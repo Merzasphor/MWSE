@@ -1,0 +1,11 @@
+#ifndef _DEBUGGING_H_SFGADFBADNTUMETADRBFYNY
+#define _DEBUGGING_H_SFGADFBADNTUMETADRBFYNY
+
+//#define DEBUG 1
+//#define DEBUGGING 1
+
+#ifdef DEBUGGING
+#include "LOG.h"
+#endif
+
+#endif

@@ -1,0 +1,11 @@
+28-12-2006 by Tp21:
+-Fliggerty is working on MWSE now too!
+
+27-12-2006 by Tp21:
+-fixed the xEquip function
+-final version that works in VS.net 2005
+
+22-08-2006 by Tp21:
+-included the function xDrop, xEquip, xSetName and xGetSpellEffects
+-change the pipe reader from hanging if there is no data available (original code form timeslip)
+-made it working for VS.net 2003 and VS.net 2005 (code from timeslip)
