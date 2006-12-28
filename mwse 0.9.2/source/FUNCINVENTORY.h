@@ -5,6 +5,19 @@
 #include "FUNCEXTENDER.h"
 #include "STRINGS.h"
 
+//Fliggerty 12-27-06
+
+struct FUNCADDSPELL : public FUNCEXTENDER, public HWBREAKPOINT
+{
+	FUNCADDSPELL(TES3MACHINE& vm);
+	virtual bool execute(void);
+	virtual bool breakpoint();
+	virtual LPVOID getaddress();
+	private:
+	TES3MACHINE& machine;
+	CONTEXT parent;
+};
+
 //Tp21 22-08-2006
 struct FUNCDROPITEM : public FUNCEXTENDER, public HWBREAKPOINT
 {
@@ -29,7 +42,7 @@ struct FUNCEQUIPITEM : public FUNCEXTENDER, public HWBREAKPOINT
 	CONTEXT parent;
 };
 
-//Tp21 27-12-2006: doesn't work!
+//Tp21 27-12-2006
 struct FUNCCAST : public FUNCEXTENDER, public HWBREAKPOINT
 {
 	FUNCCAST(TES3MACHINE& vm);
@@ -69,6 +82,11 @@ struct FUNCINVENTORY : public FUNCTION
 	virtual bool execute(void);
 	private:
 	TES3MACHINE& machine;
+#ifndef CDC
+	// 2005-06-25  CDC
+	STRINGS strings;
+
+#endif
 };
 
 struct FUNCNEXTSTACK : public FUNCTION
@@ -77,6 +95,10 @@ struct FUNCNEXTSTACK : public FUNCTION
 	virtual bool execute(void);
 	private:
 	TES3MACHINE& machine;
+#ifndef CDC
+// 2005-06-25  CDC
+	STRINGS strings;
+#endif
 };
 
 struct FUNCHASEQUIPEDPART2 : public HWBREAKPOINT
@@ -97,11 +119,17 @@ struct FUNCHASEQUIPED : public FUNCEXTENDER, public HWBREAKPOINT
 	virtual LPVOID getaddress();
 	private:
 	TES3MACHINE& machine;
+#ifndef CDC
+// 2005-06-25  CDC
+	STRINGS strings;
+#endif
 	CONTEXT parent;
 	FUNCHASEQUIPEDPART2 part2;
 };
 
+#ifdef CDC
 // 2005-07-02  CDC
+
 struct FUNCCONTENTLIST : public FUNCTION
 {
 	FUNCCONTENTLIST(TES3MACHINE& vm) :machine(vm) {}
@@ -110,5 +138,7 @@ struct FUNCCONTENTLIST : public FUNCTION
 	TES3MACHINE& machine;
 	const char *randomselect(VPVOID temp);
 };
+
+#endif
 
 #endif

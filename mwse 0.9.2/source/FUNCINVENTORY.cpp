@@ -1,4 +1,3 @@
-
 #include <string.h>
 #include "FUNCINVENTORY.h"
 #include "TES3MEMMAP.h"
@@ -10,17 +9,81 @@
 // 22-08-2006 Tp21
 #include "warnings.h"
 
+//Fliggerty 12-27-06
+FUNCADDSPELL::FUNCADDSPELL(TES3MACHINE& vm)
+	:machine(vm)
+	,HWBREAKPOINT()
+{
+}
+
+bool FUNCADDSPELL::execute(void) 
+{ 
+     bool result= true; 
+     VMREGTYPE pString= 0; 
+     const char* string= "null"; 
+ 
+     if(machine.pop(pString) && (string=machine.GetString((VPVOID)pString))!=0) 
+     { 
+          VMLONG strlength= strlen((const char*)string); 
+          parent= machine.GetFlow(); 
+          result= machine.WriteMem((VPVOID)machine.reltolinear(SECONDOBJECT_LENGTH_IMAGE),&strlength,sizeof(strlength) ) 
+               && machine.WriteMem((VPVOID)machine.reltolinear(SECONDOBJECT_IMAGE),(void*)string,strlength+1); 
+          if(result) 
+          { 
+               CONTEXT context= machine.GetFlow(); 
+               context.Eip= (DWORD)machine.reltolinear(FIXUPTEMPLATE); 
+                machine.SetFlow(context); 
+               result= machine.SetVMDebuggerBreakpoint(this); 
+          } 
+     } 
+     else 
+          result= false; 
+ 
+#ifdef DEBUGGING 
+     LOG::log("FUNCADDSPELL(%s,%d) %s\n",(const char*)string,count,result?"succeeded":"failed"); 
+#endif 
+ 
+     return result; 
+}
+
+
+LPVOID FUNCADDSPELL::getaddress()
+{
+	return machine.reltolinear(FIXUPTEMPLATEBREAK);
+}
+
+bool FUNCADDSPELL::breakpoint()
+{
+	bool result= false;
+	CONTEXT flow= machine.GetFlow();
+	if(machine.WriteMem((VPVOID)machine.reltolinear(SECONDOBJECT_IMAGE),&flow.Eax,sizeof(flow.Eax)))
+	{
+		machine.SetFlow(parent);
+		result= CallOriginalFunction(machine,ORIG_ADDSPELL);
+	}
+	
+#ifdef DEBUGGING
+	LOG::log("FUNCADDSPELLb() %s\n",result?"succeeded":"failed");
+#endif
+
+	return result;
+}
+
+
+
 //Tp21 22-08-2006: xDrop
-FUNCDROPITEM::FUNCDROPITEM(TES3MACHINE& vm) : machine(vm), HWBREAKPOINT()
+FUNCDROPITEM::FUNCDROPITEM(TES3MACHINE& vm)
+	:machine(vm)
+	,HWBREAKPOINT()
 {
 }
 
 bool FUNCDROPITEM::execute(void)
 {
-	bool result = true;
-	VMREGTYPE pString = 0;
-	const char* string = "null";
-	VMREGTYPE count = 0;
+	bool result= true;
+	VMREGTYPE pString= 0;
+	const char* string= "null";
+	VMREGTYPE count= 0;
 
 	if(machine.pop(pString) && machine.pop(count) && (string=machine.GetString((VPVOID)pString))!=0)
 	{
@@ -397,8 +460,12 @@ bool FUNCNEXTSTACK::execute(void)
 				}
 			}
 		}
-		// 2005-06-29  CDC	// major error here, producing two extra elements on the stack each call!
+#ifdef CDC
+// 2005-06-29  CDC	// major error here, producing two extra elements on the stack each call!
 		stackpointer = stackpointer - sizeof(stackresults) + sizeof(pstacknode);
+#else
+		stackpointer-= sizeof(stackresults) + sizeof(pstacknode);
+#endif
 		result= (machine.SetRegister(SP,stackpointer)
 			&& machine.WriteMem((VPVOID)stackpointer,&stackresults,sizeof(stackresults)));
 
@@ -502,6 +569,7 @@ bool FUNCHASEQUIPEDPART2::breakpoint()
 	return result;
 }
 
+#ifdef CDC
 // 2005-07-10  CDC  More detailed information about inventory items, including a rudimentary random item selector
 // 2005-06-29  CDC  NextStack won't be used with the new form and there are many more values returned
 
@@ -640,4 +708,6 @@ const char *FUNCCONTENTLIST::randomselect(VPVOID templ)
 	stackpointer-= sizeof(stackresults);
 	result= (machine.SetRegister(SP,stackpointer)
 		&& machine.WriteMem((VPVOID)stackpointer,&stackresults,sizeof(stackresults)));
+#endif
+
 #endif

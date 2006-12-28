@@ -2,9 +2,11 @@
 #define _TES3OPCODES_H_SFGNSFAsdvasgndhmSDFGNSFN
 	
 typedef enum {
-	//--- original morrowind-function opcodes
-	 ORIG_DEREF= 0x010C
+	ORIG_DEREF= 0x010C
+#ifdef CDC
+	// 2005-02-14  CDC
 	,ORIG_MESSAGEBOX=	0x1000
+#endif
 	,ORIG_POSITION=	0x1004
 	,ORIG_POSITIONCELL= 0x1005
 	,ORIG_STARTCOMBAT=	0x1019
@@ -19,8 +21,10 @@ typedef enum {
 	,ORIG_EQUIPITEM =	0x110e
 	,ORIG_GETSPELLEFFECTS= 0x1121
 	,ORIG_CAST = 0x1123
+	
+	//Fliggerty 12-27-06
+	,ORIG_ADDSPELL = 0x111D
 
-	//--- Extended opcodes
 	,CALL=			0x3801
 	,CALLSHORT=		0x3802
 	,RETURN=		0x3803
@@ -119,7 +123,8 @@ typedef enum {
 	,FILEWRITELONG=		0x3C32
 	,FILEWRITEFLOAT=	0x3C33
 	,FILEWRITESTRING=	0x3C34
-
+	
+#ifdef CDC
 	// 2005-02-14  CDC
 	// These opcodes all use printable characters. (0x3F is '?')
 	,GETVALUE=	0x3F61	//a
@@ -156,7 +161,7 @@ typedef enum {
 	,ISPROVIDER=	0x3F7C	//|
 	,MESSAGEFIX=	0x3F7E	//~
 
-	,MEMLOOK=	0x3F3F	//? //DEBUG FUNCTION
+	,MEMLOOK=	0x3F3F	//?
 
 	// 2005-07-12  CDC  Even more functions for version 0.9.2
 	,KEYPRESSED=	0x3F00
@@ -182,6 +187,10 @@ typedef enum {
 	,SETOWNER=		0x3F11
 	,CAST=			0x3F12
 
+	//Fliggerty 12-27-06
+	,ADDSPELL=		0x3F20
+
+#endif
 	} OPCODES;
 
 #endif
