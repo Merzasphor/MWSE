@@ -23,12 +23,10 @@
 #include "FUNCAI.h"
 #include "FUNCPOSITION.h"
 #include "FUNCREFERENCE.h"
-#ifdef CDC
 // 2005-02-14  CDC
 #include "FUNCPROPERTIES.h"
 // 2005-06-27  CDC
 #include "FUNCTEXT.h"
-#endif
 #include "FUNCLOG.h"
 #include "FUNCFILE.h"
 #include "FUNCINVENTORY.h"
@@ -189,7 +187,6 @@ TES3MACHINE::TES3MACHINE(HANDLE process, LPVOID base)
 	AddInstruction(FILEWRITEFLOAT, new FUNCFILEWRITEFOURBYTES(*this));
 	AddInstruction(FILEWRITESTRING, new FUNCFILEWRITESTRING(*this));
 
-#ifdef CDC
 	// 2005-02-14  CDC
 	AddInstruction(GETVALUE, new FUNCGETVALUE(*this));
 	AddInstruction(GETOWNER, new FUNCGETOWNER(*this));
@@ -256,7 +253,6 @@ TES3MACHINE::TES3MACHINE(HANDLE process, LPVOID base)
 	AddInstruction(SETNAME, new FUNCSETNAME(*this));
 	AddInstruction(GETSPELLEFFECTS, new FUNCGETSPELLEFFECTS(*this));
 	AddInstruction(CAST, new FUNCCAST(*this));
-#endif
 }
 
 bool TES3MACHINE::GetRegister(WORD regidx, VMREGTYPE& value)
@@ -328,13 +324,9 @@ bool TES3MACHINE::Interrupt(VMINTERRUPT num)
 		result= true;
 
 //having min define for the next line hurts
-#ifdef MSVC
 #undef min
 		while(result && (read=std::min((VMSIZE)sizeof(buf),script.scdtlength-offset))>0)
 #define min(a,b) (((a) < (b)) ? (a) : (b))
-#else
-		while(result && (read=std::min((VMSIZE)sizeof(buf),script.scdtlength-offset))>0)
-#endif
 		{
 			result= (ReadMem(script.scdt+offset,buf,read)
 				&& WriteMem((VPVOID)SCRIPTMEM_VPOS+offset,buf,read));
@@ -468,7 +460,6 @@ void TES3MACHINE::dumptemplate(VPTEMPLATE ptempl)
 
 void TES3MACHINE::dumpobject(VPREFERENCE pref)
 {
-#ifdef CDC
 	// 2005-02-05  CDC     2005-07-06  0 is an address, non-digits quit now
 	// Allows for interactive exploration of memory - not pretty, but works
 	// You'll need a fairly wide screen and should start the extender from
@@ -567,19 +558,6 @@ void TES3MACHINE::dumpobject(VPREFERENCE pref)
 	scanf("%1020s", buf);
 	sscanf(buf,"%lx", &addr);
 	} while ( (buf[0]>='0' && buf[0]<='9') || (buf[0]>='a' && buf[0]<='f') || ( buf[0]>= 'A'&& buf[0]<='F') );
-	
-
-#else
-	TES3REFERENCE ref;
-	if(ReadMem((VPVOID)pref,(void*)&ref,sizeof(TES3REFERENCE)))
-	{
-		LOG::log("Reference from %lx\n",pref);
-		LOG::logbinary((void*)&ref,sizeof(TES3REFERENCE));
-		dumptemplate(ref.templ);
-	}
-	else
-		LOG::log("dumpobject: Reference failed\n");
-#endif
 }
 
 void TES3MACHINE::dumpobjects(void)

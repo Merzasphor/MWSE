@@ -460,12 +460,8 @@ bool FUNCNEXTSTACK::execute(void)
 				}
 			}
 		}
-#ifdef CDC
 // 2005-06-29  CDC	// major error here, producing two extra elements on the stack each call!
 		stackpointer = stackpointer - sizeof(stackresults) + sizeof(pstacknode);
-#else
-		stackpointer-= sizeof(stackresults) + sizeof(pstacknode);
-#endif
 		result= (machine.SetRegister(SP,stackpointer)
 			&& machine.WriteMem((VPVOID)stackpointer,&stackresults,sizeof(stackresults)));
 
@@ -569,7 +565,6 @@ bool FUNCHASEQUIPEDPART2::breakpoint()
 	return result;
 }
 
-#ifdef CDC
 // 2005-07-10  CDC  More detailed information about inventory items, including a rudimentary random item selector
 // 2005-06-29  CDC  NextStack won't be used with the new form and there are many more values returned
 
@@ -708,6 +703,4 @@ const char *FUNCCONTENTLIST::randomselect(VPVOID templ)
 	stackpointer-= sizeof(stackresults);
 	result= (machine.SetRegister(SP,stackpointer)
 		&& machine.WriteMem((VPVOID)stackpointer,&stackresults,sizeof(stackresults)));
-#endif
-
 #endif

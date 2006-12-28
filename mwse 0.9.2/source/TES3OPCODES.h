@@ -3,10 +3,7 @@
 	
 typedef enum {
 	ORIG_DEREF= 0x010C
-#ifdef CDC
-	// 2005-02-14  CDC
 	,ORIG_MESSAGEBOX=	0x1000
-#endif
 	,ORIG_POSITION=	0x1004
 	,ORIG_POSITIONCELL= 0x1005
 	,ORIG_STARTCOMBAT=	0x1019
@@ -124,7 +121,6 @@ typedef enum {
 	,FILEWRITEFLOAT=	0x3C33
 	,FILEWRITESTRING=	0x3C34
 	
-#ifdef CDC
 	// 2005-02-14  CDC
 	// These opcodes all use printable characters. (0x3F is '?')
 	,GETVALUE=	0x3F61	//a
@@ -189,8 +185,6 @@ typedef enum {
 
 	//Fliggerty 12-27-06
 	,ADDSPELL=		0x3F20
-
-#endif
 	} OPCODES;
 
 #endif

@@ -82,11 +82,6 @@ struct FUNCINVENTORY : public FUNCTION
 	virtual bool execute(void);
 	private:
 	TES3MACHINE& machine;
-#ifndef CDC
-	// 2005-06-25  CDC
-	STRINGS strings;
-
-#endif
 };
 
 struct FUNCNEXTSTACK : public FUNCTION
@@ -95,10 +90,6 @@ struct FUNCNEXTSTACK : public FUNCTION
 	virtual bool execute(void);
 	private:
 	TES3MACHINE& machine;
-#ifndef CDC
-// 2005-06-25  CDC
-	STRINGS strings;
-#endif
 };
 
 struct FUNCHASEQUIPEDPART2 : public HWBREAKPOINT
@@ -119,15 +110,10 @@ struct FUNCHASEQUIPED : public FUNCEXTENDER, public HWBREAKPOINT
 	virtual LPVOID getaddress();
 	private:
 	TES3MACHINE& machine;
-#ifndef CDC
-// 2005-06-25  CDC
-	STRINGS strings;
-#endif
 	CONTEXT parent;
 	FUNCHASEQUIPEDPART2 part2;
 };
 
-#ifdef CDC
 // 2005-07-02  CDC
 
 struct FUNCCONTENTLIST : public FUNCTION
@@ -138,7 +124,5 @@ struct FUNCCONTENTLIST : public FUNCTION
 	TES3MACHINE& machine;
 	const char *randomselect(VPVOID temp);
 };
-
-#endif
 
 #endif
