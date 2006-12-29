@@ -1,4 +1,7 @@
-29-12-2006
+29-12-2006 by Tp21:
+-Added Versioninfo and Icon to Executable
+
+29-12-2006 by Fliggerty:
 -Added xAddSpell and xRemoveSpell functions
 
 28-12-2006 by Tp21:
