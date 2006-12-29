@@ -477,7 +477,15 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath=".\source\MWScriptExtender.ico"
+				RelativePath=".\MWScriptExtender.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Resource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Resource.rc"
 				>
 			</File>
 		</Filter>
