@@ -7,6 +7,7 @@
 #include <winnt.h>
 #include <stdlib.h>
 #include <string.h>
+
 // 22-08-2006 Tp21
 #include "warnings.h"
 
@@ -130,6 +131,7 @@ int DEBUGGER::debugattach(char* commandline)
 	return result;
 }
 */
+
 int DEBUGGER::debug(DWORD processID)
 {
 	int result= 0;

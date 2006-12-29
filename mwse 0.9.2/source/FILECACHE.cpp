@@ -2,6 +2,7 @@
 #include "FILECACHE.h"
 #include <stdio.h>
 #include <ctype.h>
+
 // 22-08-2006 Tp21
 #include "warnings.h"
 
@@ -10,7 +11,7 @@
 #endif
 
 // 2005-06-25  CDC
-	FILESYS filesys;	// A common file system cache
+FILESYS filesys;	// A common file system cache
 
 bool FILECACHE::validfilename(const char* filename)
 {
