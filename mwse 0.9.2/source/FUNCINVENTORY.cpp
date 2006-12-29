@@ -68,6 +68,64 @@ bool FUNCADDSPELL::breakpoint()
 
 	return result;
 }
+//Fliggerty 12-29-06
+FUNCREMOVESPELL::FUNCREMOVESPELL(TES3MACHINE& vm) : machine(vm), HWBREAKPOINT()
+{
+}
+
+bool FUNCREMOVESPELL::execute(void) 
+{ 
+     bool result = true; 
+     VMREGTYPE pString = 0; 
+     const char* string = "null"; 
+ 
+     if(machine.pop(pString)
+		 && (string = machine.GetString((VPVOID)pString)) != 0) 
+     { 
+          VMLONG strlength = strlen((const char*)string); 
+          parent = machine.GetFlow(); 
+          result = machine.WriteMem((VPVOID)machine.reltolinear(SECONDOBJECT_LENGTH_IMAGE), &strlength, sizeof(strlength)) 
+               && machine.WriteMem((VPVOID)machine.reltolinear(SECONDOBJECT_IMAGE), (void*)string, strlength+1); 
+          if(result) 
+          { 
+               CONTEXT context = machine.GetFlow(); 
+               context.Eip = (DWORD)machine.reltolinear(FIXUPTEMPLATE); 
+                machine.SetFlow(context); 
+               result = machine.SetVMDebuggerBreakpoint(this); 
+          } 
+     } 
+     else 
+		 result= false; 
+ 
+	#ifdef DEBUGGING 
+     LOG::log("FUNCREMOVESPELL(%s,%d) %s\n",(const char*)string,count,result?"succeeded":"failed"); 
+	#endif
+	 
+	 return result; 
+}
+
+
+LPVOID FUNCREMOVESPELL::getaddress()
+{
+	return machine.reltolinear(FIXUPTEMPLATEBREAK);
+}
+
+bool FUNCREMOVESPELL::breakpoint()
+{
+	bool result = false;
+	CONTEXT flow = machine.GetFlow();
+	if(machine.WriteMem((VPVOID)machine.reltolinear(SECONDOBJECT_IMAGE), &flow.Eax, sizeof(flow.Eax)))
+	{
+		machine.SetFlow(parent);
+		result = CallOriginalFunction(machine,ORIG_REMOVESPELL);
+	}
+	
+	#ifdef DEBUGGING
+	LOG::log("FUNCREMOVESPELLb() %s\n",result?"succeeded":"failed");
+	#endif
+
+	return result;
+}
 
 //Tp21 22-08-2006: xDrop
 FUNCDROPITEM::FUNCDROPITEM(TES3MACHINE& vm) : machine(vm), HWBREAKPOINT()

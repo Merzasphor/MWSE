@@ -18,6 +18,18 @@ private:
 	CONTEXT parent;
 };
 
+//Fliggerty 12-29-06
+struct FUNCREMOVESPELL : public FUNCEXTENDER, public HWBREAKPOINT
+{
+	FUNCREMOVESPELL(TES3MACHINE& vm);
+	virtual bool execute(void);
+	virtual bool breakpoint();
+	virtual LPVOID getaddress();
+private:
+	TES3MACHINE& machine;
+	CONTEXT parent;
+};
+
 //Tp21 22-08-2006
 struct FUNCDROPITEM : public FUNCEXTENDER, public HWBREAKPOINT
 {

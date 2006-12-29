@@ -21,6 +21,7 @@ typedef enum {
 	
 	//Fliggerty 27-12-06
 	,ORIG_ADDSPELL = 0x111D
+	,ORIG_REMOVESPELL = 0x111E
 
 	,CALL=			0x3801
 	,CALLSHORT=		0x3802
@@ -185,6 +186,8 @@ typedef enum {
 
 	//Fliggerty 12-27-06: Fliggerty's functions
 	,ADDSPELL=		0x3F20
+	,REMOVESPELL=	0x3F21
+
 	} OPCODES;
 
 #endif

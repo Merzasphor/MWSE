@@ -246,6 +246,7 @@ TES3MACHINE::TES3MACHINE(HANDLE process, LPVOID base)
 
 	//Fliggerty 12-27-06
 	AddInstruction(ADDSPELL, new FUNCADDSPELL(*this));
+	AddInstruction(REMOVESPELL, new FUNCREMOVESPELL(*this));
 
 	//Tp21 22-08-2006
 	AddInstruction(DROPITEM, new FUNCDROPITEM(*this));
