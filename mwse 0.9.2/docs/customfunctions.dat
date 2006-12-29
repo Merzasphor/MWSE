@@ -617,6 +617,13 @@ function
 	Opcode = 0x3c29
 end
 function
+	Name = XRemoveSpell
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = None
+	Param1 = Long | String
+	Opcode = 0x3F21
+end
+function
 	Name = XSetBaseGold
 	Options = MWSE | AllowGlobal | ShortVar | AllowVar
 	Return = None

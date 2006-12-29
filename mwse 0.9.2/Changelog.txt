@@ -1,3 +1,6 @@
+29-12-2006
+-Added xAddSpell and xRemoveSpell functions
+
 28-12-2006 by Tp21:
 -Fliggerty is working on MWSE now too!
 
