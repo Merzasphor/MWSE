@@ -20,7 +20,7 @@ struct FUNCSTRCMP : FUNCTION
 {
 	FUNCSTRCMP(TES3MACHINE& vm);
 	virtual bool execute(void);
-	private:
+private:
 	TES3MACHINE& machine;
 };
 

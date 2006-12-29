@@ -9,14 +9,13 @@ struct FUNCREF : public FUNCTION
 {
 	FUNCREF(TES3MACHINE& vm);
 	virtual bool execute(void);
-	
 	virtual bool setref(VPREFERENCE ref);
 	TES3MACHINE& getMachine(void)
 	{
 		return machine;
 	}
 
-	private:
+private:
 	TES3MACHINE& machine;
 };
 
@@ -24,7 +23,7 @@ struct FUNCREFTYPE : public FUNCTION
 {
 	FUNCREFTYPE(TES3MACHINE& vm);
 	virtual bool execute(void);
-	private:
+private:
 	TES3MACHINE& machine;
 };
 
@@ -32,7 +31,7 @@ struct FUNCREFID : public FUNCTION
 {
 	FUNCREFID(TES3MACHINE& vm);
 	virtual bool execute(void);
-	private:
+private:
 	TES3MACHINE& machine;
 };
 
@@ -78,7 +77,7 @@ struct FUNCGETREF : public FUNCEXTENDER, public HWBREAKPOINT
 	virtual bool execute(void);
 	virtual bool breakpoint();
 	virtual LPVOID getaddress();
-	private:
+private:
 	TES3MACHINE& machine;
 	CONTEXT parent;
 	bool isplayer;

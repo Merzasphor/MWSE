@@ -11,7 +11,6 @@ struct LOG
 	static int log(const char* fmt, ...);
 	static int logbinary(VOID* addr, int size);
 	static void close(void);
-	
 private:
 	static HANDLE handle;
 };

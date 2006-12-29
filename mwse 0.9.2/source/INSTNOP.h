@@ -12,9 +12,9 @@ struct INSTNOP : public INSTRUCTION
 	}
 	virtual bool execute(void)
 	{
-#ifdef DEBUGGING
-	LOG::log("NOP() succeeded\n");
-#endif	
+		#ifdef DEBUGGING
+		LOG::log("NOP() succeeded\n");
+		#endif
 		return true;
 	}
 };

@@ -2,7 +2,7 @@
 #define _TES3OPCODES_H_SFGNSFAsdvasgndhmSDFGNSFN
 	
 typedef enum {
-	ORIG_DEREF= 0x010C
+	 ORIG_DEREF= 0x010C
 	,ORIG_MESSAGEBOX=	0x1000
 	,ORIG_POSITION=	0x1004
 	,ORIG_POSITIONCELL= 0x1005
@@ -19,7 +19,7 @@ typedef enum {
 	,ORIG_GETSPELLEFFECTS= 0x1121
 	,ORIG_CAST = 0x1123
 	
-	//Fliggerty 12-27-06
+	//Fliggerty 27-12-06
 	,ORIG_ADDSPELL = 0x111D
 
 	,CALL=			0x3801
@@ -175,7 +175,7 @@ typedef enum {
 	,STRINGBUILD=	0x3F0B
 	,STRINGPARSE=	0x3F0C
 	
-	//Tp21 22-08-2006: Tp21's functions (version 0.9.2a)
+	//Tp21 22-08-2006: Tp21's functions
 	,DROPITEM=		0x3F0D
 	,EQUIPITEM=		0x3F0E
 	,SETNAME=		0x3F0F
@@ -183,7 +183,7 @@ typedef enum {
 	,SETOWNER=		0x3F11
 	,CAST=			0x3F12
 
-	//Fliggerty 12-27-06
+	//Fliggerty 12-27-06: Fliggerty's functions
 	,ADDSPELL=		0x3F20
 	} OPCODES;
 

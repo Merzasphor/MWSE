@@ -9,7 +9,7 @@ struct INSTPOP : public INSTRUCTION
 	INSTPOP(VIRTUALMACHINE& vm);
 	virtual int GetOperands(OPCODE opcode, VPVOID operanddata);
 	virtual bool execute(void);
-	private:
+private:
 	VIRTUALMACHINE& machine;
 	VMSHORT stackincrease;
 };
@@ -19,7 +19,7 @@ struct INSTPOPREG : public INSTRUCTION
 	INSTPOPREG(VIRTUALMACHINE& vm);
 	virtual int GetOperands(OPCODE opcode, VPVOID operanddata);
 	virtual bool execute(void);
-	private:
+private:
 	VIRTUALMACHINE& machine;
 	VMBYTE regidx;
 };

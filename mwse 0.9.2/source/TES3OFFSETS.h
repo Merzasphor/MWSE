@@ -86,5 +86,4 @@ struct RAND {
 	TMPL* template;
 	SHORT pclevel;
 };
-
 #endif

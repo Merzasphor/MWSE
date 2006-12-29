@@ -9,7 +9,7 @@ struct FUNCPOSITION : public FUNCEXTENDER
 {
 	FUNCPOSITION(TES3MACHINE& vm);
 	virtual bool execute(void);
-	private:
+private:
 	TES3MACHINE& machine;
 };
 
@@ -17,7 +17,7 @@ struct FUNCPOSITIONCELL : public FUNCEXTENDER
 {
 	FUNCPOSITIONCELL(TES3MACHINE& vm);
 	virtual bool execute(void);
-	private:
+private:
 	TES3MACHINE& machine;
 };
 
@@ -25,7 +25,7 @@ struct FUNCDISTANCE : public FUNCEXTENDER
 {
 	FUNCDISTANCE(TES3MACHINE& vm);
 	virtual bool execute(void);
-	private:
+private:
 	TES3MACHINE& machine;
 };
 
@@ -33,7 +33,7 @@ struct FUNCPCCELLID : public FUNCTION
 {
 	FUNCPCCELLID(TES3MACHINE& vm);
 	virtual bool execute(void);
-	private:
+private:
 	TES3MACHINE& machine;
 };
 
@@ -42,7 +42,7 @@ struct FUNCPLACEATPART2 : public HWBREAKPOINT
 	FUNCPLACEATPART2(TES3MACHINE& vm);
 	virtual bool breakpoint();
 	virtual LPVOID getaddress();
-	private:
+private:
 	TES3MACHINE& machine;
 	CONTEXT parent;
 };
@@ -53,7 +53,7 @@ struct FUNCPLACEAT : public FUNCEXTENDER, public HWBREAKPOINT
 	virtual bool execute(void);
 	virtual bool breakpoint();
 	virtual LPVOID getaddress();
-	private:
+private:
 	TES3MACHINE& machine;
 	CONTEXT parent;
 	FUNCPLACEATPART2 part2;

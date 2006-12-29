@@ -5,8 +5,8 @@
 
 struct HWBREAKPOINT
 {
-	virtual LPVOID getaddress()= 0;
-	virtual bool breakpoint()= 0;
+	virtual LPVOID getaddress() = 0;
+	virtual bool breakpoint() = 0;
 };
 
 

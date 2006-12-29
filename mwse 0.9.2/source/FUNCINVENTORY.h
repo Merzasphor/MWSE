@@ -13,7 +13,7 @@ struct FUNCADDSPELL : public FUNCEXTENDER, public HWBREAKPOINT
 	virtual bool execute(void);
 	virtual bool breakpoint();
 	virtual LPVOID getaddress();
-	private:
+private:
 	TES3MACHINE& machine;
 	CONTEXT parent;
 };
@@ -25,7 +25,7 @@ struct FUNCDROPITEM : public FUNCEXTENDER, public HWBREAKPOINT
 	virtual bool execute(void);
 	virtual bool breakpoint();
 	virtual LPVOID getaddress();
-	private:
+private:
 	TES3MACHINE& machine;
 	CONTEXT parent;
 };
@@ -37,7 +37,7 @@ struct FUNCEQUIPITEM : public FUNCEXTENDER, public HWBREAKPOINT
 	virtual bool execute(void);
 	virtual bool breakpoint();
 	virtual LPVOID getaddress();
-	private:
+private:
 	TES3MACHINE& machine;
 	CONTEXT parent;
 };
@@ -60,7 +60,7 @@ struct FUNCADDITEM : public FUNCEXTENDER, public HWBREAKPOINT
 	virtual bool execute(void);
 	virtual bool breakpoint();
 	virtual LPVOID getaddress();
-	private:
+private:
 	TES3MACHINE& machine;
 	CONTEXT parent;
 };
@@ -71,7 +71,7 @@ struct FUNCREMOVEITEM : public FUNCEXTENDER, public HWBREAKPOINT
 	virtual bool execute(void);
 	virtual bool breakpoint();
 	virtual LPVOID getaddress();
-	private:
+private:
 	TES3MACHINE& machine;
 	CONTEXT parent;
 };
@@ -80,7 +80,7 @@ struct FUNCINVENTORY : public FUNCTION
 {
 	FUNCINVENTORY(TES3MACHINE& vm);
 	virtual bool execute(void);
-	private:
+private:
 	TES3MACHINE& machine;
 };
 
@@ -88,7 +88,7 @@ struct FUNCNEXTSTACK : public FUNCTION
 {
 	FUNCNEXTSTACK(TES3MACHINE& vm);
 	virtual bool execute(void);
-	private:
+private:
 	TES3MACHINE& machine;
 };
 
@@ -97,7 +97,7 @@ struct FUNCHASEQUIPEDPART2 : public HWBREAKPOINT
 	FUNCHASEQUIPEDPART2(TES3MACHINE& vm);
 	virtual bool breakpoint();
 	virtual LPVOID getaddress();
-	private:
+private:
 	TES3MACHINE& machine;
 	CONTEXT parent;
 };
@@ -108,19 +108,18 @@ struct FUNCHASEQUIPED : public FUNCEXTENDER, public HWBREAKPOINT
 	virtual bool execute(void);
 	virtual bool breakpoint();
 	virtual LPVOID getaddress();
-	private:
+private:
 	TES3MACHINE& machine;
 	CONTEXT parent;
 	FUNCHASEQUIPEDPART2 part2;
 };
 
 // 2005-07-02  CDC
-
 struct FUNCCONTENTLIST : public FUNCTION
 {
 	FUNCCONTENTLIST(TES3MACHINE& vm) :machine(vm) {}
 	virtual bool execute(void);
-	private:
+private:
 	TES3MACHINE& machine;
 	const char *randomselect(VPVOID temp);
 };

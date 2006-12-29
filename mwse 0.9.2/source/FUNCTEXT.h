@@ -16,7 +16,7 @@ struct FUNCMESSAGEFIX : public FUNCTION
 	FUNCMESSAGEFIX(TES3MACHINE& vm) :machine(vm) {}
 	virtual int GetOperands(OPCODE opcode, VPVOID operanddata);
 	virtual bool execute(void);
-	private:
+private:
 	TES3MACHINE& machine;
 	VPVOID scriptoffset;
 };
@@ -26,7 +26,7 @@ struct FUNCKEYPRESSED : public FUNCTION
 {
 	FUNCKEYPRESSED(TES3MACHINE& vm) :machine(vm) {}
 	virtual bool execute(void);
-	private:
+private:
 	TES3MACHINE& machine;
 };
 
@@ -34,7 +34,7 @@ struct FUNCTEXTINPUT : public FUNCTION
 {
 	FUNCTEXTINPUT(TES3MACHINE& vm) :machine(vm) {}
 	virtual bool execute(void);
-	private:
+private:
 	TES3MACHINE& machine;
 };
 
@@ -43,7 +43,7 @@ struct FUNCTEXTINPUTALT : public FUNCTION
 {
 	FUNCTEXTINPUTALT(TES3MACHINE& vm) :machine(vm) {}
 	virtual bool execute(void);
-	private:
+private:
 	TES3MACHINE& machine;
 };
 
@@ -51,7 +51,7 @@ struct FUNCMEMLOOK : public FUNCTION
 {
 	FUNCMEMLOOK(TES3MACHINE& vm) :machine(vm) {}
 	virtual bool execute(void);
-	private:
+private:
 	TES3MACHINE& machine;
 };
 
@@ -60,7 +60,7 @@ struct FUNCSTRINGLENGTH : public FUNCTION
 {
 	FUNCSTRINGLENGTH(TES3MACHINE& vm) :machine(vm) {}
 	virtual bool execute(void);
-	private:
+private:
 	TES3MACHINE& machine;
 };
 
@@ -68,8 +68,7 @@ struct FUNCSTRINGBUILD : public FUNCTION
 {
 	FUNCSTRINGBUILD(TES3MACHINE& vm) :machine(vm) {}
 	virtual bool execute(void);
-
-	private:
+private:
 	TES3MACHINE& machine;
 };
 
@@ -77,7 +76,7 @@ struct FUNCSTRINGPARSE : public FUNCTION
 {
 	FUNCSTRINGPARSE(TES3MACHINE& vm) :machine(vm) {}
 	virtual bool execute(void);
-	private:
+private:
 	TES3MACHINE& machine;
 };
 

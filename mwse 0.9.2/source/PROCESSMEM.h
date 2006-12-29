@@ -10,10 +10,8 @@ struct PROCESSMEM : public ADDRESSSPACE
 	virtual bool Read(VPVOID addr, VOID* buf, VMSIZE size);
 	virtual bool Write(VPVOID addr, VOID* buf, VMSIZE size);
 	virtual VMSIZE size(void);
-	
 	virtual bool ReBase(LPVOID base);
-	
-	private:
+private:
 	HANDLE hProcess;
 	LPVOID baseptr;
 	VMSIZE memsize;

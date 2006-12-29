@@ -9,9 +9,9 @@ struct INSTJUMP : public INSTRUCTION
 	INSTJUMP(VIRTUALMACHINE& vm);
 	virtual int GetOperands(OPCODE opcode, VPVOID operanddata);
 	virtual bool execute(void);
-	protected:
+protected:
 	virtual VIRTUALMACHINE& GetMachine(void);
-	protected:
+protected:
 	VIRTUALMACHINE& machine;
 	VPVOID position;
 };
