@@ -10,7 +10,6 @@
 #define NELEM(a) (sizeof(a)/sizeof(a[0]))
 #endif
 
-// 2005-06-25  CDC
 FILESYS filesys;	// A common file system cache
 
 bool FILECACHE::validfilename(const char* filename)
@@ -87,13 +86,15 @@ HANDLE FILECACHE::openfileat(const char* filename, long position)
 	}
 
 	strncpy(&realname[strlen(realname)],filename,NELEM(realname)-strlen(realname));
-	HANDLE result= CreateFile(realname
+	HANDLE result= CreateFile(
+		 realname
 		,GENERIC_READ|GENERIC_WRITE
 		,FILE_SHARE_READ|FILE_SHARE_WRITE
 		,NULL
 		,OPEN_ALWAYS
 		,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN
-		,NULL);
+		,NULL
+		);
 	if(result!=INVALID_HANDLE_VALUE && SetFilePointer(result,position,0,FILE_BEGIN)<0)
 	{
 		CloseHandle(result);

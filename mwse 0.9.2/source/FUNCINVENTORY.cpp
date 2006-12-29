@@ -6,44 +6,44 @@
 #include "REFERENCE.h"
 #include "LOG.h"
 #include "TES3OFFSETS.h"
+
 // 22-08-2006 Tp21
 #include "warnings.h"
 
 //Fliggerty 12-27-06
-FUNCADDSPELL::FUNCADDSPELL(TES3MACHINE& vm)
-	:machine(vm)
-	,HWBREAKPOINT()
+FUNCADDSPELL::FUNCADDSPELL(TES3MACHINE& vm) : machine(vm), HWBREAKPOINT()
 {
 }
 
 bool FUNCADDSPELL::execute(void) 
 { 
-     bool result= true; 
-     VMREGTYPE pString= 0; 
-     const char* string= "null"; 
+     bool result = true; 
+     VMREGTYPE pString = 0; 
+     const char* string = "null"; 
  
-     if(machine.pop(pString) && (string=machine.GetString((VPVOID)pString))!=0) 
+     if(machine.pop(pString)
+		 && (string = machine.GetString((VPVOID)pString)) != 0) 
      { 
-          VMLONG strlength= strlen((const char*)string); 
-          parent= machine.GetFlow(); 
-          result= machine.WriteMem((VPVOID)machine.reltolinear(SECONDOBJECT_LENGTH_IMAGE),&strlength,sizeof(strlength) ) 
-               && machine.WriteMem((VPVOID)machine.reltolinear(SECONDOBJECT_IMAGE),(void*)string,strlength+1); 
+          VMLONG strlength = strlen((const char*)string); 
+          parent = machine.GetFlow(); 
+          result = machine.WriteMem((VPVOID)machine.reltolinear(SECONDOBJECT_LENGTH_IMAGE), &strlength, sizeof(strlength)) 
+               && machine.WriteMem((VPVOID)machine.reltolinear(SECONDOBJECT_IMAGE), (void*)string, strlength+1); 
           if(result) 
           { 
-               CONTEXT context= machine.GetFlow(); 
-               context.Eip= (DWORD)machine.reltolinear(FIXUPTEMPLATE); 
+               CONTEXT context = machine.GetFlow(); 
+               context.Eip = (DWORD)machine.reltolinear(FIXUPTEMPLATE); 
                 machine.SetFlow(context); 
-               result= machine.SetVMDebuggerBreakpoint(this); 
+               result = machine.SetVMDebuggerBreakpoint(this); 
           } 
      } 
      else 
-          result= false; 
+		 result= false; 
  
-#ifdef DEBUGGING 
+	#ifdef DEBUGGING 
      LOG::log("FUNCADDSPELL(%s,%d) %s\n",(const char*)string,count,result?"succeeded":"failed"); 
-#endif 
- 
-     return result; 
+	#endif
+	 
+	 return result; 
 }
 
 
@@ -54,58 +54,56 @@ LPVOID FUNCADDSPELL::getaddress()
 
 bool FUNCADDSPELL::breakpoint()
 {
-	bool result= false;
-	CONTEXT flow= machine.GetFlow();
-	if(machine.WriteMem((VPVOID)machine.reltolinear(SECONDOBJECT_IMAGE),&flow.Eax,sizeof(flow.Eax)))
+	bool result = false;
+	CONTEXT flow = machine.GetFlow();
+	if(machine.WriteMem((VPVOID)machine.reltolinear(SECONDOBJECT_IMAGE), &flow.Eax, sizeof(flow.Eax)))
 	{
 		machine.SetFlow(parent);
-		result= CallOriginalFunction(machine,ORIG_ADDSPELL);
+		result = CallOriginalFunction(machine,ORIG_ADDSPELL);
 	}
 	
-#ifdef DEBUGGING
+	#ifdef DEBUGGING
 	LOG::log("FUNCADDSPELLb() %s\n",result?"succeeded":"failed");
-#endif
+	#endif
 
 	return result;
 }
 
-
-
 //Tp21 22-08-2006: xDrop
-FUNCDROPITEM::FUNCDROPITEM(TES3MACHINE& vm)
-	:machine(vm)
-	,HWBREAKPOINT()
+FUNCDROPITEM::FUNCDROPITEM(TES3MACHINE& vm) : machine(vm), HWBREAKPOINT()
 {
 }
 
 bool FUNCDROPITEM::execute(void)
 {
-	bool result= true;
-	VMREGTYPE pString= 0;
-	const char* string= "null";
-	VMREGTYPE count= 0;
+	bool result = true;
+	VMREGTYPE pString = 0;
+	const char* string = "null";
+	VMREGTYPE count = 0;
 
-	if(machine.pop(pString) && machine.pop(count) && (string=machine.GetString((VPVOID)pString))!=0)
+	if(machine.pop(pString) 
+		&& machine.pop(count) 
+		&& (string=machine.GetString((VPVOID)pString)) != 0)
 	{
-		VMLONG strlength= strlen((const char*)string);
-		parent= machine.GetFlow();
-		result= machine.WriteMem((VPVOID)machine.reltolinear(SECONDOBJECT_LENGTH_IMAGE),&strlength,sizeof(strlength))
-			&& machine.WriteMem((VPVOID)machine.reltolinear(SECONDOBJECT_IMAGE),(void*)string,strlength+1)
-			&& machine.WriteMem((VPVOID)machine.reltolinear(VARINDEX_IMAGE),(void*)&count,sizeof(count));
+		VMLONG strlength = strlen((const char*)string);
+		parent = machine.GetFlow();
+		result = machine.WriteMem((VPVOID)machine.reltolinear(SECONDOBJECT_LENGTH_IMAGE), &strlength, sizeof(strlength))
+			&& machine.WriteMem((VPVOID)machine.reltolinear(SECONDOBJECT_IMAGE), (void*)string, strlength+1)
+			&& machine.WriteMem((VPVOID)machine.reltolinear(VARINDEX_IMAGE), (void*)&count, sizeof(count));
 		if(result)
 		{
-			CONTEXT context= machine.GetFlow();
-			context.Eip= (DWORD)machine.reltolinear(FIXUPTEMPLATE);
+			CONTEXT context = machine.GetFlow();
+			context.Eip = (DWORD)machine.reltolinear(FIXUPTEMPLATE);
 			machine.SetFlow(context);
-			result= machine.SetVMDebuggerBreakpoint(this);
+			result = machine.SetVMDebuggerBreakpoint(this);
 		}
 	}
 	else
-		result= false;
+		result = false;
 
-#ifdef DEBUGGING
+	#ifdef DEBUGGING
 	LOG::log("FUNCDROPITEM(%s,%d) %s\n",(const char*)string,count,result?"succeeded":"failed");
-#endif
+	#endif
 
 	return result;
 }
@@ -125,13 +123,12 @@ bool FUNCDROPITEM::breakpoint()
 		result= CallOriginalFunction(machine,ORIG_DROPITEM);
 	}
 	
-#ifdef DEBUGGING
+	#ifdef DEBUGGING
 	LOG::log("FUNCDROPITEMb() %s\n",result?"succeeded":"failed");
-#endif
+	#endif
 
 	return result;
 }
-//END Tp21 22-08-2006
 
 //TP21 27-12-2006: xCast
 FUNCCAST::FUNCCAST(TES3MACHINE& vm) :machine(vm), HWBREAKPOINT()
@@ -180,12 +177,9 @@ bool FUNCCAST::breakpoint()
 	}
 	return result;
 }
-//END Tp21 27-12-2006
 
 //Tp21 22-08-2006: xEquip
-FUNCEQUIPITEM::FUNCEQUIPITEM(TES3MACHINE& vm)
-	:machine(vm)
-	,HWBREAKPOINT()
+FUNCEQUIPITEM::FUNCEQUIPITEM(TES3MACHINE& vm) : machine(vm), HWBREAKPOINT()
 {
 }
 
@@ -240,7 +234,6 @@ bool FUNCEQUIPITEM::breakpoint()
 
 	return result;
 }
-//END Tp21 22-08-2006
 
 FUNCADDITEM::FUNCADDITEM(TES3MACHINE& vm)
 	:machine(vm)
@@ -460,14 +453,14 @@ bool FUNCNEXTSTACK::execute(void)
 				}
 			}
 		}
-// 2005-06-29  CDC	// major error here, producing two extra elements on the stack each call!
+		// 2005-06-29  CDC	// major error here, producing two extra elements on the stack each call!
 		stackpointer = stackpointer - sizeof(stackresults) + sizeof(pstacknode);
 		result= (machine.SetRegister(SP,stackpointer)
 			&& machine.WriteMem((VPVOID)stackpointer,&stackresults,sizeof(stackresults)));
 
 	}
 	else
-		result= false;
+		result = false;
 		
 #ifdef DEBUGGING
 	LOG::log("%s,%ld,%lx= FUNCNEXTSTACK(%lx) %s\n",
@@ -540,9 +533,7 @@ bool FUNCHASEQUIPED::breakpoint()
 	return result;
 }
 
-FUNCHASEQUIPEDPART2::FUNCHASEQUIPEDPART2(TES3MACHINE& vm)
-	:machine(vm)
-	,HWBREAKPOINT()
+FUNCHASEQUIPEDPART2::FUNCHASEQUIPEDPART2(TES3MACHINE& vm) : machine(vm), HWBREAKPOINT()
 {
 }
 
