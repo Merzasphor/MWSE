@@ -1,5 +1,5 @@
-#ifndef _INSTNOP_H_SFGHNAArfygnadsfbSSERRSG
-#define _INSTNOP_H_SFGHNAArfygnadsfbSSERRSG
+//InstNop.h
+#pragma once
 
 #include "INSTRUCTION.h"
 #include "DEBUGGING.h"
@@ -12,12 +12,9 @@ struct INSTNOP : public INSTRUCTION
 	}
 	virtual bool execute(void)
 	{
-		#ifdef DEBUGGING
+	#ifdef DEBUGGING
 		LOG::log("NOP() succeeded\n");
-		#endif
+	#endif
 		return true;
 	}
 };
-
-
-#endif

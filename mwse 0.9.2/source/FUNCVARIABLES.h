@@ -1,5 +1,5 @@
-#ifndef _FUNCVARIABLES_H_FSGNYMRYGHSWBRTWBR
-#define _FUNCVARIABLES_H_FSGNYMRYGHSWBRTWBR
+//FuncVariables.h
+#pragma once
 
 #include "TES3MACHINE.h"
 #include "FUNCTION.h"
@@ -23,5 +23,3 @@ private:
 	TES3MACHINE& machine;
 	OPCODE opcode;
 };
-
-#endif

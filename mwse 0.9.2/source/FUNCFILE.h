@@ -1,5 +1,5 @@
-#ifndef _FUNCFILE_H_FNMHJWAAERVGNRUESGTBAFNFJYU
-#define _FUNCFILE_H_FNMHJWAAERVGNRUESGTBAFNFJYU
+//FuncFile.h
+#pragma once
 
 #include "TES3MACHINE.h"
 #include "FUNCTION.h"
@@ -86,6 +86,4 @@ struct FUNCFILEWRITETEXT : public FUNCTION
 private:
 	TES3MACHINE& machine;
 };
-
-#endif
 

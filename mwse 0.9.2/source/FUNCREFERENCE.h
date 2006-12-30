@@ -1,5 +1,5 @@
-#ifndef _FUNCREFERENCE_H_SDFBGNWARVBFNTYUSRTBADFRBDYSTEAQGB
-#define _FUNCREFERENCE_H_SDFBGNWARVBFNTYUSRTBADFRBDYSTEAQGB
+//FuncReference.h
+#pragma once
 
 #include "TES3MACHINE.h"
 #include "FUNCEXTENDER.h"
@@ -82,5 +82,3 @@ private:
 	CONTEXT parent;
 	bool isplayer;
 };
-
-#endif

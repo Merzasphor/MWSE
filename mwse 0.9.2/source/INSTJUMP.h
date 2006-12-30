@@ -1,5 +1,5 @@
-#ifndef _INSTJUMP_H_GHSGHATHYJUETYerdvsfgndsfy
-#define _INSTJUMP_H_GHSGHATHYJUETYerdvsfgndsfy
+//InstJump.h
+#pragma once
 
 #include "VIRTUALMACHINE.h"
 #include "INSTRUCTION.h"
@@ -69,6 +69,4 @@ struct INSTJUMPSHORTNEGATIVE : public INSTJUMPSHORT
 	INSTJUMPSHORTNEGATIVE(VIRTUALMACHINE& vm);
 	virtual bool execute(void);
 };
-
-#endif
 

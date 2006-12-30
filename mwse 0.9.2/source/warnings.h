@@ -1,3 +1,6 @@
+//Warnings.h
+#pragma once
+
 /***
 //this file disables a LOT of warnings
 

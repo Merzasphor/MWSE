@@ -1,5 +1,5 @@
-#ifndef _STRINGS_H_SDFGNYHNSFAGBMYUEJNFGBBDGHM
-#define _STRINGS_H_SDFGNYHNSFAGBMYUEJNFGBBDGHM
+//Strings.h
+#pragma once
 
 #include <string>
 #include "function.h"
@@ -23,5 +23,3 @@ struct FUNCSTRCMP : FUNCTION
 private:
 	TES3MACHINE& machine;
 };
-
-#endif

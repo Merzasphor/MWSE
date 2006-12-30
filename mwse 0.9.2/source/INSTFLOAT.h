@@ -1,5 +1,5 @@
-#ifndef _INSTFLOAT_H_SFGHDGHMJIRYUHSFGASFGN
-#define _INSTFLOAT_H_SFGHDGHMJIRYUHSFGASFGN
+//InstFloat.h
+#pragma once
 
 #include "VIRTUALMACHINE.h"
 #include "INSTRUCTION.h"
@@ -131,6 +131,4 @@ struct INSTHYPOT : public INSTRUCTION
 private:	
 	VIRTUALMACHINE& machine;
 };
-
-#endif
 

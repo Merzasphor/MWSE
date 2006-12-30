@@ -1,5 +1,5 @@
-#ifndef _TES3OPCODES_H_SFGNSFAsdvasgndhmSDFGNSFN
-#define _TES3OPCODES_H_SFGNSFAsdvasgndhmSDFGNSFN
+//Tes3Opcodes.h
+#pragma once
 	
 typedef enum {
 	 ORIG_DEREF= 0x010C
@@ -189,5 +189,3 @@ typedef enum {
 	,REMOVESPELL=	0x3F21
 
 	} OPCODES;
-
-#endif

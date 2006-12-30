@@ -1,5 +1,5 @@
-#ifndef _FUNCAI_H_SFGNSFAGADFBGHMYUMDFGNSFNYUMDYUM
-#define _FUNCAI_H_SFGNSFAGADFBGHMYUMDFGNSFNYUMDYUM
+//FuncAi.h
+#pragma once
 
 #include "FUNCEXTENDER.h"
 
@@ -26,6 +26,4 @@ struct FUNCGETCOMBAT : public FUNCTION
 private:
 	TES3MACHINE& machine;
 };
-
-#endif
 

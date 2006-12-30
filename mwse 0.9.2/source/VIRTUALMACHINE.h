@@ -1,5 +1,5 @@
-#ifndef _VIRTUALMACHINE_H_KHYUJETYBSDFGNTYUM
-#define _VIRTUALMACHINE_H_KHYUJETYBSDFGNTYUM
+//VirtualMachine.h
+#pragma once
 
 #include <map>
 
@@ -124,5 +124,3 @@ private:
 	T realobject;
 	VIRTUALMACHINE& vm;
 };
-
-#endif

@@ -1,9 +1,7 @@
-// 2005-06-27  CDC   Split MessageFix from the properties file and debug code
-#ifndef _FUNCTEXT_H_SDFBGNWARVBFNTYUSRTBADFRBDYSTEAQGB
-#define _FUNCTEXT_H_SDFBGNWARVBFNTYUSRTBADFRBDYSTEAQGB
+//FuncText.h
+#pragma once
 
 #include "TES3OFFSETS.h"
-
 
 int interpolate(TES3MACHINE& machine, const char* src, char *buffer, int &size);
 int secernate(const char* format, const char *string, VMREGTYPE* resultset, int resultmax);
@@ -79,7 +77,4 @@ struct FUNCSTRINGPARSE : public FUNCTION
 private:
 	TES3MACHINE& machine;
 };
-
-
-#endif
 

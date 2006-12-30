@@ -1,5 +1,5 @@
-#ifndef _FILECACHE_H_NFGSADEEfsdfgbynmetyDGHNMY
-#define _FILECACHE_H_NFGSADEEfsdfgbynmetyDGHNMY
+//FileCache.h
+#pragma once
 
 #include <stdio.h>
 #include <map>
@@ -37,5 +37,3 @@ private:
 };
 
 extern FILESYS filesys;		// A common file cache
-
-#endif

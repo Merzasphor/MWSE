@@ -1,5 +1,5 @@
-#ifndef _INSTPUSH_H_HSTGBATYNSFGBATHMHYSWGTN
-#define _INSTPUSH_H_HSTGBATYNSFGBATHMHYSWGTN
+//InstPush.h
+#pragma once
 
 #include "TES3MACHINE.h"
 #include "INSTRUCTION.h"
@@ -53,5 +53,3 @@ private:
 	VIRTUALMACHINE& machine;
 	VMBYTE localsize;
 };
-
-#endif

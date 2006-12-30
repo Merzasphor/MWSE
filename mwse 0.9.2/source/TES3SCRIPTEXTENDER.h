@@ -1,5 +1,5 @@
-#ifndef _TES3SCRIPTEXTENDER_H_DHUJETWRB
-#define _TES3SCRIPTEXTENDER_H_DHUJETWRB
+//Tes3ScriptExtender.h
+#pragma once
 
 #include "debugger.h"
 #include "TES3MACHINE.h"
@@ -46,5 +46,3 @@ private:
 	static const char RunFunctionErrorMsg[];
 	static const char WelcomeMessage[];
 };
-
-#endif

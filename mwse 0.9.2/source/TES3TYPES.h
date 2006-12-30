@@ -1,5 +1,5 @@
-#ifndef _TES3TYPES_H_FHJMETBWARBAWDBNETY
-#define _TES3TYPES_H_FHJMETBWARBAWDBNETY
+//Tes3Types.h
+#pragma once
 
 #include "VMTYPES.h"
 
@@ -192,5 +192,3 @@ struct TES3VIEWMASTER
 	VPREFERENCE target;
 };
 typedef TES3VIEWMASTER* VPVIEWMASTER;
-
-#endif

@@ -1,5 +1,5 @@
-#ifndef _DEBUGGER_H_SFGHSYNS
-#define _DEBUGGER_H_SFGHSYNS
+//Debugger.h
+#pragma once
 
 #include <map>
 #include <wtypes.h>
@@ -71,5 +71,3 @@ struct DEBUGGER : public application
 	static SECURITY_ATTRIBUTES security;
 	static STARTUPINFO startup;
 };
-
-#endif

@@ -1,5 +1,5 @@
-#ifndef _LOG_H_JRYUMNWETYNWRTNJRYU
-#define _LOG_H_JRYUMNWETYNWRTNJRYU
+//Log.h
+#pragma once
 
 #include <wtypes.h>
 
@@ -14,5 +14,3 @@ struct LOG
 private:
 	static HANDLE handle;
 };
-
-#endif

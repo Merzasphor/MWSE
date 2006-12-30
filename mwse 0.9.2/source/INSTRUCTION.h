@@ -1,5 +1,5 @@
-#ifndef _INSTRUCTION_H_SFGWTBQERYUMJERYTUNWSB
-#define _INSTRUCTION_H_SFGWTBQERYUMJERYTUNWSB
+//Instruction.h
+#pragma once
 
 #include "VMTYPES.h"
 
@@ -12,5 +12,3 @@ struct INSTRUCTION
 	}
 	virtual bool execute(void) = 0;
 };
-
-#endif

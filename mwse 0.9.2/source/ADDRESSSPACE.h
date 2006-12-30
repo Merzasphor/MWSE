@@ -1,5 +1,5 @@
-#ifndef _ADDRESSSPACE_H_GHNWFSBBBDFBSWNFGN
-#define _ADDRESSSPACE_H_GHNWFSBBBDFBSWNFGN
+//AdressSpace.h
+#pragma once
 
 #include "VMTYPES.h"
 
@@ -10,5 +10,3 @@ struct ADDRESSSPACE
 	virtual bool Write(VPVOID addr, VOID* buf, VMSIZE size)=0;
 	virtual VMSIZE size(void)=0;
 };
-
-#endif

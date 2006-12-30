@@ -1,5 +1,5 @@
-#ifndef _VMTYPES_H_GHUNEBQDBQWRTH
-#define _VMTYPES_H_GHUNEBQDBQWRTH
+//VmTypes.h
+#pragma once
 
 #include <wtypes.h>
 
@@ -18,5 +18,3 @@ typedef DWORD VMFLAGSTYPE;	// how many flags do you need?
 #define VMBYTE_MAX (1<<8)
 #define VMSHORT_MAX (1<<16)
 #define VMLONG_MAX (1LL<<32)
-
-#endif

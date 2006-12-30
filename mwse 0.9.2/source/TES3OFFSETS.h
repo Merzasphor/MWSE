@@ -1,6 +1,5 @@
-// 2005-06-27  CDC 		Split offset data and functions from the properties functions
-#ifndef _FUNCOFFSETS_H_SDFBGNWARVBFNTYUSRTBADFRBDYSTEAQGB
-#define _FUNCOFFSETS_H_SDFBGNWARVBFNTYUSRTBADFRBDYSTEAQGB
+//Tes3Offsets.h
+#pragma once
 
 #include "TES3MACHINE.h"
 #include "FUNCEXTENDER.h"
@@ -42,8 +41,6 @@ bool GetTargetData(TES3MACHINE& vm, VPVOID* refr, VPVOID* temp=0, ULONG* type=0,
 bool GetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, ULONG* data);
 
 bool SetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, ULONG data);
-
-#endif
 
 //what's wrong with this?
 #if 0

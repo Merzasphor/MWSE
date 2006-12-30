@@ -1,5 +1,5 @@
-#ifndef _TES3MACHINE_H_JHTIRNHEGNSFGBAW
-#define _TES3MACHINE_H_JHTIRNHEGNSFGBAW
+//Tes3Machine.h
+#pragma once
 
 #include "VIRTUALMACHINE.h"
 #include "TES3TYPES.h"
@@ -54,5 +54,3 @@ private:
 	VMREGTYPE stackpointer;
 	VMREGTYPE generalregs[GPMAX+1];
 };
-
-#endif

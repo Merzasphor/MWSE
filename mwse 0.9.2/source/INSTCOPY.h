@@ -1,5 +1,5 @@
-#ifndef _INSTCOPY_H_SFGNFRTGBAETBGHMUSTHAEDRHSFGYNRYU
-#define _INSTCOPY_H_SFGNFRTGBAETBGHMUSTHAEDRHSFGYNRYU
+//InstCopy.h
+#pragma once
 
 #include "VIRTUALMACHINE.h"
 #include "INSTRUCTION.h"
@@ -33,6 +33,4 @@ private:
 	VIRTUALMACHINE& machine;
 	VMBYTE stackpos;
 };
-
-#endif
 

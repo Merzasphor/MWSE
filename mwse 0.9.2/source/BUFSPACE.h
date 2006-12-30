@@ -1,5 +1,5 @@
-#ifndef _BUFSPACE_H_MGUHWFTGBAWRTBQARMUE
-#define _BUFSPACE_H_MGUHWFTGBAWRTBQARMUE
+//BufSpace.h
+#pragma once
 
 #include <string.h>
 #include "ADDRESSSPACE.h"
@@ -16,6 +16,3 @@ struct BUFSPACE : public ADDRESSSPACE
 	VMSIZE memsize;
 	BYTE* mem;
 };
-
-
-#endif

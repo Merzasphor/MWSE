@@ -1,5 +1,5 @@
-#ifndef _TES3MEMMAP_H_JDGNHWSRBAQDFDGHNSFGADFRT
-#define _TES3MEMMAP_H_JDGNHWSRBAQDFDGHNSFGADFRT
+//Tes3MemMap.h
+#pragma once
 
 //------Relative Addresses for game code-------------------------
 #define FIXUPSCRIPTBREAK ((LPVOID)0xfdb00)
@@ -109,5 +109,3 @@
 
 #define STACKMEM_MIN (VMSIZE)STACKMEM_VPOS
 #define STACKMEM_MAX ((VMSIZE)(STACKMEM_VPOS+STACKMEM_SIZE))
-
-#endif

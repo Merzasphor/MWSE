@@ -1,5 +1,5 @@
-#ifndef _FUNCPOSITION_H_DFGADFADFBGDHMETYNWRSFGNSFH
-#define _FUNCPOSITION_H_DFGADFADFBGDHMETYNWRSFGNSFH
+//FuncPosition.h
+#pragma once
 
 #include "TES3MACHINE.h"
 #include "FUNCEXTENDER.h"
@@ -58,5 +58,3 @@ private:
 	CONTEXT parent;
 	FUNCPLACEATPART2 part2;
 };
-
-#endif

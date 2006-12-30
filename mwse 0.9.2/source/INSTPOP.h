@@ -1,5 +1,5 @@
-#ifndef _INSTPOP_H_FGNJUMRYYAWRsdvgnyhswg
-#define _INSTPOP_H_FGNJUMRYYAWRsdvgnyhswg
+//InstPop.h
+#pragma once
 
 #include "VIRTUALMACHINE.h"
 #include "INSTRUCTION.h"
@@ -23,5 +23,3 @@ private:
 	VIRTUALMACHINE& machine;
 	VMBYTE regidx;
 };
-
-#endif

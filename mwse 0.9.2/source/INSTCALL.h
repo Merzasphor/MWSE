@@ -1,5 +1,5 @@
-#ifndef _INSTCALL_H_DGYHAWRergfntdfgnawrthwrtDGYJ
-#define _INSTCALL_H_DGYHAWRergfntdfgnawrthwrtDGYJ
+//InstCall.h
+#pragma once
 
 #include "VIRTUALMACHINE.h"
 #include "INSTRUCTION.h"
@@ -52,6 +52,4 @@ private:
 	VIRTUALMACHINE& machine;
 	VMBYTE paramsize;
 };
-
-#endif
 

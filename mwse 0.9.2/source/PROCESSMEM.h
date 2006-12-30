@@ -1,5 +1,5 @@
-#ifndef _PROCESSMEM_H_DGHNSWTNYUMESTYNASFGTNDUGTM
-#define _PROCESSMEM_H_DGHNSWTNYUMESTYNASFGTNDUGTM
+//ProcessMem.h
+#pragma once
 
 #include "windows.h"
 #include "ADDRESSSPACE.h"
@@ -16,5 +16,3 @@ private:
 	LPVOID baseptr;
 	VMSIZE memsize;
 };
-
-#endif

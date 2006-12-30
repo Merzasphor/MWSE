@@ -1,5 +1,5 @@
-#ifndef _FUNCLOG_H_SFGBRwevtynetywrtHDFTYNETYNA
-#define _FUNCLOG_H_SFGBRwevtynetywrtHDFTYNETYNA
+//FuncLog.h
+#pragma once
 
 #include "TES3MACHINE.h"
 #include "FUNCTION.h"
@@ -11,5 +11,3 @@ struct FUNCLOG : public FUNCTION
 private:
 	TES3MACHINE& machine;
 };
-
-#endif

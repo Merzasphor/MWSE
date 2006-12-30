@@ -1,5 +1,5 @@
-#ifndef _INSTINT_H_SFGHFYNADFVGNETYADFBWTYETAQGRB
-#define _INSTINT_H_SFGHFYNADFVGNETYADFBWTYETAQGRB
+//InstInt.h
+#pragma once
 
 #include "VIRTUALMACHINE.h"
 #include "INSTRUCTION.h"
@@ -43,5 +43,3 @@ struct INSTMOD : public INSTRUCTION
 private:	
 	VIRTUALMACHINE& machine;
 };
-
-#endif

@@ -1,3 +1,6 @@
+//Reference.h
+#pragma once //TODO: need here?
+
 #include "TES3MACHINE.h"
 
 struct REFERENCE

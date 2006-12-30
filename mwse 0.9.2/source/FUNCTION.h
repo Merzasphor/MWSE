@@ -1,5 +1,5 @@
-#ifndef _FUNCTION_H_DFHJNWRAVSDFGSFNM
-#define _FUNCTION_H_DFHJNWRAVSDFGSFNM
+//Function.h
+#pragma once
 
 #include "INSTRUCTION.h"
 
@@ -8,5 +8,3 @@ struct FUNCTION : public INSTRUCTION
 	virtual ~FUNCTION(void){};
 	virtual bool execute(void)=0;
 };
-
-#endif

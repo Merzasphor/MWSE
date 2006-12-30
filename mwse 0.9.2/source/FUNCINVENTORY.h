@@ -1,5 +1,5 @@
-#ifndef _FUNCITEM_H_NDFGBADFBYNYUMMDFGYBADFBTN
-#define _FUNCITEM_H_NDFGBADFBYNYUMMDFGYBADFBTN
+//FuncInventory.h
+#pragma once
 
 #include "TES3MACHINE.h"
 #include "FUNCEXTENDER.h"
@@ -135,5 +135,3 @@ private:
 	TES3MACHINE& machine;
 	const char *randomselect(VPVOID temp);
 };
-
-#endif

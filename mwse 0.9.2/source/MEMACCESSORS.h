@@ -1,5 +1,5 @@
-#ifndef _MEMACCESSORS_H_NEGTNFGBDFVNSFGN
-#define _MEMACCESSORS_H_NEGTNFGBDFVNSFGN
+//MemAccessors.h
+#pragma once
 
 #include "MEMACCESSOR.h"
 
@@ -18,5 +18,3 @@ struct MEMWRITER : public MEMACCESSOR
 		return mem.Write(reladdr,buf,size);
 	}
 };
-
-#endif
