@@ -4,6 +4,7 @@
 #include <map>
 #include <wtypes.h>
 #include "application.h"
+
 // 22-08-2006 Tp21
 #include "warnings.h"
 
