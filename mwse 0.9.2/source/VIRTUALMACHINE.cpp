@@ -1,4 +1,4 @@
-//Timeslip (2005/08/04): Need to undefine min when using std::min as it is defined as a macro in the windows headers
+//VirtualMachine.cpp
 
 #include "VIRTUALMACHINE.h"
 #include "MEMACCESSORS.h"

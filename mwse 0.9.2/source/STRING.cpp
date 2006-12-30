@@ -1,3 +1,4 @@
+//String.cpp
 
 #include "STRINGS.h"
 #include "TES3MACHINE.h"

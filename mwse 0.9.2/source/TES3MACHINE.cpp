@@ -1,4 +1,4 @@
-//Timeslip (2005/08/04): Undefine min when std:min is being used
+//Tes3Machine.cpp
 
 #include "TES3MACHINE.h"
 #include "TES3MEMMAP.h"

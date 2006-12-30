@@ -1,4 +1,4 @@
-//Timeslip (2005/08/04): Modified casts to compile under VS 2005
+//Reference.cpp
 
 #include "REFERENCE.h"
 #include "DEBUGGING.h"

@@ -1,4 +1,4 @@
-// 2005-06-27  CDC	Split the offset data and functions from the properties functions
+//Tes3Offsets.cpp
 
 #include "TES3OFFSETS.h"
 #include "REFERENCE.h"

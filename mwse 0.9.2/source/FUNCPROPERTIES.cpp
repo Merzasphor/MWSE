@@ -1,4 +1,4 @@
-// 2005-02-14  CDC
+//FuncProperties.cpp
 
 #include "FUNCPROPERTIES.h"
 #include "REFERENCE.h"

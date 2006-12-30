@@ -1,8 +1,9 @@
+//InstInt.cpp
+
 #include "INSTINT.h"
 #include "DEBUGGING.h"
 
-INSTADD::INSTADD(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTADD::INSTADD(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -23,8 +24,7 @@ bool INSTADD::execute(void)
 	return result;
 }
 
-INSTSUB::INSTSUB(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTSUB::INSTSUB(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -45,8 +45,7 @@ bool INSTSUB::execute(void)
 	return result;
 }
 
-INSTMUL::INSTMUL(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTMUL::INSTMUL(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -67,8 +66,7 @@ bool INSTMUL::execute(void)
 	return result;
 }
 
-INSTDIV::INSTDIV(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTDIV::INSTDIV(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 

@@ -1,6 +1,4 @@
-// Timeslip (2005/08/04): Make buffer in FUNCMESSAGEFIX::execute and resultset in FUNCSTRINGPARSE::execute 
-//                        into pointers for MSVC compilation
-// 2005-06-27  CDC	Split messagefix and debug functions from the property functions (2005-02-14 code base)
+//FuncText.cpp
 
 #include "FUNCTEXT.h"
 #include "REFERENCE.h"

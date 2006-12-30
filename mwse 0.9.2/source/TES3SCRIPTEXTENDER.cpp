@@ -1,5 +1,4 @@
-//#define INVESTIGATE
-//#define DEBUG
+//Tes3ScriptExtender.cpp
 
 #include "TES3SCRIPTEXTENDER.h"
 #include "TES3MEMMAP.h"
@@ -12,9 +11,10 @@
 #define RUNFUNCIDXTOCODE(a) (OPCODE)(((a)+0x1000))
 
 // 2005-08-02  CDC
+// 30-12-2006  Tp21
 const char TES3SCRIPTEXTENDER::WelcomeMessage[]= 
- "Morrowind Script Extender v 0.9.2a\n"
- "Copyright (C) 2003-2006 FreshFish, et.al., copyleft GPL\n\n"
+ "Morrowind Script Extender v0.9.2a\n"
+ "Copyright (C) 2003-2006 FreshFish, copyleft GPL\n\n"
  "This program is free software, licensed according to the GNU Public License,\n"
  "and comes with ABSOLUTELY NO WARRANTY.  See the file 'gpl.txt' for details.\n";
 
@@ -30,14 +30,14 @@ TES3SCRIPTEXTENDER::~TES3SCRIPTEXTENDER(void)
 {
 }
 
-int TES3SCRIPTEXTENDER::main(int argc, char* argv[])
+int TES3SCRIPTEXTENDER::main(int argc, char* argv[]) //TODO: cleanup
 {
-	int result= 0;
-	char* app= "Morrowind.exe";
+	int result = 0;
+	char* app = "Morrowind.exe"; //default app to load
 
-	printf("%s\n",WelcomeMessage);
-	if(argc>1)
-		app= argv[1];
+	printf("%s\n",WelcomeMessage); //prints the copyright
+	if(argc > 1) //if there is an Application given as an Command Argument, run that
+		app = argv[1];
 	// 2005-03-08  CDC  Run the Launcher and then search for the running Morrowind by default
 	// 2005-06-27  CDC  Force the messages to show even in Cygwin shell
 	else {
@@ -55,11 +55,14 @@ int TES3SCRIPTEXTENDER::main(int argc, char* argv[])
 		// Now we wait for Morrowind itself to start
 		printf("\nWaiting for game to start...\n");
 		fflush(stdout);
+
+		//we search for the Morrowind window
 		DWORD mwpid = 0;
 		while ( !mwpid ) {
 			HWND mwwin = ::FindWindow("Morrowind", "Morrowind");
 			if (mwwin) ::GetWindowThreadProcessId(mwwin, &mwpid);
 		}
+
 		// Found it so start the debugger to catch any script errors
 		printf("\n\n\n\n\n\n\n\n\n\n\n\nFound Morrowind Process.\n");
 		fflush(stdout);
