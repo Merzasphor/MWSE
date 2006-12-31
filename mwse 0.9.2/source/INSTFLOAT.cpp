@@ -393,7 +393,7 @@ bool INSTHYPOT::execute(void)
 	{
 		VMFLOAT f1= ffromi(val1);
 		VMFLOAT f2= ffromi(val2);
-		f1= hypot(f1,f2);
+		f1= _hypot(f1,f2);
 		sum= ifromf(f1);
 		result= machine.push(sum);
 	}

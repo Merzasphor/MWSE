@@ -239,21 +239,19 @@ FUNCFIRSTSTATIC::FUNCFIRSTSTATIC(TES3MACHINE& vm)
 
 bool FUNCFIRSTSTATIC::execute(void)
 {
-	bool result= false;
+	bool result = false;
 	static VPCELLMASTER cellmaster= 0;
 	VPCELLPTR pcellptr;
 	TES3CELLPTR cellptr;
 	VPCELL intcell= 0;
 	VPREFERENCE ref= 0;
-// 2005-07-02  CDC
-	int i;	
 	exteriors[0] = 0;
 
 	if((cellmaster || getMachine().ReadMem((VPVOID)getMachine().reltolinear(MASTERCELL_IMAGE),&cellmaster,sizeof(cellmaster)))
 		&& getMachine().ReadMem((VPVOID)&cellmaster->interiorcell,&intcell,sizeof(intcell)))
 	{
 		if(intcell)
-			result= getMachine().ReadMem((VPVOID)&intcell->statics.first,&ref,sizeof(ref));
+			result = getMachine().ReadMem((VPVOID)&intcell->statics.first,&ref,sizeof(ref));
 		else
 		{
 			if(getMachine().ReadMem((VPVOID)&cellmaster->exteriorcells[CENTRE],&pcellptr,sizeof(pcellptr))
@@ -277,8 +275,7 @@ bool FUNCFIRSTSTATIC::execute(void)
 	return result;
 }
 
-FUNCNEXTREF::FUNCNEXTREF(TES3MACHINE& vm)
-:	FUNCREF(vm)
+FUNCNEXTREF::FUNCNEXTREF(TES3MACHINE& vm) : FUNCREF(vm)
 {
 }
 

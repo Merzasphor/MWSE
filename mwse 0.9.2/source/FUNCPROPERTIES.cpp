@@ -444,7 +444,6 @@ bool FUNCGETBASEID::execute(void)
 {
 	VPVOID refr, temp, base;
 	ULONG type;
-	ULONG data;
 	ULONG id = 0;
 	char idstr[129];
 	idstr[128] = 0;
@@ -872,7 +871,6 @@ bool FUNCMODSERVICE::execute(void)
 	ULONG type;
 	ULONG flags = 0;
 	ULONG cflags = 0;
-	ULONG mask;
 	
 	if (!machine.pop(data)) return false;
 	if (GetTargetData(machine, &refr, &temp, &type, &base) && type == '_CPN')

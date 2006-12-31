@@ -698,7 +698,7 @@ const char *FUNCCONTENTLIST::randomselect(VPVOID templ)
     srand(GetTickCount());
 	// Honor the chance for none option
 	GetOffsetData(machine, templ, 0xf, &chance);
-	if ( (rand() % 100) < (chance & 0xFFFF) ) return 0;
+	if ( (unsigned)(rand() % 100) < (chance & 0xFFFF) ) return 0; //fixed error 4018
 	// Find the head of the list
 	GetOffsetData(machine, templ, 0xC, (ULONG*)&p);
 	if (!p) return 0;	// empty list

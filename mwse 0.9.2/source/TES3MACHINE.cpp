@@ -290,7 +290,8 @@ bool TES3MACHINE::SetRegister(WORD regidx, VMREGTYPE value)
 		result= true;
 		break;
 	case SP:
-		if(value && value<STACKMEM_MIN) // || value>STACKMEM_MAX) // how do I test the upper limit?
+		//fixed error 4018 (hope it works :P)
+		if(value && value < (signed)STACKMEM_MIN) // || value>STACKMEM_MAX) // how do I test the upper limit?
 			result= false;
 		else
 			stackpointer= value;
