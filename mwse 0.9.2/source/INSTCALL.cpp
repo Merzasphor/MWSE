@@ -5,8 +5,7 @@
 // 22-08-2006 Tp21
 #include "warnings.h"
 
-INSTCALL::INSTCALL(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTCALL::INSTCALL(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -35,8 +34,7 @@ bool INSTCALL::execute(void)
 	return result;
 }
 
-INSTCALLSHORT::INSTCALLSHORT(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTCALLSHORT::INSTCALLSHORT(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -70,8 +68,7 @@ bool INSTCALLSHORT::execute(void)
 	return result;
 }
 
-INSTRETURN::INSTRETURN(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTRETURN::INSTRETURN(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -92,8 +89,7 @@ bool INSTRETURN::execute(void)
 	return result;
 }
 
-INSTRETURNP::INSTRETURNP(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTRETURNP::INSTRETURNP(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -127,8 +123,7 @@ bool INSTRETURNP::execute(void)
 	return result;
 }
 
-INSTRETURNVP::INSTRETURNVP(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTRETURNVP::INSTRETURNVP(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 

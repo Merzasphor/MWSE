@@ -80,8 +80,7 @@ bool FUNCPOSITIONCELL::execute(void)
 	return false; // required to make virtualmachine stop running
 }
 
-FUNCDISTANCE::FUNCDISTANCE(TES3MACHINE& vm)
-:	machine(vm)
+FUNCDISTANCE::FUNCDISTANCE(TES3MACHINE& vm) : machine(vm)
 {
 }
 
@@ -120,8 +119,7 @@ bool FUNCDISTANCE::execute(void)
 	return result;
 }
 
-FUNCPCCELLID::FUNCPCCELLID(TES3MACHINE& vm)
-:	machine(vm)
+FUNCPCCELLID::FUNCPCCELLID(TES3MACHINE& vm) : machine(vm)
 {
 }
 
@@ -169,10 +167,7 @@ bool FUNCPCCELLID::execute(void)
 	return result;
 }
 
-FUNCPLACEAT::FUNCPLACEAT(TES3MACHINE& vm)
-	:machine(vm)
-	,part2(vm)
-	,HWBREAKPOINT()
+FUNCPLACEAT::FUNCPLACEAT(TES3MACHINE& vm) : machine(vm), part2(vm), HWBREAKPOINT()
 {
 }
 
@@ -236,9 +231,7 @@ bool FUNCPLACEAT::breakpoint()
 	return result;
 }
 
-FUNCPLACEATPART2::FUNCPLACEATPART2(TES3MACHINE& vm)
-	:machine(vm)
-	,HWBREAKPOINT()
+FUNCPLACEATPART2::FUNCPLACEATPART2(TES3MACHINE& vm) : machine(vm), HWBREAKPOINT()
 {
 }
 

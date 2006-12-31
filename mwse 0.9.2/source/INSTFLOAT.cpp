@@ -23,8 +23,7 @@ VMFLOAT ffromi(VMREGTYPE i)
 	return *(VMFLOAT*)&i;
 }
 
-INSTITOF::INSTITOF(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTITOF::INSTITOF(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -45,8 +44,7 @@ bool INSTITOF::execute(void)
 	return result;
 }
 
-INSTFTOI::INSTFTOI(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTFTOI::INSTFTOI(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -67,8 +65,7 @@ bool INSTFTOI::execute(void)
 	return result;
 }
 
-INSTFADD::INSTFADD(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTFADD::INSTFADD(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -93,8 +90,7 @@ bool INSTFADD::execute(void)
 	return result;
 }
 
-INSTFSUB::INSTFSUB(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTFSUB::INSTFSUB(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -119,8 +115,7 @@ bool INSTFSUB::execute(void)
 	return result;
 }
 
-INSTFMUL::INSTFMUL(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTFMUL::INSTFMUL(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -145,8 +140,7 @@ bool INSTFMUL::execute(void)
 	return result;
 }
 
-INSTFDIV::INSTFDIV(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTFDIV::INSTFDIV(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -171,8 +165,7 @@ bool INSTFDIV::execute(void)
 	return result;
 }
 
-INSTTAN::INSTTAN(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTTAN::INSTTAN(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -194,8 +187,7 @@ bool INSTTAN::execute(void)
 	return result;
 }
 
-INSTSIN::INSTSIN(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTSIN::INSTSIN(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -217,8 +209,7 @@ bool INSTSIN::execute(void)
 	return result;
 }
 
-INSTCOS::INSTCOS(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTCOS::INSTCOS(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -241,8 +232,7 @@ bool INSTCOS::execute(void)
 }
 
 
-INSTARCTAN::INSTARCTAN(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTARCTAN::INSTARCTAN(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -264,8 +254,7 @@ bool INSTARCTAN::execute(void)
 	return result;
 }
 
-INSTARCSIN::INSTARCSIN(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTARCSIN::INSTARCSIN(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -287,8 +276,7 @@ bool INSTARCSIN::execute(void)
 	return result;
 }
 
-INSTARCCOS::INSTARCCOS(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTARCCOS::INSTARCCOS(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -310,8 +298,7 @@ bool INSTARCCOS::execute(void)
 	return result;
 }
 
-INSTDEGRAD::INSTDEGRAD(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTDEGRAD::INSTDEGRAD(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -333,8 +320,7 @@ bool INSTDEGRAD::execute(void)
 	return result;
 }
 
-INSTRADDEG::INSTRADDEG(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTRADDEG::INSTRADDEG(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -356,8 +342,7 @@ bool INSTRADDEG::execute(void)
 	return result;
 }
 
-INSTSQRT::INSTSQRT(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTSQRT::INSTSQRT(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -379,8 +364,7 @@ bool INSTSQRT::execute(void)
 	return result;
 }
 
-INSTHYPOT::INSTHYPOT(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTHYPOT::INSTHYPOT(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 

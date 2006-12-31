@@ -9,7 +9,7 @@
 
 BUFSPACE::BUFSPACE(VMSIZE size) : memsize(size), mem(new BYTE[size])
 {
-	memset(mem,0,size);
+	memset(mem, 0, size);
 }
 
 BUFSPACE::~BUFSPACE(void)
@@ -19,28 +19,28 @@ BUFSPACE::~BUFSPACE(void)
 
 bool BUFSPACE::Read(VPVOID addr, VOID* buf, VMSIZE readsize)
 {
-	bool result= true;
-	if((VMSIZE)addr+readsize<=size())
+	bool result = true;
+	if((VMSIZE)addr + readsize <= size())
 	{
-		size_t len= min(readsize,size()-(VMSIZE)addr);
-		memcpy(buf,&mem[(int)addr],len);
+		size_t len = min(readsize, size()-(VMSIZE)addr);
+		memcpy(buf, &mem[(int)addr], len);
 	}
 	else
-		result= false;
+		result = false;
 		
 	return result;
 }
 
 bool BUFSPACE::Write(VPVOID addr, VOID* buf, VMSIZE writesize)
 {
-	bool result= true;
-	if((VMSIZE)addr+writesize<=size())
+	bool result = true;
+	if((VMSIZE)addr + writesize <= size())
 	{
-		size_t len= min(writesize,size()-(VMSIZE)addr);
-		memcpy(&mem[(int)addr],buf,len);
+		size_t len = min(writesize, size()-(VMSIZE)addr);
+		memcpy(&mem[(int)addr], buf, len);
 	}
 	else
-		result= false;
+		result = false;
 		
 	return result;
 }

@@ -50,8 +50,7 @@ bool GetRefVars(TES3MACHINE& machine, VPREFERENCE pref, TES3VARIABLES* vars)
 	return result;
 }
 
-FUNCGETLOCAL::FUNCGETLOCAL(TES3MACHINE& vm)
-:	machine(vm)
+FUNCGETLOCAL::FUNCGETLOCAL(TES3MACHINE& vm) : machine(vm)
 {
 }
 
@@ -112,8 +111,7 @@ bool FUNCGETLOCAL::execute(void)
 	return result;
 }
 
-FUNCSETLOCAL::FUNCSETLOCAL(TES3MACHINE& vm)
-:	machine(vm)
+FUNCSETLOCAL::FUNCSETLOCAL(TES3MACHINE& vm) : machine(vm)
 {
 }
 

@@ -5,8 +5,7 @@
 // 22-08-2006 Tp21
 #include "warnings.h"
 
-INSTCOPYREG::INSTCOPYREG(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTCOPYREG::INSTCOPYREG(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -37,8 +36,7 @@ bool INSTCOPYREG::execute(void)
 	return result;
 }
 
-INSTCOPYFROMSTACK::INSTCOPYFROMSTACK(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTCOPYFROMSTACK::INSTCOPYFROMSTACK(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 int INSTCOPYFROMSTACK::GetOperands(OPCODE opcode, VPVOID operanddata)
@@ -68,8 +66,7 @@ bool INSTCOPYFROMSTACK::execute(void)
 	return result;
 }
 
-INSTCOPYTOSTACK::INSTCOPYTOSTACK(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTCOPYTOSTACK::INSTCOPYTOSTACK(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 

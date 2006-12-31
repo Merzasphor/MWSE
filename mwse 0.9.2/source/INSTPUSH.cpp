@@ -3,8 +3,7 @@
 #include "INSTPUSH.h"
 #include "DEBUGGING.h"
 
-INSTPUSH::INSTPUSH(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTPUSH::INSTPUSH(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -29,8 +28,7 @@ bool INSTPUSH::execute(void)
 	return result;
 }
 
-INSTPUSHB::INSTPUSHB(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTPUSHB::INSTPUSHB(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -56,8 +54,7 @@ bool INSTPUSHB::execute(void)
 	return result;
 }
 
-INSTPUSHS::INSTPUSHS(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTPUSHS::INSTPUSHS(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -82,8 +79,7 @@ bool INSTPUSHS::execute(void)
 	return result;
 }
 
-INSTPUSHREG::INSTPUSHREG(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTPUSHREG::INSTPUSHREG(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -113,8 +109,7 @@ bool INSTPUSHREG::execute(void)
 	return result;
 }
 
-INSTDECLARELOCAL::INSTDECLARELOCAL(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTDECLARELOCAL::INSTDECLARELOCAL(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 

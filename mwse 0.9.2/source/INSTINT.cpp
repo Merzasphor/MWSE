@@ -87,9 +87,8 @@ bool INSTDIV::execute(void)
 	return result;
 }
 
-INSTMOD::INSTMOD(VIRTUALMACHINE& vm)
-:	machine(vm)
-{
+INSTMOD::INSTMOD(VIRTUALMACHINE& vm) : machine(vm)
+{ 
 }
 
 bool INSTMOD::execute(void)

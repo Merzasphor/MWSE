@@ -4,8 +4,7 @@
 // 22-08-2006 Tp21
 #include "warnings.h"
 
-PROCESSMEM::PROCESSMEM(HANDLE process, LPVOID base, VMSIZE size)
-:	hProcess(process), baseptr(base), memsize(size)
+PROCESSMEM::PROCESSMEM(HANDLE process, LPVOID base, VMSIZE size) : hProcess(process), baseptr(base), memsize(size)
 {
 }
 

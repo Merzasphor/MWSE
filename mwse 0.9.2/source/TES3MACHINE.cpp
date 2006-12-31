@@ -23,9 +23,7 @@
 #include "FUNCAI.h"
 #include "FUNCPOSITION.h"
 #include "FUNCREFERENCE.h"
-// 2005-02-14  CDC
 #include "FUNCPROPERTIES.h"
-// 2005-06-27  CDC
 #include "FUNCTEXT.h"
 #include "FUNCLOG.h"
 #include "FUNCFILE.h"
@@ -45,8 +43,8 @@
 
 #define SUPER VIRTUALMACHINE
 
-TES3MACHINE::TES3MACHINE(HANDLE process, LPVOID base)
-:	SUPER()
+TES3MACHINE::TES3MACHINE(HANDLE process, LPVOID base) 
+: SUPER()
 	,hProcess(process)
 	,procbase(base)
 	,scriptaddr(0)
@@ -61,27 +59,9 @@ TES3MACHINE::TES3MACHINE(HANDLE process, LPVOID base)
 		LOG::log("TES3MACHINE: AddAddressSpace SCRIPTMEM failed\n");
 	if(!AddAddressSpace(STACKMEM_VPOS, new BUFSPACE(STACKMEM_SIZE)))
 		LOG::log("TES3MACHINE: AddAddressSpace STACKMEM failed\n");
-#ifdef DEBUG
-	{
-		FILE* fin= fopen("bootscript.scdt","rb");
-		if(fin)
-		{
-			BYTE buf[512]= {NULL};
-			VPVOID pos= 0;
-			int read= 0;
-			while((read= fread(buf,sizeof(BYTE),NELEMS(buf),fin))>0)
-			{
-				executable->Write(pos,&buf,read);
-				pos+= read;
-			}	
-			fclose(fin);
-		}
-	}
-#else	
 	if(!AddAddressSpace(GENERALMEM_VPOS,
 		new PROCESSMEM(process,GENERALMEM_VPOS,GENERALMEM_SIZE)))
 		LOG::log("TES3MACHINE: AddAddressSpace GENERALMEM failed\n");
-#endif
 
 	AddInstruction(CALL,new INSTCALL(*this));
 	AddInstruction(CALLSHORT,new INSTCALLSHORT(*this));

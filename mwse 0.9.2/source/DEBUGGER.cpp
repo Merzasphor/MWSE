@@ -1,4 +1,5 @@
 //Debugger.cpp
+//this is the base of MWSE, it's an 'standard' debugger
 
 // functions which might be useful
 // StackWalk
@@ -17,17 +18,37 @@
 
 using namespace std; 	//introduces namespace std
 
-char DEBUGGER::emptystring[]="";
-SECURITY_ATTRIBUTES DEBUGGER::security= {sizeof(SECURITY_ATTRIBUTES),NULL,FALSE};
-STARTUPINFO DEBUGGER::startup= {sizeof(STARTUPINFO),NULL,emptystring,NULL,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+char DEBUGGER::emptystring[] = "";
+SECURITY_ATTRIBUTES DEBUGGER::security = {
+	sizeof(SECURITY_ATTRIBUTES), 
+	NULL, 
+	FALSE
+};
+STARTUPINFO DEBUGGER::startup = {
+	sizeof(STARTUPINFO), 
+	NULL, 
+	emptystring, 
+	NULL, 
+	0, 
+	0, 
+	0, 
+	0, 
+	0, 
+	0, 
+	0, 
+	0, 
+	0, 
+	0, 
+	0, 
+	0, 
+	0, 
+	0
+};
 
-DEBUGGER::DEBUGGER(void)
-:	procinfo()
-	,procbase(0)
-	,stepbreakpoint(0)
+DEBUGGER::DEBUGGER(void) : procinfo(), procbase(0), stepbreakpoint(0)
 {
-	procinfo.hProcess= INVALID_HANDLE_VALUE;
-	procinfo.hThread= INVALID_HANDLE_VALUE;
+	procinfo.hProcess = INVALID_HANDLE_VALUE;
+	procinfo.hThread  = INVALID_HANDLE_VALUE;
 }
 
 DEBUGGER::~DEBUGGER(void)
@@ -36,24 +57,24 @@ DEBUGGER::~DEBUGGER(void)
 
 int DEBUGGER::main( int argc, char* argv[])
 {
-	char commandline[BUFSIZE]= "\0";
+	char commandline[BUFSIZE] = "\0";
 	
-	for(int i= 1;i<argc;i++)
+	for(int i = 1; i < argc; i++)
 	{
-		strncat(commandline,argv[i],NELEMS(commandline)-strlen(commandline));
-		strncat(commandline," ",NELEMS(commandline)-strlen(commandline));
+		strncat(commandline, argv[i], NELEMS(commandline)-strlen(commandline));
+		strncat(commandline, " ", NELEMS(commandline)-strlen(commandline));
 	}
-	commandline[sizeof(commandline)-1]= '\0';
+	commandline[sizeof(commandline)-1] = '\0';
 		
 	return debug(commandline);
 }
 
 int DEBUGGER::log(char* fmt, ...)
 {
-	int result= 0;
+	int result = 0;
 	va_list args;
-	va_start(args,fmt);
-	result= vfprintf(stdout,fmt,args);
+	va_start(args, fmt);
+	result = vfprintf(stdout, fmt, args);
 	va_end(args);
 
 	return result;
@@ -61,23 +82,34 @@ int DEBUGGER::log(char* fmt, ...)
 
 void DEBUGGER::logerror(char* fmt)
 {
-	char buffer[512]="\0";
+	char buffer[512] = "\0";
 	
-	buffer[FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM,NULL,GetLastError(),0,buffer,sizeof(buffer)-1,NULL)]='\0';
-	log(fmt,buffer);
+	buffer[FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), 0, buffer, sizeof(buffer)-1, NULL)] = '\0';
+	log(fmt, buffer);
 }
 
 int DEBUGGER::debug(char* commandline)
 {
-	int result= 0;
+	int result = 0;
 	try
 	{
-		if(CreateProcess(NULL,commandline,&security,&security,TRUE,DEBUG_PROCESS|DEBUG_ONLY_THIS_PROCESS|NORMAL_PRIORITY_CLASS,NULL,NULL,&startup,&procinfo))
-			result= debug(procinfo);
+		if(CreateProcess(
+			NULL, 
+			commandline, 
+			&security, 
+			&security, 
+			TRUE, 
+			DEBUG_PROCESS|DEBUG_ONLY_THIS_PROCESS|NORMAL_PRIORITY_CLASS, 
+			NULL, 
+			NULL, 
+			&startup, 
+			&procinfo
+		))
+			result = debug(procinfo);
 		else
 		{
 			logerror("debug: CreateProcess failed: %s\n");
-			result= -1;
+			result = -1;
 		}
 	}
 	catch(...)
@@ -85,72 +117,32 @@ int DEBUGGER::debug(char* commandline)
 		log("Exception!\n");
 	}
 	closethreadhandles();
-	if(procinfo.hThread!=INVALID_HANDLE_VALUE)
+	if(procinfo.hThread != INVALID_HANDLE_VALUE)
 		CloseHandle(procinfo.hThread);
-	procinfo.hThread= INVALID_HANDLE_VALUE;
-	if(procinfo.hProcess!=INVALID_HANDLE_VALUE)
+	procinfo.hThread = INVALID_HANDLE_VALUE;
+	if(procinfo.hProcess != INVALID_HANDLE_VALUE)
 		CloseHandle(procinfo.hProcess);
 				
 	return result;
 }
 
-/*
-int DEBUGGER::debugattach(char* commandline)
-{
-	int result= 20;
-	try
-	{
-		if(CreateProcess(NULL,commandline,&security,&security,TRUE,NORMAL_PRIORITY_CLASS,NULL,NULL,&startup,&procinfo))
-		{
-			_sleep(20);
-			if(DebugActiveProcess(procinfo.dwProcessId))
-				result= debug(procinfo);
-			else
-				logerror("debugattach: could not attach\n");
-				
-			closethreadhandles();
-			if(procinfo.hThread!=INVALID_HANDLE_VALUE)
-				CloseHandle(procinfo.hThread);
-			procinfo.hThread= INVALID_HANDLE_VALUE;
-			if(procinfo.hProcess!=INVALID_HANDLE_VALUE)
-				CloseHandle(procinfo.hProcess);
-			procinfo.hProcess= INVALID_HANDLE_VALUE;
-		}
-		else
-		{
-			logerror("debugattach: CreateProcess failed: %s\n");
-			result= -1;
-		}
-	}
-	catch(...)
-	{
-		log("Exception!\n");
-		if(procinfo.hProcess!=INVALID_HANDLE_VALUE)
-			CloseHandle(procinfo.hProcess);
-		procinfo.hProcess= INVALID_HANDLE_VALUE;
-	}
-		
-	return result;
-}
-*/
-
 int DEBUGGER::debug(DWORD processID)
 {
-	int result= 0;
-	procinfo.hProcess= OpenProcess(PROCESS_ALL_ACCESS,FALSE,processID);
-	if(procinfo.hProcess!=INVALID_HANDLE_VALUE)
+	int result = 0;
+	procinfo.hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, processID);
+	if(procinfo.hProcess != INVALID_HANDLE_VALUE)
 	{
 		if(DebugActiveProcess(processID))
-			result= debug(procinfo);
+			result = debug(procinfo);
 		else
 			logerror("debug(procID): DebugActiveProcess failed: %s\n");
 		closethreadhandles();
-		if(procinfo.hThread!=INVALID_HANDLE_VALUE)
+		if(procinfo.hThread != INVALID_HANDLE_VALUE)
 			CloseHandle(procinfo.hThread);
-		procinfo.hThread= INVALID_HANDLE_VALUE;
-		if(procinfo.hProcess!=INVALID_HANDLE_VALUE)
+		procinfo.hThread = INVALID_HANDLE_VALUE;
+		if(procinfo.hProcess != INVALID_HANDLE_VALUE)
 			CloseHandle(procinfo.hProcess);
-		procinfo.hProcess= INVALID_HANDLE_VALUE;
+		procinfo.hProcess = INVALID_HANDLE_VALUE;
 	}
 	else
 		logerror("debug(procID): OpenProcess failed: %s\n");
@@ -160,16 +152,16 @@ int DEBUGGER::debug(DWORD processID)
 
 int DEBUGGER::debug(const PROCESS_INFORMATION& /*procinfo*/)
 {
-	int result= 0;
+	int result = 0;
 	DEBUG_EVENT DebugEv;
-	DWORD dwContinue= DBG_CONTINUE;
-	bool done= false;
-	bool initialbreakpoint= true;
+	DWORD dwContinue = DBG_CONTINUE;
+	bool done = false;
+	bool initialbreakpoint = true;
 
 	while(!done)
 	{ 
 		WaitForDebugEvent(&DebugEv,INFINITE);
-	    dwContinue= DBG_CONTINUE;
+	    dwContinue = DBG_CONTINUE;
 	    switch (DebugEv.dwDebugEventCode) 
     	{ 
         	case EXCEPTION_DEBUG_EVENT: 
@@ -179,11 +171,11 @@ int DEBUGGER::debug(const PROCESS_INFORMATION& /*procinfo*/)
         	// status parameter (dwContinueStatus). This value 
 	        // is used by the ContinueDebugEvent function. 
  				if(DebugEv.u.Exception.dwFirstChance)
-				    dwContinue= DBG_EXCEPTION_NOT_HANDLED;
+				    dwContinue = DBG_EXCEPTION_NOT_HANDLED;
 				else
 				{
-//					dwContinue= DBG_CONTINUE;
-				    dwContinue= DBG_EXCEPTION_NOT_HANDLED;
+//					dwContinue = DBG_CONTINUE;
+				    dwContinue = DBG_EXCEPTION_NOT_HANDLED;
 				}
     	        switch (DebugEv.u.Exception.ExceptionRecord.ExceptionCode) 
         	    { 
@@ -191,7 +183,7 @@ int DEBUGGER::debug(const PROCESS_INFORMATION& /*procinfo*/)
 					// First chance: Update the display of the 
 					// current instruction and register values. 
                 		DoSingleStep(DebugEv);
-					    dwContinue= DBG_CONTINUE;
+					    dwContinue = DBG_CONTINUE;
 			            break;
  
     	            case EXCEPTION_BREAKPOINT: 
@@ -200,18 +192,18 @@ int DEBUGGER::debug(const PROCESS_INFORMATION& /*procinfo*/)
 		                if(initialbreakpoint)
 		                {
 		                	DoInitialBreakpoint(DebugEv);
-				            initialbreakpoint= false;
+				            initialbreakpoint = false;
 				        }
 		                else
 			                DoBreakpoint(DebugEv);
-					    dwContinue= DBG_CONTINUE;
+					    dwContinue = DBG_CONTINUE;
 			            break;
  
 					case EXCEPTION_GUARD_PAGE:
 					// This may occur if I place a page watch VirtualProtect(GUARD)
 					// on the page containing RunFunction
 						DoPageGuard(DebugEv);
-					    dwContinue= DBG_CONTINUE;
+					    dwContinue = DBG_CONTINUE;
 						break;
 					
 	                case EXCEPTION_ACCESS_VIOLATION: 
@@ -252,7 +244,7 @@ int DEBUGGER::debug(const PROCESS_INFORMATION& /*procinfo*/)
 	        case EXIT_PROCESS_DEBUG_EVENT: 
     	    // Display the process's exit code. 
 	            DoExitProc(DebugEv);
-	        	done= true;
+	        	done = true;
 	            break;
  
 	        case OUTPUT_DEBUG_STRING_EVENT: 
@@ -268,10 +260,10 @@ int DEBUGGER::debug(const PROCESS_INFORMATION& /*procinfo*/)
 
 void DEBUGGER::closethreadhandles(void)
 {
-		THREADHANDLEMAP::iterator it= threadhandles.begin();
-		while(it!=threadhandles.end())
+		THREADHANDLEMAP::iterator it = threadhandles.begin();
+		while(it != threadhandles.end())
 		{
-			if(it->second!=INVALID_HANDLE_VALUE)
+			if(it->second != INVALID_HANDLE_VALUE)
 				CloseHandle(it->second);
 		}
 		threadhandles.clear();
@@ -302,8 +294,8 @@ void DEBUGGER::DoCreateProc(DEBUG_EVENT& DebugEv)
 //		logerror("DoCreateProc: ReadProcessMemory failed %s\n");
 		
 //	dumpmemlist();
-	procbase= (LPVOID)DebugEv.u.CreateProcessInfo.lpBaseOfImage;
-	threadhandles[DebugEv.dwThreadId]= DebugEv.u.CreateProcessInfo.hThread;
+	procbase = (LPVOID)DebugEv.u.CreateProcessInfo.lpBaseOfImage;
+	threadhandles[DebugEv.dwThreadId] = DebugEv.u.CreateProcessInfo.hThread;
 }
 
 void DEBUGGER::DoExitProc(DEBUG_EVENT& DebugEv)
@@ -312,10 +304,10 @@ void DEBUGGER::DoExitProc(DEBUG_EVENT& DebugEv)
 	
 	if(procinfo.hThread)
 		CloseHandle(procinfo.hThread);
-	procinfo.hThread= 0;
+	procinfo.hThread = 0;
 	if(procinfo.hProcess)
 		CloseHandle(procinfo.hProcess);
-	procinfo.hProcess= 0;
+	procinfo.hProcess = 0;
 }
 
 void DEBUGGER::DoCreateThread(DEBUG_EVENT& DebugEv)
@@ -338,25 +330,31 @@ void DEBUGGER::DoInitialBreakpoint(DEBUG_EVENT& /*DebugEv*/)
 
 void DEBUGGER::DoBreakpoint(DEBUG_EVENT& DebugEv)
 {
-	if(breakpoints.find(DebugEv.u.Exception.ExceptionRecord.ExceptionAddress)!=breakpoints.end())
+	if(breakpoints.find(DebugEv.u.Exception.ExceptionRecord.ExceptionAddress) != breakpoints.end())
 	{
-		HANDLE hThread= threadhandles[DebugEv.dwThreadId];
+		HANDLE hThread = threadhandles[DebugEv.dwThreadId];
 		if(hThread)
 		{
-			BYTE ret= breakpoints[DebugEv.u.Exception.ExceptionRecord.ExceptionAddress];
-			if(WriteProcessMemory(procinfo.hProcess,DebugEv.u.Exception.ExceptionRecord.ExceptionAddress,
-				&ret,sizeof(BYTE),NULL))
+			BYTE ret = breakpoints[DebugEv.u.Exception.ExceptionRecord.ExceptionAddress];
+			if(WriteProcessMemory(procinfo.hProcess, 
+				DebugEv.u.Exception.ExceptionRecord.ExceptionAddress,
+				&ret, 
+				sizeof(BYTE),NULL
+			))
 			{
-				if(!FlushInstructionCache(procinfo.hProcess,DebugEv.u.Exception.ExceptionRecord.ExceptionAddress,sizeof(BYTE)))
+				if(!FlushInstructionCache(procinfo.hProcess, 
+					DebugEv.u.Exception.ExceptionRecord.ExceptionAddress, 
+					sizeof(BYTE)
+				))
 					logerror("\tDoBreakpoint: FlushInstructionCache failed: %s\n");
 				CONTEXT context;
-				context.ContextFlags= CONTEXT_FULL;
-				if(GetThreadContext(hThread,&context))
+				context.ContextFlags = CONTEXT_FULL;
+				if(GetThreadContext(hThread, &context))
 				{
 					context.Eip--;
 					context.EFlags|= EFLAGS_SINGLE_STEP;
-					context.ContextFlags= CONTEXT_FULL;
-					if(!SetThreadContext(hThread,&context))
+					context.ContextFlags = CONTEXT_FULL;
+					if(!SetThreadContext(hThread, &context))
 						logerror("DoBreakpoint: SetThreadContext failed: %s\n");
 				}
 				else
@@ -366,29 +364,29 @@ void DEBUGGER::DoBreakpoint(DEBUG_EVENT& DebugEv)
 				logerror("DoBreakpoint: WriteProcessMemory failed: %s\n");
 		}
 		else
-			log("DoBreakpoint: ThreadId Unknown %8lx\n",DebugEv.dwThreadId);
+			log("DoBreakpoint: ThreadId Unknown %8lx\n", DebugEv.dwThreadId);
 	}
 }
 
 void DEBUGGER::DoPageGuard(DEBUG_EVENT& DebugEv)
 {
-	log("PageGuard caught at %lx\n",DebugEv.u.Exception.ExceptionRecord.ExceptionAddress);
+	log("PageGuard caught at %lx\n", DebugEv.u.Exception.ExceptionRecord.ExceptionAddress);
 }
 
 void DEBUGGER::DoSingleStep(DEBUG_EVENT& DebugEv)
 {
-	HANDLE hThread= threadhandles[DebugEv.dwThreadId];
+	HANDLE hThread = threadhandles[DebugEv.dwThreadId];
 	if(hThread)
 	{
 		if(stepbreakpoint)
 		{
 			setbreakpoint(stepbreakpoint);
-			stepbreakpoint= 0;
+			stepbreakpoint = 0;
 		}
 		clearsinglestep(hThread);
 	}
 	else
-		log("DoSingleStep: ThreadId Unknown %8lx\n",DebugEv.dwThreadId);
+		log("DoSingleStep: ThreadId Unknown %8lx\n", DebugEv.dwThreadId);
 }
 
 void DEBUGGER::DoAccessViolation(DEBUG_EVENT& DebugEv)
@@ -397,12 +395,12 @@ void DEBUGGER::DoAccessViolation(DEBUG_EVENT& DebugEv)
 
 bool DEBUGGER::setpageguard(LPVOID addr)
 {
-	bool result= false;
-	DWORD oldprotect= 0;
-	if(VirtualProtectEx(procinfo.hProcess,addr,1,PAGE_EXECUTE_READWRITE|PAGE_GUARD,&oldprotect))
+	bool result = false;
+	DWORD oldprotect = 0;
+	if(VirtualProtectEx(procinfo.hProcess, addr, 1, PAGE_EXECUTE_READWRITE|PAGE_GUARD, &oldprotect))
 	{
-		if(VirtualProtectEx(procinfo.hProcess,addr,1,PAGE_GUARD|oldprotect,NULL))
-			result= true;
+		if(VirtualProtectEx(procinfo.hProcess, addr, 1, PAGE_GUARD|oldprotect, NULL))
+			result = true;
 		else
 			logerror("setpageguard: VirtualProtectEx 2 failed: %s\n");
 	}
@@ -414,19 +412,19 @@ bool DEBUGGER::setpageguard(LPVOID addr)
 
 bool DEBUGGER::setbreakpoint(LPVOID addr)
 {
-	bool result= false;
-	BYTE opcode= 0;
-	BYTE breakpoint= BREAKPOINT;
-	if(ReadProcessMemory(procinfo.hProcess,addr,&opcode,sizeof(opcode),NULL))
+	bool result = false;
+	BYTE opcode = 0;
+	BYTE breakpoint = BREAKPOINT;
+	if(ReadProcessMemory(procinfo.hProcess, addr, &opcode, sizeof(opcode), NULL))
 	{
-		if(WriteProcessMemory(procinfo.hProcess,addr,&breakpoint,sizeof(breakpoint),NULL))
+		if(WriteProcessMemory(procinfo.hProcess, addr, &breakpoint, sizeof(breakpoint), NULL))
 		{
-			if(opcode!=BREAKPOINT	// if its a BREAKPOINT we already set then we have the opcode already
-				|| breakpoints.find(addr)==breakpoints.end())
-				breakpoints[addr]= opcode;
-			if(!FlushInstructionCache(procinfo.hProcess,addr,sizeof(BYTE)))
+			if(opcode != BREAKPOINT	// if its a BREAKPOINT we already set then we have the opcode already
+				|| breakpoints.find(addr) == breakpoints.end())
+				breakpoints[addr] = opcode;
+			if(!FlushInstructionCache(procinfo.hProcess, addr, sizeof(BYTE)))
 				logerror("\tsetbreakpoint: FlushInstructionCache failed: %s\n");
-			result= true;
+			result = true;
 		}
 		else
 			logerror("setbreakpoint: WriteProcessMemory failed: %s\n");
@@ -439,11 +437,11 @@ bool DEBUGGER::setbreakpoint(LPVOID addr)
 
 bool DEBUGGER::clearbreakpoints(void)
 {
-	bool result= true;
+	bool result = true;
 	
 	while(!breakpoints.empty())
 	{
-		BREAKPOINTMAP::iterator it= breakpoints.begin();
+		BREAKPOINTMAP::iterator it = breakpoints.begin();
 		clearbreakpoint(it->first);
 	}
 
@@ -452,16 +450,16 @@ bool DEBUGGER::clearbreakpoints(void)
 
 bool DEBUGGER::clearbreakpoint(LPVOID addr)
 {
-	bool result= false;
-	if(breakpoints.find(addr)!=breakpoints.end())
+	bool result = false;
+	if(breakpoints.find(addr) != breakpoints.end())
 	{
-		BYTE opcode= breakpoints[addr];
-		if(WriteProcessMemory(procinfo.hProcess,addr,&opcode,sizeof(opcode),NULL))
+		BYTE opcode = breakpoints[addr];
+		if(WriteProcessMemory(procinfo.hProcess, addr, &opcode, sizeof(opcode), NULL))
 		{
 			breakpoints.erase(addr);
-			if(!FlushInstructionCache(procinfo.hProcess,addr,sizeof(BYTE)))
+			if(!FlushInstructionCache(procinfo.hProcess, addr, sizeof(BYTE)))
 				logerror("\tclearbreakpoint: FlushInstructionCache failed: %s\n");
-			result= true;
+			result = true;
 		}
 		else
 			logerror("\tclearbreakpoint: WriteProcessMemory failed: %s\n");
@@ -472,19 +470,19 @@ bool DEBUGGER::clearbreakpoint(LPVOID addr)
 
 bool DEBUGGER::runbreakpoint(CONTEXT& context)
 {
-	bool result= false;
-	LPVOID addr= (LPVOID)(context.Eip-1);
-	if(breakpoints.find(addr)!=breakpoints.end())
+	bool result = false;
+	LPVOID addr = (LPVOID)(context.Eip - 1);
+	if(breakpoints.find(addr) != breakpoints.end())
 	{
-		stepbreakpoint= addr;
-		BYTE opcode= breakpoints[addr];
-		if(WriteProcessMemory(procinfo.hProcess,addr,&opcode,sizeof(opcode),NULL))
+		stepbreakpoint = addr;
+		BYTE opcode = breakpoints[addr];
+		if(WriteProcessMemory(procinfo.hProcess, addr, &opcode, sizeof(opcode), NULL))
 		{
-			if(!FlushInstructionCache(procinfo.hProcess,addr,sizeof(BYTE)))
+			if(!FlushInstructionCache(procinfo.hProcess, addr, sizeof(BYTE)))
 				logerror("\trunbreakpoint: FlushInstructionCache failed: %s\n");
 			context.Eip--;
 			context.EFlags|= EFLAGS_SINGLE_STEP;
-			result= true;
+			result = true;
 		}
 		else
 			logerror("\trunbreakpoint: WriteProcessMemory failed: %s\n");
@@ -495,18 +493,18 @@ bool DEBUGGER::runbreakpoint(CONTEXT& context)
 
 bool DEBUGGER::setsinglestep(HANDLE hThread)
 {
-	bool result= false;
+	bool result = false;
 	CONTEXT context;
-	DWORD prevcount= SuspendThread(hThread);
-	if(prevcount>=0)
+	DWORD prevcount = SuspendThread(hThread);
+	if(prevcount >= 0)
 	{
-		context.ContextFlags= CONTEXT_FULL;
-		if(GetThreadContext(hThread,&context))
+		context.ContextFlags = CONTEXT_FULL;
+		if(GetThreadContext(hThread, &context))
 		{
 			context.EFlags|= EFLAGS_SINGLE_STEP;
-			context.ContextFlags= CONTEXT_FULL;
-			if(SetThreadContext(hThread,&context))
-				result= true;
+			context.ContextFlags = CONTEXT_FULL;
+			if(SetThreadContext(hThread, &context))
+				result = true;
 			else
 				logerror("\tsetsinglestep: SetThreadContext failed: %s\n");
 		}
@@ -522,20 +520,20 @@ bool DEBUGGER::setsinglestep(HANDLE hThread)
 
 bool DEBUGGER::clearsinglestep(HANDLE hThread)
 {
-	bool result= false;
+	bool result = false;
 	CONTEXT context;
-	DWORD prevcount= SuspendThread(hThread);
-	if(prevcount>=0)
+	DWORD prevcount = SuspendThread(hThread);
+	if(prevcount >= 0)
 	{
-		context.ContextFlags= CONTEXT_FULL;
-		if(GetThreadContext(hThread,&context))
+		context.ContextFlags = CONTEXT_FULL;
+		if(GetThreadContext(hThread, &context))
 		{
-			context.ContextFlags= CONTEXT_FULL;
+			context.ContextFlags = CONTEXT_FULL;
 			if(context.EFlags&EFLAGS_SINGLE_STEP)
 				log("\tclearsinglestep: single step trap already clear\n");
 			context.EFlags&= ~((DWORD)EFLAGS_SINGLE_STEP);
-			if(SetThreadContext(hThread,&context))
-				result= true;
+			if(SetThreadContext(hThread, &context))
+				result = true;
 			else
 				logerror("\tclearsinglestep: SetThreadContext failed: %s\n");
 		}

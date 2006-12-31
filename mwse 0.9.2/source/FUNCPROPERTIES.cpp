@@ -14,9 +14,7 @@
 
 //Tp21 22-08-2006: xGetSpellEffects
 //TODO does it work?
-FUNCGETSPELLEFFECTS::FUNCGETSPELLEFFECTS(TES3MACHINE& vm)
-	:machine(vm)
-	,HWBREAKPOINT()
+FUNCGETSPELLEFFECTS::FUNCGETSPELLEFFECTS(TES3MACHINE& vm) : machine(vm), HWBREAKPOINT()
 {
 }
 
@@ -72,7 +70,6 @@ bool FUNCGETSPELLEFFECTS::breakpoint()
 
 	return result;
 }
-//END Tp21 22-08-2006
 
 bool FUNCGETVALUE::execute(void)
 {
@@ -438,7 +435,6 @@ bool FUNCSETNAME::execute(void)
 
 	return true;
 }
-//END Tp21 22-08-2006: xSetName
 
 bool FUNCGETBASEID::execute(void)
 {

@@ -1,3 +1,6 @@
+31-12-2006 by Tp21:
+-Began Big documentation project, cleaned code some more...
+
 30-12-2006 by Tp21:
 -Changed the include guard to '#pragma once', this is better understandable
 

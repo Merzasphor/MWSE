@@ -31,8 +31,7 @@ const char* STRINGS::add(const char* str)
 
 STRINGS strings;   // A common string cache
 
-FUNCSTRCMP::FUNCSTRCMP(TES3MACHINE& vm)
-:	machine(vm)
+FUNCSTRCMP::FUNCSTRCMP(TES3MACHINE& vm) : machine(vm)
 {
 }
 

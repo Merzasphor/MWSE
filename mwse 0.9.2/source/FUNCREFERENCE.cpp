@@ -9,11 +9,10 @@
 // 22-08-2006 Tp21
 #include "warnings.h"
 
-// 2005-06-18  CDC
+
 static VPREFERENCE exteriors[9] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-FUNCREF::FUNCREF(TES3MACHINE& vm)
-:	machine(vm)
+FUNCREF::FUNCREF(TES3MACHINE& vm) : machine(vm)
 {
 }
 
@@ -47,8 +46,7 @@ bool FUNCREF::execute(void)
 	return result;
 }
 
-FUNCREFTYPE::FUNCREFTYPE(TES3MACHINE& vm)
-:	machine(vm)
+FUNCREFTYPE::FUNCREFTYPE(TES3MACHINE& vm) : machine(vm)
 {
 }
 
@@ -77,8 +75,7 @@ bool FUNCREFTYPE::execute(void)
 	return result;
 }
 
-FUNCREFID::FUNCREFID(TES3MACHINE& vm)
-:	machine(vm)
+FUNCREFID::FUNCREFID(TES3MACHINE& vm) : machine(vm)
 {
 }
 
@@ -111,8 +108,7 @@ bool FUNCREFID::execute(void)
 	return result;
 }
 
-FUNCFIRSTNPC::FUNCFIRSTNPC(TES3MACHINE& vm)
-:	FUNCREF(vm)
+FUNCFIRSTNPC::FUNCFIRSTNPC(TES3MACHINE& vm) : FUNCREF(vm)
 {
 }
 
@@ -171,8 +167,7 @@ bool FUNCFIRSTNPC::execute(void)
 	return result;
 }
 
-FUNCFIRSTITEM::FUNCFIRSTITEM(TES3MACHINE& vm)
-:	FUNCREF(vm)
+FUNCFIRSTITEM::FUNCFIRSTITEM(TES3MACHINE& vm) : FUNCREF(vm)
 {
 }
 
@@ -232,8 +227,7 @@ bool FUNCFIRSTITEM::execute(void)
 	return result;
 }
 
-FUNCFIRSTSTATIC::FUNCFIRSTSTATIC(TES3MACHINE& vm)
-:	FUNCREF(vm)
+FUNCFIRSTSTATIC::FUNCFIRSTSTATIC(TES3MACHINE& vm) : FUNCREF(vm)
 {
 }
 
@@ -310,8 +304,7 @@ bool FUNCNEXTREF::execute(void)
 }
 
 
-FUNCGETPCTARGET::FUNCGETPCTARGET(TES3MACHINE& vm)
-:	FUNCREF(vm)
+FUNCGETPCTARGET::FUNCGETPCTARGET(TES3MACHINE& vm) : FUNCREF(vm)
 {
 }
 
@@ -334,8 +327,7 @@ bool FUNCGETPCTARGET::execute(void)
 	return result;
 }
 
-FUNCREFPCTARGET::FUNCREFPCTARGET(TES3MACHINE& vm)
-:	FUNCREF(vm)
+FUNCREFPCTARGET::FUNCREFPCTARGET(TES3MACHINE& vm) : FUNCREF(vm)
 {
 }
 
@@ -358,9 +350,7 @@ bool FUNCREFPCTARGET::execute(void)
 	return result;
 }
 
-FUNCGETREF::FUNCGETREF(TES3MACHINE& vm)
-	:machine(vm)
-	,HWBREAKPOINT()
+FUNCGETREF::FUNCGETREF(TES3MACHINE& vm) : machine(vm), HWBREAKPOINT()
 {
 }
 

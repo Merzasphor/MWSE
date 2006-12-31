@@ -40,21 +40,21 @@ bool FILECACHE::validfilename(const char* filename)
 
 HANDLE FILECACHE::getfile(const char* filename)
 {
-	HANDLE result= 0;
+	HANDLE result = 0;
 	
 	STRING str(filename);
-	FILEMAP::iterator it= filemap.find(str);
-	if(it!=filemap.end())
+	FILEMAP::iterator it = filemap.find(str);
+	if(it != filemap.end())
 	{
-		FILESTATE& state= it->second;
-		if((result=state.file)==INVALID_HANDLE_VALUE)
-			result= state.file= openfileat(filename,state.position);
+		FILESTATE& state = it->second;
+		if((result = state.file) == INVALID_HANDLE_VALUE)
+			result = state.file = openfileat(filename, state.position);
 	}
 	else
 	{
-		FILESTATE state= {openfileat(filename,0),0};
-		filemap[str]= state;
-		result= state.file;
+		FILESTATE state = {openfileat(filename, 0), 0};
+		filemap[str] = state;
+		result = state.file;
 	}
 	
 	return result;
@@ -62,11 +62,11 @@ HANDLE FILECACHE::getfile(const char* filename)
 	
 FILECACHE::~FILECACHE(void)
 {
-	FILEMAP::iterator it= filemap.begin();
-	while(it!=filemap.end())
+	FILEMAP::iterator it = filemap.begin();
+	while(it != filemap.end())
 	{
-		FILESTATE& state= it->second;
-		if(state.file!=INVALID_HANDLE_VALUE)
+		FILESTATE& state = it->second;
+		if(state.file != INVALID_HANDLE_VALUE)
 			CloseHandle(state.file);
 		it++;
 	}
@@ -76,7 +76,7 @@ HANDLE FILECACHE::openfileat(const char* filename, long position)
 {
 	if(!validfilename(filename)) return INVALID_HANDLE_VALUE;
 	
-	char realname[BUFSIZ]= "Data Files\\MWSE\\";
+	char realname[BUFSIZ] = "Data Files\\MWSE\\";
 	// 2005-02-12  CDC Create the file storage area if it doesn't already exist
 	CreateDirectory("Data Files\\MWSE", NULL);
 	// 2005-07-01  CDC Allow connection to named pipes one the local machine
@@ -86,8 +86,8 @@ HANDLE FILECACHE::openfileat(const char* filename, long position)
 		filename++;
 	}
 
-	strncpy(&realname[strlen(realname)],filename,NELEM(realname)-strlen(realname));
-	HANDLE result= CreateFile(
+	strncpy(&realname[strlen(realname)], filename,NELEM(realname)-strlen(realname));
+	HANDLE result = CreateFile(
 		 realname
 		,GENERIC_READ|GENERIC_WRITE
 		,FILE_SHARE_READ|FILE_SHARE_WRITE
@@ -96,10 +96,10 @@ HANDLE FILECACHE::openfileat(const char* filename, long position)
 		,FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN
 		,NULL
 		);
-	if(result!=INVALID_HANDLE_VALUE && SetFilePointer(result,position,0,FILE_BEGIN)<0)
+	if(result != INVALID_HANDLE_VALUE && SetFilePointer(result, position, 0, FILE_BEGIN) < 0)
 	{
 		CloseHandle(result);
-		result= INVALID_HANDLE_VALUE;
+		result = INVALID_HANDLE_VALUE;
 	}
 	
 	return result;
@@ -109,20 +109,20 @@ FILECACHE FILESYS::cache;
 
 int FILESYS::read(const char* filename, VOID* pdata, int size)
 {
-	int result= 0;
-	HANDLE file= cache.getfile(filename);
-	if(file!=INVALID_HANDLE_VALUE)
+	int result = 0;
+	HANDLE file = cache.getfile(filename);
+	if(file != INVALID_HANDLE_VALUE)
 	{
 		//Tp21 2006-06-21: Stop MWSE getting stuck if there's no data available to be read (original code from timeslip)
 		if( *filename == '|' ) { //check if it's an pipe
 			DWORD toread;
-			PeekNamedPipe(file,NULL,0,NULL,&toread,NULL); //look if there is something to read
+			PeekNamedPipe(file, NULL, 0, NULL, &toread, NULL); //look if there is something to read
 			if(!toread) return 0; //if not, return
 		}
 
-		DWORD red= 0;
-		ReadFile(file,pdata,size,&red,0);
-		result= (int)red;
+		DWORD red = 0;
+		ReadFile(file, pdata, size, &red, 0);
+		result = (int)red;
 	}
 
 	return result;
@@ -169,14 +169,14 @@ int FILESYS::readcstring(const char* filename, char* string, int bufsize)
 
 int FILESYS::write(const char* filename, const VOID* pdata, int size)
 {
-	int result= 0;
-	HANDLE file= cache.getfile(filename);
-	if(file!=INVALID_HANDLE_VALUE)
+	int result = 0;
+	HANDLE file = cache.getfile(filename);
+	if(file != INVALID_HANDLE_VALUE)
 	{
-		DWORD red= 0;
-		WriteFile(file,pdata,size,&red,0);
+		DWORD red = 0;
+		WriteFile(file, pdata, size, &red, 0);
 		SetEndOfFile(file);
-		result= (int)red;
+		result = (int)red;
 	}
 
 	return result;
@@ -184,10 +184,10 @@ int FILESYS::write(const char* filename, const VOID* pdata, int size)
 
 bool FILESYS::seek(const char* filename, long absolute)
 {
-	bool result= false;
-	HANDLE file= cache.getfile(filename);
-	if(file!=INVALID_HANDLE_VALUE)
-		result= SetFilePointer(file,absolute,0,FILE_BEGIN)>=0;
+	bool result = false;
+	HANDLE file = cache.getfile(filename);
+	if(file != INVALID_HANDLE_VALUE)
+		result = SetFilePointer(file, absolute, 0, FILE_BEGIN) >= 0;
 
 	return result;
 }

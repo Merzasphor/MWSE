@@ -3,8 +3,7 @@
 #include "INSTPOP.h"
 #include "DEBUGGING.h"
 
-INSTPOP::INSTPOP(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTPOP::INSTPOP(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 
@@ -33,8 +32,7 @@ bool INSTPOP::execute(void)
 	return result;
 }
 
-INSTPOPREG::INSTPOPREG(VIRTUALMACHINE& vm)
-:	machine(vm)
+INSTPOPREG::INSTPOPREG(VIRTUALMACHINE& vm) : machine(vm)
 {
 }
 

@@ -45,7 +45,6 @@ struct DEBUGGER : public application
 	virtual void logerror(char* fmt);
 
 	virtual int debug(char* commandline);
-//	virtual int debugattach(/*const */char* commandline);
 	virtual int debug(DWORD processID);
 	virtual int debug(const PROCESS_INFORMATION& procinfo);
 	
