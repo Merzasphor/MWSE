@@ -59,7 +59,7 @@ bool VIRTUALMACHINE::AddAddressSpace(VPVOID position, ADDRESSSPACE* space)
 	return result;
 }
 
-bool VIRTUALMACHINE::AddInstruction(OPCODE opcode, INSTRUCTION* instruction)
+bool VIRTUALMACHINE::AddInstruction(OPCODE opcode, INSTRUCTION* instruction) //to add an extended function to morrowind, so it can be used
 {
 	bool result= false;
 	if(instruction)
@@ -74,7 +74,7 @@ bool VIRTUALMACHINE::AddInstruction(OPCODE opcode, INSTRUCTION* instruction)
 	return result;			
 }
 
-//#include "LOG.h"
+//function to access memory to read or write to it
 bool VIRTUALMACHINE::AccessMem(MEMACCESSOR& access, VPVOID addr, VOID* buf, VMSIZE size)
 {
 	bool result= true;
@@ -139,13 +139,13 @@ bool VIRTUALMACHINE::AccessMem(MEMACCESSOR& access, VPVOID addr, VOID* buf, VMSI
 	return result;
 }
 
-bool VIRTUALMACHINE::ReadMem(const VPVOID addr, VOID* buf, VMSIZE size)
+bool VIRTUALMACHINE::ReadMem(const VPVOID addr, VOID* buf, VMSIZE size) //function to read stuff from memory
 {
 	MEMREADER reader;
 	return AccessMem(reader,const_cast<VPVOID>(addr),buf,size);
 }
 
-bool VIRTUALMACHINE::WriteMem(VPVOID addr, const VOID* buf, VMSIZE size)
+bool VIRTUALMACHINE::WriteMem(VPVOID addr, const VOID* buf, VMSIZE size) //function to write stuff to memory
 {
 	MEMWRITER writer;
 	return AccessMem(writer,addr,const_cast<VOID*>(buf),size);

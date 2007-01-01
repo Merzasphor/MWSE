@@ -29,14 +29,14 @@
 #define LOCALVARIABLES_IMAGE ((LPVOID)0x3cebf8)
 #define SCRIPTTARGETREF_IMAGE	((LPVOID)0x3cebec)
 #define SCRIPTTARGETTEMPL_IMAGE	((LPVOID)0x3cebf4)
-#define SECONDOBJECT_IMAGE	((LPVOID)0x3ce6f8)
+#define SECONDOBJECT_IMAGE	((LPVOID)0x3ce6f8) //first variable...
 #define SECONDOBJECT_LENGTH_IMAGE ((LPVOID)0x3cebb8)
 
 #define MASTER_IMAGE	((LPVOID)0x3c67dc) // cross check with fps_opt
 #define MASTERCELL_IMAGE	((LPVOID)0x3c67e0)
 #define MASTER2_IMAGE	((LPVOID)0x3c6cdc) // master + 0x500
 
-#define VARINDEX_IMAGE	((LPVOID)0x3cebb4)
+#define VARINDEX_IMAGE	((LPVOID)0x3cebb4) //count most of the time
 #define DESTINATIONX_IMAGE	((LPVOID)0x3cea48)
 #define DESTINATIONY_IMAGE	((LPVOID)0x3cea4c)
 #define DESTINATIONZ_IMAGE	((LPVOID)0x3cea50)

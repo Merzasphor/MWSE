@@ -328,7 +328,7 @@ void DEBUGGER::DoInitialBreakpoint(DEBUG_EVENT& /*DebugEv*/)
 {
 }
 
-void DEBUGGER::DoBreakpoint(DEBUG_EVENT& DebugEv)
+void DEBUGGER::DoBreakpoint(DEBUG_EVENT& DebugEv) //triggers when breakpoint occurs
 {
 	if(breakpoints.find(DebugEv.u.Exception.ExceptionRecord.ExceptionAddress) != breakpoints.end())
 	{
@@ -410,7 +410,7 @@ bool DEBUGGER::setpageguard(LPVOID addr)
 	return result;
 }
 
-bool DEBUGGER::setbreakpoint(LPVOID addr)
+bool DEBUGGER::setbreakpoint(LPVOID addr) //set an breakpoint on a address
 {
 	bool result = false;
 	BYTE opcode = 0;
@@ -435,7 +435,7 @@ bool DEBUGGER::setbreakpoint(LPVOID addr)
 	return result;
 }
 
-bool DEBUGGER::clearbreakpoints(void)
+bool DEBUGGER::clearbreakpoints(void) //remove all breakpoints
 {
 	bool result = true;
 	
@@ -448,7 +448,7 @@ bool DEBUGGER::clearbreakpoints(void)
 	return result;
 }
 
-bool DEBUGGER::clearbreakpoint(LPVOID addr)
+bool DEBUGGER::clearbreakpoint(LPVOID addr) //remove one breakpoint at given address
 {
 	bool result = false;
 	if(breakpoints.find(addr) != breakpoints.end())

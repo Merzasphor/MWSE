@@ -236,7 +236,7 @@ TES3MACHINE::TES3MACHINE(HANDLE process, LPVOID base)
 	AddInstruction(CAST, new FUNCCAST(*this));
 }
 
-bool TES3MACHINE::GetRegister(WORD regidx, VMREGTYPE& value)
+bool TES3MACHINE::GetRegister(WORD regidx, VMREGTYPE& value) //get the info from a processor register (EDX,EIP,...)
 {
 	bool result= true;
 	
@@ -259,7 +259,7 @@ bool TES3MACHINE::GetRegister(WORD regidx, VMREGTYPE& value)
 	return result;
 }
 
-bool TES3MACHINE::SetRegister(WORD regidx, VMREGTYPE value)
+bool TES3MACHINE::SetRegister(WORD regidx, VMREGTYPE value) //write stuff into a processor register (EDX,EIP,...)
 {
 	bool result= true;
 	
@@ -321,12 +321,12 @@ bool TES3MACHINE::Interrupt(VMINTERRUPT num)
 	return result;
 }
 
-const CONTEXT& TES3MACHINE::GetFlow(void)
+const CONTEXT& TES3MACHINE::GetFlow(void) //return the Flow context, (registers, ...)
 {
 	return flow;
 }
 
-void TES3MACHINE::SetFlow(const CONTEXT& newflow)
+void TES3MACHINE::SetFlow(const CONTEXT& newflow) //set the flow context (registers, ...)
 {
 	this->flow= newflow;
 }
