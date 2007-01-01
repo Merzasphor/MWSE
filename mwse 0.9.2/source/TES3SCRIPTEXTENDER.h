@@ -11,6 +11,9 @@ struct TES3SCRIPTEXTENDER : public DEBUGGER
 	virtual ~TES3SCRIPTEXTENDER(void);
 	
 	virtual int main(int argc, char* argv[]);
+
+	virtual int getVersion(char* filename);
+
 	virtual void DoCreateProc(DEBUG_EVENT& DebugEv);
 	virtual void DoExitProc(DEBUG_EVENT& DebugEv);
 	virtual void DoDebugString(DEBUG_EVENT& DebugEv);

@@ -1,4 +1,5 @@
 //Tes3ScriptExtender.cpp
+//Based upon DEBUGGER, but is edited for Morrowind specificly
 
 #include "TES3SCRIPTEXTENDER.h"
 #include "TES3MEMMAP.h"
@@ -18,34 +19,101 @@ const char TES3SCRIPTEXTENDER::WelcomeMessage[]=
  "This program is free software, licensed according to the GNU Public License,\n"
  "and comes with ABSOLUTELY NO WARRANTY.  See the file 'gpl.txt' for details.\n";
 
+//not used?
 const char TES3SCRIPTEXTENDER::RunFunctionErrorMsg[]= "Trying to RunFunction index greater than function count";
 
-#define SUPER DEBUGGER
+#define SUPER DEBUGGER //define that SUPER is DEBUGGER... ??? ...
 
 TES3SCRIPTEXTENDER::TES3SCRIPTEXTENDER(void) : SUPER(), prevscript(0), scriptmachine(0), HWbreakpoint(0)
 {
+	//constructor
 }
 
 TES3SCRIPTEXTENDER::~TES3SCRIPTEXTENDER(void)
 {
+	//destructor
 }
 
-int TES3SCRIPTEXTENDER::main(int argc, char* argv[]) //TODO: cleanup
+//original code from TimeSlip, modified to return the version of any Executable.
+int TES3SCRIPTEXTENDER::getVersion(char* filename)
+{
+	DWORD size;
+	DWORD* buffer = NULL;
+	VS_FIXEDFILEINFO* info;
+	UINT infosize;
+	int version = 0;
+	
+	size = GetFileVersionInfoSizeA(filename, buffer);
+	if (!size)
+	{
+		log("Unable to get Morrowind file version.\n");
+		delete[size] buffer;
+		return 0;
+	}
+	buffer = new DWORD[size];
+	if (!GetFileVersionInfoA(filename, NULL, size, buffer))
+	{
+		log("Unable to get Morrowind file version.\n");
+		delete[size] buffer;
+		return 0;
+	}
+	if (!VerQueryValueA(buffer, "\\", (void**)&info, &infosize))
+	{
+		log("Unable to get Morrowind file version.\n");
+		delete[size] buffer;
+		return 0;
+	}
+
+	version = (int)info->dwFileVersionLS;
+	delete[size] buffer;
+
+	return version;
+
+}
+
+//main function, calls directly from program's main entry point
+//in this function we start the real work, start 'Morrowind.exe'
+//and start debugging it
+int TES3SCRIPTEXTENDER::main(int argc, char* argv[]) //TODO: cleanup!
 {
 	int result = 0;
-	char* app = "Morrowind.exe"; //default app to load
+	char* app = "Morrowind.exe"; //default app to load //isn't used, is overwritten with command-line argument, or isn't used at all
 
-	printf("%s\n",WelcomeMessage); //prints the copyright
+	//version checking...
+	//checks if 'Morrowind.exe' is version 1820 or 1875 (don't know, got it from TimeSlip's code, think it's 'boosted' code)
+	int version = getVersion(app);
+	if(!(version == 1820 || version == 1875))
+	{
+		log("Incorrect Version, Version: %d\n",version);
+		log("Please upgrade your Morrowind to version 1.6.0.1820.\n"
+			"That's Bloodmoon with the latest patch");
+		return -1;
+	}
+	else
+	{
+		log("Correct Version, Version: %d\n",version);
+	}
+
+	printf("%s\n",WelcomeMessage); //prints the welcome message
 	if(argc > 1) //if there is an Application given as an Command Argument, run that
-		app = argv[1];
+		app = argv[1]; //app to run is first argument given.
+
 	// 2005-03-08  CDC  Run the Launcher and then search for the running Morrowind by default
-	// 2005-06-27  CDC  Force the messages to show even in Cygwin shell
-	else {
+	else { //there aren't given any extra parameters
 		STARTUPINFO startup_info = { sizeof(STARTUPINFO), NULL, NULL, NULL, 
 						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0, 0 };
 		PROCESS_INFORMATION proc_info;
-		if (!CreateProcess("Morrowind Launcher.exe", "Morrowind Launcher.exe", NULL, NULL, 
-			FALSE, NORMAL_PRIORITY_CLASS, NULL, NULL, &startup_info, &proc_info)) {
+		if (!CreateProcess("Morrowind Launcher.exe", 
+			"Morrowind Launcher.exe", 
+			NULL, 
+			NULL, 
+			FALSE, 
+			NORMAL_PRIORITY_CLASS, 
+			NULL, 
+			NULL, 
+			&startup_info, 
+			&proc_info)) 
+		{
 			printf("Unable to find the Morrowind Launcher program!\n");
 			return -1;
 		}
@@ -102,7 +170,6 @@ void TES3SCRIPTEXTENDER::logbinary(const VOID* addr, int size)
 		for(int x = 0; x < 16 && (x+y) < size; x++)
 			log("%02X ",((int)ptr[y+x])&0xFF);
 		log("\t");
-		// 2005-07-07  CDC  Allowing declarations in the start condition was a bad language design decision for C++.
 		for(int x=0;x<16 && (x+y)<size;x++)
 			if(isprint(ptr[y+x]))
 				log("%c",ptr[y+x]);
@@ -458,7 +525,7 @@ void TES3SCRIPTEXTENDER::OnDecode(CONTEXT& context)
 		scriptmachine->dumpscript();
 	}
 #endif
-	if(scriptmachine->IsInstruction(context.Eax)) //opcode
+	if(scriptmachine->IsInstruction(context.Eax)) //opcode //check if the instruction exists in our instruction table
 	{
 		ChangeReference((VPVOID)context.Ebx); //script
 

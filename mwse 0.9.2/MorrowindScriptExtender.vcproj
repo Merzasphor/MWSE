@@ -60,7 +60,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="gdi32.lib kernel32.lib user32.lib"
+				AdditionalDependencies="gdi32.lib kernel32.lib user32.lib version.lib"
 				OutputFile="$(OutDir)/MWSE.exe"
 				Version=""
 				LinkIncremental="2"

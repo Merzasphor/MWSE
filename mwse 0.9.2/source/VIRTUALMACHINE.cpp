@@ -156,7 +156,7 @@ bool VIRTUALMACHINE::GetInstruction(VPVOID addr, OPCODE& opcode)
 	return ReadMem(addr,&opcode,sizeof(opcode));
 }
 
-bool VIRTUALMACHINE::IsInstruction(OPCODE inst)
+bool VIRTUALMACHINE::IsInstruction(OPCODE inst) //see if the given opcode is an extended instruction
 {
 	return 	instructions.find(inst)!=instructions.end();
 }

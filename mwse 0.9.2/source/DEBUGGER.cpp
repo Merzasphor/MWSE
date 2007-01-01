@@ -53,6 +53,7 @@ DEBUGGER::DEBUGGER(void) : procinfo(), procbase(0), stepbreakpoint(0)
 
 DEBUGGER::~DEBUGGER(void)
 {
+	//destructor
 }
 
 int DEBUGGER::main( int argc, char* argv[])
@@ -88,6 +89,8 @@ void DEBUGGER::logerror(char* fmt)
 	log(fmt, buffer);
 }
 
+//start debugging an process that's not running,
+//we have to run it first...
 int DEBUGGER::debug(char* commandline)
 {
 	int result = 0;
@@ -126,6 +129,7 @@ int DEBUGGER::debug(char* commandline)
 	return result;
 }
 
+//start debugging an already running process, by processID
 int DEBUGGER::debug(DWORD processID)
 {
 	int result = 0;
@@ -150,6 +154,7 @@ int DEBUGGER::debug(DWORD processID)
 	return result;
 }
 
+//start debugging an process using the PROCESS_INFORMATION
 int DEBUGGER::debug(const PROCESS_INFORMATION& /*procinfo*/)
 {
 	int result = 0;
@@ -310,12 +315,12 @@ void DEBUGGER::DoExitProc(DEBUG_EVENT& DebugEv)
 	procinfo.hProcess = 0;
 }
 
-void DEBUGGER::DoCreateThread(DEBUG_EVENT& DebugEv)
+void DEBUGGER::DoCreateThread(DEBUG_EVENT& DebugEv) //triggers when an Thread is being created
 {
 	threadhandles[DebugEv.dwThreadId]= DebugEv.u.CreateThread.hThread;
 }
 
-void DEBUGGER::DoExitThread(DEBUG_EVENT& DebugEv)
+void DEBUGGER::DoExitThread(DEBUG_EVENT& DebugEv) //triggers when an Thread is Quit
 {
 	threadhandles.erase(DebugEv.dwThreadId);
 }
