@@ -47,7 +47,6 @@ int TES3SCRIPTEXTENDER::getVersion(char* filename)
 	if (!size)
 	{
 		log("Unable to get Morrowind file version.\n");
-		delete[size] buffer;
 		return 0;
 	}
 	buffer = new DWORD[size];
