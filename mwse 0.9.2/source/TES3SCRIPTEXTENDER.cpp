@@ -454,7 +454,7 @@ void TES3SCRIPTEXTENDER::DoBreakpoint(DEBUG_EVENT& DebugEv)
 void TES3SCRIPTEXTENDER::OnRunScript(CONTEXT& context)
 {
 	context.Eip--;
-	if(!clearbreakpoint((LPVOID)context.Eip))
+	if(!clearbreakpoint((LPVOID)context.Eip)) //remove RUNSCRIPTBREAK breakpoint
 		log("OnRunScript: clearbreakpoint(thisBP) failed\n");
 
 	if(!setbreakpoint(reltolinear(FIXUPSCRIPTBREAK)))

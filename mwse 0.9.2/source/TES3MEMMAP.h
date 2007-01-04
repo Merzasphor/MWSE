@@ -1,6 +1,7 @@
 //Tes3MemMap.h
 //this file containes all sorts of opcodes, these are ESSENTIAL for MWSE to work.
 //it also contains game data addresses, for example where to put your parameters for original functions.
+//add 0x400000 to them for the real addresses!
 #pragma once
 
 //------Relative Addresses for game code-------------------------
