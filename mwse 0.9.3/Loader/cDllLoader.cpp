@@ -6,29 +6,36 @@ void cDllLoader::mInitMorrowind()
 
 	if(!vMorroWin)
 	{
-		if(RegOpenKeyEx(HKEY_LOCAL_MACHINE,"Software\\Bethesda Softworks\\Morrowind",0,KEY_READ,&vKeyRes)!=ERROR_SUCCESS)
-			printf("Could not locate Morrowind Installation, You may have a corrupted install, Or no install at all \n");
+		//Thanks for the idea Timeslip :)
+		if(CreateProcess("Morrowind Launcher.exe","Morrowind Launcher.exe",0,0,false,NORMAL_PRIORITY_CLASS,0,0,&sSi,&sPi))
+			printf("Morrowind Found In Current Directory\n");
+		//Fallback to a registry search
 		else
 		{
-			vSizeOfBuf=1000;
+			printf("Morrowind Not Found In Current Directory, Performing RegSearch\n");
+			if(RegOpenKeyEx(HKEY_LOCAL_MACHINE,"Software\\Bethesda Softworks\\Morrowind",0,KEY_READ,&vKeyRes)!=ERROR_SUCCESS)
+				printf("Could not locate Morrowind Installation, You may have a corrupted install, Or no install at all \n");
+		    else
+		    {
+			    vSizeOfBuf=1000;
 
-			RegQueryValueEx(vKeyRes,"Installed Path",0,0,(BYTE *)vMorroLauncherLocation,&vSizeOfBuf);
-			sprintf(vMorroLauncherFormattedLocation,"%s\\Morrowind Launcher.exe",vMorroLauncherLocation);
-			printf("Morrowind Located At: %s\n",vMorroLauncherFormattedLocation);
+			    RegQueryValueEx(vKeyRes,"Installed Path",0,0,(BYTE *)vMorroLauncherLocation,&vSizeOfBuf);
+			    sprintf(vMorroLauncherFormattedLocation,"%s\\Morrowind Launcher.exe",vMorroLauncherLocation);
+			    printf("Morrowind Located At: %s\n",vMorroLauncherFormattedLocation);
 			
-			if(!CreateProcess(vMorroLauncherFormattedLocation,vMorroLauncherFormattedLocation,0,0,false,NORMAL_PRIORITY_CLASS,0,0,&sSi,&sPi))
-				printf("Could not start Morrowind Launcher.exe\n");
-		}
-		RegCloseKey(vKeyRes);
+			    if(!CreateProcess(vMorroLauncherFormattedLocation,vMorroLauncherFormattedLocation,0,0,false,NORMAL_PRIORITY_CLASS,0,0,&sSi,&sPi))
+				    printf("Could not start Morrowind Launcher.exe\n");
+		    }
+		    RegCloseKey(vKeyRes);
 
-		while(!vMorroWin)
-		{
-			Sleep(20);
-			vMorroWin=FindWindow("Morrowind","Morrowind");
-		}
+		    while(!vMorroWin)
+		    {
+		    	Sleep(20);
+		    	vMorroWin=FindWindow("Morrowind","Morrowind");
+		    }
+	    }
 	}
-
-	vMorroID=GetWindowThreadProcessId(vMorroWin,&vMorroID);
+  vMorroID=GetWindowThreadProcessId(vMorroWin,&vMorroID);
 }
 
 void cDllLoader::mInjectDll(DWORD ProcID)
