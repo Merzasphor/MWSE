@@ -19,6 +19,7 @@ void cDllLoader::mInitMorrowind()
 			if(!CreateProcess(vMorroLauncherFormattedLocation,vMorroLauncherFormattedLocation,0,0,false,NORMAL_PRIORITY_CLASS,0,0,&sSi,&sPi))
 				printf("Could not start Morrowind Launcher.exe\n");
 		}
+		RegCloseKey(vKeyRes);
 
 		while(!vMorroWin)
 		{
