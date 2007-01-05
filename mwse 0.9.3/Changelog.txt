@@ -4,6 +4,11 @@ Developers: AnthonyG, Fliggerty, Timeslip, Tp21
 Original Developers: CdCooley, FreshFish
 --------------------------------------------------------------------------------
 
+05-01-2007 by AnthonyG
+-Morrowind Script Extender is now directory dependent, You no longer have to place it in Morrowind's install directory
+-Under the hood improvements
+-New silent and console mode binary options(Not available to end-user, Developer's choice).
+
 05-01-2007 by Tp21:
 -new 0.9.3 branch, that includes the new MWSE.
 -Added Resource information to both DLL and loader, added icon to loader
