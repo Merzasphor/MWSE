@@ -1,7 +1,5 @@
 #include "Resource.h"
 
-IDI_ICON1 ICON "MWScriptExtender.ico"
-
 1 VERSIONINFO
 FILEVERSION 0,9,3,0
 PRODUCTVERSION 0,9,3,0
@@ -18,10 +16,10 @@ BEGIN
 	BEGIN
 		BLOCK "040904B0"
 		BEGIN
-			VALUE "LegalCopyright", "Copyright (c) 2007, Timeslip, GPL"
-			VALUE "FileDescription", "MorrowindScriptExtender Loader"
+			VALUE "LegalCopyright", "Copyright (c) 2003-2007 Freshfish, GPL"
+			VALUE "FileDescription", "MorrowindScriptExtender main dll"
 			VALUE "FileVersion", "0.9.3"
-			VALUE "OriginalFilename", "Loader.exe"
+			VALUE "OriginalFilename", "Mwse.dll"
 		END
 	END
 	BLOCK "VarFileInfo"
