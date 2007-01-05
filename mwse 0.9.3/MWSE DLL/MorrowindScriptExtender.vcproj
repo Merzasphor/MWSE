@@ -294,6 +294,10 @@
 						RelativePath=".\source\FUNCVARIABLES.cpp"
 						>
 					</File>
+				</Filter>
+				<Filter
+					Name="Instructions"
+					>
 					<File
 						RelativePath=".\source\INSTCALL.cpp"
 						>
@@ -460,6 +464,10 @@
 						RelativePath=".\source\FUNCVARIABLES.h"
 						>
 					</File>
+				</Filter>
+				<Filter
+					Name="Instructions"
+					>
 					<File
 						RelativePath=".\source\INSTCALL.h"
 						>
