@@ -1,0 +1,13 @@
+NULL need not be used, It is merely a constant of 0, 
+There are multiple ways it is defined.
+
+#define NULL ((void *)0) //C style
+
+#define NULL 0L //C++
+
+#define NULL 0 //C/C++
+
+
+THERE ARE ONLY SO MANY WAYS YOU CAN DEFINE 0 GENTLEMEN :)
+
+Please use 0 from now on :).
