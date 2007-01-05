@@ -45,14 +45,6 @@ private:
 	TES3MACHINE& machine;
 };
 
-struct FUNCMEMLOOK : public FUNCTION
-{
-	FUNCMEMLOOK(TES3MACHINE& vm) :machine(vm) {}
-	virtual bool execute(void);
-private:
-	TES3MACHINE& machine;
-};
-
 // 2005-07-10  CDC  Separate the string read/write from the file functions
 struct FUNCSTRINGLENGTH : public FUNCTION
 {

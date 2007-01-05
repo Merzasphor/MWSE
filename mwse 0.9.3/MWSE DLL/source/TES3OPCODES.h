@@ -324,8 +324,6 @@ typedef enum {
 	,ISPROVIDER=	0x3F7C	//|
 	,MESSAGEFIX=	0x3F7E	//~
 
-	,MEMLOOK=	0x3F3F	//?
-
 	// 2005-07-12  CDC  Even more functions for version 0.9.2
 	,KEYPRESSED=	0x3F00
 	,TEXTINPUT=	0x3F01

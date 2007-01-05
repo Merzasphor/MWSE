@@ -1,3 +1,4 @@
 05-01-2007 by Tp21:
 -new 0.9.3 branch, that includes the new MWSE.
 -Added Resource information to both DLL and loader, added icon to loader
+-removed the Memlook function, that doesn't work now it doesn't has an interactive console available. and nobody used it anyway because it's an debug function

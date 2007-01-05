@@ -288,19 +288,6 @@ bool FUNCTEXTINPUTALT::execute(void)
 	return true;
 }
 
-
-bool FUNCMEMLOOK::execute(void)
-{
-	VPVOID refr;
-    //VPVOID temp,base;
-	//ULONG type;
-	if (GetTargetData(machine, &refr))
-		machine.dumpobject((TES3REFERENCE*)refr);
-	return true;
-}
-
-
-
 // 2005-07-10  CDC  Separate formatted string functions from the file I/O routines
 
 // 2005-07-10  CDC   This just returns returns the string now, but there's a length function too.

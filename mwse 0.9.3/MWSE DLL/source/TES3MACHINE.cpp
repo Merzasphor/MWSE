@@ -218,8 +218,6 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(STRINGBUILD, new FUNCSTRINGBUILD(*this));
 	AddInstruction(STRINGPARSE, new FUNCSTRINGPARSE(*this));
 
-	AddInstruction(MEMLOOK, new FUNCMEMLOOK(*this));
-
 	//Fliggerty 12-27-06
 	AddInstruction(ADDSPELL, new FUNCADDSPELL(*this));
 	AddInstruction(REMOVESPELL, new FUNCREMOVESPELL(*this));
