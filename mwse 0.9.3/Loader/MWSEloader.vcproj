@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="MWSEloader"
 	ProjectGUID="{7CAD84E1-BC3F-4545-B96F-83E364FDC92A}"
 	RootNamespace="MWSEloader"
@@ -117,13 +117,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="3"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
-				RuntimeLibrary="2"
-				BufferSecurityCheck="false"
-				UsePrecompiledHeader="0"
-				WarningLevel="3"
-				Detect64BitPortabilityProblems="false"
-				DebugInformationFormat="3"
+				RuntimeLibrary="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -139,11 +133,8 @@
 				AdditionalDependencies="kernel32.lib user32.lib"
 				LinkIncremental="1"
 				GenerateManifest="false"
-				GenerateDebugInformation="false"
-				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				EntryPointSymbol="main"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -175,6 +166,14 @@
 	<References>
 	</References>
 	<Files>
+		<File
+			RelativePath=".\cDllLoader.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\cDllLoader.h"
+			>
+		</File>
 		<File
 			RelativePath=".\MWScriptExtender.ico"
 			>
