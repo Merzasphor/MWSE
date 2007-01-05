@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="MWSEloader"
 	ProjectGUID="{7CAD84E1-BC3F-4545-B96F-83E364FDC92A}"
 	RootNamespace="MWSEloader"
@@ -176,7 +176,19 @@
 	</References>
 	<Files>
 		<File
+			RelativePath=".\MWScriptExtender.ico"
+			>
+		</File>
+		<File
 			RelativePath=".\MWSEloader.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\Resource.h"
+			>
+		</File>
+		<File
+			RelativePath=".\Resource.rc"
 			>
 		</File>
 	</Files>
