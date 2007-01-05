@@ -1,0 +1,4 @@
+LIBRARY MorrowindScriptExtender
+EXPORTS
+
+Direct3DCreate8=FakeDirect3DCreate
