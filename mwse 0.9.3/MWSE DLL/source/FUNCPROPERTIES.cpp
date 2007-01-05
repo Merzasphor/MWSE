@@ -13,7 +13,7 @@
 	
 
 //Tp21 22-08-2006: xGetSpellEffects
-//TODO does it work?
+//TODO i don't think it works... (we don't get the return results... have to find that breakpoint)
 FUNCGETSPELLEFFECTS::FUNCGETSPELLEFFECTS(TES3MACHINE& vm) : machine(vm), HWBREAKPOINT()
 {
 }
@@ -379,7 +379,7 @@ bool FUNCGETNAME::execute(void)
 }
 
 //Tp21 22-08-2006: xSetName
-//TODO xSetName
+//TODO xSetName, very buggy
 bool FUNCSETNAME::execute(void)
 {
 	VPVOID refr, temp, base;
