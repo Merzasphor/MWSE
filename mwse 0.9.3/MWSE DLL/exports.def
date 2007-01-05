@@ -1,4 +1,5 @@
 LIBRARY MorrowindScriptExtender
 EXPORTS
 
-Direct3DCreate8=FakeDirect3DCreate
+;uncomment when using the alternative injection method
+;Direct3DCreate8=FakeDirect3DCreate

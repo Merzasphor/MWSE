@@ -12,6 +12,7 @@ static const char WelcomeMessage[]=
 
 //Alternate injection method, for automatic loading without using MWSEloader.exe
 //use exports.def as the module definitions file, uncomment this function and rename the dll d3d8.dll
+//uncomment in exports.def
 
 /*typedef void* (_stdcall *D3DProc)(UINT);
 void* _stdcall FakeDirect3DCreate(UINT version) {
