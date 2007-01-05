@@ -22,6 +22,15 @@ int main()
 int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)
 #endif
 {
+    #ifndef _SILENT
+	/*
+	Added by AnthonyG 05-4-07, 
+	Preprocessed to save that MicroSec or two of CPU time :).
+	Makes the console a bit more appealing to have a title
+	*/
+	SetConsoleTitle("Morrowind Script Extender");
+    #endif
+
 	//Instantiate cDllLoader
 	cDllLoader iStartEmUp;
 
