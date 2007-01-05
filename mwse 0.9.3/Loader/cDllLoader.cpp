@@ -27,15 +27,18 @@ void cDllLoader::mInitMorrowind()
 				    printf("Could not start Morrowind Launcher.exe\n");
 		    }
 		    RegCloseKey(vKeyRes);
-
-		    while(!vMorroWin)
-		    {
-		    	Sleep(20);
-		    	vMorroWin=FindWindow("Morrowind","Morrowind");
-		    }
 	    }
+		   
+		while(!vMorroWin)
+		{
+			Sleep(20);
+		    vMorroWin=FindWindow("Morrowind","Morrowind");
+		}
+
 	}
-  vMorroID=GetWindowThreadProcessId(vMorroWin,&vMorroID);
+	
+	//it works now :)
+	GetWindowThreadProcessId(vMorroWin,&vMorroID);
 }
 
 void cDllLoader::mInjectDll(DWORD ProcID)
