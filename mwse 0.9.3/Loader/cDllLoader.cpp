@@ -36,8 +36,26 @@ void cDllLoader::mInitMorrowind()
 		}
 
 	}
-	
+
 	//it works now :)
+	GetWindowThreadProcessId(vMorroWin,&vMorroID);
+}
+
+void cDllLoader::mInitMorrowindCommandline(char* vCommandline)
+{
+	vMorroWin=FindWindow("Morrowind","Morrowind");
+
+	if(!vMorroWin)
+	{
+		if(!CreateProcess(vCommandline, vCommandline, 0, 0, false, NORMAL_PRIORITY_CLASS, 0, 0, &sSi, &sPi))
+			printf("Error Loading External Program\n");
+
+		while(!vMorroWin)
+		{
+			Sleep(20);
+			vMorroWin = FindWindow("Morrowind", "Morrowind");
+		}
+	}
 	GetWindowThreadProcessId(vMorroWin,&vMorroID);
 }
 

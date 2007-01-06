@@ -33,6 +33,10 @@ public:
 	//Start up Morrowind. Guess what? Tis now directory dependent.(I.E. Place it in your desktop folder if you want!)
 	//Fills MorroID with Proc ID for use with InjectDll;
 	void mInitMorrowind();
+
+	//run program from commandline, and just sit until Morrowind starts
+	void mInitMorrowindCommandline(char* commandline);
+
 	//Inject DLL 
 	void mInjectDll(DWORD ProcID);
 

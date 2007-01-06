@@ -17,7 +17,7 @@ Main MUST return an integer to exit properly, changed to int type
 */
 
 #ifndef _SILENT
-int main()
+int main(int argc, char* argv[])
 #else
 int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)
 #endif
@@ -34,7 +34,21 @@ int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)
 	//Instantiate cDllLoader
 	cDllLoader iStartEmUp;
 
+	#ifndef _SILENT
+
+	if(argc > 1)
+	{
+		iStartEmUp.mInitMorrowindCommandline(argv[1]);
+	}
+	else
+	{
+		iStartEmUp.mInitMorrowind();
+	}
+	#else
+
 	iStartEmUp.mInitMorrowind();
+
+	#endif
 
 	iStartEmUp.mInjectDll(iStartEmUp.vMorroID);
 
