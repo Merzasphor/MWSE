@@ -5,6 +5,9 @@ Original Developers: CdCooley, FreshFish
 --------------------------------------------------------------------------------
 
 05-01-2007 by AnthonyG
+-New logging methods available, Up to the rest of the team to use them or not
+
+05-01-2007 by AnthonyG
 -Morrowind Script Extender is now directory dependent, You no longer have to place it in Morrowind's install directory
 -Under the hood improvements
 -New silent and console mode binary options(Not available to end-user, Developer's choice).
