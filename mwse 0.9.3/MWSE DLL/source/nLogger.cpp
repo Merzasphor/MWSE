@@ -53,7 +53,7 @@ bool nLogger::cHtml::mOpen(char filename[])
 			"<title>MWSE Log</title>\n"
 			"</head>\n"
 			"<body style='background-color: #000000'>\n"
-			"<table border='0' align='center' cellpadding='0' cellspacing='0' width='100'>\n"
+			"<table border='0' align='center' cellpadding='0' cellspacing='0'>\n"
 			);
 
 		return true;
