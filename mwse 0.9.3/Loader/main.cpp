@@ -36,6 +36,7 @@ int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)
 
 	#ifndef _SILENT
 
+	//argc and argv don't exists when run in silent mode
 	if(argc > 1)
 	{
 		iStartEmUp.mInitMorrowindCommandline(argv[1]);
