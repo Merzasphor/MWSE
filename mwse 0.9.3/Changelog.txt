@@ -3,6 +3,8 @@ MWSE 0.9.3: Changelog
 Developers: AnthonyG, Fliggerty, Timeslip, Tp21
 Original Developers: CdCooley, FreshFish
 --------------------------------------------------------------------------------
+06-01-2007 by Tp21:
+-You can now run Another program with MWSELoader by just popping in the program location as an command line argument. it'll run the program, and just sit and wait until Morrowind is launched.
 
 05-01-2007 by AnthonyG
 -New logging methods available, Up to the rest of the team to use them or not
