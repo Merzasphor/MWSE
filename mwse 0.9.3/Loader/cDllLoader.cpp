@@ -23,7 +23,7 @@ void cDllLoader::mInitMorrowind()
 			    sprintf(vMorroLauncherFormattedLocation,"%s\\Morrowind Launcher.exe",vMorroLauncherLocation);
 			    printf("Morrowind Located At: %s\n",vMorroLauncherFormattedLocation);
 			
-			    if(!CreateProcess(vMorroLauncherFormattedLocation,vMorroLauncherFormattedLocation,0,0,false,NORMAL_PRIORITY_CLASS,0,0,&sSi,&sPi))
+			    if(!CreateProcess(vMorroLauncherFormattedLocation,vMorroLauncherFormattedLocation,0,0,false,NORMAL_PRIORITY_CLASS,0,vMorroLauncherLocation,&sSi,&sPi))
 				    printf("Could not start Morrowind Launcher.exe\n");
 		    }
 		    RegCloseKey(vKeyRes);
