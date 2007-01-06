@@ -166,30 +166,50 @@
 	<References>
 	</References>
 	<Files>
-		<File
-			RelativePath=".\cDllLoader.cpp"
+		<Filter
+			Name="Source Files"
 			>
-		</File>
-		<File
-			RelativePath=".\cDllLoader.h"
+			<File
+				RelativePath=".\cDllLoader.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\main.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\nLogger.cpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Header Files"
 			>
-		</File>
-		<File
-			RelativePath=".\MWScriptExtender.ico"
+			<File
+				RelativePath=".\cDllLoader.h"
+				>
+			</File>
+			<File
+				RelativePath=".\nLogger.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Resource.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Resource Files"
 			>
-		</File>
-		<File
-			RelativePath=".\MWSEloader.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\Resource.h"
-			>
-		</File>
-		<File
-			RelativePath=".\Resource.rc"
-			>
-		</File>
+			<File
+				RelativePath=".\MWScriptExtender.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\Resource.rc"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>
