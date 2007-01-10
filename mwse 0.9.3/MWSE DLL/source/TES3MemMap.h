@@ -10,7 +10,11 @@
 
 #define RUNFUNCIDXERRBREAK 0x10d5d6 //edx=opcode, same
 #define RUNFUNCIDXERRCONTINUE 0x10d5f6
-#define RUNFUNCOPCODETEST 0x105831
+#define RUNFUNCOPCODETEST 0x105831 //0x505831
+/*
+this actually runs the original functions
+put the opcode in the EDX register.
+*/
 
 #define FIXUPTEMPLATE 0x0fe180
 #define FIXUPTEMPLATEBREAK 0x0fe195
