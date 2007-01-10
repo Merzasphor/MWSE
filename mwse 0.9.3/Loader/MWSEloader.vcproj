@@ -174,11 +174,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\main.cpp"
+				RelativePath=".\cDllLoaderUi.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\nLogger.cpp"
+				RelativePath=".\cMailServer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\main.cpp"
 				>
 			</File>
 		</Filter>
@@ -190,7 +194,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\nLogger.h"
+				RelativePath=".\cDllLoaderUi.h"
+				>
+			</File>
+			<File
+				RelativePath=".\cMailServer.h"
 				>
 			</File>
 			<File

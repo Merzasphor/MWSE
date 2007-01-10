@@ -8,7 +8,9 @@
 \*********************************************/
 //Lean and mean specified in MWSEloader already
 #include<Windows.h>
-#include<StdIO.h>
+#include<stdio.h>
+//For the console input
+#include"cDllLoaderUi.h"
 
 class cDllLoader
 {
@@ -27,15 +29,17 @@ private:
 	char vMorroLauncherFormattedLocation[1000]; //Use this, Has full location.
 	HKEY vKeyRes;
 	DWORD vSizeOfBuf;
+	//Console input instantiation
+	cDllLoaderUi iUiAction;
+	//Need to convert a few hex values
+	char vHexVars[256];
 public:
 	DWORD vMorroID;
 
 	//Start up Morrowind. Guess what? Tis now directory dependent.(I.E. Place it in your desktop folder if you want!)
 	//Fills MorroID with Proc ID for use with InjectDll;
+	//1/7/07 AnthonyG: Modified it, If It can't find the Morrowind Launcher, It won't loop for it.
 	void mInitMorrowind();
-
-	//run program from commandline, and just sit until Morrowind starts
-	void mInitMorrowindCommandline(char* commandline);
 
 	//Inject DLL 
 	void mInjectDll(DWORD ProcID);

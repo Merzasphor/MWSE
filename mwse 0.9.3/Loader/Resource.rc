@@ -1,16 +1,19 @@
+#include<windows.h>
 #include "Resource.h"
 
 IDI_ICON1 ICON "MWScriptExtender.ico"
+
+//Added by AnthonyG
+//Splash image
+ID_SPLASHIMAGE BITMAP "mwseSplash.bmp"
+//Console image
+ID_CONSOLEIMAGE BITMAP "mwseConsole.bmp"
 
 1 VERSIONINFO
 FILEVERSION 0,9,3,0
 PRODUCTVERSION 0,9,3,0
 FILEFLAGSMASK  0x3fL
-#ifdef _DEBUG
-FILEFLAGS 0x1L
-#else
 FILEFLAGS 0x0L
-#endif
 FILEOS 0x4L
 FILETYPE 0x1L
 BEGIN
@@ -18,8 +21,9 @@ BEGIN
 	BEGIN
 		BLOCK "040904B0"
 		BEGIN
-			VALUE "LegalCopyright", "Copyright (c) 2007, Timeslip, GPL"
-			VALUE "FileDescription", "MorrowindScriptExtender Loader"
+		    VALUE "CompanyName","MorroFanatics Inc."
+			VALUE "LegalCopyright", "Copyright (c) 2007, GPL"
+			VALUE "FileDescription", "MWSE Loader"
 			VALUE "FileVersion", "0.9.3"
 			VALUE "OriginalFilename", "Loader.exe"
 		END

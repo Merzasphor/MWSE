@@ -1,57 +1,51 @@
 #define WIN32_LEAN_AND_MEAN
-#include "cDllLoader.h"
+#include"cDllLoader.h"
+//AnthonyG 1/7/07
+#include"cDllLoaderUi.h"
+#include"cMailServer.h"
+#include"Resource.h"
 
 /*
-AnthonyG 5-01-07
-Added silent and console modes
-To do silent define _SILENT
-To show a console window don't define anything
-Main MUST return an integer to exit properly, changed to int type
+ 1/7/07
+ AnthonyG
+ Let's get this masterpiece user-friendly
+ I removed the preprocessors. Eye-candied console
+ doesn't use nor need any of these.
 */
-
-//What functions do these macros cover? 
-//Look like debug macros, Use printf :). AnthonyG
-/*
-#define _ERROR
-#define _MESSAGE
-*/
-
-#ifndef _SILENT
-int main(int argc, char* argv[])
-#else
 int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)
-#endif
 {
-    #ifndef _SILENT
-	/*
-	Added by AnthonyG 05-4-07, 
-	Preprocessed to save that MicroSec or two of CPU time :).
-	Makes the console a bit more appealing to have a title
-	*/
-	SetConsoleTitle("Morrowind Script Extender");
-    #endif
+	//Message var, Don't change this
+	MSG vMsg;
 
 	//Instantiate cDllLoader
 	cDllLoader iStartEmUp;
+	//Instantiate UI class
+	cDllLoaderUi iPrepUi;
+	//Instantiate server class
+	cMailServer Mail;
 
-	#ifndef _SILENT
+	//Render up the splash screen
+	iPrepUi.mCreateSplash(IDI_ICON1);
+	//Render up the console(Yes darksecond, RLY, Theres a console)
+	iPrepUi.mCreateConsole(IDI_ICON1);
 
-	//argc and argv don't exists when run in silent mode
-	if(argc > 1)
-	{
-		iStartEmUp.mInitMorrowindCommandline(argv[1]);
-	}
-	else
-	{
-		iStartEmUp.mInitMorrowind();
-	}
-	#else
-
+	//Do the searches
 	iStartEmUp.mInitMorrowind();
-
-	#endif
-
+	//Inject the DLL
 	iStartEmUp.mInjectDll(iStartEmUp.vMorroID);
+
+	//Create mail server(So we can get log msgs from the DLL)
+	Mail.mCreateServer();
+	while(GetMessage(&vMsg,0,0,0)>0)
+	{
+		Mail.mReadMail();
+		TranslateMessage(&vMsg);
+		DispatchMessage(&vMsg);
+	}
+	//Shutdown the server
+	Mail.mShutdownServer();
+
+	iPrepUi.mFlushConsole();
 
 	return 0;
 }

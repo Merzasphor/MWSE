@@ -209,6 +209,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\cMailClient.h"
+				>
+			</File>
+			<File
 				RelativePath=".\source\DEBUGGING.h"
 				>
 			</File>
@@ -238,10 +242,6 @@
 			</File>
 			<File
 				RelativePath=".\source\MWSEmain.h"
-				>
-			</File>
-			<File
-				RelativePath=".\source\nLogger.h"
 				>
 			</File>
 			<File
@@ -387,6 +387,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\cMailClient.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\source\FILECACHE.cpp"
 				>
 			</File>
@@ -400,10 +404,6 @@
 			</File>
 			<File
 				RelativePath=".\source\MWSEmain.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\source\nLogger.cpp"
 				>
 			</File>
 			<File

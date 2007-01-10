@@ -8,61 +8,51 @@ void cDllLoader::mInitMorrowind()
 	{
 		//Thanks for the idea Timeslip :)
 		if(CreateProcess("Morrowind Launcher.exe","Morrowind Launcher.exe",0,0,false,NORMAL_PRIORITY_CLASS,0,0,&sSi,&sPi))
-			printf("Morrowind Found In Current Directory\n");
+		{
+			iUiAction.mConsolePut("Morrowind Found In Current Directory");
+			while(!vMorroWin)
+			{
+				Sleep(20);
+				vMorroWin=FindWindow("Morrowind","Morrowind");
+			}
+		}
 		//Fallback to a registry search
 		else
 		{
-			printf("Morrowind Not Found In Current Directory, Performing RegSearch\n");
+			iUiAction.mConsolePut("Morrowind Not Found In Current Directory");
+			iUiAction.mConsolePut("Performing RegSearch");
 			if(RegOpenKeyEx(HKEY_LOCAL_MACHINE,"Software\\Bethesda Softworks\\Morrowind",0,KEY_READ,&vKeyRes)!=ERROR_SUCCESS)
-				printf("Could not locate Morrowind Installation, You may have a corrupted install, Or no install at all \n");
+				iUiAction.mConsolePut("Could not locate Morrowind Installation");
 		    else
 		    {
 			    vSizeOfBuf=1000;
 
 			    RegQueryValueEx(vKeyRes,"Installed Path",0,0,(BYTE *)vMorroLauncherLocation,&vSizeOfBuf);
 			    sprintf(vMorroLauncherFormattedLocation,"%s\\Morrowind Launcher.exe",vMorroLauncherLocation);
-			    printf("Morrowind Located At: %s\n",vMorroLauncherFormattedLocation);
+				iUiAction.mConsolePut("Morrowind Located At: ");
+				iUiAction.mConsolePut(vMorroLauncherFormattedLocation);
 			
 			    if(!CreateProcess(vMorroLauncherFormattedLocation,vMorroLauncherFormattedLocation,0,0,false,NORMAL_PRIORITY_CLASS,0,vMorroLauncherLocation,&sSi,&sPi))
-				    printf("Could not start Morrowind Launcher.exe\n");
+					iUiAction.mConsolePut("Could not start Morrowind Launcher.exe");
+				else
+				{
+					while(!vMorroWin)
+					{
+						Sleep(20);
+						vMorroWin=FindWindow("Morrowind","Morrowind");
+					}
+				}
 		    }
 		    RegCloseKey(vKeyRes);
-	    }
-		   
-		while(!vMorroWin)
-		{
-			Sleep(20);
-		    vMorroWin=FindWindow("Morrowind","Morrowind");
-		}
-
+	    }		   
 	}
-
 	//it works now :)
-	GetWindowThreadProcessId(vMorroWin,&vMorroID);
-}
-
-void cDllLoader::mInitMorrowindCommandline(char* vCommandline)
-{
-	vMorroWin=FindWindow("Morrowind","Morrowind");
-
-	if(!vMorroWin)
-	{
-		if(!CreateProcess(vCommandline, vCommandline, 0, 0, false, NORMAL_PRIORITY_CLASS, 0, 0, &sSi, &sPi))
-			printf("Error Loading External Program\n");
-
-		while(!vMorroWin)
-		{
-			Sleep(20);
-			vMorroWin = FindWindow("Morrowind", "Morrowind");
-		}
-	}
 	GetWindowThreadProcessId(vMorroWin,&vMorroID);
 }
 
 void cDllLoader::mInjectDll(DWORD ProcID)
 {
-	vProcess=OpenProcess(/*PROCESS_CREATE_THREAD|PROCESS_QUERY_INFORMATION|PROCESS_VM_OPERATION|PROCESS_VM_WRITE|PROCESS_VM_READ*/PROCESS_ALL_ACCESS,
-		false,ProcID);
+	vProcess=OpenProcess(PROCESS_ALL_ACCESS,false,ProcID);
 
 	if(vProcess)
 	{
@@ -72,8 +62,10 @@ void cDllLoader::mInjectDll(DWORD ProcID)
 		{
 			vLoadLibraryAddr=(DWORD)GetProcAddress(GetModuleHandle("kernel32.dll"),"LoadLibraryA");
 
-			printf("vBaseHook= 0x%X\n",vBaseHook);
-			printf("vLoadLibraryAddr= 0x%X\n",vLoadLibraryAddr);
+			sprintf(vHexVars,"vBaseHook= 0x%X\n",vBaseHook);
+			iUiAction.mConsolePut(vHexVars);
+			sprintf(vHexVars,"vLoadLibraryAddr= 0x%X\n",vLoadLibraryAddr);
+			iUiAction.mConsolePut(vHexVars);
 
 			WriteProcessMemory(vProcess,(LPVOID)(vBaseHook+5),"MWSE.dll",9,&vBytesWritten);
 
@@ -89,29 +81,29 @@ void cDllLoader::mInjectDll(DWORD ProcID)
 				switch(WaitForSingleObject(vThread, 5000))
 				{
 				case WAIT_OBJECT_0:
-					printf("hook thread complete\n");
+					iUiAction.mConsolePut("Hook thread complete");
 					break;
 				case WAIT_ABANDONED:
-					printf("Process::InstallHook: waiting for thread = WAIT_ABANDONED\n");
+					iUiAction.mConsolePut("Process::InstallHook: waiting for thread = WAIT_ABANDONED");
 					break;
 				case WAIT_TIMEOUT:
-					printf("Process::InstallHook: waiting for thread = WAIT_TIMEOUT\n");
+					iUiAction.mConsolePut("Process::InstallHook: waiting for thread = WAIT_TIMEOUT");
 					break;
 				}
 				CloseHandle(vThread);
 			}
 			else //vThread
-				printf("Could Not Create Thread Error->%d\n",GetLastError());
+				iUiAction.mConsolePut("Could Not Create Thread");
 
 			VirtualFreeEx(vProcess,(LPVOID)vBaseHook,8192,MEM_RELEASE);
 		}
 		else //vBaseHook
-			printf("Could Not Allocate Memory For Hook->%d\n",GetLastError());
+			iUiAction.mConsolePut("Could Not Allocate Memory For Hook");
 		
 		CloseHandle(vProcess);
 	}
 	else //vProccess
-		printf("Could Not Open Process->%d\n",GetLastError());
+		iUiAction.mConsolePut("Could Not Open Process");
 }
 
 cDllLoader::cDllLoader()

@@ -3,6 +3,13 @@ MWSE 0.9.3: Changelog
 Developers: AnthonyG, Fliggerty, Timeslip, Tp21
 Original Developers: CdCooley, FreshFish
 --------------------------------------------------------------------------------
+
+09-01-2007 by AnthonyG
+-Oh so much changes... Hm..
+-Now has GUI
+-MWSE DLL can now send messages to the loader's console via Mailslots
+-Optimizations
+
 06-01-2007 by Tp21:
 -You can now run Another program with MWSELoader by just popping in the program location as an command line argument. it'll run the program, and just sit and wait until Morrowind is launched.
 
