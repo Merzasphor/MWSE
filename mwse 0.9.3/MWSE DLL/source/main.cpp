@@ -11,7 +11,12 @@
  Most of this needs to be cleaned up, Every line is defiled.
  Timeslip: Please abide to the standard introduced in the Loader's cDllLoader .h/.cpp.
 */
+
 //TODO: Check FUNCHASEQUIPEDPART2 works - uses dodgy breakpoint
+//TODO: FUNCEXTENDER.cpp: needs upgrade using latest knowledge on subject.
+
+//Do we need this? i don't think we will use this method, because it will give problems with MGE.
+//and we have a new way of loading, and else we can't use the Console
 
 //Alternate injection method, for automatic loading without using MWSEloader.exe
 //use exports.def as the module definitions file, uncomment this function and rename the dll d3d8.dll
