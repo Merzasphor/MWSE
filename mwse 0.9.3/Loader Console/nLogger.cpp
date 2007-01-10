@@ -162,6 +162,14 @@ void nLogger::cXml::mAddFailure(char contents[])
 		"</Chunk>\n",contents);
 }
 
+void nLogger::cXml::mAddMessage(char contents[])
+{
+	fprintf(vXmlFile,
+		"<Chunk type='message'>\n"
+		"%s\n"
+		"</Chunk>\n",contents);
+}
+
 bool nLogger::cXml::mClose()
 {
 	fprintf(vXmlFile,

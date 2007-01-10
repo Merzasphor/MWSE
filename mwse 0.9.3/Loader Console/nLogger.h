@@ -74,6 +74,8 @@ namespace nLogger
 		void mAddWarning(char contents[]);
 		//Add fail snippet
 		void mAddFailure(char contents[]);
+		//Add a generic message snippet
+		void mAddMessage(char contents[]);
 		//Close it
 		bool mClose();
 

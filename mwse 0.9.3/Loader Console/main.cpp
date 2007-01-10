@@ -1,6 +1,7 @@
 #define WIN32_LEAN_AND_MEAN
 #include "cDllLoader.h"
 #include "cMailServer.h"
+#include "nLogger.h"
 
 /*
 AnthonyG 5-01-07
