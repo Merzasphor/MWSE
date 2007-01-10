@@ -45,13 +45,23 @@ BOOL _stdcall DllMain(HANDLE hModule, DWORD reason, void* unused)
 	//Don't use this anywhere else
 	Mail.mOpenMailConnection();
 
-	if(reason!=DLL_PROCESS_ATTACH)
+	switch(reason)
 	{
-		Mail.mWriteMail("Wrong Reason, DLL exiting");
-		return true;
+	case DLL_PROCESS_ATTACH:
+		Mail.mWriteMail("DLL:Attaching to process");
+		break;
+	case DLL_PROCESS_DETACH:
+		Mail.mWriteMail("DLL:Unloading from process");
+		break;
+	case DLL_THREAD_ATTACH:
+		Mail.mWriteMail("DLL:Attaching to thread");
+		break;
+	case DLL_THREAD_DETACH:
+		Mail.mWriteMail("DLL:Unloading from thread");
+		break;
 	}
 
-	Mail.mWriteMail("Starting Script Extender");
+	Mail.mWriteMail("DLL:Starting Script Extender");
 	MWSEOnProcessStart();
 
 	//Don't use this anywhere else
