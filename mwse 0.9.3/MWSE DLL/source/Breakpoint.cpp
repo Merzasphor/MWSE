@@ -41,7 +41,7 @@ static BreakpointData Breakpoints[] = {
 	BreakpointData(0x5028a0, 8, BP1),
 	BreakpointData(0x500540, 10, BP2),
 /*
-i think this get's overwritten by MWSE (BP3)
+MWE injection method (BP3)
 0050D5C5   C741 3C 00000000 MOV DWORD PTR DS:[ECX+3C],0
 0050D5CC   EB 5F            JMP SHORT Morrowin.0050D62D
 0050D5CE   81FA BD010000    CMP EDX,1BD
@@ -54,6 +54,20 @@ i think this get's overwritten by MWSE (BP3)
 0050D5E3   E8 189EF6FF      CALL Morrowin.00477400
 0050D5E8   8B4C24 34        MOV ECX,DWORD PTR SS:[ESP+34]
 0050D5EC   83C4 08          ADD ESP,8
+*/
+/*
+non injected version (BP3)
+0050D5C5   C741 3C 000000 MOV DWORD PTR DS:[ECX+3C],0
+0050D5CC   EB 5F          JMP SHORT Morrowin.0050D62D
+0050D5CE   81FA BD010000  CMP EDX,1BD
+0050D5D4   7C 22          JL SHORT Morrowin.0050D5F8
+0050D5D6   8B4424 2C      MOV EAX,DWORD PTR SS:[ESP+2C]
+0050D5DA   83C0 10        ADD EAX,10
+0050D5DD   50             PUSH EAX
+0050D5DE   68 40037B00    PUSH Morrowin.007B0340                   ;  ASCII "Script %s Trying to RunFunction index greater than function count The script will not run anymore."
+0050D5E3   E8 189EF6FF    CALL Morrowin.00477400
+0050D5E8   8B4C24 34      MOV ECX,DWORD PTR SS:[ESP+34]
+0050D5EC   83C4 08        ADD ESP,8
 */
 	BreakpointData(0x50d5d6, 8, BP3),
 	BreakpointData(0x4fe195, 10, BP4),
