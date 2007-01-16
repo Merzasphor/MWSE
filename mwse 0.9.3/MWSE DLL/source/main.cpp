@@ -52,12 +52,21 @@ BOOL _stdcall DllMain(HANDLE hModule, DWORD reason, void* unused)
 		break;
 	case DLL_PROCESS_DETACH:
 		Mail.mWriteMail("DLL:Unloading from process");
+
+		return true;
+
 		break;
 	case DLL_THREAD_ATTACH:
 		Mail.mWriteMail("DLL:Attaching to thread");
+
+		return true;
+
 		break;
 	case DLL_THREAD_DETACH:
 		Mail.mWriteMail("DLL:Unloading from thread");
+
+		return true;
+
 		break;
 	}
 
