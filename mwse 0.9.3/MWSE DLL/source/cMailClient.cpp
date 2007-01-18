@@ -2,26 +2,36 @@
 
 void cMailClient::mOpenMailConnection(char serverName[])
 {
-	vServerName = serverName;
-	vSlotHandle=CreateFile(vServerName,GENERIC_WRITE,FILE_SHARE_READ,0,OPEN_EXISTING,
-		FILE_ATTRIBUTE_NORMAL,0);
+	if(vSlotHandle == INVALID_HANDLE_VALUE)
+	{
+		vServerName = serverName;
+		vSlotHandle=CreateFile(vServerName,GENERIC_WRITE,FILE_SHARE_READ,0,OPEN_EXISTING,
+			FILE_ATTRIBUTE_NORMAL,0);
+	}
 }
 
 void cMailClient::mWriteMail(char mail[])
 {
-	WriteFile(vSlotHandle,mail,vBytes2Write,&vBytesWritten,0);
+	if(vSlotHandle != INVALID_HANDLE_VALUE)
+		WriteFile(vSlotHandle,mail,vBytes2Write,&vBytesWritten,0);
 }
 
 void cMailClient::mCloseMailConnection()
 {
-	CloseHandle(vSlotHandle);
+	if(vSlotHandle != INVALID_HANDLE_VALUE)
+	{
+		CloseHandle(vSlotHandle);
+		vSlotHandle = INVALID_HANDLE_VALUE;
+	}
 }
 
 cMailClient::cMailClient()
 {
-vBytes2Write = 1000;
+	vSlotHandle = INVALID_HANDLE_VALUE;
+	vBytes2Write = 1000;
 }
 
 cMailClient::~cMailClient()
 {
+	mCloseMailConnection();
 }

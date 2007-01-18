@@ -43,8 +43,6 @@ BOOL _stdcall DllMain(HANDLE hModule, DWORD reason, void* unused)
 {
 
 	//Don't use this anywhere else
-//	cMailClient Mail;
-//	Mail.mOpenMailConnection();
 	cLog::mOpenLog();
 
 	switch(reason)
@@ -58,7 +56,7 @@ BOOL _stdcall DllMain(HANDLE hModule, DWORD reason, void* unused)
 		break;
 	case DLL_THREAD_ATTACH:
 		cLog::mLogMessage("DLL:Attaching to thread\n");
-		return true;
+//		return true;
 		break;
 	case DLL_THREAD_DETACH:
 		cLog::mLogMessage("DLL:Unloading from thread\n");
