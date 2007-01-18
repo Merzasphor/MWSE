@@ -23,7 +23,7 @@ bool INSTPUSH::execute(void)
 	bool result= machine.push(value);
 	
 #ifdef DEBUGGING
-	LOG::log("INSTPUSH(%lx or %f) %s\n",value,*(float*)&value,result?"succeeded":"failed");
+	cLog::mLogMessage("INSTPUSH(%lx or %f) %s\n",value,*(float*)&value,result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -49,7 +49,7 @@ bool INSTPUSHB::execute(void)
 	bool result= machine.push(val);
 	
 #ifdef DEBUGGING
-	LOG::log("INSTPUSHB(%lx or %f) %s\n",val,*(float*)&val,result?"succeeded":"failed");
+	cLog::mLogMessage("INSTPUSHB(%lx or %f) %s\n",val,*(float*)&val,result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -74,7 +74,7 @@ bool INSTPUSHS::execute(void)
 	VMREGTYPE val= value;
 	bool result= machine.push(val);
 #ifdef DEBUGGING
-	LOG::log("INSTPUSHS(%lx or %f) %s\n",val,*(float*)&val,result?"succeeded":"failed");
+	cLog::mLogMessage("INSTPUSHS(%lx or %f) %s\n",val,*(float*)&val,result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -103,7 +103,7 @@ bool INSTPUSHREG::execute(void)
 		result= machine.push(value);
 		
 #ifdef DEBUGGING
-	LOG::log("%lx or %f = INSTPUSHREG(REG%d) %s\n",
+	cLog::mLogMessage("%lx or %f = INSTPUSHREG(REG%d) %s\n",
 		value,*(float*)&value,GP+regidx,result?"succeeded":"failed");
 #endif	
 	return result;
@@ -144,7 +144,7 @@ bool INSTDECLARELOCAL::execute(void)
 #ifdef DEBUGGING
 	TES3MACHINE* vm= (TES3MACHINE*)(&machine);
 	vm->dumpscriptstack();
-	LOG::log("INSTDECLARELOCAL(%d) %s\n",(int)localsize,result?"succeeded":"failed");
+	cLog::mLogMessage("INSTDECLARELOCAL(%d) %s\n",(int)localsize,result?"succeeded":"failed");
 #endif	
 	return result;
 }

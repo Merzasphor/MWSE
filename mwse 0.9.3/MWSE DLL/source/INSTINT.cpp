@@ -19,7 +19,7 @@ bool INSTADD::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%ld= INSTADD(%ld,%ld) %s\n",sum,val,val2,result?"succeeded":"failed");
+	cLog::mLogMessage("%ld= INSTADD(%ld,%ld) %s\n",sum,val,val2,result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -40,7 +40,7 @@ bool INSTSUB::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%ld= INSTSUB(%ld,%ld) %s\n",sum,val,val2,result?"succeeded":"failed");
+	cLog::mLogMessage("%ld= INSTSUB(%ld,%ld) %s\n",sum,val,val2,result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -61,7 +61,7 @@ bool INSTMUL::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%ld= INSTMUL(%ld,%ld) %s\n",sum,val,val2,result?"succeeded":"failed");
+	cLog::mLogMessage("%ld= INSTMUL(%ld,%ld) %s\n",sum,val,val2,result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -82,7 +82,7 @@ bool INSTDIV::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%ld= INSTDIV(%ld,%ld) %s\n",sum,val,val2,result?"succeeded":"failed");
+	cLog::mLogMessage("%ld= INSTDIV(%ld,%ld) %s\n",sum,val,val2,result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -103,7 +103,7 @@ bool INSTMOD::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%ld= INSTMOD(%ld,%ld) %s\n",sum,val,val2,result?"succeeded":"failed");
+	cLog::mLogMessage("%ld= INSTMOD(%ld,%ld) %s\n",sum,val,val2,result?"succeeded":"failed");
 #endif	
 	return result;
 }

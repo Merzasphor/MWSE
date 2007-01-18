@@ -4,7 +4,7 @@
 #include "TES3MEMMAP.h"
 #include "TES3TYPES.h"
 #include "TES3OPCODES.h"
-#include "LOG.h"
+#include "cLog.h"
 #include "DEBUGGING.h"
 // 22-08-2006 Tp21
 #include "warnings.h"
@@ -138,7 +138,7 @@ bool FUNCPCCELLID::execute(void)
 	}
 	catch(...)
 	{
-		LOG::log("PCCELLID() exception\n");
+		cLog::mLogMessage("PCCELLID() exception\n");
 		result= false;
 	}
 			

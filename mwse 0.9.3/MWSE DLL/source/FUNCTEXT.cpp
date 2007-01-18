@@ -5,7 +5,7 @@
 #include "TES3MEMMAP.h"
 #include "TES3OPCODES.h"
 #include "DEBUGGING.h"
-#include "LOG.h"
+#include "cLog.h"
 #include <string.h>
 // 22-08-2006 Tp21
 #include "warnings.h"
@@ -307,7 +307,7 @@ bool FUNCSTRINGBUILD::execute(void)
 	}
 
 #ifdef DEBUGGING
-	LOG::log("FUNCSTRINGBUILD(%x,%s,%d) %s\n",str,str,result,result?"succeeded":"failed");
+	cLog::mLogMessage("FUNCSTRINGBUILD(%x,%s,%d) %s\n",str,str,result,result?"succeeded":"failed");
 #endif
 
 	return result;
@@ -325,7 +325,7 @@ bool FUNCSTRINGLENGTH::execute(void)
 	}
 
 #ifdef DEBUGGING
-	//LOG::log("FUNCSTRINGLENGTH(%s,%x,%d) %s\n",filename,str,result,result?"succeeded":"failed");
+	//cLog::mLogMessage("FUNCSTRINGLENGTH(%s,%x,%d) %s\n",filename,str,result,result?"succeeded":"failed");
 #endif
 
 	return result;
@@ -356,7 +356,7 @@ bool FUNCSTRINGPARSE::execute(void)
         delete[] resultset;
 	}
 #ifdef DEBUGGING
-	//LOG::log("FUNCSTRINGPARSE(%d,%s,%s) %s\n",resultset[0],format,str,result?"succeeded":"failed");
+	//cLog::mLogMessage("FUNCSTRINGPARSE(%d,%s,%s) %s\n",resultset[0],format,str,result?"succeeded":"failed");
 #endif
 	return result;
 }

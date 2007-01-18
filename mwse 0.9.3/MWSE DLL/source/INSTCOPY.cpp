@@ -31,7 +31,7 @@ bool INSTCOPYREG::execute(void)
 		&& machine.SetRegister(GP+destreg,value);
 		
 #ifdef DEBUGGING
-	LOG::log("%lx= INSTCOPYREG(%d,%d) %s\n",value,destreg,sourcereg,result?"succeeded":"failed");
+	cLog::mLogMessage("%lx= INSTCOPYREG(%d,%d) %s\n",value,destreg,sourcereg,result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -61,7 +61,7 @@ bool INSTCOPYFROMSTACK::execute(void)
 		&& machine.push(value);
 		
 #ifdef DEBUGGING
-	LOG::log("%lx= INSTCOPYFROMSTACK(%d) %s\n",value,(int)stackpos,result?"succeeded":"failed");
+	cLog::mLogMessage("%lx= INSTCOPYFROMSTACK(%d) %s\n",value,(int)stackpos,result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -91,7 +91,7 @@ bool INSTCOPYTOSTACK::execute(void)
 		&& machine.WriteMem((VPVOID)stackpointer+stackpos,&value,sizeof(value));
 		
 #ifdef DEBUGGING
-	LOG::log("%lx= INSTCOPYTOSTACK(%d) %s\n",value,(int)stackpos,result?"succeeded":"failed");
+	cLog::mLogMessage("%lx= INSTCOPYTOSTACK(%d) %s\n",value,(int)stackpos,result?"succeeded":"failed");
 #endif	
 	return result;
 }

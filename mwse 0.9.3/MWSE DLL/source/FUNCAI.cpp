@@ -60,8 +60,8 @@ bool FUNCGETCOMBAT::execute(void)
 			result= machine.push((VMREGTYPE)target);
 
 #ifdef DEBUGGING
-	LOG::log("%lx = FUNCGETCOMBAT(%lx) %s\n",target,ref,result?"succeeded":"failed");
-#endif	
+	cLog::mLogMessage("%lx = FUNCGETCOMBAT(%lx) %s\n",target,ref,result?"succeeded":"failed");
+#endif
 			
 	return result;
 }
@@ -80,7 +80,7 @@ bool FUNCSTARTCOMBAT::execute(void)
 
 
 #ifdef DEBUGGING
-	LOG::log("FUNCSTARTCOMBAT(%lx) %s\n",target,result?"succeeded":"failed");
+	cLog::mLogMessage("FUNCSTARTCOMBAT(%lx) %s\n",target,result?"succeeded":"failed");
 #endif	
 			
 	return result;

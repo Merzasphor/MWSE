@@ -1,5 +1,5 @@
 #include "Breakpoint.h"
-#include "log.h"
+#include "cLog.h"
 
 static void* Overwritten;
 static Context context;
@@ -197,7 +197,7 @@ void AddBreakpoint(BYTE ID, BreakpointFunc func) {
 	if(ID>8) return;
 	if(Breakpoints[ID].active) return;
 
-	//LOG::log("Setting breakpoint ID %d\n", ID);
+	//cLog::mLogMessage("Setting breakpoint ID %d\n", ID);
 
 	Breakpoints[ID].func=func;
 	DWORD OldProtect;
@@ -231,7 +231,7 @@ void RemoveBreakpoint(BYTE ID) {
 	if(ID>8) return;
 	if(!Breakpoints[ID].active) return;
 
-	//LOG::log("Removing breakpoint ID %d\n", ID);
+	//cLog::mLogMessage("Removing breakpoint ID %d\n", ID);
 
 	DWORD OldProtect;
 	const BYTE* source;

@@ -27,7 +27,7 @@ bool INSTPOP::execute(void)
 		&& machine.SetRegister(SP,stackpointer+stackincrease);
 		
 #ifdef DEBUGGING
-	LOG::log("INSTPOP(%d) %s\n",(int)stackincrease,result?"succeeded":"failed");
+	cLog::mLogMessage("INSTPOP(%d) %s\n",(int)stackincrease,result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -54,7 +54,7 @@ bool INSTPOPREG::execute(void)
 	
 	bool result= machine.pop(val) && machine.SetRegister(GP+regidx,val);
 #ifdef DEBUGGING
-	LOG::log("%lx= INSTPOPREG(REG%d) %s\n",val,(int)GP+regidx,result?"succeeded":"failed");
+	cLog::mLogMessage("%lx= INSTPOPREG(REG%d) %s\n",val,(int)GP+regidx,result?"succeeded":"failed");
 #endif	
 	return result;
 }

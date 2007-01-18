@@ -13,7 +13,7 @@ struct INSTNOP : public INSTRUCTION
 	virtual bool execute(void)
 	{
 	#ifdef DEBUGGING
-		LOG::log("NOP() succeeded\n");
+		cLog::mLogMessage("NOP() succeeded\n");
 	#endif
 		return true;
 	}

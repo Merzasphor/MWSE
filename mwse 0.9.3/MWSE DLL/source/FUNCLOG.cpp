@@ -1,7 +1,7 @@
 //FuncLog.cpp
 
 #include "FUNCLOG.h"
-#include "LOG.h"
+#include "cLog.h"
 #include "DEBUGGING.h"
 #include "FUNCTEXT.h"
 
@@ -26,7 +26,7 @@ bool FUNCLOG::execute(void)
 			buffer[len-1] = '\n';
 			buffer[len] = 0;
 		}
-		LOG::log("%s",buffer);
+		cLog::mLogMessage("%s",buffer);
 	}
 	
 	return result;

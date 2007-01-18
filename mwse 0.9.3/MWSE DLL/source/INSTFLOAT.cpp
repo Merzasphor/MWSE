@@ -39,7 +39,7 @@ bool INSTITOF::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%f= INSTITOF(%ld) %s\n",ffromi(sum),val,result?"succeeded":"failed");
+	cLog::mLogMessage("%f= INSTITOF(%ld) %s\n",ffromi(sum),val,result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -60,7 +60,7 @@ bool INSTFTOI::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%ld= INSTFTOI(%f) %s\n",sum,ffromi(val),result?"succeeded":"failed");
+	cLog::mLogMessage("%ld= INSTFTOI(%f) %s\n",sum,ffromi(val),result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -84,7 +84,7 @@ bool INSTFADD::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%f= INSTFADD(%f,%f) %s\n",
+	cLog::mLogMessage("%f= INSTFADD(%f,%f) %s\n",
 		ffromi(sum),ffromi(val1),ffromi(val2),result?"succeeded":"failed");
 #endif	
 	return result;
@@ -109,7 +109,7 @@ bool INSTFSUB::execute(void)
 	}
 
 #ifdef DEBUGGING
-	LOG::log("%f= INSTFSUB(%f,%f) %s\n",
+	cLog::mLogMessage("%f= INSTFSUB(%f,%f) %s\n",
 		ffromi(sum),ffromi(val1),ffromi(val2),result?"succeeded":"failed");
 #endif	
 	return result;
@@ -134,7 +134,7 @@ bool INSTFMUL::execute(void)
 	}
 
 #ifdef DEBUGGING
-	LOG::log("%f= INSTFMUL(%f,%f) %s\n",
+	cLog::mLogMessage("%f= INSTFMUL(%f,%f) %s\n",
 		ffromi(sum),ffromi(val1),ffromi(val2),result?"succeeded":"failed");
 #endif	
 	return result;
@@ -159,7 +159,7 @@ bool INSTFDIV::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%f= INSTFDIV(%f,%f) %s\n",
+	cLog::mLogMessage("%f= INSTFDIV(%f,%f) %s\n",
 		ffromi(sum),ffromi(val1),ffromi(val2),result?"succeeded":"failed");
 #endif	
 	return result;
@@ -182,7 +182,7 @@ bool INSTTAN::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%f= INSTTAN(%f) %s\n",ffromi(sum),ffromi(val),result?"succeeded":"failed");
+	cLog::mLogMessage("%f= INSTTAN(%f) %s\n",ffromi(sum),ffromi(val),result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -204,7 +204,7 @@ bool INSTSIN::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%f= INSTSIN(%f) %s\n",ffromi(sum),ffromi(val),result?"succeeded":"failed");
+	cLog::mLogMessage("%f= INSTSIN(%f) %s\n",ffromi(sum),ffromi(val),result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -226,7 +226,7 @@ bool INSTCOS::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%f= INSTCOS(%f) %s\n",ffromi(sum),ffromi(val),result?"succeeded":"failed");
+	cLog::mLogMessage("%f= INSTCOS(%f) %s\n",ffromi(sum),ffromi(val),result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -249,7 +249,7 @@ bool INSTARCTAN::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%f= INSTARCTAN(%f) %s\n",ffromi(sum),ffromi(val),result?"succeeded":"failed");
+	cLog::mLogMessage("%f= INSTARCTAN(%f) %s\n",ffromi(sum),ffromi(val),result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -271,7 +271,7 @@ bool INSTARCSIN::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%f= INSTARCSIN(%f) %s\n",ffromi(sum),ffromi(val),result?"succeeded":"failed");
+	cLog::mLogMessage("%f= INSTARCSIN(%f) %s\n",ffromi(sum),ffromi(val),result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -293,7 +293,7 @@ bool INSTARCCOS::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%f= INSTARCCOS(%f) %s\n",ffromi(sum),ffromi(val),result?"succeeded":"failed");
+	cLog::mLogMessage("%f= INSTARCCOS(%f) %s\n",ffromi(sum),ffromi(val),result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -315,7 +315,7 @@ bool INSTDEGRAD::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%f= INSTDEGRAD(%f) %s\n",ffromi(sum),ffromi(val),result?"succeeded":"failed");
+	cLog::mLogMessage("%f= INSTDEGRAD(%f) %s\n",ffromi(sum),ffromi(val),result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -337,7 +337,7 @@ bool INSTRADDEG::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%f= INSTRADDEG(%f) %s\n",ffromi(sum),ffromi(val),result?"succeeded":"failed");
+	cLog::mLogMessage("%f= INSTRADDEG(%f) %s\n",ffromi(sum),ffromi(val),result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -359,7 +359,7 @@ bool INSTSQRT::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%f= INSTSQRT(%f) %s\n",ffromi(sum),ffromi(val),result?"succeeded":"failed");
+	cLog::mLogMessage("%f= INSTSQRT(%f) %s\n",ffromi(sum),ffromi(val),result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -383,7 +383,7 @@ bool INSTHYPOT::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%f= INSTHYPOT(%f,%f) %s\n",
+	cLog::mLogMessage("%f= INSTHYPOT(%f,%f) %s\n",
 		ffromi(sum),ffromi(val1),ffromi(val2),result?"succeeded":"failed");
 #endif	
 	return result;

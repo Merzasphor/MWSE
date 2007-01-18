@@ -58,7 +58,7 @@ bool FUNCSTRCMP::execute(void)
 	}
 
 #ifdef DEBUGGING
-	LOG::log("%ld = FUNCSTRCMP(%s,%s) %s\n",cmp,str1,str2,result?"succeeded":"failed");
+	cLog::mLogMessage("%ld = FUNCSTRCMP(%s,%s) %s\n",cmp,str1,str2,result?"succeeded":"failed");
 #endif
 	
 	return result;

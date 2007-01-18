@@ -18,6 +18,9 @@ public:
 	//Log message to console
 	static void mLogMessage(const char* fmt, ...);
 
+	//Log binary message to console
+	static void mLogBinaryMessage(void* addr, int size);
+
 	//close the log
 	static void mCloseLog();
 

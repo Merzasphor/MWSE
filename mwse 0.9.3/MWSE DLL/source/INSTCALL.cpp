@@ -29,7 +29,7 @@ bool INSTCALL::execute(void)
 		&& machine.SetRegister(IP,(VMREGTYPE)function);
 
 #ifdef DEBUGGING
-	LOG::log("INSTCALL(%lx) %s\n",function,result?"succeeded":"failed");
+	cLog::mLogMessage("INSTCALL(%lx) %s\n",function,result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -63,7 +63,7 @@ bool INSTCALLSHORT::execute(void)
 		&& machine.SetRegister(IP,(VMREGTYPE)function);
 
 #ifdef DEBUGGING
-	LOG::log("INSTCALLSHORT(%lx) %s\n",function,result?"succeeded":"failed");
+	cLog::mLogMessage("INSTCALLSHORT(%lx) %s\n",function,result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -84,7 +84,7 @@ bool INSTRETURN::execute(void)
 		&& machine.SetRegister(IP,ip);
 		
 #ifdef DEBUGGING
-	LOG::log("INSTRETURN(%lx) %s\n",ip,result?"succeeded":"failed");
+	cLog::mLogMessage("INSTRETURN(%lx) %s\n",ip,result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -118,7 +118,7 @@ bool INSTRETURNP::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("INSTRETURNP(%lx,%x) %s\n",ip,(int)paramsize,result?"succeeded":"failed");
+	cLog::mLogMessage("INSTRETURNP(%lx,%x) %s\n",ip,(int)paramsize,result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -153,7 +153,7 @@ bool INSTRETURNVP::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%lx= INSTRETURNVP(%lx,%x) %s\n",funcresult,ip,(int)paramsize,result?"succeeded":"failed");
+	cLog::mLogMessage("%lx= INSTRETURNVP(%lx,%x) %s\n",funcresult,ip,(int)paramsize,result?"succeeded":"failed");
 #endif	
 	return result;
 }

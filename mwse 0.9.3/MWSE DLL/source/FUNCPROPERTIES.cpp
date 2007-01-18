@@ -5,7 +5,7 @@
 #include "TES3MEMMAP.h"
 #include "TES3OPCODES.h"
 #include "DEBUGGING.h"
-#include "LOG.h"
+#include "cLog.h"
 #include "TES3OFFSETS.h"
 #include <string.h>
 // 22-08-2006 Tp21
@@ -61,7 +61,7 @@ bool FUNCGETSPELLEFFECTS::breakpoint()
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("FUNCGETSPELLEFFECTSb() %s\n",result?"succeeded":"failed");
+	cLog::mLogMessage("FUNCGETSPELLEFFECTSb() %s\n",result?"succeeded":"failed");
 #endif
 
 	return result;
@@ -95,7 +95,7 @@ bool FUNCGETVALUE::execute(void)
 		}
 	}
 #ifdef DEBUGGING
-	LOG::log("%lu= FUNCGETVALUE()\n",value);
+	cLog::mLogMessage("%lu= FUNCGETVALUE()\n",value);
 #endif	
 	return machine.push((VMREGTYPE)value);
 }
@@ -118,7 +118,7 @@ bool FUNCGETOWNER::execute(void)
 		}
 	}
 #ifdef DEBUGGING
-	LOG::log("%lx %s= FUNCGETOWNER()\n",id, (id?(char*)id:"(null)"));
+	cLog::mLogMessage("%lx %s= FUNCGETOWNER()\n",id, (id?(char*)id:"(null)"));
 #endif	
 		
 	return machine.push((VMREGTYPE)id);
@@ -142,7 +142,7 @@ bool FUNCGETWEIGHT::execute(void)
 			weight *= count;
 	}
 #ifdef DEBUGGING
-	LOG::log("%f= FUNCGETWEIGHT()\n",weight);
+	cLog::mLogMessage("%f= FUNCGETWEIGHT()\n",weight);
 #endif	
 	return machine.push((VMFLOAT)weight);
 }
@@ -204,7 +204,7 @@ bool FUNCGETENCUMB::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%f= FUNCGETENCUMB() %s\n",totalweight,result?"succeeded":"failed");
+	cLog::mLogMessage("%f= FUNCGETENCUMB() %s\n",totalweight,result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -229,7 +229,7 @@ bool FUNCGETCONDITION::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%lu= FUNCGETCONDITION()\n",value);
+	cLog::mLogMessage("%lu= FUNCGETCONDITION()\n",value);
 #endif	
 	return machine.push((VMREGTYPE)value);
 }
@@ -250,7 +250,7 @@ bool FUNCGETMAXCOND::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%lu= FUNCGETMAXCOND()\n",value);
+	cLog::mLogMessage("%lu= FUNCGETMAXCOND()\n",value);
 #endif	
 	return machine.push((VMREGTYPE)value);
 }
@@ -284,7 +284,7 @@ bool FUNCGETCHARGE::execute(void)
 		}
 	}
 #ifdef DEBUGGING
-	LOG::log("%f= FUNCGETCHARGE()\n",charge);
+	cLog::mLogMessage("%f= FUNCGETCHARGE()\n",charge);
 #endif	
 	return machine.push((VMFLOAT)charge);
 }
@@ -315,7 +315,7 @@ bool FUNCGETMAXCHARGE::execute(void)
 			maxcharge = value;  // want float format to match current charge
 	}
 #ifdef DEBUGGING
-	LOG::log("%f= FUNCGETMAXCHARGE()\n",maxcharge);
+	cLog::mLogMessage("%f= FUNCGETMAXCHARGE()\n",maxcharge);
 #endif	
 	return machine.push((VMFLOAT)maxcharge);
 }
@@ -335,7 +335,7 @@ bool FUNCGETQUALITY::execute(void)
 			GetOffsetData(machine,temp,offset,(ULONG*)&quality);
 	}
 #ifdef DEBUGGING
-	LOG::log("%f= FUNCGETQUALITY()\n",quality);
+	cLog::mLogMessage("%f= FUNCGETQUALITY()\n",quality);
 #endif	
 	return machine.push((VMFLOAT)quality);
 }
@@ -372,7 +372,7 @@ bool FUNCGETNAME::execute(void)
 				str = (ULONG)strings.add((const char*)namestr);
 	}
 #ifdef DEBUGGING
-	LOG::log("%lx %s= FUNCGETNAME()\n",str, (str?(char*)str:"(null)"));
+	cLog::mLogMessage("%lx %s= FUNCGETNAME()\n",str, (str?(char*)str:"(null)"));
 #endif	
 		
 	return machine.push((VMREGTYPE)str);
@@ -426,7 +426,7 @@ bool FUNCSETNAME::execute(void)
 		}
 	}
 #ifdef DEBUGGING
-//	LOG::log("%lx %s %s= FUNCSETNAME()\n",str, (str?(char*)str:"(null)"), string);
+//	cLog::mLogMessage("%lx %s %s= FUNCSETNAME()\n",str, (str?(char*)str:"(null)"), string);
 #endif	
 
 	return true;
@@ -449,7 +449,7 @@ bool FUNCGETBASEID::execute(void)
 			id= (ULONG)strings.add("unknown");
 	}
 #ifdef DEBUGGING
-	LOG::log("%lx %s= FUNCGETBASEID()\n",id, (id?(char*)id:"(null)"));
+	cLog::mLogMessage("%lx %s= FUNCGETBASEID()\n",id, (id?(char*)id:"(null)"));
 #endif	
 		
 	return machine.push((VMREGTYPE)id);
@@ -465,7 +465,7 @@ bool FUNCGETBASESTR::execute(void)
 	if (GetTargetData(machine, &refr))
 		GetAttachData(machine, refr, 8, 0x96, (ULONG*)&value);
 #ifdef DEBUGGING
-	LOG::log("%f= FUNCGETBASESTR()\n",value);
+	cLog::mLogMessage("%f= FUNCGETBASESTR()\n",value);
 #endif	
 	return machine.push((VMFLOAT)value);
 }
@@ -478,7 +478,7 @@ bool FUNCGETBASEINT::execute(void)
 	if (GetTargetData(machine, &refr))
 		GetAttachData(machine, refr, 8, 0x99, (ULONG*)&value);
 #ifdef DEBUGGING
-	LOG::log("%f= FUNCGETBASEINT()\n",value);
+	cLog::mLogMessage("%f= FUNCGETBASEINT()\n",value);
 #endif	
 	return machine.push((VMFLOAT)value);
 }
@@ -491,7 +491,7 @@ bool FUNCGETBASEWIL::execute(void)
 	if (GetTargetData(machine, &refr))
 		GetAttachData(machine, refr, 8, 0x9c, (ULONG*)&value);
 #ifdef DEBUGGING
-	LOG::log("%f= FUNCGETBASEWIL()\n",value);
+	cLog::mLogMessage("%f= FUNCGETBASEWIL()\n",value);
 #endif	
 	return machine.push((VMFLOAT)value);
 }
@@ -504,7 +504,7 @@ bool FUNCGETBASEAGI::execute(void)
 	if (GetTargetData(machine, &refr))
 		GetAttachData(machine, refr, 8, 0x9f, (ULONG*)&value);
 #ifdef DEBUGGING
-	LOG::log("%f= FUNCGETBASEAGI()\n",value);
+	cLog::mLogMessage("%f= FUNCGETBASEAGI()\n",value);
 #endif	
 	return machine.push((VMFLOAT)value);
 }
@@ -517,7 +517,7 @@ bool FUNCGETBASESPE::execute(void)
 	if (GetTargetData(machine, &refr))
 		GetAttachData(machine, refr, 8, 0xa2, (ULONG*)&value);
 #ifdef DEBUGGING
-	LOG::log("%f= FUNCGETBASESPE()\n",value);
+	cLog::mLogMessage("%f= FUNCGETBASESPE()\n",value);
 #endif	
 	return machine.push((VMFLOAT)value);
 }
@@ -530,7 +530,7 @@ bool FUNCGETBASEEND::execute(void)
 	if (GetTargetData(machine, &refr))
 		GetAttachData(machine, refr, 8, 0xa5, (ULONG*)&value);
 #ifdef DEBUGGING
-	LOG::log("%f= FUNCGETBASEEND()\n",value);
+	cLog::mLogMessage("%f= FUNCGETBASEEND()\n",value);
 #endif	
 	return machine.push((VMFLOAT)value);
 }
@@ -543,7 +543,7 @@ bool FUNCGETBASEPER::execute(void)
 	if (GetTargetData(machine, &refr))
 		GetAttachData(machine, refr, 8, 0xa8, (ULONG*)&value);
 #ifdef DEBUGGING
-	LOG::log("%f= FUNCGETBASEPER()\n",value);
+	cLog::mLogMessage("%f= FUNCGETBASEPER()\n",value);
 #endif	
 	return machine.push((VMFLOAT)value);
 }
@@ -556,7 +556,7 @@ bool FUNCGETBASELUC::execute(void)
 	if (GetTargetData(machine, &refr))
 		GetAttachData(machine, refr, 8, 0xab, (ULONG*)&value);
 #ifdef DEBUGGING
-	LOG::log("%f= FUNCGETBASELUC()\n",value);
+	cLog::mLogMessage("%f= FUNCGETBASELUC()\n",value);
 #endif	
 	return machine.push((VMFLOAT)value);
 }
@@ -572,7 +572,7 @@ bool FUNCISFEMALE::execute(void)
 		if (GetOffsetData(machine, temp, OFFSET_NPCFLAGS, &value))
 			value %= 2;	// lowest bit
 #ifdef DEBUGGING
-	LOG::log("%lu= FUNCISFEMALE()\n",value);
+	cLog::mLogMessage("%lu= FUNCISFEMALE()\n",value);
 #endif	
 	return machine.push((VMREGTYPE)value);
 }
@@ -593,7 +593,7 @@ bool FUNCMYCELLID::execute(void)
 						id= (ULONG)strings.add((const char*)idstr);
 	}
 #ifdef DEBUGGING
-	LOG::log("%lx %s= FUNCMYCELLID()\n",id, (id?(char*)id:"(null)"));
+	cLog::mLogMessage("%lx %s= FUNCMYCELLID()\n",id, (id?(char*)id:"(null)"));
 #endif	
 		
 	return machine.push((VMREGTYPE)id);
@@ -620,7 +620,7 @@ bool FUNCGETBASEGOLD::execute(void)
 		gold %= 65536; // it's a short here, so lower half only
 	}
 #ifdef DEBUGGING
-	LOG::log("%lu= FUNCGETBASEGOLD()\n",gold);
+	cLog::mLogMessage("%lu= FUNCGETBASEGOLD()\n",gold);
 #endif	
 	return machine.push((VMREGTYPE)gold);
 }
@@ -646,7 +646,7 @@ bool FUNCGETGOLD::execute(void)
 		}
 	}
 #ifdef DEBUGGING
-	LOG::log("%lu= FUNCGETGOLD()\n",gold);
+	cLog::mLogMessage("%lu= FUNCGETGOLD()\n",gold);
 #endif	
 	return machine.push((VMREGTYPE)gold);
 }
@@ -683,7 +683,7 @@ bool FUNCSETBASEGOLD::execute(void)
 		}
 	}
 #ifdef DEBUGGING
-	LOG::log("%lu= FUNCSETBASEGOLD()\n",gold);
+	cLog::mLogMessage("%lu= FUNCSETBASEGOLD()\n",gold);
 #endif	
 	return machine.push((VMREGTYPE)gold);
 }
@@ -701,7 +701,7 @@ bool FUNCSETGOLD::execute(void)
 			result = SetAttachData(machine, refr, 8, OFFSET_GOLD, (ULONG)gold);
 	}
 #ifdef DEBUGGING
-	LOG::log("%lu= FUNCSETGOLD()\n",gold);
+	cLog::mLogMessage("%lu= FUNCSETGOLD()\n",gold);
 #endif	
 	return result;
 }
@@ -737,7 +737,7 @@ bool FUNCISTRADER::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%lu= FUNCISTRADER()\n",flags);
+	cLog::mLogMessage("%lu= FUNCISTRADER()\n",flags);
 #endif	
 	return machine.push((VMREGTYPE)flags);
 }
@@ -770,7 +770,7 @@ bool FUNCISTRAINER::execute(void)
 			flags = 1;
 	}
 #ifdef DEBUGGING
-	LOG::log("%lu= FUNCISTRAINER()\n",flags);
+	cLog::mLogMessage("%lu= FUNCISTRAINER()\n",flags);
 #endif	
 	return machine.push((VMREGTYPE)flags);
 }
@@ -802,7 +802,7 @@ bool FUNCISPROVIDER::execute(void)
 		flags |= cflags;
 	}
 #ifdef DEBUGGING
-	LOG::log("%lu= FUNCISPROVIDER()\n",flags);
+	cLog::mLogMessage("%lu= FUNCISPROVIDER()\n",flags);
 #endif	
 	return machine.push((VMREGTYPE)flags);
 }

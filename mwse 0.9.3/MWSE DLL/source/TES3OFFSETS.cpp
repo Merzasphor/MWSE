@@ -5,7 +5,7 @@
 #include "TES3MEMMAP.h"
 #include "TES3OPCODES.h"
 #include "DEBUGGING.h"
-#include "LOG.h"
+#include "cLog.h"
 #include <string.h>
 	
 // offset of value in carriable item templates

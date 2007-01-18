@@ -104,7 +104,7 @@ bool FUNCGETLOCAL::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%lx or %f = FUNCGETLOCAL(%lx,%lx) %s\n",
+	cLog::mLogMessage("%lx or %f = FUNCGETLOCAL(%lx,%lx) %s\n",
 		value,*(VMFLOAT*)&value,stackparams.type,stackparams.index,result?"succeeded":"failed");
 #endif	
 	
@@ -172,7 +172,7 @@ bool FUNCSETLOCAL::execute(void)
 	}
 
 #ifdef DEBUGGING
-	LOG::log("FUNCSETLOCAL(%lx,%lx,%lx or %f) %s\n",
+	cLog::mLogMessage("FUNCSETLOCAL(%lx,%lx,%lx or %f) %s\n",
 		stackparams.type,stackparams.index,stackparams.value,*(VMFLOAT*)&stackparams.value,
 		result?"succeeded":"failed");
 #endif	

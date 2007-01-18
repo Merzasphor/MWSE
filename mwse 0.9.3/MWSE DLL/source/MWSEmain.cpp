@@ -1,10 +1,10 @@
 #include "MWSEmain.h"
 #include "Breakpoint.h"
 #include "TES3MACHINE.h"
-#include "log.h"
+#include "cLog.h"
 #include "TES3MemMap.h"
 
-#define log LOG::log
+#define log cLog::mLogMessage
 
 static void OnDecode(Context* context);
 static void OnRunFuncIdxError(Context* context);

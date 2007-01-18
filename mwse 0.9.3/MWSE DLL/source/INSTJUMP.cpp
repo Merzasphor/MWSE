@@ -24,7 +24,7 @@ bool INSTJUMP::execute(void)
 {
 	bool result= machine.SetRegister(IP,(VMREGTYPE)position);
 #ifdef DEBUGGING
-	LOG::log("%lx= INSTJUMP() %s\n",(long)position,result?"succeeded":"failed");
+	cLog::mLogMessage("%lx= INSTJUMP() %s\n",(long)position,result?"succeeded":"failed");
 #endif	
 	return result;
 }
@@ -45,7 +45,7 @@ bool INSTJUMPZERO::execute(void)
 		result= INSTJUMP::execute();
 	
 #ifdef DEBUGGING
-	LOG::log("%lx= INSTJUMPZERO(%s) %s\n",(long)position,
+	cLog::mLogMessage("%lx= INSTJUMPZERO(%s) %s\n",(long)position,
 	(GetMachine().GetFlags()&FZERO)?"ZERO":"NOTZERO",
 	result?"succeeded":"failed");
 #endif	
@@ -64,7 +64,7 @@ bool INSTJUMPNOTZERO::execute(void)
 		result= INSTJUMP::execute();
 	
 #ifdef DEBUGGING
-	LOG::log("%lx= INSTJUMPNOTZERO(%s) %s\n",(long)position,
+	cLog::mLogMessage("%lx= INSTJUMPNOTZERO(%s) %s\n",(long)position,
 	(GetMachine().GetFlags()&FZERO)?"ZERO":"NOTZERO",
 	result?"succeeded":"failed");
 #endif	
@@ -82,7 +82,7 @@ bool INSTJUMPPOSITIVE::execute(void)
 		result= INSTJUMP::execute();
 	
 #ifdef DEBUGGING
-	LOG::log("%lx= INSTJUMPPOSITIVE(%s) %s\n",(long)position,
+	cLog::mLogMessage("%lx= INSTJUMPPOSITIVE(%s) %s\n",(long)position,
 	(GetMachine().GetFlags()&FPOS)?"POS":"NEG",
 	result?"succeeded":"failed");
 #endif	
@@ -100,7 +100,7 @@ bool INSTJUMPNEGATIVE::execute(void)
 		result= INSTJUMP::execute();
 	
 #ifdef DEBUGGING
-	LOG::log("%lx= INSTJUMPNEGATIVE(%s) %s\n",(long)position,
+	cLog::mLogMessage("%lx= INSTJUMPNEGATIVE(%s) %s\n",(long)position,
 	(GetMachine().GetFlags()&FPOS)?"POS":"NEG",
 	result?"succeeded":"failed");
 #endif	
@@ -138,7 +138,7 @@ bool INSTJUMPSHORTZERO::execute(void)
 		result= INSTJUMP::execute();
 	
 #ifdef DEBUGGING
-	LOG::log("%lx= INSTJUMPSHORTZERO(%s) %s\n",(long)position,
+	cLog::mLogMessage("%lx= INSTJUMPSHORTZERO(%s) %s\n",(long)position,
 	(GetMachine().GetFlags()&FZERO)?"ZERO":"NOTZERO",
 	result?"succeeded":"failed");
 #endif	
@@ -157,7 +157,7 @@ bool INSTJUMPSHORTNOTZERO::execute(void)
 		result= INSTJUMP::execute();
 	
 #ifdef DEBUGGING
-	LOG::log("%lx= INSTJUMPSHORTNOTZERO(%s) %s\n",(long)position,
+	cLog::mLogMessage("%lx= INSTJUMPSHORTNOTZERO(%s) %s\n",(long)position,
 	(GetMachine().GetFlags()&FZERO)?"ZERO":"NOTZERO",
 	result?"succeeded":"failed");
 #endif	
@@ -175,7 +175,7 @@ bool INSTJUMPSHORTPOSITIVE::execute(void)
 		result= INSTJUMP::execute();
 	
 #ifdef DEBUGGING
-	LOG::log("%lx= INSTJUMPSHORTPOSITIVE(%s) %s\n",(long)position,
+	cLog::mLogMessage("%lx= INSTJUMPSHORTPOSITIVE(%s) %s\n",(long)position,
 	(GetMachine().GetFlags()&FPOS)?"POS":"NEG",
 	result?"succeeded":"failed");
 #endif	
@@ -193,7 +193,7 @@ bool INSTJUMPSHORTNEGATIVE::execute(void)
 		result= INSTJUMP::execute();
 	
 #ifdef DEBUGGING
-	LOG::log("%lx= INSTJUMPSHORTNEGATIVE(%s) %s\n",(long)position,
+	cLog::mLogMessage("%lx= INSTJUMPSHORTNEGATIVE(%s) %s\n",(long)position,
 	(GetMachine().GetFlags()&FPOS)?"POS":"NEG",
 	result?"succeeded":"failed");
 #endif	

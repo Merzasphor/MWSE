@@ -6,7 +6,7 @@
 #include "TES3OPCODES.h"
 #include "DEBUGGING.h"
 #include "REFERENCE.h"
-#include "LOG.h"
+#include "cLog.h"
 #include "TES3OFFSETS.h"
 
 // 22-08-2006 Tp21
@@ -42,7 +42,7 @@ bool FUNCADDSPELL::execute(void)
 		 result= false; 
  
 	#ifdef DEBUGGING 
-     LOG::log("FUNCADDSPELL(%s,%d) %s\n",(const char*)string,count,result?"succeeded":"failed"); 
+     cLog::mLogMessage("FUNCADDSPELL(%s,%d) %s\n",(const char*)string,count,result?"succeeded":"failed"); 
 	#endif
 	 
 	 return result; 
@@ -65,7 +65,7 @@ bool FUNCADDSPELL::breakpoint()
 	}
 	
 	#ifdef DEBUGGING
-	LOG::log("FUNCADDSPELLb() %s\n",result?"succeeded":"failed");
+	cLog::mLogMessage("FUNCADDSPELLb() %s\n",result?"succeeded":"failed");
 	#endif
 
 	return result;
@@ -100,7 +100,7 @@ bool FUNCREMOVESPELL::execute(void)
 		 result= false; 
  
 	#ifdef DEBUGGING 
-     LOG::log("FUNCREMOVESPELL(%s,%d) %s\n",(const char*)string,count,result?"succeeded":"failed"); 
+     cLog::mLogMessage("FUNCREMOVESPELL(%s,%d) %s\n",(const char*)string,count,result?"succeeded":"failed"); 
 	#endif
 	 
 	 return result; 
@@ -123,7 +123,7 @@ bool FUNCREMOVESPELL::breakpoint()
 	}
 	
 	#ifdef DEBUGGING
-	LOG::log("FUNCREMOVESPELLb() %s\n",result?"succeeded":"failed");
+	cLog::mLogMessage("FUNCREMOVESPELLb() %s\n",result?"succeeded":"failed");
 	#endif
 
 	return result;

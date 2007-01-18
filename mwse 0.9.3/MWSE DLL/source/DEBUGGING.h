@@ -5,5 +5,5 @@
 //#define DEBUGGING 1
 
 #ifdef DEBUGGING
-#include "LOG.h"
+#include "cLog.h"
 #endif

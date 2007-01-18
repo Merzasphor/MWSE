@@ -4,7 +4,7 @@
 #include "TES3MEMMAP.h"
 #include "TES3OPCODES.h"
 #include "DEBUGGING.h"
-#include "LOG.h"
+#include "cLog.h"
 #include <string.h>
 // 22-08-2006 Tp21
 #include "warnings.h"
@@ -38,7 +38,7 @@ bool FUNCREF::execute(void)
 		&& setref((VPREFERENCE)pref));
 
 #ifdef DEBUGGING
-	LOG::log("%s= FUNCREF(%lx) %s\n",pref?"true":"false",pref,result?"succeeded":"failed");
+	cLog::mLogMessage("%s= FUNCREF(%lx) %s\n",pref?"true":"false",pref,result?"succeeded":"failed");
 //	if(pref)
 //		machine.dumpobject((VPREFERENCE)pref);
 #endif
@@ -69,7 +69,7 @@ bool FUNCREFTYPE::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%lx= FUNCREFTYPE() %s\n",templ->type,result?"succeeded":"failed");
+	cLog::mLogMessage("%lx= FUNCREFTYPE() %s\n",templ->type,result?"succeeded":"failed");
 #endif	
 		
 	return result;
@@ -102,7 +102,7 @@ bool FUNCREFID::execute(void)
 	}
 	
 #ifdef DEBUGGING
-	LOG::log("%s= FUNCREFID() %s\n",idstring,result?"succeeded":"failed");
+	cLog::mLogMessage("%s= FUNCREFID() %s\n",idstring,result?"succeeded":"failed");
 #endif	
 		
 	return result;
@@ -159,7 +159,7 @@ bool FUNCFIRSTNPC::execute(void)
 	result= getMachine().push((VMREGTYPE)ref) && result;
 
 #ifdef DEBUGGING
-	LOG::log("%lx = FUNCFIRSTNPC() %s\n",ref,result?"succeeded":"failed");
+	cLog::mLogMessage("%lx = FUNCFIRSTNPC() %s\n",ref,result?"succeeded":"failed");
 	if(ref)
 		getMachine().dumpobject((VPREFERENCE)ref);
 #endif
@@ -219,7 +219,7 @@ bool FUNCFIRSTITEM::execute(void)
 	result= getMachine().push((VMREGTYPE)ref) && result;
 
 #ifdef DEBUGGING
-	LOG::log("%lx = FUNCFIRSTITEM() %s\n",ref,result?"succeeded":"failed");
+	cLog::mLogMessage("%lx = FUNCFIRSTITEM() %s\n",ref,result?"succeeded":"failed");
 	if(ref)
 		getMachine().dumpobject((VPREFERENCE)ref);
 #endif
@@ -261,7 +261,7 @@ bool FUNCFIRSTSTATIC::execute(void)
 	result= getMachine().push((VMREGTYPE)ref) && result;
 
 #ifdef DEBUGGING
-	LOG::log("%lx = FUNCFIRSTSTATIC() %s\n",ref,result?"succeeded":"failed");
+	cLog::mLogMessage("%lx = FUNCFIRSTSTATIC() %s\n",ref,result?"succeeded":"failed");
 	if(ref)
 		getMachine().dumpobject((VPREFERENCE)ref);
 #endif
@@ -295,7 +295,7 @@ bool FUNCNEXTREF::execute(void)
 	}
 
 #ifdef DEBUGGING
-	LOG::log("%lx= FUNCNEXTREF(%lx) %s\n",next,pref,result?"succeeded":"failed");
+	cLog::mLogMessage("%lx= FUNCNEXTREF(%lx) %s\n",next,pref,result?"succeeded":"failed");
 	if(next)
 		getMachine().dumpobject((VPREFERENCE)next);
 #endif
@@ -319,7 +319,7 @@ bool FUNCGETPCTARGET::execute(void)
 		&& getMachine().push((VMREGTYPE)target));
 
 #ifdef DEBUGGING
-	LOG::log("%lx= FUNCGETTARGET() %s\n",target,result?"succeeded":"failed");
+	cLog::mLogMessage("%lx= FUNCGETTARGET() %s\n",target,result?"succeeded":"failed");
 	if(target)
 		getMachine().dumpobject((VPREFERENCE)target);
 #endif
@@ -342,7 +342,7 @@ bool FUNCREFPCTARGET::execute(void)
 		&& setref(target));
 
 #ifdef DEBUGGING
-	LOG::log("%lx= FUNCREFTARGET() %s\n",target,result?"succeeded":"failed");
+	cLog::mLogMessage("%lx= FUNCREFTARGET() %s\n",target,result?"succeeded":"failed");
 	if(target)
 		getMachine().dumpobject((VPREFERENCE)target);
 #endif
