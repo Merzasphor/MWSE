@@ -17,7 +17,7 @@ private:
 	DWORD vBytesWritten,vBytes2Write;
 public:
 	//Open the mailbox
-	void mOpenMailConnection();
+	void mOpenMailConnection(char serverName[]);
 	//Write a letter
 	void mWriteMail(char mail[]);
 	//Shut it

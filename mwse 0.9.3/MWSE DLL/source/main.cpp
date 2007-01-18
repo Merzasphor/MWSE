@@ -1,4 +1,6 @@
-#include"cMailClient.h"
+//#include"cMailClient.h"
+#include "cLog.h"
+
 #include "MWSEmain.h"
 
 /*
@@ -37,44 +39,42 @@ void* _stdcall FakeDirect3DCreate(UINT version) {
 
 	return func(version);
 }*/
-
 BOOL _stdcall DllMain(HANDLE hModule, DWORD reason, void* unused)
 {
-	cMailClient Mail;
 
 	//Don't use this anywhere else
-	Mail.mOpenMailConnection();
+//	cMailClient Mail;
+//	Mail.mOpenMailConnection();
+	cLog::mOpenLog();
 
 	switch(reason)
 	{
 	case DLL_PROCESS_ATTACH:
-		Mail.mWriteMail("DLL:Attaching to process");
+		cLog::mLogMessage("DLL:Attaching to process\n");
 		break;
 	case DLL_PROCESS_DETACH:
-		Mail.mWriteMail("DLL:Unloading from process");
-
+		cLog::mLogMessage("DLL:Unloading from process\n");
 		return true;
-
 		break;
 	case DLL_THREAD_ATTACH:
-		Mail.mWriteMail("DLL:Attaching to thread");
-
+		cLog::mLogMessage("DLL:Attaching to thread\n");
 		return true;
-
 		break;
 	case DLL_THREAD_DETACH:
-		Mail.mWriteMail("DLL:Unloading from thread");
-
+		cLog::mLogMessage("DLL:Unloading from thread\n");
 		return true;
-
+		break;
+	default: //in any other case (shouldn't happen)
+		cLog::mLogMessage("DLL:This should not happen\n");
+		return true;
 		break;
 	}
 
-	Mail.mWriteMail("DLL:Starting Script Extender");
+	cLog::mLogMessage("DLL:Starting Script Extender\n");
 	MWSEOnProcessStart();
 
 	//Don't use this anywhere else
-	Mail.mCloseMailConnection();
+	cLog::mCloseLog();
 
 	return true;
 }

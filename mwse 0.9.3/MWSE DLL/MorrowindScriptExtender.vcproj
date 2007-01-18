@@ -209,6 +209,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\cLog.h"
+				>
+			</File>
+			<File
 				RelativePath=".\source\cMailClient.h"
 				>
 			</File>
@@ -384,6 +388,10 @@
 			</File>
 			<File
 				RelativePath=".\source\BUFSPACE.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\cLog.cpp"
 				>
 			</File>
 			<File

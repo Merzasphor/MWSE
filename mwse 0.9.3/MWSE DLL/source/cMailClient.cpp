@@ -1,7 +1,8 @@
 #include"cMailClient.h"
 
-void cMailClient::mOpenMailConnection()
+void cMailClient::mOpenMailConnection(char serverName[])
 {
+	vServerName = serverName;
 	vSlotHandle=CreateFile(vServerName,GENERIC_WRITE,FILE_SHARE_READ,0,OPEN_EXISTING,
 		FILE_ATTRIBUTE_NORMAL,0);
 }
@@ -18,8 +19,7 @@ void cMailClient::mCloseMailConnection()
 
 cMailClient::cMailClient()
 {
-	vServerName="\\\\.\\mailslot\\MorrowindScriptExtenderMailslot";
-	vBytes2Write=1000;
+vBytes2Write = 1000;
 }
 
 cMailClient::~cMailClient()
