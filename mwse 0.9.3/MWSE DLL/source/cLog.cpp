@@ -16,9 +16,9 @@ void cLog::mLogMessage(const char* fmt, ...)
 	va_list args;
 	va_start(args, fmt);
 	if (fmt)
-		vsprintf(buf, fmt, args);
+		_vsnprintf(buf, sizeof(buf)/sizeof(buf[0])-1, fmt, args);
 	else
-		strcpy(buf, "DLL:log(null)\n");
+		strncpy(buf, "DLL:log(null)\n", sizeof(buf)-1);
 
 	buf[sizeof(buf)-1] = '\0';
 	vMail->mWriteMail(buf);
@@ -28,14 +28,16 @@ void cLog::mLogMessage(const char* fmt, ...)
 void cLog::mLogBinaryMessage(void *addr, int size)
 {
 	BYTE *ptr = (BYTE*)addr;
-	for (int y = 0;y < size;y += 16)
+    int y;
+	for (y = 0;y < size;y += 16)
 	{
+        int x;
 		mLogMessage("\t");
-		for (int x = 0;x < 16 && (x+y) < size; x++)
+		for (x = 0;x < 16 && (x+y) < size; x++)
 			mLogMessage("%02X ", ((int)ptr[y+x])&0xFF);
 		mLogMessage("\t");
 
-		for (int x = 0;x < 16 && (x+y) < size; x++)
+		for (x = 0;x < 16 && (x+y) < size; x++)
 			if(isprint(ptr[y+x]))
 				mLogMessage("%c", ptr[y+x]);
 			else
