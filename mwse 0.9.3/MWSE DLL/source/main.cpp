@@ -1,7 +1,6 @@
 //#include"cMailClient.h"
 #include "cLog.h"
-
-#include "MWSEmain.h"
+#include "cMWSEmain.h"
 
 /*
  1/9/07
@@ -69,7 +68,7 @@ BOOL _stdcall DllMain(HANDLE hModule, DWORD reason, void* unused)
 	}
 
 	cLog::mLogMessage("DLL:Starting Script Extender\n");
-	MWSEOnProcessStart();
+	cMWSEMain::mStartMWSE();
 
 	//Don't use this anywhere else
 	cLog::mCloseLog();
