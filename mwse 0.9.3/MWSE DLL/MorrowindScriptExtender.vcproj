@@ -217,6 +217,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\cMWSEMain.h"
+				>
+			</File>
+			<File
 				RelativePath=".\source\DEBUGGING.h"
 				>
 			</File>
@@ -238,10 +242,6 @@
 			</File>
 			<File
 				RelativePath=".\source\MEMACCESSORS.h"
-				>
-			</File>
-			<File
-				RelativePath=".\source\MWSEmain.h"
 				>
 			</File>
 			<File
@@ -395,15 +395,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\cMWSEMain.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\source\FILECACHE.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\source\main.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\source\MWSEmain.cpp"
 				>
 			</File>
 			<File
