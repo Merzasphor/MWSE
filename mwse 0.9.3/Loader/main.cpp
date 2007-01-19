@@ -31,11 +31,12 @@ int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)
 
 	//Do the searches
 	iStartEmUp.mInitMorrowind();
+	//Create mail server(So we can get log msgs from the DLL)
+    //This MUST be before the DLL is injected
+	Mail.mCreateServer();
 	//Inject the DLL
 	iStartEmUp.mInjectDll(iStartEmUp.vMorroID);
 
-	//Create mail server(So we can get log msgs from the DLL)
-	Mail.mCreateServer();
 	while(GetMessage(&vMsg,0,0,0)>0)
 	{
 		Mail.mReadMail();
