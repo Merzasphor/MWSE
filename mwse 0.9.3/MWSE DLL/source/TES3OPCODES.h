@@ -373,7 +373,15 @@ typedef enum {
 	,CAST=			0x3F12
 
 	//Fliggerty 12-27-06: Fliggerty's functions
-	,ADDSPELL=		0x3F20
-	,REMOVESPELL=	0x3F21
+	,ADDSPELL=		0x3FA0
+	,REMOVESPELL=	0x3FA1
 
+    // GRM 01-15-07: New "set value" functions
+    ,SETVALUE = 0x3FB0
+    ,SETWEIGHT= 0x3FB1
+    ,SETQUALITY=0x3FB2
+    ,SETCONDITION=0x3FB3
+    ,SETMAXCOND=0x3FB4
+    ,SETCHARGE=0x3FB5
+    ,SETMAXCHARGE=0x3FB6
 	} OPCODES;
