@@ -3,6 +3,7 @@
 #include "VIRTUALMACHINE.h"
 #include "MEMACCESSORS.h"
 #include <algorithm>
+using namespace std;
 // 22-08-2006 Tp21
 #include "warnings.h"
 
@@ -36,14 +37,14 @@ bool VIRTUALMACHINE::AddAddressSpace(VPVOID position, ADDRESSSPACE* space)
 	if(space && space->size())
 	{
 		VMSIZE pos= (VMSIZE)position;
-		long long newend= (long long)pos+space->size();
+		LONGLONG newend= (LONGLONG)pos+space->size();
 		ADDRESSSPACEMAP::iterator it= memory.begin();
 		ADDRESSSPACEMAP::iterator lim= memory.end();
 		while(result && it!=lim)
 		{
 			VMSIZE memstart= (VMSIZE)it->first;
 			ADDRESSSPACE* mem= it->second;
-			long long memend= (long long)memstart+mem->size();
+			LONGLONG memend= (LONGLONG)memstart+mem->size();
 			if((memstart<=pos && pos<memend)
 				|| (memstart<newend && newend<=memend)
 				|| (pos<=memstart && memend<=newend))
@@ -79,7 +80,7 @@ bool VIRTUALMACHINE::AccessMem(MEMACCESSOR& access, VPVOID addr, VOID* buf, VMSI
 {
 	bool result= true;
 	VMSIZE start= (VMSIZE)addr;
-	long long end= (long long)start+size;
+	LONGLONG end= (LONGLONG)start+size;
 	int loop= 0;
 //	LOG::log("VIRTUALMACHINE::AccessMem(xxx,%lx,%lx)\n",addr,size);
 	
@@ -97,13 +98,11 @@ bool VIRTUALMACHINE::AccessMem(MEMACCESSOR& access, VPVOID addr, VOID* buf, VMSI
 		}
 		VMSIZE memstart= (VMSIZE)it->first;
 		VMSIZE memsize= mem->size();
-		long long memend= (long long)memstart+memsize;
+		LONGLONG memend= (LONGLONG)memstart+memsize;
 		if(memstart<=start && start<memend)
 		{
 			VMSIZE memoffset= start-memstart;
-#undef min
-				VMSIZE memlen= std::min((VMSIZE)(memend-start),size);
-#define min(a,b) (((a) < (b)) ? (a) : (b))
+			VMSIZE memlen= _cpp_min((VMSIZE)(memend-start),size);
 
 			if(access.access(*mem,(VPVOID)memoffset,buf,memlen))
 				size-= memlen;
