@@ -58,10 +58,11 @@ int WINAPI WinMain(HINSTANCE,HINSTANCE,LPSTR,int)
 
 	#endif
 
-	iStartEmUp.mInjectDll(iStartEmUp.vMorroID);
-
 	//Create mail server(So we can get log msgs from the DLL)
 	iMail.mCreateServer();
+
+	iStartEmUp.mInjectDll(iStartEmUp.vMorroID);
+
 	while(GetMessage(&vMsg,0,0,0)>0)
 	{
 		iMail.mReadMail();
