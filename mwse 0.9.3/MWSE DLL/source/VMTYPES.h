@@ -14,7 +14,10 @@ typedef short VMSHORT;	// any consistent size
 typedef	long VMLONG;	// any consistent size > VMSHORT
 typedef DWORD VMFLAGSTYPE;	// how many flags do you need?
 
-#define VMSIZE_MAX (1LL<<32)
+// 'ui32' is the pre-Visual C++ 2005 suffix, equivalent
+// to 'll'.
+#define VMSIZE_MAX (1ui64<<32)
 #define VMBYTE_MAX (1<<8)
 #define VMSHORT_MAX (1<<16)
-#define VMLONG_MAX (1LL<<32)
+#define VMLONG_MAX (1ui64<<32)
+
