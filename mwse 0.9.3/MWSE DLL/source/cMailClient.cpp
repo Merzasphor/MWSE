@@ -7,6 +7,9 @@ void cMailClient::mOpenMailConnection(char serverName[])
 		vServerName = serverName;
 		vSlotHandle=CreateFile(vServerName,GENERIC_WRITE,FILE_SHARE_READ,0,OPEN_EXISTING,
 			FILE_ATTRIBUTE_NORMAL,0);
+        if (vSlotHandle == INVALID_HANDLE_VALUE) {
+            MessageBox(NULL, "Unable to open mail slot", "MWSE Initialization Failure", 0);
+        }
 	}
 }
 
