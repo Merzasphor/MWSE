@@ -40,38 +40,38 @@ void* _stdcall FakeDirect3DCreate(UINT version) {
 }*/
 BOOL _stdcall DllMain(HANDLE hModule, DWORD reason, void* unused)
 {
+    OutputDebugString("MSWE DllMain\n");
 
-	//Don't use this anywhere else
-	cLog::mOpenLog();
 
 	switch(reason)
 	{
 	case DLL_PROCESS_ATTACH:
+	    //Don't use this anywhere else
+	    cLog::mOpenLog();
 		cLog::mLogMessage("DLL:Attaching to process\n");
 		break;
 	case DLL_PROCESS_DETACH:
 		cLog::mLogMessage("DLL:Unloading from process\n");
+	    //Don't use this anywhere else
+	    cLog::mCloseLog();
 		return true;
 		break;
 	case DLL_THREAD_ATTACH:
 		cLog::mLogMessage("DLL:Attaching to thread\n");
-//		return true;
+		return true;
 		break;
 	case DLL_THREAD_DETACH:
 		cLog::mLogMessage("DLL:Unloading from thread\n");
 		return true;
 		break;
 	default: //in any other case (shouldn't happen)
-		cLog::mLogMessage("DLL:This should not happen\n");
+		cLog::mLogMessage("DLL:Unknown DLL event\n");
 		return true;
 		break;
 	}
 
 	cLog::mLogMessage("DLL:Starting Script Extender\n");
 	cMWSEMain::mStartMWSE();
-
-	//Don't use this anywhere else
-	cLog::mCloseLog();
 
 	return true;
 }
