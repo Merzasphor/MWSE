@@ -3,7 +3,107 @@
 
 #include "TES3MACHINE.h"
 #include "FUNCEXTENDER.h"
+#include "TES3OFFSETS.h"
 #include "STRINGS.h"
+
+//GRM  15-01-2007 [use proper C++ class]
+class FUNCSETVALUE : public FUNCTION
+{
+public:
+	FUNCSETVALUE(TES3MACHINE& vm): machine(vm) { };
+   virtual bool execute(void);
+private:
+   TES3MACHINE& machine;
+};
+
+// charge is unique
+class FUNCSETCHARGE : public FUNCTION
+{
+public:
+   FUNCSETCHARGE(TES3MACHINE& vm): machine(vm) { };
+   virtual bool execute(void);
+private:
+   TES3MACHINE& machine;
+};
+
+class FUNCSETMAXCHARGE : public FUNCTION
+{
+public:
+   FUNCSETMAXCHARGE(TES3MACHINE& vm): machine(vm) { };
+   virtual bool execute(void);
+private:
+   TES3MACHINE& machine;
+};
+
+class FUNCSETCONDITION : public FUNCTION
+{
+public:
+   FUNCSETCONDITION(TES3MACHINE& vm): machine(vm) { };
+   virtual bool execute(void);
+private:
+   TES3MACHINE& machine;
+};
+
+class FUNCSETMAXCONDITION : public FUNCTION
+{
+public:
+   FUNCSETMAXCONDITION(TES3MACHINE& vm): machine(vm) { };
+   virtual bool execute(void);
+private:
+   TES3MACHINE& machine;
+};
+// Most of the <set> functions have a virtually identical structure.
+// To exploit this, a base class is used.
+class CommonSet : public FUNCTION
+{
+public:
+   virtual bool execute(void);
+protected:
+   CommonSet(TES3MACHINE &ctor_machine, const char *ctor_name): name(ctor_name), machine(ctor_machine) {};
+   const char *name;
+   TES3MACHINE &machine;
+   // Derived classes will define this function.
+   virtual ULONG getTypeOffset(ULONG type) = 0;
+   virtual bool canSet(ULONG type) = 0;
+};
+
+class FUNCSETWEIGHT : public CommonSet
+{
+public:
+   FUNCSETWEIGHT(TES3MACHINE& vm): CommonSet(vm, "FUNCSETWEIGHT") { };
+protected:
+   virtual ULONG getTypeOffset(ULONG type) { return offsetOfWeight(type); }
+   virtual bool canSet(ULONG type)
+   {
+       return (type == MISC ||
+               type == CLOTHING ||
+               type == WEAPON ||
+               type == ARMOR ||
+               type == BOOK ||
+               type == ALCHEMY ||
+               type == APPARATUS ||
+               type == INGREDIENT ||
+               type == PROBE ||
+               type == PICK ||
+               type == REPAIR);
+   }
+};
+
+class FUNCSETQUALITY : public CommonSet
+{
+public:
+   FUNCSETQUALITY(TES3MACHINE& vm): CommonSet(vm, "FUNCSETQUALITY") { };
+protected:
+   virtual ULONG getTypeOffset(ULONG type) { return offsetOfQuality(type); }
+   virtual bool canSet(ULONG type)
+   {
+       return (type == PROBE ||
+               type == PICK ||
+               type == REPAIR);
+   }
+};
+
+
 
 //Tp21 22-08-2006
 struct FUNCSETNAME : public FUNCTION
