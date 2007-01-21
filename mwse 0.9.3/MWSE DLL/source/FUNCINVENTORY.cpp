@@ -24,12 +24,12 @@ bool FUNCADDSPELL::execute(void)
      const char* string = "null"; 
  
      if(machine.pop(pString)
-		 && (string = machine.GetString((VPVOID)pString)) != 0) 
+		 && (string = machine.GetString(reinterpret_cast<VPVOID>(pString))) != 0) 
      { 
-          VMLONG strlength = strlen((const char*)string); 
+          VMLONG strlength = strlen(string); 
           parent = machine.GetFlow(); 
-          result = machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_LENGTH_IMAGE), &strlength, sizeof(strlength)) 
-               && machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_IMAGE), (void*)string, strlength+1); 
+          result = machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_LENGTH_IMAGE)), &strlength, sizeof(strlength)) 
+               && machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_IMAGE)), (void*)string, strlength+1); 
           if(result) 
           { 
                Context context = machine.GetFlow(); 
@@ -42,7 +42,7 @@ bool FUNCADDSPELL::execute(void)
 		 result= false; 
  
 	#ifdef DEBUGGING 
-     cLog::mLogMessage("FUNCADDSPELL(%s,%d) %s\n",(const char*)string,count,result?"succeeded":"failed"); 
+     cLog::mLogMessage("FUNCADDSPELL(%s) %s\n",string,result?"succeeded":"failed"); 
 	#endif
 	 
 	 return result; 
@@ -58,7 +58,7 @@ bool FUNCADDSPELL::breakpoint()
 {
 	bool result = false;
 	Context flow = machine.GetFlow();
-	if(machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_IMAGE), &flow.Eax, sizeof(flow.Eax)))
+	if(machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_IMAGE)), &flow.Eax, sizeof(flow.Eax)))
 	{
 		machine.SetFlow(parent);
 		result = CallOriginalFunction(machine,ORIG_ADDSPELL);
@@ -82,12 +82,12 @@ bool FUNCREMOVESPELL::execute(void)
      const char* string = "null"; 
  
      if(machine.pop(pString)
-		 && (string = machine.GetString((VPVOID)pString)) != 0) 
+		 && (string = machine.GetString(reinterpret_cast<VPVOID>(pString))) != 0) 
      { 
-          VMLONG strlength = strlen((const char*)string); 
+          VMLONG strlength = strlen(string); 
           parent = machine.GetFlow(); 
-          result = machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_LENGTH_IMAGE), &strlength, sizeof(strlength)) 
-               && machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_IMAGE), (void*)string, strlength+1); 
+          result = machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_LENGTH_IMAGE)), &strlength, sizeof(strlength)) 
+               && machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_IMAGE)), (void*)string, strlength+1); 
           if(result) 
           { 
                Context context = machine.GetFlow(); 
@@ -100,7 +100,7 @@ bool FUNCREMOVESPELL::execute(void)
 		 result= false; 
  
 	#ifdef DEBUGGING 
-     cLog::mLogMessage("FUNCREMOVESPELL(%s,%d) %s\n",(const char*)string,count,result?"succeeded":"failed"); 
+     cLog::mLogMessage("FUNCREMOVESPELL(%s) %s\n",string,result?"succeeded":"failed"); 
 	#endif
 	 
 	 return result; 
@@ -116,7 +116,7 @@ bool FUNCREMOVESPELL::breakpoint()
 {
 	bool result = false;
 	Context flow = machine.GetFlow();
-	if(machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_IMAGE), &flow.Eax, sizeof(flow.Eax)))
+	if(machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_IMAGE)), &flow.Eax, sizeof(flow.Eax)))
 	{
 		machine.SetFlow(parent);
 		result = CallOriginalFunction(machine,ORIG_REMOVESPELL);
@@ -143,13 +143,13 @@ bool FUNCDROPITEM::execute(void)
 
 	if(machine.pop(pString) 
 		&& machine.pop(count) 
-		&& (string=machine.GetString((VPVOID)pString)) != 0)
+		&& (string=machine.GetString(reinterpret_cast<VPVOID>(pString))) != 0)
 	{
 		VMLONG strlength = strlen((const char*)string);
 		parent = machine.GetFlow();
-		result = machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_LENGTH_IMAGE), &strlength, sizeof(strlength))
-			&& machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_IMAGE), (void*)string, strlength+1)
-			&& machine.WriteMem((VPVOID)reltolinear(VARINDEX_IMAGE), (void*)&count, sizeof(count));
+		result = machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_LENGTH_IMAGE)), &strlength, sizeof(strlength))
+			&& machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_IMAGE)), (void*)string, strlength+1)
+			&& machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(VARINDEX_IMAGE)), (void*)&count, sizeof(count));
 		if(result)
 		{
 			Context context = machine.GetFlow();
@@ -173,7 +173,7 @@ bool FUNCDROPITEM::breakpoint()
 {
 	bool result= false;
 	Context flow= machine.GetFlow();
-	if(machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_IMAGE),&flow.Eax,sizeof(flow.Eax)))
+	if(machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_IMAGE)),&flow.Eax,sizeof(flow.Eax)))
 	{
 		machine.SetFlow(parent);
 		result= CallOriginalFunction(machine,ORIG_DROPITEM);
@@ -193,12 +193,12 @@ bool FUNCCAST::execute(void)
 	VMREGTYPE pString = 0;
 	const char* string = "null";
 
-	if (machine.pop(pString) && (string = machine.GetString((VPVOID)pString)) != 0)
+	if (machine.pop(pString) && (string = machine.GetString(reinterpret_cast<VPVOID>(pString))) != 0)
 	{
 		VMLONG strlength = strlen((const char*)string);
 		parent = machine.GetFlow();
-		result = machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_LENGTH_IMAGE), &strlength, sizeof(strlength))
-			&& machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_IMAGE), (void*)string, strlength+1);
+		result = machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_LENGTH_IMAGE)), &strlength, sizeof(strlength))
+			&& machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_IMAGE)), (void*)string, strlength+1);
 		if(result)
 		{
 			Context context= machine.GetFlow();
@@ -222,7 +222,7 @@ bool FUNCCAST::breakpoint()
 {
 	bool result= false;
 	Context flow= machine.GetFlow();
-	if(machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_IMAGE),&flow.Eax,sizeof(flow.Eax)))
+	if(machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_IMAGE)),&flow.Eax,sizeof(flow.Eax)))
 	{
 		machine.SetFlow(parent);
 		result= CallOriginalFunction(machine,ORIG_CAST);
@@ -241,12 +241,12 @@ bool FUNCEQUIPITEM::execute(void)
 	VMREGTYPE pString= 0;
 	const char* string= "null";
 
-	if(machine.pop(pString) && (string=machine.GetString((VPVOID)pString))!=0)
+	if(machine.pop(pString) && (string=machine.GetString(reinterpret_cast<VPVOID>(pString)))!=0)
 	{
 		VMLONG strlength= strlen((const char*)string);
 		parent= machine.GetFlow();
-		result= machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_LENGTH_IMAGE),&strlength,sizeof(strlength))
-			&& machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_IMAGE),(void*)string,strlength+1);
+		result= machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_LENGTH_IMAGE)),&strlength,sizeof(strlength))
+			&& machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_IMAGE)),(void*)string,strlength+1);
 		if(result)
 		{
 			Context context= machine.GetFlow();
@@ -270,7 +270,7 @@ bool FUNCEQUIPITEM::breakpoint()
 {
 	bool result= false;
 	Context flow= machine.GetFlow();
-	if(machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_IMAGE),&flow.Eax,sizeof(flow.Eax)))
+	if(machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_IMAGE)),&flow.Eax,sizeof(flow.Eax)))
 	{
 		machine.SetFlow(parent);
 		result= CallOriginalFunction(machine,ORIG_EQUIPITEM);
@@ -292,13 +292,13 @@ bool FUNCADDITEM::execute(void)
 	const char* string= "null";
 	VMREGTYPE count= 0;
 
-	if(machine.pop(pString) && machine.pop(count) && (string=machine.GetString((VPVOID)pString))!=0)
+	if(machine.pop(pString) && machine.pop(count) && (string=machine.GetString(reinterpret_cast<VPVOID>(pString)))!=0)
 	{
 		VMLONG strlength= strlen((const char*)string);
 		parent= machine.GetFlow();
-		result= machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_LENGTH_IMAGE),&strlength,sizeof(strlength))
-			&& machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_IMAGE),(void*)string,strlength+1)
-			&& machine.WriteMem((VPVOID)reltolinear(VARINDEX_IMAGE),(void*)&count,sizeof(count));
+		result= machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_LENGTH_IMAGE)),&strlength,sizeof(strlength))
+			&& machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_IMAGE)),(void*)string,strlength+1)
+			&& machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(VARINDEX_IMAGE)),(void*)&count,sizeof(count));
 		if(result)
 		{
 			Context context= machine.GetFlow();
@@ -322,7 +322,7 @@ bool FUNCADDITEM::breakpoint()
 {
 	bool result= false;
 	Context flow= machine.GetFlow();
-	if(machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_IMAGE),&flow.Eax,sizeof(flow.Eax)))
+	if(machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_IMAGE)),&flow.Eax,sizeof(flow.Eax)))
 	{
 		machine.SetFlow(parent);
 		result= CallOriginalFunction(machine,ORIG_ADDITEM);
@@ -345,13 +345,13 @@ bool FUNCREMOVEITEM::execute(void)
 	const char* string= "null";
 	VMREGTYPE count= 0;
 
-	if(machine.pop(pString) && machine.pop(count) && (string=machine.GetString((VPVOID)pString))!=0)
+	if(machine.pop(pString) && machine.pop(count) && (string=machine.GetString(reinterpret_cast<VPVOID>(pString)))!=0)
 	{
 		VMLONG strlength= strlen((const char*)string);
 		parent= machine.GetFlow();
-		result= machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_LENGTH_IMAGE),&strlength,sizeof(strlength))
-			&& machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_IMAGE),(void*)string,strlength+1)
-			&& machine.WriteMem((VPVOID)reltolinear(VARINDEX_IMAGE),(void*)&count,sizeof(count));
+		result= machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_LENGTH_IMAGE)),&strlength,sizeof(strlength))
+			&& machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_IMAGE)),(void*)string,strlength+1)
+			&& machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(VARINDEX_IMAGE)),(void*)&count,sizeof(count));
 		if(result)
 		{
 			Context context= machine.GetFlow();
@@ -375,7 +375,7 @@ bool FUNCREMOVEITEM::breakpoint()
 {
 	bool result= false;
 	Context flow= machine.GetFlow();
-	if(machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_IMAGE),&flow.Eax,sizeof(flow.Eax)))
+	if(machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_IMAGE)),&flow.Eax,sizeof(flow.Eax)))
 	{
 		machine.SetFlow(parent);
 		result= CallOriginalFunction(machine,ORIG_REMOVEITEM);
@@ -429,7 +429,7 @@ bool FUNCINVENTORY::execute(void)
 		}
 		stackpointer-= sizeof(stackresults);
 		result= (machine.SetRegister(SP,stackpointer)
-			&& machine.WriteMem((VPVOID)stackpointer,&stackresults,sizeof(stackresults)));
+			&& machine.WriteMem(reinterpret_cast<VPVOID>(stackpointer),&stackresults,sizeof(stackresults)));
 
 	}
 	else
@@ -451,7 +451,7 @@ bool FUNCNEXTSTACK::execute(void)
 	VMREGTYPE pstacknode= 0;
 	struct{VMREGTYPE id, count, next;} stackresults={(VMREGTYPE)"null",0,0};
 	if(machine.GetRegister(SP,stackpointer)
-		&& machine.ReadMem((VPVOID)stackpointer,&pstacknode,sizeof(pstacknode)))
+		&& machine.ReadMem(reinterpret_cast<VPVOID>(stackpointer),&pstacknode,sizeof(pstacknode)))
 	{
 		machine.SetFlags((VMREGTYPE)0);
 		if(pstacknode)
@@ -480,7 +480,7 @@ bool FUNCNEXTSTACK::execute(void)
 		// 2005-06-29  CDC	// major error here, producing two extra elements on the stack each call!
 		stackpointer = stackpointer - sizeof(stackresults) + sizeof(pstacknode);
 		result= (machine.SetRegister(SP,stackpointer)
-			&& machine.WriteMem((VPVOID)stackpointer,&stackresults,sizeof(stackresults)));
+			&& machine.WriteMem(reinterpret_cast<VPVOID>(stackpointer),&stackresults,sizeof(stackresults)));
 
 	}
 	else
@@ -501,12 +501,12 @@ bool FUNCHASEQUIPED::execute(void)
 	bool result= true;
 	VMREGTYPE pString= 0;
 	const char* string= "null";
-	if(machine.pop(pString) && (string=machine.GetString((VPVOID)pString))!=0)
+	if(machine.pop(pString) && (string=machine.GetString(reinterpret_cast<VPVOID>(pString)))!=0)
 	{
 		VMLONG strlength= strlen((const char*)string);
 		parent= machine.GetFlow();
-		result= machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_LENGTH_IMAGE),&strlength,sizeof(strlength))
-			&& machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_IMAGE),(void*)string,strlength+1);
+		result= machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_LENGTH_IMAGE)),&strlength,sizeof(strlength))
+			&& machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_IMAGE)),(void*)string,strlength+1);
 		if(result)
 		{
 			Context context= machine.GetFlow();
@@ -534,7 +534,7 @@ bool FUNCHASEQUIPED::breakpoint()
 	VMREGTYPE templ= flow.Eax;
 	if(templ)
 	{
-		result=(machine.WriteMem((VPVOID)reltolinear(SECONDOBJECT_IMAGE),&templ,sizeof(templ))
+		result=(machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_IMAGE)),&templ,sizeof(templ))
 			&& machine.SetVMDebuggerBreakpoint(&part2)
 			&& CallOriginalFunction(machine,ORIG_HASEQUIPED));
 		
@@ -589,12 +589,12 @@ bool FUNCCONTENTLIST::execute(void)
 	if ( !pnode )	// Parameter null (or missing), so get first item using object reference instead
 		GetTargetData(machine, &refr) && REFERENCE::GetInventory(machine,(VPREFERENCE)refr,pnode);
 
-	if ( pnode && GetOffsetData(machine,(VPVOID)pnode,0x2,(ULONG*)&pstack)
-		&& pstack && GetOffsetData(machine,(VPVOID)pstack,0x1,(ULONG*)&ptempl) && ptempl )
+	if ( pnode && GetOffsetData(machine,reinterpret_cast<VPVOID>(pnode),0x2,(ULONG*)&pstack)
+		&& pstack && GetOffsetData(machine,reinterpret_cast<VPVOID>(pstack),0x1,(ULONG*)&ptempl) && ptempl )
 	{
 		GetIdString(machine,ptempl,idstr);
 		invresults.id = (VMREGTYPE)strings.add((const char*)idstr);
-		GetOffsetData(machine,(VPVOID)pstack,0x0,(ULONG*)&data);
+		GetOffsetData(machine,reinterpret_cast<VPVOID>(pstack),0x0,(ULONG*)&data);
 		invresults.count = data;
 
 		GetOffsetData(machine,ptempl,0x1,(ULONG*)&data);
@@ -616,7 +616,7 @@ bool FUNCCONTENTLIST::execute(void)
 		else if ( data = (VMREGTYPE)GetNameString(machine,ptempl,invresults.type,0) )
 			invresults.name = data;
 
-		GetOffsetData(machine,(VPVOID)pnode,0x1,(ULONG*)&data);
+		GetOffsetData(machine,reinterpret_cast<VPVOID>(pnode),0x1,(ULONG*)&data);
 		invresults.next = data;
 		machine.SetFlags((VMREGTYPE)1);
 	}
@@ -624,7 +624,7 @@ bool FUNCCONTENTLIST::execute(void)
 	machine.GetRegister(SP,stackpointer);
 	stackpointer-= sizeof(invresults);
 	result= (machine.SetRegister(SP,stackpointer)
-		&& machine.WriteMem((VPVOID)stackpointer,&invresults,sizeof(invresults)));
+		&& machine.WriteMem(reinterpret_cast<VPVOID>(stackpointer),&invresults,sizeof(invresults)));
 
 	return result;
 }
@@ -636,6 +636,7 @@ bool FUNCCONTENTLIST::execute(void)
 const char *FUNCCONTENTLIST::randomselect(VPVOID templ)
 {
 	VPVOID p;
+    const char *string;
 	VPVOID node;
 	VPVOID item;		// item template pointer
 	ULONG chance;		// chance of none or pc level value (They are really short values though.)
@@ -670,8 +671,10 @@ const char *FUNCCONTENTLIST::randomselect(VPVOID templ)
 			GetOffsetData(machine,item,0x1,&chance);	// check for nested levelled lists
 			if (chance != 'IVEL') 
 				GetIdString(machine, item, buf);
-			else if ( p = (VPVOID)randomselect(item) )
-				strcpy(buf,(char*)p);
+            else if ( string = randomselect(item) ) {
+				strncpy(buf,string,sizeof buf-1);
+                buf[sizeof buf-1] = '\0';
+            }
 		}
 		GetOffsetData(machine, node, 0x1, (ULONG*)&node);
 		fflush(stdout);
