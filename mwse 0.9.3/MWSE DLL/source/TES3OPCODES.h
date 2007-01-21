@@ -384,4 +384,6 @@ typedef enum {
     ,SETMAXCONDITION=0x3E65
     ,SETCHARGE=0x3E66
     ,SETMAXCHARGE=0x3E67
+    // String compare (using regular expression)
+    ,STRINGMATCH=0x3E68
 	} OPCODES;
