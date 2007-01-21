@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
 MWSE 0.9.3: Changelog
-Developers: AnthonyG, Fliggerty, Timeslip, Tp21
+Developers: AnthonyG, Fliggerty, Timeslip, Tp21, grmcdorman
 Original Developers: CdCooley, FreshFish
 --------------------------------------------------------------------------------
 18-01-2007 by Tp21:
