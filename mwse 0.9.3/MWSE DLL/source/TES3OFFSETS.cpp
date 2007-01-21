@@ -11,18 +11,18 @@
 // offset of value in carriable item templates
 ULONG offsetOfValue(ULONG type) {
 	switch ( type ) {
-		case 'CSIM':
-		case 'KOOB':
-		case 'HCLA':
-		case 'PAEW': return 0x16;
-		case 'HGIL': return 0x17;
-		case 'RGNI':
-		case 'KCOL':
-		case 'BORP':
+		case MISC:
+		case BOOK:
+		case ALCHEMY:
+		case WEAPON: return 0x16;
+		case LIGHT: return 0x17;
+		case INGREDIENT:
+		case LOCK:
+		case PROBE:
 		case 'REPA': return 0x2b;
-		case 'OMRA':
-		case 'TOLC': return 0x2c;
-		case 'APPA': return 0x2d;
+		case ARMOR:
+		case CLOTHING: return 0x2c;
+		case APPARATUS: return 0x2d;
 	}
 	return 0;
 }
@@ -30,28 +30,28 @@ ULONG offsetOfValue(ULONG type) {
 // offset of weight in carriable item templates
 ULONG offsetOfWeight(ULONG type) {
 	ULONG i = offsetOfValue(type) - 1;
-	if (type == 'TNOC') i = 0x1e;
+	if (type == CONT) i = 0x1e;
 	if ( i < 0 ) i = 0;
 	return i;
 }
 
 ULONG offsetOfCondition(ULONG type) {
 	switch ( type ) {
-		case 'KCOL':
-		case 'BORP':
-		case 'OMRA': return 0x2d;
-		case 'APER': return 0x2c;
-		case 'PAEW': return 0x17;
+		case LOCK:
+		case PROBE:
+		case ARMOR: return 0x2d;
+		case REPAIR: return 0x2c;
+		case WEAPON: return 0x17;
 	}
 	return 0;
 }
 
 ULONG offsetOfQuality(ULONG type) {
 	switch ( type ) {
-		case 'APPA': return 0x2b;
-		case 'KCOL':
-		case 'BORP': return 0x2c;
-		case 'APER': return 0x2d;
+		case APPARATUS: return 0x2b;
+		case LOCK:
+		case PROBE: return 0x2c;
+		case REPAIR: return 0x2d;
 	}
 	return 0;
 }
@@ -63,22 +63,22 @@ const char *GetNameString(TES3MACHINE& vm, VPVOID temp, ULONG type, VPVOID base)
 	char namestr[129];
 	namestr[128] = 0;
 
-	if (type == '_CPN' || type == 'AERC')
+	if (type == NPC || type == CREATURE)
 		GetOffsetData(vm,base?base:temp,0x1c,(ULONG*)&addr);
-	else if (type == 'TNOC')
+	else if (type == CONTAINER)
 		GetOffsetData(vm,temp,0x1b,(ULONG*)&addr);
-	else if (type == 'HGIL')
+	else if (type == LIGHT)
 		GetOffsetData(vm,temp,0x12,(ULONG*)&addr);
-	else if (type == 'TOLC' || type == 'OMRA' || type == 'PAEW' 
-		|| type == 'CSIM' || type == 'KOOB' || type == 'HCLA')
+	else if (type == CLOTHING || type == ARMOR || type == WEAPON 
+		|| type == MISC || type == BOOK || type == ALCHEMY)
 		GetOffsetData(vm,temp,0x11,(ULONG*)&addr);
-	else if (type == 'ITCA')
+	else if (type == ACTIVATOR)
 		GetOffsetData(vm,temp,0xe,(ULONG*)&addr);
-	else if (type == 'ROOD')
+	else if (type == DOOR)
 		addr = LONGOFFSET(temp,0x0d);
-	else if (type == 'APPA')
+	else if (type == APPARATUS)
 		addr = LONGOFFSET(temp,0x19);
-	else if (type == 'RGNI' || type == 'APER' || type == 'BORP' || type == 'KCIP')
+	else if (type == INGREDIENT || type == REPAIR || type == PROBE || type == PICK)
 		addr = LONGOFFSET(temp,0x11);
 
 	if (addr && vm.ReadMem((VPVOID)addr, namestr, 128))
@@ -88,15 +88,16 @@ const char *GetNameString(TES3MACHINE& vm, VPVOID temp, ULONG type, VPVOID base)
 }
 
 	
-bool GetOffsetData(TES3MACHINE& vm, VPVOID base, ULONG offset, ULONG* data) 
+bool GetOffsetData(TES3MACHINE& vm, VPVOID base, ULONG offset, void* data, size_t size)
 {
-	return vm.ReadMem(LONGOFFSET(base,offset),data,sizeof(ULONG));
+	return vm.ReadMem(LONGOFFSET(base,offset),data,size);
 }
-	
-bool SetOffsetData(TES3MACHINE& vm, VPVOID base, ULONG offset, ULONG data) 
+
+bool SetOffsetData(TES3MACHINE& vm, VPVOID base, ULONG offset, void *data, size_t size)
 {
-	return vm.WriteMem(LONGOFFSET(base,offset),(VPVOID)&data,sizeof(ULONG));
+	return vm.WriteMem(LONGOFFSET(base,offset),data, size);
 }
+
 
 bool GetIdString(TES3MACHINE& vm, VPVOID temp, char *id)
 {
@@ -134,7 +135,7 @@ bool GetTargetData(TES3MACHINE& vm, VPVOID* refr, VPVOID* temp, ULONG* type, VPV
 	return true;
 }
 
-bool GetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, ULONG* data) 
+bool GetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, void* data, size_t size)
 {
 	VPVOID pnode = 0;
 	TES3LISTNODE node;
@@ -147,12 +148,12 @@ bool GetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, ULONG*
 		if (node.type != type)
 			pnode = (VPVOID)node.next;
 		else
-			return GetOffsetData(vm,node.dataptr,offset,data);
+			return GetOffsetData(vm,node.dataptr,offset,data,size);
 	}
 	return false;
 }
 
-bool SetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, ULONG data) 
+bool SetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, void *data, size_t size)
 {
 	VPVOID pnode = 0;
 	TES3LISTNODE node;
@@ -165,7 +166,7 @@ bool SetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, ULONG 
 		if (node.type != type)
 			pnode = (VPVOID)node.next;
 		else
-			return SetOffsetData(vm,node.dataptr,offset,data);
+			return SetOffsetData(vm,node.dataptr,offset,data,size);
 	}
 	return false;
 }

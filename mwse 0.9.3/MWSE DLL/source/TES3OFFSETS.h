@@ -30,17 +30,41 @@ ULONG offsetOfQuality(ULONG type);
 
 const char *GetNameString(TES3MACHINE& vm, VPVOID temp, ULONG type, VPVOID base);
 	
-bool GetOffsetData(TES3MACHINE& vm, VPVOID base, ULONG offset, ULONG* data);
+bool GetOffsetData(TES3MACHINE& vm, VPVOID base, ULONG offset, void* data, size_t size);
+template<class T> bool GetOffsetData(TES3MACHINE& vm, VPVOID base, ULONG offset, T &data)
+{
+    return GetOffsetData(vm, base, offset, reinterpret_cast<void *>(&data), sizeof(data));
+}
+template<class T> bool GetOffsetData(TES3MACHINE& vm, VPVOID base, ULONG offset, T *data)
+{
+    return GetOffsetData(vm, base, offset, reinterpret_cast<void *>(data), sizeof(*data));
+}
 	
-bool SetOffsetData(TES3MACHINE& vm, VPVOID base, ULONG offset, ULONG data);
+bool SetOffsetData(TES3MACHINE& vm, VPVOID base, ULONG offset, void *data, size_t size);
+template<class T> bool SetOffsetData(TES3MACHINE& vm, VPVOID base, ULONG offset, T data) 
+{
+    return SetOffsetData(vm, base, offset, reinterpret_cast<void *>(&data), sizeof(T));
+}
 
 bool GetIdString(TES3MACHINE& vm, VPVOID temp, char *id);
 
 bool GetTargetData(TES3MACHINE& vm, VPVOID* refr, VPVOID* temp=0, ULONG* type=0, VPVOID* base=0);
 
-bool GetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, ULONG* data);
+bool GetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, void* data, size_t size);
+template<class T> bool GetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, T &data)
+{
+    return GetAttachData(vm, ref, type, offset, reinterpret_cast<void *>(&data), sizeof(T));
+}
+template<class T> bool GetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, T *data)
+{
+    return GetAttachData(vm, ref, type, offset, reinterpret_cast<void *>(data), sizeof(T));
+}
 
-bool SetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, ULONG data);
+bool SetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, void *data, size_t size);
+template<class T> bool SetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, T data)
+{
+    return SetAttachData(vm, ref, type, offset, reinterpret_cast<void *>(&data), sizeof(T));
+}
 
 //what's wrong with this?
 #if 0
