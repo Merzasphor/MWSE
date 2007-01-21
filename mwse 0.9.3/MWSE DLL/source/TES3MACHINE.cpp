@@ -1,4 +1,5 @@
 //Tes3Machine.cpp
+#include <conio.h>
 
 #include "TES3MACHINE.h"
 #include "TES3MEMMAP.h"
@@ -8,6 +9,7 @@
 #include "cLog.h"
 
 #include <algorithm>
+using namespace std;
 
 #include "TES3OPCODES.h"
 
@@ -228,6 +230,15 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(SETNAME, new FUNCSETNAME(*this));
 	AddInstruction(GETSPELLEFFECTS, new FUNCGETSPELLEFFECTS(*this));
 	AddInstruction(CAST, new FUNCCAST(*this));
+	// Grant McDorman 16 Jan 2007
+#define ADDINSTRUCTION(name) AddInstruction(name, new FUNC##name(*this))
+	ADDINSTRUCTION(SETVALUE);
+	ADDINSTRUCTION(SETWEIGHT);
+	ADDINSTRUCTION(SETQUALITY);
+	ADDINSTRUCTION(SETCONDITION);
+	ADDINSTRUCTION(SETCHARGE);
+	ADDINSTRUCTION(SETMAXCHARGE);
+    ADDINSTRUCTION(SETMAXCONDITION);
 }
 
 bool TES3MACHINE::GetRegister(WORD regidx, VMREGTYPE& value) //get the info from a processor register (EDX,EIP,...)
@@ -299,10 +310,7 @@ bool TES3MACHINE::Interrupt(VMINTERRUPT num)
 		VMSIZE offset= 0;
 		result= true;
 
-//having min define for the next line hurts
-#undef min
-		while(result && (read=std::min((VMSIZE)sizeof(buf),script.scdtlength-offset))>0)
-#define min(a,b) (((a) < (b)) ? (a) : (b))
+        while(result && (read=_cpp_min((VMSIZE)sizeof(buf),script.scdtlength-offset))>0)
 		{
 			result= (ReadMem(script.scdt+offset,buf,read)
 				&& WriteMem((VPVOID)SCRIPTMEM_VPOS+offset,buf,read));
@@ -435,9 +443,12 @@ void TES3MACHINE::dumptemplate(VPTEMPLATE ptempl)
 		cLog::mLogMessage("dumpobject: Template failed\n");
 
 }
-
+bool consoleCreated = false;
 void TES3MACHINE::dumpobject(VPREFERENCE pref)
 {
+    if (!consoleCreated) {
+        AllocConsole();
+    }
 	// 2005-02-05  CDC     2005-07-06  0 is an address, non-digits quit now
 	// Allows for interactive exploration of memory - not pretty, but works
 	// You'll need a fairly wide screen and should start the extender from
@@ -476,71 +487,65 @@ void TES3MACHINE::dumpobject(VPREFERENCE pref)
         unsigned x, y, size;
 	BYTE buffer[1024];
 	BYTE* ptr= buffer;
-	char buf[1024];
 
 	size = sizeof(TES3REFERENCE);
-	printf("Script %lx %lx: Reference from ",scriptaddr,script);
-	do {
-        if ( addr <= 0x40 ) 
+	_cprintf("Script %lx %lx: Reference from ",scriptaddr,script);
+
+    if ( addr <= 0x40 ) 
 		addr = *((unsigned long *)(ptr+addr*4));
-	printf("%lX - %lX\n", addr, addr+size);
+	_cprintf("%lX - %lX\n", addr, addr+size);
 	if(!ReadMem((VPVOID)addr,(void*)&buffer,size))
 		return;
 	for(y=0;y<size;y+=32)
 	{
 		for(x=0;x<32 && (x+y)<size;x++) {
-			printf("%02X",((int)ptr[y+x])&0xFF);
+			_cprintf("%02X",((int)ptr[y+x])&0xFF);
 			if ( x == 3 || x == 11 || x == 19 || x == 27 )
-				printf(" ");
+				_cprintf(" ");
 			if ( x == 7 || x == 23 )
-				printf("  ");
+				_cprintf("  ");
 			if ( x == 15 )
-				printf(" | ");
+				_cprintf(" | ");
 		}
-		printf(" ");
+		_cprintf(" ");
 		for(x=0;x<32 && (x+y)<size;x++) {
 			if(isprint(ptr[y+x]))
-				printf("%c",ptr[y+x]);
+				_cprintf("%c",ptr[y+x]);
 			else
-				printf(".");
+				_cprintf(".");
 			if ( x == 3 || x == 11 || x == 19 || x == 27 )
-				printf(" ");
+				_cprintf(" ");
 			if ( x == 7 || x == 23 )
-				printf("  ");
+				_cprintf("  ");
 			if ( x == 15 )
-				printf(" | ");
+				_cprintf(" | ");
 		}
 #if 0
-		printf("\n");
+		_cprintf("\n");
 		for(x=0;x<32 && (x+y)<size;x+=4) {
-			printf("%4.2f ",*((float*)(ptr+y+x)));
+			_cprintf("%4.2f ",*((float*)(ptr+y+x)));
 			if ( x == 7 || x == 23 )
-				printf(" ");
+				_cprintf(" ");
 			if ( x == 15 )
-				printf(" | ");
+				_cprintf(" | ");
 		}
 
-		printf("  ");
+		_cprintf("  ");
 		for(x=0;x<32 && (x+y)<size;x+=4) {
-			printf("%ld ",*((unsigned long*)(ptr+y+x)));
+			_cprintf("%ld ",*((unsigned long*)(ptr+y+x)));
 			if ( x == 7 || x == 23 )
-				printf(" ");
+				_cprintf(" ");
 			if ( x == 15 )
-				printf(" | ");
+				_cprintf(" | ");
 		}
 #endif
-		printf("\n");
+		_cprintf("\n");
 	}
-	fflush(stdout);
-	size = 256;
-	scanf("%1020s", buf);
-	sscanf(buf,"%lx", &addr);
-	} while ( (buf[0]>='0' && buf[0]<='9') || (buf[0]>='a' && buf[0]<='f') || ( buf[0]>= 'A'&& buf[0]<='F') );
 }
 
 void TES3MACHINE::dumpobjects(void)
 {
-	const Context& context= GetFlow();
+	const Context context( GetFlow() );
 	VPVOID master2= 0;
 	VPVOID target= 0;
 	VPVOID pvariables= 0;
@@ -585,7 +590,7 @@ void TES3MACHINE::dumpobjects(void)
 
 void TES3MACHINE::searchforscripttarget(void)
 {
-	const Context& context= GetFlow();
+	const Context context( GetFlow() );
 	DWORD scripttarget= context.Ecx;
 	cLog::mLogMessage("Searching for script target %lx\n",scripttarget);
 
