@@ -21,7 +21,7 @@ bool FUNCREF::setref(VPREFERENCE target)
 	TES3REFERENCE ref;
 	OPCODE deref= ORIG_DEREF;
 	BYTE inref= 1;
-	const Context& context= machine.GetFlow();
+	const Context context( machine.GetFlow() );
 	machine.SetFlags((VMREGTYPE)target);
 	return (!target
 		|| (machine.ReadMem((VPVOID)target,&ref,sizeof(ref))
