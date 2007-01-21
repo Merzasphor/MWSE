@@ -69,7 +69,9 @@ bool VIRTUALMACHINE::AddInstruction(OPCODE opcode, INSTRUCTION* instruction) //t
 		{
 			instructions[opcode]= instruction;
 			result= true;
-		}
+        } else {
+            MessageBox(0, "Possible duplicate op code", "MWSE Warning", 0);
+        }
 	}
 	
 	return result;			
