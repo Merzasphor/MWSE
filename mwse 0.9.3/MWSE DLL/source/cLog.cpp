@@ -25,6 +25,14 @@ void cLog::mLogMessage(const char* fmt, ...)
 	va_end(args);
 }
 
+void cLog::mLogError(char message[], bool ShowMessageBox)
+{
+	vMail->mWriteMail(message);
+
+	if(ShowMessageBox)
+		MessageBox(0, message, "MWSE Error", 0);
+}
+
 void cLog::mLogBinaryMessage(void *addr, int size)
 {
 	BYTE *ptr = (BYTE*)addr;

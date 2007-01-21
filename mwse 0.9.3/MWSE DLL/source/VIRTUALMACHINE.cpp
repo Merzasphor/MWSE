@@ -7,6 +7,8 @@ using namespace std;
 // 22-08-2006 Tp21
 #include "warnings.h"
 
+#include "cLog.h"
+
 VIRTUALMACHINE::~VIRTUALMACHINE(void)
 {
 	{
@@ -70,7 +72,7 @@ bool VIRTUALMACHINE::AddInstruction(OPCODE opcode, INSTRUCTION* instruction) //t
 			instructions[opcode]= instruction;
 			result= true;
         } else {
-            MessageBox(0, "Possible duplicate op code", "MWSE Warning", 0);
+			cLog::mLogError("Possible duplicate opcode", true);
         }
 	}
 	
