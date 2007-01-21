@@ -3,6 +3,10 @@ MWSE 0.9.3: Changelog
 Developers: AnthonyG, Fliggerty, Timeslip, Tp21, grmcdorman
 Original Developers: CdCooley, FreshFish
 --------------------------------------------------------------------------------
+20-01-2007 by Grant McDorman <grmcdorman>
+Implemented set functions for value, weight, quality, condition, max condition,
+charge, and max charge. Also various code cleanups.
+
 18-01-2007 by Tp21:
 -Implented new Logging class: cLog.
 everything you log, is put through to the MWSELoaders' console.
