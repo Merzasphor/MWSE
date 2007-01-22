@@ -80,7 +80,7 @@ non injected version (BP3)
 static DWORD _stdcall InterruptExtern2(DWORD ID) {
 	Overwritten = Breakpoints[ID].overwritten; 
 	
-	if(ID==3) *(DWORD*)&Overwritten += 0x2E; //46
+	if(ID==3) *(DWORD*)&Overwritten = 0x0050D5D6;
 	if(ID==5) *(DWORD*)&Overwritten += 8;
 	if(ID==6) *(DWORD*)&Overwritten += 7;
 	
