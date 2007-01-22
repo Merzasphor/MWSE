@@ -340,10 +340,6 @@
 				Name="Instructions"
 				>
 				<File
-					RelativePath=".\source\INSTCALL.h"
-					>
-				</File>
-				<File
 					RelativePath=".\source\INSTCOPY.h"
 					>
 				</File>
@@ -369,6 +365,34 @@
 				</File>
 				<File
 					RelativePath=".\source\INSTPUSH.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Functions (new)"
+				>
+			</Filter>
+			<Filter
+				Name="Instructions (new)"
+				>
+				<File
+					RelativePath=".\source\cInstCall.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\cInstCallShort.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\cInstReturn.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\cInstReturnP.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\cInstReturnVP.h"
 					>
 				</File>
 			</Filter>
@@ -478,10 +502,6 @@
 				Name="Instructions"
 				>
 				<File
-					RelativePath=".\source\INSTCALL.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\source\INSTCOPY.cpp"
 					>
 				</File>
@@ -503,6 +523,34 @@
 				</File>
 				<File
 					RelativePath=".\source\INSTPUSH.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Functions (new)"
+				>
+			</Filter>
+			<Filter
+				Name="Instructions (new)"
+				>
+				<File
+					RelativePath=".\source\cInstCall.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\cInstCallShort.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\cInstReturn.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\cInstReturnP.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\cInstReturnVP.cpp"
 					>
 				</File>
 			</Filter>
