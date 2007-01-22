@@ -340,10 +340,6 @@
 				Name="Instructions"
 				>
 				<File
-					RelativePath=".\source\INSTCOPY.h"
-					>
-				</File>
-				<File
 					RelativePath=".\source\INSTFLOAT.h"
 					>
 				</File>
@@ -381,6 +377,18 @@
 				</File>
 				<File
 					RelativePath=".\source\cInstCallShort.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\cInstCopyFromStack.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\cInstCopyReg.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\cInstCopyToStack.h"
 					>
 				</File>
 				<File
@@ -502,10 +510,6 @@
 				Name="Instructions"
 				>
 				<File
-					RelativePath=".\source\INSTCOPY.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\source\INSTFLOAT.cpp"
 					>
 				</File>
@@ -539,6 +543,18 @@
 				</File>
 				<File
 					RelativePath=".\source\cInstCallShort.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\cInstCopyFromStack.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\cInstCopyReg.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\cInstCopyToStack.cpp"
 					>
 				</File>
 				<File
