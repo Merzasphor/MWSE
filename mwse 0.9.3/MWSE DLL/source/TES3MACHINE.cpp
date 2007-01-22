@@ -14,7 +14,7 @@ using namespace std;
 #include "TES3OPCODES.h"
 
 
-#include "INSTCOPY.h"
+
 #include "INSTFLOAT.h"
 #include "INSTINT.h"
 #include "INSTJUMP.h"
@@ -22,15 +22,15 @@ using namespace std;
 #include "INSTPOP.h"
 #include "INSTPUSH.h"
 
-//#include "INSTCALL.h"
-
-//just testing...
 #include "cInstCall.h"
 #include "cInstCallShort.h"
 #include "cInstReturn.h"
 #include "cInstReturnP.h"
 #include "cInstReturnVP.h"
 
+#include "cInstCopyReg.h"
+#include "cInstCopyFromStack.h"
+#include "cInstCopyToStack.h"
 
 #include "FUNCVARIABLES.h"
 #include "FUNCAI.h"
@@ -72,24 +72,15 @@ TES3MACHINE::TES3MACHINE()
 	if(!AddAddressSpace(GENERALMEM_VPOS, new PROCESSMEM(GENERALMEM_VPOS,GENERALMEM_SIZE)))
 		cLog::mLogMessage("TES3MACHINE: AddAddressSpace GENERALMEM failed\n");
 
-//	AddInstruction(CALL,new INSTCALL(*this));
 	AddInstruction(CALL, new cInstCall(*this));
-
-//	AddInstruction(CALLSHORT,new INSTCALLSHORT(*this));
 	AddInstruction(CALLSHORT, new cInstCallShort(*this));
-
-//	AddInstruction(RETURN,new INSTRETURN(*this));
 	AddInstruction(RETURN, new cInstReturn(*this));
-
-//	AddInstruction(RETURNP,new INSTRETURNP(*this));
 	AddInstruction(RETURNP, new cInstReturnP(*this));
-
-//	AddInstruction(RETURNVP,new INSTRETURNVP(*this));
 	AddInstruction(RETURNVP, new cInstReturnVP(*this));
 
-	AddInstruction(COPYREG,new INSTCOPYREG(*this));
-	AddInstruction(COPYFROMSTACK,new INSTCOPYFROMSTACK(*this));
-	AddInstruction(COPYTOSTACK,new INSTCOPYTOSTACK(*this));
+	AddInstruction(COPYREG,new cInstCopyReg(*this));
+	AddInstruction(COPYFROMSTACK,new cInstCopyFromStack(*this)); 
+	AddInstruction(COPYTOSTACK,new cInstCopyToStack(*this));
 
 	AddInstruction(JUMP,new INSTJUMP(*this));
 	AddInstruction(JUMPSHORT,new INSTJUMPSHORT(*this));
