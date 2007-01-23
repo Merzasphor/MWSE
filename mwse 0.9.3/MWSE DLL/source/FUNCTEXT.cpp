@@ -10,6 +10,8 @@
 // 22-08-2006 Tp21
 #include "warnings.h"
 
+#include <boost/regex.hpp>
+
 #ifndef ULONG
 #define ULONG unsigned long int
 #endif
@@ -758,5 +760,33 @@ int secernate(const char* format, const char *string, VMREGTYPE* resultset, int 
 		resultset[resultcount++] = (VMREGTYPE)0;
 		
 	return resultset[0];
+}
+
+
+// Regular expression string matching. Returns 1 (matches) or 0 (no match).
+//   xStringMatch <string>, <string> -> <short>
+//
+bool FUNCSTRINGMATCH::execute(void)
+{
+    VMREGTYPE regString = 0;
+    VMREGTYPE regPattern = 0;
+    const char *string = "";
+    const char *pattern = "";
+    bool match = false;
+
+	if ( machine.pop(regString) &&
+        machine.pop(regPattern) ) {
+        string = machine.GetString(reinterpret_cast<VPVOID>(regString));
+        pattern = machine.GetString(reinterpret_cast<VPVOID>(regPattern));
+        if (string != NULL && pattern != NULL) {
+            match = boost::regex_search(string,
+                boost::regex(pattern),
+                boost::match_default | boost::match_partial);
+        }
+    }
+#ifdef DEBUGGING
+	//cLog::mLogMessage("FUNCSTRINGPARSE(%d,%s,%s) %s\n",resultset[0],format,str,result?"succeeded":"failed");
+#endif
+	return machine.push(static_cast<VMREGTYPE>(match));
 }
 

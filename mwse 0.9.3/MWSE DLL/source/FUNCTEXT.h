@@ -70,3 +70,13 @@ private:
 	TES3MACHINE& machine;
 };
 
+class FUNCSTRINGMATCH : public FUNCTION
+{
+public:
+	FUNCSTRINGMATCH(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+

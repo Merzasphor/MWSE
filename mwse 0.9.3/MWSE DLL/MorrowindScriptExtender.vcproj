@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="8.00"
 	Name="MorrowindScriptExtender"
 	ProjectGUID="{9B5B16FE-EC4B-4F3C-B70D-6A702F0BB0F5}"
 	RootNamespace="MorrowindScriptExtender"
@@ -41,14 +41,15 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
+				AdditionalIncludeDirectories="../third-party/boost_1_33_1"
+				PreprocessorDefinitions="BOOST_ALL_NO_LIB;WIN32;_DEBUG;CDC;BLOODMOON;MSVC;DEBUGGING"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
-				DebugInformationFormat="4"
+				DebugInformationFormat="3"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -61,15 +62,17 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="gdi32.lib kernel32.lib user32.lib version.lib"
-				OutputFile="$(OutDir)\$(ProjectName).dll"
+				AdditionalDependencies="user32.lib boost-regex.lib"
+				OutputFile="$(OutDir)\MWSE.dll"
 				Version=""
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="$(IntDir)"
 				ModuleDefinitionFile=""
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile="$(OutDir)$(TargetName).pdb"
+				ProgramDatabaseFile="$(OutDir)\$(TargetName).pdb"
 				SubSystem="1"
 				EntryPointSymbol=""
+				BaseAddress="0x012A0000"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -123,7 +126,9 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="3"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;CDC;BLOODMOON;MSVC"
+				WholeProgramOptimization="true"
+				AdditionalIncludeDirectories="../third-party/boost_1_33_1"
+				PreprocessorDefinitions="BOOST_ALL_NO_LIB;WIN32;NDEBUG;CDC;BLOODMOON;MSVC"
 				WarningLevel="3"
 			/>
 			<Tool
@@ -137,11 +142,13 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="gdi32.lib kernel32.lib user32.lib"
+				AdditionalDependencies="user32.lib boost-regex.lib"
 				OutputFile="$(OutDir)\MWSE.dll"
+				AdditionalLibraryDirectories="$(IntDir)"
 				GenerateManifest="false"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				LinkTimeCodeGeneration="1"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -171,6 +178,14 @@
 		</Configuration>
 	</Configurations>
 	<References>
+		<ProjectReference
+			ReferencedProjectIdentifier="{12E62C58-3739-401D-88B1-F5B0EBBCA10D}"
+			CopyLocal="false"
+			CopyLocalDependencies="false"
+			UseDependenciesInBuild="false"
+			CopyLocalSatelliteAssemblies="false"
+			RelativePathToProject="..\boost-regex\boost-regex.vcproj"
+		/>
 	</References>
 	<Files>
 		<Filter
