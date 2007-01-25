@@ -1,12 +1,20 @@
+#include <stdio.h>
+#include <stdarg.h>
+
+#include <windows.h>
+
 #include "cLog.h"
 
-cMailClient *cLog::vMail;
+FILE *cLog::logFile = NULL;
+const char *cLog::defaultLogFilename = "MWSELog.txt";
 
 void cLog::mOpenLog()
 {
-	vMail = new cMailClient();
-
-	vMail->mOpenMailConnection("\\\\.\\mailslot\\MorrowindScriptExtenderMailslot");
+    if (logFile == NULL) {
+        logFile = fopen(defaultLogFilename, "w");
+        // disable buffering
+        setvbuf(logFile, NULL, _IONBF, 0);
+    }
 }
 
 void cLog::mLogMessage(const char* fmt, ...)
@@ -15,22 +23,20 @@ void cLog::mLogMessage(const char* fmt, ...)
 
 	va_list args;
 	va_start(args, fmt);
-	if (fmt)
-		_vsnprintf(buf, sizeof(buf)/sizeof(buf[0])-1, fmt, args);
-	else
-		strncpy(buf, "DLL:log(null)\n", sizeof(buf)-1);
-
-	buf[sizeof(buf)-1] = '\0';
-	vMail->mWriteMail(buf);
+    if (fmt) {
+        vfprintf(logFile, fmt, args);
+    } else {
+        fprintf(logFile, "DLL:log(null)\n");
+    }
 	va_end(args);
 }
 
-void cLog::mLogError(char message[], bool ShowMessageBox)
+void cLog::mLogError(const char *message, bool ShowMessageBox)
 {
-	vMail->mWriteMail(message);
-
-	if(ShowMessageBox)
-		MessageBox(0, message, "MWSE Error", 0);
+    fputs(message, logFile);
+    if(ShowMessageBox) {
+        MessageBox(0, message, "MWSE Error", MB_OK|MB_ICONERROR);
+    }
 }
 
 void cLog::mLogBinaryMessage(void *addr, int size)
@@ -56,8 +62,8 @@ void cLog::mLogBinaryMessage(void *addr, int size)
 
 void cLog::mCloseLog()
 {
-	vMail->mCloseMailConnection();
-	delete vMail;
+    fclose(logFile);
+    logFile = NULL;
 }
 
 cLog::~cLog()

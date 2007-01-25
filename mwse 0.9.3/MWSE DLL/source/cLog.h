@@ -1,16 +1,12 @@
 #pragma once
 
-#include "cMailClient.h"
-
-#include <stdarg.h>
-#include <fcntl.h>
-#include <ctype.h>
-#include <stdio.h>
+#include <stdio.h>  // cannot use 'class FILE';
 
 class cLog
 {
 private:
-	static cMailClient *vMail;
+	static FILE *logFile;
+    static const char *defaultLogFilename;
 public:
 	//Open the log
 	static void mOpenLog();
@@ -19,7 +15,7 @@ public:
 	static void mLogMessage(const char* fmt, ...);
 
 	//Logs error to console, and optionally shows an MessageBox
-	static void mLogError(char message[], bool ShowMessageBox);
+	static void mLogError(const char *message, bool ShowMessageBox);
 
 	//Log binary message to console
 	static void mLogBinaryMessage(void* addr, int size);

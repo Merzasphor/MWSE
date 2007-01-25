@@ -3,6 +3,21 @@ MWSE 0.9.3: Changelog
 Developers: AnthonyG, Fliggerty, Timeslip, Tp21, grmcdorman
 Original Developers: CdCooley, FreshFish
 --------------------------------------------------------------------------------
+24-01-2007 by Grant McDorman <grmcdorman>
+New launcher (formerly known as the loader). Written using WTL 8, it has
+the following features:
+ - Buttons to launch Morrowind's launcher, view MWSE log, and exit
+ - Launcher does not need to be in Morrowind directory (but MWSE.dll
+   needs to be in _launcher's_ directory)
+ - Does not hang or use lots of CPU when looking for Morrowind to start
+ - Log is once again a text file (MWSELog.txt in Morrowind directory)
+ - Detects Morrowind (and injects MWSE.dll) when Morrowind is launched
+   externally
+ - Buttons (launch, view log) disable/enable as appropriate
+
+22-01-2007 by Grant McDorman <grmcdorman>
+Regular expression string match (xStringMatch). Uses Boost library.
+
 20-01-2007 by Grant McDorman <grmcdorman>
 Implemented set functions for value, weight, quality, condition, max condition,
 charge, and max charge. Also various code cleanups.

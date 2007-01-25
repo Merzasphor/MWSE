@@ -228,10 +228,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\source\cMailClient.h"
-				>
-			</File>
-			<File
 				RelativePath=".\source\cMWSEMain.h"
 				>
 			</File>
@@ -435,10 +431,6 @@
 			</File>
 			<File
 				RelativePath=".\source\cLog.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\source\cMailClient.cpp"
 				>
 			</File>
 			<File
