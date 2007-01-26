@@ -1,14 +1,10 @@
-//#include"cMailClient.h"
+
 #include "cLog.h"
 #include "cMWSEmain.h"
+#include "ModuleVersion.h"
 
+#include <string>
 /*
- 1/9/07
- AnthonyG:
-
- Logger soon to be nonexistant, mailslots will be used
- to send messages to the loader console.
-
  Most of this needs to be cleaned up, Every line is defiled.
  Timeslip: Please abide to the standard introduced in the Loader's cDllLoader .h/.cpp.
 */
@@ -40,28 +36,29 @@ void* _stdcall FakeDirect3DCreate(UINT version) {
 }*/
 BOOL _stdcall DllMain(HANDLE hModule, DWORD reason, void* unused)
 {
-    OutputDebugString("MSWE DllMain\n");
-
-
 	switch(reason)
 	{
 	case DLL_PROCESS_ATTACH:
+        {
 	    //Don't use this anywhere else
 	    cLog::mOpenLog();
-		cLog::mLogMessage("DLL:Attaching to process\n");
+        char buffer[512];
+        HMODULE thisModule = GetModuleHandle("MWSE.DLL");
+        int length = GetModuleFileName(thisModule, buffer, sizeof buffer);
+        std::string version = ModuleVersion::getModuleVersion(buffer).getVersionString();
+		cLog::mLogMessage("MWSE %s loaded\n", version.c_str());
+        }
 		break;
 	case DLL_PROCESS_DETACH:
-		cLog::mLogMessage("DLL:Unloading from process\n");
+		cLog::mLogMessage("MWSE Terminated\n");
 	    //Don't use this anywhere else
 	    cLog::mCloseLog();
 		return true;
 		break;
 	case DLL_THREAD_ATTACH:
-		cLog::mLogMessage("DLL:Attaching to thread\n");
 		return true;
 		break;
 	case DLL_THREAD_DETACH:
-		cLog::mLogMessage("DLL:Unloading from thread\n");
 		return true;
 		break;
 	default: //in any other case (shouldn't happen)

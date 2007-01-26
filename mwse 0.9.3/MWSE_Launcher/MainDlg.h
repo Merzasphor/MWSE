@@ -48,6 +48,7 @@ private:
     CButton     viewButton;
     CButton     launchButton;
     CButton     exitButton;
+    CStatic     statusMessage;
     cDllLoader  loader;
 
     static DWORD WINAPI WindowMonitor(void *self);

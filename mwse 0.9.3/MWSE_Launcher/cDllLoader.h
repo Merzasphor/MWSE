@@ -19,6 +19,8 @@ private:
 	STARTUPINFO sSi; //See constructor definition
 	PROCESS_INFORMATION sPi;
     std::string runningModuleLocation;
+    std::string injectedMWSEVersion;
+    std::string morrowindVersion;
 public:
 
 	//Start up Morrowind. Guess what? Tis now directory dependent.(I.E. Place it in your desktop folder if you want!)
@@ -34,6 +36,14 @@ public:
     std::string getMorrowindDirectory(void) const
     {
         return runningModuleLocation;
+    }
+    std::string getInjectedMWSEVersion(void) const
+    {
+        return injectedMWSEVersion;
+    }
+    std::string getMorrowindVersion(void) const
+    {
+        return morrowindVersion;
     }
 
 

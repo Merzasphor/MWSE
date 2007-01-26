@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+#include <string>
+
 #include <windows.h>
 
 #include "cLog.h"
@@ -11,7 +13,14 @@ const char *cLog::defaultLogFilename = "MWSELog.txt";
 void cLog::mOpenLog()
 {
     if (logFile == NULL) {
-        logFile = fopen(defaultLogFilename, "w");
+        // Open the log file in the directory containing MWSE.DLL.
+        HMODULE thisModule = GetModuleHandle("MWSE.DLL");
+        char buffer[2048];
+        int length = GetModuleFileName(thisModule, buffer, sizeof buffer);
+        // Strip "MWSE.DLL" from name (note this leaves a trailing '\')
+        buffer[length - strlen("MWSE.DLL")] = '\0';
+        std::string name = std::string(buffer) + std::string(defaultLogFilename);
+        logFile = fopen(name.c_str(), "w");
         // disable buffering
         setvbuf(logFile, NULL, _IONBF, 0);
     }

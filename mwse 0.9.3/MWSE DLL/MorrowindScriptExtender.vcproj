@@ -41,8 +41,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../third-party/boost_1_33_1"
-				PreprocessorDefinitions="BOOST_ALL_NO_LIB;WIN32;_DEBUG;CDC;BLOODMOON;MSVC;DEBUGGING"
+				AdditionalIncludeDirectories="../MWSE_Launcher;../third-party/boost_1_33_1"
+				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS;BOOST_ALL_NO_LIB;WIN32;_DEBUG;CDC;BLOODMOON;MSVC;DEBUGGING"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
@@ -62,7 +62,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib boost-regex.lib"
+				AdditionalDependencies="user32.lib boost-regex.lib version.lib"
 				OutputFile="$(OutDir)\MWSE.dll"
 				Version=""
 				LinkIncremental="2"
@@ -127,8 +127,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="../third-party/boost_1_33_1"
-				PreprocessorDefinitions="BOOST_ALL_NO_LIB;WIN32;NDEBUG;CDC;BLOODMOON;MSVC"
+				AdditionalIncludeDirectories="../MWSE_Launcher;../third-party/boost_1_33_1"
+				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS;BOOST_ALL_NO_LIB;WIN32;NDEBUG;CDC;BLOODMOON;MSVC"
 				WarningLevel="3"
 			/>
 			<Tool
@@ -142,7 +142,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib boost-regex.lib"
+				AdditionalDependencies="user32.lib boost-regex.lib version.lib"
 				OutputFile="$(OutDir)\MWSE.dll"
 				AdditionalLibraryDirectories="$(IntDir)"
 				GenerateManifest="false"
@@ -443,6 +443,10 @@
 			</File>
 			<File
 				RelativePath=".\source\main.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\MWSE_Launcher\ModuleVersion.cpp"
 				>
 			</File>
 			<File

@@ -55,7 +55,7 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
-				UsePrecompiledHeader="2"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -73,7 +73,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="psapi.lib"
+				AdditionalDependencies="psapi.lib version.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="../third-party/WTL8/lib"
 				GenerateManifest="false"
@@ -145,7 +145,7 @@
 				PreprocessorDefinitions="WIN32;_WINDOWS;STRICT;NDEBUG"
 				ExceptionHandling="1"
 				RuntimeLibrary="0"
-				UsePrecompiledHeader="2"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="0"
 			/>
@@ -163,7 +163,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="psapi.lib"
+				AdditionalDependencies="psapi.lib version.lib"
 				LinkIncremental="1"
 				GenerateManifest="false"
 				SubSystem="2"
@@ -215,6 +215,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ModuleVersion.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MWSE_Launcher.cpp"
 				>
 			</File>
@@ -253,6 +257,10 @@
 			</File>
 			<File
 				RelativePath=".\MainDlg.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ModuleVersion.h"
 				>
 			</File>
 			<File

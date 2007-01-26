@@ -12,6 +12,7 @@
 #define IDC_LAUNCH                      1
 #define IDC_VIEW_LOG                    2
 #define IDC_EXIT                        3
+#define IDC_STATUS                      4
 
 #define IDI_MWSE_ICON                   201
 #define IDB_MWSE_BITMAP                 202

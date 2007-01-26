@@ -4,8 +4,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MorrowindScriptExtender", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "boost-regex", "..\boost-regex\boost-regex.vcproj", "{12E62C58-3739-401D-88B1-F5B0EBBCA10D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Launcher", "..\Launcher\Launcher.vcproj", "{E1FF004D-2AF3-4D1E-A73C-B2B82E5107B7}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -45,20 +43,6 @@ Global
 		{12E62C58-3739-401D-88B1-F5B0EBBCA10D}.Unicode Release MinDependency|Win32.Build.0 = Release|Win32
 		{12E62C58-3739-401D-88B1-F5B0EBBCA10D}.Unicode Release MinSize|Win32.ActiveCfg = Release|Win32
 		{12E62C58-3739-401D-88B1-F5B0EBBCA10D}.Unicode Release MinSize|Win32.Build.0 = Release|Win32
-		{E1FF004D-2AF3-4D1E-A73C-B2B82E5107B7}.Debug|Win32.ActiveCfg = Debug|Win32
-		{E1FF004D-2AF3-4D1E-A73C-B2B82E5107B7}.Debug|Win32.Build.0 = Debug|Win32
-		{E1FF004D-2AF3-4D1E-A73C-B2B82E5107B7}.Release MinDependency|Win32.ActiveCfg = Release MinDependency|Win32
-		{E1FF004D-2AF3-4D1E-A73C-B2B82E5107B7}.Release MinDependency|Win32.Build.0 = Release MinDependency|Win32
-		{E1FF004D-2AF3-4D1E-A73C-B2B82E5107B7}.Release MinSize|Win32.ActiveCfg = Release MinSize|Win32
-		{E1FF004D-2AF3-4D1E-A73C-B2B82E5107B7}.Release MinSize|Win32.Build.0 = Release MinSize|Win32
-		{E1FF004D-2AF3-4D1E-A73C-B2B82E5107B7}.Release|Win32.ActiveCfg = Release MinSize|Win32
-		{E1FF004D-2AF3-4D1E-A73C-B2B82E5107B7}.Release|Win32.Build.0 = Release MinSize|Win32
-		{E1FF004D-2AF3-4D1E-A73C-B2B82E5107B7}.Unicode Debug|Win32.ActiveCfg = Unicode Debug|Win32
-		{E1FF004D-2AF3-4D1E-A73C-B2B82E5107B7}.Unicode Debug|Win32.Build.0 = Unicode Debug|Win32
-		{E1FF004D-2AF3-4D1E-A73C-B2B82E5107B7}.Unicode Release MinDependency|Win32.ActiveCfg = Unicode Release MinDependency|Win32
-		{E1FF004D-2AF3-4D1E-A73C-B2B82E5107B7}.Unicode Release MinDependency|Win32.Build.0 = Unicode Release MinDependency|Win32
-		{E1FF004D-2AF3-4D1E-A73C-B2B82E5107B7}.Unicode Release MinSize|Win32.ActiveCfg = Unicode Release MinSize|Win32
-		{E1FF004D-2AF3-4D1E-A73C-B2B82E5107B7}.Unicode Release MinSize|Win32.Build.0 = Unicode Release MinSize|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

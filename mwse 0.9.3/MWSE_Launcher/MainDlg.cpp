@@ -10,6 +10,7 @@
 
 #include "aboutdlg.h"
 #include "MainDlg.h"
+#include "ModuleVersion.h"
 
 CMainDlg::CMainDlg()
 {
@@ -54,16 +55,20 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
 	pLoop->AddIdleHandler(this);
 
     viewButton.Attach(GetDlgItem(IDC_VIEW_LOG));
-    viewButton.EnableWindow(false);
-
     launchButton.Attach(GetDlgItem(IDC_LAUNCH));
     exitButton.Attach(GetDlgItem(IDC_EXIT));
+    statusMessage.Attach(GetDlgItem(IDC_STATUS));
 
     UIAddChildWindowContainer(m_hWnd);
 
     mainThreadId = GetCurrentThreadId();
     DWORD dwThreadID;
     monitorThread = ::CreateThread(NULL, 0, WindowMonitor, this, 0, &dwThreadID);
+    char buffer[512];
+    int length = GetModuleFileName(NULL, buffer, sizeof buffer);
+    std::string version = ModuleVersion::getModuleVersion(buffer).getVersionString();
+    std::string message = "MWSE Launcher " + version;
+    statusMessage.SetWindowTextA(message.c_str());
 	return TRUE;
 }
 
@@ -78,6 +83,7 @@ LRESULT CMainDlg::OnLaunch(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOO
 {
     if (loader.LaunchMorrowind()) {
         launchButton.EnableWindow(false);
+        statusMessage.SetWindowTextA("Morrowind started.");
     } else {
         MessageBox("Could not start Morrowind", "Error Starting Morrowind", MB_OK|MB_ICONERROR);
     }
@@ -86,29 +92,28 @@ LRESULT CMainDlg::OnLaunch(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOO
 
 LRESULT CMainDlg::OnViewLog(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 {
-    if (loader.getMorrowindDirectory().size() != 0) {
-        UINT length = GetSystemDirectory(NULL, 0);
-        if (length > 0) {
-            char *buffer = reinterpret_cast<char *>(alloca(length + 1));
-            GetSystemDirectory(buffer, length+1);   // location of system files, typically C:\\WINDOWS
+    UINT length = GetSystemDirectory(NULL, 0);
+    if (length > 0) {
+        char *buffer = reinterpret_cast<char *>(alloca(length + 1));
+        GetSystemDirectory(buffer, length+1);   // location of system files, typically C:\\WINDOWS
 
-            std::string notepad = buffer + std::string("\\notepad.exe");
+        std::string notepad = buffer + std::string("\\notepad.exe");
+        char currentDir[2048];
+        GetCurrentDirectory(sizeof currentDir, currentDir);
+        std::string logFile = notepad + " \"" +
+            std::string(currentDir) +
+            "\\MWSELog.txt\"";
 
-            std::string logFile = notepad + " \"" +
-                loader.getMorrowindDirectory() +
-                "\\MWSELog.txt\"";
+        STARTUPINFO sSi;
+        PROCESS_INFORMATION sPi;
 
-            STARTUPINFO sSi;
-            PROCESS_INFORMATION sPi;
-
-            memset(&sSi, 0, sizeof sSi);
-            sSi.cb = sizeof(sSi);
-            CreateProcess(const_cast<char *>(notepad.c_str()),
-                          const_cast<char *>(logFile.c_str()),
-                          0,0,false,NORMAL_PRIORITY_CLASS,0,0,&sSi,&sPi);
-            CloseHandle(sPi.hProcess);
-            CloseHandle(sPi.hThread);
-        }
+        memset(&sSi, 0, sizeof sSi);
+        sSi.cb = sizeof(sSi);
+        CreateProcess(const_cast<char *>(notepad.c_str()),
+                      const_cast<char *>(logFile.c_str()),
+                      0,0,false,NORMAL_PRIORITY_CLASS,0,0,&sSi,&sPi);
+        CloseHandle(sPi.hProcess);
+        CloseHandle(sPi.hThread);
     }
 	return 0;
 }
@@ -128,16 +133,20 @@ void CMainDlg::CloseDialog(int nVal)
 
 LRESULT CMainDlg::OnNewMorrowindWindow(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& /*bHandled*/)
 {
-    bool enableView = false;
+    bool enableLaunch = true;
     if (wParam != 0) {
         if (loader.mInjectDll(reinterpret_cast<HWND>(wParam))) {
-            enableView = true;
+            enableLaunch = false;
+            std::string message = "MWSE " + loader.getInjectedMWSEVersion() + " loaded in Morrowind " +
+                loader.getMorrowindVersion() + ".";
+            statusMessage.SetWindowTextA(message.c_str());
         } else {
             MessageBox("Could not inject MWSE into Morrowind", "Error Injecting MWSE", MB_OK|MB_ICONERROR);
         }
+    } else {
+        statusMessage.SetWindowTextA("Morrowind exited.");
     }
-    viewButton.EnableWindow(enableView);
-    launchButton.EnableWindow(!enableView);
+    launchButton.EnableWindow(enableLaunch);
     return TRUE;
 }
 

@@ -4,6 +4,7 @@
 #include <malloc.h>
 
 #include "cDllLoader.h"
+#include "ModuleVersion.h"
 
 static const char * const morrowindLauncher = "Morrowind Launcher.exe";
 static const char * const morrowindRegistryHive = "Software\\Bethesda Softworks\\Morrowind";
@@ -98,7 +99,6 @@ bool cDllLoader::mInjectDll(HWND windowHandle)
 				switch(WaitForSingleObject(injectorThread, 5000))
 				{
 				case WAIT_OBJECT_0:
-                    result = true;
 					break;
 				case WAIT_ABANDONED:
 					break;
@@ -108,15 +108,36 @@ bool cDllLoader::mInjectDll(HWND windowHandle)
 				CloseHandle(injectorThread);
             }
 
-            // Determine the directory of Morrowind.exe. This will be where the
-            // MWSE log is located.
-            int length = GetModuleFileNameEx(morrowindProcess, NULL, buffer, sizeof(buffer));
-            // strip 'morrowind.exe' from buffer
-            int endIndex = length - strlen(morrowindExeSlash);
-            if (stricmp(buffer + endIndex, morrowindExeSlash) == 0) {
-                buffer[endIndex] = '\0';
+            // See if MWSE.dll was actually injected into the process.
+            DWORD needed;
+            EnumProcessModules(morrowindProcess, NULL, 0, &needed);
+            HMODULE *list = reinterpret_cast<HMODULE *>(alloca(needed * sizeof (HMODULE)));
+            EnumProcessModules(morrowindProcess, list, needed, &needed);
+            size_t i;
+            bool loaded = false;
+            for (i = 0; i < needed/sizeof *list && !loaded; i++) {
+                if (GetModuleBaseName(morrowindProcess, list[i], buffer, sizeof(buffer))) {
+                    if (stricmp(buffer, mwseDLL) == 0) {
+                        loaded = true;
+                    }
+                }
             }
-            runningModuleLocation = buffer;
+
+            if (loaded) {
+                // Determine the directory of Morrowind.exe. This will be where the
+                // MWSE log is located.
+                int length = GetModuleFileNameEx(morrowindProcess, NULL, buffer, sizeof(buffer));
+                morrowindVersion = ModuleVersion::getModuleVersion(buffer).getVersionString();
+                // strip 'morrowind.exe' from buffer
+                int endIndex = length - strlen(morrowindExeSlash);
+                if (stricmp(buffer + endIndex, morrowindExeSlash) == 0) {
+                    buffer[endIndex] = '\0';
+                }
+                runningModuleLocation = buffer;
+
+                injectedMWSEVersion = ModuleVersion::getModuleVersion(mwsePath).getVersionString();
+                result = true;
+            }
 			VirtualFreeEx(morrowindProcess,(LPVOID)hookMemoryBlock,8192,MEM_RELEASE);
 		}
 		
