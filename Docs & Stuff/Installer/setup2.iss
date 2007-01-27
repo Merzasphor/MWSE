@@ -24,8 +24,8 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 Name: "democopy"; Description: "Copy Demo esp to Morrowind Directory"; GroupDescription: "Demo"; Flags: unchecked
 
 [Files]
-Source: "MWSE Launcher.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "MWSE.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "../../MWSE_Launcher/Release/MWSE Launcher.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "../../MWSE DLL/Release/MWSE.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 ; NOTE: these are 'other' files
 Source: "../GPL.txt"; DestDir: "{app}"; Flags: ignoreversion
