@@ -8,7 +8,7 @@ DefaultDirName={pf}\MWScriptExtender
 ;DefaultDirName={reg:HKLM\Software\Bethesda Softworks\Morrowind,Installed Path}
 ;this installs it to the Morrowind directory
 DefaultGroupName=Morrowind Script Extender
-LicenseFile=GPL.txt
+LicenseFile=../GPL.txt
 OutputDir=.
 OutputBaseFilename=Setup
 Compression=lzma
