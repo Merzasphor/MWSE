@@ -3,6 +3,12 @@ MWSE 0.9.3: Changelog
 Developers: AnthonyG, Fliggerty, Timeslip, Tp21, grmcdorman
 Original Developers: CdCooley, FreshFish
 --------------------------------------------------------------------------------
+27-01-2007 by Grant McDorman <grmcdorman>
+Remove unneeded and confusing 'mwse 0.9.3' directory (contents moved to
+parent)
+Installer build script fetches Changelog.txt and binaries from their initial
+locations (no copying)
+
 25-01-2007 by Grant McDorman <grmcdorman>
 Launcher updated to have a status bar. Messages in the status bar give:
  - launcher version (when first started)
