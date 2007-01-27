@@ -31,12 +31,13 @@ Source: "../../MWSE DLL/Release/MWSE.dll"; DestDir: "{app}"; Flags: ignoreversio
 Source: "../GPL.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "../customfunctions.dat"; DestDir: "{app}"; Flags: ignoreversion
 Source: "../Readme.html"; DestDir: "{app}"; Flags: ignoreversion
+Source: "../MWSE_Scripting.html"; DestDir "{app}"; Flags: ignoreversion
 Source: "authors"; DestDir: "{app}"; Flags: ignoreversion
 Source: "../../Changelog.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "Copying"; DestDir: "{app}"; Flags: ignoreversion
 
-Source: "../MWSE_v092a_Demo.esp"; DestDir: "{reg:HKLM\Software\Bethesda Softworks\Morrowind,Installed Path}\Data Files"; Flags: ignoreversion uninsneveruninstall; Tasks: democopy
-Source: "../MWSE_v092a_Demo.esp"; DestDir: "{app}"; Flags: ignoreversion;
+Source: "../MWSE_v093_Demo.esp"; DestDir: "{reg:HKLM\Software\Bethesda Softworks\Morrowind,Installed Path}\Data Files"; Flags: ignoreversion uninsneveruninstall; Tasks: democopy
+Source: "../MWSE_v093_Demo.esp"; DestDir: "{app}"; Flags: ignoreversion;
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
