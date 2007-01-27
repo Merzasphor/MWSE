@@ -4,6 +4,10 @@ Developers: AnthonyG, Fliggerty, Timeslip, Tp21, grmcdorman
 Original Developers: CdCooley, FreshFish
 --------------------------------------------------------------------------------
 27-01-2007 by Grant McDorman <grmcdorman>
+Fix xSetMaxCondition: it did not enforce condition to be no greater than
+max condition.
+
+27-01-2007 by Grant McDorman <grmcdorman>
 Remove unneeded and confusing 'mwse 0.9.3' directory (contents moved to
 parent)
 Installer build script fetches Changelog.txt and binaries from their initial
