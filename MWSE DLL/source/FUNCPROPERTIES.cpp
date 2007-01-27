@@ -166,7 +166,7 @@ bool FUNCSETMAXCONDITION::execute(void)
             VMREGTYPE condition;
             if (GetAttachData(machine, refr, VARNODE, 3, condition) &&
                 condition > value) {
-                    //SetAttachData(machine, refr, VARNODE, 3, value);
+                    SetAttachData(machine, refr, VARNODE, 3, value);
             }
 
             if ( type == WEAPON) {
