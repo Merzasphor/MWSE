@@ -179,7 +179,7 @@ operator, might be provided by the xSetRef function, or could be the target of t
 <a href="#xGetCondition">xGetCondition</a>, <a href="#xGetMaxCondition">xGetMaxCondition</a>, 
 <a href="#xGetCharge">xGetCharge</a>, <a href="#xGetMaxCharge">xGetMaxCharge</a> <br>
 <a href="#xSetValue">xSetValue</a>, <a href="#xSetWeight">xSetWeight</a>,
-<a href="#xSetCondition">xSetCondition</a>, <a href="#xSetQuality">xSetQuality</a>,
+<a href="#xSetQuality">xSetQuality</a>, <a href="#xSetCondition">xSetCondition</a>,
 <a href="#xSetMaxCondition">xSetMaxCondition</a>,<br>
 <a href="#xSetCharge">xSetCharge</a>, <a href="#xSetMaxCharge">xSetMaxCharge</a><br>
 <br clear=all>
@@ -627,8 +627,41 @@ FLOAT <code><small>REF</small>-></code><b>xGetCharge</b>
 FLOAT <code><small>REF</small>-></code><b>xGetMaxCharge</b>
 	<ul style="margin-top: 0.25em; margin-bottom: 1.5em">Returns the maximum charge on an enchanted item.</ul>
 
+<a name="xSetValue"></a>
+LONG <code><small>REF</small>-></code><b>xSetValue</b> LONG
+	<ul style="margin-top: 0.25em; margin-bottom: 1.5em">Sets the gold value of the object.  Returns 1 if succesful, 
+	0 if failed.</ul>
 
+<a name="xSetWeight"></a>
+LONG <code><small>REF</small>-></code><b>xSetWeight</b> FLOAT
+	<ul style="margin-top: 0.25em; margin-bottom: 1.5em">Sets the weight of the object.  Returns 1 if succesful, 
+	0 if failed.</ul>
 
+<a name="xSetQuality"></a>
+LONG <code><small>REF</small>-></code><b>xSetQuality</b> FLOAT
+	<ul style="margin-top: 0.25em; margin-bottom: 1.5em">Sets the quality of alchemical apparatus, lockpick, 
+	probe, and repair tool items.  Returns 1 if succesful, 0 if failed.</ul>
+
+<a name="xSetCondition"></a>
+LONG <code><small>REF</small>-></code><b>xSetCondition</b> LONG
+	<ul style="margin-top: 0.25em; margin-bottom: 1.5em">Sets the current condition of armor and weapons.
+	Armor must not be at 100% or this function will fail.  It must have already sustained some damage.
+	Returns 1 if succesful, 0 if failed.</ul>
+	
+<a name="xSetMaxCondition"></a>
+LONG <code><small>REF</small>-></code><b>xSetMaxCondition</b> LONG
+	<ul style="margin-top: 0.25em; margin-bottom: 1.5em">Sets the maxium condition for armor and weapons 
+	and maximum uses for lockpicks, probes, and repair tools.  Returns 1 if succesful, 0 if failed.</ul>
+	
+<a name="xSetCharge"></a>
+LONG <code><small>REF</small>-></code><b>xSetCharge</b> LONG
+	<ul style="margin-top: 0.25em; margin-bottom: 1.5em">Returns the current charge on a 'cast when used' or 
+	'cast when strikes' enchanted item.  Returns 1 if succesful, 0 if failed.</ul>
+	
+<a name="xSetMaxCharge"></a>
+LONG <code><small>REF</small>-></code><b>xSetMaxCharge</b> LONG
+	<ul style="margin-top: 0.25em; margin-bottom: 1.5em">Returns the maximum charge on an enchanted item.
+	Returns 1 if succesful, 0 if failed.</ul>
 
 <a name="xKeyPressed"></a>
 LONG <code><small>REF</small>-></code><b>xKeyPressed</b> LONG_code
@@ -1014,13 +1047,13 @@ You could call this script from the console, dialog, or another script.
         endif
 
         ; check to see if it's a female, we only want the males
-        setx temp to prospect->xIsFemale 
+        setx temp to prospectref->xIsFemale 
         if ( temp != 0 )          ; it's not a male
             set call to 0
         endif
 
         ; get this NPCs id and see if it's fargoth
-        setx prospectid to prospect->xGetBaseID 
+        setx prospectid to prospectref->xGetBaseID 
         setx temp to xStringCompare prospectid "fargoth"
         if ( temp == 0 )          ; it's Fargoth
             set call to 0
@@ -1028,12 +1061,12 @@ You could call this script from the console, dialog, or another script.
 
         ; if call is still 1 we want to call this NPC to the player
         ifx ( call )  ; we use extended functions inside so need ifx
-            xSetRef prospect       ; substitute for prospect->ForceRun
+            xSetRef prospectref       ; substitute for prospect->ForceRun
             ForceRun
             prospect->xAITravel px py pz
         endif
 
-        setx prospect to xNextRef prospect
+        setx prospectref to xNextRef prospect
     endwhile
 
     end

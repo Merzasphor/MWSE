@@ -3,6 +3,10 @@ MWSE 0.9.3: Changelog
 Developers: AnthonyG, Fliggerty, Timeslip, Tp21, grmcdorman
 Original Developers: CdCooley, FreshFish
 --------------------------------------------------------------------------------
+27-01-2007 by Fliggerty
+--Finished Demo esp.
+--Added new functions to MWSE_Scripting.html
+
 27-01-2007 by Grant McDorman <grmcdorman>
 Fix xSetMaxCondition: it did not enforce condition to be no greater than
 max condition.
