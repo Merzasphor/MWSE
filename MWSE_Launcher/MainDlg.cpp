@@ -81,11 +81,14 @@ LRESULT CMainDlg::OnAppAbout(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*
 
 LRESULT CMainDlg::OnLaunch(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 {
-    if (loader.LaunchMorrowind()) {
+    try {
+        loader.LaunchMorrowind();
         launchButton.EnableWindow(false);
         statusMessage.SetWindowTextA("Morrowind started.");
-    } else {
-        MessageBox("Could not start Morrowind", "Error Starting Morrowind", MB_OK|MB_ICONERROR);
+    } catch (cDllLoader::LoadException *e) {
+        std::string message = std::string("Could not start Morrowind: ") +
+            std::string(e->what());
+        MessageBox(message.c_str(), "Error Starting Morrowind", MB_OK|MB_ICONERROR);
     }
 	return 0;
 }
@@ -135,13 +138,16 @@ LRESULT CMainDlg::OnNewMorrowindWindow(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lP
 {
     bool enableLaunch = true;
     if (wParam != 0) {
-        if (loader.mInjectDll(reinterpret_cast<HWND>(wParam))) {
+        try {
+            loader.mInjectDll(reinterpret_cast<HWND>(wParam));
             enableLaunch = false;
             std::string message = "MWSE " + loader.getInjectedMWSEVersion() + " loaded in Morrowind " +
                 loader.getMorrowindVersion() + ".";
             statusMessage.SetWindowTextA(message.c_str());
-        } else {
-            MessageBox("Could not inject MWSE into Morrowind", "Error Injecting MWSE", MB_OK|MB_ICONERROR);
+        } catch (cDllLoader::LoadException *e) {
+            std::string message = std::string("Could not inject MWSE into Morrowind: ") +
+                std::string(e->what());
+            MessageBox(message.c_str(), "Error Injecting MWSE", MB_OK|MB_ICONERROR);
         }
     } else {
         statusMessage.SetWindowTextA("Morrowind exited.");
