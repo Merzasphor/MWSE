@@ -3,6 +3,14 @@ MWSE 0.9.3: Changelog
 Developers: AnthonyG, Fliggerty, Timeslip, Tp21, grmcdorman
 Original Developers: CdCooley, FreshFish
 --------------------------------------------------------------------------------
+31-01-2007 by Grant McDorman <grmcdorman>
+MWSE_Scripting.html updated: now valid HTML, and includes description
+of xStringMatch.
+
+30-01-2007 by Grant McDorman <grmcdorman>
+Added detailed error handling to launcher, improved injection marginally.
+Also fixed syntax errors in Setup script.
+
 27-01-2007 by Fliggerty
 --Finished Demo esp.
 --Added new functions to MWSE_Scripting.html
