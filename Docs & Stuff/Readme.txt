@@ -23,17 +23,24 @@ The Morrowind Script Extender is free software, licensed according to the GNU Pu
 ************************************
 
 Installing and Running the Program
-For single installations, Place MWSE anywhere on the Hard drive, double click the executable, and it will automatically find your Morrowind Installation.
 
-For multiple installations, Place the executable in the Morrowind install path (Usually "Drive:\Program Files\Bethesda Softworks\Morrowind"),  double click the executable to run.
+If you have downloaded the installer, it will install by default to C:\Program Files\MWSE.  You will be given the option to install elsewhere though.  
+
+If you have downloaded the ZIP file, place MWSE Launcher.exe and MWSE.dll in a location of your choice.
+
+It will work regardless of which directory it is installed into.
+
+For multiple Morrowind installations, the MWSE Launcher will find the location of the last installed version.  It checks the registry key HKLM\Software\Bethesda Softworks\Morrowind,Installed Path and launches the Morrowind Launcher.exe found there.  However, it will also check for Morrowind.exe in the same directory.  So to avoid renaming your installation folders, you can simply put multiple copies of MWSE into each installation directory.
 
 
 ************************************
 
-MWSE Console: This if for logging, An HTML file is saved when MWSE is closed(Right click taskbar button->Close) that contains the output of the console(Copy-paste friendly for error reports).
+MWSE Launcher: There is now a GUI style launcher.  It has three buttons: Launch Morrowind, View Log, and Exit.  Launch Morrowind will start Morrowind Launcher.exe; note that the MWSE Launcher does not have to be restarted to launch Morrowind again.  View Log will open MWSElog.txt.  And Exit will close the MWSE Launcher.
 
 ************************************
 
 Source and Support files for Modders and Scripters
-any new version can be found at: http://sourceforge.net/projects/mwse, you can find all the packagedetails there.
+any new version can be found at: http://sourceforge.net/projects/mwse, you can find all the package details there.
+
+Bugs and feature requests should be submitted at http://sourceforge.net/tracker/?group_id=172997.
 
