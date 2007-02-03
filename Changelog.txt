@@ -3,6 +3,9 @@ MWSE 0.9.3: Changelog
 Developers: AnthonyG, Fliggerty, Timeslip, Tp21, grmcdorman
 Original Developers: CdCooley, FreshFish
 --------------------------------------------------------------------------------
+03-02-2007 by Grant McDorman <grmcdorman>
+Copied Ted's ArchiveMaker to trunk from 0.9.4 release tag.
+
 02-02-2007 by Grant McDorman <grmcdorman>
 In installer, drop obsolete install of shortcut to Readme.html in Start Menu.
 Also fix incorrect Quick Launch shortcut.
