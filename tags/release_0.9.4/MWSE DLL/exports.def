@@ -1,0 +1,6 @@
+LIBRARY MorrowindScriptExtender
+EXPORTS
+
+;uncomment when using the alternative injection method
+;because we aren't using the alternative injection method anymore, this should be removed.
+;Direct3DCreate8=FakeDirect3DCreate

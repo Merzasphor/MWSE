@@ -1,0 +1,1175 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<title>Morrowind Script Extender Scripting</title><STYLE type="text/css">
+ dt           { margin-top: 0.5em; }
+ .spacebefore {  margin-top: 0.25em; }
+ .spaceafter  { margin-bottom: 1.5em; }
+ .spaceboth   { margin-top: 0.25em; margin-bottom: 1.5em; }
+ .flushright  { float:right; margin:0em; font-weight:bold; }
+ .code        { margin-left: 2em; margin-top: 1em; margin-bottom: 1em; font-family: monospace; }
+ .inlinecode  { font-family:monospace; }
+ .inlinedef   { font-weight: bold; font-family: monospace; }
+ .outset      { text-align:center; border-style:outset; border-width: thin; padding-left: 0.25em; padding-right: 0.25em; }
+ .boxed       { border-style: solid; border-width: thin; }
+</STYLE>
+</HEAD>
+<BODY>
+<center>
+<h2>Morrowind Script Extender Scripting<br>
+<small>January 28, 2007 - the MWSE team</small></h2>
+<A HREF="http://www.sourceforge.net/projects/mwse">www.sourceforge.net/projects/mwse</A>
+</center>
+<p>So you want to write scripts using the new MWSE functions?  If you don't know how to write normal Morrowind scripts,
+please go read GhanBuriGhan's 'Morrrowind Scripting for Dummies' and at least learn the basics of writing the standard
+scripts in the Construction Set then come back here.</p>
+<p>
+Writing extended scripts is only slightly more difficult than the standard scripts.  MWSE adds over 80 new functions,
+2 new types, and alternate set, if, and while statements for use with the new functions.</p>
+
+
+<center>
+<a href="#Compiling">Compiling Scripts with the Extended Functions</a>
+<br><small><a href="#Variables">The New String and Reference Variable Types</a></small>
+<br><small><a href="#SetX">Assignment with the New 'setx' Command</a></small>
+<br><small><a href="#IfXWhileX">Flow Control Blocks with 'ifx' and 'whilex'</a></small>
+<br>
+<br><a href="#Functions">The Functions</a>
+<br>
+<br><a href="#Samples">Sample Scripts</a>
+</center>
+<hr>
+
+<h3><a name="Compiling"></a>Compiling Scripts with the Extended Functions</h3>
+
+To compile the scripts, use the MWEdit, available from <A HREF="http://www.sourceforge.net/projects/mwedit" target="_blank">www.sourceforge.net/projects/mwedit</A>. This editor provides
+support for all of the new MWSE functions. You may need to replace <code>customfunctions.data</code> with the
+version provided by MWSE; this file defines the MWSE functions (and other custom functions).
+<p>
+The Construction Set doesn't support these new functions, but you will want to use it for all of the non-script
+portions of your plug-in.   You can also use the Construction Set to edit your scripts, but it will give errors
+when you try to compile and save the scripts. We recommend that you create the scripts using the Construction Set
+and attach them to the appropriate objects as needed.  Then you can write the contents of those scripts using
+MWEditSE.</p>
+<p>
+Note that both string and reference variables are recorded as long in the scripts
+but they are not interchangable. In addition, if you use an invalid string or reference value,
+Morrowind will crash; this is especially something you need to watch out for when games are loaded, as
+string and reference variables are <em>not</em> saved with the game.</p>
+<p>
+MWEdit does not provide the full functionality of the Construction Set, and may have other issues. We recommend using MWEdit only
+to edit and compile your scripts; use the Construction Set for all other tasks. In addition, loading only the plugin with the scripts you need to compile seems to
+help.  If you have problems, you can always ask someone else to compile them for you.</p>
+<hr>
+
+<h3><a name="Variables"></a>The New String and Reference Variable Types </h3>
+
+<p>The MWSE functions make use of two new variable types, <em>string</em> and <em>reference</em>.  Both are actually declared in the scripts
+using the "long" type.  In the sample scripts, the 'invitem' varible is treated as a string by the extended
+functions.  The 'invref' and 'pcref' are both reference types.  (The 'invcount' really is a long variable.)</p>
+<p>
+Strings and references are returned by some of the extended functions.  The descriptions of the extended functions
+explain which type they expect.  Be careful because the compiler doesn't verify that you are using the correct type.</p>
+<p>
+The REF, reference, variables provide a way to keep track of specific objects in the game world.  They are most
+commonly used on the left side of the <span class="code">-&gt;</span> operator with other functions (new or old) to affect that object.</p>
+<p>
+<b>Reference values and strings become invalid each time the game is loaded or reloaded.</b></p>
+
+<hr>
+
+<h3><a name="SetX"></a>Assignment with the New 'setx' Command</h3>
+
+<p>Unfortunately, the new functions can't be easily integrated with the standard script functions and commands.  A
+'setx' command is provided as a substitute for 'set' when you are using a new function.  You can only put one
+function or one string value on the right side of 'setx' but it does allow more than one variable on the left
+for functions like 'xInventory' that return multiple values (just separate the list with commas like the example
+above).
+</p><p>
+Again, the compiler doesn't do enough error checking, so if you use a function like xInventory that returns three
+items, be sure you put three variables on the left side to accept the results.  Be sure you don't put too many either.</p>
+<hr>
+
+
+<h3><a name="IfXWhileX"></a>Flow Control Blocks with 'ifx' and 'whilex'</h3>
+
+The standard Morrowind script if and while commands do not work when the body of the block contains extended
+commands, instead use ifx and whilex. The ifx and whilex do not currently support a full syntax, I would just
+use a single value or function for now.  The ifx/whilex will be performed if the value is not zero.  You can
+use 'else' with 'ifx' but not 'elseif' and there isn't an 'elseifx'.
+<p>
+If you have a multiple stage if/elseif section it's frequently possible to isolate the new functions to only
+one or two sections, so check all of the others first then use statements like the following.
+<table border="2" cellpadding="10">
+<TR><TH>OLD VERSION</TH><TH>NEW VERSION</TH></TR>
+<TR><TD><div class="code"><PRE>
+if ( state == 5 )
+    ; section for 5
+else
+    ; section for not 5
+endif
+</PRE></div></TD>
+<TD><div class="code"><PRE>
+set temp to ( state - 5 )
+ifx ( temp )
+    ; section for not 5
+else
+    section for 5
+endif
+</PRE></div></TD></TR>
+</table>
+It's OK to leave the first section blank, so this also works:
+<table border="2" cellpadding="10">
+<TR><TH>OLD VERSION</TH><TH>NEW VERSION</TH></TR>
+<TR><TD><div class="code"><PRE>
+if ( state == 5 )
+    ; section for 5
+endif
+</PRE></div></TD>
+<td><div class="code"><PRE>
+set temp to ( state - 5 )
+ifx ( temp )
+else
+    section for 5
+endif
+</PRE></div></TD></TR>
+</table>
+<hr>
+
+
+<h3><a name="Functions"></a>The Functions</h3>
+
+Types listed as STRING and REF are really stored in <code>long</code> variables.  Functions listed with
+<em>ref</em><code>-&gt;</code> operate on a target which might be provided by the <code>-&gt;</code>
+operator, might be provided by the <code>xSetRef</code> function, or could be the target of the script.
+<table>
+<tr><TD colspan="2"><hr></TD></tr>
+<tr>
+<th>References</th>
+<td><a href="#xSetRef">xSetRef</a>, <a href="#xRefType">xRefType</a>, <a href="#xGetRef">xGetRef</a>,
+<a href="#xGetCombat">xGetCombat</a>, <a href="#xGetPCTarget">xGetPCTarget</a>,
+<a href="#xFirstNPC">xFirstNPC</a>, <a href="#xFirstItem">xFirstItem</a>,
+<a href="#xFirstStatic">xFirstStatic</a>, <a href="#xNextRef">xNextRef</a>
+</td></tr>
+
+<tr><TD colspan="2"><hr></TD></tr>
+<tr>
+<th>Math</th>
+<td><a href="#xDistance">xDistance</a>, <a href="#xSqrt">xSqrt</a>, <a href="#xHypot">xHypot</a>,
+<a href="#xDegRad">xDegRad</a>, <a href="#xRadDeg">xRadDeg</a>,
+<a href="#xCos">xCos</a>, <a href="#xSin">xSin</a>, <a href="#xTan">xTan</a>,
+<a href="#xArcCos">xArcCos</a>, <a href="#xArcSin">xArcSin</a>, <a href="#xArcTan">xArcTan</a>
+</td></tr>
+
+<tr><TD colspan="2"><hr></TD></tr>
+<tr>
+<th>AI and Movement</th>
+<td><a href="#xAITravel">xAITravel</a>, <a href="#xPlace">xPlace</a>, <a href="#xPosition">xPosition</a>,
+<a href="#xPositionCell">xPositionCell</a>, <a href="#xStartCombat">xStartCombat</a>
+</td></tr>
+
+<tr><TD colspan="2"><hr></TD></tr>
+<tr>
+<th>Inventory</th>
+<td><a href="#xInventory">xInventory</a>, <a href="#xNextStack">xNextStack</a>,
+<a href="#xContentList">xContentList</a>,
+<a href="#xAddItem">xAddItem</a>, <a href="#xRemoveItem">xRemoveItem</a>,
+<a href="#xHasItemEquipped">xHasItemEquipped</a>,
+<a href="#xEquip">xEquip</a>,
+<a href="#xDrop">xDrop</a>,
+<a href="#xAddSpell">xAddSpell</a>,
+<a href="#xRemoveSpell">xRemoveSpell</a>
+</td></tr>
+
+<tr><TD colspan="2"><hr></TD></tr>
+<tr>
+<th>Attributes</th>
+<td><a href="#xGetBaseStr">xGetBaseStr</a>, <a href="#xGetBaseInt">xGetBaseInt</a>,
+<a href="#xGetBaseWil">xGetBaseWil</a>, <a href="#xGetBaseAgi">xGetBaseAgi</a>,
+<a href="#xGetBaseSpe">xGetBaseSpe</a>, <a href="#xGetBaseEnd">xGetBaseEnd</a>,
+<a href="#xGetBasePer">xGetBasePer</a>, <a href="#xGetBaseLuc">xGetBaseLuc</a>
+</td></tr>
+
+<tr><TD colspan="2"><hr></TD></tr>
+<tr>
+<th>NPC Properties</th>
+<td><a href="#xIsFemale">xIsFemale</a>, <a href="#xIsTrader">xIsTrader</a>,
+<a href="#xIsTrainer">xIsTrainer</a>, <a href="#xIsProvider">xIsProvider</a>,
+<a href="#xGetService">xGetService</a>, <a href="#xSetService">xSetService</a>,
+<a href="#xModService">xModService</a>,
+<a href="#xGetBaseGold">xGetBaseGold</a>, <a href="#xGetGold">xGetGold</a>,
+<a href="#xSetBaseGold">xSetBaseGold</a>, <a href="#xSetGold">xSetGold</a>
+</td></tr>
+
+<tr><TD colspan="2"><hr></TD></tr>
+<tr>
+<th>Item Properties</th>
+<td><a href="#xGetValue">xGetValue</a>, <a href="#xGetOwner">xGetOwner</a>, <a href="#xGetWeight">xGetWeight</a>,
+<a href="#xGetEncumb">xGetEncumb</a>, <a href="#xGetQuality">xGetQuality</a>,
+<a href="#xGetCondition">xGetCondition</a>, <a href="#xGetMaxCondition">xGetMaxCondition</a>,
+<a href="#xGetCharge">xGetCharge</a>, <a href="#xGetMaxCharge">xGetMaxCharge</a>,
+<a href="#xSetValue">xSetValue</a>, <a href="#xSetWeight">xSetWeight</a>,
+<a href="#xSetQuality">xSetQuality</a>, <a href="#xSetCondition">xSetCondition</a>,
+<a href="#xSetMaxCondition">xSetMaxCondition</a>,
+<a href="#xSetCharge">xSetCharge</a>, <a href="#xSetMaxCharge">xSetMaxCharge</a>
+</td></tr>
+
+<tr><TD colspan="2"><hr></TD></tr>
+<tr>
+<th>Keyboard Input</th>
+<td><a href="#xKeyPressed">xKeyPressed</a>, <a href="#xTextInput">xTextInput</a>,
+<a href="#xTextInputAlt">xTextInputAlt</a> <br>
+</td></tr>
+
+<tr><TD colspan="2"><hr></TD></tr>
+<tr>
+<th>File I/O</th>
+<td><a href="#xFileRewind">xFileRewind</a>, <a href="#xFileSeek">xFileSeek</a>,
+<a href="#xFileReadText">xFileReadText</a>, <a href="#xFileWriteText">xFileWriteText</a>,
+<a href="#xFileReadShort">xFileReadShort</a>, <a href="#xFileReadLong">xFileReadLong</a>,
+<a href="#xFileReadFloat">xFileReadFloat</a>, <a href="#xFileReadString">xFileReadString</a>,
+<a href="#xFileWriteShort">xFileWriteShort</a>, <a href="#xFileWriteLong">xFileWriteLong</a>,
+<a href="#xFileWriteFloat">xFileWriteFloat</a>, <a href="#xFileWriteString">xFileWriteString</a>
+</td></tr>
+
+<tr><TD colspan="2"><hr></TD></tr>
+<tr>
+<th>Strings</th>
+<td><a href="#xPCCellID">xPCCellID</a>, <a href="#xRefID">xRefID</a>, <a href="#xMyCellID">xMyCellID</a>,
+<a href="#xGetName">xGetName</a>, <a href="#xSetName">xSetName</a>,
+<a href="#xGetBaseID">xGetBaseID</a>,
+<a href="#xStringCompare">xStringCompare</a>, <a href="#xStringLength">xStringLength</a>,
+<a href="#xStringParse">xStringParse</a>,
+<a href="#xStringBuild">xStringBuild</a>, <a href="#xStringMatch">xStringMatch</a>,
+<a href="#xLogMessage">xLogMessage</a>,
+<a href="#xMessageFix">xMessageFix</a>
+</td></tr></table>
+<hr>
+
+<dl>
+<dt><a name="xSetRef"></a><span class="inlinedef">xSetRef</span> <em>reference (long)</em></dt>
+<dd>
+	This function provides a way of calling object
+	functions where the syntax does not allow for it, e.g.
+	<DIV class="code">set myalchemyskill to myobject-&gt;GetAlchemy</DIV>
+	does not work because the original set statement does not allow the use of variables as objects,
+	in this case you should use:
+        <DIV class="code">xSetRef myobject<br>
+	set myalchemyskill to GetAlchemy</div>
+</dd>
+
+<dt><em>type (long)</em>: <a name="xRefType"></a><em>ref</em>-&gt;<span class="inlinedef">xRefType</span></dt>
+<dd>Gets the object type of the reference and is literally
+	the four byte of the type name as a number.
+<ul>
+		<li>1230259009 = ACTI (Activator)</li>
+		<li>1212369985 = ALCH (Alchemy/Potion)</li>
+		<li>1095782465 = APPA (Alchemy Apparatus)</li>
+		<li>1330467393 = ARMO (Armour)</li>
+		<li>1263488834 = BOOK (Book/Scroll)</li>
+		<li>1414483011 = CLOT (Clothing)</li>
+		<li>1414418243 = CONT (Container)</li>
+		<li>1095062083 = CREA (Creature)</li>
+		<li>1380929348 = DOOR (Door)</li>
+		<li>1380404809 = INGR (Ingredient)</li>
+		<li>1129727308 = LEVC (Levelled Creature)</li>
+		<li>1230390604 = LEVI (Levelled Item)</li>
+		<li>1212631372 = LIGH (Light)</li>
+		<li>1262702412 = LOCK (Lockpick)</li>
+		<li>1129531725 = MISC (Misc. Item)</li>
+		<li>1598246990 = NPC_ (NPC)</li>
+		<li>1112494672 = PROB (Probe)</li>
+		<li>1095779666 = REPA (Repair Tool)</li>
+		<li>1414546259 = SCPT (Script)</li>
+		<li>1195658835 = SNDG (Sound Generator)</li>
+		<li>1413567571 = STAT (Static)</li>
+		<li>1346454871 = WEAP (Weapon)</li>
+            </ul>
+</dd>
+
+
+<dt><em>reference (long)</em>: <a name="xGetRef"></a><em>ref</em>-&gt;<span class="inlinedef">xGetRef</span> <em>object_id (string)</em></dt>
+	<dd>Returns a reference to one of the active objects matching
+	the objectid or a 0 if no active object is found.  Active objects are in one of the loaded cells or are
+	persistent like NPCs.  This is most useful to locate NPCs and unique objects.  If you try to find a mudcrab you
+	could either find none (if you are far from the coast) or one of the many nearby (if you are near the coast).</dd>
+
+<dt><a name="xGetCombat"></a>
+<em>reference (long)</em>: <em>ref</em>-&gt;<span class="inlinedef">xGetCombat</span></dt>
+	<dd>Returns a reference to this NPC/creature's combat target
+	or 0 if the NPC/creature is not in combat.</dd>
+
+<dt><a name="xGetPCTarget"></a>
+<em>reference (long)</em>: <span class="inlinedef">xGetPCTarget</span> </dt>
+	<dd>Returns a reference to the object in the player's crosshair
+	or 0 if the player is not looking at anything that can be manipulated by the player.</dd>
+
+<dt><a name="xFirstNPC"></a>
+<em>reference (long)</em>: <span class="inlinedef">xFirstNPC</span></dt>
+	<dd>Returns a reference to one of the NPCs or Creatures in the
+	players cell or 0 if there are none.  The reference is simply the one on the top of a list of all NPCs and
+	Creatures in the cell and you can use the xNextRef function to find the rest.</dd>
+
+<dt><a name="xFirstItem"></a>
+<em>reference (long)</em>: <span class="inlinedef">xFirstItem</span></dt>
+	<dd>Returns a reference like FirstNPC except this one is the top
+	of a list of ordinary objects the player can activate (and usually carry).</dd>
+
+<dt><a name="xFirstStatic"></a>
+<em>reference (long)</em>: <span class="inlinedef">xFirstStatic</span></dt>
+	<dd>Returns a reference like FirstNPC except this one is the top
+	of a list of static objects (the non-carriable, non-interactive ones).</dd>
+
+<dt><a name="xNextRef"></a>
+<em>reference (long)</em>: <span class="inlinedef">xNextRef</span> <em>current (reference, long)</em></dt>
+	<dd>Returns the 'next' reference in one of the three lists of
+	objects in the current cell (NPC, Item, and Static) after the current one.  If the player is outside, the list
+	will cycle through all 9 loaded exterior cells which may be too much to do in a single frame. </dd>
+
+
+
+
+<dt><a name="xDistance"></a>
+<em>distance (float)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xDistance</span> <em>target (reference)</em></dt>
+	<dd>Similar to the original GetDistance function but takes a
+	reference variable as the target instead of an objectid string.  Like the original, it uses the editor position
+	not the current position for non-persistent objects.</dd>
+
+<dt><a name="xSqrt"></a>
+<em>root (float)</em>: <span class="inlinedef">xSqrt</span> <em>x (float)</em> </dt>
+	<dd>Returns the square root of the value.  (Use Tribunal's
+	GetSquareRoot instead.)</dd>
+
+<dt><a name="xHypot"></a>
+<em>hypotenuse (float)</em>: <span class="inlinedef">xHypot</span> <em>a (float)</em>, <em>b (float)</em></dt>
+	<dd>Returns the hypotenuse for sides a and b, c = sqrt(a*a + b*b).
+	Unlike xSqrt this is more efficient than calculating the formula inside the script.</dd>
+
+<dt><a name="xDegRad"></a>
+<em>radians (float)</em>: <span class="inlinedef">xDegRad</span>  <em>degrees (float)</em></dt>
+	<dd>Converts a value from degrees to radians.</dd>
+
+<dt><a name="xRadDeg"></a>
+<em>degrees (float)</em>: <span class="inlinedef">xRadDeg</span>  <em>radians (float)</em></dt>
+	<dd>Converts a value from radians to degrees.</dd>
+
+<dt><a name="xCos"></a>
+<em>cosine (float)</em>: <span class="inlinedef">xCos</span> <em>radian (float)</em></dt>
+	<dd>Returns the cosine of the angle (which given in radians).</dd>
+
+<dt><a name="xSin"></a>
+<em>sine (float)</em>: <span class="inlinedef">xSin</span> <em>radian (float)</em></dt>
+	<dd>Returns the sine of the angle (which given in radians).</dd>
+
+<dt><a name="xTan"></a>
+<em>tangent (float)</em>: <span class="inlinedef">xTan</span> <em>radian (float)</em></dt>
+	<dd>Returns the tangent of the angle (which given in radians).</dd>
+
+<dt><a name="xArcCos"></a>
+<em>radians (float)</em>: <span class="inlinedef">xArcCos</span> <em>cosine (float)</em></dt>
+	<dd>Returns the arc cosine (in radians) of the value.</dd>
+
+<dt><a name="xArcSin"></a>
+<em>radians (float)</em>: <span class="inlinedef">xArcSin</span> <em>sine (float)</em></dt>
+	<dd>Returns the arc sine (in radians) of the angle.</dd>
+
+<dt><a name="xArcTan"></a>
+<em>radians (float)</em>: <span class="inlinedef">xArcTan</span> <em>tangent (float)</em></dt>
+	<dd>Returns the arc tangent (in radians) of the angle.</dd>
+
+<dt><a name="xAITravel"></a>
+<em>ref</em><code>-&gt;</code><span class="inlinedef">xAITravel</span> <em>x (float)</em>, <em>y (float)</em>, <em>z (float)</em></dt>
+	<dd>A wrapper function for the original AiTravel to allow
+	variables.</dd>
+
+<dt><a name="xPlace"></a>
+<em>new_object (reference)</em>: <span class="inlinedef">xPlace</span> <em>objectid (string)</em></dt>
+	<dd>Places an object of type objectid behind the player
+	and returns a reference to the new object.</dd>
+
+<dt><a name="xPosition"></a>
+<em>ref</em><code>-&gt;</code><span class="inlinedef">xPosition</span> <em>x (float)</em>, <em>y (float)</em>, <em>z (float)</em>, <em>rotation (float)</em></dt>
+	<dd>A wrapper function for the original Position to allow
+	variables.</dd>
+
+<dt><a name="xPositionCell"></a>
+<em>ref</em><code>-&gt;</code><span class="inlinedef">xPositionCell</span> <em>x (float)</em>,  <em>y (float)</em>, <em>z (float)</em>, <em>rotation (float)</em>, <em>cellname (string)</em></dt>
+	<dd>A wrapper function for the original PositionCell to
+	allow variables.</dd>
+
+<dt><a name="xStartCombat"></a>
+<em>ref</em><code>-&gt;</code><span class="inlinedef">xStartCombat</span> <em>target (reference)</em></dt>
+	<dd>A wrapper for the original StartCombat to take variables.</dd>
+
+<dt><a name="xInventory"></a>
+<em>objectid (string)</em>, <em>count (long)</em>, <em>next (reference)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xInventory</span></dt>
+	<dd>Returns three values based on the inventory of the
+	current container, NPC, or creature.  The first is the objectid of one of the items in inventory. The
+	second is the number of that particular item found in the inventory.  The third is a reference that can
+	be passed to the xNextStack function to find the rest of the items in the inventory.   All three results
+	will be 0 if there are no items in the inventory (and just the third will be zero if there is only one
+	item in the inventory).  (It is not possible to get a normal reference to objects inside an inventory.
+	The reference returned by this function is of a unique type and should only be used with xNextStack.)</dd>
+
+<dt><a name="xNextStack"></a>
+<em>objectid (string)</em>, <em>count (long)</em>, <em>next (reference)</em>: <span class="inlinedef">xNextStack</span> <em>next (reference)</em></dt>
+	<dd>Returns the next item in the inventory stack.  The
+	parameter to this function is the third result from either xInventory or this function.  Attempts to pass
+	any other kind of reference to this function or use this reference with other functions will result in
+	errors and possibly crash the game.  If the inventory of the current NPC, creature, or container is
+	changed (items added or removed) it will make the current stack reference invalid and you should get a
+	new stack reference with xInventory.</dd>
+
+<dt><a name="xContentList"></a>
+<em>objectid (string)</em>, <em>count (long)</em>, <em>type (long)</em>, <em>value (long)</em>, <em>weight (float)</em>, <em>name (string)</em>, <em>next (reference)</em>:
+<em>ref</em><code>-&gt;</code><span class="inlinedef">xContentList</span> <em>next (reference)</em>
+</dt>
+<dd>An alternative to both the xInventory and xNextStack
+	functions, which returns seven values based on the inventory of the current container, NPC, or creature
+	rather than three.  If the input parameter value is 0, the first item in the current container, NPC, or
+	creatures is returned (like xInventory).  The seventh (last) value returned can also be used as the input
+	parameter to access the next item in the inventory (like xNextStack).  Whenever the items in the container
+	change, the next reference may be invalid and you should start again with a value of 0 for the input
+	parameter.
+<p>  	The first return value is the objectid of one of the items in inventory. The second is the number of that
+	particular item found in the inventory.  The third is the type of that item using the codes listed for
+	the xRefType function.  The next three parameters are the value, weight, and printable name of the item
+	unless the object is of the Levelled Item type.  For LEVI objects, the value and weight will be listed
+	as 0 and the name field will contain a randomly selected object id for one random item selected from the
+	levelled list.  The normal levelled list rules aren't followed and lower level items are always more
+	likely than higher level items.  (In the future, the selection of random items may be improved.)</p> </dd>
+
+<dt><a name="xAddItem"></a>
+<em>ref</em><code>-&gt;</code><span class="inlinedef">xAddItem</span> <em>objectid (string)</em>, <em>count (long)</em></dt>
+	<dd>A wrapper for the original AddItem to take variables.</dd>
+
+<dt><a name="xRemoveItem"></a>
+<em>ref</em><code>-&gt;</code><span class="inlinedef">xRemoveItem</span> <em>objectid (string)</em>, <em>count (long)</em></dt>
+	<dd>A wrapper for the original RemoveItem to take variables.</dd>
+
+<dt><a name="xHasItemEquipped"></a>
+<em>equipped (long)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xHasItemEquipped</span> <em>objectid (string)</em></dt>
+	<dd>Returns 1 if the npc or creature has the object
+	equipped or 0 otherwise.</dd>
+
+<dt><a name="xEquip"></a>
+<em>ref</em><code>-&gt;</code><span class="inlinedef">xEquip</span> <em>objectid (string)</em></dt>
+	<dd>A wrapper for the original Equip to take variables.</dd>
+
+<dt><a name="xDrop"></a>
+<em>ref</em><code>-&gt;</code><span class="inlinedef">xDrop</span> <em>objectid (string)</em>, <em>count (long)</em></dt>
+	<dd>A wrapper for the original Drop to take variables.</dd>
+
+<dt><a name="xAddSpell"></a>
+<em>ref</em><code>-&gt;</code><span class="inlinedef">xAddSpell</span> <em>spellid (string)</em>, <em>count (long)</em></dt>
+	<dd>A wrapper for the original AddSpell to take variables.</dd>
+
+<dt><a name="xRemoveSpell"></a>
+<em>ref</em><code>-&gt;</code><span class="inlinedef">xRemoveSpell</span> <em>spellid (string)</em>, <em>count (long)</em></dt>
+	<dd>A wrapper for the original RemoveSpell to take variables.</dd>
+
+
+<dt><a name="xGetBaseStr"></a>
+<em>strength (float)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetBaseStr</span></dt>
+	<dd>Returns the base (unmodifed) strength for the NPC.</dd>
+
+<dt><a name="xGetBaseInt"></a>
+<em>intelligence (float)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetBaseInt</span></dt>
+	<dd>Returns the base (unmodifed) intelligence for the NPC.</dd>
+
+<dt><a name="xGetBaseWil"></a>
+<em>will (float)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetBaseWil</span></dt>
+	<dd>Returns the base (unmodifed) willpower for the NPC.</dd>
+
+<dt><a name="xGetBaseAgi"></a>
+<em>agility (float)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetBaseAgi</span></dt>
+	<dd>Returns the base (unmodifed) agility for the NPC.</dd>
+
+<dt><a name="xGetBaseSpe"></a>
+<em>speed (float)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetBaseSpe</span></dt>
+	<dd>Returns the base (unmodifed) speed for the NPC.</dd>
+
+<dt><a name="xGetBaseEnd"></a>
+<em>endurance (float)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetBaseEnd</span></dt>
+	<dd>Returns the base (unmodifed) endurance for the NPC.</dd>
+
+<dt><a name="xGetBasePer"></a>
+<em>personality (float)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetBasePer</span></dt>
+	<dd>Returns the base (unmodifed) personality for the NPC.</dd>
+
+<dt><a name="xGetBaseLuc"></a>
+<em>luck (float)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetBaseLuc</span></dt>
+	<dd>Returns the base (unmodifed) luck for the NPC.</dd>
+
+
+<dt><a name="xIsFemale"></a>
+<em>female (long)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xIsFemale</span></dt>
+	<dd>Returns 1 if the NPC is female and 0 otherwise.</dd>
+
+<dt><a name="xIsTrader"></a>
+<em>trader (long)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xIsTrader</span></dt>
+	<dd>Returns a 0 if the NPC/creature doesn't barter
+	for items, otherwise it is a value that represents the combination of items the merchant will trade.
+	New functions for each individual type are needed.</dd>
+
+<dt><a name="xIsTrainer"></a>
+<em>trainer (long)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xIsTrainer</span></dt>
+	<dd>Returns a 1 if the NPC/creature is a Trainer and 0
+	otherwise.</dd>
+
+<dt><a name="xIsProvider"></a>
+<em>provider (long)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xIsProvider</span></dt>
+	<dd>Returns a non-zero value if the NPC/creature sells
+	spells, repairs armor and weapons, or is an enchanter or spell maker.  Otherwise it returns a 0.</dd>
+
+
+
+<dt><a name="xGetService"></a>
+<em>service_mask (long)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetService</span> <em>service_mask (long)</em></dt>
+	<dd>Combines the features of xIsTrader, xIsTrainer, and
+	xIsProvider in a single function with one return value.  The service values are shown in the following
+	table and if an NPC offers more than one service the sum of the service numbers will be returned.  The
+	mask parameter can be used as a filter to limit the return value to only consider the services indicated.
+		<table  cellpadding="2" border="2">
+		<tr><th>Value</th><th>Service</th></tr>
+		<tr><td align=center>1</td><td>Barters for Weapons</td></tr>
+		<tr><td align=center>2</td><td>Barters for Armour</td></tr>
+		<tr><td align=center>4</td><td>Barters for Clothing</td></tr>
+		<tr><td align=center>8</td><td>Barters for Books</td></tr>
+		<tr><td align=center>16</td><td>Barters for Ingrediants</td></tr>
+		<tr><td align=center>32</td><td>Barters for Lockpicks</td></tr>
+		<tr><td align=center>64</td><td>Barters for Probes</td></tr>
+		<tr><td align=center>128</td><td>Barters for Lights</td></tr>
+		<tr><td align=center>256</td><td>Barters for Alchemical Apparatus</td></tr>
+		<tr><td align=center>512</td><td>Barters for Repair Tools</td></tr>
+		<tr><td align=center>1024</td><td>Barters for Miscellaneous Items</td></tr>
+		<tr><td align=center>2048</td><td>Sells Spells</td></tr>
+		<tr><td align=center>4096</td><td>Barters for Enchanted Items</td></tr>
+		<tr><td align=center>8192</td><td>Barters for Potions</td></tr>
+		<tr><td align=center>16384</td><td>Provides Training</td></tr>
+		<tr><td align=center>32768</td><td>Provides Spellmaking Service</td></tr>
+		<tr><td align=center>65536</td><td>Provides Enchanting Service</td></tr>
+		<tr><td align=center>131072</td><td>Repairs Armor and Weapons</td></tr>
+		</table>
+	Use a mask of 16384 to see if the NPC is a trainer and the function will either return 16384 or 0.
+	Use a mask of 96 (32+64) to see if the NPC sells thieving equipment.  The value returned could be
+	0, 32, 64, or 96, but won't any other values even if the NPC provides other services too.
+</dd>
+
+<dt><a name="xSetService"></a>
+<em>ref</em><code>-&gt;</code><span class="inlinedef">xSetService</span> <em>service_mask (long)</em></dt>
+	<dd>Uses the value parameter to change the NPC to
+	offer the set of services represented by the number.  The service number values are used and any old
+	services are ignored, so using a value of 8 will make the NPC a bookseller and a value of 131587
+	(1+2+512+131072) is typical for smiths.  The values changed by this function are not permanent and
+	may be reset after 72-hours or a game reload.</dd>
+
+<dt><a name="xModService"></a>
+<em>ref</em><code>-&gt;</code><span class="inlinedef">xModService</span> <em>service_mask (long)</em></dt>
+	<dd>Uses the value parameter to modify the services
+	offered by an NPC.  A positive value adds that service (or set of services) to those already offered.
+	A negative value will remove a service or service.  The changes are not permanent.</dd>
+
+
+<dt><a name="xGetBaseGold"></a>
+<em>gold (long)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetBaseGold</span></dt>
+	<dd>Returns the base amount of barter gold assigned to
+	the NPC (or creature) in the Construction Set.  This is the value that resets automatically each day.</dd>
+
+<dt><a name="xGetGold"></a>
+<em>gold (long)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetGold</span></dt>
+	<dd>Returns the current amount of barter gold possessed by
+	the NPC (or creature).  The base gold amount is used if you haven't bartered with the NPC/creature recently.</dd>
+
+<dt><a name="xSetBaseGold"></a>
+<em>ref</em><code>-&gt;</code><span class="inlinedef">xSetBaseGold</span> <em>gold (long)</em></dt>
+	<dd>Changes the base amount of barter gold assigned to
+	the NPC (or creature).  Unfortunately this change won't be saved with the save game so you will need to
+	reset it after each game reload or after the "72-hour bug" affects the merchant.</dd>
+
+<dt><a name="xSetGold"></a>
+<em>ref</em><code>-&gt;</code><span class="inlinedef">xSetGold</span> <em>gold (long)</em></dt>
+	<dd>Changes the current amount of barter gold possessed
+	by the NPC (or creature).  This value is stored in save game files so it will survive a game reload.
+	Setting this will have no effect if you haven't recently bartered with the NPC/creature.  (But setting
+	both this and the base gold amount at the same time will likely do what you want.)</dd>
+
+
+
+
+<dt><a name="xGetValue"></a>
+<em>value (long)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetValue</span></dt>
+	<dd>Returns the gold value of the object.  Objects that
+	can't be sold return 0.</dd>
+
+<dt><a name="xGetOwner"></a>
+<em>owner (string)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetOwner</span></dt>
+	<dd>Returns a 0 if the object is not owned, the objectid
+	of the owner of the item if it is owned by a specific NPC or the string "unknown" if it is owned by a
+	faction or controlled by a variable.</dd>
+
+<dt><a name="xGetWeight"></a>
+<em>weight (float)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetWeight</span></dt>
+	<dd>Returns the weight of the object for carriable objects.
+	Returns the maximum capacity of a container and 0 for all other objects.  (When the player places multiple
+	copies of one item on the ground the stack is considered one item and this function will calculate the value
+	for the group not just a single item of that type.)</dd>
+
+<dt><a name="xGetEncumb"></a>
+<em>encumberance (float)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetEncumb</span></dt>
+	<dd>Returns the total weight of all objects in the inventory
+	of a container, NPC, or creature.  Levelled list items don't have a weight but they are assigned a weight
+	of 0.001 by this fnction.  If any of the items in the group are respawning items then the resulting weight
+	will be negative.</dd>
+
+<dt><a name="xGetQuality"></a>
+<em>quality (float)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetQuality</span></dt>
+	<dd>Returns the quality of alchemical apparatus, lockpick,
+	probe, and repair tool items.</dd>
+
+<dt><a name="xGetCondition"></a>
+<em>condition (long)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetCondition</span></dt>
+	<dd>Returns the current condition for armor and weapons
+	and remaining uses for lockpicks, probes, and repair tools.</dd>
+
+<dt><a name="xGetMaxCondition"></a>
+<em>condition (long)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetMaxCondition</span></dt>
+	<dd>Returns the maxium condition for armor and weapons
+	and maximum uses for lockpicks, probes, and repair tools.</dd>
+
+<dt><a name="xGetCharge"></a>
+<em>charge (float)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetCharge</span></dt>
+	<dd>Returns the current charge on a 'cast when used' or
+	'cast when strikes' enchanted item.  Constant effect and non-enchanted items return 0.</dd>
+
+<dt><a name="xGetMaxCharge"></a>
+<em>charge (float)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetMaxCharge</span></dt>
+	<dd>Returns the maximum charge on an enchanted item.</dd>
+
+<dt><a name="xSetValue"></a>
+<em>success (long)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xSetValue</span> <em>value (long)</em></dt>
+	<dd>Sets the gold value of the object.  Returns 1 if succesful,
+	0 if failed.</dd>
+
+<dt><a name="xSetWeight"></a>
+ <em>success (long)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xSetWeight</span> <em>weight (float)</em> </dt>
+	<dd>Sets the weight of the object.  Returns 1 if succesful,
+	0 if failed.</dd>
+
+<dt><a name="xSetQuality"></a>
+<em>success (long)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xSetQuality</span> <em>quality (float)</em>  </dt>
+	<dd>Sets the quality of alchemical apparatus, lockpick,
+	probe, and repair tool items.  Returns 1 if succesful, 0 if failed.</dd>
+
+<dt><a name="xSetCondition"></a>
+<em>success (long)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xSetCondition</span> <em>condition (long)</em>  </dt>
+	<dd>Sets the current condition of armor and weapons.
+	Armor must not be at 100% or this function will fail.  It must have already sustained some damage.
+	Returns 1 if succesful, 0 if failed.</dd>
+
+<dt><a name="xSetMaxCondition"></a>
+<em>success (long)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xSetMaxCondition</span> <em>condition (long)</em></dt>
+	<dd>Sets the maxium condition for armor and weapons
+	and maximum uses for lockpicks, probes, and repair tools.  Returns 1 if succesful, 0 if failed.</dd>
+
+<dt><a name="xSetCharge"></a>
+<em>success (long)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xSetCharge</span> <em>charge (long)</em> </dt>
+	<dd>Sets the current charge on a 'cast when used' or
+	'cast when strikes' enchanted item. May not work if the item has never been used.  Returns 1 if succesful, 0 if failed.</dd>
+
+<dt><a name="xSetMaxCharge"></a>
+<em>success (long)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xSetMaxCharge</span> <em>charge (long)</em> </dt>
+	<dd>Returns the maximum charge on an enchanted item.
+	Returns 1 if succesful, 0 if failed.</dd>
+
+<dt><a name="xKeyPressed"></a>
+<em>code (long)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xKeyPressed</span> <em>code (long)</em></dt>
+	<dd>Monitors the status of the keyboard (and mouse buttons).
+	This can be similar to GetPCSneaking, but actually detects whether a particular key is really being pressed.
+	If input parameter code is a Virtual Key Code (between 1 and 254) the return value will indicate the status
+	of that key and a non-zero value means the key is being pressed.  If the input code is 0, then on each call,
+	the function will return the key code for the key (or one of the keys) currently being pressed.  The specific
+	values for the virtual key codes can be found in the Microsoft documentation at
+	<a href="http://msdn.microsoft.com">http://msdn.microsoft.com</a>.  Some of the codes match different keys
+	on different keyboard layouts.</dd>
+
+<dt><a name="xTextInput"></a>
+<em>length (long)</em>, <em>text (string)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xTextInput</span> <em>message (string)</em>, <em>endcode (long)</em></dt>
+	<dd>This allows you to directly read keyboard input from
+	the user and the results will be returned as a string.  Pass a string and a virtual key code to the function.
+	The function will wait for a key to be pressed and then take one of three actions.  If the key pressed
+	matches the endcode parameter, the string and its length are returned.  If the key pressed is a printable
+	ASCII character, the character is added to the string and the string and the number 0 are returned.  If the key is
+	RETURN or BACKSPACE, a new line is started or one character is removed from the string, and the modifed
+	string and a 0 are returned.  The function returns after each key press so that the current value of the
+	string can be shown with xMessageFix and MessageBox but the string should only be used normally after the
+	length is returned. Player controls should be disabled while this function is used.
+	<p>Example:</p>
+<div class="code">
+<pre>
+long endchar
+long message
+long length
+ifx ( endchar )
+else                       ; Initialization needed when endchar == 0
+    DisablePlayerControls
+    set endchar to 13                  ; RETURN key
+    setx message to xStringBuild ""    ; Empty string to start
+    set length to 0
+    return
+endif
+ifx ( length )
+else                       ; Actual string edit while length == 0
+    setx length message to xTextInput message endchar
+    ; Three boxes, makes it appear as if there is one set that changes.
+    MessageBox ""
+    ; Spaces and trailing % hide old characters while using Backspace.
+    xMessageFix "%s           %" message
+    MessageBox "                                                      "
+    MessageBox "Enter a message and press ENTER when it is complete."
+    return
+endif
+EnablePlayerControls       ; The message is complete now
+</pre></div></dd>
+
+<dt><a name="xTextInputAlt"></a>
+<em>length (long)</em>, <em>text (string)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xTextInputAlt</span> <em>message (string)</em>, <em>endcode (long)</em></dt>
+	<dd>This function is identical to xTextInput except that
+	the function simply checks the status of keys and returns immediately rather than waiting for a key to be
+	pressed.</dd>
+
+
+<dt><a name="xFileRewind"></a>
+<span class="inlinedef">xFileRewind</span> <em>filename (string)</em></dt>
+	<dd>Moves the current reading position to the start of
+	the file.  Call this or xFileSeek at the start of any script which uses file reading or writing functions,
+	otherwise you will have problems with the current file position not being as expected.</dd>
+
+<dt><a name="xFileSeek"></a>
+<span class="inlinedef">xFileSeek</span> <em>filename (string)</em>, <em>offset (long)</em></dt>
+	<dd>Moves the current reading position to the specified
+	offset in the file.  You should call this or xRewind every frame before using other file functions.
+	(This function isn't very useful if the file contains string data.)</dd>
+
+<dt><a name="xFileReadText"></a>
+ <em>matches (long)</em>, ...: <span class="inlinedef">xFileReadText</span> <em>filename (string)</em>, <em>pattern (string)</em></dt>
+	<dd>Read a text string from from the file at the current
+	reading position.  The current position is then advanced.  The pattern string is then used to extract data
+	from the string just read; the first return value indicates how much of the pattern is matched.  The values
+	matched by the pattern are also returned.  The patterns and return values are the same as for the
+	xStringParse function with one addition: placing a single % sign at the end of the pattern will cause the
+	read routine to stop when it gets to the end of a line (CR/LF) allowing you to use this to read a normal
+	text file instead of a binary file.  Without the trailing % sign on the pattern this will read up to the
+	first NULL character or to the end of the file if it doesn't find a NULL character.</dd>
+
+<dt><a name="xFileWriteText"></a>
+<span class="inlinedef">xFileWriteText</span> <em>filename (string)</em>, <em>format (string)</em>, ...</dt>
+	<dd>Writes formatted string to the file at the current
+	position and advances.  The file is then truncated at the current position (just after the end of the
+	new value), so you cannot use this to modify the values in the middle of an existing file.  The formatting
+	rules are the same as for the xStringBuild function with one addition.  Placing a % at the end of the
+	pattern will suppress the NULL that is normally printed, so a format string ending with "%N%" can be
+	used to create a normal text file.</dd>
+
+<dt><a name="xFileReadShort"></a>
+<em>count (long)</em>, ...: <span class="inlinedef">xFileReadShort</span> <em>filename (string)</em>, <em>count (long)</em></dt>
+	<dd>Reads the number of SHORTS (2 bytes) requested
+	from the file at the current reading position.  The current position is then advanced.  Returns the
+	number of values actually read followed by the values.</dd>
+
+<dt><a name="xFileReadLong"></a>
+<em>count (long)</em>, ...: <span class="inlinedef">xFileReadLong</span> <em>filename (string)</em>, <em>count (long)</em></dt>
+	<dd>The same as xFileReadShort but reads LONGS (4 bytes).</dd>
+
+<dt><a name="xFileReadFloat"></a>
+<em>count (long)</em>, ...: <span class="inlinedef">xFileReadFloat</span> <em>filename (string)</em>, <em>count (long)</em></dt>
+	<dd>The same as xFileReadShort but reads FLOATS (4 bytes).</dd>
+
+<dt><a name="xFileReadString"></a>
+<em>text (string)</em>: <span class="inlinedef">xFileReadString</span> <em>filename (string)</em></dt>
+	<dd>Similar to xFileReadShort but reads a single 'C'-style NUL ('\0')
+	terminated string from the file. If a string cannot be read it returns a 0.</dd>
+
+<dt><a name="xFileWriteShort"></a>
+<span class="inlinedef">xFileWriteShort</span> <em>filename (string)</em>, <em>value (short)</em></dt>
+	<dd>Writes a (2 byte) SHORT value to the file at the current
+	position and advances.  The file is then truncated at the current position (just after the end of the new
+	value), so you cannot use this to modify the values in the middle of an existing file.</dd>
+
+<dt><a name="xFileWriteLong"></a>
+<span class="inlinedef">xFileWriteLong</span> <em>filename (string)</em>, <em>value (long)</em></dt>
+	<dd>The same as for xFileWriteShort but stores a (4 byte)
+	LONG value.</dd>
+
+<dt><a name="xFileWriteFloat"></a>
+<span class="inlinedef">xFileWriteFloat</span> <em>filename (string)</em>, <em>value (float)</em></dt>
+	<dd>The same as for xFileWriteFloat but stores a (4 byte)
+	FLOAT value.</dd>
+
+<dt><a name="xFileWriteString"></a>
+<span class="inlinedef">xFileWriteString</span> <em>filename (string)</em>, <em>text (string)</em></dt>
+	<dd>The same as for xFileWriteShort but stores a 'C'-style
+	null terminated string to the file.</dd>
+
+
+
+<dt><a name="xPCCellID"></a>
+<em>cellid (string)</em>: <span class="inlinedef">xPCCellID</span></dt>
+	<dd>Returns a string containing the name of the current
+	cell.</dd>
+
+<dt><a name="xRefID"></a>
+<em>objectid (string)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xRefID</span></dt>
+	<dd>Returns the objectid string of the object.</dd>
+
+<dt><a name="xMyCellID"></a>
+<em>cellid (string)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xMyCellID</span></dt>
+	<dd>Returns a string containing the name of the cell
+	the object (intended to be used with references to unique NPCs) inhabits.  So <span class="inlinecode">fargoth"-&gt;xMyCellID</span>
+	would return "Seyda Neen" unless you've lured him into the wilderness for some reason.  Useful for
+	locating that missing companion.  Can't locate items stored in containers or inventory.</dd>
+
+<dt><a name="xGetName"></a>
+<em>name (string)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetName</span></dt>
+	<dd>Returns a string containing the name (suitable
+	for display, not the objectid) for the object or 0 if the object doesn't have a name.  The NPC who
+	falls from the sky near Seyda Neen has an object id of "agronian guy" but his name is "Tarhiel" when
+	you look at his corpse.</dd>
+
+<dt><a name="xSetName"></a>
+<em>ref</em><code>-&gt;</code><span class="inlinedef">xSetName</span> <em>new_name (string)</em></dt>
+	<dd>Uses the value parameter to change the NPC's name.
+	  The values changed by this function are not permanent and may be reset after 72-hours or a game reload.
+	  Currently only works for NPCs.</dd>
+
+<dt><a name="xGetBaseID"></a>
+<em>objectid (string)</em>: <em>ref</em><code>-&gt;</code><span class="inlinedef">xGetBaseID</span></dt>
+	<dd>Returns the base part of of the objectid for the
+	object.  This is really intended for use with NPCs.  There are 36 diseased Dreamers who share the object
+	id "dreamer" but if you use the xRefID function on one of them you will get an id that is unique to that
+	particular NPC such as "dreamer000002", this function would only return "dreamer".</dd>
+
+
+
+<dt><a name="xStringCompare"></a>
+<em>order (long)</em>: <span class="inlinedef">xStringCompare</span> <em>s1 (string)</em>, <em>s2 (string)</em></dt>
+	<dd>Compares the two strings based on alphabetical
+	order and returns 0 if they are equal, a negative number if the first string would appear first, and
+	a postive number if the second string would appear first.</dd>
+
+<dt><a name="xStringLength"></a>
+<em>length (long)</em>: <span class="inlinedef">xStringLength</span> <em>text (string)</em></dt>
+	<dd>Returns the number of characters in the input string.</dd>
+
+<dt><a name="xStringParse"></a>
+<em>count (long)</em>, ...: <span class="inlinedef">xStringParse</span> <em>pattern (string)</em>, <em>source (string)</em> </dt>
+	<dd>Identifies and extracts data from the source
+	string based on the pattern string.  The first return value is a long indicating how much of the
+	pattern matched successfully.  The values matched by the pattern will then be returned in order.
+	For example, the following statement will put value of 37 in the long variable lval, a value of 2.4
+	in the float variable fval, the string "Golden Egg" in the string variable sval, and the value 4 into
+	matches to indicated that all of the pattern successfully matched. For example:
+<div class="code">set matches lval fval sval to xStringParse "%d %f %s" "37 2.4 Golden Egg"</div>
+	In the pattern string, all of the special features begin with a % symbol.  Some, simply match special
+	characters that can't otherwise be typed in the pattern string.
+		<table border="2">
+		<tr><td class="inlinecode">%%</td> <td>matches a single % sign.</td></tr>
+		<tr><td class="inlinecode">%n</td> <td>matches the new line marker, CR/LF.</td></tr>
+		<tr><td class="inlinecode">%q</td> <td>matches the " quotation mark.</td></tr>
+		</table>
+	The rest return the values matched so they can be stored in variables with setx.
+		<table border="2">
+		<tr><td class="inlinecode">%d</td> <td>matches a decimal integer and the value is returned as type long.</td></tr>
+		<tr><td class="inlinecode">%h</td> <td>matches a hexadecimal integer and the value is returned as type long.</td></tr>
+		<tr><td class="inlinecode">%f</td> <td>matches a real number and the value is returned as type float.</td></tr>
+		<tr><td class="inlinecode">%s</td> <td>matches the rest of the string and returns it as type string.</td></tr>
+		<tr><td class="inlinecode">%l</td> <td>matches exactly four characters and returns them as type long.</td></tr>
+		</table>
+	The uppercase forms %N, %Q, %D, %H, %F, %S, and %L also work.  Only one of these takes a precision
+	specifier, and it is best explained by examples:
+	<div class="code">set matches sval lval to xStringParse "%.0s_%d" "gold_001"</div>
+	In this case, the special pattern "%.0s" is followed by a "_" character, so only "gold" will be
+	stored in the string sval, a value of 1 will be in lval, and matches will be 3.  Matches is normally
+	one more than the number of values returned to indicated that in addition to filling all of the
+	variables the entire pattern was matched successfully.  You could use a pattern simply for string
+	comparison.
+	<div class="code">set matches lval to xStringParse "%d Apples" somestring</div>
+	If the somestring variable really holds the string "43 Apples" then matches will be 2 to indicate
+	that the pattern was matched completely.  If somestring were "47 Pears" then matches will be 1 to
+	indicate that the first variable was filled (with 47) but that the rest of the pattern failed to match.
+	If somestring were "Hello" then matches will be 0 to indicate that not even the first variable was
+	filled correctly.</dd>
+
+<dt><a name="xStringBuild"></a>
+<em>result (string)</em>: <span class="inlinedef">xStringBuild</span> <em>format (string)</em>, ...</dt>
+	<dd>Returns a new string that is constructed based
+	on the format string and any other variable values as needed.  The format string is similar to those
+	for MessageBox with % indicating some special character or variable substitution.  Some patterns
+	can be used to place special characters into the string:
+            <table border="2">
+                <TR><TD class="inlinecode">%%</TD> <td>a single % sign is placed in the string.</td></TR>
+		<tr><td class="inlinecode">%n</td> <td>a new line marker (CR/LF) is placed in the string.</td></tr>
+		<tr><td class="inlinecode">%q</td> <td>a " quotation mark is placed in the string.</td></tr>
+		</table>
+	The rest are used to insert values from the remaining parameters into the output string.
+		<table border="2">
+		<tr><td class="inlinecode">%d</td> <td>a short or long value is inserted as a decimal integer.</td></tr>
+		<tr><td class="inlinecode">%h</td> <td>a short or long value is inserted as a hexadecimal integer.</td></tr>
+		<tr><td class="inlinecode">%f</td> <td>a float value is inserted as real decimal number.</td></tr>
+		<tr><td class="inlinecode">%s</td> <td>a string value is inserted.</td></tr>
+		<tr><td class="inlinecode">%l</td> <td>a long value is inserted as a four character string.</td></tr>
+		</table>
+	The uppercase forms %N, %Q, %D, %H, %F, %S, and %L also work.  The float specifier takes a precision
+	specifier just like the MessageBox command. The format "%.3f" will print a floating point value with
+	three digits after the decimal point.  The string specifier can take two numbers in its specifier.
+		<table border="2">
+		<tr><td class="inlinecode">%2s</td> <td>skips the first two characters of the string, but inserts the rest.</td></tr>
+		<tr><td class="inlinecode">%.3s</td> <td>inserts only three characters of the string.</td></tr>
+		<tr><td class="inlinecode">%4.5s</td> <td>skips 4 characters, then inserts the next 5 characters of the string.</td></tr>
+		</table>
+	To put "World, Hello!" into str, you could use the following statement.
+	<div class="code">set str to xStringBuild "%7S%5.2s%.5S!" "World, Hello</div>
+	<b>The compiler doesn't currently support more than 12 parameters at a time.</b></dd>
+
+<dt><a name="xStringMatch"></a>
+<em>match (long)</em>: <span class="inlinedef">xStringMatch</span> <em>source (string)</em>, <em>pattern (string)</em></dt>
+	<dd>Performs a Regular Expression (R.E.) match
+	on <em>source</em> using the pattern in <em>pattern</em>. Regular expressions
+	are pattern matching expressions. MWSE uses the RE library from the Boost C++ library, from
+	<A HREF="http://www.boost.org">www.boost.org</a>. The regular expression style is the Perl syntax;
+	please see <a href="http://www.boost.org/libs/regex/doc/syntax_perl.html">the Boost documentation</a>
+	for full documentation. However, here is a partial quick summary:
+	<p>In regular expressions, a number of characters have special meanings:
+	  <table>
+	  <tr><td class="inlinecode">.</td> <td>Matches any one character.</td></tr>
+	  <tr><td class="inlinecode">^</td> <td>Matches the beginning of the string.</td></tr>
+	  <tr><td class="inlinecode">$</td> <td>Matches then end of the string.</td></tr>
+	  <tr><td><code>(</code> and <code>)</code></td> <td>Groups a sub-expression (see below).</td></tr>
+	  <tr><td class="inlinecode">*</td> <td>Makes the preceeding item or group match zero or more times.</td></tr>
+	  <tr><td class="inlinecode">?</td> <td>Makes the preceeding item or group match zero or once.</td></tr>
+	  <tr><td class="inlinecode">+</td> <td>Makes the preceeding item or group match one or more times.</td></tr>
+	  <tr><td><code>{</code><em>integer</em><code>}</code></td> <td>Makes the preceeding item or group match exactly
+                 <em>integer</em> times.</td></tr>
+	  <tr><td><code>{</code><em>int1</em><code>,</code><em>int2</em><code>}</code></td> <td>Makes the preceeding item or group
+                match from <em>int1</em> to <em>int2</em> times.</td></tr>
+	  <tr><td class="inlinecode">|</td> <td><em>Alternation</em>; makes the pattern match either the item on the left of the
+                     <code>|</code> or the item on the right.</td></tr>
+	  <tr><td><code>[</code><em>character set</em><code>]</code></td> <td>Matches a single character from the set <em>character
+                     set</em>. The set can contain individual characters, or ranges of the form <em>a</em><code>-</code><em>b</em>,
+                     which matches all characters between <em>a</em> and <em>b</em>, including <em>a</em> and <em>b</em>. (For example,
+                     <code>[A-Z]</code> will match upper case letters.) If the <em>character set</em> begins with <code>^</code>, then
+                    it will match any character <em>except</em> those in the character set.</td></tr>
+	  <tr><td><code>[[:</code><em>name</em><code>:]]</code></td> <td>Matches a single character from the pre-defined set
+                     <em>name</em>.</td></tr>
+	  <tr><td><code>\</code><em>character</em></td><td>Matches the character; that is, removes the special meaning, if any,
+                from <em>character</em>. (For example, <code>"."</code> matches any single character, but <code>"\."</code> matches
+                the period character.)</td>
+	  <tr><td class="inlinecode">\d</td> <td>Match a digit (0-9).</td></tr>
+	  <tr><td class="inlinecode">\l</td> <td>Match a lower case letter (a-z).</td></tr>
+	  <tr><td class="inlinecode">\s</td> <td>Match whitespace (space, tab).</td></tr>
+	  <tr><td class="inlinecode">\u</td> <td>Match an upper case letter (A-Z).</td></tr>
+	  <tr><td class="inlinecode">\w</td> <td>Match a word (a string of letters, digits, and underscores)</td></tr>
+	  <tr><td class="inlinecode">\D</td> <td>Match anything <em>but</em> a digit.</td></tr>
+	  <tr><td class="inlinecode">\L</td> <td>Match anything <em>but</em> a lower case letter (a-z).</td></tr>
+	  <tr><td class="inlinecode">\S</td> <td>Match anything <em>but</em> whitespace (space, tab).</td></tr>
+	  <tr><td class="inlinecode">\U</td> <td>Match anything <em>but</em> an upper case letter (A-Z).</td></tr>
+	  <tr><td class="inlinecode">\W</td> <td>Match anything <em>but</em> a word.</td></tr>
+	  <tr><td class="inlinecode">\&lt;</td> <td>Match the start of a word.</td></tr>
+	  <tr><td class="inlinecode">\&gt;</td> <td>Match the end of a word.</td></tr>
+	  <tr><td class="inlinecode">\b</td> <td>Match the end or start of a word.</td></tr>
+	  <tr><td class="inlinecode">\B</td> <td>Match anything <em>but</em> the end or start of a word.</td></tr>
+	  </table>
+	<p>Examples:</p>
+
+	<p><span class="inlinecode">"(^Mage's Guild)|(, Guild of Mages$)"</span> This will match any string
+	that starts with "Mage's Guild", or ends with ", Guild of Mages".</p>
+	<p><span class="inlinecode">"( Tomb(, level \d+)?)|( Barrow)$"</span> This will match any string ending
+	with " Tomb", " Tomb, level <em>digits</em>", or " Barrow" - in other words, just about any
+	tomb/barrow type location.</p>
+</dd>
+
+<dt><a name="xLogMessage"></a>
+<span class="inlinedef">xLogMessage</span> <em>format (string)</em>, ...</dt>
+	<dd>Writes out formatted strings to the log file
+	(MWScriptExtender.log)  Works much like MessageBox but with the additional formatting options
+	described for xStringBuild.  A trailing % in the format string will suppress the printing of the
+	new line sequence allowing a single line of text to be created with two or more xLogMessage calls.
+	The number of parameters specified in the formatstring MUST match those supplied or there will be
+	trouble.</dd>
+
+<dt><a name="xMessageFix"></a>
+<span class="inlinedef">xMessageFix</span> <em>message_format (string)</em>, ...</dt>
+	<dd>This function allows you to use strings from variables
+	with the MessageBox function with a few restrictions.  First, the MessageBox command must immediately
+	follow this one.  Second, the number of strings for this function must match the number of strings for
+	the MessageBox.  Third, the MessageBox can have buttons but it can't use variables.  And finally, the
+	values of the strings used on the MessageBox will be replaced with the values from xMessageFix,
+	but the MessageBox strings set a maximum size for each of the xMessageFix strings (it's OK if the
+	MessageBox strings are longer than the MessageFix ones).  Using aMessageFix can take both the STRING
+	variable and literal string types and each string acts as a format string as described for the
+	xStringBuild function.  If a string ends in a single % and the formated string takes less space than
+	the matching string from MessageBox, the remaining characters of the MessageBox string will be used.
+	<p><b>While it is possible to use formatted messages and buttons, it is best to format strings with
+	xStringBuild if there are buttons involved because of the limit of 12 parameters per function.</b></p>
+<p>Example:</p>
+<div class="code">
+<pre>long thiscell
+setx thiscell to xPCCellID
+xMessageFix "Teleport Fargoth Where?" thiscell "Seyda Neen" "Red Mountain"
+MessageBox "Send Fargoth to Location" "My Cell" "His Original Location" "Vos"</pre></div>
+If you are in Caldera, the Arena in Vivec, or Ald-Ruhn the MessageBox would show:
+<table cellpadding="4" cellspacing="6" align="center">
+<TR>
+   <TD class="boxed" align="center">
+      <span class="outset">Teleport Fargoth Where?</span><br>
+      <span class="outset">Caldera</span><br>
+      <span class="outset">Seyda Neen</span><br>
+      <span class="outset">Red</span>
+    </TD>
+   <TD class="boxed" align="center">
+      <span class="outset">Teleport Fargoth Where?</span><br>
+      <span class="outset">Vivec,</span><br>
+      <span class="outset">Seyda Neen</span><br>
+      <span class="outset">Red</span>
+    </TD>
+   <TD class="boxed" align="center">
+      <span class="outset">Teleport Fargoth Where?</span><br>
+      <span class="outset">Ald-Ruh</span><br>
+      <span class="outset">Seyda Neen</span><br>
+      <span class="outset">Red</span>
+    </TD>
+</TR>
+</table>
+</dd>
+</dl>
+<hr>
+
+
+<h3><a name="Samples"></a>Sample Scripts</h3>
+
+Below are three sample scripts that show the structure of the extended scripts.  You should also look at
+the example scripts in the test ESP files in the Advanced folder.
+
+
+<p>The following script finds the weight of the item currently in the player's crosshair.  It could be called
+from a spell monitoring script to create a scripted "Get Weight" spell.</p>
+<div class="code"><pre>begin getweight_of_pctarget
+
+long pctarget
+float weight
+
+; Ensure the script only runs once.
+StopScript getweight_of_pctarget
+
+setx pctarget to xGetPCTarget   ; Returns a 0 if there isn't a target.
+
+if ( pctarget == 0 )   ; No target, so warn and quit.
+    MessageBox "You don't have anything targeted."
+    return
+endif
+
+setx weight to pctarget-&gt;xGetWeight
+
+MessageBox "The item had weight %f" weight
+
+end
+</pre></div>
+
+<p>This script will cause all of the male NPCs except Fargoth to run to the player's current position.
+You could call this script from the console, dialog, or another script.</p>
+<div class="code"><pre>begin siren_call
+
+short call         ; status variable - should this NPC be called?
+
+long prospectref   ; reference to an NPC (or creature)
+long prospectid    ; string holding the NPC's id
+
+long temp          ; used to control ifx statements
+
+float px           ; the current player's position
+float py
+float pz
+
+; this only needs to run for one frame
+stopscript siren_call
+
+set px to player-&gt;GetPos X
+set py to player-&gt;GetPos Y
+set pz to player-&gt;GetPos Z
+
+; loop through each of the NPCs and creatures in the cell
+setx prospectref to xFirstNPC
+whilex ( prospectref )
+
+    ; start by assuming we want to call this one
+    set call to 1
+
+    ; check the type because we don't want creatures (Non-NPCs)
+    setx temp to prospectref-&gt;xRefType
+    if ( temp != 1598246990 )   ; it's not an NPC
+        set call to 0
+    endif
+
+    ; check to see if it's a female, we only want the males
+    setx temp to prospectref-&gt;xIsFemale
+    if ( temp != 0 )          ; it's not a male
+       set call to 0
+    endif
+
+    ; get this NPCs id and see if it's fargoth
+    setx prospectid to prospectref-&gt;xGetBaseID
+    setx temp to xStringCompare prospectid "fargoth"
+    if ( temp == 0 )          ; it's Fargoth
+        set call to 0
+    endif
+
+    ; if call is still 1 we want to call this NPC to the player
+    ifx ( call )  ; we use extended functions inside so need ifx
+        xSetRef prospectref       ; substitute for prospect-&gt;ForceRun
+        ForceRun
+        prospect-&gt;xAITravel px py pz
+    endif
+
+    setx prospectref to xNextRef prospect
+endwhile
+
+end
+</pre></div>
+
+<p>This sample script is meant to be placed on a container.  When the player activates the container, it
+takes all of the player's posessions and places them in the container unless the trap has been been disabled.
+</p>
+<p><b>NOTE:</b> What is actually placed in the container is <em>copies</em> of the player's items. For the most part this doesn't
+matter; however, it means that weapons and armour will have damage reset, and charged enchanted items will have their charges reset.</p>
+<div class="code"><pre>begin take_player_items
+
+short trapdisabled
+long invitem    ; name of the item (i.e. gold_001, ingred_ruby_01, etc.)
+long invcount   ; amount of the item (i.e. 327 gold_001, etc.)
+long invref     ; pointer to next item (unused in this script)
+long pcref
+
+if ( OnActivate == 0 )    ; Nothing to do until player tries to open it.
+    return
+endif
+
+if ( trapdisabled == 1 )  ; This would be changed by some external script
+    Activate              ; to allow the player to retrieve the items.
+endif
+
+; If we get here, the trap is active, take everything the player carries.
+setx pcref to xGetRef "player"
+
+setx invitem,invcount,invref to pcref-&gt;xInventory      ; get first item
+whilex ( invcount )
+    xAddItem invitem invcount                          ; add to container
+    pcref-&gt;xRemoveItem invitem invcount                ; take from player
+    setx invitem,invcount,invref to pcref-&gt;xInventory  ; get another item
+endwhile
+
+end
+</pre></div>
+<hr>
+
+</BODY>
+</HTML>
