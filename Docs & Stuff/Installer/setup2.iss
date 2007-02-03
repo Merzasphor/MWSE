@@ -43,16 +43,15 @@ Source: "../MWSE_v094_Demo.esp"; DestDir: "{app}"; Flags: ignoreversion;
 
 [Icons]
 Name: "{group}\Morrowind Script Extender"; Filename: "{app}\MWSE Launcher.exe"
-Name: "{group}\MWSE Readme"; Filename: "{app}\Readme.txt"
-Name: "{group}\MWSE License"; Filename: "{app}\GPL.txt"
-Name: "{group}\MWSE Scripting Guide"; Filename: "{app}\MWSE_Scripting.html"
 Name: "{commondesktop}\Morrowind Script Extender"; Filename: "{app}\MWSE Launcher.exe"; Tasks: desktopicon
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Morrowind Script Extender"; Filename: "{app}\MWSEloader.exe"; Tasks: quicklaunchicon
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\Morrowind Script Extender"; Filename: "{app}\MWSE Launcher.exe"; Tasks: quicklaunchicon
 
 Name: "{group}\Uninstall MWSE"; Filename: "{uninstallexe}"
 
 ; NOTE: there are 'other' icons
-Name: "{group}\Readme"; Filename: "{app}\Readme.html"
+Name: "{group}\MWSE Readme"; Filename: "{app}\Readme.txt"
+Name: "{group}\MWSE License"; Filename: "{app}\GPL.txt"
+Name: "{group}\MWSE Scripting Guide"; Filename: "{app}\MWSE_Scripting.html"
 
 ;[Run]
 ;Filename: "{app}\MWSE Launcher.exe"; Description: "{cm:LaunchProgram,Morrowind Script Extender}"; Flags: nowait postinstall skipifsilent

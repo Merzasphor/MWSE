@@ -4,6 +4,10 @@ Developers: AnthonyG, Fliggerty, Timeslip, Tp21, grmcdorman
 Original Developers: CdCooley, FreshFish
 --------------------------------------------------------------------------------
 02-02-2007 by Grant McDorman <grmcdorman>
+In installer, drop obsolete install of shortcut to Readme.html in Start Menu.
+Also fix incorrect Quick Launch shortcut.
+
+02-02-2007 by Grant McDorman <grmcdorman>
 Changed installer: dropped Readme.html, added Readme, License (GPL.txt),
 MWSE Scripting Guide (MWSE_Scripting.html) to Start Menu entry, corrected
 desktop icon error.
