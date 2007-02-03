@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="MWSE Launcher"
 	ProjectGUID="{B68F004B-53DF-428C-9F02-2D333978F6F8}"
 	RootNamespace="MWSE Launcher"
