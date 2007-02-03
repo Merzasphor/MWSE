@@ -30,17 +30,17 @@ If you have downloaded the ZIP file, place MWSE Launcher.exe and MWSE.dll in a l
 
 It will work regardless of which directory it is installed into.
 
-For multiple Morrowind installations, the MWSE Launcher will find the location of the last installed version.  It checks the registry key HKLM\Software\Bethesda Softworks\Morrowind,Installed Path and launches the Morrowind Launcher.exe found there.  However, it will also check for Morrowind.exe in the same directory.  So to avoid renaming your installation folders, you can simply put multiple copies of MWSE into each installation directory.
+For multiple Morrowind installations, the MWSE Launcher will find the location of the last installed version.  It checks the registry key HKLM\Software\Bethesda Softworks\Morrowind,Installed Path and launches the Morrowind Launcher.exe found there.  However, it will also check for Morrowind.exe in the same directory.  To avoid renaming your installation folders, you can simply put a copy of MWSE into each installation directory.
 
 
 ************************************
 
-MWSE Launcher: There is now a GUI style launcher.  It has three buttons: Launch Morrowind, View Log, and Exit.  Launch Morrowind will start Morrowind Launcher.exe; note that the MWSE Launcher does not have to be restarted to launch Morrowind again.  View Log will open MWSElog.txt.  And Exit will close the MWSE Launcher.
+MWSE Launcher: There is now a GUI style launcher.  It has three buttons: Launch Morrowind, View Log, and Exit.  Launch Morrowind will start Morrowind Launcher.exe; note that the MWSE Launcher does not have to be restarted to launch Morrowind again.  View Log will open MWSElog.txt.  Finally, the Exit button will close the MWSE Launcher.
 
 ************************************
 
 Source and Support files for Modders and Scripters
-any new version can be found at: http://sourceforge.net/projects/mwse, you can find all the package details there.
+and updated versions can be found at: http://sourceforge.net/projects/mwse, you can find all the package details there.
 
 Bugs and feature requests should be submitted at http://sourceforge.net/tracker/?group_id=172997.
 
