@@ -3,6 +3,11 @@ MWSE 0.9.3: Changelog
 Developers: AnthonyG, Fliggerty, Timeslip, Tp21, grmcdorman
 Original Developers: CdCooley, FreshFish
 --------------------------------------------------------------------------------
+02-02-2007 by Grant McDorman <grmcdorman>
+Changed installer: dropped Readme.html, added Readme, License (GPL.txt),
+MWSE Scripting Guide (MWSE_Scripting.html) to Start Menu entry, corrected
+desktop icon error.
+
 31-01-2007 by Grant McDorman <grmcdorman>
 MWSE_Scripting.html updated: now valid HTML, and includes description
 of xStringMatch.
