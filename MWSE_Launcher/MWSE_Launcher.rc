@@ -146,8 +146,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,9,4,0
- PRODUCTVERSION 0,9,4,0
+ FILEVERSION 0,9,4,1
+ PRODUCTVERSION 0,9,4,1
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -164,12 +164,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "http://www.sourceforge.net/projects/mwse\0"
             VALUE "FileDescription", "MWSE Launcher Module\0"
-            VALUE "FileVersion", "0, 9, 4, 0\0"
+            VALUE "FileVersion", "0, 9, 4, 1\0"
             VALUE "InternalName", "MWSE Launcher\0"
             VALUE "LegalCopyright", "Copyright 2007\0"
             VALUE "OriginalFilename", "MWSE Launcher.exe\0"
             VALUE "ProductName", "MWSE Launcher Module\0"
-            VALUE "ProductVersion", "0, 9, 4, 0\0"
+            VALUE "ProductVersion", "0, 9, 4, 1\0"
         END
     END
     BLOCK "VarFileInfo"

@@ -3,6 +3,10 @@ MWSE 0.9.3: Changelog
 Developers: AnthonyG, Fliggerty, Timeslip, Tp21, grmcdorman
 Original Developers: CdCooley, FreshFish
 --------------------------------------------------------------------------------
+24-02-2007 by Grant McDorman <grmcdorman>
+Changed mechanism for locating MWSE.DLL in launcher, to try and squish bug
+1666719.
+
 03-02-2007 by Grant McDorman <grmcdorman>
 Copied Ted's ArchiveMaker to trunk from 0.9.4 release tag.
 
