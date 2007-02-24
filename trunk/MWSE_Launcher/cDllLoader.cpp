@@ -69,21 +69,28 @@ void cDllLoader::mInjectDll(HWND windowHandle) throw(cDllLoader::LoadException)
         throw reportError("Could not get Morrowind process", true);
     }
 
-    // MWSE.DLL is assumed to be in the current directory.
+    // MWSE.DLL is assumed to be in the directory of the launcher.
     // (With the detection of the Morrowind location above and below,
     //  this means MWSE doesn't have to be installed in the Morrowind
     //  directory.)
     char buffer[1024];
-    DWORD status = GetCurrentDirectory(sizeof buffer, buffer);
+    DWORD status = GetModuleFileNameEx(GetCurrentProcess(), NULL, buffer, sizeof buffer);
     if (status == 0) {
+        LoadException *exception = reportError("Could not launcher directory", true);
         CloseHandle(morrowindProcess);
-        throw reportError("Could not get current directory", true);
+        throw exception;
+    }
+    // Trim executable name.
+    char *cp = strrchr(buffer, '\\');
+    if (cp != NULL) {
+        *cp = '\0';
     }
 
     HMODULE kernel32Handle = GetModuleHandle("kernel32.dll");
     if (kernel32Handle == NULL) {
+        LoadException *exception = reportError("Could not get kernel32", true);
         CloseHandle(morrowindProcess);
-        throw reportError("Could not get kernel32", true);
+        throw exception;
     }
 
     // NOTE: This depends on the address of LoadLibraryA being the same in
@@ -94,25 +101,43 @@ void cDllLoader::mInjectDll(HWND windowHandle) throw(cDllLoader::LoadException)
     void *libraryAddress=reinterpret_cast<void *>(GetProcAddress(kernel32Handle,
                                                                  "LoadLibraryA"));
     if (libraryAddress == NULL) {
+        LoadException *exception = reportError("Could not get LoadLibraryA", true);
         CloseHandle(morrowindProcess);
-        throw reportError("Could not get LoadLibraryA", true);
+        throw exception;
     }
 
     std::string mwsePath = buffer + std::string("\\") + mwseDLL;
 
+    HANDLE testLocation = CreateFile(mwsePath.c_str(),
+        0 /* DesiredAccess no access, existence only */,
+        0 /* ShareMode (default) */,
+        NULL /* SECURITY_ATTRIBUTES */,
+        OPEN_EXISTING /* CreationDisposition */,
+        0 /* Flags */,
+        0 /* TemplateFile */ );
+    if (testLocation == INVALID_HANDLE_VALUE) {
+        mwsePath += " not found";
+        LoadException *exception = reportError(mwsePath.c_str(), true);
+        CloseHandle(morrowindProcess);
+        throw exception;
+    }
+    CloseHandle(testLocation);
+
     LPVOID hookMemoryBlock = VirtualAllocEx(morrowindProcess,0,
         mwsePath.size() + 1,MEM_COMMIT,PAGE_EXECUTE_READWRITE);
     if (hookMemoryBlock == NULL) {
+        LoadException *exception = reportError("Could not allocate Morrowind memory", true);
         CloseHandle(morrowindProcess);
-        throw reportError("Could not allocate Morrowind memory", true);
+        throw exception;
     }
 
     DWORD bytesWritten;
     if (!WriteProcessMemory(morrowindProcess, hookMemoryBlock,
         mwsePath.c_str(),mwsePath.size()+1,&bytesWritten)) {
+        LoadException *exception = reportError("Could not write to Morrowind memory", true);
         VirtualFreeEx(morrowindProcess,hookMemoryBlock,mwsePath.size()+1,MEM_RELEASE);
         CloseHandle(morrowindProcess);
-        throw reportError("Could not write to Morrowind memory", true);
+        throw exception;
     }
 
 
@@ -122,9 +147,10 @@ void cDllLoader::mInjectDll(HWND windowHandle) throw(cDllLoader::LoadException)
                            reinterpret_cast<void *>(hookMemoryBlock),
                            0, 0);
     if (injectorThread == NULL) {
+        LoadException *exception = reportError("Could not start thread in Morrowind", true);
         VirtualFreeEx(morrowindProcess,hookMemoryBlock,mwsePath.size()+1,MEM_RELEASE);
         CloseHandle(morrowindProcess);
-        throw reportError("Could not start thread in Morrowind", true);
+        throw exception;
     }
 
 	(void )WaitForSingleObject(injectorThread, INFINITE);   // ignore return code
@@ -136,8 +162,9 @@ void cDllLoader::mInjectDll(HWND windowHandle) throw(cDllLoader::LoadException)
     VirtualFreeEx(morrowindProcess,hookMemoryBlock,mwsePath.size()+1,MEM_RELEASE);
 
     if (loadedAddress == 0) {
+        LoadException *exception = reportError("MWSE.DLL failed to load in Morrowind"); // cannot get error
         CloseHandle(morrowindProcess);
-        throw reportError("MWSE.DLL failed to load in Morrowind"); // cannot get error
+        throw exception;
     }
 
     // See if MWSE.dll was actually injected into the process.
@@ -160,8 +187,9 @@ void cDllLoader::mInjectDll(HWND windowHandle) throw(cDllLoader::LoadException)
         // MWSE log is located.
         int length = GetModuleFileNameEx(morrowindProcess, NULL, buffer, sizeof(buffer));
         if (length == 0) {
+            LoadException *exception = reportError("Could not get filename of Morrowind", true);
     	    CloseHandle(morrowindProcess);
-            throw reportError("Could not get filename of Morrowind", true);
+            throw exception;
         }
         try {
             morrowindVersion = ModuleVersion::getModuleVersion(buffer).getVersionString();
