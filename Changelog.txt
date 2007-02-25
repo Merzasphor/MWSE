@@ -4,6 +4,14 @@ Developers: AnthonyG, Fliggerty, Timeslip, Tp21, grmcdorman
 Original Developers: CdCooley, FreshFish
 --------------------------------------------------------------------------------
 24-02-2007 by Grant McDorman <grmcdorman>
+Changed MWSE.DLL to be in Morrowind directory. When injecting the DLL, try
+to find MWSE.DLL in the launcher directory and the Morrowind directory; if
+the DLL differs in version, or is not present in the Morrowind directory,
+copy the file from the launcher directory to the Morrowind directory. Also
+fix the 'view log' to look in the Morrowind directory as well, and to detect
+the absence of the log (instead of launching Notepad anyway).
+
+24-02-2007 by Grant McDorman <grmcdorman>
 Changed mechanism for locating MWSE.DLL in launcher, to try and squish bug
 1666719.
 
