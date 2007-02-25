@@ -59,6 +59,8 @@ LRESULT CMainDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam
     exitButton.Attach(GetDlgItem(IDC_EXIT));
     statusMessage.Attach(GetDlgItem(IDC_STATUS));
 
+    viewButton.EnableWindow(false);
+
     UIAddChildWindowContainer(m_hWnd);
 
     mainThreadId = GetCurrentThreadId();
@@ -96,27 +98,37 @@ LRESULT CMainDlg::OnLaunch(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOO
 LRESULT CMainDlg::OnViewLog(WORD /*wNotifyCode*/, WORD wID, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 {
     UINT length = GetSystemDirectory(NULL, 0);
-    if (length > 0) {
+    if (length > 0 && loader.getMorrowindDirectory().length() > 0) {
         char *buffer = reinterpret_cast<char *>(alloca(length + 1));
         GetSystemDirectory(buffer, length+1);   // location of system files, typically C:\\WINDOWS
 
+        std::string logFile =
+            loader.getMorrowindDirectory() +
+            "\\MWSELog.txt";
         std::string notepad = buffer + std::string("\\notepad.exe");
-        char currentDir[2048];
-        GetCurrentDirectory(sizeof currentDir, currentDir);
-        std::string logFile = notepad + " \"" +
-            std::string(currentDir) +
-            "\\MWSELog.txt\"";
+        std::string command = notepad + " \"" + logFile + "\"";
 
-        STARTUPINFO sSi;
-        PROCESS_INFORMATION sPi;
+        HANDLE testExist = CreateFile(logFile.c_str(),
+            0 /* DesiredAccess no access, existence only */,
+            0 /* ShareMode (default) */,
+            NULL /* SECURITY_ATTRIBUTES */,
+            OPEN_EXISTING /* CreationDisposition */,
+            0 /* Flags */,
+            0 /* TemplateFile */ );
+        if (testExist == INVALID_HANDLE_VALUE) {
+            MessageBox("MWSE Log file doesn't seem to exist", "No MWSE Log File", MB_ICONEXCLAMATION|MB_OK);
+        } else {
+            STARTUPINFO sSi;
+            PROCESS_INFORMATION sPi;
 
-        memset(&sSi, 0, sizeof sSi);
-        sSi.cb = sizeof(sSi);
-        CreateProcess(const_cast<char *>(notepad.c_str()),
-                      const_cast<char *>(logFile.c_str()),
-                      0,0,false,NORMAL_PRIORITY_CLASS,0,0,&sSi,&sPi);
-        CloseHandle(sPi.hProcess);
-        CloseHandle(sPi.hThread);
+            memset(&sSi, 0, sizeof sSi);
+            sSi.cb = sizeof(sSi);
+            CreateProcess(const_cast<char *>(notepad.c_str()),
+                          const_cast<char *>(command.c_str()),
+                          0,0,false,NORMAL_PRIORITY_CLASS,0,0,&sSi,&sPi);
+            CloseHandle(sPi.hProcess);
+            CloseHandle(sPi.hThread);
+        }
     }
 	return 0;
 }
@@ -152,6 +164,7 @@ LRESULT CMainDlg::OnNewMorrowindWindow(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lP
     } else {
         statusMessage.SetWindowTextA("Morrowind exited.");
     }
+    viewButton.EnableWindow(true);
     launchButton.EnableWindow(enableLaunch);
     return TRUE;
 }

@@ -76,7 +76,7 @@ void cDllLoader::mInjectDll(HWND windowHandle) throw(cDllLoader::LoadException)
     char buffer[1024];
     DWORD status = GetModuleFileNameEx(GetCurrentProcess(), NULL, buffer, sizeof buffer);
     if (status == 0) {
-        LoadException *exception = reportError("Could not launcher directory", true);
+        LoadException *exception = reportError("Could not get launcher directory", true);
         CloseHandle(morrowindProcess);
         throw exception;
     }
@@ -84,6 +84,73 @@ void cDllLoader::mInjectDll(HWND windowHandle) throw(cDllLoader::LoadException)
     char *cp = strrchr(buffer, '\\');
     if (cp != NULL) {
         *cp = '\0';
+    }
+
+    // Path to distribution MWSE.DLL.
+    std::string mwseDistPath = buffer + std::string("\\") + mwseDLL;
+
+    HANDLE testLocation = CreateFile(mwseDistPath.c_str(),
+        0 /* DesiredAccess no access, existence only */,
+        0 /* ShareMode (default) */,
+        NULL /* SECURITY_ATTRIBUTES */,
+        OPEN_EXISTING /* CreationDisposition */,
+        0 /* Flags */,
+        0 /* TemplateFile */ );
+    if (testLocation == INVALID_HANDLE_VALUE) {
+        mwseDistPath += " not found";
+        LoadException *exception = reportError(mwseDistPath.c_str(), true);
+        CloseHandle(morrowindProcess);
+        throw exception;
+    }
+    CloseHandle(testLocation);
+
+    injectedMWSEVersion = ModuleVersion::getModuleVersion(mwseDistPath).getVersionString();
+
+    // Path to MWSE.DLL in Morrowind directory.
+    // Determine the directory of Morrowind.exe. This will be where the
+    // MWSE log is located.
+    int length = GetModuleFileNameEx(morrowindProcess, NULL, buffer, sizeof(buffer));
+    if (length == 0) {
+        LoadException *exception = reportError("Could not get filename of Morrowind", true);
+        CloseHandle(morrowindProcess);
+        throw exception;
+    }
+    try {
+        morrowindVersion = ModuleVersion::getModuleVersion(buffer).getVersionString();
+    } catch (std::string e) {
+        CloseHandle(morrowindProcess);
+        throw reportError(e.c_str());
+    }
+
+    // strip 'morrowind.exe' from buffer
+    int endIndex = length - strlen(morrowindExeSlash);
+    if (stricmp(buffer + endIndex, morrowindExeSlash) == 0) {
+        buffer[endIndex] = '\0';
+    }
+    runningModuleLocation = buffer;
+    std::string mwsePath = buffer + std::string("\\") + mwseDLL;
+
+    // Check existence and version of MWSE.DLL in Morrowind directory.
+    testLocation = CreateFile(mwsePath.c_str(),
+        0 /* DesiredAccess no access, existence only */,
+        0 /* ShareMode (default) */,
+        NULL /* SECURITY_ATTRIBUTES */,
+        OPEN_EXISTING /* CreationDisposition */,
+        0 /* Flags */,
+        0 /* TemplateFile */ );
+    bool mustCopy = true;
+    if (testLocation != INVALID_HANDLE_VALUE) {
+        // Get versions of MWSE DLLs.
+        mustCopy = injectedMWSEVersion != ModuleVersion::getModuleVersion(mwsePath).getVersionString();
+
+        CloseHandle(testLocation);
+    }
+    if (mustCopy) {
+        if (!CopyFile(mwseDistPath.c_str(), mwsePath.c_str(), false)) {
+            LoadException *exception = reportError("Could not copy MWSE.DLL to Morrowind directory", true);
+            CloseHandle(morrowindProcess);
+            throw exception;
+        }
     }
 
     HMODULE kernel32Handle = GetModuleHandle("kernel32.dll");
@@ -105,23 +172,6 @@ void cDllLoader::mInjectDll(HWND windowHandle) throw(cDllLoader::LoadException)
         CloseHandle(morrowindProcess);
         throw exception;
     }
-
-    std::string mwsePath = buffer + std::string("\\") + mwseDLL;
-
-    HANDLE testLocation = CreateFile(mwsePath.c_str(),
-        0 /* DesiredAccess no access, existence only */,
-        0 /* ShareMode (default) */,
-        NULL /* SECURITY_ATTRIBUTES */,
-        OPEN_EXISTING /* CreationDisposition */,
-        0 /* Flags */,
-        0 /* TemplateFile */ );
-    if (testLocation == INVALID_HANDLE_VALUE) {
-        mwsePath += " not found";
-        LoadException *exception = reportError(mwsePath.c_str(), true);
-        CloseHandle(morrowindProcess);
-        throw exception;
-    }
-    CloseHandle(testLocation);
 
     LPVOID hookMemoryBlock = VirtualAllocEx(morrowindProcess,0,
         mwsePath.size() + 1,MEM_COMMIT,PAGE_EXECUTE_READWRITE);
@@ -183,29 +233,6 @@ void cDllLoader::mInjectDll(HWND windowHandle) throw(cDllLoader::LoadException)
     }
 
     if (loaded) {
-        // Determine the directory of Morrowind.exe. This will be where the
-        // MWSE log is located.
-        int length = GetModuleFileNameEx(morrowindProcess, NULL, buffer, sizeof(buffer));
-        if (length == 0) {
-            LoadException *exception = reportError("Could not get filename of Morrowind", true);
-    	    CloseHandle(morrowindProcess);
-            throw exception;
-        }
-        try {
-            morrowindVersion = ModuleVersion::getModuleVersion(buffer).getVersionString();
-        } catch (std::string e) {
-            CloseHandle(morrowindProcess);
-            throw reportError(e.c_str());
-        }
-
-        // strip 'morrowind.exe' from buffer
-        int endIndex = length - strlen(morrowindExeSlash);
-        if (stricmp(buffer + endIndex, morrowindExeSlash) == 0) {
-            buffer[endIndex] = '\0';
-        }
-        runningModuleLocation = buffer;
-
-        injectedMWSEVersion = ModuleVersion::getModuleVersion(mwsePath).getVersionString();
 
         CloseHandle(morrowindProcess);
 
