@@ -1,6 +1,6 @@
 [Setup]
 AppName=Morrowind Script Extender
-AppVerName=Morrowind Script Extender 0.9.4
+AppVerName=Morrowind Script Extender 0.9.4.1
 AppPublisherURL=http://sourceforge.net/projects/mwse/
 AppSupportURL=http://sourceforge.net/projects/mwse/
 AppUpdatesURL=http://sourceforge.net/projects/mwse/
