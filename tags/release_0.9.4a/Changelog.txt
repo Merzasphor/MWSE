@@ -1,0 +1,104 @@
+--------------------------------------------------------------------------------
+MWSE 0.9.3: Changelog
+Developers: AnthonyG, Fliggerty, Timeslip, Tp21, grmcdorman
+Original Developers: CdCooley, FreshFish
+--------------------------------------------------------------------------------
+24-02-2007 by Grant McDorman <grmcdorman>
+Changed MWSE.DLL to be in Morrowind directory. When injecting the DLL, try
+to find MWSE.DLL in the launcher directory and the Morrowind directory; if
+the DLL differs in version, or is not present in the Morrowind directory,
+copy the file from the launcher directory to the Morrowind directory. Also
+fix the 'view log' to look in the Morrowind directory as well, and to detect
+the absence of the log (instead of launching Notepad anyway).
+
+24-02-2007 by Grant McDorman <grmcdorman>
+Changed mechanism for locating MWSE.DLL in launcher, to try and squish bug
+1666719.
+
+03-02-2007 by Grant McDorman <grmcdorman>
+Copied Ted's ArchiveMaker to trunk from 0.9.4 release tag.
+
+02-02-2007 by Grant McDorman <grmcdorman>
+In installer, drop obsolete install of shortcut to Readme.html in Start Menu.
+Also fix incorrect Quick Launch shortcut.
+
+02-02-2007 by Grant McDorman <grmcdorman>
+Changed installer: dropped Readme.html, added Readme, License (GPL.txt),
+MWSE Scripting Guide (MWSE_Scripting.html) to Start Menu entry, corrected
+desktop icon error.
+
+31-01-2007 by Grant McDorman <grmcdorman>
+MWSE_Scripting.html updated: now valid HTML, and includes description
+of xStringMatch.
+
+30-01-2007 by Grant McDorman <grmcdorman>
+Added detailed error handling to launcher, improved injection marginally.
+Also fixed syntax errors in Setup script.
+
+27-01-2007 by Fliggerty
+--Finished Demo esp.
+--Added new functions to MWSE_Scripting.html
+
+27-01-2007 by Grant McDorman <grmcdorman>
+Fix xSetMaxCondition: it did not enforce condition to be no greater than
+max condition.
+
+27-01-2007 by Grant McDorman <grmcdorman>
+Remove unneeded and confusing 'mwse 0.9.3' directory (contents moved to
+parent)
+Installer build script fetches Changelog.txt and binaries from their initial
+locations (no copying)
+
+25-01-2007 by Grant McDorman <grmcdorman>
+Launcher updated to have a status bar. Messages in the status bar give:
+ - launcher version (when first started)
+ - "Morrowind started" when "Launch Morrowind" pressed
+ - "MWSE <version> loaded in Morrowind <version>"
+ - "Morrowind exited"
+Also, log moved from Morrowind directory to directory containing MWSE.DLL,
+and MWSE.DLL logs its version in the log file when started.
+
+24-01-2007 by Grant McDorman <grmcdorman>
+New launcher (formerly known as the loader). Written using WTL 8, it has
+the following features:
+ - Buttons to launch Morrowind's launcher, view MWSE log, and exit
+ - Launcher does not need to be in Morrowind directory (but MWSE.dll
+   needs to be in _launcher's_ directory)
+ - Does not hang or use lots of CPU when looking for Morrowind to start
+ - Log is once again a text file (MWSELog.txt in Morrowind directory)
+ - Detects Morrowind (and injects MWSE.dll) when Morrowind is launched
+   externally
+ - Buttons (launch, view log) disable/enable as appropriate
+
+22-01-2007 by Grant McDorman <grmcdorman>
+Regular expression string match (xStringMatch). Uses Boost library.
+
+20-01-2007 by Grant McDorman <grmcdorman>
+Implemented set functions for value, weight, quality, condition, max condition,
+charge, and max charge. Also various code cleanups.
+
+18-01-2007 by Tp21:
+-Implented new Logging class: cLog.
+everything you log, is put through to the MWSELoaders' console.
+
+09-01-2007 by AnthonyG
+-Oh so much changes... Hm..
+-Now has GUI
+-MWSE DLL can now send messages to the loader's console via Mailslots
+-Optimizations
+
+06-01-2007 by Tp21:
+-You can now run Another program with MWSELoader by just popping in the program location as an command line argument. it'll run the program, and just sit and wait until Morrowind is launched.
+
+05-01-2007 by AnthonyG
+-New logging methods available, Up to the rest of the team to use them or not
+
+05-01-2007 by AnthonyG
+-Morrowind Script Extender is now directory dependent, You no longer have to place it in Morrowind's install directory
+-Under the hood improvements
+-New silent and console mode binary options(Not available to end-user, Developer's choice).
+
+05-01-2007 by Tp21:
+-new 0.9.3 branch, that includes the new MWSE.
+-Added Resource information to both DLL and loader, added icon to loader
+-removed the Memlook function, that doesn't work now it doesn't has an interactive console available. and nobody used it anyway because it's an debug function
