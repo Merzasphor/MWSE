@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../MWSE_Launcher;../third-party/boost_1_33_1"
+				AdditionalIncludeDirectories="../MWSE_Launcher;../boost-regex"
 				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS;BOOST_ALL_NO_LIB;WIN32;_DEBUG;CDC;BLOODMOON;MSVC;DEBUGGING"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -127,7 +127,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="../MWSE_Launcher;../third-party/boost_1_33_1"
+				AdditionalIncludeDirectories="../MWSE_Launcher;../boost-regex"
 				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS;BOOST_ALL_NO_LIB;WIN32;NDEBUG;CDC;BLOODMOON;MSVC"
 				WarningLevel="3"
 			/>

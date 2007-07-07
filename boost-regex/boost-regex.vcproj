@@ -16,7 +16,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="../MWSE DLL"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="0"
@@ -39,7 +39,6 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../third-party/boost_1_33_1"
 				PreprocessorDefinitions="BOOST_ALL_NO_LIB;WIN32;_MBCS;_LIB;_SCL_SECURE_NO_WARNINGS;_DEBUG;BOOST_REGEX_CONFIG_INFO"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -77,7 +76,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			OutputDirectory="../MWSE DLL"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="2"
@@ -100,7 +99,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../third-party/boost_1_33_1"
 				PreprocessorDefinitions="BOOST_ALL_NO_LIB;WIN32;_MBCS;_LIB;NDEBUG;_SCL_SECURE_NO_WARNINGS"
 				RuntimeLibrary="0"
 				WarningLevel="3"
@@ -145,67 +143,67 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\third-party\boost_1_33_1\libs\regex\src\c_regex_traits.cpp"
+				RelativePath="src\c_regex_traits.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\third-party\boost_1_33_1\libs\regex\src\cpp_regex_traits.cpp"
+				RelativePath="src\cpp_regex_traits.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\third-party\boost_1_33_1\libs\regex\src\cregex.cpp"
+				RelativePath="src\cregex.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\third-party\boost_1_33_1\libs\regex\src\fileiter.cpp"
+				RelativePath="src\fileiter.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\third-party\boost_1_33_1\libs\regex\src\icu.cpp"
+				RelativePath="src\icu.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\third-party\boost_1_33_1\libs\regex\src\instances.cpp"
+				RelativePath="src\instances.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\third-party\boost_1_33_1\libs\regex\src\posix_api.cpp"
+				RelativePath="src\posix_api.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\third-party\boost_1_33_1\libs\regex\src\regex.cpp"
+				RelativePath="src\regex.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\third-party\boost_1_33_1\libs\regex\src\regex_raw_buffer.cpp"
+				RelativePath="src\regex_raw_buffer.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\third-party\boost_1_33_1\libs\regex\src\regex_traits_defaults.cpp"
+				RelativePath="src\regex_traits_defaults.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\third-party\boost_1_33_1\libs\regex\src\static_mutex.cpp"
+				RelativePath="src\static_mutex.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\third-party\boost_1_33_1\libs\regex\src\usinstances.cpp"
+				RelativePath="src\usinstances.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\third-party\boost_1_33_1\libs\regex\src\w32_regex_traits.cpp"
+				RelativePath="src\w32_regex_traits.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\third-party\boost_1_33_1\libs\regex\src\wc_regex_traits.cpp"
+				RelativePath="src\wc_regex_traits.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\third-party\boost_1_33_1\libs\regex\src\wide_posix_api.cpp"
+				RelativePath="src\wide_posix_api.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\third-party\boost_1_33_1\libs\regex\src\winstances.cpp"
+				RelativePath="src\winstances.cpp"
 				>
 			</File>
 		</Filter>
