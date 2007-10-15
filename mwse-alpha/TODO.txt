@@ -1,0 +1,8 @@
+<Ryan:10/15/07>
+
+-Many of the original MWSE functions need to be implemented
+-Implement better price return value function
+-Testing
+-More functions to modify templates (get/set)
+
+
