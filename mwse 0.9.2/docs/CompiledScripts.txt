@@ -1,0 +1,177 @@
+                          Compiled Scripts
+                          ================
+                           2005-02-28 CDC
+
+The following is based on information published by Dave Humphrey.  
+Visit http://www.uesp.net to see the original.
+
+A script record (SCPT) in the ESP/ESM file format consists of 4 parts.
+ 
+1) A script header (SCHD) which is a 52 byte field containing the name of the
+   script, the number of short, long, and float variables, and the lengths of
+   the other sections.
+2) A script variable (SCVR) section which lists the names of all of the local
+   script variables separated by NULL characters.  The variables appear in 
+   the order they are declared but grouped by type, with all short variables
+   before the long variables and float variables last.
+3) The compiled script data (SCDT) as described below.
+4) The human readable script text (SCTX) normally shown in the CS.
+
+In game there are sections of memory corresponding to the SCHD, SCVR, and 
+SCDT sections and an additional are to hold the values of the variables for 
+global scripts.  (For scripts attached to another object the variable values 
+are stored in that object's attachment data.)
+
+
+-----------------------------------------------------------------------------
+
+Original Script Command Structure
+
+The variables are accessed in the compiled code using both their type and 
+position, so the first variable of the float type is known as 'f 1' instead 
+of it's name shown in the SCTX and SCVR sections.
+
+The opcodes and other multi-byte values in the following description will 
+appear in the file with the bytes reversed. So the disable function 10DB will
+appear as DB01 if you look at the raw data in a hex editor.  The compiled 
+script is a binary stream of data so there are no separator characters 
+between the various opcodes and parameters.
+
+Some common operations to demonstrate how parameters are processed.  Some 
+operations consist of only the opcode while others are followed by a list of 
+parameters.  See the definitions section below for an explaination of the 
+codes used to describe the parameters.  There is no code for "begin" and the 
+-> operator is treated like a function that will modify the next function.
+
+
+-----------------------------------------------------------------------------
+
+Mnemonic          HexOp  Params
+
+->                010C   bstr {the object id of the reference}
+
+else              0107   byte {count of statements in section}
+if                0106   byte {statement count} ifexpr {condition}
+elseif            0108   byte {statement count} ifexpr {condition}
+endif             0109
+
+set               0105   variable {target} setexpr {newvalue}
+
+AiTravel          10F8   float {x} float {y} float {z} bool {reset}
+Position          1004   float {x} float {y} float {z} float {zangle}
+
+GetAlchemy        106B
+SetAlchemy        106C   fparam {newalchemy}
+GetDistance       1001   ref {objectname}
+GetJournalIndex   10CD   bstr {topic}
+GetPos            100A   byte {must be 'X', 'Y' or 'Z'}
+
+Journal           10CC   bstr {topic} sparam {index}
+Lock              1136   short {lock level}
+
+MessageBox        1000   sstr {formatstr}
+                         byte {num args} [ variable [ variable [...]]]
+                         byte {num buttons} [ bcstr [ bcstr [...]]]
+
+
+-----------------------------------------------------------------------------
+
+Definitions
+
+Values in {} are comments to explain the purpose of that feature.  
+Values in <> are hexadecimal digits representing bytes of data.
+Values in [] are optional. 
+Values in '' are characters. 
+The () pairs are used to group values.
+The | symbol represents a choice of one or more options.
+
+
+bool        = {<00> | <01>}
+byte        = {any byte of data}
+short       = {a two byte number}
+long        = {a four byte number}
+float       = {a four byte IEEE format number}
+ascii       = {a string of ascii characters}
+valascii    = {a string representing a number made of digits 
+               (and possibly a minus sign and/or a decimal point)}
+
+bstr        = byte {length of string} ascii
+sstr        = short {length of string} ascii
+cstr        = ascii <00>
+bcstr       = byte {length of string including the <00>} cstr
+
+mathop      = '+' | '-' | '*' | '/'
+mathcomp    = '==' | '!=' | '<' | '<=' | '>' | '>='
+vartype     = 's' | 'f' | 'l'
+local       = vartype short {the variable index number}
+global      = 'G' bstr
+variable    = local | global
+ref         = 'r' bstr
+foreign     = ref local
+fparam      = float | ( local <00> )
+sparam      = ( short <ffff> ) | ( local <00> )
+rval        = local | valascii
+func        = 'X' opcode [' ' rval [' ' rval [' ' rval [' ' rval]]]]
+
+polish      = { Reverse polish calculator, uses space as 'push', 
+                mathop as operators, and setval as values. An extra 
+                <00> is needed if there is only 1 variable/function. }
+
+setval      = local | global | func | valascii
+setexpr     = byte {length} ' ' polish
+
+ifval       = local | global | foreign | func | valascii | polish
+ifexpr      = byte {length} ifval [mathcomp ifval]
+
+
+-----------------------------------------------------------------------------
+
+Script Extender Additions
+
+The new functions use a stack for all parameters and results so one of the 
+Push instructions is needed to add parameters to the stack in the reverse 
+order that they will be used.  Only a few new instructions like Push, Pop, 
+and Jump take parameter values in the Morrowind way.
+
+Strings and references are memory addresses stored in long variables both in 
+the text version of the script and in the compiled version.
+
+Instruction        HexOp  Operands
+
+JUMPSHORT          380A   short {unconditional jump to address}
+JUMPSHORTZERO      380C   short {jump to address if last value was 0}
+
+POP                380F   short {discards bytes from top of stack}
+PUSH               3811   long  {pushes the value onto the stack}
+PUSHB              3812   byte  {as PUSH, but value stored as a LONG}
+PUSHS              3813   short {as PUSH, but value stored as a LONG}
+
+A typical encoding for one of the new functions consists of a sequence of 
+PUSH operations to put the appropriate values on the stack and then the 
+OpCode for the function and then instructions to clear the stack.
+
+Some new instructions are combined to mimic standard instructions like Set, 
+If, and While.
+
+GETLOCAL is used to retrieve a value from one of the local variables and put 
+it on the stack, but first two values used to identify the variable need to 
+be pushed onto the stack.  For example:
+                  PUSHB 1           12 38 01
+                  PUSHB 's'         12 38 73
+                  GETLOCAL          00 3c
+
+SETLOCAL works the same way except the value to be stored must also be on 
+the stack.  For example:
+                  PUSHS 403         13 38 93 01
+                  PUSHB 1           12 38 01
+                  PUSHB 's'         12 38 73
+                  SETLOCAL          02 3c
+
+AITRAVEL takes three float variables and the two methods for storing floats 
+are shown in the next example.
+                  PUSHB 3           12 38 03
+                  ITOF              28 38
+                  PUSHB 2           12 38 02
+                  ITOF              28 38
+                  PUSH 100.0        11 38 00 00 C8 42
+                  AITRAVEL          04 3c

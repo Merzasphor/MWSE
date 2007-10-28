@@ -1,0 +1,152 @@
+How it werks v0.1 (MWScriptExtender)
+
+TES3SCRIPTEXTENDER is the applications main class, it is a debugger, derived from DEBUGGER.
+TES3SCRIPTEXTENDER::main is called from main, it starts debugging by calling DEBUGGER::debug.
+DEBUGGER::debug runs Morrowind using CreateProcess with the debugging flags set.
+DEBUGGER::debug waits for a debug event, when it gets one it calls a virtual function.
+
+First Debug Event is CREATEPROCESS, this gives us the base address of morrowind
+
+	TES3SCRIPTEXTENDER creates the virtual machine (TES3MACHINE) at this point.
+		TES3MACHINE::TES3MACHINE creates the 'memory' for the VM from some classes.
+
+			The current active script lives in the executable ADDRESSSPACE.
+			general memory ( morrwind process memory ) takes up most of the VM's
+			memory.
+			Some BUFSPACE is reserved for the stack.
+
+		TES3MACHINE::TES3MACHINE adds the appropriate instructions to the VM, all new
+			instructions and functions are derived from INSTRUCTION.
+
+Some other Debug Event Occur ( CREATETHREAD etc )
+
+Event BREAKPOINT occurs:
+	When you are a debugger you get one of these when the process is ready to start.
+
+	TES3SCRIPTEXTENDER::DoInitialBreakpoint is called from DEBUGGER::debug
+
+		Setup the initial breakpoints, these are at the start of some Morrowind functions
+		which I call RunScript and FixupScript so I can see which happens first
+
+Event BREAKPOINT occurs:
+	This is one of the ones I set from DoInitialBreakpoint, first it will be the breakpoint
+	on FixupScript, so now I know Morrowind is trying to 'Fixup' a script, this is what I'm
+	calling the once-through run which morrowind does to convert all string references to
+	pointers, it calls 'DecodeInstruction' on each instruction and since Morrowind doesnt
+	understand the new instructions it assumes their size is 2, if it is not then the
+	instruction pointer will become unaligned and 'fixups' will fail so I have to intervene
+	here. 
+
+	TES3SCRIPTEXTENDER::DoBreakpoint is call from DEBUGGER::debug
+		TES3SCRIPTEXTENDER::OnFixupScript is called
+
+			So I set a breakpoint on 'DecodeInstruction' so I can see each one and
+			use the	correct instruction size.
+	
+Event BREAKPOINT occurs:
+	This should be the one on 'DecodeInstruction', this is one place I could implement the
+	new instructions, but looking at every instruction is very slow so I use another method
+	for that, during fixup at this point I find out what size the instruction should be.
+
+	TES3SCRIPTEXTENDER::OnBreakpoint is called from DEBUGGER::debug
+		TES3SCRIPTEXTENDER::OnDecode is called
+
+			I check if the current instruction is one of my additions, if it is then
+			I check the size of as many new instructions as I can get, when I get to
+			an original I set the script instruction pointer (SIP) back out to where
+			Morrowind expects it and let Morrowind run again.
+
+			Calling VIRTUALMACHINE::set(true) means to skip one step.
+
+			Here I also check if the reference has changed, this is my way of seeing
+			which script is begin run, if the reference has changed the I read the
+			running script SCDT from whereever it is and put it in the executable
+			VM memory segment at address 0, thus SIP really does point to the correct
+			address, its not just an offset.
+
+Loads more BREAKPOINT events for 'DecodeInstruction'
+
+Script runs natively, maybe this script does not use any new instructions, then Morrowind will go
+on to the next script and 'Fixup' that, the breakpoint on 'FixupScript' sets the breakpoint on
+'DecodeInstruction' if its not already set and Morrowind continue doing 'Fixups' on all the
+scripts it feels like doing right now. Eventually Morrowinf will decide it has fixed enough
+scripts for now and will start running some.
+
+Event BREAKPOINT ( RUNSCRIPT ) occurs:
+	When Morrowind hits 'RunScript', 'FixupScript' has finished for this script at least,
+	now we want to let the script run until one of the new instructions occurs.
+
+	TES3SCRIPTEXTENDER::OnRunScript is called
+
+		Clears the breakpoint in 'DecodeInstruction', sets a breakpoint in
+		'RunFunctionError'
+
+Script runs natively until a new instruction code is hit.
+
+Event BREAKPOINT ( RUNFUNCTIONINDEXERRROR )
+	This breakpoint is in the code at a point where Morrowind goes to tell you that your
+	script contains instructions it doesnt understand ( you get a messagebox usually ). Now
+	this point is only reached for new instructions, here I can look at the new instructions
+	only and let original instructions run natively.
+
+	TES3SCRIPTEXTENDER::OnRunFuncIdxError is called.
+
+		Check that the current instruction is a new one, if it is not the let Morrowind
+		continue and report the error.
+
+		Check if the reference has changed and if so 'load' the current scripts SCDT.
+
+		Grab the script instruction pointer (SIP) from Morrowind's registers and make
+		that the instruction pointer for the virtual machine.
+
+		I also set instruction pointer for morrowind itself to where I expect to continue
+		after executing script instructions, that way instructions can change the
+		continuation point is they choose, like ot they want to call the original
+		Position function.
+
+		call VIRTUALMACHINE::step to execute one instruction.
+			Originally I did execute as many new instructions as I could at once,
+			because I thought it would be faster that way, but this broke the scope
+			of the '->' instruction so now its one instruction only.
+
+		VIRTUALMACHINE::step called by TES3SCRIPTEXTENDER::OnRunFuncIdxError
+			Gets the instruction pointer which I just set in, fetches the instruction
+			from that point and looks up if there is an INSTRUCTION to execute for
+			that.
+
+			calls INSTRUCTION::GetOperands which reads any operands from the
+			instruction sequence ( script ) and returns the length of operands.
+ 
+			calls INSTRUCTION::execute to let the INSTRUCTION do whatever it is
+			that instruction does.
+
+			moves the SIP to the next instruction.
+			return
+
+		continues running Morrowind process from the address previously set with SetFlow,
+		this may skip the Morrowind index error reporting or it may goto some other
+		Morrowind function.
+
+Repeat indefinately until Morrowind exits, then close all the handles nicely and exit.
+
+
+All the instructions are in files starting with INST, all the functinos are in files starting
+with FUNC, the interface called by VIRTUALMACHINE is always INSTRUCTION even for functions.
+I guess those may need explaining next since I wrote them in a kind of minimalist style, but most
+go somthing like:
+	INSTXXXX::GetOperands
+	{
+		if ( ReadOperands(pointer to expected operands ))
+			result= sizeof(operands)
+		else
+			result= error
+	}
+	INSTXXXX:execute
+	{
+		if ( read parameters from stack, memory, wherever)
+		{
+			do something with the parameters, add them up or something
+			if(write the results back to stack, memory, wherever)
+				result= good
+		}
+	}

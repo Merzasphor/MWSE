@@ -1,0 +1,115 @@
+Variables
+
+Vars are not defined in the SCDT.
+In SCVR the vars are listed as null terminated strings in the order shorts, longs, floats,
+this does not appear to be used by SCDT.
+The number of variables of each type is stored in SCHD, the format of which appears to be:
+
+SCHD (long) size, (cstr32) scriptname, (long) num shorts, (long) num longs, (long) num floats
+	(long) 2, (long) size of SCVR seg
+
+SCDT uses the index of the variable by type, so the first float would be 'f 0001', it starts at
+1 not 0 because its stupid.
+
+---------------------------------------------------------------------------------
+Mnemonic	HexOp	Params
+
+->		010C	{bstr} objectname	; appears before the function which uses it
+						; lasts for 1 simple statement only
+else		0107	{byte} statement count
+elseif		0108	{byte} statement count, {ifexpr} condition
+end		0101	none
+endif		0109	none
+if		0106	{byte} statement count, {ifexpr} condition
+return		0124	none
+set		0105	{variable} target, {setexpr} newvalue
+
+AiTravel	10F8	{float} x, {float} y, {float} z, {bool} reset
+Disable		10DB	none
+Enable		10DA	none
+
+ForceSneak	1163	none
+GetAlchemy	106B	none
+GetDistance	1001	{ref} objectname
+GetJournalIndex	10CD	{bstr} topic
+GetPos		100A	{byte} 'X' 'Y' or 'Z'
+GetSecondsPassed1012	none
+
+Journal		10CC	{bstr} topic, {sparam} index
+Lock		1136	{short} literal
+
+MessageBox	1000	{lstr} formatstr,
+			{byte} num args, [ {variable} arg1 [, {variable} arg2 [...]]],
+			{byte} num buttons, [ {bcstr} but1 [, {bcstr} but2 [...]]]
+
+Position	1004	{float} x, {float} y, {float} z, {float} zangle
+Random		1021	{short} limit
+
+SetAlchemy	106C	{fparam} newalchemy
+SetDisposition	1099	{fparam} newdisp
+SetSneak	1075	{fparam} newsneak
+
+StartScript	101B	{bstr} scriptname
+StopScript 	101C	{bstr} scriptname
+
+---------------------------------------------------------------------------------
+Definitions
+; note there are no implicit separators, this is a binary stream
+<??>	=	literal hex value
+<sp>	=	' '
+
+bool	=	{byte} (<00>|<01>)
+bstr	=	{byte} length, ascii
+lstr	=	{short} length, ascii
+cstr	=	ascii, <00>
+cstr32	=	0-31(printascii), <00>
+bcstr	=	{byte} length, cstr
+length1	=	{byte} length
+varidx1	=	{byte} var index
+varidx2	=	{short} var index
+varidx	=	{short} var index
+
+mathop		=	('+'|'-'|'*'|'/')
+mathcomp	=	('=='|'!='|'<'|'<='|'>'|'>=')
+valascii	=	['-']*(0-9)[.[*(0-9)]]
+vartype		=	('s'|'f'|'l')
+local		=	( vartype varidx )
+global		=	('G' bstr)
+variable	=	( local | global )
+ref		=	('r' bstr)
+foreign		=	( ref local )
+fparam		=	( float | local <00> ) ; 4 bytes either way see
+sparam		=	( short <ffff> | local <00> ) ; 4 bytes either way see, WRONG!!
+rval		=	( local | valascii )
+setval		=	( local | global | func | valascii )
+		; The know issue of: set temp to ( myobj.val ); not working is a runtime problem
+		; the compiler generates a foreign reference exactly the same as for if, where it
+		; works.
+
+func		=	('X' opcode [<sp> rval [<sp> rval [<sp> rval [<sp> rval]]]])
+		; How does the evaluator know how many params to grab?
+		;	if everything up to the end of the expression, can only have 1 function
+		;	per set
+		;		set temp to ( Position 1 2 3 4 ) okay
+		;		set temp to ( Position 1 2 3 4 + 1 ) wont work
+		;		set temp to ( 1 + Position 1 2 3 4 ) would work
+		;		but this would not be backwards compatible
+		;	if up to the next space, funcs can only have 1 param,
+		;		set temp to ( GetPos x + GetPos y ) okay
+		;		this is backwards compatable, tested and works
+
+polish		=	Reverse polish calculator, uses space as 'push', mathop as operators,
+			setval as values.
+			If there is only 1 variable or 1 function then an additional <00> is
+			appended which appears to do nothing, but is required by the runtime.
+
+setexpr		=	(byte) length, <sp> polish
+
+ifval		=	( local | global | foreign | func | valascii )
+ifexpr		=	(byte) length, ifval [mathcomp ifval]
+		; The if evaluator cannot handle calculations, the comparison operator is 
+		; not implemented as part of the reverse polish calculator, the compiler
+		; will encode calculations in reverse polish but the comparisons are
+		; inserted in the wrong order to work.
+		; Like the set calculator, if there is only one term a <00> byte is appended.
+
