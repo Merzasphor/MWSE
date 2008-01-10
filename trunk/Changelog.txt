@@ -3,6 +3,11 @@ MWSE 0.9.3: Changelog
 Developers: AnthonyG, Fliggerty, Timeslip, Tp21, grmcdorman
 Original Developers: CdCooley, FreshFish
 --------------------------------------------------------------------------------
+10-01-2008 by Tim Peters <Darksecond>
+work on the new MWSE version has begun!
+removed everything from Trunk, inserted new MWSE.
+you can access the old versions under tags of course.
+
 24-02-2007 by Grant McDorman <grmcdorman>
 Changed MWSE.DLL to be in Morrowind directory. When injecting the DLL, try
 to find MWSE.DLL in the launcher directory and the Morrowind directory; if
