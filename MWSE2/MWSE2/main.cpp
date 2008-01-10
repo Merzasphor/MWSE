@@ -2,7 +2,6 @@
 #include "mwAdapter.h"
 
 using namespace mwse;
-using namespace mwAdapter;
 
 BOOL WINAPI DllMain(
 					HINSTANCE hinstDLL,	// handle to DLL module
@@ -14,7 +13,7 @@ BOOL WINAPI DllMain(
 	case DLL_PROCESS_ATTACH:
 		// Initialize once for each new process.
 		// Return FALSE to fail DLL load.
-		Hook(); //for testing purposes only at the moment, this should be replaced by a function more friendly (like a virtual machine init or something)
+		mwAdapter::Hook(); //for testing purposes only at the moment, this should be replaced by a function more friendly (like a virtual machine init or something)
 		//also Log should be initialized ;)
 		break;
 	case DLL_THREAD_ATTACH:
