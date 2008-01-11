@@ -8,6 +8,7 @@ namespace mwse
 		typedef short mwShort_t;
 		typedef long  mwLong_t;
 		typedef float mwFloat_t;
+		typedef unsigned short mwOpcode_t; //same as old MWSE (WORD == unsinged short) should be big enough
 
 		enum recordType_t
 		{
@@ -129,7 +130,7 @@ namespace mwse
 			char * modNamePtr;
 			int unknown1;
 			int unknown2;
-			int unknown3;
+			int unknown3; //void * reference ?
 			void * previousRecord;
 			void * nextRecord;
 			void * unknown4;

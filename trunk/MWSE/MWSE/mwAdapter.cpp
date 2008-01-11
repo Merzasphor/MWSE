@@ -8,7 +8,7 @@ namespace mwse
 {
 	namespace mwAdapter
 	{
-		static Context context;
+		static Context_t context;
 
 		//-----------------------------------------------
 		//-----------------------------------------------

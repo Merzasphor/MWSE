@@ -6,7 +6,7 @@ namespace mwse
 {
 	namespace mwAdapter
 	{
-		struct Context
+		struct Context_t
 		{
 			//general registers
 			DWORD eax;
