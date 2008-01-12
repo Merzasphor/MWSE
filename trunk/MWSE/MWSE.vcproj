@@ -186,6 +186,14 @@
 				RelativePath=".\mwAdapter.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\InstructionInterface.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\InstructionStore.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -206,6 +214,14 @@
 			</File>
 			<File
 				RelativePath=".\mwseTypes.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InstructionInterface.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InstructionStore.h"
 				>
 			</File>
 		</Filter>
