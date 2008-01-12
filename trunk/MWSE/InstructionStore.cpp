@@ -7,6 +7,10 @@ static const int table_size = 255;
 
 InstructionStore InstructionStore::single_instance;
 
+InstructionStore::InstructionStore()
+{
+}
+
 void InstructionStore::add(InstructionInterface_t &implementation)
 {
     size_t primary_index = (implementation.getOpCode() >> 8) & 0xFF;
