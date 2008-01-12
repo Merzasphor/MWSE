@@ -1,5 +1,4 @@
-#ifndef INSTRUCTION_INTERFACE_H
-#define INSTRUCTION_INTERFACE_H
+#pragma once
 
 #include "mwseTypes.h"
 
@@ -15,4 +14,3 @@ namespace mwse {
             const mwOpcode_t opcode;
     };
 };
-#endif

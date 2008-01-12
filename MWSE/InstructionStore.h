@@ -1,5 +1,4 @@
-#ifndef MWSE_INSTRUCTION_STORE_H
-#define MWSE_INSTRUCTION_STORE_H
+#pragma once
 
 #include "mwseTypes.h"
 #include "InstructionInterface.h"
@@ -34,7 +33,10 @@ namespace mwse {
             InstructionInterface_t **opCode_primary_table[256];
 
         public:
-            static InstructionStore& getInstance() { return single_instance; }
+            static InstructionStore& getInstance()
+			{
+				return single_instance;
+			}
 
             void add(InstructionInterface_t &implementation);
 
@@ -53,5 +55,3 @@ namespace mwse {
             }
     };
 };
-
-#endif
