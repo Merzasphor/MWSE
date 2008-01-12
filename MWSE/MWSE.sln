@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MWSE", "MWSE\MWSE.vcproj", "{F9DC95A5-6C27-43F3-BE1E-632379055F2D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MWSE", "MWSE.vcproj", "{F9DC95A5-6C27-43F3-BE1E-632379055F2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
