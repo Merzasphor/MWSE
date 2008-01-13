@@ -1,5 +1,5 @@
 /************************************************************************
-               VMOperationInterface.h - Copyright (c) 2008 The MWSE Project
+               %filename% - Copyright (c) 2008 The MWSE Project
                 http://www.sourceforge.net/projects/mwse
 
     This program is free software; you can redistribute it and/or
@@ -18,15 +18,3 @@
 
 **************************************************************************/
 
-#pragma once
-
-#include "mwseTypes.h"
-
-namespace mwse
-{
-	public class VMOperationInterface
-	{
-		//functions to get parameters, and values should go here.
-		//NO DIRECT MEMORY ACCESS, all access should go trough ID's and alike
-	};
-}
