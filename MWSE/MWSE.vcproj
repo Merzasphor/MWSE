@@ -175,6 +175,14 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\InstructionInterface.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\InstructionStore.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Log.cpp"
 				>
 			</File>
@@ -186,20 +194,20 @@
 				RelativePath=".\mwAdapter.cpp"
 				>
 			</File>
-			<File
-				RelativePath=".\InstructionInterface.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\InstructionStore.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\InstructionInterface.h"
+				>
+			</File>
+			<File
+				RelativePath=".\InstructionStore.h"
+				>
+			</File>
 			<File
 				RelativePath=".\Log.h"
 				>
@@ -217,11 +225,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\InstructionInterface.h"
+				RelativePath=".\VirtualMachine.h"
 				>
 			</File>
 			<File
-				RelativePath=".\InstructionStore.h"
+				RelativePath=".\VMHookInterface.h"
+				>
+			</File>
+			<File
+				RelativePath=".\VMOperationInterface.h"
 				>
 			</File>
 		</Filter>
