@@ -30,5 +30,5 @@ namespace mwse
 {
 	class VirtualMachine : public VMHookInterface, VMOperationInterface
 	{
-	}
+	};
 };
