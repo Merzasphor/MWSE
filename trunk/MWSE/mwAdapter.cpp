@@ -57,19 +57,19 @@ namespace mwse
 		//code to generate a Jump in memory, don't forget to unprotect it first!
 		void genJump(DWORD Address, DWORD To) //5 bytes
 		{
-			MemAccess<char>::Set(Address, 0xE9); //jump ...
+			MemAccess<unsigned char>::Set(Address, 0xE9); //jump ...
 			MemAccess<DWORD>::Set(Address + 1, To - Address - 0x5); //Destination
 		}
 
 		//code to generate a Call in memory, don't forget to unprotect it first!
 		void genCall(DWORD Address, DWORD To) //5 bytes
 		{
-			MemAccess<char>::Set(Address, 0xE8); //call ...
+			MemAccess<unsigned char>::Set(Address, 0xE8); //call ...
 			MemAccess<DWORD>::Set(Address + 1, To - Address - 0x5); //Destination
 		}
 		void genNOP(DWORD Address) //1 byte
 		{
-			MemAccess<char>::Set(Address, 0x90); //NOP ...
+			MemAccess<unsigned char>::Set(Address, 0x90); //NOP ...
 		}
 
 		static const DWORD getNextInstructionReturnAddress = 0x500561;
