@@ -30,6 +30,8 @@ static mwLong_t next_id = 0;      // zeroed each clearStore()
 static mwLong_t clear_id = 0;     // incremented each clearStore()
 static mwLong_t id_overlay = ( ( ('M' << 8) | 'S' ) << 8 ) << 16;
 
+mwseString_t::StringMap_t  mwseString_t::store;
+
 mwseString_t::mwseString_t():
     my_id(nextID())
 {
