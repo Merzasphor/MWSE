@@ -194,6 +194,14 @@
 				RelativePath=".\mwAdapter.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\mwseString.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Stack.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -221,7 +229,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\mwseString.h"
+				>
+			</File>
+			<File
 				RelativePath=".\mwseTypes.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Stack.h"
 				>
 			</File>
 			<File
