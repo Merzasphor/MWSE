@@ -83,8 +83,8 @@ namespace mwse
 
     struct LinkedList_t
     {
-        struct LinkedList_t * previousNode;
-        struct LinkedList_t * nextNode;
+        LinkedList_t * previousNode;
+        LinkedList_t * nextNode;
         void * dataNode;
     };
 
@@ -93,6 +93,13 @@ namespace mwse
         int itemCount;
         void * recordAddress;
     };
+
+	struct ListNode_t
+	{
+		RecordTypes::recordType_t recordType;
+		ListNode_t * nextNode;
+		void * dataPtr;
+	};
 
     struct NPCBaseRecord_t
     {
@@ -134,11 +141,17 @@ namespace mwse
         char * modNamePtr;
         int unknown1;
         int unknown2;
-        int unknown3; //REFRecord_t * NextOfSameTemplate; ???
+        REFRRecord_t * NextOfSameTemplate;
         REFRRecord_t * previousRecord;
         REFRRecord_t * nextRecord;
-        int unknown4;
+        int unknown3;
         void * recordPointer; //points to the record for which this is a reference;
+		char unknown4[12];	//12 bytes
+		float x;
+		float y;
+		float z;
+		ListNode_t * attachments;
+		char unknown5[18];	//18 bytes
     };
 
     struct WEAPRecord_t
@@ -149,7 +162,7 @@ namespace mwse
         char * modNamePtr;
         int unknown1;
         int unknown2;
-        int unknown3; //void * reference ?
+        int unknown3; //REFRRecord_t * first
         void * previousRecord;
         void * nextRecord;
         void * unknown4;
