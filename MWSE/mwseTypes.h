@@ -51,6 +51,12 @@ namespace mwse
             CLAS = 'SALC', CLASS = CLAS,
             LOCK = 'KCOL'
         };
+
+		enum attachType_t
+		{
+			VARNODE = 6,	//attachment where 'local' variables are stored
+			MACHNODE = 8
+		};
     };
     struct SCPTRecord_t
     {
@@ -96,9 +102,22 @@ namespace mwse
 
 	struct ListNode_t
 	{
-		RecordTypes::recordType_t recordType;
+		RecordTypes::attachType_t attachType;
 		ListNode_t * nextNode;
 		void * dataPtr;
+	};
+
+	struct mwVariablesNode_t
+	{
+		mwShort_t * shortVarValues;
+		mwLong_t * longVarValues;
+		mwFloat_t * floatVarValues;
+	};
+
+	struct mwVarHolderNode_t
+	{
+		char unknown[0x18];
+		mwVariablesNode_t * vars;
 	};
 
     struct NPCBaseRecord_t
