@@ -49,7 +49,8 @@ namespace mwse
             PICK = 'KCIP',
             REPA = 'APER', REPAIR = REPA,
             CLAS = 'SALC', CLASS = CLAS,
-            LOCK = 'KCOL'
+            LOCK = 'KCOL',
+			GLOB = 'BOLG', GLOBAL = GLOB
         };
 
 		enum attachType_t
@@ -211,4 +212,16 @@ namespace mwse
         char trustMax;
         short flags;
     };
+
+	struct GLOBRecord
+	{
+		void * vTable;
+		RecordTypes::recordType_t recordType;
+		int recordsize;
+		char * modNamePtr;
+		char globalName[32];
+		char variableType; //morrowind converts this to uppercase (i don't know why), can be 'l', 's', 'f' (long, short, float)
+		char unknown[3]; //3 bytes of nothing usefull apparently
+		float data; //apparently, all globals are stored as floats in morrowind (i think), at least for longs!
+	};
 }
