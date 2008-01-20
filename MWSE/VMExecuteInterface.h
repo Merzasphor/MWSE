@@ -54,5 +54,10 @@ namespace mwse
 
 		virtual mwFloat_t getFloatGlobal(const char *id) = 0;
 		virtual void setFloatGlobal(const char *id, mwFloat_t value) = 0;
+
+		//objects and stuff
+		virtual void * getReference(const char *id) = 0; //can also be called getMorrowindObject i guess, this fetches the correct reference for the given object (player, npc, book, light, etc)
+		virtual void * getReference() = 0; //gets the current reference?
+		virtual void setReference(void * reference) = 0; //this sets the reference, to be used for the next instruction (also works on other MWSE instructions in the same run), but for all other things, this needs to be called before the function! (as it needs a run in runScript)
 	};
 };
