@@ -245,11 +245,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\VMExecuteInterface.h"
+				>
+			</File>
+			<File
 				RelativePath=".\VMHookInterface.h"
 				>
 			</File>
 			<File
-				RelativePath=".\VMOperationInterface.h"
+				RelativePath=".\VMParameterStreamInterface.h"
 				>
 			</File>
 		</Filter>

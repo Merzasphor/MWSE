@@ -1,5 +1,5 @@
 /************************************************************************
-               VirtualMachine.h - Copyright (c) 2008 The MWSE Project
+               VMParameterStreamInterface.h - Copyright (c) 2008 The MWSE Project
                 http://www.sourceforge.net/projects/mwse
 
     This program is free software; you can redistribute it and/or
@@ -21,15 +21,12 @@
 #pragma once
 
 #include "mwseTypes.h"
-#include "VMHookInterface.h"
-#include "VMParameterStreamInterface.h"
-#include "VMExecuteInterface.h"
 
 using namespace mwse;
 
 namespace mwse
 {
-	class VirtualMachine : public VMHookInterface, VMExecuteInterface, VMParameterStreamInterface
+	class VMExecuteInterface
 	{
 	};
 };
