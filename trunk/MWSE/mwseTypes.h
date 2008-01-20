@@ -213,7 +213,7 @@ namespace mwse
         short flags;
     };
 
-	struct GLOBRecord
+	struct GLOBRecord_t
 	{
 		void * vTable;
 		RecordTypes::recordType_t recordType;

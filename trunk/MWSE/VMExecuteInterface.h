@@ -28,5 +28,31 @@ namespace mwse
 {
 	class VMExecuteInterface
 	{
+	public:
+		//local variables
+		virtual mwLong_t getLongVariable(int index) = 0;
+		virtual mwLong_t getLongVariable(const char *id) = 0;
+		virtual void setLongVariable(int index, mwLong_t value) = 0;
+		virtual void setLongVariable(const char *id, mwLong_t value) = 0;
+
+		virtual mwShort_t getShortVariable(int index) = 0;
+		virtual mwShort_t getShortVariable(const char *id) = 0;
+		virtual void setShortVariable(int index, mwShort_t value) = 0;
+		virtual void setShortVariable(const char *id, mwShort_t value) = 0;
+
+		virtual mwFloat_t getFloatVariable(int index) = 0;
+		virtual mwFloat_t getFloatVariable(const char *id) = 0;
+		virtual void setFloatVariable(int index, mwFloat_t value) = 0;
+		virtual void setFloatVariable(const char *id, mwFloat_t value) = 0;
+
+		//global variables
+		virtual mwLong_t getLongGlobal(const char *id) = 0;
+		virtual void setLongGlobal(const char *id, mwLong_t value) = 0;
+		
+		virtual mwShort_t getShortGlobal(const char *id) = 0;
+		virtual void setShortGlobal(const char *id, mwShort_t value) = 0;
+
+		virtual mwFloat_t getFloatGlobal(const char *id) = 0;
+		virtual void setFloatGlobal(const char *id, mwFloat_t value) = 0;
 	};
 };
