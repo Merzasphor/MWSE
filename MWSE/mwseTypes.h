@@ -194,7 +194,7 @@ namespace mwse
         int unknown8;
         int unknown9;
         char * nameStringPtr;
-        int unknown10;
+        int unknown10;	//char * scriptIDStringPtr;
         char * nifStringPtr;
         char * tgaStringPtr;
         float weight;
