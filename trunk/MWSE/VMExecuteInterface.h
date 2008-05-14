@@ -29,7 +29,7 @@ namespace mwse
 	class VMExecuteInterface
 	{
 	public:
-		//local variables
+		//local variables, methods to access local variables
 		virtual mwLong_t getLongVariable(int index) = 0;
 		virtual mwLong_t getLongVariable(const char *id) = 0;
 		virtual void setLongVariable(int index, mwLong_t value) = 0;
@@ -45,7 +45,7 @@ namespace mwse
 		virtual void setFloatVariable(int index, mwFloat_t value) = 0;
 		virtual void setFloatVariable(const char *id, mwFloat_t value) = 0;
 
-		//global variables
+		//global variables, methods to access global variables
 		virtual mwLong_t getLongGlobal(const char *id) = 0;
 		virtual void setLongGlobal(const char *id, mwLong_t value) = 0;
 		
@@ -57,7 +57,10 @@ namespace mwse
 
 		//objects and stuff
 		virtual void * getReference(const char *id) = 0; //can also be called getMorrowindObject i guess, this fetches the correct reference for the given object (player, npc, book, light, etc)
-		virtual void * getReference() = 0; //gets the current reference?
+		virtual void * getReference() = 0; //gets the current reference, maybe it's better to put this in another function. it'll do for now
 		virtual void setReference(void * reference) = 0; //this sets the reference, to be used for the next instruction (also works on other MWSE instructions in the same run), but for all other things, this needs to be called before the function! (as it needs a run in runScript)
+		
+		//getParameters
+		//virtual * get*Parameter() = 0;
 	};
 };
