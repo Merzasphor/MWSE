@@ -20,6 +20,7 @@
 
 #include "mwAdapter.h"
 #include "MemAccess.h"
+#include "VirtualMachine.h"
 
 using namespace mwse;
 using namespace mwAdapter;
@@ -29,6 +30,7 @@ namespace mwse
 	namespace mwAdapter
 	{
 		static Context_t context;
+		static VirtualMachine vmInstance;	//VirtualMachine, yes i know, it's still the whole VirtualMachine, but it'll do for now. you only have 'too much' functions to access, it will not break anything
 
 		//-----------------------------------------------
 		//-----------------------------------------------

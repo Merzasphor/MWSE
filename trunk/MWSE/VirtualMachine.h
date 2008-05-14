@@ -34,7 +34,7 @@ namespace mwse
 	public:
 	protected:
 	private:
-		Context_t getContext();				//for internal functions that need the context (registers, etc)
-		void setContext(Context_t context); //for internal functions that need the context (registers, etc)
+		mwAdapter::Context_t getContext();				//for internal functions that need the context (registers, etc)
+		void setContext(mwAdapter::Context_t context); //for internal functions that need the context (registers, etc)
 	};
 };
