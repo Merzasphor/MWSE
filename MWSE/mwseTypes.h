@@ -34,7 +34,7 @@ namespace mwse
             NPC = '_CPN',
             CREA = 'AERC', CREATURE = CREA,
             CONT = 'TNOC', CONTAINER = CONT,
-            LIGHT = 'HGIL',
+            LIGH = 'HGIL', LIGHT = LIGH,
             MISC = 'CSIM',
             CLOT = 'TOLC', CLOTHING = CLOT,
             WEAP = 'PAEW', WEAPON = WEAP,
