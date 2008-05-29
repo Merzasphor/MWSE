@@ -40,15 +40,40 @@ namespace mwse
 		//cannot chance return address
 		static void _stdcall HookGetNextInstructionIndirect()
 		{
+			mwOpcode_t opcode = context.eax;
+
+			if(vmInstance.isOpcode(opcode))
+			{
+				SCPTRecord_t * script = reinterpret_cast<SCPTRecord_t*>(context.ebx);
+				//call virtualmachine here
+				vmInstance.loadParametersForOperation(opcode, context, *script);
+				//end virtualmachine call
+				context.eax = 0x0;
+			}
 			//context.eax = opcode (you need to make this zero (0x0), when the opcode is processed by MWSE)
-			//context.ebx = reference (SCPTDataPointer)
+			//context.ebx = reference to script (SCPTDataPointer)
 			//context.ebp = scriptIP (you need to write it back to address: 0x7CEBB0 !!!)
 		}
 
 		//in here you can use normal code :), this is called when the hook is called
 		//can chance return address
-		static void _stdcall HookRunFunctionIndirect()
+		static float _stdcall HookRunFunctionIndirect()
 		{
+			mwOpcode_t opcode = context.edx;
+
+			if(vmInstance.isOpcode(opcode))
+			{
+				SCPTRecord_t * script = reinterpret_cast<SCPTRecord_t*>(context.esp + 0x8);
+				context.callbackAddress = 0x50D62D;
+				//call virtualmachine here
+				float returnValue = vmInstance.executeOperation(opcode, context, *script);
+				//end virtualmachine call
+				return returnValue;
+			}
+			else
+			{
+				return 0.0;
+			}
 			//context.edx = opcode
 			//context.callbackAddress = '0x505837' when MWSE does not process the opcode, and should be '0x50D62D' when MWSE DOES process the opcode, first value is default (0x505837)!
 		}
@@ -164,6 +189,10 @@ namespace mwse
 
 				push context.flags
 				popfd
+
+				//i think this should go here...
+				//becuase then we use the stack from original runFunction, i could also use context but this is easier ;-)
+				fstp [esp+0x0C] //store FPU FP0 in [esp+0C], and pop it off the stack
 
 				//overwritten code
 				add edx, 0x0FFFFF000

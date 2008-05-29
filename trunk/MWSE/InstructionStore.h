@@ -73,5 +73,15 @@ namespace mwse {
                 }
                 return secondary_table[secondary_index];
             }
+
+			//check if a certain opcode exists, inline to make it as fast as possible.
+			inline bool isOpcode(const mwOpcode_t opcode)
+			{
+                unsigned int primary_index = (opcode >> 8) & 0xFF;
+                unsigned int secondary_index = opcode & 0xFF;
+                InstructionInterface_t **secondary_table = opCode_primary_table[primary_index];
+                
+				return (secondary_table != NULL) && (secondary_table[secondary_index] != NULL);
+			}
     };
 };
