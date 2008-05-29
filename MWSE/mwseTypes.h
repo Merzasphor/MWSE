@@ -182,7 +182,7 @@ namespace mwse
         char * modNamePtr;
         int unknown1;
         int unknown2;
-        int unknown3; //REFRRecord_t * first
+        int unknown3; //REFRRecord_t * first //nextOfSameTemplate
         void * previousRecord;
         void * nextRecord;
         void * unknown4;
