@@ -203,6 +203,10 @@
 				RelativePath=".\Stack.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\VirtualMachine.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"

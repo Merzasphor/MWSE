@@ -1,5 +1,5 @@
 /************************************************************************
-               VirtualMachine.h - Copyright (c) 2008 The MWSE Project
+               mwseString.cpp - Copyright (c) 2008 The MWSE Project
                 http://www.sourceforge.net/projects/mwse
 
     This program is free software; you can redistribute it and/or
@@ -18,26 +18,23 @@
 
 **************************************************************************/
 
-#pragma once
-
-#include "mwseTypes.h"
-#include "mwAdapter.h"
-#include "VMHookInterface.h"
-#include "VMExecuteInterface.h"
+#include "VirtualMachine.h"
+#include "InstructionStore.h"
+#include "InstructionInterface.h"
 
 using namespace mwse;
 
-namespace mwse
+void VirtualMachine::loadParametersForOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t &script)
 {
-	class VirtualMachine : public VMHookInterface, VMExecuteInterface
-	{
-	public:
-		virtual float executeOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t &script);
-		virtual void loadParametersForOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t &script);
-		virtual bool isOpcode(const mwOpcode_t opcode);
-	protected:
-	private:
-		mwAdapter::Context_t getContext();				//for internal functions that need the context (registers, etc)
-		void setContext(mwAdapter::Context_t context); //for internal functions that need the context (registers, etc)
-	};
-};
+	InstructionInterface_t * instruction = InstructionStore::getInstance().get(opcode);
+}
+
+float VirtualMachine::executeOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t &script)
+{
+	return 0.0;
+}
+
+bool VirtualMachine::isOpcode(const mwOpcode_t opcode)
+{
+	return false;
+}

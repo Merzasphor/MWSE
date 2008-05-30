@@ -48,11 +48,11 @@ namespace mwse
 				//call virtualmachine here
 				vmInstance.loadParametersForOperation(opcode, context, *script);
 				//end virtualmachine call
-				context.eax = 0x0;
+				context.eax = 0x0;	//eax is zero, this tells MW that the opcode is 'invalid' and thus return GetNextInstruction asap, it doesn't throw any errors, so this is good for us :)
 			}
 			//context.eax = opcode (you need to make this zero (0x0), when the opcode is processed by MWSE)
 			//context.ebx = reference to script (SCPTDataPointer)
-			//context.ebp = scriptIP (you need to write it back to address: 0x7CEBB0 !!!)
+			//context.ebp = scriptIP (you need to write it back to address: 0x7CEBB0 !!!), you can also read it from there.
 		}
 
 		//in here you can use normal code :), this is called when the hook is called
