@@ -32,6 +32,7 @@ namespace mwse
 	class VirtualMachine : public VMHookInterface, VMExecuteInterface
 	{
 	public:
+		VirtualMachine();
 		virtual float executeOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t &script);
 		virtual void loadParametersForOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t &script);
 		virtual bool isOpcode(const mwOpcode_t opcode);
@@ -39,5 +40,11 @@ namespace mwse
 	private:
 		mwAdapter::Context_t getContext();				//for internal functions that need the context (registers, etc)
 		void setContext(mwAdapter::Context_t context); //for internal functions that need the context (registers, etc)
+
+		SCPTRecord_t& getScript();
+		void setScript(SCPTRecord_t &script);
+		
+		mwAdapter::Context_t context;
+		SCPTRecord_t * script;
 	};
 };

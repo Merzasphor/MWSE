@@ -24,17 +24,56 @@
 
 using namespace mwse;
 
+VirtualMachine::VirtualMachine()
+: 
+context()
+{
+	//TODO: add scriptIP in some way (maybe a pointer to the morrowind scriptIP?)
+	//TODO: make it all working
+	//TODO: implement get*/set* functions from VMExecuteInterface
+}
+
 void VirtualMachine::loadParametersForOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t &script)
 {
 	InstructionInterface_t * instruction = InstructionStore::getInstance().get(opcode);
+	setContext(context);
+	setScript(script);
+
+	instruction->loadParameters(*this);
 }
 
 float VirtualMachine::executeOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t &script)
 {
-	return 0.0;
+	InstructionInterface_t * instruction = InstructionStore::getInstance().get(opcode);
+	setContext(context);
+	setScript(script);
+
+	float returnvalue = instruction->execute(*this);
+
+	return returnvalue;
 }
 
 bool VirtualMachine::isOpcode(const mwOpcode_t opcode)
 {
-	return false;
+	return InstructionStore::getInstance().isOpcode(opcode);
+}
+
+void VirtualMachine::setContext(mwAdapter::Context_t context)
+{
+	this->context = context;
+}
+
+mwAdapter::Context_t VirtualMachine::getContext()
+{
+	return this->context;
+}
+
+void VirtualMachine::setScript(mwse::SCPTRecord_t &script)
+{
+	this->script = &script;
+}
+
+SCPTRecord_t& VirtualMachine::getScript()
+{
+	return *this->script;
 }
