@@ -26,11 +26,12 @@ using namespace mwse;
 
 VirtualMachine::VirtualMachine()
 : 
-context()
+context()	//initialize context
 {
-	//TODO: add scriptIP in some way (maybe a pointer to the morrowind scriptIP?)
-	//TODO: make it all working
-	//TODO: implement get*/set* functions from VMExecuteInterface
+	//TODO: add scriptIP in some way (maybe a pointer to the morrowinds' scriptIP?)
+	//TODO: make it all working ;-)
+	//TODO: implement VMExecuteInterface
+	mwScriptIP = reinterpret_cast<long*>(0x7CEBB0);	//make mwScriptIP a pointer to morrowinds' script instruction pointer. it holds the current location in the script. when you read parameters from the script stream, you need to add the number of bytes read to this.
 }
 
 void VirtualMachine::loadParametersForOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t &script)
@@ -39,7 +40,9 @@ void VirtualMachine::loadParametersForOperation(mwOpcode_t opcode, mwAdapter::Co
 	setContext(context);
 	setScript(script);
 
-	instruction->loadParameters(*this);
+	instruction->loadParameters(*this);	//what else does 'loadParameters' need?
+
+	context = getContext();		//because the context parameter is a reference, and set/getContext isn't we have to read the context again, (maybe it's changed)
 }
 
 float VirtualMachine::executeOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t &script)
@@ -48,8 +51,9 @@ float VirtualMachine::executeOperation(mwOpcode_t opcode, mwAdapter::Context_t &
 	setContext(context);
 	setScript(script);
 
-	float returnvalue = instruction->execute(*this);
-
+	float returnvalue = instruction->execute(*this);	//what else does 'execute' need?
+	
+	context = getContext();
 	return returnvalue;
 }
 

@@ -41,10 +41,11 @@ namespace mwse
 		mwAdapter::Context_t getContext();				//for internal functions that need the context (registers, etc)
 		void setContext(mwAdapter::Context_t context); //for internal functions that need the context (registers, etc)
 
-		SCPTRecord_t& getScript();
-		void setScript(SCPTRecord_t &script);
+		SCPTRecord_t& getScript();				//get reference to current script
+		void setScript(SCPTRecord_t &script);	//set reference to current script
 		
-		mwAdapter::Context_t context;
-		SCPTRecord_t * script;
+		mwAdapter::Context_t context;			//current context (registers, etc)
+		SCPTRecord_t * script;					//current script pointer
+		long *mwScriptIP;
 	};
 };
