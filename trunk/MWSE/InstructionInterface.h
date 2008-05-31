@@ -21,13 +21,14 @@
 #pragma once
 
 #include "mwseTypes.h"
+#include "VMExecuteInterface.h"
 
 namespace mwse {
     class InstructionInterface_t {
         public:
             inline mwOpcode_t getOpCode() const { return opcode; }
-            //void execute(... [need types for this]) = 0;
-            //void loadParameters(..., bool scanonly /* do not load, for scanning inactive branches of _if_*/) = 0;
+            float execute(VMExecuteInterface &virtualMachine);		//i removed the = 0; because it gave errors
+            void loadParameters(VMExecuteInterface &virtualMachine);//same here
         protected:
             InstructionInterface_t(const mwOpcode_t ctor_opcode);
         private:
