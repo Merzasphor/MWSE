@@ -32,24 +32,24 @@ namespace mwse
 		//local variables, methods to access local variables
 		virtual mwLong_t getLongVariable(int index) = 0;
 		virtual mwLong_t getLongVariable(const char *id) = 0;
-		virtual mwLong_t getLongVariable(int index, REFRRecord_t &reference);
+		virtual mwLong_t getLongVariable(int index, REFRRecord_t &reference) = 0;
 		virtual void setLongVariable(int index, mwLong_t value) = 0;
 		virtual void setLongVariable(const char *id, mwLong_t value) = 0;
-		virtual void setLongVariable(int index, mwLong_t value , REFRRecord_t &reference);
+		virtual void setLongVariable(int index, mwLong_t value , REFRRecord_t &reference) = 0;
 
 		virtual mwShort_t getShortVariable(int index) = 0;
 		virtual mwShort_t getShortVariable(const char *id) = 0;
-		virtual mwShort_t getShortVariable(int index, REFRRecord_t &reference);
+		virtual mwShort_t getShortVariable(int index, REFRRecord_t &reference) = 0;
 		virtual void setShortVariable(int index, mwShort_t value) = 0;
 		virtual void setShortVariable(const char *id, mwShort_t value) = 0;
-		virtual void setShortVariable(int index, mwShort_t value , REFRRecord_t &reference);
+		virtual void setShortVariable(int index, mwShort_t value , REFRRecord_t &reference) = 0;
 
 		virtual mwFloat_t getFloatVariable(int index) = 0;
 		virtual mwFloat_t getFloatVariable(const char *id) = 0;
-		virtual mwFloat_t getFloatVariable(int index, REFRRecord_t &reference);
+		virtual mwFloat_t getFloatVariable(int index, REFRRecord_t &reference) = 0;
 		virtual void setFloatVariable(int index, mwFloat_t value) = 0;
 		virtual void setFloatVariable(const char *id, mwFloat_t value) = 0;
-		virtual void setFloatVariable(int index, mwFloat_t value , REFRRecord_t &reference);
+		virtual void setFloatVariable(int index, mwFloat_t value , REFRRecord_t &reference) = 0;
 
 		//global variables, methods to access global variables
 		virtual mwLong_t getLongGlobal(const char *id) = 0;
