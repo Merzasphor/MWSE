@@ -36,6 +36,10 @@ namespace mwse
 		virtual float executeOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t &script);
 		virtual void loadParametersForOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t &script);
 		virtual bool isOpcode(const mwOpcode_t opcode);
+
+		virtual REFRRecord_t * getReference();
+		virtual REFRRecord_t * getReference(const char *id);
+		virtual void setReference(REFRRecord_t * reference);
 	protected:
 	private:
 		mwAdapter::Context_t getContext();				//for internal functions that need the context (registers, etc)

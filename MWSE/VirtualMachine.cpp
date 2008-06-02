@@ -81,3 +81,73 @@ SCPTRecord_t& VirtualMachine::getScript()
 {
 	return *this->script;
 }
+
+REFRRecord_t * VirtualMachine::getReference()
+{
+	REFRRecord_t ** currentreference = reinterpret_cast<REFRRecord_t**>(0x7CEBEC);	//0x7CEBEC == ScriptRunner::Reference
+	return *currentreference;
+}
+
+REFRRecord_t * VirtualMachine::getReference(const char *id)
+{
+	size_t strLength = strlen(id);
+
+	size_t ** secondobject_image_length = reinterpret_cast<size_t**>(0x7CEBB8);	//0x7CEBB8 = SECONDOBJECT_IMAGE_LENGTH
+	*secondobject_image_length = &strLength;
+
+	const char ** secondobject_image = reinterpret_cast<const char**>(0x7CE6F8);		//0x7CE6F8 = ScriptRunner::ItemTemplate;
+	*secondobject_image = id;
+
+	long returnreference;
+
+	bool isplayer= !_stricmp(id,"player") || !_stricmp(id,"playersavegame");
+	if(isplayer)
+	{
+		//fixupplayer
+		static int getMACP = 0x40ff20;
+		_asm
+		{
+			mov ecx,dword ptr ds:[0x7c67dc]; //masterImage
+			call getMACP;
+			mov edx, [eax+0x14];
+			mov returnreference, edx;
+		}
+	}
+	else
+	{
+		static int fixupInstanceFunction = 0x4B8F50;
+		//fixupinstance
+		_asm
+		{
+			mov ecx, dword ptr ds:[0x7c67e0];	//masterCellImage
+			mov ecx, [ecx];
+			push 0x7CE6F8;					//'id' aka ScriptRunner::ItemTemplate
+			call fixupInstanceFunction;
+			mov returnreference, eax;
+		}
+	}
+
+	REFRRecord_t * reference = reinterpret_cast<REFRRecord_t*>(returnreference);
+	return reference;
+}
+
+void VirtualMachine::setReference(REFRRecord_t *reference)
+{
+	mwOpcode_t opcode = 0x010C;	//'->'
+	unsigned char inref = 1;
+	mwAdapter::Context_t context = getContext();
+
+	mwOpcode_t * currentOpcode = reinterpret_cast<mwOpcode_t*>(0x7A91C4);	//ScriptRunner::Opcode
+	*currentOpcode = opcode;
+
+	REFRRecord_t ** currentReference = reinterpret_cast<REFRRecord_t**>(0x7CEBEC);	//ScriptRunner::Reference
+	*currentReference = reference;
+
+	void ** currentTemplate = reinterpret_cast<void**>(0x7CEBF4);	//ScriptRunner::Template
+	*currentTemplate = reference->recordPointer;
+
+	unsigned char * currentInref = reinterpret_cast<unsigned char*>(context.ebp + 0x23);	//inref apparently
+	*currentInref = inref;
+
+	//this should be it. a lot of testing is needed of course ;)
+}

@@ -63,10 +63,10 @@ namespace mwse
 
 		//objects and stuff
 		//look at GETREF function in old MWSE for examples on how to fetch references!
-		virtual void * getReference(const char *id) = 0; //can also be called getMorrowindObject i guess, this fetches the correct reference for the given object (player, npc, book, light, etc)
-		virtual void * getReference() = 0; //gets the current reference, maybe it's better to put this in another function. it'll do for now
+		virtual REFRRecord_t * getReference(const char *id) = 0; //can also be called getMorrowindObject i guess, this fetches the correct reference for the given object (player, npc, book, light, etc)
+		virtual REFRRecord_t * getReference() = 0; //gets the current reference, maybe it's better to put this in another function. it'll do for now
 		
-		virtual void setReference(void * reference) = 0; //this sets the reference, to be used for the next instruction (also works on other MWSE instructions in the same run), but for all other things, this needs to be called before the function! (as it needs a run in runScript)
+		virtual void setReference(REFRRecord_t * reference) = 0; //this sets the reference, to be used for the next instruction (also works on other MWSE instructions in the same run), but for all other things, this needs to be called before the function! (as it needs a run in runScript)
 		
 		//getParameters
 		//virtual * get*Parameter() = 0;
