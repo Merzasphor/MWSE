@@ -30,9 +30,9 @@ namespace mwse
 	{
 	public:
 		//local variables, methods to access local variables
-		virtual mwLong_t getLongVariable(int index) = 0;
-		virtual mwLong_t getLongVariable(const char *id) = 0;
-		virtual mwLong_t getLongVariable(int index, REFRRecord_t &reference) = 0;
+		virtual mwLong_t getLongVariable(int index) = 0;							//by index
+		virtual mwLong_t getLongVariable(const char *id) = 0;						//by name
+		virtual mwLong_t getLongVariable(int index, REFRRecord_t &reference) = 0;	//foreign
 		virtual void setLongVariable(int index, mwLong_t value) = 0;
 		virtual void setLongVariable(const char *id, mwLong_t value) = 0;
 		virtual void setLongVariable(int index, mwLong_t value , REFRRecord_t &reference) = 0;

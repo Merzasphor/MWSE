@@ -40,6 +40,15 @@ namespace mwse
 		virtual REFRRecord_t * getReference();
 		virtual REFRRecord_t * getReference(const char *id);
 		virtual void setReference(REFRRecord_t * reference);
+
+		//local variables, methods to access local variables
+		virtual mwLong_t getLongVariable(int index);							//by index
+		virtual mwLong_t getLongVariable(const char *id);						//by name
+		virtual mwLong_t getLongVariable(int index, REFRRecord_t &reference);	//foreign
+		virtual void setLongVariable(int index, mwLong_t value);
+		virtual void setLongVariable(const char *id, mwLong_t value);
+		virtual void setLongVariable(int index, mwLong_t value , REFRRecord_t &reference);
+
 	protected:
 	private:
 		mwAdapter::Context_t getContext();				//for internal functions that need the context (registers, etc)
