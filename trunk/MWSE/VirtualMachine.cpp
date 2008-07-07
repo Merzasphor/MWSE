@@ -151,3 +151,123 @@ void VirtualMachine::setReference(REFRRecord_t *reference)
 
 	//this should be it. a lot of testing is needed of course ;)
 }
+
+mwLong_t VirtualMachine::getLongVariable(int index)
+{
+	mwVariablesNode_t * localVariables = reinterpret_cast<mwVariablesNode_t*>(0x7CEBF8);
+	if( index <= (getScript().numLongs) )
+		return localVariables->longVarValues[index];
+	//else error, the index is bigger than the number of variables
+}
+
+mwLong_t VirtualMachine::getLongVariable(const char *id)
+{
+	/*
+	
+findScriptVariablePosition = 0x50E7B0
+int * valuePtr
+char * variableName
+
+mov ecx, SCPTRecord_t * script
+push "int * index"
+push "char * variableToFind"
+call findScriptVariablePosition
+return = EAX = type of variable
+index will be filled with index of variable
+*/
+
+	long * indexPtr;
+
+	static int findScriptVariable = 0x50E7B0;
+	SCPTRecord_t* script = &getScript();
+
+	__asm
+	{
+		mov ecx, script;
+
+		push indexPtr;	//where the index will be in
+		push id;		//the name of the variable
+		call findScriptVariable;
+	}
+
+	mwVariablesNode_t * localVariables = reinterpret_cast<mwVariablesNode_t*>(0x7CEBF8);
+	if( *indexPtr <= (getScript().numLongs) )
+		return localVariables->longVarValues[*indexPtr];
+	//else error, the index is bigger than the number of variables
+}
+
+mwLong_t VirtualMachine::getLongVariable(int index, REFRRecord_t &reference)
+{
+	bool found = false;
+	ListNode_t * pnode = reference.attachments;
+	while(pnode && !found)	//make while fail when @ end of nodelist!
+	{
+		if(pnode->attachType == RecordTypes::attachType_t::VARNODE)
+		{
+			found = true;
+		}
+		else
+		{
+			pnode = pnode->nextNode;
+		}
+	}
+	if(found)
+	{
+		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(pnode->dataPtr);
+		return foreignVariables->longVarValues[index];
+	}
+	//else throw error
+}
+
+void VirtualMachine::setLongVariable(int index, mwse::mwLong_t value)
+{
+	mwVariablesNode_t * localVariables = reinterpret_cast<mwVariablesNode_t*>(0x7CEBF8);
+	if( index <= (getScript().numLongs) )
+		localVariables->longVarValues[index] = value;
+	//else error, the index is bigger than the number of variables
+}
+
+void VirtualMachine::setLongVariable(const char *id, mwse::mwLong_t value)
+{
+	long * indexPtr;
+
+	static int findScriptVariable = 0x50E7B0;
+	SCPTRecord_t* script = &getScript();
+
+	__asm
+	{
+		mov ecx, script;
+
+		push indexPtr;	//where the index will be in
+		push id;		//the name of the variable
+		call findScriptVariable;
+	}
+
+	mwVariablesNode_t * localVariables = reinterpret_cast<mwVariablesNode_t*>(0x7CEBF8);
+	if( *indexPtr <= (getScript().numLongs) )
+		localVariables->longVarValues[*indexPtr] = value;
+	//else error, the index is bigger than the number of variables
+}
+
+void VirtualMachine::setLongVariable(int index, mwse::mwLong_t value, mwse::REFRRecord_t &reference)
+{
+	bool found = false;
+	ListNode_t * pnode = reference.attachments;
+	while(pnode && !found)	//make while fail when @ end of nodelist!
+	{
+		if(pnode->attachType == RecordTypes::attachType_t::VARNODE)
+		{
+			found = true;
+		}
+		else
+		{
+			pnode = pnode->nextNode;
+		}
+	}
+	if(found)
+	{
+		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(pnode->dataPtr);
+		foreignVariables->longVarValues[index] = value;
+	}
+	//else throw error
+}
