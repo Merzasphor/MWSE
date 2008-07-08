@@ -63,6 +63,16 @@ namespace mwse
 		virtual void setFloatVariable(const char *id, mwFloat_t value);
 		virtual void setFloatVariable(int index, mwFloat_t value , REFRRecord_t &reference);
 
+		//global variables, methods to access global variables
+		virtual mwLong_t getLongGlobal(const char *id);
+		virtual void setLongGlobal(const char *id, mwLong_t value);
+		
+		virtual mwShort_t getShortGlobal(const char *id);
+		virtual void setShortGlobal(const char *id, mwShort_t value);
+
+		virtual mwFloat_t getFloatGlobal(const char *id);
+		virtual void setFloatGlobal(const char *id, mwFloat_t value);
+
 	protected:
 	private:
 		mwAdapter::Context_t getContext();				//for internal functions that need the context (registers, etc)
