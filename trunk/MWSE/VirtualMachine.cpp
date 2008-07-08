@@ -485,3 +485,140 @@ void VirtualMachine::setFloatVariable(int index, mwse::mwFloat_t value, mwse::RE
 	}
 	//else throw error
 }
+
+mwLong_t VirtualMachine::getLongGlobal(const char *id)
+{
+	/*
+	masterCellImage = 0x7C67E0
+findGLOB = 0x4BA820
+
+mov eax, masterCellImage
+mov ecx, [eax]
+push "char * globalToFind"
+call findGLOB
+return = EAX = GLOBRecord
+*/
+
+	static int findGLOB = 0x4BA820;
+	GLOBRecord_t * foundRecord;
+	__asm
+	{
+		mov ecx,dword ptr ds:[0x7C67E0]; //masterCellImage
+		push id;
+		call findGLOB;
+		mov foundRecord, eax;
+	}
+
+	//at this point we have the global we are looking for in 'foundRecord'
+
+	if(foundRecord->variableType == 'l')
+	{
+		return static_cast<mwLong_t>(foundRecord->data);
+	}
+	//else error out!
+}
+
+void VirtualMachine::setLongGlobal(const char *id, mwLong_t value)
+{
+	static int findGLOB = 0x4BA820;
+	GLOBRecord_t * foundRecord;
+	__asm
+	{
+		mov ecx,dword ptr ds:[0x7C67E0]; //masterCellImage
+		push id;
+		call findGLOB;
+		mov foundRecord, eax;
+	}
+
+	//at this point we have the global we are looking for in 'foundRecord'
+
+	if(foundRecord->variableType == 'l')
+	{
+		foundRecord->data = static_cast<mwFloat_t>(value);
+	}
+	//else error out!
+}
+
+mwShort_t VirtualMachine::getShortGlobal(const char *id)
+{
+	static int findGLOB = 0x4BA820;
+	GLOBRecord_t * foundRecord;
+	__asm
+	{
+		mov ecx,dword ptr ds:[0x7C67E0]; //masterCellImage
+		push id;
+		call findGLOB;
+		mov foundRecord, eax;
+	}
+
+	//at this point we have the global we are looking for in 'foundRecord'
+
+	if(foundRecord->variableType == 's')
+	{
+		return static_cast<mwShort_t>(foundRecord->data);
+	}
+	//else error out!
+}
+
+void VirtualMachine::setShortGlobal(const char *id, mwShort_t value)
+{
+	static int findGLOB = 0x4BA820;
+	GLOBRecord_t * foundRecord;
+	__asm
+	{
+		mov ecx,dword ptr ds:[0x7C67E0]; //masterCellImage
+		push id;
+		call findGLOB;
+		mov foundRecord, eax;
+	}
+
+	//at this point we have the global we are looking for in 'foundRecord'
+
+	if(foundRecord->variableType == 's')
+	{
+		foundRecord->data = static_cast<mwFloat_t>(value);
+	}
+	//else error out!
+}
+
+mwFloat_t VirtualMachine::getFloatGlobal(const char *id)
+{
+	static int findGLOB = 0x4BA820;
+	GLOBRecord_t * foundRecord;
+	__asm
+	{
+		mov ecx,dword ptr ds:[0x7C67E0]; //masterCellImage
+		push id;
+		call findGLOB;
+		mov foundRecord, eax;
+	}
+
+	//at this point we have the global we are looking for in 'foundRecord'
+
+	if(foundRecord->variableType == 'f')
+	{
+		return foundRecord->data;
+	}
+	//else error out!
+}
+
+void VirtualMachine::setFloatGlobal(const char *id, mwFloat_t value)
+{
+	static int findGLOB = 0x4BA820;
+	GLOBRecord_t * foundRecord;
+	__asm
+	{
+		mov ecx,dword ptr ds:[0x7C67E0]; //masterCellImage
+		push id;
+		call findGLOB;
+		mov foundRecord, eax;
+	}
+
+	//at this point we have the global we are looking for in 'foundRecord'
+
+	if(foundRecord->variableType == 'f')
+	{
+		foundRecord->data = value;
+	}
+	//else error out!
+}
