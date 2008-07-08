@@ -27,8 +27,8 @@ namespace mwse {
     class InstructionInterface_t {
         public:
             inline mwOpcode_t getOpCode() const { return opcode; }
-            float execute(VMExecuteInterface &virtualMachine);		//i removed the = 0; because it gave errors
-            void loadParameters(VMExecuteInterface &virtualMachine);//same here
+            virtual float execute(VMExecuteInterface &virtualMachine) =0;		//added 'virtual' so the linker wouldn't complain, added the '=0' back in.
+            virtual void loadParameters(VMExecuteInterface &virtualMachine) =0;	//same here
         protected:
             InstructionInterface_t(const mwOpcode_t ctor_opcode);
         private:
