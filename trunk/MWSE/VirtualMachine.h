@@ -49,6 +49,20 @@ namespace mwse
 		virtual void setLongVariable(const char *id, mwLong_t value);
 		virtual void setLongVariable(int index, mwLong_t value , REFRRecord_t &reference);
 
+		virtual mwShort_t getShortVariable(int index);
+		virtual mwShort_t getShortVariable(const char *id);
+		virtual mwShort_t getShortVariable(int index, REFRRecord_t &reference);
+		virtual void setShortVariable(int index, mwShort_t value);
+		virtual void setShortVariable(const char *id, mwShort_t value);
+		virtual void setShortVariable(int index, mwShort_t value , REFRRecord_t &reference);
+
+		virtual mwFloat_t getFloatVariable(int index);
+		virtual mwFloat_t getFloatVariable(const char *id);
+		virtual mwFloat_t getFloatVariable(int index, REFRRecord_t &reference);
+		virtual void setFloatVariable(int index, mwFloat_t value);
+		virtual void setFloatVariable(const char *id, mwFloat_t value);
+		virtual void setFloatVariable(int index, mwFloat_t value , REFRRecord_t &reference);
+
 	protected:
 	private:
 		mwAdapter::Context_t getContext();				//for internal functions that need the context (registers, etc)
