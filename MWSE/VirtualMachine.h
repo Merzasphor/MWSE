@@ -24,6 +24,7 @@
 #include "mwAdapter.h"
 #include "VMHookInterface.h"
 #include "VMExecuteInterface.h"
+#include "mwseString.h"
 
 using namespace mwse;
 
@@ -79,6 +80,8 @@ namespace mwse
 		virtual mwLong_t getLongValue(bool peek =false);
 		virtual mwFloat_t getFloatValue(bool peek = false);
 
+		virtual mwseString_t getString(mwLong_t fromStack);	//only ment for stack-based syntax!, parameter-based syntax functions should use getStringParameter!!!
+
 	protected:
 	private:
 		mwAdapter::Context_t getContext();				//for internal functions that need the context (registers, etc)
@@ -90,5 +93,8 @@ namespace mwse
 		mwAdapter::Context_t context;			//current context (registers, etc)
 		SCPTRecord_t * script;					//current script pointer
 		long *mwScriptIP;
+
+		SCPTRecord_t * oldscript;
+		void OnScriptChange();
 	};
 };

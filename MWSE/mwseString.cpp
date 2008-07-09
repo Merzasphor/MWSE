@@ -59,6 +59,13 @@ mwseString_t::mwseString_t(mwLong_t id):
     // already in map
 }
 
+mwseString_t::mwseString_t(const char *string, size_t length):
+	std::string(string, length),
+	my_id(nextID())
+{
+	store.insert(StringMap_t::value_type(my_id, *this));
+}
+
 mwseString_t::operator mwLong_t() const
 {
     return my_id;
