@@ -70,5 +70,12 @@ namespace mwse
 		
 		//getParameters
 		//virtual * get*Parameter() = 0;
+		
+		//virtual template<class T> void getStreamValue(T returnValue, bool peek = false) = 0;	//T must be in paramter list... if peek is true, then it doesn't increase the stream pointer
+		//OR
+		virtual char getByteValue(bool peek = false) = 0;			//peek means don't increase stream pointer
+		virtual mwShort_t getShortValue(bool peek = false) = 0;
+		virtual mwLong_t getLongValue(bool peek =false) = 0;
+		virtual mwFloat_t getFloatValue(bool peek = false) = 0;
 	};
 };
