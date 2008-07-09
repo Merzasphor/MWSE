@@ -73,6 +73,12 @@ namespace mwse
 		virtual mwFloat_t getFloatGlobal(const char *id);
 		virtual void setFloatGlobal(const char *id, mwFloat_t value);
 
+		//getParameters
+		virtual char getByteValue(bool peek = false);
+		virtual mwShort_t getShortValue(bool peek = false);
+		virtual mwLong_t getLongValue(bool peek =false);
+		virtual mwFloat_t getFloatValue(bool peek = false);
+
 	protected:
 	private:
 		mwAdapter::Context_t getContext();				//for internal functions that need the context (registers, etc)

@@ -622,3 +622,75 @@ void VirtualMachine::setFloatGlobal(const char *id, mwFloat_t value)
 	}
 	//else error out!
 }
+
+char VirtualMachine::getByteValue(bool peek)
+{
+	int * scriptIP = reinterpret_cast<int*>(0x7CEBB0);		//location the script instruction pointer, or current location in script stream
+
+	SCPTRecord_t script = getScript();			//get current script
+	void * scriptstream = script.machineCode;	//get script data stream
+	scriptstream = reinterpret_cast<void*>( reinterpret_cast<char*>(scriptstream) + *scriptIP);	//go to current position in script stream
+
+	char returnData = *(reinterpret_cast<char*>(scriptstream));	//<-- change char here! (twice)
+
+	if(!peek)
+	{
+		*scriptIP += sizeof(char);	//<-- change char here
+	}
+
+	return returnData;
+}
+
+mwShort_t VirtualMachine::getShortValue(book peek = false)
+{
+	int * scriptIP = reinterpret_cast<int*>(0x7CEBB0);
+
+	SCPTRecord_t script = getScript();
+	void * scriptstream = script.machineCode;
+	scriptstream = reinterpret_cast<void*>( reinterpret_cast<char*>(scriptstream) + *scriptIP);
+
+	mwShort_t returnData = *(reinterpret_cast<mwShort_t*>(scriptstream));	//<-- change char here! (twice)
+
+	if(!peek)
+	{
+		*scriptIP += sizeof(mwShort_t);	//<-- change char here
+	}
+
+	return returnData;
+}
+
+mwLong_t VirtualMachine::getLongValue(bool peek = false)
+{
+	int * scriptIP = reinterpret_cast<int*>(0x7CEBB0);
+
+	SCPTRecord_t script = getScript();
+	void * scriptstream = script.machineCode;
+	scriptstream = reinterpret_cast<void*>( reinterpret_cast<char*>(scriptstream) + *scriptIP);
+
+	mwLong_t returnData = *(reinterpret_cast<mwLong_t*>(scriptstream));	//<-- change char here! (twice)
+
+	if(!peek)
+	{
+		*scriptIP += sizeof(mwLong_t);	//<-- change char here
+	}
+
+	return returnData;
+}
+
+mwFloat_t VirtualMachine::getFloatValue(bool peek = false)
+{
+	int * scriptIP = reinterpret_cast<int*>(0x7CEBB0);
+
+	SCPTRecord_t script = getScript();
+	void * scriptstream = script.machineCode;
+	scriptstream = reinterpret_cast<void*>( reinterpret_cast<char*>(scriptstream) + *scriptIP);
+
+	mwFloat_t returnData = *(reinterpret_cast<mwFloat_t*>(scriptstream));	//<-- change char here! (twice)
+
+	if(!peek)
+	{
+		*scriptIP += sizeof(mwFloat_t);	//<-- change char here
+	}
+
+	return returnData;
+}
