@@ -38,6 +38,7 @@ namespace mwse {
             mwseString_t(const char *string);
             mwseString_t(const mwseString_t &source); // copy constructor
             mwseString_t(mwLong_t id);          // find and initialize from ID
+			mwseString_t(const char *string, size_t length);
 
             operator mwLong_t() const;          // cast to mwLong_t
 

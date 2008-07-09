@@ -21,6 +21,7 @@
 #include "VirtualMachine.h"
 #include "InstructionStore.h"
 #include "InstructionInterface.h"
+#include "mwseString.h"
 
 using namespace mwse;
 
@@ -39,6 +40,9 @@ void VirtualMachine::loadParametersForOperation(mwOpcode_t opcode, mwAdapter::Co
 	InstructionInterface_t * instruction = InstructionStore::getInstance().get(opcode);
 	setContext(context);
 	setScript(script);
+	if(oldscript != NULL && oldscript != &script)	//first time don't execute (when oldscript is empty)
+		OnScriptChange();
+	oldscript = &script;
 
 	instruction->loadParameters(*this);	//what else does 'loadParameters' need?
 
@@ -55,6 +59,11 @@ float VirtualMachine::executeOperation(mwOpcode_t opcode, mwAdapter::Context_t &
 	
 	context = getContext();
 	return returnvalue;
+}
+
+void VirtualMachine::OnScriptChange()
+{
+	mwseString_t::clearStore();
 }
 
 bool VirtualMachine::isOpcode(const mwOpcode_t opcode)
@@ -641,7 +650,7 @@ char VirtualMachine::getByteValue(bool peek)
 	return returnData;
 }
 
-mwShort_t VirtualMachine::getShortValue(book peek = false)
+mwShort_t VirtualMachine::getShortValue(bool peek)
 {
 	int * scriptIP = reinterpret_cast<int*>(0x7CEBB0);
 
@@ -659,7 +668,7 @@ mwShort_t VirtualMachine::getShortValue(book peek = false)
 	return returnData;
 }
 
-mwLong_t VirtualMachine::getLongValue(bool peek = false)
+mwLong_t VirtualMachine::getLongValue(bool peek)
 {
 	int * scriptIP = reinterpret_cast<int*>(0x7CEBB0);
 
@@ -677,7 +686,7 @@ mwLong_t VirtualMachine::getLongValue(bool peek = false)
 	return returnData;
 }
 
-mwFloat_t VirtualMachine::getFloatValue(bool peek = false)
+mwFloat_t VirtualMachine::getFloatValue(bool peek)
 {
 	int * scriptIP = reinterpret_cast<int*>(0x7CEBB0);
 
@@ -693,4 +702,27 @@ mwFloat_t VirtualMachine::getFloatValue(bool peek = false)
 	}
 
 	return returnData;
+}
+
+mwseString_t VirtualMachine::getString(mwLong_t fromStack)	//ask grant, need a '*' or a '&' here?? (and in the header files)
+{
+	if(mwseString_t::exists(fromStack))
+	{
+		//if it's a variable string
+		return mwseString_t::lookup(fromStack);
+	}
+	else
+	{
+		//if it's a litteral string
+		void * scriptstream = getScript().machineCode;
+		scriptstream = reinterpret_cast<void*>( reinterpret_cast<char*>(scriptstream) + fromStack);	//go to address in script stream
+
+		char blen = *(reinterpret_cast<char*>(scriptstream));	//get length i guess...
+
+		scriptstream = reinterpret_cast<void*>( reinterpret_cast<char*>(scriptstream) + sizeof(blen) );
+		
+		char * string = reinterpret_cast<char*>(scriptstream);
+
+		return mwseString_t(string, blen);
+	}
 }
