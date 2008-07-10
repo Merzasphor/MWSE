@@ -207,6 +207,22 @@
 				RelativePath=".\VirtualMachine.cpp"
 				>
 			</File>
+			<Filter
+				Name="Stack-based"
+				>
+				<Filter
+					Name="Instructions"
+					>
+					<File
+						RelativePath=".\Push.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Functions"
+					>
+				</Filter>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
