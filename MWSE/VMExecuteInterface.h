@@ -30,6 +30,9 @@ namespace mwse
 	class VMExecuteInterface
 	{
 	public:
+		//VirtualMachine specific
+		virtual long* getScriptIP() = 0;	//to get the script Instruction Pointer, (for functions that change this, like jump and call like things).
+
 		//local variables, methods to access local variables
 		virtual mwLong_t getLongVariable(int index) = 0;							//by index
 		virtual mwLong_t getLongVariable(const char *id) = 0;						//by name

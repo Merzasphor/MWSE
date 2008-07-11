@@ -726,3 +726,8 @@ mwseString_t VirtualMachine::getString(mwLong_t fromStack)	//ask grant, need a '
 		return mwseString_t(string, blen);
 	}
 }
+
+long* VirtualMachine::getScriptIP()
+{
+	return mwScriptIP;
+}
