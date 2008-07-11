@@ -20,6 +20,7 @@
 
 #include <windows.h>
 #include "mwAdapter.h"
+#include "Log.h"
 
 using namespace mwse;
 
@@ -33,8 +34,9 @@ BOOL WINAPI DllMain(
 	case DLL_PROCESS_ATTACH:
 		// Initialize once for each new process.
 		// Return FALSE to fail DLL load.
+		log::OpenLog("MWSEHook.txt");
 		mwAdapter::Hook(); //for testing purposes only at the moment, this should be replaced by a function more friendly (like a virtual machine init or something)
-		//also Log should be initialized ;)
+		log::getLog() << "Morrowind Script Extender initialized" << std::endl;
 		break;
 	case DLL_THREAD_ATTACH:
 		// Do thread-specific initialization.
