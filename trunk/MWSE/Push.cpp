@@ -26,6 +26,7 @@ using namespace mwse;
 
 namespace mwse
 {
+	//----------------------------------------
 	class Push : public InstructionInterface_t
 	{
 	public:
@@ -52,4 +53,61 @@ namespace mwse
 		Stack::getInstance().pushLong(pushData);
 		return 0.0;
 	}
+	//----------------------------------------
+	//----------------------------------------
+	class PushB : public InstructionInterface_t
+	{
+	public:
+		PushB();
+		virtual float execute(VMExecuteInterface &virtualMachine);
+		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+	protected:
+	private:
+		long pushData;
+	};
+
+	static const mwOpcode_t pushBOpcode = 0x3812;
+	static PushB pushBInstance;
+
+	PushB::PushB(): InstructionInterface_t(pushBOpcode){}
+
+	void PushB::loadParameters(mwse::VMExecuteInterface &virtualMachine)
+	{
+		pushData = virtualMachine.getByteValue();
+	}
+
+	float PushB::execute(mwse::VMExecuteInterface &virtualMachine)
+	{
+		Stack::getInstance().pushByte(pushData);
+		return 0.0;
+	}
+	//----------------------------------------
+	//----------------------------------------
+	class PushS : public InstructionInterface_t
+	{
+	public:
+		PushS();
+		virtual float execute(VMExecuteInterface &virtualMachine);
+		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+	protected:
+	private:
+		long pushData;
+	};
+
+	static const mwOpcode_t pushSOpcode = 0x3813;
+	static PushS pushSInstance;
+
+	PushS::PushS(): InstructionInterface_t(pushBOpcode){}
+
+	void PushS::loadParameters(mwse::VMExecuteInterface &virtualMachine)
+	{
+		pushData = virtualMachine.getShortValue();
+	}
+
+	float PushS::execute(mwse::VMExecuteInterface &virtualMachine)
+	{
+		Stack::getInstance().pushShort(pushData);
+		return 0.0;
+	}
+	//----------------------------------------
 }

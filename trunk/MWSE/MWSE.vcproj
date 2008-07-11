@@ -214,6 +214,10 @@
 					Name="Instructions"
 					>
 					<File
+						RelativePath=".\Pop.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\Push.cpp"
 						>
 					</File>
