@@ -218,6 +218,10 @@
 					Name="Instructions"
 					>
 					<File
+						RelativePath=".\getLocal.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\Jump.cpp"
 						>
 					</File>
