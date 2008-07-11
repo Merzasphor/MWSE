@@ -53,7 +53,7 @@ namespace mwse
 		mwShort_t items = popLength /4;	//number of items to throw off the stack
 		//TODO: loop here
 		//FIXME: loop here
-		for(int i = 0; i < popLength; i++)
+		for(int i = 0; i < items; i++)
 		{
 			Stack::getInstance().popByte();
 		}
