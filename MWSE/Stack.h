@@ -47,6 +47,10 @@ namespace mwse {
 
             typedef unsigned int StackItem_t;
 
+			void pushByte(const char value)
+			{
+				push(static_cast<StackItem_t>(value));
+			}
             void pushShort(const mwShort_t value)
             {
                 push(static_cast<StackItem_t>(value));
@@ -65,6 +69,10 @@ namespace mwse {
             }
             //void pushRef(const mwRef_t &value);
 
+			char        popByte(void)
+			{
+				return static_cast<char>(pop());
+			}
             mwShort_t   popShort(void)
             {
                 return static_cast<mwShort_t>(pop());
