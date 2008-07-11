@@ -22,6 +22,7 @@
 
 #include "mwseTypes.h"
 #include "mwseString.h"
+#include "Flags.h"
 
 /**
  * This Stack class is a singleton. It provides an
@@ -109,6 +110,8 @@ namespace mwse {
                 }
                 stack_storage[stack_top] = value;
                 stack_top++;
+
+				Flags::setFlags(value);	//set flags
             }
     
             StackItem_t pop()
