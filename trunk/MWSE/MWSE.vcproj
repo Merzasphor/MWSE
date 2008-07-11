@@ -218,6 +218,10 @@
 					Name="Instructions"
 					>
 					<File
+						RelativePath=".\Jump.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\Pop.cpp"
 						>
 					</File>
