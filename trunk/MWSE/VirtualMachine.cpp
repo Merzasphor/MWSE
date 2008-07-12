@@ -163,8 +163,8 @@ void VirtualMachine::setReference(REFRRecord_t *reference)
 
 mwLong_t VirtualMachine::getLongVariable(int index)
 {
-	mwVariablesNode_t * localVariables = reinterpret_cast<mwVariablesNode_t*>(0x7CEBF8);	//get a pointer to the localVariables, it contains 3 arrays, (see data structure)
-	if( index <= (getScript().numLongs) )	//maybe this should be '<' not '<=' ???
+	mwVariablesNode_t * localVariables = *(reinterpret_cast<mwVariablesNode_t**>(0x7CEBF8));	//get a pointer to the localVariables, it contains 3 arrays, (see data structure)
+	if( index < (getScript().numLongs) )	//maybe this should be '<' not '<=' ???
 		return localVariables->longVarValues[index];
 	//else error, the index is bigger than the number of variables
 }
@@ -200,8 +200,8 @@ index will be filled with index of variable
 		call findScriptVariable;
 	}
 
-	mwVariablesNode_t * localVariables = reinterpret_cast<mwVariablesNode_t*>(0x7CEBF8);
-	if( *indexPtr <= (getScript().numLongs) )
+	mwVariablesNode_t * localVariables = *(reinterpret_cast<mwVariablesNode_t**>(0x7CEBF8));
+	if( *indexPtr < (getScript().numLongs) )
 		return localVariables->longVarValues[*indexPtr];
 	//else error, the index is bigger than the number of variables
 }
@@ -232,8 +232,8 @@ mwLong_t VirtualMachine::getLongVariable(int index, REFRRecord_t &reference)
 
 void VirtualMachine::setLongVariable(int index, mwse::mwLong_t value)
 {
-	mwVariablesNode_t * localVariables = reinterpret_cast<mwVariablesNode_t*>(0x7CEBF8);
-	if( index <= (getScript().numLongs) )
+	mwVariablesNode_t * localVariables = *(reinterpret_cast<mwVariablesNode_t**>(0x7CEBF8));
+	if( index < (getScript().numLongs) )
 		localVariables->longVarValues[index] = value;
 	//else error, the index is bigger than the number of variables
 }
@@ -254,8 +254,8 @@ void VirtualMachine::setLongVariable(const char *id, mwse::mwLong_t value)
 		call findScriptVariable;
 	}
 
-	mwVariablesNode_t * localVariables = reinterpret_cast<mwVariablesNode_t*>(0x7CEBF8);
-	if( *indexPtr <= (getScript().numLongs) )
+	mwVariablesNode_t * localVariables = *(reinterpret_cast<mwVariablesNode_t**>(0x7CEBF8));
+	if( *indexPtr < (getScript().numLongs) )
 		localVariables->longVarValues[*indexPtr] = value;
 	//else error, the index is bigger than the number of variables
 }
@@ -285,8 +285,8 @@ void VirtualMachine::setLongVariable(int index, mwse::mwLong_t value, mwse::REFR
 
 mwShort_t VirtualMachine::getShortVariable(int index)
 {
-	mwVariablesNode_t * localVariables = reinterpret_cast<mwVariablesNode_t*>(0x7CEBF8);
-	if( index <= (getScript().numShorts) )
+	mwVariablesNode_t * localVariables = *(reinterpret_cast<mwVariablesNode_t**>(0x7CEBF8));
+	if( index < (getScript().numShorts) )
 		return localVariables->shortVarValues[index];
 	//else error, the index is bigger than the number of variables
 }
@@ -307,8 +307,8 @@ mwShort_t VirtualMachine::getShortVariable(const char *id)
 		call findScriptVariable;
 	}
 
-	mwVariablesNode_t * localVariables = reinterpret_cast<mwVariablesNode_t*>(0x7CEBF8);
-	if( *indexPtr <= (getScript().numShorts) )
+	mwVariablesNode_t * localVariables = *(reinterpret_cast<mwVariablesNode_t**>(0x7CEBF8));
+	if( *indexPtr < (getScript().numShorts) )
 		return localVariables->shortVarValues[*indexPtr];
 	//else error, the index is bigger than the number of variables
 }
@@ -338,8 +338,8 @@ mwShort_t VirtualMachine::getShortVariable(int index, mwse::REFRRecord_t &refere
 
 void VirtualMachine::setShortVariable(int index, mwse::mwShort_t value)
 {
-	mwVariablesNode_t * localVariables = reinterpret_cast<mwVariablesNode_t*>(0x7CEBF8);
-	if( index <= (getScript().numShorts) )
+	mwVariablesNode_t * localVariables = *(reinterpret_cast<mwVariablesNode_t**>(0x7CEBF8));
+	if( index < (getScript().numShorts) )
 		localVariables->shortVarValues[index] = value;
 	//else error, the index is bigger than the number of variables
 }
@@ -360,8 +360,8 @@ void VirtualMachine::setShortVariable(const char *id, mwse::mwShort_t value)
 		call findScriptVariable;
 	}
 
-	mwVariablesNode_t * localVariables = reinterpret_cast<mwVariablesNode_t*>(0x7CEBF8);
-	if( *indexPtr <= (getScript().numShorts) )
+	mwVariablesNode_t * localVariables = *(reinterpret_cast<mwVariablesNode_t**>(0x7CEBF8));
+	if( *indexPtr < (getScript().numShorts) )
 		localVariables->shortVarValues[*indexPtr] = value;
 	//else error, the index is bigger than the number of variables
 }
@@ -391,8 +391,8 @@ void VirtualMachine::setShortVariable(int index, mwse::mwShort_t value, mwse::RE
 
 mwFloat_t VirtualMachine::getFloatVariable(int index)
 {
-	mwVariablesNode_t * localVariables = reinterpret_cast<mwVariablesNode_t*>(0x7CEBF8);
-	if( index <= (getScript().numFloats) )
+	mwVariablesNode_t * localVariables = *(reinterpret_cast<mwVariablesNode_t**>(0x7CEBF8));
+	if( index < (getScript().numFloats) )
 		return localVariables->floatVarValues[index];
 	//else error, the index is bigger than the number of variables
 }
@@ -413,8 +413,8 @@ mwFloat_t VirtualMachine::getFloatVariable(const char *id)
 		call findScriptVariable;
 	}
 
-	mwVariablesNode_t * localVariables = reinterpret_cast<mwVariablesNode_t*>(0x7CEBF8);
-	if( *indexPtr <= (getScript().numFloats) )
+	mwVariablesNode_t * localVariables = *(reinterpret_cast<mwVariablesNode_t**>(0x7CEBF8));
+	if( *indexPtr < (getScript().numFloats) )
 		return localVariables->floatVarValues[*indexPtr];
 	//else error, the index is bigger than the number of variables
 }
@@ -444,8 +444,8 @@ mwFloat_t VirtualMachine::getFloatVariable(int index, mwse::REFRRecord_t &refere
 
 void VirtualMachine::setFloatVariable(int index, mwse::mwFloat_t value)
 {
-	mwVariablesNode_t * localVariables = reinterpret_cast<mwVariablesNode_t*>(0x7CEBF8);
-	if( index <= (getScript().numFloats) )
+	mwVariablesNode_t * localVariables = *(reinterpret_cast<mwVariablesNode_t**>(0x7CEBF8));
+	if( index < (getScript().numFloats) )
 		localVariables->floatVarValues[index] = value;
 	//else error, the index is bigger than the number of variables
 }
@@ -466,8 +466,8 @@ void VirtualMachine::setFloatVariable(const char *id, mwse::mwFloat_t value)
 		call findScriptVariable;
 	}
 
-	mwVariablesNode_t * localVariables = reinterpret_cast<mwVariablesNode_t*>(0x7CEBF8);
-	if( *indexPtr <= (getScript().numFloats) )
+	mwVariablesNode_t * localVariables = *(reinterpret_cast<mwVariablesNode_t**>(0x7CEBF8));
+	if( *indexPtr < (getScript().numFloats) )
 		localVariables->floatVarValues[*indexPtr] = value;
 	//else error, the index is bigger than the number of variables
 }

@@ -34,7 +34,7 @@ BOOL WINAPI DllMain(
 	case DLL_PROCESS_ATTACH:
 		// Initialize once for each new process.
 		// Return FALSE to fail DLL load.
-		log::OpenLog("MWSEHook.txt");
+		log::OpenLog("MWSELog.txt");
 		mwAdapter::Hook(); //for testing purposes only at the moment, this should be replaced by a function more friendly (like a virtual machine init or something)
 		log::getLog() << "Morrowind Script Extender initialized" << std::endl;
 		break;

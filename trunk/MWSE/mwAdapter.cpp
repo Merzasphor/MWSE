@@ -63,7 +63,7 @@ namespace mwse
 
 			if(vmInstance.isOpcode(opcode))
 			{
-				SCPTRecord_t * script = reinterpret_cast<SCPTRecord_t*>(context.esp + 0x8);
+				SCPTRecord_t * script = *(reinterpret_cast<SCPTRecord_t**>(context.esp + 0x8));
 				context.callbackAddress = 0x50D62D;
 				//call virtualmachine here
 				float returnValue = vmInstance.executeOperation(opcode, context, *script);

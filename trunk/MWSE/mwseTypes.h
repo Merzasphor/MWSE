@@ -66,10 +66,10 @@ namespace mwse
         int recordSize;
         char * modNamePtr;
         char scriptName[32];
-        int numShorts;
-        int numLongs;
-        int numFloats;
-        int scriptDataSize;
+        unsigned long numShorts;
+        unsigned long numLongs;
+        unsigned long numFloats;
+        unsigned long scriptDataSize;
         int LocalVarSize; //the length of the local var names concatenated (includes \0 for string endings)
         char ** shortVarNamePointers;
         char ** longVarNamePointers;
