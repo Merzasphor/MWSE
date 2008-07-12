@@ -56,7 +56,7 @@ namespace mwse
 		enum attachType_t
 		{
 			VARNODE = 6,	//attachment where 'local' variables are stored
-			MACHNODE = 8
+			MACHNODE = 8	//PCAM
 		};
     };
     struct SCPTRecord_t
@@ -66,10 +66,10 @@ namespace mwse
         int recordSize;
         char * modNamePtr;
         char scriptName[32];
-        unsigned long numShorts;
-        unsigned long numLongs;
-        unsigned long numFloats;
-        unsigned long scriptDataSize;
+        long numShorts;
+        long numLongs;
+        long numFloats;
+        long scriptDataSize;
         int LocalVarSize; //the length of the local var names concatenated (includes \0 for string endings)
         char ** shortVarNamePointers;
         char ** longVarNamePointers;
@@ -148,9 +148,15 @@ namespace mwse
         int unknown9;
         int unknown10;
         int unknown11;
-        int unknown12;
+        int AmountInventory;
         LinkedList_t * inventoryStart;
         LinkedList_t * inventoryEnd;
+		int unknown13;
+		int unknown14;
+		int unknown15;	//some pointer
+		int amountEquiped;
+		LinkedList_t * equipedStart;
+		LinkedList_t * equipedEnd;
     };
 
     struct REFRRecord_t
