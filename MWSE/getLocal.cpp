@@ -33,7 +33,6 @@ namespace mwse
 		getLocal();
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
-	private:
 	};
 
 	static const mwOpcode_t getLocalOpcode = 0x3c00;
@@ -46,7 +45,7 @@ namespace mwse
 	float getLocal::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		char type = Stack::getInstance().popByte();
-		char index = Stack::getInstance().popByte();
+		short index = Stack::getInstance().popShort();
 
 		switch(type)
 		{

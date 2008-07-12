@@ -97,7 +97,7 @@ namespace mwse
 	static const mwOpcode_t pushSOpcode = 0x3813;
 	static PushS pushSInstance;
 
-	PushS::PushS(): InstructionInterface_t(pushBOpcode){}
+	PushS::PushS(): InstructionInterface_t(pushSOpcode){}
 
 	void PushS::loadParameters(mwse::VMExecuteInterface &virtualMachine)
 	{
