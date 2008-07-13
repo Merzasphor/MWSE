@@ -50,7 +50,9 @@ namespace mwse
             REPA = 'APER', REPAIR = REPA,
             CLAS = 'SALC', CLASS = CLAS,
             LOCK = 'KCOL',
-			GLOB = 'BOLG', GLOBAL = GLOB
+			GLOB = 'BOLG', GLOBAL = GLOB,
+			REFR = 'RFER', REFERENCE = REFR,
+			MACP = 'PCAM'
         };
 
 		enum attachType_t
@@ -119,6 +121,20 @@ namespace mwse
 	{
 		char unknown[0x18];
 		mwVariablesNode_t * vars;
+	};
+
+	struct PCAMRecord_t
+	{
+		void * vTable;										//0
+		RecordTypes::recordType_t recordType;				//4
+		int unknown1;										//8
+		int unknown2;										//12
+		int unknown3;										//16
+		REFRRecord_t * playerReference;						//20
+		int unknown4[216]; // --> int unknown219;			//24
+		void * currentSpell; //current selected spell	//this of course points to a SPEL or ENCH record ;)
+		//or the one after that, if i miscounted ;-), we'll see when we start using those.
+		//vTable + 0x378 is currentSpell @, so you can recount ;-).
 	};
 
     struct NPCBaseRecord_t	//or the 'base' NPC_ record. you can access it trough the NPCC (NPC Copy) Record (baseNPC)
