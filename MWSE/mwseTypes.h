@@ -121,12 +121,61 @@ namespace mwse
 		mwVariablesNode_t * vars;
 	};
 
-    struct NPCBaseRecord_t
+    struct NPCBaseRecord_t	//or the 'base' NPC_ record. you can access it trough the NPCC (NPC Copy) Record (baseNPC)
     {
         void * vTable;
         RecordTypes::recordType_t recordType;
-        int recordSize;
+        int recordSize;		//should be 0x0F0 big!
         char * modNamePtr;
+		int unknown1;
+		int unknown2;
+		int unknown3;
+		int unknown4;	//STAT
+		int unknown5;	//BODY
+		int unknown6;
+		int unknown7;
+		char * IDStringPtr;
+		int unknown8;
+		int unknown9;
+		int unknown10;
+		int unknown11;
+		int unknown12;
+		int unknown13;	//inventory? (amount)
+		int unknown14;	//inventory? (start)
+		int unknown15;	//inventory? (end)
+		int unknown16;
+		int unknown17;
+		int unknown18;
+		int unknown19;
+		int unknown20;
+		int unknown21;
+		int unknown22;
+		int unknown23;
+		int unknown24;
+		int unknown25;
+		int unknown26;
+		int unknown27;
+		int unknown28;
+		int unknown29;
+		int unknown30;
+		int unknown31;
+		int unknown32;
+		int unknown33;
+		int unknown34;
+		int unknown35;
+		int unknown36;
+		int unknown37;
+		int unknown38;
+		int unknown39;	//RACE
+		int unknown40;	//CLAS
+		int unknown41;
+		int unknown42;	//BODY
+		int unknown43;	//BODY
+		int unknown44;
+		int unknown45;
+		int numberOfSpells;
+		LinkedList_t * spellStart	//these contain the spells! not items with a special power.
+		LinkedList_t * spellEnd;
     };
 
     struct NPCCopyRecord_t
@@ -157,13 +206,15 @@ namespace mwse
 		int amountEquiped;
 		LinkedList_t * equipedStart;
 		LinkedList_t * equipedEnd;
+		int unknown16;
+		NPCBaseRecord_t * baseNPC;
     };
 
     struct REFRRecord_t
     {
         void * vTable;
         RecordTypes::recordType_t recordType; // "REFR"
-        int recordSize;
+        int recordSize;			//0x50 big, should this be!
         char * modNamePtr;
         int unknown1;
         int unknown2;
@@ -216,7 +267,7 @@ namespace mwse
         char slashMax;
         char trustMin;
         char trustMax;
-        short flags;
+        long flags;
     };
 
 	struct GLOBRecord_t
