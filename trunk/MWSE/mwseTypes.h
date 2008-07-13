@@ -123,6 +123,8 @@ namespace mwse
 		mwVariablesNode_t * vars;
 	};
 
+	struct REFRRecord_t;
+
 	struct PCAMRecord_t
 	{
 		void * vTable;										//0
@@ -135,6 +137,73 @@ namespace mwse
 		void * currentSpell; //current selected spell	//this of course points to a SPEL or ENCH record ;)
 		//or the one after that, if i miscounted ;-), we'll see when we start using those.
 		//vTable + 0x378 is currentSpell @, so you can recount ;-).
+	};
+
+	struct SPELRecord_t
+	{
+		void * vTable;
+		RecordTypes::recordType_t recordType;
+		int recordSize;
+		char * modNamePtr;
+		int unknown1;
+		int unknown2;
+		int unknown3;
+		SPELRecord_t * prevRecord;
+		SPELRecord_t * nextRecord;
+		int unknown4;
+		char * idPtr;
+		char * friendlyName;
+		short type; //0=SPELL, 1=ABILITY, 2=BLIGHT, 3=DISEASE, 4=CURSE, 5=POWER
+		short cost;
+
+		//effect
+		struct
+		{
+		short effectId;
+		char  skillId;
+		char  AttributeId;
+		long  RangeType;		//0=SELF, 1=TOUCH, 2=TARGET
+		long  Area;
+		long  Duration;
+		long  MagMin;
+		long  MagMax;
+		} effects[8];
+
+		long flags;	//1=AUTOCALC, 2=PCSTART, 4=ALWAYSSUCCEEDS
+	};
+
+	struct ENCHRecord_t
+	{
+		void * vTable;
+		RecordTypes::recordType_t recordType;
+		int recordSize;
+		char * modNamePtr;
+		int unknown1;
+		int unknown2;
+		int unknown3;
+		ENCHRecord_t * prevRecord;
+		ENCHRecord_t * nextRecord;
+		int unknown4;			
+		char * idPtr;
+		
+		short type;	//0=CASTONCE, 1=CASTONSTRIKE, 2=CASTONUSED, 3=CONSTANT
+		short cost;
+		long charge;
+
+		//effect
+		struct
+		{
+		short effectId;
+		char  skillId;
+		char  AttributeId;
+		long  RangeType;		//0=SELF, 1=TOUCH, 2=TARGET
+		long  Area;
+		long  Duration;
+		long  MagMin;
+		long  MagMax;
+		} effects[8];
+
+		long autocalc;	//0=OFF, 1=ON
 	};
 
     struct NPCBaseRecord_t	//or the 'base' NPC_ record. you can access it trough the NPCC (NPC Copy) Record (baseNPC)
@@ -190,7 +259,7 @@ namespace mwse
 		int unknown44;
 		int unknown45;
 		int numberOfSpells;
-		LinkedList_t * spellStart	//these contain the spells! not items with a special power.
+		LinkedList_t * spellStart;	//these contain the spells! not items with a special power.
 		LinkedList_t * spellEnd;
     };
 
