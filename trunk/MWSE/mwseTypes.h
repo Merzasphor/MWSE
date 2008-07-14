@@ -57,7 +57,7 @@ namespace mwse
 
 		enum attachType_t
 		{
-			VARNODE = 6,	//attachment where 'local' variables are stored
+			VARNODE = 6,	//attachment where 'local' variables are stored, and the size of a stack, and the owner (if it has changed i think), and the script...
 			MACHNODE = 8	//PCAM
 		};
     };
@@ -297,8 +297,8 @@ namespace mwse
 		int unknown39;	//RACE
 		int unknown40;	//CLAS
 		int unknown41;
-		int unknown42;	//BODY
-		int unknown43;	//BODY
+		int unknown42;	//BODY (head)
+		int unknown43;	//BODY (hair)
 		int unknown44;
 		int unknown45;
 		int numberOfSpells;
