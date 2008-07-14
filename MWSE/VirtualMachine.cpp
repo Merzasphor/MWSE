@@ -224,7 +224,8 @@ mwLong_t VirtualMachine::getLongVariable(int index, REFRRecord_t &reference)
 	}
 	if(found)
 	{
-		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(pnode->dataPtr);
+		mwVarHolderNode_t* varholder = reinterpret_cast<mwVarHolderNode_t*>(pnode->dataPtr);
+		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(varholder->vars);
 		return foreignVariables->longVarValues[index];
 	}
 	//else throw error
@@ -277,7 +278,8 @@ void VirtualMachine::setLongVariable(int index, mwse::mwLong_t value, mwse::REFR
 	}
 	if(found)
 	{
-		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(pnode->dataPtr);
+		mwVarHolderNode_t* varholder = reinterpret_cast<mwVarHolderNode_t*>(pnode->dataPtr);
+		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(varholder->vars);
 		foreignVariables->longVarValues[index] = value;
 	}
 	//else throw error
@@ -330,7 +332,8 @@ mwShort_t VirtualMachine::getShortVariable(int index, mwse::REFRRecord_t &refere
 	}
 	if(found)
 	{
-		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(pnode->dataPtr);
+		mwVarHolderNode_t* varholder = reinterpret_cast<mwVarHolderNode_t*>(pnode->dataPtr);
+		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(varholder->vars);
 		return foreignVariables->shortVarValues[index];
 	}
 	//else throw error
@@ -383,7 +386,8 @@ void VirtualMachine::setShortVariable(int index, mwse::mwShort_t value, mwse::RE
 	}
 	if(found)
 	{
-		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(pnode->dataPtr);
+		mwVarHolderNode_t* varholder = reinterpret_cast<mwVarHolderNode_t*>(pnode->dataPtr);
+		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(varholder->vars);
 		foreignVariables->shortVarValues[index] = value;
 	}
 	//else throw error
@@ -436,7 +440,8 @@ mwFloat_t VirtualMachine::getFloatVariable(int index, mwse::REFRRecord_t &refere
 	}
 	if(found)
 	{
-		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(pnode->dataPtr);
+		mwVarHolderNode_t* varholder = reinterpret_cast<mwVarHolderNode_t*>(pnode->dataPtr);
+		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(varholder->vars);
 		return foreignVariables->floatVarValues[index];
 	}
 	//else throw error
@@ -489,7 +494,8 @@ void VirtualMachine::setFloatVariable(int index, mwse::mwFloat_t value, mwse::RE
 	}
 	if(found)
 	{
-		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(pnode->dataPtr);
+		mwVarHolderNode_t* varholder = reinterpret_cast<mwVarHolderNode_t*>(pnode->dataPtr);
+		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(varholder->vars);
 		foreignVariables->floatVarValues[index] = value;
 	}
 	//else throw error
