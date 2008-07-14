@@ -172,6 +172,49 @@ namespace mwse
 		long flags;	//1=AUTOCALC, 2=PCSTART, 4=ALWAYSSUCCEEDS
 	};
 
+	struct ALCHRecord_t
+	{
+		void * vTable;
+		RecordTypes::recordType_t recordType;
+		int recordSize;
+		char * modNamePtr;
+		int unknown1;
+		int unknown2;
+		int unknown3;
+		ALCHRecord_t * prevRecord;
+		ALCHRecord_t * nextRecord;
+		int unknown4;
+		int unknown5;
+		char * idPtr;
+		int unknown6;
+		int unknown7;
+		int unknown8;
+		int unknown9;
+		int unknown10;
+		char * friendlyName;
+		int unknown11;
+		char * model;
+		char * icon;
+
+		float weight;
+		long value;
+
+		//effect
+		struct
+		{
+		short effectId;
+		char  skillId;
+		char  AttributeId;
+		long  RangeType;		//0=SELF, 1=TOUCH, 2=TARGET
+		long  Area;
+		long  Duration;
+		long  MagMin;
+		long  MagMax;
+		} effects[8];
+
+		long flags; //1=AUTOCALC
+	};
+
 	struct ENCHRecord_t
 	{
 		void * vTable;
