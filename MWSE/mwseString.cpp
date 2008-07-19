@@ -22,13 +22,19 @@
 
 using namespace mwse;
 
-// ID values. An ID is constructed as
-//   two bytes, 'M' and 'S' characters
+// ID values. 
+//  In order to be usable in globals, string values must be restricted to 24 bits or less
+// ( globals are floats, and therefore can store at most 24 bits of an integer without truncation).
+//
+// An ID is constructed as
+//  one byte, 'S' character
 // XOR'd with clear_id << 8 (so usually one byte)
 // XOR'd with next_id (usually one byte)
-static mwLong_t next_id = 0;      // zeroed each clearStore()
+// masked to fit in 24 bits
+static mwLong_t next_id = 0;      // zeroed each clearStore(), if the store was non-empty
 static mwLong_t clear_id = 0;     // incremented each clearStore()
-static mwLong_t id_overlay = ( ( ('M' << 8) | 'S' ) << 8 ) << 16;
+static const mwLong_t id_overlay = ( 'S' ) << 16;
+static const mwLong_t mask = (1<<24)-1; // 24 bit mask
 
 mwseString_t::StringMap_t  mwseString_t::store;
 
@@ -87,7 +93,7 @@ mwseString_t & mwseString_t::lookup(mwLong_t id)
 
 void mwseString_t::clearStore()
 {
-    clear_id++;
+    if (next_id != 0) clear_id++;
     next_id = 0;
     store.clear();
 }
@@ -95,5 +101,5 @@ void mwseString_t::clearStore()
 mwLong_t mwseString_t::nextID()
 {
     next_id ++;
-    return id_overlay ^ (clear_id << 8) ^ next_id;
+    return mask & (id_overlay ^ (clear_id << 8) ^ next_id);
 }
