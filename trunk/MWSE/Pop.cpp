@@ -51,12 +51,7 @@ namespace mwse
 	float Pop::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		mwShort_t items = popLength /4;	//number of items to throw off the stack
-		//TODO: loop here
-		//FIXME: loop here
-		for(int i = 0; i < items; i++)
-		{
-			Stack::getInstance().popByte();
-		}
+        Stack::popFrames(items);
 		return 0.0;
 	}
 	//----------------------------------------

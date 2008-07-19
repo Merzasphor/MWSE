@@ -91,6 +91,10 @@ namespace mwse {
                 return static_cast<mwseString_t>(pop());
             }
             //mwRef_t & popRef(void);
+            void popFrames(size_t frame_count)  // pop <frame_count> frames from the stack`
+            {
+                stack_top -= frame_count > stack_top ? stack_top : frame_count;
+            }
 
         private:
             Stack();
