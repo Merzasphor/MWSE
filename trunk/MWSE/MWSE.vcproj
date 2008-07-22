@@ -278,6 +278,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Reference.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Stack.h"
 				>
 			</File>

@@ -51,7 +51,7 @@ namespace mwse
 	float Pop::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		mwShort_t items = popLength /4;	//number of items to throw off the stack
-        Stack::popFrames(items);
+		Stack::getInstance().popFrames(items);
 		return 0.0;
 	}
 	//----------------------------------------
