@@ -51,23 +51,23 @@ namespace mwse
 		} 
 		// map_frame[my_id] = ? // update frame of reference 
 	} 
-	void *operator() const 
+	operator void*() const
 	{ 
 		return map[my_id]; 
 		// map_frame[my_id] = ? // update frame of reference 
 	} 
-	float operator() const 
+	operator float() const
 	{ 
 		return my_id; 
 		// map_frame[my_id] = ? // update frame of reference 
 	} 
 	private: 
 		int my_id; 
-		static const map_size = (1<<24); 
+		static const size_t map_size = (1<<24);
 		static void *map[map_size]; 
 		static int   map_count[map_size]; 
 		static int   map_frame[map_size]; 
-		static int   last_id = 0; 
+		static int   last_id; 
 
 		static int nextID()
 		{ 
@@ -82,6 +82,6 @@ namespace mwse
 			if (!found) { 
 				// find least recently used reference and use that 
 			} 
-		}  
-	}
+		} 
+	};
 }
