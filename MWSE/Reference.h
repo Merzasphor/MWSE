@@ -58,7 +58,7 @@ namespace mwse
 	} 
 	operator float() const
 	{ 
-		return my_id; 
+		return static_cast<float>(my_id); 
 		// map_frame[my_id] = ? // update frame of reference 
 	} 
 	private: 
