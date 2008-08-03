@@ -22,6 +22,7 @@
 #include "InstructionStore.h"
 #include "InstructionInterface.h"
 #include "mwseString.h"
+#include "Log.h"
 
 using namespace mwse;
 
@@ -712,6 +713,11 @@ mwFloat_t VirtualMachine::getFloatValue(bool peek)
 
 mwseString_t VirtualMachine::getString(mwLong_t fromStack)	//ask grant, need a '*' or a '&' here?? (and in the header files)
 {
+	if(fromStack == 0x0)
+	{
+		return mwseString_t();
+	}
+
 	if(mwseString_t::exists(fromStack))
 	{
 		//if it's a variable string
@@ -725,11 +731,13 @@ mwseString_t VirtualMachine::getString(mwLong_t fromStack)	//ask grant, need a '
 
 		char blen = *(reinterpret_cast<char*>(scriptstream));	//get length i guess...
 
+		long strlen = static_cast<long>(blen);
+
 		scriptstream = reinterpret_cast<void*>( reinterpret_cast<char*>(scriptstream) + sizeof(blen) );
 		
 		char * string = reinterpret_cast<char*>(scriptstream);
 
-		return mwseString_t(string, blen);
+		return mwseString_t(string, strlen);
 	}
 }
 

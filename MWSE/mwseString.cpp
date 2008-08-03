@@ -39,9 +39,8 @@ static const mwLong_t mask = (1<<24)-1; // 24 bit mask
 mwseString_t::StringMap_t  mwseString_t::store;
 
 mwseString_t::mwseString_t():
-    my_id(nextID())
+    my_id(-1)
 {
-    store.insert(StringMap_t::value_type(my_id, *this));
 }
 
 mwseString_t::mwseString_t(const char *string):
@@ -55,7 +54,6 @@ mwseString_t::mwseString_t(const mwseString_t &source):
     std::string(source),
     my_id(source.my_id)
 {
-    store.insert(StringMap_t::value_type(my_id, *this));
 }
 
 mwseString_t::mwseString_t(mwLong_t id):
@@ -74,6 +72,7 @@ mwseString_t::mwseString_t(const char *string, size_t length):
 
 mwseString_t::operator mwLong_t() const
 {
+	if(my_id == -1) throw StringStoreException(-1);
     return my_id;
 }
 
