@@ -67,6 +67,9 @@ namespace mwse
 				context.callbackAddress = 0x50D62D;
 				//call virtualmachine here
 				float returnValue = vmInstance.executeOperation(opcode, context, *script);
+
+				long * returnESI = reinterpret_cast<long*>(context.esp + 4);
+				*returnESI = *(vmInstance.getScriptIP());
 				//end virtualmachine call
 				return returnValue;
 			}
