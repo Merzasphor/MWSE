@@ -1,92 +1,112 @@
 /************************************************************************
-Reference.h - Copyright (c) 2008 The MWSE Project
-http://www.sourceforge.net/projects/mwse
+               Stack.h - Copyright (c) 2008 The MWSE Project
+                http://www.sourceforge.net/projects/mwse
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 **************************************************************************/
 
 #pragma once
 
 #include "mwseTypes.h"
+#include <cstdlib>
+#include <map>
 
-namespace mwse
-{
-	class Reference
-	{
+namespace mwse {
+    class Reference {
+      public:
+        Reference(void *address)    // construct reference from address
+        {
+            // ASSUMPTION: All address do not have the high bit set
+            this.key = reinterpret_cast<mwLong_t>(address);
+            // If the value cannot be stored as a Morrowind float, it must be translated
+            if (static_cast<mwFloat_t>(this.key) != this.key) {
+                // Lookup or add to dictionary.
+                this.key = dictionary_key(address);
+            }
+        }
+        
+        Reference(mwLong_t key)     // construct reference from key
+        {
+            if (key < 0) {
+                this.key = dictionary_lookup(key);
+            } else {
+                this.key = reinterpret_cast<void *>(key);
+            }
+        }
 
-		Reference(void *item_address): 
-	my_id(nextID()) 
-	{ 
-		map[my_id] = item_address; 
-		map_count[my_id] = 1; 
-		// map_frame[my_id] = ? 
-	} 
-	~Reference() 
-	{ 
-		map_count[my_id]--; 
-	} 
-	Reference(const Reference &source): 
-	my_id(source.my_id) 
-	{ 
-		map_count[my_id]++; 
-		// map_frame[my_id] = ? // update frame of reference 
-	} 
-	Reference &operator =(const Reference &source) 
-	{ 
-		if (my_id != source.my_id) { 
-			map_count[my_id]--; 
-			my_id = source.my_id; 
-			map_count[my_id]++; 
-		} 
-		// map_frame[my_id] = ? // update frame of reference 
-	} 
-	operator void*() const
-	{ 
-		return map[my_id]; 
-		// map_frame[my_id] = ? // update frame of reference 
-	} 
-	operator float() const
-	{ 
-		return static_cast<float>(my_id); 
-		// map_frame[my_id] = ? // update frame of reference 
-	} 
-	private: 
-		int my_id; 
-		static const size_t map_size = (1<<24);
-		static void *map[map_size]; 
-		static int   map_count[map_size]; 
-		static int   map_frame[map_size]; 
-		static int   last_id; 
+        Reference(const Reference &source)  // copy constructor
+        {
+            this.key = source.key;
+        }
 
-		static int nextID()
-		{ 
-			bool found = false;
-			int  id = last_id; 
-			int  count = 0;
-			while(!found && count < map_size) { 
-				if (id == map_size + 1) id = -1;    // wraparound 
-				found = map_count[++id] == 0; 
-				count++; 
-			} 
-			if (!found) { 
-				// find least recently used reference and use that 
-			} 
+        mwLong_t getKey() const
+        {
+            return this.key;
+        }
 
-			last_id = id;
-			return id;
-		}
-	};
-}
+        void *getAddress() const
+        {
+            return (this.key < 0) ? dictionary_value(key) : reinterpret_cast<void *>(key);
+        }
+
+        operator=(const Reference &source)  // assignment operator
+        {
+            this.key = source.key;
+        }
+
+        operator mwLong_t() const           // convert
+        {
+            return getKey();
+        }
+        
+        operator void *() const
+        {
+            return getAddress();
+        }
+
+    private:
+        mwLong_t    key;
+
+        typedef std::map<void *, mwLong_t> map_by_address_t;
+        static map_by_address_t std::map<void *, mwLong_t> map_by_address;
+        typedef std::map<mwLong_t, void *> map_by_key_t;
+        static map_by_key_t std::map<mwLong_t, void *> map_by_key;
+
+        static mwLong_t dictionary_key(void *address)
+        {
+            map_by_address_t::iterator point = map_by_address.find(address);
+            if (point == map_by_address.end()) {
+                // Note old keys are never released. This is based on the assumption there won't begin
+                // that many addresses that don't map to float with no loss of precision.
+                mwLong_t key = -1 - map_by_address.size();
+                map_by_address[address] = key;
+                map_by_point[key] = address;
+                return key;
+            } else {
+                return point->second;
+            }
+        }
+        static void *dictionary_value(mwLong_t key)
+        {
+            map_by_key_t::iterator point = map_by_key.find(key);
+            if (point != map_by_key.end()) {
+                return point->second;
+            } else {
+                return NULL;
+            }
+        }
+    };
+};
