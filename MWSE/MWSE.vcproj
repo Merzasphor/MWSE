@@ -204,10 +204,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Reference.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Stack.cpp"
 				>
 			</File>
