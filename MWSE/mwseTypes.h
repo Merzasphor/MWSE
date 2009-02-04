@@ -132,8 +132,10 @@ namespace mwse
 		int unknown1;										//8
 		int unknown2;										//12
 		int unknown3;										//16
-		REFRRecord_t * playerReference;						//20
-		int unknown4[216]; // --> int unknown219;			//24
+		REFRRecord_t * reference;							//20
+		int unknown4[53];	//unknowns						//24
+		PCAMRecord_t * combatTarget;
+		int unknown5[162];	//more unknowns
 		void * currentSpell; //current selected spell	//this of course points to a SPEL or ENCH record ;)
 		//or the one after that, if i miscounted ;-), we'll see when we start using those.
 		//vTable + 0x378 is currentSpell @, so you can recount ;-).
