@@ -72,7 +72,7 @@ namespace mwse
 		
 		virtual void setReference(REFRRecord_t * reference) = 0; //this sets the reference, to be used for the next instruction (also works on other MWSE instructions in the same run), but for all other things, this needs to be called before the function! (as it needs a run in runScript)
 		
-		virtual REFRecord_t * getCurrentTarget();	//get the current reference under the crosshairs
+		virtual REFRRecord_t * getCurrentTarget() = 0;	//get the current reference under the crosshairs
 
 		//getParameters
 		//virtual * get*Parameter() = 0;

@@ -23,6 +23,7 @@
 #include "mwseTypes.h"
 #include <cstdlib>
 #include <map>
+#include "Log.h"
 
 namespace mwse {
     class Reference {
@@ -30,41 +31,38 @@ namespace mwse {
         Reference(void *address)    // construct reference from address
         {
             // ASSUMPTION: All address do not have the high bit set
-            this.key = reinterpret_cast<mwLong_t>(address);
+            this->key = reinterpret_cast<mwLong_t>(address);
             // If the value cannot be stored as a Morrowind float, it must be translated
-            if (static_cast<mwFloat_t>(this.key) != this.key) {
+            if (static_cast<mwFloat_t>(this->key) != this->key) {
                 // Lookup or add to dictionary.
-                this.key = dictionary_key(address);
+                this->key = dictionary_key(address);
             }
         }
         
         Reference(mwLong_t key)     // construct reference from key
         {
-            if (key < 0) {
-                this.key = dictionary_lookup(key);
-            } else {
-                this.key = reinterpret_cast<void *>(key);
-            }
+            this->key = key;
         }
 
         Reference(const Reference &source)  // copy constructor
         {
-            this.key = source.key;
+            this->key = source.key;
         }
 
         mwLong_t getKey() const
         {
-            return this.key;
+            return this->key;
         }
 
         void *getAddress() const
         {
-            return (this.key < 0) ? dictionary_value(key) : reinterpret_cast<void *>(key);
+            return (this->key < 0) ? dictionary_value(key) : reinterpret_cast<void *>(key);
         }
 
-        operator=(const Reference &source)  // assignment operator
+        Reference &operator=(const Reference &source)  // assignment operator
         {
-            this.key = source.key;
+            this->key = source.key;
+			return *this;
         }
 
         operator mwLong_t() const           // convert
@@ -81,9 +79,9 @@ namespace mwse {
         mwLong_t    key;
 
         typedef std::map<void *, mwLong_t> map_by_address_t;
-        static map_by_address_t std::map<void *, mwLong_t> map_by_address;
+        static map_by_address_t map_by_address;
         typedef std::map<mwLong_t, void *> map_by_key_t;
-        static map_by_key_t std::map<mwLong_t, void *> map_by_key;
+        static map_by_key_t map_by_key;
 
         static mwLong_t dictionary_key(void *address)
         {
@@ -91,9 +89,14 @@ namespace mwse {
             if (point == map_by_address.end()) {
                 // Note old keys are never released. This is based on the assumption there won't begin
                 // that many addresses that don't map to float with no loss of precision.
+
+				//DEBUG
+				log::getLog() << "Creating new Reference key" << std::endl;
+				//DEBUG
+
                 mwLong_t key = -1 - map_by_address.size();
                 map_by_address[address] = key;
-                map_by_point[key] = address;
+                map_by_key[key] = address;
                 return key;
             } else {
                 return point->second;
