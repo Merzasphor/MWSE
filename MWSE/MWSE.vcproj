@@ -245,6 +245,10 @@
 						Name="References"
 						>
 						<File
+							RelativePath=".\getRef.cpp"
+							>
+						</File>
+						<File
 							RelativePath=".\setRef.cpp"
 							>
 						</File>
