@@ -162,6 +162,12 @@ void VirtualMachine::setReference(REFRRecord_t *reference)
 	//this should be it. a lot of testing is needed of course ;)
 }
 
+REFRRecord_t * VirtualMachine::getCurrentTarget()
+{
+	TES3ViewMaster_t * viewmaster = *(reinterpret_cast<TES3ViewMaster_t**>(0x7C6CDC));
+	return viewmaster->target;
+}
+
 mwLong_t VirtualMachine::getLongVariable(int index)
 {
 	mwVariablesNode_t * localVariables = *(reinterpret_cast<mwVariablesNode_t**>(0x7CEBF8));	//get a pointer to the localVariables, it contains 3 arrays, (see data structure)
