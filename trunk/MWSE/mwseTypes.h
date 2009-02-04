@@ -409,4 +409,11 @@ namespace mwse
 		char unknown[3]; //3 bytes of nothing usefull apparently
 		float data; //apparently, all globals are stored as floats in morrowind (i think), at least for longs!
 	};
+
+	//this is the struct behind 'master2'
+	struct TES3ViewMaster_t
+	{
+		char unknown[232];
+		REFRRecord_t * target;
+	};
 }
