@@ -204,6 +204,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Reference.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Stack.cpp"
 				>
 			</File>
@@ -237,6 +241,14 @@
 				<Filter
 					Name="Functions"
 					>
+					<Filter
+						Name="References"
+						>
+						<File
+							RelativePath=".\setRef.cpp"
+							>
+						</File>
+					</Filter>
 				</Filter>
 			</Filter>
 		</Filter>
