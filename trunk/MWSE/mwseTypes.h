@@ -418,4 +418,16 @@ namespace mwse
 		char unknown[232];
 		REFRRecord_t * target;
 	};
+
+	//this is the default 'template', so we can read out the type and the ID of the object behind a reference.
+	//those values should always be there for 'normal' objects (like BOOKS and CLOTHING)
+	struct TES3DefaultTemplate_t
+	{
+		void * vTable;
+		RecordTypes::recordType_t recordType;
+		char unknown1[16];
+		REFRRecord_t * first;
+		char unknown2[16];
+		char * objectId;
+	};
 }
