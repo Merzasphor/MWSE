@@ -249,6 +249,10 @@
 							>
 						</File>
 						<File
+							RelativePath=".\refType.cpp"
+							>
+						</File>
+						<File
 							RelativePath=".\setRef.cpp"
 							>
 						</File>
