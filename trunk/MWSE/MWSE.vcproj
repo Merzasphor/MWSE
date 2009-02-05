@@ -245,6 +245,10 @@
 						Name="References"
 						>
 						<File
+							RelativePath=".\getPCTarget.cpp"
+							>
+						</File>
+						<File
 							RelativePath=".\getRef.cpp"
 							>
 						</File>
