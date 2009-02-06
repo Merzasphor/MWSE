@@ -92,6 +92,32 @@ SCPTRecord_t& VirtualMachine::getScript()
 	return *this->script;
 }
 
+void * VirtualMachine::getTemplate(const char *id)
+{
+	size_t strLength = strlen(id);
+
+	size_t ** secondobject_image_length = reinterpret_cast<size_t**>(0x7CEBB8);	//0x7CEBB8 = SECONDOBJECT_IMAGE_LENGTH
+	*secondobject_image_length = &strLength;
+
+	const char ** secondobject_image = reinterpret_cast<const char**>(0x7CE6F8);		//0x7CE6F8 = ScriptRunner::ItemTemplate;
+	*secondobject_image = id;
+
+	long returnreference;
+
+	static int fixupTemplateFunction = 0x4B8B60;
+	_asm
+	{
+		mov edx, 0x7c67dc;
+		mov ecx, [edx];
+		push 0x7CE6F8;
+		call fixupTemplateFunction;
+		mov returnreference, eax;
+	}
+
+	void * reference = reinterpret_cast<void*>(returnreference);
+	return reference;
+}
+
 REFRRecord_t * VirtualMachine::getReference()
 {
 	REFRRecord_t ** currentreference = reinterpret_cast<REFRRecord_t**>(0x7CEBEC);	//0x7CEBEC == ScriptRunner::Reference

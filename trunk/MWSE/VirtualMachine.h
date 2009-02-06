@@ -43,6 +43,7 @@ namespace mwse
 		virtual REFRRecord_t * getReference(const char *id);
 		virtual void setReference(REFRRecord_t * reference);
 		virtual REFRRecord_t * getCurrentTarget();
+		virtual void * getTemplate(const char *id);
 
 		//local variables, methods to access local variables
 		virtual mwLong_t getLongVariable(int index);							//by index
