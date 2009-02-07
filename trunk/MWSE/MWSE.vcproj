@@ -261,6 +261,14 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="Math"
+						>
+						<File
+							RelativePath=".\distance.cpp"
+							>
+						</File>
+					</Filter>
 				</Filter>
 			</Filter>
 		</Filter>

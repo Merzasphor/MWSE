@@ -23,7 +23,7 @@
 #include "mwseTypes.h"
 #include <cstdlib>
 #include <map>
-#include "Log.h"
+//#include "Log.h"
 
 namespace mwse {
     class Reference {
@@ -89,10 +89,6 @@ namespace mwse {
             if (point == map_by_address.end()) {
                 // Note old keys are never released. This is based on the assumption there won't begin
                 // that many addresses that don't map to float with no loss of precision.
-
-				//DEBUG
-				log::getLog() << "Creating new Reference key" << std::endl;
-				//DEBUG
 
                 mwLong_t key = -1 - map_by_address.size();
                 map_by_address[address] = key;
