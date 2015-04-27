@@ -5,6 +5,18 @@
 #include "FUNCEXTENDER.h"
 #include "STRINGS.h"
 
+class FUNCEXPLODESPELL : public FUNCEXTENDER, public HWBREAKPOINT
+{
+public:
+	FUNCEXPLODESPELL(TES3MACHINE& vm);
+	virtual bool execute(void);
+	virtual bool breakpoint();
+	virtual BYTE getid();
+private:
+	TES3MACHINE& machine;
+	Context parent;
+};
+
 //Fliggerty 12-27-06
 
 struct FUNCADDSPELL : public FUNCEXTENDER, public HWBREAKPOINT

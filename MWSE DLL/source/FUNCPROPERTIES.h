@@ -276,6 +276,24 @@ private:
 	TES3MACHINE& machine;
 };
 
+class FUNCGETTRAP : public FUNCTION
+{
+public:
+	FUNCGETTRAP(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCREMOVETRAP : public FUNCTION
+{
+public:
+	FUNCREMOVETRAP(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
 //GRM  15-01-2007 [use proper C++ class]
 class FUNCSETVALUE : public FUNCTION
 {

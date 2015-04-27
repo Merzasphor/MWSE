@@ -274,6 +274,9 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(GETPROGRESSLEVEL, new FUNCGETPROGRESSLEVEL(*this));
 	AddInstruction(SETPROGRESSLEVEL, new FUNCSETPROGRESSLEVEL(*this));
 	AddInstruction(GETLOCKLEVEL, new FUNCGETLOCKLEVEL(*this));
+	AddInstruction(GETTRAP, new FUNCGETTRAP(*this));
+	AddInstruction(REMOVETRAP, new FUNCREMOVETRAP(*this));
+	AddInstruction(EXPLODESPELL, new FUNCEXPLODESPELL(*this));
 
 	// Grant McDorman 16 Jan 2007
 #define ADDINSTRUCTION(name) AddInstruction(name, new FUNC##name(*this))

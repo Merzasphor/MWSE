@@ -213,6 +213,8 @@ typedef enum {
 	,ORIG_ADDSPELL = 0x111D //addspell
 	,ORIG_REMOVESPELL = 0x111E //removespell
 
+	,ORIG_EXPLODESPELL = 0x11AD
+
 	,CALL=			0x3801
 	,CALLSHORT=		0x3802
 	,RETURN=		0x3803
@@ -419,4 +421,7 @@ typedef enum {
 	,GETPROGRESSLEVEL   = 0x391C
 	,GETLOCKLEVEL       = 0x391D
 	,SETPROGRESSLEVEL   = 0x391E
+	,GETTRAP            = 0x391F
+	,REMOVETRAP         = 0x3920
+	,EXPLODESPELL       = 0x3921
 	} OPCODES;

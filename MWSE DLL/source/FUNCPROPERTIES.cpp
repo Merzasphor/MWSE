@@ -395,37 +395,95 @@ bool FUNCSETPROGRESSLEVEL::execute(void)
 {
 	VPVOID refr;
 	VMLONG progress = 0;
-	bool set = false;
+	bool success = false;
 	
 	if (GetTargetData(machine, &refr) && machine.pop(progress))
 	{
-		set = SetAttachData(machine, refr, 8, 0x17a, progress);
+		success = SetAttachData(machine, refr, 8, 0x17a, progress);
 	}
 
 #ifdef DEBUGGING
-    cLog::mLogMessage("%d:FUNCSETVALUE(%d)\n",set,value);
+    cLog::mLogMessage("%d:FUNCSETVALUE(%d)\n",success,progress);
 #endif	
 
-	return machine.push(static_cast<VMREGTYPE>(set));
+	return machine.push(static_cast<VMREGTYPE>(success));
 }
 
 bool FUNCGETLOCKLEVEL::execute(void)
 {
 	VPVOID refr, temp;
 	ULONG type;
-	VMSHORT lock = -1;
+	VMSHORT lockLevel = -1;
 	
 	if (GetTargetData(machine, &refr, &temp, &type))
 	{
 		if (type == CONTAINER || type == DOOR)
 		{
-			GetAttachData(machine, refr, 3, 0, &lock);
+			TES3LOCK lockInfo;
+			if (GetAttachData(machine, refr, 3, 0, lockInfo))
+			{
+				lockLevel = lockInfo.lockLevel;
+			}
 		}
 	}
 #ifdef DEBUGGING
-	cLog::mLogMessage("%f= FUNCGETLOCKLEVEL()\n",lock);
+	cLog::mLogMessage("%f= FUNCGETLOCKLEVEL()\n",lockLevel);
 #endif	
-	return machine.push(static_cast<VMREGTYPE>(lock));
+	return machine.push(static_cast<VMREGTYPE>(lockLevel));
+}
+
+bool FUNCGETTRAP::execute(void)
+{
+	VPVOID refr, temp;
+	ULONG type;
+	VMLONG trapId = 0;
+		
+	if (GetTargetData(machine, &refr, &temp, &type))
+	{
+		if (type == CONTAINER || type == DOOR)
+		{
+			TES3LOCK lockInfo;
+			if (GetAttachData(machine, refr, 3, 0, lockInfo))
+			{
+				VPSPELL trapSpell = lockInfo.trapSpell;
+				if (trapSpell != 0)
+				{
+					trapId = reinterpret_cast<VMLONG>(strings.add(reinterpret_cast<char*>(trapSpell->id)));
+				}
+			}
+		}
+	}
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETTRAP()\n",trapId);
+#endif	
+	return machine.push(trapId);
+}
+
+bool FUNCREMOVETRAP::execute(void)
+{
+	VPVOID refr, temp;
+	ULONG type;
+	bool success = false;
+		
+	if (GetTargetData(machine, &refr, &temp, &type))
+	{
+		if (type == CONTAINER || type == DOOR)
+		{
+			TES3LOCK lockInfo;
+			if (GetAttachData(machine, refr, 3, 0, lockInfo))
+			{
+				if (lockInfo.trapSpell != 0)
+				{
+					lockInfo.trapSpell = 0;
+					success = SetAttachData(machine, refr, 3, 0, lockInfo);
+				}
+			}
+		}
+	}
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCREMOVETRAP()\n",success);
+#endif	
+	return machine.push(static_cast<VMREGTYPE>(success));
 }
 
 // GRM 15 Jan 2007

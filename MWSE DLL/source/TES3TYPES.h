@@ -158,6 +158,28 @@ struct TES3WEAPON
 	DWORD septims;
 };
 
+struct TES3SPELL
+{
+	VPVOID vtable;
+	DWORD type; // SPEL
+	BYTE unknown[0x1C - sizeof(VPVOID) - sizeof(DWORD)];
+	TES3SPELL* next;
+	TES3SPELL* prev;
+	BYTE unknown5[0x28 - 0x1C - 2 * sizeof(TES3SPELL*)];
+	VPSTR id;
+	VPSTR name;
+};
+typedef TES3SPELL* VPSPELL;
+
+struct TES3LOCK
+{
+	VMSHORT lockLevel;
+	BYTE unknown[0x8 - sizeof(VMSHORT)];
+	VPSPELL trapSpell;
+	BYTE locked;
+};
+typedef TES3LOCK* VPLOCK;
+
 struct TES3REFLISTHEAD
 {
 	LONG	size;
