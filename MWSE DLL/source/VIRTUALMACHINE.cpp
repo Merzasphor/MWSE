@@ -72,7 +72,7 @@ bool VIRTUALMACHINE::AddInstruction(OPCODE opcode, INSTRUCTION* instruction) //t
 			instructions[opcode]= instruction;
 			result= true;
         } else {
-			cLog::mLogError("Possible duplicate opcode", true);
+			cLog::mLogMessage("Possible duplicate opcode 0x%x\n", opcode);
         }
 	}
 	

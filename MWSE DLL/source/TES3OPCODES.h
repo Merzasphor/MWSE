@@ -433,5 +433,8 @@ typedef enum {
 	,GETENCHANT			= 0x3928
 	,GETENCHANTINFO     = 0x3929
 	,GETENCHANTEFFECTINFO = 0x392A
-	,GETCLASS           = 0x392B 
+	,GETCLASS           = 0x392B
+
+	,GETGS              = 0x3A00
+	,SETGS				= 0x3A01
 	} OPCODES;

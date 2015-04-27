@@ -319,6 +319,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\FUNCGMST.h"
+					>
+				</File>
+				<File
 					RelativePath=".\source\FUNCINVENTORY.h"
 					>
 				</File>
@@ -486,6 +490,10 @@
 				</File>
 				<File
 					RelativePath=".\source\FUNCFILE.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\FUNCGMST.cpp"
 					>
 				</File>
 				<File

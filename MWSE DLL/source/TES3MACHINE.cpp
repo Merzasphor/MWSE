@@ -41,6 +41,7 @@ using namespace std;
 #include "FUNCLOG.h"
 #include "FUNCFILE.h"
 #include "FUNCINVENTORY.h"
+#include "FUNCGMST.h"
 #include "FUNCEXTENDER.h"
 
 #ifdef DEBUG
@@ -287,6 +288,9 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(GETENCHANTINFO, new FUNCGETENCHANTINFO(*this));
 	AddInstruction(GETENCHANTEFFECTINFO, new FUNCGETENCHANTEFFECTINFO(*this));
 	AddInstruction(GETCLASS, new FUNCGETCLASS(*this));
+
+	AddInstruction(GETGS, new FUNCGETGS(*this));
+	AddInstruction(SETGS, new FUNCSETGS(*this));
 
 	// Grant McDorman 16 Jan 2007
 #define ADDINSTRUCTION(name) AddInstruction(name, new FUNC##name(*this))
