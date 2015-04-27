@@ -772,17 +772,23 @@ bool FUNCGETCONDITION::execute(void)
 {
 	VPVOID refr, temp;
 	ULONG type;
-	ULONG value = 0;
+	ULONG condition = 0;
 	
 	if (GetTargetData(machine, &refr, &temp, &type))
 	{
-        value = GetMaxCondition(machine, temp, type);
+        if (type == LOCK || type == REPAIR || type == WEAPON || type == ARMOR || type == PROBE)
+		{
+			if (!GetAttachData(machine, refr, VARNODE, 3, condition))
+			{
+				condition = GetMaxCondition(machine, refr, type);
+			}
+		}
 	}
 	
 #ifdef DEBUGGING
-	cLog::mLogMessage("%lu= FUNCGETCONDITION()\n",value);
+	cLog::mLogMessage("%lu= FUNCGETCONDITION()\n",condition);
 #endif	
-	return machine.push((VMREGTYPE)value);
+	return machine.push((VMREGTYPE)condition);
 }
 
 bool FUNCGETMAXCOND::execute(void)
