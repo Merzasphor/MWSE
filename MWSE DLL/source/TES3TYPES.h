@@ -320,6 +320,85 @@ struct SPELRecord
 	long flags;	//1=AUTOCALC, 2=PCSTART, 4=ALWAYSSUCCEEDS
 };
 
+struct CLASRecord
+{
+	void * vTable;
+	RecordTypes::RecordType recordType; // CLAS
+	
+	int unknown1;
+	int unknown2; // pointer?
+	
+	char id[32];
+	char name[32];
+	
+	// Primary attributes:
+	// 0 = Strength
+	// 1 = Intelligence
+	// 2 = Willpower
+	// 3 = Agility
+	// 4 = Speed 
+	// 5 = Endurance
+	// 6 = Personality
+	// 7 = Luck
+
+	unsigned long attributes[2];
+	
+	// Specializations:
+	// 0 = Combat
+	// 1 = Magic
+	// 2 = Stealth
+
+	unsigned long specialization; 
+
+	// Skills:
+	//  0 = Block
+	//  1 = Armorer
+	//  2 = Medium Armor
+	//  3 = Heavy Armor
+	//  4 = Blunt Weapon
+	//  5 = Long Blade
+	//  6 = Axe
+	//  7 = Spear
+	//  8 = Athletics
+	//  9 = Enchant
+	//  A = Destruction
+	//  B = Alteration
+	//  C = Illusion
+	//  D = Conjuration
+	//  E = Mysticism
+	//  F = Restoration
+	// 10 = Alchemy
+	// 11 = Unarmored
+	// 12 = Security
+	// 13 = Sneak
+	// 14 = Acrobatics
+	// 15 = Light Armor
+	// 16 = Short Blade
+	// 17 = Marksman
+	// 18 = Mercantile
+	// 19 = Speechcraft
+	// 1A = Hand-To-Hand
+
+	// Even indices [0,2,4,6,8] are minor skills and odd indices [1,3,5,7,9] are major skills.
+	// The nth major skill index corresponds to the nth major skill in the CS, from the top down.
+	// E.g. skills[3] is the second major skill from the top of the list in the CS.
+	// Minor skills have a different mapping:
+	// Index | CS Position
+	//     0 | 1
+	//     2 | 4
+	//     4 | 5
+	//     6 | 3
+	//     8 | 2
+
+	unsigned long skills[10];
+
+	unsigned long playable; // is this class available to PC? 0 = no, 1 = yes
+
+	unsigned long services;
+
+	int unknowns[5];
+};
+
 struct NPCBaseRecord	//or the 'base' NPC_ record. you can access it trough the NPCC (NPC Copy) Record (baseNPC)
 {
 	void * vTable;
@@ -365,9 +444,9 @@ struct NPCBaseRecord	//or the 'base' NPC_ record. you can access it trough the N
 	int unknown36;
 	int unknown37;
 	int unknown38;
-	int unknown39;	//RACE
-	int unknown40;	//CLAS
-	int unknown41;
+	int unknown39;	
+	int unknown40;	//RACE
+	CLASRecord * characterClass;
 	int unknown42;	//BODY (head)
 	int unknown43;	//BODY (hair)
 	int unknown44;

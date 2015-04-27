@@ -14,8 +14,8 @@ using namespace std;
 // 22-08-2006 Tp21
 #include "warnings.h"
 
-static SPELRecord * GetSpellRecord(VMLONG spellId, TES3MACHINE & machine);
-static ENCHRecord * GetEnchantmentRecord(VMLONG enchId, TES3MACHINE & machine);
+static SPELRecord * GetSpellRecord(VMLONG const spellId, TES3MACHINE & machine);
+static ENCHRecord * GetEnchantmentRecord(VMLONG const enchId, TES3MACHINE & machine);
 static VMSHORT CountEffects(Effect const * effects);
 
 // These functions are used for validation in FUNCSETMAX... and for
@@ -609,31 +609,29 @@ bool FUNCGETSPELLEFFECTINFO::execute(void)
 	VMLONG spellId;
 	VMLONG effectIndex;
 	VMSHORT effectId = -1;
-	VMSHORT skillId;
-	VMSHORT attributeId;
-	VMLONG rangeType;
-	VMLONG area;
-	VMLONG duration;
-	VMLONG magMin;
-	VMLONG magMax;
+	VMSHORT skillId = 0;
+	VMSHORT attributeId = 0;
+	VMLONG rangeType = 0;
+	VMLONG area = 0;
+	VMLONG duration = 0;
+	VMLONG magMin = 0;
+	VMLONG magMax = 0;
 
-	if (machine.pop(spellId) && machine.pop(effectIndex))
+	if (machine.pop(spellId) && machine.pop(effectIndex)
+		&& 1 <= effectIndex && effectIndex <= 8)
 	{
-		if (1 <= effectIndex && effectIndex <= 8)
+		SPELRecord * spell = GetSpellRecord(spellId, machine);
+		--effectIndex; // 0-based array index
+		if (spell != 0 && spell->effects[effectIndex].effectId != 0xFFFF)
 		{			
-			SPELRecord * spell = GetSpellRecord(spellId, machine);
-			if (spell != 0)
-			{
-				--effectIndex; // 0-based array index
-				effectId = spell->effects[effectIndex].effectId;
-				skillId = spell->effects[effectIndex].skillId;
-				attributeId = spell->effects[effectIndex].AttributeId;
-				rangeType = spell->effects[effectIndex].RangeType;
-				area = spell->effects[effectIndex].Area;
-				duration = spell->effects[effectIndex].Duration;
-				magMin = spell->effects[effectIndex].MagMin;
-				magMax = spell->effects[effectIndex].MagMax;
-			}
+			effectId = spell->effects[effectIndex].effectId;
+			skillId = spell->effects[effectIndex].skillId;
+			attributeId = spell->effects[effectIndex].AttributeId;
+			rangeType = spell->effects[effectIndex].RangeType;
+			area = spell->effects[effectIndex].Area;
+			duration = spell->effects[effectIndex].Duration;
+			magMin = spell->effects[effectIndex].MagMin;
+			magMax = spell->effects[effectIndex].MagMax;
 		}
 	}
 
@@ -747,21 +745,19 @@ bool FUNCGETENCHANTEFFECTINFO::execute(void)
 	VMLONG magMin;
 	VMLONG magMax;
 
-	if (machine.pop(enchId) && machine.pop(effectIndex))
+	if (machine.pop(enchId) && machine.pop(effectIndex)
+		&& 1 <= effectIndex && effectIndex <= 8)
 	{
-		if (1 <= effectIndex && effectIndex <= 8)
-		{			
-			ENCHRecord * ench = GetEnchantmentRecord(enchId, machine);
-			if (ench != 0)
-			{
-				--effectIndex; // 0-based array index
-				effectId = ench->effects[effectIndex].effectId;
-				rangeType = ench->effects[effectIndex].RangeType;
-				area = ench->effects[effectIndex].Area;
-				duration = ench->effects[effectIndex].Duration;
-				magMin = ench->effects[effectIndex].MagMin;
-				magMax = ench->effects[effectIndex].MagMax;
-			}
+		ENCHRecord * ench = GetEnchantmentRecord(enchId, machine);
+		--effectIndex; // 0-based array index
+		if (ench != 0 && ench->effects[effectIndex].effectId != 0xFFFF)
+		{
+			effectId = ench->effects[effectIndex].effectId;
+			rangeType = ench->effects[effectIndex].RangeType;
+			area = ench->effects[effectIndex].Area;
+			duration = ench->effects[effectIndex].Duration;
+			magMin = ench->effects[effectIndex].MagMin;
+			magMax = ench->effects[effectIndex].MagMax;
 		}
 	}
 
@@ -770,6 +766,67 @@ bool FUNCGETENCHANTEFFECTINFO::execute(void)
 #endif	
 	return machine.push(magMax) && machine.push(magMin) && machine.push(duration) && machine.push(area) && machine.push(rangeType) 
 		&& machine.push(static_cast<VMREGTYPE>(effectId));
+}
+
+bool FUNCGETCLASS::execute(void)
+{
+	VMLONG attributeMask;
+	VMLONG majorMask;
+	VMLONG minorMask;
+
+	VMLONG id = 0;
+	VMLONG name = 0;
+	VMLONG specialization = 0;
+	VMLONG attributes = 0;
+	VMLONG majorSkills = 0;
+	VMLONG minorSkills = 0;
+	VMLONG playable = 0;
+
+	VPVOID refr, temp;
+	unsigned long refType;
+
+	if (machine.pop(attributeMask) && machine.pop(majorMask) && machine.pop(minorMask)
+		&& GetTargetData(machine, &refr, &temp, &refType) && refType == NPC)
+	{
+		TES3REFERENCE * npcRef = reinterpret_cast<TES3REFERENCE*>(refr);
+		NPCCopyRecord * npcCopy = reinterpret_cast<NPCCopyRecord*>(npcRef->templ);
+		CLASRecord * charClass = npcCopy->baseNPC->characterClass;
+		
+		id = reinterpret_cast<VMLONG>(strings.add(charClass->id));
+		name = reinterpret_cast<VMLONG>(strings.add(charClass->name));
+
+		playable = charClass->playable;
+		specialization = charClass->specialization;
+		
+		attributes = (1 << charClass->attributes[0]) + (1 << charClass->attributes[1]);
+
+		if (attributeMask != 0)
+		{
+			attributes &= attributeMask;
+		}
+
+		for (int i = 0; i < 10; i += 2)
+		{
+			minorSkills += 1 << charClass->skills[i];
+			majorSkills += 1 << charClass->skills[i + 1];
+		}
+
+		if (minorMask != 0)
+		{
+			minorSkills &= minorMask;
+		}
+		if (majorMask != 0)
+		{
+			majorSkills &= majorMask;
+		}
+	}
+
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETCLASS()\n",name);
+#endif	
+
+	return machine.push(minorSkills) && machine.push(majorSkills) && machine.push(attributes) 
+		&& machine.push(specialization) && machine.push(playable) && machine.push(name) && machine.push(id);
 }
 
 // GRM 15 Jan 2007
@@ -1849,7 +1906,7 @@ static VPVOID GetMaxChargeOffset(TES3MACHINE &machine, VPVOID refr, ULONG type)
     return ((autoCalc & 0xFF)!=0) ? reinterpret_cast<VPVOID>(ench) : NULL;
 }
 
-static SPELRecord * GetSpellRecord(VMLONG spellId, TES3MACHINE & machine)
+static SPELRecord * GetSpellRecord(VMLONG const spellId, TES3MACHINE & machine)
 {
 	SPELRecord * spell = 0;
 	if (spellId != 0)
@@ -1866,7 +1923,7 @@ static SPELRecord * GetSpellRecord(VMLONG spellId, TES3MACHINE & machine)
 	return spell;
 }
 
-static ENCHRecord * GetEnchantmentRecord(VMLONG enchId, TES3MACHINE & machine)
+static ENCHRecord * GetEnchantmentRecord(VMLONG const enchId, TES3MACHINE & machine)
 {
 	ENCHRecord * ench = 0;
 	if (enchId != 0)

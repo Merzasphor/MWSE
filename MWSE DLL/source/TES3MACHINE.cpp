@@ -286,6 +286,7 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(GETENCHANT, new FUNCGETENCHANT(*this));
 	AddInstruction(GETENCHANTINFO, new FUNCGETENCHANTINFO(*this));
 	AddInstruction(GETENCHANTEFFECTINFO, new FUNCGETENCHANTEFFECTINFO(*this));
+	AddInstruction(GETCLASS, new FUNCGETCLASS(*this));
 
 	// Grant McDorman 16 Jan 2007
 #define ADDINSTRUCTION(name) AddInstruction(name, new FUNC##name(*this))

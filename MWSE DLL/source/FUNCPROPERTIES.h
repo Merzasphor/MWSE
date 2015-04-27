@@ -357,6 +357,15 @@ private:
 	TES3MACHINE& machine;
 };
 
+class FUNCGETCLASS : public FUNCTION
+{
+public:
+	FUNCGETCLASS(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
 //GRM  15-01-2007 [use proper C++ class]
 class FUNCSETVALUE : public FUNCTION
 {
