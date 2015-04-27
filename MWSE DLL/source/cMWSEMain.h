@@ -21,4 +21,12 @@ public:
 	static void mOnOtherBreakpoint(Context* context);
 
 	static bool mChangeReference(VPVOID pscript);
+	static TES3MACHINE* mGetVM();
 };
+
+// MGE XE exports
+extern "C"
+{
+	__declspec( dllexport ) TES3MACHINE* MWSEGetVM();
+	__declspec( dllexport ) bool MWSEAddInstruction(OPCODE op, INSTRUCTION *ins);
+}

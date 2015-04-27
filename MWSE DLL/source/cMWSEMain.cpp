@@ -145,3 +145,18 @@ bool cMWSEMain::mChangeReference(VPVOID pscript)
 
 	return result;
 }
+
+TES3MACHINE * cMWSEMain::mGetVM()
+{
+	return vScriptMachine;
+}
+
+TES3MACHINE* MWSEGetVM()
+{
+	return cMWSEMain::mGetVM();
+}
+
+bool MWSEAddInstruction(OPCODE op, INSTRUCTION *ins)
+{
+	return cMWSEMain::mGetVM()->AddInstruction(op, ins);
+}

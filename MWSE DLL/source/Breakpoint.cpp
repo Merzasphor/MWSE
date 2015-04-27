@@ -23,6 +23,8 @@ struct BreakpointData {
 
 		func=0;
 		active=false;
+		DWORD oldProtect;
+		VirtualProtect(overwritten, len+7, PAGE_EXECUTE_READWRITE, &oldProtect);
 	}
 };
 
