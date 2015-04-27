@@ -132,7 +132,7 @@ bool VIRTUALMACHINE::AccessMem(MEMACCESSOR& access, VPVOID addr, VOID* buf, VMSI
 			else
 				result= false;
 		}
-		it++;
+		++it;
 	}
 	if(size!=0)
 		result= false;

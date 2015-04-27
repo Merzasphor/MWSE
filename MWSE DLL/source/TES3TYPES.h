@@ -158,28 +158,6 @@ struct TES3WEAPON
 	DWORD septims;
 };
 
-struct TES3SPELL
-{
-	VPVOID vtable;
-	DWORD type; // SPEL
-	BYTE unknown[0x1C - sizeof(VPVOID) - sizeof(DWORD)];
-	TES3SPELL* next;
-	TES3SPELL* prev;
-	BYTE unknown5[0x28 - 0x1C - 2 * sizeof(TES3SPELL*)];
-	VPSTR id;
-	VPSTR name;
-};
-typedef TES3SPELL* VPSPELL;
-
-struct TES3LOCK
-{
-	VMSHORT lockLevel;
-	BYTE unknown[0x8 - sizeof(VMSHORT)];
-	VPSPELL trapSpell;
-	BYTE locked;
-};
-typedef TES3LOCK* VPLOCK;
-
 struct TES3REFLISTHEAD
 {
 	LONG	size;
@@ -207,15 +185,6 @@ struct TES3CELLPTR
 };
 typedef TES3CELLPTR* VPCELLPTR;
 
-struct TES3CELLMASTER
-{
-	BYTE unknown[0x4];
-	VPCELLPTR exteriorcells[9];
-	BYTE unknown2[0xac-0x4-9*sizeof(VPCELLPTR)];
-	VPCELL	interiorcell;
-};
-typedef TES3CELLMASTER* VPCELLMASTER;
-
 struct TES3VIEWMASTER
 {
 	BYTE unknown[0x4c];
@@ -223,3 +192,208 @@ struct TES3VIEWMASTER
 	VPREFERENCE target;
 };
 typedef TES3VIEWMASTER* VPVIEWMASTER;
+
+namespace RecordTypes {
+	enum RecordType
+	{
+		ACTI = 'ITCA', ACTIVATOR = ACTI,
+		ALCH = 'HCLA', ALCHEMY = ALCH,
+		AMMO = 'OMMA',
+		APPA = 'APPA', APPARATUS = APPA,
+		ARMO = 'OMRA', ARMOR = ARMO,
+		BOOK = 'KOOB',
+		CLAS = 'SALC', CLASS = CLAS,
+		CLOT = 'TOLC', CLOTHING = CLOT,
+		CONT = 'TNOC', CONTAINER = CONT,
+		CREA = 'AERC', CREATURE = CREA,
+		DOOR = 'ROOD',
+		GLOB = 'BOLG', GLOBAL = GLOB,
+		INGR = 'RGNI', INGREDIENT = INGR,
+		LEVC = 'CVEL', LEVELLEDCREATURE = LEVC,
+		LEVI = 'IVEL', LEVELLEDITEM = LEVI,
+		LIGH = 'HGIL', LIGHT = LIGH,
+		LOCK = 'KCOL', LOCKPICK = LOCK,
+		MACP = 'PCAM', //?
+		MISC = 'CSIM',
+		NPC = '_CPN',
+		PICK = 'KCIP', //?
+		PROB = 'BORP', PROBE = PROB,
+		REFR = 'RFER', REFERENCE = REFR,
+		REPA = 'APER', REPAIR = REPA,
+		SCPT = 'TPCS', SCRIPT = SCPT,
+		SNDG = 'GDNS', SOUNDGENERATOR = SNDG,
+		SPEL = 'LEPS', SPELL = SPEL,
+		STAT = 'TATS', STATIC = STAT,
+		WEAP = 'PAEW', WEAPON = WEAP
+	};
+
+	enum AttachType
+	{
+		VARNODE = 6,	//attachment where 'local' variables are stored, and the size of a stack, and the owner (if it has changed i think), and the script...
+		MACHNODE = 8	//PCAM
+	};
+};
+
+struct LinkedListNode
+{
+	LinkedListNode * previousNode;
+	LinkedListNode * nextNode;
+	void * dataNode;
+};
+
+struct LinkedList
+{
+	unsigned long size;
+	void * head;
+	void * tail;
+};
+
+struct RecordLists
+{
+	unsigned long unknown; // size?
+	unsigned long unknown2; // 0?
+	void * unknownPtr1; // might be list
+	void * unknownPtr2; // might be list
+	LinkedList * spellsList;
+	// may be longer
+};
+
+struct SPELRecord
+{
+	void * vTable;
+	RecordTypes::RecordType recordType; // SPEL
+	unsigned long recordSize;
+	char * modName;
+	int unknown1;
+	LinkedList * spellsList;
+	int unknown3;
+	SPELRecord * prevRecord;
+	SPELRecord * nextRecord;
+	int unknown4;
+	char * id;
+	char * friendlyName;
+	short type; //0=SPELL, 1=ABILITY, 2=BLIGHT, 3=DISEASE, 4=CURSE, 5=POWER
+	short cost;
+
+	//effect
+	struct
+	{
+		unsigned short effectId;
+		char  skillId;
+		char  AttributeId;
+		long  RangeType;		//0=SELF, 1=TOUCH, 2=TARGET
+		long  Area;
+		long  Duration;
+		long  MagMin;
+		long  MagMax;
+	} effects[8];
+
+	long flags;	//1=AUTOCALC, 2=PCSTART, 4=ALWAYSSUCCEEDS
+};
+
+struct NPCBaseRecord	//or the 'base' NPC_ record. you can access it trough the NPCC (NPC Copy) Record (baseNPC)
+{
+	void * vTable;
+	RecordTypes::RecordType recordType;
+	int recordSize;		//should be 0x0F0 big!
+	char * modNamePtr;
+	int unknown1;
+	int unknown2;
+	int unknown3;
+	int unknown4;	//STAT
+	int unknown5;	//BODY
+	int unknown6;
+	int unknown7;
+	char * IDStringPtr;
+	int unknown8;
+	int unknown9;
+	int unknown10;
+	int unknown11;
+	int unknown12;
+	int unknown13;	//inventory? (amount)
+	int unknown14;	//inventory? (start)
+	int unknown15;	//inventory? (end)
+	int unknown16;
+	int unknown17;
+	int unknown18;
+	int unknown19;
+	int unknown20;
+	int unknown21;
+	int unknown22;
+	int unknown23;
+	int unknown24;
+	int unknown25;
+	int unknown26;
+	int unknown27;
+	int unknown28;
+	int unknown29;
+	int unknown30;
+	int unknown31;
+	int unknown32;
+	int unknown33;
+	int unknown34;
+	int unknown35;
+	int unknown36;
+	int unknown37;
+	int unknown38;
+	int unknown39;	//RACE
+	int unknown40;	//CLAS
+	int unknown41;
+	int unknown42;	//BODY (head)
+	int unknown43;	//BODY (hair)
+	int unknown44;
+	int unknown45;
+	int numberOfSpells;
+	LinkedListNode * spellStart;	//these contain the spells! not items with a special power.
+	LinkedListNode * spellEnd;
+};
+
+struct NPCCopyRecord
+{
+	void * vTable;
+	RecordTypes::RecordType recordType;
+	int unknown1; //int RecordSize; ?
+	int unknown2; //char * modNamePtr; ?
+	int unknown3;
+	int unknown4;
+	void * reference;
+	void * prevRecord;
+	void * nextRecord;
+	int unknown5;
+	int unknown6;
+	char * IDStringPtr;
+	int unknown7;
+	int unknown8;
+	int unknown9;
+	int unknown10;
+	int unknown11;
+	int AmountInventory;
+	LinkedListNode * inventoryStart;
+	LinkedListNode * inventoryEnd;
+	int unknown13;
+	int unknown14;
+	int unknown15;	//some pointer
+	int amountEquiped;
+	LinkedListNode * equipedStart;
+	LinkedListNode * equipedEnd;
+	int unknown16;
+	NPCBaseRecord * baseNPC;
+};
+
+struct TES3LOCK
+{
+	VMSHORT lockLevel;
+	BYTE unknown[0x8 - sizeof(VMSHORT)];
+	SPELRecord * trapSpell;
+	BYTE locked;
+};
+typedef TES3LOCK* VPLOCK;
+
+struct TES3CELLMASTER
+{
+	RecordLists * recordLists;
+	VPCELLPTR exteriorcells[9];
+	BYTE unknown2[0xac-0x4-9*sizeof(VPCELLPTR)];
+	VPCELL	interiorcell;
+};
+typedef TES3CELLMASTER* VPCELLMASTER;

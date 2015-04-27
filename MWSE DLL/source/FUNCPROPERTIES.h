@@ -285,10 +285,28 @@ private:
 	TES3MACHINE& machine;
 };
 
-class FUNCREMOVETRAP : public FUNCTION
+class FUNCSETTRAP : public FUNCTION
 {
 public:
-	FUNCREMOVETRAP(TES3MACHINE& vm) :machine(vm) {}
+	FUNCSETTRAP(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETSPELLINFO : public FUNCTION
+{
+public:
+	FUNCGETSPELLINFO(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETSPELLEFFECTINFO : public FUNCTION
+{
+public:
+	FUNCGETSPELLEFFECTINFO(TES3MACHINE& vm) :machine(vm) {}
 	virtual bool execute(void);
 private:
 	TES3MACHINE& machine;

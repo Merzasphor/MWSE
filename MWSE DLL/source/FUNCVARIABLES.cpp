@@ -5,6 +5,55 @@
 #include "TES3OPCODES.h"
 #include "DEBUGGING.h"
 
+bool FUNCFLOATSTOLONG::execute(void)
+{
+	VMFLOAT val1, val2;
+	VMLONG high, low;
+	VMLONG target = 0;
+	if (machine.pop(val1) && machine.pop(val2))
+	{
+		if (val1 >= 0x10000)
+		{
+			high = val1;
+			low = val2;
+		}
+		else
+		{
+			high = val2;
+			low = val1;
+		}
+		
+		target = (high - 0x10000) << 16;
+		target += low;
+	}
+
+#ifdef DEBUGGING
+	cLog::mLogMessage("FUNCFLOATTOLONG\n");
+#endif	
+	
+	return machine.push(target);
+}
+bool FUNCLONGTOFLOATS::execute(void)
+{
+	VMLONG value;
+	VMFLOAT high = 0;
+	VMFLOAT low = 0;
+	if (machine.pop(value))
+	{
+		// low 16 bits
+		low = value & 0xFFFF;
+		// high 16 bits and flag
+		high = (value >> 16) + 0x10000;
+	}
+
+#ifdef DEBUGGING
+	cLog::mLogMessage("FUNCLONGTOFLOAT\n");
+#endif	
+	
+	return machine.push(high) && machine.push(low);
+}
+
+
 bool GetLocalVars(TES3MACHINE& machine, TES3VARIABLES* vars)
 {
 	VPVARIABLES pvars= 0;

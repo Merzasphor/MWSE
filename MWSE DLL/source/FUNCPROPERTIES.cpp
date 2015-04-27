@@ -14,6 +14,8 @@ using namespace std;
 // 22-08-2006 Tp21
 #include "warnings.h"
 
+static SPELRecord * GetSpellRecord(VMLONG spellId, TES3MACHINE & machine);
+
 // These functions are used for validation in FUNCSETMAX... and for
 // retrieving the value in FUNCGETMAX... execute() methods.
 static ULONG GetMaxCondition(TES3MACHINE &machine, VPVOID refr, ULONG type);
@@ -437,7 +439,9 @@ bool FUNCGETTRAP::execute(void)
 	VPVOID refr, temp;
 	ULONG type;
 	VMLONG trapId = 0;
-		
+	VMLONG trapName = 0;
+	VMSHORT trapCost = 0;
+
 	if (GetTargetData(machine, &refr, &temp, &type))
 	{
 		if (type == CONTAINER || type == DOOR)
@@ -445,10 +449,12 @@ bool FUNCGETTRAP::execute(void)
 			TES3LOCK lockInfo;
 			if (GetAttachData(machine, refr, 3, 0, lockInfo))
 			{
-				VPSPELL trapSpell = lockInfo.trapSpell;
+				SPELRecord * trapSpell = lockInfo.trapSpell;
 				if (trapSpell != 0)
 				{
-					trapId = reinterpret_cast<VMLONG>(strings.add(reinterpret_cast<char*>(trapSpell->id)));
+					trapId = reinterpret_cast<VMLONG>(strings.add(trapSpell->id));
+					trapName = reinterpret_cast<VMLONG>(strings.add(trapSpell->friendlyName));
+					trapCost = trapSpell->cost;
 				}
 			}
 		}
@@ -456,34 +462,120 @@ bool FUNCGETTRAP::execute(void)
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETTRAP()\n",trapId);
 #endif	
-	return machine.push(trapId);
+	return machine.push(static_cast<VMREGTYPE>(trapCost)) && machine.push(trapName) && machine.push(trapId);
 }
 
-bool FUNCREMOVETRAP::execute(void)
+bool FUNCSETTRAP::execute(void)
 {
 	VPVOID refr, temp;
 	ULONG type;
+	VMLONG spellId;
 	bool success = false;
 		
-	if (GetTargetData(machine, &refr, &temp, &type))
+	if (GetTargetData(machine, &refr, &temp, &type) && machine.pop(spellId))
 	{
 		if (type == CONTAINER || type == DOOR)
 		{
 			TES3LOCK lockInfo;
 			if (GetAttachData(machine, refr, 3, 0, lockInfo))
 			{
-				if (lockInfo.trapSpell != 0)
+				SPELRecord * newTrap = GetSpellRecord(spellId, machine);			
+				
+				// don't update if we received an unknown spell id
+				if (spellId == 0 || newTrap != 0)
 				{
-					lockInfo.trapSpell = 0;
+					lockInfo.trapSpell = newTrap;
 					success = SetAttachData(machine, refr, 3, 0, lockInfo);
 				}
 			}
 		}
 	}
 #ifdef DEBUGGING
-	cLog::mLogMessage("%f= FUNCREMOVETRAP()\n",success);
+	cLog::mLogMessage("%f= FUNCSETTRAP()\n",success);
 #endif	
 	return machine.push(static_cast<VMREGTYPE>(success));
+}
+
+bool FUNCGETSPELLINFO::execute(void)
+{
+	VMLONG spellId;
+	VMLONG name = 0;
+	VMSHORT type = 0;
+	VMSHORT cost = 0;
+	VMSHORT effects = 0;
+	VMLONG flags = 0;
+
+	if (machine.pop(spellId))
+	{
+		SPELRecord * spell = GetSpellRecord(spellId, machine);
+		if (spell != 0)
+		{
+			name = reinterpret_cast<VMLONG>(strings.add(spell->friendlyName));
+			type = spell->type;
+			cost = spell->cost;
+			flags = spell->flags;
+
+			//count the number of effect slots in use
+			for (int i = 0; i < 8; ++i)
+			{
+				if (spell->effects[i].effectId != 0xFFFF)
+				{
+					++effects;
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+	}
+
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETSPELLINFO()\n",spellId);
+#endif	
+	return machine.push(flags) && machine.push(static_cast<VMREGTYPE>(effects)) && machine.push(static_cast<VMREGTYPE>(cost)) 
+		&& machine.push(static_cast<VMREGTYPE>(type)) && machine.push(name);
+}
+
+bool FUNCGETSPELLEFFECTINFO::execute(void)
+{
+	VMLONG spellId;
+	VMLONG effectIndex;
+	VMSHORT effectId = -1;
+	VMSHORT skillId;
+	VMSHORT attributeId;
+	VMLONG rangeType;
+	VMLONG area;
+	VMLONG duration;
+	VMLONG magMin;
+	VMLONG magMax;
+
+	if (machine.pop(spellId) && machine.pop(effectIndex))
+	{
+		if (1 <= effectIndex && effectIndex <= 8)
+		{			
+			SPELRecord * spell = GetSpellRecord(spellId, machine);
+			if (spell != 0)
+			{
+				--effectIndex; // 0-based array index
+				effectId = spell->effects[effectIndex].effectId;
+				skillId = spell->effects[effectIndex].skillId;
+				attributeId = spell->effects[effectIndex].AttributeId;
+				rangeType = spell->effects[effectIndex].RangeType;
+				area = spell->effects[effectIndex].Area;
+				duration = spell->effects[effectIndex].Duration;
+				magMin = spell->effects[effectIndex].MagMin;
+				magMax = spell->effects[effectIndex].MagMax;
+			}
+		}
+	}
+
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETSPELLINFO()\n",spellId);
+#endif	
+	return machine.push(magMax) && machine.push(magMin) && machine.push(duration) && machine.push(area) && machine.push(rangeType) 
+		&& machine.push(static_cast<VMREGTYPE>(attributeId)) && machine.push(static_cast<VMREGTYPE>(skillId)) 
+		&& machine.push(static_cast<VMREGTYPE>(effectId));
 }
 
 // GRM 15 Jan 2007
@@ -1561,4 +1653,20 @@ static VPVOID GetMaxChargeOffset(TES3MACHINE &machine, VPVOID refr, ULONG type)
     // Only the low-order byte of 'autoCalc' is used.
     // FIXME: it is not clear if this is correct.
     return ((autoCalc & 0xFF)!=0) ? reinterpret_cast<VPVOID>(ench) : NULL;
+}
+
+static SPELRecord * GetSpellRecord(VMLONG spellId, TES3MACHINE & machine)
+{
+	SPELRecord * spell = 0;
+	if (spellId != 0)
+	{
+		char const * idString = machine.GetString(reinterpret_cast<VPVOID>(spellId));
+		TES3CELLMASTER* cellMaster = *(reinterpret_cast<TES3CELLMASTER**>reltolinear(MASTERCELL_IMAGE));
+		spell = reinterpret_cast<SPELRecord*>(cellMaster->recordLists->spellsList->head);
+		while (spell != 0 && strcmp(idString, spell->id) != 0)
+		{
+			spell = spell->nextRecord;
+		}
+	}
+	return spell;
 }

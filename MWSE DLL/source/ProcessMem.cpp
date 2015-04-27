@@ -21,14 +21,61 @@ bool PROCESSMEM::Read(VPVOID addr, VOID* buf, VMSIZE size)
 {
 	void* modaddr=(void*)((DWORD)addr+(DWORD)baseptr);
 	MEMORY_BASIC_INFORMATION info;
-	if(!VirtualQuery(modaddr,&info,sizeof(info))) return false;
-	if(info.Protect&(PAGE_READONLY|PAGE_READWRITE|PAGE_EXECUTE_READ|PAGE_EXECUTE_READWRITE)) {
-		ReadMemory(modaddr,buf,size);
-		return true;
-	} else {
-		return false;
+
+	VMSIZE regionSize;
+	VMSIZE checkSize = size;
+	void* checkAddr = modaddr;
+	bool result = true;
+	
+	// This loop scans memory regions starting with the target address and going up to target size.
+	// If the memory we want to read spans multiple regions, check all of them before calling
+	// ReadMemory.
+
+	bool done = false;
+	while(!done)
+	{
+		// get info about the region of memory that the target address resides in
+		if(!VirtualQuery(checkAddr, &info, sizeof(info)))
+		{
+			result = false;
+			break;
+		}
+		
+		// Check for guard pages
+		if (info.Protect & PAGE_GUARD) 
+		{
+			result = false;
+			break;
+		}
+		
+		// Check for read access
+		if(!(info.Protect & (PAGE_READONLY | PAGE_READWRITE | PAGE_EXECUTE_READ | PAGE_EXECUTE_READWRITE))) 
+		{
+			result = false;
+			break;
+		}
+
+		regionSize = info.RegionSize;
+		if (info.BaseAddress < checkAddr)
+		{
+			regionSize -= reinterpret_cast<DWORD>(checkAddr) - reinterpret_cast<DWORD>(info.BaseAddress);
+		}
+
+		if (checkSize <= regionSize)
+		{
+			done = true;
+			ReadMemory(modaddr, buf, size);
+		}
+		else
+		{
+			checkSize -= regionSize;
+			checkAddr = reinterpret_cast<void*>(reinterpret_cast<DWORD>(checkAddr) + regionSize);
+		}
 	}
+
+	return result;
 }
+
 
 bool PROCESSMEM::Write(VPVOID addr, VOID* buf, VMSIZE size)
 {

@@ -12,10 +12,6 @@
 // 22-08-2006 Tp21
 #include "warnings.h"
 
-FUNCEXPLODESPELL::FUNCEXPLODESPELL(TES3MACHINE& vm) : machine(vm), HWBREAKPOINT()
-{
-}
-
 bool FUNCEXPLODESPELL::execute(void) 
 { 
      bool result = true; 

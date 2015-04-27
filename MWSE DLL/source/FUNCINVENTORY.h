@@ -8,7 +8,7 @@
 class FUNCEXPLODESPELL : public FUNCEXTENDER, public HWBREAKPOINT
 {
 public:
-	FUNCEXPLODESPELL(TES3MACHINE& vm);
+	FUNCEXPLODESPELL(TES3MACHINE& vm): machine(vm), HWBREAKPOINT() {}
 	virtual bool execute(void);
 	virtual bool breakpoint();
 	virtual BYTE getid();
