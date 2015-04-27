@@ -258,6 +258,15 @@ private:
 	TES3MACHINE& machine;
 };
 
+class FUNCSETPROGRESSLEVEL : public FUNCTION
+{
+public:
+	FUNCSETPROGRESSLEVEL(TES3MACHINE& vm): machine(vm) { };
+   virtual bool execute(void);
+private:
+   TES3MACHINE& machine;
+};
+
 class FUNCGETLOCKLEVEL : public FUNCTION
 {
 public:

@@ -33,11 +33,11 @@ bool FUNCGETBASEACROBATICS::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x13d, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x13d, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASEACR()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASEALCHEMY::execute(void)
@@ -46,11 +46,11 @@ bool FUNCGETBASEALCHEMY::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x12d, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x12d, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASEALCHEMY()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASEALTERATION::execute(void)
@@ -59,11 +59,11 @@ bool FUNCGETBASEALTERATION::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x119, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x119, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASEALTERATION()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASEARMORER::execute(void)
@@ -72,11 +72,11 @@ bool FUNCGETBASEARMORER::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0xf1, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0xf1, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASEARMORER()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASEATHLETICS::execute(void)
@@ -85,11 +85,11 @@ bool FUNCGETBASEATHLETICS::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x10d, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x10d, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASEATHLETICS()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASEAXE::execute(void)
@@ -98,11 +98,11 @@ bool FUNCGETBASEAXE::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x105, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x105, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASE()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASEBLOCK::execute(void)
@@ -111,11 +111,11 @@ bool FUNCGETBASEBLOCK::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0xed, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0xed, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASEBLOCK()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASEBLUNTWEAPON::execute(void)
@@ -124,11 +124,11 @@ bool FUNCGETBASEBLUNTWEAPON::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0xfd, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0xfd, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASEBLUNTWEAPON()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASECONJURATION::execute(void)
@@ -137,11 +137,11 @@ bool FUNCGETBASECONJURATION::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x121, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x121, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASECONJURATION()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASEDESTRUCTION::execute(void)
@@ -150,11 +150,11 @@ bool FUNCGETBASEDESTRUCTION::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x115, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x115, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASEDESTRUCTION()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASEENCHANT::execute(void)
@@ -163,11 +163,11 @@ bool FUNCGETBASEENCHANT::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x111, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x111, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASEENCHANT()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASEHANDTOHAND::execute(void)
@@ -176,11 +176,11 @@ bool FUNCGETBASEHANDTOHAND::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x155, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x155, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASEHANDTOHAND()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASEHEAVYARMOR::execute(void)
@@ -189,11 +189,11 @@ bool FUNCGETBASEHEAVYARMOR::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0xf9, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0xf9, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASEHEAVYARMOR()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASEILLUSION::execute(void)
@@ -202,11 +202,11 @@ bool FUNCGETBASEILLUSION::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x11d, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x11d, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASEILLUSION()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASELIGHTARMOR::execute(void)
@@ -215,11 +215,11 @@ bool FUNCGETBASELIGHTARMOR::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x141, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x141, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASELIGHTARMOR()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASELONGBLADE::execute(void)
@@ -228,11 +228,11 @@ bool FUNCGETBASELONGBLADE::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x101, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x101, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASELONGBLADE()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASEMARKSMAN::execute(void)
@@ -241,11 +241,11 @@ bool FUNCGETBASEMARKSMAN::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x149, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x149, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASEMARKSMAN()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASEMEDIUMARMOR::execute(void)
@@ -254,11 +254,11 @@ bool FUNCGETBASEMEDIUMARMOR::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0xf5, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0xf5, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASEMEDIUMARMOR()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASEMERCANTILE::execute(void)
@@ -267,11 +267,11 @@ bool FUNCGETBASEMERCANTILE::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x14d, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x14d, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASEMERCANTILE()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASEMYSTICISM::execute(void)
@@ -280,11 +280,11 @@ bool FUNCGETBASEMYSTICISM::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x125, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x125, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASEMYSTICISM()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASERESTORATION::execute(void)
@@ -293,11 +293,11 @@ bool FUNCGETBASERESTORATION::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x129, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x129, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASERESTORATION()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASESECURITY::execute(void)
@@ -306,11 +306,11 @@ bool FUNCGETBASESECURITY::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x135, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x135, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASESECURITY()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASESHORTBLADE::execute(void)
@@ -319,11 +319,11 @@ bool FUNCGETBASESHORTBLADE::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x145, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x145, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASESHORTBLADE()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASESNEAK::execute(void)
@@ -332,11 +332,11 @@ bool FUNCGETBASESNEAK::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x139, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x139, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASESNEAK()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASESPEAR::execute(void)
@@ -345,11 +345,11 @@ bool FUNCGETBASESPEAR::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x109, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x109, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASESPEAR()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASESPEECHCRAFT::execute(void)
@@ -358,11 +358,11 @@ bool FUNCGETBASESPEECHCRAFT::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x151, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x151, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASESPEECHCRAFT()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETBASEUNARMORED::execute(void)
@@ -371,35 +371,53 @@ bool FUNCGETBASEUNARMORED::execute(void)
 	VMFLOAT value = -1.0;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x131, (ULONG*)&value);
+		GetAttachData(machine, refr, 8, 0x131, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETBASEUNARMORED()\n",value);
 #endif	
-	return machine.push((VMFLOAT)value);
+	return machine.push(value);
 }
 
 bool FUNCGETPROGRESSLEVEL::execute(void)
 {
 	VPVOID refr;
-	ULONG value;
+	VMLONG value = -1;
 	
 	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x17A, &value);
+		GetAttachData(machine, refr, 8, 0x17A, value);
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETPROGRESSLEVEL()\n",value);
 #endif	
-	return machine.push((VMREGTYPE)value);
+	return machine.push(value);
+}
+
+bool FUNCSETPROGRESSLEVEL::execute(void)
+{
+	VPVOID refr;
+	VMLONG progress = 0;
+	bool set = false;
+	
+	if (GetTargetData(machine, &refr) && machine.pop(progress))
+	{
+		set = SetAttachData(machine, refr, 8, 0x17a, progress);
+	}
+
+#ifdef DEBUGGING
+    cLog::mLogMessage("%d:FUNCSETVALUE(%d)\n",set,value);
+#endif	
+
+	return machine.push(static_cast<VMREGTYPE>(set));
 }
 
 bool FUNCGETLOCKLEVEL::execute(void)
 {
 	VPVOID refr, temp;
 	ULONG type;
-	ULONG lock = 0;
+	VMSHORT lock = -1;
 	
 	if (GetTargetData(machine, &refr, &temp, &type))
 	{
-		if (type == CONT || type == DOOR)
+		if (type == CONTAINER || type == DOOR)
 		{
 			GetAttachData(machine, refr, 3, 0, &lock);
 		}
@@ -407,7 +425,7 @@ bool FUNCGETLOCKLEVEL::execute(void)
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETLOCKLEVEL()\n",lock);
 #endif	
-	return machine.push((VMREGTYPE)lock);
+	return machine.push(static_cast<VMREGTYPE>(lock));
 }
 
 // GRM 15 Jan 2007
@@ -790,7 +808,7 @@ bool FUNCGETCONDITION::execute(void)
 {
 	VPVOID refr, temp;
 	ULONG type;
-	ULONG condition = 0;
+	VMLONG condition = 0;
 	
 	if (GetTargetData(machine, &refr, &temp, &type))
 	{
@@ -806,7 +824,7 @@ bool FUNCGETCONDITION::execute(void)
 #ifdef DEBUGGING
 	cLog::mLogMessage("%lu= FUNCGETCONDITION()\n",condition);
 #endif	
-	return machine.push((VMREGTYPE)condition);
+	return machine.push(condition);
 }
 
 bool FUNCGETMAXCOND::execute(void)
