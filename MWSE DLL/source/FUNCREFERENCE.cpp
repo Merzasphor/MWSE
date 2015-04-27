@@ -165,7 +165,7 @@ bool FUNCFIRSTNPC::execute(void)
 					}
 					exteriors[extCount] = 0;
 					
-					// Find the first reference in the center (player's) cell that's hasn't been removed.
+					// Find the first reference in the center (player's) cell that hasn't been removed.
 					ref = SkipRemovedRefs(getMachine(), ref);
 
 					// make sure the reference in the center cell is valid

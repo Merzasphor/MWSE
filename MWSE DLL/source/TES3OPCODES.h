@@ -428,4 +428,6 @@ typedef enum {
 	,LONGTOFLOATS       = 0x3923
 	,GETSPELLINFO       = 0x3924
 	,GETSPELLEFFECTINFO = 0x3925
+	,SPELLLIST          = 0x3926
+	,GETSPELL           = 0x3927
 	} OPCODES;

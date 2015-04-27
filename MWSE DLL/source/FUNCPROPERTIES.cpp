@@ -496,6 +496,95 @@ bool FUNCSETTRAP::execute(void)
 	return machine.push(static_cast<VMREGTYPE>(success));
 }
 
+bool FUNCSPELLLIST::execute(void)
+{
+	LinkedListNode * next = 0;
+	VMLONG totalSpells = 0;
+	VMLONG spellId = 0;
+	VMLONG name = 0;
+	VMSHORT type = 0;
+	VMSHORT cost = 0;
+	VMSHORT effects = 0;
+	VMLONG flags = 0;
+	
+	VPVOID refr, temp;
+	unsigned long refType;
+
+	if (machine.pop(reinterpret_cast<VMREGTYPE&>(next)) && GetTargetData(machine, &refr, &temp, &refType))
+	{
+		if (refType == NPC)
+		{
+			TES3REFERENCE * npcRef = reinterpret_cast<TES3REFERENCE*>(refr);
+			NPCCopyRecord * npcCopy = reinterpret_cast<NPCCopyRecord*>(npcRef->templ);
+			NPCBaseRecord * npcRec = npcCopy->baseNPC;
+			totalSpells = npcRec->numberOfSpells;
+			if (totalSpells > 0)
+			{
+				if (next == 0)
+				{
+					next = npcRec->spellStart;
+				}
+
+				SPELRecord * spell = reinterpret_cast<SPELRecord*>(next->dataNode);
+				next = next->nextNode;
+
+				spellId = reinterpret_cast<VMLONG>(strings.add(spell->id));
+				name = reinterpret_cast<VMLONG>(strings.add(spell->friendlyName));
+				type = spell->type;
+				cost = spell->cost;
+				flags = spell->flags;
+
+				//count the number of effect slots in use
+				for (int i = 0; i < 8; ++i)
+				{
+					if (spell->effects[i].effectId != 0xFFFF)
+					{
+						++effects;
+					}
+					else
+					{
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	return machine.push(reinterpret_cast<VMREGTYPE>(next)) && machine.push(flags) && machine.push(static_cast<VMREGTYPE>(effects)) && machine.push(static_cast<VMREGTYPE>(cost)) 
+		&& machine.push(static_cast<VMREGTYPE>(type)) && machine.push(name) && machine.push(spellId) && machine.push(totalSpells);
+}
+
+bool FUNCGETSPELL::execute(void)
+{
+	VMLONG spellId = 0;
+	VMSHORT result = 0;
+	VPVOID refr, temp;
+	unsigned long refType;
+
+	if (machine.pop(spellId) && GetTargetData(machine, &refr, &temp, &refType))
+	{
+		if (refType == NPC && spellId != 0)
+		{
+			char const * idString = machine.GetString(reinterpret_cast<VPVOID>(spellId));
+			TES3REFERENCE * npcRef = reinterpret_cast<TES3REFERENCE*>(refr);
+			NPCCopyRecord * npcCopy = reinterpret_cast<NPCCopyRecord*>(npcRef->templ);
+			LinkedListNode * curr = npcCopy->baseNPC->spellStart;
+			while (curr != 0)
+			{
+				SPELRecord * spell = reinterpret_cast<SPELRecord*>(curr->dataNode);
+				if (strcmp(idString, spell->id) == 0)
+				{
+					result = 1;
+					break;
+				}
+				curr = curr->nextNode;
+			}
+		}
+	}
+
+	return machine.push(static_cast<VMREGTYPE>(result));
+}
+
 bool FUNCGETSPELLINFO::execute(void)
 {
 	VMLONG spellId;

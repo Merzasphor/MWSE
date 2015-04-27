@@ -343,6 +343,7 @@ struct NPCBaseRecord	//or the 'base' NPC_ record. you can access it trough the N
 	int unknown43;	//BODY (hair)
 	int unknown44;
 	int unknown45;
+	int unknown46;
 	int numberOfSpells;
 	LinkedListNode * spellStart;	//these contain the spells! not items with a special power.
 	LinkedListNode * spellEnd;
@@ -383,7 +384,8 @@ struct NPCCopyRecord
 struct TES3LOCK
 {
 	VMSHORT lockLevel;
-	BYTE unknown[0x8 - sizeof(VMSHORT)];
+	VMSHORT unknown;
+	VPVOID owner; // faction or global?
 	SPELRecord * trapSpell;
 	BYTE locked;
 };

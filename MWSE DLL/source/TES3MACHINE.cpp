@@ -281,6 +281,8 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(LONGTOFLOATS, new FUNCLONGTOFLOATS(*this));
 	AddInstruction(GETSPELLINFO, new FUNCGETSPELLINFO(*this));
 	AddInstruction(GETSPELLEFFECTINFO, new FUNCGETSPELLEFFECTINFO(*this));
+	AddInstruction(SPELLLIST, new FUNCSPELLLIST(*this));
+	AddInstruction(GETSPELL, new FUNCGETSPELL(*this));
 
 	// Grant McDorman 16 Jan 2007
 #define ADDINSTRUCTION(name) AddInstruction(name, new FUNC##name(*this))

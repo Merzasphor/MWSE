@@ -294,6 +294,24 @@ private:
 	TES3MACHINE& machine;
 };
 
+class FUNCSPELLLIST : public FUNCTION
+{
+public:
+	FUNCSPELLLIST(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETSPELL : public FUNCTION
+{
+public:
+	FUNCGETSPELL(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
 class FUNCGETSPELLINFO : public FUNCTION
 {
 public:
