@@ -780,7 +780,7 @@ bool FUNCGETCONDITION::execute(void)
 		{
 			if (!GetAttachData(machine, refr, VARNODE, 3, condition))
 			{
-				condition = GetMaxCondition(machine, refr, type);
+				condition = GetMaxCondition(machine, temp, type);
 			}
 		}
 	}
