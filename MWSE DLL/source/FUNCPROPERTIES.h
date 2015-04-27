@@ -258,6 +258,14 @@ private:
 	TES3MACHINE& machine;
 };
 
+class FUNCGETLOCKLEVEL : public FUNCTION
+{
+public:
+	FUNCGETLOCKLEVEL(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
 
 //GRM  15-01-2007 [use proper C++ class]
 class FUNCSETVALUE : public FUNCTION

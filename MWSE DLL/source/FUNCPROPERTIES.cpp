@@ -391,6 +391,24 @@ bool FUNCGETPROGRESSLEVEL::execute(void)
 	return machine.push((VMREGTYPE)value);
 }
 
+bool FUNCGETLOCKLEVEL::execute(void)
+{
+	VPVOID refr, temp;
+	ULONG type;
+	ULONG lock = 0;
+	
+	if (GetTargetData(machine, &refr, &temp, &type))
+	{
+		if (type == CONT || type == DOOR)
+		{
+			GetAttachData(machine, refr, 3, 0, &lock);
+		}
+	}
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETLOCKLEVEL()\n",lock);
+#endif	
+	return machine.push((VMREGTYPE)lock);
+}
 
 // GRM 15 Jan 2007
 // Set value (worth in gold) of reference.
