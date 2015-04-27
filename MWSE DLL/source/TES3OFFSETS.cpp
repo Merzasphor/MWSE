@@ -90,6 +90,7 @@ const char *GetNameString(TES3MACHINE& vm, VPVOID temp, ULONG type, VPVOID base)
 	
 bool GetOffsetData(TES3MACHINE& vm, VPVOID base, ULONG offset, void* data, size_t size)
 {
+	//cLog::mLogMessage("base: %i offset: %i size: %i\n", base, offset, size);
 	return vm.ReadMem(LONGOFFSET(base,offset),data,size);
 }
 
@@ -148,7 +149,18 @@ bool GetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, void* 
 		if (node.type != type)
 			pnode = (VPVOID)node.next;
 		else
+		{
+			/*if (type == 8)
+			{
+				char dump[2048];
+				bool ret = GetOffsetData(vm, node.dataptr, 0, dump, 2048);
+				if (ret)
+					cLog::mLogBinaryMessage(dump, 2048);
+				else
+					cLog::mLogMessage("Error dumping type 8.\n");
+			}*/
 			return GetOffsetData(vm,node.dataptr,offset,data,size);
+		}
 	}
 	return false;
 }

@@ -27,6 +27,371 @@ FUNCGETSPELLEFFECTS::FUNCGETSPELLEFFECTS(TES3MACHINE& vm) : machine(vm), HWBREAK
 {
 }
 
+bool FUNCGETBASEACROBATICS::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x13d, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASEACR()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASEALCHEMY::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x12d, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASEALCHEMY()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASEALTERATION::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x119, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASEALTERATION()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASEARMORER::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0xf1, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASEARMORER()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASEATHLETICS::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x10d, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASEATHLETICS()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASEAXE::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x105, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASE()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASEBLOCK::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0xed, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASEBLOCK()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASEBLUNTWEAPON::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0xfd, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASEBLUNTWEAPON()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASECONJURATION::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x121, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASECONJURATION()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASEDESTRUCTION::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x115, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASEDESTRUCTION()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASEENCHANT::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x111, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASEENCHANT()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASEHANDTOHAND::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x155, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASEHANDTOHAND()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASEHEAVYARMOR::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0xf9, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASEHEAVYARMOR()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASEILLUSION::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x11d, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASEILLUSION()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASELIGHTARMOR::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x141, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASELIGHTARMOR()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASELONGBLADE::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x101, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASELONGBLADE()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASEMARKSMAN::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x149, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASEMARKSMAN()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASEMEDIUMARMOR::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0xf5, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASEMEDIUMARMOR()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASEMERCANTILE::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x14d, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASEMERCANTILE()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASEMYSTICISM::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x125, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASEMYSTICISM()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASERESTORATION::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x129, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASERESTORATION()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASESECURITY::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x135, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASESECURITY()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASESHORTBLADE::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x145, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASESHORTBLADE()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASESNEAK::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x139, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASESNEAK()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASESPEAR::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x109, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASESPEAR()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASESPEECHCRAFT::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x151, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASESPEECHCRAFT()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETBASEUNARMORED::execute(void)
+{
+	VPVOID refr;
+	VMFLOAT value = -1.0;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x131, (ULONG*)&value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASEUNARMORED()\n",value);
+#endif	
+	return machine.push((VMFLOAT)value);
+}
+
+bool FUNCGETPROGRESSLEVEL::execute(void)
+{
+	VPVOID refr;
+	ULONG value;
+	
+	if (GetTargetData(machine, &refr))
+		GetAttachData(machine, refr, 8, 0x17A, &value);
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETPROGRESSLEVEL()\n",value);
+#endif	
+	return machine.push((VMREGTYPE)value);
+}
+
+
 // GRM 15 Jan 2007
 // Set value (worth in gold) of reference.
 // <ref> xSetValue <long> -> [no value]

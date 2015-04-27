@@ -6,6 +6,259 @@
 #include "TES3OFFSETS.h"
 #include "STRINGS.h"
 
+class FUNCGETBASEACROBATICS : public FUNCTION
+{
+public:
+	FUNCGETBASEACROBATICS(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASEALCHEMY : public FUNCTION
+{
+public:
+	FUNCGETBASEALCHEMY(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASEALTERATION : public FUNCTION
+{
+public:
+	FUNCGETBASEALTERATION(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASEARMORER : public FUNCTION
+{
+public:
+	FUNCGETBASEARMORER(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASEATHLETICS : public FUNCTION
+{
+public:
+	FUNCGETBASEATHLETICS(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASEAXE : public FUNCTION
+{
+public:
+	FUNCGETBASEAXE(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASEBLOCK : public FUNCTION
+{
+public:
+	FUNCGETBASEBLOCK(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASEBLUNTWEAPON : public FUNCTION
+{
+public:
+	FUNCGETBASEBLUNTWEAPON(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASECONJURATION : public FUNCTION
+{
+public:
+	FUNCGETBASECONJURATION(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASEDESTRUCTION : public FUNCTION
+{
+public:
+	FUNCGETBASEDESTRUCTION(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASEENCHANT : public FUNCTION
+{
+public:
+	FUNCGETBASEENCHANT(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASEHANDTOHAND : public FUNCTION
+{
+public:
+	FUNCGETBASEHANDTOHAND(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASEHEAVYARMOR : public FUNCTION
+{
+public:
+	FUNCGETBASEHEAVYARMOR(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASEILLUSION : public FUNCTION
+{
+public:
+	FUNCGETBASEILLUSION(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASELIGHTARMOR : public FUNCTION
+{
+public:
+	FUNCGETBASELIGHTARMOR(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASELONGBLADE : public FUNCTION
+{
+public:
+	FUNCGETBASELONGBLADE(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASEMARKSMAN : public FUNCTION
+{
+public:
+	FUNCGETBASEMARKSMAN(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASEMEDIUMARMOR : public FUNCTION
+{
+public:
+	FUNCGETBASEMEDIUMARMOR(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASEMERCANTILE : public FUNCTION
+{
+public:
+	FUNCGETBASEMERCANTILE(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASEMYSTICISM : public FUNCTION
+{
+public:
+	FUNCGETBASEMYSTICISM(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASERESTORATION : public FUNCTION
+{
+public:
+	FUNCGETBASERESTORATION(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASESECURITY : public FUNCTION
+{
+public:
+	FUNCGETBASESECURITY(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASESHORTBLADE : public FUNCTION
+{
+public:
+	FUNCGETBASESHORTBLADE(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASESNEAK : public FUNCTION
+{
+public:
+	FUNCGETBASESNEAK(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASESPEAR : public FUNCTION
+{
+public:
+	FUNCGETBASESPEAR(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASESPEECHCRAFT : public FUNCTION
+{
+public:
+	FUNCGETBASESPEECHCRAFT(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASEUNARMORED : public FUNCTION
+{
+public:
+	FUNCGETBASEUNARMORED(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETPROGRESSLEVEL : public FUNCTION
+{
+public:
+	FUNCGETPROGRESSLEVEL(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+
 //GRM  15-01-2007 [use proper C++ class]
 class FUNCSETVALUE : public FUNCTION
 {
