@@ -135,21 +135,36 @@ bool FUNCFIRSTNPC::execute(void)
 			{
 				if(cellptr.size==1)
 				{
+					// get the start of the npc list for the center cell. we'll check that it's valid later.
 					result= getMachine().ReadMem((VPVOID)&cellptr.first->npc.first,&ref,sizeof(ref));
-					for ( i=0; i<8; i++ )  // Read the other 8 exteriors too
+					int extCount = 0;
+					// check the other exterior cells for npc lists
+					for (i = 0; i < 9; ++i)
 					{
-						if(getMachine().ReadMem((VPVOID)&cellmaster->exteriorcells[(i<4?i:i+1)],&pcellptr,sizeof(pcellptr))
-							&& getMachine().ReadMem((VPVOID)pcellptr,&cellptr,sizeof(cellptr)))
+						if (i == CENTRE)
+							continue;
+						if(getMachine().ReadMem((VPVOID)&cellmaster->exteriorcells[i],&pcellptr,sizeof(pcellptr))
+							&& getMachine().ReadMem((VPVOID)pcellptr,&cellptr,sizeof(cellptr))
+							&& cellptr.size == 1)
 						{
-							if(cellptr.size==1)
-								getMachine().ReadMem((VPVOID)&cellptr.first->npc.first,&exteriors[i],sizeof(VPREFERENCE));
-							else
+							VPREFERENCE temp = 0;
+							getMachine().ReadMem((VPVOID)&cellptr.first->npc.first,&temp,sizeof(VPREFERENCE));
+							if (temp != 0)
 							{
-								exteriors[i] = 0;
-								i = 9;
+								exteriors[extCount] = temp;
+								++extCount;
 							}
 						}
 					}
+					exteriors[extCount] = 0;
+					// make sure the npc reference in the center cell is valid
+					// if not, use the reference from another exterior cell.
+					if (ref == 0 && extCount > 0)
+					{
+						ref = exteriors[extCount - 1];
+						exteriors[extCount - 1] = 0;
+					}
+
 				}
 				else
 					result= true;
@@ -284,12 +299,11 @@ bool FUNCNEXTREF::execute(void)
 		VPREFERENCE ref= (VPREFERENCE)pref;
 		int i;
 		getMachine().ReadMem((VPVOID)&ref->next,&next,sizeof(next));
-		while ( !next && exteriors[0] ) 
+		if (next == 0 && exteriors[0] != 0)
 		{
-			ref = exteriors[0];
+			next = exteriors[0];
 			for ( i=0; i<8; i++ )
 				exteriors[i] = exteriors[i+1];
-			getMachine().ReadMem((VPVOID)&ref->next,&next,sizeof(next));
 		}
 		result= getMachine().push((VMREGTYPE)next);
 	}
