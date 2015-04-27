@@ -14,12 +14,13 @@ ULONG offsetOfValue(ULONG type) {
 		case MISC:
 		case BOOK:
 		case ALCHEMY:
+		case AMMO:
 		case WEAPON: return 0x16;
 		case LIGHT: return 0x17;
 		case INGREDIENT:
 		case LOCK:
 		case PROBE:
-		case 'REPA': return 0x2b;
+		case REPAIR: return 0x2b;
 		case ARMOR:
 		case CLOTHING: return 0x2c;
 		case APPARATUS: return 0x2d;
