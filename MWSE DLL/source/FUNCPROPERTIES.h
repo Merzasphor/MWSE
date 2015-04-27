@@ -330,6 +330,33 @@ private:
 	TES3MACHINE& machine;
 };
 
+class FUNCGETENCHANT : public FUNCTION
+{
+public:
+	FUNCGETENCHANT(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETENCHANTINFO : public FUNCTION
+{
+public:
+	FUNCGETENCHANTINFO(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETENCHANTEFFECTINFO : public FUNCTION
+{
+public:
+	FUNCGETENCHANTEFFECTINFO(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
 //GRM  15-01-2007 [use proper C++ class]
 class FUNCSETVALUE : public FUNCTION
 {

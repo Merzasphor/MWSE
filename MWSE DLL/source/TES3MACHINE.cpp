@@ -283,6 +283,9 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(GETSPELLEFFECTINFO, new FUNCGETSPELLEFFECTINFO(*this));
 	AddInstruction(SPELLLIST, new FUNCSPELLLIST(*this));
 	AddInstruction(GETSPELL, new FUNCGETSPELL(*this));
+	AddInstruction(GETENCHANT, new FUNCGETENCHANT(*this));
+	AddInstruction(GETENCHANTINFO, new FUNCGETENCHANTINFO(*this));
+	AddInstruction(GETENCHANTEFFECTINFO, new FUNCGETENCHANTEFFECTINFO(*this));
 
 	// Grant McDorman 16 Jan 2007
 #define ADDINSTRUCTION(name) AddInstruction(name, new FUNC##name(*this))

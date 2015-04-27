@@ -15,6 +15,8 @@ using namespace std;
 #include "warnings.h"
 
 static SPELRecord * GetSpellRecord(VMLONG spellId, TES3MACHINE & machine);
+static ENCHRecord * GetEnchantmentRecord(VMLONG enchId, TES3MACHINE & machine);
+static VMSHORT CountEffects(Effect const * effects);
 
 // These functions are used for validation in FUNCSETMAX... and for
 // retrieving the value in FUNCGETMAX... execute() methods.
@@ -532,20 +534,8 @@ bool FUNCSPELLLIST::execute(void)
 				name = reinterpret_cast<VMLONG>(strings.add(spell->friendlyName));
 				type = spell->type;
 				cost = spell->cost;
+				effects = CountEffects(spell->effects);
 				flags = spell->flags;
-
-				//count the number of effect slots in use
-				for (int i = 0; i < 8; ++i)
-				{
-					if (spell->effects[i].effectId != 0xFFFF)
-					{
-						++effects;
-					}
-					else
-					{
-						break;
-					}
-				}
 			}
 		}
 	}
@@ -602,20 +592,8 @@ bool FUNCGETSPELLINFO::execute(void)
 			name = reinterpret_cast<VMLONG>(strings.add(spell->friendlyName));
 			type = spell->type;
 			cost = spell->cost;
+			effects = CountEffects(spell->effects);
 			flags = spell->flags;
-
-			//count the number of effect slots in use
-			for (int i = 0; i < 8; ++i)
-			{
-				if (spell->effects[i].effectId != 0xFFFF)
-				{
-					++effects;
-				}
-				else
-				{
-					break;
-				}
-			}
 		}
 	}
 
@@ -664,6 +642,133 @@ bool FUNCGETSPELLEFFECTINFO::execute(void)
 #endif	
 	return machine.push(magMax) && machine.push(magMin) && machine.push(duration) && machine.push(area) && machine.push(rangeType) 
 		&& machine.push(static_cast<VMREGTYPE>(attributeId)) && machine.push(static_cast<VMREGTYPE>(skillId)) 
+		&& machine.push(static_cast<VMREGTYPE>(effectId));
+}
+
+bool FUNCGETENCHANT::execute(void)
+{
+	VMLONG enchId = 0;
+	VMSHORT type = 0;
+	VMSHORT cost = 0;
+	VMFLOAT currCharge = 0;
+	VMLONG maxCharge = 0;
+	VMSHORT effects = 0;
+	VMLONG autocalc = 0;
+	
+	VPVOID refr, temp;
+	unsigned long refType;
+
+	if (GetTargetData(machine, &refr, &temp, &refType))
+	{
+		if (refType == WEAPON || refType == ARMOR || refType == CLOTHING)
+		{
+			TES3REFERENCE * itemRef = reinterpret_cast<TES3REFERENCE*>(refr);
+			ENCHRecord * ench;
+	
+			if (refType == WEAPON)
+			{
+				WEAPRecord * weapon = reinterpret_cast<WEAPRecord*>(itemRef->templ);
+				ench = weapon->enchantment;
+			}
+			else if (refType == ARMOR)
+			{
+				ARMORecord * armor = reinterpret_cast<ARMORecord*>(itemRef->templ);
+				ench = armor->enchantment;			
+			}
+			else
+			{
+				CLOTRecord * clothing = reinterpret_cast<CLOTRecord*>(itemRef->templ);
+				ench = clothing->enchantment;
+			}
+
+			if (ench != 0)
+			{
+				enchId = reinterpret_cast<VMLONG>(strings.add(ench->id));
+				type = ench->type;
+				cost = ench->cost;
+				maxCharge = ench->charge;
+				effects = CountEffects(ench->effects);
+				autocalc = ench->autocalc;
+
+				// get the current charge
+				if (!GetAttachData(machine, refr, VARNODE, 4, currCharge))
+				{
+					currCharge = maxCharge;
+				}
+			}
+		}
+	}
+
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETENCHANT()\n",0);
+#endif	
+	return machine.push(autocalc) && machine.push(static_cast<VMREGTYPE>(effects)) && machine.push(maxCharge)
+		&& machine.push(currCharge) && machine.push(static_cast<VMREGTYPE>(cost)) 
+		&& machine.push(static_cast<VMREGTYPE>(type)) && machine.push(enchId);
+}
+
+bool FUNCGETENCHANTINFO::execute(void)
+{
+	VMLONG enchId;
+	VMSHORT type = 0;
+	VMSHORT cost = 0;
+	VMLONG maxCharge = 0;
+	VMSHORT effects = 0;
+	VMLONG autocalc = 0;
+
+	if (machine.pop(enchId))
+	{
+		ENCHRecord * ench = GetEnchantmentRecord(enchId, machine);
+		if (ench != 0)
+		{
+			type = ench->type;
+			cost = ench->cost;
+			maxCharge = ench->charge;
+			effects = CountEffects(ench->effects);
+			autocalc = ench->autocalc;
+		}
+	}
+
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETENCHANTINFO()\n",spellId);
+#endif	
+	return machine.push(autocalc) && machine.push(static_cast<VMREGTYPE>(effects)) && machine.push(maxCharge)
+		&& machine.push(static_cast<VMREGTYPE>(cost)) && machine.push(static_cast<VMREGTYPE>(type));
+}
+
+bool FUNCGETENCHANTEFFECTINFO::execute(void)
+{
+	VMLONG enchId;
+	VMLONG effectIndex;
+	VMSHORT effectId = -1;
+	VMLONG rangeType;
+	VMLONG area;
+	VMLONG duration;
+	VMLONG magMin;
+	VMLONG magMax;
+
+	if (machine.pop(enchId) && machine.pop(effectIndex))
+	{
+		if (1 <= effectIndex && effectIndex <= 8)
+		{			
+			ENCHRecord * ench = GetEnchantmentRecord(enchId, machine);
+			if (ench != 0)
+			{
+				--effectIndex; // 0-based array index
+				effectId = ench->effects[effectIndex].effectId;
+				rangeType = ench->effects[effectIndex].RangeType;
+				area = ench->effects[effectIndex].Area;
+				duration = ench->effects[effectIndex].Duration;
+				magMin = ench->effects[effectIndex].MagMin;
+				magMax = ench->effects[effectIndex].MagMax;
+			}
+		}
+	}
+
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETENCHANTEFFECTINFO()\n",spellId);
+#endif	
+	return machine.push(magMax) && machine.push(magMin) && machine.push(duration) && machine.push(area) && machine.push(rangeType) 
 		&& machine.push(static_cast<VMREGTYPE>(effectId));
 }
 
@@ -1752,10 +1857,46 @@ static SPELRecord * GetSpellRecord(VMLONG spellId, TES3MACHINE & machine)
 		char const * idString = machine.GetString(reinterpret_cast<VPVOID>(spellId));
 		TES3CELLMASTER* cellMaster = *(reinterpret_cast<TES3CELLMASTER**>reltolinear(MASTERCELL_IMAGE));
 		spell = reinterpret_cast<SPELRecord*>(cellMaster->recordLists->spellsList->head);
-		while (spell != 0 && strcmp(idString, spell->id) != 0)
+		// this list should only contain spells, but check the type anyway to be safe
+		while (spell != 0 && !(spell->recordType == RecordTypes::SPELL && strcmp(idString, spell->id) == 0))
 		{
 			spell = spell->nextRecord;
 		}
 	}
 	return spell;
+}
+
+static ENCHRecord * GetEnchantmentRecord(VMLONG enchId, TES3MACHINE & machine)
+{
+	ENCHRecord * ench = 0;
+	if (enchId != 0)
+	{
+		char const * idString = machine.GetString(reinterpret_cast<VPVOID>(enchId));
+		TES3CELLMASTER* cellMaster = *(reinterpret_cast<TES3CELLMASTER**>reltolinear(MASTERCELL_IMAGE));
+		ench = reinterpret_cast<ENCHRecord*>(cellMaster->recordLists->enchantmentsList->head);
+		// this list contains records that are not enchantments, so check the type
+		while (ench != 0 && !(ench->recordType == RecordTypes::ENCHANTMENT && strcmp(idString, ench->id) == 0))
+		{
+			ench = ench->nextRecord;
+		}
+	}
+	return ench;
+}
+
+static VMSHORT CountEffects(Effect const * effects)
+{
+	VMSHORT numEffects = 0;
+	//count the number of effect slots in use
+	for (int i = 0; i < 8; ++i)
+	{
+		if (effects[i].effectId != 0xFFFF)
+		{
+			++numEffects;
+		}
+		else
+		{
+			break;
+		}
+	}
+	return numEffects;
 }

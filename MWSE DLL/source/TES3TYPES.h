@@ -207,6 +207,7 @@ namespace RecordTypes {
 		CONT = 'TNOC', CONTAINER = CONT,
 		CREA = 'AERC', CREATURE = CREA,
 		DOOR = 'ROOD',
+		ENCH = 'HCNE', ENCHANTMENT = ENCH,
 		GLOB = 'BOLG', GLOBAL = GLOB,
 		INGR = 'RGNI', INGREDIENT = INGR,
 		LEVC = 'CVEL', LEVELLEDCREATURE = LEVC,
@@ -250,12 +251,51 @@ struct LinkedList
 
 struct RecordLists
 {
-	unsigned long unknown; // size?
-	unsigned long unknown2; // 0?
-	void * unknownPtr1; // might be list
-	void * unknownPtr2; // might be list
+	unsigned long unknown1; // = 0xD size?
+	unsigned long unknown2; // = 0 ???
+	LinkedList * unknownList1; // might be list
+	LinkedList * enchantmentsList; // also contains statics, maybe other stuff too
 	LinkedList * spellsList;
-	// may be longer
+	LinkedList * unknownList2; // might be list
+	LinkedList * unknownList3; // might be list
+	LinkedList * unknownList4; // might be list
+	LinkedList * unknownList5; // might be list
+	LinkedList * unknownList6; // might be list
+};
+
+struct Effect
+{
+	unsigned short effectId;
+	char  skillId;
+	char  AttributeId;
+	long  RangeType;		//0=SELF, 1=TOUCH, 2=TARGET
+	long  Area;
+	long  Duration;
+	long  MagMin;
+	long  MagMax;
+};
+
+struct ENCHRecord
+{
+	void * vTable;
+	RecordTypes::RecordType recordType;
+	int recordSize;
+	char * modNamePtr;
+	int unknown1;
+	LinkedList * enchantmentsList;
+	int unknown3;
+	ENCHRecord * prevRecord;
+	ENCHRecord * nextRecord;
+	int unknown4;			
+	char * id;
+
+	short type;	//0=CASTONCE, 1=CASTONSTRIKE, 2=CASTONUSED, 3=CONSTANT
+	short cost;
+	long charge;
+
+	Effect effects[8];
+
+	long autocalc;	//0=OFF, 1=ON
 };
 
 struct SPELRecord
@@ -275,18 +315,7 @@ struct SPELRecord
 	short type; //0=SPELL, 1=ABILITY, 2=BLIGHT, 3=DISEASE, 4=CURSE, 5=POWER
 	short cost;
 
-	//effect
-	struct
-	{
-		unsigned short effectId;
-		char  skillId;
-		char  AttributeId;
-		long  RangeType;		//0=SELF, 1=TOUCH, 2=TARGET
-		long  Area;
-		long  Duration;
-		long  MagMin;
-		long  MagMax;
-	} effects[8];
+	Effect effects[8];
 
 	long flags;	//1=AUTOCALC, 2=PCSTART, 4=ALWAYSSUCCEEDS
 };
@@ -379,6 +408,132 @@ struct NPCCopyRecord
 	LinkedListNode * equipedEnd;
 	int unknown16;
 	NPCBaseRecord * baseNPC;
+};
+
+struct ARMORecord
+{
+	// copied from WEAPRecord - needs to be verified
+	void * vTable;
+	RecordTypes::RecordType recordType; // "ARMO"
+	int recordSize;
+	char * modNamePtr;
+	int unknown1;
+	int unknown2;
+	int unknown3; //REFRRecord_t * first //nextOfSameTemplate
+	void * previousRecord;
+	void * nextRecord;
+	void * unknown4;
+	int unknown5;
+	char * IDStringPtr;
+	void * unknownFunctionPtr;
+	int unknown6;
+	int unknown7;
+	int unknown8;
+	int unknown9;
+	char * nameStringPtr;
+	int unknown10;	//char * scriptIDStringPtr;
+	char * nifStringPtr;
+	char * tgaStringPtr;
+	float weight;
+	int value;
+	/*short weaponType;
+	short maxCondition;
+	float speed;
+	float reach;
+	short enchantPoints;
+	char chopMin;
+	char chopMax;
+	char slashMin;
+	char slashMax;
+	char thrustMin;
+	char thrustMax;
+	long flags;*/
+	int unknowns[25];
+	ENCHRecord * enchantment;
+};
+
+struct CLOTRecord
+{
+	// copied from WEAPRecord - needs to be verified
+	void * vTable;
+	RecordTypes::RecordType recordType; // "CLOT"
+	int recordSize;
+	char * modNamePtr;
+	int unknown1;
+	int unknown2;
+	int unknown3; //REFRRecord_t * first //nextOfSameTemplate
+	void * previousRecord;
+	void * nextRecord;
+	void * unknown4;
+	int unknown5;
+	char * IDStringPtr;
+	void * unknownFunctionPtr;
+	int unknown6;
+	int unknown7;
+	int unknown8;
+	int unknown9;
+	char * nameStringPtr;
+	int unknown10;	//char * scriptIDStringPtr;
+	char * nifStringPtr;
+	char * tgaStringPtr;
+	float weight;
+	int value;
+	/*
+	short weaponType;
+	short maxCondition;
+	float speed;
+	float reach;
+	short enchantPoints;
+	char chopMin;
+	char chopMax;
+	char slashMin;
+	char slashMax;
+	char thrustMin;
+	char thrustMax;
+	long flags;
+	*/
+	int unknowns[22];
+	ENCHRecord * enchantment;
+};
+
+struct WEAPRecord
+{
+	void * vTable;
+	RecordTypes::RecordType recordType; // "WEAP"
+	int recordSize;
+	char * modNamePtr;
+	int unknown1;
+	int unknown2;
+	int unknown3; //REFRRecord_t * first //nextOfSameTemplate
+	void * previousRecord;
+	void * nextRecord;
+	void * unknown4;
+	int unknown5;
+	char * IDStringPtr;
+	void * unknownFunctionPtr;
+	int unknown6;
+	int unknown7;
+	int unknown8;
+	int unknown9;
+	char * nameStringPtr;
+	int unknown10;	//char * scriptIDStringPtr;
+	char * nifStringPtr;
+	char * tgaStringPtr;
+	float weight;
+	int value;
+	short weaponType;
+	short maxCondition;
+	float speed;
+	float reach;
+	short enchantPoints;
+	char chopMin;
+	char chopMax;
+	char slashMin;
+	char slashMax;
+	char thrustMin;
+	char thrustMax;
+	long flags;
+	ENCHRecord * enchantment;
 };
 
 struct TES3LOCK
