@@ -12,6 +12,8 @@
 
 static VPREFERENCE exteriors[9] = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
+static VPREFERENCE SkipRemovedRefs(TES3MACHINE &machine, VPREFERENCE ref);
+
 FUNCREF::FUNCREF(TES3MACHINE& vm) : machine(vm)
 {
 }
@@ -127,7 +129,10 @@ bool FUNCFIRSTNPC::execute(void)
 		&& getMachine().ReadMem((VPVOID)&cellmaster->interiorcell,&intcell,sizeof(intcell)))
 	{
 		if(intcell)
+		{
 			result= getMachine().ReadMem((VPVOID)&intcell->npc.first,&ref,sizeof(ref));
+			ref = SkipRemovedRefs(getMachine(), ref);
+		}
 		else
 		{
 			if(getMachine().ReadMem((VPVOID)&cellmaster->exteriorcells[CENTRE],&pcellptr,sizeof(pcellptr))
@@ -135,10 +140,10 @@ bool FUNCFIRSTNPC::execute(void)
 			{
 				if(cellptr.size==1)
 				{
-					// get the start of the npc list for the center cell. we'll check that it's valid later.
+					// get the start of the list for the center cell. we'll check that it's valid later.
 					result= getMachine().ReadMem((VPVOID)&cellptr.first->npc.first,&ref,sizeof(ref));
 					int extCount = 0;
-					// check the other exterior cells for npc lists
+					// check the other exterior cells for lists
 					for (i = 0; i < 9; ++i)
 					{
 						if (i == CENTRE)
@@ -149,22 +154,28 @@ bool FUNCFIRSTNPC::execute(void)
 						{
 							VPREFERENCE temp = 0;
 							getMachine().ReadMem((VPVOID)&cellptr.first->npc.first,&temp,sizeof(VPREFERENCE));
+							temp = SkipRemovedRefs(getMachine(), temp);
 							if (temp != 0)
 							{
+								// If we've made it here, temp is a valid reference.
 								exteriors[extCount] = temp;
 								++extCount;
 							}
 						}
 					}
 					exteriors[extCount] = 0;
-					// make sure the npc reference in the center cell is valid
+					
+					// Find the first reference in the center (player's) cell that's hasn't been removed.
+					ref = SkipRemovedRefs(getMachine(), ref);
+
+					// make sure the reference in the center cell is valid
 					// if not, use the reference from another exterior cell.
 					if (ref == 0 && extCount > 0)
 					{
-						ref = exteriors[extCount - 1];
-						exteriors[extCount - 1] = 0;
+						--extCount;
+						ref = exteriors[extCount];
+						exteriors[extCount] = 0;
 					}
-
 				}
 				else
 					result= true;
@@ -202,7 +213,10 @@ bool FUNCFIRSTITEM::execute(void)
 		&& getMachine().ReadMem((VPVOID)&cellmaster->interiorcell,&intcell,sizeof(intcell)))
 	{
 		if(intcell)
+		{
 			result= getMachine().ReadMem((VPVOID)&intcell->otheritems.first,&ref,sizeof(ref));
+			ref = SkipRemovedRefs(getMachine(), ref);
+		}
 		else
 		{
 			if(getMachine().ReadMem((VPVOID)&cellmaster->exteriorcells[CENTRE],&pcellptr,sizeof(pcellptr))
@@ -210,20 +224,41 @@ bool FUNCFIRSTITEM::execute(void)
 			{
 				if(cellptr.size==1)
 				{
+					// get the start of the list for the center cell. we'll check that it's valid later.
 					result= getMachine().ReadMem((VPVOID)&cellptr.first->otheritems.first,&ref,sizeof(ref));
-					for ( i=0; i<8; i++ )  // Read the other 8 exteriors too
+					int extCount = 0;
+					// check the other exterior cells for lists
+					for (i = 0; i < 9; ++i)
 					{
-						if(getMachine().ReadMem((VPVOID)&cellmaster->exteriorcells[(i<4?i:i+1)],&pcellptr,sizeof(pcellptr))
-							&& getMachine().ReadMem((VPVOID)pcellptr,&cellptr,sizeof(cellptr)))
+						if (i == CENTRE)
+							continue;
+						if(getMachine().ReadMem((VPVOID)&cellmaster->exteriorcells[i],&pcellptr,sizeof(pcellptr))
+							&& getMachine().ReadMem((VPVOID)pcellptr,&cellptr,sizeof(cellptr))
+							&& cellptr.size == 1)
 						{
-							if(cellptr.size==1)
-								getMachine().ReadMem((VPVOID)&cellptr.first->otheritems.first,&exteriors[i],sizeof(VPREFERENCE));
-							else
+							VPREFERENCE temp = 0;
+							getMachine().ReadMem((VPVOID)&cellptr.first->otheritems.first,&temp,sizeof(VPREFERENCE));
+							temp = SkipRemovedRefs(getMachine(), temp);
+							if (temp != 0)
 							{
-								exteriors[i] = 0;
-								i = 9;
+								// If we've made it here, temp is a valid reference.
+								exteriors[extCount] = temp;
+								++extCount;
 							}
 						}
+					}
+					exteriors[extCount] = 0;
+					
+					// Find the first reference in the center (player's) cell that's hasn't been removed.
+					ref = SkipRemovedRefs(getMachine(), ref);
+
+					// make sure the reference in the center cell is valid
+					// if not, use the reference from another exterior cell.
+					if (ref == 0 && extCount > 0)
+					{
+						--extCount;
+						ref = exteriors[extCount];
+						exteriors[extCount] = 0;
 					}
 				}
 				else
@@ -254,20 +289,61 @@ bool FUNCFIRSTSTATIC::execute(void)
 	TES3CELLPTR cellptr;
 	VPCELL intcell= 0;
 	VPREFERENCE ref= 0;
+	int i;
 	exteriors[0] = 0;
 
 	if((cellmaster || getMachine().ReadMem((VPVOID)reltolinear(MASTERCELL_IMAGE),&cellmaster,sizeof(cellmaster)))
 		&& getMachine().ReadMem((VPVOID)&cellmaster->interiorcell,&intcell,sizeof(intcell)))
 	{
 		if(intcell)
-			result = getMachine().ReadMem((VPVOID)&intcell->statics.first,&ref,sizeof(ref));
+		{
+			result= getMachine().ReadMem((VPVOID)&intcell->statics.first,&ref,sizeof(ref));
+			ref = SkipRemovedRefs(getMachine(), ref);
+		}
 		else
 		{
 			if(getMachine().ReadMem((VPVOID)&cellmaster->exteriorcells[CENTRE],&pcellptr,sizeof(pcellptr))
 				&& getMachine().ReadMem((VPVOID)pcellptr,&cellptr,sizeof(cellptr)))
 			{
 				if(cellptr.size==1)
+				{
+					// get the start of the list for the center cell. we'll check that it's valid later.
 					result= getMachine().ReadMem((VPVOID)&cellptr.first->statics.first,&ref,sizeof(ref));
+					int extCount = 0;
+					// check the other exterior cells for lists
+					for (i = 0; i < 9; ++i)
+					{
+						if (i == CENTRE)
+							continue;
+						if(getMachine().ReadMem((VPVOID)&cellmaster->exteriorcells[i],&pcellptr,sizeof(pcellptr))
+							&& getMachine().ReadMem((VPVOID)pcellptr,&cellptr,sizeof(cellptr))
+							&& cellptr.size == 1)
+						{
+							VPREFERENCE temp = 0;
+							getMachine().ReadMem((VPVOID)&cellptr.first->statics.first,&temp,sizeof(VPREFERENCE));
+							temp = SkipRemovedRefs(getMachine(), temp);
+							if (temp != 0)
+							{
+								// If we've made it here, temp is a valid reference.
+								exteriors[extCount] = temp;
+								++extCount;
+							}
+						}
+					}
+					exteriors[extCount] = 0;
+					
+					// Find the first reference in the center (player's) cell that's hasn't been removed.
+					ref = SkipRemovedRefs(getMachine(), ref);
+
+					// make sure the reference in the center cell is valid
+					// if not, use the reference from another exterior cell.
+					if (ref == 0 && extCount > 0)
+					{
+						--extCount;
+						ref = exteriors[extCount];
+						exteriors[extCount] = 0;
+					}
+				}
 				else
 					result= true;
 			}
@@ -299,6 +375,7 @@ bool FUNCNEXTREF::execute(void)
 		VPREFERENCE ref= (VPREFERENCE)pref;
 		int i;
 		getMachine().ReadMem((VPVOID)&ref->next,&next,sizeof(next));
+		next = SkipRemovedRefs(getMachine(), next);
 		if (next == 0 && exteriors[0] != 0)
 		{
 			next = exteriors[0];
@@ -416,4 +493,15 @@ bool FUNCGETREF::breakpoint()
 	machine.SetFlow(parent);
 	
 	return result;
+}
+
+static VPREFERENCE SkipRemovedRefs(TES3MACHINE &machine, VPREFERENCE ref)
+{
+	while (ref != 0 && (ref->flags & 0x20) == 0x20)
+	{
+		VPREFERENCE next;
+		machine.ReadMem((VPVOID)&ref->next, &next, sizeof(next));
+		ref = next;
+	}
+	return ref;
 }

@@ -102,7 +102,8 @@ struct TES3REFERENCE
 {
 	VPVOID vtable;
 	DWORD type;	// "REFR"
-	BYTE	unknown[0x18-sizeof(VPVOID)-sizeof(DWORD)];
+	DWORD flags;
+	BYTE	unknown[0x18 - sizeof(VPVOID) - 2 * sizeof(DWORD)];
 	TES3REFERENCE* nextofsametempl;
 	TES3REFERENCE* prev;
 	TES3REFERENCE* next;
