@@ -467,34 +467,66 @@ bool FUNCGETBASEUNARMORED::execute(void)
 
 bool FUNCGETPROGRESSLEVEL::execute(void)
 {
-	VPVOID refr;
-	VMLONG value = -1;
+	VMLONG progress = -1;
+	MACPRecord * macp = GetMACPRecord(machine);
 	
-	if (GetTargetData(machine, &refr))
-		GetAttachData(machine, refr, 8, 0x17A, value);
+	if (macp)
+	{
+		progress = macp->levelProgress;
+	}
+
 #ifdef DEBUGGING
-	cLog::mLogMessage("%f= FUNCGETPROGRESSLEVEL()\n",value);
+	cLog::mLogMessage("%f= FUNCGETPROGRESSLEVEL()\n",progress);
 #endif	
-	return machine.push(value);
+
+	return (machine.push(progress));
 }
 
 bool FUNCSETPROGRESSLEVEL::execute(void)
 {
-	VPVOID refr;
 	VMLONG progress = 0;
-	bool success = false;
+	bool result = false;
 	
-	if (GetTargetData(machine, &refr) && machine.pop(progress))
+	MACPRecord * macp = GetMACPRecord(machine);
+	
+	if (macp &&
+		machine.pop(progress) && progress > 0)
 	{
-		success = SetAttachData(machine, refr, 8, 0x17a, progress);
+		macp->levelProgress = progress;
+		result = true;
 	}
 
 #ifdef DEBUGGING
-    cLog::mLogMessage("%d:FUNCSETVALUE(%d)\n",success,progress);
+    cLog::mLogMessage("%d:FUNCSETPROGRESSLEVEL(%d)\n",result,progress);
 #endif	
 
-	return machine.push(static_cast<VMREGTYPE>(success));
+	return machine.push(static_cast<VMREGTYPE>(result));
 }
+
+bool FUNCMODPROGRESSLEVEL::execute(void)
+{
+	VMLONG mod = 0;
+	bool result = false;
+	
+	MACPRecord * macp = GetMACPRecord(machine);
+	
+	if (macp &&
+		machine.pop(mod))
+	{
+		long progress = mod + macp->levelProgress;
+		if (progress < 0)
+			progress = 0;
+		macp->levelProgress = progress;
+		result = true;
+	}
+
+#ifdef DEBUGGING
+    cLog::mLogMessage("%d:FUNCMODPROGRESSLEVEL(%d)\n",result,progress);
+#endif	
+
+	return machine.push(static_cast<VMREGTYPE>(result));
+}
+
 
 bool FUNCGETLOCKLEVEL::execute(void)
 {

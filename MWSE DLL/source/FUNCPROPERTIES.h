@@ -304,6 +304,15 @@ private:
    TES3MACHINE& machine;
 };
 
+class FUNCMODPROGRESSLEVEL : public FUNCTION
+{
+public:
+	FUNCMODPROGRESSLEVEL(TES3MACHINE& vm): machine(vm) { };
+   virtual bool execute(void);
+private:
+   TES3MACHINE& machine;
+};
+
 class FUNCGETLOCKLEVEL : public FUNCTION
 {
 public:
