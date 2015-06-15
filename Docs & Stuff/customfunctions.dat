@@ -1315,6 +1315,34 @@ function
 	Opcode = 0x3930
 end
 
+function
+	Name = XCreateArray
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Long
+	Param1 = Long
+	Param2 = Long
+	Opcode = 0x3931
+end
+
+function
+	Name = XGetArrayValue
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Long 
+	Param1 = Long | Float
+	Param2 = Long
+	Opcode = 0x3932
+end
+
+function
+	Name = XSetArrayValue
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Short
+	Param1 = Long
+	Param2 = Long
+	Param3 = Long | Float
+	Opcode = 0x3933
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll

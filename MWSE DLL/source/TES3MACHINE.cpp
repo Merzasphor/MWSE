@@ -42,6 +42,7 @@ using namespace std;
 #include "FUNCFILE.h"
 #include "FUNCINVENTORY.h"
 #include "FUNCGMST.h"
+#include "FUNCARRAY.h"
 #include "FUNCEXTENDER.h"
 
 #ifdef DEBUG
@@ -293,6 +294,9 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(MODPROGRESSSKILL, new FUNCMODPROGRESSSKILL(*this));
 	AddInstruction(GETBASESKILL, new FUNCGETBASESKILL(*this));
 	AddInstruction(MODPROGRESSLEVEL, new FUNCMODPROGRESSLEVEL(*this));
+	AddInstruction(CREATEARRAY, new FUNCCREATEARRAY(*this));
+	AddInstruction(GETARRAYVALUE, new FUNCGETARRAYVALUE(*this));
+	AddInstruction(SETARRAYVALUE, new FUNCSETARRAYVALUE(*this));
 
 	AddInstruction(GETGS, new FUNCGETGS(*this));
 	AddInstruction(SETGS, new FUNCSETGS(*this));

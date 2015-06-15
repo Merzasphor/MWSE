@@ -311,6 +311,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\FUNCARRAY.h"
+					>
+				</File>
+				<File
 					RelativePath=".\source\FUNCEXTENDER.h"
 					>
 				</File>
@@ -482,6 +486,10 @@
 				>
 				<File
 					RelativePath=".\source\FUNCAI.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\FUNCARRAY.cpp"
 					>
 				</File>
 				<File
