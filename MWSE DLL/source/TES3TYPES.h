@@ -214,7 +214,7 @@ namespace RecordTypes {
 		LEVI = 'IVEL', LEVELLEDITEM = LEVI,
 		LIGH = 'HGIL', LIGHT = LIGH,
 		LOCK = 'KCOL', LOCKPICK = LOCK,
-		MACP = 'PCAM', //?
+		MACP = 'PCAM',
 		MISC = 'CSIM',
 		NPC = '_CPN',
 		PICK = 'KCIP', //?
@@ -222,6 +222,7 @@ namespace RecordTypes {
 		REFR = 'RFER', REFERENCE = REFR,
 		REPA = 'APER', REPAIR = REPA,
 		SCPT = 'TPCS', SCRIPT = SCPT,
+		SKIL = 'LIKS', SKILL = SKIL,
 		SNDG = 'GDNS', SOUNDGENERATOR = SNDG,
 		SPEL = 'LEPS', SPELL = SPEL,
 		STAT = 'TATS', STATIC = STAT,
@@ -233,6 +234,63 @@ namespace RecordTypes {
 		VARNODE = 6,	//attachment where 'local' variables are stored, and the size of a stack, and the owner (if it has changed i think), and the script...
 		MACHNODE = 8	//PCAM
 	};
+};
+
+enum Attributes
+{
+	Strength,
+	Intelligence,
+	Willpower,
+	Agility,
+	Speed,
+	Endurance,
+	Personality,
+	Luck
+};
+
+enum SkillTypes
+{
+	Major,
+	Minor,
+	Misc
+};
+
+enum Specializations
+{
+	Combat,
+	Magic,
+	Stealth
+};
+
+enum Skills
+{
+	Block,
+	Armorer,
+	MediumArmor,
+	HeavyArmor,
+	BluntWeapon,
+	LongBlade,
+	Axe,
+	Spear,
+	Athletics,
+	Enchant,
+	Destruction,
+	Alteration,
+	Illusion,
+	Conjuration,
+	Mysticism,
+	Restoration,
+	Alchemy,
+	Unarmored,
+	Security,
+	Sneak,
+	Acrobatics,
+	LightArmor,
+	ShortBlade,
+	Marksman,
+	Mercantile,
+	Speechcraft,
+	HandToHand
 };
 
 struct LinkedListNode
@@ -613,6 +671,49 @@ struct WEAPRecord
 	char thrustMax;
 	long flags;
 	ENCHRecord * enchantment;
+};
+
+struct MACPRecord
+{
+	struct Skill
+	{
+		int unknown1;
+		float base;
+		float current;
+		SkillTypes skillType;
+	};
+	void * vTable; // 0
+	RecordTypes::RecordType recordType; // "MACP" // 4
+	int unknown1[3];										//8
+	void * reference; // unverified							//20
+	int unknown2[53];						//24
+	MACPRecord * combatTarget; // unverified // 236
+	int unknown3[162]; // 240
+	void * currentSpell; // unverfied // 888 
+	// notes from trunk:
+	//current selected spell	//this of course points to a SPEL or ENCH record ;)
+	//or the one after that, if i miscounted ;-), we'll see when we start using those.
+	//vTable + 0x378 is currentSpell @, so you can recount ;-).
+	int unknown4[13]; // 892
+	Skill skills[27]; // 944
+	int unknown5[34];  // 1376
+	long levelProgress; // 1512
+	int unknown6[2];  // 1516
+	float skillProgress[27]; // 1524
+};
+
+struct SKILRecord
+{
+	void * vTable;
+	RecordTypes::RecordType recordType; // SKIL
+	int unknown1;
+	void * ptr1; // pointer to head of list?
+	Skills skill;
+	Attributes attribute;
+	Specializations specialization;
+	float actions[4];
+	int unknown2;
+	int unknown3;
 };
 
 struct TES3LOCK

@@ -51,6 +51,9 @@ bool GetIdString(TES3MACHINE& vm, VPVOID temp, char *id);
 bool GetTargetData(TES3MACHINE& vm, VPVOID* refr, VPVOID* temp=0, ULONG* type=0, VPVOID* base=0);
 
 bool GetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, void* data, size_t size);
+
+void* GetAttachPointer(TES3MACHINE& vm, VPVOID ref, ULONG type);
+
 template<class T> bool GetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, T &data)
 {
     return GetAttachData(vm, ref, type, offset, reinterpret_cast<void *>(&data), sizeof(T));

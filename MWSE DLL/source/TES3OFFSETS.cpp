@@ -156,7 +156,10 @@ bool GetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, void* 
 				char dump[2048];
 				bool ret = GetOffsetData(vm, node.dataptr, 0, dump, 2048);
 				if (ret)
+				{
+					cLog::mLogMessage("Type 8 dump.\n");
 					cLog::mLogBinaryMessage(dump, 2048);
+				}
 				else
 					cLog::mLogMessage("Error dumping type 8.\n");
 			}*/
@@ -165,6 +168,27 @@ bool GetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, void* 
 	}
 	return false;
 }
+
+void* GetAttachPointer(TES3MACHINE& vm, VPVOID ref, ULONG type)
+{
+	VPVOID pnode = 0;
+	TES3LISTNODE node;
+	
+	GetOffsetData(vm, ref, 0x11, (ULONG*)&pnode); // attachments
+	while (pnode)
+	{
+		if (!vm.ReadMem(pnode,&node,sizeof(node)))
+			return 0;
+		if (node.type != type)
+			pnode = (VPVOID)node.next;
+		else
+		{
+			return node.dataptr;
+		}
+	}
+	return 0;
+}
+
 
 bool SetAttachData(TES3MACHINE& vm, VPVOID ref, ULONG type, ULONG offset, void *data, size_t size)
 {

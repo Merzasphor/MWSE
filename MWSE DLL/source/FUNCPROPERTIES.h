@@ -6,6 +6,43 @@
 #include "TES3OFFSETS.h"
 #include "STRINGS.h"
 
+class FUNCGETPROGRESSSKILL : public FUNCTION
+{
+public:
+	FUNCGETPROGRESSSKILL(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCSETPROGRESSSKILL : public FUNCTION
+{
+public:
+	FUNCSETPROGRESSSKILL(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCMODPROGRESSSKILL : public FUNCTION
+{
+public:
+	FUNCMODPROGRESSSKILL(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCGETBASESKILL : public FUNCTION
+{
+public:
+	FUNCGETBASESKILL(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+
 class FUNCGETBASEACROBATICS : public FUNCTION
 {
 public:

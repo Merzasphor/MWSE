@@ -18,6 +18,9 @@ static SPELRecord * GetSpellRecord(VMLONG const spellId, TES3MACHINE & machine);
 static ENCHRecord * GetEnchantmentRecord(VMLONG const enchId, TES3MACHINE & machine);
 static VMSHORT CountEffects(Effect const * effects);
 
+static CLASRecord * GetClassRecord(TES3MACHINE & machine);
+static MACPRecord * GetMACPRecord(TES3MACHINE & machine);
+
 // These functions are used for validation in FUNCSETMAX... and for
 // retrieving the value in FUNCGETMAX... execute() methods.
 static ULONG GetMaxCondition(TES3MACHINE &machine, VPVOID refr, ULONG type);
@@ -31,11 +34,91 @@ FUNCGETSPELLEFFECTS::FUNCGETSPELLEFFECTS(TES3MACHINE& vm) : machine(vm), HWBREAK
 {
 }
 
+bool FUNCGETPROGRESSSKILL::execute(void)
+{
+	VMLONG skillIndex;
+	VMFLOAT progress = -1.0;
+	MACPRecord * macp = GetMACPRecord(machine);
+	
+	if (macp && 
+		machine.pop(skillIndex) && skillIndex >= Block && skillIndex <= HandToHand)
+	{
+		progress = macp->skillProgress[skillIndex];
+	}
+
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETPROGRESSSKILL()\n",progress);
+#endif	
+	return (machine.push(progress));
+}
+
+bool FUNCSETPROGRESSSKILL::execute(void)
+{
+	VMLONG skillIndex;
+	VMFLOAT progress;
+	bool result = false;
+	MACPRecord * macp = GetMACPRecord(machine);
+	
+	if (macp && 
+		machine.pop(skillIndex) && skillIndex >= Block && skillIndex <= HandToHand &&
+		machine.pop(progress) && progress > 0)
+	{
+		macp->skillProgress[skillIndex] = progress;
+		result = true;
+	}
+
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCSETPROGRESSSKILL()\n",progress);
+#endif	
+	return (machine.push(static_cast<VMREGTYPE>(result)));
+}
+
+bool FUNCMODPROGRESSSKILL::execute(void)
+{
+	VMLONG skillIndex;
+	VMFLOAT mod;
+	bool result = false;
+	MACPRecord * macp = GetMACPRecord(machine);
+	
+	if (macp && 
+		machine.pop(skillIndex) && skillIndex >= Block && skillIndex <= HandToHand &&
+		machine.pop(mod))
+	{
+		float progress = mod + macp->skillProgress[skillIndex];
+		if (progress < 0)
+			progress = 0.0;
+		macp->skillProgress[skillIndex] = progress;
+		result = true;
+	}
+
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCMODPROGRESSSKILL()\n",progress);
+#endif	
+	return (machine.push(static_cast<VMREGTYPE>(result)));
+}
+
+bool FUNCGETBASESKILL::execute(void)
+{
+	VMLONG skillIndex;
+	VMFLOAT value = -1.0;
+	MACPRecord * macp = GetMACPRecord(machine);
+	
+	if (macp && machine.pop(skillIndex) && skillIndex >= Block && skillIndex <= HandToHand)
+	{
+		value = macp->skills[skillIndex].base;
+	}
+
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETBASESKILL()\n",value);
+#endif	
+	return (machine.push(value));
+}
+
 bool FUNCGETBASEACROBATICS::execute(void)
 {
 	VPVOID refr;
 	VMFLOAT value = -1.0;
-	
+
 	if (GetTargetData(machine, &refr))
 		GetAttachData(machine, refr, 8, 0x13d, value);
 #ifdef DEBUGGING
@@ -1956,4 +2039,39 @@ static VMSHORT CountEffects(Effect const * effects)
 		}
 	}
 	return numEffects;
+}
+
+static CLASRecord * GetClassRecord(TES3MACHINE & machine)
+{
+	VPVOID refr, temp;
+	unsigned long refType;
+	CLASRecord * charClass = 0;
+	
+	if (GetTargetData(machine, &refr, &temp, &refType) && refType == NPC)
+	{
+		TES3REFERENCE * npcRef = reinterpret_cast<TES3REFERENCE*>(refr);
+		NPCCopyRecord * npcCopy = reinterpret_cast<NPCCopyRecord*>(npcRef->templ);
+		charClass = npcCopy->baseNPC->characterClass;
+	}
+
+	return charClass;
+}
+
+static MACPRecord * GetMACPRecord(TES3MACHINE & machine)
+{
+	VPVOID refr;
+	MACPRecord * macp = 0;
+	if (GetTargetData(machine, &refr))
+	{
+		void* ptr = GetAttachPointer(machine, refr, 8);
+		if (ptr)
+		{
+			macp = reinterpret_cast<MACPRecord*>(ptr);
+			if (macp->recordType != RecordTypes::MACP)
+			{
+				return 0;
+			}
+		}
+	}
+	return macp;
 }
