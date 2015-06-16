@@ -1319,16 +1319,14 @@ function
 	Name = XCreateArray
 	Options = MWSE | AllowGlobal | ShortVar | AllowVar
 	Return = Long
-	Param1 = Long
-	Param2 = Long
 	Opcode = 0x3931
 end
 
 function
 	Name = XGetArrayValue
 	Options = MWSE | AllowGlobal | ShortVar | AllowVar
-	Return = Long 
-	Param1 = Long | Float
+	Return = Long
+	Param1 = Long
 	Param2 = Long
 	Opcode = 0x3932
 end
@@ -1339,7 +1337,7 @@ function
 	Return = Short
 	Param1 = Long
 	Param2 = Long
-	Param3 = Long | Float
+	Param3 = Long
 	Opcode = 0x3933
 end
 
