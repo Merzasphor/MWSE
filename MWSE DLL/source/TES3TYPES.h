@@ -208,6 +208,7 @@ namespace RecordTypes {
 		CREA = 'AERC', CREATURE = CREA,
 		DOOR = 'ROOD',
 		ENCH = 'HCNE', ENCHANTMENT = ENCH,
+		FACT = 'TCAF', FACTION = FACT,
 		GLOB = 'BOLG', GLOBAL = GLOB,
 		INGR = 'RGNI', INGREDIENT = INGR,
 		LEVC = 'CVEL', LEVELLEDCREATURE = LEVC,
@@ -319,6 +320,12 @@ struct RecordLists
 	LinkedList * unknownList4; // might be list
 	LinkedList * unknownList5; // might be list
 	LinkedList * unknownList6; // might be list
+};
+
+struct BaseRecord
+{
+	void * vTable;
+	RecordTypes::RecordType recordType;
 };
 
 struct Effect
@@ -714,6 +721,17 @@ struct SKILRecord
 	float actions[4];
 	int unknown2;
 	int unknown3;
+};
+
+struct FACTRecord
+{
+	void * vTable;
+	RecordTypes::RecordType recordType; // FACT
+	int unknown1[2];
+	char id[32];
+	char name[32];
+	char ranks[10][32];
+	int unknown2[71];
 };
 
 struct TES3LOCK

@@ -1213,18 +1213,23 @@ bool FUNCGETVALUE::execute(void)
 bool FUNCGETOWNER::execute(void)
 {
 	VPVOID refr;
-	ULONG data;
+	void * data;
 	ULONG id = 0;
-	char idstr[129];
-	idstr[128] = 0;
 	if (GetTargetData(machine, &refr))
 	{
 		if (GetAttachData(machine, refr, VARNODE, 1, &data) && data)
 		{
-			if (GetIdString(machine, (VPVOID)data, idstr))
-				id= (ULONG)strings.add((const char*)idstr);
-			else
-				id= (ULONG)strings.add("unknown");
+			BaseRecord * rec = reinterpret_cast<BaseRecord*>(data);
+			if (rec->recordType == RecordTypes::NPC)
+			{
+				NPCBaseRecord * npc = reinterpret_cast<NPCBaseRecord*>(rec);
+				id = reinterpret_cast<ULONG>(strings.add(npc->IDStringPtr));
+			}
+			else if (rec->recordType == RecordTypes::FACTION)
+			{
+				FACTRecord * fact = reinterpret_cast<FACTRecord*>(rec);
+				id = reinterpret_cast<ULONG>(strings.add(fact->id));
+			}
 		}
 	}
 #ifdef DEBUGGING
