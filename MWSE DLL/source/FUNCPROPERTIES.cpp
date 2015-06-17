@@ -61,7 +61,7 @@ bool FUNCSETPROGRESSSKILL::execute(void)
 	
 	if (macp && 
 		machine.pop(skillIndex) && skillIndex >= Block && skillIndex <= HandToHand &&
-		machine.pop(progress) && progress > 0)
+		machine.pop(progress) && progress >= 0)
 	{
 		macp->skillProgress[skillIndex] = progress;
 		result = true;
@@ -490,7 +490,7 @@ bool FUNCSETPROGRESSLEVEL::execute(void)
 	MACPRecord * macp = GetMACPRecord(machine);
 	
 	if (macp &&
-		machine.pop(progress) && progress > 0)
+		machine.pop(progress) && progress >= 0)
 	{
 		macp->levelProgress = progress;
 		result = true;
