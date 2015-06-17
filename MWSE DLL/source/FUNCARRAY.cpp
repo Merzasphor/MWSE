@@ -28,7 +28,7 @@ bool FUNCCREATEARRAY::execute(void)
 	}
 	else
 	{
-		cLog::mLogMessage("xCreateArray: Unable to create array. id: %d", id);
+		cLog::mLogMessage("xCreateArray: Unable to create array. id exceeds MAXARRAYID. id: %d\n", id);
 	}
 
 #ifdef DEBUGGING
@@ -51,15 +51,16 @@ bool FUNCGETARRAYVALUE::execute(void)
 			std::vector<long> const & a = arrays[id - 1];
 			if (index >= 0 && index < a.size())
 			{	
-				if (index <= a.size() - 1)
-				{
-					value = a[index];
-				}
-				else
-				{
-					cLog::mLogMessage("xGetArrayValue: Array index out of bounds. id: %d index: %d", id, index);
-				}
+				value = a[index];
 			}
+			else
+			{
+				cLog::mLogMessage("xGetArrayValue: Array index out of bounds. id: %d index: %d\n", id, index);
+			}
+		}
+		else
+		{
+			cLog::mLogMessage("xGetArrayValue: Invalid array id. id: %d\n", id);
 		}
 	}
 
@@ -73,17 +74,29 @@ bool FUNCSETARRAYVALUE::execute(void)
 	long value;
 	bool result = false;
 
-	if (machine.pop(id) && id > 0 && id <= MAXARRAYID
-		&& machine.pop(index) && index >= 0
-		&& machine.pop(value))
+	if (machine.pop(id) && machine.pop(index) && machine.pop(value))
 	{
-		std::vector<long> & a = arrays[id - 1];
-		if (index + 1 > a.size())
+		if (id > 0 && id <= MAXARRAYID)
 		{
-			a.resize(index + 1);
+			if (index >= 0)
+			{
+				std::vector<long> & a = arrays[id - 1];
+				if (index + 1 > a.size())
+				{
+					a.resize(index + 1);
+				}
+				a[index] = value;
+				result = true;
+			}
+			else
+			{
+				cLog::mLogMessage("xSetArrayValue: Array index out of bounds. id: %d index: %d\n", id, index);
+			}
 		}
-		a[index] = value;
-		result = true;
+		else
+		{
+			cLog::mLogMessage("xSetArrayValue: Invalid array id. id: %d\n", id);
+		}
 	}
 
 	return (machine.push(static_cast<VMREGTYPE>(result)));
