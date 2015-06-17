@@ -454,10 +454,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\MWSE_Launcher\ModuleVersion.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\source\ProcessMem.cpp"
 				>
 			</File>

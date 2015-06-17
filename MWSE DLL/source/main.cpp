@@ -1,8 +1,8 @@
 
 #include "cLog.h"
 #include "cMWSEmain.h"
-#include "ModuleVersion.h"
 
+#include <windows.h>
 #include <string>
 /*
  Most of this needs to be cleaned up, Every line is defiled.
@@ -34,6 +34,9 @@ void* _stdcall FakeDirect3DCreate(UINT version) {
 
 	return func(version);
 }*/
+
+std::string GetVersionString(char const * module);
+
 BOOL _stdcall DllMain(HANDLE hModule, DWORD reason, void* unused)
 {
 	switch(reason)
@@ -45,7 +48,7 @@ BOOL _stdcall DllMain(HANDLE hModule, DWORD reason, void* unused)
         char buffer[512];
         HMODULE thisModule = GetModuleHandle("MWSE.DLL");
         int length = GetModuleFileName(thisModule, buffer, sizeof buffer);
-        std::string version = ModuleVersion::getModuleVersion(buffer).getVersionString();
+        std::string version = GetVersionString(buffer);
 		cLog::mLogMessage("MWSE %s loaded\n", version.c_str());
         }
 		break;
@@ -71,4 +74,25 @@ BOOL _stdcall DllMain(HANDLE hModule, DWORD reason, void* unused)
 	cMWSEMain::mStartMWSE();
 
 	return true;
+}
+
+std::string GetVersionString(char const * module)
+{
+	DWORD dwUseless;
+
+    int length = GetFileVersionInfoSize(module, &dwUseless);
+    if (length == 0) {
+        throw new std::string("Could not get version info size");
+    }
+
+    void *data = alloca(length);
+    char *fileVersion;
+    UINT returnedSize;
+
+    GetFileVersionInfo(module, NULL, length, data);
+    
+    if (!VerQueryValue(data, "\\StringFileInfo\\040904B0\\FileVersion", reinterpret_cast<LPVOID *>(&fileVersion), &returnedSize)) {
+        throw new std::string("Could not get fixed version info");
+    }
+	return std::string(fileVersion);
 }
