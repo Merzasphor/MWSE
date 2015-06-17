@@ -1,3 +1,5 @@
-MorrowindScriptExtender.ncb
+*.ncb
+*.suo
 debug
 release
+
