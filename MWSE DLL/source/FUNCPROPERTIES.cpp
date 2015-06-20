@@ -61,7 +61,7 @@ bool FUNCSETPROGRESSSKILL::execute(void)
 	
 	if (macp && 
 		machine.pop(skillIndex) && skillIndex >= Block && skillIndex <= HandToHand &&
-		machine.pop(progress) && progress >= 0)
+		machine.pop(progress) && progress > 0)
 	{
 		macp->skillProgress[skillIndex] = progress;
 		result = true;
@@ -490,7 +490,7 @@ bool FUNCSETPROGRESSLEVEL::execute(void)
 	MACPRecord * macp = GetMACPRecord(machine);
 	
 	if (macp &&
-		machine.pop(progress) && progress >= 0)
+		machine.pop(progress) && progress > 0)
 	{
 		macp->levelProgress = progress;
 		result = true;
@@ -1213,23 +1213,18 @@ bool FUNCGETVALUE::execute(void)
 bool FUNCGETOWNER::execute(void)
 {
 	VPVOID refr;
-	void * data;
+	ULONG data;
 	ULONG id = 0;
+	char idstr[129];
+	idstr[128] = 0;
 	if (GetTargetData(machine, &refr))
 	{
 		if (GetAttachData(machine, refr, VARNODE, 1, &data) && data)
 		{
-			BaseRecord * rec = reinterpret_cast<BaseRecord*>(data);
-			if (rec->recordType == RecordTypes::NPC)
-			{
-				NPCBaseRecord * npc = reinterpret_cast<NPCBaseRecord*>(rec);
-				id = reinterpret_cast<ULONG>(strings.add(npc->IDStringPtr));
-			}
-			else if (rec->recordType == RecordTypes::FACTION)
-			{
-				FACTRecord * fact = reinterpret_cast<FACTRecord*>(rec);
-				id = reinterpret_cast<ULONG>(strings.add(fact->id));
-			}
+			if (GetIdString(machine, (VPVOID)data, idstr))
+				id= (ULONG)strings.add((const char*)idstr);
+			else
+				id= (ULONG)strings.add("unknown");
 		}
 	}
 #ifdef DEBUGGING
