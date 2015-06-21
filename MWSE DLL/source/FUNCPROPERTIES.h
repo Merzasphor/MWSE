@@ -549,6 +549,14 @@ private:
 	TES3MACHINE& machine;
 };
 
+struct FUNCGETOWNERINFO : public FUNCTION
+{
+	FUNCGETOWNERINFO(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
 struct FUNCGETWEIGHT : public FUNCTION
 {
 	FUNCGETWEIGHT(TES3MACHINE& vm) :machine(vm) {}

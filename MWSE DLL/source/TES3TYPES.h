@@ -734,6 +734,29 @@ struct FACTRecord
 	int unknown2[71];
 };
 
+struct GLOBRecord
+{
+	void * vTable;
+	RecordTypes::RecordType recordType; //GLOB
+	int unknown;
+	char * modName;
+	char id[32];
+	long type; // 'f' 's' 'l'
+	float value;
+	int unknown2[2];
+};
+
+struct OwnerInfo
+{
+	int unknown;
+	void * owner;
+	union
+	{
+		long rank;
+		void * variable;
+	} rankVar;
+};
+
 struct TES3LOCK
 {
 	VMSHORT lockLevel;

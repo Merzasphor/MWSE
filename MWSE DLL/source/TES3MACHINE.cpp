@@ -297,6 +297,7 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(CREATEARRAY, new FUNCCREATEARRAY(*this));
 	AddInstruction(GETARRAYVALUE, new FUNCGETARRAYVALUE(*this));
 	AddInstruction(SETARRAYVALUE, new FUNCSETARRAYVALUE(*this));
+	AddInstruction(GETOWNERINFO, new FUNCGETOWNERINFO(*this));
 
 	AddInstruction(GETGS, new FUNCGETGS(*this));
 	AddInstruction(SETGS, new FUNCSETGS(*this));

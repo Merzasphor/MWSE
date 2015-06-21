@@ -442,6 +442,7 @@ typedef enum {
 	,CREATEARRAY        = 0x3931
 	,GETARRAYVALUE      = 0x3932
 	,SETARRAYVALUE      = 0x3933
+	,GETOWNERINFO		= 0x3934
 
 	,GETGS              = 0x3A00
 	,SETGS				= 0x3A01

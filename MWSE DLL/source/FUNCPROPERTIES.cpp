@@ -1234,6 +1234,48 @@ bool FUNCGETOWNER::execute(void)
 	return machine.push((VMREGTYPE)id);
 }
 
+bool FUNCGETOWNERINFO::execute(void)
+{
+	VPVOID refr;
+	long id = 0;
+	long rankVar = 0;
+	long type = 0;
+	if (GetTargetData(machine, &refr))
+	{
+		OwnerInfo * info = reinterpret_cast<OwnerInfo*>(GetAttachPointer(machine, refr, VARNODE));
+		if (info)
+		{
+			BaseRecord * rec = reinterpret_cast<BaseRecord*>(info->owner);
+			if (rec)
+			{
+				if (rec->recordType == RecordTypes::NPC)
+				{
+					NPCBaseRecord * npc = reinterpret_cast<NPCBaseRecord*>(rec);
+					id = reinterpret_cast<ULONG>(strings.add(npc->IDStringPtr));
+					type = 1;
+					if (info->rankVar.variable)
+					{
+						GLOBRecord * global = reinterpret_cast<GLOBRecord*>(info->rankVar.variable);
+						rankVar = reinterpret_cast<long>(strings.add(global->id));
+					}
+				}
+				else if (rec->recordType == RecordTypes::FACTION)
+				{
+					FACTRecord * fact = reinterpret_cast<FACTRecord*>(rec);
+					id = reinterpret_cast<long>(strings.add(fact->id));
+					rankVar = info->rankVar.rank;
+					type = 2;
+				}
+			}
+		}
+	}
+#ifdef DEBUGGING
+	cLog::mLogMessage("%lx %s= FUNCGETOWNER()\n",id, (id?(char*)id:"(null)"));
+#endif	
+		
+	return (machine.push(rankVar) && machine.push(id) && machine.push(type));
+}
+
 
 bool FUNCGETWEIGHT::execute(void)
 {
