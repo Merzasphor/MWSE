@@ -388,3 +388,16 @@ bool INSTHYPOT::execute(void)
 #endif	
 	return result;
 }
+
+bool INSTPOW::execute(void)
+{
+	VMFLOAT base, exponent;
+	VMFLOAT result = 0;
+
+	if (machine.pop(base) && machine.pop(exponent))
+	{
+		result = powf(base, exponent);
+	}
+
+	return machine.push(result);
+}

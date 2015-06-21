@@ -1348,6 +1348,15 @@ function
 	Opcode = 0x3934
 end
 
+function
+	Name = XPow
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Float
+	Param1 = Float
+	Param2 = Float
+	Opcode = 0x383A
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll

@@ -266,6 +266,7 @@ typedef enum {
 	,RADDEG=		0x3837
 	,SQRT=			0x3838
 	,HYPOT=			0x3839
+	,POW=           0x383A
 	
 	,GETLOCAL=		0x3C00
 	,GETFOREIGN=	0x3C01

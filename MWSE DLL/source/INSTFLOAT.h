@@ -132,3 +132,12 @@ private:
 	VIRTUALMACHINE& machine;
 };
 
+class INSTPOW : public INSTRUCTION
+{
+public:
+	INSTPOW(VIRTUALMACHINE& vm) : machine(vm) {}
+	virtual bool execute(void);
+private:	
+	VIRTUALMACHINE& machine;
+};
+
