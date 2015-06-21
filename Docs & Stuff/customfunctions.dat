@@ -1357,6 +1357,15 @@ function
 	Opcode = 0x383A
 end
 
+function
+	Name = XShift
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Long
+	Param1 = Long
+	Param2 = Long
+	Opcode = 0x3935
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll

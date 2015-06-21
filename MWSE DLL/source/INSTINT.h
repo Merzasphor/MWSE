@@ -43,3 +43,12 @@ struct INSTMOD : public INSTRUCTION
 private:	
 	VIRTUALMACHINE& machine;
 };
+
+class INSTSHIFT : public INSTRUCTION
+{
+public:
+	INSTSHIFT(VIRTUALMACHINE& vm) : machine(vm) {}
+	virtual bool execute(void);
+private:	
+	VIRTUALMACHINE& machine;
+};

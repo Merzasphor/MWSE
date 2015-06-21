@@ -107,3 +107,23 @@ bool INSTMOD::execute(void)
 #endif	
 	return result;
 }
+
+bool INSTSHIFT::execute(void)
+{
+	VMLONG value, magnitude;
+	VMLONG result = 0;
+	if(machine.pop(value) && machine.pop(magnitude))
+	{
+		if (magnitude < 0)
+		{
+			result = value >> abs(magnitude);
+		}
+		else
+		{
+			result = value << magnitude;
+		}
+	}
+	
+	return machine.push(result);
+}
+
