@@ -88,3 +88,12 @@ public:
 private:	
 	VIRTUALMACHINE& machine;
 };
+
+class INSTAND : public INSTRUCTION
+{
+public:
+	INSTAND(VIRTUALMACHINE& vm) : machine(vm) {}
+	virtual bool execute(void);
+private:	
+	VIRTUALMACHINE& machine;
+};
