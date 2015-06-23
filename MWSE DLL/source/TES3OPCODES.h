@@ -450,6 +450,7 @@ typedef enum {
 	,BITXOR				= 0x3938
 	,BITNOT				= 0x3939
 	,AND				= 0x393A
+	,OR					= 0x393B
 
 	,GETGS              = 0x3A00
 	,SETGS				= 0x3A01

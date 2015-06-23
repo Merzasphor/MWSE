@@ -97,3 +97,12 @@ public:
 private:	
 	VIRTUALMACHINE& machine;
 };
+
+class INSTOR : public INSTRUCTION
+{
+public:
+	INSTOR(VIRTUALMACHINE& vm) : machine(vm) {}
+	virtual bool execute(void);
+private:	
+	VIRTUALMACHINE& machine;
+};

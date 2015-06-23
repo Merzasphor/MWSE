@@ -1410,6 +1410,15 @@ function
 	Opcode = 0x393A
 end
 
+function
+	Name = XOr
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Long
+	Param1 = Long
+	Param2 = Long
+	Opcode = 0x393B
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll
