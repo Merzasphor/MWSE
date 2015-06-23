@@ -79,3 +79,12 @@ public:
 private:	
 	VIRTUALMACHINE& machine;
 };
+
+class INSTBITNOT : public INSTRUCTION
+{
+public:
+	INSTBITNOT(VIRTUALMACHINE& vm) : machine(vm) {}
+	virtual bool execute(void);
+private:	
+	VIRTUALMACHINE& machine;
+};

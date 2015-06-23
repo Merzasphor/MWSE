@@ -1393,6 +1393,14 @@ function
 	Opcode = 0x3938
 end
 
+function
+	Name = XBitNot
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Long
+	Param1 = Long
+	Opcode = 0x3939
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll

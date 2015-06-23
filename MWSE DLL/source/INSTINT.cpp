@@ -165,3 +165,16 @@ bool INSTBITXOR::execute(void)
 	
 	return machine.push(result);
 }
+
+bool INSTBITNOT::execute(void)
+{
+	VMLONG a;
+	VMLONG result = 0;
+
+	if(machine.pop(a))
+	{
+		result = ~a;
+	}
+	
+	return machine.push(result);
+}
