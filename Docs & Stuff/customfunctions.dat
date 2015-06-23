@@ -1375,6 +1375,15 @@ function
 	Opcode = 0x3936
 end
 
+function
+	Name = XBitOr
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Long
+	Param1 = Long
+	Param2 = Long
+	Opcode = 0x3937
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll

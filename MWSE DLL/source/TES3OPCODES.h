@@ -446,6 +446,7 @@ typedef enum {
 	,GETOWNERINFO		= 0x3934
 	,SHIFT				= 0x3935
 	,BITAND				= 0x3936
+	,BITOR				= 0x3937
 
 	,GETGS              = 0x3A00
 	,SETGS				= 0x3A01

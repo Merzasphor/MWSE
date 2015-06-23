@@ -61,3 +61,12 @@ public:
 private:	
 	VIRTUALMACHINE& machine;
 };
+
+class INSTBITOR : public INSTRUCTION
+{
+public:
+	INSTBITOR(VIRTUALMACHINE& vm) : machine(vm) {}
+	virtual bool execute(void);
+private:	
+	VIRTUALMACHINE& machine;
+};
