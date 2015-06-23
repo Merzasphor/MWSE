@@ -300,6 +300,7 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(GETOWNERINFO, new FUNCGETOWNERINFO(*this));
 	AddInstruction(POW, new INSTPOW(*this));
 	AddInstruction(SHIFT, new INSTSHIFT(*this));
+	AddInstruction(BITAND, new INSTBITAND(*this));
 
 	AddInstruction(GETGS, new FUNCGETGS(*this));
 	AddInstruction(SETGS, new FUNCSETGS(*this));

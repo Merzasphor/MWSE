@@ -52,3 +52,12 @@ public:
 private:	
 	VIRTUALMACHINE& machine;
 };
+
+class INSTBITAND : public INSTRUCTION
+{
+public:
+	INSTBITAND(VIRTUALMACHINE& vm) : machine(vm) {}
+	virtual bool execute(void);
+private:	
+	VIRTUALMACHINE& machine;
+};
