@@ -306,6 +306,7 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(BITNOT, new INSTBITNOT(*this));
 	AddInstruction(AND, new INSTAND(*this));
 	AddInstruction(OR, new INSTOR(*this));
+	AddInstruction(XOR, new INSTXOR(*this));
 
 	AddInstruction(GETGS, new FUNCGETGS(*this));
 	AddInstruction(SETGS, new FUNCSETGS(*this));

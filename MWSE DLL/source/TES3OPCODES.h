@@ -451,6 +451,7 @@ typedef enum {
 	,BITNOT				= 0x3939
 	,AND				= 0x393A
 	,OR					= 0x393B
+	,XOR				= 0x393C
 
 	,GETGS              = 0x3A00
 	,SETGS				= 0x3A01

@@ -204,3 +204,16 @@ bool INSTOR::execute(void)
 	
 	return machine.push(result);
 }
+
+bool INSTXOR::execute(void)
+{
+	VMLONG a, b;
+	VMLONG result = 0;
+
+	if(machine.pop(a) && machine.pop(b))
+	{
+		result = (a || b) && !(a && b);
+	}
+	
+	return machine.push(result);
+}

@@ -106,3 +106,12 @@ public:
 private:	
 	VIRTUALMACHINE& machine;
 };
+
+class INSTXOR : public INSTRUCTION
+{
+public:
+	INSTXOR(VIRTUALMACHINE& vm) : machine(vm) {}
+	virtual bool execute(void);
+private:	
+	VIRTUALMACHINE& machine;
+};
