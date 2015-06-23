@@ -70,3 +70,12 @@ public:
 private:	
 	VIRTUALMACHINE& machine;
 };
+
+class INSTBITXOR : public INSTRUCTION
+{
+public:
+	INSTBITXOR(VIRTUALMACHINE& vm) : machine(vm) {}
+	virtual bool execute(void);
+private:	
+	VIRTUALMACHINE& machine;
+};

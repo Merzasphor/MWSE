@@ -153,3 +153,15 @@ bool INSTBITOR::execute(void)
 	return machine.push(result);
 }
 
+bool INSTBITXOR::execute(void)
+{
+	VMLONG a, b;
+	VMLONG result = 0;
+
+	if(machine.pop(a) && machine.pop(b))
+	{
+		result = a ^ b;
+	}
+	
+	return machine.push(result);
+}
