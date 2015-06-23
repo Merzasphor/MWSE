@@ -1428,6 +1428,14 @@ function
 	Opcode = 0x393C
 end
 
+function
+	Name = XNot
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Long
+	Param1 = Long
+	Opcode = 0x393D
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll

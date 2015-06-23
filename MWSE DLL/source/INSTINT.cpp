@@ -217,3 +217,16 @@ bool INSTXOR::execute(void)
 	
 	return machine.push(result);
 }
+
+bool INSTNOT::execute(void)
+{
+	VMLONG a;
+	VMLONG result = 0;
+
+	if(machine.pop(a))
+	{
+		result = !a;
+	}
+	
+	return machine.push(result);
+}
