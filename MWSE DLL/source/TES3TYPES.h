@@ -308,18 +308,29 @@ struct LinkedList
 	void * tail;
 };
 
+struct SKILRecord
+{
+	void * vTable;
+	RecordTypes::RecordType recordType; // SKIL
+	int unknown1;
+	void * ptr1; // pointer to first array element?
+	Skills skill;
+	Attributes attribute;
+	Specializations specialization;
+	float actions[4];
+	int unknown2;
+	int unknown3;
+};
+
 struct RecordLists
 {
-	unsigned long unknown1; // = 0xD size?
-	unsigned long unknown2; // = 0 ???
-	LinkedList * unknownList1; // might be list
+	unsigned long unknown1; // 
+	unsigned long unknown2; // always 0 ???
+	void * unknown3; // points to info about the last loaded save
 	LinkedList * enchantmentsList; // also contains statics, maybe other stuff too
 	LinkedList * spellsList;
-	LinkedList * unknownList2; // might be list
-	LinkedList * unknownList3; // might be list
-	LinkedList * unknownList4; // might be list
-	LinkedList * unknownList5; // might be list
-	LinkedList * unknownList6; // might be list
+	void * unknown4[14]; // pointers? [1] = array of pointers to GMSTs
+	SKILRecord skills[27];
 };
 
 struct BaseRecord
@@ -709,19 +720,7 @@ struct MACPRecord
 	float skillProgress[27]; // 1524
 };
 
-struct SKILRecord
-{
-	void * vTable;
-	RecordTypes::RecordType recordType; // SKIL
-	int unknown1;
-	void * ptr1; // pointer to head of list?
-	Skills skill;
-	Attributes attribute;
-	Specializations specialization;
-	float actions[4];
-	int unknown2;
-	int unknown3;
-};
+
 
 struct FACTRecord
 {
@@ -771,7 +770,8 @@ struct TES3CELLMASTER
 {
 	RecordLists * recordLists;
 	VPCELLPTR exteriorcells[9];
-	BYTE unknown2[0xac-0x4-9*sizeof(VPCELLPTR)];
+	int unknown[33];
 	VPCELL	interiorcell;
+	int unknown2[4];
 };
 typedef TES3CELLMASTER* VPCELLMASTER;
