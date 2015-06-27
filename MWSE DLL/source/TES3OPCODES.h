@@ -453,6 +453,8 @@ typedef enum {
 	,OR					= 0x393B
 	,XOR				= 0x393C
 	,NOT				= 0x393D
+	,GETGLOBAL			= 0x393E
+	,SETGLOBAL			= 0x393F
 
 	,GETGS              = 0x3A00
 	,SETGS				= 0x3A01

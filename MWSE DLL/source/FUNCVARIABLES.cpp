@@ -5,6 +5,57 @@
 #include "TES3OPCODES.h"
 #include "DEBUGGING.h"
 
+GLOBRecord * findGlobalRecord(char const * const id)
+{
+	int const findGLOB = 0x4BA820; // address of native MW function
+	GLOBRecord * foundRecord;
+	__asm
+	{
+		mov ecx,dword ptr ds:[0x7C67E0]; //masterCellImage
+		mov ecx, [ecx];
+		push id;
+		call findGLOB;
+		mov foundRecord, eax;
+	}
+	return foundRecord;
+}
+
+bool FUNCGETGLOBAL::execute(void)
+{
+	VMFLOAT value = 0;
+	VMLONG idPtr;
+	VMLONG result = 0;
+	if (machine.pop(idPtr))
+	{
+		char const * const idString = reinterpret_cast<char * const>(idPtr);
+		GLOBRecord const * const global = findGlobalRecord(idString);
+		if (global)
+		{
+			value = global->value;
+			result = 1;
+		}
+	}
+	return machine.push(value) && machine.push(result);
+}
+
+bool FUNCSETGLOBAL::execute(void)
+{
+	VMFLOAT value;
+	VMLONG idPtr;
+	VMLONG result = 0;
+	if (machine.pop(idPtr) && machine.pop(value))
+	{
+		char const * const idString = reinterpret_cast<char * const>(idPtr);
+		GLOBRecord * const global = findGlobalRecord(idString);
+		if (global)
+		{
+			global->value = value;
+			result = 1;
+		}
+	}
+	return machine.push(result);
+}
+
 bool FUNCFLOATSTOLONG::execute(void)
 {
 	VMFLOAT val1, val2;

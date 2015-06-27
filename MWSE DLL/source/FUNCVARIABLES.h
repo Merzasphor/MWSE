@@ -4,6 +4,24 @@
 #include "TES3MACHINE.h"
 #include "FUNCTION.h"
 
+class FUNCGETGLOBAL : public FUNCTION
+{
+public:
+	FUNCGETGLOBAL(TES3MACHINE& vm) : machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
+class FUNCSETGLOBAL : public FUNCTION
+{
+public:
+	FUNCSETGLOBAL(TES3MACHINE& vm) : machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
 class FUNCFLOATSTOLONG : public FUNCTION
 {
 public:

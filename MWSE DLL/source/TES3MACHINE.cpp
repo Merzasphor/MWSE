@@ -308,6 +308,8 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(OR, new INSTOR(*this));
 	AddInstruction(XOR, new INSTXOR(*this));
 	AddInstruction(NOT, new INSTNOT(*this));
+	AddInstruction(GETGLOBAL, new FUNCGETGLOBAL(*this));
+	AddInstruction(SETGLOBAL, new FUNCSETGLOBAL(*this));
 
 	AddInstruction(GETGS, new FUNCGETGS(*this));
 	AddInstruction(SETGS, new FUNCSETGS(*this));
