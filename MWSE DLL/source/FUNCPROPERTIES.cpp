@@ -1251,7 +1251,7 @@ bool FUNCGETOWNERINFO::execute(void)
 				if (rec->recordType == RecordTypes::NPC)
 				{
 					NPCBaseRecord * npc = reinterpret_cast<NPCBaseRecord*>(rec);
-					id = reinterpret_cast<ULONG>(strings.add(npc->IDStringPtr));
+					id = reinterpret_cast<long>(strings.add(npc->IDStringPtr));
 					type = 1;
 					if (info->rankVar.variable)
 					{
