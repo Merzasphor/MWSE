@@ -95,11 +95,21 @@ bool FUNCMODPROGRESSSKILL::execute(void)
 		machine.pop(mod) &&
 		machine.pop(normalized))
 	{
+		float progress = macp->skillProgress[skillIndex];
 		if (normalized)
 		{
-			mod = GetSkillRequirement(machine, static_cast<Skills>(skillIndex)) * mod / 100;
+			float const requirement = GetSkillRequirement(machine, static_cast<Skills>(skillIndex));
+			
+			// normalize progress, then add mod, then convert back.
+			// this avoids some floating point precision errors.
+			progress = 100 * progress /requirement;
+			progress += mod;
+			progress = requirement * progress / 100;
 		}
-		float progress = mod + macp->skillProgress[skillIndex];
+		else
+		{
+			progress += mod;
+		}
 		if (progress < 0)
 			progress = 0.0;
 		macp->skillProgress[skillIndex] = progress;
