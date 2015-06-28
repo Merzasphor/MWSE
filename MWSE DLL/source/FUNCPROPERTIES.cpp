@@ -2174,27 +2174,26 @@ static float GetSkillRequirement(TES3MACHINE & machine, Skills skillIndex)
 		TES3CELLMASTER* cellMaster = *(reinterpret_cast<TES3CELLMASTER**>reltolinear(MASTERCELL_IMAGE));
 		GMSTRecord ** gmsts = cellMaster->recordLists->GMSTs;
 		MACPRecord::Skill const & s = macp->skills[skillIndex];
-		float bonus = 0;
+		requirement = 1 + macp->skills[skillIndex].base;
 		if (s.skillType == Misc)
 		{
-			bonus = gmsts[fMiscSkillBonus]->value.fVal;
+			requirement *= gmsts[fMiscSkillBonus]->value.fVal;
 		}
 		else if (s.skillType == Minor)
 		{
-			bonus = gmsts[fMinorSkillBonus]->value.fVal;
+			requirement *= gmsts[fMinorSkillBonus]->value.fVal;
 		}
 		else if (s.skillType == Major)
 		{
-			bonus = gmsts[fMajorSkillBonus]->value.fVal;
+			requirement *= gmsts[fMajorSkillBonus]->value.fVal;
 		}
 		
 		CLASRecord const * const charClass = GetClassRecord(machine);
 		SKILRecord const & currSkill = cellMaster->recordLists->skills[skillIndex];
 		if (charClass->specialization == currSkill.specialization)
 		{
-			bonus *= gmsts[fSpecialSkillBonus]->value.fVal;
+			requirement *= gmsts[fSpecialSkillBonus]->value.fVal;
 		}
-		requirement = (1 + macp->skills[skillIndex].base) * bonus;
 	}
 	return requirement;
 }
