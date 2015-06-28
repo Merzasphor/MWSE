@@ -240,6 +240,7 @@ namespace RecordTypes {
 
 enum GMSTs
 {
+	iLevelupTotal = 1088,
 	fSpecialSkillBonus = 1161,
 	fMajorSkillBonus,
 	fMinorSkillBonus,

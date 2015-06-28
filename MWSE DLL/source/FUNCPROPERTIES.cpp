@@ -22,6 +22,7 @@ static CLASRecord * GetClassRecord(TES3MACHINE & machine);
 static MACPRecord * GetMACPRecord(TES3MACHINE & machine);
 static float GetSkillRequirement(TES3MACHINE & machine, Skills skillIndex);
 static void CheckForSkillUp(MACPRecord * macp, Skills skillIndex);
+static void CheckForLevelUp(long const progress);
 
 // These functions are used for validation in FUNCSETMAX... and for
 // retrieving the value in FUNCGETMAX... execute() methods.
@@ -550,6 +551,7 @@ bool FUNCSETPROGRESSLEVEL::execute(void)
 		machine.pop(progress) && progress > 0)
 	{
 		macp->levelProgress = progress;
+		CheckForLevelUp(progress);
 		result = true;
 	}
 
@@ -574,6 +576,7 @@ bool FUNCMODPROGRESSLEVEL::execute(void)
 		if (progress < 0)
 			progress = 0;
 		macp->levelProgress = progress;
+		CheckForLevelUp(progress);
 		result = true;
 	}
 
@@ -2248,5 +2251,26 @@ static void CheckForSkillUp(MACPRecord * macp, Skills skillIndex)
 		mov ecx, macp;
 		push skillIndex;
 		call skillUp;
+	}
+}
+
+static void CheckForLevelUp(long const progress)
+{
+	TES3CELLMASTER* cellMaster = *(reinterpret_cast<TES3CELLMASTER**>reltolinear(MASTERCELL_IMAGE));
+	GMSTRecord ** gmsts = cellMaster->recordLists->GMSTs;
+	if (progress >= gmsts[iLevelupTotal]->value.lVal)
+	{
+		int const loadMessage = 0x40F930;
+		int const displayMessage = 0x5F90C0;
+		__asm
+		{
+			mov ecx, dword ptr [0x7C67DC];
+			push 0x1;
+			push 0x0;
+			push 0x2AA;
+			call loadMessage;
+			push eax;
+			call displayMessage;
+		}
 	}
 }
