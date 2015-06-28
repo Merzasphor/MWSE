@@ -21,6 +21,7 @@ static VMSHORT CountEffects(Effect const * effects);
 static CLASRecord * GetClassRecord(TES3MACHINE & machine);
 static MACPRecord * GetMACPRecord(TES3MACHINE & machine);
 static float GetSkillRequirement(TES3MACHINE & machine, Skills skillIndex);
+static void CheckForSkillUp(MACPRecord * macp, Skills skillIndex);
 
 // These functions are used for validation in FUNCSETMAX... and for
 // retrieving the value in FUNCGETMAX... execute() methods.
@@ -73,6 +74,7 @@ bool FUNCSETPROGRESSSKILL::execute(void)
 			progress = GetSkillRequirement(machine, static_cast<Skills>(skillIndex)) * progress / 100;
 		}
 		macp->skillProgress[skillIndex] = progress;
+		CheckForSkillUp(macp, static_cast<Skills>(skillIndex));
 		result = true;
 	}
 
@@ -113,6 +115,7 @@ bool FUNCMODPROGRESSSKILL::execute(void)
 		if (progress < 0)
 			progress = 0.0;
 		macp->skillProgress[skillIndex] = progress;
+		CheckForSkillUp(macp, static_cast<Skills>(skillIndex));
 		result = true;
 	}
 
@@ -2206,4 +2209,15 @@ static float GetSkillRequirement(TES3MACHINE & machine, Skills skillIndex)
 		}
 	}
 	return requirement;
+}
+
+static void CheckForSkillUp(MACPRecord * macp, Skills skillIndex)
+{
+	int const skillUp = 0x56BBE0; // address of native MW function
+	__asm
+	{
+		mov ecx, macp;
+		push skillIndex;
+		call skillUp;
+	}
 }
