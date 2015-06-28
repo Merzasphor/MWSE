@@ -20,7 +20,7 @@ static VMSHORT CountEffects(Effect const * effects);
 
 static CLASRecord * GetClassRecord(TES3MACHINE & machine);
 static MACPRecord * GetMACPRecord(TES3MACHINE & machine);
-static float GetSkillBonus(TES3MACHINE & machine, Skills skillIndex);
+static float GetSkillRequirement(TES3MACHINE & machine, Skills skillIndex);
 
 // These functions are used for validation in FUNCSETMAX... and for
 // retrieving the value in FUNCGETMAX... execute() methods.
@@ -46,8 +46,7 @@ bool FUNCGETPROGRESSSKILL::execute(void)
 		machine.pop(skillIndex) && skillIndex >= Block && skillIndex <= HandToHand)
 	{
 		progress = macp->skillProgress[skillIndex];
-		float requirement = (1 + macp->skills[skillIndex].base) * GetSkillBonus(machine, static_cast<Skills>(skillIndex));
-		normalized = 100 * progress / requirement;
+		normalized = 100 * progress / GetSkillRequirement(machine, static_cast<Skills>(skillIndex));
 	}
 
 #ifdef DEBUGGING
@@ -2154,15 +2153,16 @@ static MACPRecord * GetMACPRecord(TES3MACHINE & machine)
 	return macp;
 }
 
-static float GetSkillBonus(TES3MACHINE & machine, Skills skillIndex)
+static float GetSkillRequirement(TES3MACHINE & machine, Skills skillIndex)
 {
-	float bonus = 1.0;
+	float requirement = 1.0;
 	MACPRecord const * const macp = GetMACPRecord(machine);
 	if (macp)
 	{
 		TES3CELLMASTER* cellMaster = *(reinterpret_cast<TES3CELLMASTER**>reltolinear(MASTERCELL_IMAGE));
 		GMSTRecord ** gmsts = cellMaster->recordLists->GMSTs;
 		MACPRecord::Skill const & s = macp->skills[skillIndex];
+		float bonus = 0;
 		if (s.skillType == Misc)
 		{
 			bonus = gmsts[fMiscSkillBonus]->value.fVal;
@@ -2182,6 +2182,7 @@ static float GetSkillBonus(TES3MACHINE & machine, Skills skillIndex)
 		{
 			bonus *= gmsts[fSpecialSkillBonus]->value.fVal;
 		}
+		requirement = (1 + macp->skills[skillIndex].base) * bonus;
 	}
-	return bonus;
+	return requirement;
 }
