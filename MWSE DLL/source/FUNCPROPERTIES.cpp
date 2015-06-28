@@ -70,13 +70,9 @@ bool FUNCSETPROGRESSSKILL::execute(void)
 	{
 		if (normalized)
 		{
-			float newProgress = GetSkillRequirement(machine, static_cast<Skills>(skillIndex)) * progress / 100;
-			macp->skillProgress[skillIndex] = newProgress;
+			progress = GetSkillRequirement(machine, static_cast<Skills>(skillIndex)) * progress / 100;
 		}
-		else
-		{
-			macp->skillProgress[skillIndex] = progress;
-		}
+		macp->skillProgress[skillIndex] = progress;
 		result = true;
 	}
 
