@@ -210,6 +210,7 @@ namespace RecordTypes {
 		ENCH = 'HCNE', ENCHANTMENT = ENCH,
 		FACT = 'TCAF', FACTION = FACT,
 		GLOB = 'BOLG', GLOBAL = GLOB,
+		GMST = 'TSMG',
 		INGR = 'RGNI', INGREDIENT = INGR,
 		LEVC = 'CVEL', LEVELLEDCREATURE = LEVC,
 		LEVI = 'IVEL', LEVELLEDITEM = LEVI,
@@ -235,6 +236,14 @@ namespace RecordTypes {
 		VARNODE = 6,	//attachment where 'local' variables are stored, and the size of a stack, and the owner (if it has changed i think), and the script...
 		MACHNODE = 8	//PCAM
 	};
+};
+
+enum GMSTs
+{
+	fSpecialSkillBonus = 1161,
+	fMajorSkillBonus,
+	fMinorSkillBonus,
+	fMiscSkillBonus
 };
 
 enum Attributes
@@ -322,6 +331,21 @@ struct SKILRecord
 	int unknown3;
 };
 
+struct GMSTRecord
+{
+	void * vTable;
+	RecordTypes::RecordType recordType;
+	int unknown;
+	void * mod; // pointer to mod?
+	union
+	{
+		long lVal;
+		float fVal;
+	} value;
+	int index; // array index of this GMST
+	int unknown2[2];
+};
+
 struct RecordLists
 {
 	unsigned long unknown1; // 
@@ -329,7 +353,9 @@ struct RecordLists
 	void * unknown3; // points to info about the last loaded save
 	LinkedList * enchantmentsList; // also contains statics, maybe other stuff too
 	LinkedList * spellsList;
-	void * unknown4[14]; // pointers? [1] = array of pointers to GMSTs
+	void * unknown4;
+	GMSTRecord ** GMSTs; // pointer to array of GMST pointers
+	void * unknown5[12];
 	SKILRecord skills[27];
 };
 
@@ -719,8 +745,6 @@ struct MACPRecord
 	int unknown6[2];  // 1516
 	float skillProgress[27]; // 1524
 };
-
-
 
 struct FACTRecord
 {

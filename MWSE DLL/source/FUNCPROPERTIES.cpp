@@ -20,6 +20,7 @@ static VMSHORT CountEffects(Effect const * effects);
 
 static CLASRecord * GetClassRecord(TES3MACHINE & machine);
 static MACPRecord * GetMACPRecord(TES3MACHINE & machine);
+static float GetSkillBonus(TES3MACHINE & machine, Skills skillIndex);
 
 // These functions are used for validation in FUNCSETMAX... and for
 // retrieving the value in FUNCGETMAX... execute() methods.
@@ -38,18 +39,21 @@ bool FUNCGETPROGRESSSKILL::execute(void)
 {
 	VMLONG skillIndex;
 	VMFLOAT progress = -1.0;
+	VMFLOAT normalized = -1.0;
 	MACPRecord * macp = GetMACPRecord(machine);
 	
 	if (macp && 
 		machine.pop(skillIndex) && skillIndex >= Block && skillIndex <= HandToHand)
 	{
 		progress = macp->skillProgress[skillIndex];
+		float requirement = (1 + macp->skills[skillIndex].base) * GetSkillBonus(machine, static_cast<Skills>(skillIndex));
+		normalized = 100 * progress / requirement;
 	}
 
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETPROGRESSSKILL()\n",progress);
 #endif	
-	return (machine.push(progress));
+	return (machine.push(normalized) && machine.push(progress));
 }
 
 bool FUNCSETPROGRESSSKILL::execute(void)
@@ -2148,4 +2152,36 @@ static MACPRecord * GetMACPRecord(TES3MACHINE & machine)
 		}
 	}
 	return macp;
+}
+
+static float GetSkillBonus(TES3MACHINE & machine, Skills skillIndex)
+{
+	float bonus = 1.0;
+	MACPRecord const * const macp = GetMACPRecord(machine);
+	if (macp)
+	{
+		TES3CELLMASTER* cellMaster = *(reinterpret_cast<TES3CELLMASTER**>reltolinear(MASTERCELL_IMAGE));
+		GMSTRecord ** gmsts = cellMaster->recordLists->GMSTs;
+		MACPRecord::Skill const & s = macp->skills[skillIndex];
+		if (s.skillType == Misc)
+		{
+			bonus = gmsts[fMiscSkillBonus]->value.fVal;
+		}
+		else if (s.skillType == Minor)
+		{
+			bonus = gmsts[fMinorSkillBonus]->value.fVal;
+		}
+		else if (s.skillType == Major)
+		{
+			bonus = gmsts[fMajorSkillBonus]->value.fVal;
+		}
+		
+		CLASRecord const * const charClass = GetClassRecord(machine);
+		SKILRecord const & currSkill = cellMaster->recordLists->skills[skillIndex];
+		if (charClass->specialization == currSkill.specialization)
+		{
+			bonus *= gmsts[fSpecialSkillBonus]->value.fVal;
+		}
+	}
+	return bonus;
 }

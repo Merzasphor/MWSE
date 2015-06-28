@@ -1276,7 +1276,7 @@ end
 function
 	Name = XGetProgressSkill
 	Options = MWSE | AllowGlobal | AllowVar
-	Return = Float
+	Return = Many
 	Param1 = Short | Long
 	Opcode = 0x392c
 end
