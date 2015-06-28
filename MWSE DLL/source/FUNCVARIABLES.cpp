@@ -7,15 +7,18 @@
 
 GLOBRecord * findGlobalRecord(char const * const id)
 {
-	int const findGLOB = 0x4BA820; // address of native MW function
-	GLOBRecord * foundRecord;
-	__asm
+	GLOBRecord * foundRecord = 0;
+	if (id)
 	{
-		mov ecx,dword ptr ds:[0x7C67E0]; //masterCellImage
-		mov ecx, [ecx];
-		push id;
-		call findGLOB;
-		mov foundRecord, eax;
+		int const findGLOB = 0x4BA820; // address of native MW function
+		__asm
+		{
+			mov ecx,dword ptr ds:[0x7C67E0]; //masterCellImage
+			mov ecx, [ecx];
+			push id;
+			call findGLOB;
+			mov foundRecord, eax;
+		}
 	}
 	return foundRecord;
 }
@@ -27,7 +30,7 @@ bool FUNCGETGLOBAL::execute(void)
 	VMLONG result = 0;
 	if (machine.pop(idPtr))
 	{
-		char const * const idString = reinterpret_cast<char * const>(idPtr);
+		char const * const idString = machine.GetString(reinterpret_cast<VPVOID>(idPtr));
 		GLOBRecord const * const global = findGlobalRecord(idString);
 		if (global)
 		{
@@ -45,7 +48,7 @@ bool FUNCSETGLOBAL::execute(void)
 	VMLONG result = 0;
 	if (machine.pop(idPtr) && machine.pop(value))
 	{
-		char const * const idString = reinterpret_cast<char * const>(idPtr);
+		char const * const idString = machine.GetString(reinterpret_cast<VPVOID>(idPtr));
 		GLOBRecord * const global = findGlobalRecord(idString);
 		if (global)
 		{

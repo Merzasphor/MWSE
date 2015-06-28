@@ -1442,7 +1442,7 @@ function
 	Name = xGetGlobal
 	Options = MWSE | AllowGlobal | ShortVar | AllowVar
 	Return = Many
-	Param1 = Long
+	Param1 = Long | String
 	Opcode = 0x393E
 end
 
@@ -1450,7 +1450,7 @@ function
 	Name = xSetGlobal
 	Options = MWSE | AllowGlobal | ShortVar | AllowVar
 	Return = Long
-	Param1 = Long
+	Param1 = Long | String
 	Param2 = Float
 	Opcode = 0x393F
 end
