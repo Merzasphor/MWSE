@@ -310,6 +310,7 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(NOT, new INSTNOT(*this));
 	AddInstruction(GETGLOBAL, new FUNCGETGLOBAL(*this));
 	AddInstruction(SETGLOBAL, new FUNCSETGLOBAL(*this));
+	AddInstruction(GETMAGIC, new FUNCGETMAGIC(*this));
 
 	AddInstruction(GETGS, new FUNCGETGS(*this));
 	AddInstruction(SETGS, new FUNCSETGS(*this));

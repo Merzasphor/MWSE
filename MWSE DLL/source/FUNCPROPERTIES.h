@@ -6,6 +6,15 @@
 #include "TES3OFFSETS.h"
 #include "STRINGS.h"
 
+class FUNCGETMAGIC : public FUNCTION
+{
+public:
+	FUNCGETMAGIC(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
 class FUNCGETPROGRESSSKILL : public FUNCTION
 {
 public:

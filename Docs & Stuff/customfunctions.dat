@@ -1455,6 +1455,13 @@ function
 	Opcode = 0x393F
 end
 
+function
+	Name = xGetMagic
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Many
+	Opcode = 0x3940
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll

@@ -455,6 +455,7 @@ typedef enum {
 	,NOT				= 0x393D
 	,GETGLOBAL			= 0x393E
 	,SETGLOBAL			= 0x393F
+	,GETMAGIC			= 0x3940
 
 	,GETGS              = 0x3A00
 	,SETGS				= 0x3A01
