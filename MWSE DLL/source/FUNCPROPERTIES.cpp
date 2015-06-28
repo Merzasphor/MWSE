@@ -812,6 +812,51 @@ bool FUNCGETSPELLINFO::execute(void)
 		&& machine.push(static_cast<VMREGTYPE>(type)) && machine.push(name);
 }
 
+bool FUNCSETSPELLEFFECTINFO::execute(void)
+{
+	VMLONG spellId;
+	VMLONG effectIndex;
+	VMLONG effectId;
+	VMLONG skillId;
+	VMLONG attributeId;
+	VMLONG rangeType;
+	VMLONG area;
+	VMLONG duration;
+	VMLONG magMin;
+	VMLONG magMax;
+	VMLONG result = 0;
+
+	if (machine.pop(spellId) && 
+		machine.pop(effectIndex) && 1 <= effectIndex && effectIndex <= 8 &&
+		machine.pop(effectId) &&
+		machine.pop(skillId) &&
+		machine.pop(attributeId) &&
+		machine.pop(rangeType) &&
+		machine.pop(area) &&
+		machine.pop(duration) &&
+		machine.pop(magMin) &&
+		machine.pop(magMax))
+	{
+		SPELRecord * spell = GetSpellRecord(spellId, machine);
+		if (spell)
+		{
+			result = 1;
+			--effectIndex; // 0-based array index
+			Effect & effect = spell->effects[effectIndex];
+			effect.effectId = effectId;
+			effect.effectId = effectId;
+			effect.skillId = skillId;
+			effect.AttributeId = attributeId;
+			effect.RangeType = rangeType;
+			effect.Area = area;
+			effect.Duration = duration;
+			effect.MagMin = magMin;
+			effect.MagMax = magMax;
+		}
+	}
+	return machine.push(result);
+}
+
 bool FUNCGETSPELLEFFECTINFO::execute(void)
 {
 	VMLONG spellId;

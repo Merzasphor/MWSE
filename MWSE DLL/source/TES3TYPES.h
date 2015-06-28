@@ -369,8 +369,8 @@ struct BaseRecord
 struct Effect
 {
 	unsigned short effectId;
-	char  skillId;
-	char  AttributeId;
+	unsigned char  skillId;
+	unsigned char  AttributeId;
 	long  RangeType;		//0=SELF, 1=TOUCH, 2=TARGET
 	long  Area;
 	long  Duration;

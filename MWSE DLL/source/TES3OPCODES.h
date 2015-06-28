@@ -457,6 +457,7 @@ typedef enum {
 	,SETGLOBAL			= 0x393F
 	,GETMAGIC			= 0x3940
 	,SETSPELLINFO		= 0x3941
+	,SETSPELLEFFECTINFO = 0x3942
 
 	,GETGS              = 0x3A00
 	,SETGS				= 0x3A01

@@ -385,6 +385,15 @@ private:
 	TES3MACHINE& machine;
 };
 
+class FUNCSETSPELLEFFECTINFO : public FUNCTION
+{
+public:
+	FUNCSETSPELLEFFECTINFO(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
 class FUNCGETSPELLEFFECTINFO : public FUNCTION
 {
 public:
