@@ -367,6 +367,15 @@ private:
 	TES3MACHINE& machine;
 };
 
+class FUNCSETSPELLINFO : public FUNCTION
+{
+public:
+	FUNCSETSPELLINFO(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
 class FUNCGETSPELLINFO : public FUNCTION
 {
 public:

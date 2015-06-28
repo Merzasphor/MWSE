@@ -1462,6 +1462,18 @@ function
 	Opcode = 0x3940
 end
 
+function
+	Name = xSetSpellInfo
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Param1 = Long | String
+	Param2 = Long | String
+	Param3 = Short
+	Param4 = Short
+	Param5 = Long
+	Return = Long
+	Opcode = 0x3941
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll

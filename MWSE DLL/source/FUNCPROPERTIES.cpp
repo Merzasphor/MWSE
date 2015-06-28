@@ -750,6 +750,39 @@ bool FUNCGETSPELL::execute(void)
 	return machine.push(static_cast<VMREGTYPE>(result));
 }
 
+bool FUNCSETSPELLINFO::execute(void)
+{
+	VMLONG spellId;
+	VMLONG name;
+	VMLONG type;
+	VMLONG cost;
+	VMLONG flags;
+	VMLONG result = 0;
+
+	if (machine.pop(spellId) &&
+		machine.pop(name) &&
+		machine.pop(type) &&
+		machine.pop(cost) &&
+		machine.pop(flags))
+	{
+		SPELRecord * spell = GetSpellRecord(spellId, machine);
+		if (spell)
+		{
+			char const * newName = machine.GetString(reinterpret_cast<VPVOID>(name));
+			if (newName)
+			{
+				spell->friendlyName = newName;
+			}
+			spell->type = type;
+			spell->cost = cost;
+			spell->flags = flags;
+			result = 1;
+		}
+	}
+	return machine.push(result);
+}
+
+
 bool FUNCGETSPELLINFO::execute(void)
 {
 	VMLONG spellId;
