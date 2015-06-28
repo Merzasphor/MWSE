@@ -1287,6 +1287,7 @@ function
 	Return = Short
 	Param1 = Short | Long
 	Param2 = Float
+	Param3 = Short | Long
 	Opcode = 0x392d
 end
 

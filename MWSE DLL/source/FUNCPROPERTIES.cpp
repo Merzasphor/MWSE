@@ -58,15 +58,25 @@ bool FUNCGETPROGRESSSKILL::execute(void)
 bool FUNCSETPROGRESSSKILL::execute(void)
 {
 	VMLONG skillIndex;
+	VMLONG normalized;
 	VMFLOAT progress;
 	bool result = false;
 	MACPRecord * macp = GetMACPRecord(machine);
 	
 	if (macp && 
 		machine.pop(skillIndex) && skillIndex >= Block && skillIndex <= HandToHand &&
-		machine.pop(progress) && progress > 0)
+		machine.pop(progress) && progress > 0 &&
+		machine.pop(normalized))
 	{
-		macp->skillProgress[skillIndex] = progress;
+		if (normalized)
+		{
+			float newProgress = GetSkillRequirement(machine, static_cast<Skills>(skillIndex)) * progress / 100;
+			macp->skillProgress[skillIndex] = newProgress;
+		}
+		else
+		{
+			macp->skillProgress[skillIndex] = progress;
+		}
 		result = true;
 	}
 
