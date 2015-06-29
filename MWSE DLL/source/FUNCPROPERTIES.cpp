@@ -48,17 +48,16 @@ bool FUNCGETMAGIC::execute(void)
 		BaseRecord const * const rec = static_cast<BaseRecord const * const>(macp->currentSpell);
 		if (rec)
 		{
-			if (rec->recordType == RecordTypes::SPELL)
+			type = rec->recordType;
+			if (type == RecordTypes::SPELL)
 			{
 				SPELRecord const * const spell = reinterpret_cast<SPELRecord const * const>(rec);
 				id = reinterpret_cast<VMLONG>(strings.add(spell->id));
-				type = 1;
 			}
-			else if (rec->recordType == RecordTypes::ENCHANTMENT)
+			else if (type == RecordTypes::ENCHANTMENT)
 			{
 				ENCHRecord const * const enchantment = reinterpret_cast<ENCHRecord const * const>(rec);
 				id = reinterpret_cast<VMLONG>(strings.add(enchantment->id));
-				type = 2;
 			}
 		}
 	}
