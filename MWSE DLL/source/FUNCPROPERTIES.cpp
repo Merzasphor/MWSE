@@ -811,6 +811,35 @@ bool FUNCGETSPELLINFO::execute(void)
 		&& machine.push(static_cast<VMREGTYPE>(type)) && machine.push(name);
 }
 
+bool FUNCDELETEEFFECT::execute(void)
+{
+	VMLONG type, id, effectIndex;
+	VMLONG result = 0;
+
+	if (machine.pop(type) &&
+		machine.pop(id) &&
+		machine.pop(effectIndex) && 1 <= effectIndex && effectIndex <= 8)
+	{
+		Effect * effects = GetEffects(type, id, machine);
+		if (effects)
+		{
+			short numEffects = CountEffects(effects);
+			--effectIndex; // 0-based array index
+			if (numEffects > 1 && effectIndex < numEffects)
+			{
+				result = 1;
+				effects[effectIndex].effectId = 0xFFFF;
+				for (int i = effectIndex + 1; i < numEffects; ++i)
+				{
+					effects[i-1] = effects[i];
+					effects[i].effectId = 0xFFFF;
+				}
+			}
+		}
+	}
+	return machine.push(result);
+}
+
 bool FUNCSETEFFECTINFO::execute(void)
 {
 	VMLONG type, id, effectIndex, effectId, skillId, attributeId,

@@ -1514,6 +1514,16 @@ function
 	Opcode = 0x3944
 end
 
+function
+	Name = XDeleteEffect
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Long
+	Param1 = Long
+	Param2 = Long | String
+	Param3 = Long
+	Opcode = 0x3945
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll

@@ -385,6 +385,15 @@ private:
 	TES3MACHINE& machine;
 };
 
+class FUNCDELETEEFFECT : public FUNCTION
+{
+public:
+	FUNCDELETEEFFECT(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
 class FUNCSETEFFECTINFO : public FUNCTION
 {
 public:
