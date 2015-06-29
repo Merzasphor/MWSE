@@ -680,7 +680,7 @@ bool FUNCSPELLLIST::execute(void)
 	VMLONG spellId = 0;
 	VMLONG name = 0;
 	VMSHORT type = 0;
-	VMSHORT cost = 0;
+	VMLONG cost = 0;
 	VMSHORT effects = 0;
 	VMLONG flags = 0;
 	
@@ -715,7 +715,7 @@ bool FUNCSPELLLIST::execute(void)
 		}
 	}
 
-	return machine.push(reinterpret_cast<VMREGTYPE>(next)) && machine.push(flags) && machine.push(static_cast<VMREGTYPE>(effects)) && machine.push(static_cast<VMREGTYPE>(cost)) 
+	return machine.push(reinterpret_cast<VMREGTYPE>(next)) && machine.push(flags) && machine.push(static_cast<VMREGTYPE>(effects)) && machine.push(cost) 
 		&& machine.push(static_cast<VMREGTYPE>(type)) && machine.push(name) && machine.push(spellId) && machine.push(totalSpells);
 }
 
@@ -782,13 +782,12 @@ bool FUNCSETSPELLINFO::execute(void)
 	return machine.push(result);
 }
 
-
 bool FUNCGETSPELLINFO::execute(void)
 {
 	VMLONG spellId;
 	VMLONG name = 0;
 	VMSHORT type = 0;
-	VMSHORT cost = 0;
+	VMLONG cost = 0;
 	VMSHORT effects = 0;
 	VMLONG flags = 0;
 
@@ -808,7 +807,7 @@ bool FUNCGETSPELLINFO::execute(void)
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETSPELLINFO()\n",spellId);
 #endif	
-	return machine.push(flags) && machine.push(static_cast<VMREGTYPE>(effects)) && machine.push(static_cast<VMREGTYPE>(cost)) 
+	return machine.push(flags) && machine.push(static_cast<VMREGTYPE>(effects)) && machine.push(cost)
 		&& machine.push(static_cast<VMREGTYPE>(type)) && machine.push(name);
 }
 

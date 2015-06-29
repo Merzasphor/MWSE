@@ -1468,7 +1468,7 @@ function
 	Param1 = Long | String
 	Param2 = Long | String
 	Param3 = Short
-	Param4 = Short
+	Param4 = Long
 	Param5 = Long
 	Return = Long
 	Opcode = 0x3941

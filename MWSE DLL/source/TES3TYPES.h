@@ -416,7 +416,7 @@ struct SPELRecord
 	char * id;
 	char const * friendlyName;
 	short type; //0=SPELL, 1=ABILITY, 2=BLIGHT, 3=DISEASE, 4=CURSE, 5=POWER
-	short cost;
+	unsigned short cost;
 
 	Effect effects[8];
 
