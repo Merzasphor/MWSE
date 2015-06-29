@@ -1502,6 +1502,18 @@ function
 	Opcode = 0x3943
 end
 
+function
+	Name = XSetEnchantInfo
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Long
+	Param1 = Long | String
+	Param2 = Long
+	Param3 = Long
+	Param4 = Long
+	Param5 = Long
+	Opcode = 0x3944
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll

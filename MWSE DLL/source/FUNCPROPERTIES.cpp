@@ -987,6 +987,31 @@ bool FUNCGETENCHANT::execute(void)
 		&& machine.push(static_cast<VMREGTYPE>(type)) && machine.push(enchId);
 }
 
+bool FUNCSETENCHANTINFO::execute(void)
+{
+	VMLONG enchId, type, cost, charge, autocalc;
+	VMLONG result = 0;
+
+	if (machine.pop(enchId) &&
+		machine.pop(type) &&
+		machine.pop(cost) &&
+		machine.pop(charge) &&
+		machine.pop(autocalc))
+	{
+		ENCHRecord * ench = GetEnchantmentRecord(enchId, machine);
+		if (ench)
+		{
+			result = 1;
+			ench->type = type;
+			ench->cost = cost;
+			ench->charge = charge;
+			ench->autocalc = autocalc;
+		}
+	}
+
+	return machine.push(result);
+}
+
 bool FUNCGETENCHANTINFO::execute(void)
 {
 	VMLONG enchId;
