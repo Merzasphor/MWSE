@@ -17,7 +17,7 @@ using namespace std;
 static SPELRecord * GetSpellRecord(VMLONG const spellId, TES3MACHINE & machine);
 static ENCHRecord * GetEnchantmentRecord(VMLONG const enchId, TES3MACHINE & machine);
 static VMSHORT CountEffects(Effect const * effects);
-static Effect * GetEffect(long const type, long const id, long index, TES3MACHINE & machine);
+static Effect * GetEffects(long const type, long const id, TES3MACHINE & machine);
 
 static CLASRecord * GetClassRecord(TES3MACHINE & machine);
 static MACPRecord * GetMACPRecord(TES3MACHINE & machine);
@@ -829,18 +829,20 @@ bool FUNCSETEFFECTINFO::execute(void)
 		machine.pop(magMin) &&
 		machine.pop(magMax))
 	{
-		Effect * effect = GetEffect(type, id, effectIndex, machine);
-		if (effect)
+		Effect * effects = GetEffects(type, id, machine);
+		if (effects)
 		{
+			--effectIndex; // 0-based array index
+			Effect & effect = effects[effectIndex];
 			result = 1;
-			effect->effectId = effectId;
-			effect->skillId = skillId;
-			effect->AttributeId = attributeId;
-			effect->RangeType = rangeType;
-			effect->Area = area;
-			effect->Duration = duration;
-			effect->MagMin = magMin;
-			effect->MagMax = magMax;
+			effect.effectId = effectId;
+			effect.skillId = skillId;
+			effect.AttributeId = attributeId;
+			effect.RangeType = rangeType;
+			effect.Area = area;
+			effect.Duration = duration;
+			effect.MagMin = magMin;
+			effect.MagMax = magMax;
 		}
 	}
 	return machine.push(result);
@@ -862,19 +864,22 @@ bool FUNCGETEFFECTINFO::execute(void)
 		machine.pop(id) && 
 		machine.pop(effectIndex) && 1 <= effectIndex && effectIndex <= 8)
 	{
-		Effect const * effect = GetEffect(type, id, effectIndex, machine);
-		if (effect)
+		Effect const * effects = GetEffects(type, id, machine);
+		if (effects)
 		{
-			if (effect->effectId != 0xFFFF)
+			--effectIndex; // 0-based array index
+			Effect const & effect = effects[effectIndex];
+
+			if (effect.effectId != 0xFFFF)
 			{
-				effectId = effect->effectId;
-				skillId = effect->skillId;
-				attributeId = effect->AttributeId;
-				rangeType = effect->RangeType;
-				area = effect->Area;
-				duration = effect->Duration;
-				magMin = effect->MagMin;
-				magMax = effect->MagMax;
+				effectId = effect.effectId;
+				skillId = effect.skillId;
+				attributeId = effect.AttributeId;
+				rangeType = effect.RangeType;
+				area = effect.Area;
+				duration = effect.Duration;
+				magMin = effect.MagMin;
+				magMax = effect.MagMax;
 			}
 		}
 	}
@@ -2407,10 +2412,9 @@ static void CheckForLevelUp(long const progress)
 	}
 }
 
-static Effect * GetEffect(long const type, long const id, long index, TES3MACHINE & machine)
+static Effect * GetEffects(long const type, long const id, TES3MACHINE & machine)
 {
 	Effect * effects = 0;
-	Effect * effect = 0;
 
 	if (type == RecordTypes::SPELL)
 	{
@@ -2428,11 +2432,5 @@ static Effect * GetEffect(long const type, long const id, long index, TES3MACHIN
 			effects = ench->effects;
 		}
 	}
-
-	if (effects)
-	{
-		--index; // 0-based array index
-		effect = &effects[index];
-	}
-	return effect;
+	return effects;
 }
