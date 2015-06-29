@@ -313,6 +313,7 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(GETMAGIC, new FUNCGETMAGIC(*this));
 	AddInstruction(SETSPELLINFO, new FUNCSETSPELLINFO(*this));
 	AddInstruction(SETEFFECTINFO, new FUNCSETEFFECTINFO(*this));
+	AddInstruction(GETEFFECTINFO, new FUNCGETEFFECTINFO(*this));
 
 	AddInstruction(GETGS, new FUNCGETGS(*this));
 	AddInstruction(SETGS, new FUNCSETGS(*this));

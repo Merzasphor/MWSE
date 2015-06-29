@@ -860,6 +860,66 @@ bool FUNCSETEFFECTINFO::execute(void)
 	return machine.push(result);
 }
 
+bool FUNCGETEFFECTINFO::execute(void)
+{
+	VMLONG type, id, effectIndex;
+	VMLONG effectId = 0xFFFF;
+	VMLONG skillId = 0;
+	VMLONG attributeId = 0;
+	VMLONG rangeType = 0;
+	VMLONG area = 0;
+	VMLONG duration = 0;
+	VMLONG magMin = 0;
+	VMLONG magMax = 0;
+
+	if (machine.pop(type) &&
+		machine.pop(id) && 
+		machine.pop(effectIndex) && 1 <= effectIndex && effectIndex <= 8)
+	{
+		Effect * effects = 0;
+
+		if (type == RecordTypes::SPELL)
+		{
+			SPELRecord * spell = GetSpellRecord(id, machine);
+			if (spell)
+			{
+				effects = spell->effects;
+			}
+		}
+		else if (type == RecordTypes::ENCHANTMENT)
+		{
+			ENCHRecord * ench = GetEnchantmentRecord(id, machine);
+			if (ench)
+			{
+				effects = ench->effects;
+			}
+		}
+
+		if (effects)
+		{
+			--effectIndex; // 0-based array index
+			Effect const & effect = effects[effectIndex];
+			if (effect.effectId != 0xFFFF)
+			{
+				effectId = effect.effectId;
+				skillId = effect.skillId;
+				attributeId = effect.AttributeId;
+				rangeType = effect.RangeType;
+				area = effect.Area;
+				duration = effect.Duration;
+				magMin = effect.MagMin;
+				magMax = effect.MagMax;
+			}
+		}
+	}
+
+#ifdef DEBUGGING
+	cLog::mLogMessage("%f= FUNCGETSPELLINFO()\n",spellId);
+#endif	
+	return machine.push(magMax) && machine.push(magMin) && machine.push(duration) && machine.push(area) && machine.push(rangeType) 
+		&& machine.push(attributeId) && machine.push(skillId) && machine.push(effectId);
+}
+
 bool FUNCGETSPELLEFFECTINFO::execute(void)
 {
 	VMLONG spellId;

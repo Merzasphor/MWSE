@@ -403,6 +403,15 @@ private:
 	TES3MACHINE& machine;
 };
 
+class FUNCGETEFFECTINFO : public FUNCTION
+{
+public:
+	FUNCGETEFFECTINFO(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
 class FUNCGETENCHANT : public FUNCTION
 {
 public:

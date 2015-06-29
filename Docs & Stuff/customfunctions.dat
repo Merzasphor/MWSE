@@ -1492,6 +1492,16 @@ function
 	Opcode = 0x3942
 end
 
+function
+	Name = XGetEffectInfo
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Many
+	Param1 = Long
+	Param2 = Long | String
+	Param3 = Long
+	Opcode = 0x3943
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll
