@@ -811,21 +811,14 @@ bool FUNCGETSPELLINFO::execute(void)
 		&& machine.push(static_cast<VMREGTYPE>(type)) && machine.push(name);
 }
 
-bool FUNCSETSPELLEFFECTINFO::execute(void)
+bool FUNCSETEFFECTINFO::execute(void)
 {
-	VMLONG spellId;
-	VMLONG effectIndex;
-	VMLONG effectId;
-	VMLONG skillId;
-	VMLONG attributeId;
-	VMLONG rangeType;
-	VMLONG area;
-	VMLONG duration;
-	VMLONG magMin;
-	VMLONG magMax;
+	VMLONG type, id, effectIndex, effectId, skillId, attributeId,
+		rangeType, area, duration, magMin, magMax;
 	VMLONG result = 0;
 
-	if (machine.pop(spellId) && 
+	if (machine.pop(type) &&
+		machine.pop(id) && 
 		machine.pop(effectIndex) && 1 <= effectIndex && effectIndex <= 8 &&
 		machine.pop(effectId) &&
 		machine.pop(skillId) &&
@@ -836,12 +829,24 @@ bool FUNCSETSPELLEFFECTINFO::execute(void)
 		machine.pop(magMin) &&
 		machine.pop(magMax))
 	{
-		SPELRecord * spell = GetSpellRecord(spellId, machine);
-		if (spell)
+		Effect * effects = 0;
+		
+		if (type == RecordTypes::SPELL)
+		{
+			SPELRecord * spell = GetSpellRecord(id, machine);
+			effects = spell->effects;
+		}
+		else if (type == RecordTypes::ENCHANTMENT)
+		{
+			ENCHRecord * ench = GetEnchantmentRecord(id, machine);
+			effects = ench->effects;
+		}
+
+		if (effects)
 		{
 			result = 1;
 			--effectIndex; // 0-based array index
-			Effect & effect = spell->effects[effectIndex];
+			Effect & effect = effects[effectIndex];
 			effect.effectId = effectId;
 			effect.effectId = effectId;
 			effect.skillId = skillId;

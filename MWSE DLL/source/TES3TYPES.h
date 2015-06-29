@@ -432,8 +432,8 @@ struct ALCHRecord
 	int unknown1;
 	LinkedList * alchemyList;
 	int unknown3;
-	ALCHRecord_t * prevRecord;
-	ALCHRecord_t * nextRecord;
+	ALCHRecord * prevRecord;
+	ALCHRecord * nextRecord;
 	int unknown4;
 	int unknown5;
 	char const * id;

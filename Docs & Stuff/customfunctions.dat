@@ -1475,10 +1475,10 @@ function
 end
 
 function
-	Name = xSetSpellEffectInfo
+	Name = xSetEffectInfo
 	Options = MWSE | AllowGlobal | ShortVar | AllowVar
-	Param1 = Long | String
-	Param2 = Long
+	Param1 = Long
+	Param2 = Long | String
 	Param3 = Long
 	Param4 = Long
 	Param5 = Long
@@ -1487,6 +1487,7 @@ function
 	Param8 = Long
 	Param9 = Long
 	Param10 = Long
+	Param11 = Long
 	Return = Long
 	Opcode = 0x3942
 end
