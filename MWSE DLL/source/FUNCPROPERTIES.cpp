@@ -1474,23 +1474,22 @@ bool FUNCGETOWNERINFO::execute(void)
 			BaseRecord * rec = reinterpret_cast<BaseRecord*>(info->owner);
 			if (rec)
 			{
-				if (rec->recordType == RecordTypes::NPC)
+				type = rec->recordType;
+				if (type == RecordTypes::NPC)
 				{
 					NPCBaseRecord * npc = reinterpret_cast<NPCBaseRecord*>(rec);
 					id = reinterpret_cast<long>(strings.add(npc->IDStringPtr));
-					type = 1;
 					if (info->rankVar.variable)
 					{
 						GLOBRecord * global = reinterpret_cast<GLOBRecord*>(info->rankVar.variable);
 						rankVar = reinterpret_cast<long>(strings.add(global->id));
 					}
 				}
-				else if (rec->recordType == RecordTypes::FACTION)
+				else if (type == RecordTypes::FACTION)
 				{
 					FACTRecord * fact = reinterpret_cast<FACTRecord*>(rec);
 					id = reinterpret_cast<long>(strings.add(fact->id));
 					rankVar = info->rankVar.rank;
-					type = 2;
 				}
 			}
 		}
