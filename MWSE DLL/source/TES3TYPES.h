@@ -423,6 +423,35 @@ struct SPELRecord
 	long flags;	//1=AUTOCALC, 2=PCSTART, 4=ALWAYSSUCCEEDS
 };
 
+struct ALCHRecord
+{
+	void * vTable;
+	RecordTypes::RecordType recordType;
+	int recordSize;
+	char * modName;
+	int unknown1;
+	LinkedList * alchemyList;
+	int unknown3;
+	ALCHRecord_t * prevRecord;
+	ALCHRecord_t * nextRecord;
+	int unknown4;
+	int unknown5;
+	char const * id;
+	int unknown6;
+	int unknown7;
+	int unknown8;
+	int unknown9;
+	int unknown10;
+	char const * friendlyName;
+	int unknown11;
+	char * model;
+	char * icon;
+	float weight;
+	long value;
+	Effect effects[8];
+	long flags; //1=AUTOCALC
+};
+
 struct CLASRecord
 {
 	void * vTable;
