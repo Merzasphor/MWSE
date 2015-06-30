@@ -66,7 +66,7 @@ bool FUNCGETMAGIC::execute(void)
 		}
 	}
 
-	return (machine.push(type) && machine.push(id));
+	return (machine.push(id) && machine.push(type);
 }
 
 bool FUNCGETPROGRESSSKILL::execute(void)
