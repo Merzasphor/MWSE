@@ -1,21 +1,28 @@
-0.9.5-alpha.20150617
+0.9.5-alpha.20150630
 https://github.com/Merzasphor/MWSE
 
 This is a WIP modification to the Morrowind Script Extender, based on version 0.9.4a.
 There may be bugs. Proceed with caution!
 
-Updates since MWSE-WIP-2015-02-16:
+Updates since 0.9.5-alpha.20150617:
 
-- xGetOwner now returns the id string of faction owners.
-- Added experimental basic array support. (xCreateArray, xSetArrayValue, xGetArrayValue)
-- Added functions to read and manipulate skill progress. These should mirror related MWE 
-  functionality. (xGetProgressSkill, xSetProgressSkill, xModProgressSkill)
-- Refactored level progress functions to make use of player data structures instead of fixed 
-  offsets. (xGetProgressLevel, xSetProgressLevel)
-- Fixed a bug that made setting level progress to zero fail. (xSetProgressLevel)
-- Added a function to modify level progress by a fixed value. (xModProgressLevel)
-- Added a function to get base skill values that uses an argument to determine the skill to read. 
-  (xGetBaseSkill)
+- Reverted xGetOwner update to maintain compatibility with old mods. It should be considered
+  deprecated. Use the new xGetOwnerInfo function instead.
+- Added a function to return all ownership information about a reference. (xGetOwnerInfo)
+- Added a function to compute exponentiation. (xPow)
+- Added functions to perform bitwise operations on longs. (xShift, xBitAnd, xBitOr, xBitXor, xBitNot)
+- Added functions to perform boolean logic. (xAnd, xOr, xXor, xNot)
+- Added functions to manipulate global variables based on their string representation. (xGetGlobal, xSetGlobal)
+- Skill progress functions now support normalized progress values and invoke the game's native 
+  skill-up function. (xGetProgressSkill, xSetProgressSkill, xModProgressSkill)
+- Level progress functions now invoke the game's native level-up message function. (xSetProgressLevel, xGetProgressLevel)
+- Added functions to modify spell and enchantment properties. (xSetSpellInfo, xSetEnchantInfo, xSetEffectInfo, xDeleteEffect, xAddEffect)
+- Added a function to return the type and id of the player's currently readied magic. (xGetMagic)
+
+!!! The following functions are deprecated and will be removed in the future: !!!
+xGetBase[skillname] - Replaced by xGetBaseSkill
+xGetSpellEffectInfo - Replaced by xGetEffectInfo
+xGetEnchantEffectInfo - Replaced by xGetEffectInfo
 
 See "New Updates" for details.
   
@@ -62,6 +69,364 @@ modifying the program.
 
 -----New Updates-----
 
+Functions:
+
+xGetOwnerInfo
+type (long) id (long) long rankVar: ref->xGetOwnerInfo
+Returns information about the owner of the reference.
+type: the internal game type of the owner record
+NPC = 1598246990
+Faction = 1413693766
+id: the id string of the owner
+rankVar: Rank, if the owner is a faction.
+If the owner is an NPC, this is a string ref to the associated global variable,
+and 0 if there is no such variable. 
+See also xGetGlobal, xSetGlobal.
+
+xPow
+result (float): xPow b (float) e (float)
+Computes b^e. Currently only works with floats.
+
+xShift
+result (long): xShift a (long) shift (long)
+Computes the bitwise shift of a. If shift is positive, perform a left shift,
+if negative perform a right shift.
+
+xBitAnd, xBitOr, xBitXor
+result (long): xBit[And|Or|Xor] a (long) b (long)
+Computes the appropriate bitwise operation.
+
+xBitNot
+result (long): xBitNot a (long)
+Computes the bitwise not of a.
+
+xAnd, xOr, xXor
+result (long|float): x[And|Or|Xor] a (long|float) b (long|float)
+Computes the appropriate logical operation. zero is considered false, 
+non-zero, true. Should work with floats and longs interchangeably.
+
+xNot
+result (long|float): xNot a (long|float)
+Computes the logical not of a. zero is considered false, 
+non-zero, true. Should work with floats and longs interchangeably.
+
+xGetGlobal
+result (long) value (float): xGetGlobal id (long | string)
+Returns the value of global represented by id.
+id: string representation of a global e.g. "CharGenState"
+result: 1 if the lookup was successful, 0 otherwise
+value: the current value of the global
+
+xSetGlobal
+result (long): xSetGlobal id (long | string) value (float)
+Sets the value of global represented by id.
+id: string representation of a global e.g. "CharGenState"
+value: the new value of the global
+result: 1 if the lookup was successful, 0 otherwise
+
+xGetProgressSkill
+raw (float) normalized (float): xGetProgressSkill skillId (long)
+Returns the skill progress for the given skillId.
+skillId: id of the skill to examine
+raw: raw skill progress value
+normalized: normalized skill progress value
+Return values will be zero if skillId is invalid.
+
+xSetProgressSkill
+result (short): xSetProgressSkill skillId (long) value (float) normalized (long)
+Sets the progress for the given skillId to value.
+skillId: id of the skill to examine
+value: raw or normalized progress value
+normalized: flag indicating whether value is raw (0) or normalized (1)
+result: 1 on success, 0 on failure. This function will fail if skillId is invalid or value < 0.
+
+xModProgressSkill
+result (short): xModProgressSkill skillId (long) value (float) normalized (long)
+Adds value to the progress for the given skillId.
+skillId: id of the skill to examine
+value: raw or normalized progress modification value. If the new progress value is less 
+than zero, it's set to zero instead.
+normalized: flag indicating whether value is raw (0) or normalized (1)
+result: 1 on success, 0 on failure. This function will fail if skillId is invalid.
+
+xSetSpellInfo
+result (long): xSetSpellInfo spellId (long | string) name (long | string) type (long) cost (long) flags (long)
+Sets the properties of the given spellId.
+spellId: id of the spell to modify
+name: new display name. Use 0 to leave the name unmodified.
+type: new type - 0 = SPELL, 1 = ABILITY, 2 = BLIGHT, 3 = DISEASE, 4 = CURSE, 5 = POWER
+cost: new magicka cost
+flags: new flags - (combination of these values) 1 = AUTOCALC, 2 = PCSTART, 4 = ALWAYSSUCCEEDS
+result: 1 on success, 0 on failure
+
+xSetEnchantInfo
+result (long): xSetEnchantInfo enchantId (long | string) type (long) cost (long) charge (long) autocalc (long)
+Sets the properties of the given enchantId.
+enchantId: id of the enchantment to modify
+type: new type - 0 = Cast Once, 1 = Cast When Strikes, 2 = Cast When Used, 3 = Constant
+cost: new cost per use
+charge: new maximum charge
+autocalc: new autocalc - 0 = off, 1 = on
+result: 1 on success, 0 on failure
+
+xAddEffect
+result (long): xAddEffect type (long) id (long | string) effectId (long) skillId (long) attributeId (long) rangeType (long) area (long) duration (long) magMin (long) magMax (long)
+Adds a new effect to the given spell or enchantment.
+type: spell = 1279610963 enchantment = 1212370501
+id: id of the spell or enchantment to modify
+effectId: id of the effect to add
+skillId: id of the skill to use (only used by drain/absorb/damage/fortify/restore skill effects - ignored otherwise)
+attributeId: id of the attribute to use (only used by drain/absorb/damage/fortify/restore attribute effects - ignored otherwise)
+rangeType: new range type - 0 = SELF, 1 = TOUCH, 2 = TARGET
+area: area of effect
+duration: duration in seconds
+magMin: minimum magnitude
+magMax: maximum magnitude
+result: 1 on success, 0 on failure
+
+xSetEffectInfo
+result (long): xSetEffectInfo type (long) id (long | string) index (long) effectId (long) skillId (long) attributeId (long) rangeType (long) area (long) duration (long) magMin (long) magMax (long)
+Modifies an existing effect on the given spell or enchantment.
+type: spell = 1279610963 enchantment = 1212370501
+id: id of the spell or enchantment to modify
+index: the index of the effect to modify [1, 8]
+effectId: id of the effect to modify
+skillId: id of the skill to use (only used by drain/absorb/damage/fortify/restore skill effects - ignored otherwise)
+attributeId: id of the attribute to use (only used by drain/absorb/damage/fortify/restore attribute effects - ignored otherwise)
+rangeType: new range type - 0 = SELF, 1 = TOUCH, 2 = TARGET
+area: area of effect
+duration: duration in seconds
+magMin: minimum magnitude
+magMax: maximum magnitude
+result: 1 on success, 0 on failure
+
+xDeleteEffect
+result (long): xDeleteEffect type (long) id (long | string) index (long)
+Removes the effect at index from the given spell or enchantment.
+Other effects are reordered, e.g. if effect 1 is removed, effect 2 becomes 1,
+3 becomes 2, etc.
+type: spell = 1279610963 enchantment = 1212370501
+id: id of the spell or enchantment to modify
+index: the index of the effect to remove [1, 8]
+result: 1 on success, 0 on failure
+
+xGetEffectInfo
+effectId (long) skillId (long) attributeId (long) rangeType (long) area (long) duration (long) magMin (long) magMax (long): xSetEffectInfo type (long) id (long | string) index (long)
+Returns the properties of an effect on the given spell or enchantment.
+type: spell = 1279610963 enchantment = 1212370501
+id: id of the spell or enchantment to modify
+index: the index of the effect to modify [1, 8]
+effectId: see below for list
+skillId: see below for list (only used by drain/absorb/damage/fortify/restore skill effects - 255 otherwise)
+attributeId: see below for list (only used by drain/absorb/damage/fortify/restore attribute effects - 255 otherwise)
+rangeType: 0 = SELF, 1 = TOUCH, 2 = TARGET
+area: area of effect
+duration: duration in seconds
+magMin: minimum magnitude
+magMax: maximum magnitude
+On failure, effectId is set to 65535 and everything else to 0.
+
+xGetMagic
+type (long) id (long): ref->xGetMagic
+Returns the currently readied magic.
+type: spell = 1279610963 enchantment = 1212370501
+id: id of the spell or enchantment
+On failure, both type and id will be 0.
+
+Attribute IDs:
+0 Strength
+1 Intelligence
+2 Willpower
+3 Agility
+4 Speed
+5 Endurance
+6 Personality
+7 Luck
+
+Skill IDs:
+0 Block
+1 Armorer
+2 Medium Armor
+3 Heavy Armor
+4 Blunt Weapon
+5 Long Blade
+6 Axe
+7 Spear
+8 Athletics
+9 Enchant
+10 Destruction
+11 Alteration
+12 Illusion
+13 Conjuration
+14 Mysticism
+15 Restoration
+16 Alchemy
+17 Unarmored
+18 Security
+19 Sneak
+20 Acrobatics
+21 Light Armor
+22 Short Blade
+23 Marksman
+24 Mercantile
+25 Speechcraft
+26 HandToHand
+
+Effect IDs:
+0 WaterBreathing
+1 SwiftSwim
+2 WaterWalking
+3 Shield
+4 FireShield
+5 LightningShield
+6 FrostShield
+7 Burden
+8 Feather
+9 Jump
+10 Levitate
+11 SlowFall
+12 Lock
+13 Open
+14 FireDamage
+15 ShockDamage
+16 FrostDamage
+17 DrainAttribute
+18 DrainHealth
+19 DrainSpellpoints
+20 DrainFatigue
+21 DrainSkill
+22 DamageAttribute
+23 DamageHealth
+24 DamageMagicka
+25 DamageFatigue
+26 DamageSkill
+27 Poison
+28 WeaknessToFire
+29 WeaknessToFrost
+30 WeaknessToShock
+31 WeaknessToMagicka
+32 WeaknessToCommonDisease
+33 WeaknessToBlightDisease
+34 WeaknessToCorprusDisease
+35 WeaknessToPoison
+36 WeaknessToNormalWeapons
+37 DisintegrateWeapon
+38 DisintegrateArmor
+39 Invisibility
+40 Chameleon
+41 Light
+42 Sanctuary
+43 NightEye
+44 Charm
+45 Paralyze
+46 Silence
+47 Blind
+48 Sound
+49 CalmHumanoid
+50 CalmCreature
+51 FrenzyHumanoid
+52 FrenzyCreature
+53 DemoralizeHumanoid
+54 DemoralizeCreature
+55 RallyHumanoid
+56 RallyCreature
+57 Dispel
+58 Soultrap
+59 Telekinesis
+60 Mark
+61 Recall
+62 DivineIntervention
+63 AlmsiviIntervention
+64 DetectAnimal
+65 DetectEnchantment
+66 DetectKey
+67 SpellAbsorption
+68 Reflect
+69 CureCommonDisease
+70 CureBlightDisease
+71 CureCorprusDisease
+72 CurePoison
+73 CureParalyzation
+74 RestoreAttribute
+75 RestoreHealth
+76 RestoreSpellPoints
+77 RestoreFatigue
+78 RestoreSkill
+79 FortifyAttribute
+80 FortifyHealth
+81 FortifySpellpoints
+82 FortifyFatigue
+83 FortifySkill
+84 FortifyMagickaMultiplier
+85 AbsorbAttribute
+86 AbsorbHealth
+87 AbsorbSpellPoints
+88 AbsorbFatigue
+89 AbsorbSkill
+90 ResistFire
+91 ResistFrost
+92 ResistShock
+93 ResistMagicka
+94 ResistCommonDisease
+95 ResistBlightDisease
+96 ResistCorprusDisease
+97 ResistPoison
+98 ResistNormalWeapons
+99 ResistParalysis
+100 RemoveCurse
+101 TurnUndead
+102 SummonScamp
+103 SummonClannfear
+104 SummonDaedroth
+105 SummonDremora
+106 SummonAncestralGhost
+107 SummonSkeletalMinion
+108 SummonLeastBonewalker
+109 SummonGreaterBonewalker
+110 SummonBonelord
+111 SummonWingedTwilight
+112 SummonHunger
+113 SummonGoldensaint
+114 SummonFlameAtronach
+115 SummonFrostAtronach
+116 SummonStormAtronach
+117 FortifyAttackBonus
+118 CommandCreatures
+119 CommandHumanoids
+120 BoundDagger
+121 BoundLongsword
+122 BoundMace
+123 BoundBattleAxe
+124 BoundSpear
+125 BoundLongbow
+126 ExtraSpell
+127 BoundCuirass
+128 BoundHelm
+129 BoundBoots
+130 BoundShield
+131 BoundGloves
+132 Corpus
+133 Vampirism
+134 SummonCenturionSphere
+135 SunDamage
+136 StuntedMagicka
+
+*******************************************************************************
+
+Previous updates:
+
+0.9.5-alpha.20150617
+- xGetOwner now returns the id string of faction owners.
+- Added experimental basic array support. (xCreateArray, xSetArrayValue, xGetArrayValue)
+- Added functions to read and manipulate skill progress. These should mirror related MWE 
+  functionality. (xGetProgressSkill, xSetProgressSkill, xModProgressSkill)
+- Refactored level progress functions to make use of player data structures instead of fixed 
+  offsets. (xGetProgressLevel, xSetProgressLevel)
+- Fixed a bug that made setting level progress to zero fail. (xSetProgressLevel)
+- Added a function to modify level progress by a fixed value. (xModProgressLevel)
+- Added a function to get base skill values that uses an argument to determine the skill to read. 
+  (xGetBaseSkill)
+  
 Functions:
 
 xCreateArray
@@ -173,8 +538,6 @@ resolve this, I'll add functions to calculate the displayed value and/or progres
 	
 Examples:
 See ArrayDemo.esp for scripts that demonstrate these functions.
-
-*******************************************************************************
 
 Previous WIP updates:
 
