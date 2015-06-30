@@ -766,7 +766,9 @@ bool FUNCSETSPELLINFO::execute(void)
 		machine.pop(name) &&
 		machine.pop(type) &&
 		machine.pop(cost) &&
-		machine.pop(flags))
+		machine.pop(flags) &&
+		0 <= type && type <= 5 &&
+		0 <= flags && flags <= 7)
 	{
 		SPELRecord * spell = GetSpellRecord(spellId, machine);
 		if (spell)
@@ -1049,7 +1051,9 @@ bool FUNCSETENCHANTINFO::execute(void)
 		machine.pop(type) &&
 		machine.pop(cost) &&
 		machine.pop(charge) &&
-		machine.pop(autocalc))
+		machine.pop(autocalc) &&
+		0 <= type && type <= 3 &&
+		0 <= autocalc && autocalc <= 1)
 	{
 		ENCHRecord * ench = GetEnchantmentRecord(enchId, machine);
 		if (ench)
@@ -2492,7 +2496,8 @@ static VMLONG SetEffect(Effect * effects, VMLONG index, VMLONG effectId, VMLONG 
 	VMLONG result = 0;
 	if (effects && 
 		1 <= index && index <= 8 &&
-		WaterBreathing <= effectId && effectId <= StuntedMagicka)
+		WaterBreathing <= effectId && effectId <= StuntedMagicka &&
+		0 <= rangeType && rangeType <= 2)
 	{
 		if (effectId != DrainSkill && effectId != DamageSkill && 
 			effectId != RestoreSkill && effectId != FortifySkill &&
