@@ -818,7 +818,8 @@ bool FUNCDELETEEFFECT::execute(void)
 
 	if (machine.pop(type) &&
 		machine.pop(id) &&
-		machine.pop(effectIndex) && 1 <= effectIndex && effectIndex <= 8)
+		machine.pop(effectIndex) && 
+		1 <= effectIndex && effectIndex <= 8)
 	{
 		Effect * effects = GetEffects(type, id, machine);
 		if (effects)
@@ -828,11 +829,11 @@ bool FUNCDELETEEFFECT::execute(void)
 			if (numEffects > 1 && effectIndex < numEffects)
 			{
 				result = 1;
-				effects[effectIndex].effectId = 0xFFFF;
+				effects[effectIndex].effectId = NoEffect;
 				for (int i = effectIndex + 1; i < numEffects; ++i)
 				{
 					effects[i-1] = effects[i];
-					effects[i].effectId = 0xFFFF;
+					effects[i].effectId = NoEffect;
 				}
 			}
 		}
@@ -848,16 +849,32 @@ bool FUNCSETEFFECTINFO::execute(void)
 
 	if (machine.pop(type) &&
 		machine.pop(id) && 
-		machine.pop(effectIndex) && 1 <= effectIndex && effectIndex <= 8 &&
-		machine.pop(effectId) &&
+		machine.pop(effectIndex) && 
+		machine.pop(effectId) && 
 		machine.pop(skillId) &&
 		machine.pop(attributeId) &&
 		machine.pop(rangeType) &&
 		machine.pop(area) &&
 		machine.pop(duration) &&
 		machine.pop(magMin) &&
-		machine.pop(magMax))
+		machine.pop(magMax) && 
+		1 <= effectIndex && effectIndex <= 8 &&
+		WaterBreathing <= effectId && effectId <= StuntedMagicka)
 	{
+		if (effectId != DrainSkill && effectId != DamageSkill && 
+			effectId != RestoreSkill && effectId != FortifySkill &&
+			effectId != AbsorbSkill)
+		{
+			skillId = 0xFF;
+		}
+
+		if (effectId != DrainAttribute && effectId != DamageAttribute && 
+			effectId != RestoreAttribute && effectId != FortifyAttribute &&
+			effectId != AbsorbAttribute)
+		{
+			attributeId = 0xFF;
+		}
+
 		Effect * effects = GetEffects(type, id, machine);
 		if (effects)
 		{
@@ -880,7 +897,7 @@ bool FUNCSETEFFECTINFO::execute(void)
 bool FUNCGETEFFECTINFO::execute(void)
 {
 	VMLONG type, id, effectIndex;
-	VMLONG effectId = 0xFFFF;
+	VMLONG effectId = NoEffect;
 	VMLONG skillId = 0;
 	VMLONG attributeId = 0;
 	VMLONG rangeType = 0;
@@ -891,7 +908,8 @@ bool FUNCGETEFFECTINFO::execute(void)
 
 	if (machine.pop(type) &&
 		machine.pop(id) && 
-		machine.pop(effectIndex) && 1 <= effectIndex && effectIndex <= 8)
+		machine.pop(effectIndex) &&
+		1 <= effectIndex && effectIndex <= 8)
 	{
 		Effect const * effects = GetEffects(type, id, machine);
 		if (effects)
@@ -899,7 +917,7 @@ bool FUNCGETEFFECTINFO::execute(void)
 			--effectIndex; // 0-based array index
 			Effect const & effect = effects[effectIndex];
 
-			if (effect.effectId != 0xFFFF)
+			if (effect.effectId != NoEffect)
 			{
 				effectId = effect.effectId;
 				skillId = effect.skillId;
