@@ -316,6 +316,7 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(GETEFFECTINFO, new FUNCGETEFFECTINFO(*this));
 	AddInstruction(SETENCHANTINFO, new FUNCSETENCHANTINFO(*this));
 	AddInstruction(DELETEEFFECT, new FUNCDELETEEFFECT(*this));
+	AddInstruction(ADDEFFECT, new FUNCADDEFFECT(*this));
 
 	AddInstruction(GETGS, new FUNCGETGS(*this));
 	AddInstruction(SETGS, new FUNCSETGS(*this));

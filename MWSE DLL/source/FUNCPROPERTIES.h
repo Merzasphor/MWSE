@@ -403,6 +403,15 @@ private:
 	TES3MACHINE& machine;
 };
 
+class FUNCADDEFFECT : public FUNCTION
+{
+public:
+	FUNCADDEFFECT(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
 class FUNCGETSPELLEFFECTINFO : public FUNCTION
 {
 public:

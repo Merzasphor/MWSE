@@ -461,6 +461,7 @@ typedef enum {
 	,GETEFFECTINFO		= 0x3943
 	,SETENCHANTINFO		= 0x3944
 	,DELETEEFFECT		= 0x3945
+	,ADDEFFECT			= 0x3946
 
 	,GETGS              = 0x3A00
 	,SETGS				= 0x3A01

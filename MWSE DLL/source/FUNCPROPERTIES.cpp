@@ -18,6 +18,9 @@ static SPELRecord * GetSpellRecord(VMLONG const spellId, TES3MACHINE & machine);
 static ENCHRecord * GetEnchantmentRecord(VMLONG const enchId, TES3MACHINE & machine);
 static VMSHORT CountEffects(Effect const * effects);
 static Effect * GetEffects(long const type, long const id, TES3MACHINE & machine);
+static VMLONG SetEffect(Effect * effects, VMLONG index, VMLONG effectId, VMLONG skillId,
+						VMLONG attributeId, VMLONG rangeType, VMLONG area, VMLONG duration,
+						VMLONG magMin, VMLONG magMax);
 
 static CLASRecord * GetClassRecord(TES3MACHINE & machine);
 static MACPRecord * GetMACPRecord(TES3MACHINE & machine);
@@ -857,38 +860,36 @@ bool FUNCSETEFFECTINFO::execute(void)
 		machine.pop(area) &&
 		machine.pop(duration) &&
 		machine.pop(magMin) &&
-		machine.pop(magMax) && 
-		1 <= effectIndex && effectIndex <= 8 &&
-		WaterBreathing <= effectId && effectId <= StuntedMagicka)
+		machine.pop(magMax))
 	{
-		if (effectId != DrainSkill && effectId != DamageSkill && 
-			effectId != RestoreSkill && effectId != FortifySkill &&
-			effectId != AbsorbSkill)
-		{
-			skillId = 0xFF;
-		}
-
-		if (effectId != DrainAttribute && effectId != DamageAttribute && 
-			effectId != RestoreAttribute && effectId != FortifyAttribute &&
-			effectId != AbsorbAttribute)
-		{
-			attributeId = 0xFF;
-		}
-
 		Effect * effects = GetEffects(type, id, machine);
-		if (effects)
+		result = SetEffect(effects, effectIndex, effectId, skillId, attributeId, rangeType, area, duration, magMin, magMax);
+	}
+	return machine.push(result);
+}
+
+bool FUNCADDEFFECT::execute(void)
+{
+	VMLONG type, id, effectId, skillId, attributeId,
+		rangeType, area, duration, magMin, magMax;
+	VMLONG result = 0;
+
+	if (machine.pop(type) &&
+		machine.pop(id) && 
+		machine.pop(effectId) && 
+		machine.pop(skillId) &&
+		machine.pop(attributeId) &&
+		machine.pop(rangeType) &&
+		machine.pop(area) &&
+		machine.pop(duration) &&
+		machine.pop(magMin) &&
+		machine.pop(magMax)) 
+	{
+		Effect * effects = GetEffects(type, id, machine);
+		short numEffects = CountEffects(effects);
+		if (numEffects < 8)
 		{
-			--effectIndex; // 0-based array index
-			Effect & effect = effects[effectIndex];
-			result = 1;
-			effect.effectId = effectId;
-			effect.skillId = skillId;
-			effect.AttributeId = attributeId;
-			effect.RangeType = rangeType;
-			effect.Area = area;
-			effect.Duration = duration;
-			effect.MagMin = magMin;
-			effect.MagMax = magMax;
+			result = SetEffect(effects, numEffects + 1, effectId, skillId, attributeId, rangeType, area, duration, magMin, magMax);
 		}
 	}
 	return machine.push(result);
@@ -2343,16 +2344,19 @@ static ENCHRecord * GetEnchantmentRecord(VMLONG const enchId, TES3MACHINE & mach
 static VMSHORT CountEffects(Effect const * effects)
 {
 	VMSHORT numEffects = 0;
-	//count the number of effect slots in use
-	for (int i = 0; i < 8; ++i)
+	if (effects)
 	{
-		if (effects[i].effectId != 0xFFFF)
+		//count the number of effect slots in use
+		for (int i = 0; i < 8; ++i)
 		{
-			++numEffects;
-		}
-		else
-		{
-			break;
+			if (effects[i].effectId != 0xFFFF)
+			{
+				++numEffects;
+			}
+			else
+			{
+				break;
+			}
 		}
 	}
 	return numEffects;
@@ -2479,4 +2483,45 @@ static Effect * GetEffects(long const type, long const id, TES3MACHINE & machine
 		}
 	}
 	return effects;
+}
+
+static VMLONG SetEffect(Effect * effects, VMLONG index, VMLONG effectId, VMLONG skillId, 
+						VMLONG attributeId, VMLONG rangeType, VMLONG area, VMLONG duration,
+						VMLONG magMin, VMLONG magMax)
+{
+	VMLONG result = 0;
+	if (effects && 
+		1 <= index && index <= 8 &&
+		WaterBreathing <= effectId && effectId <= StuntedMagicka)
+	{
+		if (effectId != DrainSkill && effectId != DamageSkill && 
+			effectId != RestoreSkill && effectId != FortifySkill &&
+			effectId != AbsorbSkill)
+		{
+			skillId = 0xFF;
+		}
+
+		if (effectId != DrainAttribute && effectId != DamageAttribute && 
+			effectId != RestoreAttribute && effectId != FortifyAttribute &&
+			effectId != AbsorbAttribute)
+		{
+			attributeId = 0xFF;
+		}
+
+		if (effects)
+		{
+			--index; // 0-based array index
+			Effect & effect = effects[index];
+			result = 1;
+			effect.effectId = effectId;
+			effect.skillId = skillId;
+			effect.AttributeId = attributeId;
+			effect.RangeType = rangeType;
+			effect.Area = area;
+			effect.Duration = duration;
+			effect.MagMin = magMin;
+			effect.MagMax = magMax;
+		}
+	}
+	return result;
 }
