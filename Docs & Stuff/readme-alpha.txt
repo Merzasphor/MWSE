@@ -16,6 +16,7 @@ Updates since 0.9.5-alpha.20150617:
 - Skill progress functions now support normalized progress values and invoke the game's native 
   skill-up function. (xGetProgressSkill, xSetProgressSkill, xModProgressSkill)
 - Level progress functions now invoke the game's native level-up message function. (xSetProgressLevel, xGetProgressLevel)
+- Added a function to get effect info from spells and enchantments. (xGetEffectInfo)
 - Added functions to modify spell and enchantment properties. (xSetSpellInfo, xSetEnchantInfo, xSetEffectInfo, xDeleteEffect, xAddEffect)
 - Added a function to return the type and id of the player's currently readied magic. (xGetMagic)
 
