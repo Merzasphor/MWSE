@@ -249,6 +249,7 @@ enum GMSTs
 
 enum Attributes
 {
+	NoAttribute = -1,
 	Strength,
 	Intelligence,
 	Willpower,
@@ -275,6 +276,7 @@ enum Specializations
 
 enum Skills
 {
+	NoSkill = -1,
 	Block,
 	Armorer,
 	MediumArmor,
@@ -306,6 +308,7 @@ enum Skills
 
 enum Effects
 {
+	NoEffect = -1,
 	WaterBreathing,
 	SwiftSwim,
 	WaterWalking,
@@ -442,8 +445,7 @@ enum Effects
 	Vampirism,
 	SummonCenturionSphere,
 	SunDamage,
-	StuntedMagicka,
-	NoEffect = 0xFFFF
+	StuntedMagicka
 };
 
 struct LinkedListNode
@@ -510,9 +512,9 @@ struct BaseRecord
 
 struct Effect
 {
-	unsigned short effectId;
-	unsigned char  skillId;
-	unsigned char  AttributeId;
+	short effectId;
+	char  skillId;
+	char  AttributeId;
 	long  RangeType;		//0=SELF, 1=TOUCH, 2=TARGET
 	long  Area;
 	long  Duration;

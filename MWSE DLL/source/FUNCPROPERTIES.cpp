@@ -960,7 +960,7 @@ bool FUNCGETSPELLEFFECTINFO::execute(void)
 	{
 		SPELRecord * spell = GetSpellRecord(spellId, machine);
 		--effectIndex; // 0-based array index
-		if (spell != 0 && spell->effects[effectIndex].effectId != 0xFFFF)
+		if (spell != 0 && spell->effects[effectIndex].effectId != NoEffect)
 		{			
 			effectId = spell->effects[effectIndex].effectId;
 			skillId = spell->effects[effectIndex].skillId;
@@ -1115,7 +1115,7 @@ bool FUNCGETENCHANTEFFECTINFO::execute(void)
 	{
 		ENCHRecord * ench = GetEnchantmentRecord(enchId, machine);
 		--effectIndex; // 0-based array index
-		if (ench != 0 && ench->effects[effectIndex].effectId != 0xFFFF)
+		if (ench != 0 && ench->effects[effectIndex].effectId != NoEffect)
 		{
 			effectId = ench->effects[effectIndex].effectId;
 			rangeType = ench->effects[effectIndex].RangeType;
@@ -2354,7 +2354,7 @@ static VMSHORT CountEffects(Effect const * effects)
 		//count the number of effect slots in use
 		for (int i = 0; i < 8; ++i)
 		{
-			if (effects[i].effectId != 0xFFFF)
+			if (effects[i].effectId != NoEffect)
 			{
 				++numEffects;
 			}
@@ -2504,14 +2504,14 @@ static VMLONG SetEffect(Effect * effects, VMLONG index, VMLONG effectId, VMLONG 
 			effectId != RestoreSkill && effectId != FortifySkill &&
 			effectId != AbsorbSkill)
 		{
-			skillId = 0xFF;
+			skillId = NoSkill;
 		}
 
 		if (effectId != DrainAttribute && effectId != DamageAttribute && 
 			effectId != RestoreAttribute && effectId != FortifyAttribute &&
 			effectId != AbsorbAttribute)
 		{
-			attributeId = 0xFF;
+			attributeId = NoAttribute;
 		}
 
 		if (effects)
