@@ -776,7 +776,7 @@ bool FUNCSETSPELLINFO::execute(void)
 			char const * newName = machine.GetString(reinterpret_cast<VPVOID>(name));
 			if (newName)
 			{
-				spell->friendlyName = newName;
+				strncpy(spell->friendlyName, newName, 31);
 			}
 			spell->type = type;
 			spell->cost = cost;
