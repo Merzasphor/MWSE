@@ -777,6 +777,7 @@ bool FUNCSETSPELLINFO::execute(void)
 			if (newName)
 			{
 				strncpy(spell->friendlyName, newName, 31);
+				spell->friendlyName[31] = '\0';
 			}
 			spell->type = type;
 			spell->cost = cost;
