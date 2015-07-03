@@ -1,50 +1,48 @@
+#include <windows.h>
+#include <dbghelp.h>
+
 #include "cMWSEMain.h"
 
-#include <imagehlp.h>
-
-void * external_malloc = NULL;
-void * external_free = NULL;
-
-static BOOL CALLBACK enumSymbolsCallback(PSYMBOL_INFO symbolInfo, ULONG symbolSize, PVOID userContext){
-
-	if(strcmp(symbolInfo->Name, "malloc") == 0)
-	{
-		external_malloc = reinterpret_cast<void*>(symbolInfo->Address);
-	}
-	else if (strcmp(symbolInfo->Name, "free") == 0)
-	{
-		external_free = reinterpret_cast<void*>(symbolInfo->Address);
-	}
-
-	return true;
-}
-
+void* external_malloc = NULL;
+void* external_free = NULL;
+void* external_realloc = NULL;
 TES3MACHINE* cMWSEMain::vScriptMachine;
 HWBREAKPOINT* cMWSEMain::vHWBreakpoint;
 VPVOID cMWSEMain::vPrevScript;
+
+static BOOL CALLBACK EnumSymbolsCallback(PSYMBOL_INFO symbol_info,
+										 ULONG /*symbol_size*/, 
+										 PVOID /*user_context*/);
 
 void cMWSEMain::mStartMWSE()
 {
 	vScriptMachine = new TES3MACHINE();
 	AddBreakpoint(BP_RUNSCRIPT, mOnRunScript);
 	AddBreakpoint(BP_FIXUPSCRIPT, mOnFixupScript);
-
-	// Find the addresses of malloc() and free() that MW uses,
+	// Find the addresses of malloc(), realloc(), free() that MW uses,
 	// so that we can interact with its heap.
-	SymInitialize(GetCurrentProcess(), NULL, true);
-	SymEnumSymbols(GetCurrentProcess(), 0, "msvcrt!*", enumSymbolsCallback, NULL);
-
-	if (!external_malloc)
-	{
+	HANDLE process = GetCurrentProcess();
+	SymInitialize(process,
+		NULL,  // No search path.
+		TRUE); // Load symbol tables for all modules.
+	SymEnumSymbols(process,
+		0,                    // No base address.
+		"msvcrt!*",           // Only look in msvcrt.dll.
+		EnumSymbolsCallback,
+		NULL);                // No context.
+	SymCleanup(process);
+	if (!external_malloc) {
 		cLog::mLogMessage("Error: unable to find malloc()\n");
 	}
-	if (!external_free)
-	{
+	if (!external_free) {
 		cLog::mLogMessage("Error: unable to find free()\n");
 	}
-
+	if (!external_realloc) {
+		cLog::mLogMessage("Error: unable to find realloc()\n");
+	}
 	vScriptMachine->set_external_malloc(external_malloc);
 	vScriptMachine->set_external_free(external_free);
+	vScriptMachine->set_external_realloc(external_realloc);
 }
 
 void cMWSEMain::mOnRunScript(Context *context)
@@ -195,4 +193,20 @@ TES3MACHINE* MWSEGetVM()
 bool MWSEAddInstruction(OPCODE op, INSTRUCTION *ins)
 {
 	return cMWSEMain::mGetVM()->AddInstruction(op, ins);
+}
+
+static BOOL CALLBACK EnumSymbolsCallback(PSYMBOL_INFO symbol_info,
+										 ULONG /*symbol_size*/, 
+										 PVOID /*user_context*/) 
+{
+	if(strcmp(symbol_info->Name, "malloc") == 0) {
+		external_malloc = reinterpret_cast<void*>(symbol_info->Address);
+	}
+	else if (strcmp(symbol_info->Name, "free") == 0) {
+		external_free = reinterpret_cast<void*>(symbol_info->Address);
+	}
+	else if (strcmp(symbol_info->Name, "realloc") == 0) {
+		external_realloc = reinterpret_cast<void*>(symbol_info->Address);
+	}
+	return TRUE;
 }

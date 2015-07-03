@@ -10,8 +10,9 @@
 // 22-08-2006 Tp21
 #include "warnings.h"
 
-typedef void * (__cdecl *ExternalMalloc)(size_t);
-typedef void (__cdecl *ExternalFree)(void *);
+typedef void* (__cdecl *ExternalMalloc)(size_t);
+typedef void (__cdecl *ExternalFree)(void*);
+typedef void* (__cdecl *ExternalRealloc)(void*, size_t);
 
 typedef enum {INTSWITCHREFERENCE= 1} INTERRUPTS;
 
@@ -42,10 +43,17 @@ struct TES3MACHINE : public VIRTUALMACHINE
 	virtual const Context GetFlow(void);
 	virtual void SetFlow(const Context newflow);
 
-	void * Malloc(size_t size);
-	void set_external_malloc(void* external_malloc);
-	void Free(void * to_free);
-	void set_external_free(void* external_free);
+	void set_external_malloc(void* external_malloc) {
+		external_malloc_ = reinterpret_cast<ExternalMalloc>(external_malloc); }
+	void* Malloc(size_t size) { return external_malloc_(size); }
+	void set_external_free(void* external_free) {
+		external_free_ = reinterpret_cast<ExternalFree>(external_free); }
+	void Free(void* to_free) { external_free_(to_free); }
+	void set_external_realloc(void* external_realloc) {
+		external_realloc_ =
+			reinterpret_cast<ExternalRealloc>(external_realloc); }
+	void* Realloc(void* to_realloc, size_t size) {
+		return external_realloc_(to_realloc, size); }
 
 private:
 	ADDRESSSPACE* executable;
@@ -58,4 +66,5 @@ private:
 	VMREGTYPE generalregs[GPMAX+1];
 	ExternalMalloc external_malloc_;
 	ExternalFree external_free_;
+	ExternalRealloc external_realloc_;
 };

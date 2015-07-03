@@ -755,44 +755,28 @@ bool FUNCGETSPELL::execute(void)
 
 bool FUNCSETSPELLINFO::execute(void)
 {
-	VMLONG spellId;
-	VMLONG name;
-	VMLONG type;
-	VMLONG cost;
-	VMLONG flags;
+	VMLONG spellId, name, type, cost, flags;
 	VMLONG result = 0;
-
 	if (machine.pop(spellId) &&
 		machine.pop(name) &&
 		machine.pop(type) &&
 		machine.pop(cost) &&
 		machine.pop(flags) &&
 		0 <= type && type <= 5 &&
-		0 <= flags && flags <= 7)
-	{
+		0 <= flags && flags <= 7) {
 		SPELRecord * spell = GetSpellRecord(spellId, machine);
-		if (spell)
-		{
+		if (spell) {
 			char const * newName = machine.GetString(reinterpret_cast<VPVOID>(name));
-			if (newName)
-			{
-				if (strlen(newName) <= strlen(spell->friendlyName))
-				{
-					strncpy(spell->friendlyName, newName, strlen(spell->friendlyName));
-				}
-				else
-				{
+			if (newName) {
+				if (strlen(newName) > strlen(spell->friendlyName)) {
 					// The CS limits spell names to 31 characters, so we will too.
-					char * newString = static_cast<char*>(machine.Malloc(32));
-					strncpy(newString, newName, 31);
-					newString[31] = '\0';
-					char * oldName = spell->friendlyName;
-					spell->friendlyName = newString;
-					//TODO Is this safe?
-					//If we free, there's a chance something else still
-					//has the pointer. If we don't, we have a memory leak.
-					machine.Free(oldName);
+					// TODO Is it safe to realloc? We can't be sure that
+					// nothing else knows about this pointer.
+					spell->friendlyName =
+						static_cast<char*>(machine.Realloc(spell->friendlyName, 32));
+					spell->friendlyName[31] = '\0';
 				}
+				strncpy(spell->friendlyName, newName, 31);
 			}
 			spell->type = type;
 			spell->cost = cost;
