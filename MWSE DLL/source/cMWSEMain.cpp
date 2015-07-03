@@ -1,5 +1,24 @@
 #include "cMWSEMain.h"
 
+#include <imagehlp.h>
+
+void * external_malloc = NULL;
+void * external_free = NULL;
+
+static BOOL CALLBACK enumSymbolsCallback(PSYMBOL_INFO symbolInfo, ULONG symbolSize, PVOID userContext){
+
+	if(strcmp(symbolInfo->Name, "malloc") == 0)
+	{
+		external_malloc = reinterpret_cast<void*>(symbolInfo->Address);
+	}
+	else if (strcmp(symbolInfo->Name, "free") == 0)
+	{
+		external_free = reinterpret_cast<void*>(symbolInfo->Address);
+	}
+
+	return true;
+}
+
 TES3MACHINE* cMWSEMain::vScriptMachine;
 HWBREAKPOINT* cMWSEMain::vHWBreakpoint;
 VPVOID cMWSEMain::vPrevScript;
@@ -9,6 +28,23 @@ void cMWSEMain::mStartMWSE()
 	vScriptMachine = new TES3MACHINE();
 	AddBreakpoint(BP_RUNSCRIPT, mOnRunScript);
 	AddBreakpoint(BP_FIXUPSCRIPT, mOnFixupScript);
+
+	// Find the addresses of malloc() and free() that MW uses,
+	// so that we can interact with its heap.
+	SymInitialize(GetCurrentProcess(), NULL, true);
+	SymEnumSymbols(GetCurrentProcess(), 0, "msvcrt!*", enumSymbolsCallback, NULL);
+
+	if (!external_malloc)
+	{
+		cLog::mLogMessage("Error: unable to find malloc()\n");
+	}
+	if (!external_free)
+	{
+		cLog::mLogMessage("Error: unable to find free()\n");
+	}
+
+	vScriptMachine->set_external_malloc(external_malloc);
+	vScriptMachine->set_external_free(external_free);
 }
 
 void cMWSEMain::mOnRunScript(Context *context)

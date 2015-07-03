@@ -142,7 +142,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib boost-regex.lib version.lib"
+				AdditionalDependencies="user32.lib boost-regex.lib version.lib imagehlp.lib"
 				OutputFile="$(OutDir)\MWSE.dll"
 				AdditionalLibraryDirectories="$(IntDir)"
 				GenerateManifest="false"

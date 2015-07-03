@@ -10,6 +10,9 @@
 // 22-08-2006 Tp21
 #include "warnings.h"
 
+typedef void * (__cdecl *ExternalMalloc)(size_t);
+typedef void (__cdecl *ExternalFree)(void *);
+
 typedef enum {INTSWITCHREFERENCE= 1} INTERRUPTS;
 
 
@@ -39,6 +42,11 @@ struct TES3MACHINE : public VIRTUALMACHINE
 	virtual const Context GetFlow(void);
 	virtual void SetFlow(const Context newflow);
 
+	void * Malloc(size_t size);
+	void set_external_malloc(void* external_malloc);
+	void Free(void * to_free);
+	void set_external_free(void* external_free);
+
 private:
 	ADDRESSSPACE* executable;
 	VPSCRIPT scriptaddr;
@@ -48,4 +56,6 @@ private:
 	VMREGTYPE instructionpointer;
 	VMREGTYPE stackpointer;
 	VMREGTYPE generalregs[GPMAX+1];
+	ExternalMalloc external_malloc_;
+	ExternalFree external_free_;
 };

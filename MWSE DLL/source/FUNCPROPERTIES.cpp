@@ -776,8 +776,23 @@ bool FUNCSETSPELLINFO::execute(void)
 			char const * newName = machine.GetString(reinterpret_cast<VPVOID>(name));
 			if (newName)
 			{
-				strncpy(spell->friendlyName, newName, 31);
-				spell->friendlyName[31] = '\0';
+				if (strlen(newName) <= strlen(spell->friendlyName))
+				{
+					strncpy(spell->friendlyName, newName, strlen(spell->friendlyName));
+				}
+				else
+				{
+					// The CS limits spell names to 31 characters, so we will too.
+					char * newString = static_cast<char*>(machine.Malloc(32));
+					strncpy(newString, newName, 31);
+					newString[31] = '\0';
+					char * oldName = spell->friendlyName;
+					spell->friendlyName = newString;
+					//TODO Is this safe?
+					//If we free, there's a chance something else still
+					//has the pointer. If we don't, we have a memory leak.
+					machine.Free(oldName);
+				}
 			}
 			spell->type = type;
 			spell->cost = cost;

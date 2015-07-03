@@ -700,3 +700,23 @@ void TES3MACHINE::searchforscripttarget(void)
 		}
 	}
 }
+
+void TES3MACHINE::set_external_malloc(void * external_malloc)
+{
+	external_malloc_ = reinterpret_cast<void * (__cdecl *)(size_t)>(external_malloc);
+}
+
+void * TES3MACHINE::Malloc(size_t size)
+{
+	return external_malloc_(size);
+}
+
+void TES3MACHINE::set_external_free(void * external_free)
+{
+	external_free_ = reinterpret_cast<void (__cdecl *)(void *)>(external_free);
+}
+
+void TES3MACHINE::Free(void * to_free)
+{
+	external_free_(to_free);
+}
