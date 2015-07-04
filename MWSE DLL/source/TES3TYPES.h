@@ -193,6 +193,13 @@ struct TES3VIEWMASTER
 };
 typedef TES3VIEWMASTER* VPVIEWMASTER;
 
+enum SpellFlags 
+{
+	kAutoCalculateCost = 1,
+	kPcStartSpell = 2,
+	kAlwaysSucceeds = 4
+};
+
 namespace RecordTypes {
 	enum RecordType
 	{
@@ -218,6 +225,7 @@ namespace RecordTypes {
 		LOCK = 'KCOL', LOCKPICK = LOCK,
 		MACP = 'PCAM',
 		MISC = 'CSIM',
+		MGEF = 'FEGM', MAGICEFFECT = MGEF,
 		NPC = '_CPN',
 		PICK = 'KCIP', //?
 		PROB = 'BORP', PROBE = PROB,
@@ -240,6 +248,7 @@ namespace RecordTypes {
 
 enum GMSTs
 {
+	fEffectCostMult = 1037,
 	iLevelupTotal = 1088,
 	fSpecialSkillBonus = 1161,
 	fMajorSkillBonus,
@@ -445,7 +454,13 @@ enum Effects
 	Vampirism,
 	SummonCenturionSphere,
 	SunDamage,
-	StuntedMagicka
+	StuntedMagicka,
+	SummonFabricant,
+	CallWolf,
+	CallBear,
+	SummonBonewolf,
+	sEffectSummonCreature04,
+	sEffectSummonCreature05
 };
 
 struct LinkedListNode
@@ -491,6 +506,38 @@ struct GMSTRecord
 	int unknown2[2];
 };
 
+struct MGEFRecord
+{
+	void* vtable;
+	RecordTypes::RecordType record_type;
+	int unknown1;
+	void* module; // pointer to module?
+	long index; // index in array
+	int unknown3;
+	int unknown4;
+	char effect_icon[32];
+	char particle_texture[32];
+	// Only a few effects have data in their sound effect strings.
+	// Maybe it's inferred from school if missing?
+	char cast_sound_effect[32];
+	char bolt_sound_effect[32];
+	char hit_sound_effect[32];
+	char area_sound_effect[32];
+	void* unknown5; // visual effect?
+	void* unknown6; // visual effect?
+	void* unknown7; // visual effect?
+	void* unknown8; // visual effect?
+	long school; // 0 = Alteration, 1 = Conjuration, 2 = Destruction, 3 = Illusion, 4 = Mysticism, 5 = Restoration
+	float base_magicka_cost;
+	long flags; //0x200 = spellmaking 0x400 = enchanting 0x800 = negative lighting effect
+	long red;
+	long green;
+	long blue;
+	float size_x;
+	float speed_x;
+	float size_cap;
+};
+
 struct RecordLists
 {
 	unsigned long unknown1; // 
@@ -502,12 +549,20 @@ struct RecordLists
 	GMSTRecord ** GMSTs; // pointer to array of GMST pointers
 	void * unknown5[12];
 	SKILRecord skills[27];
+	MGEFRecord magic_effects[143];
 };
 
 struct BaseRecord
 {
 	void * vTable;
 	RecordTypes::RecordType recordType;
+};
+
+enum RangeFlags
+{
+	kSelf = 0,
+	kTouch,
+	kTarget
 };
 
 struct Effect
@@ -545,11 +600,17 @@ struct ENCHRecord
 	long autocalc;	//0=OFF, 1=ON
 };
 
+enum SpellOrigins
+{
+	kModule = 1,
+	kSpellmaker
+};
+
 struct SPELRecord
 {
 	void * vTable;
 	RecordTypes::RecordType recordType; // SPEL
-	unsigned long recordSize;
+	unsigned long origin;
 	char * modName;
 	int unknown1;
 	LinkedList * spellsList;

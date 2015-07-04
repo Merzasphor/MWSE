@@ -763,10 +763,11 @@ bool FUNCSETSPELLINFO::execute(void)
 		machine.pop(cost) &&
 		machine.pop(flags) &&
 		0 <= type && type <= 5 &&
-		0 <= flags && flags <= 7) {
-		SPELRecord * spell = GetSpellRecord(spellId, machine);
+		0 <= flags &&
+		flags <= (kAutoCalculateCost | kPcStartSpell | kAlwaysSucceeds)) {
+		SPELRecord* spell = GetSpellRecord(spellId, machine);
 		if (spell) {
-			char const * newName = machine.GetString(reinterpret_cast<VPVOID>(name));
+			char const* newName = machine.GetString(reinterpret_cast<VPVOID>(name));
 			if (newName) {
 				if (strlen(newName) > strlen(spell->friendlyName)) {
 					// The CS limits spell names to 31 characters, so we will too.
@@ -778,8 +779,15 @@ bool FUNCSETSPELLINFO::execute(void)
 				}
 				strncpy(spell->friendlyName, newName, 31);
 			}
+			if (flags & kAutoCalculateCost &&
+				!(spell->flags & kAutoCalculateCost)) {
+				// TODO Need to find the native function(s) that calculate
+				// spell cost.
+			}
+			else if (!(flags & kAutoCalculateCost)) {
+				spell->cost = cost;
+			}
 			spell->type = type;
-			spell->cost = cost;
 			spell->flags = flags;
 			result = 1;
 		}
