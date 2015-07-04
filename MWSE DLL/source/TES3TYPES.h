@@ -197,7 +197,9 @@ enum SpellFlags
 {
 	kAutoCalculateCost = 1,
 	kPcStartSpell = 2,
-	kAlwaysSucceeds = 4
+	kAlwaysSucceeds = 4,
+	kSpellFlagsNone = 0,
+	kSpellFlagsAll = (kAutoCalculateCost | kPcStartSpell | kAlwaysSucceeds)
 };
 
 namespace RecordTypes {
@@ -603,7 +605,21 @@ struct ENCHRecord
 enum SpellOrigins
 {
 	kModule = 1,
-	kSpellmaker
+	kSpellmaker,
+	kSpellOriginsFirst = kModule,
+	kSpellOriginsLast = kSpellmaker
+};
+
+enum SpellTypes
+{
+	kSpell,
+	kAbility,
+	kBlight,
+	kDisease,
+	kCurse,
+	kPower,
+	kSpellTypesFirst = kSpell,
+	kSpellTypesLast = kPower
 };
 
 struct SPELRecord
@@ -968,11 +984,7 @@ struct MACPRecord
 	int unknown2[53];						//24
 	MACPRecord * combatTarget; // unverified // 236
 	int unknown3[162]; // 240
-	void * currentSpell; // unverfied // 888 
-	// notes from trunk:
-	//current selected spell	//this of course points to a SPEL or ENCH record ;)
-	//or the one after that, if i miscounted ;-), we'll see when we start using those.
-	//vTable + 0x378 is currentSpell @, so you can recount ;-).
+	void * currentSpell; // 888 
 	int unknown4[13]; // 892
 	Skill skills[27]; // 944
 	int unknown5[34];  // 1376

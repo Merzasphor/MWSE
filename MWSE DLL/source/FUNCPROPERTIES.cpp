@@ -678,48 +678,44 @@ bool FUNCSETTRAP::execute(void)
 
 bool FUNCSPELLLIST::execute(void)
 {
-	LinkedListNode * next = 0;
-	VMLONG totalSpells = 0;
-	VMLONG spellId = 0;
+	LinkedListNode* next = 0;
+	VMLONG total_spells = 0;
+	VMLONG spellid = 0;
 	VMLONG name = 0;
-	VMSHORT type = 0;
+	VMLONG type = 0;
 	VMLONG cost = 0;
-	VMSHORT effects = 0;
+	VMLONG effects = 0;
 	VMLONG flags = 0;
-	
+	VMLONG origin = 0;
 	VPVOID refr, temp;
-	unsigned long refType;
-
-	if (machine.pop(reinterpret_cast<VMREGTYPE&>(next)) && GetTargetData(machine, &refr, &temp, &refType))
-	{
-		if (refType == NPC)
-		{
+	unsigned long ref_type;
+	if (machine.pop(reinterpret_cast<VMREGTYPE&>(next)) && GetTargetData(machine, &refr, &temp, &ref_type)) {
+		if (ref_type == NPC) {
 			TES3REFERENCE * npcRef = reinterpret_cast<TES3REFERENCE*>(refr);
 			NPCCopyRecord * npcCopy = reinterpret_cast<NPCCopyRecord*>(npcRef->templ);
 			NPCBaseRecord * npcRec = npcCopy->baseNPC;
-			totalSpells = npcRec->numberOfSpells;
-			if (totalSpells > 0)
-			{
-				if (next == 0)
-				{
+			total_spells = npcRec->numberOfSpells;
+			if (total_spells > 0) {
+				if (!next) {
 					next = npcRec->spellStart;
 				}
-
 				SPELRecord * spell = reinterpret_cast<SPELRecord*>(next->dataNode);
 				next = next->nextNode;
-
-				spellId = reinterpret_cast<VMLONG>(strings.add(spell->id));
+				spellid = reinterpret_cast<VMLONG>(strings.add(spell->id));
 				name = reinterpret_cast<VMLONG>(strings.add(spell->friendlyName));
 				type = spell->type;
 				cost = spell->cost;
 				effects = CountEffects(spell->effects);
 				flags = spell->flags;
+				origin = spell->origin;
 			}
 		}
 	}
 
-	return machine.push(reinterpret_cast<VMREGTYPE>(next)) && machine.push(flags) && machine.push(static_cast<VMREGTYPE>(effects)) && machine.push(cost) 
-		&& machine.push(static_cast<VMREGTYPE>(type)) && machine.push(name) && machine.push(spellId) && machine.push(totalSpells);
+	return machine.push(reinterpret_cast<VMREGTYPE>(next)) &&
+		machine.push(origin) && machine.push(flags) && machine.push(effects) &&
+		machine.push(cost) && machine.push(type) && machine.push(name) &&
+		machine.push(spellid) && machine.push(total_spells);
 }
 
 bool FUNCGETSPELL::execute(void)
@@ -755,17 +751,18 @@ bool FUNCGETSPELL::execute(void)
 
 bool FUNCSETSPELLINFO::execute(void)
 {
-	VMLONG spellId, name, type, cost, flags;
+	VMLONG spellid, name, type, cost, flags, origin;
 	VMLONG result = 0;
-	if (machine.pop(spellId) &&
+	if (machine.pop(spellid) &&
 		machine.pop(name) &&
 		machine.pop(type) &&
 		machine.pop(cost) &&
 		machine.pop(flags) &&
-		0 <= type && type <= 5 &&
-		0 <= flags &&
-		flags <= (kAutoCalculateCost | kPcStartSpell | kAlwaysSucceeds)) {
-		SPELRecord* spell = GetSpellRecord(spellId, machine);
+		machine.pop(origin) &&
+		kSpellTypesFirst <= type && type <= kSpellTypesLast &&
+		kSpellFlagsNone <= flags && flags <= kSpellFlagsAll &&
+		kSpellOriginsFirst <= origin && origin <= kSpellOriginsLast) {
+		SPELRecord* spell = GetSpellRecord(spellid, machine);
 		if (spell) {
 			char const* newName = machine.GetString(reinterpret_cast<VPVOID>(name));
 			if (newName) {
@@ -789,6 +786,7 @@ bool FUNCSETSPELLINFO::execute(void)
 			}
 			spell->type = type;
 			spell->flags = flags;
+			spell->origin = origin;
 			result = 1;
 		}
 	}
@@ -797,31 +795,28 @@ bool FUNCSETSPELLINFO::execute(void)
 
 bool FUNCGETSPELLINFO::execute(void)
 {
-	VMLONG spellId;
+	VMLONG spellid;
 	VMLONG name = 0;
-	VMSHORT type = 0;
+	VMLONG type = 0;
 	VMLONG cost = 0;
-	VMSHORT effects = 0;
+	VMLONG effects = 0;
 	VMLONG flags = 0;
+	VMLONG origin = 0;
 
-	if (machine.pop(spellId))
-	{
-		SPELRecord * spell = GetSpellRecord(spellId, machine);
-		if (spell != 0)
-		{
+	if (machine.pop(spellid)) {
+		SPELRecord * spell = GetSpellRecord(spellid, machine);
+		if (spell) {
 			name = reinterpret_cast<VMLONG>(strings.add(spell->friendlyName));
 			type = spell->type;
 			cost = spell->cost;
 			effects = CountEffects(spell->effects);
 			flags = spell->flags;
+			origin = spell->origin;
 		}
 	}
-
-#ifdef DEBUGGING
-	cLog::mLogMessage("%f= FUNCGETSPELLINFO()\n",spellId);
-#endif	
-	return machine.push(flags) && machine.push(static_cast<VMREGTYPE>(effects)) && machine.push(cost)
-		&& machine.push(static_cast<VMREGTYPE>(type)) && machine.push(name);
+	return machine.push(origin) && machine.push(flags) && 
+		machine.push(effects) && machine.push(cost) && 
+		machine.push(type) && machine.push(name);
 }
 
 bool FUNCDELETEEFFECT::execute(void)
