@@ -930,9 +930,8 @@ bool FUNCADDEFFECT::execute(void)
 bool FUNCGETEFFECTINFO::execute(void)
 {
 	VMLONG type, id, effectIndex;
-	VMLONG effectId = kNoEffect;
-	VMLONG skillId = 0;
-	VMLONG attributeId = 0;
+	VMLONG effect_id = kNoEffect;
+	VMLONG skill_attribute_id = 0;
 	VMLONG rangeType = 0;
 	VMLONG area = 0;
 	VMLONG duration = 0;
@@ -949,12 +948,18 @@ bool FUNCGETEFFECTINFO::execute(void)
 		{
 			--effectIndex; // 0-based array index
 			Effect const & effect = effects[effectIndex];
-
-			if (effect.effectId != kNoEffect)
-			{
-				effectId = effect.effectId;
-				skillId = effect.skillId;
-				attributeId = effect.AttributeId;
+			if (effect.effectId != kNoEffect) {
+				effect_id = effect.effectId;
+				int effect_flags = kMagicEffectFlags[effect_id];
+				if (effect_flags & kTargetSkill) {
+					skill_attribute_id = effect.skillId;
+				}
+				else if (effect_flags & kTargetAttribute) {
+					skill_attribute_id = effect.AttributeId;
+				}
+				else {
+					skill_attribute_id = kNoSkill;
+				}
 				rangeType = effect.RangeType;
 				area = effect.Area;
 				duration = effect.Duration;
@@ -967,8 +972,10 @@ bool FUNCGETEFFECTINFO::execute(void)
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETSPELLINFO()\n",spellId);
 #endif	
-	return machine.push(magMax) && machine.push(magMin) && machine.push(duration) && machine.push(area) && machine.push(rangeType) 
-		&& machine.push(attributeId) && machine.push(skillId) && machine.push(effectId);
+	return machine.push(magMax) && machine.push(magMin) &&
+		machine.push(duration) && machine.push(area) &&
+		machine.push(rangeType) && machine.push(skill_attribute_id) &&
+		machine.push(effect_id);
 }
 
 bool FUNCGETSPELLEFFECTINFO::execute(void)
