@@ -18,9 +18,10 @@ static SPELRecord * GetSpellRecord(VMLONG const spellId, TES3MACHINE & machine);
 static ENCHRecord * GetEnchantmentRecord(VMLONG const enchId, TES3MACHINE & machine);
 static VMSHORT CountEffects(Effect const * effects);
 static Effect * GetEffects(long const type, long const id, TES3MACHINE & machine);
-static VMLONG SetEffect(Effect * effects, VMLONG index, VMLONG effectId, VMLONG skillId,
-						VMLONG attributeId, VMLONG rangeType, VMLONG area, VMLONG duration,
-						VMLONG magMin, VMLONG magMax);
+static VMLONG SetEffect(Effect * effects, VMLONG index, VMLONG effect_id, 
+						VMLONG skill_attribute_id, VMLONG range, VMLONG area, 
+						VMLONG duration, VMLONG minimum_magnitude,
+						VMLONG maximum_magnitude);
 
 static CLASRecord * GetClassRecord(TES3MACHINE & machine);
 static MACPRecord * GetMACPRecord(TES3MACHINE & machine);
@@ -77,7 +78,7 @@ bool FUNCGETPROGRESSSKILL::execute(void)
 	MACPRecord * macp = GetMACPRecord(machine);
 	
 	if (macp && 
-		machine.pop(skillIndex) && skillIndex >= Block && skillIndex <= HandToHand)
+		machine.pop(skillIndex) && skillIndex >= kFirstSkill && skillIndex <= kLastSkill)
 	{
 		progress = macp->skillProgress[skillIndex];
 		normalized = 100 * progress / GetSkillRequirement(machine, static_cast<Skills>(skillIndex));
@@ -98,7 +99,7 @@ bool FUNCSETPROGRESSSKILL::execute(void)
 	MACPRecord * macp = GetMACPRecord(machine);
 	
 	if (macp && 
-		machine.pop(skillIndex) && skillIndex >= Block && skillIndex <= HandToHand &&
+		machine.pop(skillIndex) && skillIndex >= kFirstSkill && skillIndex <= kLastSkill &&
 		machine.pop(progress) && progress >= 0 &&
 		machine.pop(normalized))
 	{
@@ -126,7 +127,7 @@ bool FUNCMODPROGRESSSKILL::execute(void)
 	MACPRecord * macp = GetMACPRecord(machine);
 	
 	if (macp && 
-		machine.pop(skillIndex) && skillIndex >= Block && skillIndex <= HandToHand &&
+		machine.pop(skillIndex) && skillIndex >= kFirstSkill && skillIndex <= kLastSkill &&
 		machine.pop(mod) &&
 		machine.pop(normalized))
 	{
@@ -164,7 +165,7 @@ bool FUNCGETBASESKILL::execute(void)
 	VMFLOAT value = -1.0;
 	MACPRecord * macp = GetMACPRecord(machine);
 	
-	if (macp && machine.pop(skillIndex) && skillIndex >= Block && skillIndex <= HandToHand)
+	if (macp && machine.pop(skillIndex) && skillIndex >= kFirstSkill && skillIndex <= kLastSkill)
 	{
 		value = macp->skills[skillIndex].base;
 	}
@@ -757,8 +758,8 @@ bool FUNCSETSPELLINFO::execute(void)
 		machine.pop(cost) &&
 		machine.pop(flags) &&
 		machine.pop(origin) &&
-		kSpellTypesFirst <= type && type <= kSpellTypesLast &&
-		kSpellFlagsNone <= flags && flags <= kSpellFlagsAll &&
+		kFirstSpellTypes <= type && type <= kLastSpellTypes &&
+		kNoSpellFlags <= flags && flags <= kAllSpellFlags &&
 		(origin == 0 || (kSpellOriginsFirst <= origin && origin <= kSpellOriginsLast))) {
 		SPELRecord* spell = GetSpellRecord(spellid, machine);
 		if (spell) {
@@ -837,11 +838,11 @@ bool FUNCDELETEEFFECT::execute(void)
 			if (numEffects > 1 && effectIndex < numEffects)
 			{
 				result = 1;
-				effects[effectIndex].effectId = NoEffect;
+				effects[effectIndex].effectId = kNoEffect;
 				for (int i = effectIndex + 1; i < numEffects; ++i)
 				{
 					effects[i-1] = effects[i];
-					effects[i].effectId = NoEffect;
+					effects[i].effectId = kNoEffect;
 				}
 			}
 		}
@@ -851,50 +852,37 @@ bool FUNCDELETEEFFECT::execute(void)
 
 bool FUNCSETEFFECTINFO::execute(void)
 {
-	VMLONG type, id, effectIndex, effectId, skillId, attributeId,
-		rangeType, area, duration, magMin, magMax;
+	VMLONG type, id, effect_index, effect_id, skill_attribute_id,
+		range, area, duration, mininum_magnitude, maximum_magnitude;
 	VMLONG result = 0;
-
-	if (machine.pop(type) &&
-		machine.pop(id) && 
-		machine.pop(effectIndex) && 
-		machine.pop(effectId) && 
-		machine.pop(skillId) &&
-		machine.pop(attributeId) &&
-		machine.pop(rangeType) &&
-		machine.pop(area) &&
-		machine.pop(duration) &&
-		machine.pop(magMin) &&
-		machine.pop(magMax))
-	{
+	if (machine.pop(type) && machine.pop(id) && machine.pop(effect_index) &&
+		machine.pop(effect_id) && machine.pop(skill_attribute_id) &&
+		machine.pop(range) && machine.pop(area) && machine.pop(duration) &&
+		machine.pop(mininum_magnitude) && machine.pop(maximum_magnitude)) {
 		Effect * effects = GetEffects(type, id, machine);
-		result = SetEffect(effects, effectIndex, effectId, skillId, attributeId, rangeType, area, duration, magMin, magMax);
+		result = SetEffect(effects, effect_index, effect_id, 
+			skill_attribute_id, range, area, duration, mininum_magnitude,
+			maximum_magnitude);
 	}
 	return machine.push(result);
 }
 
 bool FUNCADDEFFECT::execute(void)
 {
-	VMLONG type, id, effectId, skillId, attributeId,
-		rangeType, area, duration, magMin, magMax;
+	VMLONG type, id, effect_id, skill_attribute_id,
+		range, area, duration, minimum_magnitude, maximum_magnitude;
 	VMLONG result = 0;
-
-	if (machine.pop(type) &&
-		machine.pop(id) && 
-		machine.pop(effectId) && 
-		machine.pop(skillId) &&
-		machine.pop(attributeId) &&
-		machine.pop(rangeType) &&
-		machine.pop(area) &&
-		machine.pop(duration) &&
-		machine.pop(magMin) &&
-		machine.pop(magMax)) 
+	if (machine.pop(type) && machine.pop(id) && machine.pop(effect_id) &&
+		machine.pop(skill_attribute_id) && machine.pop(range) &&
+		machine.pop(area) && machine.pop(duration) &&
+		machine.pop(minimum_magnitude) && machine.pop(maximum_magnitude))
 	{
-		Effect * effects = GetEffects(type, id, machine);
-		short numEffects = CountEffects(effects);
-		if (numEffects < 8)
-		{
-			result = SetEffect(effects, numEffects + 1, effectId, skillId, attributeId, rangeType, area, duration, magMin, magMax);
+		Effect* effects = GetEffects(type, id, machine);
+		short num_effects = CountEffects(effects);
+		if (num_effects < 8) {
+			result = SetEffect(effects, num_effects + 1, effect_id,
+				skill_attribute_id, range, area, duration, minimum_magnitude,
+				maximum_magnitude);
 		}
 	}
 	return machine.push(result);
@@ -903,7 +891,7 @@ bool FUNCADDEFFECT::execute(void)
 bool FUNCGETEFFECTINFO::execute(void)
 {
 	VMLONG type, id, effectIndex;
-	VMLONG effectId = NoEffect;
+	VMLONG effectId = kNoEffect;
 	VMLONG skillId = 0;
 	VMLONG attributeId = 0;
 	VMLONG rangeType = 0;
@@ -923,7 +911,7 @@ bool FUNCGETEFFECTINFO::execute(void)
 			--effectIndex; // 0-based array index
 			Effect const & effect = effects[effectIndex];
 
-			if (effect.effectId != NoEffect)
+			if (effect.effectId != kNoEffect)
 			{
 				effectId = effect.effectId;
 				skillId = effect.skillId;
@@ -962,7 +950,7 @@ bool FUNCGETSPELLEFFECTINFO::execute(void)
 	{
 		SPELRecord * spell = GetSpellRecord(spellId, machine);
 		--effectIndex; // 0-based array index
-		if (spell != 0 && spell->effects[effectIndex].effectId != NoEffect)
+		if (spell != 0 && spell->effects[effectIndex].effectId != kNoEffect)
 		{			
 			effectId = spell->effects[effectIndex].effectId;
 			skillId = spell->effects[effectIndex].skillId;
@@ -1117,7 +1105,7 @@ bool FUNCGETENCHANTEFFECTINFO::execute(void)
 	{
 		ENCHRecord * ench = GetEnchantmentRecord(enchId, machine);
 		--effectIndex; // 0-based array index
-		if (ench != 0 && ench->effects[effectIndex].effectId != NoEffect)
+		if (ench != 0 && ench->effects[effectIndex].effectId != kNoEffect)
 		{
 			effectId = ench->effects[effectIndex].effectId;
 			rangeType = ench->effects[effectIndex].RangeType;
@@ -2356,7 +2344,7 @@ static VMSHORT CountEffects(Effect const * effects)
 		//count the number of effect slots in use
 		for (int i = 0; i < 8; ++i)
 		{
-			if (effects[i].effectId != NoEffect)
+			if (effects[i].effectId != kNoEffect)
 			{
 				++numEffects;
 			}
@@ -2492,43 +2480,52 @@ static Effect * GetEffects(long const type, long const id, TES3MACHINE & machine
 	return effects;
 }
 
-static VMLONG SetEffect(Effect * effects, VMLONG index, VMLONG effectId, VMLONG skillId, 
-						VMLONG attributeId, VMLONG rangeType, VMLONG area, VMLONG duration,
-						VMLONG magMin, VMLONG magMax)
+static VMLONG SetEffect(Effect * effects, VMLONG index, VMLONG effect_id, 
+						VMLONG skill_attribute_id, VMLONG range, VMLONG area, 
+						VMLONG duration, VMLONG minimum_magnitude,
+						VMLONG maximum_magnitude)
 {
 	VMLONG result = 0;
 	if (effects && 
 		1 <= index && index <= 8 &&
-		WaterBreathing <= effectId && effectId <= StuntedMagicka &&
-		0 <= rangeType && rangeType <= 2)
-	{
-		if (effectId != DrainSkill && effectId != DamageSkill && 
-			effectId != RestoreSkill && effectId != FortifySkill &&
-			effectId != AbsorbSkill)
-		{
-			skillId = NoSkill;
-		}
-
-		if (effectId != DrainAttribute && effectId != DamageAttribute && 
-			effectId != RestoreAttribute && effectId != FortifyAttribute &&
-			effectId != AbsorbAttribute)
-		{
-			attributeId = NoAttribute;
-		}
-
-		if (effects)
-		{
-			--index; // 0-based array index
-			Effect & effect = effects[index];
-			result = 1;
-			effect.effectId = effectId;
-			effect.skillId = skillId;
-			effect.AttributeId = attributeId;
-			effect.RangeType = rangeType;
+		kFirstMagicEffect <= effect_id && effect_id <= kLastMagicEffect &&
+		kFirstRangeType <= range && range <= kLastRangeType) {
+		int effect_flags = kMagicEffectFlags[effect_id];
+		if ((effect_flags & kCastSelf && range == kSelf) ||
+			(effect_flags & kCastTouch && range == kTouch) ||
+			(effect_flags & kCastTarget && range == kTarget)) {
+			--index; // convert to 0-based array index
+			Effect& effect = effects[index];
+			effect.effectId = effect_id;
+			if (effect_flags & kTargetSkill) {
+				effect.skillId = skill_attribute_id;
+			}
+			else {
+				effect.skillId = kNoSkill;
+			}
+			if (effect_flags & kTargetAttribute) {
+				effect.AttributeId = skill_attribute_id;
+			}
+			else {
+				effect.AttributeId = kNoAttribute;
+			}
+			if (effect_flags & kNoDuration) {
+				effect.Duration = 0;
+			}
+			else {
+				effect.Duration = duration;
+			}
+			if (effect_flags & kNoMagnitude) {
+				effect.MagMin = 0;
+				effect.MagMax = 0;
+			}
+			else {
+				effect.MagMin = minimum_magnitude;
+				effect.MagMax = maximum_magnitude;
+			}
+			effect.RangeType = range;
 			effect.Area = area;
-			effect.Duration = duration;
-			effect.MagMin = magMin;
-			effect.MagMax = magMax;
+			result = 1;
 		}
 	}
 	return result;

@@ -1488,7 +1488,6 @@ function
 	Param8 = Long
 	Param9 = Long
 	Param10 = Long
-	Param11 = Long
 	Return = Long
 	Opcode = 0x3942
 end
@@ -1537,7 +1536,6 @@ function
 	Param7 = Long
 	Param8 = Long
 	Param9 = Long
-	Param10 = Long
 	Return = Long
 	Opcode = 0x3946
 end
