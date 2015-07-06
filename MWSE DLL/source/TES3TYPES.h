@@ -193,6 +193,16 @@ struct TES3VIEWMASTER
 };
 typedef TES3VIEWMASTER* VPVIEWMASTER;
 
+union Color
+{
+	struct Components
+	{
+		unsigned char alpha, blue, green, red;
+	};
+	Components components;
+	long color;
+};
+
 enum MagicEffectFlags
 {
 	kTargetSkill      = 0x1,
@@ -561,6 +571,18 @@ struct GMSTRecord
 	} value;
 	int index; // array index of this GMST
 	int unknown2[2];
+};
+
+enum MagicSchools
+{
+	kAlterationMagic = 0,
+	kConjurationMagic,
+	kDestructionMagic,
+	kIllusionMagic,
+	kMysticismMagic,
+	kRestorationMagic,
+	kFirstMagicSchool = kAlteration,
+	kLastMagicSchool = kRestoration
 };
 
 struct MGEFRecord
