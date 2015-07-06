@@ -1548,6 +1548,17 @@ function
 	Opcode = 0x3947
 end
 
+function
+	Name = xSetBaseEffectInfo
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Param1 = Long
+	Param2 = Long
+	Param3 = Float
+	Param4 = Long
+	Return = Long
+	Opcode = 0x3948
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll

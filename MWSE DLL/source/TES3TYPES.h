@@ -197,7 +197,7 @@ union Color
 {
 	struct Components
 	{
-		unsigned char alpha, blue, green, red;
+		unsigned char blue, green, red, alpha;
 	};
 	Components components;
 	long color;

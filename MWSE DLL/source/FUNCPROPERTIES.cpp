@@ -41,6 +41,25 @@ static VPVOID GetMaxChargeOffset(TES3MACHINE &machine, VPVOID refr, ULONG type);
 FUNCGETSPELLEFFECTS::FUNCGETSPELLEFFECTS(TES3MACHINE& vm) : machine(vm), HWBREAKPOINT()
 {
 }
+bool FUNCSETBASEEFFECTINFO::execute(void)
+{
+	VMLONG effect_id, school, flags;
+	VMFLOAT base_magicka_cost;
+	VMLONG result = 0;
+	if (machine.pop(effect_id) && machine.pop(school) &&
+		machine.pop(base_magicka_cost) && machine.pop(flags) && 
+		kFirstMagicEffect <= effect_id && effect_id <= kLastMagicEffect) {
+		TES3CELLMASTER* cell_master =
+			*(reinterpret_cast<TES3CELLMASTER**>reltolinear(MASTERCELL_IMAGE));
+		MGEFRecord& effect =
+			cell_master->recordLists->magic_effects[effect_id];
+		effect.school = school;
+		effect.base_magicka_cost = base_magicka_cost;
+		effect.flags = (flags & (kSpellmaking | kEnchanting | kNegativeLighting));
+		result = 1;
+	}
+	return machine.push(result);
+}
 
 bool FUNCGETBASEEFFECTINFO::execute(void)
 {
@@ -48,11 +67,6 @@ bool FUNCGETBASEEFFECTINFO::execute(void)
 	VMLONG school = 0;
 	VMFLOAT base_magicka_cost = 0.0;
 	VMLONG flags = 0;
-	Color color;
-	color.color = 0;
-	VMFLOAT size_x = 0.0;
-	VMFLOAT speed_x = 0.0;
-	VMFLOAT size_cap = 0.0;
 	if (machine.pop(effect_id) &&
 		kFirstMagicEffect <= effect_id && effect_id <= kLastMagicEffect) {
 		TES3CELLMASTER* cell_master =
@@ -62,16 +76,8 @@ bool FUNCGETBASEEFFECTINFO::execute(void)
 		school = effect.school;
 		base_magicka_cost = effect.base_magicka_cost;
 		flags = effect.flags | kMagicEffectFlags[effect_id];
-		color.components.red = effect.red;
-		color.components.green = effect.green;
-		color.components.blue = effect.blue;
-		size_x = effect.size_x;
-		speed_x = effect.speed_x;
-		size_cap = effect.size_cap;
 	}
-	return machine.push(size_cap) && machine.push(speed_x) && 
-		machine.push(size_x) && machine.push(color.color) &&
-		machine.push(flags) && machine.push(base_magicka_cost) &&
+	return machine.push(flags) && machine.push(base_magicka_cost) &&
 		machine.push(school);
 }
 
