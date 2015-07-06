@@ -686,7 +686,6 @@ bool FUNCSPELLLIST::execute(void)
 	VMLONG cost = 0;
 	VMLONG effects = 0;
 	VMLONG flags = 0;
-	VMLONG origin = 0;
 	VPVOID refr, temp;
 	unsigned long ref_type;
 	if (machine.pop(reinterpret_cast<VMREGTYPE&>(next)) && GetTargetData(machine, &refr, &temp, &ref_type)) {
@@ -707,13 +706,12 @@ bool FUNCSPELLLIST::execute(void)
 				cost = spell->cost;
 				effects = CountEffects(spell->effects);
 				flags = spell->flags;
-				origin = spell->origin;
 			}
 		}
 	}
 
 	return machine.push(reinterpret_cast<VMREGTYPE>(next)) &&
-		machine.push(origin) && machine.push(flags) && machine.push(effects) &&
+		&& machine.push(flags) && machine.push(effects) &&
 		machine.push(cost) && machine.push(type) && machine.push(name) &&
 		machine.push(spellid) && machine.push(total_spells);
 }
