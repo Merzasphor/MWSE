@@ -1,24 +1,16 @@
-0.9.5-alpha.20150630
+0.9.5-alpha.201507xx
 https://github.com/Merzasphor/MWSE
 
 This is a WIP modification to the Morrowind Script Extender, based on version 0.9.4a.
 There may be bugs. Proceed with caution!
 
-Updates since 0.9.5-alpha.20150617:
+Updates since 0.9.5-alpha.20150630:
 
-- Reverted xGetOwner update to maintain compatibility with old mods. It should be considered
-  deprecated. Use the new xGetOwnerInfo function instead.
-- Added a function to return all ownership information about a reference. (xGetOwnerInfo)
-- Added a function to compute exponentiation. (xPow)
-- Added functions to perform bitwise operations on longs. (xShift, xBitAnd, xBitOr, xBitXor, xBitNot)
-- Added functions to perform boolean logic. (xAnd, xOr, xXor, xNot)
-- Added functions to manipulate global variables based on their string representation. (xGetGlobal, xSetGlobal)
-- Skill progress functions now support normalized progress values and invoke the game's native 
-  skill-up function. (xGetProgressSkill, xSetProgressSkill, xModProgressSkill)
-- Level progress functions now invoke the game's native level-up message function. (xSetProgressLevel, xGetProgressLevel)
-- Added a function to get effect info from spells and enchantments. (xGetEffectInfo)
-- Added functions to modify spell and enchantment properties. (xSetSpellInfo, xSetEnchantInfo, xSetEffectInfo, xDeleteEffect, xAddEffect)
-- Added a function to return the type and id of the player's currently readied magic. (xGetMagic)
+- Fixed crash on exit caused by changing the name of a spell.
+- Spell names are now limited to 31 characters. (xSetSpellInfo)
+- Added spell origin (module, spellmaking) support. (xSetSpellInfo, xGetSpellInfo)
+- Combined skill and attribute ids into a single parameter/return value. (xAddEffect, xSetEffectInfo, xGetEffectInfo)
+- Added functions to read/write base magic effect properties. (xGetBaseEffectInfo, xSetBaseEffectInfo)
 
 !!! The following functions are deprecated and will be removed in the future: !!!
 xGetBase[skillname] - Replaced by xGetBaseSkill
