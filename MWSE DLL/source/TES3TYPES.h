@@ -193,16 +193,6 @@ struct TES3VIEWMASTER
 };
 typedef TES3VIEWMASTER* VPVIEWMASTER;
 
-union Color
-{
-	struct Components
-	{
-		unsigned char blue, green, red, alpha;
-	};
-	Components components;
-	long color;
-};
-
 enum MagicEffectFlags
 {
 	kTargetSkill      = 0x1,
