@@ -711,7 +711,7 @@ bool FUNCSPELLLIST::execute(void)
 	}
 
 	return machine.push(reinterpret_cast<VMREGTYPE>(next)) &&
-		&& machine.push(flags) && machine.push(effects) &&
+		machine.push(flags) && machine.push(effects) &&
 		machine.push(cost) && machine.push(type) && machine.push(name) &&
 		machine.push(spellid) && machine.push(total_spells);
 }
@@ -759,7 +759,7 @@ bool FUNCSETSPELLINFO::execute(void)
 		machine.pop(origin) &&
 		kSpellTypesFirst <= type && type <= kSpellTypesLast &&
 		kSpellFlagsNone <= flags && flags <= kSpellFlagsAll &&
-		kSpellOriginsFirst <= origin && origin <= kSpellOriginsLast) {
+		(origin == 0 || (kSpellOriginsFirst <= origin && origin <= kSpellOriginsLast))) {
 		SPELRecord* spell = GetSpellRecord(spellid, machine);
 		if (spell) {
 			char const* newName = machine.GetString(reinterpret_cast<VPVOID>(name));
@@ -784,7 +784,9 @@ bool FUNCSETSPELLINFO::execute(void)
 			}
 			spell->type = type;
 			spell->flags = flags;
-			spell->origin = origin;
+			if (origin != 0) {
+				spell->origin = origin;
+			}
 			result = 1;
 		}
 	}
