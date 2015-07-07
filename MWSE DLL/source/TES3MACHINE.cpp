@@ -319,6 +319,7 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(ADDEFFECT, new FUNCADDEFFECT(*this));
 	AddInstruction(GETBASEEFFECTINFO, new FUNCGETBASEEFFECTINFO(*this));
 	AddInstruction(SETBASEEFFECTINFO, new FUNCSETBASEEFFECTINFO(*this));
+	AddInstruction(CREATESPELL, new FUNCCREATESPELL(*this));
 
 	AddInstruction(GETGS, new FUNCGETGS(*this));
 	AddInstruction(SETGS, new FUNCSETGS(*this));

@@ -1559,6 +1559,15 @@ function
 	Opcode = 0x3948
 end
 
+function
+	Name = xCreateSpell
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Param1 = Long
+	Param2 = Long
+	Return = Long
+	Opcode = 0x3949
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll

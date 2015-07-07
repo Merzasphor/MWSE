@@ -41,6 +41,47 @@ static VPVOID GetMaxChargeOffset(TES3MACHINE &machine, VPVOID refr, ULONG type);
 FUNCGETSPELLEFFECTS::FUNCGETSPELLEFFECTS(TES3MACHINE& vm) : machine(vm), HWBREAKPOINT()
 {
 }
+bool FUNCCREATESPELL::execute(void)
+{
+	VMLONG spell_id, spell_name;
+	VMLONG result = 0;
+	if (machine.pop(spell_id) && machine.pop(spell_name)) {
+		char const* id = 
+			machine.GetString(reinterpret_cast<VPVOID>(spell_id));
+		if (strlen(id) <= 31 && !GetSpellRecord(spell_id, machine)) {
+			TES3CELLMASTER* cell_master =
+				*(reinterpret_cast<TES3CELLMASTER**>reltolinear(MASTERCELL_IMAGE));
+			LinkedList* spells_list = cell_master->recordLists->spellsList;
+			SPELRecord* tail_spell = 
+				static_cast<SPELRecord*>(spells_list->tail);
+			SPELRecord* new_spell = 
+				static_cast<SPELRecord*>(machine.Malloc(sizeof(SPELRecord)));
+			memset(new_spell, 0, sizeof(*new_spell));
+			new_spell->vTable = tail_spell->vTable;
+			new_spell->recordType = RecordTypes::SPELL;
+			new_spell->origin = kSpellmaker;
+			new_spell->spellsList = spells_list;
+			new_spell->id = static_cast<char*>(machine.Malloc(32));
+			strcpy(new_spell->id, id);
+			new_spell->friendlyName = static_cast<char*>(machine.Malloc(32));
+			char const* new_name = 
+				machine.GetString(reinterpret_cast<VPVOID>(spell_name));
+			strcpy(new_spell->friendlyName, new_name);
+			for (int i = 1; i < 8; ++i) {
+				new_spell->effects[i].effectId = kNoEffect;
+			}
+			SetEffect(new_spell->effects, 1, kWaterBreathing, kNoSkill, kSelf, 0, 1, 0, 0);
+			new_spell->nextRecord = NULL;
+			new_spell->prevRecord = tail_spell;	
+			tail_spell->nextRecord = new_spell;
+			spells_list->tail = new_spell;
+			spells_list->size++;
+			result = 1;
+		}
+	}
+	return machine.push(result);
+}
+
 bool FUNCSETBASEEFFECTINFO::execute(void)
 {
 	VMLONG effect_id, school, flags;

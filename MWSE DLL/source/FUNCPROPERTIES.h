@@ -6,6 +6,15 @@
 #include "TES3OFFSETS.h"
 #include "STRINGS.h"
 
+class FUNCCREATESPELL : public FUNCTION
+{
+public:
+	FUNCCREATESPELL(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute(void);
+private:
+	TES3MACHINE& machine;
+};
+
 class FUNCSETBASEEFFECTINFO : public FUNCTION
 {
 public:
