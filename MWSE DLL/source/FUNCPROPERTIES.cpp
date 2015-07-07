@@ -810,9 +810,12 @@ bool FUNCSETSPELLINFO::execute(void)
 					// nothing else knows about this pointer.
 					spell->friendlyName =
 						static_cast<char*>(machine.Realloc(spell->friendlyName, 32));
+					strncpy(spell->friendlyName, newName, 31);
 					spell->friendlyName[31] = '\0';
 				}
-				strncpy(spell->friendlyName, newName, 31);
+				else {
+					strcpy(spell->friendlyName, newName);
+				}
 			}
 			if (flags & kAutoCalculateCost &&
 				!(spell->flags & kAutoCalculateCost)) {
