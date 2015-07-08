@@ -147,7 +147,7 @@ bool FUNCSETBASEEFFECTINFO::execute(void)
 bool FUNCGETBASEEFFECTINFO::execute(void)
 {
 	VMLONG effect_id;
-	VMLONG school = 0;
+	VMLONG school = -1;
 	VMFLOAT base_magicka_cost = 0.0;
 	VMLONG flags = 0;
 	if (machine.pop(effect_id) &&
