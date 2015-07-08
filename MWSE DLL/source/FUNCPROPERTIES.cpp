@@ -41,6 +41,48 @@ static VPVOID GetMaxChargeOffset(TES3MACHINE &machine, VPVOID refr, ULONG type);
 FUNCGETSPELLEFFECTS::FUNCGETSPELLEFFECTS(TES3MACHINE& vm) : machine(vm), HWBREAKPOINT()
 {
 }
+
+bool FUNCDELETESPELL::execute(void)
+{
+	// TODO Calling AddSpell on a deleted spell does not cause an error. There
+	// must be some other data structure that should be updated when deleting a
+	// spell.
+	VMLONG spell_id;
+	VMLONG result = 0;
+	if (machine.pop(spell_id)) {
+		char const* id =
+			machine.GetString(reinterpret_cast<VPVOID>(spell_id));
+		SPELRecord* spell = GetSpellRecord(spell_id, machine);
+		if (spell) {
+			TES3CELLMASTER* cell_master =
+				*(reinterpret_cast<TES3CELLMASTER**>reltolinear(MASTERCELL_IMAGE));
+			LinkedList* spells_list = cell_master->recordLists->spellsList;
+			if (spell == spells_list->head) {
+				spell->nextRecord->prevRecord = NULL;
+				spells_list->head = spell->nextRecord;
+			}
+			else if (spell == spells_list->tail) {
+				spell->prevRecord->nextRecord = NULL;
+				spells_list->tail = spell->prevRecord;
+			}
+			else {
+				SPELRecord* spell_next = spell->nextRecord;
+				SPELRecord* spell_prev = spell->prevRecord;
+				spell_next->prevRecord = spell_prev;
+				spell_prev->nextRecord = spell_next;
+			}
+			spells_list->size--;
+			machine.Free(spell->friendlyName);
+			spell->friendlyName = NULL;
+			machine.Free(spell->id);
+			spell->id = NULL;
+			machine.Free(spell);
+			result = 1;
+		}
+	}
+	return machine.push(result);
+}
+
 bool FUNCCREATESPELL::execute(void)
 {
 	VMLONG spell_id, spell_name;

@@ -1568,6 +1568,14 @@ function
 	Opcode = 0x3949
 end
 
+function
+	Name = xDeleteSpell
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Param1 = Long
+	Return = Long
+	Opcode = 0x394A
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll
