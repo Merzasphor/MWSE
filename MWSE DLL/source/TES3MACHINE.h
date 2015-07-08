@@ -10,10 +10,6 @@
 // 22-08-2006 Tp21
 #include "warnings.h"
 
-typedef void* (__cdecl *ExternalMalloc)(size_t);
-typedef void (__cdecl *ExternalFree)(void*);
-typedef void* (__cdecl *ExternalRealloc)(void*, size_t);
-
 typedef enum {INTSWITCHREFERENCE= 1} INTERRUPTS;
 
 
@@ -56,6 +52,9 @@ struct TES3MACHINE : public VIRTUALMACHINE
 		return external_realloc_(to_realloc, size); }
 
 private:
+	typedef void* (__cdecl *ExternalMalloc)(size_t);
+	typedef void (__cdecl *ExternalFree)(void*);
+	typedef void* (__cdecl *ExternalRealloc)(void*, size_t);
 	ADDRESSSPACE* executable;
 	VPSCRIPT scriptaddr;
 	TES3SCRIPT script;
