@@ -1,4 +1,4 @@
-0.9.5-alpha.201507xx
+0.9.5-alpha.20150707
 https://github.com/Merzasphor/MWSE
 
 This is a WIP modification to the Morrowind Script Extender, based on version 0.9.4a.
@@ -11,6 +11,8 @@ Updates since 0.9.5-alpha.20150630:
 - Added spell origin (module, spellmaking) support. (xSetSpellInfo, xGetSpellInfo)
 - Combined skill and attribute ids into a single parameter/return value. (xAddEffect, xSetEffectInfo, xGetEffectInfo)
 - Added functions to read/write base magic effect properties. (xGetBaseEffectInfo, xSetBaseEffectInfo)
+- Added functions to create/delete custom spells. (xCreateSpell, xDeleteSpell)
+- Updated and corrected magic effect id list.
 
 !!! The following functions are deprecated and will be removed in the future: !!!
 xGetBase[skillname] - Replaced by xGetBaseSkill
@@ -61,6 +63,357 @@ file gpl.txt for details if you are interested in distributing or
 modifying the program.
 
 -----New Updates-----
+
+Functions:
+
+xSetSpellInfo
+result (long): xSetSpellInfo spellId (long | string) name (long | string) type (long) cost (long) flags (long) origin (long)
+Sets the properties of the given spellId.
+spellId: id of the spell to modify
+name: new display name. Use 0 to leave the name unmodified. Names longer than 31 characters will be truncated.
+type: new type - 0 = SPELL, 1 = ABILITY, 2 = BLIGHT, 3 = DISEASE, 4 = CURSE, 5 = POWER
+cost: new magicka cost
+flags: new flags - (combination of these values) 1 = AUTOCALC, 2 = PCSTART, 4 = ALWAYSSUCCEEDS
+origin: Mark where the spell came from. 1 = module, 2 = spellmaker. Use 0 to leave the origin unmodified.
+result: 1 on success, 0 on failure
+
+xGetSpellInfo
+name (long) type (long) cost (long) numEffects (long) flags (long) origin (long): xGetSpellInfo spellId (string | long)
+Returns info about the given spellId.
+spellId: id of the spell to look up.
+name: reference to display name string. 0 if spellId is invalid.
+type: 0 = SPELL, 1 = ABILITY, 2 = BLIGHT, 3 = DISEASE, 4 = CURSE, 5 = POWER
+cost: cost in magicka
+numEffects: number of magic effects [1, 8]
+flags: (combination of these values) 1 = AUTOCALC, 2 = PCSTART, 4 = ALWAYSSUCCEEDS
+origin: Where the spell originated. 1 = module, 2 = spellmaker
+
+xAddEffect
+result (long): xAddEffect type (long) id (long | string) effectId (long) skillAttribId (long) rangeType (long) area (long) duration (long) magMin (long) magMax (long)
+Adds a new effect to the given spell or enchantment.
+type: spell = 1279610963 enchantment = 1212370501
+id: id of the spell or enchantment to modify
+effectId: id of the effect to add
+skillAttribId: id of the skill or attribute to use (only used by drain/absorb/damage/fortify/restore skill/attribute effects - ignored otherwise)
+rangeType: new range type - 0 = SELF, 1 = TOUCH, 2 = TARGET
+area: area of effect
+duration: duration in seconds
+magMin: minimum magnitude
+magMax: maximum magnitude
+result: 1 on success, 0 on failure
+
+xSetEffectInfo
+result (long): xSetEffectInfo type (long) id (long | string) index (long) effectId (long) skillAttribId (long) rangeType (long) area (long) duration (long) magMin (long) magMax (long)
+Modifies an existing effect on the given spell or enchantment.
+type: spell = 1279610963 enchantment = 1212370501
+id: id of the spell or enchantment to modify
+index: the index of the effect to modify [1, 8]
+effectId: id of the effect to modify
+skillAttribId: id of the skill or attribute to use (only used by drain/absorb/damage/fortify/restore skill/attribute effects - ignored otherwise)
+rangeType: new range type - 0 = SELF, 1 = TOUCH, 2 = TARGET
+area: area of effect
+duration: duration in seconds
+magMin: minimum magnitude
+magMax: maximum magnitude
+result: 1 on success, 0 on failure
+
+xGetEffectInfo
+effectId (long) skillAttribId (long) rangeType (long) area (long) duration (long) magMin (long) magMax (long): xSetEffectInfo type (long) id (long | string) index (long)
+Returns the properties of an effect on the given spell or enchantment.
+type: spell = 1279610963 enchantment = 1212370501
+id: id of the spell or enchantment to modify
+index: the index of the effect to modify [1, 8]
+effectId: see below for list
+skillIdAttribId: see below for list (only used by drain/absorb/damage/fortify/restore skill/attribute effects - -1 otherwise)
+rangeType: 0 = SELF, 1 = TOUCH, 2 = TARGET
+area: area of effect
+duration: duration in seconds
+magMin: minimum magnitude
+magMax: maximum magnitude
+On failure, effectId is set to -1.
+
+xGetBaseEffectInfo
+school (long) base_cost (float) flags (long): xGetBaseEffectInfo effect_id (long)
+Returns the properties of a magic effect.
+effect_id: id to look up (see below)
+school: spell school (see below), -1 if effect_id is invalid.
+base_cost: base magicka cost of this effect
+flags: see below
+
+xSetBaseEffectInfo
+result (long): xSetBaseEffectInfo effect_id (long) school (long) base_cost (float) flags (long)
+Changes the properties of a magic effect.
+effect_id: id to change (see below)
+school: new spell school (see below)
+base_cost: new base cost in magicka
+flags: new flags. only Spellmaking, Enchanting, and Negative Lighting are valid here. All others are ignored (see below)
+result: 1 on success 0 on failure
+This function will fail if effect_id or school is invalid.
+
+Notes: xSetBaseEffectInfo changes the properties of the effect for all magic that uses it.
+Changes to school and flags take effect immediately. E.g. if you have a spell with a Fire Damage effect
+and you change the Fire Damage school to Alteration, casting that spell will raise Alteration instead 
+of Destruction. Likewise, if you clear the Spellmaking or Enchanting flags, Fire Damage will no longer
+be available at the respective crafter. Negative Lighting does not appear to have any effect.
+Changes to the base cost take effect on any subsequent spell or magic item creation, but don't affect
+any spells or items already in the game.
+
+xCreateSpell
+result (long): xCreateSpell spell_id (long | string) name (long | string)
+Creates a new spell with all flags cleared, origin set to spellmaker (2) and a single Water Breathing effect
+and adds it to the master spell list.
+spell_id: new spell id. Spell ids are limited to 31 characters.
+name: new spell display name. Names longer than 31 characters will be truncated.
+result: 1 on success, 0 on failure
+This function will fail if spell_id already exists or if it's longer than 31 characters.
+
+Notes: spells created by this command should persist unmodified as long as origin remains set
+to 2 and the autocalc flag remains unset.
+
+xDeleteSpell
+result (long): xDeleteSpell spell_id (long | string)
+Deletes a spell from the master spell list. It will no longer persist in save games.
+spell_id: spell to delete
+result: 1 on success, 0 on failure
+This function will fail if spell_id does not exist.
+
+Notes: Be very careful using this command.
+The effect of deleting a spell originating from the CS is undefined.
+The effect of deleting a spell referenced by other entities (player, npcs, traps, etc.) in undefined.
+Do not attempt to add a deleted spell with AddSpell. AddSpell will succeed, but leave the game in an
+indeterminate state. It's not yet clear why this happens, but I hope to fix it in the future.
+
+Schools:
+0 Alteration
+1 Conjuration
+2 Destruction
+3 Illusion
+4 Mysticism
+5 Restoration
+
+Base Magic Effect Flags:
+1 TargetSkill
+2 TargetAttribute
+4 NoDuration
+8 NoMagnitude
+16 Harmful
+32 ContinuousVfx
+64 CastSelf
+128 CastTouch
+256 CastTarget
+512 Spellmaking
+1024 Enchanting
+2048 NegativeLighting
+4096 AppliedOnce
+8192 Stealth
+16384 NonRecastable
+32768 IllegalDaedra
+65536 Unreflectable
+131072 CasterLinked
+
+Attribute IDs:
+0 Strength
+1 Intelligence
+2 Willpower
+3 Agility
+4 Speed
+5 Endurance
+6 Personality
+7 Luck
+
+Skill IDs:
+0 Block
+1 Armorer
+2 Medium Armor
+3 Heavy Armor
+4 Blunt Weapon
+5 Long Blade
+6 Axe
+7 Spear
+8 Athletics
+9 Enchant
+10 Destruction
+11 Alteration
+12 Illusion
+13 Conjuration
+14 Mysticism
+15 Restoration
+16 Alchemy
+17 Unarmored
+18 Security
+19 Sneak
+20 Acrobatics
+21 Light Armor
+22 Short Blade
+23 Marksman
+24 Mercantile
+25 Speechcraft
+26 HandToHand
+
+Effect IDs:
+0 Water Breathing
+1 Swift Swim
+2 Water Walking
+3 Shield
+4 Fire Shield
+5 Lightning Shield
+6 Frost Shield
+7 Burden
+8 Feather
+9 Jump
+10 Levitate
+11 SlowFall
+12 Lock
+13 Open
+14 Fire Damage
+15 Shock Damage
+16 Frost Damage
+17 Drain Attribute
+18 Drain Health
+19 Drain Magicka
+20 Drain Fatigue
+21 Drain Skill
+22 Damage Attribute
+23 Damage Health
+24 Damage Magicka
+25 Damage Fatigue
+26 Damage Skill
+27 Poison
+28 Weakness to Fire
+29 Weakness to Frost
+30 Weakness to Shock
+31 Weakness to Magicka
+32 Weakness to Common Disease
+33 Weakness to Blight Disease
+34 Weakness to Corprus Disease
+35 Weakness to Poison
+36 Weakness to Normal Weapons
+37 Disintegrate Weapon
+38 Disintegrate Armor
+39 Invisibility
+40 Chameleon
+41 Light
+42 Sanctuary
+43 Night Eye
+44 Charm
+45 Paralyze
+46 Silence
+47 Blind
+48 Sound
+49 Calm Humanoid
+50 Calm Creature
+51 Frenzy Humanoid
+52 Frenzy Creature
+53 Demoralize Humanoid
+54 Demoralize Creature
+55 Rally Humanoid
+56 Rally Creature
+57 Dispel
+58 Soultrap
+59 Telekinesis
+60 Mark
+61 Recall
+62 Divine Intervention
+63 Almsivi Intervention
+64 Detect Animal
+65 Detect Enchantment
+66 Detect Key
+67 Spell Absorption
+68 Reflect
+69 Cure Common Disease
+70 Cure Blight Disease
+71 Cure Corprus Disease
+72 Cure Poison
+73 Cure Paralyzation
+74 Restore Attribute
+75 Restore Health
+76 Restore Magicka
+77 Restore Fatigue
+78 Restore Skill
+79 Fortify Attribute
+80 Fortify Health
+81 Fortify Magicka
+82 Fortify Fatigue
+83 Fortify Skill
+84 Fortify Maximum Magicka
+85 Absorb Attribute
+86 Absorb Health
+87 Absorb Magicka
+88 Absorb Fatigue
+89 Absorb Skill
+90 Resist Fire
+91 Resist Frost
+92 Resist Shock
+93 Resist Magicka
+94 Resist Common Disease
+95 Resist Blight Disease
+96 Resist Corprus Disease
+97 Resist Poison
+98 Resist Normal Weapons
+99 Resist Paralysis
+100 Remove Curse
+101 Turn Undead
+102 Summon Scamp
+103 Summon Clannfear
+104 Summon Daedroth
+105 Summon Dremora
+106 Summon Ancestral Ghost
+107 Summon Skeletal Minion
+108 Summon Bonewalker
+109 Summon Greater Bonewalker
+110 Summon Bonelord
+111 Summon Winged Twilight
+112 Summon Hunger
+113 Summon Golden Saint
+114 Summon Flame Atronach
+115 Summon Frost Atronach
+116 Summon Storm Atronach
+117 Fortify Attack
+118 Command Creature
+119 Command Humanoid
+120 Bound Dagger
+121 Bound Longsword
+122 Bound Mace
+123 Bound Battle Axe
+124 Bound Spear
+125 Bound Longbow
+126 EXTRA SPELL
+127 Bound Cuirass
+128 Bound Helm
+129 Bound Boots
+130 Bound Shield
+131 Bound Gloves
+132 Corprus
+133 Vampirism
+134 Summon Centurion Sphere
+135 Sun Damage
+136 Stunted Magicka
+137 Summon Fabricant
+138 Call Wolf
+139 Call Bear
+140 Summon Bonewolf
+141 sEffectSummonCreature04
+142 sEffectSummonCreature05
+
+*******************************************************************************
+
+Previous updates:
+
+0.9.5-alpha.20150630
+
+- Reverted xGetOwner update to maintain compatibility with old mods. It should be considered
+  deprecated. Use the new xGetOwnerInfo function instead.
+- Added a function to return all ownership information about a reference. (xGetOwnerInfo)
+- Added a function to compute exponentiation. (xPow)
+- Added functions to perform bitwise operations on longs. (xShift, xBitAnd, xBitOr, xBitXor, xBitNot)
+- Added functions to perform boolean logic. (xAnd, xOr, xXor, xNot)
+- Added functions to manipulate global variables based on their string representation. (xGetGlobal, xSetGlobal)
+- Skill progress functions now support normalized progress values and invoke the game's native 
+  skill-up function. (xGetProgressSkill, xSetProgressSkill, xModProgressSkill)
+- Level progress functions now invoke the game's native level-up message function. (xSetProgressLevel, xGetProgressLevel)
+- Added a function to get effect info from spells and enchantments. (xGetEffectInfo)
+- Added functions to modify spell and enchantment properties. (xSetSpellInfo, xSetEnchantInfo, xSetEffectInfo, xDeleteEffect, xAddEffect)
+- Added a function to return the type and id of the player's currently readied magic. (xGetMagic)
 
 Functions:
 
@@ -226,187 +579,6 @@ type: spell = 1279610963 enchantment = 1212370501
 id: id of the spell or enchantment
 On failure, both type and id will be 0.
 
-Attribute IDs:
-0 Strength
-1 Intelligence
-2 Willpower
-3 Agility
-4 Speed
-5 Endurance
-6 Personality
-7 Luck
-
-Skill IDs:
-0 Block
-1 Armorer
-2 Medium Armor
-3 Heavy Armor
-4 Blunt Weapon
-5 Long Blade
-6 Axe
-7 Spear
-8 Athletics
-9 Enchant
-10 Destruction
-11 Alteration
-12 Illusion
-13 Conjuration
-14 Mysticism
-15 Restoration
-16 Alchemy
-17 Unarmored
-18 Security
-19 Sneak
-20 Acrobatics
-21 Light Armor
-22 Short Blade
-23 Marksman
-24 Mercantile
-25 Speechcraft
-26 HandToHand
-
-Effect IDs:
-0 WaterBreathing
-1 SwiftSwim
-2 WaterWalking
-3 Shield
-4 FireShield
-5 LightningShield
-6 FrostShield
-7 Burden
-8 Feather
-9 Jump
-10 Levitate
-11 SlowFall
-12 Lock
-13 Open
-14 FireDamage
-15 ShockDamage
-16 FrostDamage
-17 DrainAttribute
-18 DrainHealth
-19 DrainSpellpoints
-20 DrainFatigue
-21 DrainSkill
-22 DamageAttribute
-23 DamageHealth
-24 DamageMagicka
-25 DamageFatigue
-26 DamageSkill
-27 Poison
-28 WeaknessToFire
-29 WeaknessToFrost
-30 WeaknessToShock
-31 WeaknessToMagicka
-32 WeaknessToCommonDisease
-33 WeaknessToBlightDisease
-34 WeaknessToCorprusDisease
-35 WeaknessToPoison
-36 WeaknessToNormalWeapons
-37 DisintegrateWeapon
-38 DisintegrateArmor
-39 Invisibility
-40 Chameleon
-41 Light
-42 Sanctuary
-43 NightEye
-44 Charm
-45 Paralyze
-46 Silence
-47 Blind
-48 Sound
-49 CalmHumanoid
-50 CalmCreature
-51 FrenzyHumanoid
-52 FrenzyCreature
-53 DemoralizeHumanoid
-54 DemoralizeCreature
-55 RallyHumanoid
-56 RallyCreature
-57 Dispel
-58 Soultrap
-59 Telekinesis
-60 Mark
-61 Recall
-62 DivineIntervention
-63 AlmsiviIntervention
-64 DetectAnimal
-65 DetectEnchantment
-66 DetectKey
-67 SpellAbsorption
-68 Reflect
-69 CureCommonDisease
-70 CureBlightDisease
-71 CureCorprusDisease
-72 CurePoison
-73 CureParalyzation
-74 RestoreAttribute
-75 RestoreHealth
-76 RestoreSpellPoints
-77 RestoreFatigue
-78 RestoreSkill
-79 FortifyAttribute
-80 FortifyHealth
-81 FortifySpellpoints
-82 FortifyFatigue
-83 FortifySkill
-84 FortifyMagickaMultiplier
-85 AbsorbAttribute
-86 AbsorbHealth
-87 AbsorbSpellPoints
-88 AbsorbFatigue
-89 AbsorbSkill
-90 ResistFire
-91 ResistFrost
-92 ResistShock
-93 ResistMagicka
-94 ResistCommonDisease
-95 ResistBlightDisease
-96 ResistCorprusDisease
-97 ResistPoison
-98 ResistNormalWeapons
-99 ResistParalysis
-100 RemoveCurse
-101 TurnUndead
-102 SummonScamp
-103 SummonClannfear
-104 SummonDaedroth
-105 SummonDremora
-106 SummonAncestralGhost
-107 SummonSkeletalMinion
-108 SummonLeastBonewalker
-109 SummonGreaterBonewalker
-110 SummonBonelord
-111 SummonWingedTwilight
-112 SummonHunger
-113 SummonGoldensaint
-114 SummonFlameAtronach
-115 SummonFrostAtronach
-116 SummonStormAtronach
-117 FortifyAttackBonus
-118 CommandCreatures
-119 CommandHumanoids
-120 BoundDagger
-121 BoundLongsword
-122 BoundMace
-123 BoundBattleAxe
-124 BoundSpear
-125 BoundLongbow
-126 ExtraSpell
-127 BoundCuirass
-128 BoundHelm
-129 BoundBoots
-130 BoundShield
-131 BoundGloves
-132 Corpus
-133 Vampirism
-134 SummonCenturionSphere
-135 SunDamage
-136 StuntedMagicka
-
-*******************************************************************************
-
-Previous updates:
 
 0.9.5-alpha.20150617
 - xGetOwner now returns the id string of faction owners.
