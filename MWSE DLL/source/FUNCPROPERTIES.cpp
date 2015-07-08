@@ -131,7 +131,8 @@ bool FUNCSETBASEEFFECTINFO::execute(void)
 	VMLONG result = 0;
 	if (machine.pop(effect_id) && machine.pop(school) &&
 		machine.pop(base_magicka_cost) && machine.pop(flags) && 
-		kFirstMagicEffect <= effect_id && effect_id <= kLastMagicEffect) {
+		kFirstMagicEffect <= effect_id && effect_id <= kLastMagicEffect &&
+		kFirstMagicSchool <= school && school <= kLastMagicSchool) {
 		TES3CELLMASTER* cell_master =
 			*(reinterpret_cast<TES3CELLMASTER**>reltolinear(MASTERCELL_IMAGE));
 		MGEFRecord& effect =
