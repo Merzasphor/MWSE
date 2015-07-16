@@ -102,12 +102,20 @@ bool FUNCCREATESPELL::execute(void)
 			new_spell->vTable = tail_spell->vTable;
 			new_spell->recordType = RecordTypes::SPELL;
 			new_spell->spellsList = spells_list;
-			new_spell->id = static_cast<char*>(machine.Malloc(32));
+			new_spell->id = static_cast<char*>(machine.Malloc(strlen(id) + 1));
 			strcpy(new_spell->id, id);
-			new_spell->friendlyName = static_cast<char*>(machine.Malloc(32));
 			char const* new_name = 
 				machine.GetString(reinterpret_cast<VPVOID>(spell_name));
-			strcpy(new_spell->friendlyName, new_name);
+			if (strlen(new_name) > 31) {
+				new_spell->friendlyName = static_cast<char*>(machine.Malloc(32));
+				strncpy(new_spell->friendlyName, new_name, 31);
+				new_spell->friendlyName[31] = '\0';
+			}
+			else {
+				new_spell->friendlyName = 
+					static_cast<char*>(machine.Malloc(strlen(new_name) + 1));
+				strcpy(new_spell->friendlyName, new_name);
+			}
 			for (int i = 1; i < 8; ++i) {
 				new_spell->effects[i].effectId = kNoEffect;
 			}
