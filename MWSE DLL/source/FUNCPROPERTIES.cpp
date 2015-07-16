@@ -101,7 +101,6 @@ bool FUNCCREATESPELL::execute(void)
 			memset(new_spell, 0, sizeof(*new_spell));
 			new_spell->vTable = tail_spell->vTable;
 			new_spell->recordType = RecordTypes::SPELL;
-			new_spell->origin = kSpellmaker;
 			new_spell->spellsList = spells_list;
 			new_spell->id = static_cast<char*>(machine.Malloc(32));
 			strcpy(new_spell->id, id);
@@ -113,12 +112,17 @@ bool FUNCCREATESPELL::execute(void)
 				new_spell->effects[i].effectId = kNoEffect;
 			}
 			SetEffect(new_spell->effects, 1, kWaterBreathing, kNoSkill, kSelf, 0, 1, 0, 0);
-			new_spell->nextRecord = NULL;
-			new_spell->prevRecord = tail_spell;	
-			tail_spell->nextRecord = new_spell;
-			spells_list->tail = new_spell;
-			spells_list->size++;
+			new_spell->cost = 1;
 			result = 1;
+
+			// Call Morrowind's native add object function
+			int const kAddObject = 0x4B8980;
+			__asm {
+				mov edx, dword ptr ds:[0x7C67E0];
+				mov ecx, dword ptr ds:[edx];
+				push new_spell;
+				call kAddObject;
+			}
 		}
 	}
 	return machine.push(result);
