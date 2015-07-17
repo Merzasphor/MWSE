@@ -781,7 +781,7 @@ bool FUNCSTRINGMATCH::execute(void)
         if (string != NULL && pattern != NULL) {
             match = boost::regex_search(string,
                 boost::regex(pattern),
-                boost::match_default | boost::match_partial);
+                boost::match_default);
         }
     }
 #ifdef DEBUGGING
