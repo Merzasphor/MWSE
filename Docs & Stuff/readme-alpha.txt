@@ -11,6 +11,10 @@ Updates since 0.9.5-alpha.20150707:
   than needed (xCreateSpell)
 - xStringMatch no longer finds partial pattern matches.
 - Added functions to read and write skill parameters. (xGetSkillInfo, xSetSkillInfo)
+- *Progress* functions no longer need an explicit player reference. They now
+  implicitly access the player's reference as needed. (xGetProgressLevel,
+  xSetProgressLevel, xModProgressLevel, xGetProgressSkill, xSetProgressSkill,
+  xModProgressSkill)
 
 !!! The following functions are deprecated and will be removed in the future: !!!
 xGetBase[skillname] - Replaced by xGetBaseSkill
@@ -74,9 +78,8 @@ action1-4: progress value associated with the action (see below for list)
 If skill_id is invalid, all return values are set to -1.
 
 xSetSkillInfo
-result (long): ref->xSetSkillInfo skill_id (long) attribute (long) specialization (long) action1 (float) action2 (float) action3 (float) action4 (float)
+result (long): xSetSkillInfo skill_id (long) attribute (long) specialization (long) action1 (float) action2 (float) action3 (float) action4 (float)
 Modify the properties of the given skill_id.
-ref: this must be a reference to the player in order for automatic skill-ups to work.
 skill_id: id of the skill to read.
 attribute: new governing attribute
 specialization: new specialization associated with this skill
@@ -89,8 +92,7 @@ All parameters seem to take effect immediately. There may be side-effects other 
 Changing the governing attribute will cause any subsequent skill-ups to count toward that attribute at level-up. 
 (Which implies they're counted, not inferred, and could be modified. Stay tuned...)
 Changing the specialization will cause the target progress needed for skill up to change. This function invokes the native
-skill-up function when changing specialization, in case the change would cause progress to reach 100. You must use a
-reference to the player for this feature to work.
+skill-up function when changing specialization, in case the change would cause progress to reach 100.
 Actions can be set a negative value, in which case they'll remove progress, but progress will never go below zero.
 
 Actions: (taken from CS)
