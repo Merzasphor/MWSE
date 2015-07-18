@@ -1,18 +1,16 @@
-0.9.5-alpha.20150707
+0.9.5-alpha.201507xx
 https://github.com/Merzasphor/MWSE
 
 This is a WIP modification to the Morrowind Script Extender, based on version 0.9.4a.
 There may be bugs. Proceed with caution!
 
-Updates since 0.9.5-alpha.20150630:
+Updates since 0.9.5-alpha.20150707:
 
-- Fixed crash on exit caused by changing the name of a spell.
-- Spell names are now limited to 31 characters. (xSetSpellInfo)
-- Added spell origin (module, spellmaking) support. (xSetSpellInfo, xGetSpellInfo)
-- Combined skill and attribute ids into a single parameter/return value. (xAddEffect, xSetEffectInfo, xGetEffectInfo)
-- Added functions to read/write base magic effect properties. (xGetBaseEffectInfo, xSetBaseEffectInfo)
-- Added functions to create/delete custom spells. (xCreateSpell, xDeleteSpell)
-- Updated and corrected magic effect id list.
+- Fixed bug where newly created spells could not be added to an actor. (xCreateSpell)
+- Spell names are now properly truncated to 31 characters and don't use more memory
+  than needed (xCreateSpell)
+- xStringMatch no longer finds partial pattern matches.
+- Added functions to read and write skill parameters. (xGetSkillInfo, xSetSkillInfo)
 
 !!! The following functions are deprecated and will be removed in the future: !!!
 xGetBase[skillname] - Replaced by xGetBaseSkill
@@ -66,122 +64,69 @@ modifying the program.
 
 Functions:
 
-xSetSpellInfo
-result (long): xSetSpellInfo spellId (long | string) name (long | string) type (long) cost (long) flags (long) origin (long)
-Sets the properties of the given spellId.
-spellId: id of the spell to modify
-name: new display name. Use 0 to leave the name unmodified. Names longer than 31 characters will be truncated.
-type: new type - 0 = SPELL, 1 = ABILITY, 2 = BLIGHT, 3 = DISEASE, 4 = CURSE, 5 = POWER
-cost: new magicka cost
-flags: new flags - (combination of these values) 1 = AUTOCALC, 2 = PCSTART, 4 = ALWAYSSUCCEEDS
-origin: Mark where the spell came from. 1 = module, 2 = spellmaker. Use 0 to leave the origin unmodified.
+xGetSkillInfo
+attribute (long) specialization (long) action1 (float) action2 (float) action3 (float) action4 (float): xGetSkillInfo skill_id (long)
+Read the properties of the given skill_id.
+skill_id: id of the skill to read.
+attribute: governing attribute
+specialization: specialization associated with this skill
+action1-4: progress value associated with the action (see below for list)
+If skill_id is invalid, all return values are set to -1.
+
+xSetSkillInfo
+result (long): ref->xSetSkillInfo skill_id (long) attribute (long) specialization (long) action1 (float) action2 (float) action3 (float) action4 (float)
+Modify the properties of the given skill_id.
+ref: this must be a reference to the player in order for automatic skill-ups to work.
+skill_id: id of the skill to read.
+attribute: new governing attribute
+specialization: new specialization associated with this skill
+action1-4: new progress value associated with the action (see below for list)
 result: 1 on success, 0 on failure
+This function fails if skill_id, attribute, or specialization are invalid.
 
-xGetSpellInfo
-name (long) type (long) cost (long) numEffects (long) flags (long) origin (long): xGetSpellInfo spellId (string | long)
-Returns info about the given spellId.
-spellId: id of the spell to look up.
-name: reference to display name string. 0 if spellId is invalid.
-type: 0 = SPELL, 1 = ABILITY, 2 = BLIGHT, 3 = DISEASE, 4 = CURSE, 5 = POWER
-cost: cost in magicka
-numEffects: number of magic effects [1, 8]
-flags: (combination of these values) 1 = AUTOCALC, 2 = PCSTART, 4 = ALWAYSSUCCEEDS
-origin: Where the spell originated. 1 = module, 2 = spellmaker
+Notes:
+All parameters seem to take effect immediately. There may be side-effects other than those listed below that I have not discovered yet.
+Changing the governing attribute will cause any subsequent skill-ups to count toward that attribute at level-up. 
+(Which implies they're counted, not inferred, and could be modified. Stay tuned...)
+Changing the specialization will cause the target progress needed for skill up to change. This function invokes the native
+skill-up function when changing specialization, in case the change would cause progress to reach 100. You must use a
+reference to the player for this feature to work.
+Actions can be set a negative value, in which case they'll remove progress, but progress will never go below zero.
 
-xAddEffect
-result (long): xAddEffect type (long) id (long | string) effectId (long) skillAttribId (long) rangeType (long) area (long) duration (long) magMin (long) magMax (long)
-Adds a new effect to the given spell or enchantment.
-type: spell = 1279610963 enchantment = 1212370501
-id: id of the spell or enchantment to modify
-effectId: id of the effect to add
-skillAttribId: id of the skill or attribute to use (only used by drain/absorb/damage/fortify/restore skill/attribute effects - ignored otherwise)
-rangeType: new range type - 0 = SELF, 1 = TOUCH, 2 = TARGET
-area: area of effect
-duration: duration in seconds
-magMin: minimum magnitude
-magMax: maximum magnitude
-result: 1 on success, 0 on failure
+Actions: (taken from CS)
+Skill: 1, 2, 3, 4
+Acrobatics: Jump, Fall
+Alchemy: Potion creation, Ingredient use
+Alteration: Successful cast
+Armorer: Successful repair
+Athletics: Second of running, Second of swimming
+Axe: Successful attack
+Block: Successful block
+Blunt Weapon: Successful attack
+Conjuration: Successful cast
+Destruction: Successful cast
+Enchant: Recharge item, Use magic item, Create magic item, Cast When Strikes
+Hand-to-Hand: Successful attack
+Heavy Armor: Hit by opponent
+Illusion: Successful cast
+Light Armor: Hit by opponent
+Long Blade: Successful attack
+Marksman: Successful attack
+Medium Armor: Hit by opponent
+Mercantile: Successful bargain, Successful bribe
+Mysticism: Successful cast
+Restoration: Successful cast
+Security: Defeat trap, Pick lock
+Short Blade: Successful attack
+Sneak: Avoid notice, Successful pick-pock(et)
+Spear: Successful attack
+Speechcraft: Successful persuasion, Failed persuasion
+Unarmored: Hit by opponent
 
-xSetEffectInfo
-result (long): xSetEffectInfo type (long) id (long | string) index (long) effectId (long) skillAttribId (long) rangeType (long) area (long) duration (long) magMin (long) magMax (long)
-Modifies an existing effect on the given spell or enchantment.
-type: spell = 1279610963 enchantment = 1212370501
-id: id of the spell or enchantment to modify
-index: the index of the effect to modify [1, 8]
-effectId: id of the effect to modify
-skillAttribId: id of the skill or attribute to use (only used by drain/absorb/damage/fortify/restore skill/attribute effects - ignored otherwise)
-rangeType: new range type - 0 = SELF, 1 = TOUCH, 2 = TARGET
-area: area of effect
-duration: duration in seconds
-magMin: minimum magnitude
-magMax: maximum magnitude
-result: 1 on success, 0 on failure
-
-xGetEffectInfo
-effectId (long) skillAttribId (long) rangeType (long) area (long) duration (long) magMin (long) magMax (long): xSetEffectInfo type (long) id (long | string) index (long)
-Returns the properties of an effect on the given spell or enchantment.
-type: spell = 1279610963 enchantment = 1212370501
-id: id of the spell or enchantment to modify
-index: the index of the effect to modify [1, 8]
-effectId: see below for list
-skillIdAttribId: see below for list (only used by drain/absorb/damage/fortify/restore skill/attribute effects - -1 otherwise)
-rangeType: 0 = SELF, 1 = TOUCH, 2 = TARGET
-area: area of effect
-duration: duration in seconds
-magMin: minimum magnitude
-magMax: maximum magnitude
-On failure, effectId is set to -1.
-
-xGetBaseEffectInfo
-school (long) base_cost (float) flags (long): xGetBaseEffectInfo effect_id (long)
-Returns the properties of a magic effect.
-effect_id: id to look up (see below)
-school: spell school (see below), -1 if effect_id is invalid.
-base_cost: base magicka cost of this effect
-flags: see below
-
-xSetBaseEffectInfo
-result (long): xSetBaseEffectInfo effect_id (long) school (long) base_cost (float) flags (long)
-Changes the properties of a magic effect.
-effect_id: id to change (see below)
-school: new spell school (see below)
-base_cost: new base cost in magicka
-flags: new flags. only Spellmaking, Enchanting, and Negative Lighting are valid here. All others are ignored (see below)
-result: 1 on success 0 on failure
-This function will fail if effect_id or school is invalid.
-
-Notes: xSetBaseEffectInfo changes the properties of the effect for all magic that uses it.
-Changes to school and flags take effect immediately. E.g. if you have a spell with a Fire Damage effect
-and you change the Fire Damage school to Alteration, casting that spell will raise Alteration instead 
-of Destruction. Likewise, if you clear the Spellmaking or Enchanting flags, Fire Damage will no longer
-be available at the respective crafter. Negative Lighting does not appear to have any effect.
-Changes to the base cost take effect on any subsequent spell or magic item creation, but don't affect
-any spells or items already in the game.
-
-xCreateSpell
-result (long): xCreateSpell spell_id (long | string) name (long | string)
-Creates a new spell with all flags cleared, origin set to spellmaker (2) and a single Water Breathing effect
-and adds it to the master spell list.
-spell_id: new spell id. Spell ids are limited to 31 characters.
-name: new spell display name. Names longer than 31 characters will be truncated.
-result: 1 on success, 0 on failure
-This function will fail if spell_id already exists or if it's longer than 31 characters.
-
-Notes: spells created by this command should persist unmodified as long as origin remains set
-to 2 and the autocalc flag remains unset.
-
-xDeleteSpell
-result (long): xDeleteSpell spell_id (long | string)
-Deletes a spell from the master spell list. It will no longer persist in save games.
-spell_id: spell to delete
-result: 1 on success, 0 on failure
-This function will fail if spell_id does not exist.
-
-Notes: Be very careful using this command.
-The effect of deleting a spell originating from the CS is undefined.
-The effect of deleting a spell referenced by other entities (player, npcs, traps, etc.) in undefined.
-Do not attempt to add a deleted spell with AddSpell. AddSpell will succeed, but leave the game in an
-indeterminate state. It's not yet clear why this happens, but I hope to fix it in the future.
+Specializations:
+0 Combat
+1 Magic
+2 Stealth
 
 Schools:
 0 Alteration
@@ -398,6 +343,135 @@ Effect IDs:
 *******************************************************************************
 
 Previous updates:
+
+0.9.5-alpha.20150707
+
+- Fixed crash on exit caused by changing the name of a spell.
+- Spell names are now limited to 31 characters. (xSetSpellInfo)
+- Added spell origin (module, spellmaking) support. (xSetSpellInfo, xGetSpellInfo)
+- Combined skill and attribute ids into a single parameter/return value. (xAddEffect, xSetEffectInfo, xGetEffectInfo)
+- Added functions to read/write base magic effect properties. (xGetBaseEffectInfo, xSetBaseEffectInfo)
+- Added functions to create/delete custom spells. (xCreateSpell, xDeleteSpell)
+- Updated and corrected magic effect id list.
+
+Functions:
+
+xSetSpellInfo
+result (long): xSetSpellInfo spellId (long | string) name (long | string) type (long) cost (long) flags (long) origin (long)
+Sets the properties of the given spellId.
+spellId: id of the spell to modify
+name: new display name. Use 0 to leave the name unmodified. Names longer than 31 characters will be truncated.
+type: new type - 0 = SPELL, 1 = ABILITY, 2 = BLIGHT, 3 = DISEASE, 4 = CURSE, 5 = POWER
+cost: new magicka cost
+flags: new flags - (combination of these values) 1 = AUTOCALC, 2 = PCSTART, 4 = ALWAYSSUCCEEDS
+origin: Mark where the spell came from. 1 = module, 2 = spellmaker. Use 0 to leave the origin unmodified.
+result: 1 on success, 0 on failure
+
+xGetSpellInfo
+name (long) type (long) cost (long) numEffects (long) flags (long) origin (long): xGetSpellInfo spellId (string | long)
+Returns info about the given spellId.
+spellId: id of the spell to look up.
+name: reference to display name string. 0 if spellId is invalid.
+type: 0 = SPELL, 1 = ABILITY, 2 = BLIGHT, 3 = DISEASE, 4 = CURSE, 5 = POWER
+cost: cost in magicka
+numEffects: number of magic effects [1, 8]
+flags: (combination of these values) 1 = AUTOCALC, 2 = PCSTART, 4 = ALWAYSSUCCEEDS
+origin: Where the spell originated. 1 = module, 2 = spellmaker
+
+xAddEffect
+result (long): xAddEffect type (long) id (long | string) effectId (long) skillAttribId (long) rangeType (long) area (long) duration (long) magMin (long) magMax (long)
+Adds a new effect to the given spell or enchantment.
+type: spell = 1279610963 enchantment = 1212370501
+id: id of the spell or enchantment to modify
+effectId: id of the effect to add
+skillAttribId: id of the skill or attribute to use (only used by drain/absorb/damage/fortify/restore skill/attribute effects - ignored otherwise)
+rangeType: new range type - 0 = SELF, 1 = TOUCH, 2 = TARGET
+area: area of effect
+duration: duration in seconds
+magMin: minimum magnitude
+magMax: maximum magnitude
+result: 1 on success, 0 on failure
+
+xSetEffectInfo
+result (long): xSetEffectInfo type (long) id (long | string) index (long) effectId (long) skillAttribId (long) rangeType (long) area (long) duration (long) magMin (long) magMax (long)
+Modifies an existing effect on the given spell or enchantment.
+type: spell = 1279610963 enchantment = 1212370501
+id: id of the spell or enchantment to modify
+index: the index of the effect to modify [1, 8]
+effectId: id of the effect to modify
+skillAttribId: id of the skill or attribute to use (only used by drain/absorb/damage/fortify/restore skill/attribute effects - ignored otherwise)
+rangeType: new range type - 0 = SELF, 1 = TOUCH, 2 = TARGET
+area: area of effect
+duration: duration in seconds
+magMin: minimum magnitude
+magMax: maximum magnitude
+result: 1 on success, 0 on failure
+
+xGetEffectInfo
+effectId (long) skillAttribId (long) rangeType (long) area (long) duration (long) magMin (long) magMax (long): xSetEffectInfo type (long) id (long | string) index (long)
+Returns the properties of an effect on the given spell or enchantment.
+type: spell = 1279610963 enchantment = 1212370501
+id: id of the spell or enchantment to modify
+index: the index of the effect to modify [1, 8]
+effectId: see below for list
+skillIdAttribId: see below for list (only used by drain/absorb/damage/fortify/restore skill/attribute effects - -1 otherwise)
+rangeType: 0 = SELF, 1 = TOUCH, 2 = TARGET
+area: area of effect
+duration: duration in seconds
+magMin: minimum magnitude
+magMax: maximum magnitude
+On failure, effectId is set to -1.
+
+xGetBaseEffectInfo
+school (long) base_cost (float) flags (long): xGetBaseEffectInfo effect_id (long)
+Returns the properties of a magic effect.
+effect_id: id to look up (see below)
+school: spell school (see below), -1 if effect_id is invalid.
+base_cost: base magicka cost of this effect
+flags: see below
+
+xSetBaseEffectInfo
+result (long): xSetBaseEffectInfo effect_id (long) school (long) base_cost (float) flags (long)
+Changes the properties of a magic effect.
+effect_id: id to change (see below)
+school: new spell school (see below)
+base_cost: new base cost in magicka
+flags: new flags. only Spellmaking, Enchanting, and Negative Lighting are valid here. All others are ignored (see below)
+result: 1 on success 0 on failure
+This function will fail if effect_id or school is invalid.
+
+Notes: xSetBaseEffectInfo changes the properties of the effect for all magic that uses it.
+Changes to school and flags take effect immediately. E.g. if you have a spell with a Fire Damage effect
+and you change the Fire Damage school to Alteration, casting that spell will raise Alteration instead 
+of Destruction. Likewise, if you clear the Spellmaking or Enchanting flags, Fire Damage will no longer
+be available at the respective crafter. Negative Lighting does not appear to have any effect.
+Changes to the base cost take effect on any subsequent spell or magic item creation, but don't affect
+any spells or items already in the game.
+
+xCreateSpell
+result (long): xCreateSpell spell_id (long | string) name (long | string)
+Creates a new spell with all flags cleared, origin set to spellmaker (2) and a single Water Breathing effect
+and adds it to the master spell list.
+spell_id: new spell id. Spell ids are limited to 31 characters.
+name: new spell display name. Names longer than 31 characters will be truncated.
+result: 1 on success, 0 on failure
+This function will fail if spell_id already exists or if it's longer than 31 characters.
+
+Notes: spells created by this command should persist unmodified as long as origin remains set
+to 2 and the autocalc flag remains unset.
+
+xDeleteSpell
+result (long): xDeleteSpell spell_id (long | string)
+Deletes a spell from the master spell list. It will no longer persist in save games.
+spell_id: spell to delete
+result: 1 on success, 0 on failure
+This function will fail if spell_id does not exist.
+
+Notes: Be very careful using this command.
+The effect of deleting a spell originating from the CS is undefined.
+The effect of deleting a spell referenced by other entities (player, npcs, traps, etc.) in undefined.
+Do not attempt to add a deleted spell with AddSpell. AddSpell will succeed, but leave the game in an
+indeterminate state. It's not yet clear why this happens, but I hope to fix it in the future.
 
 0.9.5-alpha.20150630
 
