@@ -50,6 +50,8 @@ struct TES3MACHINE : public VIRTUALMACHINE
 			reinterpret_cast<ExternalRealloc>(external_realloc); }
 	void* Realloc(void* to_realloc, size_t size) {
 		return external_realloc_(to_realloc, size); }
+	void CheckForSkillUp(long skill_id);
+	MACPRecord* GetMacpRecord();
 
 private:
 	typedef void* (__cdecl *ExternalMalloc)(size_t);

@@ -708,3 +708,33 @@ void TES3MACHINE::searchforscripttarget(void)
 		}
 	}
 }
+
+void TES3MACHINE::CheckForSkillUp(long skill_id)
+{
+	MACPRecord* macp = GetMacpRecord();
+	if (macp) {
+		int const kSkillUp = 0x56BBE0; // address of native MW function
+		__asm
+		{
+			mov ecx, macp;
+			push skill_id;
+			call kSkillUp;
+		}
+	}
+}
+
+MACPRecord* TES3MACHINE::GetMacpRecord()
+{	
+	VPVOID refr;
+	MACPRecord* macp = NULL;
+	if (GetTargetData(*this, &refr)) 	{
+		void* ptr = GetAttachPointer(*this, refr, 8);
+		if (ptr) {
+			macp = reinterpret_cast<MACPRecord*>(ptr);
+			if (macp->recordType != RecordTypes::MACP) {
+				macp = NULL;
+			}
+		}
+	}
+	return macp;
+}

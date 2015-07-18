@@ -24,9 +24,7 @@ static VMLONG SetEffect(Effect * effects, VMLONG index, VMLONG effect_id,
 						VMLONG maximum_magnitude);
 
 static CLASRecord * GetClassRecord(TES3MACHINE & machine);
-static MACPRecord * GetMACPRecord(TES3MACHINE & machine);
 static float GetSkillRequirement(TES3MACHINE & machine, Skills skillIndex);
-static void CheckForSkillUp(MACPRecord * macp, Skills skillIndex);
 static void CheckForLevelUp(long const progress);
 
 // These functions are used for validation in FUNCSETMAX... and for
@@ -181,7 +179,7 @@ bool FUNCGETMAGIC::execute(void)
 {
 	VMLONG id = 0;
 	VMLONG type = 0;
-	MACPRecord * macp = GetMACPRecord(machine);
+	MACPRecord* macp = machine.GetMacpRecord();
 	
 	if (macp)
 	{
@@ -210,7 +208,7 @@ bool FUNCGETPROGRESSSKILL::execute(void)
 	VMLONG skillIndex;
 	VMFLOAT progress = -1.0;
 	VMFLOAT normalized = -1.0;
-	MACPRecord * macp = GetMACPRecord(machine);
+	MACPRecord* macp = machine.GetMacpRecord();
 	
 	if (macp && 
 		machine.pop(skillIndex) && skillIndex >= kFirstSkill && skillIndex <= kLastSkill)
@@ -231,7 +229,7 @@ bool FUNCSETPROGRESSSKILL::execute(void)
 	VMLONG normalized;
 	VMFLOAT progress;
 	bool result = false;
-	MACPRecord * macp = GetMACPRecord(machine);
+	MACPRecord* macp = machine.GetMacpRecord();
 	
 	if (macp && 
 		machine.pop(skillIndex) && skillIndex >= kFirstSkill && skillIndex <= kLastSkill &&
@@ -243,7 +241,7 @@ bool FUNCSETPROGRESSSKILL::execute(void)
 			progress = GetSkillRequirement(machine, static_cast<Skills>(skillIndex)) * progress / 100;
 		}
 		macp->skillProgress[skillIndex] = progress;
-		CheckForSkillUp(macp, static_cast<Skills>(skillIndex));
+		machine.CheckForSkillUp(skillIndex);
 		result = true;
 	}
 
@@ -259,7 +257,7 @@ bool FUNCMODPROGRESSSKILL::execute(void)
 	VMLONG normalized;
 	VMFLOAT mod;
 	bool result = false;
-	MACPRecord * macp = GetMACPRecord(machine);
+	MACPRecord* macp = machine.GetMacpRecord();
 	
 	if (macp && 
 		machine.pop(skillIndex) && skillIndex >= kFirstSkill && skillIndex <= kLastSkill &&
@@ -284,7 +282,7 @@ bool FUNCMODPROGRESSSKILL::execute(void)
 		if (progress < 0)
 			progress = 0.0;
 		macp->skillProgress[skillIndex] = progress;
-		CheckForSkillUp(macp, static_cast<Skills>(skillIndex));
+		machine.CheckForSkillUp(skillIndex);
 		result = true;
 	}
 
@@ -298,7 +296,7 @@ bool FUNCGETBASESKILL::execute(void)
 {
 	VMLONG skillIndex;
 	VMFLOAT value = -1.0;
-	MACPRecord * macp = GetMACPRecord(machine);
+	MACPRecord* macp = machine.GetMacpRecord();
 	
 	if (macp && machine.pop(skillIndex) && skillIndex >= kFirstSkill && skillIndex <= kLastSkill)
 	{
@@ -665,7 +663,7 @@ bool FUNCGETBASEUNARMORED::execute(void)
 bool FUNCGETPROGRESSLEVEL::execute(void)
 {
 	VMLONG progress = -1;
-	MACPRecord * macp = GetMACPRecord(machine);
+	MACPRecord* macp = machine.GetMacpRecord();
 	
 	if (macp)
 	{
@@ -684,7 +682,7 @@ bool FUNCSETPROGRESSLEVEL::execute(void)
 	VMLONG progress = 0;
 	bool result = false;
 	
-	MACPRecord * macp = GetMACPRecord(machine);
+	MACPRecord* macp = machine.GetMacpRecord();
 	
 	if (macp &&
 		machine.pop(progress) && progress >= 0)
@@ -706,7 +704,7 @@ bool FUNCMODPROGRESSLEVEL::execute(void)
 	VMLONG mod = 0;
 	bool result = false;
 	
-	MACPRecord * macp = GetMACPRecord(machine);
+	MACPRecord* macp = machine.GetMacpRecord();
 	
 	if (macp &&
 		machine.pop(mod))
@@ -2518,29 +2516,10 @@ static CLASRecord * GetClassRecord(TES3MACHINE & machine)
 	return charClass;
 }
 
-static MACPRecord * GetMACPRecord(TES3MACHINE & machine)
-{
-	VPVOID refr;
-	MACPRecord * macp = 0;
-	if (GetTargetData(machine, &refr))
-	{
-		void* ptr = GetAttachPointer(machine, refr, 8);
-		if (ptr)
-		{
-			macp = reinterpret_cast<MACPRecord*>(ptr);
-			if (macp->recordType != RecordTypes::MACP)
-			{
-				return 0;
-			}
-		}
-	}
-	return macp;
-}
-
 static float GetSkillRequirement(TES3MACHINE & machine, Skills skillIndex)
 {
 	float requirement = 1.0;
-	MACPRecord const * const macp = GetMACPRecord(machine);
+	MACPRecord const * const macp = machine.GetMacpRecord();;
 	if (macp)
 	{
 		TES3CELLMASTER* cellMaster = *(reinterpret_cast<TES3CELLMASTER**>reltolinear(MASTERCELL_IMAGE));
@@ -2568,17 +2547,6 @@ static float GetSkillRequirement(TES3MACHINE & machine, Skills skillIndex)
 		}
 	}
 	return requirement;
-}
-
-static void CheckForSkillUp(MACPRecord * macp, Skills skillIndex)
-{
-	int const skillUp = 0x56BBE0; // address of native MW function
-	__asm
-	{
-		mov ecx, macp;
-		push skillIndex;
-		call skillUp;
-	}
 }
 
 static void CheckForLevelUp(long const progress)
