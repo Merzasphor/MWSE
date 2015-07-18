@@ -13,4 +13,4 @@ private:
 	TES3MACHINE& machine;
 };
 
-#endif // MWSE_GETSKILLINFO_H_
+#endif // MWSE_GETSKILLINFOFUNCTION_H_
