@@ -1576,6 +1576,14 @@ function
 	Opcode = 0x394A
 end
 
+function
+	Name = xGetSkillInfo
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Param1 = Long
+	Return = Many
+	Opcode = 0x394B
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll

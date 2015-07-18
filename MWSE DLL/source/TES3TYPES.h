@@ -208,7 +208,7 @@ enum MagicEffectFlags
 	kEnchanting       = 0x400,
 	kNegativeLighting = 0x800,
 	kAppliedOnce      = 0x1000,
-	kStealth          = 0x2000,
+	kStealthEffect    = 0x2000,
 	kNonRecastable    = 0x4000,
 	kIllegalDaedra    = 0x8000,
 	kUnreflectable    = 0x10000,
@@ -216,7 +216,7 @@ enum MagicEffectFlags
 	kNoMagicEffectFlags = 0,
 	kAllMagicEffectFlags = (kTargetSkill | kTargetAttribute | kNoDuration | kNoMagnitude |
 		kHarmful | kContinuousVfx | kCastSelf | kCastTouch | kCastTarget | kSpellmaking |
-		kEnchanting | kNegativeLighting | kAppliedOnce | kStealth | kNonRecastable |
+		kEnchanting | kNegativeLighting | kAppliedOnce | kStealthEffect | kNonRecastable |
 		kIllegalDaedra | kUnreflectable | kCasterLinked)
 };
 
@@ -331,9 +331,10 @@ enum SkillTypes
 
 enum Specializations
 {
-	Combat,
-	Magic,
-	Stealth
+	kNoSpecialization = -1,
+	kCombat,
+	kMagic,
+	kStealth
 };
 
 enum Skills

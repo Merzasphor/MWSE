@@ -354,6 +354,10 @@
 					RelativePath=".\source\FUNCVARIABLES.h"
 					>
 				</File>
+				<File
+					RelativePath=".\source\GetSkillInfoFunction.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Instructions"
@@ -526,6 +530,10 @@
 				</File>
 				<File
 					RelativePath=".\source\FUNCVARIABLES.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\GetSkillInfoFunction.cpp"
 					>
 				</File>
 			</Filter>
