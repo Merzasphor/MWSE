@@ -23,9 +23,12 @@ bool SetSkillInfoFunction::execute()
 		SKILRecord& skill_record = 
 			cell_master->recordLists->skills[skill_id];
 		skill_record.attribute = attribute_id;
-		skill_record.specialization = specialization_id;
 		std::copy(actions, actions + sizeof(actions) / sizeof(actions[0]), 
 			skill_record.actions);
+		if (skill_record.specialization != specialization_id) {
+			skill_record.specialization = specialization_id;
+			machine.CheckForSkillUp(skill_id);
+		}
 		result = 1;
 	}
 	return machine.push(result);
