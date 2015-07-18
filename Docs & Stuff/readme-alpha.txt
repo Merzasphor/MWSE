@@ -9,6 +9,7 @@ Updates since 0.9.5-alpha.20150707:
 - Fixed bug where newly created spells could not be added to an actor. (xCreateSpell)
 - Spell names are now properly truncated to 31 characters and don't use more memory
   than needed (xCreateSpell)
+- Spells are created with a default cost of 1. (xCreateSpell)
 - xStringMatch no longer finds partial pattern matches.
 - Added functions to read and write skill parameters. (xGetSkillInfo, xSetSkillInfo)
 - *Progress* functions no longer need an explicit player reference. They now
