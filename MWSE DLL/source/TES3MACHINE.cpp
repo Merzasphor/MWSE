@@ -45,6 +45,7 @@ using namespace std;
 #include "FUNCARRAY.h"
 #include "FUNCEXTENDER.h"
 #include "GetSkillInfoFunction.h"
+#include "SetSkillInfoFunction.h"
 
 #ifdef DEBUG
 #include <stdio.h>
@@ -323,6 +324,7 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(CREATESPELL, new FUNCCREATESPELL(*this));
 	AddInstruction(DELETESPELL, new FUNCDELETESPELL(*this));
 	AddInstruction(GETSKILLINFO, new GetSkillInfoFunction(*this));
+	AddInstruction(SETSKILLINFO, new SetSkillInfoFunction(*this));
 
 	AddInstruction(GETGS, new FUNCGETGS(*this));
 	AddInstruction(SETGS, new FUNCSETGS(*this));

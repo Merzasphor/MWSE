@@ -1584,6 +1584,20 @@ function
 	Opcode = 0x394B
 end
 
+function
+	Name = xSetSkillInfo
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Param1 = Long
+	Param2 = Long
+	Param3 = Long
+	Param4 = Float
+	Param5 = Float
+	Param6 = Float
+	Param7 = Float
+	Return = Long
+	Opcode = 0x394C
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll

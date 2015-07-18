@@ -319,7 +319,9 @@ enum Attributes
 	kSpeed,
 	kEndurance,
 	kPersonality,
-	kLuck
+	kLuck,
+	kFirstAttribute = kStrength,
+	kLastAttribute = kLuck
 };
 
 enum SkillTypes
@@ -334,7 +336,9 @@ enum Specializations
 	kNoSpecialization = -1,
 	kCombat,
 	kMagic,
-	kStealth
+	kStealth,
+	kFirstSpecialization = kCombat,
+	kLastSpecialization = kStealth
 };
 
 enum Skills
@@ -541,9 +545,9 @@ struct SKILRecord
 	RecordTypes::RecordType recordType; // SKIL
 	int unknown1;
 	void * ptr1; // pointer to first array element?
-	Skills skill;
-	Attributes attribute;
-	Specializations specialization;
+	long skill;
+	long attribute;
+	long specialization;
 	float actions[4];
 	int unknown2;
 	int unknown3;

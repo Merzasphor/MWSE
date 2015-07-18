@@ -358,6 +358,10 @@
 					RelativePath=".\source\GetSkillInfoFunction.h"
 					>
 				</File>
+				<File
+					RelativePath=".\source\SetSkillInfoFunction.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Instructions"
@@ -534,6 +538,10 @@
 				</File>
 				<File
 					RelativePath=".\source\GetSkillInfoFunction.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\SetSkillInfoFunction.cpp"
 					>
 				</File>
 			</Filter>
