@@ -22,9 +22,7 @@ static VMLONG SetEffect(Effect * effects, VMLONG index, VMLONG effect_id,
 						VMLONG skill_attribute_id, VMLONG range, VMLONG area, 
 						VMLONG duration, VMLONG minimum_magnitude,
 						VMLONG maximum_magnitude);
-
-static CLASRecord * GetClassRecord(TES3MACHINE & machine);
-static float GetSkillRequirement(TES3MACHINE & machine, Skills skillIndex);
+static float GetSkillRequirement(TES3MACHINE& machine, long skill_id);
 static void CheckForLevelUp(long const progress);
 
 // These functions are used for validation in FUNCSETMAX... and for
@@ -2500,51 +2498,31 @@ static VMSHORT CountEffects(Effect const * effects)
 	return numEffects;
 }
 
-static CLASRecord * GetClassRecord(TES3MACHINE & machine)
-{
-	VPVOID refr, temp;
-	unsigned long refType;
-	CLASRecord * charClass = 0;
-	
-	if (GetTargetData(machine, &refr, &temp, &refType) && refType == NPC)
-	{
-		TES3REFERENCE * npcRef = reinterpret_cast<TES3REFERENCE*>(refr);
-		NPCCopyRecord * npcCopy = reinterpret_cast<NPCCopyRecord*>(npcRef->templ);
-		charClass = npcCopy->baseNPC->characterClass;
-	}
-
-	return charClass;
-}
-
-static float GetSkillRequirement(TES3MACHINE & machine, Skills skillIndex)
+static float GetSkillRequirement(TES3MACHINE& machine, long skill_id)
 {
 	float requirement = 1.0;
-	MACPRecord const * const macp = machine.GetMacpRecord();;
-	if (macp)
-	{
-		TES3CELLMASTER* cellMaster = *(reinterpret_cast<TES3CELLMASTER**>reltolinear(MASTERCELL_IMAGE));
-		GMSTRecord ** gmsts = cellMaster->recordLists->GMSTs;
-		MACPRecord::Skill const & s = macp->skills[skillIndex];
-		requirement = 1 + macp->skills[skillIndex].base;
-		if (s.skillType == Misc)
-		{
-			requirement *= gmsts[fMiscSkillBonus]->value.fVal;
-		}
-		else if (s.skillType == Minor)
-		{
-			requirement *= gmsts[fMinorSkillBonus]->value.fVal;
-		}
-		else if (s.skillType == Major)
-		{
-			requirement *= gmsts[fMajorSkillBonus]->value.fVal;
-		}
-		
-		CLASRecord const * const charClass = GetClassRecord(machine);
-		SKILRecord const & currSkill = cellMaster->recordLists->skills[skillIndex];
-		if (charClass->specialization == currSkill.specialization)
-		{
-			requirement *= gmsts[fSpecialSkillBonus]->value.fVal;
-		}
+	MACPRecord const* const macp = machine.GetMacpRecord();
+	TES3CELLMASTER const* const cell_master =
+		*(reinterpret_cast<TES3CELLMASTER**>reltolinear(MASTERCELL_IMAGE));
+	GMSTRecord const* const* gmsts = cell_master->recordLists->GMSTs;
+	MACPRecord::Skill const& skill = macp->skills[skill_id];
+	requirement = 1 + skill.base;
+	if (skill.skillType == Misc) {
+		requirement *= gmsts[fMiscSkillBonus]->value.fVal;
+	}
+	else if (skill.skillType == Minor) {
+		requirement *= gmsts[fMinorSkillBonus]->value.fVal;
+	}
+	else if (skill.skillType == Major) {
+		requirement *= gmsts[fMajorSkillBonus]->value.fVal;
+	}
+	NPCCopyRecord const* const npc_copy =
+		reinterpret_cast<NPCCopyRecord*>(macp->reference->templ);
+	CLASRecord const* const klass = npc_copy->baseNPC->characterClass;
+	SKILRecord const& skill_record =
+		cell_master->recordLists->skills[skill_id];
+	if (klass->specialization == skill_record.specialization) {
+		requirement *= gmsts[fSpecialSkillBonus]->value.fVal;
 	}
 	return requirement;
 }

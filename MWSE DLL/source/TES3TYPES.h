@@ -1054,7 +1054,7 @@ struct MACPRecord
 	void * vTable; // 0
 	RecordTypes::RecordType recordType; // "MACP" // 4
 	int unknown1[3];										//8
-	void * reference; // unverified							//20
+	TES3REFERENCE* reference;							//20
 	int unknown2[53];						//24
 	MACPRecord * combatTarget; // unverified // 236
 	int unknown3[162]; // 240

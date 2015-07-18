@@ -725,16 +725,16 @@ void TES3MACHINE::CheckForSkillUp(long skill_id)
 
 MACPRecord* TES3MACHINE::GetMacpRecord()
 {	
-	VPVOID refr;
+	// TODO All offsets appear to be fixed, so we should be able to replace
+	// this by accessing the appropriate fields in yet to be mapped data
+	// structures.
 	MACPRecord* macp = NULL;
-	if (GetTargetData(*this, &refr)) 	{
-		void* ptr = GetAttachPointer(*this, refr, 8);
-		if (ptr) {
-			macp = reinterpret_cast<MACPRecord*>(ptr);
-			if (macp->recordType != RecordTypes::MACP) {
-				macp = NULL;
-			}
-		}
+	int const kGetMacp = 0x40FF20;
+	__asm
+	{
+		mov ecx, dword ptr ds:[0x7C67DC]; //masterImage
+		call kGetMacp;
+		mov macp, eax;
 	}
 	return macp;
 }
