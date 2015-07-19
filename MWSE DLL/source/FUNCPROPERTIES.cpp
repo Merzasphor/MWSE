@@ -2500,13 +2500,12 @@ static VMSHORT CountEffects(Effect const * effects)
 
 static float GetSkillRequirement(TES3MACHINE& machine, long skill_id)
 {
-	float requirement = 1.0;
 	MACPRecord const* const macp = machine.GetMacpRecord();
 	TES3CELLMASTER const* const cell_master =
 		*(reinterpret_cast<TES3CELLMASTER**>reltolinear(MASTERCELL_IMAGE));
 	GMSTRecord const* const* gmsts = cell_master->recordLists->GMSTs;
 	MACPRecord::Skill const& skill = macp->skills[skill_id];
-	requirement = 1 + skill.base;
+	float requirement = 1.0 + skill.base;
 	if (skill.skillType == Misc) {
 		requirement *= gmsts[fMiscSkillBonus]->value.fVal;
 	}
