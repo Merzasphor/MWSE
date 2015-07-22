@@ -2507,13 +2507,13 @@ static float GetSkillRequirement(TES3MACHINE& machine, long skill_id)
 	MACPRecord::Skill const& skill = macp->skills[skill_id];
 	float requirement = 1.0 + skill.base;
 	if (skill.skillType == Misc) {
-		requirement *= gmsts[fMiscSkillBonus]->value.fVal;
+		requirement *= gmsts[fMiscSkillBonus]->value.float_value;
 	}
 	else if (skill.skillType == Minor) {
-		requirement *= gmsts[fMinorSkillBonus]->value.fVal;
+		requirement *= gmsts[fMinorSkillBonus]->value.float_value;
 	}
 	else if (skill.skillType == Major) {
-		requirement *= gmsts[fMajorSkillBonus]->value.fVal;
+		requirement *= gmsts[fMajorSkillBonus]->value.float_value;
 	}
 	NPCCopyRecord const* const npc_copy =
 		reinterpret_cast<NPCCopyRecord*>(macp->reference->templ);
@@ -2521,7 +2521,7 @@ static float GetSkillRequirement(TES3MACHINE& machine, long skill_id)
 	SKILRecord const& skill_record =
 		cell_master->recordLists->skills[skill_id];
 	if (klass->specialization == skill_record.specialization) {
-		requirement *= gmsts[fSpecialSkillBonus]->value.fVal;
+		requirement *= gmsts[fSpecialSkillBonus]->value.float_value;
 	}
 	return requirement;
 }
@@ -2530,7 +2530,7 @@ static void CheckForLevelUp(long const progress)
 {
 	TES3CELLMASTER* cellMaster = *(reinterpret_cast<TES3CELLMASTER**>reltolinear(MASTERCELL_IMAGE));
 	GMSTRecord ** gmsts = cellMaster->recordLists->GMSTs;
-	if (progress >= gmsts[iLevelupTotal]->value.lVal)
+	if (progress >= gmsts[iLevelupTotal]->value.long_value)
 	{
 		int const loadMessage = 0x40F930;
 		int const displayMessage = 0x5F90C0;

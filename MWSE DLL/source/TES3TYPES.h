@@ -561,8 +561,9 @@ struct GMSTRecord
 	void * mod; // pointer to mod?
 	union
 	{
-		long lVal;
-		float fVal;
+		long long_value;
+		float float_value;
+		char* string_value;
 	} value;
 	int index; // array index of this GMST
 	int unknown2[2];
