@@ -1,21 +1,12 @@
-0.9.5-alpha.20150718
+0.9.5-alpha.201507xx
 https://github.com/Merzasphor/MWSE
 
 This is a WIP modification to the Morrowind Script Extender, based on version 0.9.4a.
 There may be bugs. Proceed with caution!
 
-Updates since 0.9.5-alpha.20150707:
+Updates since 0.9.5-alpha.20150718:
 
-- Fixed bug where newly created spells could not be added to an actor. (xCreateSpell)
-- Spell names are now properly truncated to 31 characters and don't use more memory
-  than needed (xCreateSpell)
-- Spells are created with a default cost of 1. (xCreateSpell)
-- xStringMatch no longer finds partial pattern matches.
-- Added functions to read and write skill parameters. (xGetSkillInfo, xSetSkillInfo)
-- *Progress* functions no longer need an explicit player reference. They now
-  implicitly access the player's reference as needed. (xGetProgressLevel,
-  xSetProgressLevel, xModProgressLevel, xGetProgressSkill, xSetProgressSkill,
-  xModProgressSkill)
+- Added functions to read/write string GMSTs. (xGetGSString, xSetGSString)
 
 !!! The following functions are deprecated and will be removed in the future: !!!
 xGetBase[skillname] - Replaced by xGetBaseSkill
@@ -36,9 +27,19 @@ Trying it out:
 
 !!!Make backups of any already existing files!!!
 
+If you're not using MGE XE:
 Copy MWSE Launcher.exe and MWSE.dll to your Morrowind directory.
-If you're using MGE XE, run MGEXEgui.exe and check "Disable internal MWSE" on the "In-Game" tab.
 Run MWSE Launcher.exe and click "Launch Morrowind"
+
+If you're using MGE XE 0.10.0 beta 9 or later:
+Copy MWSE.dll to your Morrowind directory.
+Start Morrowind normally.
+
+If you're using an earlier version of MGE XE:
+Copy MWSE.dll to your Morrowind directory.
+Run MGEXEgui.exe and check "Disable internal MWSE" on the "In-Game" tab.
+Start Morrowind normally.
+Note that MGE XE specific functions will no longer be available.
 
 The included plugin runs scripts that do the following:
 Displays a message whenever the base value of one of the player's skills changes or whenever the 
@@ -69,32 +70,27 @@ modifying the program.
 
 Functions:
 
-xGetSkillInfo
-attribute (long) specialization (long) action1 (float) action2 (float) action3 (float) action4 (float): xGetSkillInfo skill_id (long)
-Read the properties of the given skill_id.
-skill_id: id of the skill to read.
-attribute: governing attribute
-specialization: specialization associated with this skill
-action1-4: progress value associated with the action (see below for list)
-If skill_id is invalid, all return values are set to -1.
+xGetGSString
+string (long): xGetGSString gmst_id (long)
+Returns the string associated with the given GMST.
+gmst_id: id of the GMST to look up
+string: the string value of the GMST
+If gmst_id is negative, string will be 0.
 
-xSetSkillInfo
-result (long): xSetSkillInfo skill_id (long) attribute (long) specialization (long) action1 (float) action2 (float) action3 (float) action4 (float)
-Modify the properties of the given skill_id.
-skill_id: id of the skill to read.
-attribute: new governing attribute
-specialization: new specialization associated with this skill
-action1-4: new progress value associated with the action (see below for list)
+xSetGSString
+result (long): xSetGSString gmst_id (long) string (long | string)
+Sets the string associated with the given GMST.
+gmst_id: id of the GMST to modify
+string: new string value
 result: 1 on success, 0 on failure
-This function fails if skill_id, attribute, or specialization are invalid.
+This function fails if gmst_id is negative or string == 0.
 
 Notes:
-All parameters seem to take effect immediately. There may be side-effects other than those listed below that I have not discovered yet.
-Changing the governing attribute will cause any subsequent skill-ups to count toward that attribute at level-up. 
-(Which implies they're counted, not inferred, and could be modified. Stay tuned...)
-Changing the specialization will cause the target progress needed for skill up to change. This function invokes the native
-skill-up function when changing specialization, in case the change would cause progress to reach 100.
-Actions can be set a negative value, in which case they'll remove progress, but progress will never go below zero.
+These functions do not check if a given GMST id is really a string GMST. Using 
+a float or long GMST with these functions will result in undefined behavior,
+and likely crash the game.
+The GMST ids exported from the CS are off by one. To get the correct id,
+subtract 1 from the CS id.
 
 Actions: (taken from CS)
 Skill: 1, 2, 3, 4
@@ -346,6 +342,47 @@ Effect IDs:
 *******************************************************************************
 
 Previous updates:
+
+0.9.5-alpha.20150718:
+
+- Fixed bug where newly created spells could not be added to an actor. (xCreateSpell)
+- Spell names are now properly truncated to 31 characters and don't use more memory
+  than needed (xCreateSpell)
+- Spells are created with a default cost of 1. (xCreateSpell)
+- xStringMatch no longer finds partial pattern matches.
+- Added functions to read and write skill parameters. (xGetSkillInfo, xSetSkillInfo)
+- *Progress* functions no longer need an explicit player reference. They now
+  implicitly access the player's reference as needed. (xGetProgressLevel,
+  xSetProgressLevel, xModProgressLevel, xGetProgressSkill, xSetProgressSkill,
+  xModProgressSkill)
+
+Functions:
+xGetSkillInfo
+attribute (long) specialization (long) action1 (float) action2 (float) action3 (float) action4 (float): xGetSkillInfo skill_id (long)
+Read the properties of the given skill_id.
+skill_id: id of the skill to read.
+attribute: governing attribute
+specialization: specialization associated with this skill
+action1-4: progress value associated with the action (see below for list)
+If skill_id is invalid, all return values are set to -1.
+
+xSetSkillInfo
+result (long): xSetSkillInfo skill_id (long) attribute (long) specialization (long) action1 (float) action2 (float) action3 (float) action4 (float)
+Modify the properties of the given skill_id.
+skill_id: id of the skill to read.
+attribute: new governing attribute
+specialization: new specialization associated with this skill
+action1-4: new progress value associated with the action (see below for list)
+result: 1 on success, 0 on failure
+This function fails if skill_id, attribute, or specialization are invalid.
+
+Notes:
+All parameters seem to take effect immediately. There may be side-effects other than those listed below that I have not discovered yet.
+Changing the governing attribute will cause any subsequent skill-ups to count toward that attribute at level-up. 
+(Which implies they're counted, not inferred, and could be modified. Stay tuned...)
+Changing the specialization will cause the target progress needed for skill up to change. This function invokes the native
+skill-up function when changing specialization, in case the change would cause progress to reach 100.
+Actions can be set a negative value, in which case they'll remove progress, but progress will never go below zero.
 
 0.9.5-alpha.20150707
 
