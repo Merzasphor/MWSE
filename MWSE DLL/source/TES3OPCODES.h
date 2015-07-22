@@ -468,6 +468,7 @@ typedef enum {
 	,DELETESPELL        = 0x394A
 	,GETSKILLINFO       = 0x394B
 	,SETSKILLINFO		= 0x394C
+	,GETGSSTRING        = 0x394D
 
 	,GETGS              = 0x3A00
 	,SETGS				= 0x3A01

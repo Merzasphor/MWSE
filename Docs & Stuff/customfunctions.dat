@@ -1598,6 +1598,14 @@ function
 	Opcode = 0x394C
 end
 
+function
+	Name = xGetGSString
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Param1 = Long
+	Return = Long
+	Opcode = 0x394D
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll
