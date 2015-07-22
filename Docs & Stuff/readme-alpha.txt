@@ -1,4 +1,4 @@
-0.9.5-alpha.201507xx
+0.9.5-alpha.20150722
 https://github.com/Merzasphor/MWSE
 
 This is a WIP modification to the Morrowind Script Extender, based on version 0.9.4a.
