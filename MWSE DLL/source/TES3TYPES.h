@@ -269,7 +269,6 @@ enum RecordTypes
 	MISC = 'CSIM',
 	MGEF = 'FEGM', MAGICEFFECT = MGEF,
 	NPC = '_CPN',
-	PICK = 'KCIP', //?
 	PROB = 'BORP', PROBE = PROB,
 	REFR = 'RFER', REFERENCE = REFR,
 	REPA = 'APER', REPAIR = REPA,
