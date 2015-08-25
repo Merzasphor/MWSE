@@ -96,7 +96,7 @@ bool FUNCCREATESPELL::execute(void)
 				static_cast<SPELRecord*>(machine.Malloc(sizeof(SPELRecord)));
 			memset(new_spell, 0, sizeof(*new_spell));
 			new_spell->vTable = tail_spell->vTable;
-			new_spell->recordType = RecordTypes::SPELL;
+			new_spell->recordType = SPELL;
 			new_spell->spellsList = spells_list;
 			new_spell->id = static_cast<char*>(machine.Malloc(strlen(id) + 1));
 			strcpy(new_spell->id, id);
@@ -185,12 +185,12 @@ bool FUNCGETMAGIC::execute(void)
 		if (rec)
 		{
 			type = rec->recordType;
-			if (type == RecordTypes::SPELL)
+			if (type == SPELL)
 			{
 				SPELRecord const * const spell = reinterpret_cast<SPELRecord const * const>(rec);
 				id = reinterpret_cast<VMLONG>(strings.add(spell->id));
 			}
-			else if (type == RecordTypes::ENCHANTMENT)
+			else if (type == ENCHANTMENT)
 			{
 				ENCHRecord const * const enchantment = reinterpret_cast<ENCHRecord const * const>(rec);
 				id = reinterpret_cast<VMLONG>(strings.add(enchantment->id));
@@ -1630,7 +1630,7 @@ bool FUNCGETOWNERINFO::execute(void)
 			if (rec)
 			{
 				type = rec->recordType;
-				if (type == RecordTypes::NPC)
+				if (type == NPC)
 				{
 					NPCBaseRecord * npc = reinterpret_cast<NPCBaseRecord*>(rec);
 					id = reinterpret_cast<long>(strings.add(npc->IDStringPtr));
@@ -1640,7 +1640,7 @@ bool FUNCGETOWNERINFO::execute(void)
 						rankVar = reinterpret_cast<long>(strings.add(global->id));
 					}
 				}
-				else if (type == RecordTypes::FACTION)
+				else if (type == FACTION)
 				{
 					FACTRecord * fact = reinterpret_cast<FACTRecord*>(rec);
 					id = reinterpret_cast<long>(strings.add(fact->id));
@@ -2452,7 +2452,7 @@ static SPELRecord * GetSpellRecord(VMLONG const spellId, TES3MACHINE & machine)
 		TES3CELLMASTER* cellMaster = *(reinterpret_cast<TES3CELLMASTER**>reltolinear(MASTERCELL_IMAGE));
 		spell = reinterpret_cast<SPELRecord*>(cellMaster->recordLists->spellsList->head);
 		// this list should only contain spells, but check the type anyway to be safe
-		while (spell != 0 && !(spell->recordType == RecordTypes::SPELL && strcmp(idString, spell->id) == 0))
+		while (spell != 0 && !(spell->recordType == SPELL && strcmp(idString, spell->id) == 0))
 		{
 			spell = spell->nextRecord;
 		}
@@ -2469,7 +2469,7 @@ static ENCHRecord * GetEnchantmentRecord(VMLONG const enchId, TES3MACHINE & mach
 		TES3CELLMASTER* cellMaster = *(reinterpret_cast<TES3CELLMASTER**>reltolinear(MASTERCELL_IMAGE));
 		ench = reinterpret_cast<ENCHRecord*>(cellMaster->recordLists->enchantmentsList->head);
 		// this list contains records that are not enchantments, so check the type
-		while (ench != 0 && !(ench->recordType == RecordTypes::ENCHANTMENT && strcmp(idString, ench->id) == 0))
+		while (ench != 0 && !(ench->recordType == ENCHANTMENT && strcmp(idString, ench->id) == 0))
 		{
 			ench = ench->nextRecord;
 		}
@@ -2551,7 +2551,7 @@ static Effect * GetEffects(long const type, long const id, TES3MACHINE & machine
 {
 	Effect * effects = 0;
 
-	if (type == RecordTypes::SPELL)
+	if (type == SPELL)
 	{
 		SPELRecord * spell = GetSpellRecord(id, machine);
 		if (spell)
@@ -2559,7 +2559,7 @@ static Effect * GetEffects(long const type, long const id, TES3MACHINE & machine
 			effects = spell->effects;
 		}
 	}
-	else if (type == RecordTypes::ENCHANTMENT)
+	else if (type == ENCHANTMENT)
 	{
 		ENCHRecord * ench = GetEnchantmentRecord(id, machine);
 		if (ench)

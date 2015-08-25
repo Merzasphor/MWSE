@@ -71,7 +71,7 @@ const char *GetNameString(TES3MACHINE& vm, VPVOID temp, ULONG type, VPVOID base)
 	else if (type == LIGHT)
 		GetOffsetData(vm,temp,0x12,(ULONG*)&addr);
 	else if (type == CLOTHING || type == ARMOR || type == WEAPON 
-		|| type == MISC || type == BOOK || type == ALCHEMY || type == RecordTypes::AMMO)
+		|| type == MISC || type == BOOK || type == ALCHEMY || type == AMMO)
 		GetOffsetData(vm,temp,0x11,(ULONG*)&addr);
 	else if (type == ACTIVATOR)
 		GetOffsetData(vm,temp,0xe,(ULONG*)&addr);
@@ -79,7 +79,7 @@ const char *GetNameString(TES3MACHINE& vm, VPVOID temp, ULONG type, VPVOID base)
 		addr = LONGOFFSET(temp,0x0d);
 	else if (type == APPARATUS)
 		addr = LONGOFFSET(temp,0x19);
-	else if (type == INGREDIENT || type == REPAIR || type == PROBE || type == RecordTypes::LOCKPICK)
+	else if (type == INGREDIENT || type == REPAIR || type == PROBE || type == LOCKPICK)
 		addr = LONGOFFSET(temp,0x11);
 
 	if (addr && vm.ReadMem((VPVOID)addr, namestr, 128))

@@ -6,17 +6,6 @@
 typedef short	TES3SHORT;
 typedef long	TES3LONG;
 typedef float	TES3FLOAT;
-typedef enum{VARNODE=6,MACHNODE=8} TES3ATTACHTYPE;
-
-typedef enum{NPC='_CPN',
-             CREA='AERC', CREATURE=CREA,
-             CONT='TNOC',CONTAINER=CONT,
-             LIGHT='HGIL',
-             MISC='CSIM',CLOTHING='TOLC',WEAPON='PAEW',ARMOR='OMRA',
-             BOOK='KOOB',ALCHEMY='HCLA',ACTIVATOR='ITCA',DOOR='ROOD',
-             APPARATUS='APPA',INGREDIENT='RGNI',PROBE='BORP',PICK='KCIP',REPAIR='APER',
-             CLASS='SALC',LOCK='KCOL',AMMO='OMMA'
-} TEMPLTYPE;
 
 typedef enum{NORTHWEST=0,NORTH=1,NORTHEAST=2,WEST=3,CENTRE=4,EAST=5,SOUTHWEST=6,SOUTH=7,SOUTHEAST=8} TES3CELLGRID;
 
@@ -253,51 +242,51 @@ enum SpellFlags
 	kAllSpellFlags = (kAutoCalculateCost | kPcStartSpell | kAlwaysSucceeds)
 };
 
-namespace RecordTypes {
-	enum RecordType
-	{
-		ACTI = 'ITCA', ACTIVATOR = ACTI,
-		ALCH = 'HCLA', ALCHEMY = ALCH,
-		AMMO = 'OMMA',
-		APPA = 'APPA', APPARATUS = APPA,
-		ARMO = 'OMRA', ARMOR = ARMO,
-		BOOK = 'KOOB',
-		CLAS = 'SALC', CLASS = CLAS,
-		CLOT = 'TOLC', CLOTHING = CLOT,
-		CONT = 'TNOC', CONTAINER = CONT,
-		CREA = 'AERC', CREATURE = CREA,
-		DOOR = 'ROOD',
-		ENCH = 'HCNE', ENCHANTMENT = ENCH,
-		FACT = 'TCAF', FACTION = FACT,
-		GLOB = 'BOLG', GLOBAL = GLOB,
-		GMST = 'TSMG',
-		INGR = 'RGNI', INGREDIENT = INGR,
-		LEVC = 'CVEL', LEVELLEDCREATURE = LEVC,
-		LEVI = 'IVEL', LEVELLEDITEM = LEVI,
-		LIGH = 'HGIL', LIGHT = LIGH,
-		LOCK = 'KCOL', LOCKPICK = LOCK,
-		MACP = 'PCAM',
-		MISC = 'CSIM',
-		MGEF = 'FEGM', MAGICEFFECT = MGEF,
-		NPC = '_CPN',
-		PICK = 'KCIP', //?
-		PROB = 'BORP', PROBE = PROB,
-		REFR = 'RFER', REFERENCE = REFR,
-		REPA = 'APER', REPAIR = REPA,
-		SCPT = 'TPCS', SCRIPT = SCPT,
-		SKIL = 'LIKS', SKILL = SKIL,
-		SNDG = 'GDNS', SOUNDGENERATOR = SNDG,
-		SPEL = 'LEPS', SPELL = SPEL,
-		STAT = 'TATS', STATIC = STAT,
-		WEAP = 'PAEW', WEAPON = WEAP
-	};
 
-	enum AttachType
-	{
-		VARNODE = 6,	//attachment where 'local' variables are stored, and the size of a stack, and the owner (if it has changed i think), and the script...
-		MACHNODE = 8	//PCAM
-	};
+enum RecordTypes
+{
+	ACTI = 'ITCA', ACTIVATOR = ACTI,
+	ALCH = 'HCLA', ALCHEMY = ALCH,
+	AMMO = 'OMMA',
+	APPA = 'APPA', APPARATUS = APPA,
+	ARMO = 'OMRA', ARMOR = ARMO,
+	BOOK = 'KOOB',
+	CLAS = 'SALC', CLASS = CLAS,
+	CLOT = 'TOLC', CLOTHING = CLOT,
+	CONT = 'TNOC', CONTAINER = CONT,
+	CREA = 'AERC', CREATURE = CREA,
+	DOOR = 'ROOD',
+	ENCH = 'HCNE', ENCHANTMENT = ENCH,
+	FACT = 'TCAF', FACTION = FACT,
+	GLOB = 'BOLG', GLOBAL = GLOB,
+	GMST = 'TSMG',
+	INGR = 'RGNI', INGREDIENT = INGR,
+	LEVC = 'CVEL', LEVELLEDCREATURE = LEVC,
+	LEVI = 'IVEL', LEVELLEDITEM = LEVI,
+	LIGH = 'HGIL', LIGHT = LIGH,
+	LOCK = 'KCOL', LOCKPICK = LOCK,
+	MACP = 'PCAM',
+	MISC = 'CSIM',
+	MGEF = 'FEGM', MAGICEFFECT = MGEF,
+	NPC = '_CPN',
+	PICK = 'KCIP', //?
+	PROB = 'BORP', PROBE = PROB,
+	REFR = 'RFER', REFERENCE = REFR,
+	REPA = 'APER', REPAIR = REPA,
+	SCPT = 'TPCS', SCRIPT = SCPT,
+	SKIL = 'LIKS', SKILL = SKIL,
+	SNDG = 'GDNS', SOUNDGENERATOR = SNDG,
+	SPEL = 'LEPS', SPELL = SPEL,
+	STAT = 'TATS', STATIC = STAT,
+	WEAP = 'PAEW', WEAPON = WEAP
 };
+
+enum AttachTypes
+{
+	VARNODE = 6,	//attachment where 'local' variables are stored, and the size of a stack, and the owner (if it has changed i think), and the script...
+	MACHNODE = 8	//PCAM
+};
+
 
 enum GMSTs
 {
@@ -542,7 +531,7 @@ struct LinkedList
 struct SKILRecord
 {
 	void * vTable;
-	RecordTypes::RecordType recordType; // SKIL
+	RecordTypes recordType; // SKIL
 	int unknown1;
 	void * ptr1; // pointer to first array element?
 	long skill;
@@ -556,7 +545,7 @@ struct SKILRecord
 struct GMSTRecord
 {
 	void * vTable;
-	RecordTypes::RecordType recordType;
+	RecordTypes recordType;
 	int unknown;
 	void * mod; // pointer to mod?
 	union
@@ -584,7 +573,7 @@ enum MagicSchools
 struct MGEFRecord
 {
 	void* vtable;
-	RecordTypes::RecordType record_type;
+	RecordTypes record_type;
 	int unknown1;
 	void* module; // pointer to module?
 	long index; // index in array
@@ -630,7 +619,7 @@ struct RecordLists
 struct BaseRecord
 {
 	void * vTable;
-	RecordTypes::RecordType recordType;
+	RecordTypes recordType;
 };
 
 enum RangeTypes
@@ -657,7 +646,7 @@ struct Effect
 struct ENCHRecord
 {
 	void * vTable;
-	RecordTypes::RecordType recordType;
+	RecordTypes recordType;
 	int recordSize;
 	char * modNamePtr;
 	int unknown1;
@@ -700,7 +689,7 @@ enum SpellTypes
 struct SPELRecord
 {
 	void * vTable;
-	RecordTypes::RecordType recordType; // SPEL
+	RecordTypes recordType; // SPEL
 	unsigned long origin;
 	char * modName;
 	int unknown1;
@@ -722,7 +711,7 @@ struct SPELRecord
 struct ALCHRecord
 {
 	void * vTable;
-	RecordTypes::RecordType recordType;
+	RecordTypes recordType;
 	int recordSize;
 	char * modName;
 	int unknown1;
@@ -751,7 +740,7 @@ struct ALCHRecord
 struct CLASRecord
 {
 	void * vTable;
-	RecordTypes::RecordType recordType; // CLAS
+	RecordTypes recordType; // CLAS
 	
 	int unknown1;
 	int unknown2; // pointer?
@@ -830,7 +819,7 @@ struct CLASRecord
 struct NPCBaseRecord	//or the 'base' NPC_ record. you can access it trough the NPCC (NPC Copy) Record (baseNPC)
 {
 	void * vTable;
-	RecordTypes::RecordType recordType;
+	RecordTypes recordType;
 	int recordSize;		//should be 0x0F0 big!
 	char * modNamePtr;
 	int unknown1;
@@ -888,7 +877,7 @@ struct NPCBaseRecord	//or the 'base' NPC_ record. you can access it trough the N
 struct NPCCopyRecord
 {
 	void * vTable;
-	RecordTypes::RecordType recordType;
+	RecordTypes recordType;
 	int unknown1; //int RecordSize; ?
 	int unknown2; //char * modNamePtr; ?
 	int unknown3;
@@ -921,7 +910,7 @@ struct ARMORecord
 {
 	// copied from WEAPRecord - needs to be verified
 	void * vTable;
-	RecordTypes::RecordType recordType; // "ARMO"
+	RecordTypes recordType; // "ARMO"
 	int recordSize;
 	char * modNamePtr;
 	int unknown1;
@@ -963,7 +952,7 @@ struct CLOTRecord
 {
 	// copied from WEAPRecord - needs to be verified
 	void * vTable;
-	RecordTypes::RecordType recordType; // "CLOT"
+	RecordTypes recordType; // "CLOT"
 	int recordSize;
 	char * modNamePtr;
 	int unknown1;
@@ -1006,7 +995,7 @@ struct CLOTRecord
 struct WEAPRecord
 {
 	void * vTable;
-	RecordTypes::RecordType recordType; // "WEAP"
+	RecordTypes recordType; // "WEAP"
 	int recordSize;
 	char * modNamePtr;
 	int unknown1;
@@ -1053,7 +1042,7 @@ struct MACPRecord
 		SkillTypes skillType;
 	};
 	void * vTable; // 0
-	RecordTypes::RecordType recordType; // "MACP" // 4
+	RecordTypes recordType; // "MACP" // 4
 	int unknown1[3];										//8
 	TES3REFERENCE* reference;							//20
 	int unknown2[53];						//24
@@ -1071,7 +1060,7 @@ struct MACPRecord
 struct FACTRecord
 {
 	void * vTable;
-	RecordTypes::RecordType recordType; // FACT
+	RecordTypes recordType; // FACT
 	int unknown1[2];
 	char id[32];
 	char name[32];
@@ -1082,7 +1071,7 @@ struct FACTRecord
 struct GLOBRecord
 {
 	void * vTable;
-	RecordTypes::RecordType recordType; //GLOB
+	RecordTypes recordType; //GLOB
 	int unknown;
 	char * modName;
 	char id[32];

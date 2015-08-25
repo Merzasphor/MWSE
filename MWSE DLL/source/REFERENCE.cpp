@@ -3,7 +3,7 @@
 #include "REFERENCE.h"
 #include "DEBUGGING.h"
 
-bool REFERENCE::GetAttachment(TES3MACHINE& machine, VPREFERENCE pref, VPVOID& attachment, TES3ATTACHTYPE type)
+bool REFERENCE::GetAttachment(TES3MACHINE& machine, VPREFERENCE pref, VPVOID& attachment, AttachTypes type)
 {
 	bool result= true;
 	
