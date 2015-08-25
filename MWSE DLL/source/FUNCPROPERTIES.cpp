@@ -1858,7 +1858,7 @@ bool FUNCGETNAME::execute(void)
 		else if (type == LIGHT) // LIGH
 			GetOffsetData(machine,temp,0x12,(ULONG*)&addr);
 		else if (type == CLOTHING || type == ARMOR || type == WEAPON
-			|| type == MISC || type == BOOK || type == ALCHEMY)
+			|| type == MISC || type == BOOK || type == ALCHEMY || type == AMMO)
 			GetOffsetData(machine,temp,0x11,(ULONG*)&addr);
 		else if (type == ACTIVATOR)
 			GetOffsetData(machine,temp,0xe,(ULONG*)&addr);
@@ -1866,7 +1866,7 @@ bool FUNCGETNAME::execute(void)
 			addr = LONGOFFSET(temp,0x0d);
 		else if (type == APPARATUS)
 			addr = LONGOFFSET(temp,0x19);
-		else if (type == INGREDIENT || type == REPAIR || type == PROBE || type == PICK)
+		else if (type == INGREDIENT || type == REPAIR || type == PROBE || type == LOCKPICK)
 			addr = LONGOFFSET(temp,0x11);
 
 		if (addr && machine.ReadMem((VPVOID)addr, namestr, 128))
@@ -1904,7 +1904,7 @@ bool FUNCSETNAME::execute(void)
 		else if (type == LIGHT)
 			GetOffsetData(machine,temp,0x12,(ULONG*)&addr);
 		else if (type == CLOTHING || type == ARMOR || type == WEAPON 
-			|| type == MISC || type == BOOK || type == ALCHEMY)
+			|| type == MISC || type == BOOK || type == ALCHEMY || type == AMMO)
 			GetOffsetData(machine,temp,0x11,(ULONG*)&addr);
 		else if (type == ACTIVATOR)
 			GetOffsetData(machine,temp,0xe,(ULONG*)&addr);
@@ -1912,7 +1912,7 @@ bool FUNCSETNAME::execute(void)
 			addr = LONGOFFSET(temp,0x0d);
 		else if (type == APPARATUS)
 			addr = LONGOFFSET(temp,0x19);
-		else if (type == INGREDIENT || type == REPAIR || type == PROBE || type == PICK)
+		else if (type == INGREDIENT || type == REPAIR || type == PROBE || type == LOCKPICK)
 			addr = LONGOFFSET(temp,0x11);
 
 			//this writes the string (max char= 128!)
