@@ -589,7 +589,7 @@ protected:
                type == APPARATUS ||
                type == INGREDIENT ||
                type == PROBE ||
-               type == PICK ||
+               type == LOCKPICK ||
                type == REPAIR);
    }
 };
@@ -603,7 +603,7 @@ protected:
    virtual bool canSet(ULONG type)
    {
        return (type == PROBE ||
-               type == PICK ||
+               type == LOCKPICK ||
                type == REPAIR);
    }
 };
