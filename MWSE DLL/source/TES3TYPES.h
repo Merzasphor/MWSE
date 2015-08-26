@@ -848,7 +848,8 @@ struct NPCBaseRecord	//or the 'base' NPC_ record. you can access it trough the N
 	int unknown24;
 	int unknown25;
 	int unknown26;
-	int unknown27;
+	short level;
+	short unknown27;
 	int unknown28;
 	int unknown29;
 	int unknown30;

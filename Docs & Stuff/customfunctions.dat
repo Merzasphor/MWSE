@@ -1615,6 +1615,14 @@ function
 	Opcode = 0x394E
 end
 
+function
+	Name = xSetLevel
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Param1 = Short
+	Return = Long
+	Opcode = 0x394F
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll
