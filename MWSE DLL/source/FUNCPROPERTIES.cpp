@@ -206,13 +206,16 @@ bool FUNCGETPROGRESSSKILL::execute(void)
 	VMLONG skillIndex;
 	VMFLOAT progress = -1.0;
 	VMFLOAT normalized = -1.0;
-	MACPRecord* macp = machine.GetMacpRecord();
-	
-	if (macp && 
-		machine.pop(skillIndex) && skillIndex >= kFirstSkill && skillIndex <= kLastSkill)
-	{
-		progress = macp->skillProgress[skillIndex];
-		normalized = 100 * progress / GetSkillRequirement(machine, static_cast<Skills>(skillIndex));
+	VPVOID refr;
+	if (GetTargetData(machine, &refr)) {
+		MACPRecord* macp = reinterpret_cast<MACPRecord*>(GetAttachPointer(machine, refr, MACHNODE));
+
+		if (macp && 
+			machine.pop(skillIndex) && skillIndex >= kFirstSkill && skillIndex <= kLastSkill)
+		{
+			progress = macp->skillProgress[skillIndex];
+			//normalized = 100 * progress / GetSkillRequirement(machine, static_cast<Skills>(skillIndex));
+		}
 	}
 
 #ifdef DEBUGGING
@@ -292,18 +295,18 @@ bool FUNCMODPROGRESSSKILL::execute(void)
 
 bool FUNCGETBASESKILL::execute(void)
 {
-	VMLONG skillIndex;
-	VMFLOAT value = -1.0;
-	MACPRecord* macp = machine.GetMacpRecord();
-	
-	if (macp && machine.pop(skillIndex) && skillIndex >= kFirstSkill && skillIndex <= kLastSkill)
-	{
-		value = macp->skills[skillIndex].base;
+	long skill_index;
+	float value = -1.0;
+	unsigned long type;
+	VPVOID refr, temp;
+	if (GetTargetData(machine, &refr, &temp, &type) && type == NPC) {
+		MACPRecord* macp = 
+			reinterpret_cast<MACPRecord*>(GetAttachPointer(machine, refr, MACHNODE));
+		if (macp && machine.pop(skill_index) && skill_index >= kFirstSkill
+			&& skill_index <= kLastSkill) {
+			value = macp->skills[skill_index].base;
+		}
 	}
-
-#ifdef DEBUGGING
-	cLog::mLogMessage("%f= FUNCGETBASESKILL()\n",value);
-#endif	
 	return (machine.push(value));
 }
 
