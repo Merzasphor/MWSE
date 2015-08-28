@@ -355,6 +355,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\GetAttributeFunction.h"
+					>
+				</File>
+				<File
 					RelativePath=".\source\GetBaseAttributeFunction.h"
 					>
 				</File>
@@ -554,6 +558,10 @@
 				</File>
 				<File
 					RelativePath=".\source\FUNCVARIABLES.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\GetAttributeFunction.cpp"
 					>
 				</File>
 				<File
