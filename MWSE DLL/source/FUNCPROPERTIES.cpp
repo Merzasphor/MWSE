@@ -206,16 +206,13 @@ bool FUNCGETPROGRESSSKILL::execute(void)
 	VMLONG skillIndex;
 	VMFLOAT progress = -1.0;
 	VMFLOAT normalized = -1.0;
-	VPVOID refr;
-	if (GetTargetData(machine, &refr)) {
-		MACPRecord* macp = reinterpret_cast<MACPRecord*>(GetAttachPointer(machine, refr, MACHNODE));
+	MACPRecord* macp = machine.GetMacpRecord();
 
-		if (macp && 
-			machine.pop(skillIndex) && skillIndex >= kFirstSkill && skillIndex <= kLastSkill)
-		{
-			progress = macp->skillProgress[skillIndex];
-			//normalized = 100 * progress / GetSkillRequirement(machine, static_cast<Skills>(skillIndex));
-		}
+	if (macp &&
+		machine.pop(skillIndex) && skillIndex >= kFirstSkill && skillIndex <= kLastSkill)
+	{
+		progress = macp->skillProgress[skillIndex];
+		normalized = 100 * progress / GetSkillRequirement(machine, static_cast<Skills>(skillIndex));
 	}
 
 #ifdef DEBUGGING
