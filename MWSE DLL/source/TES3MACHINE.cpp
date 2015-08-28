@@ -50,6 +50,7 @@ using namespace std;
 #include "SetGsStringFunction.h"
 #include "SetLevelFunction.h"
 #include "GetSkillFunction.h"
+#include "GetBaseAttributeFunction.h"
 
 #ifdef DEBUG
 #include <stdio.h>
@@ -333,6 +334,7 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(SETGSSTRING, new SetGsStringFunction(*this));
 	AddInstruction(SETLEVEL, new SetLevelFunction(*this));
 	AddInstruction(GETSKILL, new GetSkillFunction(*this));
+	AddInstruction(GETBASEATTRIBUTE, new GetBaseAttributeFunction(*this));
 
 	AddInstruction(GETGS, new FUNCGETGS(*this));
 	AddInstruction(SETGS, new FUNCSETGS(*this));

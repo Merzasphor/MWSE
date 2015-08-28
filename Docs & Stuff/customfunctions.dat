@@ -1631,6 +1631,14 @@ function
 	Opcode = 0x3950
 end
 
+function
+	Name = XGetBaseAttribute
+	Options = MWSE | AllowGlobal | AllowVar
+	Return = Float
+	Param1 = Short | Long
+	Opcode = 0x3951
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll

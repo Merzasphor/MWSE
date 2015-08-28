@@ -1036,10 +1036,16 @@ struct MACPRecord
 {
 	struct Skill
 	{
-		int unknown1;
+		void* vtable;
 		float base;
 		float current;
 		SkillTypes skillType;
+	};
+	struct Attribute
+	{
+		void* vtable;
+		float base;
+		float current;
 	};
 	void * vTable; // 0
 	RecordTypes recordType; // "MACP" // 4
@@ -1047,13 +1053,15 @@ struct MACPRecord
 	TES3REFERENCE* reference;							//20
 	int unknown2[53];						//24
 	MACPRecord * combatTarget; // unverified // 236
-	int unknown3[162]; // 240
+	int unknown3[89]; // 240
+	Attribute attributes[8]; // 596
+	int unknown4[49]; // 692
 	void * currentSpell; // 888 
-	int unknown4[13]; // 892
+	int unknown5[13]; // 892
 	Skill skills[27]; // 944
-	int unknown5[34];  // 1376
+	int unknown6[34];  // 1376
 	long levelProgress; // 1512
-	int unknown6[2];  // 1516
+	int unknown7[2];  // 1516
 	float skillProgress[27]; // 1524
 };
 
