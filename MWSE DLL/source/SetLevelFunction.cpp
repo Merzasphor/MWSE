@@ -13,8 +13,7 @@ bool SetLevelFunction::execute()
 	if (machine.pop(level) &&
 		level >= 1 &&
 		GetTargetData(machine, &refr, &temp, &ref_type) && 
-		ref_type == NPC)
-	{
+		ref_type == NPC) {
 		TES3REFERENCE * npc_ref = reinterpret_cast<TES3REFERENCE*>(refr);
 		NPCCopyRecord * npc_copy = reinterpret_cast<NPCCopyRecord*>(npc_ref->templ);
 		npc_copy->baseNPC->level = level;
