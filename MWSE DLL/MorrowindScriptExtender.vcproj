@@ -359,6 +359,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\GetSkillFunction.h"
+					>
+				</File>
+				<File
 					RelativePath=".\source\GetSkillInfoFunction.h"
 					>
 				</File>
@@ -550,6 +554,10 @@
 				</File>
 				<File
 					RelativePath=".\source\GetGsStringFunction.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\GetSkillFunction.cpp"
 					>
 				</File>
 				<File

@@ -1623,6 +1623,14 @@ function
 	Opcode = 0x394F
 end
 
+function
+	Name = XGetSkill
+	Options = MWSE | AllowGlobal | AllowVar
+	Return = Float
+	Param1 = Short | Long
+	Opcode = 0x3950
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll

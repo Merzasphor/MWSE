@@ -471,6 +471,7 @@ typedef enum {
 	,GETGSSTRING        = 0x394D
 	,SETGSSTRING        = 0x394E
 	,SETLEVEL           = 0x394F
+	,GETSKILL           = 0x3950
 
 	,GETGS              = 0x3A00
 	,SETGS				= 0x3A01
