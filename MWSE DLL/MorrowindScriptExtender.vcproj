@@ -367,6 +367,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\GetMaxHealthFunction.h"
+					>
+				</File>
+				<File
 					RelativePath=".\source\GetSkillFunction.h"
 					>
 				</File>
@@ -574,6 +578,10 @@
 				</File>
 				<File
 					RelativePath=".\source\GetGsStringFunction.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\GetMaxHealthFunction.cpp"
 					>
 				</File>
 				<File

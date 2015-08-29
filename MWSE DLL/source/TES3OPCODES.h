@@ -475,6 +475,7 @@ typedef enum {
 	,GETBASEATTRIBUTE   = 0x3951
 	,GETATTRIBUTE       = 0x3952
 	,MODATTRIBUTE       = 0x3953
+	,GETMAXHEALTH       = 0x3954
 
 	,GETGS              = 0x3A00
 	,SETGS				= 0x3A01

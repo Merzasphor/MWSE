@@ -1656,6 +1656,12 @@ function
 	Opcode = 0x3953
 end
 
+function
+	Name = XGetMaxHealth
+	Options = MWSE | AllowGlobal | AllowVar
+	Return = Float
+	Opcode = 0x3954
+end
 
 # MGE extensions
 function
