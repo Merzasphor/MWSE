@@ -375,6 +375,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\ModAttributeFunction.h"
+					>
+				</File>
+				<File
 					RelativePath=".\source\SetGsStringFunction.h"
 					>
 				</File>
@@ -578,6 +582,10 @@
 				</File>
 				<File
 					RelativePath=".\source\GetSkillInfoFunction.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\ModAttributeFunction.cpp"
 					>
 				</File>
 				<File

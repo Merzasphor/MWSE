@@ -52,6 +52,7 @@ using namespace std;
 #include "GetSkillFunction.h"
 #include "GetBaseAttributeFunction.h"
 #include "GetAttributeFunction.h"
+#include "ModAttributeFunction.h"
 
 #ifdef DEBUG
 #include <stdio.h>
@@ -337,6 +338,7 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(GETSKILL, new GetSkillFunction(*this));
 	AddInstruction(GETBASEATTRIBUTE, new GetBaseAttributeFunction(*this));
 	AddInstruction(GETATTRIBUTE, new GetAttributeFunction(*this));
+	AddInstruction(MODATTRIBUTE, new ModAttributeFunction(*this));
 
 	AddInstruction(GETGS, new FUNCGETGS(*this));
 	AddInstruction(SETGS, new FUNCSETGS(*this));

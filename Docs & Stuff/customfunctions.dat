@@ -1647,6 +1647,16 @@ function
 	Opcode = 0x3952
 end
 
+function
+	Name = XModAttribute
+	Options = MWSE | AllowGlobal | AllowVar
+	Return = Long
+	Param1 = Short | Long
+	Param2 = Float
+	Opcode = 0x3953
+end
+
+
 # MGE extensions
 function
 	Name = MGEWipeAll
