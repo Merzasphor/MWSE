@@ -1041,7 +1041,7 @@ struct MACPRecord
 		float current;
 		SkillTypes skillType;
 	};
-	struct Attribute
+	struct Statistic
 	{
 		void* vtable;
 		float base;
@@ -1054,8 +1054,13 @@ struct MACPRecord
 	int unknown2[53];						//24
 	MACPRecord * combatTarget; // unverified // 236
 	int unknown3[89]; // 240
-	Attribute attributes[8]; // 596
-	int unknown4[49]; // 692
+	Statistic attributes[8]; // 596
+	Statistic health; // 692
+	Statistic magicka; // 704
+	Statistic weight_limit; // 716
+	Statistic fatigue; // 728 // fatigue has a different vtable pointer than the other Statistic objects.
+	Statistic unknown_statistic; // 740
+	int unknown4[34]; // 752
 	void * currentSpell; // 888 
 	int unknown5[13]; // 892
 	Skill skills[27]; // 944
