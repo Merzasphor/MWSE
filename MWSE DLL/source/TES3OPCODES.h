@@ -214,6 +214,7 @@ typedef enum {
 	,ORIG_REMOVESPELL = 0x111E //removespell
 
 	,ORIG_EXPLODESPELL = 0x11AD
+	,ORIG_SETLEVEL     = 0x1156
 
 	,CALL=			0x3801
 	,CALLSHORT=		0x3802

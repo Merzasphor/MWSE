@@ -1,23 +1,44 @@
 #include "SetLevelFunction.h"
 
+#include "Breakpoint.h"
+#include "Tes3MemMap.h"
 #include "TES3OFFSETS.h"
+#include "TES3OPCODES.h"
 #include "TES3TYPES.h"
 #include "VMTYPES.h"
 
 bool SetLevelFunction::execute()
 {
-	long result = 0;
+	bool result = false;
 	long level;
-	VPVOID refr, temp;
-	unsigned long ref_type;
-	if (machine.pop(level) &&
-		level >= 1 &&
-		GetTargetData(machine, &refr, &temp, &ref_type) && 
-		ref_type == NPC) {
-		TES3REFERENCE * npc_ref = reinterpret_cast<TES3REFERENCE*>(refr);
-		NPCCopyRecord * npc_copy = reinterpret_cast<NPCCopyRecord*>(npc_ref->templ);
-		npc_copy->baseNPC->level = level;
-		result = 1;
+	if (machine.pop(level)) {
+		parent = machine.GetFlow();
+		result =
+			machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(VARINDEX_IMAGE)),
+			static_cast<void*>(&level),sizeof(level));
+		if (result) {
+			Context context = machine.GetFlow();
+			context.Eip = (DWORD)reltolinear(FIXUPTEMPLATE);
+			machine.SetFlow(context);
+			result = machine.SetVMDebuggerBreakpoint(this);
+		}
 	}
-	return machine.push(result);
+	return result;
+}
+
+BYTE SetLevelFunction::getid()
+{
+	return BP_FIXUPTEMPLATE;
+}
+
+bool SetLevelFunction::breakpoint()
+{
+	bool result = false;
+	Context flow = machine.GetFlow();
+	if (machine.WriteMem(reinterpret_cast<VPVOID>(reltolinear(SECONDOBJECT_IMAGE)),
+		&flow.Eax, sizeof(flow.Eax))) {
+		machine.SetFlow(parent);
+		result = CallOriginalFunction(machine, ORIG_SETLEVEL);
+	}
+	return result;
 }
