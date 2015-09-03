@@ -1,24 +1,12 @@
-0.9.5-alpha.20150829
+0.9.5-alpha.20150902
 https://github.com/Merzasphor/MWSE
 
 This is a WIP modification to the Morrowind Script Extender, based on version 0.9.4a.
 There may be bugs. Proceed with caution!
 
-Updates since 0.9.5-alpha.20150722:
+Updates since 0.9.5-alpha.20150829:
 
-Bug fixes:
-- xContentList and xGetName now return ammo and lockpick names.
-- xSetName now sets lockpick names.
-- xSetQuality and xSetWeight now work with lockpicks.
-- xGetBaseSkill now supports npc references.
-
-New functions:
-- xSetLevel 
-- xGetSkill
-- xGetBaseAttribute
-- xGetAttribute
-- xGetMaxHealth
-- xModAttribute
+xSetLevel is now a wrapper for the native SetLevel function.
 
 See "New Updates" for details.
 
@@ -74,7 +62,7 @@ Anthony Garcia
 
 License:
 The Morrowind Script Extender is free software, licensed according to
-the GNU Public License, and comes with ABSOLUTELY NO WARRANTY. See the
+the GNU General Public License, and comes with ABSOLUTELY NO WARRANTY. See the
 file gpl.txt for details if you are interested in distributing or
 modifying the program.
 
@@ -83,47 +71,11 @@ modifying the program.
 Functions:
 
 xSetLevel
-result (long): ref->xSetLevel new_level (long)
-Sets the level of the given reference. This function only supports the player and NPCs.
-This function is not a wrapper for SetLevel, but it suffers from the same display issue:
-when using this function on the player, the character screen does not update with the new level.
+ref->xSetLevel new_level (long)
+Sets the level of the given reference. This function is a wrapper for SetLevel,
+and suffers from the same display issue: when using this function on the 
+player, the character screen does not update with the new level.
 new_level: new character level
-result: 1 on success, 0 otherwise. This function will fail if the reference is not an NPC or the player.
-
-xGetSkill
-skill_value (float): ref->xGetSkill skill_id (long)
-Returns the current value of the referenced skill. This function only supports the player and NPCs.
-skill_id: see below for valid skill ids
-skill_value: current value of the skill. Returns -1 if the reference is not an NPC or the player.
-
-xGetBaseAttribute
-attribute_value (float): ref->xGetBaseAttribute attribute_id (long)
-Returns the base value of the referenced attribute. This function only supports the player and NPCs.
-attribute_id: see below for valid attribute ids
-attribute_value: base value of the attribute. Returns -1 if the reference is not an NPC or the player.
-
-xGetAttribute
-attribute_value (float): ref->xGetAttribute attribute_id (long)
-Returns the current value of the referenced attribute. This function only supports the player and NPCs.
-attribute_id: see below for valid attribute ids
-attribute_value: current value of the attribute. Returns -1 if the reference is not an NPC or the player.
-
-xGetMaxHealth
-max_health (float): ref->xGetMaxHealth
-Returns maximum health. This function only supports the player and NPCs.
-maximum_health: Maximum health of the referenced entity. Returns -1 if the reference is not an NPC or the player.
-
-xModAttribute
-result (long): ref->xModAttribute attribute_id (long) mod_value (float)
-Adds mod_value to the current and base values of the referenced attribute. This suffers from the same
-display issue as xSetLevel. This function only supports the player and NPCs. It ignores the 100
-max attribute limit.
-attribute_id: see below for valid attribute ids
-mod_value: add this to the current and base values
-result: 1 on success, 0 otherwise. This function will fail if the reference is not an NPC or the player.
-
-Note: I debated leaving xModAttribute out, since it has a display issue that the vanilla Mod[Attribute]
-functions don't have. However, it seems to work and is more useful in some cases.
 
 Actions: (taken from CS)
 Skill: 1, 2, 3, 4
@@ -375,6 +327,58 @@ Effect IDs:
 *******************************************************************************
 
 Previous updates:
+
+0.9.5-alpha.20150829
+
+Bug fixes:
+- xContentList and xGetName now return ammo and lockpick names.
+- xSetName now sets lockpick names.
+- xSetQuality and xSetWeight now work with lockpicks.
+- xGetBaseSkill now supports npc references.
+
+New functions:
+- xSetLevel 
+- xGetSkill
+- xGetBaseAttribute
+- xGetAttribute
+- xGetMaxHealth
+- xModAttribute
+
+Functions:
+xGetSkill
+skill_value (float): ref->xGetSkill skill_id (long)
+Returns the current value of the referenced skill. This function only supports the player and NPCs.
+skill_id: see below for valid skill ids
+skill_value: current value of the skill. Returns -1 if the reference is not an NPC or the player.
+
+xGetBaseAttribute
+attribute_value (float): ref->xGetBaseAttribute attribute_id (long)
+Returns the base value of the referenced attribute. This function only supports the player and NPCs.
+attribute_id: see below for valid attribute ids
+attribute_value: base value of the attribute. Returns -1 if the reference is not an NPC or the player.
+
+xGetAttribute
+attribute_value (float): ref->xGetAttribute attribute_id (long)
+Returns the current value of the referenced attribute. This function only supports the player and NPCs.
+attribute_id: see below for valid attribute ids
+attribute_value: current value of the attribute. Returns -1 if the reference is not an NPC or the player.
+
+xGetMaxHealth
+max_health (float): ref->xGetMaxHealth
+Returns maximum health. This function only supports the player and NPCs.
+maximum_health: Maximum health of the referenced entity. Returns -1 if the reference is not an NPC or the player.
+
+xModAttribute
+result (long): ref->xModAttribute attribute_id (long) mod_value (float)
+Adds mod_value to the current and base values of the referenced attribute. This suffers from the same
+display issue as xSetLevel. This function only supports the player and NPCs. It ignores the 100
+max attribute limit.
+attribute_id: see below for valid attribute ids
+mod_value: add this to the current and base values
+result: 1 on success, 0 otherwise. This function will fail if the reference is not an NPC or the player.
+
+Note: I debated leaving xModAttribute out, since it has a display issue that the vanilla Mod[Attribute]
+functions don't have. However, it seems to work and is more useful in some cases.
 
 0.9.5-alpha.20150722
 
