@@ -7,6 +7,7 @@
 // 22-08-2006 Tp21
 #include "warnings.h"
 
+#include <string>
 
 FUNCFILEREADTWOBYTES::FUNCFILEREADTWOBYTES(TES3MACHINE& vm) : machine(vm)
 {
@@ -272,29 +273,20 @@ bool FUNCFILEREADTEXT::execute(void)
 // 2005-06-28  CDC   Formatted writes (but doesn't return anything now (07-12)
 bool FUNCFILEWRITETEXT::execute(void)
 {
-	bool result= false;
-
-	VMREGTYPE pfilename= 0;
-	VMREGTYPE pstr= 0;
-	const char* filename= "null";
-	const char* str= "null";
-
-	if(machine.pop(pfilename)
+	bool result = false;
+	VMREGTYPE pfilename = 0;
+	VMREGTYPE pstr = 0;
+	char const* filename = "null";
+	char const* str = "null";
+	if (machine.pop(pfilename)
 		&& machine.pop(pstr)
-		&& (filename=machine.GetString((VPVOID)pfilename))!=0
-		&& (str=machine.GetString((VPVOID)pstr))!=0)
-	{
-		char buffer[BUFSIZ*4+1];	// Matches how much can be read, but is it long enough?
-		int len = BUFSIZ*4;
-		int substitutions = interpolate(machine, str, buffer, len);
-		if ( buffer[0] )
-			str = buffer;
-		len = strlen(str) + 1;
-		if ( substitutions < 0 )	// want to skip printing the null!
-			len = len - 1;
-		if ( filesys.write(filename,str,len) )
-			result = true;
+		&& (filename = machine.GetString((VPVOID)pfilename)) != 0
+		&& (str = machine.GetString((VPVOID)pstr)) != 0) {
+		std::string new_string;
+		bool suppress_null = interpolate(machine, str, new_string) < 0;
+		int len = new_string.length() + 1;
+		if (suppress_null) --len;
+		if (filesys.write(filename, new_string.c_str(), len)) result = true;
 	}
-
 	return result;
 }

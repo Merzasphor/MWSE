@@ -3,7 +3,10 @@
 
 #include "TES3OFFSETS.h"
 
-int interpolate(TES3MACHINE& machine, const char* src, char *buffer, int &size);
+#include <string>
+
+//int interpolate(TES3MACHINE& machine, const char* src, char *buffer, int &size);
+int interpolate(TES3MACHINE& machine, const char* format, std::string &result);
 int secernate(const char* format, const char *string, VMREGTYPE* resultset, int resultmax);
 bool enumerate(const char *format, int& substitutions, bool& eolmode);
 

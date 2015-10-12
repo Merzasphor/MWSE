@@ -12,6 +12,8 @@
 
 #include <boost/regex.hpp>
 
+#include <string>
+
 #ifndef ULONG
 #define ULONG unsigned long int
 #endif
@@ -35,77 +37,64 @@ bool FUNCMESSAGEFIX::execute(void)
 	int len = 0;
 	unsigned char buttonlen = 0;
 	unsigned char buttoncount = 0;
-	
 	// we want to modify the real script SCDT info
 	scriptaddr = (VPVOID)machine.GetScript();
 	if (!GetOffsetData(machine, scriptaddr, OFFSET_SCDT, (ULONG*)&scriptaddr)) return false;
-	
 	scriptoffset += (ULONG)scriptaddr;
 	// must be followed by messagebox opcode and length
 	machine.ReadMem(scriptoffset,(VPVOID)mboxhdr,sizeof(mboxhdr));
 	scriptoffset += sizeof(mboxhdr);
-	if ( mboxhdr[0] != ORIG_MESSAGEBOX ) return false;
-	
-	// Calculate a maximum size and create a buffer for the interpreted strings
-    //Timeslip: need to make this a pointer
-	char* buffer=new char[64 + (mboxhdr[1]>256?mboxhdr[1]:256)];	// a little extra temporary work space
+	if ( mboxhdr[0] != ORIG_MESSAGEBOX ) return false;	
 	// get the parameter matching the main message string
-    if (!machine.pop(addr)) {
-        delete buffer;  //Timeslip: Need to clean up since it is no longer freed implicetly
-        return false;
-    }
+    if (!machine.pop(addr)) return false;
 	str = machine.GetString((VPVOID)addr);
-	if ( str && *str )	// can skip the substitution if the string is empty or nonexistant
-	{
-		len = mboxhdr[1];	
-		// 2005-06-28  CDC  Improved processing in interpolate
-		if ( interpolate(machine, str, buffer, len) < 0 )
-			len--;	// 2005-07-03 skip printing the null, showing the rest of the original string
-		machine.WriteMem(scriptoffset,(VPVOID)buffer, len);
+	if ( str && *str )	{ // can skip the substitution if the string is empty or nonexistant
+		std::string new_string;
+		bool suppress_null = interpolate(machine, str, new_string) < 0;
+		if (mboxhdr[1] < new_string.length()) {
+			len = mboxhdr[1];
+		}
+		else {
+			len = new_string.length() + 1;
+		}
+		if (suppress_null) --len;
+		machine.WriteMem(scriptoffset,(VPVOID)new_string.c_str(), len);
 	}
 	scriptoffset += mboxhdr[1];
-	
 	// find the null after the orignal message string
 	// (the "%.0f" style formatting is not allowed for the MessageBox, xMessageFix handles it here)
 	machine.ReadMem(scriptoffset,(VPVOID)&buttoncount,1);	// using buttoncount as a temporary
 	scriptoffset += 1;
-    if (buttoncount != 0) {
-        delete buffer;  //Timeslip: Need to clean up since it is no longer freed implicetly
-        return false;
-    }
-	
-	// next is the number of buttons to replace
+    if (buttoncount != 0) return false;
+    // next is the number of buttons to replace
 	machine.ReadMem(scriptoffset,(VPVOID)&buttoncount,1);
 	scriptoffset += 1;
-	
 	// for each button, replace it with string from the stack
-	while (buttoncount != 0)
-	{
+	while (buttoncount != 0) {
 		// find the amount of space available
 		machine.ReadMem(scriptoffset,(VPVOID)&buttonlen,1);
 		scriptoffset += 1;
-	
 		// get the replacement string
-        if (!machine.pop(addr)) {
-            delete[] buffer;  //Timeslip: Need to clean up since it is no longer freed implicetly
-            return false;
-        }
-		str = machine.GetString((VPVOID)addr);
-		if ( str && *str )	// can skip the substitution if the string is empty or nonexistant
-		{
-			len = buttonlen;
-			interpolate(machine, str, buffer, len);	// 2005-06-28  CDC  Improved processing in interpolate
-			machine.WriteMem(scriptoffset,(VPVOID)buffer, len);
+        if (!machine.pop(addr)) return false;
+        str = machine.GetString((VPVOID)addr);
+		if ( str && *str )	{ // can skip the substitution if the string is empty or nonexistant
+			std::string new_string;
+			bool suppress_null = interpolate(machine, str, new_string) < 0;
+			if (buttonlen < new_string.length()) {
+				len = buttonlen - 1;
+			}
+			else {
+				len = new_string.length() + 1;
+			}
+			if (suppress_null) --len;
+			machine.WriteMem(scriptoffset,(VPVOID)new_string.c_str(), len);
 		}
 		scriptoffset += buttonlen;
-	
 		// next button
 		buttoncount--;
 	}
-	delete[] buffer;  //Timeslip: Need to clean up since it is no longer freed implicetly
 	return true;
 }
-
 
 bool FUNCKEYPRESSED::execute(void) 
 {
@@ -295,23 +284,20 @@ bool FUNCTEXTINPUTALT::execute(void)
 // 2005-07-10  CDC   This just returns returns the string now, but there's a length function too.
 bool FUNCSTRINGBUILD::execute(void)
 {
-	bool result= false;
-	VMREGTYPE pstr= 0;
+	bool result = false;
+	VMREGTYPE pstr = 0;
 	const char* str;
-
-	if ( machine.pop(pstr) && ( ( str=machine.GetString((VPVOID)pstr) ) !=0 ) )
-	{
-		char buffer[BUFSIZ*4+1];	// Matches how much can be read, but is it long enough?
-		int len = BUFSIZ*4;
-		interpolate(machine, str, buffer, len);
-		if ( !buffer[0] ) strcpy(buffer,"null");
-		result = machine.push( (VMREGTYPE) strings.add(buffer) );
+	if (machine.pop(pstr) && ((str = machine.GetString((VPVOID)pstr)) != 0)) {
+		std::string new_string;
+		interpolate(machine, str, new_string);
+		if (new_string == "") {
+			new_string = "null";
+		}
+		result = machine.push((VMREGTYPE)strings.add(new_string.c_str()));
 	}
-
 #ifdef DEBUGGING
 	cLog::mLogMessage("FUNCSTRINGBUILD(%x,%s,%d) %s\n",str,str,result,result?"succeeded":"failed");
 #endif
-
 	return result;
 }
 
@@ -364,141 +350,133 @@ bool FUNCSTRINGPARSE::execute(void)
 }
 
 
+int alloc_sprintf(char*& string, char const* format, ...)
+{
+	va_list args;
+	va_start(args, format);
+	int size = -1;
+	if (format) {
+		size = _vscprintf(format, args);
+		string = new char[size+1];
+		vsprintf(string, format, args);
+	}
+	va_end(args);
+	return size;
+}	
+
 
 // ============================================================================================================
 
 // 2005-06-28  CDC  Process the string looking for % format instructions and perform any substitutions needed
 // 2005-07-12  CDC  Hexadecimal representation added and length results removed
-int interpolate(TES3MACHINE& machine, const char* format, char *buffer, int &size)
+int interpolate(TES3MACHINE& machine, const char* format, std::string &result)
 {
 	int substitutions = 0;
-	char *first = buffer;
-	char *last = buffer + size - 1;  // leave space for the null
-	const char *temp;
 	int stringskip;
 	int precision;
-	VMREGTYPE val = 0;
-
-	while ( *format && buffer < last )	// not at end of source or destination string
-	{
-		if ( *format != '%' ) 		// not the magic format character
-		{
-			*buffer++ = *format++;	// copy one character and move forward in each string
+	long val = 0;
+	while (*format != '\0') {
+		if (*format != '%') { 		// not the magic format character
+			result += *format++;
 		}
 		else 	// format symbol seen but is really a format?
 		{
 			stringskip = 0;
 			precision = -1;
 			format++;
-			if ( !*format )		// single trailing %, treat it as a flag
-			{ 
-				//*buffer++ = '%';
+			if (*format == '\0') {		// single trailing %, treat it as a flag
 				substitutions++;
 				substitutions = -substitutions;
 				break;
 			}
-			else if ( *format == '%' )	// double %, just print one
-			{
-				*buffer++ = *format++;
+			else if (*format == '%') { // double %, just print one
+				result += *format++;
 				continue;
 			}
-			while ( *format >= '0' && *format <= '9' )	// first digits used for strings
-			{
+			while (*format >= '0' && *format <= '9') { // first digits used for strings
 				stringskip = stringskip * 10 + *format - '0';
 				format++;
 			}
-			if ( *format == '.' )	// . with a number is for strings and floats
-			{
+			if ( *format == '.' ) {	// . with a number is for strings and floats
 				format++;
-				if ( *format < '0' || *format > '9' )	// no number, so treat it as a literal
-				{
-					*buffer++ = '%';
-					*buffer++ = '.';
+				if (*format < '0' || *format > '9') { // no number, so treat it as a literal
+					result += "%.";
 					continue;
 				}
 				precision = (*format++) - '0'; 	// two digits are more than enough
-				while ( *format >= '0' && *format <= '9' )
+				while (*format >= '0' && *format <= '9')
 					precision = precision * 10 + (*format++) - '0';
 			}
-
-			if ( *format == 'N' || *format == 'n' )	// end of line/new line
-			{
+			if (*format == 'N' || *format == 'n') {	// end of line/new line
 				format++;
 				substitutions++;
-				*buffer++ = '\r';
-				*buffer++ = '\n';
+				result += "\r\n";
 			}
-			else if ( *format == 'Q' || *format == 'q' )	// the " quoting character
-			{
+			else if (*format == 'Q' || *format == 'q') {	// the " quoting character
 				format++;
 				substitutions++;
-				*buffer++ = '"';
+				result += '"';
 			}
-			else if ( *format == 'L' || *format == 'l' )	// treat long variables as string segments
-			{
+			else if (*format == 'L' || *format == 'l') {	// treat long variables as string segments
 				format++;
-				if ( machine.pop(val) )
-				{
+				if (machine.pop(val)) {
 					substitutions++;
-					buffer += sprintf(buffer,"%.4s",(char*)&val);
+					result.append(reinterpret_cast<char*>(&val), 4);
 				}
 			}
-			else if ( *format == 'D' || *format == 'd' )	// short and long variables in decimal
-			{
+			else if (*format == 'D' || *format == 'd') {	// short and long variables in decimal
 				format++;
-				if ( machine.pop(val) )
-				{
+				if (machine.pop(val)) {
 					substitutions++;
-					buffer += sprintf(buffer,"%d",val);
+					char* convert;
+					alloc_sprintf(convert, "%d", val);
+					result += convert;
+					delete[] convert;
 				}
 			}
-			else if ( *format == 'H' || *format == 'h' )	// short and long variables in hexadecimal
-			{
+			else if (*format == 'H' || *format == 'h') {	// short and long variables in hexadecimal
 				format++;
-				if ( machine.pop(val) )
-				{
+				if (machine.pop(val)) {
 					substitutions++;
-					buffer += sprintf(buffer,"%x",val);
+					char* convert;
+					alloc_sprintf(convert, "%x", val);
+					result += convert;
+					delete[] convert;
 				}
 			}
-			else if ( *format == 'F' || *format == 'f' )	// float variables
-			{
+			else if (*format == 'F' || *format == 'f') { // float variables
 				format++;
-				if ( machine.pop(val) )
-				{
+				if (machine.pop(val)) {
 					substitutions++;
 					float fval= *(float*)&val;
-					if ( precision < 0 )
-						buffer += sprintf(buffer,"%f",fval);
-					else
-						buffer += sprintf(buffer,"%.*f",precision,fval);
+					char* convert;
+					if (precision < 0) {
+						alloc_sprintf(convert, "%f", fval);
+						result += convert;
+					}
+					else { 
+						alloc_sprintf(convert, "%.*f", precision, fval);
+						result += convert;
+					}
+					delete[] convert;
 				}
 			}
-			else if ( *format == 'S' || *format == 's' )	// string variables
-			{
+			else if (*format == 'S' || *format == 's') {	// string variables
 				format++;
-				if ( machine.pop(val) && val )
-				{
+				if (machine.pop(val) && val) {
 					substitutions++;
-					temp = machine.GetString((VPVOID)val);
+					const char* temp = machine.GetString((VPVOID)val);
 					while ( *temp && stringskip-- ) temp++;	// skip some chars?
-					while ( *temp && buffer < last && precision-- )
-						*buffer++ = *temp++;
+					while ( *temp && precision-- ) result += *temp++;
 				}
 			}
-			else		// Not any of the magic characters, so treat it as a literal
-			{
-				*buffer++ = '%';
+			else {		// Not any of the magic characters, so treat it as a literal
+				result += '%';
 			}
 		}
 	}
-	if ( buffer > last )
-		buffer = last;
-	*buffer = 0;
-	size = buffer - first + 1;
 	return substitutions;
 }
-
 
 // Count how many results there should be based on the format string
 bool enumerate(const char *format, int& substitutions, bool& eolmode)
