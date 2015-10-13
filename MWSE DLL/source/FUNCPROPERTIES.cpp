@@ -1114,64 +1114,58 @@ bool FUNCGETSPELLEFFECTINFO::execute(void)
 
 bool FUNCGETENCHANT::execute(void)
 {
-	VMLONG enchId = 0;
-	VMSHORT type = 0;
-	VMSHORT cost = 0;
-	VMFLOAT currCharge = 0;
-	VMLONG maxCharge = 0;
-	VMSHORT effects = 0;
-	VMLONG autocalc = 0;
-	
+	long enchId = 0;
+	long type = 0;
+	long cost = 0;
+	float currCharge = 0;
+	long maxCharge = 0;
+	long effects = 0;
+	long autocalc = 0;
 	VPVOID refr, temp;
 	unsigned long refType;
-
-	if (GetTargetData(machine, &refr, &temp, &refType))
-	{
-		if (refType == WEAPON || refType == ARMOR || refType == CLOTHING)
-		{
-			TES3REFERENCE * itemRef = reinterpret_cast<TES3REFERENCE*>(refr);
-			ENCHRecord * ench;
-	
-			if (refType == WEAPON)
-			{
-				WEAPRecord * weapon = reinterpret_cast<WEAPRecord*>(itemRef->templ);
+	if (GetTargetData(machine, &refr, &temp, &refType))	{
+		if (refType == WEAPON || refType == ARMOR || refType == CLOTHING 
+			|| refType == BOOK) {
+			TES3REFERENCE* itemRef = reinterpret_cast<TES3REFERENCE*>(refr);
+			ENCHRecord* ench = 0;
+			if (refType == WEAPON) {
+				WEAPRecord* weapon = reinterpret_cast<WEAPRecord*>(itemRef->templ);
 				ench = weapon->enchantment;
 			}
-			else if (refType == ARMOR)
-			{
-				ARMORecord * armor = reinterpret_cast<ARMORecord*>(itemRef->templ);
+			else if (refType == ARMOR) {
+				ARMORecord* armor = reinterpret_cast<ARMORecord*>(itemRef->templ);
 				ench = armor->enchantment;			
 			}
-			else
-			{
-				CLOTRecord * clothing = reinterpret_cast<CLOTRecord*>(itemRef->templ);
+			else if (refType == CLOTHING) {
+				CLOTRecord* clothing = reinterpret_cast<CLOTRecord*>(itemRef->templ);
 				ench = clothing->enchantment;
 			}
-
-			if (ench != 0)
-			{
+			else if (refType == BOOK) {
+				BOOKRecord* book = reinterpret_cast<BOOKRecord*>(itemRef->templ);
+				if (book->scroll == 1) {
+					ench = book->enchantment;
+				}
+			}
+			if (ench) {
 				enchId = reinterpret_cast<VMLONG>(strings.add(ench->id));
 				type = ench->type;
 				cost = ench->cost;
 				maxCharge = ench->charge;
 				effects = CountEffects(ench->effects);
 				autocalc = ench->autocalc;
-
 				// get the current charge
-				if (!GetAttachData(machine, refr, VARNODE, 4, currCharge))
-				{
+				if (!GetAttachData(machine, refr, VARNODE, 4, currCharge)) {
 					currCharge = maxCharge;
 				}
 			}
 		}
 	}
-
 #ifdef DEBUGGING
 	cLog::mLogMessage("%f= FUNCGETENCHANT()\n",0);
 #endif	
-	return machine.push(autocalc) && machine.push(static_cast<VMREGTYPE>(effects)) && machine.push(maxCharge)
-		&& machine.push(currCharge) && machine.push(static_cast<VMREGTYPE>(cost)) 
-		&& machine.push(static_cast<VMREGTYPE>(type)) && machine.push(enchId);
+	return machine.push(autocalc) && machine.push(effects) && machine.push(maxCharge)
+		&& machine.push(currCharge) && machine.push(cost)
+		&& machine.push(type) && machine.push(enchId);
 }
 
 bool FUNCSETENCHANTINFO::execute(void)

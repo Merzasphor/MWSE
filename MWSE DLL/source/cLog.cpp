@@ -28,8 +28,6 @@ void cLog::mOpenLog()
 
 void cLog::mLogMessage(const char* fmt, ...)
 {
-	//char buf[1024] = "\0";
-
 	va_list args;
 	va_start(args, fmt);
     if (fmt) {

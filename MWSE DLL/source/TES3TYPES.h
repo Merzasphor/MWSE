@@ -1104,6 +1104,44 @@ struct OwnerInfo
 	} rankVar;
 };
 
+struct BOOKRecord
+{
+	void* vtable;
+	long record_type;
+	int unknown1;
+	void* module; // pointer to module?
+	int unknown2;
+	void* unknown3; // pointer to list?
+	int unknown4;
+	void* previous; // previous item in list
+	void* next; // next item in list
+	int unknown5;
+	int unknown6;
+	char* id;
+	void* vtable2; // vtable of embedded object?
+	int unknown7;
+	int unknown8;
+	int unknown9;
+	int unknown10;
+	char* name;
+	void* script;
+	char* model;
+	char* texture;
+	float weight;
+	long value;
+	long scroll;
+	long skill;
+	long enchant_capacity;
+	ENCHRecord* enchantment;
+	void* vtable3; // vtable of embedded object?
+	int unknown16;
+	int unknown17;
+	int unknown18;
+	int unknown19;
+	void* unknown20;
+	void* unknown21;
+};
+
 struct TES3LOCK
 {
 	VMSHORT lockLevel;
