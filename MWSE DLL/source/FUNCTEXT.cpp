@@ -757,9 +757,7 @@ bool FUNCSTRINGMATCH::execute(void)
         string = machine.GetString(reinterpret_cast<VPVOID>(regString));
         pattern = machine.GetString(reinterpret_cast<VPVOID>(regPattern));
         if (string != NULL && pattern != NULL) {
-            match = boost::regex_search(string,
-                boost::regex(pattern),
-                boost::match_default);
+            match = boost::regex_search(string, boost::regex(pattern));
         }
     }
 #ifdef DEBUGGING

@@ -127,8 +127,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="3"
 				WholeProgramOptimization="true"
-				AdditionalIncludeDirectories="../MWSE_Launcher;../third-party/boost_1_33_1"
-				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS;BOOST_ALL_NO_LIB;WIN32;NDEBUG;CDC;BLOODMOON;MSVC"
+				AdditionalIncludeDirectories="../MWSE_Launcher;../third-party/boost_1_59_0"
+				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;CDC;BLOODMOON;MSVC"
 				WarningLevel="3"
 			/>
 			<Tool
@@ -142,9 +142,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="user32.lib boost-regex.lib version.lib dbghelp.lib"
+				AdditionalDependencies="user32.lib version.lib dbghelp.lib"
 				OutputFile="$(OutDir)\MWSE.dll"
-				AdditionalLibraryDirectories="$(IntDir)"
+				AdditionalLibraryDirectories="../third-party/boost_1_59_0/stage/lib"
 				GenerateManifest="false"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -178,14 +178,6 @@
 		</Configuration>
 	</Configurations>
 	<References>
-		<ProjectReference
-			ReferencedProjectIdentifier="{12E62C58-3739-401D-88B1-F5B0EBBCA10D}"
-			CopyLocal="false"
-			CopyLocalDependencies="false"
-			UseDependenciesInBuild="false"
-			CopyLocalSatelliteAssemblies="false"
-			RelativePathToProject="..\boost-regex\boost-regex.vcproj"
-		/>
 	</References>
 	<Files>
 		<Filter
