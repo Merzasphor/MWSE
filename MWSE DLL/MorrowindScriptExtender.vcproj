@@ -128,7 +128,7 @@
 				Optimization="3"
 				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="../MWSE_Launcher;../third-party/boost_1_59_0"
-				PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;CDC;BLOODMOON;MSVC"
+				PreprocessorDefinitions="_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;CDC;BLOODMOON;MSVC"
 				WarningLevel="3"
 			/>
 			<Tool
@@ -375,6 +375,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\RandomFloatFunction.h"
+					>
+				</File>
+				<File
+					RelativePath=".\source\RandomLongFunction.h"
+					>
+				</File>
+				<File
 					RelativePath=".\source\SetGsStringFunction.h"
 					>
 				</File>
@@ -586,6 +594,14 @@
 				</File>
 				<File
 					RelativePath=".\source\ModAttributeFunction.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\RandomFloatFunction.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\RandomLongFunction.cpp"
 					>
 				</File>
 				<File

@@ -1663,6 +1663,24 @@ function
 	Opcode = 0x3954
 end
 
+function
+	Name = XRandomLong
+	Options = MWSE | AllowGlobal | AllowVar
+	Return = Long
+	Param1 = Long
+	Param2 = Long
+	Opcode = 0x3955
+end
+
+function
+	Name = XRandomFloat
+	Options = MWSE | AllowGlobal | AllowVar
+	Return = Float
+	Param1 = Float
+	Param2 = Float
+	Opcode = 0x3956
+end
+
 # MGE extensions
 function
 	Name = MGEWipeAll

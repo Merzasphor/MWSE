@@ -54,6 +54,8 @@ using namespace std;
 #include "GetAttributeFunction.h"
 #include "ModAttributeFunction.h"
 #include "GetMaxHealthFunction.h"
+#include "RandomFloatFunction.h"
+#include "RandomLongFunction.h"
 
 #ifdef DEBUG
 #include <stdio.h>
@@ -63,6 +65,11 @@ using namespace std;
 #endif
 // 22-08-2006 Tp21
 #include "warnings.h"
+
+#include <boost/random/uniform_int_distribution.hpp>
+#include <boost/random/uniform_real_distribution.hpp>
+
+#include <ctime>
 
 #define PLACEHOLDER 0
 
@@ -76,6 +83,7 @@ TES3MACHINE::TES3MACHINE()
 	,instructionpointer(0)
 	,stackpointer(0)
 	,executable(new BUFSPACE(SCRIPTMEM_SIZE))
+	,rng_(std::time(0))
 {
 	if(!AddAddressSpace(SCRIPTMEM_VPOS,executable))
 		cLog::mLogMessage("TES3MACHINE: AddAddressSpace SCRIPTMEM failed\n");
@@ -341,6 +349,8 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(GETATTRIBUTE, new GetAttributeFunction(*this));
 	AddInstruction(MODATTRIBUTE, new ModAttributeFunction(*this));
 	AddInstruction(GETMAXHEALTH, new GetMaxHealthFunction(*this));
+	AddInstruction(RANDOMLONG, new RandomLongFunction(*this));
+	AddInstruction(RANDOMFLOAT, new RandomFloatFunction(*this));
 
 	AddInstruction(GETGS, new FUNCGETGS(*this));
 	AddInstruction(SETGS, new FUNCSETGS(*this));
@@ -753,4 +763,16 @@ MACPRecord* TES3MACHINE::GetMacpRecord()
 		mov macp, eax;
 	}
 	return macp;
+}
+
+long TES3MACHINE::GetRandomLong(long min, long max)
+{
+	boost::random::uniform_int_distribution<long> dist(min, max);
+	return dist(rng_);
+}
+
+float TES3MACHINE::GetRandomFloat(float min, float max)
+{
+	boost::random::uniform_real_distribution<float> dist(min, max);
+	return dist(rng_);
 }

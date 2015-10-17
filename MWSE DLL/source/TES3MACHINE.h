@@ -10,6 +10,8 @@
 // 22-08-2006 Tp21
 #include "warnings.h"
 
+#include <boost/random/mersenne_twister.hpp>
+
 typedef enum {INTSWITCHREFERENCE= 1} INTERRUPTS;
 
 
@@ -52,6 +54,8 @@ struct TES3MACHINE : public VIRTUALMACHINE
 		return external_realloc_(to_realloc, size); }
 	void CheckForSkillUp(long skill_id);
 	MACPRecord* GetMacpRecord();
+	long GetRandomLong(long min, long max);
+	float GetRandomFloat(float min, float max);
 
 private:
 	typedef void* (__cdecl *ExternalMalloc)(size_t);
@@ -68,4 +72,5 @@ private:
 	ExternalMalloc external_malloc_;
 	ExternalFree external_free_;
 	ExternalRealloc external_realloc_;
+	boost::random::mt19937 rng_;
 };

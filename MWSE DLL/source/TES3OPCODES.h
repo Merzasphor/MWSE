@@ -477,6 +477,8 @@ typedef enum {
 	,GETATTRIBUTE       = 0x3952
 	,MODATTRIBUTE       = 0x3953
 	,GETMAXHEALTH       = 0x3954
+	,RANDOMLONG         = 0x3955
+	,RANDOMFLOAT        = 0x3956
 
 	,GETGS              = 0x3A00
 	,SETGS				= 0x3A01
