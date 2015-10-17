@@ -1,12 +1,21 @@
-0.9.5-alpha.20150902
+0.9.5-alpha.20151016
 https://github.com/Merzasphor/MWSE
 
 This is a WIP modification to the Morrowind Script Extender, based on version 0.9.4a.
 There may be bugs. Proceed with caution!
 
-Updates since 0.9.5-alpha.20150829:
+Updates since 0.9.5-alpha.20150902:
 
-xSetLevel is now a wrapper for the native SetLevel function.
+- xGetEnchant now works with scrolls.
+- Added functions to generate random numbers. (xRandomLong, xRandomFloat)
+- Updated internal interpolate() function to use std::strings instead of fixed 
+  character arrays. This removes the limits on string length for certain 
+  functions (xLogMessage, xStringBuild, xFileWriteText). xMessageFix also uses
+  interpolate(), but its string lenght limit is determined by the following
+  MessageBox.
+- Fixed a bug where xMessageFix ignored the trailing "%" flag (null 
+  terminator suppression) when updating button strings.
+- Upgraded boost to 1.59.0.  
 
 See "New Updates" for details.
 
@@ -70,12 +79,15 @@ modifying the program.
 
 Functions:
 
-xSetLevel
-ref->xSetLevel new_level (long)
-Sets the level of the given reference. This function is a wrapper for SetLevel,
-and suffers from the same display issue: when using this function on the 
-player, the character screen does not update with the new level.
-new_level: new character level
+xRandomFloat
+float rand_val xRandomFloat float min float max
+Generates a random floating point value from a uniform distribution over [min, max).
+Returns 0 if min > max.
+
+xRandomLong
+long rand_val xRandomLong long min long max
+Generates a random long integer value from a uniform distribution over [min, max].
+Returns 0 if min > max.
 
 Actions: (taken from CS)
 Skill: 1, 2, 3, 4
@@ -327,6 +339,19 @@ Effect IDs:
 *******************************************************************************
 
 Previous updates:
+
+0.9.5-alpha.20150902
+
+xSetLevel is now a wrapper for the native SetLevel function.
+
+Functions:
+
+xSetLevel
+ref->xSetLevel new_level (long)
+Sets the level of the given reference. This function is a wrapper for SetLevel,
+and suffers from the same display issue: when using this function on the 
+player, the character screen does not update with the new level.
+new_level: new character level
 
 0.9.5-alpha.20150829
 
