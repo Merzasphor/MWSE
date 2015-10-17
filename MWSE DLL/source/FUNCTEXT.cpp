@@ -350,7 +350,7 @@ bool FUNCSTRINGPARSE::execute(void)
 }
 
 
-int alloc_sprintf(char*& string, char const* format, ...)
+int AllocSprintf(char*& string, char const* format, ...)
 {
 	va_list args;
 	va_start(args, format);
@@ -364,105 +364,110 @@ int alloc_sprintf(char*& string, char const* format, ...)
 	return size;
 }	
 
-
 // ============================================================================================================
 
 // 2005-06-28  CDC  Process the string looking for % format instructions and perform any substitutions needed
 // 2005-07-12  CDC  Hexadecimal representation added and length results removed
-int interpolate(TES3MACHINE& machine, const char* format, std::string &result)
+int interpolate(TES3MACHINE& machine, std::string const& format, std::string& result)
 {
 	int substitutions = 0;
-	int stringskip;
-	int precision;
+	int stringskip = 0;
+	int precision = 0;
 	long val = 0;
-	while (*format != '\0') {
-		if (*format != '%') { 		// not the magic format character
-			result += *format++;
+	std::string::const_iterator format_iter = format.begin();
+	while (format_iter != format.end()) {
+		if (*format_iter != '%') { 		// not the magic format character
+			result += *format_iter;
+			++format_iter;
 		}
 		else 	// format symbol seen but is really a format?
 		{
 			stringskip = 0;
 			precision = -1;
-			format++;
-			if (*format == '\0') {		// single trailing %, treat it as a flag
+			++format_iter;
+			if (format_iter == format.end()) {		// single trailing %, treat it as a flag
 				substitutions++;
 				substitutions = -substitutions;
 				break;
 			}
-			else if (*format == '%') { // double %, just print one
-				result += *format++;
+			else if (*format_iter == '%') { // double %, just print one
+				result += *format_iter;
+				++format_iter;
 				continue;
 			}
-			while (*format >= '0' && *format <= '9') { // first digits used for strings
-				stringskip = stringskip * 10 + *format - '0';
-				format++;
+			while (*format_iter >= '0' && *format_iter <= '9') { // first digits used for strings
+				stringskip = stringskip * 10 + *format_iter - '0';
+				++format_iter;
 			}
-			if ( *format == '.' ) {	// . with a number is for strings and floats
-				format++;
-				if (*format < '0' || *format > '9') { // no number, so treat it as a literal
+			if ( *format_iter == '.' ) {	// . with a number is for strings and floats
+				++format_iter;
+				if (*format_iter < '0' || *format_iter > '9') { // no number, so treat it as a literal
 					result += "%.";
 					continue;
 				}
-				precision = (*format++) - '0'; 	// two digits are more than enough
-				while (*format >= '0' && *format <= '9')
-					precision = precision * 10 + (*format++) - '0';
+				precision = (*format_iter) - '0'; 	// two digits are more than enough
+				++format_iter;
+				while (*format_iter >= '0' && *format_iter <= '9') {
+					precision = precision * 10 + (*format_iter) - '0';
+					++format_iter;
+				}
 			}
-			if (*format == 'N' || *format == 'n') {	// end of line/new line
-				format++;
+			if (*format_iter == 'N' || *format_iter == 'n') {	// end of line/new line
+				++format_iter;
 				substitutions++;
 				result += "\r\n";
 			}
-			else if (*format == 'Q' || *format == 'q') {	// the " quoting character
-				format++;
+			else if (*format_iter == 'Q' || *format_iter == 'q') {	// the " quoting character
+				++format_iter;
 				substitutions++;
 				result += '"';
 			}
-			else if (*format == 'L' || *format == 'l') {	// treat long variables as string segments
-				format++;
+			else if (*format_iter == 'L' || *format_iter == 'l') {	// treat long variables as string segments
+				++format_iter;
 				if (machine.pop(val)) {
 					substitutions++;
 					result.append(reinterpret_cast<char*>(&val), 4);
 				}
 			}
-			else if (*format == 'D' || *format == 'd') {	// short and long variables in decimal
-				format++;
+			else if (*format_iter == 'D' || *format_iter == 'd') {	// short and long variables in decimal
+				++format_iter;
 				if (machine.pop(val)) {
 					substitutions++;
 					char* convert;
-					alloc_sprintf(convert, "%d", val);
+					AllocSprintf(convert, "%d", val);
 					result += convert;
 					delete[] convert;
 				}
 			}
-			else if (*format == 'H' || *format == 'h') {	// short and long variables in hexadecimal
-				format++;
+			else if (*format_iter == 'H' || *format_iter == 'h') {	// short and long variables in hexadecimal
+				++format_iter;
 				if (machine.pop(val)) {
 					substitutions++;
 					char* convert;
-					alloc_sprintf(convert, "%x", val);
+					AllocSprintf(convert, "%x", val);
 					result += convert;
 					delete[] convert;
 				}
 			}
-			else if (*format == 'F' || *format == 'f') { // float variables
-				format++;
+			else if (*format_iter == 'F' || *format_iter == 'f') { // float variables
+				++format_iter;
 				if (machine.pop(val)) {
 					substitutions++;
 					float fval= *(float*)&val;
 					char* convert;
 					if (precision < 0) {
-						alloc_sprintf(convert, "%f", fval);
+						AllocSprintf(convert, "%f", fval);
 						result += convert;
 					}
 					else { 
-						alloc_sprintf(convert, "%.*f", precision, fval);
+						AllocSprintf(convert, "%.*f", precision, fval);
 						result += convert;
 					}
 					delete[] convert;
 				}
 			}
-			else if (*format == 'S' || *format == 's') {	// string variables
-				format++;
+			else if (*format_iter == 'S' || *format_iter == 's') {	// string variables
+				++format_iter;
 				if (machine.pop(val) && val) {
 					substitutions++;
 					const char* temp = machine.GetString((VPVOID)val);
