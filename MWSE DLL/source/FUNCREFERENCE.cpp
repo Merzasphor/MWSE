@@ -373,14 +373,17 @@ bool FUNCNEXTREF::execute(void)
 	if(getMachine().pop(pref))
 	{
 		VPREFERENCE ref= (VPREFERENCE)pref;
-		int i;
-		getMachine().ReadMem((VPVOID)&ref->next,&next,sizeof(next));
-		next = SkipRemovedRefs(getMachine(), next);
-		if (next == 0 && exteriors[0] != 0)
+		if (ref != 0)
 		{
-			next = exteriors[0];
-			for ( i=0; i<8; i++ )
-				exteriors[i] = exteriors[i+1];
+			int i;
+			getMachine().ReadMem((VPVOID)&ref->next,&next,sizeof(next));
+			next = SkipRemovedRefs(getMachine(), next);
+			if (next == 0 && exteriors[0] != 0)
+			{
+				next = exteriors[0];
+				for ( i=0; i<8; i++ )
+					exteriors[i] = exteriors[i+1];
+			}
 		}
 		result= getMachine().push((VMREGTYPE)next);
 	}
