@@ -1,23 +1,27 @@
-0.9.5-alpha.20151016
+0.9.5-alpha.20171006
 https://github.com/Merzasphor/MWSE
 
 This is a WIP modification to the Morrowind Script Extender, based on version 0.9.4a.
 There may be bugs. Proceed with caution!
 
-Updates since 0.9.5-alpha.20150902:
+Updates since 0.9.5-alpha.20151016:
 
-- xGetEnchant now works with scrolls.
-- Added functions to generate random numbers. (xRandomLong, xRandomFloat)
-- Updated internal interpolate() function to use std::strings instead of fixed 
-  character arrays. This removes the limits on string length for certain 
-  functions (xLogMessage, xStringBuild, xFileWriteText). xMessageFix also uses
-  interpolate(), but its string lenght limit is determined by the following
-  MessageBox.
-- Fixed a bug where xMessageFix ignored the trailing "%" flag (null 
-  terminator suppression) when updating button strings.
-- Upgraded boost to 1.59.0.  
+- xNextRef no longer crashes when passed a null reference. Now it returns a
+  a null reference and prints a message to the log instead.
 
-See "New Updates" for details.
+This is a very old bug that is also present in MWSE 0.9.4a. When passed a null
+reference, xNextRef would treat it as a valid memory address and return a 
+garbage reference. In 0.9.4a, a subsequent call to xNextRef using that 
+reference could cause a crash; repeating this process eventually would. Newer
+versions skip over references deleted by plugins, thus utilizing the garbage 
+reference immediately and greatly increasing the probability of an immediate 
+crash. 
+
+Best practice is still to check the return value of xNextRef and stop the list
+traversal when it equals zero. This has the side effect of avoiding this bug 
+altogether. However, there is at least one mod out there that doesn't perform 
+this check, causing random crashes for its users. A log message should also be 
+more helpful than a CTD when debugging list traversal logic. :-)
 
 !!! The following functions are deprecated and will be removed in the future: !!!
 xGetBase[skillname] - Replaced by xGetBaseSkill
@@ -77,17 +81,7 @@ modifying the program.
 
 -----New Updates-----
 
-Functions:
-
-xRandomFloat
-float rand_val xRandomFloat float min float max
-Generates a random floating point value from a uniform distribution over [min, max).
-Returns 0 if min > max.
-
-xRandomLong
-long rand_val xRandomLong long min long max
-Generates a random long integer value from a uniform distribution over [min, max].
-Returns 0 if min > max.
+No new functions.
 
 Actions: (taken from CS)
 Skill: 1, 2, 3, 4
@@ -339,6 +333,31 @@ Effect IDs:
 *******************************************************************************
 
 Previous updates:
+
+0.9.5-alpha.20151016
+
+- xGetEnchant now works with scrolls.
+- Added functions to generate random numbers. (xRandomLong, xRandomFloat)
+- Updated internal interpolate() function to use std::strings instead of fixed 
+  character arrays. This removes the limits on string length for certain 
+  functions (xLogMessage, xStringBuild, xFileWriteText). xMessageFix also uses
+  interpolate(), but its string length limit is determined by the following
+  MessageBox.
+- Fixed a bug where xMessageFix ignored the trailing "%" flag (null 
+  terminator suppression) when updating button strings.
+- Upgraded boost to 1.59.0.  
+
+Functions:
+
+xRandomFloat
+float rand_val xRandomFloat float min float max
+Generates a random floating point value from a uniform distribution over [min, max).
+Returns 0 if min > max.
+
+xRandomLong
+long rand_val xRandomLong long min long max
+Generates a random long integer value from a uniform distribution over [min, max].
+Returns 0 if min > max.
 
 0.9.5-alpha.20150902
 

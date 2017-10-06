@@ -1,8 +1,8 @@
 #include "Resource.h"
 
 1 VERSIONINFO
-FILEVERSION 0,9,5,1016
-PRODUCTVERSION 0,9,5,1016
+FILEVERSION 0,9,5,8983
+PRODUCTVERSION 0,9,5,8983
 FILEFLAGSMASK  0x3fL
 #ifdef _DEBUG
 FILEFLAGS 0x1L
@@ -16,9 +16,9 @@ BEGIN
 	BEGIN
 		BLOCK "040904B0"
 		BEGIN
-			VALUE "LegalCopyright", "Copyright (c) 2003-2015 MWSE Developers"
+			VALUE "LegalCopyright", "Copyright (c) 2003-2017 MWSE Developers"
 			VALUE "FileDescription", "MorrowindScriptExtender main dll"
-			VALUE "FileVersion", "0.9.5-alpha.20151016"
+			VALUE "FileVersion", "0.9.5-alpha.20171006"
 			VALUE "OriginalFilename", "Mwse.dll"
 		END
 	END
