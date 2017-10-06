@@ -385,6 +385,10 @@ bool FUNCNEXTREF::execute(void)
 					exteriors[i] = exteriors[i+1];
 			}
 		}
+		else
+		{
+			cLog::mLogMessage("xNextRef: null argument\n");
+		}
 		result= getMachine().push((VMREGTYPE)next);
 	}
 
