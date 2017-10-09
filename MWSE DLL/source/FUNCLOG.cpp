@@ -17,10 +17,10 @@ bool FUNCLOG::execute(void)
 	VMREGTYPE pFormat = 0;
 	if(machine.pop(pFormat) 
 		&& (format = machine.GetString((VPVOID)pFormat)) != 0) {
-		std::string new_string;
-		interpolate(machine, format, new_string);
-		new_string += '\n';
-		cLog::mLogMessage("%s", new_string.c_str());
+			bool suppress_null = false;
+			std::string new_string = interpolate(format, &machine, &suppress_null);
+			new_string += '\n';
+			cLog::mLogMessage("%s", new_string.c_str());
 	}
 	return result;
 }

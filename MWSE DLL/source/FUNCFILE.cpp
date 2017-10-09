@@ -282,11 +282,11 @@ bool FUNCFILEWRITETEXT::execute(void)
 		&& machine.pop(pstr)
 		&& (filename = machine.GetString((VPVOID)pfilename)) != 0
 		&& (str = machine.GetString((VPVOID)pstr)) != 0) {
-		std::string new_string;
-		bool suppress_null = interpolate(machine, str, new_string) < 0;
-		int len = new_string.length() + 1;
-		if (suppress_null) --len;
-		if (filesys.write(filename, new_string.c_str(), len)) result = true;
+			bool suppress_null = false;
+			std::string const new_string = interpolate(str, &machine, &suppress_null);
+			int len = new_string.length() + 1;
+			if (suppress_null) --len;
+			if (filesys.write(filename, new_string.c_str(), len)) result = true;
 	}
 	return result;
 }

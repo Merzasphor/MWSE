@@ -5,8 +5,23 @@
 
 #include <string>
 
-//int interpolate(TES3MACHINE& machine, const char* src, char *buffer, int &size);
-int interpolate(TES3MACHINE& machine, std::string const& format, std::string& result);
+// Returns a string with substitutions performed, similar to printf().
+// Recognized format codes (all codes are case insensitive):
+// %% = %
+// %n = \r\n
+// %q = "
+// %d = decimal integer
+// %h = hexadecimal integr
+// %f = floating point number - can specify precision: %.3f
+// %s = string - can skip leading character: %2.s - or only insert n
+//      characters: %.3s - or combine both: %2.3s
+// % at the end of the string indicates that the null terminator should not be
+// printed.
+// format - a string containing zero or more format codes and/or other text.
+// machine - read arguments for substitution from this machine.
+// suppress_null - set to true when null suppression flag is detected.
+std::string interpolate(std::string const& format, TES3MACHINE* machine,
+						bool* suppress_null);
 int secernate(const char* format, const char *string, VMREGTYPE* resultset, int resultmax);
 bool enumerate(const char *format, int& substitutions, bool& eolmode);
 

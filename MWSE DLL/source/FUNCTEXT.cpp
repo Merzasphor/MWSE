@@ -12,6 +12,8 @@
 
 #include <boost/regex.hpp>
 
+#include <iomanip>
+#include <sstream>
 #include <string>
 
 #ifndef ULONG
@@ -49,8 +51,8 @@ bool FUNCMESSAGEFIX::execute(void)
     if (!machine.pop(addr)) return false;
 	str = machine.GetString((VPVOID)addr);
 	if ( str && *str )	{ // can skip the substitution if the string is empty or nonexistant
-		std::string new_string;
-		bool suppress_null = interpolate(machine, str, new_string) < 0;
+		bool suppress_null = false;
+		std::string const new_string = interpolate(str, &machine, &suppress_null);
 		if (mboxhdr[1] < new_string.length()) {
 			len = mboxhdr[1];
 		}
@@ -78,8 +80,8 @@ bool FUNCMESSAGEFIX::execute(void)
         if (!machine.pop(addr)) return false;
         str = machine.GetString((VPVOID)addr);
 		if ( str && *str )	{ // can skip the substitution if the string is empty or nonexistant
-			std::string new_string;
-			bool suppress_null = interpolate(machine, str, new_string) < 0;
+			bool suppress_null = false;
+			std::string const new_string = interpolate(str, &machine, &suppress_null);
 			if (buttonlen < new_string.length()) {
 				len = buttonlen - 1;
 			}
@@ -288,8 +290,8 @@ bool FUNCSTRINGBUILD::execute(void)
 	VMREGTYPE pstr = 0;
 	const char* str;
 	if (machine.pop(pstr) && ((str = machine.GetString((VPVOID)pstr)) != 0)) {
-		std::string new_string;
-		interpolate(machine, str, new_string);
+		bool suppress_null = false;
+		std::string new_string = interpolate(str, &machine, &suppress_null);
 		if (new_string == "") {
 			new_string = "null";
 		}
@@ -349,138 +351,133 @@ bool FUNCSTRINGPARSE::execute(void)
 	return result;
 }
 
-
-int AllocSprintf(char*& string, char const* format, ...)
-{
-	va_list args;
-	va_start(args, format);
-	int size = -1;
-	if (format) {
-		size = _vscprintf(format, args);
-		string = new char[size+1];
-		vsprintf(string, format, args);
-	}
-	va_end(args);
-	return size;
-}	
-
-// ============================================================================================================
-
-// 2005-06-28  CDC  Process the string looking for % format instructions and perform any substitutions needed
-// 2005-07-12  CDC  Hexadecimal representation added and length results removed
-int interpolate(TES3MACHINE& machine, std::string const& format, std::string& result)
-{
-	int substitutions = 0;
-	int stringskip = 0;
-	int precision = 0;
-	long val = 0;
-	std::string::const_iterator format_iter = format.begin();
-	while (format_iter != format.end()) {
-		if (*format_iter != '%') { 		// not the magic format character
-			result += *format_iter;
-			++format_iter;
+std::string interpolate(std::string const& format, TES3MACHINE* machine, bool* suppress_null) {
+	*suppress_null = false;
+	size_t start = 0;
+	std::string result;
+	std::string current_format;
+	std::string number;
+	std::ostringstream convert;
+	while (start < format.length()) {
+		size_t end = format.find('%', start);
+		if (end == std::string::npos) {
+			result += format.substr(start);
+			break;
 		}
-		else 	// format symbol seen but is really a format?
-		{
-			stringskip = 0;
-			precision = -1;
-			++format_iter;
-			if (format_iter == format.end()) {		// single trailing %, treat it as a flag
-				substitutions++;
-				substitutions = -substitutions;
-				break;
-			}
-			else if (*format_iter == '%') { // double %, just print one
-				result += *format_iter;
-				++format_iter;
-				continue;
-			}
-			while (*format_iter >= '0' && *format_iter <= '9') { // first digits used for strings
-				stringskip = stringskip * 10 + *format_iter - '0';
-				++format_iter;
-			}
-			if ( *format_iter == '.' ) {	// . with a number is for strings and floats
-				++format_iter;
-				if (*format_iter < '0' || *format_iter > '9') { // no number, so treat it as a literal
-					result += "%.";
-					continue;
+		result += format.substr(start, end - start);
+		end++;
+		if (end == format.length()) { // single trailing %
+			*suppress_null = true;
+			break;
+		}
+		current_format = "%";
+		int string_skip = 0;
+		int precision = -1;
+		bool precision_set = false;
+		bool done = false;
+		while (!done) {
+			char current_char = tolower(format.at(end));
+			if (current_char == '%' && current_format == "%") {
+				result += current_char;
+				end++;
+				done = true;
+			} else if (std::isdigit(current_char)) {
+				number = current_char;
+				end++;
+				while (end < format.length()) {
+					current_char = format.at(end);
+					if (std::isdigit(current_char)) {
+						number += current_char;
+						end++;
+					} else {
+						break;
+					}
 				}
-				precision = (*format_iter) - '0'; 	// two digits are more than enough
-				++format_iter;
-				while (*format_iter >= '0' && *format_iter <= '9') {
-					precision = precision * 10 + (*format_iter) - '0';
-					++format_iter;
+				if (!current_format.empty() && 
+					current_format.at(current_format.length() - 1) == '.') {
+						precision = atoi(number.c_str());
+						precision_set = true;
+				} else {
+					string_skip = atoi(number.c_str());
 				}
-			}
-			if (*format_iter == 'N' || *format_iter == 'n') {	// end of line/new line
-				++format_iter;
-				substitutions++;
+				current_format += number;
+			} else if (current_char == '.') {
+				current_format += current_char;
+				end++;
+			} else if (current_char == 'n' && current_format == "%") {
 				result += "\r\n";
-			}
-			else if (*format_iter == 'Q' || *format_iter == 'q') {	// the " quoting character
-				++format_iter;
-				substitutions++;
+				end++;
+				done = true;
+			} else if (current_char == 'q' && current_format == "%") {
 				result += '"';
-			}
-			else if (*format_iter == 'L' || *format_iter == 'l') {	// treat long variables as string segments
-				++format_iter;
-				if (machine.pop(val)) {
-					substitutions++;
-					result.append(reinterpret_cast<char*>(&val), 4);
+				end++;
+				done = true;
+			} else if (current_char == 'l' && current_format == "%") {
+				long argument = 0;
+				if (machine->pop(argument)) {
+					result.append(reinterpret_cast<char*>(&argument), 4);
 				}
-			}
-			else if (*format_iter == 'D' || *format_iter == 'd') {	// short and long variables in decimal
-				++format_iter;
-				if (machine.pop(val)) {
-					substitutions++;
-					char* convert;
-					AllocSprintf(convert, "%d", val);
-					result += convert;
-					delete[] convert;
+				end++;
+				done = true;
+			} else if (current_char == 'd' && current_format == "%") {
+				long argument = 0;
+				if (machine->pop(argument)) {
+					convert.str("");
+					convert << std::dec << argument;
+					result += convert.str();
 				}
-			}
-			else if (*format_iter == 'H' || *format_iter == 'h') {	// short and long variables in hexadecimal
-				++format_iter;
-				if (machine.pop(val)) {
-					substitutions++;
-					char* convert;
-					AllocSprintf(convert, "%x", val);
-					result += convert;
-					delete[] convert;
+				end++;
+				done = true;
+			} else if (current_char == 'h' && current_format == "%") {
+				long argument = 0;
+				if (machine->pop(argument)) {
+					convert.str("");
+					convert << std::hex << argument;
+					result += convert.str();
 				}
-			}
-			else if (*format_iter == 'F' || *format_iter == 'f') { // float variables
-				++format_iter;
-				if (machine.pop(val)) {
-					substitutions++;
-					float fval= *(float*)&val;
-					char* convert;
-					if (precision < 0) {
-						AllocSprintf(convert, "%f", fval);
-						result += convert;
+				end++;
+				done = true;
+			} else if (current_char == 'f') {
+				if (string_skip == 0) {
+					float argument = 0;
+					if (machine->pop(argument)) {
+						convert.str("");
+						convert << std::fixed; 
+						if (precision_set) {
+							convert << std::setprecision(precision);
+						} else {
+							// 6 is the default precison of vsprintf
+							convert << std::setprecision(6);
+						}
+						convert << argument;
+						result += convert.str();
 					}
-					else { 
-						AllocSprintf(convert, "%.*f", precision, fval);
-						result += convert;
-					}
-					delete[] convert;
+				} else {
+					current_format += current_char;
 				}
-			}
-			else if (*format_iter == 'S' || *format_iter == 's') {	// string variables
-				++format_iter;
-				if (machine.pop(val) && val) {
-					substitutions++;
-					const char* temp = machine.GetString((VPVOID)val);
-					while ( *temp && stringskip-- ) temp++;	// skip some chars?
-					while ( *temp && precision-- ) result += *temp++;
+				end++;
+				done = true;
+			} else if (current_char == 's') {
+				long argument = 0;
+				if (machine->pop(argument) && argument != 0) {
+					std::string substitute(machine->GetString(
+						reinterpret_cast<unsigned char*>(argument)));
+					size_t substitute_start = 
+						min(string_skip, substitute.length());
+					result += substitute.substr(substitute_start, precision);
 				}
+				end++;
+				done = true;
+			} else {
+				done = true;
 			}
-			else {		// Not any of the magic characters, so treat it as a literal
-				result += '%';
+			if (end >= format.length()) {
+				done = true;
 			}
 		}
+		start = end;
 	}
-	return substitutions;
+	return result;
 }
 
 // Count how many results there should be based on the format string
