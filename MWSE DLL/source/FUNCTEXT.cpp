@@ -372,7 +372,7 @@ std::string interpolate(std::string const& format, TES3MACHINE* machine, bool* s
 		}
 		current_format = "%";
 		int string_skip = 0;
-		int precision = -1;
+		int precision = 0;
 		bool precision_set = false;
 		bool done = false;
 		while (!done) {
@@ -442,14 +442,10 @@ std::string interpolate(std::string const& format, TES3MACHINE* machine, bool* s
 					float argument = 0;
 					if (machine->pop(argument)) {
 						convert.str("");
-						convert << std::fixed; 
-						if (precision_set) {
-							convert << std::setprecision(precision);
-						} else {
-							// 6 is the default precison of vsprintf
-							convert << std::setprecision(6);
-						}
-						convert << argument;
+						// 6 = vsprintf default precision - mimic old version
+						if (!precision_set) precision = 6;
+						convert << std::fixed << std::setprecision(precision)
+							<< argument;
 						result += convert.str();
 					}
 				} else {
