@@ -18,7 +18,14 @@ bool FUNCLOG::execute(void)
 	if(machine.pop(pFormat) 
 		&& (format = machine.GetString((VPVOID)pFormat)) != 0) {
 			bool suppress_null = false;
-			std::string new_string = interpolate(format, &machine, &suppress_null);
+			std::string bad_codes;
+			std::string new_string = interpolate(format, &machine, &suppress_null,
+				&bad_codes);
+			if (bad_codes != "") {
+				cLog::mLogMessage(
+					"xLogMessage: bad format \"%s\" in \"%s\"\n",
+					bad_codes.c_str(), format);
+			}
 			new_string += '\n';
 			cLog::mLogMessage("%s", new_string.c_str());
 	}

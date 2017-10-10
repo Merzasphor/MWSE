@@ -52,7 +52,14 @@ bool FUNCMESSAGEFIX::execute(void)
 	str = machine.GetString((VPVOID)addr);
 	if ( str && *str )	{ // can skip the substitution if the string is empty or nonexistant
 		bool suppress_null = false;
-		std::string const new_string = interpolate(str, &machine, &suppress_null);
+		std::string bad_codes;
+		std::string const new_string = interpolate(str, &machine,
+			&suppress_null, &bad_codes);
+		if (bad_codes != "") {
+			cLog::mLogMessage(
+				"xMessageFix: bad format \"%s\" in \"%s\"\n",
+				bad_codes.c_str(), str);
+		}
 		if (mboxhdr[1] < new_string.length()) {
 			len = mboxhdr[1];
 		}
@@ -81,7 +88,14 @@ bool FUNCMESSAGEFIX::execute(void)
         str = machine.GetString((VPVOID)addr);
 		if ( str && *str )	{ // can skip the substitution if the string is empty or nonexistant
 			bool suppress_null = false;
-			std::string const new_string = interpolate(str, &machine, &suppress_null);
+			std::string bad_codes;
+			std::string const new_string = interpolate(str, &machine, &suppress_null,
+				&bad_codes);
+			if (bad_codes != "") {
+				cLog::mLogMessage(
+					"xMessageFix: bad format \"%s\" in \"%s\"\n",
+					bad_codes.c_str(), str);
+			}
 			if (buttonlen < new_string.length()) {
 				len = buttonlen - 1;
 			}
@@ -291,7 +305,14 @@ bool FUNCSTRINGBUILD::execute(void)
 	const char* str;
 	if (machine.pop(pstr) && ((str = machine.GetString((VPVOID)pstr)) != 0)) {
 		bool suppress_null = false;
-		std::string new_string = interpolate(str, &machine, &suppress_null);
+		std::string bad_codes;
+		std::string new_string = interpolate(str, &machine, &suppress_null,
+			&bad_codes);
+		if (bad_codes != "") {
+			cLog::mLogMessage(
+				"xStringBuild: bad format \"%s\" in \"%s\"\n",
+				bad_codes.c_str(), str);
+		}
 		if (new_string == "") {
 			new_string = "null";
 		}
@@ -351,11 +372,13 @@ bool FUNCSTRINGPARSE::execute(void)
 	return result;
 }
 
-std::string interpolate(std::string const& format, TES3MACHINE* machine, bool* suppress_null) {
+std::string interpolate(std::string const& format, TES3MACHINE* machine,
+						bool* suppress_null, std::string* bad_codes) {
 	*suppress_null = false;
+	*bad_codes = "";
 	size_t start = 0;
 	std::string result;
-	std::string current_format;
+	std::string current_code;
 	std::string number;
 	std::ostringstream convert;
 	while (start < format.length()) {
@@ -370,16 +393,20 @@ std::string interpolate(std::string const& format, TES3MACHINE* machine, bool* s
 			*suppress_null = true;
 			break;
 		}
-		current_format = "%";
-		int string_skip = 0;
+		current_code = "%";
+		int skip = 0;
+		bool skip_set = false;
 		int precision = 0;
 		bool precision_set = false;
 		bool done = false;
+		bool parse_success = false;
 		while (!done) {
 			char current_char = tolower(format.at(end));
-			if (current_char == '%' && current_format == "%") {
+			current_code += current_char;
+			if (current_code == "%%") {
 				result += current_char;
 				end++;
+				parse_success = true;
 				done = true;
 			} else if (std::isdigit(current_char)) {
 				number = current_char;
@@ -388,38 +415,41 @@ std::string interpolate(std::string const& format, TES3MACHINE* machine, bool* s
 					current_char = format.at(end);
 					if (std::isdigit(current_char)) {
 						number += current_char;
+						current_code += current_char;
 						end++;
 					} else {
 						break;
 					}
 				}
-				if (!current_format.empty() && 
-					current_format.at(current_format.length() - 1) == '.') {
+				if (!current_code.empty() && 
+					current_code.at(current_code.length() - 1) == '.') {
 						precision = atoi(number.c_str());
 						precision_set = true;
 				} else {
-					string_skip = atoi(number.c_str());
+					skip = atoi(number.c_str());
+					skip_set = true;
 				}
-				current_format += number;
 			} else if (current_char == '.') {
-				current_format += current_char;
 				end++;
-			} else if (current_char == 'n' && current_format == "%") {
+			} else if (current_code == "%n") {
 				result += "\r\n";
 				end++;
+				parse_success = true;
 				done = true;
-			} else if (current_char == 'q' && current_format == "%") {
+			} else if (current_code == "%q") {
 				result += '"';
 				end++;
+				parse_success = true;
 				done = true;
-			} else if (current_char == 'l' && current_format == "%") {
+			} else if (current_code == "%l") {
 				long argument = 0;
 				if (machine->pop(argument)) {
 					result.append(reinterpret_cast<char*>(&argument), 4);
 				}
 				end++;
+				parse_success = true;
 				done = true;
-			} else if (current_char == 'd' && current_format == "%") {
+			} else if (current_code == "%d") {
 				long argument = 0;
 				if (machine->pop(argument)) {
 					convert.str("");
@@ -427,8 +457,9 @@ std::string interpolate(std::string const& format, TES3MACHINE* machine, bool* s
 					result += convert.str();
 				}
 				end++;
+				parse_success = true;
 				done = true;
-			} else if (current_char == 'h' && current_format == "%") {
+			} else if (current_code == "%h") {
 				long argument = 0;
 				if (machine->pop(argument)) {
 					convert.str("");
@@ -436,9 +467,10 @@ std::string interpolate(std::string const& format, TES3MACHINE* machine, bool* s
 					result += convert.str();
 				}
 				end++;
+				parse_success = true;
 				done = true;
 			} else if (current_char == 'f') {
-				if (string_skip == 0) {
+				if (!skip_set) {
 					float argument = 0;
 					if (machine->pop(argument)) {
 						convert.str("");
@@ -448,27 +480,32 @@ std::string interpolate(std::string const& format, TES3MACHINE* machine, bool* s
 							<< argument;
 						result += convert.str();
 					}
-				} else {
-					current_format += current_char;
+					parse_success = true;
 				}
-				end++;
 				done = true;
+				end++;
 			} else if (current_char == 's') {
 				long argument = 0;
 				if (machine->pop(argument) && argument != 0) {
-					std::string substitute(machine->GetString(
+					std::string const substitute(machine->GetString(
 						reinterpret_cast<unsigned char*>(argument)));
-					size_t substitute_start = 
-						min(string_skip, substitute.length());
+					size_t substitute_start = min(skip, substitute.length());
+					if (!precision_set) precision = substitute.length();
 					result += substitute.substr(substitute_start, precision);
 				}
 				end++;
+				parse_success = true;
 				done = true;
 			} else {
+				end++;
 				done = true;
 			}
-			if (end >= format.length()) {
+			if (!done && end >= format.length()) {
 				done = true;
+			}
+			if (done && !parse_success) {
+				if (*bad_codes != "") *bad_codes += " ";
+				*bad_codes += current_code;
 			}
 		}
 		start = end;

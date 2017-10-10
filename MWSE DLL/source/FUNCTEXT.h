@@ -21,7 +21,7 @@
 // machine - read arguments for substitution from this machine.
 // suppress_null - set to true when null suppression flag is detected.
 std::string interpolate(std::string const& format, TES3MACHINE* machine,
-						bool* suppress_null);
+						bool* suppress_null, std::string* bad_codes);
 int secernate(const char* format, const char *string, VMREGTYPE* resultset, int resultmax);
 bool enumerate(const char *format, int& substitutions, bool& eolmode);
 

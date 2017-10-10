@@ -6,6 +6,7 @@
 #include "FUNCTEXT.h"
 // 22-08-2006 Tp21
 #include "warnings.h"
+#include "cLog.h"
 
 #include <string>
 
@@ -283,7 +284,14 @@ bool FUNCFILEWRITETEXT::execute(void)
 		&& (filename = machine.GetString((VPVOID)pfilename)) != 0
 		&& (str = machine.GetString((VPVOID)pstr)) != 0) {
 			bool suppress_null = false;
-			std::string const new_string = interpolate(str, &machine, &suppress_null);
+			std::string bad_codes;
+			std::string const new_string = interpolate(str, &machine, &suppress_null,
+				&bad_codes);
+			if (bad_codes != "") {
+				cLog::mLogMessage(
+					"xFileWriteText: bad format \"%s\" in \"%s\"\n",
+					bad_codes.c_str(), str);
+			}
 			int len = new_string.length() + 1;
 			if (suppress_null) --len;
 			if (filesys.write(filename, new_string.c_str(), len)) result = true;
