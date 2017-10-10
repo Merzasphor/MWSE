@@ -407,7 +407,6 @@ std::string interpolate(std::string const& format, TES3MACHINE* machine,
 				result += current_char;
 				end++;
 				parse_success = true;
-				done = true;
 			} else if (std::isdigit(current_char)) {
 				number = current_char;
 				end++;
@@ -435,12 +434,10 @@ std::string interpolate(std::string const& format, TES3MACHINE* machine,
 				result += "\r\n";
 				end++;
 				parse_success = true;
-				done = true;
 			} else if (current_code == "%q") {
 				result += '"';
 				end++;
 				parse_success = true;
-				done = true;
 			} else if (current_code == "%l") {
 				long argument = 0;
 				if (machine->pop(argument)) {
@@ -448,7 +445,6 @@ std::string interpolate(std::string const& format, TES3MACHINE* machine,
 				}
 				end++;
 				parse_success = true;
-				done = true;
 			} else if (current_code == "%d") {
 				long argument = 0;
 				if (machine->pop(argument)) {
@@ -458,7 +454,6 @@ std::string interpolate(std::string const& format, TES3MACHINE* machine,
 				}
 				end++;
 				parse_success = true;
-				done = true;
 			} else if (current_code == "%h") {
 				long argument = 0;
 				if (machine->pop(argument)) {
@@ -468,7 +463,6 @@ std::string interpolate(std::string const& format, TES3MACHINE* machine,
 				}
 				end++;
 				parse_success = true;
-				done = true;
 			} else if (current_char == 'f') {
 				if (!skip_set) {
 					float argument = 0;
@@ -495,14 +489,11 @@ std::string interpolate(std::string const& format, TES3MACHINE* machine,
 				}
 				end++;
 				parse_success = true;
-				done = true;
 			} else {
 				end++;
 				done = true;
 			}
-			if (!done && end >= format.length()) {
-				done = true;
-			}
+			if (parse_success || end >= format.length()) done = true;
 			if (done && !parse_success) {
 				if (*bad_codes != "") *bad_codes += " ";
 				*bad_codes += current_code;
