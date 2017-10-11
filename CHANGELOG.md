@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+- New function to get maximum and current (modified) encumbrance:
+  xGetEncumbrance.
+
 ### Changed
 - xMessageFix, xStringBuild, xLogMessage, xFileWriteText print a message to the
   log when invalid format codes are encountered. The log message contains the
