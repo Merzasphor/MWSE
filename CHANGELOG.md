@@ -3,6 +3,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+
+### Changed
+- xMessageFix, xStringBuild, xLogMessage, xFileWriteText print a message to the
+  log when invalid format codes are encountered. The log message contains the
+  invalid codes, the original format string, and the resulting string.
+
+### Fixed
+- Better handling of invalid format codes in xMessageFix, xStringBuild,
+  xLogMessage, xFileWriteText. All invalid codes are removed in the resulting
+  string, preventing them from propagating to MessageBox via xMessageFix and
+  potentially causing a crash.
+
 ## [0.9.5-alpha.20171006] - 2017-10-06
 
 ### Fixed
@@ -299,6 +312,7 @@ New logging methods available, Up to the rest of the team to use them or not
 - Added Resource information to both DLL and loader, added icon to loader
 - removed the Memlook function, that doesn't work now it doesn't has an interactive console available. and nobody used it anyway because it's an debug function
 
+[Unreleased]: https://github.com/Merzasphor/MWSE/compare/v0.9.5-alpha.20171006...HEAD
 [0.9.5-alpha.20171006]: https://github.com/Merzasphor/MWSE/compare/v0.9.5-alpha.201501016...v0.9.5-alpha.20171006
 [0.9.5-alpha.20151016]: https://github.com/Merzasphor/MWSE/compare/v0.9.5-alpha.20150902...v0.9.5-alpha.201501016
 [0.9.5-alpha.20150902]: https://github.com/Merzasphor/MWSE/compare/v0.9.5-alpha.20150829...v0.9.5-alpha.20150902
