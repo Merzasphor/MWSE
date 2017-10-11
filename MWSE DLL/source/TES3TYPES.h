@@ -1057,7 +1057,7 @@ struct MACPRecord
 	Statistic attributes[8]; // 596
 	Statistic health; // 692
 	Statistic magicka; // 704
-	Statistic weight_limit; // 716
+	Statistic weight_limit; // 716 // base = max
 	Statistic fatigue; // 728 // fatigue has a different vtable pointer than the other Statistic objects.
 	Statistic unknown_statistic; // 740
 	int unknown4[34]; // 752

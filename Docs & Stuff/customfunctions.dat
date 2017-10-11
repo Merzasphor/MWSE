@@ -1681,6 +1681,15 @@ function
 	Opcode = 0x3956
 end
 
+function
+	Name = XGetEncumbrance
+	Options = MWSE | AllowGlobal | AllowVar
+	Return = Float
+	Param1 = Short
+	Opcode = 0x3957
+end
+
+
 
 # MGE extensions
 function

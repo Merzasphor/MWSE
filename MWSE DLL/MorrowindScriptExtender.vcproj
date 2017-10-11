@@ -355,6 +355,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\GetEncumbranceFunction.h"
+					>
+				</File>
+				<File
 					RelativePath=".\source\GetGsStringFunction.h"
 					>
 				</File>
@@ -574,6 +578,10 @@
 				</File>
 				<File
 					RelativePath=".\source\GetBaseAttributeFunction.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\GetEncumbranceFunction.cpp"
 					>
 				</File>
 				<File
