@@ -285,12 +285,12 @@ bool FUNCFILEWRITETEXT::execute(void)
 		&& (str = machine.GetString((VPVOID)pstr)) != 0) {
 			bool suppress_null = false;
 			std::string bad_codes;
-			std::string const new_string = interpolate(str, &machine, &suppress_null,
-				&bad_codes);
+			std::string const new_string = interpolate(str, &machine,
+				&suppress_null,	&bad_codes);
 			if (bad_codes != "") {
 				cLog::mLogMessage(
-					"xFileWriteText: bad format \"%s\" in \"%s\"\n",
-					bad_codes.c_str(), str);
+					"xFileWriteText: bad format \"%s\" in \"%s\" generating \"%s\"\n",
+					bad_codes.c_str(), str, new_string.c_str());
 			}
 			int len = new_string.length() + 1;
 			if (suppress_null) --len;

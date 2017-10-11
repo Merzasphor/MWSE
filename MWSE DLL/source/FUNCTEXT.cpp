@@ -57,8 +57,8 @@ bool FUNCMESSAGEFIX::execute(void)
 			&suppress_null, &bad_codes);
 		if (bad_codes != "") {
 			cLog::mLogMessage(
-				"xMessageFix: bad format \"%s\" in \"%s\"\n",
-				bad_codes.c_str(), str);
+				"xMessageFix: bad format \"%s\" in \"%s\" generating \"%s\"\n",
+				bad_codes.c_str(), str, new_string.c_str());
 		}
 		if (mboxhdr[1] < new_string.length()) {
 			len = mboxhdr[1];
@@ -89,12 +89,12 @@ bool FUNCMESSAGEFIX::execute(void)
 		if ( str && *str )	{ // can skip the substitution if the string is empty or nonexistant
 			bool suppress_null = false;
 			std::string bad_codes;
-			std::string const new_string = interpolate(str, &machine, &suppress_null,
-				&bad_codes);
+			std::string const new_string = interpolate(str, &machine,
+				&suppress_null, &bad_codes);
 			if (bad_codes != "") {
 				cLog::mLogMessage(
-					"xMessageFix: bad format \"%s\" in \"%s\"\n",
-					bad_codes.c_str(), str);
+					"xMessageFix: bad format \"%s\" in \"%s\" generating \"%s\"\n",
+					bad_codes.c_str(), str, new_string.c_str());
 			}
 			if (buttonlen < new_string.length()) {
 				len = buttonlen - 1;
@@ -310,8 +310,8 @@ bool FUNCSTRINGBUILD::execute(void)
 			&bad_codes);
 		if (bad_codes != "") {
 			cLog::mLogMessage(
-				"xStringBuild: bad format \"%s\" in \"%s\"\n",
-				bad_codes.c_str(), str);
+				"xStringBuild: bad format \"%s\" in \"%s\" generating \"%s\"\n",
+				bad_codes.c_str(), str, new_string.c_str());
 		}
 		if (new_string == "") {
 			new_string = "null";
@@ -490,8 +490,11 @@ std::string interpolate(std::string const& format, TES3MACHINE* machine,
 				end++;
 				parse_success = true;
 			} else {
-				end++;
 				done = true;
+				if (std::isspace(current_char))
+					current_code.erase(--current_code.end());
+				else
+					end++;
 			}
 			if (parse_success || end >= format.length()) done = true;
 			if (done && !parse_success) {
