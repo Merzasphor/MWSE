@@ -1053,7 +1053,10 @@ struct MACPRecord
 	TES3REFERENCE* reference;							//20
 	int unknown2[53];						//24
 	MACPRecord * combatTarget; // unverified // 236
-	int unknown3[89]; // 240
+	int unknown3[55]; // 240
+	long num_active_spells; // 460 // number of active spells / effects
+	MACPRecord* self; // 464 // pointer back to this record?
+	int unknown[32];  // 468
 	Statistic attributes[8]; // 596
 	Statistic health; // 692
 	Statistic magicka; // 704
