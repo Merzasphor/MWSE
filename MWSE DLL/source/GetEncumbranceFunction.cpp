@@ -17,7 +17,7 @@ bool GetEncumbranceFunction::execute(void)
 	unsigned long record_type;
 	VPVOID reference, temp;
 	if (GetTargetData(machine, &reference, &temp, &record_type) 
-		&& record_type == NPC) {
+		&& (record_type == NPC || record_type == CREATURE)) {
 		MACPRecord* macp = 
 			reinterpret_cast<MACPRecord*>(GetAttachPointer(
 			machine, reference, MACHNODE));
