@@ -13,7 +13,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - xMessageFix, xStringBuild, xLogMessage, xFileWriteText print a message to the
   log when invalid format codes are encountered. The log message contains the
   invalid codes, the original format string, and the resulting string.
-- xGetMagic now works with NPC and creature references.
+- xGetMagic now works with NPC and creature references, in addition to the
+  player.
+- xGetMaxHealth now works with creature references, in addition to the player
+  and NPCs.
 
 ### Fixed
 - Better handling of invalid format codes in xMessageFix, xStringBuild,
