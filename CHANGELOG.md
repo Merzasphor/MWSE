@@ -15,8 +15,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
   invalid codes, the original format string, and the resulting string.
 - xGetMagic now works with NPC and creature references, in addition to the
   player.
-- xGetMaxHealth now works with creature references, in addition to the player
-  and NPCs.
+- xGetMaxHealth, xGetSkill now work with creature references, in addition to
+  the player and NPCs.
 
 ### Fixed
 - Better handling of invalid format codes in xMessageFix, xStringBuild,
