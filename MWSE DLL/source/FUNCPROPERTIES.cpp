@@ -175,30 +175,36 @@ bool FUNCGETBASEEFFECTINFO::execute(void)
 
 bool FUNCGETMAGIC::execute(void)
 {
-	VMLONG id = 0;
-	VMLONG type = 0;
-	MACPRecord* macp = machine.GetMacpRecord();
-	
-	if (macp)
-	{
-		BaseRecord const * const rec = static_cast<BaseRecord const * const>(macp->currentSpell);
-		if (rec)
-		{
-			type = rec->recordType;
-			if (type == SPELL)
-			{
-				SPELRecord const * const spell = reinterpret_cast<SPELRecord const * const>(rec);
-				id = reinterpret_cast<VMLONG>(strings.add(spell->id));
-			}
-			else if (type == ENCHANTMENT)
-			{
-				ENCHRecord const * const enchantment = reinterpret_cast<ENCHRecord const * const>(rec);
-				id = reinterpret_cast<VMLONG>(strings.add(enchantment->id));
+	VMLONG magic_id = 0;
+	VMLONG magic_type = 0;
+	unsigned long record_type;
+	VPVOID reference, temp;
+	if (GetTargetData(machine, &reference, &temp, &record_type) &&
+		(record_type == NPC || record_type == CREATURE)) {
+		MACPRecord const* const macp =
+			reinterpret_cast<MACPRecord*>(GetAttachPointer(
+			machine, reference, MACHNODE));
+		if (macp != NULL) {
+			BaseRecord const* const record =
+				static_cast<BaseRecord const* const>(macp->currentSpell);
+			if (record != NULL) {
+				magic_type = record->recordType;
+				if (magic_type == SPELL) {
+					SPELRecord const* const spell =
+						reinterpret_cast<SPELRecord const * const>(record);
+					magic_id =
+						reinterpret_cast<VMLONG>(strings.add(spell->id));
+				}
+				else if (magic_type == ENCHANTMENT) {
+					ENCHRecord const* const enchantment =
+						reinterpret_cast<ENCHRecord const * const>(record);
+					magic_id =
+						reinterpret_cast<VMLONG>(strings.add(enchantment->id));
+				}
 			}
 		}
 	}
-
-	return (machine.push(id) && machine.push(type));
+	return (machine.push(magic_id) && machine.push(magic_type));
 }
 
 bool FUNCGETPROGRESSSKILL::execute(void)
