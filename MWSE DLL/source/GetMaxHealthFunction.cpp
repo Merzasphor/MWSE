@@ -11,7 +11,7 @@ bool GetMaxHealthFunction::execute(void)
 	VPVOID reference, temp;
 	if (GetTargetData(machine, &reference, &temp, &record_type) &&
 		(record_type == NPC || record_type == CREATURE)) {
-		MACPRecord* macp = 
+		MACPRecord const* const macp =
 			reinterpret_cast<MACPRecord*>(GetAttachPointer(
 			machine, reference, MACHNODE));
 		if (macp != NULL) health = macp->health.base;
