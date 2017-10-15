@@ -606,7 +606,10 @@ struct RecordLists
 	unsigned long unknown1; // 
 	unsigned long unknown2; // always 0 ???
 	void * unknown3; // points to info about the last loaded save
-	LinkedList * enchantmentsList; // also contains statics, maybe other stuff too
+	// list contains the following types: CREA, REPA, APPA, PROB, MISC, LEVC,
+	// ALCH, ENCH, LIGH, ACTI, LEVI, LOCK, BOOK, AMMO, ARMO, WEAP, INGR, DOOR,
+	// STAT, CONT, CLOT, BODY, NPC_
+	LinkedList * list;
 	LinkedList * spellsList;
 	void * unknown4;
 	GMSTRecord ** GMSTs; // pointer to array of GMST pointers

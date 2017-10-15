@@ -2467,7 +2467,7 @@ static ENCHRecord * GetEnchantmentRecord(VMLONG const enchId, TES3MACHINE & mach
 	{
 		char const * idString = machine.GetString(reinterpret_cast<VPVOID>(enchId));
 		TES3CELLMASTER* cellMaster = *(reinterpret_cast<TES3CELLMASTER**>reltolinear(MASTERCELL_IMAGE));
-		ench = reinterpret_cast<ENCHRecord*>(cellMaster->recordLists->enchantmentsList->head);
+		ench = reinterpret_cast<ENCHRecord*>(cellMaster->recordLists->list->head);
 		// this list contains records that are not enchantments, so check the type
 		while (ench != 0 && !(ench->recordType == ENCHANTMENT && strcmp(idString, ench->id) == 0))
 		{
