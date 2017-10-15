@@ -11,7 +11,7 @@ bool ModAttributeFunction::execute(void)
 	float value;
 	unsigned long type;
 	VPVOID refr, temp;
-	if (GetTargetData(machine, &refr, &temp, &type) && type == NPC) {
+	if (GetTargetData(machine, &refr, &temp, &type) && (type == NPC || type == CREATURE)) {
 		MACPRecord* macp =
 			reinterpret_cast<MACPRecord*>(GetAttachPointer(machine, refr, MACHNODE));
 		if (macp && machine.pop(attribute_index) && machine.pop(value)
