@@ -89,19 +89,19 @@ typedef TES3STACK* VPSTACK;
 
 struct TES3REFERENCE
 {
-	VPVOID vtable;
-	DWORD type;	// "REFR"
-	DWORD flags;
-	BYTE	unknown[0x18 - sizeof(VPVOID) - 2 * sizeof(DWORD)];
-	TES3REFERENCE* nextofsametempl;
-	TES3REFERENCE* prev;
-	TES3REFERENCE* next;
-	BYTE	unknown2[0x28-0x18-3*sizeof(TES3REFERENCE*)];
-	VPTEMPLATE templ;
-	BYTE	unknown3[0x38-0x28-sizeof(VPTEMPLATE)];
-	FLOAT	x,y,z;
-	VPLISTNODE attachments;
-	BYTE unknown4[0x60-0x38-3*sizeof(FLOAT)-sizeof(VPLISTNODE)];
+	VPVOID vtable; // 0
+	DWORD type;	// "REFR" // 4
+	DWORD flags; // 8
+	BYTE	unknown[0x18 - sizeof(VPVOID) - 2 * sizeof(DWORD)]; // 12
+	TES3REFERENCE* nextofsametempl; // 24
+	TES3REFERENCE* prev; // 28
+	TES3REFERENCE* next; // 32
+	BYTE	unknown2[0x28-0x18-3*sizeof(TES3REFERENCE*)]; // 36
+	VPTEMPLATE templ; // 40
+	BYTE	unknown3[0x38-0x28-sizeof(VPTEMPLATE)]; // 44
+	FLOAT	x,y,z; // 56
+	VPLISTNODE attachments; // 68
+	BYTE unknown4[0x60-0x38-3*sizeof(FLOAT)-sizeof(VPLISTNODE)]; // 72
 };
 typedef TES3REFERENCE* VPREFERENCE;
 
@@ -707,6 +707,30 @@ struct SPELRecord
 	long flags;	//1=AUTOCALC, 2=PCSTART, 4=ALWAYSSUCCEEDS
 };
 
+struct SPLLRecord // total length 20*16 bytes
+{
+	struct Array
+	{
+		void* v_table;
+		unsigned long count; // number of non-null pointers in array?
+		unsigned long array_length;
+		void* array_pointer; // pointer to array of array_length pointers
+	};
+	void* v_table;
+	RecordTypes record_type; // SPLL
+	long unknown1[5];
+	Array arrays[8];
+	long unknown3;
+	SPELRecord* spell;
+	long unknown4;
+	long unknown5; // nth active effect? in cell?
+	long unknown6[3];
+	TES3REFERENCE* reference;
+	unsigned long flag; //??? 5 = active 6 = ready to remove 7 = removed?
+	long unknown7[9];
+	char id[32]; // SPELRecord.id
+};
+
 struct ALCHRecord
 {
 	void * vTable;
@@ -1047,14 +1071,27 @@ struct MACPRecord
 		float base;
 		float current;
 	};
+	struct ActiveEffect
+	{
+		ActiveEffect* next;
+		ActiveEffect* previous;
+		unsigned long index; //??? might be index into an array of spells/effects
+		unsigned short flags; //??? 0x0 for spells 0x68 for potions?
+		unsigned short effect_type;
+		unsigned short detrimental; // 1 = yes, 0 = no
+		unsigned short duration; // seconds
+		unsigned short magnitude;
+		unsigned short attribute_skill; // 255 if N/A
+	};
 	void * vTable; // 0
 	RecordTypes recordType; // "MACP" // 4
 	int unknown1[3];										//8
 	TES3REFERENCE* reference;							//20
 	int unknown2[53];						//24
 	MACPRecord * combatTarget; // unverified // 236
-	int unknown3[55]; // 240
-	long num_active_spells; // 460 // number of active spells / effects
+	int unknown3[54]; // 240
+	ActiveEffect* active_effects; // 454
+	long num_active_effects; // 460 // number of active spells / effects
 	MACPRecord* self; // 464 // pointer back to this record?
 	int unknown[32];  // 468
 	Statistic attributes[8]; // 596
@@ -1065,11 +1102,13 @@ struct MACPRecord
 	Statistic unknown_statistic; // 740
 	int unknown4[34]; // 752
 	void * currentSpell; // 888 
-	int unknown5[13]; // 892
+	int unknown5[3]; // 892
+	void* current_weapon; // 904
+	int unknown6[9]; // 908
 	Skill skills[27]; // 944
-	int unknown6[34];  // 1376
+	int unknown7[34];  // 1376
 	long levelProgress; // 1512
-	int unknown7[2];  // 1516
+	int unknown8[2];  // 1516
 	float skillProgress[27]; // 1524
 };
 
