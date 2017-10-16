@@ -603,6 +603,16 @@ struct MGEFRecord
 
 struct RecordLists
 {
+	struct UnknownStruct
+	{
+		void* v_table;
+		unsigned long unknown1;
+		void* unknown2;
+		void* unknown3;
+		void* unknown4;
+		unsigned long unknown5[6];
+		void* unknown6;
+	};
 	unsigned long unknown1; // 
 	unsigned long unknown2; // always 0 ???
 	void * unknown3; // points to info about the last loaded save
@@ -613,7 +623,7 @@ struct RecordLists
 	LinkedList * spellsList;
 	void * unknown4;
 	GMSTRecord ** GMSTs; // pointer to array of GMST pointers
-	void * unknown5[12];
+	UnknownStruct* unknown5[12];
 	SKILRecord skills[27];
 	MGEFRecord magic_effects[143];
 };
