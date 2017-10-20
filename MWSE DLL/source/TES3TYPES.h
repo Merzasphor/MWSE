@@ -722,17 +722,25 @@ struct SPELRecord
 
 struct SPLLRecord // total length 20*16 bytes?
 {
-	struct Array
+	struct ActiveSpell
+	{
+		char* id; // "PlayerSaveGame" if player.
+		TES3REFERENCE* reference;
+		float statistic; // Magicka Resistance if applicable
+		unsigned long magnitude;
+		float time_elapsed; //???
+	};
+	struct Effect
 	{
 		void* v_table;
-		unsigned long count; // number of non-null pointers in array?
-		unsigned long array_length;
-		void* array_pointer; // pointer to array of array_length pointers
+		unsigned long in_use; // number of non-null pointers in array?
+		unsigned long size;
+		ActiveSpell** active_spells; // pointer to array of size pointers
 	};
 	void* v_table;
 	RecordTypes record_type; // SPLL
 	long unknown1[5];
-	Array arrays[8];
+	Effect effects[8]; // index corresponds to nth effect of spell
 	long unknown3;
 	SPELRecord* spell;
 	long unknown4;
@@ -1249,8 +1257,6 @@ struct TES3CELLMASTER
 };
 typedef TES3CELLMASTER* VPCELLMASTER;
 
-// Reading the pointer at 0x7c7c8c and adding 0x30 bytes to it, then
-// dereferencing, seems to be a reliable way to access these nodes.
 struct SPLLNode
 {
 	SPLLNode* first; //??? some kind of tree?
