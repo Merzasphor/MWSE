@@ -648,7 +648,7 @@ struct Effect
 	short effectId;
 	char  skillId;
 	char  AttributeId;
-	long  RangeType;		//0=SELF, 1=TOUCH, 2=TARGET
+	long  RangeType; // see RangeTypes enum
 	long  Area;
 	long  Duration;
 	long  MagMin;
@@ -712,7 +712,7 @@ struct SPELRecord
 	int unknown4;
 	char * id;
 	char * friendlyName;
-	short type; //0=SPELL, 1=ABILITY, 2=BLIGHT, 3=DISEASE, 4=CURSE, 5=POWER
+	short type; // see SpellTypes enum
 	unsigned short cost;
 
 	Effect effects[8];
@@ -720,7 +720,7 @@ struct SPELRecord
 	long flags;	//1=AUTOCALC, 2=PCSTART, 4=ALWAYSSUCCEEDS
 };
 
-struct SPLLRecord // total length 20*16 bytes
+struct SPLLRecord // total length 20*16 bytes?
 {
 	struct Array
 	{
@@ -917,15 +917,15 @@ struct NPCCopyRecord
 	RecordTypes recordType;
 	int unknown1; //int RecordSize; ?
 	int unknown2; //char * modNamePtr; ?
-	int unknown3;
-	int unknown4;
+	void * unknown3; //??? appears to point to object containing animation info
+	void * unknown4; //??? appears to point to records list
 	void * reference;
 	void * prevRecord;
 	void * nextRecord;
 	int unknown5;
 	int unknown6;
-	char * IDStringPtr;
-	int unknown7;
+	char * IDStringPtr; // "PlayerSaveGame" if this is the player's record.
+	void * unknown7; //??? Pointer to pointer of string representing animation file.
 	int unknown8;
 	int unknown9;
 	int unknown10;
@@ -1069,6 +1069,37 @@ struct WEAPRecord
 	ENCHRecord * enchantment;
 };
 
+// Effects tracked in effect_attributes
+// From https://wiki.openmw.org/index.php?title=Research:Magic
+// Index 	Name 	Provides resistance against magic effects
+// 0 	Fortify Attack
+// 1 	Sanctuary 	Disintegrate *
+// 2 	Resist Magicka 	Drain *, Damage *, Absorb *, Weakness to *, Burden, Charm, Silence, Blind, Sound, Calm, Frenzy, Demoralize, Rally, Turn Undead
+// 3 	Resist Fire 	Fire
+// 4 	Resist Frost 	Frost
+// 5 	Resist Shock 	Shock
+// 6 	Resist Common Disease 	Vampirism
+// 7 	Resist Blight Disease
+// 8 	Resist Corprus 	Corprus
+// 9 	Resist Poison 	Poison
+// 10 	Resist Paralysis 	Paralysis
+// 11 	Chameleon
+// 12 	Resist Normal Weapons
+// 13 	Water Breathing
+// 14 	Water Walking
+// 15 	Swift Swim
+// 16 	Jump
+// 17 	Levitate
+// 18 	Shield
+// 19 	Sound
+// 20 	Silence
+// 21 	Blind
+// 22 	Paralyze
+// 23 	Invisibility
+// 24 	Fight
+// 25 	Flee
+// 26 	Hello
+// 27 	Alarm
 struct MACPRecord
 {
 	struct Skill
@@ -1088,13 +1119,13 @@ struct MACPRecord
 	{
 		ActiveEffect* next;
 		ActiveEffect* previous;
-		unsigned long index; //??? might be index into an array of spells/effects
+		unsigned long id; //??? matches SPLLRecord
 		unsigned short flags; //??? 0x0 for spells 0x68 for potions?
-		unsigned short effect_type;
+		unsigned short effect_type; // see Effects enum
 		unsigned short detrimental; // 1 = yes, 0 = no
 		unsigned short duration; // seconds
 		unsigned short magnitude;
-		unsigned short attribute_skill; // 255 if N/A
+		unsigned short attribute_skill; // 255 if N/A see Attributes/Skills enums
 	};
 	void * vTable; // 0
 	RecordTypes recordType; // "MACP" // 4
@@ -1113,8 +1144,9 @@ struct MACPRecord
 	Statistic weight_limit; // 716 // base = max
 	Statistic fatigue; // 728 // fatigue has a different vtable pointer than the other Statistic objects.
 	Statistic unknown_statistic; // 740
-	int unknown4[34]; // 752
-	void * currentSpell; // 888 
+	unsigned long effect_attributes[27]; // 752
+	int unknown4[7]; // 860
+	void * currentSpell; // 888
 	int unknown5[3]; // 892
 	void* current_weapon; // 904
 	int unknown6[9]; // 908
@@ -1216,3 +1248,16 @@ struct TES3CELLMASTER
 	int unknown2[4];
 };
 typedef TES3CELLMASTER* VPCELLMASTER;
+
+// Reading the pointer at 0x7c7c8c and adding 0x30 bytes to it, then
+// dereferencing, seems to be a reliable way to access these nodes.
+struct SPLLNode
+{
+	SPLLNode* first; //??? some kind of tree?
+	SPLLNode* second; //???
+	SPLLNode* third; //???
+	unsigned long id; // nth active effect? matches SPLL record
+	SPLLRecord* spll_record;
+	unsigned long flag; // 1 or 0
+	unsigned long unknown[2];
+};
