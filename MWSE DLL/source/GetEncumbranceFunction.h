@@ -11,14 +11,12 @@
 class GetEncumbranceFunction : public FUNCTION
 {
 public:
-	GetEncumbranceFunction(TES3MACHINE& vm)
-		: machine(vm),
-		  player_id_("PlayerSaveGame") {}
+	GetEncumbranceFunction(TES3MACHINE& vm) : machine(vm) {}
 	virtual bool execute();
 private:
 	TES3MACHINE& machine;
 	std::set<SPLLNode const* const> visited_;
-	std::string const player_id_;
+	std::string name_;
 	double SearchForBurden(SPLLNode const* const node);
 };
 

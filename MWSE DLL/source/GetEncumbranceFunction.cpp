@@ -17,8 +17,8 @@ bool GetEncumbranceFunction::execute(void)
 	long encumbrance_type;
 	double encumbrance = -1.0;
 	unsigned long record_type;
-	VPVOID reference, temp;
-	if (GetTargetData(machine, &reference, &temp, &record_type) 
+	VPVOID reference, temp, base;
+	if (GetTargetData(machine, &reference, &temp, &record_type, &base)
 		&& (record_type == NPC || record_type == CREATURE)) {
 		MACPRecord const* const macp =
 			reinterpret_cast<MACPRecord*>(GetAttachPointer(
@@ -42,6 +42,10 @@ bool GetEncumbranceFunction::execute(void)
 							// Burden is modified by Magicka Resistance
 							// we must take into account any MR that was active
 							// when Burden went into effect.
+							char* name;
+							GetOffsetData(machine, base?base:temp, 0x1c,
+								reinterpret_cast<unsigned long*>(&name));
+							name_ = name;
 							unsigned long address = 0x7C67DC;
 							unsigned long* pointer =
 								reinterpret_cast<unsigned long*>(address);
@@ -97,7 +101,7 @@ double GetEncumbranceFunction::SearchForBurden(SPLLNode const* const node)
 					SPLLRecord::ActiveSpell const* const current_spell =
 						active_spells[index];
 					if (current_spell != NULL &&
-						player_id_ == current_spell->id) {
+						name_ == current_spell->id) {
 						burden += current_spell->magnitude *
 							(100.0 - current_spell->statistic) / 100.0;
 						found++;
