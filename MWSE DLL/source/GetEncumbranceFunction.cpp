@@ -42,10 +42,13 @@ bool GetEncumbranceFunction::execute(void)
 							// Burden is modified by Magicka Resistance
 							// we must take into account any MR that was active
 							// when Burden went into effect.
-							char* name;
-							GetOffsetData(machine, base?base:temp, 0x1c,
-								reinterpret_cast<unsigned long*>(&name));
-							name_ = name;
+							// Note: using NPCCopyRecord also works for
+							// creatures.
+							TES3REFERENCE* npc_reference =
+								reinterpret_cast<TES3REFERENCE*>(reference);
+							NPCCopyRecord* npc_copy =
+								reinterpret_cast<NPCCopyRecord*>(npc_reference->templ);
+							name_ = npc_copy->IDStringPtr;
 							unsigned long address = 0x7C67DC;
 							unsigned long* pointer =
 								reinterpret_cast<unsigned long*>(address);
