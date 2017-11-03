@@ -757,11 +757,15 @@ MACPRecord* TES3MACHINE::GetMacpRecord()
 	// this by accessing the appropriate fields in yet to be mapped data
 	// structures. Offsets come from the native function at 0x40FF20.
 	MACPRecord* macp = NULL;
-	unsigned char* pointer = reinterpret_cast<unsigned char*>(0x7C67DC);
-	pointer = reinterpret_cast<unsigned char*>(*pointer);
-	pointer = reinterpret_cast<unsigned char*>(*(pointer + 0x5C));
+	unsigned long address = 0x7C67DC;
+	unsigned long* pointer = reinterpret_cast<unsigned long*>(address);
+	address = (*pointer) + 0x5C;
+	pointer = reinterpret_cast<unsigned long*>(address);
+	pointer = reinterpret_cast<unsigned long*>(*pointer);
 	if (pointer != NULL) {
-		pointer = reinterpret_cast<unsigned char*>(*(pointer + 0x24));
+		address = reinterpret_cast<unsigned long>(pointer) + 0x24;
+		pointer = reinterpret_cast<unsigned long*>(address);
+		pointer = reinterpret_cast<unsigned long*>(*pointer);
 		macp = reinterpret_cast<MACPRecord*>(*pointer);
 	}
 	return macp;
