@@ -1686,6 +1686,7 @@ function
 	Options = MWSE | AllowGlobal | AllowVar
 	Return = Float
 	Param1 = Short
+	Param2 = Short
 	Opcode = 0x3957
 end
 

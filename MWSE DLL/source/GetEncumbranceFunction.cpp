@@ -2,6 +2,8 @@
 
 #include <set>
 
+#include <boost/math/special_functions/round.hpp>
+
 #include "TES3OFFSETS.h"
 #include "TES3TYPES.h"
 #include "VMTYPES.h"
@@ -14,7 +16,7 @@ bool GetEncumbranceFunction::execute(void)
 		kMax = 1,
 		kBase = 2
 	};
-	long encumbrance_type;
+	long round_result = 0;
 	double encumbrance = -1.0;
 	unsigned long record_type;
 	VPVOID reference, temp, base;
@@ -23,7 +25,9 @@ bool GetEncumbranceFunction::execute(void)
 		MACPRecord const* const macp =
 			reinterpret_cast<MACPRecord*>(GetAttachPointer(
 			machine, reference, MACHNODE));
+		long encumbrance_type;
 		machine.pop(encumbrance_type);
+		machine.pop(round_result);
 		if (macp != NULL) {
 			if (encumbrance_type == kCurrent) {
 				encumbrance = macp->weight_limit.current;
@@ -80,6 +84,9 @@ bool GetEncumbranceFunction::execute(void)
 			}
 		}
 	}
+	// The smallest item weight is 0.01, so round to nearest 0.01.
+	if (round_result != 0)
+		encumbrance = boost::math::round(encumbrance * 100.0) / 100.0;
 	float value = static_cast<float>(encumbrance);
 	return (machine.push(value));
 }
