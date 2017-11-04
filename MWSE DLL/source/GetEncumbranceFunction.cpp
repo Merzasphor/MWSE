@@ -94,12 +94,10 @@ bool GetEncumbranceFunction::execute(void)
 double GetEncumbranceFunction::SearchForBurden(SPLLNode const* const node)
 {
 	if (node == NULL || visited_.count(node) != 0) return 0.0;
-	unsigned long pointer = reinterpret_cast<unsigned long>(node);
 	double burden = 0.0;
 	visited_.insert(node);
 	SPLLRecord const* const active_spell = node->spll_record;
 	if (active_spell != NULL) {
-		pointer = reinterpret_cast<unsigned long>(active_spell);
 		SPELRecord const* const spell = active_spell->spell;
 		for (int effect = 0; effect < 8; effect++) {
 			if (spell->effects[effect].effectId == kBurden) {
