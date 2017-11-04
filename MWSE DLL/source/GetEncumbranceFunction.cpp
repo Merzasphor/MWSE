@@ -104,7 +104,6 @@ double GetEncumbranceFunction::SearchForBurden(SPLLNode const* const node)
 		for (int effect = 0; effect < 8; effect++) {
 			if (spell->effects[effect].effectId == kBurden) {
 				unsigned long size = active_spell->effects[effect].size;
-				unsigned long found = 0;
 				SPLLRecord::ActiveSpell const* const* const active_spells =
 					active_spell->effects[effect].active_spells;
 				for (int index = 0; index < size; index++) {
@@ -114,10 +113,7 @@ double GetEncumbranceFunction::SearchForBurden(SPLLNode const* const node)
 						name_ == current_spell->id) {
 						burden += current_spell->magnitude *
 							(100.0 - current_spell->statistic) / 100.0;
-						found++;
 					}
-					if (found == active_spell->effects[effect].in_use)
-						break;
 				}
 			}
 		}
