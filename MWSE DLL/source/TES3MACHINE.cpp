@@ -55,6 +55,7 @@ using namespace std;
 #include "ModAttributeFunction.h"
 #include "GetMaxHealthFunction.h"
 #include "GetMaxMagickaFunction.h"
+#include "GetMaxFatigueFunction.h"
 #include "RandomFloatFunction.h"
 #include "RandomLongFunction.h"
 #include "GetEncumbranceFunction.h"
@@ -355,6 +356,7 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(RANDOMFLOAT, new RandomFloatFunction(*this));
 	AddInstruction(GETENCUMBRANCE, new GetEncumbranceFunction(*this));
 	AddInstruction(GETMAXMAGICKA, new GetMaxMagickaFunction(*this));
+	AddInstruction(GETMAXFATIGUE, new GetMaxFatigueFunction(*this));
 
 	AddInstruction(GETGS, new FUNCGETGS(*this));
 	AddInstruction(SETGS, new FUNCSETGS(*this));

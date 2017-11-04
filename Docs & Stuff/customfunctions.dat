@@ -1697,6 +1697,13 @@ function
 	Opcode = 0x3958
 end
 
+function
+	Name = XGetMaxFatigue
+	Options = MWSE | AllowGlobal | AllowVar
+	Return = Float
+	Opcode = 0x3959
+end
+
 
 
 # MGE extensions
