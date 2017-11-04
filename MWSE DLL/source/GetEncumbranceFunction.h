@@ -15,9 +15,12 @@ public:
 	virtual bool execute();
 private:
 	TES3MACHINE& machine;
-	std::set<SPLLNode const* const> visited_;
-	std::string name_;
-	double SearchForBurden(SPLLNode const* const node);
+	double SearchForEffect(Effects const target_effect,
+		unsigned char const* const reference);
+	double SearchForEffect(Effects const target_effect,
+		std::string const& entity_name,
+		SPLLNode const* const node,
+		std::set<SPLLNode const* const>* const visited_nodes);
 };
 
 #endif // MWSE_GETENCUMBRANCEFUNCTION_H_

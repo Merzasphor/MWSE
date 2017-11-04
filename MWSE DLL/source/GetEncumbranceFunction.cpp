@@ -18,7 +18,9 @@ bool GetEncumbranceFunction::execute(void)
 	};
 	double encumbrance = -1.0;
 	unsigned long record_type;
-	VPVOID reference, temp, base;
+	unsigned char* reference;
+	unsigned char* temp;
+	unsigned char* base;
 	if (GetTargetData(machine, &reference, &temp, &record_type, &base)
 		&& (record_type == NPC || record_type == CREATURE)) {
 		MACPRecord const* const macp =
@@ -40,43 +42,20 @@ bool GetEncumbranceFunction::execute(void)
 					MACPRecord::ActiveEffect* current_effect =
 						macp->active_effects->next;
 					for (int i = 0; i < macp->num_active_effects; i++) {
+						// It's not sufficient to simply read the current
+						// magnitude of the effect (ActiveEffect.magnitude) for
+						// two reasons: First, it does not take into account
+						// any Magicka Resistance active when the effect was
+						// applied to the actor (burden is affected by MR,
+						// feather is not). Second, when a spell that is
+						// already affecting an entity is cast again on that
+						// entity, the game applies the effects of both copies
+						// for one frame, doubling the effect on encumbrance
+						// for that frame.
 						if (current_effect->effect_type == kFeather) {
-							encumbrance += current_effect->magnitude;
+							encumbrance += SearchForEffect(kFeather, reference);
 						} else if (current_effect->effect_type == kBurden) {
-							// Burden is modified by Magicka Resistance
-							// we must take into account any MR that was active
-							// when Burden went into effect.
-							// Note: using NPCCopyRecord also works for
-							// creatures.
-							TES3REFERENCE* npc_reference =
-								reinterpret_cast<TES3REFERENCE*>(reference);
-							NPCCopyRecord* npc_copy =
-								reinterpret_cast<NPCCopyRecord*>(npc_reference->templ);
-							name_ = npc_copy->IDStringPtr;
-							unsigned long address = 0x7C67DC;
-							unsigned long* pointer =
-								reinterpret_cast<unsigned long*>(address);
-							address = (*pointer) + 0x70;
-							pointer =
-								reinterpret_cast<unsigned long*>(address);
-							address = (*pointer) + 0xC;
-							pointer =
-								reinterpret_cast<unsigned long*>(address);
-							address = *pointer;
-							SPLLNode const* const root =
-								reinterpret_cast<SPLLNode*>(address);
-							address = 0x7C7C8C;
-							pointer =
-								reinterpret_cast<unsigned long*>(address);
-							address = *pointer;
-							SPLLNode const* const leaf =
-								reinterpret_cast<SPLLNode*>(address);
-							visited_.clear();
-							visited_.insert(root);
-							visited_.insert(leaf);
-							encumbrance -= SearchForBurden(root->first);
-							encumbrance -= SearchForBurden(root->second);
-							encumbrance -= SearchForBurden(root->third);
+							encumbrance -= SearchForEffect(kBurden, reference);
 						}
 						current_effect = current_effect->next;
 					}
@@ -91,33 +70,79 @@ bool GetEncumbranceFunction::execute(void)
 	return (machine.push(value));
 }
 
-double GetEncumbranceFunction::SearchForBurden(SPLLNode const* const node)
+double GetEncumbranceFunction::SearchForEffect(Effects const target_effect,
+											   unsigned char const* const reference)
 {
-	if (node == NULL || visited_.count(node) != 0) return 0.0;
-	double burden = 0.0;
-	visited_.insert(node);
+	TES3REFERENCE const* const npc_reference =
+		reinterpret_cast<TES3REFERENCE const* const>(reference);
+	// Note: using NPCCopyRecord also works for creatures.
+	NPCCopyRecord const* const npc_copy =
+		reinterpret_cast<NPCCopyRecord*>(npc_reference->templ);
+	std::string const entity_name = npc_copy->IDStringPtr;
+	unsigned long address = 0x7C67DC;
+	unsigned long* pointer =
+		reinterpret_cast<unsigned long*>(address);
+	address = (*pointer) + 0x70;
+	pointer =
+		reinterpret_cast<unsigned long*>(address);
+	address = (*pointer) + 0xC;
+	pointer =
+		reinterpret_cast<unsigned long*>(address);
+	address = *pointer;
+	SPLLNode const* const root =
+		reinterpret_cast<SPLLNode*>(address);
+	address = 0x7C7C8C;
+	pointer =
+		reinterpret_cast<unsigned long*>(address);
+	address = *pointer;
+	SPLLNode const* const leaf =
+		reinterpret_cast<SPLLNode*>(address);
+	std::set<SPLLNode const* const> visited_nodes;
+	visited_nodes.insert(NULL);
+	visited_nodes.insert(leaf);
+	return SearchForEffect(target_effect, entity_name, root, &visited_nodes);
+}
+
+double GetEncumbranceFunction::SearchForEffect(Effects const target_effect,
+											   std::string const& entity_name,
+											   SPLLNode const* const node,
+											   std::set<SPLLNode const* const>* const visited_nodes)
+{
+	double magnitude = 0.0;
+	if (visited_nodes->count(node) != 0) return magnitude;
+	visited_nodes->insert(node);
 	SPLLRecord const* const active_spell = node->spll_record;
 	if (active_spell != NULL) {
 		SPELRecord const* const spell = active_spell->spell;
 		for (int effect = 0; effect < 8; effect++) {
-			if (spell->effects[effect].effectId == kBurden) {
+			if (spell->effects[effect].effectId == target_effect) {
 				unsigned long size = active_spell->effects[effect].size;
 				SPLLRecord::ActiveSpell const* const* const active_spells =
 					active_spell->effects[effect].active_spells;
-				for (int index = 0; index < size; index++) {
+				for (unsigned long index = 0; index < size; index++) {
 					SPLLRecord::ActiveSpell const* const current_spell =
 						active_spells[index];
 					if (current_spell != NULL &&
-						name_ == current_spell->id) {
-						burden += current_spell->magnitude *
-							(100.0 - current_spell->statistic) / 100.0;
+						entity_name == current_spell->id) {
+						if (target_effect == kBurden) {
+							// Burden is modified by Magicka Resistance. We
+							// must take into account any MR that was active
+							// when Burden went into effect.
+							magnitude += current_spell->magnitude *
+								(100.0 - current_spell->statistic) / 100.0;
+						} else if (target_effect == kFeather) {
+							magnitude += current_spell->magnitude;
+						}
 					}
 				}
 			}
 		}
 	}
-	burden += SearchForBurden(node->first);
-	burden += SearchForBurden(node->second);
-	burden += SearchForBurden(node->third);
-	return burden;
+	magnitude += SearchForEffect(target_effect, entity_name, node->first,
+		visited_nodes);
+	magnitude += SearchForEffect(target_effect, entity_name, node->second,
+		visited_nodes);
+	magnitude += SearchForEffect(target_effect, entity_name, node->third,
+		visited_nodes);
+	return magnitude;
 }
