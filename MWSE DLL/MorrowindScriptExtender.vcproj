@@ -367,6 +367,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\source\GetMaxMagickaFunction.h"
+					>
+				</File>
+				<File
 					RelativePath=".\source\GetSkillFunction.h"
 					>
 				</File>
@@ -590,6 +594,10 @@
 				</File>
 				<File
 					RelativePath=".\source\GetMaxHealthFunction.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\source\GetMaxMagickaFunction.cpp"
 					>
 				</File>
 				<File

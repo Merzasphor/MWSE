@@ -1690,6 +1690,13 @@ function
 	Opcode = 0x3957
 end
 
+function
+	Name = XGetMaxMagicka
+	Options = MWSE | AllowGlobal | AllowVar
+	Return = Float
+	Opcode = 0x3958
+end
+
 
 
 # MGE extensions

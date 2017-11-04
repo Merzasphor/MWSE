@@ -480,6 +480,7 @@ typedef enum {
 	,RANDOMLONG         = 0x3955
 	,RANDOMFLOAT        = 0x3956
 	,GETENCUMBRANCE     = 0x3957
+	,GETMAXMAGICKA      = 0x3958
 
 	,GETGS              = 0x3A00
 	,SETGS				= 0x3A01
