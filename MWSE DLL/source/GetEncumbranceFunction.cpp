@@ -1,12 +1,12 @@
 #include "GetEncumbranceFunction.h"
 
 #include <set>
+#include <string>
 
 #include <boost/math/special_functions/round.hpp>
 
 #include "TES3OFFSETS.h"
 #include "TES3TYPES.h"
-#include "VMTYPES.h"
 
 bool GetEncumbranceFunction::execute()
 {
