@@ -2,7 +2,6 @@
 #define MWSE_GETENCUMBRANCEFUNCTION_H_
 
 #include <set>
-#include <string>
 
 #include "FUNCTION.h"
 #include "TES3MACHINE.h"
@@ -15,10 +14,8 @@ public:
 	virtual bool execute();
 private:
 	TES3MACHINE& machine;
-	double SearchForEffect(Effects const target_effect,
-		unsigned char const* const reference);
-	double SearchForEffect(Effects const target_effect,
-		std::string const& entity_name,
+	double SearchForEffects(unsigned char const* const reference);
+	double SearchForEffects(std::string const& entity_name,
 		SPLLNode const* const node,
 		std::set<SPLLNode const* const>* const visited_nodes);
 };

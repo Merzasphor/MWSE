@@ -8,7 +8,7 @@
 #include "TES3TYPES.h"
 #include "VMTYPES.h"
 
-bool GetEncumbranceFunction::execute(void)
+bool GetEncumbranceFunction::execute()
 {
 	enum Encumbrance
 	{
@@ -52,10 +52,10 @@ bool GetEncumbranceFunction::execute(void)
 						// entity, the game applies the effects of both copies
 						// for one frame, doubling the effect on encumbrance
 						// for that frame.
-						if (current_effect->effect_type == kFeather) {
-							encumbrance += SearchForEffect(kFeather, reference);
-						} else if (current_effect->effect_type == kBurden) {
-							encumbrance -= SearchForEffect(kBurden, reference);
+						if (current_effect->effect_type == kFeather ||
+							current_effect->effect_type == kBurden) {
+								encumbrance += SearchForEffects(reference);
+								break;
 						}
 						current_effect = current_effect->next;
 					}
@@ -70,8 +70,8 @@ bool GetEncumbranceFunction::execute(void)
 	return (machine.push(value));
 }
 
-double GetEncumbranceFunction::SearchForEffect(Effects const target_effect,
-											   unsigned char const* const reference)
+double GetEncumbranceFunction::SearchForEffects(
+	unsigned char const* const reference)
 {
 	TES3REFERENCE const* const npc_reference =
 		reinterpret_cast<TES3REFERENCE const* const>(reference);
@@ -100,13 +100,12 @@ double GetEncumbranceFunction::SearchForEffect(Effects const target_effect,
 	std::set<SPLLNode const* const> visited_nodes;
 	visited_nodes.insert(NULL);
 	visited_nodes.insert(leaf);
-	return SearchForEffect(target_effect, entity_name, root, &visited_nodes);
+	return SearchForEffects(entity_name, root, &visited_nodes);
 }
 
-double GetEncumbranceFunction::SearchForEffect(Effects const target_effect,
-											   std::string const& entity_name,
-											   SPLLNode const* const node,
-											   std::set<SPLLNode const* const>* const visited_nodes)
+double GetEncumbranceFunction::SearchForEffects(std::string const& entity_name,
+	SPLLNode const* const node,
+	std::set<SPLLNode const* const>* const visited_nodes)
 {
 	double magnitude = 0.0;
 	if (visited_nodes->count(node) != 0) return magnitude;
@@ -115,8 +114,9 @@ double GetEncumbranceFunction::SearchForEffect(Effects const target_effect,
 	if (active_spell != NULL) {
 		SPELRecord const* const spell = active_spell->spell;
 		for (int effect = 0; effect < 8; effect++) {
-			if (spell->effects[effect].effectId == target_effect) {
-				unsigned long size = active_spell->effects[effect].size;
+			short const effect_id = spell->effects[effect].effectId;
+			if (effect_id == kBurden || effect_id == kFeather) {
+				unsigned long const size = active_spell->effects[effect].size;
 				SPLLRecord::ActiveSpell const* const* const active_spells =
 					active_spell->effects[effect].active_spells;
 				for (unsigned long index = 0; index < size; index++) {
@@ -124,13 +124,13 @@ double GetEncumbranceFunction::SearchForEffect(Effects const target_effect,
 						active_spells[index];
 					if (current_spell != NULL &&
 						entity_name == current_spell->id) {
-						if (target_effect == kBurden) {
+						if (effect_id == kBurden) {
 							// Burden is modified by Magicka Resistance. We
 							// must take into account any MR that was active
 							// when Burden went into effect.
-							magnitude += current_spell->magnitude *
+							magnitude -= current_spell->magnitude *
 								(100.0 - current_spell->statistic) / 100.0;
-						} else if (target_effect == kFeather) {
+						} else if (effect_id == kFeather) {
 							magnitude += current_spell->magnitude;
 						}
 					}
@@ -138,11 +138,8 @@ double GetEncumbranceFunction::SearchForEffect(Effects const target_effect,
 			}
 		}
 	}
-	magnitude += SearchForEffect(target_effect, entity_name, node->first,
-		visited_nodes);
-	magnitude += SearchForEffect(target_effect, entity_name, node->second,
-		visited_nodes);
-	magnitude += SearchForEffect(target_effect, entity_name, node->third,
-		visited_nodes);
+	magnitude += SearchForEffects(entity_name, node->first,	visited_nodes);
+	magnitude += SearchForEffects(entity_name, node->second, visited_nodes);
+	magnitude += SearchForEffects(entity_name, node->third,	visited_nodes);
 	return magnitude;
 }
