@@ -80,23 +80,17 @@ double GetEncumbranceFunction::SearchForEffects(
 		reinterpret_cast<NPCCopyRecord*>(npc_reference->templ);
 	std::string const entity_name = npc_copy->IDStringPtr;
 	unsigned long address = 0x7C67DC;
-	unsigned long* pointer =
-		reinterpret_cast<unsigned long*>(address);
+	unsigned long* pointer = reinterpret_cast<unsigned long*>(address);
 	address = (*pointer) + 0x70;
-	pointer =
-		reinterpret_cast<unsigned long*>(address);
+	pointer = reinterpret_cast<unsigned long*>(address);
 	address = (*pointer) + 0xC;
-	pointer =
-		reinterpret_cast<unsigned long*>(address);
+	pointer = reinterpret_cast<unsigned long*>(address);
 	address = *pointer;
-	SPLLNode const* const root =
-		reinterpret_cast<SPLLNode*>(address);
+	SPLLNode const* const root = reinterpret_cast<SPLLNode*>(address);
 	address = 0x7C7C8C;
-	pointer =
-		reinterpret_cast<unsigned long*>(address);
+	pointer = reinterpret_cast<unsigned long*>(address);
 	address = *pointer;
-	SPLLNode const* const leaf =
-		reinterpret_cast<SPLLNode*>(address);
+	SPLLNode const* const leaf = reinterpret_cast<SPLLNode*>(address);
 	std::set<SPLLNode const* const> visited_nodes;
 	visited_nodes.insert(NULL);
 	visited_nodes.insert(leaf);
