@@ -102,7 +102,7 @@ skill-up function when changing specialization, in case the change would cause p
 Actions can be set a negative value, in which case they'll remove progress, but progress will never go below zero.
 
 xSetSpellInfo
-result (long): xSetSpellInfo spellId (long | string) name (long | string) type (long) cost (long) flags (long) origin (long)
+result (long): xSetSpellInfo spellId (long | string) name (long | string) type (long) cost (short) flags (long) origin (long)
 Sets the properties of the given spellId.
 spellId: id of the spell to modify
 name: new display name. Use 0 to leave the name unmodified. Names longer than 31 characters will be truncated.
@@ -113,7 +113,7 @@ origin: Mark where the spell came from. 1 = module, 2 = spellmaker. Use 0 to lea
 result: 1 on success, 0 on failure
 
 xGetSpellInfo
-name (long) type (long) cost (long) numEffects (long) flags (long) origin (long): xGetSpellInfo spellId (string | long)
+name (long) type (long) cost (short) numEffects (long) flags (long) origin (long): xGetSpellInfo spellId (string | long)
 Returns info about the given spellId.
 spellId: id of the spell to look up.
 name: reference to display name string. 0 if spellId is invalid.
