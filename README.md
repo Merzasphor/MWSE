@@ -27,7 +27,7 @@ The [Morrowind Code Patch](https://www.nexusmods.com/morrowind/mods/19510/) is h
 
 ## Function Reference
 
-See newfunctions.txt for functions added since v0.9.4a. This format is temporary
+See `newfunctions.txt` for functions added since v0.9.4a. This format is temporary
 and will be converted to something more user-friendly soon.
 
 The [Morrowind Modding Wiki](http://wiki.theassimilationlab.com/mmw/Main_Page)
