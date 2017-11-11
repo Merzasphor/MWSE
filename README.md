@@ -25,6 +25,15 @@ would otherwise impractical or impossible.
 
 The [Morrowind Code Patch](https://www.nexusmods.com/morrowind/mods/19510/) is highly recommended.
 
+## Function Reference
+
+See newfunctions.txt for functions added since v0.9.4a. This format is temporary
+and will be converted to something more user-friendly soon.
+
+The [Morrowind Modding Wiki](http://wiki.theassimilationlab.com/mmw/Main_Page)
+has a [section devoted to MWSE](http://wiki.theassimilationlab.com/mmw/MWSE),
+containing example scripts and other information.
+
 ## Contributors
 This software is based on the 0.9.4a version of MWSE, released by the Sourceforge MWSE Dev Team.
 
