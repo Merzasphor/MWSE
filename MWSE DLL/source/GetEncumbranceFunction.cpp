@@ -1,12 +1,8 @@
 #include "GetEncumbranceFunction.h"
 
-#include <set>
-#include <string>
-
 #include <boost/math/special_functions/round.hpp>
 
 #include "TES3OFFSETS.h"
-#include "TES3TYPES.h"
 
 bool GetEncumbranceFunction::execute()
 {
@@ -31,11 +27,9 @@ bool GetEncumbranceFunction::execute()
 		machine.pop(encumbrance_type);
 		machine.pop(round_result);
 		if (macp != NULL) {
-			if (encumbrance_type == kCurrent) {
-				encumbrance = macp->weight_limit.current;
-			} else if (encumbrance_type == kMax) {
+			if (encumbrance_type == kMax) {
 				encumbrance = macp->weight_limit.base;
-			} else if (encumbrance_type == kBase) {
+			} else if (encumbrance_type == kBase || encumbrance_type == kCurrent) {
 				encumbrance = macp->weight_limit.current;
 				if (macp->num_active_effects > 0) {
 					// first effect is a "dummy" node
@@ -54,8 +48,12 @@ bool GetEncumbranceFunction::execute()
 						// for that frame.
 						if (current_effect->effect_type == kFeather ||
 							current_effect->effect_type == kBurden) {
-								encumbrance += SearchForEffects(reference);
-								break;
+							if (encumbrance_type == kBase) {
+								encumbrance += CalculateTotal(reference);
+							} else {
+								encumbrance += CalculateCorrection(reference);
+							}
+							break;
 						}
 						current_effect = current_effect->next;
 					}
@@ -70,15 +68,48 @@ bool GetEncumbranceFunction::execute()
 	return (machine.push(value));
 }
 
-double GetEncumbranceFunction::SearchForEffects(
+double GetEncumbranceFunction::CalculateTotal(
+	unsigned char const* const reference)
+{
+	SearchForEffects(reference);
+	double magnitude = 0.0;
+	for (EffectsMap::const_iterator it = active_effects_.begin();
+		it != active_effects_.end(); ++it) {
+		magnitude += it->second.first;
+	}
+	return magnitude;
+}
+
+double GetEncumbranceFunction::CalculateCorrection(
+	unsigned char const* const reference)
+{
+	SearchForEffects(reference);
+	double magnitude = 0.0;
+	EffectsMap::const_iterator it = active_effects_.begin();
+	while (it != active_effects_.end()) {
+		EffectsMap::const_iterator current = it;
+		EffectsMap::const_iterator next = ++it;
+		if (next != active_effects_.end() && current->first == next->first) {
+			++it;
+			if (current->second.second > next->second.second) {
+				magnitude += next->second.first;
+			} else {
+				magnitude += current->second.first;
+			}
+		}
+	}
+	return magnitude;
+}
+
+void GetEncumbranceFunction::SearchForEffects(
 	unsigned char const* const reference)
 {
 	TES3REFERENCE const* const npc_reference =
-		reinterpret_cast<TES3REFERENCE const* const>(reference);
+	reinterpret_cast<TES3REFERENCE const* const>(reference);
 	// Note: using NPCCopyRecord also works for creatures.
 	NPCCopyRecord const* const npc_copy =
 		reinterpret_cast<NPCCopyRecord*>(npc_reference->templ);
-	std::string const entity_name = npc_copy->IDStringPtr;
+	entity_name_ = npc_copy->IDStringPtr;
 	unsigned long address = 0x7C67DC;
 	unsigned long* pointer = reinterpret_cast<unsigned long*>(address);
 	address = (*pointer) + 0x70;
@@ -91,24 +122,23 @@ double GetEncumbranceFunction::SearchForEffects(
 	pointer = reinterpret_cast<unsigned long*>(address);
 	address = *pointer;
 	SPLLNode const* const leaf = reinterpret_cast<SPLLNode*>(address);
-	std::set<SPLLNode const* const> visited_nodes;
-	visited_nodes.insert(NULL);
-	visited_nodes.insert(leaf);
-	return SearchForEffects(entity_name, root, &visited_nodes);
+	visited_nodes_.clear();
+	visited_nodes_.insert(NULL);
+	visited_nodes_.insert(leaf);
+	active_effects_.clear();
+	SearchForEffects(root);
 }
 
-double GetEncumbranceFunction::SearchForEffects(std::string const& entity_name,
-	SPLLNode const* const node,
-	std::set<SPLLNode const* const>* const visited_nodes)
+void GetEncumbranceFunction::SearchForEffects(SPLLNode const* const node)
 {
-	double magnitude = 0.0;
-	if (visited_nodes->count(node) != 0) return magnitude;
-	visited_nodes->insert(node);
+	if (visited_nodes_.count(node) != 0) return;
+	visited_nodes_.insert(node);
 	SPLLRecord const* const active_spell = node->spll_record;
 	if (active_spell != NULL) {
-		SPELRecord const* const spell = active_spell->spell;
+		float time = 0.0f;
+		double magnitude = 0.0;
 		for (int effect = 0; effect < 8; effect++) {
-			short const effect_id = spell->effects[effect].effectId;
+			short const effect_id = active_spell->spell->effects[effect].effectId;
 			if (effect_id == kBurden || effect_id == kFeather) {
 				unsigned long const size = active_spell->effects[effect].size;
 				SPLLRecord::ActiveSpell const* const* const active_spells =
@@ -117,13 +147,18 @@ double GetEncumbranceFunction::SearchForEffects(std::string const& entity_name,
 					SPLLRecord::ActiveSpell const* const current_spell =
 						active_spells[index];
 					if (current_spell != NULL &&
-						entity_name == current_spell->id) {
+						entity_name_ == current_spell->id) {
+						time = current_spell->time;
 						if (effect_id == kBurden) {
 							// Burden is modified by Magicka Resistance. We
 							// must take into account any MR that was active
 							// when Burden went into effect.
-							magnitude -= current_spell->magnitude *
-								(100.0 - current_spell->statistic) / 100.0;
+							if (current_spell->statistic == 0.0f) {
+								magnitude -= current_spell->magnitude;
+							} else {
+								magnitude -= current_spell->magnitude *
+									(100.0 - current_spell->statistic) / 100.0;
+							}
 						} else if (effect_id == kFeather) {
 							magnitude += current_spell->magnitude;
 						}
@@ -131,9 +166,12 @@ double GetEncumbranceFunction::SearchForEffects(std::string const& entity_name,
 				}
 			}
 		}
+		if (magnitude != 0.0) {
+			active_effects_.insert(
+				std::make_pair(active_spell->id, std::make_pair(magnitude, time)));
+		}
 	}
-	magnitude += SearchForEffects(entity_name, node->first,	visited_nodes);
-	magnitude += SearchForEffects(entity_name, node->second, visited_nodes);
-	magnitude += SearchForEffects(entity_name, node->third,	visited_nodes);
-	return magnitude;
+	SearchForEffects(node->first);
+	SearchForEffects(node->second);
+	SearchForEffects(node->third);
 }

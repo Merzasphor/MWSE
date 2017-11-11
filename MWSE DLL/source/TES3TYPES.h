@@ -728,7 +728,7 @@ struct SPLLRecord // total length 20*16 bytes?
 		TES3REFERENCE* reference;
 		float statistic; // Magicka Resistance if applicable
 		unsigned long magnitude;
-		float time_elapsed; //???
+		float time; //??? elapsed? start?
 	};
 	struct Effect
 	{
