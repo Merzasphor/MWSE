@@ -1237,6 +1237,26 @@ struct BOOKRecord
 	void* unknown21;
 };
 
+struct AMMORecord
+{
+	void* v_table;
+	RecordTypes record_type; //AMMO
+	long unknown1;
+	void* module; // pointer to module?
+	long unknown2[3];
+	void* next; // ?
+	void* previous; // ?
+	long unknown3[2];
+	char* id;
+	long unknown4[5];
+	char* name;
+	long unknown5;
+	char* model;
+	char* texture;
+	long unknown6[8];
+	ENCHRecord* enchantment;
+};
+
 struct TES3LOCK
 {
 	VMSHORT lockLevel;

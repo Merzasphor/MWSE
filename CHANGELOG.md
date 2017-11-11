@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
   player.
 - xGetMaxHealth, xGetSkill, xGetBaseAttribute, xGetAttribute, xModAttribute now
   work with creature references, in addition to the player and NPCs.
+- xGetEnchant now works with ammo.
 
 ### Fixed
 - Better handling of invalid format codes in xMessageFix, xStringBuild,

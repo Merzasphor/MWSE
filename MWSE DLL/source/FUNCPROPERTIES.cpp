@@ -1131,7 +1131,7 @@ bool FUNCGETENCHANT::execute(void)
 	unsigned long refType;
 	if (GetTargetData(machine, &refr, &temp, &refType))	{
 		if (refType == WEAPON || refType == ARMOR || refType == CLOTHING 
-			|| refType == BOOK) {
+			|| refType == BOOK || refType == AMMO) {
 			TES3REFERENCE* itemRef = reinterpret_cast<TES3REFERENCE*>(refr);
 			ENCHRecord* ench = 0;
 			if (refType == WEAPON) {
@@ -1151,6 +1151,10 @@ bool FUNCGETENCHANT::execute(void)
 				if (book->scroll == 1) {
 					ench = book->enchantment;
 				}
+			}
+			else if (refType == AMMO) {
+				AMMORecord* ammo = reinterpret_cast<AMMORecord*>(itemRef->templ);
+				ench = ammo->enchantment;
 			}
 			if (ench) {
 				enchId = reinterpret_cast<VMLONG>(strings.add(ench->id));
