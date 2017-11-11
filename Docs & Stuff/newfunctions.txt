@@ -1,5 +1,32 @@
 Functions:
 
+xGetEncumbrance
+float encumbrance ref->xGetEncumbrance short type short round
+Returns the current or maximum encumbrance of ref.
+type: 0 = current (modified by feather/burden), 1 = maximum (total capacity), 2 = current (unmodified by feather/burden)
+round: 0 = don't round the result, 1 = attempt to round result to nearest 0.01.
+If ref is not the player, an NPC, or a creature, encumbrance is set to -999999.0.
+
+Complexity:
+maximum (type = 1): constant
+current (type = 0 or 2):
+	n = number of effects active on ref
+	m = number of effects active in area
+	O(n), if ref is not affected by burden or feather.
+	O(n + mlogm), if ref is affected by burden or feather. 
+
+Notes:
+type = 2 takes the current encumbrance of ref and subtracts any active burden 
+and feather effects, taking into account magicka resistance as appropriate.
+The resulting encumbrance should be equivalent to the total weight of all items
+in the inventory of ref.
+The round parameter is an attempt to mitigate some of the floating point errors
+that will inevitably crop up. The smallest precision possible for item weight in
+the construction set is 0.01.
+
+xGetMaxMagicka, xGetMaxFatigue
+Same as xGetMaxHealth, but for magicka and fatigue.
+
 xRandomFloat
 float rand_val xRandomFloat float min float max
 Generates a random floating point value from a uniform distribution over [min, max).
@@ -19,35 +46,39 @@ new_level: new character level
 
 xGetSkill
 skill_value (float): ref->xGetSkill skill_id (long)
-Returns the current value of the referenced skill. This function only supports the player and NPCs.
+Returns the current value of the referenced skill.
 skill_id: see below for valid skill ids
-skill_value: current value of the skill. Returns -1 if the reference is not an NPC or the player.
+skill_value: current value of the skill. Returns -1 if ref is
+not a creature, an NPC, or the player.
 
 xGetBaseAttribute
 attribute_value (float): ref->xGetBaseAttribute attribute_id (long)
-Returns the base value of the referenced attribute. This function only supports the player and NPCs.
+Returns the base value of the referenced attribute.
 attribute_id: see below for valid attribute ids
-attribute_value: base value of the attribute. Returns -1 if the reference is not an NPC or the player.
+attribute_value: base value of the attribute. Returns -1 if ref is
+not a creature, an NPC, or the player.
 
 xGetAttribute
 attribute_value (float): ref->xGetAttribute attribute_id (long)
-Returns the current value of the referenced attribute. This function only supports the player and NPCs.
+Returns the current value of the referenced attribute.
 attribute_id: see below for valid attribute ids
-attribute_value: current value of the attribute. Returns -1 if the reference is not an NPC or the player.
+attribute_value: current value of the attribute. Returns -1 if ref is
+not a creature, an NPC, or the player.
 
 xGetMaxHealth
 max_health (float): ref->xGetMaxHealth
-Returns maximum health. This function only supports the player and NPCs.
-maximum_health: Maximum health of the referenced entity. Returns -1 if the reference is not an NPC or the player.
+Returns maximum health.
+maximum_health: Maximum health of the referenced entity. Returns -1 if ref is
+not a creature, an NPC, or the player.
 
 xModAttribute
 result (long): ref->xModAttribute attribute_id (long) mod_value (float)
 Adds mod_value to the current and base values of the referenced attribute. This suffers from the same
-display issue as xSetLevel. This function only supports the player and NPCs. It ignores the 100
-max attribute limit.
+display issue as xSetLevel. It ignores the 100 max attribute limit.
 attribute_id: see below for valid attribute ids
 mod_value: add this to the current and base values
-result: 1 on success, 0 otherwise. This function will fail if the reference is not an NPC or the player.
+result: 1 on success, 0 otherwise. This function will fail if the reference is
+not a creature, an NPC, or the player.
 
 Note: I debated leaving xModAttribute out, since it has a display issue that the vanilla Mod[Attribute]
 functions don't have. However, it seems to work and is more useful in some cases.
