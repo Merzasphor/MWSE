@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.9.5-alpha.20171111] - 2017-11-11
+
 ### Added
 - New function to get maximum, current (modified), and unmodified encumbrance:
   xGetEncumbrance.
@@ -323,7 +325,8 @@ New logging methods available, Up to the rest of the team to use them or not
 - Added Resource information to both DLL and loader, added icon to loader
 - removed the Memlook function, that doesn't work now it doesn't has an interactive console available. and nobody used it anyway because it's an debug function
 
-[Unreleased]: https://github.com/Merzasphor/MWSE/compare/v0.9.5-alpha.20171006...HEAD
+[Unreleased]: https://github.com/Merzasphor/MWSE/compare/v0.9.5-alpha.20171111...HEAD
+[0.9.5-alpha.20171111]: https://github.com/Merzasphor/MWSE/compare/v0.9.5-alpha.20171006...v0.9.5-alpha.20171111
 [0.9.5-alpha.20171006]: https://github.com/Merzasphor/MWSE/compare/v0.9.5-alpha.201501016...v0.9.5-alpha.20171006
 [0.9.5-alpha.20151016]: https://github.com/Merzasphor/MWSE/compare/v0.9.5-alpha.20150902...v0.9.5-alpha.201501016
 [0.9.5-alpha.20150902]: https://github.com/Merzasphor/MWSE/compare/v0.9.5-alpha.20150829...v0.9.5-alpha.20150902
