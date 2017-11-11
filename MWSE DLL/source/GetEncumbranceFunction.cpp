@@ -12,7 +12,7 @@ bool GetEncumbranceFunction::execute()
 		kMax = 1,
 		kBase = 2
 	};
-	double encumbrance = -1.0;
+	double encumbrance = -999999.0;
 	unsigned long record_type;
 	unsigned char* reference;
 	unsigned char* temp;
