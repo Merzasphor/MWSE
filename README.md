@@ -5,7 +5,7 @@ The Morrowind Script Extender makes additional functions available for use in
 Morrowind scripts, beyond those provided by the game's construction set. 
 
 These extra functions allow modders to add features and behavior to scripts that
-would otherwise impractical or impossible.
+would otherwise be impractical or impossible.
 
 ## Installation
 
