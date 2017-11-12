@@ -402,8 +402,7 @@ std::string interpolate(std::string const& format, TES3MACHINE* machine,
 		bool parse_success = false;
 		while (!done) {
 			char current_char = tolower(format.at(end));
-			current_code += current_char;
-			if (current_code == "%%") {
+			if (current_char == '%' && current_code == "%") {
 				result += current_char;
 				end++;
 				parse_success = true;
@@ -414,38 +413,38 @@ std::string interpolate(std::string const& format, TES3MACHINE* machine,
 					current_char = format.at(end);
 					if (std::isdigit(current_char)) {
 						number += current_char;
-						current_code += current_char;
 						end++;
 					} else {
 						break;
 					}
 				}
-				if (!current_code.empty() && 
-					current_code.at(current_code.length() - 1) == '.') {
+				if (current_code.at(current_code.length() - 1) == '.') {
 						precision = atoi(number.c_str());
 						precision_set = true;
 				} else {
 					skip = atoi(number.c_str());
 					skip_set = true;
 				}
+				current_code += number;
 			} else if (current_char == '.') {
+				current_code += current_char;
 				end++;
-			} else if (current_code == "%n") {
+			} else if (current_char == 'n' && current_code == "%") {
 				result += "\r\n";
 				end++;
 				parse_success = true;
-			} else if (current_code == "%q") {
+			} else if (current_char == 'q' && current_code == "%") {
 				result += '"';
 				end++;
 				parse_success = true;
-			} else if (current_code == "%l") {
+			} else if (current_char == 'l' && current_code == "%") {
 				long argument = 0;
 				if (machine->pop(argument)) {
 					result.append(reinterpret_cast<char*>(&argument), 4);
 				}
 				end++;
 				parse_success = true;
-			} else if (current_code == "%d") {
+			} else if (current_char == 'd' && current_code == "%") {
 				long argument = 0;
 				if (machine->pop(argument)) {
 					convert.str("");
@@ -454,7 +453,7 @@ std::string interpolate(std::string const& format, TES3MACHINE* machine,
 				}
 				end++;
 				parse_success = true;
-			} else if (current_code == "%h") {
+			} else if (current_char == 'h' && current_code == "%") {
 				long argument = 0;
 				if (machine->pop(argument)) {
 					convert.str("");
@@ -475,6 +474,8 @@ std::string interpolate(std::string const& format, TES3MACHINE* machine,
 						result += convert.str();
 					}
 					parse_success = true;
+				} else {
+					current_code += current_char;
 				}
 				done = true;
 				end++;
@@ -491,10 +492,10 @@ std::string interpolate(std::string const& format, TES3MACHINE* machine,
 				parse_success = true;
 			} else {
 				done = true;
-				if (std::isspace(current_char))
-					current_code.erase(--current_code.end());
-				else
+				if (!std::isspace(current_char)) {
+					current_code += current_char;
 					end++;
+				}
 			}
 			if (parse_success || end >= format.length()) done = true;
 			if (done && !parse_success) {
