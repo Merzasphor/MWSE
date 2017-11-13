@@ -787,36 +787,45 @@ float TES3MACHINE::GetRandomFloat(float min, float max)
 	return dist(rng_);
 }
 
-TES3MACHINE::ArrayError TES3MACHINE::CreateArray(long* const id)
+long TES3MACHINE::CreateArray(std::string const& caller)
 {
-	*id = 0;
+	long id = 0;
 	if (arrays_.size() < kMaxArrayId) {
-		*id = arrays_.size() + 1;
+		id = arrays_.size() + 1;
 		arrays_.push_back(std::vector<long>());
-		return kNoError;
 	} else {
-		return kInvalidId;
+		std::string const error_message = caller +
+			": Unable to create array. Maximum number of arrays reached. id: %d\n";
+		cLog::mLogMessage(error_message.c_str(), id);
 	}
+	return id;
 }
 
-TES3MACHINE::ArrayError TES3MACHINE::GetArrayValue(long const id, long const index,
-								long* const value)
+long TES3MACHINE::GetArrayValue(std::string const& caller, long const id,
+	long const index)
 {
+	long value = 0;
 	if (id > 0 && id <= arrays_.size()) {
 		std::vector<long> const& a = arrays_[id - 1];
 		if (index >= 0 && index < a.size()) {
-			*value = a[index];
-			return kNoError;
+			value = a[index];
 		} else 	{
-			return kOutOfBounds;
+		std::string const error_message = caller +
+			": Array index out of bounds. id: %d index: %d\n";
+			cLog::mLogMessage(error_message.c_str(), id, index);
 		}
 	} else {
-		return kInvalidId;
+		std::string const error_message = caller +
+			": Invalid array id: %d\n";
+		cLog::mLogMessage(error_message.c_str(), id);
 	}
+	return value;
 }
 
-TES3MACHINE::ArrayError TES3MACHINE::SetArrayValue(long id, long index, long value)
+long TES3MACHINE::SetArrayValue(std::string const& caller, long const id,
+	long const index, long const value)
 {
+	long success = 0;
 	if (id > 0 && id <= arrays_.size())	{
 		if (index >= 0)	{
 			std::vector<long>& a = arrays_[id - 1];
@@ -824,11 +833,21 @@ TES3MACHINE::ArrayError TES3MACHINE::SetArrayValue(long id, long index, long val
 				a.resize(index + 1);
 			}
 			a[index] = value;
-			return kNoError;
+			success = 1;
 		} else {
-			return kOutOfBounds;
+			std::string const error_message = caller +
+				": Array index out of bounds. id: %d index: %d\n";
+			cLog::mLogMessage(error_message.c_str(), id, index);
 		}
 	} else {
-		return kInvalidId;
+		std::string const error_message = caller +
+			": Invalid array id: %d\n";
+		cLog::mLogMessage(error_message.c_str(), id);
 	}
+	return success;
+}
+
+std::vector<std::vector<long> >& TES3MACHINE::arrays()
+{
+	return arrays_;
 }

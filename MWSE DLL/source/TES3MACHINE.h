@@ -1,6 +1,7 @@
 //Tes3Machine.h
 #pragma once
 
+#include <string>
 #include <vector>
 
 #include <boost/random/mersenne_twister.hpp>
@@ -58,15 +59,12 @@ struct TES3MACHINE : public VIRTUALMACHINE
 	MACPRecord* GetMacpRecord();
 	long GetRandomLong(long min, long max);
 	float GetRandomFloat(float min, float max);
-	enum ArrayError
-	{
-		kNoError,
-		kInvalidId,
-		kOutOfBounds
-	};
-	ArrayError CreateArray(long* const id);
-	ArrayError GetArrayValue(long const id, long const index, long* const value);
-	ArrayError SetArrayValue(long id, long index, long value);
+	long CreateArray(std::string const& caller);
+	long GetArrayValue(std::string const& caller, long const id,
+		long const index);
+	long SetArrayValue(std::string const& caller, long const id,
+		long const index, long const value);
+	std::vector<std::vector<long> >& arrays();
 
 private:
 	typedef void* (__cdecl *ExternalMalloc)(size_t);
