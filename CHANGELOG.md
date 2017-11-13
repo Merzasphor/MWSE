@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Fixed
+- Calling xSetArrayValue with an invalid array id could crash the game.
+
 ## [0.9.5-alpha.20171112] - 2017-11-12
 
 ### Fixed
