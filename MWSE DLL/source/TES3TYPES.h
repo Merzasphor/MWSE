@@ -860,6 +860,61 @@ struct CLASRecord
 	int unknowns[5];
 };
 
+struct RACERecord
+{
+	struct SkillBonus
+	{
+		Skills skill;
+		unsigned long bonus;
+	};
+	struct BaseAttribute
+	{
+		unsigned long male;
+		unsigned long female;
+	};
+	struct HeightWeight
+	{
+		float male;
+		float female;
+	};
+	struct BodyParts
+	{
+		// all point to BODY records
+		void* head1;
+		void* hair;
+		void* neck;
+		void* chest;
+		void* groin;
+		void* hands;
+		void* wrist;
+		void* forearm;
+		void* upper_arm;
+		void* foot;
+		void* ankle;
+		void* knee;
+		void* upper_leg;
+		long unknown1;
+		void* tail;
+		void* head2;
+		long unknown2[14];
+	};
+	void* v_table;
+	RecordTypes record_type; // RACE
+	long unknown1;
+	void* module; // appears to be info about the module this record comes from
+	char id[32];
+	char name[32];
+	SkillBonus skill_bonuses[7];
+	BaseAttribute base_attributes[8]; // index corresponds to Attributes enum
+	HeightWeight height;
+	HeightWeight weight;
+	unsigned long flags; // 1 = playable, 2 = beast, 3 = both
+	long unknown2; // pointer?
+	long unknown3[2];
+	BodyParts male;
+	BodyParts female;
+};
+
 struct NPCBaseRecord	//or the 'base' NPC_ record. you can access it trough the NPCC (NPC Copy) Record (baseNPC)
 {
 	void * vTable;
