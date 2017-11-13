@@ -1,6 +1,10 @@
 //Tes3Machine.h
 #pragma once
 
+#include <vector>
+
+#include <boost/random/mersenne_twister.hpp>
+
 #include "VIRTUALMACHINE.h"
 #include "TES3TYPES.h"
 #include "ADDRESSSPACE.h"
@@ -9,8 +13,6 @@
 
 // 22-08-2006 Tp21
 #include "warnings.h"
-
-#include <boost/random/mersenne_twister.hpp>
 
 typedef enum {INTSWITCHREFERENCE= 1} INTERRUPTS;
 
@@ -56,6 +58,15 @@ struct TES3MACHINE : public VIRTUALMACHINE
 	MACPRecord* GetMacpRecord();
 	long GetRandomLong(long min, long max);
 	float GetRandomFloat(float min, float max);
+	enum ArrayError
+	{
+		kNoError,
+		kInvalidId,
+		kOutOfBounds
+	};
+	ArrayError CreateArray(long* const id);
+	ArrayError GetArrayValue(long const id, long const index, long* const value);
+	ArrayError SetArrayValue(long id, long index, long value);
 
 private:
 	typedef void* (__cdecl *ExternalMalloc)(size_t);
@@ -73,4 +84,6 @@ private:
 	ExternalFree external_free_;
 	ExternalRealloc external_realloc_;
 	boost::random::mt19937 rng_;
+	static long const kMaxArrayId = 16777215; // max 24 bit int - avoid exceding MW global precision
+	std::vector<std::vector<long> > arrays_;
 };

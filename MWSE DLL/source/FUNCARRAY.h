@@ -1,7 +1,6 @@
 #pragma once
 
 #include "TES3MACHINE.h"
-#include "FUNCEXTENDER.h"
 
 class FUNCCREATEARRAY : public FUNCTION
 {

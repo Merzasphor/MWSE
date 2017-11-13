@@ -1,40 +1,15 @@
 #include "FUNCARRAY.h"
 #include "cLog.h"
 
-#include <vector>
-
-long const MAXARRAYID = 16777215; // max 24 bit int - avoid exceding MW global precision
-
-static std::vector< std::vector< long > > arrays;
-
 bool FUNCCREATEARRAY::execute(void)
 {
-	long id = 0;
-	long newId;
-
-	if (arrays.empty())
-	{ 
-		newId = 1;
+	long id;
+	TES3MACHINE::ArrayError error = machine.CreateArray(&id);
+	if (error == TES3MACHINE::kInvalidId) {
+		cLog::mLogMessage(
+			"xCreateArray: Unable to create array. Maximum number of arrays reached. id: %d\n",
+			id);
 	}
-	else
-	{
-		newId = 1 + arrays.size();
-	}
-
-	if (newId <= MAXARRAYID)
-	{
-		id = newId;
-		arrays.push_back(std::vector<long>());
-	}
-	else
-	{
-		cLog::mLogMessage("xCreateArray: Unable to create array. id exceeds MAXARRAYID. id: %d\n", id);
-	}
-
-#ifdef DEBUGGING
-	cLog::mLogMessage("%f= FUNCCREATEARRAY()\n",size);
-#endif	
-
 	return (machine.push(id));
 }
 
@@ -43,27 +18,16 @@ bool FUNCGETARRAYVALUE::execute(void)
 	long id;
 	long index;
 	long value = 0;
-
-	if (machine.pop(id) && machine.pop(index))
-	{
-		if ((id > 0 && id <= arrays.size()))
-		{
-			std::vector<long> const & a = arrays[id - 1];
-			if (index >= 0 && index < a.size())
-			{	
-				value = a[index];
-			}
-			else
-			{
-				cLog::mLogMessage("xGetArrayValue: Array index out of bounds. id: %d index: %d\n", id, index);
-			}
-		}
-		else
-		{
-			cLog::mLogMessage("xGetArrayValue: Invalid array id. id: %d\n", id);
+	if (machine.pop(id) && machine.pop(index)) {
+		TES3MACHINE::ArrayError error = machine.GetArrayValue(id, index, &value);
+		if (error == TES3MACHINE::kInvalidId) {
+			cLog::mLogMessage("xGetArrayValue: Invalid array id: %d\n", id);
+		} else if (error == TES3MACHINE::kOutOfBounds) {
+			cLog::mLogMessage(
+				"xGetArrayValue: Array index out of bounds. id: %d index: %d\n",
+				id, index);
 		}
 	}
-
 	return (machine.push(value));
 }
 
@@ -72,32 +36,16 @@ bool FUNCSETARRAYVALUE::execute(void)
 	long id;
 	long index;
 	long value;
-	bool result = false;
-
-	if (machine.pop(id) && machine.pop(index) && machine.pop(value))
-	{
-		if (id > 0 && id <= MAXARRAYID)
-		{
-			if (index >= 0)
-			{
-				std::vector<long> & a = arrays[id - 1];
-				if (index + 1 > a.size())
-				{
-					a.resize(index + 1);
-				}
-				a[index] = value;
-				result = true;
-			}
-			else
-			{
-				cLog::mLogMessage("xSetArrayValue: Array index out of bounds. id: %d index: %d\n", id, index);
-			}
-		}
-		else
-		{
-			cLog::mLogMessage("xSetArrayValue: Invalid array id. id: %d\n", id);
+	long result = 0;
+	if (machine.pop(id) && machine.pop(index) && machine.pop(value)) {
+		TES3MACHINE::ArrayError error = machine.SetArrayValue(id, index, value);
+		if (error == TES3MACHINE::kOutOfBounds) {
+			cLog::mLogMessage("xSetArrayValue: Array index out of bounds. id: %d index: %d\n", id, index);
+		} else if (error == TES3MACHINE::kInvalidId){
+			cLog::mLogMessage("xSetArrayValue: Invalid array id: %d\n", id);
+		} else if (error == TES3MACHINE::kNoError) {
+			result = 1;
 		}
 	}
-
-	return (machine.push(static_cast<VMREGTYPE>(result)));
+	return (machine.push(result));
 }

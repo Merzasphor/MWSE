@@ -786,3 +786,49 @@ float TES3MACHINE::GetRandomFloat(float min, float max)
 	boost::random::uniform_real_distribution<float> dist(min, max);
 	return dist(rng_);
 }
+
+TES3MACHINE::ArrayError TES3MACHINE::CreateArray(long* const id)
+{
+	*id = 0;
+	if (arrays_.size() < kMaxArrayId) {
+		*id = arrays_.size() + 1;
+		arrays_.push_back(std::vector<long>());
+		return kNoError;
+	} else {
+		return kInvalidId;
+	}
+}
+
+TES3MACHINE::ArrayError TES3MACHINE::GetArrayValue(long const id, long const index,
+								long* const value)
+{
+	if (id > 0 && id <= arrays_.size()) {
+		std::vector<long> const& a = arrays_[id - 1];
+		if (index >= 0 && index < a.size()) {
+			*value = a[index];
+			return kNoError;
+		} else 	{
+			return kOutOfBounds;
+		}
+	} else {
+		return kInvalidId;
+	}
+}
+
+TES3MACHINE::ArrayError TES3MACHINE::SetArrayValue(long id, long index, long value)
+{
+	if (id > 0 && id <= arrays_.size())	{
+		if (index >= 0)	{
+			std::vector<long>& a = arrays_[id - 1];
+			if (index + 1 > a.size()) {
+				a.resize(index + 1);
+			}
+			a[index] = value;
+			return kNoError;
+		} else {
+			return kOutOfBounds;
+		}
+	} else {
+		return kInvalidId;
+	}
+}
