@@ -6,8 +6,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
-- New function to get race information: xGetRace.
+- New function to get the race of the player and NPCs: xGetRace.
 - New function get the number of elements in an array: xGetArraySize
+- New function to remove all elements in an array: xClearArray
 
 ### Fixed
 - Calling xSetArrayValue with an invalid array id could crash the game.

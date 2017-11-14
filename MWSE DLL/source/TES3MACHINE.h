@@ -65,6 +65,7 @@ struct TES3MACHINE : public VIRTUALMACHINE
 	long SetArrayValue(std::string const& caller, long const id,
 		long const index, long const value);
 	long GetArraySize(std::string const& caller, long const id);
+	long ClearArray(std::string const& caller, long const id);
 	std::vector<std::vector<long> >& arrays();
 
 private:

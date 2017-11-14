@@ -40,4 +40,13 @@ private:
 	TES3MACHINE& machine;
 };
 
+class ClearArrayFunction : public FUNCTION
+{
+public:
+	ClearArrayFunction(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute();
+private:
+	TES3MACHINE& machine;
+};
+
 #endif // MWSE_ARRAYFUNCTIONS_H_

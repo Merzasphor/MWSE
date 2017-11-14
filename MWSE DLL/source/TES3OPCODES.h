@@ -484,6 +484,7 @@ typedef enum {
 	,GETMAXFATIGUE      = 0x3959
 	,GETRACE			= 0x395A
 	,GETARRAYSIZE		= 0x395B
+	,CLEARARRAY			= 0x395C
 
 	,GETGS              = 0x3A00
 	,SETGS				= 0x3A01

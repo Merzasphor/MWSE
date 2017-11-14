@@ -1720,6 +1720,13 @@ function
 	Opcode = 0x395B
 end
 
+function
+	Name = XClearArray
+	Options = MWSE | AllowGlobal | AllowVar
+	Return = Long
+	Param1 = Long
+	Opcode = 0x395C
+end
 
 
 # MGE extensions

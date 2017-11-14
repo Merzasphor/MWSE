@@ -38,3 +38,13 @@ bool GetArraySizeFunction::execute()
 	}
 	return (machine.push(size));
 }
+
+bool ClearArrayFunction::execute()
+{
+	long id;
+	long success = 0;
+	if (machine.pop(id)) {
+		success = machine.ClearArray("xClearArray", id);
+	}
+	return (machine.push(success));
+}
