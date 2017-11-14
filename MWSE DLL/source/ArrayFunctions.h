@@ -31,4 +31,13 @@ private:
 	TES3MACHINE& machine;
 };
 
+class GetArraySizeFunction : public FUNCTION
+{
+public:
+	GetArraySizeFunction(TES3MACHINE& vm) :machine(vm) {}
+	virtual bool execute();
+private:
+	TES3MACHINE& machine;
+};
+
 #endif // MWSE_ARRAYFUNCTIONS_H_

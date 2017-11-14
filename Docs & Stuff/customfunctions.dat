@@ -1712,6 +1712,14 @@ function
 	Opcode = 0x395A
 end
 
+function
+	Name = XGetArraySize
+	Options = MWSE | AllowGlobal | AllowVar
+	Return = Long
+	Param1 = Long
+	Opcode = 0x395B
+end
+
 
 
 # MGE extensions

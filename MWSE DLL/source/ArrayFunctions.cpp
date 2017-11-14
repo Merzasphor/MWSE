@@ -28,3 +28,13 @@ bool SetArrayValueFunction::execute()
 	}
 	return (machine.push(result));
 }
+
+bool GetArraySizeFunction::execute()
+{
+	long id;
+	long size = 0;
+	if (machine.pop(id)) {
+		size = machine.GetArraySize("xGetArraySize", id);
+	}
+	return (machine.push(size));
+}

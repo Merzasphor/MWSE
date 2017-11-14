@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - New function to get race information: xGetRace.
+- New function get the number of elements in an array: xGetArraySize
 
 ### Fixed
 - Calling xSetArrayValue with an invalid array id could crash the game.

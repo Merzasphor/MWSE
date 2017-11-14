@@ -359,6 +359,7 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(GETMAXMAGICKA, new GetMaxMagickaFunction(*this));
 	AddInstruction(GETMAXFATIGUE, new GetMaxFatigueFunction(*this));
 	AddInstruction(GETRACE, new GetRaceFunction(*this));
+	AddInstruction(GETARRAYSIZE, new GetArraySizeFunction(*this));
 
 	AddInstruction(GETGS, new FUNCGETGS(*this));
 	AddInstruction(SETGS, new FUNCSETGS(*this));
@@ -847,6 +848,19 @@ long TES3MACHINE::SetArrayValue(std::string const& caller, long const id,
 		cLog::mLogMessage(error_message.c_str(), id);
 	}
 	return success;
+}
+
+long TES3MACHINE::GetArraySize(std::string const& caller, long const id)
+{
+	long size = 0;
+	if (id > 0 && id <= arrays_.size()) {
+		size = arrays_[id - 1].size();
+	} else {
+		std::string const error_message = caller +
+			": Invalid array id: %d\n";
+		cLog::mLogMessage(error_message.c_str(), id);
+	}
+	return size;
 }
 
 std::vector<std::vector<long> >& TES3MACHINE::arrays()
