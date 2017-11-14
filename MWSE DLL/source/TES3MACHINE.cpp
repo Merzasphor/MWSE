@@ -42,7 +42,7 @@ using namespace std;
 #include "FUNCFILE.h"
 #include "FUNCINVENTORY.h"
 #include "FUNCGMST.h"
-#include "FUNCARRAY.h"
+#include "ArrayFunctions.h"
 #include "FUNCEXTENDER.h"
 #include "GetSkillInfoFunction.h"
 #include "SetSkillInfoFunction.h"
@@ -316,9 +316,9 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(MODPROGRESSSKILL, new FUNCMODPROGRESSSKILL(*this));
 	AddInstruction(GETBASESKILL, new FUNCGETBASESKILL(*this));
 	AddInstruction(MODPROGRESSLEVEL, new FUNCMODPROGRESSLEVEL(*this));
-	AddInstruction(CREATEARRAY, new FUNCCREATEARRAY(*this));
-	AddInstruction(GETARRAYVALUE, new FUNCGETARRAYVALUE(*this));
-	AddInstruction(SETARRAYVALUE, new FUNCSETARRAYVALUE(*this));
+	AddInstruction(CREATEARRAY, new CreateArrayFunction(*this));
+	AddInstruction(GETARRAYVALUE, new GetArrayValueFunction(*this));
+	AddInstruction(SETARRAYVALUE, new SetArrayValueFunction(*this));
 	AddInstruction(GETOWNERINFO, new FUNCGETOWNERINFO(*this));
 	AddInstruction(POW, new INSTPOW(*this));
 	AddInstruction(SHIFT, new INSTSHIFT(*this));

@@ -1,12 +1,12 @@
-#include "FUNCARRAY.h"
+#include "ArrayFunctions.h"
 
-bool FUNCCREATEARRAY::execute(void)
+bool CreateArrayFunction::execute()
 {
 	long id = machine.CreateArray("xCreateArray");
 	return (machine.push(id));
 }
 
-bool FUNCGETARRAYVALUE::execute(void)
+bool GetArrayValueFunction::execute()
 {
 	long id;
 	long index;
@@ -17,7 +17,7 @@ bool FUNCGETARRAYVALUE::execute(void)
 	return (machine.push(value));
 }
 
-bool FUNCSETARRAYVALUE::execute(void)
+bool SetArrayValueFunction::execute()
 {
 	long id;
 	long index;

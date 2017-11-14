@@ -299,11 +299,11 @@
 				Name="Functions"
 				>
 				<File
-					RelativePath=".\source\FUNCAI.h"
+					RelativePath=".\source\ArrayFunctions.h"
 					>
 				</File>
 				<File
-					RelativePath=".\source\FUNCARRAY.h"
+					RelativePath=".\source\FUNCAI.h"
 					>
 				</File>
 				<File
@@ -537,11 +537,11 @@
 				Name="Functions"
 				>
 				<File
-					RelativePath=".\source\FUNCAI.cpp"
+					RelativePath=".\source\ArrayFunctions.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\source\FUNCARRAY.cpp"
+					RelativePath=".\source\FUNCAI.cpp"
 					>
 				</File>
 				<File
