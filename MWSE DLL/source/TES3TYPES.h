@@ -962,7 +962,7 @@ struct NPCBaseRecord	//or the 'base' NPC_ record. you can access it trough the N
 	int unknown37;
 	int unknown38;
 	int unknown39;	
-	int unknown40;	//RACE
+	RACERecord* race; //RACE
 	CLASRecord * characterClass;
 	int unknown42;	//BODY (head)
 	int unknown43;	//BODY (hair)

@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+- New function to get race information: xGetRace.
+
 ### Fixed
 - Calling xSetArrayValue with an invalid array id could crash the game.
 

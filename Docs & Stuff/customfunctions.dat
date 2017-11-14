@@ -1704,6 +1704,14 @@ function
 	Opcode = 0x3959
 end
 
+function
+	Name = XGetRace
+	Options = MWSE | AllowGlobal | AllowVar
+	Return = Long
+	Param1 = Short
+	Opcode = 0x395A
+end
+
 
 
 # MGE extensions

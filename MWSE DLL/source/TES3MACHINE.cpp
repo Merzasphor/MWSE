@@ -59,6 +59,7 @@ using namespace std;
 #include "RandomFloatFunction.h"
 #include "RandomLongFunction.h"
 #include "GetEncumbranceFunction.h"
+#include "GetRaceFunction.h"
 
 #ifdef DEBUG
 #include <stdio.h>
@@ -357,6 +358,7 @@ TES3MACHINE::TES3MACHINE()
 	AddInstruction(GETENCUMBRANCE, new GetEncumbranceFunction(*this));
 	AddInstruction(GETMAXMAGICKA, new GetMaxMagickaFunction(*this));
 	AddInstruction(GETMAXFATIGUE, new GetMaxFatigueFunction(*this));
+	AddInstruction(GETRACE, new GetRaceFunction(*this));
 
 	AddInstruction(GETGS, new FUNCGETGS(*this));
 	AddInstruction(SETGS, new FUNCSETGS(*this));

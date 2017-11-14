@@ -482,6 +482,7 @@ typedef enum {
 	,GETENCUMBRANCE     = 0x3957
 	,GETMAXMAGICKA      = 0x3958
 	,GETMAXFATIGUE      = 0x3959
+	,GETRACE			= 0x395A
 
 	,GETGS              = 0x3A00
 	,SETGS				= 0x3A01
