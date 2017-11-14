@@ -1,4 +1,5 @@
-#pragma once
+#ifndef MWSE_FUNCARRAY_H_
+#define MWSE_FUNCARRAY_H_
 
 #include "TES3MACHINE.h"
 
@@ -28,3 +29,5 @@ public:
 private:
 	TES3MACHINE& machine;
 };
+
+#endif // MWSE_FUNCARRAY_H_

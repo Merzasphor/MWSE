@@ -1,5 +1,4 @@
 #include "FUNCARRAY.h"
-#include "cLog.h"
 
 bool FUNCCREATEARRAY::execute(void)
 {
