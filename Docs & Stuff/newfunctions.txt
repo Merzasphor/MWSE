@@ -1,5 +1,48 @@
 Functions:
 
+xGetRace
+long id ref->xGetRace short type
+Returns information about the race of ref.
+type: 0 = return the race name as a string, 1 = return an array
+id: string or array id
+If ref is not the player or an NPC, id is set to 0.
+Array values:
+Index	Type	Contents
+0		string	race ID
+1		string 	race name
+2		array	skill bonuses
+3		array	starting attributes
+4		float	male height
+5		float	female height
+6		float	male weight
+7		float	female weight
+8		long	playable flag
+9		long	beast flag
+
+skill bonuses
+0		long	number of skill bonuses (0-7)
+1		long	skill id
+2		long	bonus value
+...
+
+starting attributes
+0		long	male strength
+1		long	female strength
+2		long	male intelligence
+...
+
+xGetArraySize
+long size xGetArraySize long array
+Returns the number of elements in array.
+array: id of array to evaluate
+size: number of elements in array, 0 if array is not valid
+
+xClearArray
+long result xClearArray long array
+Removes all elements in array. Array is still a valid array with size 0.
+array: id of array to clear
+result: 0 if array is invalid, 1 otherwise.
+
 xGetEncumbrance
 float encumbrance ref->xGetEncumbrance short type short round
 Returns the current or maximum encumbrance of ref.
