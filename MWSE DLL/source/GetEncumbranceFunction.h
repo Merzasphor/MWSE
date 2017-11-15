@@ -16,7 +16,7 @@ public:
 	virtual bool execute();
 private:
 	TES3MACHINE& machine;
-	std::set<SPLLNode const* const> visited_nodes_;
+	std::set<const SPLLNode*> visited_nodes_;
 	typedef std::multimap<std::string const,
 		std::pair<double const, float const> const> EffectsMap;
 	EffectsMap active_effects_;

@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Changed
+- Changed project base from Visual Studio 2005 to Visual Studio 2017.
+
 ## [0.9.5-alpha.20171114] - 2017-11-14
 
 ### Added

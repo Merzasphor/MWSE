@@ -106,7 +106,7 @@ bool VIRTUALMACHINE::AccessMem(MEMACCESSOR& access, VPVOID addr, VOID* buf, VMSI
 		if(memstart<=start && start<memend)
 		{
 			VMSIZE memoffset= start-memstart;
-			VMSIZE memlen= _cpp_min((VMSIZE)(memend-start),size);
+			VMSIZE memlen= min((VMSIZE)(memend-start),size);
 
 			if(access.access(*mem,(VPVOID)memoffset,buf,memlen))
 				size-= memlen;

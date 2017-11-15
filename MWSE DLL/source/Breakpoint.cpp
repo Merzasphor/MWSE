@@ -145,10 +145,16 @@ Continue:
 }
 
 //This one conflicts with MWE, so move it backward a bit
+//Migration from VS2005 to VS2017 rejects direct jumps to explicit memory addresses. This function was changed to get around this.
 static __declspec(naked) void Interrupt3() {
     _asm {
+		jmp hacky_jump_after
+hacky_jump_sectioned:
+		mov eax, 0050D5CEh
+		jmp eax
+hacky_jump_after:
         cmp edx, 0x1bd
-        jl 0x0050D5CE
+        jl hacky_jump_sectioned
         _emit 0x6a
         _emit 0x03
         call InterruptExtern
@@ -236,7 +242,7 @@ void RemoveBreakpoint(BYTE ID) {
 	//cLog::mLogMessage("Removing breakpoint ID %d\n", ID);
 
 	DWORD OldProtect;
-	const BYTE* source;
+	const BYTE* source = NULL;
 	switch(ID) {
 		case 0: source=(BYTE*)&BP0; break;
 		case 1: source=(BYTE*)&BP1; break;

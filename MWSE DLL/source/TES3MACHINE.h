@@ -3,8 +3,7 @@
 
 #include <string>
 #include <vector>
-
-#include <boost/random/mersenne_twister.hpp>
+#include <random>
 
 #include "VIRTUALMACHINE.h"
 #include "TES3TYPES.h"
@@ -83,7 +82,7 @@ private:
 	ExternalMalloc external_malloc_;
 	ExternalFree external_free_;
 	ExternalRealloc external_realloc_;
-	boost::random::mt19937 rng_;
+	std::mt19937 rng_;
 	static long const kMaxArrayId = 16777215; // max 24 bit int - avoid exceding MW global precision
 	std::vector<std::vector<long> > arrays_;
 };
