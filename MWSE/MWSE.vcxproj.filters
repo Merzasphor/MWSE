@@ -13,108 +13,132 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\ScriptVM">
+      <UniqueIdentifier>{788e7d9f-d144-40dc-9269-327a315bb516}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DataAdapters">
+      <UniqueIdentifier>{920e59e8-136f-47c3-a00b-2140c2503670}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ScriptVM">
+      <UniqueIdentifier>{98090f88-6af9-4784-8299-282fb0bcd73a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Functions">
+      <UniqueIdentifier>{9751081a-e2ea-4487-ac5f-9bec70a7fd7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Functions">
+      <UniqueIdentifier>{5c76601b-346b-4845-9980-d0d1765e998e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utility">
+      <UniqueIdentifier>{b56416f6-f9d7-4b4b-ae95-94e13114b47a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility">
+      <UniqueIdentifier>{a80f4438-f86c-4c93-8dbc-0b1163f26b48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DataAdapters">
+      <UniqueIdentifier>{2fb5c485-2d19-4254-bda9-7ef4f0c79a3b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="VMHookInterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Flags.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InstructionInterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InstructionStore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Log.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MemAccess.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mwAdapter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mwseString.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mwseTypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Reference.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Flags.h">
+      <Filter>Header Files\ScriptVM</Filter>
+    </ClInclude>
+    <ClInclude Include="mwAdapter.h">
+      <Filter>Header Files\ScriptVM</Filter>
+    </ClInclude>
+    <ClInclude Include="mwseString.h">
+      <Filter>Header Files\DataAdapters</Filter>
+    </ClInclude>
+    <ClInclude Include="mwseTypes.h">
+      <Filter>Header Files\DataAdapters</Filter>
+    </ClInclude>
+    <ClInclude Include="InstructionInterface.h">
+      <Filter>Header Files\ScriptVM</Filter>
+    </ClInclude>
+    <ClInclude Include="InstructionStore.h">
+      <Filter>Header Files\ScriptVM</Filter>
+    </ClInclude>
     <ClInclude Include="Stack.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ScriptVM</Filter>
     </ClInclude>
     <ClInclude Include="VirtualMachine.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ScriptVM</Filter>
     </ClInclude>
     <ClInclude Include="VMExecuteInterface.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ScriptVM</Filter>
+    </ClInclude>
+    <ClInclude Include="VMHookInterface.h">
+      <Filter>Header Files\ScriptVM</Filter>
+    </ClInclude>
+    <ClInclude Include="MemAccess.h">
+      <Filter>Header Files\ScriptVM</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Reference.h">
+      <Filter>Header Files\ScriptVM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="refType.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="setRef.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Stack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VirtualMachine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="distance.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Flags.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="getLocal.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="getPCTarget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="getRef.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InstructionInterface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InstructionStore.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Jump.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Log.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mwAdapter.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="distance.cpp">
+      <Filter>Source Files\Functions</Filter>
     </ClCompile>
-    <ClCompile Include="mwseString.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Flags.cpp">
+      <Filter>Source Files\ScriptVM</Filter>
     </ClCompile>
-    <ClCompile Include="Pop.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="InstructionInterface.cpp">
+      <Filter>Source Files\ScriptVM</Filter>
     </ClCompile>
-    <ClCompile Include="Push.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="InstructionStore.cpp">
+      <Filter>Source Files\ScriptVM</Filter>
+    </ClCompile>
+    <ClCompile Include="Jump.cpp">
+      <Filter>Source Files\ScriptVM</Filter>
+    </ClCompile>
+    <ClCompile Include="Stack.cpp">
+      <Filter>Source Files\ScriptVM</Filter>
+    </ClCompile>
+    <ClCompile Include="getLocal.cpp">
+      <Filter>Source Files\ScriptVM</Filter>
     </ClCompile>
     <ClCompile Include="Reference.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ScriptVM</Filter>
+    </ClCompile>
+    <ClCompile Include="Push.cpp">
+      <Filter>Source Files\ScriptVM</Filter>
+    </ClCompile>
+    <ClCompile Include="Pop.cpp">
+      <Filter>Source Files\ScriptVM</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="VirtualMachine.cpp">
+      <Filter>Source Files\ScriptVM</Filter>
+    </ClCompile>
+    <ClCompile Include="setRef.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="getRef.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="getPCTarget.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="mwseString.cpp">
+      <Filter>Source Files\DataAdapters</Filter>
+    </ClCompile>
+    <ClCompile Include="mwAdapter.cpp">
+      <Filter>Source Files\ScriptVM</Filter>
+    </ClCompile>
+    <ClCompile Include="refType.cpp">
+      <Filter>Source Files\Functions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
