@@ -10,11 +10,11 @@
 // 22-08-2006 Tp21
 #include "warnings.h"
 
-#include <boost/regex.hpp>
-
 #include <iomanip>
 #include <sstream>
 #include <string>
+#include <cctype>
+#include <regex>
 
 #ifndef ULONG
 #define ULONG unsigned long int
@@ -787,7 +787,7 @@ bool FUNCSTRINGMATCH::execute(void)
         string = machine.GetString(reinterpret_cast<VPVOID>(regString));
         pattern = machine.GetString(reinterpret_cast<VPVOID>(regPattern));
         if (string != NULL && pattern != NULL) {
-            match = boost::regex_search(string, boost::regex(pattern));
+            match = std::regex_search(string, std::regex(pattern));
         }
     }
 #ifdef DEBUGGING

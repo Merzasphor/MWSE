@@ -1,6 +1,6 @@
 
 #include "cLog.h"
-#include "cMWSEmain.h"
+#include "cMWSEMain.h"
 
 #include <windows.h>
 #include <string>

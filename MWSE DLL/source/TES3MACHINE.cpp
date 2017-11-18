@@ -9,6 +9,7 @@
 #include "cLog.h"
 
 #include <algorithm>
+#include <random>
 using namespace std;
 
 #include "TES3OPCODES.h"
@@ -69,9 +70,6 @@ using namespace std;
 #endif
 // 22-08-2006 Tp21
 #include "warnings.h"
-
-#include <boost/random/uniform_int_distribution.hpp>
-#include <boost/random/uniform_real_distribution.hpp>
 
 #include <ctime>
 
@@ -446,7 +444,7 @@ bool TES3MACHINE::Interrupt(VMINTERRUPT num)
 		VMSIZE offset= 0;
 		result= true;
 
-        while(result && (read=_cpp_min((VMSIZE)sizeof(buf),script.scdtlength-offset))>0)
+        while(result && (read=min((VMSIZE)sizeof(buf),script.scdtlength-offset))>0)
 		{
 			result= (ReadMem(script.scdt+offset,buf,read)
 				&& WriteMem((VPVOID)SCRIPTMEM_VPOS+offset,buf,read));
@@ -781,13 +779,13 @@ MACPRecord* TES3MACHINE::GetMacpRecord()
 
 long TES3MACHINE::GetRandomLong(long min, long max)
 {
-	boost::random::uniform_int_distribution<long> dist(min, max);
+	std::uniform_int_distribution<long> dist(min, max);
 	return dist(rng_);
 }
 
 float TES3MACHINE::GetRandomFloat(float min, float max)
 {
-	boost::random::uniform_real_distribution<float> dist(min, max);
+	std::uniform_real_distribution<float> dist(min, max);
 	return dist(rng_);
 }
 

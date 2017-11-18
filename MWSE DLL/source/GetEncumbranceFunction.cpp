@@ -1,7 +1,5 @@
 #include "GetEncumbranceFunction.h"
 
-#include <boost/math/special_functions/round.hpp>
-
 #include "TES3OFFSETS.h"
 
 bool GetEncumbranceFunction::execute()
@@ -61,7 +59,7 @@ bool GetEncumbranceFunction::execute()
 			}
 			// The smallest item weight is 0.01, so round to nearest 0.01.
 			if (round_result != 0)
-				encumbrance = boost::math::round(encumbrance * 100.0) / 100.0;
+				encumbrance = round(encumbrance * 100.0) / 100.0;
 		}
 	}
 	float value = static_cast<float>(encumbrance);

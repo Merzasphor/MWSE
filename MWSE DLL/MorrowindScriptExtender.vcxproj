@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="source\ADDRESSSPACE.h" />
+    <ClInclude Include="source\ArrayFunctions.h" />
+    <ClInclude Include="source\Breakpoint.h" />
+    <ClInclude Include="source\BUFSPACE.h" />
+    <ClInclude Include="source\cInstCall.h" />
+    <ClInclude Include="source\cInstCallShort.h" />
+    <ClInclude Include="source\cInstCopyFromStack.h" />
+    <ClInclude Include="source\cInstCopyReg.h" />
+    <ClInclude Include="source\cInstCopyToStack.h" />
+    <ClInclude Include="source\cInstReturn.h" />
+    <ClInclude Include="source\cInstReturnP.h" />
+    <ClInclude Include="source\cInstReturnVP.h" />
+    <ClInclude Include="source\cLog.h" />
+    <ClInclude Include="source\cMailClient.h" />
+    <ClInclude Include="source\cMWSEMain.h" />
+    <ClInclude Include="source\DEBUGGING.h" />
+    <ClInclude Include="source\FILECACHE.h" />
+    <ClInclude Include="source\FUNCAI.h" />
+    <ClInclude Include="source\FUNCEXTENDER.h" />
+    <ClInclude Include="source\FUNCFILE.h" />
+    <ClInclude Include="source\FUNCGMST.h" />
+    <ClInclude Include="source\FUNCINVENTORY.h" />
+    <ClInclude Include="source\FUNCLOG.h" />
+    <ClInclude Include="source\FUNCPOSITION.h" />
+    <ClInclude Include="source\FUNCPROPERTIES.h" />
+    <ClInclude Include="source\FUNCREFERENCE.h" />
+    <ClInclude Include="source\FUNCTEXT.h" />
+    <ClInclude Include="source\FUNCTION.h" />
+    <ClInclude Include="source\FUNCVARIABLES.h" />
+    <ClInclude Include="source\GetAttributeFunction.h" />
+    <ClInclude Include="source\GetBaseAttributeFunction.h" />
+    <ClInclude Include="source\GetEncumbranceFunction.h" />
+    <ClInclude Include="source\GetGsStringFunction.h" />
+    <ClInclude Include="source\GetMaxFatigueFunction.h" />
+    <ClInclude Include="source\GetMaxHealthFunction.h" />
+    <ClInclude Include="source\GetMaxMagickaFunction.h" />
+    <ClInclude Include="source\GetRaceFunction.h" />
+    <ClInclude Include="source\GetSkillFunction.h" />
+    <ClInclude Include="source\GetSkillInfoFunction.h" />
+    <ClInclude Include="source\INSTFLOAT.h" />
+    <ClInclude Include="source\INSTINT.h" />
+    <ClInclude Include="source\INSTJUMP.h" />
+    <ClInclude Include="source\INSTNOP.h" />
+    <ClInclude Include="source\INSTPOP.h" />
+    <ClInclude Include="source\INSTPUSH.h" />
+    <ClInclude Include="source\INSTRUCTION.h" />
+    <ClInclude Include="source\MEMACCESSOR.h" />
+    <ClInclude Include="source\MEMACCESSORS.h" />
+    <ClInclude Include="source\ModAttributeFunction.h" />
+    <ClInclude Include="source\ProcessMem.h" />
+    <ClInclude Include="source\RandomFloatFunction.h" />
+    <ClInclude Include="source\RandomLongFunction.h" />
+    <ClInclude Include="source\REFERENCE.h" />
+    <ClInclude Include="source\SetGsStringFunction.h" />
+    <ClInclude Include="source\SetLevelFunction.h" />
+    <ClInclude Include="source\SetSkillInfoFunction.h" />
+    <ClInclude Include="source\STRINGS.h" />
+    <ClInclude Include="source\TES3MACHINE.h" />
+    <ClInclude Include="source\TES3MemMap.h" />
+    <ClInclude Include="source\TES3OFFSETS.h" />
+    <ClInclude Include="source\TES3OPCODES.h" />
+    <ClInclude Include="source\TES3TYPES.h" />
+    <ClInclude Include="source\VIRTUALMACHINE.h" />
+    <ClInclude Include="source\VMTYPES.h" />
+    <ClInclude Include="source\warnings.h" />
+    <ClInclude Include="source\WinHeader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\ArrayFunctions.cpp" />
+    <ClCompile Include="source\Breakpoint.cpp" />
+    <ClCompile Include="source\BUFSPACE.cpp" />
+    <ClCompile Include="source\cInstCall.cpp" />
+    <ClCompile Include="source\cInstCallShort.cpp" />
+    <ClCompile Include="source\cInstCopyFromStack.cpp" />
+    <ClCompile Include="source\cInstCopyReg.cpp" />
+    <ClCompile Include="source\cInstCopyToStack.cpp" />
+    <ClCompile Include="source\cInstReturn.cpp" />
+    <ClCompile Include="source\cInstReturnP.cpp" />
+    <ClCompile Include="source\cInstReturnVP.cpp" />
+    <ClCompile Include="source\cLog.cpp" />
+    <ClCompile Include="source\cMailClient.cpp" />
+    <ClCompile Include="source\cMWSEMain.cpp" />
+    <ClCompile Include="source\FILECACHE.cpp" />
+    <ClCompile Include="source\FUNCAI.cpp" />
+    <ClCompile Include="source\FUNCEXTENDER.cpp" />
+    <ClCompile Include="source\FUNCFILE.cpp" />
+    <ClCompile Include="source\FUNCGMST.cpp" />
+    <ClCompile Include="source\FUNCINVENTORY.cpp" />
+    <ClCompile Include="source\FUNCLOG.cpp" />
+    <ClCompile Include="source\FUNCPOSITION.cpp" />
+    <ClCompile Include="source\FUNCPROPERTIES.cpp" />
+    <ClCompile Include="source\FUNCREFERENCE.cpp" />
+    <ClCompile Include="source\FUNCTEXT.cpp" />
+    <ClCompile Include="source\FUNCVARIABLES.cpp" />
+    <ClCompile Include="source\GetAttributeFunction.cpp" />
+    <ClCompile Include="source\GetBaseAttributeFunction.cpp" />
+    <ClCompile Include="source\GetEncumbranceFunction.cpp" />
+    <ClCompile Include="source\GetGsStringFunction.cpp" />
+    <ClCompile Include="source\GetMaxFatigueFunction.cpp" />
+    <ClCompile Include="source\GetMaxHealthFunction.cpp" />
+    <ClCompile Include="source\GetMaxMagickaFunction.cpp" />
+    <ClCompile Include="source\GetRaceFunction.cpp" />
+    <ClCompile Include="source\GetSkillFunction.cpp" />
+    <ClCompile Include="source\GetSkillInfoFunction.cpp" />
+    <ClCompile Include="source\INSTFLOAT.cpp" />
+    <ClCompile Include="source\INSTINT.cpp" />
+    <ClCompile Include="source\INSTJUMP.cpp" />
+    <ClCompile Include="source\INSTPOP.cpp" />
+    <ClCompile Include="source\INSTPUSH.cpp" />
+    <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\ModAttributeFunction.cpp" />
+    <ClCompile Include="source\ProcessMem.cpp" />
+    <ClCompile Include="source\RandomFloatFunction.cpp" />
+    <ClCompile Include="source\RandomLongFunction.cpp" />
+    <ClCompile Include="source\REFERENCE.cpp" />
+    <ClCompile Include="source\SetGsStringFunction.cpp" />
+    <ClCompile Include="source\SetLevelFunction.cpp" />
+    <ClCompile Include="source\SetSkillInfoFunction.cpp" />
+    <ClCompile Include="source\STRING.cpp" />
+    <ClCompile Include="source\TES3MACHINE.cpp" />
+    <ClCompile Include="source\TES3OFFSETS.cpp" />
+    <ClCompile Include="source\VIRTUALMACHINE.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{BE1DF9AB-CBD1-4D73-84B6-7B8F362561EC}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>MWSEDLL</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <TargetName>MWSE</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+    <TargetName>MWSE</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;MWSEDLL_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>Dbghelp.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;MWSEDLL_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>Dbghelp.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
