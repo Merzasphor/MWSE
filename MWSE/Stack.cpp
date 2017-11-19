@@ -24,12 +24,9 @@ using namespace mwse;
 
 Stack Stack::singleton;
 
-static const size_t initial_stack_size = 64;
-static const size_t stack_grow_size = 32;
-
 Stack::Stack()
 {
-    stack_size = 64;
+    stack_size = initial_stack_size;
     stack_storage = new StackItem_t[stack_size];
     stack_top = 0;
 }

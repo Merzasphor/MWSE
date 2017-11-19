@@ -20,9 +20,14 @@
 
 #pragma once
 
+#define MWSE_DEBUG_STACK 0
+
 #include "mwseTypes.h"
 #include "mwseString.h"
 #include "Flags.h"
+#include "Log.h"
+
+#include <stdexcept>
 
 /**
  * This Stack class is a singleton. It provides an
@@ -42,6 +47,10 @@
  *      mwLong_t value = Stack::getInstance().popLong(value);
  */
 namespace mwse {
+
+	static const size_t initial_stack_size = 64;
+	static const size_t stack_grow_size = 32;
+
     class Stack {
         public:
             static Stack &getInstance() { return singleton; };
@@ -70,19 +79,19 @@ namespace mwse {
             }
             //void pushRef(const mwRef_t &value);
 
-			char        popByte(void)
+			char popByte(void)
 			{
 				return static_cast<char>(pop());
 			}
-            mwShort_t   popShort(void)
+            mwShort_t popShort(void)
             {
                 return static_cast<mwShort_t>(pop());
             }
-            mwLong_t    popLong(void)
+            mwLong_t popLong(void)
             {
                 return static_cast<mwLong_t>(pop());
             }
-            mwFloat_t   popFloat(void)
+            mwFloat_t popFloat(void)
             {
 				int temp = pop();
 				return *reinterpret_cast<mwFloat_t*>(&temp);
@@ -97,6 +106,21 @@ namespace mwse {
                 stack_top -= frame_count > stack_top ? stack_top : frame_count;
             }
 
+			// Returns the element count of the stack.
+			size_t size()
+			{
+				return stack_top;
+			}
+
+			// Prints information about the Stack to the MWSE log file.
+			void dump()
+			{
+				log::getLog() << std::dec << "Stack dump (Size: " << stack_top << "; Buffer Size: " << stack_size << "):" << std::endl;
+				for (size_t i = stack_top; i > 0; i--) {
+					log::getLog() << "\t" << std::dec << i-1 << "\t" << std::hex << stack_storage[i-1] << "h" << std::endl;
+				}
+			}
+
         private:
             Stack();
 
@@ -105,7 +129,7 @@ namespace mwse {
             void push(StackItem_t value)
             {
                 if (stack_top >= stack_size) {
-                    stack_size += 32;
+                    stack_size += stack_grow_size;
                     StackItem_t *new_stack = new StackItem_t[stack_size];
                     for (size_t i = 0; i < stack_top; i++) {
                         new_stack[i] = stack_storage[i];
@@ -113,6 +137,9 @@ namespace mwse {
                     delete [] stack_storage;
                     stack_storage = new_stack;
                 }
+#if MWSE_DEBUG_STACK
+				log::getLog() << std::dec << "Stack: Pushing element " << stack_top << " as " << std::hex << value << "h" << std::endl;
+#endif
                 stack_storage[stack_top] = value;
                 stack_top++;
 
@@ -122,9 +149,16 @@ namespace mwse {
             StackItem_t pop()
             {
                 if (stack_top == 0) {
-                    //throw ?
+#if DEBUG
+					throw new std::underflow_error("Could not pop from stack: top is already at zero.");
+#else
+					return 0;
+#endif
                 }
                 stack_top --;
+#if MWSE_DEBUG_STACK
+				log::getLog() << std::dec << "Stack: Popping element " << stack_top << " as " << std::hex << stack_storage[stack_top] << "h" << std::endl;
+#endif
                 return stack_storage[stack_top];
             }
 
