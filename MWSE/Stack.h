@@ -60,9 +60,9 @@ namespace mwse {
             {
                 push(static_cast<StackItem_t>(value));
             }
-            void pushFloat(const mwFloat_t value)
+            void pushFloat(mwFloat_t value)
             {
-                push(static_cast<StackItem_t>(value));
+                push(*reinterpret_cast<StackItem_t*>(&value));
             }
             void pushString(const mwseString_t &value)
             {
@@ -84,7 +84,8 @@ namespace mwse {
             }
             mwFloat_t   popFloat(void)
             {
-                return static_cast<mwFloat_t>(pop());
+				int temp = pop();
+				return *reinterpret_cast<mwFloat_t*>(&temp);
             }
             mwseString_t popString(void)
             {
