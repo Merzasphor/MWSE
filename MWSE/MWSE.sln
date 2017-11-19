@@ -1,20 +1,25 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MWSE", "MWSE.vcproj", "{F9DC95A5-6C27-43F3-BE1E-632379055F2D}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MWSE", "MWSE.vcxproj", "{CF29BC49-506F-4555-8849-5D59F2519D53}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Win32 = Debug|Win32
-		Release|Win32 = Release|Win32
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F9DC95A5-6C27-43F3-BE1E-632379055F2D}.Debug|Win32.ActiveCfg = Debug|Win32
-		{F9DC95A5-6C27-43F3-BE1E-632379055F2D}.Debug|Win32.Build.0 = Debug|Win32
-		{F9DC95A5-6C27-43F3-BE1E-632379055F2D}.Release|Win32.ActiveCfg = Release|Win32
-		{F9DC95A5-6C27-43F3-BE1E-632379055F2D}.Release|Win32.Build.0 = Release|Win32
+		{CF29BC49-506F-4555-8849-5D59F2519D53}.Debug|x86.ActiveCfg = Debug|Win32
+		{CF29BC49-506F-4555-8849-5D59F2519D53}.Debug|x86.Build.0 = Debug|Win32
+		{CF29BC49-506F-4555-8849-5D59F2519D53}.Release|x86.ActiveCfg = Release|Win32
+		{CF29BC49-506F-4555-8849-5D59F2519D53}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3079D20E-0739-4F0C-9134-0686AF0EB20E}
 	EndGlobalSection
 EndGlobal

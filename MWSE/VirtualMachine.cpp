@@ -94,13 +94,11 @@ SCPTRecord_t& VirtualMachine::getScript()
 
 void * VirtualMachine::getTemplate(const char *id)
 {
-	size_t strLength = strlen(id);
+	size_t * secondobject_image_length = reinterpret_cast<size_t*>(0x7CEBB8);    //0x7CEBB8 = SECONDOBJECT_IMAGE_LENGTH
+	*secondobject_image_length = strlen(id);
 
-	size_t ** secondobject_image_length = reinterpret_cast<size_t**>(0x7CEBB8);	//0x7CEBB8 = SECONDOBJECT_IMAGE_LENGTH
-	*secondobject_image_length = &strLength;
-
-	const char ** secondobject_image = reinterpret_cast<const char**>(0x7CE6F8);		//0x7CE6F8 = ScriptRunner::ItemTemplate;
-	*secondobject_image = id;
+	char * secondobject_image = reinterpret_cast<char*>(0x7CE6F8);        //0x7CE6F8 = ScriptRunner::ItemTemplate;
+	strcpy(secondobject_image, id);
 
 	long returnreference;
 
@@ -126,13 +124,11 @@ REFRRecord_t * VirtualMachine::getReference()
 
 REFRRecord_t * VirtualMachine::getReference(const char *id)
 {
-	size_t strLength = strlen(id);
+	size_t * secondobject_image_length = reinterpret_cast<size_t*>(0x7CEBB8);    //0x7CEBB8 = SECONDOBJECT_IMAGE_LENGTH
+	*secondobject_image_length = strlen(id);
 
-	size_t ** secondobject_image_length = reinterpret_cast<size_t**>(0x7CEBB8);	//0x7CEBB8 = SECONDOBJECT_IMAGE_LENGTH
-	*secondobject_image_length = &strLength;
-
-	const char ** secondobject_image = reinterpret_cast<const char**>(0x7CE6F8);		//0x7CE6F8 = ScriptRunner::ItemTemplate;
-	*secondobject_image = id;
+	char * secondobject_image = reinterpret_cast<char*>(0x7CE6F8);        //0x7CE6F8 = ScriptRunner::ItemTemplate;
+	strcpy(secondobject_image, id);
 
 	long returnreference;
 
