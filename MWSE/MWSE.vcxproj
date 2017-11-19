@@ -35,11 +35,11 @@
     <ClInclude Include="VMHookInterface.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="distance.cpp" />
+    <ClCompile Include="xDistance.cpp" />
     <ClCompile Include="Flags.cpp" />
     <ClCompile Include="getLocal.cpp" />
-    <ClCompile Include="getPCTarget.cpp" />
-    <ClCompile Include="getRef.cpp" />
+    <ClCompile Include="xGetPCTarget.cpp" />
+    <ClCompile Include="xGetRef.cpp" />
     <ClCompile Include="InstructionInterface.cpp" />
     <ClCompile Include="InstructionStore.cpp" />
     <ClCompile Include="Jump.cpp" />
@@ -50,8 +50,8 @@
     <ClCompile Include="Pop.cpp" />
     <ClCompile Include="Push.cpp" />
     <ClCompile Include="Reference.cpp" />
-    <ClCompile Include="refType.cpp" />
-    <ClCompile Include="setRef.cpp" />
+    <ClCompile Include="xRefType.cpp" />
+    <ClCompile Include="xSetRef.cpp" />
     <ClCompile Include="Stack.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
   </ItemGroup>

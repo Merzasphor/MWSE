@@ -25,9 +25,6 @@
     <Filter Include="Source Files\Functions">
       <UniqueIdentifier>{9751081a-e2ea-4487-ac5f-9bec70a7fd7f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Functions">
-      <UniqueIdentifier>{5c76601b-346b-4845-9980-d0d1765e998e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Utility">
       <UniqueIdentifier>{b56416f6-f9d7-4b4b-ae95-94e13114b47a}</UniqueIdentifier>
     </Filter>
@@ -86,9 +83,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="distance.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
     <ClCompile Include="Flags.cpp">
       <Filter>Source Files\ScriptVM</Filter>
     </ClCompile>
@@ -122,22 +116,27 @@
     <ClCompile Include="VirtualMachine.cpp">
       <Filter>Source Files\ScriptVM</Filter>
     </ClCompile>
-    <ClCompile Include="setRef.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="getRef.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="getPCTarget.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
     <ClCompile Include="mwseString.cpp">
       <Filter>Source Files\DataAdapters</Filter>
     </ClCompile>
     <ClCompile Include="mwAdapter.cpp">
       <Filter>Source Files\ScriptVM</Filter>
     </ClCompile>
-    <ClCompile Include="refType.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="xDistance.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetRef.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="xSetRef.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="xRefType.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetPCTarget.cpp">
       <Filter>Source Files\Functions</Filter>
     </ClCompile>
   </ItemGroup>
