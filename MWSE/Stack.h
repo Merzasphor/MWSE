@@ -48,8 +48,8 @@
  */
 namespace mwse {
 
-	static const size_t initial_stack_size = 64;
-	static const size_t stack_grow_size = 32;
+    static const size_t initial_stack_size = 64;
+    static const size_t stack_grow_size = 32;
 
     class Stack {
         public:
@@ -138,7 +138,7 @@ namespace mwse {
                     stack_storage = new_stack;
                 }
 #if MWSE_DEBUG_STACK
-				log::getLog() << std::dec << "Stack: Pushing element " << stack_top << " as " << std::hex << value << "h" << std::endl;
+                log::getLog() << std::dec << "Stack: Pushing element " << stack_top << " as " << std::hex << value << "h" << std::endl;
 #endif
                 stack_storage[stack_top] = value;
                 stack_top++;
@@ -149,11 +149,7 @@ namespace mwse {
             StackItem_t pop()
             {
                 if (stack_top == 0) {
-#if DEBUG
-					throw new std::underflow_error("Could not pop from stack: top is already at zero.");
-#else
-					return 0;
-#endif
+                    throw new std::exception("Could not pop from stack: top is already at zero.");
                 }
                 stack_top --;
 #if MWSE_DEBUG_STACK
