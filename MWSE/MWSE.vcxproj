@@ -29,12 +29,14 @@
     <ClInclude Include="mwseTypes.h" />
     <ClInclude Include="Reference.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="RngUtil.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="VirtualMachine.h" />
     <ClInclude Include="VMExecuteInterface.h" />
     <ClInclude Include="VMHookInterface.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="RngUtil.cpp" />
     <ClCompile Include="xAnd.cpp" />
     <ClCompile Include="xArcCos.cpp" />
     <ClCompile Include="xArcSin.cpp" />
@@ -64,9 +66,12 @@
     <ClCompile Include="xHypot.cpp" />
     <ClCompile Include="xLogMessage.cpp" />
     <ClCompile Include="xLongToFloats.cpp" />
+    <ClCompile Include="xNot.cpp" />
     <ClCompile Include="xOr.cpp" />
     <ClCompile Include="xPow.cpp" />
     <ClCompile Include="xRadDeg.cpp" />
+    <ClCompile Include="xRandomFloat.cpp" />
+    <ClCompile Include="xRandomLong.cpp" />
     <ClCompile Include="xRefType.cpp" />
     <ClCompile Include="xSetRef.cpp" />
     <ClCompile Include="Stack.cpp" />
@@ -158,6 +163,10 @@
     </Link>
     <PostBuildEvent />
     <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>xcopy /Y "$(TargetDir)MWSE.dll" "D:\Games\Morrowind\MWSE.dll"
+xcopy /Y "$(TargetDir)MWSE.pdb" "D:\Games\Morrowind\MWSE.pdb"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -190,6 +199,10 @@
     </Link>
     <PostBuildEvent />
     <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>xcopy /Y "$(TargetDir)MWSE.dll" "D:\Games\Morrowind\MWSE.dll"
+xcopy /Y "$(TargetDir)MWSE.pdb" "D:\Games\Morrowind\MWSE.pdb"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>

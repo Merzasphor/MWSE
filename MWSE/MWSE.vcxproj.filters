@@ -78,6 +78,9 @@
     <ClInclude Include="Reference.h">
       <Filter>Header Files\ScriptVM</Filter>
     </ClInclude>
+    <ClInclude Include="RngUtil.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -201,6 +204,18 @@
       <Filter>Source Files\Functions</Filter>
     </ClCompile>
     <ClCompile Include="xXor.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="xNot.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="xRandomLong.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="RngUtil.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="xRandomFloat.cpp">
       <Filter>Source Files\Functions</Filter>
     </ClCompile>
   </ItemGroup>
