@@ -122,8 +122,6 @@
     <ClCompile Include="mwAdapter.cpp">
       <Filter>Source Files\ScriptVM</Filter>
     </ClCompile>
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
     <ClCompile Include="xDistance.cpp">
       <Filter>Source Files\Functions</Filter>
     </ClCompile>
@@ -137,6 +135,9 @@
       <Filter>Source Files\Functions</Filter>
     </ClCompile>
     <ClCompile Include="xGetPCTarget.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="xLogMessage.cpp">
       <Filter>Source Files\Functions</Filter>
     </ClCompile>
   </ItemGroup>
