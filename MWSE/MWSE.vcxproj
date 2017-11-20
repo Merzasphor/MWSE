@@ -35,9 +35,20 @@
     <ClInclude Include="VMHookInterface.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="xAnd.cpp" />
+    <ClCompile Include="xArcCos.cpp" />
+    <ClCompile Include="xArcSin.cpp" />
+    <ClCompile Include="xArcTan.cpp" />
+    <ClCompile Include="xBitAnd.cpp" />
+    <ClCompile Include="xBitNot.cpp" />
+    <ClCompile Include="xBitOr.cpp" />
+    <ClCompile Include="xBitXor.cpp" />
+    <ClCompile Include="xCos.cpp" />
+    <ClCompile Include="xDegRad.cpp" />
     <ClCompile Include="xDistance.cpp" />
     <ClCompile Include="Flags.cpp" />
     <ClCompile Include="getLocal.cpp" />
+    <ClCompile Include="xFloatsToLong.cpp" />
     <ClCompile Include="xGetPCTarget.cpp" />
     <ClCompile Include="xGetRef.cpp" />
     <ClCompile Include="InstructionInterface.cpp" />
@@ -50,11 +61,21 @@
     <ClCompile Include="Pop.cpp" />
     <ClCompile Include="Push.cpp" />
     <ClCompile Include="Reference.cpp" />
+    <ClCompile Include="xHypot.cpp" />
     <ClCompile Include="xLogMessage.cpp" />
+    <ClCompile Include="xLongToFloats.cpp" />
+    <ClCompile Include="xOr.cpp" />
+    <ClCompile Include="xPow.cpp" />
+    <ClCompile Include="xRadDeg.cpp" />
     <ClCompile Include="xRefType.cpp" />
     <ClCompile Include="xSetRef.cpp" />
     <ClCompile Include="Stack.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
+    <ClCompile Include="xShift.cpp" />
+    <ClCompile Include="xSin.cpp" />
+    <ClCompile Include="xSqrt.cpp" />
+    <ClCompile Include="xTan.cpp" />
+    <ClCompile Include="xXor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />
