@@ -1,6 +1,6 @@
 /************************************************************************
 	
-	xNot.cpp - Copyright (c) 2008 The MWSE Project
+	xXor.cpp - Copyright (c) 2008 The MWSE Project
 	http://www.sourceforge.net/projects/mwse
 
 	This program is free software; you can redistribute it and/or
@@ -27,22 +27,22 @@ using namespace mwse;
 
 namespace mwse
 {
-	class xNot : mwse::InstructionInterface_t
+	class xXor : mwse::InstructionInterface_t
 	{
 	public:
-		xNot();
+		xXor();
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xNotOpcode = 0x393C;
-	static xNot xNotInstance;
+	static const mwse::mwOpcode_t xXorOpcode = 0x393C;
+	static xXor xXorInstance;
 
-	xNot::xNot() : mwse::InstructionInterface_t(xNotOpcode) {}
+	xXor::xXor() : mwse::InstructionInterface_t(xXorOpcode) {}
 
-	void xNot::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
+	void xXor::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 
-	float xNot::execute(mwse::VMExecuteInterface &virtualMachine)
+	float xXor::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		if (mwse::Stack::getInstance().size() != 2) {
 			return 0;
