@@ -134,34 +134,40 @@ namespace mwse
 					end++;
 					parse_success = true;
 				} else if (current_char == 'l' && current_code == "%") {
-					mwLong_t value = Stack::getInstance().popLong();
-					convert.str("");
-					convert << std::dec << value;
-					result += convert.str();
+					if (!Stack::getInstance().empty()) {
+						long value = Stack::getInstance().popLong();
+						result.append(reinterpret_cast<char*>(&value), 4);
+					}
 					end++;
 					parse_success = true;
 				} else if (current_char == 'd' && current_code == "%") {
-					mwLong_t value = Stack::getInstance().popLong();
-					convert.str("");
-					convert << std::dec << value;
-					result += convert.str();
+					if (!Stack::getInstance().empty()) {
+						mwLong_t value = Stack::getInstance().popLong();
+						convert.str("");
+						convert << std::dec << value;
+						result += convert.str();
+					}
 					end++;
 					parse_success = true;
 				} else if (current_char == 'h' && current_code == "%") {
-					mwLong_t value = Stack::getInstance().popLong();
-					convert.str("");
-					convert << std::hex << value;
-					result += convert.str();
+					if (!Stack::getInstance().empty()) {
+						mwLong_t value = Stack::getInstance().popLong();
+						convert.str("");
+						convert << std::hex << value;
+						result += convert.str();
+					}
 					end++;
 					parse_success = true;
 				} else if (current_char == 'f') {
 					if (!skip_set) {
-						float value = Stack::getInstance().popFloat();
-						// 6 = vsprintf default precision - mimic old version
-						if (!precision_set) precision = 6;
-						convert.str("");
-						convert << std::fixed << std::setprecision(precision) << value;
-						result += convert.str();
+						if (!Stack::getInstance().empty()) {
+							mwFloat_t value = Stack::getInstance().popFloat();
+							// 6 = vsprintf default precision - mimic old version
+							if (!precision_set) precision = 6;
+							convert.str("");
+							convert << std::fixed << std::setprecision(precision) << value;
+							result += convert.str();
+						}
 						parse_success = true;
 					} else {
 						current_code += current_char;
@@ -169,7 +175,15 @@ namespace mwse
 					done = true;
 					end++;
 				} else if (current_char == 's') {
-					result += virtualMachine.getString(Stack::getInstance().popLong()).c_str();
+					if (!Stack::getInstance().empty()) {
+						mwLong_t argument = Stack::getInstance().popLong();
+						if (argument != 0) {
+							mwseString_t value = virtualMachine.getString(argument);
+							size_t substitute_start = std::min((size_t)skip, value.length());
+							if (!precision_set) precision = value.length();
+							result += value.substr(substitute_start, precision);
+						}
+					}
 					end++;
 					parse_success = true;
 				} else {
