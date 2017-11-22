@@ -65,7 +65,9 @@ namespace mwse
 
 	float xLogMessage::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
+#if MWSE_DEBUG_STACK
 		Stack::getInstance().dump();
+#endif
 
 		mwseString_t format = virtualMachine.getString(Stack::getInstance().popLong());
 		
