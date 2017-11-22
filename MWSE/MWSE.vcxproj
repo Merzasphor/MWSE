@@ -196,10 +196,7 @@
     </Link>
     <PostBuildEvent />
     <PostBuildEvent />
-    <PostBuildEvent>
-      <Command>xcopy /Y "$(TargetDir)MWSE.dll" "D:\Games\Morrowind\MWSE.dll"
-xcopy /Y "$(TargetDir)MWSE.pdb" "D:\Games\Morrowind\MWSE.pdb"</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
