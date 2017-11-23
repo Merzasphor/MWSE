@@ -24,17 +24,23 @@
     <ClInclude Include="InstructionStore.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="MemAccess.h" />
+    <ClInclude Include="MgeInstruction.h" />
+    <ClInclude Include="MgeVirtualMachine.h" />
+    <ClInclude Include="MgeVmtypes.h" />
     <ClInclude Include="mwAdapter.h" />
     <ClInclude Include="mwseString.h" />
     <ClInclude Include="mwseTypes.h" />
     <ClInclude Include="Reference.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stack.h" />
+    <ClInclude Include="MgeTes3Machine.h" />
     <ClInclude Include="VirtualMachine.h" />
     <ClInclude Include="VMExecuteInterface.h" />
     <ClInclude Include="VMHookInterface.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MgeVirtualMachine.cpp" />
+    <ClCompile Include="MgeTes3Machine.cpp" />
     <ClCompile Include="xDistance.cpp" />
     <ClCompile Include="Flags.cpp" />
     <ClCompile Include="getLocal.cpp" />
@@ -133,6 +139,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <PostBuildEvent />
@@ -165,6 +172,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <PostBuildEvent />
