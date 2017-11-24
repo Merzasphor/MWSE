@@ -81,6 +81,18 @@
     <ClInclude Include="RngUtil.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="MgeInstruction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MgeVirtualMachine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MgeVmtypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MgeTes3Machine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="TES3Util.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
@@ -226,6 +238,12 @@
     </ClCompile>
     <ClCompile Include="xFirstNPC.cpp">
       <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="MgeVirtualMachine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MgeTes3Machine.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TES3Util.cpp">
       <Filter>Source Files\Utility</Filter>
