@@ -35,6 +35,7 @@
     <ClInclude Include="RngUtil.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="MgeTes3Machine.h" />
+    <ClInclude Include="StringUtil.h" />
     <ClInclude Include="TES3Util.h" />
     <ClInclude Include="VirtualMachine.h" />
     <ClInclude Include="VMExecuteInterface.h" />
@@ -44,6 +45,7 @@
     <ClCompile Include="MgeVirtualMachine.cpp" />
     <ClCompile Include="MgeTes3Machine.cpp" />
     <ClCompile Include="RngUtil.cpp" />
+    <ClCompile Include="StringUtil.cpp" />
     <ClCompile Include="TES3Util.cpp" />
     <ClCompile Include="xAnd.cpp" />
     <ClCompile Include="xArcCos.cpp" />
