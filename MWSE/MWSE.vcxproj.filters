@@ -81,6 +81,9 @@
     <ClInclude Include="RngUtil.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="TES3Util.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -216,6 +219,21 @@
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
     <ClCompile Include="xRandomFloat.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="xFirstNPC.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Util.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="xNextRef.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="xFirstItem.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="xFirstStatic.cpp">
       <Filter>Source Files\Functions</Filter>
     </ClCompile>
   </ItemGroup>

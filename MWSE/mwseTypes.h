@@ -159,7 +159,7 @@ namespace mwse
 		short cost;
 
 		//effect
-		struct
+		struct Effect
 		{
 		short effectId;
 		char  skillId;
@@ -181,7 +181,7 @@ namespace mwse
 		int recordSize;
 		char * modNamePtr;
 		int unknown1;
-		int unknown2;
+		LinkedList_t * alchemyList;
 		int unknown3;
 		ALCHRecord_t * prevRecord;
 		ALCHRecord_t * nextRecord;
@@ -202,7 +202,7 @@ namespace mwse
 		long value;
 
 		//effect
-		struct
+		struct Effect
 		{
 		short effectId;
 		char  skillId;
@@ -236,7 +236,7 @@ namespace mwse
 		long charge;
 
 		//effect
-		struct
+		struct Effect
 		{
 		short effectId;
 		char  skillId;
@@ -344,11 +344,11 @@ namespace mwse
     {
         void * vTable;
         RecordTypes::recordType_t recordType; // "REFR"
-        int recordSize;			//0x50 big, should this be!
-        char * modNamePtr;
+        long flags;			//0x50 big, should this be!
+        char ** modNamePtr;
         int unknown1;
-        int unknown2;
-        REFRRecord_t * NextOfSameTemplate;
+		int unknown2;
+        REFRRecord_t * nextOfSameTemplate;
         REFRRecord_t * previousRecord;
         REFRRecord_t * nextRecord;
         int unknown3;
@@ -360,6 +360,13 @@ namespace mwse
 		ListNode_t * attachments;
 		char unknown5[18];	//18 bytes
     };
+
+	struct TES3RefListHead_t {
+		long size;
+		REFRRecord_t * first;
+		REFRRecord_t * last;
+		REFRRecord_t * container;
+	};
 
     struct WEAPRecord_t
     {
@@ -412,6 +419,67 @@ namespace mwse
 		float data; //apparently, all globals are stored as floats in morrowind (i think), at least for longs!
 	};
 
+	struct GMSTRecord_t {
+		void * vTable;
+		RecordTypes::recordType_t recordType;
+		int unknown;
+		void * mod; // pointer to mod?
+		union values
+		{
+			long long_value;
+			float float_value;
+			char* string_value;
+		} value;
+		int index; // array index of this GMST
+		int unknown2[2];
+	};
+
+	struct SKILRecord_t
+	{
+		void * vTable;
+		RecordTypes::recordType_t recordType; // SKIL
+		int unknown1;
+		void * ptr1; // pointer to first array element?
+		long skill;
+		long attribute;
+		long specialization;
+		float actions[4];
+		int unknown2;
+		int unknown3;
+	};
+
+	struct MGEFRecord_t
+	{
+		void* vtable;
+		RecordTypes::recordType_t record_type;
+		int unknown1;
+		void* module; // pointer to module?
+		long index; // index in array
+		int unknown3;
+		int unknown4;
+		char effect_icon[32];
+		char particle_texture[32];
+		// Only a few effects have data in their sound effect strings.
+		// Maybe it's inferred from school if missing?
+		char cast_sound_effect[32];
+		char bolt_sound_effect[32];
+		char hit_sound_effect[32];
+		char area_sound_effect[32];
+		void* unknown5; // visual effect?
+		void* unknown6; // visual effect?
+		void* unknown7; // visual effect?
+		void* unknown8; // visual effect?
+		long school; // 0 = Alteration, 1 = Conjuration, 2 = Destruction, 3 = Illusion, 4 = Mysticism, 5 = Restoration
+		float base_magicka_cost;
+		long flags; //0x200 = spellmaking 0x400 = enchanting 0x800 = negative lighting effect
+		long red;
+		long green;
+		long blue;
+		float size_x;
+		float speed_x;
+		float size_cap;
+	};
+
 	//this is the struct behind 'master2'
 	struct TES3ViewMaster_t
 	{
@@ -429,5 +497,66 @@ namespace mwse
 		REFRRecord_t * first;
 		char unknown2[16];
 		char * objectId;
+	};
+
+	struct RecordLists_t {
+		struct UnknownStruct
+		{
+			void* v_table;
+			unsigned long unknown1;
+			void* unknown2;
+			void* unknown3;
+			void* unknown4;
+			unsigned long unknown5[6];
+			void* unknown6;
+		};
+		unsigned long unknown1; // 
+		unsigned long unknown2; // always 0 ???
+		void * unknown3; // points to info about the last loaded save
+						 // list contains the following types: CREA, REPA, APPA, PROB, MISC, LEVC,
+						 // ALCH, ENCH, LIGH, ACTI, LEVI, LOCK, BOOK, AMMO, ARMO, WEAP, INGR, DOOR,
+						 // STAT, CONT, CLOT, BODY, NPC_
+		LinkedList_t * list;
+		LinkedList_t * spellsList;
+		void * unknown4;
+		GMSTRecord_t ** GMSTs; // pointer to array of GMST pointers
+		UnknownStruct* unknown5[12];
+		SKILRecord_t skills[27];
+		MGEFRecord_t magic_effects[143];
+	};
+
+	struct TES3Cell_t {
+		char unknown[0x10];
+		char* cellname; // may be null
+		char unknown2[0x30 - 0x10 - sizeof(char*)];
+		TES3RefListHead_t npc;
+		TES3RefListHead_t statics;
+		char unknown3[0x58 - 0x30 - 2 * sizeof(TES3RefListHead_t)];
+		TES3RefListHead_t otheritems;
+	};
+
+	struct TES3CellPointer_t {
+		long size;
+		TES3Cell_t * first;
+	};
+
+	enum TES3CellGrid {
+		NORTHWEST = 0,
+		NORTH = 1,
+		NORTHEAST = 2,
+		WEST = 3,
+		CENTER = 4,
+		EAST = 5,
+		SOUTHWEST = 6,
+		SOUTH = 7,
+		SOUTHEAST = 8
+	};
+
+	struct TES3CellMaster_t {
+		RecordLists_t * recordLists;
+		TES3CellPointer_t * exteriorCells[9];
+		int unknown[33];
+		TES3Cell_t * interiorCell;
+		int unknown2[4];
 	};
 }
