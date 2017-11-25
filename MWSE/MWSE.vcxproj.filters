@@ -99,6 +99,9 @@
     <ClInclude Include="StringUtil.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="ArrayUtil.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -258,6 +261,24 @@
       <Filter>Source Files\Functions</Filter>
     </ClCompile>
     <ClCompile Include="xFirstStatic.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="ArrayUtil.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="xCreateArray.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="xClearArray.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetArraySize.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetArrayValue.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="xSetArrayValue.cpp">
       <Filter>Source Files\Functions</Filter>
     </ClCompile>
   </ItemGroup>

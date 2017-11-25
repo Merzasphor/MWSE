@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArrayUtil.h" />
     <ClInclude Include="Flags.h" />
     <ClInclude Include="InstructionInterface.h" />
     <ClInclude Include="InstructionStore.h" />
@@ -42,6 +43,7 @@
     <ClInclude Include="VMHookInterface.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ArrayUtil.cpp" />
     <ClCompile Include="MgeVirtualMachine.cpp" />
     <ClCompile Include="MgeTes3Machine.cpp" />
     <ClCompile Include="RngUtil.cpp" />
@@ -55,7 +57,9 @@
     <ClCompile Include="xBitNot.cpp" />
     <ClCompile Include="xBitOr.cpp" />
     <ClCompile Include="xBitXor.cpp" />
+    <ClCompile Include="xClearArray.cpp" />
     <ClCompile Include="xCos.cpp" />
+    <ClCompile Include="xCreateArray.cpp" />
     <ClCompile Include="xDegRad.cpp" />
     <ClCompile Include="xDistance.cpp" />
     <ClCompile Include="Flags.cpp" />
@@ -64,6 +68,8 @@
     <ClCompile Include="xFirstNPC.cpp" />
     <ClCompile Include="xFirstStatic.cpp" />
     <ClCompile Include="xFloatsToLong.cpp" />
+    <ClCompile Include="xGetArraySize.cpp" />
+    <ClCompile Include="xGetArrayValue.cpp" />
     <ClCompile Include="xGetPCTarget.cpp" />
     <ClCompile Include="xGetRef.cpp" />
     <ClCompile Include="InstructionInterface.cpp" />
@@ -87,6 +93,7 @@
     <ClCompile Include="xRandomFloat.cpp" />
     <ClCompile Include="xRandomLong.cpp" />
     <ClCompile Include="xRefType.cpp" />
+    <ClCompile Include="xSetArrayValue.cpp" />
     <ClCompile Include="xSetRef.cpp" />
     <ClCompile Include="Stack.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
