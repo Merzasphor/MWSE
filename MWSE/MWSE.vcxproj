@@ -100,6 +100,7 @@
     <ClCompile Include="xGetBaseEnchant.cpp" />
     <ClCompile Include="xGetBaseEnd.cpp" />
     <ClCompile Include="xGetBaseFatigue.cpp" />
+    <ClCompile Include="xGetBaseGold.cpp" />
     <ClCompile Include="xGetBaseHandToHand.cpp" />
     <ClCompile Include="xGetBaseHealth.cpp" />
     <ClCompile Include="xGetBaseHeavyArmor.cpp" />
@@ -149,6 +150,7 @@
     <ClCompile Include="xRandomLong.cpp" />
     <ClCompile Include="xRefType.cpp" />
     <ClCompile Include="xSetArrayValue.cpp" />
+    <ClCompile Include="xSetBaseGold.cpp" />
     <ClCompile Include="xSetRef.cpp" />
     <ClCompile Include="Stack.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />

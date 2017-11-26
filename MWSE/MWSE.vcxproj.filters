@@ -458,6 +458,9 @@
     <ClCompile Include="xRandomLong.cpp">
       <Filter>Source Files\Functions\Math</Filter>
     </ClCompile>
+    <ClCompile Include="xGetBaseGold.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
     <ClCompile Include="xOr.cpp">
       <Filter>Source Files\Functions\Logic</Filter>
     </ClCompile>
@@ -466,6 +469,9 @@
     </ClCompile>
     <ClCompile Include="xXor.cpp">
       <Filter>Source Files\Functions\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="xSetBaseGold.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
