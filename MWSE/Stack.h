@@ -21,6 +21,7 @@
 #pragma once
 
 #define MWSE_DEBUG_STACK 0
+#define MWSE_PRINT_DETAILED_STACK_DUMP 0
 
 #include "mwseTypes.h"
 #include "mwseString.h"
@@ -122,7 +123,12 @@ namespace mwse {
 			{
 				log::getLog() << std::dec << "Stack dump (Size: " << stack_top << "; Buffer Size: " << stack_size << "):" << std::endl;
 				for (size_t i = stack_top; i > 0; i--) {
-					log::getLog() << "\t" << std::dec << i-1 << "\t" << std::hex << stack_storage[i-1] << "h" << std::endl;
+					log::getLog() << "\t" << std::dec << i - 1 << "\t" << std::hex << stack_storage[i - 1] << "h" << std::endl;
+#if MWSE_PRINT_DETAILED_STACK_DUMP
+					log::getLog() << "\t\tShort: " << std::dec << *reinterpret_cast<mwShort_t*>(&stack_storage[i - 1]) << std::endl;
+					log::getLog() << "\t\tLong: " << std::dec << *reinterpret_cast<mwLong_t*>(&stack_storage[i - 1]) << std::endl;
+					log::getLog() << "\t\tFloat: " << std::dec << *reinterpret_cast<mwFloat_t*>(&stack_storage[i - 1]) << std::endl;
+#endif
 				}
 			}
 
