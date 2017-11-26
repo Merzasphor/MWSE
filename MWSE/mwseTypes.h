@@ -1,20 +1,20 @@
 /************************************************************************
-               mwseTypes.h - Copyright (c) 2008 The MWSE Project
-                http://www.sourceforge.net/projects/mwse
+	mwseTypes.h - Copyright (c) 2008 The MWSE Project
+	http://www.sourceforge.net/projects/mwse
 
-    This program is free software; you can redistribute it and/or
-    modify it under the terms of the GNU General Public License
-    as published by the Free Software Foundation; either version 2
-    of the License, or (at your option) any later version.
+	This program is free software; you can redistribute it and/or
+	modify it under the terms of the GNU General Public License
+	as published by the Free Software Foundation; either version 2
+	of the License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 **************************************************************************/
 
@@ -23,44 +23,44 @@
 namespace mwse
 {
 
-    typedef short mwShort_t;
-    typedef long  mwLong_t;
-    typedef float mwFloat_t;
-    typedef unsigned short mwOpcode_t; //same as old MWSE (WORD == unsigned short) should be big enough
+	typedef short mwShort_t;
+	typedef long  mwLong_t;
+	typedef float mwFloat_t;
+	typedef unsigned short mwOpcode_t; //same as old MWSE (WORD == unsigned short) should be big enough
 
-    namespace RecordTypes {
-        enum recordType_t
-        {
-            NPC = '_CPN',
-            CREA = 'AERC', CREATURE = CREA,
-            CONT = 'TNOC', CONTAINER = CONT,
-            LIGH = 'HGIL', LIGHT = LIGH,
-            MISC = 'CSIM',
-            CLOT = 'TOLC', CLOTHING = CLOT,
-            WEAP = 'PAEW', WEAPON = WEAP,
-            ARMO = 'OMRA', ARMOR = ARMO,
-            BOOK = 'KOOB',
-            ALCH = 'HCLA', ALCHEMY = ALCH,
-            ACTI = 'ITCA', ACTIVATOR = ACTI,
-            DOOR = 'ROOD',
-            APPA = 'APPA', APPARATUS = APPA,
-            INGR = 'RGNI', INGREDIENT = INGR,
-            PROB = 'BORP', PROBE = PROB,
-            PICK = 'KCIP',
-            REPA = 'APER', REPAIR = REPA,
-            CLAS = 'SALC', CLASS = CLAS,
-            LOCK = 'KCOL',
+	namespace RecordTypes {
+		enum recordType_t
+		{
+			NPC = '_CPN',
+			CREA = 'AERC', CREATURE = CREA,
+			CONT = 'TNOC', CONTAINER = CONT,
+			LIGH = 'HGIL', LIGHT = LIGH,
+			MISC = 'CSIM',
+			CLOT = 'TOLC', CLOTHING = CLOT,
+			WEAP = 'PAEW', WEAPON = WEAP,
+			ARMO = 'OMRA', ARMOR = ARMO,
+			BOOK = 'KOOB',
+			ALCH = 'HCLA', ALCHEMY = ALCH,
+			ACTI = 'ITCA', ACTIVATOR = ACTI,
+			DOOR = 'ROOD',
+			APPA = 'APPA', APPARATUS = APPA,
+			INGR = 'RGNI', INGREDIENT = INGR,
+			PROB = 'BORP', PROBE = PROB,
+			PICK = 'KCIP',
+			REPA = 'APER', REPAIR = REPA,
+			CLAS = 'SALC', CLASS = CLAS,
+			LOCK = 'KCOL',
 			GLOB = 'BOLG', GLOBAL = GLOB,
 			REFR = 'RFER', REFERENCE = REFR,
 			MACP = 'PCAM'
-        };
+		};
 
 		enum attachType_t
 		{
 			VARNODE = 6,	//attachment where 'local' variables are stored, and the size of a stack, and the owner (if it has changed i think), and the script...
 			MACHNODE = 8	//PCAM
 		};
-    };
+	};
 
 	struct BaseRecord_t
 	{
@@ -68,47 +68,47 @@ namespace mwse
 		RecordTypes::recordType_t recordType;
 	};
 
-    struct SCPTRecord_t
-    {
-        void * vTable; //pointer to the vTable
-        RecordTypes::recordType_t recordType; // "SCPT"
-        int recordSize;
-        char * modNamePtr;
-        char scriptName[32];
-        long numShorts;
-        long numLongs;
-        long numFloats;
-        long scriptDataSize;
-        int LocalVarSize; //the length of the local var names concatenated (includes \0 for string endings)
-        char ** shortVarNamePointers;
-        char ** longVarNamePointers;
-        char ** floatVarNamePointers;
-        char * varNamePointers;
-        int unknownData;	//equals zero
-        void * machineCode;
-        mwShort_t * shortVarValues; //pointer to array of shorts, each associated with its corresponding variable
-        mwLong_t * longVarValues;
-        mwFloat_t * floatVarValues;
-    };
+	struct SCPTRecord_t
+	{
+		void * vTable; //pointer to the vTable
+		RecordTypes::recordType_t recordType; // "SCPT"
+		int recordSize;
+		char * modNamePtr;
+		char scriptName[32];
+		long numShorts;
+		long numLongs;
+		long numFloats;
+		long scriptDataSize;
+		int LocalVarSize; //the length of the local var names concatenated (includes \0 for string endings)
+		char ** shortVarNamePointers;
+		char ** longVarNamePointers;
+		char ** floatVarNamePointers;
+		char * varNamePointers;
+		int unknownData;	//equals zero
+		void * machineCode;
+		mwShort_t * shortVarValues; //pointer to array of shorts, each associated with its corresponding variable
+		mwLong_t * longVarValues;
+		mwFloat_t * floatVarValues;
+	};
 
-    struct SCPTNode_t
-    {
-        int unknown;
-        SCPTRecord_t * scptRecord;
-    };
+	struct SCPTNode_t
+	{
+		int unknown;
+		SCPTRecord_t * scptRecord;
+	};
 
-    struct LinkedList_t
-    {
-        LinkedList_t * previousNode;
-        LinkedList_t * nextNode;
-        void * dataNode;
-    };
+	struct LinkedList_t
+	{
+		LinkedList_t * previousNode;
+		LinkedList_t * nextNode;
+		void * dataNode;
+	};
 
-    struct InventoryNode_t
-    {
-        int itemCount;
-        void * recordAddress;
-    };
+	struct InventoryNode_t
+	{
+		int itemCount;
+		void * recordAddress;
+	};
 
 	struct ListNode_t
 	{
@@ -283,14 +283,14 @@ namespace mwse
 		//effect
 		struct Effect
 		{
-		short effectId;
-		char  skillId;
-		char  AttributeId;
-		long  RangeType;		//0=SELF, 1=TOUCH, 2=TARGET
-		long  Area;
-		long  Duration;
-		long  MagMin;
-		long  MagMax;
+			short effectId;
+			char  skillId;
+			char  AttributeId;
+			long  RangeType;		//0=SELF, 1=TOUCH, 2=TARGET
+			long  Area;
+			long  Duration;
+			long  MagMin;
+			long  MagMax;
 		} effects[8];
 
 		long flags;	//1=AUTOCALC, 2=PCSTART, 4=ALWAYSSUCCEEDS
@@ -326,14 +326,14 @@ namespace mwse
 		//effect
 		struct Effect
 		{
-		short effectId;
-		char  skillId;
-		char  AttributeId;
-		long  RangeType;		//0=SELF, 1=TOUCH, 2=TARGET
-		long  Area;
-		long  Duration;
-		long  MagMin;
-		long  MagMax;
+			short effectId;
+			char  skillId;
+			char  AttributeId;
+			long  RangeType;		//0=SELF, 1=TOUCH, 2=TARGET
+			long  Area;
+			long  Duration;
+			long  MagMin;
+			long  MagMax;
 		} effects[8];
 
 		long flags; //1=AUTOCALC
@@ -350,9 +350,9 @@ namespace mwse
 		int unknown3;
 		ENCHRecord_t * prevRecord;
 		ENCHRecord_t * nextRecord;
-		int unknown4;			
+		int unknown4;
 		char * idPtr;
-		
+
 		short type;	//0=CASTONCE, 1=CASTONSTRIKE, 2=CASTONUSED, 3=CONSTANT
 		short cost;
 		long charge;
@@ -360,25 +360,25 @@ namespace mwse
 		//effect
 		struct Effect
 		{
-		short effectId;
-		char  skillId;
-		char  AttributeId;
-		long  RangeType;		//0=SELF, 1=TOUCH, 2=TARGET
-		long  Area;
-		long  Duration;
-		long  MagMin;
-		long  MagMax;
+			short effectId;
+			char  skillId;
+			char  AttributeId;
+			long  RangeType;		//0=SELF, 1=TOUCH, 2=TARGET
+			long  Area;
+			long  Duration;
+			long  MagMin;
+			long  MagMax;
 		} effects[8];
 
 		long autocalc;	//0=OFF, 1=ON
 	};
 
-    struct NPCBaseRecord_t	//or the 'base' NPC_ record. you can access it trough the NPCC (NPC Copy) Record (baseNPC)
-    {
-        void * vTable;
-        RecordTypes::recordType_t recordType;
-        int recordSize;		//should be 0x0F0 big!
-        char * modNamePtr;
+	struct NPCBaseRecord_t	//or the 'base' NPC_ record. you can access it trough the NPCC (NPC Copy) Record (baseNPC)
+	{
+		void * vTable;
+		RecordTypes::recordType_t recordType;
+		int recordSize;		//should be 0x0F0 big!
+		char * modNamePtr;
 		int unknown1;
 		int unknown2;
 		int unknown3;
@@ -430,30 +430,30 @@ namespace mwse
 		int numberOfSpells;
 		LinkedList_t * spellStart;	//these contain the spells! not items with a special power.
 		LinkedList_t * spellEnd;
-    };
+	};
 
-    struct NPCCopyRecord_t
-    {
-        void * vTable;
-        RecordTypes::recordType_t recordType;
-        int unknown1; //int RecordSize; ?
-        int unknown2; //char * modNamePtr; ?
-        int unknown3;
-        int unknown4;
-        void * reference;
-        void * prevRecord;
-        void * nextRecord;
-        int unknown5;
-        int unknown6;
-        char * IDStringPtr;
-        int unknown7;
-        int unknown8;
-        int unknown9;
-        int unknown10;
-        int unknown11;
-        int AmountInventory;
-        LinkedList_t * inventoryStart;
-        LinkedList_t * inventoryEnd;
+	struct NPCCopyRecord_t
+	{
+		void * vTable;
+		RecordTypes::recordType_t recordType;
+		int unknown1; //int RecordSize; ?
+		int unknown2; //char * modNamePtr; ?
+		int unknown3;
+		int unknown4;
+		void * reference;
+		void * prevRecord;
+		void * nextRecord;
+		int unknown5;
+		int unknown6;
+		char * IDStringPtr;
+		int unknown7;
+		int unknown8;
+		int unknown9;
+		int unknown10;
+		int unknown11;
+		int AmountInventory;
+		LinkedList_t * inventoryStart;
+		LinkedList_t * inventoryEnd;
 		int unknown13;
 		int unknown14;
 		int unknown15;	//some pointer
@@ -462,20 +462,20 @@ namespace mwse
 		LinkedList_t * equipedEnd;
 		int unknown16;
 		NPCBaseRecord_t * baseNPC;
-    };
+	};
 
-    struct REFRRecord_t
-    {
-        void * vTable;
-        RecordTypes::recordType_t recordType; // "REFR"
-        long flags;			//0x50 big, should this be!
+	struct REFRRecord_t
+	{
+		void * vTable;
+		RecordTypes::recordType_t recordType; // "REFR"
+		long flags;			//0x50 big, should this be!
 		char* modNamePtr;
-        int unknown1;
+		int unknown1;
 		int unknown2;
-        REFRRecord_t * nextOfSameTemplate;
-        REFRRecord_t * previousRecord;
-        REFRRecord_t * nextRecord;
-        int unknown3;
+		REFRRecord_t * nextOfSameTemplate;
+		REFRRecord_t * previousRecord;
+		REFRRecord_t * nextRecord;
+		int unknown3;
 		BaseRecord_t * recordPointer; //points to the record for which this is a reference;
 		char unknown4[12];	//12 bytes
 		float x;
@@ -483,7 +483,7 @@ namespace mwse
 		float z;
 		ListNode_t * attachments;
 		char unknown5[18];	//18 bytes
-    };
+	};
 
 	struct TES3RefListHead_t {
 		long size;
@@ -492,44 +492,44 @@ namespace mwse
 		REFRRecord_t * container;
 	};
 
-    struct WEAPRecord_t
-    {
-        void * vTable;
-        RecordTypes::recordType_t recordType; // "WEAP"
-        int recordSize;
-        char * modNamePtr;
-        int unknown1;
-        int unknown2;
-        int unknown3; //REFRRecord_t * first //nextOfSameTemplate
-        void * previousRecord;
-        void * nextRecord;
-        void * unknown4;
-        int unknown5;
-        char * IDStringPtr;
-        void * unknownFunctionPtr;
-        int unknown6;
-        int unknown7;
-        int unknown8;
-        int unknown9;
-        char * nameStringPtr;
-        int unknown10;	//char * scriptIDStringPtr;
-        char * nifStringPtr;
-        char * tgaStringPtr;
-        float weight;
-        int value;
-        short weaponType;
-        short maxCondition;
-        float speed;
-        float reach;
-        short enchantPoints;
-        char chopMin;
-        char chopMax;
-        char slashMin;
-        char slashMax;
-        char trustMin;
-        char trustMax;
-        long flags;
-    };
+	struct WEAPRecord_t
+	{
+		void * vTable;
+		RecordTypes::recordType_t recordType; // "WEAP"
+		int recordSize;
+		char * modNamePtr;
+		int unknown1;
+		int unknown2;
+		int unknown3; //REFRRecord_t * first //nextOfSameTemplate
+		void * previousRecord;
+		void * nextRecord;
+		void * unknown4;
+		int unknown5;
+		char * IDStringPtr;
+		void * unknownFunctionPtr;
+		int unknown6;
+		int unknown7;
+		int unknown8;
+		int unknown9;
+		char * nameStringPtr;
+		int unknown10;	//char * scriptIDStringPtr;
+		char * nifStringPtr;
+		char * tgaStringPtr;
+		float weight;
+		int value;
+		short weaponType;
+		short maxCondition;
+		float speed;
+		float reach;
+		short enchantPoints;
+		char chopMin;
+		char chopMax;
+		char slashMin;
+		char slashMax;
+		char trustMin;
+		char trustMax;
+		long flags;
+	};
 
 	struct GLOBRecord_t
 	{
@@ -617,9 +617,15 @@ namespace mwse
 	{
 		void * vTable;
 		RecordTypes::recordType_t recordType;
-		char unknown1[16];
+		mwLong_t unknown_0x08;
+		mwLong_t unknown_0x0C;
+		mwLong_t unknown_0x10;
+		mwLong_t unknown_0x14;
 		REFRRecord_t * first;
-		char unknown2[16];
+		mwLong_t unknown_0x1C;
+		mwLong_t unknown_0x20;
+		mwLong_t unknown_0x24;
+		mwLong_t unknown_0x28;
 		char * objectId;
 	};
 
@@ -635,7 +641,7 @@ namespace mwse
 		mwLong_t unknown_0x20;
 		mwLong_t unknown_0x24;
 		mwLong_t unknown_0x28;
-		char * objectid; // 0x2C
+		char * objectId; // 0x2C
 		mwLong_t unknown_0x30;
 		mwLong_t unknown_0x34;
 		mwLong_t unknown_0x38;
@@ -694,7 +700,7 @@ namespace mwse
 		void * nextRecord;
 		int unknown5;
 		int unknown6;
-		char * IDStringPtr;
+		char * objectId;
 		int unknown7;
 		int unknown8;
 		int unknown9;
