@@ -386,7 +386,7 @@ namespace mwse
 		int unknown5;	//BODY
 		int unknown6;
 		int unknown7;
-		char * IDStringPtr;
+		char * objectId;
 		int unknown8;
 		int unknown9;
 		int unknown10;
@@ -445,7 +445,7 @@ namespace mwse
 		void * nextRecord;
 		int unknown5;
 		int unknown6;
-		char * IDStringPtr;
+		char * objectId;
 		int unknown7;
 		int unknown8;
 		int unknown9;

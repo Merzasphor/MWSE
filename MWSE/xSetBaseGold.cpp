@@ -57,7 +57,7 @@ namespace mwse
 				npc->baseNPC->baseGold = gold;
 			}
 			else {
-				mwse::log::getLog() << "xSetBaseGold: Could not get base NPC record for \"" << npc->IDStringPtr << "\"" << std::endl;
+				mwse::log::getLog() << "xSetBaseGold: Could not get base NPC record for \"" << npc->objectId << "\"" << std::endl;
 			}
 		}
 		else if (baseRecord->recordType == RecordTypes::CREATURE) {
@@ -66,7 +66,7 @@ namespace mwse
 				creature->baseCreature->baseGold = gold;
 			}
 			else {
-				mwse::log::getLog() << "xSetBaseGold: Could not get base creature record for \"" << creature->IDStringPtr << "\"" << std::endl;
+				mwse::log::getLog() << "xSetBaseGold: Could not get base creature record for \"" << creature->objectId << "\"" << std::endl;
 			}
 		}
 
