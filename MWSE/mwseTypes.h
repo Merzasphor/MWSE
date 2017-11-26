@@ -117,6 +117,14 @@ namespace mwse
 		void * dataPtr;
 	};
 
+	struct ListIterator_t
+	{
+		char unknown[8];
+		ListNode_t * first;
+		char unknown2[4];
+		ListNode_t * current;
+	};
+
 	struct mwVariablesNode_t
 	{
 		mwShort_t * shortVarValues;
@@ -398,7 +406,8 @@ namespace mwse
 		int unknown24;
 		int unknown25;
 		int unknown26;
-		int unknown27;
+		short level;
+		short unknown27;
 		int unknown28;
 		int unknown29;
 		int unknown30;
@@ -410,13 +419,14 @@ namespace mwse
 		int unknown36;
 		int unknown37;
 		int unknown38;
-		int unknown39;	//RACE
-		int unknown40;	//CLAS
-		int unknown41;
-		int unknown42;	//BODY (head)
-		int unknown43;	//BODY (hair)
+		mwShort_t baseGold;
+		mwShort_t unknown45;
+		int unknown39; //RACE
+		int unknown40; //CLASS
+		int unknown41;	//BODY (head)
+		int unknown42;	//BODY (hair)
+		int unknown43;
 		int unknown44;
-		int unknown45;
 		int numberOfSpells;
 		LinkedList_t * spellStart;	//these contain the spells! not items with a special power.
 		LinkedList_t * spellEnd;
@@ -466,7 +476,7 @@ namespace mwse
         REFRRecord_t * previousRecord;
         REFRRecord_t * nextRecord;
         int unknown3;
-        void * recordPointer; //points to the record for which this is a reference;
+		BaseRecord_t * recordPointer; //points to the record for which this is a reference;
 		char unknown4[12];	//12 bytes
 		float x;
 		float y;
@@ -611,6 +621,96 @@ namespace mwse
 		REFRRecord_t * first;
 		char unknown2[16];
 		char * objectId;
+	};
+
+	struct CREABaseRecord_t {
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04
+		mwLong_t unknown_0x08;
+		mwLong_t unknown_0x0C;
+		mwLong_t unknown_0x10;
+		mwLong_t unknown_0x14;
+		REFRRecord_t* first; // 0x18
+		mwLong_t unknown_0x1C;
+		mwLong_t unknown_0x20;
+		mwLong_t unknown_0x24;
+		mwLong_t unknown_0x28;
+		char * objectid; // 0x2C
+		mwLong_t unknown_0x30;
+		mwLong_t unknown_0x34;
+		mwLong_t unknown_0x38;
+		mwLong_t unknown_0x3C;
+		ListIterator_t * inventory; // 0x40
+		mwLong_t unknown_0x44;
+		mwLong_t unknown_0x48;
+		mwLong_t unknown_0x4C;
+		mwLong_t unknown_0x50;
+		mwLong_t unknown_0x54;
+		mwLong_t unknown_0x58;
+		mwLong_t unknown_0x5C;
+		mwLong_t unknown_0x60;
+		mwLong_t unknown_0x64;
+		mwLong_t unknown_0x68;
+		mwLong_t unknown_0x6C;
+		mwLong_t unknown_0x70;
+		mwLong_t unknown_0x74;
+		mwLong_t unknown_0x78;
+		mwLong_t unknown_0x7C;
+		mwLong_t unknown_0x80;
+		mwLong_t unknown_0x84;
+		mwLong_t unknown_0x88;
+		mwLong_t unknown_0x8C;
+		mwLong_t unknown_0x90;
+		mwLong_t unknown_0x94;
+		mwLong_t unknown_0x98;
+		mwLong_t unknown_0x9C;
+		mwLong_t unknown_0xA0;
+		mwLong_t unknown_0xA4;
+		mwLong_t unknown_0xA8;
+		mwLong_t unknown_0xAC;
+		mwLong_t unknown_0xB0;
+		mwLong_t unknown_0xB4;
+		mwLong_t unknown_0xB8;
+		mwLong_t unknown_0xBC;
+		mwLong_t unknown_0xC0;
+		mwLong_t unknown_0xC4;
+		mwLong_t unknown_0xC8;
+		mwLong_t unknown_0xCC;
+		mwLong_t unknown_0xD0;
+		mwLong_t unknown_0xD4;
+		mwShort_t baseGold; // 0xD8 -- Base barter gold.
+	};
+
+	struct CREACopyRecord_t
+	{
+		void * vTable;
+		RecordTypes::recordType_t recordType;
+		int unknown1; //int RecordSize; ?
+		int unknown2; //char * modNamePtr; ?
+		int unknown3;
+		int unknown4;
+		void * reference;
+		void * prevRecord;
+		void * nextRecord;
+		int unknown5;
+		int unknown6;
+		char * IDStringPtr;
+		int unknown7;
+		int unknown8;
+		int unknown9;
+		int unknown10;
+		int unknown11;
+		int AmountInventory;
+		LinkedList_t * inventoryStart;
+		LinkedList_t * inventoryEnd;
+		int unknown13;
+		int unknown14;
+		int unknown15;	//some pointer
+		int amountEquiped;
+		LinkedList_t * equipedStart;
+		LinkedList_t * equipedEnd;
+		int unknown16;
+		CREABaseRecord_t * baseCreature;
 	};
 
 	struct RecordLists_t {
