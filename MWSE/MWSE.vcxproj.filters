@@ -401,12 +401,6 @@
     <ClCompile Include="xLongToFloats.cpp">
       <Filter>Source Files\Functions\Math</Filter>
     </ClCompile>
-    <ClCompile Include="xNot.cpp">
-      <Filter>Source Files\Functions\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="xOr.cpp">
-      <Filter>Source Files\Functions\Math</Filter>
-    </ClCompile>
     <ClCompile Include="xShift.cpp">
       <Filter>Source Files\Functions\Math</Filter>
     </ClCompile>
@@ -417,9 +411,6 @@
       <Filter>Source Files\Functions\Math</Filter>
     </ClCompile>
     <ClCompile Include="xTan.cpp">
-      <Filter>Source Files\Functions\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="xXor.cpp">
       <Filter>Source Files\Functions\Math</Filter>
     </ClCompile>
     <ClCompile Include="xPow.cpp">
@@ -466,6 +457,15 @@
     </ClCompile>
     <ClCompile Include="xRandomLong.cpp">
       <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xOr.cpp">
+      <Filter>Source Files\Functions\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="xNot.cpp">
+      <Filter>Source Files\Functions\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="xXor.cpp">
+      <Filter>Source Files\Functions\Logic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
