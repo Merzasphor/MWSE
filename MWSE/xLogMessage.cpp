@@ -61,10 +61,6 @@ namespace mwse
 
 	float xLogMessage::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-#if MWSE_DEBUG_STACK
-		Stack::getInstance().dump();
-#endif
-
 		mwseString_t format = virtualMachine.getString(Stack::getInstance().popLong());
 
 		bool suppressNull = false;
@@ -73,7 +69,7 @@ namespace mwse
 
 		mwse::log::getLog() << result << std::endl;
 		if (!badCodes.empty()) {
-			mwse::log::getLog() << "xMessageFix: bad format \"" << badCodes << "\" in \"" << format << "\" generating \"" << result << "\"" << badCodes << std::endl;
+			mwse::log::getLog() << "xLogMessage: bad format \"" << badCodes << "\" in \"" << format << "\" generating \"" << result << "\"" << badCodes << std::endl;
 		}
 
 		return 0.0;
