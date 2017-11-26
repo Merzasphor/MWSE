@@ -61,6 +61,13 @@ namespace mwse
 			MACHNODE = 8	//PCAM
 		};
     };
+
+	struct BaseRecord_t
+	{
+		void * vTable;
+		RecordTypes::recordType_t recordType;
+	};
+
     struct SCPTRecord_t
     {
         void * vTable; //pointer to the vTable
@@ -125,20 +132,127 @@ namespace mwse
 
 	struct REFRRecord_t;
 
-	struct PCAMRecord_t
+	enum Attributes
 	{
-		void * vTable;										//0
-		RecordTypes::recordType_t recordType;				//4
-		int unknown1;										//8
-		int unknown2;										//12
-		int unknown3;										//16
-		REFRRecord_t * reference;							//20
-		int unknown4[53];	//unknowns						//24
-		PCAMRecord_t * combatTarget;
-		int unknown5[162];	//more unknowns
-		void * currentSpell; //current selected spell	//this of course points to a SPEL or ENCH record ;)
-		//or the one after that, if i miscounted ;-), we'll see when we start using those.
-		//vTable + 0x378 is currentSpell @, so you can recount ;-).
+		NoAttribute = -1,
+		Strength,
+		Intelligence,
+		Willpower,
+		Agility,
+		Speed,
+		Endurance,
+		Personality,
+		Luck,
+		FirstAttribute = Strength,
+		LastAttribute = Luck
+	};
+
+	enum SkillTypes
+	{
+		Major,
+		Minor,
+		Misc
+	};
+
+	enum Specializations
+	{
+		NoSpecialization = -1,
+		Combat,
+		Magic,
+		Stealth,
+		FirstSpecialization = Combat,
+		LastSpecialization = Stealth
+	};
+
+	enum Skills
+	{
+		NoSkill = -1,
+		Block,
+		Armorer,
+		MediumArmor,
+		HeavyArmor,
+		BluntWeapon,
+		LongBlade,
+		Axe,
+		Spear,
+		Athletics,
+		Enchant,
+		Destruction,
+		Alteration,
+		Illusion,
+		Conjuration,
+		Mysticism,
+		Restoration,
+		Alchemy,
+		Unarmored,
+		Security,
+		Sneak,
+		Acrobatics,
+		LightArmor,
+		ShortBlade,
+		Marksman,
+		Mercantile,
+		Speechcraft,
+		HandToHand,
+		FirstSkill = Block,
+		LastSkill = HandToHand
+	};
+
+	struct MACPRecord_t
+	{
+		struct Skill
+		{
+			void* vtable;
+			float base;
+			float current;
+			SkillTypes skillType;
+		};
+		struct Statistic
+		{
+			void* vtable;
+			float base;
+			float current;
+		};
+		struct ActiveEffect
+		{
+			ActiveEffect* next;
+			ActiveEffect* previous;
+			unsigned long id; //??? matches SPLLRecord
+			unsigned short flags; //??? 0x0 for spells 0x68 for potions?
+			unsigned short effect_type; // see Effects enum
+			unsigned short detrimental; // 1 = yes, 0 = no
+			unsigned short duration; // seconds
+			unsigned short magnitude;
+			unsigned short attribute_skill; // 255 if N/A see Attributes/Skills enums
+		};
+		void * vTable; // 0
+		RecordTypes::attachType_t recordType; // "MACP" // 4
+		int unknown1[3]; //8
+		REFRRecord_t* reference; //20
+		int unknown2[53]; //24
+		MACPRecord_t* combatTarget; // unverified // 236
+		int unknown3[54]; // 240
+		ActiveEffect* active_effects; // 454
+		long num_active_effects; // 460 // number of active spells / effects
+		MACPRecord_t* self; // 464 // pointer back to this record?
+		int unknown[32];  // 468
+		Statistic attributes[8]; // 596
+		Statistic health; // 692
+		Statistic magicka; // 704
+		Statistic weight_limit; // 716 // base = max
+		Statistic fatigue; // 728 // fatigue has a different vtable pointer than the other Statistic objects.
+		Statistic unknown_statistic; // 740
+		unsigned long effect_attributes[27]; // 752
+		int unknown4[7]; // 860
+		void * currentSpell; // 888
+		int unknown5[3]; // 892
+		void* current_weapon; // 904
+		int unknown6[9]; // 908
+		Skill skills[27]; // 944
+		int unknown7[34];  // 1376
+		long levelProgress; // 1512
+		int unknown8[2];  // 1516
+		float skillProgress[27]; // 1524
 	};
 
 	struct SPELRecord_t
@@ -345,7 +459,7 @@ namespace mwse
         void * vTable;
         RecordTypes::recordType_t recordType; // "REFR"
         long flags;			//0x50 big, should this be!
-        char ** modNamePtr;
+		char* modNamePtr;
         int unknown1;
 		int unknown2;
         REFRRecord_t * nextOfSameTemplate;

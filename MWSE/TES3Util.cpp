@@ -17,5 +17,21 @@ namespace mwse
 			}
 			return reference;
 		}
+
+		BaseRecord_t* getFirstAttachmentByType(REFRRecord_t* reference, RecordTypes::attachType_t attachmentType) {
+			if (reference == NULL || reference->attachments == NULL) {
+				return NULL;
+			}
+
+			ListNode_t* listNode = reference->attachments;
+			while (listNode) {
+				if (listNode->attachType == attachmentType) {
+					return reinterpret_cast<BaseRecord_t*>(listNode->dataPtr);
+				}
+				listNode = listNode->nextNode;
+			}
+
+			return NULL;
+		}
 	}
 }
