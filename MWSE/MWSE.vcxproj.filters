@@ -34,6 +34,27 @@
     <Filter Include="Source Files\DataAdapters">
       <UniqueIdentifier>{2fb5c485-2d19-4254-bda9-7ef4f0c79a3b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Functions\Logic">
+      <UniqueIdentifier>{bdee9a24-8699-48c0-8e36-0d28cc804d3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Functions\Math">
+      <UniqueIdentifier>{bce34f47-3e61-4286-b89e-a5c0233970c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Functions\Actor Statistics">
+      <UniqueIdentifier>{f698aff9-3bb6-4a1c-b46f-ad0d38d278d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Functions\Arrays">
+      <UniqueIdentifier>{c0c18598-6c02-475a-9a09-ab224f72034b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Functions\File IO">
+      <UniqueIdentifier>{bf50a121-5d26-4031-80b7-2bc93169bc3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Functions\Utility">
+      <UniqueIdentifier>{69246e43-644e-4abd-b2e3-bbe9ff5d1bc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Functions\References">
+      <UniqueIdentifier>{6c987b3d-88c0-45ef-8b2e-803ee7617540}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -149,101 +170,8 @@
     <ClCompile Include="mwAdapter.cpp">
       <Filter>Source Files\ScriptVM</Filter>
     </ClCompile>
-    <ClCompile Include="xDistance.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetRef.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xSetRef.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xRefType.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetPCTarget.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xLogMessage.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xArcCos.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xArcSin.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xArcTan.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xSin.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xCos.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xTan.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xDegRad.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xRadDeg.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xHypot.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xSqrt.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xFloatsToLong.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xLongToFloats.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xPow.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xShift.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xBitAnd.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xBitOr.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xBitXor.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xBitNot.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xAnd.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xOr.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xXor.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xNot.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xRandomLong.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
     <ClCompile Include="RngUtil.cpp">
       <Filter>Source Files\Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="xRandomFloat.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xFirstNPC.cpp">
-      <Filter>Source Files\Functions</Filter>
     </ClCompile>
     <ClCompile Include="MgeVirtualMachine.cpp">
       <Filter>Source Files</Filter>
@@ -254,197 +182,290 @@
     <ClCompile Include="TES3Util.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="xNextRef.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
     <ClCompile Include="StringUtil.cpp">
       <Filter>Source Files\Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="xFirstItem.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xFirstStatic.cpp">
-      <Filter>Source Files\Functions</Filter>
     </ClCompile>
     <ClCompile Include="ArrayUtil.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="xCreateArray.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xClearArray.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetArraySize.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetArrayValue.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xSetArrayValue.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
     <ClCompile Include="FileUtil.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="xAnd.cpp">
+      <Filter>Source Files\Functions\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="xArcCos.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xArcSin.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xArcTan.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xBitAnd.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xBitNot.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xBitOr.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xBitXor.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xClearArray.cpp">
+      <Filter>Source Files\Functions\Arrays</Filter>
+    </ClCompile>
+    <ClCompile Include="xCos.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xCreateArray.cpp">
+      <Filter>Source Files\Functions\Arrays</Filter>
+    </ClCompile>
+    <ClCompile Include="xDegRad.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xDistance.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
     <ClCompile Include="xFileReadFloat.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xFileWriteFloat.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xFileRewind.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xFileSeek.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xFileReadShort.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xFileWriteShort.cpp">
-      <Filter>Source Files\Functions</Filter>
+      <Filter>Source Files\Functions\File IO</Filter>
     </ClCompile>
     <ClCompile Include="xFileReadLong.cpp">
-      <Filter>Source Files\Functions</Filter>
+      <Filter>Source Files\Functions\File IO</Filter>
     </ClCompile>
-    <ClCompile Include="xFileWriteLong.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xFileWriteString.cpp">
-      <Filter>Source Files\Functions</Filter>
+    <ClCompile Include="xFileReadShort.cpp">
+      <Filter>Source Files\Functions\File IO</Filter>
     </ClCompile>
     <ClCompile Include="xFileReadString.cpp">
-      <Filter>Source Files\Functions</Filter>
+      <Filter>Source Files\Functions\File IO</Filter>
     </ClCompile>
     <ClCompile Include="xFileReadText.cpp">
-      <Filter>Source Files\Functions</Filter>
+      <Filter>Source Files\Functions\File IO</Filter>
+    </ClCompile>
+    <ClCompile Include="xFileRewind.cpp">
+      <Filter>Source Files\Functions\File IO</Filter>
+    </ClCompile>
+    <ClCompile Include="xFileSeek.cpp">
+      <Filter>Source Files\Functions\File IO</Filter>
+    </ClCompile>
+    <ClCompile Include="xFileWriteFloat.cpp">
+      <Filter>Source Files\Functions\File IO</Filter>
+    </ClCompile>
+    <ClCompile Include="xFileWriteLong.cpp">
+      <Filter>Source Files\Functions\File IO</Filter>
+    </ClCompile>
+    <ClCompile Include="xFileWriteShort.cpp">
+      <Filter>Source Files\Functions\File IO</Filter>
+    </ClCompile>
+    <ClCompile Include="xFileWriteString.cpp">
+      <Filter>Source Files\Functions\File IO</Filter>
     </ClCompile>
     <ClCompile Include="xFileWriteText.cpp">
-      <Filter>Source Files\Functions</Filter>
+      <Filter>Source Files\Functions\File IO</Filter>
+    </ClCompile>
+    <ClCompile Include="xFloatsToLong.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetArraySize.cpp">
+      <Filter>Source Files\Functions\Arrays</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetArrayValue.cpp">
+      <Filter>Source Files\Functions\Arrays</Filter>
     </ClCompile>
     <ClCompile Include="xGetAttribute.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseAttribute.cpp">
-      <Filter>Source Files\Functions</Filter>
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
     </ClCompile>
     <ClCompile Include="xGetBaseAcrobatics.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseAlchemy.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseAlteration.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseArmorer.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseAthletics.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseAxe.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseBlock.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseBluntWeapon.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseConjuration.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseDestruction.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseEnchant.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseHandToHand.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseHeavyArmor.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseIllusion.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseLightArmor.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseLongBlade.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseMarksman.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseMediumArmor.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseMercantile.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseMysticism.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseRestoration.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseSecurity.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseShortBlade.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseSneak.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseSpear.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseSpeechcraft.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseUnarmored.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseSkill.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseEnd.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseInt.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseLuc.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBasePer.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseSpe.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseStr.cpp">
-      <Filter>Source Files\Functions</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseWil.cpp">
-      <Filter>Source Files\Functions</Filter>
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
     </ClCompile>
     <ClCompile Include="xGetBaseAgi.cpp">
-      <Filter>Source Files\Functions</Filter>
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseAlchemy.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseAlteration.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseArmorer.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseAthletics.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseAttribute.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseAxe.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseBlock.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseBluntWeapon.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseConjuration.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseDestruction.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseEnchant.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseEnd.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
     </ClCompile>
     <ClCompile Include="xGetBaseFatigue.cpp">
-      <Filter>Source Files\Functions</Filter>
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
     </ClCompile>
-    <ClCompile Include="xGetBaseMagicka.cpp">
-      <Filter>Source Files\Functions</Filter>
+    <ClCompile Include="xGetBaseHandToHand.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
     </ClCompile>
     <ClCompile Include="xGetBaseHealth.cpp">
-      <Filter>Source Files\Functions</Filter>
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseHeavyArmor.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseIllusion.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseInt.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseLightArmor.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseLongBlade.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseLuc.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseMagicka.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseMarksman.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseMediumArmor.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseMercantile.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseMysticism.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBasePer.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseRestoration.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseSecurity.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseShortBlade.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseSkill.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseSneak.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseSpe.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseSpear.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseSpeechcraft.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseStr.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseUnarmored.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseWil.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xLongToFloats.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xNot.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xOr.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xShift.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xSin.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xSqrt.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xTan.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xXor.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xPow.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xRadDeg.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xHypot.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xSetArrayValue.cpp">
+      <Filter>Source Files\Functions\Arrays</Filter>
+    </ClCompile>
+    <ClCompile Include="xFirstItem.cpp">
+      <Filter>Source Files\Functions\References</Filter>
+    </ClCompile>
+    <ClCompile Include="xFirstNPC.cpp">
+      <Filter>Source Files\Functions\References</Filter>
+    </ClCompile>
+    <ClCompile Include="xFirstStatic.cpp">
+      <Filter>Source Files\Functions\References</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetPCTarget.cpp">
+      <Filter>Source Files\Functions\References</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetRef.cpp">
+      <Filter>Source Files\Functions\References</Filter>
+    </ClCompile>
+    <ClCompile Include="xNextRef.cpp">
+      <Filter>Source Files\Functions\References</Filter>
+    </ClCompile>
+    <ClCompile Include="xRefType.cpp">
+      <Filter>Source Files\Functions\References</Filter>
+    </ClCompile>
+    <ClCompile Include="xSetRef.cpp">
+      <Filter>Source Files\Functions\References</Filter>
+    </ClCompile>
+    <ClCompile Include="xLogMessage.cpp">
+      <Filter>Source Files\Functions\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="xRandomFloat.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="xRandomLong.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
