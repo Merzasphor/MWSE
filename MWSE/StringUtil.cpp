@@ -207,5 +207,212 @@ namespace mwse {
 			}
 			return (eolmode || (substitutions > 0));
 		}
+
+		int secernate(const char* format, const char* string, mwLong_t* results, int maxResults) {
+			int resultcount = 1;		// count is first and set below
+			int sign;
+			int ivalue;
+			float fvalue;
+			char svalbuf[BUFSIZ * 4];
+			char *svalue;
+
+			while (format && *format && string && *string)
+			{
+				if (*format != '%')
+				{
+					if (*format++ != *string++)	// if not a literal match, quit
+						format = 0;
+				}
+				else		// format symbol in format string found
+				{
+					int stringskip = 0;
+					int stringwidth = -1;
+					format++;
+					while (*format >= '0' && *format <= '9')
+					{
+						stringskip = stringskip * 10 + *format - '0';
+						format++;
+					}
+					if (*format == '.')
+					{
+						format++;
+						if (*format < '0' || *format > '9')
+						{
+							if (*string == '%' && *(string + 1) == '.')
+								string += 2;	// literal %. matches
+							else
+								format = 0;	// no match, so quit.
+							continue;
+						}
+						stringwidth = *format++ - '0';
+						while (*format >= '0' && *format <= '9')
+						{
+							stringwidth = stringwidth * 10 + *format - '0';
+							format++;
+						}
+					}
+
+					if (*format == 'N' || *format == 'n')
+					{
+						format++;
+						if (*string == '\r')
+							string++;
+						if (*string == '\n')
+							string++;
+						else
+							format = 0;
+					}
+					else if (*format == 'Q' || *format == 'q')
+					{
+						format++;
+						if (*string == '"')
+							string++;
+						else
+							format = 0;
+					}
+					else if (*format == 'L' || *format == 'l')
+					{
+						format++;
+						svalue = svalbuf;
+						*((mwLong_t*)svalbuf) = 0;
+						stringwidth = 4;
+						while (stringwidth-- && (*svalue++ = *string++));
+						results[resultcount++] = *((mwLong_t*)svalbuf);
+					}
+					else if (*format == 'D' || *format == 'd')
+					{
+						format++;
+						ivalue = 0;
+						sign = 1;
+						if (*string == '-')
+						{
+							string++;
+							sign = -1;
+						}
+						while (*string >= '0' && *string <= '9')
+						{
+							ivalue = ivalue * 10 + *string - '0';
+							string++;
+						}
+						ivalue *= sign;
+						results[resultcount++] = (mwLong_t)ivalue;
+					}
+					else if (*format == 'H' || *format == 'h')
+					{
+						format++;
+						unsigned long hvalue = 0;
+						int length = 0;
+						while (length < 8)
+						{
+							if (*string >= '0' && *string <= '9')
+								hvalue = hvalue * 16 + *string - '0';
+							else if (*string >= 'a' && *string <= 'f')
+								hvalue = hvalue * 16 + *string - 'a' + 10;
+							else if (*string >= 'A' && *string <= 'F')
+								hvalue = hvalue * 16 + *string - 'A' + 10;
+							else
+								break;
+							string++;
+							length++;
+						}
+						results[resultcount++] = (mwLong_t)hvalue;
+					}
+
+					else if (*format == 'F' || *format == 'f')
+					{
+						format++;
+						fvalue = 0.0;
+						sign = 1;
+						if (*string == '-')
+						{
+							string++;
+							sign = -1;
+						}
+						while (*string >= '0' && *string <= '9')
+						{
+							fvalue = fvalue * 10.0f + (*string - '0');
+							string++;
+						}
+						if (*string == '.')
+						{
+							string++;
+							ivalue = 10;
+							while (*string >= '0' && *string <= '9')
+							{
+								fvalue += 1.0f / ivalue * (*string - '0');
+								ivalue *= 10;
+								string++;
+							}
+						}
+						fvalue *= sign;
+						results[resultcount++] = (mwLong_t)(*((mwLong_t*)&fvalue));
+					}
+
+					else if (*format == 'S' || *format == 's')
+					{
+						format++;
+						svalue = svalbuf;
+						while (stringskip-- && *string++);	// skip some characters
+						if (stringwidth)	// standard greedy string mode
+							while (stringwidth-- && (*svalue++ = *string++));
+						else	// non-greedy string can be used like a "search" function
+						{
+							int stopsymbol = *format;
+							if ((stopsymbol == '%') && (*(format + 1) != '%'))
+							{
+								stopsymbol = *(format + 1);
+								if (stopsymbol == 'N' || stopsymbol == 'n')
+									stopsymbol = '\r';
+								else if (stopsymbol == 'Q' || stopsymbol == 'q')
+									stopsymbol = '"';
+								else if (stopsymbol == 'D' || stopsymbol == 'd'
+									|| stopsymbol == 'F' || stopsymbol == 'f')
+									stopsymbol = 0;
+								else
+									stopsymbol = *string;
+							}
+							while (*string)
+							{
+								if (*string == stopsymbol) break;
+								if (!stopsymbol && (*string == '-' ||
+									(*string >= '0' && *string <= '9'))) break;
+								*svalue++ = *string++;
+							}
+						}
+						*svalue = 0;	// make sure it's null terminated
+						results[resultcount++] = mwseString_t(svalbuf);
+					}
+
+					else if (*format == '%')
+					{
+						format++;
+						if (*string == '%')
+							string++;
+						else
+							format = 0;
+					}
+					else if (*format)
+					{
+						if (*string == '%' && *(string + 1) == *format)
+						{
+							string += 2;	// literal % matches
+							format++;
+						}
+						else
+							format = 0;
+					}
+				}
+			}
+
+			results[0] = resultcount - 1;		// assume it's the number of %subs performed
+			if (!(*string) && (!format || !(*format)
+				|| (*format == '%' && !(*(format + 1)))))	// completed string, so flag an extra
+				results[0] = resultcount;
+
+			while (resultcount < maxResults)
+				results[resultcount++] = (mwLong_t)0;
+
+			return results[0];
+		}
 	}
 }

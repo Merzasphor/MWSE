@@ -33,5 +33,8 @@ namespace mwse
 
 		// Count how many results there should be based on the format string
 		bool enumerate(const char *format, int& substitutions, bool& eolmode);
+
+		// Extract the values from the string based on the format data and store them in the resultset array
+		int secernate(const char* format, const char* string, mwLong_t* results, int maxResults);
 	}
 };
