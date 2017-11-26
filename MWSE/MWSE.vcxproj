@@ -104,6 +104,7 @@
     <ClCompile Include="xGetBaseHandToHand.cpp" />
     <ClCompile Include="xGetBaseHealth.cpp" />
     <ClCompile Include="xGetBaseHeavyArmor.cpp" />
+    <ClCompile Include="xGetBaseID.cpp" />
     <ClCompile Include="xGetBaseIllusion.cpp" />
     <ClCompile Include="xGetBaseInt.cpp" />
     <ClCompile Include="xGetBaseLightArmor.cpp" />

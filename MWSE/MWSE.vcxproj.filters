@@ -473,6 +473,9 @@
     <ClCompile Include="xSetBaseGold.cpp">
       <Filter>Source Files\Functions\Actor Statistics</Filter>
     </ClCompile>
+    <ClCompile Include="xGetBaseID.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
