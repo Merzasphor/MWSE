@@ -115,7 +115,7 @@ namespace mwse
 		int unknown_0x04;
 		int unknown_0x08;
 		int unknown_0x0C;
-		int unknown_0x10;
+		int unknown_0x10; // For enchanted items, this is the current charge (as a float).
 	};
 
 	struct ListNode_t
