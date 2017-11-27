@@ -127,6 +127,7 @@
     <ClCompile Include="xGetBaseStr.cpp" />
     <ClCompile Include="xGetBaseUnarmored.cpp" />
     <ClCompile Include="xGetBaseWil.cpp" />
+    <ClCompile Include="xGetCharge.cpp" />
     <ClCompile Include="xGetPCTarget.cpp" />
     <ClCompile Include="xGetRef.cpp" />
     <ClCompile Include="InstructionInterface.cpp" />

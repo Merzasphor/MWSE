@@ -110,6 +110,14 @@ namespace mwse
 		void * recordAddress;
 	};
 
+	struct VarNodeAttachment_t {
+		int unknown_0x00;
+		int unknown_0x04;
+		int unknown_0x08;
+		int unknown_0x0C;
+		int unknown_0x10;
+	};
+
 	struct ListNode_t
 	{
 		RecordTypes::attachType_t attachType;
@@ -492,6 +500,66 @@ namespace mwse
 		REFRRecord_t * container;
 	};
 
+	// Copied from WEAPRecord - needs to be verified.
+	struct ARMORecord_t
+	{
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04 "ARMO"
+		int recordSize; // 0x08
+		char * modNamePtr; // 0x0C
+		int unknown_0x10;
+		int unknown_0x14;
+		REFRRecord_t * nextOfSameTemplate; // 0x18
+		REFRRecord_t * previousRecord; // 0x1C
+		REFRRecord_t * nextRecord; // 0x20
+		void * unknown_0x24;
+		int unknown_0x28;
+		char * objectId; // 0x2C
+		void * unknownFunctionPtr; // 0x30
+		int unknown_0x34;
+		int unknown_0x38;
+		int unknown_0x3C;
+		int unknown_0x40;
+		char * nameStringPtr; // 0x44
+		int unknown_0x48;	// char * scriptIDStringPtr;
+		char * nifStringPtr; // 0x4C
+		char * tgaStringPtr; // 0x50
+		float weight; // 0x54
+		int value; // 0x58
+		int unknown_0x5C[25];
+		ENCHRecord_t * enchantment; // 0xF0
+	};
+
+	// Copied from WEAPRecord - needs to be verified.
+	struct CLOTRecord
+	{
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04 "CLOT"
+		int recordSize; // 0x08
+		char * modNamePtr; // 0x0C
+		int unknown_0x10;
+		int unknown_0x14;
+		REFRRecord_t * nextOfSameTemplate; // 0x18
+		REFRRecord_t * previousRecord; // 0x1C
+		REFRRecord_t * nextRecord; // 0x20
+		void * unknown_0x24;
+		int unknown_0x28;
+		char * objectId; // 0x2C
+		void * unknownFunctionPtr; // 0x30
+		int unknown_0x34;
+		int unknown_0x38;
+		int unknown_0x3C;
+		int unknown_0x40;
+		char * nameStringPtr; // 0x44
+		int unknown_0x48;	//char * scriptIDStringPtr;
+		char * nifStringPtr;
+		char * tgaStringPtr;
+		float weight;
+		int value;
+		int unknowns[22];
+		ENCHRecord_t * enchantment;
+	};
+
 	struct WEAPRecord_t
 	{
 		void * vTable;
@@ -529,6 +597,7 @@ namespace mwse
 		char trustMin;
 		char trustMax;
 		long flags;
+		ENCHRecord_t * enchantment;
 	};
 
 	struct GLOBRecord_t
