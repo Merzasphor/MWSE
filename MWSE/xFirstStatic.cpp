@@ -45,19 +45,19 @@ namespace mwse
 
 	float xFirstStatic::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		// Clear first element in our stored exterior ref list.
-		mwse::tes3::exteriorRefs[0] = NULL;
+		// Clear elements in our stored exterior ref list.
+		mwse::tes3::clearExteriorRefs();
 
 		REFRRecord_t* reference = NULL;
 		TES3CellMaster_t* cellMaster = mwse::tes3::getCellMaster();
 		if (cellMaster->interiorCell != NULL) {
-			reference = mwse::tes3::skipRemovedReferences(cellMaster->interiorCell->npc.first);
+			reference = mwse::tes3::skipRemovedReferences(cellMaster->interiorCell->statics.first);
 		}
 		else {
 			TES3CellPointer_t* cellPointer = cellMaster->exteriorCells[CENTER];
 			if (cellPointer->size == 1) {
 				// Get the start of the list for the center cell. We'll check that it's valid later.
-				reference = mwse::tes3::skipRemovedReferences(cellPointer->first->npc.first);
+				reference = mwse::tes3::skipRemovedReferences(cellPointer->first->statics.first);
 				int exteriorCount = 0;
 				for (int i = 0; i < 9; i++) {
 					if (i == CENTER) {
@@ -72,9 +72,12 @@ namespace mwse
 							exteriorCount++;
 						}
 					}
+					else {
+						mwse::log::getLog() << "xFirstStatic: Exterior size is " << cellPointer->size << ". Skipping exterior " << i << "." << std::endl;
+					}
 				}
 
-				// 9th (last) index should always be NULL.
+				// Make sure that we end our list with a NULL, so we know we're done.
 				mwse::tes3::exteriorRefs[exteriorCount] = NULL;
 
 				// Make sure the reference in the center cell is valid.
@@ -82,7 +85,7 @@ namespace mwse
 				if (reference == NULL && exteriorCount > 0) {
 					exteriorCount--;
 					reference = mwse::tes3::exteriorRefs[exteriorCount];
-					mwse::tes3::exteriorRefs[exteriorCount] = 0;
+					mwse::tes3::exteriorRefs[exteriorCount] = NULL;
 				}
 			}
 		}

@@ -34,10 +34,16 @@ namespace mwse
 
 		REFRRecord_t* skipRemovedReferences(REFRRecord_t* reference);
 
+		bool getHasBaseRecord(TES3DefaultTemplate_t* record);
+
+		TES3DefaultTemplate_t* getBaseRecord(TES3DefaultTemplate_t* reference);
+
 		BaseRecord_t* getFirstAttachmentByType(REFRRecord_t* reference, RecordTypes::attachType_t attachmentType);
 
 		// Used in xFirstNPC/Static/Item. The last element should never be non-null.
 		// The first eight elements are pointers to the first reference from the 8 surrounding cells.
-		static REFRRecord_t* exteriorRefs[9] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
+		extern REFRRecord_t* exteriorRefs[9];
+
+		void clearExteriorRefs();
 	}
 };

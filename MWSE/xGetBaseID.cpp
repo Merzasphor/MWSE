@@ -51,8 +51,9 @@ namespace mwse
 
 		// Try to get the data base record objectId first, and fall back to the copy object.
 		TES3DefaultTemplate_t* data = reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer);
-		if (data && reinterpret_cast<NPCCopyRecord_t*>(data)->baseNPC) {
-			objectId = reinterpret_cast<NPCCopyRecord_t*>(data)->baseNPC->objectId;
+		TES3DefaultTemplate_t* base = mwse::tes3::getBaseRecord(data);
+		if (base && base->objectId) {
+			objectId = base->objectId;
 		}
 		else if (data && data->objectId) {
 			objectId = data->objectId;
