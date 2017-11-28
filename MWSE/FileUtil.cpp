@@ -1,6 +1,5 @@
 #include "FileUtil.h"
 
-
 namespace mwse {
 	FileSystem FileSystem::singleton;
 
@@ -45,15 +44,16 @@ namespace mwse {
 		return result;
 	}
 
-	mwseString_t FileSystem::readString(const char* fileName, bool stopAtEndOfLine) {
+	FileReadString_t FileSystem::readString(const char* fileName, bool stopAtEndOfLine) {
 		HANDLE file = getFile(fileName);
+		int numRead = 0;
 
 		// String buffer.
-		char buffer[128] = "\0";
+		char buffer[BUFSIZ * 4] = "\0";
 		char* bufferPtr = buffer;
 
 		if (file == INVALID_HANDLE_VALUE) {
-			return mwseString_t();
+			return FileReadString_t(mwseString_t(), 0);
 		}
 
 		DWORD bytesRead = 0;
@@ -79,12 +79,13 @@ namespace mwse {
 			bufferRemaining--;
 		}
 
+		numRead = bufferPtr - buffer;
 		if (stopAtEndOfLine && (*(bufferPtr - 2) == '\r')) {
 			*(bufferPtr - 2) = 0;
 			bufferPtr--;
 		}
 
-		return mwseString_t(buffer);
+		return FileReadString_t(mwseString_t(buffer), numRead);
 	}
 
 	void FileSystem::writeShort(const char* fileName, const mwShort_t value) {

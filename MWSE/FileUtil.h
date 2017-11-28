@@ -29,6 +29,7 @@
 #include <map>
 #include <stdio.h>
 #include <wtypes.h>
+#include <tuple>
 
 #ifndef NELEM
 #define NELEM(a) (sizeof(a)/sizeof(a[0]))
@@ -43,6 +44,9 @@ namespace mwse {
 
 	typedef std::map<mwseString_t, mwseFileState_t> mwseFileMap_t;
 
+	// readString needs to return both the string it read, and the number of characters read.
+	typedef std::tuple<mwseString_t, int> FileReadString_t;
+
 	class FileSystem {
 	public:
 		static FileSystem& getInstance() { return singleton; };
@@ -52,7 +56,7 @@ namespace mwse {
 		mwShort_t readShort(const char* fileName);
 		mwLong_t readLong(const char* fileName);
 		mwFloat_t readFloat(const char* fileName);
-		mwseString_t readString(const char* fileName, bool stopAtEndOfLine);
+		FileReadString_t readString(const char* fileName, bool stopAtEndOfLine);
 
 		void writeShort(const char* fileName, const mwShort_t value);
 		void writeLong(const char* fileName, const mwLong_t value);

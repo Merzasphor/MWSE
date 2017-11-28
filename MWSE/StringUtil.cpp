@@ -214,7 +214,7 @@ namespace mwse {
 			int ivalue;
 			float fvalue;
 			char svalbuf[BUFSIZ * 4];
-			char *svalue;
+			char* svalue;
 
 			while (format && *format && string && *string)
 			{

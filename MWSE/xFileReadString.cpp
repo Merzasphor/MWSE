@@ -52,11 +52,15 @@ namespace mwse
 			return 0.0f;
 		}
 
+		// Get filename as an argument.
 		mwseString_t fileName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
-		const char* cstr = fileName.c_str();
-		mwseString_t value = mwse::FileSystem::getInstance().readString(cstr, true);
-		mwse::Stack::getInstance().pushLong(value);
+		// Read the string from the file.
+		mwseString_t readString;
+		std::tie(readString, std::ignore) = mwse::FileSystem::getInstance().readString(fileName.c_str(), true);
+
+		// Push the found string to the stack.
+		mwse::Stack::getInstance().pushLong(readString);
 
 		return 0.0f;
 	}

@@ -64,13 +64,13 @@ namespace mwse
 
 		// Store results so we can push them on in reverse.
 		mwLong_t* results = new mwLong_t[maxResults];
-		char stringBuffer[BUFSIZ * 4 + 1]; // May be enough, but could be larger.  Matches Write size.
-		stringBuffer[BUFSIZ * 4] = 0x0;
-		char* string = stringBuffer;
 
-		results[0] = mwse::FileSystem::getInstance().readString(fileName.c_str(), stopAtEndOfLine);
+		// Read the string from the file.
+		mwseString_t readString;
+		std::tie(readString, results[0]) = mwse::FileSystem::getInstance().readString(fileName.c_str(), stopAtEndOfLine);
+
 		if (results[0]) {
-			mwse::string::secernate(format.c_str(), string, results, maxResults);
+			mwse::string::secernate(format.c_str(), readString.c_str(), results, maxResults);
 		}
 
 		while (maxResults--) {
