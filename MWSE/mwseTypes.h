@@ -820,7 +820,7 @@ namespace mwse
 	};
 
 	// Copied from WEAPRecord - needs to be verified.
-	struct CLOTRecord
+	struct CLOTRecord_t
 	{
 		void * vTable; // 0x00
 		RecordTypes::recordType_t recordType; // 0x04 "CLOT"
@@ -887,6 +887,39 @@ namespace mwse
 		char trustMax; // 0x65
 		long flags; // 0x66
 		ENCHRecord_t * enchantment; // 0x7A
+	};
+
+	struct AMMORecord_t {
+		void * vtable; // 0x00
+		RecordTypes::recordType_t record_type; //0x04 AMMO
+		long unknown_0x08;
+		void * module; // 0x0C pointer to module?
+		long unknown_0x10;
+		long unknown_0x14;
+		long unknown_0x18;
+		AMMORecord_t * next; // 0x1C
+		AMMORecord_t * previous; // 0x20
+		long unknown_0x24;
+		long unknown_0x28;
+		char * id; // 0x2C
+		long unknown_0x30;
+		long unknown_0x34;
+		long unknown_0x38;
+		long unknown_0x3C;
+		long unknown_0x40;
+		char * name; // 0x44
+		long unknown_0x48;
+		char * model; // 0x4C
+		char * texture; // 0x50
+		long unknown_0x54;
+		long unknown_0x58;
+		long unknown_0x5C;
+		long unknown_0x60;
+		long unknown_0x64;
+		long unknown_0x68;
+		long unknown_0x6C;
+		long unknown_0x70;
+		ENCHRecord_t* enchantment; // 0x74
 	};
 
 	struct LOCKRecord_t {
@@ -1036,6 +1069,43 @@ namespace mwse
 		int unknown_0xAC;
 		mwShort_t maxCondition; // 0xB0
 		mwShort_t unknown_0xB2;
+	};
+
+	struct BOOKRecord_t {
+		void * vtable;
+		long record_type;
+		int unknown1;
+		void * module; // pointer to module?
+		int unknown2;
+		void * unknown3; // pointer to list?
+		int unknown4;
+		void * previous; // previous item in list
+		void * next; // next item in list
+		int unknown5;
+		int unknown6;
+		char * id;
+		void * vtable2; // vtable of embedded object?
+		int unknown7;
+		int unknown8;
+		int unknown9;
+		int unknown10;
+		char * name;
+		void * script;
+		char * model;
+		char * texture;
+		float weight;
+		long value;
+		long scroll;
+		long skill;
+		long enchant_capacity;
+		ENCHRecord_t * enchantment;
+		void* vtable3; // vtable of embedded object?
+		int unknown16;
+		int unknown17;
+		int unknown18;
+		int unknown19;
+		void* unknown20;
+		void* unknown21;
 	};
 
 	struct GLOBRecord_t

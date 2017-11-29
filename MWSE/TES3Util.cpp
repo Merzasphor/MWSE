@@ -103,6 +103,16 @@ namespace mwse
 			return enchant;
 		}
 
+		size_t getEffectCount(const Effect_t* effectArray) {
+			size_t count = 0;
+			for (size_t i = 0; i < 8; i++) {
+				if (effectArray[i].effectId != Effects::NoEffect) {
+					count++;
+				}
+			}
+			return count;
+		}
+
 		REFRRecord_t* exteriorRefs[9] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 
 		void clearExteriorRefs() {

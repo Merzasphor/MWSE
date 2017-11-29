@@ -80,7 +80,7 @@ namespace mwse
 				}
 			}
 			else if (type == RecordTypes::CLOTHING) {
-				CLOTRecord* clothing = reinterpret_cast<CLOTRecord*>(record);
+				CLOTRecord_t* clothing = reinterpret_cast<CLOTRecord_t*>(record);
 				if (clothing->enchantment) {
 					charge = clothing->enchantment->charge;
 				}

@@ -132,6 +132,7 @@
     <ClCompile Include="xGetCombat.cpp" />
     <ClCompile Include="xGetCondition.cpp" />
     <ClCompile Include="xGetEffectInfo.cpp" />
+    <ClCompile Include="xGetEnchant.cpp" />
     <ClCompile Include="xGetPCTarget.cpp" />
     <ClCompile Include="xGetRef.cpp" />
     <ClCompile Include="InstructionInterface.cpp" />
