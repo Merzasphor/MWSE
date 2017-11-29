@@ -479,6 +479,15 @@
     <ClCompile Include="xGetCharge.cpp">
       <Filter>Source Files\Functions\Actor Statistics</Filter>
     </ClCompile>
+    <ClCompile Include="xGetClass.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetCombat.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetCondition.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
