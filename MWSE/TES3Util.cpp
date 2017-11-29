@@ -81,6 +81,28 @@ namespace mwse
 			return NULL;
 		}
 
+		SPELRecord_t* getSpellRecordById(const mwseString_t& id) {
+			TES3CellMaster_t* cellMaster = getCellMaster();
+
+			SPELRecord_t * spell = cellMaster->recordLists->spellsList->head;
+			while (spell != NULL && !(spell->recordType == RecordTypes::SPELL && strcmp(id.c_str(), spell->id) == 0)) {
+				spell = spell->nextRecord;
+			}
+
+			return spell;
+		}
+
+		ENCHRecord_t* getEnchantRecordById(const mwseString_t& id) {
+			TES3CellMaster_t* cellMaster = getCellMaster();
+
+			ENCHRecord_t * enchant = reinterpret_cast<ENCHRecord_t*>(cellMaster->recordLists->list->head);
+			while (enchant != NULL && !(enchant->recordType == RecordTypes::ENCHANTMENT && strcmp(id.c_str(), enchant->id) == 0)) {
+				enchant = enchant->nextRecord;
+			}
+
+			return enchant;
+		}
+
 		REFRRecord_t* exteriorRefs[9] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 
 		void clearExteriorRefs() {

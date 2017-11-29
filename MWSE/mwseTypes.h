@@ -31,28 +31,39 @@ namespace mwse
 	namespace RecordTypes {
 		enum recordType_t
 		{
-			NPC = '_CPN',
-			CREA = 'AERC', CREATURE = CREA,
-			CONT = 'TNOC', CONTAINER = CONT,
-			LIGH = 'HGIL', LIGHT = LIGH,
-			MISC = 'CSIM',
-			CLOT = 'TOLC', CLOTHING = CLOT,
-			WEAP = 'PAEW', WEAPON = WEAP,
+			ACTI = 'ITCA', ACTIVATOR = ACTI,
+			ALCH = 'HCLA', ALCHEMY = ALCH,
+			AMMO = 'OMMA',
+			APPA = 'APPA', APPARATUS = APPA,
 			ARMO = 'OMRA', ARMOR = ARMO,
 			BOOK = 'KOOB',
-			ALCH = 'HCLA', ALCHEMY = ALCH,
-			ACTI = 'ITCA', ACTIVATOR = ACTI,
-			DOOR = 'ROOD',
-			APPA = 'APPA', APPARATUS = APPA,
-			INGR = 'RGNI', INGREDIENT = INGR,
-			PROB = 'BORP', PROBE = PROB,
-			PICK = 'KCIP', // Is this record used?
-			REPA = 'APER', REPAIR = REPA,
 			CLAS = 'SALC', CLASS = CLAS,
-			LOCK = 'KCOL', LOCKPICK = LOCK,
+			CLOT = 'TOLC', CLOTHING = CLOT,
+			CONT = 'TNOC', CONTAINER = CONT,
+			CREA = 'AERC', CREATURE = CREA,
+			DOOR = 'ROOD',
+			ENCH = 'HCNE', ENCHANTMENT = ENCH,
+			FACT = 'TCAF', FACTION = FACT,
 			GLOB = 'BOLG', GLOBAL = GLOB,
+			GMST = 'TSMG',
+			INGR = 'RGNI', INGREDIENT = INGR,
+			LEVC = 'CVEL', LEVELLEDCREATURE = LEVC,
+			LEVI = 'IVEL', LEVELLEDITEM = LEVI,
+			LIGH = 'HGIL', LIGHT = LIGH,
+			LOCK = 'KCOL', LOCKPICK = LOCK,
+			MACP = 'PCAM',
+			MISC = 'CSIM',
+			MGEF = 'FEGM', MAGICEFFECT = MGEF,
+			NPC  = '_CPN',
+			PROB = 'BORP', PROBE = PROB,
 			REFR = 'RFER', REFERENCE = REFR,
-			MACP = 'PCAM'
+			REPA = 'APER', REPAIR = REPA,
+			SCPT = 'TPCS', SCRIPT = SCPT,
+			SKIL = 'LIKS', SKILL = SKIL,
+			SNDG = 'GDNS', SOUNDGENERATOR = SNDG,
+			SPEL = 'LEPS', SPELL = SPEL,
+			STAT = 'TATS', STATIC = STAT,
+			WEAP = 'PAEW', WEAPON = WEAP
 		};
 
 		enum attachType_t
@@ -62,10 +73,229 @@ namespace mwse
 		};
 	};
 
+	namespace Effects {
+		enum EffectTypes {
+			NoEffect = -1,
+			WaterBreathing,
+			SwiftSwim,
+			WaterWalking,
+			Shield,
+			FireShield,
+			LightningShield,
+			FrostShield,
+			Burden,
+			Feather,
+			Jump,
+			Levitate,
+			SlowFall,
+			Lock,
+			Open,
+			FireDamage,
+			ShockDamage,
+			FrostDamage,
+			DrainAttribute,
+			DrainHealth,
+			DrainMagicka,
+			DrainFatigue,
+			DrainSkill,
+			DamageAttribute,
+			DamageHealth,
+			DamageMagicka,
+			DamageFatigue,
+			DamageSkill,
+			Poison,
+			WeaknesstoFire,
+			WeaknesstoFrost,
+			WeaknesstoShock,
+			WeaknesstoMagicka,
+			WeaknesstoCommonDisease,
+			WeaknesstoBlightDisease,
+			WeaknesstoCorprusDisease,
+			WeaknesstoPoison,
+			WeaknesstoNormalWeapons,
+			DisintegrateWeapon,
+			DisintegrateArmor,
+			Invisibility,
+			Chameleon,
+			Light,
+			Sanctuary,
+			NightEye,
+			Charm,
+			Paralyze,
+			Silence,
+			Blind,
+			Sound,
+			CalmHumanoid,
+			CalmCreature,
+			FrenzyHumanoid,
+			FrenzyCreature,
+			DemoralizeHumanoid,
+			DemoralizeCreature,
+			RallyHumanoid,
+			RallyCreature,
+			Dispel,
+			Soultrap,
+			Telekinesis,
+			Mark,
+			Recall,
+			DivineIntervention,
+			AlmsiviIntervention,
+			DetectAnimal,
+			DetectEnchantment,
+			DetectKey,
+			SpellAbsorption,
+			Reflect,
+			CureCommonDisease,
+			CureBlightDisease,
+			CureCorprusDisease,
+			CurePoison,
+			CureParalyzation,
+			RestoreAttribute,
+			RestoreHealth,
+			RestoreMagicka,
+			RestoreFatigue,
+			RestoreSkill,
+			FortifyAttribute,
+			FortifyHealth,
+			FortifyMagicka,
+			FortifyFatigue,
+			FortifySkill,
+			FortifyMaximumMagicka,
+			AbsorbAttribute,
+			AbsorbHealth,
+			AbsorbMagicka,
+			AbsorbFatigue,
+			AbsorbSkill,
+			ResistFire,
+			ResistFrost,
+			ResistShock,
+			ResistMagicka,
+			ResistCommonDisease,
+			ResistBlightDisease,
+			ResistCorprusDisease,
+			ResistPoison,
+			ResistNormalWeapons,
+			ResistParalysis,
+			RemoveCurse,
+			TurnUndead,
+			SummonScamp,
+			SummonClannfear,
+			SummonDaedroth,
+			SummonDremora,
+			SummonAncestralGhost,
+			SummonSkeletalMinion,
+			SummonBonewalker,
+			SummonGreaterBonewalker,
+			SummonBonelord,
+			SummonWingedTwilight,
+			SummonHunger,
+			SummonGoldenSaint,
+			SummonFlameAtronach,
+			SummonFrostAtronach,
+			SummonStormAtronach,
+			FortifyAttack,
+			CommandCreature,
+			CommandHumanoid,
+			BoundDagger,
+			BoundLongsword,
+			BoundMace,
+			BoundBattleAxe,
+			BoundSpear,
+			BoundLongbow,
+			EXTRASPELL,
+			BoundCuirass,
+			BoundHelm,
+			BoundBoots,
+			BoundShield,
+			BoundGloves,
+			Corprus,
+			Vampirism,
+			SummonCenturionSphere,
+			SunDamage,
+			StuntedMagicka,
+			SummonFabricant,
+			CallWolf,
+			CallBear,
+			SummonBonewolf,
+			sEffectSummonCreature04,
+			sEffectSummonCreature05,
+			FirstMagicEffect = WaterBreathing,
+			LastMagicEffect = sEffectSummonCreature05
+		};
+
+		enum MagicEffectFlags
+		{
+			TargetSkill = 0x1,
+			TargetAttribute = 0x2,
+			NoDuration = 0x4,
+			NoMagnitude = 0x8,
+			Harmful = 0x10,
+			ContinuousVfx = 0x20,
+			CastSelf = 0x40,
+			CastTouch = 0x80,
+			CastTarget = 0x100,
+			Spellmaking = 0x200,
+			Enchanting = 0x400,
+			NegativeLighting = 0x800,
+			AppliedOnce = 0x1000,
+			StealthEffect = 0x2000,
+			NonRecastable = 0x4000,
+			IllegalDaedra = 0x8000,
+			Unreflectable = 0x10000,
+			CasterLinked = 0x20000,
+			NoMagicEffectFlags = 0,
+			AllMagicEffectFlags = (TargetSkill | TargetAttribute | NoDuration | NoMagnitude |
+			Harmful | ContinuousVfx | CastSelf | CastTouch | CastTarget | Spellmaking |
+				Enchanting | NegativeLighting | AppliedOnce | StealthEffect | NonRecastable |
+				IllegalDaedra | Unreflectable | CasterLinked)
+		};
+
+		int const MagicEffectFlagMap[] = {
+			0x11c8, 0x11c0, 0x11c8, 0x11e0, 0x11e0, 0x11e0, 0x11e0, 0x11d0,
+			0x11c0, 0x11c0, 0x11e0, 0x11c0, 0x11184, 0x11184, 0x1f0, 0x1f0,
+			0x1f0, 0x11d2, 0x11f0, 0x11d0, 0x11d0, 0x11d1, 0x1d2, 0x1f0,
+			0x01d0, 0x1d0, 0x1d1, 0x1f0, 0x11d0, 0x11d0, 0x11d0, 0x11d0,
+			0x11d0, 0x11d0, 0x11d0, 0x11d0, 0x11d0, 0x1d0, 0x1d0, 0x11c8,
+			0x31c0, 0x11c0, 0x11c0, 0x11c0, 0x1180, 0x11d8, 0x11d8, 0x11d0,
+			0x11d0, 0x11180, 0x11180, 0x11180, 0x11180, 0x11180, 0x11180, 0x11180,
+			0x11180, 0x11c4, 0x111b8, 0x1040, 0x104c, 0x104c, 0x104c, 0x104c,
+			0x1040, 0x1040, 0x1040, 0x11c0, 0x11c0, 0x1cc, 0x1cc, 0x1cc,
+			0x1cc, 0x1cc, 0x1c2, 0x1c0, 0x1c0, 0x1c0, 0x1c1, 0x11c2,
+			0x11c0, 0x11c0, 0x11c0, 0x11c1, 0x11c0, 0x21192, 0x20190, 0x20190,
+			0x20190, 0x21191, 0x11c0, 0x11c0, 0x11c0, 0x11c0, 0x11c0, 0x11c0,
+			0x11c0, 0x11c0, 0x11c0, 0x11c0, 0x1c0, 0x11190, 0x9048, 0x9048,
+			0x9048, 0x9048, 0x9048, 0x9048, 0x9048, 0x9048, 0x9048, 0x9048,
+			0x9048, 0x9048, 0x9048, 0x9048, 0x9048, 0x11c0, 0x1180, 0x1180,
+			0x5048, 0x5048, 0x5048, 0x5048, 0x5048, 0x5048, 0x1188, 0x5048,
+			0x5048, 0x5048, 0x5048, 0x5048, 0x1048, 0x104c, 0x1048, 0x40,
+			0x11c8, 0x1048, 0x1048, 0x1048, 0x1048, 0x1048, 0x1048
+		};
+	};
+
 	struct BaseRecord_t
 	{
 		void * vTable;
 		RecordTypes::recordType_t recordType;
+	};
+
+	struct REFRRecord_t;
+
+	//this is the default 'template', so we can read out the type and the ID of the object behind a reference.
+	//those values should always be there for 'normal' objects (like BOOKS and CLOTHING)
+	struct TES3DefaultTemplate_t
+	{
+		void * vTable;
+		RecordTypes::recordType_t recordType;
+		mwLong_t unknown_0x08;
+		mwLong_t unknown_0x0C;
+		mwLong_t unknown_0x10;
+		mwLong_t unknown_0x14;
+		REFRRecord_t * first;
+		mwLong_t unknown_0x1C;
+		mwLong_t unknown_0x20;
+		mwLong_t unknown_0x24;
+		mwLong_t unknown_0x28;
+		char * objectId;
 	};
 
 	struct SCPTRecord_t
@@ -97,11 +327,14 @@ namespace mwse
 		SCPTRecord_t * scptRecord;
 	};
 
+	struct SPELRecord_t;
+
+	template <typename T>
 	struct LinkedList_t
 	{
-		LinkedList_t * previousNode;
-		LinkedList_t * nextNode;
-		void * dataNode;
+		unsigned long size;
+		T * head;
+		T * tail;
 	};
 
 	struct InventoryNode_t
@@ -268,6 +501,17 @@ namespace mwse
 		float skillProgress[27]; // 1524
 	};
 
+	struct Effect_t {
+		short effectId;
+		char  skillId;
+		char  attributeId;
+		long  rangeType;		//0=SELF, 1=TOUCH, 2=TARGET
+		long  area;
+		long  duration;
+		long  magMin;
+		long  magMax;
+	};
+
 	struct SPELRecord_t
 	{
 		void * vTable;
@@ -280,23 +524,12 @@ namespace mwse
 		SPELRecord_t * prevRecord;
 		SPELRecord_t * nextRecord;
 		int unknown4;
-		char * idPtr;
+		char * id;
 		char * friendlyName;
 		short type; //0=SPELL, 1=ABILITY, 2=BLIGHT, 3=DISEASE, 4=CURSE, 5=POWER
 		short cost;
 
-		//effect
-		struct Effect
-		{
-			short effectId;
-			char  skillId;
-			char  AttributeId;
-			long  RangeType;		//0=SELF, 1=TOUCH, 2=TARGET
-			long  Area;
-			long  Duration;
-			long  MagMin;
-			long  MagMax;
-		} effects[8];
+		Effect_t effects[8];
 
 		long flags;	//1=AUTOCALC, 2=PCSTART, 4=ALWAYSSUCCEEDS
 	};
@@ -308,7 +541,7 @@ namespace mwse
 		int recordSize;
 		char * modNamePtr;
 		int unknown1;
-		LinkedList_t * alchemyList;
+		LinkedList_t<ALCHRecord_t> * alchemyList;
 		int unknown3;
 		ALCHRecord_t * prevRecord;
 		ALCHRecord_t * nextRecord;
@@ -328,18 +561,7 @@ namespace mwse
 		float weight;
 		long value;
 
-		//effect
-		struct Effect
-		{
-			short effectId;
-			char  skillId;
-			char  AttributeId;
-			long  RangeType;		//0=SELF, 1=TOUCH, 2=TARGET
-			long  Area;
-			long  Duration;
-			long  MagMin;
-			long  MagMax;
-		} effects[8];
+		Effect_t effects[8];
 
 		long flags; //1=AUTOCALC
 	};
@@ -356,24 +578,13 @@ namespace mwse
 		ENCHRecord_t * prevRecord;
 		ENCHRecord_t * nextRecord;
 		int unknown4;
-		char * idPtr;
+		char * id;
 
 		short type;	//0=CASTONCE, 1=CASTONSTRIKE, 2=CASTONUSED, 3=CONSTANT
 		short cost;
 		long charge;
 
-		//effect
-		struct Effect
-		{
-			short effectId;
-			char  skillId;
-			char  AttributeId;
-			long  RangeType;		//0=SELF, 1=TOUCH, 2=TARGET
-			long  Area;
-			long  Duration;
-			long  MagMin;
-			long  MagMax;
-		} effects[8];
+		Effect_t effects[8];
 
 		long autocalc;	//0=OFF, 1=ON
 	};
@@ -511,8 +722,8 @@ namespace mwse
 		int unknown43;
 		int unknown44;
 		int numberOfSpells;
-		LinkedList_t * spellStart;	//these contain the spells! not items with a special power.
-		LinkedList_t * spellEnd;
+		LinkedList_t<SPELRecord_t> * spellStart;	//these contain the spells! not items with a special power.
+		LinkedList_t<SPELRecord_t> * spellEnd;
 	};
 
 	struct NPCCopyRecord_t
@@ -535,14 +746,14 @@ namespace mwse
 		int unknown10;
 		int unknown11;
 		int AmountInventory;
-		LinkedList_t * inventoryStart;
-		LinkedList_t * inventoryEnd;
+		LinkedList_t<TES3DefaultTemplate_t> * inventoryStart;
+		LinkedList_t<TES3DefaultTemplate_t> * inventoryEnd;
 		int unknown13;
 		int unknown14;
 		int unknown15;	//some pointer
 		int amountEquiped;
-		LinkedList_t * equipedStart;
-		LinkedList_t * equipedEnd;
+		LinkedList_t<TES3DefaultTemplate_t> * equipedStart;
+		LinkedList_t<TES3DefaultTemplate_t> * equipedEnd;
 		int unknown16;
 		NPCBaseRecord_t * baseNPC;
 	};
@@ -907,24 +1118,6 @@ namespace mwse
 		REFRRecord_t * target;
 	};
 
-	//this is the default 'template', so we can read out the type and the ID of the object behind a reference.
-	//those values should always be there for 'normal' objects (like BOOKS and CLOTHING)
-	struct TES3DefaultTemplate_t
-	{
-		void * vTable;
-		RecordTypes::recordType_t recordType;
-		mwLong_t unknown_0x08;
-		mwLong_t unknown_0x0C;
-		mwLong_t unknown_0x10;
-		mwLong_t unknown_0x14;
-		REFRRecord_t * first;
-		mwLong_t unknown_0x1C;
-		mwLong_t unknown_0x20;
-		mwLong_t unknown_0x24;
-		mwLong_t unknown_0x28;
-		char * objectId;
-	};
-
 	struct CREABaseRecord_t {
 		void * vTable; // 0x00
 		RecordTypes::recordType_t recordType; // 0x04
@@ -1003,14 +1196,14 @@ namespace mwse
 		int unknown10;
 		int unknown11;
 		int AmountInventory;
-		LinkedList_t * inventoryStart;
-		LinkedList_t * inventoryEnd;
+		LinkedList_t<TES3DefaultTemplate_t> * inventoryStart;
+		LinkedList_t<TES3DefaultTemplate_t> * inventoryEnd;
 		int unknown13;
 		int unknown14;
 		int unknown15;	//some pointer
 		int amountEquiped;
-		LinkedList_t * equipedStart;
-		LinkedList_t * equipedEnd;
+		LinkedList_t<TES3DefaultTemplate_t> * equipedStart;
+		LinkedList_t<TES3DefaultTemplate_t> * equipedEnd;
 		int unknown16;
 		CREABaseRecord_t * baseCreature;
 	};
@@ -1032,8 +1225,8 @@ namespace mwse
 						 // list contains the following types: CREA, REPA, APPA, PROB, MISC, LEVC,
 						 // ALCH, ENCH, LIGH, ACTI, LEVI, LOCK, BOOK, AMMO, ARMO, WEAP, INGR, DOOR,
 						 // STAT, CONT, CLOT, BODY, NPC_
-		LinkedList_t * list;
-		LinkedList_t * spellsList;
+		LinkedList_t<TES3DefaultTemplate_t> * list;
+		LinkedList_t<SPELRecord_t> * spellsList;
 		void * unknown4;
 		GMSTRecord_t ** GMSTs; // pointer to array of GMST pointers
 		UnknownStruct* unknown5[12];

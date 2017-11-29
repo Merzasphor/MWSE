@@ -25,6 +25,7 @@
 #include <queue>
 
 #include "mwseTypes.h"
+#include "mwseString.h"
 
 namespace mwse
 {
@@ -41,6 +42,10 @@ namespace mwse
 		BaseRecord_t* getFirstAttachmentByType(REFRRecord_t* reference, RecordTypes::attachType_t attachmentType);
 
 		mwVarHolderNode_t* getVarHolderNode(REFRRecord_t* reference);
+
+		SPELRecord_t* getSpellRecordById(const mwseString_t& id);
+
+		ENCHRecord_t* getEnchantRecordById(const mwseString_t& id);
 
 		// Used in xFirstNPC/Static/Item. The last element should never be non-null.
 		// The first eight elements are pointers to the first reference from the 8 surrounding cells.

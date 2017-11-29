@@ -488,6 +488,9 @@
     <ClCompile Include="xGetCondition.cpp">
       <Filter>Source Files\Functions\Actor Statistics</Filter>
     </ClCompile>
+    <ClCompile Include="xGetEffectInfo.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
