@@ -46,10 +46,10 @@ namespace mwse
 			APPA = 'APPA', APPARATUS = APPA,
 			INGR = 'RGNI', INGREDIENT = INGR,
 			PROB = 'BORP', PROBE = PROB,
-			PICK = 'KCIP',
+			PICK = 'KCIP', // Is this record used?
 			REPA = 'APER', REPAIR = REPA,
 			CLAS = 'SALC', CLASS = CLAS,
-			LOCK = 'KCOL',
+			LOCK = 'KCOL', LOCKPICK = LOCK,
 			GLOB = 'BOLG', GLOBAL = GLOB,
 			REFR = 'RFER', REFERENCE = REFR,
 			MACP = 'PCAM'
@@ -378,6 +378,84 @@ namespace mwse
 		long autocalc;	//0=OFF, 1=ON
 	};
 
+	struct CLASRecord_t {
+		void * vTable;
+		RecordTypes::recordType_t recordType; // CLAS
+
+		int unknown1;
+		int unknown2; // pointer?
+
+		char id[32];
+		char name[32];
+
+		// Primary attributes:
+		// 0 = Strength
+		// 1 = Intelligence
+		// 2 = Willpower
+		// 3 = Agility
+		// 4 = Speed 
+		// 5 = Endurance
+		// 6 = Personality
+		// 7 = Luck
+
+		unsigned long attributes[2];
+
+		// Specializations:
+		// 0 = Combat
+		// 1 = Magic
+		// 2 = Stealth
+
+		unsigned long specialization;
+
+		// Skills:
+		//  0 = Block
+		//  1 = Armorer
+		//  2 = Medium Armor
+		//  3 = Heavy Armor
+		//  4 = Blunt Weapon
+		//  5 = Long Blade
+		//  6 = Axe
+		//  7 = Spear
+		//  8 = Athletics
+		//  9 = Enchant
+		//  A = Destruction
+		//  B = Alteration
+		//  C = Illusion
+		//  D = Conjuration
+		//  E = Mysticism
+		//  F = Restoration
+		// 10 = Alchemy
+		// 11 = Unarmored
+		// 12 = Security
+		// 13 = Sneak
+		// 14 = Acrobatics
+		// 15 = Light Armor
+		// 16 = Short Blade
+		// 17 = Marksman
+		// 18 = Mercantile
+		// 19 = Speechcraft
+		// 1A = Hand-To-Hand
+
+		// Even indices [0,2,4,6,8] are minor skills and odd indices [1,3,5,7,9] are major skills.
+		// The nth major skill index corresponds to the nth major skill in the CS, from the top down.
+		// E.g. skills[3] is the second major skill from the top of the list in the CS.
+		// Minor skills have a different mapping:
+		// Index | CS Position
+		//     0 | 1
+		//     2 | 4
+		//     4 | 5
+		//     6 | 3
+		//     8 | 2
+
+		unsigned long skills[10];
+
+		unsigned long playable; // is this class available to PC? 0 = no, 1 = yes
+
+		unsigned long services;
+
+		int unknowns[5];
+	};
+
 	struct NPCBaseRecord_t	//or the 'base' NPC_ record. you can access it trough the NPCC (NPC Copy) Record (baseNPC)
 	{
 		void * vTable;
@@ -427,7 +505,7 @@ namespace mwse
 		mwShort_t baseGold;
 		mwShort_t unknown45;
 		int unknown39; //RACE
-		int unknown40; //CLASS
+		CLASRecord_t * classRecord; //CLASS
 		int unknown41;	//BODY (head)
 		int unknown42;	//BODY (hair)
 		int unknown43;
@@ -523,7 +601,10 @@ namespace mwse
 		char * tgaStringPtr; // 0x50
 		float weight; // 0x54
 		int value; // 0x58
-		int unknown_0x5C[25];
+		int unknown_0x5C[16];
+		mwShort_t maxCondition; // 0xB4
+		mwShort_t unknown_0xB6;
+		int unknown_0xB8[8];
 		ENCHRecord_t * enchantment; // 0xF0
 	};
 
@@ -553,48 +634,197 @@ namespace mwse
 		char * tgaStringPtr;
 		float weight;
 		int value;
-		int unknowns[22];
-		ENCHRecord_t * enchantment;
+		int unknown_0x5C[22];
+		ENCHRecord_t * enchantment; // 0xB8
 	};
 
 	struct WEAPRecord_t
 	{
-		void * vTable;
-		RecordTypes::recordType_t recordType; // "WEAP"
-		int recordSize;
-		char * modNamePtr;
-		int unknown1;
-		int unknown2;
-		int unknown3; //REFRRecord_t * first //nextOfSameTemplate
-		void * previousRecord;
-		void * nextRecord;
-		void * unknown4;
-		int unknown5;
-		char * IDStringPtr;
-		void * unknownFunctionPtr;
-		int unknown6;
-		int unknown7;
-		int unknown8;
-		int unknown9;
-		char * nameStringPtr;
-		int unknown10;	//char * scriptIDStringPtr;
-		char * nifStringPtr;
-		char * tgaStringPtr;
-		float weight;
-		int value;
-		short weaponType;
-		short maxCondition;
-		float speed;
-		float reach;
-		short enchantPoints;
-		char chopMin;
-		char chopMax;
-		char slashMin;
-		char slashMax;
-		char trustMin;
-		char trustMax;
-		long flags;
-		ENCHRecord_t * enchantment;
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04 "WEAP"
+		int recordSize; // 0x08
+		char * modNamePtr; // 0x0C
+		int unknown_0x10;
+		int unknown_0x14;
+		int unknown_0x18; //REFRRecord_t * first //nextOfSameTemplate
+		void * previousRecord; // 0x1C
+		void * nextRecord; // 0x20
+		void * unknown_0x24;
+		int unknown_0x28;
+		char * objectId; // 0x2C
+		void * unknownFunctionPtr; // 0x30
+		int unknown_0x34;
+		int unknown_0x38;
+		int unknown_0x3C;
+		int unknown_0x40;
+		char * nameStringPtr; // 0x44
+		int unknown_0x48; // char * scriptIDStringPtr;
+		char * nifStringPtr; // 0x4C
+		char * tgaStringPtr; // 0x50
+		float weight; // 0x54
+		int value; // 0x58
+		short weaponType; // 0x5C
+		short maxCondition; // 0x5E
+		float speed; // 0x60
+		float reach; // 0x64
+		short enchantPoints; // 0x68
+		char chopMin; // 0x60
+		char chopMax; // 0x61
+		char slashMin; // 0x62
+		char slashMax; // 0x63
+		char trustMin; // 0x64
+		char trustMax; // 0x65
+		long flags; // 0x66
+		ENCHRecord_t * enchantment; // 0x7A
+	};
+
+	struct LOCKRecord_t {
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04 "LOCK"
+		int recordSize; // 0x08
+		char * modNamePtr; // 0x0C
+		int unknown_0x10;
+		int unknown_0x14;
+		int unknown_0x18; //REFRRecord_t * first //nextOfSameTemplate
+		void * previousRecord; // 0x1C
+		void * nextRecord; // 0x20
+		void * unknown_0x24;
+		int unknown_0x28; // 0x28
+		char * objectid; // 0x2C
+		int unknown_0x30;
+		int unknown_0x34;
+		int unknown_0x38;
+		int unknown_0x3C;
+		int unknown_0x40;
+		int unknown_0x44;
+		int unknown_0x48;
+		int unknown_0x4C;
+		int unknown_0x50;
+		int unknown_0x54;
+		int unknown_0x58;
+		int unknown_0x5C;
+		int unknown_0x60;
+		int unknown_0x64;
+		int unknown_0x68;
+		int unknown_0x6C;
+		int unknown_0x70;
+		int unknown_0x74;
+		int unknown_0x78;
+		int unknown_0x7C;
+		int unknown_0x80;
+		int unknown_0x84;
+		int unknown_0x88;
+		int unknown_0x8C;
+		int unknown_0x90;
+		int unknown_0x94;
+		int unknown_0x98;
+		int unknown_0x9C;
+		int unknown_0xA0;
+		int unknown_0xA4;
+		int unknown_0xA8;
+		int unknown_0xAC;
+		int unknown_0xB0;
+		mwShort_t maxCondition; // 0xB4
+		mwShort_t unknown_0xB6;
+	};
+
+	struct PROBRecord_t {
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04 "PROB"
+		int recordSize; // 0x08
+		char * modNamePtr; // 0x0C
+		int unknown_0x10;
+		int unknown_0x14;
+		int unknown_0x18; //REFRRecord_t * first //nextOfSameTemplate
+		void * previousRecord; // 0x1C
+		void * nextRecord; // 0x20
+		void * unknown_0x24;
+		int unknown_0x28; // 0x28
+		char * objectid; // 0x2C
+		int unknown_0x30;
+		int unknown_0x34;
+		int unknown_0x38;
+		int unknown_0x3C;
+		int unknown_0x40;
+		int unknown_0x44;
+		int unknown_0x48;
+		int unknown_0x4C;
+		int unknown_0x50;
+		int unknown_0x54;
+		int unknown_0x58;
+		int unknown_0x5C;
+		int unknown_0x60;
+		int unknown_0x64;
+		int unknown_0x68;
+		int unknown_0x6C;
+		int unknown_0x70;
+		int unknown_0x74;
+		int unknown_0x78;
+		int unknown_0x7C;
+		int unknown_0x80;
+		int unknown_0x84;
+		int unknown_0x88;
+		int unknown_0x8C;
+		int unknown_0x90;
+		int unknown_0x94;
+		int unknown_0x98;
+		int unknown_0x9C;
+		int unknown_0xA0;
+		int unknown_0xA4;
+		int unknown_0xA8;
+		int unknown_0xAC;
+		int unknown_0xB0;
+		mwShort_t maxCondition; // 0xB4
+		mwShort_t unknown_0xB6;
+	};
+
+	struct REPARecord_t {
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04 "PROB"
+		int recordSize; // 0x08
+		char * modNamePtr; // 0x0C
+		int unknown_0x10;
+		int unknown_0x14;
+		int unknown_0x18; //REFRRecord_t * first //nextOfSameTemplate
+		void * previousRecord; // 0x1C
+		void * nextRecord; // 0x20
+		void * unknown_0x24;
+		int unknown_0x28; // 0x28
+		char * objectid; // 0x2C
+		int unknown_0x30;
+		int unknown_0x34;
+		int unknown_0x38;
+		int unknown_0x3C;
+		int unknown_0x40;
+		int unknown_0x44;
+		int unknown_0x48;
+		int unknown_0x4C;
+		int unknown_0x50;
+		int unknown_0x54;
+		int unknown_0x58;
+		int unknown_0x5C;
+		int unknown_0x60;
+		int unknown_0x64;
+		int unknown_0x68;
+		int unknown_0x6C;
+		int unknown_0x70;
+		int unknown_0x74;
+		int unknown_0x78;
+		int unknown_0x7C;
+		int unknown_0x80;
+		int unknown_0x84;
+		int unknown_0x88;
+		int unknown_0x8C;
+		int unknown_0x90;
+		int unknown_0x94;
+		int unknown_0x98;
+		int unknown_0x9C;
+		int unknown_0xA0;
+		int unknown_0xA4;
+		int unknown_0xA8;
+		int unknown_0xAC;
+		mwShort_t maxCondition; // 0xB0
+		mwShort_t unknown_0xB2;
 	};
 
 	struct GLOBRecord_t
