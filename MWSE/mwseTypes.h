@@ -110,14 +110,6 @@ namespace mwse
 		void * recordAddress;
 	};
 
-	struct VarNodeAttachment_t {
-		int unknown_0x00;
-		int unknown_0x04;
-		int unknown_0x08;
-		int unknown_0x0C;
-		int unknown_0x10; // For enchanted items, this is the current charge (as a float).
-	};
-
 	struct ListNode_t
 	{
 		RecordTypes::attachType_t attachType;
@@ -142,8 +134,13 @@ namespace mwse
 
 	struct mwVarHolderNode_t
 	{
-		char unknown[0x18];
-		mwVariablesNode_t * vars;
+		int unknown_0x00;
+		int unknown_0x04;
+		int unknown_0x08;
+		int unknown_0x0C; // For LOCK/REPAIR/WEAPON/ARMOR/PROBE, this is the current condition (as long).
+		int unknown_0x10; // For enchanted items, this is the current charge (as a float).
+		int unknown_0x14;
+		mwVariablesNode_t * vars; // 0x18
 	};
 
 	struct REFRRecord_t;

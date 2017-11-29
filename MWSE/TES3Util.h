@@ -40,6 +40,8 @@ namespace mwse
 
 		BaseRecord_t* getFirstAttachmentByType(REFRRecord_t* reference, RecordTypes::attachType_t attachmentType);
 
+		mwVarHolderNode_t* getVarHolderNode(REFRRecord_t* reference);
+
 		// Used in xFirstNPC/Static/Item. The last element should never be non-null.
 		// The first eight elements are pointers to the first reference from the 8 surrounding cells.
 		extern REFRRecord_t* exteriorRefs[9];

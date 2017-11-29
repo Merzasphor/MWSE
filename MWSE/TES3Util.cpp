@@ -65,6 +65,22 @@ namespace mwse
 			return NULL;
 		}
 
+		mwVarHolderNode_t* getVarHolderNode(REFRRecord_t* reference) {
+			if (reference == NULL || reference->attachments == NULL) {
+				return NULL;
+			}
+
+			ListNode_t* listNode = reference->attachments;
+			while (listNode) {
+				if (listNode->attachType == RecordTypes::VARNODE) {
+					return reinterpret_cast<mwVarHolderNode_t*>(listNode->dataPtr);
+				}
+				listNode = listNode->nextNode;
+			}
+
+			return NULL;
+		}
+
 		REFRRecord_t* exteriorRefs[9] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 
 		void clearExteriorRefs() {
