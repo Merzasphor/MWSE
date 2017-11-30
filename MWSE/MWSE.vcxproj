@@ -133,6 +133,8 @@
     <ClCompile Include="xGetCondition.cpp" />
     <ClCompile Include="xGetEffectInfo.cpp" />
     <ClCompile Include="xGetEnchant.cpp" />
+    <ClCompile Include="xGetEnchantEffectInfo.cpp" />
+    <ClCompile Include="xGetGold.cpp" />
     <ClCompile Include="xGetPCTarget.cpp" />
     <ClCompile Include="xGetRef.cpp" />
     <ClCompile Include="InstructionInterface.cpp" />
@@ -145,6 +147,7 @@
     <ClCompile Include="Pop.cpp" />
     <ClCompile Include="Push.cpp" />
     <ClCompile Include="Reference.cpp" />
+    <ClCompile Include="xGetSpellEffectInfo.cpp" />
     <ClCompile Include="xHypot.cpp" />
     <ClCompile Include="xLogMessage.cpp" />
     <ClCompile Include="xLongToFloats.cpp" />

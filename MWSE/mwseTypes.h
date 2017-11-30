@@ -471,34 +471,37 @@ namespace mwse
 			unsigned short magnitude;
 			unsigned short attribute_skill; // 255 if N/A see Attributes/Skills enums
 		};
-		void * vTable; // 0
-		RecordTypes::attachType_t recordType; // "MACP" // 4
-		int unknown1[3]; //8
-		REFRRecord_t* reference; //20
-		int unknown2[53]; //24
-		MACPRecord_t* combatTarget; // unverified // 236
-		int unknown3[54]; // 240
-		ActiveEffect* active_effects; // 454
-		long num_active_effects; // 460 // number of active spells / effects
-		MACPRecord_t* self; // 464 // pointer back to this record?
-		int unknown[32];  // 468
-		Statistic attributes[8]; // 596
-		Statistic health; // 692
-		Statistic magicka; // 704
-		Statistic weight_limit; // 716 // base = max
-		Statistic fatigue; // 728 // fatigue has a different vtable pointer than the other Statistic objects.
-		Statistic unknown_statistic; // 740
-		unsigned long effect_attributes[27]; // 752
-		int unknown4[7]; // 860
-		void * currentSpell; // 888
-		int unknown5[3]; // 892
-		void* current_weapon; // 904
-		int unknown6[9]; // 908
-		Skill skills[27]; // 944
-		int unknown7[34];  // 1376
-		long levelProgress; // 1512
-		int unknown8[2];  // 1516
-		float skillProgress[27]; // 1524
+		void * vTable; // 0x0000
+		RecordTypes::attachType_t recordType; // 0x0004 // "MACP"
+		int unknown_0x0008[3];
+		REFRRecord_t* reference; // 0x0014
+		int unknown_0x0018[53]; // 0x0018
+		MACPRecord_t* combatTarget; // 0x00EC // unverified
+		int unknown_0x00F0[54]; // 0x00F0
+		ActiveEffect* active_effects; // 0x01C8
+		long num_active_effects; // 0x01CC // Number of active spells/effects.
+		MACPRecord_t* self; // 0x01D0 // Pointer back to this record?
+		int unknown_0x01D4[32];  // 0x01D4
+		Statistic attributes[8]; // 0x0254
+		Statistic health; // 0x02B4
+		Statistic magicka; // 0x02C0
+		Statistic weight_limit; // 0x02CC // base = max
+		Statistic fatigue; // 0x02D8 // Fatigue has a different vtable pointer than the other Statistic objects.
+		Statistic unknown_statistic; // 0x02E4
+		unsigned long effect_attributes[27]; // 0x02E8
+		int unknown_0x035C; // 0x035C
+		mwShort_t gold; // 0x0360
+		mwShort_t unknown_0x0362; // 0x0362
+		int unknown_0x0364[7]; // 0x0364
+		void * currentSpell; // 0x0378
+		int unknown_0x037C[3]; // 0x037C
+		void* current_weapon; // 0x0388
+		int unknown_0x038C[9]; // 0x038C
+		Skill skills[27]; // 0x03B0
+		int unknown_0x0560[34];  // 0x0560
+		long levelProgress; // 0x05E8
+		int unknown_0x05EC[2];  // 0x05EC
+		float skillProgress[27]; // 0x05F4
 	};
 
 	struct Effect_t {

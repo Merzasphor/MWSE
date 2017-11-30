@@ -494,6 +494,15 @@
     <ClCompile Include="xGetEnchant.cpp">
       <Filter>Source Files\Functions</Filter>
     </ClCompile>
+    <ClCompile Include="xGetEnchantEffectInfo.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetSpellEffectInfo.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetGold.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
