@@ -72,7 +72,7 @@ mwseString_t::mwseString_t(const char *string, size_t length):
 
 mwseString_t::operator mwLong_t() const
 {
-	if(my_id == -1) throw StringStoreException(-1);
+    if (my_id == -1) return 0;
     return my_id;
 }
 
