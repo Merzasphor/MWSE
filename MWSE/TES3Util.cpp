@@ -66,19 +66,11 @@ namespace mwse
 		}
 
 		mwVarHolderNode_t* getVarHolderNode(REFRRecord_t* reference) {
-			if (reference == NULL || reference->attachments == NULL) {
-				return NULL;
-			}
+			return reinterpret_cast<mwVarHolderNode_t*>(getFirstAttachmentByType(reference, RecordTypes::VARNODE));
+		}
 
-			ListNode_t* listNode = reference->attachments;
-			while (listNode) {
-				if (listNode->attachType == RecordTypes::VARNODE) {
-					return reinterpret_cast<mwVarHolderNode_t*>(listNode->dataPtr);
-				}
-				listNode = listNode->nextNode;
-			}
-
-			return NULL;
+		mwLockNode_t* getLockNode(REFRRecord_t* reference) {
+			return reinterpret_cast<mwLockNode_t*>(getFirstAttachmentByType(reference, RecordTypes::LOCKNODE));
 		}
 
 		SPELRecord_t* getSpellRecordById(const mwseString_t& id) {

@@ -43,6 +43,8 @@ namespace mwse
 
 		mwVarHolderNode_t* getVarHolderNode(REFRRecord_t* reference);
 
+		mwLockNode_t* getLockNode(REFRRecord_t* reference);
+
 		SPELRecord_t* getSpellRecordById(const mwseString_t& id);
 
 		ENCHRecord_t* getEnchantRecordById(const mwseString_t& id);

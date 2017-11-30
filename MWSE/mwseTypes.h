@@ -68,6 +68,7 @@ namespace mwse
 
 		enum attachType_t
 		{
+			LOCKNODE = 3,	// Used to store lock/trap information.
 			VARNODE = 6,	//attachment where 'local' variables are stored, and the size of a stack, and the owner (if it has changed i think), and the script...
 			MACHNODE = 8	//PCAM
 		};
@@ -365,9 +366,17 @@ namespace mwse
 		mwFloat_t * floatVarValues;
 	};
 
+	struct mwLockNode_t {
+		mwShort_t lockLevel; // 0x00
+		mwShort_t unknown_0x04;
+		void * owner; // 0x08 // Faction or global?
+		SPELRecord_t * trapSpell; // 0x0C
+		char locked; // 0x10
+	};
+
 	struct mwVarHolderNode_t
 	{
-		int unknown_0x00;
+		int unknown_0x00; // See mwVarLockNode_t
 		int unknown_0x04;
 		int unknown_0x08;
 		int unknown_0x0C; // For LOCK/REPAIR/WEAPON/ARMOR/PROBE, this is the current condition (as long).

@@ -503,6 +503,9 @@
     <ClCompile Include="xGetGold.cpp">
       <Filter>Source Files\Functions\Actor Statistics</Filter>
     </ClCompile>
+    <ClCompile Include="xGetLockLevel.cpp">
+      <Filter>Source Files\Functions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

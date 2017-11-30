@@ -135,6 +135,7 @@
     <ClCompile Include="xGetEnchant.cpp" />
     <ClCompile Include="xGetEnchantEffectInfo.cpp" />
     <ClCompile Include="xGetGold.cpp" />
+    <ClCompile Include="xGetLockLevel.cpp" />
     <ClCompile Include="xGetPCTarget.cpp" />
     <ClCompile Include="xGetRef.cpp" />
     <ClCompile Include="InstructionInterface.cpp" />
