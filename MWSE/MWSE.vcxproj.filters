@@ -509,6 +509,9 @@
     <ClCompile Include="xGetEnchantInfo.cpp">
       <Filter>Source Files\Functions</Filter>
     </ClCompile>
+    <ClCompile Include="xGetMagic.cpp">
+      <Filter>Source Files\Functions\Actor Statistics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
