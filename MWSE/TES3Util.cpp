@@ -65,11 +65,15 @@ namespace mwse
 			return NULL;
 		}
 
-		mwVarHolderNode_t* getVarHolderNode(REFRRecord_t* reference) {
+		MACPRecord_t* getAttachedMACPRecord(REFRRecord_t* reference) {
+			return reinterpret_cast<MACPRecord_t*>(getFirstAttachmentByType(reference, RecordTypes::MACHNODE));
+		}
+
+		mwVarHolderNode_t* getAttachedVarHolderNode(REFRRecord_t* reference) {
 			return reinterpret_cast<mwVarHolderNode_t*>(getFirstAttachmentByType(reference, RecordTypes::VARNODE));
 		}
 
-		mwLockNode_t* getLockNode(REFRRecord_t* reference) {
+		mwLockNode_t* getAttachedLockNode(REFRRecord_t* reference) {
 			return reinterpret_cast<mwLockNode_t*>(getFirstAttachmentByType(reference, RecordTypes::LOCKNODE));
 		}
 

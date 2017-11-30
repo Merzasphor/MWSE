@@ -41,9 +41,11 @@ namespace mwse
 
 		BaseRecord_t* getFirstAttachmentByType(REFRRecord_t* reference, RecordTypes::attachType_t attachmentType);
 
-		mwVarHolderNode_t* getVarHolderNode(REFRRecord_t* reference);
+		MACPRecord_t* getAttachedMACPRecord(REFRRecord_t* reference);
 
-		mwLockNode_t* getLockNode(REFRRecord_t* reference);
+		mwVarHolderNode_t* getAttachedVarHolderNode(REFRRecord_t* reference);
+
+		mwLockNode_t* getAttachedLockNode(REFRRecord_t* reference);
 
 		SPELRecord_t* getSpellRecordById(const mwseString_t& id);
 

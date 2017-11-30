@@ -95,7 +95,7 @@ namespace mwse
 				autocalc = enchantment->autocalc;
 
 				// Get the current charge.
-				mwVarHolderNode_t* varNode = tes3::getVarHolderNode(reference);
+				mwVarHolderNode_t* varNode = tes3::getAttachedVarHolderNode(reference);
 				if (varNode) {
 					currCharge = *reinterpret_cast<mwFloat_t*>(&varNode->unknown_0x10);
 				}

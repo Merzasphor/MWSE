@@ -57,7 +57,7 @@ namespace mwse
 		mwLong_t value = 0;
 
 		// Get associated varnode, and the condition from it.
-		mwVarHolderNode_t* varNode = mwse::tes3::getVarHolderNode(reference);
+		mwVarHolderNode_t* varNode = mwse::tes3::getAttachedVarHolderNode(reference);
 		if (varNode != NULL) {
 			value = varNode->unknown_0x0C;
 		}

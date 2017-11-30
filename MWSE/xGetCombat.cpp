@@ -55,7 +55,7 @@ namespace mwse
 		}
 
 		// Get attached MACP record.
-		MACPRecord_t* macp = reinterpret_cast<MACPRecord_t*>(mwse::tes3::getFirstAttachmentByType(reference, RecordTypes::MACHNODE));
+		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
 			mwse::log::getLog() << "xGetCombat: No mach node found." << std::endl;
 			mwse::Stack::getInstance().pushLong(0);

@@ -52,7 +52,7 @@ namespace mwse
 
 		RecordTypes::recordType_t type = reference->recordPointer->recordType;
 		if (type == RecordTypes::CONTAINER || type == RecordTypes::DOOR) {
-			mwLockNode_t* lockNode = tes3::getLockNode(reference);
+			mwLockNode_t* lockNode = tes3::getAttachedLockNode(reference);
 			if (lockNode) {
 				lockLevel = lockNode->lockLevel;
 			}

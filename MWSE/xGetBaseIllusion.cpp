@@ -49,7 +49,7 @@ namespace mwse
 	{
 		// Get the associated MACP record.
 		mwse::REFRRecord_t* reference = virtualMachine.getReference();
-		MACPRecord_t* macp = reinterpret_cast<MACPRecord_t*>(mwse::tes3::getFirstAttachmentByType(reference, RecordTypes::MACHNODE));
+		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
 			mwse::log::getLog() << "xGetBaseIllusion: Could not find MACP record for reference." << std::endl;
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);

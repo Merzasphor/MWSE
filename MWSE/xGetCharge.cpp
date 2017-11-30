@@ -67,7 +67,7 @@ namespace mwse
 
 		// Get the charge based on the record type. If the item doesn't have a varnode,
 		// return the maximum charge from the enchantment record.
-		mwVarHolderNode_t* varNode = mwse::tes3::getVarHolderNode(reference);
+		mwVarHolderNode_t* varNode = mwse::tes3::getAttachedVarHolderNode(reference);
 		if (varNode) {
 			charge = *reinterpret_cast<mwFloat_t*>(&varNode->unknown_0x10);
 		}
