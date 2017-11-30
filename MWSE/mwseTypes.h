@@ -501,7 +501,7 @@ namespace mwse
 		int unknown_0x035C; // 0x035C
 		mwShort_t gold; // 0x0360
 		mwShort_t unknown_0x0362; // 0x0362
-		int unknown_0x0364[7]; // 0x0364
+		int unknown_0x0364[5]; // 0x0364
 		BaseRecord_t * currentSpell; // 0x0378
 		int unknown_0x037C[3]; // 0x037C
 		void* current_weapon; // 0x0388
