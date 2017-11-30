@@ -1,21 +1,21 @@
 /************************************************************************
+	
+	xGetMagic.cpp - Copyright (c) 2008 The MWSE Project
+	http://www.sourceforge.net/projects/mwse
 
-xGetMagic.cpp - Copyright (c) 2008 The MWSE Project
-http://www.sourceforge.net/projects/mwse
+	This program is free software; you can redistribute it and/or
+	modify it under the terms of the GNU General Public License
+	as published by the Free Software Foundation; either version 2
+	of the License, or (at your option) any later version.
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 **************************************************************************/
 
@@ -46,7 +46,7 @@ namespace mwse
 	float xGetMagic::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Return values.
-		mwShort_t type = 0;
+		mwLong_t type = 0;
 		mwseString_t id;
 
 		// Get reference to what we're finding enchantment information for.
@@ -67,26 +67,26 @@ namespace mwse
 							id = enchantment->id;
 						}
 						else {
-							mwse::log::getLog() << "xGetMagic: Unsupported current spell type: " << type << std::endl;
+							log::getLog() << "xGetMagic: Unsupported current spell type: " << type << std::endl;
 							type = 0;
 						}
 					}
 				}
 				else {
-					mwse::log::getLog() << "xGetMagic: Could not obtain MACP record for reference." << std::endl;
+					log::getLog() << "xGetMagic: Could not obtain MACP record for reference." << std::endl;
 				}
 			}
 			else {
-				mwse::log::getLog() << "xGetMagic: Invalid reference type:" << recordType << std::endl;
+				log::getLog() << "xGetMagic: Invalid reference type:" << recordType << std::endl;
 			}
 		}
 		else {
-			mwse::log::getLog() << "xGetMagic: Could not obtain reference." << std::endl;
+			log::getLog() << "xGetMagic: Could not obtain reference." << std::endl;
 		}
 
 		// Return type/id.
-		Stack::getInstance().pushString(id);
-		Stack::getInstance().pushShort(type);
+		Stack::getInstance().pushLong(id);
+		Stack::getInstance().pushLong(type);
 
 		return 0.0f;
 	}
