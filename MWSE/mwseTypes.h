@@ -377,7 +377,7 @@ namespace mwse
 	struct mwVarHolderNode_t
 	{
 		int unknown_0x00; // See mwVarLockNode_t
-		int unknown_0x04;
+		int unknown_0x04; // Pointer to the owner?
 		int unknown_0x08;
 		int unknown_0x0C; // For LOCK/REPAIR/WEAPON/ARMOR/PROBE, this is the current condition (as long).
 		int unknown_0x10; // For enchanted items, this is the current charge (as a float).
