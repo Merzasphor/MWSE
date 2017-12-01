@@ -709,7 +709,7 @@ namespace mwse
 		int unknown21;
 		int unknown22;
 		int unknown23;
-		int unknown24;
+		char * name;
 		int unknown25;
 		int unknown26;
 		short level;
@@ -818,7 +818,7 @@ namespace mwse
 		int unknown_0x38;
 		int unknown_0x3C;
 		int unknown_0x40;
-		char * nameStringPtr; // 0x44
+		char * name; // 0x44
 		int unknown_0x48;	// char * scriptIDStringPtr;
 		char * nifStringPtr; // 0x4C
 		char * tgaStringPtr; // 0x50
@@ -1159,6 +1159,116 @@ namespace mwse
 		float actions[4];
 		int unknown2;
 		int unknown3;
+	};
+
+	struct CONTRecord_t
+	{
+		void * vTable;
+		RecordTypes::recordType_t recordType;
+		int unknown_0x08;
+		int unknown_0x0C;
+		int unknown_0x10;
+		int unknown_0x14;
+		CONTRecord_t * firstRecord; // 0x18
+		CONTRecord_t * previousRecord; // 0x1C
+		CONTRecord_t * nextRecord; // 0x20
+		int unknown_0x20;
+		int unknown_0x24;
+		int unknown_0x28;
+		char * objectId; // 0x2C
+		int unknown_0x30;
+		int unknown_0x34;
+		int unknown_0x38;
+		int unknown_0x3C;
+		int unknown_0x40;
+		int unknown_0x44;
+		int unknown_0x48;
+		int unknown_0x4C;
+		int unknown_0x50;
+		int unknown_0x54;
+		int unknown_0x58;
+		int unknown_0x5C;
+		int unknown_0x60;
+		int unknown_0x64;
+		char * name; // 0x68
+		char * texture; // 0x6C
+	};
+
+	struct LIGHRecord_t
+	{
+		void * vTable;
+		RecordTypes::recordType_t recordType;
+		int unknown_0x08;
+		int unknown_0x0C;
+		int unknown_0x10;
+		int unknown_0x14;
+		LIGHRecord_t * firstRecord; // 0x18
+		LIGHRecord_t * previousRecord; // 0x1C
+		LIGHRecord_t * nextRecord; // 0x20
+		int unknown_0x20;
+		int unknown_0x24;
+		int unknown_0x28;
+		char * objectId; // 0x2C
+		int unknown_0x30; // Empty string?
+		int unknown_0x34;
+		int unknown_0x38;
+		int unknown_0x3C;
+		int unknown_0x40;
+		char * name; // 0x44
+		int unknown_0x48;
+		char * model; // 0x4C
+		char * icon; // 0x50
+	};
+
+	struct ACTIRecord_t
+	{
+		void * vTable;
+		RecordTypes::recordType_t recordType;
+		int unknown_0x08;
+		int unknown_0x0C;
+		int unknown_0x10;
+		int unknown_0x14;
+		int unknown_0x18;
+		TES3DefaultTemplate_t * previousRecord; // 0x1C
+		TES3DefaultTemplate_t * nextRecord; // 0x20
+		int unknown_0x20;
+		int unknown_0x24;
+		int unknown_0x28;
+		char * objectId; // 0x2C
+		char * model; // 0x30
+		char * name; // 0x34
+	};
+
+	struct DOORRecord_t
+	{
+		void * vTable;
+		RecordTypes::recordType_t recordType;
+		int unknown_0x08;
+		int unknown_0x0C;
+		int unknown_0x10;
+		int unknown_0x14;
+		int unknown_0x18;
+		TES3DefaultTemplate_t * previousRecord; // 0x1C
+		TES3DefaultTemplate_t * nextRecord; // 0x20
+		char * unknown_0x20;
+		char * unknown_0x24;
+		char * objectId; // 0x28
+	};
+
+	struct APPARecord_t
+	{
+		void * vTable;
+		RecordTypes::recordType_t recordType;
+		int unknown_0x08;
+		int unknown_0x0C;
+		int unknown_0x10;
+		int unknown_0x14;
+		int unknown_0x18;
+		TES3DefaultTemplate_t * previousRecord; // 0x1C
+		TES3DefaultTemplate_t * nextRecord; // 0x20
+		char * unknown_0x20;
+		char * unknown_0x24;
+		char * objectId; // 0x28
 	};
 
 	struct MGEFRecord_t
