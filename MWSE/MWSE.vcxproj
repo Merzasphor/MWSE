@@ -149,6 +149,7 @@
     <ClCompile Include="xGetPCTarget.cpp" />
     <ClCompile Include="xGetProgressLevel.cpp" />
     <ClCompile Include="xGetProgressSkill.cpp" />
+    <ClCompile Include="xGetQuality.cpp" />
     <ClCompile Include="xGetRef.cpp" />
     <ClCompile Include="InstructionInterface.cpp" />
     <ClCompile Include="InstructionStore.cpp" />

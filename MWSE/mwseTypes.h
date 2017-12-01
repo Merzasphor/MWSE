@@ -1001,7 +1001,7 @@ namespace mwse
 		int unknown_0xA4;
 		int unknown_0xA8;
 		int unknown_0xAC;
-		int unknown_0xB0;
+		mwFloat_t quality; // 0xB0
 		mwShort_t maxCondition; // 0xB4
 		mwShort_t unknown_0xB6;
 	};
@@ -1051,7 +1051,7 @@ namespace mwse
 		int unknown_0xA4;
 		int unknown_0xA8;
 		int unknown_0xAC;
-		int unknown_0xB0;
+		mwFloat_t quality; // 0xB0
 		mwShort_t maxCondition; // 0xB4
 		mwShort_t unknown_0xB6;
 	};
@@ -1103,6 +1103,7 @@ namespace mwse
 		int unknown_0xAC;
 		mwShort_t maxCondition; // 0xB0
 		mwShort_t unknown_0xB2;
+		mwFloat_t quality; // 0xB4
 	};
 
 	struct BOOKRecord_t {
@@ -1298,9 +1299,41 @@ namespace mwse
 		int unknown_0x18;
 		TES3DefaultTemplate_t * previousRecord; // 0x1C
 		TES3DefaultTemplate_t * nextRecord; // 0x20
-		char * unknown_0x20;
 		char * unknown_0x24;
-		char * objectId; // 0x28
+		char * unknown_0x28;
+		char * objectId; // 0x2C
+		int unknown_0x30;
+		int unknown_0x34;
+		int unknown_0x38;
+		int unknown_0x3C;
+		ListIterator_t * inventory; // 0x40
+		int unknown_0x44;
+		int unknown_0x48;
+		int unknown_0x4C;
+		int unknown_0x50;
+		int unknown_0x54;
+		int unknown_0x58;
+		int unknown_0x5C;
+		int unknown_0x60;
+		int unknown_0x64;
+		int unknown_0x68;
+		int unknown_0x6C;
+		int unknown_0x70;
+		int unknown_0x74;
+		int unknown_0x78;
+		int unknown_0x7C;
+		int unknown_0x80;
+		int unknown_0x84;
+		int unknown_0x88;
+		int unknown_0x8C;
+		int unknown_0x90;
+		int unknown_0x94;
+		int unknown_0x98;
+		int unknown_0x9C;
+		int unknown_0xA0;
+		int unknown_0xA4;
+		int unknown_0xA8;
+		mwFloat_t quality; // 0xAC
 	};
 
 	struct MGEFRecord_t
