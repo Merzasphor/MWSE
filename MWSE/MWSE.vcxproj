@@ -138,6 +138,11 @@
     <ClCompile Include="xGetGold.cpp" />
     <ClCompile Include="xGetLockLevel.cpp" />
     <ClCompile Include="xGetMagic.cpp" />
+    <ClCompile Include="xGetMaxCharge.cpp" />
+    <ClCompile Include="xGetMaxCondition.cpp" />
+    <ClCompile Include="xGetMaxFatigue.cpp" />
+    <ClCompile Include="xGetMaxHealth.cpp" />
+    <ClCompile Include="xGetMaxMagicka.cpp" />
     <ClCompile Include="xGetPCTarget.cpp" />
     <ClCompile Include="xGetRef.cpp" />
     <ClCompile Include="InstructionInterface.cpp" />
