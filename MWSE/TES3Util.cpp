@@ -6,13 +6,11 @@ namespace mwse
 {
 	namespace tes3
 	{
-		TES3CellMaster_t * getCellMaster()
-		{
+		TES3CellMaster_t * getCellMaster() {
 			return *reinterpret_cast<TES3CellMaster_t**>(0x7C67E0);
 		}
 
-		REFRRecord_t * skipRemovedReferences(REFRRecord_t * reference)
-		{
+		REFRRecord_t * skipRemovedReferences(REFRRecord_t * reference) {
 			while (reference != 0 && (reference->flags & 0x20) == 0x20)
 			{
 				reference = reference->nextRecord;
@@ -107,6 +105,34 @@ namespace mwse
 				}
 			}
 			return count;
+		}
+
+		float getSkillRequirement(REFRRecord_t* reference, mwLong_t skillId) {
+			TES3CellMaster_t* cellMaster = getCellMaster();
+			GMSTRecord_t ** gmsts = cellMaster->recordLists->GMSTs;
+
+			MACPRecord_t* macp = getAttachedMACPRecord(reference);
+			const MACPRecord_t::Skill& skill = macp->skills[skillId];
+
+			// Multiply requirement by skill type bonus.
+			float requirement = skill.base + 1.0f;
+			if (skill.skillType == Misc) {
+				requirement *= gmsts[GMST::fMiscSkillBonus]->value.float_value;
+			}
+			else if (skill.skillType == Minor) {
+				requirement *= gmsts[GMST::fMinorSkillBonus]->value.float_value;
+			}
+			else if (skill.skillType == Major) {
+				requirement *= gmsts[GMST::fMajorSkillBonus]->value.float_value;
+			}
+
+			// Multiply requirement by specialization bonus.
+			CLASRecord_t* classRecord = reinterpret_cast<NPCCopyRecord_t*>(macp->reference->recordPointer)->baseNPC->classRecord;
+			if (cellMaster->recordLists->skills[skillId].specialization == classRecord->specialization) {
+				requirement *= gmsts[GMST::fSpecialSkillBonus]->value.float_value;
+			}
+
+			return requirement;
 		}
 
 		REFRRecord_t* exteriorRefs[9] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };

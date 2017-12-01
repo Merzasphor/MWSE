@@ -273,6 +273,18 @@ namespace mwse
 		};
 	};
 
+	namespace GMST {
+		enum GMSTs
+		{
+			fEffectCostMult = 1037,
+			iLevelupTotal = 1088,
+			fSpecialSkillBonus = 1161,
+			fMajorSkillBonus,
+			fMinorSkillBonus,
+			fMiscSkillBonus
+		};
+	}
+
 	struct BaseRecord_t
 	{
 		void * vTable;

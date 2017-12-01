@@ -53,6 +53,8 @@ namespace mwse
 
 		size_t getEffectCount(const Effect_t* effectArray);
 
+		float getSkillRequirement(REFRRecord_t* reference, mwLong_t skillId);
+
 		// Used in xFirstNPC/Static/Item. The last element should never be non-null.
 		// The first eight elements are pointers to the first reference from the 8 surrounding cells.
 		extern REFRRecord_t* exteriorRefs[9];

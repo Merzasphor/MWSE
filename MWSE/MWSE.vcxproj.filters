@@ -542,6 +542,12 @@
     <ClCompile Include="xGetOwnerInfo.cpp">
       <Filter>Source Files\Functions\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="xGetProgressLevel.cpp">
+      <Filter>Source Files\Functions\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetProgressSkill.cpp">
+      <Filter>Source Files\Functions\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
