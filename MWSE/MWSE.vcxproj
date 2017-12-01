@@ -145,6 +145,7 @@
     <ClCompile Include="xGetMaxMagicka.cpp" />
     <ClCompile Include="xGetName.cpp" />
     <ClCompile Include="xGetOwner.cpp" />
+    <ClCompile Include="xGetOwnerInfo.cpp" />
     <ClCompile Include="xGetPCTarget.cpp" />
     <ClCompile Include="xGetRef.cpp" />
     <ClCompile Include="InstructionInterface.cpp" />

@@ -539,6 +539,9 @@
     <ClCompile Include="xGetOwner.cpp">
       <Filter>Source Files\Functions\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="xGetOwnerInfo.cpp">
+      <Filter>Source Files\Functions\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

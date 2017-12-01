@@ -1130,6 +1130,16 @@ namespace mwse
 		void* unknown21;
 	};
 
+	struct FACTRecord_t {
+		void * vTable;
+		RecordTypes::recordType_t recordType; // FACT
+		int unknown1[2];
+		char id[32];
+		char name[32];
+		char ranks[10][32];
+		int unknown2[71];
+	};
+
 	struct GLOBRecord_t
 	{
 		void * vTable;
