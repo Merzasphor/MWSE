@@ -11,7 +11,7 @@ namespace mwse {
 		size_t id = 0;
 		if (arrays.size() < maxArrayId) {
 			id = arrays.size() + 1;
-			arrays.push_back(std::vector<ArrayItem_t>());
+			arrays.push_back(ContainedArray_t());
 		}
 		else {
 			mwse::log::getLog() << caller << ": Unable to create array. Maximum number of arrays reached. id: " << id << std::endl;
@@ -22,7 +22,7 @@ namespace mwse {
 	ArrayItem_t Arrays::getValue(std::string const& caller, size_t const id, size_t const index) {
 		ArrayItem_t value = 0;
 		if (id > 0 && id <= arrays.size()) {
-			std::vector<ArrayItem_t> const& a = arrays[id - 1];
+			ContainedArray_t const& a = arrays[id - 1];
 			if (index >= 0 && index < a.size()) {
 				value = a[index];
 			}
@@ -40,7 +40,7 @@ namespace mwse {
 		mwLong_t success = 0;
 		if (id > 0 && id <= arrays.size()) {
 			if (index >= 0) {
-				std::vector<ArrayItem_t>& a = arrays[id - 1];
+				ContainedArray_t& a = arrays[id - 1];
 				if (index + 1 > a.size()) {
 					a.resize(index + 1);
 				}
@@ -84,5 +84,9 @@ namespace mwse {
 
 	Arrays_t& Arrays::get() {
 		return arrays;
+	}
+
+	ContainedArray_t& Arrays::get(size_t index) {
+		return arrays[index-1];
 	}
 }

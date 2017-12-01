@@ -33,7 +33,8 @@
 */
 namespace mwse {
 	typedef long ArrayItem_t;
-	typedef std::vector<std::vector<ArrayItem_t>> Arrays_t;
+	typedef std::vector<ArrayItem_t> ContainedArray_t;
+	typedef std::vector<ContainedArray_t> Arrays_t;
 
 	class Arrays {
 	public:
@@ -50,6 +51,8 @@ namespace mwse {
 		mwLong_t clear(std::string const& caller, size_t const id);
 
 		Arrays_t& get();
+
+		ContainedArray_t& get(size_t index);
 
 	private:
 		Arrays();

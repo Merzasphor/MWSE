@@ -551,6 +551,9 @@
     <ClCompile Include="xGetQuality.cpp">
       <Filter>Source Files\Functions\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="xGetRace.cpp">
+      <Filter>Source Files\Functions\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

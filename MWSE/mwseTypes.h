@@ -623,6 +623,61 @@ namespace mwse
 		long autocalc;	//0=OFF, 1=ON
 	};
 
+	struct RACERecord_t {
+		struct SkillBonus_t
+		{
+			Skills skill;
+			unsigned long bonus;
+		};
+		struct BaseAttribute_t
+		{
+			unsigned long male;
+			unsigned long female;
+		};
+		struct HeightWeight_t
+		{
+			float male;
+			float female;
+		};
+		struct BodyParts_t
+		{
+			// BODY records.
+			BaseRecord_t * head1;
+			BaseRecord_t * hair;
+			BaseRecord_t * neck;
+			BaseRecord_t * chest;
+			BaseRecord_t * groin;
+			BaseRecord_t * hands;
+			BaseRecord_t * wrist;
+			BaseRecord_t * forearm;
+			BaseRecord_t * upper_arm;
+			BaseRecord_t * foot;
+			BaseRecord_t * ankle;
+			BaseRecord_t * knee;
+			BaseRecord_t * upper_leg;
+			BaseRecord_t  unknown1;
+			BaseRecord_t * tail;
+			BaseRecord_t * head2;
+			int unknown2[14];
+		};
+		void* v_table; // 0x0000
+		RecordTypes::recordType_t record_type; // 0x0004 // "RACE"
+		long unknown_0x0008;
+		void * module; // 0x000C // Appears to be info about the module this record comes from.
+		char id[32]; // 0x0010
+		char name[32]; // 0x0030
+		SkillBonus_t skill_bonuses[7]; // 0x0050
+		BaseAttribute_t base_attributes[8]; // 0x0088 // Index corresponds to Attributes enum.
+		HeightWeight_t height; // 0x00C8
+		HeightWeight_t weight; // 0x00D0
+		unsigned long flags; // 0x00D8 // 1 = playable, 2 = beast, 3 = both.
+		int unknown_0x00DC; // Pointer?
+		int unknown_0x00E0;
+		int unknown_0x00E4;
+		BodyParts_t male; // 0x00E8
+		BodyParts_t female; // 0x0106
+	};
+
 	struct CLASRecord_t {
 		void * vTable;
 		RecordTypes::recordType_t recordType; // CLAS
@@ -749,7 +804,7 @@ namespace mwse
 		int unknown38;
 		mwShort_t baseGold;
 		mwShort_t unknown45;
-		int unknown39; //RACE
+		RACERecord_t * raceRecord; //RACE
 		CLASRecord_t * classRecord; //CLASS
 		int unknown41;	//BODY (head)
 		int unknown42;	//BODY (hair)
