@@ -374,10 +374,20 @@ namespace mwse
 		char locked; // 0x10
 	};
 
+	struct mwOwnerInfoNode_t {
+		int unknown_0x00;
+		TES3DefaultTemplate_t * owner; // 0x04
+		union {
+			mwLong_t rank;
+			void * variable;
+		} rankVar; // 0x08
+	};
+
+	// Can alternatively be one of the above mw*Node_t types.
 	struct mwVarHolderNode_t
 	{
-		int unknown_0x00; // See mwVarLockNode_t
-		int unknown_0x04; // Pointer to the owner?
+		int unknown_0x00;
+		int unknown_0x04;
 		int unknown_0x08;
 		int unknown_0x0C; // For LOCK/REPAIR/WEAPON/ARMOR/PROBE, this is the current condition (as long).
 		int unknown_0x10; // For enchanted items, this is the current charge (as a float).

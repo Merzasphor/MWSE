@@ -53,21 +53,20 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwseString_t ownerId;
+		mwseString_t owner;
 
 		// Get the attached varnode.
-		mwVarHolderNode_t* varNode = tes3::getAttachedVarHolderNode(reference);
-		if (varNode) {
-			TES3DefaultTemplate_t* owner = reinterpret_cast<TES3DefaultTemplate_t*>(varNode->unknown_0x04);
-			if (owner && owner->objectId) {
-				ownerId = owner->objectId;
+		mwOwnerInfoNode_t* ownerInfo = reinterpret_cast<mwOwnerInfoNode_t*>(tes3::getAttachedVarHolderNode(reference));
+		if (ownerInfo) {
+			if (ownerInfo->owner && ownerInfo->owner->objectId) {
+				owner = ownerInfo->owner->objectId;
 			}
 		}
 		else {
 			mwse::log::getLog() << "xGetOwner: Could not obtain attached VARNODE." << std::endl;
 		}
 
-		mwse::Stack::getInstance().pushString(ownerId);
+		mwse::Stack::getInstance().pushString(owner);
 
 		return 0.0f;
 	}
