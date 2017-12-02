@@ -181,6 +181,7 @@
     <ClCompile Include="xLongToFloats.cpp" />
     <ClCompile Include="xModAttribute.cpp" />
     <ClCompile Include="xModProgressLevel.cpp" />
+    <ClCompile Include="xModProgressSkill.cpp" />
     <ClCompile Include="xNextRef.cpp" />
     <ClCompile Include="xNot.cpp" />
     <ClCompile Include="xOr.cpp" />

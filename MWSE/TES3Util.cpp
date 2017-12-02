@@ -40,7 +40,8 @@ namespace mwse
 			NPCBaseRecord_t* base = reinterpret_cast<NPCCopyRecord_t*>(reference)->baseNPC;
 			if (base == NULL) {
 				return NULL;
-			} else if (base->recordType != reference->recordType) {
+			}
+			else if (base->recordType != reference->recordType) {
 				return NULL;
 			}
 
@@ -133,6 +134,19 @@ namespace mwse
 			}
 
 			return requirement;
+		}
+
+		void checkForSkillUp(REFRRecord_t* reference, mwLong_t skillId) {
+			MACPRecord_t* macp = getAttachedMACPRecord(reference);
+			if (macp) {
+				int const FuncSkillUp = 0x56BBE0;
+				__asm
+				{
+					mov ecx, macp
+					push skillId
+					call FuncSkillUp
+				}
+			}
 		}
 
 		REFRRecord_t* exteriorRefs[9] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
