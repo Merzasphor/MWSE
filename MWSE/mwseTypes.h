@@ -929,7 +929,7 @@ namespace mwse
 		int unknown_0x48;	// char * scriptIDStringPtr;
 		char * nifStringPtr; // 0x4C
 		char * tgaStringPtr; // 0x50
-		float weight; // 0x54
+		int unknown_0x54;
 		int unknown_0x58;
 		int unknown_0x5C;
 		int unknown_0x60[4];
@@ -938,7 +938,8 @@ namespace mwse
 		int unknown_0x90[3];
 		mwShort_t maxCondition; // 0x9C
 		mwShort_t unknown_0x9E;
-		int unknown_0xA0[4];
+		int unknown_0xA0[3];
+		mwFloat_t weight; // 0xAC
 		mwLong_t value; // 0xB0
 		int unknown_0xB4[3]; // 0xB4
 		ENCHRecord_t * enchantment; // 0xC0
@@ -969,9 +970,10 @@ namespace mwse
 		int unknown_0x48;	//char * scriptIDStringPtr;
 		char * nifStringPtr; // 0x4C
 		char * tgaStringPtr; // 0x50
-		float weight; // 0x54
-		int unknown_0x58; // 0x58
-		int unknown_0x5C[20];
+		int unknown_0x54;
+		int unknown_0x58;
+		int unknown_0x5C[19];
+		mwFloat_t weight; // 0xA4
 		mwShort_t value; // 0xAC
 		mwShort_t unknown_0xAE;
 		int unknown_0xB0;
@@ -1002,8 +1004,8 @@ namespace mwse
 		char * model; // 0x48
 		int unknown_0x4C; // 0x4C
 		char * tgaStringPtr; // 0x50
-		float weight; // 0x54
-		int value; // 0x58
+		mwFloat_t weight; // 0x54
+		mwLong_t value; // 0x58
 		short weaponType; // 0x5C
 		short maxCondition; // 0x5E
 		float speed; // 0x60
@@ -1042,7 +1044,7 @@ namespace mwse
 		long unknown_0x48;
 		char * model; // 0x4C
 		char * texture; // 0x50
-		long unknown_0x54;
+		mwFloat_t weight; // 0x54
 		mwLong_t value; // 0x58
 		long unknown_0x5C;
 		long unknown_0x60;
@@ -1097,7 +1099,7 @@ namespace mwse
 		int unknown_0x9C;
 		int unknown_0xA0;
 		int unknown_0xA4;
-		int unknown_0xA8;
+		mwFloat_t weight; // 0xA8
 		mwLong_t value; // 0xAC
 		mwFloat_t quality; // 0xB0
 		mwShort_t maxCondition; // 0xB4
@@ -1148,8 +1150,8 @@ namespace mwse
 		int unknown_0x9C;
 		int unknown_0xA0;
 		int unknown_0xA4;
-		int unknown_0xA8;
-		int unknown_0xAC;
+		mwFloat_t weight; // 0xA8
+		mwLong_t value; // 0xAC
 		mwFloat_t quality; // 0xB0
 		mwShort_t maxCondition; // 0xB4
 		mwShort_t unknown_0xB6;
@@ -1199,8 +1201,8 @@ namespace mwse
 		int unknown_0x9C;
 		int unknown_0xA0;
 		int unknown_0xA4;
-		int unknown_0xA8;
-		int unknown_0xAC;
+		mwFloat_t weight; // 0xA8
+		mwLong_t value; // 0xAC
 		mwShort_t maxCondition; // 0xB0
 		mwShort_t unknown_0xB2;
 		mwFloat_t quality; // 0xB4
@@ -1229,7 +1231,7 @@ namespace mwse
 		int unknown_0x48; // 0x48
 		int unknown_0x4C; // 0x4C
 		int unknown_0x50; // 0x50
-		int unknown_0x54; // 0x54
+		mwFloat_t weight; // 0x54
 		mwLong_t value; // 0x58
 		long scroll; // 0x5C
 		long skill; // 0x60
@@ -1260,7 +1262,7 @@ namespace mwse
 		void * script; // 0x48
 		char * model; // 0x4C
 		char * texture; // 0x50
-		float weight; // 0x54
+		mwFloat_t weight; // 0x54
 		mwLong_t value; // 0x58
 		long scroll; // 0x5C
 		long skill; // 0x60
@@ -1364,8 +1366,10 @@ namespace mwse
 		int unknown_0x68;
 		char * name; // 0x6C
 		char * texture; // 0x70
+		int unknown_0x74;
+		mwFloat_t weight;
 	};
-	static_assert(sizeof(CONTRecord_t) == 0x74, "CONTRecord_t failed size validation");
+	static_assert(sizeof(CONTRecord_t) == 0x7C, "CONTRecord_t failed size validation");
 
 	struct LIGHRecord_t
 	{
@@ -1391,7 +1395,7 @@ namespace mwse
 		int unknown_0x4C;
 		char * model; // 0x50
 		char * icon; // 0x54
-		int unknown_0x58;
+		mwFloat_t weight; // 0x58
 		mwLong_t value; // 0x5C
 	};
 	static_assert(sizeof(LIGHRecord_t) == 0x60, "LIGHRecord_t failed size validation");
@@ -1479,7 +1483,7 @@ namespace mwse
 		int unknown_0xA4;
 		int unknown_0xA8;
 		mwFloat_t quality; // 0xAC
-		int unknown_0xB0;
+		mwFloat_t weight; // 0xB0
 		mwLong_t value; // 0xB4
 	};
 	static_assert(sizeof(APPARecord_t) == 0xB8, "APPARecord_t failed size validation");
