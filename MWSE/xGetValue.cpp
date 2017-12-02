@@ -47,7 +47,7 @@ namespace mwse {
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 			mwse::log::getLog() << "xGetValue: No reference provided." << std::endl;
-			// TODO: Fix stack.
+			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
 
@@ -55,7 +55,7 @@ namespace mwse {
 		BaseRecord_t* record = reference->recordPointer;
 		if (record == NULL) {
 			mwse::log::getLog() << "xGetValue: No base record found." << std::endl;
-			// TODO: Fix stack.
+			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
 
@@ -114,7 +114,6 @@ namespace mwse {
 			}
 		}
 
-		DebugRecord_t* debug = reinterpret_cast<DebugRecord_t*>(record);
 		mwse::Stack::getInstance().pushLong(value);
 
 		return 0.0f;
