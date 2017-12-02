@@ -173,6 +173,9 @@
     <ClCompile Include="xGetWeight.cpp" />
     <ClCompile Include="xHypot.cpp" />
     <ClCompile Include="xIsFemale.cpp" />
+    <ClCompile Include="xIsProvider.cpp" />
+    <ClCompile Include="xIsTrader.cpp" />
+    <ClCompile Include="xIsTrainer.cpp" />
     <ClCompile Include="xLogMessage.cpp" />
     <ClCompile Include="xLongToFloats.cpp" />
     <ClCompile Include="xNextRef.cpp" />

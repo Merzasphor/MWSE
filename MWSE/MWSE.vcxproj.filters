@@ -581,6 +581,15 @@
     <ClCompile Include="xIsFemale.cpp">
       <Filter>Source Files\Functions\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="xIsProvider.cpp">
+      <Filter>Source Files\Functions\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="xIsTrader.cpp">
+      <Filter>Source Files\Functions\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="xIsTrainer.cpp">
+      <Filter>Source Files\Functions\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
