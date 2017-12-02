@@ -578,6 +578,9 @@
     <ClCompile Include="xGetWeight.cpp">
       <Filter>Source Files\Functions\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="xIsFemale.cpp">
+      <Filter>Source Files\Functions\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

@@ -857,7 +857,7 @@ namespace mwse
 		int unknown_0x28;
 		char * objectId; // 0x2C
 		int unknown_0x30;
-		int unknown_0x34;
+		unsigned long flags; // 0x34
 		int unknown_0x38;
 		int unknown_0x3C;
 		int unknown_0x40;
