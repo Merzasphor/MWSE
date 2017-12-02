@@ -238,7 +238,7 @@ index will be filled with index of variable
 mwLong_t VirtualMachine::getLongVariable(int index, REFRRecord_t &reference)
 {
 	bool found = false;
-	ListNode_t * pnode = reference.attachments;
+	ListNode_t<BaseRecord_t> * pnode = reference.attachments;
 	//search in attachments for the 'VARNODE' attachment. it contains the variableslist.
 	while(pnode && !found)	//make while fail when @ end of nodelist!
 	{
@@ -293,7 +293,7 @@ void VirtualMachine::setLongVariable(const char *id, mwse::mwLong_t value)
 void VirtualMachine::setLongVariable(int index, mwse::mwLong_t value, mwse::REFRRecord_t &reference)
 {
 	bool found = false;
-	ListNode_t * pnode = reference.attachments;
+	ListNode_t<BaseRecord_t> * pnode = reference.attachments;
 	while(pnode && !found)	//make while fail when @ end of nodelist!
 	{
 		if(pnode->attachType == RecordTypes::attachType_t::VARNODE)
@@ -347,7 +347,7 @@ mwShort_t VirtualMachine::getShortVariable(const char *id)
 mwShort_t VirtualMachine::getShortVariable(int index, mwse::REFRRecord_t &reference)
 {
 	bool found = false;
-	ListNode_t * pnode = reference.attachments;
+	ListNode_t<BaseRecord_t> * pnode = reference.attachments;
 	while(pnode && !found)	//make while fail when @ end of nodelist!
 	{
 		if(pnode->attachType == RecordTypes::attachType_t::VARNODE)
@@ -401,7 +401,7 @@ void VirtualMachine::setShortVariable(const char *id, mwse::mwShort_t value)
 void VirtualMachine::setShortVariable(int index, mwse::mwShort_t value, mwse::REFRRecord_t &reference)
 {
 	bool found = false;
-	ListNode_t * pnode = reference.attachments;
+	ListNode_t<BaseRecord_t> * pnode = reference.attachments;
 	while(pnode && !found)	//make while fail when @ end of nodelist!
 	{
 		if(pnode->attachType == RecordTypes::attachType_t::VARNODE)
@@ -455,7 +455,7 @@ mwFloat_t VirtualMachine::getFloatVariable(const char *id)
 mwFloat_t VirtualMachine::getFloatVariable(int index, mwse::REFRRecord_t &reference)
 {
 	bool found = false;
-	ListNode_t * pnode = reference.attachments;
+	ListNode_t<BaseRecord_t> * pnode = reference.attachments;
 	while(pnode && !found)	//make while fail when @ end of nodelist!
 	{
 		if(pnode->attachType == RecordTypes::attachType_t::VARNODE)
@@ -509,7 +509,7 @@ void VirtualMachine::setFloatVariable(const char *id, mwse::mwFloat_t value)
 void VirtualMachine::setFloatVariable(int index, mwse::mwFloat_t value, mwse::REFRRecord_t &reference)
 {
 	bool found = false;
-	ListNode_t * pnode = reference.attachments;
+	ListNode_t<BaseRecord_t> * pnode = reference.attachments;
 	while(pnode && !found)	//make while fail when @ end of nodelist!
 	{
 		if(pnode->attachType == RecordTypes::attachType_t::VARNODE)

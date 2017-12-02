@@ -356,19 +356,21 @@ namespace mwse
 		void * recordAddress;
 	};
 
+	template <typename T>
 	struct ListNode_t
 	{
 		RecordTypes::attachType_t attachType;
-		ListNode_t * nextNode;
-		void * dataPtr;
+		ListNode_t<T> * nextNode;
+		T * dataPtr;
 	};
 
+	template <typename T>
 	struct ListIterator_t
 	{
 		char unknown[8];
-		ListNode_t * first;
+		ListNode_t<T> * first;
 		char unknown2[4];
-		ListNode_t * current;
+		ListNode_t<T> * current;
 	};
 
 	struct mwVariablesNode_t
@@ -811,8 +813,8 @@ namespace mwse
 		int unknown_0x00C0;
 		int unknown_0x00C4;
 		int numberOfSpells; // 0x00C8
-		LinkedList_t<SPELRecord_t> * spellStart; // 0x00CC // These contain the spells! Not items with a special power.
-		LinkedList_t<SPELRecord_t> * spellEnd; // 0x00D0
+		ListNode_t<SPELRecord_t> * spellStart; // 0x00CC // These contain the spells! Not items with a special power.
+		ListNode_t<SPELRecord_t> * spellEnd; // 0x00D0
 		int unknown_0x00D4;
 		int unknown_0x00D8;
 		int unknown_0x00DC;
@@ -870,7 +872,7 @@ namespace mwse
 		float x;
 		float y;
 		float z;
-		ListNode_t * attachments;
+		ListNode_t<BaseRecord_t> * attachments;
 		char unknown5[18];	//18 bytes
 	};
 
@@ -1367,7 +1369,7 @@ namespace mwse
 		int unknown_0x34;
 		int unknown_0x38;
 		int unknown_0x3C;
-		ListIterator_t * inventory; // 0x40
+		ListIterator_t<BaseRecord_t> * inventory; // 0x40
 		int unknown_0x44;
 		int unknown_0x48;
 		int unknown_0x4C;
@@ -1453,7 +1455,7 @@ namespace mwse
 		mwLong_t unknown_0x34;
 		mwLong_t unknown_0x38;
 		mwLong_t unknown_0x3C;
-		ListIterator_t * inventory; // 0x40
+		ListIterator_t<BaseRecord_t> * inventory; // 0x40
 		mwLong_t unknown_0x44;
 		mwLong_t unknown_0x48;
 		mwLong_t unknown_0x4C;

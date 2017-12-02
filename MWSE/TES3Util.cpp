@@ -52,10 +52,10 @@ namespace mwse
 				return NULL;
 			}
 
-			ListNode_t* listNode = reference->attachments;
+			ListNode_t<BaseRecord_t>* listNode = reference->attachments;
 			while (listNode) {
 				if (listNode->attachType == attachmentType) {
-					return reinterpret_cast<BaseRecord_t*>(listNode->dataPtr);
+					return listNode->dataPtr;
 				}
 				listNode = listNode->nextNode;
 			}
