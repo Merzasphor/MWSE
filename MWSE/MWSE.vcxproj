@@ -163,6 +163,7 @@
     <ClCompile Include="Push.cpp" />
     <ClCompile Include="Reference.cpp" />
     <ClCompile Include="xGetService.cpp" />
+    <ClCompile Include="xGetSkill.cpp" />
     <ClCompile Include="xGetSpellEffectInfo.cpp" />
     <ClCompile Include="xHypot.cpp" />
     <ClCompile Include="xLogMessage.cpp" />
