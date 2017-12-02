@@ -68,7 +68,6 @@ namespace mwse
 
 		// Get the quality.
 		RecordTypes::recordType_t recordType = record->recordType;
-		DebugRecord_t* debug = reinterpret_cast<DebugRecord_t*>(record);
 		if (recordType == RecordTypes::LOCKPICK) {
 			LOCKRecord_t* lockpick = reinterpret_cast<LOCKRecord_t*>(reference->recordPointer);
 			value = lockpick->quality;
