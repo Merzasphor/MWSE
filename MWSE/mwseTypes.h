@@ -758,61 +758,67 @@ namespace mwse
 
 	struct NPCBaseRecord_t	//or the 'base' NPC_ record. you can access it trough the NPCC (NPC Copy) Record (baseNPC)
 	{
-		void * vTable;
-		RecordTypes::recordType_t recordType;
-		int recordSize;		//should be 0x0F0 big!
-		char * modNamePtr;
-		int unknown1;
-		int unknown2;
-		int unknown3;
-		int unknown4;	//STAT
-		int unknown5;	//BODY
-		int unknown6;
-		int unknown7;
-		char * objectId;
-		int unknown8;
-		int unknown9;
-		int unknown10;
-		int unknown11;
-		int unknown12;
-		int unknown13;	//inventory? (amount)
-		int unknown14;	//inventory? (start)
-		int unknown15;	//inventory? (end)
-		int unknown16;
-		int unknown17;
-		int unknown18;
-		int unknown19;
-		int unknown20;
-		int unknown21;
-		int unknown22;
-		int unknown23;
-		char * name;
-		int unknown25;
-		int unknown26;
-		short level;
-		short unknown27;
-		int unknown28;
-		int unknown29;
-		int unknown30;
-		int unknown31;
-		int unknown32;
-		int unknown33;
-		int unknown34;
-		int unknown35;
-		int unknown36;
-		int unknown37;
-		int unknown38;
-		mwShort_t baseGold;
-		mwShort_t unknown45;
-		RACERecord_t * raceRecord; //RACE
-		CLASRecord_t * classRecord; //CLASS
-		int unknown41;	//BODY (head)
-		int unknown42;	//BODY (hair)
-		int unknown43;
-		int unknown44;
-		int numberOfSpells;
-		LinkedList_t<SPELRecord_t> * spellStart;	//these contain the spells! not items with a special power.
-		LinkedList_t<SPELRecord_t> * spellEnd;
+		void * vTable; // 0x0000
+		RecordTypes::recordType_t recordType; // 0x0004
+		int recordSize; // 0x0008 // Should be 0x0F0 big!
+		char * modNamePtr; // 0x000C
+		int unknown_0x0010;
+		int unknown_0x0014;
+		int unknown_0x0018;
+		int unknown_0x001C; // STAT
+		int unknown_0x0020;	// BODY
+		int unknown_0x0024;
+		int unknown_0x0028;
+		char * objectId; // 0x002C
+		int unknown_0x0030;
+		int unknown_0x0034;
+		int unknown_0x0038;
+		int unknown_0x003C;
+		int unknown_0x0040;
+		int unknown_0x0044;	// Inventory amount?
+		int unknown_0x0048;	// Inventory start?
+		int unknown_0x004C;	// Inventory end?
+		int unknown_0x0050;
+		int unknown_0x0054;
+		int unknown_0x0058;
+		int unknown_0x005C;
+		int unknown_0x0060;
+		int unknown_0x0064;
+		int unknown_0x0068;
+		int unknown_0x006C;
+		char * name; // 0x0070
+		int unknown_0x0074;
+		int unknown_0x0078;
+		short level; // 0x007C
+		short unknown_0x007E;
+		int unknown_0x0080;
+		int unknown_0x0084;
+		int unknown_0x0088;
+		int unknown_0x008C;
+		int unknown_0x0090;
+		int unknown_0x0094;
+		int unknown_0x0098;
+		int unknown_0x009C;
+		int unknown_0x00A0;
+		int unknown_0x00A4;
+		int unknown_0x00A8;
+		mwShort_t baseGold; // 0x00AC
+		mwShort_t unknown_0x00AE;
+		RACERecord_t * raceRecord; // 0x00B0
+		CLASRecord_t * classRecord; // 0x00B4
+		int unknown_0x00B8;	// BODY (head)
+		int unknown_0x00BC;	// BODY (hair)
+		int unknown_0x00C0;
+		int unknown_0x00C4;
+		int numberOfSpells; // 0x00C8
+		LinkedList_t<SPELRecord_t> * spellStart; // 0x00CC // These contain the spells! Not items with a special power.
+		LinkedList_t<SPELRecord_t> * spellEnd; // 0x00D0
+		int unknown_0x00D4;
+		int unknown_0x00D8;
+		int unknown_0x00DC;
+		int unknown_0x00E0;
+		int unknown_0x00E4;
+		mwLong_t servicesMask; // 0xE8
 	};
 
 	struct NPCCopyRecord_t
