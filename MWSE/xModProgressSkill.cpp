@@ -45,7 +45,7 @@ namespace mwse
 
 	float xModProgressSkill::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		if (mwse::Stack::getInstance().size() < 2) {
+		if (mwse::Stack::getInstance().size() < 3) {
 			mwse::log::getLog() << "xModProgressSkill: Function called with too few arguments." << std::endl;
 			return 0.0f;
 		}
