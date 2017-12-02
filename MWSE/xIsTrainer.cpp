@@ -60,7 +60,7 @@ namespace mwse {
 				mwse::log::getLog() << "xIsTrainer: Could not get base NPC record for \"" << npc->objectId << "\"" << std::endl;
 			}
 
-			// Get 
+			// Get class services.
 			if (npc->baseNPC && npc->baseNPC->classRecord) {
 				classServiceFlags = npc->baseNPC->classRecord->services;
 				classServiceFlags &= 0x00004000;
