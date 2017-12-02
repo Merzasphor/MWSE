@@ -168,6 +168,7 @@
     <ClCompile Include="xGetSpell.cpp" />
     <ClCompile Include="xGetSpellEffectInfo.cpp" />
     <ClCompile Include="xGetSpellInfo.cpp" />
+    <ClCompile Include="xGetTrap.cpp" />
     <ClCompile Include="xHypot.cpp" />
     <ClCompile Include="xLogMessage.cpp" />
     <ClCompile Include="xLongToFloats.cpp" />
