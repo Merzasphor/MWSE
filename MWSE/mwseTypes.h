@@ -339,6 +339,7 @@ namespace mwse
 		int unknown;
 		SCPTRecord_t * scptRecord;
 	};
+	static_assert(sizeof(SCPTNode_t) == 0x08, "SCPTNode_t failed size validation");
 
 	struct SPELRecord_t;
 
@@ -349,12 +350,14 @@ namespace mwse
 		T * head;
 		T * tail;
 	};
+	static_assert(sizeof(LinkedList_t<void>) == 0x0C, "LinkedList_t failed size validation");
 
 	struct InventoryNode_t
 	{
 		int itemCount;
 		void * recordAddress;
 	};
+	static_assert(sizeof(InventoryNode_t) == 0x08, "InventoryNode_t failed size validation");
 
 	template <typename T>
 	struct ListNode_t
@@ -363,6 +366,7 @@ namespace mwse
 		ListNode_t<T> * nextNode;
 		T * dataPtr;
 	};
+	static_assert(sizeof(ListNode_t<void>) == 0x0C, "ListNode_t failed size validation");
 
 	template <typename T>
 	struct ListIterator_t
@@ -372,6 +376,7 @@ namespace mwse
 		char unknown2[4];
 		ListNode_t<T> * current;
 	};
+	static_assert(sizeof(ListIterator_t<void>) == 0x14, "ListIterator_t failed size validation");
 
 	struct mwVariablesNode_t
 	{
@@ -379,6 +384,7 @@ namespace mwse
 		mwLong_t * longVarValues;
 		mwFloat_t * floatVarValues;
 	};
+	static_assert(sizeof(mwVariablesNode_t) == 0x0C, "mwVariablesNode_t failed size validation");
 
 	struct mwLockNode_t {
 		mwShort_t lockLevel; // 0x00
@@ -387,6 +393,7 @@ namespace mwse
 		SPELRecord_t * trapSpell; // 0x0C
 		char locked; // 0x10
 	};
+	static_assert(sizeof(mwLockNode_t) == 0x10, "mwLockNode_t failed size validation");
 
 	struct mwOwnerInfoNode_t {
 		int unknown_0x00;
@@ -396,6 +403,7 @@ namespace mwse
 			void * variable;
 		} rankVar; // 0x08
 	};
+	static_assert(sizeof(mwOwnerInfoNode_t) == 0x0C, "mwOwnerInfoNode_t failed size validation");
 
 	// Can alternatively be one of the above mw*Node_t types.
 	struct mwVarHolderNode_t
@@ -408,6 +416,7 @@ namespace mwse
 		int unknown_0x14;
 		mwVariablesNode_t * vars; // 0x18
 	};
+	static_assert(sizeof(mwVarHolderNode_t) == 0x1C, "mwVarHolderNode_t failed size validation");
 
 	struct REFRRecord_t;
 
@@ -536,6 +545,10 @@ namespace mwse
 		int unknown_0x05EC[2];  // 0x05EC
 		float skillProgress[27]; // 0x05F4
 	};
+	static_assert(sizeof(MACPRecord_t::Skill) == 0x10, "MACPRecord_t::Skill failed size validation");
+	static_assert(sizeof(MACPRecord_t::Statistic) == 0x0C, "MACPRecord_t::Statistic failed size validation");
+	static_assert(sizeof(MACPRecord_t::ActiveEffect) == 0x18, "MACPRecord_t::ActiveEffect failed size validation");
+	static_assert(sizeof(MACPRecord_t) == 0x660, "MACPRecord_t failed size validation");
 
 	struct Effect_t {
 		short effectId;
@@ -547,6 +560,7 @@ namespace mwse
 		long  magMin;
 		long  magMax;
 	};
+	static_assert(sizeof(Effect_t) == 0x18, "Effect_t failed size validation");
 
 	struct SPELRecord_t
 	{
@@ -564,43 +578,40 @@ namespace mwse
 		char * friendlyName;
 		short type; //0=SPELL, 1=ABILITY, 2=BLIGHT, 3=DISEASE, 4=CURSE, 5=POWER
 		short cost;
-
 		Effect_t effects[8];
-
 		long flags;	//1=AUTOCALC, 2=PCSTART, 4=ALWAYSSUCCEEDS
 	};
+	static_assert(sizeof(SPELRecord_t) == 0xF8, "SPELRecord_t failed size validation");
 
 	struct ALCHRecord_t
 	{
-		void * vTable;
-		RecordTypes::recordType_t recordType;
-		int recordSize;
-		char * modNamePtr;
-		int unknown1;
-		LinkedList_t<ALCHRecord_t> * alchemyList;
-		int unknown3;
-		ALCHRecord_t * prevRecord;
-		ALCHRecord_t * nextRecord;
-		int unknown4;
-		int unknown5;
-		char * idPtr;
-		int unknown6;
-		int unknown7;
-		int unknown8;
-		int unknown9;
-		int unknown10;
-		char * friendlyName;
-		int unknown11;
-		char * model;
-		char * icon;
-
-		float weight;
-		long value;
-
-		Effect_t effects[8];
-
-		long flags; //1=AUTOCALC
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04
+		int recordSize; // 0x08
+		char * modNamePtr; // 0x0C
+		int unknown_0x10;
+		LinkedList_t<ALCHRecord_t> * alchemyList; // 0x14
+		int unknown_0x18;
+		ALCHRecord_t * prevRecord; // 0x1C
+		ALCHRecord_t * nextRecord; // 0x20
+		int unknown_0x24;
+		int unknown_0x28;
+		char * id; // 0x2C
+		int unknown_0x30;
+		int unknown_0x34;
+		int unknown_0x38;
+		int unknown_0x3C;
+		int unknown_0x40;
+		char * friendlyName; // 0x44
+		int unknown_0x48;
+		char * model; // 0x4C
+		char * icon; // 0x50
+		mwFloat_t weight; // 0x54
+		mwLong_t value; // 0x58
+		Effect_t effects[8]; // 0x5C
+		mwLong_t flags; // 0x011C // 1 = AUTOCALC
 	};
+	static_assert(sizeof(ALCHRecord_t) == 0x0120, "ALCHRecord_t failed size validation");
 
 	struct ENCHRecord_t
 	{
@@ -657,7 +668,7 @@ namespace mwse
 			BaseRecord_t * ankle;
 			BaseRecord_t * knee;
 			BaseRecord_t * upper_leg;
-			BaseRecord_t  unknown1;
+			BaseRecord_t * unknown1;
 			BaseRecord_t * tail;
 			BaseRecord_t * head2;
 			int unknown2[14];
@@ -677,18 +688,23 @@ namespace mwse
 		int unknown_0x00E0;
 		int unknown_0x00E4;
 		BodyParts_t male; // 0x00E8
-		BodyParts_t female; // 0x0106
+		BodyParts_t female; // 0x0160
 	};
+	static_assert(sizeof(RACERecord_t::SkillBonus_t) == 0x08, "RACERecord_t::SkillBonus_t failed size validation");
+	static_assert(sizeof(RACERecord_t::BaseAttribute_t) == 0x08, "RACERecord_t::BaseAttribute_t failed size validation");
+	static_assert(sizeof(RACERecord_t::HeightWeight_t) == 0x08, "RACERecord_t::HeightWeight_t failed size validation");
+	static_assert(sizeof(RACERecord_t::BodyParts_t) == 0x78, "RACERecord_t::BodyParts_t failed size validation");
+	static_assert(sizeof(RACERecord_t) == 0x01D8, "RACERecord_t failed size validation");
 
 	struct CLASRecord_t {
-		void * vTable;
-		RecordTypes::recordType_t recordType; // CLAS
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04 // "CLAS"
 
-		int unknown1;
-		int unknown2; // pointer?
+		int unknown_0x08;
+		int unknown_0x0C; // Pointer?
 
-		char id[32];
-		char name[32];
+		char id[32]; // 0x10
+		char name[32]; // 0x30
 
 		// Primary attributes:
 		// 0 = Strength
@@ -700,14 +716,14 @@ namespace mwse
 		// 6 = Personality
 		// 7 = Luck
 
-		unsigned long attributes[2];
+		unsigned long attributes[2]; // 0x50
 
 		// Specializations:
 		// 0 = Combat
 		// 1 = Magic
 		// 2 = Stealth
 
-		unsigned long specialization;
+		unsigned long specialization; // 0x58
 
 		// Skills:
 		//  0 = Block
@@ -749,14 +765,15 @@ namespace mwse
 		//     6 | 3
 		//     8 | 2
 
-		unsigned long skills[10];
+		unsigned long skills[10]; // 0x5C
 
-		unsigned long playable; // is this class available to PC? 0 = no, 1 = yes
+		unsigned long playable; // 0x84 Is this class available to PC? 0 = no, 1 = yes
 
-		unsigned long services;
+		unsigned long services; // 0x88
 
-		int unknowns[5];
+		int unknowns[5]; // 0x8C
 	};
+	static_assert(sizeof(CLASRecord_t) == 0xA0, "CLASRecord_t failed size validation");
 
 	struct NPCBaseRecord_t	//or the 'base' NPC_ record. you can access it trough the NPCC (NPC Copy) Record (baseNPC)
 	{
@@ -822,59 +839,62 @@ namespace mwse
 		int unknown_0x00E4;
 		mwLong_t servicesMask; // 0xE8
 	};
+	static_assert(sizeof(NPCBaseRecord_t) == 0xEC, "NPCBaseRecord_t failed size validation");
 
 	struct NPCCopyRecord_t
 	{
-		void * vTable;
-		RecordTypes::recordType_t recordType;
-		int unknown1; //int RecordSize; ?
-		int unknown2; //char * modNamePtr; ?
-		int unknown3;
-		int unknown4;
-		void * reference;
-		void * prevRecord;
-		void * nextRecord;
-		int unknown5;
-		int unknown6;
-		char * objectId;
-		int unknown7;
-		int unknown8;
-		int unknown9;
-		int unknown10;
-		int unknown11;
-		int AmountInventory;
-		LinkedList_t<TES3DefaultTemplate_t> * inventoryStart;
-		LinkedList_t<TES3DefaultTemplate_t> * inventoryEnd;
-		int unknown13;
-		int unknown14;
-		int unknown15;	//some pointer
-		int amountEquiped;
-		LinkedList_t<TES3DefaultTemplate_t> * equipedStart;
-		LinkedList_t<TES3DefaultTemplate_t> * equipedEnd;
-		int unknown16;
-		NPCBaseRecord_t * baseNPC;
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04
+		int unknown_0x08; //int RecordSize; ?
+		int unknown_0x0C; //char * modNamePtr; ?
+		int unknown_0x10;
+		int unknown_0x14;
+		BaseRecord_t * reference; // 0x18
+		BaseRecord_t * prevRecord; // 0x1C
+		BaseRecord_t * nextRecord; // 0x20
+		int unknown_0x24;
+		int unknown_0x28;
+		char * objectId; // 0x2C
+		int unknown_0x30;
+		int unknown_0x34;
+		int unknown_0x38;
+		int unknown_0x3C;
+		int unknown_0x40;
+		int inventorySize; // 0x44
+		LinkedList_t<TES3DefaultTemplate_t> * inventoryStart; // 0x48
+		LinkedList_t<TES3DefaultTemplate_t> * inventoryEnd; // 0x4C
+		int unknown_0x50;
+		int unknown_0x54;
+		int unknown_0x58; // Pointer?
+		int amountEquiped; // 0x5C
+		LinkedList_t<TES3DefaultTemplate_t> * equipedStart; // 0x60
+		LinkedList_t<TES3DefaultTemplate_t> * equipedEnd; // 0x64
+		int unknown_0x68;
+		NPCBaseRecord_t * baseNPC; // 0x6C
 	};
+	static_assert(sizeof(NPCCopyRecord_t) == 0x70, "NPCBaseRecord_t failed size validation");
 
 	struct REFRRecord_t
 	{
-		void * vTable;
-		RecordTypes::recordType_t recordType; // "REFR"
-		long flags;			//0x50 big, should this be!
-		char* modNamePtr;
-		int unknown1;
-		int unknown2;
-		REFRRecord_t * nextOfSameTemplate;
-		REFRRecord_t * previousRecord;
-		REFRRecord_t * nextRecord;
-		int unknown3;
-		BaseRecord_t * recordPointer; //points to the record for which this is a reference;
-		char unknown4[12];	//12 bytes
-		float x;
-		float y;
-		float z;
-		ListNode_t<BaseRecord_t> * attachments;
-		char unknown5[18];	//18 bytes
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04 // "REFR"
+		long flags; // 0x08 // 0x50 big, should this be!
+		char* modNamePtr; // 0x0C
+		int unknown_0x10;
+		int unknown_0x14;
+		REFRRecord_t * nextOfSameTemplate; // 0x18
+		REFRRecord_t * previousRecord; // 0x1C
+		REFRRecord_t * nextRecord; // 0x20
+		int unknown_0x24;
+		BaseRecord_t * recordPointer; // 0x28 // Points to the record for which this is a reference.
+		char unknown_0x2C[12]; // 0x2C // 12 bytes?
+		float x; // 0x38
+		float y; // 0x3C
+		float z; // 0x40
+		ListNode_t<BaseRecord_t> * attachments; // 0x44
+		char unknown_0x48[18]; // 0x48 // 18 bytes?
 	};
+	static_assert(sizeof(REFRRecord_t) == 0x5C, "REFRRecord_t failed size validation");
 
 	struct TES3RefListHead_t {
 		long size;
@@ -882,6 +902,7 @@ namespace mwse
 		REFRRecord_t * last;
 		REFRRecord_t * container;
 	};
+	static_assert(sizeof(TES3RefListHead_t) == 0x10, "TES3RefListHead_t failed size validation");
 
 	// Copied from WEAPRecord - needs to be verified.
 	struct ARMORecord_t
@@ -908,13 +929,20 @@ namespace mwse
 		char * nifStringPtr; // 0x4C
 		char * tgaStringPtr; // 0x50
 		float weight; // 0x54
-		int value; // 0x58
-		int unknown_0x5C[16];
-		mwShort_t maxCondition; // 0xB4
-		mwShort_t unknown_0xB6;
-		int unknown_0xB8[8];
-		ENCHRecord_t * enchantment; // 0xF0
+		int unknown_0x58;
+		int unknown_0x5C;
+		int unknown_0x60[4];
+		int unknown_0x70[4];
+		int unknown_0x80[4];
+		int unknown_0x90[3];
+		mwShort_t maxCondition; // 0x9C
+		mwShort_t unknown_0x9E;
+		int unknown_0xA0[4];
+		mwLong_t value; // 0xB0
+		int unknown_0xB4[3]; // 0xB4
+		ENCHRecord_t * enchantment; // 0xC0
 	};
+	static_assert(sizeof(ARMORecord_t) == 0xC4, "ARMO record size check failed.");
 
 	// Copied from WEAPRecord - needs to be verified.
 	struct CLOTRecord_t
@@ -938,13 +966,17 @@ namespace mwse
 		int unknown_0x40;
 		char * nameStringPtr; // 0x44
 		int unknown_0x48;	//char * scriptIDStringPtr;
-		char * nifStringPtr;
-		char * tgaStringPtr;
-		float weight;
-		int value;
-		int unknown_0x5C[22];
-		ENCHRecord_t * enchantment; // 0xB8
+		char * nifStringPtr; // 0x4C
+		char * tgaStringPtr; // 0x50
+		float weight; // 0x54
+		int unknown_0x58; // 0x58
+		int unknown_0x5C[20];
+		mwShort_t value; // 0xAC
+		mwShort_t unknown_0xAE;
+		int unknown_0xB0;
+		ENCHRecord_t * enchantment; // 0xB4
 	};
+	static_assert(sizeof(CLOTRecord_t) == 0xB8, "CLOTRecord_t failed size validation");
 
 	struct WEAPRecord_t
 	{
@@ -955,8 +987,8 @@ namespace mwse
 		int unknown_0x10;
 		int unknown_0x14;
 		int unknown_0x18; //REFRRecord_t * first //nextOfSameTemplate
-		void * previousRecord; // 0x1C
-		void * nextRecord; // 0x20
+		BaseRecord_t * previousRecord; // 0x1C
+		BaseRecord_t * nextRecord; // 0x20
 		void * unknown_0x24;
 		int unknown_0x28;
 		char * objectId; // 0x2C
@@ -966,8 +998,8 @@ namespace mwse
 		int unknown_0x3C;
 		int unknown_0x40;
 		char * nameStringPtr; // 0x44
-		int unknown_0x48; // char * scriptIDStringPtr;
-		char * nifStringPtr; // 0x4C
+		char * model; // 0x48
+		int unknown_0x4C; // 0x4C
 		char * tgaStringPtr; // 0x50
 		float weight; // 0x54
 		int value; // 0x58
@@ -976,15 +1008,16 @@ namespace mwse
 		float speed; // 0x60
 		float reach; // 0x64
 		short enchantPoints; // 0x68
-		char chopMin; // 0x60
-		char chopMax; // 0x61
-		char slashMin; // 0x62
-		char slashMax; // 0x63
-		char trustMin; // 0x64
-		char trustMax; // 0x65
-		long flags; // 0x66
-		ENCHRecord_t * enchantment; // 0x7A
+		char chopMin; // 0x6A
+		char chopMax; // 0x6B
+		char slashMin; // 0x6C
+		char slashMax; // 0x6D
+		char trustMin; // 0x6E
+		char trustMax; // 0x6F
+		long flags; // 0x70
+		ENCHRecord_t * enchantment; // 0x74
 	};
+	static_assert(sizeof(WEAPRecord_t) == 0x78, "WEAPRecord_t failed size validation");
 
 	struct AMMORecord_t {
 		void * vtable; // 0x00
@@ -1009,7 +1042,7 @@ namespace mwse
 		char * model; // 0x4C
 		char * texture; // 0x50
 		long unknown_0x54;
-		long unknown_0x58;
+		mwLong_t value; // 0x58
 		long unknown_0x5C;
 		long unknown_0x60;
 		long unknown_0x64;
@@ -1018,6 +1051,7 @@ namespace mwse
 		long unknown_0x70;
 		ENCHRecord_t* enchantment; // 0x74
 	};
+	static_assert(sizeof(AMMORecord_t) == 0x78, "AMMORecord_t failed size validation");
 
 	struct LOCKRecord_t {
 		void * vTable; // 0x00
@@ -1063,11 +1097,12 @@ namespace mwse
 		int unknown_0xA0;
 		int unknown_0xA4;
 		int unknown_0xA8;
-		int unknown_0xAC;
+		mwLong_t value; // 0xAC
 		mwFloat_t quality; // 0xB0
 		mwShort_t maxCondition; // 0xB4
 		mwShort_t unknown_0xB6;
 	};
+	static_assert(sizeof(LOCKRecord_t) == 0xB8, "LOCKRecord_t failed size validation");
 
 	struct PROBRecord_t {
 		void * vTable; // 0x00
@@ -1118,6 +1153,7 @@ namespace mwse
 		mwShort_t maxCondition; // 0xB4
 		mwShort_t unknown_0xB6;
 	};
+	static_assert(sizeof(PROBRecord_t) == 0xB8, "PROBRecord_t failed size validation");
 
 	struct REPARecord_t {
 		void * vTable; // 0x00
@@ -1168,99 +1204,138 @@ namespace mwse
 		mwShort_t unknown_0xB2;
 		mwFloat_t quality; // 0xB4
 	};
+	static_assert(sizeof(REPARecord_t) == 0xB8, "REPARecord_t failed size validation");
+
+	struct MISCRecord_t {
+		void * vtable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04 // "MISC"
+		int unknown_0x08;
+		void * module; // 0x0C // Pointer to module?
+		int unknown_0x10;
+		void * unknown_0x14; // Pointer to list?
+		int unknown_0x18;
+		MISCRecord_t * previous; // 0x1C // Previous item in list.
+		MISCRecord_t * next; // 0x20 // Next item in list.
+		int unknown_0x24;
+		int unknown_0x28;
+		char * id; // 0x2C
+		void * vtable2; // 0x30 // vtable of embedded object?
+		int unknown_0x34;
+		int unknown_0x38;
+		int unknown_0x3C;
+		int unknown_0x40;
+		int unknown_0x44; // 0x44
+		int unknown_0x48; // 0x48
+		int unknown_0x4C; // 0x4C
+		int unknown_0x50; // 0x50
+		int unknown_0x54; // 0x54
+		mwLong_t value; // 0x58
+		long scroll; // 0x5C
+		long skill; // 0x60
+		long enchantCapacity; // 0x64
+		ENCHRecord_t * enchantment; // 0x68
+	};
+	static_assert(sizeof(MISCRecord_t) == 0x6C, "MISCRecord_t failed size validation");
 
 	struct BOOKRecord_t {
-		void * vtable;
-		long record_type;
-		int unknown1;
-		void * module; // pointer to module?
-		int unknown2;
-		void * unknown3; // pointer to list?
-		int unknown4;
-		void * previous; // previous item in list
-		void * next; // next item in list
-		int unknown5;
-		int unknown6;
-		char * id;
-		void * vtable2; // vtable of embedded object?
-		int unknown7;
-		int unknown8;
-		int unknown9;
-		int unknown10;
-		char * name;
-		void * script;
-		char * model;
-		char * texture;
-		float weight;
-		long value;
-		long scroll;
-		long skill;
-		long enchant_capacity;
-		ENCHRecord_t * enchantment;
-		void* vtable3; // vtable of embedded object?
-		int unknown16;
-		int unknown17;
-		int unknown18;
-		int unknown19;
-		void* unknown20;
-		void* unknown21;
+		void * vtable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04
+		int unknown_0x08;
+		void * module; // 0x0C // Pointer to module?
+		int unknown_0x10;
+		void * unknown_0x14; // Pointer to list?
+		int unknown_0x18;
+		BOOKRecord_t * previous; // 0x1C // Previous item in list.
+		BOOKRecord_t * next; // 0x20 // Next item in list.
+		int unknown_0x24;
+		int unknown_0x28;
+		char * id; // 0x2C
+		void * vtable2; // 0x30 // vtable of embedded object?
+		int unknown_0x34;
+		int unknown_0x38;
+		int unknown_0x3C;
+		int unknown_0x40;
+		char * name; // 0x44
+		void * script; // 0x48
+		char * model; // 0x4C
+		char * texture; // 0x50
+		float weight; // 0x54
+		mwLong_t value; // 0x58
+		long scroll; // 0x5C
+		long skill; // 0x60
+		long enchantCapacity; // 0x64
+		ENCHRecord_t * enchantment; // 0x68
+		void* vtable3; // 0x6C // vtable of embedded object?
+		int unknown_0x70;
+		int unknown_0x74;
+		int unknown_0x78;
+		int unknown_0x7C;
+		void * unknown_0x80;
+		void * unknown_0x84;
 	};
+	static_assert(sizeof(BOOKRecord_t) == 0x88, "BOOKRecord_t failed size validation");
 
 	struct FACTRecord_t {
-		void * vTable;
-		RecordTypes::recordType_t recordType; // FACT
-		int unknown1[2];
-		char id[32];
-		char name[32];
-		char ranks[10][32];
-		int unknown2[71];
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04 // "FACT"
+		int unknown_0x08;
+		int unknown_0x0C;
+		char id[32]; // 0x10
+		char name[32]; // 0x30
+		char ranks[10][32]; // 0x50
+		int unknown2[71]; // 0x190
 	};
+	static_assert(sizeof(FACTRecord_t) == 0x02AC, "FACTRecord_t failed size validation");
 
 	struct GLOBRecord_t
 	{
-		void * vTable;
-		RecordTypes::recordType_t recordType;
-		int recordsize;
-		char * modNamePtr;
-		char globalName[32];
-		char variableType; //morrowind converts this to uppercase (i don't know why), can be 'l', 's', 'f' (long, short, float)
-		char unknown[3]; //3 bytes of nothing usefull apparently
-		float data; //apparently, all globals are stored as floats in morrowind (i think), at least for longs!
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04
+		int recordsize; // 0x08
+		char * modNamePtr; // 0x0C
+		char globalName[32]; // 0x10
+		char variableType; // 0x30 // Morrowind converts this to uppercase, can be 'l', 's', 'f' (long, short, float).
+		char unknown[3]; // 0x31 // 3 bytes of padding.
+		float data; // 0x34 // Apparently, all globals are stored as floats in morrowind (i think), at least for longs!
 	};
+	static_assert(sizeof(GLOBRecord_t) == 0x38, "GLOBRecord_t failed size validation");
 
 	struct GMSTRecord_t {
-		void * vTable;
-		RecordTypes::recordType_t recordType;
-		int unknown;
-		void * mod; // pointer to mod?
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04
+		int unknown; // 0x08
+		void * mod; // 0x0C // Pointer to mod?
 		union values
 		{
 			long long_value;
 			float float_value;
 			char* string_value;
-		} value;
-		int index; // array index of this GMST
-		int unknown2[2];
+		} value; // 0x10
+		int index; // 0x14 // Array index of this GMST
+		int unknown_0x18;
+		int unknown_0x1C;
 	};
+	static_assert(sizeof(GMSTRecord_t) == 0x20, "GMSTRecord_t failed size validation");
 
 	struct SKILRecord_t
 	{
-		void * vTable;
-		RecordTypes::recordType_t recordType; // SKIL
-		int unknown1;
-		void * ptr1; // pointer to first array element?
-		long skill;
-		long attribute;
-		long specialization;
-		float actions[4];
-		int unknown2;
-		int unknown3;
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04 // "SKIL"
+		int unknown_0x08; // 0x08
+		void * unknown_0x0C; // 0x0C // Pointer to first array element?
+		long skill; // 0x10
+		long attribute; // 0x14
+		long specialization; // 0x18
+		float actions[4]; // 0x1C
+		int unknown_0x2C; // 0x2C
+		int unknown_0x30; // 0x30
 	};
+	static_assert(sizeof(SKILRecord_t) == 0x34, "SKILRecord_t failed size validation");
 
 	struct CONTRecord_t
 	{
-		void * vTable;
-		RecordTypes::recordType_t recordType;
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04
 		int unknown_0x08;
 		int unknown_0x0C;
 		int unknown_0x10;
@@ -1268,11 +1343,10 @@ namespace mwse
 		CONTRecord_t * firstRecord; // 0x18
 		CONTRecord_t * previousRecord; // 0x1C
 		CONTRecord_t * nextRecord; // 0x20
-		int unknown_0x20;
 		int unknown_0x24;
 		int unknown_0x28;
-		char * objectId; // 0x2C
-		int unknown_0x30;
+		int unknown_0x2C;
+		char * objectId; // 0x30
 		int unknown_0x34;
 		int unknown_0x38;
 		int unknown_0x3C;
@@ -1286,14 +1360,16 @@ namespace mwse
 		int unknown_0x5C;
 		int unknown_0x60;
 		int unknown_0x64;
-		char * name; // 0x68
-		char * texture; // 0x6C
+		int unknown_0x68;
+		char * name; // 0x6C
+		char * texture; // 0x70
 	};
+	static_assert(sizeof(CONTRecord_t) == 0x74, "CONTRecord_t failed size validation");
 
 	struct LIGHRecord_t
 	{
-		void * vTable;
-		RecordTypes::recordType_t recordType;
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04
 		int unknown_0x08;
 		int unknown_0x0C;
 		int unknown_0x10;
@@ -1301,25 +1377,29 @@ namespace mwse
 		LIGHRecord_t * firstRecord; // 0x18
 		LIGHRecord_t * previousRecord; // 0x1C
 		LIGHRecord_t * nextRecord; // 0x20
-		int unknown_0x20;
 		int unknown_0x24;
 		int unknown_0x28;
-		char * objectId; // 0x2C
-		int unknown_0x30; // Empty string?
-		int unknown_0x34;
+		int unknown_0x2C;
+		char * objectId; // 0x30
+		int unknown_0x34; // Empty string?
 		int unknown_0x38;
 		int unknown_0x3C;
 		int unknown_0x40;
-		char * name; // 0x44
-		int unknown_0x48;
-		char * model; // 0x4C
-		char * icon; // 0x50
+		int unknown_0x44;
+		char * name; // 0x48
+		int unknown_0x4C;
+		char * model; // 0x50
+		char * icon; // 0x54
+		int unknown_0x58;
+		int unknown_0x5C;
+		mwLong_t value; // 0x60
 	};
+	static_assert(sizeof(LIGHRecord_t) == 0x64, "LIGHRecord_t failed size validation");
 
 	struct ACTIRecord_t
 	{
-		void * vTable;
-		RecordTypes::recordType_t recordType;
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04
 		int unknown_0x08;
 		int unknown_0x0C;
 		int unknown_0x10;
@@ -1327,18 +1407,19 @@ namespace mwse
 		int unknown_0x18;
 		TES3DefaultTemplate_t * previousRecord; // 0x1C
 		TES3DefaultTemplate_t * nextRecord; // 0x20
-		int unknown_0x20;
 		int unknown_0x24;
 		int unknown_0x28;
-		char * objectId; // 0x2C
-		char * model; // 0x30
-		char * name; // 0x34
+		int unknown_0x2C;
+		char * objectId; // 0x30
+		char * model; // 0x34
+		char * name; // 0x38
 	};
+	static_assert(sizeof(ACTIRecord_t) == 0x3C, "ACTIRecord_t failed size validation");
 
 	struct DOORRecord_t
 	{
-		void * vTable;
-		RecordTypes::recordType_t recordType;
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04
 		int unknown_0x08;
 		int unknown_0x0C;
 		int unknown_0x10;
@@ -1346,15 +1427,16 @@ namespace mwse
 		int unknown_0x18;
 		TES3DefaultTemplate_t * previousRecord; // 0x1C
 		TES3DefaultTemplate_t * nextRecord; // 0x20
-		char * unknown_0x20;
 		char * unknown_0x24;
-		char * objectId; // 0x28
+		char * unknown_0x28;
+		char * objectId; // 0x2C
 	};
+	static_assert(sizeof(DOORRecord_t) == 0x30, "DOORRecord_t failed size validation");
 
 	struct APPARecord_t
 	{
-		void * vTable;
-		RecordTypes::recordType_t recordType;
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04
 		int unknown_0x08;
 		int unknown_0x0C;
 		int unknown_0x10;
@@ -1397,39 +1479,43 @@ namespace mwse
 		int unknown_0xA4;
 		int unknown_0xA8;
 		mwFloat_t quality; // 0xAC
+		int unknown_0xB0;
+		mwLong_t value; // 0xB4
 	};
+	static_assert(sizeof(APPARecord_t) == 0xB8, "APPARecord_t failed size validation");
 
 	struct MGEFRecord_t
 	{
-		void* vtable;
-		RecordTypes::recordType_t record_type;
-		int unknown1;
-		void* module; // pointer to module?
-		long index; // index in array
-		int unknown3;
-		int unknown4;
-		char effect_icon[32];
-		char particle_texture[32];
+		void* vtable; // 0x00
+		RecordTypes::recordType_t record_type; // 0x04
+		int unknown_0x08;
+		void * module; // 0x0C // Pointer to module?
+		long index; // 0x10 // Index in array.
+		int unknown_0x14;
+		int unknown_0x18;
+		char effect_icon[32]; // 0x1C
+		char particle_texture[32]; // 0x3C
 		// Only a few effects have data in their sound effect strings.
 		// Maybe it's inferred from school if missing?
-		char cast_sound_effect[32];
-		char bolt_sound_effect[32];
-		char hit_sound_effect[32];
-		char area_sound_effect[32];
-		void* unknown5; // visual effect?
-		void* unknown6; // visual effect?
-		void* unknown7; // visual effect?
-		void* unknown8; // visual effect?
-		long school; // 0 = Alteration, 1 = Conjuration, 2 = Destruction, 3 = Illusion, 4 = Mysticism, 5 = Restoration
-		float base_magicka_cost;
-		long flags; //0x200 = spellmaking 0x400 = enchanting 0x800 = negative lighting effect
-		long red;
-		long green;
-		long blue;
-		float size_x;
-		float speed_x;
-		float size_cap;
+		char cast_sound_effect[32]; // 0x5C
+		char bolt_sound_effect[32]; // 0x7C
+		char hit_sound_effect[32]; // 0x9C
+		char area_sound_effect[32]; // 0xBC
+		void * unknown_0xDC; // Visual effect?
+		void * unknown_0xE0; // Visual effect?
+		void * unknown_0xE4; // Visual effect?
+		void * unknown_0xE8; // Visual effect?
+		long school; // 0xEC // 0 = Alteration, 1 = Conjuration, 2 = Destruction, 3 = Illusion, 4 = Mysticism, 5 = Restoration
+		float base_magicka_cost; // 0xF0
+		long flags; // 0xF4 // 0x200 = spellmaking, 0x400 = enchanting, 0x800 = negative lighting effect
+		long red; // 0xF8
+		long green; // 0xFC
+		long blue; // 0x0100
+		float size_x; // 0x0104
+		float speed_x; // 0x0108
+		float size_cap; // 0x010C
 	};
+	static_assert(sizeof(MGEFRecord_t) == 0x0110, "MGEFRecord_t failed size validation");
 
 	//this is the struct behind 'master2'
 	struct TES3ViewMaster_t
@@ -1437,6 +1523,7 @@ namespace mwse
 		char unknown[232];
 		REFRRecord_t * target;
 	};
+	static_assert(sizeof(TES3ViewMaster_t) == 0xEC, "TES3ViewMaster_t failed size validation");
 
 	struct CREABaseRecord_t {
 		void * vTable; // 0x00
@@ -1495,79 +1582,91 @@ namespace mwse
 		mwLong_t unknown_0xD4;
 		mwShort_t baseGold; // 0xD8 -- Base barter gold.
 	};
+	static_assert(sizeof(CREABaseRecord_t) == 0xDC, "CREABaseRecord_t failed size validation");
 
 	struct CREACopyRecord_t
 	{
-		void * vTable;
-		RecordTypes::recordType_t recordType;
-		int unknown1; //int RecordSize; ?
-		int unknown2; //char * modNamePtr; ?
-		int unknown3;
-		int unknown4;
-		void * reference;
-		void * prevRecord;
-		void * nextRecord;
-		int unknown5;
-		int unknown6;
-		char * objectId;
-		int unknown7;
-		int unknown8;
-		int unknown9;
-		int unknown10;
-		int unknown11;
-		int AmountInventory;
-		LinkedList_t<TES3DefaultTemplate_t> * inventoryStart;
-		LinkedList_t<TES3DefaultTemplate_t> * inventoryEnd;
-		int unknown13;
-		int unknown14;
-		int unknown15;	//some pointer
-		int amountEquiped;
-		LinkedList_t<TES3DefaultTemplate_t> * equipedStart;
-		LinkedList_t<TES3DefaultTemplate_t> * equipedEnd;
-		int unknown16;
-		CREABaseRecord_t * baseCreature;
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04
+		int unknown_0x08; // 0x08 // Record size?
+		int unknown_0x0C; // 0x0C // char * modNamePtr; ?
+		int unknown_0x10;
+		int unknown_0x14;
+		BaseRecord_t * reference; // 0x18
+		BaseRecord_t * prevRecord; // 0x1C
+		BaseRecord_t * nextRecord; // 0x20
+		int unknown_0x24;
+		int unknown_0x28;
+		char * objectId; // 0x2C
+		int unknown_0x30;
+		int unknown_0x34;
+		int unknown_0x38;
+		int unknown_0x3C;
+		int unknown_0x40;
+		int inventorySize; // 0x44
+		LinkedList_t<TES3DefaultTemplate_t> * inventoryStart; // 0x48
+		LinkedList_t<TES3DefaultTemplate_t> * inventoryEnd; // 0x4C
+		int unknown_0x50;
+		int unknown_0x54;
+		int unknown_0x58; // Pointer?
+		int amountEquiped; // 0x5C
+		LinkedList_t<TES3DefaultTemplate_t> * equipedStart; // 0x60
+		LinkedList_t<TES3DefaultTemplate_t> * equipedEnd; // 0x64
+		int unknown_0x68;
+		CREABaseRecord_t * baseCreature; // 0x6C
 	};
+	static_assert(sizeof(CREACopyRecord_t) == 0x70, "CREACopyRecord_t failed size validation");
 
 	struct RecordLists_t {
 		struct UnknownStruct
 		{
-			void* v_table;
-			unsigned long unknown1;
-			void* unknown2;
-			void* unknown3;
-			void* unknown4;
-			unsigned long unknown5[6];
-			void* unknown6;
+			void* v_table; // 0x00
+			unsigned long unknown_0x04; // 0x04
+			void* unknown_0x08;
+			void* unknown_0x0C;
+			void* unknown_0x10;
+			unsigned long unknown_0x14;
+			unsigned long unknown_0x18;
+			unsigned long unknown_0x1C;
+			unsigned long unknown_0x20;
+			unsigned long unknown_0x24;
+			unsigned long unknown_0x28;
+			void* unknown_0x2C;
 		};
-		unsigned long unknown1; // 
-		unsigned long unknown2; // always 0 ???
-		void * unknown3; // points to info about the last loaded save
+		unsigned long unknown_0x00; // 
+		unsigned long unknown_0x04; // always 0 ???
+		BaseRecord_t * unknown_0x08; // points to info about the last loaded save
 						 // list contains the following types: CREA, REPA, APPA, PROB, MISC, LEVC,
 						 // ALCH, ENCH, LIGH, ACTI, LEVI, LOCK, BOOK, AMMO, ARMO, WEAP, INGR, DOOR,
 						 // STAT, CONT, CLOT, BODY, NPC_
-		LinkedList_t<TES3DefaultTemplate_t> * list;
-		LinkedList_t<SPELRecord_t> * spellsList;
-		void * unknown4;
-		GMSTRecord_t ** GMSTs; // pointer to array of GMST pointers
-		UnknownStruct* unknown5[12];
-		SKILRecord_t skills[27];
-		MGEFRecord_t magic_effects[143];
+		LinkedList_t<TES3DefaultTemplate_t> * list; // 0x0C
+		LinkedList_t<SPELRecord_t> * spellsList; // 0x10
+		void * unknown_0x14;
+		GMSTRecord_t ** GMSTs; // 0x18 // Pointer to array of GMST pointers.
+		UnknownStruct* unknown5[12]; // 0x1C
+		SKILRecord_t skills[27]; // 0x4C
+		MGEFRecord_t magic_effects[143]; // 0x05C8
 	};
+	static_assert(sizeof(RecordLists_t::UnknownStruct) == 0x30, "RecordLists_t::UnknownStruct failed size validation");
+	static_assert(sizeof(RecordLists_t) == 0x9DB8, "RecordLists_t failed size validation");
 
 	struct TES3Cell_t {
-		char unknown[0x10];
-		char* cellname; // may be null
-		char unknown2[0x30 - 0x10 - sizeof(char*)];
-		TES3RefListHead_t npc;
-		TES3RefListHead_t statics;
-		char unknown3[0x58 - 0x30 - 2 * sizeof(TES3RefListHead_t)];
-		TES3RefListHead_t otheritems;
+		char unknown_0x00[16];
+		char * cellname; // 0x10 // May be null.
+		char unknown_0x14[48];
+		TES3RefListHead_t npc; // 0x44
+		TES3RefListHead_t statics; // 0x54
+		long unknown_0x64;
+		long unknown_0x68;
+		TES3RefListHead_t otheritems; // 0x6C
 	};
+	static_assert(sizeof(TES3Cell_t) == 0x7C, "TES3Cell_t failed size validation");
 
 	struct TES3CellPointer_t {
 		long size;
 		TES3Cell_t * first;
 	};
+	static_assert(sizeof(TES3CellPointer_t) == 0x08, "TES3CellPointer_t failed size validation");
 
 	enum TES3CellGrid {
 		NORTHWEST = 0,
@@ -1582,10 +1681,12 @@ namespace mwse
 	};
 
 	struct TES3CellMaster_t {
-		RecordLists_t * recordLists;
-		TES3CellPointer_t * exteriorCells[9];
-		int unknown[33];
-		TES3Cell_t * interiorCell;
-		int unknown2[4];
+		RecordLists_t * recordLists; // 0x00
+		TES3CellPointer_t * exteriorCells[9]; // 0x04
+		int unknown_0x28[33]; // 0x28
+		TES3Cell_t * interiorCell; // 0xAC
+		int unknown_0xB0[4]; // 0xB0
+	};
+	static_assert(sizeof(TES3CellMaster_t) == 0xC0, "TES3CellMaster_t failed size validation");
 	};
 }
