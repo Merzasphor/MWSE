@@ -165,6 +165,7 @@
     <ClCompile Include="xGetService.cpp" />
     <ClCompile Include="xGetSkill.cpp" />
     <ClCompile Include="xGetSkillInfo.cpp" />
+    <ClCompile Include="xGetSpell.cpp" />
     <ClCompile Include="xGetSpellEffectInfo.cpp" />
     <ClCompile Include="xHypot.cpp" />
     <ClCompile Include="xLogMessage.cpp" />

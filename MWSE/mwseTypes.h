@@ -812,10 +812,10 @@ namespace mwse
 		int unknown_0x00BC;	// BODY (hair)
 		int unknown_0x00C0;
 		int unknown_0x00C4;
-		int numberOfSpells; // 0x00C8
-		ListNode_t<SPELRecord_t> * spellStart; // 0x00CC // These contain the spells! Not items with a special power.
-		ListNode_t<SPELRecord_t> * spellEnd; // 0x00D0
-		int unknown_0x00D4;
+		int unknown_0x00C8;
+		int numberOfSpells; // 0x00CC
+		ListNode_t<SPELRecord_t> * spellStart; // 0x00D0 // These contain the spells! Not items with a special power.
+		ListNode_t<SPELRecord_t> * spellEnd; // 0x00D4
 		int unknown_0x00D8;
 		int unknown_0x00DC;
 		int unknown_0x00E0;
