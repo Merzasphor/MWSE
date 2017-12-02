@@ -590,6 +590,9 @@
     <ClCompile Include="xIsTrainer.cpp">
       <Filter>Source Files\Functions\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="xKeyPressed.cpp">
+      <Filter>Source Files\Functions\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

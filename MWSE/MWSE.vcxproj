@@ -176,6 +176,7 @@
     <ClCompile Include="xIsProvider.cpp" />
     <ClCompile Include="xIsTrader.cpp" />
     <ClCompile Include="xIsTrainer.cpp" />
+    <ClCompile Include="xKeyPressed.cpp" />
     <ClCompile Include="xLogMessage.cpp" />
     <ClCompile Include="xLongToFloats.cpp" />
     <ClCompile Include="xNextRef.cpp" />
