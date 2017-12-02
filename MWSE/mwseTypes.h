@@ -408,7 +408,7 @@ namespace mwse
 	// Can alternatively be one of the above mw*Node_t types.
 	struct mwVarHolderNode_t
 	{
-		int unknown_0x00;
+		int unknown_0x00; // For items, this is the item count (as long).
 		int unknown_0x04;
 		int unknown_0x08;
 		int unknown_0x0C; // For LOCK/REPAIR/WEAPON/ARMOR/PROBE, this is the current condition (as long).
@@ -635,6 +635,7 @@ namespace mwse
 
 		long autocalc;	//0=OFF, 1=ON
 	};
+	static_assert(sizeof(ENCHRecord_t) == 0xF8, "ENCHRecord_t failed size validation");
 
 	struct RACERecord_t {
 		struct SkillBonus_t
@@ -1391,10 +1392,9 @@ namespace mwse
 		char * model; // 0x50
 		char * icon; // 0x54
 		int unknown_0x58;
-		int unknown_0x5C;
-		mwLong_t value; // 0x60
+		mwLong_t value; // 0x5C
 	};
-	static_assert(sizeof(LIGHRecord_t) == 0x64, "LIGHRecord_t failed size validation");
+	static_assert(sizeof(LIGHRecord_t) == 0x60, "LIGHRecord_t failed size validation");
 
 	struct ACTIRecord_t
 	{
