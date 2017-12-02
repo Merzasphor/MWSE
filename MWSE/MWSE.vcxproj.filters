@@ -566,6 +566,9 @@
     <ClCompile Include="xGetSpell.cpp">
       <Filter>Source Files\Functions\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="xGetSpellInfo.cpp">
+      <Filter>Source Files\Functions\Records</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

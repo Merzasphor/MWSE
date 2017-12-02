@@ -552,7 +552,7 @@ namespace mwse
 	{
 		void * vTable;
 		RecordTypes::recordType_t recordType;
-		int recordSize;
+		unsigned long origin; // Possibly record size instead?
 		char * modNamePtr;
 		int unknown1;
 		int unknown2;
