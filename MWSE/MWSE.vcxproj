@@ -191,6 +191,7 @@
     <ClCompile Include="xRadDeg.cpp" />
     <ClCompile Include="xRandomFloat.cpp" />
     <ClCompile Include="xRandomLong.cpp" />
+    <ClCompile Include="xRefID.cpp" />
     <ClCompile Include="xRefType.cpp" />
     <ClCompile Include="xSetArrayValue.cpp" />
     <ClCompile Include="xSetBaseGold.cpp" />
