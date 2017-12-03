@@ -273,6 +273,18 @@ namespace mwse
 		};
 	};
 
+	enum MagicSchools
+	{
+		AlterationSchool = 0,
+		ConjurationSchool,
+		DestructionSchool,
+		IllusionSchool,
+		MysticismSchool,
+		RestorationSchool,
+		FirstMagicSchool = AlterationSchool,
+		LastMagicSchool = RestorationSchool
+	};
+
 	namespace GMST {
 		enum GMSTs
 		{
@@ -1509,7 +1521,7 @@ namespace mwse
 		void * unknown_0xE0; // Visual effect?
 		void * unknown_0xE4; // Visual effect?
 		void * unknown_0xE8; // Visual effect?
-		long school; // 0xEC // 0 = Alteration, 1 = Conjuration, 2 = Destruction, 3 = Illusion, 4 = Mysticism, 5 = Restoration
+		MagicSchools school; // 0xEC // 0 = Alteration, 1 = Conjuration, 2 = Destruction, 3 = Illusion, 4 = Mysticism, 5 = Restoration
 		float base_magicka_cost; // 0xF0
 		long flags; // 0xF4 // 0x200 = spellmaking, 0x400 = enchanting, 0x800 = negative lighting effect
 		long red; // 0xF8

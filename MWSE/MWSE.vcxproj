@@ -194,6 +194,7 @@
     <ClCompile Include="xRefID.cpp" />
     <ClCompile Include="xRefType.cpp" />
     <ClCompile Include="xSetArrayValue.cpp" />
+    <ClCompile Include="xSetBaseEffectInfo.cpp" />
     <ClCompile Include="xSetBaseGold.cpp" />
     <ClCompile Include="xSetRef.cpp" />
     <ClCompile Include="Stack.cpp" />
