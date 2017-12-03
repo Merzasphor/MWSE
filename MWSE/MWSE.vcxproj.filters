@@ -614,6 +614,9 @@
     <ClCompile Include="xSetBaseEffectInfo.cpp">
       <Filter>Source Files\Functions\Records</Filter>
     </ClCompile>
+    <ClCompile Include="xSetCharge.cpp">
+      <Filter>Source Files\Functions\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
