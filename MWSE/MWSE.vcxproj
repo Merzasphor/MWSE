@@ -204,6 +204,11 @@
     <ClCompile Include="xShift.cpp" />
     <ClCompile Include="xSin.cpp" />
     <ClCompile Include="xSqrt.cpp" />
+    <ClCompile Include="xStringBuild.cpp" />
+    <ClCompile Include="xStringCompare.cpp" />
+    <ClCompile Include="xStringLength.cpp" />
+    <ClCompile Include="xStringMatch.cpp" />
+    <ClCompile Include="xStringParse.cpp" />
     <ClCompile Include="xTan.cpp" />
     <ClCompile Include="xXor.cpp" />
   </ItemGroup>
