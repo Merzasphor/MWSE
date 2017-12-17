@@ -24,6 +24,8 @@
 
 namespace mwse
 {
+	class VirtualMachine;
+
 	namespace mwAdapter
 	{
 		struct Context_t
@@ -49,5 +51,7 @@ namespace mwse
 		};
 
 		void Hook();
+
+		VirtualMachine* GetVMInstance();
 	}
 }

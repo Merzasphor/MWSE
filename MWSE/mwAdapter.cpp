@@ -20,6 +20,7 @@
 
 #include "mwAdapter.h"
 #include "MemAccess.h"
+
 #include "VirtualMachine.h"
 
 using namespace mwse;
@@ -221,5 +222,9 @@ namespace mwse
 			VirtualProtect((DWORD*)0x505831, 0x6, OldProtect, &OldProtect);
 		}
 
+		VirtualMachine* GetVMInstance()
+		{
+			return &vmInstance;
+		}
 	}
 }

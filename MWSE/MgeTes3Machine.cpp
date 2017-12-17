@@ -43,6 +43,10 @@ using namespace std;
 
 #include <ctime>
 
+#include "mwseString.h"
+#include "mwseTypes.h"
+#include "VirtualMachine.h"
+
 #define PLACEHOLDER 0
 
 #define SUPER VIRTUALMACHINE
@@ -197,46 +201,8 @@ const char* TES3MACHINE::GetScriptName(void)
 
 const char* TES3MACHINE::GetString(VPVOID addr)
 {
-	mwse::log::getLog() << __FUNCTION__ << " address: " << std::hex << addr << std::endl;
-	const char* result = NULL;
-	static const char empty[] = "empty";
-	int blen = 0;
-	if (addr != NULL && (LPVOID)addr < (LPVOID)32767) {
-		// need to implement a 0.9-style memory accessor
-		// to read these addresses?
-		result = empty;
-	} else {
-		result = reinterpret_cast<char*>(addr);
-	}
-	return result;
-	/*
-	const char* result= 0;
-	VMBYTE blen= 0;
-	
-//	cLog::mLogMessage("TES3MACHINE::GetString(%lx)\n",addr);
-	if(addr && (LPVOID)addr<(LPVOID)32767)
-	{
-		if(ReadMem(addr,&blen,sizeof(blen)))
-		{
-			char* string= new char[blen+4];
-			if(ReadMem(addr+sizeof(blen),string,blen))
-			{
-				string[blen]= '\0';
-				result= strings.add(string);
-			}
-			delete []string;
-		}
-	}
-	else
-		result= (const char*)addr;
-		
-//	const char* printable= result;
-//	if(!printable)
-//		printable= "null";
-		
-//	cLog::mLogMessage("%s= TES3MACHINE::GetString(%lx)\n",printable,addr);
-	return result;
-	*/
+	mwse::mwseString_t string = mwse::mwAdapter::GetVMInstance()->getString((mwLong_t)addr);
+	return string.c_str();
 }
 
 
