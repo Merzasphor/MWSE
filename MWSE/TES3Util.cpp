@@ -108,6 +108,82 @@ namespace mwse
 			return count;
 		}
 
+		bool setEffect(Effect_t * effects, mwLong_t index, mwLong_t effectId,
+			mwLong_t skillAttributeId, mwLong_t range, mwLong_t area, mwLong_t duration,
+			mwLong_t minimumMagnitude, mwLong_t maximumMagnitude) {
+			// Validate effect pointer.
+			if (effects == NULL) {
+				mwse::log::getLog() << __FUNCTION__ << ": No effect passed." << std::endl;
+				return false;
+			}
+
+			// Validate index.
+			if (index < 1 || index > 8) {
+				mwse::log::getLog() << __FUNCTION__ << ": Index must be between [1,8]." << std::endl;
+				return false;
+			}
+
+			// Validate effect id.
+			if (effectId < Effects::FirstMagicEffect || effectId > Effects::LastMagicEffect) {
+				mwse::log::getLog() << __FUNCTION__ << ": Effect id outside bounds." << std::endl;
+				return false;
+			}
+
+			// Validate that the effect supports the range type.
+			const int flags = Effects::MagicEffectFlagMap[effectId];
+			if ((flags & Effects::CastSelf && range == Effects::RangeSelf) ||
+				(flags & Effects::CastTouch && range == Effects::RangeTouch) ||
+				(flags & Effects::CastTarget && range == Effects::RangeTarget)) {
+				mwse::log::getLog() << __FUNCTION__ << ": Effect does not support given range type." << std::endl;
+				return false;
+			}
+
+			// Convert index to zero-based.
+			index--;
+
+			// Set basic effect data.
+			Effect_t& effect = effects[index];
+			effect.effectId = effectId;
+			effect.rangeType = range;
+			effect.area = area;
+			
+			// Set skill.
+			if (flags & Effects::TargetSkill) {
+				effect.skillId = skillAttributeId;
+			}
+			else {
+				effect.skillId = NoSkill;
+			}
+
+			// Set attribute.
+			if (flags & Effects::TargetAttribute) {
+				effect.attributeId = skillAttributeId;
+			}
+			else {
+				effect.attributeId = NoAttribute;
+			}
+
+			// Set duration.
+			if (flags & Effects::NoDuration) {
+				effect.duration = 0;
+			}
+			else {
+				effect.duration = duration;
+			}
+
+			// Set magnitude.
+			if (flags & Effects::NoMagnitude) {
+				effect.magMin = 0;
+				effect.magMax = 0;
+			}
+			else {
+				effect.magMin = minimumMagnitude;
+				effect.magMax = maximumMagnitude;
+			}
+
+			return true;
+		}
+
 		float getSkillRequirement(REFRRecord_t* reference, mwLong_t skillId) {
 			TES3CellMaster_t* cellMaster = getCellMaster();
 			GMSTRecord_t ** gmsts = cellMaster->recordLists->GMSTs;

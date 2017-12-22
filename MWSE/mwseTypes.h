@@ -224,6 +224,15 @@ namespace mwse
 			LastMagicEffect = sEffectSummonCreature05
 		};
 
+		enum RangeTypes
+		{
+			RangeSelf = 0,
+			RangeTouch,
+			RangeTarget,
+			FirstRangeType = RangeSelf,
+			LastRangeType = RangeTarget
+		};
+
 		enum MagicEffectFlags
 		{
 			TargetSkill = 0x1,

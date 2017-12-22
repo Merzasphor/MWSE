@@ -53,6 +53,10 @@ namespace mwse
 
 		size_t getEffectCount(const Effect_t* effectArray);
 
+		bool setEffect(Effect_t * effects, mwLong_t index, mwLong_t effectId,
+			mwLong_t skillAttributeId, mwLong_t range, mwLong_t area, mwLong_t duration,
+			mwLong_t minimumMagnitude, mwLong_t maximumMagnitude);
+
 		float getSkillRequirement(REFRRecord_t* reference, mwLong_t skillId);
 
 		void checkForSkillUp(REFRRecord_t* reference, mwLong_t skillId);
