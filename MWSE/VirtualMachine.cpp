@@ -751,7 +751,7 @@ mwseString_t VirtualMachine::getString(mwLong_t fromStack)	//ask grant, need a '
 		//if it's a variable string
 		return mwseString_t::lookup(fromStack);
 	}
-	else
+	else if (fromStack < 32767)
 	{
 		//if it's a litteral string
 		void * scriptstream = getScript().machineCode;
@@ -766,6 +766,11 @@ mwseString_t VirtualMachine::getString(mwLong_t fromStack)	//ask grant, need a '
 		char * string = reinterpret_cast<char*>(scriptstream);
 
 		return mwseString_t(string, strlen);
+	}
+	else
+	{
+		const char* string = reinterpret_cast<char*>(fromStack);
+		return mwseString_t(string);
 	}
 }
 
