@@ -201,7 +201,8 @@ const char* TES3MACHINE::GetScriptName(void)
 
 const char* TES3MACHINE::GetString(VPVOID addr)
 {
-	mwse::mwseString_t string = mwse::mwAdapter::GetVMInstance()->getString((mwLong_t)addr);
+	mwse::log::getLog() << __FUNCTION__ << std::endl;
+	mwse::mwseString_t& string = mwseString_t::lookup(mwse::mwAdapter::GetVMInstance()->getString((mwLong_t)addr));
 	return string.c_str();
 }
 
