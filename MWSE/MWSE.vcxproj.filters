@@ -647,6 +647,9 @@
     <ClCompile Include="xSetGlobal.cpp">
       <Filter>Source Files\Functions\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="xSetGold.cpp">
+      <Filter>Source Files\Functions\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
