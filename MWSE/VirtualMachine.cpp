@@ -64,7 +64,8 @@ float VirtualMachine::executeOperation(mwOpcode_t opcode, mwAdapter::Context_t &
 
 void VirtualMachine::OnScriptChange()
 {
-	mwseString_t::clearStore();
+	// Disable clearing the string store for now, until we can make cleanup work like in 0.9.
+	// mwseString_t::clearStore();
 }
 
 bool VirtualMachine::isOpcode(const mwOpcode_t opcode)
