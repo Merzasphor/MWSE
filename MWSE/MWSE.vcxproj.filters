@@ -644,6 +644,9 @@
     <ClCompile Include="xSetEnchantInfo.cpp">
       <Filter>Source Files\Functions\Records</Filter>
     </ClCompile>
+    <ClCompile Include="xSetGlobal.cpp">
+      <Filter>Source Files\Functions\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
