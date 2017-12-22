@@ -199,6 +199,7 @@
     <ClCompile Include="xSetCharge.cpp" />
     <ClCompile Include="xSetCondition.cpp" />
     <ClCompile Include="xSetEffectInfo.cpp" />
+    <ClCompile Include="xSetEnchantInfo.cpp" />
     <ClCompile Include="xSetRef.cpp" />
     <ClCompile Include="Stack.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />

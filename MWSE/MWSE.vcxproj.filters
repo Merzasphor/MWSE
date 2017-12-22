@@ -641,6 +641,9 @@
     <ClCompile Include="xStringParse.cpp">
       <Filter>Source Files\Functions\Strings</Filter>
     </ClCompile>
+    <ClCompile Include="xSetEnchantInfo.cpp">
+      <Filter>Source Files\Functions\Records</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
