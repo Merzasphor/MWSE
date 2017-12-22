@@ -86,5 +86,7 @@ namespace mwse
 		virtual mwFloat_t getFloatValue(bool peek = false) = 0;
 
 		virtual mwseString_t getString(mwLong_t fromStack) = 0;	//only ment for stack-based syntax!, parameter-based syntax functions should use getStringParameter!!!
+
+		virtual void dumpScriptVariables() = 0;
 	};
 };
