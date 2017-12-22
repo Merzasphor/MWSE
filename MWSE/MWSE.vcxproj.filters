@@ -650,6 +650,9 @@
     <ClCompile Include="xSetGold.cpp">
       <Filter>Source Files\Functions\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="xSetGSString.cpp">
+      <Filter>Source Files\Functions\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

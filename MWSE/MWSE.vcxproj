@@ -202,6 +202,7 @@
     <ClCompile Include="xSetEnchantInfo.cpp" />
     <ClCompile Include="xSetGlobal.cpp" />
     <ClCompile Include="xSetGold.cpp" />
+    <ClCompile Include="xSetGSString.cpp" />
     <ClCompile Include="xSetRef.cpp" />
     <ClCompile Include="Stack.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
