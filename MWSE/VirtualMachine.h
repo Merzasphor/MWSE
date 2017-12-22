@@ -85,6 +85,8 @@ namespace mwse
 
 		virtual mwseString_t getString(mwLong_t fromStack);	//only ment for stack-based syntax!, parameter-based syntax functions should use getStringParameter!!!
 
+		virtual void dumpScriptVariables();
+
 	protected:
 	private:
 		mwAdapter::Context_t getContext();				//for internal functions that need the context (registers, etc)

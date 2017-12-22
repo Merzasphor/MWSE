@@ -774,6 +774,31 @@ mwseString_t VirtualMachine::getString(mwLong_t fromStack)	//ask grant, need a '
 	}
 }
 
+void VirtualMachine::dumpScriptVariables()
+{
+	if (!script) {
+		mwse::log::getLog() << __FUNCTION__ << " - No script found." << std::endl;
+		return;
+	}
+
+	mwse::log::getLog() << __FUNCTION__ << " - Variable dump for '" << script->scriptName << "'" << std::endl;
+
+	mwse::log::getLog() << "  Longs (" << script->numLongs << "):" << std::endl;
+	for (int i = 0; i < script->numLongs; i++) {
+		mwse::log::getLog() << "    " << script->longVarNamePointers[i] << " = " << std::dec << script->longVarValues[i] << std::endl;
+	}
+
+	mwse::log::getLog() << "  Floats (" << script->numFloats << "):" << std::endl;
+	for (int i = 0; i < script->numFloats; i++) {
+		mwse::log::getLog() << "    " << script->floatVarNamePointers[i] << " = " << std::dec << script->floatVarValues[i] << std::endl;
+	}
+
+	mwse::log::getLog() << "  Shorts (" << script->numShorts << "):" << std::endl;
+	for (int i = 0; i < script->numShorts; i++) {
+		mwse::log::getLog() << "    " << script->shortVarNamePointers[i] << " = " << std::dec << script->shortVarValues[i] << std::endl;
+	}
+}
+
 long* VirtualMachine::getScriptIP()
 {
 	return mwScriptIP;
