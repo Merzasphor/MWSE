@@ -692,6 +692,9 @@
     <ClCompile Include="xGetGlobal.cpp">
       <Filter>Source Files\Functions\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="xAddEffect.cpp">
+      <Filter>Source Files\Functions\Records</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
