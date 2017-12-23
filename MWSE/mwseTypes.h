@@ -1095,7 +1095,7 @@ namespace mwse
 		int unknown_0x38;
 		int unknown_0x3C;
 		int unknown_0x40;
-		int unknown_0x44;
+		char * name; // 0x44
 		int unknown_0x48;
 		int unknown_0x4C;
 		int unknown_0x50;
@@ -1455,8 +1455,10 @@ namespace mwse
 		char * unknown_0x24;
 		char * unknown_0x28;
 		char * objectId; // 0x2C
+		int unknown_0x30;
+		char * name; // 0x34
 	};
-	static_assert(sizeof(DOORRecord_t) == 0x30, "DOORRecord_t failed size validation");
+	static_assert(sizeof(DOORRecord_t) == 0x38, "DOORRecord_t failed size validation");
 
 	struct APPARecord_t
 	{
@@ -1485,7 +1487,7 @@ namespace mwse
 		int unknown_0x58;
 		int unknown_0x5C;
 		int unknown_0x60;
-		int unknown_0x64;
+		char * name; // 0x64
 		int unknown_0x68;
 		int unknown_0x6C;
 		int unknown_0x70;
@@ -1579,7 +1581,7 @@ namespace mwse
 		mwLong_t unknown_0x64;
 		mwLong_t unknown_0x68;
 		mwLong_t unknown_0x6C;
-		mwLong_t unknown_0x70;
+		char * name; // 0x0070
 		mwLong_t unknown_0x74;
 		mwLong_t unknown_0x78;
 		mwLong_t unknown_0x7C;
