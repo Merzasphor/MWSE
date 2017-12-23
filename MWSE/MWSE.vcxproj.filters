@@ -689,6 +689,9 @@
     <ClCompile Include="xSetWeight.cpp">
       <Filter>Source Files\Functions\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="xGetGlobal.cpp">
+      <Filter>Source Files\Functions\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
