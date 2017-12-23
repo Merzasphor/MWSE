@@ -680,6 +680,9 @@
     <ClCompile Include="xSetSpellInfo.cpp">
       <Filter>Source Files\Functions\Records</Filter>
     </ClCompile>
+    <ClCompile Include="xSetTrap.cpp">
+      <Filter>Source Files\Functions\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
