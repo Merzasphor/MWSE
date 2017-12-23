@@ -61,6 +61,8 @@ namespace mwse
 
 		void checkForSkillUp(REFRRecord_t* reference, mwLong_t skillId);
 
+		void checkForLevelUp(mwLong_t progress);
+
 		// Used in xFirstNPC/Static/Item. The last element should never be non-null.
 		// The first eight elements are pointers to the first reference from the 8 surrounding cells.
 		extern REFRRecord_t* exteriorRefs[9];

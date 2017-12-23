@@ -662,6 +662,9 @@
     <ClCompile Include="xSetName.cpp">
       <Filter>Source Files\Functions\References</Filter>
     </ClCompile>
+    <ClCompile Include="xSetProgressLevel.cpp">
+      <Filter>Source Files\Functions\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

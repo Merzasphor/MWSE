@@ -225,6 +225,24 @@ namespace mwse
 			}
 		}
 
+		void checkForLevelUp(mwLong_t progress) {
+			GMSTRecord_t** GMSTs = getCellMaster()->recordLists->GMSTs;
+			if (progress >= GMSTs[GMST::iLevelupTotal]->value.long_value) {
+				const int loadMessage = 0x40F930;
+				const int displayMessage = 0x5F90C0;
+				__asm
+				{
+					mov ecx, dword ptr[0x7C67DC];
+					push 0x1;
+					push 0x0;
+					push 0x2AA;
+					call loadMessage;
+					push eax;
+					call displayMessage;
+				}
+			}
+		}
+
 		REFRRecord_t* exteriorRefs[9] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 
 		void clearExteriorRefs() {
