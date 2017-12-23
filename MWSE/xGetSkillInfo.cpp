@@ -56,7 +56,7 @@ namespace mwse
 		float actions[4] = { INVALID_VALUE, INVALID_VALUE, INVALID_VALUE, INVALID_VALUE };
 
 		// Validate skill index.
-		if (skillIndex < FirstSkill || skillIndex > LastSkill) {
+		if (skillIndex >= FirstSkill && skillIndex <= LastSkill) {
 			TES3CellMaster_t* cellMaster = tes3::getCellMaster();
 			const SKILRecord_t& skillRecord = cellMaster->recordLists->skills[skillIndex];
 			attributeId = skillRecord.attribute;
@@ -69,6 +69,7 @@ namespace mwse
 			mwse::log::getLog() << "xGetSkillInfo: Skill index out of range." << std::endl;
 		}
 
+		// Push desired values.
 		mwse::Stack::getInstance().pushFloat(actions[3]);
 		mwse::Stack::getInstance().pushFloat(actions[2]);
 		mwse::Stack::getInstance().pushFloat(actions[1]);
