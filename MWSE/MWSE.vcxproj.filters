@@ -656,6 +656,9 @@
     <ClCompile Include="xSetMaxCharge.cpp">
       <Filter>Source Files\Functions\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="xSetMaxCondition.cpp">
+      <Filter>Source Files\Functions\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

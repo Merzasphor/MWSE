@@ -204,6 +204,7 @@
     <ClCompile Include="xSetGold.cpp" />
     <ClCompile Include="xSetGSString.cpp" />
     <ClCompile Include="xSetMaxCharge.cpp" />
+    <ClCompile Include="xSetMaxCondition.cpp" />
     <ClCompile Include="xSetRef.cpp" />
     <ClCompile Include="Stack.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
