@@ -108,7 +108,6 @@ namespace mwse {
 			}
 		}
 
-		DebugRecord_t* debug = reinterpret_cast<DebugRecord_t*>(record);
 		mwse::Stack::getInstance().pushFloat(weight);
 
 		return 0.0f;
