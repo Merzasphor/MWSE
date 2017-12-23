@@ -216,6 +216,7 @@
     <ClCompile Include="xSetSkillInfo.cpp" />
     <ClCompile Include="xSetSpellInfo.cpp" />
     <ClCompile Include="xSetTrap.cpp" />
+    <ClCompile Include="xSetValue.cpp" />
     <ClCompile Include="xShift.cpp" />
     <ClCompile Include="xSin.cpp" />
     <ClCompile Include="xSqrt.cpp" />
