@@ -47,6 +47,7 @@ namespace mwse
 	{
 		// Get parameter from the stack.
 		mwFloat_t maxCharge = mwse::Stack::getInstance().popFloat();
+		bool success = false;
 
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
@@ -64,15 +65,6 @@ namespace mwse
 			return 0.0f;
 		}
 
-		// If there's charge data in an attached node, update it.
-		mwVarHolderNode_t* varNode = tes3::getAttachedVarHolderNode(reference);
-		if (varNode) {
-			mwFloat_t& charge = *reinterpret_cast<mwFloat_t*>(&varNode->unknown_0x10);
-			if (charge >= maxCharge) {
-				charge = maxCharge;
-			}
-		}
-
 		// Get enchantment record based on record type.
 		ENCHRecord_t* enchantment = NULL;
 		if (record->recordType == RecordTypes::ARMOR) {
@@ -84,19 +76,29 @@ namespace mwse
 		else if (record->recordType == RecordTypes::WEAPON) {
 			enchantment = reinterpret_cast<WEAPRecord_t*>(record)->enchantment;
 		}
+		else {
+			mwse::log::getLog() << "xSetMaxCharge: Invalid record type: " << record->recordType << std::endl;
+			mwse::Stack::getInstance().pushLong(success);
+			return 0.0f;
+		}
 
 		// If we found an enchantment record, set the max charge.
-		if (enchantment) {
+		if (enchantment && enchantment->autocalc) {
 			enchantment->charge = maxCharge;
+
+			// If there's charge data in an attached node, update it.
+			mwVarHolderNode_t* varNode = tes3::getAttachedVarHolderNode(reference);
+			if (varNode) {
+				mwFloat_t& charge = *reinterpret_cast<mwFloat_t*>(&varNode->unknown_0x10);
+				if (charge >= maxCharge) {
+					charge = maxCharge;
+					success = true;
+				}
+			}
 		}
 
-		// Return the enchantment record, if it's autocalced.
-		if (enchantment && (enchantment->autocalc & 0xFF) != 0) {
-			mwse::Stack::getInstance().pushLong((mwLong_t)enchantment);
-		}
-		else {
-			mwse::Stack::getInstance().pushLong(NULL);
-		}
+		// Push success state.
+		mwse::Stack::getInstance().pushLong(success);
 
 		return 0.0f;
 	}
