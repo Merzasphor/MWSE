@@ -208,6 +208,7 @@
     <ClCompile Include="xSetName.cpp" />
     <ClCompile Include="xSetProgressLevel.cpp" />
     <ClCompile Include="xSetProgressSkill.cpp" />
+    <ClCompile Include="xSetQuality.cpp" />
     <ClCompile Include="xSetRef.cpp" />
     <ClCompile Include="Stack.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
