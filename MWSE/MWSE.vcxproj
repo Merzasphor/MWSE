@@ -207,6 +207,7 @@
     <ClCompile Include="xSetMaxCondition.cpp" />
     <ClCompile Include="xSetName.cpp" />
     <ClCompile Include="xSetProgressLevel.cpp" />
+    <ClCompile Include="xSetProgressSkill.cpp" />
     <ClCompile Include="xSetRef.cpp" />
     <ClCompile Include="Stack.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
