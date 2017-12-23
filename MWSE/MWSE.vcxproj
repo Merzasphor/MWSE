@@ -212,6 +212,7 @@
     <ClCompile Include="xSetRef.cpp" />
     <ClCompile Include="Stack.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
+    <ClCompile Include="xSetService.cpp" />
     <ClCompile Include="xShift.cpp" />
     <ClCompile Include="xSin.cpp" />
     <ClCompile Include="xSqrt.cpp" />
