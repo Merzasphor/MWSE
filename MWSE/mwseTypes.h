@@ -282,6 +282,32 @@ namespace mwse
 		};
 	};
 
+	enum SpellOrigins {
+		Module = 1,
+		Spellmaker,
+		SpellOriginsFirst = Module,
+		SpellOriginsLast = Spellmaker
+	};
+
+	enum SpellTypes {
+		Spell,
+		Ability,
+		Blight,
+		Disease,
+		Curse,
+		Power,
+		FirstSpellType = Spell,
+		LastSpellType = Power
+	};
+
+	enum SpellFlags {
+		AutoCalculateCost = 1,
+		PcStartSpell = 2,
+		AlwaysSucceeds = 4,
+		NoSpellFlags = 0,
+		AllSpellFlags = (kAutoCalculateCost | kPcStartSpell | kAlwaysSucceeds)
+	};
+
 	enum MagicSchools
 	{
 		AlterationSchool = 0,

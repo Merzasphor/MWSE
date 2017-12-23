@@ -214,6 +214,7 @@
     <ClCompile Include="VirtualMachine.cpp" />
     <ClCompile Include="xSetService.cpp" />
     <ClCompile Include="xSetSkillInfo.cpp" />
+    <ClCompile Include="xSetSpellInfo.cpp" />
     <ClCompile Include="xShift.cpp" />
     <ClCompile Include="xSin.cpp" />
     <ClCompile Include="xSqrt.cpp" />
