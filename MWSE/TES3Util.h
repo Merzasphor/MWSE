@@ -33,6 +33,9 @@ namespace mwse
 	{
 		TES3CellMaster_t * getCellMaster();
 
+		GLOBRecord_t* getGlobalRecord(const char* id);
+		GLOBRecord_t* getGlobalRecord(const mwseString_t& id);
+
 		REFRRecord_t* skipRemovedReferences(REFRRecord_t* reference);
 
 		bool getHasBaseRecord(TES3DefaultTemplate_t* record);

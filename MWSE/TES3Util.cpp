@@ -10,6 +10,23 @@ namespace mwse
 			return *reinterpret_cast<TES3CellMaster_t**>(0x7C67E0);
 		}
 
+		GLOBRecord_t* getGlobalRecord(const char* id) {
+			static int findGLOB = 0x4BA820;
+			GLOBRecord_t* global = NULL;
+			__asm
+			{
+				mov ecx, dword ptr ds : [0x7C67E0];
+				push id;
+				call findGLOB;
+				mov foundRecord, eax;
+			}
+			return global;
+		}
+
+		GLOBRecord_t* getGlobalRecord(const mwseString_t& id) {
+			return getGlobalRecord(id.c_str());
+		}
+
 		REFRRecord_t * skipRemovedReferences(REFRRecord_t * reference) {
 			while (reference != 0 && (reference->flags & 0x20) == 0x20)
 			{
