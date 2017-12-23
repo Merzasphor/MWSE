@@ -34,8 +34,6 @@ namespace mwse
 		xSetProgressLevel();
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
-	private:
-		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
 	static const mwse::mwOpcode_t xSetProgressLevelOpcode = 0x391E;
