@@ -51,61 +51,15 @@ namespace mwse {
 			return 0.0f;
 		}
 
-		// Get record.
-		BaseRecord_t* record = reference->recordPointer;
-		if (record == NULL) {
-			mwse::log::getLog() << "xGetWeight: No base record found." << std::endl;
+		// Get weight.
+		mwFloat_t weight = 0.0f;
+		try {
+			weight = tes3::getWeight(reference, true);
+		}
+		catch (std::exception& e) {
+			mwse::log::getLog() << "xGetWeight: " << e.what() << std::endl;
 			mwse::Stack::getInstance().pushFloat(0.0f);
 			return 0.0f;
-		}
-
-		mwFloat_t weight = 0.0f;
-
-		// Get the weight from the base record. We group records here by the same offset.
-		bool foundValue = true;
-		RecordTypes::recordType_t recordType = record->recordType;
-		switch (recordType) {
-		case RecordTypes::MISC:
-		case RecordTypes::BOOK:
-		case RecordTypes::ALCHEMY:
-		case RecordTypes::AMMO:
-		case RecordTypes::WEAPON:
-			weight = reinterpret_cast<BOOKRecord_t*>(record)->weight;
-			break;
-		case RecordTypes::LIGHT:
-			weight = reinterpret_cast<LIGHRecord_t*>(record)->weight;
-			break;
-		case RecordTypes::INGREDIENT:
-		case RecordTypes::LOCK:
-		case RecordTypes::PROBE:
-		case RecordTypes::REPAIR:
-			weight = reinterpret_cast<LOCKRecord_t*>(record)->weight;
-			break;
-		case RecordTypes::ARMOR:
-			weight = reinterpret_cast<ARMORecord_t*>(record)->weight;
-			break;
-		case RecordTypes::CLOTHING:
-			// Clothing has the same offset as armor, but it's a short rather than a long.
-			weight = reinterpret_cast<CLOTRecord_t*>(record)->weight;
-			break;
-		case RecordTypes::APPARATUS:
-			weight = reinterpret_cast<APPARecord_t*>(record)->weight;
-			break;
-		case RecordTypes::CONTAINER:
-			weight = reinterpret_cast<CONTRecord_t*>(record)->weight;
-			break;
-		default:
-			mwse::log::getLog() << "xGetWeight: Call on invalid record type." << std::endl;
-			foundValue = false;
-			break;
-		}
-
-		// Multiply the value by the count of the item.
-		if (foundValue) {
-			mwVarHolderNode_t* varHolder = tes3::getAttachedVarHolderNode(reference);
-			if (varHolder) {
-				weight *= varHolder->unknown_0x00;
-			}
 		}
 
 		mwse::Stack::getInstance().pushFloat(weight);

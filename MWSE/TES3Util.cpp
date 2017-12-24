@@ -35,6 +35,126 @@ namespace mwse
 			return reference;
 		}
 
+		mwLong_t getValue(REFRRecord_t* reference, bool multiplyByCount) {
+			// Get record.
+			BaseRecord_t* record = reference->recordPointer;
+			if (record == NULL) {
+				throw std::exception("No base record found.");
+			}
+
+			mwLong_t value = 0;
+
+			// Get the value from the base record. We group records here by the same offset.
+			RecordTypes::recordType_t recordType = record->recordType;
+			switch (recordType) {
+			case RecordTypes::BOOK:
+			case RecordTypes::ALCHEMY:
+			case RecordTypes::AMMO:
+			case RecordTypes::WEAPON:
+				value = reinterpret_cast<BOOKRecord_t*>(record)->value;
+				break;
+			case RecordTypes::LIGHT:
+				value = reinterpret_cast<LIGHRecord_t*>(record)->value;
+				break;
+			case RecordTypes::INGREDIENT:
+			case RecordTypes::LOCK:
+			case RecordTypes::PROBE:
+			case RecordTypes::REPAIR:
+				value = reinterpret_cast<LOCKRecord_t*>(record)->value;
+				break;
+			case RecordTypes::ARMOR:
+				value = reinterpret_cast<ARMORecord_t*>(record)->value;
+				break;
+			case RecordTypes::CLOTHING:
+				// Clothing has the same offset as armor, but it's a short rather than a long.
+				value = reinterpret_cast<CLOTRecord_t*>(record)->value;
+				break;
+			case RecordTypes::APPARATUS:
+				value = reinterpret_cast<APPARecord_t*>(record)->value;
+				break;
+			case RecordTypes::MISC:
+			{
+				// Misc is a unique case. We need to make gold always be worth 1.
+				MISCRecord_t* misc = reinterpret_cast<MISCRecord_t*>(record);
+				value = misc->value;
+				if (!strncmp(misc->id, "Gold_", 5)) {
+					value = 1;
+				}
+				break;
+			}
+			default:
+				throw std::exception("Call on invalid record type.");
+			}
+
+			// Multiply the value by the count of the item.
+			if (multiplyByCount) {
+				mwVarHolderNode_t* varHolder = tes3::getAttachedVarHolderNode(reference);
+				if (varHolder) {
+					value *= varHolder->unknown_0x00;
+				}
+			}
+
+			return value;
+		}
+
+
+		mwFloat_t getWeight(REFRRecord_t* reference, bool multiplyByCount) {
+			// Get record.
+			BaseRecord_t* record = reference->recordPointer;
+			if (record == NULL) {
+				throw std::exception("No base record found.");
+			}
+
+			mwFloat_t weight = 0.0f;
+
+			// Get the weight from the base record. We group records here by the same offset.
+			bool foundValue = true;
+			RecordTypes::recordType_t recordType = record->recordType;
+			switch (recordType) {
+			case RecordTypes::MISC:
+			case RecordTypes::BOOK:
+			case RecordTypes::ALCHEMY:
+			case RecordTypes::AMMO:
+			case RecordTypes::WEAPON:
+				weight = reinterpret_cast<BOOKRecord_t*>(record)->weight;
+				break;
+			case RecordTypes::LIGHT:
+				weight = reinterpret_cast<LIGHRecord_t*>(record)->weight;
+				break;
+			case RecordTypes::INGREDIENT:
+			case RecordTypes::LOCK:
+			case RecordTypes::PROBE:
+			case RecordTypes::REPAIR:
+				weight = reinterpret_cast<LOCKRecord_t*>(record)->weight;
+				break;
+			case RecordTypes::ARMOR:
+				weight = reinterpret_cast<ARMORecord_t*>(record)->weight;
+				break;
+			case RecordTypes::CLOTHING:
+				// Clothing has the same offset as armor, but it's a short rather than a long.
+				weight = reinterpret_cast<CLOTRecord_t*>(record)->weight;
+				break;
+			case RecordTypes::APPARATUS:
+				weight = reinterpret_cast<APPARecord_t*>(record)->weight;
+				break;
+			case RecordTypes::CONTAINER:
+				weight = reinterpret_cast<CONTRecord_t*>(record)->weight;
+				break;
+			default:
+				throw std::exception("Call on invalid record type.");
+			}
+
+			// Multiply the value by the count of the item.
+			if (multiplyByCount) {
+				mwVarHolderNode_t* varHolder = tes3::getAttachedVarHolderNode(reference);
+				if (varHolder) {
+					weight *= varHolder->unknown_0x00;
+				}
+			}
+
+			return weight;
+		}
+
 		bool getHasBaseRecord(TES3DefaultTemplate_t* record) {
 			if (record == NULL) {
 				return false;
@@ -163,7 +283,7 @@ namespace mwse
 			effect.effectId = effectId;
 			effect.rangeType = range;
 			effect.area = area;
-			
+
 			// Set skill.
 			if (flags & Effects::TargetSkill) {
 				effect.skillId = skillAttributeId;
