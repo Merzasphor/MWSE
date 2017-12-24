@@ -305,7 +305,7 @@ namespace mwse
 		PcStartSpell = 2,
 		AlwaysSucceeds = 4,
 		NoSpellFlags = 0,
-		AllSpellFlags = (kAutoCalculateCost | kPcStartSpell | kAlwaysSucceeds)
+		AllSpellFlags = (AutoCalculateCost | PcStartSpell | AlwaysSucceeds)
 	};
 
 	enum MagicSchools
