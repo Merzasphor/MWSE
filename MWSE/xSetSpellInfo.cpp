@@ -85,14 +85,14 @@ namespace mwse
 		// Set spell name if one is provided.
 		if (nameId) {
 			mwseString_t name = virtualMachine.getString(nameId);
-			if (name.length > 31) {
+			if (name.length() > 31) {
 				mwse::log::getLog() << "xSetSpellInfo: Given name must be 31 characters or less." << std::endl;
 				mwse::Stack::getInstance().pushLong(false);
 				return 0.0f;
 			}
 			
 			// Expand name length if needed.
-			if (name.length > strlen(spell->friendlyName)) {
+			if (name.length() > strlen(spell->friendlyName)) {
 				spell->friendlyName = reinterpret_cast<char*>(realloc(spell->friendlyName, 32));
 			}
 

@@ -49,7 +49,7 @@ namespace mwse
 		mwseString_t name = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Enforce name length.
-		if (name.length > 128) {
+		if (name.length() > 128) {
 			mwse::log::getLog() << "xSetName: Given name length must be 128 characters or less." << std::endl;
 			return 0.0f;
 		}
