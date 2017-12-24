@@ -18,7 +18,7 @@ namespace mwse
 				mov ecx, dword ptr ds : [0x7C67E0];
 				push id;
 				call findGLOB;
-				mov foundRecord, eax;
+				mov global, eax;
 			}
 			return global;
 		}
