@@ -695,6 +695,9 @@
     <ClCompile Include="xAddEffect.cpp">
       <Filter>Source Files\Functions\Records</Filter>
     </ClCompile>
+    <ClCompile Include="xContentList.cpp">
+      <Filter>Source Files\Functions\References</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

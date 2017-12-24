@@ -40,6 +40,10 @@ namespace mwse
 
 		bool getHasBaseRecord(TES3DefaultTemplate_t* record);
 
+		ListNode_t<InventoryNode_t> * getFirstInventoryNode(REFRRecord_t* reference);
+
+		bool hasInventory(BaseRecord_t* record);
+
 		mwseString_t getName(BaseRecord_t* record);
 
 		mwLong_t getValue(REFRRecord_t* reference, bool multiplyByCount);

@@ -35,6 +35,67 @@ namespace mwse
 			return reference;
 		}
 
+		ListNode_t<InventoryNode_t> * getFirstInventoryNode(REFRRecord_t* reference) {
+			ListNode_t<InventoryNode_t>* node = NULL;
+
+			BaseRecord_t* record = reference->recordPointer;
+
+			if (hasInventory(record)) {
+				node = reinterpret_cast<ListNode_t<InventoryNode_t>*>(reinterpret_cast<CONTRecord_t*>(record)->inventory->first);
+			}
+
+			return node;
+		}
+
+		bool hasInventory(BaseRecord_t* record) {
+			RecordTypes::recordType_t type = record->recordType;
+			return (type == RecordTypes::NPC || type == RecordTypes::CREATURE || type == RecordTypes::CONTAINER);
+		}
+
+		mwseString_t getName(BaseRecord_t* record) {
+			const char* name = NULL;
+
+			RecordTypes::recordType_t type = record->recordType;
+			switch (type) {
+			case RecordTypes::NPC:
+			case RecordTypes::CREATURE:
+				name = reinterpret_cast<NPCCopyRecord_t*>(record)->baseNPC->name;
+				break;
+			case RecordTypes::CONTAINER:
+				name = reinterpret_cast<CONTRecord_t*>(record)->name;
+				break;
+			case RecordTypes::LIGHT:
+				name = reinterpret_cast<LIGHRecord_t*>(record)->name;
+				break;
+			case RecordTypes::ALCHEMY:
+			case RecordTypes::AMMO:
+			case RecordTypes::ARMOR:
+			case RecordTypes::BOOK:
+			case RecordTypes::CLOTHING:
+			case RecordTypes::MISC:
+			case RecordTypes::WEAPON:
+				name = reinterpret_cast<ARMORecord_t*>(record)->name;
+				break;
+			case RecordTypes::ACTIVATOR:
+				name = reinterpret_cast<ACTIRecord_t*>(record)->name;
+				break;
+			case RecordTypes::DOOR:
+				name = reinterpret_cast<DOORRecord_t*>(record)->name;
+				break;
+			case RecordTypes::APPARATUS:
+				name = reinterpret_cast<APPARecord_t*>(record)->name;
+				break;
+			case RecordTypes::INGREDIENT:
+			case RecordTypes::LOCKPICK:
+			case RecordTypes::PROBE:
+			case RecordTypes::REPAIR:
+				name = reinterpret_cast<LOCKRecord_t*>(record)->name;
+				break;
+			}
+
+			return mwseString_t::exists(name) ? mwseString_t::lookup(name) : mwseString_t(name);
+		}
+
 		mwLong_t getValue(REFRRecord_t* reference, bool multiplyByCount) {
 			// Get record.
 			BaseRecord_t* record = reference->recordPointer;

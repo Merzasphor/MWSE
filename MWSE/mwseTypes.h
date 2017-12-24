@@ -402,7 +402,7 @@ namespace mwse
 	struct InventoryNode_t
 	{
 		int itemCount;
-		void * recordAddress;
+		BaseRecord_t * recordAddress;
 	};
 	static_assert(sizeof(InventoryNode_t) == 0x08, "InventoryNode_t failed size validation");
 
@@ -1400,7 +1400,7 @@ namespace mwse
 		int unknown_0x34;
 		int unknown_0x38;
 		int unknown_0x3C;
-		int unknown_0x40;
+		ListIterator_t<void> * inventory;
 		int unknown_0x44;
 		int unknown_0x48;
 		int unknown_0x4C;
