@@ -81,6 +81,17 @@ bool mwseString_t::exists(mwLong_t id)
     return store.find(id) != store.end();
 }
 
+bool mwseString_t::exists(const char* string)
+{
+	for (StringMap_t::iterator it = store.begin(); it != store.end(); it++) {
+		if (it->second.compare(string) == 0) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 mwseString_t & mwseString_t::lookup(mwLong_t id)
 {
     StringMap_t::iterator item = store.find(id);
@@ -90,11 +101,39 @@ mwseString_t & mwseString_t::lookup(mwLong_t id)
     return item->second;
 }
 
+mwseString_t& mwseString_t::lookup(const char* string) {
+	for (StringMap_t::iterator it = store.begin(); it != store.end(); it++) {
+		if (it->second.compare(string) == 0) {
+			return it->second;
+		}
+	}
+
+	return mwseString_t();
+}
+
 void mwseString_t::clearStore()
 {
     if (next_id != 0) clear_id++;
     next_id = 0;
     store.clear();
+}
+
+mwseString_t& mwseString_t::get(mwLong_t id) {
+	if (exists(id)) {
+		return lookup(id);
+	}
+	else {
+		return mwseString_t();
+	}
+}
+
+mwseString_t& mwseString_t::get(const char* string) {
+	if (exists(string)) {
+		return lookup(string);
+	}
+	else {
+		return mwseString_t(string);
+	}
 }
 
 mwLong_t mwseString_t::nextID()

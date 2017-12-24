@@ -43,8 +43,14 @@ namespace mwse {
             operator mwLong_t() const;          // cast to mwLong_t
 
             static bool exists(mwLong_t id);    // true if given string known
-            static mwseString_t &lookup(mwLong_t id);
+			static bool exists(const char* string);
+            static mwseString_t& lookup(mwLong_t id);
+			static mwseString_t& lookup(const char* string);
             static void clearStore();           // release all stored strings
+
+			static mwseString_t& get(mwLong_t id);
+			static mwseString_t& get(const char* string);
+
             class StringStoreException: public std::exception {
               public:
                 StringStoreException(mwLong_t ctor_id):
