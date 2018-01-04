@@ -1706,14 +1706,14 @@ namespace mwse
 	struct TES3Cell_t {
 		char unknown_0x00[16];
 		char * cellname; // 0x10 // May be null.
-		char unknown_0x14[48];
-		TES3RefListHead_t npc; // 0x44
-		TES3RefListHead_t statics; // 0x54
-		long unknown_0x64;
-		long unknown_0x68;
-		TES3RefListHead_t otheritems; // 0x6C
+		char unknown_0x14[28];
+		TES3RefListHead_t npc; // 0x30
+		TES3RefListHead_t statics; // 0x40
+		long unknown_0x50;
+		long unknown_0x54;
+		TES3RefListHead_t otheritems; // 0x58
 	};
-	static_assert(sizeof(TES3Cell_t) == 0x7C, "TES3Cell_t failed size validation");
+	static_assert(sizeof(TES3Cell_t) == 0x68, "TES3Cell_t failed size validation");
 
 	struct TES3CellPointer_t {
 		long size;
