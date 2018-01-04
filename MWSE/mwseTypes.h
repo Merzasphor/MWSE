@@ -344,19 +344,20 @@ namespace mwse
 	//those values should always be there for 'normal' objects (like BOOKS and CLOTHING)
 	struct TES3DefaultTemplate_t
 	{
-		void * vTable;
-		RecordTypes::recordType_t recordType;
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04
 		mwLong_t unknown_0x08;
 		mwLong_t unknown_0x0C;
 		mwLong_t unknown_0x10;
 		mwLong_t unknown_0x14;
-		REFRRecord_t * first;
+		REFRRecord_t * first; // 0x18
 		mwLong_t unknown_0x1C;
 		mwLong_t unknown_0x20;
 		mwLong_t unknown_0x24;
 		mwLong_t unknown_0x28;
-		char * objectId;
+		char * objectId; // 0x2C
 	};
+	static_assert(sizeof(TES3DefaultTemplate_t) == 0x30, "TES3DefaultTemplate_t failed size validation");
 
 	struct SCPTRecord_t
 	{
@@ -1399,12 +1400,8 @@ namespace mwse
 		char * objectId; // 0x30
 		int unknown_0x34;
 		int unknown_0x38;
-		int unknown_0x3C;
-		ListIterator_t<void> * inventory;
-		int unknown_0x44;
-		int unknown_0x48;
-		int unknown_0x4C;
-		int unknown_0x50;
+		mwLong_t inventoryFlags; // 0x3C
+		ListIterator_t<InventoryNode_t> inventory; // 0x40
 		int unknown_0x54;
 		int unknown_0x58;
 		int unknown_0x5C;
@@ -1414,7 +1411,7 @@ namespace mwse
 		char * name; // 0x6C
 		char * texture; // 0x70
 		int unknown_0x74;
-		mwFloat_t weight;
+		mwFloat_t weight; // 0x78
 	};
 	static_assert(sizeof(CONTRecord_t) == 0x7C, "CONTRecord_t failed size validation");
 
