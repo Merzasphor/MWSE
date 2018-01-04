@@ -701,6 +701,9 @@
     <ClCompile Include="xGetBaseEffectInfo.cpp">
       <Filter>Source Files\Functions\Records</Filter>
     </ClCompile>
+    <ClCompile Include="xCreateSpell.cpp">
+      <Filter>Source Files\Functions\Records</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

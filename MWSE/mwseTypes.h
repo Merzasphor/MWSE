@@ -612,22 +612,22 @@ namespace mwse
 
 	struct SPELRecord_t
 	{
-		void * vTable;
-		RecordTypes::recordType_t recordType;
-		unsigned long origin; // Possibly record size instead?
-		char * modNamePtr;
-		int unknown1;
-		int unknown2;
-		int unknown3;
-		SPELRecord_t * prevRecord;
-		SPELRecord_t * nextRecord;
-		int unknown4;
-		char * id;
-		char * friendlyName;
-		short type; //0=SPELL, 1=ABILITY, 2=BLIGHT, 3=DISEASE, 4=CURSE, 5=POWER
-		short cost;
-		Effect_t effects[8];
-		long flags;	//1=AUTOCALC, 2=PCSTART, 4=ALWAYSSUCCEEDS
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04
+		unsigned long origin; // 0x08 Possibly record size instead?
+		char * modNamePtr; // 0x0C
+		long unknown_0x10;
+		LinkedList_t<SPELRecord_t> * spellsList;
+		long unknown_0x18;
+		SPELRecord_t * prevRecord; // 0x1C
+		SPELRecord_t * nextRecord; // 0x20
+		long unknown_0x24;
+		char * id; // 0x28
+		char * friendlyName; // 0x2C
+		short type; // 0x30 // 0=SPELL, 1=ABILITY, 2=BLIGHT, 3=DISEASE, 4=CURSE, 5=POWER
+		short cost; // 0x32
+		Effect_t effects[8]; // 0x34
+		long flags;	// 0xF4 // 1=AUTOCALC, 2=PCSTART, 4=ALWAYSSUCCEEDS
 	};
 	static_assert(sizeof(SPELRecord_t) == 0xF8, "SPELRecord_t failed size validation");
 

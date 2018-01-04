@@ -64,6 +64,7 @@
     <ClCompile Include="xContentList.cpp" />
     <ClCompile Include="xCos.cpp" />
     <ClCompile Include="xCreateArray.cpp" />
+    <ClCompile Include="xCreateSpell.cpp" />
     <ClCompile Include="xDegRad.cpp" />
     <ClCompile Include="xDistance.cpp" />
     <ClCompile Include="Flags.cpp" />
