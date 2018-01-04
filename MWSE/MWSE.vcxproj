@@ -99,6 +99,7 @@
     <ClCompile Include="xGetBaseBluntWeapon.cpp" />
     <ClCompile Include="xGetBaseConjuration.cpp" />
     <ClCompile Include="xGetBaseDestruction.cpp" />
+    <ClCompile Include="xGetBaseEffectInfo.cpp" />
     <ClCompile Include="xGetBaseEnchant.cpp" />
     <ClCompile Include="xGetBaseEnd.cpp" />
     <ClCompile Include="xGetBaseFatigue.cpp" />
