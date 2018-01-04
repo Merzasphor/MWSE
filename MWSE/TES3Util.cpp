@@ -39,9 +39,10 @@ namespace mwse
 			ListNode_t<InventoryNode_t>* node = NULL;
 
 			BaseRecord_t* record = reference->recordPointer;
+			CONTRecord_t* recordAsContainer = reinterpret_cast<CONTRecord_t*>(record);
 
 			if (hasInventory(record)) {
-				node = reinterpret_cast<ListNode_t<InventoryNode_t>*>(reinterpret_cast<CONTRecord_t*>(record)->inventory->first);
+				node = recordAsContainer->inventory.first;
 			}
 
 			return node;
