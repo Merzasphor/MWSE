@@ -53,7 +53,7 @@ namespace mwse {
 		mwLong_t count = 0;
 		mwLong_t type = 0;
 		mwLong_t value = 0;
-		mwLong_t weight = 0;
+		mwFloat_t weight = 0;
 		mwLong_t name = 0;
 		ListNode_t<InventoryNode_t>* next = NULL;
 
@@ -100,7 +100,7 @@ namespace mwse {
 		// Push values to the stack.
 		mwse::Stack::getInstance().pushLong((mwLong_t)next);
 		mwse::Stack::getInstance().pushLong(name);
-		mwse::Stack::getInstance().pushLong(weight);
+		mwse::Stack::getInstance().pushFloat(weight);
 		mwse::Stack::getInstance().pushLong(value);
 		mwse::Stack::getInstance().pushLong(type);
 		mwse::Stack::getInstance().pushLong(count);
