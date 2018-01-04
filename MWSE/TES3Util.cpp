@@ -27,8 +27,7 @@ namespace mwse
 			return getGlobalRecord(id.c_str());
 		}
 
-		template <typename T>
-		void addObject(T* record) {
+		void addObject(BaseRecord_t* record) {
 			int const kAddObject = 0x4B8980;
 			__asm {
 				mov edx, dword ptr ds : [0x7C67E0];

@@ -36,8 +36,7 @@ namespace mwse
 		GLOBRecord_t* getGlobalRecord(const char* id);
 		GLOBRecord_t* getGlobalRecord(const mwseString_t& id);
 
-		template <typename T>
-		void addObject(T* record);
+		void addObject(BaseRecord_t* record);
 
 		REFRRecord_t* skipRemovedReferences(REFRRecord_t* reference);
 

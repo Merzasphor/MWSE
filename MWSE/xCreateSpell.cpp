@@ -98,7 +98,7 @@ namespace mwse
 		tes3::setEffect(newSpell->effects, 1, Effects::WaterBreathing, mwse::NoSkill, Effects::RangeSelf, 0, 1, 0, 0);
 
 		// Add object to the game.
-		tes3::addObject(newSpell);
+		tes3::addObject(reinterpret_cast<BaseRecord_t*>(newSpell));
 
 		return 0.0f;
 	}
