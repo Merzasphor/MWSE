@@ -27,6 +27,17 @@ namespace mwse
 			return getGlobalRecord(id.c_str());
 		}
 
+		template <typename T>
+		void addObject(T* record) {
+			int const kAddObject = 0x4B8980;
+			__asm {
+				mov edx, dword ptr ds : [0x7C67E0];
+				mov ecx, dword ptr ds : [edx];
+				push record;
+				call kAddObject;
+			}
+		}
+
 		REFRRecord_t * skipRemovedReferences(REFRRecord_t * reference) {
 			while (reference != 0 && (reference->flags & 0x20) == 0x20)
 			{
