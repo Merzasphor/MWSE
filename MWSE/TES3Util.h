@@ -48,8 +48,10 @@ namespace mwse
 
 		mwseString_t getName(BaseRecord_t* record);
 
+		mwLong_t getValue(BaseRecord_t* record);
 		mwLong_t getValue(REFRRecord_t* reference, bool multiplyByCount);
 
+		mwFloat_t getWeight(BaseRecord_t* record);
 		mwFloat_t getWeight(REFRRecord_t* reference, bool multiplyByCount);
 
 		TES3DefaultTemplate_t* getBaseRecord(TES3DefaultTemplate_t* reference);

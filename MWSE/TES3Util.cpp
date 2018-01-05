@@ -107,13 +107,7 @@ namespace mwse
 			return mwseString_t::exists(name) ? mwseString_t::lookup(name) : mwseString_t(name);
 		}
 
-		mwLong_t getValue(REFRRecord_t* reference, bool multiplyByCount) {
-			// Get record.
-			BaseRecord_t* record = reference->recordPointer;
-			if (record == NULL) {
-				throw std::exception("No base record found.");
-			}
-
+		mwLong_t getValue(BaseRecord_t* record) {
 			mwLong_t value = 0;
 
 			// Get the value from the base record. We group records here by the same offset.
@@ -148,15 +142,30 @@ namespace mwse
 			{
 				// Misc is a unique case. We need to make gold always be worth 1.
 				MISCRecord_t* misc = reinterpret_cast<MISCRecord_t*>(record);
-				value = misc->value;
-				if (!strncmp(misc->id, "Gold_", 5)) {
+				if (strncmp(misc->id, "Gold_", 5) == 0) {
 					value = 1;
+				}
+				else {
+					value = misc->value;
 				}
 				break;
 			}
 			default:
 				throw std::exception("Call on invalid record type.");
 			}
+
+			return value;
+		}
+
+		mwLong_t getValue(REFRRecord_t* reference, bool multiplyByCount) {
+			// Get record.
+			BaseRecord_t* record = reference->recordPointer;
+			if (record == NULL) {
+				throw std::exception("No base record found.");
+			}
+
+			// Get base value for the record.
+			mwLong_t value = getValue(record);
 
 			// Multiply the value by the count of the item.
 			if (multiplyByCount) {
@@ -169,14 +178,7 @@ namespace mwse
 			return value;
 		}
 
-
-		mwFloat_t getWeight(REFRRecord_t* reference, bool multiplyByCount) {
-			// Get record.
-			BaseRecord_t* record = reference->recordPointer;
-			if (record == NULL) {
-				throw std::exception("No base record found.");
-			}
-
+		mwFloat_t getWeight(BaseRecord_t* record) {
 			mwFloat_t weight = 0.0f;
 
 			// Get the weight from the base record. We group records here by the same offset.
@@ -215,6 +217,19 @@ namespace mwse
 			default:
 				throw std::exception("Call on invalid record type.");
 			}
+
+			return weight;
+		}
+
+		mwFloat_t getWeight(REFRRecord_t* reference, bool multiplyByCount) {
+			// Get record.
+			BaseRecord_t* record = reference->recordPointer;
+			if (record == NULL) {
+				throw std::exception("No base record found.");
+			}
+
+			// Get base weight for the record.
+			mwFloat_t weight = getWeight(record);
 
 			// Multiply the value by the count of the item.
 			if (multiplyByCount) {
