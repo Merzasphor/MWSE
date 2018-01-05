@@ -135,6 +135,9 @@
     <ClInclude Include="FileUtil.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="mwOffsets.h">
+      <Filter>Header Files\DataAdapters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

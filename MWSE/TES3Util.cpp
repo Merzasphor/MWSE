@@ -2,20 +2,22 @@
 
 #include "Log.h"
 
+#include "mwOffsets.h"
+
 namespace mwse
 {
 	namespace tes3
 	{
 		TES3CellMaster_t * getCellMaster() {
-			return *reinterpret_cast<TES3CellMaster_t**>(0x7C67E0);
+			return *reinterpret_cast<TES3CellMaster_t**>(TES3_MASTERCELL_IMAGE);
 		}
 
 		GLOBRecord_t* getGlobalRecord(const char* id) {
-			static int findGLOB = 0x4BA820;
+			static int findGLOB = TES3_FUNC_FIND_GLOBAL;
 			GLOBRecord_t* global = NULL;
 			__asm
 			{
-				mov ecx, dword ptr ds : [0x7C67E0];
+				mov ecx, dword ptr ds : [TES3_MASTERCELL_IMAGE];
 				push id;
 				call findGLOB;
 				mov global, eax;
@@ -28,9 +30,9 @@ namespace mwse
 		}
 
 		void addObject(BaseRecord_t* record) {
-			int const kAddObject = 0x4B8980;
+			int const kAddObject = TES3_FUNC_ADD_NEW_OBJECT;
 			__asm {
-				mov edx, dword ptr ds : [0x7C67E0];
+				mov edx, dword ptr ds : [TES3_MASTERCELL_IMAGE];
 				mov ecx, dword ptr ds : [edx];
 				push record;
 				call kAddObject;
@@ -439,7 +441,7 @@ namespace mwse
 		void checkForSkillUp(REFRRecord_t* reference, mwLong_t skillId) {
 			MACPRecord_t* macp = getAttachedMACPRecord(reference);
 			if (macp) {
-				int const FuncSkillUp = 0x56BBE0;
+				int const FuncSkillUp = TES3_FUNC_SKILL_LEVEL_UP;
 				__asm
 				{
 					mov ecx, macp
@@ -452,11 +454,11 @@ namespace mwse
 		void checkForLevelUp(mwLong_t progress) {
 			GMSTRecord_t** GMSTs = getCellMaster()->recordLists->GMSTs;
 			if (progress >= GMSTs[GMST::iLevelupTotal]->value.long_value) {
-				const int loadMessage = 0x40F930;
-				const int displayMessage = 0x5F90C0;
+				const int loadMessage = TES3_FUNC_LOAD_MESSAGE;
+				const int displayMessage = TES3_FUNC_DISPLAY_MESSAGE;
 				__asm
 				{
-					mov ecx, dword ptr[0x7C67DC];
+					mov ecx, dword ptr[TES3_MASTER_IMAGE];
 					push 0x1;
 					push 0x0;
 					push 0x2AA;

@@ -45,6 +45,7 @@ using namespace std;
 
 #include "mwseString.h"
 #include "mwseTypes.h"
+#include "mwOffsets.h"
 #include "VirtualMachine.h"
 
 #define PLACEHOLDER 0
@@ -457,12 +458,12 @@ void TES3MACHINE::CheckForSkillUp(long skill_id)
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
 	MACPRecord* macp = GetMacpRecord();
 	if (macp) {
-		int const kSkillUp = 0x56BBE0; // address of native MW function
+		int const skillUpFunc = TES3_FUNC_SKILL_LEVEL_UP; // address of native MW function
 		__asm
 		{
 			mov ecx, macp;
 			push skill_id;
-			call kSkillUp;
+			call skillUpFunc;
 		}
 	}
 }
@@ -474,7 +475,7 @@ MACPRecord* TES3MACHINE::GetMacpRecord()
 	// this by accessing the appropriate fields in yet to be mapped data
 	// structures. Offsets come from the native function at 0x40FF20.
 	MACPRecord* macp = NULL;
-	unsigned long address = 0x7C67DC;
+	unsigned long address = TES3_MASTER_IMAGE;
 	unsigned long* pointer = reinterpret_cast<unsigned long*>(address);
 	address = (*pointer) + 0x5C;
 	pointer = reinterpret_cast<unsigned long*>(address);

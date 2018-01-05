@@ -30,6 +30,7 @@
     <ClInclude Include="MgeVirtualMachine.h" />
     <ClInclude Include="MgeVmtypes.h" />
     <ClInclude Include="mwAdapter.h" />
+    <ClInclude Include="mwOffsets.h" />
     <ClInclude Include="mwseString.h" />
     <ClInclude Include="mwseTypes.h" />
     <ClInclude Include="Reference.h" />
