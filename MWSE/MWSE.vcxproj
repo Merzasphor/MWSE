@@ -143,6 +143,7 @@
     <ClCompile Include="xGetEnchantInfo.cpp" />
     <ClCompile Include="xGetGlobal.cpp" />
     <ClCompile Include="xGetGold.cpp" />
+    <ClCompile Include="xGetGSString.cpp" />
     <ClCompile Include="xGetLockLevel.cpp" />
     <ClCompile Include="xGetMagic.cpp" />
     <ClCompile Include="xGetMaxCharge.cpp" />
