@@ -713,6 +713,9 @@
     <ClCompile Include="xGetGSString.cpp">
       <Filter>Source Files\Functions\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="xGetEncumb.cpp">
+      <Filter>Source Files\Functions\References</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
