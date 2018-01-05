@@ -169,9 +169,9 @@ namespace mwse
 
 			// Multiply the value by the count of the item.
 			if (multiplyByCount) {
-				mwVarHolderNode_t* varHolder = tes3::getAttachedVarHolderNode(reference);
-				if (varHolder) {
-					value *= varHolder->unknown_0x00;
+				InventoryNode_t* inventoryNode = reinterpret_cast<InventoryNode_t*>(tes3::getAttachedVarHolderNode(reference));
+				if (inventoryNode) {
+					value *= inventoryNode->itemCount;
 				}
 			}
 
@@ -233,9 +233,9 @@ namespace mwse
 
 			// Multiply the value by the count of the item.
 			if (multiplyByCount) {
-				mwVarHolderNode_t* varHolder = tes3::getAttachedVarHolderNode(reference);
-				if (varHolder) {
-					weight *= varHolder->unknown_0x00;
+				InventoryNode_t* inventoryNode = reinterpret_cast<InventoryNode_t*>(tes3::getAttachedVarHolderNode(reference));
+				if (inventoryNode) {
+					weight *= inventoryNode->itemCount;
 				}
 			}
 
