@@ -49,7 +49,7 @@ namespace mwse
 		mwseString_t newString = virtualMachine.getString(Stack::getInstance().popLong());
 
 		if (gmstId < 0) {
-			mwse::log::getLog() << "xSetGold: Invalid GMST id." << std::endl;
+			mwse::log::getLog() << "xSetGSString: Invalid GMST id." << std::endl;
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
