@@ -66,6 +66,7 @@
     <ClCompile Include="xCreateArray.cpp" />
     <ClCompile Include="xCreateSpell.cpp" />
     <ClCompile Include="xDegRad.cpp" />
+    <ClCompile Include="xDeleteEffect.cpp" />
     <ClCompile Include="xDistance.cpp" />
     <ClCompile Include="Flags.cpp" />
     <ClCompile Include="getLocal.cpp" />
