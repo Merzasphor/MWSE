@@ -49,12 +49,12 @@ namespace mwse {
 		REFRRecord_t* reference = virtualMachine.getReference();
 
 		// Results.
-		mwLong_t id = NULL;
+		char * id = NULL;
 		mwLong_t count = 0;
 		mwLong_t type = 0;
 		mwLong_t value = 0;
 		mwFloat_t weight = 0;
-		mwLong_t name = 0;
+		mwseString_t name;
 		ListNode_t<InventoryNode_t>* next = NULL;
 
 		// If we aren't given a node, get the first one.
@@ -66,24 +66,26 @@ namespace mwse {
 		if (node && node->dataPtr && node->dataPtr->recordAddress) {
 			TES3DefaultTemplate_t* record = reinterpret_cast<TES3DefaultTemplate_t*>(node->dataPtr->recordAddress);
 			
-			id = mwseString_t::get(record->objectId);
+			id = record->objectId;
 			count = node->dataPtr->itemCount;
 			type = record->recordType;
 
 			// Get value.
 			try {
-				value = tes3::getValue(reference, false);
+				value = tes3::getValue(reinterpret_cast<BaseRecord_t*>(record));
 			}
 			catch (std::exception& e) {
 				value = 0;
+				mwse::log::getLog() << "xContentList: Could not get value of object '" << id << "'. " << e.what() << std::endl;
 			}
 
 			// Get weight.
 			try {
-				weight = tes3::getWeight(reference, false);
+				weight = tes3::getWeight(reinterpret_cast<BaseRecord_t*>(record));
 			}
 			catch (std::exception& e) {
 				weight = 0.0f;
+				mwse::log::getLog() << "xContentList: Could not get weight of object '" << id << "'. " << e.what() << std::endl;
 			}
 
 			// Get name.
@@ -91,7 +93,8 @@ namespace mwse {
 				name = tes3::getName(reinterpret_cast<BaseRecord_t*>(record));
 			}
 			catch (std::exception& e) {
-				name = NULL;
+				name = mwseString_t();
+				mwse::log::getLog() << "xContentList: Could not get name of object '" << id << "'. " << e.what() << std::endl;
 			}
 			
 			next = node->nextNode;
@@ -99,12 +102,12 @@ namespace mwse {
 
 		// Push values to the stack.
 		mwse::Stack::getInstance().pushLong((mwLong_t)next);
-		mwse::Stack::getInstance().pushLong(name);
+		mwse::Stack::getInstance().pushString(name);
 		mwse::Stack::getInstance().pushFloat(weight);
 		mwse::Stack::getInstance().pushLong(value);
 		mwse::Stack::getInstance().pushLong(type);
 		mwse::Stack::getInstance().pushLong(count);
-		mwse::Stack::getInstance().pushLong(id);
+		mwse::Stack::getInstance().pushString(id);
 
 		return 0.0;
 	}
