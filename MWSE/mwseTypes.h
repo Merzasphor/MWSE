@@ -1122,31 +1122,10 @@ namespace mwse
 		int unknown_0x38;
 		int unknown_0x3C;
 		int unknown_0x40;
-		char * name; // 0x44
-		int unknown_0x48;
-		int unknown_0x4C;
-		int unknown_0x50;
-		int unknown_0x54;
-		int unknown_0x58;
-		int unknown_0x5C;
-		int unknown_0x60;
+		char name[32]; // 0x44
 		int unknown_0x64;
-		int unknown_0x68;
-		int unknown_0x6C;
-		int unknown_0x70;
-		int unknown_0x74;
-		int unknown_0x78;
-		int unknown_0x7C;
-		int unknown_0x80;
-		int unknown_0x84;
-		int unknown_0x88;
-		int unknown_0x8C;
-		int unknown_0x90;
-		int unknown_0x94;
-		int unknown_0x98;
-		int unknown_0x9C;
-		int unknown_0xA0;
-		int unknown_0xA4;
+		char modal[32]; // 0x68
+		char texture[32]; // 0x88
 		mwFloat_t weight; // 0xA8
 		mwLong_t value; // 0xAC
 		mwFloat_t quality; // 0xB0
