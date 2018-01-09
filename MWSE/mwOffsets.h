@@ -21,7 +21,10 @@
 
 #pragma once
 
+//
 // Addresses for game data.
+//
+
 #define TES3_IP_IMAGE 0x7CEBB0
 #define TES3_OP_IMAGE 0x7A91C4
 
@@ -33,9 +36,26 @@
 
 #define TES3_MASTER_IMAGE 0x7C67DC
 #define TES3_MASTER2_IMAGE 0x7C6CDC
-#define TES3_MASTERCELL_IMAGE 0x7C67E0 // Master cell image. Use tes3::getCellMaster()
 
+// Master cell image. Use tes3::getCellMaster() instead of fetching manually.
+#define TES3_MASTERCELL_IMAGE 0x7C67E0
+
+//
+// Hooking positions.
+//
+
+#define TES3_HOOK_GET_NEXT_INSTRUCTION 0x50055B
+#define TES3_HOOK_GET_NEXT_INSTRUCTION_SIZE 0x6
+#define TES3_HOOK_GET_NEXT_INSTRUCTION_RETURN (TES3_HOOK_GET_NEXT_INSTRUCTION + TES3_HOOK_GET_NEXT_INSTRUCTION_SIZE)
+
+#define TES3_HOOK_RUN_FUNCTION 0x505831
+#define TES3_HOOK_RUN_FUNCTION_SIZE 0x6
+#define TES3_HOOK_RUN_FUNCTION_RETURN (TES3_HOOK_RUN_FUNCTION + TES3_HOOK_RUN_FUNCTION_SIZE)
+
+//
 // Addresses for game functions.
+//
+
 #define TES3_FUNC_GET_MACP 0x40FF20
 #define TES3_FUNC_LOAD_MESSAGE 0x40F930
 #define TES3_FUNC_FIXUP_INSTANCE 0x4B8F50
