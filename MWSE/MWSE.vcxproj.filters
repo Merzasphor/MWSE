@@ -530,15 +530,6 @@
     <ClCompile Include="xGetMaxMagicka.cpp">
       <Filter>Source Files\Functions\Actors</Filter>
     </ClCompile>
-    <ClCompile Include="xGetBaseFatigue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseHealth.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="xGetBaseMagicka.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="xGetName.cpp">
       <Filter>Source Files\Functions\Objects</Filter>
     </ClCompile>
@@ -718,6 +709,15 @@
     </ClCompile>
     <ClCompile Include="xGetEncumb.cpp">
       <Filter>Source Files\Functions\References</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseFatigue.cpp">
+      <Filter>Source Files\Functions\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseHealth.cpp">
+      <Filter>Source Files\Functions\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetBaseMagicka.cpp">
+      <Filter>Source Files\Functions\Records</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
