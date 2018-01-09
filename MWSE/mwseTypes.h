@@ -362,26 +362,27 @@ namespace mwse
 
 	struct SCPTRecord_t
 	{
-		void * vTable; //pointer to the vTable
-		RecordTypes::recordType_t recordType; // "SCPT"
-		int recordSize;
-		char * modNamePtr;
-		char scriptName[32];
-		long numShorts;
-		long numLongs;
-		long numFloats;
-		long scriptDataSize;
-		int LocalVarSize; //the length of the local var names concatenated (includes \0 for string endings)
-		char ** shortVarNamePointers;
-		char ** longVarNamePointers;
-		char ** floatVarNamePointers;
-		char * varNamePointers;
-		int unknownData;	//equals zero
-		void * machineCode;
-		mwShort_t * shortVarValues; //pointer to array of shorts, each associated with its corresponding variable
-		mwLong_t * longVarValues;
-		mwFloat_t * floatVarValues;
+		void * vTable; // 0x00 // pointer to the vTable
+		RecordTypes::recordType_t recordType; // 0x04 // "SCPT"
+		int recordSize; // 0x08
+		char * modNamePtr; // 0x0C
+		char scriptName[32]; // 0x10
+		long numShorts; // 0x30
+		long numLongs; // 0x34
+		long numFloats; // 0x38
+		long scriptDataSize; // 0x3C
+		int LocalVarSize; // 0x40 // the length of the local var names concatenated (includes \0 for string endings)
+		char ** shortVarNamePointers; // 0x44
+		char ** longVarNamePointers; // 0x48
+		char ** floatVarNamePointers; // 0x4C
+		char * varNamePointers; // 0x50
+		int unknown_0x54; // 0x54 // equals zero?
+		void * machineCode; // 0x58
+		mwShort_t * shortVarValues; // 0x5C // pointer to array of shorts, each associated with its corresponding variable
+		mwLong_t * longVarValues; // 0x60
+		mwFloat_t * floatVarValues; // 0x64
 	};
+	static_assert(sizeof(SCPTRecord_t) == 0x68, "SCPTRecord_t failed size validation");
 
 	struct SCPTNode_t
 	{
@@ -991,7 +992,7 @@ namespace mwse
 	{
 		void * vTable; // 0x00
 		RecordTypes::recordType_t recordType; // 0x04 // "REFR"
-		long flags; // 0x08 // 0x50 big, should this be!
+		long flags; // 0x08 // 0x50 big, should this be! // 0x800 bit is isEnabled
 		char* modNamePtr; // 0x0C
 		int unknown_0x10;
 		int unknown_0x14;
@@ -1771,6 +1772,47 @@ namespace mwse
 		SOUTHWEST = 6,
 		SOUTH = 7,
 		SOUTHEAST = 8
+	};
+
+	struct TES3Master_t {
+		struct Unknown1_t {
+			long unknown_0x00;
+			long unknown_0x04;
+			long unknown_0x08;
+			SPLLNode_t * unknown_0x0C;
+		};
+		long unknown_0x00;
+		long unknown_0x04;
+		long unknown_0x08;
+		long unknown_0x0C;
+		long unknown_0x10;
+		long unknown_0x14;
+		long unknown_0x18;
+		long unknown_0x1C;
+		long unknown_0x20;
+		long unknown_0x24;
+		long unknown_0x28;
+		long unknown_0x2C;
+		long unknown_0x30;
+		long unknown_0x34;
+		long unknown_0x38;
+		long unknown_0x3C;
+		long unknown_0x40;
+		long unknown_0x44;
+		long unknown_0x48;
+		long unknown_0x4C;
+		long unknown_0x50;
+		long unknown_0x54;
+		long unknown_0x58;
+		long unknown_0x5C;
+		long unknown_0x60;
+		long unknown_0x64;
+		long unknown_0x68;
+		long unknown_0x6C;
+		Unknown1_t * unknown_0x70; // 
+		long unknown_0x74;
+		long unknown_0x78;
+		long unknown_0x7C;
 	};
 
 	struct TES3CellMaster_t {
