@@ -29,8 +29,17 @@ namespace mwse
 {
 	namespace mwscript
 	{
+
+		//
+		// Manipulation of script state.
+		//
+
 		int getInstructionPointer();
 		void setInstructionPointer(int IP);
+
+		//
+		// Manipulation of script variables.
+		//
 
 		REFRRecord_t* getScriptTargetReference();
 		void setScriptTargetReference(REFRRecord_t* reference);
@@ -66,7 +75,15 @@ namespace mwse
 
 		void setScriptTargetRotation(mwFloat_t x, mwFloat_t y, mwFloat_t z);
 
+		//
+		// Execute original op code.
+		//
+
 		float RunOriginalOpCode(SCPTRecord_t* script, REFRRecord_t* reference, int opCode, TES3DefaultTemplate_t* objectParam, char charParam, float unk1, float unk2);
+
+		//
+		// Wrapper functions for original opcodes.
+		//
 
 		void AddItem(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* itemTemplate, mwLong_t count);
 
