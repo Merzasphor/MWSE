@@ -138,6 +138,9 @@
     <ClInclude Include="mwOffsets.h">
       <Filter>Header Files\DataAdapters</Filter>
     </ClInclude>
+    <ClInclude Include="ScriptUtil.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -718,6 +721,12 @@
     </ClCompile>
     <ClCompile Include="xGetBaseMagicka.cpp">
       <Filter>Source Files\Functions\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="xAddItem.cpp">
+      <Filter>Source Files\Functions\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptUtil.cpp">
+      <Filter>Source Files\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

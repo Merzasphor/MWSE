@@ -36,6 +36,7 @@
     <ClInclude Include="Reference.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RngUtil.h" />
+    <ClInclude Include="ScriptUtil.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="MgeTes3Machine.h" />
     <ClInclude Include="StringUtil.h" />
@@ -50,9 +51,11 @@
     <ClCompile Include="MgeVirtualMachine.cpp" />
     <ClCompile Include="MgeTes3Machine.cpp" />
     <ClCompile Include="RngUtil.cpp" />
+    <ClCompile Include="ScriptUtil.cpp" />
     <ClCompile Include="StringUtil.cpp" />
     <ClCompile Include="TES3Util.cpp" />
     <ClCompile Include="xAddEffect.cpp" />
+    <ClCompile Include="xAddItem.cpp" />
     <ClCompile Include="xAnd.cpp" />
     <ClCompile Include="xArcCos.cpp" />
     <ClCompile Include="xArcSin.cpp" />
