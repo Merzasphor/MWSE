@@ -186,6 +186,7 @@
     <ClCompile Include="xGetSkillInfo.cpp" />
     <ClCompile Include="xGetSpell.cpp" />
     <ClCompile Include="xGetSpellEffectInfo.cpp" />
+    <ClCompile Include="xGetSpellEffects.cpp" />
     <ClCompile Include="xGetSpellInfo.cpp" />
     <ClCompile Include="xGetTrap.cpp" />
     <ClCompile Include="xGetValue.cpp" />
