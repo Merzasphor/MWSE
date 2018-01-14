@@ -190,6 +190,7 @@
     <ClCompile Include="xGetTrap.cpp" />
     <ClCompile Include="xGetValue.cpp" />
     <ClCompile Include="xGetWeight.cpp" />
+    <ClCompile Include="xHasItemEquipped.cpp" />
     <ClCompile Include="xHypot.cpp" />
     <ClCompile Include="xIsFemale.cpp" />
     <ClCompile Include="xIsProvider.cpp" />

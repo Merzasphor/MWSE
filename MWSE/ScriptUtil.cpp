@@ -205,5 +205,19 @@ namespace mwse
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);
 		}
+
+		bool HasItemEquipped(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* itemTemplate) {
+			// Cache previous script variables.
+			TES3DefaultTemplate_t* cachedSecondObject = getScriptSecondObject();
+
+			// Prepare variables and run original opcode.
+			setScriptSecondObject(itemTemplate);
+			float value = RunOriginalOpCode(script, reference, TES3_OPCODE_HASITEMEQUIPPED);
+
+			// Restore original script variables.
+			setScriptSecondObject(cachedSecondObject);
+
+			return value != 0.0f;
+		}
 	}
 }
