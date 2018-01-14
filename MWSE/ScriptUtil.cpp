@@ -335,5 +335,20 @@ namespace mwse
 			setScriptTargetRotationZ(cachedRotationZ);
 			setScriptSecondObject(cachedSecondObject);
 		}
+
+		void RemoveItem(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* itemTemplate, mwLong_t count) {
+			// Cache previous script variables.
+			mwLong_t cachedVarIndex = getScriptVariableIndex();
+			TES3DefaultTemplate_t* cachedSecondObject = getScriptSecondObject();
+
+			// Prepare variables and run original opcode.
+			setScriptSecondObject(itemTemplate);
+			setScriptVariableIndex(count);
+			RunOriginalOpCode(script, reference, TES3_OPCODE_REMOVEITEM);
+
+			// Restore original script variables.
+			setScriptSecondObject(cachedSecondObject);
+			setScriptVariableIndex(cachedVarIndex);
+		}
 	}
 }
