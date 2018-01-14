@@ -56,6 +56,7 @@
     <ClCompile Include="TES3Util.cpp" />
     <ClCompile Include="xAddEffect.cpp" />
     <ClCompile Include="xAddItem.cpp" />
+    <ClCompile Include="xAddSpell.cpp" />
     <ClCompile Include="xAnd.cpp" />
     <ClCompile Include="xArcCos.cpp" />
     <ClCompile Include="xArcSin.cpp" />
