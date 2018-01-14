@@ -767,6 +767,9 @@
     <ClCompile Include="xRemoveItem.cpp">
       <Filter>Source Files\Functions\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="xRemoveSpell.cpp">
+      <Filter>Source Files\Functions\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
