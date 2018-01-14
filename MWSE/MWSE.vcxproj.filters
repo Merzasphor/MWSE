@@ -731,8 +731,11 @@
     <ClCompile Include="ScriptUtil.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="xAITravel.cpp">
+      <Filter>Source Files\Functions\Actors</Filter>
+    </ClCompile>
     <ClCompile Include="xAddSpell.cpp">
-      <Filter>Source Files\Functions\Objects</Filter>
+      <Filter>Source Files\Functions\Actors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

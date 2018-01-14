@@ -44,10 +44,23 @@ namespace mwse
 		mwLong_t getScriptVariableIndex();
 		void setScriptVariableIndex(mwLong_t index);
 
+		float getDestinationX();
+		void setDestinationX(float value);
+
+		float getDestinationY();
+		void setDestinationY(float value);
+
+		float getDestinationZ();
+		void setDestinationZ(float value);
+
+		void setDestination(float x, float y, float z);
+
 		float RunOriginalOpCode(SCPTRecord_t* script, REFRRecord_t* reference, int opCode, TES3DefaultTemplate_t* objectParam, char charParam, float unk1, float unk2);
 
 		void AddItem(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* itemTemplate, mwLong_t count);
 
 		void AddSpell(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* spellTemplate);
+
+		void AITravel(SCPTRecord_t* script, REFRRecord_t* reference, float x, float y, float z);
 	}
 }

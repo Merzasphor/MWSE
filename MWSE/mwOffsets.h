@@ -41,6 +41,10 @@
 // Master cell image. Use tes3::getCellMaster() instead of fetching manually.
 #define TES3_MASTERCELL_IMAGE 0x7C67E0
 
+#define TES3_DESTINATION_X_IMAGE 0x7CEA48
+#define TES3_DESTINATION_Y_IMAGE 0x7CEA4C
+#define TES3_DESTINATION_Z_IMAGE 0x7CEA50
+
 //
 // Hooking positions.
 //
@@ -82,3 +86,4 @@
 
 #define TES3_OPCODE_ADDITEM 0x10D4
 #define TES3_OPCODE_ADDSPELL 0x111D
+#define TES3_OPCODE_AITRAVEL 0x10F8
