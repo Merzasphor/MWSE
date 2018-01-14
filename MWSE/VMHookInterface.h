@@ -28,8 +28,8 @@ namespace mwse
 	class VMHookInterface
 	{
 	public:
-		virtual float executeOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t &script) = 0;
-		virtual void loadParametersForOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t &script) = 0;
+		virtual float executeOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t* script) = 0;
+		virtual void loadParametersForOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t* script) = 0;
 
 		virtual bool isOpcode(const mwOpcode_t opcode) = 0;
 	};

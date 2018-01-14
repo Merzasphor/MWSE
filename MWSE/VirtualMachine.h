@@ -34,8 +34,8 @@ namespace mwse
 	{
 	public:
 		VirtualMachine();
-		virtual float executeOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t &script);
-		virtual void loadParametersForOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t &script);
+		virtual float executeOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t* script);
+		virtual void loadParametersForOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t* script);
 		virtual bool isOpcode(const mwOpcode_t opcode);
 		virtual long* getScriptIP();
 
@@ -43,7 +43,7 @@ namespace mwse
 		virtual REFRRecord_t * getReference(const char *id);
 		virtual void setReference(REFRRecord_t * reference);
 		virtual REFRRecord_t * getCurrentTarget();
-		virtual void * getTemplate(const char *id);
+		virtual TES3DefaultTemplate_t * getTemplate(const char *id);
 
 		//local variables, methods to access local variables
 		virtual mwLong_t getLongVariable(int index);							//by index
@@ -85,21 +85,29 @@ namespace mwse
 
 		virtual mwseString_t getString(mwLong_t fromStack);	//only ment for stack-based syntax!, parameter-based syntax functions should use getStringParameter!!!
 
+
+		// Debug method to print information about the current script.
 		virtual void dumpScriptVariables();
 
-	protected:
-	private:
-		mwAdapter::Context_t getContext();				//for internal functions that need the context (registers, etc)
-		void setContext(mwAdapter::Context_t context); //for internal functions that need the context (registers, etc)
+		mwAdapter::Context_t context;
 
-		SCPTRecord_t& getScript();				//get reference to current script
-		void setScript(SCPTRecord_t &script);	//set reference to current script
+		SCPTRecord_t& getScript();
+
+	private:
+		// The currently executing script.
+		SCPTRecord_t * script;
+		void setScript(SCPTRecord_t* script);
 		
-		mwAdapter::Context_t context;			//current context (registers, etc)
-		SCPTRecord_t * script;					//current script pointer
+		// Current context (registers, etc).
+		mwAdapter::Context_t getContext();
+		void setContext(mwAdapter::Context_t context);
+
 		long *mwScriptIP;
 
+		// Last executed script.
 		SCPTRecord_t * oldscript;
+
+		// Called when the currently executed script changes.
 		void OnScriptChange();
 	};
 };

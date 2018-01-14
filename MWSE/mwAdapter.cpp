@@ -48,7 +48,7 @@ namespace mwse
 			{
 				SCPTRecord_t * script = reinterpret_cast<SCPTRecord_t*>(context.ebx);
 
-				vmInstance.loadParametersForOperation(opcode, context, *script);
+				vmInstance.loadParametersForOperation(opcode, context, script);
 
 				// Set eax to zero. This tells Morrowind that the opcode is invalid and it will return GetNextInstruction.
 				// It doesn't throw any errors when doing so.
@@ -68,8 +68,9 @@ namespace mwse
 				// Our default return address. This can be changed below.
 				context.callbackAddress = 0x50D62D;
 
-				float returnValue = vmInstance.executeOperation(opcode, context, *script);
+				float returnValue = vmInstance.executeOperation(opcode, context, script);
 
+				// Increment instruction pointer.
 				long * returnESI = reinterpret_cast<long*>(context.esp + 4);
 				*returnESI = *(vmInstance.getScriptIP());
 
