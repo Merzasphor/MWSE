@@ -211,6 +211,7 @@
     <ClCompile Include="xPCCellID.cpp" />
     <ClCompile Include="xPlace.cpp" />
     <ClCompile Include="xPosition.cpp" />
+    <ClCompile Include="xPositionCell.cpp" />
     <ClCompile Include="xPow.cpp" />
     <ClCompile Include="xRadDeg.cpp" />
     <ClCompile Include="xRandomFloat.cpp" />

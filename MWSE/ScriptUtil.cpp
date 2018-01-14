@@ -54,6 +54,11 @@ namespace mwse
 			return *reinterpret_cast<TES3DefaultTemplate_t**>(TES3_SECONDOBJECT_IMAGE);
 		}
 
+		void setScriptSecondObject(const char* string) {
+			*reinterpret_cast<const char**>(TES3_SECONDOBJECT_IMAGE) = string;
+			*reinterpret_cast<size_t*>(TES3_SECONDOBJECT_LENGTH_IMAGE) = strlen(string);
+		}
+
 		void setScriptSecondObject(TES3DefaultTemplate_t* record) {
 			*reinterpret_cast<TES3DefaultTemplate_t**>(TES3_SECONDOBJECT_IMAGE) = record;
 		}
@@ -303,6 +308,32 @@ namespace mwse
 			setScriptTargetRotationX(cachedRotationX);
 			setScriptTargetRotationY(cachedRotationY);
 			setScriptTargetRotationZ(cachedRotationZ);
+		}
+
+		void PositionCell(SCPTRecord_t* script, REFRRecord_t* reference, mwFloat_t x, mwFloat_t y, mwFloat_t z, mwFloat_t rotation, const char* cell) {
+			// Cache script variables.
+			mwFloat_t cachedDestinationX = getScriptDestinationX();
+			mwFloat_t cachedDestinationY = getScriptDestinationY();
+			mwFloat_t cachedDestinationZ = getScriptDestinationZ();
+			mwFloat_t cachedRotationX = getScriptTargetRotationX();
+			mwFloat_t cachedRotationY = getScriptTargetRotationY();
+			mwFloat_t cachedRotationZ = getScriptTargetRotationZ();
+			TES3DefaultTemplate_t* cachedSecondObject = getScriptSecondObject();
+
+			// Call original opcode.
+			setScriptDestination(x, y, z);
+			setScriptTargetRotation(0.0f, 0.0f, rotation);
+			setScriptSecondObject(cell);
+			RunOriginalOpCode(script, reference, TES3_OPCODE_POSITIONCELL);
+
+			// Restore script variables.
+			setScriptDestinationX(cachedDestinationX);
+			setScriptDestinationY(cachedDestinationY);
+			setScriptDestinationZ(cachedDestinationZ);
+			setScriptTargetRotationX(cachedRotationX);
+			setScriptTargetRotationY(cachedRotationY);
+			setScriptTargetRotationZ(cachedRotationZ);
+			setScriptSecondObject(cachedSecondObject);
 		}
 	}
 }
