@@ -52,7 +52,7 @@ namespace mwse
 		// Get parameters.
 		mwseString_t id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
-		// Get other context information for AddItem.
+		// Get other context information for original opcode.
 		SCPTRecord_t* script = &virtualMachine.getScript();
 		REFRRecord_t* reference = virtualMachine.getReference();
 		TES3DefaultTemplate_t* templateToPlace = virtualMachine.getTemplate(id.c_str());
