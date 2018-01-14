@@ -66,34 +66,34 @@ namespace mwse
 			*reinterpret_cast<mwLong_t*>(TES3_VARINDEX_IMAGE) = index;
 		}
 
-		float getDestinationX() {
-			return *reinterpret_cast<float*>(TES3_DESTINATION_X_IMAGE);
+		mwFloat_t getDestinationX() {
+			return *reinterpret_cast<mwFloat_t*>(TES3_DESTINATION_X_IMAGE);
 		}
 
-		void setDestinationX(float value) {
-			*reinterpret_cast<float*>(TES3_DESTINATION_X_IMAGE) = value;
+		void setDestinationX(mwFloat_t value) {
+			*reinterpret_cast<mwFloat_t*>(TES3_DESTINATION_X_IMAGE) = value;
 		}
 
-		float getDestinationY() {
-			return *reinterpret_cast<float*>(TES3_DESTINATION_Y_IMAGE);
+		mwFloat_t getDestinationY() {
+			return *reinterpret_cast<mwFloat_t*>(TES3_DESTINATION_Y_IMAGE);
 		}
 
-		void setDestinationY(float value) {
-			*reinterpret_cast<float*>(TES3_DESTINATION_Y_IMAGE) = value;
+		void setDestinationY(mwFloat_t value) {
+			*reinterpret_cast<mwFloat_t*>(TES3_DESTINATION_Y_IMAGE) = value;
 		}
 
-		float getDestinationZ() {
-			return *reinterpret_cast<float*>(TES3_DESTINATION_Z_IMAGE);
+		mwFloat_t getDestinationZ() {
+			return *reinterpret_cast<mwFloat_t*>(TES3_DESTINATION_Z_IMAGE);
 		}
 
-		void setDestinationZ(float value) {
-			*reinterpret_cast<float*>(TES3_DESTINATION_Z_IMAGE) = value;
+		void setDestinationZ(mwFloat_t value) {
+			*reinterpret_cast<mwFloat_t*>(TES3_DESTINATION_Z_IMAGE) = value;
 		}
 
-		void setDestination(float x, float y, float z) {
-			*reinterpret_cast<float*>(TES3_DESTINATION_X_IMAGE) = x;
-			*reinterpret_cast<float*>(TES3_DESTINATION_Y_IMAGE) = y;
-			*reinterpret_cast<float*>(TES3_DESTINATION_Z_IMAGE) = z;
+		void setDestination(mwFloat_t x, mwFloat_t y, mwFloat_t z) {
+			*reinterpret_cast<mwFloat_t*>(TES3_DESTINATION_X_IMAGE) = x;
+			*reinterpret_cast<mwFloat_t*>(TES3_DESTINATION_Y_IMAGE) = y;
+			*reinterpret_cast<mwFloat_t*>(TES3_DESTINATION_Z_IMAGE) = z;
 		}
 
 		float RunOriginalOpCode(SCPTRecord_t* script, REFRRecord_t* reference, int opCode, TES3DefaultTemplate_t* objectParam = NULL, char charParam = '_', float unk1 = 0.0f, float unk2 = 0.0f) {
@@ -153,11 +153,11 @@ namespace mwse
 			setScriptSecondObject(cachedSecondObject);
 		}
 
-		void AITravel(SCPTRecord_t* script, REFRRecord_t* reference, float x, float y, float z) {
+		void AITravel(SCPTRecord_t* script, REFRRecord_t* reference, mwFloat_t x, mwFloat_t y, mwFloat_t z) {
 			// Cache destination values.
-			float cachedDestinationX = getDestinationX();
-			float cachedDestinationY = getDestinationY();
-			float cachedDestinationZ = getDestinationZ();
+			mwFloat_t cachedDestinationX = getDestinationX();
+			mwFloat_t cachedDestinationY = getDestinationY();
+			mwFloat_t cachedDestinationZ = getDestinationZ();
 
 			// Call original opcode.
 			setDestination(x, y, z);
@@ -226,7 +226,7 @@ namespace mwse
 
 			// Prepare variables and run original opcode.
 			setScriptSecondObject(spellTemplate);
-			float value = RunOriginalOpCode(script, reference, TES3_OPCODE_GETSPELLEFFECTS);
+			mwFloat_t value = RunOriginalOpCode(script, reference, TES3_OPCODE_GETSPELLEFFECTS);
 
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);
