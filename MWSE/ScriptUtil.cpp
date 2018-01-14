@@ -66,34 +66,64 @@ namespace mwse
 			*reinterpret_cast<mwLong_t*>(TES3_VARINDEX_IMAGE) = index;
 		}
 
-		mwFloat_t getDestinationX() {
+		mwFloat_t getScriptDestinationX() {
 			return *reinterpret_cast<mwFloat_t*>(TES3_DESTINATION_X_IMAGE);
 		}
 
-		void setDestinationX(mwFloat_t value) {
+		void setScriptDestinationX(mwFloat_t value) {
 			*reinterpret_cast<mwFloat_t*>(TES3_DESTINATION_X_IMAGE) = value;
 		}
 
-		mwFloat_t getDestinationY() {
+		mwFloat_t getScriptDestinationY() {
 			return *reinterpret_cast<mwFloat_t*>(TES3_DESTINATION_Y_IMAGE);
 		}
 
-		void setDestinationY(mwFloat_t value) {
+		void setScriptDestinationY(mwFloat_t value) {
 			*reinterpret_cast<mwFloat_t*>(TES3_DESTINATION_Y_IMAGE) = value;
 		}
 
-		mwFloat_t getDestinationZ() {
+		mwFloat_t getScriptDestinationZ() {
 			return *reinterpret_cast<mwFloat_t*>(TES3_DESTINATION_Z_IMAGE);
 		}
 
-		void setDestinationZ(mwFloat_t value) {
+		void setScriptDestinationZ(mwFloat_t value) {
 			*reinterpret_cast<mwFloat_t*>(TES3_DESTINATION_Z_IMAGE) = value;
 		}
 
-		void setDestination(mwFloat_t x, mwFloat_t y, mwFloat_t z) {
+		void setScriptDestination(mwFloat_t x, mwFloat_t y, mwFloat_t z) {
 			*reinterpret_cast<mwFloat_t*>(TES3_DESTINATION_X_IMAGE) = x;
 			*reinterpret_cast<mwFloat_t*>(TES3_DESTINATION_Y_IMAGE) = y;
 			*reinterpret_cast<mwFloat_t*>(TES3_DESTINATION_Z_IMAGE) = z;
+		}
+
+		mwFloat_t getScriptTargetRotationX() {
+			return *reinterpret_cast<mwFloat_t*>(TES3_TARGET_ROTX_IMAGE);
+		}
+
+		void setScriptTargetRotationX(mwFloat_t value) {
+			*reinterpret_cast<mwFloat_t*>(TES3_TARGET_ROTX_IMAGE) = value;
+		}
+
+		mwFloat_t getScriptTargetRotationY() {
+			return *reinterpret_cast<mwFloat_t*>(TES3_TARGET_ROTY_IMAGE);
+		}
+
+		void setScriptTargetRotationY(mwFloat_t value) {
+			*reinterpret_cast<mwFloat_t*>(TES3_TARGET_ROTY_IMAGE) = value;
+		}
+
+		mwFloat_t getScriptTargetRotationZ() {
+			return *reinterpret_cast<mwFloat_t*>(TES3_TARGET_ROTZ_IMAGE);
+		}
+
+		void setScriptTargetRotationZ(mwFloat_t value) {
+			*reinterpret_cast<mwFloat_t*>(TES3_TARGET_ROTZ_IMAGE) = value;
+		}
+
+		void setScriptTargetRotation(mwFloat_t x, mwFloat_t y, mwFloat_t z) {
+			*reinterpret_cast<mwFloat_t*>(TES3_TARGET_ROTX_IMAGE) = x;
+			*reinterpret_cast<mwFloat_t*>(TES3_TARGET_ROTY_IMAGE) = y;
+			*reinterpret_cast<mwFloat_t*>(TES3_TARGET_ROTZ_IMAGE) = z;
 		}
 
 		float RunOriginalOpCode(SCPTRecord_t* script, REFRRecord_t* reference, int opCode, TES3DefaultTemplate_t* objectParam = NULL, char charParam = '_', float unk1 = 0.0f, float unk2 = 0.0f) {
@@ -155,16 +185,16 @@ namespace mwse
 
 		void AITravel(SCPTRecord_t* script, REFRRecord_t* reference, mwFloat_t x, mwFloat_t y, mwFloat_t z) {
 			// Cache destination values.
-			mwFloat_t cachedDestinationX = getDestinationX();
-			mwFloat_t cachedDestinationY = getDestinationY();
-			mwFloat_t cachedDestinationZ = getDestinationZ();
+			mwFloat_t cachedDestinationX = getScriptDestinationX();
+			mwFloat_t cachedDestinationY = getScriptDestinationY();
+			mwFloat_t cachedDestinationZ = getScriptDestinationZ();
 
 			// Call original opcode.
-			setDestination(x, y, z);
+			setScriptDestination(x, y, z);
 			RunOriginalOpCode(script, reference, TES3_OPCODE_AITRAVEL);
 
 			// Restore destination values.
-			setDestination(cachedDestinationX, cachedDestinationY, cachedDestinationZ);
+			setScriptDestination(cachedDestinationX, cachedDestinationY, cachedDestinationZ);
 		}
 
 		void Drop(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* itemTemplate, mwLong_t count) {
@@ -236,19 +266,19 @@ namespace mwse
 
 		void PlaceAtPC(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* placedTemplate, mwLong_t count, mwFloat_t distance, mwFloat_t direction) {
 			// Cache script variables.
-			mwFloat_t cachedDestinationX = getDestinationX();
-			mwFloat_t cachedDestinationY = getDestinationY();
+			mwFloat_t cachedDestinationX = getScriptDestinationX();
+			mwFloat_t cachedDestinationY = getScriptDestinationY();
 			mwLong_t cachedVarIndex = getScriptVariableIndex();
 
 			// Call original opcode.
 			setScriptVariableIndex(count);
-			setDestinationX(distance);
-			setDestinationY(direction);
+			setScriptDestinationX(distance);
+			setScriptDestinationY(direction);
 			RunOriginalOpCode(script, reference, TES3_OPCODE_PLACEATPC);
 
 			// Restore script variables.
-			setDestinationX(cachedDestinationX);
-			setDestinationY(cachedDestinationY);
+			setScriptDestinationX(cachedDestinationX);
+			setScriptDestinationY(cachedDestinationY);
 			setScriptVariableIndex(cachedVarIndex);
 		}
 	}

@@ -44,16 +44,27 @@ namespace mwse
 		mwLong_t getScriptVariableIndex();
 		void setScriptVariableIndex(mwLong_t index);
 
-		mwFloat_t getDestinationX();
-		void setDestinationX(float value);
+		mwFloat_t getScriptDestinationX();
+		void setScriptDestinationX(mwFloat_t value);
 
-		mwFloat_t getDestinationY();
-		void setDestinationY(float value);
+		mwFloat_t getScriptDestinationY();
+		void setScriptDestinationY(mwFloat_t value);
 
-		mwFloat_t getDestinationZ();
-		void setDestinationZ(float value);
+		mwFloat_t getScriptDestinationZ();
+		void setScriptDestinationZ(mwFloat_t value);
 
-		void setDestination(mwFloat_t x, mwFloat_t y, mwFloat_t z);
+		void setScriptDestination(mwFloat_t x, mwFloat_t y, mwFloat_t z);
+
+		mwFloat_t getScriptTargetRotationX();
+		void setScriptTargetRotationX(mwFloat_t value);
+
+		mwFloat_t getScriptTargetRotationY();
+		void setScriptTargetRotationY(mwFloat_t value);
+
+		mwFloat_t getScriptTargetRotationZ();
+		void setScriptTargetRotationZ(mwFloat_t value);
+
+		void setScriptTargetRotation(mwFloat_t x, mwFloat_t y, mwFloat_t z);
 
 		float RunOriginalOpCode(SCPTRecord_t* script, REFRRecord_t* reference, int opCode, TES3DefaultTemplate_t* objectParam, char charParam, float unk1, float unk2);
 
