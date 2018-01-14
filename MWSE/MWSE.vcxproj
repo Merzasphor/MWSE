@@ -146,6 +146,7 @@
     <ClCompile Include="xGetEnchantEffectInfo.cpp" />
     <ClCompile Include="xGetEnchantInfo.cpp" />
     <ClCompile Include="xGetEncumb.cpp" />
+    <ClCompile Include="xGetEncumbrance.cpp" />
     <ClCompile Include="xGetGlobal.cpp" />
     <ClCompile Include="xGetGold.cpp" />
     <ClCompile Include="xGetGSString.cpp" />
