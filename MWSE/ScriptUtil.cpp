@@ -362,5 +362,17 @@ namespace mwse
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);
 		}
+
+		void SetLevel(SCPTRecord_t* script, REFRRecord_t* reference, mwShort_t level) {
+			// Cache previous script variables.
+			mwLong_t cachedVarIndex = getScriptVariableIndex();
+
+			// Prepare variables and run original opcode.
+			setScriptVariableIndex(level);
+			RunOriginalOpCode(script, reference, TES3_OPCODE_SETLEVEL);
+
+			// Restore original script variables.
+			setScriptVariableIndex(cachedVarIndex);
+		}
 	}
 }

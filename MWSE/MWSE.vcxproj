@@ -230,6 +230,7 @@
     <ClCompile Include="xSetGlobal.cpp" />
     <ClCompile Include="xSetGold.cpp" />
     <ClCompile Include="xSetGSString.cpp" />
+    <ClCompile Include="xSetLevel.cpp" />
     <ClCompile Include="xSetMaxCharge.cpp" />
     <ClCompile Include="xSetMaxCondition.cpp" />
     <ClCompile Include="xSetName.cpp" />

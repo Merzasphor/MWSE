@@ -111,5 +111,7 @@ namespace mwse
 		void RemoveItem(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* itemTemplate, mwLong_t count);
 
 		void RemoveSpell(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* spellTemplate);
+
+		void SetLevel(SCPTRecord_t* script, REFRRecord_t* reference, mwShort_t level);
 	}
 }
