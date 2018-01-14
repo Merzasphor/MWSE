@@ -281,5 +281,28 @@ namespace mwse
 			setScriptDestinationY(cachedDestinationY);
 			setScriptVariableIndex(cachedVarIndex);
 		}
+
+		void Position(SCPTRecord_t* script, REFRRecord_t* reference, mwFloat_t x, mwFloat_t y, mwFloat_t z, mwFloat_t rotation) {
+			// Cache script variables.
+			mwFloat_t cachedDestinationX = getScriptDestinationX();
+			mwFloat_t cachedDestinationY = getScriptDestinationY();
+			mwFloat_t cachedDestinationZ = getScriptDestinationZ();
+			mwFloat_t cachedRotationX = getScriptTargetRotationX();
+			mwFloat_t cachedRotationY = getScriptTargetRotationY();
+			mwFloat_t cachedRotationZ = getScriptTargetRotationZ();
+
+			// Call original opcode.
+			setScriptDestination(x, y, z);
+			setScriptTargetRotation(0.0f, 0.0f, rotation);
+			RunOriginalOpCode(script, reference, TES3_OPCODE_POSITION);
+
+			// Restore script variables.
+			setScriptDestinationX(cachedDestinationX);
+			setScriptDestinationY(cachedDestinationY);
+			setScriptDestinationZ(cachedDestinationZ);
+			setScriptTargetRotationX(cachedRotationX);
+			setScriptTargetRotationY(cachedRotationY);
+			setScriptTargetRotationZ(cachedRotationZ);
+		}
 	}
 }
