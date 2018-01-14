@@ -62,5 +62,7 @@ namespace mwse
 		void AddSpell(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* spellTemplate);
 
 		void AITravel(SCPTRecord_t* script, REFRRecord_t* reference, float x, float y, float z);
+
+		void Drop(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* itemTemplate, mwLong_t count);
 	}
 }

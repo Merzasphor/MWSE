@@ -77,6 +77,7 @@
     <ClCompile Include="xDistance.cpp" />
     <ClCompile Include="Flags.cpp" />
     <ClCompile Include="getLocal.cpp" />
+    <ClCompile Include="xDrop.cpp" />
     <ClCompile Include="xFileReadFloat.cpp" />
     <ClCompile Include="xFileReadLong.cpp" />
     <ClCompile Include="xFileReadShort.cpp" />
