@@ -988,14 +988,21 @@ namespace mwse
 	};
 	static_assert(sizeof(NPCCopyRecord_t) == 0x70, "NPCBaseRecord_t failed size validation");
 
+	struct TES3Cell_t;
+
 	struct REFRRecord_t
 	{
+		struct Unknown1_t {
+			int unknown_0x00; // Reference?
+			int unknown_0x04; // Reference?
+			TES3Cell_t * cell; // 0x08 // Current cell.
+		};
 		void * vTable; // 0x00
 		RecordTypes::recordType_t recordType; // 0x04 // "REFR"
 		long flags; // 0x08 // 0x50 big, should this be! // 0x800 bit is isEnabled
 		char* modNamePtr; // 0x0C
 		int unknown_0x10;
-		int unknown_0x14;
+		REFRRecord_t::Unknown1_t * unknown_0x14;
 		REFRRecord_t * nextOfSameTemplate; // 0x18
 		REFRRecord_t * previousRecord; // 0x1C
 		REFRRecord_t * nextRecord; // 0x20

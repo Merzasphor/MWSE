@@ -752,6 +752,9 @@
     <ClCompile Include="xGetSpellEffects.cpp">
       <Filter>Source Files\Functions\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="xMyCellID.cpp">
+      <Filter>Source Files\Functions\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
