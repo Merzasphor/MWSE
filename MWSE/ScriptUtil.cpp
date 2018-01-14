@@ -181,5 +181,17 @@ namespace mwse
 			setScriptSecondObject(cachedSecondObject);
 			setScriptVariableIndex(cachedVarIndex);
 		}
+
+		void Equip(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* itemTemplate) {
+			// Cache previous script variables.
+			TES3DefaultTemplate_t* cachedSecondObject = getScriptSecondObject();
+
+			// Prepare variables and run original opcode.
+			setScriptSecondObject(itemTemplate);
+			RunOriginalOpCode(script, reference, TES3_OPCODE_EQUIP);
+
+			// Restore original script variables.
+			setScriptSecondObject(cachedSecondObject);
+		}
 	}
 }
