@@ -209,6 +209,7 @@
     <ClCompile Include="xNot.cpp" />
     <ClCompile Include="xOr.cpp" />
     <ClCompile Include="xPCCellID.cpp" />
+    <ClCompile Include="xPlace.cpp" />
     <ClCompile Include="xPow.cpp" />
     <ClCompile Include="xRadDeg.cpp" />
     <ClCompile Include="xRandomFloat.cpp" />

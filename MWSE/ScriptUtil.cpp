@@ -233,5 +233,23 @@ namespace mwse
 
 			return value != 0.0f;
 		}
+
+		void PlaceAtPC(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* placedTemplate, mwLong_t count, mwFloat_t distance, mwFloat_t direction) {
+			// Cache script variables.
+			mwFloat_t cachedDestinationX = getDestinationX();
+			mwFloat_t cachedDestinationY = getDestinationY();
+			mwLong_t cachedVarIndex = getScriptVariableIndex();
+
+			// Call original opcode.
+			setScriptVariableIndex(count);
+			setDestinationX(distance);
+			setDestinationY(direction);
+			RunOriginalOpCode(script, reference, TES3_OPCODE_PLACEATPC);
+
+			// Restore script variables.
+			setDestinationX(cachedDestinationX);
+			setDestinationY(cachedDestinationY);
+			setScriptVariableIndex(cachedVarIndex);
+		}
 	}
 }

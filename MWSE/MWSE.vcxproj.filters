@@ -755,6 +755,9 @@
     <ClCompile Include="xMyCellID.cpp">
       <Filter>Source Files\Functions\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="xPlace.cpp">
+      <Filter>Source Files\Functions\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
