@@ -33,6 +33,23 @@ namespace mwse
 			*reinterpret_cast<int*>(TES3_IP_IMAGE) = IP;
 		}
 
+		REFRRecord_t* getScriptTargetReference() {
+			return *reinterpret_cast<REFRRecord_t**>(TES3_SCRIPTTARGETREF_IMAGE);
+		}
+
+		void setScriptTargetReference(REFRRecord_t* reference) {
+			*reinterpret_cast<REFRRecord_t**>(TES3_SCRIPTTARGETREF_IMAGE) = reference;
+			setScriptTargetTemplate(reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer));
+		}
+
+		TES3DefaultTemplate_t* getScriptTargetTemplate() {
+			return *reinterpret_cast<TES3DefaultTemplate_t**>(TES3_SCRIPTTARGETTEMPL_IMAGE);
+		}
+
+		void setScriptTargetTemplate(TES3DefaultTemplate_t* record) {
+			*reinterpret_cast<TES3DefaultTemplate_t**>(TES3_SCRIPTTARGETTEMPL_IMAGE) = record;
+		}
+
 		TES3DefaultTemplate_t* getScriptSecondObject() {
 			return *reinterpret_cast<TES3DefaultTemplate_t**>(TES3_SECONDOBJECT_IMAGE);
 		}
@@ -49,15 +66,20 @@ namespace mwse
 			*reinterpret_cast<mwLong_t*>(TES3_VARINDEX_IMAGE) = index;
 		}
 
-		float RunOriginalOpCode(SCPTRecord_t* script, float unk1, float unk2, int opCode, char charParam, REFRRecord_t* reference) {
+		float RunOriginalOpCode(SCPTRecord_t* script, REFRRecord_t* reference, int opCode, TES3DefaultTemplate_t* objectParam = NULL, char charParam = '_', float unk1 = 0.0f, float unk2 = 0.0f) {
 			float result = 0.0;
+
+			REFRRecord_t* cachedTargetReference = getScriptTargetReference();
+			TES3DefaultTemplate_t* cachedTargetTemplate = getScriptTargetTemplate();
+
+			setScriptTargetReference(reference);
 
 			int IP = getInstructionPointer();
 
 			static int origRunOpCode = 0x505770;
 			__asm {
 				mov ecx, script
-				push reference
+				push objectParam
 				push charParam
 				push opCode
 
@@ -67,6 +89,9 @@ namespace mwse
 			}
 
 			setInstructionPointer(IP);
+
+			setScriptTargetReference(cachedTargetReference);
+			setScriptTargetTemplate(cachedTargetTemplate);
 
 			return result;
 		}
@@ -79,7 +104,7 @@ namespace mwse
 			// Prepare variables and run original opcode.
 			setScriptSecondObject(itemTemplate);
 			setScriptVariableIndex(count);
-			RunOriginalOpCode(script, 0.0f, 0.0f, 0x10D4, ' ', reference);
+			RunOriginalOpCode(script, reference, TES3_OPCODE_ADDITEM);
 
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);

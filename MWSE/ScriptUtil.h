@@ -32,13 +32,19 @@ namespace mwse
 		int getInstructionPointer();
 		void setInstructionPointer(int IP);
 
+		REFRRecord_t* getScriptTargetReference();
+		void setScriptTargetReference(REFRRecord_t* reference);
+
+		TES3DefaultTemplate_t* getScriptTargetTemplate();
+		void setScriptTargetTemplate(TES3DefaultTemplate_t* record);
+
 		TES3DefaultTemplate_t* getScriptSecondObject();
 		void setScriptSecondObject(TES3DefaultTemplate_t* record);
 
 		mwLong_t getScriptVariableIndex();
 		void setScriptVariableIndex(mwLong_t index);
 
-		float RunOriginalOpCode(SCPTRecord_t* script, float unk1, float unk2, int opCode, char charParam, REFRRecord_t* reference);
+		float RunOriginalOpCode(SCPTRecord_t* script, REFRRecord_t* reference, int opCode, TES3DefaultTemplate_t* objectParam, char charParam, float unk1, float unk2);
 
 		void AddItem(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* itemTemplate, mwLong_t count);
 	}
