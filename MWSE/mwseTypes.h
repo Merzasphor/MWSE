@@ -394,6 +394,15 @@ namespace mwse
 	struct SPELRecord_t;
 
 	template <typename T>
+	struct LinkedListNode_t
+	{
+		LinkedListNode_t<T> * previous;
+		LinkedListNode_t<T> * next;
+		T * data;
+	};
+	static_assert(sizeof(LinkedListNode_t<void>) == 0x0C, "LinkedListNode_t failed size validation");
+
+	template <typename T>
 	struct LinkedList_t
 	{
 		unsigned long size;
@@ -945,8 +954,8 @@ namespace mwse
 		int unknown_0x00C4;
 		int unknown_0x00C8;
 		int numberOfSpells; // 0x00CC
-		ListNode_t<SPELRecord_t> * spellStart; // 0x00D0 // These contain the spells! Not items with a special power.
-		ListNode_t<SPELRecord_t> * spellEnd; // 0x00D4
+		LinkedListNode_t<SPELRecord_t> * spellStart; // 0x00D0 // These contain the spells! Not items with a special power.
+		LinkedListNode_t<SPELRecord_t> * spellEnd; // 0x00D4
 		int unknown_0x00D8;
 		int unknown_0x00DC;
 		int unknown_0x00E0;

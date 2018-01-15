@@ -248,6 +248,7 @@
     <ClCompile Include="xSetWeight.cpp" />
     <ClCompile Include="xShift.cpp" />
     <ClCompile Include="xSin.cpp" />
+    <ClCompile Include="xSpellList.cpp" />
     <ClCompile Include="xSqrt.cpp" />
     <ClCompile Include="xStartCombat.cpp" />
     <ClCompile Include="xStringBuild.cpp" />

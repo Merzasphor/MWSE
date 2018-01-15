@@ -64,14 +64,14 @@ namespace mwse
 		}
 
 		NPCBaseRecord_t* npc = reinterpret_cast<NPCCopyRecord_t*>(reference->recordPointer)->baseNPC;
-		ListNode_t<SPELRecord_t>* currentNode = npc->spellStart;
+		LinkedListNode_t<SPELRecord_t>* currentNode = npc->spellStart;
 		while (currentNode != NULL) {
-			SPELRecord_t* spell = currentNode->dataPtr;
+			SPELRecord_t* spell = currentNode->data;
 			if (strcmp(spell->id, spellId.c_str()) == 0) {
 				result = 1;
 				break;
 			}
-			currentNode = currentNode->nextNode;
+			currentNode = currentNode->next;
 		}
 
 		mwse::Stack::getInstance().pushShort(result);
