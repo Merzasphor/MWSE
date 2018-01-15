@@ -113,5 +113,7 @@ namespace mwse
 		void RemoveSpell(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* spellTemplate);
 
 		void SetLevel(SCPTRecord_t* script, REFRRecord_t* reference, mwShort_t level);
+
+		void StartCombat(SCPTRecord_t* script, REFRRecord_t* reference, REFRRecord_t* target);
 	}
 }

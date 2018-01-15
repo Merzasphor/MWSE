@@ -249,6 +249,7 @@
     <ClCompile Include="xShift.cpp" />
     <ClCompile Include="xSin.cpp" />
     <ClCompile Include="xSqrt.cpp" />
+    <ClCompile Include="xStartCombat.cpp" />
     <ClCompile Include="xStringBuild.cpp" />
     <ClCompile Include="xStringCompare.cpp" />
     <ClCompile Include="xStringLength.cpp" />

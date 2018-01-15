@@ -374,5 +374,17 @@ namespace mwse
 			// Restore original script variables.
 			setScriptVariableIndex(cachedVarIndex);
 		}
+
+		void StartCombat(SCPTRecord_t* script, REFRRecord_t* reference, REFRRecord_t* target) {
+			// Cache previous script variables.
+			TES3DefaultTemplate_t* cachedSecondObject = getScriptSecondObject();
+
+			// Prepare variables and run original opcode.
+			setScriptSecondObject(reinterpret_cast<TES3DefaultTemplate_t*>(target));
+			RunOriginalOpCode(script, reference, TES3_OPCODE_STARTCOMBAT);
+
+			// Restore original script variables.
+			setScriptSecondObject(cachedSecondObject);
+		}
 	}
 }

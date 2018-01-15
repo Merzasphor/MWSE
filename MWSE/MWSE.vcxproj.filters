@@ -773,6 +773,9 @@
     <ClCompile Include="xSetLevel.cpp">
       <Filter>Source Files\Functions\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="xStartCombat.cpp">
+      <Filter>Source Files\Functions\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
