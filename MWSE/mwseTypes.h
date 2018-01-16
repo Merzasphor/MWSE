@@ -1839,5 +1839,4 @@ namespace mwse
 		int unknown_0xB0[4]; // 0xB0
 	};
 	static_assert(sizeof(TES3CellMaster_t) == 0xC0, "TES3CellMaster_t failed size validation");
-	};
 }
