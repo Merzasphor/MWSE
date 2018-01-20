@@ -74,7 +74,9 @@ namespace mwse {
 
 			// If the back key is pressed, remove a character.
 			if (GetKeyIsPressed(VK_BACK)) {
-				message.erase(message.end() - 1);
+				if (message.length() > 0) {
+					message.erase(message.end() - 1);
+				}
 				mwse::Stack::getInstance().pushString(message);
 				mwse::Stack::getInstance().pushLong(0);
 				return 0.0f;
