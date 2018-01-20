@@ -92,6 +92,8 @@ namespace mwse
 
 		void AITravel(SCPTRecord_t* script, REFRRecord_t* reference, mwFloat_t x, mwFloat_t y, mwFloat_t z);
 
+		void Cast(SCPTRecord_t* script, REFRRecord_t* reference, SPELRecord_t* spell, const char* target);
+
 		void Drop(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* itemTemplate, mwLong_t count);
 
 		void Equip(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* itemTemplate);

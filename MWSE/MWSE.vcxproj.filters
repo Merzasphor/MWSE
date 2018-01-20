@@ -800,6 +800,9 @@
     <ClCompile Include="MgeVirtualMachine.cpp">
       <Filter>Source Files\MGE Interface</Filter>
     </ClCompile>
+    <ClCompile Include="xCast.cpp">
+      <Filter>Source Files\Functions\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

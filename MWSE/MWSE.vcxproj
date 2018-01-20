@@ -66,6 +66,7 @@
     <ClCompile Include="xBitNot.cpp" />
     <ClCompile Include="xBitOr.cpp" />
     <ClCompile Include="xBitXor.cpp" />
+    <ClCompile Include="xCast.cpp" />
     <ClCompile Include="xClearArray.cpp" />
     <ClCompile Include="xContentList.cpp" />
     <ClCompile Include="xCos.cpp" />

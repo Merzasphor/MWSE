@@ -202,6 +202,18 @@ namespace mwse
 			setScriptDestination(cachedDestinationX, cachedDestinationY, cachedDestinationZ);
 		}
 
+		void Cast(SCPTRecord_t* script, REFRRecord_t* reference, SPELRecord_t* spell, TES3DefaultTemplate_t* target) {
+			// Cache previous script variables.
+			TES3DefaultTemplate_t* cachedSecondObject = getScriptSecondObject();
+
+			// Prepare variables and run original opcode.
+			setScriptSecondObject(reinterpret_cast<TES3DefaultTemplate_t*>(spell));
+			RunOriginalOpCode(script, reference, TES3_OPCODE_CAST);
+
+			// Restore original script variables.
+			setScriptSecondObject(cachedSecondObject);
+		}
+
 		void Drop(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* itemTemplate, mwLong_t count) {
 			// Cache previous script variables.
 			mwLong_t cachedVarIndex = getScriptVariableIndex();
