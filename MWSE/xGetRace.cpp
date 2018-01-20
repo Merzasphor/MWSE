@@ -70,17 +70,18 @@ namespace mwse
 
 		// Get the NPC's race.
 		RACERecord_t* race = record->baseNPC->raceRecord;
-		mwLong_t raceOrArrayId = 0;
 
-		// Get argument: 
+		// Get argument: return variable type.
 		mwShort_t returnTypeParam = mwse::Stack::getInstance().popShort();
+
+		// Simple case. Just push the race name.
 		if (returnTypeParam == 0) {
-			// Simple case. Just push the race name.
-			raceOrArrayId = mwseString_t(race->name);
+			mwse::Stack::getInstance().pushString(race->name);
+			return 0.0f;
 		}
 		else if (returnTypeParam == 1) {
-			raceOrArrayId = mwse::Arrays::getInstance().create("xGetRace");
-			if (raceOrArrayId != 0) {
+			mwLong_t arrayId = mwse::Arrays::getInstance().create("xGetRace");
+			if (arrayId != 0) {
 				// Create array for skills.
 				mwLong_t skillArrayId = mwse::Arrays::getInstance().create("xGetRace");
 				if (skillArrayId != 0) {
@@ -108,9 +109,9 @@ namespace mwse
 				}
 
 				// Push the above arrays and other values to the result array.
-				ContainedArray_t& returnArray = mwse::Arrays::getInstance().get(raceOrArrayId);
-				returnArray.push_back(mwseString_t(race->id));
-				returnArray.push_back(mwseString_t(race->name));
+				ContainedArray_t& returnArray = mwse::Arrays::getInstance().get(arrayId);
+				returnArray.push_back(mwse::string::store::getOrCreate(race->id));
+				returnArray.push_back(mwse::string::store::getOrCreate(race->name));
 				returnArray.push_back(skillArrayId);
 				returnArray.push_back(attributeArrayId);
 				returnArray.push_back(*reinterpret_cast<mwLong_t*>(&race->height.male));
@@ -119,12 +120,18 @@ namespace mwse
 				returnArray.push_back(*reinterpret_cast<mwLong_t*>(&race->weight.female));
 				returnArray.push_back(race->flags & 1);
 				returnArray.push_back(race->flags >> 1);
+
+				// Push array result
+				mwse::Stack::getInstance().pushLong(arrayId);
+				return 0.0f;
 			}
 		}
+		else {
 
-		// Push result
-		mwse::Stack::getInstance().pushLong(raceOrArrayId);
-
+		}
+		
+		// 
+		mwse::Stack::getInstance().pushLong(false);
 		return 0.0f;
 	}
 }

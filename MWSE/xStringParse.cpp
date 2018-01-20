@@ -47,8 +47,8 @@ namespace mwse
 
 	float xStringParse::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwseString_t format = virtualMachine.getString(Stack::getInstance().popLong());
-		mwseString_t string = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString_t& format = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString_t& string = virtualMachine.getString(Stack::getInstance().popLong());
 
 		int resultCount = 0;
 		bool eolMode = false;

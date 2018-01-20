@@ -46,7 +46,7 @@ namespace mwse
 	float xGetBaseEffectInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t id = Stack::getInstance().popLong();
+		mwLong_t id = Stack::getInstance().popLong();
 
 		// Return values.
 		mwLong_t school = 0;

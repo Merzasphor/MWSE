@@ -47,7 +47,7 @@ namespace mwse
 	{
 		// Return values.
 		mwLong_t type = 0;
-		mwseString_t id;
+		mwString_t id = NULL;
 
 		// Get reference to what we're finding enchantment information for.
 		REFRRecord_t* reference = virtualMachine.getReference();
@@ -85,7 +85,7 @@ namespace mwse
 		}
 
 		// Return type/id.
-		Stack::getInstance().pushLong(id);
+		Stack::getInstance().pushString(id);
 		Stack::getInstance().pushLong(type);
 
 		return 0.0f;

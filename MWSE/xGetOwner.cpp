@@ -53,7 +53,7 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwseString_t owner;
+		mwString_t owner = NULL;
 
 		// Get the attached varnode.
 		mwOwnerInfoNode_t* ownerInfo = reinterpret_cast<mwOwnerInfoNode_t*>(tes3::getAttachedVarHolderNode(reference));

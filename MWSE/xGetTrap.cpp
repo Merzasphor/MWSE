@@ -45,8 +45,8 @@ namespace mwse
 
 	float xGetTrap::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwseString_t id;
-		mwseString_t name;
+		mwString_t id = NULL;
+		mwString_t name = NULL;
 		mwShort_t cost = 0;
 
 		// Get reference to what we're finding the lock level of.

@@ -25,7 +25,7 @@ namespace mwse
 			return global;
 		}
 
-		GLOBRecord_t* getGlobalRecord(const mwseString_t& id) {
+		GLOBRecord_t* getGlobalRecord(const std::string& id) {
 			return getGlobalRecord(id.c_str());
 		}
 
@@ -65,8 +65,8 @@ namespace mwse
 			return (type == RecordTypes::NPC || type == RecordTypes::CREATURE || type == RecordTypes::CONTAINER);
 		}
 
-		mwseString_t getName(BaseRecord_t* record) {
-			const char* name = NULL;
+		char* getName(BaseRecord_t* record) {
+			char* name = NULL;
 
 			RecordTypes::recordType_t type = record->recordType;
 			switch (type) {
@@ -106,7 +106,7 @@ namespace mwse
 				break;
 			}
 
-			return mwseString_t::exists(name) ? mwseString_t::lookup(name) : mwseString_t(name);
+			return name;
 		}
 
 		mwLong_t getValue(BaseRecord_t* record) {
@@ -302,7 +302,7 @@ namespace mwse
 			return reinterpret_cast<mwLockNode_t*>(getFirstAttachmentByType(reference, RecordTypes::LOCKNODE));
 		}
 
-		SPELRecord_t* getSpellRecordById(const mwseString_t& id) {
+		SPELRecord_t* getSpellRecordById(const std::string& id) {
 			TES3CellMaster_t* cellMaster = getCellMaster();
 
 			SPELRecord_t * spell = cellMaster->recordLists->spellsList->head;
@@ -313,7 +313,7 @@ namespace mwse
 			return spell;
 		}
 
-		ENCHRecord_t* getEnchantRecordById(const mwseString_t& id) {
+		ENCHRecord_t* getEnchantRecordById(const std::string& id) {
 			TES3CellMaster_t* cellMaster = getCellMaster();
 
 			ENCHRecord_t * enchant = reinterpret_cast<ENCHRecord_t*>(cellMaster->recordLists->list->head);

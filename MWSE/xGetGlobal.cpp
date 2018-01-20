@@ -42,7 +42,7 @@ namespace mwse {
 	void xGetGlobal::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 
 	float xGetGlobal::execute(mwse::VMExecuteInterface &virtualMachine) {
-		mwseString_t variable = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString_t& variable = virtualMachine.getString(Stack::getInstance().popLong());
 
 		mwFloat_t value = 0.0f;
 

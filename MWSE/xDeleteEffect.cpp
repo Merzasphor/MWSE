@@ -47,7 +47,7 @@ namespace mwse
 	{
 		// Get parameters.
 		mwLong_t type = mwse::Stack::getInstance().popLong();
-		mwLong_t id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 		mwLong_t effectIndex = mwse::Stack::getInstance().popLong() - 1; // 0-based index.
 		
 		// Get the desired effect.

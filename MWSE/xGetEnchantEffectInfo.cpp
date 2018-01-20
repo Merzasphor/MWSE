@@ -46,7 +46,7 @@ namespace mwse
 	float xGetEnchantEffectInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t effectId = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString_t& effectId = virtualMachine.getString(Stack::getInstance().popLong());
 		mwShort_t effectIndex = Stack::getInstance().popShort();
 
 		// Return values.

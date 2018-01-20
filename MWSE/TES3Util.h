@@ -34,7 +34,7 @@ namespace mwse
 		TES3CellMaster_t * getCellMaster();
 
 		GLOBRecord_t* getGlobalRecord(const char* id);
-		GLOBRecord_t* getGlobalRecord(const mwseString_t& id);
+		GLOBRecord_t* getGlobalRecord(const std::string& id);
 
 		void addObject(BaseRecord_t* record);
 
@@ -46,7 +46,7 @@ namespace mwse
 
 		bool hasInventory(BaseRecord_t* record);
 
-		mwseString_t getName(BaseRecord_t* record);
+		char* getName(BaseRecord_t* record);
 
 		mwLong_t getValue(BaseRecord_t* record);
 		mwLong_t getValue(REFRRecord_t* reference, bool multiplyByCount);
@@ -64,9 +64,9 @@ namespace mwse
 
 		mwLockNode_t* getAttachedLockNode(REFRRecord_t* reference);
 
-		SPELRecord_t* getSpellRecordById(const mwseString_t& id);
+		SPELRecord_t* getSpellRecordById(const std::string& id);
 
-		ENCHRecord_t* getEnchantRecordById(const mwseString_t& id);
+		ENCHRecord_t* getEnchantRecordById(const std::string& id);
 
 		size_t getEffectCount(const Effect_t* effectArray);
 

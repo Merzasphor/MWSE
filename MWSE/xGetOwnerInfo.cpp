@@ -45,7 +45,7 @@ namespace mwse
 
 	float xGetOwnerInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwseString_t id;
+		mwString_t id = NULL;
 		mwLong_t rank = 0;
 		mwLong_t type = 0;
 
@@ -61,7 +61,7 @@ namespace mwse
 					if (type == RecordTypes::NPC) {
 						id = reinterpret_cast<NPCBaseRecord_t*>(owner)->objectId;
 						if (ownerInfo->rankVar.variable) {
-							rank = mwseString_t(reinterpret_cast<GLOBRecord_t*>(ownerInfo->rankVar.variable)->globalName);
+							rank = mwse::string::store::getOrCreate(reinterpret_cast<GLOBRecord_t*>(ownerInfo->rankVar.variable)->globalName);
 						}
 					}
 					else if (type == RecordTypes::FACTION) {
@@ -83,7 +83,7 @@ namespace mwse
 		}
 
 		mwse::Stack::getInstance().pushLong(rank);
-		mwse::Stack::getInstance().pushLong(id);
+		mwse::Stack::getInstance().pushString(id);
 		mwse::Stack::getInstance().pushLong(type);
 
 		return 0.0f;

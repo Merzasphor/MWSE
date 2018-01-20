@@ -83,7 +83,7 @@ namespace mwse
 		virtual mwLong_t getLongValue(bool peek =false);
 		virtual mwFloat_t getFloatValue(bool peek = false);
 
-		virtual mwseString_t getString(mwLong_t fromStack);	//only ment for stack-based syntax!, parameter-based syntax functions should use getStringParameter!!!
+		virtual mwseString_t& getString(mwLong_t fromStack);	//only ment for stack-based syntax!, parameter-based syntax functions should use getStringParameter!!!
 
 
 		// Debug method to print information about the current script.

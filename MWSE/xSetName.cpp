@@ -46,7 +46,7 @@ namespace mwse
 	float xSetName::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameter from the stack.
-		mwseString_t name = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString_t& name = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Enforce name length.
 		if (name.length() > 128) {

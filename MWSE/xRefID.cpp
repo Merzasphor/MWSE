@@ -44,9 +44,9 @@ namespace mwse {
 	float xRefID::execute(mwse::VMExecuteInterface &virtualMachine) {
 		REFRRecord_t* reference = virtualMachine.getReference();
 
-		mwseString_t objectId = reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer)->objectId;
+		mwString_t objectId = reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer)->objectId;
 
-		Stack::getInstance().pushLong(objectId);
+		Stack::getInstance().pushString(objectId);
 
 		return 0.0f;
 	}

@@ -53,7 +53,7 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwseString_t name;
+		mwString_t name = NULL;
 
 		// Get the base record.
 		TES3DefaultTemplate_t* record = reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer);

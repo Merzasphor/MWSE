@@ -45,7 +45,7 @@ namespace mwse
 
 	float xGetRef::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwseString_t referenceId = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString_t& referenceId = virtualMachine.getString(Stack::getInstance().popLong());
 
 		REFRRecord_t * ref = virtualMachine.getReference(referenceId.c_str());
 

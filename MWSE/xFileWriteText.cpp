@@ -51,12 +51,12 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwseString_t fileName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
-		mwseString_t format = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString_t& fileName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString_t& format = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		bool suppressNull = false;
 		std::string badCodes;
-		mwseString_t value = mwse::string::interpolate(format, virtualMachine, &suppressNull, &badCodes);
+		std::string value = mwse::string::interpolate(format, virtualMachine, &suppressNull, &badCodes);
 		if (!badCodes.empty()) {
 			mwse::log::getLog() << "xFileWriteText: bad format \"" << badCodes << "\" in \"" << format << "\" generating \"" << value << "\"" << badCodes << std::endl;
 		}

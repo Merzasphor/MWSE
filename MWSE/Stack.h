@@ -27,6 +27,7 @@
 #include "mwseString.h"
 #include "Flags.h"
 #include "Log.h"
+#include "StringUtil.h"
 
 #include <stdexcept>
 
@@ -74,11 +75,18 @@ namespace mwse {
             {
                 push(*reinterpret_cast<StackItem_t*>(&value));
             }
-            void pushString(const mwseString_t &value)
+            void pushString(const mwseString_t& value)
             {
-                push(static_cast<StackItem_t>(value));
+                pushLong(value);
             }
-            //void pushRef(const mwRef_t &value);
+			void pushString(const std::string& value)
+			{
+				pushLong(mwse::string::store::getOrCreate(value));
+			}
+			void pushString(const char* value)
+			{
+				pushLong(mwse::string::store::getOrCreate(value));
+			}
 
 			char popByte(void)
 			{
@@ -96,10 +104,6 @@ namespace mwse {
             {
 				int temp = pop();
 				return *reinterpret_cast<mwFloat_t*>(&temp);
-            }
-            mwseString_t popString(void)
-            {
-                return static_cast<mwseString_t>(pop());
             }
             //mwRef_t & popRef(void);
             void popFrames(size_t frame_count)  // pop <frame_count> frames from the stack`

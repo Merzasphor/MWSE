@@ -46,7 +46,7 @@ namespace mwse
 	float xDeleteSpell::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwLong_t id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get spell.
 		SPELRecord_t* spell = tes3::getSpellRecordById(id);

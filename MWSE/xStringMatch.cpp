@@ -49,8 +49,8 @@ namespace mwse
 
 	float xStringMatch::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwseString_t string = virtualMachine.getString(Stack::getInstance().popLong());
-		mwseString_t pattern = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString_t& string = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString_t& pattern = virtualMachine.getString(Stack::getInstance().popLong());
 
 		mwLong_t result = std::regex_search(string, std::regex(pattern));
 

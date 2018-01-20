@@ -50,7 +50,7 @@ namespace mwse
 	float xGetSpellEffects::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get other context information for original opcode call.
 		SCPTRecord_t* script = &virtualMachine.getScript();

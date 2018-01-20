@@ -45,7 +45,7 @@ namespace mwse
 
 	float xSetTrap::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwseString_t spellId = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString_t& spellId = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get the spell based on the ID given.
 		SPELRecord_t* spell = tes3::getSpellRecordById(spellId);

@@ -48,7 +48,7 @@ namespace mwse
 		mwShort_t result = 0;
 
 		// Get spell id from the stack.
-		mwseString_t spellId = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString_t& spellId = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();

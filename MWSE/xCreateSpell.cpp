@@ -46,8 +46,8 @@ namespace mwse
 	float xCreateSpell::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t spellId = virtualMachine.getString(Stack::getInstance().popLong());
-		mwseString_t spellName = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString_t& spellId = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString_t& spellName = virtualMachine.getString(Stack::getInstance().popLong());
 
 		// Verify spell Id length.
 		if (spellId.length() > 31) {

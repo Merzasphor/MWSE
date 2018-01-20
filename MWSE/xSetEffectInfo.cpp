@@ -47,7 +47,7 @@ namespace mwse
 	{
 		// Get parameters.
 		mwLong_t effectType = Stack::getInstance().popLong();
-		mwseString_t effectId = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString_t& effectId = virtualMachine.getString(Stack::getInstance().popLong());
 		mwLong_t effectIndex = Stack::getInstance().popLong();
 		mwLong_t effectXXXXXXXXX = Stack::getInstance().popLong();
 		mwLong_t effectSkillAttributeId = Stack::getInstance().popLong();

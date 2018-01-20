@@ -46,7 +46,7 @@ namespace mwse
 	float xSetSpellInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t spellId = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString_t& spellId = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 		mwLong_t nameId = mwse::Stack::getInstance().popLong();
 		mwLong_t type = mwse::Stack::getInstance().popLong();
 		mwLong_t cost = mwse::Stack::getInstance().popLong();
@@ -76,7 +76,7 @@ namespace mwse
 
 		// Get spell data by id.
 		SPELRecord_t* spell = tes3::getSpellRecordById(spellId);
-		if (spellId == NULL) {
+		if (spell == NULL) {
 			mwse::log::getLog() << "xSetSpellInfo: Could not find spell of id '" << spellId << "'" << std::endl;
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
@@ -84,7 +84,7 @@ namespace mwse
 
 		// Set spell name if one is provided.
 		if (nameId) {
-			mwseString_t name = virtualMachine.getString(nameId);
+			mwseString_t& name = virtualMachine.getString(nameId);
 			if (name.length() > 31) {
 				mwse::log::getLog() << "xSetSpellInfo: Given name must be 31 characters or less." << std::endl;
 				mwse::Stack::getInstance().pushLong(false);

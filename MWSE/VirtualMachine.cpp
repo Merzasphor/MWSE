@@ -26,6 +26,7 @@
 #include "mwOffsets.h"
 #include "Log.h"
 #include "TES3Util.h"
+#include "StringUtil.h"
 
 using namespace mwse;
 
@@ -741,17 +742,17 @@ mwFloat_t VirtualMachine::getFloatValue(bool peek)
 	return returnData;
 }
 
-mwseString_t VirtualMachine::getString(mwLong_t fromStack)	//ask grant, need a '*' or a '&' here?? (and in the header files)
+mwseString_t& VirtualMachine::getString(mwLong_t fromStack)	//ask grant, need a '*' or a '&' here?? (and in the header files)
 {
 	if (fromStack == 0x0)
 	{
 		return mwseString_t();
 	}
 
-	if (mwseString_t::exists(fromStack))
+	if (mwse::string::store::exists(fromStack))
 	{
 		//if it's a variable string
-		return mwseString_t::lookup(fromStack);
+		return mwse::string::store::get(fromStack);
 	}
 	else if (fromStack < 32767)
 	{
@@ -767,12 +768,12 @@ mwseString_t VirtualMachine::getString(mwLong_t fromStack)	//ask grant, need a '
 
 		char * string = reinterpret_cast<char*>(scriptstream);
 
-		return mwseString_t(string, strlen);
+		return mwse::string::store::getOrCreate(string, strlen);
 	}
 	else
 	{
 		const char* string = reinterpret_cast<char*>(fromStack);
-		return mwseString_t(string);
+		return mwse::string::store::getOrCreate(string);
 	}
 }
 

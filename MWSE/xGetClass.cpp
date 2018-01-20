@@ -76,8 +76,8 @@ namespace mwse
 		CLASRecord_t* classRecord = record->baseNPC->classRecord;
 
 		// Get basic class details.
-		mwseString_t id(classRecord->id);
-		mwseString_t name(classRecord->name);
+		mwString_t id = classRecord->id;
+		mwString_t name = classRecord->name;
 		mwLong_t playable = classRecord->playable;
 		mwLong_t specialization = classRecord->specialization;
 
@@ -107,8 +107,8 @@ namespace mwse
 		mwse::Stack::getInstance().pushLong(attributes);
 		mwse::Stack::getInstance().pushLong(specialization);
 		mwse::Stack::getInstance().pushLong(playable);
-		mwse::Stack::getInstance().pushLong(name);
-		mwse::Stack::getInstance().pushLong(id);
+		mwse::Stack::getInstance().pushString(name);
+		mwse::Stack::getInstance().pushString(id);
 
 		return 0.0f;
 	}

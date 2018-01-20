@@ -52,8 +52,8 @@ namespace mwse
 
 		// Arguments we will be returning.
 		mwLong_t spellCount = 0;
-		mwLong_t spellId = 0;
-		mwLong_t spellName = 0;
+		mwString_t spellId = NULL;
+		mwString_t spellName = NULL;
 		mwLong_t spellType = 0;
 		mwLong_t spellCost = 0;
 		mwLong_t spellEffectCount = 0;
@@ -83,8 +83,8 @@ namespace mwse
 		// Get our data.
 		SPELRecord_t* spell = node->data;
 		spellCount = npcCopyRecord->baseNPC->numberOfSpells;
-		spellId = mwseString_t(spell->id);
-		spellName = mwseString_t(spell->friendlyName);
+		spellId = spell->id;
+		spellName = spell->friendlyName;
 		spellType = spell->type;
 		spellCost = spell->cost;
 		spellEffectCount = tes3::getEffectCount(spell->effects);
@@ -95,8 +95,8 @@ namespace mwse
 		mwse::Stack::getInstance().pushLong(spellFlags);
 		mwse::Stack::getInstance().pushLong(spellEffectCount);
 		mwse::Stack::getInstance().pushLong(spellCost);
-		mwse::Stack::getInstance().pushLong(spellName);
-		mwse::Stack::getInstance().pushLong(spellId);
+		mwse::Stack::getInstance().pushString(spellName);
+		mwse::Stack::getInstance().pushString(spellId);
 		mwse::Stack::getInstance().pushLong(spellCount);
 
 		return 0.0f;

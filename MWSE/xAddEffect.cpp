@@ -47,7 +47,7 @@ namespace mwse
 	{
 		// Get parameters.
 		mwLong_t type = mwse::Stack::getInstance().popLong();
-		mwLong_t id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 		mwLong_t effectId = mwse::Stack::getInstance().popLong();
 		mwLong_t skillAttributeId = mwse::Stack::getInstance().popLong();
 		mwLong_t range = mwse::Stack::getInstance().popLong();

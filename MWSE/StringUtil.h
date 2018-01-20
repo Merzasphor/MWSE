@@ -25,11 +25,46 @@
 #include "mwseTypes.h"
 #include "mwseString.h"
 
-namespace mwse
-{
-	namespace string
-	{
-		mwseString_t interpolate(const mwseString_t& format, mwse::VMExecuteInterface &virtualMachine, bool* suppressNull, std::string* badCodes);
+namespace mwse {
+	namespace string {
+		namespace store {
+			// Type of our string storage.
+			typedef std::map<mwLong_t, mwseString_t> StringMap_t;
+
+			extern mwLong_t nextId;
+
+			extern StringMap_t store;
+
+			mwseString_t& create(const std::string& value);
+
+			mwseString_t& create(const char* value);
+
+			mwseString_t& create(const char* value, size_t length);
+
+			bool clear();
+
+			bool exists(const mwLong_t id);
+
+			bool exists(const std::string& value);
+
+			bool exists(const char* value);
+
+			mwseString_t& get(const mwLong_t id);
+
+			mwseString_t& get(const std::string& value);
+
+			mwseString_t& getOrCreate(const std::string& value);
+
+			mwseString_t& getOrCreate(const char* value);
+
+			mwseString_t& getOrCreate(const char* value, size_t length);
+		}
+
+		//
+		// String pattern searching functions.
+		//
+
+		std::string interpolate(const std::string& format, mwse::VMExecuteInterface &virtualMachine, bool* suppressNull, std::string* badCodes);
 
 		// Count how many results there should be based on the format string
 		bool enumerate(const char *format, int& substitutions, bool& eolmode);

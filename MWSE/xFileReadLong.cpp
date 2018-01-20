@@ -53,7 +53,7 @@ namespace mwse
 		}
 
 		// Get arguments from the stack.
-		mwseString_t fileName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString_t& fileName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 		mwLong_t count = mwse::Stack::getInstance().popLong();
 
 		// Gather values into a temporary list, so they aren't in reverse order.

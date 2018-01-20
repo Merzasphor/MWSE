@@ -54,7 +54,7 @@ namespace mwse
 		mwFloat_t y = mwse::Stack::getInstance().popFloat();
 		mwFloat_t z = mwse::Stack::getInstance().popFloat();
 		mwFloat_t rotation = mwse::Stack::getInstance().popFloat();
-		mwseString_t cell = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString_t& cell = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get other context information for original opcode.
 		SCPTRecord_t* script = &virtualMachine.getScript();

@@ -46,7 +46,7 @@ namespace mwse
 	float xSetBaseEffectInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t id = Stack::getInstance().popLong();
+		mwLong_t id = Stack::getInstance().popLong();
 		mwLong_t school = Stack::getInstance().popLong();
 		mwFloat_t baseMagickaCost = Stack::getInstance().popLong();
 		mwLong_t flags = Stack::getInstance().popLong();
@@ -54,14 +54,14 @@ namespace mwse
 		// Validate id.
 		if (id < Effects::FirstMagicEffect || id > Effects::LastMagicEffect) {
 			log::getLog() << "xSetBaseEffectInfo: Effect ID out of range." << std::endl;
-			Stack::getInstance().pushLong(0);
+			Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
 		// Validate school.
 		if (school < FirstMagicSchool || school > LastMagicSchool) {
 			log::getLog() << "xSetBaseEffectInfo: School ID out of range." << std::endl;
-			Stack::getInstance().pushLong(0);
+			Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
@@ -70,7 +70,7 @@ namespace mwse
 		effect.base_magicka_cost = baseMagickaCost;
 		effect.flags = (flags & (Effects::Spellmaking | Effects::Enchanting | Effects::NegativeLighting));
 
-		Stack::getInstance().pushLong(1);
+		Stack::getInstance().pushLong(true);
 
 		return 0.0f;
 	}

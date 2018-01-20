@@ -46,10 +46,10 @@ namespace mwse
 	float xGetSpellInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t spellId = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString_t& spellId = virtualMachine.getString(Stack::getInstance().popLong());
 
 		// Return values.
-		mwseString_t name;
+		mwString_t name = NULL;
 		mwLong_t type = 0;
 		mwLong_t cost = 0;
 		mwLong_t effects = 0;
@@ -75,7 +75,7 @@ namespace mwse
 		mwse::Stack::getInstance().pushLong(effects);
 		mwse::Stack::getInstance().pushLong(cost);
 		mwse::Stack::getInstance().pushLong(type);
-		mwse::Stack::getInstance().pushLong(name);
+		mwse::Stack::getInstance().pushString(name);
 
 		return 0.0f;
 	}

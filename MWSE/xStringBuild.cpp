@@ -49,17 +49,17 @@ namespace mwse
 
 	float xStringBuild::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwseString_t format = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString_t& format = virtualMachine.getString(Stack::getInstance().popLong());
 
 		bool suppressNull = false;
 		std::string badCodes;
 
-		mwseString_t result = mwse::string::interpolate(format, virtualMachine, &suppressNull, &badCodes);
+		std::string& result = mwse::string::interpolate(format, virtualMachine, &suppressNull, &badCodes);
 		if (!badCodes.empty()) {
 			mwse::log::getLog() << "xLogMessage: bad format \"" << badCodes << "\" in \"" << format << "\" generating \"" << result << "\"" << badCodes << std::endl;
 		}
 
-		mwse::Stack::getInstance().pushLong(result);
+		mwse::Stack::getInstance().pushString(result);
 
 		return 0.0;
 	}

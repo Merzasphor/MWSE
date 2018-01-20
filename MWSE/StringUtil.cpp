@@ -9,8 +9,112 @@
 
 namespace mwse {
 	namespace string {
-		mwseString_t interpolate(const mwseString_t& format, mwse::VMExecuteInterface &virtualMachine, bool* suppressNull, std::string* badCodes) {
-			mwseString_t result;
+		namespace store {
+			mwLong_t nextId = 0;
+
+			// Static storage for strings, indexed by id.
+			StringMap_t store;
+
+			mwseString_t& create(const std::string& value) {
+				mwLong_t id = nextId++;
+				store.insert(StringMap_t::value_type(id, mwseString_t(id, value)));
+				return get(id);
+			}
+
+			mwseString_t& create(const char* value) {
+				mwLong_t id = nextId++;
+				store.insert(StringMap_t::value_type(id, mwseString_t(id, value)));
+				return get(id);
+			}
+
+			mwseString_t& create(const char* value, size_t length) {
+				mwLong_t id = nextId++;
+				store.insert(StringMap_t::value_type(id, mwseString_t(id, value, length)));
+				return get(id);
+			}
+
+			bool clear() {
+				bool cleared = true;
+				if (nextId == 0) {
+					cleared = false;
+				}
+
+				nextId = 0;
+				store.clear();
+
+				return cleared;
+			}
+
+			bool exists(const mwLong_t id) {
+				return store.find(id) != store.end();
+			}
+
+			bool exists(const char* value) {
+				for (StringMap_t::iterator it = store.begin(); it != store.end(); it++) {
+					if (it->second.compare(value) == 0) {
+						return true;
+					}
+				}
+
+				return false;
+			}
+
+			bool exists(const std::string& value) {
+				for (StringMap_t::iterator it = store.begin(); it != store.end(); it++) {
+					if (it->second.compare(value) == 0) {
+						return true;
+					}
+				}
+
+				return false;
+			}
+
+			mwseString_t& get(const mwLong_t id) {
+				auto it = store.find(id);
+				if (it == store.end()) {
+					return mwseString_t();
+				}
+
+				return it->second;
+			}
+
+			mwseString_t& get(const std::string& value) {
+				for (StringMap_t::iterator it = store.begin(); it != store.end(); it++) {
+					if (it->second.compare(value) == 0) {
+						return it->second;
+					}
+				}
+
+				return mwseString_t();
+			}
+
+			mwseString_t& getOrCreate(const char* value) {
+				if (exists(value)) {
+					return get(value);
+				}
+
+				return create(value);
+			}
+
+			mwseString_t& getOrCreate(const char* value, size_t length) {
+				if (exists(value)) {
+					return get(value);
+				}
+
+				return create(value, length);
+			}
+
+			mwseString_t& getOrCreate(const std::string& value) {
+				if (exists(value)) {
+					return get(value);
+				}
+
+				return create(value);
+			}
+		}
+
+		std::string interpolate(const std::string& format, mwse::VMExecuteInterface &virtualMachine, bool* suppressNull, std::string* badCodes) {
+			std::string result;
 
 			*suppressNull = false;
 
@@ -129,9 +233,8 @@ namespace mwse {
 					}
 					else if (current_char == 's') {
 						if (!mwse::Stack::getInstance().empty()) {
-							mwLong_t argument = Stack::getInstance().popLong();
-							if (argument != 0) {
-								mwseString_t value = virtualMachine.getString(argument);
+							mwseString_t& value = mwse::string::store::get(Stack::getInstance().popLong());
+							if (value.isValid()) {
 								size_t substitute_start = std::min((size_t)skip, value.length());
 								if (!precision_set) precision = value.length();
 								result += value.substr(substitute_start, precision);
@@ -380,7 +483,7 @@ namespace mwse {
 							}
 						}
 						*svalue = 0;	// make sure it's null terminated
-						results[resultcount++] = mwseString_t(svalbuf);
+						results[resultcount++] = mwse::string::store::getOrCreate(svalbuf);
 					}
 
 					else if (*format == '%')

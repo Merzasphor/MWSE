@@ -54,7 +54,7 @@ namespace mwse {
 		mwLong_t type = 0;
 		mwLong_t value = 0;
 		mwFloat_t weight = 0;
-		mwseString_t name;
+		mwString_t name = NULL;
 		ListNode_t<InventoryNode_t>* next = NULL;
 
 		// If we aren't given a node, get the first one.
@@ -93,7 +93,7 @@ namespace mwse {
 				name = tes3::getName(reinterpret_cast<BaseRecord_t*>(record));
 			}
 			catch (std::exception& e) {
-				name = mwseString_t();
+				name = NULL;
 				mwse::log::getLog() << "xContentList: Could not get name of object '" << id << "'. " << e.what() << std::endl;
 			}
 			

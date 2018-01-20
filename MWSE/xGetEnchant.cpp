@@ -46,7 +46,7 @@ namespace mwse
 	float xGetEnchant::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Return values.
-		mwseString_t enchId;
+		mwString_t enchId = NULL;
 		mwLong_t type = 0;
 		mwLong_t cost = 0;
 		mwFloat_t currCharge = 0.0f;
@@ -115,7 +115,7 @@ namespace mwse
 		Stack::getInstance().pushFloat(currCharge);
 		Stack::getInstance().pushLong(cost);
 		Stack::getInstance().pushLong(type);
-		Stack::getInstance().pushLong(enchId);
+		Stack::getInstance().pushString(enchId);
 
 		return 0.0f;
 	}

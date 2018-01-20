@@ -46,7 +46,7 @@ namespace mwse
 	float xGetEnchantInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t enchantId = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString_t& enchantId = virtualMachine.getString(Stack::getInstance().popLong());
 
 		// Return values.
 		mwShort_t type = 0;

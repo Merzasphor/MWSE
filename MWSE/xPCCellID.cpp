@@ -59,9 +59,7 @@ namespace mwse
 			cell = masterCell->exteriorCells[CENTER]->first;
 		}
 
-		mwseString_t cellId = cell->cellname;
-
-		Stack::getInstance().pushLong(cellId);
+		Stack::getInstance().pushString(cell->cellname);
 
 		return 0.0f;
 	}

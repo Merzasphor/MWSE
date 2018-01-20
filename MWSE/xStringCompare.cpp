@@ -49,8 +49,8 @@ namespace mwse
 
 	float xStringCompare::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwseString_t string1 = virtualMachine.getString(Stack::getInstance().popLong());
-		mwseString_t string2 = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString_t& string1 = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString_t& string2 = virtualMachine.getString(Stack::getInstance().popLong());
 
 		mwLong_t result = strcmp(string1.c_str(), string2.c_str());
 

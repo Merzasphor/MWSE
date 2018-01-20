@@ -8,7 +8,7 @@ namespace mwse {
 	HANDLE FileSystem::getFile(const char* fileName) {
 		HANDLE result = NULL;
 
-		mwseString_t str(fileName);
+		std::string str(fileName);
 		mwseFileMap_t::iterator it = fileMap.find(str);
 		if (it != fileMap.end()) {
 			mwseFileState_t& state = it->second;
@@ -53,7 +53,7 @@ namespace mwse {
 		char* bufferPtr = buffer;
 
 		if (file == INVALID_HANDLE_VALUE) {
-			return FileReadString_t(mwseString_t(), 0);
+			return FileReadString_t(std::string(), 0);
 		}
 
 		DWORD bytesRead = 0;
@@ -85,7 +85,7 @@ namespace mwse {
 			bufferPtr--;
 		}
 
-		return FileReadString_t(mwseString_t(buffer), numRead);
+		return FileReadString_t(std::string(buffer), numRead);
 	}
 
 	void FileSystem::writeShort(const char* fileName, const mwShort_t value) {
@@ -100,7 +100,7 @@ namespace mwse {
 		write(fileName, &value, sizeof(mwFloat_t));
 	}
 
-	void FileSystem::writeString(const char* fileName, const mwseString_t& value) {
+	void FileSystem::writeString(const char* fileName, const std::string& value) {
 		write(fileName, value.c_str(), strlen(value.c_str()) + 1);
 	}
 
