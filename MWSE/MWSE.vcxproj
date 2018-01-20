@@ -258,6 +258,7 @@
     <ClCompile Include="xStringMatch.cpp" />
     <ClCompile Include="xStringParse.cpp" />
     <ClCompile Include="xTan.cpp" />
+    <ClCompile Include="xTextInput.cpp" />
     <ClCompile Include="xXor.cpp" />
   </ItemGroup>
   <ItemGroup>

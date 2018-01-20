@@ -779,6 +779,9 @@
     <ClCompile Include="xSpellList.cpp">
       <Filter>Source Files\Functions\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="xTextInput.cpp">
+      <Filter>Source Files\Functions\Utility</Filter>
+    </ClCompile>
     <ClCompile Include="xMessageFix.cpp">
       <Filter>Source Files\Functions\Utility</Filter>
     </ClCompile>
