@@ -104,7 +104,8 @@ namespace mwse {
 		bool result = false;
 		HANDLE file = getFile(fileName);
 		if (file != INVALID_HANDLE_VALUE) {
-			result = SetFilePointer(file, absolute, 0, FILE_BEGIN) >= 0;
+			DWORD newPosition = SetFilePointer(file, absolute, 0, FILE_BEGIN);
+			result = (newPosition == absolute);
 		}
 		return result;
 	}
