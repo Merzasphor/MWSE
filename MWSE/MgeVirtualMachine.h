@@ -8,6 +8,8 @@
 
 #include <map>
 
+#define DEBUG_MGE_VM false
+
 #include "MgeVmtypes.h"
 #include "MgeInstruction.h"
 //#include "ADDRESSSPACE.h"

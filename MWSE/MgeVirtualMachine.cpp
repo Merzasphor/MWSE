@@ -38,7 +38,9 @@ namespace mwse
 
 	float MgeInstruction::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
+#if DEBUG_MGE_VM
 		log::getLog() << __FUNCTION__ << " opcode: " << std::hex << opcode << std::endl;
+#endif
 		instruction->execute();
 		return 0.0;
 	}
@@ -73,7 +75,9 @@ VIRTUALMACHINE::~VIRTUALMACHINE(void)
 
 bool VIRTUALMACHINE::AddAddressSpace(VPVOID position, ADDRESSSPACE* space)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*bool result= true;
 	if(space && space->size())
 	{
@@ -104,7 +108,9 @@ bool VIRTUALMACHINE::AddAddressSpace(VPVOID position, ADDRESSSPACE* space)
 
 bool VIRTUALMACHINE::AddInstruction(OPCODE opcode, INSTRUCTION* instruction)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << " opcode: " << std::hex << opcode << std::endl;
+#endif
 	mwse::MgeInstruction* mge_instruction =
 		new mwse::MgeInstruction(opcode, instruction);
 	return true;
@@ -113,7 +119,9 @@ bool VIRTUALMACHINE::AddInstruction(OPCODE opcode, INSTRUCTION* instruction)
 //function to access memory to read or write to it
 bool VIRTUALMACHINE::AccessMem(MEMACCESSOR& access, VPVOID addr, VOID* buf, VMSIZE size)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	bool result= true;
 	/*VMSIZE start= (VMSIZE)addr;
 	LONGLONG end= (LONGLONG)start+size;
@@ -174,7 +182,9 @@ bool VIRTUALMACHINE::AccessMem(MEMACCESSOR& access, VPVOID addr, VOID* buf, VMSI
 
 bool VIRTUALMACHINE::ReadMem(const VPVOID addr, VOID* buf, VMSIZE size) //function to read stuff from memory
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*MEMREADER reader;
 	return AccessMem(reader,const_cast<VPVOID>(addr),buf,size);*/
 	return true;
@@ -182,7 +192,9 @@ bool VIRTUALMACHINE::ReadMem(const VPVOID addr, VOID* buf, VMSIZE size) //functi
 
 bool VIRTUALMACHINE::WriteMem(VPVOID addr, const VOID* buf, VMSIZE size) //function to write stuff to memory
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*MEMWRITER writer;
 	return AccessMem(writer,addr,const_cast<VOID*>(buf),size);*/
 	return true;
@@ -190,20 +202,26 @@ bool VIRTUALMACHINE::WriteMem(VPVOID addr, const VOID* buf, VMSIZE size) //funct
 
 bool VIRTUALMACHINE::GetInstruction(VPVOID addr, OPCODE& opcode)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	//return ReadMem(addr,&opcode,sizeof(opcode));
 	return true;
 }
 
 bool VIRTUALMACHINE::IsInstruction(OPCODE inst) //see if the given opcode is an extended instruction
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	//return 	instructions.find(inst)!=instructions.end();
 	return true;
 }
 bool VIRTUALMACHINE::step(bool skip)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*bool result= false;
 	VMREGTYPE ip= 0;
 	OPCODE opcode;
@@ -239,7 +257,9 @@ bool VIRTUALMACHINE::step(bool skip)
 
 bool VIRTUALMACHINE::run(void)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	bool result= true;
 	
 	//while(result)
@@ -251,14 +271,18 @@ bool VIRTUALMACHINE::run(void)
 
 bool VIRTUALMACHINE::Interrupt(VMINTERRUPT intnum)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 // 2005-07-07  CDC  It should return something.  False since it didn't do anything?
 	return false;
 }
 
 bool VIRTUALMACHINE::push(VMREGTYPE val)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*bool result= false;
 	VMREGTYPE sp= 0;
 	if(GetRegister(SP,sp))
@@ -278,7 +302,9 @@ bool VIRTUALMACHINE::push(VMREGTYPE val)
 
 bool VIRTUALMACHINE::push(VMFLOAT val)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*bool result= false;
 	VMREGTYPE sp= 0;
 	if(GetRegister(SP,sp))
@@ -298,7 +324,9 @@ bool VIRTUALMACHINE::push(VMFLOAT val)
 
 bool VIRTUALMACHINE::pop(VMREGTYPE& val)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*bool result= false;
 	VMREGTYPE sp= 0;
 	if(GetRegister(SP,sp))
@@ -314,7 +342,9 @@ bool VIRTUALMACHINE::pop(VMREGTYPE& val)
 
 bool VIRTUALMACHINE::pop(VMFLOAT& val)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*bool result= false;
 	VMREGTYPE sp= 0;
 	if(GetRegister(SP,sp))
@@ -330,7 +360,9 @@ bool VIRTUALMACHINE::pop(VMFLOAT& val)
 
 void VIRTUALMACHINE::SetFlags(VMREGTYPE value)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	if(value)
 	{
 		if(value>0)
@@ -344,7 +376,9 @@ void VIRTUALMACHINE::SetFlags(VMREGTYPE value)
 
 void VIRTUALMACHINE::SetFlags(VMFLOAT value)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	if(value)
 	{
 		if(value>0)
@@ -358,12 +392,16 @@ void VIRTUALMACHINE::SetFlags(VMFLOAT value)
 
 VMFLAGSTYPE VIRTUALMACHINE::GetFlags(void)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	return flags;
 }
 
 void VIRTUALMACHINE::BadOpcodeHandler(OPCODE opcode, VPVOID ip)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 }
 

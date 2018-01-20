@@ -50,28 +50,37 @@ struct TES3MACHINE : public VIRTUALMACHINE
 	virtual HWBREAKPOINT* GetVMDebuggerBreakpoint();
 
 	// 2005-02-15  CDC  needed for messagefix instruction
-	virtual VPSCRIPT GetScript(void) { 
+	virtual VPSCRIPT GetScript(void) {
+#if DEBUG_MGE_VM
 		mwse::log::getLog() << __FUNCTION__ << std::endl;
-		return scriptaddr; }
+#endif
+		return scriptaddr;
+	}
 	virtual bool SetScript(VPSCRIPT pscript);
 	virtual const Context GetFlow(void);
 	virtual void SetFlow(const Context newflow);
 
 	void set_external_malloc(void* external_malloc) {
 		external_malloc_ = reinterpret_cast<ExternalMalloc>(external_malloc); }
-	void* Malloc(size_t size) { 
+	void* Malloc(size_t size) {
+#if DEBUG_MGE_VM
 		mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 		return external_malloc_(size); }
 	void set_external_free(void* external_free) {
 		external_free_ = reinterpret_cast<ExternalFree>(external_free); }
-	void Free(void* to_free) { 
+	void Free(void* to_free) {
+#if DEBUG_MGE_VM
 		mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 		external_free_(to_free); }
 	void set_external_realloc(void* external_realloc) {
 		external_realloc_ =
 			reinterpret_cast<ExternalRealloc>(external_realloc); }
 	void* Realloc(void* to_realloc, size_t size) {
+#if DEBUG_MGE_VM
 		mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 		return external_realloc_(to_realloc, size); }
 	void CheckForSkillUp(long skill_id);
 	MACPRecord* GetMacpRecord();

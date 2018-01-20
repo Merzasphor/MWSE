@@ -66,7 +66,9 @@ TES3MACHINE::TES3MACHINE()
 
 bool TES3MACHINE::GetRegister(WORD regidx, VMREGTYPE& value) //get the info from a processor register (EDX,EIP,...)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*
 	bool result= true;
 	
@@ -93,7 +95,9 @@ bool TES3MACHINE::GetRegister(WORD regidx, VMREGTYPE& value) //get the info from
 
 bool TES3MACHINE::SetRegister(WORD regidx, VMREGTYPE value) //write stuff into a processor register (EDX,EIP,...)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*
 	bool result= true;
 	
@@ -127,7 +131,9 @@ bool TES3MACHINE::SetRegister(WORD regidx, VMREGTYPE value) //write stuff into a
 
 bool TES3MACHINE::SetScript(VPSCRIPT pscript)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*
 	scriptaddr=	pscript;
 	return ReadMem((VPVOID)pscript,&script,sizeof(script));
@@ -137,7 +143,9 @@ bool TES3MACHINE::SetScript(VPSCRIPT pscript)
 
 bool TES3MACHINE::Interrupt(VMINTERRUPT num)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*
 	bool result= false;
 	if(num==INTSWITCHREFERENCE)
@@ -164,19 +172,25 @@ bool TES3MACHINE::Interrupt(VMINTERRUPT num)
 
 const Context TES3MACHINE::GetFlow(void) //return the Flow context, (registers, ...)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	return flow;
 }
 
 void TES3MACHINE::SetFlow(const Context newflow) //set the flow context (registers, ...)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	this->flow= newflow;
 }
 
 bool TES3MACHINE::SetVMDebuggerBreakpoint(HWBREAKPOINT* breakpoint)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*if(this->breakpoint && breakpoint) return false;
 	this->breakpoint= breakpoint;*/
 	return true;
@@ -184,13 +198,17 @@ bool TES3MACHINE::SetVMDebuggerBreakpoint(HWBREAKPOINT* breakpoint)
 
 HWBREAKPOINT* TES3MACHINE::GetVMDebuggerBreakpoint()
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	return breakpoint;
 }
 
 const char* TES3MACHINE::GetScriptName(void)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*
 	const char* result= NULL;
 	if(scriptaddr)
@@ -203,7 +221,9 @@ const char* TES3MACHINE::GetScriptName(void)
 
 const char* TES3MACHINE::GetString(VPVOID addr)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	mwse::mwseString_t& string = mwse::mwAdapter::GetVMInstance()->getString((mwLong_t)addr);
 	return string.c_str();
 }
@@ -211,7 +231,9 @@ const char* TES3MACHINE::GetString(VPVOID addr)
 
 bool TES3MACHINE::dumpmem(VPVOID ptr, int size)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*
 	bool result= false;
 	BYTE* buf= new BYTE[size];
@@ -232,7 +254,9 @@ bool TES3MACHINE::dumpmem(VPVOID ptr, int size)
 
 void TES3MACHINE::dumpscriptstack(void)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*
 	VMREGTYPE sp= 0;
 	if(GetRegister(SP,sp))
@@ -248,7 +272,9 @@ void TES3MACHINE::dumpscriptstack(void)
 
 void TES3MACHINE::dumpscript(void)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*
 	cLog::mLogMessage("Stack at %lx\n",scriptaddr);
 	cLog::mLogBinaryMessage((LPVOID)&script,sizeof(script));
@@ -259,7 +285,9 @@ void TES3MACHINE::dumpscript(void)
 
 void TES3MACHINE::dumptemplate(VPTEMPLATE ptempl)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*
 	TES3TEMPLATE templ;
 	char buf[256];
@@ -283,7 +311,9 @@ void TES3MACHINE::dumptemplate(VPTEMPLATE ptempl)
 bool consoleCreated = false;
 void TES3MACHINE::dumpobject(VPREFERENCE pref)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*
     if (!consoleCreated) {
         AllocConsole();
@@ -385,7 +415,9 @@ void TES3MACHINE::dumpobject(VPREFERENCE pref)
 
 void TES3MACHINE::dumpobjects(void)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*
 	const Context context( GetFlow() );
 	VPVOID master2= 0;
@@ -432,7 +464,9 @@ void TES3MACHINE::dumpobjects(void)
 
 void TES3MACHINE::searchforscripttarget(void)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	/*
 	const Context context( GetFlow() );
 	DWORD scripttarget= context.Ecx;
@@ -456,7 +490,9 @@ void TES3MACHINE::searchforscripttarget(void)
 
 void TES3MACHINE::CheckForSkillUp(long skill_id)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	MACPRecord* macp = GetMacpRecord();
 	if (macp) {
 		int const skillUpFunc = TES3_FUNC_SKILL_LEVEL_UP; // address of native MW function
@@ -470,8 +506,10 @@ void TES3MACHINE::CheckForSkillUp(long skill_id)
 }
 
 MACPRecord* TES3MACHINE::GetMacpRecord()
-{	
+{
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	// TODO All offsets appear to be fixed, so we should be able to replace
 	// this by accessing the appropriate fields in yet to be mapped data
 	// structures. Offsets come from the native function at 0x40FF20.
@@ -492,21 +530,27 @@ MACPRecord* TES3MACHINE::GetMacpRecord()
 
 long TES3MACHINE::GetRandomLong(long min, long max)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	std::uniform_int_distribution<long> dist(min, max);
 	return dist(rng_);
 }
 
 float TES3MACHINE::GetRandomFloat(float min, float max)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	std::uniform_real_distribution<float> dist(min, max);
 	return dist(rng_);
 }
 
 long TES3MACHINE::CreateArray(std::string const& caller)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	long id = 0;
 	if (arrays_.size() < kMaxArrayId) {
 		id = arrays_.size() + 1;
@@ -522,7 +566,9 @@ long TES3MACHINE::CreateArray(std::string const& caller)
 long TES3MACHINE::GetArrayValue(std::string const& caller, long const id,
 	long const index)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	long value = 0;
 	if (id > 0 && id <= arrays_.size()) {
 		std::vector<long> const& a = arrays_[id - 1];
@@ -544,7 +590,9 @@ long TES3MACHINE::GetArrayValue(std::string const& caller, long const id,
 long TES3MACHINE::SetArrayValue(std::string const& caller, long const id,
 	long const index, long const value)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	long success = 0;
 	if (id > 0 && id <= arrays_.size())	{
 		if (index >= 0)	{
@@ -569,7 +617,9 @@ long TES3MACHINE::SetArrayValue(std::string const& caller, long const id,
 
 long TES3MACHINE::GetArraySize(std::string const& caller, long const id)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	long size = 0;
 	if (id > 0 && id <= arrays_.size()) {
 		size = arrays_[id - 1].size();
@@ -583,7 +633,9 @@ long TES3MACHINE::GetArraySize(std::string const& caller, long const id)
 
 long TES3MACHINE::ClearArray(std::string const& caller, long const id)
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	long success = 0;
 	if (id > 0 && id <= arrays_.size()) {
 		arrays_[id - 1].clear();
@@ -598,6 +650,8 @@ long TES3MACHINE::ClearArray(std::string const& caller, long const id)
 
 std::vector<std::vector<long> >& TES3MACHINE::arrays()
 {
+#if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
+#endif
 	return arrays_;
 }
