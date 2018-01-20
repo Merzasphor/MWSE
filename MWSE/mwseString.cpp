@@ -22,7 +22,7 @@
 
 #include "Log.h"
 
-#define DEBUG_STRING_CREATION true
+#define DEBUG_STRING_CREATION false
 
 using namespace mwse;
 
