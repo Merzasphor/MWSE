@@ -39,10 +39,9 @@ namespace mwse
 		mwLong_t address;
 	};
 
-	static const mwOpcode_t jumpOpcode = 0x3809;
 	static Jump jumpInstance;
 
-	Jump::Jump(): InstructionInterface_t(jumpOpcode){}
+	Jump::Jump(): InstructionInterface_t(OpCode::_Jump){}
 
 	void Jump::loadParameters(mwse::VMExecuteInterface &virtualMachine)
 	{
@@ -68,10 +67,9 @@ namespace mwse
 		mwLong_t address;
 	};
 
-	static const mwOpcode_t jumpZeroOpcode = 0x380b;
 	static JumpZero jumpZeroInstance;
 
-	JumpZero::JumpZero(): InstructionInterface_t(jumpZeroOpcode){}
+	JumpZero::JumpZero(): InstructionInterface_t(OpCode::_JumpZero){}
 
 	void JumpZero::loadParameters(mwse::VMExecuteInterface &virtualMachine)
 	{
@@ -100,10 +98,9 @@ namespace mwse
 		mwLong_t address;
 	};
 
-	static const mwOpcode_t jumpNotZeroOpcode = 0x380d;
 	static JumpNotZero jumpNotZeroInstance;
 
-	JumpNotZero::JumpNotZero(): InstructionInterface_t(jumpNotZeroOpcode){}
+	JumpNotZero::JumpNotZero(): InstructionInterface_t(OpCode::_JumpNotZero){}
 
 	void JumpNotZero::loadParameters(mwse::VMExecuteInterface &virtualMachine)
 	{
@@ -132,10 +129,9 @@ namespace mwse
 		mwLong_t address;
 	};
 
-	static const mwOpcode_t jumpPositiveOpcode = 0x3816;
 	static JumpPositive jumpPositiveInstance;
 
-	JumpPositive::JumpPositive(): InstructionInterface_t(jumpPositiveOpcode){}
+	JumpPositive::JumpPositive(): InstructionInterface_t(OpCode::_JumpPositive){}
 
 	void JumpPositive::loadParameters(mwse::VMExecuteInterface &virtualMachine)
 	{
@@ -164,10 +160,9 @@ namespace mwse
 		mwLong_t address;
 	};
 
-	static const mwOpcode_t jumpNegativeOpcode = 0x3818;
 	static JumpNegative jumpNegativeInstance;
 
-	JumpNegative::JumpNegative(): InstructionInterface_t(jumpNegativeOpcode){}
+	JumpNegative::JumpNegative(): InstructionInterface_t(OpCode::_JumpNegative){}
 
 	void JumpNegative::loadParameters(mwse::VMExecuteInterface &virtualMachine)
 	{
@@ -200,10 +195,9 @@ namespace mwse
 		mwShort_t address;
 	};
 
-	static const mwOpcode_t jumpShortOpcode = 0x380a;
 	static JumpShort jumpShortInstance;
 
-	JumpShort::JumpShort(): InstructionInterface_t(jumpShortOpcode){}
+	JumpShort::JumpShort(): InstructionInterface_t(OpCode::_JumpShort){}
 
 	void JumpShort::loadParameters(mwse::VMExecuteInterface &virtualMachine)
 	{
@@ -229,10 +223,9 @@ namespace mwse
 		mwShort_t address;
 	};
 
-	static const mwOpcode_t jumpShortZeroOpcode = 0x380c;
 	static JumpShortZero jumpShortZeroInstance;
 
-	JumpShortZero::JumpShortZero(): InstructionInterface_t(jumpShortZeroOpcode){}
+	JumpShortZero::JumpShortZero(): InstructionInterface_t(OpCode::_JumpShortZero){}
 
 	void JumpShortZero::loadParameters(mwse::VMExecuteInterface &virtualMachine)
 	{
@@ -261,10 +254,9 @@ namespace mwse
 		mwShort_t address;
 	};
 
-	static const mwOpcode_t jumpShortNotZeroOpcode = 0x380e;
 	static JumpShortNotZero jumpShortNotZeroInstance;
 
-	JumpShortNotZero::JumpShortNotZero(): InstructionInterface_t(jumpShortNotZeroOpcode){}
+	JumpShortNotZero::JumpShortNotZero(): InstructionInterface_t(OpCode::_JumpShortNotZero){}
 
 	void JumpShortNotZero::loadParameters(mwse::VMExecuteInterface &virtualMachine)
 	{
@@ -293,10 +285,9 @@ namespace mwse
 		mwShort_t address;
 	};
 
-	static const mwOpcode_t jumpShortPositiveOpcode = 0x3817;
 	static JumpShortPositive jumpShortPositiveInstance;
 
-	JumpShortPositive::JumpShortPositive(): InstructionInterface_t(jumpShortPositiveOpcode){}
+	JumpShortPositive::JumpShortPositive(): InstructionInterface_t(OpCode::_JumpShortPositive){}
 
 	void JumpShortPositive::loadParameters(mwse::VMExecuteInterface &virtualMachine)
 	{
@@ -325,10 +316,9 @@ namespace mwse
 		mwShort_t address;
 	};
 
-	static const mwOpcode_t jumpShortNegativeOpcode = 0x3819;
 	static JumpShortNegative jumpShortNegativeInstance;
 
-	JumpShortNegative::JumpShortNegative(): InstructionInterface_t(jumpShortNegativeOpcode){}
+	JumpShortNegative::JumpShortNegative(): InstructionInterface_t(OpCode::_JumpShortNegative){}
 
 	void JumpShortNegative::loadParameters(mwse::VMExecuteInterface &virtualMachine)
 	{

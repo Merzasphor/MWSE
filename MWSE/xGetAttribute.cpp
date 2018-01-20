@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetAttributeOpcode = 0x3952;
 	static xGetAttribute xGetAttributeInstance;
 
-	xGetAttribute::xGetAttribute() : mwse::InstructionInterface_t(xGetAttributeOpcode) {}
+	xGetAttribute::xGetAttribute() : mwse::InstructionInterface_t(OpCode::xGetBaseAttribute) {}
 
 	void xGetAttribute::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

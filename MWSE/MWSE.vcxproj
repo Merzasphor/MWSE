@@ -33,6 +33,7 @@
     <ClInclude Include="mwOffsets.h" />
     <ClInclude Include="mwseString.h" />
     <ClInclude Include="mwseTypes.h" />
+    <ClInclude Include="OpCodes.h" />
     <ClInclude Include="Reference.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="RngUtil.h" />

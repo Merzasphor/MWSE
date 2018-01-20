@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseMarksmanOpcode = 0x3911;
 	static xGetBaseMarksman xGetBaseMarksmanInstance;
 
-	xGetBaseMarksman::xGetBaseMarksman() : mwse::InstructionInterface_t(xGetBaseMarksmanOpcode) {}
+	xGetBaseMarksman::xGetBaseMarksman() : mwse::InstructionInterface_t(OpCode::xGetBaseMarksman) {}
 
 	void xGetBaseMarksman::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

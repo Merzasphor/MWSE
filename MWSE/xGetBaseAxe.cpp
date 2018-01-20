@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseAxeOpcode = 0x3906;
 	static xGetBaseAxe xGetBaseAxeInstance;
 
-	xGetBaseAxe::xGetBaseAxe() : mwse::InstructionInterface_t(xGetBaseAxeOpcode) {}
+	xGetBaseAxe::xGetBaseAxe() : mwse::InstructionInterface_t(OpCode::xGetBaseAxe) {}
 
 	void xGetBaseAxe::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

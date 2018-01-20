@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseWilOpcode = 0x3F33;
 	static xGetBaseWil xGetBaseWilInstance;
 
-	xGetBaseWil::xGetBaseWil() : mwse::InstructionInterface_t(xGetBaseWilOpcode) {}
+	xGetBaseWil::xGetBaseWil() : mwse::InstructionInterface_t(OpCode::xGetBaseWil) {}
 
 	void xGetBaseWil::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

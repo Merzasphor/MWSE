@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xGetBaseIDOpcode = 0x3F6F;
 	static xGetBaseID xGetBaseIDInstance;
 
-	xGetBaseID::xGetBaseID() : mwse::InstructionInterface_t(xGetBaseIDOpcode) {}
+	xGetBaseID::xGetBaseID() : mwse::InstructionInterface_t(OpCode::xGetBaseID) {}
 
 	void xGetBaseID::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

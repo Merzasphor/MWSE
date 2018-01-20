@@ -34,10 +34,9 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xGetServiceOpcode = 0x3F04;
 	static xGetService xGetServiceInstance;
 
-	xGetService::xGetService() : mwse::InstructionInterface_t(xGetServiceOpcode) {}
+	xGetService::xGetService() : mwse::InstructionInterface_t(OpCode::xGetService) {}
 
 	void xGetService::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

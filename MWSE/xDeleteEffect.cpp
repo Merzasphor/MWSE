@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xDeleteEffectOpcode = 0x3945;
 	static xDeleteEffect xDeleteEffectInstance;
 
-	xDeleteEffect::xDeleteEffect() : mwse::InstructionInterface_t(xDeleteEffectOpcode) {}
+	xDeleteEffect::xDeleteEffect() : mwse::InstructionInterface_t(OpCode::xDeleteEffect) {}
 
 	void xDeleteEffect::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

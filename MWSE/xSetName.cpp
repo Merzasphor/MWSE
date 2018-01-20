@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xSetNameOpcode = 0x3F0F;
 	static xSetName xSetNameInstance;
 
-	xSetName::xSetName() : mwse::InstructionInterface_t(xSetNameOpcode) {}
+	xSetName::xSetName() : mwse::InstructionInterface_t(OpCode::xSetName) {}
 
 	void xSetName::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

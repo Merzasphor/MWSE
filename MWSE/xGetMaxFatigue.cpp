@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetMaxFatigueOpcode = 0x3959;
 	static xGetMaxFatigue xGetMaxFatigueInstance;
 
-	xGetMaxFatigue::xGetMaxFatigue() : mwse::InstructionInterface_t(xGetMaxFatigueOpcode) {}
+	xGetMaxFatigue::xGetMaxFatigue() : mwse::InstructionInterface_t(OpCode::xGetMaxFatigue) {}
 
 	void xGetMaxFatigue::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

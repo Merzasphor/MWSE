@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xModServiceOpcode = 0x3F06;
 	static xModService xModServiceInstance;
 
-	xModService::xModService() : mwse::InstructionInterface_t(xModServiceOpcode) {}
+	xModService::xModService() : mwse::InstructionInterface_t(OpCode::xModService) {}
 
 	void xModService::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

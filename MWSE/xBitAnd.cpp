@@ -35,10 +35,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xBitAndOpcode = 0x3936;
 	static xBitAnd xBitAndInstance;
 
-	xBitAnd::xBitAnd() : mwse::InstructionInterface_t(xBitAndOpcode) {}
+	xBitAnd::xBitAnd() : mwse::InstructionInterface_t(OpCode::xBitAnd) {}
 
 	void xBitAnd::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

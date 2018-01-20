@@ -13,6 +13,7 @@ using namespace std;
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "Reference.h"
+#include "OpCodes.h"
 
 using namespace mwse;
 
@@ -21,15 +22,15 @@ namespace mwse
 	class MgeInstruction : InstructionInterface_t
 	{
 	public:
-		MgeInstruction(mwOpcode_t opcode, INSTRUCTION* instruction);
+		MgeInstruction(OpCode::OpCode_t opcode, INSTRUCTION* instruction);
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	private:
-		mwOpcode_t opcode;
+		OpCode::OpCode_t opcode;
 		INSTRUCTION* instruction;
 	};
 
-	MgeInstruction::MgeInstruction(mwOpcode_t opcode, INSTRUCTION* instruction) :
+	MgeInstruction::MgeInstruction(OpCode::OpCode_t opcode, INSTRUCTION* instruction) :
 		instruction(instruction),
 		opcode(opcode),
 		InstructionInterface_t(opcode) {}
@@ -112,7 +113,7 @@ bool VIRTUALMACHINE::AddInstruction(OPCODE opcode, INSTRUCTION* instruction)
 	mwse::log::getLog() << __FUNCTION__ << " opcode: " << std::hex << opcode << std::endl;
 #endif
 	mwse::MgeInstruction* mge_instruction =
-		new mwse::MgeInstruction(opcode, instruction);
+		new mwse::MgeInstruction((OpCode::OpCode_t)opcode, instruction);
 	return true;
 }
 

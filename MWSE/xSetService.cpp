@@ -34,10 +34,9 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xSetServiceOpcode = 0x3F05;
 	static xSetService xSetServiceInstance;
 
-	xSetService::xSetService() : mwse::InstructionInterface_t(xSetServiceOpcode) {}
+	xSetService::xSetService() : mwse::InstructionInterface_t(OpCode::xSetService) {}
 
 	void xSetService::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

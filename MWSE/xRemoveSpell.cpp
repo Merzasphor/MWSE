@@ -39,10 +39,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xRemoveSpellOpcode = 0x3FA1;
 	static xRemoveSpell xRemoveSpellInstance;
 
-	xRemoveSpell::xRemoveSpell() : mwse::InstructionInterface_t(xRemoveSpellOpcode) {}
+	xRemoveSpell::xRemoveSpell() : mwse::InstructionInterface_t(OpCode::xRemoveSpell) {}
 
 	void xRemoveSpell::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
 	}

@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xFirstNPCOpcode = 0x3C1A;
 	static xFirstNPC xFirstNPCInstance;
 
-	xFirstNPC::xFirstNPC() : mwse::InstructionInterface_t(xFirstNPCOpcode) {}
+	xFirstNPC::xFirstNPC() : mwse::InstructionInterface_t(OpCode::xFirstNPC) {}
 
 	void xFirstNPC::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

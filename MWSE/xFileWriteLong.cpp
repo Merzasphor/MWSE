@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xFileWriteLongOpcode = 0x3C32;
 	static xFileWriteLong xFileWriteLongInstance;
 
-	xFileWriteLong::xFileWriteLong() : mwse::InstructionInterface_t(xFileWriteLongOpcode) {}
+	xFileWriteLong::xFileWriteLong() : mwse::InstructionInterface_t(OpCode::xFileWriteLong) {}
 
 	void xFileWriteLong::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

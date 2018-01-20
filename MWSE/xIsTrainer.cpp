@@ -34,10 +34,9 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xIsTrainerOpcode = 0x3F5E;
 	static xIsTrainer xIsTrainerInstance;
 
-	xIsTrainer::xIsTrainer() : mwse::InstructionInterface_t(xIsTrainerOpcode) {}
+	xIsTrainer::xIsTrainer() : mwse::InstructionInterface_t(OpCode::xIsTrainer) {}
 
 	void xIsTrainer::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

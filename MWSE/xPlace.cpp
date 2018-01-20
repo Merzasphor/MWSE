@@ -39,10 +39,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xPlaceOpcode = 0X3C2E;
 	static xPlace xPlaceInstance;
 
-	xPlace::xPlace() : mwse::InstructionInterface_t(xPlaceOpcode) {}
+	xPlace::xPlace() : mwse::InstructionInterface_t(OpCode::xPlace) {}
 
 	void xPlace::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
 	}

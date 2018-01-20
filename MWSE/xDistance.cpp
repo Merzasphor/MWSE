@@ -37,10 +37,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xDistanceOpcode = 0x3C22;
 	static xDistance xDistanceInstance;
 
-	xDistance::xDistance() : mwse::InstructionInterface_t(xDistanceOpcode) {}
+	xDistance::xDistance() : mwse::InstructionInterface_t(OpCode::xDistance) {}
 
 	void xDistance::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

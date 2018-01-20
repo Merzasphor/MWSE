@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseSecurityOpcode = 0x3916;
 	static xGetBaseSecurity xGetBaseSecurityInstance;
 
-	xGetBaseSecurity::xGetBaseSecurity() : mwse::InstructionInterface_t(xGetBaseSecurityOpcode) {}
+	xGetBaseSecurity::xGetBaseSecurity() : mwse::InstructionInterface_t(OpCode::xGetBaseSecurity) {}
 
 	void xGetBaseSecurity::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

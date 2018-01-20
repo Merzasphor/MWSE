@@ -35,10 +35,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xFloatsToLongOpcode = 0x3922;
 	static xFloatsToLong xFloatsToLongInstance;
 
-	xFloatsToLong::xFloatsToLong() : mwse::InstructionInterface_t(xFloatsToLongOpcode) {}
+	xFloatsToLong::xFloatsToLong() : mwse::InstructionInterface_t(OpCode::xFloatsToLong) {}
 
 	void xFloatsToLong::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

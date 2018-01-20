@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetMaxMagickaOpcode = 0x3958;
 	static xGetMaxMagicka xGetMaxMagickaInstance;
 
-	xGetMaxMagicka::xGetMaxMagicka() : mwse::InstructionInterface_t(xGetMaxMagickaOpcode) {}
+	xGetMaxMagicka::xGetMaxMagicka() : mwse::InstructionInterface_t(OpCode::xGetMaxMagicka) {}
 
 	void xGetMaxMagicka::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

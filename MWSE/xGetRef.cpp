@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwOpcode_t xGetRefOpcode = 0x3C1D;
 	static xGetRef xGetRefInstance;
 
-	xGetRef::xGetRef() : InstructionInterface_t(xGetRefOpcode) {}
+	xGetRef::xGetRef() : InstructionInterface_t(OpCode::xGetRef) {}
 
 	void xGetRef::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

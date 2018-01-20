@@ -37,10 +37,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xPowOpcode = 0x383A;
 	static xPow xPowInstance;
 
-	xPow::xPow() : mwse::InstructionInterface_t(xPowOpcode) {}
+	xPow::xPow() : mwse::InstructionInterface_t(OpCode::xPow) {}
 
 	void xPow::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

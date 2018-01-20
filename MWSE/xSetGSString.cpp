@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xSetGSStringOpcode = 0x394E;
 	static xSetGSString xSetGSStringInstance;
 
-	xSetGSString::xSetGSString() : mwse::InstructionInterface_t(xSetGSStringOpcode) {}
+	xSetGSString::xSetGSString() : mwse::InstructionInterface_t(OpCode::xSetGSString) {}
 
 	void xSetGSString::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

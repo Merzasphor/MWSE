@@ -41,10 +41,9 @@ namespace mwse {
 		bool GetKeyIsPressed(int VK_key);
 	};
 
-	static const mwse::mwOpcode_t xTextInputOpcode = 0x3F01;
 	static xTextInput xTextInputInstance;
 
-	xTextInput::xTextInput() : mwse::InstructionInterface_t(xTextInputOpcode) {}
+	xTextInput::xTextInput() : mwse::InstructionInterface_t(OpCode::xTextInput) {}
 
 	void xTextInput::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

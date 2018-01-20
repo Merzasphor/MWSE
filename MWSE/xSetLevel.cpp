@@ -39,10 +39,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xSetLevelOpcode = 0x394F;
 	static xSetLevel xSetLevelInstance;
 
-	xSetLevel::xSetLevel() : mwse::InstructionInterface_t(xSetLevelOpcode) {}
+	xSetLevel::xSetLevel() : mwse::InstructionInterface_t(OpCode::xSetLevel) {}
 
 	void xSetLevel::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
 	}

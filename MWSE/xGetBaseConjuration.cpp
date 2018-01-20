@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseConjurationOpcode = 0x3909;
 	static xGetBaseConjuration xGetBaseConjurationInstance;
 
-	xGetBaseConjuration::xGetBaseConjuration() : mwse::InstructionInterface_t(xGetBaseConjurationOpcode) {}
+	xGetBaseConjuration::xGetBaseConjuration() : mwse::InstructionInterface_t(OpCode::xGetBaseConjuration) {}
 
 	void xGetBaseConjuration::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

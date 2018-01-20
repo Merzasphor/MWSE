@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetSkillOpcode = 0x3950;
 	static xGetSkill xGetSkillInstance;
 
-	xGetSkill::xGetSkill() : mwse::InstructionInterface_t(xGetSkillOpcode) {}
+	xGetSkill::xGetSkill() : mwse::InstructionInterface_t(OpCode::xGetSkill) {}
 
 	void xGetSkill::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

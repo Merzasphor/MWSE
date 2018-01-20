@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xArcTanOpcode = 0x3833;
 	static xArcTan xArcTanInstance;
 
-	xArcTan::xArcTan() : mwse::InstructionInterface_t(xArcTanOpcode) {}
+	xArcTan::xArcTan() : mwse::InstructionInterface_t(OpCode::xArcTan) {}
 
 	void xArcTan::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

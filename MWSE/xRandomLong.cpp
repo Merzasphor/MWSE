@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xRandomLongOpcode = 0x3955;
 	static xRandomLong xRandomLongInstance;
 
-	xRandomLong::xRandomLong() : mwse::InstructionInterface_t(xRandomLongOpcode) {}
+	xRandomLong::xRandomLong() : mwse::InstructionInterface_t(OpCode::xRandomLong) {}
 
 	void xRandomLong::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

@@ -34,10 +34,9 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xIsTraderOpcode = 0x3F3A;
 	static xIsTrader xIsTraderInstance;
 
-	xIsTrader::xIsTrader() : mwse::InstructionInterface_t(xIsTraderOpcode) {}
+	xIsTrader::xIsTrader() : mwse::InstructionInterface_t(OpCode::xIsTrader) {}
 
 	void xIsTrader::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

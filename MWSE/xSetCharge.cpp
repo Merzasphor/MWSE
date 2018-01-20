@@ -34,10 +34,9 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xSetChargeOpcode = 0x3E66;
 	static xSetCharge xSetChargeInstance;
 
-	xSetCharge::xSetCharge() : mwse::InstructionInterface_t(xSetChargeOpcode) {}
+	xSetCharge::xSetCharge() : mwse::InstructionInterface_t(OpCode::xSetCharge) {}
 
 	void xSetCharge::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

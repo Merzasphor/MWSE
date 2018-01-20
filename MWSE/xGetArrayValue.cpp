@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xGetArrayValueOpcode = 0x3932;
 	static xGetArrayValue xGetArrayValueInstance;
 
-	xGetArrayValue::xGetArrayValue() : mwse::InstructionInterface_t(xGetArrayValueOpcode) {}
+	xGetArrayValue::xGetArrayValue() : mwse::InstructionInterface_t(OpCode::xGetArrayValue) {}
 
 	void xGetArrayValue::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

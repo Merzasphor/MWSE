@@ -58,10 +58,9 @@ namespace mwse
 		std::string entityName;
 	};
 
-	static const mwse::mwOpcode_t xGetEncumbranceOpcode = 0x3957;
 	static xGetEncumbrance xGetEncumbranceInstance;
 
-	xGetEncumbrance::xGetEncumbrance() : mwse::InstructionInterface_t(xGetEncumbranceOpcode) {}
+	xGetEncumbrance::xGetEncumbrance() : mwse::InstructionInterface_t(OpCode::xGetEncumbrance) {}
 
 	void xGetEncumbrance::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

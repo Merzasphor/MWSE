@@ -39,10 +39,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xHasItemEquippedOpcode = 0x3C30;
 	static xHasItemEquipped xHasItemEquippedInstance;
 
-	xHasItemEquipped::xHasItemEquipped() : mwse::InstructionInterface_t(xHasItemEquippedOpcode) {}
+	xHasItemEquipped::xHasItemEquipped() : mwse::InstructionInterface_t(OpCode::xHasItemEquipped) {}
 
 	void xHasItemEquipped::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
 	}

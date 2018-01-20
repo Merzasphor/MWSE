@@ -37,10 +37,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xGetConditionOpcode = 0x3F65;
 	static xGetCondition xGetConditionInstance;
 
-	xGetCondition::xGetCondition() : mwse::InstructionInterface_t(xGetConditionOpcode) {}
+	xGetCondition::xGetCondition() : mwse::InstructionInterface_t(OpCode::xGetCondition) {}
 
 	void xGetCondition::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

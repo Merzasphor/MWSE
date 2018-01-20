@@ -38,10 +38,9 @@ namespace mwse
 		const mwLong_t INVALID_VALUE = -1;
 	};
 
-	static const mwse::mwOpcode_t xGetProgressLevelOpcode = 0x391C;
 	static xGetProgressLevel xGetProgressLevelInstance;
 
-	xGetProgressLevel::xGetProgressLevel() : mwse::InstructionInterface_t(xGetProgressLevelOpcode) {}
+	xGetProgressLevel::xGetProgressLevel() : mwse::InstructionInterface_t(OpCode::xGetProgressLevel) {}
 
 	void xGetProgressLevel::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

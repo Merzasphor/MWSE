@@ -35,10 +35,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xBitNotOpcode = 0x3939;
 	static xBitNot xBitNotInstance;
 
-	xBitNot::xBitNot() : mwse::InstructionInterface_t(xBitNotOpcode) {}
+	xBitNot::xBitNot() : mwse::InstructionInterface_t(OpCode::xBitNot) {}
 
 	void xBitNot::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

@@ -39,10 +39,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xStartCombatOpcode = 0x3C21;
 	static xStartCombat xStartCombatInstance;
 
-	xStartCombat::xStartCombat() : mwse::InstructionInterface_t(xStartCombatOpcode) {}
+	xStartCombat::xStartCombat() : mwse::InstructionInterface_t(OpCode::xStartCombat) {}
 
 	void xStartCombat::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
 	}

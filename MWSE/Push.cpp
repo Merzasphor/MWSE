@@ -38,10 +38,9 @@ namespace mwse
 		long pushData;
 	};
 
-	static const mwOpcode_t pushOpcode = 0x3811;
 	static Push pushInstance;
 
-	Push::Push(): InstructionInterface_t(pushOpcode){}
+	Push::Push(): InstructionInterface_t(OpCode::_PushLong){}
 
 	void Push::loadParameters(mwse::VMExecuteInterface &virtualMachine)
 	{
@@ -66,10 +65,9 @@ namespace mwse
 		long pushData;
 	};
 
-	static const mwOpcode_t pushBOpcode = 0x3812;
 	static PushB pushBInstance;
 
-	PushB::PushB(): InstructionInterface_t(pushBOpcode){}
+	PushB::PushB(): InstructionInterface_t(OpCode::_PushByte){}
 
 	void PushB::loadParameters(mwse::VMExecuteInterface &virtualMachine)
 	{
@@ -94,10 +92,9 @@ namespace mwse
 		long pushData;
 	};
 
-	static const mwOpcode_t pushSOpcode = 0x3813;
 	static PushS pushSInstance;
 
-	PushS::PushS(): InstructionInterface_t(pushSOpcode){}
+	PushS::PushS(): InstructionInterface_t(OpCode::_PushShort){}
 
 	void PushS::loadParameters(mwse::VMExecuteInterface &virtualMachine)
 	{

@@ -35,10 +35,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xNotOpcode = 0x393D;
 	static xNot xNotInstance;
 
-	xNot::xNot() : mwse::InstructionInterface_t(xNotOpcode) {}
+	xNot::xNot() : mwse::InstructionInterface_t(OpCode::xNot) {}
 
 	void xNot::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

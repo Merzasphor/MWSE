@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xSqrtOpcode = 0x3838;
 	static xSqrt xSqrtInstance;
 
-	xSqrt::xSqrt() : mwse::InstructionInterface_t(xSqrtOpcode) {}
+	xSqrt::xSqrt() : mwse::InstructionInterface_t(OpCode::xSqrt) {}
 
 	void xSqrt::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

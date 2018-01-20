@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetProgressSkillOpcode = 0x392C;
 	static xGetProgressSkill xGetProgressSkillInstance;
 
-	xGetProgressSkill::xGetProgressSkill() : mwse::InstructionInterface_t(xGetProgressSkillOpcode) {}
+	xGetProgressSkill::xGetProgressSkill() : mwse::InstructionInterface_t(OpCode::xGetProgressSkill) {}
 
 	void xGetProgressSkill::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

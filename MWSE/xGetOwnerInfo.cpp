@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xGetOwnerInfoOpcode = 0x3934;
 	static xGetOwnerInfo xGetOwnerInfoInstance;
 
-	xGetOwnerInfo::xGetOwnerInfo() : mwse::InstructionInterface_t(xGetOwnerInfoOpcode) {}
+	xGetOwnerInfo::xGetOwnerInfo() : mwse::InstructionInterface_t(OpCode::xGetOwnerInfo) {}
 
 	void xGetOwnerInfo::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

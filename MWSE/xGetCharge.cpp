@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetChargeOpcode = 0x3F67;
 	static xGetCharge xGetChargeInstance;
 
-	xGetCharge::xGetCharge() : mwse::InstructionInterface_t(xGetChargeOpcode) {}
+	xGetCharge::xGetCharge() : mwse::InstructionInterface_t(OpCode::xGetCharge) {}
 
 	void xGetCharge::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

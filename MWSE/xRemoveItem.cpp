@@ -39,10 +39,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xRemoveItemOpcode = 0x3C29;
 	static xRemoveItem xRemoveItemInstance;
 
-	xRemoveItem::xRemoveItem() : mwse::InstructionInterface_t(xRemoveItemOpcode) {}
+	xRemoveItem::xRemoveItem() : mwse::InstructionInterface_t(OpCode::xRemoveItem) {}
 
 	void xRemoveItem::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
 	}

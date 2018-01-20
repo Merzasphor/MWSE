@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xCreateArrayOpcode = 0x3931;
 	static xCreateArray xCreateArrayInstance;
 
-	xCreateArray::xCreateArray() : mwse::InstructionInterface_t(xCreateArrayOpcode) {}
+	xCreateArray::xCreateArray() : mwse::InstructionInterface_t(OpCode::xCreateArray) {}
 
 	void xCreateArray::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

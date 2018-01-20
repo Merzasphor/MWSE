@@ -39,10 +39,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xDropOpcode = 0x3F0D;
 	static xDrop xDropInstance;
 
-	xDrop::xDrop() : mwse::InstructionInterface_t(xDropOpcode) {}
+	xDrop::xDrop() : mwse::InstructionInterface_t(OpCode::xDrop) {}
 
 	void xDrop::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
 	}

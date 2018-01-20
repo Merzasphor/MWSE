@@ -27,7 +27,6 @@ namespace mwse
 	typedef long  mwLong_t;
 	typedef float mwFloat_t;
 	typedef char* mwString_t;
-	typedef unsigned short mwOpcode_t; //same as old MWSE (WORD == unsigned short) should be big enough
 
 	namespace RecordTypes {
 		enum recordType_t

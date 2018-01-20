@@ -40,10 +40,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xStringCompareOpcode = 0x3c2f;
 	static xStringCompare xStringCompareInstance;
 
-	xStringCompare::xStringCompare() : mwse::InstructionInterface_t(xStringCompareOpcode) {}
+	xStringCompare::xStringCompare() : mwse::InstructionInterface_t(OpCode::xStringCompare) {}
 
 	void xStringCompare::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

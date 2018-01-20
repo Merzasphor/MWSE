@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xAddEffectOpcode = 0x3946;
 	static xAddEffect xAddEffectInstance;
 
-	xAddEffect::xAddEffect() : mwse::InstructionInterface_t(xAddEffectOpcode) {}
+	xAddEffect::xAddEffect() : mwse::InstructionInterface_t(OpCode::xAddEffect) {}
 
 	void xAddEffect::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

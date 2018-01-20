@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetMaxHealthOpcode = 0x3954;
 	static xGetMaxHealth xGetMaxHealthInstance;
 
-	xGetMaxHealth::xGetMaxHealth() : mwse::InstructionInterface_t(xGetMaxHealthOpcode) {}
+	xGetMaxHealth::xGetMaxHealth() : mwse::InstructionInterface_t(OpCode::xGetMaxHealth) {}
 
 	void xGetMaxHealth::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

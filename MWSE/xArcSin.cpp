@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xArcSinOpcode = 0x3834;
 	static xArcSin xArcSinInstance;
 
-	xArcSin::xArcSin() : mwse::InstructionInterface_t(xArcSinOpcode) {}
+	xArcSin::xArcSin() : mwse::InstructionInterface_t(OpCode::xArcSin) {}
 
 	void xArcSin::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

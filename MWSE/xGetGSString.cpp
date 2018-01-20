@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xGetGSStringOpcode = 0x394D;
 	static xGetGSString xGetGSStringInstance;
 
-	xGetGSString::xGetGSString() : mwse::InstructionInterface_t(xGetGSStringOpcode) {}
+	xGetGSString::xGetGSString() : mwse::InstructionInterface_t(OpCode::xGetGSString) {}
 
 	void xGetGSString::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

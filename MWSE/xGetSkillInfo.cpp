@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetSkillInfoOpcode = 0x394B;
 	static xGetSkillInfo xGetSkillInfoInstance;
 
-	xGetSkillInfo::xGetSkillInfo() : mwse::InstructionInterface_t(xGetSkillInfoOpcode) {}
+	xGetSkillInfo::xGetSkillInfo() : mwse::InstructionInterface_t(OpCode::xGetSkillInfo) {}
 
 	void xGetSkillInfo::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

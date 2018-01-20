@@ -37,10 +37,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xGetMaxConditionOpcode = 0x3F66;
 	static xGetMaxCondition xGetMaxConditionInstance;
 
-	xGetMaxCondition::xGetMaxCondition() : mwse::InstructionInterface_t(xGetMaxConditionOpcode) {}
+	xGetMaxCondition::xGetMaxCondition() : mwse::InstructionInterface_t(OpCode::xGetMaxCondition) {}
 
 	void xGetMaxCondition::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

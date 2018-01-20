@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseAlchemyOpcode = 0x3902;
 	static xGetBaseAlchemy xGetBaseAlchemyInstance;
 
-	xGetBaseAlchemy::xGetBaseAlchemy() : mwse::InstructionInterface_t(xGetBaseAlchemyOpcode) {}
+	xGetBaseAlchemy::xGetBaseAlchemy() : mwse::InstructionInterface_t(OpCode::xGetBaseAlchemy) {}
 
 	void xGetBaseAlchemy::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

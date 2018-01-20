@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseRestorationOpcode = 0x3915;
 	static xGetBaseRestoration xGetBaseRestorationInstance;
 
-	xGetBaseRestoration::xGetBaseRestoration() : mwse::InstructionInterface_t(xGetBaseRestorationOpcode) {}
+	xGetBaseRestoration::xGetBaseRestoration() : mwse::InstructionInterface_t(OpCode::xGetBaseRestoration) {}
 
 	void xGetBaseRestoration::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

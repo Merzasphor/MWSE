@@ -38,10 +38,9 @@ namespace mwse
 		mwShort_t popLength;
 	};
 
-	static const mwOpcode_t popOpcode = 0x380f;
 	static Pop popInstance;
 
-	Pop::Pop(): InstructionInterface_t(popOpcode){}
+	Pop::Pop(): InstructionInterface_t(OpCode::_Pop){}
 
 	void Pop::loadParameters(mwse::VMExecuteInterface &virtualMachine)
 	{

@@ -39,10 +39,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xCastOpcode = 0x3F12;
 	static xCast xCastInstance;
 
-	xCast::xCast() : mwse::InstructionInterface_t(xCastOpcode) {}
+	xCast::xCast() : mwse::InstructionInterface_t(OpCode::xCast) {}
 
 	void xCast::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
 	}

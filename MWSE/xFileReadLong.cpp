@@ -38,10 +38,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xFileReadLongOpcode = 0x3C12;
 	static xFileReadLong xFileReadLongInstance;
 
-	xFileReadLong::xFileReadLong() : mwse::InstructionInterface_t(xFileReadLongOpcode) {}
+	xFileReadLong::xFileReadLong() : mwse::InstructionInterface_t(OpCode::xFileReadLong) {}
 
 	void xFileReadLong::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

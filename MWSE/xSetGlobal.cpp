@@ -34,10 +34,9 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xSetGlobalOpcode = 0x393F;
 	static xSetGlobal xSetGlobalInstance;
 
-	xSetGlobal::xSetGlobal() : mwse::InstructionInterface_t(xSetGlobalOpcode) {}
+	xSetGlobal::xSetGlobal() : mwse::InstructionInterface_t(OpCode::xSetGlobal) {}
 
 	void xSetGlobal::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

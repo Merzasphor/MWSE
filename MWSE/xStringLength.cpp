@@ -40,10 +40,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xStringLengthOpcode = 0x3f0a;
 	static xStringLength xStringLengthInstance;
 
-	xStringLength::xStringLength() : mwse::InstructionInterface_t(xStringLengthOpcode) {}
+	xStringLength::xStringLength() : mwse::InstructionInterface_t(OpCode::xStringLength) {}
 
 	void xStringLength::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

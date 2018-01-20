@@ -38,10 +38,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xDegRadOpcode = 0x3836;
 	static xDegRad xDegRadInstance;
 
-	xDegRad::xDegRad() : mwse::InstructionInterface_t(xDegRadOpcode) {}
+	xDegRad::xDegRad() : mwse::InstructionInterface_t(OpCode::xDegRad) {}
 
 	void xDegRad::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

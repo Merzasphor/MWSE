@@ -34,10 +34,9 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xRefIDOpcode = 0x3C1C;
 	static xRefID xRefIDInstance;
 
-	xRefID::xRefID() : mwse::InstructionInterface_t(xRefIDOpcode) {}
+	xRefID::xRefID() : mwse::InstructionInterface_t(OpCode::xRefID) {}
 
 	void xRefID::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

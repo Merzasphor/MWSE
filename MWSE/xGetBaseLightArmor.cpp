@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseLightArmorOpcode = 0x390F;
 	static xGetBaseLightArmor xGetBaseLightArmorInstance;
 
-	xGetBaseLightArmor::xGetBaseLightArmor() : mwse::InstructionInterface_t(xGetBaseLightArmorOpcode) {}
+	xGetBaseLightArmor::xGetBaseLightArmor() : mwse::InstructionInterface_t(OpCode::xGetBaseLightArmor) {}
 
 	void xGetBaseLightArmor::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

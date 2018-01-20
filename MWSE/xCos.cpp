@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xCosOpcode = 0x3832;
 	static xCos xCosInstance;
 
-	xCos::xCos() : mwse::InstructionInterface_t(xCosOpcode) {}
+	xCos::xCos() : mwse::InstructionInterface_t(OpCode::xCos) {}
 
 	void xCos::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

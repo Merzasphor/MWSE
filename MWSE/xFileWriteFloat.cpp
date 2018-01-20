@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xFileWriteFloatOpcode = 0x3C33;
 	static xFileWriteFloat xFileWriteFloatInstance;
 
-	xFileWriteFloat::xFileWriteFloat() : mwse::InstructionInterface_t(xFileWriteFloatOpcode) {}
+	xFileWriteFloat::xFileWriteFloat() : mwse::InstructionInterface_t(OpCode::xFileWriteFloat) {}
 
 	void xFileWriteFloat::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

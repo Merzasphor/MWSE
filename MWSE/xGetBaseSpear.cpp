@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseSpearOpcode = 0x3919;
 	static xGetBaseSpear xGetBaseSpearInstance;
 
-	xGetBaseSpear::xGetBaseSpear() : mwse::InstructionInterface_t(xGetBaseSpearOpcode) {}
+	xGetBaseSpear::xGetBaseSpear() : mwse::InstructionInterface_t(OpCode::xGetBaseSpear) {}
 
 	void xGetBaseSpear::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

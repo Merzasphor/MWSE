@@ -39,10 +39,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xGetSpellEffectsOpcode = 0x3F10;
 	static xGetSpellEffects xGetSpellEffectsInstance;
 
-	xGetSpellEffects::xGetSpellEffects() : mwse::InstructionInterface_t(xGetSpellEffectsOpcode) {}
+	xGetSpellEffects::xGetSpellEffects() : mwse::InstructionInterface_t(OpCode::xGetSpellEffects) {}
 
 	void xGetSpellEffects::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
 	}

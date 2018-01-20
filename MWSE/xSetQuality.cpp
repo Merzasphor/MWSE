@@ -37,10 +37,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xSetQualityOpcode = 0x3E63;
 	static xSetQuality xSetQualityInstance;
 
-	xSetQuality::xSetQuality() : mwse::InstructionInterface_t(xSetQualityOpcode) {}
+	xSetQuality::xSetQuality() : mwse::InstructionInterface_t(OpCode::xSetQuality) {}
 
 	void xSetQuality::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xGetSpellInfoOpcode = 0x3924;
 	static xGetSpellInfo xGetSpellInfoInstance;
 
-	xGetSpellInfo::xGetSpellInfo() : mwse::InstructionInterface_t(xGetSpellInfoOpcode) {}
+	xGetSpellInfo::xGetSpellInfo() : mwse::InstructionInterface_t(OpCode::xGetSpellInfo) {}
 
 	void xGetSpellInfo::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

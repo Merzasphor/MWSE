@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseAcrobaticsOpcode = 0x3901;
 	static xGetBaseAcrobatics xGetBaseAcrobaticsInstance;
 
-	xGetBaseAcrobatics::xGetBaseAcrobatics() : mwse::InstructionInterface_t(xGetBaseAcrobaticsOpcode) {}
+	xGetBaseAcrobatics::xGetBaseAcrobatics() : mwse::InstructionInterface_t(OpCode::xGetBaseAcrobatics) {}
 
 	void xGetBaseAcrobatics::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

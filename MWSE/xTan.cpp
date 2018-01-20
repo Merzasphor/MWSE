@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xTanOpcode = 0x3830;
 	static xTan xTanInstance;
 
-	xTan::xTan() : mwse::InstructionInterface_t(xTanOpcode) {}
+	xTan::xTan() : mwse::InstructionInterface_t(OpCode::xTan) {}
 
 	void xTan::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

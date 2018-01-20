@@ -52,10 +52,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xLogMessageOpcode = 0x3c09;
 	static xLogMessage xLogMessageInstance;
 
-	xLogMessage::xLogMessage() : mwse::InstructionInterface_t(xLogMessageOpcode) {}
+	xLogMessage::xLogMessage() : mwse::InstructionInterface_t(OpCode::xLogMessage) {}
 
 	void xLogMessage::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

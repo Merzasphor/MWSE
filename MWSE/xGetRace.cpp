@@ -37,10 +37,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xGetRaceOpcode = 0x395A;
 	static xGetRace xGetRaceInstance;
 
-	xGetRace::xGetRace() : mwse::InstructionInterface_t(xGetRaceOpcode) {}
+	xGetRace::xGetRace() : mwse::InstructionInterface_t(OpCode::xGetRace) {}
 
 	void xGetRace::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

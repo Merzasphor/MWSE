@@ -34,10 +34,9 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xGetGlobalOpcode = 0x393E;
 	static xGetGlobal xGetGlobalInstance;
 
-	xGetGlobal::xGetGlobal() : mwse::InstructionInterface_t(xGetGlobalOpcode) {}
+	xGetGlobal::xGetGlobal() : mwse::InstructionInterface_t(OpCode::xGetGlobal) {}
 
 	void xGetGlobal::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

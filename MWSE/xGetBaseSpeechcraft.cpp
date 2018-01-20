@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseSpeechcraftOpcode = 0x391A;
 	static xGetBaseSpeechcraft xGetBaseSpeechcraftInstance;
 
-	xGetBaseSpeechcraft::xGetBaseSpeechcraft() : mwse::InstructionInterface_t(xGetBaseSpeechcraftOpcode) {}
+	xGetBaseSpeechcraft::xGetBaseSpeechcraft() : mwse::InstructionInterface_t(OpCode::xGetBaseSpeechcraft) {}
 
 	void xGetBaseSpeechcraft::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xInventoryOpcode = 0x3C2A;
 	static xInventory xInventoryInstance;
 
-	xInventory::xInventory() : mwse::InstructionInterface_t(xInventoryOpcode) {}
+	xInventory::xInventory() : mwse::InstructionInterface_t(OpCode::xInventory) {}
 
 	void xInventory::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

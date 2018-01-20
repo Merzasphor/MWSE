@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xGetEnchantOpcode = 0x3928;
 	static xGetEnchant xGetEnchantInstance;
 
-	xGetEnchant::xGetEnchant() : mwse::InstructionInterface_t(xGetEnchantOpcode) {}
+	xGetEnchant::xGetEnchant() : mwse::InstructionInterface_t(OpCode::xGetEnchant) {}
 
 	void xGetEnchant::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xRandomFloatOpcode = 0x3956;
 	static xRandomFloat xRandomFloatInstance;
 
-	xRandomFloat::xRandomFloat() : mwse::InstructionInterface_t(xRandomFloatOpcode) {}
+	xRandomFloat::xRandomFloat() : mwse::InstructionInterface_t(OpCode::xRandomFloat) {}
 
 	void xRandomFloat::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

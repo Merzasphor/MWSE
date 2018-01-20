@@ -34,10 +34,9 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xIsFemaleOpcode = 0x3F21;
 	static xIsFemale xIsFemaleInstance;
 
-	xIsFemale::xIsFemale() : mwse::InstructionInterface_t(xIsFemaleOpcode) {}
+	xIsFemale::xIsFemale() : mwse::InstructionInterface_t(OpCode::xIsFemale) {}
 
 	void xIsFemale::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

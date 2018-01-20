@@ -39,10 +39,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xAITravelOpcode = 0x3C04;
 	static xAITravel xAITravelInstance;
 
-	xAITravel::xAITravel() : mwse::InstructionInterface_t(xAITravelOpcode) {}
+	xAITravel::xAITravel() : mwse::InstructionInterface_t(OpCode::xAITravel) {}
 
 	void xAITravel::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
 	}

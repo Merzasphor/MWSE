@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseEnchantOpcode = 0x390B;
 	static xGetBaseEnchant xGetBaseEnchantInstance;
 
-	xGetBaseEnchant::xGetBaseEnchant() : mwse::InstructionInterface_t(xGetBaseEnchantOpcode) {}
+	xGetBaseEnchant::xGetBaseEnchant() : mwse::InstructionInterface_t(OpCode::xGetBaseEnchant) {}
 
 	void xGetBaseEnchant::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

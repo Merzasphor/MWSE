@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseSkillOpcode = 0x392F;
 	static xGetBaseSkill xGetBaseSkillInstance;
 
-	xGetBaseSkill::xGetBaseSkill() : mwse::InstructionInterface_t(xGetBaseSkillOpcode) {}
+	xGetBaseSkill::xGetBaseSkill() : mwse::InstructionInterface_t(OpCode::xGetBaseSkill) {}
 
 	void xGetBaseSkill::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

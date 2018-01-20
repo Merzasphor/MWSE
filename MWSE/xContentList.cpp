@@ -34,10 +34,9 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xContentListOpcode = 0x3F03;
 	static xContentList xContentListInstance;
 
-	xContentList::xContentList() : mwse::InstructionInterface_t(xContentListOpcode) {}
+	xContentList::xContentList() : mwse::InstructionInterface_t(OpCode::xContentList) {}
 
 	void xContentList::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

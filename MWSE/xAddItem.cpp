@@ -39,10 +39,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xAddItemOpcode = 0x3C28;
 	static xAddItem xAddItemInstance;
 
-	xAddItem::xAddItem() : mwse::InstructionInterface_t(xAddItemOpcode) {}
+	xAddItem::xAddItem() : mwse::InstructionInterface_t(OpCode::xAddItem) {}
 
 	void xAddItem::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
 	}

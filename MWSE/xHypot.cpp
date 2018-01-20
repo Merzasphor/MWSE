@@ -37,10 +37,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xHypotOpcode = 0x3839;
 	static xHypot xHypotInstance;
 
-	xHypot::xHypot() : mwse::InstructionInterface_t(xHypotOpcode) {}
+	xHypot::xHypot() : mwse::InstructionInterface_t(OpCode::xHypot) {}
 
 	void xHypot::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

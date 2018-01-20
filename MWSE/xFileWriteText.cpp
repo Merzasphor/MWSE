@@ -37,10 +37,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xFileWriteTextOpcode = 0x3F09;
 	static xFileWriteText xFileWriteTextInstance;
 
-	xFileWriteText::xFileWriteText() : mwse::InstructionInterface_t(xFileWriteTextOpcode) {}
+	xFileWriteText::xFileWriteText() : mwse::InstructionInterface_t(OpCode::xFileWriteText) {}
 
 	void xFileWriteText::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

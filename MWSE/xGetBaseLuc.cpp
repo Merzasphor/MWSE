@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseLucOpcode = 0x3F38;
 	static xGetBaseLuc xGetBaseLucInstance;
 
-	xGetBaseLuc::xGetBaseLuc() : mwse::InstructionInterface_t(xGetBaseLucOpcode) {}
+	xGetBaseLuc::xGetBaseLuc() : mwse::InstructionInterface_t(OpCode::xGetBaseLuc) {}
 
 	void xGetBaseLuc::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

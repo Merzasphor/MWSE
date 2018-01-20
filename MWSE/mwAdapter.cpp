@@ -42,7 +42,7 @@ namespace mwse
 		// Determines if we want to own this opcode, and handles it if so.
 		static void _stdcall HookGetNextInstructionIndirect()
 		{
-			mwOpcode_t opcode = context.eax;
+			OpCode::OpCode_t opcode = (OpCode::OpCode_t)context.eax;
 
 			if (vmInstance.isOpcode(opcode))
 			{
@@ -59,7 +59,7 @@ namespace mwse
 		// If we own the opcode here, execute the code assigned to it.
 		static float _stdcall HookRunFunctionIndirect()
 		{
-			mwOpcode_t opcode = context.edx;
+			OpCode::OpCode_t opcode = (OpCode::OpCode_t)context.edx;
 
 			if (vmInstance.isOpcode(opcode))
 			{

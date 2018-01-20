@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseBlockOpcode = 0x3907;
 	static xGetBaseBlock xGetBaseBlockInstance;
 
-	xGetBaseBlock::xGetBaseBlock() : mwse::InstructionInterface_t(xGetBaseBlockOpcode) {}
+	xGetBaseBlock::xGetBaseBlock() : mwse::InstructionInterface_t(OpCode::xGetBaseBlock) {}
 
 	void xGetBaseBlock::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

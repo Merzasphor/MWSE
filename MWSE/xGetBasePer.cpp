@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBasePerOpcode = 0x3F37;
 	static xGetBasePer xGetBasePerInstance;
 
-	xGetBasePer::xGetBasePer() : mwse::InstructionInterface_t(xGetBasePerOpcode) {}
+	xGetBasePer::xGetBasePer() : mwse::InstructionInterface_t(OpCode::xGetBasePer) {}
 
 	void xGetBasePer::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

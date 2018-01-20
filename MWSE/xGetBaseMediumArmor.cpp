@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseMediumArmorOpcode = 0x3912;
 	static xGetBaseMediumArmor xGetBaseMediumArmorInstance;
 
-	xGetBaseMediumArmor::xGetBaseMediumArmor() : mwse::InstructionInterface_t(xGetBaseMediumArmorOpcode) {}
+	xGetBaseMediumArmor::xGetBaseMediumArmor() : mwse::InstructionInterface_t(OpCode::xGetBaseMediumArmor) {}
 
 	void xGetBaseMediumArmor::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

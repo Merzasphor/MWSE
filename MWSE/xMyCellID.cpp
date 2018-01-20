@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xMyCellIDOpcode = 0x3F22;
 	static xMyCellID xMyCellIDInstance;
 
-	xMyCellID::xMyCellID() : mwse::InstructionInterface_t(xMyCellIDOpcode) {}
+	xMyCellID::xMyCellID() : mwse::InstructionInterface_t(OpCode::xMyCellID) {}
 
 	void xMyCellID::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

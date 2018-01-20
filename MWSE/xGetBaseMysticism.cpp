@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseMysticismOpcode = 0x3914;
 	static xGetBaseMysticism xGetBaseMysticismInstance;
 
-	xGetBaseMysticism::xGetBaseMysticism() : mwse::InstructionInterface_t(xGetBaseMysticismOpcode) {}
+	xGetBaseMysticism::xGetBaseMysticism() : mwse::InstructionInterface_t(OpCode::xGetBaseMysticism) {}
 
 	void xGetBaseMysticism::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

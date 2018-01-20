@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xFileSeekOpcode = 0x3C15;
 	static xFileSeek xFileSeekInstance;
 
-	xFileSeek::xFileSeek() : mwse::InstructionInterface_t(xFileSeekOpcode) {}
+	xFileSeek::xFileSeek() : mwse::InstructionInterface_t(OpCode::xFileSeek) {}
 
 	void xFileSeek::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

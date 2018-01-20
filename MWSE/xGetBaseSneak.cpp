@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseSneakOpcode = 0x3918;
 	static xGetBaseSneak xGetBaseSneakInstance;
 
-	xGetBaseSneak::xGetBaseSneak() : mwse::InstructionInterface_t(xGetBaseSneakOpcode) {}
+	xGetBaseSneak::xGetBaseSneak() : mwse::InstructionInterface_t(OpCode::xGetBaseSneak) {}
 
 	void xGetBaseSneak::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

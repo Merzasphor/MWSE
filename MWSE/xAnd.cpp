@@ -35,10 +35,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xAndOpcode = 0x393A;
 	static xAnd xAndInstance;
 
-	xAnd::xAnd() : mwse::InstructionInterface_t(xAndOpcode) {}
+	xAnd::xAnd() : mwse::InstructionInterface_t(OpCode::xAnd) {}
 
 	void xAnd::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

@@ -34,7 +34,7 @@ namespace mwse {
         // are 16 bit, we don't want to allocate 64K for opcodes.
     class IllegalOpCode: public std::exception {
         public:
-            IllegalOpCode(const mwOpcode_t ctor_bad_opcode):
+            IllegalOpCode(const OpCode::OpCode_t ctor_bad_opcode):
                 bad_opcode(ctor_bad_opcode)
             {
             }
@@ -42,7 +42,7 @@ namespace mwse {
             {
                 return "Illegal script instruction encountered";
             }
-        const mwOpcode_t bad_opcode;
+        const OpCode::OpCode_t bad_opcode;
     };
 
     class InstructionStore {
@@ -60,7 +60,7 @@ namespace mwse {
 
             void add(InstructionInterface_t &implementation);
 
-            inline InstructionInterface_t *get(const mwOpcode_t opcode) throw (IllegalOpCode)
+            inline InstructionInterface_t *get(const OpCode::OpCode_t opcode) throw (IllegalOpCode)
             {
                 // TODO: Insert timing here to compare implementations.
                 unsigned int primary_index = (opcode >> 8) & 0xFF;
@@ -75,7 +75,7 @@ namespace mwse {
             }
 
 			//check if a certain opcode exists, inline to make it as fast as possible.
-			inline bool isOpcode(const mwOpcode_t opcode)
+			inline bool isOpcode(const OpCode::OpCode_t opcode)
 			{
                 unsigned int primary_index = (opcode >> 8) & 0xFF;
                 unsigned int secondary_index = opcode & 0xFF;

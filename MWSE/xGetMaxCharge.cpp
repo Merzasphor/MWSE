@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetMaxChargeOpcode = 0x3F68;
 	static xGetMaxCharge xGetMaxChargeInstance;
 
-	xGetMaxCharge::xGetMaxCharge() : mwse::InstructionInterface_t(xGetMaxChargeOpcode) {}
+	xGetMaxCharge::xGetMaxCharge() : mwse::InstructionInterface_t(OpCode::xGetMaxCharge) {}
 
 	void xGetMaxCharge::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

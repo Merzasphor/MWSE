@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xGetEnchantEffectInfoOpcode = 0x392A;
 	static xGetEnchantEffectInfo xGetEnchantEffectInfoInstance;
 
-	xGetEnchantEffectInfo::xGetEnchantEffectInfo() : mwse::InstructionInterface_t(xGetEnchantEffectInfoOpcode) {}
+	xGetEnchantEffectInfo::xGetEnchantEffectInfo() : mwse::InstructionInterface_t(OpCode::xGetEnchantEffectInfo) {}
 
 	void xGetEnchantEffectInfo::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

@@ -38,10 +38,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xFileReadShortOpcode = 0x3C11;
 	static xFileReadShort xFileReadShortInstance;
 
-	xFileReadShort::xFileReadShort() : mwse::InstructionInterface_t(xFileReadShortOpcode) {}
+	xFileReadShort::xFileReadShort() : mwse::InstructionInterface_t(OpCode::xFileReadShort) {}
 
 	void xFileReadShort::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

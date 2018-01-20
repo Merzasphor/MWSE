@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xClearArrayOpcode = 0x395C;
 	static xClearArray xClearArrayInstance;
 
-	xClearArray::xClearArray() : mwse::InstructionInterface_t(xClearArrayOpcode) {}
+	xClearArray::xClearArray() : mwse::InstructionInterface_t(OpCode::xClearArray) {}
 
 	void xClearArray::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xSinOpcode = 0x3831;
 	static xSin xSinInstance;
 
-	xSin::xSin() : mwse::InstructionInterface_t(xSinOpcode) {}
+	xSin::xSin() : mwse::InstructionInterface_t(OpCode::xSin) {}
 
 	void xSin::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

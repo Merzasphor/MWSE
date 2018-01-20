@@ -34,10 +34,9 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xIsProviderOpcode = 0x3F7C;
 	static xIsProvider xIsProviderInstance;
 
-	xIsProvider::xIsProvider() : mwse::InstructionInterface_t(xIsProviderOpcode) {}
+	xIsProvider::xIsProvider() : mwse::InstructionInterface_t(OpCode::xIsProvider) {}
 
 	void xIsProvider::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

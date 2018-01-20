@@ -35,10 +35,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xShiftOpcode = 0x3935;
 	static xShift xShiftInstance;
 
-	xShift::xShift() : mwse::InstructionInterface_t(xShiftOpcode) {}
+	xShift::xShift() : mwse::InstructionInterface_t(OpCode::xShift) {}
 
 	void xShift::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

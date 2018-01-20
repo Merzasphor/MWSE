@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseHealthOpcode = 0x3A02;
 	static xGetBaseHealth xGetBaseHealthInstance;
 
-	xGetBaseHealth::xGetBaseHealth() : mwse::InstructionInterface_t(xGetBaseHealthOpcode) {}
+	xGetBaseHealth::xGetBaseHealth() : mwse::InstructionInterface_t(OpCode::xGetBaseHealth) {}
 
 	void xGetBaseHealth::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

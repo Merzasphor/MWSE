@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseBluntWeaponOpcode = 0x3908;
 	static xGetBaseBluntWeapon xGetBaseBluntWeaponInstance;
 
-	xGetBaseBluntWeapon::xGetBaseBluntWeapon() : mwse::InstructionInterface_t(xGetBaseBluntWeaponOpcode) {}
+	xGetBaseBluntWeapon::xGetBaseBluntWeapon() : mwse::InstructionInterface_t(OpCode::xGetBaseBluntWeapon) {}
 
 	void xGetBaseBluntWeapon::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

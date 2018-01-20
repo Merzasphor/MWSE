@@ -34,9 +34,9 @@ namespace mwse
 	{
 	public:
 		VirtualMachine();
-		virtual float executeOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t* script);
-		virtual void loadParametersForOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t* script);
-		virtual bool isOpcode(const mwOpcode_t opcode);
+		virtual float executeOperation(OpCode::OpCode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t* script);
+		virtual void loadParametersForOperation(OpCode::OpCode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t* script);
+		virtual bool isOpcode(const OpCode::OpCode_t opcode);
 		virtual long* getScriptIP();
 
 		virtual REFRRecord_t * getReference();

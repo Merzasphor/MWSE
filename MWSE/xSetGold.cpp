@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xSetGoldOpcode = 0x3F26;
 	static xSetGold xSetGoldInstance;
 
-	xSetGold::xSetGold() : mwse::InstructionInterface_t(xSetGoldOpcode) {}
+	xSetGold::xSetGold() : mwse::InstructionInterface_t(OpCode::xSetGold) {}
 
 	void xSetGold::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

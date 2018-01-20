@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xGetMagicOpcode = 0x3940;
 	static xGetMagic xGetMagicInstance;
 
-	xGetMagic::xGetMagic() : mwse::InstructionInterface_t(xGetMagicOpcode) {}
+	xGetMagic::xGetMagic() : mwse::InstructionInterface_t(OpCode::xGetMagic) {}
 
 	void xGetMagic::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

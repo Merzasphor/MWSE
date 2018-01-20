@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseAlterationOpcode = 0x3903;
 	static xGetBaseAlteration xGetBaseAlterationInstance;
 
-	xGetBaseAlteration::xGetBaseAlteration() : mwse::InstructionInterface_t(xGetBaseAlterationOpcode) {}
+	xGetBaseAlteration::xGetBaseAlteration() : mwse::InstructionInterface_t(OpCode::xGetBaseAlteration) {}
 
 	void xGetBaseAlteration::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

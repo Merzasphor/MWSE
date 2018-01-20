@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseLongBladeOpcode = 0x3910;
 	static xGetBaseLongBlade xGetBaseLongBladeInstance;
 
-	xGetBaseLongBlade::xGetBaseLongBlade() : mwse::InstructionInterface_t(xGetBaseLongBladeOpcode) {}
+	xGetBaseLongBlade::xGetBaseLongBlade() : mwse::InstructionInterface_t(OpCode::xGetBaseLongBlade) {}
 
 	void xGetBaseLongBlade::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

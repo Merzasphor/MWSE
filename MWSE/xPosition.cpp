@@ -39,10 +39,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xPositionOpcode = 0x3C05;
 	static xPosition xPositionInstance;
 
-	xPosition::xPosition() : mwse::InstructionInterface_t(xPositionOpcode) {}
+	xPosition::xPosition() : mwse::InstructionInterface_t(OpCode::xPosition) {}
 
 	void xPosition::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
 	}

@@ -39,10 +39,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xExplodeSpellOpcode = 0x3921;
 	static xExplodeSpell xExplodeSpellInstance;
 
-	xExplodeSpell::xExplodeSpell() : mwse::InstructionInterface_t(xExplodeSpellOpcode) {}
+	xExplodeSpell::xExplodeSpell() : mwse::InstructionInterface_t(OpCode::xExplodeSpell) {}
 
 	void xExplodeSpell::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
 	}

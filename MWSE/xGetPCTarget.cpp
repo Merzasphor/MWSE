@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwOpcode_t xGetPCTargetOpcode = 0x3C07;
 	static xGetPCTarget xGetPCTargetInstance;
 
-	xGetPCTarget::xGetPCTarget() : InstructionInterface_t(xGetPCTargetOpcode) {}
+	xGetPCTarget::xGetPCTarget() : InstructionInterface_t(OpCode::xGetPCTarget) {}
 
 	void xGetPCTarget::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

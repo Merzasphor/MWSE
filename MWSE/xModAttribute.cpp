@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xModAttributeOpcode = 0x3953;
 	static xModAttribute xModAttributeInstance;
 
-	xModAttribute::xModAttribute() : mwse::InstructionInterface_t(xModAttributeOpcode) {}
+	xModAttribute::xModAttribute() : mwse::InstructionInterface_t(OpCode::xModAttribute) {}
 
 	void xModAttribute::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

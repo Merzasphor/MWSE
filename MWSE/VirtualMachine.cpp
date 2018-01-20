@@ -38,7 +38,7 @@ VirtualMachine::VirtualMachine()
 	mwScriptIP = reinterpret_cast<long*>(TES3_IP_IMAGE);
 }
 
-void VirtualMachine::loadParametersForOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t* script)
+void VirtualMachine::loadParametersForOperation(OpCode::OpCode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t* script)
 {
 	InstructionInterface_t * instruction = InstructionStore::getInstance().get(opcode);
 
@@ -57,7 +57,7 @@ void VirtualMachine::loadParametersForOperation(mwOpcode_t opcode, mwAdapter::Co
 	context = getContext();
 }
 
-float VirtualMachine::executeOperation(mwOpcode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t* script)
+float VirtualMachine::executeOperation(OpCode::OpCode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t* script)
 {
 	InstructionInterface_t * instruction = InstructionStore::getInstance().get(opcode);
 
@@ -77,7 +77,7 @@ void VirtualMachine::OnScriptChange()
 	// mwseString_t::clearStore();
 }
 
-bool VirtualMachine::isOpcode(const mwOpcode_t opcode)
+bool VirtualMachine::isOpcode(const OpCode::OpCode_t opcode)
 {
 	return InstructionStore::getInstance().isOpcode(opcode);
 }
@@ -168,11 +168,11 @@ REFRRecord_t * VirtualMachine::getReference(const char *id)
 
 void VirtualMachine::setReference(REFRRecord_t *reference)
 {
-	mwOpcode_t opcode = 0x010C;	//'->'
+	OpCode::OpCode_t opcode = OpCode::_SetReference;	//'->'
 	unsigned char inref = 1;
 	mwAdapter::Context_t context = getContext();
 
-	mwOpcode_t * currentOpcode = reinterpret_cast<mwOpcode_t*>(TES3_OP_IMAGE);
+	OpCode::OpCode_t * currentOpcode = reinterpret_cast<OpCode::OpCode_t*>(TES3_OP_IMAGE);
 	*currentOpcode = opcode;
 
 	REFRRecord_t ** currentReference = reinterpret_cast<REFRRecord_t**>(TES3_SCRIPTTARGETREF_IMAGE);
@@ -746,7 +746,7 @@ mwseString_t& VirtualMachine::getString(mwLong_t fromStack)	//ask grant, need a 
 {
 	if (fromStack == 0x0)
 	{
-		return mwseString_t();
+		return mwse::string::store::create("");
 	}
 
 	if (mwse::string::store::exists(fromStack))

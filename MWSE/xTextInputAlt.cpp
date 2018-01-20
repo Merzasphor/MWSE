@@ -41,10 +41,9 @@ namespace mwse {
 		bool GetKeyIsPressed(int VK_key);
 	};
 
-	static const mwse::mwOpcode_t xTextInputAltOpcode = 0x3F02;
 	static xTextInputAlt xTextInputAltInstance;
 
-	xTextInputAlt::xTextInputAlt() : mwse::InstructionInterface_t(xTextInputAltOpcode) {}
+	xTextInputAlt::xTextInputAlt() : mwse::InstructionInterface_t(OpCode::xTextInputAlt) {}
 
 	void xTextInputAlt::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

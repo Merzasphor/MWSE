@@ -22,16 +22,17 @@
 
 #include "mwseTypes.h"
 #include "VMExecuteInterface.h"
+#include "OpCodes.h"
 
 namespace mwse {
     class InstructionInterface_t {
         public:
-            inline mwOpcode_t getOpCode() const { return opcode; }
+            inline OpCode::OpCode_t getOpCode() const { return opcode; }
             virtual float execute(VMExecuteInterface &virtualMachine) =0;		//added 'virtual' so the linker wouldn't complain, added the '=0' back in.
             virtual void loadParameters(VMExecuteInterface &virtualMachine) =0;	//same here
         protected:
-            InstructionInterface_t(const mwOpcode_t ctor_opcode);
+            InstructionInterface_t(const OpCode::OpCode_t ctor_opcode);
         private:
-            const mwOpcode_t opcode;
+            const OpCode::OpCode_t opcode;
     };
 };

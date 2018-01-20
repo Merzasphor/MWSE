@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseFatigueOpcode = 0x3A04;
 	static xGetBaseFatigue xGetBaseFatigueInstance;
 
-	xGetBaseFatigue::xGetBaseFatigue() : mwse::InstructionInterface_t(xGetBaseFatigueOpcode) {}
+	xGetBaseFatigue::xGetBaseFatigue() : mwse::InstructionInterface_t(OpCode::xGetBaseFatigue) {}
 
 	void xGetBaseFatigue::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

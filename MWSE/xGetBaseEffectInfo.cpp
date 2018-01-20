@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xGetBaseEffectInfoOpcode = 0x3925;
 	static xGetBaseEffectInfo xGetBaseEffectInfoInstance;
 
-	xGetBaseEffectInfo::xGetBaseEffectInfo() : mwse::InstructionInterface_t(xGetBaseEffectInfoOpcode) {}
+	xGetBaseEffectInfo::xGetBaseEffectInfo() : mwse::InstructionInterface_t(OpCode::xGetBaseEffectInfo) {}
 
 	void xGetBaseEffectInfo::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

@@ -39,10 +39,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xEquipOpcode = 0x3F0E;
 	static xEquip xEquipInstance;
 
-	xEquip::xEquip() : mwse::InstructionInterface_t(xEquipOpcode) {}
+	xEquip::xEquip() : mwse::InstructionInterface_t(OpCode::xEquip) {}
 
 	void xEquip::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
 	}

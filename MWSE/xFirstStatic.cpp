@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xFirstStaticOpcode = 0x3C1F;
 	static xFirstStatic xFirstStaticInstance;
 
-	xFirstStatic::xFirstStatic() : mwse::InstructionInterface_t(xFirstStaticOpcode) {}
+	xFirstStatic::xFirstStatic() : mwse::InstructionInterface_t(OpCode::xFirstStatic) {}
 
 	void xFirstStatic::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

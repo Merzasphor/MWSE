@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseHandToHandOpcode = 0x390C;
 	static xGetBaseHandToHand xGetBaseHandToHandInstance;
 
-	xGetBaseHandToHand::xGetBaseHandToHand() : mwse::InstructionInterface_t(xGetBaseHandToHandOpcode) {}
+	xGetBaseHandToHand::xGetBaseHandToHand() : mwse::InstructionInterface_t(OpCode::xGetBaseHandToHand) {}
 
 	void xGetBaseHandToHand::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

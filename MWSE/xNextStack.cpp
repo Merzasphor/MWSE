@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xNextStackOpcode = 0x3C2B;
 	static xNextStack xNextStackInstance;
 
-	xNextStack::xNextStack() : mwse::InstructionInterface_t(xNextStackOpcode) {}
+	xNextStack::xNextStack() : mwse::InstructionInterface_t(OpCode::xNextStack) {}
 
 	void xNextStack::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

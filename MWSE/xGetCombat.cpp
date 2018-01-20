@@ -37,10 +37,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xGetCombatOpcode = 0x3C20;
 	static xGetCombat xGetCombatInstance;
 
-	xGetCombat::xGetCombat() : mwse::InstructionInterface_t(xGetCombatOpcode) {}
+	xGetCombat::xGetCombat() : mwse::InstructionInterface_t(OpCode::xGetCombat) {}
 
 	void xGetCombat::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

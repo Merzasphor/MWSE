@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xSetMaxChargeOpcode = 0x3E67;
 	static xSetMaxCharge xSetMaxChargeInstance;
 
-	xSetMaxCharge::xSetMaxCharge() : mwse::InstructionInterface_t(xSetMaxChargeOpcode) {}
+	xSetMaxCharge::xSetMaxCharge() : mwse::InstructionInterface_t(OpCode::xSetMaxCharge) {}
 
 	void xSetMaxCharge::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

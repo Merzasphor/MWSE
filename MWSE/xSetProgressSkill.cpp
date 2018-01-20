@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xSetProgressSkillOpcode = 0x392D;
 	static xSetProgressSkill xSetProgressSkillInstance;
 
-	xSetProgressSkill::xSetProgressSkill() : mwse::InstructionInterface_t(xSetProgressSkillOpcode) {}
+	xSetProgressSkill::xSetProgressSkill() : mwse::InstructionInterface_t(OpCode::xSetProgressSkill) {}
 
 	void xSetProgressSkill::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

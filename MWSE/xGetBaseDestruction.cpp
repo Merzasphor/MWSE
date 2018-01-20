@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseDestructionOpcode = 0x390A;
 	static xGetBaseDestruction xGetBaseDestructionInstance;
 
-	xGetBaseDestruction::xGetBaseDestruction() : mwse::InstructionInterface_t(xGetBaseDestructionOpcode) {}
+	xGetBaseDestruction::xGetBaseDestruction() : mwse::InstructionInterface_t(OpCode::xGetBaseDestruction) {}
 
 	void xGetBaseDestruction::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

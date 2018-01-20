@@ -40,10 +40,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xStringBuildOpcode = 0x3f0b;
 	static xStringBuild xStringBuildInstance;
 
-	xStringBuild::xStringBuild() : mwse::InstructionInterface_t(xStringBuildOpcode) {}
+	xStringBuild::xStringBuild() : mwse::InstructionInterface_t(OpCode::xStringBuild) {}
 
 	void xStringBuild::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

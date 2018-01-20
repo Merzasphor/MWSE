@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseShortBladeOpcode = 0x3917;
 	static xGetBaseShortBlade xGetBaseShortBladeInstance;
 
-	xGetBaseShortBlade::xGetBaseShortBlade() : mwse::InstructionInterface_t(xGetBaseShortBladeOpcode) {}
+	xGetBaseShortBlade::xGetBaseShortBlade() : mwse::InstructionInterface_t(OpCode::xGetBaseShortBlade) {}
 
 	void xGetBaseShortBlade::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

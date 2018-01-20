@@ -35,10 +35,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xBitXorOpcode = 0x3938;
 	static xBitXor xBitXorInstance;
 
-	xBitXor::xBitXor() : mwse::InstructionInterface_t(xBitXorOpcode) {}
+	xBitXor::xBitXor() : mwse::InstructionInterface_t(OpCode::xBitXor) {}
 
 	void xBitXor::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

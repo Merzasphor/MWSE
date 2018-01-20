@@ -35,10 +35,9 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xKeyPressedOpcode = 0x3F00;
 	static xKeyPressed xKeyPressedInstance;
 
-	xKeyPressed::xKeyPressed() : mwse::InstructionInterface_t(xKeyPressedOpcode) {}
+	xKeyPressed::xKeyPressed() : mwse::InstructionInterface_t(OpCode::xKeyPressed) {}
 
 	void xKeyPressed::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

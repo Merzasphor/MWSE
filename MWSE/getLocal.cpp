@@ -35,10 +35,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwOpcode_t getLocalOpcode = 0x3c00;
 	static getLocal getLocalInstance;
 
-	getLocal::getLocal(): InstructionInterface_t(getLocalOpcode){}
+	getLocal::getLocal(): InstructionInterface_t(OpCode::_GetLocal){}
 
 	void getLocal::loadParameters(mwse::VMExecuteInterface &virtualMachine){}
 
@@ -84,10 +83,9 @@ namespace mwse
 	private:
 	};
 
-	static const mwOpcode_t setLocalOpcode = 0x3c02;
 	static setLocal setLocalInstance;
 
-	setLocal::setLocal(): InstructionInterface_t(setLocalOpcode){}
+	setLocal::setLocal(): InstructionInterface_t(OpCode::_SetLocal){}
 
 	void setLocal::loadParameters(mwse::VMExecuteInterface &virtualMachine){}
 

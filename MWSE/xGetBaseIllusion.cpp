@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseIllusionOpcode = 0x390E;
 	static xGetBaseIllusion xGetBaseIllusionInstance;
 
-	xGetBaseIllusion::xGetBaseIllusion() : mwse::InstructionInterface_t(xGetBaseIllusionOpcode) {}
+	xGetBaseIllusion::xGetBaseIllusion() : mwse::InstructionInterface_t(OpCode::xGetBaseIllusion) {}
 
 	void xGetBaseIllusion::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

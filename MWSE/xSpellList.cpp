@@ -38,10 +38,9 @@ namespace mwse
 		void pushErrorResponse();
 	};
 
-	static const mwse::mwOpcode_t xSpellListOpcode = 0x3926;
 	static xSpellList xSpellListInstance;
 
-	xSpellList::xSpellList() : mwse::InstructionInterface_t(xSpellListOpcode) {}
+	xSpellList::xSpellList() : mwse::InstructionInterface_t(OpCode::xSpellList) {}
 
 	void xSpellList::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

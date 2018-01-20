@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xGetLockLevelOpcode = 0x391D;
 	static xGetLockLevel xGetLockLevelInstance;
 
-	xGetLockLevel::xGetLockLevel() : mwse::InstructionInterface_t(xGetLockLevelOpcode) {}
+	xGetLockLevel::xGetLockLevel() : mwse::InstructionInterface_t(OpCode::xGetLockLevel) {}
 
 	void xGetLockLevel::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

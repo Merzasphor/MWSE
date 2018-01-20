@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwOpcode_t xRefTypeOpcode = 0x3C08;
 	static xRefType xRefTypeInstance;
 
-	xRefType::xRefType() : InstructionInterface_t(xRefTypeOpcode) {}
+	xRefType::xRefType() : InstructionInterface_t(OpCode::xRefType) {}
 
 	void xRefType::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

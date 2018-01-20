@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseMagickaOpcode = 0x3A03;
 	static xGetBaseMagicka xGetBaseMagickaInstance;
 
-	xGetBaseMagicka::xGetBaseMagicka() : mwse::InstructionInterface_t(xGetBaseMagickaOpcode) {}
+	xGetBaseMagicka::xGetBaseMagicka() : mwse::InstructionInterface_t(OpCode::xGetBaseMagicka) {}
 
 	void xGetBaseMagicka::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

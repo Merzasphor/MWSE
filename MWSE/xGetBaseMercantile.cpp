@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseMercantileOpcode = 0x3913;
 	static xGetBaseMercantile xGetBaseMercantileInstance;
 
-	xGetBaseMercantile::xGetBaseMercantile() : mwse::InstructionInterface_t(xGetBaseMercantileOpcode) {}
+	xGetBaseMercantile::xGetBaseMercantile() : mwse::InstructionInterface_t(OpCode::xGetBaseMercantile) {}
 
 	void xGetBaseMercantile::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

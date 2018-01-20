@@ -35,10 +35,9 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xSetWeightOpcode = 0x3E62;
 	static xSetWeight xSetWeightInstance;
 
-	xSetWeight::xSetWeight() : mwse::InstructionInterface_t(xSetWeightOpcode) {}
+	xSetWeight::xSetWeight() : mwse::InstructionInterface_t(OpCode::xSetWeight) {}
 
 	void xSetWeight::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

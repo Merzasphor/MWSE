@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xGetBaseGoldOpcode = 0x3F23;
 	static xGetBaseGold xGetBaseGoldInstance;
 
-	xGetBaseGold::xGetBaseGold() : mwse::InstructionInterface_t(xGetBaseGoldOpcode) {}
+	xGetBaseGold::xGetBaseGold() : mwse::InstructionInterface_t(OpCode::xGetBaseGold) {}
 
 	void xGetBaseGold::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

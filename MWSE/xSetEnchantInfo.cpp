@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xSetEnchantInfoOpcode = 0x3944;
 	static xSetEnchantInfo xSetEnchantInfoInstance;
 
-	xSetEnchantInfo::xSetEnchantInfo() : mwse::InstructionInterface_t(xSetEnchantInfoOpcode) {}
+	xSetEnchantInfo::xSetEnchantInfo() : mwse::InstructionInterface_t(OpCode::xSetEnchantInfo) {}
 
 	void xSetEnchantInfo::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

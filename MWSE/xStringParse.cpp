@@ -38,10 +38,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xStringParseOpcode = 0x3f0c;
 	static xStringParse xStringParseInstance;
 
-	xStringParse::xStringParse() : mwse::InstructionInterface_t(xStringParseOpcode) {}
+	xStringParse::xStringParse() : mwse::InstructionInterface_t(OpCode::xStringParse) {}
 
 	void xStringParse::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

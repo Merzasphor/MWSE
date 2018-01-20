@@ -39,10 +39,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xAddSpellOpcode = 0x3FA0;
 	static xAddSpell xAddSpellInstance;
 
-	xAddSpell::xAddSpell() : mwse::InstructionInterface_t(xAddSpellOpcode) {}
+	xAddSpell::xAddSpell() : mwse::InstructionInterface_t(OpCode::xAddSpell) {}
 
 	void xAddSpell::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
 	}

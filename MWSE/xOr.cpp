@@ -35,10 +35,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xOrOpcode = 0x393B;
 	static xOr xOrInstance;
 
-	xOr::xOr() : mwse::InstructionInterface_t(xOrOpcode) {}
+	xOr::xOr() : mwse::InstructionInterface_t(OpCode::xOr) {}
 
 	void xOr::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

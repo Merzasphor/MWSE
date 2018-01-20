@@ -131,7 +131,7 @@ namespace mwse
 			*reinterpret_cast<mwFloat_t*>(TES3_TARGET_ROTZ_IMAGE) = z;
 		}
 
-		float RunOriginalOpCode(SCPTRecord_t* script, REFRRecord_t* reference, int opCode, TES3DefaultTemplate_t* objectParam = NULL, char charParam = '_', float unk1 = 0.0f, float unk2 = 0.0f) {
+		float RunOriginalOpCode(SCPTRecord_t* script, REFRRecord_t* reference, OpCode::OpCode_t opCode, TES3DefaultTemplate_t* objectParam = NULL, char charParam = '_', float unk1 = 0.0f, float unk2 = 0.0f) {
 			float result = 0.0;
 
 			REFRRecord_t* cachedTargetReference = getScriptTargetReference();
@@ -169,7 +169,7 @@ namespace mwse
 			// Prepare variables and run original opcode.
 			setScriptSecondObject(itemTemplate);
 			setScriptVariableIndex(count);
-			RunOriginalOpCode(script, reference, TES3_OPCODE_ADDITEM);
+			RunOriginalOpCode(script, reference, OpCode::AddItem);
 
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);
@@ -182,7 +182,7 @@ namespace mwse
 
 			// Prepare variables and run original opcode.
 			setScriptSecondObject(spellTemplate);
-			RunOriginalOpCode(script, reference, TES3_OPCODE_ADDSPELL);
+			RunOriginalOpCode(script, reference, OpCode::AddSpell);
 
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);
@@ -196,7 +196,7 @@ namespace mwse
 
 			// Call original opcode.
 			setScriptDestination(x, y, z);
-			RunOriginalOpCode(script, reference, TES3_OPCODE_AITRAVEL);
+			RunOriginalOpCode(script, reference, OpCode::AITravel);
 
 			// Restore destination values.
 			setScriptDestination(cachedDestinationX, cachedDestinationY, cachedDestinationZ);
@@ -208,7 +208,7 @@ namespace mwse
 
 			// Prepare variables and run original opcode.
 			setScriptSecondObject(reinterpret_cast<TES3DefaultTemplate_t*>(spell));
-			RunOriginalOpCode(script, reference, TES3_OPCODE_CAST);
+			RunOriginalOpCode(script, reference, OpCode::Cast);
 
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);
@@ -222,7 +222,7 @@ namespace mwse
 			// Prepare variables and run original opcode.
 			setScriptSecondObject(itemTemplate);
 			setScriptVariableIndex(count);
-			RunOriginalOpCode(script, reference, TES3_OPCODE_DROP);
+			RunOriginalOpCode(script, reference, OpCode::Drop);
 
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);
@@ -235,7 +235,7 @@ namespace mwse
 
 			// Prepare variables and run original opcode.
 			setScriptSecondObject(itemTemplate);
-			RunOriginalOpCode(script, reference, TES3_OPCODE_EQUIP);
+			RunOriginalOpCode(script, reference, OpCode::Equip);
 
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);
@@ -247,7 +247,7 @@ namespace mwse
 
 			// Prepare variables and run original opcode.
 			setScriptSecondObject(spellTemplate);
-			RunOriginalOpCode(script, reference, TES3_OPCODE_EXPLODESPELL);
+			RunOriginalOpCode(script, reference, OpCode::ExplodeSpell);
 
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);
@@ -259,7 +259,7 @@ namespace mwse
 
 			// Prepare variables and run original opcode.
 			setScriptSecondObject(itemTemplate);
-			float value = RunOriginalOpCode(script, reference, TES3_OPCODE_HASITEMEQUIPPED);
+			float value = RunOriginalOpCode(script, reference, OpCode::HasItemEquipped);
 
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);
@@ -273,7 +273,7 @@ namespace mwse
 
 			// Prepare variables and run original opcode.
 			setScriptSecondObject(spellTemplate);
-			mwFloat_t value = RunOriginalOpCode(script, reference, TES3_OPCODE_GETSPELLEFFECTS);
+			mwFloat_t value = RunOriginalOpCode(script, reference, OpCode::GetSpellEffects);
 
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);
@@ -291,7 +291,7 @@ namespace mwse
 			setScriptVariableIndex(count);
 			setScriptDestinationX(distance);
 			setScriptDestinationY(direction);
-			RunOriginalOpCode(script, reference, TES3_OPCODE_PLACEATPC);
+			RunOriginalOpCode(script, reference, OpCode::PlaceAtPC);
 
 			// Restore script variables.
 			setScriptDestinationX(cachedDestinationX);
@@ -311,7 +311,7 @@ namespace mwse
 			// Call original opcode.
 			setScriptDestination(x, y, z);
 			setScriptTargetRotation(0.0f, 0.0f, rotation);
-			RunOriginalOpCode(script, reference, TES3_OPCODE_POSITION);
+			RunOriginalOpCode(script, reference, OpCode::Position);
 
 			// Restore script variables.
 			setScriptDestinationX(cachedDestinationX);
@@ -336,7 +336,7 @@ namespace mwse
 			setScriptDestination(x, y, z);
 			setScriptTargetRotation(0.0f, 0.0f, rotation);
 			setScriptSecondObject(cell);
-			RunOriginalOpCode(script, reference, TES3_OPCODE_POSITIONCELL);
+			RunOriginalOpCode(script, reference, OpCode::PositionCell);
 
 			// Restore script variables.
 			setScriptDestinationX(cachedDestinationX);
@@ -356,7 +356,7 @@ namespace mwse
 			// Prepare variables and run original opcode.
 			setScriptSecondObject(itemTemplate);
 			setScriptVariableIndex(count);
-			RunOriginalOpCode(script, reference, TES3_OPCODE_REMOVEITEM);
+			RunOriginalOpCode(script, reference, OpCode::RemoveItem);
 
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);
@@ -369,7 +369,7 @@ namespace mwse
 
 			// Prepare variables and run original opcode.
 			setScriptSecondObject(spellTemplate);
-			RunOriginalOpCode(script, reference, TES3_OPCODE_REMOVESPELL);
+			RunOriginalOpCode(script, reference, OpCode::RemoveSpell);
 
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);
@@ -381,7 +381,7 @@ namespace mwse
 
 			// Prepare variables and run original opcode.
 			setScriptVariableIndex(level);
-			RunOriginalOpCode(script, reference, TES3_OPCODE_SETLEVEL);
+			RunOriginalOpCode(script, reference, OpCode::SetLevel);
 
 			// Restore original script variables.
 			setScriptVariableIndex(cachedVarIndex);
@@ -393,7 +393,7 @@ namespace mwse
 
 			// Prepare variables and run original opcode.
 			setScriptSecondObject(reinterpret_cast<TES3DefaultTemplate_t*>(target));
-			RunOriginalOpCode(script, reference, TES3_OPCODE_STARTCOMBAT);
+			RunOriginalOpCode(script, reference, OpCode::StartCombat);
 
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);

@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xSetSkillInfoOpcode = 0x394C;
 	static xSetSkillInfo xSetSkillInfoInstance;
 
-	xSetSkillInfo::xSetSkillInfo() : mwse::InstructionInterface_t(xSetSkillInfoOpcode) {}
+	xSetSkillInfo::xSetSkillInfo() : mwse::InstructionInterface_t(OpCode::xSetSkillInfo) {}
 
 	void xSetSkillInfo::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

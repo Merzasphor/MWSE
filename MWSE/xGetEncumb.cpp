@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xGetEncumbOpcode = 0x3F64;
 	static xGetEncumb xGetEncumbInstance;
 
-	xGetEncumb::xGetEncumb() : mwse::InstructionInterface_t(xGetEncumbOpcode) {}
+	xGetEncumb::xGetEncumb() : mwse::InstructionInterface_t(OpCode::xGetEncumb) {}
 
 	void xGetEncumb::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

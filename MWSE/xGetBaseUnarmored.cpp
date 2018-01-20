@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseUnarmoredOpcode = 0x391B;
 	static xGetBaseUnarmored xGetBaseUnarmoredInstance;
 
-	xGetBaseUnarmored::xGetBaseUnarmored() : mwse::InstructionInterface_t(xGetBaseUnarmoredOpcode) {}
+	xGetBaseUnarmored::xGetBaseUnarmored() : mwse::InstructionInterface_t(OpCode::xGetBaseUnarmored) {}
 
 	void xGetBaseUnarmored::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

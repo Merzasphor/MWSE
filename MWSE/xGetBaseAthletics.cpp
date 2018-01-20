@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseAthleticsOpcode = 0x3905;
 	static xGetBaseAthletics xGetBaseAthleticsInstance;
 
-	xGetBaseAthletics::xGetBaseAthletics() : mwse::InstructionInterface_t(xGetBaseAthleticsOpcode) {}
+	xGetBaseAthletics::xGetBaseAthletics() : mwse::InstructionInterface_t(OpCode::xGetBaseAthletics) {}
 
 	void xGetBaseAthletics::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

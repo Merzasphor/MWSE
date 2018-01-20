@@ -40,10 +40,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xStringMatchOpcode = 0x3e68;
 	static xStringMatch xStringMatchInstance;
 
-	xStringMatch::xStringMatch() : mwse::InstructionInterface_t(xStringMatchOpcode) {}
+	xStringMatch::xStringMatch() : mwse::InstructionInterface_t(OpCode::xStringMatch) {}
 
 	void xStringMatch::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

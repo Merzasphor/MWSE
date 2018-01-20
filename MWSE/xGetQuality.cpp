@@ -39,10 +39,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetQualityOpcode = 0x3F69;
 	static xGetQuality xGetQualityInstance;
 
-	xGetQuality::xGetQuality() : mwse::InstructionInterface_t(xGetQualityOpcode) {}
+	xGetQuality::xGetQuality() : mwse::InstructionInterface_t(OpCode::xGetQuality) {}
 
 	void xGetQuality::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

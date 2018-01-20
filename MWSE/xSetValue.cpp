@@ -35,10 +35,9 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xSetValueOpcode = 0x3E61;
 	static xSetValue xSetValueInstance;
 
-	xSetValue::xSetValue() : mwse::InstructionInterface_t(xSetValueOpcode) {}
+	xSetValue::xSetValue() : mwse::InstructionInterface_t(OpCode::xSetValue) {}
 
 	void xSetValue::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

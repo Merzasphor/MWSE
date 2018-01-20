@@ -36,10 +36,9 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xSetTrapOpcode = 0x3920;
 	static xSetTrap xSetTrapInstance;
 
-	xSetTrap::xSetTrap() : mwse::InstructionInterface_t(xSetTrapOpcode) {}
+	xSetTrap::xSetTrap() : mwse::InstructionInterface_t(OpCode::xSetTrap) {}
 
 	void xSetTrap::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 

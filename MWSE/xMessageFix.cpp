@@ -36,10 +36,9 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	};
 
-	static const mwse::mwOpcode_t xMessageFixOpcode = 0x3F7E;
 	static xMessageFix xMessageFixInstance;
 
-	xMessageFix::xMessageFix() : mwse::InstructionInterface_t(xMessageFixOpcode) {}
+	xMessageFix::xMessageFix() : mwse::InstructionInterface_t(OpCode::xMessageFix) {}
 
 	void xMessageFix::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 
@@ -58,7 +57,7 @@ namespace mwse {
 		scriptRWP += sizeof(mboxhdr);
 
 		// This function is invalid if the next call isn't to MessageBox.
-		if (mboxhdr[0] != TES3_OPCODE_MESSAGEBOX) {
+		if (mboxhdr[0] != OpCode::MessageBox) {
 			mwse::log::getLog() << "xMessageFix: This function must immediately be followed by a MessageBox call." << std::endl;
 			return 0.0f;
 		}

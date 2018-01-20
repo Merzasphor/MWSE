@@ -38,10 +38,9 @@ namespace mwse
 		const mwFloat_t INVALID_VALUE = -1.0f;
 	};
 
-	static const mwse::mwOpcode_t xGetBaseArmorerOpcode = 0x3904;
 	static xGetBaseArmorer xGetBaseArmorerInstance;
 
-	xGetBaseArmorer::xGetBaseArmorer() : mwse::InstructionInterface_t(xGetBaseArmorerOpcode) {}
+	xGetBaseArmorer::xGetBaseArmorer() : mwse::InstructionInterface_t(OpCode::xGetBaseArmorer) {}
 
 	void xGetBaseArmorer::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 
