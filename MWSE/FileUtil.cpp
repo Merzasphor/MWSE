@@ -46,46 +46,42 @@ namespace mwse {
 
 	FileReadString_t FileSystem::readString(const char* fileName, bool stopAtEndOfLine) {
 		HANDLE file = getFile(fileName);
-		int numRead = 0;
 
 		// String buffer.
-		char buffer[BUFSIZ * 4] = "\0";
-		char* bufferPtr = buffer;
+		std::string buffer;
+		char readCharacter = 0;
 
+		// Abort if we don't have a valid handle.
 		if (file == INVALID_HANDLE_VALUE) {
 			return FileReadString_t(std::string(), 0);
 		}
 
+		// Read until we hit EOF or read a \0 character.
 		DWORD bytesRead = 0;
-		int bufferRemaining = sizeof(buffer);
-		while (bufferRemaining > 0) {
-			ReadFile(file, bufferPtr, 1, &bytesRead, 0);
-			// eof, count it as a null
+		while (true) {
+			// Read a single byte into a buffer.
+			ReadFile(file, &readCharacter, 1, &bytesRead, 0);
+
+			// EOF, we're done.
 			if (bytesRead == 0) {
-				*bufferPtr = 0;
+				break;
 			}
 
-			// LF in eol mode, count as a null
-			if (*bufferPtr == '\n' && stopAtEndOfLine) {
-				*bufferPtr = 0;
+			// Line feed in EOL mode, we're done.
+			if ((readCharacter == '\r' || readCharacter == '\n') && stopAtEndOfLine) {
+				break;
 			}
 
-			// end of string found
-			if (!*bufferPtr) {
-				bufferRemaining = 0;
+			// End of string found, we're done.
+			if (!readCharacter) {
+				break;
 			}
 
-			bufferPtr++;
-			bufferRemaining--;
+			// Valid character. Add it to the buffer.
+			buffer.push_back(readCharacter);
 		}
 
-		numRead = bufferPtr - buffer;
-		if (stopAtEndOfLine && (*(bufferPtr - 2) == '\r')) {
-			*(bufferPtr - 2) = 0;
-			bufferPtr--;
-		}
-
-		return FileReadString_t(std::string(buffer), numRead);
+		return FileReadString_t(buffer, 0);
 	}
 
 	void FileSystem::writeShort(const char* fileName, const mwShort_t value) {
