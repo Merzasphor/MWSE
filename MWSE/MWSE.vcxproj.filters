@@ -788,6 +788,12 @@
     <ClCompile Include="xTextInputAlt.cpp">
       <Filter>Source Files\Functions\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="xInventory.cpp">
+      <Filter>Source Files\Functions\References</Filter>
+    </ClCompile>
+    <ClCompile Include="xNextStack.cpp">
+      <Filter>Source Files\Functions\References</Filter>
+    </ClCompile>
     <ClCompile Include="MgeTes3Machine.cpp">
       <Filter>Source Files\MGE Interface</Filter>
     </ClCompile>

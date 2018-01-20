@@ -193,6 +193,7 @@
     <ClCompile Include="xGetWeight.cpp" />
     <ClCompile Include="xHasItemEquipped.cpp" />
     <ClCompile Include="xHypot.cpp" />
+    <ClCompile Include="xInventory.cpp" />
     <ClCompile Include="xIsFemale.cpp" />
     <ClCompile Include="xIsProvider.cpp" />
     <ClCompile Include="xIsTrader.cpp" />
@@ -207,6 +208,7 @@
     <ClCompile Include="xModService.cpp" />
     <ClCompile Include="xMyCellID.cpp" />
     <ClCompile Include="xNextRef.cpp" />
+    <ClCompile Include="xNextStack.cpp" />
     <ClCompile Include="xNot.cpp" />
     <ClCompile Include="xOr.cpp" />
     <ClCompile Include="xPCCellID.cpp" />
