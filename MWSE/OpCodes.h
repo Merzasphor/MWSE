@@ -458,6 +458,23 @@ namespace mwse {
 			// MWSE OpCodes
 			//
 
+			_GetLocal = 0x3C00,
+			_SetLocal = 0x3C02,
+			_Jump = 0x3809,
+			_JumpZero = 0x380B,
+			_JumpNotZero = 0x380D,
+			_JumpPositive = 0x3816,
+			_JumpNegative = 0x3818,
+			_JumpShort = 0x380A,
+			_JumpShortZero = 0x380C,
+			_JumpShortNotZero = 0x380E,
+			_JumpShortPositive = 0x3817,
+			_JumpShortNegative = 0x3819,
+			_PushByte = 0x3812,
+			_PushShort = 0x3813,
+			_PushLong = 0x3811,
+			_Pop = 0x380F,
+			_SetReference = 0x010C,
 			xAddEffect = 0x3946,
 			xAddItem = 0x3C28,
 			xAddSpell = 0x3FA0,
@@ -656,24 +673,7 @@ namespace mwse {
 			xTan = 0x3830,
 			xTextInput = 0x3F01,
 			xTextInputAlt = 0x3F02,
-			xXor = 0x393C,
-			_GetLocal = 0x3C00,
-			_SetLocal = 0x3C02,
-			_Jump = 0x3809,
-			_JumpZero = 0x380B,
-			_JumpNotZero = 0x380D,
-			_JumpPositive = 0x3816,
-			_JumpNegative = 0x3818,
-			_JumpShort = 0x380A,
-			_JumpShortZero = 0x380C,
-			_JumpShortNotZero = 0x380E,
-			_JumpShortPositive = 0x3817,
-			_JumpShortNegative = 0x3819,
-			_PushByte = 0x3812,
-			_PushShort = 0x3813,
-			_PushLong = 0x3811,
-			_Pop = 0x380F,
-			_SetReference = 0x010C
+			xXor = 0x393C
 		};
 	}
 }
