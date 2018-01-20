@@ -24,6 +24,7 @@
 #include "mwOffsets.h"
 #include "mwseTypes.h"
 #include "mwseString.h"
+#include "OpCodes.h"
 
 namespace mwse
 {
@@ -80,7 +81,7 @@ namespace mwse
 		// Execute original op code.
 		//
 
-		float RunOriginalOpCode(SCPTRecord_t* script, REFRRecord_t* reference, int opCode, TES3DefaultTemplate_t* objectParam, char charParam, float unk1, float unk2);
+		float RunOriginalOpCode(SCPTRecord_t* script, REFRRecord_t* reference, OpCode::OpCode_t opCode, TES3DefaultTemplate_t* objectParam, char charParam, float unk1, float unk2);
 
 		//
 		// Wrapper functions for original opcodes.
