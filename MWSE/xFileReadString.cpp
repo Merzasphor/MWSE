@@ -58,9 +58,15 @@ namespace mwse
 		// Read the string from the file.
 		std::string readString;
 		std::tie(readString, std::ignore) = mwse::FileSystem::getInstance().readString(fileName.c_str(), true);
-
+		
 		// Push the found string to the stack.
-		mwse::Stack::getInstance().pushString(readString);
+		if (!readString.empty()) {
+			mwse::Stack::getInstance().pushString(readString);
+		}
+		else {
+			// If we didn't read a string, "null" is expected.
+			mwse::Stack::getInstance().pushString("null");
+		}
 
 		return 0.0f;
 	}
