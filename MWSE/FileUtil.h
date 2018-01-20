@@ -60,7 +60,7 @@ namespace mwse {
 		void writeFloat(const char* fileName, const mwFloat_t value);
 		void writeString(const char* fileName, const std::string& value);
 
-		bool seek(const char* fileName, bool absolute);
+		bool seek(const char* fileName, long absolute);
 
 	private:
 		FileSystem();

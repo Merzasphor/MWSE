@@ -100,12 +100,12 @@ namespace mwse {
 		write(fileName, value.c_str(), strlen(value.c_str()) + 1);
 	}
 
-	bool FileSystem::seek(const char* fileName, bool absolute) {
+	bool FileSystem::seek(const char* fileName, long position) {
 		bool result = false;
 		HANDLE file = getFile(fileName);
 		if (file != INVALID_HANDLE_VALUE) {
-			DWORD newPosition = SetFilePointer(file, absolute, 0, FILE_BEGIN);
-			result = (newPosition == absolute);
+			DWORD newPosition = SetFilePointer(file, position, 0, FILE_BEGIN);
+			result = (newPosition == position);
 		}
 		return result;
 	}
