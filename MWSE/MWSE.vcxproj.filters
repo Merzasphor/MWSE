@@ -64,6 +64,12 @@
     <Filter Include="Source Files\Functions\Strings">
       <UniqueIdentifier>{95e8e115-a53a-4b11-82f1-30d6e1d7fc47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\MGE Interface">
+      <UniqueIdentifier>{da22a9fe-c632-4ac8-a7aa-2797d17b8a6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MGE Interface">
+      <UniqueIdentifier>{23f0c759-9924-4947-8988-c3c89b4ea786}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -111,18 +117,6 @@
     <ClInclude Include="RngUtil.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="MgeInstruction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MgeVirtualMachine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MgeVmtypes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MgeTes3Machine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TES3Util.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
@@ -140,6 +134,18 @@
     </ClInclude>
     <ClInclude Include="ScriptUtil.h">
       <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="MgeInstruction.h">
+      <Filter>Header Files\MGE Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="MgeTes3Machine.h">
+      <Filter>Header Files\MGE Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="MgeVirtualMachine.h">
+      <Filter>Header Files\MGE Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="MgeVmtypes.h">
+      <Filter>Header Files\MGE Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -187,12 +193,6 @@
     </ClCompile>
     <ClCompile Include="RngUtil.cpp">
       <Filter>Source Files\Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="MgeVirtualMachine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MgeTes3Machine.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TES3Util.cpp">
       <Filter>Source Files\Utility</Filter>
@@ -787,6 +787,12 @@
     </ClCompile>
     <ClCompile Include="xTextInputAlt.cpp">
       <Filter>Source Files\Functions\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="MgeTes3Machine.cpp">
+      <Filter>Source Files\MGE Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="MgeVirtualMachine.cpp">
+      <Filter>Source Files\MGE Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
