@@ -200,6 +200,7 @@
     <ClCompile Include="xKeyPressed.cpp" />
     <ClCompile Include="xLogMessage.cpp" />
     <ClCompile Include="xLongToFloats.cpp" />
+    <ClCompile Include="xMessageFix.cpp" />
     <ClCompile Include="xModAttribute.cpp" />
     <ClCompile Include="xModProgressLevel.cpp" />
     <ClCompile Include="xModProgressSkill.cpp" />
