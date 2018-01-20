@@ -36,6 +36,9 @@ namespace mwse {
 		xTextInputAlt();
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+
+	private:
+		bool GetKeyIsPressed(int VK_key);
 	};
 
 	static const mwse::mwOpcode_t xTextInputAltOpcode = 0x3F02;
@@ -47,7 +50,7 @@ namespace mwse {
 
 	static std::map<int, char> keyCharMap;
 
-	bool GetKeyIsPressed(int VK_key) {
+	bool xTextInputAlt::GetKeyIsPressed(int VK_key) {
 		return (GetAsyncKeyState(VK_key) & 0x8001) == 0x8001;
 	}
 
