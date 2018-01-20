@@ -65,10 +65,9 @@ namespace mwse
 		mwLong_t* results = new mwLong_t[maxResults];
 
 		// Read the string from the file.
-		std::string readString;
-		std::tie(readString, results[0]) = mwse::FileSystem::getInstance().readString(fileName.c_str(), stopAtEndOfLine);
+		std::string readString = mwse::FileSystem::getInstance().readString(fileName.c_str(), stopAtEndOfLine);
 
-		if (results[0]) {
+		if (!readString.empty()) {
 			mwse::string::secernate(format.c_str(), readString.c_str(), results, maxResults);
 		}
 

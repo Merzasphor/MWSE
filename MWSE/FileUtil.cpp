@@ -44,7 +44,7 @@ namespace mwse {
 		return result;
 	}
 
-	FileReadString_t FileSystem::readString(const char* fileName, bool stopAtEndOfLine) {
+	std::string FileSystem::readString(const char* fileName, bool stopAtEndOfLine) {
 		HANDLE file = getFile(fileName);
 
 		// String buffer.
@@ -53,7 +53,7 @@ namespace mwse {
 
 		// Abort if we don't have a valid handle.
 		if (file == INVALID_HANDLE_VALUE) {
-			return FileReadString_t(std::string(), 0);
+			return buffer;
 		}
 
 		// Read until we hit EOF or read a \0 character.
@@ -81,7 +81,7 @@ namespace mwse {
 			buffer.push_back(readCharacter);
 		}
 
-		return FileReadString_t(buffer, 0);
+		return buffer;
 	}
 
 	void FileSystem::writeShort(const char* fileName, const mwShort_t value) {

@@ -44,9 +44,6 @@ namespace mwse {
 
 	typedef std::map<std::string, mwseFileState_t> mwseFileMap_t;
 
-	// readString needs to return both the string it read, and the number of characters read.
-	typedef std::tuple<std::string, int> FileReadString_t;
-
 	class FileSystem {
 	public:
 		static FileSystem& getInstance() { return singleton; };
@@ -56,7 +53,7 @@ namespace mwse {
 		mwShort_t readShort(const char* fileName);
 		mwLong_t readLong(const char* fileName);
 		mwFloat_t readFloat(const char* fileName);
-		FileReadString_t readString(const char* fileName, bool stopAtEndOfLine);
+		std::string readString(const char* fileName, bool stopAtEndOfLine);
 
 		void writeShort(const char* fileName, const mwShort_t value);
 		void writeLong(const char* fileName, const mwLong_t value);
