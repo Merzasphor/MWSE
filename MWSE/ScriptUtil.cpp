@@ -55,8 +55,7 @@ namespace mwse
 		}
 
 		void setScriptSecondObject(const char* string) {
-			*reinterpret_cast<const char**>(TES3_SECONDOBJECT_IMAGE) = string;
-			*reinterpret_cast<size_t*>(TES3_SECONDOBJECT_LENGTH_IMAGE) = strlen(string);
+			strncpy(reinterpret_cast<char*>(TES3_SECONDOBJECT_IMAGE), string, strlen(string)+1);
 		}
 
 		void setScriptSecondObject(TES3DefaultTemplate_t* record) {
