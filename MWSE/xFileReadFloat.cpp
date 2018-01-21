@@ -56,19 +56,25 @@ namespace mwse
 		mwLong_t count = mwse::Stack::getInstance().popLong();
 
 		// Gather values into a temporary list, so they aren't in reverse order.
+		mwLong_t valuesRead = 0;
 		std::list<mwFloat_t> values;
 		for (mwLong_t i = 0; i < count; i++) {
-			mwFloat_t value = mwse::FileSystem::getInstance().readFloat(fileName.c_str());
-			values.push_front(value);
+			try {
+				mwFloat_t value = mwse::FileSystem::getInstance().readFloat(fileName.c_str());
+				values.push_front(value);
+				valuesRead++;
+			}
+			catch (std::exception& e) {
+				values.push_front(0.0f);
+			}
 		}
 
 		// Copy values from the temporary vector to the stack.
-		mwLong_t size = values.size();
 		while (!values.empty()) {
 			mwse::Stack::getInstance().pushFloat(values.front());
 			values.pop_front();
 		}
-		mwse::Stack::getInstance().pushLong(size);
+		mwse::Stack::getInstance().pushLong(valuesRead);
 
 		return 0.0f;
 	}

@@ -28,19 +28,25 @@ namespace mwse {
 
 	mwShort_t FileSystem::readShort(const char* fileName) {
 		mwShort_t result = 0;
-		read(fileName, &result, sizeof(mwShort_t));
+		if (read(fileName, &result, sizeof(mwShort_t)) != sizeof(mwShort_t)) {
+			throw std::exception("Invalid size read.");
+		}
 		return result;
 	}
 
 	mwLong_t FileSystem::readLong(const char* fileName) {
 		mwLong_t result = 0;
-		read(fileName, &result, sizeof(mwLong_t));
+		if (read(fileName, &result, sizeof(mwLong_t)) != sizeof(mwLong_t)) {
+			throw std::exception("Invalid size read.");
+		}
 		return result;
 	}
 
 	mwFloat_t FileSystem::readFloat(const char* fileName) {
 		mwFloat_t result = 0.0f;
-		read(fileName, &result, sizeof(mwFloat_t));
+		if (read(fileName, &result, sizeof(mwFloat_t)) != sizeof(mwFloat_t)) {
+			throw std::exception("Invalid size read.");
+		}
 		return result;
 	}
 
@@ -185,9 +191,9 @@ namespace mwse {
 				if (!toread) return 0; //if not, return
 			}
 
-			DWORD red = 0;
-			ReadFile(file, data, size, &red, 0);
-			result = (int)red;
+			DWORD bytesRead = 0;
+			ReadFile(file, data, size, &bytesRead, 0);
+			result = (int)bytesRead;
 		}
 
 		return result;
