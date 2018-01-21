@@ -476,5 +476,20 @@ namespace mwse
 				exteriorRefs[i] = NULL;
 			}
 		}
+
+		ExternalRealloc _realloc = NULL;
+		void* realloc(void* address, size_t size) {
+			return _realloc(address, size);
+		}
+
+		ExternalMalloc _malloc = NULL;
+		void* malloc(size_t size) {
+			return _malloc(size);
+		}
+
+		ExternalFree _free = NULL;
+		void free(void* address) {
+			_free(address);
+		}
 	}
 }

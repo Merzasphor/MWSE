@@ -19,6 +19,7 @@
 
 **************************************************************************/
 
+#include <stdlib.h>
 #include "VMExecuteInterface.h"
 #include "Stack.h"
 #include "InstructionInterface.h"
@@ -59,7 +60,7 @@ namespace mwse
 
 		// Reallocate string memory if it is growing in size.
 		if (newString.length() > strlen(oldString)) {
-			oldString = reinterpret_cast<char*>(realloc(oldString, newString.length() + 1));
+			oldString = reinterpret_cast<char*>(tes3::realloc(oldString, newString.length() + 1));
 		}
 		
 		// Copy over new value.

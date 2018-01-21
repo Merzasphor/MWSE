@@ -92,7 +92,7 @@ namespace mwse
 			
 			// Expand name length if needed.
 			if (name.length() > strlen(spell->friendlyName)) {
-				spell->friendlyName = reinterpret_cast<char*>(realloc(spell->friendlyName, 32));
+				spell->friendlyName = reinterpret_cast<char*>(tes3::realloc(spell->friendlyName, 32));
 			}
 
 			// Copy name over.

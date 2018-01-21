@@ -25,6 +25,8 @@
 #include "Log.h"
 #include "MgeTes3Machine.h"
 
+#include "TES3Util.h"
+
 using namespace mwse;
 
 TES3MACHINE* mge_virtual_machine = NULL;
@@ -72,9 +74,9 @@ BOOL WINAPI DllMain(
 		if (external_realloc == NULL) {
 			log::getLog() << "Error: unable to find realloc()" << std::endl;
 		}
-		mge_virtual_machine->set_external_malloc(external_malloc);
-		mge_virtual_machine->set_external_free(external_free);
-		mge_virtual_machine->set_external_realloc(external_realloc);
+		tes3::_realloc = reinterpret_cast<tes3::ExternalRealloc>(external_realloc);
+		tes3::_malloc = reinterpret_cast<tes3::ExternalMalloc>(external_malloc);
+		tes3::_free = reinterpret_cast<tes3::ExternalFree>(external_free);
 		break;
 	case DLL_THREAD_ATTACH:
 		// Do thread-specific initialization.

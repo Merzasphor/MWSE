@@ -15,6 +15,8 @@
 //#include "STRINGS.h"
 //#include "BREAKPOINT.h"
 
+#include "TES3Util.h"
+
 struct MACPRecord;
 struct HWBREAKPOINT;
 struct Context {};
@@ -26,13 +28,13 @@ typedef void* VPTEMPLATE;
 // 22-08-2006 Tp21
 //#include "warnings.h"
 
-typedef enum {INTSWITCHREFERENCE= 1} INTERRUPTS;
+typedef enum { INTSWITCHREFERENCE = 1 } INTERRUPTS;
 
 
 struct TES3MACHINE : public VIRTUALMACHINE
 {
 	TES3MACHINE();
-	
+
 	virtual void searchforscripttarget(void);
 	virtual void dumpscript(void);
 	virtual void dumpscriptstack(void);
@@ -60,28 +62,24 @@ struct TES3MACHINE : public VIRTUALMACHINE
 	virtual const Context GetFlow(void);
 	virtual void SetFlow(const Context newflow);
 
-	void set_external_malloc(void* external_malloc) {
-		external_malloc_ = reinterpret_cast<ExternalMalloc>(external_malloc); }
 	void* Malloc(size_t size) {
 #if DEBUG_MGE_VM
 		mwse::log::getLog() << __FUNCTION__ << std::endl;
 #endif
-		return external_malloc_(size); }
-	void set_external_free(void* external_free) {
-		external_free_ = reinterpret_cast<ExternalFree>(external_free); }
+		return mwse::tes3::malloc(size);
+	}
 	void Free(void* to_free) {
 #if DEBUG_MGE_VM
 		mwse::log::getLog() << __FUNCTION__ << std::endl;
 #endif
-		external_free_(to_free); }
-	void set_external_realloc(void* external_realloc) {
-		external_realloc_ =
-			reinterpret_cast<ExternalRealloc>(external_realloc); }
+		mwse::tes3::free(to_free);
+	}
 	void* Realloc(void* to_realloc, size_t size) {
 #if DEBUG_MGE_VM
 		mwse::log::getLog() << __FUNCTION__ << std::endl;
 #endif
-		return external_realloc_(to_realloc, size); }
+		return mwse::tes3::realloc(to_realloc, size);
+	}
 	void CheckForSkillUp(long skill_id);
 	MACPRecord* GetMacpRecord();
 	long GetRandomLong(long min, long max);
@@ -96,9 +94,6 @@ struct TES3MACHINE : public VIRTUALMACHINE
 	std::vector<std::vector<long> >& arrays();
 
 private:
-	typedef void* (__cdecl *ExternalMalloc)(size_t);
-	typedef void (__cdecl *ExternalFree)(void*);
-	typedef void* (__cdecl *ExternalRealloc)(void*, size_t);
 	ADDRESSSPACE* executable;
 	VPSCRIPT scriptaddr;
 	TES3SCRIPT script;
@@ -106,10 +101,7 @@ private:
 	HWBREAKPOINT* breakpoint;
 	VMREGTYPE instructionpointer;
 	VMREGTYPE stackpointer;
-	VMREGTYPE generalregs[GPMAX+1];
-	ExternalMalloc external_malloc_;
-	ExternalFree external_free_;
-	ExternalRealloc external_realloc_;
+	VMREGTYPE generalregs[GPMAX + 1];
 	std::mt19937 rng_;
 	static long const kMaxArrayId = 16777215; // max 24 bit int - avoid exceding MW global precision
 	std::vector<std::vector<long> > arrays_;
