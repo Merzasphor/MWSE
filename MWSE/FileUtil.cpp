@@ -102,8 +102,12 @@ namespace mwse {
 		write(fileName, &value, sizeof(mwFloat_t));
 	}
 
-	void FileSystem::writeString(const char* fileName, const std::string& value) {
-		write(fileName, value.c_str(), strlen(value.c_str()) + 1);
+	void FileSystem::writeString(const char* fileName, const std::string& value, bool suppressNull) {
+		size_t length = value.length();
+		if (!suppressNull) {
+			length++;
+		}
+		write(fileName, value.c_str(), length);
 	}
 
 	bool FileSystem::seek(const char* fileName, long position) {

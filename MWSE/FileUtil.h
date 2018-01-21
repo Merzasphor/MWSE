@@ -58,7 +58,7 @@ namespace mwse {
 		void writeShort(const char* fileName, const mwShort_t value);
 		void writeLong(const char* fileName, const mwLong_t value);
 		void writeFloat(const char* fileName, const mwFloat_t value);
-		void writeString(const char* fileName, const std::string& value);
+		void writeString(const char* fileName, const std::string& value, bool suppressNull = false);
 
 		bool seek(const char* fileName, long absolute);
 

@@ -60,7 +60,7 @@ namespace mwse
 			mwse::log::getLog() << "xFileWriteText: bad format \"" << badCodes << "\" in \"" << format << "\" generating \"" << value << "\"" << badCodes << std::endl;
 		}
 
-		mwse::FileSystem::getInstance().writeString(fileName.c_str(), value);
+		mwse::FileSystem::getInstance().writeString(fileName.c_str(), value, suppressNull);
 
 		return 0.0f;
 	}
