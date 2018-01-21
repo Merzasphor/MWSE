@@ -12,7 +12,7 @@ namespace mwse {
 		namespace store {
 			// String ids need to start at 40,000 so that they don't get confused for in-script
 			// strings.
-			mwLong_t nextId = 40000;
+			mwLong_t nextId = MWSE_STRING_STORE_FIRSTID;
 
 			// Static storage for strings, indexed by id.
 			StringMap_t store;
@@ -37,11 +37,11 @@ namespace mwse {
 
 			bool clear() {
 				bool cleared = true;
-				if (nextId == 0) {
+				if (nextId == MWSE_STRING_STORE_FIRSTID) {
 					cleared = false;
 				}
 
-				nextId = 0;
+				nextId = MWSE_STRING_STORE_FIRSTID;
 				store.clear();
 
 				return cleared;

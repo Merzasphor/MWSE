@@ -25,6 +25,8 @@
 #include "mwseTypes.h"
 #include "mwseString.h"
 
+#define MWSE_STRING_STORE_FIRSTID 40000
+
 namespace mwse {
 	namespace string {
 		namespace store {
