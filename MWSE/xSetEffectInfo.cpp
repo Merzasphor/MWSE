@@ -45,10 +45,10 @@ namespace mwse
 	float xSetEffectInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwLong_t effectType = Stack::getInstance().popLong();
-		mwseString_t& effectId = virtualMachine.getString(Stack::getInstance().popLong());
+		mwLong_t targetType = Stack::getInstance().popLong();
+		mwseString_t& targetid = virtualMachine.getString(Stack::getInstance().popLong());
 		mwLong_t effectIndex = Stack::getInstance().popLong();
-		mwLong_t effectXXXXXXXXX = Stack::getInstance().popLong();
+		mwLong_t effectId = Stack::getInstance().popLong();
 		mwLong_t effectSkillAttributeId = Stack::getInstance().popLong();
 		mwLong_t effectRange = Stack::getInstance().popLong();
 		mwLong_t effectArea = Stack::getInstance().popLong();
@@ -62,26 +62,26 @@ namespace mwse
 		if (effectIndex >= 1 && effectIndex <= 8) {
 			// Get the desired effect.
 			Effect_t* effect = NULL;
-			if (effectType == RecordTypes::SPELL) {
-				SPELRecord_t* spell = tes3::getSpellRecordById(effectId);
+			if (targetType == RecordTypes::SPELL) {
+				SPELRecord_t* spell = tes3::getSpellRecordById(targetid);
 				if (spell) {
 					effect = &spell->effects[effectIndex - 1];
 				}
 				else {
-					mwse::log::getLog() << "xSetEffectInfo: No spell found with id '" << effectId << "'." << std::endl;
+					mwse::log::getLog() << "xSetEffectInfo: No spell found with id '" << targetid << "'." << std::endl;
 				}
 			}
-			else if (effectType == RecordTypes::ENCH) {
-				ENCHRecord_t* enchant = tes3::getEnchantRecordById(effectId);
+			else if (targetType == RecordTypes::ENCH) {
+				ENCHRecord_t* enchant = tes3::getEnchantRecordById(targetid);
 				if (enchant) {
 					effect = &enchant->effects[effectIndex - 1];
 				}
 				else {
-					mwse::log::getLog() << "xSetEffectInfo: No spell found with id '" << effectId << "'." << std::endl;
+					mwse::log::getLog() << "xSetEffectInfo: No spell found with id '" << targetid << "'." << std::endl;
 				}
 			}
 			else {
-				mwse::log::getLog() << "xSetEffectInfo: Record type of " << effectType << " is not supported." << std::endl;
+				mwse::log::getLog() << "xSetEffectInfo: Record type of " << targetType << " is not supported." << std::endl;
 			}
 
 			// If we found an effect, set the values.
