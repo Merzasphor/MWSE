@@ -85,7 +85,12 @@ namespace mwse {
 			}
 			void pushString(const char* value)
 			{
-				pushLong(mwse::string::store::getOrCreate(value));
+				if (value) {
+					pushLong(mwse::string::store::getOrCreate(value));
+				}
+				else {
+					pushLong(0);
+				}
 			}
 
 			char popByte(void)
