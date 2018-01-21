@@ -744,23 +744,20 @@ mwFloat_t VirtualMachine::getFloatValue(bool peek)
 
 mwseString_t& VirtualMachine::getString(mwLong_t fromStack)	//ask grant, need a '*' or a '&' here?? (and in the header files)
 {
+	// Invalid ID. Return an empty string.
 	if (fromStack == 0x0)
 	{
 		return mwse::string::store::create("");
 	}
 
-	if (mwse::string::store::exists(fromStack))
-	{
-		//if it's a variable string
-		return mwse::string::store::get(fromStack);
-	}
+	// Small enough to fit in the script as a literal string. Parse it from the script
+	// stream.
 	else if (fromStack < 32767)
 	{
-		//if it's a litteral string
 		void * scriptstream = getScript().machineCode;
-		scriptstream = reinterpret_cast<void*>(reinterpret_cast<char*>(scriptstream) + fromStack);	//go to address in script stream
+		scriptstream = reinterpret_cast<void*>(reinterpret_cast<char*>(scriptstream) + fromStack);
 
-		char blen = *(reinterpret_cast<char*>(scriptstream));	//get length i guess...
+		char blen = *(reinterpret_cast<char*>(scriptstream));
 
 		long strlen = static_cast<long>(blen);
 
@@ -770,6 +767,14 @@ mwseString_t& VirtualMachine::getString(mwLong_t fromStack)	//ask grant, need a 
 
 		return mwse::string::store::getOrCreate(string, strlen);
 	}
+
+	// If it's not in the script, it might be in storage.
+	else if (mwse::string::store::exists(fromStack))
+	{
+		return mwse::string::store::get(fromStack);
+	}
+
+	// Otherwise, assume it's a char*, though we should never hit this case.
 	else
 	{
 		const char* string = reinterpret_cast<char*>(fromStack);

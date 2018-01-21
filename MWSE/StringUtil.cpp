@@ -10,25 +10,27 @@
 namespace mwse {
 	namespace string {
 		namespace store {
-			mwLong_t nextId = 0;
+			// String ids need to start at 40,000 so that they don't get confused for in-script
+			// strings.
+			mwLong_t nextId = 40000;
 
 			// Static storage for strings, indexed by id.
 			StringMap_t store;
 
 			mwseString_t& create(const std::string& value) {
-				mwLong_t id = ++nextId;
+				mwLong_t id = nextId++;
 				store.insert(StringMap_t::value_type(id, mwseString_t(id, value)));
 				return get(id);
 			}
 
 			mwseString_t& create(const char* value) {
-				mwLong_t id = ++nextId;
+				mwLong_t id = nextId++;
 				store.insert(StringMap_t::value_type(id, mwseString_t(id, value)));
 				return get(id);
 			}
 
 			mwseString_t& create(const char* value, size_t length) {
-				mwLong_t id = ++nextId;
+				mwLong_t id = nextId++;
 				store.insert(StringMap_t::value_type(id, mwseString_t(id, value, length)));
 				return get(id);
 			}
