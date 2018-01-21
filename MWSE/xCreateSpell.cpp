@@ -51,21 +51,21 @@ namespace mwse
 		// Verify spell Id length.
 		if (spellId.length() > 31) {
 			mwse::log::getLog() << "xCreateSpell: Spell id length of '" << spellId << "' is invalid. Must be 31 characters of less." << std::endl;
-			Stack::getInstance().pushLong(0);
+			Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
 		// Verify spell Id length.
 		if (spellName.length() > 31) {
 			mwse::log::getLog() << "xCreateSpell: Spell name length of '" << spellName << "' is invalid. Must be 31 characters of less." << std::endl;
-			Stack::getInstance().pushLong(0);
+			Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 		
 		// Verify that a spell of this id doesn't already exist.
 		if (tes3::getSpellRecordById(spellId) != NULL) {
 			mwse::log::getLog() << "xCreateSpell: A spell of the given id '" << spellId << "' already exists." << std::endl;
-			Stack::getInstance().pushLong(0);
+			Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
@@ -98,6 +98,8 @@ namespace mwse
 
 		// Add object to the game.
 		tes3::addObject(reinterpret_cast<BaseRecord_t*>(newSpell));
+
+		Stack::getInstance().pushLong(true);
 
 		return 0.0f;
 	}
