@@ -67,7 +67,7 @@ namespace mwse
 		}
 
 		// Validate spell origin.
-		if (origin < SpellOriginsFirst || origin > SpellOriginsLast) {
+		if (origin != 0 && (origin < SpellOriginsFirst || origin > SpellOriginsLast)) {
 			mwse::log::getLog() << "xSetSpellInfo: Spell origin out of range: " << origin << std::endl;
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
