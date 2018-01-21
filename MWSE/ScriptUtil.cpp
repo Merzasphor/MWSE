@@ -25,6 +25,8 @@ namespace mwse
 {
 	namespace mwscript
 	{
+		REFRRecord_t* lastCreatedPlaceAtPCReference = NULL;
+
 		int getInstructionPointer() {
 			return *reinterpret_cast<int*>(TES3_IP_IMAGE);
 		}
@@ -285,17 +287,20 @@ namespace mwse
 			mwFloat_t cachedDestinationX = getScriptDestinationX();
 			mwFloat_t cachedDestinationY = getScriptDestinationY();
 			mwLong_t cachedVarIndex = getScriptVariableIndex();
+			TES3DefaultTemplate_t* cachedSecondObject = getScriptSecondObject();
 
 			// Call original opcode.
 			setScriptVariableIndex(count);
 			setScriptDestinationX(distance);
 			setScriptDestinationY(direction);
+			setScriptSecondObject(placedTemplate);
 			RunOriginalOpCode(script, reference, OpCode::PlaceAtPC);
 
 			// Restore script variables.
 			setScriptDestinationX(cachedDestinationX);
 			setScriptDestinationY(cachedDestinationY);
 			setScriptVariableIndex(cachedVarIndex);
+			setScriptSecondObject(cachedSecondObject);
 		}
 
 		void Position(SCPTRecord_t* script, REFRRecord_t* reference, mwFloat_t x, mwFloat_t y, mwFloat_t z, mwFloat_t rotation) {
@@ -396,6 +401,10 @@ namespace mwse
 
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);
+		}
+
+		void OnPlaceReferenceCreated(REFRRecord_t* reference) {
+			lastCreatedPlaceAtPCReference = reference;
 		}
 	}
 }

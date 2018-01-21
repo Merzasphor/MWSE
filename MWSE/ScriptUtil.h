@@ -118,5 +118,13 @@ namespace mwse
 		void SetLevel(SCPTRecord_t* script, REFRRecord_t* reference, mwShort_t level);
 
 		void StartCombat(SCPTRecord_t* script, REFRRecord_t* reference, REFRRecord_t* target);
+
+		//
+		// In-function hook callbacks for getting script variables.
+		//
+
+		extern REFRRecord_t* lastCreatedPlaceAtPCReference;
+
+		void OnPlaceReferenceCreated(REFRRecord_t* reference);
 	}
 }

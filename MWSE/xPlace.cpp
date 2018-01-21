@@ -59,6 +59,9 @@ namespace mwse
 		// Call the original function.
 		mwse::mwscript::PlaceAtPC(script, reference, templateToPlace, 1, 256.0f, 1);
 
+		REFRRecord_t* createdReference = mwse::mwscript::lastCreatedPlaceAtPCReference;
+		mwse::Stack::getInstance().pushLong((mwLong_t)createdReference);
+
 		return 0.0f;
 	}
 }

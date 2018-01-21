@@ -25,6 +25,8 @@
 
 #include "VirtualMachine.h"
 
+#include "ScriptUtil.h"
+
 using namespace mwse;
 using namespace mwAdapter;
 
@@ -80,6 +82,13 @@ namespace mwse
 			{
 				return 0.0;
 			}
+		}
+
+		// Called when a reference is created for during PlaceAtPC
+		static void _stdcall HookPlaceAtPCReferenceCreatedIndirect()
+		{
+			REFRRecord_t* reference = reinterpret_cast<REFRRecord_t*>(context.esi);
+			mwse::mwscript::OnPlaceReferenceCreated(reference);
 		}
 
 		// Code to generate a jump in memory. Don't forget to unprotect it first!
@@ -203,6 +212,55 @@ namespace mwse
 			}
 		}
 
+		static __declspec(naked) void HookPlaceAtPCReferenceCreatedDirect()
+		{
+			__asm
+			{
+				// Save eax.
+				mov context.eax, eax
+
+				// Save the flags.
+				pushfd
+				pop eax
+				mov context.flags, eax
+
+				// Save the other registers.
+				mov context.ebx, ebx
+				mov context.ecx, ecx
+				mov context.edx, edx
+				mov context.esi, esi
+				mov context.edi, edi
+				mov context.ebp, ebp
+				mov context.esp, esp
+
+				// Store our default return address. HookRunFunctionIndirect may
+				// change this (relatively) safely.
+				mov context.callbackAddress, TES3_HOOK_PLACE_GETREFERENCE_RETURN
+
+				// Actually use our hook.
+				call HookPlaceAtPCReferenceCreatedIndirect
+
+				// Restore all registers and flags.
+				mov eax, context.eax
+				mov ebx, context.ebx
+				mov ecx, context.ecx
+				mov edx, context.edx
+				mov esi, context.esi
+				mov edi, context.edi
+				mov ebp, context.ebp
+				mov esp, context.esp
+				push context.flags
+				popfd
+
+				// Overwritten code at this hook's address.
+				mov ecx, TES3_MASTERCELL_IMAGE
+				mov ecx, [ecx]
+
+				// Return to where execution was before.
+				jmp context.callbackAddress
+			}
+		}
+
 		// Put our hooks into the Morrowind engine.
 		void Hook()
 		{
@@ -222,6 +280,14 @@ namespace mwse
 			genJump(TES3_HOOK_RUN_FUNCTION, reinterpret_cast<DWORD>(HookRunFunctionDirect));
 			genNOP(TES3_HOOK_RUN_FUNCTION_RETURN - 1);
 			VirtualProtect((DWORD*)TES3_HOOK_RUN_FUNCTION, TES3_HOOK_RUN_FUNCTION_SIZE, OldProtect, &OldProtect);
+
+			// PlaceAtPC creates a new reference to an object. We want to return
+			// that with xPlace, but can't get the value back cleanly. We'll have to
+			// grab it mid-execution.
+			VirtualProtect((DWORD*)TES3_HOOK_PLACE_GETREFERENCE, TES3_HOOK_PLACE_GETREFERENCE_SIZE, PAGE_READWRITE, &OldProtect);
+			genJump(TES3_HOOK_PLACE_GETREFERENCE, reinterpret_cast<DWORD>(HookPlaceAtPCReferenceCreatedDirect));
+			genNOP(TES3_HOOK_PLACE_GETREFERENCE_RETURN - 1);
+			VirtualProtect((DWORD*)TES3_HOOK_PLACE_GETREFERENCE, TES3_HOOK_PLACE_GETREFERENCE_SIZE, OldProtect, &OldProtect);
 		}
 
 		// If we need access to our virtual machine outside of the usual context,
