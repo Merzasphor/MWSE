@@ -77,6 +77,9 @@ namespace mwse {
 			if (readCharacter == '\r' && stopAtEndOfLine) {
 				// We need to read one more byte to get past the following \n.
 				ReadFile(file, &readCharacter, 1, &bytesRead, 0);
+				if (readCharacter != '\n') {
+					mwse::log::getLog() << "FileSystem::readString: Warning: EOL file read does not have a valid CRLF ending." << std::endl;
+				}
 				break;
 			}
 
