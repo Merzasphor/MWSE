@@ -44,15 +44,7 @@ namespace mwse
 
 	float xSetTrap::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwseString_t& spellId = virtualMachine.getString(mwse::Stack::getInstance().popLong());
-
-		// Get the spell based on the ID given.
-		SPELRecord_t* spell = tes3::getSpellRecordById(spellId);
-		if (!spell) {
-			log::getLog() << "xSetTrap: No spell could be found with id '" << spellId << "'." << std::endl;
-			mwse::Stack::getInstance().pushLong(false);
-			return 0.0f;
-		}
+		mwLong_t spellId = mwse::Stack::getInstance().popLong();
 
 		// Get reference to what we're finding the lock level of.
 		REFRRecord_t* reference = virtualMachine.getReference();
@@ -69,6 +61,19 @@ namespace mwse
 			log::getLog() << "xSetTrap: Could not obtain lock node." << std::endl;
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
+		}
+
+		// If we have a spellId, set it. Otherwise we'll clear it.
+		SPELRecord_t* spell = NULL;
+		if (spellId) {
+			// Get the spell based on the ID given.
+			mwseString_t& spellObjId = virtualMachine.getString(spellId);
+			spell = tes3::getSpellRecordById(spellObjId);
+			if (!spell) {
+				log::getLog() << "xSetTrap: No spell could be found with id '" << spellObjId << "'." << std::endl;
+				mwse::Stack::getInstance().pushLong(false);
+				return 0.0f;
+			}
 		}
 
 		// Set the new reference.
