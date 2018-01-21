@@ -74,7 +74,9 @@ namespace mwse {
 			}
 
 			// Line feed in EOL mode, we're done.
-			if ((readCharacter == '\r' || readCharacter == '\n') && stopAtEndOfLine) {
+			if (readCharacter == '\r' && stopAtEndOfLine) {
+				// We need to read one more byte to get past the following \n.
+				ReadFile(file, &readCharacter, 1, &bytesRead, 0);
 				break;
 			}
 
