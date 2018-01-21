@@ -357,10 +357,10 @@ namespace mwse
 
 			// Validate that the effect supports the range type.
 			const int flags = Effects::MagicEffectFlagMap[effectId];
-			if ((flags & Effects::CastSelf && range == Effects::RangeSelf) ||
-				(flags & Effects::CastTouch && range == Effects::RangeTouch) ||
-				(flags & Effects::CastTarget && range == Effects::RangeTarget)) {
-				mwse::log::getLog() << __FUNCTION__ << ": Effect does not support given range type." << std::endl;
+			if ((range == Effects::RangeSelf && !(flags & Effects::CastSelf)) ||
+				(range == Effects::CastTouch && !(flags & Effects::RangeTouch)) ||
+				(range == Effects::RangeTarget && !(flags & Effects::CastTarget))) {
+				mwse::log::getLog() << __FUNCTION__ << ": Effect " << effectId << " (with flags " << std::hex << flags << std::dec << ") does not support given range type of " << range << "." << std::endl;
 				return false;
 			}
 
