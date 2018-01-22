@@ -1055,9 +1055,9 @@ namespace mwse
 		int unknown_0x3C;
 		int unknown_0x40;
 		char * name; // 0x44
-		int unknown_0x48;	// char * scriptIDStringPtr;
-		char * nifStringPtr; // 0x4C
-		char * tgaStringPtr; // 0x50
+		int unknown_0x48; // char * scriptIDStringPtr;
+		char * model; // 0x4C
+		char * texture; // 0x50
 		int unknown_0x54;
 		int unknown_0x58;
 		int unknown_0x5C;
@@ -1242,22 +1242,8 @@ namespace mwse
 		int unknown_0x5C;
 		int unknown_0x60;
 		int unknown_0x64;
-		int unknown_0x68;
-		int unknown_0x6C;
-		int unknown_0x70;
-		int unknown_0x74;
-		int unknown_0x78;
-		int unknown_0x7C;
-		int unknown_0x80;
-		int unknown_0x84;
-		int unknown_0x88;
-		int unknown_0x8C;
-		int unknown_0x90;
-		int unknown_0x94;
-		int unknown_0x98;
-		int unknown_0x9C;
-		int unknown_0xA0;
-		int unknown_0xA4;
+		char model[32]; // 0x68
+		char texture[32]; // 0x88
 		mwFloat_t weight; // 0xA8
 		mwLong_t value; // 0xAC
 		mwFloat_t quality; // 0xB0
@@ -1291,22 +1277,8 @@ namespace mwse
 		int unknown_0x54;
 		int unknown_0x58;
 		int unknown_0x5C;
-		int unknown_0x60;
-		int unknown_0x64;
-		int unknown_0x68;
-		int unknown_0x6C;
-		int unknown_0x70;
-		int unknown_0x74;
-		int unknown_0x78;
-		int unknown_0x7C;
-		int unknown_0x80;
-		int unknown_0x84;
-		int unknown_0x88;
-		int unknown_0x8C;
-		int unknown_0x90;
-		int unknown_0x94;
-		int unknown_0x98;
-		int unknown_0x9C;
+		char model[32]; // 0x60
+		char texture[32]; // 0x80
 		int unknown_0xA0;
 		int unknown_0xA4;
 		mwFloat_t weight; // 0xA8
@@ -1337,8 +1309,8 @@ namespace mwse
 		int unknown_0x40;
 		int unknown_0x44; // 0x44
 		int unknown_0x48; // 0x48
-		int unknown_0x4C; // 0x4C
-		int unknown_0x50; // 0x50
+		char* model; // 0x4C
+		char* texture; // 0x50
 		mwFloat_t weight; // 0x54
 		mwLong_t value; // 0x58
 		long scroll; // 0x5C
@@ -1469,7 +1441,7 @@ namespace mwse
 		int unknown_0x64;
 		int unknown_0x68;
 		char * name; // 0x6C
-		char * texture; // 0x70
+		char * model; // 0x70
 		int unknown_0x74;
 		mwFloat_t weight; // 0x78
 	};
@@ -1524,6 +1496,27 @@ namespace mwse
 	};
 	static_assert(sizeof(ACTIRecord_t) == 0x3C, "ACTIRecord_t failed size validation");
 
+	struct STATRecord_t
+	{
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04
+		int unknown_0x08;
+		int unknown_0x0C;
+		int unknown_0x10;
+		int unknown_0x14;
+		int unknown_0x18;
+		TES3DefaultTemplate_t * previousRecord; // 0x1C
+		TES3DefaultTemplate_t * nextRecord; // 0x20
+		int unknown_0x24;
+		int unknown_0x28;
+		int unknown_0x2C;
+		char * model; // 0x30
+		int unknown_0x34;
+		int unknown_0x38;
+		int unknown_0x3C;
+	};
+	static_assert(sizeof(STATRecord_t) == 0x40, "STATRecord_t failed size validation");
+
 	struct DOORRecord_t
 	{
 		void * vTable; // 0x00
@@ -1539,9 +1532,10 @@ namespace mwse
 		char * unknown_0x28;
 		char * objectId; // 0x2C
 		int unknown_0x30;
-		char * name; // 0x34
+		char name[32]; // 0x34
+		char model[32]; // 0x54
 	};
-	static_assert(sizeof(DOORRecord_t) == 0x38, "DOORRecord_t failed size validation");
+	static_assert(sizeof(DOORRecord_t) == 0x74, "DOORRecord_t failed size validation");
 
 	struct APPARecord_t
 	{
@@ -1562,30 +1556,9 @@ namespace mwse
 		int unknown_0x38;
 		int unknown_0x3C;
 		ListIterator_t<BaseRecord_t> * inventory; // 0x40
-		int unknown_0x44;
-		int unknown_0x48;
-		int unknown_0x4C;
-		int unknown_0x50;
-		int unknown_0x54;
-		int unknown_0x58;
-		int unknown_0x5C;
-		int unknown_0x60;
-		char * name; // 0x64
-		int unknown_0x68;
-		int unknown_0x6C;
-		int unknown_0x70;
-		int unknown_0x74;
-		int unknown_0x78;
-		int unknown_0x7C;
-		int unknown_0x80;
-		int unknown_0x84;
-		int unknown_0x88;
-		int unknown_0x8C;
-		int unknown_0x90;
-		int unknown_0x94;
-		int unknown_0x98;
-		int unknown_0x9C;
-		int unknown_0xA0;
+		char model[32]; // 0x44
+		char name[32]; // 0x64
+		char texture[32]; // 0x84
 		int unknown_0xA4;
 		int unknown_0xA8;
 		mwFloat_t quality; // 0xAC
@@ -1593,6 +1566,31 @@ namespace mwse
 		mwLong_t value; // 0xB4
 	};
 	static_assert(sizeof(APPARecord_t) == 0xB8, "APPARecord_t failed size validation");
+
+	struct INGRRecord_t
+	{
+		void * vTable; // 0x00
+		RecordTypes::recordType_t recordType; // 0x04
+		int unknown_0x08;
+		int unknown_0x0C;
+		int unknown_0x10;
+		int unknown_0x14;
+		int unknown_0x18;
+		TES3DefaultTemplate_t * previousRecord; // 0x1C
+		TES3DefaultTemplate_t * nextRecord; // 0x20
+		char * unknown_0x24;
+		char * unknown_0x28;
+		char * objectId; // 0x2C
+		int unknown_0x30;
+		int unknown_0x34;
+		int unknown_0x38;
+		int unknown_0x3C;
+		int unknown_0x40;
+		char name[32]; // 0x44
+		char model[32]; // 0x64
+		char texture[32]; // 0x84
+	};
+	static_assert(sizeof(INGRRecord_t) == 0xA4, "INGRRecord_t failed size validation");
 
 	struct MGEFRecord_t
 	{

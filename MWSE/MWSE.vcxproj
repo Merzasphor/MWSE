@@ -164,6 +164,7 @@
     <ClCompile Include="xGetMaxFatigue.cpp" />
     <ClCompile Include="xGetMaxHealth.cpp" />
     <ClCompile Include="xGetMaxMagicka.cpp" />
+    <ClCompile Include="xGetModel.cpp" />
     <ClCompile Include="xGetName.cpp" />
     <ClCompile Include="xGetOwner.cpp" />
     <ClCompile Include="xGetOwnerInfo.cpp" />

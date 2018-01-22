@@ -54,6 +54,8 @@ namespace mwse
 		mwFloat_t getWeight(BaseRecord_t* record);
 		mwFloat_t getWeight(REFRRecord_t* reference, bool multiplyByCount);
 
+		char* getModel(BaseRecord_t* record);
+
 		TES3DefaultTemplate_t* getBaseRecord(TES3DefaultTemplate_t* reference);
 
 		BaseRecord_t* getFirstAttachmentByType(REFRRecord_t* reference, RecordTypes::attachType_t attachmentType);

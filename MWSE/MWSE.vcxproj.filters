@@ -806,6 +806,9 @@
     <ClCompile Include="xCast.cpp">
       <Filter>Source Files\Functions\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="xGetModel.cpp">
+      <Filter>Source Files\Functions\References</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

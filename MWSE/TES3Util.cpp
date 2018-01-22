@@ -244,6 +244,54 @@ namespace mwse
 			return weight;
 		}
 
+		char* getModel(BaseRecord_t* record) {
+			char* model = NULL;
+
+			RecordTypes::recordType_t type = record->recordType;
+			switch (type) {
+			case RecordTypes::ACTIVATOR:
+				model = reinterpret_cast<ACTIRecord_t*>(record)->model;
+				break;
+			case RecordTypes::ALCHEMY:
+			case RecordTypes::AMMO:
+			case RecordTypes::ARMOR:
+			case RecordTypes::BOOK:
+			case RecordTypes::CLOTHING:
+			case RecordTypes::MISC:
+				model = reinterpret_cast<ALCHRecord_t*>(record)->model;
+				break;
+			case RecordTypes::APPARATUS:
+				model = reinterpret_cast<APPARecord_t*>(record)->model;
+				break;
+			case RecordTypes::CONTAINER:
+				model = reinterpret_cast<CONTRecord_t*>(record)->model;
+				break;
+			case RecordTypes::INGREDIENT:
+				model = reinterpret_cast<INGRRecord_t*>(record)->model;
+				break;
+			case RecordTypes::LOCKPICK:
+			case RecordTypes::PROBE:
+				model = reinterpret_cast<LOCKRecord_t*>(record)->modal;
+				break;
+			case RecordTypes::LIGH:
+				model = reinterpret_cast<LIGHRecord_t*>(record)->model;
+				break;
+			case RecordTypes::REPAIR:
+				model = reinterpret_cast<REPARecord_t*>(record)->model;
+				break;
+			case RecordTypes::WEAPON:
+				model = reinterpret_cast<WEAPRecord_t*>(record)->model;
+				break;
+			case RecordTypes::DOOR:
+				model = reinterpret_cast<DOORRecord_t*>(record)->model;
+			default:
+				log::getLog() << __FUNCTION__ << ": Unhandled record type of " << std::hex << type << " at " << (long)record << std::dec << std::endl;
+				break;
+			}
+
+			return model;
+		}
+
 		bool getHasBaseRecord(TES3DefaultTemplate_t* record) {
 			if (record == NULL) {
 				return false;
