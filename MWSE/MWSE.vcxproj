@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArrayUtil.h" />
+    <ClInclude Include="CodePatchUtil.h" />
     <ClInclude Include="FileUtil.h" />
     <ClInclude Include="Flags.h" />
     <ClInclude Include="InstructionInterface.h" />
@@ -48,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArrayUtil.cpp" />
+    <ClCompile Include="CodePatchUtil.cpp" />
     <ClCompile Include="FileUtil.cpp" />
     <ClCompile Include="MgeVirtualMachine.cpp" />
     <ClCompile Include="MgeTes3Machine.cpp" />
@@ -164,6 +166,7 @@
     <ClCompile Include="xGetMaxFatigue.cpp" />
     <ClCompile Include="xGetMaxHealth.cpp" />
     <ClCompile Include="xGetMaxMagicka.cpp" />
+    <ClCompile Include="xGetMCPFeatureState.cpp" />
     <ClCompile Include="xGetModel.cpp" />
     <ClCompile Include="xGetName.cpp" />
     <ClCompile Include="xGetOwner.cpp" />

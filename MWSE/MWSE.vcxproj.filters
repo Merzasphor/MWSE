@@ -150,6 +150,9 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CodePatchUtil.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -808,6 +811,12 @@
     </ClCompile>
     <ClCompile Include="xGetModel.cpp">
       <Filter>Source Files\Functions\References</Filter>
+    </ClCompile>
+    <ClCompile Include="xGetMCPFeatureState.cpp">
+      <Filter>Source Files\Functions\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="CodePatchUtil.cpp">
+      <Filter>Source Files\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

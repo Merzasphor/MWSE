@@ -26,6 +26,7 @@
 #include "MgeTes3Machine.h"
 
 #include "TES3Util.h"
+#include "CodePatchUtil.h"
 
 using namespace mwse;
 
@@ -77,6 +78,12 @@ BOOL WINAPI DllMain(
 		tes3::_realloc = reinterpret_cast<tes3::ExternalRealloc>(external_realloc);
 		tes3::_malloc = reinterpret_cast<tes3::ExternalMalloc>(external_malloc);
 		tes3::_free = reinterpret_cast<tes3::ExternalFree>(external_free);
+
+		// Parse and load the features installed by the Morrowind Code Patch.
+		if (!mwse::mcp::loadFeatureList()) {
+			mwse::log::getLog() << "Failed to load Morrowind Code Patch installed features. MCP may not be installed." << std::endl;
+		}
+
 		break;
 	case DLL_THREAD_ATTACH:
 		// Do thread-specific initialization.

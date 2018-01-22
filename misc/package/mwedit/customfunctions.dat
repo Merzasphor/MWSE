@@ -383,6 +383,13 @@ function
 	Opcode = 0x3f66
 end
 function
+	Name = xGetMCPFeatureState
+	Options = MWSE
+	Return = Short
+	Param1 = Long
+	Opcode = 0x3f41
+end
+function
 	Name = xGetModel
 	Options = MWSE
 	Return = Long | String

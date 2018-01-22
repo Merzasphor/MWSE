@@ -583,6 +583,7 @@ namespace mwse {
 			xGetMaxFatigue = 0x3959,
 			xGetMaxHealth = 0x3954,
 			xGetMaxMagicka = 0x3958,
+			xGetMCPFeatureState = 0x3F41,
 			xGetModel = 0x3F40,
 			xGetName = 0x3F6E,
 			xGetOwner = 0x3F62,
