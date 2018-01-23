@@ -53,7 +53,7 @@ namespace mwse
 
 		// Get other context information for original opcode.
 		SCPTRecord_t* script = &virtualMachine.getScript();
-		REFRRecord_t* reference = virtualMachine.getReference();
+		REFRRecord_t* reference = virtualMachine.getReference("player");
 		TES3DefaultTemplate_t* templateToPlace = virtualMachine.getTemplate(id.c_str());
 
 		// Call the original function.
