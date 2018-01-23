@@ -60,6 +60,6 @@ namespace mwse
 
 		mwse::Stack::getInstance().pushString(result);
 
-		return 0.0;
+		return 0.0f;
 	}
 }

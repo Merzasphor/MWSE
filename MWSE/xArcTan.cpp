@@ -45,6 +45,6 @@ namespace mwse
 	float xArcTan::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		mwse::Stack::getInstance().pushFloat(std::atan(mwse::Stack::getInstance().popFloat()));
-		return 0.0;
+		return 0.0f;
 	}
 }

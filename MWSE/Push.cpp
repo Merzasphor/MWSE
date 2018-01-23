@@ -50,7 +50,7 @@ namespace mwse
 	float Push::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		Stack::getInstance().pushLong(pushData);
-		return 0.0;
+		return 0.0f;
 	}
 	//----------------------------------------
 	//----------------------------------------
@@ -77,7 +77,7 @@ namespace mwse
 	float PushB::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		Stack::getInstance().pushByte(pushData);
-		return 0.0;
+		return 0.0f;
 	}
 	//----------------------------------------
 	//----------------------------------------
@@ -104,7 +104,7 @@ namespace mwse
 	float PushS::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		Stack::getInstance().pushShort(pushData);
-		return 0.0;
+		return 0.0f;
 	}
 	//----------------------------------------
 }

@@ -43,7 +43,7 @@ namespace mwse
 		log::getLog() << __FUNCTION__ << " opcode: " << std::hex << opcode << std::endl;
 #endif
 		instruction->execute();
-		return 0.0;
+		return 0.0f;
 	}
 }
 

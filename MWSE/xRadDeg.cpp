@@ -47,6 +47,6 @@ namespace mwse
 	float xRadDeg::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		mwse::Stack::getInstance().pushFloat(mwse::Stack::getInstance().popFloat() / M_PI * 180);
-		return 0.0;
+		return 0.0f;
 	}
 }

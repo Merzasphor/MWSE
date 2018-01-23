@@ -51,7 +51,7 @@ namespace mwse
 	{
 		mwShort_t items = popLength /4;	//number of items to throw off the stack
 		Stack::getInstance().popFrames(items);
-		return 0.0;
+		return 0.0f;
 	}
 	//----------------------------------------
 }

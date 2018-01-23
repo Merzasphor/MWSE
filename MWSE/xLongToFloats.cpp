@@ -48,6 +48,6 @@ namespace mwse
 		mwse::Stack::getInstance().pushFloat((param >> 16) + 0x10000);
 		mwse::Stack::getInstance().pushFloat(param & 0xFFFF);
 
-		return 0.0;
+		return 0.0f;
 	}
 }

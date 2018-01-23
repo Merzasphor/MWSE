@@ -50,7 +50,7 @@ namespace mwse
 
 		virtualMachine.setReference(realRef);		//set the current reference
 
-		return 0.0;
+		return 0.0f;
 	}
 	//----------------------------------------
 }

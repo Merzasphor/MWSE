@@ -53,6 +53,6 @@ namespace mwse
 		//push the Reference on the stack.
 		Stack::getInstance().pushLong(fixed);
 
-		return 0.0;
+		return 0.0f;
 	}
 }

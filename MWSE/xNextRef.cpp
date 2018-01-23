@@ -67,6 +67,6 @@ namespace mwse
 
 		mwse::Stack::getInstance().pushLong((mwLong_t)next);
 
-		return 0.0;
+		return 0.0f;
 	}
 }

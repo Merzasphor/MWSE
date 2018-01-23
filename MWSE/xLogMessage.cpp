@@ -71,6 +71,6 @@ namespace mwse
 			mwse::log::getLog() << "xLogMessage: bad format \"" << badCodes << "\" in \"" << format << "\" generating \"" << result << "\"" << badCodes << std::endl;
 		}
 
-		return 0.0;
+		return 0.0f;
 	}
 }

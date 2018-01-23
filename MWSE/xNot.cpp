@@ -46,6 +46,6 @@ namespace mwse
 		mwLong_t value = mwse::Stack::getInstance().popLong();
 		mwse::Stack::getInstance().pushLong(!value);
 
-		return 0.0;
+		return 0.0f;
 	}
 }

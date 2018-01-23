@@ -50,6 +50,6 @@ namespace mwse
 
 		mwse::Stack::getInstance().pushFloat(std::hypotf(param1, param2));
 
-		return 0.0;
+		return 0.0f;
 	}
 }

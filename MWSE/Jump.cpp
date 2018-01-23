@@ -52,7 +52,7 @@ namespace mwse
 	{
 		long * scriptIP = virtualMachine.getScriptIP();
 		*scriptIP = address;
-		return 0.0;
+		return 0.0f;
 	}
 	//----------------------------------------
 	//----------------------------------------
@@ -83,7 +83,7 @@ namespace mwse
 			long * scriptIP = virtualMachine.getScriptIP();
 			*scriptIP = address;
 		}
-		return 0.0;
+		return 0.0f;
 	}
 	//----------------------------------------
 	//----------------------------------------
@@ -114,7 +114,7 @@ namespace mwse
 			long * scriptIP = virtualMachine.getScriptIP();
 			*scriptIP = address;
 		}
-		return 0.0;
+		return 0.0f;
 	}
 	//----------------------------------------
 	//----------------------------------------
@@ -145,7 +145,7 @@ namespace mwse
 			long * scriptIP = virtualMachine.getScriptIP();
 			*scriptIP = address;
 		}
-		return 0.0;
+		return 0.0f;
 	}
 	//----------------------------------------
 	//----------------------------------------
@@ -176,7 +176,7 @@ namespace mwse
 			long * scriptIP = virtualMachine.getScriptIP();
 			*scriptIP = address;
 		}
-		return 0.0;
+		return 0.0f;
 	}
 	//----------------------------------------
 
@@ -208,7 +208,7 @@ namespace mwse
 	{
 		long * scriptIP = virtualMachine.getScriptIP();
 		*scriptIP = static_cast<long>(address);
-		return 0.0;
+		return 0.0f;
 	}
 	//----------------------------------------
 	//----------------------------------------
@@ -239,7 +239,7 @@ namespace mwse
 			long * scriptIP = virtualMachine.getScriptIP();
 			*scriptIP = static_cast<long>(address);
 		}
-		return 0.0;
+		return 0.0f;
 	}
 	//----------------------------------------
 	//----------------------------------------
@@ -270,7 +270,7 @@ namespace mwse
 			long * scriptIP = virtualMachine.getScriptIP();
 			*scriptIP = static_cast<long>(address);
 		}
-		return 0.0;
+		return 0.0f;
 	}
 	//----------------------------------------
 	//----------------------------------------
@@ -301,7 +301,7 @@ namespace mwse
 			long * scriptIP = virtualMachine.getScriptIP();
 			*scriptIP = static_cast<long>(address);
 		}
-		return 0.0;
+		return 0.0f;
 	}
 	//----------------------------------------
 	//----------------------------------------
@@ -332,7 +332,7 @@ namespace mwse
 			long * scriptIP = virtualMachine.getScriptIP();
 			*scriptIP = static_cast<long>(address);
 		}
-		return 0.0;
+		return 0.0f;
 	}
 	//----------------------------------------
 
