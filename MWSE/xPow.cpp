@@ -45,10 +45,6 @@ namespace mwse
 
 	float xPow::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		if (mwse::Stack::getInstance().size() != 2) {
-			return 0;
-		}
-
 		mwFloat_t base = mwse::Stack::getInstance().popFloat();
 		mwFloat_t exponent = mwse::Stack::getInstance().popFloat();
 

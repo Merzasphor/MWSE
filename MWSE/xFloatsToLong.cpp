@@ -43,10 +43,6 @@ namespace mwse
 
 	float xFloatsToLong::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		if (mwse::Stack::getInstance().size() != 2) {
-			return 0;
-		}
-
 		mwFloat_t param1 = mwse::Stack::getInstance().popFloat();
 		mwFloat_t param2 = mwse::Stack::getInstance().popFloat();
 

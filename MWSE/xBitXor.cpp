@@ -43,11 +43,10 @@ namespace mwse
 
 	float xBitXor::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		if (mwse::Stack::getInstance().size() != 2) {
-			return 0;
-		}
+		mwLong_t param1 = mwse::Stack::getInstance().popLong();
+		mwLong_t param2 = mwse::Stack::getInstance().popLong();
 
-		mwse::Stack::getInstance().pushLong(mwse::Stack::getInstance().popLong() ^ mwse::Stack::getInstance().popLong());
+		mwse::Stack::getInstance().pushLong(param1 ^ param2);
 
 		return 0.0;
 	}

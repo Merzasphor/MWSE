@@ -43,11 +43,8 @@ namespace mwse
 
 	float xNot::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		if (mwse::Stack::getInstance().size() != 1) {
-			return 0;
-		}
-
-		mwse::Stack::getInstance().pushLong(!mwse::Stack::getInstance().popLong());
+		mwLong_t value = mwse::Stack::getInstance().popLong();
+		mwse::Stack::getInstance().pushLong(!value);
 
 		return 0.0;
 	}

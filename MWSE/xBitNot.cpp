@@ -43,11 +43,9 @@ namespace mwse
 
 	float xBitNot::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		if (mwse::Stack::getInstance().size() != 1) {
-			return 0;
-		}
+		mwLong_t param = mwse::Stack::getInstance().popLong();
 
-		mwse::Stack::getInstance().pushLong(~mwse::Stack::getInstance().popLong());
+		mwse::Stack::getInstance().pushLong(~param);
 
 		return 0.0;
 	}

@@ -43,13 +43,6 @@ namespace mwse
 
 	float xAnd::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		if (mwse::Stack::getInstance().size() != 2) {
-#if _DEBUG
-			mwse::log::getLog() << "Warning: xAnd - Called with " << mwse::Stack::getInstance().size() << " parameters." << std::endl;
-#endif
-			return 0;
-		}
-
 		mwLong_t param1 = mwse::Stack::getInstance().popLong();
 		mwLong_t param2 = mwse::Stack::getInstance().popLong();
 
