@@ -54,11 +54,19 @@ namespace mwse
 		// Get other context information for original opcode.
 		SCPTRecord_t* script = &virtualMachine.getScript();
 		REFRRecord_t* reference = virtualMachine.getReference("player");
+
+		// Get the template we're supposed to place.
 		TES3DefaultTemplate_t* templateToPlace = virtualMachine.getTemplate(id.c_str());
+		if (templateToPlace == NULL) {
+			mwse::log::getLog() << "xPlace: No template found for id '" << id << "'." << std::endl;
+			mwse::Stack::getInstance().pushLong(0);
+			return 0.0f;
+		}
 
 		// Call the original function.
 		mwse::mwscript::PlaceAtPC(script, reference, templateToPlace, 1, 256.0f, 1);
 
+		// Push back the reference we created.
 		REFRRecord_t* createdReference = mwse::mwscript::lastCreatedPlaceAtPCReference;
 		mwse::Stack::getInstance().pushLong((mwLong_t)createdReference);
 
