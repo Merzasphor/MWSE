@@ -41,7 +41,12 @@ namespace mwse
 
 		void setScriptTargetReference(REFRRecord_t* reference) {
 			*reinterpret_cast<REFRRecord_t**>(TES3_SCRIPTTARGETREF_IMAGE) = reference;
-			setScriptTargetTemplate(reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer));
+			if (reference != NULL) {
+				setScriptTargetTemplate(reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer));
+			}
+			else {
+				setScriptTargetTemplate(reinterpret_cast<TES3DefaultTemplate_t*>(NULL));
+			}
 		}
 
 		TES3DefaultTemplate_t* getScriptTargetTemplate() {
