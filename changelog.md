@@ -11,7 +11,7 @@ This release marks a complete under the hood rewrite of how MWSE functions. Vers
 - Performance improvements across the board. The underlying mechanism used to extend Morrowind's scripting system has been entirely rewritten to improve performance. This version of MWSE makes frequent raycasting to what the player is looking at, single-frame `xContent` loops, and other scripting necessities more viable.
 - (Unfinished) `xGetMWSEVersion`: Returns a number matching the padded MWSE version. For example, version 2.0.0 is 20000. Version 2.13.4 would be 21304. This can be used to determine if the user is using an out-of-date version of MWSE that doesn't have the desired feature. E.g. if a new feature is added in 2.0.1, the script can check to see if the current version is less than 20001 and show a warning message.
 - `xGetMCPFeatureState`: The [Morrowind Code Patch](https://www.nexusmods.com/morrowind/mods/19510) has become more important with its fixes to the script parser, and other scripting extensions. If the user has the MCP installed and hasn't deleted the mcpatch folder, this function will let the script know if a MCP feature is enabled or disabled. The ID passed to this function can be found in the describe.json file in the mcpatch folder.
-- (Unfinished) `xStartScript`, `xStopScript` and `xScriptRunning`: These functions are wrapper around their non-MWSE counterparts, that accept a variable input.
+- `xStartScript`, `xStopScript` and `xScriptRunning`: These functions are wrapper around their non-MWSE counterparts, that accept a variable input.
 - `xGetModel`: This function gets the targetted reference's model as a string. It will work on anything but NPC or CREATURE references, which return `0`.
 
 ### Changed

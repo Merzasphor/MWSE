@@ -229,6 +229,7 @@
     <ClCompile Include="xRefType.cpp" />
     <ClCompile Include="xRemoveItem.cpp" />
     <ClCompile Include="xRemoveSpell.cpp" />
+    <ClCompile Include="xScriptRunning.cpp" />
     <ClCompile Include="xSetArrayValue.cpp" />
     <ClCompile Include="xSetBaseEffectInfo.cpp" />
     <ClCompile Include="xSetBaseGold.cpp" />
@@ -260,6 +261,8 @@
     <ClCompile Include="xSpellList.cpp" />
     <ClCompile Include="xSqrt.cpp" />
     <ClCompile Include="xStartCombat.cpp" />
+    <ClCompile Include="xStartScript.cpp" />
+    <ClCompile Include="xStopScript.cpp" />
     <ClCompile Include="xStringBuild.cpp" />
     <ClCompile Include="xStringCompare.cpp" />
     <ClCompile Include="xStringLength.cpp" />

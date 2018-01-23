@@ -115,9 +115,15 @@ namespace mwse
 
 		void RemoveSpell(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* spellTemplate);
 
+		bool ScriptRunning(SCPTRecord_t* script, const char* scriptName);
+
 		void SetLevel(SCPTRecord_t* script, REFRRecord_t* reference, mwShort_t level);
 
 		void StartCombat(SCPTRecord_t* script, REFRRecord_t* reference, REFRRecord_t* target);
+
+		void StartScript(SCPTRecord_t* script, REFRRecord_t* reference, const char* scriptName);
+
+		void StopScript(SCPTRecord_t* script, const char* scriptName);
 
 		//
 		// In-function hook callbacks for getting script variables.

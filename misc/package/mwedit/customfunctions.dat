@@ -608,6 +608,13 @@ function
 	Opcode = 0x3c29
 end
 function
+	Name = XScriptRunning
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = None
+	Param1 = Long | String
+	Opcode = 0x101d
+end
+function
 	Name = XSetBaseGold
 	Options = MWSE | AllowGlobal | ShortVar | AllowVar
 	Return = None
@@ -662,6 +669,20 @@ function
 	Return = None
 	Param1 = Long | String
 	Opcode = 0x3c21
+end
+function
+	Name = XStartScript
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = None
+	Param1 = Long | String
+	Opcode = 0x3e50
+end
+function
+	Name = XStopScript
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = None
+	Param1 = Long | String
+	Opcode = 0x3e51
 end
 function
 	Name = XStringBuild

@@ -70,6 +70,9 @@
     <Filter Include="Source Files\MGE Interface">
       <UniqueIdentifier>{23f0c759-9924-4947-8988-c3c89b4ea786}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Functions\Scripting">
+      <UniqueIdentifier>{04372d31-c2ee-45ef-97a7-648c4a812ad1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Flags.h">
@@ -817,6 +820,15 @@
     </ClCompile>
     <ClCompile Include="CodePatchUtil.cpp">
       <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="xStartScript.cpp">
+      <Filter>Source Files\Functions\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="xStopScript.cpp">
+      <Filter>Source Files\Functions\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="xScriptRunning.cpp">
+      <Filter>Source Files\Functions\Scripting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
