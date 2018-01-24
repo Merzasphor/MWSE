@@ -18,6 +18,7 @@ namespace mwse
 			__asm
 			{
 				mov ecx, dword ptr ds : [TES3_MASTERCELL_IMAGE];
+				mov ecx, [ecx];
 				push id;
 				call findGLOB;
 				mov global, eax;
