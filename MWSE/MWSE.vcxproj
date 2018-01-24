@@ -356,6 +356,10 @@
     <PostBuildEvent />
     <PostBuildEvent />
     <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>xcopy /y "$(TargetDir)MWSE.dll" "$(SolutionDir)..\..\MWSE.dll"
+xcopy /y "$(TargetDir)MWSE.pdb" "$(SolutionDir)..\..\MWSE.pdb"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -390,6 +394,10 @@
     <PostBuildEvent />
     <PostBuildEvent />
     <PostBuildEvent />
+    <PostBuildEvent>
+      <Command>xcopy /y "$(TargetDir)MWSE.dll" "$(SolutionDir)..\..\MWSE.dll"
+xcopy /y "$(TargetDir)MWSE.pdb" "$(SolutionDir)..\..\MWSE.pdb"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
