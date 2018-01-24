@@ -47,10 +47,12 @@ namespace mwse {
 		GLOBRecord_t* global = tes3::getGlobalRecord(variable);
 		if (global == NULL) {
 			mwse::log::getLog() << "xSetGlobal: No global could be found with id '" << variable << "'." << std::endl;
+			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
 		global->data = value;
+		mwse::Stack::getInstance().pushLong(true);
 
 		return 0.0f;
 	}
