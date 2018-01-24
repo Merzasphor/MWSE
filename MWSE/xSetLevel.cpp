@@ -49,7 +49,7 @@ namespace mwse
 	float xSetLevel::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwShort_t level = virtualMachine.getString(mwse::Stack::getInstance().popShort());
+		mwShort_t level = mwse::Stack::getInstance().popShort();
 
 		// Get other context information for original opcode.
 		SCPTRecord_t* script = &virtualMachine.getScript();
