@@ -1004,7 +1004,8 @@ namespace mwse
 		struct Unknown1_t {
 			int unknown_0x00; // Reference?
 			int unknown_0x04; // Reference?
-			TES3Cell_t * cell; // 0x08 // Current cell.
+			int unknown_0x08; // Reference?
+			TES3Cell_t * cell; // 0x0C // Current cell.
 		};
 		void * vTable; // 0x00
 		RecordTypes::recordType_t recordType; // 0x04 // "REFR"
