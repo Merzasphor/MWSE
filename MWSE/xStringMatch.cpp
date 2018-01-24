@@ -51,7 +51,13 @@ namespace mwse
 		mwseString_t& string = virtualMachine.getString(Stack::getInstance().popLong());
 		mwseString_t& pattern = virtualMachine.getString(Stack::getInstance().popLong());
 
-		mwLong_t result = std::regex_search(string, std::regex(pattern));
+		bool result = false;
+		try {
+			result = std::regex_search(string, std::regex(pattern));
+		}
+		catch (std::regex_error& e) {
+			result = false;
+		}
 
 		mwse::Stack::getInstance().pushLong(result);
 
