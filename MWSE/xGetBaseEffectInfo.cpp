@@ -66,7 +66,7 @@ namespace mwse
 
 		// Push results.
 		Stack::getInstance().pushLong(effect.flags | Effects::MagicEffectFlagMap[id]);
-		Stack::getInstance().pushLong(effect.base_magicka_cost);
+		Stack::getInstance().pushFloat(effect.base_magicka_cost);
 		Stack::getInstance().pushLong(effect.school);
 
 		return 0.0f;
