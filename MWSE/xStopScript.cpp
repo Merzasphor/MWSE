@@ -48,14 +48,29 @@ namespace mwse
 
 	float xStopScript::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		// Get parameters.
-		mwseString_t& scriptName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		// Get parameter: script name. We allow a value of 0 to target the current script.
+		mwLong_t scriptNameId = mwse::Stack::getInstance().popLong();
+		const char* scriptName = NULL;
+		if (scriptNameId == 0) {
+			scriptName = virtualMachine.getScript().scriptName;
+		}
+		else {
+			scriptName = virtualMachine.getString(scriptNameId).c_str();
+		}
+
+		// Verify the target script.
+		SCPTRecord_t* targetScript = tes3::getScript(scriptName);
+		if (targetScript == NULL) {
+			mwse::log::getLog() << "xStopScript: No script could be found with name '" << scriptName << "'." << std::endl;
+			mwse::Stack::getInstance().pushLong(false);
+			return 0.0f;
+		}
 
 		// Get other context information for opcode call.
 		SCPTRecord_t* script = &virtualMachine.getScript();
 
 		// Call the original function.
-		mwse::mwscript::StopScript(script, scriptName.c_str());
+		mwse::mwscript::StopScript(script, targetScript);
 
 		return 0.0f;
 	}

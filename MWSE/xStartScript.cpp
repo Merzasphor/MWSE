@@ -51,12 +51,20 @@ namespace mwse
 		// Get parameters.
 		mwseString_t& scriptName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
+		// Try to get the target script.
+		SCPTRecord_t* targetScript = tes3::getScript(scriptName);
+		if (targetScript == NULL) {
+			mwse::log::getLog() << "xStartScript: No script could be found with name '" << scriptName << "'." << std::endl;
+			mwse::Stack::getInstance().pushLong(false);
+			return 0.0f;
+		}
+
 		// Get other context information for opcode call.
 		SCPTRecord_t* script = &virtualMachine.getScript();
 		REFRRecord_t* reference = virtualMachine.getReference();
 
 		// Call the original function.
-		mwse::mwscript::StartScript(script, reference, scriptName.c_str());
+		mwse::mwscript::StartScript(script, reference, targetScript);
 
 		return 0.0f;
 	}

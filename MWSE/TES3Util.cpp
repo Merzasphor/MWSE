@@ -48,6 +48,24 @@ namespace mwse
 			return foundTemplate;
 		}
 
+		SCPTRecord_t* getScript(const char* id) {
+			static int findScript = TES3_FUNC_FIND_SCRIPT;
+			SCPTRecord_t* script = NULL;
+			__asm
+			{
+				mov ecx, dword ptr ds : [TES3_MASTERCELL_IMAGE];
+				mov ecx, [ecx];
+				push id;
+				call findScript;
+				mov script, eax;
+			}
+			return script;
+		}
+
+		SCPTRecord_t* getScript(const std::string& id) {
+			return getScript(id.c_str());
+		}
+
 		TES3DefaultTemplate_t* getTemplate(const std::string& id)
 		{
 			return getTemplate(id.c_str());

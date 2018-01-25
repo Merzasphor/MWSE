@@ -384,12 +384,12 @@ namespace mwse
 			setScriptSecondObject(cachedSecondObject);
 		}
 
-		bool ScriptRunning(SCPTRecord_t* script, const char* scriptName) {
+		bool ScriptRunning(SCPTRecord_t* script, SCPTRecord_t* targetScript) {
 			// Cache previous script variables.
 			TES3DefaultTemplate_t* cachedSecondObject = getScriptSecondObject();
 
 			// Prepare variables and run original opcode.
-			setScriptSecondObject(scriptName);
+			setScriptSecondObject(reinterpret_cast<TES3DefaultTemplate_t*>(targetScript));
 			float value = RunOriginalOpCode(script, NULL, OpCode::ScriptRunning);
 
 			// Restore original script variables.
@@ -422,24 +422,24 @@ namespace mwse
 			setScriptSecondObject(cachedSecondObject);
 		}
 
-		void StartScript(SCPTRecord_t* script, REFRRecord_t* reference, const char* scriptName) {
+		void StartScript(SCPTRecord_t* script, REFRRecord_t* reference, SCPTRecord_t* targetScript) {
 			// Cache previous script variables.
 			TES3DefaultTemplate_t* cachedSecondObject = getScriptSecondObject();
 
 			// Prepare variables and run original opcode.
-			setScriptSecondObject(scriptName);
+			setScriptSecondObject(reinterpret_cast<TES3DefaultTemplate_t*>(targetScript));
 			RunOriginalOpCode(script, reference, OpCode::StartScript);
 
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);
 		}
 
-		void StopScript(SCPTRecord_t* script, const char* scriptName) {
+		void StopScript(SCPTRecord_t* script, SCPTRecord_t* targetScript) {
 			// Cache previous script variables.
 			TES3DefaultTemplate_t* cachedSecondObject = getScriptSecondObject();
 
 			// Prepare variables and run original opcode.
-			setScriptSecondObject(scriptName);
+			setScriptSecondObject(reinterpret_cast<TES3DefaultTemplate_t*>(targetScript));
 			RunOriginalOpCode(script, NULL, OpCode::StopScript);
 
 			// Restore original script variables.
