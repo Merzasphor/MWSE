@@ -29,7 +29,7 @@ See `newfunctions.txt` for functions added since v0.9.4a. This format is tempora
 
 The [Morrowind Modding Wiki](http://wiki.theassimilationlab.com/mmw/Main_Page) has a [section devoted to MWSE](http://wiki.theassimilationlab.com/mmw/MWSE), containing example scripts and other information.
 
-## Contributors
+## Developers
 This software is based on the 0.9.5 version of MWSE by Merzasphor, which is in turn based on the 0.9.4a version of MWSE, released by the Sourceforge MWSE Dev Team.
 
 MWSE developers:
@@ -43,6 +43,19 @@ MWSE developers:
 - Michael Wallar (NullCascade)
 - Tim Peters
 - Timeslip
+
+### Contributing
+
+The Morrowind Script Extender is open source software that welcomes contributions in the forms of ideas, bug fixes, and new features.
+
+The following features are required through the *Visual Studio 2017* installer:
+* Workloads:
+	* Desktop development with C++
+* Individual components:
+	* VC++ 2017 v141 toolset (x86,x64)
+	* Windows 10 SDK for Desktop C++ [x86 and x64] (any version will do)
+
+To contribute to the project, clone the source code as a subdirectory of the base Morrowind game directory. Load the MWSE\\MWSE.sln. Functions are organized by category under Source Files\\Functions. The local debugger is configured to automatically attach to Morrowind.exe, so new developers can quickly get on their feet and test functions.
 
 ## License
 The Morrowind Script Extender is free software, licensed according to the GNU General Public License, and comes with ABSOLUTELY NO WARRANTY. See the file LICENSE.TXT for details if you are interested in distributing or modifying the program.
