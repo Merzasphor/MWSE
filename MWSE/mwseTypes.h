@@ -1103,10 +1103,10 @@ namespace mwse
 		int unknown_0x54;
 		int unknown_0x58;
 		int unknown_0x5C[19];
-		mwFloat_t weight; // 0xA4
-		mwShort_t value; // 0xAC
-		mwShort_t unknown_0xAE;
-		int unknown_0xB0;
+		int unknown_0xA4;
+		mwFloat_t weight; // 0xA8
+		mwShort_t value; // 0xB0
+		mwShort_t unknown_0xB2;
 		ENCHRecord_t * enchantment; // 0xB4
 	};
 	static_assert(sizeof(CLOTRecord_t) == 0xB8, "CLOTRecord_t failed size validation");
