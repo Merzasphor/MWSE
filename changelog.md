@@ -8,13 +8,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 This release marks a complete under the hood rewrite of how MWSE functions. Version 2.0 is designed to be 100% compatible with previous version of MWSE.
 
 ### Added
-- Performance improvements across the board. The underlying mechanism used to extend Morrowind's scripting system has been entirely rewritten to improve performance. This version of MWSE makes frequent raycasting to what the player is looking at, single-frame `xContent` loops, and other scripting necessities more viable.
 - `xGetMCPFeatureState`: The [Morrowind Code Patch](https://www.nexusmods.com/morrowind/mods/19510) has become more important with its fixes to the script parser, and other scripting extensions. If the user has the MCP installed and hasn't deleted the mcpatch folder, this function will let the script know if a MCP feature is enabled or disabled. The ID passed to this function can be found in the describe.json file in the mcpatch folder.
 - `xStartScript`, `xStopScript` and `xScriptRunning`: These functions are wrappers around their non-MWSE counterparts, and accept a variable input. Additionally, calling `xStopScript 0` will effectively call `xStopScript` on the current script.
 - `xGetModel`: This function gets the targeted reference's model as a string. It will work on anything but NPC or CREATURE references, which return `0`.
 
 ### Changed
-- String storage has changed under the hood. It's just as reliable as before, but is more recognizable. Strings are stored by ID rather than as string pointers, starting at an index of 40,000. An invalid/empty response is still treated as zero. Scripters do not need to change how they handle strings in any way.
+- Performance improvements across the board. The underlying mechanism used to extend Morrowind's scripting system has been entirely rewritten to improve performance. This version of MWSE makes frequent raycasting to what the player is looking at, single-frame `xContent` loops, and other scripting necessities more viable.
+- String storage has changed under the hood. It's just as reliable as before, but is more recognizable. Strings are stored by ID rather than as string pointers, starting at an index of 40,000. An invalid/empty response is still treated as zero. Scripters do not need to change how they handle strings in any way. This has the added side-benefit that string IDs can more reliably be stored in globals.
 - Version information has adapted to something more traditional. MWSE is mature software that has been out for many years. It isn't in alpha or beta anymore. As such, it is treating pre-2.0 MWSE as version 1, and making the leap to version 2 with this entire rewrite. 
 - `xStringParse`: This function can now be used to determine MWSE's version number at runtime. This can be useful for ensuring that a feature is available. Correct usage is `setx version versionCheck to xStringParse "MWSE_VERSION" versionNumberDesired`.
   * The first returned value is a `long` with a value starting at `2000000` for version 2.0.0. This continues to a pattern, where the hypothetical version 5.59.3 would return `5059003`. On versions of MWSE prior to 2.0, `xStringParse` will return `0`.
@@ -22,6 +22,7 @@ This release marks a complete under the hood rewrite of how MWSE functions. Vers
 
 ### Fixed
 - `xSetName` is safe to use, and no longer rewrites random portions of memory. This function used to cause various issues if the new name was longer than the old name on most object types. This could cause random value changes, and make the game prone to crashing.
+- `xPlace`'s returned reference can now be used in the same frame that it was created.
 
 ## [0.9.5-alpha.YYYYMMDD] - 2017-MM-DD
 
