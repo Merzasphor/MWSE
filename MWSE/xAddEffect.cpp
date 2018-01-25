@@ -94,7 +94,7 @@ namespace mwse
 		}
 
 		// Add effect.
-		bool success = tes3::setEffect(effects, effectCount + 1, effectId, skillAttributeId, range, area, duration, magMin, magMin);
+		bool success = tes3::setEffect(effects, effectCount + 1, effectId, skillAttributeId, range, area, duration, magMin, magMax);
 		mwse::Stack::getInstance().pushLong(success);
 
 		return 0.0f;
