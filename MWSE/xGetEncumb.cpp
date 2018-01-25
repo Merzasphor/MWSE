@@ -60,7 +60,7 @@ namespace mwse
 		while (inventoryListNode) {
 			InventoryNode_t* inventoryNode = inventoryListNode->dataPtr;
 			if (inventoryNode) {
-				totalWeight += tes3::getWeight(inventoryNode->recordAddress) * inventoryNode->itemCount;
+				totalWeight += tes3::getWeight(inventoryNode->recordAddress) * std::abs(inventoryNode->itemCount);
 
 				// Keep track if we've run across leveled content.
 				if (!hasLeveledContent && inventoryNode->recordAddress->recordType == RecordTypes::LEVELLEDITEM) {
