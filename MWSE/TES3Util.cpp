@@ -257,7 +257,7 @@ namespace mwse
 				weight = reinterpret_cast<CONTRecord_t*>(record)->weight;
 				break;
 			case RecordTypes::LEVELLEDITEM:
-				weight = 0.0f;
+				weight = 0.000001f;
 				break;
 			default:
 				throw std::exception("Call on invalid record type.");
