@@ -1,5 +1,5 @@
 /************************************************************************
-	
+
 	xSetName.cpp - Copyright (c) 2008 The MWSE Project
 	http://www.sourceforge.net/projects/mwse
 
@@ -48,8 +48,8 @@ namespace mwse
 		mwseString_t& name = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Enforce name length.
-		if (name.length() > 128) {
-			mwse::log::getLog() << "xSetName: Given name length must be 128 characters or less." << std::endl;
+		if (name.length() > 31) {
+			mwse::log::getLog() << "xSetName: Given name length must be 31 characters or less." << std::endl;
 			return 0.0f;
 		}
 
@@ -67,49 +67,65 @@ namespace mwse
 			return 0.0f;
 		}
 
-		// Set name based on record type.
-		if (recordGeneric->recordType == RecordTypes::NPC
-			|| recordGeneric->recordType == RecordTypes::CREATURE) {
-			NPCCopyRecord_t* record = reinterpret_cast<NPCCopyRecord_t*>(recordGeneric);
-			strcpy(record->baseNPC->name, name.c_str());
+		// Get string pointer based on record type.
+		char* namePtr = NULL;
+		char** nameContainer = NULL;
+		RecordTypes::recordType_t recordType = recordGeneric->recordType;
+		switch (recordType) {
+		case RecordTypes::NPC:
+		case RecordTypes::CREATURE:
+			nameContainer = &reinterpret_cast<NPCCopyRecord_t*>(recordGeneric)->baseNPC->name;
+			namePtr = *nameContainer;
+			break;
+		case RecordTypes::CONTAINER:
+			nameContainer = &reinterpret_cast<CONTRecord_t*>(recordGeneric)->name;
+			namePtr = *nameContainer;
+			break;
+		case RecordTypes::LIGHT:
+			nameContainer = &reinterpret_cast<LIGHRecord_t*>(recordGeneric)->name;
+			namePtr = *nameContainer;
+			break;
+		case RecordTypes::ALCHEMY:
+		case RecordTypes::AMMO:
+		case RecordTypes::ARMOR:
+		case RecordTypes::BOOK:
+		case RecordTypes::CLOTHING:
+		case RecordTypes::MISC:
+		case RecordTypes::WEAPON:
+			nameContainer = &reinterpret_cast<ARMORecord_t*>(recordGeneric)->name;
+			namePtr = *nameContainer;
+			break;
+		case RecordTypes::ACTIVATOR:
+			nameContainer = &reinterpret_cast<ACTIRecord_t*>(recordGeneric)->name;
+			namePtr = *nameContainer;
+			break;
+		case RecordTypes::DOOR:
+			namePtr = reinterpret_cast<DOORRecord_t*>(recordGeneric)->name;
+			break;
+		case RecordTypes::APPARATUS:
+			namePtr = reinterpret_cast<APPARecord_t*>(recordGeneric)->name;
+			break;
+		case RecordTypes::INGREDIENT:
+		case RecordTypes::LOCKPICK:
+		case RecordTypes::PROBE:
+		case RecordTypes::REPAIR:
+			namePtr = reinterpret_cast<LOCKRecord_t*>(recordGeneric)->name;
+			break;
 		}
-		else if (recordGeneric->recordType == RecordTypes::CONTAINER) {
-			CONTRecord_t* record = reinterpret_cast<CONTRecord_t*>(recordGeneric);
-			strcpy(record->name, name.c_str());
+
+		// Bail out if we haven't found the name.
+		if (namePtr == NULL) {
+			mwse::log::getLog() << "xSetName: Unsupported record format: " << recordType << "." << std::endl;
+			return 0.0f;
 		}
-		else if (recordGeneric->recordType == RecordTypes::LIGHT) {
-			LIGHRecord_t* record = reinterpret_cast<LIGHRecord_t*>(recordGeneric);
-			strcpy(record->name, name.c_str());
+
+		// Some strings might need to be recreated.
+		if (nameContainer != NULL && name.length() > strlen(namePtr)) {
+			namePtr = reinterpret_cast<char*>(tes3::realloc(namePtr, name.length() + 1));
+			*nameContainer = namePtr;
 		}
-		else if (recordGeneric->recordType == RecordTypes::ARMOR
-			|| recordGeneric->recordType == RecordTypes::CLOTHING
-			|| recordGeneric->recordType == RecordTypes::WEAPON
-			|| recordGeneric->recordType == RecordTypes::MISC
-			|| recordGeneric->recordType == RecordTypes::BOOK
-			|| recordGeneric->recordType == RecordTypes::ALCHEMY
-			|| recordGeneric->recordType == RecordTypes::AMMO) {
-			ARMORecord_t* record = reinterpret_cast<ARMORecord_t*>(recordGeneric);
-			strcpy(record->name, name.c_str());
-		}
-		else if (recordGeneric->recordType == RecordTypes::ACTIVATOR) {
-			ACTIRecord_t* record = reinterpret_cast<ACTIRecord_t*>(recordGeneric);
-			strcpy(record->name, name.c_str());
-		}
-		else if (recordGeneric->recordType == RecordTypes::DOOR) {
-			DOORRecord_t* record = reinterpret_cast<DOORRecord_t*>(recordGeneric);
-			strcpy(record->name, name.c_str());
-		}
-		else if (recordGeneric->recordType == RecordTypes::APPARATUS) {
-			APPARecord_t* record = reinterpret_cast<APPARecord_t*>(recordGeneric);
-			strcpy(record->name, name.c_str());
-		}
-		else if (recordGeneric->recordType == RecordTypes::INGREDIENT
-			|| recordGeneric->recordType == RecordTypes::REPAIR
-			|| recordGeneric->recordType == RecordTypes::PROBE
-			|| recordGeneric->recordType == RecordTypes::LOCKPICK) {
-			LOCKRecord_t* record = reinterpret_cast<LOCKRecord_t*>(recordGeneric);
-			strcpy(record->name, name.c_str());
-		}
+
+		strcpy(namePtr, name.c_str());
 
 		return 0.0f;
 	}
