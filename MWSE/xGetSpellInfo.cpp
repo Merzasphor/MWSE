@@ -57,7 +57,7 @@ namespace mwse
 
 		// Get spell data by id.
 		SPELRecord_t* spell = tes3::getSpellRecordById(spellId);
-		if (spellId) {
+		if (spell != NULL) {
 			name = spell->friendlyName;
 			type = spell->type;
 			cost = spell->cost;
