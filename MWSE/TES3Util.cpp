@@ -226,7 +226,6 @@ namespace mwse
 			mwFloat_t weight = 0.0f;
 
 			// Get the weight from the base record. We group records here by the same offset.
-			bool foundValue = true;
 			RecordTypes::recordType_t recordType = record->recordType;
 			switch (recordType) {
 			case RecordTypes::MISC:
@@ -249,7 +248,6 @@ namespace mwse
 				weight = reinterpret_cast<ARMORecord_t*>(record)->weight;
 				break;
 			case RecordTypes::CLOTHING:
-				// Clothing has the same offset as armor, but it's a short rather than a long.
 				weight = reinterpret_cast<CLOTRecord_t*>(record)->weight;
 				break;
 			case RecordTypes::APPARATUS:
@@ -257,6 +255,9 @@ namespace mwse
 				break;
 			case RecordTypes::CONTAINER:
 				weight = reinterpret_cast<CONTRecord_t*>(record)->weight;
+				break;
+			case RecordTypes::LEVELLEDITEM:
+				weight = 0.0f;
 				break;
 			default:
 				throw std::exception("Call on invalid record type.");
