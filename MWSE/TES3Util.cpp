@@ -30,6 +30,29 @@ namespace mwse
 			return getGlobalRecord(id.c_str());
 		}
 
+		TES3DefaultTemplate_t* getTemplate(const char *id)
+		{
+			RecordLists_t* recordLists = tes3::getCellMaster()->recordLists;
+
+			TES3DefaultTemplate_t * foundTemplate = NULL;
+
+			static int fixupTemplateFunction = TES3_FUNC_FIXUP_TEMPLATE;
+			_asm
+			{
+				mov ecx, recordLists;
+				push id;
+				call fixupTemplateFunction;
+				mov foundTemplate, eax;
+			}
+
+			return foundTemplate;
+		}
+
+		TES3DefaultTemplate_t* getTemplate(const std::string& id)
+		{
+			return getTemplate(id.c_str());
+		}
+
 		void addObject(BaseRecord_t* record) {
 			int const kAddObject = TES3_FUNC_ADD_NEW_OBJECT;
 			__asm {

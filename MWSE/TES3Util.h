@@ -36,6 +36,9 @@ namespace mwse
 		GLOBRecord_t* getGlobalRecord(const char* id);
 		GLOBRecord_t* getGlobalRecord(const std::string& id);
 
+		TES3DefaultTemplate_t* getTemplate(const char *id);
+		TES3DefaultTemplate_t* getTemplate(const std::string& id);
+
 		void addObject(BaseRecord_t* record);
 
 		REFRRecord_t* skipRemovedReferences(REFRRecord_t* reference);
