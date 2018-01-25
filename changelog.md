@@ -16,7 +16,9 @@ This release marks a complete under the hood rewrite of how MWSE functions. Vers
 ### Changed
 - String storage has changed under the hood. It's just as reliable as before, but is more recognizable. Strings are stored by ID rather than as string pointers, starting at an index of 40,000. An invalid/empty response is still treated as zero. Scripters do not need to change how they handle strings in any way.
 - Version information has adapted to something more traditional. MWSE is mature software that has been out for many years. It isn't in alpha or beta anymore. As such, it is treating pre-2.0 MWSE as version 1, and making the leap to version 2 with this entire rewrite. 
-- `xStringParse`: This function can now be used to determine MWSE's version number at runtime. This can be useful for ensuring that a feature is available. Correct usage is `setx version to xStringParse "%d" "MWSE_VERSION"`. The returned value is a `long` with a value starting at `2000000` for version 2.0.0. This continues to a pattern, where the hypothetical version 5.59.3 would return `5059003`. On versions of MWSE prior to 2.0, `xStringParse` will return `0`.
+- `xStringParse`: This function can now be used to determine MWSE's version number at runtime. This can be useful for ensuring that a feature is available. Correct usage is `setx version versionCheck to xStringParse "MWSE_VERSION" versionNumberDesired`.
+  * The first returned value is a `long` with a value starting at `2000000` for version 2.0.0. This continues to a pattern, where the hypothetical version 5.59.3 would return `5059003`. On versions of MWSE prior to 2.0, `xStringParse` will return `0`.
+  * The second parameter can be used as a version check, and the second returned value will be `1` if the current version meets that requirement. For example, `setx version versionCheck to xStringParse "MWSE_VERSION" 2001000` will set `versionCheck` to `1` if the current MWSE version is at least 2.1.0. Otherwise `versionCheck` will be `0`.
 
 ## [0.9.5-alpha.YYYYMMDD] - 2017-MM-DD
 

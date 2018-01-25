@@ -53,7 +53,7 @@ BOOL WINAPI DllMain(
 		// Return FALSE to fail DLL load.
 		log::OpenLog("MWSELog.txt");
 		mwAdapter::Hook(); //for testing purposes only at the moment, this should be replaced by a function more friendly (like a virtual machine init or something)
-		log::getLog() << "Morrowind Script Extender v" << MWSE_VERSION_MAJOR << "." << MWSE_VERSION_MINOR << "." << MWSE_VERSION_PATCH << " (built " << __DATE__ << ") initialized" << std::endl;
+		log::getLog() << "Morrowind Script Extender v" << MWSE_VERSION_MAJOR << "." << MWSE_VERSION_MINOR << "." << MWSE_VERSION_PATCH << " (built " << __DATE__ << ") initialized." << std::endl;
 		mge_virtual_machine = new TES3MACHINE();
 		// Find the addresses of malloc(), realloc(), free() that MW uses,
 		// so that we can interact with its heap.

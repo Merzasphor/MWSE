@@ -46,13 +46,17 @@ namespace mwse
 	float xStringParse::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		mwseString_t& format = virtualMachine.getString(Stack::getInstance().popLong());
-		mwseString_t& string = virtualMachine.getString(Stack::getInstance().popLong());
 
 		// We have to hijack this function for version checking, to make it backwards-compatible.
-		if (string == "MWSE_VERSION") {
+		if (format == "MWSE_VERSION") {
+			mwLong_t checkVersionAgainst = mwse::Stack::getInstance().popLong();
+			mwse::Stack::getInstance().pushLong(MWSE_VERSION_INTEGER >= checkVersionAgainst);
 			mwse::Stack::getInstance().pushLong(MWSE_VERSION_INTEGER);
 			return 0.0f;
 		}
+
+		// If we're not doing an actual version check, we'll want the string.
+		mwseString_t& string = virtualMachine.getString(Stack::getInstance().popLong());
 
 		int resultCount = 0;
 		bool eolMode = false;
