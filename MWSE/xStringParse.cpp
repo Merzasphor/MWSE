@@ -25,8 +25,7 @@
 #include "Reference.h"
 #include "Log.h"
 #include "StringUtil.h"
-
-using namespace mwse;
+#include "MWSEDefs.h"
 
 namespace mwse
 {
@@ -48,6 +47,12 @@ namespace mwse
 	{
 		mwseString_t& format = virtualMachine.getString(Stack::getInstance().popLong());
 		mwseString_t& string = virtualMachine.getString(Stack::getInstance().popLong());
+
+		// We have to hijack this function for version checking, to make it backwards-compatible.
+		if (string == "MWSE_VERSION") {
+			mwse::Stack::getInstance().pushLong(MWSE_VERSION_INTEGER);
+			return 0.0f;
+		}
 
 		int resultCount = 0;
 		bool eolMode = false;

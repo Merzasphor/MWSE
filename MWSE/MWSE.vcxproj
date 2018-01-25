@@ -32,6 +32,7 @@
     <ClInclude Include="MgeVmtypes.h" />
     <ClInclude Include="mwAdapter.h" />
     <ClInclude Include="mwOffsets.h" />
+    <ClInclude Include="MWSEDefs.h" />
     <ClInclude Include="mwseString.h" />
     <ClInclude Include="mwseTypes.h" />
     <ClInclude Include="OpCodes.h" />
