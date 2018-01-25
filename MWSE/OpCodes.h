@@ -601,6 +601,7 @@ namespace mwse {
 			xGetSpellEffectInfo = 0x3925,
 			xGetSpellEffects = 0x3F10,
 			xGetSpellInfo = 0x3924,
+			xGetStackSize = 0x3C35,
 			xGetTrap = 0x391F,
 			xGetValue = 0x3F61,
 			xGetWeight = 0x3F63,

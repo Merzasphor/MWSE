@@ -833,6 +833,9 @@
     <ClCompile Include="xScriptRunning.cpp">
       <Filter>Source Files\Functions\Scripting</Filter>
     </ClCompile>
+    <ClCompile Include="xGetStackSize.cpp">
+      <Filter>Source Files\Functions\References</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">
