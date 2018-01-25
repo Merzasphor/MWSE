@@ -47,7 +47,6 @@ namespace mwse
 		// Get the passed node.
 		ListNode_t<InventoryNode_t>* node = reinterpret_cast<ListNode_t<InventoryNode_t>*>(mwse::Stack::getInstance().popLong());
 		if (node == NULL) {
-			mwse::log::getLog() << "xNextStack: Function given an invalid value of 0." << std::endl;
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
