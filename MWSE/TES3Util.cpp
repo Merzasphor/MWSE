@@ -184,14 +184,7 @@ namespace mwse
 				break;
 			case RecordTypes::MISC:
 			{
-				// Misc is a unique case. We need to make gold always be worth 1.
-				MISCRecord_t* misc = reinterpret_cast<MISCRecord_t*>(record);
-				if (strncmp(misc->id, "Gold_", 5) == 0) {
-					value = 1;
-				}
-				else {
-					value = misc->value;
-				}
+				value = reinterpret_cast<MISCRecord_t*>(record)->value;
 				break;
 			}
 			default:

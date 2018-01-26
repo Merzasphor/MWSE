@@ -20,6 +20,7 @@ This release marks a complete under the hood rewrite of how MWSE functions. Vers
 - `xStringParse`: This function can now be used to determine MWSE's version number at runtime. This can be useful for ensuring that a feature is available. Correct usage is `setx version versionCheck to xStringParse "MWSE_VERSION" versionNumberDesired`.
   * The first returned value is a `long` with a value starting at `2000000` for version 2.0.0. This continues to a pattern, where the hypothetical version 5.59.3 would return `5059003`. On versions of MWSE prior to 2.0, `xStringParse` will return `0`.
   * The second parameter can be used as a version check, and the second returned value will be `1` if the current version meets that requirement. For example, `setx version versionCheck to xStringParse "MWSE_VERSION" 2001000` will set `versionCheck` to `1` if the current MWSE version is at least 2.1.0. Otherwise `versionCheck` will be `0`.
+- `xGetValue` and `xSetValue` now work on gold without hardcoding values.
 
 ### Fixed
 - `xSetName` is safe to use, and no longer rewrites random portions of memory. This function used to cause various issues if the new name was longer than the old name on most object types. This could cause random value changes, and make the game prone to crashing.

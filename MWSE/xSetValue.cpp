@@ -98,16 +98,8 @@ namespace mwse {
 			break;
 		case RecordTypes::MISC:
 		{
-			// Misc is a unique case. We need to make gold always be worth 1.
-			MISCRecord_t* misc = reinterpret_cast<MISCRecord_t*>(record);
-			value = misc->value;
-			if (strncmp(misc->id, "gold_", 5) == 0) {
-				mwse::log::getLog() << "xSetValue: Called on gold. Value not set." << std::endl;
-			}
-			else {
-				reinterpret_cast<MISCRecord_t*>(record)->value = value;
-				setValue = true;
-			}
+			reinterpret_cast<MISCRecord_t*>(record)->value = value;
+			setValue = true;
 			break;
 		}
 		default:
