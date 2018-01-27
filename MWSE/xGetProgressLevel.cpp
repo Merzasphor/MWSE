@@ -47,7 +47,7 @@ namespace mwse
 	float xGetProgressLevel::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get reference.
-		mwse::REFRRecord_t* reference = virtualMachine.getReference();
+		mwse::REFRRecord_t* reference = virtualMachine.getReference("player");
 		if (reference == NULL) {
 			mwse::log::getLog() << "xGetProgressLevel: Could not find reference." << std::endl;
 			mwse::Stack::getInstance().pushLong(INVALID_VALUE);
