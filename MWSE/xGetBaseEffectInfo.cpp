@@ -47,11 +47,6 @@ namespace mwse
 		// Get parameters.
 		mwLong_t id = Stack::getInstance().popLong();
 
-		// Return values.
-		mwLong_t school = 0;
-		mwFloat_t baseMagickaCost = 0.0f;
-		mwLong_t flags = 0;
-
 		// Validate id.
 		if (id < Effects::FirstMagicEffect || id > Effects::LastMagicEffect) {
 			log::getLog() << "xGetBaseEffectInfo: Effect ID out of range." << std::endl;
