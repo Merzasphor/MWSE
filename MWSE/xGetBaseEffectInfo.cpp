@@ -59,8 +59,12 @@ namespace mwse
 		// Get the effect.
 		MGEFRecord_t& effect = tes3::getCellMaster()->recordLists->magic_effects[id];
 
-		// Push results.
+		// Flags are a unique case. There is other data associated with flags that we want
+		// to expose, so we will return it here.
+		// TODO: Programmatically allow setting/getting these normally hard-coded values.
 		Stack::getInstance().pushLong(effect.flags | Effects::MagicEffectFlagMap[id]);
+
+		// Push other results.
 		Stack::getInstance().pushFloat(effect.base_magicka_cost);
 		Stack::getInstance().pushLong(effect.school);
 

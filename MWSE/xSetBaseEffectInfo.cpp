@@ -67,7 +67,11 @@ namespace mwse
 		MGEFRecord_t& effect = tes3::getCellMaster()->recordLists->magic_effects[id];
 		effect.school = (MagicSchools)school;
 		effect.base_magicka_cost = baseMagickaCost;
-		effect.flags = flags;
+
+		// Flags are a unique case. We added extra information in xGetBaseEffectInfo. We
+		// need to strip that back out here, and make sure only the right bits are set.
+		// TODO: Programmatically allow setting/getting these normally hard-coded values.
+		effect.flags = (flags & (Effects::Spellmaking | Effects::Enchanting | Effects::NegativeLighting));
 
 		Stack::getInstance().pushLong(true);
 
