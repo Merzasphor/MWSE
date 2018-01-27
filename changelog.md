@@ -24,6 +24,7 @@ This release marks a complete under the hood rewrite of how MWSE functions. Vers
 
 ### Fixed
 - `xSetName` is safe to use, and no longer rewrites random portions of memory. This function used to cause various issues if the new name was longer than the old name on most object types. This could cause random value changes, and make the game prone to crashing.
+- `xSetBaseEffectInfo` now allows direct manipulation of the flags. This is more of a fix than a change, as before the flags would be set in an invalid way.
 - `xPlace`'s returned reference can now be reliably used in the same frame that it was created.
 - `xSetQuality` now works correctly on apparatus.
 - `xSetWeight` now works correctly on lights.

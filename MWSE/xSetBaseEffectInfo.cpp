@@ -67,7 +67,7 @@ namespace mwse
 		MGEFRecord_t& effect = tes3::getCellMaster()->recordLists->magic_effects[id];
 		effect.school = (MagicSchools)school;
 		effect.base_magicka_cost = baseMagickaCost;
-		effect.flags = (flags & (Effects::Spellmaking | Effects::Enchanting | Effects::NegativeLighting));
+		effect.flags = flags;
 
 		Stack::getInstance().pushLong(true);
 
