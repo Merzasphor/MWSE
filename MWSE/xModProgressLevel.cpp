@@ -49,14 +49,14 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwLong_t modValue = mwse::Stack::getInstance().popFloat();
+		mwLong_t modValue = mwse::Stack::getInstance().popLong();
 
 		// Get the associated MACP record.
-		mwse::REFRRecord_t* reference = virtualMachine.getReference();
+		mwse::REFRRecord_t* reference = virtualMachine.getReference("player");
 		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
 			mwse::log::getLog() << "xModProgressLevel: Could not find MACP record for reference." << std::endl;
-			mwse::Stack::getInstance().pushLong(0);
+			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
@@ -68,7 +68,7 @@ namespace mwse
 		macp->levelProgress = newValue;
 
 		// Push to indicate success.
-		mwse::Stack::getInstance().pushLong(1);
+		mwse::Stack::getInstance().pushLong(true);
 
 		return 0.0f;
 	}

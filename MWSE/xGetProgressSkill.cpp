@@ -56,7 +56,7 @@ namespace mwse
 		}
 
 		// Get reference.
-		mwse::REFRRecord_t* reference = virtualMachine.getReference();
+		mwse::REFRRecord_t* reference = virtualMachine.getReference("player");
 		if (reference == NULL) {
 			mwse::log::getLog() << "xGetProgressSkill: Could not find reference." << std::endl;
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
