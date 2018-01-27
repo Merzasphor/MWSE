@@ -408,6 +408,17 @@ namespace mwse
 			return enchant;
 		}
 
+		ALCHRecord_t* getAlchemyRecordById(const std::string& id) {
+			TES3CellMaster_t* cellMaster = getCellMaster();
+
+			ALCHRecord_t * record = reinterpret_cast<ALCHRecord_t*>(cellMaster->recordLists->list->head);
+			while (record != NULL && !(record->recordType == RecordTypes::ALCHEMY && strcmp(id.c_str(), record->id) == 0)) {
+				record = record->nextRecord;
+			}
+
+			return record;
+		}
+
 		size_t getEffectCount(const Effect_t* effectArray) {
 			size_t count = 0;
 			for (size_t i = 0; i < 8; i++) {

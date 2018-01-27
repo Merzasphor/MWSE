@@ -76,6 +76,8 @@ namespace mwse
 
 		ENCHRecord_t* getEnchantRecordById(const std::string& id);
 
+		ALCHRecord_t* getAlchemyRecordById(const std::string& id);
+
 		size_t getEffectCount(const Effect_t* effectArray);
 
 		bool setEffect(Effect_t * effects, mwLong_t index, mwLong_t effectId,

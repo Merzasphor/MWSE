@@ -46,7 +46,7 @@ namespace mwse
 	{
 		// Get parameters.
 		mwLong_t targetType = Stack::getInstance().popLong();
-		mwseString_t& targetid = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString_t& targetId = virtualMachine.getString(Stack::getInstance().popLong());
 		mwLong_t effectIndex = Stack::getInstance().popLong();
 		mwLong_t effectId = Stack::getInstance().popLong();
 		mwLong_t effectSkillAttributeId = Stack::getInstance().popLong();
@@ -63,21 +63,30 @@ namespace mwse
 			// Get the desired effect.
 			Effect_t* effect = NULL;
 			if (targetType == RecordTypes::SPELL) {
-				SPELRecord_t* spell = tes3::getSpellRecordById(targetid);
+				SPELRecord_t* spell = tes3::getSpellRecordById(targetId);
 				if (spell) {
 					effect = &spell->effects[effectIndex - 1];
 				}
 				else {
-					mwse::log::getLog() << "xSetEffectInfo: No spell found with id '" << targetid << "'." << std::endl;
+					mwse::log::getLog() << "xSetEffectInfo: No spell record found with id '" << targetId << "'." << std::endl;
 				}
 			}
 			else if (targetType == RecordTypes::ENCH) {
-				ENCHRecord_t* enchant = tes3::getEnchantRecordById(targetid);
+				ENCHRecord_t* enchant = tes3::getEnchantRecordById(targetId);
 				if (enchant) {
 					effect = &enchant->effects[effectIndex - 1];
 				}
 				else {
-					mwse::log::getLog() << "xSetEffectInfo: No spell found with id '" << targetid << "'." << std::endl;
+					mwse::log::getLog() << "xSetEffectInfo: No enchant record found with id '" << targetId << "'." << std::endl;
+				}
+			}
+			else if (targetType == RecordTypes::ALCHEMY) {
+				ALCHRecord_t* alchemy = tes3::getAlchemyRecordById(targetId);
+				if (alchemy) {
+					effect = &alchemy->effects[effectIndex - 1];
+				}
+				else {
+					mwse::log::getLog() << "xSetEffectInfo: No alchemy record found with id '" << targetId << "'." << std::endl;
 				}
 			}
 			else {

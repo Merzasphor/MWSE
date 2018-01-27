@@ -68,7 +68,7 @@ namespace mwse
 					effect = &spell->effects[effectIndex - 1];
 				}
 				else {
-					mwse::log::getLog() << "xGetEffectInfo: No spell found with id '" << effectId << "'." << std::endl;
+					mwse::log::getLog() << "xGetEffectInfo: No spell record found with id '" << effectId << "'." << std::endl;
 				}
 			}
 			else if (effectType == RecordTypes::ENCH) {
@@ -77,7 +77,16 @@ namespace mwse
 					effect = &enchant->effects[effectIndex - 1];
 				}
 				else {
-					mwse::log::getLog() << "xGetEffectInfo: No spell found with id '" << effectId << "'." << std::endl;
+					mwse::log::getLog() << "xGetEffectInfo: No enchant record found with id '" << effectId << "'." << std::endl;
+				}
+			}
+			else if (effectType == RecordTypes::ALCHEMY) {
+				ALCHRecord_t* alchemy = tes3::getAlchemyRecordById(effectId);
+				if (alchemy) {
+					effect = &alchemy->effects[effectIndex - 1];
+				}
+				else {
+					mwse::log::getLog() << "xGetEffectInfo: No alchemy record found with id '" << effectId << "'." << std::endl;
 				}
 			}
 			else {
