@@ -61,7 +61,7 @@ namespace mwse
 		}
 
 		// Make sure we're looking at an NPC or creature.
-		mwse::REFRRecord_t* reference = virtualMachine.getReference();
+		mwse::REFRRecord_t* reference = virtualMachine.getReference("player");
 		if (reference->recordPointer->recordType != RecordTypes::NPC) {
 			mwse::log::getLog() << "xModProgressSkill: Called on non-NPC reference." << std::endl;
 			mwse::Stack::getInstance().pushLong(0);

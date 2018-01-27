@@ -50,7 +50,7 @@ namespace mwse
 		mwFloat_t progress = mwse::Stack::getInstance().popFloat();
 
 		// Get the associated MACP record.
-		mwse::REFRRecord_t* reference = virtualMachine.getReference();
+		mwse::REFRRecord_t* reference = virtualMachine.getReference("player");
 		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
 			mwse::log::getLog() << "xSetProgressSkill: Could not find MACP record for reference." << std::endl;
