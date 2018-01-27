@@ -549,6 +549,7 @@ namespace mwse
 					call loadMessage;
 					push eax;
 					call displayMessage;
+					add esp, 0xC
 				}
 			}
 		}
