@@ -440,6 +440,13 @@ function
 	Opcode = 0x3c35
 end
 function
+	Name = xGetItemCount
+	Options = MWSE
+	Return = Long
+	Param1 = Long | String
+	Opcode = 0x3f42
+end
+function
 	Name = XGetValue
 	Options = MWSE
 	Return = Long

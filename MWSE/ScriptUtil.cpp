@@ -273,6 +273,20 @@ namespace mwse
 			return value != 0.0f;
 		}
 
+		mwLong_t GetItemCount(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* itemTemplate) {
+			// Cache previous script variables.
+			TES3DefaultTemplate_t* cachedSecondObject = getScriptSecondObject();
+
+			// Prepare variables and run original opcode.
+			setScriptSecondObject(itemTemplate);
+			mwLong_t value = RunOriginalOpCode(script, reference, OpCode::GetItemCount);
+
+			// Restore original script variables.
+			setScriptSecondObject(cachedSecondObject);
+
+			return value;
+		}
+
 		bool GetSpellEffects(SCPTRecord_t* script, REFRRecord_t* reference, TES3DefaultTemplate_t* spellTemplate) {
 			// Cache previous script variables.
 			TES3DefaultTemplate_t* cachedSecondObject = getScriptSecondObject();

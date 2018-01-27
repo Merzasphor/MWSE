@@ -576,6 +576,7 @@ namespace mwse {
 			xGetGlobal = 0x393E,
 			xGetGold = 0x3F24,
 			xGetGSString = 0x394D,
+			xGetItemCount = 0x3F42,
 			xGetLockLevel = 0x391D,
 			xGetMagic = 0x3940,
 			xGetMaxCharge = 0x3F68,

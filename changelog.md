@@ -12,6 +12,7 @@ This release marks a complete under the hood rewrite of how MWSE functions. Vers
 - `xStartScript`, `xStopScript` and `xScriptRunning`: These functions are wrappers around their non-MWSE counterparts, and accept a variable input. Additionally, calling `xStopScript 0` will effectively call `xStopScript` on the current script.
 - `xGetModel`: This function gets the targeted reference's model as a string. It will work on anything but NPC or CREATURE references, which return `0`.
 - `xGetStackSize`: This function returns the size of a stack. If it can't find the stack information, it returns `0`.
+- `xGetItemCount`: This function behaves like the vanilla `GetItemCount`, but accepts a variable string input.
 
 ### Changed
 - Performance improvements across the board. The underlying mechanism used to extend Morrowind's scripting system has been entirely rewritten to improve performance. Performance gains as high as 90 FPS on heavy MWSE-scripted modlists have been recorded. Mods such as [MWSE Containers](https://www.nexusmods.com/morrowind/mods/44387/?) and [MWSE Alchemy Filters](https://www.nexusmods.com/morrowind/mods/44808?) should no longer cause long hiccups and mods like [The Bare Necessities](https://www.nexusmods.com/morrowind/mods/43365/?) should not cause such severe performance hits. This opens new scripting opportunities that previously were not viable due to the old version's performance issues.
