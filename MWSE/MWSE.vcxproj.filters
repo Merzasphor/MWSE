@@ -839,6 +839,9 @@
     <ClCompile Include="xGetItemCount.cpp">
       <Filter>Source Files\Functions\References</Filter>
     </ClCompile>
+    <ClCompile Include="xContentListFiltered.cpp">
+      <Filter>Source Files\Functions\References</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">

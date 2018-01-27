@@ -73,6 +73,7 @@
     <ClCompile Include="xCast.cpp" />
     <ClCompile Include="xClearArray.cpp" />
     <ClCompile Include="xContentList.cpp" />
+    <ClCompile Include="xContentListFiltered.cpp" />
     <ClCompile Include="xCos.cpp" />
     <ClCompile Include="xCreateArray.cpp" />
     <ClCompile Include="xCreateSpell.cpp" />

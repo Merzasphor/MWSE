@@ -132,6 +132,14 @@ function
 	Opcode = 0x3f03
 end
 function
+	Name = XContentListFiltered
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Short | Long | Float | String | Many
+	Param1 = Long
+	Param2 = Long
+	Opcode = 0x3f07
+end
+function
 	Name = XCos
 	Options = MWSE | AllowGlobal | ShortVar | AllowVar
 	Return = Float

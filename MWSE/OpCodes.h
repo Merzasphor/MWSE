@@ -491,6 +491,7 @@ namespace mwse {
 			xCast = 0x3F12,
 			xClearArray = 0x395C,
 			xContentList = 0x3F03,
+			xContentListFiltered = 0x3F07,
 			xCos = 0x3832,
 			xCreateArray = 0x3931,
 			xCreateSpell = 0x3949,
