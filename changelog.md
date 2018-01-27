@@ -27,6 +27,7 @@ This release marks a complete under the hood rewrite of how MWSE functions. Vers
 - `xPlace`'s returned reference can now be reliably used in the same frame that it was created.
 - `xSetQuality` now works correctly on apparatus.
 - `xSetWeight` now works correctly on lights.
+- `xSetBaseEffectInfo` correctly functions. Previously it had a bug that prevented it from actually setting any values.
 
 ## [0.9.5-alpha.YYYYMMDD] - 2017-MM-DD
 
