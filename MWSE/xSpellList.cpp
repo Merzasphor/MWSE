@@ -94,6 +94,7 @@ namespace mwse
 		mwse::Stack::getInstance().pushLong(spellFlags);
 		mwse::Stack::getInstance().pushLong(spellEffectCount);
 		mwse::Stack::getInstance().pushLong(spellCost);
+		mwse::Stack::getInstance().pushLong(spellType);
 		mwse::Stack::getInstance().pushString(spellName);
 		mwse::Stack::getInstance().pushString(spellId);
 		mwse::Stack::getInstance().pushLong(spellCount);
