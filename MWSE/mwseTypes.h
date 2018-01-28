@@ -1590,8 +1590,14 @@ namespace mwse
 		char name[32]; // 0x44
 		char model[32]; // 0x64
 		char texture[32]; // 0x84
+		int unknown_0xA4;
+		int unknown_0xA8;
+		int unknown_0xAC;
+		mwLong_t effects[4]; // 0xB0
+		mwLong_t effectSkillIds[4]; // 0xC0
+		mwLong_t effectAttributeIds[4]; // 0xD0
 	};
-	static_assert(sizeof(INGRRecord_t) == 0xA4, "INGRRecord_t failed size validation");
+	static_assert(sizeof(INGRRecord_t) == 0xE0, "INGRRecord_t failed size validation");
 
 	struct MGEFRecord_t
 	{

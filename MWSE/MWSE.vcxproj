@@ -161,6 +161,7 @@
     <ClCompile Include="xGetGlobal.cpp" />
     <ClCompile Include="xGetGold.cpp" />
     <ClCompile Include="xGetGSString.cpp" />
+    <ClCompile Include="xGetIngredientEffect.cpp" />
     <ClCompile Include="xGetItemCount.cpp" />
     <ClCompile Include="xGetLockLevel.cpp" />
     <ClCompile Include="xGetMagic.cpp" />
@@ -244,6 +245,7 @@
     <ClCompile Include="xSetGlobal.cpp" />
     <ClCompile Include="xSetGold.cpp" />
     <ClCompile Include="xSetGSString.cpp" />
+    <ClCompile Include="xSetIngredientEffect.cpp" />
     <ClCompile Include="xSetLevel.cpp" />
     <ClCompile Include="xSetMaxCharge.cpp" />
     <ClCompile Include="xSetMaxCondition.cpp" />

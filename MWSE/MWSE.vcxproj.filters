@@ -845,6 +845,12 @@
     <ClCompile Include="xStringCapture.cpp">
       <Filter>Source Files\Functions\Strings</Filter>
     </ClCompile>
+    <ClCompile Include="xGetIngredientEffect.cpp">
+      <Filter>Source Files\Functions\Records</Filter>
+    </ClCompile>
+    <ClCompile Include="xSetIngredientEffect.cpp">
+      <Filter>Source Files\Functions\Records</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">

@@ -15,6 +15,8 @@ This release marks a complete under the hood rewrite of how MWSE functions. Vers
 - `xGetItemCount`: This function behaves like the vanilla `GetItemCount`, but accepts a variable string input.
 - `xContentListFiltered`: Behaves like `xContentList`, with an additional filter parameter passed. The filter is a record type, and only records matching that type will be returned. E.g. `setx id count type value weight name node to target->xContentListFiltered 0 1380404809` returns the first ingredient in the target's inventory. The nodes returned by `xContentList` and `xContentListFiltered` are compatible, but should generally not be mixed.
 - `xStringCapture`: Performs a regex match using a given pattern on a given string. Usage is `setx match1 match2 match3 to xStringCapture string pattern numResults`. The `numResults` value must match the number of return values desired. If there aren't enough matches to fill each return value, or if there isn't a capture, the return (extra) return values will be `0`s.
+- `xGetIngredientEffect`: Returns the effect id and skill or attribute id associated with the effect. E.g. `setx effectId skillOrAttributeId to xGetIngredientEffect "ingred_alit_hide_01" 1` gets the first effect the ingredient has.
+- `xSetIngredientEffect`: Sets an ingredient's effect at a given index. E.g. `xSetIngredientEffect "ingred_alit_hide_01" 1 83 4` sets the first effect of alit hide to be fortify speed.
 
 ### Changed
 - Performance improvements across the board. The underlying mechanism used to extend Morrowind's scripting system has been entirely rewritten to improve performance. Performance gains as high as 90 FPS on heavy MWSE-scripted modlists have been recorded. Mods such as [MWSE Containers](https://www.nexusmods.com/morrowind/mods/44387/?) and [MWSE Alchemy Filters](https://www.nexusmods.com/morrowind/mods/44808?) should no longer cause long hiccups and mods like [The Bare Necessities](https://www.nexusmods.com/morrowind/mods/43365/?) should not cause such severe performance hits. This opens new scripting opportunities that previously were not viable due to the old version's performance issues.
@@ -24,7 +26,7 @@ This release marks a complete under the hood rewrite of how MWSE functions. Vers
   * The first returned value is a `long` with a value starting at `2000000` for version 2.0.0. This continues to a pattern, where the hypothetical version 5.59.3 would return `5059003`. On versions of MWSE prior to 2.0, `xStringParse` will return `0`.
   * The second parameter can be used as a version check, and the second returned value will be `1` if the current version meets that requirement. For example, `setx version versionCheck to xStringParse "MWSE_VERSION" 2001000` will set `versionCheck` to `1` if the current MWSE version is at least 2.1.0. Otherwise `versionCheck` will be `0`.
 - `xGetValue` and `xSetValue` now work on gold without hardcoding values.
-- `xAddEffect`, `xDeleteEffect`, `xGetEffectInfo`, and `xSetEffectInfo` now support `ALCH` records.
+- `xAddEffect`, `xDeleteEffect`, `xGetEffectInfo`, and `xSetEffectInfo` now support `ALCH` (potion) records.
 
 ### Fixed
 - `xSetName` is safe to use, and no longer rewrites random portions of memory. This function used to cause various issues if the new name was longer than the old name on most object types. This could cause random value changes, and make the game prone to crashing.
