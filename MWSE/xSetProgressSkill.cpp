@@ -46,8 +46,8 @@ namespace mwse
 	{
 		// Get parameters.
 		mwLong_t skillIndex = mwse::Stack::getInstance().popLong();
-		mwLong_t normalized = mwse::Stack::getInstance().popLong();
 		mwFloat_t progress = mwse::Stack::getInstance().popFloat();
+		mwLong_t normalized = mwse::Stack::getInstance().popLong();
 
 		// Get the associated MACP record.
 		mwse::REFRRecord_t* reference = virtualMachine.getReference("player");
