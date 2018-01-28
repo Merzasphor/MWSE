@@ -66,7 +66,7 @@ namespace mwse
 		}
 
 		// Verify progress.
-		if (progress >= 0) {
+		if (progress < 0) {
 			mwse::log::getLog() << "xSetProgressSkill: Progress cannot be negative." << std::endl;
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
