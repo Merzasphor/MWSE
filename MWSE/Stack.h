@@ -127,6 +127,12 @@ namespace mwse {
 				return (stack_top == 0);
 			}
 
+			// Clears the stack.
+			void clear()
+			{
+				stack_top = 0;
+			}
+
 			// Prints information about the Stack to the MWSE log file.
 			void dump()
 			{

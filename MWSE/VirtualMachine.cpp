@@ -27,6 +27,7 @@
 #include "Log.h"
 #include "TES3Util.h"
 #include "StringUtil.h"
+#include "Stack.h"
 
 using namespace mwse;
 
@@ -73,8 +74,8 @@ float VirtualMachine::executeOperation(OpCode::OpCode_t opcode, mwAdapter::Conte
 
 void VirtualMachine::OnScriptChange()
 {
-	// Disable clearing the string store for now, until we can make cleanup work like in 0.9.
-	// mwseString_t::clearStore();
+	// When a script changes, we can clear our stack.
+	mwse::Stack::getInstance().clear();
 }
 
 bool VirtualMachine::isOpcode(const OpCode::OpCode_t opcode)
