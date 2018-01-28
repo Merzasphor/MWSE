@@ -633,7 +633,7 @@ function
 	Options = MWSE | AllowGlobal | ShortVar | AllowVar
 	Return = None
 	Param1 = Long | String
-	Opcode = 0x101d
+	Opcode = 0x3E52
 end
 function
 	Name = XSetBaseGold

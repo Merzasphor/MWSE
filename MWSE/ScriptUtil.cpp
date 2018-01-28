@@ -399,15 +399,8 @@ namespace mwse
 		}
 
 		bool ScriptRunning(SCPTRecord_t* script, SCPTRecord_t* targetScript) {
-			// Cache previous script variables.
-			TES3DefaultTemplate_t* cachedSecondObject = getScriptSecondObject();
-
-			// Prepare variables and run original opcode.
-			setScriptSecondObject(reinterpret_cast<TES3DefaultTemplate_t*>(targetScript));
-			float value = RunOriginalOpCode(script, NULL, OpCode::ScriptRunning);
-
-			// Restore original script variables.
-			setScriptSecondObject(cachedSecondObject);
+			// Run original opcode.
+			float value = RunOriginalOpCode(script, NULL, OpCode::ScriptRunning, reinterpret_cast<TES3DefaultTemplate_t*>(targetScript));
 
 			return value != 0.0f;
 		}
