@@ -79,6 +79,15 @@ namespace mwse
 				return 0.0f;
 			}
 		}
+		else if (type == RecordTypes::ALCHEMY) {
+			ALCHRecord_t* alchemy = tes3::getAlchemyRecordById(id);
+			if (alchemy) {
+				effects = alchemy->effects;
+			}
+			else {
+				mwse::log::getLog() << "xDeleteEffect: No alchemy record found with id '" << id << "'." << std::endl;
+			}
+		}
 		else {
 			mwse::log::getLog() << "xAddEffect: Record type of " << type << " is not supported." << std::endl;
 			mwse::Stack::getInstance().pushLong(false);
