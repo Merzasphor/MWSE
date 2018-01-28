@@ -268,6 +268,7 @@
     <ClCompile Include="xStartScript.cpp" />
     <ClCompile Include="xStopScript.cpp" />
     <ClCompile Include="xStringBuild.cpp" />
+    <ClCompile Include="xStringCapture.cpp" />
     <ClCompile Include="xStringCompare.cpp" />
     <ClCompile Include="xStringLength.cpp" />
     <ClCompile Include="xStringMatch.cpp" />

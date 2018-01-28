@@ -1008,6 +1008,15 @@ function
 	Param2 = Long | String
 	Opcode = 0x3e68
 end
+function
+	Name = XStringCapture
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Long | String | Many
+	Param1 = Long | String
+	Param2 = Long | String
+	Param3 = Long
+	Opcode = 0x3e69
+end
 
 # New MWSE-WIP functions
 function

@@ -842,6 +842,9 @@
     <ClCompile Include="xContentListFiltered.cpp">
       <Filter>Source Files\Functions\References</Filter>
     </ClCompile>
+    <ClCompile Include="xStringCapture.cpp">
+      <Filter>Source Files\Functions\Strings</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">
