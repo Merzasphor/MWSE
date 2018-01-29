@@ -333,6 +333,35 @@ namespace mwse
 		};
 	}
 
+	template <typename T>
+	struct IteratorNode_t
+	{
+		IteratorNode_t<T> * previous;
+		IteratorNode_t<T> * next;
+		T * data;
+	};
+	static_assert(sizeof(IteratorNode_t<void>) == 0x0C, "IteratorNode_t failed size validation");
+
+	template <typename T>
+	struct Iterator_t
+	{
+		void * unknown_0x00;
+		mwLong_t size;
+		IteratorNode_t<T> * head;
+		IteratorNode_t<T> * tail;
+		IteratorNode_t<T> * current;
+	};
+	static_assert(sizeof(Iterator_t<void>) == 0x14, "Iterator_t failed size validation");
+
+	template <typename T>
+	struct LinkedList_t
+	{
+		unsigned long size;
+		T * head;
+		T * tail;
+	};
+	static_assert(sizeof(LinkedList_t<void>) == 0x0C, "LinkedList_t failed size validation");
+
 	struct BaseRecord_t
 	{
 		void * vTable;
@@ -393,49 +422,12 @@ namespace mwse
 
 	struct SPELRecord_t;
 
-	template <typename T>
-	struct LinkedListNode_t
-	{
-		LinkedListNode_t<T> * previous;
-		LinkedListNode_t<T> * next;
-		T * data;
-	};
-	static_assert(sizeof(LinkedListNode_t<void>) == 0x0C, "LinkedListNode_t failed size validation");
-
-	template <typename T>
-	struct LinkedList_t
-	{
-		unsigned long size;
-		T * head;
-		T * tail;
-	};
-	static_assert(sizeof(LinkedList_t<void>) == 0x0C, "LinkedList_t failed size validation");
-
 	struct InventoryNode_t
 	{
 		int itemCount;
 		BaseRecord_t * recordAddress;
 	};
 	static_assert(sizeof(InventoryNode_t) == 0x08, "InventoryNode_t failed size validation");
-
-	template <typename T>
-	struct ListNode_t
-	{
-		RecordTypes::attachType_t attachType;
-		ListNode_t<T> * nextNode;
-		T * dataPtr;
-	};
-	static_assert(sizeof(ListNode_t<void>) == 0x0C, "ListNode_t failed size validation");
-
-	template <typename T>
-	struct ListIterator_t
-	{
-		char unknown[8];
-		ListNode_t<T> * first;
-		char unknown2[4];
-		ListNode_t<T> * current;
-	};
-	static_assert(sizeof(ListIterator_t<void>) == 0x14, "ListIterator_t failed size validation");
 
 	struct mwVariablesNode_t
 	{
@@ -952,11 +944,7 @@ namespace mwse
 		int unknown_0x00BC;	// BODY (hair)
 		int unknown_0x00C0;
 		int unknown_0x00C4;
-		int unknown_0x00C8;
-		int numberOfSpells; // 0x00CC
-		LinkedListNode_t<SPELRecord_t> * spellStart; // 0x00D0 // These contain the spells! Not items with a special power.
-		LinkedListNode_t<SPELRecord_t> * spellEnd; // 0x00D4
-		int unknown_0x00D8;
+		Iterator_t<SPELRecord_t> spells; // 0x00CC
 		int unknown_0x00DC;
 		int unknown_0x00E0;
 		int unknown_0x00E4;
@@ -982,22 +970,21 @@ namespace mwse
 		unsigned long flags; // 0x34
 		int unknown_0x38;
 		int unknown_0x3C;
-		int unknown_0x40;
-		int inventorySize; // 0x44
-		LinkedList_t<TES3DefaultTemplate_t> * inventoryStart; // 0x48
-		LinkedList_t<TES3DefaultTemplate_t> * inventoryEnd; // 0x4C
-		int unknown_0x50;
+		Iterator_t<InventoryNode_t*> inventory; // 0x40
 		int unknown_0x54;
-		int unknown_0x58; // Pointer?
-		int amountEquiped; // 0x5C
-		LinkedList_t<TES3DefaultTemplate_t> * equipedStart; // 0x60
-		LinkedList_t<TES3DefaultTemplate_t> * equipedEnd; // 0x64
-		int unknown_0x68;
+		Iterator_t<TES3DefaultTemplate_t*> equipment; // 0x58
 		NPCBaseRecord_t * baseNPC; // 0x6C
 	};
 	static_assert(sizeof(NPCCopyRecord_t) == 0x70, "NPCBaseRecord_t failed size validation");
 
 	struct TES3Cell_t;
+
+	template <typename T>
+	struct AttachmentNode_t {
+		RecordTypes::attachType_t type;
+		AttachmentNode_t<T> * next;
+		T * data;
+	};
 
 	struct REFRRecord_t
 	{
@@ -1022,7 +1009,7 @@ namespace mwse
 		float x; // 0x38
 		float y; // 0x3C
 		float z; // 0x40
-		ListNode_t<BaseRecord_t> * attachments; // 0x44
+		AttachmentNode_t<BaseRecord_t> * attachments; // 0x44
 		char unknown_0x48[18]; // 0x48 // 18 bytes?
 	};
 	static_assert(sizeof(REFRRecord_t) == 0x5C, "REFRRecord_t failed size validation");
@@ -1068,7 +1055,9 @@ namespace mwse
 		int unknown_0x90[3];
 		mwShort_t maxCondition; // 0x9C
 		mwShort_t unknown_0x9E;
-		int unknown_0xA0[3];
+		int unknown_0xA0;
+		int unknown_0xA4;
+		mwLong_t slot; // 0xA8
 		mwFloat_t weight; // 0xAC
 		mwLong_t value; // 0xB0
 		int unknown_0xB4[3]; // 0xB4
@@ -1103,7 +1092,7 @@ namespace mwse
 		int unknown_0x54;
 		int unknown_0x58;
 		int unknown_0x5C[19];
-		int unknown_0xA4;
+		mwLong_t slot;
 		mwFloat_t weight; // 0xA8
 		mwShort_t value; // 0xB0
 		mwShort_t unknown_0xB2;
@@ -1434,7 +1423,7 @@ namespace mwse
 		int unknown_0x34;
 		int unknown_0x38;
 		mwLong_t inventoryFlags; // 0x3C
-		ListIterator_t<InventoryNode_t> inventory; // 0x40
+		Iterator_t<InventoryNode_t> inventory; // 0x40
 		int unknown_0x54;
 		int unknown_0x58;
 		int unknown_0x5C;
@@ -1556,7 +1545,7 @@ namespace mwse
 		int unknown_0x34;
 		int unknown_0x38;
 		int unknown_0x3C;
-		ListIterator_t<BaseRecord_t> * inventory; // 0x40
+		int unknown_0x40;
 		char model[32]; // 0x44
 		char name[32]; // 0x64
 		char texture[32]; // 0x84
@@ -1657,7 +1646,7 @@ namespace mwse
 		mwLong_t unknown_0x34;
 		mwLong_t unknown_0x38;
 		mwLong_t unknown_0x3C;
-		ListIterator_t<BaseRecord_t> * inventory; // 0x40
+		Iterator_t<InventoryNode_t> * inventory; // 0x40
 		mwLong_t unknown_0x44;
 		mwLong_t unknown_0x48;
 		mwLong_t unknown_0x4C;
@@ -1717,17 +1706,9 @@ namespace mwse
 		int unknown_0x34;
 		int unknown_0x38;
 		int unknown_0x3C;
-		int unknown_0x40;
-		int inventorySize; // 0x44
-		LinkedList_t<TES3DefaultTemplate_t> * inventoryStart; // 0x48
-		LinkedList_t<TES3DefaultTemplate_t> * inventoryEnd; // 0x4C
-		int unknown_0x50;
+		Iterator_t<TES3DefaultTemplate_t*> inventory; // 0x58
 		int unknown_0x54;
-		int unknown_0x58; // Pointer?
-		int amountEquiped; // 0x5C
-		LinkedList_t<TES3DefaultTemplate_t> * equipedStart; // 0x60
-		LinkedList_t<TES3DefaultTemplate_t> * equipedEnd; // 0x64
-		int unknown_0x68;
+		Iterator_t<TES3DefaultTemplate_t*> equipment; // 0x58
 		CREABaseRecord_t * baseCreature; // 0x6C
 	};
 	static_assert(sizeof(CREACopyRecord_t) == 0x70, "CREACopyRecord_t failed size validation");

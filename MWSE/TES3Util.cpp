@@ -89,14 +89,14 @@ namespace mwse
 			return reference;
 		}
 
-		ListNode_t<InventoryNode_t> * getFirstInventoryNode(REFRRecord_t* reference) {
-			ListNode_t<InventoryNode_t>* node = NULL;
+		IteratorNode_t<InventoryNode_t> * getFirstInventoryNode(REFRRecord_t* reference) {
+			IteratorNode_t<InventoryNode_t>* node = NULL;
 
 			BaseRecord_t* record = reference->recordPointer;
 			CONTRecord_t* recordAsContainer = reinterpret_cast<CONTRecord_t*>(record);
 
 			if (hasInventory(record)) {
-				node = recordAsContainer->inventory.first;
+				node = recordAsContainer->inventory.head;
 			}
 
 			return node;
@@ -363,12 +363,12 @@ namespace mwse
 				return NULL;
 			}
 
-			ListNode_t<BaseRecord_t>* listNode = reference->attachments;
+			AttachmentNode_t<mwVarHolderNode_t>* listNode = reinterpret_cast<AttachmentNode_t<mwVarHolderNode_t>*>(reference->attachments);
 			while (listNode) {
-				if (listNode->attachType == attachmentType) {
-					return listNode->dataPtr;
+				if (listNode->type == attachmentType) {
+					return reinterpret_cast<BaseRecord_t*>(listNode->data);
 				}
-				listNode = listNode->nextNode;
+				listNode = listNode->next;
 			}
 
 			return NULL;

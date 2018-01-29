@@ -242,24 +242,22 @@ index will be filled with index of variable
 mwLong_t VirtualMachine::getLongVariable(int index, REFRRecord_t &reference)
 {
 	bool found = false;
-	ListNode_t<BaseRecord_t> * pnode = reference.attachments;
+	AttachmentNode_t<mwVarHolderNode_t> * pnode = reinterpret_cast<AttachmentNode_t<mwVarHolderNode_t>*>(reference.attachments);
 	//search in attachments for the 'VARNODE' attachment. it contains the variableslist.
 	while (pnode && !found)	//make while fail when @ end of nodelist!
 	{
-		if (pnode->attachType == RecordTypes::attachType_t::VARNODE)
+		if (pnode->type == RecordTypes::attachType_t::VARNODE)
 		{
 			found = true;
 		}
 		else
 		{
-			pnode = pnode->nextNode;
+			pnode = pnode->next;
 		}
 	}
 	if (found)
 	{
-		mwVarHolderNode_t* varholder = reinterpret_cast<mwVarHolderNode_t*>(pnode->dataPtr);
-		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(varholder->vars);
-		return foreignVariables->longVarValues[index];
+		return pnode->data->vars->longVarValues[index];
 	}
 	//else throw error
 }
@@ -297,23 +295,21 @@ void VirtualMachine::setLongVariable(const char *id, mwse::mwLong_t value)
 void VirtualMachine::setLongVariable(int index, mwse::mwLong_t value, mwse::REFRRecord_t &reference)
 {
 	bool found = false;
-	ListNode_t<BaseRecord_t> * pnode = reference.attachments;
+	AttachmentNode_t<mwVarHolderNode_t>* pnode = reinterpret_cast<AttachmentNode_t<mwVarHolderNode_t>*>(reference.attachments);
 	while (pnode && !found)	//make while fail when @ end of nodelist!
 	{
-		if (pnode->attachType == RecordTypes::attachType_t::VARNODE)
+		if (pnode->type == RecordTypes::attachType_t::VARNODE)
 		{
 			found = true;
 		}
 		else
 		{
-			pnode = pnode->nextNode;
+			pnode = pnode->next;
 		}
 	}
 	if (found)
 	{
-		mwVarHolderNode_t* varholder = reinterpret_cast<mwVarHolderNode_t*>(pnode->dataPtr);
-		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(varholder->vars);
-		foreignVariables->longVarValues[index] = value;
+		pnode->data->vars->longVarValues[index] = value;
 	}
 	//else throw error
 }
@@ -351,23 +347,21 @@ mwShort_t VirtualMachine::getShortVariable(const char *id)
 mwShort_t VirtualMachine::getShortVariable(int index, mwse::REFRRecord_t &reference)
 {
 	bool found = false;
-	ListNode_t<BaseRecord_t> * pnode = reference.attachments;
+	AttachmentNode_t<mwVarHolderNode_t>* pnode = reinterpret_cast<AttachmentNode_t<mwVarHolderNode_t>*>(reference.attachments);
 	while (pnode && !found)	//make while fail when @ end of nodelist!
 	{
-		if (pnode->attachType == RecordTypes::attachType_t::VARNODE)
+		if (pnode->type == RecordTypes::attachType_t::VARNODE)
 		{
 			found = true;
 		}
 		else
 		{
-			pnode = pnode->nextNode;
+			pnode = pnode->next;
 		}
 	}
 	if (found)
 	{
-		mwVarHolderNode_t* varholder = reinterpret_cast<mwVarHolderNode_t*>(pnode->dataPtr);
-		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(varholder->vars);
-		return foreignVariables->shortVarValues[index];
+		return pnode->data->vars->shortVarValues[index];
 	}
 	//else throw error
 }
@@ -405,23 +399,21 @@ void VirtualMachine::setShortVariable(const char *id, mwse::mwShort_t value)
 void VirtualMachine::setShortVariable(int index, mwse::mwShort_t value, mwse::REFRRecord_t &reference)
 {
 	bool found = false;
-	ListNode_t<BaseRecord_t> * pnode = reference.attachments;
+	AttachmentNode_t<mwVarHolderNode_t>* pnode = reinterpret_cast<AttachmentNode_t<mwVarHolderNode_t>*>(reference.attachments);
 	while (pnode && !found)	//make while fail when @ end of nodelist!
 	{
-		if (pnode->attachType == RecordTypes::attachType_t::VARNODE)
+		if (pnode->type == RecordTypes::attachType_t::VARNODE)
 		{
 			found = true;
 		}
 		else
 		{
-			pnode = pnode->nextNode;
+			pnode = pnode->next;
 		}
 	}
 	if (found)
 	{
-		mwVarHolderNode_t* varholder = reinterpret_cast<mwVarHolderNode_t*>(pnode->dataPtr);
-		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(varholder->vars);
-		foreignVariables->shortVarValues[index] = value;
+		pnode->data->vars->shortVarValues[index] = value;
 	}
 	//else throw error
 }
@@ -459,23 +451,21 @@ mwFloat_t VirtualMachine::getFloatVariable(const char *id)
 mwFloat_t VirtualMachine::getFloatVariable(int index, mwse::REFRRecord_t &reference)
 {
 	bool found = false;
-	ListNode_t<BaseRecord_t> * pnode = reference.attachments;
+	AttachmentNode_t<mwVarHolderNode_t>* pnode = reinterpret_cast<AttachmentNode_t<mwVarHolderNode_t>*>(reference.attachments);
 	while (pnode && !found)	//make while fail when @ end of nodelist!
 	{
-		if (pnode->attachType == RecordTypes::attachType_t::VARNODE)
+		if (pnode->type == RecordTypes::attachType_t::VARNODE)
 		{
 			found = true;
 		}
 		else
 		{
-			pnode = pnode->nextNode;
+			pnode = pnode->next;
 		}
 	}
 	if (found)
 	{
-		mwVarHolderNode_t* varholder = reinterpret_cast<mwVarHolderNode_t*>(pnode->dataPtr);
-		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(varholder->vars);
-		return foreignVariables->floatVarValues[index];
+		return pnode->data->vars->floatVarValues[index];
 	}
 	//else throw error
 }
@@ -513,23 +503,21 @@ void VirtualMachine::setFloatVariable(const char *id, mwse::mwFloat_t value)
 void VirtualMachine::setFloatVariable(int index, mwse::mwFloat_t value, mwse::REFRRecord_t &reference)
 {
 	bool found = false;
-	ListNode_t<BaseRecord_t> * pnode = reference.attachments;
+	AttachmentNode_t<mwVarHolderNode_t>* pnode = reinterpret_cast<AttachmentNode_t<mwVarHolderNode_t>*>(reference.attachments);
 	while (pnode && !found)	//make while fail when @ end of nodelist!
 	{
-		if (pnode->attachType == RecordTypes::attachType_t::VARNODE)
+		if (pnode->type == RecordTypes::attachType_t::VARNODE)
 		{
 			found = true;
 		}
 		else
 		{
-			pnode = pnode->nextNode;
+			pnode = pnode->next;
 		}
 	}
 	if (found)
 	{
-		mwVarHolderNode_t* varholder = reinterpret_cast<mwVarHolderNode_t*>(pnode->dataPtr);
-		mwVariablesNode_t* foreignVariables = reinterpret_cast<mwVariablesNode_t*>(varholder->vars);
-		foreignVariables->floatVarValues[index] = value;
+		pnode->data->vars->floatVarValues[index] = value;
 	}
 	//else throw error
 }

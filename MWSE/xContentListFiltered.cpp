@@ -42,7 +42,7 @@ namespace mwse {
 
 	float xContentListFiltered::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get parameters.
-		ListNode_t<InventoryNode_t>* node = reinterpret_cast<ListNode_t<InventoryNode_t>*>(mwse::Stack::getInstance().popLong());
+		IteratorNode_t<InventoryNode_t>* node = reinterpret_cast<IteratorNode_t<InventoryNode_t>*>(mwse::Stack::getInstance().popLong());
 		mwLong_t filter = mwse::Stack::getInstance().popLong();
 
 		// Get reference.
@@ -55,24 +55,24 @@ namespace mwse {
 		mwLong_t value = 0;
 		mwFloat_t weight = 0;
 		mwString_t name = NULL;
-		ListNode_t<InventoryNode_t>* next = NULL;
+		IteratorNode_t<InventoryNode_t>* next = NULL;
 
 		// If we aren't given a node, get the first one.
 		if (node == NULL) {
 			node = tes3::getFirstInventoryNode(reference);
 
 			// Pass over any records that don't match the current filter.
-			while (node && node->dataPtr && node->dataPtr->recordAddress && node->dataPtr->recordAddress->recordType != filter) {
-				node = node->nextNode;
+			while (node && node->data && node->data->recordAddress && node->data->recordAddress->recordType != filter) {
+				node = node->next;
 			}
 		}
 
 		// Validate the node we've obtained.
-		if (node && node->dataPtr && node->dataPtr->recordAddress) {
-			TES3DefaultTemplate_t* record = reinterpret_cast<TES3DefaultTemplate_t*>(node->dataPtr->recordAddress);
+		if (node && node->data && node->data->recordAddress) {
+			TES3DefaultTemplate_t* record = reinterpret_cast<TES3DefaultTemplate_t*>(node->data->recordAddress);
 
 			id = record->objectId;
-			count = node->dataPtr->itemCount;
+			count = node->data->itemCount;
 			type = record->recordType;
 
 			// Get value.
@@ -103,9 +103,9 @@ namespace mwse {
 			}
 
 			// Get next node. Pass over any records that don't match the given filter.
-			next = node->nextNode;
-			while (next && next->dataPtr && next->dataPtr->recordAddress && next->dataPtr->recordAddress->recordType != filter) {
-				next = next->nextNode;
+			next = node->next;
+			while (next && next->data && next->data->recordAddress && next->data->recordAddress->recordType != filter) {
+				next = next->next;
 			}
 		}
 

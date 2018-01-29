@@ -63,7 +63,7 @@ namespace mwse
 		}
 
 		NPCBaseRecord_t* npc = reinterpret_cast<NPCCopyRecord_t*>(reference->recordPointer)->baseNPC;
-		LinkedListNode_t<SPELRecord_t>* currentNode = npc->spellStart;
+		IteratorNode_t<SPELRecord_t>* currentNode = npc->spells.head;
 		while (currentNode != NULL) {
 			SPELRecord_t* spell = currentNode->data;
 			if (strcmp(spell->id, spellId.c_str()) == 0) {

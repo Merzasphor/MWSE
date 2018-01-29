@@ -48,7 +48,7 @@ namespace mwse
 
 		bool getHasBaseRecord(TES3DefaultTemplate_t* record);
 
-		ListNode_t<InventoryNode_t> * getFirstInventoryNode(REFRRecord_t* reference);
+		IteratorNode_t<InventoryNode_t> * getFirstInventoryNode(REFRRecord_t* reference);
 
 		bool hasInventory(BaseRecord_t* record);
 

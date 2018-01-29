@@ -42,7 +42,7 @@ namespace mwse {
 
 	float xContentList::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get parameters.
-		ListNode_t<InventoryNode_t>* node = reinterpret_cast<ListNode_t<InventoryNode_t>*>(mwse::Stack::getInstance().popLong());
+		IteratorNode_t<InventoryNode_t>* node = reinterpret_cast<IteratorNode_t<InventoryNode_t>*>(mwse::Stack::getInstance().popLong());
 
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
@@ -54,7 +54,7 @@ namespace mwse {
 		mwLong_t value = 0;
 		mwFloat_t weight = 0;
 		mwString_t name = NULL;
-		ListNode_t<InventoryNode_t>* next = NULL;
+		IteratorNode_t<InventoryNode_t>* next = NULL;
 
 		// If we aren't given a node, get the first one.
 		if (node == NULL) {
@@ -62,11 +62,11 @@ namespace mwse {
 		}
 
 		// Validate the node we've obtained.
-		if (node && node->dataPtr && node->dataPtr->recordAddress) {
-			TES3DefaultTemplate_t* record = reinterpret_cast<TES3DefaultTemplate_t*>(node->dataPtr->recordAddress);
+		if (node && node->data && node->data->recordAddress) {
+			TES3DefaultTemplate_t* record = reinterpret_cast<TES3DefaultTemplate_t*>(node->data->recordAddress);
 			
 			id = record->objectId;
-			count = node->dataPtr->itemCount;
+			count = node->data->itemCount;
 			type = record->recordType;
 
 			// Get value.
@@ -96,7 +96,7 @@ namespace mwse {
 				mwse::log::getLog() << "xContentList: Could not get name of object '" << id << "'. " << e.what() << std::endl;
 			}
 			
-			next = node->nextNode;
+			next = node->next;
 		}
 
 		// Push values to the stack.

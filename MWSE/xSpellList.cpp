@@ -47,7 +47,7 @@ namespace mwse
 	float xSpellList::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get our next node.
-		LinkedListNode_t<SPELRecord_t>* node = reinterpret_cast<LinkedListNode_t<SPELRecord_t>*>(mwse::Stack::getInstance().popLong());
+		IteratorNode_t<SPELRecord_t>* node = reinterpret_cast<IteratorNode_t<SPELRecord_t>*>(mwse::Stack::getInstance().popLong());
 
 		// Arguments we will be returning.
 		mwLong_t spellCount = 0;
@@ -76,12 +76,12 @@ namespace mwse
 
 		// If we're not provided a node, get the first node of the NPC.
 		if (node == NULL) {
-			node = npcCopyRecord->baseNPC->spellStart;
+			node = npcCopyRecord->baseNPC->spells.head;
 		}
 
 		// Get our data.
 		SPELRecord_t* spell = node->data;
-		spellCount = npcCopyRecord->baseNPC->numberOfSpells;
+		spellCount = npcCopyRecord->baseNPC->spells.size;
 		spellId = spell->id;
 		spellName = spell->friendlyName;
 		spellType = spell->type;

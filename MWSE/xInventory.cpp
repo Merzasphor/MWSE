@@ -54,7 +54,7 @@ namespace mwse
 			return 0.0f;
 		}
 		
-		ListNode_t<InventoryNode_t>* firstItem = tes3::getFirstInventoryNode(reference);
+		IteratorNode_t<InventoryNode_t>* firstItem = tes3::getFirstInventoryNode(reference);
 		if (firstItem == NULL) {
 			mwse::log::getLog() << "xInventory: First item could not be determined." << std::endl;
 			mwse::Stack::getInstance().pushLong(0);
@@ -63,9 +63,9 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwse::Stack::getInstance().pushLong((mwLong_t)firstItem->nextNode);
-		mwse::Stack::getInstance().pushLong(firstItem->dataPtr->itemCount);
-		mwse::Stack::getInstance().pushString(reinterpret_cast<TES3DefaultTemplate_t*>(firstItem->dataPtr->recordAddress)->objectId);
+		mwse::Stack::getInstance().pushLong((mwLong_t)firstItem->next);
+		mwse::Stack::getInstance().pushLong(firstItem->data->itemCount);
+		mwse::Stack::getInstance().pushString(reinterpret_cast<TES3DefaultTemplate_t*>(firstItem->data->recordAddress)->objectId);
 
 		return 0.0f;
 	}
