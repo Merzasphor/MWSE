@@ -28,6 +28,7 @@ This release marks a complete under the hood rewrite of how MWSE functions. Vers
   * The second parameter can be used as a version check, and the second returned value will be `1` if the current version meets that requirement. For example, `setx version versionCheck to xStringParse "MWSE_VERSION" 2001000` will set `versionCheck` to `1` if the current MWSE version is at least 2.1.0. Otherwise `versionCheck` will be `0`.
 - `xGetValue` and `xSetValue` now work on gold without hardcoding values.
 - `xAddEffect`, `xDeleteEffect`, `xGetEffectInfo`, and `xSetEffectInfo` now support `ALCH` (potion) records.
+- `xGetRef` now returns a reference to its caller when given the argument `0`.
 
 ### Fixed
 - `xSetName` is safe to use, and no longer rewrites random portions of memory. This function used to cause various issues if the new name was longer than the old name on most object types. This could cause random value changes, and make the game prone to crashing.
