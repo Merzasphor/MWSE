@@ -3,6 +3,7 @@
 namespace mwse {
 	namespace OpCode {
 		enum OpCode_t {
+
 			//
 			// Morrowind OpCodes
 			//
@@ -501,6 +502,7 @@ namespace mwse {
 			xDistance = 0x3C22,
 			xDrop = 0x3F0D,
 			xEquip = 0x3F0E,
+			xEquipmentList = 0x3E53,
 			xExplodeSpell = 0x3921,
 			xFileReadFloat = 0x3C13,
 			xFileReadLong = 0x3C12,

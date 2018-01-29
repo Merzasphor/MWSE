@@ -60,6 +60,8 @@ namespace mwse
 		mwFloat_t getWeight(BaseRecord_t* record);
 		mwFloat_t getWeight(REFRRecord_t* reference, bool multiplyByCount);
 
+		ENCHRecord_t* getEnchantment(TES3DefaultTemplate_t* record);
+
 		char* getModel(BaseRecord_t* record);
 
 		TES3DefaultTemplate_t* getBaseRecord(TES3DefaultTemplate_t* reference);

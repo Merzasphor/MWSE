@@ -1092,7 +1092,7 @@ namespace mwse
 		int unknown_0x54;
 		int unknown_0x58;
 		int unknown_0x5C[19];
-		mwLong_t slot;
+		mwLong_t slot; // 0xA4
 		mwFloat_t weight; // 0xA8
 		mwShort_t value; // 0xB0
 		mwShort_t unknown_0xB2;

@@ -176,6 +176,15 @@ function
 	Opcode = 0x3f0e
 end
 function
+	Name = xEquipmentList
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Long | String | Float | Many
+	Param1 = Long
+	Param2 = Long
+	Param3 = Long
+	Opcode = 0x3e53
+end
+function
 	Name = XFileReadFloat
 	Options = MWSE | AllowGlobal | ShortVar | AllowVar
 	Return = Short | Long | Float | String | Many

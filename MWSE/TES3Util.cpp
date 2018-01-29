@@ -280,6 +280,33 @@ namespace mwse
 			return weight;
 		}
 
+		ENCHRecord_t* getEnchantment(TES3DefaultTemplate_t* record) {
+			ENCHRecord_t* enchantment = NULL;
+
+			RecordTypes::recordType_t type = record->recordType;
+			switch (type) {
+			case RecordTypes::AMMO:
+				enchantment = reinterpret_cast<AMMORecord_t*>(record)->enchantment;
+				break;
+			case RecordTypes::ARMOR:
+				enchantment = reinterpret_cast<ARMORecord_t*>(record)->enchantment;
+				break;
+			case RecordTypes::BOOK:
+				enchantment = reinterpret_cast<BOOKRecord_t*>(record)->enchantment;
+				break;
+			case RecordTypes::CLOTHING:
+				enchantment = reinterpret_cast<CLOTRecord_t*>(record)->enchantment;
+				break;
+			case RecordTypes::WEAPON:
+				enchantment = reinterpret_cast<WEAPRecord_t*>(record)->enchantment;
+				break;
+			default:
+				throw std::exception("Call on invalid record type.");
+			}
+
+			return enchantment;
+		}
+
 		char* getModel(BaseRecord_t* record) {
 			char* model = NULL;
 
