@@ -682,6 +682,7 @@ namespace mwse {
 			xStringParse = 0x3F0C,
 			xStringCapture = 0x3E69,
 			xTan = 0x3830,
+			xArcTan2 = 0x382F,
 			xTextInput = 0x3F01,
 			xTextInputAlt = 0x3F02,
 			xXor = 0x393C

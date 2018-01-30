@@ -854,6 +854,9 @@
     <ClCompile Include="xEquipmentList.cpp">
       <Filter>Source Files\Functions\Actors</Filter>
     </ClCompile>
+    <ClCompile Include="xArcTan2.cpp">
+      <Filter>Source Files\Functions\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">

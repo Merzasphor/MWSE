@@ -66,6 +66,7 @@
     <ClCompile Include="xArcCos.cpp" />
     <ClCompile Include="xArcSin.cpp" />
     <ClCompile Include="xArcTan.cpp" />
+    <ClCompile Include="xArcTan2.cpp" />
     <ClCompile Include="xBitAnd.cpp" />
     <ClCompile Include="xBitNot.cpp" />
     <ClCompile Include="xBitOr.cpp" />

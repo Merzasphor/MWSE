@@ -125,6 +125,14 @@ function
 	Opcode = 0x3833
 end
 function
+	Name = XArcTan2
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Float
+	Param1 = Float
+	Param2 = Float
+	Opcode = 0x382F
+end
+function
 	Name = XContentList
 	Options = MWSE | AllowGlobal | ShortVar | AllowVar
 	Return = Short | Long | Float | String | Many
