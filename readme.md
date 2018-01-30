@@ -39,6 +39,7 @@ MWSE developers:
 - Cody Erekson (Fliggerty)
 - FreshFish
 - Grant McDorman
+- Greatness7
 - Merzasphor
 - Michael Wallar (NullCascade)
 - Tim Peters
