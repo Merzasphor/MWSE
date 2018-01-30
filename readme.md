@@ -5,9 +5,11 @@ The Morrowind Script Extender makes additional functions available for use in Mo
 
 These extra functions allow modders to add features and behavior to scripts that would otherwise be impractical or impossible.
 
+For a list of recent releases, see the [changelog](changelog.md).
+
 ## Installation
 
-* Download the latest MWSE release from [GitHub](https://github.com/Merzasphor/MWSE/releases) and unpack to a temporary directory.
+* Download the latest MWSE release from [GitHub](https://github.com/MWSE/MWSE/releases) and unpack to a temporary directory.
 * If you use MGE XE 0.10.0 beta 9 or later:
 	* (Optional) Backup `MWSE.dll` in your Morrowind directory.
 	* Copy `MWSE.dll` from the archive in step 1 to your Morrowind directory.
