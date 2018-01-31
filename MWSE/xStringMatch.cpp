@@ -53,7 +53,7 @@ namespace mwse
 
 		bool result = false;
 		try {
-			result = std::regex_search(string, std::regex(pattern));
+			result = std::regex_search(string, std::regex(pattern, std::regex::extended));
 		}
 		catch (std::regex_error& e) {
 			result = false;

@@ -56,7 +56,7 @@ namespace mwse
 		// Go and try to get all of our matches, to a limit of the count given to us as our 3rd parameter.
 		mwLong_t matchesReturned = 0;
 		try {
-			std::regex regex_pattern(pattern);
+			std::regex regex_pattern(pattern, std::regex::extended);
 			std::smatch regex_matches;
 			if (std::regex_match(string, regex_matches, regex_pattern)) {
 				for (size_t i = 0; i < regex_matches.size(); i++) {
