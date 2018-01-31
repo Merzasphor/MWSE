@@ -31,14 +31,16 @@ This release marks a complete under the hood rewrite of how MWSE functions. Vers
 - `xGetRef` now returns a reference to its caller when given the argument `0`.
 
 ### Fixed
-- `xSetName` is safe to use, and no longer rewrites random portions of memory. This function used to cause various issues if the new name was longer than the old name on most object types. This could cause random value changes, and make the game prone to crashing.
+- `xSetName` is now safe to use, and no longer rewrites random portions of memory. This function used to cause various issues if the new name was longer than the old name on most object types. This could cause random value changes, and make the game prone to crashing.
 - `xPlace`'s returned reference can now be reliably used in the same frame that it was created.
 - `xSetQuality` now works correctly on apparatus.
 - `xSetWeight` now works correctly on lights.
 - `xSetBaseEffectInfo` correctly functions. Previously it had a bug that prevented it from actually setting any values.
+- `xStringLength` now correctly returns 0 when called on an empty string.
 
 ### Known Issues
 - `xEquipmentList`: The count returned is always `1`, though more than one ammo item could be equipped.
+- `xGetEncumbrance`: This function is unreliable and should not be used yet.
 
 ## [0.9.5-alpha.YYYYMMDD] - 2017-MM-DD
 
