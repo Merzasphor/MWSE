@@ -29,3 +29,6 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 MWSE DLL/.vs/
 MWSE/.vs/
+docs/build
+docs/source/.vscode/
+docs/source/_build/
