@@ -82,7 +82,7 @@ BOOL WINAPI DllMain(
 
 		// Parse and load the features installed by the Morrowind Code Patch.
 		if (!mwse::mcp::loadFeatureList()) {
-			mwse::log::getLog() << "Failed to load Morrowind Code Patch installed features. MCP may not be installed." << std::endl;
+			mwse::log::getLog() << "Failed to detect Morrowind Code Patch installed features. MCP may not be installed, or the mcpatch\\installed file may have been deleted. Mods will be unable to detect MCP feature support." << std::endl;
 		}
 
 		break;
