@@ -173,7 +173,7 @@ ID  Effect
 
 .. note:: The attribute- and skill-affecting effects are often paired with a specific attribute or skill in function calls. See the associated tables below for their values.
 
-Record types
+Record Types
 -----------------------------------------------------------
 
 ========== ===== =================
