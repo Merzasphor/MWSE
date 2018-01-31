@@ -10,6 +10,7 @@ These extra functions allow modders to add features and behavior to scripts that
 .. toctree::
     :maxdepth: 1
 
+    installation
     changelog
     contributing
     authors
