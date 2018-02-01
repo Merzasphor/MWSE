@@ -857,6 +857,9 @@
     <ClCompile Include="xArcTan2.cpp">
       <Filter>Source Files\Functions\Math</Filter>
     </ClCompile>
+    <ClCompile Include="xGetAlchemyInfo.cpp">
+      <Filter>Source Files\Functions\Records</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">

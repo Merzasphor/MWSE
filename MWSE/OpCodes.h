@@ -520,6 +520,7 @@ namespace mwse {
 			xFirstNPC = 0x3C1A,
 			xFirstStatic = 0x3C1F,
 			xFloatsToLong = 0x3922,
+			xGetAlchemyInfo = 0x395F,
 			xGetArraySize = 0x395B,
 			xGetArrayValue = 0x3932,
 			xGetAttribute = 0x3952,

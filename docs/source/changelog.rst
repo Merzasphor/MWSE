@@ -34,6 +34,8 @@ Added
 
 - ``xEquipmentList``: Behaves similar to ``xContentList``/``xContentListFiltered``, returning inventory information. This function allows looping over equipped items instead of all items, and also returns some subtype information. Usage is ``setx id count type subtype value weight name enchantId nextNode to xEquipmentList node typeFilter subTypeFilter``. The ``typeFilter`` parameter matches the ``type``s returned, and will restrict results to that item type (e.g. only clothing). The ``subTypeFilter`` allows specifying a weapon type or armor/clothing slot. The subtype index is one higher for both return values and parameters are one higher than in their normal records (e.g. pants are index ``1`` instead of ``0``). If ``typeFilter`` or ``subTypeFilter`` are 0, no filtering is performed on those values.
 
+- ``xGetAlchemyInfo``: Allows the fetching the effect count (and flags) for an alchemy record.
+
 Changed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

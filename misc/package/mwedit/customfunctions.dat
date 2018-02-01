@@ -1406,6 +1406,14 @@ function
 end
 
 function
+	Name = XGetAlchemyInfo
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Many
+	Param1 = Long | String
+	Opcode = 0x395F
+end
+
+function
 	Name = XGetArrayValue
 	Options = MWSE | AllowGlobal | ShortVar | AllowVar
 	Return = Long

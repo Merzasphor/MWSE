@@ -104,6 +104,7 @@
     <ClCompile Include="xFirstNPC.cpp" />
     <ClCompile Include="xFirstStatic.cpp" />
     <ClCompile Include="xFloatsToLong.cpp" />
+    <ClCompile Include="xGetAlchemyInfo.cpp" />
     <ClCompile Include="xGetArraySize.cpp" />
     <ClCompile Include="xGetArrayValue.cpp" />
     <ClCompile Include="xGetAttribute.cpp" />
