@@ -2,13 +2,13 @@
 xGetMCPFeatureState
 ========================================================
 
-:Parameters:
+**Parameters:**
 
-    - ``long`` **id**: Identifier for the MCP feature.
+- ``long`` **id**: Identifier for the MCP feature.
 
-:Returned:
+**Returned:**
 
-    - ``short`` **state**: 1 if the feature is enabled, 0 if it is disabled, or -1 if MWSE couldn't determine the MCP installation state.
+- ``short`` **state**: 1 if the feature is enabled, 0 if it is disabled, or -1 if MWSE couldn't determine the MCP installation state.
 
 This function can be used to attempt to ensure that the user has the correct `Morrowind Code Patch <https://www.nexusmods.com/morrowind/mods/19510/?>`_ features enabled.
 

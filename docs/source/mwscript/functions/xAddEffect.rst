@@ -2,21 +2,21 @@
 xAddEffect
 ========================================================
 
-:Parameters:
+**Parameters:**
 
-    - :code:`long` **type**: Record type to target. See `Record Types`.
-    - :code:`string` **id**: ID of the spell or enchantment to modify.
-    - :code:`long` **effectId**: ID of the effect to add.
-    - :code:`long` **skillAttributeId**: ID of the skill or attribute to use (only used by drain/absorb/damage/fortify/restore skill/attribute effects - ignored otherwise).
-    - :code:`long` **rangeType**: New range type. 0 = SELF, 1 = TOUCH, 2 = TARGET.
-    - :code:`long` **area**: Area of effect.
-    - :code:`long` **duration**: Duration in seconds.
-    - :code:`long` **magMin**: Minimum magnitude.
-    - :code:`long` **magMax**: Maximum magnitude.
+- ``long`` **type**: Record type to target. See `Record Types`.
+- ``string`` **id**: ID of the spell or enchantment to modify.
+- ``long`` **effectId**: ID of the effect to add.
+- ``long`` **skillAttributeId**: ID of the skill or attribute to use (only used by drain/absorb/damage/fortify/restore skill/attribute effects - ignored otherwise).
+- ``long`` **rangeType**: New range type. 0 = SELF, 1 = TOUCH, 2 = TARGET.
+- ``long`` **area**: Area of effect.
+- ``long`` **duration**: Duration in seconds.
+- ``long`` **magMin**: Minimum magnitude.
+- ``long`` **magMax**: Maximum magnitude.
 
-:Returned:
+**Returned:**
 
-    - :code:`long` **success**: 1 if the effect was added, or 0 if it wasn't.
+- ``long`` **success**: 1 if the effect was added, or 0 if it wasn't.
 
 Adds a new effect to the given spell or enchantment.
 
