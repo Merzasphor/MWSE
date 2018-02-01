@@ -4,6 +4,27 @@ References
 
 MWSE functions sometimes need magic numbers to help denote specific types. This page helps to explain what these values mean, and what they are.
 
+Armor Types
+-----------------------------------------------------------
+
+=== =============================================
+ID  Armor Type
+=== =============================================
+0   Helmet
+1   Cuirass
+2   Left Pauldron
+3   Right Pauldron
+4   Greaves
+5   Boots
+6   Left Gauntlet
+7   Right Gauntlet
+8   Shield
+9   Left Bracer
+10  Right Bracer
+=== =============================================
+
+.. note:: `xEquipmentList <functions/xEquipmentList.html>`_'s returns this value as the subtype for armor records. Note that the values are **increased by one** by that function.
+
 Attributes
 -----------------------------------------------------------
 
@@ -19,6 +40,26 @@ ID Attribute
 6  Personality
 7  Luck
 == ============
+
+Clothing Types
+-----------------------------------------------------------
+
+=== =============================================
+ID  Type
+=== =============================================
+0   Pants
+1   Shoes
+2   Shirt
+3   Belt
+4   Robe
+5   Right Glove
+6   Left Glove
+7   Skirt
+8   Ring
+9   Amulet
+=== =============================================
+
+.. note:: `xEquipmentList <functions/xEquipmentList.html>`_'s returns this value as the subtype for clothing records. Note that the values are **increased by one** by that function.
 
 Effect Types
 -----------------------------------------------------------
@@ -262,3 +303,27 @@ ID Specialization
 1  Magic
 2  Stealth
 == ==============
+
+Weapon Types
+-----------------------------------------------------------
+
+=== =============================================
+ID  Weapon Type
+=== =============================================
+0   Short Blade One Hand
+1   Long Blade One Hand
+2   Long Blade Two Close
+3   Blunt One Hand
+4   Blunt Two Close
+5   Blunt Two Wide
+6   Spear Two Wide
+7   Axe One Hand
+8   Axe Two Hand
+9   Marksman Bow
+10  Marksman Crossbow
+11  Marksman Thrown
+12  Arrow
+13  Bolt
+=== =============================================
+
+.. note:: `xEquipmentList <functions/xEquipmentList.html>`_'s returns this value as the subtype for clothing records. Note that the values are **increased by one** by that function.
