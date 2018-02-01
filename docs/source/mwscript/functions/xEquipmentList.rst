@@ -51,14 +51,12 @@ Example
   
   set loop to 1
   whilex ( loop )
-      setx id count type subtype value weight name enchantId node to ref->xEquipmentList 0 0 0
+      setx id count type subtype value weight name enchantId node to ref->xEquipmentList node 0 0
   
       ; Code to be run for each looped item.
   
       set loop to node
   endwhile
-  
-  setx ref to  
   
   End
 
