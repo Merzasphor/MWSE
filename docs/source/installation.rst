@@ -5,7 +5,9 @@ Installation
 Requirements
 --------------------------------------------------------
 
-MWSE has two soft requirements that all typical users should have installed.
+The `Visual Studio 2017 Redistributable <https://go.microsoft.com/fwlink/?LinkId=746572>`_ is required for MWSE v2.0.
+
+Additionally, MWSE has two soft requirements that all typical users should have installed.
 
 - The `Morrowind Graphic Extender XE <https://www.nexusmods.com/morrowind/mods/26348/?>`_ (MGE XE) allows MWSE to be loaded without any separate launcher. 
 - The `Morrowind Code Patch <https://www.nexusmods.com/morrowind/mods/19510/?>`_ is not required, but its scripting fixes are highly recommended. Various MWSE mods also require special features from this extension. 
