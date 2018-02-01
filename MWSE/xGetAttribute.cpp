@@ -40,7 +40,7 @@ namespace mwse
 
 	static xGetAttribute xGetAttributeInstance;
 
-	xGetAttribute::xGetAttribute() : mwse::InstructionInterface_t(OpCode::xGetBaseAttribute) {}
+	xGetAttribute::xGetAttribute() : mwse::InstructionInterface_t(OpCode::xGetAttribute) {}
 
 	void xGetAttribute::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 
