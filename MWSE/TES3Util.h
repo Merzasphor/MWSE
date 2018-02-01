@@ -39,6 +39,16 @@ namespace mwse
 		TES3DefaultTemplate_t* getTemplate(const char *id);
 		TES3DefaultTemplate_t* getTemplate(const std::string& id);
 
+		template <typename T>
+		T* getRecordById(const char* id) {
+			return reinterpret_cast<T*>(getTemplate(id));
+		}
+
+		template <typename T>
+		T* getRecordById(const std::string& id) {
+			return reinterpret_cast<T*>(getTemplate(id.c_str()));
+		}
+
 		SCPTRecord_t* getScript(const char* id);
 		SCPTRecord_t* getScript(const std::string& id);
 
