@@ -1,5 +1,5 @@
 /************************************************************************
-	
+
 	xStringMatch.cpp - Copyright (c) 2008 The MWSE Project
 	http://www.sourceforge.net/projects/mwse
 
@@ -26,7 +26,7 @@
 #include "Log.h"
 #include "StringUtil.h"
 
-#include <regex>
+#include <boost\regex.hpp>
 
 using namespace mwse;
 
@@ -53,9 +53,9 @@ namespace mwse
 
 		bool result = false;
 		try {
-			result = std::regex_search(string, std::regex(pattern, std::regex::extended));
+			result = boost::regex_search(string, boost::regex(pattern));
 		}
-		catch (std::regex_error& e) {
+		catch (boost::regex_error&) {
 			result = false;
 		}
 

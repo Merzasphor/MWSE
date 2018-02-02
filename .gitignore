@@ -33,3 +33,4 @@ docs/build
 docs/source/.vscode/
 docs/source/_build/
 .vscode/
+.vs/
