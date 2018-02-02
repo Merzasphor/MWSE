@@ -33,7 +33,7 @@ This example demonstrates how to loop through all potions the player is carrying
 
 ::
 
-  begin Example_xContentListFiltered
+  begin Example
 
   long id
   long count
@@ -60,7 +60,7 @@ This example demonstrates how to loop through all potions the player is carrying
       set loop to next
   endwhile
 
-  StopScript "Example_xContentListFiltered"
+  StopScript Example
 
   end
 
