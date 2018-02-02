@@ -326,4 +326,4 @@ ID  Weapon Type
 13  Bolt
 === =============================================
 
-.. note:: `xEquipmentList <functions/xEquipmentList.html>`_'s returns this value as the subtype for clothing records. Note that the values are **increased by one** by that function.
+.. note:: `xEquipmentList <functions/xEquipmentList.html>`_'s returns this value as the subtype for weapon records. Note that the values are **increased by one** by that function.
