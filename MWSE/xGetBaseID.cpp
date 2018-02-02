@@ -64,7 +64,7 @@ namespace mwse
 			objectId = data->objectId;
 		}
 
-		// Push the base value of that skill.
+		// Push the found objectId.
 		if (objectId) {
 			mwse::Stack::getInstance().pushString(objectId);
 		}
