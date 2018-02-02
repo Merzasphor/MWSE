@@ -46,6 +46,12 @@ namespace mwse
 	{
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+			mwse::log::getLog() << "xGetBaseID: Called without reference." << std::endl;
+			mwse::Stack::getInstance().pushLong(0);
+			return 0.0f;
+		}
+
 		char* objectId = NULL;
 
 		// Try to get the data base record objectId first, and fall back to the copy object.
