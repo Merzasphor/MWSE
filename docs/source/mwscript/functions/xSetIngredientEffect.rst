@@ -21,3 +21,30 @@ To instead retrieve these values, use  `xGetIngredientEffect`_.
 .. _`Attribute Type`: ../references.html#attribute-types
 .. _`Skill Type`: ../references.html#skill-types
 .. _`xGetIngredientEffect`: xGetIngredientEffect.html
+
+
+Example: Set an ingredient's first effect.
+--------------------------------------------------------
+
+::
+
+  begin WheatAllergy
+
+  long ingred
+  long index
+  long effect
+  long attrib
+
+  setx ingred to xStringBuild "ingred_bread_01"
+  set index to 1 ; First Slot
+  set effect to 22 ; Damage Attribute
+  set attrib to 0 ; Strength
+  xSetIngredientEffect ingred index effect attrib
+
+  ; in this case, we could've also used literals
+  xSetIngredientEffect "ingred_bread_01" 1 22 0
+
+  ; needs to run only once per session
+  StopScript WheatAllergy
+
+  end
