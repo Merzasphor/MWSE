@@ -53,12 +53,20 @@ namespace mwse
 			return 0.0f;
 		}
 
+		// Determine the PC cell -- either the interior cell if we have one, or the center cell.
 		TES3Cell_t* cell = masterCell->interiorCell;
 		if (!cell) {
 			cell = masterCell->exteriorCells[CENTER]->first;
 		}
 
-		Stack::getInstance().pushString(cell->cellname);
+		// If the cell has a name, use it. If not we want to use the literal
+		// "Wilderness" so that PositionCell behaves properly.
+		if (cell->cellname) {
+			mwse::Stack::getInstance().pushString(cell->cellname);
+		}
+		else {
+			mwse::Stack::getInstance().pushString("Wilderness");
+		}
 
 		return 0.0f;
 	}
