@@ -26,8 +26,10 @@ This function behaves similar to `xContentList`_/`xContentListFiltered`_, return
 
 .. tip:: At present this function is the only way to reliably get the equipment a reference has currently worn. Using the **typeFilter** and **subTypeFilter** the script can quickly query to see if, for example, the player is wearing pants.
 
-Example
--------
+Example: Simple Equipment Loop
+--------------------------------------------------------
+
+This example demonstrates how to do a simple loop through all equipped items (on the player in this instance).
 
 ::
 
@@ -59,6 +61,45 @@ Example
   endwhile
   
   End
+
+Example: Get Equipped Weapon's Enchantment
+--------------------------------------------------------
+
+This example shows how to get the enchantment objectId for the currently equipped weapon. Looping isn't required as the player can never have more than one equipped weapon.
+
+::
+
+  begin GetPlayerWeaponInfo
+  
+  long ref
+  
+  long id
+  long count
+  long type
+  long subtype
+  long value
+  long weight
+  long name
+  long ench
+  long node
+  
+  ; get the player reference
+  setx ref to xGetRef "player"
+  
+  ; get info about his weapon
+  setx id count type subtype value weight name ench node to ref->xEquipmentList 0 1346454871 0
+  
+  ifx ( name )
+      xMessageFix "Weapon: %s" name
+      MessageBox "Weapon: ________________________________"
+  endif
+  
+  ifx ( ench )
+      xMessageFix "Enchantment: %s" ench
+      MessageBox "Enchantment: ________________________________"
+  endif
+  
+  end
 
 .. _`xContentList`: xContentList.html
 .. _`xContentListFiltered`: xContentListFiltered.html
