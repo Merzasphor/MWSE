@@ -74,18 +74,18 @@ namespace mwse
 		SPELRecord_t* spellListTail = spellsList->tail;
 
 		// Create new spell.
-		SPELRecord_t* newSpell = new SPELRecord_t();
+		SPELRecord_t* newSpell = reinterpret_cast<SPELRecord_t*>(tes3::malloc(sizeof(SPELRecord_t)));
 		newSpell->vTable = spellListTail->vTable;
 		newSpell->recordType = RecordTypes::SPELL;
 		newSpell->spellsList = spellsList;
 		newSpell->cost = 1;
 
 		// Set ID.
-		newSpell->id = new char[spellId.length() + 1];
+		newSpell->id = reinterpret_cast<char*>(tes3::malloc(spellId.length() + 1));
 		strcpy(newSpell->id, spellId.c_str());
 
 		// Set name.
-		newSpell->friendlyName = new char[spellName.length() + 1];
+		newSpell->friendlyName = reinterpret_cast<char*>(tes3::malloc(spellName.length() + 1));
 		strcpy(newSpell->friendlyName, spellName.c_str());
 
 		// Set effects.

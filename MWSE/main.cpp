@@ -67,18 +67,27 @@ BOOL WINAPI DllMain(
 			EnumSymbolsCallback,
 			NULL);                // No context.
 		SymCleanup(process);
+
 		if (external_malloc == NULL) {
 			log::getLog() << "Error: unable to find malloc()" << std::endl;
 		}
+		else {
+			tes3::_malloc = reinterpret_cast<tes3::ExternalMalloc>(external_malloc);
+		}
+
 		if (external_free == NULL) {
 			log::getLog() << "Error: unable to find free()" << std::endl;
 		}
+		else {
+			tes3::_free = reinterpret_cast<tes3::ExternalFree>(external_free);
+		}
+
 		if (external_realloc == NULL) {
 			log::getLog() << "Error: unable to find realloc()" << std::endl;
 		}
-		tes3::_realloc = reinterpret_cast<tes3::ExternalRealloc>(external_realloc);
-		tes3::_malloc = reinterpret_cast<tes3::ExternalMalloc>(external_malloc);
-		tes3::_free = reinterpret_cast<tes3::ExternalFree>(external_free);
+		else {
+			tes3::_realloc = reinterpret_cast<tes3::ExternalRealloc>(external_realloc);
+		}
 
 		// Parse and load the features installed by the Morrowind Code Patch.
 		if (!mwse::mcp::loadFeatureList()) {

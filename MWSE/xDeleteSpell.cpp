@@ -74,9 +74,9 @@ namespace mwse
 		spellsList->size--;
 
 		// Delete the spell from memory.
-		delete spell->friendlyName;
-		delete spell->id;
-		delete spell;
+		tes3::free(spell->friendlyName);
+		tes3::free(spell->id);
+		tes3::free(spell);
 
 		/*
 			TODO: Calling AddSpell on a deleted spell does not cause an error. There
