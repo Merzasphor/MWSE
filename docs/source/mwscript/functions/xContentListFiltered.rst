@@ -24,3 +24,83 @@ This function behaves similar to `xContentList`_, with the added convenience of 
 .. _`xContentList`: xContentList.html
 .. _`xEquipmentList`: xEquipmentList.html
 .. _`Record Type`: ../references.html#record-types
+
+
+Example: Simple Filtered Loop
+--------------------------------------------------------
+
+This example demonstrates how to loop through all potions the player is carrying.
+
+::
+
+  begin Example_xContentListFiltered
+
+  long id
+  long count
+  long type
+  long value
+  float weight
+  long name
+  long next
+  long filter
+
+  long ref
+  long loop
+
+  setx ref to xGetRef "player"
+
+  set filter to 1212369985 ; ALCH
+
+  set loop to 1
+  whilex ( loop )
+      setx id count type value weight name next to ref->xContentListFiltered next filter
+
+      ; Code to be run for each potion.
+
+      set loop to next
+  endwhile
+
+  StopScript "Example_xContentListFiltered"
+
+  end
+
+
+Example: Transfer Ingredients
+--------------------------------------------------------
+
+This example shows how to efficiently transfer all ingredients from the player to another container.
+
+::
+
+  begin TransferIngreds
+
+  long _
+  long id
+  long count
+
+  long src
+  long dst
+
+  setx src to xGetRef "player"
+  setx dst to xGetRef "ingred_storage"
+
+  set count to 1
+  whilex ( count )
+      ; get the next ingred and count
+      setx id count _ _ _ _ _ to src->xContentListFiltered _ 1380404809
+
+      ; remove the ingred from source
+      src->xRemoveItem id count
+
+      ; add the ingred to destination
+      dst->xAddItem id count
+
+      ; continue with next ingredient
+      set count to _
+  endwhile
+
+  src->PlaySound3D "Item Ingredient Down"
+
+  StopScript TransferIngreds
+
+  end
