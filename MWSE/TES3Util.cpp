@@ -595,7 +595,7 @@ namespace mwse
 		REFRRecord_t* exteriorRefs[9] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 
 		void clearExteriorRefs() {
-			for (size_t i = 0; i <= 9; i++) {
+			for (size_t i = 0; i < 9; i++) {
 				exteriorRefs[i] = NULL;
 			}
 		}
