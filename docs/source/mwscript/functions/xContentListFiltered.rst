@@ -27,13 +27,13 @@ This function behaves similar to `xContentList`_, with the added convenience of 
 
 
 Example: Simple Filtered Loop
---------------------------------------------------------
+-----------------------------
 
 This example demonstrates how to loop through all potions the player is carrying.
 
 ::
 
-  begin Example
+  begin Example_xContentListFiltered
 
   long id
   long count
@@ -41,6 +41,7 @@ This example demonstrates how to loop through all potions the player is carrying
   long value
   float weight
   long name
+
   long next
   long filter
 
@@ -55,20 +56,26 @@ This example demonstrates how to loop through all potions the player is carrying
   whilex ( loop )
       setx id count type value weight name next to ref->xContentListFiltered next filter
 
-      ; Code to be run for each potion.
+      xLogMessage "id: %s" id
+      xLogMessage "    count: %d" count
+      xLogMessage "    type: %l" type
+      xLogMessage "    value: %d" value
+      xLogMessage "    weight: %.2f" weight
+      xLogMessage "    name: %s" name
+      xLogMessage "    next: %d" next
 
       set loop to next
   endwhile
 
-  StopScript Example
+  StopScript Example_xContentListFiltered
 
   end
 
 
 Example: Transfer Ingredients
---------------------------------------------------------
+-----------------------------
 
-This example shows how to efficiently transfer all ingredients from the player to another container.
+This example shows how to efficiently transfer all ingredients from the player to another container. A placeholder variable, such as "_", can be used to ignore return values that are not needed for your script.
 
 ::
 
@@ -102,5 +109,37 @@ This example shows how to efficiently transfer all ingredients from the player t
   src->PlaySound3D "Item Ingredient Down"
 
   StopScript TransferIngreds
+
+  end
+
+
+Example: Get first item of a specific type.
+-------------------------------------------
+
+This example shows how to efficiently check if the player is carrying any weapons at all. No explicit loop is needed here, so evaluating the weapon id alone will suffice.
+
+::
+
+  begin NoWeaponsAllowed
+
+  ; local script on a door
+
+  long pcRef
+  long weapID
+
+  if ( OnActivate == 0 )
+      return
+  endif
+
+  setx pcRef to xGetRef "player"
+  setx weapID to pcRef->xContentListFiltered 0 1346454871
+
+  if ( weapID != 0 )
+      MessageBox "No weapons are allowed inside the royal chamber!"
+      PlaySound3D "Door Heavy Close"
+      return
+  endif
+
+  Activate
 
   end
