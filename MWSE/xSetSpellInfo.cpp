@@ -54,21 +54,27 @@ namespace mwse
 
 		// Validate spell type.
 		if (type < FirstSpellType || type > LastSpellType) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetSpellInfo: Spell type out of range: " << type << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
 		// Validate spell flags.
 		if (flags < NoSpellFlags || flags > AllSpellFlags) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetSpellInfo: Spell flags out of range: " << flags << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
 		// Validate spell origin.
 		if (origin != 0 && (origin < SpellOriginsFirst || origin > SpellOriginsLast)) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetSpellInfo: Spell origin out of range: " << origin << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
@@ -76,7 +82,9 @@ namespace mwse
 		// Get spell data by id.
 		SPELRecord_t* spell = tes3::getSpellRecordById(spellId);
 		if (spell == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetSpellInfo: Could not find spell of id '" << spellId << "'" << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
@@ -85,7 +93,9 @@ namespace mwse
 		if (nameId) {
 			mwseString_t& name = virtualMachine.getString(nameId);
 			if (name.length() > 31) {
+#if _DEBUG
 				mwse::log::getLog() << "xSetSpellInfo: Given name must be 31 characters or less." << std::endl;
+#endif
 				mwse::Stack::getInstance().pushLong(false);
 				return 0.0f;
 			}

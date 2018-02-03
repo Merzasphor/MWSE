@@ -63,7 +63,9 @@ namespace mwse
 				effects = spell->effects;
 			}
 			else {
+#if _DEBUG
 				mwse::log::getLog() << "xAddEffect: No spell found with id '" << id << "'." << std::endl;
+#endif
 				mwse::Stack::getInstance().pushLong(false);
 				return 0.0f;
 			}
@@ -74,7 +76,9 @@ namespace mwse
 				effects = enchant->effects;
 			}
 			else {
+#if _DEBUG
 				mwse::log::getLog() << "xAddEffect: No spell found with id '" << id << "'." << std::endl;
+#endif
 				mwse::Stack::getInstance().pushLong(false);
 				return 0.0f;
 			}
@@ -85,11 +89,17 @@ namespace mwse
 				effects = alchemy->effects;
 			}
 			else {
-				mwse::log::getLog() << "xDeleteEffect: No alchemy record found with id '" << id << "'." << std::endl;
+#if _DEBUG
+				mwse::log::getLog() << "xAddEffect: No alchemy record found with id '" << id << "'." << std::endl;
+#endif
+				mwse::Stack::getInstance().pushLong(false);
+				return 0.0f;
 			}
 		}
 		else {
+#if _DEBUG
 			mwse::log::getLog() << "xAddEffect: Record type of " << type << " is not supported." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
@@ -97,7 +107,9 @@ namespace mwse
 		// Get effect count.
 		size_t effectCount = tes3::getEffectCount(effects);
 		if (effectCount == 8) {
+#if _DEBUG
 			mwse::log::getLog() << "xAddEffect: Record already contains 8 effects." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}

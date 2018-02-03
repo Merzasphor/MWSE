@@ -51,7 +51,9 @@ namespace mwse
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetMaxCharge: No reference provided." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
@@ -59,7 +61,9 @@ namespace mwse
 		// Get the base record.
 		TES3DefaultTemplate_t* record = reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer);
 		if (record == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetMaxCharge: No record found for reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
@@ -76,7 +80,9 @@ namespace mwse
 			enchantment = reinterpret_cast<WEAPRecord_t*>(record)->enchantment;
 		}
 		else {
+#if _DEBUG
 			mwse::log::getLog() << "xSetMaxCharge: Invalid record type: " << record->recordType << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(success);
 			return 0.0f;
 		}

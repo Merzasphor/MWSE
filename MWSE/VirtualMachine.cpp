@@ -169,6 +169,13 @@ REFRRecord_t * VirtualMachine::getReference(const char *id)
 
 void VirtualMachine::setReference(REFRRecord_t *reference)
 {
+	if (reference == NULL || reference->recordPointer == NULL) {
+#if _DEBUG
+		mwse::log::getLog() << __FUNCTION__ << ": Attempted to set to invalid reference." << std::endl;
+#endif
+		return;
+	}
+
 	OpCode::OpCode_t opcode = OpCode::_SetReference;	//'->'
 	unsigned char inref = 1;
 	mwAdapter::Context_t context = getContext();

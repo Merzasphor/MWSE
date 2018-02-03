@@ -46,9 +46,16 @@ namespace mwse
 	{
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
-		mwShort_t gold = 0;
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xGetGold: Called on invalid reference." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushShort(0);
+			return 0.0f;
+		}
 
 		// Try to get the gold from the macp record.
+		mwShort_t gold = 0;
 		MACPRecord_t* macp = reinterpret_cast<MACPRecord_t*>(tes3::getFirstAttachmentByType(reference, RecordTypes::MACHNODE));
 		if (macp) {
 			gold = macp->gold;
@@ -62,7 +69,9 @@ namespace mwse
 					gold = npc->baseNPC->baseGold;
 				}
 				else {
+#if _DEBUG
 					mwse::log::getLog() << "xGetGold: Could not get base NPC record for \"" << npc->objectId << "\"" << std::endl;
+#endif
 				}
 			}
 			else if (baseRecord->recordType == RecordTypes::CREATURE) {
@@ -71,7 +80,9 @@ namespace mwse
 					gold = creature->baseCreature->baseGold;
 				}
 				else {
+#if _DEBUG
 					mwse::log::getLog() << "xGetGold: Could not get base creature record for \"" << creature->objectId << "\"" << std::endl;
+#endif
 				}
 			}
 		}

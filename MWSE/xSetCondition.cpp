@@ -51,7 +51,9 @@ namespace mwse
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
+#if _DEBUG
 			log::getLog() << "xSetCondition: No reference provided." << std::endl;
+#endif
 			Stack::getInstance().pushShort(0);
 			return 0.0f;
 		}
@@ -62,7 +64,9 @@ namespace mwse
 			varNode->unknown_0x0C = value;
 		}
 		else {
+#if _DEBUG
 			log::getLog() << "xSetCondition: Could not get attached VARNODE." << std::endl;
+#endif
 			Stack::getInstance().pushShort(0);
 			return 0.0f;
 		}

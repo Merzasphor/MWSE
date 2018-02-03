@@ -48,6 +48,13 @@ namespace mwse
 
 		// Get reference to what we're finding the lock level of.
 		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xGetLockLevel: No reference provided." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushLong(0);
+			return 0.0f;
+		}
 
 		RecordTypes::recordType_t type = reference->recordPointer->recordType;
 		if (type == RecordTypes::CONTAINER || type == RecordTypes::DOOR) {
@@ -56,11 +63,15 @@ namespace mwse
 				lockLevel = lockNode->lockLevel;
 			}
 			else {
+#if _DEBUG
 				log::getLog() << "xGetLockLevel: Could not obtain lock node." << std::endl;
+#endif
 			}
 		}
 		else {
+#if _DEBUG
 			log::getLog() << "xGetLockLevel: Called on a non-container, non-door reference." << std::endl;
+#endif
 		}
 
 		Stack::getInstance().pushShort(lockLevel);

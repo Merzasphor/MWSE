@@ -47,7 +47,9 @@ namespace mwse
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xInventory: Invalid reference attachment." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);

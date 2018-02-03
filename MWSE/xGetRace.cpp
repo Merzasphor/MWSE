@@ -48,22 +48,30 @@ namespace mwse
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetRace: No reference provided." << std::endl;
+#endif
 			return 0.0f;
 		}
 
 		// Get the base record.
 		NPCCopyRecord_t* record = reinterpret_cast<NPCCopyRecord_t*>(reference->recordPointer);
 		if (record == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetRace: No record found for reference." << std::endl;
+#endif
 			return 0.0f;
 		}
 		else if (record->recordType != RecordTypes::NPC) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetRace: Called on a non-NPC reference." << std::endl;
+#endif
 			return 0.0f;
 		}
 		else if (record->baseNPC == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetRace: NPC record lacks a base NPC." << std::endl;
+#endif
 			return 0.0f;
 		}
 

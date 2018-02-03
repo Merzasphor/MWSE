@@ -50,7 +50,9 @@ namespace mwse
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetQuality: No reference provided." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;
 		}
@@ -58,7 +60,9 @@ namespace mwse
 		// Get record.
 		BaseRecord_t* record = reference->recordPointer;
 		if (record == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetQuality: No base record found." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;
 		}
@@ -84,7 +88,9 @@ namespace mwse
 			value = apparatus->quality;
 		}
 		else {
+#if _DEBUG
 			mwse::log::getLog() << "xGetQuality: Call on unsupported record type: " << recordType << std::endl;
+#endif
 		}
 
 		mwse::Stack::getInstance().pushFloat(value);

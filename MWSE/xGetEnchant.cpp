@@ -81,7 +81,9 @@ namespace mwse
 				enchantment = ammo->enchantment;
 			}
 			else {
+#if _DEBUG
 				log::getLog() << "xGetEnchant: Could not find enchant record of record type: " << recordType << std::endl;
+#endif
 			}
 
 			// Get data from ENCH record.
@@ -104,7 +106,9 @@ namespace mwse
 			}
 		}
 		else {
+#if _DEBUG
 			log::getLog() << "xGetEnchant: No reference found for function." << std::endl;
+#endif
 		}
 
 		// Push results to the stack.

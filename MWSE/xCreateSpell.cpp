@@ -50,21 +50,27 @@ namespace mwse
 
 		// Verify spell Id length.
 		if (spellId.length() > 31) {
+#if _DEBUG
 			mwse::log::getLog() << "xCreateSpell: Spell id length of '" << spellId << "' is invalid. Must be 31 characters of less." << std::endl;
+#endif
 			Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
 		// Verify spell Id length.
 		if (spellName.length() > 31) {
+#if _DEBUG
 			mwse::log::getLog() << "xCreateSpell: Spell name length of '" << spellName << "' is invalid. Must be 31 characters of less." << std::endl;
+#endif
 			Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 		
 		// Verify that a spell of this id doesn't already exist.
 		if (tes3::getSpellRecordById(spellId) != NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xCreateSpell: A spell of the given id '" << spellId << "' already exists." << std::endl;
+#endif
 			Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}

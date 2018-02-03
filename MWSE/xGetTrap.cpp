@@ -48,8 +48,17 @@ namespace mwse
 		mwString_t name = NULL;
 		mwShort_t cost = 0;
 
-		// Get reference to what we're finding the lock level of.
+		// Get reference to what we're finding the trap of.
 		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xGetTrap: Called on invalid reference." << std::endl;
+#endif
+			Stack::getInstance().pushShort(cost);
+			Stack::getInstance().pushString(name);
+			Stack::getInstance().pushString(id);
+			return 0.0f;
+		}
 
 		RecordTypes::recordType_t type = reference->recordPointer->recordType;
 		if (type == RecordTypes::CONTAINER || type == RecordTypes::DOOR) {
@@ -63,11 +72,15 @@ namespace mwse
 				}
 			}
 			else {
+#if _DEBUG
 				log::getLog() << "xGetTrap: Could not obtain lock node." << std::endl;
+#endif
 			}
 		}
 		else {
+#if _DEBUG
 			log::getLog() << "xGetTrap: Called on a non-container, non-door reference." << std::endl;
+#endif
 		}
 
 		Stack::getInstance().pushShort(cost);

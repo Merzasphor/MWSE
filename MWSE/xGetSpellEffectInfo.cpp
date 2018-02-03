@@ -73,11 +73,15 @@ namespace mwse
 				}
 			}
 			else {
+#if _DEBUG
 				mwse::log::getLog() << "xGetSpellEffectInfo: No spell found with id '" << effectId << "'." << std::endl;
+#endif
 			}
 		}
 		else {
+#if _DEBUG
 			mwse::log::getLog() << "xGetSpellEffectInfo: Invalid effect index. Value must be between 1 and 8." << std::endl;
+#endif
 		}
 
 		mwse::Stack::getInstance().pushLong(magMax);

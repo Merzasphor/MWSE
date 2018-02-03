@@ -47,14 +47,18 @@ namespace mwse
 	float xGetBaseAttribute::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		if (mwse::Stack::getInstance().size() < 1) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetBaseAttribute: Function called with too few arguments." << std::endl;
+#endif
 			return 0.0f;
 		}
 
 		// Get attribute index as parameter.
 		mwLong_t attributeId = mwse::Stack::getInstance().popLong();
 		if (attributeId < FirstAttribute || attributeId > LastAttribute) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetBaseAttribute: Invalid attribute id: " << attributeId << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;
 		}
@@ -63,7 +67,9 @@ namespace mwse
 		mwse::REFRRecord_t* reference = virtualMachine.getReference();
 		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetBaseAttribute: Could not find MACP record for reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;
 		}

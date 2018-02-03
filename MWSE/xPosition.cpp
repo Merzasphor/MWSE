@@ -55,10 +55,16 @@ namespace mwse
 		mwFloat_t rotation = mwse::Stack::getInstance().popFloat();
 
 		// Get other context information for original opcode.
-		SCPTRecord_t* script = &virtualMachine.getScript();
 		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xPosition: Called on invalid reference." << std::endl;
+#endif
+			return 0.0f;
+		}
 
 		// Call the original function.
+		SCPTRecord_t* script = &virtualMachine.getScript();
 		mwse::mwscript::Position(script, reference, x, y, z, rotation);
 
 		return 0.0f;

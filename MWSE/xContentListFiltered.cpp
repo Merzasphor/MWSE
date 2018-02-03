@@ -47,6 +47,19 @@ namespace mwse {
 
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xContentList: Called on invalid reference." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushLong(0);
+			mwse::Stack::getInstance().pushLong(0);
+			mwse::Stack::getInstance().pushFloat(0.0f);
+			mwse::Stack::getInstance().pushLong(0);
+			mwse::Stack::getInstance().pushLong(0);
+			mwse::Stack::getInstance().pushLong(0);
+			mwse::Stack::getInstance().pushLong(0);
+			return 0.0f;
+		}
 
 		// Results.
 		char * id = NULL;

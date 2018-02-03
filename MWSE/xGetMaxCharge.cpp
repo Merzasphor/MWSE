@@ -51,7 +51,9 @@ namespace mwse
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetMaxCharge: No reference provided." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;
 		}
@@ -59,7 +61,9 @@ namespace mwse
 		// Get the base record.
 		TES3DefaultTemplate_t* record = reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer);
 		if (record == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetMaxCharge: No record found for reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;
 		}
@@ -85,7 +89,9 @@ namespace mwse
 			}
 		}
 		else {
+#if _DEBUG
 			mwse::log::getLog() << "xGetMaxCharge: Invalid call on record of type " << type << "." << std::endl;
+#endif
 		}
 
 		mwse::Stack::getInstance().pushFloat(charge);

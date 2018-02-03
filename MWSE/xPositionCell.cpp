@@ -56,10 +56,16 @@ namespace mwse
 		mwseString_t& cell = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get other context information for original opcode.
-		SCPTRecord_t* script = &virtualMachine.getScript();
 		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xPositionCell: Called on invalid reference." << std::endl;
+#endif
+			return 0.0f;
+		}
 
 		// Call the original function.
+		SCPTRecord_t* script = &virtualMachine.getScript();
 		mwse::mwscript::PositionCell(script, reference, x, y, z, rotation, cell.c_str());
 
 		return 0.0f;

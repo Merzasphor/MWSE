@@ -52,14 +52,18 @@ namespace mwse
 
 		// Validate id.
 		if (id < Effects::FirstMagicEffect || id > Effects::LastMagicEffect) {
+#if _DEBUG
 			log::getLog() << "xSetBaseEffectInfo: Effect ID out of range." << std::endl;
+#endif
 			Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
 		// Validate school.
 		if (school < FirstMagicSchool || school > LastMagicSchool) {
+#if _DEBUG
 			log::getLog() << "xSetBaseEffectInfo: School ID out of range." << std::endl;
+#endif
 			Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}

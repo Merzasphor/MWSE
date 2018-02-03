@@ -55,7 +55,9 @@ namespace mwse
 		// object type for us, we don't need to.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetItemCount: No reference found for function call." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
@@ -63,7 +65,9 @@ namespace mwse
 		// Get template for the item we want to get the count of.
 		TES3DefaultTemplate_t* itemTemplate = virtualMachine.getTemplate(id.c_str());
 		if (itemTemplate == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetItemCount: No template found with id " << id << "." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}

@@ -44,18 +44,14 @@ namespace mwse
 
 	float xSetGold::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
 		mwLong_t gold = mwse::Stack::getInstance().popLong();
 
-		if (reference == NULL) {
-			mwse::log::getLog() << "xSetGold: Invalid reference given." << std::endl;
-			return 0.0f;
-		}
-
+		REFRRecord_t* reference = virtualMachine.getReference();
 		MACPRecord_t* node = tes3::getAttachedMACPRecord(reference);
 		if (node == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetGold: Could not find attached MACP node." << std::endl;
+#endif
 			return 0.0f;
 		}
 

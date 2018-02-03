@@ -51,12 +51,28 @@ namespace mwse
 		// Get parameters.
 		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
-		// Get other context information for opcode call.
-		SCPTRecord_t* script = &virtualMachine.getScript();
+		// Get script reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xHasItemEquipped: Called on invalid reference." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushLong(false);
+			return 0.0f;
+		}
+
+		// Get item template.
 		TES3DefaultTemplate_t* itemTemplate = virtualMachine.getTemplate(id.c_str());
+		if (itemTemplate == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xHasItemEquipped: No template found with id '" << id << "'." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushLong(false);
+			return 0.0f;
+		}
 
 		// Call the original function.
+		SCPTRecord_t* script = &virtualMachine.getScript();
 		bool result = mwse::mwscript::HasItemEquipped(script, reference, itemTemplate);
 
 		mwse::Stack::getInstance().pushLong(result);

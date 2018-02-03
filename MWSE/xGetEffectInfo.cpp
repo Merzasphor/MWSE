@@ -68,7 +68,9 @@ namespace mwse
 					effect = &spell->effects[effectIndex - 1];
 				}
 				else {
+#if _DEBUG
 					mwse::log::getLog() << "xGetEffectInfo: No spell record found with id '" << effectId << "'." << std::endl;
+#endif
 				}
 			}
 			else if (effectType == RecordTypes::ENCH) {
@@ -77,7 +79,9 @@ namespace mwse
 					effect = &enchant->effects[effectIndex - 1];
 				}
 				else {
+#if _DEBUG
 					mwse::log::getLog() << "xGetEffectInfo: No enchant record found with id '" << effectId << "'." << std::endl;
+#endif
 				}
 			}
 			else if (effectType == RecordTypes::ALCHEMY) {
@@ -86,11 +90,15 @@ namespace mwse
 					effect = &alchemy->effects[effectIndex - 1];
 				}
 				else {
+#if _DEBUG
 					mwse::log::getLog() << "xGetEffectInfo: No alchemy record found with id '" << effectId << "'." << std::endl;
+#endif
 				}
 			}
 			else {
+#if _DEBUG
 				mwse::log::getLog() << "xGetEffectInfo: Record type of " << effectType << " is not supported." << std::endl;
+#endif
 			}
 
 			// If we found an effect, set the values.
@@ -114,7 +122,9 @@ namespace mwse
 			}
 		}
 		else {
+#if _DEBUG
 			mwse::log::getLog() << "xGetEffectInfo: Invalid effect index. Value must be between 1 and 8." << std::endl;
+#endif
 		}
 
 		mwse::Stack::getInstance().pushLong(magMax);

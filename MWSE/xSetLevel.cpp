@@ -51,11 +51,17 @@ namespace mwse
 		// Get parameters.
 		mwShort_t level = mwse::Stack::getInstance().popShort();
 
-		// Get other context information for original opcode.
-		SCPTRecord_t* script = &virtualMachine.getScript();
+		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xSetLevel: Called on invalid reference." << std::endl;
+#endif
+			return 0.0f;
+		}
 
 		// Call the original function.
+		SCPTRecord_t* script = &virtualMachine.getScript();
 		mwse::mwscript::SetLevel(script, reference, level);
 
 		return 0.0f;

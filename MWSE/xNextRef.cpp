@@ -62,7 +62,9 @@ namespace mwse
 			}
 		}
 		else {
+#if _DEBUG
 			mwse::log::getLog() << "xNextRef: Null argument." << std::endl;
+#endif
 		}
 
 		mwse::Stack::getInstance().pushLong((mwLong_t)next);

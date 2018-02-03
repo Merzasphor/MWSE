@@ -45,7 +45,9 @@ namespace mwse
 	float xModAttribute::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		if (mwse::Stack::getInstance().size() < 2) {
+#if _DEBUG
 			mwse::log::getLog() << "xModAttribute: Function called with too few arguments." << std::endl;
+#endif
 			return 0.0f;
 		}
 
@@ -54,16 +56,29 @@ namespace mwse
 
 		// Verify attribute range.
 		if (attributeId < FirstAttribute || attributeId > LastAttribute) {
+#if _DEBUG
 			mwse::log::getLog() << "xModAttribute: Invalid attribute id: " << attributeId << std::endl;
+#endif
+			mwse::Stack::getInstance().pushLong(0);
+			return 0.0f;
+		}
+
+		// Get script reference.
+		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xModAttribute: Called on invalid reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
 
 		// Make sure we're looking at an NPC or creature.
-		mwse::REFRRecord_t* reference = virtualMachine.getReference();
 		RecordTypes::recordType_t type = reference->recordPointer->recordType;
 		if (type != RecordTypes::NPC && type != RecordTypes::CREATURE) {
+#if _DEBUG
 			mwse::log::getLog() << "xModAttribute: Called on non-NPC, non-creature reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
@@ -71,7 +86,9 @@ namespace mwse
 		// Get the associated MACP record.
 		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xModAttribute: Could not find MACP record for reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}

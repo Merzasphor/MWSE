@@ -47,7 +47,9 @@ namespace mwse
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
+#if _DEBUG
 			log::getLog() << "xGetModel: Invalid reference." << std::endl;
+#endif
 			Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}

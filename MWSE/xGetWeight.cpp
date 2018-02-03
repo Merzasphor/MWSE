@@ -45,7 +45,9 @@ namespace mwse {
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetWeight: No reference provided." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(0.0f);
 			return 0.0f;
 		}
@@ -56,7 +58,9 @@ namespace mwse {
 			weight = tes3::getWeight(reference, true);
 		}
 		catch (std::exception& e) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetWeight: " << e.what() << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(0.0f);
 			return 0.0f;
 		}

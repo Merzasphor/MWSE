@@ -65,7 +65,9 @@ namespace mwse
 			}
 		}
 		else {
+#if _DEBUG
 			mwse::log::getLog() << "xGetSkillInfo: Skill index out of range." << std::endl;
+#endif
 		}
 
 		// Push desired values.

@@ -47,7 +47,9 @@ namespace mwse {
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetCharge: No reference provided." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushShort(0);
 			return 0.0f;
 		}
@@ -55,7 +57,9 @@ namespace mwse {
 		// Get the base record.
 		TES3DefaultTemplate_t* record = reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer);
 		if (record == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetCharge: No record found for reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushShort(0);
 			return 0.0f;
 		}
@@ -67,7 +71,9 @@ namespace mwse {
 			*reinterpret_cast<mwFloat_t*>(&varNode->unknown_0x10) = charge;
 		}
 		else {
+#if _DEBUG
 			mwse::log::getLog() << "xSetCharge: Could not get attached VARNODE." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushShort(0);
 			return 0.0f;
 		}

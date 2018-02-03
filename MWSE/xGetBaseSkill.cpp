@@ -47,14 +47,18 @@ namespace mwse
 	float xGetBaseSkill::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		if (mwse::Stack::getInstance().size() < 1) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetBaseSkill: Function called with too few arguments." << std::endl;
+#endif
 			return 0.0f;
 		}
 
 		// Get skill id argument.
 		mwLong_t skillId = mwse::Stack::getInstance().popLong();
 		if (skillId < FirstSkill || skillId > LastSkill) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetBaseSkill: Invalid skill id: " << skillId << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;
 		}
@@ -63,7 +67,9 @@ namespace mwse
 		mwse::REFRRecord_t* reference = virtualMachine.getReference();
 		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetBaseSkill: Could not find MACP record for reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;
 		}

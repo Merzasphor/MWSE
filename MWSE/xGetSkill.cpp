@@ -49,15 +49,28 @@ namespace mwse
 		// Get skill id argument.
 		mwLong_t skillId = mwse::Stack::getInstance().popLong();
 		if (skillId < FirstSkill || skillId > LastSkill) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetSkill: Invalid skill id: " << skillId << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;
 		}
 		
 		// Get reference.
-		mwse::REFRRecord_t* reference = virtualMachine.getReference();
+		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xGetSkill: Call on invalid reference." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
+			return 0.0f;
+		}
+
+		// Verify target record type.
 		if (reference->recordPointer->recordType != RecordTypes::NPC && reference->recordPointer->recordType != RecordTypes::CREATURE) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetSkill: Reference is not a creature or NPC." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;
 		}
@@ -65,7 +78,9 @@ namespace mwse
 		// Get the associated MACP record.
 		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetSkill: Could not find MACP record for reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;
 		}

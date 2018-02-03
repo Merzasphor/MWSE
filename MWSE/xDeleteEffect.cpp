@@ -57,7 +57,9 @@ namespace mwse
 				effects = spell->effects;
 			}
 			else {
+#if _DEBUG
 				mwse::log::getLog() << "xDeleteEffect: No spell found with id '" << id << "'." << std::endl;
+#endif
 				mwse::Stack::getInstance().pushLong(false);
 				return 0.0f;
 			}
@@ -68,7 +70,9 @@ namespace mwse
 				effects = enchant->effects;
 			}
 			else {
+#if _DEBUG
 				mwse::log::getLog() << "xDeleteEffect: No spell found with id '" << id << "'." << std::endl;
+#endif
 				mwse::Stack::getInstance().pushLong(false);
 				return 0.0f;
 			}
@@ -79,11 +83,15 @@ namespace mwse
 				effects = alchemy->effects;
 			}
 			else {
+#if _DEBUG
 				mwse::log::getLog() << "xDeleteEffect: No alchemy record found with id '" << id << "'." << std::endl;
+#endif
 			}
 		}
 		else {
+#if _DEBUG
 			mwse::log::getLog() << "xDeleteEffect: Record type of " << type << " is not supported." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
@@ -91,7 +99,9 @@ namespace mwse
 		// Get effect count.
 		size_t effectCount = tes3::getEffectCount(effects);
 		if (effectCount == 0 || effectIndex >= effectCount) {
+#if _DEBUG
 			mwse::log::getLog() << "xDeleteEffect: Effect index out of range for effect." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}

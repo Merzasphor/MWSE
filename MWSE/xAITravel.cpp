@@ -53,11 +53,17 @@ namespace mwse
 		mwFloat_t y = mwse::Stack::getInstance().popFloat();
 		mwFloat_t z = mwse::Stack::getInstance().popFloat();
 
-		// Get other context information for opcode call.
-		SCPTRecord_t* script = &virtualMachine.getScript();
+		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xAITravel: Called on invalid reference." << std::endl;
+#endif
+			return 0.0f;
+		}
 
 		// Call the original function.
+		SCPTRecord_t* script = &virtualMachine.getScript();
 		mwse::mwscript::AITravel(script, reference, x, y, z);
 
 		return 0.0f;

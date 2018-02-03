@@ -61,7 +61,9 @@ namespace mwse
 		// Get the reference we're checking.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xSpellList: Could not get reference." << std::endl;
+#endif
 			pushErrorResponse();
 			return 0.0f;
 		}
@@ -69,7 +71,9 @@ namespace mwse
 		// Function only works on NPCs.
 		NPCCopyRecord_t* npcCopyRecord = reinterpret_cast<NPCCopyRecord_t*>(reference->recordPointer);
 		if (npcCopyRecord->recordType != RecordTypes::NPC) {
+#if _DEBUG
 			mwse::log::getLog() << "xSpellList: Called on non-NPC reference." << std::endl;
+#endif
 			pushErrorResponse();
 			return 0.0f;
 		}

@@ -73,7 +73,9 @@ namespace mwse
 		// Get reference to target.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetEncumbrance: No reference provided." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(0.0f);
 			return 0.0f;
 		}
@@ -81,14 +83,18 @@ namespace mwse
 		// Get record for reference.
 		BaseRecord_t* record = reference->recordPointer;
 		if (record == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetEncumbrance: No record found for reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(0.0f);
 			return 0.0f;
 		}
 
 		// This function only supports creatures and NPCs.
 		if (record->recordType != RecordTypes::NPC && record->recordType != RecordTypes::CREATURE) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetEncumbrance: Called on unsupported record type " << record->recordType << "." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(0.0f);
 			return 0.0f;
 		}
@@ -98,7 +104,9 @@ namespace mwse
 		// Get associated MACP node.
 		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetEncumbrance: No associated macp record found for reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(0.0f);
 			return 0.0f;
 		}

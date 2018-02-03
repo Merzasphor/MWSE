@@ -46,6 +46,13 @@ namespace mwse {
 
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xSetService: Called on invalid reference." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushLong(false);
+			return 0.0f;
+		}
 
 		// Set service mask.
 		NPCCopyRecord_t* npc = reinterpret_cast<NPCCopyRecord_t*>(reference->recordPointer);
@@ -54,11 +61,15 @@ namespace mwse {
 				npc->baseNPC->servicesMask = flags;
 			}
 			else {
+#if _DEBUG
 				mwse::log::getLog() << "xSetService: Could not get base NPC record for \"" << npc->objectId << "\"" << std::endl;
+#endif
 			}
 		}
 		else {
+#if _DEBUG
 			mwse::log::getLog() << "xSetService: Called on non-NPC target." << std::endl;
+#endif
 		}
 
 		return 0.0f;

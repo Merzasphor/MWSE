@@ -47,7 +47,9 @@ namespace mwse
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetName: No reference provided." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
@@ -86,11 +88,15 @@ namespace mwse
 				name = reinterpret_cast<char*>(reinterpret_cast<unsigned long*>(record) + 0x11);
 			}
 			else {
+#if _DEBUG
 				mwse::log::getLog() << "xGetName: Invalid call on record of type " << type << "." << std::endl;
+#endif
 			}
 		}
 		else {
+#if _DEBUG
 			mwse::log::getLog() << "xGetName: Could not obtain record from reference." << std::endl;
+#endif
 		}
 
 		mwse::Stack::getInstance().pushString(name);

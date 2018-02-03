@@ -50,13 +50,17 @@ namespace mwse
 		// Get the record by its id.
 		ALCHRecord_t* record = tes3::getRecordById<ALCHRecord_t>(id);
 		if (record == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetAlchemyInfo: No record found by id '" << id << "'." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
 		else if (record->recordType != RecordTypes::ALCHEMY) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetAlchemyInfo: Found record by id '" << id << "' of invalid type " << record->recordType << "." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;

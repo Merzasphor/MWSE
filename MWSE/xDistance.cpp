@@ -45,15 +45,31 @@ namespace mwse
 
 	float xDistance::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwse::Reference ref(mwse::Stack::getInstance().popLong());	//get the reference
-		mwse::REFRRecord_t * targetref = reinterpret_cast<mwse::REFRRecord_t*>(ref.getAddress());		//cast it to a pointer
+		// Get target reference
+		Reference ref(mwse::Stack::getInstance().popLong());
+		REFRRecord_t * targetref = reinterpret_cast<mwse::REFRRecord_t*>(ref.getAddress());
+		if (targetref == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xModProgressSkill: Target reference is invalid." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushFloat(0.0f);
+			return 0.0f;
+		}
 
-		mwse::REFRRecord_t * thisref = virtualMachine.getReference();
+		// Get script reference.
+		REFRRecord_t * thisref = virtualMachine.getReference();
+		if (thisref == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xModProgressSkill: Script reference is invalid." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushFloat(0.0f);
+			return 0.0f;
+		}
 
-		mwse::mwFloat_t dx = targetref->x - thisref->x;
-		mwse::mwFloat_t dy = targetref->y - thisref->y;
-		mwse::mwFloat_t dz = targetref->z - thisref->z;
-		mwse::mwFloat_t xDistance = std::sqrt(dx*dx + dy*dy + dz*dz);
+		mwFloat_t dx = targetref->x - thisref->x;
+		mwFloat_t dy = targetref->y - thisref->y;
+		mwFloat_t dz = targetref->z - thisref->z;
+		mwFloat_t xDistance = std::sqrt(dx*dx + dy*dy + dz*dz);
 
 		mwse::Stack::getInstance().pushFloat(xDistance);
 

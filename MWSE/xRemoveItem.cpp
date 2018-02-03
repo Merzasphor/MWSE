@@ -52,12 +52,26 @@ namespace mwse
 		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 		mwLong_t count = mwse::Stack::getInstance().popLong();
 
-		// Get other context information for original opcode.
-		SCPTRecord_t* script = &virtualMachine.getScript();
+		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xRemoveItem: Called on invalid reference." << std::endl;
+#endif
+			return 0.0f;
+		}
+
+		// Get spell template by the id.
 		TES3DefaultTemplate_t* itemTemplate = virtualMachine.getTemplate(id.c_str());
+		if (itemTemplate == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xRemoveItem: No template found with id '" << id << "'." << std::endl;
+#endif
+			return 0.0f;
+		}
 
 		// Call the original function.
+		SCPTRecord_t* script = &virtualMachine.getScript();
 		mwse::mwscript::RemoveItem(script, reference, itemTemplate, count);
 
 		return 0.0f;

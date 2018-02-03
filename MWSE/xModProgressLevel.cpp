@@ -45,7 +45,9 @@ namespace mwse
 	float xModProgressLevel::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		if (mwse::Stack::getInstance().size() < 1) {
+#if _DEBUG
 			mwse::log::getLog() << "xModProgressLevel: Function called with too few arguments." << std::endl;
+#endif
 			return 0.0f;
 		}
 
@@ -55,7 +57,9 @@ namespace mwse
 		mwse::REFRRecord_t* reference = virtualMachine.getReference("player");
 		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xModProgressLevel: Could not find MACP record for reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}

@@ -55,21 +55,27 @@ namespace mwse
 
 		// Validate type.
 		if (type < 0 || type > 3) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetEnchantInfo: Type out of range." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return false;
 		}
 
 		// Validate autocalc.
 		if (autocalc < 0 || autocalc > 1) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetEnchantInfo: Autocalc value of range." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return false;
 		}
 
 		ENCHRecord_t* enchantRecord = tes3::getEnchantRecordById(enchantId);
 		if (enchantRecord == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetEnchantInfo: No effect found given id '" << enchantId << "'." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return false;
 		}

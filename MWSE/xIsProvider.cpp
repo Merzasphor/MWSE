@@ -43,6 +43,13 @@ namespace mwse {
 	float xIsProvider::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xIsProvider: Called on invalid reference." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushLong(0);
+			return 0.0f;
+		}
 
 		mwLong_t npcServiceFlags = 0;
 		mwLong_t classServiceFlags = 0;
@@ -56,7 +63,9 @@ namespace mwse {
 				npcServiceFlags &= 0x00038800;
 			}
 			else {
+#if _DEBUG
 				mwse::log::getLog() << "xIsProvider: Could not get base NPC record for \"" << npc->objectId << "\"" << std::endl;
+#endif
 			}
 
 			// Get class services.
@@ -65,11 +74,15 @@ namespace mwse {
 				classServiceFlags &= 0x00038800;
 			}
 			else {
+#if _DEBUG
 				mwse::log::getLog() << "xIsProvider: Could not get class record for \"" << npc->objectId << "\"" << std::endl;
+#endif
 			}
 		}
 		else {
+#if _DEBUG
 			mwse::log::getLog() << "xIsProvider: Called on non-NPC target." << std::endl;
+#endif
 		}
 
 		mwse::Stack::getInstance().pushLong(npcServiceFlags | classServiceFlags);

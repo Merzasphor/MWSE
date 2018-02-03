@@ -44,9 +44,16 @@ namespace mwse
 
 	float xSetBaseGold::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
+		mwShort_t gold = mwse::Stack::getInstance().popShort();
+
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
-		mwShort_t gold = mwse::Stack::getInstance().popShort();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xSetBaseGold: Called on invalid reference." << std::endl;
+#endif
+			return 0.0f;
+		}
 
 		// Get the gold based on the base record type.
 		BaseRecord_t* baseRecord = reference->recordPointer;

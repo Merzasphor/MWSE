@@ -46,6 +46,14 @@ namespace mwse
 	{
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xGetBaseGold: Called on invalid reference." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushShort(0);
+			return 0.0f;
+		}
+
 		mwShort_t gold = 0;
 
 		// Get the gold based on the base record type.
@@ -56,7 +64,9 @@ namespace mwse
 				gold = npc->baseNPC->baseGold;
 			}
 			else {
+#if _DEBUG
 				mwse::log::getLog() << "xGetBaseGold: Could not get base NPC record for \"" << npc->objectId << "\"" << std::endl;
+#endif
 			}
 		}
 		else if (baseRecord->recordType == RecordTypes::CREATURE) {
@@ -65,7 +75,9 @@ namespace mwse
 				gold = creature->baseCreature->baseGold;
 			}
 			else {
+#if _DEBUG
 				mwse::log::getLog() << "xGetBaseGold: Could not get base creature record for \"" << creature->objectId << "\"" << std::endl;
+#endif
 			}
 		}
 

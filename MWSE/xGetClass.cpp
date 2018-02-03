@@ -47,7 +47,9 @@ namespace mwse
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetClass: No reference provided." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
@@ -61,7 +63,9 @@ namespace mwse
 		// Get the base record.
 		NPCCopyRecord_t* record = reinterpret_cast<NPCCopyRecord_t*>(reference->recordPointer);
 		if (record == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetClass: No record found for reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
@@ -72,7 +76,9 @@ namespace mwse
 			return 0.0f;
 		}
 		else if (record->recordType != RecordTypes::NPC) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetClass: Called on a non-NPC reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
@@ -83,7 +89,9 @@ namespace mwse
 			return 0.0f;
 		}
 		else if (record->baseNPC == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetClass: NPC record lacks a base NPC." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);

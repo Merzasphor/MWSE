@@ -47,7 +47,9 @@ namespace mwse
 		// Get reference to target.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetEncumb: No reference provided." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(0.0f);
 			return 0.0f;
 		}

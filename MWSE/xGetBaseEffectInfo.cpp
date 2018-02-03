@@ -49,7 +49,9 @@ namespace mwse
 
 		// Validate id.
 		if (id < Effects::FirstMagicEffect || id > Effects::LastMagicEffect) {
+#if _DEBUG
 			log::getLog() << "xGetBaseEffectInfo: Effect ID out of range." << std::endl;
+#endif
 			Stack::getInstance().pushLong(0);
 			Stack::getInstance().pushFloat(0.0f);
 			Stack::getInstance().pushLong(0);

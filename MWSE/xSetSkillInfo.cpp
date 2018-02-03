@@ -57,21 +57,27 @@ namespace mwse
 
 		// Validate skill index.
 		if (skillIndex < FirstSkill || skillIndex > LastSkill) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetSkillInfo: Skill index out of range." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
 		// Validate attribute.
 		if (attributeId < FirstAttribute || attributeId > LastAttribute) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetSkillInfo: Attribute id out of range." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
 		// Validate specialization.
 		if (specialization < FirstSpecialization || specialization > LastSpecialization) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetSkillInfo: Specialization out of range." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}

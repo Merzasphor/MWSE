@@ -50,7 +50,9 @@ namespace mwse
 		mwse::REFRRecord_t* reference = virtualMachine.getReference();
 		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetBaseHandToHand: Could not find MACP record for reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;
 		}

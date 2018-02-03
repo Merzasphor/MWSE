@@ -51,7 +51,9 @@ namespace mwse
 		mwse::REFRRecord_t* reference = virtualMachine.getReference("player");
 		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetProgressLevel: Could not find MACP record for reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}

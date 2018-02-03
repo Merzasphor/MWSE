@@ -48,7 +48,9 @@ namespace mwse {
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetWeight: No reference provided." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
@@ -56,7 +58,9 @@ namespace mwse {
 		// Get record.
 		BaseRecord_t* record = reference->recordPointer;
 		if (record == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetWeight: No base record found." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
@@ -96,7 +100,9 @@ namespace mwse {
 			break;
 		default:
 			setWeight = false;
+#if _DEBUG
 			mwse::log::getLog() << "xSetWeight: Call on invalid record type." << std::endl;
+#endif
 			break;
 		}
 

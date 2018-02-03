@@ -69,16 +69,21 @@ namespace mwse
 						rank = ownerInfo->rankVar.rank;
 					}
 					else {
+#if _DEBUG
 						mwse::log::getLog() << "xGetOwnerInfo: Owner was of unhandled type " << type << "." << std::endl;
+#endif
 					}
 				}
 			}
 			else {
+#if _DEBUG
 				mwse::log::getLog() << "xGetOwnerInfo: Could not obtain attached VARNODE." << std::endl;
+#endif
 			}
 		} else {
+#if _DEBUG
 			mwse::log::getLog() << "xGetOwnerInfo: No reference provided." << std::endl;
-			return 0.0f;
+#endif
 		}
 
 		mwse::Stack::getInstance().pushLong(rank);

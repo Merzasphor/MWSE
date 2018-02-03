@@ -45,18 +45,13 @@ namespace mwse
 
 	float xGetCombat::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		// Get reference.
+		// Get MACP record.
 		REFRRecord_t* reference = virtualMachine.getReference();
-		if (reference == NULL) {
-			mwse::log::getLog() << "xGetCombat: No reference provided." << std::endl;
-			mwse::Stack::getInstance().pushLong(0);
-			return 0.0f;
-		}
-
-		// Get attached MACP record.
 		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetCombat: No mach node found." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}

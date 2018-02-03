@@ -53,21 +53,27 @@ namespace mwse
 		mwse::REFRRecord_t* reference = virtualMachine.getReference("player");
 		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetProgressSkill: Could not find MACP record for reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
 		// Verify skill index.
 		if (skillIndex < FirstSkill || skillIndex > LastSkill) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetProgressSkill: Skill index out of bounds." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
 		// Verify progress.
 		if (progress < 0) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetProgressSkill: Progress cannot be negative." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}

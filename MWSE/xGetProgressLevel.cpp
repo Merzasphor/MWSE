@@ -46,18 +46,13 @@ namespace mwse
 
 	float xGetProgressLevel::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		// Get reference.
-		mwse::REFRRecord_t* reference = virtualMachine.getReference("player");
-		if (reference == NULL) {
-			mwse::log::getLog() << "xGetProgressLevel: Could not find reference." << std::endl;
-			mwse::Stack::getInstance().pushLong(INVALID_VALUE);
-			return 0.0f;
-		}
-
-		// Get the associated MACP record.
+		// Get the player's associated MACP record.
+		REFRRecord_t* reference = virtualMachine.getReference("player");
 		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetProgressLevel: Could not find MACP record for reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(INVALID_VALUE);
 			return 0.0f;
 		}

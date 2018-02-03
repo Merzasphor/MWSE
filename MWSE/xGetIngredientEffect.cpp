@@ -55,7 +55,9 @@ namespace mwse
 		// Get the ingredient.
 		INGRRecord_t* ingredient = reinterpret_cast<INGRRecord_t*>(tes3::getTemplate(id));
 		if (ingredient == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetIngredientEffect: No ingredient record found with id '" << id << "'." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(skillAttributeId);
 			mwse::Stack::getInstance().pushLong(effectEnumId);
 			return 0.0f;
@@ -63,7 +65,9 @@ namespace mwse
 		
 		// Validate index.
 		if (index < 0 || index > 3) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetIngredientEffect: Invalid index. Value must be between 1 and 4." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(skillAttributeId);
 			mwse::Stack::getInstance().pushLong(effectEnumId);
 			return 0.0f;

@@ -51,11 +51,17 @@ namespace mwse
 		// Get parameters.
 		REFRRecord_t* target = reinterpret_cast<REFRRecord_t*>(mwse::Stack::getInstance().popLong());
 
-		// Get other context information for original opcode.
-		SCPTRecord_t* script = &virtualMachine.getScript();
+		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xStartCombat: Called on invalid reference." << std::endl;
+#endif
+			return 0.0f;
+		}
 
 		// Call the original function.
+		SCPTRecord_t* script = &virtualMachine.getScript();
 		mwse::mwscript::StartCombat(script, reference, target);
 
 		return 0.0f;

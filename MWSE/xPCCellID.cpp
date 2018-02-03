@@ -44,18 +44,18 @@ namespace mwse
 
 	float xPCCellID::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		REFRRecord_t* reference = virtualMachine.getReference();
-
 		TES3CellMaster_t* masterCell = tes3::getCellMaster();
 		if (masterCell == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xPCCellID: Cell master could not be found." << std::endl;
-			Stack::getInstance().pushLong(0);
+#endif
+			mwse::Stack::getInstance().pushString("Wilderness");
 			return 0.0f;
 		}
 
 		// Determine the PC cell -- either the interior cell if we have one, or the center cell.
 		TES3Cell_t* cell = masterCell->interiorCell;
-		if (!cell) {
+		if (cell == NULL) {
 			cell = masterCell->exteriorCells[CENTER]->first;
 		}
 

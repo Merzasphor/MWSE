@@ -53,21 +53,27 @@ namespace mwse
 		// Get the ingredient.
 		INGRRecord_t* ingredient = reinterpret_cast<INGRRecord_t*>(tes3::getTemplate(id));
 		if (ingredient == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetIngredientEffect: No ingredient record found with id '" << id << "'." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
 		// Validate index.
 		if (index < 0 || index > 3) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetIngredientEffect: Invalid index. Value must be between 1 and 4." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
 		// Validate effect id.
 		if (effectEnumId < Effects::FirstMagicEffect || effectEnumId > Effects::LastMagicEffect) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetIngredientEffect: Invalid effect id." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}

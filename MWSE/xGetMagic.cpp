@@ -66,21 +66,29 @@ namespace mwse
 							id = enchantment->id;
 						}
 						else {
+#if _DEBUG
 							log::getLog() << "xGetMagic: Unsupported current spell type: " << type << std::endl;
+#endif
 							type = 0;
 						}
 					}
 				}
 				else {
+#if _DEBUG
 					log::getLog() << "xGetMagic: Could not obtain MACP record for reference." << std::endl;
+#endif
 				}
 			}
 			else {
+#if _DEBUG
 				log::getLog() << "xGetMagic: Invalid reference type:" << recordType << std::endl;
+#endif
 			}
 		}
 		else {
+#if _DEBUG
 			log::getLog() << "xGetMagic: Could not obtain reference." << std::endl;
+#endif
 		}
 
 		// Return type/id.

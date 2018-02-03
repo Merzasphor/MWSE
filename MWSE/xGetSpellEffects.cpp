@@ -48,15 +48,31 @@ namespace mwse
 
 	float xGetSpellEffects::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		// Get parameters.
+		// Get parameter.
 		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
-		// Get other context information for original opcode call.
-		SCPTRecord_t* script = &virtualMachine.getScript();
+		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xGetSpellEffects: Called on invalid reference." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushLong(false);
+			return 0.0f;
+		}
+
+		// Get spell template by the id.
 		TES3DefaultTemplate_t* spellTemplate = virtualMachine.getTemplate(id.c_str());
+		if (spellTemplate == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xGetSpellEffects: No template found with id '" << id << "'." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushLong(false);
+			return 0.0f;
+		}
 
 		// Call the original function.
+		SCPTRecord_t* script = &virtualMachine.getScript();
 		bool result = mwse::mwscript::GetSpellEffects(script, reference, spellTemplate);
 
 		mwse::Stack::getInstance().pushLong(result);

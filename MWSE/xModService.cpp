@@ -45,17 +45,30 @@ namespace mwse
 	float xModService::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		if (mwse::Stack::getInstance().size() < 1) {
+#if _DEBUG
 			mwse::log::getLog() << "xModService: Function called with too few arguments." << std::endl;
+#endif
 			return 0.0f;
 		}
 
 		unsigned long data = Stack::getInstance().popLong();
 
-		// Make sure we're looking at an NPC.
+		// Get reference.
 		mwse::REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xModService: Called on invalid reference." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushLong(0);
+			return 0.0f;
+		}
+
+		// Make sure we're looking at an NPC.
 		NPCCopyRecord_t* npcCopy = reinterpret_cast<NPCCopyRecord_t*>(reference->recordPointer);
 		if (!reference || !npcCopy || npcCopy->recordType != RecordTypes::NPC) {
+#if _DEBUG
 			mwse::log::getLog() << "xModService: Called on non-NPC reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
@@ -63,7 +76,9 @@ namespace mwse
 		// Get the NPC's class.
 		CLASRecord_t* classRecord = npcCopy->baseNPC->classRecord;
 		if (!classRecord) {
+#if _DEBUG
 			mwse::log::getLog() << "xModService: Failed to obtain NPC's class." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}

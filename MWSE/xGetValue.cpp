@@ -45,7 +45,9 @@ namespace mwse {
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetValue: No reference provided." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
@@ -56,7 +58,9 @@ namespace mwse {
 			value = tes3::getValue(reference, true);
 		}
 		catch (std::exception& e) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetValue: " << e.what() << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}

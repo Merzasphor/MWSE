@@ -43,6 +43,13 @@ namespace mwse {
 	float xGetService::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xGetRace: No reference provided." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushLong(0);
+			return 0.0f;
+		}
 
 		mwLong_t flags = 0;
 		mwLong_t mask = mwse::Stack::getInstance().popLong();
@@ -55,10 +62,14 @@ namespace mwse {
 				flags &= mask;
 			}
 			else {
+#if _DEBUG
 				mwse::log::getLog() << "xGetService: Could not get base NPC record for \"" << npc->objectId << "\"" << std::endl;
+#endif
 			}
 		} else {
+#if _DEBUG
 			mwse::log::getLog() << "xGetService: Called on non-NPC target." << std::endl;
+#endif
 		}
 
 		mwse::Stack::getInstance().pushLong(flags);

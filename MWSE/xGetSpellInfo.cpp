@@ -66,7 +66,9 @@ namespace mwse
 			origin = spell->origin;
 		}
 		else {
+#if _DEBUG
 			mwse::log::getLog() << "xGetSpellInfo: Could not find spell of id '" << spellId << "'" << std::endl;
+#endif
 		}
 
 		mwse::Stack::getInstance().pushLong(origin);

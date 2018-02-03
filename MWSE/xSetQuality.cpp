@@ -51,14 +51,18 @@ namespace mwse
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetQuality: No reference provided." << std::endl;
+#endif
 			return 0.0f;
 		}
 
 		// Get record.
 		BaseRecord_t* record = reference->recordPointer;
 		if (record == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetQuality: No base record found." << std::endl;
+#endif
 			return 0.0f;
 		}
 
@@ -77,7 +81,9 @@ namespace mwse
 			reinterpret_cast<APPARecord_t*>(reference->recordPointer)->quality = value;
 		}
 		else {
+#if _DEBUG
 			mwse::log::getLog() << "xSetQuality: Call on unsupported record type: " << recordType << std::endl;
+#endif
 		}
 
 		return 0.0f;

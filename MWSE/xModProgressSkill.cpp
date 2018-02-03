@@ -45,7 +45,9 @@ namespace mwse
 	float xModProgressSkill::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		if (mwse::Stack::getInstance().size() < 3) {
+#if _DEBUG
 			mwse::log::getLog() << "xModProgressSkill: Function called with too few arguments." << std::endl;
+#endif
 			return 0.0f;
 		}
 
@@ -55,15 +57,19 @@ namespace mwse
 
 		// Verify attribute range.
 		if (skillId < FirstSkill || skillId > LastSkill) {
+#if _DEBUG
 			mwse::log::getLog() << "xModProgressSkill: Invalid skill id: " << skillId << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
 
 		// Make sure we're looking at an NPC or creature.
-		mwse::REFRRecord_t* reference = virtualMachine.getReference("player");
+		REFRRecord_t* reference = virtualMachine.getReference("player");
 		if (reference->recordPointer->recordType != RecordTypes::NPC) {
+#if _DEBUG
 			mwse::log::getLog() << "xModProgressSkill: Called on non-NPC reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
@@ -71,7 +77,9 @@ namespace mwse
 		// Get the associated MACP record.
 		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xModProgressSkill: Could not find MACP record for reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}

@@ -43,6 +43,13 @@ namespace mwse {
 	float xIsFemale::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xIsFemale: Called on invalid reference." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushLong(false);
+			return 0.0f;
+		}
 
 		mwLong_t value = 0;
 
@@ -52,7 +59,9 @@ namespace mwse {
 			value = npc->flags % 2;
 		}
 		else {
+#if _DEBUG
 			mwse::log::getLog() << "xIsFemale: Called on non-NPC target." << std::endl;
+#endif
 		}
 
 		mwse::Stack::getInstance().pushLong(value);

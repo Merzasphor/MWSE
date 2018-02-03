@@ -49,7 +49,9 @@ namespace mwse
 		// Get parameter off the stack.
 		mwLong_t skillIndex = mwse::Stack::getInstance().popLong();
 		if (skillIndex < FirstSkill || skillIndex > LastSkill) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetProgressSkill: Invalid skill index provided." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;
@@ -58,7 +60,9 @@ namespace mwse
 		// Get reference.
 		mwse::REFRRecord_t* reference = virtualMachine.getReference("player");
 		if (reference == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetProgressSkill: Could not find reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;
@@ -67,7 +71,9 @@ namespace mwse
 		// Get the associated MACP record.
 		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xGetProgressSkill: Could not find MACP record for reference." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;

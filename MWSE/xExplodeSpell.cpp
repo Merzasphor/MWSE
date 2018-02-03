@@ -51,12 +51,26 @@ namespace mwse
 		// Get parameters.
 		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
-		// Get other context information for original opcode.
-		SCPTRecord_t* script = &virtualMachine.getScript();
+		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
+		if (reference == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xExplodeSpell: Called on invalid reference." << std::endl;
+#endif
+			return 0.0f;
+		}
+
+		// Get spell template by the id.
 		TES3DefaultTemplate_t* spellTemplate = virtualMachine.getTemplate(id.c_str());
+		if (spellTemplate == NULL) {
+#if _DEBUG
+			mwse::log::getLog() << "xExplodeSpell: No template found with id '" << id << "'." << std::endl;
+#endif
+			return 0.0f;
+		}
 
 		// Call the original function.
+		SCPTRecord_t* script = &virtualMachine.getScript();
 		mwse::mwscript::ExplodeSpell(script, reference, spellTemplate);
 
 		return 0.0f;

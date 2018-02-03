@@ -50,7 +50,9 @@ namespace mwse
 		// Get spell.
 		SPELRecord_t* spell = tes3::getSpellRecordById(id);
 		if (spell == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xDeleteSpell: No spell found with id '" << id << "'." << std::endl;
+#endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}

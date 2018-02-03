@@ -49,21 +49,27 @@ namespace mwse
 
 		// Enforce name length.
 		if (name.length() > 31) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetName: Given name length must be 31 characters or less." << std::endl;
+#endif
 			return 0.0f;
 		}
 
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetName: No reference provided." << std::endl;
+#endif
 			return 0.0f;
 		}
 
 		// Get the base record.
 		TES3DefaultTemplate_t* recordGeneric = reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer);
 		if (recordGeneric == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetName: No record found for reference." << std::endl;
+#endif
 			return 0.0f;
 		}
 
@@ -115,7 +121,9 @@ namespace mwse
 
 		// Bail out if we haven't found the name.
 		if (namePtr == NULL) {
+#if _DEBUG
 			mwse::log::getLog() << "xSetName: Unsupported record format: " << recordType << "." << std::endl;
+#endif
 			return 0.0f;
 		}
 
