@@ -75,6 +75,7 @@ namespace mwse
 
 		// Create new spell.
 		SPELRecord_t* newSpell = reinterpret_cast<SPELRecord_t*>(tes3::malloc(sizeof(SPELRecord_t)));
+		memset(newSpell, 0, sizeof(SPELRecord_t));
 		newSpell->vTable = spellListTail->vTable;
 		newSpell->recordType = RecordTypes::SPELL;
 		newSpell->spellsList = spellsList;
