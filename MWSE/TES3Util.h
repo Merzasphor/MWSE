@@ -113,12 +113,15 @@ namespace mwse
 		//
 
 		typedef void* (__cdecl *ExternalRealloc)(void*, size_t);
+		extern ExternalRealloc _realloc;
 		void* realloc(void* address, size_t size);
 
 		typedef void* (__cdecl *ExternalMalloc)(size_t);
+		extern ExternalMalloc _malloc;
 		void* malloc(size_t size);
 
 		typedef void(__cdecl *ExternalFree)(void*);
+		extern ExternalFree _free;
 		void free(void* address);
 	}
 };
