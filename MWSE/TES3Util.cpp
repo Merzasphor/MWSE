@@ -600,17 +600,17 @@ namespace mwse
 			}
 		}
 
-		ExternalRealloc _realloc = NULL;
+		ExternalRealloc _realloc = reinterpret_cast<tes3::ExternalRealloc>(TES3_REALLOC);
 		void* realloc(void* address, size_t size) {
 			return _realloc(address, size);
 		}
 
-		ExternalMalloc _malloc = NULL;
+		ExternalMalloc _malloc = reinterpret_cast<tes3::ExternalMalloc>(TES3_MALLOC);
 		void* malloc(size_t size) {
 			return _malloc(size);
 		}
 
-		ExternalFree _free = NULL;
+		ExternalFree _free = reinterpret_cast<tes3::ExternalFree>(TES3_FREE);
 		void free(void* address) {
 			_free(address);
 		}

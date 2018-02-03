@@ -32,13 +32,6 @@
 using namespace mwse;
 
 TES3MACHINE* mge_virtual_machine = NULL;
-void* external_malloc = NULL;
-void* external_free = NULL;
-void* external_realloc = NULL;
-
-static BOOL CALLBACK EnumSymbolsCallback(PSYMBOL_INFO symbol_info,
-	ULONG /*symbol_size*/,
-	PVOID /*user_context*/);
 
 BOOL WINAPI DllMain(
 					HINSTANCE hinstDLL,	// handle to DLL module
@@ -55,39 +48,6 @@ BOOL WINAPI DllMain(
 		mwAdapter::Hook(); //for testing purposes only at the moment, this should be replaced by a function more friendly (like a virtual machine init or something)
 		log::getLog() << "Morrowind Script Extender v" << MWSE_VERSION_MAJOR << "." << MWSE_VERSION_MINOR << "." << MWSE_VERSION_PATCH << " (built " << __DATE__ << ") initialized." << std::endl;
 		mge_virtual_machine = new TES3MACHINE();
-		// Find the addresses of malloc(), realloc(), free() that MW uses,
-		// so that we can interact with its heap.
-		process = GetCurrentProcess();
-		SymInitialize(process,
-			NULL,  // No search path.
-			TRUE); // Load symbol tables for all modules.
-		SymEnumSymbols(process,
-			0,                    // No base address.
-			"msvcrt!*",           // Only look in msvcrt.dll.
-			EnumSymbolsCallback,
-			NULL);                // No context.
-		SymCleanup(process);
-
-		if (external_malloc == NULL) {
-			log::getLog() << "Error: unable to find malloc()" << std::endl;
-		}
-		else {
-			tes3::_malloc = reinterpret_cast<tes3::ExternalMalloc>(external_malloc);
-		}
-
-		if (external_free == NULL) {
-			log::getLog() << "Error: unable to find free()" << std::endl;
-		}
-		else {
-			tes3::_free = reinterpret_cast<tes3::ExternalFree>(external_free);
-		}
-
-		if (external_realloc == NULL) {
-			log::getLog() << "Error: unable to find realloc()" << std::endl;
-		}
-		else {
-			tes3::_realloc = reinterpret_cast<tes3::ExternalRealloc>(external_realloc);
-		}
 
 		// Parse and load the features installed by the Morrowind Code Patch.
 		if (!mwse::mcp::loadFeatureList()) {
@@ -124,20 +84,4 @@ TES3MACHINE* MWSEGetVM()
 bool MWSEAddInstruction(OPCODE op, INSTRUCTION *ins)
 {
 	return mge_virtual_machine->AddInstruction(op, ins);
-}
-
-static BOOL CALLBACK EnumSymbolsCallback(PSYMBOL_INFO symbol_info,
-	ULONG /*symbol_size*/,
-	PVOID /*user_context*/)
-{
-	if (strcmp(symbol_info->Name, "malloc") == 0) {
-		external_malloc = reinterpret_cast<void*>(symbol_info->Address);
-	}
-	else if (strcmp(symbol_info->Name, "free") == 0) {
-		external_free = reinterpret_cast<void*>(symbol_info->Address);
-	}
-	else if (strcmp(symbol_info->Name, "realloc") == 0) {
-		external_realloc = reinterpret_cast<void*>(symbol_info->Address);
-	}
-	return TRUE;
 }

@@ -71,6 +71,9 @@
 
 #define TES3_INFUNC_RUN_SCRIPT_OPCODE 0x505793;
 #define TES3_INFUNC_SCRIPT_ADD_ITEM 0x508B54;
+#define TES3_MALLOC 0x749471C0
+#define TES3_FREE 0x74947000
+#define TES3_REALLOC 0x749472B0
 
 //
 // Addresses for game functions.
