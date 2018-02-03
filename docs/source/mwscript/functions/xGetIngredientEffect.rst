@@ -10,9 +10,29 @@ xGetIngredientEffect
 **Returned:**
 
 - ``long`` **effectType**: The `Effect Type`_ that the ingredient has at the given **effectIndex**.
-- ``long`` **skillAttributeType**: The `Attribute Type`_ or `Skill Type`_, if the **effectType** supports one.
+- ``long`` **skillAttributeType**: The `Attribute Type`_ or `Skill Type`_, if the **effectType** supports one. Otherwise will always be -1.
 
 This function allows scripts to determine the effects of a given ingredient programmatically. Scripts can alter these values as well using `xSetIngredientEffect`_.
+
+
+Example
+-------
+
+::
+
+  begin Example_xGetIngredientEffect
+
+  long effect
+  long skillAttribute
+
+  setx effect skillAttribute to xGetIngredientEffect "food_kwama_egg_01" 1
+
+  MessageBox "skill / attribute: %g" skillAttribute
+  MessageBox "effect: %g" effectID
+  MessageBox "food_kwama_egg_01"
+
+  end
+
 
 .. _`Effect Type`: ../references.html#effect-types
 .. _`Attribute Type`: ../references.html#attribute-types
