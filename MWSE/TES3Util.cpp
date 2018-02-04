@@ -418,10 +418,10 @@ namespace mwse
 		}
 
 		SPELRecord_t* getSpellRecordById(const std::string& id) {
-			TES3CellMaster_t* cellMaster = getCellMaster();
+			const char* cid = id.c_str();
 
-			SPELRecord_t * spell = cellMaster->recordLists->spellsList->head;
-			while (spell != NULL && !(spell->recordType == RecordTypes::SPELL && strcmp(id.c_str(), spell->id) == 0)) {
+			SPELRecord_t * spell = getCellMaster()->recordLists->spellsList->head;
+			while (spell != NULL && !(spell->recordType == RecordTypes::SPELL && strcmp(cid, spell->id) == 0)) {
 				spell = spell->nextRecord;
 			}
 
