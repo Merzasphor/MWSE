@@ -77,12 +77,12 @@ namespace mwse
 
 		// Get spell list.
 		LinkedList_t<SPELRecord_t>* spellsList = tes3::getCellMaster()->recordLists->spellsList;
-		SPELRecord_t* spellListTail = spellsList->tail;
+		SPELRecord_t* spellListHead = spellsList->head;
 
 		// Create new spell.
 		SPELRecord_t* newSpell = reinterpret_cast<SPELRecord_t*>(tes3::malloc(sizeof(SPELRecord_t)));
 		memset(newSpell, 0, sizeof(SPELRecord_t));
-		newSpell->vTable = spellListTail->vTable;
+		newSpell->vTable = spellListHead->vTable;
 		newSpell->recordType = RecordTypes::SPELL;
 		newSpell->spellsList = spellsList;
 		newSpell->cost = 1;
