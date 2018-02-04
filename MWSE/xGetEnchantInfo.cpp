@@ -48,10 +48,10 @@ namespace mwse
 		mwseString_t& enchantId = virtualMachine.getString(Stack::getInstance().popLong());
 
 		// Return values.
-		mwShort_t type = 0;
-		mwShort_t cost = 0;
+		mwLong_t type = 0;
+		mwLong_t cost = 0;
 		mwLong_t maxCharge = 0;
-		mwShort_t effects = 0;
+		mwLong_t effects = 0;
 		mwLong_t autocalc = 0;
 
 		// Validate effect index.
@@ -69,10 +69,10 @@ namespace mwse
 #endif
 		}
 		mwse::Stack::getInstance().pushLong(autocalc);
-		mwse::Stack::getInstance().pushShort(effects);
+		mwse::Stack::getInstance().pushLong(effects);
 		mwse::Stack::getInstance().pushLong(maxCharge);
-		mwse::Stack::getInstance().pushShort(cost);
-		mwse::Stack::getInstance().pushShort(type);
+		mwse::Stack::getInstance().pushLong(cost);
+		mwse::Stack::getInstance().pushLong(type);
 
 		return 0.0f;
 	}
