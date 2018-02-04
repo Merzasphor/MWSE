@@ -5,7 +5,7 @@ Installation
 Requirements
 --------------------------------------------------------
 
-The `Visual Studio 2017 Redistributable <https://go.microsoft.com/fwlink/?LinkId=746572>`_ is required for MWSE v2.0.
+The `Visual Studio 2017 Redistributable <https://aka.ms/vs/15/release/VC_redist.x86.exe>`_ is required for MWSE v2.0.
 
 Additionally, MWSE has two soft requirements that all typical users should have installed.
 
