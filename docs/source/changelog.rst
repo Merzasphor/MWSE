@@ -14,29 +14,29 @@ This release marks a complete under the hood rewrite of how MWSE functions. Vers
 Added
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- ``xGetMCPFeatureState``: The `Morrowind Code Patch <https://www.nexusmods.com/morrowind/mods/19510/?>`_ has become more important with its fixes to the script parser, and other scripting extensions. If the user has the MCP installed and hasn't deleted the mcpatch folder, this function will let the script know if a MCP feature is enabled or disabled. The ID passed to this function can be found in the describe.json file in the mcpatch folder.
-
-- ``xStartScript``, ``xStopScript`` and ``xScriptRunning``: These functions are wrappers around their non-MWSE counterparts, and accept a variable input. Additionally, calling ``xStopScript 0`` will effectively call ``xStopScript`` on the current script.
-
-- ``xGetModel``: This function gets the targeted reference's model as a string. It will work on anything but NPC or CREATURE references, which return ``0``.
-
-- ``xGetStackSize``: This function returns the size of a stack. If it can't find the stack information, it returns ``0``.
-
-- ``xGetItemCount``: This function behaves like the vanilla ``GetItemCount``, but accepts a variable string input.
-
 - ``xContentListFiltered``: Behaves like ``xContentList``, with an additional filter parameter passed. The filter is a record type, and only records matching that type will be returned. E.g. ``setx id count type value weight name node to target->xContentListFiltered 0 1380404809`` returns the first ingredient in the target's inventory. The nodes returned by ``xContentList`` and ``xContentListFiltered`` are compatible, but should generally not be mixed.
-
-- ``xStringCapture``: Performs a regex match using a given pattern on a given string. Usage is ``setx match1 match2 match3 to xStringCapture string pattern numResults``. The ``numResults`` value must match the number of return values desired. If there aren't enough matches to fill each return value, or if there isn't a capture, the return (extra) return values will be ``0``s.
-
-- ``xGetIngredientEffect``: Returns the effect id and skill or attribute id associated with the effect. E.g. ``setx effectId skillOrAttributeId to xGetIngredientEffect "ingred_alit_hide_01" 1`` gets the first effect the ingredient has.
-
-- ``xSetIngredientEffect``: Sets an ingredient's effect at a given index. E.g. ``xSetIngredientEffect "ingred_alit_hide_01" 1 83 4`` sets the first effect of alit hide to be fortify speed.
 
 - ``xEquipmentList``: Behaves similar to ``xContentList``/``xContentListFiltered``, returning inventory information. This function allows looping over equipped items instead of all items, and also returns some subtype information. Usage is ``setx id count type subtype value weight name enchantId nextNode to xEquipmentList node typeFilter subTypeFilter``. The ``typeFilter`` parameter matches the ``type``s returned, and will restrict results to that item type (e.g. only clothing). The ``subTypeFilter`` allows specifying a weapon type or armor/clothing slot. The subtype index is one higher for both return values and parameters are one higher than in their normal records (e.g. pants are index ``1`` instead of ``0``). If ``typeFilter`` or ``subTypeFilter`` are 0, no filtering is performed on those values.
 
 - ``xGetAlchemyInfo``: Allows the fetching the effect count (and flags) for an alchemy record.
 
+- ``xGetIngredientEffect``: Returns the effect id and skill or attribute id associated with the effect. E.g. ``setx effectId skillOrAttributeId to xGetIngredientEffect "ingred_alit_hide_01" 1`` gets the first effect the ingredient has.
+
 - ``xGetInputConfig``: Obtains the key codes used for input (e.g. what the current activation key is). Can also supply information such as if an input is bound to a keyboard, joystick, or mouse.
+
+- ``xGetItemCount``: This function behaves like the vanilla ``GetItemCount``, but accepts a variable string input.
+
+- ``xGetMCPFeatureState``: The `Morrowind Code Patch <https://www.nexusmods.com/morrowind/mods/19510/?>`_ has become more important with its fixes to the script parser, and other scripting extensions. If the user has the MCP installed and hasn't deleted the mcpatch folder, this function will let the script know if a MCP feature is enabled or disabled. The ID passed to this function can be found in the describe.json file in the mcpatch folder.
+
+- ``xGetModel``: This function gets the targeted reference's model as a string. It will work on anything but NPC or CREATURE references, which return ``0``.
+
+- ``xGetStackSize``: This function returns the size of a stack. If it can't find the stack information, it returns ``0``.
+
+- ``xSetIngredientEffect``: Sets an ingredient's effect at a given index. E.g. ``xSetIngredientEffect "ingred_alit_hide_01" 1 83 4`` sets the first effect of alit hide to be fortify speed.
+
+- ``xStartScript``, ``xStopScript`` and ``xScriptRunning``: These functions are wrappers around their non-MWSE counterparts, and accept a variable input. Additionally, calling ``xStopScript 0`` will effectively call ``xStopScript`` on the current script.
+
+- ``xStringCapture``: Performs a regex match using a given pattern on a given string. Usage is ``setx match1 match2 match3 to xStringCapture string pattern numResults``. The ``numResults`` value must match the number of return values desired. If there aren't enough matches to fill each return value, or if there isn't a capture, the return (extra) return values will be ``0``s.
 
 Changed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
