@@ -1837,6 +1837,15 @@ function
 	Opcode = 0x395E
 end
 
+function
+	Name = xGetInputConfig
+	Options = MWSE | AllowGlobal | AllowVar
+	Return = Long | Many
+	Param1 = Long
+	Param2 = Long
+	Opcode = 0x3C36
+end
+
 
 # MGE extensions
 function

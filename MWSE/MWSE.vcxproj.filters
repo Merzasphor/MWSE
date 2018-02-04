@@ -860,6 +860,9 @@
     <ClCompile Include="xGetAlchemyInfo.cpp">
       <Filter>Source Files\Functions\Records</Filter>
     </ClCompile>
+    <ClCompile Include="xGetInputConfig.cpp">
+      <Filter>Source Files\Functions\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">

@@ -31,6 +31,7 @@ namespace mwse
 {
 	namespace tes3
 	{
+		TES3Master_t * getMaster();
 		TES3CellMaster_t * getCellMaster();
 
 		GLOBRecord_t* getGlobalRecord(const char* id);

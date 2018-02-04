@@ -8,6 +8,10 @@ namespace mwse
 {
 	namespace tes3
 	{
+		TES3Master_t * getMaster() {
+			return *reinterpret_cast<TES3Master_t**>(TES3_MASTER_IMAGE);
+		}
+
 		TES3CellMaster_t * getCellMaster() {
 			return *reinterpret_cast<TES3CellMaster_t**>(TES3_MASTERCELL_IMAGE);
 		}

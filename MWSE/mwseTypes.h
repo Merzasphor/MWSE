@@ -1776,6 +1776,65 @@ namespace mwse
 		SOUTHEAST = 8
 	};
 
+	enum InputIndex_t {
+		KeyForward,
+		KeyBack,
+		KeySlideLeft,
+		KeySlideRight,
+		KeyUse,
+		KeyActivate,
+		KeyReadyItem,
+		KeyReadyMagic,
+		KeyCrouchSneak,
+		KeyRun,
+		KeyAlwaysRun,
+		KeyAutoRun,
+		KeyJump,
+		KeyNextWeapon,
+		KeyPrevWeapon,
+		KeyNextSpell,
+		KeyPrevSpell,
+		KeyTogglePOV,
+		KeyMenuMode,
+		KeyJournal,
+		KeyRest,
+		KeyQuickMenu,
+		KeyQuick1,
+		KeyQuick2,
+		KeyQuick3,
+		KeyQuick4,
+		KeyQuick5,
+		KeyQuick6,
+		KeyQuick7,
+		KeyQuick8,
+		KeyQuick9,
+		KeyQuick10,
+		KeyQuickSave,
+		KeyQuickload,
+		KeyFirst = KeyForward,
+		KeyLast = KeyQuickload
+	};
+
+	enum InputDevice_t {
+		DeviceKeyboard,
+		DeviceMouse,
+		DeviceJoystick,
+		DeviceGamepad,
+		DeviceFirst = DeviceKeyboard,
+		DeviceLast = DeviceGamepad
+	};
+
+	struct InputConfig_t {
+		struct Input_t {
+			int keyCode;
+			int device;
+			int unknown_0x08;
+			int unknown_0x0C;
+		};
+		char unknown_0x00[0x1B3C];
+		Input_t inputMaps[34];
+	};
+
 	struct TES3Master_t {
 		struct Unknown1_t {
 			long unknown_0x00;
@@ -1802,7 +1861,7 @@ namespace mwse
 		long unknown_0x40;
 		long unknown_0x44;
 		long unknown_0x48;
-		long unknown_0x4C;
+		InputConfig_t* inputConfig;
 		long unknown_0x50;
 		long unknown_0x54;
 		long unknown_0x58;

@@ -581,6 +581,7 @@ namespace mwse {
 			xGetGold = 0x3F24,
 			xGetGSString = 0x394D,
 			xGetIngredientEffect = 0x395D,
+			xGetInputConfig = 0x3C36,
 			xGetItemCount = 0x3F42,
 			xGetLockLevel = 0x391D,
 			xGetMagic = 0x3940,
