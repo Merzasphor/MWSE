@@ -22,9 +22,9 @@ Added
 
 - ``xGetIngredientEffect``: Returns the effect id and skill or attribute id associated with the effect. E.g. ``setx effectId skillOrAttributeId to xGetIngredientEffect "ingred_alit_hide_01" 1`` gets the first effect the ingredient has.
 
-- ``xGetInputConfig``: Obtains the key codes used for input (e.g. what the current activation key is). Can also supply information such as if an input is bound to a keyboard, joystick, or mouse.
-
 - ``xGetItemCount``: This function behaves like the vanilla ``GetItemCount``, but accepts a variable string input.
+
+- ``xGetKeyBind``: Obtains the key codes used for input (e.g. what the current activation key is). Also supplies information such as if an input is bound to a keyboard, joystick, or mouse.
 
 - ``xGetMCPFeatureState``: The `Morrowind Code Patch <https://www.nexusmods.com/morrowind/mods/19510/?>`_ has become more important with its fixes to the script parser, and other scripting extensions. If the user has the MCP installed and hasn't deleted the mcpatch folder, this function will let the script know if a MCP feature is enabled or disabled. The ID passed to this function can be found in the describe.json file in the mcpatch folder.
 
