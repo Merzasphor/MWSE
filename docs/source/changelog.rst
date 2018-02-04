@@ -16,7 +16,7 @@ Added
 
 - ``xContentListFiltered``: Behaves like ``xContentList``, with an additional filter parameter passed. The filter is a record type, and only records matching that type will be returned. E.g. ``setx id count type value weight name node to target->xContentListFiltered 0 1380404809`` returns the first ingredient in the target's inventory. The nodes returned by ``xContentList`` and ``xContentListFiltered`` are compatible, but should generally not be mixed.
 
-- ``xEquipmentList``: Behaves similar to ``xContentList``/``xContentListFiltered``, returning inventory information. This function allows looping over equipped items instead of all items, and also returns some subtype information. Usage is ``setx id count type subtype value weight name enchantId nextNode to xEquipmentList node typeFilter subTypeFilter``. The ``typeFilter`` parameter matches the ``type``s returned, and will restrict results to that item type (e.g. only clothing). The ``subTypeFilter`` allows specifying a weapon type or armor/clothing slot. The subtype index is one higher for both return values and parameters are one higher than in their normal records (e.g. pants are index ``1`` instead of ``0``). If ``typeFilter`` or ``subTypeFilter`` are 0, no filtering is performed on those values.
+- ``xEquipmentList``: Behaves similar to ``xContentList``/``xContentListFiltered``, returning inventory information. This function allows looping over equipped items instead of all items, and also returns some subtype information. Usage is ``setx id count type subtype value weight name enchantId nextNode to xEquipmentList node typeFilter subTypeFilter``. The ``typeFilter`` parameter matches the ``type`` returned, and will restrict results to that item type (e.g. only clothing). The ``subTypeFilter`` allows specifying a weapon type or armor/clothing slot. The subtype index is one higher for both return values and parameters are one higher than in their normal records (e.g. pants are index ``1`` instead of ``0``). If ``typeFilter`` or ``subTypeFilter`` are 0, no filtering is performed on those values.
 
 - ``xGetAlchemyInfo``: Allows the fetching the effect count (and flags) for an alchemy record.
 
@@ -36,7 +36,7 @@ Added
 
 - ``xStartScript``, ``xStopScript`` and ``xScriptRunning``: These functions are wrappers around their non-MWSE counterparts, and accept a variable input. Additionally, calling ``xStopScript 0`` will effectively call ``xStopScript`` on the current script.
 
-- ``xStringCapture``: Performs a regex match using a given pattern on a given string. Usage is ``setx match1 match2 match3 to xStringCapture string pattern numResults``. The ``numResults`` value must match the number of return values desired. If there aren't enough matches to fill each return value, or if there isn't a capture, the return (extra) return values will be ``0``s.
+- ``xStringCapture``: Performs a regex match using a given pattern on a given string. Usage is ``setx match1 match2 match3 to xStringCapture string pattern numResults``. The ``numResults`` value must match the number of return values desired. If there aren't enough matches to fill each return value, or if there isn't a capture, the return (extra) return values will be ``0``.
 
 Changed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -73,6 +73,8 @@ Fixed
 - ``xSetBaseEffectInfo`` correctly functions. Previously it had a bug that prevented it from actually setting any values.
 
 - ``xStringLength`` now correctly returns 0 when called on an empty string.
+
+- ``xAITravel``, ``xStartCombat``, ``xDistance``, ``xGetCombat``, ``xInventory``, ``xRefID``, and ``xRefType`` no longer cause a crash when called by an invalid reference.
 
 Known Issues
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
