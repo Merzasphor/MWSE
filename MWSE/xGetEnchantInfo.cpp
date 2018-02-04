@@ -56,19 +56,23 @@ namespace mwse
 
 		// Validate effect index.
 		ENCHRecord_t* enchantment = tes3::getEnchantRecordById(enchantId);
-		if (enchantment) {
+		if (enchantment != NULL) {
 			type = enchantment->type;
 			cost = enchantment->cost;
 			maxCharge = enchantment->charge;
 			effects = tes3::getEffectCount(enchantment->effects);
 			autocalc = enchantment->autocalc;
 		}
-
+		else {
+#if _DEBUG
+			mwse::log::getLog() << "xGetEnchantInfo: Could not find spell of id '" << enchantId << "'" << std::endl;
+#endif
+		}
 		mwse::Stack::getInstance().pushLong(autocalc);
-		mwse::Stack::getInstance().pushLong(effects);
+		mwse::Stack::getInstance().pushShort(effects);
 		mwse::Stack::getInstance().pushLong(maxCharge);
-		mwse::Stack::getInstance().pushLong(cost);
-		mwse::Stack::getInstance().pushLong(type);
+		mwse::Stack::getInstance().pushShort(cost);
+		mwse::Stack::getInstance().pushShort(type);
 
 		return 0.0f;
 	}
