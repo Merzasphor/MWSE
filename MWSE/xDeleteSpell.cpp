@@ -70,8 +70,8 @@ namespace mwse
 		else {
 			SPELRecord_t* nextSpell = spell->nextRecord;
 			SPELRecord_t* previousSpell = spell->prevRecord;
-			spell->nextRecord->prevRecord = previousSpell;
-			previousSpell->nextRecord = spell->nextRecord;
+			nextSpell->prevRecord = previousSpell;
+			previousSpell->nextRecord = nextSpell;
 		}
 		spellsList->size--;
 
