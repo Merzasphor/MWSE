@@ -96,9 +96,16 @@ namespace mwse
 			return 0.0f;
 		}
 
-		// Get effect count.
+		// Verify that the effect can be deleted.
 		size_t effectCount = tes3::getEffectCount(effects);
-		if (effectCount == 0 || effectIndex >= effectCount) {
+		if (effectCount == 1) {
+#if _DEBUG
+			mwse::log::getLog() << "xDeleteEffect: Effect count must be at least one." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushLong(false);
+			return 0.0f;
+		}
+		else if (effectIndex >= effectCount) {
 #if _DEBUG
 			mwse::log::getLog() << "xDeleteEffect: Effect index out of range for effect." << std::endl;
 #endif
