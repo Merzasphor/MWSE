@@ -79,6 +79,7 @@ namespace mwse
 		// If we didn't get enough matches, pad it out with zeros.
 		while (matchesReturned < desiredMatches) {
 			mwse::Stack::getInstance().pushLong(0);
+			matchesReturned++;
 		}
 
 		return 0.0f;
