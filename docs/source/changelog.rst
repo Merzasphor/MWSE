@@ -36,6 +36,8 @@ Added
 
 - ``xGetAlchemyInfo``: Allows the fetching the effect count (and flags) for an alchemy record.
 
+- ``xGetInputConfig``: Obtains the key codes used for input (e.g. what the current activation key is). Can also supply information such as if an input is bound to a keyboard, joystick, or mouse.
+
 Changed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
