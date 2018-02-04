@@ -860,7 +860,7 @@
     <ClCompile Include="xGetAlchemyInfo.cpp">
       <Filter>Source Files\Functions\Records</Filter>
     </ClCompile>
-    <ClCompile Include="xGetInputConfig.cpp">
+    <ClCompile Include="xGetKeyBind.cpp">
       <Filter>Source Files\Functions\Utility</Filter>
     </ClCompile>
   </ItemGroup>

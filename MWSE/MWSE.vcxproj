@@ -157,7 +157,7 @@
     <ClCompile Include="xGetGold.cpp" />
     <ClCompile Include="xGetGSString.cpp" />
     <ClCompile Include="xGetIngredientEffect.cpp" />
-    <ClCompile Include="xGetInputConfig.cpp" />
+    <ClCompile Include="xGetKeyBind.cpp" />
     <ClCompile Include="xGetItemCount.cpp" />
     <ClCompile Include="xGetLockLevel.cpp" />
     <ClCompile Include="xGetMagic.cpp" />

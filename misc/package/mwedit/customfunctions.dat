@@ -1838,11 +1838,10 @@ function
 end
 
 function
-	Name = xGetInputConfig
+	Name = xGetKeyBind
 	Options = MWSE | AllowGlobal | AllowVar
 	Return = Long | Many
 	Param1 = Long
-	Param2 = Long
 	Opcode = 0x3C36
 end
 

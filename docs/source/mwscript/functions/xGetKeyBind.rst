@@ -1,18 +1,18 @@
 
-xGetInputConfig
+xGetKeyBind
 ========================================================
 
 **Parameters:**
 
 - ``long`` **controlType**: The `Control Type`_ desired. 
-- ``long`` **returnType**: If 0, **keyCode** is a `Virtual-Key Code`_ and the second returned value if the code **wasConverted**. If 1, the **keyCode** returned is a `Key Scan Code`_s and the second parameter is the **device** for context.
 
 **Returned:**
 
-- ``long`` **keyCode**: The `Virtual-Key Code`_ or `Key Scan Code`_ for the **controlType**.
-- ``long`` **wasConverted** or **device**: A special value based on **returnType**.
+- ``long`` **scanCode**: The `Key Scan Code`_ for the **controlType**.
+- ``long`` **scanDevice**: The device type used for the associated scan code. A value of 0 is keyboard, 1 is mouse, 2 is joystick.
+- ``long`` **keyCode**: The `Virtual-Key Code`_ for the **controlType**. If this value is 0, the scan code could not be converted to a key code.
 
-This function allows scripts to determine what keys are configured by the player. Typically the **keyCode** is passed to `xKeyPressed`_ to determine if it is pressed.
+This function allows scripts to determine what keys are configured by the player. Typically the **keyCode** is passed to `xKeyPressed`_ to determine if it is pressed. Other functions that require a scan code would make use of **scanCode**.
 
 .. _`Control Type`: ../references.html#control-types
 .. _`xKeyPressed`: xKeyPressed.html
@@ -26,13 +26,14 @@ Example: Determine if the Activation Key is Pressed
 
   Begin IsActivating
   
+  long scanCode
+  long scanDevice
   long keyCode
-  long converted
-  long isPressed
   
-  setx keyCode converted to xGetInputConfig 5 0
+  ; Get input information for the Activate key.
+  setx scanCode scanDevice keyCode to xGetKeyBind 5
   
-  ifx (converted)
+  ifx (keyCode)
       ; Activation key was successfully obtained, get its state.
       setx isPressed to xKeyPressed keyCode
       if (isPressed)
