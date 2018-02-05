@@ -13,11 +13,11 @@ xAnd
 
 This function performs an AND logical operation, and returns its result. An AND operation returns true if both of the values are non-zero.
 
-= = =======
-A B xOr A B
-= = =======
+= = ========
+A B xAnd A B
+= = ========
 0 0 0
 0 1 0
 1 0 0
 1 1 1
-= = =======
+= = ========

@@ -12,9 +12,9 @@ xNot
 
 This function performs a NOT logical operation, and returns its result. A NOT operation returns true if its parameter is zero.
 
-= =====
-A xOr A
-= =====
+= ======
+A xNot A
+= ======
 0 1
 1 0
-= =====
+= ======
