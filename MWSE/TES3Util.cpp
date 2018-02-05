@@ -360,9 +360,11 @@ namespace mwse
 			case RecordTypes::BODY:
 				model = reinterpret_cast<STATRecord_t*>(record)->model;
 				break;
+#if _DEBUG
 			default:
 				log::getLog() << __FUNCTION__ << ": Unhandled record type of " << std::hex << type << " at " << (long)record << std::dec << std::endl;
 				break;
+#endif
 			}
 
 			return model;

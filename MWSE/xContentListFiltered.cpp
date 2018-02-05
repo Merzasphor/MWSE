@@ -221,8 +221,15 @@ namespace mwse {
 		}
 
 		// If we're filtering by enchantment, verify that the record has one.
-		if ((filter & FILTER_ENCH) && tes3::getEnchantment(reinterpret_cast<TES3DefaultTemplate_t*>(record)) == NULL) {
-			return false;
+		if (filter & FILTER_ENCH) {
+			try {
+				if (tes3::getEnchantment(reinterpret_cast<TES3DefaultTemplate_t*>(record)) == NULL) {
+					return false;
+				}
+			}
+			catch (std::exception& e) {
+				return false;
+			}
 		}
 
 		return true;
