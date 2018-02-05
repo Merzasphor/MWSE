@@ -32,6 +32,36 @@ namespace mwse {
 		xContentListFiltered();
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+
+	private:
+		mwLong_t getBitMaskForRecordType(mwLong_t recordType);
+		bool passesFilter(BaseRecord_t* record, mwLong_t filter);
+
+		enum FilterMask {
+			FILTER_ACTI = 1,
+			FILTER_ALCH = 2,
+			FILTER_AMMO = 4,
+			FILTER_APPA = 8,
+			FILTER_ARMO = 16,
+			FILTER_BODY = 32,
+			FILTER_BOOK = 64,
+			FILTER_CLOT = 128,
+			FILTER_CONT = 256,
+			FILTER_CREA = 512,
+			FILTER_DOOR = 1024,
+			FILTER_INGR = 2048,
+			FILTER_LEVC = 4096,
+			FILTER_LEVI = 8192,
+			FILTER_LIGH = 16384,
+			FILTER_LOCK = 32768,
+			FILTER_MISC = 65536,
+			FILTER_NPC = 131072,
+			FILTER_PROB = 262144,
+			FILTER_REPA = 524288,
+			FILTER_STAT = 1048576,
+			FILTER_WEAP = 2097152,
+			FILTER_ENCH = 4194304
+		};
 	};
 
 	static xContentListFiltered xContentListFilteredInstance;
@@ -90,8 +120,7 @@ namespace mwse {
 			node = tes3::getFirstInventoryNode(reference);
 
 			// Pass over any records that don't match the current filter.
-			while (node && node->data && node->data->recordAddress
-				&& !(tes3::getBitMaskForRecordType(node->data->recordAddress->recordType) & filter)) {
+			while (node && node->data && node->data->recordAddress && !passesFilter(node->data->recordAddress, filter)) {
 				node = node->next;
 			}
 		}
@@ -139,8 +168,7 @@ namespace mwse {
 
 			// Get next node. Pass over any records that don't match the given filter.
 			next = node->next;
-			while (next && next->data && next->data->recordAddress
-				&& !(tes3::getBitMaskForRecordType(next->data->recordAddress->recordType) & filter)) {
+			while (next && next->data && next->data->recordAddress && !passesFilter(next->data->recordAddress, filter)) {
 				next = next->next;
 			}
 		}
@@ -155,5 +183,48 @@ namespace mwse {
 		mwse::Stack::getInstance().pushString(id);
 
 		return 0.0f;
+	}
+
+	mwLong_t xContentListFiltered::getBitMaskForRecordType(mwLong_t recordType) {
+		switch (recordType) {
+		case RecordTypes::ACTIVATOR: return FILTER_ACTI;
+		case RecordTypes::ALCHEMY: return FILTER_ALCH;
+		case RecordTypes::AMMO: return FILTER_AMMO;
+		case RecordTypes::APPARATUS: return FILTER_APPA;
+		case RecordTypes::ARMOR: return FILTER_ARMO;
+		case RecordTypes::BODY: return FILTER_BODY;
+		case RecordTypes::BOOK: return FILTER_BOOK;
+		case RecordTypes::CLOTHING: return FILTER_CLOT;
+		case RecordTypes::CONTAINER: return FILTER_CONT;
+		case RecordTypes::CREATURE: return FILTER_CREA;
+		case RecordTypes::DOOR: return FILTER_DOOR;
+		case RecordTypes::INGREDIENT: return FILTER_INGR;
+		case RecordTypes::LEVELLEDCREATURE: return FILTER_LEVC;
+		case RecordTypes::LEVELLEDITEM: return FILTER_LEVI;
+		case RecordTypes::LIGHT: return FILTER_LIGH;
+		case RecordTypes::LOCKPICK: return FILTER_LOCK;
+		case RecordTypes::MISC: return FILTER_MISC;
+		case RecordTypes::NPC: return FILTER_NPC;
+		case RecordTypes::PROBE: return FILTER_PROB;
+		case RecordTypes::REPAIR: return FILTER_REPA;
+		case RecordTypes::STATIC: return FILTER_STAT;
+		case RecordTypes::WEAPON: return FILTER_WEAP;
+		}
+
+		return 0x0;
+	}
+
+	bool xContentListFiltered::passesFilter(BaseRecord_t* record, mwLong_t filter) {
+		// Filter by record type. Unless we're not filtering only by enchantment.
+		if (filter != FILTER_ENCH && !(getBitMaskForRecordType(record->recordType) & filter)) {
+			return false;
+		}
+
+		// If we're filtering by enchantment, verify that the record has one.
+		if ((filter & FILTER_ENCH) && tes3::getEnchantment(reinterpret_cast<TES3DefaultTemplate_t*>(record)) == NULL) {
+			return false;
+		}
+
+		return true;
 	}
 }

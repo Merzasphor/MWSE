@@ -103,8 +103,6 @@ namespace mwse
 
 		void checkForLevelUp(mwLong_t progress);
 
-		mwLong_t getBitMaskForRecordType(mwLong_t recordType);
-
 		// Used in xFirstNPC/Static/Item. The last element should never be non-null.
 		// The first eight elements are pointers to the first reference from the 8 surrounding cells.
 		extern REFRRecord_t* exteriorRefs[9];

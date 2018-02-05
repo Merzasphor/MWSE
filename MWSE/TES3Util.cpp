@@ -304,8 +304,10 @@ namespace mwse
 			case RecordTypes::WEAPON:
 				enchantment = reinterpret_cast<WEAPRecord_t*>(record)->enchantment;
 				break;
+#if _DEBUG
 			default:
 				throw std::exception("Call on invalid record type.");
+#endif
 			}
 
 			return enchantment;
@@ -594,35 +596,6 @@ namespace mwse
 					add esp, 0xC
 				}
 			}
-		}
-
-		mwLong_t getBitMaskForRecordType(mwLong_t recordType) {
-			switch (recordType) {
-			case RecordTypes::ACTIVATOR: return 0x01;
-			case RecordTypes::ALCHEMY: return 0x2;
-			case RecordTypes::AMMO: return 0x4;
-			case RecordTypes::APPARATUS: return 0x8;
-			case RecordTypes::ARMOR: return 0x10;
-			case RecordTypes::BODY: return 0x20;
-			case RecordTypes::BOOK: return 0x40;
-			case RecordTypes::CLOTHING: return 0x80;
-			case RecordTypes::CONTAINER: return 0x100;
-			case RecordTypes::CREATURE: return 0x200;
-			case RecordTypes::DOOR: return 0x400;
-			case RecordTypes::INGREDIENT: return 0x800;
-			case RecordTypes::LEVELLEDCREATURE: return 0x1000;
-			case RecordTypes::LEVELLEDITEM: return 0x2000;
-			case RecordTypes::LIGHT: return 0x4000;
-			case RecordTypes::LOCKPICK: return 0x8000;
-			case RecordTypes::MISC: return 0x10000;
-			case RecordTypes::NPC: return 0x20000;
-			case RecordTypes::PROBE: return 0x40000;
-			case RecordTypes::REPAIR: return 0x80000;
-			case RecordTypes::STATIC: return 0x100000;
-			case RecordTypes::WEAPON: return 0x200000;
-			}
-
-			return 0x0;
 		}
 
 		REFRRecord_t* exteriorRefs[9] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
