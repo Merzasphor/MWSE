@@ -51,15 +51,6 @@ namespace mwse
 		// Get parameters.
 		mwseString_t& scriptName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
-		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
-		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xRemoveItem: Called on invalid reference." << std::endl;
-#endif
-			return 0.0f;
-		}
-
 		// Try to get the target script.
 		SCPTRecord_t* targetScript = tes3::getScript(scriptName);
 		if (targetScript == NULL) {
@@ -70,6 +61,7 @@ namespace mwse
 		}
 
 		// Call the original function.
+		REFRRecord_t* reference = virtualMachine.getReference();
 		SCPTRecord_t* script = &virtualMachine.getScript();
 		mwse::mwscript::StartScript(script, reference, targetScript);
 
