@@ -23,7 +23,7 @@ namespace mwse {
 			);
 
 			// Values start at 0x3C.
-			if (fileHandle != INVALID_HANDLE_VALUE && SetFilePointer(fileHandle, 0x3C, 0, FILE_BEGIN) != 0x3C) {
+			if (fileHandle != INVALID_HANDLE_VALUE && SetFilePointer(fileHandle, 0x8, 0, FILE_BEGIN) != 0x8) {
 				CloseHandle(fileHandle);
 				return false;
 			}
