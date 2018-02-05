@@ -58,7 +58,7 @@ namespace mwse
 		try {
 			boost::regex regex_pattern(pattern);
 			boost::smatch regex_matches;
-			if (boost::regex_match(string, regex_matches, regex_pattern)) {
+			if (boost::regex_search(string, regex_matches, regex_pattern)) {
 				for (size_t i = 0; i < regex_matches.size(); i++) {
 					// Bail out if we're past our desired number of matches.
 					if (matchesReturned >= desiredMatches) {
