@@ -14,7 +14,7 @@ This release marks a complete under the hood rewrite of how MWSE functions. Vers
 Added
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- ``xContentListFiltered``: Behaves like ``xContentList``, with an additional filter parameter passed. The filter is a record type, and only records matching that type will be returned. E.g. ``setx id count type value weight name node to target->xContentListFiltered 0 1380404809`` returns the first ingredient in the target's inventory. The nodes returned by ``xContentList`` and ``xContentListFiltered`` are compatible, but should generally not be mixed.
+- ``xContentListFiltered``: Behaves like ``xContentList``, with an additional filter parameter passed. The filter allows filtering by record type and/or enchantment, and only records matching that filter will be returned.
 
 - ``xEquipmentList``: Behaves similar to ``xContentList``/``xContentListFiltered``, returning inventory information. This function allows looping over equipped items instead of all items, and also returns some subtype information. Usage is ``setx id count type subtype value weight name enchantId nextNode to xEquipmentList node typeFilter subTypeFilter``. The ``typeFilter`` parameter matches the ``type`` returned, and will restrict results to that item type (e.g. only clothing). The ``subTypeFilter`` allows specifying a weapon type or armor/clothing slot. The subtype index is one higher for both return values and parameters are one higher than in their normal records (e.g. pants are index ``1`` instead of ``0``). If ``typeFilter`` or ``subTypeFilter`` are 0, no filtering is performed on those values.
 
@@ -28,7 +28,7 @@ Added
 
 - ``xGetMCPFeatureState``: The `Morrowind Code Patch <https://www.nexusmods.com/morrowind/mods/19510/?>`_ has become more important with its fixes to the script parser, and other scripting extensions. If the user has the MCP installed and hasn't deleted the mcpatch folder, this function will let the script know if a MCP feature is enabled or disabled. The ID passed to this function can be found in the describe.json file in the mcpatch folder.
 
-- ``xGetModel``: This function gets the targeted reference's model as a string. It will work on anything but NPC or CREATURE references, which return ``0``.
+- ``xGetModel``: This function gets the model of either a reference or a record. It will work on anything but NPC or creature references, which return ``0``.
 
 - ``xGetStackSize``: This function returns the size of a stack. If it can't find the stack information, it returns ``0``.
 
