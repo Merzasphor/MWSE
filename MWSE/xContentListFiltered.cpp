@@ -45,11 +45,26 @@ namespace mwse {
 		IteratorNode_t<InventoryNode_t>* node = reinterpret_cast<IteratorNode_t<InventoryNode_t>*>(mwse::Stack::getInstance().popLong());
 		mwLong_t filter = mwse::Stack::getInstance().popLong();
 
+		// If we're not filtering, abandon ship.
+		if (filter == 0) {
+#if _DEBUG
+			mwse::log::getLog() << "xContentListFiltered: No filter provided." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushLong(0);
+			mwse::Stack::getInstance().pushLong(0);
+			mwse::Stack::getInstance().pushFloat(0.0f);
+			mwse::Stack::getInstance().pushLong(0);
+			mwse::Stack::getInstance().pushLong(0);
+			mwse::Stack::getInstance().pushLong(0);
+			mwse::Stack::getInstance().pushLong(0);
+			return 0.0f;
+		}
+
 		// Get reference.
 		REFRRecord_t* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
-			mwse::log::getLog() << "xContentList: Called on invalid reference." << std::endl;
+			mwse::log::getLog() << "xContentListFiltered: Called on invalid reference." << std::endl;
 #endif
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
@@ -75,7 +90,8 @@ namespace mwse {
 			node = tes3::getFirstInventoryNode(reference);
 
 			// Pass over any records that don't match the current filter.
-			while (node && node->data && node->data->recordAddress && node->data->recordAddress->recordType != filter) {
+			while (node && node->data && node->data->recordAddress
+				&& !(tes3::getBitMaskForRecordType(node->data->recordAddress->recordType) & filter)) {
 				node = node->next;
 			}
 		}
@@ -94,7 +110,9 @@ namespace mwse {
 			}
 			catch (std::exception& e) {
 				value = 0;
+#if _DEBUG
 				mwse::log::getLog() << "xContentListFiltered: Could not get value of object '" << id << "'. " << e.what() << std::endl;
+#endif
 			}
 
 			// Get weight.
@@ -103,7 +121,9 @@ namespace mwse {
 			}
 			catch (std::exception& e) {
 				weight = 0.0f;
+#if _DEBUG
 				mwse::log::getLog() << "xContentListFiltered: Could not get weight of object '" << id << "'. " << e.what() << std::endl;
+#endif
 			}
 
 			// Get name.
@@ -112,12 +132,15 @@ namespace mwse {
 			}
 			catch (std::exception& e) {
 				name = NULL;
+#if _DEBUG
 				mwse::log::getLog() << "xContentListFiltered: Could not get name of object '" << id << "'. " << e.what() << std::endl;
+#endif
 			}
 
 			// Get next node. Pass over any records that don't match the given filter.
 			next = node->next;
-			while (next && next->data && next->data->recordAddress && next->data->recordAddress->recordType != filter) {
+			while (next && next->data && next->data->recordAddress
+				&& !(tes3::getBitMaskForRecordType(next->data->recordAddress->recordType) & filter)) {
 				next = next->next;
 			}
 		}
