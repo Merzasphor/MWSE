@@ -1055,8 +1055,8 @@ namespace mwse
 		int unknown_0x3C;
 		int unknown_0x40;
 		char * name; // 0x44
-		int unknown_0x48; // char * scriptIDStringPtr;
-		char * model; // 0x4C
+		char * model; // 0x48
+		int unknown_0x4C;
 		char * texture; // 0x50
 		int unknown_0x54;
 		int unknown_0x58;
@@ -1132,9 +1132,9 @@ namespace mwse
 		int unknown_0x3C;
 		int unknown_0x40;
 		char * nameStringPtr; // 0x44
-		char * model; // 0x48
-		int unknown_0x4C; // 0x4C
-		char * tgaStringPtr; // 0x50
+		int unknown_0x48;
+		mwString_t model; // 0x4C
+		mwString_t texture; // 0x50
 		mwFloat_t weight; // 0x54
 		mwLong_t value; // 0x58
 		short weaponType; // 0x5C
@@ -1279,10 +1279,10 @@ namespace mwse
 		int unknown_0x54;
 		int unknown_0x58;
 		int unknown_0x5C;
-		char model[32]; // 0x60
-		char texture[32]; // 0x80
-		int unknown_0xA0;
-		int unknown_0xA4;
+		int unknown_0x60;
+		int unknown_0x64;
+		char model[32]; // 0x68
+		char texture[32]; // 0x88
 		mwFloat_t weight; // 0xA8
 		mwLong_t value; // 0xAC
 		mwShort_t maxCondition; // 0xB0

@@ -321,9 +321,11 @@ namespace mwse
 			case RecordTypes::ACTIVATOR:
 				model = reinterpret_cast<ACTIRecord_t*>(record)->model;
 				break;
+			case RecordTypes::ARMOR:
+				model = reinterpret_cast<ARMORecord_t*>(record)->model;
+				break;
 			case RecordTypes::ALCHEMY:
 			case RecordTypes::AMMO:
-			case RecordTypes::ARMOR:
 			case RecordTypes::BOOK:
 			case RecordTypes::CLOTHING:
 			case RecordTypes::MISC:
@@ -353,6 +355,11 @@ namespace mwse
 				break;
 			case RecordTypes::DOOR:
 				model = reinterpret_cast<DOORRecord_t*>(record)->model;
+				break;
+			case RecordTypes::STAT:
+			case RecordTypes::BODY:
+				model = reinterpret_cast<STATRecord_t*>(record)->model;
+				break;
 			default:
 				log::getLog() << __FUNCTION__ << ": Unhandled record type of " << std::hex << type << " at " << (long)record << std::dec << std::endl;
 				break;
