@@ -44,10 +44,12 @@ namespace mwse
 
 	float xGetModel::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
+		// Get our parameter. 
 		mwLong_t param = Stack::getInstance().popLong();
 
-		char* model = NULL;
+		mwString_t model = NULL;
 
+		// If we were given a value, it's supposed to be a string, and we'll get a record by this ID.
 		if (param) {
 			// Get the record by id string.
 			mwseString_t& id = virtualMachine.getString(param);
@@ -61,8 +63,9 @@ namespace mwse
 			}
 			model = tes3::getModel(record);
 		}
+
+		// If we were not given a value, we try to use the function's given reference.
 		else {
-			// Get the record by reference.
 			REFRRecord_t* reference = virtualMachine.getReference();
 			if (reference == NULL) {
 #if _DEBUG
