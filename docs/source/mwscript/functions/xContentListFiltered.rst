@@ -28,7 +28,7 @@ This function behaves similar to `xContentList`_, with the added convenience of 
 Filter Mask
 -----------------------------
 
-The filter mask below is meant to be summed for each `Record Type`_ desired in the filter.
+The filter mask below is meant to be summed for each `Record Type`_ desired in the filter. The exception to this rule is the ENCH filter, which restricts the results to enchanted items.
 
 For example, if you wanted clothing (128) and armor (16) results, you would pass a value of 144 (128+16).
 
@@ -57,6 +57,7 @@ PROB  262144
 REPA  524288
 STAT  1048576
 WEAP  2097152
+ENCH  4194304
 ===== =========
 
 Example: Simple Filtered Loop
