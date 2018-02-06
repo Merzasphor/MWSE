@@ -37,3 +37,21 @@ Token  Description
 ====== ====================================
 
 .. note:: The uppercase forms ``%N``, ``%Q``, ``%D``, ``%H``, ``%F``, ``%S``, and ``%L`` also work.
+
+MWSE Version Checking
+--------------------------------------------------------
+
+A special use case of xStringParse is to check the version of MWSE. If a value of zero is returned, the version of MWSE is older than version 2.0.
+
+To do this, **pattern** must be ``MWSE_VERSION``. **source** is instead a ``long``, to compare to the return value. If the version returned is greater than or equal to **source**, the second return value is 1.
+
+Example:
+
+::
+
+  long version
+  long versionAbove2p0
+
+  setx version versionAbove2p0 to xStringParse "MWSE_VERSION" 2000000
+
+The version returned is spaced. Version 2.0.0 is 2000000 while the hypothetical version 2.34.9 would be 2034009.
