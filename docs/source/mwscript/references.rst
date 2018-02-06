@@ -335,6 +335,20 @@ ID Skill
 26 Hand to Hand
 == ============
 
+Schools
+-----------------------------------------------------------
+
+== ================
+ID School
+== ================
+0  Alteration
+1  Conjuration
+2  Destruction
+3  Illusion
+4  Mysticism
+5  Restoration
+== ================
+
 Specialization Types
 -----------------------------------------------------------
 
