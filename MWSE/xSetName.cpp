@@ -52,6 +52,7 @@ namespace mwse
 #if _DEBUG
 			mwse::log::getLog() << "xSetName: Given name length must be 31 characters or less." << std::endl;
 #endif
+			mwse::Stack::getInstance().pushShort(false);
 			return 0.0f;
 		}
 
@@ -61,15 +62,17 @@ namespace mwse
 #if _DEBUG
 			mwse::log::getLog() << "xSetName: No reference provided." << std::endl;
 #endif
+			mwse::Stack::getInstance().pushShort(false);
 			return 0.0f;
 		}
-
+		
 		// Get the base record.
 		TES3DefaultTemplate_t* recordGeneric = reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer);
 		if (recordGeneric == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetName: No record found for reference." << std::endl;
 #endif
+			mwse::Stack::getInstance().pushShort(false);
 			return 0.0f;
 		}
 
@@ -124,6 +127,7 @@ namespace mwse
 #if _DEBUG
 			mwse::log::getLog() << "xSetName: Unsupported record format: " << recordType << "." << std::endl;
 #endif
+			mwse::Stack::getInstance().pushShort(false);
 			return 0.0f;
 		}
 
@@ -135,6 +139,7 @@ namespace mwse
 
 		strcpy(namePtr, name.c_str());
 
+		mwse::Stack::getInstance().pushShort(true);
 		return 0.0f;
 	}
 }
