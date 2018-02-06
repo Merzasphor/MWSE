@@ -56,7 +56,7 @@ namespace mwse
 
 		mwLong_t status = mwse::Arrays::getInstance().setValue("xSetArrayValue", id, index, value);
 
-		mwse::Stack::getInstance().pushLong(status);
+		mwse::Stack::getInstance().pushShort(status);
 
 		return 0.0f;
 	}
