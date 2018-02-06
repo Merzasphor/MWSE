@@ -61,11 +61,11 @@ namespace mwse
 		// Validate effect index.
 		if (effectIndex >= 1 && effectIndex <= 8) {
 			// Get the desired effect.
-			Effect_t* effect = NULL;
+			Effect_t* effects = NULL;
 			if (targetType == RecordTypes::SPELL) {
 				SPELRecord_t* spell = tes3::getSpellRecordById(targetId);
 				if (spell) {
-					effect = &spell->effects[effectIndex - 1];
+					effects = spell->effects;
 				}
 				else {
 #if _DEBUG
@@ -76,7 +76,7 @@ namespace mwse
 			else if (targetType == RecordTypes::ENCH) {
 				ENCHRecord_t* enchant = tes3::getEnchantRecordById(targetId);
 				if (enchant) {
-					effect = &enchant->effects[effectIndex - 1];
+					effects = enchant->effects;
 				}
 				else {
 #if _DEBUG
@@ -87,7 +87,7 @@ namespace mwse
 			else if (targetType == RecordTypes::ALCHEMY) {
 				ALCHRecord_t* alchemy = tes3::getAlchemyRecordById(targetId);
 				if (alchemy) {
-					effect = &alchemy->effects[effectIndex - 1];
+					effects = alchemy->effects;
 				}
 				else {
 #if _DEBUG
@@ -102,8 +102,8 @@ namespace mwse
 			}
 
 			// If we found an effect, set the values.
-			if (effect) {
-				result = tes3::setEffect(effect, effectIndex, effectId, effectSkillAttributeId, effectRange, effectArea, effectDuration, effectMagMin, effectMagMax);
+			if (effects) {
+				result = tes3::setEffect(effects, effectIndex, effectId, effectSkillAttributeId, effectRange, effectArea, effectDuration, effectMagMin, effectMagMax);
 			}
 		}
 		else {
