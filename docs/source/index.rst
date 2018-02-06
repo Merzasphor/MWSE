@@ -22,4 +22,5 @@ These extra functions allow modders to add features and behavior to scripts that
     :caption: MWScript Extensions:
 
     mwscript/references
+    mwscript/GMSTs
     mwscript/functions
