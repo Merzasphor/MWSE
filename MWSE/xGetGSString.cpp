@@ -48,7 +48,7 @@ namespace mwse
 
 		if (gmstId < 0) {
 			mwse::log::getLog() << "xGetGSString: Invalid GMST id." << std::endl;
-			mwse::Stack::getInstance().pushLong(false);
+			mwse::Stack::getInstance().pushLong(NULL);
 			return 0.0f;
 		}
 
