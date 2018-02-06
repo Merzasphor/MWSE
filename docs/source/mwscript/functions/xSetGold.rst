@@ -4,7 +4,7 @@ xSetGold
 
 **Parameters:**
 
-- ``long`` **gold**:  New value to set the reference's barter gold to.
+- ``long`` **gold**:  New value to set the reference's current barter gold to.
 
 **Returned:**
 
