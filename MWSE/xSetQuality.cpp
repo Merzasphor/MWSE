@@ -67,24 +67,31 @@ namespace mwse
 		}
 
 		// Get the quality.
+		bool valueSet = false;
 		RecordTypes::recordType_t recordType = record->recordType;
 		if (recordType == RecordTypes::LOCKPICK) {
 			reinterpret_cast<LOCKRecord_t*>(reference->recordPointer)->quality = value;
+			valueSet = true;
 		}
 		else if (recordType == RecordTypes::PROBE) {
 			reinterpret_cast<PROBRecord_t*>(reference->recordPointer)->quality = value;
+			valueSet = true;
 		}
 		else if (recordType == RecordTypes::REPAIR) {
 			reinterpret_cast<REPARecord_t*>(reference->recordPointer)->quality = value;
+			valueSet = true;
 		}
 		else if (recordType == RecordTypes::APPARATUS) {
 			reinterpret_cast<APPARecord_t*>(reference->recordPointer)->quality = value;
+			valueSet = true;
 		}
 		else {
 #if _DEBUG
 			mwse::log::getLog() << "xSetQuality: Call on unsupported record type: " << recordType << std::endl;
 #endif
 		}
+
+		mwse::Stack::getInstance().pushLong(valueSet);
 
 		return 0.0f;
 	}
