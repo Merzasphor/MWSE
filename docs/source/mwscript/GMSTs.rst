@@ -214,7 +214,7 @@ Index Type   Identifier                       Default Value
 206   String sKeyName_34                      "."
 207   String sKeyName_35                      "/"
 208   String sKeyName_36                      "Right Shift"
-209   String sKeyName_37                      "Numpad *"
+209   String sKeyName_37                      "Numpad \*"
 210   String sKeyName_38                      "Left Alt"
 211   String sKeyName_39                      "SPACEBAR"
 212   String sKeyName_3A                      "Caps Lock"
