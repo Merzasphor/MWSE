@@ -175,7 +175,10 @@ namespace mwse {
             StackItem_t pop()
             {
                 if (stack_top == 0) {
-                    throw new std::exception("Could not pop from stack: top is already at zero.");
+#if _DEBUG
+					mwse::log::getLog() << __FUNCTION__ << ": Stack is empty, but a pop was requested! Check function definition." << std::endl;
+#endif
+					return 0;
                 }
                 stack_top --;
 #if MWSE_DEBUG_STACK
