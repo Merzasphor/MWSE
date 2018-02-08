@@ -256,6 +256,34 @@ ID  Effect
 
 .. note:: The attribute- and skill-affecting effects are often paired with a specific attribute or skill in function calls. See the associated tables below for their values.
 
+Magic Effects Flags
+-----------------------------------------------------------
+
+====== ================
+Value  Meaning
+====== ================
+1      Targets skill.
+2      Targets attribute.
+4      No duration.
+8      No magnitude.
+16     Harmful.
+32     Continuous VFX.
+64     Cast self.
+128    Cast touch.
+256    Cast target.
+512    Valid for spellmaking.
+1024   Valid for enchanting.
+2048   Negative lighting.
+4096   Applied once.
+8192   Stealth.
+16384  Non-recastable.
+32768  Illegal daedra.
+65536  Unreflectable.
+131072 Caster linked.
+====== ================
+
+.. note:: Negative lighting does not appear to have any effect.
+
 Record Types
 -----------------------------------------------------------
 
