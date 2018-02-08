@@ -77,14 +77,19 @@ namespace mwse {
 			switch (scanCode) {
 			case 0x00:
 				keyCode = VK_LBUTTON;
+				break;
 			case 0x01:
 				keyCode = VK_RBUTTON;
+				break;
 			case 0x02:
 				keyCode = VK_MBUTTON;
+				break;
 			case 0x03:
 				keyCode = VK_XBUTTON1;
+				break;
 			case 0x04:
 				keyCode = VK_XBUTTON2;
+				break;
 			}
 		}
 		else {
