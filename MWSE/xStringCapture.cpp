@@ -59,7 +59,8 @@ namespace mwse
 			boost::regex regex_pattern(pattern);
 			boost::smatch regex_matches;
 			if (boost::regex_search(string, regex_matches, regex_pattern)) {
-				for (size_t i = 0; i < regex_matches.size(); i++) {
+				// The capture groups begin at index 1, so start there.
+				for (size_t i = 1; i < regex_matches.size(); i++) {
 					// Bail out if we're past our desired number of matches.
 					if (matchesReturned >= desiredMatches) {
 						break;
