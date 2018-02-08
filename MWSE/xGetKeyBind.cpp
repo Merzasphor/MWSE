@@ -71,7 +71,7 @@ namespace mwse {
 		mwLong_t keyCode = 0;
 
 		if (scanDevice == DeviceKeyboard) {
-			keyCode = MapVirtualKey(keyCode, MAPVK_VSC_TO_VK);
+			keyCode = MapVirtualKey(scanCode, MAPVK_VSC_TO_VK);
 		}
 		else if (scanDevice == DeviceMouse) {
 			switch (scanCode) {
