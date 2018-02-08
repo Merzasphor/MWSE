@@ -62,19 +62,21 @@ Changed
 Fixed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- ``xSetName`` is now safe to use, and no longer rewrites random portions of memory. This function used to cause various issues if the new name was longer than the old name on most object types. This could cause random value changes, and make the game prone to crashing.
+- ``xAITravel``, ``xStartCombat``, ``xDistance``, ``xGetCombat``, ``xInventory``, ``xRefID``, and ``xRefType`` no longer cause a crash when called by an invalid reference.
+
+- ``xGetRace`` no longer leaks memory. Arrays returned by this function are reused and refreshed with the newest information on each call.
 
 - ``xPlace``'s returned reference can now be reliably used in the same frame that it was created.
+
+- ``xSetBaseEffectInfo`` correctly functions. Previously it had a bug that prevented it from actually setting any values.
+
+- ``xSetName`` is now safe to use, and no longer rewrites random portions of memory. This function used to cause various issues if the new name was longer than the old name on most object types. This could cause random value changes, and make the game prone to crashing.
 
 - ``xSetQuality`` now works correctly on apparatus.
 
 - ``xSetWeight`` now works correctly on lights.
 
-- ``xSetBaseEffectInfo`` correctly functions. Previously it had a bug that prevented it from actually setting any values.
-
 - ``xStringLength`` now correctly returns 0 when called on an empty string.
-
-- ``xAITravel``, ``xStartCombat``, ``xDistance``, ``xGetCombat``, ``xInventory``, ``xRefID``, and ``xRefType`` no longer cause a crash when called by an invalid reference.
 
 Known Issues
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
