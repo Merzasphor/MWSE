@@ -35,6 +35,8 @@ namespace mwse
 		xGetRace();
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+	private:
+		std::map<mwLong_t, mwLong_t> arrayMap;
 	};
 
 	static xGetRace xGetRaceInstance;
@@ -86,11 +88,33 @@ namespace mwse
 			mwse::Stack::getInstance().pushString(race->name);
 			return 0.0f;
 		}
+
+		// Complex case, push array(s).
 		else if (returnTypeParam == 1) {
-			mwLong_t arrayId = mwse::Arrays::getInstance().create("xGetRace");
-			if (arrayId != 0) {
+			// Get the array index to use from storage, or create it.
+			mwLong_t mainArrayId = 0;
+			mwLong_t skillArrayId = 0;
+			mwLong_t attributeArrayId = 0;
+			auto foundArrayId = arrayMap.find((mwLong_t)race);
+			if (foundArrayId != arrayMap.end()) {
+				// Array found. Clear the arrays for reuse.
+				mainArrayId = foundArrayId->second;
+				mwse::Arrays::getInstance().clear("xGetRace", mainArrayId);
+				skillArrayId = mainArrayId + 1;
+				mwse::Arrays::getInstance().clear("xGetRace", skillArrayId);
+				attributeArrayId = mainArrayId + 1;
+				mwse::Arrays::getInstance().clear("xGetRace", attributeArrayId);
+			}
+			else {
+				// Arrays not found. Create them.
+				mainArrayId = mwse::Arrays::getInstance().create("xGetRace");
+				skillArrayId = mwse::Arrays::getInstance().create("xGetRace");
+				attributeArrayId = mwse::Arrays::getInstance().create("xGetRace");
+				arrayMap[(mwLong_t)race] = mainArrayId;
+			}
+
+			if (mainArrayId != 0) {
 				// Create array for skills.
-				mwLong_t skillArrayId = mwse::Arrays::getInstance().create("xGetRace");
 				if (skillArrayId != 0) {
 					ContainedArray_t& skillArray = mwse::Arrays::getInstance().get(skillArrayId);
 					skillArray.push_back(7);
@@ -106,7 +130,6 @@ namespace mwse
 				}
 
 				// Create array for attributes.
-				mwLong_t attributeArrayId = mwse::Arrays::getInstance().create("xGetRace");
 				if (attributeArrayId != 0) {
 					ContainedArray_t& attributeArray = mwse::Arrays::getInstance().get(attributeArrayId);
 					for (size_t i = 0; i < 8; i++) {
@@ -116,7 +139,7 @@ namespace mwse
 				}
 
 				// Push the above arrays and other values to the result array.
-				ContainedArray_t& returnArray = mwse::Arrays::getInstance().get(arrayId);
+				ContainedArray_t& returnArray = mwse::Arrays::getInstance().get(mainArrayId);
 				returnArray.push_back(mwse::string::store::getOrCreate(race->id));
 				returnArray.push_back(mwse::string::store::getOrCreate(race->name));
 				returnArray.push_back(skillArrayId);
@@ -129,15 +152,12 @@ namespace mwse
 				returnArray.push_back(race->flags >> 1);
 
 				// Push array result
-				mwse::Stack::getInstance().pushLong(arrayId);
+				mwse::Stack::getInstance().pushLong(mainArrayId);
 				return 0.0f;
 			}
 		}
-		else {
 
-		}
-		
-		// 
+		// Invalid return type, or something wrong happened.
 		mwse::Stack::getInstance().pushLong(false);
 		return 0.0f;
 	}

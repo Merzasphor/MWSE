@@ -16,7 +16,7 @@ xGetRace
 
 This function fetches the objectID or complete details about the target's race.
 
-.. warning:: This function causes a memory leak of roughly 128 bytes when **returnType** is 1. This can be reduced but not fixed by manually clearing the arrays after they are read from.
+.. warning:: The arrays returned by this function when **returnType** is 1 are volatile. They should not be used for custom storage. Whenever xGetRace is called, the arrays are cleared and refilled with up-to-date information.
 
 If **returnType** is 0, the response is the race's object ID. Otherwise, the returned array contains the following values:
 
