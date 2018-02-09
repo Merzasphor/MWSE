@@ -35,7 +35,7 @@ namespace mwse
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	private:
-		const mwFloat_t INVALID_VALUE = -1.0f;
+		const mwFloat INVALID_VALUE = -1.0f;
 	};
 
 	static xGetSkillInfo xGetSkillInfoInstance;
@@ -47,16 +47,16 @@ namespace mwse
 	float xGetSkillInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameter.
-		mwLong_t skillIndex = Stack::getInstance().popLong();
+		mwLong skillIndex = Stack::getInstance().popLong();
 
 		// Return values.
-		mwLong_t attributeId = NoAttribute;
-		mwLong_t specialization = NoSpecialization;
+		mwLong attributeId = NoAttribute;
+		mwLong specialization = NoSpecialization;
 		float actions[4] = { INVALID_VALUE, INVALID_VALUE, INVALID_VALUE, INVALID_VALUE };
 
 		// Validate skill index.
-		if (skillIndex >= FirstSkill && skillIndex <= LastSkill) {
-			TES3CellMaster_t* cellMaster = tes3::getCellMaster();
+		if (skillIndex >= TES3::FirstSkill && skillIndex <= TES3::LastSkill) {
+			TES3::CellMaster* cellMaster = tes3::getCellMaster();
 			const SKILRecord_t& skillRecord = cellMaster->recordLists->skills[skillIndex];
 			attributeId = skillRecord.attribute;
 			specialization = skillRecord.specialization;

@@ -52,7 +52,7 @@ namespace mwse
 		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xAddSpell: Called on invalid reference." << std::endl;
@@ -61,7 +61,7 @@ namespace mwse
 		}
 
 		// Get spell template by the id.
-		TES3DefaultTemplate_t* spellTemplate = virtualMachine.getTemplate(id.c_str());
+		TES3::BaseObject* spellTemplate = virtualMachine.getTemplate(id.c_str());
 		if (spellTemplate == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xAddSpell: No template found with id '" << id << "'." << std::endl;
@@ -70,7 +70,7 @@ namespace mwse
 		}
 
 		// Call the original function.
-		SCPTRecord_t* script = &virtualMachine.getScript();
+		TES3::Script* script = &virtualMachine.getScript();
 		mwse::mwscript::AddSpell(script, reference, spellTemplate);
 
 		return 0.0f;

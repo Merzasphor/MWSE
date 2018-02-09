@@ -45,10 +45,10 @@ namespace mwse
 	float xSetBaseEffectInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwLong_t id = Stack::getInstance().popLong();
-		mwLong_t school = Stack::getInstance().popLong();
-		mwFloat_t baseMagickaCost = Stack::getInstance().popFloat();
-		mwLong_t flags = Stack::getInstance().popLong();
+		mwLong id = Stack::getInstance().popLong();
+		mwLong school = Stack::getInstance().popLong();
+		mwFloat baseMagickaCost = Stack::getInstance().popFloat();
+		mwLong flags = Stack::getInstance().popLong();
 
 		// Validate id.
 		if (id < Effects::FirstMagicEffect || id > Effects::LastMagicEffect) {

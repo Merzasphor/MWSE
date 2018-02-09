@@ -46,10 +46,10 @@ namespace mwse
 		};
 
 	private:
-		void SearchForEffects(REFRRecord_t* reference);
+		void SearchForEffects(TES3::Reference* reference);
 		void SearchForEffects(SPLLNode_t* node);
-		double CalculateTotal(REFRRecord_t* reference);
-		double CalculateCorrection(REFRRecord_t* reference);
+		double CalculateTotal(TES3::Reference* reference);
+		double CalculateCorrection(TES3::Reference* reference);
 
 		// Data storage for current implementation of looping active effects.
 		std::set<const SPLLNode_t*> visitedNodes;
@@ -71,7 +71,7 @@ namespace mwse
 		bool roundResult = mwse::Stack::getInstance().popLong();
 
 		// Get reference to target.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetEncumbrance: No reference provided." << std::endl;
@@ -81,7 +81,7 @@ namespace mwse
 		}
 
 		// Get record for reference.
-		BaseRecord_t* record = reference->recordPointer;
+		TES3::BaseObject* record = reference->objectPointer;
 		if (record == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetEncumbrance: No record found for reference." << std::endl;
@@ -91,9 +91,9 @@ namespace mwse
 		}
 
 		// This function only supports creatures and NPCs.
-		if (record->recordType != RecordTypes::NPC && record->recordType != RecordTypes::CREATURE) {
+		if (record->objectType != TES3::ObjectType::NPC && record->objectType != TES3::ObjectType::Creature) {
 #if _DEBUG
-			mwse::log::getLog() << "xGetEncumbrance: Called on unsupported record type " << record->recordType << "." << std::endl;
+			mwse::log::getLog() << "xGetEncumbrance: Called on unsupported record type " << record->objectType << "." << std::endl;
 #endif
 			mwse::Stack::getInstance().pushFloat(0.0f);
 			return 0.0f;
@@ -102,7 +102,7 @@ namespace mwse
 		double encumbrance = -999999.0;
 
 		// Get associated MACP node.
-		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
+		TES3::MACP* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetEncumbrance: No associated macp record found for reference." << std::endl;
@@ -118,9 +118,9 @@ namespace mwse
 		else if (queryType == BaseEncumbrance || queryType == CurrentEncumbrance) {
 			encumbrance = macp->weight_limit.current;
 			if (macp->num_active_effects > 0) {
-				MACPRecord_t::ActiveEffect* currentEffect = macp->active_effects->next;
+				TES3::MACP::ActiveEffect* currentEffect = macp->active_effects->next;
 				for (int i = 0; i < macp->num_active_effects; i++) {
-					if (currentEffect->effect_type == Effects::Burden || currentEffect->effect_type == Effects::Feather) {
+					if (currentEffect->TES3::Effectype == Effects::Burden || currentEffect->TES3::Effectype == Effects::Feather) {
 						encumbrance += (queryType == BaseEncumbrance) ? CalculateTotal(reference) : CalculateCorrection(reference);
 					}
 
@@ -139,9 +139,9 @@ namespace mwse
 		return 0.0f;
 	}
 
-	void xGetEncumbrance::SearchForEffects(REFRRecord_t* reference) {
-		NPCCopyRecord_t* npcCopy = reinterpret_cast<NPCCopyRecord_t*>(reference->recordPointer);
-		entityName = npcCopy->objectId;
+	void xGetEncumbrance::SearchForEffects(TES3::Reference* reference) {
+	TES3::NPCInstance* npcCopy = reinterpret_cast<TES3::NPCInstance*>(reference->objectPointer);
+		entityName = npcCopy->objectID;
 
 		unsigned long address = 0x7C67DC;
 		unsigned long* pointer = reinterpret_cast<unsigned long*>(address);
@@ -206,7 +206,7 @@ namespace mwse
 		SearchForEffects(node->third);
 	}
 
-	double xGetEncumbrance::CalculateTotal(REFRRecord_t* reference) {
+	double xGetEncumbrance::CalculateTotal(TES3::Reference* reference) {
 		SearchForEffects(reference);
 		double magnitude = 0.0;
 		for (EffectsMap::const_iterator it = activeEffects.begin();
@@ -216,7 +216,7 @@ namespace mwse
 		return magnitude;
 	}
 
-	double xGetEncumbrance::CalculateCorrection(REFRRecord_t* reference) {
+	double xGetEncumbrance::CalculateCorrection(TES3::Reference* reference) {
 		SearchForEffects(reference);
 		double magnitude = 0.0;
 		EffectsMap::const_iterator it = activeEffects.begin();

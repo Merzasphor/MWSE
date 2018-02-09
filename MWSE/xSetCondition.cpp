@@ -46,10 +46,10 @@ namespace mwse
 	float xSetCondition::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameter.
-		mwLong_t value = Stack::getInstance().popLong();
+		mwLong value = Stack::getInstance().popLong();
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			log::getLog() << "xSetCondition: No reference provided." << std::endl;

@@ -52,7 +52,7 @@ namespace mwse
 		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference("player");
+		TES3::Reference* reference = virtualMachine.getReference("player");
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xPlace: Called on invalid reference." << std::endl;
@@ -62,7 +62,7 @@ namespace mwse
 		}
 
 		// Get the template we're supposed to place.
-		TES3DefaultTemplate_t* templateToPlace = virtualMachine.getTemplate(id.c_str());
+		TES3::BaseObject* templateToPlace = virtualMachine.getTemplate(id.c_str());
 		if (templateToPlace == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xPlace: No template found for id '" << id << "'." << std::endl;
@@ -72,12 +72,12 @@ namespace mwse
 		}
 
 		// Call the original function.
-		SCPTRecord_t* script = &virtualMachine.getScript();
+		TES3::Script* script = &virtualMachine.getScript();
 		mwse::mwscript::PlaceAtPC(script, reference, templateToPlace, 1, 256.0f, 1);
 
 		// Push back the reference we created.
-		REFRRecord_t* createdReference = mwse::mwscript::lastCreatedPlaceAtPCReference;
-		mwse::Stack::getInstance().pushLong((mwLong_t)createdReference);
+		TES3::Reference* createdReference = mwse::mwscript::lastCreatedPlaceAtPCReference;
+		mwse::Stack::getInstance().pushLong((mwLong)createdReference);
 
 		return 0.0f;
 	}

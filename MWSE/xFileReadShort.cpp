@@ -53,14 +53,14 @@ namespace mwse
 
 		// Get arguments from the stack.
 		mwseString_t& fileName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
-		mwLong_t count = mwse::Stack::getInstance().popLong();
+		mwLong count = mwse::Stack::getInstance().popLong();
 
 		// Gather values into a temporary list, so they aren't in reverse order.
-		mwLong_t valuesRead = 0;
-		std::list<mwShort_t> values;
-		for (mwLong_t i = 0; i < count; i++) {
+		mwLong valuesRead = 0;
+		std::list<mwShort> values;
+		for (mwLong i = 0; i < count; i++) {
 			try {
-				mwShort_t value = mwse::FileSystem::getInstance().readShort(fileName.c_str());
+				mwShort value = mwse::FileSystem::getInstance().readShort(fileName.c_str());
 				values.push_front(value);
 				valuesRead++;
 			}

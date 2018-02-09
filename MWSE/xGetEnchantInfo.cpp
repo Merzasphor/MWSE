@@ -48,14 +48,14 @@ namespace mwse
 		mwseString_t& enchantId = virtualMachine.getString(Stack::getInstance().popLong());
 
 		// Return values.
-		mwLong_t type = 0;
-		mwLong_t cost = 0;
-		mwLong_t maxCharge = 0;
-		mwLong_t effects = 0;
-		mwLong_t autocalc = 0;
+		mwLong type = 0;
+		mwLong cost = 0;
+		mwLong maxCharge = 0;
+		mwLong effects = 0;
+		mwLong autocalc = 0;
 
 		// Validate effect index.
-		ENCHRecord_t* enchantment = tes3::getEnchantRecordById(enchantId);
+		TES3::Enchantment* enchantment = tes3::getEnchantRecordById(enchantId);
 		if (enchantment != NULL) {
 			type = enchantment->type;
 			cost = enchantment->cost;

@@ -62,7 +62,7 @@ namespace mwse
 		maxResults++;
 
 		// Store results so we can push them on in reverse.
-		mwLong_t* results = new mwLong_t[maxResults];
+		mwLong* results = new mwLong[maxResults];
 
 		// Read the string from the file. If we can't read a string back, push 0s.
 		std::string readString = mwse::FileSystem::getInstance().readString(fileName.c_str(), stopAtEndOfLine);

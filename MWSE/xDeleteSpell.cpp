@@ -48,7 +48,7 @@ namespace mwse
 		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get spell.
-		SPELRecord_t* spell = tes3::getSpellRecordById(id);
+		TES3::Spell* spell = tes3::getSpellRecordById(id);
 		if (spell == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xDeleteSpell: No spell found with id '" << id << "'." << std::endl;
@@ -58,7 +58,7 @@ namespace mwse
 		}
 
 		// Manipulate the record list to remove this object.
-		LinkedList_t<SPELRecord_t>* spellsList = tes3::getCellMaster()->recordLists->spellsList;
+		LinkedList_t<TES3::Spell>* spellsList = tes3::getCellMaster()->recordLists->spellsList;
 		if (spell == spellsList->head) {
 			spell->nextRecord->prevRecord = NULL;
 			spellsList->head = spell->nextRecord;
@@ -68,8 +68,8 @@ namespace mwse
 			spellsList->tail = spell->prevRecord;
 		}
 		else {
-			SPELRecord_t* nextSpell = spell->nextRecord;
-			SPELRecord_t* previousSpell = spell->prevRecord;
+			TES3::Spell* nextSpell = spell->nextRecord;
+			TES3::Spell* previousSpell = spell->prevRecord;
 			nextSpell->prevRecord = previousSpell;
 			previousSpell->nextRecord = nextSpell;
 		}

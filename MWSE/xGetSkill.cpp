@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3MACP.h"
 
 using namespace mwse;
 
@@ -35,7 +36,7 @@ namespace mwse
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	private:
-		const mwFloat_t INVALID_VALUE = -1.0f;
+		const mwFloat INVALID_VALUE = -1.0f;
 	};
 
 	static xGetSkill xGetSkillInstance;
@@ -47,8 +48,8 @@ namespace mwse
 	float xGetSkill::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get skill id argument.
-		mwLong_t skillId = mwse::Stack::getInstance().popLong();
-		if (skillId < FirstSkill || skillId > LastSkill) {
+		mwLong skillId = mwse::Stack::getInstance().popLong();
+		if (skillId < TES3::FirstSkill || skillId > TES3::LastSkill) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetSkill: Invalid skill id: " << skillId << std::endl;
 #endif
@@ -57,7 +58,7 @@ namespace mwse
 		}
 		
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetSkill: Call on invalid reference." << std::endl;
@@ -67,7 +68,7 @@ namespace mwse
 		}
 
 		// Verify target record type.
-		if (reference->recordPointer->recordType != RecordTypes::NPC && reference->recordPointer->recordType != RecordTypes::CREATURE) {
+		if (reference->objectPointer->objectType != TES3::ObjectType::NPC && reference->objectPointer->objectType != TES3::ObjectType::Creature) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetSkill: Reference is not a creature or NPC." << std::endl;
 #endif
@@ -76,7 +77,7 @@ namespace mwse
 		}
 
 		// Get the associated MACP record.
-		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
+		TES3::MACP* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetSkill: Could not find MACP record for reference." << std::endl;

@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3MACP.h"
 
 using namespace mwse;
 
@@ -35,7 +36,7 @@ namespace mwse
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	private:
-		const mwFloat_t INVALID_VALUE = -1.0f;
+		const mwFloat INVALID_VALUE = -1.0f;
 	};
 
 	static xGetBaseSkill xGetBaseSkillInstance;
@@ -54,8 +55,8 @@ namespace mwse
 		}
 
 		// Get skill id argument.
-		mwLong_t skillId = mwse::Stack::getInstance().popLong();
-		if (skillId < FirstSkill || skillId > LastSkill) {
+		mwLong skillId = mwse::Stack::getInstance().popLong();
+		if (skillId < TES3::FirstSkill || skillId > TES3::LastSkill) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetBaseSkill: Invalid skill id: " << skillId << std::endl;
 #endif
@@ -64,8 +65,8 @@ namespace mwse
 		}
 
 		// Get the associated MACP record.
-		mwse::REFRRecord_t* reference = virtualMachine.getReference();
-		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
+		TES3::Reference* reference = virtualMachine.getReference();
+		TES3::MACP* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetBaseSkill: Could not find MACP record for reference." << std::endl;

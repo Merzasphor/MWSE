@@ -45,18 +45,18 @@ namespace mwse
 	float xSetSkillInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameter.
-		mwLong_t skillIndex = mwse::Stack::getInstance().popLong();
+		mwLong skillIndex = mwse::Stack::getInstance().popLong();
 
 		// Return values.
-		mwLong_t attributeId = mwse::Stack::getInstance().popLong();
-		mwLong_t specialization = mwse::Stack::getInstance().popLong();
-		mwFloat_t action1 = mwse::Stack::getInstance().popFloat();
-		mwFloat_t action2 = mwse::Stack::getInstance().popFloat();
-		mwFloat_t action3 = mwse::Stack::getInstance().popFloat();
-		mwFloat_t action4 = mwse::Stack::getInstance().popFloat();
+		mwLong attributeId = mwse::Stack::getInstance().popLong();
+		mwLong specialization = mwse::Stack::getInstance().popLong();
+		mwFloat action1 = mwse::Stack::getInstance().popFloat();
+		mwFloat action2 = mwse::Stack::getInstance().popFloat();
+		mwFloat action3 = mwse::Stack::getInstance().popFloat();
+		mwFloat action4 = mwse::Stack::getInstance().popFloat();
 
 		// Validate skill index.
-		if (skillIndex < FirstSkill || skillIndex > LastSkill) {
+		if (skillIndex < TES3::FirstSkill || skillIndex > TES3::LastSkill) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetSkillInfo: Skill index out of range." << std::endl;
 #endif
@@ -65,7 +65,7 @@ namespace mwse
 		}
 
 		// Validate attribute.
-		if (attributeId < FirstAttribute || attributeId > LastAttribute) {
+		if (attributeId < TES3::FirstAttribute || attributeId > TES3::LastAttribute) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetSkillInfo: Attribute id out of range." << std::endl;
 #endif
@@ -86,7 +86,7 @@ namespace mwse
 		SKILRecord_t& skillInfo = tes3::getCellMaster()->recordLists->skills[skillIndex];
 
 		// Store old specialization for future check.
-		mwLong_t oldSpecialization = skillInfo.specialization;
+		mwLong oldSpecialization = skillInfo.specialization;
 
 		// Set skill info values.
 		skillInfo.attribute = attributeId;

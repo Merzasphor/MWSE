@@ -23,6 +23,9 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3MACP.h"
+#include "TES3NPC.h"
+#include "TES3Creature.h"
 
 using namespace mwse;
 
@@ -45,7 +48,7 @@ namespace mwse
 	float xGetGold::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetGold: Called on invalid reference." << std::endl;
@@ -55,33 +58,33 @@ namespace mwse
 		}
 
 		// Try to get the gold from the macp record.
-		mwShort_t gold = 0;
-		MACPRecord_t* macp = reinterpret_cast<MACPRecord_t*>(tes3::getFirstAttachmentByType(reference, RecordTypes::MACHNODE));
+		mwShort gold = 0;
+		TES3::MACP* macp = reinterpret_cast<TES3::MACP*>(tes3::getFirstAttachmentByType(reference, TES3::AttachmentMACP));
 		if (macp) {
 			gold = macp->gold;
 		}
 		else {
 			// Get the gold based on the base record type if we can't get it from macp.
-			BaseRecord_t* baseRecord = reference->recordPointer;
-			if (baseRecord->recordType == RecordTypes::NPC) {
-				NPCCopyRecord_t* npc = reinterpret_cast<NPCCopyRecord_t*>(baseRecord);
+			TES3::BaseObject* baseRecord = reference->objectPointer;
+			if (baseRecord->objectType == TES3::ObjectType::NPC) {
+				TES3::NPCInstance* npc = reinterpret_cast<TES3::NPCInstance*>(baseRecord);
 				if (npc->baseNPC) {
 					gold = npc->baseNPC->baseGold;
 				}
 				else {
 #if _DEBUG
-					mwse::log::getLog() << "xGetGold: Could not get base NPC record for \"" << npc->objectId << "\"" << std::endl;
+					mwse::log::getLog() << "xGetGold: Could not get base NPC record for \"" << npc->objectID << "\"" << std::endl;
 #endif
 				}
 			}
-			else if (baseRecord->recordType == RecordTypes::CREATURE) {
-				CREACopyRecord_t* creature = reinterpret_cast<CREACopyRecord_t*>(baseRecord);
+			else if (baseRecord->objectType == TES3::ObjectType::Creature) {
+				TES3::CreatureInstance* creature = reinterpret_cast<TES3::CreatureInstance*>(baseRecord);
 				if (creature->baseCreature) {
 					gold = creature->baseCreature->baseGold;
 				}
 				else {
 #if _DEBUG
-					mwse::log::getLog() << "xGetGold: Could not get base creature record for \"" << creature->objectId << "\"" << std::endl;
+					mwse::log::getLog() << "xGetGold: Could not get base creature record for \"" << creature->objectID << "\"" << std::endl;
 #endif
 				}
 			}

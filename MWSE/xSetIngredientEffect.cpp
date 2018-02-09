@@ -46,9 +46,9 @@ namespace mwse
 	{
 		// Get parameters.
 		mwseString_t& id = virtualMachine.getString(Stack::getInstance().popLong());
-		mwLong_t index = Stack::getInstance().popLong() - 1;
-		mwLong_t effectEnumId = Stack::getInstance().popLong();
-		mwLong_t skillAttributeId = Stack::getInstance().popLong();
+		mwLong index = Stack::getInstance().popLong() - 1;
+		mwLong effectEnumId = Stack::getInstance().popLong();
+		mwLong skillAttributeId = Stack::getInstance().popLong();
 
 		// Get the ingredient.
 		INGRRecord_t* ingredient = reinterpret_cast<INGRRecord_t*>(tes3::getTemplate(id));

@@ -18,7 +18,6 @@
 
 **************************************************************************/
 
-#include "mwseTypes.h"
 #include "InstructionStore.h"
 
 using namespace mwse;

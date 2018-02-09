@@ -35,7 +35,7 @@ namespace mwse
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	private:
-		const mwFloat_t INVALID_VALUE = -1.0f;
+		const mwFloat INVALID_VALUE = -1.0f;
 	};
 
 	static xGetBaseMagicka xGetBaseMagickaInstance;
@@ -47,8 +47,8 @@ namespace mwse
 	float xGetBaseMagicka::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get the associated MACP record.
-		mwse::REFRRecord_t* reference = virtualMachine.getReference();
-		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
+		TES3::Reference* reference = virtualMachine.getReference();
+		TES3::MACP* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetBaseMagicka: Could not find MACP record for reference." << std::endl;

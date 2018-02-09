@@ -44,9 +44,9 @@ namespace mwse
 
 	float xGetRef::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwLong_t id = Stack::getInstance().popLong();
+		mwLong id = Stack::getInstance().popLong();
 
-		REFRRecord_t * ref;
+		TES3::Reference * ref;
 
 		if (id == NULL) {
 			ref = virtualMachine.getReference();

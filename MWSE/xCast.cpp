@@ -53,7 +53,7 @@ namespace mwse
 		mwseString_t& targetId = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xAITravel: Called on invalid reference." << std::endl;
@@ -62,7 +62,7 @@ namespace mwse
 		}
 
 		// Get spell template by the id.
-		SPELRecord_t* spell = tes3::getSpellRecordById(spellId);
+		TES3::Spell* spell = tes3::getSpellRecordById(spellId);
 		if (spell == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xCast: No template found with id '" << spellId << "'." << std::endl;
@@ -71,7 +71,7 @@ namespace mwse
 		}
 
 		// Get the target by id.
-		REFRRecord_t* target = virtualMachine.getReference(targetId.c_str());
+		TES3::Reference* target = virtualMachine.getReference(targetId.c_str());
 		if (target == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xCast: Could not find valid target by id '" << targetId << "'." << std::endl;
@@ -80,7 +80,7 @@ namespace mwse
 		}
 
 		// This function isn't working yet.
-		SCPTRecord_t* script = &virtualMachine.getScript();
+		TES3::Script* script = &virtualMachine.getScript();
 		mwse::log::getLog() << "xCast: Function unimplemented." << std::endl;
 
 		return 0.0f;

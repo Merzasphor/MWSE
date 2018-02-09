@@ -46,7 +46,7 @@ namespace mwse
 	float xSetRef::execute(VMExecuteInterface &virtualMachine)
 	{
 		Reference ref(Stack::getInstance().popLong());	//get the reference
-		REFRRecord_t * realRef = reinterpret_cast<REFRRecord_t*>(ref.getAddress());		//cast it to a pointer
+		TES3::Reference * realRef = reinterpret_cast<TES3::Reference*>(ref.getAddress());		//cast it to a pointer
 
 		virtualMachine.setReference(realRef);		//set the current reference
 

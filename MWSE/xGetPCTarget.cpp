@@ -45,7 +45,7 @@ namespace mwse
 	float xGetPCTarget::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		//get the current target
-		REFRRecord_t * target = virtualMachine.getCurrentTarget();
+		TES3::Reference * target = virtualMachine.getCurrentTarget();
 
 		//make it a 'Reference'
 		Reference fixed(target);

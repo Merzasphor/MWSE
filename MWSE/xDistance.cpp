@@ -47,7 +47,7 @@ namespace mwse
 	{
 		// Get target reference
 		Reference ref(mwse::Stack::getInstance().popLong());
-		REFRRecord_t * targetref = reinterpret_cast<mwse::REFRRecord_t*>(ref.getAddress());
+		TES3::Reference * targetref = reinterpret_cast<TES3::Reference*>(ref.getAddress());
 		if (targetref == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xModProgressSkill: Target reference is invalid." << std::endl;
@@ -57,7 +57,7 @@ namespace mwse
 		}
 
 		// Get script reference.
-		REFRRecord_t * thisref = virtualMachine.getReference();
+		TES3::Reference * thisref = virtualMachine.getReference();
 		if (thisref == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xModProgressSkill: Script reference is invalid." << std::endl;
@@ -66,10 +66,10 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwFloat_t dx = targetref->x - thisref->x;
-		mwFloat_t dy = targetref->y - thisref->y;
-		mwFloat_t dz = targetref->z - thisref->z;
-		mwFloat_t xDistance = std::sqrt(dx*dx + dy*dy + dz*dz);
+		mwFloat dx = targetref->x - thisref->x;
+		mwFloat dy = targetref->y - thisref->y;
+		mwFloat dz = targetref->z - thisref->z;
+		mwFloat xDistance = std::sqrt(dx*dx + dy*dy + dz*dz);
 
 		mwse::Stack::getInstance().pushFloat(xDistance);
 

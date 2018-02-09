@@ -51,10 +51,10 @@ namespace mwse
 		// Get parameters from stack.
 		mwseString_t& string = virtualMachine.getString(Stack::getInstance().popLong());
 		mwseString_t& pattern = virtualMachine.getString(Stack::getInstance().popLong());
-		mwLong_t desiredMatches = Stack::getInstance().popLong();
+		mwLong desiredMatches = Stack::getInstance().popLong();
 
 		// Go and try to get all of our matches, to a limit of the count given to us as our 3rd parameter.
-		mwLong_t matchesReturned = 0;
+		mwLong matchesReturned = 0;
 		try {
 			boost::regex regex_pattern(pattern);
 			boost::smatch regex_matches;

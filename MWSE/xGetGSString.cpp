@@ -44,7 +44,7 @@ namespace mwse
 
 	float xGetGSString::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwLong_t gmstId = Stack::getInstance().popLong();
+		mwLong gmstId = Stack::getInstance().popLong();
 
 		if (gmstId < 0) {
 			mwse::log::getLog() << "xGetGSString: Invalid GMST id." << std::endl;

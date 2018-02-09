@@ -44,7 +44,7 @@ namespace mwse
 
 	float xRefType::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		REFRRecord_t * refr = virtualMachine.getReference();
+		TES3::Reference * refr = virtualMachine.getReference();
 		if (refr == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xRefType: Called on invalid reference." << std::endl;
@@ -53,9 +53,9 @@ namespace mwse
 			return 0.0f;
 		}
 
-		TES3DefaultTemplate_t * temp = reinterpret_cast<TES3DefaultTemplate_t*>(refr->recordPointer);
+		TES3::BaseObject * temp = reinterpret_cast<TES3::BaseObject*>(refr->objectPointer);
 
-		mwLong_t type = static_cast<mwLong_t>(temp->recordType);
+		mwLong type = static_cast<mwLong>(temp->objectType);
 
 		Stack::getInstance().pushLong(type);
 

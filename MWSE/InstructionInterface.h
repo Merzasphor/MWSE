@@ -20,7 +20,6 @@
 
 #pragma once
 
-#include "mwseTypes.h"
 #include "VMExecuteInterface.h"
 #include "OpCodes.h"
 

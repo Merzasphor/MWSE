@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3MACP.h"
 
 using namespace mwse;
 
@@ -51,11 +52,11 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwLong_t modValue = mwse::Stack::getInstance().popLong();
+		mwLong modValue = mwse::Stack::getInstance().popLong();
 
 		// Get the associated MACP record.
-		mwse::REFRRecord_t* reference = virtualMachine.getReference("player");
-		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
+		TES3::Reference* reference = virtualMachine.getReference("player");
+		TES3::MACP* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xModProgressLevel: Could not find MACP record for reference." << std::endl;
@@ -65,7 +66,7 @@ namespace mwse
 		}
 
 		// Modify value.
-		mwLong_t newValue = macp->levelProgress + modValue;
+		mwLong newValue = macp->levelProgress + modValue;
 		if (newValue < 0) {
 			newValue = 0;
 		}

@@ -45,39 +45,39 @@ namespace mwse
 	float xGetEnchant::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Return values.
-		mwString_t enchId = NULL;
-		mwLong_t type = 0;
-		mwLong_t cost = 0;
-		mwFloat_t currCharge = 0.0f;
-		mwLong_t maxCharge = 0;
-		mwLong_t effects = 0;
-		mwLong_t autocalc = 0;
+		mwString enchId = NULL;
+		mwLong type = 0;
+		mwLong cost = 0;
+		mwFloat currCharge = 0.0f;
+		mwLong maxCharge = 0;
+		mwLong effects = 0;
+		mwLong autocalc = 0;
 
 		// Get reference to what we're finding enchantment information for.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference) {
-			ENCHRecord_t* enchantment = NULL;
+			TES3::Enchantment* enchantment = NULL;
 
 			// Get ENCH record by type.
-			RecordTypes::recordType_t recordType = reference->recordPointer->recordType;
-			if (recordType == RecordTypes::ARMOR) {
-				ARMORecord_t* armor = reinterpret_cast<ARMORecord_t*>(reference->recordPointer);
+			TES3::ObjectType::ObjectType recordType = reference->objectPointer->objectType;
+			if (recordType == TES3::ObjectType::ARMOR) {
+				TES3::Armor* armor = reinterpret_cast<TES3::Armor*>(reference->objectPointer);
 				enchantment = armor->enchantment;
 			}
-			else if (recordType == RecordTypes::WEAPON) {
-				WEAPRecord_t* weapon = reinterpret_cast<WEAPRecord_t*>(reference->recordPointer);
+			else if (recordType == TES3::ObjectType::WEAPON) {
+				TES3::Weapon* weapon = reinterpret_cast<TES3::Weapon*>(reference->objectPointer);
 				enchantment = weapon->enchantment;
 			}
-			else if (recordType == RecordTypes::CLOTHING) {
-				CLOTRecord_t* clothing = reinterpret_cast<CLOTRecord_t*>(reference->recordPointer);
+			else if (recordType == TES3::ObjectType::CLOTHING) {
+				TES3::Clothing* clothing = reinterpret_cast<TES3::Clothing*>(reference->objectPointer);
 				enchantment = clothing->enchantment;
 			}
-			else if (recordType == RecordTypes::BOOK) {
-				BOOKRecord_t* book = reinterpret_cast<BOOKRecord_t*>(reference->recordPointer);
+			else if (recordType == TES3::ObjectType::BOOK) {
+				BOOKRecord_t* book = reinterpret_cast<BOOKRecord_t*>(reference->objectPointer);
 				enchantment = book->enchantment;
 			}
-			else if (recordType == RecordTypes::AMMO) {
-				AMMORecord_t* ammo = reinterpret_cast<AMMORecord_t*>(reference->recordPointer);
+			else if (recordType == TES3::ObjectType::AMMO) {
+				TES3::Ammo* ammo = reinterpret_cast<TES3::Ammo*>(reference->objectPointer);
 				enchantment = ammo->enchantment;
 			}
 			else {
@@ -98,7 +98,7 @@ namespace mwse
 				// Get the current charge.
 				mwVarHolderNode_t* varNode = tes3::getAttachedVarHolderNode(reference);
 				if (varNode) {
-					currCharge = *reinterpret_cast<mwFloat_t*>(&varNode->unknown_0x10);
+					currCharge = *reinterpret_cast<mwFloat*>(&varNode->unknown_0x10);
 				}
 				else {
 					currCharge = maxCharge;

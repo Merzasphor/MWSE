@@ -26,25 +26,25 @@ namespace mwse {
 		return result;
 	}
 
-	mwShort_t FileSystem::readShort(const char* fileName) {
-		mwShort_t result = 0;
-		if (read(fileName, &result, sizeof(mwShort_t)) != sizeof(mwShort_t)) {
+	mwShort FileSystem::readShort(const char* fileName) {
+		mwShort result = 0;
+		if (read(fileName, &result, sizeof(mwShort)) != sizeof(mwShort)) {
 			throw std::exception("Invalid size read.");
 		}
 		return result;
 	}
 
-	mwLong_t FileSystem::readLong(const char* fileName) {
-		mwLong_t result = 0;
-		if (read(fileName, &result, sizeof(mwLong_t)) != sizeof(mwLong_t)) {
+	mwLong FileSystem::readLong(const char* fileName) {
+		mwLong result = 0;
+		if (read(fileName, &result, sizeof(mwLong)) != sizeof(mwLong)) {
 			throw std::exception("Invalid size read.");
 		}
 		return result;
 	}
 
-	mwFloat_t FileSystem::readFloat(const char* fileName) {
-		mwFloat_t result = 0.0f;
-		if (read(fileName, &result, sizeof(mwFloat_t)) != sizeof(mwFloat_t)) {
+	mwFloat FileSystem::readFloat(const char* fileName) {
+		mwFloat result = 0.0f;
+		if (read(fileName, &result, sizeof(mwFloat)) != sizeof(mwFloat)) {
 			throw std::exception("Invalid size read.");
 		}
 		return result;
@@ -95,16 +95,16 @@ namespace mwse {
 		return buffer;
 	}
 
-	void FileSystem::writeShort(const char* fileName, const mwShort_t value) {
-		write(fileName, &value, sizeof(mwShort_t));
+	void FileSystem::writeShort(const char* fileName, const mwShort value) {
+		write(fileName, &value, sizeof(mwShort));
 	}
 
-	void FileSystem::writeLong(const char* fileName, const mwLong_t value) {
-		write(fileName, &value, sizeof(mwLong_t));
+	void FileSystem::writeLong(const char* fileName, const mwLong value) {
+		write(fileName, &value, sizeof(mwLong));
 	}
 
-	void FileSystem::writeFloat(const char* fileName, const mwFloat_t value) {
-		write(fileName, &value, sizeof(mwFloat_t));
+	void FileSystem::writeFloat(const char* fileName, const mwFloat value) {
+		write(fileName, &value, sizeof(mwFloat));
 	}
 
 	void FileSystem::writeString(const char* fileName, const std::string& value, bool suppressNull) {

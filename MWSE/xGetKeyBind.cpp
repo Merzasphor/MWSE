@@ -48,7 +48,7 @@ namespace mwse {
 
 	float xGetKeyBind::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get parameters.
-		mwLong_t inputIndex = Stack::getInstance().popLong();
+		mwLong inputIndex = Stack::getInstance().popLong();
 
 		// Validate index.
 		if (inputIndex < KeyFirst || inputIndex > KeyLast) {
@@ -66,9 +66,9 @@ namespace mwse {
 		InputConfig_t::Input_t& config = tes3::getMaster()->inputConfig->inputMaps[inputIndex];
 
 		// Get the basic codes/return values.
-		mwLong_t scanCode = config.keyCode;
-		mwLong_t scanDevice = config.device;
-		mwLong_t keyCode = 0;
+		mwLong scanCode = config.keyCode;
+		mwLong scanDevice = config.device;
+		mwLong keyCode = 0;
 
 		if (scanDevice == DeviceKeyboard) {
 			keyCode = MapVirtualKey(scanCode, MAPVK_VSC_TO_VK);

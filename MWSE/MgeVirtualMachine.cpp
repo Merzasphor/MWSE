@@ -12,7 +12,6 @@ using namespace std;
 #include "VMExecuteInterface.h"
 #include "Stack.h"
 #include "InstructionInterface.h"
-#include "Reference.h"
 #include "OpCodes.h"
 
 using namespace mwse;

@@ -23,6 +23,8 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3MACP.h"
+#include "TES3NPC.h"
 
 using namespace mwse;
 
@@ -45,7 +47,7 @@ namespace mwse
 	float xGetClass::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetClass: No reference provided." << std::endl;
@@ -61,7 +63,7 @@ namespace mwse
 		}
 
 		// Get the base record.
-		NPCCopyRecord_t* record = reinterpret_cast<NPCCopyRecord_t*>(reference->recordPointer);
+		TES3::NPCInstance* record = reinterpret_cast<TES3::NPCInstance*>(reference->objectPointer);
 		if (record == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetClass: No record found for reference." << std::endl;
@@ -75,7 +77,7 @@ namespace mwse
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
-		else if (record->recordType != RecordTypes::NPC) {
+		else if (record->objectType != TES3::ObjectType::NPC) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetClass: Called on a non-NPC reference." << std::endl;
 #endif
@@ -103,28 +105,28 @@ namespace mwse
 		}
 
 		// Get argument: 
-		mwLong_t attributesMask = mwse::Stack::getInstance().popLong();
-		mwLong_t majorMask = mwse::Stack::getInstance().popLong();
-		mwLong_t minorMask = mwse::Stack::getInstance().popLong();
+		mwLong attributesMask = mwse::Stack::getInstance().popLong();
+		mwLong majorMask = mwse::Stack::getInstance().popLong();
+		mwLong minorMask = mwse::Stack::getInstance().popLong();
 
 		// Get the class record.
-		CLASRecord_t* classRecord = record->baseNPC->classRecord;
+		TES3::Class* classRecord = record->baseNPC->classRecord;
 
 		// Get basic class details.
-		mwString_t id = classRecord->id;
-		mwString_t name = classRecord->name;
-		mwLong_t playable = classRecord->playable;
-		mwLong_t specialization = classRecord->specialization;
+		mwString id = classRecord->id;
+		mwString name = classRecord->name;
+		mwLong playable = classRecord->playable;
+		mwLong specialization = classRecord->specialization;
 
 		// Get class attributes.
-		mwLong_t attributes = (1 << classRecord->attributes[0]) + (1 << classRecord->attributes[1]);
+		mwLong attributes = (1 << classRecord->attributes[0]) + (1 << classRecord->attributes[1]);
 		if (attributesMask != 0) {
 			attributes &= attributesMask;
 		}
 
 		// Get class minor/major skills.
-		mwLong_t minorSkills = 0;
-		mwLong_t majorSkills = 0;
+		mwLong minorSkills = 0;
+		mwLong majorSkills = 0;
 		for (int i = 0; i < 10; i += 2) {
 			minorSkills += 1 << classRecord->skills[i];
 			majorSkills += 1 << classRecord->skills[i + 1];

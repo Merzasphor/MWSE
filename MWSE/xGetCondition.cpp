@@ -46,7 +46,7 @@ namespace mwse
 	float xGetCondition::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetCondition: No reference provided." << std::endl;
@@ -55,7 +55,7 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwLong_t value = 0;
+		mwLong value = 0;
 
 		// Get associated varnode, and the condition from it.
 		mwVarHolderNode_t* varNode = mwse::tes3::getAttachedVarHolderNode(reference);
@@ -64,25 +64,25 @@ namespace mwse
 		}
 		else {
 			// If we couldn't get the condition, return the max condition.
-			RecordTypes::recordType_t recordType = reference->recordPointer->recordType;
-			if (recordType == RecordTypes::LOCKPICK) {
-				LOCKRecord_t* lockpick = reinterpret_cast<LOCKRecord_t*>(reference->recordPointer);
+			TES3::ObjectType::ObjectType recordType = reference->objectPointer->objectType;
+			if (recordType == TES3::ObjectType::LOCKPICK) {
+				LOCKRecord_t* lockpick = reinterpret_cast<LOCKRecord_t*>(reference->objectPointer);
 				value = lockpick->maxCondition;
 			}
-			else if (recordType == RecordTypes::PROBE) {
-				PROBRecord_t* probe = reinterpret_cast<PROBRecord_t*>(reference->recordPointer);
+			else if (recordType == TES3::ObjectType::PROBE) {
+				PROBRecord_t* probe = reinterpret_cast<PROBRecord_t*>(reference->objectPointer);
 				value = probe->maxCondition;
 			}
-			else if (recordType == RecordTypes::ARMOR) {
-				ARMORecord_t* armor = reinterpret_cast<ARMORecord_t*>(reference->recordPointer);
+			else if (recordType == TES3::ObjectType::ARMOR) {
+				TES3::Armor* armor = reinterpret_cast<TES3::Armor*>(reference->objectPointer);
 				value = armor->maxCondition;
 			}
-			else if (recordType == RecordTypes::REPAIR) {
-				REPARecord_t* repair = reinterpret_cast<REPARecord_t*>(reference->recordPointer);
+			else if (recordType == TES3::ObjectType::REPAIR) {
+				REPARecord_t* repair = reinterpret_cast<REPARecord_t*>(reference->objectPointer);
 				value = repair->maxCondition;
 			}
-			else if (recordType == RecordTypes::WEAPON) {
-				WEAPRecord_t* weapon = reinterpret_cast<WEAPRecord_t*>(reference->recordPointer);
+			else if (recordType == TES3::ObjectType::WEAPON) {
+				TES3::Weapon* weapon = reinterpret_cast<TES3::Weapon*>(reference->objectPointer);
 				value = weapon->maxCondition;
 			}
 			else {

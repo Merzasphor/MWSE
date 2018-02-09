@@ -49,10 +49,10 @@ namespace mwse
 	float xSetLevel::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwShort_t level = mwse::Stack::getInstance().popShort();
+		mwShort level = mwse::Stack::getInstance().popShort();
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetLevel: Called on invalid reference." << std::endl;
@@ -61,7 +61,7 @@ namespace mwse
 		}
 
 		// Call the original function.
-		SCPTRecord_t* script = &virtualMachine.getScript();
+		TES3::Script* script = &virtualMachine.getScript();
 		mwse::mwscript::SetLevel(script, reference, level);
 
 		return 0.0f;

@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3MACP.h"
 
 using namespace mwse;
 
@@ -35,7 +36,7 @@ namespace mwse
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	private:
-		const mwFloat_t INVALID_VALUE = -1.0f;
+		const mwFloat INVALID_VALUE = -1.0f;
 	};
 
 	static xGetBaseLuc xGetBaseLucInstance;
@@ -47,8 +48,8 @@ namespace mwse
 	float xGetBaseLuc::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get the associated MACP record.
-		mwse::REFRRecord_t* reference = virtualMachine.getReference();
-		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
+		TES3::Reference* reference = virtualMachine.getReference();
+		TES3::MACP* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetBaseLuc: Could not find MACP record for reference." << std::endl;
@@ -58,7 +59,7 @@ namespace mwse
 		}
 
 		// Push the current value of that attribute.
-		mwse::Stack::getInstance().pushFloat(macp->attributes[Luck].base);
+		mwse::Stack::getInstance().pushFloat(macp->attributes[TES3::AttributeLuck].base);
 
 		return 0.0f;
 	}

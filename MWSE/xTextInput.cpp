@@ -58,7 +58,7 @@ namespace mwse {
 		mwseString_t& message = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// 2nd parameter: Key to use to end the input stream. 
-		mwLong_t endCode = mwse::Stack::getInstance().popLong();
+		mwLong endCode = mwse::Stack::getInstance().popLong();
 
 		// The default endcode is return.
 		if (endCode == 0) {

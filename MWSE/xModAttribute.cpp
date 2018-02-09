@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3MACP.h"
 
 using namespace mwse;
 
@@ -51,11 +52,11 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwLong_t attributeId = mwse::Stack::getInstance().popLong();
-		mwFloat_t modValue = mwse::Stack::getInstance().popFloat();
+		mwLong attributeId = mwse::Stack::getInstance().popLong();
+		mwFloat modValue = mwse::Stack::getInstance().popFloat();
 
 		// Verify attribute range.
-		if (attributeId < FirstAttribute || attributeId > LastAttribute) {
+		if (attributeId < TES3::FirstAttribute || attributeId > TES3::LastAttribute) {
 #if _DEBUG
 			mwse::log::getLog() << "xModAttribute: Invalid attribute id: " << attributeId << std::endl;
 #endif
@@ -64,7 +65,7 @@ namespace mwse
 		}
 
 		// Get script reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xModAttribute: Called on invalid reference." << std::endl;
@@ -74,8 +75,8 @@ namespace mwse
 		}
 
 		// Make sure we're looking at an NPC or creature.
-		RecordTypes::recordType_t type = reference->recordPointer->recordType;
-		if (type != RecordTypes::NPC && type != RecordTypes::CREATURE) {
+		TES3::ObjectType::ObjectType type = reference->objectPointer->objectType;
+		if (type != TES3::ObjectType::NPC && type != TES3::ObjectType::Creature) {
 #if _DEBUG
 			mwse::log::getLog() << "xModAttribute: Called on non-NPC, non-creature reference." << std::endl;
 #endif
@@ -84,7 +85,7 @@ namespace mwse
 		}
 
 		// Get the associated MACP record.
-		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
+		TES3::MACP* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xModAttribute: Could not find MACP record for reference." << std::endl;

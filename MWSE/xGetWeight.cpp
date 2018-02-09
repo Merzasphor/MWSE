@@ -43,7 +43,7 @@ namespace mwse {
 
 	float xGetWeight::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetWeight: No reference provided." << std::endl;
@@ -53,7 +53,7 @@ namespace mwse {
 		}
 
 		// Get weight.
-		mwFloat_t weight = 0.0f;
+		mwFloat weight = 0.0f;
 		try {
 			weight = tes3::getWeight(reference, true);
 		}

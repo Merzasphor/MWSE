@@ -36,7 +36,7 @@
 #define TES3_VARINDEX_IMAGE 0x7CEBB4
 
 #define TES3_MASTER_IMAGE 0x7C67DC
-#define TES3_MASTER2_IMAGE 0x7C6CDC
+#define TES3_VIEWMASTER_IMAGE 0x7C6CDC
 
 // Master cell image. Use tes3::getCellMaster() instead of fetching manually.
 #define TES3_MASTERCELL_IMAGE 0x7C67E0

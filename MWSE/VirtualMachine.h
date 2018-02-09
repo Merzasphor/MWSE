@@ -20,7 +20,9 @@
 
 #pragma once
 
-#include "mwseTypes.h"
+#include "ObjectTypes.h"
+#include "TES3Script.h"
+#include "TES3Reference.h"
 #include "mwAdapter.h"
 #include "VMHookInterface.h"
 #include "VMExecuteInterface.h"
@@ -34,56 +36,56 @@ namespace mwse
 	{
 	public:
 		VirtualMachine();
-		virtual float executeOperation(OpCode::OpCode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t* script);
-		virtual void loadParametersForOperation(OpCode::OpCode_t opcode, mwAdapter::Context_t &context, SCPTRecord_t* script);
+		virtual float executeOperation(OpCode::OpCode_t opcode, mwAdapter::Context_t &context, TES3::Script* script);
+		virtual void loadParametersForOperation(OpCode::OpCode_t opcode, mwAdapter::Context_t &context, TES3::Script* script);
 		virtual bool isOpcode(const OpCode::OpCode_t opcode);
 		virtual long* getScriptIP();
 
-		virtual REFRRecord_t * getReference();
-		virtual REFRRecord_t * getReference(const char *id);
-		virtual void setReference(REFRRecord_t * reference);
-		virtual REFRRecord_t * getCurrentTarget();
-		virtual TES3DefaultTemplate_t * getTemplate(const char *id);
+		virtual TES3::Reference * getReference();
+		virtual TES3::Reference * getReference(const char *id);
+		virtual void setReference(TES3::Reference * reference);
+		virtual TES3::Reference * getCurrentTarget();
+		virtual TES3::BaseObject * getTemplate(const char *id);
 
 		//local variables, methods to access local variables
-		virtual mwLong_t getLongVariable(int index);							//by index
-		virtual mwLong_t getLongVariable(const char *id);						//by name
-		virtual mwLong_t getLongVariable(int index, REFRRecord_t &reference);	//foreign
-		virtual void setLongVariable(int index, mwLong_t value);
-		virtual void setLongVariable(const char *id, mwLong_t value);
-		virtual void setLongVariable(int index, mwLong_t value , REFRRecord_t &reference);
+		virtual mwLong getLongVariable(int index);							//by index
+		virtual mwLong getLongVariable(const char *id);						//by name
+		virtual mwLong getLongVariable(int index, TES3::Reference& reference);	//foreign
+		virtual void setLongVariable(int index, mwLong value);
+		virtual void setLongVariable(const char *id, mwLong value);
+		virtual void setLongVariable(int index, mwLong value , TES3::Reference &reference);
 
-		virtual mwShort_t getShortVariable(int index);
-		virtual mwShort_t getShortVariable(const char *id);
-		virtual mwShort_t getShortVariable(int index, REFRRecord_t &reference);
-		virtual void setShortVariable(int index, mwShort_t value);
-		virtual void setShortVariable(const char *id, mwShort_t value);
-		virtual void setShortVariable(int index, mwShort_t value , REFRRecord_t &reference);
+		virtual mwShort getShortVariable(int index);
+		virtual mwShort getShortVariable(const char *id);
+		virtual mwShort getShortVariable(int index, TES3::Reference& reference);
+		virtual void setShortVariable(int index, mwShort value);
+		virtual void setShortVariable(const char *id, mwShort value);
+		virtual void setShortVariable(int index, mwShort value , TES3::Reference &reference);
 
-		virtual mwFloat_t getFloatVariable(int index);
-		virtual mwFloat_t getFloatVariable(const char *id);
-		virtual mwFloat_t getFloatVariable(int index, REFRRecord_t &reference);
-		virtual void setFloatVariable(int index, mwFloat_t value);
-		virtual void setFloatVariable(const char *id, mwFloat_t value);
-		virtual void setFloatVariable(int index, mwFloat_t value , REFRRecord_t &reference);
+		virtual mwFloat getFloatVariable(int index);
+		virtual mwFloat getFloatVariable(const char *id);
+		virtual mwFloat getFloatVariable(int index, TES3::Reference& reference);
+		virtual void setFloatVariable(int index, mwFloat value);
+		virtual void setFloatVariable(const char *id, mwFloat value);
+		virtual void setFloatVariable(int index, mwFloat value , TES3::Reference& reference);
 
 		//global variables, methods to access global variables
-		virtual mwLong_t getLongGlobal(const char *id);
-		virtual void setLongGlobal(const char *id, mwLong_t value);
+		virtual mwLong getLongGlobal(const char *id);
+		virtual void setLongGlobal(const char *id, mwLong value);
 		
-		virtual mwShort_t getShortGlobal(const char *id);
-		virtual void setShortGlobal(const char *id, mwShort_t value);
+		virtual mwShort getShortGlobal(const char *id);
+		virtual void setShortGlobal(const char *id, mwShort value);
 
-		virtual mwFloat_t getFloatGlobal(const char *id);
-		virtual void setFloatGlobal(const char *id, mwFloat_t value);
+		virtual mwFloat getFloatGlobal(const char *id);
+		virtual void setFloatGlobal(const char *id, mwFloat value);
 
 		//getParameters
 		virtual char getByteValue(bool peek = false);
-		virtual mwShort_t getShortValue(bool peek = false);
-		virtual mwLong_t getLongValue(bool peek =false);
-		virtual mwFloat_t getFloatValue(bool peek = false);
+		virtual mwShort getShortValue(bool peek = false);
+		virtual mwLong getLongValue(bool peek =false);
+		virtual mwFloat getFloatValue(bool peek = false);
 
-		virtual mwseString_t& getString(mwLong_t fromStack);	//only ment for stack-based syntax!, parameter-based syntax functions should use getStringParameter!!!
+		virtual mwseString_t& getString(mwLong fromStack);	//only ment for stack-based syntax!, parameter-based syntax functions should use getStringParameter!!!
 
 
 		// Debug method to print information about the current script.
@@ -91,12 +93,12 @@ namespace mwse
 
 		mwAdapter::Context_t context;
 
-		SCPTRecord_t& getScript();
+		TES3::Script& getScript();
 
 	private:
 		// The currently executing script.
-		SCPTRecord_t * script;
-		void setScript(SCPTRecord_t* script);
+		TES3::Script * script;
+		void setScript(TES3::Script* script);
 		
 		// Current context (registers, etc).
 		mwAdapter::Context_t getContext();
@@ -105,7 +107,7 @@ namespace mwse
 		long *mwScriptIP;
 
 		// Last executed script.
-		SCPTRecord_t * oldscript;
+		TES3::Script * oldscript;
 
 		// Called when the currently executed script changes.
 		void OnScriptChange();

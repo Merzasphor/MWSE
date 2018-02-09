@@ -24,6 +24,8 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 #include "ArrayUtil.h"
+#include "TES3MACP.h"
+#include "TES3NPC.h"
 
 using namespace mwse;
 
@@ -36,7 +38,7 @@ namespace mwse
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	private:
-		std::map<mwLong_t, mwLong_t> arrayMap;
+		std::map<mwLong, mwLong> arrayMap;
 	};
 
 	static xGetRace xGetRaceInstance;
@@ -48,7 +50,7 @@ namespace mwse
 	float xGetRace::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetRace: No reference provided." << std::endl;
@@ -57,14 +59,14 @@ namespace mwse
 		}
 
 		// Get the base record.
-		NPCCopyRecord_t* record = reinterpret_cast<NPCCopyRecord_t*>(reference->recordPointer);
+		TES3::NPCInstance* record = reinterpret_cast<TES3::NPCInstance*>(reference->objectPointer);
 		if (record == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetRace: No record found for reference." << std::endl;
 #endif
 			return 0.0f;
 		}
-		else if (record->recordType != RecordTypes::NPC) {
+		else if (record->objectType != TES3::ObjectType::NPC) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetRace: Called on a non-NPC reference." << std::endl;
 #endif
@@ -78,10 +80,10 @@ namespace mwse
 		}
 
 		// Get the NPC's race.
-		RACERecord_t* race = record->baseNPC->raceRecord;
+		TES3::Race* race = record->baseNPC->race;
 
 		// Get argument: return variable type.
-		mwShort_t returnTypeParam = mwse::Stack::getInstance().popShort();
+		mwShort returnTypeParam = mwse::Stack::getInstance().popShort();
 
 		// Simple case. Just push the race name.
 		if (returnTypeParam == 0) {
@@ -92,10 +94,10 @@ namespace mwse
 		// Complex case, push array(s).
 		else if (returnTypeParam == 1) {
 			// Get the array index to use from storage, or create it.
-			mwLong_t mainArrayId = 0;
-			mwLong_t skillArrayId = 0;
-			mwLong_t attributeArrayId = 0;
-			auto foundArrayId = arrayMap.find((mwLong_t)race);
+			mwLong mainArrayId = 0;
+			mwLong skillArrayId = 0;
+			mwLong attributeArrayId = 0;
+			auto foundArrayId = arrayMap.find((mwLong)race);
 			if (foundArrayId != arrayMap.end()) {
 				// Array found. Clear the arrays for reuse.
 				mainArrayId = foundArrayId->second;
@@ -110,7 +112,7 @@ namespace mwse
 				mainArrayId = mwse::Arrays::getInstance().create("xGetRace");
 				skillArrayId = mwse::Arrays::getInstance().create("xGetRace");
 				attributeArrayId = mwse::Arrays::getInstance().create("xGetRace");
-				arrayMap[(mwLong_t)race] = mainArrayId;
+				arrayMap[(mwLong)race] = mainArrayId;
 			}
 
 			if (mainArrayId != 0) {
@@ -119,9 +121,9 @@ namespace mwse
 					ContainedArray_t& skillArray = mwse::Arrays::getInstance().get(skillArrayId);
 					skillArray.push_back(7);
 					for (size_t i = 0; i < 7; i++) {
-						if (race->skill_bonuses[i].skill != NoSkill) {
-							skillArray.push_back(race->skill_bonuses[i].skill);
-							skillArray.push_back(race->skill_bonuses[i].bonus);
+						if (race->skillBonuses[i].skill != TES3::SkillInvalid) {
+							skillArray.push_back(race->skillBonuses[i].skill);
+							skillArray.push_back(race->skillBonuses[i].bonus);
 						}
 						else {
 							skillArray[0] = i;
@@ -133,8 +135,8 @@ namespace mwse
 				if (attributeArrayId != 0) {
 					ContainedArray_t& attributeArray = mwse::Arrays::getInstance().get(attributeArrayId);
 					for (size_t i = 0; i < 8; i++) {
-						attributeArray.push_back(race->base_attributes[i].male);
-						attributeArray.push_back(race->base_attributes[i].female);
+						attributeArray.push_back(race->baseAttributes[i].male);
+						attributeArray.push_back(race->baseAttributes[i].female);
 					}
 				}
 
@@ -144,10 +146,10 @@ namespace mwse
 				returnArray.push_back(mwse::string::store::getOrCreate(race->name));
 				returnArray.push_back(skillArrayId);
 				returnArray.push_back(attributeArrayId);
-				returnArray.push_back(*reinterpret_cast<mwLong_t*>(&race->height.male));
-				returnArray.push_back(*reinterpret_cast<mwLong_t*>(&race->height.female));
-				returnArray.push_back(*reinterpret_cast<mwLong_t*>(&race->weight.male));
-				returnArray.push_back(*reinterpret_cast<mwLong_t*>(&race->weight.female));
+				returnArray.push_back(*reinterpret_cast<mwLong*>(&race->height.male));
+				returnArray.push_back(*reinterpret_cast<mwLong*>(&race->height.female));
+				returnArray.push_back(*reinterpret_cast<mwLong*>(&race->weight.male));
+				returnArray.push_back(*reinterpret_cast<mwLong*>(&race->weight.female));
 				returnArray.push_back(race->flags & 1);
 				returnArray.push_back(race->flags >> 1);
 

@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3MACP.h"
 
 using namespace mwse;
 
@@ -51,12 +52,12 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwLong_t skillId = mwse::Stack::getInstance().popLong();
-		mwFloat_t modValue = mwse::Stack::getInstance().popFloat();
-		mwLong_t normalize = mwse::Stack::getInstance().popLong();
+		mwLong skillId = mwse::Stack::getInstance().popLong();
+		mwFloat modValue = mwse::Stack::getInstance().popFloat();
+		mwLong normalize = mwse::Stack::getInstance().popLong();
 
 		// Verify attribute range.
-		if (skillId < FirstSkill || skillId > LastSkill) {
+		if (skillId < TES3::FirstSkill || skillId > TES3::LastSkill) {
 #if _DEBUG
 			mwse::log::getLog() << "xModProgressSkill: Invalid skill id: " << skillId << std::endl;
 #endif
@@ -65,8 +66,8 @@ namespace mwse
 		}
 
 		// Make sure we're looking at an NPC or creature.
-		REFRRecord_t* reference = virtualMachine.getReference("player");
-		if (reference->recordPointer->recordType != RecordTypes::NPC) {
+		TES3::Reference* reference = virtualMachine.getReference("player");
+		if (reference->objectPointer->objectType != TES3::ObjectType::NPC) {
 #if _DEBUG
 			mwse::log::getLog() << "xModProgressSkill: Called on non-NPC reference." << std::endl;
 #endif
@@ -75,7 +76,7 @@ namespace mwse
 		}
 
 		// Get the associated MACP record.
-		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
+		TES3::MACP* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xModProgressSkill: Could not find MACP record for reference." << std::endl;
@@ -85,11 +86,11 @@ namespace mwse
 		}
 
 		// Mod value.
-		mwFloat_t progress = macp->skillProgress[skillId];
+		mwFloat progress = macp->skillProgress[skillId];
 		// Normalize progress, then add mod, then convert back.
 		// This avoids some floating point precision errors.
 		if (normalize) {
-			const mwFloat_t requirement = tes3::getSkillRequirement(reference, skillId);
+			const mwFloat requirement = tes3::getSkillRequirement(reference, skillId);
 			progress = 100.0f * progress / requirement + modValue;
 			progress = requirement * progress / 100.0f;
 		}

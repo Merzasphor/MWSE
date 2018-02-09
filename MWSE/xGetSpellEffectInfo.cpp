@@ -46,22 +46,22 @@ namespace mwse
 	{
 		// Get parameters.
 		mwseString_t& effectId = virtualMachine.getString(Stack::getInstance().popLong());
-		mwShort_t effectIndex = Stack::getInstance().popShort();
+		mwShort effectIndex = Stack::getInstance().popShort();
 
 		// Return values.
-		mwLong_t effectEnumId = Effects::NoEffect;
-		mwLong_t rangeType = 0;
-		mwLong_t area = 0;
-		mwLong_t duration = 0;
-		mwLong_t magMin = 0;
-		mwLong_t magMax = 0;
+		mwLong effectEnumId = Effects::NoEffect;
+		mwLong rangeType = 0;
+		mwLong area = 0;
+		mwLong duration = 0;
+		mwLong magMin = 0;
+		mwLong magMax = 0;
 
 		// Validate effect index.
 		if (effectIndex >= 1 && effectIndex <= 8) {
 			// Get the desired effect.
-			SPELRecord_t* spell = tes3::getSpellRecordById(effectId);
+			TES3::Spell* spell = tes3::getSpellRecordById(effectId);
 			if (spell) {
-				Effect_t* effect = &spell->effects[effectIndex - 1];
+				TES3::Effect* effect = &spell->effects[effectIndex - 1];
 				// If we found an effect, set the values.
 				if (effect && effect->effectId != Effects::NoEffect) {
 					effectEnumId = effect->effectId;

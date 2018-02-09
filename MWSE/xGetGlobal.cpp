@@ -43,7 +43,7 @@ namespace mwse {
 	float xGetGlobal::execute(mwse::VMExecuteInterface &virtualMachine) {
 		mwseString_t& variable = virtualMachine.getString(Stack::getInstance().popLong());
 
-		mwFloat_t value = 0.0f;
+		mwFloat value = 0.0f;
 
 		// Get global.
 		const GLOBRecord_t* global = tes3::getGlobalRecord(variable);

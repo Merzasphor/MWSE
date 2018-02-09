@@ -41,7 +41,7 @@ namespace mwse {
 	void xRefID::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 
 	float xRefID::execute(mwse::VMExecuteInterface &virtualMachine) {
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xRefID: Called on invalid reference." << std::endl;
@@ -49,7 +49,7 @@ namespace mwse {
 			return 0.0f;
 		}
 
-		mwString_t objectId = reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer)->objectId;
+		mwString objectId = reinterpret_cast<TES3::BaseObject*>(reference->objectPointer)->objectID;
 
 		Stack::getInstance().pushString(objectId);
 

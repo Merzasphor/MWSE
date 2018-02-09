@@ -44,7 +44,7 @@ namespace mwse
 
 	float xCreateArray::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwLong_t id = mwse::Arrays::getInstance().create("xCreateArray");
+		mwLong id = mwse::Arrays::getInstance().create("xCreateArray");
 
 		mwse::Stack::getInstance().pushLong(id);
 

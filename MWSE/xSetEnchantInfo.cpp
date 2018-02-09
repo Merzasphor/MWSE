@@ -46,10 +46,10 @@ namespace mwse
 	{
 		// Get parameters.
 		mwseString_t& enchantId = virtualMachine.getString(Stack::getInstance().popLong());
-		mwLong_t type = Stack::getInstance().popLong();
-		mwLong_t cost = Stack::getInstance().popLong();
-		mwLong_t charge = Stack::getInstance().popLong();
-		mwLong_t autocalc = Stack::getInstance().popLong();
+		mwLong type = Stack::getInstance().popLong();
+		mwLong cost = Stack::getInstance().popLong();
+		mwLong charge = Stack::getInstance().popLong();
+		mwLong autocalc = Stack::getInstance().popLong();
 
 		bool result = false;
 
@@ -71,7 +71,7 @@ namespace mwse
 			return false;
 		}
 
-		ENCHRecord_t* enchantRecord = tes3::getEnchantRecordById(enchantId);
+		TES3::Enchantment* enchantRecord = tes3::getEnchantRecordById(enchantId);
 		if (enchantRecord == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetEnchantInfo: No effect found given id '" << enchantId << "'." << std::endl;

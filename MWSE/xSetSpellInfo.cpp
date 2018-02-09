@@ -46,11 +46,11 @@ namespace mwse
 	{
 		// Get parameters.
 		mwseString_t& spellId = virtualMachine.getString(mwse::Stack::getInstance().popLong());
-		mwLong_t nameId = mwse::Stack::getInstance().popLong();
-		mwLong_t type = mwse::Stack::getInstance().popLong();
-		mwLong_t cost = mwse::Stack::getInstance().popLong();
-		mwLong_t flags = mwse::Stack::getInstance().popLong();
-		mwLong_t origin = mwse::Stack::getInstance().popLong();
+		mwLong nameId = mwse::Stack::getInstance().popLong();
+		mwLong type = mwse::Stack::getInstance().popLong();
+		mwLong cost = mwse::Stack::getInstance().popLong();
+		mwLong flags = mwse::Stack::getInstance().popLong();
+		mwLong origin = mwse::Stack::getInstance().popLong();
 
 		// Validate spell type.
 		if (type < FirstSpellType || type > LastSpellType) {
@@ -80,7 +80,7 @@ namespace mwse
 		}
 
 		// Get spell data by id.
-		SPELRecord_t* spell = tes3::getSpellRecordById(spellId);
+		TES3::Spell* spell = tes3::getSpellRecordById(spellId);
 		if (spell == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetSpellInfo: Could not find spell of id '" << spellId << "'" << std::endl;

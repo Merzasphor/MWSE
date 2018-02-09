@@ -45,11 +45,11 @@ namespace mwse
 	float xSetMaxCondition::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameter from the stack.
-		mwLong_t maxCondition = mwse::Stack::getInstance().popLong();
+		mwLong maxCondition = mwse::Stack::getInstance().popLong();
 		bool success = false;
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetMaxCondition: No reference provided." << std::endl;
@@ -59,7 +59,7 @@ namespace mwse
 		}
 
 		// Get the base record.
-		TES3DefaultTemplate_t* record = reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer);
+		TES3::BaseObject* record = reinterpret_cast<TES3::BaseObject*>(reference->objectPointer);
 		if (record == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetMaxCondition: No record found for reference." << std::endl;
@@ -69,24 +69,24 @@ namespace mwse
 		}
 
 		// Set the max condition based on record type.
-		if (record->recordType == RecordTypes::ARMOR) {
-			reinterpret_cast<ARMORecord_t*>(record)->maxCondition = maxCondition;
+		if (record->objectType == TES3::ObjectType::ARMOR) {
+			reinterpret_cast<TES3::Armor*>(record)->maxCondition = maxCondition;
 		}
-		else if (record->recordType == RecordTypes::WEAPON) {
-			reinterpret_cast<WEAPRecord_t*>(record)->maxCondition = maxCondition;
+		else if (record->objectType == TES3::ObjectType::WEAPON) {
+			reinterpret_cast<TES3::Weapon*>(record)->maxCondition = maxCondition;
 		}
-		else if (record->recordType == RecordTypes::LOCK) {
+		else if (record->objectType == TES3::ObjectType::LOCK) {
 			reinterpret_cast<LOCKRecord_t*>(record)->maxCondition = maxCondition;
 		}
-		else if (record->recordType == RecordTypes::PROBE) {
+		else if (record->objectType == TES3::ObjectType::PROBE) {
 			reinterpret_cast<PROBRecord_t*>(record)->maxCondition = maxCondition;
 		}
-		else if (record->recordType == RecordTypes::REPAIR) {
+		else if (record->objectType == TES3::ObjectType::REPAIR) {
 			reinterpret_cast<REPARecord_t*>(record)->maxCondition = maxCondition;
 		}
 		else {
 #if _DEBUG
-			mwse::log::getLog() << "xSetMaxCondition: Invalid record type: " << record->recordType << std::endl;
+			mwse::log::getLog() << "xSetMaxCondition: Invalid record type: " << record->objectType << std::endl;
 #endif
 			mwse::Stack::getInstance().pushLong(success);
 			return 0.0f;

@@ -24,6 +24,12 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Armor.h"
+#include "TES3Clothing.h"
+#include "TES3Weapon.h"
+#include "TES3NPC.h"
+#include "TES3Enchantment.h"
+
 using namespace mwse;
 
 namespace mwse {
@@ -34,8 +40,8 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 		
 	private:
-		mwLong_t getSubtype(TES3DefaultTemplate_t* record);
-		bool nodeMatchesFilter(IteratorNode_t<TES3DefaultTemplate_t*>* node, mwLong_t typeFilter, mwLong_t subtypeFilter);
+		mwLong getSubtype(TES3::BaseObject* record);
+		bool nodeMatchesFilter(TES3::IteratorNode<TES3::BaseObject*>* node, mwLong typeFilter, mwLong subtypeFilter);
 	};
 
 	static xEquipmentList xEquipmentListInstance;
@@ -46,12 +52,12 @@ namespace mwse {
 
 	float xEquipmentList::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get parameters.
-		IteratorNode_t<TES3DefaultTemplate_t*>* node = reinterpret_cast<IteratorNode_t<TES3DefaultTemplate_t*>*>(mwse::Stack::getInstance().popLong());
-		mwLong_t typeFilter = mwse::Stack::getInstance().popLong();
-		mwLong_t subtypeFilter = mwse::Stack::getInstance().popLong() - 1;
+		TES3::IteratorNode<TES3::BaseObject*>* node = reinterpret_cast<TES3::IteratorNode<TES3::BaseObject*>*>(mwse::Stack::getInstance().popLong());
+		mwLong typeFilter = mwse::Stack::getInstance().popLong();
+		mwLong subtypeFilter = mwse::Stack::getInstance().popLong() - 1;
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 			mwse::log::getLog() << "xEquipmentList: Called without refrence." << std::endl;
 			mwse::Stack::getInstance().pushLong(0);
@@ -66,7 +72,8 @@ namespace mwse {
 			return 0.0f;
 		}
 
-		if (reference->recordPointer->recordType != RecordTypes::NPC && reference->recordPointer->recordType != RecordTypes::CREATURE) {
+		TES3::ObjectType::ObjectType objectType = reference->objectPointer->objectType;
+		if (objectType != TES3::ObjectType::NPC && objectType != TES3::ObjectType::Creature) {
 			mwse::log::getLog() << "xEquipmentList: Called on non-NPC, non-creature." << std::endl;
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
@@ -82,18 +89,18 @@ namespace mwse {
 
 		// Results.
 		char * id = NULL;
-		mwLong_t count = 0;
-		mwLong_t type = 0;
-		mwLong_t subtype = -1;
-		mwLong_t value = 0;
-		mwFloat_t weight = 0;
-		mwString_t name = NULL;
-		mwString_t enchantId = NULL;
-		IteratorNode_t<TES3DefaultTemplate_t*>* next = NULL;
+		mwLong count = 0;
+		mwLong type = 0;
+		mwLong subtype = -1;
+		mwLong value = 0;
+		mwFloat weight = 0;
+		mwString name = NULL;
+		mwString enchantId = NULL;
+		TES3::IteratorNode<TES3::BaseObject*>* next = NULL;
 
 		// If we aren't given a node, get the first one.
 		if (node == NULL) {
-			node = reinterpret_cast<NPCCopyRecord_t*>(reference->recordPointer)->equipment.head;
+			node = reinterpret_cast<TES3::NPCInstance*>(reference->objectPointer)->equipment.head;
 
 			// Pass over any records that don't match the current filters.
 			while (node && !nodeMatchesFilter(node, typeFilter, subtypeFilter)) {
@@ -103,10 +110,10 @@ namespace mwse {
 
 		// Validate the node we've obtained.
 		if (node && node->data) {
-			TES3DefaultTemplate_t* record = *node->data;
+			TES3::BaseObject* record = *node->data;
 
-			id = record->objectId;
-			type = record->recordType;
+			id = record->objectID;
+			type = record->objectType;
 
 			// Get subtype.
 			subtype = getSubtype(record) + 1;
@@ -116,7 +123,7 @@ namespace mwse {
 
 			// Get value.
 			try {
-				value = tes3::getValue(reinterpret_cast<BaseRecord_t*>(record));
+				value = tes3::getValue(reinterpret_cast<TES3::BaseObject*>(record));
 			}
 			catch (std::exception& e) {
 				value = 0;
@@ -125,7 +132,7 @@ namespace mwse {
 
 			// Get weight.
 			try {
-				weight = tes3::getWeight(reinterpret_cast<BaseRecord_t*>(record));
+				weight = tes3::getWeight(reinterpret_cast<TES3::BaseObject*>(record));
 			}
 			catch (std::exception& e) {
 				weight = 0.0f;
@@ -134,7 +141,7 @@ namespace mwse {
 
 			// Get name.
 			try {
-				name = tes3::getName(reinterpret_cast<BaseRecord_t*>(record));
+				name = tes3::getName(reinterpret_cast<TES3::BaseObject*>(record));
 			}
 			catch (std::exception& e) {
 				name = NULL;
@@ -143,9 +150,9 @@ namespace mwse {
 
 			// Get enchantment id.
 			try {
-				ENCHRecord_t* enchantment = tes3::getEnchantment(record);
+				TES3::Enchantment* enchantment = tes3::getEnchantment(record);
 				if (enchantment) {
-					enchantId = enchantment->id;
+					enchantId = enchantment->objectID;
 				}
 			}
 			catch (std::exception& e) {
@@ -161,7 +168,7 @@ namespace mwse {
 		}
 
 		// Push values to the stack.
-		mwse::Stack::getInstance().pushLong((mwLong_t)next);
+		mwse::Stack::getInstance().pushLong((mwLong)next);
 		mwse::Stack::getInstance().pushString(enchantId);
 		mwse::Stack::getInstance().pushString(name);
 		mwse::Stack::getInstance().pushFloat(weight);
@@ -174,36 +181,36 @@ namespace mwse {
 		return 0.0f;
 	}
 
-	mwLong_t xEquipmentList::getSubtype(TES3DefaultTemplate_t* record) {
+	mwLong xEquipmentList::getSubtype(TES3::BaseObject* record) {
 		if (record == NULL) {
 			return -2;
 		}
 
-		mwLong_t subtype = -2;
+		mwLong subtype = -2;
 
-		AMMORecord_t * ammo = reinterpret_cast<AMMORecord_t*>(record);
-		switch (record->recordType) {
-		case RecordTypes::AMMO:
+		TES3::Ammo * ammo = reinterpret_cast<TES3::Ammo*>(record);
+		switch (record->objectType) {
+		case TES3::ObjectType::Ammo:
 			subtype = ammo->weight;
 			break;
-		case RecordTypes::ARMOR:
-			subtype = reinterpret_cast<ARMORecord_t*>(record)->slot;
+		case TES3::ObjectType::Armor:
+			subtype = reinterpret_cast<TES3::Armor*>(record)->slot;
 			break;
-		case RecordTypes::CLOTHING:
-			subtype = reinterpret_cast<CLOTRecord_t*>(record)->slot;
+		case TES3::ObjectType::Clothing:
+			subtype = reinterpret_cast<TES3::Clothing*>(record)->slot;
 			break;
-		case RecordTypes::WEAPON:
-			subtype = reinterpret_cast<WEAPRecord_t*>(record)->weaponType;
+		case TES3::ObjectType::Weapon:
+			subtype = reinterpret_cast<TES3::Weapon*>(record)->weaponType;
 			break;
 		}
 
 		return subtype;
 	}
 
-	bool xEquipmentList::nodeMatchesFilter(IteratorNode_t<TES3DefaultTemplate_t*>* node, mwLong_t typeFilter, mwLong_t subtypeFilter) {
-		TES3DefaultTemplate_t* record = *node->data;
+	bool xEquipmentList::nodeMatchesFilter(TES3::IteratorNode<TES3::BaseObject*>* node, mwLong typeFilter, mwLong subtypeFilter) {
+		TES3::BaseObject* record = *node->data;
 
-		if (typeFilter != 0 && record->recordType != typeFilter) {
+		if (typeFilter != 0 && record->objectType != typeFilter) {
 			return false;
 		}
 

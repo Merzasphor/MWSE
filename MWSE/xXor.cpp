@@ -43,8 +43,8 @@ namespace mwse
 
 	float xXor::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwLong_t param1 = mwse::Stack::getInstance().popLong();
-		mwLong_t param2 = mwse::Stack::getInstance().popLong();
+		mwLong param1 = mwse::Stack::getInstance().popLong();
+		mwLong param2 = mwse::Stack::getInstance().popLong();
 
 		mwse::Stack::getInstance().pushLong((param1 || param2) && !(param1 && param2));
 

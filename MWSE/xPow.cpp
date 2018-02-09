@@ -45,8 +45,8 @@ namespace mwse
 
 	float xPow::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwFloat_t base = mwse::Stack::getInstance().popFloat();
-		mwFloat_t exponent = mwse::Stack::getInstance().popFloat();
+		mwFloat base = mwse::Stack::getInstance().popFloat();
+		mwFloat exponent = mwse::Stack::getInstance().popFloat();
 
 		mwse::Stack::getInstance().pushFloat(std::powf(base, exponent));
 

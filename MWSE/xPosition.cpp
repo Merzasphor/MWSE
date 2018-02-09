@@ -49,13 +49,13 @@ namespace mwse
 	float xPosition::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwFloat_t x = mwse::Stack::getInstance().popFloat();
-		mwFloat_t y = mwse::Stack::getInstance().popFloat();
-		mwFloat_t z = mwse::Stack::getInstance().popFloat();
-		mwFloat_t rotation = mwse::Stack::getInstance().popFloat();
+		mwFloat x = mwse::Stack::getInstance().popFloat();
+		mwFloat y = mwse::Stack::getInstance().popFloat();
+		mwFloat z = mwse::Stack::getInstance().popFloat();
+		mwFloat rotation = mwse::Stack::getInstance().popFloat();
 
 		// Get other context information for original opcode.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xPosition: Called on invalid reference." << std::endl;
@@ -64,7 +64,7 @@ namespace mwse
 		}
 
 		// Call the original function.
-		SCPTRecord_t* script = &virtualMachine.getScript();
+		TES3::Script* script = &virtualMachine.getScript();
 		mwse::mwscript::Position(script, reference, x, y, z, rotation);
 
 		return 0.0f;

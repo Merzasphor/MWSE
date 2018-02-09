@@ -50,7 +50,7 @@ namespace mwse
 	{
 		mwseString_t& parameter = virtualMachine.getString(Stack::getInstance().popLong());
 
-		mwLong_t result = parameter.length();
+		mwLong result = parameter.length();
 
 		mwse::Stack::getInstance().pushLong(result);
 

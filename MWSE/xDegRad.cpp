@@ -46,7 +46,7 @@ namespace mwse
 
 	float xDegRad::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwFloat_t param = mwse::Stack::getInstance().popFloat();
+		mwFloat param = mwse::Stack::getInstance().popFloat();
 
 		mwse::Stack::getInstance().pushFloat(param * M_PI / 180);
 		return 0.0f;

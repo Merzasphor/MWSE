@@ -46,10 +46,10 @@ namespace mwse
 	float xSetQuality::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwFloat_t value = mwse::Stack::getInstance().popFloat();
+		mwFloat value = mwse::Stack::getInstance().popFloat();
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetQuality: No reference provided." << std::endl;
@@ -58,7 +58,7 @@ namespace mwse
 		}
 
 		// Get record.
-		BaseRecord_t* record = reference->recordPointer;
+		TES3::BaseObject* record = reference->objectPointer;
 		if (record == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetQuality: No base record found." << std::endl;
@@ -68,21 +68,21 @@ namespace mwse
 
 		// Get the quality.
 		bool valueSet = false;
-		RecordTypes::recordType_t recordType = record->recordType;
-		if (recordType == RecordTypes::LOCKPICK) {
-			reinterpret_cast<LOCKRecord_t*>(reference->recordPointer)->quality = value;
+		TES3::ObjectType::ObjectType recordType = record->objectType;
+		if (recordType == TES3::ObjectType::LOCKPICK) {
+			reinterpret_cast<LOCKRecord_t*>(reference->objectPointer)->quality = value;
 			valueSet = true;
 		}
-		else if (recordType == RecordTypes::PROBE) {
-			reinterpret_cast<PROBRecord_t*>(reference->recordPointer)->quality = value;
+		else if (recordType == TES3::ObjectType::PROBE) {
+			reinterpret_cast<PROBRecord_t*>(reference->objectPointer)->quality = value;
 			valueSet = true;
 		}
-		else if (recordType == RecordTypes::REPAIR) {
-			reinterpret_cast<REPARecord_t*>(reference->recordPointer)->quality = value;
+		else if (recordType == TES3::ObjectType::REPAIR) {
+			reinterpret_cast<REPARecord_t*>(reference->objectPointer)->quality = value;
 			valueSet = true;
 		}
-		else if (recordType == RecordTypes::APPARATUS) {
-			reinterpret_cast<APPARecord_t*>(reference->recordPointer)->quality = value;
+		else if (recordType == TES3::ObjectType::APPARATUS) {
+			reinterpret_cast<APPARecord_t*>(reference->objectPointer)->quality = value;
 			valueSet = true;
 		}
 		else {

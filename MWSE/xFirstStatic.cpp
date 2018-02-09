@@ -47,8 +47,8 @@ namespace mwse
 		// Clear elements in our stored exterior ref list.
 		mwse::tes3::clearExteriorRefs();
 
-		REFRRecord_t* reference = NULL;
-		TES3CellMaster_t* cellMaster = mwse::tes3::getCellMaster();
+		TES3::Reference* reference = NULL;
+		TES3::CellMaster* cellMaster = mwse::tes3::getCellMaster();
 		if (cellMaster->interiorCell != NULL) {
 			reference = mwse::tes3::skipRemovedReferences(cellMaster->interiorCell->statics.first);
 		}
@@ -65,7 +65,7 @@ namespace mwse
 
 					cellPointer = cellMaster->exteriorCells[i];
 					if (cellPointer->size == 1) {
-						REFRRecord_t* tempReference = mwse::tes3::skipRemovedReferences(cellPointer->first->npc.first);
+						TES3::Reference* tempReference = mwse::tes3::skipRemovedReferences(cellPointer->first->npc.first);
 						if (tempReference != NULL) {
 							mwse::tes3::exteriorRefs[exteriorCount] = tempReference;
 							exteriorCount++;
@@ -89,7 +89,7 @@ namespace mwse
 			}
 		}
 
-		mwse::Stack::getInstance().pushLong((mwLong_t)reference);
+		mwse::Stack::getInstance().pushLong((mwLong)reference);
 
 		return 0.0f;
 	}

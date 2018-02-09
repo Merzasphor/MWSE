@@ -50,9 +50,9 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwLong_t id = mwse::Stack::getInstance().popLong();
+		mwLong id = mwse::Stack::getInstance().popLong();
 
-		mwLong_t status = mwse::Arrays::getInstance().clear("xClearArray", id);
+		mwLong status = mwse::Arrays::getInstance().clear("xClearArray", id);
 
 		mwse::Stack::getInstance().pushLong(status);
 

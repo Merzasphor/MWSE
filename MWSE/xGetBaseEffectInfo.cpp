@@ -45,7 +45,7 @@ namespace mwse
 	float xGetBaseEffectInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwLong_t id = Stack::getInstance().popLong();
+		mwLong id = Stack::getInstance().popLong();
 
 		// Validate id.
 		if (id < Effects::FirstMagicEffect || id > Effects::LastMagicEffect) {

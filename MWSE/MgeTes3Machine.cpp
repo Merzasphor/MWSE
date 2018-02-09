@@ -44,7 +44,7 @@ using namespace std;
 #include <ctime>
 
 #include "mwseString.h"
-#include "mwseTypes.h"
+#include "ObjectTypes.h"
 #include "mwOffsets.h"
 #include "VirtualMachine.h"
 #include "StringUtil.h"
@@ -224,7 +224,7 @@ const char* TES3MACHINE::GetString(VPVOID addr)
 #if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
 #endif
-	mwse::mwseString_t& string = mwse::mwAdapter::GetVMInstance()->getString((mwLong_t)addr);
+	mwse::mwseString_t& string = mwse::mwAdapter::GetVMInstance()->getString((mwLong)addr);
 	return string.c_str();
 }
 

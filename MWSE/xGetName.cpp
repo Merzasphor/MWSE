@@ -45,7 +45,7 @@ namespace mwse
 	float xGetName::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetName: No reference provided." << std::endl;
@@ -54,37 +54,37 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwString_t name = NULL;
+		mwString name = NULL;
 
 		// Get the base record.
-		TES3DefaultTemplate_t* record = reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer);
+		TES3::BaseObject* record = reinterpret_cast<TES3::BaseObject*>(reference->objectPointer);
 		if (record) {
-			RecordTypes::recordType_t type = reference->recordPointer->recordType;
-			if (type == RecordTypes::NPC || type == RecordTypes::CREATURE) {
-				name = reinterpret_cast<NPCBaseRecord_t*>(tes3::getBaseRecord(record))->name;
+			TES3::ObjectType::ObjectType type = reference->objectPointer->objectType;
+			if (type == TES3::ObjectType::NPC || type == TES3::ObjectType::Creature) {
+				name = reinterpret_cast<NPCTES3::BaseObject*>(tes3::getBaseRecord(record))->name;
 			}
-			else if (type == RecordTypes::CONTAINER) {
+			else if (type == TES3::ObjectType::CONTAINER) {
 				name = reinterpret_cast<CONTRecord_t*>(record)->name;
 			}
-			else if (type == RecordTypes::LIGHT) {
+			else if (type == TES3::ObjectType::LIGHT) {
 				name = reinterpret_cast<LIGHRecord_t*>(record)->name;
 			}
-			else if (type == RecordTypes::CLOTHING || type == RecordTypes::ARMOR || type == RecordTypes::WEAPON
-				|| type == RecordTypes::MISC || type == RecordTypes::BOOK || type == RecordTypes::ALCHEMY
-				|| type == RecordTypes::AMMO) {
+			else if (type == TES3::ObjectType::CLOTHING || type == TES3::ObjectType::ARMOR || type == TES3::ObjectType::WEAPON
+				|| type == TES3::ObjectType::MISC || type == TES3::ObjectType::BOOK || type == TES3::ObjectType::Alchemy
+				|| type == TES3::ObjectType::AMMO) {
 				// These records happen to use the same offset. We'll be lazy/efficient here.
-				name = reinterpret_cast<ARMORecord_t*>(record)->name;
+				name = reinterpret_cast<TES3::Armor*>(record)->name;
 			}
-			else if (type == RecordTypes::ACTIVATOR) {
+			else if (type == TES3::ObjectType::ACTIVATOR) {
 				name = reinterpret_cast<ACTIRecord_t*>(record)->name;
 			}
-			else if (type == RecordTypes::DOOR) {
+			else if (type == TES3::ObjectType::DOOR) {
 				name = reinterpret_cast<char*>(reinterpret_cast<unsigned long*>(record) + 0x0d);
 			}
-			else if (type == RecordTypes::APPARATUS) {
+			else if (type == TES3::ObjectType::APPARATUS) {
 				name = reinterpret_cast<char*>(reinterpret_cast<unsigned long*>(record) + 0x19);
 			}
-			else if (type == RecordTypes::INGREDIENT || type == RecordTypes::REPAIR || type == RecordTypes::PROBE || type == RecordTypes::LOCKPICK) {
+			else if (type == TES3::ObjectType::INGREDIENT || type == TES3::ObjectType::REPAIR || type == TES3::ObjectType::PROBE || type == TES3::ObjectType::LOCKPICK) {
 				name = reinterpret_cast<char*>(reinterpret_cast<unsigned long*>(record) + 0x11);
 			}
 			else {

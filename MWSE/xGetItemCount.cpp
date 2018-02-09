@@ -53,7 +53,7 @@ namespace mwse
 
 		// Get who we're getting the item count of. mwscript's GetItemCount validates the
 		// object type for us, we don't need to.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetItemCount: No reference found for function call." << std::endl;
@@ -63,7 +63,7 @@ namespace mwse
 		}
 
 		// Get template for the item we want to get the count of.
-		TES3DefaultTemplate_t* itemTemplate = virtualMachine.getTemplate(id.c_str());
+		TES3::BaseObject* itemTemplate = virtualMachine.getTemplate(id.c_str());
 		if (itemTemplate == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetItemCount: No template found with id " << id << "." << std::endl;
@@ -73,8 +73,8 @@ namespace mwse
 		}
 
 		// Call the original function.
-		SCPTRecord_t* script = &virtualMachine.getScript();
-		mwLong_t result = mwse::mwscript::GetItemCount(script, reference, itemTemplate);
+		TES3::Script* script = &virtualMachine.getScript();
+		mwLong result = mwse::mwscript::GetItemCount(script, reference, itemTemplate);
 		mwse::Stack::getInstance().pushLong(result);
 
 		return 0.0f;

@@ -36,7 +36,7 @@ namespace mwse
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	private:
-		const mwFloat_t INVALID_VALUE = -1.0f;
+		const mwFloat INVALID_VALUE = -1.0f;
 	};
 
 	static xGetQuality xGetQualityInstance;
@@ -48,7 +48,7 @@ namespace mwse
 	float xGetQuality::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetQuality: No reference provided." << std::endl;
@@ -58,7 +58,7 @@ namespace mwse
 		}
 
 		// Get record.
-		BaseRecord_t* record = reference->recordPointer;
+		TES3::BaseObject* record = reference->objectPointer;
 		if (record == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetQuality: No base record found." << std::endl;
@@ -67,24 +67,24 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwFloat_t value = 0;
+		mwFloat value = 0;
 
 		// Get the quality.
-		RecordTypes::recordType_t recordType = record->recordType;
-		if (recordType == RecordTypes::LOCKPICK) {
-			LOCKRecord_t* lockpick = reinterpret_cast<LOCKRecord_t*>(reference->recordPointer);
+		TES3::ObjectType::ObjectType recordType = record->objectType;
+		if (recordType == TES3::ObjectType::LOCKPICK) {
+			LOCKRecord_t* lockpick = reinterpret_cast<LOCKRecord_t*>(reference->objectPointer);
 			value = lockpick->quality;
 		}
-		else if (recordType == RecordTypes::PROBE) {
-			PROBRecord_t* probe = reinterpret_cast<PROBRecord_t*>(reference->recordPointer);
+		else if (recordType == TES3::ObjectType::PROBE) {
+			PROBRecord_t* probe = reinterpret_cast<PROBRecord_t*>(reference->objectPointer);
 			value = probe->quality;
 		}
-		else if (recordType == RecordTypes::REPAIR) {
-			REPARecord_t* repair = reinterpret_cast<REPARecord_t*>(reference->recordPointer);
+		else if (recordType == TES3::ObjectType::REPAIR) {
+			REPARecord_t* repair = reinterpret_cast<REPARecord_t*>(reference->objectPointer);
 			value = repair->quality;
 		}
-		else if (recordType == RecordTypes::APPARATUS) {
-			APPARecord_t* apparatus = reinterpret_cast<APPARecord_t*>(reference->recordPointer);
+		else if (recordType == TES3::ObjectType::APPARATUS) {
+			APPARecord_t* apparatus = reinterpret_cast<APPARecord_t*>(reference->objectPointer);
 			value = apparatus->quality;
 		}
 		else {

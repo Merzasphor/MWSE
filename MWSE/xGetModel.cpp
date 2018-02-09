@@ -45,15 +45,15 @@ namespace mwse
 	float xGetModel::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get our parameter. 
-		mwLong_t param = Stack::getInstance().popLong();
+		mwLong param = Stack::getInstance().popLong();
 
-		mwString_t model = NULL;
+		mwString model = NULL;
 
 		// If we were given a value, it's supposed to be a string, and we'll get a record by this ID.
 		if (param) {
 			// Get the record by id string.
 			mwseString_t& id = virtualMachine.getString(param);
-			BaseRecord_t* record = tes3::getRecordById<BaseRecord_t>(id);
+			TES3::BaseObject* record = tes3::getRecordById<TES3::BaseObject>(id);
 			if (record == NULL) {
 #if _DEBUG
 				log::getLog() << "xGetModel: No record found for id '" << id << "'." << std::endl;
@@ -66,7 +66,7 @@ namespace mwse
 
 		// If we were not given a value, we try to use the function's given reference.
 		else {
-			REFRRecord_t* reference = virtualMachine.getReference();
+			TES3::Reference* reference = virtualMachine.getReference();
 			if (reference == NULL) {
 #if _DEBUG
 				log::getLog() << "xGetModel: Invalid reference." << std::endl;
@@ -74,7 +74,7 @@ namespace mwse
 				mwse::Stack::getInstance().pushLong(0);
 				return 0.0f;
 			}
-			model = tes3::getModel(reference->recordPointer);
+			model = tes3::getModel(reference->objectPointer);
 		}
 
 		// Push the model back to the stack.

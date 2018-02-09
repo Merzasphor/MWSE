@@ -52,7 +52,7 @@ namespace mwse
 		mwseString_t& scriptName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Try to get the target script.
-		SCPTRecord_t* targetScript = tes3::getScript(scriptName);
+		TES3::Script* targetScript = tes3::getScript(scriptName);
 		if (targetScript == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xScriptRunning: No script could be found with name '" << scriptName << "'." << std::endl;
@@ -62,7 +62,7 @@ namespace mwse
 		}
 
 		// Call the original function.
-		SCPTRecord_t* script = &virtualMachine.getScript();
+		TES3::Script* script = &virtualMachine.getScript();
 		bool result = mwse::mwscript::ScriptRunning(script, targetScript);
 
 		mwse::Stack::getInstance().pushLong(result);

@@ -49,10 +49,10 @@ namespace mwse
 	float xStartCombat::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		REFRRecord_t* target = reinterpret_cast<REFRRecord_t*>(mwse::Stack::getInstance().popLong());
+		TES3::Reference* target = reinterpret_cast<TES3::Reference*>(mwse::Stack::getInstance().popLong());
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xStartCombat: Called on invalid reference." << std::endl;
@@ -61,7 +61,7 @@ namespace mwse
 		}
 
 		// Call the original function.
-		SCPTRecord_t* script = &virtualMachine.getScript();
+		TES3::Script* script = &virtualMachine.getScript();
 		mwse::mwscript::StartCombat(script, reference, target);
 
 		return 0.0f;

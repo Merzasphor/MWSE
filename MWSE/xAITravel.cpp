@@ -49,12 +49,12 @@ namespace mwse
 	float xAITravel::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwFloat_t x = mwse::Stack::getInstance().popFloat();
-		mwFloat_t y = mwse::Stack::getInstance().popFloat();
-		mwFloat_t z = mwse::Stack::getInstance().popFloat();
+		mwFloat x = mwse::Stack::getInstance().popFloat();
+		mwFloat y = mwse::Stack::getInstance().popFloat();
+		mwFloat z = mwse::Stack::getInstance().popFloat();
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xAITravel: Called on invalid reference." << std::endl;
@@ -63,7 +63,7 @@ namespace mwse
 		}
 
 		// Call the original function.
-		SCPTRecord_t* script = &virtualMachine.getScript();
+		TES3::Script* script = &virtualMachine.getScript();
 		mwse::mwscript::AITravel(script, reference, x, y, z);
 
 		return 0.0f;
