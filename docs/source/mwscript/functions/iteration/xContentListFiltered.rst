@@ -11,24 +11,24 @@ xContentListFiltered
 
 - ``string`` **id**: The id string of the item.
 - ``long`` **count**: How many items are in the item stack.
-- ``long`` **type**: The `Record Type`_ of the item.
+- ``long`` **type**: The `Object Type`_ of the item.
 - ``long`` **value**: The value of the item.
 - ``float`` **weight**: The weight of the item.
 - ``string`` **name**: The name of the item.
 - ``long`` **nextNode**: The next node to provide back into this function to continue looping. When this value is 0, there are no more items.
 
-This function behaves similar to `xContentList`_, with the added convenience of filtering for one or more `Record Type`_. 
+This function behaves similar to `xContentList`_, with the added convenience of filtering for one or more `Object Type`_.
 
 .. tip:: If you are trying to specifically get the equipped items of an actor, consider using `xEquipmentList`_.
 
 .. _`xContentList`: xContentList.html
 .. _`xEquipmentList`: xEquipmentList.html
-.. _`Record Type`: ../references.html#record-types
+.. _`Object Type`: ../references.html#object-types
 
 Filter Mask
 -----------------------------
 
-The filter mask below is meant to be summed for each `Record Type`_ desired in the filter. The exception to this rule is the ENCH filter, which restricts the results to enchanted items.
+The filter mask below is meant to be summed for each `Object Type`_ desired in the filter. The exception to this rule is the ENCH filter, which restricts the results to enchanted items.
 
 For example, if you wanted clothing (128) and armor (16) results, you would pass a value of 144 (128+16).
 

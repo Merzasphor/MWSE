@@ -4,8 +4,8 @@ xAddEffect
 
 **Parameters:**
 
-- ``long`` **recordType**: `Record Type`_ value for the target's type.
-- ``string`` **recordID**: Record ID of target spell, enchantment, or potion.
+- ``long`` **objectType**: `Object Type`_ value for the target's type.
+- ``string`` **objectID**: Object ID of target spell, enchantment, or potion.
 - ``long`` **effectID**: `Magic Effect`_ ID that will be added to the target.
 - ``long`` **skillAttributeID**: `Skill`_ or `Attribute`_ ID to be used. (Only for absorb/damage/drain/fortify/restore effects - ignored otherwise.)
 - ``long`` **rangeType**: New range type. (0 = SELF, 1 = TOUCH, 2 = TARGET)
@@ -20,7 +20,7 @@ xAddEffect
 
 Adds a new effect to the given spell, enchantment, or potion.
 
-.. _`Record Type`: ../references.html#record-types
+.. _`Object Type`: ../references.html#object-types
 .. _`Magic Effect`: ../references.html#magic-effects
 .. _`Attribute`: ../references.html#attributes
 .. _`Skill`: ../references.html#skills

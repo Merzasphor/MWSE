@@ -14,11 +14,11 @@ This release marks a complete under the hood rewrite of how MWSE functions. Vers
 Added
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- ``xContentListFiltered``: Behaves like ``xContentList``, with an additional filter parameter passed. The filter allows filtering by record type and/or enchantment, and only records matching that filter will be returned.
+- ``xContentListFiltered``: Behaves like ``xContentList``, with an additional filter parameter passed. The filter allows filtering by object type and/or enchantment, and only objects matching that filter will be returned.
 
-- ``xEquipmentList``: Behaves similar to ``xContentList``/``xContentListFiltered``, returning inventory information. This function allows looping over equipped items instead of all items, and also returns some subtype information. Usage is ``setx id count type subtype value weight name enchantId nextNode to xEquipmentList node typeFilter subTypeFilter``. The ``typeFilter`` parameter matches the ``type`` returned, and will restrict results to that item type (e.g. only clothing). The ``subTypeFilter`` allows specifying a weapon type or armor/clothing slot. The subtype index is one higher for both return values and parameters are one higher than in their normal records (e.g. pants are index ``1`` instead of ``0``). If ``typeFilter`` or ``subTypeFilter`` are 0, no filtering is performed on those values.
+- ``xEquipmentList``: Behaves similar to ``xContentList``/``xContentListFiltered``, returning inventory information. This function allows looping over equipped items instead of all items, and also returns some subtype information. Usage is ``setx id count type subtype value weight name enchantId nextNode to xEquipmentList node typeFilter subTypeFilter``. The ``typeFilter`` parameter matches the ``type`` returned, and will restrict results to that item type (e.g. only clothing). The ``subTypeFilter`` allows specifying a weapon type or armor/clothing slot. The subtype index is one higher for both return values and parameters are one higher than in their normal objects (e.g. pants are index ``1`` instead of ``0``). If ``typeFilter`` or ``subTypeFilter`` are 0, no filtering is performed on those values.
 
-- ``xGetAlchemyInfo``: Allows the fetching the effect count (and flags) for an alchemy record.
+- ``xGetAlchemyInfo``: Allows the fetching the effect count (and flags) for an alchemy object.
 
 - ``xGetIngredientEffect``: Returns the effect id and skill or attribute id associated with the effect. E.g. ``setx effectId skillOrAttributeId to xGetIngredientEffect "ingred_alit_hide_01" 1`` gets the first effect the ingredient has.
 
@@ -28,7 +28,7 @@ Added
 
 - ``xGetMCPFeatureState``: The `Morrowind Code Patch <https://www.nexusmods.com/morrowind/mods/19510/?>`_ has become more important with its fixes to the script parser, and other scripting extensions. If the user has the MCP installed and hasn't deleted the mcpatch folder, this function will let the script know if a MCP feature is enabled or disabled. The ID passed to this function can be found in the describe.json file in the mcpatch folder.
 
-- ``xGetModel``: This function gets the model of either a reference or a record. It will work on anything but NPC or creature references, which return ``0``.
+- ``xGetModel``: This function gets the model of either a reference or a object. It will work on anything but NPC or creature references, which return ``0``.
 
 - ``xGetStackSize``: This function returns the size of a stack. If it can't find the stack information, it returns ``0``.
 
@@ -41,7 +41,7 @@ Added
 Changed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- Performance improvements across the board. The underlying mechanism used to extend Morrowind's scripting system has been entirely rewritten to improve performance. Performance gains as high as 90 FPS on heavy MWSE-scripted modlists have been recorded. Mods such as `MWSE Containers <https://www.nexusmods.com/morrowind/mods/44387/?>`_ and `MWSE Alchemy Filters <https://www.nexusmods.com/morrowind/mods/44808?>`_ should no longer cause long hiccups and mods like `The Bare Necessities <https://www.nexusmods.com/morrowind/mods/43365/?>`_ should not cause such severe performance hits. This opens new scripting opportunities that previously were not viable due to the old version's performance issues.
+- Performance improvements across the board. The underlying mechanism used to extend Morrowind's scripting system has been entirely rewritten to improve performance. Performance gains as high as 90 FPS on heavy MWSE-scripted modlists have been objected. Mods such as `MWSE Containers <https://www.nexusmods.com/morrowind/mods/44387/?>`_ and `MWSE Alchemy Filters <https://www.nexusmods.com/morrowind/mods/44808?>`_ should no longer cause long hiccups and mods like `The Bare Necessities <https://www.nexusmods.com/morrowind/mods/43365/?>`_ should not cause such severe performance hits. This opens new scripting opportunities that previously were not viable due to the old version's performance issues.
 
 - String storage has changed under the hood. It's just as reliable as before, but is more recognizable. Strings are stored by ID rather than as string pointers, starting at an index of 40,000. An invalid/empty response is still treated as zero. Scripters do not need to change how they handle strings in any way. This has the added side-benefit that string IDs can more reliably be stored in globals.
 
@@ -55,7 +55,7 @@ Changed
 
 - ``xGetValue`` and ``xSetValue`` now work on gold without hardcoding values.
 
-- ``xAddEffect``, ``xDeleteEffect``, ``xGetEffectInfo``, and ``xSetEffectInfo`` now support ``ALCH`` (potion) records.
+- ``xAddEffect``, ``xDeleteEffect``, ``xGetEffectInfo``, and ``xSetEffectInfo`` now support ``ALCH`` (potion) objects.
 
 - ``xGetRef`` now returns a reference to its caller when given the argument ``0``.
 

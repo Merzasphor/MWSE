@@ -31,7 +31,7 @@ Example: Boobytrapped Mages Guild and Telvanni faction containers
   ;if the player tries to open a container owned by either MG or GHT that he
   ;doesn't have the required rank to legally take items from, then instead of
   ;the container opening, the player will be zapped.
-  
+
   short framecount
   short temp
   short player_rank
@@ -39,17 +39,17 @@ Example: Boobytrapped Mages Guild and Telvanni faction containers
   long type
   long own_id
   long own_cond
-  
+
   if ( MenuMode )
       return
   endif
-  
+
   set framecount to ( framecount + 1 )
   if ( framecount < 30 )
       return
   endif
   set framecount to 0
-  
+
   setx pctarget to xGetPCTarget
   ifx ( pctarget )
       setx type to pctarget->xRefType
@@ -60,7 +60,7 @@ Example: Boobytrapped Mages Guild and Telvanni faction containers
       if ( type != 1413693766 ) ;if it's not a faction ownership type
           return
       endif
-  
+
       setx temp to xStringCompare own_id "Mages Guild" ;if the owner of the container is MG, temp will be 0
       ifx ( temp ) ;not MG
           setx temp to xStringCompare own_id "Telvanni"
@@ -74,7 +74,7 @@ Example: Boobytrapped Mages Guild and Telvanni faction containers
           ;owner is MG
           set player_rank to GetPCRank "Mages Guild"
       endif
-  
+
       set temp to 0
       if ( player_rank >= own_cond ) ;player is of the right rank in whichever faction to be able to claim the container's contents
           set temp to 1
@@ -89,7 +89,7 @@ Example: Boobytrapped Mages Guild and Telvanni faction containers
           endif
           return
       endif
-  
+
       ;if reached here, player doesn't meet rank requirement
       xSetRef pctarget
       if ( OnActivate ) ;merely CALLING this function will block any further normal activation attempts. it makes the object's activation temporarily only possible through the Activate function
@@ -99,7 +99,7 @@ Example: Boobytrapped Mages Guild and Telvanni faction containers
           player->PlaySound "destruction hit"
       endif
   endif
-  
+
   end
 
 Example: World entity destruction with ownership penalty
@@ -108,18 +108,18 @@ Example: World entity destruction with ownership penalty
 ::
 
   begin entitydestruction
-  
+
   ;allows the player to destroy objects in the world by striking at them with
   ;a weapon (or barehanded). but if the player wouldn't have been (legally) allowed to pick up that
   ;object, he gets a bounty as if he stole it (with respect to the GMST that controls the bounty amount for theft).
-  
+
   ;the value of containers is assumed to be only the value of all the items within them.
   ;the value of doors is assumed to be 100 septims, and of activators, 200 septims.
-  
+
   ;this script doesn't take into account whether player is detected (sneaking, invisible),
   ;etc. well, he's doing a loud and incriminating action, anyway.
   ;it doesn't do faction expulsion, either...
-  
+
   short framecount
   short update_col
   long temp
@@ -134,43 +134,43 @@ Example: World entity destruction with ownership penalty
   float glob
   ;note: in this script, existing vars are often reused, so that a bunch of
   ;vars are also used for other purposes than their name suggests.
-  
+
   ;for example, because it is the only float and there's no problem with
   ;overwriting it, 'glob' is used to (temporarily) hold both the result of
-  ;a reading of a global var, and also of reading a float GMST. 
-  
-  
+  ;a reading of a global var, and also of reading a float GMST.
+
+
   if ( MenuMode )
       return
   endif
-  
+
   set framecount to ( framecount + 1 )
   if ( framecount < timing1 )
       return
   endif
   set framecount to 0
-  
+
   if ( player->GetWeaponDrawn == 0 )
       return
   endif
-  
+
   if ( player->GetWeaponType == 0 )
       return ;ignore lockpicks and probes; unfortuantely this also applies to Short Blades...
   endif
-  
+
   setx temp to xKeyPressed 1 ;left mouse button
   setx pctarget to xGetPCTarget
-  
+
   setx temp to xAnd temp pctarget;if player looking at something AND pressing LMB, temp will be 1
-  
+
   if ( temp == 0 )
       return
   endif
-  
+
   ;you should also be able to just use 'if ( player->GetSoundPlaying "weapon swish" )' instead, to check
   ;if the player is making a strike, at least on machines where GetSoundPlaying works fine.
   ;you'd also be able to automatically support all swinging weapons, then.
-  
+
   setx type to pctarget->xRefType
   set value to 0
   set nextref to 0
@@ -179,7 +179,7 @@ Example: World entity destruction with ownership penalty
   elseif ( type == 1095062083 ) ;creature
       return
   elseif ( type == 1414418243 ) ;container
-      set nextref to 1 ;flag that we need to tally the container's total value 
+      set nextref to 1 ;flag that we need to tally the container's total value
       set update_col to 1
   elseif ( type == 1380929348 ) ;door      (this script allows player to destroy load doors too, careful)
       set value to 100
@@ -188,8 +188,8 @@ Example: World entity destruction with ownership penalty
       set value to 200
       set update_col to 1
   endif
-  
-  
+
+
   set invvalue to 0
   set invcount to 0
   setx type ownerid condition to pctarget->xGetOwnerInfo
@@ -203,7 +203,7 @@ Example: World entity destruction with ownership penalty
       MessageBox "ERROR?!" ;this should never happen
       return
   endif
-  
+
   ifx ( invvalue ) ;NPC owner
       setx temp to xGetRef ownerid
       ifx ( temp )
@@ -230,23 +230,23 @@ Example: World entity destruction with ownership penalty
           endif
       endif
   endif
-  
+
   ifx ( invcount ) ;faction owner
       ;setx temp to xGetPCRank ownerid ;(this function doesn't exist yet)
       set temp to 0 ;temp filler since can't use above line. this makes the player count as of the lowest rank in the faction.
-  
+
       if ( temp >= condition ) ;if player is of the required rank or above...
           ;then it's legal
           set type to 0
           set value to 1
       endif
   endif
-  
-  
+
+
   ifx ( value )
   else
       ;if value is still 0, we're looking at an item (or a container)
-      
+
       ifx ( nextref ) ;container
           set nextref to 0
           setx temp invcount temp invvalue temp temp nextref to pctarget->xContentList nextref ;values we don't care about get stored in temp and overwritten
@@ -262,9 +262,9 @@ Example: World entity destruction with ownership penalty
       else ;looking at an item
           setx value to pctarget->xGetValue
       endif
-      
+
   endif
-  
+
   pctarget->Disable ;'destroy' the target
   player->PlaySound "critical damage"
   if ( type ) ;if it was determined to be illegal...
@@ -272,7 +272,7 @@ Example: World entity destruction with ownership penalty
       set value to ( value * glob )
       ModPCCrimeLevel value
   endif
-  
+
   if ( update_col )
       set update_col to 0
       ;in the event that that the player just disable'd a door or a large
@@ -281,17 +281,17 @@ Example: World entity destruction with ownership penalty
       ;space it used to occupy.
       ;this part of the script solves that issue, making use of the fact that
       ;the FixMe function also reloads some stuff in the active cell, such as
-      ;object coliisions. 
-  
+      ;object coliisions.
+
       ;unfortunately, it also seems to always teleport the player, and,
       ;ironically, sometimes cause him to get stuck. therefore, this line is commented out.
-  
+
       ;FixMe
   endif
-  
+
   end
 
-.. _`Object Type`: ../references.html#record-types
+.. _`Object Type`: ../references.html#object-types
 .. _`xGetOwner`: xGetOwner.html
 .. _`xGetGlobal`: xGetGlobal.html
 .. _`xSetGlobal`: xSetGlobal.html

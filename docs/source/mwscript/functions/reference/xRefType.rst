@@ -8,8 +8,8 @@ xRefType
 
 **Returned:**
 
-- ``long`` **type**: The `Record Type`_ of the reference.
+- ``long`` **type**: The `Object Type`_ of the reference.
 
-Returns the four byte record name of the calling reference.
+Returns the four byte object name of the calling reference.
 
-.. _`Record Type`: ../references.html#record-types
+.. _`Object Type`: ../references.html#object-types

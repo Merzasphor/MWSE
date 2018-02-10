@@ -16,4 +16,4 @@ Removes the effect at index from the given spell or enchantment.
 
 Other effects are reordered, e.g. if effect 1 is removed, effect 2 becomes 1, 3 becomes 2, etc.
 
-.. _`Object Type`: ../reference.html#record-types
+.. _`Object Type`: ../reference.html#object-types

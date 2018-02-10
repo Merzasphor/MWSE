@@ -23,7 +23,7 @@ ID  Armor Type
 10  Right Bracer
 === =============================================
 
-.. note:: `xEquipmentList <functions/xEquipmentList.html>`_'s returns this value as the subtype for armor records. Note that the values are **increased by one** by that function.
+.. note:: `xEquipmentList <functions/xEquipmentList.html>`_'s returns this value as the subtype for armor objects. Note that the values are **increased by one** by that function.
 
 Attributes
 -----------------------------------------------------------
@@ -59,7 +59,7 @@ ID  Type
 9   Amulet
 === =============================================
 
-.. note:: `xEquipmentList <functions/xEquipmentList.html>`_'s returns this value as the subtype for clothing records. Note that the values are **increased by one** by that function.
+.. note:: `xEquipmentList <functions/xEquipmentList.html>`_'s returns this value as the subtype for clothing objects. Note that the values are **increased by one** by that function.
 
 Control Types
 -----------------------------------------------------------
@@ -284,7 +284,7 @@ Value  Meaning
 
 .. note:: Negative lighting does not appear to have any effect.
 
-Record Types
+Object Types
 -----------------------------------------------------------
 
 ========== ===== =================
@@ -315,7 +315,7 @@ Value      Code  Meaning
 1346454871 WEAP  Weapon
 ========== ===== =================
 
-.. note:: The **AMMO** record type is for arrows and bolts only, even though these usually show up in the weapons tab of the Construction Set. Thrown weapons do not have this type.
+.. note:: The **AMMO** object type is for arrows and bolts only, even though these usually show up in the weapons tab of the Construction Set. Thrown weapons do not have this type.
 
 Skill Types
 -----------------------------------------------------------
@@ -410,4 +410,4 @@ ID  Weapon Type
 13  Bolt
 === =============================================
 
-.. note:: `xEquipmentList <functions/xEquipmentList.html>`_'s returns this value as the subtype for weapon records. Note that the values are **increased by one** by that function.
+.. note:: `xEquipmentList <functions/xEquipmentList.html>`_'s returns this value as the subtype for weapon objects. Note that the values are **increased by one** by that function.

@@ -6,7 +6,7 @@ The Morrowind Script Extender makes additional functions available for use in Mo
 
 These extra functions allow modders to add features and behavior to scripts that would otherwise be impractical or impossible.
 
-.. important:: This version of Morrowind Script Extender is in beta for testing. If you are interested in testing, `download the latest build <https://nullcascade.com/tmp/MWSEv2b.7z>`_ and join the `Morrowind Modding Community Discord <https://discord.gg/QDEBbaP>`_
+.. important:: The latest version of MWSE can be downloaded either from the `GitHub release page <https://github.com/MWSE/MWSE/releases>`_ or the `Nexus mod page <https://rd.nexusmods.com/morrowind/mods/45468>`_. If you're looking for MWSE scripting advice or discussions, try the `Morrowind Modding Community Discord <https://discord.gg/QDEBbaP>`_
 
 .. toctree::
     :maxdepth: 1
