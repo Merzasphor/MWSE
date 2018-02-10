@@ -28,13 +28,12 @@ namespace TES3 {
 		BaseObject * previousRecord; // 0x1C
 		BaseObject * nextObject; // 0x20
 		int unknown_0x24;
-		int unknown_0x28;
-		mwString objectID; // 0x2C
-		short type;	// 0x30 // EnchantmentType
-		short cost; // 0x32
-		long charge; // 0x34
-		Effect effects[8]; // 0x38
-		long autocalc;
+		mwString objectID; // 0x28
+		short type;	// 0x2C // EnchantmentType
+		short cost; // 0x2E
+		long charge; // 0x30
+		Effect effects[8]; // 0x34
+		long autocalc; // 0xF4
 	};
-	//static_assert(sizeof(Enchantment) == 0xF8, "TES3::Enchantment failed size validation");
+	static_assert(sizeof(Enchantment) == 0xF8, "TES3::Enchantment failed size validation");
 }

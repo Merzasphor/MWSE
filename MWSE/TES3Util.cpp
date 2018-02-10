@@ -466,23 +466,23 @@ namespace mwse
 		TES3::Spell* getSpellRecordById(const std::string& id) {
 			const char* objectID = id.c_str();
 
-			TES3::BaseObject * record = reinterpret_cast<TES3::BaseObject*>(getCellMaster()->recordLists->spellsList->head);
-			while (record != NULL && !(record->objectType == TES3::ObjectType::Spell && strcmp(objectID, record->objectID) == 0)) {
-				record = record->nextObject;
+			TES3::Spell * spell = getCellMaster()->recordLists->spellsList->head;
+			while (spell != NULL && !(spell->objectType == TES3::ObjectType::Spell && strcmp(objectID, spell->objectID) == 0)) {
+				spell = spell->nextSpell;
 			}
 
-			return reinterpret_cast<TES3::Spell*>(record);
+			return spell;
 		}
 
 		TES3::Enchantment* getEnchantRecordById(const std::string& id) {
 			const char* objectID = id.c_str();
 
-			TES3::BaseObject * record = getCellMaster()->recordLists->list->head;
-			while (record != NULL && !(record->objectType == TES3::ObjectType::Enchantment && strcmp(objectID, record->objectID) == 0)) {
-				record = record->nextObject;
+			TES3::Enchantment * enchantment = reinterpret_cast<TES3::Enchantment*>(getCellMaster()->recordLists->list->head);
+			while (enchantment != NULL && !(enchantment->objectType == TES3::ObjectType::Enchantment && strcmp(objectID, enchantment->objectID) == 0)) {
+				enchantment = reinterpret_cast<TES3::Enchantment*>(enchantment->nextObject);
 			}
 
-			return reinterpret_cast<TES3::Enchantment*>(record);
+			return enchantment;
 		}
 
 		TES3::Alchemy* getAlchemyRecordById(const std::string& id) {
