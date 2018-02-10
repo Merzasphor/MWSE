@@ -24,6 +24,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3CellMaster.h"
 
 using namespace mwse;
 

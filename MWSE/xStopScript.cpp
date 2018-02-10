@@ -52,7 +52,7 @@ namespace mwse
 		mwLong scriptNameId = mwse::Stack::getInstance().popLong();
 		const char* scriptName = NULL;
 		if (scriptNameId == 0) {
-			scriptName = virtualMachine.getScript().scriptName;
+			scriptName = virtualMachine.getScript().name;
 		}
 		else {
 			scriptName = virtualMachine.getString(scriptNameId).c_str();

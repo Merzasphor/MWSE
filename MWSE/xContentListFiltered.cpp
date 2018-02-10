@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3Collections.h"
 
 using namespace mwse;
 
@@ -72,7 +73,7 @@ namespace mwse {
 
 	float xContentListFiltered::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get parameters.
-		TES3::IteratorNode<InventoryNode>* node = reinterpret_cast<TES3::IteratorNode<InventoryNode>*>(mwse::Stack::getInstance().popLong());
+		TES3::IteratorNode<TES3::InventoryNode>* node = reinterpret_cast<TES3::IteratorNode<TES3::InventoryNode>*>(mwse::Stack::getInstance().popLong());
 		mwLong filter = mwse::Stack::getInstance().popLong();
 
 		// If we're not filtering, abandon ship.
@@ -113,7 +114,7 @@ namespace mwse {
 		mwLong value = 0;
 		mwFloat weight = 0;
 		mwString name = NULL;
-		TES3::IteratorNode<InventoryNode>* next = NULL;
+		TES3::IteratorNode<TES3::InventoryNode>* next = NULL;
 
 		// If we aren't given a node, get the first one.
 		if (node == NULL) {
@@ -187,27 +188,27 @@ namespace mwse {
 
 	mwLong xContentListFiltered::getBitMaskForRecordType(mwLong recordType) {
 		switch (recordType) {
-		case TES3::ObjectType::ACTIVATOR: return FILTER_ACTI;
+		case TES3::ObjectType::Activator: return FILTER_ACTI;
 		case TES3::ObjectType::Alchemy: return FILTER_ALCH;
 		case TES3::ObjectType::Ammo: return FILTER_AMMO;
 		case TES3::ObjectType::Apparatus: return FILTER_APPA;
 		case TES3::ObjectType::Armor: return FILTER_ARMO;
-		case TES3::ObjectType::BODY: return FILTER_BODY;
+		case TES3::ObjectType::Bodypart: return FILTER_BODY;
 		case TES3::ObjectType::Book: return FILTER_BOOK;
 		case TES3::ObjectType::Clothing: return FILTER_CLOT;
 		case TES3::ObjectType::Container: return FILTER_CONT;
 		case TES3::ObjectType::Creature: return FILTER_CREA;
 		case TES3::ObjectType::Door: return FILTER_DOOR;
 		case TES3::ObjectType::Ingredient: return FILTER_INGR;
-		case TES3::ObjectType::LEVELLEDCREATURE: return FILTER_LEVC;
-		case TES3::ObjectType::LEVELLEDITEM: return FILTER_LEVI;
+		case TES3::ObjectType::LeveledCreature: return FILTER_LEVC;
+		case TES3::ObjectType::LeveledItem: return FILTER_LEVI;
 		case TES3::ObjectType::Light: return FILTER_LIGH;
 		case TES3::ObjectType::Lockpick: return FILTER_LOCK;
 		case TES3::ObjectType::Misc: return FILTER_MISC;
 		case TES3::ObjectType::NPC: return FILTER_NPC;
 		case TES3::ObjectType::Probe: return FILTER_PROB;
 		case TES3::ObjectType::Repair: return FILTER_REPA;
-		case TES3::ObjectType::STATIC: return FILTER_STAT;
+		case TES3::ObjectType::Static: return FILTER_STAT;
 		case TES3::ObjectType::Weapon: return FILTER_WEAP;
 		}
 

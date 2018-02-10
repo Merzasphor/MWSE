@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ObjectTypes.h"
+#include "TES3Collections.h"
 
 #include "TES3Effect.h"
 
@@ -30,6 +31,67 @@ namespace TES3 {
 		NoSpellFlags = 0,
 		AllSpellFlags = (AutoCalculateCost | PcStartSpell | AlwaysSucceeds)
 	};
+
+	// TODO: Rename this.
+	struct SPLL {
+		struct ActiveSpell {
+			char * id; // 0x00 // "PlayerSaveGame" if player.
+			Reference * reference; // 0x04
+			mwFloat statistic; // 0x08 // Magicka Resistance if applicable.
+			unsigned long magnitude; // 0x0C
+			mwFloat time; // 0x10 // Elapsed? Start?
+		};
+		struct SPLLEffect {
+			void * vTable; // 0x00
+			unsigned long inUse; // 0x04 // Number of null-pointers in array?
+			unsigned long size; // 0x08
+			ActiveSpell ** activeSpells; // 0x0C
+		};
+		void * vTable; // 0x00
+		ObjectType::ObjectType objectType; // 0x04
+		long unknown_0x08;
+		long unknown_0x0C;
+		long unknown_0x10;
+		long unknown_0x14;
+		long unknown_0x18;
+		SPLLEffect effects[8]; // 0x1C
+		long unknown_0x9C;
+		Spell * spell; // 0xA0
+		long unknown_0xA4;
+		long unknown_0xA8; // nth active effect? In cell?
+		long unknown_0xAC;
+		long unknown_0xB0;
+		long unknown_0xB4;
+		Reference * reference; // 0xB8
+		unsigned long flags; // 0xBC
+		long unknown_0xC0;
+		long unknown_0xC4;
+		long unknown_0xC8;
+		long unknown_0xCC;
+		long unknown_0xD0;
+		long unknown_0xD4;
+		long unknown_0xD8;
+		long unknown_0xDC;
+		long unknown_0xE0;
+		char id[32]; // 0xE4 // Matches spell.id?
+	};
+	static_assert(sizeof(TES3::SPLL::ActiveSpell) == 0x14, "TES3::SPLL::ActiveSpell failed size validation");
+	static_assert(sizeof(TES3::SPLL::SPLLEffect) == 0x10, "TES3::SPLL::SPLLEffect failed size validation");
+	static_assert(sizeof(TES3::SPLL) == 0x0104, "TES3::SPLL failed size validation");
+
+	// TODO: Some kind of tree?
+	struct SPLLNode
+	{
+		SPLLNode * first; // 0x00
+		SPLLNode * second; // 0x04
+		SPLLNode * third; // 0x08
+		unsigned long id; // 0x0C
+		SPLL * object; // 0x10
+		unsigned long flag; // 0x14
+		long unknown_0x18;
+		long unknown_0x1C;
+	};
+	static_assert(sizeof(TES3::SPLLNode) == 0x20, "TES3::SPLLNode failed size validation");
 
 	struct Spell_vTable {
 

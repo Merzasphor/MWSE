@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ObjectTypes.h"
+#include "TES3Skill.h"
 
 namespace TES3 {
 	struct Race_vTable {

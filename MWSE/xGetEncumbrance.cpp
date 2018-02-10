@@ -24,6 +24,9 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3MACP.h"
+#include "TES3NPC.h"
+
 #include <map>
 #include <set>
 #include <string>
@@ -47,12 +50,12 @@ namespace mwse
 
 	private:
 		void SearchForEffects(TES3::Reference* reference);
-		void SearchForEffects(SPLLNode_t* node);
+		void SearchForEffects(TES3::SPLLNode* node);
 		double CalculateTotal(TES3::Reference* reference);
 		double CalculateCorrection(TES3::Reference* reference);
 
 		// Data storage for current implementation of looping active effects.
-		std::set<const SPLLNode_t*> visitedNodes;
+		std::set<const TES3::SPLLNode*> visitedNodes;
 		typedef std::multimap<std::string const, std::pair<double const, float const> const> EffectsMap;
 		EffectsMap activeEffects;
 		std::string entityName;
@@ -118,9 +121,9 @@ namespace mwse
 		else if (queryType == BaseEncumbrance || queryType == CurrentEncumbrance) {
 			encumbrance = macp->weight_limit.current;
 			if (macp->num_active_effects > 0) {
-				TES3::MACP::ActiveEffect* currentEffect = macp->active_effects->next;
+				TES3::MACP::ActiveEffect* currentEffect = macp->activeEffects->next;
 				for (int i = 0; i < macp->num_active_effects; i++) {
-					if (currentEffect->TES3::Effectype == TES3::EffectBurden || currentEffect->TES3::Effectype == TES3::EffectFeather) {
+					if (currentEffect->effectType == TES3::EffectBurden || currentEffect->effectType == TES3::EffectFeather) {
 						encumbrance += (queryType == BaseEncumbrance) ? CalculateTotal(reference) : CalculateCorrection(reference);
 					}
 
@@ -150,11 +153,11 @@ namespace mwse
 		address = (*pointer) + 0xC;
 		pointer = reinterpret_cast<unsigned long*>(address);
 		address = *pointer;
-		SPLLNode_t* root = reinterpret_cast<SPLLNode_t*>(address);
+		TES3::SPLLNode* root = reinterpret_cast<TES3::SPLLNode*>(address);
 		address = 0x7C7C8C;
 		pointer = reinterpret_cast<unsigned long*>(address);
 		address = *pointer;
-		SPLLNode_t const* const leaf = reinterpret_cast<SPLLNode_t*>(address);
+		TES3::SPLLNode const* const leaf = reinterpret_cast<TES3::SPLLNode*>(address);
 
 		visitedNodes.clear();
 		visitedNodes.insert(NULL);
@@ -163,42 +166,42 @@ namespace mwse
 		SearchForEffects(root);
 	}
 
-	void xGetEncumbrance::SearchForEffects(SPLLNode_t* node) {
+	void xGetEncumbrance::SearchForEffects(TES3::SPLLNode* node) {
 		if (visitedNodes.count(node) != 0) return;
 		visitedNodes.insert(node);
-		SPLLRecord_t* active_spell = node->record;
-		if (active_spell != NULL) {
+		TES3::SPLL* activeSpell = node->object;
+		if (activeSpell != NULL) {
 			float time = 0.0f;
 			double magnitude = 0.0;
 			for (int effect = 0; effect < 8; effect++) {
-				short const effect_id = active_spell->spell->effects[effect].effectId;
+				short const effect_id = activeSpell->spell->effects[effect].ID;
 				if (effect_id == TES3::EffectBurden || effect_id == TES3::EffectFeather) {
-					unsigned long const size = active_spell->effects[effect].size;
-					SPLLRecord_t::ActiveSpell_t** active_spells = active_spell->effects[effect].activeSpells;
+					unsigned long const size = activeSpell->effects[effect].size;
+					TES3::SPLL::ActiveSpell** activeSpells = activeSpell->effects[effect].activeSpells;
 					for (unsigned long index = 0; index < size; index++) {
-						SPLLRecord_t::ActiveSpell_t* current_spell = active_spells[index];
-						if (current_spell != NULL && entityName == current_spell->id) {
-							time = current_spell->time;
+						TES3::SPLL::ActiveSpell* currentSpell = activeSpells[index];
+						if (currentSpell != NULL && entityName == currentSpell->id) {
+							time = currentSpell->time;
 							if (effect_id == TES3::EffectBurden) {
 								// Burden is modified by Magicka Resistance. We
 								// must take into account any MR that was active
 								// when Burden went into effect.
-								if (current_spell->statistic == 0.0f) {
-									magnitude -= current_spell->magnitude;
+								if (currentSpell->statistic == 0.0f) {
+									magnitude -= currentSpell->magnitude;
 								}
 								else {
-									magnitude -= current_spell->magnitude * (100.0 - current_spell->statistic) / 100.0;
+									magnitude -= currentSpell->magnitude * (100.0 - currentSpell->statistic) / 100.0;
 								}
 							}
 							else if (effect_id == TES3::EffectFeather) {
-								magnitude += current_spell->magnitude;
+								magnitude += currentSpell->magnitude;
 							}
 						}
 					}
 				}
 			}
 			if (magnitude != 0.0) {
-				activeEffects.insert(std::make_pair(active_spell->id, std::make_pair(magnitude, time)));
+				activeEffects.insert(std::make_pair(activeSpell->id, std::make_pair(magnitude, time)));
 			}
 		}
 		SearchForEffects(node->first);

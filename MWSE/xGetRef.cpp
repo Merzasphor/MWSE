@@ -22,7 +22,6 @@
 #include "VMExecuteInterface.h"
 #include "Stack.h"
 #include "InstructionInterface.h"
-#include "Reference.h"
 
 using namespace mwse;
 
@@ -56,9 +55,7 @@ namespace mwse
 			ref = virtualMachine.getReference(referenceId.c_str());
 		}
 
-		Reference fixed(ref);
-
-		Stack::getInstance().pushLong(fixed);
+		Stack::getInstance().pushLong((mwLong)ref);
 
 		return 0.0f;
 	}

@@ -35,8 +35,8 @@ namespace TES3 {
 			DialogInfo = 'OFNI',
 			Ingredient = 'RGNI',
 			Land = 'DNAL',
-			LevelledCreature = 'CVEL',
-			LevelledItem = 'IVEL',
+			LeveledCreature = 'CVEL',
+			LeveledItem = 'IVEL',
 			Light = 'HGIL',
 			Lockpick = 'KCOL',
 			LandTexture = 'XETL',
@@ -97,6 +97,7 @@ namespace TES3 {
 	struct Skill;
 	struct Sound;
 	struct Spell;
+	struct SPLLNode;
 	struct Static;
 	struct ViewMaster;
 	struct Weapon;

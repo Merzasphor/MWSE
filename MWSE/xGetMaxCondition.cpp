@@ -23,7 +23,12 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "Reference.h"
+
+#include "TES3Lockpick.h"
+#include "TES3Probe.h"
+#include "TES3Armor.h"
+#include "TES3Repair.h"
+#include "TES3Weapon.h"
 
 using namespace mwse;
 

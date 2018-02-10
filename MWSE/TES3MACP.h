@@ -25,7 +25,7 @@ namespace TES3 {
 			ActiveEffect * previous;
 			unsigned long id; //??? matches SPLLRecord
 			unsigned short flags; //??? 0x0 for spells 0x68 for potions?
-			unsigned short TES3::Effectype; // see Effects enum
+			unsigned short effectType; // see Effects enum
 			unsigned short detrimental; // 1 = yes, 0 = no
 			unsigned short duration; // seconds
 			unsigned short magnitude;

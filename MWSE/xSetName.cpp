@@ -24,6 +24,15 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3NPC.h"
+#include "TES3Container.h"
+#include "TES3Light.h"
+#include "TES3Armor.h"
+#include "TES3Activator.h"
+#include "TES3Door.h"
+#include "TES3Apparatus.h"
+#include "TES3Lockpick.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -104,12 +113,12 @@ namespace mwse
 			nameContainer = &reinterpret_cast<TES3::Armor*>(recordGeneric)->name;
 			namePtr = *nameContainer;
 			break;
-		case TES3::ObjectType::ACTIVATOR:
-			nameContainer = &reinterpret_cast<ACTIRecord_t*>(recordGeneric)->name;
+		case TES3::ObjectType::Activator:
+			nameContainer = &reinterpret_cast<TES3::Activator*>(recordGeneric)->name;
 			namePtr = *nameContainer;
 			break;
 		case TES3::ObjectType::Door:
-			namePtr = reinterpret_cast<DOORRecord_t*>(recordGeneric)->name;
+			namePtr = reinterpret_cast<TES3::Door*>(recordGeneric)->name;
 			break;
 		case TES3::ObjectType::Apparatus:
 			namePtr = reinterpret_cast<TES3::Apparatus*>(recordGeneric)->name;

@@ -58,14 +58,14 @@ namespace mwse
 		mwFloat totalWeight = 0.0f;
 
 		// Loop through the inventory nodes of the reference, adding weight for each item found.
-		TES3::IteratorNode<InventoryNode>* inventoryListNode = tes3::getFirstInventoryNode(reference);
+		TES3::IteratorNode<TES3::InventoryNode>* inventoryListNode = tes3::getFirstInventoryNode(reference);
 		while (inventoryListNode) {
-			InventoryNode* inventoryNode = inventoryListNode->data;
+			TES3::InventoryNode* inventoryNode = inventoryListNode->data;
 			if (inventoryNode) {
-				totalWeight += tes3::getWeight(inventoryNode->recordAddress) * std::abs(inventoryNode->itemCount);
+				totalWeight += tes3::getWeight(inventoryNode->object) * std::abs(inventoryNode->itemCount);
 
 				// Keep track if we've run across leveled content.
-				if (!hasLeveledContent && inventoryNode->recordAddress->objectType == TES3::ObjectType::LEVELLEDITEM) {
+				if (!hasLeveledContent && inventoryNode->object->objectType == TES3::ObjectType::LeveledItem) {
 					hasLeveledContent = true;
 				}
 			}

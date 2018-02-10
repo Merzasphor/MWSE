@@ -41,12 +41,12 @@ namespace mwse
 
 	static xGetSpellEffects xGetSpellEffectsInstance;
 
-	xGetSpellTES3::EffectxGetSpellEffects() : mwse::InstructionInterface_t(OpCode::xGetSpellEffects) {}
+	xGetSpellEffects::xGetSpellEffects() : mwse::InstructionInterface_t(OpCode::xGetSpellEffects) {}
 
-	void xGetSpellTES3::EffectloadParameters(mwse::VMExecuteInterface &virtualMachine) {
+	void xGetSpellEffects::loadParameters(mwse::VMExecuteInterface &virtualMachine) {
 	}
 
-	float xGetSpellTES3::Effectexecute(mwse::VMExecuteInterface &virtualMachine)
+	float xGetSpellEffects::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameter.
 		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());

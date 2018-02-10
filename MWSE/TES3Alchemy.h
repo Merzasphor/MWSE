@@ -35,7 +35,7 @@ namespace TES3 {
 		mwFloat weight; // 0x54
 		mwLong value; // 0x58
 		Effect effects[8]; // 0x5C
-		mwLong autocalc; // 0x011C // 1 = AUTOCALC
+		mwLong flags; // 0x011C // 1 = AUTOCALC
 	};
 	static_assert(sizeof(Alchemy) == 0x120, "TES3::Alchemy failed size validation");
 }

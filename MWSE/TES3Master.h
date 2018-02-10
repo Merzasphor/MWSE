@@ -5,7 +5,7 @@
 #include "ObjectTypes.h"
 
 namespace TES3 {
-	namespace input {
+	namespace Input {
 		enum InputIndex {
 			KeyForward,
 			KeyBack,
@@ -90,7 +90,7 @@ namespace TES3 {
 		int unknown_0x40;
 		int unknown_0x44;
 		int unknown_0x48;
-		input::InputConfig * inputConfig; // 0x4C
+		Input::InputConfig * inputConfig; // 0x4C
 		int unknown_0x50;
 		int unknown_0x54;
 		int unknown_0x58;

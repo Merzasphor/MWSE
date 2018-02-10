@@ -23,7 +23,6 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "Reference.h"
 
 namespace mwse {
 	class xGetStackSize : mwse::InstructionInterface_t {
@@ -52,7 +51,7 @@ namespace mwse {
 
 		// Get the associated variable node and its item count.
 		mwLong count = 0;
-		InventoryNode* inventoryNode = reinterpret_cast<InventoryNode*>(tes3::getAttachedVarHolderNode(reference));
+		TES3::InventoryNode* inventoryNode = reinterpret_cast<TES3::InventoryNode*>(tes3::getAttachedVarHolderNode(reference));
 		if (inventoryNode) {
 			count = inventoryNode->itemCount;
 		}

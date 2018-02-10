@@ -22,7 +22,8 @@
 #include "VMExecuteInterface.h"
 #include "Stack.h"
 #include "InstructionInterface.h"
-#include "Reference.h"
+
+#include "ObjectTypes.h"
 
 using namespace mwse;
 
@@ -47,11 +48,8 @@ namespace mwse
 		//get the current target
 		TES3::Reference * target = virtualMachine.getCurrentTarget();
 
-		//make it a 'Reference'
-		Reference fixed(target);
-
 		//push the Reference on the stack.
-		Stack::getInstance().pushLong(fixed);
+		Stack::getInstance().pushLong((mwLong)target);
 
 		return 0.0f;
 	}

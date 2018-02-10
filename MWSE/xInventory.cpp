@@ -56,7 +56,7 @@ namespace mwse
 			return 0.0f;
 		}
 		
-		TES3::IteratorNode<InventoryNode>* firstItem = tes3::getFirstInventoryNode(reference);
+		TES3::IteratorNode<TES3::InventoryNode>* firstItem = tes3::getFirstInventoryNode(reference);
 		if (firstItem == NULL) {
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);

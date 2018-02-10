@@ -22,7 +22,6 @@
 #include "VMExecuteInterface.h"
 #include "Stack.h"
 #include "InstructionInterface.h"
-#include "Reference.h"
 #include <cmath>
 
 using namespace mwse;
@@ -46,8 +45,7 @@ namespace mwse
 	float xDistance::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get target reference
-		Reference ref(mwse::Stack::getInstance().popLong());
-		TES3::Reference * targetref = reinterpret_cast<TES3::Reference*>(ref.getAddress());
+		TES3::Reference* targetref = reinterpret_cast<TES3::Reference*>(mwse::Stack::getInstance().popLong());
 		if (targetref == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xModProgressSkill: Target reference is invalid." << std::endl;

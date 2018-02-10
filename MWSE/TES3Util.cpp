@@ -288,7 +288,7 @@ namespace mwse
 			case TES3::ObjectType::Container:
 				weight = reinterpret_cast<TES3::Container*>(record)->weight;
 				break;
-			case TES3::ObjectType::LevelledItem:
+			case TES3::ObjectType::LeveledItem:
 				weight = 0.000001f;
 				break;
 			default:

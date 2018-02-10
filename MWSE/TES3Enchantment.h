@@ -34,6 +34,7 @@ namespace TES3 {
 		short cost; // 0x32
 		long charge; // 0x34
 		Effect effects[8]; // 0x38
+		long autocalc;
 	};
-	static_assert(sizeof(Enchantment) == 0xF8, "TES3::Enchantment failed size validation");
+	//static_assert(sizeof(Enchantment) == 0xF8, "TES3::Enchantment failed size validation");
 }

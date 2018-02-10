@@ -24,6 +24,8 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3CellMaster.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -53,19 +55,19 @@ namespace mwse
 			reference = mwse::tes3::skipRemovedReferences(cellMaster->interiorCell->npc.first);
 		}
 		else {
-			TES3CellPointer_t* cellPointer = cellMaster->exteriorCells[CENTER];
+			TES3::CellPointer* cellPointer = cellMaster->exteriorCells[TES3::CellGridCenter];
 			if (cellPointer->size == 1) {
 				// Get the start of the list for the center cell. We'll check that it's valid later.
-				reference = mwse::tes3::skipRemovedReferences(cellPointer->first->npc.first);
+				reference = mwse::tes3::skipRemovedReferences(cellPointer->cell->npc.first);
 				int exteriorCount = 0;
 				for (int i = 0; i < 9; i++) {
-					if (i == CENTER) {
+					if (i == TES3::CellGridCenter) {
 						continue;
 					}
 
 					cellPointer = cellMaster->exteriorCells[i];
 					if (cellPointer->size == 1) {
-						TES3::Reference* tempReference = mwse::tes3::skipRemovedReferences(cellPointer->first->npc.first);
+						TES3::Reference* tempReference = mwse::tes3::skipRemovedReferences(cellPointer->cell->npc.first);
 						if (tempReference != NULL) {
 							mwse::tes3::exteriorRefs[exteriorCount] = tempReference;
 							exteriorCount++;

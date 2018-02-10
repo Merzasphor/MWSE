@@ -45,7 +45,7 @@ namespace mwse
 	float xNextStack::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get the passed node.
-		TES3::IteratorNode<InventoryNode>* node = reinterpret_cast<TES3::IteratorNode<InventoryNode>*>(mwse::Stack::getInstance().popLong());
+		TES3::IteratorNode<TES3::InventoryNode>* node = reinterpret_cast<TES3::IteratorNode<TES3::InventoryNode>*>(mwse::Stack::getInstance().popLong());
 		if (node == NULL) {
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);

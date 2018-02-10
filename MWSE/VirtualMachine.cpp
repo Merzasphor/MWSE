@@ -31,6 +31,7 @@
 
 #include "TES3CellMaster.h"
 #include "TES3GlobalVariable.h"
+#include "TES3ViewMaster.h"
 
 using namespace mwse;
 
