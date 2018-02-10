@@ -34,3 +34,5 @@ goto end
 
 :end
 popd
+
+rem %~dp0\build\html\index.html

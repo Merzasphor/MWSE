@@ -2,7 +2,7 @@
 Morrowind Script Extender v2
 ========================================================
 
-The Morrowind Script Extender makes additional functions available for use in Morrowind scripts, beyond those provided by the game's construction set. 
+The Morrowind Script Extender makes additional functions available for use in Morrowind scripts, beyond those provided by the game's construction set.
 
 These extra functions allow modders to add features and behavior to scripts that would otherwise be impractical or impossible.
 
@@ -23,4 +23,4 @@ These extra functions allow modders to add features and behavior to scripts that
 
     mwscript/references
     mwscript/GMSTs
-    mwscript/functions
+    mwscript/functions/index
