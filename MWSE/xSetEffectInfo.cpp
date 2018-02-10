@@ -24,6 +24,9 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Alchemy.h"
+#include "TES3Enchantment.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -45,25 +48,25 @@ namespace mwse
 	float xSetEffectInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwLong_t targetType = Stack::getInstance().popLong();
+		mwLong targetType = Stack::getInstance().popLong();
 		mwseString_t& targetId = virtualMachine.getString(Stack::getInstance().popLong());
-		mwLong_t effectIndex = Stack::getInstance().popLong();
-		mwLong_t effectId = Stack::getInstance().popLong();
-		mwLong_t effectSkillAttributeId = Stack::getInstance().popLong();
-		mwLong_t effectRange = Stack::getInstance().popLong();
-		mwLong_t effectArea = Stack::getInstance().popLong();
-		mwLong_t effectDuration = Stack::getInstance().popLong();
-		mwLong_t effectMagMin = Stack::getInstance().popLong();
-		mwLong_t effectMagMax = Stack::getInstance().popLong();
+		mwLong effectIndex = Stack::getInstance().popLong();
+		mwLong effectId = Stack::getInstance().popLong();
+		mwLong effectSkillAttributeId = Stack::getInstance().popLong();
+		mwLong effectRange = Stack::getInstance().popLong();
+		mwLong effectArea = Stack::getInstance().popLong();
+		mwLong effectDuration = Stack::getInstance().popLong();
+		mwLong effectMagMin = Stack::getInstance().popLong();
+		mwLong effectMagMax = Stack::getInstance().popLong();
 
 		bool result = false;
 
 		// Validate effect index.
 		if (effectIndex >= 1 && effectIndex <= 8) {
 			// Get the desired effect.
-			Effect_t* effects = NULL;
-			if (targetType == RecordTypes::SPELL) {
-				SPELRecord_t* spell = tes3::getSpellRecordById(targetId);
+			TES3::Effect* effects = NULL;
+			if (targetType == TES3::ObjectType::Spell) {
+				TES3::Spell* spell = tes3::getSpellRecordById(targetId);
 				if (spell) {
 					effects = spell->effects;
 				}
@@ -73,8 +76,8 @@ namespace mwse
 #endif
 				}
 			}
-			else if (targetType == RecordTypes::ENCH) {
-				ENCHRecord_t* enchant = tes3::getEnchantRecordById(targetId);
+			else if (targetType == TES3::ObjectType::Enchantment) {
+				TES3::Enchantment* enchant = tes3::getEnchantRecordById(targetId);
 				if (enchant) {
 					effects = enchant->effects;
 				}
@@ -84,8 +87,8 @@ namespace mwse
 #endif
 				}
 			}
-			else if (targetType == RecordTypes::ALCHEMY) {
-				ALCHRecord_t* alchemy = tes3::getAlchemyRecordById(targetId);
+			else if (targetType == TES3::ObjectType::Alchemy) {
+				TES3::Alchemy* alchemy = tes3::getAlchemyRecordById(targetId);
 				if (alchemy) {
 					effects = alchemy->effects;
 				}

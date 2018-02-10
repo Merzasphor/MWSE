@@ -24,6 +24,15 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3NPC.h"
+#include "TES3Container.h"
+#include "TES3Light.h"
+#include "TES3Armor.h"
+#include "TES3Activator.h"
+#include "TES3Door.h"
+#include "TES3Apparatus.h"
+#include "TES3Lockpick.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -57,7 +66,7 @@ namespace mwse
 		}
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetName: No reference provided." << std::endl;
@@ -67,7 +76,7 @@ namespace mwse
 		}
 		
 		// Get the base record.
-		TES3DefaultTemplate_t* recordGeneric = reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer);
+		TES3::BaseObject* recordGeneric = reinterpret_cast<TES3::BaseObject*>(reference->objectPointer);
 		if (recordGeneric == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetName: No record found for reference." << std::endl;
@@ -79,46 +88,46 @@ namespace mwse
 		// Get string pointer based on record type.
 		char* namePtr = NULL;
 		char** nameContainer = NULL;
-		RecordTypes::recordType_t recordType = recordGeneric->recordType;
+		TES3::ObjectType::ObjectType recordType = recordGeneric->objectType;
 		switch (recordType) {
-		case RecordTypes::NPC:
-		case RecordTypes::CREATURE:
-			nameContainer = &reinterpret_cast<NPCCopyRecord_t*>(recordGeneric)->baseNPC->name;
+		case TES3::ObjectType::NPC:
+		case TES3::ObjectType::Creature:
+			nameContainer = &reinterpret_cast<TES3::NPCInstance*>(recordGeneric)->baseNPC->name;
 			namePtr = *nameContainer;
 			break;
-		case RecordTypes::CONTAINER:
-			nameContainer = &reinterpret_cast<CONTRecord_t*>(recordGeneric)->name;
+		case TES3::ObjectType::Container:
+			nameContainer = &reinterpret_cast<TES3::Container*>(recordGeneric)->name;
 			namePtr = *nameContainer;
 			break;
-		case RecordTypes::LIGHT:
-			nameContainer = &reinterpret_cast<LIGHRecord_t*>(recordGeneric)->name;
+		case TES3::ObjectType::Light:
+			nameContainer = &reinterpret_cast<TES3::Light*>(recordGeneric)->name;
 			namePtr = *nameContainer;
 			break;
-		case RecordTypes::ALCHEMY:
-		case RecordTypes::AMMO:
-		case RecordTypes::ARMOR:
-		case RecordTypes::BOOK:
-		case RecordTypes::CLOTHING:
-		case RecordTypes::MISC:
-		case RecordTypes::WEAPON:
-			nameContainer = &reinterpret_cast<ARMORecord_t*>(recordGeneric)->name;
+		case TES3::ObjectType::Alchemy:
+		case TES3::ObjectType::Ammo:
+		case TES3::ObjectType::Armor:
+		case TES3::ObjectType::Book:
+		case TES3::ObjectType::Clothing:
+		case TES3::ObjectType::Misc:
+		case TES3::ObjectType::Weapon:
+			nameContainer = &reinterpret_cast<TES3::Armor*>(recordGeneric)->name;
 			namePtr = *nameContainer;
 			break;
-		case RecordTypes::ACTIVATOR:
-			nameContainer = &reinterpret_cast<ACTIRecord_t*>(recordGeneric)->name;
+		case TES3::ObjectType::Activator:
+			nameContainer = &reinterpret_cast<TES3::Activator*>(recordGeneric)->name;
 			namePtr = *nameContainer;
 			break;
-		case RecordTypes::DOOR:
-			namePtr = reinterpret_cast<DOORRecord_t*>(recordGeneric)->name;
+		case TES3::ObjectType::Door:
+			namePtr = reinterpret_cast<TES3::Door*>(recordGeneric)->name;
 			break;
-		case RecordTypes::APPARATUS:
-			namePtr = reinterpret_cast<APPARecord_t*>(recordGeneric)->name;
+		case TES3::ObjectType::Apparatus:
+			namePtr = reinterpret_cast<TES3::Apparatus*>(recordGeneric)->name;
 			break;
-		case RecordTypes::INGREDIENT:
-		case RecordTypes::LOCKPICK:
-		case RecordTypes::PROBE:
-		case RecordTypes::REPAIR:
-			namePtr = reinterpret_cast<LOCKRecord_t*>(recordGeneric)->name;
+		case TES3::ObjectType::Ingredient:
+		case TES3::ObjectType::Lockpick:
+		case TES3::ObjectType::Probe:
+		case TES3::ObjectType::Repair:
+			namePtr = reinterpret_cast<TES3::Lockpick*>(recordGeneric)->name;
 			break;
 		}
 

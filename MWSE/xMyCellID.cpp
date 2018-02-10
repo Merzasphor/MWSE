@@ -44,7 +44,7 @@ namespace mwse
 
 	float xMyCellID::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xMyCellID: Called on invalid reference." << std::endl;
@@ -55,7 +55,7 @@ namespace mwse
 
 		// This data structure hasn't been fully mapped out.
 		if (reference && reference->unknown_0x14 && reference->unknown_0x14->cell) {
-			mwse::Stack::getInstance().pushString(reference->unknown_0x14->cell->cellname);
+			mwse::Stack::getInstance().pushString(reference->unknown_0x14->cell->name);
 		}
 		else {
 			mwse::Stack::getInstance().pushLong(0);

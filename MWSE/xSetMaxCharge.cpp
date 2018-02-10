@@ -24,6 +24,10 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Armor.h"
+#include "TES3Clothing.h"
+#include "TES3Weapon.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -45,11 +49,11 @@ namespace mwse
 	float xSetMaxCharge::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameter from the stack.
-		mwFloat_t maxCharge = mwse::Stack::getInstance().popFloat();
+		mwFloat maxCharge = mwse::Stack::getInstance().popFloat();
 		bool success = false;
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetMaxCharge: No reference provided." << std::endl;
@@ -59,7 +63,7 @@ namespace mwse
 		}
 
 		// Get the base record.
-		TES3DefaultTemplate_t* record = reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer);
+		TES3::BaseObject* record = reinterpret_cast<TES3::BaseObject*>(reference->objectPointer);
 		if (record == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetMaxCharge: No record found for reference." << std::endl;
@@ -69,19 +73,19 @@ namespace mwse
 		}
 
 		// Get enchantment record based on record type.
-		ENCHRecord_t* enchantment = NULL;
-		if (record->recordType == RecordTypes::ARMOR) {
-			enchantment = reinterpret_cast<ARMORecord_t*>(record)->enchantment;
+		TES3::Enchantment* enchantment = NULL;
+		if (record->objectType == TES3::ObjectType::Armor) {
+			enchantment = reinterpret_cast<TES3::Armor*>(record)->enchantment;
 		}
-		else if (record->recordType == RecordTypes::CLOTHING) {
-			enchantment = reinterpret_cast<CLOTRecord_t*>(record)->enchantment;
+		else if (record->objectType == TES3::ObjectType::Clothing) {
+			enchantment = reinterpret_cast<TES3::Clothing*>(record)->enchantment;
 		}
-		else if (record->recordType == RecordTypes::WEAPON) {
-			enchantment = reinterpret_cast<WEAPRecord_t*>(record)->enchantment;
+		else if (record->objectType == TES3::ObjectType::Weapon) {
+			enchantment = reinterpret_cast<TES3::Weapon*>(record)->enchantment;
 		}
 		else {
 #if _DEBUG
-			mwse::log::getLog() << "xSetMaxCharge: Invalid record type: " << record->recordType << std::endl;
+			mwse::log::getLog() << "xSetMaxCharge: Invalid record type: " << record->objectType << std::endl;
 #endif
 			mwse::Stack::getInstance().pushLong(success);
 			return 0.0f;
@@ -92,9 +96,9 @@ namespace mwse
 			enchantment->charge = maxCharge;
 
 			// If there's charge data in an attached node, update it.
-			mwVarHolderNode_t* varNode = tes3::getAttachedVarHolderNode(reference);
+			 TES3::VariableHolderAttachment* varNode = tes3::getAttachedVarHolderNode(reference);
 			if (varNode) {
-				mwFloat_t& charge = *reinterpret_cast<mwFloat_t*>(&varNode->unknown_0x10);
+				mwFloat& charge = *reinterpret_cast<mwFloat*>(&varNode->unknown_0x10);
 				if (charge >= maxCharge) {
 					charge = maxCharge;
 					success = true;

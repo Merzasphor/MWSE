@@ -22,7 +22,6 @@
 #include "VMExecuteInterface.h"
 #include "Stack.h"
 #include "InstructionInterface.h"
-#include "Reference.h"
 #include "Log.h"
 #include "StringUtil.h"
 
@@ -51,7 +50,7 @@ namespace mwse
 		mwseString_t& string1 = virtualMachine.getString(Stack::getInstance().popLong());
 		mwseString_t& string2 = virtualMachine.getString(Stack::getInstance().popLong());
 
-		mwLong_t result = strcmp(string1.c_str(), string2.c_str());
+		mwLong result = strcmp(string1.c_str(), string2.c_str());
 
 		mwse::Stack::getInstance().pushLong(result);
 

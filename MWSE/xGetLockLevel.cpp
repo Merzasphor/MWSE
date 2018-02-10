@@ -44,10 +44,10 @@ namespace mwse
 
 	float xGetLockLevel::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwShort_t lockLevel = -1;
+		mwShort lockLevel = -1;
 
 		// Get reference to what we're finding the lock level of.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetLockLevel: No reference provided." << std::endl;
@@ -56,9 +56,9 @@ namespace mwse
 			return 0.0f;
 		}
 
-		RecordTypes::recordType_t type = reference->recordPointer->recordType;
-		if (type == RecordTypes::CONTAINER || type == RecordTypes::DOOR) {
-			mwLockNode_t* lockNode = tes3::getAttachedLockNode(reference);
+		TES3::ObjectType::ObjectType type = reference->objectPointer->objectType;
+		if (type == TES3::ObjectType::Container || type == TES3::ObjectType::Door) {
+			TES3::LockAttachment* lockNode = tes3::getAttachedLockNode(reference);
 			if (lockNode) {
 				lockLevel = lockNode->lockLevel;
 			}

@@ -24,6 +24,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3CellMaster.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -48,7 +50,7 @@ namespace mwse
 		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get spell.
-		SPELRecord_t* spell = tes3::getSpellRecordById(id);
+		TES3::Spell* spell = tes3::getSpellRecordById(id);
 		if (spell == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xDeleteSpell: No spell found with id '" << id << "'." << std::endl;
@@ -58,26 +60,26 @@ namespace mwse
 		}
 
 		// Manipulate the record list to remove this object.
-		LinkedList_t<SPELRecord_t>* spellsList = tes3::getCellMaster()->recordLists->spellsList;
+		TES3::LinkedList<TES3::Spell>* spellsList = tes3::getCellMaster()->recordLists->spellsList;
 		if (spell == spellsList->head) {
-			spell->nextRecord->prevRecord = NULL;
-			spellsList->head = spell->nextRecord;
+			spell->nextSpell->previousSpell = NULL;
+			spellsList->head = spell->nextSpell;
 		}
 		else if (spell == spellsList->tail) {
-			spell->prevRecord->nextRecord = NULL;
-			spellsList->tail = spell->prevRecord;
+			spell->previousSpell->nextSpell = NULL;
+			spellsList->tail = spell->previousSpell;
 		}
 		else {
-			SPELRecord_t* nextSpell = spell->nextRecord;
-			SPELRecord_t* previousSpell = spell->prevRecord;
-			nextSpell->prevRecord = previousSpell;
-			previousSpell->nextRecord = nextSpell;
+			TES3::Spell* nextSpell = spell->nextSpell;
+			TES3::Spell* previousSpell = spell->previousSpell;
+			nextSpell->previousSpell = previousSpell;
+			previousSpell->nextSpell = nextSpell;
 		}
 		spellsList->size--;
 
 		// Delete the spell from memory.
-		tes3::free(spell->friendlyName);
-		tes3::free(spell->id);
+		tes3::free(spell->name);
+		tes3::free(spell->objectID);
 		tes3::free(spell);
 
 		/*

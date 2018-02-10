@@ -42,10 +42,10 @@ namespace mwse {
 
 	float xContentList::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get parameters.
-		IteratorNode_t<InventoryNode_t>* node = reinterpret_cast<IteratorNode_t<InventoryNode_t>*>(mwse::Stack::getInstance().popLong());
+		TES3::IteratorNode<TES3::InventoryNode>* node = reinterpret_cast<TES3::IteratorNode<TES3::InventoryNode>*>(mwse::Stack::getInstance().popLong());
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xContentList: Called on invalid reference." << std::endl;
@@ -62,12 +62,12 @@ namespace mwse {
 
 		// Results.
 		char * id = NULL;
-		mwLong_t count = 0;
-		mwLong_t type = 0;
-		mwLong_t value = 0;
-		mwFloat_t weight = 0;
-		mwString_t name = NULL;
-		IteratorNode_t<InventoryNode_t>* next = NULL;
+		mwLong count = 0;
+		mwLong type = 0;
+		mwLong value = 0;
+		mwFloat weight = 0;
+		mwString name = NULL;
+		TES3::IteratorNode<TES3::InventoryNode>* next = NULL;
 
 		// If we aren't given a node, get the first one.
 		if (node == NULL) {
@@ -75,16 +75,16 @@ namespace mwse {
 		}
 
 		// Validate the node we've obtained.
-		if (node && node->data && node->data->recordAddress) {
-			TES3DefaultTemplate_t* record = reinterpret_cast<TES3DefaultTemplate_t*>(node->data->recordAddress);
+		if (node && node->data && node->data->object) {
+			TES3::BaseObject* record = reinterpret_cast<TES3::BaseObject*>(node->data->object);
 			
-			id = record->objectId;
+			id = record->objectID;
 			count = node->data->itemCount;
-			type = record->recordType;
+			type = record->objectType;
 
 			// Get value.
 			try {
-				value = tes3::getValue(reinterpret_cast<BaseRecord_t*>(record));
+				value = tes3::getValue(reinterpret_cast<TES3::BaseObject*>(record));
 			}
 			catch (std::exception& e) {
 				value = 0;
@@ -93,7 +93,7 @@ namespace mwse {
 
 			// Get weight.
 			try {
-				weight = tes3::getWeight(reinterpret_cast<BaseRecord_t*>(record));
+				weight = tes3::getWeight(reinterpret_cast<TES3::BaseObject*>(record));
 			}
 			catch (std::exception& e) {
 				weight = 0.0f;
@@ -102,7 +102,7 @@ namespace mwse {
 
 			// Get name.
 			try {
-				name = tes3::getName(reinterpret_cast<BaseRecord_t*>(record));
+				name = tes3::getName(reinterpret_cast<TES3::BaseObject*>(record));
 			}
 			catch (std::exception& e) {
 				name = NULL;
@@ -113,7 +113,7 @@ namespace mwse {
 		}
 
 		// Push values to the stack.
-		mwse::Stack::getInstance().pushLong((mwLong_t)next);
+		mwse::Stack::getInstance().pushLong((mwLong)next);
 		mwse::Stack::getInstance().pushString(name);
 		mwse::Stack::getInstance().pushFloat(weight);
 		mwse::Stack::getInstance().pushLong(value);

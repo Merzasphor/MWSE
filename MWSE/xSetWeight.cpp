@@ -23,7 +23,15 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "Reference.h"
+
+#include "TES3Book.h"
+#include "TES3Light.h"
+#include "TES3Lockpick.h"
+#include "TES3Armor.h"
+#include "TES3Clothing.h"
+#include "TES3Apparatus.h"
+#include "TES3Misc.h"
+#include "TES3Container.h"
 
 using namespace mwse;
 
@@ -43,10 +51,10 @@ namespace mwse {
 
 	float xSetWeight::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get parameters.
-		mwFloat_t weight = mwse::Stack::getInstance().popFloat();
+		mwFloat weight = mwse::Stack::getInstance().popFloat();
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetWeight: No reference provided." << std::endl;
@@ -56,7 +64,7 @@ namespace mwse {
 		}
 
 		// Get record.
-		BaseRecord_t* record = reference->recordPointer;
+		TES3::BaseObject* record = reference->objectPointer;
 		if (record == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetWeight: No base record found." << std::endl;
@@ -67,36 +75,36 @@ namespace mwse {
 
 		// Get the weight from the base record. We group records here by the same offset.
 		bool setWeight = true;
-		RecordTypes::recordType_t recordType = record->recordType;
+		TES3::ObjectType::ObjectType recordType = record->objectType;
 		switch (recordType) {
-		case RecordTypes::MISC:
-		case RecordTypes::BOOK:
-		case RecordTypes::ALCHEMY:
-		case RecordTypes::AMMO:
-		case RecordTypes::WEAPON:
-			reinterpret_cast<BOOKRecord_t*>(record)->weight = weight;
+		case TES3::ObjectType::Misc:
+		case TES3::ObjectType::Book:
+		case TES3::ObjectType::Alchemy:
+		case TES3::ObjectType::Ammo:
+		case TES3::ObjectType::Weapon:
+			reinterpret_cast<TES3::Book*>(record)->weight = weight;
 			break;
-		case RecordTypes::LIGHT:
-			reinterpret_cast<LIGHRecord_t*>(record)->weight = weight;
+		case TES3::ObjectType::Light:
+			reinterpret_cast<TES3::Light*>(record)->weight = weight;
 			break;
-		case RecordTypes::INGREDIENT:
-		case RecordTypes::LOCK:
-		case RecordTypes::PROBE:
-		case RecordTypes::REPAIR:
-			reinterpret_cast<LOCKRecord_t*>(record)->weight = weight;
+		case TES3::ObjectType::Ingredient:
+		case TES3::ObjectType::Lockpick:
+		case TES3::ObjectType::Probe:
+		case TES3::ObjectType::Repair:
+			reinterpret_cast<TES3::Lockpick*>(record)->weight = weight;
 			break;
-		case RecordTypes::ARMOR:
-			reinterpret_cast<ARMORecord_t*>(record)->weight = weight;
+		case TES3::ObjectType::Armor:
+			reinterpret_cast<TES3::Armor*>(record)->weight = weight;
 			break;
-		case RecordTypes::CLOTHING:
+		case TES3::ObjectType::Clothing:
 			// Clothing has the same offset as armor, but it's a short rather than a long.
-			reinterpret_cast<CLOTRecord_t*>(record)->weight = weight;
+			reinterpret_cast<TES3::Clothing*>(record)->weight = weight;
 			break;
-		case RecordTypes::APPARATUS:
-			reinterpret_cast<APPARecord_t*>(record)->weight = weight;
+		case TES3::ObjectType::Apparatus:
+			reinterpret_cast<TES3::Apparatus*>(record)->weight = weight;
 			break;
-		case RecordTypes::CONTAINER:
-			reinterpret_cast<CONTRecord_t*>(record)->weight = weight;
+		case TES3::ObjectType::Container:
+			reinterpret_cast<TES3::Container*>(record)->weight = weight;
 			break;
 		default:
 			setWeight = false;

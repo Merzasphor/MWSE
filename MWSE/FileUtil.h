@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include "mwseTypes.h"
+#include "ObjectTypes.h"
 #include "mwseString.h"
 #include "Log.h"
 
@@ -50,14 +50,14 @@ namespace mwse {
 
 		HANDLE getFile(const char* fileName);
 
-		mwShort_t readShort(const char* fileName);
-		mwLong_t readLong(const char* fileName);
-		mwFloat_t readFloat(const char* fileName);
+		mwShort readShort(const char* fileName);
+		mwLong readLong(const char* fileName);
+		mwFloat readFloat(const char* fileName);
 		std::string readString(const char* fileName, bool stopAtEndOfLine);
 
-		void writeShort(const char* fileName, const mwShort_t value);
-		void writeLong(const char* fileName, const mwLong_t value);
-		void writeFloat(const char* fileName, const mwFloat_t value);
+		void writeShort(const char* fileName, const mwShort value);
+		void writeLong(const char* fileName, const mwLong value);
+		void writeFloat(const char* fileName, const mwFloat value);
 		void writeString(const char* fileName, const std::string& value, bool suppressNull = false);
 
 		bool seek(const char* fileName, long absolute);

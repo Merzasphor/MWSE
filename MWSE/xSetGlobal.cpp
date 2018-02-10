@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3GlobalVariable.h"
 
 using namespace mwse;
 
@@ -42,9 +43,9 @@ namespace mwse {
 
 	float xSetGlobal::execute(mwse::VMExecuteInterface &virtualMachine) {
 		mwseString_t& variable = virtualMachine.getString(Stack::getInstance().popLong());
-		mwFloat_t value = Stack::getInstance().popFloat();
+		mwFloat value = Stack::getInstance().popFloat();
 
-		GLOBRecord_t* global = tes3::getGlobalRecord(variable);
+		TES3::GlobalVariable* global = tes3::getGlobalRecord(variable);
 		if (global == NULL) {
 			mwse::log::getLog() << "xSetGlobal: No global could be found with id '" << variable << "'." << std::endl;
 			mwse::Stack::getInstance().pushLong(false);

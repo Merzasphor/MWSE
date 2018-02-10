@@ -24,6 +24,10 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Effect.h"
+#include "TES3CellMaster.h"
+#include "TES3MagicEffect.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -45,13 +49,13 @@ namespace mwse
 	float xSetBaseEffectInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwLong_t id = Stack::getInstance().popLong();
-		mwLong_t school = Stack::getInstance().popLong();
-		mwFloat_t baseMagickaCost = Stack::getInstance().popFloat();
-		mwLong_t flags = Stack::getInstance().popLong();
+		mwLong id = Stack::getInstance().popLong();
+		mwLong school = Stack::getInstance().popLong();
+		mwFloat baseMagickaCost = Stack::getInstance().popFloat();
+		mwLong flags = Stack::getInstance().popLong();
 
 		// Validate id.
-		if (id < Effects::FirstMagicEffect || id > Effects::LastMagicEffect) {
+		if (id < TES3::EffectFirst || id > TES3::EffectLast) {
 #if _DEBUG
 			log::getLog() << "xSetBaseEffectInfo: Effect ID out of range." << std::endl;
 #endif
@@ -60,7 +64,7 @@ namespace mwse
 		}
 
 		// Validate school.
-		if (school < FirstMagicSchool || school > LastMagicSchool) {
+		if (school < TES3::FirstMagicSchool || school > TES3::LastMagicSchool) {
 #if _DEBUG
 			log::getLog() << "xSetBaseEffectInfo: School ID out of range." << std::endl;
 #endif
@@ -68,14 +72,14 @@ namespace mwse
 			return 0.0f;
 		}
 
-		MGEFRecord_t& effect = tes3::getCellMaster()->recordLists->magic_effects[id];
-		effect.school = (MagicSchools)school;
-		effect.base_magicka_cost = baseMagickaCost;
+		TES3::MagicEffect& effect = tes3::getCellMaster()->recordLists->magicEffects[id];
+		effect.school = (TES3::MagicSchools)school;
+		effect.baseMagickaCost = baseMagickaCost;
 
 		// Flags are a unique case. We added extra information in xGetBaseEffectInfo. We
 		// need to strip that back out here, and make sure only the right bits are set.
 		// TODO: Programmatically allow setting/getting these normally hard-coded values.
-		effect.flags = (flags & (Effects::Spellmaking | Effects::Enchanting | Effects::NegativeLighting));
+		effect.flags = (flags & (TES3::Spellmaking | TES3::Enchanting | TES3::NegativeLighting));
 
 		Stack::getInstance().pushLong(true);
 

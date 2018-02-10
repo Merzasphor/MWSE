@@ -22,7 +22,6 @@
 #include "VMExecuteInterface.h"
 #include "Stack.h"
 #include "InstructionInterface.h"
-#include "Reference.h"
 
 using namespace mwse;
 
@@ -45,11 +44,8 @@ namespace mwse
 
 	float xSetRef::execute(VMExecuteInterface &virtualMachine)
 	{
-		Reference ref(Stack::getInstance().popLong());	//get the reference
-		REFRRecord_t * realRef = reinterpret_cast<REFRRecord_t*>(ref.getAddress());		//cast it to a pointer
-
-		virtualMachine.setReference(realRef);		//set the current reference
-
+		TES3::Reference* reference = reinterpret_cast<TES3::Reference*>(Stack::getInstance().popLong());
+		virtualMachine.setReference(reference);
 		return 0.0f;
 	}
 	//----------------------------------------

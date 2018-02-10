@@ -42,10 +42,10 @@ namespace mwse {
 
 	float xSetCharge::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get charge from parameter.
-		mwFloat_t charge = Stack::getInstance().popFloat();
+		mwFloat charge = Stack::getInstance().popFloat();
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetCharge: No reference provided." << std::endl;
@@ -55,7 +55,7 @@ namespace mwse {
 		}
 
 		// Get the base record.
-		TES3DefaultTemplate_t* record = reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer);
+		TES3::BaseObject* record = reinterpret_cast<TES3::BaseObject*>(reference->objectPointer);
 		if (record == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetCharge: No record found for reference." << std::endl;
@@ -66,9 +66,9 @@ namespace mwse {
 
 		// Get the charge based on the record type. If the item doesn't have a varnode,
 		// return the maximum charge from the enchantment record.
-		mwVarHolderNode_t* varNode = mwse::tes3::getAttachedVarHolderNode(reference);
+		 TES3::VariableHolderAttachment* varNode = mwse::tes3::getAttachedVarHolderNode(reference);
 		if (varNode) {
-			*reinterpret_cast<mwFloat_t*>(&varNode->unknown_0x10) = charge;
+			*reinterpret_cast<mwFloat*>(&varNode->unknown_0x10) = charge;
 		}
 		else {
 #if _DEBUG

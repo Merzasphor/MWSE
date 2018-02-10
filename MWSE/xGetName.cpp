@@ -45,7 +45,7 @@ namespace mwse
 	float xGetName::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetName: No reference provided." << std::endl;
@@ -54,44 +54,12 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwString_t name = NULL;
+		mwString name = NULL;
 
 		// Get the base record.
-		TES3DefaultTemplate_t* record = reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer);
+		TES3::BaseObject* record = reinterpret_cast<TES3::BaseObject*>(reference->objectPointer);
 		if (record) {
-			RecordTypes::recordType_t type = reference->recordPointer->recordType;
-			if (type == RecordTypes::NPC || type == RecordTypes::CREATURE) {
-				name = reinterpret_cast<NPCBaseRecord_t*>(tes3::getBaseRecord(record))->name;
-			}
-			else if (type == RecordTypes::CONTAINER) {
-				name = reinterpret_cast<CONTRecord_t*>(record)->name;
-			}
-			else if (type == RecordTypes::LIGHT) {
-				name = reinterpret_cast<LIGHRecord_t*>(record)->name;
-			}
-			else if (type == RecordTypes::CLOTHING || type == RecordTypes::ARMOR || type == RecordTypes::WEAPON
-				|| type == RecordTypes::MISC || type == RecordTypes::BOOK || type == RecordTypes::ALCHEMY
-				|| type == RecordTypes::AMMO) {
-				// These records happen to use the same offset. We'll be lazy/efficient here.
-				name = reinterpret_cast<ARMORecord_t*>(record)->name;
-			}
-			else if (type == RecordTypes::ACTIVATOR) {
-				name = reinterpret_cast<ACTIRecord_t*>(record)->name;
-			}
-			else if (type == RecordTypes::DOOR) {
-				name = reinterpret_cast<char*>(reinterpret_cast<unsigned long*>(record) + 0x0d);
-			}
-			else if (type == RecordTypes::APPARATUS) {
-				name = reinterpret_cast<char*>(reinterpret_cast<unsigned long*>(record) + 0x19);
-			}
-			else if (type == RecordTypes::INGREDIENT || type == RecordTypes::REPAIR || type == RecordTypes::PROBE || type == RecordTypes::LOCKPICK) {
-				name = reinterpret_cast<char*>(reinterpret_cast<unsigned long*>(record) + 0x11);
-			}
-			else {
-#if _DEBUG
-				mwse::log::getLog() << "xGetName: Invalid call on record of type " << type << "." << std::endl;
-#endif
-			}
+			name = tes3::getName(reference->objectPointer);
 		}
 		else {
 #if _DEBUG

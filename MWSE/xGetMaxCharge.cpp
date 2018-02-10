@@ -23,6 +23,9 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3Armor.h"
+#include "TES3Clothing.h"
+#include "TES3Weapon.h"
 
 using namespace mwse;
 
@@ -35,7 +38,7 @@ namespace mwse
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	private:
-		const mwFloat_t INVALID_VALUE = -1.0f;
+		const mwFloat INVALID_VALUE = -1.0f;
 	};
 
 	static xGetMaxCharge xGetMaxChargeInstance;
@@ -49,7 +52,7 @@ namespace mwse
 		float charge = 0.0f;
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetMaxCharge: No reference provided." << std::endl;
@@ -59,7 +62,7 @@ namespace mwse
 		}
 
 		// Get the base record.
-		TES3DefaultTemplate_t* record = reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer);
+		TES3::BaseObject* record = reinterpret_cast<TES3::BaseObject*>(reference->objectPointer);
 		if (record == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetMaxCharge: No record found for reference." << std::endl;
@@ -69,21 +72,21 @@ namespace mwse
 		}
 
 		// Get  the maximum charge from the enchantment record.
-		RecordTypes::recordType_t type = reference->recordPointer->recordType;
-		if (type == RecordTypes::ARMOR) {
-			ARMORecord_t* armor = reinterpret_cast<ARMORecord_t*>(record);
+		TES3::ObjectType::ObjectType type = reference->objectPointer->objectType;
+		if (type == TES3::ObjectType::Armor) {
+			TES3::Armor* armor = reinterpret_cast<TES3::Armor*>(record);
 			if (armor->enchantment) {
 				charge = armor->enchantment->charge;
 			}
 		}
-		else if (type == RecordTypes::CLOTHING) {
-			CLOTRecord_t* clothing = reinterpret_cast<CLOTRecord_t*>(record);
+		else if (type == TES3::ObjectType::Clothing) {
+			TES3::Clothing* clothing = reinterpret_cast<TES3::Clothing*>(record);
 			if (clothing->enchantment) {
 				charge = clothing->enchantment->charge;
 			}
 		}
-		else if (type == RecordTypes::WEAPON) {
-			WEAPRecord_t* weapon = reinterpret_cast<WEAPRecord_t*>(record);
+		else if (type == TES3::ObjectType::Weapon) {
+			TES3::Weapon* weapon = reinterpret_cast<TES3::Weapon*>(record);
 			if (weapon->enchantment) {
 				charge = weapon->enchantment->charge;
 			}

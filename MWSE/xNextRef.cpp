@@ -45,13 +45,13 @@ namespace mwse
 	float xNextRef::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get REFR pointer as an argument.
-		REFRRecord_t* reference = (REFRRecord_t*)mwse::Stack::getInstance().popLong();
+		TES3::Reference* reference = (TES3::Reference*)mwse::Stack::getInstance().popLong();
 
 		// Start looking for our next reference.
-		REFRRecord_t* next = NULL;
+		TES3::Reference* next = NULL;
 		if (reference) {
 			// Try to get the next non-removed reference linked down from the passed one.
-			next = mwse::tes3::skipRemovedReferences(reference->nextRecord);
+			next = mwse::tes3::skipRemovedReferences(reinterpret_cast<TES3::Reference*>(reference->nextObject));
 
 			// If we found nothing, check the stored exterior references.
 			if (next == NULL && mwse::tes3::exteriorRefs[0] != NULL) {
@@ -67,7 +67,7 @@ namespace mwse
 #endif
 		}
 
-		mwse::Stack::getInstance().pushLong((mwLong_t)next);
+		mwse::Stack::getInstance().pushLong((mwLong)next);
 
 		return 0.0f;
 	}

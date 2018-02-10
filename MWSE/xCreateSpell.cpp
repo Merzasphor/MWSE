@@ -24,6 +24,9 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Collections.h"
+#include "TES3CellMaster.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -76,35 +79,35 @@ namespace mwse
 		}
 
 		// Get spell list.
-		LinkedList_t<SPELRecord_t>* spellsList = tes3::getCellMaster()->recordLists->spellsList;
-		SPELRecord_t* spellListHead = spellsList->head;
+		TES3::LinkedList<TES3::Spell>* spellsList = tes3::getCellMaster()->recordLists->spellsList;
+		TES3::Spell* spellListHead = spellsList->head;
 
 		// Create new spell.
-		SPELRecord_t* newSpell = reinterpret_cast<SPELRecord_t*>(tes3::malloc(sizeof(SPELRecord_t)));
-		memset(newSpell, 0, sizeof(SPELRecord_t));
+		TES3::Spell* newSpell = reinterpret_cast<TES3::Spell*>(tes3::malloc(sizeof(TES3::Spell)));
+		memset(newSpell, 0, sizeof(TES3::Spell));
 		newSpell->vTable = spellListHead->vTable;
-		newSpell->recordType = RecordTypes::SPELL;
+		newSpell->objectType = TES3::ObjectType::Spell;
 		newSpell->spellsList = spellsList;
 		newSpell->cost = 1;
 
 		// Set ID.
-		newSpell->id = reinterpret_cast<char*>(tes3::malloc(spellId.length() + 1));
-		strcpy(newSpell->id, spellId.c_str());
+		newSpell->objectID = reinterpret_cast<char*>(tes3::malloc(spellId.length() + 1));
+		strcpy(newSpell->objectID, spellId.c_str());
 
 		// Set name.
-		newSpell->friendlyName = reinterpret_cast<char*>(tes3::malloc(spellName.length() + 1));
-		strcpy(newSpell->friendlyName, spellName.c_str());
+		newSpell->name = reinterpret_cast<char*>(tes3::malloc(spellName.length() + 1));
+		strcpy(newSpell->name, spellName.c_str());
 
 		// Set effects.
 		for (int i = 0; i < 8; i++) {
-			newSpell->effects[i].effectId = Effects::NoEffect;
+			newSpell->effects[i].ID = TES3::EffectNone;
 		}
 		
 		// Set the first effect just so that there is something? TODO: Why?
-		tes3::setEffect(newSpell->effects, 1, Effects::WaterBreathing, mwse::NoSkill, Effects::RangeSelf, 0, 1, 0, 0);
+		tes3::setEffect(newSpell->effects, 1, TES3::EffectWaterBreathing, TES3::SkillInvalid, TES3::EffectRangeSelf, 0, 1, 0, 0);
 
 		// Add object to the game.
-		tes3::addObject(reinterpret_cast<BaseRecord_t*>(newSpell));
+		tes3::addObject(reinterpret_cast<TES3::BaseObject*>(newSpell));
 
 		Stack::getInstance().pushLong(true);
 

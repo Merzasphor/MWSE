@@ -23,7 +23,11 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "Reference.h"
+
+#include "TES3Lockpick.h"
+#include "TES3Probe.h"
+#include "TES3Repair.h"
+#include "TES3Apparatus.h"
 
 using namespace mwse;
 
@@ -46,10 +50,10 @@ namespace mwse
 	float xSetQuality::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwFloat_t value = mwse::Stack::getInstance().popFloat();
+		mwFloat value = mwse::Stack::getInstance().popFloat();
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetQuality: No reference provided." << std::endl;
@@ -58,7 +62,7 @@ namespace mwse
 		}
 
 		// Get record.
-		BaseRecord_t* record = reference->recordPointer;
+		TES3::BaseObject* record = reference->objectPointer;
 		if (record == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetQuality: No base record found." << std::endl;
@@ -68,21 +72,21 @@ namespace mwse
 
 		// Get the quality.
 		bool valueSet = false;
-		RecordTypes::recordType_t recordType = record->recordType;
-		if (recordType == RecordTypes::LOCKPICK) {
-			reinterpret_cast<LOCKRecord_t*>(reference->recordPointer)->quality = value;
+		TES3::ObjectType::ObjectType recordType = record->objectType;
+		if (recordType == TES3::ObjectType::Lockpick) {
+			reinterpret_cast<TES3::Lockpick*>(reference->objectPointer)->quality = value;
 			valueSet = true;
 		}
-		else if (recordType == RecordTypes::PROBE) {
-			reinterpret_cast<PROBRecord_t*>(reference->recordPointer)->quality = value;
+		else if (recordType == TES3::ObjectType::Probe) {
+			reinterpret_cast<TES3::Probe*>(reference->objectPointer)->quality = value;
 			valueSet = true;
 		}
-		else if (recordType == RecordTypes::REPAIR) {
-			reinterpret_cast<REPARecord_t*>(reference->recordPointer)->quality = value;
+		else if (recordType == TES3::ObjectType::Repair) {
+			reinterpret_cast<TES3::Repair*>(reference->objectPointer)->quality = value;
 			valueSet = true;
 		}
-		else if (recordType == RecordTypes::APPARATUS) {
-			reinterpret_cast<APPARecord_t*>(reference->recordPointer)->quality = value;
+		else if (recordType == TES3::ObjectType::Apparatus) {
+			reinterpret_cast<TES3::Apparatus*>(reference->objectPointer)->quality = value;
 			valueSet = true;
 		}
 		else {

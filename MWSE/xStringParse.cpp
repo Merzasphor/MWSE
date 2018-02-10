@@ -22,7 +22,6 @@
 #include "VMExecuteInterface.h"
 #include "Stack.h"
 #include "InstructionInterface.h"
-#include "Reference.h"
 #include "Log.h"
 #include "StringUtil.h"
 #include "MWSEDefs.h"
@@ -49,7 +48,7 @@ namespace mwse
 
 		// We have to hijack this function for version checking, to make it backwards-compatible.
 		if (format == "MWSE_VERSION") {
-			mwLong_t checkVersionAgainst = mwse::Stack::getInstance().popLong();
+			mwLong checkVersionAgainst = mwse::Stack::getInstance().popLong();
 			mwse::Stack::getInstance().pushLong(MWSE_VERSION_INTEGER >= checkVersionAgainst);
 			mwse::Stack::getInstance().pushLong(MWSE_VERSION_INTEGER);
 			return 0.0f;
@@ -63,7 +62,7 @@ namespace mwse
 		mwse::string::enumerate(format.c_str(), resultCount, eolMode);
 		resultCount++;
 
-		mwLong_t* results = new mwLong_t[resultCount];
+		mwLong* results = new mwLong[resultCount];
 		mwse::string::secernate(format.c_str(), string.c_str(), results, resultCount);
 
 		while (resultCount--) {

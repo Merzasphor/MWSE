@@ -44,8 +44,8 @@ namespace mwse
 
 	float xRandomFloat::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwFloat_t min = mwse::Stack::getInstance().popFloat();
-		mwFloat_t max = mwse::Stack::getInstance().popFloat();
+		mwFloat min = mwse::Stack::getInstance().popFloat();
+		mwFloat max = mwse::Stack::getInstance().popFloat();
 
 		mwse::Stack::getInstance().pushFloat(mwse::rng::getRandomFloat(min, max));
 

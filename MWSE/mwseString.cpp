@@ -35,7 +35,7 @@ mwseString_t::mwseString_t() :
 #endif
 }
 
-mwseString_t::mwseString_t(mwLong_t id) :
+mwseString_t::mwseString_t(mwLong id) :
 	std::string(""),
 	m_ID(id)
 {
@@ -44,7 +44,7 @@ mwseString_t::mwseString_t(mwLong_t id) :
 #endif
 }
 
-mwseString_t::mwseString_t(mwLong_t id, const char* value) :
+mwseString_t::mwseString_t(mwLong id, const char* value) :
 	std::string(value),
 	m_ID(id)
 {
@@ -53,7 +53,7 @@ mwseString_t::mwseString_t(mwLong_t id, const char* value) :
 #endif
 }
 
-mwseString_t::mwseString_t(mwLong_t id, const char* value, size_t length) :
+mwseString_t::mwseString_t(mwLong id, const char* value, size_t length) :
 	std::string(value, length),
 	m_ID(id)
 {
@@ -62,7 +62,7 @@ mwseString_t::mwseString_t(mwLong_t id, const char* value, size_t length) :
 #endif
 }
 
-mwseString_t::mwseString_t(mwLong_t id, const std::string& value) :
+mwseString_t::mwseString_t(mwLong id, const std::string& value) :
 	std::string(value),
 	m_ID(id)
 {
@@ -71,7 +71,7 @@ mwseString_t::mwseString_t(mwLong_t id, const std::string& value) :
 #endif
 }
 
-mwseString_t::operator mwLong_t() const
+mwseString_t::operator mwLong() const
 {
 	if (m_ID == -1) return 0;
 	return m_ID;
@@ -82,7 +82,7 @@ bool mwseString_t::isValid()
 	return m_ID != -1;
 }
 
-mwLong_t mwseString_t::getId()
+mwLong mwseString_t::getId()
 {
 	return m_ID;
 }

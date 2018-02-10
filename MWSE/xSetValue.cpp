@@ -23,7 +23,14 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "Reference.h"
+
+#include "TES3Book.h"
+#include "TES3Light.h"
+#include "TES3Lockpick.h"
+#include "TES3Armor.h"
+#include "TES3Clothing.h"
+#include "TES3Apparatus.h"
+#include "TES3Misc.h"
 
 using namespace mwse;
 
@@ -43,11 +50,11 @@ namespace mwse {
 
 	float xSetValue::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get parameter.
-		mwLong_t value = mwse::Stack::getInstance().popLong();
+		mwLong value = mwse::Stack::getInstance().popLong();
 		bool setValue = false;
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetValue: No reference provided." << std::endl;
@@ -57,7 +64,7 @@ namespace mwse {
 		}
 
 		// Get record.
-		BaseRecord_t* record = reference->recordPointer;
+		TES3::BaseObject* record = reference->objectPointer;
 		if (record == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetValue: No base record found." << std::endl;
@@ -67,42 +74,42 @@ namespace mwse {
 		}
 
 		// Set the value from the base record. We group records here by the same offset.
-		RecordTypes::recordType_t recordType = record->recordType;
+		TES3::ObjectType::ObjectType recordType = record->objectType;
 		switch (recordType) {
-		case RecordTypes::BOOK:
-		case RecordTypes::ALCHEMY:
-		case RecordTypes::AMMO:
-		case RecordTypes::WEAPON:
-			reinterpret_cast<BOOKRecord_t*>(record)->value = value;
+		case TES3::ObjectType::Book:
+		case TES3::ObjectType::Alchemy:
+		case TES3::ObjectType::Ammo:
+		case TES3::ObjectType::Weapon:
+			reinterpret_cast<TES3::Book*>(record)->value = value;
 			setValue = true;
 			break;
-		case RecordTypes::LIGHT:
-			reinterpret_cast<LIGHRecord_t*>(record)->value = value;
+		case TES3::ObjectType::Light:
+			reinterpret_cast<TES3::Light*>(record)->value = value;
 			setValue = true;
 			break;
-		case RecordTypes::INGREDIENT:
-		case RecordTypes::LOCK:
-		case RecordTypes::PROBE:
-		case RecordTypes::REPAIR:
-			reinterpret_cast<LOCKRecord_t*>(record)->value = value;
+		case TES3::ObjectType::Ingredient:
+		case TES3::ObjectType::Lockpick:
+		case TES3::ObjectType::Probe:
+		case TES3::ObjectType::Repair:
+			reinterpret_cast<TES3::Lockpick*>(record)->value = value;
 			setValue = true;
 			break;
-		case RecordTypes::ARMOR:
-			reinterpret_cast<ARMORecord_t*>(record)->value = value;
+		case TES3::ObjectType::Armor:
+			reinterpret_cast<TES3::Armor*>(record)->value = value;
 			setValue = true;
 			break;
-		case RecordTypes::CLOTHING:
+		case TES3::ObjectType::Clothing:
 			// Clothing has the same offset as armor, but it's a short rather than a long.
-			reinterpret_cast<CLOTRecord_t*>(record)->value = value;
+			reinterpret_cast<TES3::Clothing*>(record)->value = value;
 			setValue = true;
 			break;
-		case RecordTypes::APPARATUS:
-			reinterpret_cast<APPARecord_t*>(record)->value = value;
+		case TES3::ObjectType::Apparatus:
+			reinterpret_cast<TES3::Apparatus*>(record)->value = value;
 			setValue = true;
 			break;
-		case RecordTypes::MISC:
+		case TES3::ObjectType::Misc:
 		{
-			reinterpret_cast<MISCRecord_t*>(record)->value = value;
+			reinterpret_cast<TES3::Misc*>(record)->value = value;
 			setValue = true;
 			break;
 		}

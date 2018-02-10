@@ -24,6 +24,9 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3GlobalVariable.h"
+#include "TES3Faction.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -44,28 +47,28 @@ namespace mwse
 
 	float xGetOwnerInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwString_t id = NULL;
-		mwLong_t rank = 0;
-		mwLong_t type = 0;
+		mwString id = NULL;
+		mwLong rank = 0;
+		mwLong type = 0;
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference) {
 			// Get the attached varnode as owner information.
-			mwOwnerInfoNode_t* ownerInfo = reinterpret_cast<mwOwnerInfoNode_t*>(tes3::getAttachedVarHolderNode(reference));
+			TES3::OwnershipAttachment* ownerInfo = reinterpret_cast<TES3::OwnershipAttachment*>(tes3::getAttachedVarHolderNode(reference));
 			if (ownerInfo) {
-				TES3DefaultTemplate_t* owner = ownerInfo->owner;
+				TES3::BaseObject* owner = ownerInfo->owner;
 				if (owner) {
-					type = owner->recordType;
-					if (type == RecordTypes::NPC) {
-						id = reinterpret_cast<NPCBaseRecord_t*>(owner)->objectId;
+					type = owner->objectType;
+					if (type == TES3::ObjectType::NPC) {
+						id = owner->objectID;
 						if (ownerInfo->rankVar.variable) {
-							rank = mwse::string::store::getOrCreate(reinterpret_cast<GLOBRecord_t*>(ownerInfo->rankVar.variable)->globalName);
+							rank = mwse::string::store::getOrCreate(reinterpret_cast<TES3::GlobalVariable*>(ownerInfo->rankVar.variable)->name);
 						}
 					}
-					else if (type == RecordTypes::FACTION) {
-						FACTRecord_t * faction = reinterpret_cast<FACTRecord_t*>(owner);
-						id = faction->id;
+					else if (type == TES3::ObjectType::Faction) {
+						TES3::Faction * faction = reinterpret_cast<TES3::Faction*>(owner);
+						id = faction->objectID;
 						rank = ownerInfo->rankVar.rank;
 					}
 					else {

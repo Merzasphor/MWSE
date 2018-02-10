@@ -52,7 +52,7 @@ namespace mwse
 		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get script reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xHasItemEquipped: Called on invalid reference." << std::endl;
@@ -62,7 +62,7 @@ namespace mwse
 		}
 
 		// Get item template.
-		TES3DefaultTemplate_t* itemTemplate = virtualMachine.getTemplate(id.c_str());
+		TES3::BaseObject* itemTemplate = virtualMachine.getTemplate(id.c_str());
 		if (itemTemplate == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xHasItemEquipped: No template found with id '" << id << "'." << std::endl;
@@ -72,7 +72,7 @@ namespace mwse
 		}
 
 		// Call the original function.
-		SCPTRecord_t* script = &virtualMachine.getScript();
+		TES3::Script* script = &virtualMachine.getScript();
 		bool result = mwse::mwscript::HasItemEquipped(script, reference, itemTemplate);
 
 		mwse::Stack::getInstance().pushLong(result);

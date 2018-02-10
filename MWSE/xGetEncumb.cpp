@@ -45,7 +45,7 @@ namespace mwse
 	float xGetEncumb::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get reference to target.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetEncumb: No reference provided." << std::endl;
@@ -55,17 +55,17 @@ namespace mwse
 		}
 
 		bool hasLeveledContent = false;
-		mwFloat_t totalWeight = 0.0f;
+		mwFloat totalWeight = 0.0f;
 
 		// Loop through the inventory nodes of the reference, adding weight for each item found.
-		IteratorNode_t<InventoryNode_t>* inventoryListNode = tes3::getFirstInventoryNode(reference);
+		TES3::IteratorNode<TES3::InventoryNode>* inventoryListNode = tes3::getFirstInventoryNode(reference);
 		while (inventoryListNode) {
-			InventoryNode_t* inventoryNode = inventoryListNode->data;
+			TES3::InventoryNode* inventoryNode = inventoryListNode->data;
 			if (inventoryNode) {
-				totalWeight += tes3::getWeight(inventoryNode->recordAddress) * std::abs(inventoryNode->itemCount);
+				totalWeight += tes3::getWeight(inventoryNode->object) * std::abs(inventoryNode->itemCount);
 
 				// Keep track if we've run across leveled content.
-				if (!hasLeveledContent && inventoryNode->recordAddress->recordType == RecordTypes::LEVELLEDITEM) {
+				if (!hasLeveledContent && inventoryNode->object->objectType == TES3::ObjectType::LeveledItem) {
 					hasLeveledContent = true;
 				}
 			}

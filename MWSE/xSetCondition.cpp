@@ -23,7 +23,6 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "Reference.h"
 
 using namespace mwse;
 
@@ -46,10 +45,10 @@ namespace mwse
 	float xSetCondition::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameter.
-		mwLong_t value = Stack::getInstance().popLong();
+		mwLong value = Stack::getInstance().popLong();
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			log::getLog() << "xSetCondition: No reference provided." << std::endl;
@@ -59,7 +58,7 @@ namespace mwse
 		}
 
 		// Get associated varnode, and the condition from it.
-		mwVarHolderNode_t* varNode = tes3::getAttachedVarHolderNode(reference);
+		 TES3::VariableHolderAttachment* varNode = tes3::getAttachedVarHolderNode(reference);
 		if (varNode != NULL) {
 			varNode->unknown_0x0C = value;
 		}

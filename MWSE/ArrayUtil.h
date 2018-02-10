@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include "mwseTypes.h"
+#include "ObjectTypes.h"
 #include "mwseString.h"
 #include "Log.h"
 
@@ -44,11 +44,11 @@ namespace mwse {
 
 		ArrayItem_t getValue(std::string const& caller, size_t const id, size_t const index);
 
-		mwLong_t setValue(std::string const& caller, size_t const id, size_t const index, ArrayItem_t const value);
+		mwLong setValue(std::string const& caller, size_t const id, size_t const index, ArrayItem_t const value);
 
 		size_t getSize(std::string const& caller, size_t const id);
 
-		mwLong_t clear(std::string const& caller, size_t const id);
+		mwLong clear(std::string const& caller, size_t const id);
 
 		Arrays_t& get();
 

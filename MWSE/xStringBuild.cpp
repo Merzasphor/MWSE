@@ -22,7 +22,6 @@
 #include "VMExecuteInterface.h"
 #include "Stack.h"
 #include "InstructionInterface.h"
-#include "Reference.h"
 #include "Log.h"
 #include "StringUtil.h"
 

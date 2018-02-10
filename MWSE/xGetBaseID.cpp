@@ -45,7 +45,7 @@ namespace mwse
 	float xGetBaseID::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetBaseID: Called without reference." << std::endl;
@@ -57,13 +57,13 @@ namespace mwse
 		char* objectId = NULL;
 
 		// Try to get the data base record objectId first, and fall back to the copy object.
-		TES3DefaultTemplate_t* data = reinterpret_cast<TES3DefaultTemplate_t*>(reference->recordPointer);
-		TES3DefaultTemplate_t* base = mwse::tes3::getBaseRecord(data);
-		if (base && base->objectId) {
-			objectId = base->objectId;
+		TES3::BaseObject* data = reinterpret_cast<TES3::BaseObject*>(reference->objectPointer);
+		TES3::BaseObject* base = mwse::tes3::getBaseRecord(data);
+		if (base && base->objectID) {
+			objectId = base->objectID;
 		}
-		else if (data && data->objectId) {
-			objectId = data->objectId;
+		else if (data && data->objectID) {
+			objectId = data->objectID;
 		}
 
 		// Push the found objectId.

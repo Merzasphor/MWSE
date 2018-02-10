@@ -44,10 +44,10 @@ namespace mwse
 
 	float xSetTrap::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwLong_t spellId = mwse::Stack::getInstance().popLong();
+		mwLong spellId = mwse::Stack::getInstance().popLong();
 
 		// Get reference to what we're finding the trap of.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetTrap: No reference provided." << std::endl;
@@ -57,8 +57,8 @@ namespace mwse
 		}
 
 		// Verify record type.
-		RecordTypes::recordType_t type = reference->recordPointer->recordType;
-		if (type != RecordTypes::CONTAINER && type != RecordTypes::DOOR) {
+		TES3::ObjectType::ObjectType type = reference->objectPointer->objectType;
+		if (type != TES3::ObjectType::Container && type != TES3::ObjectType::Door) {
 #if _DEBUG
 			log::getLog() << "xSetTrap: Called on a non-container, non-door reference." << std::endl;
 #endif
@@ -67,7 +67,7 @@ namespace mwse
 		}
 
 		// Get attached lock node.
-		mwLockNode_t* lockNode = tes3::getAttachedLockNode(reference);
+		TES3::LockAttachment* lockNode = tes3::getAttachedLockNode(reference);
 		if (!lockNode) {
 #if _DEBUG
 			log::getLog() << "xSetTrap: Could not obtain lock node." << std::endl;
@@ -77,7 +77,7 @@ namespace mwse
 		}
 
 		// If we have a spellId, set it. Otherwise we'll clear it.
-		SPELRecord_t* spell = NULL;
+		TES3::Spell* spell = NULL;
 		if (spellId) {
 			// Get the spell based on the ID given.
 			mwseString_t& spellObjId = virtualMachine.getString(spellId);

@@ -18,7 +18,6 @@
 
 **************************************************************************/
 
-#include "mwseTypes.h"
 #include "InstructionInterface.h"
 #include "InstructionStore.h"
 

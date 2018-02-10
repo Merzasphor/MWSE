@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3MACP.h"
 
 using namespace mwse;
 
@@ -44,10 +45,10 @@ namespace mwse
 
 	float xSetGold::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwLong_t gold = mwse::Stack::getInstance().popLong();
+		mwLong gold = mwse::Stack::getInstance().popLong();
 
-		REFRRecord_t* reference = virtualMachine.getReference();
-		MACPRecord_t* node = tes3::getAttachedMACPRecord(reference);
+		TES3::Reference* reference = virtualMachine.getReference();
+		TES3::MACP* node = tes3::getAttachedMACPRecord(reference);
 		if (node == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetGold: Could not find attached MACP node." << std::endl;

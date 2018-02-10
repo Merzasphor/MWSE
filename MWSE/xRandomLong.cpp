@@ -44,8 +44,8 @@ namespace mwse
 
 	float xRandomLong::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwLong_t min = mwse::Stack::getInstance().popLong();
-		mwLong_t max= mwse::Stack::getInstance().popLong();
+		mwLong min = mwse::Stack::getInstance().popLong();
+		mwLong max= mwse::Stack::getInstance().popLong();
 
 		mwse::Stack::getInstance().pushLong(mwse::rng::getRandomLong(min, max));
 

@@ -45,8 +45,8 @@ namespace mwse
 
 	float xHypot::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwFloat_t param1 = mwse::Stack::getInstance().popFloat();
-		mwFloat_t param2 = mwse::Stack::getInstance().popFloat();
+		mwFloat param1 = mwse::Stack::getInstance().popFloat();
+		mwFloat param2 = mwse::Stack::getInstance().popFloat();
 
 		mwse::Stack::getInstance().pushFloat(std::hypotf(param1, param2));
 

@@ -48,17 +48,17 @@ namespace mwse
 		mwseString_t& spellId = virtualMachine.getString(Stack::getInstance().popLong());
 
 		// Return values.
-		mwString_t name = NULL;
-		mwLong_t type = 0;
-		mwLong_t cost = 0;
-		mwLong_t effects = 0;
-		mwLong_t flags = 0;
-		mwLong_t origin = 0;
+		mwString name = NULL;
+		mwLong type = 0;
+		mwLong cost = 0;
+		mwLong effects = 0;
+		mwLong flags = 0;
+		mwLong origin = 0;
 
 		// Get spell data by id.
-		SPELRecord_t* spell = tes3::getSpellRecordById(spellId);
+		TES3::Spell* spell = tes3::getSpellRecordById(spellId);
 		if (spell != NULL) {
-			name = spell->friendlyName;
+			name = spell->name;
 			type = spell->type;
 			cost = spell->cost;
 			effects = tes3::getEffectCount(spell->effects);

@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3MACP.h"
 
 using namespace mwse;
 
@@ -35,7 +36,7 @@ namespace mwse
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	private:
-		const mwLong_t INVALID_VALUE = -1;
+		const mwLong INVALID_VALUE = -1;
 	};
 
 	static xGetProgressLevel xGetProgressLevelInstance;
@@ -47,8 +48,8 @@ namespace mwse
 	float xGetProgressLevel::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get the player's associated MACP record.
-		REFRRecord_t* reference = virtualMachine.getReference("player");
-		MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
+		TES3::Reference* reference = virtualMachine.getReference("player");
+		TES3::MACP* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetProgressLevel: Could not find MACP record for reference." << std::endl;

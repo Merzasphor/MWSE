@@ -20,7 +20,7 @@ namespace mwse {
 	void xGetMCPFeatureState::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 
 	float xGetMCPFeatureState::execute(mwse::VMExecuteInterface &virtualMachine) {
-		mwLong_t id = mwse::Stack::getInstance().popLong();
+		mwLong id = mwse::Stack::getInstance().popLong();
 
 		if (mwse::mcp::hasFeaturesFound()) {
 			bool enabled = mwse::mcp::getFeatureEnabled(id);

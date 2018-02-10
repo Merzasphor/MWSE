@@ -48,7 +48,7 @@ namespace mwse
 
 			if (vmInstance.isOpcode(opcode))
 			{
-				SCPTRecord_t * script = reinterpret_cast<SCPTRecord_t*>(context.ebx);
+				TES3::Script * script = reinterpret_cast<TES3::Script*>(context.ebx);
 
 				vmInstance.loadParametersForOperation(opcode, context, script);
 
@@ -65,7 +65,7 @@ namespace mwse
 
 			if (vmInstance.isOpcode(opcode))
 			{
-				SCPTRecord_t * script = *(reinterpret_cast<SCPTRecord_t**>(context.esp + 0x8));
+				TES3::Script * script = *(reinterpret_cast<TES3::Script**>(context.esp + 0x8));
 
 				// Our default return address. This can be changed below.
 				context.callbackAddress = 0x50D62D;
@@ -87,7 +87,7 @@ namespace mwse
 		// Called when a reference is created for during PlaceAtPC
 		static void _stdcall HookPlaceAtPCReferenceCreatedIndirect()
 		{
-			REFRRecord_t* reference = reinterpret_cast<REFRRecord_t*>(context.esi);
+			TES3::Reference* reference = reinterpret_cast<TES3::Reference*>(context.esi);
 			mwse::mwscript::OnPlaceReferenceCreated(reference);
 		}
 

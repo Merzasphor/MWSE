@@ -24,6 +24,8 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3GlobalVariable.h"
+
 using namespace mwse;
 
 namespace mwse {
@@ -43,10 +45,10 @@ namespace mwse {
 	float xGetGlobal::execute(mwse::VMExecuteInterface &virtualMachine) {
 		mwseString_t& variable = virtualMachine.getString(Stack::getInstance().popLong());
 
-		mwFloat_t value = 0.0f;
+		mwFloat value = 0.0f;
 
 		// Get global.
-		const GLOBRecord_t* global = tes3::getGlobalRecord(variable);
+		const TES3::GlobalVariable* global = tes3::getGlobalRecord(variable);
 		if (global == NULL) {
 			mwse::log::getLog() << "xGetGlobal: Global '" << variable << "' could not be found." << std::endl;
 			mwse::Stack::getInstance().pushFloat(0.0f);

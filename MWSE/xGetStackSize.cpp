@@ -23,7 +23,6 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "Reference.h"
 
 namespace mwse {
 	class xGetStackSize : mwse::InstructionInterface_t {
@@ -41,7 +40,7 @@ namespace mwse {
 
 	float xGetStackSize::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetStackSize: No reference provided." << std::endl;
@@ -51,8 +50,8 @@ namespace mwse {
 		}
 
 		// Get the associated variable node and its item count.
-		mwLong_t count = 0;
-		InventoryNode_t* inventoryNode = reinterpret_cast<InventoryNode_t*>(tes3::getAttachedVarHolderNode(reference));
+		mwLong count = 0;
+		TES3::InventoryNode* inventoryNode = reinterpret_cast<TES3::InventoryNode*>(tes3::getAttachedVarHolderNode(reference));
 		if (inventoryNode) {
 			count = inventoryNode->itemCount;
 		}

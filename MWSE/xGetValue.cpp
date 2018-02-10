@@ -23,7 +23,6 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "Reference.h"
 
 using namespace mwse;
 
@@ -43,7 +42,7 @@ namespace mwse {
 
 	float xGetValue::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetValue: No reference provided." << std::endl;
@@ -53,7 +52,7 @@ namespace mwse {
 		}
 
 		// Get value.
-		mwLong_t value = 0;
+		mwLong value = 0;
 		try {
 			value = tes3::getValue(reference, true);
 		}

@@ -23,7 +23,7 @@
 #define MWSE_DEBUG_STACK 0
 #define MWSE_PRINT_DETAILED_STACK_DUMP 0
 
-#include "mwseTypes.h"
+#include "ObjectTypes.h"
 #include "mwseString.h"
 #include "Flags.h"
 #include "Log.h"
@@ -39,14 +39,14 @@
  * No validation across push/pop operations are performed; that is,
  * no error will occur in the sequence of:
  *      pushLong(value);
- *      mwFloat_t value = popFloat(value);
+ *      mwFloat value = popFloat(value);
  * save where the value defines a cast operator that validates
  * its value (as may be the case for mwseString).
  *
  * Basic usage:
  *      Stack::getInstance().pushLong(value);
  *      ....
- *      mwLong_t value = Stack::getInstance().popLong(value);
+ *      mwLong value = Stack::getInstance().popLong(value);
  */
 namespace mwse {
 
@@ -63,15 +63,15 @@ namespace mwse {
 			{
 				push(static_cast<StackItem_t>(value));
 			}
-            void pushShort(const mwShort_t value)
+            void pushShort(const mwShort value)
             {
                 push(static_cast<StackItem_t>(value));
             }
-            void pushLong(const mwLong_t value)
+            void pushLong(const mwLong value)
             {
                 push(static_cast<StackItem_t>(value));
             }
-            void pushFloat(mwFloat_t value)
+            void pushFloat(mwFloat value)
             {
                 push(*reinterpret_cast<StackItem_t*>(&value));
             }
@@ -97,18 +97,18 @@ namespace mwse {
 			{
 				return static_cast<char>(pop());
 			}
-            mwShort_t popShort(void)
+            mwShort popShort(void)
             {
-                return static_cast<mwShort_t>(pop());
+                return static_cast<mwShort>(pop());
             }
-            mwLong_t popLong(void)
+            mwLong popLong(void)
             {
-                return static_cast<mwLong_t>(pop());
+                return static_cast<mwLong>(pop());
             }
-            mwFloat_t popFloat(void)
+            mwFloat popFloat(void)
             {
 				int temp = pop();
-				return *reinterpret_cast<mwFloat_t*>(&temp);
+				return *reinterpret_cast<mwFloat*>(&temp);
             }
             //mwRef_t & popRef(void);
             void popFrames(size_t frame_count)  // pop <frame_count> frames from the stack`
@@ -140,9 +140,9 @@ namespace mwse {
 				for (size_t i = stack_top; i > 0; i--) {
 					log::getLog() << "\t" << std::dec << i - 1 << "\t" << std::hex << stack_storage[i - 1] << "h" << std::endl;
 #if MWSE_PRINT_DETAILED_STACK_DUMP
-					log::getLog() << "\t\tShort: " << std::dec << *reinterpret_cast<mwShort_t*>(&stack_storage[i - 1]) << std::endl;
-					log::getLog() << "\t\tLong: " << std::dec << *reinterpret_cast<mwLong_t*>(&stack_storage[i - 1]) << std::endl;
-					log::getLog() << "\t\tFloat: " << std::dec << *reinterpret_cast<mwFloat_t*>(&stack_storage[i - 1]) << std::endl;
+					log::getLog() << "\t\tShort: " << std::dec << *reinterpret_cast<mwShort*>(&stack_storage[i - 1]) << std::endl;
+					log::getLog() << "\t\tLong: " << std::dec << *reinterpret_cast<mwLong*>(&stack_storage[i - 1]) << std::endl;
+					log::getLog() << "\t\tFloat: " << std::dec << *reinterpret_cast<mwFloat*>(&stack_storage[i - 1]) << std::endl;
 #endif
 				}
 			}

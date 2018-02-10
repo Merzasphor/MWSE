@@ -23,6 +23,9 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3MACP.h"
+#include "TES3Reference.h"
+#include "TES3NPC.h"
 
 using namespace mwse;
 
@@ -44,13 +47,13 @@ namespace mwse
 
 	float xGetSpell::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwShort_t result = 0;
+		mwShort result = 0;
 
 		// Get spell id from the stack.
 		mwseString_t& spellId = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetSpell: Could not find reference." << std::endl;
@@ -58,7 +61,7 @@ namespace mwse
 			mwse::Stack::getInstance().pushShort(result);
 			return 0.0f;
 		}
-		else if (reference->recordPointer->recordType != RecordTypes::NPC) {
+		else if (reference->objectPointer->objectType != TES3::ObjectType::NPC) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetSpell: Target is not an NPC." << std::endl;
 #endif
@@ -66,11 +69,11 @@ namespace mwse
 			return 0.0f;
 		}
 
-		NPCBaseRecord_t* npc = reinterpret_cast<NPCCopyRecord_t*>(reference->recordPointer)->baseNPC;
-		IteratorNode_t<SPELRecord_t>* currentNode = npc->spells.head;
+		TES3::NPC* npc = reinterpret_cast<TES3::NPCInstance*>(reference->objectPointer)->baseNPC;
+		TES3::IteratorNode<TES3::Spell>* currentNode = npc->spells.head;
 		while (currentNode != NULL) {
-			SPELRecord_t* spell = currentNode->data;
-			if (strcmp(spell->id, spellId.c_str()) == 0) {
+			TES3::Spell* spell = currentNode->data;
+			if (strcmp(spell->objectID, spellId.c_str()) == 0) {
 				result = 1;
 				break;
 			}

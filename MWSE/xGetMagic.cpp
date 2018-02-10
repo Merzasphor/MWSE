@@ -23,6 +23,8 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3MACP.h"
+#include "TES3Enchantment.h"
 
 using namespace mwse;
 
@@ -45,25 +47,25 @@ namespace mwse
 	float xGetMagic::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Return values.
-		mwLong_t type = 0;
-		mwString_t id = NULL;
+		mwLong type = 0;
+		mwString id = NULL;
 
 		// Get reference to what we're finding enchantment information for.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference) {
-			RecordTypes::recordType_t recordType = reference->recordPointer->recordType;
-			if (recordType == RecordTypes::CREATURE || recordType == RecordTypes::NPC) {
-				MACPRecord_t* macp = tes3::getAttachedMACPRecord(reference);
+			TES3::ObjectType::ObjectType recordType = reference->objectPointer->objectType;
+			if (recordType == TES3::ObjectType::Creature || recordType == TES3::ObjectType::NPC) {
+				TES3::MACP* macp = tes3::getAttachedMACPRecord(reference);
 				if (macp) {
 					if (macp->currentSpell) {
-						type = macp->currentSpell->recordType;
-						if (type == RecordTypes::SPELL) {
-							SPELRecord_t* spell = reinterpret_cast<SPELRecord_t*>(macp->currentSpell);
-							id = spell->id;
+						type = macp->currentSpell->objectType;
+						if (type == TES3::ObjectType::Spell) {
+							TES3::Spell* spell = reinterpret_cast<TES3::Spell*>(macp->currentSpell);
+							id = spell->objectID;
 						}
-						else if (type == RecordTypes::ENCHANTMENT) {
-							ENCHRecord_t* enchantment = reinterpret_cast<ENCHRecord_t*>(macp->currentSpell);
-							id = enchantment->id;
+						else if (type == TES3::ObjectType::Enchantment) {
+							TES3::Enchantment* enchantment = reinterpret_cast<TES3::Enchantment*>(macp->currentSpell);
+							id = enchantment->objectID;
 						}
 						else {
 #if _DEBUG

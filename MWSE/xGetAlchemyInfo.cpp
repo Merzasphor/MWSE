@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3Alchemy.h"
 
 using namespace mwse;
 
@@ -48,7 +49,7 @@ namespace mwse
 		mwseString_t& id = virtualMachine.getString(Stack::getInstance().popLong());
 
 		// Get the record by its id.
-		ALCHRecord_t* record = tes3::getRecordById<ALCHRecord_t>(id);
+		TES3::Alchemy* record = tes3::getRecordById<TES3::Alchemy>(id);
 		if (record == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetAlchemyInfo: No record found by id '" << id << "'." << std::endl;
@@ -57,17 +58,17 @@ namespace mwse
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
-		else if (record->recordType != RecordTypes::ALCHEMY) {
+		else if (record->objectType != TES3::ObjectType::Alchemy) {
 #if _DEBUG
-			mwse::log::getLog() << "xGetAlchemyInfo: Found record by id '" << id << "' of invalid type " << record->recordType << "." << std::endl;
+			mwse::log::getLog() << "xGetAlchemyInfo: Found record by id '" << id << "' of invalid type " << record->objectType << "." << std::endl;
 #endif
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
 
-		mwLong_t flags = record->flags;
-		mwLong_t effectCount = tes3::getEffectCount(record->effects);
+		mwLong flags = record->flags;
+		mwLong effectCount = tes3::getEffectCount(record->effects);
 
 		mwse::Stack::getInstance().pushLong(flags);
 		mwse::Stack::getInstance().pushLong(effectCount);

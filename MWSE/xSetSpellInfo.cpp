@@ -24,6 +24,8 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Spell.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -46,14 +48,14 @@ namespace mwse
 	{
 		// Get parameters.
 		mwseString_t& spellId = virtualMachine.getString(mwse::Stack::getInstance().popLong());
-		mwLong_t nameId = mwse::Stack::getInstance().popLong();
-		mwLong_t type = mwse::Stack::getInstance().popLong();
-		mwLong_t cost = mwse::Stack::getInstance().popLong();
-		mwLong_t flags = mwse::Stack::getInstance().popLong();
-		mwLong_t origin = mwse::Stack::getInstance().popLong();
+		mwLong nameId = mwse::Stack::getInstance().popLong();
+		mwLong type = mwse::Stack::getInstance().popLong();
+		mwLong cost = mwse::Stack::getInstance().popLong();
+		mwLong flags = mwse::Stack::getInstance().popLong();
+		mwLong origin = mwse::Stack::getInstance().popLong();
 
 		// Validate spell type.
-		if (type < FirstSpellType || type > LastSpellType) {
+		if (type < TES3::FirstSpellType || type > TES3::LastSpellType) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetSpellInfo: Spell type out of range: " << type << std::endl;
 #endif
@@ -62,7 +64,7 @@ namespace mwse
 		}
 
 		// Validate spell flags.
-		if (flags < NoSpellFlags || flags > AllSpellFlags) {
+		if (flags < TES3::NoSpellFlags || flags > TES3::AllSpellFlags) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetSpellInfo: Spell flags out of range: " << flags << std::endl;
 #endif
@@ -71,7 +73,7 @@ namespace mwse
 		}
 
 		// Validate spell origin.
-		if (origin != 0 && (origin < SpellOriginsFirst || origin > SpellOriginsLast)) {
+		if (origin != 0 && (origin < TES3::SpellOriginsFirst || origin > TES3::SpellOriginsLast)) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetSpellInfo: Spell origin out of range: " << origin << std::endl;
 #endif
@@ -80,7 +82,7 @@ namespace mwse
 		}
 
 		// Get spell data by id.
-		SPELRecord_t* spell = tes3::getSpellRecordById(spellId);
+		TES3::Spell* spell = tes3::getSpellRecordById(spellId);
 		if (spell == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetSpellInfo: Could not find spell of id '" << spellId << "'" << std::endl;
@@ -101,19 +103,19 @@ namespace mwse
 			}
 			
 			// Expand name length if needed.
-			if (name.length() > strlen(spell->friendlyName)) {
-				spell->friendlyName = reinterpret_cast<char*>(tes3::realloc(spell->friendlyName, 32));
+			if (name.length() > strlen(spell->name)) {
+				spell->name = reinterpret_cast<char*>(tes3::realloc(spell->name, 32));
 			}
 
 			// Copy name over.
-			strcpy(spell->friendlyName, name.c_str());
+			strcpy(spell->name, name.c_str());
 		}
 
 		// Set cost.
-		if (flags & AutoCalculateCost && !(spell->flags & AutoCalculateCost)) {
+		if (flags & TES3::AutoCalculateCost && !(spell->flags & TES3::AutoCalculateCost)) {
 			//! TODO: Recalculate spell cost.
 		}
-		else if (!(flags & AutoCalculateCost)) {
+		else if (!(flags & TES3::AutoCalculateCost)) {
 			spell->cost = cost;
 		}
 

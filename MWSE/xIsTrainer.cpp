@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3NPC.h"
 
 using namespace mwse;
 
@@ -42,7 +43,7 @@ namespace mwse {
 
 	float xIsTrainer::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xIsTrader: Called on invalid reference." << std::endl;
@@ -51,12 +52,12 @@ namespace mwse {
 			return 0.0f;
 		}
 
-		mwLong_t npcServiceFlags = 0;
-		mwLong_t classServiceFlags = 0;
+		mwLong npcServiceFlags = 0;
+		mwLong classServiceFlags = 0;
 
 		// Get the gold based on the base record type.
-		NPCCopyRecord_t* npc = reinterpret_cast<NPCCopyRecord_t*>(reference->recordPointer);
-		if (npc->recordType == RecordTypes::NPC) {
+		TES3::NPCInstance* npc = reinterpret_cast<TES3::NPCInstance*>(reference->objectPointer);
+		if (npc->objectType == TES3::ObjectType::NPC) {
 			// Get NPC's services.
 			if (npc->baseNPC) {
 				npcServiceFlags = npc->baseNPC->servicesMask;
@@ -64,7 +65,7 @@ namespace mwse {
 			}
 			else {
 #if _DEBUG
-				mwse::log::getLog() << "xIsTrainer: Could not get base NPC record for \"" << npc->objectId << "\"" << std::endl;
+				mwse::log::getLog() << "xIsTrainer: Could not get base NPC record for \"" << npc->objectID << "\"" << std::endl;
 #endif
 			}
 
@@ -75,7 +76,7 @@ namespace mwse {
 			}
 			else {
 #if _DEBUG
-				mwse::log::getLog() << "xIsTrainer: Could not get class record for \"" << npc->objectId << "\"" << std::endl;
+				mwse::log::getLog() << "xIsTrainer: Could not get class record for \"" << npc->objectID << "\"" << std::endl;
 #endif
 			}
 		}

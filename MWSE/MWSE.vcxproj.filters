@@ -73,6 +73,12 @@
     <Filter Include="Source Files\Functions\Scripting">
       <UniqueIdentifier>{04372d31-c2ee-45ef-97a7-648c4a812ad1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\DataAdapters\TES3Types">
+      <UniqueIdentifier>{fa82f1cf-933f-4708-9489-28ab03c17d30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\DataAdapters\TES3Enums">
+      <UniqueIdentifier>{e7155e06-db72-4964-8b95-e6d718b62b9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Flags.h">
@@ -82,9 +88,6 @@
       <Filter>Header Files\ScriptVM</Filter>
     </ClInclude>
     <ClInclude Include="mwseString.h">
-      <Filter>Header Files\DataAdapters</Filter>
-    </ClInclude>
-    <ClInclude Include="mwseTypes.h">
       <Filter>Header Files\DataAdapters</Filter>
     </ClInclude>
     <ClInclude Include="InstructionInterface.h">
@@ -110,9 +113,6 @@
     </ClInclude>
     <ClInclude Include="Log.h">
       <Filter>Header Files\Utility</Filter>
-    </ClInclude>
-    <ClInclude Include="Reference.h">
-      <Filter>Header Files\ScriptVM</Filter>
     </ClInclude>
     <ClInclude Include="RngUtil.h">
       <Filter>Header Files\Utility</Filter>
@@ -159,6 +159,126 @@
     <ClInclude Include="MWSEDefs.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectTypes.h">
+      <Filter>Header Files\DataAdapters\TES3Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Activator.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Script.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Door.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Sound.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Alchemy.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Effect.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Apparatus.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Book.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Enchantment.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Reference.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Cell.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Attachment.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Master.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3CellMaster.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Collections.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Spell.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3GameSetting.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Skill.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MagicEffect.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Region.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MACP.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3GlobalVariable.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Weapon.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Armor.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Lockpick.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Light.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Misc.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Class.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Probe.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Container.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Repair.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Ingredient.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Static.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Clothing.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3NPC.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Race.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3ViewMaster.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Creature.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Faction.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -180,9 +300,6 @@
       <Filter>Source Files\ScriptVM</Filter>
     </ClCompile>
     <ClCompile Include="getLocal.cpp">
-      <Filter>Source Files\ScriptVM</Filter>
-    </ClCompile>
-    <ClCompile Include="Reference.cpp">
       <Filter>Source Files\ScriptVM</Filter>
     </ClCompile>
     <ClCompile Include="Push.cpp">

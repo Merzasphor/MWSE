@@ -44,12 +44,12 @@ namespace mwse
 
 	float xGetTrap::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwString_t id = NULL;
-		mwString_t name = NULL;
-		mwShort_t cost = 0;
+		mwString id = NULL;
+		mwString name = NULL;
+		mwShort cost = 0;
 
 		// Get reference to what we're finding the trap of.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetTrap: Called on invalid reference." << std::endl;
@@ -60,14 +60,14 @@ namespace mwse
 			return 0.0f;
 		}
 
-		RecordTypes::recordType_t type = reference->recordPointer->recordType;
-		if (type == RecordTypes::CONTAINER || type == RecordTypes::DOOR) {
-			mwLockNode_t* lockNode = tes3::getAttachedLockNode(reference);
+		TES3::ObjectType::ObjectType type = reference->objectPointer->objectType;
+		if (type == TES3::ObjectType::Container || type == TES3::ObjectType::Door) {
+			TES3::LockAttachment* lockNode = tes3::getAttachedLockNode(reference);
 			if (lockNode) {
-				SPELRecord_t* trapSpell = lockNode->trapSpell;
+				TES3::Spell* trapSpell = lockNode->trapSpell;
 				if (trapSpell) {
-					id = trapSpell->id;
-					name = trapSpell->friendlyName;
+					id = trapSpell->objectID;
+					name = trapSpell->name;
 					cost = trapSpell->cost;
 				}
 			}

@@ -1,5 +1,5 @@
 /************************************************************************
-	
+
 	xModService.cpp - Copyright (c) 2008 The MWSE Project
 	http://www.sourceforge.net/projects/mwse
 
@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3NPC.h"
 
 using namespace mwse;
 
@@ -54,7 +55,7 @@ namespace mwse
 		unsigned long data = Stack::getInstance().popLong();
 
 		// Get reference.
-		mwse::REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xModService: Called on invalid reference." << std::endl;
@@ -64,8 +65,8 @@ namespace mwse
 		}
 
 		// Make sure we're looking at an NPC.
-		NPCCopyRecord_t* npcCopy = reinterpret_cast<NPCCopyRecord_t*>(reference->recordPointer);
-		if (!reference || !npcCopy || npcCopy->recordType != RecordTypes::NPC) {
+		TES3::NPCInstance* npcCopy = reinterpret_cast<TES3::NPCInstance*>(reference->objectPointer);
+		if (!reference || !npcCopy || npcCopy->objectType != TES3::ObjectType::NPC) {
 #if _DEBUG
 			mwse::log::getLog() << "xModService: Called on non-NPC reference." << std::endl;
 #endif
@@ -74,7 +75,7 @@ namespace mwse
 		}
 
 		// Get the NPC's class.
-		CLASRecord_t* classRecord = npcCopy->baseNPC->classRecord;
+		TES3::Class* classRecord = npcCopy->baseNPC->classRecord;
 		if (!classRecord) {
 #if _DEBUG
 			mwse::log::getLog() << "xModService: Failed to obtain NPC's class." << std::endl;
@@ -83,11 +84,11 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwLong_t services = npcCopy->baseNPC->servicesMask | classRecord->services;
+		mwLong services = npcCopy->baseNPC->servicesMask | classRecord->services;
 
 		// Want to remove services.
 		if (data < 0) {
-			services = services & (~((unsigned long)(0-(signed long)data)));
+			services = services & (~((unsigned long)(0 - (signed long)data)));
 		}
 		// Want to add services.
 		else {

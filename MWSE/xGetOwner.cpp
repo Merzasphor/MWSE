@@ -45,7 +45,7 @@ namespace mwse
 	float xGetOwner::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetOwner: No reference provided." << std::endl;
@@ -54,13 +54,13 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwString_t owner = NULL;
+		mwString owner = NULL;
 
 		// Get the attached varnode.
-		mwOwnerInfoNode_t* ownerInfo = reinterpret_cast<mwOwnerInfoNode_t*>(tes3::getAttachedVarHolderNode(reference));
+		TES3::OwnershipAttachment* ownerInfo = reinterpret_cast<TES3::OwnershipAttachment*>(tes3::getAttachedVarHolderNode(reference));
 		if (ownerInfo) {
-			if (ownerInfo->owner && ownerInfo->owner->objectId) {
-				owner = ownerInfo->owner->objectId;
+			if (ownerInfo->owner && ownerInfo->owner->objectID) {
+				owner = ownerInfo->owner->objectID;
 			}
 		}
 		else {

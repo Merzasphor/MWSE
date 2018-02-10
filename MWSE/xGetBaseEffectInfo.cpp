@@ -24,6 +24,9 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3CellMaster.h"
+#include "TES3MagicEffect.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -45,10 +48,10 @@ namespace mwse
 	float xGetBaseEffectInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwLong_t id = Stack::getInstance().popLong();
+		mwLong id = Stack::getInstance().popLong();
 
 		// Validate id.
-		if (id < Effects::FirstMagicEffect || id > Effects::LastMagicEffect) {
+		if (id < TES3::EffectFirst || id > TES3::EffectLast) {
 #if _DEBUG
 			log::getLog() << "xGetBaseEffectInfo: Effect ID out of range." << std::endl;
 #endif
@@ -59,15 +62,15 @@ namespace mwse
 		}
 
 		// Get the effect.
-		MGEFRecord_t& effect = tes3::getCellMaster()->recordLists->magic_effects[id];
+		TES3::MagicEffect& effect = tes3::getCellMaster()->recordLists->magicEffects[id];
 
 		// Flags are a unique case. There is other data associated with flags that we want
 		// to expose, so we will return it here.
 		// TODO: Programmatically allow setting/getting these normally hard-coded values.
-		Stack::getInstance().pushLong(effect.flags | Effects::MagicEffectFlagMap[id]);
+		Stack::getInstance().pushLong(effect.flags | TES3::MagicEffectFlagMap[id]);
 
 		// Push other results.
-		Stack::getInstance().pushFloat(effect.base_magicka_cost);
+		Stack::getInstance().pushFloat(effect.baseMagickaCost);
 		Stack::getInstance().pushLong(effect.school);
 
 		return 0.0f;

@@ -22,7 +22,7 @@
 #pragma once
 
 #include "VMExecuteInterface.h"
-#include "mwseTypes.h"
+#include "ObjectTypes.h"
 #include "mwseString.h"
 
 #define MWSE_STRING_STORE_FIRSTID 40000
@@ -31,9 +31,9 @@ namespace mwse {
 	namespace string {
 		namespace store {
 			// Type of our string storage.
-			typedef std::map<mwLong_t, mwseString_t> StringMap_t;
+			typedef std::map<mwLong, mwseString_t> StringMap_t;
 
-			extern mwLong_t nextId;
+			extern mwLong nextId;
 
 			extern StringMap_t store;
 
@@ -45,13 +45,13 @@ namespace mwse {
 
 			bool clear();
 
-			bool exists(const mwLong_t id);
+			bool exists(const mwLong id);
 
 			bool exists(const std::string& value);
 
 			bool exists(const char* value);
 
-			mwseString_t& get(const mwLong_t id);
+			mwseString_t& get(const mwLong id);
 
 			mwseString_t& get(const std::string& value);
 
@@ -72,6 +72,6 @@ namespace mwse {
 		bool enumerate(const char *format, int& substitutions, bool& eolmode);
 
 		// Extract the values from the string based on the format data and store them in the resultset array
-		int secernate(const char* format, const char* string, mwLong_t* results, int maxResults);
+		int secernate(const char* format, const char* string, mwLong* results, int maxResults);
 	}
 };

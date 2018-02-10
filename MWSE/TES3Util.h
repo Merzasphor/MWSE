@@ -24,21 +24,25 @@
 #include <random>
 #include <queue>
 
-#include "mwseTypes.h"
 #include "mwseString.h"
+
+#include "ObjectTypes.h"
+#include "TES3Collections.h"
+#include "TES3Attachment.h"
 
 namespace mwse
 {
 	namespace tes3
 	{
-		TES3Master_t * getMaster();
-		TES3CellMaster_t * getCellMaster();
+		TES3::Master * getMaster();
+		TES3::CellMaster * getCellMaster();
+		TES3::ViewMaster * getViewMaster();
 
-		GLOBRecord_t* getGlobalRecord(const char* id);
-		GLOBRecord_t* getGlobalRecord(const std::string& id);
+		TES3::GlobalVariable* getGlobalRecord(const char* id);
+		TES3::GlobalVariable* getGlobalRecord(const std::string& id);
 
-		TES3DefaultTemplate_t* getTemplate(const char *id);
-		TES3DefaultTemplate_t* getTemplate(const std::string& id);
+		TES3::BaseObject* getTemplate(const char *id);
+		TES3::BaseObject* getTemplate(const std::string& id);
 
 		template <typename T>
 		T* getRecordById(const char* id) {
@@ -50,62 +54,62 @@ namespace mwse
 			return reinterpret_cast<T*>(getTemplate(id.c_str()));
 		}
 
-		SCPTRecord_t* getScript(const char* id);
-		SCPTRecord_t* getScript(const std::string& id);
+		TES3::Script* getScript(const char* id);
+		TES3::Script* getScript(const std::string& id);
 
-		void addObject(BaseRecord_t* record);
+		void addObject(TES3::BaseObject* record);
 
-		REFRRecord_t* skipRemovedReferences(REFRRecord_t* reference);
+		TES3::Reference* skipRemovedReferences(TES3::Reference* reference);
 
-		bool getHasBaseRecord(TES3DefaultTemplate_t* record);
+		bool getHasBaseRecord(TES3::BaseObject* record);
 
-		IteratorNode_t<InventoryNode_t> * getFirstInventoryNode(REFRRecord_t* reference);
+		TES3::IteratorNode<TES3::InventoryNode> * getFirstInventoryNode(TES3::Reference* reference);
 
-		bool hasInventory(BaseRecord_t* record);
+		bool hasInventory(TES3::BaseObject* record);
 
-		char* getName(BaseRecord_t* record);
+		char* getName(TES3::BaseObject* record);
 
-		mwLong_t getValue(BaseRecord_t* record);
-		mwLong_t getValue(REFRRecord_t* reference, bool multiplyByCount);
+		mwLong getValue(TES3::BaseObject* record);
+		mwLong getValue(TES3::Reference* reference, bool multiplyByCount);
 
-		mwFloat_t getWeight(BaseRecord_t* record);
-		mwFloat_t getWeight(REFRRecord_t* reference, bool multiplyByCount);
+		mwFloat getWeight(TES3::BaseObject* record);
+		mwFloat getWeight(TES3::Reference* reference, bool multiplyByCount);
 
-		ENCHRecord_t* getEnchantment(TES3DefaultTemplate_t* record);
+		TES3::Enchantment* getEnchantment(TES3::BaseObject* record);
 
-		char* getModel(BaseRecord_t* record);
+		char* getModel(TES3::BaseObject* record);
 
-		TES3DefaultTemplate_t* getBaseRecord(TES3DefaultTemplate_t* reference);
+		TES3::BaseObject* getBaseRecord(TES3::BaseObject* reference);
 
-		BaseRecord_t* getFirstAttachmentByType(REFRRecord_t* reference, RecordTypes::attachType_t attachmentType);
+		TES3::BaseObject* getFirstAttachmentByType(TES3::Reference* reference, TES3::AttachmentType attachmentType);
 
-		MACPRecord_t* getAttachedMACPRecord(REFRRecord_t* reference);
+		TES3::MACP* getAttachedMACPRecord(TES3::Reference* reference);
 
-		mwVarHolderNode_t* getAttachedVarHolderNode(REFRRecord_t* reference);
+		TES3::VariableHolderAttachment* getAttachedVarHolderNode(TES3::Reference* reference);
 
-		mwLockNode_t* getAttachedLockNode(REFRRecord_t* reference);
+		TES3::LockAttachment* getAttachedLockNode(TES3::Reference* reference);
 
-		SPELRecord_t* getSpellRecordById(const std::string& id);
+		TES3::Spell* getSpellRecordById(const std::string& id);
 
-		ENCHRecord_t* getEnchantRecordById(const std::string& id);
+		TES3::Enchantment* getEnchantRecordById(const std::string& id);
 
-		ALCHRecord_t* getAlchemyRecordById(const std::string& id);
+		TES3::Alchemy* getAlchemyRecordById(const std::string& id);
 
-		size_t getEffectCount(const Effect_t* effectArray);
+		size_t getEffectCount(const TES3::Effect* effectArray);
 
-		bool setEffect(Effect_t * effects, mwLong_t index, mwLong_t effectId,
-			mwLong_t skillAttributeId, mwLong_t range, mwLong_t area, mwLong_t duration,
-			mwLong_t minimumMagnitude, mwLong_t maximumMagnitude);
+		bool setEffect(TES3::Effect * effects, mwLong index, mwLong effectId,
+			mwLong skillAttributeId, mwLong range, mwLong area, mwLong duration,
+			mwLong minimumMagnitude, mwLong maximumMagnitude);
 
-		float getSkillRequirement(REFRRecord_t* reference, mwLong_t skillId);
+		float getSkillRequirement(TES3::Reference* reference, mwLong skillId);
 
-		void checkForSkillUp(REFRRecord_t* reference, mwLong_t skillId);
+		void checkForSkillUp(TES3::Reference* reference, mwLong skillId);
 
-		void checkForLevelUp(mwLong_t progress);
+		void checkForLevelUp(mwLong progress);
 
 		// Used in xFirstNPC/Static/Item. The last element should never be non-null.
 		// The first eight elements are pointers to the first reference from the 8 surrounding cells.
-		extern REFRRecord_t* exteriorRefs[9];
+		extern TES3::Reference* exteriorRefs[9];
 
 		void clearExteriorRefs();
 

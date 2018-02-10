@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3Collections.h"
 
 using namespace mwse;
 
@@ -34,8 +35,8 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 
 	private:
-		mwLong_t getBitMaskForRecordType(mwLong_t recordType);
-		bool passesFilter(BaseRecord_t* record, mwLong_t filter);
+		mwLong getBitMaskForRecordType(mwLong recordType);
+		bool passesFilter(TES3::BaseObject* record, mwLong filter);
 
 		enum FilterMask {
 			FILTER_ACTI = 1,
@@ -72,8 +73,8 @@ namespace mwse {
 
 	float xContentListFiltered::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get parameters.
-		IteratorNode_t<InventoryNode_t>* node = reinterpret_cast<IteratorNode_t<InventoryNode_t>*>(mwse::Stack::getInstance().popLong());
-		mwLong_t filter = mwse::Stack::getInstance().popLong();
+		TES3::IteratorNode<TES3::InventoryNode>* node = reinterpret_cast<TES3::IteratorNode<TES3::InventoryNode>*>(mwse::Stack::getInstance().popLong());
+		mwLong filter = mwse::Stack::getInstance().popLong();
 
 		// If we're not filtering, abandon ship.
 		if (filter == 0) {
@@ -91,7 +92,7 @@ namespace mwse {
 		}
 
 		// Get reference.
-		REFRRecord_t* reference = virtualMachine.getReference();
+		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xContentListFiltered: Called on invalid reference." << std::endl;
@@ -108,34 +109,34 @@ namespace mwse {
 
 		// Results.
 		char * id = NULL;
-		mwLong_t count = 0;
-		mwLong_t type = 0;
-		mwLong_t value = 0;
-		mwFloat_t weight = 0;
-		mwString_t name = NULL;
-		IteratorNode_t<InventoryNode_t>* next = NULL;
+		mwLong count = 0;
+		mwLong type = 0;
+		mwLong value = 0;
+		mwFloat weight = 0;
+		mwString name = NULL;
+		TES3::IteratorNode<TES3::InventoryNode>* next = NULL;
 
 		// If we aren't given a node, get the first one.
 		if (node == NULL) {
 			node = tes3::getFirstInventoryNode(reference);
 
 			// Pass over any records that don't match the current filter.
-			while (node && node->data && node->data->recordAddress && !passesFilter(node->data->recordAddress, filter)) {
+			while (node && node->data && node->data->object && !passesFilter(node->data->object, filter)) {
 				node = node->next;
 			}
 		}
 
 		// Validate the node we've obtained.
-		if (node && node->data && node->data->recordAddress) {
-			TES3DefaultTemplate_t* record = reinterpret_cast<TES3DefaultTemplate_t*>(node->data->recordAddress);
+		if (node && node->data && node->data->object) {
+			TES3::BaseObject* record = reinterpret_cast<TES3::BaseObject*>(node->data->object);
 
-			id = record->objectId;
+			id = record->objectID;
 			count = node->data->itemCount;
-			type = record->recordType;
+			type = record->objectType;
 
 			// Get value.
 			try {
-				value = tes3::getValue(reinterpret_cast<BaseRecord_t*>(record));
+				value = tes3::getValue(reinterpret_cast<TES3::BaseObject*>(record));
 			}
 			catch (std::exception& e) {
 				value = 0;
@@ -146,7 +147,7 @@ namespace mwse {
 
 			// Get weight.
 			try {
-				weight = tes3::getWeight(reinterpret_cast<BaseRecord_t*>(record));
+				weight = tes3::getWeight(reinterpret_cast<TES3::BaseObject*>(record));
 			}
 			catch (std::exception& e) {
 				weight = 0.0f;
@@ -157,7 +158,7 @@ namespace mwse {
 
 			// Get name.
 			try {
-				name = tes3::getName(reinterpret_cast<BaseRecord_t*>(record));
+				name = tes3::getName(reinterpret_cast<TES3::BaseObject*>(record));
 			}
 			catch (std::exception& e) {
 				name = NULL;
@@ -168,13 +169,13 @@ namespace mwse {
 
 			// Get next node. Pass over any records that don't match the given filter.
 			next = node->next;
-			while (next && next->data && next->data->recordAddress && !passesFilter(next->data->recordAddress, filter)) {
+			while (next && next->data && next->data->object && !passesFilter(next->data->object, filter)) {
 				next = next->next;
 			}
 		}
 
 		// Push values to the stack.
-		mwse::Stack::getInstance().pushLong((mwLong_t)next);
+		mwse::Stack::getInstance().pushLong((mwLong)next);
 		mwse::Stack::getInstance().pushString(name);
 		mwse::Stack::getInstance().pushFloat(weight);
 		mwse::Stack::getInstance().pushLong(value);
@@ -185,45 +186,45 @@ namespace mwse {
 		return 0.0f;
 	}
 
-	mwLong_t xContentListFiltered::getBitMaskForRecordType(mwLong_t recordType) {
+	mwLong xContentListFiltered::getBitMaskForRecordType(mwLong recordType) {
 		switch (recordType) {
-		case RecordTypes::ACTIVATOR: return FILTER_ACTI;
-		case RecordTypes::ALCHEMY: return FILTER_ALCH;
-		case RecordTypes::AMMO: return FILTER_AMMO;
-		case RecordTypes::APPARATUS: return FILTER_APPA;
-		case RecordTypes::ARMOR: return FILTER_ARMO;
-		case RecordTypes::BODY: return FILTER_BODY;
-		case RecordTypes::BOOK: return FILTER_BOOK;
-		case RecordTypes::CLOTHING: return FILTER_CLOT;
-		case RecordTypes::CONTAINER: return FILTER_CONT;
-		case RecordTypes::CREATURE: return FILTER_CREA;
-		case RecordTypes::DOOR: return FILTER_DOOR;
-		case RecordTypes::INGREDIENT: return FILTER_INGR;
-		case RecordTypes::LEVELLEDCREATURE: return FILTER_LEVC;
-		case RecordTypes::LEVELLEDITEM: return FILTER_LEVI;
-		case RecordTypes::LIGHT: return FILTER_LIGH;
-		case RecordTypes::LOCKPICK: return FILTER_LOCK;
-		case RecordTypes::MISC: return FILTER_MISC;
-		case RecordTypes::NPC: return FILTER_NPC;
-		case RecordTypes::PROBE: return FILTER_PROB;
-		case RecordTypes::REPAIR: return FILTER_REPA;
-		case RecordTypes::STATIC: return FILTER_STAT;
-		case RecordTypes::WEAPON: return FILTER_WEAP;
+		case TES3::ObjectType::Activator: return FILTER_ACTI;
+		case TES3::ObjectType::Alchemy: return FILTER_ALCH;
+		case TES3::ObjectType::Ammo: return FILTER_AMMO;
+		case TES3::ObjectType::Apparatus: return FILTER_APPA;
+		case TES3::ObjectType::Armor: return FILTER_ARMO;
+		case TES3::ObjectType::Bodypart: return FILTER_BODY;
+		case TES3::ObjectType::Book: return FILTER_BOOK;
+		case TES3::ObjectType::Clothing: return FILTER_CLOT;
+		case TES3::ObjectType::Container: return FILTER_CONT;
+		case TES3::ObjectType::Creature: return FILTER_CREA;
+		case TES3::ObjectType::Door: return FILTER_DOOR;
+		case TES3::ObjectType::Ingredient: return FILTER_INGR;
+		case TES3::ObjectType::LeveledCreature: return FILTER_LEVC;
+		case TES3::ObjectType::LeveledItem: return FILTER_LEVI;
+		case TES3::ObjectType::Light: return FILTER_LIGH;
+		case TES3::ObjectType::Lockpick: return FILTER_LOCK;
+		case TES3::ObjectType::Misc: return FILTER_MISC;
+		case TES3::ObjectType::NPC: return FILTER_NPC;
+		case TES3::ObjectType::Probe: return FILTER_PROB;
+		case TES3::ObjectType::Repair: return FILTER_REPA;
+		case TES3::ObjectType::Static: return FILTER_STAT;
+		case TES3::ObjectType::Weapon: return FILTER_WEAP;
 		}
 
 		return 0x0;
 	}
 
-	bool xContentListFiltered::passesFilter(BaseRecord_t* record, mwLong_t filter) {
+	bool xContentListFiltered::passesFilter(TES3::BaseObject* record, mwLong filter) {
 		// Filter by record type. Unless we're not filtering only by enchantment.
-		if (filter != FILTER_ENCH && !(getBitMaskForRecordType(record->recordType) & filter)) {
+		if (filter != FILTER_ENCH && !(getBitMaskForRecordType(record->objectType) & filter)) {
 			return false;
 		}
 
 		// If we're filtering by enchantment, verify that the record has one.
 		if (filter & FILTER_ENCH) {
 			try {
-				if (tes3::getEnchantment(reinterpret_cast<TES3DefaultTemplate_t*>(record)) == NULL) {
+				if (tes3::getEnchantment(reinterpret_cast<TES3::BaseObject*>(record)) == NULL) {
 					return false;
 				}
 			}
