@@ -76,6 +76,7 @@ namespace TES3 {
 	struct Door;
 	struct Effect;
 	struct Enchantment;
+	struct Faction;
 	struct GameSetting;
 	struct GlobalVariable;
 	struct Ingredient;
@@ -113,7 +114,7 @@ namespace TES3 {
 		mwLong unknown_0x14;
 		mwLong unknown_0x18;
 		BaseObject * previousRecord; // 0x1C
-		BaseObject * nextRecord; // 0x20
+		BaseObject * nextObject; // 0x20
 		mwLong unknown_0x24;
 		mwLong unknown_0x28;
 		mwString objectID; // 0x2C

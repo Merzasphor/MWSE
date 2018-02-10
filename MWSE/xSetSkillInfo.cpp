@@ -24,6 +24,9 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3CellMaster.h"
+#include "TES3Skill.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -74,7 +77,7 @@ namespace mwse
 		}
 
 		// Validate specialization.
-		if (specialization < FirstSpecialization || specialization > LastSpecialization) {
+		if (specialization < TES3::FirstSpecialization || specialization > TES3::LastSpecialization) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetSkillInfo: Specialization out of range." << std::endl;
 #endif
@@ -83,7 +86,7 @@ namespace mwse
 		}
 
 		// Get skill info.
-		SKILRecord_t& skillInfo = tes3::getCellMaster()->recordLists->skills[skillIndex];
+		TES3::Skill& skillInfo = tes3::getCellMaster()->recordLists->skills[skillIndex];
 
 		// Store old specialization for future check.
 		mwLong oldSpecialization = skillInfo.specialization;

@@ -24,6 +24,8 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Enchantment.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -49,7 +51,7 @@ namespace mwse
 		mwShort effectIndex = Stack::getInstance().popShort();
 
 		// Return values.
-		mwLong effectEnumId = Effects::NoEffect;
+		mwLong effectEnumId = TES3::EffectNone;
 		mwLong rangeType = 0;
 		mwLong area = 0;
 		mwLong duration = 0;
@@ -63,13 +65,13 @@ namespace mwse
 			if (enchant) {
 				TES3::Effect* effect = &enchant->effects[effectIndex - 1];
 				// If we found an effect, set the values.
-				if (effect && effect->effectId != Effects::NoEffect) {
-					effectEnumId = effect->effectId;
-					rangeType = effect->rangeType;
+				if (effect && effect->ID != TES3::EffectNone) {
+					effectEnumId = effect->ID;
+					rangeType = effect->range;
 					area = effect->area;
 					duration = effect->duration;
-					magMin = effect->magMin;
-					magMax = effect->magMax;
+					magMin = effect->magnitudeMin;
+					magMax = effect->magnitudeMax;
 				}
 			}
 			else {

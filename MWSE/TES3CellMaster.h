@@ -33,7 +33,7 @@ namespace TES3 {
 		GameSetting ** GMSTs; // 0x18 // Pointer to array of GMST pointers.
 		UnknownStruct * unknown5[12]; // 0x1C
 		Skill skills[27]; // 0x4C
-		MagicEffect magic_effects[143]; // 0x05C8
+		MagicEffect magicEffects[143]; // 0x05C8
 	};
 	static_assert(sizeof(RecordLists::UnknownStruct) == 0x30, "TES3::RecordList::UnknownStruct failed size validation");
 	static_assert(sizeof(RecordLists) == 0x9DB8, "TES3::RecordList failed size validation");

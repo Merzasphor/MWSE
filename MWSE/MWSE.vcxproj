@@ -50,6 +50,7 @@
     <ClInclude Include="TES3Door.h" />
     <ClInclude Include="TES3Effect.h" />
     <ClInclude Include="TES3Enchantment.h" />
+    <ClInclude Include="TES3Faction.h" />
     <ClInclude Include="TES3GameSetting.h" />
     <ClInclude Include="TES3GlobalVariable.h" />
     <ClInclude Include="TES3Ingredient.h" />

@@ -24,6 +24,9 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3CellMaster.h"
+#include "TES3Skill.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -50,14 +53,14 @@ namespace mwse
 		mwLong skillIndex = Stack::getInstance().popLong();
 
 		// Return values.
-		mwLong attributeId = NoAttribute;
-		mwLong specialization = NoSpecialization;
+		mwLong attributeId = TES3::AttributeInvalid;
+		mwLong specialization = TES3::SpecializationInvalid;
 		float actions[4] = { INVALID_VALUE, INVALID_VALUE, INVALID_VALUE, INVALID_VALUE };
 
 		// Validate skill index.
 		if (skillIndex >= TES3::FirstSkill && skillIndex <= TES3::LastSkill) {
 			TES3::CellMaster* cellMaster = tes3::getCellMaster();
-			const SKILRecord_t& skillRecord = cellMaster->recordLists->skills[skillIndex];
+			const TES3::Skill& skillRecord = cellMaster->recordLists->skills[skillIndex];
 			attributeId = skillRecord.attribute;
 			specialization = skillRecord.specialization;
 			for (size_t i = 0; i < 4; i++) {

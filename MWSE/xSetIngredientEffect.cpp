@@ -24,6 +24,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Ingredient.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -51,7 +53,7 @@ namespace mwse
 		mwLong skillAttributeId = Stack::getInstance().popLong();
 
 		// Get the ingredient.
-		INGRRecord_t* ingredient = reinterpret_cast<INGRRecord_t*>(tes3::getTemplate(id));
+		TES3::Ingredient* ingredient = reinterpret_cast<TES3::Ingredient*>(tes3::getTemplate(id));
 		if (ingredient == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetIngredientEffect: No ingredient record found with id '" << id << "'." << std::endl;
@@ -70,7 +72,7 @@ namespace mwse
 		}
 
 		// Validate effect id.
-		if (effectEnumId < Effects::FirstMagicEffect || effectEnumId > Effects::LastMagicEffect) {
+		if (effectEnumId < TES3::EffectFirst || effectEnumId > TES3::EffectLast) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetIngredientEffect: Invalid effect id." << std::endl;
 #endif
@@ -80,15 +82,15 @@ namespace mwse
 
 		// Set the ingredient effect information.
 		ingredient->effects[index] = effectEnumId;
-		if (effectEnumId == Effects::DrainAttribute || effectEnumId == Effects::DamageAttribute
-			|| effectEnumId == Effects::RestoreAttribute || effectEnumId == Effects::FortifyAttribute
-			|| effectEnumId == Effects::AbsorbAttribute) {
+		if (effectEnumId == TES3::EffectDrainAttribute || effectEnumId == TES3::EffectDamageAttribute
+			|| effectEnumId == TES3::EffectRestoreAttribute || effectEnumId == TES3::EffectFortifyAttribute
+			|| effectEnumId == TES3::EffectAbsorbAttribute) {
 			ingredient->effectAttributeIds[index] = skillAttributeId;
 			ingredient->effectSkillIds[index] = -1;
 		}
-		else if (effectEnumId == Effects::DrainSkill || effectEnumId == Effects::DamageSkill
-			|| effectEnumId == Effects::RestoreSkill || effectEnumId == Effects::FortifySkill
-			|| effectEnumId == Effects::AbsorbSkill) {
+		else if (effectEnumId == TES3::EffectDrainSkill || effectEnumId == TES3::EffectDamageSkill
+			|| effectEnumId == TES3::EffectRestoreSkill || effectEnumId == TES3::EffectFortifySkill
+			|| effectEnumId == TES3::EffectAbsorbSkill) {
 			ingredient->effectAttributeIds[index] = -1;
 			ingredient->effectSkillIds[index] = skillAttributeId;
 		}

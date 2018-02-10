@@ -59,23 +59,23 @@ namespace mwse
 
 		// Get the max condition.
 		TES3::ObjectType::ObjectType recordType = reference->objectPointer->objectType;
-		if (recordType == TES3::ObjectType::LOCKPICK) {
-			LOCKRecord_t* lockpick = reinterpret_cast<LOCKRecord_t*>(reference->objectPointer);
+		if (recordType == TES3::ObjectType::Lockpick) {
+			TES3::Lockpick* lockpick = reinterpret_cast<TES3::Lockpick*>(reference->objectPointer);
 			value = lockpick->maxCondition;
 		}
-		else if (recordType == TES3::ObjectType::PROBE) {
-			PROBRecord_t* probe = reinterpret_cast<PROBRecord_t*>(reference->objectPointer);
+		else if (recordType == TES3::ObjectType::Probe) {
+			TES3::Probe* probe = reinterpret_cast<TES3::Probe*>(reference->objectPointer);
 			value = probe->maxCondition;
 		}
-		else if (recordType == TES3::ObjectType::ARMOR) {
+		else if (recordType == TES3::ObjectType::Armor) {
 			TES3::Armor* armor = reinterpret_cast<TES3::Armor*>(reference->objectPointer);
 			value = armor->maxCondition;
 		}
-		else if (recordType == TES3::ObjectType::REPAIR) {
-			REPARecord_t* repair = reinterpret_cast<REPARecord_t*>(reference->objectPointer);
+		else if (recordType == TES3::ObjectType::Repair) {
+			TES3::Repair* repair = reinterpret_cast<TES3::Repair*>(reference->objectPointer);
 			value = repair->maxCondition;
 		}
-		else if (recordType == TES3::ObjectType::WEAPON) {
+		else if (recordType == TES3::ObjectType::Weapon) {
 			TES3::Weapon* weapon = reinterpret_cast<TES3::Weapon*>(reference->objectPointer);
 			value = weapon->maxCondition;
 		}

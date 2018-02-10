@@ -24,6 +24,12 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Armor.h"
+#include "TES3Weapon.h"
+#include "TES3Lockpick.h"
+#include "TES3Probe.h"
+#include "TES3Repair.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -69,20 +75,20 @@ namespace mwse
 		}
 
 		// Set the max condition based on record type.
-		if (record->objectType == TES3::ObjectType::ARMOR) {
+		if (record->objectType == TES3::ObjectType::Armor) {
 			reinterpret_cast<TES3::Armor*>(record)->maxCondition = maxCondition;
 		}
-		else if (record->objectType == TES3::ObjectType::WEAPON) {
+		else if (record->objectType == TES3::ObjectType::Weapon) {
 			reinterpret_cast<TES3::Weapon*>(record)->maxCondition = maxCondition;
 		}
-		else if (record->objectType == TES3::ObjectType::LOCK) {
-			reinterpret_cast<LOCKRecord_t*>(record)->maxCondition = maxCondition;
+		else if (record->objectType == TES3::ObjectType::Lockpick) {
+			reinterpret_cast<TES3::Lockpick*>(record)->maxCondition = maxCondition;
 		}
-		else if (record->objectType == TES3::ObjectType::PROBE) {
-			reinterpret_cast<PROBRecord_t*>(record)->maxCondition = maxCondition;
+		else if (record->objectType == TES3::ObjectType::Probe) {
+			reinterpret_cast<TES3::Probe*>(record)->maxCondition = maxCondition;
 		}
-		else if (record->objectType == TES3::ObjectType::REPAIR) {
-			reinterpret_cast<REPARecord_t*>(record)->maxCondition = maxCondition;
+		else if (record->objectType == TES3::ObjectType::Repair) {
+			reinterpret_cast<TES3::Repair*>(record)->maxCondition = maxCondition;
 		}
 		else {
 #if _DEBUG
@@ -93,7 +99,7 @@ namespace mwse
 		}
 
 		// If there's a variable node containing condition, and we need to change it, do so.
-		mwVarHolderNode_t* varNode = tes3::getAttachedVarHolderNode(reference);
+		 TES3::VariableHolderAttachment* varNode = tes3::getAttachedVarHolderNode(reference);
 		if (varNode && varNode->unknown_0x0C > maxCondition) {
 			varNode->unknown_0x0C = maxCondition;
 			success = true;

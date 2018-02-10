@@ -24,6 +24,9 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Alchemy.h"
+#include "TES3Enchantment.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -114,12 +117,12 @@ namespace mwse
 		}
 
 		// Disable the effect.
-		effects[effectIndex].effectId = Effects::NoEffect;
+		effects[effectIndex].ID = TES3::EffectNone;
 
 		// Move effects beyond the given index forward to fill the gap.
 		for (size_t i = effectIndex + 1; i < effectCount; i++) {
 			effects[i - 1] = effects[i];
-			effects[i].effectId = Effects::NoEffect;
+			effects[i].ID = TES3::EffectNone;
 		}
 
 		mwse::Stack::getInstance().pushLong(true);

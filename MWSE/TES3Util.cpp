@@ -123,7 +123,7 @@ namespace mwse
 		TES3::Reference * skipRemovedReferences(TES3::Reference * reference) {
 			while (reference != 0 && (reference->baseFlags & 0x20) == 0x20)
 			{
-				reference = reinterpret_cast<TES3::Reference*>(reference->nextRecord);
+				reference = reinterpret_cast<TES3::Reference*>(reference->nextObject);
 			}
 			return reference;
 		}
@@ -468,7 +468,7 @@ namespace mwse
 
 			TES3::BaseObject * record = reinterpret_cast<TES3::BaseObject*>(getCellMaster()->recordLists->spellsList->head);
 			while (record != NULL && !(record->objectType == TES3::ObjectType::Spell && strcmp(objectID, record->objectID) == 0)) {
-				record = record->nextRecord;
+				record = record->nextObject;
 			}
 
 			return reinterpret_cast<TES3::Spell*>(record);
@@ -479,7 +479,7 @@ namespace mwse
 
 			TES3::BaseObject * record = getCellMaster()->recordLists->list->head;
 			while (record != NULL && !(record->objectType == TES3::ObjectType::Enchantment && strcmp(objectID, record->objectID) == 0)) {
-				record = record->nextRecord;
+				record = record->nextObject;
 			}
 
 			return reinterpret_cast<TES3::Enchantment*>(record);
@@ -490,7 +490,7 @@ namespace mwse
 
 			TES3::BaseObject * record = getCellMaster()->recordLists->list->head;
 			while (record != NULL && !(record->objectType == TES3::ObjectType::Alchemy && strcmp(objectID, record->objectID) == 0)) {
-				record = record->nextRecord;
+				record = record->nextObject;
 			}
 
 			return reinterpret_cast<TES3::Alchemy*>(record);

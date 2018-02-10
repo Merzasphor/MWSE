@@ -24,6 +24,11 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3MagicEffect.h"
+#include "TES3Enchantment.h"
+#include "TES3Alchemy.h"
+#include "TES3Skill.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -50,7 +55,7 @@ namespace mwse
 		mwLong effectIndex = Stack::getInstance().popLong();
 
 		// Return values.
-		mwLong effectEnumId = Effects::NoEffect;
+		mwLong effectEnumId = TES3::EffectNone;
 		mwLong skillAttributeId = 0;
 		mwLong rangeType = 0;
 		mwLong area = 0;
@@ -102,23 +107,23 @@ namespace mwse
 			}
 
 			// If we found an effect, set the values.
-			if (effect && effect->effectId != Effects::NoEffect) {
-				effectEnumId = effect->effectId;
-				int effectFlags = Effects::MagicEffectFlagMap[effectEnumId];
-				if (effectFlags & Effects::TargetSkill) {
-					skillAttributeId = effect->skillId;
+			if (effect && effect->ID != TES3::EffectNone) {
+				effectEnumId = effect->ID;
+				int effectFlags = TES3::MagicEffectFlagMap[effectEnumId];
+				if (effectFlags & TES3::TargetSkill) {
+					skillAttributeId = effect->skillID;
 				}
-				else if (effectFlags & Effects::TargetAttribute) {
-					skillAttributeId = effect->attributeId;
+				else if (effectFlags & TES3::TargetAttribute) {
+					skillAttributeId = effect->attributeID;
 				}
 				else {
-					skillAttributeId = NoSkill;
+					skillAttributeId = TES3::SkillInvalid;
 				}
-				rangeType = effect->rangeType;
+				rangeType = effect->range;
 				area = effect->area;
 				duration = effect->duration;
-				magMin = effect->magMin;
-				magMax = effect->magMax;
+				magMin = effect->magnitudeMin;
+				magMax = effect->magnitudeMax;
 			}
 		}
 		else {

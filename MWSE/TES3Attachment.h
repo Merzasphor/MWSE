@@ -42,5 +42,15 @@ namespace TES3 {
 		char locked; // 0x0C
 	};
 	static_assert(sizeof(LockAttachment) == 0x10, "TES3::LockAttachment failed size validation");
+
+	struct OwnershipAttachment {
+		int unknown_0x00;
+		BaseObject * owner; // 0x04
+		union {
+			mwLong rank;
+			void * variable;
+		} rankVar; // 0x08
+	};
+	static_assert(sizeof(OwnershipAttachment) == 0x0C, "TES3::OwnershipAttachment failed size validation");
 }
 

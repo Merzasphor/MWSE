@@ -26,7 +26,7 @@ namespace TES3 {
 		ReferenceUnk1 * unknown_0x14;
 		int unknown_0x18;
 		BaseObject * previousRecord; // 0x1C
-		BaseObject * nextRecord; // 0x20
+		BaseObject * nextObject; // 0x20
 		int unknown_0x24;
 		BaseObject * objectPointer; // 0x28 // Points to the record for which this is a reference.
 		int unknown_0x2C;

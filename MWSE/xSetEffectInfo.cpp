@@ -24,6 +24,9 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Alchemy.h"
+#include "TES3Enchantment.h"
+
 using namespace mwse;
 
 namespace mwse

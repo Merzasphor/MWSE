@@ -24,6 +24,10 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Armor.h"
+#include "TES3Clothing.h"
+#include "TES3Weapon.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -70,25 +74,25 @@ namespace mwse
 
 		// Get the charge based on the record type. If the item doesn't have a varnode,
 		// return the maximum charge from the enchantment record.
-		mwVarHolderNode_t* varNode = mwse::tes3::getAttachedVarHolderNode(reference);
+		 TES3::VariableHolderAttachment* varNode = mwse::tes3::getAttachedVarHolderNode(reference);
 		if (varNode) {
 			charge = *reinterpret_cast<mwFloat*>(&varNode->unknown_0x10);
 		}
 		else {
 			TES3::ObjectType::ObjectType type = reference->objectPointer->objectType;
-			if (type == TES3::ObjectType::ARMOR) {
+			if (type == TES3::ObjectType::Armor) {
 				TES3::Armor* armor = reinterpret_cast<TES3::Armor*>(record);
 				if (armor->enchantment) {
 					charge = armor->enchantment->charge;
 				}
 			}
-			else if (type == TES3::ObjectType::CLOTHING) {
+			else if (type == TES3::ObjectType::Clothing) {
 				TES3::Clothing* clothing = reinterpret_cast<TES3::Clothing*>(record);
 				if (clothing->enchantment) {
 					charge = clothing->enchantment->charge;
 				}
 			}
-			else if (type == TES3::ObjectType::WEAPON) {
+			else if (type == TES3::ObjectType::Weapon) {
 				TES3::Weapon* weapon = reinterpret_cast<TES3::Weapon*>(record);
 				if (weapon->enchantment) {
 					charge = weapon->enchantment->charge;

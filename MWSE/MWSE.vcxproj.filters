@@ -276,6 +276,9 @@
     <ClInclude Include="TES3Creature.h">
       <Filter>Header Files\DataAdapters\TES3Types</Filter>
     </ClInclude>
+    <ClInclude Include="TES3Faction.h">
+      <Filter>Header Files\DataAdapters\TES3Types</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

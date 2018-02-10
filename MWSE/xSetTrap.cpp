@@ -58,7 +58,7 @@ namespace mwse
 
 		// Verify record type.
 		TES3::ObjectType::ObjectType type = reference->objectPointer->objectType;
-		if (type != TES3::ObjectType::CONTAINER && type != TES3::ObjectType::DOOR) {
+		if (type != TES3::ObjectType::Container && type != TES3::ObjectType::Door) {
 #if _DEBUG
 			log::getLog() << "xSetTrap: Called on a non-container, non-door reference." << std::endl;
 #endif
@@ -67,7 +67,7 @@ namespace mwse
 		}
 
 		// Get attached lock node.
-		mwLockNode_t* lockNode = tes3::getAttachedLockNode(reference);
+		TES3::LockAttachment* lockNode = tes3::getAttachedLockNode(reference);
 		if (!lockNode) {
 #if _DEBUG
 			log::getLog() << "xSetTrap: Could not obtain lock node." << std::endl;

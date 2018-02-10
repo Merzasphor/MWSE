@@ -61,13 +61,13 @@ namespace mwse
 		}
 
 		TES3::ObjectType::ObjectType type = reference->objectPointer->objectType;
-		if (type == TES3::ObjectType::CONTAINER || type == TES3::ObjectType::DOOR) {
-			mwLockNode_t* lockNode = tes3::getAttachedLockNode(reference);
+		if (type == TES3::ObjectType::Container || type == TES3::ObjectType::Door) {
+			TES3::LockAttachment* lockNode = tes3::getAttachedLockNode(reference);
 			if (lockNode) {
 				TES3::Spell* trapSpell = lockNode->trapSpell;
 				if (trapSpell) {
-					id = trapSpell->id;
-					name = trapSpell->friendlyName;
+					id = trapSpell->objectID;
+					name = trapSpell->name;
 					cost = trapSpell->cost;
 				}
 			}

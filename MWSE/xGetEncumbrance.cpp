@@ -120,7 +120,7 @@ namespace mwse
 			if (macp->num_active_effects > 0) {
 				TES3::MACP::ActiveEffect* currentEffect = macp->active_effects->next;
 				for (int i = 0; i < macp->num_active_effects; i++) {
-					if (currentEffect->TES3::Effectype == Effects::Burden || currentEffect->TES3::Effectype == Effects::Feather) {
+					if (currentEffect->TES3::Effectype == TES3::EffectBurden || currentEffect->TES3::Effectype == TES3::EffectFeather) {
 						encumbrance += (queryType == BaseEncumbrance) ? CalculateTotal(reference) : CalculateCorrection(reference);
 					}
 
@@ -172,14 +172,14 @@ namespace mwse
 			double magnitude = 0.0;
 			for (int effect = 0; effect < 8; effect++) {
 				short const effect_id = active_spell->spell->effects[effect].effectId;
-				if (effect_id == Effects::Burden || effect_id == Effects::Feather) {
+				if (effect_id == TES3::EffectBurden || effect_id == TES3::EffectFeather) {
 					unsigned long const size = active_spell->effects[effect].size;
 					SPLLRecord_t::ActiveSpell_t** active_spells = active_spell->effects[effect].activeSpells;
 					for (unsigned long index = 0; index < size; index++) {
 						SPLLRecord_t::ActiveSpell_t* current_spell = active_spells[index];
 						if (current_spell != NULL && entityName == current_spell->id) {
 							time = current_spell->time;
-							if (effect_id == Effects::Burden) {
+							if (effect_id == TES3::EffectBurden) {
 								// Burden is modified by Magicka Resistance. We
 								// must take into account any MR that was active
 								// when Burden went into effect.
@@ -190,7 +190,7 @@ namespace mwse
 									magnitude -= current_spell->magnitude * (100.0 - current_spell->statistic) / 100.0;
 								}
 							}
-							else if (effect_id == Effects::Feather) {
+							else if (effect_id == TES3::EffectFeather) {
 								magnitude += current_spell->magnitude;
 							}
 						}

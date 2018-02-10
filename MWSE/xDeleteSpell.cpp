@@ -24,6 +24,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3CellMaster.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -58,26 +60,26 @@ namespace mwse
 		}
 
 		// Manipulate the record list to remove this object.
-		LinkedList_t<TES3::Spell>* spellsList = tes3::getCellMaster()->recordLists->spellsList;
+		TES3::LinkedList<TES3::Spell>* spellsList = tes3::getCellMaster()->recordLists->spellsList;
 		if (spell == spellsList->head) {
-			spell->nextRecord->prevRecord = NULL;
-			spellsList->head = spell->nextRecord;
+			spell->nextSpell->previousSpell = NULL;
+			spellsList->head = spell->nextSpell;
 		}
 		else if (spell == spellsList->tail) {
-			spell->prevRecord->nextRecord = NULL;
-			spellsList->tail = spell->prevRecord;
+			spell->previousSpell->nextSpell = NULL;
+			spellsList->tail = spell->previousSpell;
 		}
 		else {
-			TES3::Spell* nextSpell = spell->nextRecord;
-			TES3::Spell* previousSpell = spell->prevRecord;
-			nextSpell->prevRecord = previousSpell;
-			previousSpell->nextRecord = nextSpell;
+			TES3::Spell* nextSpell = spell->nextSpell;
+			TES3::Spell* previousSpell = spell->previousSpell;
+			nextSpell->previousSpell = previousSpell;
+			previousSpell->nextSpell = nextSpell;
 		}
 		spellsList->size--;
 
 		// Delete the spell from memory.
-		tes3::free(spell->friendlyName);
-		tes3::free(spell->id);
+		tes3::free(spell->name);
+		tes3::free(spell->objectID);
 		tes3::free(spell);
 
 		/*

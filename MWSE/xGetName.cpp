@@ -59,39 +59,7 @@ namespace mwse
 		// Get the base record.
 		TES3::BaseObject* record = reinterpret_cast<TES3::BaseObject*>(reference->objectPointer);
 		if (record) {
-			TES3::ObjectType::ObjectType type = reference->objectPointer->objectType;
-			if (type == TES3::ObjectType::NPC || type == TES3::ObjectType::Creature) {
-				name = reinterpret_cast<NPCTES3::BaseObject*>(tes3::getBaseRecord(record))->name;
-			}
-			else if (type == TES3::ObjectType::CONTAINER) {
-				name = reinterpret_cast<CONTRecord_t*>(record)->name;
-			}
-			else if (type == TES3::ObjectType::LIGHT) {
-				name = reinterpret_cast<LIGHRecord_t*>(record)->name;
-			}
-			else if (type == TES3::ObjectType::CLOTHING || type == TES3::ObjectType::ARMOR || type == TES3::ObjectType::WEAPON
-				|| type == TES3::ObjectType::MISC || type == TES3::ObjectType::BOOK || type == TES3::ObjectType::Alchemy
-				|| type == TES3::ObjectType::AMMO) {
-				// These records happen to use the same offset. We'll be lazy/efficient here.
-				name = reinterpret_cast<TES3::Armor*>(record)->name;
-			}
-			else if (type == TES3::ObjectType::ACTIVATOR) {
-				name = reinterpret_cast<ACTIRecord_t*>(record)->name;
-			}
-			else if (type == TES3::ObjectType::DOOR) {
-				name = reinterpret_cast<char*>(reinterpret_cast<unsigned long*>(record) + 0x0d);
-			}
-			else if (type == TES3::ObjectType::APPARATUS) {
-				name = reinterpret_cast<char*>(reinterpret_cast<unsigned long*>(record) + 0x19);
-			}
-			else if (type == TES3::ObjectType::INGREDIENT || type == TES3::ObjectType::REPAIR || type == TES3::ObjectType::PROBE || type == TES3::ObjectType::LOCKPICK) {
-				name = reinterpret_cast<char*>(reinterpret_cast<unsigned long*>(record) + 0x11);
-			}
-			else {
-#if _DEBUG
-				mwse::log::getLog() << "xGetName: Invalid call on record of type " << type << "." << std::endl;
-#endif
-			}
+			name = tes3::getName(reference->objectPointer);
 		}
 		else {
 #if _DEBUG

@@ -24,6 +24,8 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Enchantment.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -61,7 +63,7 @@ namespace mwse
 			cost = enchantment->cost;
 			maxCharge = enchantment->charge;
 			effects = tes3::getEffectCount(enchantment->effects);
-			autocalc = enchantment->autocalc;
+			// autocalc = enchantment->autocalc; // TODO: Find flag.
 		}
 		else {
 #if _DEBUG

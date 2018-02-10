@@ -42,6 +42,15 @@ namespace TES3 {
 		SkillTypeMisc
 	};
 
+	enum SkillSpecialization {
+		SpecializationInvalid = -1,
+		SpecializationCombat,
+		SpecializationMagic,
+		SpecializationStealth,
+		FirstSpecialization = SpecializationCombat,
+		LastSpecialization = SpecializationStealth
+	};
+
 	struct Skill_vTable {
 
 	};

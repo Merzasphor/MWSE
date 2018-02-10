@@ -86,21 +86,21 @@ namespace mwse
 			nameContainer = &reinterpret_cast<TES3::NPCInstance*>(recordGeneric)->baseNPC->name;
 			namePtr = *nameContainer;
 			break;
-		case TES3::ObjectType::CONTAINER:
-			nameContainer = &reinterpret_cast<CONTRecord_t*>(recordGeneric)->name;
+		case TES3::ObjectType::Container:
+			nameContainer = &reinterpret_cast<TES3::Container*>(recordGeneric)->name;
 			namePtr = *nameContainer;
 			break;
-		case TES3::ObjectType::LIGHT:
-			nameContainer = &reinterpret_cast<LIGHRecord_t*>(recordGeneric)->name;
+		case TES3::ObjectType::Light:
+			nameContainer = &reinterpret_cast<TES3::Light*>(recordGeneric)->name;
 			namePtr = *nameContainer;
 			break;
 		case TES3::ObjectType::Alchemy:
-		case TES3::ObjectType::AMMO:
-		case TES3::ObjectType::ARMOR:
-		case TES3::ObjectType::BOOK:
-		case TES3::ObjectType::CLOTHING:
-		case TES3::ObjectType::MISC:
-		case TES3::ObjectType::WEAPON:
+		case TES3::ObjectType::Ammo:
+		case TES3::ObjectType::Armor:
+		case TES3::ObjectType::Book:
+		case TES3::ObjectType::Clothing:
+		case TES3::ObjectType::Misc:
+		case TES3::ObjectType::Weapon:
 			nameContainer = &reinterpret_cast<TES3::Armor*>(recordGeneric)->name;
 			namePtr = *nameContainer;
 			break;
@@ -108,17 +108,17 @@ namespace mwse
 			nameContainer = &reinterpret_cast<ACTIRecord_t*>(recordGeneric)->name;
 			namePtr = *nameContainer;
 			break;
-		case TES3::ObjectType::DOOR:
+		case TES3::ObjectType::Door:
 			namePtr = reinterpret_cast<DOORRecord_t*>(recordGeneric)->name;
 			break;
-		case TES3::ObjectType::APPARATUS:
-			namePtr = reinterpret_cast<APPARecord_t*>(recordGeneric)->name;
+		case TES3::ObjectType::Apparatus:
+			namePtr = reinterpret_cast<TES3::Apparatus*>(recordGeneric)->name;
 			break;
-		case TES3::ObjectType::INGREDIENT:
-		case TES3::ObjectType::LOCKPICK:
-		case TES3::ObjectType::PROBE:
-		case TES3::ObjectType::REPAIR:
-			namePtr = reinterpret_cast<LOCKRecord_t*>(recordGeneric)->name;
+		case TES3::ObjectType::Ingredient:
+		case TES3::ObjectType::Lockpick:
+		case TES3::ObjectType::Probe:
+		case TES3::ObjectType::Repair:
+			namePtr = reinterpret_cast<TES3::Lockpick*>(recordGeneric)->name;
 			break;
 		}
 

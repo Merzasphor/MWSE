@@ -49,7 +49,7 @@ namespace mwse {
 			return 0.0f;
 		}
 
-		mwString objectId = reinterpret_cast<TES3::BaseObject*>(reference->objectPointer)->objectID;
+		mwString objectId = reference->objectPointer->objectID;
 
 		Stack::getInstance().pushString(objectId);
 

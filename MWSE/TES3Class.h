@@ -3,12 +3,6 @@
 #include "ObjectTypes.h"
 
 namespace TES3 {
-	enum Specialization {
-		SpecializationCombat,
-		SpecializationMagic,
-		SpecializationStealth
-	};
-
 	struct Class_vTable {
 
 	};

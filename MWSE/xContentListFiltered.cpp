@@ -189,26 +189,26 @@ namespace mwse {
 		switch (recordType) {
 		case TES3::ObjectType::ACTIVATOR: return FILTER_ACTI;
 		case TES3::ObjectType::Alchemy: return FILTER_ALCH;
-		case TES3::ObjectType::AMMO: return FILTER_AMMO;
-		case TES3::ObjectType::APPARATUS: return FILTER_APPA;
-		case TES3::ObjectType::ARMOR: return FILTER_ARMO;
+		case TES3::ObjectType::Ammo: return FILTER_AMMO;
+		case TES3::ObjectType::Apparatus: return FILTER_APPA;
+		case TES3::ObjectType::Armor: return FILTER_ARMO;
 		case TES3::ObjectType::BODY: return FILTER_BODY;
-		case TES3::ObjectType::BOOK: return FILTER_BOOK;
-		case TES3::ObjectType::CLOTHING: return FILTER_CLOT;
-		case TES3::ObjectType::CONTAINER: return FILTER_CONT;
+		case TES3::ObjectType::Book: return FILTER_BOOK;
+		case TES3::ObjectType::Clothing: return FILTER_CLOT;
+		case TES3::ObjectType::Container: return FILTER_CONT;
 		case TES3::ObjectType::Creature: return FILTER_CREA;
-		case TES3::ObjectType::DOOR: return FILTER_DOOR;
-		case TES3::ObjectType::INGREDIENT: return FILTER_INGR;
+		case TES3::ObjectType::Door: return FILTER_DOOR;
+		case TES3::ObjectType::Ingredient: return FILTER_INGR;
 		case TES3::ObjectType::LEVELLEDCREATURE: return FILTER_LEVC;
 		case TES3::ObjectType::LEVELLEDITEM: return FILTER_LEVI;
-		case TES3::ObjectType::LIGHT: return FILTER_LIGH;
-		case TES3::ObjectType::LOCKPICK: return FILTER_LOCK;
-		case TES3::ObjectType::MISC: return FILTER_MISC;
+		case TES3::ObjectType::Light: return FILTER_LIGH;
+		case TES3::ObjectType::Lockpick: return FILTER_LOCK;
+		case TES3::ObjectType::Misc: return FILTER_MISC;
 		case TES3::ObjectType::NPC: return FILTER_NPC;
-		case TES3::ObjectType::PROBE: return FILTER_PROB;
-		case TES3::ObjectType::REPAIR: return FILTER_REPA;
+		case TES3::ObjectType::Probe: return FILTER_PROB;
+		case TES3::ObjectType::Repair: return FILTER_REPA;
 		case TES3::ObjectType::STATIC: return FILTER_STAT;
-		case TES3::ObjectType::WEAPON: return FILTER_WEAP;
+		case TES3::ObjectType::Weapon: return FILTER_WEAP;
 		}
 
 		return 0x0;

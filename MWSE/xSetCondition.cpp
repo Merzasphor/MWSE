@@ -23,7 +23,6 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "Reference.h"
 
 using namespace mwse;
 
@@ -59,7 +58,7 @@ namespace mwse
 		}
 
 		// Get associated varnode, and the condition from it.
-		mwVarHolderNode_t* varNode = tes3::getAttachedVarHolderNode(reference);
+		 TES3::VariableHolderAttachment* varNode = tes3::getAttachedVarHolderNode(reference);
 		if (varNode != NULL) {
 			varNode->unknown_0x0C = value;
 		}

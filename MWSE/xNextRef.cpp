@@ -51,7 +51,7 @@ namespace mwse
 		TES3::Reference* next = NULL;
 		if (reference) {
 			// Try to get the next non-removed reference linked down from the passed one.
-			next = mwse::tes3::skipRemovedReferences(reference->nextRecord);
+			next = mwse::tes3::skipRemovedReferences(reference->nextObject);
 
 			// If we found nothing, check the stored exterior references.
 			if (next == NULL && mwse::tes3::exteriorRefs[0] != NULL) {

@@ -57,7 +57,7 @@ namespace mwse
 		mwString owner = NULL;
 
 		// Get the attached varnode.
-		mwOwnerInfoNode_t* ownerInfo = reinterpret_cast<mwOwnerInfoNode_t*>(tes3::getAttachedVarHolderNode(reference));
+		TES3::OwnershipAttachment* ownerInfo = reinterpret_cast<TES3::OwnershipAttachment*>(tes3::getAttachedVarHolderNode(reference));
 		if (ownerInfo) {
 			if (ownerInfo->owner && ownerInfo->owner->objectID) {
 				owner = ownerInfo->owner->objectID;

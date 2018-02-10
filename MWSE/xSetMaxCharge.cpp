@@ -24,6 +24,10 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Armor.h"
+#include "TES3Clothing.h"
+#include "TES3Weapon.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -70,13 +74,13 @@ namespace mwse
 
 		// Get enchantment record based on record type.
 		TES3::Enchantment* enchantment = NULL;
-		if (record->objectType == TES3::ObjectType::ARMOR) {
+		if (record->objectType == TES3::ObjectType::Armor) {
 			enchantment = reinterpret_cast<TES3::Armor*>(record)->enchantment;
 		}
-		else if (record->objectType == TES3::ObjectType::CLOTHING) {
+		else if (record->objectType == TES3::ObjectType::Clothing) {
 			enchantment = reinterpret_cast<TES3::Clothing*>(record)->enchantment;
 		}
-		else if (record->objectType == TES3::ObjectType::WEAPON) {
+		else if (record->objectType == TES3::ObjectType::Weapon) {
 			enchantment = reinterpret_cast<TES3::Weapon*>(record)->enchantment;
 		}
 		else {
@@ -92,7 +96,7 @@ namespace mwse
 			enchantment->charge = maxCharge;
 
 			// If there's charge data in an attached node, update it.
-			mwVarHolderNode_t* varNode = tes3::getAttachedVarHolderNode(reference);
+			 TES3::VariableHolderAttachment* varNode = tes3::getAttachedVarHolderNode(reference);
 			if (varNode) {
 				mwFloat& charge = *reinterpret_cast<mwFloat*>(&varNode->unknown_0x10);
 				if (charge >= maxCharge) {

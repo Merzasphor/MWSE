@@ -18,7 +18,7 @@ namespace TES3 {
 		int unknown_0x14;
 		int unknown_0x18;
 		BaseObject * previousRecord; // 0x1C
-		BaseObject * nextRecord; // 0x20
+		BaseObject * nextObject; // 0x20
 		int unknown_0x24;
 		int unknown_0x28;
 		mwString objectID; // 0x2C
@@ -85,7 +85,7 @@ namespace TES3 {
 		int unknown_0x14;
 		int unknown_0x18;
 		BaseObject * previousRecord; // 0x1C
-		BaseObject * nextRecord; // 0x20
+		BaseObject * nextObject; // 0x20
 		int unknown_0x24;
 		int unknown_0x28;
 		mwString objectID; // 0x2C

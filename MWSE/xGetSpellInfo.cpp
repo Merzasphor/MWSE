@@ -58,7 +58,7 @@ namespace mwse
 		// Get spell data by id.
 		TES3::Spell* spell = tes3::getSpellRecordById(spellId);
 		if (spell != NULL) {
-			name = spell->friendlyName;
+			name = spell->name;
 			type = spell->type;
 			cost = spell->cost;
 			effects = tes3::getEffectCount(spell->effects);

@@ -24,6 +24,8 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Enchantment.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -84,7 +86,7 @@ namespace mwse
 		enchantRecord->type = type;
 		enchantRecord->cost = cost;
 		enchantRecord->charge = charge;
-		enchantRecord->autocalc = autocalc;
+		// enchantRecord->autocalc = autocalc; // TODO: Fix autocalc.
 
 		mwse::Stack::getInstance().pushLong(true);
 		return 0.0f;
