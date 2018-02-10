@@ -1,20 +1,21 @@
 /************************************************************************
-               main.cpp - Copyright (c) 2008 The MWSE Project
-                http://www.sourceforge.net/projects/mwse
+	
+	main.cpp - Copyright (c) 2008 The MWSE Project
+	https://github.com/MWSE/MWSE/
 
-    This program is free software; you can redistribute it and/or
-    modify it under the terms of the GNU General Public License
-    as published by the Free Software Foundation; either version 2
-    of the License, or (at your option) any later version.
+	This program is free software; you can redistribute it and/or
+	modify it under the terms of the GNU General Public License
+	as published by the Free Software Foundation; either version 2
+	of the License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 **************************************************************************/
 
@@ -36,17 +37,12 @@ void* external_malloc = NULL;
 void* external_free = NULL;
 void* external_realloc = NULL;
 
-static BOOL CALLBACK EnumSymbolsCallback(PSYMBOL_INFO symbol_info,
-	ULONG /*symbol_size*/,
-	PVOID /*user_context*/);
+static BOOL CALLBACK EnumSymbolsCallback(PSYMBOL_INFO, ULONG, PVOID);
 
-BOOL WINAPI DllMain(
-					HINSTANCE hinstDLL,	// handle to DLL module
-					DWORD fdwReason,	// reason for calling function
-					LPVOID lpReserved )	// reserved
+BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved)
 {
 	HANDLE process = NULL;
-	switch(fdwReason)
+	switch (fdwReason)
 	{
 	case DLL_PROCESS_ATTACH:
 		// Initialize once for each new process.
@@ -58,14 +54,8 @@ BOOL WINAPI DllMain(
 		// Find the addresses of malloc(), realloc(), free() that MW uses,
 		// so that we can interact with its heap.
 		process = GetCurrentProcess();
-		SymInitialize(process,
-			NULL,  // No search path.
-			TRUE); // Load symbol tables for all modules.
-		SymEnumSymbols(process,
-			0,                    // No base address.
-			"msvcrt!*",           // Only look in msvcrt.dll.
-			EnumSymbolsCallback,
-			NULL);                // No context.
+		SymInitialize(process, NULL, TRUE);
+		SymEnumSymbols(process, 0, "msvcrt!*", EnumSymbolsCallback, NULL);
 		SymCleanup(process);
 
 		if (external_malloc == NULL) {
