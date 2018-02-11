@@ -81,13 +81,25 @@ namespace mwse
 
 		TES3::BaseObject* getBaseRecord(TES3::BaseObject* reference);
 
-		TES3::BaseObject* getFirstAttachmentByType(TES3::Reference* reference, TES3::AttachmentType attachmentType);
+		template <typename T>
+		T* getAttachment(TES3::Reference* reference, TES3::AttachmentType attachmentType) {
+			if (reference == NULL || reference->attachments == NULL) {
+				return NULL;
+			}
+
+			TES3::BaseAttachment* attachment = reference->attachments;
+			while (attachment && attachment->type != attachmentType) {
+				attachment = attachment->next;
+			}
+
+			return reinterpret_cast<T*>(attachment);
+		}
 
 		TES3::MACP* getAttachedMACPRecord(TES3::Reference* reference);
 
-		TES3::VariableHolderAttachment* getAttachedVarHolderNode(TES3::Reference* reference);
+		TES3::VariableAttachmentNode* getAttachedVariableNode(TES3::Reference* reference);
 
-		TES3::LockAttachment* getAttachedLockNode(TES3::Reference* reference);
+		TES3::LockAttachmentNode* getAttachedLockNode(TES3::Reference* reference);
 
 		TES3::Spell* getSpellRecordById(const std::string& id);
 

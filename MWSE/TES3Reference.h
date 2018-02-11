@@ -35,7 +35,7 @@ namespace TES3 {
 		mwFloat x; // 0x38
 		mwFloat y; // 0x3C
 		mwFloat z; // 0x40
-		Attachment<BaseObject> * attachments; // 0x44
+		BaseAttachment * attachments; // 0x44
 		int unknown_0x48;
 		int unknown_0x4C;
 	};

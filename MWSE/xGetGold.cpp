@@ -59,7 +59,7 @@ namespace mwse
 
 		// Try to get the gold from the macp record.
 		mwShort gold = 0;
-		TES3::MACP* macp = reinterpret_cast<TES3::MACP*>(tes3::getFirstAttachmentByType(reference, TES3::AttachmentMACP));
+		TES3::MACP* macp = tes3::getAttachedMACPRecord(reference);
 		if (macp) {
 			gold = macp->gold;
 		}

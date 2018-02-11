@@ -62,7 +62,7 @@ namespace mwse
 
 		TES3::ObjectType::ObjectType type = reference->objectPointer->objectType;
 		if (type == TES3::ObjectType::Container || type == TES3::ObjectType::Door) {
-			TES3::LockAttachment* lockNode = tes3::getAttachedLockNode(reference);
+			auto lockNode = tes3::getAttachedLockNode(reference);
 			if (lockNode) {
 				TES3::Spell* trapSpell = lockNode->trapSpell;
 				if (trapSpell) {

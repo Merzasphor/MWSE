@@ -63,9 +63,9 @@ namespace mwse
 		mwLong value = 0;
 
 		// Get associated varnode, and the condition from it.
-		 TES3::VariableHolderAttachment* varNode = mwse::tes3::getAttachedVarHolderNode(reference);
+		auto varNode = mwse::tes3::getAttachedVariableNode(reference);
 		if (varNode != NULL) {
-			value = varNode->unknown_0x0C;
+			value = varNode->condition;
 		}
 		else {
 			// If we couldn't get the condition, return the max condition.

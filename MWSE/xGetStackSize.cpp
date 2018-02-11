@@ -51,9 +51,9 @@ namespace mwse {
 
 		// Get the associated variable node and its item count.
 		mwLong count = 0;
-		TES3::InventoryNode* inventoryNode = reinterpret_cast<TES3::InventoryNode*>(tes3::getAttachedVarHolderNode(reference));
-		if (inventoryNode) {
-			count = inventoryNode->itemCount;
+		auto varNode = tes3::getAttachedVariableNode(reference);
+		if (varNode) {
+			count = varNode->count;
 		}
 
 		mwse::Stack::getInstance().pushLong(count);

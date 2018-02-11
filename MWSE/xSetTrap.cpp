@@ -67,7 +67,7 @@ namespace mwse
 		}
 
 		// Get attached lock node.
-		TES3::LockAttachment* lockNode = tes3::getAttachedLockNode(reference);
+		auto lockNode = tes3::getAttachedLockNode(reference);
 		if (!lockNode) {
 #if _DEBUG
 			log::getLog() << "xSetTrap: Could not obtain lock node." << std::endl;

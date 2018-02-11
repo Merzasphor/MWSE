@@ -245,9 +245,9 @@ namespace mwse
 
 			// Multiply the value by the count of the item.
 			if (multiplyByCount) {
-				TES3::InventoryNode* inventoryNode = reinterpret_cast<TES3::InventoryNode*>(tes3::getAttachedVarHolderNode(reference));
-				if (inventoryNode) {
-					value *= inventoryNode->itemCount;
+				auto varNode = tes3::getAttachedVariableNode(reference);
+				if (varNode) {
+					value *= varNode->count;
 				}
 			}
 
@@ -310,9 +310,9 @@ namespace mwse
 
 			// Multiply the value by the count of the item.
 			if (multiplyByCount) {
-				TES3::InventoryNode* inventoryNode = reinterpret_cast<TES3::InventoryNode*>(tes3::getAttachedVarHolderNode(reference));
-				if (inventoryNode) {
-					weight *= inventoryNode->itemCount;
+				auto varNode = tes3::getAttachedVariableNode(reference);
+				if (varNode) {
+					weight *= varNode->count;
 				}
 			}
 
@@ -435,32 +435,31 @@ namespace mwse
 			return reinterpret_cast<TES3::BaseObject*>(base);
 		}
 
-		TES3::BaseObject* getFirstAttachmentByType(TES3::Reference* reference, TES3::AttachmentType attachmentType) {
-			if (reference == NULL || reference->attachments == NULL) {
-				return NULL;
-			}
-
-			TES3::Attachment<TES3::VariableHolderAttachment>* listNode = reinterpret_cast<TES3::Attachment<TES3::VariableHolderAttachment>*>(reference->attachments);
-			while (listNode) {
-				if (listNode->type == attachmentType) {
-					return reinterpret_cast<TES3::BaseObject*>(listNode->data);
-				}
-				listNode = listNode->next;
+		TES3::MACP* getAttachedMACPRecord(TES3::Reference* reference) {
+			auto attachment = getAttachment<TES3::MACPAttachment>(reference, TES3::AttachmentMACP);
+			if (attachment) {
+				return attachment->node;
 			}
 
 			return NULL;
 		}
 
-		TES3::MACP* getAttachedMACPRecord(TES3::Reference* reference) {
-			return reinterpret_cast<TES3::MACP*>(getFirstAttachmentByType(reference, TES3::AttachmentMACP));
+		TES3::VariableAttachmentNode* getAttachedVariableNode(TES3::Reference* reference) {
+			auto attachment = getAttachment<TES3::VariableAttachment>(reference, TES3::AttachmentVariables);
+			if (attachment) {
+				return attachment->node;
+			}
+
+			return NULL;
 		}
 
-		TES3::VariableHolderAttachment* getAttachedVarHolderNode(TES3::Reference* reference) {
-			return reinterpret_cast<TES3::VariableHolderAttachment*>(getFirstAttachmentByType(reference, TES3::AttachmentVariables));
-		}
+		TES3::LockAttachmentNode* getAttachedLockNode(TES3::Reference* reference) {
+			auto attachment = getAttachment<TES3::LockAttachment>(reference, TES3::AttachmentLock);
+			if (attachment) {
+				return attachment->node;
+			}
 
-		TES3::LockAttachment* getAttachedLockNode(TES3::Reference* reference) {
-			return reinterpret_cast<TES3::LockAttachment*>(getFirstAttachmentByType(reference, TES3::AttachmentLock));
+			return NULL;
 		}
 
 		TES3::Spell* getSpellRecordById(const std::string& id) {

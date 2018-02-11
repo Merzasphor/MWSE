@@ -96,11 +96,10 @@ namespace mwse
 			enchantment->charge = maxCharge;
 
 			// If there's charge data in an attached node, update it.
-			 TES3::VariableHolderAttachment* varNode = tes3::getAttachedVarHolderNode(reference);
+			auto varNode = tes3::getAttachedVariableNode(reference);
 			if (varNode) {
-				mwFloat& charge = *reinterpret_cast<mwFloat*>(&varNode->unknown_0x10);
-				if (charge >= maxCharge) {
-					charge = maxCharge;
+				if (varNode->currentCharge >= maxCharge) {
+					varNode->currentCharge = maxCharge;
 					success = true;
 				}
 			}

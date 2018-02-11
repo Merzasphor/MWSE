@@ -55,21 +55,21 @@ namespace mwse
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference) {
 			// Get the attached varnode as owner information.
-			TES3::OwnershipAttachment* ownerInfo = reinterpret_cast<TES3::OwnershipAttachment*>(tes3::getAttachedVarHolderNode(reference));
-			if (ownerInfo) {
-				TES3::BaseObject* owner = ownerInfo->owner;
+			auto varNode = tes3::getAttachedVariableNode(reference);
+			if (varNode) {
+				TES3::BaseObject* owner = varNode->owner;
 				if (owner) {
 					type = owner->objectType;
 					if (type == TES3::ObjectType::NPC) {
 						id = owner->objectID;
-						if (ownerInfo->rankVar.variable) {
-							rank = mwse::string::store::getOrCreate(reinterpret_cast<TES3::GlobalVariable*>(ownerInfo->rankVar.variable)->name);
+						if (varNode->rankVar.variable) {
+							rank = mwse::string::store::getOrCreate(varNode->rankVar.variable->name);
 						}
 					}
 					else if (type == TES3::ObjectType::Faction) {
 						TES3::Faction * faction = reinterpret_cast<TES3::Faction*>(owner);
 						id = faction->objectID;
-						rank = ownerInfo->rankVar.rank;
+						rank = varNode->rankVar.rank;
 					}
 					else {
 #if _DEBUG

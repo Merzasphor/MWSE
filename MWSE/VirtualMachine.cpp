@@ -206,7 +206,7 @@ TES3::Reference * VirtualMachine::getCurrentTarget()
 
 mwLong VirtualMachine::getLongVariable(int index)
 {
-	TES3::VariableHolderAttachment::Variables * localVariables = *(reinterpret_cast<TES3::VariableHolderAttachment::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (index < (getScript().longCount))	//maybe this should be '<' not '<=' ???
 		return localVariables->longVarValues[index];
 	//else error, the index is bigger than the number of variables
@@ -243,7 +243,7 @@ index will be filled with index of variable
 		call findScriptVariable;
 	}
 
-	TES3::VariableHolderAttachment::Variables * localVariables = *(reinterpret_cast<TES3::VariableHolderAttachment::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (*indexPtr < (getScript().longCount))
 		return localVariables->longVarValues[*indexPtr];
 	//else error, the index is bigger than the number of variables
@@ -251,7 +251,7 @@ index will be filled with index of variable
 
 mwLong VirtualMachine::getLongVariable(int index, TES3::Reference& reference)
 {
-	TES3::VariableHolderAttachment* attachment = tes3::getAttachedVarHolderNode(&reference);
+	auto attachment = tes3::getAttachedVariableNode(&reference);
 	if (attachment) {
 		return attachment->variables->longVarValues[index];
 	}
@@ -261,7 +261,7 @@ mwLong VirtualMachine::getLongVariable(int index, TES3::Reference& reference)
 
 void VirtualMachine::setLongVariable(int index, mwLong value)
 {
-	TES3::VariableHolderAttachment::Variables * localVariables = *(reinterpret_cast<TES3::VariableHolderAttachment::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (index < (getScript().longCount)) {
 		localVariables->longVarValues[index] = value;
 	}
@@ -284,7 +284,7 @@ void VirtualMachine::setLongVariable(const char *id, mwLong value)
 		call findScriptVariable;
 	}
 
-	TES3::VariableHolderAttachment::Variables * localVariables = *(reinterpret_cast<TES3::VariableHolderAttachment::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (*indexPtr < (getScript().longCount)) {
 		localVariables->longVarValues[*indexPtr] = value;
 	}
@@ -293,7 +293,7 @@ void VirtualMachine::setLongVariable(const char *id, mwLong value)
 
 void VirtualMachine::setLongVariable(int index, mwLong value, TES3::Reference &reference)
 {
-	TES3::VariableHolderAttachment* attachment = tes3::getAttachedVarHolderNode(&reference);
+	auto attachment = tes3::getAttachedVariableNode(&reference);
 	if (attachment) {
 		attachment->variables->longVarValues[index] = value;
 	}
@@ -302,7 +302,7 @@ void VirtualMachine::setLongVariable(int index, mwLong value, TES3::Reference &r
 
 mwShort VirtualMachine::getShortVariable(int index)
 {
-	TES3::VariableHolderAttachment::Variables * localVariables = *(reinterpret_cast<TES3::VariableHolderAttachment::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (index < (getScript().shortCount))
 		return localVariables->shortVarValues[index];
 	//else error, the index is bigger than the number of variables
@@ -324,7 +324,7 @@ mwShort VirtualMachine::getShortVariable(const char *id)
 		call findScriptVariable;
 	}
 
-	TES3::VariableHolderAttachment::Variables * localVariables = *(reinterpret_cast<TES3::VariableHolderAttachment::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (*indexPtr < (getScript().shortCount))
 		return localVariables->shortVarValues[*indexPtr];
 	//else error, the index is bigger than the number of variables
@@ -332,7 +332,7 @@ mwShort VirtualMachine::getShortVariable(const char *id)
 
 mwShort VirtualMachine::getShortVariable(int index, TES3::Reference &reference)
 {
-	TES3::VariableHolderAttachment* attachment = tes3::getAttachedVarHolderNode(&reference);
+	auto attachment = tes3::getAttachedVariableNode(&reference);
 	if (attachment) {
 		return attachment->variables->shortVarValues[index];
 	}
@@ -341,7 +341,7 @@ mwShort VirtualMachine::getShortVariable(int index, TES3::Reference &reference)
 
 void VirtualMachine::setShortVariable(int index, mwShort value)
 {
-	TES3::VariableHolderAttachment::Variables * localVariables = *(reinterpret_cast<TES3::VariableHolderAttachment::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (index < (getScript().shortCount))
 		localVariables->shortVarValues[index] = value;
 	//else error, the index is bigger than the number of variables
@@ -363,7 +363,7 @@ void VirtualMachine::setShortVariable(const char *id, mwShort value)
 		call findScriptVariable;
 	}
 
-	TES3::VariableHolderAttachment::Variables * localVariables = *(reinterpret_cast<TES3::VariableHolderAttachment::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (*indexPtr < (getScript().shortCount))
 		localVariables->shortVarValues[*indexPtr] = value;
 	//else error, the index is bigger than the number of variables
@@ -371,7 +371,7 @@ void VirtualMachine::setShortVariable(const char *id, mwShort value)
 
 void VirtualMachine::setShortVariable(int index, mwShort value, TES3::Reference &reference)
 {
-	TES3::VariableHolderAttachment* attachment = tes3::getAttachedVarHolderNode(&reference);
+	auto attachment = tes3::getAttachedVariableNode(&reference);
 	if (attachment) {
 		attachment->variables->shortVarValues[index] = value;
 	}
@@ -380,7 +380,7 @@ void VirtualMachine::setShortVariable(int index, mwShort value, TES3::Reference 
 
 mwFloat VirtualMachine::getFloatVariable(int index)
 {
-	TES3::VariableHolderAttachment::Variables * localVariables = *(reinterpret_cast<TES3::VariableHolderAttachment::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (index < (getScript().floatCount))
 		return localVariables->floatVarValues[index];
 	//else error, the index is bigger than the number of variables
@@ -402,7 +402,7 @@ mwFloat VirtualMachine::getFloatVariable(const char *id)
 		call findScriptVariable;
 	}
 
-	TES3::VariableHolderAttachment::Variables * localVariables = *(reinterpret_cast<TES3::VariableHolderAttachment::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (*indexPtr < (getScript().floatCount))
 		return localVariables->floatVarValues[*indexPtr];
 	//else error, the index is bigger than the number of variables
@@ -410,7 +410,7 @@ mwFloat VirtualMachine::getFloatVariable(const char *id)
 
 mwFloat VirtualMachine::getFloatVariable(int index, TES3::Reference &reference)
 {
-	TES3::VariableHolderAttachment* attachment = tes3::getAttachedVarHolderNode(&reference);
+	auto attachment = tes3::getAttachedVariableNode(&reference);
 	if (attachment) {
 		return attachment->variables->floatVarValues[index];
 	}
@@ -419,7 +419,7 @@ mwFloat VirtualMachine::getFloatVariable(int index, TES3::Reference &reference)
 
 void VirtualMachine::setFloatVariable(int index, mwFloat value)
 {
-	TES3::VariableHolderAttachment::Variables * localVariables = *(reinterpret_cast<TES3::VariableHolderAttachment::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (index < (getScript().floatCount))
 		localVariables->floatVarValues[index] = value;
 	//else error, the index is bigger than the number of variables
@@ -441,7 +441,7 @@ void VirtualMachine::setFloatVariable(const char *id, mwFloat value)
 		call findScriptVariable;
 	}
 
-	TES3::VariableHolderAttachment::Variables * localVariables = *(reinterpret_cast<TES3::VariableHolderAttachment::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (*indexPtr < (getScript().floatCount))
 		localVariables->floatVarValues[*indexPtr] = value;
 	//else error, the index is bigger than the number of variables
@@ -449,7 +449,7 @@ void VirtualMachine::setFloatVariable(const char *id, mwFloat value)
 
 void VirtualMachine::setFloatVariable(int index, mwFloat value, TES3::Reference &reference)
 {
-	TES3::VariableHolderAttachment* attachment = tes3::getAttachedVarHolderNode(&reference);
+	auto attachment = tes3::getAttachedVariableNode(&reference);
 	if (attachment) {
 		attachment->variables->floatVarValues[index] = value;
 	}

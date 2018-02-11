@@ -58,9 +58,9 @@ namespace mwse
 		}
 
 		// Get associated varnode, and the condition from it.
-		 TES3::VariableHolderAttachment* varNode = tes3::getAttachedVarHolderNode(reference);
+		auto varNode = tes3::getAttachedVariableNode(reference);
 		if (varNode != NULL) {
-			varNode->unknown_0x0C = value;
+			varNode->condition = value;
 		}
 		else {
 #if _DEBUG

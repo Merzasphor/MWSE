@@ -101,9 +101,9 @@ namespace mwse
 				//autocalc = enchantment->autocalc; // TODO: This field didn't seem valid. Find it.
 
 				// Get the current charge.
-				 TES3::VariableHolderAttachment* varNode = tes3::getAttachedVarHolderNode(reference);
+				auto varNode = tes3::getAttachedVariableNode(reference);
 				if (varNode) {
-					currCharge = *reinterpret_cast<mwFloat*>(&varNode->unknown_0x10);
+					currCharge = varNode->currentCharge;
 				}
 				else {
 					currCharge = maxCharge;
