@@ -88,6 +88,7 @@
     <ClCompile Include="ScriptUtil.cpp" />
     <ClCompile Include="StringUtil.cpp" />
     <ClCompile Include="TES3Util.cpp" />
+    <ClCompile Include="xActivate.cpp" />
     <ClCompile Include="xAddEffect.cpp" />
     <ClCompile Include="xAddItem.cpp" />
     <ClCompile Include="xAddSpell.cpp" />

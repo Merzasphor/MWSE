@@ -95,6 +95,8 @@ namespace mwse
 			return reinterpret_cast<T*>(attachment);
 		}
 
+		bool insertAttachment(TES3::Reference* reference, TES3::BaseAttachment* attachment);
+
 		TES3::MACP* getAttachedMACPRecord(TES3::Reference* reference);
 
 		TES3::VariableAttachmentNode* getAttachedVariableNode(TES3::Reference* reference);

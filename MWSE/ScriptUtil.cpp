@@ -170,6 +170,10 @@ namespace mwse
 			return result;
 		}
 
+		void Activate(TES3::Script* script, TES3::Reference* reference) {
+			RunOriginalOpCode(script, reference, OpCode::Activate);
+		}
+
 		void AddItem(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, mwLong count) {
 			// Cache previous script variables.
 			mwLong cachedVarIndex = getScriptVariableIndex();

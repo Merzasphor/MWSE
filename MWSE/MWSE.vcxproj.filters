@@ -980,6 +980,9 @@
     <ClCompile Include="xGetKeyBind.cpp">
       <Filter>Source Files\Functions\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="xActivate.cpp">
+      <Filter>Source Files\Functions\Actors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">

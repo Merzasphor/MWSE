@@ -87,6 +87,8 @@ namespace mwse
 		// Wrapper functions for original opcodes.
 		//
 
+		void Activate(TES3::Script* script, TES3::Reference* reference);
+
 		void AddItem(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, mwLong count);
 
 		void AddSpell(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate);

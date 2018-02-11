@@ -1845,6 +1845,14 @@ function
 	Opcode = 0x3C36
 end
 
+function
+	Name = xActivate
+	Options = MWSE
+	Return = Long
+	Param1 = Long
+	Opcode = 0x3C37
+end
+
 
 # MGE extensions
 function

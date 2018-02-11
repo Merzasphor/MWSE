@@ -477,6 +477,7 @@ namespace mwse {
 			_Pop = 0x380F,
 			_SetReference = 0x010C,
 
+			xActivate = 0x3C37,
 			xAddEffect = 0x3946,
 			xAddItem = 0x3C28,
 			xAddSpell = 0x3FA0,

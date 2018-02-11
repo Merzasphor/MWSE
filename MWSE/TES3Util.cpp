@@ -435,6 +435,33 @@ namespace mwse
 			return reinterpret_cast<TES3::BaseObject*>(base);
 		}
 
+		bool insertAttachment(TES3::Reference* reference, TES3::BaseAttachment* attachment) {
+			if (reference == NULL || attachment == NULL) {
+				return false;
+			}
+
+			// Make sure no attachment already exists of this type.
+			if (tes3::getAttachment<TES3::BaseAttachment>(reference, attachment->type) != NULL) {
+				return false;
+			}
+
+			// If there are no attachments, set this as the first.
+			if (reference->attachments == NULL) {
+				reference->attachments = attachment;
+				return true;
+			}
+
+			// Otherwise, get the last attachment.
+			TES3::BaseAttachment* lastAttachment = reference->attachments;
+			while (lastAttachment->next != NULL) {
+				lastAttachment = lastAttachment->next;
+			}
+
+			// Link the attachment.
+			lastAttachment->next = attachment;
+			return true;
+		}
+
 		TES3::MACP* getAttachedMACPRecord(TES3::Reference* reference) {
 			auto attachment = getAttachment<TES3::MACPAttachment>(reference, TES3::AttachmentMACP);
 			if (attachment) {
