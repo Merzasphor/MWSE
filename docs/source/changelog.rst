@@ -6,6 +6,11 @@ This page documents the various changes to the Morrowind Script Extender from ve
 
 More details about each function can be found under the New Functions page.
 
+In-Development
+-----------------------------------------------------------
+
+These changes are available when building from source, or from `downloading the latest beta <https://www.nexusmods.com/morrowind/mods/45468?tab=files>`_.
+
 Added
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -20,11 +25,6 @@ Fixed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - Reverted feature to get the current reference by calling xGetRef with a value of zero.
-
-In-Development
------------------------------------------------------------
-
-These changes are available when building from source, or from `downloading the latest beta <https://www.nexusmods.com/morrowind/mods/45468?tab=files>`_.
 
 v2.0.0
 -----------------------------------------------------------
