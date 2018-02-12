@@ -629,6 +629,7 @@ namespace mwse {
 			xModProgressSkill = 0x392E,
 			xModService = 0x3F06,
 			xMyCellID = 0x3F22,
+			xMyRef = 0x3C38,
 			xNextRef = 0x3C1B,
 			xNextStack = 0x3C2B,
 			xNot = 0x393D,
