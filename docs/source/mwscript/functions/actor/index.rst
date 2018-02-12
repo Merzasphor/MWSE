@@ -5,6 +5,7 @@ Actor Functions
 .. toctree::
    :maxdepth: 1
 
+   xActivate
    xAddSpell
    xAITravel
    xDrop
