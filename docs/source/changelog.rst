@@ -14,6 +14,7 @@ These changes are available when building from source, or from `downloading the 
 Added
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+- ``xMyRef``: Allows an object to get a reference to itself. Moved from ``xGetRef`` to its own function for better compatibility.
 - ``xActivate``: Allows the forced activation of one reference to another. This allows you to make the player or NPCs pick up objects, go through doors, and otherwise perform a normal activation. Unlike the vanilla ``Activate`` function, this one wil always work and accepts variable input.
 
 Changed
