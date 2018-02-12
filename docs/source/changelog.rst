@@ -6,6 +6,26 @@ This page documents the various changes to the Morrowind Script Extender from ve
 
 More details about each function can be found under the New Functions page.
 
+Added
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- ``xActivate``: Allows the forced activation of one reference to another. This allows you to make the player or NPCs pick up objects, go through doors, and otherwise perform a normal activation. Unlike the vanilla ``Activate`` function, this one wil always work and accepts variable input.
+
+Changed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Refactored TES3 type information under the hood to make development smoother.
+
+Fixed
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Reverted feature to get the current reference by calling xGetRef with a value of zero.
+
+In-Development
+-----------------------------------------------------------
+
+These changes are available when building from source, or from `downloading the latest beta <https://www.nexusmods.com/morrowind/mods/45468?tab=files>`_.
+
 v2.0.0
 -----------------------------------------------------------
 
