@@ -83,7 +83,7 @@ namespace mwse
 		TES3::Spell* spellListHead = spellsList->head;
 
 		// Create new spell.
-		TES3::Spell* newSpell = reinterpret_cast<TES3::Spell*>(tes3::malloc(sizeof(TES3::Spell)));
+		TES3::Spell* newSpell = tes3::malloc<TES3::Spell>();
 		memset(newSpell, 0, sizeof(TES3::Spell));
 		newSpell->vTable = spellListHead->vTable;
 		newSpell->objectType = TES3::ObjectType::Spell;
@@ -91,11 +91,11 @@ namespace mwse
 		newSpell->cost = 1;
 
 		// Set ID.
-		newSpell->objectID = reinterpret_cast<char*>(tes3::malloc(spellId.length() + 1));
+		newSpell->objectID = tes3::malloc<char>(spellId.length() + 1);
 		strcpy(newSpell->objectID, spellId.c_str());
 
 		// Set name.
-		newSpell->name = reinterpret_cast<char*>(tes3::malloc(spellName.length() + 1));
+		newSpell->name = tes3::malloc<char>(spellName.length() + 1);
 		strcpy(newSpell->name, spellName.c_str());
 
 		// Set effects.

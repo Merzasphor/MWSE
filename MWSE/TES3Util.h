@@ -139,6 +139,16 @@ namespace mwse
 		extern ExternalMalloc _malloc;
 		void* malloc(size_t size);
 
+		template <typename T>
+		T* malloc(size_t size) {
+			return reinterpret_cast<T*>(_malloc(size));
+		}
+
+		template <typename T>
+		T* malloc() {
+			return reinterpret_cast<T*>(_malloc(sizeof(T)));
+		}
+
 		typedef void(__cdecl *ExternalFree)(void*);
 		extern ExternalFree _free;
 		void free(void* address);
