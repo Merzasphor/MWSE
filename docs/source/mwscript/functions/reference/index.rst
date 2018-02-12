@@ -27,6 +27,7 @@ Reference Functions
    xGetValue
    xGetWeight
    xMyCellID
+   xMyRef
    xPosition
    xPositionCell
    xRefID
