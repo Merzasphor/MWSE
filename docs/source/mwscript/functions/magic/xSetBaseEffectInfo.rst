@@ -17,6 +17,6 @@ This function changes the properties of the effect for all magic that uses it. C
 
 E.g. if you have a spell with a Fire Damage effect and you change the Fire Damage **school** to Alteration, casting that spell will raise Alteration instead of Destruction. Likewise, if you clear the Spellmaking or Enchanting flags, Fire Damage will no longer be available at the respective crafter. Changes to the base **cost** take effect on any subsequent spell or magic item creation, but don't affect any spells or items already in the game.
 
-.. _`Magic Effect`: ../references.html#magic-effects
-.. _`Magic Effect Flags`: ../references.html#magic-effects-flags
-.. _`School`: ../references.html#schools
+.. _`Magic Effect`: ../../references.html#magic-effects
+.. _`Magic Effect Flags`: ../../references.html#magic-effects-flags
+.. _`School`: ../../references.html#schools

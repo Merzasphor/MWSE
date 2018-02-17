@@ -21,7 +21,7 @@ xSetEffectInfo
 
 Modifies an existing effect on the given spell or enchantment.
 
-.. _`Object Type`: ../references.html#object-types
-.. _`Effect Type`: ../references.html#magic-effects
-.. _`Attribute`: ../references.html#attributes
-.. _`Skill`: ../references.html#skills
+.. _`Object Type`: ../../references.html#object-types
+.. _`Effect Type`: ../../references.html#magic-effects
+.. _`Attribute`: ../../references.html#attributes
+.. _`Skill`: ../../references.html#skills

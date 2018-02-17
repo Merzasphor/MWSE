@@ -23,7 +23,7 @@ This function behaves similar to `xContentList`_, with the added convenience of 
 
 .. _`xContentList`: xContentList.html
 .. _`xEquipmentList`: xEquipmentList.html
-.. _`Object Type`: ../references.html#object-types
+.. _`Object Type`: ../../references.html#object-types
 
 Filter Mask
 -----------------------------

@@ -12,7 +12,7 @@ xNextRef
 
 `xNextRef`_ returns the next reference in the supplied reference's associated list.
 
-.. _`Object Type`: ../references.html#object-types
+.. _`Object Type`: ../../references.html#object-types
 .. _`xFirstItem`: xFirstItem.html
 .. _`xFirstNPC`: xFirstNPC.html
 .. _`xFirstStatic`: xFirstStatic.html

@@ -103,7 +103,7 @@ This example shows how to get the enchantment objectId for the currently equippe
 
 .. _`xContentList`: xContentList.html
 .. _`xContentListFiltered`: xContentListFiltered.html
-.. _`Object Tye`: ../references.html#object-types
-.. _`Armor Type`: ../references.html#armor-types
-.. _`Clothing Type`: ../references.html#clothing-types
-.. _`Weapon Type`: ../references.html#weapon-types
+.. _`Object Tye`: ../../references.html#object-types
+.. _`Armor Type`: ../../references.html#armor-types
+.. _`Clothing Type`: ../../references.html#clothing-types
+.. _`Weapon Type`: ../../references.html#weapon-types

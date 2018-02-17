@@ -20,4 +20,4 @@ The effect of deleting a spell referenced by other entities (player, npcs, traps
 Do not attempt to add a deleted spell with AddSpell. AddSpell will succeed, but leave the game in an
 indeterminate state. It's not yet clear why this happens, but I hope to fix it in the future.
 
-.. _`Object Type`: ../reference.html#object-types
+.. _`Object Type`: ../../reference.html#object-types

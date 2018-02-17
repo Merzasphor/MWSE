@@ -34,7 +34,7 @@ Example
   end
 
 
-.. _`Effect Type`: ../references.html#magic-effects
-.. _`Attribute Type`: ../references.html#attribute-types
-.. _`Skill Type`: ../references.html#skill-types
+.. _`Effect Type`: ../../references.html#magic-effects
+.. _`Attribute Type`: ../../references.html#attribute-types
+.. _`Skill Type`: ../../references.html#skill-types
 .. _`xSetIngredientEffect`: xSetIngredientEffect.html

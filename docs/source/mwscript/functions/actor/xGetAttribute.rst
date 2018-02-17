@@ -14,4 +14,4 @@ Returns the current value of the referenced object's attribute.
 
 .. note:: This function only supports the player and NPCs.
 
-.. _`Attribute`: ../references.html#attributes
+.. _`Attribute`: ../../references.html#attributes

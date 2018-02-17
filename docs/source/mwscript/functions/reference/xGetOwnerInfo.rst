@@ -291,7 +291,7 @@ Example: World entity destruction with ownership penalty
 
   end
 
-.. _`Object Type`: ../references.html#object-types
+.. _`Object Type`: ../../references.html#object-types
 .. _`xGetOwner`: xGetOwner.html
 .. _`xGetGlobal`: xGetGlobal.html
 .. _`xSetGlobal`: xSetGlobal.html

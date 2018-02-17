@@ -20,10 +20,10 @@ xAddEffect
 
 Adds a new effect to the given spell, enchantment, or potion.
 
-.. _`Object Type`: ../references.html#object-types
-.. _`Magic Effect`: ../references.html#magic-effects
-.. _`Attribute`: ../references.html#attributes
-.. _`Skill`: ../references.html#skills
+.. _`Object Type`: ../../references.html#object-types
+.. _`Magic Effect`: ../../references.html#magic-effects
+.. _`Attribute`: ../../references.html#attributes
+.. _`Skill`: ../../references.html#skills
 
 Example
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

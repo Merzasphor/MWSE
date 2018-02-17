@@ -16,4 +16,4 @@ Returns the properties of a magic effect.
 
 .. note:: This function only supports the player and NPCs.
 
-.. _`School`: ../references.html#schools
+.. _`School`: ../../references.html#schools

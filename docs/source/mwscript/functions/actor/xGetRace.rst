@@ -60,4 +60,4 @@ Index Type       Contents
 15    ``long``   Female luck.
 ===== ========== ==========================
 
-.. _`Skill`: ../references.html#skills
+.. _`Skill`: ../../references.html#skills

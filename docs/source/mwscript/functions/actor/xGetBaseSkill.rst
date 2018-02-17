@@ -14,4 +14,4 @@ Returns the base value of the referenced object's skill.
 
 .. note:: This function only supports the player and NPCs.
 
-.. _`Skill`: ../references.html#skills
+.. _`Skill`: ../../references.html#skills

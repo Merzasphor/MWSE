@@ -16,4 +16,4 @@ display issue as xSetLevel. It ignores the 100 max attribute limit.
 
 .. note:: This function only supports the player and NPCs.
 
-.. _`Attribute`: ../references.html#attributes
+.. _`Attribute`: ../../references.html#attributes

@@ -12,4 +12,4 @@ xRefType
 
 Returns the four byte object name of the calling reference.
 
-.. _`Object Type`: ../references.html#object-types
+.. _`Object Type`: ../../references.html#object-types

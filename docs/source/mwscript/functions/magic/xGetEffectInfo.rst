@@ -22,7 +22,7 @@ Returns the properties of an effect on the given alchemy item, spell, or enchant
 
 .. note:: On failure, **effectId** is set to -1.
 
-.. _`Object Type`: ../references.html#object-types
-.. _`Effect ID`: ../references.html#magic-effects
-.. _`Attribute`: ../references.html#attributes
-.. _`Skill`: ../references.html#skills
+.. _`Object Type`: ../../references.html#object-types
+.. _`Effect ID`: ../../references.html#magic-effects
+.. _`Attribute`: ../../references.html#attributes
+.. _`Skill`: ../../references.html#skills

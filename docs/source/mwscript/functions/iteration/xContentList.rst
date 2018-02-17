@@ -21,7 +21,7 @@ This function allows a script to iterate through the inventory of an actor or co
 .. tip:: If you are only interested in items of specific types, consider using `xContentListFiltered`_ instead.
 .. tip:: If you are only interested in items currently equipped by the actor, consider using `xEquipmentList`_.
 
-.. _`Object Type`: ../references.html#object-types
+.. _`Object Type`: ../../references.html#object-types
 .. _`xContentList`: xContentList.html
 .. _`xContentListFiltered`: xContentListFiltered.html
 .. _`xEquipmentList`: xEquipmentList.html

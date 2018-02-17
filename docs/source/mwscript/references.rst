@@ -23,7 +23,7 @@ ID  Armor Type
 10  Right Bracer
 === =============================================
 
-.. note:: `xEquipmentList <functions/xEquipmentList.html>`_'s returns this value as the subtype for armor objects. Note that the values are **increased by one** by that function.
+.. note:: `xEquipmentList <functions/iteration/xEquipmentList.html>`_'s returns this value as the subtype for armor objects. Note that the values are **increased by one** by that function.
 
 Attributes
 -----------------------------------------------------------
@@ -59,7 +59,7 @@ ID  Type
 9   Amulet
 === =============================================
 
-.. note:: `xEquipmentList <functions/xEquipmentList.html>`_'s returns this value as the subtype for clothing objects. Note that the values are **increased by one** by that function.
+.. note:: `xEquipmentList <functions/iteration/xEquipmentList.html>`_'s returns this value as the subtype for clothing objects. Note that the values are **increased by one** by that function.
 
 Control Types
 -----------------------------------------------------------
@@ -410,4 +410,4 @@ ID  Weapon Type
 13  Bolt
 === =============================================
 
-.. note:: `xEquipmentList <functions/xEquipmentList.html>`_'s returns this value as the subtype for weapon objects. Note that the values are **increased by one** by that function.
+.. note:: `xEquipmentList <functions/iteration/xEquipmentList.html>`_'s returns this value as the subtype for weapon objects. Note that the values are **increased by one** by that function.

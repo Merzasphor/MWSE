@@ -23,9 +23,9 @@ Changing the specialization will cause the target progress needed for skill up t
 skill-up function when changing specialization, in case the change would cause progress to reach 100.
 Actions can be set a negative value, in which case they'll remove progress, but progress will never go below zero.
 
-.. _`Skill`: ../references.html#skills
-.. _`Attribute`: ../references.html#attributes
-.. _`Specialization Type`: ../references.html#specialization-types
+.. _`Skill`: ../../references.html#skills
+.. _`Attribute`: ../../references.html#attributes
+.. _`Specialization Type`: ../../references.html#specialization-types
 
 
 setx attribute specialization action1 action2 action3 action4 to xGetSkillInfo 9

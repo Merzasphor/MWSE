@@ -14,7 +14,7 @@ xFirstItem
 
 .. note:: Scripts that intend to process *all* references in the loaded cells will need to independently handle the separate lists provided by `xFirstItem`_, `xFirstStatic`_, and `xFirstNPC`_.
 
-.. _`Object Type`: ../references.html#object-types
+.. _`Object Type`: ../../references.html#object-types
 .. _`xFirstItem`: xFirstItem.html
 .. _`xFirstNPC`: xFirstNPC.html
 .. _`xFirstStatic`: xFirstStatic.html

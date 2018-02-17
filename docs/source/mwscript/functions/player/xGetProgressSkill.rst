@@ -13,5 +13,5 @@ xGetProgressSkill
 
 Returns the skill progress for the given skill ID. Returned values will be zero if skill ID is invalid.
 
-.. _`Skill`: ../references.html#skills
+.. _`Skill`: ../../references.html#skills
 

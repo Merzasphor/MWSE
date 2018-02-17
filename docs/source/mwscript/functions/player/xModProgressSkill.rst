@@ -16,4 +16,4 @@ Modifies the current progress for the given skill. If the new progress value is 
 set to zero instead. Returns non-zero on success, zero on failure. This function will fail if
 skill ID is out of range.
 
-.. _`Skill`: ../references.html#skills
+.. _`Skill`: ../../references.html#skills

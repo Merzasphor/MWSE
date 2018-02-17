@@ -17,9 +17,9 @@ This function allows scripts to modify the effects of an ingredient programmatic
 
 To instead retrieve these values, use  `xGetIngredientEffect`_.
 
-.. _`Effect Type`: ../references.html#magic-effects
-.. _`Attribute Type`: ../references.html#attribute-types
-.. _`Skill Type`: ../references.html#skill-types
+.. _`Effect Type`: ../../references.html#magic-effects
+.. _`Attribute Type`: ../../references.html#attribute-types
+.. _`Skill Type`: ../../references.html#skill-types
 .. _`xGetIngredientEffect`: xGetIngredientEffect.html
 
 
