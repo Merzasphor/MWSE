@@ -20,7 +20,6 @@
 
 #pragma once
 
-#include "ObjectTypes.h"
 #include "TES3Script.h"
 #include "TES3Reference.h"
 #include "mwAdapter.h"
@@ -48,44 +47,44 @@ namespace mwse
 		virtual TES3::BaseObject * getTemplate(const char *id);
 
 		//local variables, methods to access local variables
-		virtual mwLong getLongVariable(int index);							//by index
-		virtual mwLong getLongVariable(const char *id);						//by name
-		virtual mwLong getLongVariable(int index, TES3::Reference& reference);	//foreign
-		virtual void setLongVariable(int index, mwLong value);
-		virtual void setLongVariable(const char *id, mwLong value);
-		virtual void setLongVariable(int index, mwLong value , TES3::Reference &reference);
+		virtual long getLongVariable(int index);							//by index
+		virtual long getLongVariable(const char *id);						//by name
+		virtual long getLongVariable(int index, TES3::Reference& reference);	//foreign
+		virtual void setLongVariable(int index, long value);
+		virtual void setLongVariable(const char *id, long value);
+		virtual void setLongVariable(int index, long value , TES3::Reference &reference);
 
-		virtual mwShort getShortVariable(int index);
-		virtual mwShort getShortVariable(const char *id);
-		virtual mwShort getShortVariable(int index, TES3::Reference& reference);
-		virtual void setShortVariable(int index, mwShort value);
-		virtual void setShortVariable(const char *id, mwShort value);
-		virtual void setShortVariable(int index, mwShort value , TES3::Reference &reference);
+		virtual short getShortVariable(int index);
+		virtual short getShortVariable(const char *id);
+		virtual short getShortVariable(int index, TES3::Reference& reference);
+		virtual void setShortVariable(int index, short value);
+		virtual void setShortVariable(const char *id, short value);
+		virtual void setShortVariable(int index, short value , TES3::Reference &reference);
 
-		virtual mwFloat getFloatVariable(int index);
-		virtual mwFloat getFloatVariable(const char *id);
-		virtual mwFloat getFloatVariable(int index, TES3::Reference& reference);
-		virtual void setFloatVariable(int index, mwFloat value);
-		virtual void setFloatVariable(const char *id, mwFloat value);
-		virtual void setFloatVariable(int index, mwFloat value , TES3::Reference& reference);
+		virtual float getFloatVariable(int index);
+		virtual float getFloatVariable(const char *id);
+		virtual float getFloatVariable(int index, TES3::Reference& reference);
+		virtual void setFloatVariable(int index, float value);
+		virtual void setFloatVariable(const char *id, float value);
+		virtual void setFloatVariable(int index, float value , TES3::Reference& reference);
 
 		//global variables, methods to access global variables
-		virtual mwLong getLongGlobal(const char *id);
-		virtual void setLongGlobal(const char *id, mwLong value);
+		virtual long getLongGlobal(const char *id);
+		virtual void setLongGlobal(const char *id, long value);
 		
-		virtual mwShort getShortGlobal(const char *id);
-		virtual void setShortGlobal(const char *id, mwShort value);
+		virtual short getShortGlobal(const char *id);
+		virtual void setShortGlobal(const char *id, short value);
 
-		virtual mwFloat getFloatGlobal(const char *id);
-		virtual void setFloatGlobal(const char *id, mwFloat value);
+		virtual float getFloatGlobal(const char *id);
+		virtual void setFloatGlobal(const char *id, float value);
 
 		//getParameters
 		virtual char getByteValue(bool peek = false);
-		virtual mwShort getShortValue(bool peek = false);
-		virtual mwLong getLongValue(bool peek =false);
-		virtual mwFloat getFloatValue(bool peek = false);
+		virtual short getShortValue(bool peek = false);
+		virtual long getLongValue(bool peek =false);
+		virtual float getFloatValue(bool peek = false);
 
-		virtual mwseString_t& getString(mwLong fromStack);	//only ment for stack-based syntax!, parameter-based syntax functions should use getStringParameter!!!
+		virtual mwseString& getString(long fromStack);	//only ment for stack-based syntax!, parameter-based syntax functions should use getStringParameter!!!
 
 
 		// Debug method to print information about the current script.

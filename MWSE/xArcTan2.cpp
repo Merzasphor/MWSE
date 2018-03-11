@@ -44,8 +44,8 @@ namespace mwse
 
 	float xArcTan2::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwFloat param1 = mwse::Stack::getInstance().popFloat();
-		mwFloat param2 = mwse::Stack::getInstance().popFloat();
+		float param1 = mwse::Stack::getInstance().popFloat();
+		float param2 = mwse::Stack::getInstance().popFloat();
 
 		mwse::Stack::getInstance().pushFloat(std::atan2(param1, param2));
 

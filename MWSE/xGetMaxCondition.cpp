@@ -23,12 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-
-#include "TES3Lockpick.h"
-#include "TES3Probe.h"
-#include "TES3Armor.h"
-#include "TES3Repair.h"
-#include "TES3Weapon.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -60,35 +55,9 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwLong value = 0;
-
 		// Get the max condition.
-		TES3::ObjectType::ObjectType recordType = reference->objectPointer->objectType;
-		if (recordType == TES3::ObjectType::Lockpick) {
-			TES3::Lockpick* lockpick = reinterpret_cast<TES3::Lockpick*>(reference->objectPointer);
-			value = lockpick->maxCondition;
-		}
-		else if (recordType == TES3::ObjectType::Probe) {
-			TES3::Probe* probe = reinterpret_cast<TES3::Probe*>(reference->objectPointer);
-			value = probe->maxCondition;
-		}
-		else if (recordType == TES3::ObjectType::Armor) {
-			TES3::Armor* armor = reinterpret_cast<TES3::Armor*>(reference->objectPointer);
-			value = armor->maxCondition;
-		}
-		else if (recordType == TES3::ObjectType::Repair) {
-			TES3::Repair* repair = reinterpret_cast<TES3::Repair*>(reference->objectPointer);
-			value = repair->maxCondition;
-		}
-		else if (recordType == TES3::ObjectType::Weapon) {
-			TES3::Weapon* weapon = reinterpret_cast<TES3::Weapon*>(reference->objectPointer);
-			value = weapon->maxCondition;
-		}
-		else {
-#if _DEBUG
-			mwse::log::getLog() << "xGetMaxCondition: Could not fall back to max condition of given type, " << recordType << "." << std::endl;
-#endif
-		}
+		TES3::BaseObject* object = reference->baseObject;
+		long value = object->vTable->getDurability(object);
 
 		mwse::Stack::getInstance().pushLong(value);
 

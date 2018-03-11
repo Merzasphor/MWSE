@@ -47,8 +47,8 @@ namespace mwse
 
 	float xStringMatch::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwseString_t& string = virtualMachine.getString(Stack::getInstance().popLong());
-		mwseString_t& pattern = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString& string = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString& pattern = virtualMachine.getString(Stack::getInstance().popLong());
 
 		bool result = false;
 		try {

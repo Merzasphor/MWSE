@@ -29,9 +29,9 @@
 #include "StringUtil.h"
 #include "Stack.h"
 
-#include "TES3CellMaster.h"
+#include "TES3DataHandler.h"
 #include "TES3GlobalVariable.h"
-#include "TES3ViewMaster.h"
+#include "TES3Game.h"
 
 using namespace mwse;
 
@@ -109,7 +109,7 @@ TES3::Script& VirtualMachine::getScript()
 
 TES3::BaseObject * VirtualMachine::getTemplate(const char *id)
 {
-	TES3::RecordLists* recordLists = tes3::getCellMaster()->recordLists;
+	TES3::RecordLists* recordLists = tes3::getDataHandler()->recordLists;
 
 	TES3::BaseObject * foundTemplate = NULL;
 
@@ -147,7 +147,7 @@ TES3::Reference * VirtualMachine::getReference(const char *id)
 		static int getMACP = TES3_FUNC_GET_MACP;
 		_asm
 		{
-			mov ecx, dword ptr ds : [TES3_MASTER_IMAGE];
+			mov ecx, dword ptr ds : [TES3_WORLD_CONTROLLER_IMAGE];
 			call getMACP;
 			mov edx, [eax + 0x14];
 			mov returnreference, edx;
@@ -159,7 +159,7 @@ TES3::Reference * VirtualMachine::getReference(const char *id)
 		//fixupinstance
 		_asm
 		{
-			mov ecx, dword ptr ds : [TES3_MASTERCELL_IMAGE];
+			mov ecx, dword ptr ds : [TES3_DATA_HANDLER_IMAGE];
 			mov ecx, [ecx];
 			push TES3_SECONDOBJECT_IMAGE;
 			call fixupInstanceFunction;
@@ -173,7 +173,7 @@ TES3::Reference * VirtualMachine::getReference(const char *id)
 
 void VirtualMachine::setReference(TES3::Reference *reference)
 {
-	if (reference == NULL || reference->objectPointer == NULL) {
+	if (reference == NULL || reference->baseObject == NULL) {
 #if _DEBUG
 		mwse::log::getLog() << __FUNCTION__ << ": Attempted to set to invalid reference." << std::endl;
 #endif
@@ -191,7 +191,7 @@ void VirtualMachine::setReference(TES3::Reference *reference)
 	*currentReference = reference;
 
 	void ** currentTemplate = reinterpret_cast<void**>(TES3_SCRIPTTARGETTEMPL_IMAGE);
-	*currentTemplate = reference->objectPointer;
+	*currentTemplate = reference->baseObject;
 
 	unsigned char * currentInref = reinterpret_cast<unsigned char*>(context.ebp + 0x23);	//inref apparently
 	*currentInref = inref;
@@ -201,18 +201,18 @@ void VirtualMachine::setReference(TES3::Reference *reference)
 
 TES3::Reference * VirtualMachine::getCurrentTarget()
 {
-	return tes3::getViewMaster()->target;
+	return tes3::getGame()->playerTarget;
 }
 
-mwLong VirtualMachine::getLongVariable(int index)
+long VirtualMachine::getLongVariable(int index)
 {
-	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::ScriptVariables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (index < (getScript().longCount))	//maybe this should be '<' not '<=' ???
 		return localVariables->longVarValues[index];
 	//else error, the index is bigger than the number of variables
 }
 
-mwLong VirtualMachine::getLongVariable(const char *id)
+long VirtualMachine::getLongVariable(const char *id)
 {
 	/*
 
@@ -243,32 +243,32 @@ index will be filled with index of variable
 		call findScriptVariable;
 	}
 
-	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::ScriptVariables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (*indexPtr < (getScript().longCount))
 		return localVariables->longVarValues[*indexPtr];
 	//else error, the index is bigger than the number of variables
 }
 
-mwLong VirtualMachine::getLongVariable(int index, TES3::Reference& reference)
+long VirtualMachine::getLongVariable(int index, TES3::Reference& reference)
 {
-	auto attachment = tes3::getAttachedVariableNode(&reference);
+	auto attachment = tes3::getAttachedItemDataNode(&reference);
 	if (attachment) {
-		return attachment->variables->longVarValues[index];
+		return attachment->scriptData->longVarValues[index];
 	}
 
 	return 0;
 }
 
-void VirtualMachine::setLongVariable(int index, mwLong value)
+void VirtualMachine::setLongVariable(int index, long value)
 {
-	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::ScriptVariables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (index < (getScript().longCount)) {
 		localVariables->longVarValues[index] = value;
 	}
 	//else error, the index is bigger than the number of variables
 }
 
-void VirtualMachine::setLongVariable(const char *id, mwLong value)
+void VirtualMachine::setLongVariable(const char *id, long value)
 {
 	long * indexPtr;
 
@@ -284,31 +284,31 @@ void VirtualMachine::setLongVariable(const char *id, mwLong value)
 		call findScriptVariable;
 	}
 
-	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::ScriptVariables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (*indexPtr < (getScript().longCount)) {
 		localVariables->longVarValues[*indexPtr] = value;
 	}
 	//else error, the index is bigger than the number of variables
 }
 
-void VirtualMachine::setLongVariable(int index, mwLong value, TES3::Reference &reference)
+void VirtualMachine::setLongVariable(int index, long value, TES3::Reference &reference)
 {
-	auto attachment = tes3::getAttachedVariableNode(&reference);
+	auto attachment = tes3::getAttachedItemDataNode(&reference);
 	if (attachment) {
-		attachment->variables->longVarValues[index] = value;
+		attachment->scriptData->longVarValues[index] = value;
 	}
 	//else throw error
 }
 
-mwShort VirtualMachine::getShortVariable(int index)
+short VirtualMachine::getShortVariable(int index)
 {
-	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::ScriptVariables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (index < (getScript().shortCount))
 		return localVariables->shortVarValues[index];
 	//else error, the index is bigger than the number of variables
 }
 
-mwShort VirtualMachine::getShortVariable(const char *id)
+short VirtualMachine::getShortVariable(const char *id)
 {
 	long * indexPtr;
 
@@ -324,30 +324,30 @@ mwShort VirtualMachine::getShortVariable(const char *id)
 		call findScriptVariable;
 	}
 
-	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::ScriptVariables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (*indexPtr < (getScript().shortCount))
 		return localVariables->shortVarValues[*indexPtr];
 	//else error, the index is bigger than the number of variables
 }
 
-mwShort VirtualMachine::getShortVariable(int index, TES3::Reference &reference)
+short VirtualMachine::getShortVariable(int index, TES3::Reference &reference)
 {
-	auto attachment = tes3::getAttachedVariableNode(&reference);
+	auto attachment = tes3::getAttachedItemDataNode(&reference);
 	if (attachment) {
-		return attachment->variables->shortVarValues[index];
+		return attachment->scriptData->shortVarValues[index];
 	}
 	//else throw error
 }
 
-void VirtualMachine::setShortVariable(int index, mwShort value)
+void VirtualMachine::setShortVariable(int index, short value)
 {
-	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::ScriptVariables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (index < (getScript().shortCount))
 		localVariables->shortVarValues[index] = value;
 	//else error, the index is bigger than the number of variables
 }
 
-void VirtualMachine::setShortVariable(const char *id, mwShort value)
+void VirtualMachine::setShortVariable(const char *id, short value)
 {
 	long * indexPtr;
 
@@ -363,30 +363,30 @@ void VirtualMachine::setShortVariable(const char *id, mwShort value)
 		call findScriptVariable;
 	}
 
-	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::ScriptVariables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (*indexPtr < (getScript().shortCount))
 		localVariables->shortVarValues[*indexPtr] = value;
 	//else error, the index is bigger than the number of variables
 }
 
-void VirtualMachine::setShortVariable(int index, mwShort value, TES3::Reference &reference)
+void VirtualMachine::setShortVariable(int index, short value, TES3::Reference &reference)
 {
-	auto attachment = tes3::getAttachedVariableNode(&reference);
+	auto attachment = tes3::getAttachedItemDataNode(&reference);
 	if (attachment) {
-		attachment->variables->shortVarValues[index] = value;
+		attachment->scriptData->shortVarValues[index] = value;
 	}
 	//else throw error
 }
 
-mwFloat VirtualMachine::getFloatVariable(int index)
+float VirtualMachine::getFloatVariable(int index)
 {
-	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::ScriptVariables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (index < (getScript().floatCount))
 		return localVariables->floatVarValues[index];
 	//else error, the index is bigger than the number of variables
 }
 
-mwFloat VirtualMachine::getFloatVariable(const char *id)
+float VirtualMachine::getFloatVariable(const char *id)
 {
 	long * indexPtr;
 
@@ -402,30 +402,30 @@ mwFloat VirtualMachine::getFloatVariable(const char *id)
 		call findScriptVariable;
 	}
 
-	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::ScriptVariables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (*indexPtr < (getScript().floatCount))
 		return localVariables->floatVarValues[*indexPtr];
 	//else error, the index is bigger than the number of variables
 }
 
-mwFloat VirtualMachine::getFloatVariable(int index, TES3::Reference &reference)
+float VirtualMachine::getFloatVariable(int index, TES3::Reference &reference)
 {
-	auto attachment = tes3::getAttachedVariableNode(&reference);
+	auto attachment = tes3::getAttachedItemDataNode(&reference);
 	if (attachment) {
-		return attachment->variables->floatVarValues[index];
+		return attachment->scriptData->floatVarValues[index];
 	}
 	//else throw error
 }
 
-void VirtualMachine::setFloatVariable(int index, mwFloat value)
+void VirtualMachine::setFloatVariable(int index, float value)
 {
-	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::ScriptVariables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (index < (getScript().floatCount))
 		localVariables->floatVarValues[index] = value;
 	//else error, the index is bigger than the number of variables
 }
 
-void VirtualMachine::setFloatVariable(const char *id, mwFloat value)
+void VirtualMachine::setFloatVariable(const char *id, float value)
 {
 	long * indexPtr;
 
@@ -441,25 +441,25 @@ void VirtualMachine::setFloatVariable(const char *id, mwFloat value)
 		call findScriptVariable;
 	}
 
-	auto localVariables = *(reinterpret_cast<TES3::VariableAttachmentNode::Variables**>(TES3_LOCALVARIABLES_IMAGE));
+	auto localVariables = *(reinterpret_cast<TES3::ScriptVariables**>(TES3_LOCALVARIABLES_IMAGE));
 	if (*indexPtr < (getScript().floatCount))
 		localVariables->floatVarValues[*indexPtr] = value;
 	//else error, the index is bigger than the number of variables
 }
 
-void VirtualMachine::setFloatVariable(int index, mwFloat value, TES3::Reference &reference)
+void VirtualMachine::setFloatVariable(int index, float value, TES3::Reference &reference)
 {
-	auto attachment = tes3::getAttachedVariableNode(&reference);
+	auto attachment = tes3::getAttachedItemDataNode(&reference);
 	if (attachment) {
-		attachment->variables->floatVarValues[index] = value;
+		attachment->scriptData->floatVarValues[index] = value;
 	}
 	//else throw error
 }
 
-mwLong VirtualMachine::getLongGlobal(const char *id)
+long VirtualMachine::getLongGlobal(const char *id)
 {
 	/*
-	masterCellImage = TES3_MASTERCELL_IMAGE
+	masterCellImage = TES3_DATA_HANDLER_IMAGE
 findGLOB = TES3_FUNC_FIND_GLOBAL
 
 mov eax, masterCellImage
@@ -473,7 +473,7 @@ return = EAX = GLOBRecord
 	TES3::GlobalVariable * foundRecord;
 	__asm
 	{
-		mov ecx, dword ptr ds : [TES3_MASTERCELL_IMAGE]; //masterCellImage
+		mov ecx, dword ptr ds : [TES3_DATA_HANDLER_IMAGE]; //masterCellImage
 		push id;
 		call findGLOB;
 		mov foundRecord, eax;
@@ -481,20 +481,20 @@ return = EAX = GLOBRecord
 
 	//at this point we have the global we are looking for in 'foundRecord'
 
-	if (foundRecord->type == 'l')
+	if (foundRecord->valueType == 'l')
 	{
-		return static_cast<mwLong>(foundRecord->data);
+		return static_cast<long>(foundRecord->value);
 	}
 	//else error out!
 }
 
-void VirtualMachine::setLongGlobal(const char *id, mwLong value)
+void VirtualMachine::setLongGlobal(const char *id, long value)
 {
 	static int findGLOB = TES3_FUNC_FIND_GLOBAL;
 	TES3::GlobalVariable * foundRecord;
 	__asm
 	{
-		mov ecx, dword ptr ds : [TES3_MASTERCELL_IMAGE];
+		mov ecx, dword ptr ds : [TES3_DATA_HANDLER_IMAGE];
 		push id;
 		call findGLOB;
 		mov foundRecord, eax;
@@ -502,20 +502,20 @@ void VirtualMachine::setLongGlobal(const char *id, mwLong value)
 
 	//at this point we have the global we are looking for in 'foundRecord'
 
-	if (foundRecord->type == 'l')
+	if (foundRecord->valueType == 'l')
 	{
-		foundRecord->data = static_cast<mwFloat>(value);
+		foundRecord->value = static_cast<float>(value);
 	}
 	//else error out!
 }
 
-mwShort VirtualMachine::getShortGlobal(const char *id)
+short VirtualMachine::getShortGlobal(const char *id)
 {
 	static int findGLOB = TES3_FUNC_FIND_GLOBAL;
 	TES3::GlobalVariable * foundRecord;
 	__asm
 	{
-		mov ecx, dword ptr ds : [TES3_MASTERCELL_IMAGE];
+		mov ecx, dword ptr ds : [TES3_DATA_HANDLER_IMAGE];
 		push id;
 		call findGLOB;
 		mov foundRecord, eax;
@@ -523,20 +523,20 @@ mwShort VirtualMachine::getShortGlobal(const char *id)
 
 	//at this point we have the global we are looking for in 'foundRecord'
 
-	if (foundRecord->type == 's')
+	if (foundRecord->valueType == 's')
 	{
-		return static_cast<mwShort>(foundRecord->data);
+		return static_cast<short>(foundRecord->value);
 	}
 	//else error out!
 }
 
-void VirtualMachine::setShortGlobal(const char *id, mwShort value)
+void VirtualMachine::setShortGlobal(const char *id, short value)
 {
 	static int findGLOB = TES3_FUNC_FIND_GLOBAL;
 	TES3::GlobalVariable * foundRecord;
 	__asm
 	{
-		mov ecx, dword ptr ds : [TES3_MASTERCELL_IMAGE];
+		mov ecx, dword ptr ds : [TES3_DATA_HANDLER_IMAGE];
 		push id;
 		call findGLOB;
 		mov foundRecord, eax;
@@ -544,20 +544,20 @@ void VirtualMachine::setShortGlobal(const char *id, mwShort value)
 
 	//at this point we have the global we are looking for in 'foundRecord'
 
-	if (foundRecord->type == 's')
+	if (foundRecord->valueType == 's')
 	{
-		foundRecord->data = static_cast<mwFloat>(value);
+		foundRecord->value = static_cast<float>(value);
 	}
 	//else error out!
 }
 
-mwFloat VirtualMachine::getFloatGlobal(const char *id)
+float VirtualMachine::getFloatGlobal(const char *id)
 {
 	static int findGLOB = TES3_FUNC_FIND_GLOBAL;
 	TES3::GlobalVariable * foundRecord;
 	__asm
 	{
-		mov ecx, dword ptr ds : [TES3_MASTERCELL_IMAGE];
+		mov ecx, dword ptr ds : [TES3_DATA_HANDLER_IMAGE];
 		push id;
 		call findGLOB;
 		mov foundRecord, eax;
@@ -565,20 +565,20 @@ mwFloat VirtualMachine::getFloatGlobal(const char *id)
 
 	//at this point we have the global we are looking for in 'foundRecord'
 
-	if (foundRecord->type == 'f')
+	if (foundRecord->valueType == 'f')
 	{
-		return foundRecord->data;
+		return foundRecord->value;
 	}
 	//else error out!
 }
 
-void VirtualMachine::setFloatGlobal(const char *id, mwFloat value)
+void VirtualMachine::setFloatGlobal(const char *id, float value)
 {
 	static int findGLOB = TES3_FUNC_FIND_GLOBAL;
 	TES3::GlobalVariable * foundRecord;
 	__asm
 	{
-		mov ecx, dword ptr ds : [TES3_MASTERCELL_IMAGE];
+		mov ecx, dword ptr ds : [TES3_DATA_HANDLER_IMAGE];
 		push id;
 		call findGLOB;
 		mov foundRecord, eax;
@@ -586,9 +586,9 @@ void VirtualMachine::setFloatGlobal(const char *id, mwFloat value)
 
 	//at this point we have the global we are looking for in 'foundRecord'
 
-	if (foundRecord->type == 'f')
+	if (foundRecord->valueType == 'f')
 	{
-		foundRecord->data = value;
+		foundRecord->value = value;
 	}
 	//else error out!
 }
@@ -611,7 +611,7 @@ char VirtualMachine::getByteValue(bool peek)
 	return returnData;
 }
 
-mwShort VirtualMachine::getShortValue(bool peek)
+short VirtualMachine::getShortValue(bool peek)
 {
 	int * scriptIP = reinterpret_cast<int*>(TES3_IP_IMAGE);
 
@@ -619,17 +619,17 @@ mwShort VirtualMachine::getShortValue(bool peek)
 	void * scriptstream = script.machineCode;
 	scriptstream = reinterpret_cast<void*>(reinterpret_cast<char*>(scriptstream) + *scriptIP);
 
-	mwShort returnData = *(reinterpret_cast<mwShort*>(scriptstream));	//<-- change char here! (twice)
+	short returnData = *(reinterpret_cast<short*>(scriptstream));	//<-- change char here! (twice)
 
 	if (!peek)
 	{
-		*scriptIP += sizeof(mwShort);	//<-- change char here
+		*scriptIP += sizeof(short);	//<-- change char here
 	}
 
 	return returnData;
 }
 
-mwLong VirtualMachine::getLongValue(bool peek)
+long VirtualMachine::getLongValue(bool peek)
 {
 	int * scriptIP = reinterpret_cast<int*>(TES3_IP_IMAGE);
 
@@ -637,17 +637,17 @@ mwLong VirtualMachine::getLongValue(bool peek)
 	void * scriptstream = script.machineCode;
 	scriptstream = reinterpret_cast<void*>(reinterpret_cast<char*>(scriptstream) + *scriptIP);
 
-	mwLong returnData = *(reinterpret_cast<mwLong*>(scriptstream));	//<-- change char here! (twice)
+	long returnData = *(reinterpret_cast<long*>(scriptstream));	//<-- change char here! (twice)
 
 	if (!peek)
 	{
-		*scriptIP += sizeof(mwLong);	//<-- change char here
+		*scriptIP += sizeof(long);	//<-- change char here
 	}
 
 	return returnData;
 }
 
-mwFloat VirtualMachine::getFloatValue(bool peek)
+float VirtualMachine::getFloatValue(bool peek)
 {
 	int * scriptIP = reinterpret_cast<int*>(TES3_IP_IMAGE);
 
@@ -655,17 +655,17 @@ mwFloat VirtualMachine::getFloatValue(bool peek)
 	void * scriptstream = script.machineCode;
 	scriptstream = reinterpret_cast<void*>(reinterpret_cast<char*>(scriptstream) + *scriptIP);
 
-	mwFloat returnData = *(reinterpret_cast<mwFloat*>(scriptstream));	//<-- change char here! (twice)
+	float returnData = *(reinterpret_cast<float*>(scriptstream));	//<-- change char here! (twice)
 
 	if (!peek)
 	{
-		*scriptIP += sizeof(mwFloat);	//<-- change char here
+		*scriptIP += sizeof(float);	//<-- change char here
 	}
 
 	return returnData;
 }
 
-mwseString_t& VirtualMachine::getString(mwLong fromStack)	//ask grant, need a '*' or a '&' here?? (and in the header files)
+mwseString& VirtualMachine::getString(long fromStack)	//ask grant, need a '*' or a '&' here?? (and in the header files)
 {
 	// Invalid ID. Return an empty string.
 	if (fromStack == 0x0)

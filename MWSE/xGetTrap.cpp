@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -44,9 +45,9 @@ namespace mwse
 
 	float xGetTrap::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwString id = NULL;
-		mwString name = NULL;
-		mwShort cost = 0;
+		char* id = NULL;
+		char* name = NULL;
+		short cost = 0;
 
 		// Get reference to what we're finding the trap of.
 		TES3::Reference* reference = virtualMachine.getReference();
@@ -60,7 +61,7 @@ namespace mwse
 			return 0.0f;
 		}
 
-		TES3::ObjectType::ObjectType type = reference->objectPointer->objectType;
+		TES3::ObjectType::ObjectType type = reference->baseObject->objectType;
 		if (type == TES3::ObjectType::Container || type == TES3::ObjectType::Door) {
 			auto lockNode = tes3::getAttachedLockNode(reference);
 			if (lockNode) {
@@ -68,7 +69,7 @@ namespace mwse
 				if (trapSpell) {
 					id = trapSpell->objectID;
 					name = trapSpell->name;
-					cost = trapSpell->cost;
+					cost = trapSpell->magickaCost;
 				}
 			}
 			else {

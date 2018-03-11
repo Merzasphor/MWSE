@@ -49,8 +49,8 @@ namespace mwse
 	float xDrop::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
-		mwLong count = mwse::Stack::getInstance().popLong();
+		mwseString& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		long count = mwse::Stack::getInstance().popLong();
 
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();

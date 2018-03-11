@@ -49,7 +49,7 @@ namespace mwse
 	float xPlace::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference("player");
@@ -77,7 +77,7 @@ namespace mwse
 
 		// Push back the reference we created.
 		TES3::Reference* createdReference = mwse::mwscript::lastCreatedPlaceAtPCReference;
-		mwse::Stack::getInstance().pushLong((mwLong)createdReference);
+		mwse::Stack::getInstance().pushLong((long)createdReference);
 
 		return 0.0f;
 	}

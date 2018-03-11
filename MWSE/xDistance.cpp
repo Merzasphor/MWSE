@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include <cmath>
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -64,10 +65,10 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwFloat dx = targetref->x - thisref->x;
-		mwFloat dy = targetref->y - thisref->y;
-		mwFloat dz = targetref->z - thisref->z;
-		mwFloat xDistance = std::sqrt(dx*dx + dy*dy + dz*dz);
+		float dx = targetref->position.x - thisref->position.x;
+		float dy = targetref->position.y - thisref->position.y;
+		float dz = targetref->position.z - thisref->position.z;
+		float xDistance = std::sqrt(dx*dx + dy*dy + dz*dz);
 
 		mwse::Stack::getInstance().pushFloat(xDistance);
 

@@ -48,16 +48,16 @@ namespace mwse
 	float xSetEffectInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwLong targetType = Stack::getInstance().popLong();
-		mwseString_t& targetId = virtualMachine.getString(Stack::getInstance().popLong());
-		mwLong effectIndex = Stack::getInstance().popLong();
-		mwLong effectId = Stack::getInstance().popLong();
-		mwLong effectSkillAttributeId = Stack::getInstance().popLong();
-		mwLong effectRange = Stack::getInstance().popLong();
-		mwLong effectArea = Stack::getInstance().popLong();
-		mwLong effectDuration = Stack::getInstance().popLong();
-		mwLong effectMagMin = Stack::getInstance().popLong();
-		mwLong effectMagMax = Stack::getInstance().popLong();
+		long targetType = Stack::getInstance().popLong();
+		mwseString& targetId = virtualMachine.getString(Stack::getInstance().popLong());
+		long effectIndex = Stack::getInstance().popLong();
+		long effectId = Stack::getInstance().popLong();
+		long effectSkillAttributeId = Stack::getInstance().popLong();
+		long effectRange = Stack::getInstance().popLong();
+		long effectArea = Stack::getInstance().popLong();
+		long effectDuration = Stack::getInstance().popLong();
+		long effectMagMin = Stack::getInstance().popLong();
+		long effectMagMax = Stack::getInstance().popLong();
 
 		bool result = false;
 
@@ -66,7 +66,7 @@ namespace mwse
 			// Get the desired effect.
 			TES3::Effect* effects = NULL;
 			if (targetType == TES3::ObjectType::Spell) {
-				TES3::Spell* spell = tes3::getSpellRecordById(targetId);
+				TES3::Spell* spell = tes3::getObjectByID<TES3::Spell>(targetId, TES3::ObjectType::Spell);
 				if (spell) {
 					effects = spell->effects;
 				}
@@ -77,7 +77,7 @@ namespace mwse
 				}
 			}
 			else if (targetType == TES3::ObjectType::Enchantment) {
-				TES3::Enchantment* enchant = tes3::getEnchantRecordById(targetId);
+				TES3::Enchantment* enchant = tes3::getObjectByID<TES3::Enchantment>(targetId, TES3::ObjectType::Enchantment);
 				if (enchant) {
 					effects = enchant->effects;
 				}
@@ -88,7 +88,7 @@ namespace mwse
 				}
 			}
 			else if (targetType == TES3::ObjectType::Alchemy) {
-				TES3::Alchemy* alchemy = tes3::getAlchemyRecordById(targetId);
+				TES3::Alchemy* alchemy = tes3::getObjectByID<TES3::Alchemy>(targetId, TES3::ObjectType::Alchemy);
 				if (alchemy) {
 					effects = alchemy->effects;
 				}

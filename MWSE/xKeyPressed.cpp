@@ -42,11 +42,11 @@ namespace mwse {
 	void xKeyPressed::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 
 	float xKeyPressed::execute(mwse::VMExecuteInterface &virtualMachine) {
-		mwLong keyCode = Stack::getInstance().popLong();
+		long keyCode = Stack::getInstance().popLong();
 
 		// A particular key, based on virtual key codes.
 		if (keyCode > 0 && keyCode < 256) {
-			mwLong state = GetAsyncKeyState(keyCode & 0xFF);
+			long state = GetAsyncKeyState(keyCode & 0xFF);
 			if (state / 2) {
 				state = 2 + state % 2;
 			}
@@ -56,7 +56,7 @@ namespace mwse {
 
 		// Any key will do, cycles through the list.
 		else {
-			mwLong lastCode = 0;
+			long lastCode = 0;
 			keyCode = 0;
 			do {
 				if (keyCode <= 0 || keyCode >= 255) {

@@ -23,7 +23,8 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "TES3MACP.h"
+#include "TES3MobilePlayer.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -52,12 +53,12 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwLong skillId = mwse::Stack::getInstance().popLong();
-		mwFloat modValue = mwse::Stack::getInstance().popFloat();
-		mwLong normalize = mwse::Stack::getInstance().popLong();
+		long skillId = mwse::Stack::getInstance().popLong();
+		float modValue = mwse::Stack::getInstance().popFloat();
+		long normalize = mwse::Stack::getInstance().popLong();
 
 		// Verify attribute range.
-		if (skillId < TES3::FirstSkill || skillId > TES3::LastSkill) {
+		if (skillId < TES3::SkillID::FirstSkill || skillId > TES3::SkillID::LastSkill) {
 #if _DEBUG
 			mwse::log::getLog() << "xModProgressSkill: Invalid skill id: " << skillId << std::endl;
 #endif
@@ -67,7 +68,7 @@ namespace mwse
 
 		// Make sure we're looking at an NPC or creature.
 		TES3::Reference* reference = virtualMachine.getReference("player");
-		if (reference->objectPointer->objectType != TES3::ObjectType::NPC) {
+		if (reference->baseObject->objectType != TES3::ObjectType::NPC) {
 #if _DEBUG
 			mwse::log::getLog() << "xModProgressSkill: Called on non-NPC reference." << std::endl;
 #endif
@@ -76,8 +77,8 @@ namespace mwse
 		}
 
 		// Get the associated MACP record.
-		TES3::MACP* macp = tes3::getAttachedMACPRecord(reference);
-		if (macp == NULL) {
+		auto mobileObject = tes3::getAttachedMobilePlayer(reference);
+		if (mobileObject == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xModProgressSkill: Could not find MACP record for reference." << std::endl;
 #endif
@@ -86,11 +87,11 @@ namespace mwse
 		}
 
 		// Mod value.
-		mwFloat progress = macp->skillProgress[skillId];
+		float progress = mobileObject->skillProgress[skillId];
 		// Normalize progress, then add mod, then convert back.
 		// This avoids some floating point precision errors.
 		if (normalize) {
-			const mwFloat requirement = tes3::getSkillRequirement(reference, skillId);
+			const float requirement = tes3::getSkillRequirement(reference, skillId);
 			progress = 100.0f * progress / requirement + modValue;
 			progress = requirement * progress / 100.0f;
 		}
@@ -101,7 +102,7 @@ namespace mwse
 		if (progress < 0.0f) {
 			progress = 0.0f;
 		}
-		macp->skillProgress[skillId] = progress;
+		mobileObject->skillProgress[skillId] = progress;
 
 		// Call Morrowind's native CheckForSkillUp function.
 		tes3::checkForSkillUp(reference, skillId);

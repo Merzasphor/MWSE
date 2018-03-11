@@ -23,6 +23,8 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3Reference.h"
+#include "TES3Cell.h"
 
 using namespace mwse;
 
@@ -53,9 +55,9 @@ namespace mwse
 			return 0.0f;
 		}
 
-		// This data structure hasn't been fully mapped out.
-		if (reference && reference->unknown_0x14 && reference->unknown_0x14->cell) {
-			mwse::Stack::getInstance().pushString(reference->unknown_0x14->cell->name);
+		TES3::ReferenceList* referenceList = reinterpret_cast<TES3::ReferenceList*>(reference->owningCollection);
+		if (referenceList && referenceList->cell) {
+			mwse::Stack::getInstance().pushString(referenceList->cell->name);
 		}
 		else {
 			mwse::Stack::getInstance().pushLong(0);

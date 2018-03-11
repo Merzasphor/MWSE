@@ -24,7 +24,8 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
-#include "TES3CellMaster.h"
+#include "TES3DataHandler.h"
+#include "TES3GameSetting.h"
 
 using namespace mwse;
 
@@ -46,7 +47,7 @@ namespace mwse
 
 	float xGetGSString::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwLong gmstId = Stack::getInstance().popLong();
+		long gmstId = Stack::getInstance().popLong();
 
 		if (gmstId < 0) {
 			mwse::log::getLog() << "xGetGSString: Invalid GMST id." << std::endl;
@@ -55,7 +56,7 @@ namespace mwse
 		}
 
 		// Get the string. No real sanity checks here...
-		char * value = tes3::getCellMaster()->recordLists->GMSTs[gmstId]->value.string_value;
+		char * value = tes3::getDataHandler()->recordLists->GMSTs[gmstId]->value.asString;
 
 		mwse::Stack::getInstance().pushString(value);
 

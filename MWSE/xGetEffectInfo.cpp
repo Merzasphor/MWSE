@@ -50,25 +50,25 @@ namespace mwse
 	float xGetEffectInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwLong effectType = Stack::getInstance().popLong();
-		mwseString_t& effectId = virtualMachine.getString(Stack::getInstance().popLong());
-		mwLong effectIndex = Stack::getInstance().popLong();
+		long effectType = Stack::getInstance().popLong();
+		mwseString& effectId = virtualMachine.getString(Stack::getInstance().popLong());
+		long effectIndex = Stack::getInstance().popLong();
 
 		// Return values.
-		mwLong effectEnumId = TES3::EffectNone;
-		mwLong skillAttributeId = 0;
-		mwLong rangeType = 0;
-		mwLong area = 0;
-		mwLong duration = 0;
-		mwLong magMin = 0;
-		mwLong magMax = 0;
+		long effectEnumId = TES3::EffectID::None;
+		long skillAttributeId = 0;
+		long rangeType = 0;
+		long area = 0;
+		long duration = 0;
+		long magMin = 0;
+		long magMax = 0;
 
 		// Validate effect index.
 		if (effectIndex >= 1 && effectIndex <= 8) {
 			// Get the desired effect.
 			TES3::Effect* effect = NULL;
 			if (effectType == TES3::ObjectType::Spell) {
-				TES3::Spell* spell = tes3::getSpellRecordById(effectId);
+				TES3::Spell* spell = tes3::getObjectByID<TES3::Spell>(effectId, TES3::ObjectType::Spell);
 				if (spell) {
 					effect = &spell->effects[effectIndex - 1];
 				}
@@ -79,7 +79,7 @@ namespace mwse
 				}
 			}
 			else if (effectType == TES3::ObjectType::Enchantment) {
-				TES3::Enchantment* enchant = tes3::getEnchantRecordById(effectId);
+				TES3::Enchantment* enchant = tes3::getObjectByID<TES3::Enchantment>(effectId, TES3::ObjectType::Enchantment);
 				if (enchant) {
 					effect = &enchant->effects[effectIndex - 1];
 				}
@@ -90,7 +90,7 @@ namespace mwse
 				}
 			}
 			else if (effectType == TES3::ObjectType::Alchemy) {
-				TES3::Alchemy* alchemy = tes3::getAlchemyRecordById(effectId);
+				TES3::Alchemy* alchemy = tes3::getObjectByID<TES3::Alchemy>(effectId, TES3::ObjectType::Alchemy);
 				if (alchemy) {
 					effect = &alchemy->effects[effectIndex - 1];
 				}
@@ -107,20 +107,20 @@ namespace mwse
 			}
 
 			// If we found an effect, set the values.
-			if (effect && effect->ID != TES3::EffectNone) {
-				effectEnumId = effect->ID;
+			if (effect && effect->effectID != TES3::EffectID::None) {
+				effectEnumId = effect->effectID;
 				int effectFlags = TES3::MagicEffectFlagMap[effectEnumId];
-				if (effectFlags & TES3::TargetSkill) {
+				if (effectFlags & TES3::EffectFlag::TargetSkill) {
 					skillAttributeId = effect->skillID;
 				}
-				else if (effectFlags & TES3::TargetAttribute) {
+				else if (effectFlags & TES3::EffectFlag::TargetAttribute) {
 					skillAttributeId = effect->attributeID;
 				}
 				else {
-					skillAttributeId = TES3::SkillInvalid;
+					skillAttributeId = TES3::SkillID::Invalid;
 				}
-				rangeType = effect->range;
-				area = effect->area;
+				rangeType = effect->rangeType;
+				area = effect->radius;
 				duration = effect->duration;
 				magMin = effect->magnitudeMin;
 				magMax = effect->magnitudeMax;

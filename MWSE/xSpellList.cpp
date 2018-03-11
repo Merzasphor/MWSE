@@ -24,6 +24,7 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 #include "TES3NPC.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -51,13 +52,13 @@ namespace mwse
 		TES3::IteratorNode<TES3::Spell>* node = reinterpret_cast<TES3::IteratorNode<TES3::Spell>*>(mwse::Stack::getInstance().popLong());
 
 		// Arguments we will be returning.
-		mwLong spellCount = 0;
-		mwString spellId = NULL;
-		mwString spellName = NULL;
-		mwLong spellType = 0;
-		mwLong spellCost = 0;
-		mwLong spellEffectCount = 0;
-		mwLong spellFlags = 0;
+		long spellCount = 0;
+		char* spellId = NULL;
+		char* spellName = NULL;
+		long spellType = 0;
+		long spellCost = 0;
+		long spellEffectCount = 0;
+		long spellFlags = 0;
 
 		// Get the reference we're checking.
 		TES3::Reference* reference = virtualMachine.getReference();
@@ -70,8 +71,7 @@ namespace mwse
 		}
 
 		// Function only works on NPCs.
-		TES3::NPCInstance* npcCopyRecord = reinterpret_cast<TES3::NPCInstance*>(reference->objectPointer);
-		if (npcCopyRecord->objectType != TES3::ObjectType::NPC) {
+		if (reference->baseObject->objectType != TES3::ObjectType::NPC) {
 #if _DEBUG
 			mwse::log::getLog() << "xSpellList: Called on non-NPC reference." << std::endl;
 #endif
@@ -79,23 +79,30 @@ namespace mwse
 			return 0.0f;
 		}
 
+		// Make sure we have the base NPC.
+		TES3::NPC* npc = reinterpret_cast<TES3::NPC*>(reference->baseObject);
+		if (!(npc->actorFlags & TES3::NPCFlag::IsBase)) {
+			npc = reinterpret_cast<TES3::NPCInstance*>(npc)->baseNPC;
+		}
+
+
 		// If we're not provided a node, get the first node of the NPC.
 		if (node == NULL) {
-			node = npcCopyRecord->baseNPC->spells.head;
+			node = npc->spellList.list.head;
 		}
 
 		// Get our data.
 		TES3::Spell* spell = node->data;
-		spellCount = npcCopyRecord->baseNPC->spells.size;
+		spellCount = npc->spellList.list.size;
 		spellId = spell->objectID;
 		spellName = spell->name;
-		spellType = spell->type;
-		spellCost = spell->cost;
+		spellType = spell->castType;
+		spellCost = spell->magickaCost;
 		spellEffectCount = tes3::getEffectCount(spell->effects);
-		spellFlags = spell->flags;
+		spellFlags = spell->spellFlags;
 
 		// Push the data back to mwscript.
-		mwse::Stack::getInstance().pushLong((mwLong)node->next);
+		mwse::Stack::getInstance().pushLong((long)node->next);
 		mwse::Stack::getInstance().pushLong(spellFlags);
 		mwse::Stack::getInstance().pushLong(spellEffectCount);
 		mwse::Stack::getInstance().pushLong(spellCost);

@@ -49,7 +49,7 @@ namespace mwse
 	float xScriptRunning::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t& scriptName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString& scriptName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Try to get the target script.
 		TES3::Script* targetScript = tes3::getScript(scriptName);

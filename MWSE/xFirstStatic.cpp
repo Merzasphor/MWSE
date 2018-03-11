@@ -24,7 +24,8 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
-#include "TES3CellMaster.h"
+#include "TES3DataHandler.h"
+#include "TES3Cell.h"
 
 using namespace mwse;
 
@@ -50,24 +51,24 @@ namespace mwse
 		mwse::tes3::clearExteriorRefs();
 
 		TES3::Reference* reference = NULL;
-		TES3::CellMaster* cellMaster = mwse::tes3::getCellMaster();
-		if (cellMaster->interiorCell != NULL) {
-			reference = mwse::tes3::skipRemovedReferences(cellMaster->interiorCell->statics.first);
+		TES3::DataHandler* dataHandler = mwse::tes3::getDataHandler();
+		if (dataHandler->currentInteriorCell != NULL) {
+			reference = mwse::tes3::skipRemovedReferences(dataHandler->currentInteriorCell->activators.head);
 		}
 		else {
-			TES3::CellPointer* cellPointer = cellMaster->exteriorCells[TES3::CellGridCenter];
-			if (cellPointer->size == 1) {
+			auto cellPointer = dataHandler->exteriorCellData[TES3::CellGrid::Center];
+			if (cellPointer->size >= 1) {
 				// Get the start of the list for the center cell. We'll check that it's valid later.
-				reference = mwse::tes3::skipRemovedReferences(cellPointer->cell->statics.first);
+				reference = mwse::tes3::skipRemovedReferences(cellPointer->cell->activators.head);
 				int exteriorCount = 0;
 				for (int i = 0; i < 9; i++) {
-					if (i == TES3::CellGridCenter) {
+					if (i == TES3::CellGrid::Center) {
 						continue;
 					}
 
-					cellPointer = cellMaster->exteriorCells[i];
-					if (cellPointer->size == 1) {
-						TES3::Reference* tempReference = mwse::tes3::skipRemovedReferences(cellPointer->cell->npc.first);
+					cellPointer = dataHandler->exteriorCellData[i];
+					if (cellPointer->size >= 1) {
+						TES3::Reference* tempReference = mwse::tes3::skipRemovedReferences(cellPointer->cell->activators.head);
 						if (tempReference != NULL) {
 							mwse::tes3::exteriorRefs[exteriorCount] = tempReference;
 							exteriorCount++;
@@ -91,7 +92,7 @@ namespace mwse
 			}
 		}
 
-		mwse::Stack::getInstance().pushLong((mwLong)reference);
+		mwse::Stack::getInstance().pushLong((long)reference);
 
 		return 0.0f;
 	}

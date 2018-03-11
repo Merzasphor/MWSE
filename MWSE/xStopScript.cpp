@@ -49,7 +49,7 @@ namespace mwse
 	float xStopScript::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameter: script name. We allow a value of 0 to target the current script.
-		mwLong scriptNameId = mwse::Stack::getInstance().popLong();
+		long scriptNameId = mwse::Stack::getInstance().popLong();
 		const char* scriptName = NULL;
 		if (scriptNameId == 0) {
 			scriptName = virtualMachine.getScript().name;

@@ -24,6 +24,8 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 #include "TES3NPC.h"
+#include "TES3Reference.h"
+#include "TES3Class.h"
 
 using namespace mwse;
 
@@ -52,37 +54,23 @@ namespace mwse {
 			return 0.0f;
 		}
 
-		mwLong npcServiceFlags = 0;
-		mwLong classServiceFlags = 0;
+		long npcServiceFlags = 0;
+		long classServiceFlags = 0;
 
 		// Get the gold based on the base record type.
-		TES3::NPCInstance* npc = reinterpret_cast<TES3::NPCInstance*>(reference->objectPointer);
-		if (npc->objectType == TES3::ObjectType::NPC) {
-			// Get NPC's services.
-			if (npc->baseNPC) {
-				npcServiceFlags = npc->baseNPC->servicesMask;
-				npcServiceFlags &= 0x00038800;
-			}
-			else {
-#if _DEBUG
-				mwse::log::getLog() << "xIsProvider: Could not get base NPC record for \"" << npc->objectID << "\"" << std::endl;
-#endif
-			}
+		TES3::AIConfig* aiConfig = reference->baseObject->vTable->getAIConfig(reference->baseObject);
+		if (aiConfig) {
+			npcServiceFlags = aiConfig->merchantFlags & 0x00038800;
 
-			// Get class services.
-			if (npc->baseNPC && npc->baseNPC->classRecord) {
-				classServiceFlags = npc->baseNPC->classRecord->services;
-				classServiceFlags &= 0x00038800;
-			}
-			else {
-#if _DEBUG
-				mwse::log::getLog() << "xIsProvider: Could not get class record for \"" << npc->objectID << "\"" << std::endl;
-#endif
+			// Get the class flags.
+			TES3::Class* npcClass = reference->baseObject->vTable->getClass(reference->baseObject);
+			if (npcClass) {
+				npcServiceFlags = npcClass->services & 0x00038800;
 			}
 		}
 		else {
 #if _DEBUG
-			mwse::log::getLog() << "xIsProvider: Called on non-NPC target." << std::endl;
+			mwse::log::getLog() << "xIsProvider: Failed to get AI configuration for target." << std::endl;
 #endif
 		}
 

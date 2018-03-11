@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -54,19 +55,14 @@ namespace mwse
 			return 0.0f;
 		}
 
-		char* objectId = NULL;
-
-		// Try to get the data base record objectId first, and fall back to the copy object.
-		TES3::BaseObject* data = reinterpret_cast<TES3::BaseObject*>(reference->objectPointer);
-		TES3::BaseObject* base = mwse::tes3::getBaseRecord(data);
-		if (base && base->objectID) {
-			objectId = base->objectID;
-		}
-		else if (data && data->objectID) {
-			objectId = data->objectID;
+		// Get the base object.
+		TES3::BaseObject* object = reference->baseObject;
+		if (tes3::getHasBaseRecord(object)) {
+			object = tes3::getBaseRecord(object);
 		}
 
 		// Push the found objectId.
+		char* objectId = object->vTable->getObjectID(object);
 		if (objectId) {
 			mwse::Stack::getInstance().pushString(objectId);
 		}

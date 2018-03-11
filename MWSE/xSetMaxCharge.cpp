@@ -24,9 +24,8 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
-#include "TES3Armor.h"
-#include "TES3Clothing.h"
-#include "TES3Weapon.h"
+#include "TES3Reference.h"
+#include "TES3Enchantment.h"
 
 using namespace mwse;
 
@@ -49,7 +48,7 @@ namespace mwse
 	float xSetMaxCharge::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameter from the stack.
-		mwFloat maxCharge = mwse::Stack::getInstance().popFloat();
+		float maxCharge = mwse::Stack::getInstance().popFloat();
 		bool success = false;
 
 		// Get reference.
@@ -63,8 +62,8 @@ namespace mwse
 		}
 
 		// Get the base record.
-		TES3::BaseObject* record = reinterpret_cast<TES3::BaseObject*>(reference->objectPointer);
-		if (record == NULL) {
+		TES3::BaseObject* object = reference->baseObject;
+		if (object == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetMaxCharge: No record found for reference." << std::endl;
 #endif
@@ -72,37 +71,20 @@ namespace mwse
 			return 0.0f;
 		}
 
-		// Get enchantment record based on record type.
-		TES3::Enchantment* enchantment = NULL;
-		if (record->objectType == TES3::ObjectType::Armor) {
-			enchantment = reinterpret_cast<TES3::Armor*>(record)->enchantment;
-		}
-		else if (record->objectType == TES3::ObjectType::Clothing) {
-			enchantment = reinterpret_cast<TES3::Clothing*>(record)->enchantment;
-		}
-		else if (record->objectType == TES3::ObjectType::Weapon) {
-			enchantment = reinterpret_cast<TES3::Weapon*>(record)->enchantment;
-		}
-		else {
-#if _DEBUG
-			mwse::log::getLog() << "xSetMaxCharge: Invalid record type: " << record->objectType << std::endl;
-#endif
-			mwse::Stack::getInstance().pushLong(success);
-			return 0.0f;
-		}
-
 		// If we found an enchantment record, set the max charge.
-		if (enchantment && enchantment->autocalc) {
-			enchantment->charge = maxCharge;
+		TES3::Enchantment* enchantment = object->vTable->getEnchantment(object);
+		if (enchantment) {
+			enchantment->maxCharge = maxCharge;
 
 			// If there's charge data in an attached node, update it.
-			auto varNode = tes3::getAttachedVariableNode(reference);
+			auto varNode = tes3::getAttachedItemDataNode(reference);
 			if (varNode) {
-				if (varNode->currentCharge >= maxCharge) {
-					varNode->currentCharge = maxCharge;
-					success = true;
+				if (varNode->enchantCharge >= maxCharge) {
+					varNode->enchantCharge = maxCharge;
 				}
 			}
+
+			success = true;
 		}
 
 		// Push success state.

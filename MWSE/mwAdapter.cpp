@@ -253,7 +253,7 @@ namespace mwse
 				popfd
 
 				// Overwritten code at this hook's address.
-				mov ecx, TES3_MASTERCELL_IMAGE
+				mov ecx, TES3_DATA_HANDLER_IMAGE
 				mov ecx, [ecx]
 
 				// Return to where execution was before.

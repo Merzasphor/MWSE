@@ -24,7 +24,8 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "TES3CellMaster.h"
+#include "TES3DataHandler.h"
+#include "TES3GameSetting.h"
 
 using namespace mwse;
 
@@ -46,8 +47,8 @@ namespace mwse
 
 	float xSetGSString::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwLong gmstId = Stack::getInstance().popLong();
-		mwseString_t& newString = virtualMachine.getString(Stack::getInstance().popLong());
+		long gmstId = Stack::getInstance().popLong();
+		mwseString& newString = virtualMachine.getString(Stack::getInstance().popLong());
 
 		if (gmstId < 0) {
 			mwse::log::getLog() << "xSetGSString: Invalid GMST id." << std::endl;
@@ -56,8 +57,8 @@ namespace mwse
 		}
 
 		// Get the string we're going to change.
-		TES3::CellMaster* cellMaster = tes3::getCellMaster();
-		char *& oldString = cellMaster->recordLists->GMSTs[gmstId]->value.string_value;
+		TES3::DataHandler* dataHandler = tes3::getDataHandler();
+		char *& oldString = dataHandler->recordLists->GMSTs[gmstId]->value.asString;
 
 		// Reallocate string memory if it is growing in size.
 		if (newString.length() > strlen(oldString)) {

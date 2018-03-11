@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -45,14 +46,14 @@ namespace mwse
 	float xGetModel::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get our parameter. 
-		mwLong param = Stack::getInstance().popLong();
+		long param = Stack::getInstance().popLong();
 
-		mwString model = NULL;
+		char* model = NULL;
 
 		// If we were given a value, it's supposed to be a string, and we'll get a record by this ID.
 		if (param) {
 			// Get the record by id string.
-			mwseString_t& id = virtualMachine.getString(param);
+			mwseString& id = virtualMachine.getString(param);
 			TES3::BaseObject* record = tes3::getRecordById<TES3::BaseObject>(id);
 			if (record == NULL) {
 #if _DEBUG
@@ -61,7 +62,7 @@ namespace mwse
 				mwse::Stack::getInstance().pushLong(0);
 				return 0.0f;
 			}
-			model = tes3::getModel(record);
+			model = record->vTable->getModelPath(record);
 		}
 
 		// If we were not given a value, we try to use the function's given reference.
@@ -74,7 +75,7 @@ namespace mwse
 				mwse::Stack::getInstance().pushLong(0);
 				return 0.0f;
 			}
-			model = tes3::getModel(reference->objectPointer);
+			model = reference->baseObject->vTable->getModelPath(reference->baseObject);
 		}
 
 		// Push the model back to the stack.

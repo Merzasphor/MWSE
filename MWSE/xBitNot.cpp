@@ -43,7 +43,7 @@ namespace mwse
 
 	float xBitNot::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwLong param = mwse::Stack::getInstance().popLong();
+		long param = mwse::Stack::getInstance().popLong();
 
 		mwse::Stack::getInstance().pushLong(~param);
 

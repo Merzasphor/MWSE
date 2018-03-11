@@ -24,7 +24,7 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
-#include "TES3CellMaster.h"
+#include "TES3DataHandler.h"
 #include "TES3Skill.h"
 
 using namespace mwse;
@@ -38,7 +38,7 @@ namespace mwse
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	private:
-		const mwFloat INVALID_VALUE = -1.0f;
+		const float INVALID_VALUE = -1.0f;
 	};
 
 	static xGetSkillInfo xGetSkillInfoInstance;
@@ -50,21 +50,21 @@ namespace mwse
 	float xGetSkillInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameter.
-		mwLong skillIndex = Stack::getInstance().popLong();
+		long skillIndex = Stack::getInstance().popLong();
 
 		// Return values.
-		mwLong attributeId = TES3::AttributeInvalid;
-		mwLong specialization = TES3::SpecializationInvalid;
+		long attributeId = TES3::Attribute::Invalid;
+		long specialization = TES3::SkillSpecialization::Invalid;
 		float actions[4] = { INVALID_VALUE, INVALID_VALUE, INVALID_VALUE, INVALID_VALUE };
 
 		// Validate skill index.
-		if (skillIndex >= TES3::FirstSkill && skillIndex <= TES3::LastSkill) {
-			TES3::CellMaster* cellMaster = tes3::getCellMaster();
-			const TES3::Skill& skillRecord = cellMaster->recordLists->skills[skillIndex];
-			attributeId = skillRecord.attribute;
+		if (skillIndex >= TES3::SkillID::FirstSkill && skillIndex <= TES3::SkillID::LastSkill) {
+			TES3::DataHandler* dataHandler = tes3::getDataHandler();
+			const TES3::Skill& skillRecord = dataHandler->recordLists->skills[skillIndex];
+			attributeId = skillRecord.governingAttribute;
 			specialization = skillRecord.specialization;
 			for (size_t i = 0; i < 4; i++) {
-				actions[i] = skillRecord.actions[i];
+				actions[i] = skillRecord.progressActions[i];
 			}
 		}
 		else {

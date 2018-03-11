@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -44,7 +45,7 @@ namespace mwse
 
 	float xSetTrap::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwLong spellId = mwse::Stack::getInstance().popLong();
+		long spellId = mwse::Stack::getInstance().popLong();
 
 		// Get reference to what we're finding the trap of.
 		TES3::Reference* reference = virtualMachine.getReference();
@@ -57,7 +58,7 @@ namespace mwse
 		}
 
 		// Verify record type.
-		TES3::ObjectType::ObjectType type = reference->objectPointer->objectType;
+		TES3::ObjectType::ObjectType type = reference->baseObject->objectType;
 		if (type != TES3::ObjectType::Container && type != TES3::ObjectType::Door) {
 #if _DEBUG
 			log::getLog() << "xSetTrap: Called on a non-container, non-door reference." << std::endl;
@@ -80,8 +81,8 @@ namespace mwse
 		TES3::Spell* spell = NULL;
 		if (spellId) {
 			// Get the spell based on the ID given.
-			mwseString_t& spellObjId = virtualMachine.getString(spellId);
-			spell = tes3::getSpellRecordById(spellObjId);
+			mwseString& spellObjId = virtualMachine.getString(spellId);
+			spell = tes3::getObjectByID<TES3::Spell>(spellObjId, TES3::ObjectType::Spell);
 			if (!spell) {
 #if _DEBUG
 				log::getLog() << "xSetTrap: No spell could be found with id '" << spellObjId << "'." << std::endl;

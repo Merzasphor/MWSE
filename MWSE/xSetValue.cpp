@@ -24,6 +24,7 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Reference.h"
 #include "TES3Book.h"
 #include "TES3Light.h"
 #include "TES3Lockpick.h"
@@ -50,7 +51,7 @@ namespace mwse {
 
 	float xSetValue::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get parameter.
-		mwLong value = mwse::Stack::getInstance().popLong();
+		long value = mwse::Stack::getInstance().popLong();
 		bool setValue = false;
 
 		// Get reference.
@@ -64,7 +65,7 @@ namespace mwse {
 		}
 
 		// Get record.
-		TES3::BaseObject* record = reference->objectPointer;
+		TES3::BaseObject* record = reference->baseObject;
 		if (record == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetValue: No base record found." << std::endl;

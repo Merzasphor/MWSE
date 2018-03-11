@@ -47,9 +47,9 @@ namespace mwse
 
 	float xStringLength::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwseString_t& parameter = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString& parameter = virtualMachine.getString(Stack::getInstance().popLong());
 
-		mwLong result = parameter.length();
+		long result = parameter.length();
 
 		mwse::Stack::getInstance().pushLong(result);
 

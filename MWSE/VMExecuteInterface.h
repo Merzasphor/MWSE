@@ -22,9 +22,7 @@
 
 #include "mwseString.h"
 
-#include "ObjectTypes.h"
-#include "TES3Reference.h"
-#include "TES3Script.h"
+#include "TES3Object.h"
 
 using namespace mwse;
 
@@ -37,36 +35,36 @@ namespace mwse
 		virtual long* getScriptIP() = 0;	//to get the script Instruction Pointer, (for functions that change this, like jump and call like things).
 
 		//local variables, methods to access local variables
-		virtual mwLong getLongVariable(int index) = 0;							//by index
-		virtual mwLong getLongVariable(const char *id) = 0;						//by name
-		virtual mwLong getLongVariable(int index, TES3::Reference &reference) = 0;	//foreign
-		virtual void setLongVariable(int index, mwLong value) = 0;
-		virtual void setLongVariable(const char *id, mwLong value) = 0;
-		virtual void setLongVariable(int index, mwLong value , TES3::Reference &reference) = 0;
+		virtual long getLongVariable(int index) = 0;							//by index
+		virtual long getLongVariable(const char *id) = 0;						//by name
+		virtual long getLongVariable(int index, TES3::Reference &reference) = 0;	//foreign
+		virtual void setLongVariable(int index, long value) = 0;
+		virtual void setLongVariable(const char *id, long value) = 0;
+		virtual void setLongVariable(int index, long value , TES3::Reference &reference) = 0;
 
-		virtual mwShort getShortVariable(int index) = 0;
-		virtual mwShort getShortVariable(const char *id) = 0;
-		virtual mwShort getShortVariable(int index, TES3::Reference &reference) = 0;
-		virtual void setShortVariable(int index, mwShort value) = 0;
-		virtual void setShortVariable(const char *id, mwShort value) = 0;
-		virtual void setShortVariable(int index, mwShort value , TES3::Reference &reference) = 0;
+		virtual short getShortVariable(int index) = 0;
+		virtual short getShortVariable(const char *id) = 0;
+		virtual short getShortVariable(int index, TES3::Reference &reference) = 0;
+		virtual void setShortVariable(int index, short value) = 0;
+		virtual void setShortVariable(const char *id, short value) = 0;
+		virtual void setShortVariable(int index, short value , TES3::Reference &reference) = 0;
 
-		virtual mwFloat getFloatVariable(int index) = 0;
-		virtual mwFloat getFloatVariable(const char *id) = 0;
-		virtual mwFloat getFloatVariable(int index, TES3::Reference &reference) = 0;
-		virtual void setFloatVariable(int index, mwFloat value) = 0;
-		virtual void setFloatVariable(const char *id, mwFloat value) = 0;
-		virtual void setFloatVariable(int index, mwFloat value , TES3::Reference &reference) = 0;
+		virtual float getFloatVariable(int index) = 0;
+		virtual float getFloatVariable(const char *id) = 0;
+		virtual float getFloatVariable(int index, TES3::Reference &reference) = 0;
+		virtual void setFloatVariable(int index, float value) = 0;
+		virtual void setFloatVariable(const char *id, float value) = 0;
+		virtual void setFloatVariable(int index, float value , TES3::Reference &reference) = 0;
 
 		//global variables, methods to access global variables
-		virtual mwLong getLongGlobal(const char *id) = 0;
-		virtual void setLongGlobal(const char *id, mwLong value) = 0;
+		virtual long getLongGlobal(const char *id) = 0;
+		virtual void setLongGlobal(const char *id, long value) = 0;
 		
-		virtual mwShort getShortGlobal(const char *id) = 0;
-		virtual void setShortGlobal(const char *id, mwShort value) = 0;
+		virtual short getShortGlobal(const char *id) = 0;
+		virtual void setShortGlobal(const char *id, short value) = 0;
 
-		virtual mwFloat getFloatGlobal(const char *id) = 0;
-		virtual void setFloatGlobal(const char *id, mwFloat value) = 0;
+		virtual float getFloatGlobal(const char *id) = 0;
+		virtual void setFloatGlobal(const char *id, float value) = 0;
 
 		//objects and stuff
 		//look at GETREF function in old MWSE for examples on how to fetch references!
@@ -84,11 +82,11 @@ namespace mwse
 		//virtual template<class T> void getStreamValue(T returnValue, bool peek = false) = 0;	//T must be in paramter list... if peek is true, then it doesn't increase the stream pointer
 		//OR
 		virtual char getByteValue(bool peek = false) = 0;			//peek means don't increase stream pointer
-		virtual mwShort getShortValue(bool peek = false) = 0;
-		virtual mwLong getLongValue(bool peek =false) = 0;
-		virtual mwFloat getFloatValue(bool peek = false) = 0;
+		virtual short getShortValue(bool peek = false) = 0;
+		virtual long getLongValue(bool peek =false) = 0;
+		virtual float getFloatValue(bool peek = false) = 0;
 
-		virtual mwseString_t& getString(mwLong fromStack) = 0;	//only ment for stack-based syntax!, parameter-based syntax functions should use getStringParameter!!!
+		virtual mwseString& getString(long fromStack) = 0;	//only ment for stack-based syntax!, parameter-based syntax functions should use getStringParameter!!!
 
 		virtual void dumpScriptVariables() = 0;
 

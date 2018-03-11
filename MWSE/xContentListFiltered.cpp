@@ -35,8 +35,8 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 
 	private:
-		mwLong getBitMaskForRecordType(mwLong recordType);
-		bool passesFilter(TES3::BaseObject* record, mwLong filter);
+		long getBitMaskForRecordType(long recordType);
+		bool passesFilter(TES3::BaseObject* record, long filter);
 
 		enum FilterMask {
 			FILTER_ACTI = 1,
@@ -73,8 +73,8 @@ namespace mwse {
 
 	float xContentListFiltered::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get parameters.
-		TES3::IteratorNode<TES3::InventoryNode>* node = reinterpret_cast<TES3::IteratorNode<TES3::InventoryNode>*>(mwse::Stack::getInstance().popLong());
-		mwLong filter = mwse::Stack::getInstance().popLong();
+		TES3::IteratorNode<TES3::ItemStack>* node = reinterpret_cast<TES3::IteratorNode<TES3::ItemStack>*>(mwse::Stack::getInstance().popLong());
+		long filter = mwse::Stack::getInstance().popLong();
 
 		// If we're not filtering, abandon ship.
 		if (filter == 0) {
@@ -108,13 +108,13 @@ namespace mwse {
 		}
 
 		// Results.
-		char * id = NULL;
-		mwLong count = 0;
-		mwLong type = 0;
-		mwLong value = 0;
-		mwFloat weight = 0;
-		mwString name = NULL;
-		TES3::IteratorNode<TES3::InventoryNode>* next = NULL;
+		char* id = NULL;
+		long count = 0;
+		long type = 0;
+		long value = 0;
+		float weight = 0;
+		char* name = NULL;
+		TES3::IteratorNode<TES3::ItemStack>* next = NULL;
 
 		// If we aren't given a node, get the first one.
 		if (node == NULL) {
@@ -128,44 +128,14 @@ namespace mwse {
 
 		// Validate the node we've obtained.
 		if (node && node->data && node->data->object) {
-			TES3::BaseObject* record = reinterpret_cast<TES3::BaseObject*>(node->data->object);
+			TES3::Object* object = node->data->object;
 
-			id = record->objectID;
-			count = node->data->itemCount;
-			type = record->objectType;
-
-			// Get value.
-			try {
-				value = tes3::getValue(reinterpret_cast<TES3::BaseObject*>(record));
-			}
-			catch (std::exception& e) {
-				value = 0;
-#if _DEBUG
-				mwse::log::getLog() << "xContentListFiltered: Could not get value of object '" << id << "'. " << e.what() << std::endl;
-#endif
-			}
-
-			// Get weight.
-			try {
-				weight = tes3::getWeight(reinterpret_cast<TES3::BaseObject*>(record));
-			}
-			catch (std::exception& e) {
-				weight = 0.0f;
-#if _DEBUG
-				mwse::log::getLog() << "xContentListFiltered: Could not get weight of object '" << id << "'. " << e.what() << std::endl;
-#endif
-			}
-
-			// Get name.
-			try {
-				name = tes3::getName(reinterpret_cast<TES3::BaseObject*>(record));
-			}
-			catch (std::exception& e) {
-				name = NULL;
-#if _DEBUG
-				mwse::log::getLog() << "xContentListFiltered: Could not get name of object '" << id << "'. " << e.what() << std::endl;
-#endif
-			}
+			id = object->vTable->getObjectID(object);
+			count = node->data->count;
+			type = object->objectType;
+			value = object->vTable->getValue(object);
+			weight = object->vTable->getWeight(object);
+			name = object->vTable->getName(object);
 
 			// Get next node. Pass over any records that don't match the given filter.
 			next = node->next;
@@ -175,7 +145,7 @@ namespace mwse {
 		}
 
 		// Push values to the stack.
-		mwse::Stack::getInstance().pushLong((mwLong)next);
+		mwse::Stack::getInstance().pushLong((long)next);
 		mwse::Stack::getInstance().pushString(name);
 		mwse::Stack::getInstance().pushFloat(weight);
 		mwse::Stack::getInstance().pushLong(value);
@@ -186,7 +156,7 @@ namespace mwse {
 		return 0.0f;
 	}
 
-	mwLong xContentListFiltered::getBitMaskForRecordType(mwLong recordType) {
+	long xContentListFiltered::getBitMaskForRecordType(long recordType) {
 		switch (recordType) {
 		case TES3::ObjectType::Activator: return FILTER_ACTI;
 		case TES3::ObjectType::Alchemy: return FILTER_ALCH;
@@ -215,20 +185,20 @@ namespace mwse {
 		return 0x0;
 	}
 
-	bool xContentListFiltered::passesFilter(TES3::BaseObject* record, mwLong filter) {
+	bool xContentListFiltered::passesFilter(TES3::BaseObject* object, long filter) {
 		// Filter by record type. Unless we're not filtering only by enchantment.
-		if (filter != FILTER_ENCH && !(getBitMaskForRecordType(record->objectType) & filter)) {
+		if (filter != FILTER_ENCH && !(getBitMaskForRecordType(object->objectType) & filter)) {
 			return false;
 		}
 
 		// If we're filtering by enchantment, verify that the record has one.
 		if (filter & FILTER_ENCH) {
 			try {
-				if (tes3::getEnchantment(reinterpret_cast<TES3::BaseObject*>(record)) == NULL) {
+				if (object->vTable->getEnchantment(object) == NULL) {
 					return false;
 				}
 			}
-			catch (std::exception& e) {
+			catch (std::exception&) {
 				return false;
 			}
 		}

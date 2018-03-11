@@ -22,9 +22,9 @@
 #pragma once
 
 #include "mwOffsets.h"
-#include "ObjectTypes.h"
 #include "mwseString.h"
 #include "OpCodes.h"
+#include "TES3Object.h"
 
 namespace mwse
 {
@@ -52,30 +52,30 @@ namespace mwse
 		void setScriptSecondObject(const char* string);
 		void setScriptSecondObject(TES3::BaseObject* record);
 
-		mwLong getScriptVariableIndex();
-		void setScriptVariableIndex(mwLong index);
+		long getScriptVariableIndex();
+		void setScriptVariableIndex(long index);
 
-		mwFloat getScriptDestinationX();
-		void setScriptDestinationX(mwFloat value);
+		float getScriptDestinationX();
+		void setScriptDestinationX(float value);
 
-		mwFloat getScriptDestinationY();
-		void setScriptDestinationY(mwFloat value);
+		float getScriptDestinationY();
+		void setScriptDestinationY(float value);
 
-		mwFloat getScriptDestinationZ();
-		void setScriptDestinationZ(mwFloat value);
+		float getScriptDestinationZ();
+		void setScriptDestinationZ(float value);
 
-		void setScriptDestination(mwFloat x, mwFloat y, mwFloat z);
+		void setScriptDestination(float x, float y, float z);
 
-		mwFloat getScriptTargetRotationX();
-		void setScriptTargetRotationX(mwFloat value);
+		float getScriptTargetRotationX();
+		void setScriptTargetRotationX(float value);
 
-		mwFloat getScriptTargetRotationY();
-		void setScriptTargetRotationY(mwFloat value);
+		float getScriptTargetRotationY();
+		void setScriptTargetRotationY(float value);
 
-		mwFloat getScriptTargetRotationZ();
-		void setScriptTargetRotationZ(mwFloat value);
+		float getScriptTargetRotationZ();
+		void setScriptTargetRotationZ(float value);
 
-		void setScriptTargetRotation(mwFloat x, mwFloat y, mwFloat z);
+		void setScriptTargetRotation(float x, float y, float z);
 
 		//
 		// Execute original op code.
@@ -89,15 +89,15 @@ namespace mwse
 
 		void Activate(TES3::Script* script, TES3::Reference* reference);
 
-		void AddItem(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, mwLong count);
+		void AddItem(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, long count);
 
 		void AddSpell(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate);
 
-		void AITravel(TES3::Script* script, TES3::Reference* reference, mwFloat x, mwFloat y, mwFloat z);
+		void AITravel(TES3::Script* script, TES3::Reference* reference, float x, float y, float z);
 
 		void Cast(TES3::Script* script, TES3::Reference* reference, TES3::Spell* spell, TES3::BaseObject* target);
 
-		void Drop(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, mwLong count);
+		void Drop(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, long count);
 
 		void Equip(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate);
 
@@ -105,23 +105,23 @@ namespace mwse
 
 		bool HasItemEquipped(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate);
 
-		mwLong GetItemCount(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate);
+		long GetItemCount(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate);
 
 		bool GetSpellEffects(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate);
 
-		void PlaceAtPC(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* placedTemplate, mwLong count, mwFloat distance, mwFloat direction);
+		void PlaceAtPC(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* placedTemplate, long count, float distance, float direction);
 
-		void Position(TES3::Script* script, TES3::Reference* reference, mwFloat x, mwFloat y, mwFloat z, mwFloat rotation);
+		void Position(TES3::Script* script, TES3::Reference* reference, float x, float y, float z, float rotation);
 
-		void PositionCell(TES3::Script* script, TES3::Reference* reference, mwFloat x, mwFloat y, mwFloat z, mwFloat rotation, const char* cell);
+		void PositionCell(TES3::Script* script, TES3::Reference* reference, float x, float y, float z, float rotation, const char* cell);
 
-		void RemoveItem(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, mwLong count);
+		void RemoveItem(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, long count);
 
 		void RemoveSpell(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate);
 
 		bool ScriptRunning(TES3::Script* script, TES3::Script* targetScript);
 
-		void SetLevel(TES3::Script* script, TES3::Reference* reference, mwShort level);
+		void SetLevel(TES3::Script* script, TES3::Reference* reference, short level);
 
 		void StartCombat(TES3::Script* script, TES3::Reference* reference, TES3::Reference* target);
 

@@ -22,7 +22,6 @@
 #pragma once
 
 #include "VMExecuteInterface.h"
-#include "ObjectTypes.h"
 #include "mwseString.h"
 
 #define MWSE_STRING_STORE_FIRSTID 40000
@@ -31,35 +30,35 @@ namespace mwse {
 	namespace string {
 		namespace store {
 			// Type of our string storage.
-			typedef std::map<mwLong, mwseString_t> StringMap_t;
+			typedef std::map<long, mwseString> StringMap_t;
 
-			extern mwLong nextId;
+			extern long nextId;
 
 			extern StringMap_t store;
 
-			mwseString_t& create(const std::string& value);
+			mwseString& create(const std::string& value);
 
-			mwseString_t& create(const char* value);
+			mwseString& create(const char* value);
 
-			mwseString_t& create(const char* value, size_t length);
+			mwseString& create(const char* value, size_t length);
 
 			bool clear();
 
-			bool exists(const mwLong id);
+			bool exists(const long id);
 
 			bool exists(const std::string& value);
 
 			bool exists(const char* value);
 
-			mwseString_t& get(const mwLong id);
+			mwseString& get(const long id);
 
-			mwseString_t& get(const std::string& value);
+			mwseString& get(const std::string& value);
 
-			mwseString_t& getOrCreate(const std::string& value);
+			mwseString& getOrCreate(const std::string& value);
 
-			mwseString_t& getOrCreate(const char* value);
+			mwseString& getOrCreate(const char* value);
 
-			mwseString_t& getOrCreate(const char* value, size_t length);
+			mwseString& getOrCreate(const char* value, size_t length);
 		}
 
 		//
@@ -72,6 +71,6 @@ namespace mwse {
 		bool enumerate(const char *format, int& substitutions, bool& eolmode);
 
 		// Extract the values from the string based on the format data and store them in the resultset array
-		int secernate(const char* format, const char* string, mwLong* results, int maxResults);
+		int secernate(const char* format, const char* string, long* results, int maxResults);
 	}
 };

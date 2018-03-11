@@ -47,23 +47,23 @@ namespace mwse
 	float xGetEnchantInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t& enchantId = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString& enchantId = virtualMachine.getString(Stack::getInstance().popLong());
 
 		// Return values.
-		mwLong type = 0;
-		mwLong cost = 0;
-		mwLong maxCharge = 0;
-		mwLong effects = 0;
-		mwLong autocalc = 0;
+		long type = 0;
+		long cost = 0;
+		long maxCharge = 0;
+		long effects = 0;
+		long autocalc = 0;
 
 		// Validate effect index.
-		TES3::Enchantment* enchantment = tes3::getEnchantRecordById(enchantId);
+		TES3::Enchantment* enchantment = tes3::getObjectByID<TES3::Enchantment>(enchantId, TES3::ObjectType::Enchantment);
 		if (enchantment != NULL) {
-			type = enchantment->type;
-			cost = enchantment->cost;
-			maxCharge = enchantment->charge;
+			type = enchantment->castType;
+			cost = enchantment->chargeCost;
+			maxCharge = enchantment->maxCharge;
 			effects = tes3::getEffectCount(enchantment->effects);
-			// autocalc = enchantment->autocalc; // TODO: Find flag.
+			autocalc = enchantment->vTable->getAutoCalc(enchantment);
 		}
 		else {
 #if _DEBUG

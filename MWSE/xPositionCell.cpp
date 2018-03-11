@@ -49,11 +49,11 @@ namespace mwse
 	float xPositionCell::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwFloat x = mwse::Stack::getInstance().popFloat();
-		mwFloat y = mwse::Stack::getInstance().popFloat();
-		mwFloat z = mwse::Stack::getInstance().popFloat();
-		mwFloat rotation = mwse::Stack::getInstance().popFloat();
-		mwseString_t& cell = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		float x = mwse::Stack::getInstance().popFloat();
+		float y = mwse::Stack::getInstance().popFloat();
+		float z = mwse::Stack::getInstance().popFloat();
+		float rotation = mwse::Stack::getInstance().popFloat();
+		mwseString& cell = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get other context information for original opcode.
 		TES3::Reference* reference = virtualMachine.getReference();

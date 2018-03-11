@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -54,12 +55,12 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwString name = NULL;
+		char* name = NULL;
 
 		// Get the base record.
-		TES3::BaseObject* record = reinterpret_cast<TES3::BaseObject*>(reference->objectPointer);
+		TES3::BaseObject* record = reference->baseObject;
 		if (record) {
-			name = tes3::getName(reference->objectPointer);
+			name = reference->baseObject->vTable->getName(reference->baseObject);
 		}
 		else {
 #if _DEBUG

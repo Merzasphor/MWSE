@@ -49,9 +49,9 @@ namespace mwse
 	float xAITravel::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwFloat x = mwse::Stack::getInstance().popFloat();
-		mwFloat y = mwse::Stack::getInstance().popFloat();
-		mwFloat z = mwse::Stack::getInstance().popFloat();
+		float x = mwse::Stack::getInstance().popFloat();
+		float y = mwse::Stack::getInstance().popFloat();
+		float z = mwse::Stack::getInstance().popFloat();
 
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();

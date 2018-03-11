@@ -36,7 +36,7 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	protected:
 	private:
-		mwLong address;
+		long address;
 	};
 
 	static Jump jumpInstance;
@@ -64,7 +64,7 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	protected:
 	private:
-		mwLong address;
+		long address;
 	};
 
 	static JumpZero jumpZeroInstance;
@@ -95,7 +95,7 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	protected:
 	private:
-		mwLong address;
+		long address;
 	};
 
 	static JumpNotZero jumpNotZeroInstance;
@@ -126,7 +126,7 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	protected:
 	private:
-		mwLong address;
+		long address;
 	};
 
 	static JumpPositive jumpPositiveInstance;
@@ -157,7 +157,7 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	protected:
 	private:
-		mwLong address;
+		long address;
 	};
 
 	static JumpNegative jumpNegativeInstance;
@@ -192,7 +192,7 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	protected:
 	private:
-		mwShort address;
+		short address;
 	};
 
 	static JumpShort jumpShortInstance;
@@ -220,7 +220,7 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	protected:
 	private:
-		mwShort address;
+		short address;
 	};
 
 	static JumpShortZero jumpShortZeroInstance;
@@ -251,7 +251,7 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	protected:
 	private:
-		mwShort address;
+		short address;
 	};
 
 	static JumpShortNotZero jumpShortNotZeroInstance;
@@ -282,7 +282,7 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	protected:
 	private:
-		mwShort address;
+		short address;
 	};
 
 	static JumpShortPositive jumpShortPositiveInstance;
@@ -313,7 +313,7 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	protected:
 	private:
-		mwShort address;
+		short address;
 	};
 
 	static JumpShortNegative jumpShortNegativeInstance;

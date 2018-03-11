@@ -47,29 +47,29 @@ namespace mwse
 
 	float xGetOwnerInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwString id = NULL;
-		mwLong rank = 0;
-		mwLong type = 0;
+		char* id = NULL;
+		long rank = 0;
+		long type = 0;
 
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference) {
 			// Get the attached varnode as owner information.
-			auto varNode = tes3::getAttachedVariableNode(reference);
+			auto varNode = tes3::getAttachedItemDataNode(reference);
 			if (varNode) {
 				TES3::BaseObject* owner = varNode->owner;
 				if (owner) {
 					type = owner->objectType;
 					if (type == TES3::ObjectType::NPC) {
-						id = owner->objectID;
-						if (varNode->rankVar.variable) {
-							rank = mwse::string::store::getOrCreate(varNode->rankVar.variable->name);
+						id = owner->vTable->getObjectID(owner);
+						if (varNode->requirement.variable) {
+							rank = mwse::string::store::getOrCreate(varNode->requirement.variable->name);
 						}
 					}
 					else if (type == TES3::ObjectType::Faction) {
 						TES3::Faction * faction = reinterpret_cast<TES3::Faction*>(owner);
 						id = faction->objectID;
-						rank = varNode->rankVar.rank;
+						rank = varNode->requirement.rank;
 					}
 					else {
 #if _DEBUG

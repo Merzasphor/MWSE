@@ -23,7 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "TES3MACP.h"
+#include "TES3MobilePlayer.h"
 #include "TES3Skill.h"
 
 using namespace mwse;
@@ -37,7 +37,7 @@ namespace mwse
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	private:
-		const mwFloat INVALID_VALUE = -1.0f;
+		const float INVALID_VALUE = -1.0f;
 	};
 
 	static xGetProgressSkill xGetProgressSkillInstance;
@@ -49,8 +49,8 @@ namespace mwse
 	float xGetProgressSkill::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameter off the stack.
-		mwLong skillIndex = mwse::Stack::getInstance().popLong();
-		if (skillIndex < TES3::FirstSkill || skillIndex > TES3::LastSkill) {
+		long skillIndex = mwse::Stack::getInstance().popLong();
+		if (skillIndex < TES3::SkillID::FirstSkill || skillIndex > TES3::SkillID::LastSkill) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetProgressSkill: Invalid skill index provided." << std::endl;
 #endif
@@ -71,8 +71,8 @@ namespace mwse
 		}
 
 		// Get the associated MACP record.
-		TES3::MACP* macp = tes3::getAttachedMACPRecord(reference);
-		if (macp == NULL) {
+		auto mobileObject = tes3::getAttachedMobilePlayer(reference);
+		if (mobileObject == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetProgressSkill: Could not find MACP record for reference." << std::endl;
 #endif
@@ -80,9 +80,16 @@ namespace mwse
 			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
 			return 0.0f;
 		}
+		else if (mobileObject->objectType != TES3::ObjectType::MobilePlayer) {
+#if _DEBUG
+			mwse::log::getLog() << "xGetProgressSkill: Attached mobile object is not for the player." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushLong(INVALID_VALUE);
+			return 0.0f;
+		}
 
-		mwFloat progress = macp->skillProgress[skillIndex];
-		mwFloat normalized = 100.0f * progress / tes3::getSkillRequirement(reference, skillIndex);
+		float progress = mobileObject->skillProgress[skillIndex];
+		float normalized = 100.0f * progress / tes3::getSkillRequirement(reference, skillIndex);
 
 		// Push the desired values.
 		mwse::Stack::getInstance().pushFloat(normalized);

@@ -1,99 +1,93 @@
 #pragma once
 
-#include "ObjectTypes.h"
-#include "TES3Spell.h"
-
-/*
-	Attachments are a data type that are added onto references (and possibly other
-	data types). They provide extra information, such as data for the lock, variables,
-	MACP, and activation targets.
-*/
+#include "TES3Object.h"
+#include "TES3Item.h"
+#include "TES3MobileActor.h"
+#include "TES3Vectors.h"
 
 namespace TES3 {
-	enum AttachmentType {
-		AttachmentLock = 3,
-		AttachmentVariables = 6,
-		AttachmentMACP = 8,
-		AttachmentActivator = 9
+	namespace AttachmentType {
+		enum AttachmentType {
+			Lock = 0x3,
+			LoadDoor = 0x5,
+			Variables = 0x6,
+			ActorData = 0x8,
+			Action = 0x9,
+			NewOrientation = 0xA
+		};
+	}
+
+	struct Attachment {
+		AttachmentType::AttachmentType type;
+		Attachment * next;
 	};
+	static_assert(sizeof(Attachment) == 0x8, "TES3::Attachment failed size validation");
 
-	// ----------------------------------------------------------------------------- //
-
-	// The most basic attachment data. Every attachment forms a linked list, defining
-	// the type of the attachment and the next attachment in the chain.
-	struct BaseAttachment {
-		AttachmentType type;
-		BaseAttachment * next;
-	};
-	static_assert(sizeof(BaseAttachment) == 0x08, "TES3::BaseAttachment failed size validation");
-
-	// Some attachment types are the basic linked list structure, with an added pointer
-	// to an extra data structure.
 	template <typename T>
-	struct NodeAttachment {
-		AttachmentType type;
-		NodeAttachment<T> * next;
-		T * node;
+	struct AttachmentWithNode : Attachment {
+		T * data;
 	};
-	static_assert(sizeof(NodeAttachment<void>) == 0x0C, "TES3::NodeAttachment failed size validation");
+	static_assert(sizeof(AttachmentWithNode<void>) == 0xC, "TES3::AttachmentWithNode failed size validation");
 
-	// ----------------------------------------------------------------------------- //
+	//
+	// Locks
+	//
 
-	// Node for LockAttachment.
 	struct LockAttachmentNode {
-		mwShort lockLevel; // 0x00
-		mwShort unknown_0x02;
+		int lockLevel; // 0x00
 		BaseObject * owner; // 0x04 // Faction or global?
 		Spell * trapSpell; // 0x08
 		char locked; // 0x0C
 	};
 	static_assert(sizeof(LockAttachmentNode) == 0x10, "TES3::LockAttachmentNode failed size validation");
 
-	// AttachmentType = 3
-	// Holds information about a door/container's lock state.
-	typedef NodeAttachment<LockAttachmentNode> LockAttachment;
+	typedef AttachmentWithNode<LockAttachmentNode> LockAttachment;
 
-	// ----------------------------------------------------------------------------- //
+	//
+	// Variables
+	//
 
-	// Node for VariableAttachment.
-	struct VariableAttachmentNode {
-		struct Variables {
-			mwShort * shortVarValues;
-			mwLong * longVarValues;
-			mwFloat * floatVarValues;
-		};
-		mwLong count; // 0x00 // For items, this is the item count (as long).
+	typedef AttachmentWithNode<ItemData> ItemDataAttachment;
+
+	//
+	// Ownership
+	//
+
+	struct OwnershipAttachmentNode {
+		int unknown_0x00;
 		BaseObject * owner; // 0x04
-		union { mwLong rank; TES3::GlobalVariable * variable; } rankVar; // 0x08
-		mwLong condition; // 0x0C // For LOCK/REPAIR/WEAPON/ARMOR/PROBE, this is the current condition (as long).
-		mwFloat currentCharge; // 0x10 // For enchanted items, this is the current charge (as a float).
-		int unknown_0x14;
-		Variables * variables; // 0x18
+		union {
+			long rank;
+			void * variable;
+		} rankVar; // 0x08
 	};
-	static_assert(sizeof(VariableAttachmentNode::Variables) == 0x0C, "TES3::VariableAttachmentNode::Variables failed size validation");
-	static_assert(sizeof(VariableAttachmentNode) == 0x1C, "TES3::VariableAttachmentNode failed size validation");
+	static_assert(sizeof(OwnershipAttachmentNode) == 0x0C, "TES3::OwnershipAttachmentNode failed size validation");
 
-	// AttachmentType = 6
-	// Holds variables associated with the object.
-	typedef NodeAttachment<VariableAttachmentNode> VariableAttachment;
+	typedef AttachmentWithNode<OwnershipAttachmentNode> OwnershipAttachment;
 
-	// ----------------------------------------------------------------------------- //
+	//
+	// Actor Data / Mobile Object
+	//
 
-	// AttachmentType = 8
-	// Holds the MACP record for the associated object.
-	typedef NodeAttachment<MACP> MACPAttachment;
+	typedef AttachmentWithNode<MobileActor> MobileActorAttachment;
 
-	// ----------------------------------------------------------------------------- //
+	//
+	// Action
+	//
 
-	// AttachmentType = 9
-	// Activator attachment holds the activation state, and who is going to activate the
-	// object.
-	struct ActivatorAttachment {
-		AttachmentType type;
-		BaseAttachment * next;
-		mwLong flags; // 1 = ???; 2 = Ready to activate
+	struct ActionAttachment : Attachment {
+		int flags;
 		Reference * reference;
 	};
-	static_assert(sizeof(ActivatorAttachment) == 0x10, "TES3::ActivatorAttachment failed size validation");
-}
+	static_assert(sizeof(ActionAttachment) == 0x10, "TES3::ActionAttachment failed size validation");
+	
+	//
+	// New Orientation
+	//
 
+	struct NewOrientationAttachment : Attachment {
+		Vector3 position;
+		Vector3 orientation;
+	};
+	static_assert(sizeof(NewOrientationAttachment) == 0x20, "TES3::NewOrientationAttachment failed size validation");
+}

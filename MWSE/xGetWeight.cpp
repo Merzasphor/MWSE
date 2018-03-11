@@ -52,7 +52,7 @@ namespace mwse {
 		}
 
 		// Get weight.
-		mwFloat weight = 0.0f;
+		float weight = 0.0f;
 		try {
 			weight = tes3::getWeight(reference, true);
 		}

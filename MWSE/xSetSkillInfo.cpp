@@ -24,7 +24,7 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
-#include "TES3CellMaster.h"
+#include "TES3DataHandler.h"
 #include "TES3Skill.h"
 
 using namespace mwse;
@@ -48,18 +48,18 @@ namespace mwse
 	float xSetSkillInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameter.
-		mwLong skillIndex = mwse::Stack::getInstance().popLong();
+		long skillIndex = mwse::Stack::getInstance().popLong();
 
 		// Return values.
-		mwLong attributeId = mwse::Stack::getInstance().popLong();
-		mwLong specialization = mwse::Stack::getInstance().popLong();
-		mwFloat action1 = mwse::Stack::getInstance().popFloat();
-		mwFloat action2 = mwse::Stack::getInstance().popFloat();
-		mwFloat action3 = mwse::Stack::getInstance().popFloat();
-		mwFloat action4 = mwse::Stack::getInstance().popFloat();
+		long attributeId = mwse::Stack::getInstance().popLong();
+		long specialization = mwse::Stack::getInstance().popLong();
+		float action1 = mwse::Stack::getInstance().popFloat();
+		float action2 = mwse::Stack::getInstance().popFloat();
+		float action3 = mwse::Stack::getInstance().popFloat();
+		float action4 = mwse::Stack::getInstance().popFloat();
 
 		// Validate skill index.
-		if (skillIndex < TES3::FirstSkill || skillIndex > TES3::LastSkill) {
+		if (skillIndex < TES3::SkillID::FirstSkill || skillIndex > TES3::SkillID::LastSkill) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetSkillInfo: Skill index out of range." << std::endl;
 #endif
@@ -68,7 +68,7 @@ namespace mwse
 		}
 
 		// Validate attribute.
-		if (attributeId < TES3::FirstAttribute || attributeId > TES3::LastAttribute) {
+		if (attributeId < TES3::Attribute::FirstAttribute || attributeId > TES3::Attribute::LastAttribute) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetSkillInfo: Attribute id out of range." << std::endl;
 #endif
@@ -77,7 +77,7 @@ namespace mwse
 		}
 
 		// Validate specialization.
-		if (specialization < TES3::FirstSpecialization || specialization > TES3::LastSpecialization) {
+		if (specialization < TES3::SkillSpecialization::FirstSpecialization || specialization > TES3::SkillSpecialization::LastSpecialization) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetSkillInfo: Specialization out of range." << std::endl;
 #endif
@@ -86,18 +86,18 @@ namespace mwse
 		}
 
 		// Get skill info.
-		TES3::Skill& skillInfo = tes3::getCellMaster()->recordLists->skills[skillIndex];
+		TES3::Skill& skillInfo = tes3::getDataHandler()->recordLists->skills[skillIndex];
 
 		// Store old specialization for future check.
-		mwLong oldSpecialization = skillInfo.specialization;
+		long oldSpecialization = skillInfo.specialization;
 
 		// Set skill info values.
-		skillInfo.attribute = attributeId;
+		skillInfo.governingAttribute = attributeId;
 		skillInfo.specialization = specialization;
-		skillInfo.actions[0] = action1;
-		skillInfo.actions[1] = action2;
-		skillInfo.actions[2] = action3;
-		skillInfo.actions[4] = action4;
+		skillInfo.progressActions[0] = action1;
+		skillInfo.progressActions[1] = action2;
+		skillInfo.progressActions[2] = action3;
+		skillInfo.progressActions[4] = action4;
 
 		// If our specialization changed, check for a skill level up.
 		if (oldSpecialization != specialization) {

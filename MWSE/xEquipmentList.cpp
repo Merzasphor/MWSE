@@ -29,6 +29,7 @@
 #include "TES3Weapon.h"
 #include "TES3NPC.h"
 #include "TES3Enchantment.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -40,8 +41,7 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 		
 	private:
-		mwLong getSubtype(TES3::BaseObject* record);
-		bool nodeMatchesFilter(TES3::IteratorNode<TES3::BaseObject*>* node, mwLong typeFilter, mwLong subtypeFilter);
+		bool nodeMatchesFilter(TES3::IteratorNode<TES3::Item>* node, long typeFilter, long subtypeFilter);
 	};
 
 	static xEquipmentList xEquipmentListInstance;
@@ -52,9 +52,9 @@ namespace mwse {
 
 	float xEquipmentList::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get parameters.
-		TES3::IteratorNode<TES3::BaseObject*>* node = reinterpret_cast<TES3::IteratorNode<TES3::BaseObject*>*>(mwse::Stack::getInstance().popLong());
-		mwLong typeFilter = mwse::Stack::getInstance().popLong();
-		mwLong subtypeFilter = mwse::Stack::getInstance().popLong() - 1;
+		TES3::IteratorNode<TES3::Item>* node = reinterpret_cast<TES3::IteratorNode<TES3::Item>*>(mwse::Stack::getInstance().popLong());
+		long typeFilter = mwse::Stack::getInstance().popLong();
+		long subtypeFilter = mwse::Stack::getInstance().popLong() - 1;
 
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
@@ -72,7 +72,7 @@ namespace mwse {
 			return 0.0f;
 		}
 
-		TES3::ObjectType::ObjectType objectType = reference->objectPointer->objectType;
+		TES3::ObjectType::ObjectType objectType = reference->baseObject->objectType;
 		if (objectType != TES3::ObjectType::NPC && objectType != TES3::ObjectType::Creature) {
 			mwse::log::getLog() << "xEquipmentList: Called on non-NPC, non-creature." << std::endl;
 			mwse::Stack::getInstance().pushLong(0);
@@ -88,19 +88,19 @@ namespace mwse {
 		}
 
 		// Results.
-		char * id = NULL;
-		mwLong count = 0;
-		mwLong type = 0;
-		mwLong subtype = -1;
-		mwLong value = 0;
-		mwFloat weight = 0;
-		mwString name = NULL;
-		mwString enchantId = NULL;
-		TES3::IteratorNode<TES3::BaseObject*>* next = NULL;
+		char* id = NULL;
+		long count = 0;
+		long type = 0;
+		long subtype = -1;
+		long value = 0;
+		float weight = 0;
+		char* name = NULL;
+		char* enchantId = NULL;
+		TES3::IteratorNode<TES3::Item>* next = NULL;
 
 		// If we aren't given a node, get the first one.
 		if (node == NULL) {
-			node = reinterpret_cast<TES3::NPCInstance*>(reference->objectPointer)->equipment.head;
+			node = reinterpret_cast<TES3::NPCInstance*>(reference->baseObject)->equipment.head;
 
 			// Pass over any records that don't match the current filters.
 			while (node && !nodeMatchesFilter(node, typeFilter, subtypeFilter)) {
@@ -110,54 +110,24 @@ namespace mwse {
 
 		// Validate the node we've obtained.
 		if (node && node->data) {
-			TES3::BaseObject* record = *node->data;
+			TES3::BaseObject* object = node->data;
 
-			id = record->objectID;
-			type = record->objectType;
+			id = object->vTable->getObjectID(object);
+			type = object->objectType;
+			value = object->vTable->getValue(object);
+			weight = object->vTable->getWeight(object);
+			name = object->vTable->getName(object);
 
 			// Get subtype.
-			subtype = getSubtype(record) + 1;
+			subtype = object->vTable->getType(object) + 1;
 
 			// Get count. Right now we hardcode this to 1, but ammo might actually have a count.
 			count = 1;
 
-			// Get value.
-			try {
-				value = tes3::getValue(reinterpret_cast<TES3::BaseObject*>(record));
-			}
-			catch (std::exception& e) {
-				value = 0;
-				mwse::log::getLog() << "xEquipmentList: Could not get value of object '" << id << "'. " << e.what() << std::endl;
-			}
-
-			// Get weight.
-			try {
-				weight = tes3::getWeight(reinterpret_cast<TES3::BaseObject*>(record));
-			}
-			catch (std::exception& e) {
-				weight = 0.0f;
-				mwse::log::getLog() << "xEquipmentList: Could not get weight of object '" << id << "'. " << e.what() << std::endl;
-			}
-
-			// Get name.
-			try {
-				name = tes3::getName(reinterpret_cast<TES3::BaseObject*>(record));
-			}
-			catch (std::exception& e) {
-				name = NULL;
-				mwse::log::getLog() << "xEquipmentList: Could not get name of object '" << id << "'. " << e.what() << std::endl;
-			}
-
 			// Get enchantment id.
-			try {
-				TES3::Enchantment* enchantment = tes3::getEnchantment(record);
-				if (enchantment) {
-					enchantId = enchantment->objectID;
-				}
-			}
-			catch (std::exception& e) {
-				name = NULL;
-				mwse::log::getLog() << "xEquipmentList: Could not get enchantment id of object '" << id << "'. " << e.what() << std::endl;
+			TES3::Enchantment* enchantment = object->vTable->getEnchantment(object);
+			if (enchantment) {
+				enchantId = enchantment->objectID;
 			}
 
 			// Pass over any records that don't match the current filters.
@@ -168,7 +138,7 @@ namespace mwse {
 		}
 
 		// Push values to the stack.
-		mwse::Stack::getInstance().pushLong((mwLong)next);
+		mwse::Stack::getInstance().pushLong((long)next);
 		mwse::Stack::getInstance().pushString(enchantId);
 		mwse::Stack::getInstance().pushString(name);
 		mwse::Stack::getInstance().pushFloat(weight);
@@ -181,40 +151,14 @@ namespace mwse {
 		return 0.0f;
 	}
 
-	mwLong xEquipmentList::getSubtype(TES3::BaseObject* record) {
-		if (record == NULL) {
-			return -2;
-		}
+	bool xEquipmentList::nodeMatchesFilter(TES3::IteratorNode<TES3::Item>* node, long typeFilter, long subtypeFilter) {
+		TES3::BaseObject* object = node->data;
 
-		mwLong subtype = -2;
-
-		TES3::Ammo * ammo = reinterpret_cast<TES3::Ammo*>(record);
-		switch (record->objectType) {
-		case TES3::ObjectType::Ammo:
-			subtype = ammo->weight;
-			break;
-		case TES3::ObjectType::Armor:
-			subtype = reinterpret_cast<TES3::Armor*>(record)->slot;
-			break;
-		case TES3::ObjectType::Clothing:
-			subtype = reinterpret_cast<TES3::Clothing*>(record)->slot;
-			break;
-		case TES3::ObjectType::Weapon:
-			subtype = reinterpret_cast<TES3::Weapon*>(record)->weaponType;
-			break;
-		}
-
-		return subtype;
-	}
-
-	bool xEquipmentList::nodeMatchesFilter(TES3::IteratorNode<TES3::BaseObject*>* node, mwLong typeFilter, mwLong subtypeFilter) {
-		TES3::BaseObject* record = *node->data;
-
-		if (typeFilter != 0 && record->objectType != typeFilter) {
+		if (typeFilter != 0 && object->objectType != typeFilter) {
 			return false;
 		}
 
-		if (subtypeFilter != -1 && getSubtype(record) != subtypeFilter) {
+		if (subtypeFilter != -1 && object->vTable->getType(object) != subtypeFilter) {
 			return false;
 		}
 

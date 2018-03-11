@@ -24,14 +24,15 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
-#include "TES3NPC.h"
-#include "TES3Container.h"
-#include "TES3Light.h"
-#include "TES3Armor.h"
 #include "TES3Activator.h"
-#include "TES3Door.h"
 #include "TES3Apparatus.h"
+#include "TES3Armor.h"
+#include "TES3Container.h"
+#include "TES3Door.h"
+#include "TES3Light.h"
 #include "TES3Lockpick.h"
+#include "TES3NPC.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -54,7 +55,7 @@ namespace mwse
 	float xSetName::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameter from the stack.
-		mwseString_t& name = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString& name = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Enforce name length.
 		if (name.length() > 31) {
@@ -76,7 +77,7 @@ namespace mwse
 		}
 		
 		// Get the base record.
-		TES3::BaseObject* recordGeneric = reinterpret_cast<TES3::BaseObject*>(reference->objectPointer);
+		TES3::BaseObject* recordGeneric = reference->baseObject;
 		if (recordGeneric == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetName: No record found for reference." << std::endl;

@@ -1,8 +1,15 @@
 #pragma once
 
-#include "ObjectTypes.h"
+#include "TES3Object.h"
 
 namespace TES3 {
+	struct ScriptVariables {
+		short * shortVarValues;
+		long * longVarValues;
+		float * floatVarValues;
+	};
+	static_assert(sizeof(ScriptVariables) == 0xC, "TES3::ScriptVariables failed size validation");
+
 	struct Script {
 		void * vTable; // 0x00
 		ObjectType::ObjectType recordType; // 0x04 // "SCPT"
@@ -20,8 +27,11 @@ namespace TES3 {
 		char * varNamePointers; // 0x50
 		int unknown_0x54; // equals zero?
 		void * machineCode; // 0x58
-		mwShort * shortVarValues; // 0x5C
-		mwLong * longVarValues; // 0x60
-		mwFloat * floatVarValues; // 0x64
+		short * shortVarValues; // 0x5C
+		long * longVarValues; // 0x60
+		float * floatVarValues; // 0x64
+		int unknown_0x68;
+		int unknown_0x6C;
 	};
+	static_assert(sizeof(Script) == 0x70, "TES3::Script failed size validation");
 }

@@ -24,8 +24,10 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 #include "ArrayUtil.h"
-#include "TES3MACP.h"
+#include "TES3MobileNPC.h"
 #include "TES3NPC.h"
+#include "TES3Reference.h"
+#include "TES3Race.h"
 
 using namespace mwse;
 
@@ -38,7 +40,7 @@ namespace mwse
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	private:
-		std::map<mwLong, mwLong> arrayMap;
+		std::map<long, long> arrayMap;
 	};
 
 	static xGetRace xGetRaceInstance;
@@ -59,31 +61,25 @@ namespace mwse
 		}
 
 		// Get the base record.
-		TES3::NPCInstance* record = reinterpret_cast<TES3::NPCInstance*>(reference->objectPointer);
-		if (record == NULL) {
+		TES3::NPCInstance* object = reinterpret_cast<TES3::NPCInstance*>(reference->baseObject);
+		if (object == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetRace: No record found for reference." << std::endl;
 #endif
 			return 0.0f;
 		}
-		else if (record->objectType != TES3::ObjectType::NPC) {
+		else if (object->objectType != TES3::ObjectType::NPC) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetRace: Called on a non-NPC reference." << std::endl;
 #endif
 			return 0.0f;
 		}
-		else if (record->baseNPC == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetRace: NPC record lacks a base NPC." << std::endl;
-#endif
-			return 0.0f;
-		}
 
 		// Get the NPC's race.
-		TES3::Race* race = record->baseNPC->race;
+		TES3::Race* race = object->vTable->getRace(object);
 
 		// Get argument: return variable type.
-		mwShort returnTypeParam = mwse::Stack::getInstance().popShort();
+		short returnTypeParam = mwse::Stack::getInstance().popShort();
 
 		// Simple case. Just push the race name.
 		if (returnTypeParam == 0) {
@@ -94,10 +90,10 @@ namespace mwse
 		// Complex case, push array(s).
 		else if (returnTypeParam == 1) {
 			// Get the array index to use from storage, or create it.
-			mwLong mainArrayId = 0;
-			mwLong skillArrayId = 0;
-			mwLong attributeArrayId = 0;
-			auto foundArrayId = arrayMap.find((mwLong)race);
+			long mainArrayId = 0;
+			long skillArrayId = 0;
+			long attributeArrayId = 0;
+			auto foundArrayId = arrayMap.find((long)race);
 			if (foundArrayId != arrayMap.end()) {
 				// Array found. Clear the arrays for reuse.
 				mainArrayId = foundArrayId->second;
@@ -112,7 +108,7 @@ namespace mwse
 				mainArrayId = mwse::Arrays::getInstance().create("xGetRace");
 				skillArrayId = mwse::Arrays::getInstance().create("xGetRace");
 				attributeArrayId = mwse::Arrays::getInstance().create("xGetRace");
-				arrayMap[(mwLong)race] = mainArrayId;
+				arrayMap[(long)race] = mainArrayId;
 			}
 
 			if (mainArrayId != 0) {
@@ -121,7 +117,7 @@ namespace mwse
 					ContainedArray_t& skillArray = mwse::Arrays::getInstance().get(skillArrayId);
 					skillArray.push_back(7);
 					for (size_t i = 0; i < 7; i++) {
-						if (race->skillBonuses[i].skill != TES3::SkillInvalid) {
+						if (race->skillBonuses[i].skill != TES3::SkillID::Invalid) {
 							skillArray.push_back(race->skillBonuses[i].skill);
 							skillArray.push_back(race->skillBonuses[i].bonus);
 						}
@@ -146,10 +142,10 @@ namespace mwse
 				returnArray.push_back(mwse::string::store::getOrCreate(race->name));
 				returnArray.push_back(skillArrayId);
 				returnArray.push_back(attributeArrayId);
-				returnArray.push_back(*reinterpret_cast<mwLong*>(&race->height.male));
-				returnArray.push_back(*reinterpret_cast<mwLong*>(&race->height.female));
-				returnArray.push_back(*reinterpret_cast<mwLong*>(&race->weight.male));
-				returnArray.push_back(*reinterpret_cast<mwLong*>(&race->weight.female));
+				returnArray.push_back(*reinterpret_cast<long*>(&race->height.male));
+				returnArray.push_back(*reinterpret_cast<long*>(&race->height.female));
+				returnArray.push_back(*reinterpret_cast<long*>(&race->weight.male));
+				returnArray.push_back(*reinterpret_cast<long*>(&race->weight.female));
 				returnArray.push_back(race->flags & 1);
 				returnArray.push_back(race->flags >> 1);
 

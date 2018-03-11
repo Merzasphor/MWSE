@@ -56,7 +56,7 @@ namespace mwse
 			return 0.0f;
 		}
 		
-		TES3::IteratorNode<TES3::InventoryNode>* firstItem = tes3::getFirstInventoryNode(reference);
+		TES3::IteratorNode<TES3::ItemStack>* firstItem = tes3::getFirstInventoryNode(reference);
 		if (firstItem == NULL) {
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
@@ -64,9 +64,9 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwse::Stack::getInstance().pushLong((mwLong)firstItem->next);
-		mwse::Stack::getInstance().pushLong(firstItem->data->itemCount);
-		mwse::Stack::getInstance().pushString(reinterpret_cast<TES3::BaseObject*>(firstItem->data->object)->objectID);
+		mwse::Stack::getInstance().pushLong((long)firstItem->next);
+		mwse::Stack::getInstance().pushLong(firstItem->data->count);
+		mwse::Stack::getInstance().pushString(firstItem->data->object->vTable->getObjectID(firstItem->data->object));
 
 		return 0.0f;
 	}

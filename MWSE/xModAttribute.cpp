@@ -23,7 +23,8 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "TES3MACP.h"
+#include "TES3MobileNPC.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -52,11 +53,11 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwLong attributeId = mwse::Stack::getInstance().popLong();
-		mwFloat modValue = mwse::Stack::getInstance().popFloat();
+		long attributeId = mwse::Stack::getInstance().popLong();
+		float modValue = mwse::Stack::getInstance().popFloat();
 
 		// Verify attribute range.
-		if (attributeId < TES3::FirstAttribute || attributeId > TES3::LastAttribute) {
+		if (attributeId < TES3::Attribute::FirstAttribute || attributeId > TES3::Attribute::LastAttribute) {
 #if _DEBUG
 			mwse::log::getLog() << "xModAttribute: Invalid attribute id: " << attributeId << std::endl;
 #endif
@@ -75,7 +76,7 @@ namespace mwse
 		}
 
 		// Make sure we're looking at an NPC or creature.
-		TES3::ObjectType::ObjectType type = reference->objectPointer->objectType;
+		TES3::ObjectType::ObjectType type = reference->baseObject->objectType;
 		if (type != TES3::ObjectType::NPC && type != TES3::ObjectType::Creature) {
 #if _DEBUG
 			mwse::log::getLog() << "xModAttribute: Called on non-NPC, non-creature reference." << std::endl;
@@ -85,8 +86,8 @@ namespace mwse
 		}
 
 		// Get the associated MACP record.
-		TES3::MACP* macp = tes3::getAttachedMACPRecord(reference);
-		if (macp == NULL) {
+		auto mobileObject = tes3::getAttachedMobileNPC(reference);
+		if (mobileObject == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xModAttribute: Could not find MACP record for reference." << std::endl;
 #endif
@@ -95,18 +96,18 @@ namespace mwse
 		}
 
 		// Modify current.
-		float newValue = macp->attributes[attributeId].current + modValue;
+		float newValue = mobileObject->attributes[attributeId].current + modValue;
 		if (newValue < 0) {
 			newValue = 0;
 		}
-		macp->attributes[attributeId].current = newValue;
+		mobileObject->attributes[attributeId].current = newValue;
 
 		// Modify base.
-		newValue = macp->attributes[attributeId].base + modValue;
+		newValue = mobileObject->attributes[attributeId].base + modValue;
 		if (newValue < 0) {
 			newValue = 0;
 		}
-		macp->attributes[attributeId].base = newValue;
+		mobileObject->attributes[attributeId].base = newValue;
 
 		// Push to indicate success.
 		mwse::Stack::getInstance().pushLong(1);

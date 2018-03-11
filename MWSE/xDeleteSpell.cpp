@@ -24,7 +24,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
-#include "TES3CellMaster.h"
+#include "TES3DataHandler.h"
+#include "TES3Spell.h"
 
 using namespace mwse;
 
@@ -47,10 +48,10 @@ namespace mwse
 	float xDeleteSpell::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get spell.
-		TES3::Spell* spell = tes3::getSpellRecordById(id);
+		TES3::Spell* spell = tes3::getObjectByID<TES3::Spell>(id, TES3::ObjectType::Spell);
 		if (spell == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xDeleteSpell: No spell found with id '" << id << "'." << std::endl;
@@ -60,20 +61,20 @@ namespace mwse
 		}
 
 		// Manipulate the record list to remove this object.
-		TES3::LinkedList<TES3::Spell>* spellsList = tes3::getCellMaster()->recordLists->spellsList;
+		TES3::LinkedList<TES3::Spell>* spellsList = tes3::getDataHandler()->recordLists->spellsList;
 		if (spell == spellsList->head) {
-			spell->nextSpell->previousSpell = NULL;
-			spellsList->head = spell->nextSpell;
+			spell->nextInCollection->previousInCollection = NULL;
+			spellsList->head = reinterpret_cast<TES3::Spell*>(spell->nextInCollection);
 		}
 		else if (spell == spellsList->tail) {
-			spell->previousSpell->nextSpell = NULL;
-			spellsList->tail = spell->previousSpell;
+			spell->previousInCollection->nextInCollection = NULL;
+			spellsList->tail = reinterpret_cast<TES3::Spell*>(spell->previousInCollection);
 		}
 		else {
-			TES3::Spell* nextSpell = spell->nextSpell;
-			TES3::Spell* previousSpell = spell->previousSpell;
-			nextSpell->previousSpell = previousSpell;
-			previousSpell->nextSpell = nextSpell;
+			TES3::Object* nextSpell = spell->nextInCollection;
+			TES3::Object* previousSpell = spell->previousInCollection;
+			nextSpell->previousInCollection = previousSpell;
+			previousSpell->nextInCollection = nextSpell;
 		}
 		spellsList->size--;
 

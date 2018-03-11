@@ -44,13 +44,13 @@ namespace mwse
 	float xGetRef::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get the parameter.
-		mwseString_t & id = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString & id = virtualMachine.getString(Stack::getInstance().popLong());
 
 		// Get its reference.
 		TES3::Reference * ref = virtualMachine.getReference(id.c_str());
 
 		// Push back as long.
-		Stack::getInstance().pushLong((mwLong)ref);
+		Stack::getInstance().pushLong((long)ref);
 
 		return 0.0f;
 	}

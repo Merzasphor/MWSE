@@ -43,7 +43,7 @@ namespace mwse
 
 	float xLongToFloats::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwLong param = mwse::Stack::getInstance().popLong();
+		long param = mwse::Stack::getInstance().popLong();
 
 		mwse::Stack::getInstance().pushFloat((param >> 16) + 0x10000);
 		mwse::Stack::getInstance().pushFloat(param & 0xFFFF);

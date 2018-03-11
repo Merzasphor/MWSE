@@ -24,11 +24,12 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Reference.h"
 #include "TES3Armor.h"
 #include "TES3Weapon.h"
 #include "TES3Lockpick.h"
 #include "TES3Probe.h"
-#include "TES3Repair.h"
+#include "TES3RepairTool.h"
 
 using namespace mwse;
 
@@ -51,7 +52,7 @@ namespace mwse
 	float xSetMaxCondition::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameter from the stack.
-		mwLong maxCondition = mwse::Stack::getInstance().popLong();
+		long maxCondition = mwse::Stack::getInstance().popLong();
 		bool success = false;
 
 		// Get reference.
@@ -64,42 +65,42 @@ namespace mwse
 			return 0.0f;
 		}
 
-		// Get the base record.
-		TES3::BaseObject* record = reinterpret_cast<TES3::BaseObject*>(reference->objectPointer);
-		if (record == NULL) {
+		// Get the base object.
+		TES3::BaseObject* object = reference->baseObject;
+		if (object == NULL) {
 #if _DEBUG
-			mwse::log::getLog() << "xSetMaxCondition: No record found for reference." << std::endl;
+			mwse::log::getLog() << "xSetMaxCondition: No object found for reference." << std::endl;
 #endif
 			mwse::Stack::getInstance().pushLong(false);
 			return 0.0f;
 		}
 
-		// Set the max condition based on record type.
-		if (record->objectType == TES3::ObjectType::Armor) {
-			reinterpret_cast<TES3::Armor*>(record)->maxCondition = maxCondition;
+		// Set the max condition based on object type.
+		if (object->objectType == TES3::ObjectType::Armor) {
+			reinterpret_cast<TES3::Armor*>(object)->maxCondition = maxCondition;
 		}
-		else if (record->objectType == TES3::ObjectType::Weapon) {
-			reinterpret_cast<TES3::Weapon*>(record)->maxCondition = maxCondition;
+		else if (object->objectType == TES3::ObjectType::Weapon) {
+			reinterpret_cast<TES3::Weapon*>(object)->maxCondition = maxCondition;
 		}
-		else if (record->objectType == TES3::ObjectType::Lockpick) {
-			reinterpret_cast<TES3::Lockpick*>(record)->maxCondition = maxCondition;
+		else if (object->objectType == TES3::ObjectType::Lockpick) {
+			reinterpret_cast<TES3::Lockpick*>(object)->maxCondition = maxCondition;
 		}
-		else if (record->objectType == TES3::ObjectType::Probe) {
-			reinterpret_cast<TES3::Probe*>(record)->maxCondition = maxCondition;
+		else if (object->objectType == TES3::ObjectType::Probe) {
+			reinterpret_cast<TES3::Probe*>(object)->maxCondition = maxCondition;
 		}
-		else if (record->objectType == TES3::ObjectType::Repair) {
-			reinterpret_cast<TES3::Repair*>(record)->maxCondition = maxCondition;
+		else if (object->objectType == TES3::ObjectType::Repair) {
+			reinterpret_cast<TES3::RepairTool*>(object)->maxCondition = maxCondition;
 		}
 		else {
 #if _DEBUG
-			mwse::log::getLog() << "xSetMaxCondition: Invalid record type: " << record->objectType << std::endl;
+			mwse::log::getLog() << "xSetMaxCondition: Invalid object type: " << object->objectType << std::endl;
 #endif
 			mwse::Stack::getInstance().pushLong(success);
 			return 0.0f;
 		}
 
 		// If there's a variable node containing condition, and we need to change it, do so.
-		auto varNode = tes3::getAttachedVariableNode(reference);
+		auto varNode = tes3::getAttachedItemDataNode(reference);
 		if (varNode && varNode->condition > maxCondition) {
 			varNode->condition = maxCondition;
 			success = true;

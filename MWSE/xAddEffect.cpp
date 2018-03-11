@@ -49,20 +49,20 @@ namespace mwse
 	float xAddEffect::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwLong type = mwse::Stack::getInstance().popLong();
-		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
-		mwLong effectId = mwse::Stack::getInstance().popLong();
-		mwLong skillAttributeId = mwse::Stack::getInstance().popLong();
-		mwLong range = mwse::Stack::getInstance().popLong();
-		mwLong area = mwse::Stack::getInstance().popLong();
-		mwLong duration = mwse::Stack::getInstance().popLong();
-		mwLong magMin = mwse::Stack::getInstance().popLong();
-		mwLong magMax = mwse::Stack::getInstance().popLong();
+		long type = mwse::Stack::getInstance().popLong();
+		mwseString& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		long effectId = mwse::Stack::getInstance().popLong();
+		long skillAttributeId = mwse::Stack::getInstance().popLong();
+		long range = mwse::Stack::getInstance().popLong();
+		long area = mwse::Stack::getInstance().popLong();
+		long duration = mwse::Stack::getInstance().popLong();
+		long magMin = mwse::Stack::getInstance().popLong();
+		long magMax = mwse::Stack::getInstance().popLong();
 
 		// Get the desired effect.
 		TES3::Effect* effects = NULL;
 		if (type == TES3::ObjectType::Spell) {
-			TES3::Spell* spell = tes3::getSpellRecordById(id);
+			TES3::Spell* spell = tes3::getObjectByID<TES3::Spell>(id, TES3::ObjectType::Spell);
 			if (spell) {
 				effects = spell->effects;
 			}
@@ -75,7 +75,7 @@ namespace mwse
 			}
 		}
 		else if (type == TES3::ObjectType::Enchantment) {
-			TES3::Enchantment* enchant = tes3::getEnchantRecordById(id);
+			TES3::Enchantment* enchant = tes3::getObjectByID<TES3::Enchantment>(id, TES3::ObjectType::Enchantment);
 			if (enchant) {
 				effects = enchant->effects;
 			}
@@ -88,7 +88,7 @@ namespace mwse
 			}
 		}
 		else if (type == TES3::ObjectType::Alchemy) {
-			TES3::Alchemy* alchemy = tes3::getAlchemyRecordById(id);
+			TES3::Alchemy* alchemy = tes3::getObjectByID<TES3::Alchemy>(id, TES3::ObjectType::Alchemy);
 			if (alchemy) {
 				effects = alchemy->effects;
 			}

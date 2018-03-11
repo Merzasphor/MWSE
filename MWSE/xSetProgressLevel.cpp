@@ -23,7 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "TES3MACP.h"
+#include "TES3MobilePlayer.h"
 
 using namespace mwse;
 
@@ -46,12 +46,12 @@ namespace mwse
 	float xSetProgressLevel::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameter.
-		mwLong progress = mwse::Stack::getInstance().popLong();
+		long progress = mwse::Stack::getInstance().popLong();
 
 		// Get the associated MACP record.
 		TES3::Reference* reference = virtualMachine.getReference("player");
-		TES3::MACP* macp = tes3::getAttachedMACPRecord(reference);
-		if (macp == NULL) {
+		auto mobileObject = tes3::getAttachedMobilePlayer(reference);
+		if (mobileObject == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetProgressLevel: Could not find MACP record for reference." << std::endl;
 #endif
@@ -60,7 +60,7 @@ namespace mwse
 		}
 
 		// Set progress.
-		macp->levelProgress = progress;
+		mobileObject->levelUpProgress = progress;
 
 		// Check for level up.
 		tes3::checkForLevelUp(progress);

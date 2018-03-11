@@ -49,7 +49,7 @@ namespace mwse
 	float xGetItemCount::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameter.
-		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get who we're getting the item count of. mwscript's GetItemCount validates the
 		// object type for us, we don't need to.
@@ -74,7 +74,7 @@ namespace mwse
 
 		// Call the original function.
 		TES3::Script* script = &virtualMachine.getScript();
-		mwLong result = mwse::mwscript::GetItemCount(script, reference, itemTemplate);
+		long result = mwse::mwscript::GetItemCount(script, reference, itemTemplate);
 		mwse::Stack::getInstance().pushLong(result);
 
 		return 0.0f;

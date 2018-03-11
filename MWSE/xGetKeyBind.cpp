@@ -25,8 +25,9 @@
 #include "TES3Util.h"
 #include <Windows.h>
 
-#include "TES3Master.h"
-#include "TES3CellMaster.h"
+#include "TES3WorldController.h"
+#include "TES3InputController.h"
+#include "TES3DataHandler.h"
 
 using namespace mwse;
 
@@ -51,10 +52,10 @@ namespace mwse {
 
 	float xGetKeyBind::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get parameters.
-		mwLong inputIndex = Stack::getInstance().popLong();
+		long inputIndex = Stack::getInstance().popLong();
 
 		// Validate index.
-		if (inputIndex < TES3::Input::KeyFirst || inputIndex > TES3::Input::KeyLast) {
+		if (inputIndex < TES3::KeyBind::FirstKey || inputIndex > TES3::KeyBind::LastKey) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetKeyBind: Index out of bounds." << std::endl;
 #endif
@@ -66,17 +67,17 @@ namespace mwse {
 		}
 
 		// Get our structure.
-		TES3::Input::InputConfig::Input& config = tes3::getMaster()->inputConfig->inputMaps[inputIndex];
+		TES3::InputConfig& config = tes3::getWorldController()->inputController->inputMaps[inputIndex];
 
 		// Get the basic codes/return values.
-		mwLong scanCode = config.keyCode;
-		mwLong scanDevice = config.device;
-		mwLong keyCode = 0;
+		long scanCode = config.keyCode;
+		long scanDevice = config.device;
+		long keyCode = 0;
 
-		if (scanDevice == TES3::Input::DeviceKeyboard) {
+		if (scanDevice == TES3::InputDevice::Keyboard) {
 			keyCode = MapVirtualKey(scanCode, MAPVK_VSC_TO_VK);
 		}
-		else if (scanDevice == TES3::Input::DeviceMouse) {
+		else if (scanDevice == TES3::InputDevice::Mouse) {
 			switch (scanCode) {
 			case 0x00:
 				keyCode = VK_LBUTTON;

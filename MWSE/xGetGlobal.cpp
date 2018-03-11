@@ -43,9 +43,9 @@ namespace mwse {
 	void xGetGlobal::loadParameters(mwse::VMExecuteInterface &virtualMachine) {}
 
 	float xGetGlobal::execute(mwse::VMExecuteInterface &virtualMachine) {
-		mwseString_t& variable = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString& variable = virtualMachine.getString(Stack::getInstance().popLong());
 
-		mwFloat value = 0.0f;
+		float value = 0.0f;
 
 		// Get global.
 		const TES3::GlobalVariable* global = tes3::getGlobalRecord(variable);
@@ -57,7 +57,7 @@ namespace mwse {
 		}
 
 		// Push value if found.
-		mwse::Stack::getInstance().pushFloat(global->data);
+		mwse::Stack::getInstance().pushFloat(global->value);
 		mwse::Stack::getInstance().pushLong(true);
 
 		return 0.0f;

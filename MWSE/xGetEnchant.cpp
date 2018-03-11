@@ -28,6 +28,8 @@
 #include "TES3Weapon.h"
 #include "TES3Clothing.h"
 #include "TES3Book.h"
+#include "TES3Reference.h"
+#include "TES3Enchantment.h"
 
 using namespace mwse;
 
@@ -50,64 +52,40 @@ namespace mwse
 	float xGetEnchant::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Return values.
-		mwString enchId = NULL;
-		mwLong type = 0;
-		mwLong cost = 0;
-		mwFloat currCharge = 0.0f;
-		mwLong maxCharge = 0;
-		mwLong effects = 0;
-		mwLong autocalc = 0;
+		char* enchId = NULL;
+		long type = 0;
+		long cost = 0;
+		float currCharge = 0.0f;
+		long maxCharge = 0;
+		long effects = 0;
+		long autocalc = 0;
 
 		// Get reference to what we're finding enchantment information for.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference) {
-			TES3::Enchantment* enchantment = NULL;
-
-			// Get ENCH record by type.
-			TES3::ObjectType::ObjectType recordType = reference->objectPointer->objectType;
-			if (recordType == TES3::ObjectType::Armor) {
-				TES3::Armor* armor = reinterpret_cast<TES3::Armor*>(reference->objectPointer);
-				enchantment = armor->enchantment;
-			}
-			else if (recordType == TES3::ObjectType::Weapon) {
-				TES3::Weapon* weapon = reinterpret_cast<TES3::Weapon*>(reference->objectPointer);
-				enchantment = weapon->enchantment;
-			}
-			else if (recordType == TES3::ObjectType::Clothing) {
-				TES3::Clothing* clothing = reinterpret_cast<TES3::Clothing*>(reference->objectPointer);
-				enchantment = clothing->enchantment;
-			}
-			else if (recordType == TES3::ObjectType::Book) {
-				TES3::Book* book = reinterpret_cast<TES3::Book*>(reference->objectPointer);
-				enchantment = book->enchantment;
-			}
-			else if (recordType == TES3::ObjectType::Ammo) {
-				TES3::Ammo* ammo = reinterpret_cast<TES3::Ammo*>(reference->objectPointer);
-				enchantment = ammo->enchantment;
-			}
-			else {
-#if _DEBUG
-				log::getLog() << "xGetEnchant: Could not find enchant record of record type: " << recordType << std::endl;
-#endif
-			}
-
 			// Get data from ENCH record.
+			TES3::Enchantment* enchantment = reference->baseObject->vTable->getEnchantment(reference->baseObject);
 			if (enchantment) {
 				enchId = enchantment->objectID;
-				type = enchantment->type;
-				cost = enchantment->cost;
-				maxCharge = enchantment->charge;
+				type = enchantment->castType;
+				cost = enchantment->chargeCost;
+				maxCharge = enchantment->maxCharge;
 				effects = tes3::getEffectCount(enchantment->effects);
-				//autocalc = enchantment->autocalc; // TODO: This field didn't seem valid. Find it.
+				autocalc = enchantment->vTable->getAutoCalc(enchantment);
 
 				// Get the current charge.
-				auto varNode = tes3::getAttachedVariableNode(reference);
+				auto varNode = tes3::getAttachedItemDataNode(reference);
 				if (varNode) {
-					currCharge = varNode->currentCharge;
+					currCharge = varNode->enchantCharge;
 				}
 				else {
 					currCharge = maxCharge;
 				}
+			}
+			else {
+#if _DEBUG
+				log::getLog() << "xGetEnchant: Could not find enchant record of record type: " << reference->baseObject->objectType << std::endl;
+#endif
 			}
 		}
 		else {

@@ -45,7 +45,7 @@ namespace mwse
 	float xSetCondition::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameter.
-		mwLong value = Stack::getInstance().popLong();
+		long value = Stack::getInstance().popLong();
 
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
@@ -58,7 +58,7 @@ namespace mwse
 		}
 
 		// Get associated varnode, and the condition from it.
-		auto varNode = tes3::getAttachedVariableNode(reference);
+		auto varNode = tes3::getAttachedItemDataNode(reference);
 		if (varNode != NULL) {
 			varNode->condition = value;
 		}

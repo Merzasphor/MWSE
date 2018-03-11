@@ -49,7 +49,7 @@ namespace mwse
 	float xSetLevel::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwShort level = mwse::Stack::getInstance().popShort();
+		short level = mwse::Stack::getInstance().popShort();
 
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();

@@ -23,7 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "TES3MACP.h"
+#include "TES3MobileNPC.h"
 
 using namespace mwse;
 
@@ -47,8 +47,8 @@ namespace mwse
 	{
 		// Get MACP record.
 		TES3::Reference* reference = virtualMachine.getReference();
-		TES3::MACP* macp = tes3::getAttachedMACPRecord(reference);
-		if (macp == NULL) {
+		auto mobileObject = tes3::getAttachedMobileNPC(reference);
+		if (mobileObject == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetCombat: No mach node found." << std::endl;
 #endif
@@ -57,8 +57,8 @@ namespace mwse
 		}
 
 		// Push the reference of the combat target, or 0 if no target reference is found.
-		if (macp->combatTarget && macp->combatTarget->reference) {
-			mwse::Stack::getInstance().pushLong((mwLong)macp->combatTarget->reference);
+		if (mobileObject->actionData.target && mobileObject->actionData.target->reference) {
+			mwse::Stack::getInstance().pushLong((long)mobileObject->actionData.target->reference);
 		}
 		else {
 			mwse::Stack::getInstance().pushLong(0);

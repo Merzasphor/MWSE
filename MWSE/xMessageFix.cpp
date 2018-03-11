@@ -25,6 +25,7 @@
 #include "TES3Util.h"
 #include "ScriptUtil.h"
 #include "StringUtil.h"
+#include "TES3Script.h"
 
 using namespace mwse;
 
@@ -63,7 +64,7 @@ namespace mwse {
 		}
 
 		// Get the parameter matching the main message string.
-		mwseString_t& format = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString& format = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// The first string is the message text. Following parameters might be based on the format there.
 		// We can skip the substitution if the string is empty or nonexistant.
@@ -109,7 +110,7 @@ namespace mwse {
 			scriptRWP += 1;
 
 			// Get the replacement string.
-			mwseString_t& newButtonText = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+			mwseString& newButtonText = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 			// We can skip the substitution if the string is empty or nonexistant.
 			if (!newButtonText.empty()) {

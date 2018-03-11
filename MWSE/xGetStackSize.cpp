@@ -50,10 +50,10 @@ namespace mwse {
 		}
 
 		// Get the associated variable node and its item count.
-		mwLong count = 0;
-		auto varNode = tes3::getAttachedVariableNode(reference);
+		long count = 0;
+		auto varNode = tes3::getAttachedItemDataNode(reference);
 		if (varNode) {
-			count = varNode->count;
+			count = varNode->stackCount;
 		}
 
 		mwse::Stack::getInstance().pushLong(count);

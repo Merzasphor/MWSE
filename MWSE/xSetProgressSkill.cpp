@@ -23,7 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "TES3MACP.h"
+#include "TES3MobilePlayer.h"
 
 using namespace mwse;
 
@@ -46,14 +46,14 @@ namespace mwse
 	float xSetProgressSkill::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwLong skillIndex = mwse::Stack::getInstance().popLong();
-		mwFloat progress = mwse::Stack::getInstance().popFloat();
-		mwLong normalized = mwse::Stack::getInstance().popLong();
+		long skillIndex = mwse::Stack::getInstance().popLong();
+		float progress = mwse::Stack::getInstance().popFloat();
+		long normalized = mwse::Stack::getInstance().popLong();
 
 		// Get the associated MACP record.
 		TES3::Reference* reference = virtualMachine.getReference("player");
-		TES3::MACP* macp = tes3::getAttachedMACPRecord(reference);
-		if (macp == NULL) {
+		auto mobileObject = tes3::getAttachedMobilePlayer(reference);
+		if (mobileObject == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetProgressSkill: Could not find MACP record for reference." << std::endl;
 #endif
@@ -62,7 +62,7 @@ namespace mwse
 		}
 
 		// Verify skill index.
-		if (skillIndex < TES3::FirstSkill || skillIndex > TES3::LastSkill) {
+		if (skillIndex < TES3::SkillID::FirstSkill || skillIndex > TES3::SkillID::LastSkill) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetProgressSkill: Skill index out of bounds." << std::endl;
 #endif
@@ -85,7 +85,7 @@ namespace mwse
 		}
 
 		// Set progress.
-		macp->skillProgress[skillIndex] = progress;
+		mobileObject->skillProgress[skillIndex] = progress;
 
 		// Check for skill level up.
 		tes3::checkForSkillUp(reference, skillIndex);

@@ -1,16 +1,11 @@
 #pragma once
 
-#include "ObjectTypes.h"
-#include "TES3Skill.h"
+#include "TES3Object.h"
 
 namespace TES3 {
-	struct Race_vTable {
-
-	};
-
-	struct Race {
+	struct Race : BaseObject {
 		struct SkillBonus {
-			Skills skill;
+			long skill;
 			unsigned long bonus;
 		};
 		struct BaseAttribute {
@@ -40,10 +35,6 @@ namespace TES3 {
 			BaseObject * head2;
 			int unknown2[14];
 		};
-		Race_vTable * vTable; // 0x00
-		ObjectType::ObjectType objectType; // 0x04
-		int baseFlags; // 0x08
-		void * unknown_0x0C; // 0x0C // Appears to be info about the module this record comes from.
 		char id[32]; // 0x10
 		char name[32]; // 0x30
 		SkillBonus skillBonuses[7]; // 0x50

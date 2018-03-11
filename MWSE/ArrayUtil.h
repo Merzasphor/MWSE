@@ -21,16 +21,12 @@
 
 #pragma once
 
-#include "ObjectTypes.h"
 #include "mwseString.h"
 #include "Log.h"
 
 #include <string>
 #include <vector>
 
-/**
-*
-*/
 namespace mwse {
 	typedef long ArrayItem_t;
 	typedef std::vector<ArrayItem_t> ContainedArray_t;
@@ -44,11 +40,11 @@ namespace mwse {
 
 		ArrayItem_t getValue(std::string const& caller, size_t const id, size_t const index);
 
-		mwLong setValue(std::string const& caller, size_t const id, size_t const index, ArrayItem_t const value);
+		long setValue(std::string const& caller, size_t const id, size_t const index, ArrayItem_t const value);
 
 		size_t getSize(std::string const& caller, size_t const id);
 
-		mwLong clear(std::string const& caller, size_t const id);
+		long clear(std::string const& caller, size_t const id);
 
 		Arrays_t& get();
 

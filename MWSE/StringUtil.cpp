@@ -12,26 +12,26 @@ namespace mwse {
 		namespace store {
 			// String ids need to start at 40,000 so that they don't get confused for in-script
 			// strings.
-			mwLong nextId = MWSE_STRING_STORE_FIRSTID;
+			long nextId = MWSE_STRING_STORE_FIRSTID;
 
 			// Static storage for strings, indexed by id.
 			StringMap_t store;
 
-			mwseString_t& create(const std::string& value) {
-				mwLong id = nextId++;
-				store.insert(StringMap_t::value_type(id, mwseString_t(id, value)));
+			mwseString& create(const std::string& value) {
+				long id = nextId++;
+				store.insert(StringMap_t::value_type(id, mwseString(id, value)));
 				return get(id);
 			}
 
-			mwseString_t& create(const char* value) {
-				mwLong id = nextId++;
-				store.insert(StringMap_t::value_type(id, mwseString_t(id, value)));
+			mwseString& create(const char* value) {
+				long id = nextId++;
+				store.insert(StringMap_t::value_type(id, mwseString(id, value)));
 				return get(id);
 			}
 
-			mwseString_t& create(const char* value, size_t length) {
-				mwLong id = nextId++;
-				store.insert(StringMap_t::value_type(id, mwseString_t(id, value, length)));
+			mwseString& create(const char* value, size_t length) {
+				long id = nextId++;
+				store.insert(StringMap_t::value_type(id, mwseString(id, value, length)));
 				return get(id);
 			}
 
@@ -47,7 +47,7 @@ namespace mwse {
 				return cleared;
 			}
 
-			bool exists(const mwLong id) {
+			bool exists(const long id) {
 				return store.find(id) != store.end();
 			}
 
@@ -71,26 +71,26 @@ namespace mwse {
 				return false;
 			}
 
-			mwseString_t& get(const mwLong id) {
+			mwseString& get(const long id) {
 				auto it = store.find(id);
 				if (it == store.end()) {
-					return mwseString_t();
+					throw std::exception();
 				}
 
 				return it->second;
 			}
 
-			mwseString_t& get(const std::string& value) {
+			mwseString& get(const std::string& value) {
 				for (StringMap_t::iterator it = store.begin(); it != store.end(); it++) {
 					if (it->second.compare(value) == 0) {
 						return it->second;
 					}
 				}
 
-				return mwseString_t();
+				throw std::exception();
 			}
 
-			mwseString_t& getOrCreate(const char* value) {
+			mwseString& getOrCreate(const char* value) {
 				if (exists(value)) {
 					return get(value);
 				}
@@ -98,15 +98,15 @@ namespace mwse {
 				return create(value);
 			}
 
-			mwseString_t& getOrCreate(const char* value, size_t length) {
+			mwseString& getOrCreate(const char* value, size_t length) {
 				if (exists(value)) {
 					return get(value);
 				}
 
-				return create(value, length);
+				return create(value);
 			}
 
-			mwseString_t& getOrCreate(const std::string& value) {
+			mwseString& getOrCreate(const std::string& value) {
 				if (exists(value)) {
 					return get(value);
 				}
@@ -197,7 +197,7 @@ namespace mwse {
 					}
 					else if (current_char == 'd' && current_code == "%") {
 						if (!Stack::getInstance().empty()) {
-							mwLong value = mwse::Stack::getInstance().popLong();
+							long value = mwse::Stack::getInstance().popLong();
 							convert.str("");
 							convert << std::dec << value;
 							result += convert.str();
@@ -207,7 +207,7 @@ namespace mwse {
 					}
 					else if (current_char == 'h' && current_code == "%") {
 						if (!Stack::getInstance().empty()) {
-							mwLong value = mwse::Stack::getInstance().popLong();
+							long value = mwse::Stack::getInstance().popLong();
 							convert.str("");
 							convert << std::hex << value;
 							result += convert.str();
@@ -218,7 +218,7 @@ namespace mwse {
 					else if (current_char == 'f') {
 						if (!skip_set) {
 							if (!Stack::getInstance().empty()) {
-								mwFloat value = mwse::Stack::getInstance().popFloat();
+								float value = mwse::Stack::getInstance().popFloat();
 								// 6 = vsprintf default precision - mimic old version
 								if (!precision_set) precision = 6;
 								convert.str("");
@@ -235,7 +235,7 @@ namespace mwse {
 					}
 					else if (current_char == 's') {
 						if (!mwse::Stack::getInstance().empty()) {
-							mwseString_t& value = mwse::string::store::get(Stack::getInstance().popLong());
+							mwseString& value = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 							if (value.isValid()) {
 								size_t substitute_start = std::min((size_t)skip, value.length());
 								if (!precision_set) precision = value.length();
@@ -313,7 +313,7 @@ namespace mwse {
 			return (eolmode || (substitutions > 0));
 		}
 
-		int secernate(const char* format, const char* string, mwLong* results, int maxResults) {
+		int secernate(const char* format, const char* string, long* results, int maxResults) {
 			int resultcount = 1;		// count is first and set below
 			int sign;
 			int ivalue;
@@ -379,10 +379,10 @@ namespace mwse {
 					{
 						format++;
 						svalue = svalbuf;
-						*((mwLong*)svalbuf) = 0;
+						*((long*)svalbuf) = 0;
 						stringwidth = 4;
 						while (stringwidth-- && (*svalue++ = *string++));
-						results[resultcount++] = *((mwLong*)svalbuf);
+						results[resultcount++] = *((long*)svalbuf);
 					}
 					else if (*format == 'D' || *format == 'd')
 					{
@@ -400,7 +400,7 @@ namespace mwse {
 							string++;
 						}
 						ivalue *= sign;
-						results[resultcount++] = (mwLong)ivalue;
+						results[resultcount++] = (long)ivalue;
 					}
 					else if (*format == 'H' || *format == 'h')
 					{
@@ -420,7 +420,7 @@ namespace mwse {
 							string++;
 							length++;
 						}
-						results[resultcount++] = (mwLong)hvalue;
+						results[resultcount++] = (long)hvalue;
 					}
 
 					else if (*format == 'F' || *format == 'f')
@@ -450,7 +450,7 @@ namespace mwse {
 							}
 						}
 						fvalue *= sign;
-						results[resultcount++] = (mwLong)(*((mwLong*)&fvalue));
+						results[resultcount++] = (long)(*((long*)&fvalue));
 					}
 
 					else if (*format == 'S' || *format == 's')
@@ -515,7 +515,7 @@ namespace mwse {
 				results[0] = resultcount;
 
 			while (resultcount < maxResults)
-				results[resultcount++] = (mwLong)0;
+				results[resultcount++] = (long)0;
 
 			return results[0];
 		}

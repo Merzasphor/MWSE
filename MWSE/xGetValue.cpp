@@ -52,7 +52,7 @@ namespace mwse {
 		}
 
 		// Get value.
-		mwLong value = 0;
+		long value = 0;
 		try {
 			value = tes3::getValue(reference, true);
 		}

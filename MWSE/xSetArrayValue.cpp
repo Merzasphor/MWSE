@@ -50,11 +50,11 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwLong id = mwse::Stack::getInstance().popLong();
-		mwLong index = mwse::Stack::getInstance().popLong();
-		mwLong value = mwse::Stack::getInstance().popLong();
+		long id = mwse::Stack::getInstance().popLong();
+		long index = mwse::Stack::getInstance().popLong();
+		long value = mwse::Stack::getInstance().popLong();
 
-		mwLong status = mwse::Arrays::getInstance().setValue("xSetArrayValue", id, index, value);
+		long status = mwse::Arrays::getInstance().setValue("xSetArrayValue", id, index, value);
 
 		mwse::Stack::getInstance().pushShort(status);
 

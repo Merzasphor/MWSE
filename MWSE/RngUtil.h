@@ -23,14 +23,12 @@
 
 #include <random>
 
-#include "ObjectTypes.h"
-
 namespace mwse
 {
 	namespace rng
 	{
-		mwLong getRandomLong(mwLong min, mwLong max);
+		long getRandomLong(long min, long max);
 
-		mwFloat getRandomFloat(mwFloat min, mwFloat max);
+		float getRandomFloat(float min, float max);
 	}
 };
