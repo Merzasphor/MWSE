@@ -99,11 +99,14 @@ namespace mwse {
 			}
 
 			mwseString& getOrCreate(const char* value, size_t length) {
-				if (exists(value)) {
-					return get(value);
+				std::string limitedValue = value;
+				limitedValue.resize(length, '\0');
+
+				if (exists(limitedValue.c_str())) {
+					return get(limitedValue.c_str());
 				}
 
-				return create(value);
+				return create(limitedValue.c_str());
 			}
 
 			mwseString& getOrCreate(const std::string& value) {
