@@ -57,7 +57,7 @@ namespace mwse
 		}
 
 		// Determine the PC cell -- either the interior cell if we have one, or the center cell.
-		TES3::Cell* cell = masterCell->lastExteriorCell;
+		TES3::Cell* cell = masterCell->currentInteriorCell;
 		if (cell == NULL) {
 			cell = masterCell->exteriorCellData[TES3::CellGrid::Center]->cell;
 		}
