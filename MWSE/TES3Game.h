@@ -1,14 +1,13 @@
 #pragma once
 
+#include "TES3Object.h"
+
 #include <Windows.h>
 
-#include "ObjectTypes.h"
-#include "TES3Reference.h"
-
 namespace TES3 {
-	struct ViewMaster {
-		int unknown_0x0;
-		int unknown_0x4;
+	struct Game {
+		void * vTable;
+		void * unknown_0x4;
 		int unknown_0x8;
 		int unknown_0xC;
 		int unknown_0x10;
@@ -21,14 +20,13 @@ namespace TES3 {
 		char unknown_0x20;
 		char unknown_0x21;
 		char screenShotsEnabled; // 0x22
-		char unknown_0x23;
 		int unknown_0x24;
 		int unknown_0x28;
 		int unknown_0x2C;
 		int unknown_0x30;
 		int unknown_0x34;
 		int unknown_0x38;
-		int unknown_0x3C;
+		float unknown_0x3C;
 		int unknown_0x40;
 		int screenX; // 0x44
 		int screenY; // 0x48
@@ -44,20 +42,21 @@ namespace TES3 {
 		char unknown_0x5B;
 		int unknown_0x5C;
 		HWND windowHandle; // 0x60
-		int unknown_0x64;
+		void * sgNode1;
 		int unknown_0x68;
 		int unknown_0x6C;
 		int unknown_0x70;
-		int unknown_0x74;
-		int unknown_0x78;
-		int unknown_0x7C;
+		char unknown_0x74;
+		char unknown_0x75;
+		void * unknown_0x78;
+		char unknown_0x7C;
 		int unknown_0x80;
 		int unknown_0x84;
-		int unknown_0x88;
+		void * unknown_0x88; // std::string?
 		int unknown_0x8C;
 		int unknown_0x90;
 		int unknown_0x94;
-		void * UnkStr2; // 0x98
+		void * unknown_0x98; // List?
 		int unknown_0x9C;
 		int unknown_0xA0;
 		int unknown_0xA4;
@@ -71,13 +70,11 @@ namespace TES3 {
 		int unknown_0xC4;
 		int unknown_0xC8;
 		int unknown_0xCC;
-		int unknown_0xD0;
-		int unknown_0xD4;
-		int unknown_0xD8;
+		void * unknown_0xD0[3]; // SG nodes?
 		int unknown_0xDC;
 		int unknown_0xE0;
 		int unknown_0xE4;
-		Reference * target; // 0xE8
+		Reference * playerTarget; // 0xE8
 		int unknown_0xEC;
 		int unknown_0xF0;
 		int unknown_0xF4;
@@ -87,8 +84,7 @@ namespace TES3 {
 		int unknown_0x104;
 		int unknown_0x108;
 		char unknown_0x10C;
-		char unknown_0x10D;
-		char unknown_0x10E;
-		char unknown_0x10F;
+		char unknown_0x10D[3]; // Padding.
 	};
+	static_assert(sizeof(Game) == 0x110, "TES3::Game failed size validation");
 }

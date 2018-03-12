@@ -23,7 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "TES3MACP.h"
+#include "TES3MobileNPC.h"
 
 using namespace mwse;
 
@@ -36,7 +36,7 @@ namespace mwse
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	private:
-		const mwFloat INVALID_VALUE = -1.0f;
+		const float INVALID_VALUE = -1.0f;
 	};
 
 	static xGetMaxFatigue xGetMaxFatigueInstance;
@@ -49,8 +49,8 @@ namespace mwse
 	{
 		// Get the associated MACP record.
 		TES3::Reference* reference = virtualMachine.getReference();
-		TES3::MACP* macp = tes3::getAttachedMACPRecord(reference);
-		if (macp == NULL) {
+		auto mobileObject = tes3::getAttachedMobileNPC(reference);
+		if (mobileObject == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetMaxFatigue: Could not find MACP record for reference." << std::endl;
 #endif
@@ -59,7 +59,7 @@ namespace mwse
 		}
 
 		// Push the base value of the statistic.
-		mwse::Stack::getInstance().pushFloat(macp->fatigue.base);
+		mwse::Stack::getInstance().pushFloat(mobileObject->fatigue.base);
 
 		return 0.0f;
 	}

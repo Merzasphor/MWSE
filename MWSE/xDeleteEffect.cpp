@@ -48,14 +48,14 @@ namespace mwse
 	float xDeleteEffect::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwLong type = mwse::Stack::getInstance().popLong();
-		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
-		mwLong effectIndex = mwse::Stack::getInstance().popLong() - 1; // 0-based index.
+		long type = mwse::Stack::getInstance().popLong();
+		mwseString& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		long effectIndex = mwse::Stack::getInstance().popLong() - 1; // 0-based index.
 		
 		// Get the desired effect.
 		TES3::Effect* effects = NULL;
 		if (type == TES3::ObjectType::Spell) {
-			TES3::Spell* spell = tes3::getSpellRecordById(id);
+			TES3::Spell* spell = tes3::getObjectByID<TES3::Spell>(id, TES3::ObjectType::Spell);
 			if (spell) {
 				effects = spell->effects;
 			}
@@ -68,7 +68,7 @@ namespace mwse
 			}
 		}
 		else if (type == TES3::ObjectType::Enchantment) {
-			TES3::Enchantment* enchant = tes3::getEnchantRecordById(id);
+			TES3::Enchantment* enchant = tes3::getObjectByID<TES3::Enchantment>(id, TES3::ObjectType::Enchantment);
 			if (enchant) {
 				effects = enchant->effects;
 			}
@@ -81,7 +81,7 @@ namespace mwse
 			}
 		}
 		else if (type == TES3::ObjectType::Alchemy) {
-			TES3::Alchemy* alchemy = tes3::getAlchemyRecordById(id);
+			TES3::Alchemy* alchemy = tes3::getObjectByID<TES3::Alchemy>(id, TES3::ObjectType::Alchemy);
 			if (alchemy) {
 				effects = alchemy->effects;
 			}
@@ -117,12 +117,12 @@ namespace mwse
 		}
 
 		// Disable the effect.
-		effects[effectIndex].ID = TES3::EffectNone;
+		effects[effectIndex].effectID = TES3::EffectID::None;
 
 		// Move effects beyond the given index forward to fill the gap.
 		for (size_t i = effectIndex + 1; i < effectCount; i++) {
 			effects[i - 1] = effects[i];
-			effects[i].ID = TES3::EffectNone;
+			effects[i].effectID = TES3::EffectID::None;
 		}
 
 		mwse::Stack::getInstance().pushLong(true);

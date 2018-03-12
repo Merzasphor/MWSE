@@ -24,6 +24,7 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Reference.h"
 #include "TES3Book.h"
 #include "TES3Light.h"
 #include "TES3Lockpick.h"
@@ -51,7 +52,7 @@ namespace mwse {
 
 	float xSetWeight::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get parameters.
-		mwFloat weight = mwse::Stack::getInstance().popFloat();
+		float weight = mwse::Stack::getInstance().popFloat();
 
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
@@ -64,7 +65,7 @@ namespace mwse {
 		}
 
 		// Get record.
-		TES3::BaseObject* record = reference->objectPointer;
+		TES3::BaseObject* record = reference->baseObject;
 		if (record == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetWeight: No base record found." << std::endl;
@@ -104,7 +105,7 @@ namespace mwse {
 			reinterpret_cast<TES3::Apparatus*>(record)->weight = weight;
 			break;
 		case TES3::ObjectType::Container:
-			reinterpret_cast<TES3::Container*>(record)->weight = weight;
+			reinterpret_cast<TES3::Container*>(record)->capacity = weight;
 			break;
 		default:
 			setWeight = false;

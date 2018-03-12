@@ -49,7 +49,7 @@ namespace mwse
 	float xHasItemEquipped::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get script reference.
 		TES3::Reference* reference = virtualMachine.getReference();

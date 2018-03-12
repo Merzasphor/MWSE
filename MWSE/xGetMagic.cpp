@@ -23,8 +23,10 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "TES3MACP.h"
+#include "TES3MobileNPC.h"
 #include "TES3Enchantment.h"
+#include "TES3Reference.h"
+#include "TES3Spell.h"
 
 using namespace mwse;
 
@@ -47,24 +49,24 @@ namespace mwse
 	float xGetMagic::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Return values.
-		mwLong type = 0;
-		mwString id = NULL;
+		long type = 0;
+		char* id = NULL;
 
 		// Get reference to what we're finding enchantment information for.
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference) {
-			TES3::ObjectType::ObjectType recordType = reference->objectPointer->objectType;
+			TES3::ObjectType::ObjectType recordType = reference->baseObject->objectType;
 			if (recordType == TES3::ObjectType::Creature || recordType == TES3::ObjectType::NPC) {
-				TES3::MACP* macp = tes3::getAttachedMACPRecord(reference);
-				if (macp) {
-					if (macp->currentSpell) {
-						type = macp->currentSpell->objectType;
+				auto mobileObject = tes3::getAttachedMobileNPC(reference);
+				if (mobileObject) {
+					if (mobileObject->currentSpell) {
+						type = mobileObject->currentSpell->objectType;
 						if (type == TES3::ObjectType::Spell) {
-							TES3::Spell* spell = reinterpret_cast<TES3::Spell*>(macp->currentSpell);
+							TES3::Spell* spell = reinterpret_cast<TES3::Spell*>(mobileObject->currentSpell);
 							id = spell->objectID;
 						}
 						else if (type == TES3::ObjectType::Enchantment) {
-							TES3::Enchantment* enchantment = reinterpret_cast<TES3::Enchantment*>(macp->currentSpell);
+							TES3::Enchantment* enchantment = reinterpret_cast<TES3::Enchantment*>(mobileObject->currentSpell);
 							id = enchantment->objectID;
 						}
 						else {

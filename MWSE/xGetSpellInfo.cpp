@@ -45,25 +45,25 @@ namespace mwse
 	float xGetSpellInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t& spellId = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString& spellId = virtualMachine.getString(Stack::getInstance().popLong());
 
 		// Return values.
-		mwString name = NULL;
-		mwLong type = 0;
-		mwLong cost = 0;
-		mwLong effects = 0;
-		mwLong flags = 0;
-		mwLong origin = 0;
+		char* name = NULL;
+		long type = 0;
+		long cost = 0;
+		long effects = 0;
+		long flags = 0;
+		long origin = 0;
 
 		// Get spell data by id.
-		TES3::Spell* spell = tes3::getSpellRecordById(spellId);
+		TES3::Spell* spell = tes3::getObjectByID<TES3::Spell>(spellId, TES3::ObjectType::Spell);;
 		if (spell != NULL) {
 			name = spell->name;
-			type = spell->type;
-			cost = spell->cost;
+			type = spell->castType;
+			cost = spell->magickaCost;
 			effects = tes3::getEffectCount(spell->effects);
-			flags = spell->flags;
-			origin = spell->origin;
+			flags = spell->spellFlags;
+			origin = spell->objectFlags & 0x3;
 		}
 		else {
 #if _DEBUG

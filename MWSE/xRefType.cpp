@@ -22,6 +22,7 @@
 #include "VMExecuteInterface.h"
 #include "Stack.h"
 #include "InstructionInterface.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -52,9 +53,9 @@ namespace mwse
 			return 0.0f;
 		}
 
-		TES3::BaseObject * temp = reinterpret_cast<TES3::BaseObject*>(refr->objectPointer);
+		TES3::BaseObject * temp = reinterpret_cast<TES3::BaseObject*>(refr->baseObject);
 
-		mwLong type = static_cast<mwLong>(temp->objectType);
+		long type = static_cast<long>(temp->objectType);
 
 		Stack::getInstance().pushLong(type);
 

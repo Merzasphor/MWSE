@@ -24,6 +24,7 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 #include "TES3NPC.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -52,20 +53,8 @@ namespace mwse {
 			return 0.0f;
 		}
 
-		mwLong value = 0;
-
-		// Get the gold based on the base record type.
-		TES3::NPCInstance* npc = reinterpret_cast<TES3::NPCInstance*>(reference->objectPointer);
-		if (npc->objectType == TES3::ObjectType::NPC) {
-			value = npc->flags % 2;
-		}
-		else {
-#if _DEBUG
-			mwse::log::getLog() << "xIsFemale: Called on non-NPC target." << std::endl;
-#endif
-		}
-
-		mwse::Stack::getInstance().pushLong(value);
+		long isFemale = reference->baseObject->vTable->isFemale(reference->baseObject);
+		mwse::Stack::getInstance().pushLong(isFemale);
 
 		return 0.0f;
 	}

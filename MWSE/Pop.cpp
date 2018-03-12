@@ -35,7 +35,7 @@ namespace mwse
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 	protected:
 	private:
-		mwShort popLength;
+		short popLength;
 	};
 
 	static Pop popInstance;
@@ -49,7 +49,7 @@ namespace mwse
 
 	float Pop::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwShort items = popLength /4; //number of items to throw off the stack
+		short items = popLength /4; //number of items to throw off the stack
 		Stack::getInstance().popFrames(items);
 		return 0.0f;
 	}

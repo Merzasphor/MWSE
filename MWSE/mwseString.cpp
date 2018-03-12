@@ -26,63 +26,63 @@
 
 using namespace mwse;
 
-mwseString_t::mwseString_t() :
+mwseString::mwseString() :
 	std::string(""),
 	m_ID(-1)
 {
 #if DEBUG_STRING_CREATION
-	mwse::log::getDebug() << "mwseString_t: Created invalid string." << std::endl;
+	mwse::log::getDebug() << "mwseString: Created invalid string." << std::endl;
 #endif
 }
 
-mwseString_t::mwseString_t(mwLong id) :
+mwseString::mwseString(long id) :
 	std::string(""),
 	m_ID(id)
 {
 #if DEBUG_STRING_CREATION
-	mwse::log::getDebug() << "mwseString_t: Created new string of id '" << m_ID << "' with empty value." << std::endl;
+	mwse::log::getDebug() << "mwseString: Created new string of id '" << m_ID << "' with empty value." << std::endl;
 #endif
 }
 
-mwseString_t::mwseString_t(mwLong id, const char* value) :
+mwseString::mwseString(long id, const char* value) :
 	std::string(value),
 	m_ID(id)
 {
 #if DEBUG_STRING_CREATION
-	mwse::log::getDebug() << "mwseString_t: Created new string of id '" << m_ID << "' value '" << value << "'." << std::endl;
+	mwse::log::getDebug() << "mwseString: Created new string of id '" << m_ID << "' value '" << value << "'." << std::endl;
 #endif
 }
 
-mwseString_t::mwseString_t(mwLong id, const char* value, size_t length) :
+mwseString::mwseString(long id, const char* value, size_t length) :
 	std::string(value, length),
 	m_ID(id)
 {
 #if DEBUG_STRING_CREATION
-	mwse::log::getDebug() << "mwseString_t: Created new string of id '" << m_ID << "' value '" << value << "'." << std::endl;
+	mwse::log::getDebug() << "mwseString: Created new string of id '" << m_ID << "' value '" << this->c_str() << "' (" << length << ")." << std::endl;
 #endif
 }
 
-mwseString_t::mwseString_t(mwLong id, const std::string& value) :
+mwseString::mwseString(long id, const std::string& value) :
 	std::string(value),
 	m_ID(id)
 {
 #if DEBUG_STRING_CREATION
-	mwse::log::getDebug() << "mwseString_t: Created new string of id '" << m_ID << "' value '" << value << "'." << std::endl;
+	mwse::log::getDebug() << "mwseString: Created new string of id '" << m_ID << "' value '" << value << "'." << std::endl;
 #endif
 }
 
-mwseString_t::operator mwLong() const
+mwseString::operator long() const
 {
 	if (m_ID == -1) return 0;
 	return m_ID;
 }
 
-bool mwseString_t::isValid()
+bool mwseString::isValid()
 {
 	return m_ID != -1;
 }
 
-mwLong mwseString_t::getId()
+long mwseString::getId()
 {
 	return m_ID;
 }

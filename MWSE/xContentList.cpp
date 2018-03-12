@@ -42,7 +42,7 @@ namespace mwse {
 
 	float xContentList::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get parameters.
-		TES3::IteratorNode<TES3::InventoryNode>* node = reinterpret_cast<TES3::IteratorNode<TES3::InventoryNode>*>(mwse::Stack::getInstance().popLong());
+		TES3::IteratorNode<TES3::ItemStack>* node = reinterpret_cast<TES3::IteratorNode<TES3::ItemStack>*>(mwse::Stack::getInstance().popLong());
 
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
@@ -61,13 +61,13 @@ namespace mwse {
 		}
 
 		// Results.
-		char * id = NULL;
-		mwLong count = 0;
-		mwLong type = 0;
-		mwLong value = 0;
-		mwFloat weight = 0;
-		mwString name = NULL;
-		TES3::IteratorNode<TES3::InventoryNode>* next = NULL;
+		char* id = NULL;
+		long count = 0;
+		long type = 0;
+		long value = 0;
+		float weight = 0;
+		char* name = NULL;
+		TES3::IteratorNode<TES3::ItemStack>* next = NULL;
 
 		// If we aren't given a node, get the first one.
 		if (node == NULL) {
@@ -76,44 +76,20 @@ namespace mwse {
 
 		// Validate the node we've obtained.
 		if (node && node->data && node->data->object) {
-			TES3::BaseObject* record = reinterpret_cast<TES3::BaseObject*>(node->data->object);
+			TES3::Object* object = node->data->object;
 			
-			id = record->objectID;
-			count = node->data->itemCount;
-			type = record->objectType;
-
-			// Get value.
-			try {
-				value = tes3::getValue(reinterpret_cast<TES3::BaseObject*>(record));
-			}
-			catch (std::exception& e) {
-				value = 0;
-				mwse::log::getLog() << "xContentList: Could not get value of object '" << id << "'. " << e.what() << std::endl;
-			}
-
-			// Get weight.
-			try {
-				weight = tes3::getWeight(reinterpret_cast<TES3::BaseObject*>(record));
-			}
-			catch (std::exception& e) {
-				weight = 0.0f;
-				mwse::log::getLog() << "xContentList: Could not get weight of object '" << id << "'. " << e.what() << std::endl;
-			}
-
-			// Get name.
-			try {
-				name = tes3::getName(reinterpret_cast<TES3::BaseObject*>(record));
-			}
-			catch (std::exception& e) {
-				name = NULL;
-				mwse::log::getLog() << "xContentList: Could not get name of object '" << id << "'. " << e.what() << std::endl;
-			}
+			id = object->vTable->getObjectID(object);
+			count = node->data->count;
+			type = object->objectType;
+			value = object->vTable->getValue(object);
+			weight = object->vTable->getWeight(object);
+			name = object->vTable->getName(object);
 			
 			next = node->next;
 		}
 
 		// Push values to the stack.
-		mwse::Stack::getInstance().pushLong((mwLong)next);
+		mwse::Stack::getInstance().pushLong((long)next);
 		mwse::Stack::getInstance().pushString(name);
 		mwse::Stack::getInstance().pushFloat(weight);
 		mwse::Stack::getInstance().pushLong(value);

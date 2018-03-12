@@ -45,28 +45,28 @@ namespace mwse
 	float xGetSpellEffectInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t& effectId = virtualMachine.getString(Stack::getInstance().popLong());
-		mwShort effectIndex = Stack::getInstance().popShort();
+		mwseString& effectId = virtualMachine.getString(Stack::getInstance().popLong());
+		short effectIndex = Stack::getInstance().popShort();
 
 		// Return values.
-		mwLong effectEnumId = TES3::EffectNone;
-		mwLong rangeType = 0;
-		mwLong area = 0;
-		mwLong duration = 0;
-		mwLong magMin = 0;
-		mwLong magMax = 0;
+		long effectEnumId = TES3::EffectID::None;
+		long rangeType = 0;
+		long area = 0;
+		long duration = 0;
+		long magMin = 0;
+		long magMax = 0;
 
 		// Validate effect index.
 		if (effectIndex >= 1 && effectIndex <= 8) {
 			// Get the desired effect.
-			TES3::Spell* spell = tes3::getSpellRecordById(effectId);
+			TES3::Spell* spell = tes3::getObjectByID<TES3::Spell>(effectId, TES3::ObjectType::Spell);
 			if (spell) {
 				TES3::Effect* effect = &spell->effects[effectIndex - 1];
 				// If we found an effect, set the values.
-				if (effect && effect->ID != TES3::EffectNone) {
-					effectEnumId = effect->ID;
-					rangeType = effect->range;
-					area = effect->area;
+				if (effect && effect->effectID != TES3::EffectID::None) {
+					effectEnumId = effect->effectID;
+					rangeType = effect->rangeType;
+					area = effect->radius;
 					duration = effect->duration;
 					magMin = effect->magnitudeMin;
 					magMax = effect->magnitudeMax;

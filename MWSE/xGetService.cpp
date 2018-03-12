@@ -23,8 +23,10 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "TES3MACP.h"
+#include "TES3MobileNPC.h"
 #include "TES3NPC.h"
+#include "TES3Reference.h"
+#include "TES3AIConfig.h"
 
 using namespace mwse;
 
@@ -53,24 +55,16 @@ namespace mwse {
 			return 0.0f;
 		}
 
-		mwLong flags = 0;
-		mwLong mask = mwse::Stack::getInstance().popLong();
+		long flags = 0;
+		long mask = mwse::Stack::getInstance().popLong();
 
-		// Get the gold based on the base record type.
-		TES3::NPCInstance* npc = reinterpret_cast<TES3::NPCInstance*>(reference->objectPointer);
-		if (npc->objectType == TES3::ObjectType::NPC) {
-			if (npc->baseNPC) {
-				flags = npc->baseNPC->servicesMask;
-				flags &= mask;
-			}
-			else {
-#if _DEBUG
-				mwse::log::getLog() << "xGetService: Could not get base NPC record for \"" << npc->objectID << "\"" << std::endl;
-#endif
-			}
+		// Get the AI configuration from the NPC;
+		TES3::AIConfig* aiConfig = reference->baseObject->vTable->getAIConfig(reference->baseObject);
+		if (aiConfig) {
+			flags = aiConfig->merchantFlags & mask;
 		} else {
 #if _DEBUG
-			mwse::log::getLog() << "xGetService: Called on non-NPC target." << std::endl;
+			mwse::log::getLog() << "xGetService: Could not resolve AI configuration." << std::endl;
 #endif
 		}
 

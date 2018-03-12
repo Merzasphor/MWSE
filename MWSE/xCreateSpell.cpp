@@ -25,7 +25,7 @@
 #include "TES3Util.h"
 
 #include "TES3Collections.h"
-#include "TES3CellMaster.h"
+#include "TES3DataHandler.h"
 
 using namespace mwse;
 
@@ -48,8 +48,8 @@ namespace mwse
 	float xCreateSpell::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t& spellId = virtualMachine.getString(Stack::getInstance().popLong());
-		mwseString_t& spellName = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString& spellId = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString& spellName = virtualMachine.getString(Stack::getInstance().popLong());
 
 		// Verify spell Id length.
 		if (spellId.length() > 31) {
@@ -70,7 +70,7 @@ namespace mwse
 		}
 		
 		// Verify that a spell of this id doesn't already exist.
-		if (tes3::getSpellRecordById(spellId) != NULL) {
+		if (tes3::getObjectByID<TES3::Spell>(spellId, TES3::ObjectType::Spell) != NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xCreateSpell: A spell of the given id '" << spellId << "' already exists." << std::endl;
 #endif
@@ -79,7 +79,7 @@ namespace mwse
 		}
 
 		// Get spell list.
-		TES3::LinkedList<TES3::Spell>* spellsList = tes3::getCellMaster()->recordLists->spellsList;
+		TES3::LinkedList<TES3::Spell>* spellsList = tes3::getDataHandler()->recordLists->spellsList;
 		TES3::Spell* spellListHead = spellsList->head;
 
 		// Create new spell.
@@ -87,8 +87,8 @@ namespace mwse
 		memset(newSpell, 0, sizeof(TES3::Spell));
 		newSpell->vTable = spellListHead->vTable;
 		newSpell->objectType = TES3::ObjectType::Spell;
-		newSpell->spellsList = spellsList;
-		newSpell->cost = 1;
+		newSpell->owningCollection = spellsList;
+		newSpell->magickaCost = 1;
 
 		// Set ID.
 		newSpell->objectID = tes3::malloc<char>(spellId.length() + 1);
@@ -100,11 +100,11 @@ namespace mwse
 
 		// Set effects.
 		for (int i = 0; i < 8; i++) {
-			newSpell->effects[i].ID = TES3::EffectNone;
+			newSpell->effects[i].effectID = TES3::EffectID::None;
 		}
 		
 		// Set the first effect just so that there is something? TODO: Why?
-		tes3::setEffect(newSpell->effects, 1, TES3::EffectWaterBreathing, TES3::SkillInvalid, TES3::EffectRangeSelf, 0, 1, 0, 0);
+		tes3::setEffect(newSpell->effects, 1, TES3::EffectID::WaterBreathing, TES3::SkillID::Invalid, TES3::EffectRange::Self, 0, 1, 0, 0);
 
 		// Add object to the game.
 		tes3::addObject(reinterpret_cast<TES3::BaseObject*>(newSpell));

@@ -54,10 +54,10 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwString owner = NULL;
+		char* owner = NULL;
 
 		// Get the attached varnode.
-		auto node = tes3::getAttachedVariableNode(reference);
+		auto node = tes3::getAttachedItemDataNode(reference);
 		if (node) {
 			if (node->owner && node->owner->objectID) {
 				owner = node->owner->objectID;

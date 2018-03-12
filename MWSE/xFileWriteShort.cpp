@@ -49,8 +49,8 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwseString_t& fileName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
-		mwShort value = mwse::Stack::getInstance().popShort();
+		mwseString& fileName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		short value = mwse::Stack::getInstance().popShort();
 
 		mwse::FileSystem::getInstance().writeShort(fileName.c_str(), value);
 

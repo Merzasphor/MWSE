@@ -24,6 +24,7 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 #include "TES3NPC.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -43,7 +44,7 @@ namespace mwse {
 
 	float xSetService::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get parameters.
-		mwLong flags = mwse::Stack::getInstance().popLong() & 0x0003FFFF;
+		long flags = mwse::Stack::getInstance().popLong() & 0x0003FFFF;
 
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
@@ -56,20 +57,13 @@ namespace mwse {
 		}
 
 		// Set service mask.
-		TES3::NPCInstance* npc = reinterpret_cast<TES3::NPCInstance*>(reference->objectPointer);
-		if (npc->objectType == TES3::ObjectType::NPC) {
-			if (npc->baseNPC) {
-				npc->baseNPC->servicesMask = flags;
-			}
-			else {
-#if _DEBUG
-				mwse::log::getLog() << "xSetService: Could not get base NPC record for \"" << npc->objectID << "\"" << std::endl;
-#endif
-			}
+		TES3::AIConfig* aiConfig = reference->baseObject->vTable->getAIConfig(reference->baseObject);
+		if (aiConfig) {
+			aiConfig->merchantFlags = flags;
 		}
 		else {
 #if _DEBUG
-			mwse::log::getLog() << "xSetService: Called on non-NPC target." << std::endl;
+			mwse::log::getLog() << "xSetService: Could not obtain AI configuration." << std::endl;
 #endif
 		}
 

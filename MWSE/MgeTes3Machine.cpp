@@ -44,7 +44,6 @@ using namespace std;
 #include <ctime>
 
 #include "mwseString.h"
-#include "ObjectTypes.h"
 #include "mwOffsets.h"
 #include "VirtualMachine.h"
 #include "StringUtil.h"
@@ -224,7 +223,7 @@ const char* TES3MACHINE::GetString(VPVOID addr)
 #if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
 #endif
-	mwse::mwseString_t& string = mwse::mwAdapter::GetVMInstance()->getString((mwLong)addr);
+	mwse::mwseString& string = mwse::mwAdapter::GetVMInstance()->getString((long)addr);
 	return string.c_str();
 }
 
@@ -514,7 +513,7 @@ MACPRecord* TES3MACHINE::GetMacpRecord()
 	// this by accessing the appropriate fields in yet to be mapped data
 	// structures. Offsets come from the native function at 0x40FF20.
 	MACPRecord* macp = NULL;
-	unsigned long address = TES3_MASTER_IMAGE;
+	unsigned long address = TES3_WORLD_CONTROLLER_IMAGE;
 	unsigned long* pointer = reinterpret_cast<unsigned long*>(address);
 	address = (*pointer) + 0x5C;
 	pointer = reinterpret_cast<unsigned long*>(address);

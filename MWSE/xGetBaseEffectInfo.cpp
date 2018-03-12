@@ -24,7 +24,7 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
-#include "TES3CellMaster.h"
+#include "TES3DataHandler.h"
 #include "TES3MagicEffect.h"
 
 using namespace mwse;
@@ -48,10 +48,10 @@ namespace mwse
 	float xGetBaseEffectInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwLong id = Stack::getInstance().popLong();
+		long id = Stack::getInstance().popLong();
 
 		// Validate id.
-		if (id < TES3::EffectFirst || id > TES3::EffectLast) {
+		if (id < TES3::EffectID::FirstEffect || id > TES3::EffectID::LastEffect) {
 #if _DEBUG
 			log::getLog() << "xGetBaseEffectInfo: Effect ID out of range." << std::endl;
 #endif
@@ -62,7 +62,7 @@ namespace mwse
 		}
 
 		// Get the effect.
-		TES3::MagicEffect& effect = tes3::getCellMaster()->recordLists->magicEffects[id];
+		TES3::MagicEffect& effect = tes3::getDataHandler()->recordLists->magicEffects[id];
 
 		// Flags are a unique case. There is other data associated with flags that we want
 		// to expose, so we will return it here.

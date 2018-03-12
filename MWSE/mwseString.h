@@ -24,46 +24,44 @@
 #include <map>
 #include <exception>
 
-#include "ObjectTypes.h"
-
 namespace mwse {
 	/*
 		A string implementation for mwse. Derived from std::string; however, the strings
-		can also be identified by a value stored as a mwLong. This value is an ID;
+		can also be identified by a value stored as a long. This value is an ID;
 		invalid IDs will cause exceptions.
 
 		Because strings are exclusively referenced by this ID, this class shouldn't
 		be instantiated frequently. Instead, the lookup() and get() functions should
 		be used to get a mutable reference to the string.
 	*/
-	class mwseString_t : public std::string {
+	class mwseString : public std::string {
 	public:
 		// Constructor for an invalid string.
-		mwseString_t();
+		mwseString();
 
 		// Constructs a new mwseString 
-		mwseString_t(mwLong id);
+		mwseString(long id);
 
 		// 
-		mwseString_t(mwLong id, const char* value);
+		mwseString(long id, const char* value);
 
 		// 
-		mwseString_t(mwLong id, const char* value, size_t length);
+		mwseString(long id, const char* value, size_t length);
 
 		// 
-		mwseString_t(mwLong id, const std::string& value);
+		mwseString(long id, const std::string& value);
 
 		// Get only the id of the string.
-		operator mwLong() const;
+		operator long() const;
 
 		// Determines if the string has a valid ID.
 		bool isValid();
 
 		// Get the ID of the string.
-		mwLong getId();
+		long getId();
 
 	private:
 		// Unique identifier for the string, used to identify strings back to mwscript.
-		mwLong m_ID;
+		long m_ID;
 	};
 };

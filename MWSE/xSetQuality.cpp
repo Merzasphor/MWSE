@@ -24,9 +24,10 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Reference.h"
 #include "TES3Lockpick.h"
 #include "TES3Probe.h"
-#include "TES3Repair.h"
+#include "TES3RepairTool.h"
 #include "TES3Apparatus.h"
 
 using namespace mwse;
@@ -50,7 +51,7 @@ namespace mwse
 	float xSetQuality::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwFloat value = mwse::Stack::getInstance().popFloat();
+		float value = mwse::Stack::getInstance().popFloat();
 
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
@@ -62,7 +63,7 @@ namespace mwse
 		}
 
 		// Get record.
-		TES3::BaseObject* record = reference->objectPointer;
+		TES3::BaseObject* record = reference->baseObject;
 		if (record == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetQuality: No base record found." << std::endl;
@@ -74,19 +75,19 @@ namespace mwse
 		bool valueSet = false;
 		TES3::ObjectType::ObjectType recordType = record->objectType;
 		if (recordType == TES3::ObjectType::Lockpick) {
-			reinterpret_cast<TES3::Lockpick*>(reference->objectPointer)->quality = value;
+			reinterpret_cast<TES3::Lockpick*>(reference->baseObject)->quality = value;
 			valueSet = true;
 		}
 		else if (recordType == TES3::ObjectType::Probe) {
-			reinterpret_cast<TES3::Probe*>(reference->objectPointer)->quality = value;
+			reinterpret_cast<TES3::Probe*>(reference->baseObject)->quality = value;
 			valueSet = true;
 		}
 		else if (recordType == TES3::ObjectType::Repair) {
-			reinterpret_cast<TES3::Repair*>(reference->objectPointer)->quality = value;
+			reinterpret_cast<TES3::RepairTool*>(reference->baseObject)->quality = value;
 			valueSet = true;
 		}
 		else if (recordType == TES3::ObjectType::Apparatus) {
-			reinterpret_cast<TES3::Apparatus*>(reference->objectPointer)->quality = value;
+			reinterpret_cast<TES3::Apparatus*>(reference->baseObject)->quality = value;
 			valueSet = true;
 		}
 		else {

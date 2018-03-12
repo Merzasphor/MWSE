@@ -43,7 +43,7 @@ namespace mwse
 
 	float xNot::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwLong value = mwse::Stack::getInstance().popLong();
+		long value = mwse::Stack::getInstance().popLong();
 		mwse::Stack::getInstance().pushLong(!value);
 
 		return 0.0f;

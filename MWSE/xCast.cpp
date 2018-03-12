@@ -49,8 +49,8 @@ namespace mwse
 	float xCast::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t& spellId = virtualMachine.getString(mwse::Stack::getInstance().popLong());
-		mwseString_t& targetId = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString& spellId = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString& targetId = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
@@ -62,7 +62,7 @@ namespace mwse
 		}
 
 		// Get spell template by the id.
-		TES3::Spell* spell = tes3::getSpellRecordById(spellId);
+		TES3::Spell* spell = tes3::getObjectByID<TES3::Spell>(spellId, TES3::ObjectType::Spell);
 		if (spell == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xCast: No template found with id '" << spellId << "'." << std::endl;

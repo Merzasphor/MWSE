@@ -1,71 +1,70 @@
 #pragma once
 
-#include "ObjectTypes.h"
+#include "TES3Object.h"
+#include "TES3Statistic.h"
 
 namespace TES3 {
-	enum Skills {
-		SkillInvalid = -1,
-		SkillBlock,
-		SkillArmorer,
-		SkillMediumArmor,
-		SkillHeavyArmor,
-		SkillBluntWeapon,
-		SkillLongBlade,
-		SkillAxe,
-		SkillSpear,
-		SkillAthletics,
-		SkillEnchant,
-		SkillDestruction,
-		SkillAlteration,
-		SkillIllusion,
-		SkillConjuration,
-		SkillMysticism,
-		SkillRestoration,
-		SkillAlchemy,
-		SkillUnarmored,
-		SkillSecurity,
-		SkillSneak,
-		SkillAcrobatics,
-		SkillLightArmor,
-		SkillShortBlade,
-		SkillMarksman,
-		SkillMercantile,
-		SkillSpeechcraft,
-		SkillHandToHand,
-		FirstSkill = SkillBlock,
-		LastSkill = SkillHandToHand
-	};
+	namespace SkillID {
+		enum Skill {
+			Invalid = -1,
+			Block,
+			Armorer,
+			MediumArmor,
+			HeavyArmor,
+			BluntWeapon,
+			LongBlade,
+			Axe,
+			Spear,
+			Athletics,
+			Enchant,
+			Destruction,
+			Alteration,
+			Illusion,
+			Conjuration,
+			Mysticism,
+			Restoration,
+			Alchemy,
+			Unarmored,
+			Security,
+			Sneak,
+			Acrobatics,
+			LightArmor,
+			ShortBlade,
+			Marksman,
+			Mercantile,
+			Speechcraft,
+			HandToHand,
+			FirstSkill = Block,
+			LastSkill = HandToHand
+		};
+	}
 
-	enum SkillType {
-		SkillTypeMajor,
-		SkillTypeMinor,
-		SkillTypeMisc
-	};
+	namespace SkillType {
+		enum SkillType {
+			Major,
+			Minor,
+			Misc
+		};
+	}
 
-	enum SkillSpecialization {
-		SpecializationInvalid = -1,
-		SpecializationCombat,
-		SpecializationMagic,
-		SpecializationStealth,
-		FirstSpecialization = SpecializationCombat,
-		LastSpecialization = SpecializationStealth
-	};
+	namespace SkillSpecialization {
+		enum SkillSpecialization {
+			Invalid = -1,
+			Combat,
+			Magic,
+			Stealth,
+			FirstSpecialization = Combat,
+			LastSpecialization = Stealth
+		};
+	}
 
-	struct Skill_vTable {
-
-	};
-
-	struct Skill {
-		void * vTable; // 0x00
-		ObjectType::ObjectType objectType; // 0x04 // "SKIL"
-		int baseFlags; // 0x08
-		void * unknown_0x0C; // 0x0C // Pointer to first array element?
-		mwLong skill; // 0x10
-		mwLong attribute; // 0x14
-		mwLong specialization; // 0x18
-		mwFloat actions[4]; // 0x1C
-		int unknown_0x2C; // 0x2C
-		int unknown_0x30; // 0x30
+	struct Skill : BaseObject {
+		int skill;
+		int governingAttribute;
+		int specialization;
+		float progressActions[4];
+		void * description;
+		float descriptionFileOffset;
 	};
 	static_assert(sizeof(Skill) == 0x34, "TES3::Skill failed size validation");
 }

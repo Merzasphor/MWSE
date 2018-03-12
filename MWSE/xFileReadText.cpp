@@ -52,8 +52,8 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwseString_t& fileName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
-		mwseString_t& format = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString& fileName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString& format = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Count how many results there should be based on the format string
 		bool stopAtEndOfLine = false;
@@ -62,7 +62,7 @@ namespace mwse
 		maxResults++;
 
 		// Store results so we can push them on in reverse.
-		mwLong* results = new mwLong[maxResults];
+		long* results = new long[maxResults];
 
 		// Read the string from the file. If we can't read a string back, push 0s.
 		std::string readString = mwse::FileSystem::getInstance().readString(fileName.c_str(), stopAtEndOfLine);

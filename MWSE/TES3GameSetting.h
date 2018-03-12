@@ -1,10 +1,10 @@
 #pragma once
 
-#include "ObjectTypes.h"
+#include "TES3Object.h"
 
 namespace TES3 {
 	namespace GMST {
-		enum GameSettings {
+		enum GMST {
 			sMonthMorningstar,
 			sMonthSunsdawn,
 			sMonthFirstseed,
@@ -1529,22 +1529,14 @@ namespace TES3 {
 		};
 	}
 
-	struct GameSetting_vTable {
-
-	};
-
-	struct GameSetting {
-		void * vTable; // 0x00
-		ObjectType::ObjectType objectType; // 0x04
-		int unknown_0x08;
-		int unknown_0x0C;
+	struct GameSetting : BaseObject {
 		union values
 		{
-			long long_value;
-			float float_value;
-			char* string_value;
+			long asLong;
+			float asFloat;
+			char * asString;
 		} value; // 0x10
-		mwLong index; // 0x14 // Array index of this GMST
+		long index; // 0x14 // Array index of this GMST
 		int unknown_0x18;
 		int unknown_0x1C;
 	};

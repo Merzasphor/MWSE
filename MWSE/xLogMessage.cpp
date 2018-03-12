@@ -59,7 +59,7 @@ namespace mwse
 
 	float xLogMessage::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwseString_t& format = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString& format = virtualMachine.getString(Stack::getInstance().popLong());
 
 		bool suppressNull = false;
 		std::string badCodes;

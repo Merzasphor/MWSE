@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -51,7 +52,7 @@ namespace mwse
 		TES3::Reference* next = NULL;
 		if (reference) {
 			// Try to get the next non-removed reference linked down from the passed one.
-			next = mwse::tes3::skipRemovedReferences(reinterpret_cast<TES3::Reference*>(reference->nextObject));
+			next = mwse::tes3::skipRemovedReferences(reinterpret_cast<TES3::Reference*>(reference->nextInCollection));
 
 			// If we found nothing, check the stored exterior references.
 			if (next == NULL && mwse::tes3::exteriorRefs[0] != NULL) {
@@ -67,7 +68,7 @@ namespace mwse
 #endif
 		}
 
-		mwse::Stack::getInstance().pushLong((mwLong)next);
+		mwse::Stack::getInstance().pushLong((long)next);
 
 		return 0.0f;
 	}

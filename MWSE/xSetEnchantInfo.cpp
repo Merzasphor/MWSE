@@ -47,13 +47,11 @@ namespace mwse
 	float xSetEnchantInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t& enchantId = virtualMachine.getString(Stack::getInstance().popLong());
-		mwLong type = Stack::getInstance().popLong();
-		mwLong cost = Stack::getInstance().popLong();
-		mwLong charge = Stack::getInstance().popLong();
-		mwLong autocalc = Stack::getInstance().popLong();
-
-		bool result = false;
+		mwseString& enchantId = virtualMachine.getString(Stack::getInstance().popLong());
+		long type = Stack::getInstance().popLong();
+		long cost = Stack::getInstance().popLong();
+		long charge = Stack::getInstance().popLong();
+		bool autocalc = (Stack::getInstance().popLong() != 0);
 
 		// Validate type.
 		if (type < 0 || type > 3) {
@@ -73,8 +71,8 @@ namespace mwse
 			return false;
 		}
 
-		TES3::Enchantment* enchantRecord = tes3::getEnchantRecordById(enchantId);
-		if (enchantRecord == NULL) {
+		TES3::Enchantment* enchant = tes3::getObjectByID<TES3::Enchantment>(enchantId, TES3::ObjectType::Enchantment);
+		if (enchant == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetEnchantInfo: No effect found given id '" << enchantId << "'." << std::endl;
 #endif
@@ -83,10 +81,10 @@ namespace mwse
 		}
 
 		// Set values.
-		enchantRecord->type = type;
-		enchantRecord->cost = cost;
-		enchantRecord->charge = charge;
-		// enchantRecord->autocalc = autocalc; // TODO: Fix autocalc.
+		enchant->castType = type;
+		enchant->chargeCost = cost;
+		enchant->maxCharge = charge;
+		enchant->vTable->setAutoCalc(enchant, autocalc);
 
 		mwse::Stack::getInstance().pushLong(true);
 		return 0.0f;

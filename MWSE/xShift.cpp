@@ -43,8 +43,8 @@ namespace mwse
 
 	float xShift::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwLong value = mwse::Stack::getInstance().popLong();
-		mwLong magnitude = mwse::Stack::getInstance().popLong();
+		long value = mwse::Stack::getInstance().popLong();
+		long magnitude = mwse::Stack::getInstance().popLong();
 
 		if (magnitude < 0) {
 			mwse::Stack::getInstance().pushLong(value >> abs(magnitude));

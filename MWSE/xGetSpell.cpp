@@ -23,7 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "TES3MACP.h"
+#include "TES3MobileNPC.h"
 #include "TES3Reference.h"
 #include "TES3NPC.h"
 
@@ -47,10 +47,10 @@ namespace mwse
 
 	float xGetSpell::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwShort result = 0;
+		short result = 0;
 
 		// Get spell id from the stack.
-		mwseString_t& spellId = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString& spellId = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get reference.
 		TES3::Reference* reference = virtualMachine.getReference();
@@ -61,7 +61,7 @@ namespace mwse
 			mwse::Stack::getInstance().pushShort(result);
 			return 0.0f;
 		}
-		else if (reference->objectPointer->objectType != TES3::ObjectType::NPC) {
+		else if (reference->baseObject->objectType != TES3::ObjectType::NPC) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetSpell: Target is not an NPC." << std::endl;
 #endif
@@ -69,8 +69,8 @@ namespace mwse
 			return 0.0f;
 		}
 
-		TES3::NPC* npc = reinterpret_cast<TES3::NPCInstance*>(reference->objectPointer)->baseNPC;
-		TES3::IteratorNode<TES3::Spell>* currentNode = npc->spells.head;
+		TES3::NPC* npc = reinterpret_cast<TES3::NPCInstance*>(reference->baseObject)->baseNPC;
+		TES3::IteratorNode<TES3::Spell>* currentNode = npc->spellList.list.head;
 		while (currentNode != NULL) {
 			TES3::Spell* spell = currentNode->data;
 			if (strcmp(spell->objectID, spellId.c_str()) == 0) {

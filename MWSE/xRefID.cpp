@@ -23,6 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -49,7 +50,7 @@ namespace mwse {
 			return 0.0f;
 		}
 
-		mwString objectId = reference->objectPointer->objectID;
+		char* objectId = reference->baseObject->vTable->getObjectID(reference->baseObject);
 
 		Stack::getInstance().pushString(objectId);
 

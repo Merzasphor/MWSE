@@ -24,7 +24,8 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
-#include "TES3CellMaster.h"
+#include "TES3DataHandler.h"
+#include "TES3Cell.h"
 
 using namespace mwse;
 
@@ -46,7 +47,7 @@ namespace mwse
 
 	float xPCCellID::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		TES3::CellMaster* masterCell = tes3::getCellMaster();
+		TES3::DataHandler* masterCell = tes3::getDataHandler();
 		if (masterCell == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xPCCellID: Cell master could not be found." << std::endl;
@@ -56,9 +57,9 @@ namespace mwse
 		}
 
 		// Determine the PC cell -- either the interior cell if we have one, or the center cell.
-		TES3::Cell* cell = masterCell->interiorCell;
+		TES3::Cell* cell = masterCell->currentInteriorCell;
 		if (cell == NULL) {
-			cell = masterCell->exteriorCells[TES3::CellGridCenter]->cell;
+			cell = masterCell->exteriorCellData[TES3::CellGrid::Center]->cell;
 		}
 
 		// If the cell has a name, use it. If not we want to use the literal

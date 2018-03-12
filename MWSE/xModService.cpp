@@ -24,6 +24,8 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 #include "TES3NPC.h"
+#include "TES3Reference.h"
+#include "TES3Class.h"
 
 using namespace mwse;
 
@@ -64,9 +66,9 @@ namespace mwse
 			return 0.0f;
 		}
 
-		// Make sure we're looking at an NPC.
-		TES3::NPCInstance* npcCopy = reinterpret_cast<TES3::NPCInstance*>(reference->objectPointer);
-		if (!reference || !npcCopy || npcCopy->objectType != TES3::ObjectType::NPC) {
+		// Get AI configuration.
+		TES3::AIConfig* aiConfig = reference->baseObject->vTable->getAIConfig(reference->baseObject);
+		if (!aiConfig) {
 #if _DEBUG
 			mwse::log::getLog() << "xModService: Called on non-NPC reference." << std::endl;
 #endif
@@ -75,7 +77,7 @@ namespace mwse
 		}
 
 		// Get the NPC's class.
-		TES3::Class* classRecord = npcCopy->baseNPC->classRecord;
+		TES3::Class* classRecord = reference->baseObject->vTable->getClass(reference->baseObject);
 		if (!classRecord) {
 #if _DEBUG
 			mwse::log::getLog() << "xModService: Failed to obtain NPC's class." << std::endl;
@@ -84,18 +86,18 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwLong services = npcCopy->baseNPC->servicesMask | classRecord->services;
+		long services = aiConfig->merchantFlags | classRecord->services;
 
 		// Want to remove services.
 		if (data < 0) {
-			services = services & (~((unsigned long)(0 - (signed long)data)));
+			services = services & (~(0 - data));
 		}
 		// Want to add services.
 		else {
 			services = services | (data & 0x0003FFFF);
 		}
 
-		npcCopy->baseNPC->servicesMask = services;
+		aiConfig->merchantFlags = services;
 
 		return 0.0f;
 	}

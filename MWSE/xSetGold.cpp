@@ -23,7 +23,7 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "TES3MACP.h"
+#include "TES3MobileNPC.h"
 
 using namespace mwse;
 
@@ -45,10 +45,10 @@ namespace mwse
 
 	float xSetGold::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		mwLong gold = mwse::Stack::getInstance().popLong();
+		long gold = mwse::Stack::getInstance().popLong();
 
 		TES3::Reference* reference = virtualMachine.getReference();
-		TES3::MACP* node = tes3::getAttachedMACPRecord(reference);
+		TES3::MobileActor* node = tes3::getAttachedMobileActor(reference);
 		if (node == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetGold: Could not find attached MACP node." << std::endl;
@@ -56,7 +56,7 @@ namespace mwse
 			return 0.0f;
 		}
 
-		node->gold = gold;
+		node->barterGold = gold;
 
 		return 0.0f;
 	}

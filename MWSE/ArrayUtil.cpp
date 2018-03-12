@@ -36,8 +36,8 @@ namespace mwse {
 		return value;
 	}
 
-	mwLong Arrays::setValue(std::string const& caller, size_t const id, size_t const index, ArrayItem_t const value) {
-		mwLong success = 0;
+	long Arrays::setValue(std::string const& caller, size_t const id, size_t const index, ArrayItem_t const value) {
+		long success = 0;
 		if (id > 0 && id <= arrays.size()) {
 			if (index >= 0) {
 				ContainedArray_t& a = arrays[id - 1];
@@ -69,9 +69,9 @@ namespace mwse {
 		return size;
 	}
 
-	mwLong Arrays::clear(std::string const& caller, size_t const id)
+	long Arrays::clear(std::string const& caller, size_t const id)
 	{
-		mwLong success = 0;
+		long success = 0;
 		if (id > 0 && id <= arrays.size()) {
 			arrays[id - 1].clear();
 			success = 1;

@@ -45,7 +45,7 @@ namespace mwse
 		void setScriptTargetReference(TES3::Reference* reference) {
 			*reinterpret_cast<TES3::Reference**>(TES3_SCRIPTTARGETREF_IMAGE) = reference;
 			if (reference != NULL) {
-				setScriptTargetTemplate(reinterpret_cast<TES3::BaseObject*>(reference->objectPointer));
+				setScriptTargetTemplate(reference->baseObject);
 			}
 			else {
 				setScriptTargetTemplate(reinterpret_cast<TES3::BaseObject*>(NULL));
@@ -72,72 +72,72 @@ namespace mwse
 			*reinterpret_cast<TES3::BaseObject**>(TES3_SECONDOBJECT_IMAGE) = record;
 		}
 
-		mwLong getScriptVariableIndex() {
-			return *reinterpret_cast<mwLong*>(TES3_VARINDEX_IMAGE);
+		long getScriptVariableIndex() {
+			return *reinterpret_cast<long*>(TES3_VARINDEX_IMAGE);
 		}
 
-		void setScriptVariableIndex(mwLong index) {
-			*reinterpret_cast<mwLong*>(TES3_VARINDEX_IMAGE) = index;
+		void setScriptVariableIndex(long index) {
+			*reinterpret_cast<long*>(TES3_VARINDEX_IMAGE) = index;
 		}
 
-		mwFloat getScriptDestinationX() {
-			return *reinterpret_cast<mwFloat*>(TES3_DESTINATION_X_IMAGE);
+		float getScriptDestinationX() {
+			return *reinterpret_cast<float*>(TES3_DESTINATION_X_IMAGE);
 		}
 
-		void setScriptDestinationX(mwFloat value) {
-			*reinterpret_cast<mwFloat*>(TES3_DESTINATION_X_IMAGE) = value;
+		void setScriptDestinationX(float value) {
+			*reinterpret_cast<float*>(TES3_DESTINATION_X_IMAGE) = value;
 		}
 
-		mwFloat getScriptDestinationY() {
-			return *reinterpret_cast<mwFloat*>(TES3_DESTINATION_Y_IMAGE);
+		float getScriptDestinationY() {
+			return *reinterpret_cast<float*>(TES3_DESTINATION_Y_IMAGE);
 		}
 
-		void setScriptDestinationY(mwFloat value) {
-			*reinterpret_cast<mwFloat*>(TES3_DESTINATION_Y_IMAGE) = value;
+		void setScriptDestinationY(float value) {
+			*reinterpret_cast<float*>(TES3_DESTINATION_Y_IMAGE) = value;
 		}
 
-		mwFloat getScriptDestinationZ() {
-			return *reinterpret_cast<mwFloat*>(TES3_DESTINATION_Z_IMAGE);
+		float getScriptDestinationZ() {
+			return *reinterpret_cast<float*>(TES3_DESTINATION_Z_IMAGE);
 		}
 
-		void setScriptDestinationZ(mwFloat value) {
-			*reinterpret_cast<mwFloat*>(TES3_DESTINATION_Z_IMAGE) = value;
+		void setScriptDestinationZ(float value) {
+			*reinterpret_cast<float*>(TES3_DESTINATION_Z_IMAGE) = value;
 		}
 
-		void setScriptDestination(mwFloat x, mwFloat y, mwFloat z) {
-			*reinterpret_cast<mwFloat*>(TES3_DESTINATION_X_IMAGE) = x;
-			*reinterpret_cast<mwFloat*>(TES3_DESTINATION_Y_IMAGE) = y;
-			*reinterpret_cast<mwFloat*>(TES3_DESTINATION_Z_IMAGE) = z;
+		void setScriptDestination(float x, float y, float z) {
+			*reinterpret_cast<float*>(TES3_DESTINATION_X_IMAGE) = x;
+			*reinterpret_cast<float*>(TES3_DESTINATION_Y_IMAGE) = y;
+			*reinterpret_cast<float*>(TES3_DESTINATION_Z_IMAGE) = z;
 		}
 
-		mwFloat getScriptTargetRotationX() {
-			return *reinterpret_cast<mwFloat*>(TES3_TARGET_ROTX_IMAGE);
+		float getScriptTargetRotationX() {
+			return *reinterpret_cast<float*>(TES3_TARGET_ROTX_IMAGE);
 		}
 
-		void setScriptTargetRotationX(mwFloat value) {
-			*reinterpret_cast<mwFloat*>(TES3_TARGET_ROTX_IMAGE) = value;
+		void setScriptTargetRotationX(float value) {
+			*reinterpret_cast<float*>(TES3_TARGET_ROTX_IMAGE) = value;
 		}
 
-		mwFloat getScriptTargetRotationY() {
-			return *reinterpret_cast<mwFloat*>(TES3_TARGET_ROTY_IMAGE);
+		float getScriptTargetRotationY() {
+			return *reinterpret_cast<float*>(TES3_TARGET_ROTY_IMAGE);
 		}
 
-		void setScriptTargetRotationY(mwFloat value) {
-			*reinterpret_cast<mwFloat*>(TES3_TARGET_ROTY_IMAGE) = value;
+		void setScriptTargetRotationY(float value) {
+			*reinterpret_cast<float*>(TES3_TARGET_ROTY_IMAGE) = value;
 		}
 
-		mwFloat getScriptTargetRotationZ() {
-			return *reinterpret_cast<mwFloat*>(TES3_TARGET_ROTZ_IMAGE);
+		float getScriptTargetRotationZ() {
+			return *reinterpret_cast<float*>(TES3_TARGET_ROTZ_IMAGE);
 		}
 
-		void setScriptTargetRotationZ(mwFloat value) {
-			*reinterpret_cast<mwFloat*>(TES3_TARGET_ROTZ_IMAGE) = value;
+		void setScriptTargetRotationZ(float value) {
+			*reinterpret_cast<float*>(TES3_TARGET_ROTZ_IMAGE) = value;
 		}
 
-		void setScriptTargetRotation(mwFloat x, mwFloat y, mwFloat z) {
-			*reinterpret_cast<mwFloat*>(TES3_TARGET_ROTX_IMAGE) = x;
-			*reinterpret_cast<mwFloat*>(TES3_TARGET_ROTY_IMAGE) = y;
-			*reinterpret_cast<mwFloat*>(TES3_TARGET_ROTZ_IMAGE) = z;
+		void setScriptTargetRotation(float x, float y, float z) {
+			*reinterpret_cast<float*>(TES3_TARGET_ROTX_IMAGE) = x;
+			*reinterpret_cast<float*>(TES3_TARGET_ROTY_IMAGE) = y;
+			*reinterpret_cast<float*>(TES3_TARGET_ROTZ_IMAGE) = z;
 		}
 
 		float RunOriginalOpCode(TES3::Script* script, TES3::Reference* reference, OpCode::OpCode_t opCode, TES3::BaseObject* objectParam = NULL, char charParam = '_', float unk1 = 0.0f, float unk2 = 0.0f) {
@@ -174,9 +174,9 @@ namespace mwse
 			RunOriginalOpCode(script, reference, OpCode::Activate);
 		}
 
-		void AddItem(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, mwLong count) {
+		void AddItem(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, long count) {
 			// Cache previous script variables.
-			mwLong cachedVarIndex = getScriptVariableIndex();
+			long cachedVarIndex = getScriptVariableIndex();
 			TES3::BaseObject* cachedSecondObject = getScriptSecondObject();
 
 			// Prepare variables and run original opcode.
@@ -201,11 +201,11 @@ namespace mwse
 			setScriptSecondObject(cachedSecondObject);
 		}
 
-		void AITravel(TES3::Script* script, TES3::Reference* reference, mwFloat x, mwFloat y, mwFloat z) {
+		void AITravel(TES3::Script* script, TES3::Reference* reference, float x, float y, float z) {
 			// Cache destination values.
-			mwFloat cachedDestinationX = getScriptDestinationX();
-			mwFloat cachedDestinationY = getScriptDestinationY();
-			mwFloat cachedDestinationZ = getScriptDestinationZ();
+			float cachedDestinationX = getScriptDestinationX();
+			float cachedDestinationY = getScriptDestinationY();
+			float cachedDestinationZ = getScriptDestinationZ();
 
 			// Call original opcode.
 			setScriptDestination(x, y, z);
@@ -227,9 +227,9 @@ namespace mwse
 			setScriptSecondObject(cachedSecondObject);
 		}
 
-		void Drop(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, mwLong count) {
+		void Drop(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, long count) {
 			// Cache previous script variables.
-			mwLong cachedVarIndex = getScriptVariableIndex();
+			long cachedVarIndex = getScriptVariableIndex();
 			TES3::BaseObject* cachedSecondObject = getScriptSecondObject();
 
 			// Prepare variables and run original opcode.
@@ -280,13 +280,13 @@ namespace mwse
 			return value != 0.0f;
 		}
 
-		mwLong GetItemCount(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate) {
+		long GetItemCount(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate) {
 			// Cache previous script variables.
 			TES3::BaseObject* cachedSecondObject = getScriptSecondObject();
 
 			// Prepare variables and run original opcode.
 			setScriptSecondObject(itemTemplate);
-			mwLong value = RunOriginalOpCode(script, reference, OpCode::GetItemCount);
+			long value = RunOriginalOpCode(script, reference, OpCode::GetItemCount);
 
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);
@@ -300,7 +300,7 @@ namespace mwse
 
 			// Prepare variables and run original opcode.
 			setScriptSecondObject(spellTemplate);
-			mwFloat value = RunOriginalOpCode(script, reference, OpCode::GetSpellEffects);
+			float value = RunOriginalOpCode(script, reference, OpCode::GetSpellEffects);
 
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);
@@ -308,11 +308,11 @@ namespace mwse
 			return value != 0.0f;
 		}
 
-		void PlaceAtPC(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* placedTemplate, mwLong count, mwFloat distance, mwFloat direction) {
+		void PlaceAtPC(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* placedTemplate, long count, float distance, float direction) {
 			// Cache script variables.
-			mwFloat cachedDestinationX = getScriptDestinationX();
-			mwFloat cachedDestinationY = getScriptDestinationY();
-			mwLong cachedVarIndex = getScriptVariableIndex();
+			float cachedDestinationX = getScriptDestinationX();
+			float cachedDestinationY = getScriptDestinationY();
+			long cachedVarIndex = getScriptVariableIndex();
 			TES3::BaseObject* cachedSecondObject = getScriptSecondObject();
 
 			// Call original opcode.
@@ -329,14 +329,14 @@ namespace mwse
 			setScriptSecondObject(cachedSecondObject);
 		}
 
-		void Position(TES3::Script* script, TES3::Reference* reference, mwFloat x, mwFloat y, mwFloat z, mwFloat rotation) {
+		void Position(TES3::Script* script, TES3::Reference* reference, float x, float y, float z, float rotation) {
 			// Cache script variables.
-			mwFloat cachedDestinationX = getScriptDestinationX();
-			mwFloat cachedDestinationY = getScriptDestinationY();
-			mwFloat cachedDestinationZ = getScriptDestinationZ();
-			mwFloat cachedRotationX = getScriptTargetRotationX();
-			mwFloat cachedRotationY = getScriptTargetRotationY();
-			mwFloat cachedRotationZ = getScriptTargetRotationZ();
+			float cachedDestinationX = getScriptDestinationX();
+			float cachedDestinationY = getScriptDestinationY();
+			float cachedDestinationZ = getScriptDestinationZ();
+			float cachedRotationX = getScriptTargetRotationX();
+			float cachedRotationY = getScriptTargetRotationY();
+			float cachedRotationZ = getScriptTargetRotationZ();
 
 			// Call original opcode.
 			setScriptDestination(x, y, z);
@@ -352,14 +352,14 @@ namespace mwse
 			setScriptTargetRotationZ(cachedRotationZ);
 		}
 
-		void PositionCell(TES3::Script* script, TES3::Reference* reference, mwFloat x, mwFloat y, mwFloat z, mwFloat rotation, const char* cell) {
+		void PositionCell(TES3::Script* script, TES3::Reference* reference, float x, float y, float z, float rotation, const char* cell) {
 			// Cache script variables.
-			mwFloat cachedDestinationX = getScriptDestinationX();
-			mwFloat cachedDestinationY = getScriptDestinationY();
-			mwFloat cachedDestinationZ = getScriptDestinationZ();
-			mwFloat cachedRotationX = getScriptTargetRotationX();
-			mwFloat cachedRotationY = getScriptTargetRotationY();
-			mwFloat cachedRotationZ = getScriptTargetRotationZ();
+			float cachedDestinationX = getScriptDestinationX();
+			float cachedDestinationY = getScriptDestinationY();
+			float cachedDestinationZ = getScriptDestinationZ();
+			float cachedRotationX = getScriptTargetRotationX();
+			float cachedRotationY = getScriptTargetRotationY();
+			float cachedRotationZ = getScriptTargetRotationZ();
 			TES3::BaseObject* cachedSecondObject = getScriptSecondObject();
 
 			// Call original opcode.
@@ -378,9 +378,9 @@ namespace mwse
 			setScriptSecondObject(cachedSecondObject);
 		}
 
-		void RemoveItem(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, mwLong count) {
+		void RemoveItem(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, long count) {
 			// Cache previous script variables.
-			mwLong cachedVarIndex = getScriptVariableIndex();
+			long cachedVarIndex = getScriptVariableIndex();
 			TES3::BaseObject* cachedSecondObject = getScriptSecondObject();
 
 			// Prepare variables and run original opcode.
@@ -412,9 +412,9 @@ namespace mwse
 			return value != 0.0f;
 		}
 
-		void SetLevel(TES3::Script* script, TES3::Reference* reference, mwShort level) {
+		void SetLevel(TES3::Script* script, TES3::Reference* reference, short level) {
 			// Cache previous script variables.
-			mwLong cachedVarIndex = getScriptVariableIndex();
+			long cachedVarIndex = getScriptVariableIndex();
 
 			// Prepare variables and run original opcode.
 			setScriptVariableIndex(level);

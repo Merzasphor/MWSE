@@ -23,6 +23,7 @@
 #include "Stack.h"
 
 #include "TES3Attachment.h"
+#include "TES3Reference.h"
 
 #include "ScriptUtil.h"
 #include "TES3Util.h"
@@ -48,7 +49,7 @@ namespace mwse
 
 	float xActivate::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get potential target.
-		mwLong parameter = Stack::getInstance().popLong();
+		long parameter = Stack::getInstance().popLong();
 
 		// Verify that the script is called on a valid reference.
 		TES3::Reference* reference = virtualMachine.getReference();
@@ -60,7 +61,7 @@ namespace mwse
 		}
 
 		// Only certain types of objects can actually activate things without crashing.
-		auto baseObjectType = reference->objectPointer->objectType;
+		auto baseObjectType = reference->baseObject->objectType;
 		if (baseObjectType != TES3::ObjectType::NPC && baseObjectType != TES3::ObjectType::Creature) {
 #if _DEBUG
 			log::getLog() << __FUNCTION__ << ": Called on non-NPC, non-creature reference.." << std::endl;
@@ -92,15 +93,15 @@ namespace mwse
 		}
 		
 		// Set up the attachment node.
-		auto activator = tes3::getAttachment<TES3::ActivatorAttachment>(target, TES3::AttachmentActivator);
+		auto activator = tes3::getAttachment<TES3::ActionAttachment>(target, TES3::AttachmentType::Action);
 		if (activator == NULL) {
-			activator = tes3::malloc<TES3::ActivatorAttachment>();
-			activator->type = TES3::AttachmentActivator;
+			activator = tes3::malloc<TES3::ActionAttachment>();
+			activator->type = TES3::AttachmentType::Action;
 			activator->next = NULL;
 			activator->reference = NULL;
 			activator->flags = 1;
 
-			tes3::insertAttachment(target, reinterpret_cast<TES3::BaseAttachment*>(activator));
+			tes3::insertAttachment(target, reinterpret_cast<TES3::Attachment*>(activator));
 		}
 
 		// Ensure that our flags and reference is accurate.

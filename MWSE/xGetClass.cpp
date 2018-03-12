@@ -23,8 +23,10 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
-#include "TES3MACP.h"
+#include "TES3MobileNPC.h"
 #include "TES3NPC.h"
+#include "TES3Reference.h"
+#include "TES3Class.h"
 
 using namespace mwse;
 
@@ -63,10 +65,10 @@ namespace mwse
 		}
 
 		// Get the base record.
-		TES3::NPCInstance* record = reinterpret_cast<TES3::NPCInstance*>(reference->objectPointer);
-		if (record == NULL) {
+		TES3::BaseObject* object = reference->baseObject;
+		if (object == NULL) {
 #if _DEBUG
-			mwse::log::getLog() << "xGetClass: No record found for reference." << std::endl;
+			mwse::log::getLog() << "xGetClass: No object found for reference." << std::endl;
 #endif
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
@@ -77,7 +79,7 @@ namespace mwse
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
-		else if (record->objectType != TES3::ObjectType::NPC) {
+		else if (object->objectType != TES3::ObjectType::NPC) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetClass: Called on a non-NPC reference." << std::endl;
 #endif
@@ -90,43 +92,30 @@ namespace mwse
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
-		else if (record->baseNPC == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetClass: NPC record lacks a base NPC." << std::endl;
-#endif
-			mwse::Stack::getInstance().pushLong(0);
-			mwse::Stack::getInstance().pushLong(0);
-			mwse::Stack::getInstance().pushLong(0);
-			mwse::Stack::getInstance().pushLong(0);
-			mwse::Stack::getInstance().pushLong(0);
-			mwse::Stack::getInstance().pushLong(0);
-			mwse::Stack::getInstance().pushLong(0);
-			return 0.0f;
-		}
 
 		// Get argument: 
-		mwLong attributesMask = mwse::Stack::getInstance().popLong();
-		mwLong majorMask = mwse::Stack::getInstance().popLong();
-		mwLong minorMask = mwse::Stack::getInstance().popLong();
+		long attributesMask = mwse::Stack::getInstance().popLong();
+		long majorMask = mwse::Stack::getInstance().popLong();
+		long minorMask = mwse::Stack::getInstance().popLong();
 
 		// Get the class record.
-		TES3::Class* classRecord = record->baseNPC->classRecord;
+		TES3::Class* classRecord = object->vTable->getClass(object);
 
 		// Get basic class details.
-		mwString id = classRecord->id;
-		mwString name = classRecord->name;
-		mwLong playable = classRecord->playable;
-		mwLong specialization = classRecord->specialization;
+		char* id = classRecord->id;
+		char* name = classRecord->name;
+		long playable = classRecord->playable;
+		long specialization = classRecord->specialization;
 
 		// Get class attributes.
-		mwLong attributes = (1 << classRecord->attributes[0]) + (1 << classRecord->attributes[1]);
+		long attributes = (1 << classRecord->attributes[0]) + (1 << classRecord->attributes[1]);
 		if (attributesMask != 0) {
 			attributes &= attributesMask;
 		}
 
 		// Get class minor/major skills.
-		mwLong minorSkills = 0;
-		mwLong majorSkills = 0;
+		long minorSkills = 0;
+		long majorSkills = 0;
 		for (int i = 0; i < 10; i += 2) {
 			minorSkills += 1 << classRecord->skills[i];
 			majorSkills += 1 << classRecord->skills[i + 1];

@@ -50,8 +50,8 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwseString_t& fileName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
-		mwseString_t& format = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString& fileName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString& format = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		bool suppressNull = false;
 		std::string badCodes;

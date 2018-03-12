@@ -47,12 +47,12 @@ namespace mwse
 	float xGetIngredientEffect::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t& id = virtualMachine.getString(Stack::getInstance().popLong());
-		mwLong index = Stack::getInstance().popLong() - 1;
+		mwseString& id = virtualMachine.getString(Stack::getInstance().popLong());
+		long index = Stack::getInstance().popLong() - 1;
 
 		// Return values.
-		mwLong effectEnumId = TES3::EffectNone;
-		mwLong skillAttributeId = -1;
+		long effectEnumId = TES3::EffectID::None;
+		long skillAttributeId = -1;
 
 		// Get the ingredient.
 		TES3::Ingredient* ingredient = reinterpret_cast<TES3::Ingredient*>(tes3::getTemplate(id));
@@ -77,14 +77,14 @@ namespace mwse
 
 		// Get the ingredient effect information.
 		effectEnumId = ingredient->effects[index];
-		if (effectEnumId == TES3::EffectDrainAttribute || effectEnumId == TES3::EffectDamageAttribute
-			|| effectEnumId == TES3::EffectRestoreAttribute || effectEnumId == TES3::EffectFortifyAttribute
-			|| effectEnumId == TES3::EffectAbsorbAttribute) {
+		if (effectEnumId == TES3::EffectID::DrainAttribute || effectEnumId == TES3::EffectID::DamageAttribute
+			|| effectEnumId == TES3::EffectID::RestoreAttribute || effectEnumId == TES3::EffectID::FortifyAttribute
+			|| effectEnumId == TES3::EffectID::AbsorbAttribute) {
 			skillAttributeId = ingredient->effectAttributeIds[index];
 		}
-		else if (effectEnumId == TES3::EffectDrainSkill || effectEnumId == TES3::EffectDamageSkill
-			|| effectEnumId == TES3::EffectRestoreSkill || effectEnumId == TES3::EffectFortifySkill
-			|| effectEnumId == TES3::EffectAbsorbSkill) {
+		else if (effectEnumId == TES3::EffectID::DrainSkill || effectEnumId == TES3::EffectID::DamageSkill
+			|| effectEnumId == TES3::EffectID::RestoreSkill || effectEnumId == TES3::EffectID::FortifySkill
+			|| effectEnumId == TES3::EffectID::AbsorbSkill) {
 			skillAttributeId = ingredient->effectSkillIds[index];
 		}
 

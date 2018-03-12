@@ -55,10 +55,10 @@ namespace mwse {
 
 	float xTextInputAlt::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// 1st parameter: Message Id.
-		mwseString_t& message = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		mwseString& message = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// 2nd parameter: Key to use to end the input stream. 
-		mwLong endCode = mwse::Stack::getInstance().popLong();
+		long endCode = mwse::Stack::getInstance().popLong();
 
 		// The default endcode is return.
 		if (endCode == 0) {

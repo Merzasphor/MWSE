@@ -26,25 +26,25 @@ namespace mwse {
 		return result;
 	}
 
-	mwShort FileSystem::readShort(const char* fileName) {
-		mwShort result = 0;
-		if (read(fileName, &result, sizeof(mwShort)) != sizeof(mwShort)) {
+	short FileSystem::readShort(const char* fileName) {
+		short result = 0;
+		if (read(fileName, &result, sizeof(short)) != sizeof(short)) {
 			throw std::exception("Invalid size read.");
 		}
 		return result;
 	}
 
-	mwLong FileSystem::readLong(const char* fileName) {
-		mwLong result = 0;
-		if (read(fileName, &result, sizeof(mwLong)) != sizeof(mwLong)) {
+	long FileSystem::readLong(const char* fileName) {
+		long result = 0;
+		if (read(fileName, &result, sizeof(long)) != sizeof(long)) {
 			throw std::exception("Invalid size read.");
 		}
 		return result;
 	}
 
-	mwFloat FileSystem::readFloat(const char* fileName) {
-		mwFloat result = 0.0f;
-		if (read(fileName, &result, sizeof(mwFloat)) != sizeof(mwFloat)) {
+	float FileSystem::readFloat(const char* fileName) {
+		float result = 0.0f;
+		if (read(fileName, &result, sizeof(float)) != sizeof(float)) {
 			throw std::exception("Invalid size read.");
 		}
 		return result;
@@ -95,16 +95,16 @@ namespace mwse {
 		return buffer;
 	}
 
-	void FileSystem::writeShort(const char* fileName, const mwShort value) {
-		write(fileName, &value, sizeof(mwShort));
+	void FileSystem::writeShort(const char* fileName, const short value) {
+		write(fileName, &value, sizeof(short));
 	}
 
-	void FileSystem::writeLong(const char* fileName, const mwLong value) {
-		write(fileName, &value, sizeof(mwLong));
+	void FileSystem::writeLong(const char* fileName, const long value) {
+		write(fileName, &value, sizeof(long));
 	}
 
-	void FileSystem::writeFloat(const char* fileName, const mwFloat value) {
-		write(fileName, &value, sizeof(mwFloat));
+	void FileSystem::writeFloat(const char* fileName, const float value) {
+		write(fileName, &value, sizeof(float));
 	}
 
 	void FileSystem::writeString(const char* fileName, const std::string& value, bool suppressNull) {

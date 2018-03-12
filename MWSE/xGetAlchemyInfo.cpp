@@ -46,7 +46,7 @@ namespace mwse
 	float xGetAlchemyInfo::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
 		// Get parameters.
-		mwseString_t& id = virtualMachine.getString(Stack::getInstance().popLong());
+		mwseString& id = virtualMachine.getString(Stack::getInstance().popLong());
 
 		// Get the record by its id.
 		TES3::Alchemy* record = tes3::getRecordById<TES3::Alchemy>(id);
@@ -67,8 +67,8 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwLong flags = record->flags;
-		mwLong effectCount = tes3::getEffectCount(record->effects);
+		long flags = record->flags;
+		long effectCount = tes3::getEffectCount(record->effects);
 
 		mwse::Stack::getInstance().pushLong(flags);
 		mwse::Stack::getInstance().pushLong(effectCount);
