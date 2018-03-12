@@ -39,9 +39,10 @@ namespace mwse {
 		xEquipmentList();
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
-		
+
 	private:
-		bool nodeMatchesFilter(TES3::IteratorNode<TES3::Item>* node, long typeFilter, long subtypeFilter);
+		bool nodeMatchesFilter(TES3::IteratorNode<TES3::Item*>* node, long typeFilter, long subtypeFilter);
+		long getItemSubType(TES3::BaseObject* object);
 	};
 
 	static xEquipmentList xEquipmentListInstance;
@@ -52,7 +53,7 @@ namespace mwse {
 
 	float xEquipmentList::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get parameters.
-		TES3::IteratorNode<TES3::Item>* node = reinterpret_cast<TES3::IteratorNode<TES3::Item>*>(mwse::Stack::getInstance().popLong());
+		TES3::IteratorNode<TES3::Item*>* node = reinterpret_cast<TES3::IteratorNode<TES3::Item*>*>(mwse::Stack::getInstance().popLong());
 		long typeFilter = mwse::Stack::getInstance().popLong();
 		long subtypeFilter = mwse::Stack::getInstance().popLong() - 1;
 
@@ -72,9 +73,26 @@ namespace mwse {
 			return 0.0f;
 		}
 
-		TES3::ObjectType::ObjectType objectType = reference->baseObject->objectType;
+		// Verify actor state.
+		TES3::Actor* actor = reinterpret_cast<TES3::Actor*>(reference->baseObject);
+		TES3::ObjectType::ObjectType objectType = actor->objectType;
 		if (objectType != TES3::ObjectType::NPC && objectType != TES3::ObjectType::Creature) {
-			mwse::log::getLog() << "xEquipmentList: Called on non-NPC, non-creature." << std::endl;
+			mwse::log::getLog() << "xEquipmentList: Called on non-actor." << std::endl;
+			mwse::Stack::getInstance().pushLong(0);
+			mwse::Stack::getInstance().pushLong(0);
+			mwse::Stack::getInstance().pushLong(0);
+			mwse::Stack::getInstance().pushLong(0);
+			mwse::Stack::getInstance().pushLong(0);
+			mwse::Stack::getInstance().pushFloat(0.0f);
+			mwse::Stack::getInstance().pushLong(0);
+			mwse::Stack::getInstance().pushLong(0);
+			mwse::Stack::getInstance().pushLong(0);
+			return 0.0f;
+		}
+
+		// Make sure the object isn't a base actor.
+		if (actor->actorFlags & TES3::NPCFlag::IsBase) {
+			mwse::log::getLog() << "xEquipmentList: Called on base actor. Must be used on instance." << std::endl;
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
@@ -96,11 +114,11 @@ namespace mwse {
 		float weight = 0;
 		char* name = NULL;
 		char* enchantId = NULL;
-		TES3::IteratorNode<TES3::Item>* next = NULL;
+		TES3::IteratorNode<TES3::Item*>* next = NULL;
 
 		// If we aren't given a node, get the first one.
 		if (node == NULL) {
-			node = reinterpret_cast<TES3::NPCInstance*>(reference->baseObject)->equipment.head;
+			node = actor->equipment.head;
 
 			// Pass over any records that don't match the current filters.
 			while (node && !nodeMatchesFilter(node, typeFilter, subtypeFilter)) {
@@ -110,16 +128,17 @@ namespace mwse {
 
 		// Validate the node we've obtained.
 		if (node && node->data) {
-			TES3::BaseObject* object = node->data;
+			TES3::BaseObject* object = *node->data;
 
-			id = object->vTable->getObjectID(object);
+			id = reinterpret_cast<TES3::PhysicalObject*>(object)->objectID;
 			type = object->objectType;
 			value = object->vTable->getValue(object);
 			weight = object->vTable->getWeight(object);
 			name = object->vTable->getName(object);
 
-			// Get subtype.
-			subtype = object->vTable->getType(object) + 1;
+			// Get subtype. We can't directly use the vtable here to get the type,
+			// because types are zero-indexed.
+			subtype = getItemSubType(object) + 1;
 
 			// Get count. Right now we hardcode this to 1, but ammo might actually have a count.
 			count = 1;
@@ -151,17 +170,35 @@ namespace mwse {
 		return 0.0f;
 	}
 
-	bool xEquipmentList::nodeMatchesFilter(TES3::IteratorNode<TES3::Item>* node, long typeFilter, long subtypeFilter) {
-		TES3::BaseObject* object = node->data;
+	bool xEquipmentList::nodeMatchesFilter(TES3::IteratorNode<TES3::Item*>* node, long typeFilter, long subtypeFilter) {
+		TES3::BaseObject* object = *node->data;
 
 		if (typeFilter != 0 && object->objectType != typeFilter) {
 			return false;
 		}
 
-		if (subtypeFilter != -1 && object->vTable->getType(object) != subtypeFilter) {
+		if (subtypeFilter != -1 && getItemSubType(object) != subtypeFilter) {
 			return false;
 		}
 
 		return true;
+	}
+
+	long xEquipmentList::getItemSubType(TES3::BaseObject* object) {
+		if (object == NULL) {
+			return -2;
+		}
+
+		long subtype = -2;
+
+		long type = object->objectType;
+		if (type == TES3::ObjectType::Armor || type == TES3::ObjectType::Apparatus ||
+			type == TES3::ObjectType::Clothing || type == TES3::ObjectType::Weapon)
+		{
+			subtype = object->vTable->getType(object);
+			log::getLog() << "xEquipmentList::getItemSubType : " << object->vTable->getObjectID(object) << " = " << subtype - 1 << std::endl;
+		}
+
+		return subtype;
 	}
 }

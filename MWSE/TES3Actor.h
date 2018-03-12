@@ -70,7 +70,7 @@ namespace TES3 {
 		unsigned int actorFlags; // 0x34 // See ActorFlag above.
 		int cloneCount; // 0x38
 		Inventory inventory; // 0x3C
-		Iterator<Item> equipment; // 0x58
+		Iterator<Item*> equipment; // 0x58
 	};
 	static_assert(sizeof(Actor) == 0x6C, "TES3::Actor failed size validation");
 }
