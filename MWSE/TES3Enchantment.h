@@ -4,9 +4,18 @@
 #include "TES3MagicEffect.h"
 
 namespace TES3 {
+	namespace EnchantmentCastType {
+		enum EnchantmentCastType {
+			Once,
+			OnStrike,
+			OnUse,
+			Constant
+		};
+	}
+
 	struct Enchantment : Object {
 		char * objectID; // 0x28
-		short castType; // 0x2C
+		short castType; // 0x2C // EnchantmentCastType
 		short chargeCost; // 0x2E
 		short maxCharge; // 0x30
 		short magickaCost; // 0x32

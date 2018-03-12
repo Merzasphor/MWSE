@@ -82,8 +82,8 @@ namespace mwse
 
 		// Set values.
 		enchant->castType = type;
-		enchant->magickaCost = cost;
-		enchant->chargeCost = charge;
+		enchant->chargeCost = cost;
+		enchant->maxCharge = charge;
 		enchant->vTable->setAutoCalc(enchant, autocalc);
 
 		mwse::Stack::getInstance().pushLong(true);
