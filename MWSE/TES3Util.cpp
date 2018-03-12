@@ -4,24 +4,22 @@
 
 #include "mwOffsets.h"
 
-#include "TES3Attachment.h"
 #include "TES3Actor.h"
+#include "TES3Attachment.h"
+#include "TES3Class.h"
 #include "TES3Clothing.h"
 #include "TES3DataHandler.h"
 #include "TES3Enchantment.h"
+#include "TES3GameSetting.h"
+#include "TES3MobilePlayer.h"
+#include "TES3NPC.h"
 #include "TES3Reference.h"
+#include "TES3Skill.h"
 #include "TES3Spell.h"
 #include "TES3WorldController.h"
-#include "TES3NPC.h"
-#include "TES3Skill.h"
-#include "TES3MobilePlayer.h"
-#include "TES3Class.h"
-#include "TES3GameSetting.h"
 
-namespace mwse
-{
-	namespace tes3
-	{
+namespace mwse {
+	namespace tes3 {
 		TES3::WorldController * getWorldController() {
 			// Prior to 2.1, this was getMaster
 			return *reinterpret_cast<TES3::WorldController**>(TES3_WORLD_CONTROLLER_IMAGE);
@@ -55,8 +53,7 @@ namespace mwse
 			return getGlobalRecord(id.c_str());
 		}
 
-		TES3::BaseObject* getTemplate(const char *id)
-		{
+		TES3::BaseObject* getTemplate(const char *id) {
 			TES3::RecordLists * recordLists = tes3::getDataHandler()->recordLists;
 
 			TES3::BaseObject * foundTemplate = NULL;

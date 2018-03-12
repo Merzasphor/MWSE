@@ -32,10 +32,8 @@
 #include "TES3DataHandler.h"
 #include "TES3Spell.h"
 
-namespace mwse
-{
-	namespace tes3
-	{
+namespace mwse {
+	namespace tes3 {
 		TES3::WorldController * getWorldController();
 		TES3::DataHandler * getDataHandler();
 		TES3::Game * getGame();
