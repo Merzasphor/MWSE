@@ -19,6 +19,7 @@
     <ClInclude Include="D3DVector.h" />
     <ClInclude Include="D3DViewport.h" />
     <ClInclude Include="LuaManager.h" />
+    <ClInclude Include="MemoryUtil.h" />
     <ClInclude Include="sol.hpp" />
     <ClInclude Include="sol_forward.hpp" />
     <ClInclude Include="TES3Activator.h" />
@@ -114,6 +115,7 @@
     <ClCompile Include="CodePatchUtil.cpp" />
     <ClCompile Include="FileUtil.cpp" />
     <ClCompile Include="LuaManager.cpp" />
+    <ClCompile Include="MemoryUtil.cpp" />
     <ClCompile Include="MgeVirtualMachine.cpp" />
     <ClCompile Include="MgeTes3Machine.cpp" />
     <ClCompile Include="RngUtil.cpp" />

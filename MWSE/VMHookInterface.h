@@ -28,8 +28,8 @@ namespace mwse
 	class VMHookInterface
 	{
 	public:
-		virtual float executeOperation(OpCode::OpCode_t opcode, mwAdapter::Context_t &context, TES3::Script* script) = 0;
-		virtual void loadParametersForOperation(OpCode::OpCode_t opcode, mwAdapter::Context_t &context, TES3::Script* script) = 0;
+		virtual float executeOperation(OpCode::OpCode_t opcode, RegistryContext &context, TES3::Script* script) = 0;
+		virtual void loadParametersForOperation(OpCode::OpCode_t opcode, RegistryContext &context, TES3::Script* script) = 0;
 
 		virtual bool isOpcode(const OpCode::OpCode_t opcode) = 0;
 	};

@@ -43,11 +43,11 @@ VirtualMachine::VirtualMachine()
 	mwScriptIP = reinterpret_cast<long*>(TES3_IP_IMAGE);
 }
 
-void VirtualMachine::loadParametersForOperation(OpCode::OpCode_t opcode, mwAdapter::Context_t &context, TES3::Script* script)
+void VirtualMachine::loadParametersForOperation(OpCode::OpCode_t opcode, RegistryContext &context, TES3::Script* script)
 {
 	InstructionInterface_t * instruction = InstructionStore::getInstance().get(opcode);
 
-	setContext(context);
+	setRegistryContext(context);
 	setScript(script);
 
 	// Call OnScriptChange if we're running a different script.
@@ -59,19 +59,19 @@ void VirtualMachine::loadParametersForOperation(OpCode::OpCode_t opcode, mwAdapt
 	instruction->loadParameters(*this);
 
 	// Feed up any changes to the context to the hook.
-	context = getContext();
+	context = getRegistryContext();
 }
 
-float VirtualMachine::executeOperation(OpCode::OpCode_t opcode, mwAdapter::Context_t &context, TES3::Script* script)
+float VirtualMachine::executeOperation(OpCode::OpCode_t opcode, RegistryContext &context, TES3::Script* script)
 {
 	InstructionInterface_t * instruction = InstructionStore::getInstance().get(opcode);
 
-	setContext(context);
+	setRegistryContext(context);
 	setScript(script);
 
 	float returnvalue = instruction->execute(*this);	//what else does 'execute' need?
 
-	context = getContext();
+	context = getRegistryContext();
 
 	return returnvalue;
 }
@@ -87,12 +87,12 @@ bool VirtualMachine::isOpcode(const OpCode::OpCode_t opcode)
 	return InstructionStore::getInstance().isOpcode(opcode);
 }
 
-void VirtualMachine::setContext(mwAdapter::Context_t context)
+void VirtualMachine::setRegistryContext(RegistryContext context)
 {
 	this->context = context;
 }
 
-mwAdapter::Context_t VirtualMachine::getContext()
+RegistryContext VirtualMachine::getRegistryContext()
 {
 	return this->context;
 }
@@ -182,7 +182,7 @@ void VirtualMachine::setReference(TES3::Reference *reference)
 
 	OpCode::OpCode_t opcode = OpCode::_SetReference;	//'->'
 	unsigned char inref = 1;
-	mwAdapter::Context_t context = getContext();
+	RegistryContext context = getRegistryContext();
 
 	OpCode::OpCode_t * currentOpcode = reinterpret_cast<OpCode::OpCode_t*>(TES3_OP_IMAGE);
 	*currentOpcode = opcode;
