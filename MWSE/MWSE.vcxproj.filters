@@ -118,6 +118,12 @@
     <Filter Include="Header Files\Lua">
       <UniqueIdentifier>{537f3124-ae1e-4dbe-88da-8870fced7fa7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Lua\sol2">
+      <UniqueIdentifier>{49c38c80-85e8-4ebc-ae2e-b8805552aae9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lua">
+      <UniqueIdentifier>{f8c5e605-9df8-4756-b370-f13211251225}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Flags.h">
@@ -400,9 +406,12 @@
       <Filter>Header Files\DataAdapters\TES3\Objects\Actor\Data</Filter>
     </ClInclude>
     <ClInclude Include="sol.hpp">
-      <Filter>Header Files\Lua</Filter>
+      <Filter>Header Files\Lua\sol2</Filter>
     </ClInclude>
     <ClInclude Include="sol_forward.hpp">
+      <Filter>Header Files\Lua\sol2</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaManager.h">
       <Filter>Header Files\Lua</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1111,6 +1120,9 @@
     </ClCompile>
     <ClCompile Include="xMyRef.cpp">
       <Filter>Source Files\Functions\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaManager.cpp">
+      <Filter>Source Files\Lua</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
