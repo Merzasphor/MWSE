@@ -1,6 +1,10 @@
 #pragma once
 
+#include <unordered_map>
+
 #include "sol.hpp"
+
+#include "LuaScript.h"
 
 namespace mwse {
 	namespace lua {
@@ -12,16 +16,28 @@ namespace mwse {
 			};
 
 			// Returns a reference to the sol2 lua state.
-			sol::state& getState() {
+			sol::state& __fastcall getState() {
 				return luaState;
 			}
+
+			// 
+			void hook();
+			void cleanup();
 
 		private:
 			LuaManager();
 
+			//
+			void bindData();
+
+			// 
 			static LuaManager singleton;
 
+			// 
 			sol::state luaState;
+
+			// 
+			bool hooked = false;
 		};
 	}
 }
