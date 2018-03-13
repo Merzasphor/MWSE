@@ -1,11 +1,13 @@
 #include "LuaManager.h"
 
+#include "mwOffsets.h"
 #include "Log.h"
 #include "TES3Util.h"
 #include "TES3Game.h"
 #include "TES3Reference.h"
 #include "LuaUtil.h"
 #include "MemoryUtil.h"
+#include "ScriptUtil.h"
 
 // TEMP! REMOVE!
 #include "TES3Script.h"
@@ -34,10 +36,10 @@ namespace mwse {
 		static HookContext context;
 
 		// Fast-access mapping from a TES3::Script* to its associated Lua module.
-		std::unordered_map<unsigned long, sol::table> scriptOverrides;
+		static std::unordered_map<unsigned long, sol::table> scriptOverrides;
 
 		// The currently executing overwritten script.
-		LuaScript * currentOverwrittenScript = NULL;
+		static LuaScript * currentOverwrittenScript = NULL;
 
 		// Overwrite function for Lua's print(), so that we can get information to the log
 		// from lua.
@@ -152,6 +154,41 @@ namespace mwse {
 			}
 		}
 
+		// Determines if a script should be overriden, and executes the module::execute function if so.
+		static void _stdcall HookRunScriptIndirect() {
+			TES3::Script* script = reinterpret_cast<TES3::Script*>(context.ebx);
+
+			// Determine if we own this script.
+			auto searchResult = scriptOverrides.find(context.ebx);
+			if (searchResult == scriptOverrides.end()) {
+				return;
+			}
+
+			// Get and update the script context.
+			LuaScript* luaScript = searchResult->second.as<LuaScript*>();
+			luaScript->reference = *reinterpret_cast<TES3::Reference**>(TES3_SCRIPTTARGETREF_IMAGE);
+			currentOverwrittenScript = luaScript;
+
+			// Call the script in a protected state.
+			sol::protected_function execute = searchResult->second["execute"];
+			auto result = execute();
+			if (result.valid()) {
+				// Check the return value. If it is false, stop the script execution.
+				sol::object shouldContinue = result;
+				if (shouldContinue.is<bool>() && shouldContinue.as<bool>() == false) {
+					mwse::mwscript::StopScript(script, script);
+				}
+			}
+			else {
+				// Stop script if execution failed.
+				mwse::mwscript::StopScript(script, script);
+
+				// Print error to log.
+				sol::error error = result;
+				log::getLog() << "Lua error in " << script->name << ":execute():\n\t" << error.what() << std::endl;
+			}
+		}
+
 		// Hook for HookScriptNewIndirect.
 		DWORD skipped_setEntitySrcMod = 0x4EEE50;
 		DWORD HookScriptNewDirectReturnTo = TES3_HOOK_SCRIPT_NEW_LUACHECK_RETURN;
@@ -200,6 +237,51 @@ namespace mwse {
 			}
 		}
 
+		// Hook for HookRunScriptIndirect.
+		static __declspec(naked) void HookRunScriptDirect() {
+			_asm
+			{
+				// Save eax.
+				mov context.eax, eax
+
+				// Save the flags.
+				pushfd
+				pop eax
+				mov context.flags, eax
+
+				// Save the other registers.
+				mov context.ebx, ebx
+				mov context.ecx, ecx
+				mov context.edx, edx
+				mov context.esi, esi
+				mov context.edi, edi
+				mov context.ebp, ebp
+				mov context.esp, esp
+
+				// Actually use our hook.
+				mov context.callbackAddress, TES3_HOOK_RUNSCRIPT_LUACHECK_RETURN
+				call HookRunScriptIndirect
+
+				// Restore all registers and flags.
+				mov eax, context.eax
+				mov ebx, context.ebx
+				mov ecx, context.ecx
+				mov edx, context.edx
+				mov esi, context.esi
+				mov edi, context.edi
+				mov ebp, context.ebp
+				mov esp, context.esp
+				push context.flags
+				popfd
+
+				// Overwritten code.
+				mov ecx, TES3_SCRIPTTARGETREF_IMAGE
+
+				// Resume normal execution.
+				jmp context.callbackAddress
+			}
+		}
+
 		void LuaManager::hook() {
 			if (hooked) {
 				throw std::exception("Lua subsystem already hooked!");
@@ -218,15 +300,18 @@ namespace mwse {
 			// We can't do the script constructor here, because at that time the script's name is not determined.
 			VirtualProtect((DWORD*)TES3_HOOK_SCRIPT_NEW_LUACHECK, TES3_HOOK_SCRIPT_NEW_LUACHECK_SIZE, PAGE_READWRITE, &OldProtect);
 			genJump(TES3_HOOK_SCRIPT_NEW_LUACHECK, reinterpret_cast<DWORD>(HookScriptNewDirect));
+			for (DWORD i = TES3_HOOK_SCRIPT_NEW_LUACHECK + 5; i < TES3_HOOK_SCRIPT_NEW_LUACHECK_RETURN; i++) {
+				genNOP(i);
+			}
 			VirtualProtect((DWORD*)TES3_HOOK_SCRIPT_NEW_LUACHECK, TES3_HOOK_SCRIPT_NEW_LUACHECK_SIZE, OldProtect, &OldProtect);
 
 			// Hook the RunScript function so we can intercept Lua scripts and invoke Lua code if needed.
-#if false
 			VirtualProtect((DWORD*)TES3_HOOK_RUNSCRIPT_LUACHECK, TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE, PAGE_READWRITE, &OldProtect);
 			genJump(TES3_HOOK_RUNSCRIPT_LUACHECK, reinterpret_cast<DWORD>(HookRunScriptDirect));
-			genNOP(TES3_HOOK_RUNSCRIPT_LUACHECK_RETURN - 1);
+			for (DWORD i = TES3_HOOK_RUNSCRIPT_LUACHECK + 5; i < TES3_HOOK_RUNSCRIPT_LUACHECK_RETURN; i++) {
+				genNOP(i);
+			}
 			VirtualProtect((DWORD*)TES3_HOOK_RUNSCRIPT_LUACHECK, TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE, OldProtect, &OldProtect);
-#endif
 
 			hooked = true;
 		}
