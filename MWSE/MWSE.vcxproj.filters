@@ -115,6 +115,9 @@
     <Filter Include="Header Files\DataAdapters\TES3\Objects\Other">
       <UniqueIdentifier>{13bbc2cf-0995-4f07-bf1c-2df65a817f76}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Lua">
+      <UniqueIdentifier>{537f3124-ae1e-4dbe-88da-8870fced7fa7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Flags.h">
@@ -395,6 +398,12 @@
     </ClInclude>
     <ClInclude Include="TES3Faction.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Actor\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="sol.hpp">
+      <Filter>Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="sol_forward.hpp">
+      <Filter>Header Files\Lua</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

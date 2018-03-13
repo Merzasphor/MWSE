@@ -18,6 +18,8 @@
     <ClInclude Include="D3DMaterial.h" />
     <ClInclude Include="D3DVector.h" />
     <ClInclude Include="D3DViewport.h" />
+    <ClInclude Include="sol.hpp" />
+    <ClInclude Include="sol_forward.hpp" />
     <ClInclude Include="TES3Activator.h" />
     <ClInclude Include="TES3Alchemy.h" />
     <ClInclude Include="TES3Apparatus.h" />
