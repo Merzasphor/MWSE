@@ -5,7 +5,7 @@
 namespace mwse {
 	// Container for registers, flags, and other information to help with the
 	// native to MWSE code bridge.
-	struct RegistryContext {
+	struct HookContext {
 		// General registers.
 		DWORD eax;
 		DWORD ebx;
