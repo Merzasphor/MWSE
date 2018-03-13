@@ -3,7 +3,7 @@
 #include "Log.h"
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
-
+#include "TES3ObjectLua.h"
 
 namespace mwse {
 	namespace lua {
@@ -21,6 +21,9 @@ namespace mwse {
 				lua_pop(L, 1);
 				return 0;
 			};
+
+			// Bind data types.
+			bindTES3Object();
 
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");

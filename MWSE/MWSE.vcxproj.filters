@@ -124,6 +124,18 @@
     <Filter Include="Source Files\Lua">
       <UniqueIdentifier>{f8c5e605-9df8-4756-b370-f13211251225}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Lua\Bindings">
+      <UniqueIdentifier>{f796ca77-0b45-4a33-9f5f-8e48b6629e26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lua\Bindings\TES3">
+      <UniqueIdentifier>{38bcc59f-8405-47ac-8a1b-136ac84270dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lua\Bindings">
+      <UniqueIdentifier>{111da9ef-aaed-4c85-9881-de3127252753}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lua\Bindings\TES3">
+      <UniqueIdentifier>{dadfb912-6f34-42c2-9a34-cec9d9dd3745}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Flags.h">
@@ -413,6 +425,9 @@
     </ClInclude>
     <ClInclude Include="LuaManager.h">
       <Filter>Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3ObjectLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1123,6 +1138,9 @@
     </ClCompile>
     <ClCompile Include="LuaManager.cpp">
       <Filter>Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3ObjectLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
