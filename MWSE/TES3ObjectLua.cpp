@@ -20,6 +20,12 @@ namespace mwse {
 				"new", sol::no_constructor,
 
 				//
+				// Properties.
+				//
+
+				"objectType", sol::readonly(&TES3::BaseObject::objectType),
+
+				//
 				// Easy vtable victories.
 				//
 

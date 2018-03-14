@@ -13,7 +13,13 @@ namespace mwse {
 				"new", sol::no_constructor,
 
 				//
+				// Properties.
 				//
+
+				"objectType", sol::readonly(&TES3::Reference::objectType),
+
+				//
+				// Functions.
 				//
 
 				"getObject", [](TES3::Reference* reference) { return makeLuaObject(reference->baseObject); }
