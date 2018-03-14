@@ -95,12 +95,10 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved)
 		break;
 	case DLL_THREAD_DETACH:
 		// Do thread-specific cleanup.
-
-		// Unhook Lua interface.
-		lua::LuaManager::getInstance().cleanup();
 		break;
 	case DLL_PROCESS_DETACH:
-		// Perform any necessary cleanup.
+		// Unhook Lua interface.
+		lua::LuaManager::getInstance().cleanup();
 		break;
 	}
 

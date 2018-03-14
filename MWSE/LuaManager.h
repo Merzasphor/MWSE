@@ -20,8 +20,10 @@ namespace mwse {
 				return luaState;
 			}
 
-			// 
+			// Uses the MemoryUtil library to create the necessary injections into Morrowind.
 			void hook();
+
+			// Performs cleanup to safely detach the DLL.
 			void cleanup();
 
 		private:
@@ -35,9 +37,6 @@ namespace mwse {
 
 			// 
 			sol::state luaState;
-
-			// 
-			bool hooked = false;
 		};
 	}
 }
