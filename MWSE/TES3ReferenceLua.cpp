@@ -17,12 +17,16 @@ namespace mwse {
 				//
 
 				"objectType", sol::readonly(&TES3::Reference::objectType),
+				"position", &TES3::Reference::position,
+				"orientation", &TES3::Reference::orientation, // This doesn't seem to actually do anything.
 
 				//
 				// Functions.
 				//
 
-				"getObject", [](TES3::Reference* reference) { return makeLuaObject(reference->baseObject); }
+				"of", [](TES3::Reference* self) { return makeLuaObject(self); },
+				"getID", [](TES3::Reference* self) { return self->vTable->getObjectID(self); }
+
 				);
 		}
 	}
