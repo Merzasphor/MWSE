@@ -114,6 +114,7 @@ namespace TES3 {
 	struct InputConfig;
 	struct InputController;
 	struct Item;
+	struct ItemData;
 	struct Light;
 	struct Lockpick;
 	struct MobileActor;

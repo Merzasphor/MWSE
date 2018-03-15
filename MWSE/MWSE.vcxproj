@@ -92,6 +92,7 @@
     <ClInclude Include="TES3Script.h" />
     <ClInclude Include="TES3Skill.h" />
     <ClInclude Include="TES3Spell.h" />
+    <ClInclude Include="TES3SpellInstance.h" />
     <ClInclude Include="TES3SpellList.h" />
     <ClInclude Include="TES3Statistic.h" />
     <ClInclude Include="TES3Util.h" />

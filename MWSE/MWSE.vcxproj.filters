@@ -396,6 +396,9 @@
     <ClInclude Include="TES3Faction.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Actor\Data</Filter>
     </ClInclude>
+    <ClInclude Include="TES3SpellInstance.h">
+      <Filter>Header Files\DataAdapters\TES3\Magic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
