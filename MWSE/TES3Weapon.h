@@ -24,20 +24,20 @@ namespace TES3 {
 	}
 
 	struct Weapon : Item {
-		float weight;
-		int value;
-		char weaponType;
-		short maxCondition;
-		float speed;
-		float reach;
-		short enchantCapacity;
-		unsigned char chopMin;
-		unsigned char chopMax;
-		unsigned char slashMin;
-		unsigned char slashMax;
-		unsigned char thrustMin;
-		unsigned char thrustMax;
-		int materialFlags;
-		Enchantment * enchantment;
+		float weight; // 0x54
+		int value; // 0x58
+		char weaponType; // 0x5C
+		short maxCondition; // 0x5E
+		float speed; // 0x60
+		float reach; // 0x64
+		short enchantCapacity; // 0x68
+		unsigned char chopMin; // 0x6A
+		unsigned char chopMax; // 0x6B
+		unsigned char slashMin; // 0x6C
+		unsigned char slashMax; // 0x6D
+		unsigned char thrustMin; // 0x6E
+		unsigned char thrustMax; // 0x6F
+		int materialFlags; // 0x70
+		Enchantment * enchantment; // 0x74
 	};
 }
