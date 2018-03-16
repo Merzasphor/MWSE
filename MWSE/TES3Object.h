@@ -227,6 +227,14 @@ namespace TES3 {
 		ObjectType::ObjectType objectType; // 0x4
 		int objectFlags; // 0x8
 		void * sourceMod; // 0xC
+
+		//
+		// Function wrappers for our virtual table.
+		//
+
+		char* getIcon() {
+			return this->vTable->getIconPath(this);
+		}
 	};
 	static_assert(sizeof(BaseObject) == 0x10, "TES3::BaseObject failed size validation");
 

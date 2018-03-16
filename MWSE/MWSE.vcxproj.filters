@@ -450,6 +450,9 @@
     <ClInclude Include="TES3SpellInstance.h">
       <Filter>Header Files\DataAdapters\TES3\Magic</Filter>
     </ClInclude>
+    <ClInclude Include="TES3ApparatusLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1174,6 +1177,9 @@
     </ClCompile>
     <ClCompile Include="MemoryUtil.cpp">
       <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3ApparatusLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
