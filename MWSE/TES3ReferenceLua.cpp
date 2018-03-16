@@ -24,7 +24,8 @@ namespace mwse {
 				// Functions.
 				//
 
-				"of", [](TES3::Reference* self) { return makeLuaObject(self); },
+				"of", [](TES3::Reference* self) { return makeLuaObject(self->baseObject); },
+
 				"getID", [](TES3::Reference* self) { return self->vTable->getObjectID(self); }
 
 				);
