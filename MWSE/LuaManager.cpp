@@ -13,6 +13,7 @@
 #include "TES3Script.h"
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
+#include "TES3ActivatorLua.h"
 #include "TES3ApparatusLua.h"
 #include "TES3ReferenceLua.h"
 #include "TES3VectorsLua.h"
@@ -77,6 +78,7 @@ namespace mwse {
 				);
 
 			// Bind data types.
+			bindTES3Activator();
 			bindTES3Apparatus();
 			bindTES3Reference();
 			bindTES3Vectors();

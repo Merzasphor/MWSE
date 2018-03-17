@@ -26,6 +26,7 @@
     <ClInclude Include="sol.hpp" />
     <ClInclude Include="sol_forward.hpp" />
     <ClInclude Include="TES3Activator.h" />
+    <ClInclude Include="TES3ActivatorLua.h" />
     <ClInclude Include="TES3Alchemy.h" />
     <ClInclude Include="TES3Apparatus.h" />
     <ClInclude Include="TES3ApparatusLua.h" />
@@ -127,6 +128,7 @@
     <ClCompile Include="MgeTes3Machine.cpp" />
     <ClCompile Include="RngUtil.cpp" />
     <ClCompile Include="ScriptUtil.cpp" />
+    <ClCompile Include="TES3ActivatorLua.cpp" />
     <ClCompile Include="TES3ApparatusLua.cpp" />
     <ClCompile Include="TES3Object.cpp" />
     <ClCompile Include="TES3ReferenceLua.cpp" />
