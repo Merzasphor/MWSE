@@ -16,6 +16,7 @@
 #include "TES3ActivatorLua.h"
 #include "TES3AlchemyLua.h"
 #include "TES3ApparatusLua.h"
+#include "TES3MagicEffectLua.h"
 #include "TES3MobileNPCLua.h"
 #include "TES3ReferenceLua.h"
 #include "TES3StatisticLua.h"
@@ -85,6 +86,7 @@ namespace mwse {
 			bindTES3Alchemy();
 			bindTES3Apparatus();
 			bindTES3Reference();
+			bindTES3MagicEffect();
 			bindTES3MobileNPC();
 			bindTES3Statistic();
 			bindTES3Vectors();
