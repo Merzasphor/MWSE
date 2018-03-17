@@ -14,7 +14,6 @@
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
 #include "TES3ApparatusLua.h"
-#include "TES3ObjectLua.h"
 #include "TES3ReferenceLua.h"
 #include "TES3VectorsLua.h"
 
