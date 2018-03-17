@@ -40,7 +40,7 @@
 namespace mwse {
 	namespace lua {
 		sol::object makeLuaObject(TES3::BaseObject* object) {
-			lua_State * state = LuaManager::getInstance().getState();
+			sol::state& state = LuaManager::getInstance().getState();
 
 			switch (object->objectType) {
 			case TES3::ObjectType::Activator:
@@ -71,12 +71,6 @@ namespace mwse {
 				return sol::make_object(state, reinterpret_cast<TES3::Light*>(object));
 			case TES3::ObjectType::Lockpick:
 				return sol::make_object(state, reinterpret_cast<TES3::Lockpick*>(object));
-			case TES3::ObjectType::MobileNPC:
-				return sol::make_object(state, reinterpret_cast<TES3::MobileNPC*>(object));
-			case TES3::ObjectType::MobileCreature:
-				return sol::make_object(state, reinterpret_cast<TES3::MobileCreature*>(object));
-			case TES3::ObjectType::MobilePlayer:
-				return sol::make_object(state, reinterpret_cast<TES3::MobilePlayer*>(object));
 			case TES3::ObjectType::NPC:
 				return sol::make_object(state, reinterpret_cast<TES3::NPC*>(object));
 			case TES3::ObjectType::Probe:
@@ -98,6 +92,21 @@ namespace mwse {
 			}
 
 			return sol::make_object(state, object);
+		}
+
+		sol::object makeLuaObject(TES3::MobileActor* actor) {
+			sol::state& state = LuaManager::getInstance().getState();
+
+			switch (actor->objectType) {
+			case TES3::ObjectType::MobileCreature:
+				return sol::make_object(state, reinterpret_cast<TES3::MobileCreature*>(actor));
+			case TES3::ObjectType::MobileNPC:
+				return sol::make_object(state, reinterpret_cast<TES3::MobileNPC*>(actor));
+			case TES3::ObjectType::MobilePlayer:
+				return sol::make_object(state, reinterpret_cast<TES3::MobilePlayer*>(actor));
+			}
+
+			return sol::make_object(state, actor);
 		}
 	}
 }

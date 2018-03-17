@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sol.hpp"
 
 #include "TES3Object.h"
 #include "TES3Attachment.h"
@@ -13,6 +14,14 @@ namespace TES3 {
 		Attachment * attachments; // 0x44
 		int sourceID; // 0x48
 		int targetID; // 0x4C
+
+		//
+		// Custom functions.
+		//
+
+		// Return a table (or nil) of attachments for this object.
+		sol::object getAttachments();
+
 	};
 	static_assert(sizeof(Reference) == 0x50, "TES3::Reference failed size validation");
 }

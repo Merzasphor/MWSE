@@ -5,6 +5,35 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+namespace TES3 {
+	sol::object Reference::getAttachments() {
+		if (this->attachments == NULL) {
+			return sol::nil;
+		}
+
+		sol::state& state = mwse::lua::LuaManager::getInstance().getState();
+
+		sol::table result;
+
+		Attachment* attachment = this->attachments;
+		while (attachment) {
+			switch (attachment->type) {
+			case AttachmentType::Lock:
+				result["lock"] = sol::make_object(state, reinterpret_cast<LockAttachment*>(attachment)->data);
+				break;
+			case AttachmentType::Variables:
+				result["variables"] = sol::make_object(state, reinterpret_cast<ItemDataAttachment*>(attachment)->data);
+				break;
+			case AttachmentType::ActorData:
+				result["actor"] = mwse::lua::makeLuaObject(reinterpret_cast<MobileActorAttachment*>(attachment)->data);
+				break;
+			}
+		}
+
+		return result;
+	}
+}
+
 namespace mwse {
 	namespace lua {
 		void bindTES3Reference() {
@@ -22,6 +51,8 @@ namespace mwse {
 				"orientation", &TES3::Reference::orientation, // This doesn't seem to actually do anything.
 
 				"isRespawn", sol::readonly_property(&TES3::Reference::isRespawn),
+
+				"attachments", sol::readonly_property(&TES3::Reference::getAttachments),
 
 				//
 				// Functions.

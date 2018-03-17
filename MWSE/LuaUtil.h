@@ -7,5 +7,6 @@
 namespace mwse {
 	namespace lua {
 		sol::object makeLuaObject(TES3::BaseObject* object);
+		sol::object makeLuaObject(TES3::MobileActor* actor);
 	}
 }
