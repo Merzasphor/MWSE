@@ -456,6 +456,9 @@
     <ClInclude Include="TES3StatisticLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
+    <ClInclude Include="TES3MobileNPCLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
     <ClInclude Include="TES3ActivatorLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
@@ -1192,6 +1195,9 @@
     </ClCompile>
     <ClCompile Include="TES3Statistic.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3MobileNPCLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3ActivatorLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>

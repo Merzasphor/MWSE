@@ -25,7 +25,7 @@ namespace TES3 {
 
 	struct MobileActor {
 		void * vTable; // 0x0
-		int objectType; // 0x4
+		ObjectType::ObjectType objectType; // 0x4
 		short movementFlags; // 0x8
 		short prevMovementFlags; // 0xA
 		short unknown_0xC;
@@ -98,8 +98,8 @@ namespace TES3 {
 		char unknown_0x224;
 		char unknown_0x225;
 		char unknown_0x226;
-		char nextActionWeight; // 0x227
-		char actorType; // 0x228
+		signed char nextActionWeight; // 0x227
+		signed char actorType; // 0x228
 		char unknown_0x229;
 		char unknown_0x22A; // Undefined.
 		char unknown_0x22B; // Undefined.

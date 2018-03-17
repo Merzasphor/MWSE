@@ -86,6 +86,7 @@
     <ClInclude Include="TES3Light.h" />
     <ClInclude Include="TES3Lockpick.h" />
     <ClInclude Include="TES3MobileNPC.h" />
+    <ClInclude Include="TES3MobileNPCLua.h" />
     <ClInclude Include="TES3MobilePlayer.h" />
     <ClInclude Include="TES3MobileCreature.h" />
     <ClInclude Include="TES3MobileActor.h" />
@@ -131,6 +132,7 @@
     <ClCompile Include="ScriptUtil.cpp" />
     <ClCompile Include="TES3ActivatorLua.cpp" />
     <ClCompile Include="TES3ApparatusLua.cpp" />
+    <ClCompile Include="TES3MobileNPCLua.cpp" />
     <ClCompile Include="TES3Object.cpp" />
     <ClCompile Include="TES3ReferenceLua.cpp" />
     <ClCompile Include="TES3Statistic.cpp" />
