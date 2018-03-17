@@ -129,6 +129,7 @@
     <ClCompile Include="RngUtil.cpp" />
     <ClCompile Include="ScriptUtil.cpp" />
     <ClCompile Include="TES3ApparatusLua.cpp" />
+    <ClCompile Include="TES3Object.cpp" />
     <ClCompile Include="TES3ObjectLua.cpp" />
     <ClCompile Include="TES3ReferenceLua.cpp" />
     <ClCompile Include="TES3VectorsLua.cpp" />
