@@ -1,10 +1,51 @@
 #pragma once
 
+#include "TES3Object.h"
+
+#include "sol_forward.hpp"
+
 namespace TES3 {
+	struct Statistic_vTable {
+		float (__thiscall * getCurrentValue)(Statistic*);
+	};
+
 	struct Statistic {
-		void * vTable;
+		Statistic_vTable * vTable;
 		float base;
 		float current;
+
+		//
+		// Virtual table function wrappers.
+		//
+
+		float getCurrent();
+
+		//
+		// Other related this-call functions.
+		//
+
+		float getBase();
+		float getCurrentRaw();
+		float getNormalized();
+
+		void modBaseCapped(float delta, bool capAt0, bool capAt100);
+		void modCurrentCapped(float delta, bool capAt0, bool capAtBase, bool capAt100);
+
+		void setBase(float value);
+		void setBaseAndCurrent(float value);
+		void setBaseToCurrent();
+		void setCurrentCapped(float value, bool applyCaps);
+
+		//
+		// Lua interface functions.
+		//
+
+		void luaModBase(float);
+		void luaSetBase(float);
+
+		void luaModCurrent(float);
+		void luaSetCurrent(float);
+
 	};
 	static_assert(sizeof(Statistic) == 0xC, "TES3::Statistic failed size validation");
 

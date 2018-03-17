@@ -16,6 +16,7 @@
 #include "TES3ActivatorLua.h"
 #include "TES3ApparatusLua.h"
 #include "TES3ReferenceLua.h"
+#include "TES3StatisticLua.h"
 #include "TES3VectorsLua.h"
 
 #define TES3_HOOK_SCRIPT_NEW_LUACHECK 0x4C086D
@@ -81,6 +82,7 @@ namespace mwse {
 			bindTES3Activator();
 			bindTES3Apparatus();
 			bindTES3Reference();
+			bindTES3Statistic();
 			bindTES3Vectors();
 
 			// Bind function: GetPlayerTarget

@@ -133,6 +133,7 @@ namespace TES3 {
 	struct Script;
 	struct ScriptVariables;
 	struct Spell;
+	struct Statistic;
 	struct Weapon;
 	struct WorldController;
 
