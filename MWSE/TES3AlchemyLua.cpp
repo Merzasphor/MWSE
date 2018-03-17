@@ -13,7 +13,8 @@ namespace TES3 {
 		// Build a table of TES3::Effect* objects to pass back.
 		sol::table result = state.create_table();
 		for (int i = 0; i < 8; i++) {
-			result[i] = sol::make_object(state, &effects[i]);
+			// Insert a pointer to the effect. Convert index to be 1-based.
+			result[i+1] = sol::make_object(state, &effects[i]);
 		}
 		return result;
 	}
