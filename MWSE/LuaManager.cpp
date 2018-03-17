@@ -79,7 +79,6 @@ namespace mwse {
 
 			// Bind data types.
 			bindTES3Apparatus();
-			bindTES3Object();
 			bindTES3Reference();
 			bindTES3Vectors();
 

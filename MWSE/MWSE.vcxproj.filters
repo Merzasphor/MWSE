@@ -429,9 +429,6 @@
     <ClInclude Include="LuaManager.h">
       <Filter>Header Files\Lua</Filter>
     </ClInclude>
-    <ClInclude Include="TES3ObjectLua.h">
-      <Filter>Header Files\Lua\Bindings\TES3</Filter>
-    </ClInclude>
     <ClInclude Include="TES3VectorsLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
@@ -1165,9 +1162,6 @@
     </ClCompile>
     <ClCompile Include="LuaManager.cpp">
       <Filter>Source Files\Lua</Filter>
-    </ClCompile>
-    <ClCompile Include="TES3ObjectLua.cpp">
-      <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3VectorsLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
