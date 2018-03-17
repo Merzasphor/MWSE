@@ -13,7 +13,7 @@ namespace TES3 {
 
 		sol::state& state = mwse::lua::LuaManager::getInstance().getState();
 
-		sol::table result;
+		sol::table result = state.create_table();
 
 		Attachment* attachment = this->attachments;
 		while (attachment) {
@@ -28,6 +28,8 @@ namespace TES3 {
 				result["actor"] = mwse::lua::makeLuaObject(reinterpret_cast<MobileActorAttachment*>(attachment)->data);
 				break;
 			}
+
+			attachment = attachment->next;
 		}
 
 		return result;
