@@ -3,6 +3,7 @@
 #include "LuaManager.h"
 
 #include "TES3Apparatus.h"
+#include "TES3Script.h"
 
 namespace mwse {
 	namespace lua {
@@ -16,16 +17,20 @@ namespace mwse {
 				//
 
 				"objectType", &TES3::Apparatus::objectType,
-				"type", &TES3::Apparatus::type,
-				"quality", &TES3::Apparatus::quality,
 
-				"icon", sol::readonly_property(&TES3::Apparatus::getIcon),
+				"id", sol::readonly_property(&TES3::Apparatus::getObjectID),
+				"name", sol::property(&TES3::Apparatus::getName, &TES3::Apparatus::setName),
 
-				//
-				// Functions.
-				//
+				"icon", sol::readonly_property(&TES3::Apparatus::getIconPath),
+				"model", sol::readonly_property(&TES3::Apparatus::getModelPath),
 
-				"getIcon", [](TES3::Apparatus* self) { return self->vTable->getIconPath(self); }
+				"type", sol::readonly_property(&TES3::Apparatus::getType),
+				"typeName", sol::readonly_property(&TES3::Apparatus::getTypeName),
+				"quality", sol::readonly_property(&TES3::Apparatus::getQuality),
+				"value", sol::readonly_property(&TES3::Apparatus::getValue),
+				"weight", sol::readonly_property(&TES3::Apparatus::getWeight),
+
+				"script", sol::readonly_property(&TES3::Apparatus::getScript)
 
 				);
 		}
