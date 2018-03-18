@@ -30,7 +30,7 @@ namespace TES3 {
 	struct ItemContained : PhysicalObject {
 		Iterator<void> stolenList; // 0x30
 		char name[32]; // 0x44
-		int unknown_0x64;
+		Script * script;
 		char modal[32]; // 0x68
 		char icon[32]; // 0x88
 	};

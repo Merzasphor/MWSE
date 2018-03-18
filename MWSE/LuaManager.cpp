@@ -24,8 +24,10 @@
 #include "TES3IngredientLua.h"
 #include "TES3InventoryLua.h"
 #include "TES3LightLua.h"
+#include "TES3LockpickLua.h"
 #include "TES3MagicEffectLua.h"
 #include "TES3MobileNPCLua.h"
+#include "TES3ProbeLua.h"
 #include "TES3ReferenceLua.h"
 #include "TES3StatisticLua.h"
 #include "TES3VectorsLua.h"
@@ -101,9 +103,11 @@ namespace mwse {
 			bindTES3Ingredient();
 			bindTES3Inventory();
 			bindTES3Light();
+			bindTES3Lockpick();
 			bindTES3Reference();
 			bindTES3MagicEffect();
 			bindTES3MobileNPC();
+			bindTES3Probe();
 			bindTES3Statistic();
 			bindTES3Vectors();
 

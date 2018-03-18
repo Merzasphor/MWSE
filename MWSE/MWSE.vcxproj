@@ -95,6 +95,7 @@
     <ClInclude Include="TES3Light.h" />
     <ClInclude Include="TES3LightLua.h" />
     <ClInclude Include="TES3Lockpick.h" />
+    <ClInclude Include="TES3LockpickLua.h" />
     <ClInclude Include="TES3MagicEffectLua.h" />
     <ClInclude Include="TES3MobileNPC.h" />
     <ClInclude Include="TES3MobileNPCLua.h" />
@@ -106,6 +107,7 @@
     <ClInclude Include="TES3NPC.h" />
     <ClInclude Include="TES3Object.h" />
     <ClInclude Include="TES3Probe.h" />
+    <ClInclude Include="TES3ProbeLua.h" />
     <ClInclude Include="TES3Race.h" />
     <ClInclude Include="TES3Reference.h" />
     <ClInclude Include="TES3ReferenceList.h" />
@@ -160,9 +162,11 @@
     <ClCompile Include="TES3InventoryLua.cpp" />
     <ClCompile Include="TES3Light.cpp" />
     <ClCompile Include="TES3LightLua.cpp" />
+    <ClCompile Include="TES3LockpickLua.cpp" />
     <ClCompile Include="TES3MagicEffectLua.cpp" />
     <ClCompile Include="TES3MobileNPCLua.cpp" />
     <ClCompile Include="TES3Object.cpp" />
+    <ClCompile Include="TES3ProbeLua.cpp" />
     <ClCompile Include="TES3ReferenceLua.cpp" />
     <ClCompile Include="TES3Statistic.cpp" />
     <ClCompile Include="TES3StatisticLua.cpp" />
