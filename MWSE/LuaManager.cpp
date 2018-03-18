@@ -18,6 +18,7 @@
 #include "TES3ArmorLua.h"
 #include "TES3ApparatusLua.h"
 #include "TES3BookLua.h"
+#include "TES3ClassLua.h"
 #include "TES3MagicEffectLua.h"
 #include "TES3MobileNPCLua.h"
 #include "TES3ReferenceLua.h"
@@ -89,6 +90,7 @@ namespace mwse {
 			bindTES3Armor();
 			bindTES3Apparatus();
 			bindTES3Book();
+			bindTES3Class();
 			bindTES3Reference();
 			bindTES3MagicEffect();
 			bindTES3MobileNPC();
