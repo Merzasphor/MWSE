@@ -58,7 +58,12 @@ namespace mwse {
 			case TES3::ObjectType::Class:
 				return sol::make_object(state, reinterpret_cast<TES3::Class*>(object));
 			case TES3::ObjectType::Creature:
-				return sol::make_object(state, reinterpret_cast<TES3::Creature*>(object));
+				if (reinterpret_cast<TES3::Actor*>(object)->actorFlags & TES3::ActorFlag::IsBase) {
+					return sol::make_object(state, reinterpret_cast<TES3::Creature*>(object));
+				}
+				else {
+					return sol::make_object(state, reinterpret_cast<TES3::CreatureInstance*>(object));
+				}
 			case TES3::ObjectType::Door:
 				return sol::make_object(state, reinterpret_cast<TES3::Door*>(object));
 			case TES3::ObjectType::Enchantment:
@@ -74,7 +79,12 @@ namespace mwse {
 			case TES3::ObjectType::Lockpick:
 				return sol::make_object(state, reinterpret_cast<TES3::Lockpick*>(object));
 			case TES3::ObjectType::NPC:
-				return sol::make_object(state, reinterpret_cast<TES3::NPC*>(object));
+				if (reinterpret_cast<TES3::Actor*>(object)->actorFlags & TES3::ActorFlag::IsBase) {
+					return sol::make_object(state, reinterpret_cast<TES3::NPC*>(object));
+				}
+				else {
+					return sol::make_object(state, reinterpret_cast<TES3::NPCInstance*>(object));
+				}
 			case TES3::ObjectType::Probe:
 				return sol::make_object(state, reinterpret_cast<TES3::Probe*>(object));
 			case TES3::ObjectType::Race:

@@ -20,6 +20,7 @@
 #include "TES3BookLua.h"
 #include "TES3ClassLua.h"
 #include "TES3ClothingLua.h"
+#include "TES3CreatureLua.h"
 #include "TES3MagicEffectLua.h"
 #include "TES3MobileNPCLua.h"
 #include "TES3ReferenceLua.h"
@@ -93,6 +94,7 @@ namespace mwse {
 			bindTES3Book();
 			bindTES3Class();
 			bindTES3Clothing();
+			bindTES3Creature();
 			bindTES3Reference();
 			bindTES3MagicEffect();
 			bindTES3MobileNPC();

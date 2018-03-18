@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sol_forward.hpp"
+
 #include "TES3Object.h"
 #include "TES3Actor.h"
 #include "TES3AIConfig.h"
@@ -31,6 +33,13 @@ namespace TES3 {
 		SpellList * ptrSpellList;
 		void * aiPackageList;
 		AIConfig * aiConfig;
+
+		//
+		// Lua interface functions.
+		//
+
+		sol::object getAttributes();
+
 	};
 	static_assert(sizeof(Creature) == 0xE8, "TES3::Creature failed size validation");
 
@@ -43,6 +52,12 @@ namespace TES3 {
 		int field_80;
 		void * sgNode_84;
 		int field_88;
+
+		//
+		// Lua interface functions.
+		//
+
+		sol::object getAttributes();
 	};
 	static_assert(sizeof(CreatureInstance) == 0x8C, "TES3::CreatureInstance failed size validation");
 }
