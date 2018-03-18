@@ -486,6 +486,9 @@
     <ClInclude Include="TES3InventoryLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
+    <ClInclude Include="TES3ContainerLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1263,6 +1266,12 @@
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3InventoryLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Container.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3ContainerLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
   </ItemGroup>
