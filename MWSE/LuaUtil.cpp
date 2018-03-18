@@ -51,6 +51,8 @@ namespace mwse {
 				return sol::make_object(state, reinterpret_cast<TES3::Apparatus*>(object));
 			case TES3::ObjectType::Armor:
 				return sol::make_object(state, reinterpret_cast<TES3::Armor*>(object));
+			case TES3::ObjectType::Book:
+				return sol::make_object(state, reinterpret_cast<TES3::Book*>(object));
 			case TES3::ObjectType::Cell:
 				return sol::make_object(state, reinterpret_cast<TES3::Cell*>(object));
 			case TES3::ObjectType::Class:

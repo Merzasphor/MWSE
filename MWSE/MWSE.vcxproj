@@ -32,6 +32,7 @@
     <ClInclude Include="TES3Apparatus.h" />
     <ClInclude Include="TES3ApparatusLua.h" />
     <ClInclude Include="TES3ArmorLua.h" />
+    <ClInclude Include="TES3BookLua.h" />
     <ClInclude Include="TES3Class.h" />
     <ClInclude Include="TES3Creature.h" />
     <ClInclude Include="TES3DataHandler.h" />
@@ -138,6 +139,8 @@
     <ClCompile Include="TES3ApparatusLua.cpp" />
     <ClCompile Include="TES3Armor.cpp" />
     <ClCompile Include="TES3ArmorLua.cpp" />
+    <ClCompile Include="TES3Book.cpp" />
+    <ClCompile Include="TES3BookLua.cpp" />
     <ClCompile Include="TES3MagicEffectLua.cpp" />
     <ClCompile Include="TES3MobileNPCLua.cpp" />
     <ClCompile Include="TES3Object.cpp" />
