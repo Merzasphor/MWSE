@@ -492,6 +492,9 @@
     <ClInclude Include="TES3Light.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Item</Filter>
     </ClInclude>
+    <ClInclude Include="TES3LightLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1278,6 +1281,9 @@
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3IngredientLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3LightLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3Light.cpp">
