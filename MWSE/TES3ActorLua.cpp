@@ -15,3 +15,15 @@ namespace TES3 {
 		return result;
 	}
 
+	sol::object Actor::getEquipment() {
+		sol::state& state = mwse::lua::LuaManager::getInstance().getState();
+
+		sol::table result = state.create_table(1, equipment.size);
+		unsigned int index = 1;
+		for (auto itt = equipment.head; itt != NULL; itt = itt->next) {
+			result[index] = sol::make_object(state, itt->data);
+			index++;
+		}
+		return result;
+	}
+}

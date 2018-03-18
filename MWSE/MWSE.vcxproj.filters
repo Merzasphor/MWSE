@@ -483,7 +483,7 @@
     <ClInclude Include="TES3CreatureLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
-    <ClInclude Include="TES3ItemLua.h">
+    <ClInclude Include="TES3InventoryLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1262,7 +1262,7 @@
     <ClCompile Include="TES3ActorLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
-    <ClCompile Include="TES3ItemLua.cpp">
+    <ClCompile Include="TES3InventoryLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
   </ItemGroup>

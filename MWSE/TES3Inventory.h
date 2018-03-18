@@ -34,6 +34,12 @@ namespace TES3 {
 	struct EquipmentStack {
 		Object * object; // 0x0
 		ItemVariables * variables; // 0x4
+
+		//
+		// Lua interface functions.
+		//
+
+		sol::object getObjectLua();
 	};
 	static_assert(sizeof(EquipmentStack) == 0x8, "TES3::EquipmentStack failed size validation");
 

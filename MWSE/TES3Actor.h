@@ -72,6 +72,7 @@ namespace TES3 {
 		//
 
 		sol::object getInventory();
+		sol::object getEquipment();
 
 	};
 	static_assert(sizeof(Actor) == 0x6C, "TES3::Actor failed size validation");

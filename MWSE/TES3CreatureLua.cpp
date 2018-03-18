@@ -117,6 +117,7 @@ namespace mwse {
 				"isAttacked", sol::readonly_property(&TES3::Creature::getIsAttacked),
 
 				"inventory", sol::readonly_property(&TES3::Creature::getInventory),
+				"equipment", sol::readonly_property(&TES3::Creature::getEquipment),
 				"barterGold", sol::property(&TES3::Creature::getBaseBarterGold, &TES3::Creature::setBaseBarterGold),
 
 				"aiConfig", sol::readonly_property(&TES3::Creature::aiConfig),
@@ -156,6 +157,7 @@ namespace mwse {
 				"isAttacked", sol::readonly_property(&TES3::CreatureInstance::getIsAttacked),
 
 				"inventory", sol::readonly_property(&TES3::CreatureInstance::getInventory),
+				"equipment", sol::readonly_property(&TES3::CreatureInstance::getEquipment),
 				"barterGold", sol::property(&TES3::CreatureInstance::getBaseBarterGold, &TES3::CreatureInstance::setBaseBarterGold),
 
 				//"aiConfig", sol::readonly_property(&TES3::CreatureInstance::aiConfig),
