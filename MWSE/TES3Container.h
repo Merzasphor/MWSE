@@ -13,6 +13,14 @@ namespace TES3 {
 
 	struct ContainerInstance : Actor {
 		Container * container;
+
+		//
+		// Base object helper functions.
+		//
+
+		float getCapacity();
+		void setCapacity(float);
+
 	};
 	static_assert(sizeof(ContainerInstance) == 0x70, "TES3::ContainerInstance failed size validation");
 }

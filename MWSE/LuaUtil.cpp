@@ -57,6 +57,13 @@ namespace mwse {
 				return sol::make_object(state, reinterpret_cast<TES3::Cell*>(object));
 			case TES3::ObjectType::Class:
 				return sol::make_object(state, reinterpret_cast<TES3::Class*>(object));
+			case TES3::ObjectType::Container:
+				if (reinterpret_cast<TES3::Actor*>(object)->actorFlags & TES3::ActorFlag::IsBase) {
+					return sol::make_object(state, reinterpret_cast<TES3::Container*>(object));
+				}
+				else {
+					return sol::make_object(state, reinterpret_cast<TES3::ContainerInstance*>(object));
+				}
 			case TES3::ObjectType::Creature:
 				if (reinterpret_cast<TES3::Actor*>(object)->actorFlags & TES3::ActorFlag::IsBase) {
 					return sol::make_object(state, reinterpret_cast<TES3::Creature*>(object));
