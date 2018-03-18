@@ -33,6 +33,7 @@ namespace mwse {
 				"weightClass", sol::readonly_property(&TES3::Armor::getWeightClass),
 				"value", sol::readonly_property(&TES3::Armor::getValue),
 				"health", sol::readonly_property(&TES3::Armor::getDurability),
+				"armorRating", &TES3::Armor::armorRating,
 
 				"enchantment", sol::readonly_property(&TES3::Armor::enchantCapacity),
 				"enchanting", sol::property(&TES3::Armor::getEnchantment, &TES3::Armor::setEnchantment),
