@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sol_forward.hpp"
+
 #include "TES3Object.h"
 #include "TES3Collections.h"
 
@@ -19,6 +21,13 @@ namespace TES3 {
 		int count; // 0x0
 		Object * object; // 0x4
 		ItemVariables * variables; // 0x8
+
+		//
+		// Lua interface functions.
+		//
+
+		sol::object getObjectLua();
+
 	};
 	static_assert(sizeof(ItemStack) == 0xC, "TES3::ItemStack failed size validation");
 

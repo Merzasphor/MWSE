@@ -1,10 +1,12 @@
 #include "TES3CreatureLua.h"
 
 #include "LuaManager.h"
+#include "LuaUtil.h"
 
 #include "TES3AIConfig.h"
 #include "TES3Creature.h"
 #include "TES3Item.h"
+#include "TES3Inventory.h"
 #include "TES3Script.h"
 
 namespace TES3 {
@@ -114,6 +116,7 @@ namespace mwse {
 				"isRespawn", sol::readonly_property(&TES3::Creature::isRespawn),
 				"isAttacked", sol::readonly_property(&TES3::Creature::getIsAttacked),
 
+				"inventory", sol::readonly_property(&TES3::Creature::getInventory),
 				"barterGold", sol::property(&TES3::Creature::getBaseBarterGold, &TES3::Creature::setBaseBarterGold),
 
 				"aiConfig", sol::readonly_property(&TES3::Creature::aiConfig),
@@ -152,6 +155,7 @@ namespace mwse {
 				"isRespawn", sol::readonly_property(&TES3::CreatureInstance::isRespawn),
 				"isAttacked", sol::readonly_property(&TES3::CreatureInstance::getIsAttacked),
 
+				"inventory", sol::readonly_property(&TES3::CreatureInstance::getInventory),
 				"barterGold", sol::property(&TES3::CreatureInstance::getBaseBarterGold, &TES3::CreatureInstance::setBaseBarterGold),
 
 				//"aiConfig", sol::readonly_property(&TES3::CreatureInstance::aiConfig),

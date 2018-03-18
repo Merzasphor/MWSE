@@ -21,6 +21,7 @@
 #include "TES3ClassLua.h"
 #include "TES3ClothingLua.h"
 #include "TES3CreatureLua.h"
+#include "TES3ItemLua.h"
 #include "TES3MagicEffectLua.h"
 #include "TES3MobileNPCLua.h"
 #include "TES3ReferenceLua.h"
@@ -95,6 +96,7 @@ namespace mwse {
 			bindTES3Class();
 			bindTES3Clothing();
 			bindTES3Creature();
+			bindTES3Item();
 			bindTES3Reference();
 			bindTES3MagicEffect();
 			bindTES3MobileNPC();

@@ -483,6 +483,9 @@
     <ClInclude Include="TES3CreatureLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
+    <ClInclude Include="TES3ItemLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1255,6 +1258,12 @@
     </ClCompile>
     <ClCompile Include="TES3Actor.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3ActorLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3ItemLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

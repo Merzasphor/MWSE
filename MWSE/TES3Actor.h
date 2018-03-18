@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sol_forward.hpp"
+
 #include "TES3Object.h"
 #include "TES3Collections.h"
 #include "TES3Inventory.h"
@@ -64,6 +66,12 @@ namespace TES3 {
 		int getBaseBarterGold();
 		void setBaseBarterGold(int);
 		bool getIsAttacked();
+
+		//
+		// Lua interface functions.
+		//
+
+		sol::object getInventory();
 
 	};
 	static_assert(sizeof(Actor) == 0x6C, "TES3::Actor failed size validation");

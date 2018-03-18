@@ -89,6 +89,7 @@
     <ClInclude Include="TES3InputController.h" />
     <ClInclude Include="TES3Inventory.h" />
     <ClInclude Include="TES3Item.h" />
+    <ClInclude Include="TES3ItemLua.h" />
     <ClInclude Include="TES3Light.h" />
     <ClInclude Include="TES3Lockpick.h" />
     <ClInclude Include="TES3MagicEffectLua.h" />
@@ -139,6 +140,7 @@
     <ClCompile Include="ScriptUtil.cpp" />
     <ClCompile Include="TES3ActivatorLua.cpp" />
     <ClCompile Include="TES3Actor.cpp" />
+    <ClCompile Include="TES3ActorLua.cpp" />
     <ClCompile Include="TES3AlchemyLua.cpp" />
     <ClCompile Include="TES3ApparatusLua.cpp" />
     <ClCompile Include="TES3Armor.cpp" />
@@ -149,6 +151,7 @@
     <ClCompile Include="TES3ClassLua.cpp" />
     <ClCompile Include="TES3ClothingLua.cpp" />
     <ClCompile Include="TES3CreatureLua.cpp" />
+    <ClCompile Include="TES3ItemLua.cpp" />
     <ClCompile Include="TES3MagicEffectLua.cpp" />
     <ClCompile Include="TES3MobileNPCLua.cpp" />
     <ClCompile Include="TES3Object.cpp" />
