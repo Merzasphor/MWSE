@@ -9,7 +9,7 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Armor() {
-			auto type = LuaManager::getInstance().getState().new_usertype<TES3::Armor>("TES3Armor",
+			LuaManager::getInstance().getState().new_usertype<TES3::Armor>("TES3Armor",
 				// Disable construction of this type.
 				"new", sol::no_constructor,
 

@@ -23,7 +23,7 @@ namespace TES3 {
 namespace mwse {
 	namespace lua {
 		void bindTES3Alchemy() {
-			auto type = LuaManager::getInstance().getState().new_usertype<TES3::Alchemy>("TES3Alchemy",
+			LuaManager::getInstance().getState().new_usertype<TES3::Alchemy>("TES3Alchemy",
 				// Disable construction of this type.
 				"new", sol::no_constructor,
 
