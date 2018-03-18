@@ -141,7 +141,12 @@ namespace mwse {
 			subtype = getItemSubType(object) + 1;
 
 			// Get count. Right now we hardcode this to 1, but ammo might actually have a count.
-			count = 1;
+			if (node->data->variables) {
+				count = node->data->variables->count;
+			}
+			else {
+				count = 1;
+			}
 
 			// Get enchantment id.
 			TES3::Enchantment* enchantment = object->vTable.object->getEnchantment(object);
