@@ -9,159 +9,159 @@ namespace TES3 {
 		return this->vTable->getObjectID(this);
 	}
 
-	char* BaseObject::getName() {
+	char* Object::getName() {
 		return this->vTable->getName(this);
 	}
 
-	char* BaseObject::getIconPath() {
+	char* Object::getIconPath() {
 		return this->vTable->getIconPath(this);
 	}
 
-	char* BaseObject::getModelPath() {
+	char* Object::getModelPath() {
 		return this->vTable->getModelPath(this);
 	}
 
-	Script* BaseObject::getScript() {
+	Script* Object::getScript() {
 		return this->vTable->getScript(this);
 	}
 
-	char* BaseObject::getRaceID() {
+	char* Object::getRaceID() {
 		return this->vTable->getRaceID(this);
 	}
 
-	char* BaseObject::getClassID() {
+	char* Object::getClassID() {
 		return this->vTable->getClassID(this);
 	}
 
-	char* BaseObject::getBirthsignID() {
+	char* Object::getBirthsignID() {
 		return this->vTable->getBirthsignID(this);
 	}
 
-	Race* BaseObject::getRace() {
+	Race* Object::getRace() {
 		return this->vTable->getRace(this);
 	}
 
-	Class* BaseObject::getClass() {
+	Class* Object::getClass() {
 		return this->vTable->getClass(this);
 	}
 
-	Faction* BaseObject::getFaction() {
+	Faction* Object::getFaction() {
 		return this->vTable->getFaction(this);
 	}
 
-	bool BaseObject::isFemale() {
+	bool Object::isFemale() {
 		return this->vTable->isFemale(this);
 	}
 
-	int BaseObject::getFactionRank() {
+	int Object::getFactionRank() {
 		return this->vTable->getFactionRank(this);
 	}
 
-	int BaseObject::getLevel() {
+	int Object::getLevel() {
 		return this->vTable->getLevel(this);
 	}
 
-	signed char BaseObject::setDispositionRaw(signed char value) {
+	signed char Object::setDispositionRaw(signed char value) {
 		return this->vTable->setDispositionRaw(this, value);
 	}
 
-	int BaseObject::modDisposition(signed int value) {
+	int Object::modDisposition(signed int value) {
 		return this->vTable->modDisposition(this, value);
 	}
 
-	int BaseObject::getFactionIndex() {
+	int Object::getFactionIndex() {
 		return this->vTable->getFactionIndex(this);
 	}
 
-	signed char BaseObject::setFactionIndex(signed char index) {
+	signed char Object::setFactionIndex(signed char index) {
 		return this->vTable->setFactionIndex(this, index);
 	}
 
-	int BaseObject::getDispositionRaw() {
+	int Object::getDispositionRaw() {
 		return this->vTable->getDispositionRaw(this);
 	}
 
-	signed char BaseObject::modFactionIndex(signed char value) {
+	signed char Object::modFactionIndex(signed char value) {
 		return this->vTable->modFactionIndex(this, value);
 	}
 
-	int BaseObject::getType() {
+	int Object::getType() {
 		return this->vTable->getType(this);
 	}
 
-	char* BaseObject::getTypeName() {
+	char* Object::getTypeName() {
 		return this->vTable->getTypeName(this);
 	}
 
-	float BaseObject::getWeight() {
+	float Object::getWeight() {
 		return this->vTable->getWeight(this);
 	}
 
-	int BaseObject::getValue() {
+	int Object::getValue() {
 		return this->vTable->getValue(this);
 	}
 
-	void BaseObject::setDurability(int value) {
+	void Object::setDurability(int value) {
 		return this->vTable->setDurability(this, value);
 	}
 
-	int BaseObject::getDurability() {
+	int Object::getDurability() {
 		return this->vTable->getDurability(this);
 	}
 
-	int BaseObject::getMagicka() {
+	int Object::getMagicka() {
 		return this->vTable->getMagicka(this);
 	}
 
-	int BaseObject::getFatigue() {
+	int Object::getFatigue() {
 		return this->vTable->getFatigue(this);
 	}
 
-	float BaseObject::getQuality() {
+	float Object::getQuality() {
 		return this->vTable->getQuality(this);
 	}
 
-	bool BaseObject::isLeftPartOfPair() {
+	bool Object::isLeftPartOfPair() {
 		return this->vTable->isLeftPartOfPair(this);
 	}
 
-	bool BaseObject::isEssential() {
+	bool Object::isEssential() {
 		return this->vTable->isEssential(this);
 	}
 
-	bool BaseObject::isRespawn() {
+	bool Object::isRespawn() {
 		return this->vTable->isRespawn(this);
 	}
 
-	int BaseObject::getUses() {
+	int Object::getUses() {
 		return this->vTable->getUses(this);
 	}
 
-	Enchantment* BaseObject::getEnchantment() {
+	Enchantment* Object::getEnchantment() {
 		return this->vTable->getEnchantment(this);
 	}
 
-	Enchantment* BaseObject::setEnchantment(Enchantment* enchantment) {
+	Enchantment* Object::setEnchantment(Enchantment* enchantment) {
 		return this->vTable->setEnchantment(this, enchantment);
 	}
 
-	AIConfig* BaseObject::getAIConfig() {
+	AIConfig* Object::getAIConfig() {
 		return this->vTable->getAIConfig(this);
 	}
 
-	unsigned char BaseObject::getAutoCalc() {
+	unsigned char Object::getAutoCalc() {
 		return this->vTable->getAutoCalc(this);
 	}
 
-	unsigned char BaseObject::setAutoCalc(unsigned char value) {
+	unsigned char Object::setAutoCalc(unsigned char value) {
 		return this->vTable->setAutoCalc(this, value);
 	}
 
-	char* BaseObject::setModelPath(char* path) {
+	char* Object::setModelPath(char* path) {
 		return this->vTable->setModelPath(this, path);
 	}
 
-	char* BaseObject::setName(char* name) {
+	char* Object::setName(char* name) {
 		return this->vTable->setName(this, name);
 	}
 

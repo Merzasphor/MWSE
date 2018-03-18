@@ -235,6 +235,22 @@ namespace TES3 {
 
 		int setObjectModified(unsigned char);
 		char * getObjectID();
+
+	};
+	static_assert(sizeof(BaseObject) == 0x10, "TES3::BaseObject failed size validation");
+
+	struct Object : BaseObject {
+		void * sceneNode; // 0x10
+		void * owningCollection; // 0x14
+		void * referenceToThis; // 0x18
+		Object * previousInCollection; // 0x1C
+		Object * nextInCollection; // 0x20
+		void * sceneGraphReference; // 0x24
+
+		//
+		// Function wrappers for our virtual table.
+		//
+
 		char * getName();
 		char * getIconPath();
 		char * getModelPath();
@@ -274,17 +290,6 @@ namespace TES3 {
 		unsigned char setAutoCalc(unsigned char);
 		char* setModelPath(char*);
 		char* setName(char*);
-
-	};
-	static_assert(sizeof(BaseObject) == 0x10, "TES3::BaseObject failed size validation");
-
-	struct Object : BaseObject {
-		void * sceneNode; // 0x10
-		void * owningCollection; // 0x14
-		void * referenceToThis; // 0x18
-		Object * previousInCollection; // 0x1C
-		Object * nextInCollection; // 0x20
-		void * sceneGraphReference; // 0x24
 	};
 	static_assert(sizeof(Object) == 0x28, "TES3::Object failed size validation");
 
