@@ -31,6 +31,12 @@ namespace TES3 {
 	};
 	static_assert(sizeof(ItemStack) == 0xC, "TES3::ItemStack failed size validation");
 
+	struct EquipmentStack {
+		Object * object; // 0x0
+		ItemVariables * variables; // 0x4
+	};
+	static_assert(sizeof(EquipmentStack) == 0x8, "TES3::EquipmentStack failed size validation");
+
 	struct Inventory {
 		unsigned int flags; // 0x0
 		Iterator<ItemStack> iterator; // 0x4
