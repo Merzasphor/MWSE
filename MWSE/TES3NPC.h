@@ -6,30 +6,6 @@
 #include "TES3SpellList.h"
 
 namespace TES3 {
-	namespace NPCFlag {
-		enum NPCFlag {
-			Female = 0x1,
-			Essential = 0x2,
-			Respawns = 0x4,
-			IsBase = 0x8,
-			AutoCalc = 0x10,
-			BloodSkeleton = 0x400,
-			BloodMetal = 0x800,
-		};
-	}
-
-	namespace NPCFlagBit {
-		enum NPCFlagBit {
-			FemaleBit = 0,
-			EssentialBit = 1,
-			RespawnsBit = 2,
-			IsBaseBit = 3,
-			AutocalcBit = 4,
-			BloodSkeletonBit = 10,
-			BloodMetalBit = 11,
-		};
-	}
-
 	struct NPC : Actor {
 		void * model; // 0x6C
 		char * name; // 0x70

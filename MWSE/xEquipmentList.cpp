@@ -91,7 +91,7 @@ namespace mwse {
 		}
 
 		// Make sure the object isn't a base actor.
-		if (actor->actorFlags & TES3::NPCFlag::IsBase) {
+		if (actor->actorFlags & TES3::ActorFlag::IsBase) {
 			mwse::log::getLog() << "xEquipmentList: Called on base actor. Must be used on instance." << std::endl;
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
