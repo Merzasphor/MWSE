@@ -15,6 +15,7 @@
 // Lua binding files. These are split out rather than kept here to help with compile times.
 #include "TES3ActivatorLua.h"
 #include "TES3AlchemyLua.h"
+#include "TES3ArmorLua.h"
 #include "TES3ApparatusLua.h"
 #include "TES3MagicEffectLua.h"
 #include "TES3MobileNPCLua.h"
@@ -84,6 +85,7 @@ namespace mwse {
 			// Bind data types.
 			bindTES3Activator();
 			bindTES3Alchemy();
+			bindTES3Armor();
 			bindTES3Apparatus();
 			bindTES3Reference();
 			bindTES3MagicEffect();

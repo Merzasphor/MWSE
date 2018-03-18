@@ -193,7 +193,7 @@ namespace TES3 {
 		bool (__thiscall * isRespawn)(BaseObject*); // 0xC0
 		void * unknown_0xC4;
 		int (__thiscall * getUses)(BaseObject*); // 0xC8
-		void * unknown_0xCC;
+		int (__thiscall * getEnchantCapacity)(BaseObject*);  // 0xCC
 		Enchantment * (__thiscall * getEnchantment)(BaseObject*); // 0xD0
 		Enchantment * (__thiscall * setEnchantment)(BaseObject*, Enchantment*); // 0xD4
 		AIConfig * (__thiscall * getAIConfig)(BaseObject*); // 0xD8
