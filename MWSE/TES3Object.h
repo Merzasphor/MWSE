@@ -92,6 +92,7 @@ namespace TES3 {
 
 	struct Activator;
 	struct Actor;
+	struct ActorVirtualTable;
 	struct AIConfig;
 	struct Alchemy;
 	struct Apparatus;
@@ -154,6 +155,7 @@ namespace TES3 {
 		void * unknown_0x1C;
 		char * (__thiscall * getObjectID)(BaseObject*); // 0x20
 	};
+	static_assert(sizeof(BaseObjectVirtualTable) == 0x24, "TES3::BaseObjectVirtualTable failed size validation");
 
 	struct ObjectVirtualTable : BaseObjectVirtualTable {
 		void * copyEntity;
@@ -227,11 +229,13 @@ namespace TES3 {
 		void * loadModel; // 0x134
 		void * unknown_0x138;
 	};
+	static_assert(sizeof(ObjectVirtualTable) == 0x13C, "TES3::ObjectVirtualTable failed size validation");
 
 	struct BaseObject {
 		union {
 			BaseObjectVirtualTable * base;
 			ObjectVirtualTable * object;
+			ActorVirtualTable * actor;
 		} vTable; // 0x0
 		ObjectType::ObjectType objectType; // 0x4
 		int objectFlags; // 0x8
