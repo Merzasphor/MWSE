@@ -8,24 +8,26 @@
 #include "TES3Script.h"
 
 namespace TES3 {
-	sol::object Creature::getAttributes() {
+	sol::object CreatureInstance::getAttributes() {
+		return sol::make_object(mwse::lua::LuaManager::getInstance().getState(), &baseCreature->attributes);
+	}
+
+	sol::object CreatureInstance::getSkills() {
+		return sol::make_object(mwse::lua::LuaManager::getInstance().getState(), &baseCreature->skills);
+	}
+
+	sol::object Creature::getAttacks() {
 		sol::state& state = mwse::lua::LuaManager::getInstance().getState();
 
 		sol::table result = state.create_table();
-		for (int i = 0; i < 8; i++) {
-			result[i + 1] = attributes[i];
+		for (int i = 0; i < 3; i++) {
+			result[i+1] = sol::make_object(state, &attacks[i]);
 		}
 		return result;
 	}
 
-	sol::object CreatureInstance::getAttributes() {
-		sol::state& state = mwse::lua::LuaManager::getInstance().getState();
-
-		sol::table result = state.create_table();
-		for (int i = 0; i < 8; i++) {
-			result[i + 1] = baseCreature->attributes[i];
-		}
-		return result;
+	sol::object CreatureInstance::getAttacks() {
+		return baseCreature->getAttacks();
 	}
 }
 
@@ -33,6 +35,52 @@ namespace mwse {
 	namespace lua {
 		void bindTES3Creature() {
 			sol::state& state = LuaManager::getInstance().getState();
+
+			state.new_usertype<TES3::Creature::Attributes>("TES3CreatureAttributes",
+				// Disable construction of this type.
+				"new", sol::no_constructor,
+
+				//
+				// Properties.
+				//
+
+				"strength", &TES3::Creature::Attributes::strength,
+				"intelligence", &TES3::Creature::Attributes::intelligence,
+				"willpower", &TES3::Creature::Attributes::willpower,
+				"agility", &TES3::Creature::Attributes::agility,
+				"speed", &TES3::Creature::Attributes::speed,
+				"endurance", &TES3::Creature::Attributes::endurance,
+				"personality", &TES3::Creature::Attributes::personality,
+				"luck", &TES3::Creature::Attributes::luck
+
+				);
+
+			state.new_usertype<TES3::Creature::Skills>("TES3CreatureSkills",
+				// Disable construction of this type.
+				"new", sol::no_constructor,
+
+				//
+				// Properties.
+				//
+
+				"combat", &TES3::Creature::Skills::combat,
+				"magic", &TES3::Creature::Skills::magic,
+				"stealth", &TES3::Creature::Skills::stealth
+
+				);
+
+			state.new_usertype<TES3::Creature::Attack>("TES3CreatureAttack",
+				// Disable construction of this type.
+				"new", sol::no_constructor,
+
+				//
+				// Properties.
+				//
+
+				"min", &TES3::Creature::Attack::min,
+				"max", &TES3::Creature::Attack::max
+
+				);
 
 			state.new_usertype<TES3::Creature>("TES3Creature",
 				// Disable construction of this type.
@@ -58,16 +106,9 @@ namespace mwse {
 				"health", sol::readonly_property(&TES3::Creature::getDurability),
 				"magicka", sol::readonly_property(&TES3::Creature::getMagicka),
 				"fatigue", sol::readonly_property(&TES3::Creature::getFatigue),
-				"attributes", sol::readonly_property(&TES3::Creature::getAttributes),
-				"skillCombat", &TES3::Creature::combatSkill,
-				"skillMagic", &TES3::Creature::magicSkill,
-				"skillStealth", &TES3::Creature::stealthSkill,
-				"attack1Min", &TES3::Creature::attack1Min,
-				"attack1Max", &TES3::Creature::attack1Max,
-				"attack2Min", &TES3::Creature::attack2Min,
-				"attack2Max", &TES3::Creature::attack2Max,
-				"attack3Min", &TES3::Creature::attack3Min,
-				"attack3Max", &TES3::Creature::attack3Max,
+				"attributes", sol::readonly_property(&TES3::Creature::attributes),
+				"skills", sol::readonly_property(&TES3::Creature::skills),
+				"attacks", sol::readonly_property(&TES3::Creature::getAttacks),
 
 				"isEssential", sol::readonly_property(&TES3::Creature::isEssential),
 				"isRespawn", sol::readonly_property(&TES3::Creature::isRespawn),
@@ -104,15 +145,8 @@ namespace mwse {
 				"magicka", sol::readonly_property(&TES3::CreatureInstance::getMagicka),
 				"fatigue", sol::readonly_property(&TES3::CreatureInstance::getFatigue),
 				"attributes", sol::readonly_property(&TES3::CreatureInstance::getAttributes),
-				//"skillCombat", &TES3::CreatureInstance::combatSkill,
-				//"skillMagic", &TES3::CreatureInstance::magicSkill,
-				//"skillStealth", &TES3::CreatureInstance::stealthSkill,
-				//"attack1Min", &TES3::CreatureInstance::attack1Min,
-				//"attack1Max", &TES3::CreatureInstance::attack1Max,
-				//"attack2Min", &TES3::CreatureInstance::attack2Min,
-				//"attack2Max", &TES3::CreatureInstance::attack2Max,
-				//"attack3Min", &TES3::CreatureInstance::attack3Min,
-				//"attack3Max", &TES3::CreatureInstance::attack3Max,
+				"skills", sol::readonly_property(&TES3::CreatureInstance::getSkills),
+				"attacks", sol::readonly_property(&TES3::CreatureInstance::getAttacks),
 
 				"isEssential", sol::readonly_property(&TES3::CreatureInstance::isEssential),
 				"isRespawn", sol::readonly_property(&TES3::CreatureInstance::isRespawn),
