@@ -78,12 +78,12 @@ namespace mwse {
 		if (node && node->data && node->data->object) {
 			TES3::Object* object = node->data->object;
 			
-			id = object->vTable->getObjectID(object);
+			id = object->vTable.object->getObjectID(object);
 			count = node->data->count;
 			type = object->objectType;
-			value = object->vTable->getValue(object);
-			weight = object->vTable->getWeight(object);
-			name = object->vTable->getName(object);
+			value = object->vTable.object->getValue(object);
+			weight = object->vTable.object->getWeight(object);
+			name = object->vTable.object->getName(object);
 			
 			next = node->next;
 		}

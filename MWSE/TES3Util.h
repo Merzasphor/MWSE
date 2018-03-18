@@ -110,7 +110,7 @@ namespace mwse {
 				object = getDataHandler()->recordLists->list->head;
 			}
 
-			while (object != NULL && !(object->objectType == type && strcmp(objectID, object->vTable->getObjectID(object)) == 0)) {
+			while (object != NULL && !(object->objectType == type && strcmp(objectID, object->vTable.object->getObjectID(object)) == 0)) {
 				object = object->nextInCollection;
 			}
 

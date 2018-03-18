@@ -62,7 +62,7 @@ namespace mwse
 				mwse::Stack::getInstance().pushLong(0);
 				return 0.0f;
 			}
-			model = record->vTable->getModelPath(record);
+			model = record->vTable.object->getModelPath(record);
 		}
 
 		// If we were not given a value, we try to use the function's given reference.
@@ -75,7 +75,7 @@ namespace mwse
 				mwse::Stack::getInstance().pushLong(0);
 				return 0.0f;
 			}
-			model = reference->baseObject->vTable->getModelPath(reference->baseObject);
+			model = reference->baseObject->vTable.object->getModelPath(reference->baseObject);
 		}
 
 		// Push the model back to the stack.

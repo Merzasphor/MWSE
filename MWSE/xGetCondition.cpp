@@ -64,7 +64,7 @@ namespace mwse
 			value = varNode->condition;
 		}
 		else {
-			value = reference->baseObject->vTable->getDurability(reference->baseObject);
+			value = reference->baseObject->vTable.object->getDurability(reference->baseObject);
 		}
 
 		mwse::Stack::getInstance().pushLong(value);

@@ -62,7 +62,7 @@ namespace mwse
 		while (inventoryListNode) {
 			TES3::ItemStack* inventoryNode = inventoryListNode->data;
 			if (inventoryNode) {
-				totalWeight += inventoryNode->object->vTable->getWeight(inventoryNode->object) * std::abs(inventoryNode->count);
+				totalWeight += inventoryNode->object->vTable.object->getWeight(inventoryNode->object) * std::abs(inventoryNode->count);
 
 				// Keep track if we've run across leveled content.
 				if (!hasLeveledContent && inventoryNode->object->objectType == TES3::ObjectType::LeveledItem) {

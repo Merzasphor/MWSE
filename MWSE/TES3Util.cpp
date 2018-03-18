@@ -134,7 +134,7 @@ namespace mwse {
 			}
 
 			// Get base value for the record.
-			long value = object->vTable->getValue(object);
+			long value = object->vTable.object->getValue(object);
 
 			// Multiply the value by the count of the item.
 			if (multiplyByCount) {
@@ -155,7 +155,7 @@ namespace mwse {
 			}
 
 			// Get base weight for the record.
-			float weight = object->vTable->getWeight(object);
+			float weight = object->vTable.object->getWeight(object);
 
 			// Multiply the value by the count of the item.
 			if (multiplyByCount) {
@@ -169,7 +169,7 @@ namespace mwse {
 		}
 
 		TES3::Enchantment* getEnchantment(TES3::BaseObject* object) {
-			return object->vTable->getEnchantment(object);
+			return object->vTable.object->getEnchantment(object);
 		}
 
 		bool getHasBaseRecord(TES3::BaseObject* record) {

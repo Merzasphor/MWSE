@@ -2,167 +2,167 @@
 
 namespace TES3 {
 	int BaseObject::setObjectModified(unsigned char modified) {
-		return this->vTable->setObjectModified(this, modified);
+		return vTable.base->setObjectModified(this, modified);
 	}
 
 	char* BaseObject::getObjectID() {
-		return this->vTable->getObjectID(this);
+		return vTable.base->getObjectID(this);
 	}
 
 	char* Object::getName() {
-		return this->vTable->getName(this);
+		return vTable.object->getName(this);
 	}
 
 	char* Object::getIconPath() {
-		return this->vTable->getIconPath(this);
+		return vTable.object->getIconPath(this);
 	}
 
 	char* Object::getModelPath() {
-		return this->vTable->getModelPath(this);
+		return vTable.object->getModelPath(this);
 	}
 
 	Script* Object::getScript() {
-		return this->vTable->getScript(this);
+		return vTable.object->getScript(this);
 	}
 
 	char* Object::getRaceID() {
-		return this->vTable->getRaceID(this);
+		return vTable.object->getRaceID(this);
 	}
 
 	char* Object::getClassID() {
-		return this->vTable->getClassID(this);
+		return vTable.object->getClassID(this);
 	}
 
 	char* Object::getBirthsignID() {
-		return this->vTable->getBirthsignID(this);
+		return vTable.object->getBirthsignID(this);
 	}
 
 	Race* Object::getRace() {
-		return this->vTable->getRace(this);
+		return vTable.object->getRace(this);
 	}
 
 	Class* Object::getClass() {
-		return this->vTable->getClass(this);
+		return vTable.object->getClass(this);
 	}
 
 	Faction* Object::getFaction() {
-		return this->vTable->getFaction(this);
+		return vTable.object->getFaction(this);
 	}
 
 	bool Object::isFemale() {
-		return this->vTable->isFemale(this);
+		return vTable.object->isFemale(this);
 	}
 
 	int Object::getFactionRank() {
-		return this->vTable->getFactionRank(this);
+		return vTable.object->getFactionRank(this);
 	}
 
 	int Object::getLevel() {
-		return this->vTable->getLevel(this);
+		return vTable.object->getLevel(this);
 	}
 
 	signed char Object::setDispositionRaw(signed char value) {
-		return this->vTable->setDispositionRaw(this, value);
+		return vTable.object->setDispositionRaw(this, value);
 	}
 
 	int Object::modDisposition(signed int value) {
-		return this->vTable->modDisposition(this, value);
+		return vTable.object->modDisposition(this, value);
 	}
 
 	int Object::getFactionIndex() {
-		return this->vTable->getFactionIndex(this);
+		return vTable.object->getFactionIndex(this);
 	}
 
 	signed char Object::setFactionIndex(signed char index) {
-		return this->vTable->setFactionIndex(this, index);
+		return vTable.object->setFactionIndex(this, index);
 	}
 
 	int Object::getDispositionRaw() {
-		return this->vTable->getDispositionRaw(this);
+		return vTable.object->getDispositionRaw(this);
 	}
 
 	signed char Object::modFactionIndex(signed char value) {
-		return this->vTable->modFactionIndex(this, value);
+		return vTable.object->modFactionIndex(this, value);
 	}
 
 	int Object::getType() {
-		return this->vTable->getType(this);
+		return vTable.object->getType(this);
 	}
 
 	char* Object::getTypeName() {
-		return this->vTable->getTypeName(this);
+		return vTable.object->getTypeName(this);
 	}
 
 	float Object::getWeight() {
-		return this->vTable->getWeight(this);
+		return vTable.object->getWeight(this);
 	}
 
 	int Object::getValue() {
-		return this->vTable->getValue(this);
+		return vTable.object->getValue(this);
 	}
 
 	void Object::setDurability(int value) {
-		return this->vTable->setDurability(this, value);
+		return vTable.object->setDurability(this, value);
 	}
 
 	int Object::getDurability() {
-		return this->vTable->getDurability(this);
+		return vTable.object->getDurability(this);
 	}
 
 	int Object::getMagicka() {
-		return this->vTable->getMagicka(this);
+		return vTable.object->getMagicka(this);
 	}
 
 	int Object::getFatigue() {
-		return this->vTable->getFatigue(this);
+		return vTable.object->getFatigue(this);
 	}
 
 	float Object::getQuality() {
-		return this->vTable->getQuality(this);
+		return vTable.object->getQuality(this);
 	}
 
 	bool Object::isLeftPartOfPair() {
-		return this->vTable->isLeftPartOfPair(this);
+		return vTable.object->isLeftPartOfPair(this);
 	}
 
 	bool Object::isEssential() {
-		return this->vTable->isEssential(this);
+		return vTable.object->isEssential(this);
 	}
 
 	bool Object::isRespawn() {
-		return this->vTable->isRespawn(this);
+		return vTable.object->isRespawn(this);
 	}
 
 	int Object::getUses() {
-		return this->vTable->getUses(this);
+		return vTable.object->getUses(this);
 	}
 
 	Enchantment* Object::getEnchantment() {
-		return this->vTable->getEnchantment(this);
+		return vTable.object->getEnchantment(this);
 	}
 
 	Enchantment* Object::setEnchantment(Enchantment* enchantment) {
-		return this->vTable->setEnchantment(this, enchantment);
+		return vTable.object->setEnchantment(this, enchantment);
 	}
 
 	AIConfig* Object::getAIConfig() {
-		return this->vTable->getAIConfig(this);
+		return vTable.object->getAIConfig(this);
 	}
 
 	unsigned char Object::getAutoCalc() {
-		return this->vTable->getAutoCalc(this);
+		return vTable.object->getAutoCalc(this);
 	}
 
 	unsigned char Object::setAutoCalc(unsigned char value) {
-		return this->vTable->setAutoCalc(this, value);
+		return vTable.object->setAutoCalc(this, value);
 	}
 
 	char* Object::setModelPath(char* path) {
-		return this->vTable->setModelPath(this, path);
+		return vTable.object->setModelPath(this, path);
 	}
 
 	char* Object::setName(char* name) {
-		return this->vTable->setName(this, name);
+		return vTable.object->setName(this, name);
 	}
 
 }

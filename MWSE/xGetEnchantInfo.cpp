@@ -63,7 +63,7 @@ namespace mwse
 			cost = enchantment->chargeCost;
 			maxCharge = enchantment->maxCharge;
 			effects = tes3::getEffectCount(enchantment->effects);
-			autocalc = enchantment->vTable->getAutoCalc(enchantment);
+			autocalc = enchantment->vTable.object->getAutoCalc(enchantment);
 		}
 		else {
 #if _DEBUG

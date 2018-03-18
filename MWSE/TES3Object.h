@@ -97,6 +97,7 @@ namespace TES3 {
 	struct Apparatus;
 	struct Armor;
 	struct BaseObject;
+	struct BaseObjectVirtualTable;
 	struct Bodypart;
 	struct Cell;
 	struct CellExteriorData;
@@ -124,6 +125,7 @@ namespace TES3 {
 	struct NPC;
 	struct NPCInstance;
 	struct Object;
+	struct ObjectVirtualTable;
 	struct PhysicalObject;
 	struct Probe;
 	struct Race;
@@ -141,7 +143,7 @@ namespace TES3 {
 	// The core building blocks of TES3 objects.
 	//
 
-	struct vtBaseObject {
+	struct BaseObjectVirtualTable {
 		void * destructor; // 0x0
 		int (__thiscall * loadObjectSpecific)(BaseObject*, int); // 0x4
 		int (__thiscall * saveRecordSpecific)(BaseObject*, int); // 0x8
@@ -151,6 +153,9 @@ namespace TES3 {
 		int (__thiscall * setObjectFlag40)(BaseObject*, unsigned char); // 0x18
 		void * unknown_0x1C;
 		char * (__thiscall * getObjectID)(BaseObject*); // 0x20
+	};
+
+	struct ObjectVirtualTable : BaseObjectVirtualTable {
 		void * copyEntity;
 		void * setID;
 		void * getVisualNode;
@@ -224,7 +229,10 @@ namespace TES3 {
 	};
 
 	struct BaseObject {
-		vtBaseObject * vTable; // 0x0
+		union {
+			BaseObjectVirtualTable * base;
+			ObjectVirtualTable * object;
+		} vTable; // 0x0
 		ObjectType::ObjectType objectType; // 0x4
 		int objectFlags; // 0x8
 		void * sourceMod; // 0xC
