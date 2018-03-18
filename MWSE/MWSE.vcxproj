@@ -157,6 +157,7 @@
     <ClCompile Include="TES3CreatureLua.cpp" />
     <ClCompile Include="TES3IngredientLua.cpp" />
     <ClCompile Include="TES3InventoryLua.cpp" />
+    <ClCompile Include="TES3Light.cpp" />
     <ClCompile Include="TES3MagicEffectLua.cpp" />
     <ClCompile Include="TES3MobileNPCLua.cpp" />
     <ClCompile Include="TES3Object.cpp" />
