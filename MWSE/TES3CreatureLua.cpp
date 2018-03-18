@@ -115,6 +115,7 @@ namespace mwse {
 				"isEssential", sol::readonly_property(&TES3::Creature::isEssential),
 				"isRespawn", sol::readonly_property(&TES3::Creature::isRespawn),
 				"isAttacked", sol::readonly_property(&TES3::Creature::getIsAttacked),
+				"isInstance", sol::var(false),
 
 				"inventory", sol::readonly_property(&TES3::Creature::getInventory),
 				"equipment", sol::readonly_property(&TES3::Creature::getEquipment),
@@ -155,6 +156,7 @@ namespace mwse {
 				"isEssential", sol::readonly_property(&TES3::CreatureInstance::isEssential),
 				"isRespawn", sol::readonly_property(&TES3::CreatureInstance::isRespawn),
 				"isAttacked", sol::readonly_property(&TES3::CreatureInstance::getIsAttacked),
+				"isInstance", sol::var(true),
 
 				"inventory", sol::readonly_property(&TES3::CreatureInstance::getInventory),
 				"equipment", sol::readonly_property(&TES3::CreatureInstance::getEquipment),
