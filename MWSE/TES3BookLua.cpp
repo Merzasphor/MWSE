@@ -33,8 +33,8 @@ namespace mwse {
 
 				"text", sol::readonly_property(&TES3::Book::getBookText),
 
-				"enchantment", &TES3::Book::enchantCapacity,
-				"enchanting", sol::property(&TES3::Book::getEnchantment, &TES3::Book::setEnchantment),
+				"enchantCapacity", &TES3::Book::enchantCapacity,
+				"enchantment", sol::property(&TES3::Book::getEnchantment, &TES3::Book::setEnchantment),
 
 				"script", sol::readonly_property(&TES3::Book::getScript)
 

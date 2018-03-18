@@ -35,8 +35,8 @@ namespace mwse {
 				"health", sol::readonly_property(&TES3::Armor::getDurability),
 				"armorRating", &TES3::Armor::armorRating,
 
-				"enchantment", sol::readonly_property(&TES3::Armor::enchantCapacity),
-				"enchanting", sol::property(&TES3::Armor::getEnchantment, &TES3::Armor::setEnchantment),
+				"enchantCapacity", &TES3::Armor::enchantCapacity,
+				"enchantment", sol::property(&TES3::Armor::getEnchantment, &TES3::Armor::setEnchantment),
 
 				"script", sol::readonly_property(&TES3::Armor::getScript)
 

@@ -33,8 +33,8 @@ namespace mwse {
 				"value", sol::readonly_property(&TES3::Clothing::getValue),
 				"health", sol::readonly_property(&TES3::Clothing::getDurability),
 
-				"enchantment", sol::readonly_property(&TES3::Clothing::enchantCapacity),
-				"enchanting", sol::property(&TES3::Clothing::getEnchantment, &TES3::Clothing::setEnchantment),
+				"enchantCapacity", &TES3::Clothing::enchantCapacity,
+				"enchantment", sol::property(&TES3::Clothing::getEnchantment, &TES3::Clothing::setEnchantment),
 
 				"script", sol::readonly_property(&TES3::Clothing::getScript)
 
