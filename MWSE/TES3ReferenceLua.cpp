@@ -47,6 +47,7 @@ namespace mwse {
 				// Properties.
 				//
 
+				"id", sol::readonly_property(&TES3::Reference::getObjectID),
 				"objectType", sol::readonly(&TES3::Reference::objectType),
 
 				"position", &TES3::Reference::position,
