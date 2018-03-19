@@ -32,6 +32,7 @@
 #include "TES3RepairToolLua.h"
 #include "TES3StatisticLua.h"
 #include "TES3VectorsLua.h"
+#include "TES3WeaponLua.h"
 
 #define TES3_HOOK_SCRIPT_NEW_LUACHECK 0x4C086D
 #define TES3_HOOK_SCRIPT_NEW_LUACHECK_SIZE 0x8
@@ -112,6 +113,7 @@ namespace mwse {
 			bindTES3Probe();
 			bindTES3Statistic();
 			bindTES3Vectors();
+			bindTES3Weapon();
 
 			// Bind function: GetPlayerTarget
 			luaState["GetPlayerTarget"] = []() {

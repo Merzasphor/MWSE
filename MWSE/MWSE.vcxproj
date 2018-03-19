@@ -125,6 +125,7 @@
     <ClInclude Include="TES3Vectors.h" />
     <ClInclude Include="TES3VectorsLua.h" />
     <ClInclude Include="TES3Weapon.h" />
+    <ClInclude Include="TES3WeaponLua.h" />
     <ClInclude Include="TES3WearablePart.h" />
     <ClInclude Include="TES3Weather.h" />
     <ClInclude Include="TES3WeatherController.h" />
@@ -173,6 +174,7 @@
     <ClCompile Include="TES3Statistic.cpp" />
     <ClCompile Include="TES3StatisticLua.cpp" />
     <ClCompile Include="TES3VectorsLua.cpp" />
+    <ClCompile Include="TES3WeaponLua.cpp" />
     <ClCompile Include="xMyRef.cpp" />
     <ClCompile Include="StringUtil.cpp" />
     <ClCompile Include="TES3Util.cpp" />
