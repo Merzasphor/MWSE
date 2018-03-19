@@ -50,23 +50,23 @@ namespace mwse {
 				// Properties.
 				//
 
-				"objectType", &TES3::Container::objectType,
+				"objectType", &TES3::ContainerInstance::objectType,
 
-				"id", sol::readonly_property(&TES3::Container::getObjectID),
-				"name", sol::property(&TES3::Container::getName, &TES3::Container::setName),
+				"id", sol::readonly_property(&TES3::ContainerInstance::getObjectID),
+				"name", sol::property(&TES3::ContainerInstance::getName, &TES3::ContainerInstance::setName),
 
-				"model", sol::readonly_property(&TES3::Container::getModelPath),
+				"model", sol::readonly_property(&TES3::ContainerInstance::getModelPath),
 
-				"flags", &TES3::Container::actorFlags,
-				"cloneCount", &TES3::Container::cloneCount,
+				"flags", &TES3::ContainerInstance::actorFlags,
+				"cloneCount", &TES3::ContainerInstance::cloneCount,
 
-				"isRespawn", sol::readonly_property(&TES3::Container::isRespawn),
+				"isRespawn", sol::readonly_property(&TES3::ContainerInstance::isRespawn),
 				"isInstance", sol::var(true),
 
-				"inventory", sol::readonly_property(&TES3::Container::getInventory),
+				"inventory", sol::readonly_property(&TES3::ContainerInstance::getInventory),
 				"capacity", sol::property(&TES3::ContainerInstance::getCapacity, &TES3::ContainerInstance::setCapacity),
 
-				"script", sol::readonly_property(&TES3::Container::getScript)
+				"script", sol::readonly_property(&TES3::ContainerInstance::getScript)
 
 				);
 		}
