@@ -11,7 +11,10 @@ namespace TES3 {
 		void * owner; // 0x4
 		void * lockData; // 0x8
 		int condition; // 0xC
-		int enchantCharge; // 0x10
+		union {
+			int charge;
+			Actor* soul;
+		} enchantData; // 0x10
 		void * script; // 0x14
 		void * scriptData; // 0x18
 	};
