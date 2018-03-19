@@ -57,6 +57,8 @@ namespace mwse {
 				return sol::make_object(state, reinterpret_cast<TES3::Cell*>(object));
 			case TES3::ObjectType::Class:
 				return sol::make_object(state, reinterpret_cast<TES3::Class*>(object));
+			case TES3::ObjectType::Clothing:
+				return sol::make_object(state, reinterpret_cast<TES3::Clothing*>(object));
 			case TES3::ObjectType::Container:
 				if (reinterpret_cast<TES3::Actor*>(object)->actorFlags & TES3::ActorFlag::IsBase) {
 					return sol::make_object(state, reinterpret_cast<TES3::Container*>(object));
@@ -81,10 +83,14 @@ namespace mwse {
 				return sol::make_object(state, reinterpret_cast<TES3::GlobalVariable*>(object));
 			case TES3::ObjectType::GameSetting:
 				return sol::make_object(state, reinterpret_cast<TES3::GameSetting*>(object));
+			case TES3::ObjectType::Ingredient:
+				return sol::make_object(state, reinterpret_cast<TES3::Ingredient*>(object));
 			case TES3::ObjectType::Light:
 				return sol::make_object(state, reinterpret_cast<TES3::Light*>(object));
 			case TES3::ObjectType::Lockpick:
 				return sol::make_object(state, reinterpret_cast<TES3::Lockpick*>(object));
+			case TES3::ObjectType::Misc:
+				return sol::make_object(state, reinterpret_cast<TES3::Misc*>(object));
 			case TES3::ObjectType::NPC:
 				if (reinterpret_cast<TES3::Actor*>(object)->actorFlags & TES3::ActorFlag::IsBase) {
 					return sol::make_object(state, reinterpret_cast<TES3::NPC*>(object));
@@ -110,7 +116,7 @@ namespace mwse {
 				return sol::make_object(state, reinterpret_cast<TES3::Weapon*>(object));
 			}
 
-			return sol::make_object(state, object);
+			return sol::nil;
 		}
 
 		sol::object makeLuaObject(TES3::MobileActor* actor) {
@@ -125,7 +131,7 @@ namespace mwse {
 				return sol::make_object(state, reinterpret_cast<TES3::MobilePlayer*>(actor));
 			}
 
-			return sol::make_object(state, actor);
+			return sol::nil;
 		}
 	}
 }
