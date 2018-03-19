@@ -106,6 +106,7 @@
     <ClInclude Include="TES3MagicEffect.h" />
     <ClInclude Include="TES3Misc.h" />
     <ClInclude Include="TES3NPC.h" />
+    <ClInclude Include="TES3NPCLua.h" />
     <ClInclude Include="TES3Object.h" />
     <ClInclude Include="TES3Probe.h" />
     <ClInclude Include="TES3ProbeLua.h" />
@@ -169,6 +170,8 @@
     <ClCompile Include="TES3MagicEffectLua.cpp" />
     <ClCompile Include="TES3MiscLua.cpp" />
     <ClCompile Include="TES3MobileNPCLua.cpp" />
+    <ClCompile Include="TES3NPC.cpp" />
+    <ClCompile Include="TES3NPCLua.cpp" />
     <ClCompile Include="TES3Object.cpp" />
     <ClCompile Include="TES3ProbeLua.cpp" />
     <ClCompile Include="TES3ReferenceLua.cpp" />
