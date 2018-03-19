@@ -5,4 +5,3 @@ namespace mwse {
 		void bindTES3Misc();
 	}
 }
-
