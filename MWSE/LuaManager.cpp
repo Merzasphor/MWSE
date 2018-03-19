@@ -29,6 +29,7 @@
 #include "TES3MobileNPCLua.h"
 #include "TES3ProbeLua.h"
 #include "TES3ReferenceLua.h"
+#include "TES3RepairToolLua.h"
 #include "TES3StatisticLua.h"
 #include "TES3VectorsLua.h"
 
@@ -105,6 +106,7 @@ namespace mwse {
 			bindTES3Light();
 			bindTES3Lockpick();
 			bindTES3Reference();
+			bindTES3RepairTool();
 			bindTES3MagicEffect();
 			bindTES3MobileNPC();
 			bindTES3Probe();
