@@ -97,6 +97,7 @@
     <ClInclude Include="TES3Lockpick.h" />
     <ClInclude Include="TES3LockpickLua.h" />
     <ClInclude Include="TES3MagicEffectLua.h" />
+    <ClInclude Include="TES3MiscLua.h" />
     <ClInclude Include="TES3MobileNPC.h" />
     <ClInclude Include="TES3MobileNPCLua.h" />
     <ClInclude Include="TES3MobilePlayer.h" />
@@ -166,6 +167,7 @@
     <ClCompile Include="TES3LightLua.cpp" />
     <ClCompile Include="TES3LockpickLua.cpp" />
     <ClCompile Include="TES3MagicEffectLua.cpp" />
+    <ClCompile Include="TES3MiscLua.cpp" />
     <ClCompile Include="TES3MobileNPCLua.cpp" />
     <ClCompile Include="TES3Object.cpp" />
     <ClCompile Include="TES3ProbeLua.cpp" />
