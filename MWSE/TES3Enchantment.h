@@ -21,6 +21,12 @@ namespace TES3 {
 		short magickaCost; // 0x32
 		Effect effects[8]; // 0x34
 		unsigned long flags; // 0xF4
+
+		//
+		// Lua interface functions.
+		//
+
+		sol::object getEffectsTable();
 	};
 	static_assert(sizeof(Enchantment) == 0xF8, "TES3::Enchantment failed size validation");
 }
