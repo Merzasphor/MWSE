@@ -16,8 +16,10 @@ namespace TES3 {
 		int targetID; // 0x4C
 
 		//
-		// Custom functions.
+		// Lua interface functions.
 		//
+
+		sol::object getBaseObject();
 
 		// Return a table (or nil) of attachments for this object.
 		sol::object getAttachments();

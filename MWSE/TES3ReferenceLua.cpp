@@ -6,6 +6,10 @@
 #include "LuaUtil.h"
 
 namespace TES3 {
+	sol::object Reference::getBaseObject() {
+		return mwse::lua::makeLuaObject(baseObject);
+	}
+
 	sol::object Reference::getAttachments() {
 		if (this->attachments == NULL) {
 			return sol::nil;
@@ -57,11 +61,7 @@ namespace mwse {
 
 				"attachments", sol::readonly_property(&TES3::Reference::getAttachments),
 
-				//
-				// Functions.
-				//
-
-				"of", [](TES3::Reference* self) { return makeLuaObject(self->baseObject); }
+				"object", sol::readonly_property(&TES3::Reference::getBaseObject)
 
 				);
 		}
