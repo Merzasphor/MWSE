@@ -84,6 +84,7 @@
     <ClInclude Include="TES3Enchantment.h" />
     <ClInclude Include="TES3EnchantmentLua.h" />
     <ClInclude Include="TES3Faction.h" />
+    <ClInclude Include="TES3FactionLua.h" />
     <ClInclude Include="TES3Game.h" />
     <ClInclude Include="TES3GameSetting.h" />
     <ClInclude Include="TES3GlobalVariable.h" />
@@ -164,6 +165,7 @@
     <ClCompile Include="TES3ContainerLua.cpp" />
     <ClCompile Include="TES3CreatureLua.cpp" />
     <ClCompile Include="TES3EnchantmentLua.cpp" />
+    <ClCompile Include="TES3FactionLua.cpp" />
     <ClCompile Include="TES3IngredientLua.cpp" />
     <ClCompile Include="TES3InventoryLua.cpp" />
     <ClCompile Include="TES3Light.cpp" />

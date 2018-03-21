@@ -1,14 +1,15 @@
 #pragma once
 
+#include "sol_forward.hpp"
+
 #include "TES3Object.h"
 #include "TES3Collections.h"
 
 namespace TES3 {
 	struct Faction : BaseObject {
 		struct Rank {
-			long attributes[2];
-			long primarySkill;
-			long favoredSkill;
+			long reqAttributes[2];
+			long reqSkills[2];
 			long reputation;
 		};
 		struct ReactionNode {
@@ -26,6 +27,13 @@ namespace TES3 {
 		int unknown_0x294;
 		int unknown_0x298;
 		int unknown_0x29C;
+
+		//
+		// Lua interface functions.
+		//
+
+		sol::object getReactions();
+
 	};
 	static_assert(sizeof(Faction::Rank) == 0x14, "TES3::Faction::Rank failed size validation");
 	static_assert(sizeof(Faction::ReactionNode) == 0x8, "TES3::Faction::ReactionNode failed size validation");
