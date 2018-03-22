@@ -61,9 +61,9 @@ namespace mwse {
 				"objectType", &TES3::Faction::objectType,
 
 				"id", sol::readonly_property(&TES3::Faction::getObjectID),
-				"name", sol::property([](TES3::Faction& self) { return self.name; }),
+				"name", sol::property([](TES3::Faction* self) { return self->name; }),
 
-				"skills", sol::property([](TES3::Faction& self) { return std::ref(self.skills); }),
+				"skills", sol::property([](TES3::Faction* self) { return std::ref(self->skills); }),
 
 				"ranks", sol::readonly_property([](TES3::Faction& self) { return std::ref(self.ranks); }),
 

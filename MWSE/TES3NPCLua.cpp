@@ -17,63 +17,6 @@ namespace mwse {
 		void bindTES3NPC() {
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::NPC::Attributes>("TES3NPCAttributes",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
-
-				//
-				// Properties.
-				//
-
-				"strength", &TES3::NPC::Attributes::strength,
-				"intelligence", &TES3::NPC::Attributes::intelligence,
-				"willpower", &TES3::NPC::Attributes::willpower,
-				"agility", &TES3::NPC::Attributes::agility,
-				"speed", &TES3::NPC::Attributes::speed,
-				"endurance", &TES3::NPC::Attributes::endurance,
-				"personality", &TES3::NPC::Attributes::personality,
-				"luck", &TES3::NPC::Attributes::luck
-
-				);
-
-			state.new_usertype<TES3::NPC::Skills>("TES3NPCSkills",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
-
-				//
-				// Properties.
-				//
-
-				"block", &TES3::NPC::Skills::block,
-				"armorer", &TES3::NPC::Skills::armorer,
-				"mediumArmor", &TES3::NPC::Skills::mediumArmor,
-				"heavyArmor", &TES3::NPC::Skills::heavyArmor,
-				"bluntWeapon", &TES3::NPC::Skills::bluntWeapon,
-				"longBlade", &TES3::NPC::Skills::longBlade,
-				"axe", &TES3::NPC::Skills::axe,
-				"spear", &TES3::NPC::Skills::spear,
-				"athletics", &TES3::NPC::Skills::athletics,
-				"enchant", &TES3::NPC::Skills::enchant,
-				"destruction", &TES3::NPC::Skills::destruction,
-				"alteration", &TES3::NPC::Skills::alteration,
-				"illusion", &TES3::NPC::Skills::illusion,
-				"conjuration", &TES3::NPC::Skills::conjuration,
-				"mysticism", &TES3::NPC::Skills::mysticism,
-				"restoration", &TES3::NPC::Skills::restoration,
-				"alchemy", &TES3::NPC::Skills::alchemy,
-				"unarmored", &TES3::NPC::Skills::unarmored,
-				"security", &TES3::NPC::Skills::security,
-				"sneak", &TES3::NPC::Skills::sneak,
-				"acrobatics", &TES3::NPC::Skills::acrobatics,
-				"lightArmor", &TES3::NPC::Skills::lightArmor,
-				"shortBlade", &TES3::NPC::Skills::shortBlade,
-				"marksman", &TES3::NPC::Skills::marksman,
-				"mercantile", &TES3::NPC::Skills::mercantile,
-				"speechcraft", &TES3::NPC::Skills::speechcraft,
-				"handToHand", &TES3::NPC::Skills::handToHand
-
-				);
-
 			state.new_usertype<TES3::NPC>("TES3NPC",
 				// Disable construction of this type.
 				"new", sol::no_constructor,
@@ -96,8 +39,8 @@ namespace mwse {
 				"health", &TES3::NPC::health,
 				"magicka", &TES3::NPC::magicka,
 				"fatigue", &TES3::NPC::fatigue,
-				"attributes", sol::readonly_property(&TES3::NPC::getAttributes),
-				"skills", sol::readonly_property(&TES3::NPC::getSkills),
+				"attributes", sol::property([](TES3::NPC* self) { return std::ref(self->attributes); }),
+				"skills", sol::property([](TES3::NPC* self) { return std::ref(self->skills); }),
 				"reputation", &TES3::NPC::reputation,
 				"disposition", &TES3::NPC::disposition,
 
@@ -145,8 +88,8 @@ namespace mwse {
 				"health", sol::readonly_property(&TES3::NPCInstance::getDurability),
 				"magicka", sol::readonly_property(&TES3::NPCInstance::getMagicka),
 				"fatigue", sol::readonly_property(&TES3::NPCInstance::getFatigue),
-				"attributes", sol::readonly_property(&TES3::NPCInstance::getAttributes),
-				"skills", sol::readonly_property(&TES3::NPCInstance::getSkills),
+				"attributes", sol::property([](TES3::NPCInstance* self) { return std::ref(self->baseNPC->attributes); }),
+				"skills", sol::property([](TES3::NPCInstance* self) { return std::ref(self->baseNPC->skills); }),
 				"reputation", sol::property(&TES3::NPCInstance::getReputation, &TES3::NPCInstance::setFactionIndex),
 				"disposition", &TES3::NPCInstance::disposition,
 
