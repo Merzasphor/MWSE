@@ -11,6 +11,7 @@
 
 // TEMP! REMOVE!
 #include "TES3Script.h"
+#include "TES3MobilePlayer.h"
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
 #include "TES3ActivatorLua.h"
@@ -130,6 +131,21 @@ namespace mwse {
 			bindTES3Statistic();
 			bindTES3Vectors();
 			bindTES3Weapon();
+
+			// Bind function: GetPlayerRef
+			luaState["GetPlayerRef"] = []() {
+				TES3::MobilePlayer* mobilePlayer = NULL;
+
+				static int getMACP = TES3_FUNC_GET_MACP;
+				_asm
+				{
+					mov ecx, dword ptr ds : [TES3_WORLD_CONTROLLER_IMAGE];
+					call getMACP;
+					mov mobilePlayer, eax;
+				}
+
+				return mobilePlayer->reference;
+			};
 
 			// Bind function: GetPlayerTarget
 			luaState["GetPlayerTarget"] = []() {
