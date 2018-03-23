@@ -220,17 +220,17 @@ namespace TES3 {
 		char unknown_0x36F; // Undefined.
 		float holdBreathTime;
 		int unknown_0x374;
-		Object * currentSpell;
+		Spell * currentSpell;
 		unsigned char spellSource;
 		char unknown_0x37D; // Undefined.
 		char unknown_0x37E; // Undefined.
 		char unknown_0x37F; // Undefined.
-		void * currentEnchItem;
-		void * currentEnchItemData;
-		void * readiedWeapon;
-		void * readiedAmmo;
-		void * readiedShield;
-		void * torchSlot;
+		Item * currentEnchItem;
+		ItemData * currentEnchItemData;
+		EquipmentStack * readiedWeapon;
+		EquipmentStack * readiedAmmo;
+		EquipmentStack * readiedShield;
+		EquipmentStack * torchSlot;
 		char unknown_0x398;
 		char unknown_0x399; // Undefined.
 		char unknown_0x39A; // Undefined.

@@ -31,7 +31,9 @@
 #include "TES3LockpickLua.h"
 #include "TES3MagicEffectLua.h"
 #include "TES3MiscLua.h"
+#include "TES3MobileCreatureLua.h"
 #include "TES3MobileNPCLua.h"
+#include "TES3MobilePlayerLua.h"
 #include "TES3NPCLua.h"
 #include "TES3ProbeLua.h"
 #include "TES3ReferenceLua.h"
@@ -118,7 +120,9 @@ namespace mwse {
 			bindTES3Lockpick();
 			bindTES3MagicEffect();
 			bindTES3Misc();
+			bindTES3MobileCreature();
 			bindTES3MobileNPC();
+			bindTES3MobilePlayer();
 			bindTES3NPC();
 			bindTES3Probe();
 			bindTES3Reference();

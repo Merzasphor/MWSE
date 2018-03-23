@@ -109,6 +109,7 @@ namespace TES3 {
 	struct Door;
 	struct Effect;
 	struct Enchantment;
+	struct EquipmentStack;
 	struct Faction;
 	struct Game;
 	struct GameSetting;

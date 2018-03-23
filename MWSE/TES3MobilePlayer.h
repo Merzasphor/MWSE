@@ -14,24 +14,24 @@ namespace TES3 {
 		Apparatus * apparatus2; // 0x5A4
 		Apparatus * apparatus3; // 0x5A8
 		GlobalVariable * clawMultiplier; // 0x5AC
-		char controlsDisabled; // 0x5B0
-		char jumpingDisabled; // 0x5B1
-		char mouselookDisabled; // 0x5B2
-		char viewSwitchDisabled; // 0x5B3
-		char vanityDisabled; // 0x5B4
-		char attackDisabled; // 0x5B5
-		char magicDisabled; // 0x5B6
-		char alwaysRun; // 0x5B7
-		char autoRun; // 0x5B8
-		char sleeping; // 0x5B9
+		signed char controlsDisabled; // 0x5B0
+		signed char jumpingDisabled; // 0x5B1
+		signed char mouselookDisabled; // 0x5B2
+		signed char viewSwitchDisabled; // 0x5B3
+		signed char vanityDisabled; // 0x5B4
+		signed char attackDisabled; // 0x5B5
+		signed char magicDisabled; // 0x5B6
+		signed char alwaysRun; // 0x5B7
+		signed char autoRun; // 0x5B8
+		signed char sleeping; // 0x5B9
 		char unknown_0x5BA; // 0x5BA // Resting related?
 		char unknown_0x5BB; // 0x5BB
 		char unknown_0x5BC; // 0x5BC
-		char weaponReady; // 0x5BD
-		char castReady; // 0x5BE
+		signed char weaponReady; // 0x5BD
+		signed char castReady; // 0x5BE
 		char unknown_0x5BF;
-		char playerInJail; // 0x5C0
-		char playerIsTravelling; // 0x5C1
+		signed char playerInJail; // 0x5C0
+		signed char playerIsTravelling; // 0x5C1
 		char unknown_0x5C2; // Undefined.
 		char unknown_0x5C3; // Undefined.
 		int telekinesis; // 0x5C4
