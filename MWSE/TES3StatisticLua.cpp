@@ -39,6 +39,20 @@ namespace mwse {
 				"current", sol::property(&TES3::Statistic::getCurrent, &TES3::Statistic::luaSetCurrent)
 
 				);
+
+			state.new_usertype<TES3::SkillStatistic>("TES3SkillStatistic",
+				// Disable construction of this type.
+				"new", sol::no_constructor,
+
+				//
+				// Properties.
+				//
+
+				"base", sol::property(&TES3::SkillStatistic::getBase, &TES3::SkillStatistic::luaSetBase),
+				"current", sol::property(&TES3::SkillStatistic::getCurrent, &TES3::SkillStatistic::luaSetCurrent),
+				"type", &TES3::SkillStatistic::type
+
+				);
 		}
 	}
 }
