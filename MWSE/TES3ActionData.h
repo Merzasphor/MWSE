@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sol_forward.hpp"
+
 #include "TES3Object.h"
 #include "TES3Vectors.h"
 
@@ -10,13 +12,13 @@ namespace TES3 {
 		float attackSwing; // 0x4
 		float unknown_0x8;
 		float physicalDamage; // 0xC
-		char aiBehaviourState; // 0x10
-		char animStateAttack; // 0x11
+		signed char aiBehaviourState; // 0x10
+		signed char animStateAttack; // 0x11
 		char unknown_0x12;
 		char unknown_0x13;
-		char attackDirection; // 0x14
+		signed char attackDirection; // 0x14
 		char unknown_0x15;
-		char currentAnimGroup; // 0x16
+		signed char currentAnimGroup; // 0x16
 		char unknown_0x17;
 		short unknown_0x18;
 		short unknown_0x1A;
@@ -26,7 +28,7 @@ namespace TES3 {
 		MobileActor * hitTarget; // 0x24
 		short lastBarterHoursPassed; // 0x28
 		short unknown_0x2A;
-		Object * stolenFromFactionOrNPC; // 0x2C
+		BaseObject * stolenFromFactionOrNPC; // 0x2C
 		char unknown_0x30;
 		char unknown_0x31; // Undefined.
 		char unknown_0x32; // Undefined.
@@ -40,6 +42,18 @@ namespace TES3 {
 		Vector3 unknown_0x54;
 		Vector3 walkDestination; // 0x58
 		int unknown_0x6C;
+
+		//
+		// Lua interface plugin.
+		//
+
+		sol::object getTarget();
+		sol::object getHitTarget();
+
+		sol::object getNockedProjectile();
+
+		sol::object getStolenFrom();
+
 	};
 	static_assert(sizeof(ActionData) == 0x70, "TES3::ActionData failed size validation");
 }

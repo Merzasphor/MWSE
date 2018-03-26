@@ -14,6 +14,7 @@
 #include "TES3MobilePlayer.h"
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
+#include "TES3ActionDataLua.h"
 #include "TES3ActivatorLua.h"
 #include "TES3AlchemyLua.h"
 #include "TES3ApparatusLua.h"
@@ -103,6 +104,7 @@ namespace mwse {
 				);
 
 			// Bind data types.
+			bindTES3ActionData();
 			bindTES3Activator();
 			bindTES3Alchemy();
 			bindTES3Apparatus();
