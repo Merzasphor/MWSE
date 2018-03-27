@@ -165,6 +165,16 @@ namespace mwse {
 				return mobilePlayer->reference;
 			};
 
+			// Bind function: GetGame
+			luaState["GetGame"] = []() {
+				return tes3::getGame();
+			};
+
+			// Bind function: GetGame
+			luaState["GetWorldController"] = []() {
+				return tes3::getWorldController();
+			};
+
 			// Bind function: GetPlayerTarget
 			luaState["GetPlayerTarget"] = []() {
 				return tes3::getGame()->playerTarget;
