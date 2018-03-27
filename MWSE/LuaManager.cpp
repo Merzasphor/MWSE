@@ -28,6 +28,7 @@
 #include "TES3DoorLua.h"
 #include "TES3EnchantmentLua.h"
 #include "TES3FactionLua.h"
+#include "TES3GameLua.h"
 #include "TES3IngredientLua.h"
 #include "TES3InventoryLua.h"
 #include "TES3LightLua.h"
@@ -120,6 +121,7 @@ namespace mwse {
 			bindTES3Door();
 			bindTES3Enchantment();
 			bindTES3Faction();
+			bindTES3Game();
 			bindTES3Ingredient();
 			bindTES3Inventory();
 			bindTES3Light();

@@ -19,7 +19,7 @@ namespace TES3 {
 		char unknown_0x1F;
 		char unknown_0x20;
 		char unknown_0x21;
-		char screenShotsEnabled; // 0x22
+		unsigned char screenShotsEnabled; // 0x22
 		int unknown_0x24;
 		int unknown_0x28;
 		int unknown_0x2C;
@@ -31,12 +31,12 @@ namespace TES3 {
 		int screenX; // 0x44
 		int screenY; // 0x48
 		float renderDistance; // 0x4C
-		char volumeMaster; // 0x50
-		char volumeVoice; // 0x51
-		char volumeEffect; // 0x52
-		char volumeFootsteps; // 0x53
+		unsigned char volumeMaster; // 0x50
+		unsigned char volumeVoice; // 0x51
+		unsigned char volumeEffect; // 0x52
+		unsigned char volumeFootsteps; // 0x53
 		int volumeMedia; // 0x54
-		char soundQuality; // 0x58
+		unsigned char soundQuality; // 0x58
 		char unknown_0x59;
 		char unknown_0x5A;
 		char unknown_0x5B;
