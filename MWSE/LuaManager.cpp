@@ -20,6 +20,7 @@
 #include "TES3ApparatusLua.h"
 #include "TES3ArmorLua.h"
 #include "TES3BookLua.h"
+#include "TES3CellLua.h"
 #include "TES3ClassLua.h"
 #include "TES3ClothingLua.h"
 #include "TES3ContainerLua.h"
@@ -110,6 +111,7 @@ namespace mwse {
 			bindTES3Apparatus();
 			bindTES3Armor();
 			bindTES3Book();
+			bindTES3Cell();
 			bindTES3Class();
 			bindTES3Clothing();
 			bindTES3Container();

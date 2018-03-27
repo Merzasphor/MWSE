@@ -54,6 +54,36 @@ namespace TES3 {
 			int waterLevel;
 			Region * region;
 		} waterLevelOrRegion;
+
+		//
+		// Other related this-call functions.
+		//
+
+		Reference * getFirstObjectOfType(ObjectType::ObjectType, bool);
+
+		int getGridX();
+		int getGridY();
+
+		//
+		// Other getter/setter functions.
+		//
+
+		int getAmbientColor();
+		void setAmbientColor(int);
+
+		int getSunColor();
+		void setSunColor(int);
+
+		int getFogColor();
+		void setFogColor(int);
+
+		int getFogDensity();
+		void setFogDensity(int);
+
+		int getWaterLevel();
+		void setWaterLevel(int);
+
+		Region * getRegion();
 	};
 	static_assert(sizeof(Cell) == 0x94, "TES3::Cell failed size validation");
 }
