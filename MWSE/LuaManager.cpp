@@ -38,6 +38,7 @@
 #include "TES3MobileCreatureLua.h"
 #include "TES3MobileNPCLua.h"
 #include "TES3MobilePlayerLua.h"
+#include "TES3MoonLua.h"
 #include "TES3NPCLua.h"
 #include "TES3ProbeLua.h"
 #include "TES3ReferenceLua.h"
@@ -133,6 +134,7 @@ namespace mwse {
 			bindTES3MobileCreature();
 			bindTES3MobileNPC();
 			bindTES3MobilePlayer();
+			bindTES3Moon();
 			bindTES3NPC();
 			bindTES3Probe();
 			bindTES3Reference();

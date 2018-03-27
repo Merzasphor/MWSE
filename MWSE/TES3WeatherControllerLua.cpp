@@ -4,6 +4,7 @@
 
 #include "TES3WeatherController.h"
 
+#include "TES3Moon.h"
 #include "TES3Weather.h"
 
 namespace mwse {
@@ -27,6 +28,9 @@ namespace mwse {
 				"hoursBetweenWeatherChanges", &TES3::WeatherController::hoursBetweenWeatherChanges,
 				"hoursRemaining", &TES3::WeatherController::hoursRemaining,
 				"transitionScalar", &TES3::WeatherController::transitionScalar,
+
+				"secunda", sol::readonly_property(&TES3::WeatherController::moonSecunda),
+				"masser", sol::readonly_property(&TES3::WeatherController::moonMasser),
 				
 				"timescaleClouds", &TES3::WeatherController::timescaleClouds,
 				"sunglareFaderMax", &TES3::WeatherController::sunglareFaderMax,

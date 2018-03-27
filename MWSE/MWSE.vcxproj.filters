@@ -549,6 +549,12 @@
     <ClInclude Include="TES3WeatherControllerLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
+    <ClInclude Include="TES3Moon.h">
+      <Filter>Header Files\DataAdapters\TES3\Worldspace</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MoonLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1398,6 +1404,9 @@
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3WeatherControllerLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3MoonLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
   </ItemGroup>

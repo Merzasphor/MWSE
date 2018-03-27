@@ -1,21 +1,32 @@
 #pragma once
 
 #include "TES3Object.h"
-#include "TES3Vectors.h"
 
 namespace TES3 {
-	struct WeatherController {
-		int sceneWeather;
+	struct Moon {
+		int unknown_0x0;
 		int unknown_0x4;
 		int unknown_0x8;
-		int daysRemaining;
-		char unknown_0x10;
-		Weather * arrayWeathers[10];
-		Weather * currentWeather;
-		Weather * nextWeather;
-		Moon * moonSecunda;
-		Moon * moonMasser;
-		void * unknown_0x4C;
+		int unknown_0xC;
+		int unknown_0x10;
+		WeatherController * weatherController; // 0x14
+		int unknown_0x18;
+		int unknown_0x1C;
+		int unknown_0x20;
+		int unknown_0x24;
+		char * texture; // 0x28
+		int unknown_0x2C;
+		int unknown_0x30;
+		int unknown_0x34;
+		int unknown_0x38;
+		int unknown_0x3C;
+		int unknown_0x40;
+		int unknown_0x44;
+		char unknown_0x48;
+		char unknown_0x49;
+		unsigned char moonIsRed; // 0x4A
+		char unknown_0x4B;
+		int phase; // 0x4C
 		int unknown_0x50;
 		int unknown_0x54;
 		int unknown_0x58;
@@ -49,17 +60,17 @@ namespace TES3 {
 		int unknown_0xC8;
 		int unknown_0xCC;
 		int unknown_0xD0;
-		int sunglareFaderMax;
-		int sunglareFaderAngleMax;
-		int sunriseHour;
-		int sunsetHour;
-		int sunriseDuration;
-		int sunsetDuration;
+		int unknown_0xD4;
+		int unknown_0xD8;
+		int unknown_0xDC;
+		int unknown_0xE0;
+		int unknown_0xE4;
+		int unknown_0xE8;
 		int unknown_0xEC;
 		int unknown_0xF0;
 		int unknown_0xF4;
 		int unknown_0xF8;
-		float unknown_0xFC;
+		int unknown_0xFC;
 		int unknown_0x100;
 		int unknown_0x104;
 		int unknown_0x108;
@@ -83,40 +94,6 @@ namespace TES3 {
 		int unknown_0x150;
 		int unknown_0x154;
 		int unknown_0x158;
-		int unknown_0x15C;
-		int unknown_0x160;
-		int unknown_0x164;
-		int unknown_0x168;
-		int hoursBetweenWeatherChanges;
-		float transitionScalar;
-		float hoursRemaining;
-		int unknown_0x178;
-		int unknown_0x17C;
-		int unknown_0x180;
-		int unknown_0x184;
-		int unknown_0x188;
-		float unknown_0x18C;
-		float unknown_0x190;
-		float unknown_0x194;
-		char unknown_0x198;
-		char unknown_0x199;
-		int timescaleClouds;
-		int underwaterSunriseFog;
-		int underwaterDayFog;
-		int underwaterSunsetFog;
-		int underwaterNightFog;
-		int underwaterIndoorFog;
-		Vector3 underwaterCol;
-		int underwaterColWeight;
-		Vector3 sunglareFaderCol;
-		int unknown_0x1D0;
-		int unknown_0x1D4;
-		int soundUnderwater;
-		int unknown_0x1DC;
-		int unknown_0x1E0;
-		int unknown_0x1E4;
-		int unknown_0x1E8;
-		int unknown_0x1EC;
 	};
-	static_assert(sizeof(WeatherController) == 0x1F0, "TES3::WeatherController failed size validation");
+	static_assert(sizeof(Moon) == 0x15C, "TES3::Moon failed size validation");
 }

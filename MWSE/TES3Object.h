@@ -124,6 +124,7 @@ namespace TES3 {
 	struct MobileCreature;
 	struct MobileNPC;
 	struct MobilePlayer;
+	struct Moon;
 	struct NPC;
 	struct NPCInstance;
 	struct Object;
