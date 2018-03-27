@@ -67,7 +67,7 @@ namespace TES3 {
 		InputController * inputController; // 0x4C
 		int unknown_0x50;
 		Script * scriptGlobals; // 0x54
-		void * weatherController; // 0x58
+		WeatherController * weatherController; // 0x58
 		int mobController; // 0x5C
 		void * stats_60;
 		void * field_64;

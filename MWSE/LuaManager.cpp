@@ -46,6 +46,7 @@
 #include "TES3StatisticLua.h"
 #include "TES3VectorsLua.h"
 #include "TES3WeaponLua.h"
+#include "TES3WeatherLua.h"
 
 #define TES3_HOOK_SCRIPT_NEW_LUACHECK 0x4C086D
 #define TES3_HOOK_SCRIPT_NEW_LUACHECK_SIZE 0x8
@@ -139,6 +140,7 @@ namespace mwse {
 			bindTES3Statistic();
 			bindTES3Vectors();
 			bindTES3Weapon();
+			bindTES3Weather();
 
 			// Bind function: GetPlayerRef
 			luaState["GetPlayerRef"] = []() {

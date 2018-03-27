@@ -5,7 +5,7 @@
 namespace TES3 {
 	struct Weather {
 		int unknown_0x0;
-		int unknown_0x4;
+		int unknown_0x4; // Weather ID?
 		float transitionDelta;
 		float glareView;
 		int unknown_0x10;
@@ -35,7 +35,7 @@ namespace TES3 {
 		float landFogNightDepth;
 		float cloudsSpeed;
 		float windSpeed;
-		void *texturePathCloud;
+		char * texturePathCloud;
 		int unknown_0x108;
 		int unknown_0x10C;
 		int unknown_0x110;
@@ -73,7 +73,7 @@ namespace TES3 {
 		int unknown_0x190;
 		int unknown_0x194;
 		char unknown_0x198;
-		char flagUnderwaterSoundActive;
+		unsigned char flagUnderwaterSoundActive;
 		int unknown_0x19C;
 		int unknown_0x1A0;
 		int unknown_0x1A4;
@@ -104,7 +104,7 @@ namespace TES3 {
 		int unknown_0x208;
 		char unknown_0x20C;
 		char unknown_0x20D;
-		char soundIDAmbientLoop;
+		unsigned char soundIDAmbientLoop;
 		int unknown_0x210;
 		int unknown_0x214;
 		int unknown_0x218;

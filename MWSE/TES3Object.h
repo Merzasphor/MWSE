@@ -139,6 +139,8 @@ namespace TES3 {
 	struct Spell;
 	struct Statistic;
 	struct Weapon;
+	struct Weather;
+	struct WeatherController;
 	struct WorldController;
 
 	//
