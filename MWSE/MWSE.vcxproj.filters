@@ -537,6 +537,9 @@
     <ClInclude Include="TES3Region.h">
       <Filter>Header Files\DataAdapters\TES3\Worldspace</Filter>
     </ClInclude>
+    <ClInclude Include="TES3RegionLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1375,6 +1378,9 @@
     </ClCompile>
     <ClCompile Include="TES3Cell.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3RegionLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

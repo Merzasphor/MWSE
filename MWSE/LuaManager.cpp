@@ -40,6 +40,7 @@
 #include "TES3NPCLua.h"
 #include "TES3ProbeLua.h"
 #include "TES3ReferenceLua.h"
+#include "TES3RegionLua.h"
 #include "TES3RepairToolLua.h"
 #include "TES3StatisticLua.h"
 #include "TES3VectorsLua.h"
@@ -131,6 +132,7 @@ namespace mwse {
 			bindTES3NPC();
 			bindTES3Probe();
 			bindTES3Reference();
+			bindTES3Region();
 			bindTES3RepairTool();
 			bindTES3Statistic();
 			bindTES3Vectors();
