@@ -44,6 +44,7 @@
 #include "TES3ReferenceLua.h"
 #include "TES3RegionLua.h"
 #include "TES3RepairToolLua.h"
+#include "TES3SpellLua.h"
 #include "TES3StatisticLua.h"
 #include "TES3VectorsLua.h"
 #include "TES3WeaponLua.h"
@@ -141,6 +142,7 @@ namespace mwse {
 			bindTES3Reference();
 			bindTES3Region();
 			bindTES3RepairTool();
+			bindTES3Spell();
 			bindTES3Statistic();
 			bindTES3Vectors();
 			bindTES3Weapon();

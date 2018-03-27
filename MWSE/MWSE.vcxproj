@@ -133,6 +133,7 @@
     <ClInclude Include="TES3Spell.h" />
     <ClInclude Include="TES3SpellInstance.h" />
     <ClInclude Include="TES3SpellList.h" />
+    <ClInclude Include="TES3SpellLua.h" />
     <ClInclude Include="TES3Statistic.h" />
     <ClInclude Include="TES3StatisticLua.h" />
     <ClInclude Include="TES3Util.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="TES3ReferenceLua.cpp" />
     <ClCompile Include="TES3RegionLua.cpp" />
     <ClCompile Include="TES3RepairToolLua.cpp" />
+    <ClCompile Include="TES3SpellLua.cpp" />
     <ClCompile Include="TES3Statistic.cpp" />
     <ClCompile Include="TES3StatisticLua.cpp" />
     <ClCompile Include="TES3VectorsLua.cpp" />
