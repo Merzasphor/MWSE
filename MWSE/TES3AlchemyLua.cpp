@@ -5,21 +5,6 @@
 #include "TES3Alchemy.h"
 #include "TES3Script.h"
 
-namespace TES3 {
-	sol::object Alchemy::getEffectsTable() {
-		// Get our lua state.
-		sol::state& state = mwse::lua::LuaManager::getInstance().getState();
-
-		// Build a table of TES3::Effect* objects to pass back.
-		sol::table result = state.create_table();
-		for (int i = 0; i < 8; i++) {
-			// Insert a pointer to the effect. Convert index to be 1-based.
-			result[i+1] = sol::make_object(state, &effects[i]);
-		}
-		return result;
-	}
-}
-
 namespace mwse {
 	namespace lua {
 		void bindTES3Alchemy() {
@@ -45,7 +30,7 @@ namespace mwse {
 				"value", sol::readonly_property(&TES3::Alchemy::getValue),
 				"weight", sol::readonly_property(&TES3::Alchemy::getWeight),
 
-				"effects", sol::readonly_property(&TES3::Alchemy::getEffectsTable),
+				"effects", sol::readonly_property([](TES3::Alchemy* self) { return std::ref(self->effects); }),
 
 				"script", sol::readonly_property(&TES3::Alchemy::getScript)
 

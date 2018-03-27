@@ -12,12 +12,6 @@ namespace TES3 {
 		short value; // 0x58
 		Effect effects[8]; // 0x5C
 		long flags; // 0x011C // 1 = AUTOCALC
-
-		//
-		// Lua interface functions.
-		//
-
-		sol::object getEffectsTable();
 	};
 	static_assert(sizeof(Alchemy) == 0x120, "TES3::Alchemy failed size validation");
 }
