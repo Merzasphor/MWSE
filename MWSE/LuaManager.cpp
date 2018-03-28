@@ -41,6 +41,7 @@
 #include "TES3MoonLua.h"
 #include "TES3NPCLua.h"
 #include "TES3ProbeLua.h"
+#include "TES3RaceLua.h"
 #include "TES3ReferenceLua.h"
 #include "TES3RegionLua.h"
 #include "TES3RepairToolLua.h"
@@ -139,6 +140,7 @@ namespace mwse {
 			bindTES3Moon();
 			bindTES3NPC();
 			bindTES3Probe();
+			bindTES3Race();
 			bindTES3Reference();
 			bindTES3Region();
 			bindTES3RepairTool();
