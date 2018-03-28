@@ -25,7 +25,7 @@ namespace mwse {
 				"cost", &TES3::Enchantment::chargeCost,
 				"charge", &TES3::Enchantment::maxCharge,
 
-				"effects", sol::readonly_property([](TES3::Enchantment* self) { return std::ref(self->effects); })
+				"effects", sol::readonly_property([](TES3::Enchantment& self) { return std::ref(self.effects); })
 
 				);
 		}

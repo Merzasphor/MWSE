@@ -41,12 +41,12 @@ namespace mwse {
 				"objectType", &TES3::Race::objectType,
 
 				"id", sol::readonly_property(&TES3::Race::getObjectID),
-				"name", sol::readonly_property([](TES3::Race* self) { return self->name; }),
+				"name", sol::readonly_property([](TES3::Race& self) { return self.name; }),
 
 				"flags", &TES3::Race::flags,
 
-				"skillBonuses", sol::readonly_property([](TES3::Race* self) { return std::ref(self->skillBonuses); }),
-				"baseAttributes", sol::readonly_property([](TES3::Race* self) { return std::ref(self->baseAttributes); }),
+				"skillBonuses", sol::readonly_property([](TES3::Race& self) { return std::ref(self.skillBonuses); }),
+				"baseAttributes", sol::readonly_property([](TES3::Race& self) { return std::ref(self.baseAttributes); }),
 				"height", &TES3::Race::height,
 				"weight", &TES3::Race::weight
 

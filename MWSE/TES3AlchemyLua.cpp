@@ -30,7 +30,7 @@ namespace mwse {
 				"value", sol::readonly_property(&TES3::Alchemy::getValue),
 				"weight", sol::readonly_property(&TES3::Alchemy::getWeight),
 
-				"effects", sol::readonly_property([](TES3::Alchemy* self) { return std::ref(self->effects); }),
+				"effects", sol::readonly_property([](TES3::Alchemy& self) { return std::ref(self.effects); }),
 
 				"script", sol::readonly_property(&TES3::Alchemy::getScript)
 

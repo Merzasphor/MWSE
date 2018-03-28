@@ -68,7 +68,7 @@ namespace mwse {
 
 				//"animationData", &TES3::MobileCreature::animationData,
 
-				"attributes", sol::property([](TES3::MobileCreature* self) { return std::ref(self->attributes); }),
+				"attributes", sol::property([](TES3::MobileCreature& self) { return std::ref(self.attributes); }),
 				"health", &TES3::MobileCreature::health,
 				"magicka", &TES3::MobileCreature::magicka,
 				"encumbrance", &TES3::MobileCreature::encumbrance,

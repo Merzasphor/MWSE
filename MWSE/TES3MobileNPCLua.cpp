@@ -67,7 +67,7 @@ namespace mwse {
 
 				//"animationData", &TES3::MobileNPC::animationData,
 
-				"attributes", sol::property([](TES3::MobileNPC* self) { return std::ref(self->attributes); }),
+				"attributes", sol::property([](TES3::MobileNPC& self) { return std::ref(self.attributes); }),
 				"health", &TES3::MobileNPC::health,
 				"magicka", &TES3::MobileNPC::magicka,
 				"encumbrance", &TES3::MobileNPC::encumbrance,
@@ -127,7 +127,7 @@ namespace mwse {
 				//
 
 				"object", &TES3::MobileNPC::npcInstance,
-				"skills", sol::property([](TES3::MobileNPC* self) { return std::ref(self->skills); }),
+				"skills", sol::property([](TES3::MobileNPC& self) { return std::ref(self.skills); }),
 
 				"forceSneak", &TES3::MobileNPC::flagForceSneak,
 				"flagForceRun", &TES3::MobileNPC::flagForceRun,

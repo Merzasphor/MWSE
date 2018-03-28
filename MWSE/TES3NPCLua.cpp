@@ -39,8 +39,8 @@ namespace mwse {
 				"health", &TES3::NPC::health,
 				"magicka", &TES3::NPC::magicka,
 				"fatigue", &TES3::NPC::fatigue,
-				"attributes", sol::property([](TES3::NPC* self) { return std::ref(self->attributes); }),
-				"skills", sol::property([](TES3::NPC* self) { return std::ref(self->skills); }),
+				"attributes", sol::property([](TES3::NPC& self) { return std::ref(self.attributes); }),
+				"skills", sol::property([](TES3::NPC& self) { return std::ref(self.skills); }),
 				"reputation", &TES3::NPC::reputation,
 				"disposition", &TES3::NPC::disposition,
 
@@ -88,8 +88,8 @@ namespace mwse {
 				"health", sol::readonly_property(&TES3::NPCInstance::getDurability),
 				"magicka", sol::readonly_property(&TES3::NPCInstance::getMagicka),
 				"fatigue", sol::readonly_property(&TES3::NPCInstance::getFatigue),
-				"attributes", sol::property([](TES3::NPCInstance* self) { return std::ref(self->baseNPC->attributes); }),
-				"skills", sol::property([](TES3::NPCInstance* self) { return std::ref(self->baseNPC->skills); }),
+				"attributes", sol::property([](TES3::NPCInstance& self) { return std::ref(self.baseNPC->attributes); }),
+				"skills", sol::property([](TES3::NPCInstance& self) { return std::ref(self.baseNPC->skills); }),
 				"reputation", sol::property(&TES3::NPCInstance::getReputation, &TES3::NPCInstance::setFactionIndex),
 				"disposition", &TES3::NPCInstance::disposition,
 

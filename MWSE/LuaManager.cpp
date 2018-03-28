@@ -9,11 +9,10 @@
 #include "MemoryUtil.h"
 #include "ScriptUtil.h"
 
-// TEMP! REMOVE!
 #include "TES3Cell.h"
-#include "TES3WorldController.h"
 #include "TES3Script.h"
 #include "TES3MobilePlayer.h"
+#include "TES3WorldController.h"
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
 #include "TES3ActionDataLua.h"

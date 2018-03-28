@@ -21,7 +21,7 @@ namespace mwse {
 				"objectType", &TES3::Region::objectType,
 
 				"id", sol::readonly_property(&TES3::Region::getObjectID),
-				"name", sol::property([](TES3::Region* self) { return self->name; }),
+				"name", sol::property([](TES3::Region& self) { return self.name; }),
 
 				"weatherChanceClear", &TES3::Region::weatherChanceClear,
 				"weatherChanceCloudy", &TES3::Region::weatherChanceCloudy,
@@ -34,7 +34,7 @@ namespace mwse {
 				"weatherChanceSnow", &TES3::Region::weatherChanceSnow,
 				"weatherChanceBlizzard", &TES3::Region::weatherChanceBlizzard,
 
-				"sleepCreature", sol::readonly_property([](TES3::Region* self) { return makeLuaObject(self->sleepCreature); })
+				"sleepCreature", sol::readonly_property([](TES3::Region& self) { return makeLuaObject(self.sleepCreature); })
 
 				);
 		}

@@ -22,7 +22,7 @@ namespace mwse {
 
 				"currentWeather", &TES3::WeatherController::currentWeather,
 				"nextWeather", &TES3::WeatherController::nextWeather,
-				"weathers", sol::readonly_property([](TES3::WeatherController* self) { return std::ref(self->arrayWeathers); }),
+				"weathers", sol::readonly_property([](TES3::WeatherController& self) { return std::ref(self.arrayWeathers); }),
 
 				"daysRemaining", &TES3::WeatherController::daysRemaining,
 				"hoursBetweenWeatherChanges", &TES3::WeatherController::hoursBetweenWeatherChanges,

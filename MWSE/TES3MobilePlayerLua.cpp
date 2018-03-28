@@ -69,7 +69,7 @@ namespace mwse {
 
 				//"animationData", &TES3::MobilePlayer::animationData,
 
-				"attributes", sol::property([](TES3::MobilePlayer* self) { return std::ref(self->attributes); }),
+				"attributes", sol::property([](TES3::MobilePlayer& self) { return std::ref(self.attributes); }),
 				"health", &TES3::MobilePlayer::health,
 				"magicka", &TES3::MobilePlayer::magicka,
 				"encumbrance", &TES3::MobilePlayer::encumbrance,
@@ -129,7 +129,7 @@ namespace mwse {
 				//
 
 				"object", &TES3::MobilePlayer::npcInstance,
-				"skills", sol::property([](TES3::MobilePlayer* self) { return std::ref(self->skills); }),
+				"skills", sol::property([](TES3::MobilePlayer& self) { return std::ref(self.skills); }),
 
 				"forceSneak", &TES3::MobilePlayer::flagForceSneak,
 				"flagForceRun", &TES3::MobilePlayer::flagForceRun,
@@ -141,9 +141,9 @@ namespace mwse {
 				//
 
 				"levelupProgress", &TES3::MobilePlayer::levelUpProgress,
-				"levelupsPerAttribute", sol::property([](TES3::MobilePlayer* self) { return std::ref(self->levelupPerAttributeCount); }),
-				"levelupsPerSpecialization", sol::property([](TES3::MobilePlayer* self) { return std::ref(self->levelupPerSpecialization); }),
-				"skillProgress", sol::property([](TES3::MobilePlayer* self) { return std::ref(self->skillProgress); }),
+				"levelupsPerAttribute", sol::property([](TES3::MobilePlayer& self) { return std::ref(self.levelupPerAttributeCount); }),
+				"levelupsPerSpecialization", sol::property([](TES3::MobilePlayer& self) { return std::ref(self.levelupPerSpecialization); }),
+				"skillProgress", sol::property([](TES3::MobilePlayer& self) { return std::ref(self.skillProgress); }),
 
 				// "bounty", &TES3::MobilePlayer::bounty,
 

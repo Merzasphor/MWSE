@@ -27,9 +27,9 @@ namespace mwse {
 				"value", sol::readonly_property(&TES3::Ingredient::getValue),
 				"weight", sol::readonly_property(&TES3::Ingredient::getWeight),
 
-				"effects", sol::readonly_property([](TES3::Ingredient* self) { return std::ref(self->effects); }),
-				"effectSkillIds", sol::readonly_property([](TES3::Ingredient* self) { return std::ref(self->effectSkillIds); }),
-				"effectAttributeIds", sol::readonly_property([](TES3::Ingredient* self) { return std::ref(self->effectAttributeIds); }),
+				"effects", sol::readonly_property([](TES3::Ingredient& self) { return std::ref(self.effects); }),
+				"effectSkillIds", sol::readonly_property([](TES3::Ingredient& self) { return std::ref(self.effectSkillIds); }),
+				"effectAttributeIds", sol::readonly_property([](TES3::Ingredient& self) { return std::ref(self.effectAttributeIds); }),
 
 				"script", sol::readonly_property(&TES3::Ingredient::getScript)
 

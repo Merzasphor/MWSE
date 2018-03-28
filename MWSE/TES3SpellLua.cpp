@@ -23,7 +23,7 @@ namespace mwse {
 				"flags", &TES3::Spell::spellFlags,
 				"autoCalc", sol::property(&TES3::Spell::getAutoCalc, &TES3::Spell::setAutoCalc),
 
-				"effects", sol::readonly_property([](TES3::Spell* self) { return std::ref(self->effects); }),
+				"effects", sol::readonly_property([](TES3::Spell& self) { return std::ref(self.effects); }),
 
 				"castType", &TES3::Spell::castType,
 				"magickaCost", &TES3::Spell::magickaCost
