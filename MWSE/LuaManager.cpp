@@ -10,6 +10,7 @@
 #include "ScriptUtil.h"
 
 // TEMP! REMOVE!
+#include "TES3Cell.h"
 #include "TES3Script.h"
 #include "TES3MobilePlayer.h"
 
@@ -165,6 +166,11 @@ namespace mwse {
 				}
 
 				return mobilePlayer->reference;
+			};
+
+			// Bind function: GetPlayerCell()
+			luaState["GetPlayerCell"] = []() {
+				return tes3::getDataHandler()->currentCell;
 			};
 
 			// Bind function: GetGame
