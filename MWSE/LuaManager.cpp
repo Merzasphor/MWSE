@@ -11,6 +11,7 @@
 
 // TEMP! REMOVE!
 #include "TES3Cell.h"
+#include "TES3WorldController.h"
 #include "TES3Script.h"
 #include "TES3MobilePlayer.h"
 
