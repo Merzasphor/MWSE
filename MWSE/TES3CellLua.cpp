@@ -8,7 +8,23 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Cell() {
-			LuaManager::getInstance().getState().new_usertype<TES3::Cell>("TES3Cell",
+			sol::state& state = LuaManager::getInstance().getState();
+
+			state.new_usertype<TES3::CellExteriorData>("TES3CellExteriorData",
+				// Disable construction of this type.
+				"new", sol::no_constructor,
+
+				//
+				// Properties.
+				//
+
+				"cell", &TES3::CellExteriorData::cell,
+				"gridX", &TES3::CellExteriorData::gridX,
+				"gridY", &TES3::CellExteriorData::gridY
+
+				);
+
+			state.new_usertype<TES3::Cell>("TES3Cell",
 				// Disable construction of this type.
 				"new", sol::no_constructor,
 
