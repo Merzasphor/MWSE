@@ -377,7 +377,7 @@ namespace mwse {
 				popfd
 
 				// Overwritten code.
-				mov ecx, TES3_SCRIPTTARGETREF_IMAGE
+				mov ecx, dword ptr ds : [TES3_SCRIPTTARGETREF_IMAGE]
 
 				// Resume normal execution.
 				jmp context.callbackAddress
