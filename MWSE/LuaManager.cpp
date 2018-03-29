@@ -10,6 +10,7 @@
 #include "ScriptUtil.h"
 
 #include "TES3Cell.h"
+#include "TES3DataHandler.h"
 #include "TES3Script.h"
 #include "TES3MobilePlayer.h"
 #include "TES3WorldController.h"
@@ -180,6 +181,11 @@ namespace mwse {
 			// Bind function: GetGame
 			luaState["GetGame"] = []() {
 				return tes3::getGame();
+			};
+
+			// Bind function: GetDataHandler
+			luaState["GetDataHandler"] = []() {
+				return tes3::getDataHandler();
 			};
 
 			// Bind function: GetGame
