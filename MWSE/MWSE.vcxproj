@@ -80,6 +80,7 @@
     <ClInclude Include="TES3Collections.h" />
     <ClInclude Include="TES3CombatSession.h" />
     <ClInclude Include="TES3Container.h" />
+    <ClInclude Include="TES3DataHandlerLua.h" />
     <ClInclude Include="TES3DialogueFilter.h" />
     <ClInclude Include="TES3DialogueInfo.h" />
     <ClInclude Include="TES3Door.h" />
@@ -182,6 +183,7 @@
     <ClCompile Include="TES3Container.cpp" />
     <ClCompile Include="TES3ContainerLua.cpp" />
     <ClCompile Include="TES3CreatureLua.cpp" />
+    <ClCompile Include="TES3DataHandlerLua.cpp" />
     <ClCompile Include="TES3DoorLua.cpp" />
     <ClCompile Include="TES3EnchantmentLua.cpp" />
     <ClCompile Include="TES3FactionLua.cpp" />
