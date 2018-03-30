@@ -56,7 +56,7 @@ namespace TES3 {
 		int systemTimeMillis; // 0x20
 		int lastFrameTimeMillis; // 0x4
 		int unknown_0x28;
-		int deltaTime; // 0xC
+		float deltaTime; // 0xC
 		int unknown_0x30;
 		void * audio; // 0x34
 		int unknown_0x38;
