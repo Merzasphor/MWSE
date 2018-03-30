@@ -68,6 +68,12 @@ namespace TES3 {
 		bool getIsAttacked();
 
 		//
+		// Other related this-call functions.
+		//
+
+		Reference* dropItem(BaseObject*, ItemData*, int, bool);
+
+		//
 		// Lua interface functions.
 		//
 
