@@ -31,6 +31,7 @@ namespace TES3 {
 		UnknownStruct * unknown5[12]; // 0x1C
 		Skill skills[27]; // 0x4C
 		MagicEffect magicEffects[143]; // 0x05C8
+
 	};
 	static_assert(sizeof(RecordLists::UnknownStruct) == 0x30, "TES3::RecordList::UnknownStruct failed size validation");
 	static_assert(sizeof(RecordLists) == 0x9DB8, "TES3::RecordList failed size validation");
@@ -159,6 +160,13 @@ namespace TES3 {
 		char unknown_0xB54F;
 		long exteriorCellDataBufferSize; // 0xB550
 		void * exteriorCellDataBuffer; // 0xB554
+
+		//
+		// Other related this-call functions.
+		//
+
+		bool getSoundPlaying(Sound*, Reference*);
+
 	};
 	static_assert(sizeof(DataHandler) == 0xB558, "TES3::DataHandler failed size validation");
 }

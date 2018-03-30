@@ -137,6 +137,7 @@ namespace TES3 {
 	struct RepairTool;
 	struct Script;
 	struct ScriptVariables;
+	struct Sound;
 	struct Spell;
 	struct Statistic;
 	struct Weapon;
