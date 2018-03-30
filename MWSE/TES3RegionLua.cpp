@@ -34,7 +34,13 @@ namespace mwse {
 				"weatherChanceSnow", &TES3::Region::weatherChanceSnow,
 				"weatherChanceBlizzard", &TES3::Region::weatherChanceBlizzard,
 
-				"sleepCreature", sol::readonly_property([](TES3::Region& self) { return makeLuaObject(self.sleepCreature); })
+				"sleepCreature", sol::readonly_property([](TES3::Region& self) { return makeLuaObject(self.sleepCreature); }),
+
+				//
+				// Functions.
+				//
+
+				"changeWeather", &TES3::Region::changeWeather
 
 				);
 		}

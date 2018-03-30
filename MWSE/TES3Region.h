@@ -21,6 +21,13 @@ namespace TES3 {
 		Actor * sleepCreature; // 0x5C
 		int unknown_0x60[5]; // Unknown2 in Master?
 		int unknown_0x74;
+
+		//
+		// Other related this-call functions.
+		//
+
+		void changeWeather(int);
+
 	};
 	static_assert(sizeof(Region) == 0x78, "TES3::Region failed size validation");
 }
