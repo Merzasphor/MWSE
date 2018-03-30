@@ -16,6 +16,17 @@ namespace TES3 {
 		int targetID; // 0x4C
 
 		//
+		// Other related this-call functions.
+		//
+
+		void activate(Reference*);
+		void setActivationFlag(int);
+		void clearActivationFlag(int);
+		bool testActivationFlag(int);
+		void setActivationReference(Reference*);
+		Reference * getActivationReference();
+
+		//
 		// Lua interface functions.
 		//
 

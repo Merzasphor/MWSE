@@ -205,6 +205,7 @@
     <ClCompile Include="TES3Object.cpp" />
     <ClCompile Include="TES3ProbeLua.cpp" />
     <ClCompile Include="TES3RaceLua.cpp" />
+    <ClCompile Include="TES3Reference.cpp" />
     <ClCompile Include="TES3ReferenceLua.cpp" />
     <ClCompile Include="TES3RegionLua.cpp" />
     <ClCompile Include="TES3RepairToolLua.cpp" />

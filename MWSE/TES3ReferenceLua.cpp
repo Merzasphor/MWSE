@@ -61,7 +61,18 @@ namespace mwse {
 
 				"attachments", sol::readonly_property(&TES3::Reference::getAttachments),
 
-				"object", sol::readonly_property(&TES3::Reference::getBaseObject)
+				"object", sol::readonly_property(&TES3::Reference::getBaseObject),
+
+				"activationReference", sol::property(&TES3::Reference::getActivationReference, &TES3::Reference::setActivationReference),
+
+				//
+				// Functions
+				//
+
+				"activate", &TES3::Reference::activate,
+				"setActivationFlag", &TES3::Reference::setActivationFlag,
+				"clearActivationFlag", &TES3::Reference::clearActivationFlag,
+				"testActivationFlag", &TES3::Reference::testActivationFlag
 
 				);
 		}
