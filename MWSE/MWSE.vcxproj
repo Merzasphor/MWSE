@@ -198,6 +198,7 @@
     <ClCompile Include="TES3LockpickLua.cpp" />
     <ClCompile Include="TES3MagicEffectLua.cpp" />
     <ClCompile Include="TES3MiscLua.cpp" />
+    <ClCompile Include="TES3MobileActor.cpp" />
     <ClCompile Include="TES3MobileCreatureLua.cpp" />
     <ClCompile Include="TES3MobileNPCLua.cpp" />
     <ClCompile Include="TES3MobilePlayerLua.cpp" />

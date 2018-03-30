@@ -238,6 +238,13 @@ namespace TES3 {
 		void * arrowBone;
 		int unknown_0x3A0;
 		Vector3 unknown_0x3A4;
+
+		//
+		// Other related this-call functions.
+		//
+
+		Cell* getCell();
+
 	};
 	static_assert(sizeof(MobileActor) == 0x3B0, "TES3::MobileActor failed size validation");
 }
