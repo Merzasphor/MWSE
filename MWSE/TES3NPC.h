@@ -6,7 +6,18 @@
 #include "TES3SpellList.h"
 
 namespace TES3 {
-	struct NPC : Actor {
+	struct NPCBase : Actor {
+		// No data, this is only used for shared functions.
+
+		//
+		// Related this-call functions.
+		//
+
+		float getDisposition(bool);
+
+	};
+
+	struct NPC : NPCBase {
 		void * model; // 0x6C
 		char * name; // 0x70
 		Script * script; // 0x74
@@ -35,7 +46,7 @@ namespace TES3 {
 	};
 	static_assert(sizeof(NPC) == 0xF0, "TES3::NPC failed size validation");
 
-	struct NPCInstance : Actor {
+	struct NPCInstance : NPCBase {
 		NPC * baseNPC; // 0x6C
 		short disposition; // 0x70
 		unsigned char factionIndex; // 0x72
