@@ -7,6 +7,10 @@
 #include "TES3Vectors.h"
 
 namespace TES3 {
+	struct LuaTableAttachment : Attachment {
+		sol::table table;
+	};
+
 	struct Reference : Object {
 		Object * baseObject; // 0x28
 		Vector3 orientation; // 0x2c
@@ -34,6 +38,8 @@ namespace TES3 {
 
 		// Return a table (or nil) of attachments for this object.
 		sol::object getAttachments();
+
+		sol::table getLuaTable();
 
 	};
 	static_assert(sizeof(Reference) == 0x50, "TES3::Reference failed size validation");

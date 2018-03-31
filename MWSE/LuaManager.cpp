@@ -65,7 +65,18 @@
 #define TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE 0x6
 #define TES3_HOOK_RUNSCRIPT_LUACHECK_RETURN (TES3_HOOK_RUNSCRIPT_LUACHECK + TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE)
 
+#define TES3_HOOK_SAVE_REFERENCE 0x4E1C95
+#define TES3_HOOK_SAVE_REFERENCE_SIZE 0x6
+#define TES3_HOOK_SAVE_REFERENCE_RETURN (TES3_HOOK_SAVE_REFERENCE + TES3_HOOK_SAVE_REFERENCE_SIZE)
+
+#define TES3_HOOK_LOAD_REFERENCE 0x4DE532
+#define TES3_HOOK_LOAD_REFERENCE_SIZE 0x5
+#define TES3_HOOK_LOAD_REFERENCE_RETURN (TES3_HOOK_LOAD_REFERENCE + TES3_HOOK_LOAD_REFERENCE_SIZE)
+
 #define DEBUG_LUA_SCRIPT_INJECTION true
+
+#define TES3_load_writeChunk 0x4B6BA0
+#define TES3_load_readChunk 0x4B6880
 
 namespace mwse {
 	namespace lua {
@@ -394,6 +405,139 @@ namespace mwse {
 			}
 		}
 
+		static void _stdcall HookLoadReferencetIndirect() {
+			if (context.eax != 'TAUL') {
+				return;
+			}
+
+			// Call original readChunk function.
+			char * buffer = reinterpret_cast<char*>(context.esp + 0x510 + 0x380);
+			bool success = reinterpret_cast<char*(__thiscall *)(DWORD, char*, DWORD)>(TES3_load_readChunk)(context.ebx, buffer, 0);
+			
+			// If we for whatever reason failed to load this chunk, bail.
+			if (!success) {
+				return;
+			}
+
+			// Get our lua table, and replace it with our new table.
+			sol::state& state = LuaManager::getInstance().getState();
+			TES3::Reference * reference = reinterpret_cast<TES3::Reference*>(context.esi);
+			sol::table table = reference->getLuaTable();
+			table = state["json"]["decode"](buffer);
+
+			// We successfully read this subrecord, so our jump location is back at the success location.
+			context.callbackAddress = 0x4DE406;
+		}
+
+		DWORD HookLoadReferencetDirectJumpOut = 0x4DF708;
+		static __declspec(naked) void HookLoadReferencetDirect() {
+			_asm
+			{
+				// Save eax.
+				mov context.eax, eax
+
+				// Save the flags.
+				pushfd
+				pop eax
+				mov context.flags, eax
+
+				// Save the other registers.
+				mov context.ebx, ebx
+				mov context.ecx, ecx
+				mov context.edx, edx
+				mov context.esi, esi
+				mov context.edi, edi
+				mov context.ebp, ebp
+				mov context.esp, esp
+
+				// Actually use our hook.
+				mov context.callbackAddress, TES3_HOOK_LOAD_REFERENCE_RETURN
+				call HookLoadReferencetIndirect
+
+				// Restore all registers and flags.
+				mov eax, context.eax
+				mov ebx, context.ebx
+				mov ecx, context.ecx
+				mov edx, context.edx
+				mov esi, context.esi
+				mov edi, context.edi
+				mov ebp, context.ebp
+				mov esp, context.esp
+				push context.flags
+				popfd
+
+				// Overwritten code.
+				cmp eax, 'MANM'
+
+				// Resume normal execution.
+				jmp context.callbackAddress
+			}
+		}
+
+		static void _stdcall HookSaveReferencetIndirect() {
+			TES3::Reference * reference = reinterpret_cast<TES3::Reference*>(context.ebp);
+
+			// Get the associated table.
+			sol::table table = reference->getLuaTable();
+
+			// If it is empty, don't bother saving it.
+			if (table.empty()) {
+				return;
+			}
+
+			// Convert the table to json for storage.
+			sol::state& state = LuaManager::getInstance().getState();
+			std::string json = state["json"]["encode"](table);
+
+			// Call original writechunk function.
+			reinterpret_cast<void*(__thiscall *)(DWORD, DWORD, const char*, DWORD)>(TES3_load_writeChunk)(context.esi, 'TAUL', json.c_str(), json.length() + 1);
+		}
+
+		static __declspec(naked) void HookSaveReferencetDirect() {
+			_asm
+			{
+				// Save eax.
+				mov context.eax, eax
+
+				// Save the flags.
+				pushfd
+				pop eax
+				mov context.flags, eax
+
+				// Save the other registers.
+				mov context.ebx, ebx
+				mov context.ecx, ecx
+				mov context.edx, edx
+				mov context.esi, esi
+				mov context.edi, edi
+				mov context.ebp, ebp
+				mov context.esp, esp
+
+				// Actually use our hook.
+				mov context.callbackAddress, TES3_HOOK_SAVE_REFERENCE_RETURN
+				call HookSaveReferencetIndirect
+
+				// Restore all registers and flags.
+				mov eax, context.eax
+				mov ebx, context.ebx
+				mov ecx, context.ecx
+				mov edx, context.edx
+				mov esi, context.esi
+				mov edi, context.edi
+				mov ebp, context.ebp
+				mov esp, context.esp
+				push context.flags
+				popfd
+
+				// Overwritten code.
+				mov eax, [ebp+0x8]
+				shr eax, 5
+
+				// Resume normal execution.
+				jmp context.callbackAddress
+			}
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");
@@ -416,6 +560,17 @@ namespace mwse {
 			genJump(TES3_HOOK_RUNSCRIPT_LUACHECK, reinterpret_cast<DWORD>(HookRunScriptDirect));
 			for (DWORD i = TES3_HOOK_RUNSCRIPT_LUACHECK + 5; i < TES3_HOOK_RUNSCRIPT_LUACHECK_RETURN; i++) genNOP(i);
 			VirtualProtect((DWORD*)TES3_HOOK_RUNSCRIPT_LUACHECK, TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE, OldProtect, &OldProtect);
+
+			// Hook the load reference function, so we can fetch attached Lua data.
+			VirtualProtect((DWORD*)TES3_HOOK_LOAD_REFERENCE, TES3_HOOK_LOAD_REFERENCE_SIZE, PAGE_READWRITE, &OldProtect);
+			genJump(TES3_HOOK_LOAD_REFERENCE, reinterpret_cast<DWORD>(HookLoadReferencetDirect));
+			VirtualProtect((DWORD*)TES3_HOOK_LOAD_REFERENCE, TES3_HOOK_LOAD_REFERENCE_SIZE, OldProtect, &OldProtect);
+
+			// Hook the save reference function, so we can save attached Lua data.
+			VirtualProtect((DWORD*)TES3_HOOK_SAVE_REFERENCE, TES3_HOOK_SAVE_REFERENCE_SIZE, PAGE_READWRITE, &OldProtect);
+			genJump(TES3_HOOK_SAVE_REFERENCE, reinterpret_cast<DWORD>(HookSaveReferencetDirect));
+			for (DWORD i = TES3_HOOK_SAVE_REFERENCE + 5; i < TES3_HOOK_SAVE_REFERENCE_RETURN; i++) genNOP(i);
+			VirtualProtect((DWORD*)TES3_HOOK_SAVE_REFERENCE, TES3_HOOK_SAVE_REFERENCE_SIZE, OldProtect, &OldProtect);
 		}
 
 		void LuaManager::cleanup() {

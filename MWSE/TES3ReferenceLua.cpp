@@ -4,6 +4,7 @@
 
 #include "LuaManager.h"
 #include "LuaUtil.h"
+#include "TES3Util.h"
 
 namespace TES3 {
 	sol::object Reference::getBaseObject() {
@@ -38,6 +39,42 @@ namespace TES3 {
 
 		return result;
 	}
+
+	sol::table Reference::getLuaTable() {
+		// Get previous attachment.
+		LuaTableAttachment* attachment = reinterpret_cast<LuaTableAttachment*>(attachments);
+		while (attachment && attachment->type != AttachmentType::LuaTable) {
+			attachment = reinterpret_cast<LuaTableAttachment*>(attachment->next);
+		}
+
+		// Create the attachment if it needs to be made.
+		if (attachment == NULL) {
+			// We need to ensure that our default sol::table is initialized, so ensure that new is invoked.
+			attachment = new (mwse::tes3::malloc<LuaTableAttachment>()) LuaTableAttachment();
+
+			attachment->type = AttachmentType::LuaTable;
+			attachment->next = 0;
+			
+			// Set this as the first attachment...
+			if (attachments == NULL) {
+				attachments = attachment;
+			}
+			// ... or link up the attachment.
+			else {
+				auto lastAttachment = attachments;
+				while (lastAttachment->next) {
+					lastAttachment = lastAttachment->next;
+				}
+				lastAttachment->next = attachment;
+			}
+
+			// Create our empty table.
+			sol::state& state = mwse::lua::LuaManager::getInstance().getState();
+			attachment->table = state.create_table();
+		}
+
+		return attachment->table;
+	}
 }
 
 namespace mwse {
@@ -64,6 +101,8 @@ namespace mwse {
 				"object", sol::readonly_property(&TES3::Reference::getBaseObject),
 
 				"activationReference", sol::property(&TES3::Reference::getActivationReference, &TES3::Reference::setActivationReference),
+
+				"data", sol::readonly_property(&TES3::Reference::getLuaTable),
 
 				//
 				// Functions
