@@ -154,7 +154,9 @@ namespace mwse {
 
 		template <typename T>
 		T* malloc() {
-			return reinterpret_cast<T*>(_malloc(sizeof(T)));
+			T * ret = reinterpret_cast<T*>(_malloc(sizeof(T)));
+			memset(ret, 0, sizeof(T));
+			return ret;
 		}
 
 		typedef void(__cdecl *ExternalFree)(void*);
