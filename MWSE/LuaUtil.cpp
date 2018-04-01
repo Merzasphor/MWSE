@@ -40,6 +40,10 @@
 namespace mwse {
 	namespace lua {
 		sol::object makeLuaObject(TES3::BaseObject* object) {
+			if (object == NULL) {
+				return sol::nil;
+			}
+
 			sol::state& state = LuaManager::getInstance().getState();
 
 			switch (object->objectType) {
