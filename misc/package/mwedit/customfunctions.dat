@@ -1860,6 +1860,15 @@ function
 	Opcode = 0x3C38
 end
 
+function
+	Name = xLuaRunScript
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Short | Long | Float | String | Many
+	Param1 = Long | String
+	Param2 = Short | Long | Float | String | Many | Optional
+	Opcode = 0x3FB0
+end
+
 
 # MGE extensions
 function
