@@ -101,10 +101,21 @@ namespace mwse {
 			return 0;
 		}
 
+		// We still abort the program if an unprotected lua error happens. Here we at least
+		// get it in the log so it can be debugged.
+		int panic(lua_State* L) {
+			const char* message = lua_tostring(L, -1);
+			log::getLog() << (message ? message : "An unexpected error occurred and forced the lua state to call atpanic.") << std::endl;
+			return 0;
+		}
+
 		// LuaManager constructor. This is private, as a singleton.
 		LuaManager::LuaManager() {
 			// Open default lua libraries.
 			luaState.open_libraries();
+
+			// Override the default atpanic to print to the log.
+			luaState.set_panic(panic);
 
 			// Overwrite the default print function to print to the MWSE log.
 			luaState["print"] = printToLog;
