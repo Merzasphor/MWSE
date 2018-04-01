@@ -29,5 +29,6 @@ These extra functions allow modders to add features and behavior to scripts that
     :maxdepth: 1
     :caption: Lua Scripting:
 
+    lua/api
     lua/guide
     lua/type
