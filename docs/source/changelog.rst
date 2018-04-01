@@ -9,23 +9,35 @@ More details about each function can be found under the New Functions page.
 In-Development
 -----------------------------------------------------------
 
-These changes are available when building from source, or from `downloading the latest beta <https://www.nexusmods.com/morrowind/mods/45468?tab=files>`_.
+These changes are available when building from source, or from `downloading the latest in-development build <https://nullcascade.com/mwse/mwse-dev.zip>`_.
+
+The biggest change in this version is the introduction of new Lua scripting functionality. Scripts can be `overridden <lua/guide/script-overrides.html>`_, or `independently called <mwscript/functions/lua/xLuaRunScript.html>`_ to perform actions previously impossible by mwscript.
+
+Additionally, arbitrary data can now be persistently stored in the save, attached to references. These references do not necessarily need a script.
 
 Added
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - ``xMyRef``: Allows an object to get a reference to itself. Moved from ``xGetRef`` to its own function for better compatibility.
+
 - ``xActivate``: Allows the forced activation of one reference to another. This allows you to make the player or NPCs pick up objects, go through doors, and otherwise perform a normal activation. Unlike the vanilla ``Activate`` function, this one wil always work and accepts variable input.
+
+- ``xLuaRunScript``: Loads and executes a lua file inside of *Data Files/MWSE/lua/scripts*. That script has the power to interact with the MWSE stack, and return any data it wants. This effectively lets custom Lua-based functions to be written so that mwscripts are not limited.
+
+- If a mwscript executes when a Lua script of the same name is available under *Data Files/MWSE/lua/overrides*, the Lua script will be executed *instead of* the base mwscript. This allows for custom Lua scripts to be written that replace mwscripts (meaning they can be attached to objects). See the guide `here <lua/guide/script-overrides.html>`_ for more details.
 
 Changed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - Refactored TES3 type information under the hood to make development smoother.
+- LuaJIT 2.0.5 is now a dependency of the project.
 
 Fixed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- Reverted feature to get the current reference by calling xGetRef with a value of zero.
+- Reverted feature to get the current reference by calling ``xGetRef`` with a value of zero.
+- ``xEquipmentList``: Now returns the ammunition count, instead of always returning 1 for the count.
+- Fixed an issue where strings would be redundantly stored in memory.
 
 v2.0.0
 -----------------------------------------------------------
