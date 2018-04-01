@@ -67,7 +67,7 @@ namespace mwse
 		}
 
 		// Get AI configuration.
-		TES3::AIConfig* aiConfig = reference->baseObject->vTable->getAIConfig(reference->baseObject);
+		TES3::AIConfig* aiConfig = reference->baseObject->vTable.object->getAIConfig(reference->baseObject);
 		if (!aiConfig) {
 #if _DEBUG
 			mwse::log::getLog() << "xModService: Called on non-NPC reference." << std::endl;
@@ -77,7 +77,7 @@ namespace mwse
 		}
 
 		// Get the NPC's class.
-		TES3::Class* classRecord = reference->baseObject->vTable->getClass(reference->baseObject);
+		TES3::Class* classRecord = reference->baseObject->vTable.object->getClass(reference->baseObject);
 		if (!classRecord) {
 #if _DEBUG
 			mwse::log::getLog() << "xModService: Failed to obtain NPC's class." << std::endl;

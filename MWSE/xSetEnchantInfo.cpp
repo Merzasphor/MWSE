@@ -84,7 +84,7 @@ namespace mwse
 		enchant->castType = type;
 		enchant->chargeCost = cost;
 		enchant->maxCharge = charge;
-		enchant->vTable->setAutoCalc(enchant, autocalc);
+		enchant->vTable.object->setAutoCalc(enchant, autocalc);
 
 		mwse::Stack::getInstance().pushLong(true);
 		return 0.0f;

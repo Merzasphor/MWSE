@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sol_forward.hpp"
+
 #include "TES3Object.h"
 #include "TES3Actor.h"
 #include "TES3AIConfig.h"
@@ -7,30 +9,49 @@
 
 namespace TES3 {
 	struct Creature : Actor {
+		struct Attributes {
+			int strength;
+			int intelligence;
+			int willpower;
+			int agility;
+			int speed;
+			int endurance;
+			int personality;
+			int luck;
+		};
+		struct Skills {
+			int combat;
+			int magic;
+			int stealth;
+		};
+		struct Attack {
+			int min;
+			int max;
+		};
 		char * model;
 		char * name;
 		Script * script;
 		void * soundgen; // Maybe?
 		int creatureType;
 		int level;
-		int attributes[8];
+		Attributes attributes;
 		int health;
 		int magicka;
 		int fatigue;
 		int soul;
-		int combatSkill;
-		int magicSkill;
-		int stealthSkill;
-		int attack1Min;
-		int attack1Max;
-		int attack2Min;
-		int attack2Max;
-		int attack3Min;
-		int attack3Max;
+		Skills skills;
+		Attack attacks[3];
 		int barterGold;
 		SpellList * ptrSpellList;
 		void * aiPackageList;
 		AIConfig * aiConfig;
+
+		//
+		// Lua interface functions.
+		//
+
+		sol::object getAttacks();
+
 	};
 	static_assert(sizeof(Creature) == 0xE8, "TES3::Creature failed size validation");
 
@@ -43,6 +64,14 @@ namespace TES3 {
 		int field_80;
 		void * sgNode_84;
 		int field_88;
+
+		//
+		// Lua interface functions.
+		//
+
+		sol::object getAttributes();
+		sol::object getSkills();
+		sol::object getAttacks();
 	};
 	static_assert(sizeof(CreatureInstance) == 0x8C, "TES3::CreatureInstance failed size validation");
 }

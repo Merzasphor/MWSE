@@ -60,7 +60,7 @@ namespace mwse
 		// Get the base record.
 		TES3::BaseObject* record = reference->baseObject;
 		if (record) {
-			name = reference->baseObject->vTable->getName(reference->baseObject);
+			name = reference->baseObject->vTable.object->getName(reference->baseObject);
 		}
 		else {
 #if _DEBUG

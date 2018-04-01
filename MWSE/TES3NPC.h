@@ -6,38 +6,25 @@
 #include "TES3SpellList.h"
 
 namespace TES3 {
-	namespace NPCFlag {
-		enum NPCFlag {
-			Female = 0x1,
-			Essential = 0x2,
-			Respawns = 0x4,
-			IsBase = 0x8,
-			AutoCalc = 0x10,
-			BloodSkeleton = 0x400,
-			BloodMetal = 0x800,
-		};
-	}
+	struct NPCBase : Actor {
+		// No data, this is only used for shared functions.
 
-	namespace NPCFlagBit {
-		enum NPCFlagBit {
-			FemaleBit = 0,
-			EssentialBit = 1,
-			RespawnsBit = 2,
-			IsBaseBit = 3,
-			AutocalcBit = 4,
-			BloodSkeletonBit = 10,
-			BloodMetalBit = 11,
-		};
-	}
+		//
+		// Related this-call functions.
+		//
 
-	struct NPC : Actor {
+		float getDisposition(bool);
+
+	};
+
+	struct NPC : NPCBase {
 		void * model; // 0x6C
 		char * name; // 0x70
 		Script * script; // 0x74
 		void * linkedObjectIDs; // 0x78
 		short level; // 0x7C
-		unsigned char attributes[8]; // 0x7E
-		unsigned char skills[27]; // 0x86
+		signed char attributes[8]; // 0x7E
+		signed char skills[27]; // 0x86
 		unsigned char reputation; // 0xA1
 		short health; // 0xA2
 		short magicka; // 0xA4
@@ -55,15 +42,21 @@ namespace TES3 {
 		SpellList spellList; // 0xC4
 		void * aiPackageList; // 0xDC
 		AIConfig aiConfig; // 0xE0
+
 	};
 	static_assert(sizeof(NPC) == 0xF0, "TES3::NPC failed size validation");
 
-	struct NPCInstance : Actor {
+	struct NPCInstance : NPCBase {
 		NPC * baseNPC; // 0x6C
 		short disposition; // 0x70
 		unsigned char factionIndex; // 0x72
 		char unknown_0x73; // Padding.
 		void * aiData; // 0x74
+
+		unsigned char getReputation();
+		void setReputation(unsigned char);
+
+		void setFactionRank(unsigned char);
 	};
 	static_assert(sizeof(NPCInstance) == 0x78, "TES3::NPCInstance failed size validation");
 }

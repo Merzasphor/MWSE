@@ -22,6 +22,7 @@
 #include "mwOffsets.h"
 #include "mwAdapter.h"
 #include "MemAccess.h"
+#include "MemoryUtil.h"
 
 #include "VirtualMachine.h"
 
@@ -35,7 +36,7 @@ namespace mwse
 	namespace mwAdapter
 	{
 		// House the registers obtained before/to return after hooking a function.
-		static Context_t context;
+		static HookContext context;
 
 		// Our virtual machine. It's not really a virtual machine, and all the heavy
 		// lifting is still done by the Morrowind scripting VM.

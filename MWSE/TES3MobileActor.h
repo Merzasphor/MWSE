@@ -23,9 +23,69 @@ namespace TES3 {
 		};
 	}
 
+	namespace MobileActorFlag {
+		enum MobileActorFlag {
+			ActiveAI = 0x4,
+			Werewolf = 0x400,
+			Underwater = 0x800,
+			WeaponDrawn = 0x2000,
+			SpellReadied = 0x4000,
+			InCombat = 0x10000,
+			Attacked = 0x20000,
+			IsCrittable = 0x8000000,
+			IdleAnim = 0x10000000
+		};
+
+		enum MobileActorFlagBit {
+			ActiveAIBit = 2,
+			WerewolfBit = 10,
+			UnderwaterBit = 11,
+			WeaponDrawnBit = 13,
+			SpellReadiedBit = 14,
+			InCombatBit = 16,
+			AttackedBit = 17,
+			IsCrittableBit = 27,
+			IdleAnimBit = 28
+		};
+	}
+
+	namespace ActorMovement {
+		enum ActorMovement {
+			Foreward = 0x1,
+			Back = 0x2,
+			Left = 0x4,
+			Right = 0x8,
+			TurnLeft = 0x10,
+			TurnRight = 0x20,
+			Walking = 0x100,
+			Running = 0x200,
+			Crouching = 0x400,
+			Swimming = 0x800,
+			Jumping = 0x1000,
+			Flying = 0x2000,
+			Jumped = 0x4000
+		};
+
+		enum ActorMovementBit {
+			ForewardBit = 0,
+			BackBit = 1,
+			LeftBit = 2,
+			RightBit = 3,
+			TurnLeftBit = 4,
+			TurnRightBit = 5,
+			WalkingBit = 8,
+			RunningBit = 9,
+			CrouchingBit = 10,
+			SwimmingBit = 11,
+			JumpingBit = 12,
+			FlyingBit = 13,
+			JumpedBit = 14
+		};
+	}
+
 	struct MobileActor {
 		void * vTable; // 0x0
-		int objectType; // 0x4
+		ObjectType::ObjectType objectType; // 0x4
 		short movementFlags; // 0x8
 		short prevMovementFlags; // 0xA
 		short unknown_0xC;
@@ -51,8 +111,8 @@ namespace TES3 {
 		float unknown_0x74;
 		int unknown_0x78;
 		int unknown_0x7C;
-		Iterator<Actor> listTargetActors; // 0x80
-		Iterator<Actor> listFriendlyActors; // 0x94
+		Iterator<MobileActor> listTargetActors; // 0x80
+		Iterator<MobileActor> listFriendlyActors; // 0x94
 		float scanTimer; // 0xA8
 		int scanInterval; // 0xAC
 		int greetTimer; // B0
@@ -98,8 +158,8 @@ namespace TES3 {
 		char unknown_0x224;
 		char unknown_0x225;
 		char unknown_0x226;
-		char nextActionWeight; // 0x227
-		char actorType; // 0x228
+		signed char nextActionWeight; // 0x227
+		signed char actorType; // 0x228
 		char unknown_0x229;
 		char unknown_0x22A; // Undefined.
 		char unknown_0x22B; // Undefined.
@@ -160,17 +220,17 @@ namespace TES3 {
 		char unknown_0x36F; // Undefined.
 		float holdBreathTime;
 		int unknown_0x374;
-		Object * currentSpell;
+		Spell * currentSpell;
 		unsigned char spellSource;
 		char unknown_0x37D; // Undefined.
 		char unknown_0x37E; // Undefined.
 		char unknown_0x37F; // Undefined.
-		void * currentEnchItem;
-		void * currentEnchItemData;
-		void * readiedWeapon;
-		void * readiedAmmo;
-		void * readiedShield;
-		void * torchSlot;
+		Item * currentEnchItem;
+		ItemData * currentEnchItemData;
+		EquipmentStack * readiedWeapon;
+		EquipmentStack * readiedAmmo;
+		EquipmentStack * readiedShield;
+		EquipmentStack * torchSlot;
 		char unknown_0x398;
 		char unknown_0x399; // Undefined.
 		char unknown_0x39A; // Undefined.
@@ -178,6 +238,13 @@ namespace TES3 {
 		void * arrowBone;
 		int unknown_0x3A0;
 		Vector3 unknown_0x3A4;
+
+		//
+		// Other related this-call functions.
+		//
+
+		Cell* getCell();
+
 	};
 	static_assert(sizeof(MobileActor) == 0x3B0, "TES3::MobileActor failed size validation");
 }

@@ -56,7 +56,7 @@ namespace TES3 {
 		int systemTimeMillis; // 0x20
 		int lastFrameTimeMillis; // 0x4
 		int unknown_0x28;
-		int deltaTime; // 0xC
+		float deltaTime; // 0xC
 		int unknown_0x30;
 		void * audio; // 0x34
 		int unknown_0x38;
@@ -67,7 +67,7 @@ namespace TES3 {
 		InputController * inputController; // 0x4C
 		int unknown_0x50;
 		Script * scriptGlobals; // 0x54
-		void * weatherController; // 0x58
+		WeatherController * weatherController; // 0x58
 		int mobController; // 0x5C
 		void * stats_60;
 		void * field_64;
@@ -80,9 +80,9 @@ namespace TES3 {
 		int unknown_0x80;
 		int bShadows; // 0x84
 		int helpDelay; // 0x88
-		char hudStyle; // 0x8C
+		unsigned char hudStyle; // 0x8C
 		float menuAlpha; // 0x90
-		char bCursorOff; // 0x94
+		unsigned char bCursorOff; // 0x94
 		float aiDistance; // 0x98
 		int difficulty; // 0x9C
 		int werewolfFOV; // 0xA0
@@ -98,9 +98,9 @@ namespace TES3 {
 		int Win32_hWndParent; // 0xC8
 		int Win32_hWnd; // 0xCC
 		int Win32_hInstance; // 0xD0
-		char flagEventMenuModeOn; // 0xD4
-		char flagEventMenuModeOff; // 0xD5
-		char flagMenuMode; // 0xD6
+		unsigned char flagEventMenuModeOn; // 0xD4
+		unsigned char flagEventMenuModeOff; // 0xD5
+		unsigned char flagMenuMode; // 0xD6
 		char unknown_0xD7;
 		char unknown_0xD8;
 		char unknown_0xD9;

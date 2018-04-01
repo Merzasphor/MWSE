@@ -115,6 +115,33 @@
     <Filter Include="Header Files\DataAdapters\TES3\Objects\Other">
       <UniqueIdentifier>{13bbc2cf-0995-4f07-bf1c-2df65a817f76}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Lua">
+      <UniqueIdentifier>{537f3124-ae1e-4dbe-88da-8870fced7fa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lua\sol2">
+      <UniqueIdentifier>{49c38c80-85e8-4ebc-ae2e-b8805552aae9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lua">
+      <UniqueIdentifier>{f8c5e605-9df8-4756-b370-f13211251225}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lua\Bindings">
+      <UniqueIdentifier>{f796ca77-0b45-4a33-9f5f-8e48b6629e26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lua\Bindings\TES3">
+      <UniqueIdentifier>{38bcc59f-8405-47ac-8a1b-136ac84270dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lua\Bindings">
+      <UniqueIdentifier>{111da9ef-aaed-4c85-9881-de3127252753}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lua\Bindings\TES3">
+      <UniqueIdentifier>{dadfb912-6f34-42c2-9a34-cec9d9dd3745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DataAdapters\TES3">
+      <UniqueIdentifier>{e7548b0d-dee0-4eb0-ba9f-eb68c6fcc75f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Functions\Lua">
+      <UniqueIdentifier>{b9bc6abb-6f06-41bd-94e9-8870580495e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Flags.h">
@@ -381,9 +408,6 @@
     <ClInclude Include="TES3Door.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Other</Filter>
     </ClInclude>
-    <ClInclude Include="TES3Light.h">
-      <Filter>Header Files\DataAdapters\TES3\Objects\Other</Filter>
-    </ClInclude>
     <ClInclude Include="TES3DataHandler.h">
       <Filter>Header Files\DataAdapters\TES3</Filter>
     </ClInclude>
@@ -396,8 +420,164 @@
     <ClInclude Include="TES3Faction.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Actor\Data</Filter>
     </ClInclude>
+    <ClInclude Include="sol.hpp">
+      <Filter>Header Files\Lua\sol2</Filter>
+    </ClInclude>
+    <ClInclude Include="sol_forward.hpp">
+      <Filter>Header Files\Lua\sol2</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaManager.h">
+      <Filter>Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3VectorsLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3ReferenceLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaUtil.h">
+      <Filter>Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaScript.h">
+      <Filter>Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicLuaObject.h">
+      <Filter>Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryUtil.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
     <ClInclude Include="TES3SpellInstance.h">
       <Filter>Header Files\DataAdapters\TES3\Magic</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3ApparatusLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3StatisticLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MobileNPCLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3ActivatorLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3AlchemyLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MagicEffectLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3ArmorLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3BookLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3ClassLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3ClothingLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3CreatureLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3InventoryLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3ContainerLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3IngredientLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Light.h">
+      <Filter>Header Files\DataAdapters\TES3\Objects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3LightLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3LockpickLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3ProbeLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3RepairToolLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3WeaponLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MiscLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3NPCLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3EnchantmentLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3FactionLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3DoorLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MobileCreatureLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MobilePlayerLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3ActionDataLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3CellLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Region.h">
+      <Filter>Header Files\DataAdapters\TES3\Worldspace</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3RegionLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3GameLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3WeatherLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3WeatherControllerLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3WorldControllerLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Moon.h">
+      <Filter>Header Files\DataAdapters\TES3\Worldspace</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MoonLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3SpellLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3RaceLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3DataHandlerLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3SkillLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Sound.h">
+      <Filter>Header Files\DataAdapters\TES3\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="StackLua.h">
+      <Filter>Header Files\Lua\Bindings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1105,6 +1285,186 @@
     </ClCompile>
     <ClCompile Include="xMyRef.cpp">
       <Filter>Source Files\Functions\Actors</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaManager.cpp">
+      <Filter>Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3VectorsLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3ReferenceLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaUtil.cpp">
+      <Filter>Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryUtil.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3ApparatusLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Object.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3StatisticLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Statistic.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3MobileNPCLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3ActivatorLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3AlchemyLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3MagicEffectLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3ArmorLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Armor.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3BookLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Book.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Class.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3ClassLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3ClothingLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3CreatureLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Actor.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3ActorLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3InventoryLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Container.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3ContainerLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3IngredientLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3LightLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Light.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3LockpickLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3ProbeLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3RepairToolLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3WeaponLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3MiscLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3NPCLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3NPC.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3EnchantmentLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3FactionLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3DoorLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3MobileCreatureLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3MobilePlayerLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3ActionDataLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3CellLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Cell.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3RegionLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3GameLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3WeatherLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3WeatherControllerLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3WorldControllerLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3MoonLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3SpellLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3RaceLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3DataHandlerLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3SkillLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Reference.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Region.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3DataHandler.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3MobileActor.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="xLuaRunScript.cpp">
+      <Filter>Source Files\Functions\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="StackLua.cpp">
+      <Filter>Source Files\Lua\Bindings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

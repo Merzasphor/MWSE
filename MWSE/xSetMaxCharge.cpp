@@ -72,7 +72,7 @@ namespace mwse
 		}
 
 		// If we found an enchantment record, set the max charge.
-		TES3::Enchantment* enchantment = object->vTable->getEnchantment(object);
+		TES3::Enchantment* enchantment = object->vTable.object->getEnchantment(object);
 		if (enchantment) {
 			enchantment->maxCharge = maxCharge;
 

@@ -64,14 +64,14 @@ namespace mwse
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference) {
 			// Get data from ENCH record.
-			TES3::Enchantment* enchantment = reference->baseObject->vTable->getEnchantment(reference->baseObject);
+			TES3::Enchantment* enchantment = reference->baseObject->vTable.object->getEnchantment(reference->baseObject);
 			if (enchantment) {
 				enchId = enchantment->objectID;
 				type = enchantment->castType;
 				cost = enchantment->chargeCost;
 				maxCharge = enchantment->maxCharge;
 				effects = tes3::getEffectCount(enchantment->effects);
-				autocalc = enchantment->vTable->getAutoCalc(enchantment);
+				autocalc = enchantment->vTable.object->getAutoCalc(enchantment);
 
 				// Get the current charge.
 				auto varNode = tes3::getAttachedItemDataNode(reference);

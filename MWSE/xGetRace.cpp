@@ -76,7 +76,7 @@ namespace mwse
 		}
 
 		// Get the NPC's race.
-		TES3::Race* race = object->vTable->getRace(object);
+		TES3::Race* race = object->vTable.object->getRace(object);
 
 		// Get argument: return variable type.
 		short returnTypeParam = mwse::Stack::getInstance().popShort();

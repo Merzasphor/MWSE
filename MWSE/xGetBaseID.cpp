@@ -62,7 +62,7 @@ namespace mwse
 		}
 
 		// Push the found objectId.
-		char* objectId = object->vTable->getObjectID(object);
+		char* objectId = object->vTable.object->getObjectID(object);
 		if (objectId) {
 			mwse::Stack::getInstance().pushString(objectId);
 		}

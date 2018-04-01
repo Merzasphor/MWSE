@@ -9,9 +9,16 @@ namespace TES3 {
 		long value; // 0x58
 		int bookType;
 		int skillToRaise;
-		int unknown_0x64;
+		int enchantCapacity;
 		Enchantment * enchantment;
 		int unknown_0x6C;
+
+		//
+		// Other related this-call functions.
+		//
+
+		char* getBookText();
+
 	};
 	static_assert(sizeof(Book) == 0x70, "TES3::Book failed size validation");
 }

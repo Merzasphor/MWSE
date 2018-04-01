@@ -9,10 +9,10 @@ namespace TES3 {
 		SkillStatistic skills[27]; // 0x3B0
 		NPCInstance * npcInstance; // 0x560
 		char unknown_0x564;
-		char flagForceSneak; // 0x565
-		char flagForceRun; // 0x566
-		char flagForceJump; // 0x567
-		char flagForceMoveJump; // 0x568
+		signed char flagForceSneak; // 0x565
+		signed char flagForceRun; // 0x566
+		signed char flagForceJump; // 0x567
+		signed char flagForceMoveJump; // 0x568
 		char unknown_0x569; // Undefined.
 		char unknown_0x56A; // Undefined.
 		char unknown_0x56B; // Undefined.

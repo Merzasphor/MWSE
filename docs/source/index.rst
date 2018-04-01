@@ -24,3 +24,11 @@ These extra functions allow modders to add features and behavior to scripts that
     mwscript/references
     mwscript/GMSTs
     mwscript/functions/index
+
+.. toctree::
+    :maxdepth: 1
+    :caption: Lua Scripting:
+
+    lua/api
+    lua/guide
+    lua/type

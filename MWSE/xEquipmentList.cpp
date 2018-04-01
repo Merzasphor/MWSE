@@ -41,7 +41,7 @@ namespace mwse {
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
 
 	private:
-		bool nodeMatchesFilter(TES3::IteratorNode<TES3::Item*>* node, long typeFilter, long subtypeFilter);
+		bool nodeMatchesFilter(TES3::IteratorNode<TES3::EquipmentStack>* node, long typeFilter, long subtypeFilter);
 		long getItemSubType(TES3::BaseObject* object);
 	};
 
@@ -53,7 +53,7 @@ namespace mwse {
 
 	float xEquipmentList::execute(mwse::VMExecuteInterface &virtualMachine) {
 		// Get parameters.
-		TES3::IteratorNode<TES3::Item*>* node = reinterpret_cast<TES3::IteratorNode<TES3::Item*>*>(mwse::Stack::getInstance().popLong());
+		TES3::IteratorNode<TES3::EquipmentStack>* node = reinterpret_cast<TES3::IteratorNode<TES3::EquipmentStack>*>(mwse::Stack::getInstance().popLong());
 		long typeFilter = mwse::Stack::getInstance().popLong();
 		long subtypeFilter = mwse::Stack::getInstance().popLong() - 1;
 
@@ -91,7 +91,7 @@ namespace mwse {
 		}
 
 		// Make sure the object isn't a base actor.
-		if (actor->actorFlags & TES3::NPCFlag::IsBase) {
+		if (actor->actorFlags & TES3::ActorFlag::IsBase) {
 			mwse::log::getLog() << "xEquipmentList: Called on base actor. Must be used on instance." << std::endl;
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);
@@ -114,7 +114,7 @@ namespace mwse {
 		float weight = 0;
 		char* name = NULL;
 		char* enchantId = NULL;
-		TES3::IteratorNode<TES3::Item*>* next = NULL;
+		TES3::IteratorNode<TES3::EquipmentStack>* next = NULL;
 
 		// If we aren't given a node, get the first one.
 		if (node == NULL) {
@@ -128,23 +128,28 @@ namespace mwse {
 
 		// Validate the node we've obtained.
 		if (node && node->data) {
-			TES3::BaseObject* object = *node->data;
+			TES3::BaseObject* object = node->data->object;
 
 			id = reinterpret_cast<TES3::PhysicalObject*>(object)->objectID;
 			type = object->objectType;
-			value = object->vTable->getValue(object);
-			weight = object->vTable->getWeight(object);
-			name = object->vTable->getName(object);
+			value = object->vTable.object->getValue(object);
+			weight = object->vTable.object->getWeight(object);
+			name = object->vTable.object->getName(object);
 
 			// Get subtype. We can't directly use the vtable here to get the type,
 			// because types are zero-indexed.
 			subtype = getItemSubType(object) + 1;
 
 			// Get count. Right now we hardcode this to 1, but ammo might actually have a count.
-			count = 1;
+			if (node->data->variables) {
+				count = node->data->variables->count;
+			}
+			else {
+				count = 1;
+			}
 
 			// Get enchantment id.
-			TES3::Enchantment* enchantment = object->vTable->getEnchantment(object);
+			TES3::Enchantment* enchantment = object->vTable.object->getEnchantment(object);
 			if (enchantment) {
 				enchantId = enchantment->objectID;
 			}
@@ -170,8 +175,8 @@ namespace mwse {
 		return 0.0f;
 	}
 
-	bool xEquipmentList::nodeMatchesFilter(TES3::IteratorNode<TES3::Item*>* node, long typeFilter, long subtypeFilter) {
-		TES3::BaseObject* object = *node->data;
+	bool xEquipmentList::nodeMatchesFilter(TES3::IteratorNode<TES3::EquipmentStack>* node, long typeFilter, long subtypeFilter) {
+		TES3::BaseObject* object = node->data->object;
 
 		if (typeFilter != 0 && object->objectType != typeFilter) {
 			return false;
@@ -195,8 +200,8 @@ namespace mwse {
 		if (type == TES3::ObjectType::Armor || type == TES3::ObjectType::Apparatus ||
 			type == TES3::ObjectType::Clothing || type == TES3::ObjectType::Weapon)
 		{
-			subtype = object->vTable->getType(object);
-			log::getLog() << "xEquipmentList::getItemSubType : " << object->vTable->getObjectID(object) << " = " << subtype - 1 << std::endl;
+			subtype = object->vTable.object->getType(object);
+			log::getLog() << "xEquipmentList::getItemSubType : " << object->vTable.object->getObjectID(object) << " = " << subtype - 1 << std::endl;
 		}
 
 		return subtype;

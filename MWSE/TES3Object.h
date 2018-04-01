@@ -92,11 +92,13 @@ namespace TES3 {
 
 	struct Activator;
 	struct Actor;
+	struct ActorVirtualTable;
 	struct AIConfig;
 	struct Alchemy;
 	struct Apparatus;
 	struct Armor;
 	struct BaseObject;
+	struct BaseObjectVirtualTable;
 	struct Bodypart;
 	struct Cell;
 	struct CellExteriorData;
@@ -107,6 +109,7 @@ namespace TES3 {
 	struct Door;
 	struct Effect;
 	struct Enchantment;
+	struct EquipmentStack;
 	struct Faction;
 	struct Game;
 	struct GameSetting;
@@ -121,9 +124,11 @@ namespace TES3 {
 	struct MobileCreature;
 	struct MobileNPC;
 	struct MobilePlayer;
+	struct Moon;
 	struct NPC;
 	struct NPCInstance;
 	struct Object;
+	struct ObjectVirtualTable;
 	struct PhysicalObject;
 	struct Probe;
 	struct Race;
@@ -132,24 +137,32 @@ namespace TES3 {
 	struct RepairTool;
 	struct Script;
 	struct ScriptVariables;
+	struct Sound;
 	struct Spell;
+	struct Statistic;
 	struct Weapon;
+	struct Weather;
+	struct WeatherController;
 	struct WorldController;
 
 	//
 	// The core building blocks of TES3 objects.
 	//
 
-	struct vtBaseObject {
+	struct BaseObjectVirtualTable {
 		void * destructor; // 0x0
-		int(__thiscall * loadObjectSpecific)(BaseObject*, int); // 0x4
-		int(__thiscall * saveRecordSpecific)(BaseObject*, int); // 0x8
-		int(__thiscall * loadObject)(BaseObject*, int); // 0xC
-		int(__thiscall * saveObject)(BaseObject*, int); // 0x10
-		int(__thiscall * setObjectModified)(BaseObject*, unsigned char); // 0x14
-		int(__thiscall * setObjectFlag40)(BaseObject*, unsigned char); // 0x18
+		int (__thiscall * loadObjectSpecific)(BaseObject*, int); // 0x4
+		int (__thiscall * saveRecordSpecific)(BaseObject*, int); // 0x8
+		int (__thiscall * loadObject)(BaseObject*, int); // 0xC
+		int (__thiscall * saveObject)(BaseObject*, int); // 0x10
+		int (__thiscall * setObjectModified)(BaseObject*, unsigned char); // 0x14
+		int (__thiscall * setObjectFlag40)(BaseObject*, unsigned char); // 0x18
 		void * unknown_0x1C;
 		char * (__thiscall * getObjectID)(BaseObject*); // 0x20
+	};
+	static_assert(sizeof(BaseObjectVirtualTable) == 0x24, "TES3::BaseObjectVirtualTable failed size validation");
+
+	struct ObjectVirtualTable : BaseObjectVirtualTable {
 		void * copyEntity;
 		void * setID;
 		void * getVisualNode;
@@ -182,51 +195,64 @@ namespace TES3 {
 		char * (__thiscall * getTypeName)(BaseObject*); // 0x98
 		float (__thiscall * getWeight)(BaseObject*); // 0x9C
 		int (__thiscall * getValue)(BaseObject*); // 0xA0
-		void * setDurability;
-		int (__thiscall * getDurability)(BaseObject*);
-		void * getMagicka;
-		void * getFatigue;
-		float (__thiscall * getQuality)(BaseObject*);
-		void * isLeftPartOfPair;
-		void * isEssential;
-		void * isRespawn;
+		void (__thiscall * setDurability)(BaseObject*, int); // 0xA4
+		int (__thiscall * getDurability)(BaseObject*); // 0xA8
+		int (__thiscall * getMagicka)(BaseObject*); // 0xAC
+		int (__thiscall * getFatigue)(BaseObject*); // 0xB0
+		float (__thiscall * getQuality)(BaseObject*); // 0xB4
+		bool (__thiscall * isLeftPartOfPair)(BaseObject*); // 0xB8
+		bool (__thiscall * isEssential)(BaseObject*); // 0xBC
+		bool (__thiscall * isRespawn)(BaseObject*); // 0xC0
 		void * unknown_0xC4;
-		void * getUses;
-		void * unknown_0xCC;
-		Enchantment * (__thiscall * getEnchantment)(BaseObject*);
-		Enchantment * (__thiscall * setEnchantment)(BaseObject*, Enchantment*);
-		AIConfig * (__thiscall * getAIConfig)(BaseObject*);
-		void * getAIPackageList;
-		void * resolveInternalIDs;
+		int (__thiscall * getUses)(BaseObject*); // 0xC8
+		int (__thiscall * getEnchantCapacity)(BaseObject*);  // 0xCC
+		Enchantment * (__thiscall * getEnchantment)(BaseObject*); // 0xD0
+		Enchantment * (__thiscall * setEnchantment)(BaseObject*, Enchantment*); // 0xD4
+		AIConfig * (__thiscall * getAIConfig)(BaseObject*); // 0xD8
+		void * (__thiscall * getAIPackageList)(BaseObject*); // 0xDC
+		void * resolveInternalIDs; // 0xE0
 		void * unknown_0xE4;
-		unsigned char (__thiscall * getAutoCalc)(BaseObject*);
-		unsigned char(__thiscall * setAutoCalc)(BaseObject*, unsigned char);
+		unsigned char (__thiscall * getAutoCalc)(BaseObject*); // 0xE8
+		unsigned char(__thiscall * setAutoCalc)(BaseObject*, unsigned char); // 0xEC
 		void * unknown_0xF0;
 		void * unknown_0xF4;
 		void * unknown_0xF8;
-		void * setModelPath;
+		char* (__thiscall * setModelPath)(BaseObject*, char*); // 0xFC
 		void * unknown_0x100;
 		void * unknown_0x104;
-		void * isLocationMarker;
-		void * setName;
+		void * isLocationMarker; // 0x108
+		char* (__thiscall * setName)(BaseObject*, char*); // 0x10C
 		void * unknown_0x110;
 		void * unknown_0x114;
 		void * unknown_0x118;
 		void * unknown_0x11C;
-		void * getScale;
-		void * setScale;
+		void * getScale; // 0x120
+		void * setScale; // 0x124
 		void * unknown_0x128;
 		void * unknown_0x12C;
 		void * unknown_0x130;
-		void * loadModel;
+		void * loadModel; // 0x134
 		void * unknown_0x138;
 	};
+	static_assert(sizeof(ObjectVirtualTable) == 0x13C, "TES3::ObjectVirtualTable failed size validation");
 
 	struct BaseObject {
-		vtBaseObject * vTable; // 0x0
+		union {
+			BaseObjectVirtualTable * base;
+			ObjectVirtualTable * object;
+			ActorVirtualTable * actor;
+		} vTable; // 0x0
 		ObjectType::ObjectType objectType; // 0x4
 		int objectFlags; // 0x8
 		void * sourceMod; // 0xC
+
+		//
+		// Function wrappers for our virtual table.
+		//
+
+		int setObjectModified(unsigned char);
+		char * getObjectID();
+
 	};
 	static_assert(sizeof(BaseObject) == 0x10, "TES3::BaseObject failed size validation");
 
@@ -237,6 +263,50 @@ namespace TES3 {
 		Object * previousInCollection; // 0x1C
 		Object * nextInCollection; // 0x20
 		void * sceneGraphReference; // 0x24
+
+		//
+		// Function wrappers for our virtual table.
+		//
+
+		char * getName();
+		char * getIconPath();
+		char * getModelPath();
+		Script * getScript();
+		char * getRaceID();
+		char * getClassID();
+		char * getBirthsignID();
+		Race * getRace();
+		Class * getClass();
+		Faction * getFaction();
+		bool isFemale();
+		int getFactionRank();
+		int getLevel();
+		signed char setDispositionRaw(signed char);
+		int modDisposition(signed int);
+		int getFactionIndex();
+		signed char setFactionIndex(signed char);
+		int getDispositionRaw();
+		signed char modFactionIndex(signed char);
+		int getType();
+		char * getTypeName();
+		float getWeight();
+		int getValue();
+		void setDurability(int);
+		int getDurability();
+		int getMagicka();
+		int getFatigue();
+		float getQuality();
+		bool isLeftPartOfPair();
+		bool isEssential();
+		bool isRespawn();
+		int getUses();
+		Enchantment * getEnchantment();
+		Enchantment * setEnchantment(Enchantment*);
+		AIConfig * getAIConfig();
+		unsigned char getAutoCalc();
+		unsigned char setAutoCalc(unsigned char);
+		char* setModelPath(char*);
+		char* setName(char*);
 	};
 	static_assert(sizeof(Object) == 0x28, "TES3::Object failed size validation");
 

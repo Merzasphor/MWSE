@@ -5,17 +5,13 @@
 
 namespace TES3 {
 	struct Ingredient : PhysicalObject {
-		int unknown_0x30;
-		int unknown_0x34;
-		int unknown_0x38;
-		int unknown_0x3C;
-		int unknown_0x40;
+		Iterator<void> stolenList; // 0x30
 		char name[32]; // 0x44
 		char model[32]; // 0x64
-		char texture[32]; // 0x84
-		int unknown_0xA4;
-		int unknown_0xA8;
-		int unknown_0xAC;
+		Script * script; // 0x84
+		char texture[32]; // 0x88
+		float weight; // 0xA8
+		int value; // 0xAC
 		long effects[4]; // 0xB0
 		long effectSkillIds[4]; // 0xC0
 		long effectAttributeIds[4]; // 0xD0

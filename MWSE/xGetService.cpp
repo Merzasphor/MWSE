@@ -59,7 +59,7 @@ namespace mwse {
 		long mask = mwse::Stack::getInstance().popLong();
 
 		// Get the AI configuration from the NPC;
-		TES3::AIConfig* aiConfig = reference->baseObject->vTable->getAIConfig(reference->baseObject);
+		TES3::AIConfig* aiConfig = reference->baseObject->vTable.object->getAIConfig(reference->baseObject);
 		if (aiConfig) {
 			flags = aiConfig->merchantFlags & mask;
 		} else {

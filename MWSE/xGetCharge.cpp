@@ -78,7 +78,7 @@ namespace mwse
 			charge = varNode->enchantCharge;
 		}
 		else {
-			TES3::Enchantment* enchantment = object->vTable->getEnchantment(object);
+			TES3::Enchantment* enchantment = object->vTable.object->getEnchantment(object);
 			if (enchantment) {
 				charge = enchantment->maxCharge;
 			}

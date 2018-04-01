@@ -67,7 +67,7 @@ namespace mwse
 			return 0.0f;
 		}
 
-		mwse::Stack::getInstance().pushFloat(object->vTable->getQuality(object));
+		mwse::Stack::getInstance().pushFloat(object->vTable.object->getQuality(object));
 
 		return 0.0f;
 	}

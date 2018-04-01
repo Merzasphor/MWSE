@@ -18,11 +18,30 @@
     <ClInclude Include="D3DMaterial.h" />
     <ClInclude Include="D3DVector.h" />
     <ClInclude Include="D3DViewport.h" />
+    <ClInclude Include="DynamicLuaObject.h" />
+    <ClInclude Include="LuaManager.h" />
+    <ClInclude Include="LuaScript.h" />
+    <ClInclude Include="LuaUtil.h" />
+    <ClInclude Include="MemoryUtil.h" />
+    <ClInclude Include="sol.hpp" />
+    <ClInclude Include="sol_forward.hpp" />
+    <ClInclude Include="StackLua.h" />
+    <ClInclude Include="TES3ActionDataLua.h" />
     <ClInclude Include="TES3Activator.h" />
+    <ClInclude Include="TES3ActivatorLua.h" />
     <ClInclude Include="TES3Alchemy.h" />
+    <ClInclude Include="TES3AlchemyLua.h" />
     <ClInclude Include="TES3Apparatus.h" />
+    <ClInclude Include="TES3ApparatusLua.h" />
+    <ClInclude Include="TES3ArmorLua.h" />
+    <ClInclude Include="TES3BookLua.h" />
+    <ClInclude Include="TES3CellLua.h" />
     <ClInclude Include="TES3Class.h" />
+    <ClInclude Include="TES3ClassLua.h" />
+    <ClInclude Include="TES3ClothingLua.h" />
+    <ClInclude Include="TES3ContainerLua.h" />
     <ClInclude Include="TES3Creature.h" />
+    <ClInclude Include="TES3CreatureLua.h" />
     <ClInclude Include="TES3DataHandler.h" />
     <ClInclude Include="FileUtil.h" />
     <ClInclude Include="Flags.h" />
@@ -62,46 +81,78 @@
     <ClInclude Include="TES3Collections.h" />
     <ClInclude Include="TES3CombatSession.h" />
     <ClInclude Include="TES3Container.h" />
+    <ClInclude Include="TES3DataHandlerLua.h" />
     <ClInclude Include="TES3DialogueFilter.h" />
     <ClInclude Include="TES3DialogueInfo.h" />
     <ClInclude Include="TES3Door.h" />
+    <ClInclude Include="TES3DoorLua.h" />
     <ClInclude Include="TES3Enchantment.h" />
+    <ClInclude Include="TES3EnchantmentLua.h" />
     <ClInclude Include="TES3Faction.h" />
+    <ClInclude Include="TES3FactionLua.h" />
     <ClInclude Include="TES3Game.h" />
+    <ClInclude Include="TES3GameLua.h" />
     <ClInclude Include="TES3GameSetting.h" />
     <ClInclude Include="TES3GlobalVariable.h" />
     <ClInclude Include="TES3Ingredient.h" />
+    <ClInclude Include="TES3IngredientLua.h" />
     <ClInclude Include="TES3InputController.h" />
     <ClInclude Include="TES3Inventory.h" />
     <ClInclude Include="TES3Item.h" />
+    <ClInclude Include="TES3InventoryLua.h" />
     <ClInclude Include="TES3Light.h" />
+    <ClInclude Include="TES3LightLua.h" />
     <ClInclude Include="TES3Lockpick.h" />
+    <ClInclude Include="TES3LockpickLua.h" />
+    <ClInclude Include="TES3MagicEffectLua.h" />
+    <ClInclude Include="TES3MiscLua.h" />
+    <ClInclude Include="TES3MobileCreatureLua.h" />
     <ClInclude Include="TES3MobileNPC.h" />
+    <ClInclude Include="TES3MobileNPCLua.h" />
     <ClInclude Include="TES3MobilePlayer.h" />
     <ClInclude Include="TES3MobileCreature.h" />
     <ClInclude Include="TES3MobileActor.h" />
     <ClInclude Include="TES3MagicEffect.h" />
     <ClInclude Include="TES3Misc.h" />
+    <ClInclude Include="TES3MobilePlayerLua.h" />
+    <ClInclude Include="TES3Moon.h" />
+    <ClInclude Include="TES3MoonLua.h" />
     <ClInclude Include="TES3NPC.h" />
+    <ClInclude Include="TES3NPCLua.h" />
     <ClInclude Include="TES3Object.h" />
     <ClInclude Include="TES3Probe.h" />
+    <ClInclude Include="TES3ProbeLua.h" />
     <ClInclude Include="TES3Race.h" />
+    <ClInclude Include="TES3RaceLua.h" />
     <ClInclude Include="TES3Reference.h" />
     <ClInclude Include="TES3ReferenceList.h" />
+    <ClInclude Include="TES3ReferenceLua.h" />
+    <ClInclude Include="TES3Region.h" />
+    <ClInclude Include="TES3RegionLua.h" />
     <ClInclude Include="TES3RepairTool.h" />
+    <ClInclude Include="TES3RepairToolLua.h" />
     <ClInclude Include="TES3Script.h" />
     <ClInclude Include="TES3Skill.h" />
+    <ClInclude Include="TES3SkillLua.h" />
+    <ClInclude Include="TES3Sound.h" />
     <ClInclude Include="TES3Spell.h" />
     <ClInclude Include="TES3SpellInstance.h" />
     <ClInclude Include="TES3SpellList.h" />
+    <ClInclude Include="TES3SpellLua.h" />
     <ClInclude Include="TES3Statistic.h" />
+    <ClInclude Include="TES3StatisticLua.h" />
     <ClInclude Include="TES3Util.h" />
     <ClInclude Include="TES3Vectors.h" />
+    <ClInclude Include="TES3VectorsLua.h" />
     <ClInclude Include="TES3Weapon.h" />
+    <ClInclude Include="TES3WeaponLua.h" />
     <ClInclude Include="TES3WearablePart.h" />
     <ClInclude Include="TES3Weather.h" />
     <ClInclude Include="TES3WeatherController.h" />
+    <ClInclude Include="TES3WeatherControllerLua.h" />
+    <ClInclude Include="TES3WeatherLua.h" />
     <ClInclude Include="TES3WorldController.h" />
+    <ClInclude Include="TES3WorldControllerLua.h" />
     <ClInclude Include="VirtualMachine.h" />
     <ClInclude Include="VMExecuteInterface.h" />
     <ClInclude Include="VMHookInterface.h" />
@@ -110,10 +161,70 @@
     <ClCompile Include="ArrayUtil.cpp" />
     <ClCompile Include="CodePatchUtil.cpp" />
     <ClCompile Include="FileUtil.cpp" />
+    <ClCompile Include="LuaManager.cpp" />
+    <ClCompile Include="LuaUtil.cpp" />
+    <ClCompile Include="MemoryUtil.cpp" />
     <ClCompile Include="MgeVirtualMachine.cpp" />
     <ClCompile Include="MgeTes3Machine.cpp" />
     <ClCompile Include="RngUtil.cpp" />
     <ClCompile Include="ScriptUtil.cpp" />
+    <ClCompile Include="StackLua.cpp" />
+    <ClCompile Include="TES3ActionDataLua.cpp" />
+    <ClCompile Include="TES3ActivatorLua.cpp" />
+    <ClCompile Include="TES3Actor.cpp" />
+    <ClCompile Include="TES3ActorLua.cpp" />
+    <ClCompile Include="TES3AlchemyLua.cpp" />
+    <ClCompile Include="TES3ApparatusLua.cpp" />
+    <ClCompile Include="TES3Armor.cpp" />
+    <ClCompile Include="TES3ArmorLua.cpp" />
+    <ClCompile Include="TES3Book.cpp" />
+    <ClCompile Include="TES3BookLua.cpp" />
+    <ClCompile Include="TES3Cell.cpp" />
+    <ClCompile Include="TES3CellLua.cpp" />
+    <ClCompile Include="TES3Class.cpp" />
+    <ClCompile Include="TES3ClassLua.cpp" />
+    <ClCompile Include="TES3ClothingLua.cpp" />
+    <ClCompile Include="TES3Container.cpp" />
+    <ClCompile Include="TES3ContainerLua.cpp" />
+    <ClCompile Include="TES3CreatureLua.cpp" />
+    <ClCompile Include="TES3DataHandler.cpp" />
+    <ClCompile Include="TES3DataHandlerLua.cpp" />
+    <ClCompile Include="TES3DoorLua.cpp" />
+    <ClCompile Include="TES3EnchantmentLua.cpp" />
+    <ClCompile Include="TES3FactionLua.cpp" />
+    <ClCompile Include="TES3GameLua.cpp" />
+    <ClCompile Include="TES3IngredientLua.cpp" />
+    <ClCompile Include="TES3InventoryLua.cpp" />
+    <ClCompile Include="TES3Light.cpp" />
+    <ClCompile Include="TES3LightLua.cpp" />
+    <ClCompile Include="TES3LockpickLua.cpp" />
+    <ClCompile Include="TES3MagicEffectLua.cpp" />
+    <ClCompile Include="TES3MiscLua.cpp" />
+    <ClCompile Include="TES3MobileActor.cpp" />
+    <ClCompile Include="TES3MobileCreatureLua.cpp" />
+    <ClCompile Include="TES3MobileNPCLua.cpp" />
+    <ClCompile Include="TES3MobilePlayerLua.cpp" />
+    <ClCompile Include="TES3MoonLua.cpp" />
+    <ClCompile Include="TES3NPC.cpp" />
+    <ClCompile Include="TES3NPCLua.cpp" />
+    <ClCompile Include="TES3Object.cpp" />
+    <ClCompile Include="TES3ProbeLua.cpp" />
+    <ClCompile Include="TES3RaceLua.cpp" />
+    <ClCompile Include="TES3Reference.cpp" />
+    <ClCompile Include="TES3ReferenceLua.cpp" />
+    <ClCompile Include="TES3Region.cpp" />
+    <ClCompile Include="TES3RegionLua.cpp" />
+    <ClCompile Include="TES3RepairToolLua.cpp" />
+    <ClCompile Include="TES3SkillLua.cpp" />
+    <ClCompile Include="TES3SpellLua.cpp" />
+    <ClCompile Include="TES3Statistic.cpp" />
+    <ClCompile Include="TES3StatisticLua.cpp" />
+    <ClCompile Include="TES3VectorsLua.cpp" />
+    <ClCompile Include="TES3WeaponLua.cpp" />
+    <ClCompile Include="TES3WeatherControllerLua.cpp" />
+    <ClCompile Include="TES3WeatherLua.cpp" />
+    <ClCompile Include="TES3WorldControllerLua.cpp" />
+    <ClCompile Include="xLuaRunScript.cpp" />
     <ClCompile Include="xMyRef.cpp" />
     <ClCompile Include="StringUtil.cpp" />
     <ClCompile Include="TES3Util.cpp" />
@@ -381,15 +492,15 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)deps\boost;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)deps\boost;$(SolutionDir)deps\LuaJIT\src;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
-    <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(OutDir);$(SolutionDir)deps\LuaJIT\src;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)deps\boost;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)deps\boost;$(SolutionDir)deps\LuaJIT\src;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
-    <LibraryPath>$(OutDir);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(OutDir);$(SolutionDir)deps\LuaJIT\src;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -403,7 +514,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dbghelp.lib;lua51.lib;luajit.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <PostBuildEvent />
@@ -429,7 +540,7 @@ xcopy /y "$(TargetDir)MWSE.pdb" "$(SolutionDir)..\MWSE.pdb"</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>dbghelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dbghelp.lib;lua51.lib;luajit.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <PostBuildEvent />

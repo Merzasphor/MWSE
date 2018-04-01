@@ -130,12 +130,12 @@ namespace mwse {
 		if (node && node->data && node->data->object) {
 			TES3::Object* object = node->data->object;
 
-			id = object->vTable->getObjectID(object);
+			id = object->vTable.object->getObjectID(object);
 			count = node->data->count;
 			type = object->objectType;
-			value = object->vTable->getValue(object);
-			weight = object->vTable->getWeight(object);
-			name = object->vTable->getName(object);
+			value = object->vTable.object->getValue(object);
+			weight = object->vTable.object->getWeight(object);
+			name = object->vTable.object->getName(object);
 
 			// Get next node. Pass over any records that don't match the given filter.
 			next = node->next;
@@ -194,7 +194,7 @@ namespace mwse {
 		// If we're filtering by enchantment, verify that the record has one.
 		if (filter & FILTER_ENCH) {
 			try {
-				if (object->vTable->getEnchantment(object) == NULL) {
+				if (object->vTable.object->getEnchantment(object) == NULL) {
 					return false;
 				}
 			}

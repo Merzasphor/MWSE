@@ -30,6 +30,8 @@
 #include "CodePatchUtil.h"
 #include "MWSEDefs.h"
 
+#include "LuaManager.h"
+
 using namespace mwse;
 
 TES3MACHINE* mge_virtual_machine = NULL;
@@ -84,6 +86,9 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved)
 			mwse::log::getLog() << "Failed to detect Morrowind Code Patch installed features. MCP may not be installed, or the mcpatch\\installed file may have been deleted. Mods will be unable to detect MCP feature support." << std::endl;
 		}
 
+		// Hook Lua interface.
+		lua::LuaManager::getInstance().hook();
+
 		break;
 	case DLL_THREAD_ATTACH:
 		// Do thread-specific initialization.
@@ -92,7 +97,8 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved)
 		// Do thread-specific cleanup.
 		break;
 	case DLL_PROCESS_DETACH:
-		// Perform any necessary cleanup.
+		// Unhook Lua interface.
+		lua::LuaManager::getInstance().cleanup();
 		break;
 	}
 

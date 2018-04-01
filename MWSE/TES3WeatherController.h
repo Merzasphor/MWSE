@@ -1,5 +1,6 @@
 #pragma once
 
+#include "TES3Object.h"
 #include "TES3Vectors.h"
 
 namespace TES3 {
@@ -9,11 +10,11 @@ namespace TES3 {
 		int unknown_0x8;
 		int daysRemaining;
 		char unknown_0x10;
-		void * arrayWeathers[10];
-		void * currentWeather;
-		void * nextWeather;
-		int unknown_0x44;
-		int unknown_0x48;
+		Weather * arrayWeathers[10];
+		Weather * currentWeather;
+		Weather * nextWeather;
+		Moon * moonSecunda;
+		Moon * moonMasser;
 		void * unknown_0x4C;
 		int unknown_0x50;
 		int unknown_0x54;
@@ -88,7 +89,7 @@ namespace TES3 {
 		int unknown_0x168;
 		int hoursBetweenWeatherChanges;
 		float transitionScalar;
-		int unknown_0x174;
+		float hoursRemaining;
 		int unknown_0x178;
 		int unknown_0x17C;
 		int unknown_0x180;

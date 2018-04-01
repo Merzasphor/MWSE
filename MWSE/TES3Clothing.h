@@ -3,8 +3,6 @@
 #include "TES3Item.h"
 #include "TES3WearablePart.h"
 
-#include <type_traits>
-
 namespace TES3 {
 	namespace ClothingSlot {
 		enum ClothingSlot {
@@ -27,7 +25,7 @@ namespace TES3 {
 		float weight; // 0xAC
 		short value; // 0xB0
 		short enchantCapacity; // 0xB2
-		void * enchantment; // 0xB4
+		Enchantment * enchantment; // 0xB4
 	};
 	static_assert(sizeof(Clothing) == 0xB8, "TES3::Clothing failed size validation");
 }

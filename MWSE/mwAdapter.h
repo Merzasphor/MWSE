@@ -22,38 +22,12 @@
 #pragma once
 
 #include <windows.h>
+#include "MemoryUtil.h"
 
-namespace mwse
-{
+namespace mwse {
 	class VirtualMachine;
 
-	namespace mwAdapter
-	{
-		// Container for registers, flags, and other information to help with the
-		// native to MWSE code bridge.
-		struct Context_t
-		{
-			// General registers.
-			DWORD eax;
-			DWORD ebx;
-			DWORD ecx;
-			DWORD edx;
-
-			// String operators.
-			DWORD esi;
-			DWORD edi;
-
-			// Stack.
-			DWORD ebp;
-			DWORD esp;
-
-			// Flags (cmp, test).
-			DWORD flags;
-
-			// Address to return to.
-			DWORD callbackAddress;
-		};
-
+	namespace mwAdapter {
 		void Hook();
 
 		VirtualMachine* GetVMInstance();

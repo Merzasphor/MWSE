@@ -29,6 +29,13 @@ namespace TES3 {
 		int enchantCapacity; // 0xB8
 		int armorRating; // 0xBC
 		void * enchantment; // 0xC0
+
+		//
+		// Other related this-call functions.
+		//
+
+		int getWeightClass();
+
 	};
 	static_assert(sizeof(Armor) == 0xC4, "TES3::Armor failed size validation");
 }

@@ -35,8 +35,8 @@ namespace mwse
 	{
 	public:
 		VirtualMachine();
-		virtual float executeOperation(OpCode::OpCode_t opcode, mwAdapter::Context_t &context, TES3::Script* script);
-		virtual void loadParametersForOperation(OpCode::OpCode_t opcode, mwAdapter::Context_t &context, TES3::Script* script);
+		virtual float executeOperation(OpCode::OpCode_t opcode, HookContext &context, TES3::Script* script);
+		virtual void loadParametersForOperation(OpCode::OpCode_t opcode, HookContext &context, TES3::Script* script);
 		virtual bool isOpcode(const OpCode::OpCode_t opcode);
 		virtual long* getScriptIP();
 
@@ -90,7 +90,7 @@ namespace mwse
 		// Debug method to print information about the current script.
 		virtual void dumpScriptVariables();
 
-		mwAdapter::Context_t context;
+		HookContext context;
 
 		TES3::Script& getScript();
 
@@ -100,8 +100,8 @@ namespace mwse
 		void setScript(TES3::Script* script);
 		
 		// Current context (registers, etc).
-		mwAdapter::Context_t getContext();
-		void setContext(mwAdapter::Context_t context);
+		HookContext getHookContext();
+		void setHookContext(HookContext context);
 
 		long *mwScriptIP;
 
