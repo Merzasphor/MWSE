@@ -139,6 +139,9 @@
     <Filter Include="Source Files\DataAdapters\TES3">
       <UniqueIdentifier>{e7548b0d-dee0-4eb0-ba9f-eb68c6fcc75f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Functions\Lua">
+      <UniqueIdentifier>{b9bc6abb-6f06-41bd-94e9-8870580495e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Flags.h">
@@ -572,6 +575,9 @@
     </ClInclude>
     <ClInclude Include="TES3Sound.h">
       <Filter>Header Files\DataAdapters\TES3\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="StackLua.h">
+      <Filter>Header Files\Lua\Bindings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1453,6 +1459,12 @@
     </ClCompile>
     <ClCompile Include="TES3MobileActor.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="xLuaRunScript.cpp">
+      <Filter>Source Files\Functions\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="StackLua.cpp">
+      <Filter>Source Files\Lua\Bindings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

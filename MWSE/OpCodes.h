@@ -623,6 +623,7 @@ namespace mwse {
 			xKeyPressed = 0x3F00,
 			xLogMessage = 0x3C09,
 			xLongToFloats = 0x3923,
+			xLuaRunScript = 0x3FB0,
 			xMessageFix = 0x3F7E,
 			xModAttribute = 0x3953,
 			xModProgressLevel = 0x3930,

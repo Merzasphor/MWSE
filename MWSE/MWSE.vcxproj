@@ -25,6 +25,7 @@
     <ClInclude Include="MemoryUtil.h" />
     <ClInclude Include="sol.hpp" />
     <ClInclude Include="sol_forward.hpp" />
+    <ClInclude Include="StackLua.h" />
     <ClInclude Include="TES3ActionDataLua.h" />
     <ClInclude Include="TES3Activator.h" />
     <ClInclude Include="TES3ActivatorLua.h" />
@@ -167,6 +168,7 @@
     <ClCompile Include="MgeTes3Machine.cpp" />
     <ClCompile Include="RngUtil.cpp" />
     <ClCompile Include="ScriptUtil.cpp" />
+    <ClCompile Include="StackLua.cpp" />
     <ClCompile Include="TES3ActionDataLua.cpp" />
     <ClCompile Include="TES3ActivatorLua.cpp" />
     <ClCompile Include="TES3Actor.cpp" />
@@ -222,6 +224,7 @@
     <ClCompile Include="TES3WeatherControllerLua.cpp" />
     <ClCompile Include="TES3WeatherLua.cpp" />
     <ClCompile Include="TES3WorldControllerLua.cpp" />
+    <ClCompile Include="xLuaRunScript.cpp" />
     <ClCompile Include="xMyRef.cpp" />
     <ClCompile Include="StringUtil.cpp" />
     <ClCompile Include="TES3Util.cpp" />

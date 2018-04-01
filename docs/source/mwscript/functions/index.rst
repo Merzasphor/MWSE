@@ -12,6 +12,7 @@ Below is a categorized list of functions added to Morrowind's scripting language
    file/index
    iteration/index
    logic/index
+   lua/index
    magic/index
    math/index
    player/index

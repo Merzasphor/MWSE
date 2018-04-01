@@ -16,6 +16,7 @@
 #include "TES3WorldController.h"
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
+#include "StackLua.h"
 #include "TES3ActionDataLua.h"
 #include "TES3ActivatorLua.h"
 #include "TES3AlchemyLua.h"
@@ -127,7 +128,11 @@ namespace mwse {
 				"reference", sol::readonly(&LuaScript::reference)
 				);
 
+			// Create the base of our mwse API table.
+			luaState["mwse"] = luaState.create_table();
+
 			// Bind data types.
+			bindMWSEStack();
 			bindTES3ActionData();
 			bindTES3Activator();
 			bindTES3Alchemy();
