@@ -17,7 +17,7 @@ This function returns the **name** of an attribute, given its **id**.
 Examples
 --------------------------------------------------------
 
-::
+.. code-block:: lua
 
   -- Print out the names of each attribute.
   for i = 0, 7 do

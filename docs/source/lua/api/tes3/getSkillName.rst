@@ -17,7 +17,7 @@ This function returns the **name** of an skill, given its **id**.
 Examples
 --------------------------------------------------------
 
-::
+.. code-block:: lua
 
   -- Print out the names of each skill.
   for i = 0, 26 do

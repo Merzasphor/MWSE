@@ -17,7 +17,7 @@ This function returns the **name** of an specialization, given its **type**.
 Examples
 --------------------------------------------------------
 
-::
+.. code-block:: lua
 
   -- Print out the names of each specialization.
   for i = 0, 2 do
