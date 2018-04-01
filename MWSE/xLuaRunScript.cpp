@@ -25,6 +25,8 @@
 
 #include "LuaManager.h"
 
+#include "TES3Script.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -55,7 +57,14 @@ namespace mwse
 
 		// Run the script.
 		sol::state& state = lua::LuaManager::getInstance().getState();
-		state.script_file(path);
+		auto result = state.safe_script_file(path);
+		if (!result.valid()) {
+			sol::error error = result;
+			log::getLog() << "Lua error encountered when executing script '" << virtualMachine.getScript().name << "':" << std::endl << error.what() << std::endl;
+
+			// Clear the stack, since we can't trust what the script did or did not do.
+			mwse::Stack::getInstance().clear();
+		}
 
 		return 0.0f;
 	}
