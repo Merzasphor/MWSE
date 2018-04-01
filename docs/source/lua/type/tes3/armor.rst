@@ -119,4 +119,4 @@ Slot Name
 .. _`Reference`: reference.html
 .. _`Script`: script.html
 
-.. _`Object Type`: ../../../../mwscript/references.html#object-types
+.. _`Object Type`: ../../../mwscript/references.html#object-types

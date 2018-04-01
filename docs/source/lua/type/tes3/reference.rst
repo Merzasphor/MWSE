@@ -69,4 +69,4 @@ Attachments are how reference distinguish themselves.
 
 .. _`Vector3`: vector3.html
 
-.. _`Object Type`: ../../../../mwscript/references.html#object-types
+.. _`Object Type`: ../../../mwscript/references.html#object-types
