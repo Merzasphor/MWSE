@@ -168,57 +168,6 @@ namespace mwse {
 			bindTES3Weather();
 			bindTES3WeatherController();
 			bindTES3WorldController();
-
-			// Bind function: GetPlayerRef
-			luaState["GetPlayerRef"] = []() {
-				TES3::MobilePlayer* mobilePlayer = NULL;
-
-				static int getMACP = TES3_FUNC_GET_MACP;
-				_asm
-				{
-					mov ecx, dword ptr ds : [TES3_WORLD_CONTROLLER_IMAGE];
-					call getMACP;
-					mov mobilePlayer, eax;
-				}
-
-				return mobilePlayer->reference;
-			};
-
-			// Bind function: GetPlayerCell()
-			luaState["GetPlayerCell"] = []() {
-				return tes3::getDataHandler()->currentCell;
-			};
-
-			// Bind function: GetGame
-			luaState["GetGame"] = []() {
-				return tes3::getGame();
-			};
-
-			// Bind function: GetDataHandler
-			luaState["GetDataHandler"] = []() {
-				return tes3::getDataHandler();
-			};
-
-			// Bind function: GetGame
-			luaState["GetWorldController"] = []() {
-				return tes3::getWorldController();
-			};
-
-			// Bind function: GetPlayerTarget
-			luaState["GetPlayerTarget"] = []() {
-				return tes3::getGame()->playerTarget;
-			};
-
-			// Bind function: GetObject
-			luaState["GetObject"] = [](std::string& id, TES3::ObjectType::ObjectType type) {
-				TES3::BaseObject* object = tes3::getObjectByID<TES3::BaseObject>(id, type);
-				return makeLuaObject(tes3::getObjectByID<TES3::BaseObject>(id, (TES3::ObjectType::ObjectType)type));
-			};
-
-			// Bind function: GetScript
-			luaState["GetScript"] = [](std::string& id) {
-				return tes3::getScript(id);
-			};
 		}
 
 		// Locates the file of the script being initialized. If it finds one, it maps this
@@ -545,6 +494,61 @@ namespace mwse {
 				sol::error err = result;
 				log::getLog() << "ERROR: Failed to initialize MWSE Lua interface. Error encountered when executing mwse_init.lua:\n" << err.what() << std::endl;
 			}
+
+			//
+			// Extend tes3 library with extra functions.
+			//
+
+			// Bind function: GetPlayerRef
+			luaState["tes3"]["getPlayerRef"] = []() {
+				TES3::MobilePlayer* mobilePlayer = NULL;
+
+				static int getMACP = TES3_FUNC_GET_MACP;
+				_asm
+				{
+					mov ecx, dword ptr ds : [TES3_WORLD_CONTROLLER_IMAGE];
+					call getMACP;
+					mov mobilePlayer, eax;
+				}
+
+				return mobilePlayer->reference;
+			};
+
+			// Bind function: GetPlayerCell()
+			luaState["tes3"]["getPlayerCell"] = []() {
+				return tes3::getDataHandler()->currentCell;
+			};
+
+			// Bind function: GetGame
+			luaState["tes3"]["getGame"] = []() {
+				return tes3::getGame();
+			};
+
+			// Bind function: GetDataHandler
+			luaState["tes3"]["getDataHandler"] = []() {
+				return tes3::getDataHandler();
+			};
+
+			// Bind function: GetGame
+			luaState["tes3"]["getWorldController"] = []() {
+				return tes3::getWorldController();
+			};
+
+			// Bind function: GetPlayerTarget
+			luaState["tes3"]["getPlayerTarget"] = []() {
+				return tes3::getGame()->playerTarget;
+			};
+
+			// Bind function: GetObject
+			luaState["tes3"]["getObject"] = [](std::string& id, TES3::ObjectType::ObjectType type) {
+				TES3::BaseObject* object = tes3::getObjectByID<TES3::BaseObject>(id, type);
+				return makeLuaObject(tes3::getObjectByID<TES3::BaseObject>(id, (TES3::ObjectType::ObjectType)type));
+			};
+
+			// Bind function: GetScript
+			luaState["tes3"]["getScript"] = [](std::string& id) {
+				return tes3::getScript(id);
+			};
 
 			DWORD OldProtect;
 
