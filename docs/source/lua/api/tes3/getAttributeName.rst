@@ -8,7 +8,7 @@ tes3.getAttributeName
 
 **Returned:**
 
-- ``string`` **name**: The name of the attribute.
+- ``string`` **name**: The name of the attribute, or *invalid* if the **id** is invalid.
 
 This function returns the **name** of an attribute, given its **id**.
 
