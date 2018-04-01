@@ -231,7 +231,7 @@ namespace mwse {
 			TES3::Script* script = reinterpret_cast<TES3::Script*>(context.edi);
 
 			// Build up the desired path and check to see if the file exists.
-			std::string luaPath = "Data Files\\MWSE\\lua\\";
+			std::string luaPath = "Data Files\\MWSE\\lua\\overrides\\";
 			luaPath.append(script->name);
 			luaPath.append(".lua");
 			if (INVALID_FILE_ATTRIBUTES == GetFileAttributes(luaPath.c_str()) && GetLastError() == ERROR_FILE_NOT_FOUND) {
