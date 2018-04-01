@@ -17,7 +17,7 @@ namespace mwse {
 				// Properties.
 				//
 
-				"objectType", &TES3::Armor::objectType,
+				"objectType", sol::readonly_property(&TES3::Armor::objectType),
 
 				"id", sol::readonly_property(&TES3::Armor::getObjectID),
 				"name", sol::property(&TES3::Armor::getName, &TES3::Armor::setName),

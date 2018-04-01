@@ -12,7 +12,7 @@ Properties
 
 armorRating
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Number`_. The unadjusted, raw armor rating for the item.
+`Number`_. The unadjusted, raw armor rating for the item. This does not take into account the wearer's skills or GMSTs.
 
 enchantCapacity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -36,7 +36,7 @@ id
 
 isLeftPart
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Boolean. Read-only. For gauntlets, bracers, and pauldrons, this will return true if it is the left slot. This is functionally identical to checking to see if **slot** is 2, 6, or 9. Both right parts and slots that are not mirrored both return false.
+`Boolean`_. Read-only. For gauntlets, bracers, and pauldrons, this will return true if it is the left slot. This is functionally identical to checking to see if **slot** is 2, 6, or 9. Both right parts and slots that are not mirrored both return false.
 
 model
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
