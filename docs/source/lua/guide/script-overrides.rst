@@ -35,7 +35,7 @@ Create Lua File
 
 With a basic Morrowind script created, we can now create an override for it. When the game is initially loading, Morrowind Script Extender locates any Lua files that match the name of loading scripts.
 
-To cause a Lua file to execute instead of the vanilla Morrowind script, place a Lua file in the *Data Files\\MWSE\\lua* folder. The name of the file must exactly match the name of the script. So for to overwrite our script defined above, we would need to create *Data Files\\MWSE\\lua\\TestLuaScript.lua*.
+To cause a Lua file to execute instead of the vanilla Morrowind script, place a Lua file in the *Data Files\\MWSE\\lua\\overrides* folder. The name of the file must exactly match the name of the script. So for to overwrite our script defined above, we would need to create *Data Files\\MWSE\\lua\\overrides\\TestLuaScript.lua*.
 
 The contents of the file should begin with the following template:
 
@@ -46,7 +46,7 @@ The contents of the file should begin with the following template:
   -- Called once, when the script has been hooked into the system.
   -- This happens before the main menu is reached.
   function this:initialized()
-      
+      print("I initialized!")
   end
   
   -- Called every time the mwscript would normally execute.
