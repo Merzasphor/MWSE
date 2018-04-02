@@ -529,37 +529,42 @@ namespace mwse {
 				return mobilePlayer->reference;
 			};
 
-			// Bind function: GetPlayerCell()
+			// Bind function: tes3.getPlayerCell()
 			luaState["tes3"]["getPlayerCell"] = []() {
 				return tes3::getDataHandler()->currentCell;
 			};
 
-			// Bind function: GetGame
+			// Bind function: tes3.getGame
 			luaState["tes3"]["getGame"] = []() {
 				return tes3::getGame();
 			};
 
-			// Bind function: GetDataHandler
+			// Bind function: tes3.getDataHandler
 			luaState["tes3"]["getDataHandler"] = []() {
 				return tes3::getDataHandler();
 			};
 
-			// Bind function: GetGame
+			// Bind function: tes3.getGame
 			luaState["tes3"]["getWorldController"] = []() {
 				return tes3::getWorldController();
 			};
 
-			// Bind function: GetPlayerTarget
+			// Bind function: tes3.getPlayerTarget
 			luaState["tes3"]["getPlayerTarget"] = []() {
 				return tes3::getGame()->playerTarget;
 			};
 
-			// Bind function: GetObject
+			// Bind function: tes3.getReference
+			luaState["tes3"]["getReference"] = [](std::string& id) {
+				return tes3::getReference(id);
+			};
+
+			// Bind function: tes3.getObject
 			luaState["tes3"]["getObject"] = [](std::string& id, TES3::ObjectType::ObjectType type) {
 				return makeLuaObject(tes3::getObjectByID<TES3::BaseObject>(id, type));
 			};
 
-			// Bind function: GetScript
+			// Bind function: tes3.getScript
 			luaState["tes3"]["getScript"] = [](std::string& id) {
 				return tes3::getScript(id);
 			};

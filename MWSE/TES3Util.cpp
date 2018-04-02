@@ -53,6 +53,50 @@ namespace mwse {
 			return getGlobalRecord(id.c_str());
 		}
 
+		TES3::Reference* getReference(const char* id) {
+			size_t * secondobject_image_length = reinterpret_cast<size_t*>(TES3_SECONDOBJECT_LENGTH_IMAGE);
+			*secondobject_image_length = strlen(id);
+
+			char * secondobject_image = reinterpret_cast<char*>(TES3_SECONDOBJECT_IMAGE);
+			strcpy(secondobject_image, id);
+
+			long returnreference;
+
+			bool isplayer = !_stricmp(id, "player") || !_stricmp(id, "playersavegame");
+			if (isplayer)
+			{
+				//fixupplayer
+				static int getMACP = TES3_FUNC_GET_MACP;
+				_asm
+				{
+					mov ecx, dword ptr ds : [TES3_WORLD_CONTROLLER_IMAGE];
+					call getMACP;
+					mov edx, [eax + 0x14];
+					mov returnreference, edx;
+				}
+			}
+			else
+			{
+				static int fixupInstanceFunction = TES3_FUNC_FIXUP_INSTANCE;
+				//fixupinstance
+				_asm
+				{
+					mov ecx, dword ptr ds : [TES3_DATA_HANDLER_IMAGE];
+					mov ecx, [ecx];
+					push TES3_SECONDOBJECT_IMAGE;
+					call fixupInstanceFunction;
+					mov returnreference, eax;
+				}
+			}
+
+			TES3::Reference * reference = reinterpret_cast<TES3::Reference*>(returnreference);
+			return reference;
+		}
+
+		TES3::Reference* getReference(std::string& id) {
+			return getReference(id.c_str());
+		}
+
 		TES3::BaseObject* getTemplate(const char *id) {
 			TES3::RecordLists * recordLists = tes3::getDataHandler()->recordLists;
 

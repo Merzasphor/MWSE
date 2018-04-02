@@ -38,6 +38,9 @@ namespace mwse {
 		TES3::DataHandler * getDataHandler();
 		TES3::Game * getGame();
 
+		TES3::Reference* getReference(const char* id);
+		TES3::Reference* getReference(std::string& id);
+
 		TES3::GlobalVariable* getGlobalRecord(const char* id);
 		TES3::GlobalVariable* getGlobalRecord(const std::string& id);
 
