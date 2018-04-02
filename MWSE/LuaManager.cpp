@@ -199,8 +199,7 @@ namespace mwse {
 			std::string luaPath = "Data Files\\MWSE\\lua\\overrides\\";
 			luaPath.append(script->name);
 			luaPath.append(".lua");
-			if (INVALID_FILE_ATTRIBUTES == GetFileAttributes(luaPath.c_str()) && GetLastError() == ERROR_FILE_NOT_FOUND) {
-				// File doesn't exist. Bail out.
+			if (GetFileAttributes(luaPath.c_str()) == INVALID_FILE_ATTRIBUTES) {
 				return;
 			}
 
