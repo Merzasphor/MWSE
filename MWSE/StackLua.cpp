@@ -43,23 +43,48 @@ namespace mwse {
 			//
 
 			state["mwse"]["stack"]["popShort"] = []() {
-				return Stack::getInstance().popShort();
+				Stack& stack = Stack::getInstance();
+				sol::optional<short> maybe_ret;
+				if (!stack.empty()) {
+					maybe_ret = stack.popShort();
+				}
+				return maybe_ret;
 			};
 
 			state["mwse"]["stack"]["popLong"] = []() {
-				return Stack::getInstance().popLong();
+				Stack& stack = Stack::getInstance();
+				sol::optional<long> maybe_ret;
+				if (!stack.empty()) {
+					maybe_ret = stack.popLong();
+				}
+				return maybe_ret;
 			};
 
 			state["mwse"]["stack"]["popFloat"] = []() {
-				return Stack::getInstance().popFloat();
+				Stack& stack = Stack::getInstance();
+				sol::optional<float> maybe_ret;
+				if (!stack.empty()) {
+					maybe_ret = stack.popFloat();
+				}
+				return maybe_ret;
 			};
 
 			state["mwse"]["stack"]["popString"] = []() {
-				return mwAdapter::GetVMInstance()->getString(Stack::getInstance().popLong()).c_str();
+				Stack& stack = Stack::getInstance();
+				sol::optional<std::string> maybe_ret;
+				if (!stack.empty()) {
+					maybe_ret = mwAdapter::GetVMInstance()->getString(Stack::getInstance().popLong());
+				}
+				return maybe_ret;
 			};
 
 			state["mwse"]["stack"]["popObject"] = []() {
-				return lua::makeLuaObject(reinterpret_cast<TES3::BaseObject*>(Stack::getInstance().popLong()));
+				Stack& stack = Stack::getInstance();
+				sol::optional<sol::object> maybe_ret;
+				if (!stack.empty()) {
+					maybe_ret = lua::makeLuaObject(reinterpret_cast<TES3::BaseObject*>(Stack::getInstance().popLong()));
+				}
+				return maybe_ret;
 			};
 
 			//
