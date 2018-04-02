@@ -103,6 +103,10 @@ namespace mwse {
 				Stack::getInstance().clear();
 			};
 
+			state["mwse"]["stack"]["dump"] = []() {
+				Stack::getInstance().dump();
+			};
+
 		}
 	}
 }
