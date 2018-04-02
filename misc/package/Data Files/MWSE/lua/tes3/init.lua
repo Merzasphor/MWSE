@@ -22,15 +22,15 @@ tes3.WeaponType = require("tes3.WeaponType")
 -------------------------------------------------
 
 function tes3.getAttributeName(attributeId)
-    return AttributeName[attributeId] or "Invalid"
+    return tes3.AttributeName[attributeId] or "Invalid"
 end
 
 function tes3.getSkillName(skillId)
-    return SkillName[skillId] or "Invalid"
+    return tes3.SkillName[skillId] or "Invalid"
 end
 
 function tes3.getSpecializationName(specializationId)
-    return SpecializationName[specializationId] or "Invalid"
+    return tes3.SpecializationName[specializationId] or "Invalid"
 end
 
 return tes3
