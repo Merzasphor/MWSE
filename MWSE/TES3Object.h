@@ -164,7 +164,7 @@ namespace TES3 {
 
 	struct ObjectVirtualTable : BaseObjectVirtualTable {
 		void * copyEntity;
-		void * setID;
+		void (__thiscall * setID)(BaseObject*, const char*); // 0x10C
 		void * getVisualNode;
 		void * unknown_0x30;
 		void * unknown_0x34;
@@ -221,7 +221,7 @@ namespace TES3 {
 		void * unknown_0x100;
 		void * unknown_0x104;
 		void * isLocationMarker; // 0x108
-		char* (__thiscall * setName)(BaseObject*, char*); // 0x10C
+		char* (__thiscall * setName)(BaseObject*, const char*); // 0x10C
 		void * unknown_0x110;
 		void * unknown_0x114;
 		void * unknown_0x118;
@@ -268,6 +268,7 @@ namespace TES3 {
 		// Function wrappers for our virtual table.
 		//
 
+		void setID(const char*);
 		char * getName();
 		char * getIconPath();
 		char * getModelPath();
@@ -306,7 +307,7 @@ namespace TES3 {
 		unsigned char getAutoCalc();
 		unsigned char setAutoCalc(unsigned char);
 		char* setModelPath(char*);
-		char* setName(char*);
+		char* setName(const char*);
 	};
 	static_assert(sizeof(Object) == 0x28, "TES3::Object failed size validation");
 

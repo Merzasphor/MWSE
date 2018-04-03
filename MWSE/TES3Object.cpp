@@ -9,6 +9,10 @@ namespace TES3 {
 		return vTable.base->getObjectID(this);
 	}
 
+	void Object::setID(const char* id) {
+		vTable.object->setID(this, id);
+	}
+
 	char* Object::getName() {
 		return vTable.object->getName(this);
 	}
@@ -161,7 +165,7 @@ namespace TES3 {
 		return vTable.object->setModelPath(this, path);
 	}
 
-	char* Object::setName(char* name) {
+	char* Object::setName(const char* name) {
 		return vTable.object->setName(this, name);
 	}
 
