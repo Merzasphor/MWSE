@@ -17,6 +17,7 @@
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
 #include "StackLua.h"
+#include "ScriptUtilLua.h"
 #include "TES3ActionDataLua.h"
 #include "TES3ActivatorLua.h"
 #include "TES3AlchemyLua.h"
@@ -139,11 +140,13 @@ namespace mwse {
 				"reference", sol::readonly(&LuaScript::reference)
 				);
 
-			// Create the base of our mwse API table.
+			// Create the base of API tables.
 			luaState["mwse"] = luaState.create_table();
+			luaState["mwscript"] = luaState.create_table();
 
 			// Bind data types.
 			bindMWSEStack();
+			bindScriptUtil();
 			bindTES3ActionData();
 			bindTES3Activator();
 			bindTES3Alchemy();
@@ -208,6 +211,9 @@ namespace mwse {
 			try {
 				LuaManager& luaManager = LuaManager::getInstance();
 				sol::state& state = luaManager.getState();
+
+				// Set lua-side context for script. Reference is null here.
+				luaManager.setCurrentScript(script);
 
 				sol::table scriptModule = state.script_file(luaPath);
 				if (!scriptModule.valid()) {
@@ -303,6 +309,11 @@ namespace mwse {
 			LuaScript* luaScript = searchResult->second.as<LuaScript*>();
 			luaScript->reference = *reinterpret_cast<TES3::Reference**>(TES3_SCRIPTTARGETREF_IMAGE);
 			currentOverwrittenScript = luaScript;
+
+			// Update the internal LuaManager script/reference for ambiguous calls.
+			LuaManager& luaManager = LuaManager::getInstance();
+			luaManager.setCurrentScript(script);
+			luaManager.setCurrentReference(luaScript->reference);
 
 			// Call the script in a protected state.
 			sol::protected_function execute = searchResult->second["execute"];
@@ -600,6 +611,22 @@ namespace mwse {
 			// Clean up our handles to our override tables. Helps to prevent a crash when
 			// closing mid-execution.
 			scriptOverrides.clear();
+		}
+
+		TES3::Script* LuaManager::getCurrentScript() {
+			return currentScript;
+		}
+
+		void LuaManager::setCurrentScript(TES3::Script* script) {
+			currentScript = script;
+		}
+
+		TES3::Reference* LuaManager::getCurrentReference() {
+			return currentReference;
+		}
+
+		void LuaManager::setCurrentReference(TES3::Reference* reference) {
+			currentReference = reference;
 		}
 	}
 }

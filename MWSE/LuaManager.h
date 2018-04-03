@@ -26,6 +26,12 @@ namespace mwse {
 			// Performs cleanup to safely detach the DLL.
 			void cleanup();
 
+			// Set context for lua scripts.
+			TES3::Script* getCurrentScript();
+			void setCurrentScript(TES3::Script*);
+			TES3::Reference* getCurrentReference();
+			void setCurrentReference(TES3::Reference*);
+
 		private:
 			LuaManager();
 
@@ -37,6 +43,10 @@ namespace mwse {
 
 			// 
 			sol::state luaState;
+
+			//
+			TES3::Script* currentScript = NULL;
+			TES3::Reference* currentReference = NULL;
 		};
 	}
 }

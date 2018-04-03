@@ -55,8 +55,13 @@ namespace mwse
 		path += scriptName;
 		path += ".lua";
 
+		// Update the LuaManager to reference our current context.
+		lua::LuaManager& manager = lua::LuaManager::getInstance();
+		manager.setCurrentReference(virtualMachine.getReference());
+		manager.setCurrentScript(&virtualMachine.getScript());
+
 		// Run the script.
-		sol::state& state = lua::LuaManager::getInstance().getState();
+		sol::state& state = manager.getState();
 		auto result = state.safe_script_file(path);
 		if (!result.valid()) {
 			sol::error error = result;

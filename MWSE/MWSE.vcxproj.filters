@@ -579,6 +579,9 @@
     <ClInclude Include="StackLua.h">
       <Filter>Header Files\Lua\Bindings</Filter>
     </ClInclude>
+    <ClInclude Include="ScriptUtilLua.h">
+      <Filter>Header Files\Lua\Bindings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1464,6 +1467,9 @@
       <Filter>Source Files\Functions\Lua</Filter>
     </ClCompile>
     <ClCompile Include="StackLua.cpp">
+      <Filter>Source Files\Lua\Bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptUtilLua.cpp">
       <Filter>Source Files\Lua\Bindings</Filter>
     </ClCompile>
   </ItemGroup>
