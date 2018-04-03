@@ -90,13 +90,9 @@ namespace mwse
 		newSpell->owningCollection = spellsList;
 		newSpell->magickaCost = 1;
 
-		// Set ID.
-		newSpell->objectID = tes3::malloc<char>(spellId.length() + 1);
-		strcpy(newSpell->objectID, spellId.c_str());
-
-		// Set name.
-		newSpell->name = tes3::malloc<char>(spellName.length() + 1);
-		strcpy(newSpell->name, spellName.c_str());
+		// Set ID/name.
+		newSpell->setID(spellId.c_str());
+		newSpell->setName(spellName.c_str());
 
 		// Set effects.
 		for (int i = 0; i < 8; i++) {
@@ -107,7 +103,7 @@ namespace mwse
 		tes3::setEffect(newSpell->effects, 1, TES3::EffectID::WaterBreathing, TES3::SkillID::Invalid, TES3::EffectRange::Self, 0, 1, 0, 0);
 
 		// Add object to the game.
-		tes3::addObject(reinterpret_cast<TES3::BaseObject*>(newSpell));
+		tes3::addObject(newSpell);
 
 		Stack::getInstance().pushLong(true);
 
