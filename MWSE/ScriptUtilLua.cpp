@@ -25,7 +25,7 @@ namespace mwse {
 
 		TES3::Reference* getReferenceParam(sol::table params) {
 			TES3::Reference* reference = NULL;
-			sol::object maybe = params["script"];
+			sol::object maybe = params["reference"];
 			if (maybe.valid() && maybe.is<TES3::Reference*>()) {
 				reference = maybe.as<TES3::Reference*>();
 			}
@@ -73,7 +73,7 @@ namespace mwse {
 			};
 
 			state["mwscript"]["addItem"] = [](sol::table params) {
-				TES3::Script* script = getScriptParam(params);
+ 				TES3::Script* script = getScriptParam(params);
 				TES3::Reference* reference = getReferenceParam(params);
 
 				// Resolve item.
