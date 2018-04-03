@@ -123,7 +123,7 @@ namespace mwse {
 				return true;
 			};
 
-			state["mwscript"]["placeAtPC"] = [](sol::table params) {
+			state["mwscript"]["placeAtPC"] = [](sol::table params) -> TES3::Reference* {
 				TES3::Script* script = getScriptParam(params);
 				TES3::Reference* reference = getReferenceParam(params);
 
@@ -138,7 +138,7 @@ namespace mwse {
 				}
 
 				if (object == NULL) {
-					return std::tuple<bool, TES3::Reference*>(false, NULL);
+					return NULL;
 				}
 
 				// Resolve count.
@@ -150,7 +150,7 @@ namespace mwse {
 
 				// Resolve count.
 				sol::object distanceParam = params["distance"];
-				float distance = 1;
+				float distance = 256.0f;
 				if (distanceParam.is<double>()) {
 					distance = distanceParam.as<double>();
 				}
@@ -163,7 +163,7 @@ namespace mwse {
 				}
 
 				mwscript::PlaceAtPC(script, reference, object, count, distance, direction);
-				return std::tuple<bool, TES3::Reference*>(true, mwscript::lastCreatedPlaceAtPCReference);
+				return mwscript::lastCreatedPlaceAtPCReference;
 			};
 
 			state["mwscript"]["positionCell"] = [](sol::table params) {
