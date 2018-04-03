@@ -35,7 +35,7 @@ namespace mwse {
 			};
 
 			state["mwse"]["stack"]["pushObject"] = [](sol::object value) {
-				Stack::getInstance().pushLong((long)value.as<void*>());
+				Stack::getInstance().pushLong((long)value.as<TES3::BaseObject*>());
 			};
 
 			//
