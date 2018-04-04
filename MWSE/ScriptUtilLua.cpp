@@ -73,7 +73,7 @@ namespace mwse {
 			};
 
 			state["mwscript"]["addItem"] = [](sol::table params) {
- 				TES3::Script* script = getScriptParam(params);
+				TES3::Script* script = getScriptParam(params);
 				TES3::Reference* reference = getReferenceParam(params);
 
 				// Resolve item.
