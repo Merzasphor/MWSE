@@ -444,6 +444,7 @@ namespace mwse {
 				}
 
 				mwscript::RemoveItem(script, reference, item, count);
+				return true;
 			};
 
 			state["mwscript"]["removeSpell"] = [](sol::table params) {
