@@ -144,6 +144,22 @@ namespace mwse {
 			luaState["mwse"] = luaState.create_table();
 			luaState["mwscript"] = luaState.create_table();
 
+			//
+			// Extend mwse library with extra functions to replace %L in MWSE.
+			//
+
+			luaState["mwse"]["toLong"] = [](std::string value) {
+				if (value.length() != 4) {
+					return 0;
+				}
+
+				return *reinterpret_cast<const int*>(value.c_str());
+			};
+
+			luaState["mwse"]["fromLong"] = [](int value) {
+				return std::string(reinterpret_cast<char*>(&value), 4);
+			};
+
 			// Bind data types.
 			bindMWSEStack();
 			bindScriptUtil();
