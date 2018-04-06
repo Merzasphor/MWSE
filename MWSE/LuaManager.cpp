@@ -148,7 +148,7 @@ namespace mwse {
 			// Extend mwse library with extra functions to replace %L in MWSE.
 			//
 
-			luaState["mwse"]["toLong"] = [](std::string value) {
+			luaState["mwse"]["stringToLong"] = [](std::string value) {
 				if (value.length() != 4) {
 					return 0;
 				}
@@ -156,7 +156,7 @@ namespace mwse {
 				return *reinterpret_cast<const int*>(value.c_str());
 			};
 
-			luaState["mwse"]["fromLong"] = [](int value) {
+			luaState["mwse"]["longToString"] = [](int value) {
 				return std::string(reinterpret_cast<char*>(&value), 4);
 			};
 
