@@ -85,9 +85,6 @@ namespace mwse {
 		// Initialize singleton.
 		LuaManager LuaManager::singleton;
 
-		// Reusable context for hooking.
-		static HookContext context;
-
 		// Fast-access mapping from a TES3::Script* to its associated Lua module.
 		static std::unordered_map<unsigned long, sol::table> scriptOverrides;
 
@@ -208,12 +205,9 @@ namespace mwse {
 		// Locates the file of the script being initialized. If it finds one, it maps this
 		// script to the found Lua file. Future executions of this script would then be 
 		// handled by Lua.
-		static void _stdcall HookScriptNewIndirect() {
-			// The script that we're going to try to determine information of.
-			// Note that it is not fully loaded at this state, but its name should be there
-			// at least.
-			TES3::Script* script = reinterpret_cast<TES3::Script*>(context.edi);
-
+		// Note that the script is not fully loaded at this state, but its name should be
+		// there at least.
+		static void _stdcall ScriptNew(TES3::Script* script) {
 			// Build up the desired path and check to see if the file exists.
 			std::string luaPath = "Data Files\\MWSE\\lua\\overrides\\";
 			luaPath.append(script->name, min(strlen(script->name), 32));
@@ -248,7 +242,7 @@ namespace mwse {
 #if DEBUG_LUA_SCRIPT_INJECTION
 				log::getLog() << "Overwriting script for " << script->name << " -> " << luaPath << std::endl;
 #endif
-				scriptOverrides[context.edi] = scriptModule;
+				scriptOverrides[(unsigned long)script] = scriptModule;
 				script->dataLength = 0;
 
 				// Call the script's initialize function, if it exists.
@@ -263,10 +257,10 @@ namespace mwse {
 			}
 		}
 
-		// Hook for HookScriptNewIndirect.
+		// Hook for ScriptNew.
 		DWORD skipped_setEntitySrcMod = 0x4EEE50;
-		DWORD HookScriptNewDirectReturnTo = TES3_HOOK_SCRIPT_NEW_LUACHECK_RETURN;
-		static __declspec(naked) void HookScriptNewDirect() {
+		DWORD callbackScriptNew = TES3_HOOK_SCRIPT_NEW_LUACHECK_RETURN;
+		static __declspec(naked) void HookScriptNew() {
 			_asm
 			{
 				// Overwritten code.
@@ -274,49 +268,25 @@ namespace mwse {
 				mov ecx, edi
 				call skipped_setEntitySrcMod
 
-				// Save eax.
-				mov context.eax, eax
-
-				// Save the flags.
-				pushfd
-				pop eax
-				mov context.flags, eax
-
-				// Save the other registers.
-				mov context.ebx, ebx
-				mov context.ecx, ecx
-				mov context.edx, edx
-				mov context.esi, esi
-				mov context.edi, edi
-				mov context.ebp, ebp
-				mov context.esp, esp
+				// Save registers.
+				pushad
 
 				// Actually use our hook.
-				call HookScriptNewIndirect
+				push edi
+				call ScriptNew
 
-				// Restore all registers and flags.
-				mov eax, context.eax
-				mov ebx, context.ebx
-				mov ecx, context.ecx
-				mov edx, context.edx
-				mov esi, context.esi
-				mov edi, context.edi
-				mov ebp, context.ebp
-				mov esp, context.esp
-				push context.flags
-				popfd
+				// Restore registers.
+				popad
 
 				// Resume normal execution.
-				jmp HookScriptNewDirectReturnTo
+				jmp callbackScriptNew
 			}
 		}
 
 		// Determines if a script should be overriden, and executes the module::execute function if so.
-		static void _stdcall HookRunScriptIndirect() {
-			TES3::Script* script = reinterpret_cast<TES3::Script*>(context.ebx);
-
+		static void _stdcall RunScript(TES3::Script* script) {
 			// Determine if we own this script.
-			auto searchResult = scriptOverrides.find(context.ebx);
+			auto searchResult = scriptOverrides.find((unsigned long)script);
 			if (searchResult == scriptOverrides.end()) {
 				return;
 			}
@@ -352,122 +322,77 @@ namespace mwse {
 		}
 
 		// Hook for HookRunScriptIndirect.
-		static __declspec(naked) void HookRunScriptDirect() {
+		static DWORD callbackRunScript = TES3_HOOK_RUNSCRIPT_LUACHECK_RETURN;
+		static __declspec(naked) void HookRunScript() {
 			_asm
 			{
-				// Save eax.
-				mov context.eax, eax
-
-				// Save the flags.
-				pushfd
-				pop eax
-				mov context.flags, eax
-
-				// Save the other registers.
-				mov context.ebx, ebx
-				mov context.ecx, ecx
-				mov context.edx, edx
-				mov context.esi, esi
-				mov context.edi, edi
-				mov context.ebp, ebp
-				mov context.esp, esp
+				// Save all registers.
+				pushad
 
 				// Actually use our hook.
-				mov context.callbackAddress, TES3_HOOK_RUNSCRIPT_LUACHECK_RETURN
-				call HookRunScriptIndirect
+				push ebx
+				call RunScript
 
-				// Restore all registers and flags.
-				mov eax, context.eax
-				mov ebx, context.ebx
-				mov ecx, context.ecx
-				mov edx, context.edx
-				mov esi, context.esi
-				mov edi, context.edi
-				mov ebp, context.ebp
-				mov esp, context.esp
-				push context.flags
-				popfd
+				// Restore all registers.
+				popad
 
 				// Overwritten code.
 				mov ecx, dword ptr ds : [TES3_SCRIPTTARGETREF_IMAGE]
 
 				// Resume normal execution.
-				jmp context.callbackAddress
+				jmp callbackRunScript
 			}
 		}
-
-		static void _stdcall HookLoadReferencetIndirect() {
-			if (context.eax != 'TAUL') {
-				return;
+		
+		static DWORD _stdcall LoadReference(TES3::Reference* reference, DWORD loader, DWORD nextSubrecordTag) {
+			if (nextSubrecordTag != 'TAUL') {
+				return TES3_HOOK_LOAD_REFERENCE_RETURN;
 			}
 
 			// Call original readChunk function.
-			char * buffer = reinterpret_cast<char*>(context.esp + 0x510 + 0x380);
-			bool success = reinterpret_cast<char*(__thiscall *)(DWORD, char*, DWORD)>(TES3_load_readChunk)(context.ebx, buffer, 0);
+			char buffer[4096];
+			bool success = reinterpret_cast<char*(__thiscall *)(DWORD, char*, DWORD)>(TES3_load_readChunk)(loader, buffer, 0);
 			
 			// If we for whatever reason failed to load this chunk, bail.
 			if (!success) {
-				return;
+				return TES3_HOOK_LOAD_REFERENCE_RETURN;
 			}
 
 			// Get our lua table, and replace it with our new table.
 			sol::state& state = LuaManager::getInstance().getState();
-			TES3::Reference * reference = reinterpret_cast<TES3::Reference*>(context.esi);
 			sol::table table = reference->getLuaTable();
 			table = state["json"]["decode"](buffer);
 
 			// We successfully read this subrecord, so our jump location is back at the success location.
-			context.callbackAddress = 0x4DE406;
+			return 0x4DE406;
 		}
 
-		DWORD HookLoadReferencetDirectJumpOut = 0x4DF708;
-		static __declspec(naked) void HookLoadReferencetDirect() {
+		static __declspec(naked) void HookLoadReference() {
+			DWORD callbackLoadReference;
 			_asm
 			{
-				// Save eax.
-				mov context.eax, eax
-
-				// Save the flags.
-				pushfd
-				pop eax
-				mov context.flags, eax
-
-				// Save the other registers.
-				mov context.ebx, ebx
-				mov context.ecx, ecx
-				mov context.edx, edx
-				mov context.esi, esi
-				mov context.edi, edi
-				mov context.ebp, ebp
-				mov context.esp, esp
+				// Save the registers.
+				pushad
 
 				// Actually use our hook.
-				mov context.callbackAddress, TES3_HOOK_LOAD_REFERENCE_RETURN
-				call HookLoadReferencetIndirect
+				push eax
+				push ebx
+				push esi
+				call LoadReference
+				mov callbackLoadReference, eax
 
-				// Restore all registers and flags.
-				mov eax, context.eax
-				mov ebx, context.ebx
-				mov ecx, context.ecx
-				mov edx, context.edx
-				mov esi, context.esi
-				mov edi, context.edi
-				mov ebp, context.ebp
-				mov esp, context.esp
-				push context.flags
-				popfd
+				// Restore registers.
+				popad
 
 				// Overwritten code.
 				cmp eax, 'MANM'
 
 				// Resume normal execution.
-				jmp context.callbackAddress
+				jmp callbackLoadReference
 			}
 		}
 
-		static void _stdcall HookSaveReferencetIndirect() {
-			TES3::Reference * reference = reinterpret_cast<TES3::Reference*>(context.ebp);
-
+		static void _stdcall SaveReference(TES3::Reference* reference, DWORD loader) {
 			// Get the associated table.
 			sol::table table = reference->getLuaTable();
 
@@ -481,51 +406,30 @@ namespace mwse {
 			std::string json = state["json"]["encode"](table);
 
 			// Call original writechunk function.
-			reinterpret_cast<void*(__thiscall *)(DWORD, DWORD, const char*, DWORD)>(TES3_load_writeChunk)(context.esi, 'TAUL', json.c_str(), json.length() + 1);
+			reinterpret_cast<void*(__thiscall *)(DWORD, DWORD, const char*, DWORD)>(TES3_load_writeChunk)(loader, 'TAUL', json.c_str(), json.length() + 1);
 		}
 
-		static __declspec(naked) void HookSaveReferencetDirect() {
+		static DWORD callbackSaveReference = TES3_HOOK_SAVE_REFERENCE_RETURN;
+		static __declspec(naked) void HookSaveReference() {
 			_asm
 			{
-				// Save eax.
-				mov context.eax, eax
-
-				// Save the flags.
-				pushfd
-				pop eax
-				mov context.flags, eax
-
-				// Save the other registers.
-				mov context.ebx, ebx
-				mov context.ecx, ecx
-				mov context.edx, edx
-				mov context.esi, esi
-				mov context.edi, edi
-				mov context.ebp, ebp
-				mov context.esp, esp
+				// Save registers.
+				pushad
 
 				// Actually use our hook.
-				mov context.callbackAddress, TES3_HOOK_SAVE_REFERENCE_RETURN
-				call HookSaveReferencetIndirect
+				push esi
+				push ebp
+				call SaveReference
 
-				// Restore all registers and flags.
-				mov eax, context.eax
-				mov ebx, context.ebx
-				mov ecx, context.ecx
-				mov edx, context.edx
-				mov esi, context.esi
-				mov edi, context.edi
-				mov ebp, context.ebp
-				mov esp, context.esp
-				push context.flags
-				popfd
+				// Restore registers.
+				popad
 
 				// Overwritten code.
 				mov eax, [ebp+0x8]
 				shr eax, 5
 
 				// Resume normal execution.
-				jmp context.callbackAddress
+				jmp callbackSaveReference
 			}
 		}
 
@@ -601,24 +505,24 @@ namespace mwse {
 			// Hook the point where scripts are created so we can determine if it is a lua script.
 			// We can't do the script constructor here, because at that time the script's name is not determined.
 			VirtualProtect((DWORD*)TES3_HOOK_SCRIPT_NEW_LUACHECK, TES3_HOOK_SCRIPT_NEW_LUACHECK_SIZE, PAGE_READWRITE, &OldProtect);
-			genJump(TES3_HOOK_SCRIPT_NEW_LUACHECK, reinterpret_cast<DWORD>(HookScriptNewDirect));
+			genJump(TES3_HOOK_SCRIPT_NEW_LUACHECK, reinterpret_cast<DWORD>(HookScriptNew));
 			for (DWORD i = TES3_HOOK_SCRIPT_NEW_LUACHECK + 5; i < TES3_HOOK_SCRIPT_NEW_LUACHECK_RETURN; i++) genNOP(i);
 			VirtualProtect((DWORD*)TES3_HOOK_SCRIPT_NEW_LUACHECK, TES3_HOOK_SCRIPT_NEW_LUACHECK_SIZE, OldProtect, &OldProtect);
 
 			// Hook the RunScript function so we can intercept Lua scripts and invoke Lua code if needed.
 			VirtualProtect((DWORD*)TES3_HOOK_RUNSCRIPT_LUACHECK, TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE, PAGE_READWRITE, &OldProtect);
-			genJump(TES3_HOOK_RUNSCRIPT_LUACHECK, reinterpret_cast<DWORD>(HookRunScriptDirect));
+			genJump(TES3_HOOK_RUNSCRIPT_LUACHECK, reinterpret_cast<DWORD>(HookRunScript));
 			for (DWORD i = TES3_HOOK_RUNSCRIPT_LUACHECK + 5; i < TES3_HOOK_RUNSCRIPT_LUACHECK_RETURN; i++) genNOP(i);
 			VirtualProtect((DWORD*)TES3_HOOK_RUNSCRIPT_LUACHECK, TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE, OldProtect, &OldProtect);
 
 			// Hook the load reference function, so we can fetch attached Lua data.
 			VirtualProtect((DWORD*)TES3_HOOK_LOAD_REFERENCE, TES3_HOOK_LOAD_REFERENCE_SIZE, PAGE_READWRITE, &OldProtect);
-			genJump(TES3_HOOK_LOAD_REFERENCE, reinterpret_cast<DWORD>(HookLoadReferencetDirect));
+			genJump(TES3_HOOK_LOAD_REFERENCE, reinterpret_cast<DWORD>(HookLoadReference));
 			VirtualProtect((DWORD*)TES3_HOOK_LOAD_REFERENCE, TES3_HOOK_LOAD_REFERENCE_SIZE, OldProtect, &OldProtect);
 
 			// Hook the save reference function, so we can save attached Lua data.
 			VirtualProtect((DWORD*)TES3_HOOK_SAVE_REFERENCE, TES3_HOOK_SAVE_REFERENCE_SIZE, PAGE_READWRITE, &OldProtect);
-			genJump(TES3_HOOK_SAVE_REFERENCE, reinterpret_cast<DWORD>(HookSaveReferencetDirect));
+			genJump(TES3_HOOK_SAVE_REFERENCE, reinterpret_cast<DWORD>(HookSaveReference));
 			for (DWORD i = TES3_HOOK_SAVE_REFERENCE + 5; i < TES3_HOOK_SAVE_REFERENCE_RETURN; i++) genNOP(i);
 			VirtualProtect((DWORD*)TES3_HOOK_SAVE_REFERENCE, TES3_HOOK_SAVE_REFERENCE_SIZE, OldProtect, &OldProtect);
 		}
