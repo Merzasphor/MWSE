@@ -582,6 +582,9 @@
     <ClInclude Include="ScriptUtilLua.h">
       <Filter>Header Files\Lua\Bindings</Filter>
     </ClInclude>
+    <ClInclude Include="TES3ScriptLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1474,6 +1477,9 @@
     </ClCompile>
     <ClCompile Include="TES3Script.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3ScriptLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

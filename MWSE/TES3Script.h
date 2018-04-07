@@ -10,11 +10,7 @@ namespace TES3 {
 	};
 	static_assert(sizeof(ScriptVariables) == 0xC, "TES3::ScriptVariables failed size validation");
 
-	struct Script {
-		void * vTable; // 0x00
-		ObjectType::ObjectType recordType; // 0x04 // "SCPT"
-		int baseFlags; // 0x08
-		int unknown_0x0C;
+	struct Script : BaseObject {
 		char name[32]; // 0x10
 		long shortCount; // 0x30
 		long longCount; // 0x34
@@ -27,9 +23,7 @@ namespace TES3 {
 		char * varNamePointers; // 0x50
 		int unknown_0x54; // equals zero?
 		void * machineCode; // 0x58
-		short * shortVarValues; // 0x5C
-		long * longVarValues; // 0x60
-		float * floatVarValues; // 0x64
+		ScriptVariables varValues; // 0x5C
 		int unknown_0x68;
 		int unknown_0x6C;
 
@@ -37,7 +31,11 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		char getLocalVarIndexAndType(const char*, int*);
+		char getLocalVarIndexAndType(const char*, unsigned int*);
+
+		short getShortValue(unsigned int, bool);
+		int getLongValue(unsigned int, bool);
+		float getFloatValue(unsigned int, bool);
 
 	};
 	static_assert(sizeof(Script) == 0x70, "TES3::Script failed size validation");
