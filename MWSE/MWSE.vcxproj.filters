@@ -1472,6 +1472,9 @@
     <ClCompile Include="ScriptUtilLua.cpp">
       <Filter>Source Files\Lua\Bindings</Filter>
     </ClCompile>
+    <ClCompile Include="TES3Script.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">

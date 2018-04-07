@@ -217,6 +217,7 @@
     <ClCompile Include="TES3Region.cpp" />
     <ClCompile Include="TES3RegionLua.cpp" />
     <ClCompile Include="TES3RepairToolLua.cpp" />
+    <ClCompile Include="TES3Script.cpp" />
     <ClCompile Include="TES3SkillLua.cpp" />
     <ClCompile Include="TES3SpellLua.cpp" />
     <ClCompile Include="TES3Statistic.cpp" />

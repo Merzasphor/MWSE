@@ -32,6 +32,13 @@ namespace TES3 {
 		float * floatVarValues; // 0x64
 		int unknown_0x68;
 		int unknown_0x6C;
+
+		//
+		// Other related this-call functions.
+		//
+
+		char getLocalVarIndexAndType(const char*, int*);
+
 	};
 	static_assert(sizeof(Script) == 0x70, "TES3::Script failed size validation");
 }
