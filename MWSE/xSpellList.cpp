@@ -89,6 +89,12 @@ namespace mwse
 		// If we're not provided a node, get the first node of the NPC.
 		if (node == NULL) {
 			node = npc->spellList.list.head;
+
+			// If the node is still NULL, the reference has no spells.
+			if (node == NULL) {
+				pushErrorResponse();
+				return 0.0f;
+			}
 		}
 
 		// Get our data.
