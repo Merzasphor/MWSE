@@ -74,6 +74,7 @@
 #define TES3_HOOK_LOAD_REFERENCE 0x4DE532
 #define TES3_HOOK_LOAD_REFERENCE_SIZE 0x5
 #define TES3_HOOK_LOAD_REFERENCE_RETURN (TES3_HOOK_LOAD_REFERENCE + TES3_HOOK_LOAD_REFERENCE_SIZE)
+#define TES3_HOOK_LOAD_REFERENCE_RETURN_SUCCESS 0x4DE406
 
 #define DEBUG_LUA_SCRIPT_INJECTION true
 
@@ -343,19 +344,19 @@ namespace mwse {
 				jmp callbackRunScript
 			}
 		}
-		
+
 		static DWORD _stdcall LoadReference(TES3::Reference* reference, DWORD loader, DWORD nextSubrecordTag) {
 			if (nextSubrecordTag != 'TAUL') {
-				return TES3_HOOK_LOAD_REFERENCE_RETURN;
+				return FALSE;
 			}
 
 			// Call original readChunk function.
-			char buffer[4096];
+			char buffer[4096] = {};
 			bool success = reinterpret_cast<char*(__thiscall *)(DWORD, char*, DWORD)>(TES3_load_readChunk)(loader, buffer, 0);
-			
+
 			// If we for whatever reason failed to load this chunk, bail.
 			if (!success) {
-				return TES3_HOOK_LOAD_REFERENCE_RETURN;
+				return FALSE;
 			}
 
 			// Get our lua table, and replace it with our new table.
@@ -364,11 +365,12 @@ namespace mwse {
 			table = state["json"]["decode"](buffer);
 
 			// We successfully read this subrecord, so our jump location is back at the success location.
-			return 0x4DE406;
+			return TRUE;
 		}
 
+		static DWORD callbackLoadReferenceMiss = TES3_HOOK_LOAD_REFERENCE_RETURN;
+		static DWORD callbackLoadReferenceHit = TES3_HOOK_LOAD_REFERENCE_RETURN_SUCCESS;
 		static __declspec(naked) void HookLoadReference() {
-			DWORD callbackLoadReference;
 			_asm
 			{
 				// Save the registers.
@@ -379,16 +381,21 @@ namespace mwse {
 				push ebx
 				push esi
 				call LoadReference
-				mov callbackLoadReference, eax
 
-				// Restore registers.
+				// If we returned false, continue normal execution.
+				test eax, eax
+				jz HookLoadReferenceContinue
+
+				// Otherwise, jump to our success location.
 				popad
-
-				// Overwritten code.
 				cmp eax, 'MANM'
+				jmp callbackLoadReferenceHit
 
-				// Resume normal execution.
-				jmp callbackLoadReference
+		HookLoadReferenceContinue:
+				// Return normal execution instead.
+				popad
+				cmp eax, 'MANM'
+				jmp callbackLoadReferenceMiss
 			}
 		}
 
