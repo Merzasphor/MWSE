@@ -78,8 +78,15 @@ namespace mwse {
 				// We need to read one more byte to get past the following \n.
 				ReadFile(file, &readCharacter, 1, &bytesRead, 0);
 				if (readCharacter != '\n') {
-					mwse::log::getLog() << "FileSystem::readString: Warning: EOL file read does not have a valid CRLF ending." << std::endl;
+					mwse::log::getLog() << "FileSystem::readString: Warning: EOL file read for '" << fileName << "' does not have a valid CRLF ending." << std::endl;
+					SetFilePointer(file, -1, NULL, FILE_CURRENT);
 				}
+				break;
+			}
+
+			// Add support for non-CRLF line endings because of Wrye Mash forks.
+			else if (readCharacter == '\n' && stopAtEndOfLine) {
+				mwse::log::getLog() << "FileSystem::readString: Warning: EOL file read for '" << fileName << "' does not have a valid CRLF ending." << std::endl;
 				break;
 			}
 
