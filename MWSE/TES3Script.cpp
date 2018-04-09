@@ -12,14 +12,14 @@ namespace TES3 {
 	}
 
 	short Script::getShortValue(unsigned int index, bool useLocalVars) {
-		return reinterpret_cast<short(__thiscall *)(Script*, unsigned int, signed char)>(TES3_Script_getLocalVarIndexAndType)(this, index, useLocalVars);
+		return reinterpret_cast<short(__thiscall *)(Script*, unsigned int, signed char)>(TES3_Script_getShortValue)(this, index, useLocalVars);
 	}
 
 	int Script::getLongValue(unsigned int index, bool useLocalVars) {
-		return reinterpret_cast<int(__thiscall *)(Script*, unsigned int, signed char)>(TES3_Script_getLocalVarIndexAndType)(this, index, useLocalVars);
+		return reinterpret_cast<int(__thiscall *)(Script*, unsigned int, signed char)>(TES3_Script_getLongValue)(this, index, useLocalVars);
 	}
 
 	float Script::getFloatValue(unsigned int index, bool useLocalVars) {
-		return reinterpret_cast<float(__thiscall *)(Script*, unsigned int, signed char)>(TES3_Script_getLocalVarIndexAndType)(this, index, useLocalVars);
+		return reinterpret_cast<float(__thiscall *)(Script*, unsigned int, signed char)>(TES3_Script_getFloatValue)(this, index, useLocalVars);
 	}
 }

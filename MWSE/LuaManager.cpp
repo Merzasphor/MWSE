@@ -50,6 +50,7 @@
 #include "TES3ReferenceLua.h"
 #include "TES3RegionLua.h"
 #include "TES3RepairToolLua.h"
+#include "TES3ScriptLua.h"
 #include "TES3SkillLua.h"
 #include "TES3SpellLua.h"
 #include "TES3StatisticLua.h"
@@ -135,7 +136,9 @@ namespace mwse {
 
 				// Set up read-only properties.
 				"script", sol::readonly(&LuaScript::script),
-				"reference", sol::readonly(&LuaScript::reference)
+				"reference", sol::readonly(&LuaScript::reference),
+				"context", sol::readonly_property([](LuaScript& self) { return std::shared_ptr<ScriptContext>(new ScriptContext(self.script)); })
+
 				);
 
 			// Create the base of API tables.
@@ -193,6 +196,7 @@ namespace mwse {
 			bindTES3Reference();
 			bindTES3Region();
 			bindTES3RepairTool();
+			bindTES3Script();
 			bindTES3Skill();
 			bindTES3Spell();
 			bindTES3Statistic();

@@ -38,6 +38,10 @@ namespace mwse
 			*reinterpret_cast<int*>(TES3_IP_IMAGE) = IP;
 		}
 
+		TES3::ScriptVariables* getLocalScriptVariables() {
+			return *reinterpret_cast<TES3::ScriptVariables**>(TES3_LOCALVARIABLES_IMAGE);
+		}
+
 		TES3::Reference* getScriptTargetReference() {
 			return *reinterpret_cast<TES3::Reference**>(TES3_SCRIPTTARGETREF_IMAGE);
 		}

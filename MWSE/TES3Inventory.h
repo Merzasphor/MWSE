@@ -15,8 +15,8 @@ namespace TES3 {
 			int charge;
 			Actor* soul;
 		} enchantData; // 0x10
-		void * script; // 0x14
-		void * scriptData; // 0x18
+		TES3::Script * script; // 0x14
+		TES3::ScriptVariables * scriptData; // 0x18
 	};
 	static_assert(sizeof(ItemVariables) == 0x1C, "TES3::ItemVariables failed size validation");
 

@@ -42,6 +42,8 @@ namespace mwse
 		// Manipulation of script variables.
 		//
 
+		TES3::ScriptVariables* getLocalScriptVariables();
+
 		TES3::Reference* getScriptTargetReference();
 		void setScriptTargetReference(TES3::Reference* reference);
 

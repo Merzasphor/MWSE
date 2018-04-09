@@ -7,8 +7,10 @@ namespace TES3 {
 		short * shortVarValues;
 		long * longVarValues;
 		float * floatVarValues;
+		int unknown_0x68;
+		int unknown_0x6C;
 	};
-	static_assert(sizeof(ScriptVariables) == 0xC, "TES3::ScriptVariables failed size validation");
+	static_assert(sizeof(ScriptVariables) == 0x14, "TES3::ScriptVariables failed size validation");
 
 	struct Script : BaseObject {
 		char name[32]; // 0x10
@@ -24,8 +26,6 @@ namespace TES3 {
 		int unknown_0x54; // equals zero?
 		void * machineCode; // 0x58
 		ScriptVariables varValues; // 0x5C
-		int unknown_0x68;
-		int unknown_0x6C;
 
 		//
 		// Other related this-call functions.
