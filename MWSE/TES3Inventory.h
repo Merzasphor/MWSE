@@ -23,7 +23,7 @@ namespace TES3 {
 	struct ItemStack {
 		int count; // 0x0
 		Object * object; // 0x4
-		ItemVariables * variables; // 0x8
+		TArray<ItemVariables> * variables; // 0x8
 
 		//
 		// Lua interface functions.

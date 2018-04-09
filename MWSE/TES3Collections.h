@@ -46,4 +46,20 @@ namespace TES3 {
 		IteratorNode<T> * current;
 	};
 	static_assert(sizeof(Iterator<void>) == 0x14, "TES3::Iterator failed size validation");
+
+	//
+	// TArray
+	//
+
+	template <typename T>
+	struct TArray {
+		void * vTable; // 0x0
+		T * storage; // 0x4
+		int storageCount; // 0x8
+		T * endIndex; // 0xC
+		int filledCount; // 0x10
+		int growByCount; // 0x14
+	};
+	static_assert(sizeof(TArray<void>) == 0x18, "TES3::TArray failed size validation");
+
 }
