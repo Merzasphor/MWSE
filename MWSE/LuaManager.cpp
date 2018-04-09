@@ -27,6 +27,7 @@
 #include "TES3CellLua.h"
 #include "TES3ClassLua.h"
 #include "TES3ClothingLua.h"
+#include "TES3CollectionsLua.h"
 #include "TES3ContainerLua.h"
 #include "TES3CreatureLua.h"
 #include "TES3DataHandlerLua.h"
@@ -173,6 +174,7 @@ namespace mwse {
 			bindTES3Cell();
 			bindTES3Class();
 			bindTES3Clothing();
+			bindTES3Collections();
 			bindTES3Container();
 			bindTES3Creature();
 			bindTES3DataHandler();
