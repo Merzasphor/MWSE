@@ -68,6 +68,19 @@ namespace mwse {
 				"variables", sol::readonly_property(&TES3::EquipmentStack::variables)
 
 				);
+
+			state.new_usertype<TES3::Inventory>("TES3Inventory",
+				// Disable construction of this type.
+				"new", sol::no_constructor,
+
+				//
+				// Properties.
+				//
+
+				"flags", sol::readonly_property(&TES3::Inventory::flags),
+				"iterator", sol::readonly_property(&TES3::Inventory::iterator)
+
+				);
 		}
 	}
 }
