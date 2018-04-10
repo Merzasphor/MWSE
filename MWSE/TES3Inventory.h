@@ -12,7 +12,7 @@ namespace TES3 {
 		void * lockData; // 0x8
 		int condition; // 0xC
 		union {
-			int charge;
+			float charge;
 			Actor* soul;
 		} enchantData; // 0x10
 		TES3::Script * script; // 0x14
