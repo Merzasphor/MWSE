@@ -54,9 +54,9 @@ namespace TES3 {
 	template <typename T>
 	struct TArray {
 		void * vTable; // 0x0
-		T * storage; // 0x4
+		T ** storage; // 0x4
 		int storageCount; // 0x8
-		T * endIndex; // 0xC
+		int endIndex; // 0xC
 		int filledCount; // 0x10
 		int growByCount; // 0x14
 	};
