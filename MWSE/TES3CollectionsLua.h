@@ -68,8 +68,8 @@ namespace mwse {
 				// Meta functions.
 				//
 
-				sol::meta_function::length, [](TES3::TArray<T>& self) { return self.storageCount; }
 				sol::meta_function::index, [](TES3::TArray<T>& self, int index) { return self.storage[index - 1]; },
+				sol::meta_function::length, [](TES3::TArray<T>& self) { return self.filledCount; }
 
 				);
 		}
