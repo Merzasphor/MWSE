@@ -1,4 +1,4 @@
 return {
-    Module = 1,
-    Spellmaker = 2
+	Module = 1,
+	Spellmaker = 2
 }

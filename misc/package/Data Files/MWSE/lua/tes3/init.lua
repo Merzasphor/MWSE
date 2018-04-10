@@ -18,19 +18,29 @@ tes3.SpellType = require("tes3.SpellType")
 tes3.WeaponType = require("tes3.WeaponType")
 
 -------------------------------------------------
+-- Extend table API
+-------------------------------------------------
+
+function table.length(T)
+	local count = 0
+	for _ in pairs(T) do count = count + 1 end
+	return count
+end
+
+-------------------------------------------------
 -- Functions
 -------------------------------------------------
 
 function tes3.getAttributeName(attributeId)
-    return tes3.AttributeName[attributeId] or "Invalid"
+	return tes3.AttributeName[attributeId] or "Invalid"
 end
 
 function tes3.getSkillName(skillId)
-    return tes3.SkillName[skillId] or "Invalid"
+	return tes3.SkillName[skillId] or "Invalid"
 end
 
 function tes3.getSpecializationName(specializationId)
-    return tes3.SpecializationName[specializationId] or "Invalid"
+	return tes3.SpecializationName[specializationId] or "Invalid"
 end
 
 return tes3
