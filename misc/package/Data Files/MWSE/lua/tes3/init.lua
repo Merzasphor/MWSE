@@ -43,4 +43,16 @@ function tes3.getSpecializationName(specializationId)
 	return tes3.SpecializationName[specializationId] or "Invalid"
 end
 
+-- Iterator to use TES3::Iterator in a for loop.
+function tes3.iterate(iterator)
+	local node = iterator.head
+	return function()
+		if (node) then
+			local data = node.data
+			node = node.nextNode
+			return data
+		end
+	end
+end
+
 return tes3
