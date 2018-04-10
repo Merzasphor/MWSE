@@ -23,7 +23,7 @@ namespace mwse {
 				sol::meta_function::index, [](TES3::Iterator<T>& self, int index)
 			{
 				TES3::IteratorNode<T>* node = self.head;
-				for (int i = 0; i < index; i++) {
+				for (int i = 1; i < index; i++) {
 					node = node->next;
 				}
 				return makeLuaObject(node->data);
@@ -48,7 +48,7 @@ namespace mwse {
 				sol::meta_function::index, [](TES3::Iterator<T>& self, int index)
 			{
 				TES3::IteratorNode<T>* node = self.head;
-				for (int i = 0; i < index; i++) {
+				for (int i = 1; i < index; i++) {
 					node = node->next;
 				}
 				return node->data;
@@ -68,8 +68,8 @@ namespace mwse {
 				// Meta functions.
 				//
 
-				sol::meta_function::index, [](TES3::TArray<T>& self, int index) { return self.storage[index]; },
 				sol::meta_function::length, [](TES3::TArray<T>& self) { return self.storageCount; }
+				sol::meta_function::index, [](TES3::TArray<T>& self, int index) { return self.storage[index - 1]; },
 
 				);
 		}
