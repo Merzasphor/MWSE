@@ -53,7 +53,7 @@ namespace mwse {
 		long count = 0;
 		auto varNode = tes3::getAttachedItemDataNode(reference);
 		if (varNode) {
-			count = varNode->stackCount;
+			count = varNode->count;
 		}
 
 		mwse::Stack::getInstance().pushLong(count);

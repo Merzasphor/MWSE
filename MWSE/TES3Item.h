@@ -5,16 +5,19 @@
 
 namespace TES3 {
 	struct ItemData {
-		int stackCount;
-		PhysicalObject * owner;
+		int count; // 0x0
+		PhysicalObject * owner; // 0x4
 		union {
 			long rank;
 			GlobalVariable * variable;
-		} requirement;
-		int condition;
-		float enchantCharge;
-		Script * script;
-		ScriptVariables * scriptData;
+		} requirement; // 0x8
+		int condition; // 0xC
+		union {
+			float charge;
+			Actor* soul;
+		} enchantData;  // 0x10
+		Script * script; // 0x14
+		ScriptVariables * scriptData; // 0x18
 	};
 	static_assert(sizeof(ItemData) == 0x1C, "TES3::ItemData failed size validation");
 

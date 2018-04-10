@@ -76,7 +76,7 @@ namespace mwse
 				// Get the current charge.
 				auto varNode = tes3::getAttachedItemDataNode(reference);
 				if (varNode) {
-					currCharge = varNode->enchantCharge;
+					currCharge = varNode->enchantData.charge;
 				}
 				else {
 					currCharge = maxCharge;

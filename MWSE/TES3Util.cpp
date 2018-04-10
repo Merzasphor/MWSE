@@ -184,7 +184,7 @@ namespace mwse {
 			if (multiplyByCount) {
 				auto varNode = tes3::getAttachedItemDataNode(reference);
 				if (varNode) {
-					value *= varNode->stackCount;
+					value *= varNode->count;
 				}
 			}
 
@@ -205,7 +205,7 @@ namespace mwse {
 			if (multiplyByCount) {
 				auto varNode = tes3::getAttachedItemDataNode(reference);
 				if (varNode) {
-					weight *= varNode->stackCount;
+					weight *= varNode->count;
 				}
 			}
 

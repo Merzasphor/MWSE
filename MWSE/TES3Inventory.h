@@ -6,24 +6,10 @@
 #include "TES3Collections.h"
 
 namespace TES3 {
-	struct ItemVariables {
-		int count; // 0x0
-		void * owner; // 0x4
-		void * lockData; // 0x8
-		int condition; // 0xC
-		union {
-			float charge;
-			Actor* soul;
-		} enchantData; // 0x10
-		TES3::Script * script; // 0x14
-		TES3::ScriptVariables * scriptData; // 0x18
-	};
-	static_assert(sizeof(ItemVariables) == 0x1C, "TES3::ItemVariables failed size validation");
-
 	struct ItemStack {
 		int count; // 0x0
 		Object * object; // 0x4
-		TArray<ItemVariables> * variables; // 0x8
+		TArray<ItemData> * variables; // 0x8
 
 		//
 		// Lua interface functions.
@@ -36,7 +22,7 @@ namespace TES3 {
 
 	struct EquipmentStack {
 		Object * object; // 0x0
-		ItemVariables * variables; // 0x4
+		ItemData * variables; // 0x4
 
 		//
 		// Lua interface functions.

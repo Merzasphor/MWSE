@@ -21,7 +21,7 @@ namespace mwse {
 			bindGenericObjectIterator<TES3::MobileActor>("TES3MobileActorIterator");
 
 			// TArray bindings.
-			bindTArray<TES3::ItemVariables>("TES3ItemVariablesTArray");
+			bindTArray<TES3::ItemData>("TES3ItemDataTArray");
 		}
 	}
 }

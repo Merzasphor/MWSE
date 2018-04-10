@@ -69,7 +69,7 @@ namespace mwse {
 		// return the maximum charge from the enchantment record.
 		auto varNode = mwse::tes3::getAttachedItemDataNode(reference);
 		if (varNode) {
-			varNode->enchantCharge = charge;
+			varNode->enchantData.charge = charge;
 		}
 		else {
 #if _DEBUG

@@ -79,8 +79,8 @@ namespace mwse
 			// If there's charge data in an attached node, update it.
 			auto varNode = tes3::getAttachedItemDataNode(reference);
 			if (varNode) {
-				if (varNode->enchantCharge >= maxCharge) {
-					varNode->enchantCharge = maxCharge;
+				if (varNode->enchantData.charge >= maxCharge) {
+					varNode->enchantData.charge = maxCharge;
 				}
 			}
 

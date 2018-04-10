@@ -3,6 +3,7 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "TES3Item.h"
 #include "TES3Inventory.h"
 #include "TES3Script.h"
 #include "TES3ScriptLua.h"
@@ -22,7 +23,7 @@ namespace mwse {
 		void bindTES3Inventory() {
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::ItemVariables>("TES3ItemVariables",
+			state.new_usertype<TES3::ItemData>("TES3ItemData",
 				// Disable construction of this type.
 				"new", sol::no_constructor,
 
@@ -30,15 +31,15 @@ namespace mwse {
 				// Properties.
 				//
 
-				"count", sol::readonly_property(&TES3::ItemVariables::count),
-				"condition", &TES3::ItemVariables::condition,
+				"count", sol::readonly_property(&TES3::ItemData::count),
+				"condition", &TES3::ItemData::condition,
 				"charge", sol::property(
-					[](TES3::ItemVariables& self) { return self.enchantData.charge; },
-					[](TES3::ItemVariables& self, float value) { self.enchantData.charge = value; }
+					[](TES3::ItemData& self) { return self.enchantData.charge; },
+					[](TES3::ItemData& self, float value) { self.enchantData.charge = value; }
 					),
 
-				"script", sol::readonly_property(&TES3::ItemVariables::script),
-				"context", sol::readonly_property([](TES3::ItemVariables& self) { return std::shared_ptr<ScriptContext>(new ScriptContext(self.script, self.scriptData)); })
+				"script", sol::readonly_property(&TES3::ItemData::script),
+				"context", sol::readonly_property([](TES3::ItemData& self) { return std::shared_ptr<ScriptContext>(new ScriptContext(self.script, self.scriptData)); })
 
 				);
 
