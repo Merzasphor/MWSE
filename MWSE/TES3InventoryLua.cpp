@@ -31,9 +31,13 @@ namespace mwse {
 				//
 
 				"count", sol::readonly_property(&TES3::ItemVariables::count),
-				"condition", sol::readonly_property(&TES3::ItemVariables::condition),
-				"script", sol::readonly_property(&TES3::ItemVariables::script),
+				"condition", &TES3::ItemVariables::condition,
+				"charge", sol::property(
+					[](TES3::ItemVariables& self) { return self.enchantData.charge; },
+					[](TES3::ItemVariables& self, float value) { self.enchantData.charge = value; }
+					),
 
+				"script", sol::readonly_property(&TES3::ItemVariables::script),
 				"context", sol::readonly_property([](TES3::ItemVariables& self) { return std::shared_ptr<ScriptContext>(new ScriptContext(self.script, self.scriptData)); })
 
 				);
