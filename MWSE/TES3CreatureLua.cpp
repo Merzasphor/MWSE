@@ -117,8 +117,8 @@ namespace mwse {
 				"isAttacked", sol::readonly_property(&TES3::Creature::getIsAttacked),
 				"isInstance", sol::var(false),
 
-				"inventory", sol::readonly_property(&TES3::Creature::getInventory),
-				"equipment", sol::readonly_property(&TES3::Creature::getEquipment),
+				"inventory", sol::readonly_property(&TES3::Creature::inventory),
+				"equipment", sol::readonly_property(&TES3::Creature::equipment),
 				"barterGold", sol::property(&TES3::Creature::getBaseBarterGold, &TES3::Creature::setBaseBarterGold),
 
 				"aiConfig", sol::readonly_property(&TES3::Creature::aiConfig),
@@ -158,8 +158,8 @@ namespace mwse {
 				"isAttacked", sol::readonly_property(&TES3::CreatureInstance::getIsAttacked),
 				"isInstance", sol::var(true),
 
-				"inventory", sol::readonly_property(&TES3::CreatureInstance::getInventory),
-				"equipment", sol::readonly_property(&TES3::CreatureInstance::getEquipment),
+				"inventory", sol::readonly_property(&TES3::CreatureInstance::inventory),
+				"equipment", sol::readonly_property(&TES3::CreatureInstance::equipment),
 				"barterGold", sol::property(&TES3::CreatureInstance::getBaseBarterGold, &TES3::CreatureInstance::setBaseBarterGold),
 
 				//"aiConfig", sol::readonly_property(&TES3::CreatureInstance::aiConfig),

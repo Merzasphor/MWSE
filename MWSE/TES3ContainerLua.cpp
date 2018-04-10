@@ -35,7 +35,7 @@ namespace mwse {
 				"isRespawn", sol::readonly_property(&TES3::Container::isRespawn),
 				"isInstance", sol::var(false),
 
-				"inventory", sol::readonly_property(&TES3::Container::getInventory),
+				"inventory", sol::readonly_property(&TES3::Container::inventory),
 				"capacity", &TES3::Container::capacity,
 
 				"script", sol::readonly_property(&TES3::Container::getScript)
@@ -63,7 +63,7 @@ namespace mwse {
 				"isRespawn", sol::readonly_property(&TES3::ContainerInstance::isRespawn),
 				"isInstance", sol::var(true),
 
-				"inventory", sol::readonly_property(&TES3::ContainerInstance::getInventory),
+				"inventory", sol::readonly_property(&TES3::ContainerInstance::inventory),
 				"capacity", sol::property(&TES3::ContainerInstance::getCapacity, &TES3::ContainerInstance::setCapacity),
 
 				"script", sol::readonly_property(&TES3::ContainerInstance::getScript)

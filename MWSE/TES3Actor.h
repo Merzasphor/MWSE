@@ -73,13 +73,6 @@ namespace TES3 {
 
 		Reference* dropItem(BaseObject*, ItemData*, int, bool);
 
-		//
-		// Lua interface functions.
-		//
-
-		sol::object getInventory();
-		sol::object getEquipment();
-
 	};
 	static_assert(sizeof(Actor) == 0x6C, "TES3::Actor failed size validation");
 }

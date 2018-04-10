@@ -52,8 +52,8 @@ namespace mwse {
 				"isAttacked", sol::readonly_property(&TES3::NPC::getIsAttacked),
 				"isInstance", sol::var(false),
 
-				"inventory", sol::readonly_property(&TES3::NPC::getInventory),
-				"equipment", sol::readonly_property(&TES3::NPC::getEquipment),
+				"inventory", sol::readonly_property(&TES3::NPC::inventory),
+				"equipment", sol::readonly_property(&TES3::NPC::equipment),
 				"barterGold", sol::property(&TES3::NPC::getBaseBarterGold, &TES3::NPC::setBaseBarterGold),
 
 				"race", sol::readonly_property(&TES3::NPC::getRace),
@@ -101,8 +101,8 @@ namespace mwse {
 				"isAttacked", sol::readonly_property(&TES3::NPCInstance::getIsAttacked),
 				"isInstance", sol::var(true),
 
-				"inventory", sol::readonly_property(&TES3::NPCInstance::getInventory),
-				"equipment", sol::readonly_property(&TES3::NPCInstance::getEquipment),
+				"inventory", sol::readonly_property(&TES3::NPC::inventory),
+				"equipment", sol::readonly_property(&TES3::NPCInstance::equipment),
 				"barterGold", sol::property(&TES3::NPCInstance::getBaseBarterGold, &TES3::NPCInstance::setBaseBarterGold),
 
 				"race", sol::readonly_property(&TES3::NPCInstance::getRace),
