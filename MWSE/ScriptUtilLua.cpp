@@ -11,28 +11,98 @@
 
 namespace mwse {
 	namespace lua {
-		TES3::Script* getScriptParam(sol::table params) {
-			TES3::Script* script = NULL;
-			sol::object maybeScript = params["_script"];
-			if (maybeScript.valid() && maybeScript.is<TES3::Script*>()) {
-				script = maybeScript.as<TES3::Script*>();
+		TES3::Script* getOptionalParamExecutionScript(sol::optional<sol::table> maybeParams) {
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeScript = params["_script"];
+				if (maybeScript.valid()) {
+					if (maybeScript.is<std::string>()) {
+						return tes3::getScript(maybeScript.as<std::string>());
+					}
+					else if (maybeScript.is<TES3::Script*>()) {
+						return maybeScript.as<TES3::Script*>();
+					}
+				}
 			}
-			else {
-				script = LuaManager::getInstance().getCurrentScript();
-			}
-			return script;
+
+			// Fall back to the currently executing script.
+			return LuaManager::getInstance().getCurrentScript();
 		}
 
-		TES3::Reference* getReferenceParam(sol::table params) {
+		TES3::Reference* getOptionalParamExecutionReference(sol::optional<sol::table> maybeParams) {
 			TES3::Reference* reference = NULL;
-			sol::object maybe = params["reference"];
-			if (maybe.valid() && maybe.is<TES3::Reference*>()) {
-				reference = maybe.as<TES3::Reference*>();
+
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeScript = params["reference"];
+				if (maybeScript.valid()) {
+					if (maybeScript.is<std::string>()) {
+						reference = tes3::getReference(maybeScript.as<std::string>());
+					}
+					else if (maybeScript.is<TES3::Reference*>()) {
+						reference = maybeScript.as<TES3::Reference*>();
+					}
+				}
 			}
-			else {
+
+			if (reference == NULL) {
 				reference = LuaManager::getInstance().getCurrentReference();
 			}
+
 			return reference;
+		}
+
+		TES3::BaseObject* getOptionalParamTemplate(sol::optional<sol::table> maybeParams, const char* key, TES3::BaseObject* defaultValue = NULL) {
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeValue = params[key];
+				if (maybeValue.valid()) {
+					if (maybeValue.is<std::string>()) {
+						return tes3::getTemplate(maybeValue.as<std::string>());
+					}
+					else if (maybeValue.is<TES3::BaseObject*>()) {
+						return maybeValue.as<TES3::BaseObject*>();
+					}
+				}
+			}
+
+			return defaultValue;
+		}
+
+		TES3::Script* getOptionalParamScript(sol::optional<sol::table> maybeParams, const char* key) {
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeValue = params[key];
+				if (maybeValue.valid()) {
+					if (maybeValue.is<std::string>()) {
+						return tes3::getScript(maybeValue.as<std::string>());
+					}
+					else if (maybeValue.is<TES3::Script*>()) {
+						return maybeValue.as<TES3::Script*>();
+					}
+				}
+			}
+
+			return NULL;
+		}
+
+		TES3::Reference* getOptionalParamReference(sol::optional<sol::table> maybeParams, const char* key) {
+			TES3::Reference* value = NULL;
+
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeValue = params[key];
+				if (maybeValue.valid()) {
+					if (maybeValue.is<std::string>()) {
+						value = tes3::getReference(maybeValue.as<std::string>());
+					}
+					else if (maybeValue.is<TES3::Reference*>()) {
+						value = maybeValue.as<TES3::Reference*>();
+					}
+				}
+			}
+
+			return value;
 		}
 
 		void bindScriptUtil() {
@@ -55,66 +125,27 @@ namespace mwse {
 			//
 
 			state["mwscript"]["activate"] = [](sol::optional<sol::table> params) {
-				TES3::Script* script = NULL;
-				TES3::Reference* reference = NULL;
-
-				// Resolve our optional parameters.
-				if (params) {
-					script = getScriptParam(params.value());
-					reference = getReferenceParam(params.value());
-				}
-				else {
-					LuaManager& manager = LuaManager::getInstance();
-					script = manager.getCurrentScript();
-					reference = manager.getCurrentReference();
-				}
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
 
 				mwscript::Activate(script, reference);
 			};
-
-			state["mwscript"]["addItem"] = [](sol::table params) {
-				TES3::Script* script = getScriptParam(params);
-				TES3::Reference* reference = getReferenceParam(params);
-
-				// Resolve item.
-				sol::object itemParam = params["item"];
-				TES3::BaseObject* item = NULL;
-				if (itemParam.is<std::string>()) {
-					item = tes3::getTemplate(itemParam.as<std::string>());
-				}
-				else if (itemParam.is<TES3::BaseObject*>()) {
-					item = itemParam.as<TES3::BaseObject*>();
-				}
-
-				if (item == NULL) {
+			state["mwscript"]["addItem"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::BaseObject* item = getOptionalParamTemplate(params, "item");
+				int count = getOptionalParam<double>(params, "count", 1.0);
+				if (item == NULL || count <= 0) {
 					return false;
-				}
-
-				// Resolve count.
-				sol::object countParam = params["count"];
-				long count = 1;
-				if (countParam.is<double>()) {
-					count = countParam.as<double>();
 				}
 
 				mwscript::AddItem(script, reference, item, count);
 				return true;
 			};
-
-			state["mwscript"]["addSpell"] = [](sol::table params) {
-				TES3::Script* script = getScriptParam(params);
-				TES3::Reference* reference = getReferenceParam(params);
-
-				// Resolve spell.
-				sol::object spellParam = params["spell"];
-				TES3::Spell* spell = NULL;
-				if (spellParam.is<std::string>()) {
-					spell = tes3::getObjectByID<TES3::Spell>(spellParam.as<std::string>(), TES3::ObjectType::Spell);
-				}
-				else if (spellParam.is<TES3::Spell*>()) {
-					spell = spellParam.as<TES3::Spell*>();
-				}
-
+			state["mwscript"]["addSpell"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::Spell* spell = getOptionalParamObject<TES3::Spell>(params, "spell", TES3::ObjectType::Spell);
 				if (spell == NULL) {
 					return false;
 				}
@@ -122,79 +153,32 @@ namespace mwse {
 				mwscript::AddSpell(script, reference, spell);
 				return true;
 			};
-
-			state["mwscript"]["aiTravel"] = [](sol::table params) {
-				TES3::Script* script = getScriptParam(params);
-				TES3::Reference* reference = getReferenceParam(params);
-
-				// Resolve X.
-				sol::object xParam = params["x"];
-				float x = 0.0f;
-				if (xParam.is<double>()) {
-					x = xParam.as<double>();
-				}
-
-				// Resolve Y.
-				sol::object yParam = params["y"];
-				float y = 0.0f;
-				if (yParam.is<double>()) {
-					y = yParam.as<double>();
-				}
-
-				// Resolve Z.
-				sol::object zParam = params["z"];
-				float z = 0.0f;
-				if (zParam.is<double>()) {
-					z = zParam.as<double>();
-				}
+			state["mwscript"]["aiTravel"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				double x = getOptionalParam<double>(params, "x", 0.0);
+				double y = getOptionalParam<double>(params, "y", 0.0);
+				double z = getOptionalParam<double>(params, "z", 0.0);
 
 				mwscript::AITravel(script, reference, x, y, z);
 				return true;
 			};
-
-			state["mwscript"]["drop"] = [](sol::table params) {
-				TES3::Script* script = getScriptParam(params);
-				TES3::Reference* reference = getReferenceParam(params);
-
-				// Resolve item.
-				sol::object itemParam = params["item"];
-				TES3::BaseObject* item = NULL;
-				if (itemParam.is<std::string>()) {
-					item = tes3::getTemplate(itemParam.as<std::string>());
-				}
-				else if (itemParam.is<TES3::BaseObject*>()) {
-					item = itemParam.as<TES3::BaseObject*>();
-				}
-
+			state["mwscript"]["drop"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::BaseObject* item = getOptionalParamTemplate(params, "item");
+				int count = getOptionalParam<double>(params, "count", 1.0);
 				if (item == NULL) {
 					return false;
-				}
-
-				// Resolve count.
-				sol::object countParam = params["count"];
-				long count = 1;
-				if (countParam.is<double>()) {
-					count = countParam.as<double>();
 				}
 
 				mwscript::Drop(script, reference, item, count);
 				return true;
 			};
-
-			state["mwscript"]["equip"] = [](sol::table params) {
-				TES3::Script* script = getScriptParam(params);
-				TES3::Reference* reference = getReferenceParam(params);
-
-				// Resolve item.
-				sol::object itemParam = params["item"];
-				TES3::BaseObject* item = NULL;
-				if (itemParam.is<std::string>()) {
-					item = tes3::getTemplate(itemParam.as<std::string>());
-				}
-				else if (itemParam.is<TES3::BaseObject*>()) {
-					item = itemParam.as<TES3::BaseObject*>();
-				}
-
+			state["mwscript"]["equip"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::BaseObject* item = getOptionalParamTemplate(params, "item");
 				if (item == NULL) {
 					return false;
 				}
@@ -202,21 +186,10 @@ namespace mwse {
 				mwscript::Equip(script, reference, item);
 				return true;
 			};
-
-			state["mwscript"]["explodeSpell"] = [](sol::table params) {
-				TES3::Script* script = getScriptParam(params);
-				TES3::Reference* reference = getReferenceParam(params);
-
-				// Resolve spell.
-				sol::object spellParam = params["spell"];
-				TES3::Spell* spell = NULL;
-				if (spellParam.is<std::string>()) {
-					spell = tes3::getObjectByID<TES3::Spell>(spellParam.as<std::string>(), TES3::ObjectType::Spell);
-				}
-				else if (spellParam.is<TES3::Spell*>()) {
-					spell = spellParam.as<TES3::Spell*>();
-				}
-
+			state["mwscript"]["explodeSpell"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::Spell* spell = getOptionalParamObject<TES3::Spell>(params, "spell", TES3::ObjectType::Spell);
 				if (spell == NULL) {
 					return false;
 				}
@@ -224,21 +197,10 @@ namespace mwse {
 				mwscript::ExplodeSpell(script, reference, spell);
 				return true;
 			};
-
-			state["mwscript"]["hasItemEquipped"] = [](sol::table params) {
-				TES3::Script* script = getScriptParam(params);
-				TES3::Reference* reference = getReferenceParam(params);
-
-				// Resolve item.
-				sol::object itemParam = params["item"];
-				TES3::BaseObject* item = NULL;
-				if (itemParam.is<std::string>()) {
-					item = tes3::getTemplate(itemParam.as<std::string>());
-				}
-				else if (itemParam.is<TES3::BaseObject*>()) {
-					item = itemParam.as<TES3::BaseObject*>();
-				}
-
+			state["mwscript"]["hasItemEquipped"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::BaseObject* item = getOptionalParamTemplate(params, "item");
 				if (item == NULL) {
 					return false;
 				}
@@ -246,21 +208,10 @@ namespace mwse {
 				mwscript::HasItemEquipped(script, reference, item);
 				return true;
 			};
-
-			state["mwscript"]["getItemCount"] = [](sol::table params) {
-				TES3::Script* script = getScriptParam(params);
-				TES3::Reference* reference = getReferenceParam(params);
-
-				// Resolve item.
-				sol::object itemParam = params["item"];
-				TES3::BaseObject* item = NULL;
-				if (itemParam.is<std::string>()) {
-					item = tes3::getTemplate(itemParam.as<std::string>());
-				}
-				else if (itemParam.is<TES3::BaseObject*>()) {
-					item = itemParam.as<TES3::BaseObject*>();
-				}
-
+			state["mwscript"]["getItemCount"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::BaseObject* item = getOptionalParamTemplate(params, "item");
 				if (item == NULL) {
 					return false;
 				}
@@ -268,21 +219,10 @@ namespace mwse {
 				mwscript::GetItemCount(script, reference, item);
 				return true;
 			};
-
-			state["mwscript"]["getSpellEffects"] = [](sol::table params) {
-				TES3::Script* script = getScriptParam(params);
-				TES3::Reference* reference = getReferenceParam(params);
-
-				// Resolve spell.
-				sol::object spellParam = params["spell"];
-				TES3::Spell* spell = NULL;
-				if (spellParam.is<std::string>()) {
-					spell = tes3::getObjectByID<TES3::Spell>(spellParam.as<std::string>(), TES3::ObjectType::Spell);
-				}
-				else if (spellParam.is<TES3::Spell*>()) {
-					spell = spellParam.as<TES3::Spell*>();
-				}
-
+			state["mwscript"]["getSpellEffects"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::Spell* spell = getOptionalParamObject<TES3::Spell>(params, "spell", TES3::ObjectType::Spell);
 				if (spell == NULL) {
 					return false;
 				}
@@ -290,126 +230,39 @@ namespace mwse {
 				mwscript::GetSpellEffects(script, reference, spell);
 				return true;
 			};
-
-			state["mwscript"]["placeAtPC"] = [](sol::table params) -> TES3::Reference* {
-				TES3::Script* script = getScriptParam(params);
-				TES3::Reference* reference = getReferenceParam(params);
-
-				// Resolve item.
-				sol::object objectParam = params["object"];
-				TES3::BaseObject* object = NULL;
-				if (objectParam.is<std::string>()) {
-					object = tes3::getTemplate(objectParam.as<std::string>());
-				}
-				else if (objectParam.is<TES3::BaseObject*>()) {
-					object = objectParam.as<TES3::BaseObject*>();
-				}
-
+			state["mwscript"]["placeAtPC"] = [](sol::optional<sol::table> params) -> TES3::Reference* {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::BaseObject* object = getOptionalParamTemplate(params, "object");
+				int count = getOptionalParam<double>(params, "count", 1.0);
+				double distance = getOptionalParam<double>(params, "distance", 256.0);
+				double direction = getOptionalParam<double>(params, "direction", 1.0);
 				if (object == NULL) {
 					return NULL;
-				}
-
-				// Resolve count.
-				sol::object countParam = params["count"];
-				long count = 1;
-				if (countParam.is<double>()) {
-					count = countParam.as<double>();
-				}
-
-				// Resolve count.
-				sol::object distanceParam = params["distance"];
-				float distance = 256.0f;
-				if (distanceParam.is<double>()) {
-					distance = distanceParam.as<double>();
-				}
-
-				// Resolve count.
-				sol::object directionParam = params["direction"];
-				float direction = 1;
-				if (directionParam.is<double>()) {
-					direction = directionParam.as<double>();
 				}
 
 				mwscript::PlaceAtPC(script, reference, object, count, distance, direction);
 				return mwscript::lastCreatedPlaceAtPCReference;
 			};
-
-			state["mwscript"]["position"] = [](sol::table params) {
-				TES3::Script* script = getScriptParam(params);
-				TES3::Reference* reference = getReferenceParam(params);
-
-				// Resolve X.
-				sol::object xParam = params["x"];
-				float x = 0.0f;
-				if (xParam.is<double>()) {
-					x = xParam.as<double>();
-				}
-
-				// Resolve Y.
-				sol::object yParam = params["y"];
-				float y = 0.0f;
-				if (yParam.is<double>()) {
-					y = yParam.as<double>();
-				}
-
-				// Resolve Z.
-				sol::object zParam = params["z"];
-				float z = 0.0f;
-				if (zParam.is<double>()) {
-					z = zParam.as<double>();
-				}
-
-				// Resolve rotation.
-				sol::object rotationParam = params["rotation"];
-				float rotation = 0.0f;
-				if (rotationParam.is<double>()) {
-					rotation = rotationParam.as<double>();
-				}
+			state["mwscript"]["position"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				double x = getOptionalParam<double>(params, "x", 0.0);
+				double y = getOptionalParam<double>(params, "y", 0.0);
+				double z = getOptionalParam<double>(params, "z", 0.0);
+				double rotation = getOptionalParam<double>(params, "rotation", 0.0);
 
 				mwscript::Position(script, reference, x, y, z, rotation);
 				return true;
 			};
-
-			state["mwscript"]["positionCell"] = [](sol::table params) {
-				TES3::Script* script = getScriptParam(params);
-				TES3::Reference* reference = getReferenceParam(params);
-
-				// Resolve cell.
-				sol::object cellParam = params["cell"];
-				std::string cell;
-				if (cellParam.is<std::string>()) {
-					cell = cellParam.as<std::string>();
-				}
-
-				// Resolve X.
-				sol::object xParam = params["x"];
-				float x = 0.0f;
-				if (xParam.is<double>()) {
-					x = xParam.as<double>();
-				}
-
-				// Resolve Y.
-				sol::object yParam = params["y"];
-				float y = 0.0f;
-				if (yParam.is<double>()) {
-					y = yParam.as<double>();
-				}
-
-				// Resolve Z.
-				sol::object zParam = params["z"];
-				float z = 0.0f;
-				if (zParam.is<double>()) {
-					z = zParam.as<double>();
-				}
-
-				// Resolve rotation.
-				sol::object rotationParam = params["rotation"];
-				float rotation = 0.0f;
-				if (rotationParam.is<double>()) {
-					rotation = rotationParam.as<double>();
-				}
-
-				// Verify that we were given a cell.
+			state["mwscript"]["positionCell"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				double x = getOptionalParam<double>(params, "x", 0.0);
+				double y = getOptionalParam<double>(params, "y", 0.0);
+				double z = getOptionalParam<double>(params, "z", 0.0);
+				double rotation = getOptionalParam<double>(params, "rotation", 0.0);
+				std::string cell = getOptionalParam<std::string>(params, "cell", "");
 				if (cell.empty()) {
 					return false;
 				}
@@ -417,50 +270,22 @@ namespace mwse {
 				mwscript::PositionCell(script, reference, x, y, z, rotation, cell.c_str());
 				return true;
 			};
-
-			state["mwscript"]["removeItem"] = [](sol::table params) {
-				TES3::Script* script = getScriptParam(params);
-				TES3::Reference* reference = getReferenceParam(params);
-
-				// Resolve item.
-				sol::object itemParam = params["item"];
-				TES3::BaseObject* item = NULL;
-				if (itemParam.is<std::string>()) {
-					item = tes3::getTemplate(itemParam.as<std::string>());
-				}
-				else if (itemParam.is<TES3::BaseObject*>()) {
-					item = itemParam.as<TES3::BaseObject*>();
-				}
-
+			state["mwscript"]["removeItem"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::BaseObject* item = getOptionalParamTemplate(params, "item");
+				int count = getOptionalParam<double>(params, "count", 1.0);
 				if (item == NULL) {
 					return false;
-				}
-
-				// Resolve count.
-				sol::object countParam = params["count"];
-				long count = 1;
-				if (countParam.is<double>()) {
-					count = countParam.as<double>();
 				}
 
 				mwscript::RemoveItem(script, reference, item, count);
 				return true;
 			};
-
-			state["mwscript"]["removeSpell"] = [](sol::table params) {
-				TES3::Script* script = getScriptParam(params);
-				TES3::Reference* reference = getReferenceParam(params);
-
-				// Resolve spell.
-				sol::object spellParam = params["spell"];
-				TES3::Spell* spell = NULL;
-				if (spellParam.is<std::string>()) {
-					spell = tes3::getObjectByID<TES3::Spell>(spellParam.as<std::string>(), TES3::ObjectType::Spell);
-				}
-				else if (spellParam.is<TES3::Spell*>()) {
-					spell = spellParam.as<TES3::Spell*>();
-				}
-
+			state["mwscript"]["removeSpell"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::Spell* spell = getOptionalParamObject<TES3::Spell>(params, "spell", TES3::ObjectType::Spell);
 				if (spell == NULL) {
 					return false;
 				}
@@ -468,60 +293,30 @@ namespace mwse {
 				mwscript::RemoveSpell(script, reference, spell);
 				return true;
 			};
-
-			state["mwscript"]["scriptRunning"] = [](sol::table params) {
-				TES3::Script* script = getScriptParam(params);
-				TES3::Reference* reference = getReferenceParam(params);
-
-				// Resolve script.
-				sol::object scriptParam = params["script"];
-				TES3::Script* targetScript = NULL;
-				if (scriptParam.is<std::string>()) {
-					targetScript = tes3::getScript(scriptParam.as<std::string>().c_str());
-				}
-				else if (scriptParam.is<TES3::Script*>()) {
-					targetScript = scriptParam.as<TES3::Script*>();
-				}
-
+			state["mwscript"]["scriptRunning"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Script* targetScript = getOptionalParamScript(params, "script");
 				if (targetScript == NULL) {
 					return false;
 				}
 
 				return mwscript::ScriptRunning(script, targetScript);
 			};
-
-			state["mwscript"]["setLevel"] = [](sol::table params) {
-				TES3::Script* script = getScriptParam(params);
-				TES3::Reference* reference = getReferenceParam(params);
-
-				// Resolve level.
-				sol::object levelParam = params["level"];
-				short level = 0;
-				if (levelParam.is<double>()) {
-					level = levelParam.as<double>();
-				}
-				else {
+			state["mwscript"]["setLevel"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				short level = getOptionalParam<double>(params, "level", 0);
+				if (level <= 0) {
 					return false;
 				}
 
 				mwscript::SetLevel(script, reference, level);
 				return true;
 			};
-
-			state["mwscript"]["startCombat"] = [](sol::table params) {
-				TES3::Script* script = getScriptParam(params);
-				TES3::Reference* reference = getReferenceParam(params);
-
-				// Resolve target.
-				sol::object targetParam = params["target"];
-				TES3::Reference* target = NULL;
-				if (targetParam.is<std::string>()) {
-					target = tes3::getReference(targetParam.as<std::string>().c_str());
-				}
-				else if (targetParam.is<TES3::Reference*>()) {
-					target = targetParam.as<TES3::Reference*>();
-				}
-
+			state["mwscript"]["startCombat"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::Reference* target = getOptionalParamReference(params, "target");
 				if (target == NULL) {
 					return false;
 				}
@@ -529,21 +324,10 @@ namespace mwse {
 				mwscript::StartCombat(script, reference, target);
 				return true;
 			};
-
-			state["mwscript"]["startScript"] = [](sol::table params) {
-				TES3::Script* script = getScriptParam(params);
-				TES3::Reference* reference = getReferenceParam(params);
-
-				// Resolve script.
-				sol::object scriptParam = params["script"];
-				TES3::Script* targetScript = NULL;
-				if (scriptParam.is<std::string>()) {
-					targetScript = tes3::getScript(scriptParam.as<std::string>().c_str());
-				}
-				else if (scriptParam.is<TES3::Script*>()) {
-					targetScript = scriptParam.as<TES3::Script*>();
-				}
-
+			state["mwscript"]["startScript"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::Script* targetScript = getOptionalParamScript(params, "script");
 				if (targetScript == NULL) {
 					return false;
 				}
@@ -551,21 +335,10 @@ namespace mwse {
 				mwscript::StartScript(script, reference, targetScript);
 				return true;
 			};
-
-			state["mwscript"]["stopScript"] = [](sol::table params) {
-				TES3::Script* script = getScriptParam(params);
-				TES3::Reference* reference = getReferenceParam(params);
-
-				// Resolve script.
-				sol::object scriptParam = params["script"];
-				TES3::Script* targetScript = NULL;
-				if (scriptParam.is<std::string>()) {
-					targetScript = tes3::getScript(scriptParam.as<std::string>().c_str());
-				}
-				else if (scriptParam.is<TES3::Script*>()) {
-					targetScript = scriptParam.as<TES3::Script*>();
-				}
-
+			state["mwscript"]["stopScript"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::Script* targetScript = getOptionalParamScript(params, "script");
 				if (targetScript == NULL) {
 					return false;
 				}
