@@ -23,6 +23,8 @@
 
 #include "TES3Spell.h"
 #include "TES3Reference.h"
+#include "TES3Creature.h"
+#include "TES3Misc.h"
 
 namespace mwse
 {
@@ -74,6 +76,22 @@ namespace mwse
 
 		void setScriptSecondObject(TES3::BaseObject* record) {
 			*reinterpret_cast<TES3::BaseObject**>(TES3_SECONDOBJECT_IMAGE) = record;
+		}
+
+		TES3::BaseObject* getDataBufferObject() {
+			return *reinterpret_cast<TES3::BaseObject**>(TES3_DATA_BUFFER);
+		}
+
+		void setDataBufferObject(TES3::BaseObject* object) {
+			*reinterpret_cast<TES3::BaseObject**>(TES3_DATA_BUFFER) = object;
+		}
+
+		const char* getDataBufferString() {
+			return *reinterpret_cast<char**>(TES3_DATA_BUFFER);
+		}
+
+		void setDataBufferString(const char* string) {
+			strncpy(reinterpret_cast<char*>(TES3_DATA_BUFFER), string, strlen(string) + 1);
 		}
 
 		long getScriptVariableIndex() {
@@ -191,6 +209,21 @@ namespace mwse
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);
 			setScriptVariableIndex(cachedVarIndex);
+		}
+
+		void AddSoulGem(TES3::Script* script, TES3::Reference* reference, TES3::Creature* creature, TES3::Misc* soulGem) {
+			// Cache previous script variables.
+			TES3::BaseObject* cachedSecondObject = getScriptSecondObject();
+			TES3::BaseObject* cachedDataBufferObject = getDataBufferObject();
+
+			// Prepare variables and run original opcode.
+			setScriptSecondObject(creature);
+			setDataBufferObject(soulGem);
+			RunOriginalOpCode(script, reference, OpCode::AddSoulGem);
+
+			// Restore original script variables.
+			setScriptSecondObject(cachedSecondObject);
+			setDataBufferObject(cachedDataBufferObject);
 		}
 
 		void AddSpell(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate) {

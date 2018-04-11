@@ -142,6 +142,18 @@ namespace mwse {
 				mwscript::AddItem(script, reference, item, count);
 				return true;
 			};
+			state["mwscript"]["addSoulGem"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::Creature* creature = getOptionalParamObject<TES3::Creature>(params, "creature", TES3::ObjectType::Creature);
+				TES3::Misc* soulGem = getOptionalParamObject<TES3::Misc>(params, "soulgem", TES3::ObjectType::Misc);
+				if (creature == NULL || soulGem == NULL) {
+					return false;
+				}
+
+				mwscript::AddSoulGem(script, reference, creature, soulGem);
+				return true;
+			};
 			state["mwscript"]["addSpell"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);

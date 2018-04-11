@@ -54,6 +54,12 @@ namespace mwse
 		void setScriptSecondObject(const char* string);
 		void setScriptSecondObject(TES3::BaseObject* record);
 
+		TES3::BaseObject* getDataBufferObject();
+		void setDataBufferObject(TES3::BaseObject*);
+
+		const char* getDataBufferString();
+		void setDataBufferString(const char*);
+
 		long getScriptVariableIndex();
 		void setScriptVariableIndex(long index);
 
@@ -92,6 +98,8 @@ namespace mwse
 		void Activate(TES3::Script* script, TES3::Reference* reference);
 
 		void AddItem(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, long count);
+
+		void AddSoulGem(TES3::Script*, TES3::Reference*, TES3::Creature*, TES3::Misc*);
 
 		void AddSpell(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate);
 

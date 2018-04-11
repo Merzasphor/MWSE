@@ -47,6 +47,8 @@
 #define TES3_TARGET_ROTY_IMAGE 0x7CEB0C
 #define TES3_TARGET_ROTZ_IMAGE 0x7CEB10
 
+#define TES3_DATA_BUFFER 0x7CB678
+
 //
 // Hooking positions.
 //

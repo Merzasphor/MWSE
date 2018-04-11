@@ -120,6 +120,7 @@ namespace TES3 {
 	struct ItemData;
 	struct Light;
 	struct Lockpick;
+	struct Misc;
 	struct MobileActor;
 	struct MobileCreature;
 	struct MobileNPC;
