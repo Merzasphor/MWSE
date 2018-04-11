@@ -63,7 +63,7 @@ namespace mwse
 		}
 
 		// Call the original function.
-		TES3::Script* script = &virtualMachine.getScript();
+		TES3::Script* script = virtualMachine.getScript();
 		mwse::mwscript::AITravel(script, reference, x, y, z);
 
 		return 0.0f;

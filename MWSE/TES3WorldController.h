@@ -167,6 +167,13 @@ namespace TES3 {
 		int unknown_0x368;
 		int unknown_0x36C;
 		int unknown_0x370;
+
+		//
+		// Other related this-call functions.
+		//
+
+		MobilePlayer* getMobilePlayer();
+
 	};
 	static_assert(sizeof(WorldController) == 0x374, "TES3::WorldController failed size validation");
 }

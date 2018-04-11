@@ -72,7 +72,7 @@ namespace mwse
 		}
 
 		// Call the original function.
-		TES3::Script* script = &virtualMachine.getScript();
+		TES3::Script* script = virtualMachine.getScript();
 		mwse::mwscript::PlaceAtPC(script, reference, templateToPlace, 1, 256.0f, 1);
 
 		// Push back the reference we created.

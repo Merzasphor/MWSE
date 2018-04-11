@@ -48,6 +48,9 @@ using namespace std;
 #include "VirtualMachine.h"
 #include "StringUtil.h"
 
+#include "TES3MobilePlayer.h"
+#include "TES3WorldController.h"
+
 #define PLACEHOLDER 0
 
 #define SUPER VIRTUALMACHINE
@@ -492,39 +495,15 @@ void TES3MACHINE::CheckForSkillUp(long skill_id)
 #if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
 #endif
-	MACPRecord* macp = GetMacpRecord();
-	if (macp) {
-		int const skillUpFunc = TES3_FUNC_SKILL_LEVEL_UP; // address of native MW function
-		__asm
-		{
-			mov ecx, macp;
-			push skill_id;
-			call skillUpFunc;
-		}
-	}
+	tes3::getWorldController()->getMobilePlayer()->levelSkill(skill_id);
 }
 
-MACPRecord* TES3MACHINE::GetMacpRecord()
+TES3::MobilePlayer* TES3MACHINE::GetMacpRecord()
 {
 #if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
 #endif
-	// TODO All offsets appear to be fixed, so we should be able to replace
-	// this by accessing the appropriate fields in yet to be mapped data
-	// structures. Offsets come from the native function at 0x40FF20.
-	MACPRecord* macp = NULL;
-	unsigned long address = TES3_WORLD_CONTROLLER_IMAGE;
-	unsigned long* pointer = reinterpret_cast<unsigned long*>(address);
-	address = (*pointer) + 0x5C;
-	pointer = reinterpret_cast<unsigned long*>(address);
-	pointer = reinterpret_cast<unsigned long*>(*pointer);
-	if (pointer != NULL) {
-		address = reinterpret_cast<unsigned long>(pointer) + 0x24;
-		pointer = reinterpret_cast<unsigned long*>(address);
-		pointer = reinterpret_cast<unsigned long*>(*pointer);
-		macp = reinterpret_cast<MACPRecord*>(*pointer);
-	}
-	return macp;
+	return tes3::getWorldController()->getMobilePlayer();
 }
 
 long TES3MACHINE::GetRandomLong(long min, long max)

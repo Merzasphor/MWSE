@@ -88,7 +88,7 @@ namespace mwse
 		mobileObject->skillProgress[skillIndex] = progress;
 
 		// Check for skill level up.
-		tes3::checkForSkillUp(reference, skillIndex);
+		mobileObject->levelSkill(skillIndex);
 
 		mwse::Stack::getInstance().pushLong(true);
 

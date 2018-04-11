@@ -65,7 +65,7 @@ namespace mwse
 		}
 
 		// Call the original function.
-		TES3::Script* script = &virtualMachine.getScript();
+		TES3::Script* script = virtualMachine.getScript();
 		mwse::mwscript::PositionCell(script, reference, x, y, z, rotation, cell.c_str());
 
 		return 0.0f;

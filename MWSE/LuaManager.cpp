@@ -460,17 +460,7 @@ namespace mwse {
 
 			// Bind function: GetPlayerRef
 			luaState["tes3"]["getPlayerRef"] = []() {
-				TES3::MobilePlayer* mobilePlayer = NULL;
-
-				static int getMACP = TES3_FUNC_GET_MACP;
-				_asm
-				{
-					mov ecx, dword ptr ds : [TES3_WORLD_CONTROLLER_IMAGE];
-					call getMACP;
-					mov mobilePlayer, eax;
-				}
-
-				return mobilePlayer->reference;
+				return tes3::getWorldController()->getMobilePlayer()->reference;
 			};
 
 			// Bind function: tes3.getPlayerCell()

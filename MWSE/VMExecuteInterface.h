@@ -90,6 +90,6 @@ namespace mwse
 
 		virtual void dumpScriptVariables() = 0;
 
-		virtual TES3::Script& getScript() = 0;
+		virtual TES3::Script* getScript() = 0;
 	};
 };

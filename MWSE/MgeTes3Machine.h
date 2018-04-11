@@ -17,7 +17,6 @@
 
 #include "TES3Util.h"
 
-struct MACPRecord;
 struct HWBREAKPOINT;
 struct Context {};
 typedef void* VPSCRIPT;
@@ -81,7 +80,7 @@ struct TES3MACHINE : public VIRTUALMACHINE
 		return mwse::tes3::realloc(to_realloc, size);
 	}
 	void CheckForSkillUp(long skill_id);
-	MACPRecord* GetMacpRecord();
+	TES3::MobilePlayer* GetMacpRecord();
 	long GetRandomLong(long min, long max);
 	float GetRandomFloat(float min, float max);
 	long CreateArray(std::string const& caller);

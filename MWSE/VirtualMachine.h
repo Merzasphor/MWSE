@@ -92,7 +92,7 @@ namespace mwse
 
 		HookContext context;
 
-		TES3::Script& getScript();
+		TES3::Script* getScript();
 
 	private:
 		// The currently executing script.

@@ -61,6 +61,14 @@ namespace TES3 {
 		float inactivityTime; // 0x684
 		int humanStatsBackup; // 0x688
 		GlobalVariable * knownWerewolf; // 0x690
+
+		//
+		// Other related this-call functions.
+		//
+
+		void exerciseSkill(int skillId, float progress);
+		void levelSkill(int skillId);
+
 	};
 	static_assert(sizeof(MobilePlayer) == 0x694, "TES3::MobilePlayer failed size validation");
 }

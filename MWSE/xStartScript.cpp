@@ -62,7 +62,7 @@ namespace mwse
 
 		// Call the original function.
 		TES3::Reference* reference = virtualMachine.getReference();
-		TES3::Script* script = &virtualMachine.getScript();
+		TES3::Script* script = virtualMachine.getScript();
 		mwse::mwscript::StartScript(script, reference, targetScript);
 
 		return 0.0f;

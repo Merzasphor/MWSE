@@ -49,7 +49,7 @@ namespace mwse {
 
 		// We want to modify the real script SCDT info. We'll keep track of where we're reading/writing with a read/write pointer,
 		// starting at the current instruction pointer in the machine code.
-		unsigned char* scriptRWP = reinterpret_cast<unsigned char*>(virtualMachine.getScript().machineCode);
+		unsigned char* scriptRWP = reinterpret_cast<unsigned char*>(virtualMachine.getScript()->machineCode);
 		scriptRWP += +mwse::mwscript::getInstructionPointer();
 
 		// Must be followed by MessageBox opcode and length.

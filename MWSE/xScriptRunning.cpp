@@ -62,7 +62,7 @@ namespace mwse
 		}
 
 		// Call the original function.
-		TES3::Script* script = &virtualMachine.getScript();
+		TES3::Script* script = virtualMachine.getScript();
 		bool result = mwse::mwscript::ScriptRunning(script, targetScript);
 
 		mwse::Stack::getInstance().pushLong(result);

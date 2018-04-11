@@ -71,7 +71,7 @@ namespace mwse
 		}
 
 		// Call the original function.
-		TES3::Script* script = &virtualMachine.getScript();
+		TES3::Script* script = virtualMachine.getScript();
 		mwse::mwscript::RemoveItem(script, reference, itemTemplate, count);
 
 		return 0.0f;

@@ -61,7 +61,6 @@ namespace mwse {
 
             inline InstructionInterface_t *get(const OpCode::OpCode_t opcode) throw (IllegalOpCode)
             {
-                // TODO: Insert timing here to compare implementations.
                 unsigned int primary_index = (opcode >> 8) & 0xFF;
                 unsigned int secondary_index = opcode & 0xFF;
                 InstructionInterface_t **secondary_table = opCode_primary_table[primary_index];

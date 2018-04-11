@@ -58,14 +58,14 @@ namespace mwse
 		// Update the LuaManager to reference our current context.
 		lua::LuaManager& manager = lua::LuaManager::getInstance();
 		manager.setCurrentReference(virtualMachine.getReference());
-		manager.setCurrentScript(&virtualMachine.getScript());
+		manager.setCurrentScript(virtualMachine.getScript());
 
 		// Run the script.
 		sol::state& state = manager.getState();
 		auto result = state.safe_script_file(path);
 		if (!result.valid()) {
 			sol::error error = result;
-			log::getLog() << "Lua error encountered when executing script '" << virtualMachine.getScript().name << "':" << std::endl << error.what() << std::endl;
+			log::getLog() << "Lua error encountered when executing script '" << virtualMachine.getScript()->name << "':" << std::endl << error.what() << std::endl;
 
 			// Clear the stack, since we can't trust what the script did or did not do.
 			mwse::Stack::getInstance().clear();

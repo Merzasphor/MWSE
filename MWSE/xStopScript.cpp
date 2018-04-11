@@ -52,7 +52,7 @@ namespace mwse
 		long scriptNameId = mwse::Stack::getInstance().popLong();
 		const char* scriptName = NULL;
 		if (scriptNameId == 0) {
-			scriptName = virtualMachine.getScript().name;
+			scriptName = virtualMachine.getScript()->name;
 		}
 		else {
 			scriptName = virtualMachine.getString(scriptNameId).c_str();
@@ -68,7 +68,7 @@ namespace mwse
 		}
 
 		// Call the original function.
-		TES3::Script* script = &virtualMachine.getScript();
+		TES3::Script* script = virtualMachine.getScript();
 		mwse::mwscript::StopScript(script, targetScript);
 
 		return 0.0f;

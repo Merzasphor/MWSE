@@ -207,6 +207,7 @@
     <ClCompile Include="TES3MobileActor.cpp" />
     <ClCompile Include="TES3MobileCreatureLua.cpp" />
     <ClCompile Include="TES3MobileNPCLua.cpp" />
+    <ClCompile Include="TES3MobilePlayer.cpp" />
     <ClCompile Include="TES3MobilePlayerLua.cpp" />
     <ClCompile Include="TES3MoonLua.cpp" />
     <ClCompile Include="TES3NPC.cpp" />
@@ -229,6 +230,7 @@
     <ClCompile Include="TES3WeaponLua.cpp" />
     <ClCompile Include="TES3WeatherControllerLua.cpp" />
     <ClCompile Include="TES3WeatherLua.cpp" />
+    <ClCompile Include="TES3WorldController.cpp" />
     <ClCompile Include="TES3WorldControllerLua.cpp" />
     <ClCompile Include="xLuaRunScript.cpp" />
     <ClCompile Include="xMyRef.cpp" />

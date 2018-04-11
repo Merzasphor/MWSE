@@ -80,7 +80,7 @@ namespace mwse
 		}
 
 		// This function isn't working yet.
-		TES3::Script* script = &virtualMachine.getScript();
+		TES3::Script* script = virtualMachine.getScript();
 		mwse::log::getLog() << "xCast: Function unimplemented." << std::endl;
 
 		return 0.0f;

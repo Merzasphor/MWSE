@@ -109,7 +109,7 @@ namespace mwse
 		activator->reference = reference;
 
 		// Call the original activate function.
-		TES3::Script* script = &virtualMachine.getScript();
+		TES3::Script* script = virtualMachine.getScript();
 		mwscript::Activate(script, target);
 		Stack::getInstance().pushLong(true);
 

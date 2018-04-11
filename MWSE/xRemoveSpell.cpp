@@ -70,7 +70,7 @@ namespace mwse
 		}
 
 		// Call the original function.
-		TES3::Script* script = &virtualMachine.getScript();
+		TES3::Script* script = virtualMachine.getScript();
 		mwse::mwscript::RemoveSpell(script, reference, spellTemplate);
 
 		return 0.0f;

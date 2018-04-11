@@ -105,7 +105,7 @@ namespace mwse
 		mobileObject->skillProgress[skillId] = progress;
 
 		// Call Morrowind's native CheckForSkillUp function.
-		tes3::checkForSkillUp(reference, skillId);
+		mobileObject->levelSkill(skillId);
 
 		// Push to indicate success.
 		mwse::Stack::getInstance().pushLong(1);

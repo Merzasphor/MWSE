@@ -72,7 +72,7 @@ namespace mwse
 		}
 
 		// Call the original function.
-		TES3::Script* script = &virtualMachine.getScript();
+		TES3::Script* script = virtualMachine.getScript();
 		bool result = mwse::mwscript::HasItemEquipped(script, reference, itemTemplate);
 
 		mwse::Stack::getInstance().pushLong(result);
