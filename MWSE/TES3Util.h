@@ -126,9 +126,9 @@ namespace mwse {
 
 		float getSkillRequirement(TES3::Reference* reference, long skillId);
 
-		void checkForSkillUp(TES3::Reference* reference, long skillId);
-
 		void checkForLevelUp(long progress);
+
+		void messagePlayer(const char* message);
 
 		// Used in xFirstNPC/Static/Item. The last element should never be non-null.
 		// The first eight elements are pointers to the first reference from the 8 surrounding cells.

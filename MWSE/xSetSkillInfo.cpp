@@ -25,7 +25,9 @@
 #include "TES3Util.h"
 
 #include "TES3DataHandler.h"
+#include "TES3MobilePlayer.h"
 #include "TES3Skill.h"
+#include "TES3WorldController.h"
 
 using namespace mwse;
 
@@ -101,7 +103,7 @@ namespace mwse
 
 		// If our specialization changed, check for a skill level up.
 		if (oldSpecialization != specialization) {
-			tes3::checkForSkillUp(virtualMachine.getReference(), skillIndex);
+			tes3::getWorldController()->getMobilePlayer()->levelSkill(skillIndex);
 		}
 
 		mwse::Stack::getInstance().pushLong(true);

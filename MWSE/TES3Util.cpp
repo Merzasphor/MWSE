@@ -18,6 +18,8 @@
 #include "TES3Spell.h"
 #include "TES3WorldController.h"
 
+#define TES3_general_messagePlayer 0x5F90C0
+
 namespace mwse {
 	namespace tes3 {
 		TES3::WorldController * getWorldController() {
@@ -430,36 +432,16 @@ namespace mwse {
 			return requirement;
 		}
 
-		void checkForSkillUp(TES3::Reference* reference, long skillId) {
-			auto mobileObject = getAttachedMobileActor(reference);
-			if (mobileObject && mobileObject->objectType == TES3::ObjectType::MobilePlayer) {
-				int const FuncSkillUp = TES3_FUNC_SKILL_LEVEL_UP;
-				__asm
-				{
-					mov ecx, mobileObject
-					push skillId
-					call FuncSkillUp
-				}
+		void checkForLevelUp(long progress) {
+			TES3::NonDynamicData* nonDynamicData = getDataHandler()->nonDynamicData;
+			if (progress >= nonDynamicData->GMSTs[TES3::GMST::iLevelupTotal]->value.asLong) {
+				const char* levelUpMessage = nonDynamicData->GMSTs[TES3::GMST::sLevelUpMsg]->value.asString;
+				messagePlayer(levelUpMessage);
 			}
 		}
 
-		void checkForLevelUp(long progress) {
-			TES3::GameSetting** GMSTs = getDataHandler()->nonDynamicData->GMSTs;
-			if (progress >= GMSTs[TES3::GMST::iLevelupTotal]->value.asLong) {
-				const int loadMessage = TES3_FUNC_LOAD_MESSAGE;
-				const int displayMessage = TES3_FUNC_DISPLAY_MESSAGE;
-				__asm
-				{
-					mov ecx, dword ptr[TES3_WORLD_CONTROLLER_IMAGE];
-					push 0x1;
-					push 0x0;
-					push 0x2AA;
-					call loadMessage;
-					push eax;
-					call displayMessage;
-					add esp, 0xC
-				}
-			}
+		void messagePlayer(const char* message) {
+			reinterpret_cast<void(__cdecl *)(const char*, int, int)>(TES3_general_messagePlayer)(message, 0, 1);
 		}
 
 		TES3::Reference* exteriorRefs[9] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
