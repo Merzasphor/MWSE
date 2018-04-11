@@ -7,20 +7,6 @@
 
 namespace TES3 {
 	struct NonDynamicData {
-		struct UnknownStruct {
-			void * vTable; // 0x00
-			long unknown_0x04;
-			void * unknown_0x08;
-			void * unknown_0x0C;
-			void * unknown_0x10;
-			long unknown_0x14;
-			long unknown_0x18;
-			long unknown_0x1C;
-			long unknown_0x20;
-			long unknown_0x24;
-			long unknown_0x28;
-			void * unknown_0x2C;
-		};
 		long unknown_0x00;
 		long unknown_0x04; // always 0?
 		void * unknown_0x08; // Points to info about the last loaded save?
@@ -28,7 +14,18 @@ namespace TES3 {
 		LinkedList<Spell> * spellsList; // 0x10
 		void * unknown_0x14;
 		GameSetting ** GMSTs; // 0x18 // Pointer to array of GMST pointers.
-		UnknownStruct * unknown5[12]; // 0x1C
+		Iterator<Race> * races; // 0x1C
+		Iterator<void> * landTextures; // 0x20
+		Iterator<Class> * classes; // 0x24
+		Iterator<Faction> * factions; // 0x28
+		Iterator<Script> * scripts; // 0x2C
+		Iterator<Sound> * sounds; // 0x30
+		Iterator<void> * soundGenerators; // 0x34
+		Iterator<GlobalVariable> * globals; // 0x38
+		Iterator<void> * dialogs; // 0x3C
+		Iterator<Region> * regions; // 0x40
+		Iterator<void> * birthsigns; // 0x44
+		Iterator<Script> * startScripts; // 0x48
 		Skill skills[27]; // 0x4C
 		MagicEffect magicEffects[143]; // 0x05C8
 
@@ -36,10 +33,12 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
+		BaseObject* resolveObject(const char*);
+		BaseObject* findTemplate2(const char*);
+		Reference* findFirstCloneOfActor(const char*);
 		Script* findScriptByName(const char*);
-
+		GlobalVariable* findGlobalVariable(const char*);
 	};
-	static_assert(sizeof(NonDynamicData::UnknownStruct) == 0x30, "TES3::RecordList::UnknownStruct failed size validation");
 	static_assert(sizeof(NonDynamicData) == 0x9DB8, "TES3::RecordList failed size validation");
 
 	namespace CellGrid {
