@@ -27,6 +27,7 @@
 #include "mwseString.h"
 
 #include "TES3Attachment.h"
+#include "TES3DataHandler.h"
 #include "TES3Inventory.h"
 #include "TES3Collections.h"
 #include "TES3DataHandler.h"
@@ -56,9 +57,6 @@ namespace mwse {
 		T* getRecordById(const std::string& id) {
 			return reinterpret_cast<T*>(getTemplate(id.c_str()));
 		}
-
-		TES3::Script* getScript(const char* id);
-		TES3::Script* getScript(const std::string& id);
 
 		void addObject(TES3::BaseObject* record);
 
@@ -107,10 +105,10 @@ namespace mwse {
 
 			TES3::Object * object;
 			if (type == TES3::ObjectType::Spell) {
-				object = getDataHandler()->recordLists->spellsList->head;
+				object = getDataHandler()->nonDynamicData->spellsList->head;
 			}
 			else {
-				object = getDataHandler()->recordLists->list->head;
+				object = getDataHandler()->nonDynamicData->list->head;
 			}
 
 			while (object != NULL && !(object->objectType == type && _stricmp(objectID, object->vTable.object->getObjectID(object)) == 0)) {

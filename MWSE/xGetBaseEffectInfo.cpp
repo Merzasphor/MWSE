@@ -62,7 +62,7 @@ namespace mwse
 		}
 
 		// Get the effect.
-		TES3::MagicEffect& effect = tes3::getDataHandler()->recordLists->magicEffects[id];
+		TES3::MagicEffect& effect = tes3::getDataHandler()->nonDynamicData->magicEffects[id];
 
 		// Flags are a unique case. There is other data associated with flags that we want
 		// to expose, so we will return it here.

@@ -17,7 +17,7 @@ namespace mwse {
 				sol::object maybeScript = params["_script"];
 				if (maybeScript.valid()) {
 					if (maybeScript.is<std::string>()) {
-						return tes3::getScript(maybeScript.as<std::string>());
+						return tes3::getDataHandler()->nonDynamicData->findScriptByName(maybeScript.as<std::string>().c_str());
 					}
 					else if (maybeScript.is<TES3::Script*>()) {
 						return maybeScript.as<TES3::Script*>();
@@ -75,7 +75,7 @@ namespace mwse {
 				sol::object maybeValue = params[key];
 				if (maybeValue.valid()) {
 					if (maybeValue.is<std::string>()) {
-						return tes3::getScript(maybeValue.as<std::string>());
+						return tes3::getDataHandler()->nonDynamicData->findScriptByName(maybeValue.as<std::string>().c_str());
 					}
 					else if (maybeValue.is<TES3::Script*>()) {
 						return maybeValue.as<TES3::Script*>();

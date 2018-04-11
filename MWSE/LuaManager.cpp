@@ -510,7 +510,7 @@ namespace mwse {
 
 			// Bind function: tes3.getScript
 			luaState["tes3"]["getScript"] = [](std::string& id) {
-				return tes3::getScript(id);
+				return tes3::getDataHandler()->nonDynamicData->findScriptByName(id.c_str());
 			};
 
 			DWORD OldProtect;

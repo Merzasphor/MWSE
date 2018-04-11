@@ -59,7 +59,7 @@ namespace mwse
 		}
 
 		// Try to get the target script.
-		TES3::Script* targetScript = tes3::getScript(scriptName);
+		TES3::Script* targetScript = tes3::getDataHandler()->nonDynamicData->findScriptByName(scriptName);
 		if (targetScript == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xStopScript: No script could be found with name '" << scriptName << "'." << std::endl;

@@ -52,7 +52,7 @@ namespace mwse
 		mwseString& scriptName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Try to get the target script.
-		TES3::Script* targetScript = tes3::getScript(scriptName);
+		TES3::Script* targetScript = tes3::getDataHandler()->nonDynamicData->findScriptByName(scriptName.c_str());
 		if (targetScript == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xStartScript: No script could be found with name '" << scriptName << "'." << std::endl;

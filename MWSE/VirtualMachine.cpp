@@ -109,7 +109,7 @@ TES3::Script& VirtualMachine::getScript()
 
 TES3::BaseObject * VirtualMachine::getTemplate(const char *id)
 {
-	TES3::RecordLists* recordLists = tes3::getDataHandler()->recordLists;
+	TES3::NonDynamicData* recordLists = tes3::getDataHandler()->nonDynamicData;
 
 	TES3::BaseObject * foundTemplate = NULL;
 

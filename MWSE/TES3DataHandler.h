@@ -6,7 +6,7 @@
 #include "TES3Skill.h"
 
 namespace TES3 {
-	struct RecordLists {
+	struct NonDynamicData {
 		struct UnknownStruct {
 			void * vTable; // 0x00
 			long unknown_0x04;
@@ -23,7 +23,7 @@ namespace TES3 {
 		};
 		long unknown_0x00;
 		long unknown_0x04; // always 0?
-		BaseObject * unknown_0x08; // Points to info about the last loaded save?
+		void * unknown_0x08; // Points to info about the last loaded save?
 		LinkedList<Object> * list; // 0x0C
 		LinkedList<Spell> * spellsList; // 0x10
 		void * unknown_0x14;
@@ -32,9 +32,15 @@ namespace TES3 {
 		Skill skills[27]; // 0x4C
 		MagicEffect magicEffects[143]; // 0x05C8
 
+		//
+		// Other related this-call functions.
+		//
+
+		Script* findScriptByName(const char*);
+
 	};
-	static_assert(sizeof(RecordLists::UnknownStruct) == 0x30, "TES3::RecordList::UnknownStruct failed size validation");
-	static_assert(sizeof(RecordLists) == 0x9DB8, "TES3::RecordList failed size validation");
+	static_assert(sizeof(NonDynamicData::UnknownStruct) == 0x30, "TES3::RecordList::UnknownStruct failed size validation");
+	static_assert(sizeof(NonDynamicData) == 0x9DB8, "TES3::RecordList failed size validation");
 
 	namespace CellGrid {
 		enum CellGrid {
@@ -51,7 +57,7 @@ namespace TES3 {
 	}
 
 	struct DataHandler {
-		RecordLists * recordLists; // 0x0
+		NonDynamicData * nonDynamicData; // 0x0
 		CellExteriorData* exteriorCellData[9]; // 0x4
 		void * unknown_0x28[25]; // 0x28
 		void * worldObjectRoot; // 0x8C

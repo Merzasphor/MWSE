@@ -12,7 +12,7 @@ namespace mwse {
 		void bindTES3DataHandler() {
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::RecordLists>("TES3RecordLists",
+			state.new_usertype<TES3::NonDynamicData>("TES3RecordLists",
 				// Disable construction of this type.
 				"new", sol::no_constructor,
 
@@ -20,8 +20,8 @@ namespace mwse {
 				// Properties
 				//
 
-				"skills", sol::readonly_property([](TES3::RecordLists& self) { return std::ref(self.skills); }),
-				"magicEffects", sol::readonly_property([](TES3::RecordLists& self) { return std::ref(self.magicEffects); })
+				"skills", sol::readonly_property([](TES3::NonDynamicData& self) { return std::ref(self.skills); }),
+				"magicEffects", sol::readonly_property([](TES3::NonDynamicData& self) { return std::ref(self.magicEffects); })
 
 				);
 
@@ -33,7 +33,7 @@ namespace mwse {
 				// Properties
 				//
 
-				"recordLists", sol::readonly_property(&TES3::DataHandler::recordLists),
+				"nonDynamicData", sol::readonly_property(&TES3::DataHandler::nonDynamicData),
 
 				"currentCell", sol::readonly_property(&TES3::DataHandler::currentCell),
 				"currentInteriorCell", sol::readonly_property(&TES3::DataHandler::currentInteriorCell),

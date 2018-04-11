@@ -86,7 +86,7 @@ namespace mwse
 		}
 
 		// Get skill info.
-		TES3::Skill& skillInfo = tes3::getDataHandler()->recordLists->skills[skillIndex];
+		TES3::Skill& skillInfo = tes3::getDataHandler()->nonDynamicData->skills[skillIndex];
 
 		// Store old specialization for future check.
 		long oldSpecialization = skillInfo.specialization;

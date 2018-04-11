@@ -79,7 +79,7 @@ namespace mwse
 		}
 
 		// Get spell list.
-		TES3::LinkedList<TES3::Spell>* spellsList = tes3::getDataHandler()->recordLists->spellsList;
+		TES3::LinkedList<TES3::Spell>* spellsList = tes3::getDataHandler()->nonDynamicData->spellsList;
 		TES3::Spell* spellListHead = spellsList->head;
 
 		// Create new spell.

@@ -98,7 +98,7 @@ namespace mwse {
 		}
 
 		TES3::BaseObject* getTemplate(const char *id) {
-			TES3::RecordLists * recordLists = tes3::getDataHandler()->recordLists;
+			TES3::NonDynamicData * recordLists = tes3::getDataHandler()->nonDynamicData;
 
 			TES3::BaseObject * foundTemplate = NULL;
 
@@ -112,24 +112,6 @@ namespace mwse {
 			}
 
 			return foundTemplate;
-		}
-
-		TES3::Script* getScript(const char* id) {
-			static int findScript = TES3_FUNC_FIND_SCRIPT;
-			TES3::Script* script = NULL;
-			__asm
-			{
-				mov ecx, dword ptr ds : [TES3_DATA_HANDLER_IMAGE];
-				mov ecx, [ecx];
-				push id;
-				call findScript;
-				mov script, eax;
-			}
-			return script;
-		}
-
-		TES3::Script* getScript(const std::string& id) {
-			return getScript(id.c_str());
 		}
 
 		TES3::BaseObject* getTemplate(const std::string& id)
@@ -422,7 +404,7 @@ namespace mwse {
 			}
 
 			TES3::DataHandler* dataHandler = getDataHandler();
-			TES3::GameSetting ** gmsts = dataHandler->recordLists->GMSTs;
+			TES3::GameSetting ** gmsts = dataHandler->nonDynamicData->GMSTs;
 
 			TES3::MobileNPC* mobileObject = reinterpret_cast<TES3::MobileNPC*>(getAttachedMobileActor(reference));
 			const TES3::SkillStatistic& skill = mobileObject->skills[skillId];
@@ -441,7 +423,7 @@ namespace mwse {
 
 			// Multiply requirement by specialization bonus.
 			TES3::Class* classRecord = reinterpret_cast<TES3::NPCInstance*>(mobileObject->reference->baseObject)->baseNPC->class_;
-			if (dataHandler->recordLists->skills[skillId].specialization == classRecord->specialization) {
+			if (dataHandler->nonDynamicData->skills[skillId].specialization == classRecord->specialization) {
 				requirement *= gmsts[TES3::GMST::fSpecialSkillBonus]->value.asFloat;
 			}
 
@@ -462,7 +444,7 @@ namespace mwse {
 		}
 
 		void checkForLevelUp(long progress) {
-			TES3::GameSetting** GMSTs = getDataHandler()->recordLists->GMSTs;
+			TES3::GameSetting** GMSTs = getDataHandler()->nonDynamicData->GMSTs;
 			if (progress >= GMSTs[TES3::GMST::iLevelupTotal]->value.asLong) {
 				const int loadMessage = TES3_FUNC_LOAD_MESSAGE;
 				const int displayMessage = TES3_FUNC_DISPLAY_MESSAGE;
