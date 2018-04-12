@@ -156,6 +156,32 @@ namespace mwse {
 				mwscript::AddSoulGem(script, reference, creature, soulGem);
 				return true;
 			};
+			state["mwscript"]["addToLevCreature"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::BaseObject* list = getOptionalParamObject<TES3::BaseObject>(params, "list");
+				TES3::Actor* actor = getOptionalParamObject<TES3::Actor>(params, "creature");
+				short level = getOptionalParam<double>(params, "level", 0.0);
+				if (list == NULL || actor == NULL || level <= 0) {
+					return false;
+				}
+
+				mwscript::AddToLevCreature(script, reference, list, actor, level);
+				return true;
+			};
+			state["mwscript"]["addToLevItem"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::BaseObject* list = getOptionalParamObject<TES3::BaseObject>(params, "list");
+				TES3::PhysicalObject* item = getOptionalParamObject<TES3::PhysicalObject>(params, "item");
+				short level = getOptionalParam<double>(params, "level", 0.0);
+				if (list == NULL || item == NULL || level <= 0) {
+					return false;
+				}
+
+				mwscript::AddToLevItem(script, reference, list, item, level);
+				return true;
+			};
 			state["mwscript"]["addSpell"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
