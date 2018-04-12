@@ -70,7 +70,7 @@ namespace mwse
 		}
 		
 		// Verify that a spell of this id doesn't already exist.
-		if (tes3::getObjectByID<TES3::Spell>(spellId, TES3::ObjectType::Spell) != NULL) {
+		if (tes3::getSpellById(spellId.c_str()) != NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xCreateSpell: A spell of the given id '" << spellId << "' already exists." << std::endl;
 #endif
@@ -103,7 +103,7 @@ namespace mwse
 		tes3::setEffect(newSpell->effects, 1, TES3::EffectID::WaterBreathing, TES3::SkillID::Invalid, TES3::EffectRange::Self, 0, 1, 0, 0);
 
 		// Add object to the game.
-		tes3::addObject(newSpell);
+		tes3::getDataHandler()->nonDynamicData->addNewObject(newSpell);
 
 		Stack::getInstance().pushLong(true);
 

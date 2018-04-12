@@ -55,7 +55,7 @@ namespace mwse
 		long skillAttributeId = -1;
 
 		// Get the ingredient.
-		TES3::Ingredient* ingredient = reinterpret_cast<TES3::Ingredient*>(tes3::getTemplate(id));
+		TES3::Ingredient* ingredient = tes3::getObjectById<TES3::Ingredient>(id, TES3::ObjectType::Ingredient);
 		if (ingredient == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetIngredientEffect: No ingredient record found with id '" << id << "'." << std::endl;

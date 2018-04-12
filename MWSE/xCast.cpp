@@ -62,7 +62,7 @@ namespace mwse
 		}
 
 		// Get spell template by the id.
-		TES3::Spell* spell = tes3::getObjectByID<TES3::Spell>(spellId, TES3::ObjectType::Spell);
+		TES3::Spell* spell = tes3::getSpellById(spellId.c_str());
 		if (spell == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xCast: No template found with id '" << spellId << "'." << std::endl;

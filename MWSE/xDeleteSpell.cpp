@@ -51,7 +51,7 @@ namespace mwse
 		mwseString& id = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Get spell.
-		TES3::Spell* spell = tes3::getObjectByID<TES3::Spell>(id, TES3::ObjectType::Spell);
+		TES3::Spell* spell = tes3::getSpellById(id);
 		if (spell == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xDeleteSpell: No spell found with id '" << id << "'." << std::endl;

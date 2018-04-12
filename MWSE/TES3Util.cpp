@@ -38,79 +38,30 @@ namespace mwse {
 		}
 
 		TES3::Reference* getReference(const char* id) {
-			size_t * secondobject_image_length = reinterpret_cast<size_t*>(TES3_SECONDOBJECT_LENGTH_IMAGE);
-			*secondobject_image_length = strlen(id);
-
-			char * secondobject_image = reinterpret_cast<char*>(TES3_SECONDOBJECT_IMAGE);
-			strcpy(secondobject_image, id);
-
-			long returnreference;
-
 			bool isplayer = !_stricmp(id, "player") || !_stricmp(id, "playersavegame");
-			if (isplayer)
-			{
-				//fixupplayer
-				static int getMACP = TES3_FUNC_GET_MACP;
-				_asm
-				{
-					mov ecx, dword ptr ds : [TES3_WORLD_CONTROLLER_IMAGE];
-					call getMACP;
-					mov edx, [eax + 0x14];
-					mov returnreference, edx;
-				}
+			if (isplayer) {
+				return getWorldController()->getMobilePlayer()->reference;
 			}
-			else
-			{
-				static int fixupInstanceFunction = TES3_FUNC_FIXUP_INSTANCE;
-				//fixupinstance
-				_asm
-				{
-					mov ecx, dword ptr ds : [TES3_DATA_HANDLER_IMAGE];
-					mov ecx, [ecx];
-					push TES3_SECONDOBJECT_IMAGE;
-					call fixupInstanceFunction;
-					mov returnreference, eax;
-				}
+			else {
+				return getDataHandler()->nonDynamicData->findFirstCloneOfActor(id);
 			}
-
-			TES3::Reference * reference = reinterpret_cast<TES3::Reference*>(returnreference);
-			return reference;
 		}
 
 		TES3::Reference* getReference(std::string& id) {
 			return getReference(id.c_str());
 		}
 
-		TES3::BaseObject* getTemplate(const char *id) {
-			TES3::NonDynamicData * recordLists = tes3::getDataHandler()->nonDynamicData;
-
-			TES3::BaseObject * foundTemplate = NULL;
-
-			static int fixupTemplateFunction = TES3_FUNC_FIXUP_TEMPLATE;
-			_asm
-			{
-				mov ecx, recordLists;
-				push id;
-				call fixupTemplateFunction;
-				mov foundTemplate, eax;
+		TES3::Spell* getSpellById(const char* id) {
+			TES3::Spell * spell = getDataHandler()->nonDynamicData->spellsList->head;
+			while (spell != NULL && _stricmp(id, spell->objectID) != 0) {
+				spell = reinterpret_cast<TES3::Spell*>(spell->nextInCollection);
 			}
 
-			return foundTemplate;
+			return spell;
 		}
 
-		TES3::BaseObject* getTemplate(const std::string& id)
-		{
-			return getTemplate(id.c_str());
-		}
-
-		void addObject(TES3::BaseObject* record) {
-			int const kAddObject = TES3_FUNC_ADD_NEW_OBJECT;
-			__asm {
-				mov edx, dword ptr ds : [TES3_DATA_HANDLER_IMAGE];
-				mov ecx, dword ptr ds : [edx];
-				push record;
-				call kAddObject;
-			}
+		TES3::Spell* getSpellById(std::string& id) {
+			return getSpellById(id.c_str());
 		}
 
 		TES3::Reference * skipRemovedReferences(TES3::Reference * reference) {

@@ -54,7 +54,7 @@ namespace mwse
 		if (param) {
 			// Get the record by id string.
 			mwseString& id = virtualMachine.getString(param);
-			TES3::BaseObject* record = tes3::getRecordById<TES3::BaseObject>(id);
+			TES3::BaseObject* record = tes3::getObjectById<TES3::BaseObject>(id);
 			if (record == NULL) {
 #if _DEBUG
 				log::getLog() << "xGetModel: No record found for id '" << id << "'." << std::endl;

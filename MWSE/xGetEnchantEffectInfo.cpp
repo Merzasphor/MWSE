@@ -61,7 +61,7 @@ namespace mwse
 		// Validate effect index.
 		if (effectIndex >= 1 && effectIndex <= 8) {
 			// Get the desired effect.
-			TES3::Enchantment* enchant = tes3::getObjectByID<TES3::Enchantment>(effectId, TES3::ObjectType::Enchantment);
+			TES3::Enchantment* enchant = tes3::getObjectById<TES3::Enchantment>(effectId, TES3::ObjectType::Enchantment);
 			if (enchant) {
 				TES3::Effect* effect = &enchant->effects[effectIndex - 1];
 				// If we found an effect, set the values.

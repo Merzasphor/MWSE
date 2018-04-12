@@ -82,7 +82,7 @@ namespace mwse
 		if (spellId) {
 			// Get the spell based on the ID given.
 			mwseString& spellObjId = virtualMachine.getString(spellId);
-			spell = tes3::getObjectByID<TES3::Spell>(spellObjId, TES3::ObjectType::Spell);
+			spell = tes3::getSpellById(spellObjId.c_str());
 			if (!spell) {
 #if _DEBUG
 				log::getLog() << "xSetTrap: No spell could be found with id '" << spellObjId << "'." << std::endl;

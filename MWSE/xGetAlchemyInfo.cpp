@@ -49,7 +49,7 @@ namespace mwse
 		mwseString& id = virtualMachine.getString(Stack::getInstance().popLong());
 
 		// Get the record by its id.
-		TES3::Alchemy* record = tes3::getRecordById<TES3::Alchemy>(id);
+		TES3::Alchemy* record = tes3::getObjectById<TES3::Alchemy>(id);
 		if (record == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetAlchemyInfo: No record found by id '" << id << "'." << std::endl;

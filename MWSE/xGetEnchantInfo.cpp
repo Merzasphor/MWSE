@@ -57,7 +57,7 @@ namespace mwse
 		long autocalc = 0;
 
 		// Validate effect index.
-		TES3::Enchantment* enchantment = tes3::getObjectByID<TES3::Enchantment>(enchantId, TES3::ObjectType::Enchantment);
+		TES3::Enchantment* enchantment = tes3::getObjectById<TES3::Enchantment>(enchantId, TES3::ObjectType::Enchantment);
 		if (enchantment != NULL) {
 			type = enchantment->castType;
 			cost = enchantment->chargeCost;

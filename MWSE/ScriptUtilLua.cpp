@@ -52,23 +52,6 @@ namespace mwse {
 			return reference;
 		}
 
-		TES3::BaseObject* getOptionalParamTemplate(sol::optional<sol::table> maybeParams, const char* key, TES3::BaseObject* defaultValue = NULL) {
-			if (maybeParams) {
-				sol::table params = maybeParams.value();
-				sol::object maybeValue = params[key];
-				if (maybeValue.valid()) {
-					if (maybeValue.is<std::string>()) {
-						return tes3::getTemplate(maybeValue.as<std::string>());
-					}
-					else if (maybeValue.is<TES3::BaseObject*>()) {
-						return maybeValue.as<TES3::BaseObject*>();
-					}
-				}
-			}
-
-			return defaultValue;
-		}
-
 		TES3::Script* getOptionalParamScript(sol::optional<sol::table> maybeParams, const char* key) {
 			if (maybeParams) {
 				sol::table params = maybeParams.value();
@@ -105,6 +88,25 @@ namespace mwse {
 			return value;
 		}
 
+		TES3::Spell* getOptionalParamSpell(sol::optional<sol::table> maybeParams, const char* key) {
+			TES3::Spell* value = NULL;
+
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeValue = params[key];
+				if (maybeValue.valid()) {
+					if (maybeValue.is<std::string>()) {
+						value = tes3::getSpellById(maybeValue.as<std::string>().c_str());
+					}
+					else if (maybeValue.is<TES3::Spell*>()) {
+						value = maybeValue.as<TES3::Spell*>();
+					}
+				}
+			}
+
+			return value;
+		}
+
 		void bindScriptUtil() {
 			sol::state& state = LuaManager::getInstance().getState();
 
@@ -133,7 +135,7 @@ namespace mwse {
 			state["mwscript"]["addItem"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::BaseObject* item = getOptionalParamTemplate(params, "item");
+				TES3::BaseObject* item = getOptionalParamObject<TES3::BaseObject>(params, "item");
 				int count = getOptionalParam<double>(params, "count", 1.0);
 				if (item == NULL || count <= 0) {
 					return false;
@@ -145,8 +147,8 @@ namespace mwse {
 			state["mwscript"]["addSoulGem"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::Creature* creature = getOptionalParamObject<TES3::Creature>(params, "creature", TES3::ObjectType::Creature);
-				TES3::Misc* soulGem = getOptionalParamObject<TES3::Misc>(params, "soulgem", TES3::ObjectType::Misc);
+				TES3::Creature* creature = getOptionalParamObject<TES3::Creature>(params, "creature");
+				TES3::Misc* soulGem = getOptionalParamObject<TES3::Misc>(params, "soulgem");
 				if (creature == NULL || soulGem == NULL) {
 					return false;
 				}
@@ -157,7 +159,7 @@ namespace mwse {
 			state["mwscript"]["addSpell"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::Spell* spell = getOptionalParamObject<TES3::Spell>(params, "spell", TES3::ObjectType::Spell);
+				TES3::Spell* spell = getOptionalParamSpell(params, "spell");
 				if (spell == NULL) {
 					return false;
 				}
@@ -178,7 +180,7 @@ namespace mwse {
 			state["mwscript"]["drop"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::BaseObject* item = getOptionalParamTemplate(params, "item");
+				TES3::BaseObject* item = getOptionalParamObject<TES3::BaseObject>(params, "item");
 				int count = getOptionalParam<double>(params, "count", 1.0);
 				if (item == NULL) {
 					return false;
@@ -190,7 +192,7 @@ namespace mwse {
 			state["mwscript"]["equip"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::BaseObject* item = getOptionalParamTemplate(params, "item");
+				TES3::BaseObject* item = getOptionalParamObject<TES3::BaseObject>(params, "item");
 				if (item == NULL) {
 					return false;
 				}
@@ -201,7 +203,7 @@ namespace mwse {
 			state["mwscript"]["explodeSpell"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::Spell* spell = getOptionalParamObject<TES3::Spell>(params, "spell", TES3::ObjectType::Spell);
+				TES3::Spell* spell = getOptionalParamSpell(params, "spell");
 				if (spell == NULL) {
 					return false;
 				}
@@ -212,7 +214,7 @@ namespace mwse {
 			state["mwscript"]["hasItemEquipped"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::BaseObject* item = getOptionalParamTemplate(params, "item");
+				TES3::BaseObject* item = getOptionalParamObject<TES3::BaseObject>(params, "item");
 				if (item == NULL) {
 					return false;
 				}
@@ -223,7 +225,7 @@ namespace mwse {
 			state["mwscript"]["getItemCount"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::BaseObject* item = getOptionalParamTemplate(params, "item");
+				TES3::BaseObject* item = getOptionalParamObject<TES3::BaseObject>(params, "item");
 				if (item == NULL) {
 					return false;
 				}
@@ -234,7 +236,7 @@ namespace mwse {
 			state["mwscript"]["getSpellEffects"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::Spell* spell = getOptionalParamObject<TES3::Spell>(params, "spell", TES3::ObjectType::Spell);
+				TES3::Spell* spell = getOptionalParamSpell(params, "spell");
 				if (spell == NULL) {
 					return false;
 				}
@@ -245,7 +247,7 @@ namespace mwse {
 			state["mwscript"]["placeAtPC"] = [](sol::optional<sol::table> params) -> TES3::Reference* {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::BaseObject* object = getOptionalParamTemplate(params, "object");
+				TES3::BaseObject* object = getOptionalParamObject<TES3::BaseObject>(params, "object");
 				int count = getOptionalParam<double>(params, "count", 1.0);
 				double distance = getOptionalParam<double>(params, "distance", 256.0);
 				double direction = getOptionalParam<double>(params, "direction", 1.0);
@@ -285,7 +287,7 @@ namespace mwse {
 			state["mwscript"]["removeItem"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::BaseObject* item = getOptionalParamTemplate(params, "item");
+				TES3::BaseObject* item = getOptionalParamObject<TES3::BaseObject>(params, "item");
 				int count = getOptionalParam<double>(params, "count", 1.0);
 				if (item == NULL) {
 					return false;
@@ -297,7 +299,7 @@ namespace mwse {
 			state["mwscript"]["removeSpell"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::Spell* spell = getOptionalParamObject<TES3::Spell>(params, "spell", TES3::ObjectType::Spell);
+				TES3::Spell* spell = getOptionalParamSpell(params, "spell");
 				if (spell == NULL) {
 					return false;
 				}

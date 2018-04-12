@@ -56,7 +56,7 @@ namespace mwse
 		long origin = 0;
 
 		// Get spell data by id.
-		TES3::Spell* spell = tes3::getObjectByID<TES3::Spell>(spellId, TES3::ObjectType::Spell);;
+		TES3::Spell* spell = tes3::getObjectById<TES3::Spell>(spellId, TES3::ObjectType::Spell);;
 		if (spell != NULL) {
 			name = spell->name;
 			type = spell->castType;

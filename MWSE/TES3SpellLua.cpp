@@ -10,7 +10,7 @@ namespace mwse {
 	namespace lua {
 		TES3::Spell* createSpell(std::string id, std::string name) {
 			// Make sure a spell doesn't already exist with this id.
-			if (tes3::getObjectByID<TES3::Spell>(id, TES3::ObjectType::Spell) != NULL) {
+			if (tes3::getObjectById<TES3::Spell>(id, TES3::ObjectType::Spell) != NULL) {
 				return NULL;
 			}
 
@@ -44,7 +44,7 @@ namespace mwse {
 			tes3::setEffect(newSpell->effects, 1, TES3::EffectID::WaterBreathing, TES3::SkillID::Invalid, TES3::EffectRange::Self, 0, 1, 0, 0);
 
 			// Add object to the game.
-			tes3::addObject(newSpell);
+			tes3::getDataHandler()->nonDynamicData->addNewObject(newSpell);
 
 			// Finally return the spell.
 			return newSpell;

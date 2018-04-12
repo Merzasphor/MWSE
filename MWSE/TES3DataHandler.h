@@ -34,10 +34,11 @@ namespace TES3 {
 		//
 
 		BaseObject* resolveObject(const char*);
-		BaseObject* findTemplate2(const char*);
 		Reference* findFirstCloneOfActor(const char*);
 		Script* findScriptByName(const char*);
 		GlobalVariable* findGlobalVariable(const char*);
+		bool addNewObject(BaseObject*);
+		void deleteObject(BaseObject*);
 	};
 	static_assert(sizeof(NonDynamicData) == 0x9DB8, "TES3::RecordList failed size validation");
 

@@ -66,7 +66,7 @@ namespace mwse
 			// Get the desired effect.
 			TES3::Effect* effects = NULL;
 			if (targetType == TES3::ObjectType::Spell) {
-				TES3::Spell* spell = tes3::getObjectByID<TES3::Spell>(targetId, TES3::ObjectType::Spell);
+				TES3::Spell* spell = tes3::getObjectById<TES3::Spell>(targetId, TES3::ObjectType::Spell);
 				if (spell) {
 					effects = spell->effects;
 				}
@@ -77,7 +77,7 @@ namespace mwse
 				}
 			}
 			else if (targetType == TES3::ObjectType::Enchantment) {
-				TES3::Enchantment* enchant = tes3::getObjectByID<TES3::Enchantment>(targetId, TES3::ObjectType::Enchantment);
+				TES3::Enchantment* enchant = tes3::getObjectById<TES3::Enchantment>(targetId, TES3::ObjectType::Enchantment);
 				if (enchant) {
 					effects = enchant->effects;
 				}
@@ -88,7 +88,7 @@ namespace mwse
 				}
 			}
 			else if (targetType == TES3::ObjectType::Alchemy) {
-				TES3::Alchemy* alchemy = tes3::getObjectByID<TES3::Alchemy>(targetId, TES3::ObjectType::Alchemy);
+				TES3::Alchemy* alchemy = tes3::getObjectById<TES3::Alchemy>(targetId, TES3::ObjectType::Alchemy);
 				if (alchemy) {
 					effects = alchemy->effects;
 				}

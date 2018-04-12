@@ -42,20 +42,26 @@ namespace mwse {
 		TES3::Reference* getReference(const char* id);
 		TES3::Reference* getReference(std::string& id);
 
-		TES3::BaseObject* getTemplate(const char *id);
-		TES3::BaseObject* getTemplate(const std::string& id);
-
 		template <typename T>
-		T* getRecordById(const char* id) {
-			return reinterpret_cast<T*>(getTemplate(id));
+		T* getObjectById(const char* id, int type = 0) {
+			TES3::BaseObject* potentialResult = tes3::getDataHandler()->nonDynamicData->resolveObject(id);
+			if (!potentialResult) {
+				return NULL;
+			}
+			else if (type && potentialResult->objectType != type) {
+				return NULL;
+			}
+
+			return reinterpret_cast<T*>(potentialResult);
 		}
 
 		template <typename T>
-		T* getRecordById(const std::string& id) {
-			return reinterpret_cast<T*>(getTemplate(id.c_str()));
+		T* getObjectById(const std::string& id, int type = 0) {
+			return getObjectById<T>(id.c_str(), type);
 		}
 
-		void addObject(TES3::BaseObject* record);
+		TES3::Spell* getSpellById(const char*);
+		TES3::Spell* getSpellById(std::string&);
 
 		TES3::Reference* skipRemovedReferences(TES3::Reference* reference);
 
@@ -95,25 +101,6 @@ namespace mwse {
 		TES3::ItemData* getAttachedItemDataNode(TES3::Reference* reference);
 
 		TES3::LockAttachmentNode* getAttachedLockNode(TES3::Reference* reference);
-
-		template <typename T>
-		T* getObjectByID(const std::string& id, TES3::ObjectType::ObjectType type) {
-			const char* objectID = id.c_str();
-
-			TES3::Object * object;
-			if (type == TES3::ObjectType::Spell) {
-				object = getDataHandler()->nonDynamicData->spellsList->head;
-			}
-			else {
-				object = getDataHandler()->nonDynamicData->list->head;
-			}
-
-			while (object != NULL && !(object->objectType == type && _stricmp(objectID, object->vTable.object->getObjectID(object)) == 0)) {
-				object = object->nextInCollection;
-			}
-
-			return reinterpret_cast<T*>(object);
-		}
 
 		size_t getEffectCount(const TES3::Effect* effectArray);
 

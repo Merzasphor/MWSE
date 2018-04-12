@@ -22,7 +22,7 @@ namespace mwse {
 		}
 
 		template <typename T>
-		T* getOptionalParamObject(sol::optional<sol::table> maybeParams, const char* key, TES3::ObjectType::ObjectType type) {
+		T* getOptionalParamObject(sol::optional<sol::table> maybeParams, const char* key) {
 			T* value = NULL;
 
 			if (maybeParams) {
@@ -30,7 +30,7 @@ namespace mwse {
 				sol::object maybeValue = params[key];
 				if (maybeValue.valid()) {
 					if (maybeValue.is<std::string>()) {
-						value = tes3::getObjectByID<T>(maybeValue.as<std::string>(), type);
+						value = tes3::getObjectById<T>(maybeValue.as<std::string>().c_str());
 					}
 					else if (maybeValue.is<T*>()) {
 						value = maybeValue.as<T*>();

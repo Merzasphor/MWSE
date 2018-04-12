@@ -495,7 +495,7 @@ namespace mwse {
 
 			// Bind function: tes3.getObject
 			luaState["tes3"]["getObject"] = [](std::string& id, TES3::ObjectType::ObjectType type) {
-				return makeLuaObject(tes3::getObjectByID<TES3::BaseObject>(id, type));
+				return makeLuaObject(tes3::getObjectById<TES3::BaseObject>(id, type));
 			};
 
 			// Bind function: tes3.getScript
