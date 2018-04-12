@@ -106,6 +106,8 @@ namespace TES3 {
 	struct Creature;
 	struct CreatureInstance;
 	struct DataHandler;
+	struct DialogueInfo;
+	struct DialogueFilter;
 	struct Door;
 	struct Effect;
 	struct Enchantment;

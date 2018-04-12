@@ -37,6 +37,7 @@ namespace TES3 {
 		Reference* findFirstCloneOfActor(const char*);
 		Script* findScriptByName(const char*);
 		GlobalVariable* findGlobalVariable(const char*);
+		DialogueInfo* findDialogInfo(const char*);
 		bool addNewObject(BaseObject*);
 		void deleteObject(BaseObject*);
 	};

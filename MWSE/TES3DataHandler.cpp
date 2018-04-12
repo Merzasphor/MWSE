@@ -5,6 +5,7 @@
 #define TES3_NonDynamicData_findFirstCloneOfActor 0x4B8F50
 #define TES3_NonDynamicData_findScriptByName 0x4BA700
 #define TES3_NonDynamicData_findGlobalVariable 0x4BA820
+#define TES3_NonDynamicData_findDialogInfo 0x4BA8D0
 #define TES3_NonDynamicData_addNewObject 0x4B8980
 #define TES3_NonDynamicData_deleteObject 0x4B8B20
 
@@ -29,6 +30,10 @@ namespace TES3 {
 
 	GlobalVariable* NonDynamicData::findGlobalVariable(const char* name) {
 		return reinterpret_cast<GlobalVariable*(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findGlobalVariable)(this, name);
+	}
+
+	DialogueInfo* NonDynamicData::findDialogInfo(const char* name) {
+		return reinterpret_cast<DialogueInfo*(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findDialogInfo)(this, name);
 	}
 
 	bool NonDynamicData::addNewObject(BaseObject* object) {

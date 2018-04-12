@@ -25,6 +25,7 @@
 #include "TES3Reference.h"
 #include "TES3Creature.h"
 #include "TES3Misc.h"
+#include "TES3DialogueInfo.h"
 
 namespace mwse
 {
@@ -260,6 +261,18 @@ namespace mwse
 			setScriptSecondObject(cachedSecondObject);
 			setDataBufferObject(cachedDataBufferObject);
 			setScriptDestinationX(cachedDestinationX);
+		}
+
+		void AddTopic(TES3::Script* script, TES3::Reference* reference, TES3::DialogueInfo* topic) {
+			// Cache destination values.
+			TES3::BaseObject* cachedSecondObject = getScriptSecondObject();
+
+			// Call original opcode.
+			setScriptSecondObject(topic);
+			RunOriginalOpCode(script, reference, OpCode::AddTopic);
+
+			// Restore destination values.
+			setScriptSecondObject(cachedSecondObject);
 		}
 
 		void AddSpell(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate) {

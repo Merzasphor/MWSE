@@ -107,6 +107,25 @@ namespace mwse {
 			return value;
 		}
 
+		TES3::DialogueInfo* getOptionalParamTopic(sol::optional<sol::table> maybeParams, const char* key) {
+			TES3::DialogueInfo* value = NULL;
+
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeValue = params[key];
+				if (maybeValue.valid()) {
+					if (maybeValue.is<std::string>()) {
+						value = tes3::getDataHandler()->nonDynamicData->findDialogInfo(maybeValue.as<std::string>().c_str());
+					}
+					else if (maybeValue.is<TES3::DialogueInfo*>()) {
+						value = maybeValue.as<TES3::DialogueInfo*>();
+					}
+				}
+			}
+
+			return value;
+		}
+
 		void bindScriptUtil() {
 			sol::state& state = LuaManager::getInstance().getState();
 
@@ -180,6 +199,17 @@ namespace mwse {
 				}
 
 				mwscript::AddToLevItem(script, reference, list, item, level);
+				return true;
+			};
+			state["mwscript"]["addTopic"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::DialogueInfo* topic = getOptionalParamTopic(params, "topic");
+				if (topic == NULL) {
+					return false;
+				}
+
+				mwscript::AddTopic(script, reference, topic);
 				return true;
 			};
 			state["mwscript"]["addSpell"] = [](sol::optional<sol::table> params) {
