@@ -42,9 +42,6 @@ namespace mwse {
 		TES3::Reference* getReference(const char* id);
 		TES3::Reference* getReference(std::string& id);
 
-		TES3::GlobalVariable* getGlobalRecord(const char* id);
-		TES3::GlobalVariable* getGlobalRecord(const std::string& id);
-
 		TES3::BaseObject* getTemplate(const char *id);
 		TES3::BaseObject* getTemplate(const std::string& id);
 

@@ -25,6 +25,7 @@
 #include "TES3Util.h"
 
 #include "TES3GlobalVariable.h"
+#include "TES3DataHandler.h"
 
 using namespace mwse;
 
@@ -48,7 +49,7 @@ namespace mwse {
 		float value = 0.0f;
 
 		// Get global.
-		const TES3::GlobalVariable* global = tes3::getGlobalRecord(variable);
+		const TES3::GlobalVariable* global = tes3::getDataHandler()->nonDynamicData->findGlobalVariable(variable.c_str());
 		if (global == NULL) {
 			mwse::log::getLog() << "xGetGlobal: Global '" << variable << "' could not be found." << std::endl;
 			mwse::Stack::getInstance().pushFloat(0.0f);

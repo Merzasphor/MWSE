@@ -37,24 +37,6 @@ namespace mwse {
 			return *reinterpret_cast<TES3::Game**>(TES3_GAME_IMAGE);
 		}
 
-		TES3::GlobalVariable* getGlobalRecord(const char* id) {
-			static int findGLOB = TES3_FUNC_FIND_GLOBAL;
-			TES3::GlobalVariable* global = NULL;
-			__asm
-			{
-				mov ecx, dword ptr ds : [TES3_DATA_HANDLER_IMAGE];
-				mov ecx, [ecx];
-				push id;
-				call findGLOB;
-				mov global, eax;
-			}
-			return global;
-		}
-
-		TES3::GlobalVariable* getGlobalRecord(const std::string& id) {
-			return getGlobalRecord(id.c_str());
-		}
-
 		TES3::Reference* getReference(const char* id) {
 			size_t * secondobject_image_length = reinterpret_cast<size_t*>(TES3_SECONDOBJECT_LENGTH_IMAGE);
 			*secondobject_image_length = strlen(id);
