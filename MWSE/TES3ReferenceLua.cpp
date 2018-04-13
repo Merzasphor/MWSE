@@ -6,6 +6,8 @@
 #include "LuaUtil.h"
 #include "TES3Util.h"
 
+#include "TES3ScriptLua.h"
+
 namespace TES3 {
 	sol::object Reference::getBaseObject() {
 		return mwse::lua::makeLuaObject(baseObject);
@@ -79,6 +81,15 @@ namespace TES3 {
 
 namespace mwse {
 	namespace lua {
+		sol::object getContext(TES3::Reference* reference) {
+			auto variables = tes3::getAttachedItemDataNode(reference);
+			if (variables == NULL) {
+				return sol::nil;
+			}
+			sol::state& state = mwse::lua::LuaManager::getInstance().getState();
+			return sol::make_object(state, std::shared_ptr<ScriptContext>(new ScriptContext(variables->script, variables->scriptData)));
+		}
+
 		void bindTES3Reference() {
 			LuaManager::getInstance().getState().new_usertype<TES3::Reference>("TES3Reference",
 				// Disable construction of this type.
@@ -97,6 +108,7 @@ namespace mwse {
 				"isRespawn", sol::readonly_property(&TES3::Reference::isRespawn),
 
 				"attachments", sol::readonly_property(&TES3::Reference::getAttachments),
+				"context", sol::readonly_property([](TES3::Reference& self) { return getContext(&self); }),
 
 				"object", sol::readonly_property(&TES3::Reference::getBaseObject),
 
