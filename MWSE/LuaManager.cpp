@@ -503,6 +503,11 @@ namespace mwse {
 				return tes3::getDataHandler()->nonDynamicData->findScriptByName(id.c_str());
 			};
 
+			// Bind function: tes3.getGlobal
+			luaState["tes3"]["getGlobal"] = [](std::string& id) {
+				return tes3::getDataHandler()->nonDynamicData->findGlobalVariable(id.c_str());
+			};
+
 			DWORD OldProtect;
 
 			// Hook the point where scripts are created so we can determine if it is a lua script.
