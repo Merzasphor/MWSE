@@ -24,11 +24,11 @@ namespace TES3 {
 		//
 
 		void activate(Reference*);
-		void setActivationFlag(int);
-		void clearActivationFlag(int);
-		bool testActivationFlag(int);
-		void setActivationReference(Reference*);
-		Reference * getActivationReference();
+		void setActionFlag(int);
+		void clearActionFlag(int);
+		bool testActionFlag(int);
+		void setActionReference(Reference*);
+		Reference * getActionReference();
 
 		//
 		// Lua interface functions.

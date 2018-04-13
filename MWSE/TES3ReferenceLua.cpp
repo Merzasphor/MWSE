@@ -100,7 +100,7 @@ namespace mwse {
 
 				"object", sol::readonly_property(&TES3::Reference::getBaseObject),
 
-				"activationReference", sol::property(&TES3::Reference::getActivationReference, &TES3::Reference::setActivationReference),
+				"activationReference", sol::property(&TES3::Reference::getActionReference, &TES3::Reference::setActionReference),
 
 				"data", sol::readonly_property(&TES3::Reference::getLuaTable),
 
@@ -109,9 +109,9 @@ namespace mwse {
 				//
 
 				"activate", &TES3::Reference::activate,
-				"setActivationFlag", &TES3::Reference::setActivationFlag,
-				"clearActivationFlag", &TES3::Reference::clearActivationFlag,
-				"testActivationFlag", &TES3::Reference::testActivationFlag
+				"setActionFlag", &TES3::Reference::setActionFlag,
+				"clearActionFlag", &TES3::Reference::clearActionFlag,
+				"testActionFlag", &TES3::Reference::testActionFlag
 
 				);
 		}

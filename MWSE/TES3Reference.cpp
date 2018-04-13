@@ -4,11 +4,11 @@
 #include "TES3Util.h"
 
 #define TES3_Reference_activate 0x4E9610
-#define TES3_Reference_setActivationFlag 0x4E55A0
-#define TES3_Reference_clearActivationFlag 0x4E55E0
-#define TES3_Reference_testActivationFlag 0x4E5520
-#define TES3_Reference_setActivationReference 0x4E5610
-#define TES3_Reference_getActivationReference 0x4E5650
+#define TES3_Reference_setActionFlag 0x4E55A0
+#define TES3_Reference_clearActionFlag 0x4E55E0
+#define TES3_Reference_testActionFlag 0x4E5520
+#define TES3_Reference_setActionReference 0x4E5610
+#define TES3_Reference_getActionReference 0x4E5650
 
 namespace TES3 {
 	void Reference::activate(Reference* target) {
@@ -16,23 +16,23 @@ namespace TES3 {
 		reinterpret_cast<void(__thiscall *)(Reference*, Reference*, int)>(TES3_Reference_activate)(target, this, 1);
 	}
 
-	void Reference::setActivationFlag(int flag) {
-		reinterpret_cast<void(__thiscall *)(Reference*, int)>(TES3_Reference_setActivationFlag)(this, flag);
+	void Reference::setActionFlag(int flag) {
+		reinterpret_cast<void(__thiscall *)(Reference*, int)>(TES3_Reference_setActionFlag)(this, flag);
 	}
 
-	void Reference::clearActivationFlag(int flag) {
-		reinterpret_cast<void(__thiscall *)(Reference*, int)>(TES3_Reference_clearActivationFlag)(this, flag);
+	void Reference::clearActionFlag(int flag) {
+		reinterpret_cast<void(__thiscall *)(Reference*, int)>(TES3_Reference_clearActionFlag)(this, flag);
 	}
 
-	bool Reference::testActivationFlag(int flag) {
-		return (reinterpret_cast<signed char(__thiscall *)(Reference*, int)>(TES3_Reference_testActivationFlag)(this, flag) != 0);
+	bool Reference::testActionFlag(int flag) {
+		return (reinterpret_cast<signed char(__thiscall *)(Reference*, int)>(TES3_Reference_testActionFlag)(this, flag) != 0);
 	}
 
-	void Reference::setActivationReference(Reference* reference) {
-		reinterpret_cast<void (__thiscall *)(Reference*, Reference*)>(TES3_Reference_setActivationReference)(this, reference);
+	void Reference::setActionReference(Reference* reference) {
+		reinterpret_cast<void (__thiscall *)(Reference*, Reference*)>(TES3_Reference_setActionReference)(this, reference);
 	}
 
-	Reference* Reference::getActivationReference() {
-		return reinterpret_cast<Reference* (__thiscall *)(Reference*)>(TES3_Reference_getActivationReference)(this);
+	Reference* Reference::getActionReference() {
+		return reinterpret_cast<Reference* (__thiscall *)(Reference*)>(TES3_Reference_getActionReference)(this);
 	}
 }

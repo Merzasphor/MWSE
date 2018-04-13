@@ -76,6 +76,20 @@ namespace TES3 {
 	// Action
 	//
 
+	namespace ActionFlags {
+		enum ActionFlags {
+			UseEnabled = 0x1,
+			OnActivate = 0x2,
+			OnDeath = 0x10,
+			OnKnockout = 0x20,
+			OnMurder = 0x40,
+			DoorOpening = 0x100,
+			DoorClosing = 0x200,
+			DoorJammedOpening = 0x400,
+			DoorJammedClosing = 0x800
+		};
+	}
+
 	struct ActionAttachment : Attachment {
 		int flags;
 		Reference * reference;
