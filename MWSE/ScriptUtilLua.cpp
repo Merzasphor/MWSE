@@ -188,6 +188,17 @@ namespace mwse {
 				mwscript::AddToLevCreature(script, reference, list, actor, level);
 				return true;
 			};
+			state["mwscript"]["addSpell"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::Spell* spell = getOptionalParamSpell(params, "spell");
+				if (spell == NULL) {
+					return false;
+				}
+
+				mwscript::AddSpell(script, reference, spell);
+				return true;
+			};
 			state["mwscript"]["addToLevItem"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
@@ -210,17 +221,6 @@ namespace mwse {
 				}
 
 				mwscript::AddTopic(script, reference, topic);
-				return true;
-			};
-			state["mwscript"]["addSpell"] = [](sol::optional<sol::table> params) {
-				TES3::Script* script = getOptionalParamExecutionScript(params);
-				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::Spell* spell = getOptionalParamSpell(params, "spell");
-				if (spell == NULL) {
-					return false;
-				}
-
-				mwscript::AddSpell(script, reference, spell);
 				return true;
 			};
 			state["mwscript"]["aiTravel"] = [](sol::optional<sol::table> params) {
@@ -299,6 +299,36 @@ namespace mwse {
 
 				mwscript::GetSpellEffects(script, reference, spell);
 				return true;
+			};
+			state["mwscript"]["onActivate"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+
+				bool result = reference->testActionFlag(TES3::ActionFlags::OnActivate);
+				reference->clearActionFlag(TES3::ActionFlags::UseEnabled);
+				reference->clearActionFlag(TES3::ActionFlags::OnActivate);
+				return result;
+			};
+			state["mwscript"]["onDeath"] = [](sol::optional<sol::table> params) {
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+
+				bool result = reference->testActionFlag(TES3::ActionFlags::OnDeath);
+				reference->clearActionFlag(TES3::ActionFlags::OnDeath);
+				return result;
+			};
+			state["mwscript"]["onKnockout"] = [](sol::optional<sol::table> params) {
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+
+				bool result = reference->testActionFlag(TES3::ActionFlags::OnKnockout);
+				reference->clearActionFlag(TES3::ActionFlags::OnKnockout);
+				return result;
+			};
+			state["mwscript"]["onMurder"] = [](sol::optional<sol::table> params) {
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+
+				bool result = reference->testActionFlag(TES3::ActionFlags::OnMurder);
+				reference->clearActionFlag(TES3::ActionFlags::OnMurder);
+				return result;
 			};
 			state["mwscript"]["placeAtPC"] = [](sol::optional<sol::table> params) -> TES3::Reference* {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
