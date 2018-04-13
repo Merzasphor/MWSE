@@ -4,15 +4,18 @@
 
 #include "TES3Cell.h"
 #include "TES3DataHandler.h"
-#include "TES3Skill.h"
+#include "TES3DialogueInfo.h"
+#include "TES3GlobalVariable.h"
 #include "TES3MagicEffect.h"
+#include "TES3Script.h"
+#include "TES3Skill.h"
 
 namespace mwse {
 	namespace lua {
 		void bindTES3DataHandler() {
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::NonDynamicData>("TES3RecordLists",
+			state.new_usertype<TES3::NonDynamicData>("TES3NonDynamicData",
 				// Disable construction of this type.
 				"new", sol::no_constructor,
 
@@ -21,7 +24,19 @@ namespace mwse {
 				//
 
 				"skills", sol::readonly_property([](TES3::NonDynamicData& self) { return std::ref(self.skills); }),
-				"magicEffects", sol::readonly_property([](TES3::NonDynamicData& self) { return std::ref(self.magicEffects); })
+				"magicEffects", sol::readonly_property([](TES3::NonDynamicData& self) { return std::ref(self.magicEffects); }),
+
+				//
+				// Functions
+				//
+
+				"resolveObject", &TES3::NonDynamicData::resolveObject,
+				"findFirstCloneOfActor", &TES3::NonDynamicData::findFirstCloneOfActor,
+				"findScript", &TES3::NonDynamicData::findScriptByName,
+				"findGlobalVariable", &TES3::NonDynamicData::findGlobalVariable,
+				"findDialogInfo", &TES3::NonDynamicData::findDialogInfo,
+				"addNewObject", &TES3::NonDynamicData::addNewObject,
+				"deleteObject", &TES3::NonDynamicData::deleteObject
 
 				);
 
