@@ -116,6 +116,14 @@ namespace mwse {
 				"data", sol::readonly_property(&TES3::Reference::getLuaTable),
 
 				//
+				// Behave as a linked list node.
+				//
+
+				"previousNode", sol::readonly_property(&TES3::Reference::previousInCollection),
+				"nextNode", sol::readonly_property(&TES3::Reference::nextInCollection),
+				"data", [](TES3::Reference& self) { return &self; },
+
+				//
 				// Functions
 				//
 

@@ -591,6 +591,9 @@
     <ClInclude Include="LuaUnifiedHeader.h">
       <Filter>Header Files\Lua\sol2</Filter>
     </ClInclude>
+    <ClInclude Include="TES3ReferenceListLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1492,6 +1495,9 @@
     </ClCompile>
     <ClCompile Include="TES3WorldController.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3ReferenceListLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

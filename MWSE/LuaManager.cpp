@@ -44,6 +44,7 @@
 #include "TES3ProbeLua.h"
 #include "TES3RaceLua.h"
 #include "TES3ReferenceLua.h"
+#include "TES3ReferenceListLua.h"
 #include "TES3RegionLua.h"
 #include "TES3RepairToolLua.h"
 #include "TES3ScriptLua.h"
@@ -191,6 +192,7 @@ namespace mwse {
 			bindTES3Probe();
 			bindTES3Race();
 			bindTES3Reference();
+			bindTES3ReferenceList();
 			bindTES3Region();
 			bindTES3RepairTool();
 			bindTES3Script();

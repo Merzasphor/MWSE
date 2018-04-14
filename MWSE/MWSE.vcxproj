@@ -129,6 +129,7 @@
     <ClInclude Include="TES3RaceLua.h" />
     <ClInclude Include="TES3Reference.h" />
     <ClInclude Include="TES3ReferenceList.h" />
+    <ClInclude Include="TES3ReferenceListLua.h" />
     <ClInclude Include="TES3ReferenceLua.h" />
     <ClInclude Include="TES3Region.h" />
     <ClInclude Include="TES3RegionLua.h" />
@@ -217,6 +218,7 @@
     <ClCompile Include="TES3ProbeLua.cpp" />
     <ClCompile Include="TES3RaceLua.cpp" />
     <ClCompile Include="TES3Reference.cpp" />
+    <ClCompile Include="TES3ReferenceListLua.cpp" />
     <ClCompile Include="TES3ReferenceLua.cpp" />
     <ClCompile Include="TES3Region.cpp" />
     <ClCompile Include="TES3RegionLua.cpp" />
