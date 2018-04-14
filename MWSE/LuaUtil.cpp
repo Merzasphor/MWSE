@@ -3,8 +3,125 @@
 #include "LuaUnifiedHeader.h"
 #include "LuaManager.h"
 
+#include "TES3Util.h"
+
 namespace mwse {
 	namespace lua {
+		TES3::Script* getOptionalParamExecutionScript(sol::optional<sol::table> maybeParams) {
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeScript = params["_script"];
+				if (maybeScript.valid()) {
+					if (maybeScript.is<std::string>()) {
+						return tes3::getDataHandler()->nonDynamicData->findScriptByName(maybeScript.as<std::string>().c_str());
+					}
+					else if (maybeScript.is<TES3::Script*>()) {
+						return maybeScript.as<TES3::Script*>();
+					}
+				}
+			}
+
+			// Fall back to the currently executing script.
+			return LuaManager::getInstance().getCurrentScript();
+		}
+
+		TES3::Reference* getOptionalParamExecutionReference(sol::optional<sol::table> maybeParams) {
+			TES3::Reference* reference = NULL;
+
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeScript = params["reference"];
+				if (maybeScript.valid()) {
+					if (maybeScript.is<std::string>()) {
+						reference = tes3::getReference(maybeScript.as<std::string>());
+					}
+					else if (maybeScript.is<TES3::Reference*>()) {
+						reference = maybeScript.as<TES3::Reference*>();
+					}
+				}
+			}
+
+			if (reference == NULL) {
+				reference = LuaManager::getInstance().getCurrentReference();
+			}
+
+			return reference;
+		}
+
+		TES3::Script* getOptionalParamScript(sol::optional<sol::table> maybeParams, const char* key) {
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeValue = params[key];
+				if (maybeValue.valid()) {
+					if (maybeValue.is<std::string>()) {
+						return tes3::getDataHandler()->nonDynamicData->findScriptByName(maybeValue.as<std::string>().c_str());
+					}
+					else if (maybeValue.is<TES3::Script*>()) {
+						return maybeValue.as<TES3::Script*>();
+					}
+				}
+			}
+
+			return NULL;
+		}
+
+		TES3::Reference* getOptionalParamReference(sol::optional<sol::table> maybeParams, const char* key) {
+			TES3::Reference* value = NULL;
+
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeValue = params[key];
+				if (maybeValue.valid()) {
+					if (maybeValue.is<std::string>()) {
+						value = tes3::getReference(maybeValue.as<std::string>());
+					}
+					else if (maybeValue.is<TES3::Reference*>()) {
+						value = maybeValue.as<TES3::Reference*>();
+					}
+				}
+			}
+
+			return value;
+		}
+
+		TES3::Spell* getOptionalParamSpell(sol::optional<sol::table> maybeParams, const char* key) {
+			TES3::Spell* value = NULL;
+
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeValue = params[key];
+				if (maybeValue.valid()) {
+					if (maybeValue.is<std::string>()) {
+						value = tes3::getSpellById(maybeValue.as<std::string>().c_str());
+					}
+					else if (maybeValue.is<TES3::Spell*>()) {
+						value = maybeValue.as<TES3::Spell*>();
+					}
+				}
+			}
+
+			return value;
+		}
+
+		TES3::DialogueInfo* getOptionalParamTopic(sol::optional<sol::table> maybeParams, const char* key) {
+			TES3::DialogueInfo* value = NULL;
+
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeValue = params[key];
+				if (maybeValue.valid()) {
+					if (maybeValue.is<std::string>()) {
+						value = tes3::getDataHandler()->nonDynamicData->findDialogInfo(maybeValue.as<std::string>().c_str());
+					}
+					else if (maybeValue.is<TES3::DialogueInfo*>()) {
+						value = maybeValue.as<TES3::DialogueInfo*>();
+					}
+				}
+			}
+
+			return value;
+		}
+
 		sol::object makeLuaObject(TES3::BaseObject* object) {
 			if (object == NULL) {
 				return sol::nil;

@@ -3,6 +3,7 @@
 #include "TES3Util.h"
 
 #include "LuaUnifiedHeader.h"
+#include "LuaUtil.h"
 #include "LuaManager.h"
 
 
