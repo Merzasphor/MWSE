@@ -30,6 +30,7 @@ namespace mwse {
 				//
 
 				"count", sol::readonly_property(&TES3::ItemData::count),
+				"owner", sol::readonly_property([](TES3::ItemData& self) { return makeLuaObject(self.owner); }),
 				"condition", &TES3::ItemData::condition,
 				"charge", sol::property(
 					[](TES3::ItemData& self) { return self.enchantData.charge; },
