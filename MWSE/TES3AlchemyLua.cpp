@@ -53,11 +53,11 @@ namespace mwse {
 			alchemy->flags = getOptionalParam<double>(params, "flags", 0.0);
 
 			// Assign effects.
-			sol::table effects = params["effects"];
-			if (effects.valid()) {
+			sol::optional<sol::table> effects = params["effects"];
+			if (effects) {
 				for (int i = 1; i <= 8; i++) {
-					sol::table effectParams = effects[i];
-					if (!effectParams.valid()) {
+					sol::optional<sol::table> effectParams = effects.value()[i];
+					if (!effectParams) {
 						break;
 					}
 
@@ -65,7 +65,7 @@ namespace mwse {
 					effect->effectID = getOptionalParam<double>(effectParams, "id", -1);
 					effect->skillID = getOptionalParam<double>(effectParams, "skill", -1);
 					effect->attributeID = getOptionalParam<double>(effectParams, "attribute", -1);
-					effect->rangeType = getOptionalParam<double>(effectParams, "range", -1);
+					effect->rangeType = getOptionalParam<double>(effectParams, "range", TES3::EffectRange::Self);
 					effect->radius = getOptionalParam<double>(effectParams, "radius", 0);
 					effect->duration = getOptionalParam<double>(effectParams, "duration", 0);
 					effect->magnitudeMin = getOptionalParam<double>(effectParams, "min", 0);
@@ -73,8 +73,15 @@ namespace mwse {
 				}
 			}
 
+			// If we don't have an effect, fill in the first one.
+			if (alchemy->effects[0].effectID == TES3::EffectID::None) {
+				alchemy->effects[0].effectID = TES3::EffectID::WaterBreathing;
+			}
+
 			// All good? Add and return the object.
-			tes3::getDataHandler()->nonDynamicData->addNewObject(alchemy);
+			if (!tes3::getDataHandler()->nonDynamicData->addNewObject(alchemy)) {
+				return NULL;
+			}
 			return alchemy;
 		}
 
