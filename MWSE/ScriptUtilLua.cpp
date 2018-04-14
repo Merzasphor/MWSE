@@ -159,6 +159,16 @@ namespace mwse {
 				mwscript::HasItemEquipped(script, reference, item);
 				return true;
 			};
+			state["mwscript"]["getDistance"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::Reference* target = getOptionalParamObject<TES3::Reference>(params, "target");
+				if (reference == NULL || target == NULL) {
+					return -1.0f;
+				}
+
+				return mwscript::GetDistance(script, reference, target);
+			};
 			state["mwscript"]["getItemCount"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);

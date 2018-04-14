@@ -35,6 +35,7 @@
 #include "TES3Probe.h"
 #include "TES3Race.h"
 #include "TES3Reference.h"
+#include "TES3ReferenceList.h"
 #include "TES3Region.h"
 #include "TES3RepairTool.h"
 #include "TES3Script.h"

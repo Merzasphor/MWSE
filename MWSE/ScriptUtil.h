@@ -121,6 +121,8 @@ namespace mwse
 
 		bool HasItemEquipped(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate);
 
+		float GetDistance(TES3::Script* script, TES3::Reference* reference, TES3::Reference* target);
+		
 		long GetItemCount(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate);
 
 		bool GetSpellEffects(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate);

@@ -366,6 +366,20 @@ namespace mwse
 			return value != 0.0f;
 		}
 
+		float GetDistance(TES3::Script* script, TES3::Reference* reference, TES3::Reference* target) {
+			// Cache previous script variables.
+			TES3::BaseObject* cachedSecondObject = getScriptSecondObject();
+
+			// Setup parameters and run original opcode.
+			setScriptSecondObject(target);
+			float value = RunOriginalOpCode(script, reference, OpCode::GetDistance);
+
+			// Restore original script variables.
+			setScriptSecondObject(cachedSecondObject);
+
+			return value;
+		}
+
 		long GetItemCount(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate) {
 			// Cache previous script variables.
 			TES3::BaseObject* cachedSecondObject = getScriptSecondObject();
