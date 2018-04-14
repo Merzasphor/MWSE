@@ -1,11 +1,11 @@
 #include "StackLua.h"
 
-#include "LuaManager.h"
+#include "LuaUnifiedHeader.h"
 #include "LuaUtil.h"
+#include "LuaManager.h"
 
-#include "Stack.h"
-#include "mwAdapter.h"
 #include "VirtualMachine.h"
+#include "Stack.h"
 
 namespace mwse {
 	namespace lua {

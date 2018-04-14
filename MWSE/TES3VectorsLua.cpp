@@ -1,5 +1,6 @@
 #include "TES3Vectors.h"
 
+#include "LuaUnifiedHeader.h"
 #include "LuaManager.h"
 
 namespace mwse {

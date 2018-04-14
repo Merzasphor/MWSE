@@ -1,11 +1,8 @@
 #include "TES3RegionLua.h"
 
-#include "LuaManager.h"
+#include "LuaUnifiedHeader.h"
 #include "LuaUtil.h"
-
-#include "TES3Region.h"
-
-#include "TES3Actor.h"
+#include "LuaManager.h"
 
 namespace mwse {
 	namespace lua {

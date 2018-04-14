@@ -1,9 +1,5 @@
 #pragma once
 
-#include "sol.hpp"
-
-#include "TES3Object.h"
-
 namespace mwse {
 	namespace lua {
 		template <typename T>

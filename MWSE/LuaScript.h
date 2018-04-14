@@ -1,10 +1,8 @@
 #pragma once
 
-#include "sol.hpp"
+#include "LuaUnifiedHeader.h"
 
 #include "DynamicLuaObject.h"
-
-#include "TES3Object.h"
 
 namespace mwse {
 	namespace lua {

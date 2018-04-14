@@ -1,9 +1,7 @@
 #include "TES3CellLua.h"
 
+#include "LuaUnifiedHeader.h"
 #include "LuaManager.h"
-
-#include "TES3Cell.h"
-#include "TES3Region.h"
 
 namespace mwse {
 	namespace lua {

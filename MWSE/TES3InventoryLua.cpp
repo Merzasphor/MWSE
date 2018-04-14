@@ -1,11 +1,9 @@
 #include "TES3InventoryLua.h"
 
-#include "LuaManager.h"
+#include "LuaUnifiedHeader.h"
 #include "LuaUtil.h"
+#include "LuaManager.h"
 
-#include "TES3Item.h"
-#include "TES3Inventory.h"
-#include "TES3Script.h"
 #include "TES3ScriptLua.h"
 
 namespace TES3 {

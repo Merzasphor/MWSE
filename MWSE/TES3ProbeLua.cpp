@@ -1,9 +1,7 @@
 #include "TES3ProbeLua.h"
 
+#include "LuaUnifiedHeader.h"
 #include "LuaManager.h"
-
-#include "TES3Probe.h"
-#include "TES3Script.h"
 
 namespace mwse {
 	namespace lua {

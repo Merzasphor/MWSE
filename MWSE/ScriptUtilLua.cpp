@@ -1,13 +1,11 @@
-#include "ScriptUtilLua.h"
-
-#include "LuaManager.h"
+#include "LuaUnifiedHeader.h"
 #include "LuaUtil.h"
+#include "LuaManager.h"
+
+#include "ScriptUtilLua.h"
 
 #include "TES3Util.h"
 #include "ScriptUtil.h"
-
-#include "TES3Script.h"
-#include "TES3Reference.h"
 
 namespace mwse {
 	namespace lua {

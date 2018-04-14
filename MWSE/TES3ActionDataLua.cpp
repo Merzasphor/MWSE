@@ -1,9 +1,8 @@
 #include "TES3ActionDataLua.h"
 
-#include "LuaManager.h"
+#include "LuaUnifiedHeader.h"
 #include "LuaUtil.h"
-
-#include "TES3ActionData.h"
+#include "LuaManager.h"
 
 namespace TES3 {
 	sol::object ActionData::getTarget() {

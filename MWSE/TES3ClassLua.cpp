@@ -1,8 +1,7 @@
 #include "TES3ClassLua.h"
 
+#include "LuaUnifiedHeader.h"
 #include "LuaManager.h"
-
-#include "TES3Class.h"
 
 namespace TES3 {
 	sol::table Class::getAttributes() {

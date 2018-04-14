@@ -1,18 +1,7 @@
 #include "TES3MobileNPCLua.h"
 
+#include "LuaUnifiedHeader.h"
 #include "LuaManager.h"
-
-#include "TES3Armor.h"
-#include "TES3Inventory.h"
-#include "TES3Item.h"
-#include "TES3Light.h"
-#include "TES3MobileNPC.h"
-#include "TES3NPC.h"
-#include "TES3Reference.h"
-#include "TES3Spell.h"
-#include "TES3Statistic.h"
-#include "TES3Vectors.h"
-#include "TES3Weapon.h"
 
 namespace mwse {
 	namespace lua {

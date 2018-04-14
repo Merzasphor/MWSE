@@ -1,10 +1,7 @@
 #include "TES3GameLua.h"
 
+#include "LuaUnifiedHeader.h"
 #include "LuaManager.h"
-
-#include "TES3Game.h"
-
-#include "TES3Reference.h"
 
 namespace mwse {
 	namespace lua {

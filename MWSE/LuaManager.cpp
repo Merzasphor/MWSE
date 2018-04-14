@@ -3,17 +3,12 @@
 #include "mwOffsets.h"
 #include "Log.h"
 #include "TES3Util.h"
-#include "TES3Game.h"
-#include "TES3Reference.h"
-#include "LuaUtil.h"
 #include "MemoryUtil.h"
 #include "ScriptUtil.h"
 
-#include "TES3Cell.h"
-#include "TES3DataHandler.h"
-#include "TES3Script.h"
-#include "TES3MobilePlayer.h"
-#include "TES3WorldController.h"
+#include "LuaUnifiedHeader.h"
+
+#include "LuaScript.h"
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
 #include "StackLua.h"

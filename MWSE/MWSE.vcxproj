@@ -25,6 +25,7 @@
     <ClInclude Include="MemoryUtil.h" />
     <ClInclude Include="ScriptUtilLua.h" />
     <ClInclude Include="sol.hpp" />
+    <ClInclude Include="LuaUnifiedHeader.h" />
     <ClInclude Include="sol_forward.hpp" />
     <ClInclude Include="StackLua.h" />
     <ClInclude Include="TES3ActionDataLua.h" />

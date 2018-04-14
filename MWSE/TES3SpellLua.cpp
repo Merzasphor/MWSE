@@ -1,8 +1,8 @@
 #include "TES3SpellLua.h"
 
+#include "LuaUnifiedHeader.h"
+#include "LuaUtil.h"
 #include "LuaManager.h"
-
-#include "TES3Spell.h"
 
 #include "TES3Util.h"
 

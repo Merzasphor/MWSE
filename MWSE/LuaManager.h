@@ -2,9 +2,7 @@
 
 #include <unordered_map>
 
-#include "sol.hpp"
-
-#include "LuaScript.h"
+#include "LuaUnifiedHeader.h"
 
 namespace mwse {
 	namespace lua {

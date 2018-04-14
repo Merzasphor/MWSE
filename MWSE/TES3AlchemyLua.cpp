@@ -1,9 +1,10 @@
 #include "TES3AlchemyLua.h"
 
+#include "TES3Util.h"
+
+#include "LuaUnifiedHeader.h"
 #include "LuaManager.h"
 
-#include "TES3Alchemy.h"
-#include "TES3Script.h"
 
 namespace mwse {
 	namespace lua {

@@ -1,13 +1,7 @@
 #include "TES3ContainerLua.h"
 
+#include "LuaUnifiedHeader.h"
 #include "LuaManager.h"
-#include "LuaUtil.h"
-
-#include "TES3AIConfig.h"
-#include "TES3Container.h"
-#include "TES3Item.h"
-#include "TES3Inventory.h"
-#include "TES3Script.h"
 
 namespace mwse {
 	namespace lua {

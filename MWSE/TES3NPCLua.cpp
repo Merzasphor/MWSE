@@ -1,16 +1,7 @@
 #include "TES3NPCLua.h"
 
+#include "LuaUnifiedHeader.h"
 #include "LuaManager.h"
-#include "LuaUtil.h"
-
-#include "TES3AIConfig.h"
-#include "TES3Class.h"
-#include "TES3Faction.h"
-#include "TES3Inventory.h"
-#include "TES3Item.h"
-#include "TES3NPC.h"
-#include "TES3Race.h"
-#include "TES3Script.h"
 
 namespace mwse {
 	namespace lua {

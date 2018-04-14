@@ -1,10 +1,7 @@
 #include "TES3MiscLua.h"
 
+#include "LuaUnifiedHeader.h"
 #include "LuaManager.h"
-
-#include "TES3Misc.h"
-#include "TES3Enchantment.h"
-#include "TES3Script.h"
 
 namespace mwse {
 	namespace lua {

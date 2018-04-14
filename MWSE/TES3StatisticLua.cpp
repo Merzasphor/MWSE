@@ -1,8 +1,8 @@
 #include "TES3StatisticLua.h"
 
+#include "LuaUnifiedHeader.h"
+#include "LuaUtil.h"
 #include "LuaManager.h"
-
-#include "TES3Statistic.h"
 
 namespace TES3 {
 	void Statistic::luaModBase(float value) {

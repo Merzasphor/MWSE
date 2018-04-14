@@ -1,9 +1,7 @@
 #include "TES3MagicEffectLua.h"
 
+#include "LuaUnifiedHeader.h"
 #include "LuaManager.h"
-
-#include "TES3MagicEffect.h"
-#include "TES3Script.h"
 
 namespace mwse {
 	namespace lua {

@@ -1,8 +1,7 @@
 #include "TES3RaceLua.h"
 
+#include "LuaUnifiedHeader.h"
 #include "LuaManager.h"
-
-#include "TES3Race.h"
 
 namespace mwse {
 	namespace lua {
