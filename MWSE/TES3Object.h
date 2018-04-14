@@ -220,7 +220,7 @@ namespace TES3 {
 		void * unknown_0xF0;
 		void * unknown_0xF4;
 		void * unknown_0xF8;
-		char* (__thiscall * setModelPath)(BaseObject*, char*); // 0xFC
+		char* (__thiscall * setModelPath)(BaseObject*, const char*); // 0xFC
 		void * unknown_0x100;
 		void * unknown_0x104;
 		void * isLocationMarker; // 0x108
@@ -309,7 +309,7 @@ namespace TES3 {
 		AIConfig * getAIConfig();
 		unsigned char getAutoCalc();
 		unsigned char setAutoCalc(unsigned char);
-		char* setModelPath(char*);
+		char* setModelPath(const char*);
 		char* setName(const char*);
 	};
 	static_assert(sizeof(Object) == 0x28, "TES3::Object failed size validation");

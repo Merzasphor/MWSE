@@ -161,7 +161,7 @@ namespace TES3 {
 		return vTable.object->setAutoCalc(this, value);
 	}
 
-	char* Object::setModelPath(char* path) {
+	char* Object::setModelPath(const char* path) {
 		return vTable.object->setModelPath(this, path);
 	}
 
