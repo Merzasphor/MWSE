@@ -19,6 +19,7 @@
 #include "TES3WorldController.h"
 
 #define TES3_general_messagePlayer 0x5F90C0
+#define TES3_general_setStringSlot 0x47B410
 
 namespace mwse {
 	namespace tes3 {
@@ -161,6 +162,10 @@ namespace mwse {
 			}
 
 			return reinterpret_cast<TES3::BaseObject*>(base);
+		}
+
+		char* setDataString(char** container, const char* string) {
+			return reinterpret_cast<char*(__cdecl *)(char**, const char*)>(TES3_general_setStringSlot)(container, string);
 		}
 
 		bool insertAttachment(TES3::Reference* reference, TES3::Attachment* attachment) {

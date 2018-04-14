@@ -77,6 +77,8 @@ namespace mwse {
 
 		TES3::BaseObject* getBaseRecord(TES3::BaseObject* reference);
 
+		char* setDataString(char**, const char*);
+
 		template <typename T>
 		T* getAttachment(TES3::Reference* reference, TES3::AttachmentType::AttachmentType attachmentType) {
 			if (reference == NULL || reference->attachments == NULL) {
