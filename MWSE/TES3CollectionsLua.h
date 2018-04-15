@@ -23,7 +23,7 @@ namespace mwse {
 
 					"previousNode", sol::readonly_property(&TES3::IteratorNode<T>::previous),
 					"nextNode", sol::readonly_property(&TES3::IteratorNode<T>::next),
-					"data", [](TES3::IteratorNode<T>& self) { return  makeLuaObject(self.data); }
+					"nodeData", [](TES3::IteratorNode<T>& self) { return  makeLuaObject(self.data); }
 
 				);
 			}
@@ -73,7 +73,7 @@ namespace mwse {
 
 					"previousNode", sol::readonly_property(&TES3::IteratorNode<T>::previous),
 					"nextNode", sol::readonly_property(&TES3::IteratorNode<T>::next),
-					"data", sol::readonly_property([](TES3::IteratorNode<T>& self)
+					"nodeData", sol::readonly_property([](TES3::IteratorNode<T>& self)
 				{
 					return self.data;
 				})

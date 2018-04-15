@@ -121,7 +121,7 @@ namespace mwse {
 
 				"previousNode", sol::readonly_property(&TES3::Reference::previousInCollection),
 				"nextNode", sol::readonly_property(&TES3::Reference::nextInCollection),
-				"data", [](TES3::Reference& self) { return &self; },
+				"nodeData", sol::readonly_property([](TES3::Reference& self) { return &self; }),
 
 				//
 				// Functions

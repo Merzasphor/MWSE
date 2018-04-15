@@ -48,7 +48,7 @@ function tes3.iterate(iterator)
 	local node = iterator.head
 	return function()
 		if (node) then
-			local data = node.data
+			local data = node.nodeData
 			node = node.nextNode
 			return data
 		end
