@@ -1,10 +1,10 @@
 return {
-	Strength = 0,
-	Intelligence = 1,
-	Willpower = 2,
-	Agility = 3,
-	Speed = 4,
-	Endurance = 5,
-	Personality = 6,
-	Luck = 7,
+	["strength"] = 0,
+	["intelligence"] = 1,
+	["willpower"] = 2,
+	["agility"] = 3,
+	["speed"] = 4,
+	["endurance"] = 5,
+	["personality"] = 6,
+	["luck"] = 7,
 }

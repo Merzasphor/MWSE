@@ -1,6 +1,6 @@
 return {
-	Lock = 3,
-	Variable = 6,
-	MACP = 8,
-	Activator = 9,
+	["lock"] = 3,
+	["variable"] = 6,
+	["actor"] = 8,
+	["activator"] = 9,
 }

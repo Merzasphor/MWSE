@@ -1,6 +1,6 @@
 return {
-	CastOnce = 0,
-	OnStrike = 1,
-	OnUse = 2,
-	Constant = 3,
+	["castOnce"] = 0,
+	["onStrike"] = 1,
+	["onUse"] = 2,
+	["constant"] = 3,
 }

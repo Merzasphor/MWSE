@@ -1,6 +1,6 @@
 return {
-	Invalid = -1,
-	Combat = 0,
-	Magic = 1,
-	Stealth = 2,
+	["invalid"] = -1,
+	["combat"] = 0,
+	["magic"] = 1,
+	["stealth"] = 2,
 }

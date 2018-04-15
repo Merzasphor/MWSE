@@ -1,8 +1,8 @@
 return {
-	Spell = 0,
-	Ability = 1,
-	Blight = 2,
-	Disease = 3,
-	Curse = 4,
-	Power = 5,
+	["spell"] = 0,
+	["ability"] = 1,
+	["blight"] = 2,
+	["disease"] = 3,
+	["curse"] = 4,
+	["power"] = 5,
 }

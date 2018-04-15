@@ -1,21 +1,21 @@
 local tes3 = {}
 
 -- Game constants.
-tes3.apparatusType = require("tes3.ApparatusType")
-tes3.attachmentType = require("tes3.AttachmentType")
-tes3.attribute = require("tes3.Attribute")
-tes3.attributeName = require("tes3.AttributeName")
-tes3.effect = require("tes3.Effect")
-tes3.enchantmentType = require("tes3.EnchantmentType")
-tes3.objectType = require("tes3.ObjectType")
-tes3.skill = require("tes3.Skill")
-tes3.skillName = require("tes3.SkillName")
-tes3.skillType = require("tes3.SkillType")
-tes3.specialization = require("tes3.Specialization")
-tes3.specializationName = require("tes3.SpecializationName")
-tes3.spellOrigin = require("tes3.SpellOrigin")
-tes3.spellType = require("tes3.SpellType")
-tes3.weaponType = require("tes3.WeaponType")
+tes3.apparatusType = require("tes3.apparatusType")
+tes3.attachmentType = require("tes3.attachmentType")
+tes3.attribute = require("tes3.attribute")
+tes3.attributeName = require("tes3.attributeName")
+tes3.effect = require("tes3.effect")
+tes3.enchantmentType = require("tes3.enchantmentType")
+tes3.objectType = require("tes3.objectType")
+tes3.skill = require("tes3.skill")
+tes3.skillName = require("tes3.skillName")
+tes3.skillType = require("tes3.skillType")
+tes3.specialization = require("tes3.specialization")
+tes3.specializationName = require("tes3.specializationName")
+tes3.spellOrigin = require("tes3.spellOrigin")
+tes3.spellType = require("tes3.spellType")
+tes3.weaponType = require("tes3.weaponType")
 
 -------------------------------------------------
 -- Extend table API
@@ -32,15 +32,15 @@ end
 -------------------------------------------------
 
 function tes3.getAttributeName(attributeId)
-	return tes3.AttributeName[attributeId] or "Invalid"
+	return tes3.attributeName[attributeId] or "invalid"
 end
 
 function tes3.getSkillName(skillId)
-	return tes3.SkillName[skillId] or "Invalid"
+	return tes3.skillName[skillId] or "invalid"
 end
 
 function tes3.getSpecializationName(specializationId)
-	return tes3.SpecializationName[specializationId] or "Invalid"
+	return tes3.specializationName[specializationId] or "invalid"
 end
 
 -- Iterator to use TES3::Iterator in a for loop.

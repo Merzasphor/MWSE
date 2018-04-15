@@ -1,4 +1,4 @@
 return {
-	Module = 1,
-	Spellmaker = 2
+	["module"] = 1,
+	["spellmaker"] = 2
 }

@@ -1,6 +1,6 @@
 return {
-	Major = 0,
-	Minor = 1,
-	Misc = 2,
-	Miscellaneous = 2,
+	["major"] = 0,
+	["minor"] = 1,
+	["misc"] = 2,
+	["miscellaneous"] = 2,
 }

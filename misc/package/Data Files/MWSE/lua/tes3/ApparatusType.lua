@@ -1,6 +1,6 @@
 return {
-	MortarAndPestle = 0,
-	Alembic = 1,
-	Calcinator = 2,
-	Retort = 3,
+	["mortarAndPestle"] = 0,
+	["alembic"] = 1,
+	["calcinator"] = 2,
+	["retort"] = 3,
 }
