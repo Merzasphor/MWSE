@@ -169,16 +169,15 @@ namespace mwse {
 
 				return mwscript::GetDistance(script, reference, target);
 			};
-			state["mwscript"]["getItemCount"] = [](sol::optional<sol::table> params) {
+			state["mwscript"]["getItemCount"] = [](sol::optional<sol::table> params) -> int {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
 				TES3::BaseObject* item = getOptionalParamObject<TES3::BaseObject>(params, "item");
 				if (item == NULL) {
-					return false;
+					return 0;
 				}
 
-				mwscript::GetItemCount(script, reference, item);
-				return true;
+				return mwscript::GetItemCount(script, reference, item);
 			};
 			state["mwscript"]["getSpellEffects"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
