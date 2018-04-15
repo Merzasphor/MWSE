@@ -187,8 +187,7 @@ namespace mwse {
 					return false;
 				}
 
-				mwscript::GetSpellEffects(script, reference, spell);
-				return true;
+				return mwscript::GetSpellEffects(script, reference, spell);
 			};
 			state["mwscript"]["onActivate"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
