@@ -55,4 +55,16 @@ function tes3.iterate(iterator)
 	end
 end
 
+-- Iterator to use TES3::TArray in a for loop.
+function tes3.loopTArray(tarray)
+	local index = 0
+	local length = #tarray
+	return function()
+		index = index + 1
+		if (index <= length) then
+			return tarray[index]
+		end
+	end
+end
+
 return tes3
