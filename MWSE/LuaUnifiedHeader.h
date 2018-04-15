@@ -41,6 +41,7 @@
 #include "TES3Script.h"
 #include "TES3Skill.h"
 #include "TES3Spell.h"
+#include "TES3Static.h"
 #include "TES3Statistic.h"
 #include "TES3Vectors.h"
 #include "TES3Weapon.h"

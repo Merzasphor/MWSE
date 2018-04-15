@@ -142,6 +142,7 @@ namespace TES3 {
 	struct ScriptVariables;
 	struct Sound;
 	struct Spell;
+	struct Static;
 	struct Statistic;
 	struct Weapon;
 	struct Weather;

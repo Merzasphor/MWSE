@@ -50,6 +50,7 @@
 #include "TES3ScriptLua.h"
 #include "TES3SkillLua.h"
 #include "TES3SpellLua.h"
+#include "TES3StaticLua.h"
 #include "TES3StatisticLua.h"
 #include "TES3VectorsLua.h"
 #include "TES3WeaponLua.h"
@@ -198,6 +199,7 @@ namespace mwse {
 			bindTES3Script();
 			bindTES3Skill();
 			bindTES3Spell();
+			bindTES3Static();
 			bindTES3Statistic();
 			bindTES3Vectors();
 			bindTES3Weapon();

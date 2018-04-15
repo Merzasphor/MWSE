@@ -199,6 +199,8 @@ namespace mwse {
 				return sol::make_object(state, reinterpret_cast<TES3::Skill*>(object));
 			case TES3::ObjectType::Spell:
 				return sol::make_object(state, reinterpret_cast<TES3::Spell*>(object));
+			case TES3::ObjectType::Static:
+				return sol::make_object(state, reinterpret_cast<TES3::Static*>(object));
 			case TES3::ObjectType::Ammo:
 			case TES3::ObjectType::Weapon:
 				return sol::make_object(state, reinterpret_cast<TES3::Weapon*>(object));
