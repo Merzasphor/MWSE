@@ -119,8 +119,8 @@ namespace mwse {
 				// Behave as a linked list node.
 				//
 
-				"previousNode", sol::readonly_property(&TES3::Reference::previousInCollection),
-				"nextNode", sol::readonly_property(&TES3::Reference::nextInCollection),
+				"previousNode", sol::readonly_property([](TES3::Reference& self) { return reinterpret_cast<TES3::Reference*>(self.previousInCollection); }),
+				"nextNode", sol::readonly_property([](TES3::Reference& self) { return reinterpret_cast<TES3::Reference*>(self.nextInCollection); }),
 				"nodeData", sol::readonly_property([](TES3::Reference& self) { return &self; }),
 
 				//
