@@ -30,6 +30,7 @@
 #include "TES3EnchantmentLua.h"
 #include "TES3FactionLua.h"
 #include "TES3GameLua.h"
+#include "TES3GameSettingLua.h"
 #include "TES3IngredientLua.h"
 #include "TES3InventoryLua.h"
 #include "TES3LightLua.h"
@@ -175,6 +176,7 @@ namespace mwse {
 			bindTES3Enchantment();
 			bindTES3Faction();
 			bindTES3Game();
+			bindTES3GameSetting();
 			bindTES3Ingredient();
 			bindTES3Inventory();
 			bindTES3Light();
@@ -501,6 +503,33 @@ namespace mwse {
 			// Bind function: tes3.getGlobal
 			luaState["tes3"]["getGlobal"] = [](std::string& id) {
 				return tes3::getDataHandler()->nonDynamicData->findGlobalVariable(id.c_str());
+			};
+
+			// Bind function: tes3.getGMST
+			luaState["tes3"]["getGMST"] = [](sol::object key) -> sol::object {
+				sol::state& state = LuaManager::getInstance().getState();
+				if (key.is<double>()) {
+					int index = key.as<double>();
+					if (index >= TES3::GMST::sMonthMorningstar && index <= TES3::GMST::sWitchhunter) {
+						return sol::make_object(state, tes3::getDataHandler()->nonDynamicData->GMSTs[index]);
+					}
+				}
+				else if (key.is<std::string>()) {
+					int index = -1;
+					std::string keyStr = key.as<std::string>();
+					for (int i = 0; i <= TES3::GMST::sWitchhunter; i++) {
+						TES3::GameSettingInfo* info = tes3::getGMSTInfo(i);
+						if (strcmp(info->name, keyStr.c_str()) == 0) {
+							index = i;
+							break;
+						}
+					}
+
+					if (index != -1) {
+						return sol::make_object(state, tes3::getDataHandler()->nonDynamicData->GMSTs[index]);
+					}
+				}
+				return sol::nil;
 			};
 
 			DWORD OldProtect;

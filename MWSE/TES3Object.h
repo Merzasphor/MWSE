@@ -115,6 +115,7 @@ namespace TES3 {
 	struct Faction;
 	struct Game;
 	struct GameSetting;
+	struct GameSettingInfo;
 	struct GlobalVariable;
 	struct InputConfig;
 	struct InputController;

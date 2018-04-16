@@ -21,6 +21,8 @@
 #define TES3_general_messagePlayer 0x5F90C0
 #define TES3_general_setStringSlot 0x47B410
 
+#define TES3_data_GMSTs 0x794800
+
 namespace mwse {
 	namespace tes3 {
 		TES3::WorldController * getWorldController() {
@@ -380,6 +382,10 @@ namespace mwse {
 
 		void messagePlayer(const char* message) {
 			reinterpret_cast<void(__cdecl *)(const char*, int, int)>(TES3_general_messagePlayer)(message, 0, 1);
+		}
+
+		TES3::GameSettingInfo* getGMSTInfo(int index) {
+			return &reinterpret_cast<TES3::GameSettingInfo*>(TES3_data_GMSTs)[index];
 		}
 
 		TES3::Reference* exteriorRefs[9] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };

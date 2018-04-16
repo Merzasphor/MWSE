@@ -1529,16 +1529,22 @@ namespace TES3 {
 		};
 	}
 
+	// In-application structure used to store default values for GMSTs.
+	struct GameSettingInfo {
+		char* name; // 0x0
+		char* defaultStringValue; // 0x4
+		int defaultIntValue; // 0x8
+		float defaultFloatValue; // 0xC
+		int type; // 0x10
+	};
+
 	struct GameSetting : BaseObject {
-		union values
-		{
+		union {
 			long asLong;
 			float asFloat;
 			char * asString;
 		} value; // 0x10
 		long index; // 0x14 // Array index of this GMST
-		int unknown_0x18;
-		int unknown_0x1C;
 	};
-	static_assert(sizeof(GameSetting) == 0x20, "TES3::GameSetting failed size validation");
+	static_assert(sizeof(GameSetting) == 0x18, "TES3::GameSetting failed size validation");
 }
