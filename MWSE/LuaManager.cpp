@@ -91,14 +91,6 @@ namespace mwse {
 		// The currently executing overwritten script.
 		static LuaScript * currentOverwrittenScript = NULL;
 
-		// Overwrite function for Lua's print(), so that we can get information to the log
-		// from lua.
-		int printToLog(lua_State* L) {
-			log::getLog() << lua_tostring(L, -1) << std::endl;
-			lua_pop(L, 1);
-			return 0;
-		}
-
 		// We still abort the program if an unprotected lua error happens. Here we at least
 		// get it in the log so it can be debugged.
 		int panic(lua_State* L) {
@@ -116,7 +108,11 @@ namespace mwse {
 			luaState.set_panic(panic);
 
 			// Overwrite the default print function to print to the MWSE log.
-			luaState["print"] = printToLog;
+			luaState["print"] = [](sol::object message) {
+				sol::state& state = LuaManager::getInstance().getState();
+				std::string result = state["tostring"](message);
+				log::getLog() << result << std::endl;
+			};
 
 			// Bind our data types.
 			bindData();
