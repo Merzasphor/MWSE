@@ -486,8 +486,13 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.getReference
-			luaState["tes3"]["getReference"] = [](std::string& id) {
-				return tes3::getReference(id);
+			luaState["tes3"]["getReference"] = [](sol::optional<std::string> id) {
+				if (id) {
+					return tes3::getReference(id.value());
+				}
+				else {
+					return LuaManager::getInstance().getCurrentReference();
+				}
 			};
 
 			// Bind function: tes3.getObject
