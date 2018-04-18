@@ -122,6 +122,25 @@ namespace mwse {
 			return value;
 		}
 
+		TES3::Sound* getOptionalParamSound(sol::optional<sol::table> maybeParams, const char* key) {
+			TES3::Sound* value = NULL;
+
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeValue = params[key];
+				if (maybeValue.valid()) {
+					if (maybeValue.is<std::string>()) {
+						value = tes3::getDataHandler()->nonDynamicData->findSound(maybeValue.as<std::string>().c_str());
+					}
+					else if (maybeValue.is<TES3::Sound*>()) {
+						value = maybeValue.as<TES3::Sound*>();
+					}
+				}
+			}
+
+			return value;
+		}
+
 		sol::object makeLuaObject(TES3::BaseObject* object) {
 			if (object == NULL) {
 				return sol::nil;
