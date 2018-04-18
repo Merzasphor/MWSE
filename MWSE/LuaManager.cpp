@@ -5,6 +5,7 @@
 #include "TES3Util.h"
 #include "MemoryUtil.h"
 #include "ScriptUtil.h"
+#include "StringUtil.h"
 
 #include "LuaUnifiedHeader.h"
 
