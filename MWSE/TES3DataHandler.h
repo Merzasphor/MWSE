@@ -38,6 +38,7 @@ namespace TES3 {
 		Script* findScriptByName(const char*);
 		GlobalVariable* findGlobalVariable(const char*);
 		DialogueInfo* findDialogInfo(const char*);
+		Sound* findSound(const char*);
 		bool addNewObject(BaseObject*);
 		void deleteObject(BaseObject*);
 	};

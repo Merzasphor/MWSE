@@ -6,6 +6,7 @@
 #define TES3_NonDynamicData_findScriptByName 0x4BA700
 #define TES3_NonDynamicData_findGlobalVariable 0x4BA820
 #define TES3_NonDynamicData_findDialogInfo 0x4BA8D0
+#define TES3_NonDynamicData_findSound 0x4BA7A0
 #define TES3_NonDynamicData_addNewObject 0x4B8980
 #define TES3_NonDynamicData_deleteObject 0x4B8B20
 
@@ -34,6 +35,10 @@ namespace TES3 {
 
 	DialogueInfo* NonDynamicData::findDialogInfo(const char* name) {
 		return reinterpret_cast<DialogueInfo*(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findDialogInfo)(this, name);
+	}
+
+	Sound* NonDynamicData::findSound(const char* id) {
+		return reinterpret_cast<Sound*(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findSound)(this, id);
 	}
 
 	bool NonDynamicData::addNewObject(BaseObject* object) {
