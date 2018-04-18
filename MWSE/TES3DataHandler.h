@@ -77,8 +77,8 @@ namespace TES3 {
 		int centralGridY; // 0xA4
 		int cellChanged; // 0xA8
 		Cell * currentInteriorCell; // 0xAC
-		void * interiorCellBuffer; // 0xB0
-		void * exteriorCellBuffer; // 0xB4
+		Cell ** interiorCellBuffer; // 0xB0
+		Cell ** exteriorCellBuffer; // 0xB4
 		int unknown_0xB8;
 		int unknown_0xBC;
 		Iterator<void> collisionGrid[2304]; // 0xC0
