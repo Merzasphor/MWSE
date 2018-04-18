@@ -558,6 +558,20 @@ namespace mwse {
 				return sol::nil;
 			};
 
+			// Bind function: tes3.getSoundPlaying
+			luaState["tes3"]["getSoundPlaying"] = [](sol::optional<sol::table> params) {
+				// Get parameters.
+				TES3::Sound* sound = getOptionalParamSound(params, "sound");
+				TES3::Reference* reference = getOptionalParamReference(params, "reference");
+
+				if (sound == NULL) {
+					log::getLog() << "tes3.getSoundPlaying: Could not locate sound." << std::endl;
+					return false;
+				}
+
+				return tes3::getDataHandler()->getSoundPlaying(sound, reference);
+			};
+
 			DWORD OldProtect;
 
 			// Hook the point where scripts are created so we can determine if it is a lua script.
