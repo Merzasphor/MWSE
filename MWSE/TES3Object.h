@@ -317,7 +317,15 @@ namespace TES3 {
 	static_assert(sizeof(Object) == 0x28, "TES3::Object failed size validation");
 
 	struct PhysicalObject : Object {
-		void * boundingBox; // 0x28
+		struct BoundingBox {
+			float minX;
+			float minY;
+			float minZ;
+			float maxX;
+			float maxY;
+			float maxZ;
+		};
+		BoundingBox * boundingBox; // 0x28
 		char * objectID; // 0x2C
 	};
 	static_assert(sizeof(PhysicalObject) == 0x30, "TES3::PhysicalObject failed size validation");
