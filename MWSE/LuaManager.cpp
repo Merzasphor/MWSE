@@ -156,6 +156,26 @@ namespace mwse {
 				return std::string(reinterpret_cast<char*>(&value), 4);
 			};
 
+			//
+			// Also provide a way to interact with the string storage.
+			//
+
+			luaState["mwse"]["string"] = luaState.create_table();
+
+			luaState["mwse"]["string"]["create"] = [](std::string value) -> int {
+				return mwse::string::store::getOrCreate(value.c_str());
+			};
+
+			luaState["mwse"]["string"]["get"] = [](double value) -> sol::object {
+				try {
+					sol::state& state = LuaManager::getInstance().getState();
+					return sol::make_object(state, (double)mwse::string::store::get(value));
+				}
+				catch (std::exception& e) {
+					return sol::nil;
+				}
+			};
+
 			// Bind data types.
 			bindMWSEStack();
 			bindScriptUtil();
