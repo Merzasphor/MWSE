@@ -161,6 +161,7 @@
     <ClInclude Include="TES3WeatherLua.h" />
     <ClInclude Include="TES3WorldController.h" />
     <ClInclude Include="TES3WorldControllerLua.h" />
+    <ClInclude Include="UIUtil.h" />
     <ClInclude Include="VirtualMachine.h" />
     <ClInclude Include="VMExecuteInterface.h" />
     <ClInclude Include="VMHookInterface.h" />
@@ -240,6 +241,7 @@
     <ClCompile Include="TES3WeatherLua.cpp" />
     <ClCompile Include="TES3WorldController.cpp" />
     <ClCompile Include="TES3WorldControllerLua.cpp" />
+    <ClCompile Include="UIUtil.cpp" />
     <ClCompile Include="xLuaRunScript.cpp" />
     <ClCompile Include="xMyRef.cpp" />
     <ClCompile Include="StringUtil.cpp" />

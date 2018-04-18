@@ -600,6 +600,9 @@
     <ClInclude Include="TES3StaticLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
+    <ClInclude Include="UIUtil.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
     <ClInclude Include="TES3GameSettingLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
@@ -1510,6 +1513,9 @@
     </ClCompile>
     <ClCompile Include="TES3StaticLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="UIUtil.cpp">
+      <Filter>Source Files\Utility</Filter>
     </ClCompile>
     <ClCompile Include="TES3GameSettingLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
