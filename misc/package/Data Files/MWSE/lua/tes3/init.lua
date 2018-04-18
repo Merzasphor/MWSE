@@ -18,16 +18,6 @@ tes3.spellType = require("tes3.spellType")
 tes3.weaponType = require("tes3.weaponType")
 
 -------------------------------------------------
--- Extend table API
--------------------------------------------------
-
-function table.length(T)
-	local count = 0
-	for _ in pairs(T) do count = count + 1 end
-	return count
-end
-
--------------------------------------------------
 -- Functions
 -------------------------------------------------
 

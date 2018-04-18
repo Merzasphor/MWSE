@@ -7,4 +7,14 @@ _G.tes3 = require("tes3.init")
 -- Other global libraries.
 _G.json = require("json")
 
+-------------------------------------------------
+-- Extend table API
+-------------------------------------------------
+
+function table.length(T)
+	local count = 0
+	for _ in pairs(T) do count = count + 1 end
+	return count
+end
+
 print("MWSE Lua interface initialized.")
