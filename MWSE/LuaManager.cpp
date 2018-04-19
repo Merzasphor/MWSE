@@ -348,7 +348,7 @@ namespace mwse {
 		static void _stdcall FinishInitialization() {
 			// Raise an event about this.
 			sol::state& state = LuaManager::getInstance().getState();
-			triggerLuaEvent("finishedInitialization", state.create_table());
+			triggerLuaEvent("initialized");
 		}
 
 		static DWORD callbackFinishedInitialization = TES3_HOOK_FINISH_INITIALIZATION_RETURN;
