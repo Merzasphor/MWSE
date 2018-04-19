@@ -329,11 +329,15 @@ namespace mwse {
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
 				TES3::Script* targetScript = getOptionalParamScript(params, "script");
 				if (targetScript == NULL) {
-					return false;
+					targetScript = script;
 				}
 
-				mwscript::StartScript(script, reference, targetScript);
-				return true;
+				if (targetScript) {
+					mwscript::StopScript(script, targetScript);
+					return true;
+				}
+
+				return false;
 			};
 
 		}
