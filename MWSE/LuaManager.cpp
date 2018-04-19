@@ -5,7 +5,6 @@
 #include "TES3Util.h"
 #include "MemoryUtil.h"
 #include "ScriptUtil.h"
-#include "StringUtil.h"
 
 #include "LuaUnifiedHeader.h"
 
@@ -14,6 +13,8 @@
 // Lua binding files. These are split out rather than kept here to help with compile times.
 #include "StackLua.h"
 #include "ScriptUtilLua.h"
+#include "StringUtilLua.h"
+#include "TES3UtilLua.h"
 #include "TES3ActionDataLua.h"
 #include "TES3ActivatorLua.h"
 #include "TES3AlchemyLua.h"
@@ -60,9 +61,6 @@
 #include "TES3WeatherLua.h"
 #include "TES3WorldControllerLua.h"
 
-#define TES3_HOOK_SCRIPT_NEW_LUACHECK 0x4C086D
-#define TES3_HOOK_SCRIPT_NEW_LUACHECK_SIZE 0x8
-#define TES3_HOOK_SCRIPT_NEW_LUACHECK_RETURN (TES3_HOOK_SCRIPT_NEW_LUACHECK + TES3_HOOK_SCRIPT_NEW_LUACHECK_SIZE)
 
 #define TES3_HOOK_RUNSCRIPT_LUACHECK 0x5029A4
 #define TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE 0x6
@@ -141,42 +139,7 @@ namespace mwse {
 			luaState["mwse"] = luaState.create_table();
 			luaState["mwscript"] = luaState.create_table();
 
-			//
-			// Extend mwse library with extra functions to replace %L in MWSE.
-			//
-
-			luaState["mwse"]["stringToLong"] = [](std::string value) {
-				if (value.length() != 4) {
-					return 0;
-				}
-
-				return *reinterpret_cast<const int*>(value.c_str());
-			};
-
-			luaState["mwse"]["longToString"] = [](int value) {
-				return std::string(reinterpret_cast<char*>(&value), 4);
-			};
-
-			//
-			// Also provide a way to interact with the string storage.
-			//
-
-			luaState["mwse"]["string"] = luaState.create_table();
-
-			luaState["mwse"]["string"]["create"] = [](std::string value) -> int {
-				return mwse::string::store::getOrCreate(value.c_str());
-			};
-
-			luaState["mwse"]["string"]["get"] = [](double value) -> sol::object {
-				try {
-					sol::state& state = LuaManager::getInstance().getState();
-					return sol::make_object(state, (double)mwse::string::store::get(value));
-				}
-				catch (std::exception& e) {
-					return sol::nil;
-				}
-			};
-
+			// We want to take care of this here rather than in an external file so we have access to scriptOverrides.
 			luaState["mwse"]["overrideScript"] = [](std::string scriptId, std::string target) {
 				TES3::Script* script = tes3::getDataHandler()->nonDynamicData->findScriptByName(scriptId.c_str());
 				if (script != NULL) {
@@ -189,8 +152,6 @@ namespace mwse {
 			};
 
 			// Bind data types.
-			bindMWSEStack();
-			bindScriptUtil();
 			bindTES3ActionData();
 			bindTES3Activator();
 			bindTES3Alchemy();
@@ -386,109 +347,17 @@ namespace mwse {
 				log::getLog() << "ERROR: Failed to initialize MWSE Lua interface. Error encountered when executing mwse_init.lua:\n" << err.what() << std::endl;
 			}
 
-			//
-			// Extend tes3 library with extra functions.
-			//
+			// Bind libraries.
+			bindMWSEStack();
+			bindScriptUtil();
+			bindStringUtil();
+			bindTES3Util();
 
-			// Bind function: GetPlayerRef
-			luaState["tes3"]["getPlayerRef"] = []() {
-				return tes3::getWorldController()->getMobilePlayer()->reference;
-			};
+			// Look through the Data Files/MWSE/lua folder and see if there are any mod_init files.
 
-			// Bind function: tes3.getPlayerCell()
-			luaState["tes3"]["getPlayerCell"] = []() {
-				return tes3::getDataHandler()->currentCell;
-			};
-
-			// Bind function: tes3.getGame
-			luaState["tes3"]["getGame"] = []() {
-				return tes3::getGame();
-			};
-
-			// Bind function: tes3.getDataHandler
-			luaState["tes3"]["getDataHandler"] = []() {
-				return tes3::getDataHandler();
-			};
-
-			// Bind function: tes3.getGame
-			luaState["tes3"]["getWorldController"] = []() {
-				return tes3::getWorldController();
-			};
-
-			// Bind function: tes3.getPlayerTarget
-			luaState["tes3"]["getPlayerTarget"] = []() {
-				return tes3::getGame()->playerTarget;
-			};
-
-			// Bind function: tes3.getReference
-			luaState["tes3"]["getReference"] = [](sol::optional<std::string> id) {
-				if (id) {
-					return tes3::getReference(id.value());
-				}
-				else {
-					return LuaManager::getInstance().getCurrentReference();
-				}
-			};
-
-			// Bind function: tes3.getObject
-			luaState["tes3"]["getObject"] = [](std::string& id) {
-				return makeLuaObject(tes3::getDataHandler()->nonDynamicData->resolveObject(id.c_str()));
-			};
-
-			// Bind function: tes3.getScript
-			luaState["tes3"]["getScript"] = [](std::string& id) {
-				return tes3::getDataHandler()->nonDynamicData->findScriptByName(id.c_str());
-			};
-
-			// Bind function: tes3.getGlobal
-			luaState["tes3"]["getGlobal"] = [](std::string& id) {
-				return tes3::getDataHandler()->nonDynamicData->findGlobalVariable(id.c_str());
-			};
-
-			// Bind function: tes3.getGMST
-			luaState["tes3"]["getGMST"] = [](sol::object key) -> sol::object {
-				sol::state& state = LuaManager::getInstance().getState();
-				if (key.is<double>()) {
-					int index = key.as<double>();
-					if (index >= TES3::GMST::sMonthMorningstar && index <= TES3::GMST::sWitchhunter) {
-						return sol::make_object(state, tes3::getDataHandler()->nonDynamicData->GMSTs[index]);
-					}
-				}
-				else if (key.is<std::string>()) {
-					int index = -1;
-					std::string keyStr = key.as<std::string>();
-					for (int i = 0; i <= TES3::GMST::sWitchhunter; i++) {
-						TES3::GameSettingInfo* info = tes3::getGMSTInfo(i);
-						if (strcmp(info->name, keyStr.c_str()) == 0) {
-							index = i;
-							break;
-						}
-					}
-
-					if (index != -1) {
-						return sol::make_object(state, tes3::getDataHandler()->nonDynamicData->GMSTs[index]);
-					}
-				}
-				return sol::nil;
-			};
-
-			// Bind function: tes3.getSoundPlaying
-			luaState["tes3"]["getSoundPlaying"] = [](sol::optional<sol::table> params) {
-				// Get parameters.
-				TES3::Sound* sound = getOptionalParamSound(params, "sound");
-				TES3::Reference* reference = getOptionalParamReference(params, "reference");
-
-				if (sound == NULL) {
-					log::getLog() << "tes3.getSoundPlaying: Could not locate sound." << std::endl;
-					return false;
-				}
-
-				return tes3::getDataHandler()->getSoundPlaying(sound, reference);
-			};
-
-			DWORD OldProtect;
 
 			// Hook the RunScript function so we can intercept Lua scripts and invoke Lua code if needed.
+			DWORD OldProtect;
 			VirtualProtect((DWORD*)TES3_HOOK_RUNSCRIPT_LUACHECK, TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE, PAGE_READWRITE, &OldProtect);
 			genJump(TES3_HOOK_RUNSCRIPT_LUACHECK, reinterpret_cast<DWORD>(HookRunScript));
 			for (DWORD i = TES3_HOOK_RUNSCRIPT_LUACHECK + 5; i < TES3_HOOK_RUNSCRIPT_LUACHECK_RETURN; i++) genNOP(i);

@@ -28,6 +28,7 @@
     <ClInclude Include="LuaUnifiedHeader.h" />
     <ClInclude Include="sol_forward.hpp" />
     <ClInclude Include="StackLua.h" />
+    <ClInclude Include="StringUtilLua.h" />
     <ClInclude Include="TES3ActionDataLua.h" />
     <ClInclude Include="TES3Activator.h" />
     <ClInclude Include="TES3ActivatorLua.h" />
@@ -150,6 +151,7 @@
     <ClInclude Include="TES3Statistic.h" />
     <ClInclude Include="TES3StatisticLua.h" />
     <ClInclude Include="TES3Util.h" />
+    <ClInclude Include="TES3UtilLua.h" />
     <ClInclude Include="TES3Vectors.h" />
     <ClInclude Include="TES3VectorsLua.h" />
     <ClInclude Include="TES3Weapon.h" />
@@ -179,6 +181,7 @@
     <ClCompile Include="ScriptUtil.cpp" />
     <ClCompile Include="ScriptUtilLua.cpp" />
     <ClCompile Include="StackLua.cpp" />
+    <ClCompile Include="StringUtilLua.cpp" />
     <ClCompile Include="TES3ActionDataLua.cpp" />
     <ClCompile Include="TES3ActivatorLua.cpp" />
     <ClCompile Include="TES3Actor.cpp" />
@@ -235,6 +238,7 @@
     <ClCompile Include="TES3StaticLua.cpp" />
     <ClCompile Include="TES3Statistic.cpp" />
     <ClCompile Include="TES3StatisticLua.cpp" />
+    <ClCompile Include="TES3UtilLua.cpp" />
     <ClCompile Include="TES3VectorsLua.cpp" />
     <ClCompile Include="TES3WeaponLua.cpp" />
     <ClCompile Include="TES3WeatherControllerLua.cpp" />
