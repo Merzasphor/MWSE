@@ -245,7 +245,6 @@ namespace mwse {
 
 		void triggerLuaEvent(const char* name, sol::table payload, sol::object filter) {
 			sol::state& state = LuaManager::getInstance().getState();
-			payload["eventType"] = name;
 			state["event"]["trigger"](name, payload, filter);
 		}
 	}
