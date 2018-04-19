@@ -204,6 +204,10 @@ namespace mwse {
 			bindTES3WorldController();
 		}
 
+		//
+		// Hook: Run script.
+		//
+
 		// Determines if a script should be overriden, and executes the module::execute function if so.
 		static void _stdcall RunScript(TES3::Script* script) {
 			// Determine if we own this script.
@@ -248,6 +252,10 @@ namespace mwse {
 				jmp callbackRunScript
 			}
 		}
+
+		//
+		// Hook: Load reference.
+		//
 
 		static DWORD _stdcall LoadReference(TES3::Reference* reference, DWORD loader, DWORD nextSubrecordTag) {
 			if (nextSubrecordTag != 'TAUL') {
@@ -303,6 +311,10 @@ namespace mwse {
 			}
 		}
 
+		//
+		// Hook: Save reference.
+		//
+
 		static void _stdcall SaveReference(TES3::Reference* reference, DWORD loader) {
 			// Get the associated table.
 			sol::table table = reference->getLuaTable();
@@ -344,6 +356,9 @@ namespace mwse {
 			}
 		}
 
+		//
+		// Hook: Finished initializing game code.
+		//
 
 		static void _stdcall FinishInitialization() {
 			// Raise an event about this.
@@ -412,7 +427,7 @@ namespace mwse {
 			for (DWORD i = TES3_HOOK_SAVE_REFERENCE + 5; i < TES3_HOOK_SAVE_REFERENCE_RETURN; i++) genNOP(i);
 			VirtualProtect((DWORD*)TES3_HOOK_SAVE_REFERENCE, TES3_HOOK_SAVE_REFERENCE_SIZE, OldProtect, &OldProtect);
 
-			// Hook the save reference function, so we can save attached Lua data.
+			// Hook just before we return successfully from where game data is loaded. This is just to raise an event to Lua.
 			VirtualProtect((DWORD*)TES3_HOOK_FINISH_INITIALIZATION, TES3_HOOK_FINISH_INITIALIZATION_SIZE, PAGE_READWRITE, &OldProtect);
 			genJump(TES3_HOOK_FINISH_INITIALIZATION, reinterpret_cast<DWORD>(HookFinishInitialization));
 			VirtualProtect((DWORD*)TES3_HOOK_FINISH_INITIALIZATION, TES3_HOOK_FINISH_INITIALIZATION_SIZE, OldProtect, &OldProtect);
