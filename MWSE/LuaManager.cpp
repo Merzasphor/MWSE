@@ -76,6 +76,10 @@
 #define TES3_HOOK_LOAD_REFERENCE_RETURN (TES3_HOOK_LOAD_REFERENCE + TES3_HOOK_LOAD_REFERENCE_SIZE)
 #define TES3_HOOK_LOAD_REFERENCE_RETURN_SUCCESS 0x4DE406
 
+#define TES3_HOOK_FINISH_INITIALIZATION 0x4BBC0C
+#define TES3_HOOK_FINISH_INITIALIZATION_SIZE 0x5
+#define TES3_HOOK_FINISH_INITIALIZATION_RETURN (TES3_HOOK_FINISH_INITIALIZATION + TES3_HOOK_FINISH_INITIALIZATION_SIZE)
+
 #define DEBUG_LUA_SCRIPT_INJECTION true
 
 #define TES3_load_writeChunk 0x4B6BA0
@@ -340,6 +344,30 @@ namespace mwse {
 			}
 		}
 
+
+		static void _stdcall FinishInitialization() {
+			// Raise an event about this.
+			sol::state& state = LuaManager::getInstance().getState();
+			triggerLuaEvent("finishedInitialization", state.create_table());
+		}
+
+		static DWORD callbackFinishedInitialization = TES3_HOOK_FINISH_INITIALIZATION_RETURN;
+		static __declspec(naked) void HookFinishInitialization() {
+			_asm
+			{
+				// Save the registers.
+				pushad
+
+				// Actually use our hook.
+				call FinishInitialization
+
+				// Resume normal execution.
+				popad
+				mov eax, 1
+				jmp callbackFinishedInitialization
+			}
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");
@@ -383,6 +411,11 @@ namespace mwse {
 			genJump(TES3_HOOK_SAVE_REFERENCE, reinterpret_cast<DWORD>(HookSaveReference));
 			for (DWORD i = TES3_HOOK_SAVE_REFERENCE + 5; i < TES3_HOOK_SAVE_REFERENCE_RETURN; i++) genNOP(i);
 			VirtualProtect((DWORD*)TES3_HOOK_SAVE_REFERENCE, TES3_HOOK_SAVE_REFERENCE_SIZE, OldProtect, &OldProtect);
+
+			// Hook the save reference function, so we can save attached Lua data.
+			VirtualProtect((DWORD*)TES3_HOOK_FINISH_INITIALIZATION, TES3_HOOK_FINISH_INITIALIZATION_SIZE, PAGE_READWRITE, &OldProtect);
+			genJump(TES3_HOOK_FINISH_INITIALIZATION, reinterpret_cast<DWORD>(HookFinishInitialization));
+			VirtualProtect((DWORD*)TES3_HOOK_FINISH_INITIALIZATION, TES3_HOOK_FINISH_INITIALIZATION_SIZE, OldProtect, &OldProtect);
 		}
 
 		void LuaManager::cleanup() {
