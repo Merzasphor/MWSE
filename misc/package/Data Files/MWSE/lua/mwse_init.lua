@@ -6,6 +6,7 @@
 package.path = "./Data Files/MWSE/lua/?.lua;"
 
 _G.tes3 = require("mwse.tes3.init")
+_G.event = require("mwse.event")
 
 -------------------------------------------------
 -- Extend API: table
