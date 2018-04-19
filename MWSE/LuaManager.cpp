@@ -61,6 +61,7 @@
 #include "TES3WeatherLua.h"
 #include "TES3WorldControllerLua.h"
 
+#include <filesystem>
 
 #define TES3_HOOK_RUNSCRIPT_LUACHECK 0x5029A4
 #define TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE 0x6
@@ -354,7 +355,16 @@ namespace mwse {
 			bindTES3Util();
 
 			// Look through the Data Files/MWSE/lua folder and see if there are any mod_init files.
-
+			std::string path = "Data Files/MWSE/lua/";
+			for (auto & p : std::experimental::filesystem::recursive_directory_iterator(path)) {
+				if (p.path().filename() == "mod_init.lua") {
+					result = luaState.do_file(p.path().generic_string());
+					if (!result.valid()) {
+						sol::error err = result;
+						log::getLog() << "ERROR: Failed to run mod initialization script:\n" << err.what() << std::endl;
+					}
+				}
+			}
 
 			// Hook the RunScript function so we can intercept Lua scripts and invoke Lua code if needed.
 			DWORD OldProtect;
