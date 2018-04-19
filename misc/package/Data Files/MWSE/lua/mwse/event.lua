@@ -65,19 +65,23 @@ function this.trigger(eventType, payload, filter)
 
 	local callbacks = getEventTable(eventType)
 	for _, callback in pairs(callbacks) do
-		if (callback(payload) == true) then
-			return
+		local result = callback(payload)
+		if (result) then
+			return result
 		end
 	end
 	
 	if (filter) then
 		local filteredCallbacks = getEventTable(eventType, filter)
 		for _, callback in pairs(callbacks) do
-			if (callback(payload) == true) then
-				return
+			local result = callback(payload)
+			if (result) then
+				return result
 			end
 		end
 	end
+
+	return nil
 end
 
 return this
