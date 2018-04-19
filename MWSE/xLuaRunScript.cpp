@@ -50,11 +50,6 @@ namespace mwse
 		// Get parameters.
 		mwseString& scriptName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
-		// Build our script path.
-		std::string path = "./Data Files/MWSE/lua/scripts/";
-		path += scriptName;
-		path += ".lua";
-
 		// Update the LuaManager to reference our current context.
 		lua::LuaManager& manager = lua::LuaManager::getInstance();
 		manager.setCurrentReference(virtualMachine.getReference());
@@ -62,7 +57,7 @@ namespace mwse
 
 		// Run the script.
 		sol::state& state = manager.getState();
-		auto result = state.safe_script_file(path);
+		auto result = state.safe_script_file("./Data Files/MWSE/lua/" + scriptName + ".lua");
 		if (!result.valid()) {
 			sol::error error = result;
 			log::getLog() << "Lua error encountered when executing script '" << virtualMachine.getScript()->name << "':" << std::endl << error.what() << std::endl;

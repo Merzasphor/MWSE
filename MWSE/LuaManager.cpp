@@ -88,7 +88,7 @@ namespace mwse {
 		LuaManager LuaManager::singleton;
 
 		// Fast-access mapping from a TES3::Script* to its associated Lua module.
-		static std::unordered_map<unsigned long, sol::table> scriptOverrides;
+		static std::unordered_map<unsigned long, std::string> scriptOverrides;
 
 		// The currently executing overwritten script.
 		static LuaScript * currentOverwrittenScript = NULL;
@@ -177,6 +177,17 @@ namespace mwse {
 				}
 			};
 
+			luaState["mwse"]["overrideScript"] = [](std::string scriptId, std::string target) {
+				TES3::Script* script = tes3::getDataHandler()->nonDynamicData->findScriptByName(scriptId.c_str());
+				if (script != NULL) {
+					scriptOverrides[(unsigned long)script] = "./Data Files/MWSE/lua/" + target + ".lua";
+					script->dataLength = 0;
+					return true;
+				}
+
+				return false;
+			};
+
 			// Bind data types.
 			bindMWSEStack();
 			bindScriptUtil();
@@ -227,87 +238,6 @@ namespace mwse {
 			bindTES3WorldController();
 		}
 
-		// Locates the file of the script being initialized. If it finds one, it maps this
-		// script to the found Lua file. Future executions of this script would then be 
-		// handled by Lua.
-		// Note that the script is not fully loaded at this state, but its name should be
-		// there at least.
-		static void _stdcall ScriptNew(TES3::Script* script) {
-			// Build up the desired path and check to see if the file exists.
-			std::string luaPath = "Data Files\\MWSE\\lua\\overrides\\";
-			luaPath.append(script->name, min(strlen(script->name), 32));
-			luaPath.append(".lua");
-			if (GetFileAttributes(luaPath.c_str()) == INVALID_FILE_ATTRIBUTES) {
-				return;
-			}
-
-			// Load/execute associated file, and store the returned module into an
-			// unordered_map for later lookup.
-			try {
-				LuaManager& luaManager = LuaManager::getInstance();
-				sol::state& state = luaManager.getState();
-
-				// Set lua-side context for script. Reference is null here.
-				luaManager.setCurrentScript(script);
-
-				sol::table scriptModule = state.script_file(luaPath);
-				if (!scriptModule.valid()) {
-#if DEBUG_LUA_SCRIPT_INJECTION
-					log::getLog() << "Could not load lua module for " << script->name << std::endl;
-#endif
-					return;
-				}
-
-				// Set the read-only property linking the LuaScript to the TES3::Script.
-				LuaScript* luaScript = scriptModule.as<LuaScript*>();
-				luaScript->script = script;
-
-				// Link the script into our map so that it is actually used, and prevent the
-				// native mwscript code from being run.
-#if DEBUG_LUA_SCRIPT_INJECTION
-				log::getLog() << "Overwriting script for " << script->name << " -> " << luaPath << std::endl;
-#endif
-				scriptOverrides[(unsigned long)script] = scriptModule;
-				script->dataLength = 0;
-
-				// Call the script's initialize function, if it exists.
-				currentOverwrittenScript = luaScript;
-				auto initialized = scriptModule["initialized"];
-				if (initialized.get_type() == sol::type::function) {
-					initialized();
-				}
-			}
-			catch (std::exception& e) {
-				log::getLog() << e.what() << std::endl;
-			}
-		}
-
-		// Hook for ScriptNew.
-		DWORD skipped_setEntitySrcMod = 0x4EEE50;
-		DWORD callbackScriptNew = TES3_HOOK_SCRIPT_NEW_LUACHECK_RETURN;
-		static __declspec(naked) void HookScriptNew() {
-			_asm
-			{
-				// Overwritten code.
-				push esi
-				mov ecx, edi
-				call skipped_setEntitySrcMod
-
-				// Save registers.
-				pushad
-
-				// Actually use our hook.
-				push edi
-				call ScriptNew
-
-				// Restore registers.
-				popad
-
-				// Resume normal execution.
-				jmp callbackScriptNew
-			}
-		}
-
 		// Determines if a script should be overriden, and executes the module::execute function if so.
 		static void _stdcall RunScript(TES3::Script* script) {
 			// Determine if we own this script.
@@ -316,33 +246,17 @@ namespace mwse {
 				return;
 			}
 
-			// Get and update the script context.
-			LuaScript* luaScript = searchResult->second.as<LuaScript*>();
-			luaScript->reference = *reinterpret_cast<TES3::Reference**>(TES3_SCRIPTTARGETREF_IMAGE);
-			currentOverwrittenScript = luaScript;
+			// Update the LuaManager to reference our current context.
+			lua::LuaManager& manager = lua::LuaManager::getInstance();
+			manager.setCurrentReference(*reinterpret_cast<TES3::Reference**>(TES3_SCRIPTTARGETREF_IMAGE));
+			manager.setCurrentScript(script);
 
-			// Update the internal LuaManager script/reference for ambiguous calls.
-			LuaManager& luaManager = LuaManager::getInstance();
-			luaManager.setCurrentScript(script);
-			luaManager.setCurrentReference(luaScript->reference);
-
-			// Call the script in a protected state.
-			sol::protected_function execute = searchResult->second["execute"];
-			auto result = execute();
-			if (result.valid()) {
-				// Check the return value. If it is false, stop the script execution.
-				sol::object shouldContinue = result;
-				if (shouldContinue.is<bool>() && shouldContinue.as<bool>() == false) {
-					mwse::mwscript::StopScript(script, script);
-				}
-			}
-			else {
-				// Stop script if execution failed.
-				mwse::mwscript::StopScript(script, script);
-
-				// Print error to log.
+			// Run the script.
+			sol::state& state = manager.getState();
+			auto result = state.safe_script_file(searchResult->second);
+			if (!result.valid()) {
 				sol::error error = result;
-				log::getLog() << "Lua error in " << script->name << ":execute():\n\t" << error.what() << std::endl;
+				log::getLog() << "Lua error encountered when executing script '" << searchResult->second << "' that overrides '" << script->name << "':" << std::endl << error.what() << std::endl;
 			}
 		}
 
@@ -573,13 +487,6 @@ namespace mwse {
 			};
 
 			DWORD OldProtect;
-
-			// Hook the point where scripts are created so we can determine if it is a lua script.
-			// We can't do the script constructor here, because at that time the script's name is not determined.
-			VirtualProtect((DWORD*)TES3_HOOK_SCRIPT_NEW_LUACHECK, TES3_HOOK_SCRIPT_NEW_LUACHECK_SIZE, PAGE_READWRITE, &OldProtect);
-			genJump(TES3_HOOK_SCRIPT_NEW_LUACHECK, reinterpret_cast<DWORD>(HookScriptNew));
-			for (DWORD i = TES3_HOOK_SCRIPT_NEW_LUACHECK + 5; i < TES3_HOOK_SCRIPT_NEW_LUACHECK_RETURN; i++) genNOP(i);
-			VirtualProtect((DWORD*)TES3_HOOK_SCRIPT_NEW_LUACHECK, TES3_HOOK_SCRIPT_NEW_LUACHECK_SIZE, OldProtect, &OldProtect);
 
 			// Hook the RunScript function so we can intercept Lua scripts and invoke Lua code if needed.
 			VirtualProtect((DWORD*)TES3_HOOK_RUNSCRIPT_LUACHECK, TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE, PAGE_READWRITE, &OldProtect);
