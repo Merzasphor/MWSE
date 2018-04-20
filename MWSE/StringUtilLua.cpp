@@ -39,7 +39,7 @@ namespace mwse {
 			state["mwse"]["string"]["get"] = [](double value) -> sol::object {
 				try {
 					sol::state& state = LuaManager::getInstance().getState();
-					return sol::make_object(state, (double)mwse::string::store::get(value));
+					return sol::make_object(state, (std::string)mwse::string::store::get(value));
 				}
 				catch (std::exception& e) {
 					return sol::nil;
