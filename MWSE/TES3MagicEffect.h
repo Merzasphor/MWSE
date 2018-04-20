@@ -217,14 +217,10 @@ namespace TES3 {
 		0x11c8, 0x1048, 0x1048, 0x1048, 0x1048, 0x1048, 0x1048
 	};
 
-	struct MagicEffect {
-		void * vTable; // 0x00
-		ObjectType::ObjectType objectType; // 0x04 // "MGEF"
-		int unknown_0x08; // 0x08
-		void * unknown_0x0C; // 0x0C // Pointer to first array element?
-		long skill; // 0x10
-		long attribute; // 0x14
-		long specialization; // 0x18
+	struct MagicEffect : BaseObject {
+		long id; // 0x10
+		char * description; // 0x14
+		long descriptionFileOffset; // 0x18
 		char icon[32]; // 0x1C
 		char particleTexture[32]; // 0x3C
 								  // Only a few effects have data in their sound effect strings.

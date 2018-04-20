@@ -20,9 +20,7 @@ namespace mwse {
 
 				"flags", &TES3::MagicEffect::flags,
 
-				"skill", &TES3::MagicEffect::skill,
-				"attribute", &TES3::MagicEffect::attribute,
-				"specialization", &TES3::MagicEffect::specialization,
+				"id", &TES3::MagicEffect::id,
 
 				"school", &TES3::MagicEffect::school,
 				"baseMagickaCost", &TES3::MagicEffect::baseMagickaCost,
