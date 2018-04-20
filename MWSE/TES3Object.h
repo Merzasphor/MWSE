@@ -248,7 +248,7 @@ namespace TES3 {
 			ActorVirtualTable * actor;
 		} vTable; // 0x0
 		ObjectType::ObjectType objectType; // 0x4
-		int objectFlags; // 0x8
+		unsigned int objectFlags; // 0x8
 		void * sourceMod; // 0xC
 
 		//

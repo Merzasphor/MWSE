@@ -110,6 +110,8 @@ namespace mwse {
 			long skillAttributeId, long range, long area, long duration,
 			long minimumMagnitude, long maximumMagnitude);
 
+		bool effectsMatch(TES3::Effect* effectsA, TES3::Effect* effectsB, long count = 8);
+
 		float getSkillRequirement(TES3::Reference* reference, long skillId);
 
 		void checkForLevelUp(long progress);

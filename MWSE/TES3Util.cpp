@@ -339,6 +339,22 @@ namespace mwse {
 			return true;
 		}
 
+		bool effectsMatch(TES3::Effect* effectsA, TES3::Effect* effectsB, long count) {
+			for (int i = 0; i < count; i++) {
+				if (effectsA[i].effectID != effectsB[i].effectID ||
+					effectsA[i].skillID != effectsB[i].skillID ||
+					effectsA[i].attributeID != effectsB[i].attributeID ||
+					effectsA[i].rangeType != effectsB[i].rangeType ||
+					effectsA[i].radius != effectsB[i].radius ||
+					effectsA[i].duration != effectsB[i].duration ||
+					effectsA[i].magnitudeMin != effectsB[i].magnitudeMin ||
+					effectsA[i].magnitudeMax != effectsB[i].magnitudeMax) {
+					return false;
+				}
+			}
+			return true;
+		}
+
 		float getSkillRequirement(TES3::Reference* reference, long skillId) {
 			// This function only works on NPCs.
 			if (reference->baseObject->objectType != TES3::ObjectType::NPC) {

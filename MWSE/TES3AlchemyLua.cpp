@@ -7,6 +7,7 @@
 #include "LuaManager.h"
 
 #define TES3_Alchemy_ctor 0x4ABA40
+#define TES3_Alchemy_dtor_deleter 0x4ABB50
 
 namespace mwse {
 	namespace lua {
@@ -52,6 +53,9 @@ namespace mwse {
 			alchemy->value = getOptionalParam<double>(params, "value", 0.0);
 			alchemy->flags = getOptionalParam<double>(params, "flags", 0.0);
 
+			// Flag the object as modified.
+			alchemy->objectFlags |= TES3::ObjectFlag::Modified;
+
 			// Assign effects.
 			sol::optional<sol::table> effects = params["effects"];
 			if (effects) {
@@ -76,6 +80,56 @@ namespace mwse {
 			// If we don't have an effect, fill in the first one.
 			if (alchemy->effects[0].effectID == TES3::EffectID::None) {
 				alchemy->effects[0].effectID = TES3::EffectID::WaterBreathing;
+			}
+
+			// We have our alchemy object. But is it unique?
+			for (TES3::Alchemy* testObject = reinterpret_cast<TES3::Alchemy*>(tes3::getDataHandler()->nonDynamicData->list->head);
+				testObject != NULL;
+				testObject = reinterpret_cast<TES3::Alchemy*>(testObject->nextInCollection)) {
+				// We only care about alchemy objects.
+				if (testObject->objectType != TES3::ObjectType::Alchemy) {
+					continue;
+				}
+
+				// Check object flags.
+				if (alchemy->objectFlags != testObject->objectFlags) {
+					continue;
+				}
+
+				// Check basic values.
+				if (alchemy->weight != testObject->weight || alchemy->value != testObject->value ||
+					alchemy->flags != alchemy->flags) {
+					continue;
+				}
+
+				// Check effects.
+				if (!tes3::effectsMatch(alchemy->effects, testObject->effects)) {
+					continue;
+				}
+
+				// Check script.
+				if (alchemy->script != testObject->script) {
+					continue;
+				}
+
+				// Check name.
+				if (strcmp(alchemy->name, testObject->name) != 0) {
+					continue;
+				}
+
+				// Check model.
+				if (strcmp(alchemy->model, testObject->model) != 0) {
+					continue;
+				}
+
+				// Check icon.
+				if (strcmp(alchemy->icon, testObject->icon) != 0) {
+					continue;
+				}
+
+				// If we've gotten this far, objects are almost the same. Let's use the one that already exists.
+				reinterpret_cast<void(__thiscall *)(TES3::Alchemy*, signed char)>(TES3_Alchemy_dtor_deleter)(alchemy, 1);
+				return testObject;
 			}
 
 			// All good? Add and return the object.
