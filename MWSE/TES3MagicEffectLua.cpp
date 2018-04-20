@@ -52,7 +52,7 @@ namespace mwse {
 				// Properties.
 				//
 
-				"effect", &TES3::Effect::effectID,
+				"id", &TES3::Effect::effectID,
 				"skill", &TES3::Effect::skillID,
 				"attribute", &TES3::Effect::attributeID,
 				"rangeType", &TES3::Effect::rangeType,
