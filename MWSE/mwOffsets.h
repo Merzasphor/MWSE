@@ -74,3 +74,9 @@
 #define TES3_MALLOC 0x749471C0
 #define TES3_FREE 0x74947000
 #define TES3_REALLOC 0x749472B0
+
+//
+// Address of hardcoded data.
+//
+
+#define TES3_DATA_EFFECT_FLAGS 0x747D88

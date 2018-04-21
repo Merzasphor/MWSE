@@ -251,6 +251,23 @@ namespace mwse {
 			return NULL;
 		}
 
+		unsigned int* getBaseEffectFlags() {
+			return reinterpret_cast<unsigned int*>(TES3_DATA_EFFECT_FLAGS);
+		}
+
+		bool getBaseEffectFlag(int index, TES3::EffectFlag::EffectFlag flag) {
+			return reinterpret_cast<unsigned int*>(TES3_DATA_EFFECT_FLAGS)[index] & flag;
+		}
+
+		void setBaseEffectFlag(int index, TES3::EffectFlag::EffectFlag flag, bool set) {
+			if (set) {
+				reinterpret_cast<unsigned int*>(TES3_DATA_EFFECT_FLAGS)[index] |= flag;
+			}
+			else {
+				reinterpret_cast<unsigned int*>(TES3_DATA_EFFECT_FLAGS)[index] &= ~flag;
+			}
+		}
+
 		size_t getEffectCount(const TES3::Effect* effectArray) {
 			size_t count = 0;
 			for (size_t i = 0; i < 8; i++) {
