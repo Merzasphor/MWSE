@@ -37,6 +37,9 @@ namespace mwse
 		xLuaRunScript();
 		virtual float execute(VMExecuteInterface &virtualMachine);
 		virtual void loadParameters(VMExecuteInterface &virtualMachine);
+
+	private:
+		std::unordered_map<int, sol::table> cachedScripts;
 	};
 
 	static xLuaRunScript xLuaRunScriptInstance;
@@ -47,23 +50,53 @@ namespace mwse
 
 	float xLuaRunScript::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
+		sol::state& state = lua::LuaManager::getInstance().getState();
+
 		// Get parameters.
-		mwseString& scriptName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
+		long scriptNameKey = mwse::Stack::getInstance().popLong();
+		mwseString& scriptName = virtualMachine.getString(scriptNameKey);
 
 		// Update the LuaManager to reference our current context.
 		lua::LuaManager& manager = lua::LuaManager::getInstance();
 		manager.setCurrentReference(virtualMachine.getReference());
 		manager.setCurrentScript(virtualMachine.getScript());
+		
+		// Does this script exist in our storage?
+		sol::table cachedModule = sol::nil;
+		auto cacheHit = cachedScripts.find(scriptNameKey);
+		if (cacheHit != cachedScripts.end()) {
+			cachedModule = cacheHit->second;
+		}
+		else {
+			sol::object result = state.safe_script_file("./Data Files/MWSE/lua/" + scriptName + ".lua");
+			if (result.is<sol::table>()) {
+#if _DEBUG
+				log::getLog() << "Inserted run script into cache: " << scriptName << std::endl;
+#endif
+				cachedScripts[scriptNameKey] = result;
+				cachedModule = result;
+			}
+		}
 
 		// Run the script.
-		sol::state& state = manager.getState();
-		auto result = state.safe_script_file("./Data Files/MWSE/lua/" + scriptName + ".lua");
-		if (!result.valid()) {
-			sol::error error = result;
-			log::getLog() << "Lua error encountered when executing script '" << virtualMachine.getScript()->name << "':" << std::endl << error.what() << std::endl;
+		if (cachedModule != sol::nil) {
+			sol::protected_function execute = cachedModule["execute"];
+			if (execute) {
+				auto result = execute();
+				if (!result.valid()) {
+					sol::error error = result;
+					log::getLog() << "Lua error encountered for xLuaRunScript call of '" << scriptName << "' from script '" << virtualMachine.getScript()->name << "':" << std::endl << error.what() << std::endl;
 
-			// Clear the stack, since we can't trust what the script did or did not do.
-			mwse::Stack::getInstance().clear();
+					// Clear the stack, since we can't trust what the script did or did not do.
+					mwse::Stack::getInstance().clear();
+				}
+			}
+			else {
+				log::getLog() << "No execute function found for xLuaRunScript call of '" << scriptName << "' from script '" << virtualMachine.getScript()->name << "'." << std::endl;
+
+				// Clear the stack, since we can't trust what the script did or did not do.
+				mwse::Stack::getInstance().clear();
+			}
 		}
 
 		return 0.0f;

@@ -91,7 +91,7 @@ namespace mwse {
 		LuaManager LuaManager::singleton;
 
 		// Fast-access mapping from a TES3::Script* to its associated Lua module.
-		static std::unordered_map<unsigned long, std::string> scriptOverrides;
+		static std::unordered_map<unsigned long, sol::table> scriptOverrides;
 
 		// The currently executing overwritten script.
 		static LuaScript * currentOverwrittenScript = NULL;
@@ -148,9 +148,13 @@ namespace mwse {
 			luaState["mwse"]["overrideScript"] = [](std::string scriptId, std::string target) {
 				TES3::Script* script = tes3::getDataHandler()->nonDynamicData->findScriptByName(scriptId.c_str());
 				if (script != NULL) {
-					scriptOverrides[(unsigned long)script] = "./Data Files/MWSE/lua/" + target + ".lua";
-					script->dataLength = 0;
-					return true;
+					sol::state& state = LuaManager::getInstance().getState();
+					sol::object result = state.safe_script_file("./Data Files/MWSE/lua/" + target + ".lua");
+					if (result.is<sol::table>()) {
+						scriptOverrides[(unsigned long)script] = result;
+						script->dataLength = 0;
+						return true;
+					}
 				}
 
 				return false;
@@ -221,12 +225,20 @@ namespace mwse {
 			manager.setCurrentReference(*reinterpret_cast<TES3::Reference**>(TES3_SCRIPTTARGETREF_IMAGE));
 			manager.setCurrentScript(script);
 
-			// Run the script.
+			// Get and run the execute function.
 			sol::state& state = manager.getState();
-			auto result = state.safe_script_file(searchResult->second);
-			if (!result.valid()) {
-				sol::error error = result;
-				log::getLog() << "Lua error encountered when executing script '" << searchResult->second << "' that overrides '" << script->name << "':" << std::endl << error.what() << std::endl;
+			sol::protected_function execute = searchResult->second["execute"];
+			if (execute) {
+				auto result = execute();
+				if (!result.valid()) {
+					sol::error error = result;
+					log::getLog() << "Lua error encountered when override of script '" << script->name << "':" << std::endl << error.what() << std::endl;
+					mwscript::StopScript(script, script);
+				}
+			}
+			else {
+				log::getLog() << "No execute function found for script override of '" << script->name << "'. Script execution stopped." << std::endl;
+				mwscript::StopScript(script, script);
 			}
 		}
 
