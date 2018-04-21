@@ -119,6 +119,34 @@ namespace mwse {
 
 				return tes3::getDataHandler()->getSoundPlaying(sound, reference);
 			};
+
+			state["tes3"]["messageBox"] = [](sol::table params) {
+				// We need to make sure the strings stay in memory, we can't just snag the c-string in passing.
+				std::string buttonText[32];
+				struct {
+					const char* text[32] = {};
+				} buttonTextStruct;
+
+				//  Get the parameters out of the table and into the table.
+				std::string message = params["message"];
+				sol::table buttons = params["buttons"];
+				if (buttons.valid()) {
+					size_t size = min(buttons.size(), 32);
+					for (size_t i = 0; i < size; i++) {
+						std::string result = buttons[i+1];
+						if (result.empty()) {
+							break;
+						}
+
+						buttonText[i] = result;
+						buttonTextStruct.text[i] = buttonText[i].c_str();
+					}
+				}
+
+				// Temporary hook into the function that creates message boxes. 
+				int result = reinterpret_cast<int(__cdecl *)(const char*, ...)>(0x5F1AA0)(message.c_str(), buttonTextStruct, NULL);
+				return result;
+			};
 		}
 	}
 }
