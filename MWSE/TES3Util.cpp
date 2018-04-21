@@ -300,7 +300,7 @@ namespace mwse {
 			}
 
 			// Validate that the effect supports the range type.
-			const int flags = TES3::MagicEffectFlagMap[effectId];
+			const int flags = tes3::getBaseEffectFlags()[effectId];
 			if ((range == TES3::EffectRange::Self && !(flags & TES3::EffectFlag::CanCastSelf)) ||
 				(range == TES3::EffectRange::Touch && !(flags & TES3::EffectFlag::CanCastTouch)) ||
 				(range == TES3::EffectRange::Target && !(flags & TES3::EffectFlag::CanCastTarget))) {

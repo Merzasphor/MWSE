@@ -67,7 +67,7 @@ namespace mwse
 		// Flags are a unique case. There is other data associated with flags that we want
 		// to expose, so we will return it here.
 		// TODO: Programmatically allow setting/getting these normally hard-coded values.
-		Stack::getInstance().pushLong(effect.flags | TES3::MagicEffectFlagMap[id]);
+		Stack::getInstance().pushLong(effect.flags | tes3::getBaseEffectFlags()[id]);
 
 		// Push other results.
 		Stack::getInstance().pushFloat(effect.baseMagickaCost);

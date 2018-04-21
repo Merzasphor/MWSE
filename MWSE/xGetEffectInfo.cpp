@@ -109,7 +109,7 @@ namespace mwse
 			// If we found an effect, set the values.
 			if (effect && effect->effectID != TES3::EffectID::None) {
 				effectEnumId = effect->effectID;
-				int effectFlags = TES3::MagicEffectFlagMap[effectEnumId];
+				int effectFlags = tes3::getBaseEffectFlags()[effectEnumId];
 				if (effectFlags & TES3::EffectFlag::TargetSkill) {
 					skillAttributeId = effect->skillID;
 				}
