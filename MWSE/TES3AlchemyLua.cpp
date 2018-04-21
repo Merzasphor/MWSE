@@ -154,8 +154,8 @@ namespace mwse {
 				"id", sol::readonly_property(&TES3::Alchemy::getObjectID),
 				"name", sol::property(&TES3::Alchemy::getName, &TES3::Alchemy::setName),
 
-				"icon", sol::readonly_property(&TES3::Alchemy::getIconPath),
-				"model", sol::readonly_property(&TES3::Alchemy::getModelPath),
+				"icon", sol::property(&TES3::Alchemy::getIconPath, [](TES3::Alchemy& self, std::string value) { tes3::setDataString(&self.icon, value.c_str()); }),
+				"model", sol::property( &TES3::Alchemy::getModelPath, [](TES3::Alchemy& self, std::string value) { self.setModelPath(value.c_str()); } ),
 
 				"flags", &TES3::Alchemy::flags,
 				"autoCalc", sol::property(&TES3::Alchemy::getAutoCalc, &TES3::Alchemy::setAutoCalc),
