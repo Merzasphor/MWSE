@@ -7,7 +7,6 @@
 #include "LuaManager.h"
 
 #define TES3_Alchemy_ctor 0x4ABA40
-#define TES3_Alchemy_dtor_deleter 0x4ABB50
 
 namespace mwse {
 	namespace lua {
@@ -128,7 +127,7 @@ namespace mwse {
 				}
 
 				// If we've gotten this far, objects are almost the same. Let's use the one that already exists.
-				reinterpret_cast<void(__thiscall *)(TES3::Alchemy*, signed char)>(TES3_Alchemy_dtor_deleter)(alchemy, 1);
+				alchemy->vTable.base->destructor(alchemy, true);
 				return testObject;
 			}
 

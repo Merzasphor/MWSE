@@ -155,7 +155,7 @@ namespace TES3 {
 	//
 
 	struct BaseObjectVirtualTable {
-		void * destructor; // 0x0
+		void (__thiscall * destructor)(BaseObject*, signed char); // 0x0
 		int (__thiscall * loadObjectSpecific)(BaseObject*, int); // 0x4
 		int (__thiscall * saveRecordSpecific)(BaseObject*, int); // 0x8
 		int (__thiscall * loadObject)(BaseObject*, int); // 0xC
