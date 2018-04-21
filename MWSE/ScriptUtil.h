@@ -119,6 +119,8 @@ namespace mwse
 
 		void ExplodeSpell(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate);
 
+		int GetButtonPressed(TES3::Script* script, TES3::Reference* reference);
+
 		bool HasItemEquipped(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate);
 
 		float GetDistance(TES3::Script* script, TES3::Reference* reference, TES3::Reference* target);

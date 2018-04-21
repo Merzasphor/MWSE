@@ -148,6 +148,12 @@ namespace mwse {
 				mwscript::ExplodeSpell(script, reference, spell);
 				return true;
 			};
+			state["mwscript"]["getButtonPressed"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+
+				return mwscript::GetButtonPressed(script, reference);
+			};
 			state["mwscript"]["hasItemEquipped"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);

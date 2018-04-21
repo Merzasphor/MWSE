@@ -352,6 +352,10 @@ namespace mwse
 			setScriptSecondObject(cachedSecondObject);
 		}
 
+		int GetButtonPressed(TES3::Script* script, TES3::Reference* reference) {
+			return RunOriginalOpCode(script, reference, OpCode::GetButtonPressed);
+		}
+
 		bool HasItemEquipped(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate) {
 			// Cache previous script variables.
 			TES3::BaseObject* cachedSecondObject = getScriptSecondObject();
