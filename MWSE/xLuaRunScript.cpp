@@ -68,13 +68,24 @@ namespace mwse
 			cachedModule = cacheHit->second;
 		}
 		else {
-			sol::object result = state.safe_script_file("./Data Files/MWSE/lua/" + scriptName + ".lua");
-			if (result.is<sol::table>()) {
+			auto result = state.safe_script_file("./Data Files/MWSE/lua/" + scriptName + ".lua");
+			if (!result.valid()) {
+				sol::error error = result;
+				log::getLog() << "Lua error encountered for xLuaRunScript call of '" << scriptName << "' from script '" << virtualMachine.getScript()->name << "':" << std::endl << error.what() << std::endl;
+
+				// Clear the stack, since we can't trust what the script did or did not do.
+				mwse::Stack::getInstance().clear();
+				return 0.0f;
+			}
+
+			// If we got back a table, store it in cache.
+			sol::object resultObject = result;
+			if (resultObject.is<sol::table>()) {
 #if _DEBUG
 				log::getLog() << "Inserted run script into cache: " << scriptName << std::endl;
 #endif
-				cachedScripts[scriptNameKey] = result;
-				cachedModule = result;
+				cachedScripts[scriptNameKey] = resultObject;
+				cachedModule = resultObject;
 			}
 		}
 
