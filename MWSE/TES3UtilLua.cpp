@@ -61,6 +61,14 @@ namespace mwse {
 				return makeLuaObject(tes3::getDataHandler()->nonDynamicData->resolveObject(id.c_str()));
 			};
 
+			state["tes3"]["deleteObject"] = [](sol::object maybe) {
+				TES3::BaseObject* object = maybe.as<TES3::BaseObject*>();
+				if (object) {
+					tes3::getDataHandler()->nonDynamicData->deleteObject(object);
+					object->vTable.base->destructor(object, true);
+				}
+			};
+
 			// Bind function: tes3.getScript
 			state["tes3"]["getScript"] = [](std::string& id) {
 				return tes3::getDataHandler()->nonDynamicData->findScriptByName(id.c_str());
