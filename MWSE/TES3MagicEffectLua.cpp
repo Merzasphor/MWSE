@@ -57,7 +57,10 @@ namespace mwse {
 				"radius", &TES3::Effect::radius,
 				"duration", &TES3::Effect::duration,
 				"min", &TES3::Effect::magnitudeMin,
-				"max", &TES3::Effect::magnitudeMax
+				"max", &TES3::Effect::magnitudeMax,
+
+				// Access to the root MGEF object.
+				"object", sol::readonly_property([](TES3::Effect& self) { return tes3::getDataHandler()->nonDynamicData->magicEffects[self.effectID]; })
 
 				);
 		}
