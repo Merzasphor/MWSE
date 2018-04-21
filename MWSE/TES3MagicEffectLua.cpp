@@ -20,7 +20,7 @@ namespace mwse {
 
 				"flags", &TES3::MagicEffect::flags,
 
-				"id", &TES3::MagicEffect::id,
+				"id", sol::readonly_property(&TES3::MagicEffect::id),
 
 				"school", &TES3::MagicEffect::school,
 				"baseMagickaCost", &TES3::MagicEffect::baseMagickaCost,
