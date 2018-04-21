@@ -54,7 +54,5 @@ namespace mwse {
 
 		sol::object makeLuaObject(TES3::BaseObject* object);
 		sol::object makeLuaObject(TES3::MobileActor* actor);
-
-		sol::object triggerLuaEvent(const char* name, sol::table payload = sol::nil, sol::object filter = sol::nil);
 	}
 }
