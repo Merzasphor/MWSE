@@ -157,7 +157,7 @@ namespace mwse {
 				"icon", sol::readonly_property(&TES3::Alchemy::getIconPath),
 				"model", sol::readonly_property(&TES3::Alchemy::getModelPath),
 
-				"flags", sol::readonly(&TES3::Alchemy::flags),
+				"flags", &TES3::Alchemy::flags,
 				"autoCalc", sol::property(&TES3::Alchemy::getAutoCalc, &TES3::Alchemy::setAutoCalc),
 
 				"value", sol::readonly_property(&TES3::Alchemy::getValue),
