@@ -143,6 +143,14 @@ namespace mwse {
 					}
 				}
 
+				// Set up our event callback.
+				sol::optional<sol::protected_function> callback = params["callback"];
+				if (callback) {
+					sol::state& state = LuaManager::getInstance().getState();
+					state["event"]["clear"]("buttonPressed");
+					state["event"]["register"]("buttonPressed", callback);
+				}
+
 				// Temporary hook into the function that creates message boxes. 
 				int result = reinterpret_cast<int(__cdecl *)(const char*, ...)>(0x5F1AA0)(message.c_str(), buttonTextStruct, NULL);
 				return result;

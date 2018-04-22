@@ -80,6 +80,10 @@
 #define TES3_HOOK_FINISH_INITIALIZATION_SIZE 0x5
 #define TES3_HOOK_FINISH_INITIALIZATION_RETURN (TES3_HOOK_FINISH_INITIALIZATION + TES3_HOOK_FINISH_INITIALIZATION_SIZE)
 
+#define TES3_HOOK_BUTTON_PRESSED 0x5F208B
+#define TES3_HOOK_BUTTON_PRESSED_SIZE 0x5
+#define TES3_HOOK_BUTTON_PRESSED_RETURN (TES3_HOOK_BUTTON_PRESSED + TES3_HOOK_BUTTON_PRESSED_SIZE)
+
 #define DEBUG_LUA_SCRIPT_INJECTION true
 
 #define TES3_load_writeChunk 0x4B6BA0
@@ -375,7 +379,7 @@ namespace mwse {
 		static void _stdcall FinishInitialization() {
 			// Raise an event about this.
 			sol::state& state = LuaManager::getInstance().getState();
-			triggerLuaEvent("initialized");
+			state["event"]["trigger"]("initialized");
 		}
 
 		static DWORD callbackFinishedInitialization = TES3_HOOK_FINISH_INITIALIZATION_RETURN;
@@ -392,6 +396,37 @@ namespace mwse {
 				popad
 				mov eax, 1
 				jmp callbackFinishedInitialization
+			}
+		}
+
+		//
+		// Hook: Button pressed.
+		//
+
+		static void _stdcall ButtonPressed() {
+			// Raise an event about this.
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::table payload = state.create_table();
+			payload["button"] = *reinterpret_cast<int*>(0x7B88C0);
+			state["event"]["trigger"]("buttonPressed", payload);
+			state["event"]["clear"]("buttonPressed");
+		}
+
+		static __declspec(naked) void HookButtonPressed() {
+			_asm
+			{
+				// Save the registers.
+				pushad
+
+				// Actually use our hook.
+				call ButtonPressed
+
+				// Resume normal execution.
+				popad
+				pop edi
+				mov al, 1
+				pop esi
+				retn
 			}
 		}
 
@@ -439,10 +474,15 @@ namespace mwse {
 			for (DWORD i = TES3_HOOK_SAVE_REFERENCE + 5; i < TES3_HOOK_SAVE_REFERENCE_RETURN; i++) genNOP(i);
 			VirtualProtect((DWORD*)TES3_HOOK_SAVE_REFERENCE, TES3_HOOK_SAVE_REFERENCE_SIZE, OldProtect, &OldProtect);
 
-			// Hook just before we return successfully from where game data is loaded. This is just to raise an event to Lua.
+			// Event: initialized. Hook just before we return successfully from where game data is loaded.
 			VirtualProtect((DWORD*)TES3_HOOK_FINISH_INITIALIZATION, TES3_HOOK_FINISH_INITIALIZATION_SIZE, PAGE_READWRITE, &OldProtect);
 			genJump(TES3_HOOK_FINISH_INITIALIZATION, reinterpret_cast<DWORD>(HookFinishInitialization));
 			VirtualProtect((DWORD*)TES3_HOOK_FINISH_INITIALIZATION, TES3_HOOK_FINISH_INITIALIZATION_SIZE, OldProtect, &OldProtect);
+
+			// Event: buttonPressed. Hook after a button has been clicked.
+			VirtualProtect((DWORD*)TES3_HOOK_BUTTON_PRESSED, TES3_HOOK_BUTTON_PRESSED_SIZE, PAGE_READWRITE, &OldProtect);
+			genJump(TES3_HOOK_BUTTON_PRESSED, reinterpret_cast<DWORD>(HookButtonPressed));
+			VirtualProtect((DWORD*)TES3_HOOK_BUTTON_PRESSED, TES3_HOOK_BUTTON_PRESSED_SIZE, OldProtect, &OldProtect);
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);
