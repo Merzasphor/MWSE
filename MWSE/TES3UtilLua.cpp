@@ -129,8 +129,9 @@ namespace mwse {
 
 				//  Get the parameters out of the table and into the table.
 				std::string message = params["message"];
-				sol::table buttons = params["buttons"];
-				if (buttons.valid()) {
+				sol::optional<sol::table> maybeButtons = params["buttons"];
+				if (maybeButtons && maybeButtons.value().size() > 0) {
+					sol::table buttons = maybeButtons.value();
 					size_t size = min(buttons.size(), 32);
 					for (size_t i = 0; i < size; i++) {
 						std::string result = buttons[i+1];
@@ -141,6 +142,11 @@ namespace mwse {
 						buttonText[i] = result;
 						buttonTextStruct.text[i] = buttonText[i].c_str();
 					}
+				}
+
+				// No buttons, do a normal popup.
+				else {
+					return reinterpret_cast<int(__cdecl *)(const char*, char*, signed char)>(0x5F90C0)(message.c_str(), NULL, 1);
 				}
 
 				// Set up our event callback.
