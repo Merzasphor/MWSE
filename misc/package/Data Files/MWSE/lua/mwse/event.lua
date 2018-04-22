@@ -56,6 +56,11 @@ function this.unregisterFilter(filter)
 	end
 end
 
+function this.clear(eventType)
+	generalEvents[eventType] = nil;
+	filteredEvents[eventType] = nil;
+end
+
 function this.trigger(eventType, payload, filter)
 	if (not payload) then
 		payload = {}
