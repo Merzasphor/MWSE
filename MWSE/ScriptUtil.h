@@ -26,6 +26,8 @@
 #include "OpCodes.h"
 #include "TES3Object.h"
 
+#undef PlaySound
+
 namespace mwse
 {
 	namespace mwscript
@@ -131,6 +133,8 @@ namespace mwse
 
 		void PlaceAtPC(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* placedTemplate, long count, float distance, float direction);
 
+		void PlaySound(TES3::Script* script, TES3::Reference* reference, TES3::Sound* sound);
+
 		void Position(TES3::Script* script, TES3::Reference* reference, float x, float y, float z, float rotation);
 
 		void PositionCell(TES3::Script* script, TES3::Reference* reference, float x, float y, float z, float rotation, const char* cell);
@@ -148,6 +152,8 @@ namespace mwse
 		void StartScript(TES3::Script* script, TES3::Reference* reference, TES3::Script* targetScript);
 
 		void StopScript(TES3::Script* script, TES3::Script* targetScript);
+
+		void StopSound(TES3::Script* script, TES3::Reference* reference, TES3::Sound* sound);
 
 		//
 		// In-function hook callbacks for getting script variables.

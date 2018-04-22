@@ -26,6 +26,7 @@
 #include "TES3Creature.h"
 #include "TES3Misc.h"
 #include "TES3DialogueInfo.h"
+#include "TES3Sound.h"
 
 namespace mwse
 {
@@ -433,6 +434,18 @@ namespace mwse
 			setScriptSecondObject(cachedSecondObject);
 		}
 
+		void PlaySound(TES3::Script* script, TES3::Reference* reference, TES3::Sound* sound) {
+			// Cache script variables.
+			TES3::BaseObject* cachedSecondObject = getScriptSecondObject();
+
+			// Call original opcode.
+			setScriptSecondObject(sound);
+			RunOriginalOpCode(script, reference, OpCode::PlaySound);
+
+			// Restore original script variables.
+			setScriptSecondObject(cachedSecondObject);
+		}
+
 		void Position(TES3::Script* script, TES3::Reference* reference, float x, float y, float z, float rotation) {
 			// Cache script variables.
 			float cachedDestinationX = getScriptDestinationX();
@@ -559,6 +572,18 @@ namespace mwse
 			// Prepare variables and run original opcode.
 			setScriptSecondObject(reinterpret_cast<TES3::BaseObject*>(targetScript));
 			RunOriginalOpCode(script, NULL, OpCode::StopScript);
+
+			// Restore original script variables.
+			setScriptSecondObject(cachedSecondObject);
+		}
+
+		void StopSound(TES3::Script* script, TES3::Reference* reference, TES3::Sound* sound) {
+			// Cache script variables.
+			TES3::BaseObject* cachedSecondObject = getScriptSecondObject();
+
+			// Call original opcode.
+			setScriptSecondObject(sound);
+			RunOriginalOpCode(script, reference, OpCode::StopSound);
 
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);

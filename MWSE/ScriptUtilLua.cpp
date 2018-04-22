@@ -239,6 +239,17 @@ namespace mwse {
 				mwscript::PlaceAtPC(script, reference, object, count, distance, direction);
 				return mwscript::lastCreatedPlaceAtPCReference;
 			};
+			state["mwscript"]["playSound"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::Sound* sound = getOptionalParamSound(params, "sound");
+				if (sound == NULL) {
+					return false;
+				}
+
+				mwscript::PlaySound(script, reference, sound);
+				return true;
+			};
 			state["mwscript"]["position"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
@@ -344,6 +355,17 @@ namespace mwse {
 				}
 
 				return false;
+			};
+			state["mwscript"]["stopSound"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::Sound* sound = getOptionalParamSound(params, "sound");
+				if (sound == NULL) {
+					return false;
+				}
+
+				mwscript::StopSound(script, reference, sound);
+				return true;
 			};
 
 		}
