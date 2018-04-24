@@ -448,7 +448,7 @@ namespace mwse {
 			auto result = trigger("onPCEquip", payload);
 			if (!result.valid()) {
 				sol::error error = result;
-				log::getLog() << "Lua error encountered when raising onEquip event:" << std::endl << error.what() << std::endl;
+				log::getLog() << "Lua error encountered when raising onPCEquip event:" << std::endl << error.what() << std::endl;
 			}
 
 			// Is the result a boolean? If so, if it's false, don't let it be equipped.
@@ -490,7 +490,7 @@ namespace mwse {
 			auto result = trigger("onEquipped", payload);
 			if (!result.valid()) {
 				sol::error error = result;
-				log::getLog() << "Lua error encountered when raising onEquip event:" << std::endl << error.what() << std::endl;
+				log::getLog() << "Lua error encountered when raising onEquipped event:" << std::endl << error.what() << std::endl;
 			}
 		}
 
