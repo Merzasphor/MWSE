@@ -8,6 +8,8 @@
 
 #define TES3_ui_inventory_addTile 0x5CBCC0
 #define TES3_ui_inventory_updateIcons 0x5CC910
+#define TES3_ui_inventory_equipInventoryTileToPlayer 0x5CE130
+#define TES3_ui_data_inventory_updatePaperDoll 0x7B6D04
 
 namespace mwse {
 	namespace tes3 {
@@ -34,6 +36,14 @@ namespace mwse {
 
 			signed char inventoryUpdateIcons() {
 				return reinterpret_cast<signed char(__cdecl *)()>(TES3_ui_inventory_updateIcons)();
+			}
+
+			signed char equipInventoryTile(TES3::UI::InventoryTile* tile) {
+				return reinterpret_cast<signed char(__cdecl *)(TES3::UI::InventoryTile*)>(TES3_ui_inventory_equipInventoryTileToPlayer)(tile);
+			}
+
+			void flagPaperDollUpdate() {
+				*reinterpret_cast<signed char*>(TES3_ui_data_inventory_updatePaperDoll) = 1;
 			}
 		}
 	}

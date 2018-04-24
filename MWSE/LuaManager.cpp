@@ -458,13 +458,13 @@ namespace mwse {
 				inventoryMenu->timingUpdate();
 				tes3::ui::inventoryAddTile(1, tile);
 				inventoryMenu->performLayout(1);
-				*reinterpret_cast<signed char*>(0x7B6D04) = 1;
+				tes3::ui::flagPaperDollUpdate();
 				tes3::ui::inventoryUpdateIcons();
 				return 0;
 			}
 
 			// Call the original function.
-			return reinterpret_cast<signed char(__cdecl *)(TES3::UI::InventoryTile*)>(0x5CE130)(tile);
+			return tes3::ui::equipInventoryTile(tile);
 		}
 
 		//

@@ -13,6 +13,8 @@ namespace mwse {
 
 			TES3::UI::InventoryTile* inventoryAddTile(int, TES3::UI::InventoryTile*);
 			signed char inventoryUpdateIcons();
+			signed char equipInventoryTile(TES3::UI::InventoryTile*);
+			void flagPaperDollUpdate();
 		}
 	}
 }
