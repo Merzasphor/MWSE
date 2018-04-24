@@ -150,6 +150,10 @@ namespace TES3 {
 	struct WeatherController;
 	struct WorldController;
 
+	namespace UI {
+		struct InventoryTile;
+	}
+
 	//
 	// The core building blocks of TES3 objects.
 	//
