@@ -4,7 +4,7 @@ local generalEvents = {}
 local filteredEvents = {}
 
 function getEventTable(eventType, filter)
-	if (filter) then
+	if (filter ~= nil) then
 		if (filteredEvents[eventType] == nil) then
 			filteredEvents[eventType] = {}
 		end
@@ -71,16 +71,16 @@ function this.trigger(eventType, payload, filter)
 	local callbacks = getEventTable(eventType)
 	for _, callback in pairs(callbacks) do
 		local result = callback(payload)
-		if (result) then
+		if (result ~= nil) then
 			return result
 		end
 	end
 	
 	if (filter) then
 		local filteredCallbacks = getEventTable(eventType, filter)
-		for _, callback in pairs(callbacks) do
+		for _, callback in pairs(filteredCallbacks) do
 			local result = callback(payload)
-			if (result) then
+			if (result ~= nil) then
 				return result
 			end
 		end
