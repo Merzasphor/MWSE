@@ -23,7 +23,7 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		void activate(Reference*);
+		void activate(Reference* activator, int unknown = 1);
 		void setActionFlag(int);
 		void clearActionFlag(int);
 		bool testActionFlag(int);

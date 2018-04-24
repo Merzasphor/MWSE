@@ -494,6 +494,35 @@ namespace mwse {
 			}
 		}
 
+		//
+		// Hook: On Activate
+		//
+
+		void __fastcall OnActivate(TES3::Reference* target, DWORD _UNUSED_, TES3::Reference* activator, int something) {
+			// Prepare our event payload. Mobile actor only really seems to get defined for the player.
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::table payload = state.create_table();
+			payload["activator"] = activator;
+			payload["target"] = target;
+
+			// Trigger the function, check for lua errors.
+			sol::protected_function trigger = state["event"]["trigger"];
+			auto result = trigger("onActivate", payload);
+			if (!result.valid()) {
+				sol::error error = result;
+				log::getLog() << "Lua error encountered when raising onActivate event:" << std::endl << error.what() << std::endl;
+			}
+
+			// Is the result a boolean? If so, if it's false, don't let it be activated.
+			sol::object resultAsObject = result;
+			if (resultAsObject.is<bool>() && resultAsObject.as<bool>() == false) {
+				return;
+			}
+
+			// Call original function.
+			target->activate(activator, something);
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");
@@ -574,6 +603,15 @@ namespace mwse {
 			genCallUnprotected(0x5D00D6, reinterpret_cast<DWORD>(OnEquipped));
 			genCallUnprotected(0x5D048E, reinterpret_cast<DWORD>(OnEquipped));
 			genCallUnprotected(0x5D1468, reinterpret_cast<DWORD>(OnEquipped));
+
+			// Event: onActivate. Fires when an object is activated.
+			genCallUnprotected(0x41CCC8, reinterpret_cast<DWORD>(OnActivate));
+			genCallUnprotected(0x507298, reinterpret_cast<DWORD>(OnActivate));
+			genCallUnprotected(0x5364CD, reinterpret_cast<DWORD>(OnActivate));
+			genCallUnprotected(0x551002, reinterpret_cast<DWORD>(OnActivate));
+			genCallUnprotected(0x59051F, reinterpret_cast<DWORD>(OnActivate));
+			genCallUnprotected(0x5ADB6E, reinterpret_cast<DWORD>(OnActivate));
+			genCallUnprotected(0x613CC9, reinterpret_cast<DWORD>(OnActivate));
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);

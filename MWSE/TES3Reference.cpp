@@ -11,9 +11,8 @@
 #define TES3_Reference_getActionReference 0x4E5650
 
 namespace TES3 {
-	void Reference::activate(Reference* target) {
-		// In this case we want to flip the target and this, so that it is more logical to write.
-		reinterpret_cast<void(__thiscall *)(Reference*, Reference*, int)>(TES3_Reference_activate)(target, this, 1);
+	void Reference::activate(Reference* activator, int unknown) {
+		reinterpret_cast<void(__thiscall *)(Reference*, Reference*, int)>(TES3_Reference_activate)(this, activator, unknown);
 	}
 
 	void Reference::setActionFlag(int flag) {
