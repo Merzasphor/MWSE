@@ -142,6 +142,12 @@
     <Filter Include="Source Files\Functions\Lua">
       <UniqueIdentifier>{b9bc6abb-6f06-41bd-94e9-8870580495e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\DataAdapters\TES3\UI">
+      <UniqueIdentifier>{eeba7987-7ada-4dfb-821c-466cfe35073d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DataAdapters\TES3\UI">
+      <UniqueIdentifier>{10c0bd64-b749-4f5c-99e9-d5c36a33002c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Flags.h">
@@ -611,6 +617,21 @@
     </ClInclude>
     <ClInclude Include="TES3UtilLua.h">
       <Filter>Header Files\Lua\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3UIInventoryTile.h">
+      <Filter>Header Files\DataAdapters\TES3\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3UIBlock.h">
+      <Filter>Header Files\DataAdapters\TES3\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3UIVector.h">
+      <Filter>Header Files\DataAdapters\TES3\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3UIString.h">
+      <Filter>Header Files\DataAdapters\TES3\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3UITree.h">
+      <Filter>Header Files\DataAdapters\TES3\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1531,6 +1552,9 @@
     </ClCompile>
     <ClCompile Include="TES3UtilLua.cpp">
       <Filter>Source Files\Lua\Bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3UIBlock.cpp">
+      <Filter>Source Files\DataAdapters\TES3\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

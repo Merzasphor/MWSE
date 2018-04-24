@@ -150,6 +150,11 @@
     <ClInclude Include="TES3StaticLua.h" />
     <ClInclude Include="TES3Statistic.h" />
     <ClInclude Include="TES3StatisticLua.h" />
+    <ClInclude Include="TES3UIBlock.h" />
+    <ClInclude Include="TES3UIInventoryTile.h" />
+    <ClInclude Include="TES3UIString.h" />
+    <ClInclude Include="TES3UITree.h" />
+    <ClInclude Include="TES3UIVector.h" />
     <ClInclude Include="TES3Util.h" />
     <ClInclude Include="TES3UtilLua.h" />
     <ClInclude Include="TES3Vectors.h" />
@@ -238,6 +243,7 @@
     <ClCompile Include="TES3StaticLua.cpp" />
     <ClCompile Include="TES3Statistic.cpp" />
     <ClCompile Include="TES3StatisticLua.cpp" />
+    <ClCompile Include="TES3UIBlock.cpp" />
     <ClCompile Include="TES3UtilLua.cpp" />
     <ClCompile Include="TES3VectorsLua.cpp" />
     <ClCompile Include="TES3WeaponLua.cpp" />

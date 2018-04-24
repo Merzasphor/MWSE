@@ -151,7 +151,11 @@ namespace TES3 {
 	struct WorldController;
 
 	namespace UI {
+		struct Block;
 		struct InventoryTile;
+		struct String;
+		struct Tree;
+		struct Vector;
 	}
 
 	//
