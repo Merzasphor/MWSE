@@ -84,8 +84,6 @@
 #define TES3_HOOK_BUTTON_PRESSED_SIZE 0x5
 #define TES3_HOOK_BUTTON_PRESSED_RETURN (TES3_HOOK_BUTTON_PRESSED + TES3_HOOK_BUTTON_PRESSED_SIZE)
 
-#define DEBUG_LUA_SCRIPT_INJECTION true
-
 #define TES3_load_writeChunk 0x4B6BA0
 #define TES3_load_readChunk 0x4B6880
 
@@ -430,6 +428,33 @@ namespace mwse {
 			}
 		}
 
+		//
+		// Hook: On Equipped.
+		//
+
+		void __fastcall OnEquipped(TES3::Actor* actor, DWORD _UNUSED_, TES3::BaseObject* item, TES3::ItemData* itemData, TES3::EquipmentStack** out_equipmentStack, TES3::MobileActor* mobileActor) {
+			// Call the original function we're overriding.
+			actor->equipItem(item, itemData, out_equipmentStack, mobileActor);
+
+			// Prepare our event payload. Mobile actor only really seems to get defined for the player.
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::table payload = state.create_table();
+			payload["actor"] = lua::makeLuaObject(actor);
+			payload["item"] = lua::makeLuaObject(item);
+			payload["itemData"] = itemData;
+			if (mobileActor) {
+				payload["reference"] = mobileActor->reference;
+			}
+
+			// Trigger the function. We do no checking here for a return value.
+			sol::protected_function trigger = state["event"]["trigger"];
+			auto result = trigger("onEquipped", payload);
+			if (!result.valid()) {
+				sol::error error = result;
+				log::getLog() << "Lua error encountered when raising onEquip event:" << std::endl << error.what() << std::endl;
+			}
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");
@@ -483,6 +508,27 @@ namespace mwse {
 			VirtualProtect((DWORD*)TES3_HOOK_BUTTON_PRESSED, TES3_HOOK_BUTTON_PRESSED_SIZE, PAGE_READWRITE, &OldProtect);
 			genJump(TES3_HOOK_BUTTON_PRESSED, reinterpret_cast<DWORD>(HookButtonPressed));
 			VirtualProtect((DWORD*)TES3_HOOK_BUTTON_PRESSED, TES3_HOOK_BUTTON_PRESSED_SIZE, OldProtect, &OldProtect);
+
+			// Event: onEquipped. Various function wrappers here, instead of the in-function hook method.
+			genCallUnprotected(0x49F053, reinterpret_cast<DWORD>(OnEquipped));
+			genCallUnprotected(0x4D9C66, reinterpret_cast<DWORD>(OnEquipped));
+			genCallUnprotected(0x4D9D90, reinterpret_cast<DWORD>(OnEquipped));
+			genCallUnprotected(0x528412, reinterpret_cast<DWORD>(OnEquipped));
+			genCallUnprotected(0x52C7F5, reinterpret_cast<DWORD>(OnEquipped));
+			genCallUnprotected(0x52C813, reinterpret_cast<DWORD>(OnEquipped));
+			genCallUnprotected(0x52C83C, reinterpret_cast<DWORD>(OnEquipped));
+			genCallUnprotected(0x52CC85, reinterpret_cast<DWORD>(OnEquipped));
+			genCallUnprotected(0x52CE43, reinterpret_cast<DWORD>(OnEquipped));
+			genCallUnprotected(0x52D0B9, reinterpret_cast<DWORD>(OnEquipped));
+			genCallUnprotected(0x54DDE8, reinterpret_cast<DWORD>(OnEquipped));
+			genCallUnprotected(0x5CEEB9, reinterpret_cast<DWORD>(OnEquipped));
+			genCallUnprotected(0x5CF3DB, reinterpret_cast<DWORD>(OnEquipped));
+			genCallUnprotected(0x5CF788, reinterpret_cast<DWORD>(OnEquipped));
+			genCallUnprotected(0x5CF825, reinterpret_cast<DWORD>(OnEquipped));
+			genCallUnprotected(0x5CF89F, reinterpret_cast<DWORD>(OnEquipped));
+			genCallUnprotected(0x5D00D6, reinterpret_cast<DWORD>(OnEquipped));
+			genCallUnprotected(0x5D048E, reinterpret_cast<DWORD>(OnEquipped));
+			genCallUnprotected(0x5D1468, reinterpret_cast<DWORD>(OnEquipped));
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);

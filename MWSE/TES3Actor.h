@@ -71,6 +71,7 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
+		void equipItem(TES3::BaseObject* item, TES3::ItemData* itemData, TES3::EquipmentStack** out_equipmentStack, TES3::MobileActor* mobileActor);
 		Reference* dropItem(BaseObject*, ItemData*, int, bool);
 
 	};
