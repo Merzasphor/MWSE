@@ -5,10 +5,14 @@
 #include "TES3Util.h"
 #include "MemoryUtil.h"
 #include "ScriptUtil.h"
+#include "UIUtil.h"
 
 #include "LuaUnifiedHeader.h"
 
 #include "LuaScript.h"
+
+#include "TES3UIBlock.h"
+#include "TES3UIInventoryTile.h"
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
 #include "StackLua.h"
@@ -429,6 +433,41 @@ namespace mwse {
 		}
 
 		//
+		// Hook: On PC Equip
+		//
+
+		signed char __cdecl OnPCEquip(TES3::UI::InventoryTile* tile) {
+			// Prepare our event payload. Mobile actor only really seems to get defined for the player.
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::table payload = state.create_table();
+			payload["item"] = lua::makeLuaObject(tile->item);
+			payload["itemData"] = tile->itemData;
+
+			// Trigger the function, check for lua errors.
+			sol::protected_function trigger = state["event"]["trigger"];
+			auto result = trigger("onPCEquip", payload);
+			if (!result.valid()) {
+				sol::error error = result;
+				log::getLog() << "Lua error encountered when raising onEquip event:" << std::endl << error.what() << std::endl;
+			}
+
+			// Is the result a boolean? If so, if it's false, don't let it be equipped.
+			sol::object resultAsObject = result;
+			if (resultAsObject.is<bool>() && resultAsObject.as<bool>() == false) {
+				TES3::UI::Block* inventoryMenu = tes3::ui::getMenuNode(tes3::ui::getInventoryMenuId());
+				inventoryMenu->timingUpdate();
+				tes3::ui::inventoryAddTile(1, tile);
+				inventoryMenu->performLayout(1);
+				*reinterpret_cast<signed char*>(0x7B6D04) = 1;
+				tes3::ui::inventoryUpdateIcons();
+				return 0;
+			}
+
+			// Call the original function.
+			return reinterpret_cast<signed char(__cdecl *)(TES3::UI::InventoryTile*)>(0x5CE130)(tile);
+		}
+
+		//
 		// Hook: On Equipped.
 		//
 
@@ -508,6 +547,12 @@ namespace mwse {
 			VirtualProtect((DWORD*)TES3_HOOK_BUTTON_PRESSED, TES3_HOOK_BUTTON_PRESSED_SIZE, PAGE_READWRITE, &OldProtect);
 			genJump(TES3_HOOK_BUTTON_PRESSED, reinterpret_cast<DWORD>(HookButtonPressed));
 			VirtualProtect((DWORD*)TES3_HOOK_BUTTON_PRESSED, TES3_HOOK_BUTTON_PRESSED_SIZE, OldProtect, &OldProtect);
+
+			// Event: onPCEquip. Fires when the function would normally get called. Return values from the event can overwrite behavior.
+			genCallUnprotected(0x5CB8E7, reinterpret_cast<DWORD>(OnPCEquip));
+			genCallUnprotected(0x5D11D9, reinterpret_cast<DWORD>(OnPCEquip));
+			genCallUnprotected(0x60E70F, reinterpret_cast<DWORD>(OnPCEquip));
+			genCallUnprotected(0x60E9BE, reinterpret_cast<DWORD>(OnPCEquip));
 
 			// Event: onEquipped. Various function wrappers here, instead of the in-function hook method.
 			genCallUnprotected(0x49F053, reinterpret_cast<DWORD>(OnEquipped));
