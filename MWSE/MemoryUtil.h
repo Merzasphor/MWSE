@@ -35,4 +35,7 @@ namespace mwse {
 
 	// Code to generate a nop in memory. Don't forget to unprotect it first!
 	void genNOP(DWORD Address);
+
+	// Code to generate a call in memory. This function unprotects the memory.
+	void genCallUnprotected(DWORD Address, DWORD To);
 }
