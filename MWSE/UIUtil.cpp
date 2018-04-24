@@ -6,7 +6,7 @@
 #define TES3_ui_requestMenuModeOn 0x595230
 #define TES3_ui_getMenuNode 0x595370
 
-#define TES3_ui_inventory_addTile 0x5CC910
+#define TES3_ui_inventory_addTile 0x5CBCC0
 #define TES3_ui_inventory_updateIcons 0x5CC910
 
 namespace mwse {
