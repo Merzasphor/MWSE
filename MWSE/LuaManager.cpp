@@ -599,6 +599,28 @@ namespace mwse {
 			return loaded;
 		}
 
+		//
+		// Hook: New Game. Points to the load event.
+		//
+
+		void OnNewGame() {
+			// Prepare our event data.
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::table eventData = state.create_table();
+			eventData["newGame"] = true;
+			lua::event::trigger("load", eventData);
+			if (eventData["block"] == true) {
+				return;
+			}
+
+			// Call original function.
+			reinterpret_cast<void(__stdcall *)()>(0x5FAEA0)();
+
+			eventData = state.create_table();
+			eventData["newGame"] = true;
+			lua::event::trigger("loaded", eventData);
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");
@@ -742,6 +764,10 @@ namespace mwse {
 			genCallUnprotected(0x5DD3C9, reinterpret_cast<DWORD>(OnLoad));
 			genCallUnprotected(0x5DD59F, reinterpret_cast<DWORD>(OnLoad));
 			genCallUnprotected(0x5FB629, reinterpret_cast<DWORD>(OnLoad));
+
+			// Additional load/loaded events for new game.
+			genCallUnprotected(0x5FCCF4, reinterpret_cast<DWORD>(OnNewGame));
+			genCallUnprotected(0x5FCDAA, reinterpret_cast<DWORD>(OnNewGame));
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);
