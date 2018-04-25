@@ -480,6 +480,28 @@ namespace mwse {
 		}
 
 		//
+		// Hook: On Unequipped.
+		//
+
+		void __fastcall OnUnequipped(TES3::Actor* actor, DWORD _UNUSED_, TES3::BaseObject* item, char unknown1, TES3::MobileActor* mobileActor, char unknown2, TES3::ItemData* itemData) {
+			// Call the original function we're overriding.
+			actor->unequipItem(item, unknown1, mobileActor, unknown2, itemData);
+
+			// Prepare our event payload. Mobile actor only really seems to get defined for the player.
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::table eventData = state.create_table();
+			eventData["actor"] = lua::makeLuaObject(actor);
+			eventData["item"] = lua::makeLuaObject(item);
+			eventData["itemData"] = itemData;
+			if (mobileActor) {
+				eventData["reference"] = mobileActor->reference;
+			}
+
+			// Trigger the function. We do no checking here for a return value.
+			lua::event::trigger("onUnequipped", eventData);
+		}
+
+		//
 		// Hook: On Activate
 		//
 
@@ -560,7 +582,7 @@ namespace mwse {
 			genCallUnprotected(0x60E70F, reinterpret_cast<DWORD>(OnPCEquip));
 			genCallUnprotected(0x60E9BE, reinterpret_cast<DWORD>(OnPCEquip));
 
-			// Event: onEquipped. Various function wrappers here, instead of the in-function hook method.
+			// Event: onEquipped.
 			genCallUnprotected(0x49F053, reinterpret_cast<DWORD>(OnEquipped));
 			genCallUnprotected(0x4D9C66, reinterpret_cast<DWORD>(OnEquipped));
 			genCallUnprotected(0x4D9D90, reinterpret_cast<DWORD>(OnEquipped));
@@ -580,6 +602,45 @@ namespace mwse {
 			genCallUnprotected(0x5D00D6, reinterpret_cast<DWORD>(OnEquipped));
 			genCallUnprotected(0x5D048E, reinterpret_cast<DWORD>(OnEquipped));
 			genCallUnprotected(0x5D1468, reinterpret_cast<DWORD>(OnEquipped));
+
+			// Event: onUnequipped.
+			genCallUnprotected(0x46089D, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x460B0F, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x464D99, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x465732, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x495954, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x495B32, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x495BA8, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x495C46, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x495DA5, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x495ED9, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x495F7B, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x496062, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x4960E7, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x49615E, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x496254, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x4962A7, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x496350, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x496620, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x4966AF, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x5150FD, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x525042, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x52518F, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x5282F4, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x5283C1, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x52C6B9, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x541087, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x54DA4B, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x558472, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x5586F6, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x569CFB, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x56A914, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x56AF4D, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x5B521D, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x5B5A1F, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x5D09F0, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x5D0B4B, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallUnprotected(0x5D0C54, reinterpret_cast<DWORD>(OnUnequipped));
 
 			// Event: onActivate. Fires when an object is activated.
 			genCallUnprotected(0x41CCC8, reinterpret_cast<DWORD>(OnActivate));
