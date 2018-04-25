@@ -435,7 +435,7 @@ namespace mwse {
 		//
 
 		signed char __cdecl OnPCEquip(TES3::UI::InventoryTile* tile) {
-			// Prepare our event payload. Mobile actor only really seems to get defined for the player.
+			// Prepare our event data.
 			sol::state& state = LuaManager::getInstance().getState();
 			sol::table eventData = state.create_table();
 			eventData["item"] = lua::makeLuaObject(tile->item);
@@ -506,7 +506,7 @@ namespace mwse {
 		//
 
 		void __fastcall OnActivate(TES3::Reference* target, DWORD _UNUSED_, TES3::Reference* activator, int something) {
-			// Prepare our event payload. Mobile actor only really seems to get defined for the player.
+			// Prepare our event data.
 			sol::state& state = LuaManager::getInstance().getState();
 			sol::table eventData = state.create_table();
 			eventData["activator"] = activator;
@@ -527,13 +527,13 @@ namespace mwse {
 		//
 
 		signed char __fastcall OnSave(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName, const char* saveName) {
-			// Prepare our event payload. Mobile actor only really seems to get defined for the player.
+			// Prepare our event data.
 			sol::state& state = LuaManager::getInstance().getState();
 			sol::table eventData = state.create_table();
 			eventData["filename"] = fileName;
 			eventData["name"] = saveName;
 
-			// If our event data says to block, don't let the object activate.
+			// If our event data says to block, prevent the game from saving. This will cause an error message to show.
 			lua::event::trigger("save", eventData);
 			if (eventData["block"] == true) {
 				return false;
@@ -562,7 +562,7 @@ namespace mwse {
 		//
 
 		signed char __fastcall OnLoad(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName) {
-			// Prepare our event payload. Mobile actor only really seems to get defined for the player.
+			// Prepare our event data.
 			sol::state& state = LuaManager::getInstance().getState();
 			sol::table eventData = state.create_table();
 
@@ -575,7 +575,7 @@ namespace mwse {
 			std::string eventFileName = fileName;
 			eventData["filename"] = eventFileName.substr(0, eventFileName.find_last_of('.'));
 
-			// If our event data says to block, don't let the object activate.
+			// If our event data says to block, prevent the game from loading.
 			lua::event::trigger("load", eventData);
 			if (eventData["block"] == true) {
 				return false;
