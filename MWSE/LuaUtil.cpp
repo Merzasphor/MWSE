@@ -4,6 +4,7 @@
 #include "LuaManager.h"
 
 #include "TES3Util.h"
+#include "Log.h"
 
 namespace mwse {
 	namespace lua {
@@ -241,6 +242,22 @@ namespace mwse {
 			}
 
 			return sol::nil;
+		}
+
+		namespace event {
+			sol::object trigger(const char* eventType, sol::table eventData) {
+				sol::state& state = LuaManager::getInstance().getState();
+
+				// Trigger the function, check for lua errors.
+				sol::protected_function trigger = state["event"]["trigger"];
+				auto result = trigger(eventType, eventData);
+				if (!result.valid()) {
+					sol::error error = result;
+					log::getLog() << "Lua error encountered when raising " << eventType << " event:" << std::endl << error.what() << std::endl;
+				}
+
+				return result;
+			}
 		}
 	}
 }

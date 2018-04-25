@@ -379,9 +379,7 @@ namespace mwse {
 		//
 
 		static void _stdcall FinishInitialization() {
-			// Raise an event about this.
-			sol::state& state = LuaManager::getInstance().getState();
-			state["event"]["trigger"]("initialized");
+			lua::event::trigger("initialized");
 		}
 
 		static DWORD callbackFinishedInitialization = TES3_HOOK_FINISH_INITIALIZATION_RETURN;
@@ -408,9 +406,9 @@ namespace mwse {
 		static void _stdcall ButtonPressed() {
 			// Raise an event about this.
 			sol::state& state = LuaManager::getInstance().getState();
-			sol::table payload = state.create_table();
-			payload["button"] = *reinterpret_cast<int*>(0x7B88C0);
-			state["event"]["trigger"]("buttonPressed", payload);
+			sol::table eventData = state.create_table();
+			eventData["button"] = *reinterpret_cast<int*>(0x7B88C0);
+			lua::event::trigger("buttonPressed", eventData);
 			state["event"]["clear"]("buttonPressed");
 		}
 
@@ -439,21 +437,13 @@ namespace mwse {
 		signed char __cdecl OnPCEquip(TES3::UI::InventoryTile* tile) {
 			// Prepare our event payload. Mobile actor only really seems to get defined for the player.
 			sol::state& state = LuaManager::getInstance().getState();
-			sol::table payload = state.create_table();
-			payload["item"] = lua::makeLuaObject(tile->item);
-			payload["itemData"] = tile->itemData;
+			sol::table eventData = state.create_table();
+			eventData["item"] = lua::makeLuaObject(tile->item);
+			eventData["itemData"] = tile->itemData;
 
-			// Trigger the function, check for lua errors.
-			sol::protected_function trigger = state["event"]["trigger"];
-			auto result = trigger("onPCEquip", payload);
-			if (!result.valid()) {
-				sol::error error = result;
-				log::getLog() << "Lua error encountered when raising onPCEquip event:" << std::endl << error.what() << std::endl;
-			}
-
-			// Is the result a boolean? If so, if it's false, don't let it be equipped.
-			sol::object resultAsObject = result;
-			if (resultAsObject.is<bool>() && resultAsObject.as<bool>() == false) {
+			// Execute event. If the event returned false, bail.
+			lua::event::trigger("onPCEquip", eventData);
+			if (eventData["block"] == true) {
 				TES3::UI::Block* inventoryMenu = tes3::ui::getMenuNode(tes3::ui::getInventoryMenuId());
 				inventoryMenu->timingUpdate();
 				tes3::ui::inventoryAddTile(1, tile);
@@ -477,21 +467,16 @@ namespace mwse {
 
 			// Prepare our event payload. Mobile actor only really seems to get defined for the player.
 			sol::state& state = LuaManager::getInstance().getState();
-			sol::table payload = state.create_table();
-			payload["actor"] = lua::makeLuaObject(actor);
-			payload["item"] = lua::makeLuaObject(item);
-			payload["itemData"] = itemData;
+			sol::table eventData = state.create_table();
+			eventData["actor"] = lua::makeLuaObject(actor);
+			eventData["item"] = lua::makeLuaObject(item);
+			eventData["itemData"] = itemData;
 			if (mobileActor) {
-				payload["reference"] = mobileActor->reference;
+				eventData["reference"] = mobileActor->reference;
 			}
 
 			// Trigger the function. We do no checking here for a return value.
-			sol::protected_function trigger = state["event"]["trigger"];
-			auto result = trigger("onEquipped", payload);
-			if (!result.valid()) {
-				sol::error error = result;
-				log::getLog() << "Lua error encountered when raising onEquipped event:" << std::endl << error.what() << std::endl;
-			}
+			lua::event::trigger("onEquipped", eventData);
 		}
 
 		//
@@ -501,21 +486,13 @@ namespace mwse {
 		void __fastcall OnActivate(TES3::Reference* target, DWORD _UNUSED_, TES3::Reference* activator, int something) {
 			// Prepare our event payload. Mobile actor only really seems to get defined for the player.
 			sol::state& state = LuaManager::getInstance().getState();
-			sol::table payload = state.create_table();
-			payload["activator"] = activator;
-			payload["target"] = target;
+			sol::table eventData = state.create_table();
+			eventData["activator"] = activator;
+			eventData["target"] = target;
 
-			// Trigger the function, check for lua errors.
-			sol::protected_function trigger = state["event"]["trigger"];
-			auto result = trigger("onActivate", payload);
-			if (!result.valid()) {
-				sol::error error = result;
-				log::getLog() << "Lua error encountered when raising onActivate event:" << std::endl << error.what() << std::endl;
-			}
-
-			// Is the result a boolean? If so, if it's false, don't let it be activated.
-			sol::object resultAsObject = result;
-			if (resultAsObject.is<bool>() && resultAsObject.as<bool>() == false) {
+			// If our event data says to block, don't let the object activate.
+			lua::event::trigger("onActivate", eventData);
+			if (eventData["block"] == true) {
 				return;
 			}
 
