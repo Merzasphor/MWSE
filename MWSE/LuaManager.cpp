@@ -522,6 +522,31 @@ namespace mwse {
 			target->activate(activator, something);
 		}
 
+		//
+		// Hook: On Save
+		//
+
+		void __fastcall OnSave(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName, const char* saveName) {
+			// Prepare our event payload. Mobile actor only really seems to get defined for the player.
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::table eventData = state.create_table();
+			eventData["filename"] = fileName;
+			eventData["name"] = saveName;
+
+			// If our event data says to block, don't let the object activate.
+			lua::event::trigger("onSave", eventData);
+			if (eventData["block"] == true) {
+				return;
+			}
+
+			// Fetch the names back from the event data, in case the event changed them.
+			std::string eventFileName = eventData["filename"];
+			std::string eventSaveName = eventData["name"];
+
+			// Call original function.
+			nonDynamicData->saveGame(eventFileName.c_str(), eventSaveName.c_str());
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");
@@ -650,6 +675,15 @@ namespace mwse {
 			genCallUnprotected(0x59051F, reinterpret_cast<DWORD>(OnActivate));
 			genCallUnprotected(0x5ADB6E, reinterpret_cast<DWORD>(OnActivate));
 			genCallUnprotected(0x613CC9, reinterpret_cast<DWORD>(OnActivate));
+
+			// Event: onSave
+			genCallUnprotected(0x41B100, reinterpret_cast<DWORD>(OnSave));
+			genCallUnprotected(0x476F58, reinterpret_cast<DWORD>(OnSave));
+			genCallUnprotected(0x5C8EDB, reinterpret_cast<DWORD>(OnSave));
+			genCallUnprotected(0x610578, reinterpret_cast<DWORD>(OnSave));
+			genCallUnprotected(0x6106BE, reinterpret_cast<DWORD>(OnSave));
+			genCallUnprotected(0x6108B8, reinterpret_cast<DWORD>(OnSave));
+			genCallUnprotected(0x611B69, reinterpret_cast<DWORD>(OnSave));
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);

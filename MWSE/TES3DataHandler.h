@@ -33,6 +33,8 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
+		bool saveGame(const char* fileName, const char* saveName);
+
 		BaseObject* resolveObject(const char*);
 		Reference* findFirstCloneOfActor(const char*);
 		Script* findScriptByName(const char*);
