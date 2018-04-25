@@ -1,6 +1,7 @@
 #include "TES3DataHandler.h"
 
 #define TES3_NonDynamicData_saveGame 0x4C4250
+#define TES3_NonDynamicData_loadGameInGame 0x4C4800
 #define TES3_NonDynamicData_resolveObject 0x4B8B60
 #define TES3_NonDynamicData_findTemplate2 0x4BA8D0
 #define TES3_NonDynamicData_findFirstCloneOfActor 0x4B8F50
@@ -20,6 +21,10 @@ namespace TES3 {
 
 	bool NonDynamicData::saveGame(const char* fileName, const char* saveName) {
 		return reinterpret_cast<signed char(__thiscall *)(NonDynamicData*, const char*, const char*)>(TES3_NonDynamicData_saveGame)(this, fileName, saveName);
+	}
+
+	bool NonDynamicData::loadGame(const char* fileName) {
+		return reinterpret_cast<signed char(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_loadGameInGame)(this, fileName);
 	}
 
 	BaseObject* NonDynamicData::resolveObject(const char* id) {

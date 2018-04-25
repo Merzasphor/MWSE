@@ -526,7 +526,7 @@ namespace mwse {
 		// Hook: On Save
 		//
 
-		bool __fastcall OnSave(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName, const char* saveName) {
+		signed char __fastcall OnSave(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName, const char* saveName) {
 			// Prepare our event payload. Mobile actor only really seems to get defined for the player.
 			sol::state& state = LuaManager::getInstance().getState();
 			sol::table eventData = state.create_table();
@@ -555,6 +555,48 @@ namespace mwse {
 			}
 
 			return saved;
+		}
+
+		//
+		// Hook: On Load
+		//
+
+		signed char __fastcall OnLoad(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName) {
+			// Prepare our event payload. Mobile actor only really seems to get defined for the player.
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::table eventData = state.create_table();
+
+			// If no filename is passed, it's going to use the quicksave.
+			if (fileName == NULL) {
+				fileName = "quiksave.ess";
+			}
+
+			// To make it work like with the save event, we trim out the .ess
+			std::string eventFileName = fileName;
+			eventData["filename"] = eventFileName.substr(0, eventFileName.find_last_of('.'));
+
+			// If our event data says to block, don't let the object activate.
+			lua::event::trigger("load", eventData);
+			if (eventData["block"] == true) {
+				return false;
+			}
+
+			// Fetch the name back from the event data, and add back in the extension.
+			eventFileName = eventData["filename"];
+			eventFileName += ".ess";
+
+			// Call original function.
+			bool loaded = nonDynamicData->loadGame(eventFileName.c_str());
+
+			// Pass a follow-up event if we successfully saved.
+			if (loaded) {
+				eventData = state.create_table();
+				eventData["newGame"] = false;
+				eventData["filename"] = eventFileName.substr(0, eventFileName.find_last_of('.'));
+				lua::event::trigger("loaded", eventData);
+			}
+
+			return loaded;
 		}
 
 		void LuaManager::hook() {
@@ -694,6 +736,12 @@ namespace mwse {
 			genCallUnprotected(0x6106BE, reinterpret_cast<DWORD>(OnSave));
 			genCallUnprotected(0x6108B8, reinterpret_cast<DWORD>(OnSave));
 			genCallUnprotected(0x611B69, reinterpret_cast<DWORD>(OnSave));
+
+			// Event: load/loaded.
+			genCallUnprotected(0x41B262, reinterpret_cast<DWORD>(OnLoad));
+			genCallUnprotected(0x5DD3C9, reinterpret_cast<DWORD>(OnLoad));
+			genCallUnprotected(0x5DD59F, reinterpret_cast<DWORD>(OnLoad));
+			genCallUnprotected(0x5FB629, reinterpret_cast<DWORD>(OnLoad));
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);
