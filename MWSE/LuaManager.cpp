@@ -442,7 +442,7 @@ namespace mwse {
 			eventData["itemData"] = tile->itemData;
 
 			// Execute event. If the event returned false, bail.
-			lua::event::trigger("onPCEquip", eventData);
+			lua::event::trigger("equip", eventData);
 			if (eventData["block"] == true) {
 				TES3::UI::Block* inventoryMenu = tes3::ui::getMenuNode(tes3::ui::getInventoryMenuId());
 				inventoryMenu->timingUpdate();
@@ -476,7 +476,7 @@ namespace mwse {
 			}
 
 			// Trigger the function. We do no checking here for a return value.
-			lua::event::trigger("onEquipped", eventData);
+			lua::event::trigger("equipped", eventData);
 		}
 
 		//
@@ -498,7 +498,7 @@ namespace mwse {
 			}
 
 			// Trigger the function. We do no checking here for a return value.
-			lua::event::trigger("onUnequipped", eventData);
+			lua::event::trigger("unequipped", eventData);
 		}
 
 		//
@@ -513,7 +513,7 @@ namespace mwse {
 			eventData["target"] = target;
 
 			// If our event data says to block, don't let the object activate.
-			lua::event::trigger("onActivate", eventData);
+			lua::event::trigger("activate", eventData);
 			if (eventData["block"] == true) {
 				return;
 			}
@@ -526,7 +526,7 @@ namespace mwse {
 		// Hook: On Save
 		//
 
-		void __fastcall OnSave(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName, const char* saveName) {
+		bool __fastcall OnSave(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName, const char* saveName) {
 			// Prepare our event payload. Mobile actor only really seems to get defined for the player.
 			sol::state& state = LuaManager::getInstance().getState();
 			sol::table eventData = state.create_table();
@@ -534,9 +534,9 @@ namespace mwse {
 			eventData["name"] = saveName;
 
 			// If our event data says to block, don't let the object activate.
-			lua::event::trigger("onSave", eventData);
+			lua::event::trigger("save", eventData);
 			if (eventData["block"] == true) {
-				return;
+				return false;
 			}
 
 			// Fetch the names back from the event data, in case the event changed them.
@@ -544,7 +544,17 @@ namespace mwse {
 			std::string eventSaveName = eventData["name"];
 
 			// Call original function.
-			nonDynamicData->saveGame(eventFileName.c_str(), eventSaveName.c_str());
+			bool saved = nonDynamicData->saveGame(eventFileName.c_str(), eventSaveName.c_str());
+
+			// Pass a follow-up event if we successfully saved.
+			if (saved) {
+				eventData = state.create_table();
+				eventData["filename"] = eventFileName;
+				eventData["name"] = eventSaveName;
+				lua::event::trigger("saved", eventData);
+			}
+
+			return saved;
 		}
 
 		void LuaManager::hook() {
@@ -601,13 +611,13 @@ namespace mwse {
 			genJump(TES3_HOOK_BUTTON_PRESSED, reinterpret_cast<DWORD>(HookButtonPressed));
 			VirtualProtect((DWORD*)TES3_HOOK_BUTTON_PRESSED, TES3_HOOK_BUTTON_PRESSED_SIZE, OldProtect, &OldProtect);
 
-			// Event: onPCEquip. Fires when the function would normally get called. Return values from the event can overwrite behavior.
+			// Event: equip.
 			genCallUnprotected(0x5CB8E7, reinterpret_cast<DWORD>(OnPCEquip));
 			genCallUnprotected(0x5D11D9, reinterpret_cast<DWORD>(OnPCEquip));
 			genCallUnprotected(0x60E70F, reinterpret_cast<DWORD>(OnPCEquip));
 			genCallUnprotected(0x60E9BE, reinterpret_cast<DWORD>(OnPCEquip));
 
-			// Event: onEquipped.
+			// Event: equipped.
 			genCallUnprotected(0x49F053, reinterpret_cast<DWORD>(OnEquipped));
 			genCallUnprotected(0x4D9C66, reinterpret_cast<DWORD>(OnEquipped));
 			genCallUnprotected(0x4D9D90, reinterpret_cast<DWORD>(OnEquipped));
@@ -628,7 +638,7 @@ namespace mwse {
 			genCallUnprotected(0x5D048E, reinterpret_cast<DWORD>(OnEquipped));
 			genCallUnprotected(0x5D1468, reinterpret_cast<DWORD>(OnEquipped));
 
-			// Event: onUnequipped.
+			// Event: unequipped.
 			genCallUnprotected(0x46089D, reinterpret_cast<DWORD>(OnUnequipped));
 			genCallUnprotected(0x460B0F, reinterpret_cast<DWORD>(OnUnequipped));
 			genCallUnprotected(0x464D99, reinterpret_cast<DWORD>(OnUnequipped));
@@ -667,7 +677,7 @@ namespace mwse {
 			genCallUnprotected(0x5D0B4B, reinterpret_cast<DWORD>(OnUnequipped));
 			genCallUnprotected(0x5D0C54, reinterpret_cast<DWORD>(OnUnequipped));
 
-			// Event: onActivate. Fires when an object is activated.
+			// Event: activate.
 			genCallUnprotected(0x41CCC8, reinterpret_cast<DWORD>(OnActivate));
 			genCallUnprotected(0x507298, reinterpret_cast<DWORD>(OnActivate));
 			genCallUnprotected(0x5364CD, reinterpret_cast<DWORD>(OnActivate));
@@ -676,7 +686,7 @@ namespace mwse {
 			genCallUnprotected(0x5ADB6E, reinterpret_cast<DWORD>(OnActivate));
 			genCallUnprotected(0x613CC9, reinterpret_cast<DWORD>(OnActivate));
 
-			// Event: onSave
+			// Event: save/saved.
 			genCallUnprotected(0x41B100, reinterpret_cast<DWORD>(OnSave));
 			genCallUnprotected(0x476F58, reinterpret_cast<DWORD>(OnSave));
 			genCallUnprotected(0x5C8EDB, reinterpret_cast<DWORD>(OnSave));
