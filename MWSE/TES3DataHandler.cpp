@@ -33,7 +33,7 @@ namespace TES3 {
 		// If our event data says to block, prevent the game from saving. This will cause an error message to show.
 		mwse::lua::event::trigger("save", eventData);
 		if (eventData["block"] == true) {
-			return false;
+			return true;
 		}
 
 		// Fetch the names back from the event data, in case the event changed them.
