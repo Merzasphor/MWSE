@@ -19,7 +19,7 @@ namespace mwse {
 				"objectType", &TES3::MobilePlayer::objectType,
 
 				"movementFlags", &TES3::MobilePlayer::movementFlags,
-				"isCrouched", sol::readonly_property([](TES3::MobilePlayer& self) { return (self.movementFlags & TES3::ActorMovement::Crouching) != 0; }),
+				"isSneaking", sol::readonly_property([](TES3::MobilePlayer& self) { return (self.movementFlags & TES3::ActorMovement::Crouching) != 0; }),
 
 				"prevMovementFlags", &TES3::MobilePlayer::prevMovementFlags,
 				"actorFlags", &TES3::MobilePlayer::actorFlags,

@@ -19,7 +19,7 @@ namespace mwse {
 				"objectType", &TES3::MobileCreature::objectType,
 
 				"movementFlags", &TES3::MobileCreature::movementFlags,
-				"isCrouched", sol::readonly_property([](TES3::MobileCreature& self) { return (self.movementFlags & TES3::ActorMovement::Crouching) != 0; }),
+				"isSneaking", sol::readonly_property([](TES3::MobileCreature& self) { return (self.movementFlags & TES3::ActorMovement::Crouching) != 0; }),
 
 				"prevMovementFlags", &TES3::MobileCreature::prevMovementFlags,
 				"actorFlags", &TES3::MobileCreature::actorFlags,
