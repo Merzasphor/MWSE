@@ -400,6 +400,29 @@ namespace mwse {
 		}
 
 		//
+		// Hook: Enter Frame
+		//
+
+		void __fastcall EnterFrame(TES3::WorldController* worldController, DWORD _UNUSED_) {
+			// Run the function before raising our event.
+			worldController->mainLoopBeforeInput();
+
+			// Send off our enterFrame event always.
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::table eventData = state.create_table();
+			eventData["delta"] = worldController->deltaTime;
+			eventData["menuMode"] = (bool)worldController->flagMenuMode;
+			lua::event::trigger("enterFrame", eventData);
+
+			// If we're not in menu mode, send off the simulate event.
+			if (worldController->flagMenuMode == 0) {
+				sol::table eventData = state.create_table();
+				eventData["delta"] = worldController->deltaTime;
+				lua::event::trigger("simulate", eventData);
+			}
+		}
+
+		//
 		// Hook: Button pressed.
 		//
 
@@ -643,6 +666,9 @@ namespace mwse {
 			VirtualProtect((DWORD*)TES3_HOOK_FINISH_INITIALIZATION, TES3_HOOK_FINISH_INITIALIZATION_SIZE, PAGE_READWRITE, &OldProtect);
 			genJump(TES3_HOOK_FINISH_INITIALIZATION, reinterpret_cast<DWORD>(HookFinishInitialization));
 			VirtualProtect((DWORD*)TES3_HOOK_FINISH_INITIALIZATION, TES3_HOOK_FINISH_INITIALIZATION_SIZE, OldProtect, &OldProtect);
+
+			// Event: enterFrame.
+			genCallUnprotected(0x41ABB0, reinterpret_cast<DWORD>(EnterFrame));
 
 			// Event: buttonPressed. Hook after a button has been clicked.
 			VirtualProtect((DWORD*)TES3_HOOK_BUTTON_PRESSED, TES3_HOOK_BUTTON_PRESSED_SIZE, PAGE_READWRITE, &OldProtect);
