@@ -86,8 +86,8 @@ namespace TES3 {
 	struct MobileActor {
 		void * vTable; // 0x0
 		ObjectType::ObjectType objectType; // 0x4
-		short movementFlags; // 0x8
-		short prevMovementFlags; // 0xA
+		unsigned short movementFlags; // 0x8
+		unsigned short prevMovementFlags; // 0xA
 		short unknown_0xC;
 		short unknown_0xE; // Undefined.
 		unsigned int actorFlags; // 0x10
