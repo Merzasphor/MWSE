@@ -1,5 +1,9 @@
 #include "TES3DataHandler.h"
 
+#include "LuaUnifiedHeader.h"
+#include "LuaManager.h"
+#include "LuaUtil.h"
+
 #define TES3_NonDynamicData_saveGame 0x4C4250
 #define TES3_NonDynamicData_loadGameInGame 0x4C4800
 #define TES3_NonDynamicData_resolveObject 0x4B8B60
@@ -20,7 +24,33 @@ namespace TES3 {
 	//
 
 	bool NonDynamicData::saveGame(const char* fileName, const char* saveName) {
-		return reinterpret_cast<signed char(__thiscall *)(NonDynamicData*, const char*, const char*)>(TES3_NonDynamicData_saveGame)(this, fileName, saveName);
+		// Prepare our event data.
+		sol::state& state = mwse::lua::LuaManager::getInstance().getState();
+		sol::table eventData = state.create_table();
+		eventData["filename"] = fileName;
+		eventData["name"] = saveName;
+
+		// If our event data says to block, prevent the game from saving. This will cause an error message to show.
+		mwse::lua::event::trigger("save", eventData);
+		if (eventData["block"] == true) {
+			return false;
+		}
+
+		// Fetch the names back from the event data, in case the event changed them.
+		std::string eventFileName = eventData["filename"];
+		std::string eventSaveName = eventData["name"];
+
+		bool saved = reinterpret_cast<signed char(__thiscall *)(NonDynamicData*, const char*, const char*)>(TES3_NonDynamicData_saveGame)(this, eventFileName.c_str(), eventSaveName.c_str());
+
+		// Pass a follow-up event if we successfully saved.
+		if (saved) {
+			eventData = state.create_table();
+			eventData["filename"] = eventFileName;
+			eventData["name"] = eventSaveName;
+			mwse::lua::event::trigger("saved", eventData);
+		}
+
+		return saved;
 	}
 
 	bool NonDynamicData::loadGame(const char* fileName) {

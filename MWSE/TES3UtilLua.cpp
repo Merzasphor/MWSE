@@ -120,6 +120,7 @@ namespace mwse {
 				return tes3::getDataHandler()->getSoundPlaying(sound, reference);
 			};
 
+			// Bind function: tes3.messageBox
 			state["tes3"]["messageBox"] = [](sol::table params) {
 				// We need to make sure the strings stay in memory, we can't just snag the c-string in passing.
 				std::string buttonText[32];
@@ -160,6 +161,14 @@ namespace mwse {
 				// Temporary hook into the function that creates message boxes. 
 				int result = reinterpret_cast<int(__cdecl *)(const char*, ...)>(0x5F1AA0)(message.c_str(), buttonTextStruct, NULL);
 				return result;
+			};
+
+			// Bind function: tes3.saveGame
+			state["tes3"]["saveGame"] = [](sol::optional<sol::table> params) {
+				std::string fileName = getOptionalParam<std::string>(params, "file", "quiksave");
+				std::string saveName = getOptionalParam<std::string>(params, "file", "Quicksave");
+
+				tes3::getDataHandler()->nonDynamicData->saveGame(fileName.c_str(), saveName.c_str());
 			};
 		}
 	}

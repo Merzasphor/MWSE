@@ -527,34 +527,7 @@ namespace mwse {
 		//
 
 		signed char __fastcall OnSave(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName, const char* saveName) {
-			// Prepare our event data.
-			sol::state& state = LuaManager::getInstance().getState();
-			sol::table eventData = state.create_table();
-			eventData["filename"] = fileName;
-			eventData["name"] = saveName;
-
-			// If our event data says to block, prevent the game from saving. This will cause an error message to show.
-			lua::event::trigger("save", eventData);
-			if (eventData["block"] == true) {
-				return false;
-			}
-
-			// Fetch the names back from the event data, in case the event changed them.
-			std::string eventFileName = eventData["filename"];
-			std::string eventSaveName = eventData["name"];
-
-			// Call original function.
-			bool saved = nonDynamicData->saveGame(eventFileName.c_str(), eventSaveName.c_str());
-
-			// Pass a follow-up event if we successfully saved.
-			if (saved) {
-				eventData = state.create_table();
-				eventData["filename"] = eventFileName;
-				eventData["name"] = eventSaveName;
-				lua::event::trigger("saved", eventData);
-			}
-
-			return saved;
+			return nonDynamicData->saveGame(fileName, saveName);
 		}
 
 		//
