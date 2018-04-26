@@ -166,6 +166,10 @@ namespace mwse {
 				return false;
 			};
 
+			luaState["mwse"]["virtualKeyPressed"] = [](int VK_key) {
+				return (GetAsyncKeyState(VK_key) & 0x8001) == 0x8001;
+			};
+
 			// Bind data types.
 			bindTES3ActionData();
 			bindTES3Activator();
