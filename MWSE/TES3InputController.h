@@ -80,5 +80,13 @@ namespace TES3 {
 	struct InputController {
 		char unknown_0x00[0x1B3C];
 		InputConfig inputMaps[34];
+
+		//
+		// Other related this-call functions.
+		//
+
+		void readKeyState();
+		int keybindTest(unsigned int, unsigned int);
+
 	};
 }
