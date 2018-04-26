@@ -568,6 +568,7 @@ namespace mwse {
 
 			// If no filename is passed, it's going to use the quicksave.
 			if (fileName == NULL) {
+				eventData["quickload"] = true;
 				fileName = "quiksave.ess";
 			}
 
