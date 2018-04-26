@@ -19,6 +19,8 @@ namespace mwse {
 				"objectType", &TES3::MobileNPC::objectType,
 
 				"movementFlags", &TES3::MobileNPC::movementFlags,
+				"isCrouched", sol::readonly_property([](TES3::MobileNPC& self) { return (self.movementFlags & TES3::ActorMovement::Crouching) != 0; }),
+
 				"prevMovementFlags", &TES3::MobileNPC::prevMovementFlags,
 				"actorFlags", &TES3::MobileNPC::actorFlags,
 
