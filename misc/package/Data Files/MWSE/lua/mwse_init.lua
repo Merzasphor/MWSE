@@ -21,5 +21,32 @@ function table.size(t)
 	return count
 end
 
+function table.find(t, n)
+	for i, v in pairs(t) do
+		if (v == n) then
+			return i
+		end
+	end
+end
+
+function table.removevalue(t, v)
+	local i = table.find(t, v)
+	if (i ~= nil) then
+		table.remove(t, i)
+	end
+end
+
+-------------------------------------------------
+-- Extend API: string
+-------------------------------------------------
+
+function string.startswith(haystack, needle)
+	return string.sub(haystack, 1, string.len(needle)) == needle
+end
+
+function string.endswith(haystack, needle)
+	return needle=='' or string.sub(haystack, -string.len(needle)) == needle
+end
+
 -- Report that we're initialized.
 print("MWSE Lua interface initialized.")
