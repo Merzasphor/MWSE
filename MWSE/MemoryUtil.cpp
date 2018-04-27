@@ -17,11 +17,21 @@ namespace mwse {
 		MemAccess<unsigned char>::Set(Address, 0x90);
 	}
 
-	void genCallUnprotected(DWORD Address, DWORD To) {
+	void genCallUnprotected(DWORD address, DWORD to, DWORD size) {
+		// Unprotect memory.
 		DWORD oldProtect;
-		VirtualProtect((DWORD*)Address, 0x5, PAGE_READWRITE, &oldProtect);
-		MemAccess<unsigned char>::Set(Address, 0xE8);
-		MemAccess<DWORD>::Set(Address + 1, To - Address - 0x5);
-		VirtualProtect((DWORD*)Address, 0x5, oldProtect, &oldProtect);
+		VirtualProtect((DWORD*)address, 0x5, PAGE_READWRITE, &oldProtect);
+
+		// Create our call.
+		MemAccess<unsigned char>::Set(address, 0xE8);
+		MemAccess<DWORD>::Set(address + 1, to - address - 0x5);
+
+		// NOP out the rest of the block.
+		for (DWORD i = address + 5; i < address + size; i++) {
+			genNOP(i);
+		}
+
+		// Protect memory again.
+		VirtualProtect((DWORD*)address, 0x5, oldProtect, &oldProtect);
 	}
 }

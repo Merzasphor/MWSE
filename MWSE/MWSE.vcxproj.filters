@@ -633,6 +633,9 @@
     <ClInclude Include="TES3UITree.h">
       <Filter>Header Files\DataAdapters\TES3\UI</Filter>
     </ClInclude>
+    <ClInclude Include="PatchUtil.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1558,6 +1561,9 @@
     </ClCompile>
     <ClCompile Include="TES3InputController.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="PatchUtil.cpp">
+      <Filter>Source Files\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

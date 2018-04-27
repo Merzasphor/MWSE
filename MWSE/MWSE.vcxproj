@@ -23,6 +23,7 @@
     <ClInclude Include="LuaScript.h" />
     <ClInclude Include="LuaUtil.h" />
     <ClInclude Include="MemoryUtil.h" />
+    <ClInclude Include="PatchUtil.h" />
     <ClInclude Include="ScriptUtilLua.h" />
     <ClInclude Include="sol.hpp" />
     <ClInclude Include="LuaUnifiedHeader.h" />
@@ -182,6 +183,7 @@
     <ClCompile Include="MemoryUtil.cpp" />
     <ClCompile Include="MgeVirtualMachine.cpp" />
     <ClCompile Include="MgeTes3Machine.cpp" />
+    <ClCompile Include="PatchUtil.cpp" />
     <ClCompile Include="RngUtil.cpp" />
     <ClCompile Include="ScriptUtil.cpp" />
     <ClCompile Include="ScriptUtilLua.cpp" />

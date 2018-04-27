@@ -28,6 +28,7 @@
 
 #include "TES3Util.h"
 #include "CodePatchUtil.h"
+#include "PatchUtil.h"
 #include "MWSEDefs.h"
 
 #include "LuaManager.h"
@@ -59,6 +60,9 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved)
 		SymInitialize(process, NULL, TRUE);
 		SymEnumSymbols(process, 0, "msvcrt!*", EnumSymbolsCallback, NULL);
 		SymCleanup(process);
+
+		// Install necessary patches.
+		mwse::patch::installPatches();
 
 		if (external_malloc == NULL) {
 			log::getLog() << "Error: unable to find malloc()" << std::endl;
