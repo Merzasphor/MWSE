@@ -536,19 +536,7 @@ namespace mwse {
 		//
 
 		void __fastcall OnActivate(TES3::Reference* target, DWORD _UNUSED_, TES3::Reference* activator, int something) {
-			// Prepare our event data.
-			sol::state& state = LuaManager::getInstance().getState();
-			sol::table eventData = state.create_table();
-			eventData["activator"] = activator;
-			eventData["target"] = target;
-
-			// If our event data says to block, don't let the object activate.
-			lua::event::trigger("activate", eventData);
-			if (eventData["block"] == true) {
-				return;
-			}
-
-			// Call original function.
+			// Call our version of the function, where we send off an event.
 			target->activate(activator, something);
 		}
 

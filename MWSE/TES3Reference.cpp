@@ -1,6 +1,7 @@
 #include "TES3Reference.h"
 
 #include "LuaManager.h"
+#include "LuaUtil.h"
 #include "TES3Util.h"
 
 #define TES3_Reference_activate 0x4E9610
@@ -12,6 +13,18 @@
 
 namespace TES3 {
 	void Reference::activate(Reference* activator, int unknown) {
+		// Prepare our event data.
+		sol::state& state = mwse::lua::LuaManager::getInstance().getState();
+		sol::table eventData = state.create_table();
+		eventData["activator"] = activator;
+		eventData["target"] = this;
+
+		// If our event data says to block, don't let the object activate.
+		mwse::lua::event::trigger("activate", eventData);
+		if (eventData["block"] == true) {
+			return;
+		}
+
 		reinterpret_cast<void(__thiscall *)(Reference*, Reference*, int)>(TES3_Reference_activate)(this, activator, unknown);
 	}
 
