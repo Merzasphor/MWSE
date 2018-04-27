@@ -244,6 +244,16 @@ namespace mwse {
 			return NULL;
 		}
 
+		TES3::ItemData* getOrCreateAttachedItemDataNode(TES3::Reference* reference) {
+			TES3::ItemData* itemData = tes3::getAttachedItemDataNode(reference);
+			if (itemData == NULL) {
+				itemData = tes3::createNewItemCondition(reference->baseObject);
+				reference->addItemDataAttachment(itemData);
+			}
+
+			return itemData;
+		}
+
 		TES3::LockAttachmentNode* getAttachedLockNode(TES3::Reference* reference) {
 			auto attachment = getAttachment<TES3::LockAttachment>(reference, TES3::AttachmentType::Lock);
 			if (attachment) {

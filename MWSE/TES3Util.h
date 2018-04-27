@@ -101,6 +101,7 @@ namespace mwse {
 		TES3::MobilePlayer* getAttachedMobilePlayer(TES3::Reference* reference);
 
 		TES3::ItemData* getAttachedItemDataNode(TES3::Reference* reference);
+		TES3::ItemData* getOrCreateAttachedItemDataNode(TES3::Reference* reference);
 
 		TES3::LockAttachmentNode* getAttachedLockNode(TES3::Reference* reference);
 

@@ -131,24 +131,12 @@ namespace mwse {
 					[](TES3::Reference& self)
 			{
 				TES3::ItemData* itemData = tes3::getAttachedItemDataNode(&self);
-				if (itemData) {
-					return itemData->count;
-				}
-				else {
-					return 1;
-				}
+				return itemData ? itemData->count : 1;
 			},
 					[](TES3::Reference& self, double count)
 			{
-				TES3::ItemData* itemData = tes3::getAttachedItemDataNode(&self);
-				if (itemData) {
-					itemData->count = count;
-				}
-				else {
-					TES3::ItemData* data = tes3::createNewItemCondition(self.baseObject);
-					data->count = count;
-					self.addItemDataAttachment(data);
-				}
+				TES3::ItemData* itemData = tes3::getOrCreateAttachedItemDataNode(&self);
+				itemData->count = count;
 			}
 					),
 
