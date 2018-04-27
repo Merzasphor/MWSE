@@ -189,6 +189,12 @@ namespace mwse {
 				mwscript::HasItemEquipped(script, reference, item);
 				return true;
 			};
+			state["mwscript"]["getDelete"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+
+				return (reference->objectFlags & TES3::ObjectFlag::Delete) != 0;
+			};
 			state["mwscript"]["getDisabled"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
@@ -336,6 +342,20 @@ namespace mwse {
 				}
 
 				return mwscript::ScriptRunning(script, targetScript);
+			};
+			state["mwscript"]["setDelete"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				bool del = getOptionalParam<bool>(params, "delete", true);
+
+				if (del) {
+					reference->objectFlags |= TES3::ObjectFlag::Delete;
+				}
+				else {
+					reference->objectFlags &= ~TES3::ObjectFlag::Delete;
+				}
+
+				return true;
 			};
 			state["mwscript"]["setLevel"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
