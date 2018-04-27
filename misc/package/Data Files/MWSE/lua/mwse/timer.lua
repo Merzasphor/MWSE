@@ -60,12 +60,10 @@ function this.start(time, callback, iterations)
 		i = iterations,
 	}
 	table.insert(timers, newTime)
-	print("timer.start")
 	return newTime
 end
 
 function this.cancel(t)
-	print("timer.cancel")
 	table.removevalue(timers, t)
 	table.removevalue(pausedTimers, t)
 	t = nil
@@ -103,6 +101,10 @@ end
 
 function this.reset(t)
 	t.f = clock + t.t
+end
+
+function this.delayOneFrame(c)
+	this.start(0, c)
 end
 
 return this
