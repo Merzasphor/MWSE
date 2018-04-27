@@ -245,6 +245,9 @@ namespace TES3 {
 
 		Cell* getCell();
 
+		void startCombat(MobileActor*);
+		void stopCombat(bool);
+
 	};
 	static_assert(sizeof(MobileActor) == 0x3B0, "TES3::MobileActor failed size validation");
 }

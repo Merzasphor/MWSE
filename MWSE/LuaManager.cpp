@@ -613,6 +613,22 @@ namespace mwse {
 			lua::event::trigger("loaded", eventData);
 		}
 
+		//
+		// Hook: Start Combat
+		//
+
+		void __fastcall OnStartCombat(TES3::MobileActor* mobileActor, DWORD _UNUSED_, TES3::MobileActor* target) {
+			mobileActor->startCombat(target);
+		}
+
+		//
+		// Hook: Stop Combat
+		//
+
+		void __fastcall OnStopCombat(TES3::MobileActor* mobileActor, DWORD _UNUSED_, bool something) {
+			mobileActor->stopCombat(something);
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");
@@ -763,6 +779,27 @@ namespace mwse {
 			// Additional load/loaded events for new game.
 			genCallUnprotected(0x5FCCF4, reinterpret_cast<DWORD>(OnNewGame));
 			genCallUnprotected(0x5FCDAA, reinterpret_cast<DWORD>(OnNewGame));
+
+			// Event: Start Combat
+			genCallUnprotected(0x5073BC, reinterpret_cast<DWORD>(OnStartCombat));
+			genCallUnprotected(0x52FC2F, reinterpret_cast<DWORD>(OnStartCombat));
+			genCallUnprotected(0x530443, reinterpret_cast<DWORD>(OnStartCombat));
+			genCallUnprotected(0x5563F5, reinterpret_cast<DWORD>(OnStartCombat));
+			genCallUnprotected(0x5564C2, reinterpret_cast<DWORD>(OnStartCombat));
+			genCallUnprotected(0x558FE7, reinterpret_cast<DWORD>(OnStartCombat));
+			genCallUnprotected(0x55905E, reinterpret_cast<DWORD>(OnStartCombat));
+
+			// Event: Stop Combat
+			genCallUnprotected(0x523BBF, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallUnprotected(0x54E04D, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallUnprotected(0x556524, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallUnprotected(0x556568, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallUnprotected(0x557CBC, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallUnprotected(0x55916F, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallUnprotected(0x559265, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallUnprotected(0x5650F2, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallUnprotected(0x568794, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallUnprotected(0x7365E9, reinterpret_cast<DWORD>(OnStopCombat));
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);
