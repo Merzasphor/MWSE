@@ -157,7 +157,7 @@ namespace mwse {
 				// Functions
 				//
 
-				"activate", &TES3::Reference::activate,
+				"activate", [](TES3::Reference& self, TES3::Reference& target) { target.activate(&self); },
 				"setActionFlag", &TES3::Reference::setActionFlag,
 				"clearActionFlag", &TES3::Reference::clearActionFlag,
 				"testActionFlag", &TES3::Reference::testActionFlag
