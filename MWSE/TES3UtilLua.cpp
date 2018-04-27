@@ -76,7 +76,7 @@ namespace mwse {
 
 			// Bind function: tes3.getGlobal
 			state["tes3"]["getGlobal"] = [](std::string& id) {
-				return tes3::getDataHandler()->nonDynamicData->findGlobalVariable(id.c_str());
+				return tes3::getDataHandler()->nonDynamicData->findGlobalVariable(id.c_str())->value;
 			};
 
 			// Bind function: tes3.getGMST
@@ -166,7 +166,7 @@ namespace mwse {
 			// Bind function: tes3.saveGame
 			state["tes3"]["saveGame"] = [](sol::optional<sol::table> params) {
 				std::string fileName = getOptionalParam<std::string>(params, "file", "quiksave");
-				std::string saveName = getOptionalParam<std::string>(params, "file", "Quicksave");
+				std::string saveName = getOptionalParam<std::string>(params, "name", "Quicksave");
 
 				tes3::getDataHandler()->nonDynamicData->saveGame(fileName.c_str(), saveName.c_str());
 			};
