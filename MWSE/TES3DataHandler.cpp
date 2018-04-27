@@ -19,6 +19,7 @@
 #define TES3_DataHandler_getSoundPlaying 0x48BBD0
 
 namespace TES3 {
+
 	//
 	// NonDynamicData
 	//
@@ -30,7 +31,8 @@ namespace TES3 {
 		eventData["filename"] = fileName;
 		eventData["name"] = saveName;
 
-		// If our event data says to block, prevent the game from saving. This will cause an error message to show.
+		// If our event data says to block, prevent the game from saving. We'll
+		// return true so that the game thinks it saved successfully.
 		mwse::lua::event::trigger("save", eventData);
 		if (eventData["block"] == true) {
 			return true;
