@@ -115,7 +115,11 @@ namespace mwse
 
 		void Cast(TES3::Script* script, TES3::Reference* reference, TES3::Spell* spell, TES3::BaseObject* target);
 
+		void Disable(TES3::Script* script, TES3::Reference* reference);
+
 		void Drop(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, long count);
+
+		void Enable(TES3::Script* script, TES3::Reference* reference);
 
 		void Equip(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate);
 
@@ -124,6 +128,8 @@ namespace mwse
 		int GetButtonPressed(TES3::Script* script, TES3::Reference* reference);
 
 		bool HasItemEquipped(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate);
+
+		bool GetDisabled(TES3::Script* script, TES3::Reference* reference);
 
 		float GetDistance(TES3::Script* script, TES3::Reference* reference, TES3::Reference* target);
 		

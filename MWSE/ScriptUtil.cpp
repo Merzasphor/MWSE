@@ -314,6 +314,10 @@ namespace mwse
 			setScriptSecondObject(cachedSecondObject);
 		}
 
+		void Disable(TES3::Script* script, TES3::Reference* reference) {
+			RunOriginalOpCode(script, reference, OpCode::Disable);
+		}
+
 		void Drop(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate, long count) {
 			// Cache previous script variables.
 			long cachedVarIndex = getScriptVariableIndex();
@@ -327,6 +331,10 @@ namespace mwse
 			// Restore original script variables.
 			setScriptSecondObject(cachedSecondObject);
 			setScriptVariableIndex(cachedVarIndex);
+		}
+
+		void Enable(TES3::Script* script, TES3::Reference* reference) {
+			RunOriginalOpCode(script, reference, OpCode::Enable);
 		}
 
 		void Equip(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate) {
@@ -369,6 +377,10 @@ namespace mwse
 			setScriptSecondObject(cachedSecondObject);
 
 			return value != 0.0f;
+		}
+
+		bool GetDisabled(TES3::Script* script, TES3::Reference* reference) {
+			return (RunOriginalOpCode(script, reference, OpCode::GetDisabled) != 0.0f);
 		}
 
 		float GetDistance(TES3::Script* script, TES3::Reference* reference, TES3::Reference* target) {

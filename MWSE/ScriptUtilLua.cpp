@@ -114,6 +114,18 @@ namespace mwse {
 				mwscript::AITravel(script, reference, x, y, z);
 				return true;
 			};
+			state["mwscript"]["disable"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				bool setModified = getOptionalParam<bool>(params, "modify", true);
+
+				if (setModified) {
+					reference->setObjectModified(true);
+				}
+
+				mwscript::Disable(script, reference);
+				return true;
+			};
 			state["mwscript"]["drop"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
@@ -124,6 +136,18 @@ namespace mwse {
 				}
 
 				mwscript::Drop(script, reference, item, count);
+				return true;
+			};
+			state["mwscript"]["enable"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				bool setModified = getOptionalParam<bool>(params, "modify", true);
+
+				if (setModified) {
+					reference->setObjectModified(true);
+				}
+
+				mwscript::Enable(script, reference);
 				return true;
 			};
 			state["mwscript"]["equip"] = [](sol::optional<sol::table> params) {
@@ -164,6 +188,11 @@ namespace mwse {
 
 				mwscript::HasItemEquipped(script, reference, item);
 				return true;
+			};
+			state["mwscript"]["getDisabled"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				return mwscript::GetDisabled(script, reference);
 			};
 			state["mwscript"]["getDistance"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
