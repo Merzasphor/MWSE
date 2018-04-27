@@ -145,10 +145,9 @@ namespace mwse {
 					itemData->count = count;
 				}
 				else {
-					//! TODO: Make this cleaner when it isn't 3am!
-					TES3::ItemData* data = reinterpret_cast<TES3::ItemData*(__cdecl *)(TES3::Object*)>(0x4E7750)(self.baseObject);
+					TES3::ItemData* data = tes3::createNewItemCondition(self.baseObject);
 					data->count = count;
-					reinterpret_cast<int(__thiscall *)(TES3::Reference*, TES3::ItemData*)>(0x4E7890)(&self, data);
+					self.addItemDataAttachment(data);
 				}
 			}
 					),

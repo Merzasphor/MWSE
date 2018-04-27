@@ -30,6 +30,8 @@ namespace TES3 {
 		void setActionReference(Reference*);
 		Reference * getActionReference();
 
+		TES3::ItemDataAttachment* addItemDataAttachment(TES3::ItemData*);
+
 		//
 		// Lua interface functions.
 		//

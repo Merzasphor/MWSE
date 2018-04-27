@@ -104,6 +104,8 @@ namespace mwse {
 
 		TES3::LockAttachmentNode* getAttachedLockNode(TES3::Reference* reference);
 
+		TES3::ItemData* createNewItemCondition(TES3::Object* object);
+
 		unsigned int* getBaseEffectFlags();
 		bool getBaseEffectFlag(int index, TES3::EffectFlag::EffectFlag flag);
 		void setBaseEffectFlag(int index, TES3::EffectFlag::EffectFlag flag, bool set);

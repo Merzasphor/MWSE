@@ -11,6 +11,8 @@
 #define TES3_Reference_setActionReference 0x4E5610
 #define TES3_Reference_getActionReference 0x4E5650
 
+#define TES3_Reference_addItemDataAttachment 0x4E5360
+
 namespace TES3 {
 	void Reference::activate(Reference* activator, int unknown) {
 		// Prepare our event data.
@@ -46,5 +48,9 @@ namespace TES3 {
 
 	Reference* Reference::getActionReference() {
 		return reinterpret_cast<Reference* (__thiscall *)(Reference*)>(TES3_Reference_getActionReference)(this);
+	}
+
+	TES3::ItemDataAttachment* Reference::addItemDataAttachment(TES3::ItemData* data) {
+		return reinterpret_cast<ItemDataAttachment* (__thiscall *)(Reference*, TES3::ItemData*)>(TES3_Reference_addItemDataAttachment)(this, data);
 	}
 }
