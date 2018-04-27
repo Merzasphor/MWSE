@@ -95,7 +95,7 @@ namespace mwse {
 				"new", sol::no_constructor,
 
 				//
-				// Properties.
+				// Properties: Reference
 				//
 
 				"id", sol::readonly_property(&TES3::Reference::getObjectID),
@@ -116,12 +116,42 @@ namespace mwse {
 				"data", sol::readonly_property(&TES3::Reference::getLuaTable),
 
 				//
-				// Behave as a linked list node.
+				// Properties: Behave as a linked list node.
 				//
 
 				"previousNode", sol::readonly_property([](TES3::Reference& self) { return reinterpret_cast<TES3::Reference*>(self.previousInCollection); }),
 				"nextNode", sol::readonly_property([](TES3::Reference& self) { return reinterpret_cast<TES3::Reference*>(self.nextInCollection); }),
 				"nodeData", sol::readonly_property([](TES3::Reference& self) { return &self; }),
+
+				//
+				// Properties: Quick access to attachment data.
+				//
+
+				"stackSize", sol::property(
+					[](TES3::Reference& self)
+			{
+				TES3::ItemData* itemData = tes3::getAttachedItemDataNode(&self);
+				if (itemData) {
+					return itemData->count;
+				}
+				else {
+					return 1;
+				}
+			},
+					[](TES3::Reference& self, double count)
+			{
+				TES3::ItemData* itemData = tes3::getAttachedItemDataNode(&self);
+				if (itemData) {
+					itemData->count = count;
+				}
+				else {
+					//! TODO: Make this cleaner when it isn't 3am!
+					TES3::ItemData* data = reinterpret_cast<TES3::ItemData*(__cdecl *)(TES3::Object*)>(0x4E7750)(self.baseObject);
+					data->count = count;
+					reinterpret_cast<int(__thiscall *)(TES3::Reference*, TES3::ItemData*)>(0x4E7890)(&self, data);
+				}
+			}
+					),
 
 				//
 				// Functions
