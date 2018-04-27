@@ -37,6 +37,34 @@ function table.removevalue(t, v)
 	end
 end
 
+function table.copy(t, d)
+	if (d == nil) then
+		d = {}
+	elseif (type(t) ~= "table" or type(d) ~= "table") then
+		error("Arguments for table.copy must be tables.")
+	end
+
+	for k, v in pairs(t) do
+		d[k] = v
+	end
+
+	return d
+end
+
+function table.deepcopy(t)
+	local copy = nil
+	if type(t) == "table" then
+		copy = {}
+		for k, v in next, t, nil do
+			copy[table.deepcopy(k)] = table.deepcopy(v)
+		end
+		setmetatable(copy, table.deepcopy(getmetatable(t)))
+	else -- number, string, boolean, etc
+		copy = t
+	end
+	return copy
+end
+
 -------------------------------------------------
 -- Extend API: string
 -------------------------------------------------
