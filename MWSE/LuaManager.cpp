@@ -648,7 +648,7 @@ namespace mwse {
 			sol::state& state = LuaManager::getInstance().getState();
 			sol::table eventData = state.create_table();
 			eventData["actor"] = makeLuaObject(animData->mobileActor);
-			lua::event::trigger("meleeAttacked", eventData);
+			lua::event::trigger("attack", eventData);
 		}
 
 		void LuaManager::hook() {
