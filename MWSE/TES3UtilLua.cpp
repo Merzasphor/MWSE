@@ -16,9 +16,14 @@ namespace mwse {
 			// Extend tes3 library with extra functions.
 			//
 
-			// Bind function: GetPlayerRef
+			// Bind function: tes3.getPlayerRef
 			state["tes3"]["getPlayerRef"] = []() {
 				return tes3::getWorldController()->getMobilePlayer()->reference;
+			};
+
+			// Bind function: tes3.getMobilePlayer
+			state["tes3"]["getMobilePlayer"] = []() {
+				return tes3::getWorldController()->getMobilePlayer();
 			};
 
 			// Bind function: tes3.getPlayerCell()
