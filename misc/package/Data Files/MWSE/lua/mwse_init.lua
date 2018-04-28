@@ -8,7 +8,7 @@ package.path = "./Data Files/MWSE/lua/?.lua;"
 _G.tes3 = require("mwse.tes3.init")
 _G.event = require("mwse.event")
 _G.timer = require("mwse.timer")
-_G.json = require("json")
+_G.json = require("dkjson")
 
 -------------------------------------------------
 -- Extend API: table
@@ -76,6 +76,26 @@ end
 
 function string.endswith(haystack, needle)
 	return needle=='' or string.sub(haystack, -string.len(needle)) == needle
+end
+
+-------------------------------------------------
+-- Extend API: json
+-------------------------------------------------
+
+function json.loadfile(fileName)
+	-- Load the contents of the file.
+	local f = assert(io.open("Data Files/MWSE/" .. fileName .. ".json", "r"))
+	local fileContents = f:read("*all")
+	f:close()
+
+	-- Return decoded json.
+	return json.decode(fileContents)
+end
+
+function json.savefile(fileName, object, config)
+	local f = assert(io.open("Data Files/MWSE/" .. fileName .. ".json", "w"))
+	f:write(json.encode(object, config))
+	f:close()
 end
 
 -- Report that we're initialized.
