@@ -115,6 +115,7 @@ namespace TES3 {
 	struct EquipmentStack;
 	struct Faction;
 	struct Game;
+	struct GameFile;
 	struct GameSetting;
 	struct GameSettingInfo;
 	struct GlobalVariable;
@@ -258,7 +259,7 @@ namespace TES3 {
 		} vTable; // 0x0
 		ObjectType::ObjectType objectType; // 0x4
 		unsigned int objectFlags; // 0x8
-		void * sourceMod; // 0xC
+		GameFile * sourceMod; // 0xC
 
 		//
 		// Function wrappers for our virtual table.

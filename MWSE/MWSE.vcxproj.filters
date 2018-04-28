@@ -642,6 +642,9 @@
     <ClInclude Include="TES3ActorAnimationData.h">
       <Filter>Header Files\DataAdapters\TES3\Animations</Filter>
     </ClInclude>
+    <ClInclude Include="TES3GameFile.h">
+      <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

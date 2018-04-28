@@ -28,6 +28,18 @@ namespace TES3 {
 		Iterator<Script> * startScripts; // 0x48
 		Skill skills[27]; // 0x4C
 		MagicEffect magicEffects[143]; // 0x05C8
+		void * lights; // 0x9DB8
+		int unknown_0x9DBC[600];
+		void * unknown_0xA71C[4];
+		int unknown_0xA72C[4];
+		int unknown_0xA73C[450];
+		void * unknown_0xAE44[3];
+		int unknown_0xAE50;
+		int unknown_0xAE54;
+		int unknown_0xAE58;
+		int sgWireframeProperty; // 0xAE5C
+		void * TESFiles; // 0xAE60
+		GameFile * activeMods[256];
 
 		//
 		// Other related this-call functions.
@@ -45,7 +57,7 @@ namespace TES3 {
 		bool addNewObject(BaseObject*);
 		void deleteObject(BaseObject*);
 	};
-	static_assert(sizeof(NonDynamicData) == 0x9DB8, "TES3::RecordList failed size validation");
+	static_assert(sizeof(NonDynamicData) == 0xB264, "TES3::NonDynamicData failed size validation");
 
 	namespace CellGrid {
 		enum CellGrid {

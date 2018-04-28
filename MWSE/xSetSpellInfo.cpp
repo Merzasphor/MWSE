@@ -123,7 +123,7 @@ namespace mwse
 		spell->castType = type;
 		spell->spellFlags = flags;
 		if (origin != 0) {
-			spell->sourceMod = (void*)origin;
+			spell->sourceMod = (TES3::GameFile*)origin;
 		}
 
 		// Report success.

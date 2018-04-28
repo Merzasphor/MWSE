@@ -170,6 +170,7 @@
     <ClInclude Include="TES3WeatherLua.h" />
     <ClInclude Include="TES3WorldController.h" />
     <ClInclude Include="TES3WorldControllerLua.h" />
+    <ClInclude Include="TES3GameFile.h" />
     <ClInclude Include="UIUtil.h" />
     <ClInclude Include="VirtualMachine.h" />
     <ClInclude Include="VMExecuteInterface.h" />

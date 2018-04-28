@@ -3,6 +3,8 @@
 #include "LuaUnifiedHeader.h"
 #include "LuaManager.h"
 
+#include "TES3GameFile.h"
+
 #include "TES3Util.h"
 #include "LuaUtil.h"
 #include "Log.h"
@@ -174,6 +176,23 @@ namespace mwse {
 				std::string saveName = getOptionalParam<std::string>(params, "name", "Quicksave");
 
 				tes3::getDataHandler()->nonDynamicData->saveGame(fileName.c_str(), saveName.c_str());
+			};
+
+			state["tes3"]["isModActive"] = [](std::string modName) {
+				TES3::NonDynamicData* nonDynamicData = tes3::getDataHandler()->nonDynamicData;
+				for (int i = 0; i < 256; i++) {
+					TES3::GameFile* gameFile = nonDynamicData->activeMods[i];
+					if (gameFile == NULL) {
+						return false;
+					}
+
+					// Compare mod name with this active mod.
+					if (_stricmp(gameFile->fileName, modName.c_str()) == 0) {
+						return true;
+					}
+				}
+
+				return false;
 			};
 		}
 	}
