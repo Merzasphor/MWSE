@@ -58,4 +58,17 @@ namespace TES3 {
 		// If our event data says to block, don't let the object activate.
 		mwse::lua::event::trigger("combatStopped", eventData);
 	}
+
+	bool MobileActor::getMobileActorFlag(unsigned int flag) {
+		return (actorFlags & flag) != 0;
+	}
+
+	void MobileActor::setMobileActorFlag(unsigned int flag, bool set) {
+		if (set) {
+			actorFlags |= flag;
+		}
+		else {
+			actorFlags &= ~flag;
+		}
+	}
 }

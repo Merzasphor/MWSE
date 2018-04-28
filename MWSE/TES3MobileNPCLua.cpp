@@ -22,7 +22,20 @@ namespace mwse {
 				"isSneaking", sol::readonly_property([](TES3::MobileNPC& self) { return (self.movementFlags & TES3::ActorMovement::Crouching) != 0; }),
 
 				"prevMovementFlags", &TES3::MobileNPC::prevMovementFlags,
+
 				"actorFlags", &TES3::MobileNPC::actorFlags,
+				"activeAI", sol::property(
+					[](TES3::MobileNPC& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::ActiveAI); },
+					[](TES3::MobileNPC& self, bool set) { self.setMobileActorFlag(TES3::MobileActorFlag::ActiveAI, set); }
+					),
+				"werewolf", sol::property([](TES3::MobileNPC& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::Werewolf); }),
+				"underwater", sol::property([](TES3::MobileNPC& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::Underwater); }),
+				"weaponDrawn", sol::property([](TES3::MobileNPC& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::WeaponDrawn); }),
+				"spellReadied", sol::property([](TES3::MobileNPC& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::SpellReadied); }),
+				"inCombat", sol::property([](TES3::MobileNPC& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::InCombat); }),
+				"attacked", sol::property([](TES3::MobileNPC& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::Attacked); }),
+				"isCrittable", sol::property([](TES3::MobileNPC& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::IsCrittable); }),
+				"idleAnim", sol::property([](TES3::MobileNPC& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::IdleAnim); }),
 
 				"actorType", &TES3::MobileNPC::actorType,
 				"reference", &TES3::MobileNPC::reference,

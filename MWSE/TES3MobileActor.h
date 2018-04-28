@@ -248,6 +248,13 @@ namespace TES3 {
 		void startCombat(MobileActor*);
 		void stopCombat(bool);
 
+		//
+		// Custom functions.
+		//
+
+		bool getMobileActorFlag(unsigned int);
+		void setMobileActorFlag(unsigned int, bool);
+
 	};
 	static_assert(sizeof(MobileActor) == 0x3B0, "TES3::MobileActor failed size validation");
 }
