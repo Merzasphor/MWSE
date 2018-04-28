@@ -12,6 +12,7 @@
 
 #include "LuaScript.h"
 
+#include "TES3ActorAnimationData.h"
 #include "TES3UIBlock.h"
 #include "TES3UIInventoryTile.h"
 
@@ -91,6 +92,8 @@
 
 #define TES3_load_writeChunk 0x4B6BA0
 #define TES3_load_readChunk 0x4B6880
+
+#define TES3_ActorAnimData_attackCheckMeleeHit 0x541530
 
 namespace mwse {
 	namespace lua {
@@ -634,6 +637,20 @@ namespace mwse {
 			mobileActor->stopCombat(something);
 		}
 
+		//
+		// Hook: Melee Hit
+		//
+
+		void __fastcall OnMeleeHit(TES3::ActorAnimationData* animData) {
+			reinterpret_cast<void(__thiscall *)(TES3::ActorAnimationData*)>(TES3_ActorAnimData_attackCheckMeleeHit)(animData);
+
+			// Prepare our event data.
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::table eventData = state.create_table();
+			eventData["actor"] = makeLuaObject(animData->mobileActor);
+			lua::event::trigger("meleeAttacked", eventData);
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");
@@ -805,6 +822,11 @@ namespace mwse {
 			genCallUnprotected(0x5650F2, reinterpret_cast<DWORD>(OnStopCombat));
 			genCallUnprotected(0x568794, reinterpret_cast<DWORD>(OnStopCombat));
 			genCallUnprotected(0x7365E9, reinterpret_cast<DWORD>(OnStopCombat));
+
+			// Event: Melee Hit Check
+			genCallUnprotected(0x541489, reinterpret_cast<DWORD>(OnMeleeHit));
+			genCallUnprotected(0x5414CD, reinterpret_cast<DWORD>(OnMeleeHit));
+			genCallUnprotected(0x569E78, reinterpret_cast<DWORD>(OnMeleeHit));
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);
