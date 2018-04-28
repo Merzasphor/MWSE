@@ -56,6 +56,6 @@ namespace TES3 {
 	}
 
 	void Statistic::setCurrentCapped(float value, bool applyCaps) {
-		reinterpret_cast<float(__thiscall *)(Statistic*, float, bool)>(TES3_Statistic_setBaseToCurrent)(this, value, applyCaps);
+		reinterpret_cast<float(__thiscall *)(Statistic*, float, bool)>(TES3_Statistic_setCurrentCapped)(this, value, applyCaps);
 	}
 }
