@@ -230,6 +230,10 @@ namespace mwse {
 		}
 
 		sol::object makeLuaObject(TES3::MobileActor* actor) {
+			if (actor == NULL) {
+				return sol::nil;
+			}
+
 			sol::state& state = LuaManager::getInstance().getState();
 
 			switch (actor->objectType) {
