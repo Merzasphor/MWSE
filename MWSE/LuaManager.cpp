@@ -6,6 +6,7 @@
 #include "MemoryUtil.h"
 #include "ScriptUtil.h"
 #include "UIUtil.h"
+#include "MWSEDefs.h"
 
 #include "LuaUnifiedHeader.h"
 
@@ -149,6 +150,10 @@ namespace mwse {
 			// Create the base of API tables.
 			luaState["mwse"] = luaState.create_table();
 			luaState["mwscript"] = luaState.create_table();
+
+			luaState["mwse"]["getVersion"] = []() {
+				return MWSE_VERSION_INTEGER;
+			};
 
 			// We want to take care of this here rather than in an external file so we have access to scriptOverrides.
 			luaState["mwse"]["overrideScript"] = [](std::string scriptId, std::string target) {
