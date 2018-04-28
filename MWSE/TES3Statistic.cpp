@@ -8,7 +8,7 @@
 #define TES3_Statistic_setBase 0x401240
 #define TES3_Statistic_setBaseAndCurrent 0x401290
 #define TES3_Statistic_setBaseToCurrent 0x4012A0
-#define TES3_Statistic_setCurrentCapped 0x4012A0
+#define TES3_Statistic_setCurrentCapped 0x401250
 
 namespace TES3 {
 	//
