@@ -33,6 +33,7 @@
     <ClInclude Include="TES3ActionDataLua.h" />
     <ClInclude Include="TES3Activator.h" />
     <ClInclude Include="TES3ActivatorLua.h" />
+    <ClInclude Include="TES3ActorAnimationData.h" />
     <ClInclude Include="TES3Alchemy.h" />
     <ClInclude Include="TES3AlchemyLua.h" />
     <ClInclude Include="TES3Apparatus.h" />

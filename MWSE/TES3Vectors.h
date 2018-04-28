@@ -16,4 +16,11 @@ namespace TES3 {
 		float w;
 	};
 	static_assert(sizeof(Vector4) == 0x10, "TES3::Vector4 failed size validation");
+
+	struct Matrix33 {
+		Vector3 m0;
+		Vector3 m1;
+		Vector3 m2;
+	};
+	static_assert(sizeof(Matrix33) == 0x24, "TES3::Vector3 failed size validation");
 }

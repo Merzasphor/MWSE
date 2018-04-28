@@ -148,6 +148,9 @@
     <Filter Include="Source Files\DataAdapters\TES3\UI">
       <UniqueIdentifier>{10c0bd64-b749-4f5c-99e9-d5c36a33002c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\DataAdapters\TES3\Animations">
+      <UniqueIdentifier>{e67a3424-5992-4236-a2af-0e68b0c4868e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Flags.h">
@@ -635,6 +638,9 @@
     </ClInclude>
     <ClInclude Include="PatchUtil.h">
       <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3ActorAnimationData.h">
+      <Filter>Header Files\DataAdapters\TES3\Animations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

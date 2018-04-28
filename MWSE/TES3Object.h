@@ -92,6 +92,7 @@ namespace TES3 {
 
 	struct Activator;
 	struct Actor;
+	struct ActorAnimationData;
 	struct ActorVirtualTable;
 	struct AIConfig;
 	struct Alchemy;
