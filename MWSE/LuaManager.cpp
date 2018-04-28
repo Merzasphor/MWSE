@@ -95,6 +95,8 @@
 
 #define TES3_ActorAnimData_attackCheckMeleeHit 0x541530
 
+#define TES3_cellChanged 0x45CEF0
+
 namespace mwse {
 	namespace lua {
 		// Initialize singleton.
@@ -622,6 +624,22 @@ namespace mwse {
 		}
 
 		//
+		// Hook: On Cell Change
+		//
+
+		DWORD __cdecl OnCellChange(DWORD unk1, DWORD unk2, DWORD unk3, float x, float y, float z, TES3::Cell* cell, signed char unk4) {
+			DWORD value = reinterpret_cast<DWORD(__cdecl *)(DWORD, DWORD, DWORD, float, float, float, TES3::Cell*, signed char)>(TES3_cellChanged)(unk1, unk2, unk3, x, y, z, cell, unk4);
+
+			// Send off event.
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::table eventData = state.create_table();
+			eventData["cell"] = cell;
+			lua::event::trigger("cellChanged", eventData);
+
+			return value;
+		}
+
+		//
 		// Hook: Start Combat
 		//
 
@@ -801,6 +819,21 @@ namespace mwse {
 			// Additional load/loaded events for new game.
 			genCallUnprotected(0x5FCCF4, reinterpret_cast<DWORD>(OnNewGame));
 			genCallUnprotected(0x5FCDAA, reinterpret_cast<DWORD>(OnNewGame));
+
+			// Event: Cell Change
+			genCallUnprotected(0x45C9A2, reinterpret_cast<DWORD>(OnCellChange));
+			genCallUnprotected(0x45D356, reinterpret_cast<DWORD>(OnCellChange));
+			genCallUnprotected(0x45D3C4, reinterpret_cast<DWORD>(OnCellChange));
+			genCallUnprotected(0x4637B0, reinterpret_cast<DWORD>(OnCellChange));
+			genCallUnprotected(0x4C4B4F, reinterpret_cast<DWORD>(OnCellChange));
+			genCallUnprotected(0x4C51AE, reinterpret_cast<DWORD>(OnCellChange));
+			genCallUnprotected(0x4EA137, reinterpret_cast<DWORD>(OnCellChange));
+			genCallUnprotected(0x50497D, reinterpret_cast<DWORD>(OnCellChange));
+			genCallUnprotected(0x5062FD, reinterpret_cast<DWORD>(OnCellChange));
+			genCallUnprotected(0x568360, reinterpret_cast<DWORD>(OnCellChange));
+			genCallUnprotected(0x56A735, reinterpret_cast<DWORD>(OnCellChange));
+			genCallUnprotected(0x56B7D2, reinterpret_cast<DWORD>(OnCellChange));
+			genCallUnprotected(0x619BBF, reinterpret_cast<DWORD>(OnCellChange));
 
 			// Event: Start Combat
 			genCallUnprotected(0x5073BC, reinterpret_cast<DWORD>(OnStartCombat));
