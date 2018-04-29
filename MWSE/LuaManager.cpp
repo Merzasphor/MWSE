@@ -326,7 +326,7 @@ namespace mwse {
 				// Actually use our hook.
 				push eax
 				push ebx
-				push[esp + 0x510 + 0x4]
+				push[esp + 0x510 + 0x20 + 0x8 + 0x4] // Current frame + pushad + previous arguments + argument 0
 				call LoadReference
 
 				// If we returned false, continue normal execution.
