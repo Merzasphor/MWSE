@@ -687,11 +687,24 @@ namespace mwse {
 			std::string path = "Data Files/MWSE/lua/";
 			for (auto & p : std::experimental::filesystem::recursive_directory_iterator(path)) {
 				if (p.path().filename() == "mod_init.lua") {
-					result = luaState.do_file(p.path().generic_string());
+					// If a parent directory is marked .disabled, ignore files in it.
+					if (p.path().string().find(".disabled\\") != std::string::npos) {
+#if _DEBUG
+						log::getLog() << "[LuaManager] Skipping mod initializer in disabled directory: " << p.path().string() << std::endl;
+#endif
+						continue;
+					}
+
+					result = luaState.do_file(p.path().string());
 					if (!result.valid()) {
 						sol::error err = result;
-						log::getLog() << "ERROR: Failed to run mod initialization script:\n" << err.what() << std::endl;
+						log::getLog() << "[LuaManager] ERROR: Failed to run mod initialization script:\n" << err.what() << std::endl;
 					}
+#if _DEBUG
+					else {
+						log::getLog() << "[LuaManager] Invoked mod initialization script: " << p.path().string() << std::endl;
+					}
+#endif
 				}
 			}
 
