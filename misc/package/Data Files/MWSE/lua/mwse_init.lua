@@ -84,7 +84,10 @@ end
 
 function json.loadfile(fileName)
 	-- Load the contents of the file.
-	local f = assert(io.open("Data Files/MWSE/" .. fileName .. ".json", "r"))
+	local f = io.open("Data Files/MWSE/" .. fileName .. ".json", "r")
+	if (f == nil) then
+		return nil
+	end
 	local fileContents = f:read("*all")
 	f:close()
 
