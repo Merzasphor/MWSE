@@ -1,17 +1,8 @@
--------------------------------------------------
--- Global includes
--------------------------------------------------
-
 -- Require lua files from the right folder, instead of just the root Morrowind directory.
 package.path = "./Data Files/MWSE/lua/?.lua;"
 
-_G.tes3 = require("mwse.tes3.init")
-_G.event = require("mwse.event")
-_G.timer = require("mwse.timer")
-_G.json = require("dkjson")
-
 -------------------------------------------------
--- Extend API: table
+-- Extend base API: table
 -------------------------------------------------
 
 -- The # operator only really makes sense for continuous arrays. Get the real value.
@@ -69,7 +60,7 @@ function table.deepcopy(t)
 end
 
 -------------------------------------------------
--- Extend API: string
+-- Extend base API: string
 -------------------------------------------------
 
 function string.startswith(haystack, needle)
@@ -81,7 +72,16 @@ function string.endswith(haystack, needle)
 end
 
 -------------------------------------------------
--- Extend API: json
+-- Global includes
+-------------------------------------------------
+
+_G.tes3 = require("mwse.tes3.init")
+_G.event = require("mwse.event")
+_G.timer = require("mwse.timer")
+_G.json = require("dkjson")
+
+-------------------------------------------------
+-- Extend our base API: json
 -------------------------------------------------
 
 function json.loadfile(fileName)
