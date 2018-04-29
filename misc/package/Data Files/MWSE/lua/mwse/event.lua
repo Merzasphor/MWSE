@@ -20,8 +20,15 @@ function this.register(eventType, callback)
 		return error("event.register: Event callback must be a valid string.")
 	end
 
+	-- Make sure that the event isn't already registered.
 	local callbacks = getEventTable(eventType)
-	table.insert(callbacks, callback)
+	local found = table.find(callbacks, callback)
+	if (found == nil) then
+		table.insert(callbacks, callback)
+	else
+		print("event.register: Attempted to register same '" .. eventType .. "' event callback twice.")
+		print(debug.traceback())
+	end
 end
 
 function this.unregister(eventType, callback)
@@ -32,11 +39,14 @@ function this.unregister(eventType, callback)
 
 	-- Validate callback.
 	if (type(callback) ~= "function") then
-		return error("event.unregister: Event callback must be a valid string.")
+		return error("event.unregister: Event callback must be a valid function.")
 	end
 
 	local callbacks = getEventTable(eventType)
-	table.remove(callbacks, callback)
+	if (not table.removevalue(callbacks, callback)) then
+		print("event.register: Attempted to unregister '" .. eventType .. "' event callback that wasn't registered.")
+		print(debug.traceback())
+	end
 end
 
 function this.clear(eventType)

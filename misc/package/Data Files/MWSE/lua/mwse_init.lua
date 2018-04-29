@@ -35,7 +35,9 @@ function table.removevalue(t, v)
 	local i = table.find(t, v)
 	if (i ~= nil) then
 		table.remove(t, i)
+		return true
 	end
+	return false
 end
 
 function table.copy(t, d)
