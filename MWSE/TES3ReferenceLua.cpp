@@ -41,7 +41,7 @@ namespace TES3 {
 		return result;
 	}
 
-	sol::table Reference::getLuaTable() {
+	sol::table& Reference::getLuaTable() {
 		// Get previous attachment.
 		LuaTableAttachment* attachment = reinterpret_cast<LuaTableAttachment*>(attachments);
 		while (attachment && attachment->type != AttachmentType::LuaTable) {

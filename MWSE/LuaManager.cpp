@@ -308,7 +308,7 @@ namespace mwse {
 
 			// Get our lua table, and replace it with our new table.
 			sol::state& state = LuaManager::getInstance().getState();
-			sol::table table = reference->getLuaTable();
+			sol::table& table = reference->getLuaTable();
 			table = state["json"]["decode"](safeBuffer);
 
 			// We successfully read this subrecord, so our jump location is back at the success location.
