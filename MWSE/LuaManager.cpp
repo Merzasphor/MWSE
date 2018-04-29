@@ -326,7 +326,7 @@ namespace mwse {
 				// Actually use our hook.
 				push eax
 				push ebx
-				push esi
+				push[esp + 0x510 + 0x4]
 				call LoadReference
 
 				// If we returned false, continue normal execution.
