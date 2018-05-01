@@ -1589,6 +1589,9 @@
     <ClCompile Include="TES3MobileProjectileLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
+    <ClCompile Include="TES3MobileProjectile.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">
