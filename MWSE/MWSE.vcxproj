@@ -19,6 +19,7 @@
     <ClInclude Include="D3DVector.h" />
     <ClInclude Include="D3DViewport.h" />
     <ClInclude Include="DynamicLuaObject.h" />
+    <ClInclude Include="LuaEvents.h" />
     <ClInclude Include="LuaManager.h" />
     <ClInclude Include="LuaScript.h" />
     <ClInclude Include="LuaUtil.h" />
@@ -180,6 +181,7 @@
     <ClCompile Include="ArrayUtil.cpp" />
     <ClCompile Include="CodePatchUtil.cpp" />
     <ClCompile Include="FileUtil.cpp" />
+    <ClCompile Include="LuaEvents.cpp" />
     <ClCompile Include="LuaManager.cpp" />
     <ClCompile Include="LuaUtil.cpp" />
     <ClCompile Include="MemoryUtil.cpp" />

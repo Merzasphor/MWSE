@@ -645,6 +645,9 @@
     <ClInclude Include="TES3GameFile.h">
       <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
     </ClInclude>
+    <ClInclude Include="LuaEvents.h">
+      <Filter>Header Files\Lua</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1573,6 +1576,9 @@
     </ClCompile>
     <ClCompile Include="PatchUtil.cpp">
       <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaEvents.cpp">
+      <Filter>Source Files\Lua</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

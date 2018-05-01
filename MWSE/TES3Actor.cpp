@@ -1,5 +1,7 @@
 #include "TES3Actor.h"
 
+#include "LuaManager.h"
+
 #define TES3_Actor_equipItem 0x4958B0
 #define TES3_Actor_unequipItem 0x496710
 #define TES3_Actor_dropItem 0x52C460
@@ -19,10 +21,16 @@ namespace TES3 {
 
 	void Actor::equipItem(TES3::BaseObject* item, TES3::ItemData* itemData, TES3::EquipmentStack** out_equipmentStack, TES3::MobileActor* mobileActor) {
 		reinterpret_cast<void(__thiscall *)(TES3::Actor*, TES3::BaseObject*, TES3::ItemData*, TES3::EquipmentStack**, TES3::MobileActor*)>(TES3_Actor_equipItem)(this, item, itemData, out_equipmentStack, mobileActor);
+
+		// Trigger or queue our event.
+		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::EquippedEvent(this, mobileActor, item, itemData));
 	}
 
 	void Actor::unequipItem(TES3::BaseObject* item, char unknown1, TES3::MobileActor* mobileActor, char unknown2, TES3::ItemData* itemData) {
 		reinterpret_cast<void(__thiscall *)(TES3::Actor*, TES3::BaseObject*, char, TES3::MobileActor*, char, TES3::ItemData*)>(TES3_Actor_unequipItem)(this, item, unknown1, mobileActor, unknown2, itemData);
+
+		// Trigger or queue our event.
+		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::UnequippedEvent(this, mobileActor, item, itemData));
 	}
 
 	Reference* Actor::dropItem(BaseObject* item, ItemData* itemData = 0, int count = 1, bool matchAny = true) {

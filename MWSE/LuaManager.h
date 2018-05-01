@@ -1,8 +1,14 @@
 #pragma once
 
 #include <unordered_map>
+#include <queue>
+
+#include <mutex>
+
+#include "TES3Util.h"
 
 #include "LuaUnifiedHeader.h"
+#include "LuaEvents.h"
 
 namespace mwse {
 	namespace lua {
@@ -15,6 +21,11 @@ namespace mwse {
 
 			// Returns a reference to the sol2 lua state.
 			sol::state& __fastcall getState() {
+#if _DEBUG
+				// Prevent us from getting the state from anything but the main thread.
+				TES3::DataHandler* dataHandler = tes3::getDataHandler();
+				assert(dataHandler == NULL || dataHandler->mainThreadID == GetCurrentThreadId());
+#endif
 				return luaState;
 			}
 
@@ -29,6 +40,10 @@ namespace mwse {
 			void setCurrentScript(TES3::Script*);
 			TES3::Reference* getCurrentReference();
 			void setCurrentReference(TES3::Reference*);
+
+			// Event management.
+			sol::object triggerEvent(BaseEvent*);
+			void triggerBackgroundThreadEvents();
 
 		private:
 			LuaManager();
@@ -45,6 +60,10 @@ namespace mwse {
 			//
 			TES3::Script* currentScript = NULL;
 			TES3::Reference* currentReference = NULL;
+
+			//
+			std::mutex backgroundThreadEventsMutex;
+			std::queue<BaseEvent*> backgroundThreadEvents;
 		};
 	}
 }

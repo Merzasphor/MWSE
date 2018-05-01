@@ -396,7 +396,7 @@ namespace mwse {
 		//
 
 		static void _stdcall FinishInitialization() {
-			lua::event::trigger("initialized");
+			LuaManager::getInstance().triggerEvent(new GenericEvent("initialized"));
 		}
 
 		static DWORD callbackFinishedInitialization = TES3_HOOK_FINISH_INITIALIZATION_RETURN;
@@ -425,17 +425,12 @@ namespace mwse {
 			worldController->mainLoopBeforeInput();
 
 			// Send off our enterFrame event always.
-			sol::state& state = LuaManager::getInstance().getState();
-			sol::table eventData = state.create_table();
-			eventData["delta"] = worldController->deltaTime;
-			eventData["menuMode"] = (bool)worldController->flagMenuMode;
-			lua::event::trigger("enterFrame", eventData);
+			LuaManager& luaManager = LuaManager::getInstance();
+			luaManager.triggerEvent(new FrameEvent(worldController->deltaTime, worldController->flagMenuMode));
 
 			// If we're not in menu mode, send off the simulate event.
 			if (worldController->flagMenuMode == 0) {
-				sol::table eventData = state.create_table();
-				eventData["delta"] = worldController->deltaTime;
-				lua::event::trigger("simulate", eventData);
+				luaManager.triggerEvent(new SimulateEvent(worldController->deltaTime));
 			}
 		}
 
@@ -445,10 +440,10 @@ namespace mwse {
 
 		static void _stdcall ButtonPressed() {
 			// Raise an event about this.
+			LuaManager::getInstance().triggerEvent(new ButtonPressedEvent(*reinterpret_cast<int*>(0x7B88C0)));
+
+			// Clear any other button triggers from happening.
 			sol::state& state = LuaManager::getInstance().getState();
-			sol::table eventData = state.create_table();
-			eventData["button"] = *reinterpret_cast<int*>(0x7B88C0);
-			lua::event::trigger("buttonPressed", eventData);
 			state["event"]["clear"]("buttonPressed");
 		}
 
@@ -475,22 +470,20 @@ namespace mwse {
 		//
 
 		signed char __cdecl OnPCEquip(TES3::UI::InventoryTile* tile) {
-			// Prepare our event data.
-			sol::state& state = LuaManager::getInstance().getState();
-			sol::table eventData = state.create_table();
-			eventData["item"] = lua::makeLuaObject(tile->item);
-			eventData["itemData"] = tile->itemData;
-
-			// Execute event. If the event returned false, bail.
-			lua::event::trigger("equip", eventData);
-			if (eventData["block"] == true) {
-				TES3::UI::Block* inventoryMenu = tes3::ui::getMenuNode(tes3::ui::getInventoryMenuId());
-				inventoryMenu->timingUpdate();
-				tes3::ui::inventoryAddTile(1, tile);
-				inventoryMenu->performLayout(1);
-				tes3::ui::flagPaperDollUpdate();
-				tes3::ui::inventoryUpdateIcons();
-				return 0;
+			// Execute event. If the event blocked the call, bail.
+			sol::object response = LuaManager::getInstance().triggerEvent(new EquipEvent(NULL, tile->item, tile->itemData));
+			if (response != sol::nil && response.is<sol::table>()) {
+				sol::table eventData = response;
+				if (eventData["block"] == true) {
+					// If we want to block it, we need to run some functions to clear the held item back to the inventory.
+					TES3::UI::Block* inventoryMenu = tes3::ui::getMenuNode(tes3::ui::getInventoryMenuId());
+					inventoryMenu->timingUpdate();
+					tes3::ui::inventoryAddTile(1, tile);
+					inventoryMenu->performLayout(1);
+					tes3::ui::flagPaperDollUpdate();
+					tes3::ui::inventoryUpdateIcons();
+					return 0;
+				}
 			}
 
 			// Call the original function.
@@ -502,21 +495,8 @@ namespace mwse {
 		//
 
 		void __fastcall OnEquipped(TES3::Actor* actor, DWORD _UNUSED_, TES3::BaseObject* item, TES3::ItemData* itemData, TES3::EquipmentStack** out_equipmentStack, TES3::MobileActor* mobileActor) {
-			// Call the original function we're overriding.
+			// Call our wrapper for the function so that events are triggered.
 			actor->equipItem(item, itemData, out_equipmentStack, mobileActor);
-
-			// Prepare our event payload. Mobile actor only really seems to get defined for the player.
-			sol::state& state = LuaManager::getInstance().getState();
-			sol::table eventData = state.create_table();
-			eventData["actor"] = lua::makeLuaObject(actor);
-			eventData["item"] = lua::makeLuaObject(item);
-			eventData["itemData"] = itemData;
-			if (mobileActor) {
-				eventData["reference"] = mobileActor->reference;
-			}
-
-			// Trigger the function. We do no checking here for a return value.
-			lua::event::trigger("equipped", eventData);
 		}
 
 		//
@@ -524,21 +504,8 @@ namespace mwse {
 		//
 
 		void __fastcall OnUnequipped(TES3::Actor* actor, DWORD _UNUSED_, TES3::BaseObject* item, char unknown1, TES3::MobileActor* mobileActor, char unknown2, TES3::ItemData* itemData) {
-			// Call the original function we're overriding.
+			// Call our wrapper for the function so that events are triggered.
 			actor->unequipItem(item, unknown1, mobileActor, unknown2, itemData);
-
-			// Prepare our event payload. Mobile actor only really seems to get defined for the player.
-			sol::state& state = LuaManager::getInstance().getState();
-			sol::table eventData = state.create_table();
-			eventData["actor"] = lua::makeLuaObject(actor);
-			eventData["item"] = lua::makeLuaObject(item);
-			eventData["itemData"] = itemData;
-			if (mobileActor) {
-				eventData["reference"] = mobileActor->reference;
-			}
-
-			// Trigger the function. We do no checking here for a return value.
-			lua::event::trigger("unequipped", eventData);
 		}
 
 		//
@@ -546,7 +513,7 @@ namespace mwse {
 		//
 
 		void __fastcall OnActivate(TES3::Reference* target, DWORD _UNUSED_, TES3::Reference* activator, int something) {
-			// Call our version of the function, where we send off an event.
+			// Call our wrapper for the function so that events are triggered.
 			target->activate(activator, something);
 		}
 
@@ -555,6 +522,7 @@ namespace mwse {
 		//
 
 		signed char __fastcall OnSave(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName, const char* saveName) {
+			// Call our wrapper for the function so that events are triggered.
 			return nonDynamicData->saveGame(fileName, saveName);
 		}
 
@@ -563,42 +531,8 @@ namespace mwse {
 		//
 
 		signed char __fastcall OnLoad(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName) {
-			// Prepare our event data.
-			sol::state& state = LuaManager::getInstance().getState();
-			sol::table eventData = state.create_table();
-
-			// If no filename is passed, it's going to use the quicksave.
-			if (fileName == NULL) {
-				eventData["quickload"] = true;
-				fileName = "quiksave.ess";
-			}
-
-			// To make it work like with the save event, we trim out the .ess
-			std::string eventFileName = fileName;
-			eventData["filename"] = eventFileName.substr(0, eventFileName.find_last_of('.'));
-
-			// If our event data says to block, prevent the game from loading.
-			lua::event::trigger("load", eventData);
-			if (eventData["block"] == true) {
-				return false;
-			}
-
-			// Fetch the name back from the event data, and add back in the extension.
-			eventFileName = eventData["filename"];
-			eventFileName += ".ess";
-
-			// Call original function.
-			bool loaded = nonDynamicData->loadGame(eventFileName.c_str());
-
-			// Pass a follow-up event if we successfully saved.
-			if (loaded) {
-				eventData = state.create_table();
-				eventData["newGame"] = false;
-				eventData["filename"] = eventFileName.substr(0, eventFileName.find_last_of('.'));
-				lua::event::trigger("loaded", eventData);
-			}
-
-			return loaded;
+			// Call our wrapper for the function so that events are triggered.
+			return nonDynamicData->loadGame(fileName);
 		}
 
 		//
@@ -606,21 +540,15 @@ namespace mwse {
 		//
 
 		void OnNewGame() {
-			// Prepare our event data.
-			sol::state& state = LuaManager::getInstance().getState();
-			sol::table eventData = state.create_table();
-			eventData["newGame"] = true;
-			lua::event::trigger("load", eventData);
-			if (eventData["block"] == true) {
-				return;
-			}
+			// Call our load event.
+			LuaManager& luaManager = LuaManager::getInstance();
+			luaManager.triggerEvent(new LoadGameEvent(NULL, false, true));
 
 			// Call original function.
 			reinterpret_cast<void(__stdcall *)()>(0x5FAEA0)();
 
-			eventData = state.create_table();
-			eventData["newGame"] = true;
-			lua::event::trigger("loaded", eventData);
+			// Call our post-load event.
+			luaManager.triggerEvent(new LoadedGameEvent(NULL, false, true));
 		}
 
 		//
@@ -631,10 +559,9 @@ namespace mwse {
 			DWORD value = reinterpret_cast<DWORD(__cdecl *)(DWORD, DWORD, DWORD, float, float, float, TES3::Cell*, signed char)>(TES3_cellChanged)(unk1, unk2, unk3, x, y, z, cell, unk4);
 
 			// Send off event.
-			sol::state& state = LuaManager::getInstance().getState();
-			sol::table eventData = state.create_table();
-			eventData["cell"] = cell;
-			lua::event::trigger("cellChanged", eventData);
+			if (cell != NULL) {
+				LuaManager::getInstance().triggerEvent(new CellChangedEvent(cell, x, y, z));
+			}
 
 			return value;
 		}
@@ -644,6 +571,7 @@ namespace mwse {
 		//
 
 		void __fastcall OnStartCombat(TES3::MobileActor* mobileActor, DWORD _UNUSED_, TES3::MobileActor* target) {
+			// Call our wrapper for the function so that events are triggered.
 			mobileActor->startCombat(target);
 		}
 
@@ -652,21 +580,20 @@ namespace mwse {
 		//
 
 		void __fastcall OnStopCombat(TES3::MobileActor* mobileActor, DWORD _UNUSED_, bool something) {
+			// Call our wrapper for the function so that events are triggered.
 			mobileActor->stopCombat(something);
 		}
 
 		//
-		// Hook: Melee Hit
+		// Hook: Attack
 		//
 
-		void __fastcall OnMeleeHit(TES3::ActorAnimationData* animData) {
+		void __fastcall OnAttack(TES3::ActorAnimationData* animData) {
+			// Call original function.
 			reinterpret_cast<void(__thiscall *)(TES3::ActorAnimationData*)>(TES3_ActorAnimData_attackCheckMeleeHit)(animData);
 
 			// Prepare our event data.
-			sol::state& state = LuaManager::getInstance().getState();
-			sol::table eventData = state.create_table();
-			eventData["actor"] = makeLuaObject(animData->mobileActor);
-			lua::event::trigger("attack", eventData);
+			LuaManager::getInstance().triggerEvent(new AttackEvent(animData));
 		}
 
 		void LuaManager::hook() {
@@ -870,9 +797,9 @@ namespace mwse {
 			genCallUnprotected(0x7365E9, reinterpret_cast<DWORD>(OnStopCombat));
 
 			// Event: Melee Hit Check
-			genCallUnprotected(0x541489, reinterpret_cast<DWORD>(OnMeleeHit));
-			genCallUnprotected(0x5414CD, reinterpret_cast<DWORD>(OnMeleeHit));
-			genCallUnprotected(0x569E78, reinterpret_cast<DWORD>(OnMeleeHit));
+			genCallUnprotected(0x541489, reinterpret_cast<DWORD>(OnAttack));
+			genCallUnprotected(0x5414CD, reinterpret_cast<DWORD>(OnAttack));
+			genCallUnprotected(0x569E78, reinterpret_cast<DWORD>(OnAttack));
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);
@@ -898,6 +825,53 @@ namespace mwse {
 
 		void LuaManager::setCurrentReference(TES3::Reference* reference) {
 			currentReference = reference;
+		}
+
+		sol::object LuaManager::triggerEvent(BaseEvent* baseEvent) {
+			DWORD threadId = GetCurrentThreadId();
+			TES3::DataHandler* dataHandler = tes3::getDataHandler();
+
+			// If we're on the main thread, immediately execute the event
+			if (threadId == dataHandler->mainThreadID) {
+				// Use this opportunity to check for background events that need to run.
+				triggerBackgroundThreadEvents();
+
+				// Execute the original event.
+				sol::object response = event::trigger(baseEvent->getEventName(), baseEvent->createEventTable());
+				delete baseEvent;
+				return response;
+			}
+
+			// If we're not on the main thread, queue the event to run once we are.
+			else if (threadId == dataHandler->backgroundThreadID) {
+				log::getLog() << "Queueing background event: " << baseEvent->getEventName() << std::endl;
+				backgroundThreadEventsMutex.lock();
+				backgroundThreadEvents.push(baseEvent);
+				backgroundThreadEventsMutex.unlock();
+			}
+
+			// If we're not on the main thread or the background thread we don't know WTF is going on.
+			else {
+				throw new std::exception("Event triggered from unknown thread!");
+			}
+
+			return sol::nil;
+		}
+
+		void LuaManager::triggerBackgroundThreadEvents() {
+			backgroundThreadEventsMutex.lock();
+
+			while (backgroundThreadEvents.size() > 0) {
+				// Pop the event off the stack.
+				BaseEvent* baseEvent = backgroundThreadEvents.front();
+				backgroundThreadEvents.pop();
+
+				// Trigger it.
+				event::trigger(baseEvent->getEventName(), baseEvent->createEventTable());
+				delete baseEvent;
+			}
+
+			backgroundThreadEventsMutex.unlock();
 		}
 	}
 }

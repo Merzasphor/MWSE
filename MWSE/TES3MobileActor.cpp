@@ -14,49 +14,33 @@ namespace TES3 {
 	}
 
 	void MobileActor::startCombat(MobileActor* target) {
-		// Prepare our event data.
-		sol::state& state = mwse::lua::LuaManager::getInstance().getState();
-		sol::table eventData = state.create_table();
-		eventData["actor"] = mwse::lua::makeLuaObject(this);
-		eventData["target"] = mwse::lua::makeLuaObject(target);
-
-		// If our event data says to block, don't let the object activate.
-		mwse::lua::event::trigger("combatStart", eventData);
-		if (eventData["block"] == true) {
+		// Invoke our combat start event and check if it is blocked.
+		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+		sol::table eventData = luaManager.triggerEvent(new mwse::lua::CombatStartEvent(this, target));
+		if (eventData.valid() && eventData["block"] == true) {
 			return;
 		}
 
+		// Call original function.
 		reinterpret_cast<void(__thiscall *)(MobileActor*, MobileActor*)>(TES3_MobileActor_startCombat)(this, target);
 
-		// Prepare our event data.
-		eventData = state.create_table();
-		eventData["actor"] = mwse::lua::makeLuaObject(this);
-		eventData["target"] = mwse::lua::makeLuaObject(target);
-
-		// If our event data says to block, don't let the object activate.
-		mwse::lua::event::trigger("combatStarted", eventData);
+		// Do our follow up started event.
+		luaManager.triggerEvent(new mwse::lua::CombatStartedEvent(this, target));
 	}
 
 	void MobileActor::stopCombat(bool something) {
-		// Prepare our event data.
-		sol::state& state = mwse::lua::LuaManager::getInstance().getState();
-		sol::table eventData = state.create_table();
-		eventData["actor"] = mwse::lua::makeLuaObject(this);
-
-		// If our event data says to block, don't let the object activate.
-		mwse::lua::event::trigger("combatStop", eventData);
-		if (eventData["block"] == true) {
+		// Invoke our combat stop event and check if it is blocked.
+		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+		sol::table eventData = luaManager.triggerEvent(new mwse::lua::CombatStopEvent(this));
+		if (eventData.valid() && eventData["block"] == true) {
 			return;
 		}
 
+		// Call original function.
 		reinterpret_cast<void(__thiscall *)(MobileActor*, bool)>(TES3_MobileActor_stopCombat)(this, something);
 
-		// Prepare our event data.
-		eventData = state.create_table();
-		eventData["actor"] = mwse::lua::makeLuaObject(this);
-
-		// If our event data says to block, don't let the object activate.
-		mwse::lua::event::trigger("combatStopped", eventData);
+		// Do our follow up stopped event.
+		luaManager.triggerEvent(new mwse::lua::CombatStoppedEvent(this));
 	}
 
 	bool MobileActor::getMobileActorFlag(unsigned int flag) {

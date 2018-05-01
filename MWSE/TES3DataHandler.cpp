@@ -25,16 +25,10 @@ namespace TES3 {
 	//
 
 	bool NonDynamicData::saveGame(const char* fileName, const char* saveName) {
-		// Prepare our event data.
-		sol::state& state = mwse::lua::LuaManager::getInstance().getState();
-		sol::table eventData = state.create_table();
-		eventData["filename"] = fileName;
-		eventData["name"] = saveName;
-
-		// If our event data says to block, prevent the game from saving. We'll
-		// return true so that the game thinks it saved successfully.
-		mwse::lua::event::trigger("save", eventData);
-		if (eventData["block"] == true) {
+		// Execute event. If the event blocked the call, bail.
+		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+		sol::table eventData = luaManager.triggerEvent(new mwse::lua::SaveGameEvent(saveName, fileName));
+		if (eventData.valid() && eventData["block"] == true) {
 			return true;
 		}
 
@@ -46,17 +40,31 @@ namespace TES3 {
 
 		// Pass a follow-up event if we successfully saved.
 		if (saved) {
-			eventData = state.create_table();
-			eventData["filename"] = eventFileName;
-			eventData["name"] = eventSaveName;
-			mwse::lua::event::trigger("saved", eventData);
+			luaManager.triggerEvent(new mwse::lua::SavedGameEvent(eventSaveName.c_str(), eventFileName.c_str()));
 		}
 
 		return saved;
 	}
 
 	bool NonDynamicData::loadGame(const char* fileName) {
-		return reinterpret_cast<signed char(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_loadGameInGame)(this, fileName);
+		// Execute event. If the event blocked the call, bail.
+		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+		sol::table eventData = luaManager.triggerEvent(new mwse::lua::LoadGameEvent(fileName));
+		if (eventData.valid() && eventData["block"] == true) {
+			return true;
+		}
+
+		// Fetch the names back from the event data, in case the event changed them.
+		std::string eventFileName = eventData["filename"];
+
+		bool loaded = reinterpret_cast<signed char(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_loadGameInGame)(this, eventFileName.c_str());
+
+		// Pass a follow-up event if we successfully saved.
+		if (loaded) {
+			luaManager.triggerEvent(new mwse::lua::LoadedGameEvent(eventFileName.c_str(), fileName == NULL));
+		}
+
+		return loaded;
 	}
 
 	BaseObject* NonDynamicData::resolveObject(const char* id) {
