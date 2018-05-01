@@ -648,6 +648,12 @@
     <ClInclude Include="LuaEvents.h">
       <Filter>Header Files\Lua</Filter>
     </ClInclude>
+    <ClInclude Include="TES3MobileProjectile.h">
+      <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MobileProjectileLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1579,6 +1585,9 @@
     </ClCompile>
     <ClCompile Include="LuaEvents.cpp">
       <Filter>Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3MobileProjectileLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

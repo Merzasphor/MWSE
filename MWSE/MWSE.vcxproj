@@ -123,6 +123,8 @@
     <ClInclude Include="TES3MagicEffect.h" />
     <ClInclude Include="TES3Misc.h" />
     <ClInclude Include="TES3MobilePlayerLua.h" />
+    <ClInclude Include="TES3MobileProjectile.h" />
+    <ClInclude Include="TES3MobileProjectileLua.h" />
     <ClInclude Include="TES3Moon.h" />
     <ClInclude Include="TES3MoonLua.h" />
     <ClInclude Include="TES3NPC.h" />
@@ -231,6 +233,7 @@
     <ClCompile Include="TES3MobileNPCLua.cpp" />
     <ClCompile Include="TES3MobilePlayer.cpp" />
     <ClCompile Include="TES3MobilePlayerLua.cpp" />
+    <ClCompile Include="TES3MobileProjectileLua.cpp" />
     <ClCompile Include="TES3MoonLua.cpp" />
     <ClCompile Include="TES3NPC.cpp" />
     <ClCompile Include="TES3NPCLua.cpp" />

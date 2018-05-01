@@ -30,6 +30,7 @@
 #include "TES3MobileCreature.h"
 #include "TES3MobileNPC.h"
 #include "TES3MobilePlayer.h"
+#include "TES3MobileProjectile.h"
 #include "TES3Moon.h"
 #include "TES3NPC.h"
 #include "TES3Probe.h"
