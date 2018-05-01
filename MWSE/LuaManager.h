@@ -45,6 +45,10 @@ namespace mwse {
 			sol::object triggerEvent(BaseEvent*);
 			void triggerBackgroundThreadEvents();
 
+			// Handle our button pressed callbacks. There can only be one at a time.
+			void setButtonPressedCallback(sol::optional<sol::protected_function>);
+			sol::object triggerButtonPressed();
+
 		private:
 			LuaManager();
 
@@ -64,6 +68,9 @@ namespace mwse {
 			//
 			std::mutex backgroundThreadEventsMutex;
 			std::queue<BaseEvent*> backgroundThreadEvents;
+
+			// Storage for our current button pressed callback.
+			sol::protected_function buttonPressedCallback = sol::nil;
 		};
 	}
 }

@@ -86,10 +86,6 @@
 #define TES3_HOOK_FINISH_INITIALIZATION_SIZE 0x5
 #define TES3_HOOK_FINISH_INITIALIZATION_RETURN (TES3_HOOK_FINISH_INITIALIZATION + TES3_HOOK_FINISH_INITIALIZATION_SIZE)
 
-#define TES3_HOOK_BUTTON_PRESSED 0x5F208B
-#define TES3_HOOK_BUTTON_PRESSED_SIZE 0x5
-#define TES3_HOOK_BUTTON_PRESSED_RETURN (TES3_HOOK_BUTTON_PRESSED + TES3_HOOK_BUTTON_PRESSED_SIZE)
-
 #define TES3_load_writeChunk 0x4B6BA0
 #define TES3_load_readChunk 0x4B6880
 
@@ -426,42 +422,16 @@ namespace mwse {
 
 			// Send off our enterFrame event always.
 			LuaManager& luaManager = LuaManager::getInstance();
+			if (tes3::ui::getButtonPressedIndex() != -1) {
+				luaManager.triggerButtonPressed();
+			}
+
+			//
 			luaManager.triggerEvent(new FrameEvent(worldController->deltaTime, worldController->flagMenuMode));
 
 			// If we're not in menu mode, send off the simulate event.
 			if (worldController->flagMenuMode == 0) {
 				luaManager.triggerEvent(new SimulateEvent(worldController->deltaTime));
-			}
-		}
-
-		//
-		// Hook: Button pressed.
-		//
-
-		static void _stdcall ButtonPressed() {
-			// Raise an event about this.
-			LuaManager::getInstance().triggerEvent(new ButtonPressedEvent(*reinterpret_cast<int*>(0x7B88C0)));
-
-			// Clear any other button triggers from happening.
-			sol::state& state = LuaManager::getInstance().getState();
-			state["event"]["clear"]("buttonPressed");
-		}
-
-		static __declspec(naked) void HookButtonPressed() {
-			_asm
-			{
-				// Save the registers.
-				pushad
-
-				// Actually use our hook.
-				call ButtonPressed
-
-				// Resume normal execution.
-				popad
-				pop edi
-				mov al, 1
-				pop esi
-				retn
 			}
 		}
 
@@ -660,11 +630,6 @@ namespace mwse {
 
 			// Event: enterFrame.
 			genCallUnprotected(0x41ABB0, reinterpret_cast<DWORD>(EnterFrame));
-
-			// Event: buttonPressed. Hook after a button has been clicked.
-			VirtualProtect((DWORD*)TES3_HOOK_BUTTON_PRESSED, TES3_HOOK_BUTTON_PRESSED_SIZE, PAGE_READWRITE, &OldProtect);
-			genJump(TES3_HOOK_BUTTON_PRESSED, reinterpret_cast<DWORD>(HookButtonPressed));
-			VirtualProtect((DWORD*)TES3_HOOK_BUTTON_PRESSED, TES3_HOOK_BUTTON_PRESSED_SIZE, OldProtect, &OldProtect);
 
 			// Event: equip.
 			genCallUnprotected(0x5CB8E7, reinterpret_cast<DWORD>(OnPCEquip));
@@ -872,6 +837,23 @@ namespace mwse {
 			}
 
 			backgroundThreadEventsMutex.unlock();
+		}
+
+		void LuaManager::setButtonPressedCallback(sol::optional<sol::protected_function> callback) {
+			buttonPressedCallback = callback.value_or(sol::nil);
+		}
+
+		sol::object LuaManager::triggerButtonPressed() {
+			if (buttonPressedCallback != sol::nil) {
+				sol::protected_function callback = buttonPressedCallback;
+				buttonPressedCallback = sol::nil;
+				sol::table eventData = luaState.create_table();
+				eventData["button"] = tes3::ui::getButtonPressedIndex();
+				tes3::ui::resetButtonPressedIndex();
+				return callback(eventData);
+			}
+
+			return sol::nil;
 		}
 	}
 }

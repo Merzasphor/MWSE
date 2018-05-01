@@ -6,6 +6,7 @@
 #include "TES3GameFile.h"
 
 #include "TES3Util.h"
+#include "UIUtil.h"
 #include "LuaUtil.h"
 #include "Log.h"
 
@@ -154,16 +155,11 @@ namespace mwse {
 
 				// No buttons, do a normal popup.
 				else {
-					return reinterpret_cast<int(__cdecl *)(const char*, char*, signed char)>(0x5F90C0)(message.c_str(), NULL, 1);
+					return tes3::ui::messagePlayer(message.c_str());
 				}
 
 				// Set up our event callback.
-				sol::optional<sol::protected_function> callback = params["callback"];
-				if (callback) {
-					sol::state& state = LuaManager::getInstance().getState();
-					state["event"]["clear"]("buttonPressed");
-					state["event"]["register"]("buttonPressed", callback);
-				}
+				LuaManager::getInstance().setButtonPressedCallback(params["callback"]);
 
 				// Temporary hook into the function that creates message boxes. 
 				int result = reinterpret_cast<int(__cdecl *)(const char*, ...)>(0x5F1AA0)(message.c_str(), buttonTextStruct, NULL);

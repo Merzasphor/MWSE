@@ -8,6 +8,10 @@ namespace mwse {
 			bool requestMenuModeOff();
 			bool requestMenuModeOn(short prop = 0);
 
+			int messagePlayer(const char*);
+			int getButtonPressedIndex();
+			void resetButtonPressedIndex();
+
 			TES3::UI::Block* getMenuNode(short);
 			short getInventoryMenuId();
 
