@@ -127,7 +127,8 @@ namespace mwse {
 		//
 
 		ButtonPressedEvent::ButtonPressedEvent(int buttonId) :
-			GenericEvent("buttonPressed")
+			GenericEvent("buttonPressed"),
+			m_ButtonId(buttonId)
 		{
 
 		}
