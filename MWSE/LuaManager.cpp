@@ -823,7 +823,6 @@ namespace mwse {
 
 			// If we're not on the main thread, queue the event to run once we are.
 			else if (threadId == dataHandler->backgroundThreadID) {
-				log::getLog() << "Queueing background event: " << baseEvent->getEventName() << std::endl;
 				backgroundThreadEventsMutex.lock();
 				backgroundThreadEvents.push(baseEvent);
 				backgroundThreadEventsMutex.unlock();
