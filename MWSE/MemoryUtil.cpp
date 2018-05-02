@@ -34,4 +34,18 @@ namespace mwse {
 		// Protect memory again.
 		VirtualProtect((DWORD*)address, 0x5, oldProtect, &oldProtect);
 	}
+
+	void overrideVirtualTable(DWORD address, DWORD offset, DWORD to) {
+		DWORD location = address + offset;
+
+		// Unprotect memory.
+		DWORD oldProtect;
+		VirtualProtect((DWORD*)location, 0x4, PAGE_READWRITE, &oldProtect);
+
+		// Create our call.
+		MemAccess<DWORD>::Set(location, to);
+
+		// Protect memory again.
+		VirtualProtect((DWORD*)location, 0x4, oldProtect, &oldProtect);
+	}
 }

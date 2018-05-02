@@ -37,7 +37,7 @@ namespace TES3 {
 		void * setActorFlag8; // 0x74
 		void * setActorFlag40; // 0x78
 		void * unknown_0x7C;
-		int (__thiscall * onActorCollision)(MobileProjectile*, int); // 0x80
+		char (__thiscall * onActorCollision)(MobileProjectile*, int); // 0x80
 		void * unknown_0x84;
 		void * unknown_0x88;
 		void * unknown_0x8C;
@@ -48,7 +48,7 @@ namespace TES3 {
 
 	struct MobileProjectile {
 		MobileProjectile_vTable * vTable; // 0x0
-		unsigned int objectType; // 0x4
+		TES3::ObjectType::ObjectType objectType; // 0x4
 		unsigned short movementFlags; // 0x8
 		unsigned short preMovementFlags; // 0xA
 		int unknown_0xC;
@@ -91,7 +91,7 @@ namespace TES3 {
 		// vTable accessor functions.
 		//
 
-		int onActorCollision(int);
+		char onActorCollision(int);
 
 	};
 	static_assert(sizeof(MobileProjectile) == 0xAC, "TES3::MobileProjectile failed size validation");

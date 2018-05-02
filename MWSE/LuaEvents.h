@@ -210,5 +210,16 @@ namespace mwse {
 			TES3::ActorAnimationData* m_AnimationData;
 		};
 
+		// ---------------------------------------------------------------------------- //
+
+		class ProjectileHitEvent : public GenericEvent {
+		public:
+			ProjectileHitEvent(TES3::MobileProjectile* projectile);
+			sol::table createEventTable();
+
+		protected:
+			TES3::MobileProjectile* m_MobileProjectile;
+		};
+
 	}
 }

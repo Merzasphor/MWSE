@@ -368,5 +368,28 @@ namespace mwse {
 			return eventData;
 		}
 
+		//
+		// Hit event, but for projectiles.
+		//
+
+		ProjectileHitEvent::ProjectileHitEvent(TES3::MobileProjectile* projectile) :
+			GenericEvent("hit"),
+			m_MobileProjectile(projectile)
+		{
+
+		}
+
+		sol::table ProjectileHitEvent::createEventTable() {
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::table eventData = state.create_table();
+
+			eventData["attacker"] = m_MobileProjectile->firingActor->reference;
+			eventData["target"] = m_MobileProjectile->firingActor->actionData.hitTarget->reference;
+			eventData["weapon"] = m_MobileProjectile->firingWeapon;
+			eventData["projectile"] = m_MobileProjectile;
+
+			return eventData;
+		}
+
 	}
 }

@@ -39,6 +39,7 @@ namespace TES3 {
 			MobileNPC = 'HCAM',
 			MobileCreature = 'RCAM',
 			MobilePlayer = 'PCAM',
+			MobileProjectile = 'JRPM',
 			Misc = 'CSIM',
 			MagicEffect = 'FEGM',
 			NPC = '_CPN',

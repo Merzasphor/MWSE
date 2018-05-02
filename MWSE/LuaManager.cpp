@@ -568,6 +568,15 @@ namespace mwse {
 			LuaManager::getInstance().triggerEvent(new AttackEvent(animData));
 		}
 
+		//
+		// Mobile projectile actor collision
+		//
+
+		char __fastcall OnMobileProjectileActorCollision(TES3::MobileProjectile* mobileProjectile, DWORD _UNUSED_, int something) {
+			// Call our wrapper for the function so that events are triggered.
+			return mobileProjectile->onActorCollision(something);
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");
@@ -767,6 +776,9 @@ namespace mwse {
 			genCallUnprotected(0x541489, reinterpret_cast<DWORD>(OnAttack));
 			genCallUnprotected(0x5414CD, reinterpret_cast<DWORD>(OnAttack));
 			genCallUnprotected(0x569E78, reinterpret_cast<DWORD>(OnAttack));
+
+			// Override the MobileProjectile::onActorCollision vtable for a hit event.
+			overrideVirtualTable(0x74B2B4, 0x80, reinterpret_cast<DWORD>(OnMobileProjectileActorCollision));
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);
