@@ -55,7 +55,9 @@ namespace TES3 {
 		}
 
 		// Fetch the names back from the event data, in case the event changed them.
+		// Also add back in the .ess extension.
 		std::string eventFileName = eventData["filename"];
+		eventFileName += ".ess";
 
 		bool loaded = reinterpret_cast<signed char(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_loadGameInGame)(this, eventFileName.c_str());
 

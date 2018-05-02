@@ -208,7 +208,7 @@ namespace mwse {
 		{
 			if (m_FileName == NULL && !m_NewGame) {
 				m_QuickLoad = true;
-				m_FileName = "quikload";
+				m_FileName = "quiksave.ess";
 			}
 		}
 
@@ -221,7 +221,8 @@ namespace mwse {
 				eventData["quickload"] = false;
 			}
 			else {
-				eventData["filename"] = m_FileName;
+				std::string filename = m_FileName;
+				eventData["filename"] = filename.substr(0, filename.find_last_of('.'));;
 				eventData["quickload"] = m_QuickLoad;
 				eventData["newGame"] = false;
 			}
