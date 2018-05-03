@@ -19,7 +19,7 @@ return {
 	["mobileCreature"] = 1380139341,
 	["mobileNPC"] = 1212367181,
 	["mobilePlayer"] = 1346584909,
-	["nPC"] = 1598246990,
+	["npc"] = 1598246990,
 	["probe"] = 1112494672,
 	["repairItem"] = 1095779666,
 	["script"] = 1414546259,
