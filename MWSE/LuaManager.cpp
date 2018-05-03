@@ -174,7 +174,7 @@ namespace mwse {
 			};
 
 			luaState["mwse"]["virtualKeyPressed"] = [](int VK_key) {
-				return (GetAsyncKeyState(VK_key) & 0x8001) == 0x8001;
+				return (GetAsyncKeyState(VK_key) & 0x8000) == 0x8000;
 			};
 
 			// Bind data types.
