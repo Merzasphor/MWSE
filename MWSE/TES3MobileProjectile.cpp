@@ -6,8 +6,10 @@
 
 namespace TES3 {
 	char MobileProjectile::onActorCollision(int referenceIndex) {
-		// Call the original function. We can't invoke the vtable here because we overwrite it.
+		// Grab the hit reference now, it won't be available after calling the main function.
 		TES3::Reference* hitReference = this->hitReferences->hit[referenceIndex].reference;
+
+		// Call the original function. We can't invoke the vtable here because we overwrite it.
 		char result = reinterpret_cast<char(__thiscall *)(MobileProjectile*, int)>(TES3_MobileProjectile_onActorCollision)(this, referenceIndex);
 
 		// Fire off our hit event.
