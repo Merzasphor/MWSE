@@ -6,6 +6,7 @@
 
 #define TES3_NonDynamicData_saveGame 0x4C4250
 #define TES3_NonDynamicData_loadGameInGame 0x4C4800
+#define TES3_NonDynamicData_loadGameMainMenu 0x4C4EB0
 #define TES3_NonDynamicData_resolveObject 0x4B8B60
 #define TES3_NonDynamicData_findTemplate2 0x4BA8D0
 #define TES3_NonDynamicData_findFirstCloneOfActor 0x4B8F50
@@ -64,6 +65,29 @@ namespace TES3 {
 		// Pass a follow-up event if we successfully saved.
 		if (loaded) {
 			luaManager.triggerEvent(new mwse::lua::LoadedGameEvent(eventFileName.c_str(), fileName == NULL));
+		}
+
+		return loaded;
+	}
+
+	bool NonDynamicData::loadGameMainMenu(const char* fileName) {
+		// Execute event. If the event blocked the call, bail.
+		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+		sol::table eventData = luaManager.triggerEvent(new mwse::lua::LoadGameEvent(fileName));
+		if (eventData.valid() && eventData["block"] == true) {
+			return true;
+		}
+
+		// Fetch the names back from the event data, in case the event changed them.
+		// Also add back in the .ess extension.
+		std::string eventFileName = eventData["filename"];
+		eventFileName += ".ess";
+
+		bool loaded = reinterpret_cast<signed char(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_loadGameMainMenu)(this, eventFileName.c_str());
+
+		// Pass a follow-up event if we successfully saved.
+		if (loaded) {
+			luaManager.triggerEvent(new mwse::lua::LoadedGameEvent(eventFileName.c_str()));
 		}
 
 		return loaded;

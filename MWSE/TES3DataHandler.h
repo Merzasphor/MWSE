@@ -47,6 +47,7 @@ namespace TES3 {
 
 		bool saveGame(const char* fileName, const char* saveName);
 		bool loadGame(const char* fileName);
+		bool loadGameMainMenu(const char* fileName);
 
 		BaseObject* resolveObject(const char*);
 		Reference* findFirstCloneOfActor(const char*);

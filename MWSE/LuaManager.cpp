@@ -507,6 +507,11 @@ namespace mwse {
 			return nonDynamicData->loadGame(fileName);
 		}
 
+		signed char __fastcall OnLoadMainMenu(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName) {
+			// Call our wrapper for the function so that events are triggered.
+			return nonDynamicData->loadGameMainMenu(fileName);
+		}
+
 		//
 		// Hook: New Game. Points to the load event.
 		//
@@ -731,6 +736,9 @@ namespace mwse {
 			genCallUnprotected(0x5DD3C9, reinterpret_cast<DWORD>(OnLoad));
 			genCallUnprotected(0x5DD59F, reinterpret_cast<DWORD>(OnLoad));
 			genCallUnprotected(0x5FB629, reinterpret_cast<DWORD>(OnLoad));
+
+			// Additional load/loaded event for loading from the main menu.
+			genCallUnprotected(0x5DD3B6, reinterpret_cast<DWORD>(OnLoadMainMenu));
 
 			// Additional load/loaded events for new game.
 			genCallUnprotected(0x5FCCF4, reinterpret_cast<DWORD>(OnNewGame));
