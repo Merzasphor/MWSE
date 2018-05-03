@@ -246,6 +246,7 @@ namespace mwse {
 
 		CellChangedEvent::CellChangedEvent(TES3::Cell* cell, float x, float y, float z) :
 			GenericEvent("cellChanged"),
+			m_Cell(cell),
 			m_X(x),
 			m_Y(y),
 			m_Z(z)
