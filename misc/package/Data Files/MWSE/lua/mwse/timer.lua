@@ -53,6 +53,18 @@ function this.start(time, callback, iterations)
 		iterations = 0
 	end
 
+	if (type(time) ~= "number") then
+		error("Timer not started. Parameter #1 must be of type number.")
+	end
+
+	if (type(callback) == "function") then
+		error("Timer not started. Parameter #2 must be of type function.")
+	end
+
+	if (iterations ~= nil and type(iterations) == "number") then
+		error("Timer not started. Parameter #3 must be of type number or nil.")
+	end
+
 	local newTime = {
 		t = time,
 		f = clock + time,
