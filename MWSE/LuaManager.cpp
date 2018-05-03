@@ -577,9 +577,9 @@ namespace mwse {
 		// Mobile projectile actor collision
 		//
 
-		char __fastcall OnMobileProjectileActorCollision(TES3::MobileProjectile* mobileProjectile, DWORD _UNUSED_, int something) {
+		char __fastcall OnMobileProjectileActorCollision(TES3::MobileProjectile* mobileProjectile, DWORD _UNUSED_, int referenceIndex) {
 			// Call our wrapper for the function so that events are triggered.
-			return mobileProjectile->onActorCollision(something);
+			return mobileProjectile->onActorCollision(referenceIndex);
 		}
 
 		void LuaManager::hook() {

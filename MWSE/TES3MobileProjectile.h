@@ -47,6 +47,39 @@ namespace TES3 {
 	static_assert(sizeof(MobileProjectile_vTable) == 0x98, "TES3::MobileProjectile_vTable failed size validation");
 
 	struct MobileProjectile {
+		struct UnknownStruct1 {
+			struct UnknownStruct2 {
+				TES3::Reference * reference;
+				int unknown_0x4;
+				int unknown_0x8;
+				int unknown_0xC;
+				int unknown_0x10;
+				int unknown_0x14;
+				int unknown_0x18;
+				int unknown_0x1C;
+				int unknown_0x20;
+				int unknown_0x24;
+				int unknown_0x28;
+				int unknown_0x2C;
+				int unknown_0x30;
+				int unknown_0x34;
+				int unknown_0x38;
+				int unknown_0x3C;
+			};
+			int unknown_0x0;
+			int unknown_0x4;
+			int unknown_0x8;
+			int unknown_0xC;
+			int unknown_0x10;
+			int unknown_0x14;
+			int unknown_0x18;
+			int unknown_0x1C;
+			int unknown_0x20;
+			int unknown_0x24;
+			int unknown_0x28;
+			int unknown_0x2C;
+			UnknownStruct2 hit[20];
+		};
 		MobileProjectile_vTable * vTable; // 0x0
 		TES3::ObjectType::ObjectType objectType; // 0x4
 		unsigned short movementFlags; // 0x8
@@ -54,7 +87,7 @@ namespace TES3 {
 		int unknown_0xC;
 		unsigned int actorFlags; // 0x10
 		Reference* reference; // 0x14
-		int unknown_0x18;
+		UnknownStruct1 * hitReferences;
 		short cellX; // 0x1C
 		short cellY; // 0x1E
 		short unknown_0x20;

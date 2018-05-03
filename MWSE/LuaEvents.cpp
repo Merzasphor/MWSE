@@ -374,9 +374,10 @@ namespace mwse {
 		// Hit event, but for projectiles.
 		//
 
-		ProjectileHitEvent::ProjectileHitEvent(TES3::MobileProjectile* projectile) :
+		ProjectileHitEvent::ProjectileHitEvent(TES3::MobileProjectile* projectile, TES3::Reference* targetReference) :
 			GenericEvent("hit"),
-			m_MobileProjectile(projectile)
+			m_MobileProjectile(projectile),
+			m_TargetReference(targetReference)
 		{
 
 		}
@@ -386,7 +387,7 @@ namespace mwse {
 			sol::table eventData = state.create_table();
 
 			eventData["attacker"] = m_MobileProjectile->firingActor->reference;
-			eventData["target"] = m_MobileProjectile->firingActor->actionData.hitTarget->reference;
+			eventData["target"] = m_TargetReference;
 			eventData["weapon"] = m_MobileProjectile->firingWeapon;
 			eventData["projectile"] = m_MobileProjectile;
 

@@ -214,11 +214,12 @@ namespace mwse {
 
 		class ProjectileHitEvent : public GenericEvent {
 		public:
-			ProjectileHitEvent(TES3::MobileProjectile* projectile);
+			ProjectileHitEvent(TES3::MobileProjectile* projectile, TES3::Reference* targetReference);
 			sol::table createEventTable();
 
 		protected:
 			TES3::MobileProjectile* m_MobileProjectile;
+			TES3::Reference* m_TargetReference;
 		};
 
 	}
