@@ -16,6 +16,8 @@ namespace mwse {
 				// Properties
 				//
 
+				"objects", sol::readonly_property(&TES3::NonDynamicData::list),
+
 				"skills", sol::readonly_property([](TES3::NonDynamicData& self) { return std::ref(self.skills); }),
 				"magicEffects", sol::readonly_property([](TES3::NonDynamicData& self) { return std::ref(self.magicEffects); }),
 

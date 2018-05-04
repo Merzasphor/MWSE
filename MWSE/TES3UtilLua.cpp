@@ -203,6 +203,20 @@ namespace mwse {
 
 				tes3::getWorldController()->playItemUpDownSound(item, pickup, reference);
 			};
+
+			// Bind function: tes3.iterateList
+			state["tes3"]["iterateObjects"] = []() {
+				static TES3::Object* object = tes3::getDataHandler()->nonDynamicData->list->head;
+				return [=]() -> sol::object {
+					if (object == NULL) {
+						return sol::nil;
+					}
+
+					sol::object ret = makeLuaObject(object);
+					object = object->nextInCollection;
+					return ret;
+				};
+			};
 		}
 	}
 }

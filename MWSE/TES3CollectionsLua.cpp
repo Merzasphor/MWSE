@@ -19,6 +19,29 @@ namespace mwse {
 
 			// TArray bindings.
 			bindTArray<TES3::ItemData>("TES3ItemDataTArray");
+
+			// Bind some iterators.
+			sol::state& state = LuaManager::getInstance().getState();
+			state.new_usertype<TES3::LinkedList<TES3::Object>>("TES3ObjectLinkedList",
+				// Disable construction of this type.
+				"new", sol::no_constructor,
+
+				//
+				// Meta functions.
+				//
+
+				sol::meta_function::index, [](TES3::LinkedList<TES3::Object>& self, int index)
+			{
+				TES3::Object* object = self.head;
+				while (object && index > 1) {
+					object = object->nextInCollection;
+					index--;
+				}
+				return makeLuaObject(object);
+			},
+				sol::meta_function::length, [](TES3::LinkedList<TES3::Object>& self) { return self.size; }
+
+			);
 		}
 	}
 }
