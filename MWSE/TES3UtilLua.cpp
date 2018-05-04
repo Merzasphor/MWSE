@@ -205,9 +205,14 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.iterateList
-			state["tes3"]["iterateObjects"] = []() {
-				static TES3::Object* object = tes3::getDataHandler()->nonDynamicData->list->head;
-				return [=]() -> sol::object {
+			state["tes3"]["iterateObjects"] = [](sol::optional<double> type) {
+				unsigned int desiredType = type.value_or(0.0);
+				TES3::Object* object = tes3::getDataHandler()->nonDynamicData->list->head;
+				return [object, desiredType]() mutable -> sol::object {
+					while (object && desiredType != 0 && object->objectType != desiredType) {
+						object = object->nextInCollection;
+					}
+
 					if (object == NULL) {
 						return sol::nil;
 					}
