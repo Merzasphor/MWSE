@@ -41,7 +41,7 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		void resolveLevelledLists(MobileActor*);
+		void resolveLeveledLists(MobileActor*);
 
 	};
 	static_assert(sizeof(Inventory) == 0x1C, "TES3::Inventory failed size validation");

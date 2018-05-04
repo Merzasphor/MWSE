@@ -86,7 +86,7 @@ namespace mwse {
 
 				"resolveLeveledItems", [](TES3::Inventory& self, sol::optional<TES3::MobileActor*> actor)
 			{
-				self.resolveLevelledLists(actor.value_or(nullptr));
+				self.resolveLeveledLists(actor.value_or(nullptr));
 			}
 
 				);
