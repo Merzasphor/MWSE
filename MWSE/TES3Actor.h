@@ -40,7 +40,7 @@ namespace TES3 {
 		void * addItem; // 0x150
 		int (__thiscall * getBaseBarterGold)(Actor*); // 0x154
 		void (__thiscall * setBaseBarterGold)(Actor*, int); // 0x158
-		void * clone; // 0x15C
+		unsigned int (__thiscall * clone)(Actor*, Reference*); // 0x15C
 		void * onCloseInventory; // 0x160
 		void * unknown_0x164;
 		bool (__thiscall * getIsAttacked)(Actor*); // 0x168
@@ -66,6 +66,7 @@ namespace TES3 {
 		int getBaseBarterGold();
 		void setBaseBarterGold(int);
 		bool getIsAttacked();
+		unsigned int clone(Reference*);
 
 		//
 		// Other related this-call functions.
@@ -74,6 +75,13 @@ namespace TES3 {
 		int equipItem(TES3::BaseObject* item, TES3::ItemData* itemData, TES3::EquipmentStack** out_equipmentStack, TES3::MobileActor* mobileActor);
 		int unequipItem(TES3::BaseObject* item, char unknown1, TES3::MobileActor* mobileActor, char unknown2, TES3::ItemData* itemData);
 		Reference* dropItem(BaseObject*, ItemData*, int, bool);
+
+		//
+		// Custom functions.
+		//
+
+		bool getActorFlag(unsigned int);
+		void setActorFlag(unsigned int, bool);
 
 	};
 	static_assert(sizeof(Actor) == 0x6C, "TES3::Actor failed size validation");
