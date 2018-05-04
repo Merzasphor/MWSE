@@ -226,7 +226,7 @@ namespace mwse {
 				return sol::make_object(state, reinterpret_cast<TES3::Weapon*>(object));
 			}
 
-			return sol::nil;
+			return sol::make_object(state, object);
 		}
 
 		sol::object makeLuaObject(TES3::MobileActor* actor) {

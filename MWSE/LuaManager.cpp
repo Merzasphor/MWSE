@@ -177,6 +177,12 @@ namespace mwse {
 				return (GetAsyncKeyState(VK_key) & 0x8000) == 0x8000;
 			};
 
+			// Add binding for base objects.
+			luaState.new_usertype<TES3::BaseObject>("TES3BaseObject",
+				"new", sol::no_constructor,
+				"objectType", &TES3::Door::objectType
+				);
+
 			// Bind data types.
 			bindTES3ActionData();
 			bindTES3Activator();
