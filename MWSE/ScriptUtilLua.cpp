@@ -42,6 +42,8 @@ namespace mwse {
 				}
 
 				mwscript::AddItem(script, reference, item, count);
+				reference->setObjectModified(true);
+				reference->baseObject->setObjectModified(true);
 				return true;
 			};
 			state["mwscript"]["addSoulGem"] = [](sol::optional<sol::table> params) {
@@ -321,6 +323,8 @@ namespace mwse {
 				}
 
 				mwscript::RemoveItem(script, reference, item, count);
+				reference->setObjectModified(true);
+				reference->baseObject->setObjectModified(true);
 				return true;
 			};
 			state["mwscript"]["removeSpell"] = [](sol::optional<sol::table> params) {
