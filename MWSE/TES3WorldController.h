@@ -174,6 +174,7 @@ namespace TES3 {
 
 		void mainLoopBeforeInput();
 		MobilePlayer* getMobilePlayer();
+		void playItemUpDownSound(BaseObject*, bool, Reference*);
 
 	};
 	static_assert(sizeof(WorldController) == 0x374, "TES3::WorldController failed size validation");

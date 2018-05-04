@@ -190,6 +190,19 @@ namespace mwse {
 
 				return false;
 			};
+
+			// Bind function: tes3.playItemPickupSound
+			state["tes3"]["playItemPickupSound"] = [](sol::optional<sol::table> params) {
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::BaseObject* item = getOptionalParamObject<TES3::BaseObject>(params, "item");
+				bool pickup = getOptionalParam<bool>(params, "pickup", true);
+				TES3::Sound* sound = getOptionalParamSound(params, "sound");
+				if (item == NULL) {
+					return;
+				}
+
+				tes3::getWorldController()->playItemUpDownSound(item, pickup, reference);
+			};
 		}
 	}
 }
