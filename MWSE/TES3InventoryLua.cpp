@@ -78,7 +78,16 @@ namespace mwse {
 				//
 
 				"flags", sol::readonly_property(&TES3::Inventory::flags),
-				"iterator", sol::readonly_property(&TES3::Inventory::iterator)
+				"iterator", sol::readonly_property(&TES3::Inventory::iterator),
+
+				//
+				// Functions
+				//
+
+				"resolveLeveledItems", [](TES3::Inventory& self, sol::optional<TES3::MobileActor*> actor)
+			{
+				self.resolveLevelledLists(actor.value_or(nullptr));
+			}
 
 				);
 		}

@@ -36,6 +36,13 @@ namespace TES3 {
 		unsigned int flags; // 0x0
 		Iterator<ItemStack> iterator; // 0x4
 		int unknown_0x18;
+
+		//
+		// Other related this-call functions.
+		//
+
+		void resolveLevelledLists(MobileActor*);
+
 	};
 	static_assert(sizeof(Inventory) == 0x1C, "TES3::Inventory failed size validation");
 }
