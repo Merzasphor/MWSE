@@ -31,7 +31,7 @@ namespace TES3 {
 		char * model;
 		char * name;
 		Script * script;
-		void * soundgen; // Maybe?
+		Creature * soundGenerator;
 		int creatureType;
 		int level;
 		Attributes attributes;

@@ -29,6 +29,7 @@
     <ClInclude Include="sol.hpp" />
     <ClInclude Include="LuaUnifiedHeader.h" />
     <ClInclude Include="sol_forward.hpp" />
+    <ClInclude Include="TES3SoundGenerator.h" />
     <ClInclude Include="StackLua.h" />
     <ClInclude Include="StringUtilLua.h" />
     <ClInclude Include="TES3ActionDataLua.h" />
@@ -147,6 +148,7 @@
     <ClInclude Include="TES3Skill.h" />
     <ClInclude Include="TES3SkillLua.h" />
     <ClInclude Include="TES3Sound.h" />
+    <ClInclude Include="TES3SoundLua.h" />
     <ClInclude Include="TES3Spell.h" />
     <ClInclude Include="TES3SpellInstance.h" />
     <ClInclude Include="TES3SpellList.h" />
@@ -251,6 +253,7 @@
     <ClCompile Include="TES3Script.cpp" />
     <ClCompile Include="TES3ScriptLua.cpp" />
     <ClCompile Include="TES3SkillLua.cpp" />
+    <ClCompile Include="TES3SoundLua.cpp" />
     <ClCompile Include="TES3SpellLua.cpp" />
     <ClCompile Include="TES3StaticLua.cpp" />
     <ClCompile Include="TES3Statistic.cpp" />

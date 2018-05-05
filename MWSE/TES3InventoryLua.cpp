@@ -36,6 +36,10 @@ namespace mwse {
 					[](TES3::ItemData& self) { return self.enchantData.charge; },
 					[](TES3::ItemData& self, float value) { self.enchantData.charge = value; }
 					),
+				"soul", sol::property(
+					[](TES3::ItemData& self) { return makeLuaObject(self.enchantData.soul); },
+					[](TES3::ItemData& self, TES3::Creature* value) { self.enchantData.soul = value; }
+					),
 
 				"script", sol::readonly_property(&TES3::ItemData::script),
 				"context", sol::readonly_property([](TES3::ItemData& self) { return std::shared_ptr<ScriptContext>(new ScriptContext(self.script, self.scriptData)); })

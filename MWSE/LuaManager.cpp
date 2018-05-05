@@ -59,6 +59,7 @@
 #include "TES3RepairToolLua.h"
 #include "TES3ScriptLua.h"
 #include "TES3SkillLua.h"
+#include "TES3SoundLua.h"
 #include "TES3SpellLua.h"
 #include "TES3StaticLua.h"
 #include "TES3StatisticLua.h"
@@ -222,6 +223,7 @@ namespace mwse {
 			bindTES3RepairTool();
 			bindTES3Script();
 			bindTES3Skill();
+			bindTES3Sound();
 			bindTES3Spell();
 			bindTES3Static();
 			bindTES3Statistic();

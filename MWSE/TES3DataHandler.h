@@ -20,7 +20,7 @@ namespace TES3 {
 		Iterator<Faction> * factions; // 0x28
 		Iterator<Script> * scripts; // 0x2C
 		Iterator<Sound> * sounds; // 0x30
-		Iterator<void> * soundGenerators; // 0x34
+		Iterator<SoundGenerator> * soundGenerators; // 0x34
 		Iterator<GlobalVariable> * globals; // 0x38
 		Iterator<void> * dialogs; // 0x3C
 		Iterator<Region> * regions; // 0x40

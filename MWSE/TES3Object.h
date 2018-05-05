@@ -146,6 +146,7 @@ namespace TES3 {
 	struct Script;
 	struct ScriptVariables;
 	struct Sound;
+	struct SoundGenerator;
 	struct Spell;
 	struct Static;
 	struct Statistic;

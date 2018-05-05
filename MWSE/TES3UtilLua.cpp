@@ -222,6 +222,23 @@ namespace mwse {
 					return ret;
 				};
 			};
+
+			// Bind function: tes3.getSoundGenerator
+			state["tes3"]["getSoundGenerator"] = [](std::string creatureId, unsigned int type) -> sol::object {
+				auto soundGenerators = tes3::getDataHandler()->nonDynamicData->soundGenerators;
+				const char* creatureIdCstr = creatureId.c_str();
+				for (auto itt = soundGenerators->head; itt != NULL; itt = itt->next) {
+					if (itt->data->soundType != type) {
+						continue;
+					}
+
+					if (strncmp(creatureIdCstr, itt->data->name, creatureId.length()) == 0) {
+						return sol::make_object(LuaManager::getInstance().getState(), itt->data);
+					}
+				}
+
+				return sol::nil;
+			};
 		}
 	}
 }

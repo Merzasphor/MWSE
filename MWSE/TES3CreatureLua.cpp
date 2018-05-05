@@ -118,7 +118,9 @@ namespace mwse {
 
 				"aiConfig", sol::readonly_property(&TES3::Creature::aiConfig),
 
-				"script", sol::readonly_property(&TES3::Creature::getScript)
+				"script", sol::readonly_property(&TES3::Creature::getScript),
+
+				"soundCreature", &TES3::Creature::soundGenerator
 
 				);
 
