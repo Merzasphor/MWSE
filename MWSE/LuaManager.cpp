@@ -63,6 +63,7 @@
 #include "TES3SpellLua.h"
 #include "TES3StaticLua.h"
 #include "TES3StatisticLua.h"
+#include "TES3UIBlockLua.h"
 #include "TES3VectorsLua.h"
 #include "TES3WeaponLua.h"
 #include "TES3WeatherControllerLua.h"
@@ -87,6 +88,10 @@
 #define TES3_HOOK_FINISH_INITIALIZATION 0x4BBC0C
 #define TES3_HOOK_FINISH_INITIALIZATION_SIZE 0x5
 #define TES3_HOOK_FINISH_INITIALIZATION_RETURN (TES3_HOOK_FINISH_INITIALIZATION + TES3_HOOK_FINISH_INITIALIZATION_SIZE)
+
+#define TES3_HOOK_UI_EVENT 0x58371A
+#define TES3_HOOK_UI_EVENT_SIZE 0x5
+#define TES3_HOOK_UI_EVENT_RETURN (TES3_HOOK_UI_EVENT + TES3_HOOK_UI_EVENT_SIZE)
 
 #define TES3_load_writeChunk 0x4B6BA0
 #define TES3_load_readChunk 0x4B6880
@@ -227,6 +232,7 @@ namespace mwse {
 			bindTES3Spell();
 			bindTES3Static();
 			bindTES3Statistic();
+			bindTES3UIBlock();
 			bindTES3Vectors();
 			bindTES3Weapon();
 			bindTES3Weather();
@@ -590,6 +596,36 @@ namespace mwse {
 			return mobileProjectile->onActorCollision(referenceIndex);
 		}
 
+		//
+		// UI event hooking.
+		//
+
+		signed char __cdecl OnUIEvent(DWORD function, TES3::UI::Block* parent, DWORD prop, DWORD b, DWORD c, TES3::UI::Block* block) {
+			// Execute event. If the event blocked the call, bail.
+			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+			sol::table eventData = luaManager.triggerEvent(new mwse::lua::GenericUiPreEvent(parent, block, prop, b, c));
+			if (eventData.valid() && eventData["block"] == true) {
+				return 0;
+			}
+
+			signed char result = reinterpret_cast<signed char (__cdecl *)(TES3::UI::Block*, DWORD, DWORD, DWORD, TES3::UI::Block*)>(function)(block, c, b, prop, parent);
+
+			luaManager.triggerEvent(new mwse::lua::GenericUiPostEvent(parent, block, prop, b, c));
+
+			return result;
+		}
+
+		static DWORD callbackUIEvent = TES3_HOOK_UI_EVENT_RETURN;
+		static __declspec(naked) void HookUIEvent() {
+			_asm
+			{
+				push edi
+				call OnUIEvent
+				add esp, 0x18
+				jmp callbackUIEvent
+			}
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");
@@ -795,6 +831,12 @@ namespace mwse {
 
 			// Override the MobileProjectile::onActorCollision vtable for a hit event.
 			overrideVirtualTable(0x74B2B4, 0x80, reinterpret_cast<DWORD>(OnMobileProjectileActorCollision));
+
+			// Event: UI Event
+			VirtualProtect((DWORD*)TES3_HOOK_UI_EVENT, TES3_HOOK_UI_EVENT_SIZE, PAGE_READWRITE, &OldProtect);
+			genJump(TES3_HOOK_UI_EVENT, reinterpret_cast<DWORD>(HookUIEvent));
+			for (DWORD i = TES3_HOOK_UI_EVENT + 5; i < TES3_HOOK_UI_EVENT_RETURN; i++) genNOP(i);
+			VirtualProtect((DWORD*)TES3_HOOK_UI_EVENT, TES3_HOOK_UI_EVENT_SIZE, OldProtect, &OldProtect);
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);

@@ -4,6 +4,7 @@
 #include "LuaUtil.h"
 
 #include "TES3ActorAnimationData.h"
+#include "TES3UIBlock.h"
 
 namespace mwse {
 	namespace lua {
@@ -392,6 +393,44 @@ namespace mwse {
 			eventData["projectile"] = m_MobileProjectile;
 
 			return eventData;
+		}
+
+		//
+		// General UI pre-events.
+		//
+
+		GenericUiPreEvent::GenericUiPreEvent(TES3::UI::Block* parent, TES3::UI::Block* block, unsigned int prop, unsigned int var1, unsigned int var2) :
+			GenericEvent("uiPreEvent"),
+			m_Parent(parent),
+			m_Block(block),
+			m_Property(prop),
+			m_Variable1(var1),
+			m_Variable2(var2)
+		{
+
+		}
+
+		sol::table GenericUiPreEvent::createEventTable() {
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::table eventData = state.create_table();
+
+			eventData["parent"] = m_Parent;
+			eventData["block"] = m_Block;
+			eventData["property"] = m_Property;
+			eventData["var1"] = m_Variable1;
+			eventData["var2"] = m_Variable2;
+
+			return eventData;
+		}
+
+		//
+		// General UI post-events.
+		//
+
+		GenericUiPostEvent::GenericUiPostEvent(TES3::UI::Block* parent, TES3::UI::Block* block, unsigned int prop, unsigned int var1, unsigned int var2) :
+			GenericUiPreEvent(parent, block, prop, var1, var2)
+		{
+			m_EventName = "uiEvent";
 		}
 
 	}

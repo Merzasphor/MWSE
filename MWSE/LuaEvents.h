@@ -222,5 +222,27 @@ namespace mwse {
 			TES3::Reference* m_TargetReference;
 		};
 
+		// ---------------------------------------------------------------------------- //
+
+		class GenericUiPreEvent : public GenericEvent {
+		public:
+			GenericUiPreEvent(TES3::UI::Block* parent, TES3::UI::Block* block, unsigned int prop, unsigned int var1, unsigned int var2);
+			sol::table createEventTable();
+
+		protected:
+			TES3::UI::Block* m_Parent;
+			TES3::UI::Block* m_Block;
+			unsigned int m_Property;
+			unsigned int m_Variable1;
+			unsigned int m_Variable2;
+		};
+
+		// ---------------------------------------------------------------------------- //
+
+		class GenericUiPostEvent : public GenericUiPreEvent {
+		public:
+			GenericUiPostEvent(TES3::UI::Block* parent, TES3::UI::Block* block, unsigned int prop, unsigned int var1, unsigned int var2);
+		};
+
 	}
 }
