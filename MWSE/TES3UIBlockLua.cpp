@@ -16,6 +16,7 @@ namespace mwse {
 
 				"tag", sol::readonly_property(&TES3::UI::Block::tag),
 
+				"id", sol::readonly_property(&TES3::UI::Block::id),
 				"name", sol::readonly_property([](TES3::UI::Block& self) { return self.name.cString; }),
 
 				"parent", sol::readonly_property(&TES3::UI::Block::parent)
