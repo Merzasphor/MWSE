@@ -608,7 +608,7 @@ namespace mwse {
 				return 0;
 			}
 
-			signed char result = reinterpret_cast<signed char (__cdecl *)(TES3::UI::Block*, DWORD, DWORD, DWORD, TES3::UI::Block*)>(function)(block, c, b, prop, parent);
+			signed char result = reinterpret_cast<signed char (__cdecl *)(TES3::UI::Block*, DWORD, DWORD, DWORD, TES3::UI::Block*)>(function)(parent, prop, b, c, block);
 
 			luaManager.triggerEvent(new mwse::lua::GenericUiPostEvent(parent, block, prop, b, c));
 
