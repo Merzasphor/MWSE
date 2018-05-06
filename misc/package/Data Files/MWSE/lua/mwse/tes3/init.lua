@@ -18,6 +18,7 @@ tes3.specialization = require("mwse.tes3.specialization")
 tes3.specializationName = require("mwse.tes3.specializationName")
 tes3.spellOrigin = require("mwse.tes3.spellOrigin")
 tes3.spellType = require("mwse.tes3.spellType")
+tes3.uiProperty = require("mwse.tes3.uiProperty")
 tes3.weaponType = require("mwse.tes3.weaponType")
 
 -------------------------------------------------
