@@ -12,6 +12,27 @@
 
 namespace mwse {
 	namespace lua {
+		auto iterateObjectsFiltered(unsigned int desiredType) {
+			TES3::Object* object = tes3::getDataHandler()->nonDynamicData->list->head;
+			return [object, desiredType]() mutable -> sol::object {
+				while (object && desiredType != 0 && object->objectType != desiredType) {
+					object = object->nextInCollection;
+				}
+
+				if (object == NULL) {
+					return sol::nil;
+				}
+
+				sol::object ret = makeLuaObject(object);
+				object = object->nextInCollection;
+				return ret;
+			};
+		}
+
+		auto iterateObjects() {
+			return iterateObjectsFiltered(0);
+		}
+
 		void bindTES3Util() {
 			sol::state& state = LuaManager::getInstance().getState();
 
@@ -205,23 +226,7 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.iterateList
-			state["tes3"]["iterateObjects"] = [](sol::optional<double> type) {
-				unsigned int desiredType = type.value_or(0.0);
-				TES3::Object* object = tes3::getDataHandler()->nonDynamicData->list->head;
-				return [object, desiredType]() mutable -> sol::object {
-					while (object && desiredType != 0 && object->objectType != desiredType) {
-						object = object->nextInCollection;
-					}
-
-					if (object == NULL) {
-						return sol::nil;
-					}
-
-					sol::object ret = makeLuaObject(object);
-					object = object->nextInCollection;
-					return ret;
-				};
-			};
+			state["tes3"]["iterateObjects"] = sol::overload(&iterateObjects, &iterateObjectsFiltered);
 
 			// Bind function: tes3.getSoundGenerator
 			state["tes3"]["getSoundGenerator"] = [](std::string creatureId, unsigned int type) -> sol::object {
