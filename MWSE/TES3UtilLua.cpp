@@ -239,6 +239,21 @@ namespace mwse {
 
 				return sol::nil;
 			};
+
+			// Bind function: tes3.playSound
+			state["tes3"]["playSound"] = [](sol::table params) -> bool {
+				TES3::Sound* sound = getOptionalParamSound(params, "sound");
+				TES3::Reference* reference = getOptionalParamReference(params, "reference");
+				unsigned char volume = getOptionalParam<double>(params, "volume", 1.0) * 255;
+				float pitch = getOptionalParam<double>(params, "pitch", 1.0);
+				int flag = getOptionalParam<double>(params, "flag", 0.0);
+
+				if (sound == NULL) {
+					return false;
+				}
+
+				return sound->play(reference, volume, pitch, flag);
+			};
 		}
 	}
 }
