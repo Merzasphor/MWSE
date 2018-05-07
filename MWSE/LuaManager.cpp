@@ -13,7 +13,6 @@
 #include "LuaScript.h"
 
 #include "TES3ActorAnimationData.h"
-#include "TES3UIBlock.h"
 #include "TES3UIInventoryTile.h"
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
