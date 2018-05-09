@@ -1,8 +1,5 @@
 local this = {}
 
--- Frame based copy of this library.
-this.frame = require("mwse.frameTimer")
-
 -- Internal time, updated by this.update.
 local clock = 0
 
@@ -12,9 +9,9 @@ local timers = {}
 -- A list of paused timers.
 local pausedTimers = {}
 
--- Updates the internal clock and triggers any timers on every simulation frame.
+-- Updates the internal clock and triggers any timers on every frame.
 local lastPost = 0
-event.register("simulate", function(e)
+event.register("enterFrame", function(e)
 	-- Update internal timer.
 	clock = clock + e.delta
 
