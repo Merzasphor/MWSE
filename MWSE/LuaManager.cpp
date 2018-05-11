@@ -602,14 +602,14 @@ namespace mwse {
 		signed char __cdecl OnUIEvent(DWORD function, TES3::UI::Block* parent, DWORD prop, DWORD b, DWORD c, TES3::UI::Block* block) {
 			// Execute event. If the event blocked the call, bail.
 			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-			sol::table eventData = luaManager.triggerEvent(new mwse::lua::GenericUiPreEvent(parent, block, prop, b, c));
+			sol::table eventData = luaManager.triggerEvent(new GenericUiPreEvent(parent, block, prop, b, c));
 			if (eventData.valid() && eventData["block"] == true) {
 				return 0;
 			}
 
 			signed char result = reinterpret_cast<signed char (__cdecl *)(TES3::UI::Block*, DWORD, DWORD, DWORD, TES3::UI::Block*)>(function)(parent, prop, b, c, block);
 
-			luaManager.triggerEvent(new mwse::lua::GenericUiPostEvent(parent, block, prop, b, c));
+			luaManager.triggerEvent(new GenericUiPostEvent(parent, block, prop, b, c));
 
 			return result;
 		}
