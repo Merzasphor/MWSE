@@ -151,6 +151,9 @@
     <Filter Include="Header Files\DataAdapters\TES3\Animations">
       <UniqueIdentifier>{e67a3424-5992-4236-a2af-0e68b0c4868e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\DataAdapters\TES3\Objects\Actor\Mobile">
+      <UniqueIdentifier>{59d80928-ea83-4f60-a382-7f0ca6b86d83}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Flags.h">
@@ -374,18 +377,6 @@
     </ClInclude>
     <ClInclude Include="TES3GlobalVariable.h">
       <Filter>Header Files\DataAdapters\TES3\Scripting</Filter>
-    </ClInclude>
-    <ClInclude Include="TES3MobileNPC.h">
-      <Filter>Header Files\DataAdapters\TES3\Objects\Actor\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="TES3MobilePlayer.h">
-      <Filter>Header Files\DataAdapters\TES3\Objects\Actor\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="TES3MobileCreature.h">
-      <Filter>Header Files\DataAdapters\TES3\Objects\Actor\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="TES3MobileActor.h">
-      <Filter>Header Files\DataAdapters\TES3\Objects\Actor\Data</Filter>
     </ClInclude>
     <ClInclude Include="TES3Alchemy.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Item</Filter>
@@ -648,9 +639,6 @@
     <ClInclude Include="LuaEvents.h">
       <Filter>Header Files\Lua</Filter>
     </ClInclude>
-    <ClInclude Include="TES3MobileProjectile.h">
-      <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
-    </ClInclude>
     <ClInclude Include="TES3MobileProjectileLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
@@ -662,6 +650,24 @@
     </ClInclude>
     <ClInclude Include="TES3UIBlockLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MobileActor.h">
+      <Filter>Header Files\DataAdapters\TES3\Objects\Actor\Mobile</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MobileCreature.h">
+      <Filter>Header Files\DataAdapters\TES3\Objects\Actor\Mobile</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MobileNPC.h">
+      <Filter>Header Files\DataAdapters\TES3\Objects\Actor\Mobile</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MobilePlayer.h">
+      <Filter>Header Files\DataAdapters\TES3\Objects\Actor\Mobile</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MobileProjectile.h">
+      <Filter>Header Files\DataAdapters\TES3\Objects\Actor\Mobile</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MobileObject.h">
+      <Filter>Header Files\DataAdapters\TES3\Objects\Actor\Mobile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1598,9 +1604,6 @@
     <ClCompile Include="TES3MobileProjectileLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
-    <ClCompile Include="TES3MobileProjectile.cpp">
-      <Filter>Source Files\DataAdapters\TES3</Filter>
-    </ClCompile>
     <ClCompile Include="TES3Inventory.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
@@ -1611,6 +1614,9 @@
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3Sound.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3MobileObject.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
   </ItemGroup>

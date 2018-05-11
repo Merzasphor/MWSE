@@ -20,7 +20,7 @@ namespace mwse {
 				"objectType", &TES3::MobileProjectile::objectType,
 
 				"movementFlags", &TES3::MobileProjectile::movementFlags,
-				"preMovementFlags", &TES3::MobileProjectile::preMovementFlags,
+				"prevMovementFlags", &TES3::MobileProjectile::prevMovementFlags,
 				"actorFlags", &TES3::MobileProjectile::actorFlags,
 				"flagExpire", &TES3::MobileProjectile::flagExpire,
 

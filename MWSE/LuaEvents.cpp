@@ -375,22 +375,42 @@ namespace mwse {
 		// Hit event, but for projectiles.
 		//
 
-		ProjectileHitEvent::ProjectileHitEvent(TES3::MobileProjectile* projectile, TES3::Reference* targetReference) :
-			GenericEvent("hit"),
-			m_MobileProjectile(projectile),
+		MobileObjectCollisionEvent::MobileObjectCollisionEvent(TES3::MobileObject* mobileObject, TES3::Reference* targetReference) :
+			GenericEvent("collision"),
+			m_MobileObject(mobileObject),
 			m_TargetReference(targetReference)
 		{
 
 		}
 
-		sol::table ProjectileHitEvent::createEventTable() {
+		sol::table MobileObjectCollisionEvent::createEventTable() {
 			sol::state& state = LuaManager::getInstance().getState();
 			sol::table eventData = state.create_table();
 
-			eventData["attacker"] = m_MobileProjectile->firingActor->reference;
 			eventData["target"] = m_TargetReference;
-			eventData["weapon"] = m_MobileProjectile->firingWeapon;
-			eventData["projectile"] = m_MobileProjectile;
+			eventData["actor"] = m_MobileObject;
+
+			return eventData;
+		}
+
+		//
+		// Water impact event for projectiles.
+		//
+
+		MobileObjectWaterImpactEvent::MobileObjectWaterImpactEvent(TES3::MobileObject* mobileObject, bool inWater) :
+			GenericEvent("waterImpact"),
+			m_MobileObject(mobileObject),
+			m_InWater(inWater)
+		{
+
+		}
+
+		sol::table MobileObjectWaterImpactEvent::createEventTable() {
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::table eventData = state.create_table();
+
+			eventData["actor"] = m_MobileObject;
+			eventData["inWater"] = m_InWater;
 
 			return eventData;
 		}

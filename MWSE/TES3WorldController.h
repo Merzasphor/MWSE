@@ -158,7 +158,7 @@ namespace TES3 {
 		char bSubtitles; // 0x344
 		int countMusicTracksBattle; // 0x348
 		int countMusicTracksExplore; // 0x34C
-		int musicState; // 0x350
+		unsigned int musicState; // 0x350
 		int unknown_0x354;
 		int unknown_0x358;
 		int unknown_0x35C;

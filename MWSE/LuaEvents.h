@@ -212,14 +212,26 @@ namespace mwse {
 
 		// ---------------------------------------------------------------------------- //
 
-		class ProjectileHitEvent : public GenericEvent {
+		class MobileObjectCollisionEvent : public GenericEvent {
 		public:
-			ProjectileHitEvent(TES3::MobileProjectile* projectile, TES3::Reference* targetReference);
+			MobileObjectCollisionEvent(TES3::MobileObject* mobileObject, TES3::Reference* targetReference);
 			sol::table createEventTable();
 
 		protected:
-			TES3::MobileProjectile* m_MobileProjectile;
+			TES3::MobileObject* m_MobileObject;
 			TES3::Reference* m_TargetReference;
+		};
+
+		// ---------------------------------------------------------------------------- //
+
+		class MobileObjectWaterImpactEvent : public GenericEvent {
+		public:
+			MobileObjectWaterImpactEvent(TES3::MobileObject* mobileObject, bool inWater);
+			sol::table createEventTable();
+
+		protected:
+			TES3::MobileObject* m_MobileObject;
+			bool m_InWater;
 		};
 
 		// ---------------------------------------------------------------------------- //
