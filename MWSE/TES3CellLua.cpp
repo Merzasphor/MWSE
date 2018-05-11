@@ -5,6 +5,42 @@
 
 namespace mwse {
 	namespace lua {
+		auto iterateReferencesFiltered(TES3::Cell* cell, unsigned int desiredType) {
+			unsigned int currentList = 0;
+			TES3::Reference * reference = cell->actors.head;
+			return [cell, reference, currentList, desiredType]() mutable -> sol::object {
+				while (reference && desiredType != 0 && reference->baseObject->objectType != desiredType) {
+					reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
+
+					// Check to see if we need to run to the next list.
+					if (reference == NULL) {
+						switch (currentList) {
+						case 0:
+							reference = cell->activators.head;
+							break;
+						case 1:
+							reference = cell->statics.head;
+							break;
+						}
+						currentList++;
+					}
+				}
+
+				if (reference == NULL) {
+					return sol::nil;
+				}
+
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::object ret = sol::make_object(state, reference);
+				reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
+				return ret;
+			};
+		}
+
+		auto iterateReferences(TES3::Cell* cell) {
+			return iterateReferencesFiltered(cell, 0);
+		}
+
 		void bindTES3Cell() {
 			sol::state& state = LuaManager::getInstance().getState();
 
@@ -53,7 +89,13 @@ namespace mwse {
 
 				"waterLevel", sol::property(&TES3::Cell::getWaterLevel, &TES3::Cell::setWaterLevel),
 
-				"region", sol::readonly_property(&TES3::Cell::getRegion)
+				"region", sol::readonly_property(&TES3::Cell::getRegion),
+
+				//
+				// Functions.
+				//
+
+				"iterateReferences", sol::overload(iterateReferences, iterateReferencesFiltered)
 
 				);
 		}
