@@ -825,7 +825,7 @@ namespace mwse {
 			genCallUnprotected(0x559265, reinterpret_cast<DWORD>(OnStopCombat));
 			genCallUnprotected(0x5650F2, reinterpret_cast<DWORD>(OnStopCombat));
 			genCallUnprotected(0x568794, reinterpret_cast<DWORD>(OnStopCombat));
-			genCallUnprotected(0x7365E9, reinterpret_cast<DWORD>(OnStopCombat));
+			genJumpUnprotected(0x7365E9, reinterpret_cast<DWORD>(OnStopCombat));
 
 			// Event: Melee Hit Check
 			genCallUnprotected(0x541489, reinterpret_cast<DWORD>(OnAttack));
