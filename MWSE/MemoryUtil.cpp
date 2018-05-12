@@ -17,10 +17,28 @@ namespace mwse {
 		MemAccess<unsigned char>::Set(Address, 0x90);
 	}
 
+	void genJumpUnprotected(DWORD address, DWORD to, DWORD size) {
+		// Unprotect memory.
+		DWORD oldProtect;
+		VirtualProtect((DWORD*)address, size, PAGE_READWRITE, &oldProtect);
+
+		// Create our call.
+		MemAccess<unsigned char>::Set(address, 0xE9);
+		MemAccess<DWORD>::Set(address + 1, to - address - 0x5);
+
+		// NOP out the rest of the block.
+		for (DWORD i = address + 5; i < address + size; i++) {
+			genNOP(i);
+		}
+
+		// Protect memory again.
+		VirtualProtect((DWORD*)address, size, oldProtect, &oldProtect);
+	}
+
 	void genCallUnprotected(DWORD address, DWORD to, DWORD size) {
 		// Unprotect memory.
 		DWORD oldProtect;
-		VirtualProtect((DWORD*)address, 0x5, PAGE_READWRITE, &oldProtect);
+		VirtualProtect((DWORD*)address, size, PAGE_READWRITE, &oldProtect);
 
 		// Create our call.
 		MemAccess<unsigned char>::Set(address, 0xE8);
@@ -32,7 +50,7 @@ namespace mwse {
 		}
 
 		// Protect memory again.
-		VirtualProtect((DWORD*)address, 0x5, oldProtect, &oldProtect);
+		VirtualProtect((DWORD*)address, size, oldProtect, &oldProtect);
 	}
 
 	void overrideVirtualTable(DWORD address, DWORD offset, DWORD to) {
