@@ -6,6 +6,11 @@
 #include "TES3Util.h"
 #include "Log.h"
 
+#define TES3_vTable_MobileCreature 0x74AFA4
+#define TES3_vTable_MobileNPC 0x74AE6C
+#define TES3_vTable_MobilePlayer 0x74B174
+#define TES3_vTable_MobileProjectile 0x74b2b4
+
 namespace mwse {
 	namespace lua {
 		TES3::Script* getOptionalParamExecutionScript(sol::optional<sol::table> maybeParams) {
@@ -236,14 +241,15 @@ namespace mwse {
 
 			sol::state& state = LuaManager::getInstance().getState();
 
-			switch (object->objectType) {
-			case TES3::ObjectType::MobileCreature:
+			unsigned int vTable = (unsigned int)object->vTable.mobileObject;
+			switch (vTable) {
+			case TES3_vTable_MobileCreature:
 				return sol::make_object(state, reinterpret_cast<TES3::MobileCreature*>(object));
-			case TES3::ObjectType::MobileNPC:
+			case TES3_vTable_MobileNPC:
 				return sol::make_object(state, reinterpret_cast<TES3::MobileNPC*>(object));
-			case TES3::ObjectType::MobilePlayer:
+			case TES3_vTable_MobilePlayer:
 				return sol::make_object(state, reinterpret_cast<TES3::MobilePlayer*>(object));
-			case TES3::ObjectType::MobileProjectile:
+			case TES3_vTable_MobileProjectile:
 				return sol::make_object(state, reinterpret_cast<TES3::MobileProjectile*>(object));
 			}
 
