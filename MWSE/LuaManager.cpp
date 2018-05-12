@@ -185,7 +185,11 @@ namespace mwse {
 			// Add binding for base objects.
 			luaState.new_usertype<TES3::BaseObject>("TES3BaseObject",
 				"new", sol::no_constructor,
-				"objectType", &TES3::Door::objectType
+				"objectType", &TES3::BaseObject::objectType
+				);
+			luaState.new_usertype<TES3::MobileObject>("TES3MobileObject",
+				"new", sol::no_constructor,
+				"objectType", &TES3::MobileObject::objectType
 				);
 
 			// Bind data types.
