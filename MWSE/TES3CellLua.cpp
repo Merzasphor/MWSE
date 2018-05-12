@@ -7,32 +7,53 @@ namespace mwse {
 	namespace lua {
 		auto iterateReferencesFiltered(TES3::Cell* cell, unsigned int desiredType) {
 			unsigned int currentList = 0;
-			TES3::Reference * reference = cell->actors.head;
-			return [cell, reference, currentList, desiredType]() mutable -> sol::object {
+
+			// Prepare the lists we care about.
+			std::queue<TES3::Reference*> referenceListQueue;
+			if (cell->actors.size > 0) {
+				referenceListQueue.push(cell->actors.head);
+			}
+			if (cell->activators.size > 0) {
+				referenceListQueue.push(cell->activators.head);
+			}
+			if (cell->statics.size > 0) {
+				referenceListQueue.push(cell->statics.head);
+			}
+
+			// Get the first reference we care about.
+			TES3::Reference* reference = NULL;
+			if (!referenceListQueue.empty()) {
+				reference = referenceListQueue.front();
+				referenceListQueue.pop();
+			}
+
+			return [cell, reference, referenceListQueue, desiredType]() mutable -> sol::object {
 				while (reference && desiredType != 0 && reference->baseObject->objectType != desiredType) {
 					reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
 
-					// Check to see if we need to run to the next list.
-					if (reference == NULL) {
-						switch (currentList) {
-						case 0:
-							reference = cell->activators.head;
-							break;
-						case 1:
-							reference = cell->statics.head;
-							break;
-						}
-						currentList++;
+					// If we hit the end of the list, check for the next list.
+					if (reference == NULL && !referenceListQueue.empty()) {
+						reference = referenceListQueue.front();
+						referenceListQueue.pop();
 					}
 				}
 
+				// If we didn't find an object, return nil.
 				if (reference == NULL) {
 					return sol::nil;
 				}
 
+				// Get the object we want to return.
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::object ret = sol::make_object(state, reference);
+
+				// Get the next reference. If we're at the end of the list, go to the next one.
 				reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
+				if (reference == NULL && !referenceListQueue.empty()) {
+					reference = referenceListQueue.front();
+					referenceListQueue.pop();
+				}
+
 				return ret;
 			};
 		}
