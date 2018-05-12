@@ -229,23 +229,25 @@ namespace mwse {
 			return sol::make_object(state, object);
 		}
 
-		sol::object makeLuaObject(TES3::MobileActor* actor) {
-			if (actor == NULL) {
+		sol::object makeLuaObject(TES3::MobileObject* object) {
+			if (object == NULL) {
 				return sol::nil;
 			}
 
 			sol::state& state = LuaManager::getInstance().getState();
 
-			switch (actor->objectType) {
+			switch (object->objectType) {
 			case TES3::ObjectType::MobileCreature:
-				return sol::make_object(state, reinterpret_cast<TES3::MobileCreature*>(actor));
+				return sol::make_object(state, reinterpret_cast<TES3::MobileCreature*>(object));
 			case TES3::ObjectType::MobileNPC:
-				return sol::make_object(state, reinterpret_cast<TES3::MobileNPC*>(actor));
+				return sol::make_object(state, reinterpret_cast<TES3::MobileNPC*>(object));
 			case TES3::ObjectType::MobilePlayer:
-				return sol::make_object(state, reinterpret_cast<TES3::MobilePlayer*>(actor));
+				return sol::make_object(state, reinterpret_cast<TES3::MobilePlayer*>(object));
+			case TES3::ObjectType::MobileProjectile:
+				return sol::make_object(state, reinterpret_cast<TES3::MobileProjectile*>(object));
 			}
 
-			return sol::nil;
+			return sol::make_object(state, object);
 		}
 
 		namespace event {

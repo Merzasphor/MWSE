@@ -53,7 +53,7 @@ namespace mwse {
 		TES3::Sound* getOptionalParamSound(sol::optional<sol::table> maybeParams, const char* key);
 
 		sol::object makeLuaObject(TES3::BaseObject* object);
-		sol::object makeLuaObject(TES3::MobileActor* actor);
+		sol::object makeLuaObject(TES3::MobileObject* object);
 
 		namespace event {
 			sol::object trigger(const char* eventType, sol::table eventData = sol::nil);

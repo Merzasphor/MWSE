@@ -212,9 +212,9 @@ namespace mwse {
 
 		// ---------------------------------------------------------------------------- //
 
-		class MobileObjectCollisionEvent : public GenericEvent {
+		class MobileObjectActorCollisionEvent : public GenericEvent {
 		public:
-			MobileObjectCollisionEvent(TES3::MobileObject* mobileObject, TES3::Reference* targetReference);
+			MobileObjectActorCollisionEvent(TES3::MobileObject* mobileObject, TES3::Reference* targetReference);
 			sol::table createEventTable();
 
 		protected:
