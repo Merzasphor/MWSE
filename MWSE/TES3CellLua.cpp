@@ -92,6 +92,22 @@ namespace mwse {
 				"id", sol::readonly_property(&TES3::Cell::getObjectID),
 
 				"flags", &TES3::Cell::cellFlags,
+				"isInterior", sol::property(
+					[](TES3::Cell& self) { return self.getCellFlag(TES3::CellFlag::Interior); },
+					[](TES3::Cell& self, bool set) { self.setCellFlag(TES3::CellFlag::Interior, set); }
+					),
+				"hasWater", sol::property(
+					[](TES3::Cell& self) { return self.getCellFlag(TES3::CellFlag::HasWater); },
+					[](TES3::Cell& self, bool set) { self.setCellFlag(TES3::CellFlag::HasWater, set); }
+					),
+				"restingIsIllegal", sol::property(
+					[](TES3::Cell& self) { return self.getCellFlag(TES3::CellFlag::SleepIsIllegal); },
+					[](TES3::Cell& self, bool set) { self.setCellFlag(TES3::CellFlag::SleepIsIllegal, set); }
+					),
+				"behavesAsExterior", sol::property(
+					[](TES3::Cell& self) { return self.getCellFlag(TES3::CellFlag::BehavesAsExterior); },
+					[](TES3::Cell& self, bool set) { self.setCellFlag(TES3::CellFlag::BehavesAsExterior, set); }
+					),
 
 				"actors", &TES3::Cell::actors,
 				"activators", &TES3::Cell::activators,

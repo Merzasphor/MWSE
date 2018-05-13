@@ -68,6 +68,9 @@ namespace TES3 {
 		// Other getter/setter functions.
 		//
 
+		bool getCellFlag(unsigned int);
+		void setCellFlag(unsigned int, bool);
+
 		int getAmbientColor();
 		void setAmbientColor(int);
 

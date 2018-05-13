@@ -20,6 +20,19 @@ namespace TES3 {
 		return reinterpret_cast<int(__thiscall *)(Cell*)>(TES3_Cell_getExteriorGridY)(this);
 	}
 
+	bool Cell::getCellFlag(unsigned int flag) {
+		return (cellFlags & flag);
+	}
+
+	void Cell::setCellFlag(unsigned int flag, bool value) {
+		if (value) {
+			cellFlags |= flag;
+		}
+		else {
+			cellFlags &= ~flag;
+		}
+	}
+
 	int Cell::getAmbientColor() {
 		if (cellFlags & CellFlag::Interior) {
 			return VariantData.interior.ambientColor;
