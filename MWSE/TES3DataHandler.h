@@ -189,6 +189,8 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
+		void addSound(Sound* sound, Reference* reference = 0, int unknown1 = 0, unsigned char volume = 250, float pitch = 1.0, int unknown2 = 0, int unknown3 = 0);
+		Sound* addSound(const char* soundId, Reference* reference = 0, int unknown1  = 0, unsigned char volume = 250, float pitch = 1.0, int unknown2 = 0);
 		bool getSoundPlaying(Sound*, Reference*);
 
 	};

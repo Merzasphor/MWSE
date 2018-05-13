@@ -17,6 +17,8 @@
 #define TES3_NonDynamicData_addNewObject 0x4B8980
 #define TES3_NonDynamicData_deleteObject 0x4B8B20
 
+#define TES3_DataHandler_addSound 0x48BD40
+#define TES3_DataHandler_addSoundByName 0x48BCB0
 #define TES3_DataHandler_getSoundPlaying 0x48BBD0
 
 namespace TES3 {
@@ -128,6 +130,14 @@ namespace TES3 {
 	//
 	// DataHandler
 	//
+
+	void DataHandler::addSound(Sound* sound, Reference* reference, int unknown1, unsigned char volume, float pitch, int unknown2, int unknown3) {
+		reinterpret_cast<void(__thiscall *)(DataHandler*, Sound*, Reference*, int, unsigned char, float, int, int)>(TES3_DataHandler_addSound)(this, sound, reference, unknown1, volume, pitch, unknown2, unknown3);
+	}
+
+	Sound* DataHandler::addSound(const char* soundId, Reference* reference, int unknown1, unsigned char volume, float pitch, int unknown2) {
+		return reinterpret_cast<Sound*(__thiscall *)(DataHandler*, const char*, Reference*, int, unsigned char, float, int)>(TES3_DataHandler_addSound)(this, soundId, reference, unknown1, volume, pitch, unknown2);
+	}
 
 	bool DataHandler::getSoundPlaying(Sound* sound, Reference* reference) {
 		return reinterpret_cast<Sound*(__thiscall *)(DataHandler*, Sound*, Reference*)>(TES3_DataHandler_getSoundPlaying)(this, sound, reference);
