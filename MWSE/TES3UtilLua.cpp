@@ -135,6 +135,31 @@ namespace mwse {
 				return sol::nil;
 			};
 
+			// Bind function: tes3.playSound
+			state["tes3"]["playSound"] = [](sol::optional<sol::table> params) {
+				// Get parameters.
+				TES3::Sound* sound = getOptionalParamSound(params, "sound");
+				TES3::Reference* reference = getOptionalParamReference(params, "reference");
+				double volume = getOptionalParam<double>(params, "volume", 1.0);
+				float pitch = getOptionalParam<double>(params, "pitch", 1.0);
+
+				if (sound == NULL) {
+					log::getLog() << "tes3.playSound: Could not locate sound." << std::endl;
+					return false;
+				}
+
+				// Clamp volume. RIP no std::clamp.
+				if (volume < 0) {
+					volume = 0.0;
+				}
+				else if (volume > 1.0) {
+					volume = 1.0;
+				}
+
+				tes3::getDataHandler()->addSound(sound, reference, 0, volume * 250, pitch);
+				return true;
+			};
+
 			// Bind function: tes3.getSoundPlaying
 			state["tes3"]["getSoundPlaying"] = [](sol::optional<sol::table> params) {
 				// Get parameters.
@@ -243,21 +268,6 @@ namespace mwse {
 				}
 
 				return sol::nil;
-			};
-
-			// Bind function: tes3.playSound
-			state["tes3"]["playSound"] = [](sol::table params) -> bool {
-				TES3::Sound* sound = getOptionalParamSound(params, "sound");
-				TES3::Reference* reference = getOptionalParamReference(params, "reference");
-				unsigned char volume = getOptionalParam<double>(params, "volume", 1.0) * 255;
-				float pitch = getOptionalParam<double>(params, "pitch", 1.0);
-				int flag = getOptionalParam<double>(params, "flag", 0.0);
-
-				if (sound == NULL) {
-					return false;
-				}
-
-				return sound->play(reference, volume, pitch, flag);
 			};
 		}
 	}
