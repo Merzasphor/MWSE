@@ -116,6 +116,8 @@ namespace mwse {
 				"equipment", sol::readonly_property(&TES3::Creature::equipment),
 				"barterGold", sol::property(&TES3::Creature::getBaseBarterGold, &TES3::Creature::setBaseBarterGold),
 
+				"soul", &TES3::Creature::soul,
+
 				"aiConfig", sol::readonly_property(&TES3::Creature::aiConfig),
 
 				"script", sol::readonly_property(&TES3::Creature::getScript),
