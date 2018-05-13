@@ -15,106 +15,106 @@ namespace TES3 {
 	}
 
 	bool Light::getCanCarry() {
-		return (flags & LightFlags::Dynamic);
+		return (flags & LightFlags::CanCarry);
 	}
 
 	void Light::setCanCarry(bool value) {
 		if (value) {
-			flags |= LightFlags::Dynamic;
+			flags |= LightFlags::CanCarry;
 		}
 		else {
-			flags &= ~LightFlags::Dynamic;
+			flags &= ~LightFlags::CanCarry;
 		}
 	}
 
 	bool Light::getIsNegative() {
-		return (flags & LightFlags::Dynamic);
+		return (flags & LightFlags::Negative);
 	}
 
 	void Light::setIsNegative(bool value) {
 		if (value) {
-			flags |= LightFlags::Dynamic;
+			flags |= LightFlags::Negative;
 		}
 		else {
-			flags &= ~LightFlags::Dynamic;
+			flags &= ~LightFlags::Negative;
 		}
 	}
 
 	bool Light::getFlickers() {
-		return (flags & LightFlags::Dynamic);
+		return (flags & LightFlags::Flicker);
 	}
 
 	void Light::setFlickers(bool value) {
 		if (value) {
-			flags |= LightFlags::Dynamic;
+			flags |= LightFlags::Flicker;
 		}
 		else {
-			flags &= ~LightFlags::Dynamic;
+			flags &= ~LightFlags::Flicker;
 		}
 	}
 
 	bool Light::getIsFire() {
-		return (flags & LightFlags::Dynamic);
+		return (flags & LightFlags::Fire);
 	}
 
 	void Light::setIsFire(bool value) {
 		if (value) {
-			flags |= LightFlags::Dynamic;
+			flags |= LightFlags::Fire;
 		}
 		else {
-			flags &= ~LightFlags::Dynamic;
+			flags &= ~LightFlags::Fire;
 		}
 	}
 
 	bool Light::getIsOffByDefault() {
-		return (flags & LightFlags::Dynamic);
+		return (flags & LightFlags::OffByDefault);
 	}
 
 	void Light::setIsOffByDefault(bool value) {
 		if (value) {
-			flags |= LightFlags::Dynamic;
+			flags |= LightFlags::OffByDefault;
 		}
 		else {
-			flags &= ~LightFlags::Dynamic;
+			flags &= ~LightFlags::OffByDefault;
 		}
 	}
 
 	bool Light::getFlickersSlowly() {
-		return (flags & LightFlags::Dynamic);
+		return (flags & LightFlags::FlickerSlow);
 	}
 
 	void Light::setFlickersSlowly(bool value) {
 		if (value) {
-			flags |= LightFlags::Dynamic;
+			flags |= LightFlags::FlickerSlow;
 		}
 		else {
-			flags &= ~LightFlags::Dynamic;
+			flags &= ~LightFlags::FlickerSlow;
 		}
 	}
 
 	bool Light::getPulses() {
-		return (flags & LightFlags::Dynamic);
+		return (flags & LightFlags::Pulse);
 	}
 
 	void Light::setPulses(bool value) {
 		if (value) {
-			flags |= LightFlags::Dynamic;
+			flags |= LightFlags::Pulse;
 		}
 		else {
-			flags &= ~LightFlags::Dynamic;
+			flags &= ~LightFlags::Pulse;
 		}
 	}
 
 	bool Light::getPulsesSlowly() {
-		return (flags & LightFlags::Dynamic);
+		return (flags & LightFlags::PulseSlow);
 	}
 
 	void Light::setPulsesSlowly(bool value) {
 		if (value) {
-			flags |= LightFlags::Dynamic;
+			flags |= LightFlags::PulseSlow;
 		}
 		else {
-			flags &= ~LightFlags::Dynamic;
+			flags &= ~LightFlags::PulseSlow;
 		}
 	}
 }
