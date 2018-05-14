@@ -79,6 +79,21 @@ namespace mwse {
 
 				);
 
+			state.new_usertype<TES3::PackedColor>("TES3PackedColor",
+				// Disable construction of this type.
+				"new", sol::no_constructor,
+
+				//
+				// Properties.
+				//
+
+				"r", &TES3::PackedColor::r,
+				"g", &TES3::PackedColor::g,
+				"b", &TES3::PackedColor::b,
+				"a", &TES3::PackedColor::a
+
+				);
+
 			state.new_usertype<TES3::Cell>("TES3Cell",
 				// Disable construction of this type.
 				"new", sol::no_constructor,
@@ -119,9 +134,30 @@ namespace mwse {
 				"gridX", sol::readonly_property(&TES3::Cell::getGridX),
 				"gridY", sol::readonly_property(&TES3::Cell::getGridY),
 
-				"ambientColor", sol::property(&TES3::Cell::getAmbientColor, &TES3::Cell::setAmbientColor),
-				"sunColor", sol::property(&TES3::Cell::getSunColor, &TES3::Cell::setSunColor),
-				"fogColor", sol::property(&TES3::Cell::getFogColor, &TES3::Cell::setFogColor),
+				"ambientColor", sol::readonly_property(
+					[](TES3::Cell& self) -> TES3::PackedColor*
+			{
+				if (self.cellFlags & TES3::CellFlag::Interior) {
+					return &self.VariantData.interior.ambientColor;
+				}
+				return NULL;
+			}),
+				"sunColor", sol::readonly_property(
+					[](TES3::Cell& self) -> TES3::PackedColor*
+			{
+				if (self.cellFlags & TES3::CellFlag::Interior) {
+					return &self.VariantData.interior.sunColor;
+				}
+				return NULL;
+			}),
+				"fogColor", sol::readonly_property(
+					[](TES3::Cell& self) -> TES3::PackedColor*
+			{
+				if (self.cellFlags & TES3::CellFlag::Interior) {
+					return &self.VariantData.interior.fogColor;
+				}
+				return NULL;
+			}),
 				"fogDensity", sol::property(&TES3::Cell::getFogDensity, &TES3::Cell::setFogDensity),
 
 				"waterLevel", sol::property(&TES3::Cell::getWaterLevel, &TES3::Cell::setWaterLevel),

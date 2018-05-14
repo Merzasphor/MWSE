@@ -33,51 +33,6 @@ namespace TES3 {
 		}
 	}
 
-	int Cell::getAmbientColor() {
-		if (cellFlags & CellFlag::Interior) {
-			return VariantData.interior.ambientColor;
-		}
-		else {
-			return -1;
-		}
-	}
-
-	void Cell::setAmbientColor(int value) {
-		if (cellFlags & CellFlag::Interior) {
-			VariantData.interior.ambientColor = value;
-		}
-	}
-
-	int Cell::getSunColor() {
-		if (cellFlags & CellFlag::Interior) {
-			return VariantData.interior.sunColor;
-		}
-		else {
-			return -1;
-		}
-	}
-
-	void Cell::setSunColor(int value) {
-		if (cellFlags & CellFlag::Interior) {
-			VariantData.interior.sunColor = value;
-		}
-	}
-
-	int Cell::getFogColor() {
-		if (cellFlags & CellFlag::Interior) {
-			return VariantData.interior.fogColor;
-		}
-		else {
-			return -1;
-		}
-	}
-
-	void Cell::setFogColor(int value) {
-		if (cellFlags & CellFlag::Interior) {
-			VariantData.interior.fogColor = value;
-		}
-	}
-
 	int Cell::getFogDensity() {
 		if (cellFlags & CellFlag::Interior) {
 			return VariantData.interior.fogDensity;

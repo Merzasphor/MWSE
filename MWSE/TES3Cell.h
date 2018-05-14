@@ -19,6 +19,13 @@ namespace TES3 {
 		int gridX;
 		int gridY;
 	};
+	
+	struct PackedColor {
+		unsigned char r;
+		unsigned char g;
+		unsigned char b;
+		unsigned char a;
+	};
 
 	struct Cell : BaseObject {
 		char * name; // 0x10
@@ -32,9 +39,9 @@ namespace TES3 {
 				int gridY; // 0xC
 			} exterior;
 			struct {
-				int ambientColor; // 0x0
-				int sunColor; // 0x4
-				int fogColor; // 0x8
+				PackedColor ambientColor; // 0x0
+				PackedColor sunColor; // 0x4
+				PackedColor fogColor; // 0x8
 				int fogDensity; // 0xC
 			} interior;
 		} VariantData; // 0x1C
@@ -70,15 +77,6 @@ namespace TES3 {
 
 		bool getCellFlag(unsigned int);
 		void setCellFlag(unsigned int, bool);
-
-		int getAmbientColor();
-		void setAmbientColor(int);
-
-		int getSunColor();
-		void setSunColor(int);
-
-		int getFogColor();
-		void setFogColor(int);
 
 		int getFogDensity();
 		void setFogDensity(int);
