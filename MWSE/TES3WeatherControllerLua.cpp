@@ -27,14 +27,17 @@ namespace mwse {
 
 				"secunda", sol::readonly_property(&TES3::WeatherController::moonSecunda),
 				"masser", sol::readonly_property(&TES3::WeatherController::moonMasser),
-				
+
 				"timescaleClouds", &TES3::WeatherController::timescaleClouds,
+				"currentSkyColor", &TES3::WeatherController::currentSkyColor,
+				"currentFogColor", &TES3::WeatherController::currentSkyColor,
 				"sunglareFaderMax", &TES3::WeatherController::sunglareFaderMax,
 				"sunglareFaderAngleMax", &TES3::WeatherController::sunglareFaderAngleMax,
 				"sunriseHour", &TES3::WeatherController::sunriseHour,
 				"sunsetHour", &TES3::WeatherController::sunsetHour,
 				"sunriseDuration", &TES3::WeatherController::sunriseDuration,
 				"sunsetDuration", &TES3::WeatherController::sunsetDuration,
+				"windDirection", &TES3::WeatherController::currentSkyColor,
 
 				"underwaterSunriseFog", &TES3::WeatherController::underwaterSunriseFog,
 				"underwaterDayFog", &TES3::WeatherController::underwaterDayFog,
