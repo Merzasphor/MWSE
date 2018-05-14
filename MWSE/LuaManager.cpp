@@ -629,6 +629,18 @@ namespace mwse {
 			}
 		}
 
+		//
+		// Hook show rest attempt.
+		//
+
+		void __cdecl OnShowRestWaitMenu(signed char allowRest) {
+			tes3::ui::showRestWaitMenu(allowRest, false);
+		}
+
+		void __cdecl OnShowRestWaitMenuScripted(signed char allowRest) {
+			tes3::ui::showRestWaitMenu(allowRest, true);
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");
@@ -840,6 +852,11 @@ namespace mwse {
 			genJump(TES3_HOOK_UI_EVENT, reinterpret_cast<DWORD>(HookUIEvent));
 			for (DWORD i = TES3_HOOK_UI_EVENT + 5; i < TES3_HOOK_UI_EVENT_RETURN; i++) genNOP(i);
 			VirtualProtect((DWORD*)TES3_HOOK_UI_EVENT, TES3_HOOK_UI_EVENT_SIZE, OldProtect, &OldProtect);
+
+			// Event: Show Rest/Wait Menu
+			genCallUnprotected(0x41ADB6, reinterpret_cast<DWORD>(OnShowRestWaitMenu));
+			genCallUnprotected(0x5097BA, reinterpret_cast<DWORD>(OnShowRestWaitMenuScripted));
+			genCallUnprotected(0x5097DD, reinterpret_cast<DWORD>(OnShowRestWaitMenuScripted));
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);

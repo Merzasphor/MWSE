@@ -1,5 +1,8 @@
 #include "UIUtil.h"
 
+#include "LuaManager.h"
+#include "LuaEvents.h"
+
 #define TES3_ui_menu_inventory 0x7D3988
 
 #define TES3_ui_requestMenuModeOff 0x595270
@@ -13,6 +16,8 @@
 #define TES3_ui_inventory_updateIcons 0x5CC910
 #define TES3_ui_inventory_equipInventoryTileToPlayer 0x5CE130
 #define TES3_ui_data_inventory_updatePaperDoll 0x7B6D04
+
+#define TES3_ui_showRestWaitMenu 0x610170
 
 namespace mwse {
 	namespace tes3 {
@@ -59,6 +64,21 @@ namespace mwse {
 
 			void flagPaperDollUpdate() {
 				*reinterpret_cast<signed char*>(TES3_ui_data_inventory_updatePaperDoll) = 1;
+			}
+
+			void showRestWaitMenu(bool allowRest, bool scripted) {
+				// Execute event. If the event blocked the call, bail.
+				mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+				sol::table eventData = luaManager.triggerEvent(new mwse::lua::ShowRestWaitMenuEvent(allowRest, scripted));
+				if (eventData.valid()) {
+					if (eventData["block"] == true) {
+						return;
+					}
+
+					allowRest = eventData["allowRest"];
+				}
+
+				reinterpret_cast<void(__cdecl *)(signed char)>(TES3_ui_showRestWaitMenu)(allowRest);
 			}
 		}
 	}

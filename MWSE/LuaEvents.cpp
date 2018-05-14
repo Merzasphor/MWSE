@@ -453,5 +453,27 @@ namespace mwse {
 			m_EventName = "uiEvent";
 		}
 
+		//
+		// Show rest/wait menu event.
+		//
+
+		ShowRestWaitMenuEvent::ShowRestWaitMenuEvent(bool allowRest, bool scripted) :
+			GenericEvent("uiShowRestMenu"),
+			m_AllowRest(allowRest),
+			m_Scripted(scripted)
+		{
+
+		}
+
+		sol::table ShowRestWaitMenuEvent::createEventTable() {
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::table eventData = state.create_table();
+
+			eventData["allowRest"] = m_AllowRest;
+			eventData["scripted"] = m_Scripted;
+
+			return eventData;
+		}
+
 	}
 }

@@ -256,5 +256,17 @@ namespace mwse {
 			GenericUiPostEvent(TES3::UI::Block* parent, TES3::UI::Block* block, unsigned int prop, unsigned int var1, unsigned int var2);
 		};
 
+		// ---------------------------------------------------------------------------- //
+
+		class ShowRestWaitMenuEvent : public GenericEvent {
+		public:
+			ShowRestWaitMenuEvent(bool allowRest, bool scripted);
+			sol::table createEventTable();
+
+		protected:
+			bool m_AllowRest;
+			bool m_Scripted;
+		};
+
 	}
 }

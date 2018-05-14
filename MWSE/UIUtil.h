@@ -19,6 +19,8 @@ namespace mwse {
 			signed char inventoryUpdateIcons();
 			signed char equipInventoryTile(TES3::UI::InventoryTile*);
 			void flagPaperDollUpdate();
+
+			void showRestWaitMenu(bool allowRest, bool scripted = true);
 		}
 	}
 }
