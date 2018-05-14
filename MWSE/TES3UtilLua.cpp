@@ -108,6 +108,16 @@ namespace mwse {
 				return tes3::getDataHandler()->nonDynamicData->findGlobalVariable(id.c_str())->value;
 			};
 
+			// Bind function: tes3.setGlobal
+			state["tes3"]["setGlobal"] = [](std::string& id, double value) {
+				tes3::getDataHandler()->nonDynamicData->findGlobalVariable(id.c_str())->value = value;
+			};
+
+			// Bind function: tes3.findGlobal
+			state["tes3"]["findGlobal"] = [](std::string& id) {
+				return tes3::getDataHandler()->nonDynamicData->findGlobalVariable(id.c_str());
+			};
+
 			// Bind function: tes3.getGMST
 			state["tes3"]["getGMST"] = [](sol::object key) -> sol::object {
 				sol::state& state = LuaManager::getInstance().getState();
