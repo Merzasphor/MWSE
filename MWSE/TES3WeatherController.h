@@ -101,7 +101,7 @@ namespace TES3 {
 		int underwaterNightFog; // 0x1AC
 		int underwaterIndoorFog; // 0x1B0
 		Vector3 underwaterCol; // 0x1B4
-		int underwaterColWeight; // 0x1C0
+		float underwaterColWeight; // 0x1C0
 		Vector3 sunglareFaderCol; // 0x1C4
 		int unknown_0x1D0;
 		int unknown_0x1D4;
