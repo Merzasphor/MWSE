@@ -16,7 +16,15 @@ namespace mwse {
 			state.new_usertype<TES3::Vector3>("TES3Vector3",
 				"x", &TES3::Vector3::x,
 				"y", &TES3::Vector3::y,
-				"z", &TES3::Vector3::z
+				"z", &TES3::Vector3::z,
+
+				//
+				// This can also be used for colors, to expose it as rgb.
+				//
+
+				"r", &TES3::Vector3::x,
+				"g", &TES3::Vector3::y,
+				"b", &TES3::Vector3::z
 				);
 
 			state.new_usertype<TES3::Vector4>("TES3Vector4",
