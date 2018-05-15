@@ -730,145 +730,147 @@ namespace mwse {
 			VirtualProtect((DWORD*)TES3_HOOK_FINISH_INITIALIZATION, TES3_HOOK_FINISH_INITIALIZATION_SIZE, OldProtect, &OldProtect);
 
 			// Event: enterFrame.
-			genCallUnprotected(0x41ABB0, reinterpret_cast<DWORD>(EnterFrame));
+			genCallEnforced(0x41ABB0, 0x40F610, reinterpret_cast<DWORD>(EnterFrame));
 
 			// Event: equip.
-			genCallUnprotected(0x5CB8E7, reinterpret_cast<DWORD>(OnPCEquip));
-			genCallUnprotected(0x5D11D9, reinterpret_cast<DWORD>(OnPCEquip));
-			genCallUnprotected(0x60E70F, reinterpret_cast<DWORD>(OnPCEquip));
-			genCallUnprotected(0x60E9BE, reinterpret_cast<DWORD>(OnPCEquip));
+			genCallEnforced(0x5CB8E7, 0x5CE130, reinterpret_cast<DWORD>(OnPCEquip));
+			genCallEnforced(0x5D11D9, 0x5CE130, reinterpret_cast<DWORD>(OnPCEquip));
+			genCallEnforced(0x60E70F, 0x5CE130, reinterpret_cast<DWORD>(OnPCEquip));
+			genCallEnforced(0x60E9BE, 0x5CE130, reinterpret_cast<DWORD>(OnPCEquip));
 
 			// Event: equipped.
-			genCallUnprotected(0x49F053, reinterpret_cast<DWORD>(OnEquipped));
-			genCallUnprotected(0x4D9C66, reinterpret_cast<DWORD>(OnEquipped));
-			genCallUnprotected(0x4D9D90, reinterpret_cast<DWORD>(OnEquipped));
-			genCallUnprotected(0x528412, reinterpret_cast<DWORD>(OnEquipped));
-			genCallUnprotected(0x52C7F5, reinterpret_cast<DWORD>(OnEquipped));
-			genCallUnprotected(0x52C813, reinterpret_cast<DWORD>(OnEquipped));
-			genCallUnprotected(0x52C83C, reinterpret_cast<DWORD>(OnEquipped));
-			genCallUnprotected(0x52CC85, reinterpret_cast<DWORD>(OnEquipped));
-			genCallUnprotected(0x52CE43, reinterpret_cast<DWORD>(OnEquipped));
-			genCallUnprotected(0x52D0B9, reinterpret_cast<DWORD>(OnEquipped));
-			genCallUnprotected(0x54DDE8, reinterpret_cast<DWORD>(OnEquipped));
-			genCallUnprotected(0x5CEEB9, reinterpret_cast<DWORD>(OnEquipped));
-			genCallUnprotected(0x5CF3DB, reinterpret_cast<DWORD>(OnEquipped));
-			genCallUnprotected(0x5CF788, reinterpret_cast<DWORD>(OnEquipped));
-			genCallUnprotected(0x5CF825, reinterpret_cast<DWORD>(OnEquipped));
-			genCallUnprotected(0x5CF89F, reinterpret_cast<DWORD>(OnEquipped));
-			genCallUnprotected(0x5D00D6, reinterpret_cast<DWORD>(OnEquipped));
-			genCallUnprotected(0x5D048E, reinterpret_cast<DWORD>(OnEquipped));
-			genCallUnprotected(0x5D1468, reinterpret_cast<DWORD>(OnEquipped));
+			genCallEnforced(0x49F053, 0x4958B0, reinterpret_cast<DWORD>(OnEquipped));
+			genCallEnforced(0x4D9C66, 0x4958B0, reinterpret_cast<DWORD>(OnEquipped));
+			genCallEnforced(0x4D9D90, 0x4958B0, reinterpret_cast<DWORD>(OnEquipped));
+			genCallEnforced(0x528412, 0x4958B0, reinterpret_cast<DWORD>(OnEquipped));
+			genCallEnforced(0x52C7F5, 0x4958B0, reinterpret_cast<DWORD>(OnEquipped));
+			genCallEnforced(0x52C813, 0x4958B0, reinterpret_cast<DWORD>(OnEquipped));
+			genCallEnforced(0x52C83C, 0x4958B0, reinterpret_cast<DWORD>(OnEquipped));
+			genCallEnforced(0x52CC85, 0x4958B0, reinterpret_cast<DWORD>(OnEquipped));
+			genCallEnforced(0x52CE43, 0x4958B0, reinterpret_cast<DWORD>(OnEquipped));
+			genCallEnforced(0x52D0B9, 0x4958B0, reinterpret_cast<DWORD>(OnEquipped));
+			genCallEnforced(0x54DDE8, 0x4958B0, reinterpret_cast<DWORD>(OnEquipped));
+			genCallEnforced(0x5CEEB9, 0x4958B0, reinterpret_cast<DWORD>(OnEquipped));
+			genCallEnforced(0x5CF3DB, 0x4958B0, reinterpret_cast<DWORD>(OnEquipped));
+			genCallEnforced(0x5CF788, 0x4958B0, reinterpret_cast<DWORD>(OnEquipped));
+			genCallEnforced(0x5CF825, 0x4958B0, reinterpret_cast<DWORD>(OnEquipped));
+			genCallEnforced(0x5CF89F, 0x4958B0, reinterpret_cast<DWORD>(OnEquipped));
+			genCallEnforced(0x5D00D6, 0x4958B0, reinterpret_cast<DWORD>(OnEquipped));
+			genCallEnforced(0x5D048E, 0x4958B0, reinterpret_cast<DWORD>(OnEquipped));
+			genCallEnforced(0x5D1468, 0x4958B0, reinterpret_cast<DWORD>(OnEquipped));
 
 			// Event: unequipped.
-			genCallUnprotected(0x46089D, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x460B0F, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x464D99, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x465732, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x495954, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x495B32, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x495BA8, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x495C46, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x495DA5, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x495ED9, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x495F7B, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x496062, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x4960E7, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x49615E, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x496254, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x4962A7, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x496350, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x496620, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x4966AF, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x5150FD, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x525042, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x52518F, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x5282F4, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x5283C1, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x52C6B9, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x541087, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x54DA4B, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x558472, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x5586F6, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x569CFB, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x56A914, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x56AF4D, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x5B521D, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x5B5A1F, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x5D09F0, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x5D0B4B, reinterpret_cast<DWORD>(OnUnequipped));
-			genCallUnprotected(0x5D0C54, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x46089D, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x460B0F, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x464D99, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x465732, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x495954, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x495B32, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x495BA8, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x495C46, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x495DA5, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x495ED9, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x495F7B, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x496062, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x4960E7, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x49615E, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x496254, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x4962A7, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x496350, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x496620, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x4966AF, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x5150FD, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x525042, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x52518F, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x5282F4, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x5283C1, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x52C6B9, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x541087, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x54DA4B, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x558472, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x5586F6, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x569CFB, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x56A914, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x56AF4D, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x5B521D, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x5B5A1F, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x5D09F0, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x5D0B4B, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+			genCallEnforced(0x5D0C54, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
 
 			// Event: activate.
-			genCallUnprotected(0x41CCC8, reinterpret_cast<DWORD>(OnActivate));
-			genCallUnprotected(0x507298, reinterpret_cast<DWORD>(OnActivate));
-			genCallUnprotected(0x5364CD, reinterpret_cast<DWORD>(OnActivate));
-			genCallUnprotected(0x551002, reinterpret_cast<DWORD>(OnActivate));
-			genCallUnprotected(0x59051F, reinterpret_cast<DWORD>(OnActivate));
-			genCallUnprotected(0x5ADB6E, reinterpret_cast<DWORD>(OnActivate));
-			genCallUnprotected(0x613CC9, reinterpret_cast<DWORD>(OnActivate));
+			genCallEnforced(0x41CCC8, 0x4E9610, reinterpret_cast<DWORD>(OnActivate));
+			genCallEnforced(0x507298, 0x4E9610, reinterpret_cast<DWORD>(OnActivate));
+			genCallEnforced(0x5364CD, 0x4E9610, reinterpret_cast<DWORD>(OnActivate));
+			genCallEnforced(0x551002, 0x4E9610, reinterpret_cast<DWORD>(OnActivate));
+			genCallEnforced(0x59051F, 0x4E9610, reinterpret_cast<DWORD>(OnActivate));
+			genCallEnforced(0x5ADB6E, 0x4E9610, reinterpret_cast<DWORD>(OnActivate));
+			genCallEnforced(0x613CC9, 0x4E9610, reinterpret_cast<DWORD>(OnActivate));
 
 			// Event: save/saved.
-			genCallUnprotected(0x41B100, reinterpret_cast<DWORD>(OnSave));
-			genCallUnprotected(0x476F58, reinterpret_cast<DWORD>(OnSave));
-			genCallUnprotected(0x5C8EDB, reinterpret_cast<DWORD>(OnSave));
-			genCallUnprotected(0x610578, reinterpret_cast<DWORD>(OnSave));
-			genCallUnprotected(0x6106BE, reinterpret_cast<DWORD>(OnSave));
-			genCallUnprotected(0x6108B8, reinterpret_cast<DWORD>(OnSave));
-			genCallUnprotected(0x611B69, reinterpret_cast<DWORD>(OnSave));
+			genCallEnforced(0x41B100, 0x4C4250, reinterpret_cast<DWORD>(OnSave));
+			genCallEnforced(0x476F58, 0x4C4250, reinterpret_cast<DWORD>(OnSave));
+			genCallEnforced(0x5C8EDB, 0x4C4250, reinterpret_cast<DWORD>(OnSave));
+			genCallEnforced(0x610578, 0x4C4250, reinterpret_cast<DWORD>(OnSave));
+			genCallEnforced(0x6106BE, 0x4C4250, reinterpret_cast<DWORD>(OnSave));
+			genCallEnforced(0x6108B8, 0x4C4250, reinterpret_cast<DWORD>(OnSave));
+			genCallEnforced(0x611B69, 0x4C4250, reinterpret_cast<DWORD>(OnSave));
 
 			// Event: load/loaded.
-			genCallUnprotected(0x41B262, reinterpret_cast<DWORD>(OnLoad));
-			genCallUnprotected(0x5DD3C9, reinterpret_cast<DWORD>(OnLoad));
-			genCallUnprotected(0x5DD59F, reinterpret_cast<DWORD>(OnLoad));
-			genCallUnprotected(0x5FB629, reinterpret_cast<DWORD>(OnLoad));
+			genCallEnforced(0x41B262, 0x4C4800, reinterpret_cast<DWORD>(OnLoad));
+			genCallEnforced(0x5DD3C9, 0x4C4800, reinterpret_cast<DWORD>(OnLoad));
+			genCallEnforced(0x5DD59F, 0x4C4800, reinterpret_cast<DWORD>(OnLoad));
+			genCallEnforced(0x5FB629, 0x4C4800, reinterpret_cast<DWORD>(OnLoad));
 
 			// Additional load/loaded event for loading from the main menu.
-			genCallUnprotected(0x5DD3B6, reinterpret_cast<DWORD>(OnLoadMainMenu));
+			genCallEnforced(0x5DD3B6, 0x4C4EB0, reinterpret_cast<DWORD>(OnLoadMainMenu));
 
 			// Additional load/loaded events for new game.
-			genCallUnprotected(0x5FCCF4, reinterpret_cast<DWORD>(OnNewGame));
-			genCallUnprotected(0x5FCDAA, reinterpret_cast<DWORD>(OnNewGame));
+			genCallEnforced(0x5FCCF4, 0x5FAEA0, reinterpret_cast<DWORD>(OnNewGame));
+			genCallEnforced(0x5FCDAA, 0x5FAEA0, reinterpret_cast<DWORD>(OnNewGame));
 
 			// Event: Cell Change
-			genCallUnprotected(0x45C9A2, reinterpret_cast<DWORD>(OnCellChange));
-			genCallUnprotected(0x45D356, reinterpret_cast<DWORD>(OnCellChange));
-			genCallUnprotected(0x45D3C4, reinterpret_cast<DWORD>(OnCellChange));
-			genCallUnprotected(0x4637B0, reinterpret_cast<DWORD>(OnCellChange));
-			genCallUnprotected(0x4C4B4F, reinterpret_cast<DWORD>(OnCellChange));
-			genCallUnprotected(0x4C51AE, reinterpret_cast<DWORD>(OnCellChange));
-			genCallUnprotected(0x4EA137, reinterpret_cast<DWORD>(OnCellChange));
-			genCallUnprotected(0x50497D, reinterpret_cast<DWORD>(OnCellChange));
-			genCallUnprotected(0x5062FD, reinterpret_cast<DWORD>(OnCellChange));
-			genCallUnprotected(0x568360, reinterpret_cast<DWORD>(OnCellChange));
-			genCallUnprotected(0x56A735, reinterpret_cast<DWORD>(OnCellChange));
-			genCallUnprotected(0x56B7D2, reinterpret_cast<DWORD>(OnCellChange));
-			genCallUnprotected(0x619BBF, reinterpret_cast<DWORD>(OnCellChange));
+			genCallEnforced(0x45C9A2, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
+			genCallEnforced(0x45D356, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
+			genCallEnforced(0x45D3C4, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
+			genCallEnforced(0x4637B0, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
+			genCallEnforced(0x4C4B4F, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
+			genCallEnforced(0x4C51AE, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
+			genCallEnforced(0x4EA137, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
+			genCallEnforced(0x50497D, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
+			genCallEnforced(0x5062FD, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
+			genCallEnforced(0x568360, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
+			genCallEnforced(0x56A735, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
+			genCallEnforced(0x56B7D2, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
+			genCallEnforced(0x619BBF, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
 
 			// Event: Start Combat
-			genCallUnprotected(0x5073BC, reinterpret_cast<DWORD>(OnStartCombat));
-			genCallUnprotected(0x52FC2F, reinterpret_cast<DWORD>(OnStartCombat));
-			genCallUnprotected(0x530443, reinterpret_cast<DWORD>(OnStartCombat));
-			genCallUnprotected(0x5563F5, reinterpret_cast<DWORD>(OnStartCombat));
-			genCallUnprotected(0x5564C2, reinterpret_cast<DWORD>(OnStartCombat));
-			genCallUnprotected(0x558FE7, reinterpret_cast<DWORD>(OnStartCombat));
-			genCallUnprotected(0x55905E, reinterpret_cast<DWORD>(OnStartCombat));
+			genCallEnforced(0x5073BC, 0x530470, reinterpret_cast<DWORD>(OnStartCombat));
+			genCallEnforced(0x52FC2F, 0x530470, reinterpret_cast<DWORD>(OnStartCombat));
+			genCallEnforced(0x530443, 0x530470, reinterpret_cast<DWORD>(OnStartCombat));
+			genCallEnforced(0x5563F5, 0x530470, reinterpret_cast<DWORD>(OnStartCombat));
+			genCallEnforced(0x5564C2, 0x530470, reinterpret_cast<DWORD>(OnStartCombat));
+			genCallEnforced(0x558FE7, 0x530470, reinterpret_cast<DWORD>(OnStartCombat));
+			genCallEnforced(0x55905E, 0x530470, reinterpret_cast<DWORD>(OnStartCombat));
 
 			// Event: Stop Combat
-			genCallUnprotected(0x523BBF, reinterpret_cast<DWORD>(OnStopCombat));
-			genCallUnprotected(0x54E04D, reinterpret_cast<DWORD>(OnStopCombat));
-			genCallUnprotected(0x556524, reinterpret_cast<DWORD>(OnStopCombat));
-			genCallUnprotected(0x556568, reinterpret_cast<DWORD>(OnStopCombat));
-			genCallUnprotected(0x557CBC, reinterpret_cast<DWORD>(OnStopCombat));
-			genCallUnprotected(0x55916F, reinterpret_cast<DWORD>(OnStopCombat));
-			genCallUnprotected(0x559265, reinterpret_cast<DWORD>(OnStopCombat));
-			genCallUnprotected(0x5650F2, reinterpret_cast<DWORD>(OnStopCombat));
-			genCallUnprotected(0x568794, reinterpret_cast<DWORD>(OnStopCombat));
-			genJumpUnprotected(0x7365E9, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallEnforced(0x523BBF, 0x558720, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallEnforced(0x54E04D, 0x558720, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallEnforced(0x556524, 0x558720, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallEnforced(0x556568, 0x558720, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallEnforced(0x557CBC, 0x558720, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallEnforced(0x55916F, 0x558720, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallEnforced(0x559265, 0x558720, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallEnforced(0x5650F2, 0x558720, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallEnforced(0x568794, 0x558720, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallEnforced(0x461881, 0x558720, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallEnforced(0x461A61, 0x558720, reinterpret_cast<DWORD>(OnStopCombat));
+			genCallEnforced(0x7365E9, 0x558720, reinterpret_cast<DWORD>(OnStopCombat));
 
 			// Event: Melee Hit Check
-			genCallUnprotected(0x541489, reinterpret_cast<DWORD>(OnAttack));
-			genCallUnprotected(0x5414CD, reinterpret_cast<DWORD>(OnAttack));
-			genCallUnprotected(0x569E78, reinterpret_cast<DWORD>(OnAttack));
+			genCallEnforced(0x541489, TES3_ActorAnimData_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
+			genCallEnforced(0x5414CD, TES3_ActorAnimData_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
+			genCallEnforced(0x569E78, TES3_ActorAnimData_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
 
 			// Override the MobileProjectile::onActorCollision vtable for a hit event.
 			overrideVirtualTable(0x74B2B4, 0x80, reinterpret_cast<DWORD>(OnMobileProjectileActorCollision));
@@ -880,12 +882,13 @@ namespace mwse {
 			VirtualProtect((DWORD*)TES3_HOOK_UI_EVENT, TES3_HOOK_UI_EVENT_SIZE, OldProtect, &OldProtect);
 
 			// Event: Show Rest/Wait Menu
-			genCallUnprotected(0x41ADB6, reinterpret_cast<DWORD>(OnShowRestWaitMenu));
-			genCallUnprotected(0x5097BA, reinterpret_cast<DWORD>(OnShowRestWaitMenuScripted));
-			genCallUnprotected(0x5097DD, reinterpret_cast<DWORD>(OnShowRestWaitMenuScripted));
+			genCallEnforced(0x41ADB6, 0x610170, reinterpret_cast<DWORD>(OnShowRestWaitMenu));
+			genCallEnforced(0x5097BA, 0x610170, reinterpret_cast<DWORD>(OnShowRestWaitMenuScripted));
+			genCallEnforced(0x5097DD, 0x610170, reinterpret_cast<DWORD>(OnShowRestWaitMenuScripted));
 
 			// Event: Key
-			genCallUnprotected(0x736C04, reinterpret_cast<DWORD>(OnKeyReadState));
+			genCallEnforced(0x40F633, 0x4065E0, reinterpret_cast<DWORD>(OnKeyReadState));
+			genCallEnforced(0x736C04, 0x4065E0, reinterpret_cast<DWORD>(OnKeyReadState));
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);

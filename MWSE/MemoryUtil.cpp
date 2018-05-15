@@ -2,6 +2,8 @@
 
 #include "MemAccess.h"
 
+#include "Log.h"
+
 namespace mwse {
 	void genJump(DWORD Address, DWORD To) {
 		MemAccess<unsigned char>::Set(Address, 0xE9);
@@ -51,6 +53,35 @@ namespace mwse {
 
 		// Protect memory again.
 		VirtualProtect((DWORD*)address, size, oldProtect, &oldProtect);
+	}
+
+	bool genCallEnforced(DWORD address, DWORD previousTo, DWORD to, DWORD size) {
+		// Read previous call address to make sure it's what we are expecting.
+		DWORD currentCallAddress = *reinterpret_cast<DWORD*>(address + 1) + address + 0x5;
+		if (currentCallAddress != previousTo) {
+#if _DEBUG
+			log::getLog() << "[MemoryUtil] Skipping call generation at 0x" << std::hex << address << ". Expected previous call to 0x" << previousTo << ", found 0x" << currentCallAddress << "." << std::endl;
+#endif
+			return false;
+		}
+
+		// Unprotect memory.
+		DWORD oldProtect;
+		VirtualProtect((DWORD*)address, size, PAGE_READWRITE, &oldProtect);
+
+		// Create our call.
+		MemAccess<unsigned char>::Set(address, 0xE8);
+		MemAccess<DWORD>::Set(address + 1, to - address - 0x5);
+
+		// NOP out the rest of the block.
+		for (DWORD i = address + 5; i < address + size; i++) {
+			genNOP(i);
+		}
+
+		// Protect memory again.
+		VirtualProtect((DWORD*)address, size, oldProtect, &oldProtect);
+
+		return true;
 	}
 
 	void overrideVirtualTable(DWORD address, DWORD offset, DWORD to) {
