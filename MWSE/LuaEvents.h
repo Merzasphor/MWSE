@@ -268,5 +268,21 @@ namespace mwse {
 			bool m_Scripted;
 		};
 
+		// ---------------------------------------------------------------------------- //
+
+		class KeyEvent : public GenericEvent {
+		public:
+			KeyEvent(int keyCode, bool pressed, bool controlDown, bool shiftDown, bool altDown, bool superDown);
+			sol::table createEventTable();
+
+		protected:
+			int m_KeyCode;
+			bool m_Pressed;
+			bool m_ControlDown;
+			bool m_ShiftDown;
+			bool m_AltDown;
+			bool m_SuperDown;
+		};
+
 	}
 }

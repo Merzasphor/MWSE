@@ -641,6 +641,32 @@ namespace mwse {
 			tes3::ui::showRestWaitMenu(allowRest, true);
 		}
 
+		//
+		// Hook show rest attempt.
+		//
+
+		void __fastcall OnKeyReadState(TES3::InputController* inputController) {
+			// Call the original function.
+			inputController->readKeyState();
+
+			// We only need to check the modifier key values once.
+			bool controlDown = (inputController->keyboardState[DIK_LCONTROL] & 0x80) || (inputController->keyboardState[DIK_RCONTROL] & 0x80);
+			bool shiftDown = (inputController->keyboardState[DIK_LSHIFT] & 0x80) || (inputController->keyboardState[DIK_RSHIFT] & 0x80);
+			bool altDown = (inputController->keyboardState[DIK_LALT] & 0x80) || (inputController->keyboardState[DIK_RALT] & 0x80);
+			bool superDown = (inputController->keyboardState[DIK_LWIN] & 0x80) || (inputController->keyboardState[DIK_RWIN] & 0x80);
+
+			// Go through the keys to see if any of the states have changed, and launch an event based on that.
+			LuaManager& luaManager = LuaManager::getInstance();
+			for (size_t i = 0; i < 256; i++) {
+				if ((inputController->keyboardState[i] & 0x80) && !(inputController->previousKeyboardState[i] & 0x80)) {
+					luaManager.triggerEvent(new KeyEvent(i, true, controlDown, shiftDown, altDown, superDown));
+				}
+				else if (!(inputController->keyboardState[i] & 0x80) && (inputController->previousKeyboardState[i] & 0x80)) {
+					luaManager.triggerEvent(new KeyEvent(i, false, controlDown, shiftDown, altDown, superDown));
+				}
+			}
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");
@@ -857,6 +883,9 @@ namespace mwse {
 			genCallUnprotected(0x41ADB6, reinterpret_cast<DWORD>(OnShowRestWaitMenu));
 			genCallUnprotected(0x5097BA, reinterpret_cast<DWORD>(OnShowRestWaitMenuScripted));
 			genCallUnprotected(0x5097DD, reinterpret_cast<DWORD>(OnShowRestWaitMenuScripted));
+
+			// Event: Key
+			genCallUnprotected(0x736C04, reinterpret_cast<DWORD>(OnKeyReadState));
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);

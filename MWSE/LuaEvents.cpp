@@ -475,5 +475,35 @@ namespace mwse {
 			return eventData;
 		}
 
+		//
+		// Key event.
+		//
+
+		KeyEvent::KeyEvent(int keyCode, bool pressed, bool controlDown, bool shiftDown, bool altDown, bool superDown) :
+			GenericEvent("key"),
+			m_KeyCode(keyCode),
+			m_Pressed(pressed),
+			m_ControlDown(controlDown),
+			m_ShiftDown(shiftDown),
+			m_AltDown(altDown),
+			m_SuperDown(superDown)
+		{
+
+		}
+
+		sol::table KeyEvent::createEventTable() {
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::table eventData = state.create_table();
+
+			eventData["keyCode"] = m_KeyCode;
+			eventData["pressed"] = m_Pressed;
+			eventData["isControlDown"] = m_ControlDown;
+			eventData["isShiftDown"] = m_ShiftDown;
+			eventData["isAltDown"] = m_AltDown;
+			eventData["isSuperDown"] = m_SuperDown;
+
+			return eventData;
+		}
+
 	}
 }
