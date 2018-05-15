@@ -142,7 +142,8 @@ namespace TES3 {
 		int unknown_0x18D0[4];
 		int unknown_0x18E0[4];
 		int unknown_0x18F0;
-		int unknown_0x18F4[128]; // Confirmed size.
+		unsigned char keyboardState[256];
+		unsigned char previousKeyboardState[256];
 		int unknown_0x1AF4[10]; // Confirmed size.
 		int unknown_0x1B1C;
 		int unknown_0x1B20[4];
@@ -163,5 +164,4 @@ namespace TES3 {
 
 	};
 	static_assert(sizeof(InputController) == 0x1D5C, "TES3::InputController failed size validation");
-
 }
