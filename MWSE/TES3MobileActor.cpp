@@ -7,6 +7,7 @@
 #define TES3_MobileActor_getCell 0x521630
 #define TES3_MobileActor_startCombat 0x530470
 #define TES3_MobileActor_stopCombat 0x558720
+#define TES3_MobileActor_onDeath 0x523AA0
 
 namespace TES3 {
 	Cell* MobileActor::getCell() {
@@ -41,6 +42,13 @@ namespace TES3 {
 
 		// Do our follow up stopped event.
 		luaManager.triggerEvent(new mwse::lua::CombatStoppedEvent(this));
+	}
+
+	void MobileActor::onDeath() {
+		reinterpret_cast<void(__thiscall *)(MobileActor*)>(TES3_MobileActor_onDeath)(this);
+
+		// Trigger death event.
+		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::DeathEvent(this));
 	}
 
 	bool MobileActor::getMobileActorFlag(unsigned int flag) {

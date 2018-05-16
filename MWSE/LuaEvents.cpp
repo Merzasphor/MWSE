@@ -505,5 +505,26 @@ namespace mwse {
 			return eventData;
 		}
 
+		//
+		// Death event.
+		//
+
+		DeathEvent::DeathEvent(TES3::MobileActor* mobileActor) :
+			GenericEvent("death"),
+			m_MobileActor(mobileActor)
+		{
+
+		}
+
+		sol::table DeathEvent::createEventTable() {
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::table eventData = state.create_table();
+
+			eventData["mobile"] = makeLuaObject(m_MobileActor);
+			eventData["reference"] = m_MobileActor->reference;
+
+			return eventData;
+		}
+
 	}
 }

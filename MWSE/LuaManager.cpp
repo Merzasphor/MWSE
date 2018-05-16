@@ -667,6 +667,18 @@ namespace mwse {
 			}
 		}
 
+		//
+		// Mobile actor death event.
+		//
+
+		void __fastcall OnMobileActorDeath(TES3::MobileActor* mobileActor) {
+			mobileActor->onDeath();
+		}
+
+		void __fastcall OnMobilePlayerDeath(TES3::MobilePlayer* mobilePlayer) {
+			mobilePlayer->onDeath();
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");
@@ -889,6 +901,12 @@ namespace mwse {
 			// Event: Key
 			genCallEnforced(0x40F633, 0x4065E0, reinterpret_cast<DWORD>(OnKeyReadState));
 			genCallEnforced(0x736C04, 0x4065E0, reinterpret_cast<DWORD>(OnKeyReadState));
+
+			// Event: Dying/death.
+			overrideVirtualTable(0x74AB4C, 0xB8, reinterpret_cast<DWORD>(OnMobileActorDeath)); // MACT
+			overrideVirtualTable(0x74AFA4, 0xB8, reinterpret_cast<DWORD>(OnMobileActorDeath)); // MACR
+			overrideVirtualTable(0x74AE6C, 0xB8, reinterpret_cast<DWORD>(OnMobileActorDeath)); // MACH
+			overrideVirtualTable(0x74B174, 0xB8, reinterpret_cast<DWORD>(OnMobilePlayerDeath)); // MACP
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);

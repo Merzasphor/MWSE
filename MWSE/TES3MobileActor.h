@@ -167,6 +167,7 @@ namespace TES3 {
 
 		void startCombat(MobileActor*);
 		void stopCombat(bool);
+		void onDeath();
 
 		//
 		// Custom functions.

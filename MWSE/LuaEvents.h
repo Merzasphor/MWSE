@@ -284,5 +284,16 @@ namespace mwse {
 			bool m_SuperDown;
 		};
 
+		// ---------------------------------------------------------------------------- //
+
+		class DeathEvent : public GenericEvent {
+		public:
+			DeathEvent(TES3::MobileActor* mobileActor);
+			sol::table createEventTable();
+
+		protected:
+			TES3::MobileActor * m_MobileActor;
+		};
+
 	}
 }
