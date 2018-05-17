@@ -18,6 +18,9 @@
 #include "TES3Spell.h"
 #include "TES3WorldController.h"
 
+#include "LuaManager.h"
+#include "LuaEvents.h"
+
 #define TES3_general_messagePlayer 0x5F90C0
 #define TES3_general_setStringSlot 0x47B410
 
@@ -447,7 +450,15 @@ namespace mwse {
 		}
 
 		void startNewGame() {
+			// Call our load event.
+			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+			luaManager.triggerEvent(new mwse::lua::LoadGameEvent(NULL, false, true));
+
+			// Call original function.
 			reinterpret_cast<void(__stdcall *)()>(TES3_newGame)();
+
+			// Call our post-load event.
+			luaManager.triggerEvent(new mwse::lua::LoadedGameEvent(NULL, false, true));
 		}
 
 		ExternalRealloc _realloc = NULL;

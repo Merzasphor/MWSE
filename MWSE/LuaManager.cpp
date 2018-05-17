@@ -535,15 +535,7 @@ namespace mwse {
 		//
 
 		void OnNewGame() {
-			// Call our load event.
-			LuaManager& luaManager = LuaManager::getInstance();
-			luaManager.triggerEvent(new LoadGameEvent(NULL, false, true));
-
-			// Call original function.
-			reinterpret_cast<void(__stdcall *)()>(0x5FAEA0)();
-
-			// Call our post-load event.
-			luaManager.triggerEvent(new LoadedGameEvent(NULL, false, true));
+			tes3::startNewGame();
 		}
 
 		//
