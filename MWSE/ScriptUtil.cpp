@@ -165,29 +165,17 @@ namespace mwse
 		}
 
 		float RunOriginalOpCode(TES3::Script* script, TES3::Reference* reference, OpCode::OpCode_t opCode, TES3::BaseObject* objectParam = NULL, char charParam = '_', float unk1 = 0.0f, float unk2 = 0.0f) {
-			float result = 0.0;
-
+			// Cache script state.
 			TES3::Reference* cachedTargetReference = getScriptTargetReference();
 			TES3::BaseObject* cachedTargetTemplate = getScriptTargetTemplate();
-
-			setScriptTargetReference(reference);
-
 			int IP = getInstructionPointer();
 
-			static int origRunOpCode = 0x505770;
-			__asm {
-				mov ecx, script
-				push objectParam
-				push charParam
-				push opCode
+			// Call the opcode.
+			setScriptTargetReference(reference);
+			float result = reinterpret_cast<float(__thiscall *)(TES3::Script*, int, char, TES3::BaseObject*)>(0x505770)(script, opCode, charParam, objectParam);
 
-				call origRunOpCode
-
-				fstp result
-			}
-
+			// Restore script state.
 			setInstructionPointer(IP);
-
 			setScriptTargetReference(cachedTargetReference);
 			setScriptTargetTemplate(cachedTargetTemplate);
 
