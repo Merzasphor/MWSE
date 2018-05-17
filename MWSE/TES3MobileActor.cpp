@@ -67,7 +67,7 @@ namespace TES3 {
 		bool result = reinterpret_cast<signed char(__thiscall *)(MobileActor*, float, signed char, signed char, signed char)>(TES3_MobileActor_applyHealthDamage)(this, damage, flag1, flag2, flag3);
 
 		// Do our follow up event.
-		luaManager.triggerEvent(new mwse::lua::DamageEvent(this, damage));
+		luaManager.triggerEvent(new mwse::lua::DamagedEvent(this, damage));
 
 		return true;
 	}
