@@ -22,6 +22,7 @@
 #define TES3_general_setStringSlot 0x47B410
 
 #define TES3_createNewItemData 0x4E7750
+#define TES3_newGame 0x5FAEA0
 
 #define TES3_data_GMSTs 0x794800
 
@@ -443,6 +444,10 @@ namespace mwse {
 			for (size_t i = 0; i < 9; i++) {
 				exteriorRefs[i] = NULL;
 			}
+		}
+
+		void startNewGame() {
+			reinterpret_cast<void(__stdcall *)()>(TES3_newGame)();
 		}
 
 		ExternalRealloc _realloc = NULL;

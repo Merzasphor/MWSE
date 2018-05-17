@@ -133,6 +133,8 @@ namespace mwse {
 
 		void clearExteriorRefs();
 
+		void startNewGame();
+
 		//
 		// Original function calls in Morrowind.
 		//

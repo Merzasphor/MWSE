@@ -279,6 +279,11 @@ namespace mwse {
 
 				return sol::nil;
 			};
+
+			// Bind function: tes3.newGame
+			state["tes3"]["newGame"] = []() {
+				tes3::startNewGame();
+			};
 		}
 	}
 }
