@@ -98,6 +98,7 @@
 #define TES3_ActorAnimData_attackCheckMeleeHit 0x541530
 
 #define TES3_cellChanged 0x45CEF0
+#define TES3_cellChangedWithCompanions 0x45C9B0
 
 namespace mwse {
 	namespace lua {
@@ -560,6 +561,17 @@ namespace mwse {
 			return value;
 		}
 
+		DWORD __cdecl OnCellChangeWithCompanions(DWORD unk1, DWORD unk2, DWORD unk3, float x, float y, float z, TES3::Cell* cell) {
+			DWORD value = reinterpret_cast<DWORD(__cdecl *)(DWORD, DWORD, DWORD, float, float, float, TES3::Cell*)>(TES3_cellChangedWithCompanions)(unk1, unk2, unk3, x, y, z, cell);
+
+			// Send off event.
+			if (cell != NULL) {
+				LuaManager::getInstance().triggerEvent(new CellChangedEvent(cell, x, y, z));
+			}
+
+			return value;
+		}
+
 		//
 		// Hook: Start Combat
 		//
@@ -848,12 +860,14 @@ namespace mwse {
 			genCallEnforced(0x4637B0, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
 			genCallEnforced(0x4C4B4F, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
 			genCallEnforced(0x4C51AE, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
+			genCallEnforced(0x4EA0E8, TES3_cellChangedWithCompanions, reinterpret_cast<DWORD>(OnCellChangeWithCompanions));
 			genCallEnforced(0x4EA137, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
 			genCallEnforced(0x50497D, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
 			genCallEnforced(0x5062FD, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
 			genCallEnforced(0x568360, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
 			genCallEnforced(0x56A735, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
 			genCallEnforced(0x56B7D2, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
+			genCallEnforced(0x619B84, TES3_cellChangedWithCompanions, reinterpret_cast<DWORD>(OnCellChangeWithCompanions));
 			genCallEnforced(0x619BBF, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
 
 			// Event: Start Combat
