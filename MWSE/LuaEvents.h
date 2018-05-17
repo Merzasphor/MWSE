@@ -295,5 +295,29 @@ namespace mwse {
 			TES3::MobileActor * m_MobileActor;
 		};
 
+		// ---------------------------------------------------------------------------- //
+
+		class DamageEvent : public GenericEvent {
+		public:
+			DamageEvent(TES3::MobileActor* mobileActor, float damage);
+			sol::table createEventTable();
+
+		protected:
+			TES3::MobileActor * m_MobileActor;
+			float m_Damage;
+		};
+
+		// ---------------------------------------------------------------------------- //
+
+		class DamagedEvent : public GenericEvent {
+		public:
+			DamagedEvent(TES3::MobileActor* mobileActor, float damage);
+			sol::table createEventTable();
+
+		protected:
+			TES3::MobileActor * m_MobileActor;
+			float m_Damage;
+		};
+
 	}
 }

@@ -168,6 +168,7 @@ namespace TES3 {
 		void startCombat(MobileActor*);
 		void stopCombat(bool);
 		void onDeath();
+		bool applyHealthDamage(float, bool, bool, bool);
 
 		//
 		// Custom functions.

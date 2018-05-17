@@ -526,5 +526,51 @@ namespace mwse {
 			return eventData;
 		}
 
+		//
+		// Damage event.
+		//
+
+		DamageEvent::DamageEvent(TES3::MobileActor* mobileActor, float damage) :
+			GenericEvent("damage"),
+			m_MobileActor(mobileActor),
+			m_Damage(damage)
+		{
+
+		}
+
+		sol::table DamageEvent::createEventTable() {
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::table eventData = state.create_table();
+
+			eventData["mobile"] = makeLuaObject(m_MobileActor);
+			eventData["reference"] = m_MobileActor->reference;
+			eventData["damage"] = m_Damage;
+
+			return eventData;
+		}
+
+		//
+		// Damaged event.
+		//
+
+		DamagedEvent::DamagedEvent(TES3::MobileActor* mobileActor, float damage) :
+			GenericEvent("damaged"),
+			m_MobileActor(mobileActor),
+			m_Damage(damage)
+		{
+
+		}
+
+		sol::table DamagedEvent::createEventTable() {
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::table eventData = state.create_table();
+
+			eventData["mobile"] = makeLuaObject(m_MobileActor);
+			eventData["reference"] = m_MobileActor->reference;
+			eventData["damage"] = m_Damage;
+
+			return eventData;
+		}
+
 	}
 }

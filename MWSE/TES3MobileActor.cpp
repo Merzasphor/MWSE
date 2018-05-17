@@ -8,6 +8,7 @@
 #define TES3_MobileActor_startCombat 0x530470
 #define TES3_MobileActor_stopCombat 0x558720
 #define TES3_MobileActor_onDeath 0x523AA0
+#define TES3_MobileActor_applyHealthDamage 0x557CF0
 
 namespace TES3 {
 	Cell* MobileActor::getCell() {
@@ -49,6 +50,26 @@ namespace TES3 {
 
 		// Trigger death event.
 		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::DeathEvent(this));
+	}
+
+	bool MobileActor::applyHealthDamage(float damage, bool flag1, bool flag2, bool flag3) {
+		// Invoke our combat stop event and check if it is blocked.
+		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+		sol::table eventData = luaManager.triggerEvent(new mwse::lua::DamageEvent(this, damage));
+		if (eventData.valid()) {
+			if (eventData["block"] == true) {
+				return false;
+			}
+
+			damage = eventData["damage"];
+		}
+
+		bool result = reinterpret_cast<signed char(__thiscall *)(MobileActor*, float, signed char, signed char, signed char)>(TES3_MobileActor_applyHealthDamage)(this, damage, flag1, flag2, flag3);
+
+		// Do our follow up event.
+		luaManager.triggerEvent(new mwse::lua::DamageEvent(this, damage));
+
+		return true;
 	}
 
 	bool MobileActor::getMobileActorFlag(unsigned int flag) {

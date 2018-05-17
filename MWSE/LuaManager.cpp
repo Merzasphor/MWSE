@@ -683,6 +683,14 @@ namespace mwse {
 			mobilePlayer->onDeath();
 		}
 
+		//
+		// Mobile actor apply damage event.
+		//
+
+		signed char __fastcall OnApplyDamage(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, char flag1, char flag2, char flag3) {
+			return mobileActor->applyHealthDamage(damage, flag1, flag2, flag3);
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");
@@ -913,6 +921,18 @@ namespace mwse {
 			overrideVirtualTable(0x74AFA4, 0xB8, reinterpret_cast<DWORD>(OnMobileActorDeath)); // MACR
 			overrideVirtualTable(0x74AE6C, 0xB8, reinterpret_cast<DWORD>(OnMobileActorDeath)); // MACH
 			overrideVirtualTable(0x74B174, 0xB8, reinterpret_cast<DWORD>(OnMobilePlayerDeath)); // MACP
+
+			// Event: Damage(d)
+			genCallEnforced(0x50B72C, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
+			genCallEnforced(0x50B7AB, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
+			genCallEnforced(0x50D138, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
+			genCallEnforced(0x50D1B4, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
+			genCallEnforced(0x524884, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
+			genCallEnforced(0x52978F, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
+			genCallEnforced(0x5299CB, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
+			genCallEnforced(0x555789, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
+			genCallEnforced(0x556AE0, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
+			genCallEnforced(0x55782C, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);
