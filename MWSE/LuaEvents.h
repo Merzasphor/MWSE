@@ -27,9 +27,9 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class FilteredEvent : public GenericEvent {
+			class ObjectFilteredEvent : public GenericEvent {
 			public:
-				FilteredEvent(const char* name, sol::object filter = sol::nil);
+				ObjectFilteredEvent(const char* name, sol::object filter);
 				sol::object getEventOptions();
 
 			protected:
@@ -38,7 +38,7 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class EquipEvent : public FilteredEvent {
+			class EquipEvent : public ObjectFilteredEvent {
 			public:
 				EquipEvent(TES3::Reference* reference, TES3::BaseObject* item, TES3::ItemData* itemData);
 				sol::table createEventTable();
@@ -51,7 +51,7 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class EquippedEvent : public GenericEvent {
+			class EquippedEvent : public ObjectFilteredEvent {
 			public:
 				EquippedEvent(TES3::Actor* a, TES3::MobileActor* ma, TES3::BaseObject* i, TES3::ItemData* id);
 				sol::table createEventTable();
@@ -105,7 +105,7 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class ActivateEvent : public GenericEvent {
+			class ActivateEvent : public ObjectFilteredEvent {
 			public:
 				ActivateEvent(TES3::Reference* activator, TES3::Reference* target);
 				sol::table createEventTable();
@@ -121,6 +121,7 @@ namespace mwse {
 			public:
 				SaveGameEvent(const char* saveName, const char* fileName);
 				sol::table createEventTable();
+				sol::object getEventOptions();
 
 			protected:
 				const char* m_SaveName;
@@ -140,6 +141,7 @@ namespace mwse {
 			public:
 				LoadGameEvent(const char* fileName, bool quickLoad = false, bool newGame = false);
 				sol::table createEventTable();
+				sol::object getEventOptions();
 
 			protected:
 				const char* m_FileName;
@@ -156,7 +158,7 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class CellChangedEvent : public GenericEvent {
+			class CellChangedEvent : public ObjectFilteredEvent {
 			public:
 				CellChangedEvent(TES3::Cell* cell, float x, float y, float z);
 				sol::table createEventTable();
@@ -170,7 +172,7 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class CombatStartEvent : public GenericEvent {
+			class CombatStartEvent : public ObjectFilteredEvent {
 			public:
 				CombatStartEvent(TES3::MobileActor* mobileActor, TES3::MobileActor* target);
 				sol::table createEventTable();
@@ -182,7 +184,7 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class CombatStartedEvent : public GenericEvent {
+			class CombatStartedEvent : public ObjectFilteredEvent {
 			public:
 				CombatStartedEvent(TES3::MobileActor* mobileActor, TES3::MobileActor* target);
 				sol::table createEventTable();
@@ -194,7 +196,7 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class CombatStopEvent : public GenericEvent {
+			class CombatStopEvent : public ObjectFilteredEvent {
 			public:
 				CombatStopEvent(TES3::MobileActor* mobileActor);
 				sol::table createEventTable();
@@ -205,7 +207,7 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class CombatStoppedEvent : public GenericEvent {
+			class CombatStoppedEvent : public ObjectFilteredEvent {
 			public:
 				CombatStoppedEvent(TES3::MobileActor* mobileActor);
 				sol::table createEventTable();
@@ -216,7 +218,7 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class AttackEvent : public GenericEvent {
+			class AttackEvent : public ObjectFilteredEvent {
 			public:
 				AttackEvent(TES3::ActorAnimationData* animData);
 				sol::table createEventTable();
@@ -227,7 +229,7 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class MobileObjectActorCollisionEvent : public GenericEvent {
+			class MobileObjectActorCollisionEvent : public ObjectFilteredEvent {
 			public:
 				MobileObjectActorCollisionEvent(TES3::MobileObject* mobileObject, TES3::Reference* targetReference);
 				sol::table createEventTable();
@@ -239,7 +241,7 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class MobileObjectWaterImpactEvent : public GenericEvent {
+			class MobileObjectWaterImpactEvent : public ObjectFilteredEvent {
 			public:
 				MobileObjectWaterImpactEvent(TES3::MobileObject* mobileObject, bool inWater);
 				sol::table createEventTable();
@@ -289,6 +291,7 @@ namespace mwse {
 			public:
 				KeyEvent(int keyCode, bool pressed, bool controlDown, bool shiftDown, bool altDown, bool superDown);
 				sol::table createEventTable();
+				sol::object getEventOptions();
 
 			protected:
 				int m_KeyCode;
@@ -301,7 +304,7 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class DeathEvent : public GenericEvent {
+			class DeathEvent : public ObjectFilteredEvent {
 			public:
 				DeathEvent(TES3::MobileActor* mobileActor);
 				sol::table createEventTable();
@@ -312,7 +315,7 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class DamageEvent : public GenericEvent {
+			class DamageEvent : public ObjectFilteredEvent {
 			public:
 				DamageEvent(TES3::MobileActor* mobileActor, float damage);
 				sol::table createEventTable();
@@ -324,7 +327,7 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class DamagedEvent : public GenericEvent {
+			class DamagedEvent : public ObjectFilteredEvent {
 			public:
 				DamagedEvent(TES3::MobileActor* mobileActor, float damage);
 				sol::table createEventTable();
@@ -340,6 +343,7 @@ namespace mwse {
 			public:
 				SkillExerciseEvent(int skillId, float progress);
 				sol::table createEventTable();
+				sol::object getEventOptions();
 
 			protected:
 				int m_Skill;

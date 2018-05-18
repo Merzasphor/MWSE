@@ -43,14 +43,14 @@ namespace mwse {
 			// Filtered event.
 			//
 
-			FilteredEvent::FilteredEvent(const char* name, sol::object filter) :
+			ObjectFilteredEvent::ObjectFilteredEvent(const char* name, sol::object filter) :
 				GenericEvent(name),
 				m_EventFilter(filter)
 			{
 
 			}
 
-			sol::object FilteredEvent::getEventOptions() {
+			sol::object ObjectFilteredEvent::getEventOptions() {
 				sol::table options = LuaManager::getInstance().getState().create_table();
 				options["filter"] = m_EventFilter;
 				return options;
@@ -61,7 +61,7 @@ namespace mwse {
 			//
 
 			EquipEvent::EquipEvent(TES3::Reference* reference, TES3::BaseObject* item, TES3::ItemData* itemData) :
-				FilteredEvent("equip", makeLuaObject(item)),
+				ObjectFilteredEvent("equip", makeLuaObject(item)),
 				m_Reference(reference),
 				m_Item(item),
 				m_ItemData(itemData)
@@ -86,7 +86,7 @@ namespace mwse {
 			//
 
 			EquippedEvent::EquippedEvent(TES3::Actor* a, TES3::MobileActor* ma, TES3::BaseObject* i, TES3::ItemData* id) :
-				GenericEvent("equipped"),
+				ObjectFilteredEvent("equipped", makeLuaObject(i)),
 				m_Actor(a),
 				m_MobileActor(ma),
 				m_Item(i),
@@ -181,7 +181,7 @@ namespace mwse {
 			//
 
 			ActivateEvent::ActivateEvent(TES3::Reference* activator, TES3::Reference* target) :
-				GenericEvent("activate"),
+				ObjectFilteredEvent("activate", makeLuaObject(target)),
 				m_Activator(activator),
 				m_Target(target)
 			{
@@ -218,6 +218,15 @@ namespace mwse {
 				eventData["filename"] = m_FileName;
 
 				return eventData;
+			}
+
+			sol::object SaveGameEvent::getEventOptions() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table options = state.create_table();
+
+				options["filter"] = m_FileName;
+
+				return options;
 			}
 
 			//
@@ -264,6 +273,15 @@ namespace mwse {
 				return eventData;
 			}
 
+			sol::object LoadGameEvent::getEventOptions() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table options = state.create_table();
+
+				options["filter"] = m_FileName;
+
+				return options;
+			}
+
 			//
 			// Loaded game event.
 			//
@@ -279,7 +297,7 @@ namespace mwse {
 			//
 
 			CellChangedEvent::CellChangedEvent(TES3::Cell* cell, float x, float y, float z) :
-				GenericEvent("cellChanged"),
+				ObjectFilteredEvent("cellChanged", makeLuaObject(cell)),
 				m_Cell(cell),
 				m_X(x),
 				m_Y(y),
@@ -305,7 +323,7 @@ namespace mwse {
 			//
 
 			CombatStartEvent::CombatStartEvent(TES3::MobileActor* mobileActor, TES3::MobileActor* target) :
-				GenericEvent("combatStart"),
+				ObjectFilteredEvent("combatStart", makeLuaObject(mobileActor->reference)),
 				m_MobileActor(mobileActor),
 				m_Target(target)
 			{
@@ -327,7 +345,7 @@ namespace mwse {
 			//
 
 			CombatStartedEvent::CombatStartedEvent(TES3::MobileActor* mobileActor, TES3::MobileActor* target) :
-				GenericEvent("combatStarted"),
+				ObjectFilteredEvent("combatStarted", makeLuaObject(mobileActor->reference)),
 				m_MobileActor(mobileActor),
 				m_Target(target)
 			{
@@ -349,7 +367,7 @@ namespace mwse {
 			//
 
 			CombatStopEvent::CombatStopEvent(TES3::MobileActor* mobileActor) :
-				GenericEvent("combatStop"),
+				ObjectFilteredEvent("combatStop", makeLuaObject(mobileActor->reference)),
 				m_MobileActor(mobileActor)
 			{
 
@@ -369,7 +387,7 @@ namespace mwse {
 			//
 
 			CombatStoppedEvent::CombatStoppedEvent(TES3::MobileActor* mobileActor) :
-				GenericEvent("combatStopped"),
+				ObjectFilteredEvent("combatStopped", makeLuaObject(mobileActor->reference)),
 				m_MobileActor(mobileActor)
 			{
 
@@ -389,7 +407,7 @@ namespace mwse {
 			//
 
 			AttackEvent::AttackEvent(TES3::ActorAnimationData* animData) :
-				GenericEvent("attack"),
+				ObjectFilteredEvent("attack", makeLuaObject(animData->mobileActor->reference)),
 				m_AnimationData(animData)
 			{
 
@@ -409,7 +427,7 @@ namespace mwse {
 			//
 
 			MobileObjectActorCollisionEvent::MobileObjectActorCollisionEvent(TES3::MobileObject* mobileObject, TES3::Reference* targetReference) :
-				GenericEvent("collideActor"),
+				ObjectFilteredEvent("collideActor", makeLuaObject(mobileObject)),
 				m_MobileObject(mobileObject),
 				m_TargetReference(targetReference)
 			{
@@ -431,7 +449,7 @@ namespace mwse {
 			//
 
 			MobileObjectWaterImpactEvent::MobileObjectWaterImpactEvent(TES3::MobileObject* mobileObject, bool inWater) :
-				GenericEvent("collideWater"),
+				ObjectFilteredEvent("collideWater", makeLuaObject(mobileObject)),
 				m_MobileObject(mobileObject),
 				m_InWater(inWater)
 			{
@@ -538,12 +556,21 @@ namespace mwse {
 				return eventData;
 			}
 
+			sol::object KeyEvent::getEventOptions() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table options = state.create_table();
+
+				options["filter"] = m_KeyCode;
+
+				return options;
+			}
+
 			//
 			// Death event.
 			//
 
 			DeathEvent::DeathEvent(TES3::MobileActor* mobileActor) :
-				GenericEvent("death"),
+				ObjectFilteredEvent("death", makeLuaObject(mobileActor->reference)),
 				m_MobileActor(mobileActor)
 			{
 
@@ -564,7 +591,7 @@ namespace mwse {
 			//
 
 			DamageEvent::DamageEvent(TES3::MobileActor* mobileActor, float damage) :
-				GenericEvent("damage"),
+				ObjectFilteredEvent("damage", makeLuaObject(mobileActor->reference)),
 				m_MobileActor(mobileActor),
 				m_Damage(damage)
 			{
@@ -587,7 +614,7 @@ namespace mwse {
 			//
 
 			DamagedEvent::DamagedEvent(TES3::MobileActor* mobileActor, float damage) :
-				GenericEvent("damaged"),
+				ObjectFilteredEvent("damaged", makeLuaObject(mobileActor->reference)),
 				m_MobileActor(mobileActor),
 				m_Damage(damage)
 			{
@@ -625,6 +652,15 @@ namespace mwse {
 				eventData["progress"] = m_Progress;
 
 				return eventData;
+			}
+
+			sol::object SkillExerciseEvent::getEventOptions() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table options = state.create_table();
+
+				options["filter"] = m_Skill;
+
+				return options;
 			}
 
 		}
