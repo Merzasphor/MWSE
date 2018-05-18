@@ -248,21 +248,26 @@ namespace mwse {
 				return sol::nil;
 			}
 
-			sol::state& state = LuaManager::getInstance().getState();
-
-			unsigned int vTable = (unsigned int)object->vTable.mobileObject;
-			switch (vTable) {
-			case TES3_vTable_MobileCreature:
-				return sol::make_object(state, reinterpret_cast<TES3::MobileCreature*>(object));
-			case TES3_vTable_MobileNPC:
-				return sol::make_object(state, reinterpret_cast<TES3::MobileNPC*>(object));
-			case TES3_vTable_MobilePlayer:
-				return sol::make_object(state, reinterpret_cast<TES3::MobilePlayer*>(object));
-			case TES3_vTable_MobileProjectile:
-				return sol::make_object(state, reinterpret_cast<TES3::MobileProjectile*>(object));
+			auto searchResult = userdataMap.find((unsigned long)object);
+			if (searchResult != userdataMap.end()) {
+				return searchResult->second;
 			}
 
-			return sol::make_object(state, object);
+			sol::state& state = LuaManager::getInstance().getState();
+
+			sol::object result = sol::nil;
+			switch ((unsigned int)object->vTable.mobileObject) {
+			case TES3_vTable_MobileCreature:
+				result = sol::make_object(state, reinterpret_cast<TES3::MobileCreature*>(object));
+			case TES3_vTable_MobileNPC:
+				result = sol::make_object(state, reinterpret_cast<TES3::MobileNPC*>(object));
+			case TES3_vTable_MobilePlayer:
+				result = sol::make_object(state, reinterpret_cast<TES3::MobilePlayer*>(object));
+			case TES3_vTable_MobileProjectile:
+				result = sol::make_object(state, reinterpret_cast<TES3::MobileProjectile*>(object));
+			}
+
+			return result;
 		}
 	}
 }
