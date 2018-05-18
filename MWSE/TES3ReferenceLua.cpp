@@ -13,10 +13,6 @@ namespace TES3 {
 	}
 
 	sol::object Reference::getAttachments() {
-		if (this->attachments == NULL) {
-			return sol::nil;
-		}
-
 		sol::state& state = mwse::lua::LuaManager::getInstance().getState();
 
 		sol::table result = state.create_table();
