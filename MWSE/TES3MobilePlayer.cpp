@@ -21,6 +21,6 @@ namespace TES3 {
 		reinterpret_cast<void(__thiscall *)(MobileActor*)>(TES3_MobilePlayer_onDeath)(this);
 
 		// Trigger death event.
-		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::DeathEvent(this));
+		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::DeathEvent(this));
 	}
 }

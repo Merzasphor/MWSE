@@ -412,7 +412,7 @@ namespace mwse {
 		//
 
 		static void _stdcall FinishInitialization() {
-			LuaManager::getInstance().triggerEvent(new GenericEvent("initialized"));
+			LuaManager::getInstance().triggerEvent(new event::GenericEvent("initialized"));
 		}
 
 		static DWORD callbackFinishedInitialization = TES3_HOOK_FINISH_INITIALIZATION_RETURN;
@@ -447,11 +447,11 @@ namespace mwse {
 			}
 
 			//
-			luaManager.triggerEvent(new FrameEvent(worldController->deltaTime, worldController->flagMenuMode));
+			luaManager.triggerEvent(new event::FrameEvent(worldController->deltaTime, worldController->flagMenuMode));
 
 			// If we're not in menu mode, send off the simulate event.
 			if (worldController->flagMenuMode == 0) {
-				luaManager.triggerEvent(new SimulateEvent(worldController->deltaTime));
+				luaManager.triggerEvent(new event::SimulateEvent(worldController->deltaTime));
 			}
 		}
 
@@ -461,7 +461,7 @@ namespace mwse {
 
 		signed char __cdecl OnPCEquip(TES3::UI::InventoryTile* tile) {
 			// Execute event. If the event blocked the call, bail.
-			sol::object response = LuaManager::getInstance().triggerEvent(new EquipEvent(NULL, tile->item, tile->itemData));
+			sol::object response = LuaManager::getInstance().triggerEvent(new event::EquipEvent(NULL, tile->item, tile->itemData));
 			if (response != sol::nil && response.is<sol::table>()) {
 				sol::table eventData = response;
 				if (eventData["block"] == true) {
@@ -547,7 +547,7 @@ namespace mwse {
 
 			// Send off event.
 			if (cell != NULL) {
-				LuaManager::getInstance().triggerEvent(new CellChangedEvent(cell, x, y, z));
+				LuaManager::getInstance().triggerEvent(new event::CellChangedEvent(cell, x, y, z));
 			}
 
 			return value;
@@ -558,7 +558,7 @@ namespace mwse {
 
 			// Send off event.
 			if (cell != NULL) {
-				LuaManager::getInstance().triggerEvent(new CellChangedEvent(cell, x, y, z));
+				LuaManager::getInstance().triggerEvent(new event::CellChangedEvent(cell, x, y, z));
 			}
 
 			return value;
@@ -591,11 +591,11 @@ namespace mwse {
 			reinterpret_cast<void(__thiscall *)(TES3::ActorAnimationData*)>(TES3_ActorAnimData_attackCheckMeleeHit)(animData);
 
 			// Prepare our event data.
-			LuaManager::getInstance().triggerEvent(new AttackEvent(animData));
+			LuaManager::getInstance().triggerEvent(new event::AttackEvent(animData));
 		}
 
 		//
-		// Mobile projectile actor collision
+		// Mobile projectile collisions
 		//
 
 		char __fastcall OnMobileProjectileActorCollision(TES3::MobileProjectile* mobileProjectile, DWORD _UNUSED_, int referenceIndex) {
@@ -610,14 +610,14 @@ namespace mwse {
 		signed char __cdecl OnUIEvent(DWORD function, TES3::UI::Block* parent, DWORD prop, DWORD b, DWORD c, TES3::UI::Block* block) {
 			// Execute event. If the event blocked the call, bail.
 			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-			sol::table eventData = luaManager.triggerEvent(new GenericUiPreEvent(parent, block, prop, b, c));
+			sol::table eventData = luaManager.triggerEvent(new event::GenericUiPreEvent(parent, block, prop, b, c));
 			if (eventData.valid() && eventData["block"] == true) {
 				return 0;
 			}
 
 			signed char result = reinterpret_cast<signed char (__cdecl *)(TES3::UI::Block*, DWORD, DWORD, DWORD, TES3::UI::Block*)>(function)(parent, prop, b, c, block);
 
-			luaManager.triggerEvent(new GenericUiPostEvent(parent, block, prop, b, c));
+			luaManager.triggerEvent(new event::GenericUiPostEvent(parent, block, prop, b, c));
 
 			return result;
 		}
@@ -663,10 +663,10 @@ namespace mwse {
 			LuaManager& luaManager = LuaManager::getInstance();
 			for (size_t i = 0; i < 256; i++) {
 				if ((inputController->keyboardState[i] & 0x80) && !(inputController->previousKeyboardState[i] & 0x80)) {
-					luaManager.triggerEvent(new KeyEvent(i, true, controlDown, shiftDown, altDown, superDown));
+					luaManager.triggerEvent(new event::KeyEvent(i, true, controlDown, shiftDown, altDown, superDown));
 				}
 				else if (!(inputController->keyboardState[i] & 0x80) && (inputController->previousKeyboardState[i] & 0x80)) {
-					luaManager.triggerEvent(new KeyEvent(i, false, controlDown, shiftDown, altDown, superDown));
+					luaManager.triggerEvent(new event::KeyEvent(i, false, controlDown, shiftDown, altDown, superDown));
 				}
 			}
 		}
@@ -960,7 +960,7 @@ namespace mwse {
 			currentReference = reference;
 		}
 
-		sol::object LuaManager::triggerEvent(BaseEvent* baseEvent) {
+		sol::object LuaManager::triggerEvent(event::BaseEvent* baseEvent) {
 			DWORD threadId = GetCurrentThreadId();
 			TES3::DataHandler* dataHandler = tes3::getDataHandler();
 
@@ -970,7 +970,7 @@ namespace mwse {
 				triggerBackgroundThreadEvents();
 
 				// Execute the original event.
-				sol::object response = event::trigger(baseEvent->getEventName(), baseEvent->createEventTable());
+				sol::object response = event::trigger(baseEvent->getEventName(), baseEvent->createEventTable(), baseEvent->getEventFilter());
 				delete baseEvent;
 				return response;
 			}
@@ -995,7 +995,7 @@ namespace mwse {
 
 			while (backgroundThreadEvents.size() > 0) {
 				// Pop the event off the stack.
-				BaseEvent* baseEvent = backgroundThreadEvents.front();
+				event::BaseEvent* baseEvent = backgroundThreadEvents.front();
 				backgroundThreadEvents.pop();
 
 				// Trigger it.

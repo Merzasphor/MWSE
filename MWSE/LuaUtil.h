@@ -54,9 +54,5 @@ namespace mwse {
 
 		sol::object makeLuaObject(TES3::BaseObject* object);
 		sol::object makeLuaObject(TES3::MobileObject* object);
-
-		namespace event {
-			sol::object trigger(const char* eventType, sol::table eventData = sol::nil);
-		}
 	}
 }

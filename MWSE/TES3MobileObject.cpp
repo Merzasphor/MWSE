@@ -14,7 +14,7 @@ namespace TES3 {
 		char result = reinterpret_cast<char(__thiscall *)(MobileObject*, int)>(TES3_MobileObject_onActorCollision)(this, referenceIndex);
 
 		// Fire off our hit event.
-		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::MobileObjectActorCollisionEvent(this, hitReference));
+		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectActorCollisionEvent(this, hitReference));
 
 		return result;
 	}
@@ -24,7 +24,7 @@ namespace TES3 {
 		char result = reinterpret_cast<char(__thiscall *)(MobileObject*, signed char)>(TES3_MobileObject_onWaterImpact)(this, inWater);
 
 		// Fire off our hit event.
-		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::MobileObjectWaterImpactEvent(this, inWater));
+		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectWaterImpactEvent(this, inWater));
 
 		return result;
 	}

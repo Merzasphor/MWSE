@@ -42,7 +42,7 @@ namespace mwse {
 			void setCurrentReference(TES3::Reference*);
 
 			// Event management.
-			sol::object triggerEvent(BaseEvent*);
+			sol::object triggerEvent(event::BaseEvent*);
 			void triggerBackgroundThreadEvents();
 
 			// Handle our button pressed callbacks. There can only be one at a time.
@@ -67,7 +67,7 @@ namespace mwse {
 
 			//
 			std::mutex backgroundThreadEventsMutex;
-			std::queue<BaseEvent*> backgroundThreadEvents;
+			std::queue<event::BaseEvent*> backgroundThreadEvents;
 
 			// Storage for our current button pressed callback.
 			sol::protected_function buttonPressedCallback = sol::nil;

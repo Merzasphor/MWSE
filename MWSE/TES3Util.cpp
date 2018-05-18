@@ -452,13 +452,13 @@ namespace mwse {
 		void startNewGame() {
 			// Call our load event.
 			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-			luaManager.triggerEvent(new mwse::lua::LoadGameEvent(NULL, false, true));
+			luaManager.triggerEvent(new mwse::lua::event::LoadGameEvent(NULL, false, true));
 
 			// Call original function.
 			reinterpret_cast<void(__stdcall *)()>(TES3_newGame)();
 
 			// Call our post-load event.
-			luaManager.triggerEvent(new mwse::lua::LoadedGameEvent(NULL, false, true));
+			luaManager.triggerEvent(new mwse::lua::event::LoadedGameEvent(NULL, false, true));
 		}
 
 		ExternalRealloc _realloc = NULL;

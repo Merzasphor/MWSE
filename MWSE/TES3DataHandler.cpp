@@ -30,7 +30,7 @@ namespace TES3 {
 	bool NonDynamicData::saveGame(const char* fileName, const char* saveName) {
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		sol::table eventData = luaManager.triggerEvent(new mwse::lua::SaveGameEvent(saveName, fileName));
+		sol::table eventData = luaManager.triggerEvent(new mwse::lua::event::SaveGameEvent(saveName, fileName));
 		if (eventData.valid() && eventData["block"] == true) {
 			return true;
 		}
@@ -43,7 +43,7 @@ namespace TES3 {
 
 		// Pass a follow-up event if we successfully saved.
 		if (saved) {
-			luaManager.triggerEvent(new mwse::lua::SavedGameEvent(eventSaveName.c_str(), eventFileName.c_str()));
+			luaManager.triggerEvent(new mwse::lua::event::SavedGameEvent(eventSaveName.c_str(), eventFileName.c_str()));
 		}
 
 		return saved;
@@ -52,7 +52,7 @@ namespace TES3 {
 	bool NonDynamicData::loadGame(const char* fileName) {
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		sol::table eventData = luaManager.triggerEvent(new mwse::lua::LoadGameEvent(fileName));
+		sol::table eventData = luaManager.triggerEvent(new mwse::lua::event::LoadGameEvent(fileName));
 		if (eventData.valid() && eventData["block"] == true) {
 			return true;
 		}
@@ -66,7 +66,7 @@ namespace TES3 {
 
 		// Pass a follow-up event if we successfully saved.
 		if (loaded) {
-			luaManager.triggerEvent(new mwse::lua::LoadedGameEvent(eventFileName.c_str(), fileName == NULL));
+			luaManager.triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str(), fileName == NULL));
 		}
 
 		return loaded;
@@ -75,7 +75,7 @@ namespace TES3 {
 	bool NonDynamicData::loadGameMainMenu(const char* fileName) {
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		sol::table eventData = luaManager.triggerEvent(new mwse::lua::LoadGameEvent(fileName));
+		sol::table eventData = luaManager.triggerEvent(new mwse::lua::event::LoadGameEvent(fileName));
 		if (eventData.valid() && eventData["block"] == true) {
 			return true;
 		}
@@ -89,7 +89,7 @@ namespace TES3 {
 
 		// Pass a follow-up event if we successfully saved.
 		if (loaded) {
-			luaManager.triggerEvent(new mwse::lua::LoadedGameEvent(eventFileName.c_str()));
+			luaManager.triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str()));
 		}
 
 		return loaded;

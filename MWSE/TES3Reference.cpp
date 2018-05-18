@@ -16,7 +16,7 @@
 namespace TES3 {
 	void Reference::activate(Reference* activator, int unknown) {
 		// If our event data says to block, don't let the object activate.
-		sol::object response = mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::ActivateEvent(activator, this));
+		sol::object response = mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::ActivateEvent(activator, this));
 		if (response != sol::nil && response.is<sol::table>()) {
 			sol::table eventData = response;
 			if (eventData["block"] == true) {
