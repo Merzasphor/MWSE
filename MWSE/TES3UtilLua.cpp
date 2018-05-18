@@ -86,8 +86,12 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.getObject
-			state["tes3"]["getObject"] = [](std::string& id) {
-				return makeLuaObject(tes3::getDataHandler()->nonDynamicData->resolveObject(id.c_str()));
+			state["tes3"]["getObject"] = [](std::string& id) -> sol::object {
+				auto dataHandler = tes3::getDataHandler();
+				if (dataHandler) {
+					return makeLuaObject(dataHandler->nonDynamicData->resolveObject(id.c_str()));
+				}
+				return sol::nil;
 			};
 
 			state["tes3"]["deleteObject"] = [](sol::object maybe) {
