@@ -11,12 +11,12 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			sol::object trigger(const char* eventType, sol::table eventData, sol::object eventFilter) {
+			sol::object trigger(const char* eventType, sol::table eventData, sol::object eventOptions) {
 				sol::state& state = LuaManager::getInstance().getState();
 
 				// Trigger the function, check for lua errors.
 				sol::protected_function trigger = state["event"]["trigger"];
-				auto result = trigger(eventType, eventData, eventFilter);
+				auto result = trigger(eventType, eventData, eventOptions);
 				if (!result.valid()) {
 					sol::error error = result;
 					log::getLog() << "Lua error encountered when raising " << eventType << " event:" << std::endl << error.what() << std::endl;
@@ -50,8 +50,10 @@ namespace mwse {
 
 			}
 
-			sol::object FilteredEvent::getEventFilter() {
-				return m_EventFilter;
+			sol::object FilteredEvent::getEventOptions() {
+				sol::table options = LuaManager::getInstance().getState().create_table();
+				options["filter"] = m_EventFilter;
+				return options;
 			}
 
 			//
@@ -59,7 +61,7 @@ namespace mwse {
 			//
 
 			EquipEvent::EquipEvent(TES3::Reference* reference, TES3::BaseObject* item, TES3::ItemData* itemData) :
-				GenericEvent("equip"),
+				FilteredEvent("equip", makeLuaObject(item)),
 				m_Reference(reference),
 				m_Item(item),
 				m_ItemData(itemData)

@@ -152,86 +152,95 @@ namespace mwse {
 				return sol::nil;
 			}
 
+			auto searchResult = userdataMap.find((unsigned long)object);
+			if (searchResult != userdataMap.end()) {
+				return searchResult->second;
+			}
+
 			sol::state& state = LuaManager::getInstance().getState();
 
+			sol::object result = sol::nil;
 			switch (object->objectType) {
 			case TES3::ObjectType::Activator:
-				return sol::make_object(state, reinterpret_cast<TES3::Activator*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Activator*>(object));
 			case TES3::ObjectType::Alchemy:
-				return sol::make_object(state, reinterpret_cast<TES3::Alchemy*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Alchemy*>(object));
 			case TES3::ObjectType::Apparatus:
-				return sol::make_object(state, reinterpret_cast<TES3::Apparatus*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Apparatus*>(object));
 			case TES3::ObjectType::Armor:
-				return sol::make_object(state, reinterpret_cast<TES3::Armor*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Armor*>(object));
 			case TES3::ObjectType::Book:
-				return sol::make_object(state, reinterpret_cast<TES3::Book*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Book*>(object));
 			case TES3::ObjectType::Cell:
-				return sol::make_object(state, reinterpret_cast<TES3::Cell*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Cell*>(object));
 			case TES3::ObjectType::Class:
-				return sol::make_object(state, reinterpret_cast<TES3::Class*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Class*>(object));
 			case TES3::ObjectType::Clothing:
-				return sol::make_object(state, reinterpret_cast<TES3::Clothing*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Clothing*>(object));
 			case TES3::ObjectType::Container:
 				if (reinterpret_cast<TES3::Actor*>(object)->actorFlags & TES3::ActorFlag::IsBase) {
-					return sol::make_object(state, reinterpret_cast<TES3::Container*>(object));
+					result = sol::make_object(state, reinterpret_cast<TES3::Container*>(object));
 				}
 				else {
-					return sol::make_object(state, reinterpret_cast<TES3::ContainerInstance*>(object));
+					result = sol::make_object(state, reinterpret_cast<TES3::ContainerInstance*>(object));
 				}
 			case TES3::ObjectType::Creature:
 				if (reinterpret_cast<TES3::Actor*>(object)->actorFlags & TES3::ActorFlag::IsBase) {
-					return sol::make_object(state, reinterpret_cast<TES3::Creature*>(object));
+					result = sol::make_object(state, reinterpret_cast<TES3::Creature*>(object));
 				}
 				else {
-					return sol::make_object(state, reinterpret_cast<TES3::CreatureInstance*>(object));
+					result = sol::make_object(state, reinterpret_cast<TES3::CreatureInstance*>(object));
 				}
 			case TES3::ObjectType::Door:
-				return sol::make_object(state, reinterpret_cast<TES3::Door*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Door*>(object));
 			case TES3::ObjectType::Enchantment:
-				return sol::make_object(state, reinterpret_cast<TES3::Enchantment*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Enchantment*>(object));
 			case TES3::ObjectType::Faction:
-				return sol::make_object(state, reinterpret_cast<TES3::Faction*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Faction*>(object));
 			case TES3::ObjectType::Global:
-				return sol::make_object(state, reinterpret_cast<TES3::GlobalVariable*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::GlobalVariable*>(object));
 			case TES3::ObjectType::GameSetting:
-				return sol::make_object(state, reinterpret_cast<TES3::GameSetting*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::GameSetting*>(object));
 			case TES3::ObjectType::Ingredient:
-				return sol::make_object(state, reinterpret_cast<TES3::Ingredient*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Ingredient*>(object));
 			case TES3::ObjectType::Light:
-				return sol::make_object(state, reinterpret_cast<TES3::Light*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Light*>(object));
 			case TES3::ObjectType::Lockpick:
-				return sol::make_object(state, reinterpret_cast<TES3::Lockpick*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Lockpick*>(object));
 			case TES3::ObjectType::Misc:
-				return sol::make_object(state, reinterpret_cast<TES3::Misc*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Misc*>(object));
 			case TES3::ObjectType::NPC:
 				if (reinterpret_cast<TES3::Actor*>(object)->actorFlags & TES3::ActorFlag::IsBase) {
-					return sol::make_object(state, reinterpret_cast<TES3::NPC*>(object));
+					result = sol::make_object(state, reinterpret_cast<TES3::NPC*>(object));
 				}
 				else {
-					return sol::make_object(state, reinterpret_cast<TES3::NPCInstance*>(object));
+					result = sol::make_object(state, reinterpret_cast<TES3::NPCInstance*>(object));
 				}
 			case TES3::ObjectType::Probe:
-				return sol::make_object(state, reinterpret_cast<TES3::Probe*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Probe*>(object));
 			case TES3::ObjectType::Race:
-				return sol::make_object(state, reinterpret_cast<TES3::Race*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Race*>(object));
 			case TES3::ObjectType::Reference:
-				return sol::make_object(state, reinterpret_cast<TES3::Reference*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Reference*>(object));
 			case TES3::ObjectType::Repair:
-				return sol::make_object(state, reinterpret_cast<TES3::RepairTool*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::RepairTool*>(object));
 			case TES3::ObjectType::Script:
-				return sol::make_object(state, reinterpret_cast<TES3::Script*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Script*>(object));
 			case TES3::ObjectType::Skill:
-				return sol::make_object(state, reinterpret_cast<TES3::Skill*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Skill*>(object));
 			case TES3::ObjectType::Spell:
-				return sol::make_object(state, reinterpret_cast<TES3::Spell*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Spell*>(object));
 			case TES3::ObjectType::Static:
-				return sol::make_object(state, reinterpret_cast<TES3::Static*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Static*>(object));
 			case TES3::ObjectType::Ammo:
 			case TES3::ObjectType::Weapon:
-				return sol::make_object(state, reinterpret_cast<TES3::Weapon*>(object));
+				result = sol::make_object(state, reinterpret_cast<TES3::Weapon*>(object));
 			}
 
-			return sol::make_object(state, object);
+			if (result != sol::nil) {
+				userdataMap[(unsigned long)object] = result;
+			}
+			return result;
 		}
 
 		sol::object makeLuaObject(TES3::MobileObject* object) {

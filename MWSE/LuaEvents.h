@@ -11,7 +11,7 @@ namespace mwse {
 			public:
 				virtual const char* getEventName() { return NULL; };
 				virtual sol::table createEventTable() { return sol::nil; };
-				virtual sol::object getEventFilter() { return sol::nil; }
+				virtual sol::object getEventOptions() { return sol::nil; }
 			};
 
 			// ---------------------------------------------------------------------------- //
@@ -29,8 +29,8 @@ namespace mwse {
 
 			class FilteredEvent : public GenericEvent {
 			public:
-				FilteredEvent(const char* name, sol::object filter);
-				sol::object getEventFilter();
+				FilteredEvent(const char* name, sol::object filter = sol::nil);
+				sol::object getEventOptions();
 
 			protected:
 				sol::object m_EventFilter;
@@ -38,7 +38,7 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class EquipEvent : public GenericEvent {
+			class EquipEvent : public FilteredEvent {
 			public:
 				EquipEvent(TES3::Reference* reference, TES3::BaseObject* item, TES3::ItemData* itemData);
 				sol::table createEventTable();

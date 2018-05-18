@@ -4,7 +4,7 @@ local generalEvents = {}
 
 local filteredEvents = {}
 
-function getEventTable(eventType, filter)
+local function getEventTable(eventType, filter)
 	if (filter == nil) then
 		if (generalEvents[eventType] == nil) then
 			generalEvents[eventType] = {}

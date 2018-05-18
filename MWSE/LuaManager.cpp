@@ -970,7 +970,7 @@ namespace mwse {
 				triggerBackgroundThreadEvents();
 
 				// Execute the original event.
-				sol::object response = event::trigger(baseEvent->getEventName(), baseEvent->createEventTable(), baseEvent->getEventFilter());
+				sol::object response = event::trigger(baseEvent->getEventName(), baseEvent->createEventTable(), baseEvent->getEventOptions());
 				delete baseEvent;
 				return response;
 			}
@@ -999,7 +999,7 @@ namespace mwse {
 				backgroundThreadEvents.pop();
 
 				// Trigger it.
-				event::trigger(baseEvent->getEventName(), baseEvent->createEventTable());
+				event::trigger(baseEvent->getEventName(), baseEvent->createEventTable(), baseEvent->getEventOptions());
 				delete baseEvent;
 			}
 
