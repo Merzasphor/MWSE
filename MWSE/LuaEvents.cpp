@@ -25,6 +25,12 @@ namespace mwse {
 				return result;
 			}
 
+			void clearObjectFilter(sol::object filterObject) {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::protected_function trigger = state["event"]["clear"];
+				trigger(sol::nil, filterObject);
+			}
+
 			//
 			// Generic event. Delivers no real payload and contains a dynamic name.
 			//

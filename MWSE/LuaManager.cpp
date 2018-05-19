@@ -100,6 +100,8 @@
 #define TES3_cellChanged 0x45CEF0
 #define TES3_cellChangedWithCompanions 0x45C9B0
 
+#define TES3_BaseObject_destructor 0x4F0CA0
+
 namespace mwse {
 	namespace lua {
 		// Initialize singleton.
@@ -696,9 +698,11 @@ namespace mwse {
 		//
 
 		TES3::BaseObject* __fastcall OnEntityDelete(TES3::BaseObject* object) {
+			// Clear the object from the userdata cache.
 			LuaManager::getInstance().removeUserdataFromCache(object);
 
-			return reinterpret_cast<TES3::BaseObject*(__thiscall *)(TES3::BaseObject*)>(0x4F0CA0)(object);
+			// Let the object finally die.
+			return reinterpret_cast<TES3::BaseObject*(__thiscall *)(TES3::BaseObject*)>(TES3_BaseObject_destructor)(object);
 		}
 
 		void LuaManager::hook() {
@@ -1048,9 +1052,11 @@ namespace mwse {
 		sol::object LuaManager::getCachedUserdata(TES3::BaseObject* object) {
 			userdataMapMutex.lock();
 
+			sol::object result = sol::nil;
+
 			UserdataMap::iterator searchResult = userdataCache.find((unsigned long)object);
 			if (searchResult != userdataCache.end()) {
-				return searchResult->second;
+				result = searchResult->second;
 			}
 
 			userdataMapMutex.unlock();
@@ -1061,14 +1067,16 @@ namespace mwse {
 		sol::object LuaManager::getCachedUserdata(TES3::MobileObject* object) {
 			userdataMapMutex.lock();
 
+			sol::object result = sol::nil;
+
 			UserdataMap::iterator searchResult = userdataCache.find((unsigned long)object);
 			if (searchResult != userdataCache.end()) {
-				return searchResult->second;
+				result = searchResult->second;
 			}
 
 			userdataMapMutex.unlock();
 
-			return sol::nil;
+			return result;
 		}
 
 		void LuaManager::insertUserdataIntoCache(TES3::BaseObject* object, sol::object luaObject) {
@@ -1088,6 +1096,10 @@ namespace mwse {
 
 			auto it = userdataCache.find((unsigned long)object);
 			if (it != userdataCache.end()) {
+				// Clear any events that make use of this object.
+				event::clearObjectFilter(it->second);
+
+				// Remove it from the cache.
 				userdataCache.erase(it);
 			}
 
@@ -1099,6 +1111,10 @@ namespace mwse {
 
 			auto it = userdataCache.find((unsigned long)object);
 			if (it != userdataCache.end()) {
+				// Clear any events that make use of this object.
+				event::clearObjectFilter(it->second);
+
+				// Remove it from the cache.
 				userdataCache.erase(it);
 			}
 
