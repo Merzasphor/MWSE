@@ -152,14 +152,16 @@ namespace mwse {
 				return sol::nil;
 			}
 
-			auto searchResult = userdataMap.find((unsigned long)object);
-			if (searchResult != userdataMap.end()) {
-				return searchResult->second;
+			LuaManager& luaManager = LuaManager::getInstance();
+
+			// Search in cache first.
+			sol::object result = luaManager.getCachedUserdata(object);
+			if (result != sol::nil) {
+				return result;
 			}
 
-			sol::state& state = LuaManager::getInstance().getState();
+			sol::state& state = luaManager.getState();
 
-			sol::object result = sol::nil;
 			switch (object->objectType) {
 			case TES3::ObjectType::Activator:
 				result = sol::make_object(state, reinterpret_cast<TES3::Activator*>(object));
@@ -237,9 +239,11 @@ namespace mwse {
 				result = sol::make_object(state, reinterpret_cast<TES3::Weapon*>(object));
 			}
 
+			// Insert the object into cache.
 			if (result != sol::nil) {
-				userdataMap[(unsigned long)object] = result;
+				luaManager.insertUserdataIntoCache(object, result);
 			}
+
 			return result;
 		}
 
@@ -248,14 +252,16 @@ namespace mwse {
 				return sol::nil;
 			}
 
-			auto searchResult = userdataMap.find((unsigned long)object);
-			if (searchResult != userdataMap.end()) {
-				return searchResult->second;
+			LuaManager& luaManager = LuaManager::getInstance();
+
+			// Search in cache first.
+			sol::object result = luaManager.getCachedUserdata(object);
+			if (result != sol::nil) {
+				return result;
 			}
 
-			sol::state& state = LuaManager::getInstance().getState();
+			sol::state& state = luaManager.getState();
 
-			sol::object result = sol::nil;
 			switch ((unsigned int)object->vTable.mobileObject) {
 			case TES3_vTable_MobileCreature:
 				result = sol::make_object(state, reinterpret_cast<TES3::MobileCreature*>(object));
@@ -265,6 +271,11 @@ namespace mwse {
 				result = sol::make_object(state, reinterpret_cast<TES3::MobilePlayer*>(object));
 			case TES3_vTable_MobileProjectile:
 				result = sol::make_object(state, reinterpret_cast<TES3::MobileProjectile*>(object));
+			}
+
+			// Insert the object into cache.
+			if (result != sol::nil) {
+				luaManager.insertUserdataIntoCache(object, result);
 			}
 
 			return result;

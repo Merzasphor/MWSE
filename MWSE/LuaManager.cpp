@@ -691,6 +691,16 @@ namespace mwse {
 			return mobileActor->applyHealthDamage(damage, flag1, flag2, flag3);
 		}
 
+		//
+		// When an object is deleted, we need to clear any lua mapping to it.
+		//
+
+		TES3::BaseObject* __fastcall OnEntityDelete(TES3::BaseObject* object) {
+			LuaManager::getInstance().removeUserdataFromCache(object);
+
+			return reinterpret_cast<TES3::BaseObject*(__thiscall *)(TES3::BaseObject*)>(0x4F0CA0)(object);
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");
@@ -936,12 +946,24 @@ namespace mwse {
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);
+
+			// Hook generic entity deletion so that we can do any necessary cleanup.
+			genCallEnforced(0x4AA15B, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
+			genCallEnforced(0x4AAF10, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
+			genCallEnforced(0x4E49EE, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
+			genCallEnforced(0x4EEFAA, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
+			genCallEnforced(0x4F026F, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
+			genCallEnforced(0x4F0C83, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
 		}
 
 		void LuaManager::cleanup() {
 			// Clean up our handles to our override tables. Helps to prevent a crash when
 			// closing mid-execution.
 			scriptOverrides.clear();
+
+			userdataMapMutex.lock();
+			userdataCache.clear();
+			userdataMapMutex.unlock();
 		}
 
 		TES3::Script* LuaManager::getCurrentScript() {
@@ -1021,6 +1043,66 @@ namespace mwse {
 			}
 
 			return sol::nil;
+		}
+
+		sol::object LuaManager::getCachedUserdata(TES3::BaseObject* object) {
+			userdataMapMutex.lock();
+
+			UserdataMap::iterator searchResult = userdataCache.find((unsigned long)object);
+			if (searchResult != userdataCache.end()) {
+				return searchResult->second;
+			}
+
+			userdataMapMutex.unlock();
+
+			return sol::nil;
+		}
+
+		sol::object LuaManager::getCachedUserdata(TES3::MobileObject* object) {
+			userdataMapMutex.lock();
+
+			UserdataMap::iterator searchResult = userdataCache.find((unsigned long)object);
+			if (searchResult != userdataCache.end()) {
+				return searchResult->second;
+			}
+
+			userdataMapMutex.unlock();
+
+			return sol::nil;
+		}
+
+		void LuaManager::insertUserdataIntoCache(TES3::BaseObject* object, sol::object luaObject) {
+			userdataMapMutex.lock();
+			userdataCache[(unsigned long)object] = luaObject;
+			userdataMapMutex.unlock();
+		}
+
+		void LuaManager::insertUserdataIntoCache(TES3::MobileObject* object, sol::object luaObject) {
+			userdataMapMutex.lock();
+			userdataCache[(unsigned long)object] = luaObject;
+			userdataMapMutex.unlock();
+		}
+
+		void LuaManager::removeUserdataFromCache(TES3::BaseObject* object) {
+			userdataMapMutex.lock();
+
+			auto it = userdataCache.find((unsigned long)object);
+			if (it != userdataCache.end()) {
+				userdataCache.erase(it);
+			}
+
+			userdataMapMutex.unlock();
+		}
+
+		void LuaManager::removeUserdataFromCache(TES3::MobileObject* object) {
+			userdataMapMutex.lock();
+
+			auto it = userdataCache.find((unsigned long)object);
+			if (it != userdataCache.end()) {
+				userdataCache.erase(it);
+			}
+
+			userdataMapMutex.unlock();
 		}
 	}
 }

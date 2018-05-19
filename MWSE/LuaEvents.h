@@ -29,11 +29,11 @@ namespace mwse {
 
 			class ObjectFilteredEvent : public GenericEvent {
 			public:
-				ObjectFilteredEvent(const char* name, sol::object filter);
+				ObjectFilteredEvent(const char* name, TES3::BaseObject* filter);
 				sol::object getEventOptions();
 
 			protected:
-				sol::object m_EventFilter;
+				TES3::BaseObject* m_EventFilter;
 			};
 
 			// ---------------------------------------------------------------------------- //

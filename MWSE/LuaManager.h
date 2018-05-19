@@ -12,6 +12,8 @@
 
 namespace mwse {
 	namespace lua {
+		typedef std::unordered_map<unsigned long, sol::object> UserdataMap;
+
 		class LuaManager {
 		public:
 			// Returns an instance to the singleton.
@@ -49,6 +51,14 @@ namespace mwse {
 			void setButtonPressedCallback(sol::optional<sol::protected_function>);
 			sol::object triggerButtonPressed();
 
+			// Guarded access to the userdata cache.
+			sol::object getCachedUserdata(TES3::BaseObject*);
+			sol::object getCachedUserdata(TES3::MobileObject*);
+			void insertUserdataIntoCache(TES3::BaseObject*, sol::object);
+			void insertUserdataIntoCache(TES3::MobileObject*, sol::object);
+			void removeUserdataFromCache(TES3::BaseObject*);
+			void removeUserdataFromCache(TES3::MobileObject*);
+
 		private:
 			LuaManager();
 
@@ -71,6 +81,10 @@ namespace mwse {
 
 			// Storage for our current button pressed callback.
 			sol::protected_function buttonPressedCallback = sol::nil;
+
+			// 
+			std::mutex userdataMapMutex;
+			UserdataMap userdataCache;
 		};
 	}
 }

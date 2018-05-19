@@ -53,8 +53,6 @@ namespace mwse {
 		TES3::DialogueInfo* getOptionalParamTopic(sol::optional<sol::table> maybeParams, const char* key);
 		TES3::Sound* getOptionalParamSound(sol::optional<sol::table> maybeParams, const char* key);
 
-		static std::unordered_map<unsigned long, sol::object> userdataMap;
-
 		sol::object makeLuaObject(TES3::BaseObject* object);
 		sol::object makeLuaObject(TES3::MobileObject* object);
 	}
