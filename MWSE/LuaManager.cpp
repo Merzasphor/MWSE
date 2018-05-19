@@ -960,7 +960,7 @@ namespace mwse {
 			genCallEnforced(0x568794, 0x558720, reinterpret_cast<DWORD>(OnStopCombat));
 			genCallEnforced(0x461881, 0x558720, reinterpret_cast<DWORD>(OnStopCombat));
 			genCallEnforced(0x461A61, 0x558720, reinterpret_cast<DWORD>(OnStopCombat));
-			genCallEnforced(0x7365E9, 0x558720, reinterpret_cast<DWORD>(OnStopCombat));
+			genJumpEnforced(0x7365E9, 0x558720, reinterpret_cast<DWORD>(OnStopCombat));
 
 			// Event: Melee Hit Check
 			genCallEnforced(0x541489, TES3_ActorAnimData_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
