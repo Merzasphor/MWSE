@@ -37,6 +37,44 @@ namespace mwse {
 		VirtualProtect((DWORD*)address, size, oldProtect, &oldProtect);
 	}
 
+	bool genJumpEnforced(DWORD address, DWORD previousTo, DWORD to, DWORD size) {
+		// Make sure we're doing a call.
+		BYTE instruction = *reinterpret_cast<BYTE*>(address);
+		if (instruction != 0xE9) {
+#if _DEBUG
+			log::getLog() << "[MemoryUtil] Skipping jump generation at 0x" << std::hex << address << ". Expected 0xe9, found instruction: 0x" << (int)instruction << "." << std::endl;
+#endif
+			return false;
+		}
+
+		// Read previous call address to make sure it's what we are expecting.
+		DWORD currentCallAddress = *reinterpret_cast<DWORD*>(address + 1) + address + 0x5;
+		if (currentCallAddress != previousTo) {
+#if _DEBUG
+			log::getLog() << "[MemoryUtil] Skipping jump generation at 0x" << std::hex << address << ". Expected previous jump to 0x" << previousTo << ", found 0x" << currentCallAddress << "." << std::endl;
+#endif
+			return false;
+		}
+
+		// Unprotect memory.
+		DWORD oldProtect;
+		VirtualProtect((DWORD*)address, size, PAGE_READWRITE, &oldProtect);
+
+		// Create our jump.
+		MemAccess<unsigned char>::Set(address, 0xE9);
+		MemAccess<DWORD>::Set(address + 1, to - address - 0x5);
+
+		// NOP out the rest of the block.
+		for (DWORD i = address + 5; i < address + size; i++) {
+			genNOP(i);
+		}
+
+		// Protect memory again.
+		VirtualProtect((DWORD*)address, size, oldProtect, &oldProtect);
+
+		return true;
+	}
+
 	void genCallUnprotected(DWORD address, DWORD to, DWORD size) {
 		// Unprotect memory.
 		DWORD oldProtect;

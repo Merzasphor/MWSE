@@ -40,6 +40,9 @@ namespace mwse {
 	void genJumpUnprotected(DWORD address, DWORD to, DWORD size = 0x5);
 
 	// Code to generate a call in memory. This function unprotects the memory.
+	bool genJumpEnforced(DWORD address, DWORD previousTo, DWORD to, DWORD size = 0x5);
+
+	// Code to generate a call in memory. This function unprotects the memory.
 	void genCallUnprotected(DWORD address, DWORD to, DWORD size = 0x5);
 
 	// Code to generate a call in memory. This function unprotects the memory.
