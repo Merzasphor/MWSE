@@ -56,6 +56,15 @@ namespace mwse {
 	}
 
 	bool genCallEnforced(DWORD address, DWORD previousTo, DWORD to, DWORD size) {
+		// Make sure we're doing a call.
+		BYTE instruction = *reinterpret_cast<BYTE*>(address);
+		if (instruction != 0xE8) {
+#if _DEBUG
+			log::getLog() << "[MemoryUtil] Skipping call generation at 0x" << std::hex << address << ". Expected 0xe8, found instruction: 0x" << (int)instruction << "." << std::endl;
+#endif
+			return false;
+		}
+
 		// Read previous call address to make sure it's what we are expecting.
 		DWORD currentCallAddress = *reinterpret_cast<DWORD*>(address + 1) + address + 0x5;
 		if (currentCallAddress != previousTo) {
