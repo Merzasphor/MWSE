@@ -160,6 +160,15 @@ namespace TES3 {
 		Vector3 unknown_0x3A4;
 
 		//
+		// vTable accessor functions.
+		//
+
+		signed char onActorCollision(int hitReferenceIndex);
+		signed char onObjectCollision(int hitReferenceIndex, signed char flag);
+		signed char onTerrainCollision(int hitReferenceIndex);
+		signed char onActivatorCollision(int hitReferenceIndex);
+
+		//
 		// Other related this-call functions.
 		//
 

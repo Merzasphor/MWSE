@@ -1,19 +1,19 @@
-#include "TES3MobileObject.h"
+#include "TES3MobileProjectile.h"
 
 #include "LuaManager.h"
 
-#define TES3_MobileObject_onActorCollision 0x5615A0
-#define TES3_MobileObject_onObjectCollision 0x5615C0
-#define TES3_MobileObject_onTerrainCollision 0x5615E0
-#define TES3_MobileObject_onWaterCollision TES3_MobileObject_onTerrainCollision
+#define TES3_MobileProjectile_onActorCollision 0x573860
+#define TES3_MobileProjectile_onObjectCollision 0x573820
+#define TES3_MobileProjectile_onTerrainCollision 0x5737F0
+#define TES3_MobileProjectile_onWaterCollision 0x573790
 
 namespace TES3 {
-	signed char MobileObject::onActorCollision(int hitReferenceIndex) {
+	signed char MobileProjectile::onActorCollision(int hitReferenceIndex) {
 		// Grab the hit reference now, it won't be available after calling the main function.
 		TES3::Reference* hitReference = this->hitReferences->hit[hitReferenceIndex].reference;
 
 		// Call the original function. We can't invoke the vtable here because we overwrite it.
-		signed char result = reinterpret_cast<char(__thiscall *)(MobileObject*, int)>(TES3_MobileObject_onActorCollision)(this, hitReferenceIndex);
+		signed char result = reinterpret_cast<char(__thiscall *)(MobileObject*, int)>(TES3_MobileProjectile_onActorCollision)(this, hitReferenceIndex);
 
 		// Fire off our hit event.
 		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference, "actor"));
@@ -21,12 +21,12 @@ namespace TES3 {
 		return result;
 	}
 
-	signed char MobileObject::onObjectCollision(int hitReferenceIndex, signed char flag) {
+	signed char MobileProjectile::onObjectCollision(int hitReferenceIndex, signed char flag) {
 		// Grab the hit reference now, it won't be available after calling the main function.
 		TES3::Reference* hitReference = this->hitReferences->hit[hitReferenceIndex].reference;
 
 		// Call the original function. We can't invoke the vtable here because we overwrite it.
-		signed char result = reinterpret_cast<char(__thiscall *)(MobileObject*, int, signed char)>(TES3_MobileObject_onObjectCollision)(this, hitReferenceIndex, flag);
+		signed char result = reinterpret_cast<char(__thiscall *)(MobileObject*, int, signed char)>(TES3_MobileProjectile_onObjectCollision)(this, hitReferenceIndex, flag);
 
 		// Fire off our hit event.
 		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference, "object"));
@@ -34,12 +34,12 @@ namespace TES3 {
 		return result;
 	}
 
-	signed char MobileObject::onTerrainCollision(int hitReferenceIndex) {
+	signed char MobileProjectile::onTerrainCollision(int hitReferenceIndex) {
 		// Grab the hit reference now, it won't be available after calling the main function.
 		TES3::Reference* hitReference = this->hitReferences->hit[hitReferenceIndex].reference;
 
 		// Call the original function. We can't invoke the vtable here because we overwrite it.
-		signed char result = reinterpret_cast<char(__thiscall *)(MobileObject*, int)>(TES3_MobileObject_onTerrainCollision)(this, hitReferenceIndex);
+		signed char result = reinterpret_cast<char(__thiscall *)(MobileObject*, int)>(TES3_MobileProjectile_onTerrainCollision)(this, hitReferenceIndex);
 
 		// Fire off our hit event.
 		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference, "land"));
@@ -47,12 +47,12 @@ namespace TES3 {
 		return result;
 	}
 
-	signed char MobileObject::onWaterCollision(int hitReferenceIndex) {
+	signed char MobileProjectile::onWaterCollision(int hitReferenceIndex) {
 		// Grab the hit reference now, it won't be available after calling the main function.
 		TES3::Reference* hitReference = this->hitReferences->hit[hitReferenceIndex].reference;
 
 		// Call the original function. We can't invoke the vtable here because we overwrite it.
-		signed char result = reinterpret_cast<char(__thiscall *)(MobileObject*, int)>(TES3_MobileObject_onWaterCollision)(this, hitReferenceIndex);
+		signed char result = reinterpret_cast<char(__thiscall *)(MobileObject*, int)>(TES3_MobileProjectile_onWaterCollision)(this, hitReferenceIndex);
 
 		// Fire off our hit event.
 		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference, "water"));

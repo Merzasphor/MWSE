@@ -432,20 +432,23 @@ namespace mwse {
 			// Hit event, but for projectiles.
 			//
 
-			MobileObjectActorCollisionEvent::MobileObjectActorCollisionEvent(TES3::MobileObject* mobileObject, TES3::Reference* targetReference) :
-				ObjectFilteredEvent("collideActor", mobileObject->reference),
+			MobileObjectCollisionEvent::MobileObjectCollisionEvent(TES3::MobileObject* mobileObject, TES3::Reference* targetReference, const char* type) :
+				ObjectFilteredEvent("collision", mobileObject->reference),
 				m_MobileObject(mobileObject),
-				m_TargetReference(targetReference)
+				m_TargetReference(targetReference),
+				m_CollisionType(type)
 			{
 
 			}
 
-			sol::table MobileObjectActorCollisionEvent::createEventTable() {
+			sol::table MobileObjectCollisionEvent::createEventTable() {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table eventData = state.create_table();
 
 				eventData["mobile"] = makeLuaObject(m_MobileObject);
+				eventData["reference"] = makeLuaObject(m_MobileObject->reference);
 				eventData["target"] = m_TargetReference;
+				eventData["type"] = m_CollisionType;
 
 				return eventData;
 			}

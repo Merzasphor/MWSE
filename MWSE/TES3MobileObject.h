@@ -201,8 +201,10 @@ namespace TES3 {
 		// vTable accessor functions.
 		//
 
-		char onActorCollision(int);
-		char onWaterImpact(signed char);
+		signed char onActorCollision(int hitReferenceIndex);
+		signed char onObjectCollision(int hitReferenceIndex, signed char flag);
+		signed char onTerrainCollision(int hitReferenceIndex);
+		signed char onWaterCollision(int hitReferenceIndex);
 
 	};
 	static_assert(sizeof(MobileObject) == 0x60, "TES3::MobileObject failed size validation");

@@ -234,14 +234,15 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class MobileObjectActorCollisionEvent : public ObjectFilteredEvent {
+			class MobileObjectCollisionEvent : public ObjectFilteredEvent {
 			public:
-				MobileObjectActorCollisionEvent(TES3::MobileObject* mobileObject, TES3::Reference* targetReference);
+				MobileObjectCollisionEvent(TES3::MobileObject* mobileObject, TES3::Reference* targetReference, const char* type);
 				sol::table createEventTable();
 
 			protected:
 				TES3::MobileObject* m_MobileObject;
 				TES3::Reference* m_TargetReference;
+				const char* m_CollisionType;
 			};
 
 			// ---------------------------------------------------------------------------- //

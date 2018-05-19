@@ -1619,6 +1619,9 @@
     <ClCompile Include="TES3MobileObject.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
+    <ClCompile Include="TES3MobileProjectile.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">

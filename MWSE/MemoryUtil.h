@@ -47,4 +47,7 @@ namespace mwse {
 
 	// Overrides a function in a virtual table.
 	void overrideVirtualTable(DWORD address, DWORD offset, DWORD to);
+
+	// Overrides a function in a virtual table.
+	bool overrideVirtualTableEnforced(DWORD address, DWORD offset, DWORD previousTo, DWORD to);
 }

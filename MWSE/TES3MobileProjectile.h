@@ -26,6 +26,16 @@ namespace TES3 {
 		int unknown_0xA0;
 		int unknown_0xA4;
 		int unknown_0xA8;
+
+		//
+		// vTable accessor functions.
+		//
+
+		signed char onActorCollision(int hitReferenceIndex);
+		signed char onObjectCollision(int hitReferenceIndex, signed char flag);
+		signed char onTerrainCollision(int hitReferenceIndex);
+		signed char onWaterCollision(int hitReferenceIndex);
+
 	};
 	static_assert(sizeof(MobileProjectile) == 0xAC, "TES3::MobileProjectile failed size validation");
 }

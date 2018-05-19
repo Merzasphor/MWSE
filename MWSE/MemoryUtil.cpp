@@ -97,4 +97,29 @@ namespace mwse {
 		// Protect memory again.
 		VirtualProtect((DWORD*)location, 0x4, oldProtect, &oldProtect);
 	}
+
+	bool overrideVirtualTableEnforced(DWORD address, DWORD offset, DWORD previousTo, DWORD to) {
+		DWORD location = address + offset;
+
+		// Read previous call address to make sure it's what we are expecting.
+		DWORD currentCallAddress = *reinterpret_cast<DWORD*>(location);
+		if (currentCallAddress != previousTo) {
+#if _DEBUG
+			log::getLog() << "[MemoryUtil] Skipping virtual table overwrite at 0x" << std::hex << address << "+0x" << offset << ". Expected previous call to 0x" << previousTo << ", found 0x" << currentCallAddress << "." << std::endl;
+#endif
+			return false;
+		}
+
+		// Unprotect memory.
+		DWORD oldProtect;
+		VirtualProtect((DWORD*)location, 0x4, PAGE_READWRITE, &oldProtect);
+
+		// Create our call.
+		MemAccess<DWORD>::Set(location, to);
+		
+		// Protect memory again.
+		VirtualProtect((DWORD*)location, 0x4, oldProtect, &oldProtect);
+
+		return true;
+	}
 }

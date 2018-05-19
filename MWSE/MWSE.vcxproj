@@ -239,6 +239,7 @@
     <ClCompile Include="TES3MobilePlayer.cpp" />
     <ClCompile Include="TES3MobilePlayerLua.cpp" />
     <ClCompile Include="TES3MobileObject.cpp" />
+    <ClCompile Include="TES3MobileProjectile.cpp" />
     <ClCompile Include="TES3MobileProjectileLua.cpp" />
     <ClCompile Include="TES3MoonLua.cpp" />
     <ClCompile Include="TES3NPC.cpp" />

@@ -597,12 +597,67 @@ namespace mwse {
 		}
 
 		//
-		// Mobile projectile collisions
+		// Collision events: Mobile Object
 		//
 
-		char __fastcall OnMobileProjectileActorCollision(TES3::MobileProjectile* mobileProjectile, DWORD _UNUSED_, int referenceIndex) {
-			// Call our wrapper for the function so that events are triggered.
-			return mobileProjectile->onActorCollision(referenceIndex);
+		char __fastcall OnMobileObjectActorCollision(TES3::MobileObject* object, DWORD _UNUSED_, int referenceIndex) {
+			return object->onActorCollision(referenceIndex);
+		}
+
+		char __fastcall OnMobileObjectObjectCollision(TES3::MobileObject* object, DWORD _UNUSED_, int referenceIndex, signed char flag) {
+			return object->onObjectCollision(referenceIndex, flag);
+		}
+
+		char __fastcall OnMobileObjectTerrainCollision(TES3::MobileObject* object, DWORD _UNUSED_, int referenceIndex) {
+			return object->onTerrainCollision(referenceIndex);
+		}
+
+		char __fastcall OnMobileObjectWaterCollision(TES3::MobileObject* object, DWORD _UNUSED_, int referenceIndex) {
+			return object->onWaterCollision(referenceIndex);
+		}
+
+		char __fastcall OnMobileObjectActivatorCollision(TES3::MobileObject* object, DWORD _UNUSED_, int referenceIndex) {
+			return object->onObjectCollision(referenceIndex, 0);
+		}
+
+		//
+		// Collision events: Mobile Actor
+		//
+
+		char __fastcall OnMobileActorActorCollision(TES3::MobileActor* object, DWORD _UNUSED_, int referenceIndex) {
+			return object->onActorCollision(referenceIndex);
+		}
+
+		char __fastcall OnMobileActorObjectCollision(TES3::MobileActor* object, DWORD _UNUSED_, int referenceIndex, signed char flag) {
+			return object->onObjectCollision(referenceIndex, flag);
+		}
+
+		char __fastcall OnMobileActorTerrainCollision(TES3::MobileActor* object, DWORD _UNUSED_, int referenceIndex) {
+			return object->onTerrainCollision(referenceIndex);
+		}
+
+		char __fastcall OnMobileActorActivatorCollision(TES3::MobileActor* object, DWORD _UNUSED_, int referenceIndex) {
+			return object->onObjectCollision(referenceIndex, 0);
+		}
+
+		//
+		// Collision events: Mobile Projectile
+		//
+
+		char __fastcall OnMobileProjectileActorCollision(TES3::MobileProjectile* object, DWORD _UNUSED_, int referenceIndex) {
+			return object->onActorCollision(referenceIndex);
+		}
+
+		char __fastcall OnMobileProjectileObjectCollision(TES3::MobileProjectile* object, DWORD _UNUSED_, int referenceIndex, signed char flag) {
+			return object->onObjectCollision(referenceIndex, flag);
+		}
+
+		char __fastcall OnMobileProjectileTerrainCollision(TES3::MobileProjectile* object, DWORD _UNUSED_, int referenceIndex) {
+			return object->onTerrainCollision(referenceIndex);
+		}
+
+		char __fastcall OnMobileProjectileWaterCollision(TES3::MobileProjectile* object, DWORD _UNUSED_, int referenceIndex) {
+			return object->onWaterCollision(referenceIndex);
 		}
 
 		//
@@ -912,8 +967,48 @@ namespace mwse {
 			genCallEnforced(0x5414CD, TES3_ActorAnimData_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
 			genCallEnforced(0x569E78, TES3_ActorAnimData_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
 
-			// Override the MobileProjectile::onActorCollision vtable for a hit event.
-			overrideVirtualTable(0x74B2B4, 0x80, reinterpret_cast<DWORD>(OnMobileProjectileActorCollision));
+#if false
+			// Collision events: Mobile Object
+			overrideVirtualTableEnforced(0x74B0C0, 0x80, 0x5615A0, reinterpret_cast<DWORD>(OnMobileObjectActorCollision));
+			overrideVirtualTableEnforced(0x74B0C0, 0x84, 0x5615C0, reinterpret_cast<DWORD>(OnMobileObjectObjectCollision));
+			overrideVirtualTableEnforced(0x74B0C0, 0x88, 0x5615E0, reinterpret_cast<DWORD>(OnMobileObjectTerrainCollision));
+			overrideVirtualTableEnforced(0x74B0C0, 0x8C, 0x5615E0, reinterpret_cast<DWORD>(OnMobileObjectWaterCollision));
+			overrideVirtualTableEnforced(0x74B0C0, 0x90, 0x561600, reinterpret_cast<DWORD>(OnMobileObjectActivatorCollision));
+
+			// Collision events: Mobile Actor
+			overrideVirtualTableEnforced(0x74AB4C, 0x80, 0x5234A0, reinterpret_cast<DWORD>(OnMobileActorActorCollision));
+			overrideVirtualTableEnforced(0x74AB4C, 0x84, 0x5233B0, reinterpret_cast<DWORD>(OnMobileActorObjectCollision));
+			overrideVirtualTableEnforced(0x74AB4C, 0x88, 0x523310, reinterpret_cast<DWORD>(OnMobileActorTerrainCollision));
+			overrideVirtualTableEnforced(0x74AB4C, 0x8C, 0x5615E0, reinterpret_cast<DWORD>(OnMobileObjectWaterCollision));
+			overrideVirtualTableEnforced(0x74AB4C, 0x90, 0x523590, reinterpret_cast<DWORD>(OnMobileActorActivatorCollision));
+
+			// Collision events: Mobile Creature
+			overrideVirtualTableEnforced(0x74AFA4, 0x80, 0x5234A0, reinterpret_cast<DWORD>(OnMobileActorActorCollision));
+			overrideVirtualTableEnforced(0x74AFA4, 0x84, 0x5233B0, reinterpret_cast<DWORD>(OnMobileActorObjectCollision));
+			overrideVirtualTableEnforced(0x74AFA4, 0x88, 0x523310, reinterpret_cast<DWORD>(OnMobileActorTerrainCollision));
+			overrideVirtualTableEnforced(0x74AFA4, 0x8C, 0x5615E0, reinterpret_cast<DWORD>(OnMobileObjectWaterCollision));
+			overrideVirtualTableEnforced(0x74AFA4, 0x90, 0x523590, reinterpret_cast<DWORD>(OnMobileActorActivatorCollision));
+
+			// Collision events: Mobile NPC
+			overrideVirtualTableEnforced(0x74AE6C, 0x80, 0x5234A0, reinterpret_cast<DWORD>(OnMobileActorActorCollision));
+			overrideVirtualTableEnforced(0x74AE6C, 0x84, 0x5233B0, reinterpret_cast<DWORD>(OnMobileActorObjectCollision));
+			overrideVirtualTableEnforced(0x74AE6C, 0x88, 0x523310, reinterpret_cast<DWORD>(OnMobileActorTerrainCollision));
+			overrideVirtualTableEnforced(0x74AE6C, 0x8C, 0x5615E0, reinterpret_cast<DWORD>(OnMobileObjectWaterCollision));
+			overrideVirtualTableEnforced(0x74AE6C, 0x90, 0x523590, reinterpret_cast<DWORD>(OnMobileActorActivatorCollision));
+
+			// Collision events: Mobile Player
+			overrideVirtualTableEnforced(0x74B174, 0x80, 0x5234A0, reinterpret_cast<DWORD>(OnMobileActorActorCollision));
+			overrideVirtualTableEnforced(0x74B174, 0x84, 0x5233B0, reinterpret_cast<DWORD>(OnMobileActorObjectCollision));
+			overrideVirtualTableEnforced(0x74B174, 0x88, 0x523310, reinterpret_cast<DWORD>(OnMobileActorTerrainCollision));
+			overrideVirtualTableEnforced(0x74B174, 0x8C, 0x5615E0, reinterpret_cast<DWORD>(OnMobileObjectWaterCollision));
+			overrideVirtualTableEnforced(0x74B174, 0x90, 0x523590, reinterpret_cast<DWORD>(OnMobileActorActivatorCollision));
+
+			// Collision events: Mobile Projectile
+			overrideVirtualTableEnforced(0x74B2B4, 0x80, 0x573860, reinterpret_cast<DWORD>(OnMobileProjectileActorCollision));
+			overrideVirtualTableEnforced(0x74B2B4, 0x84, 0x573820, reinterpret_cast<DWORD>(OnMobileProjectileObjectCollision));
+			overrideVirtualTableEnforced(0x74B2B4, 0x88, 0x5737F0, reinterpret_cast<DWORD>(OnMobileProjectileTerrainCollision));
+			overrideVirtualTableEnforced(0x74B2B4, 0x8C, 0x573790, reinterpret_cast<DWORD>(OnMobileProjectileWaterCollision));
+#endif
 
 			// Event: UI Event
 			VirtualProtect((DWORD*)TES3_HOOK_UI_EVENT, TES3_HOOK_UI_EVENT_SIZE, PAGE_READWRITE, &OldProtect);
