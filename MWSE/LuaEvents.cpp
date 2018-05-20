@@ -429,7 +429,7 @@ namespace mwse {
 			}
 
 			//
-			// Hit event, but for projectiles.
+			// Generic collision event.
 			//
 
 			MobileObjectCollisionEvent::MobileObjectCollisionEvent(TES3::MobileObject* mobileObject, TES3::Reference* targetReference, const char* type) :
@@ -449,6 +449,36 @@ namespace mwse {
 				eventData["reference"] = makeLuaObject(m_MobileObject->reference);
 				eventData["target"] = m_TargetReference;
 				eventData["type"] = m_CollisionType;
+
+				return eventData;
+			}
+
+			//
+			// Projectile expiration event.
+			//
+
+			ProjectileExpireEvent::ProjectileExpireEvent(TES3::MobileProjectile* projectile) :
+				GenericEvent("projectileExpire"),
+				m_Projectile(projectile)
+			{
+
+			}
+
+			sol::table ProjectileExpireEvent::createEventTable() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table eventData = state.create_table();
+
+				eventData["mobile"] = makeLuaObject(m_Projectile);
+
+				// Give a shorthand to the firing reference.
+				if (m_Projectile->firingActor && m_Projectile->firingActor->reference) {
+					eventData["firingReference"] = makeLuaObject(m_Projectile->firingActor->reference);
+				}
+
+				// Also give a shorthand to the firing weapon.
+				if (m_Projectile->firingWeapon) {
+					eventData["firingWeapon"] = makeLuaObject(m_Projectile->firingWeapon);
+				}
 
 				return eventData;
 			}

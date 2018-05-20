@@ -749,6 +749,19 @@ namespace mwse {
 		}
 
 		//
+		// Projectile expire event.
+		//
+
+		void __fastcall OnProjectileExpire(void* mobController, DWORD _UNUSED_, TES3::Reference* reference) {
+			// Get the fired projectile, and trigger an event for it.
+			TES3::MobileProjectile* projectile = tes3::getAttachment<TES3::AttachmentWithNode<TES3::MobileProjectile>>(reference, TES3::AttachmentType::ActorData)->data;
+			LuaManager::getInstance().triggerEvent(new event::ProjectileExpireEvent(projectile));
+
+			// Call overwritten function.
+			reinterpret_cast<void(__thiscall *)(void*, TES3::Reference*)>(0x5637F0)(mobController, reference);
+		}
+
+		//
 		// When an object is deleted, we need to clear any lua mapping to it.
 		//
 
@@ -1010,6 +1023,9 @@ namespace mwse {
 			overrideVirtualTableEnforced(0x74B2B4, 0x88, 0x5737F0, reinterpret_cast<DWORD>(OnMobileProjectileTerrainCollision));
 			overrideVirtualTableEnforced(0x74B2B4, 0x8C, 0x573790, reinterpret_cast<DWORD>(OnMobileProjectileWaterCollision));
 #endif
+
+			// Mobile Projectile Expire
+			genCallEnforced(0x57548A, 0x5637F0, reinterpret_cast<DWORD>(OnProjectileExpire));
 
 			// Event: UI Event
 			VirtualProtect((DWORD*)TES3_HOOK_UI_EVENT, TES3_HOOK_UI_EVENT_SIZE, PAGE_READWRITE, &OldProtect);
