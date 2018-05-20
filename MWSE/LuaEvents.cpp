@@ -432,11 +432,10 @@ namespace mwse {
 			// Generic collision event.
 			//
 
-			MobileObjectCollisionEvent::MobileObjectCollisionEvent(TES3::MobileObject* mobileObject, TES3::Reference* targetReference, const char* type) :
+			MobileObjectCollisionEvent::MobileObjectCollisionEvent(TES3::MobileObject* mobileObject, TES3::Reference* targetReference) :
 				ObjectFilteredEvent("collision", mobileObject->reference),
 				m_MobileObject(mobileObject),
-				m_TargetReference(targetReference),
-				m_CollisionType(type)
+				m_TargetReference(targetReference)
 			{
 
 			}
@@ -448,7 +447,39 @@ namespace mwse {
 				eventData["mobile"] = makeLuaObject(m_MobileObject);
 				eventData["reference"] = makeLuaObject(m_MobileObject->reference);
 				eventData["target"] = m_TargetReference;
-				eventData["type"] = m_CollisionType;
+
+				return eventData;
+			}
+
+			//
+			// Collision event: MobileProjectile on actor
+			//
+
+			MobileProjectileActorCollisionEvent::MobileProjectileActorCollisionEvent(TES3::MobileProjectile* projectile, TES3::Reference* targetReference) :
+				ObjectFilteredEvent("projectileHitActor", projectile->firingActor->reference),
+				m_Projectile(projectile),
+				m_TargetReference(targetReference)
+			{
+
+			}
+
+			sol::table MobileProjectileActorCollisionEvent::createEventTable() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table eventData = state.create_table();
+
+				eventData["mobile"] = makeLuaObject(m_Projectile);
+				eventData["target"] = makeLuaObject(m_TargetReference);
+
+				// Give a shorthand to the firing reference.
+				if (m_Projectile->firingActor && m_Projectile->firingActor->reference) {
+					eventData["firingReference"] = makeLuaObject(m_Projectile->firingActor->reference);
+				}
+
+				// Also give a shorthand to the firing weapon.
+				if (m_Projectile->firingWeapon) {
+					eventData["firingWeapon"] = makeLuaObject(m_Projectile->firingWeapon);
+				}
+
 
 				return eventData;
 			}
@@ -458,7 +489,7 @@ namespace mwse {
 			//
 
 			ProjectileExpireEvent::ProjectileExpireEvent(TES3::MobileProjectile* projectile) :
-				GenericEvent("projectileExpire"),
+				ObjectFilteredEvent("projectileExpire", projectile->firingActor->reference),
 				m_Projectile(projectile)
 			{
 

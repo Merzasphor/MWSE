@@ -16,7 +16,7 @@ namespace TES3 {
 		signed char result = reinterpret_cast<char(__thiscall *)(MobileObject*, int)>(TES3_MobileObject_onActorCollision)(this, hitReferenceIndex);
 
 		// Fire off our hit event.
-		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference, "actor"));
+		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
 
 		return result;
 	}
@@ -29,7 +29,7 @@ namespace TES3 {
 		signed char result = reinterpret_cast<char(__thiscall *)(MobileObject*, int, signed char)>(TES3_MobileObject_onObjectCollision)(this, hitReferenceIndex, flag);
 
 		// Fire off our hit event.
-		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference, "object"));
+		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
 
 		return result;
 	}
@@ -42,7 +42,7 @@ namespace TES3 {
 		signed char result = reinterpret_cast<char(__thiscall *)(MobileObject*, int)>(TES3_MobileObject_onTerrainCollision)(this, hitReferenceIndex);
 
 		// Fire off our hit event.
-		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference, "land"));
+		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
 
 		return result;
 	}
@@ -55,7 +55,7 @@ namespace TES3 {
 		signed char result = reinterpret_cast<char(__thiscall *)(MobileObject*, int)>(TES3_MobileObject_onWaterCollision)(this, hitReferenceIndex);
 
 		// Fire off our hit event.
-		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference, "water"));
+		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
 
 		return result;
 	}

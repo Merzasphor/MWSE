@@ -4,12 +4,31 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "Log.h"
+
 #define TES3_MobilePlayer_exerciseSkill 0x56A5D0
 #define TES3_MobilePlayer_levelSkill 0x56BBE0
 #define TES3_MobilePlayer_onDeath 0x56A120
 
 namespace TES3 {
 	void MobilePlayer::exerciseSkill(int skillId, float progress) {
+		// Invoke our combat start event and check if it is blocked.
+		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+		sol::table eventData = luaManager.triggerEvent(new mwse::lua::event::SkillExerciseEvent(skillId, progress));
+		if (eventData.valid()) {
+			if (eventData["block"] == true) {
+				return;
+			}
+
+			skillId = eventData["skill"];
+			progress = eventData["progress"];
+
+			if (skillId < SkillID::FirstSkill || skillId > SkillID::LastSkill) {
+				mwse::log::getLog() << "Error: Attempted to exercise skill with id of " << skillId << "." << std::endl;
+				return;
+			}
+		}
+
 		reinterpret_cast<void(__thiscall *)(MobilePlayer*, int, float)>(TES3_MobilePlayer_exerciseSkill)(this, skillId, progress);
 	}
 
