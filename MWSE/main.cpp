@@ -51,6 +51,11 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 		mwse::log::OpenLog("MWSELog.txt");
 		mwse::log::getLog() << "Morrowind Script Extender v" << MWSE_VERSION_MAJOR << "." << MWSE_VERSION_MINOR << "." << MWSE_VERSION_PATCH << " (built " << __DATE__ << ") initialized." << std::endl;
 
+		// Before we do anything else, ensure that we can make minidumps.
+		if (!mwse::patch::installMiniDumpHook()) {
+			mwse::log::getLog() << "Error: Unable to hook minidump!" << std::endl;
+		}
+
 		// Initialize our main mwscript hook.
 		mwse::mwAdapter::Hook();
 
