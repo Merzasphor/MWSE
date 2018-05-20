@@ -1206,13 +1206,15 @@ namespace mwse {
 		void LuaManager::removeUserdataFromCache(TES3::BaseObject* object) {
 			userdataMapMutex.lock();
 
-			auto it = userdataCache.find((unsigned long)object);
-			if (it != userdataCache.end()) {
-				// Clear any events that make use of this object.
-				event::clearObjectFilter(it->second);
+			if (!userdataCache.empty()) {
+				UserdataMap::iterator it = userdataCache.find((unsigned long)object);
+				if (it != userdataCache.end()) {
+					// Clear any events that make use of this object.
+					event::clearObjectFilter(it->second);
 
-				// Remove it from the cache.
-				userdataCache.erase(it);
+					// Remove it from the cache.
+					userdataCache.erase(it);
+				}
 			}
 
 			userdataMapMutex.unlock();
@@ -1221,13 +1223,15 @@ namespace mwse {
 		void LuaManager::removeUserdataFromCache(TES3::MobileObject* object) {
 			userdataMapMutex.lock();
 
-			auto it = userdataCache.find((unsigned long)object);
-			if (it != userdataCache.end()) {
-				// Clear any events that make use of this object.
-				event::clearObjectFilter(it->second);
+			if (!userdataCache.empty()) {
+				UserdataMap::iterator it = userdataCache.find((unsigned long)object);
+				if (it != userdataCache.end()) {
+					// Clear any events that make use of this object.
+					event::clearObjectFilter(it->second);
 
-				// Remove it from the cache.
-				userdataCache.erase(it);
+					// Remove it from the cache.
+					userdataCache.erase(it);
+				}
 			}
 
 			userdataMapMutex.unlock();
