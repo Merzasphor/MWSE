@@ -25,7 +25,7 @@ namespace mwse {
 				"flagExpire", &TES3::MobileProjectile::flagExpire,
 
 				"reference", sol::readonly_property(&TES3::MobileProjectile::reference),
-				"firingActor", sol::readonly_property([](TES3::MobileProjectile& self) { return mwse::lua::makeLuaObject(self.firingActor); }),
+				"firingMobile", sol::readonly_property([](TES3::MobileProjectile& self) { return mwse::lua::makeLuaObject(self.firingActor); }),
 				"firingWeapon", sol::readonly_property(&TES3::MobileProjectile::firingWeapon),
 
 				"cellX", sol::readonly_property(&TES3::MobileProjectile::cellX),
