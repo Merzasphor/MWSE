@@ -33,8 +33,6 @@
 
 #include "LuaManager.h"
 
-using namespace mwse;
-
 TES3MACHINE* mge_virtual_machine = NULL;
 void* external_malloc = NULL;
 void* external_free = NULL;
@@ -42,48 +40,58 @@ void* external_realloc = NULL;
 
 static BOOL CALLBACK EnumSymbolsCallback(PSYMBOL_INFO, ULONG, PVOID);
 
-BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved)
-{
+BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 	HANDLE process = NULL;
-	switch (fdwReason)
-	{
+	switch (fdwReason) {
 	case DLL_PROCESS_ATTACH:
-		// Initialize once for each new process.
-		// Return FALSE to fail DLL load.
-		log::OpenLog("MWSELog.txt");
-		mwAdapter::Hook(); //for testing purposes only at the moment, this should be replaced by a function more friendly (like a virtual machine init or something)
-		log::getLog() << "Morrowind Script Extender v" << MWSE_VERSION_MAJOR << "." << MWSE_VERSION_MINOR << "." << MWSE_VERSION_PATCH << " (built " << __DATE__ << ") initialized." << std::endl;
+	{
+		// Initialize once for each new process. Return FALSE to fail DLL load.
+
+		// Initialize log file.
+		mwse::log::OpenLog("MWSELog.txt");
+		mwse::log::getLog() << "Morrowind Script Extender v" << MWSE_VERSION_MAJOR << "." << MWSE_VERSION_MINOR << "." << MWSE_VERSION_PATCH << " (built " << __DATE__ << ") initialized." << std::endl;
+
+		// Initialize our main mwscript hook.
+		mwse::mwAdapter::Hook();
+
+		// Create MGE VM interface.
 		mge_virtual_machine = new TES3MACHINE();
-		// Find the addresses of malloc(), realloc(), free() that MW uses,
-		// so that we can interact with its heap.
+
+		// Find the addresses of malloc(), realloc(), free() that MW uses, so that we can interact with its heap.
 		process = GetCurrentProcess();
 		SymInitialize(process, NULL, TRUE);
 		SymEnumSymbols(process, 0, "msvcrt!*", EnumSymbolsCallback, NULL);
 		SymCleanup(process);
 
+		// Ensure that we got malloc.
+		if (external_malloc == NULL) {
+			mwse::log::getLog() << "Error: unable to find malloc()" << std::endl;
+			exit(1);
+		}
+		else {
+			mwse::tes3::_malloc = reinterpret_cast<mwse::tes3::ExternalMalloc>(external_malloc);
+		}
+
+		// Ensure that we got free.
+		if (external_free == NULL) {
+			mwse::log::getLog() << "Error: unable to find free()" << std::endl;
+			exit(1);
+		}
+		else {
+			mwse::tes3::_free = reinterpret_cast<mwse::tes3::ExternalFree>(external_free);
+		}
+
+		// Ensure that we got realloc.
+		if (external_realloc == NULL) {
+			mwse::log::getLog() << "Error: unable to find realloc()" << std::endl;
+			exit(1);
+		}
+		else {
+			mwse::tes3::_realloc = reinterpret_cast<mwse::tes3::ExternalRealloc>(external_realloc);
+		}
+
 		// Install necessary patches.
 		mwse::patch::installPatches();
-
-		if (external_malloc == NULL) {
-			log::getLog() << "Error: unable to find malloc()" << std::endl;
-		}
-		else {
-			tes3::_malloc = reinterpret_cast<tes3::ExternalMalloc>(external_malloc);
-		}
-
-		if (external_free == NULL) {
-			log::getLog() << "Error: unable to find free()" << std::endl;
-		}
-		else {
-			tes3::_free = reinterpret_cast<tes3::ExternalFree>(external_free);
-		}
-
-		if (external_realloc == NULL) {
-			log::getLog() << "Error: unable to find realloc()" << std::endl;
-		}
-		else {
-			tes3::_realloc = reinterpret_cast<tes3::ExternalRealloc>(external_realloc);
-		}
 
 		// Parse and load the features installed by the Morrowind Code Patch.
 		if (!mwse::mcp::loadFeatureList()) {
@@ -91,9 +99,9 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved)
 		}
 
 		// Hook Lua interface.
-		lua::LuaManager::getInstance().hook();
-
-		break;
+		mwse::lua::LuaManager::getInstance().hook();
+	}
+	break;
 	case DLL_THREAD_ATTACH:
 		// Do thread-specific initialization.
 		break;
@@ -102,7 +110,7 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved)
 		break;
 	case DLL_PROCESS_DETACH:
 		// Unhook Lua interface.
-		lua::LuaManager::getInstance().cleanup();
+		mwse::lua::LuaManager::getInstance().cleanup();
 		break;
 	}
 
