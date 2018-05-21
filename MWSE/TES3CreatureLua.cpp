@@ -89,6 +89,8 @@ namespace mwse {
 
 				"objectType", &TES3::Creature::objectType,
 
+				"boundingBox", &TES3::Creature::boundingBox,
+
 				"id", sol::readonly_property(&TES3::Creature::getObjectID),
 				"name", sol::property(&TES3::Creature::getName, &TES3::Creature::setName),
 
@@ -135,6 +137,8 @@ namespace mwse {
 				//
 
 				"objectType", &TES3::CreatureInstance::objectType,
+
+				"boundingBox", &TES3::CreatureInstance::boundingBox,
 
 				"id", sol::readonly_property(&TES3::CreatureInstance::getObjectID),
 				"name", sol::property(&TES3::CreatureInstance::getName, &TES3::CreatureInstance::setName),

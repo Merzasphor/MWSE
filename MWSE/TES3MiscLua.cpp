@@ -16,6 +16,8 @@ namespace mwse {
 
 				"objectType", &TES3::Misc::objectType,
 
+				"boundingBox", &TES3::Misc::boundingBox,
+
 				"id", sol::readonly_property(&TES3::Misc::getObjectID),
 				"name", sol::property(&TES3::Misc::getName, &TES3::Misc::setName),
 

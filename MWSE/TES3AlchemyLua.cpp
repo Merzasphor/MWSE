@@ -151,6 +151,8 @@ namespace mwse {
 
 				"objectType", &TES3::Alchemy::objectType,
 
+				"boundingBox", &TES3::Alchemy::boundingBox,
+
 				"id", sol::readonly_property(&TES3::Alchemy::getObjectID),
 				"name", sol::property(&TES3::Alchemy::getName, &TES3::Alchemy::setName),
 

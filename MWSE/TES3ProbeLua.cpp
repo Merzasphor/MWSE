@@ -16,6 +16,8 @@ namespace mwse {
 
 				"objectType", &TES3::Probe::objectType,
 
+				"boundingBox", &TES3::Probe::boundingBox,
+
 				"id", sol::readonly_property(&TES3::Probe::getObjectID),
 				"name", sol::property(&TES3::Probe::getName, &TES3::Probe::setName),
 

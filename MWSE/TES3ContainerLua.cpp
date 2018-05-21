@@ -18,6 +18,8 @@ namespace mwse {
 
 				"objectType", &TES3::Container::objectType,
 
+				"boundingBox", &TES3::Container::boundingBox,
+
 				"id", sol::readonly_property(&TES3::Container::getObjectID),
 				"name", sol::property(&TES3::Container::getName, &TES3::Container::setName),
 
@@ -60,6 +62,8 @@ namespace mwse {
 				//
 
 				"objectType", &TES3::ContainerInstance::objectType,
+
+				"boundingBox", &TES3::ContainerInstance::boundingBox,
 
 				"id", sol::readonly_property(&TES3::ContainerInstance::getObjectID),
 				"name", sol::property(&TES3::ContainerInstance::getName, &TES3::ContainerInstance::setName),

@@ -16,6 +16,8 @@ namespace mwse {
 
 				"objectType", &TES3::Weapon::objectType,
 
+				"boundingBox", &TES3::Weapon::boundingBox,
+
 				"id", sol::readonly_property(&TES3::Weapon::getObjectID),
 				"name", sol::property(&TES3::Weapon::getName, &TES3::Weapon::setName),
 

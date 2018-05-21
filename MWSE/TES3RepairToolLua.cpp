@@ -16,6 +16,8 @@ namespace mwse {
 
 				"objectType", &TES3::RepairTool::objectType,
 
+				"boundingBox", &TES3::RepairTool::boundingBox,
+
 				"id", sol::readonly_property(&TES3::RepairTool::getObjectID),
 				"name", sol::property(&TES3::RepairTool::getName, &TES3::RepairTool::setName),
 

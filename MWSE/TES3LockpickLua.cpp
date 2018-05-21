@@ -16,6 +16,8 @@ namespace mwse {
 
 				"objectType", &TES3::Lockpick::objectType,
 
+				"boundingBox", &TES3::Lockpick::boundingBox,
+
 				"id", sol::readonly_property(&TES3::Lockpick::getObjectID),
 				"name", sol::property(&TES3::Lockpick::getName, &TES3::Lockpick::setName),
 

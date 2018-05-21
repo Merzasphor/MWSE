@@ -16,6 +16,8 @@ namespace mwse {
 
 				"objectType", &TES3::Static::objectType,
 
+				"boundingBox", &TES3::Static::boundingBox,
+
 				"id", sol::readonly_property(&TES3::Static::getObjectID),
 
 				"model", sol::readonly_property(&TES3::Static::getModelPath)

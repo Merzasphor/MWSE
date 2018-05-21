@@ -18,6 +18,8 @@ namespace mwse {
 
 				"objectType", &TES3::NPC::objectType,
 
+				"boundingBox", &TES3::NPC::boundingBox,
+
 				"id", sol::readonly_property(&TES3::NPC::getObjectID),
 				"name", sol::property(&TES3::NPC::getName, &TES3::NPC::setName),
 
@@ -66,6 +68,8 @@ namespace mwse {
 				//
 
 				"objectType", &TES3::NPCInstance::objectType,
+
+				"boundingBox", &TES3::NPCInstance::boundingBox,
 
 				"id", sol::readonly_property(&TES3::NPCInstance::getObjectID),
 				"name", sol::property(&TES3::NPCInstance::getName, &TES3::NPCInstance::setName),
