@@ -31,5 +31,11 @@ namespace TES3 {
 		Vector3 m1;
 		Vector3 m2;
 	};
-	static_assert(sizeof(Matrix33) == 0x24, "TES3::Vector3 failed size validation");
+	static_assert(sizeof(Matrix33) == 0x24, "TES3::Matrix33 failed size validation");
+
+	struct BoundingBox {
+		Vector3 minimum;
+		Vector3 maximum;
+	};
+	static_assert(sizeof(BoundingBox) == 0x18, "TES3::BoundingBox failed size validation");
 }

@@ -33,6 +33,11 @@ namespace mwse {
 				"z", &TES3::Vector4::z,
 				"w", &TES3::Vector4::w
 				);
+
+			state.new_usertype<TES3::BoundingBox>("TES3BoundingBox",
+				"min", &TES3::BoundingBox::minimum,
+				"max", &TES3::BoundingBox::maximum
+				);
 		}
 	}
 }

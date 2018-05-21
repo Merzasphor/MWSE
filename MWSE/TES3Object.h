@@ -102,6 +102,7 @@ namespace TES3 {
 	struct BaseObject;
 	struct BaseObjectVirtualTable;
 	struct Bodypart;
+	struct BoundingBox;
 	struct Cell;
 	struct CellExteriorData;
 	struct Class;
@@ -330,14 +331,6 @@ namespace TES3 {
 	static_assert(sizeof(Object) == 0x28, "TES3::Object failed size validation");
 
 	struct PhysicalObject : Object {
-		struct BoundingBox {
-			float minX;
-			float minY;
-			float minZ;
-			float maxX;
-			float maxY;
-			float maxZ;
-		};
 		BoundingBox * boundingBox; // 0x28
 		char * objectID; // 0x2C
 	};
