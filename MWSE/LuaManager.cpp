@@ -69,6 +69,9 @@
 #include "TES3WeatherLua.h"
 #include "TES3WorldControllerLua.h"
 
+#include "windows.h"
+#include "psapi.h"
+
 #include <filesystem>
 
 #define TES3_HOOK_RUNSCRIPT_LUACHECK 0x5029A4
@@ -183,6 +186,12 @@ namespace mwse {
 
 			luaState["mwse"]["virtualKeyPressed"] = [](int VK_key) {
 				return (GetAsyncKeyState(VK_key) & 0x8000) == 0x8000;
+			};
+
+			luaState["mwse"]["getVirtualMemoryUsage"] = []() {
+				PROCESS_MEMORY_COUNTERS_EX memCounter;
+				GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&memCounter, sizeof(memCounter));
+				return memCounter.PrivateUsage;
 			};
 
 			// Add binding for base objects.
