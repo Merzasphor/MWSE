@@ -8,7 +8,9 @@
 #include "TES3Util.h"
 #include "UIUtil.h"
 #include "LuaUtil.h"
+#include "Stack.h"
 #include "Log.h"
+#include "ScriptUtil.h"
 
 namespace mwse {
 	namespace lua {
@@ -287,6 +289,14 @@ namespace mwse {
 			// Bind function: tes3.newGame
 			state["tes3"]["newGame"] = []() {
 				tes3::startNewGame();
+			};
+
+			// Bind function: tes3.getEyeVector
+			// This function currently calls out to MGE, which should be changed at some point.
+			state["tes3"]["getCameraVector"] = [](sol::optional<sol::table> params) {
+				Stack& stack = Stack::getInstance();
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEGetEyeVec);
+				return std::make_shared<TES3::Vector3>(stack.popFloat(), stack.popFloat(), stack.popFloat());
 			};
 		}
 	}
