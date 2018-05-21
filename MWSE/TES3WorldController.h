@@ -82,7 +82,7 @@ namespace TES3 {
 		int helpDelay; // 0x88
 		unsigned char hudStyle; // 0x8C
 		float menuAlpha; // 0x90
-		unsigned char bCursorOff; // 0x94
+		bool cursorOff; // 0x94
 		float aiDistance; // 0x98
 		int difficulty; // 0x9C
 		int werewolfFOV; // 0xA0
@@ -98,26 +98,26 @@ namespace TES3 {
 		int Win32_hWndParent; // 0xC8
 		int Win32_hWnd; // 0xCC
 		int Win32_hInstance; // 0xD0
-		unsigned char flagEventMenuModeOn; // 0xD4
-		unsigned char flagEventMenuModeOff; // 0xD5
-		unsigned char flagMenuMode; // 0xD6
+		bool flagEventMenuModeOn; // 0xD4
+		bool flagEventMenuModeOff; // 0xD5
+		bool flagMenuMode; // 0xD6
 		char unknown_0xD7;
 		char unknown_0xD8;
 		char unknown_0xD9;
 		char unknown_0xDA;
-		char unknown_0xDB;
+		bool stopGameLoop; // 0xDB
 		char unknown_0xDC;
 		char unknown_0xDD;
 		char unknown_0xDE;
 		char unknown_0xDF;
-		char flagTeleportingDisabled; // 0xE0
-		char flagLevitationDisabled; // 0xE1
-		char bUseBestAttack; // 0xE2
-		char bQuickSaveRest; // 0xE3
+		bool flagTeleportingDisabled; // 0xE0
+		bool flagLevitationDisabled; // 0xE1
+		bool useBestAttack; // 0xE2
+		bool canUseQuickSaveAndRest; // 0xE3
 		char unknown_0xE4;
 		char unknown_0xE5;
 		char unknown_0xE6;
-		char shaderWaterReflectTerrain; // 0xE7
+		bool shaderWaterReflectsTerrain; // 0xE7
 		int mouseSensitivity; // 0xE8
 		int horzSensitivity; // 0xEC
 		int shaderWaterReflectUpdate; // 0xF0
@@ -155,7 +155,7 @@ namespace TES3 {
 		void * lstGlobalScripts; // 0x338
 		void * listAllActors; // 0x33C
 		void * listChargableItems; // 0x340
-		char bSubtitles; // 0x344
+		bool showSubtitles; // 0x344
 		int countMusicTracksBattle; // 0x348
 		int countMusicTracksExplore; // 0x34C
 		unsigned int musicState; // 0x350

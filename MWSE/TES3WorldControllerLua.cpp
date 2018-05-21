@@ -42,7 +42,7 @@ namespace mwse {
 				"helpDelay", &TES3::WorldController::helpDelay,
 				"hudStyle", &TES3::WorldController::hudStyle,
 				"menuAlpha", &TES3::WorldController::menuAlpha,
-				"cursorOff", &TES3::WorldController::bCursorOff,
+				"cursorOff", &TES3::WorldController::cursorOff,
 
 				"werewolfFOV", &TES3::WorldController::werewolfFOV,
 
@@ -64,11 +64,12 @@ namespace mwse {
 				"flagEventMenuModeOn", &TES3::WorldController::flagEventMenuModeOn,
 				"flagEventMenuModeOff", &TES3::WorldController::flagEventMenuModeOff,
 				"flagMenuMode", &TES3::WorldController::flagMenuMode,
+				"stopGameLoop", &TES3::WorldController::stopGameLoop,
 				"flagTeleportingDisabled", &TES3::WorldController::flagTeleportingDisabled,
 				"flagLevitationDisabled", &TES3::WorldController::flagLevitationDisabled,
-				"useBestAttack", &TES3::WorldController::bUseBestAttack,
-				"canQuickSaveAndRest", &TES3::WorldController::bQuickSaveRest,
-				"shaderWaterReflectTerrain", &TES3::WorldController::shaderWaterReflectTerrain,
+				"useBestAttack", &TES3::WorldController::useBestAttack,
+				"canQuickSaveAndRest", &TES3::WorldController::canUseQuickSaveAndRest,
+				"shaderWaterReflectTerrain", &TES3::WorldController::shaderWaterReflectsTerrain,
 
 				"mouseSensitivityX", &TES3::WorldController::horzSensitivity,
 				"mouseSensitivityY", &TES3::WorldController::mouseSensitivity,
@@ -86,7 +87,7 @@ namespace mwse {
 				"lstGlobalScripts", &TES3::WorldController::lstGlobalScripts,
 				"listAllActors", &TES3::WorldController::listAllActors,
 				"listChargableItems", &TES3::WorldController::listChargableItems,
-				"bSubtitles", &TES3::WorldController::bSubtitles,
+				"showSubtitles", &TES3::WorldController::showSubtitles,
 				"countMusicTracksBattle", &TES3::WorldController::countMusicTracksBattle,
 				"countMusicTracksExplore", &TES3::WorldController::countMusicTracksExplore,
 				"musicState", &TES3::WorldController::musicState
