@@ -164,7 +164,7 @@ namespace mwse
 			*reinterpret_cast<float*>(TES3_TARGET_ROTZ_IMAGE) = z;
 		}
 
-		float RunOriginalOpCode(TES3::Script* script, TES3::Reference* reference, OpCode::OpCode_t opCode, TES3::BaseObject* objectParam = NULL, char charParam = '_', float unk1 = 0.0f, float unk2 = 0.0f) {
+		float RunOriginalOpCode(TES3::Script* script, TES3::Reference* reference, OpCode::OpCode_t opCode, TES3::BaseObject* objectParam, char charParam, float unk1, float unk2) {
 			// Cache script state.
 			TES3::Reference* cachedTargetReference = getScriptTargetReference();
 			TES3::BaseObject* cachedTargetTemplate = getScriptTargetTemplate();
@@ -172,7 +172,18 @@ namespace mwse
 
 			// Call the opcode.
 			setScriptTargetReference(reference);
-			float result = reinterpret_cast<float(__thiscall *)(TES3::Script*, int, char, TES3::BaseObject*)>(0x505770)(script, opCode, charParam, objectParam);
+			static int origRunOpCode = 0x505770;
+			float result = 0.0f;
+			__asm {
+				mov ecx, script
+				push objectParam
+				push charParam
+				push opCode
+
+				call origRunOpCode
+
+				fstp result
+			}
 
 			// Restore script state.
 			setInstructionPointer(IP);
