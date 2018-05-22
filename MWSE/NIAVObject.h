@@ -19,7 +19,7 @@ namespace NI {
 		TES3::TArray<void> propertyList; // 078
 
 		//
-		//
+		// vTable wrappers.
 		//
 
 		AVObject * getObjectByName(const char*);
@@ -28,6 +28,12 @@ namespace NI {
 		T * getObjectByName(const char* name) {
 			return reinterpret_cast<T*>(vTable.asAVObject->getObjectByName(this, name));
 		}
+		
+		//
+		// Other related this-call functions.
+		//
+
+		void propagatePositionChange(float unk1 = 0.0f, int unk2 = 0, int unk3 = 1);
 
 	};
 	static_assert(sizeof(AVObject) == 0x90, "NI::AVObject failed size validation");
