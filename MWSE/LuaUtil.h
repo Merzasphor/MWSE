@@ -55,5 +55,6 @@ namespace mwse {
 
 		sol::object makeLuaObject(TES3::BaseObject* object);
 		sol::object makeLuaObject(TES3::MobileObject* object);
+		sol::object makeLuaObject(NI::Object* object);
 	}
 }

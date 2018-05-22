@@ -97,6 +97,8 @@ namespace mwse {
 				"id", sol::readonly_property(&TES3::Reference::getObjectID),
 				"objectType", sol::readonly(&TES3::Reference::objectType),
 
+				"sceneNode", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.sceneNode); }),
+
 				"position", &TES3::Reference::position,
 				"orientation", &TES3::Reference::orientation, // This doesn't seem to actually do anything.
 

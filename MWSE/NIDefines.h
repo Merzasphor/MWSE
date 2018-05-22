@@ -1,0 +1,32 @@
+#pragma once
+
+namespace NI {
+	struct AVObject;
+	struct Node;
+	struct Object;
+	struct ObjectNET;
+	struct RTTI;
+	struct Transform;
+
+	struct Object_vTable;
+	struct AVObject_vTable;
+	struct Node_vTable;
+
+	namespace RunTimeTypeInformation {
+		enum RTTI {
+			Accumulator = 0x7DECC0,
+			AlphaAccumulator = 0x7DDF48,
+			AVObject = 0x7DE7CC,
+			ClusterAccumulator = 0x7DDF20,
+			ExtraData = 0x7DDE68,
+			Geometry = 0x7DEA2C,
+			Object = 0x7DE734,
+			ObjectNET = 0x7DE76C,
+			MirroredNode = 0x7C8AF8,
+			Node = 0x7DDEB8,
+			Property = 0x7DE720,
+			SwitchNode = 0x7DE1AC,
+			TES3ExtraData = 0x7CE280
+		};
+	}
+}

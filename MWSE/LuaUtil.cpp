@@ -319,5 +319,24 @@ namespace mwse {
 
 			return result;
 		}
+
+		sol::object makeLuaObject(NI::Object* object) {
+			if (object == NULL) {
+				return sol::nil;
+			}
+
+			LuaManager& luaManager = LuaManager::getInstance();
+
+			sol::state& state = luaManager.getState();
+
+			switch ((unsigned int)object->getRunTimeTypeInformation()) {
+			case NI::RunTimeTypeInformation::Node:
+				return sol::make_object(state, reinterpret_cast<NI::Node*>(object));
+			case NI::RunTimeTypeInformation::SwitchNode:
+				return sol::make_object(state, reinterpret_cast<NI::SwitchNode*>(object));
+			}
+
+			return sol::make_object(state, object);
+		}
 	}
 }

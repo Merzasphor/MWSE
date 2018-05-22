@@ -53,4 +53,12 @@
 #include "TES3Weather.h"
 #include "TES3WorldController.h"
 
+#include "NIDefines.h"
+#include "NIRTTI.h"
+#include "NIObject.h"
+#include "NIObjectNET.h"
+#include "NIAVObject.h"
+#include "NINode.h"
+#include "NISwitchNode.h"
+
 #include "sol.hpp"

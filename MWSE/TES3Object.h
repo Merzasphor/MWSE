@@ -1,5 +1,7 @@
 #pragma once
 
+#include "NIDefines.h"
+
 namespace TES3 {
 
 	//
@@ -276,7 +278,7 @@ namespace TES3 {
 	static_assert(sizeof(BaseObject) == 0x10, "TES3::BaseObject failed size validation");
 
 	struct Object : BaseObject {
-		void * sceneNode; // 0x10
+		NI::Node * sceneNode; // 0x10
 		void * owningCollection; // 0x14
 		void * referenceToThis; // 0x18
 		Object * previousInCollection; // 0x1C

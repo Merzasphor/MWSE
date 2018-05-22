@@ -69,6 +69,10 @@
 #include "TES3WeatherLua.h"
 #include "TES3WorldControllerLua.h"
 
+#include "NIObjectLua.h"
+#include "NINodeLua.h"
+#include "NISwitchNodeLua.h"
+
 #include "windows.h"
 #include "psapi.h"
 
@@ -204,7 +208,7 @@ namespace mwse {
 				"objectType", &TES3::MobileObject::objectType
 				);
 
-			// Bind data types.
+			// Bind TES3 data types.
 			bindTES3ActionData();
 			bindTES3Activator();
 			bindTES3Alchemy();
@@ -253,6 +257,11 @@ namespace mwse {
 			bindTES3Weather();
 			bindTES3WeatherController();
 			bindTES3WorldController();
+
+			// Bind NI data types.
+			bindNIObject();
+			bindNINode();
+			bindNISwitchNode();
 		}
 
 		//
