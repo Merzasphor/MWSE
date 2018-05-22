@@ -12,6 +12,8 @@
 #include "Log.h"
 #include "ScriptUtil.h"
 
+
+
 namespace mwse {
 	namespace lua {
 		auto iterateObjectsFiltered(unsigned int desiredType) {
@@ -296,7 +298,13 @@ namespace mwse {
 			state["tes3"]["getCameraVector"] = [](sol::optional<sol::table> params) {
 				Stack& stack = Stack::getInstance();
 				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEGetEyeVec);
-				return std::make_shared<TES3::Vector3>(stack.popFloat(), stack.popFloat(), stack.popFloat());
+
+				// Order is backwards.
+				float z = stack.popFloat();
+				float y = stack.popFloat();
+				float x = stack.popFloat();
+
+				return std::make_shared<TES3::Vector3>(x, y, z);
 			};
 
 			// Bind function: tes3.getCameraPosition
