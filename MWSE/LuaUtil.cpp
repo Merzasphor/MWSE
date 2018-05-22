@@ -147,6 +147,31 @@ namespace mwse {
 			return value;
 		}
 
+		TES3::Vector3* getOptionalParamVector3(sol::optional<sol::table> maybeParams, const char* key) {
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeValue = params[key];
+				if (maybeValue.valid()) {
+					// Were we given a real vector?
+					if (maybeValue.is<TES3::Vector3*>()) {
+						return maybeValue.as<TES3::Vector3*>();
+					}
+
+					// Were we given a table?
+					else if (maybeValue.is<sol::table>()) {
+						sol::table value = maybeValue.as<sol::table>();
+						TES3::Vector3* result = tes3::malloc<TES3::Vector3>();
+						result->x = value[1];
+						result->y = value[2];
+						result->z = value[3];
+						return result;
+					}
+				}
+			}
+
+			return NULL;
+		}
+
 		sol::object makeLuaObject(TES3::BaseObject* object) {
 			if (object == NULL) {
 				return sol::nil;

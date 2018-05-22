@@ -12,8 +12,6 @@
 #include "Log.h"
 #include "ScriptUtil.h"
 
-
-
 namespace mwse {
 	namespace lua {
 		auto iterateObjectsFiltered(unsigned int desiredType) {
@@ -310,6 +308,103 @@ namespace mwse {
 			// Bind function: tes3.getCameraPosition
 			state["tes3"]["getCameraPosition"] = [](sol::optional<sol::table> params) {
 				return tes3::getWorldController()->worldCamera.camera->worldBoundOrigin;
+			};
+
+			// Bind function: tes3.getCameraPosition
+			static NI::Pick* rayTestCache = NULL;
+			state["tes3"]["rayTest"] = [](sol::optional<sol::table> params) -> sol::object {
+				// Make sure we got our required position.
+				TES3::Vector3* position = getOptionalParamVector3(params, "position");
+				if (position == NULL) {
+					return false;
+				}
+
+				// Make sure we got our required direction.
+				TES3::Vector3* direction = getOptionalParamVector3(params, "direction");
+				if (direction == NULL) {
+					return false;
+				}
+
+				// Create our pick if it doesn't exist.
+				if (rayTestCache == NULL) {
+					rayTestCache = NI::Pick::malloc();
+				}
+
+				// Or clean up results otherwise.
+				else {
+					rayTestCache->clearResults();
+				}
+
+				// TODO: Allow specifying the root?
+				rayTestCache->root = tes3::getGame()->worldRoot;
+
+				// Are we finding all or the first?
+				if (getOptionalParam<bool>(params, "findAll", false)) {
+					rayTestCache->pickType = NI::PickType::FIND_ALL;
+				}
+				else {
+					rayTestCache->pickType = NI::PickType::FIND_FIRST;
+				}
+
+				// Sort results by distance?
+				if (getOptionalParam<bool>(params, "sort", true)) {
+					rayTestCache->sortType = NI::PickSortType::SORT;
+				}
+				else {
+					rayTestCache->sortType = NI::PickSortType::NO_SORT;
+				}
+
+				// Use triangle or model bounds for intersection?
+				if (getOptionalParam<bool>(params, "useModelBounds", false)) {
+					rayTestCache->intersectType = NI::PickIntersectType::BOUND_INTERSECT;
+				}
+				else {
+					rayTestCache->intersectType = NI::PickIntersectType::TRIANGLE_INTERSECT;
+				}
+
+				// Use model coordinates or world coordinates?
+				if (getOptionalParam<bool>(params, "useModelCoordinates", false)) {
+					rayTestCache->coordinateType = NI::PickCoordinateType::MODEL_COORDINATES;
+				}
+				else {
+					rayTestCache->coordinateType = NI::PickCoordinateType::WORLD_COORDINATES;
+				}
+
+				// Use the back side of a triangle? Note: Parameter name flipped!
+				rayTestCache->frontOnly = !getOptionalParam<bool>(params, "useBackTriangles", false);
+
+				// Observe app cull flag?
+				rayTestCache->observeAppCullFlag = getOptionalParam<bool>(params, "observeAppCullFlag", true);
+
+				// Determine what returned values we care about.
+				rayTestCache->returnColor = getOptionalParam<bool>(params, "returnColor", false);
+				rayTestCache->returnNormal = getOptionalParam<bool>(params, "returnNormal", true);
+				rayTestCache->returnSmoothNormal = getOptionalParam<bool>(params, "returnSmoothNormal", false);
+				rayTestCache->returnTexture = getOptionalParam<bool>(params, "returnTexture", false);
+
+				// Our pick is configured. Let's run it!
+				rayTestCache->pickObjects(position, direction);
+
+				// Did we get any results?
+				if (rayTestCache->results.filledCount == 0) {
+					return sol::nil;
+				}
+
+				// Are we looking for a single result?
+				else if (rayTestCache->frontOnly) {
+					return sol::make_object(LuaManager::getInstance().getState(), rayTestCache->results.storage[0]);
+				}
+
+				// We're now in multi-result mode. We'll store these in a table.
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table results = state.create_table();
+				
+				// Go through and clone the results in a way that will play nice.
+				for (int i = 0; i < rayTestCache->results.filledCount; i++) {
+					results[i + 1] = rayTestCache->results.storage[i];
+				}
+
+				return results;
 			};
 		}
 	}

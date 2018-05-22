@@ -72,6 +72,7 @@
 #include "NICameraLua.h"
 #include "NIObjectLua.h"
 #include "NINodeLua.h"
+#include "NiPickLua.h"
 #include "NISwitchNodeLua.h"
 
 #include "windows.h"
@@ -263,6 +264,7 @@ namespace mwse {
 			bindNICamera();
 			bindNIObject();
 			bindNINode();
+			bindNIPick();
 			bindNISwitchNode();
 		}
 

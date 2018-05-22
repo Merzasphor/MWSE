@@ -33,6 +33,8 @@
     <ClInclude Include="NIObject.h" />
     <ClInclude Include="NIObjectLua.h" />
     <ClInclude Include="NIObjectNET.h" />
+    <ClInclude Include="NiPick.h" />
+    <ClInclude Include="NiPickLua.h" />
     <ClInclude Include="NIRTTI.h" />
     <ClInclude Include="NISwitchNode.h" />
     <ClInclude Include="NISwitchNodeLua.h" />
@@ -212,6 +214,8 @@
     <ClCompile Include="NINodeLua.cpp" />
     <ClCompile Include="NIObject.cpp" />
     <ClCompile Include="NIObjectLua.cpp" />
+    <ClCompile Include="NiPick.cpp" />
+    <ClCompile Include="NiPickLua.cpp" />
     <ClCompile Include="NISwitchNodeLua.cpp" />
     <ClCompile Include="NIUtil.cpp" />
     <ClCompile Include="PatchUtil.cpp" />

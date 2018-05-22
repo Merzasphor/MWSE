@@ -7,7 +7,7 @@ namespace TES3 {
 		void * vTable;
 		NI::Object * renderer;
 		NI::Object * root;
-		NI::Object * cameraRoot;
+		NI::Node * cameraRoot;
 		NI::Camera * camera;
 		float unknown_0x14;
 		float unknown_0x18;

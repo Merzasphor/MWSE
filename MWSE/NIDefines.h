@@ -6,6 +6,8 @@ namespace NI {
 	struct Node;
 	struct Object;
 	struct ObjectNET;
+	struct Pick;
+	struct PickRecord;
 	struct RTTI;
 	struct Transform;
 
