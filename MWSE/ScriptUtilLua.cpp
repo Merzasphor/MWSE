@@ -145,6 +145,10 @@ namespace mwse {
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
 				bool setModified = getOptionalParam<bool>(params, "modify", true);
 
+				if (reference == NULL) {
+					return false;
+				}
+
 				if (setModified) {
 					reference->setObjectModified(true);
 				}
