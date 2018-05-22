@@ -24,7 +24,7 @@ namespace mwse {
 
 				"flags", &NI::SwitchNode::flags,
 				"parentNode", &NI::SwitchNode::parentNode,
-				"worldBoundOrigin", &NI::SwitchNode::worldBoundOrgin,
+				"worldBoundOrigin", &NI::SwitchNode::worldBoundOrigin,
 				"worldBoundRadius", &NI::SwitchNode::worldBoundRadius,
 				"localRotation", &NI::SwitchNode::localRotation,
 				"localTranslate", &NI::SwitchNode::localTranslate,

@@ -24,7 +24,7 @@ namespace mwse {
 
 				"flags", &NI::Camera::flags,
 				"parentNode", &NI::Camera::parentNode,
-				"worldBoundOrigin", &NI::Camera::worldBoundOrgin,
+				"worldBoundOrigin", &NI::Camera::worldBoundOrigin,
 				"worldBoundRadius", &NI::Camera::worldBoundRadius,
 				"localRotation", &NI::Camera::localRotation,
 				"localTranslate", &NI::Camera::localTranslate,

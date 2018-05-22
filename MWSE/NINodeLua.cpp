@@ -40,7 +40,7 @@ namespace mwse {
 
 				"flags", &NI::Node::flags,
 				"parentNode", &NI::Node::parentNode,
-				"worldBoundOrigin", &NI::Node::worldBoundOrgin,
+				"worldBoundOrigin", &NI::Node::worldBoundOrigin,
 				"worldBoundRadius", &NI::Node::worldBoundRadius,
 				"localRotation", &NI::Node::localRotation,
 				"localTranslate", &NI::Node::localTranslate,

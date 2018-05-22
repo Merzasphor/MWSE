@@ -9,7 +9,7 @@ namespace NI {
 		unsigned short flags; // 0x14
 		short unknown_0x16;
 		Node * parentNode; // 0x18
-		TES3::Vector3 worldBoundOrgin; // 0x1C
+		TES3::Vector3 worldBoundOrigin; // 0x1C
 		float worldBoundRadius; // 0x28
 		TES3::Matrix33 * localRotation; // 0x2C
 		TES3::Vector3 localTranslate; // 0x30

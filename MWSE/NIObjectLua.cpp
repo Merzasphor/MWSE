@@ -72,7 +72,7 @@ namespace mwse {
 
 				"flags", &NI::AVObject::flags,
 				"parentNode", &NI::AVObject::parentNode,
-				"worldBoundOrigin", &NI::AVObject::worldBoundOrgin,
+				"worldBoundOrigin", &NI::AVObject::worldBoundOrigin,
 				"worldBoundRadius", &NI::AVObject::worldBoundRadius,
 				"localRotation", &NI::AVObject::localRotation,
 				"localTranslate", &NI::AVObject::localTranslate,

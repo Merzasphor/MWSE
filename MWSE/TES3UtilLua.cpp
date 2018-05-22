@@ -301,7 +301,7 @@ namespace mwse {
 
 			// Bind function: tes3.getCameraPosition
 			state["tes3"]["getCameraPosition"] = [](sol::optional<sol::table> params) {
-				return tes3::getWorldController()->worldCamera.camera->worldBoundOrgin;
+				return tes3::getWorldController()->worldCamera.camera->worldBoundOrigin;
 			};
 		}
 	}
