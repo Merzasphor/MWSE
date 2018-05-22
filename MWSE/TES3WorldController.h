@@ -5,10 +5,10 @@
 namespace TES3 {
 	struct WorldControllerRenderCamera {
 		void * vTable;
-		void * sgRenderer;
-		void * sgRoot;
-		void * sgCameraRoot;
-		void * sgCamera;
+		NI::Object * renderer;
+		NI::Object * root;
+		NI::Object * cameraRoot;
+		NI::Camera * camera;
 		float unknown_0x14;
 		float unknown_0x18;
 		float unknown_0x1C;
@@ -121,9 +121,9 @@ namespace TES3 {
 		int mouseSensitivity; // 0xE8
 		int horzSensitivity; // 0xEC
 		int shaderWaterReflectUpdate; // 0xF0
-		void * nodeCursor; // 0xF4
-		WorldControllerRenderCamera camSplashscreen; // 0xF8
-		WorldControllerRenderCamera camWorld; // 0x124
+		NI::Object * nodeCursor; // 0xF4
+		WorldControllerRenderCamera splashscreenCamera; // 0xF8
+		WorldControllerRenderCamera worldCamera; // 0x124
 		WorldControllerRenderCamera unknown_0x150;
 		WorldControllerRenderCamera unknown_0x17C;
 		WorldControllerRenderTarget characterRenderTarget; // 0x1A8

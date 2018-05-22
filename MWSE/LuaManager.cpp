@@ -69,6 +69,7 @@
 #include "TES3WeatherLua.h"
 #include "TES3WorldControllerLua.h"
 
+#include "NICameraLua.h"
 #include "NIObjectLua.h"
 #include "NINodeLua.h"
 #include "NISwitchNodeLua.h"
@@ -259,6 +260,7 @@ namespace mwse {
 			bindTES3WorldController();
 
 			// Bind NI data types.
+			bindNICamera();
 			bindNIObject();
 			bindNINode();
 			bindNISwitchNode();

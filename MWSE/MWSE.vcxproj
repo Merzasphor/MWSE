@@ -25,6 +25,8 @@
     <ClInclude Include="LuaUtil.h" />
     <ClInclude Include="MemoryUtil.h" />
     <ClInclude Include="NIAVObject.h" />
+    <ClInclude Include="NICamera.h" />
+    <ClInclude Include="NICameraLua.h" />
     <ClInclude Include="NIDefines.h" />
     <ClInclude Include="NINode.h" />
     <ClInclude Include="NINodeLua.h" />
@@ -206,6 +208,7 @@
     <ClCompile Include="MgeVirtualMachine.cpp" />
     <ClCompile Include="MgeTes3Machine.cpp" />
     <ClCompile Include="NIAVObject.cpp" />
+    <ClCompile Include="NICameraLua.cpp" />
     <ClCompile Include="NINodeLua.cpp" />
     <ClCompile Include="NIObject.cpp" />
     <ClCompile Include="NIObjectLua.cpp" />

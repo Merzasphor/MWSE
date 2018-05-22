@@ -2,11 +2,27 @@
 
 #include "LuaUnifiedHeader.h"
 #include "LuaManager.h"
+#include "LuaUtil.h"
 
 namespace mwse {
 	namespace lua {
 		void bindTES3WorldController() {
 			sol::state& state = LuaManager::getInstance().getState();
+
+			state.new_usertype<TES3::WorldControllerRenderCamera>("TES3WorldControllerRenderCamera",
+				// Disable construction of this type.
+				"new", sol::no_constructor,
+
+				//
+				// Properties.
+				//
+
+				"renderer", sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.renderer); }),
+				"root", sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.root); }),
+				"cameraRoot", sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.cameraRoot); }),
+				"camera", sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.camera); })
+
+				);
 
 			state.new_usertype<TES3::WorldController>("TES3WorldController",
 				// Disable construction of this type.
@@ -76,9 +92,9 @@ namespace mwse {
 
 				"shaderWaterReflectUpdate", &TES3::WorldController::shaderWaterReflectUpdate,
 
-				"nodeCursor", &TES3::WorldController::nodeCursor,
-				"camSplashscreen", &TES3::WorldController::camSplashscreen,
-				"camWorld", &TES3::WorldController::camWorld,
+				"nodeCursor", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.nodeCursor); }),
+				"splashscreenCamera", &TES3::WorldController::splashscreenCamera,
+				"worldCamera", &TES3::WorldController::worldCamera,
 				"characterRenderTarget", &TES3::WorldController::characterRenderTarget,
 				"fogOfWarController", &TES3::WorldController::fogOfWarController,
 				"menuController", &TES3::WorldController::menuController,

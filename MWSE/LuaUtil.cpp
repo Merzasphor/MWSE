@@ -332,6 +332,8 @@ namespace mwse {
 			switch ((unsigned int)object->getRunTimeTypeInformation()) {
 			case NI::RunTimeTypeInformation::AVObject:
 				return sol::make_object(state, reinterpret_cast<NI::AVObject*>(object));
+			case NI::RunTimeTypeInformation::Camera:
+				return sol::make_object(state, reinterpret_cast<NI::Camera*>(object));
 			case NI::RunTimeTypeInformation::Node:
 				return sol::make_object(state, reinterpret_cast<NI::Node*>(object));
 			case NI::RunTimeTypeInformation::ObjectNET:

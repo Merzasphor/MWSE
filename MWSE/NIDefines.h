@@ -2,6 +2,7 @@
 
 namespace NI {
 	struct AVObject;
+	struct Camera;
 	struct Node;
 	struct Object;
 	struct ObjectNET;
@@ -17,6 +18,7 @@ namespace NI {
 			Accumulator = 0x7DECC0,
 			AlphaAccumulator = 0x7DDF48,
 			AVObject = 0x7DE7CC,
+			Camera = 0x7DDEF8,
 			ClusterAccumulator = 0x7DDF20,
 			ExtraData = 0x7DDE68,
 			Geometry = 0x7DEA2C,

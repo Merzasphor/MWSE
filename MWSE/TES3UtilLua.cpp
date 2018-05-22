@@ -291,12 +291,17 @@ namespace mwse {
 				tes3::startNewGame();
 			};
 
-			// Bind function: tes3.getEyeVector
+			// Bind function: tes3.getCameraVector
 			// This function currently calls out to MGE, which should be changed at some point.
 			state["tes3"]["getCameraVector"] = [](sol::optional<sol::table> params) {
 				Stack& stack = Stack::getInstance();
 				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEGetEyeVec);
 				return std::make_shared<TES3::Vector3>(stack.popFloat(), stack.popFloat(), stack.popFloat());
+			};
+
+			// Bind function: tes3.getCameraPosition
+			state["tes3"]["getCameraPosition"] = [](sol::optional<sol::table> params) {
+				return tes3::getWorldController()->worldCamera.camera->worldBoundOrgin;
 			};
 		}
 	}

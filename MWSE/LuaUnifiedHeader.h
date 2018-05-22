@@ -55,6 +55,7 @@
 
 #include "NIDefines.h"
 #include "NIRTTI.h"
+#include "NICamera.h"
 #include "NIObject.h"
 #include "NIObjectNET.h"
 #include "NIAVObject.h"
