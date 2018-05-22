@@ -22,6 +22,17 @@ namespace mwse {
 
 				"name", sol::readonly_property(&NI::SwitchNode::name),
 
+				"flags", &NI::SwitchNode::flags,
+				"parentNode", &NI::SwitchNode::parentNode,
+				"worldBoundOrigin", &NI::SwitchNode::worldBoundOrgin,
+				"worldBoundRadius", &NI::SwitchNode::worldBoundRadius,
+				"localRotation", &NI::SwitchNode::localRotation,
+				"localTranslate", &NI::SwitchNode::localTranslate,
+				"localScale", &NI::SwitchNode::localScale,
+				"worldTransform", &NI::SwitchNode::worldTransform,
+
+				"children", sol::readonly_property(&NI::SwitchNode::children),
+
 				"switchIndex", &NI::SwitchNode::switchIndex,
 
 				//

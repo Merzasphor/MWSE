@@ -330,10 +330,24 @@ namespace mwse {
 			sol::state& state = luaManager.getState();
 
 			switch ((unsigned int)object->getRunTimeTypeInformation()) {
+			case NI::RunTimeTypeInformation::AVObject:
+				return sol::make_object(state, reinterpret_cast<NI::AVObject*>(object));
 			case NI::RunTimeTypeInformation::Node:
 				return sol::make_object(state, reinterpret_cast<NI::Node*>(object));
+			case NI::RunTimeTypeInformation::ObjectNET:
+				return sol::make_object(state, reinterpret_cast<NI::ObjectNET*>(object));
 			case NI::RunTimeTypeInformation::SwitchNode:
 				return sol::make_object(state, reinterpret_cast<NI::SwitchNode*>(object));
+			}
+
+			if (object->isInstanceOfType(NI::RunTimeTypeInformation::Node)) {
+				return sol::make_object(state, reinterpret_cast<NI::Node*>(object));
+			}
+			else if (object->isInstanceOfType(NI::RunTimeTypeInformation::AVObject)) {
+				return sol::make_object(state, reinterpret_cast<NI::AVObject*>(object));
+			}
+			else if (object->isInstanceOfType(NI::RunTimeTypeInformation::ObjectNET)) {
+				return sol::make_object(state, reinterpret_cast<NI::ObjectNET*>(object));
 			}
 
 			return sol::make_object(state, object);
