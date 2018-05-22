@@ -391,7 +391,7 @@ namespace mwse {
 				}
 
 				// Are we looking for a single result?
-				else if (rayTestCache->frontOnly) {
+				else if (rayTestCache->pickType == NI::PickType::FIND_FIRST) {
 					return sol::make_object(LuaManager::getInstance().getState(), rayTestCache->results.storage[0]);
 				}
 
