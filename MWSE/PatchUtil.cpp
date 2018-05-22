@@ -7,6 +7,9 @@
 
 #include "Log.h"
 
+#include <Windows.h>
+#include <Psapi.h>
+
 #include <dbghelp.h>
 
 namespace mwse {
@@ -121,6 +124,11 @@ namespace mwse {
 		}
 
 		void CreateMiniDump(EXCEPTION_POINTERS* pep) {
+			// Display the memory usage in the log.
+			PROCESS_MEMORY_COUNTERS_EX memCounter;
+			GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&memCounter, sizeof(memCounter));
+			log::getLog() << "Creating minidump. Memory usage: " << memCounter.PrivateUsage << std::endl;
+
 			// Open the file.
 			HANDLE hFile = CreateFile("MWSE_MiniDump.dmp", GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
