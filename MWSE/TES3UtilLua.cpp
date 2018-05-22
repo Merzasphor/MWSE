@@ -299,10 +299,10 @@ namespace mwse {
 				Stack& stack = Stack::getInstance();
 				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEGetEyeVec);
 
-				// Order is backwards.
-				float z = stack.popFloat();
-				float y = stack.popFloat();
+				// Get the results from the MWSE stack.
 				float x = stack.popFloat();
+				float y = stack.popFloat();
+				float z = stack.popFloat();
 
 				return std::make_shared<TES3::Vector3>(x, y, z);
 			};
