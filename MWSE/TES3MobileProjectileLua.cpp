@@ -29,7 +29,13 @@ namespace mwse {
 				"firingWeapon", sol::readonly_property(&TES3::MobileProjectile::firingWeapon),
 
 				"cellX", sol::readonly_property(&TES3::MobileProjectile::cellX),
-				"cellY", sol::readonly_property(&TES3::MobileProjectile::cellY)
+				"cellY", sol::readonly_property(&TES3::MobileProjectile::cellY),
+
+				"height", &TES3::MobileProjectile::height,
+				"boundSize", &TES3::MobileProjectile::boundSize,
+				"velocity", &TES3::MobileProjectile::velocity,
+				"impulseVelocity", &TES3::MobileProjectile::impulseVelocity,
+				"position", &TES3::MobileProjectile::position
 
 				);
 		}
