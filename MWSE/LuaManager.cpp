@@ -1205,7 +1205,7 @@ namespace mwse {
 
 			userdataMapMutex.unlock();
 
-			return sol::nil;
+			return result;
 		}
 
 		sol::object LuaManager::getCachedUserdata(TES3::MobileObject* object) {
