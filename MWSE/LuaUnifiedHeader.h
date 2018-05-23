@@ -44,6 +44,8 @@
 #include "TES3Sound.h"
 #include "TES3SoundGenerator.h"
 #include "TES3Spell.h"
+#include "TES3SpellEffectInstance.h"
+#include "TES3SpellInstance.h"
 #include "TES3Static.h"
 #include "TES3Statistic.h"
 #include "TES3UIBlock.h"

@@ -377,6 +377,27 @@ namespace mwse {
 				int m_Skill;
 				float m_Progress;
 			};
+
+			// ---------------------------------------------------------------------------- //
+
+			class SpellTickEvent : public GenericEvent {
+			public:
+				SpellTickEvent(TES3::SpellInstance * spellInstance, float deltaTime, TES3::SpellEffectInstance * effectInstance, int effectIndex, bool negateOnExpiry, int isUncapped, TES3::Statistic * statistic, void * attributeTypeInfo, int resistAttribute, bool(__cdecl *resistanceTestFunction)(void *, void *, int));
+				sol::table createEventTable();
+				sol::object getEventOptions();
+
+			protected:
+				TES3::SpellInstance* m_SpellInstance;
+				float m_DeltaTime;
+				TES3::SpellEffectInstance* m_EffectInstance;
+				int m_EffectIndex;
+				bool m_NegateOnExpiry;
+				int m_IsUncapped;
+				TES3::Statistic* m_Statistic;
+				void* m_AttributeTypeInfo;
+				int m_ResistAttribute;
+				bool(__cdecl *m_ResistanceTestFunction)(void *, void *, int);
+			};
 		}
 	}
 }

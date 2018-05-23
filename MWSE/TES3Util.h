@@ -135,6 +135,8 @@ namespace mwse {
 
 		void startNewGame();
 
+		bool __cdecl spellEffectEvent(TES3::SpellInstance * spellInstance, float deltaTime, TES3::SpellEffectInstance * effectInstance, int effectIndex, bool negateOnExpiry = true, int isUncapped = false, TES3::Statistic * statistic = NULL, void * attributeTypeInfo = NULL, int resistAttribute = 28, bool(__cdecl *funcResistTest)(void *, void *, int) = NULL);
+
 		//
 		// Original function calls in Morrowind.
 		//

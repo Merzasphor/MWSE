@@ -290,6 +290,9 @@ namespace mwse {
 			case TES3::ObjectType::Spell:
 				result = sol::make_object(state, reinterpret_cast<TES3::Spell*>(object));
 				break;
+			case TES3::ObjectType::SpellInstance:
+				result = sol::make_object(state, reinterpret_cast<TES3::SpellInstance*>(object));
+				break;
 			case TES3::ObjectType::Static:
 				result = sol::make_object(state, reinterpret_cast<TES3::Static*>(object));
 				break;

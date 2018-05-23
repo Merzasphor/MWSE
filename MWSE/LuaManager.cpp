@@ -60,6 +60,8 @@
 #include "TES3SkillLua.h"
 #include "TES3SoundLua.h"
 #include "TES3SpellLua.h"
+#include "TES3SpellEffectInstanceLua.h"
+#include "TES3SpellInstanceLua.h"
 #include "TES3StaticLua.h"
 #include "TES3StatisticLua.h"
 #include "TES3UIBlockLua.h"
@@ -251,6 +253,8 @@ namespace mwse {
 			bindTES3Skill();
 			bindTES3Sound();
 			bindTES3Spell();
+			bindTES3SpellEffectInstance();
+			bindTES3SpellInstance();
 			bindTES3Static();
 			bindTES3Statistic();
 			bindTES3UIBlock();
@@ -1091,6 +1095,115 @@ namespace mwse {
 			genCallEnforced(0x555789, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
 			genCallEnforced(0x556AE0, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
 			genCallEnforced(0x55782C, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
+
+			// Spell events.
+			genCallEnforced(0x45F1C1, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x45F221, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x45F284, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x45F301, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x45F362, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x45F3E2, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x45F462, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x45F4E9, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x45F619, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x45F741, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x45F7BA, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x45F894, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x45F9F2, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x45FBAD, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x45FF71, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x45FFD1, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x460031, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4600CC, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x460171, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4601D6, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4602CA, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x460356, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x460411, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x460471, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4604D1, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x460531, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x460591, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4605F1, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x460651, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4606B1, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x460711, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x460771, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x460858, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x460ACF, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x460C3F, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x460D8F, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x460EC1, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x460F3C, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x46114C, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4612B0, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4613A6, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4614E1, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x46155D, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x46165E, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x461705, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x461869, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4618F4, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x461964, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4619D4, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x461A49, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x461AD4, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x461B44, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x461BB4, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x461C09, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x461C89, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x461D09, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x461D89, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x461E09, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x461E89, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x461F09, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x461FCD, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x462085, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x462105, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4621D5, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4622D9, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4623BB, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x462461, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4624C6, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x462586, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x46267A, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x462735, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4628BB, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4629E3, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x462AA5, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x462C05, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x462D93, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x462E51, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x462EB1, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x462F11, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x462F71, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x462FD1, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x463031, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x463091, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4630F1, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x463151, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4631B1, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x46325C, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4632C3, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x46352C, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4635DC, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4636C0, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x463886, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x463966, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x463A32, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x463AE2, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x463B62, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x463BD5, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x464271, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4642E3, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4644F6, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x464C02, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x464CE1, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x464F72, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x465242, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x465BC2, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4662C4, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+			genCallEnforced(0x4669A2, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);

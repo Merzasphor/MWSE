@@ -5,6 +5,7 @@
 
 #include "TES3ActorAnimationData.h"
 #include "TES3UIBlock.h"
+#include "TES3SpellEffectInstance.h"
 
 #include "Log.h"
 
@@ -729,6 +730,53 @@ namespace mwse {
 				sol::table options = state.create_table();
 
 				options["filter"] = m_Skill;
+
+				return options;
+			}
+
+			//
+			// Spell tick event.
+			//
+
+			SpellTickEvent::SpellTickEvent(TES3::SpellInstance * spellInstance, float deltaTime, TES3::SpellEffectInstance * effectInstance, int effectIndex, bool negateOnExpiry, int isUncapped, TES3::Statistic * statistic, void * attributeTypeInfo, int resistAttribute, bool(__cdecl *resistanceTestFunction)(void *, void *, int)) :
+				GenericEvent("spellTick"),
+				m_SpellInstance(spellInstance),
+				m_DeltaTime(deltaTime),
+				m_EffectInstance(effectInstance),
+				m_EffectIndex(effectIndex),
+				m_NegateOnExpiry(negateOnExpiry),
+				m_IsUncapped(isUncapped),
+				m_Statistic(statistic),
+				m_AttributeTypeInfo(attributeTypeInfo),
+				m_ResistAttribute(resistAttribute),
+				m_ResistanceTestFunction(resistanceTestFunction)
+			{
+
+			}
+
+			sol::table SpellTickEvent::createEventTable() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table eventData = state.create_table();
+
+				eventData["spellInstance"] = makeLuaObject(m_SpellInstance);
+				eventData["deltaTime"] = m_DeltaTime;
+				eventData["effectInstance"] = m_EffectInstance;
+				eventData["effectIndex"] = m_EffectIndex;
+				eventData["negateOnExpiry"] = m_NegateOnExpiry;
+				eventData["isUncapped"] = m_IsUncapped;
+				eventData["statistic"] = m_Statistic;
+				eventData["attributeTypeInfo"] = m_AttributeTypeInfo;
+				eventData["resistAttribute"] = m_ResistAttribute;
+				eventData["resistanceTestFunction"] = m_ResistanceTestFunction;
+
+				return eventData;
+			}
+
+			sol::object SpellTickEvent::getEventOptions() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table options = state.create_table();
+
+				options["filter"] = makeLuaObject(m_SpellInstance->spell);
 
 				return options;
 			}
