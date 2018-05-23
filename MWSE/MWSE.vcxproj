@@ -167,6 +167,7 @@
     <ClInclude Include="TES3Sound.h" />
     <ClInclude Include="TES3SoundLua.h" />
     <ClInclude Include="TES3Spell.h" />
+    <ClInclude Include="TES3SpellEffectInstance.h" />
     <ClInclude Include="TES3SpellInstance.h" />
     <ClInclude Include="TES3SpellList.h" />
     <ClInclude Include="TES3SpellLua.h" />

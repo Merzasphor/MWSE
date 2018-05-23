@@ -15,23 +15,19 @@ namespace TES3 {
 		};
 	}
 
-	struct SpellInstance {
-		void * vTable; // 0x0
-		TES3::ObjectType::ObjectType objectType; // 0x4
-		void * unknown_0x8;
-		void * unknown_0xC;
+	struct SpellInstance : BaseObject {
 		float overrideCastChance; // 0x10
 		void * unknown_0x14;
 		void * unknown_0x18;
 		HashMap effects[8]; // 0x1C
 		void * unknown_0x9C; // Node?
 		Spell * spell; // 0xA0
-		char sourceType;// 0xA4
+		signed char sourceType;// 0xA4
 		void * unknown_0xA8;
 		void * unknown_0xAC;
 		void * unknown_0xB0;
 		int spellState; // 0xB4
-		void * targetReference;
+		Reference * targetReference;
 		Item * castingItem;
 		ItemData * castingItemCondition;
 		int unknown_0xC4;

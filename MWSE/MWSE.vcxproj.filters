@@ -729,6 +729,9 @@
     <ClInclude Include="NiPickLua.h">
       <Filter>Header Files\Lua\Bindings\NI</Filter>
     </ClInclude>
+    <ClInclude Include="TES3SpellEffectInstance.h">
+      <Filter>Header Files\DataAdapters\TES3\Magic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

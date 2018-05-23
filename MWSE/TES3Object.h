@@ -56,7 +56,7 @@ namespace TES3 {
 			SoundGenerator = 'GDNS',
 			Sound = 'NUOS',
 			Spell = 'LEPS',
-			Spll = 'LLPS',
+			SpellInstance = 'LLPS',
 			Static = 'TATS',
 			TES3 = '3SET',
 			Weapon = 'PAEW',
@@ -151,6 +151,8 @@ namespace TES3 {
 	struct Sound;
 	struct SoundGenerator;
 	struct Spell;
+	struct SpellEffectInstance;
+	struct SpellInstance;
 	struct Static;
 	struct Statistic;
 	struct Weapon;
