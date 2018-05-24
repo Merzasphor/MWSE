@@ -708,7 +708,7 @@ namespace mwse {
 			//
 
 			SkillExerciseEvent::SkillExerciseEvent(int skillId, float progress) :
-				GenericEvent("exercise"),
+				GenericEvent("exerciseSkill"),
 				m_Skill(skillId),
 				m_Progress(progress)
 			{

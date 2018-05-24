@@ -788,6 +788,14 @@ namespace mwse {
 		}
 
 		//
+		// Exercise skill event.
+		//
+
+		void __fastcall OnExerciseSkill(TES3::MobilePlayer* player, DWORD _UNUSED_, int skill, float progress) {
+			player->exerciseSkill(skill, progress);
+		}
+
+		//
 		// When an object is deleted, we need to clear any lua mapping to it.
 		//
 
@@ -1096,7 +1104,7 @@ namespace mwse {
 			genCallEnforced(0x556AE0, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
 			genCallEnforced(0x55782C, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
 
-			// Spell events.
+			// Event: Spell tick.
 			genCallEnforced(0x45F1C1, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
 			genCallEnforced(0x45F221, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
 			genCallEnforced(0x45F284, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
@@ -1204,6 +1212,30 @@ namespace mwse {
 			genCallEnforced(0x465BC2, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
 			genCallEnforced(0x4662C4, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
 			genCallEnforced(0x4669A2, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+
+			// Event: Player exercise skill.
+			genCallEnforced(0x4EB387, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x4EB586, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x5154EE, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x5158E3, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x5259AD, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x52985A, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x52CFB9, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x54DB5A, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x5568BE, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x556CA8, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x55771B, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x59D187, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x5A6777, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x5B5971, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x5C4CB6, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x5D1EA8, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x6003B5, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x600427, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x60049C, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x6004CD, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x60E81C, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+			genCallEnforced(0x60ECB2, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);
