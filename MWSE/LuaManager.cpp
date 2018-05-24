@@ -489,7 +489,7 @@ namespace mwse {
 
 		signed char __cdecl OnPCEquip(TES3::UI::InventoryTile* tile) {
 			// Execute event. If the event blocked the call, bail.
-			sol::object response = LuaManager::getInstance().triggerEvent(new event::EquipEvent(NULL, tile->item, tile->itemData));
+			sol::object response = LuaManager::getInstance().triggerEvent(new event::EquipEvent(tes3::getWorldController()->getMobilePlayer()->reference, tile->item, tile->itemData));
 			if (response != sol::nil && response.is<sol::table>()) {
 				sol::table eventData = response;
 				if (eventData["block"] == true) {
