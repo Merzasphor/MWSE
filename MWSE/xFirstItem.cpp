@@ -26,6 +26,7 @@
 
 #include "TES3DataHandler.h"
 #include "TES3Cell.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -53,13 +54,13 @@ namespace mwse
 		TES3::Reference* reference = NULL;
 		TES3::DataHandler* dataHandler = mwse::tes3::getDataHandler();
 		if (dataHandler->currentInteriorCell != NULL) {
-			reference = mwse::tes3::skipRemovedReferences(dataHandler->currentInteriorCell->statics.head);
+			reference = mwse::tes3::skipDeletedObjects<TES3::Reference>(dataHandler->currentInteriorCell->statics.head);
 		}
 		else {
 			auto cellPointer = dataHandler->exteriorCellData[TES3::CellGrid::Center];
 			if (cellPointer->size >= 1) {
 				// Get the start of the list for the center cell. We'll check that it's valid later.
-				reference = mwse::tes3::skipRemovedReferences(cellPointer->cell->statics.head);
+				reference = mwse::tes3::skipDeletedObjects<TES3::Reference>(cellPointer->cell->statics.head);
 				int exteriorCount = 0;
 				for (int i = 0; i < 9; i++) {
 					if (i == TES3::CellGrid::Center) {
@@ -68,7 +69,7 @@ namespace mwse
 
 					cellPointer = dataHandler->exteriorCellData[i];
 					if (cellPointer->size >= 1) {
-						TES3::Reference* tempReference = mwse::tes3::skipRemovedReferences(cellPointer->cell->statics.head);
+						TES3::Reference* tempReference = mwse::tes3::skipDeletedObjects<TES3::Reference>(cellPointer->cell->statics.head);
 						if (tempReference != NULL) {
 							mwse::tes3::exteriorRefs[exteriorCount] = tempReference;
 							exteriorCount++;

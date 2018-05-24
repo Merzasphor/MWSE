@@ -63,7 +63,14 @@ namespace mwse {
 		TES3::Spell* getSpellById(const char*);
 		TES3::Spell* getSpellById(std::string&);
 
-		TES3::Reference* skipRemovedReferences(TES3::Reference* reference);
+		template <typename T>
+		T* skipDeletedObjects(TES3::Object* object) {
+			while (object && (object->objectFlags & TES3::ObjectFlag::Delete) == TES3::ObjectFlag::Delete)
+			{
+				object = object->nextInCollection;
+			}
+			return reinterpret_cast<T*>(object);
+		}
 
 		bool getHasBaseRecord(TES3::BaseObject* record);
 

@@ -74,14 +74,6 @@ namespace mwse {
 			return getSpellById(id.c_str());
 		}
 
-		TES3::Reference * skipRemovedReferences(TES3::Reference * reference) {
-			while (reference != 0 && (reference->objectFlags & 0x20) == 0x20)
-			{
-				reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
-			}
-			return reference;
-		}
-
 		TES3::IteratorNode<TES3::ItemStack> * getFirstInventoryNode(TES3::Reference* reference) {
 			TES3::IteratorNode<TES3::ItemStack> * node = NULL;
 
