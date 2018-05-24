@@ -160,7 +160,7 @@ namespace mwse {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
 				TES3::BaseObject* item = getOptionalParamObject<TES3::BaseObject>(params, "item");
-				if (item == NULL) {
+				if (item == NULL || reference == NULL) {
 					return false;
 				}
 
