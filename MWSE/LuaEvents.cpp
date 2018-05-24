@@ -490,10 +490,13 @@ namespace mwse {
 			//
 
 			ProjectileExpireEvent::ProjectileExpireEvent(TES3::MobileProjectile* projectile) :
-				ObjectFilteredEvent("projectileExpire", projectile->firingActor->reference),
+				ObjectFilteredEvent("projectileExpire", NULL),
 				m_Projectile(projectile)
 			{
-
+				// Make sure that we have a firing actor before putting it.
+				if (m_Projectile->firingActor) {
+					m_EventFilter = m_Projectile->firingActor->reference;
+				}
 			}
 
 			sol::table ProjectileExpireEvent::createEventTable() {
