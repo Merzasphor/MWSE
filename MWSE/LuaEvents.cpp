@@ -424,7 +424,14 @@ namespace mwse {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table eventData = state.create_table();
 
-				eventData["actor"] = makeLuaObject(m_AnimationData->mobileActor);
+				eventData["mobile"] = makeLuaObject(m_AnimationData->mobileActor);
+				eventData["reference"] = makeLuaObject(m_AnimationData->mobileActor->reference);
+
+				TES3::MobileActor* target = m_AnimationData->mobileActor->actionData.hitTarget;
+				if (target) {
+					eventData["targetMobile"] = makeLuaObject(target);
+					eventData["targetReference"] = makeLuaObject(target->reference);
+				}
 
 				return eventData;
 			}
