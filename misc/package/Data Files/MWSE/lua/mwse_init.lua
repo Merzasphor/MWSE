@@ -94,7 +94,7 @@ end
 
 --[[
 	table.binsearch( table, value [, compval [, reversed] ] )
-	
+
 	Searches the table through BinarySearch for the given value.
 	If the  value is found:
 		it returns a table holding all the mathing indices (e.g. { startindice,endindice } )
@@ -147,9 +147,9 @@ end
 
 --[[
 	table.bininsert( table, value [, comp] )
-	
+
 	Inserts a given value through BinaryInsert into the table sorted by [, comp].
-	
+
 	If 'comp' is given, then it must be a function that receives
 	two table elements, and returns true when the first is less
 	than the second, e.g. comp = function(a, b) return a > b end,
@@ -220,6 +220,14 @@ function json.savefile(fileName, object, config)
 	local f = assert(io.open("Data Files/MWSE/" .. fileName .. ".json", "w"))
 	f:write(json.encode(object, config))
 	f:close()
+end
+
+-------------------------------------------------
+-- Extend our base API: mwse
+-------------------------------------------------
+
+function mwse.log(str, ...)
+	print(str:format(...))
 end
 
 -- Report that we're initialized.

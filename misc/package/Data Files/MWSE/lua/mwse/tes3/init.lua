@@ -78,4 +78,10 @@ function tes3.loopTArray(tarray)
 	end
 end
 
+-- Shortcut for the current MenuMode state.
+function tes3.menuMode()
+	return tes3.getWorldController().flagMenuMode
+end
+
+
 return tes3
