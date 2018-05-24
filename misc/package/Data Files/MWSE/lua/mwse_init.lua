@@ -1,6 +1,12 @@
 -- Require lua files from the right folder, instead of just the root Morrowind directory.
 package.path = "./Data Files/MWSE/lua/?.lua;"
 
+function include(moduleName)
+	local module
+	pcall(function() module = require(moduleName) end)
+	return module
+end
+
 -------------------------------------------------
 -- Extend base API: math
 -------------------------------------------------
