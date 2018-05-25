@@ -1,11 +1,14 @@
 #include "PatchUtil.h"
 
 #include "mwOffsets.h"
-#include "TES3Script.h"
-
 #include "MemoryUtil.h"
-
 #include "Log.h"
+
+#include "TES3Util.h"
+#include "TES3GameSetting.h"
+#include "TES3Script.h"
+#include "TES3MobilePlayer.h"
+#include "TES3WorldController.h"
 
 #include <Windows.h>
 #include <Psapi.h>
@@ -37,11 +40,51 @@ namespace mwse {
 			}
 		}
 
+		//
+		// Patch: Unify athletics training.
+		//
+
+		void PatchUnifyAthleticsTraining() {
+			TES3::WorldController* worldController = tes3::getWorldController();
+			TES3::NonDynamicData* nonDynamicData = tes3::getDataHandler()->nonDynamicData;
+			TES3::MobilePlayer* mobilePlayer = worldController->getMobilePlayer();
+
+			TES3::Skill* athletics = &nonDynamicData->skills[TES3::SkillID::Athletics];
+
+			// If we're running, use the first progress.
+			if (mobilePlayer->movementFlags & TES3::ActorMovement::Running) {
+				mobilePlayer->exerciseSkill(TES3::SkillID::Athletics, athletics->progressActions[0] * worldController->deltaTime);
+			}
+
+			// If we're swimming, use the second progress.
+			if (mobilePlayer->movementFlags & TES3::ActorMovement::Swimming) {
+				mobilePlayer->exerciseSkill(TES3::SkillID::Athletics, athletics->progressActions[1] * worldController->deltaTime);
+			}
+		}
+
+		//
+		// Patch: Unify sneak training.
+		//
+
+		void PatchUnifySneakTraining() {
+			TES3::NonDynamicData* nonDynamicData = tes3::getDataHandler()->nonDynamicData;
+
+			// Decrement sneak use delay counter.
+			*reinterpret_cast<float*>(0x7D16E0) = *reinterpret_cast<float*>(0x7D16E0) - nonDynamicData->GMSTs[TES3::GMST::fSneakUseDelay]->value.asFloat;
+
+			// Excercise sneak.
+			tes3::getWorldController()->getMobilePlayer()->exerciseSkill(TES3::SkillID::Sneak, nonDynamicData->skills[TES3::SkillID::Sneak].progressActions[0]);
+		}
+
 		// Install all the patches.
 		void installPatches() {
 			// Patch: Enable/Disable
 			genCallUnprotected(0x508FEB, reinterpret_cast<DWORD>(PatchScriptOpEnable), 0x9);
 			genCallUnprotected(0x5090DB, reinterpret_cast<DWORD>(PatchScriptOpDisable), 0x9);
+
+			// Patch: Unify athletics and sneak training.
+			genCallUnprotected(0x569EE7, reinterpret_cast<DWORD>(PatchUnifyAthleticsTraining), 0xC6);
+			genCallUnprotected(0x5683D0, reinterpret_cast<DWORD>(PatchUnifySneakTraining), 0x65);
 		}
 
 		//
