@@ -46,10 +46,9 @@ namespace mwse {
 
 		void PatchUnifyAthleticsTraining() {
 			TES3::WorldController* worldController = tes3::getWorldController();
-			TES3::NonDynamicData* nonDynamicData = tes3::getDataHandler()->nonDynamicData;
 			TES3::MobilePlayer* mobilePlayer = worldController->getMobilePlayer();
 
-			TES3::Skill* athletics = &nonDynamicData->skills[TES3::SkillID::Athletics];
+			TES3::Skill* athletics = &tes3::getDataHandler()->nonDynamicData->skills[TES3::SkillID::Athletics];
 
 			// If we're running, use the first progress.
 			if (mobilePlayer->movementFlags & TES3::ActorMovement::Running) {
