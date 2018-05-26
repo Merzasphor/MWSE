@@ -6,6 +6,8 @@
 
 #include "Log.h"
 
+#include "TES3PlayerAnimationData.h"
+
 #define TES3_MobilePlayer_exerciseSkill 0x56A5D0
 #define TES3_MobilePlayer_levelSkill 0x56BBE0
 #define TES3_MobilePlayer_onDeath 0x56A120
@@ -41,5 +43,13 @@ namespace TES3 {
 
 		// Trigger death event.
 		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::DeathEvent(this));
+	}
+
+	bool MobilePlayer::is3rdPerson() {
+		TES3::PlayerAnimationData* animData = animationData.asPlayer;
+		if (animData) {
+			return animData->is3rdPerson;
+		}
+		return false;
 	}
 }

@@ -738,6 +738,9 @@
     <ClInclude Include="TES3SpellEffectInstanceLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
+    <ClInclude Include="TES3PlayerAnimationData.h">
+      <Filter>Header Files\DataAdapters\TES3\Animations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

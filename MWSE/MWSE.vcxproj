@@ -46,6 +46,7 @@
     <ClInclude Include="LuaUnifiedHeader.h" />
     <ClInclude Include="sol_forward.hpp" />
     <ClInclude Include="TES3MobileObject.h" />
+    <ClInclude Include="TES3PlayerAnimationData.h" />
     <ClInclude Include="TES3SoundGenerator.h" />
     <ClInclude Include="StackLua.h" />
     <ClInclude Include="StringUtilLua.h" />

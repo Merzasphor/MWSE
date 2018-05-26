@@ -89,7 +89,10 @@ namespace TES3 {
 		int unknown_0x238;
 		int unknown_0x23C;
 		int unknown_0x240;
-		void * animationData; // 0x244
+		union {
+			ActorAnimationData * asActor;
+			PlayerAnimationData * asPlayer;
+		} animationData; // 0x244
 		char unknown_0x248;
 		char unknown_0x249; // Undefined.
 		char unknown_0x24A; // Undefined.

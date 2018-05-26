@@ -141,6 +141,7 @@ namespace TES3 {
 	struct Object;
 	struct ObjectVirtualTable;
 	struct PhysicalObject;
+	struct PlayerAnimationData;
 	struct Probe;
 	struct Race;
 	struct Reference;

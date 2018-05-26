@@ -69,6 +69,7 @@ namespace TES3 {
 		void exerciseSkill(int skillId, float progress);
 		void levelSkill(int skillId);
 		void onDeath();
+		bool is3rdPerson();
 
 	};
 	static_assert(sizeof(MobilePlayer) == 0x694, "TES3::MobilePlayer failed size validation");
