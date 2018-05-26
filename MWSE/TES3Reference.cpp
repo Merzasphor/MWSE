@@ -50,4 +50,18 @@ namespace TES3 {
 	TES3::ItemDataAttachment* Reference::addItemDataAttachment(TES3::ItemData* data) {
 		return reinterpret_cast<ItemDataAttachment* (__thiscall *)(Reference*, TES3::ItemData*)>(TES3_Reference_addItemDataAttachment)(this, data);
 	}
+
+	void Reference::setPosition(float x, float y, float z) {
+		sceneNode->localTranslate.x = x;
+		sceneNode->localTranslate.y = y;
+		sceneNode->localTranslate.z = z;
+		sceneNode->propagatePositionChange();
+		position.x = x;
+		position.y = y;
+		position.z = z;
+	}
+
+	void Reference::setPosition(TES3::Vector3* positionVec) {
+		setPosition(positionVec->x, positionVec->y, positionVec->z);
+	}
 }

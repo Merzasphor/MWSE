@@ -33,6 +33,13 @@ namespace TES3 {
 		TES3::ItemDataAttachment* addItemDataAttachment(TES3::ItemData*);
 
 		//
+		// Other utility functions.
+		//
+
+		void setPosition(float x, float y, float z);
+		void setPosition(TES3::Vector3* positionVec);
+
+		//
 		// Lua interface functions.
 		//
 

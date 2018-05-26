@@ -76,17 +76,6 @@ namespace TES3 {
 
 namespace mwse {
 	namespace lua {
-		// We want to provide position as a lie, and do some things under the hood when people try to change a
-		// reference's position.
-		class ReferencePosition {
-		public:
-			ReferencePosition(TES3::Reference* _reference) {
-				reference = _reference;
-			}
-
-			TES3::Reference* reference;
-		};
-
 		sol::object getContext(TES3::Reference* reference) {
 			auto variables = tes3::getAttachedItemDataNode(reference);
 			if (variables == NULL) {
@@ -99,44 +88,11 @@ namespace mwse {
 		void bindTES3Reference() {
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<ReferencePosition>("MWSEReferencePosition",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
-
-				"x", sol::property(
-					[](ReferencePosition& self) { return self.reference->sceneNode->localTranslate.x; },
-					[](ReferencePosition& self, double value)
-			{
-				self.reference->sceneNode->localTranslate.x = value;
-				self.reference->sceneNode->propagatePositionChange();
-				self.reference->position.x = value;
-			}
-					),
-
-				"y", sol::property(
-					[](ReferencePosition& self) { return self.reference->sceneNode->localTranslate.y; },
-					[](ReferencePosition& self, double value)
-			{
-				self.reference->sceneNode->localTranslate.y = value;
-				self.reference->sceneNode->propagatePositionChange();
-				self.reference->position.y = value;
-			}
-					),
-
-				"z", sol::property(
-					[](ReferencePosition& self) { return self.reference->sceneNode->localTranslate.z; },
-					[](ReferencePosition& self, double value)
-			{
-				self.reference->sceneNode->localTranslate.z = value;
-				self.reference->sceneNode->propagatePositionChange();
-				self.reference->position.z = value;
-			}
-					)
-				);
-
 			state.new_usertype<TES3::Reference>("TES3Reference",
 				// Disable construction of this type.
 				"new", sol::no_constructor,
+
+				sol::meta_function::to_string, [](TES3::Reference& self) { return self.getObjectID(); },
 
 				//
 				// Properties: Reference
@@ -147,8 +103,23 @@ namespace mwse {
 
 				"sceneNode", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.sceneNode); }),
 
-				// Position is complicated, we need to wrap it in a structure.
-				"position", sol::property([](TES3::Reference& self) { return std::make_unique<ReferencePosition>(&self); }
+				"position", sol::property(
+					[](TES3::Reference& self) { return &self.position; },
+					[](TES3::Reference& self, sol::stack_object value)
+			{
+				// Is it a vector?
+				if (value.is<TES3::Vector3*>()) {
+					self.setPosition(value.as<TES3::Vector3*>());
+				}
+				// Allow a simple table to be provided.
+				else if (value.is<sol::table>()) {
+					// Get the values from the table.
+					sol::table positionTable = value.as<sol::table>();
+					if (positionTable.size() == 3) {
+						self.setPosition(positionTable[1], positionTable[2], positionTable[3]);
+					}
+				}
+			}
 					),
 				//"orientation", &TES3::Reference::orientation,
 

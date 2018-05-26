@@ -15,6 +15,22 @@ namespace TES3 {
 
 		Vector3() : Vector2(), z(0) {}
 		Vector3(float _x, float _y, float _z) : Vector2(_x, _y), z(_z) {}
+
+		Vector3 operator+(const Vector3&);
+		Vector3 operator-(const Vector3&);
+
+		//
+		// Associated functions.
+		//
+
+		Vector3 crossProduct(Vector3*);
+		float dotProduct(Vector3*);
+
+		float heightDifference(Vector3*);
+		float distance(Vector3*);
+		float length();
+		void negate();
+
 	};
 	static_assert(sizeof(Vector3) == 0xC, "TES3::Vector3 failed size validation");
 
