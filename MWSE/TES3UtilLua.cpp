@@ -406,6 +406,11 @@ namespace mwse {
 
 				return results;
 			};
+
+			// Bind function: tes3.is3rdPerson
+			state["tes3"]["is3rdPerson"] = []() {
+				return tes3::getWorldController()->getMobilePlayer()->is3rdPerson();
+			};
 		}
 	}
 }

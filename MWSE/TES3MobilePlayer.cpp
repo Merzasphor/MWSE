@@ -46,10 +46,6 @@ namespace TES3 {
 	}
 
 	bool MobilePlayer::is3rdPerson() {
-		TES3::PlayerAnimationData* animData = animationData.asPlayer;
-		if (animData) {
-			return animData->is3rdPerson;
-		}
-		return false;
+		return vTable.mobileActor->is3rdPerson(this);
 	}
 }
