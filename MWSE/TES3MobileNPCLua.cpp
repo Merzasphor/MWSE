@@ -134,9 +134,9 @@ namespace mwse {
 				"skills", sol::property([](TES3::MobileNPC& self) { return std::ref(self.skills); }),
 
 				"forceSneak", &TES3::MobileNPC::flagForceSneak,
-				"flagForceRun", &TES3::MobileNPC::flagForceRun,
-				"flagForceJump", &TES3::MobileNPC::flagForceJump,
-				"flagForceMoveJump", &TES3::MobileNPC::flagForceMoveJump
+				"forceRun", &TES3::MobileNPC::flagForceRun,
+				"forceJump", &TES3::MobileNPC::flagForceJump,
+				"forceMoveJump", &TES3::MobileNPC::flagForceMoveJump
 
 				);
 		}

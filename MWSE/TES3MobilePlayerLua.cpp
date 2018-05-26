@@ -133,10 +133,21 @@ namespace mwse {
 				"object", &TES3::MobilePlayer::npcInstance,
 				"skills", sol::property([](TES3::MobilePlayer& self) { return std::ref(self.skills); }),
 
-				"forceSneak", &TES3::MobilePlayer::flagForceSneak,
-				"flagForceRun", &TES3::MobilePlayer::flagForceRun,
-				"flagForceJump", &TES3::MobilePlayer::flagForceJump,
-				"flagForceMoveJump", &TES3::MobilePlayer::flagForceMoveJump,
+				"forceSneak", sol::property(
+					[](TES3::MobilePlayer& self) { return (self.movementFlags & TES3::ActorMovement::Crouching) != 0; },
+					[](TES3::MobilePlayer& self, bool set)
+				{
+					if (set) {
+						self.movementFlags |= TES3::ActorMovement::Crouching;
+					}
+					else {
+						self.movementFlags &= ~TES3::ActorMovement::Crouching;
+					}
+				}
+					),
+				"forceRun", &TES3::MobilePlayer::flagForceRun,
+				"forceJump", &TES3::MobilePlayer::flagForceJump,
+				"forceMoveJump", &TES3::MobilePlayer::flagForceMoveJump,
 
 				//
 				// Properties: MACP
