@@ -411,6 +411,48 @@ namespace mwse {
 			state["tes3"]["is3rdPerson"] = []() {
 				return tes3::getWorldController()->getMobilePlayer()->is3rdPerson();
 			};
+
+			// Bind function: tes3.tapKey
+			state["tes3"]["tapKey"] = [](double key) {
+				Stack::getInstance().pushLong(key);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGETapKey);
+			};
+
+			// Bind function: tes3.pushKey
+			state["tes3"]["pushKey"] = [](double key) {
+				Stack::getInstance().pushLong(key);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEPushKey);
+			};
+
+			// Bind function: tes3.releaseKey
+			state["tes3"]["releaseKey"] = [](double key) {
+				Stack::getInstance().pushLong(key);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEReleaseKey);
+			};
+
+			// Bind function: tes3.hammerKey
+			state["tes3"]["hammerKey"] = [](double key) {
+				Stack::getInstance().pushLong(key);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEHammerKey);
+			};
+
+			// Bind function: tes3.unhammerKey
+			state["tes3"]["unhammerKey"] = [](double key) {
+				Stack::getInstance().pushLong(key);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEUnhammerKey);
+			};
+
+			// Bind function: tes3.enableKey
+			state["tes3"]["enableKey"] = [](double key) {
+				Stack::getInstance().pushLong(key);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEAllowKey);
+			};
+
+			// Bind function: tes3.disableKey
+			state["tes3"]["disableKey"] = [](double key) {
+				Stack::getInstance().pushLong(key);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEDisallowKey);
+			};
 		}
 	}
 }
