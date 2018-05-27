@@ -171,6 +171,7 @@ namespace mwse {
 			// Create the base of API tables.
 			luaState["mwse"] = luaState.create_table();
 			luaState["mwscript"] = luaState.create_table();
+			luaState["mge"] = luaState.create_table();
 
 			luaState["mwse"]["getVersion"] = []() {
 				return MWSE_VERSION_INTEGER;

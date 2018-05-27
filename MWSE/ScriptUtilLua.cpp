@@ -441,7 +441,6 @@ namespace mwse {
 			//
 
 			// General functions.
-			state["mge"] = state.create_table();
 			state["mge"]["getScreenHeight"] = []() {
 				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEGetHeight);
 				return Stack::getInstance().popLong();
