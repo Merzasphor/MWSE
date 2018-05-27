@@ -681,6 +681,81 @@ namespace mwse {
 				return true;
 			};
 
+			// Shader-related functions.
+			state["mge"]["disableShader"] = [](sol::optional<sol::table> params) {
+				std::string shader = getOptionalParam<std::string>(params, "shader", "");
+				if (shader.empty()) {
+					return false;
+				}
+
+				Stack::getInstance().pushString(shader);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEDisableShader);
+
+				return true;
+			};
+			state["mge"]["enableShader"] = [](sol::optional<sol::table> params) {
+				std::string shader = getOptionalParam<std::string>(params, "shader", "");
+				if (shader.empty()) {
+					return false;
+				}
+
+				Stack::getInstance().pushString(shader);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEEnableShader);
+
+				return true;
+			};
+			state["mge"]["setShaderFloat"] = [](sol::optional<sol::table> params) {
+				std::string shader = getOptionalParam<std::string>(params, "shader", "");
+				std::string variable = getOptionalParam<std::string>(params, "variable", "");
+				float value = getOptionalParam<double>(params, "value", 0.0);
+				if (shader.empty() || variable.empty()) {
+					return false;
+				}
+
+				Stack::getInstance().pushFloat(value);
+				Stack::getInstance().pushString(variable);
+				Stack::getInstance().pushString(shader);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEShaderSetFloat);
+
+				return true;
+			};
+			state["mge"]["setShaderLong"] = [](sol::optional<sol::table> params) {
+				std::string shader = getOptionalParam<std::string>(params, "shader", "");
+				std::string variable = getOptionalParam<std::string>(params, "variable", "");
+				long value = getOptionalParam<double>(params, "value", 0.0);
+				if (shader.empty() || variable.empty()) {
+					return false;
+				}
+
+				Stack::getInstance().pushLong(value);
+				Stack::getInstance().pushString(variable);
+				Stack::getInstance().pushString(shader);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEShaderSetLong);
+
+				return true;
+			};
+			state["mge"]["setShaderVector4"] = [](sol::optional<sol::table> params) {
+				std::string hud = getOptionalParam<std::string>(params, "shader", "");
+				std::string variable = getOptionalParam<std::string>(params, "variable", "");
+				sol::table values = getOptionalParam<sol::table>(params, "value", sol::nil);
+				if (variable.empty() || values == sol::nil || values.size() != 4) {
+					return false;
+				}
+
+				if (!hud.empty()) {
+					Stack::getInstance().pushString(hud);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEWithHUD);
+				}
+
+				for (int i = 4; i >= 0; i--) {
+					Stack::getInstance().pushFloat(values[i]);
+				}
+				Stack::getInstance().pushString(variable);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEShaderSetVector);
+
+				return true;
+			};
+
 		}
 	}
 }
