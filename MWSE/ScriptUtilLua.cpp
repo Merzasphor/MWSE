@@ -2,6 +2,8 @@
 #include "LuaUtil.h"
 #include "LuaManager.h"
 
+#include "Stack.h"
+
 #include "ScriptUtil.h"
 #include "ScriptUtilLua.h"
 
@@ -431,6 +433,240 @@ namespace mwse {
 				}
 
 				mwscript::StopSound(script, reference, sound);
+				return true;
+			};
+
+			//
+			// MGE opcodes.
+			//
+
+			state["mge"] = state.create_table();
+			state["mge"]["clearHUD"] = []() {
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEWipeAll);
+			};
+			state["mge"]["disableHUD"] = [](sol::optional<sol::table> params) {
+				std::string hud = getOptionalParam<std::string>(params, "hud", "");
+
+				if (!hud.empty()) {
+					Stack::getInstance().pushString(hud);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEDisableHUD);
+				}
+				else {
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGENIDDisableHUD);
+				}
+
+				return true;
+			};
+			state["mge"]["enableHUD"] = [](sol::optional<sol::table> params) {
+				std::string hud = getOptionalParam<std::string>(params, "hud", "");
+
+				if (!hud.empty()) {
+					Stack::getInstance().pushString(hud);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEEnableHUD);
+				}
+				else {
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGENIDEnableHUD);
+				}
+
+				return true;
+			};
+			state["mge"]["freeHUD"] = [](sol::optional<sol::table> params) {
+				std::string hud = getOptionalParam<std::string>(params, "hud", "");
+
+				if (!hud.empty()) {
+					Stack::getInstance().pushString(hud);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEFreeHUD);
+				}
+				else {
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGENIDFreeHUD);
+				}
+
+				return true;
+			};
+			state["mge"]["fullscreenHUD"] = [](sol::optional<sol::table> params) {
+				std::string hud = getOptionalParam<std::string>(params, "hud", "");
+
+				if (!hud.empty()) {
+					Stack::getInstance().pushString(hud);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEFullscreenHUD);
+				}
+				else {
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGENIDFullscreenHUD);
+				}
+
+				return true;
+			};
+			state["mge"]["loadHUD"] = [](sol::optional<sol::table> params) {
+				std::string hud = getOptionalParam<std::string>(params, "hud", "");
+				std::string texture = getOptionalParam<std::string>(params, "texture", "");
+				if (hud.empty() || texture.empty()) {
+					return false;
+				}
+
+				Stack::getInstance().pushString(texture);
+				Stack::getInstance().pushString(hud);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGELoadHUD);
+
+				if (getOptionalParam<bool>(params, "enable", false)) {
+					Stack::getInstance().pushString(hud);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEEnableHUD);
+				}
+
+				return true;
+			};
+			state["mge"]["positionHUD"] = [](sol::optional<sol::table> params) {
+				std::string hud = getOptionalParam<std::string>(params, "hud", "");
+				double x = getOptionalParam<double>(params, "x", 0.0);
+				double y = getOptionalParam<double>(params, "y", 0.0);
+
+				if (!hud.empty()) {
+					Stack::getInstance().pushFloat(y);
+					Stack::getInstance().pushFloat(x);
+					Stack::getInstance().pushString(hud);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEPositionHUD);
+				}
+				else {
+					Stack::getInstance().pushFloat(y);
+					Stack::getInstance().pushFloat(x);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGENIDPositionHUD);
+				}
+
+				return true;
+			};
+			state["mge"]["scaleHUD"] = [](sol::optional<sol::table> params) {
+				std::string hud = getOptionalParam<std::string>(params, "hud", "");
+				double x = getOptionalParam<double>(params, "x", 0.0);
+				double y = getOptionalParam<double>(params, "y", 0.0);
+
+				if (!hud.empty()) {
+					Stack::getInstance().pushFloat(y);
+					Stack::getInstance().pushFloat(x);
+					Stack::getInstance().pushString(hud);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEScaleHUD);
+				}
+				else {
+					Stack::getInstance().pushFloat(y);
+					Stack::getInstance().pushFloat(x);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGENIDScaleHUD);
+				}
+
+				return true;
+			};
+			state["mge"]["selectHUD"] = [](sol::optional<sol::table> params) {
+				std::string hud = getOptionalParam<std::string>(params, "hud", "");
+				if (hud.empty()) {
+					return false;
+				}
+
+				Stack::getInstance().pushString(hud);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEWithHUD);
+				return true;
+			};
+			state["mge"]["setHUDEffect"] = [](sol::optional<sol::table> params) {
+				std::string hud = getOptionalParam<std::string>(params, "hud", "");
+				std::string effect = getOptionalParam<std::string>(params, "effect", "");
+				if (effect.empty()) {
+					return false;
+				}
+
+				if (!hud.empty()) {
+					Stack::getInstance().pushString(effect);
+					Stack::getInstance().pushString(hud);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEChangeHUDEffect);
+				}
+				else {
+					Stack::getInstance().pushString(effect);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGENIDChangeHUDEffect);
+				}
+
+				return true;
+			};
+			state["mge"]["setHUDEffectFloat"] = [](sol::optional<sol::table> params) {
+				std::string hud = getOptionalParam<std::string>(params, "hud", "");
+				std::string variable = getOptionalParam<std::string>(params, "variable", "");
+				float value = getOptionalParam<double>(params, "value", 0.0);
+				if (variable.empty()) {
+					return false;
+				}
+
+				if (!hud.empty()) {
+					Stack::getInstance().pushString(hud);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEWithHUD);
+				}
+
+				Stack::getInstance().pushFloat(value);
+				Stack::getInstance().pushString(variable);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGENIDSetHUDEffectFloat);
+
+				return true;
+			};
+			state["mge"]["setHUDEffectLong"] = [](sol::optional<sol::table> params) {
+				std::string hud = getOptionalParam<std::string>(params, "hud", "");
+				std::string variable = getOptionalParam<std::string>(params, "variable", "");
+				long value = getOptionalParam<double>(params, "value", 0.0);
+				if (variable.empty()) {
+					return false;
+				}
+
+				if (!hud.empty()) {
+					Stack::getInstance().pushString(hud);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEWithHUD);
+				}
+
+				Stack::getInstance().pushLong(value);
+				Stack::getInstance().pushString(variable);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGENIDSetHUDEffectLong);
+
+				return true;
+			};
+			state["mge"]["setHUDEffectVector4"] = [](sol::optional<sol::table> params) {
+				std::string hud = getOptionalParam<std::string>(params, "hud", "");
+				std::string variable = getOptionalParam<std::string>(params, "variable", "");
+				sol::table values = getOptionalParam<sol::table>(params, "value", sol::nil);
+				if (variable.empty() || values == sol::nil || values.size() != 4) {
+					return false;
+				}
+
+				if (!hud.empty()) {
+					Stack::getInstance().pushString(hud);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEWithHUD);
+				}
+
+				for (int i = 4; i >= 0; i--) {
+					Stack::getInstance().pushFloat(values[i]);
+				}
+				Stack::getInstance().pushString(variable);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGENIDSetHUDEffectVec);
+
+				return true;
+			};
+			state["mge"]["setHUDTexture"] = [](sol::optional<sol::table> params) {
+				std::string hud = getOptionalParam<std::string>(params, "hud", "");
+				std::string texture = getOptionalParam<std::string>(params, "texture", "");
+				if (texture.empty()) {
+					return false;
+				}
+
+				if (!hud.empty()) {
+					Stack::getInstance().pushString(texture);
+					Stack::getInstance().pushString(hud);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEChangeHUDTexture);
+				}
+				else {
+					Stack::getInstance().pushString(texture);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGENIDChangeHUDTexture);
+				}
+
+				return true;
+			};
+			state["mge"]["unselectHUD"] = [](sol::optional<sol::table> params) {
+				std::string hud = getOptionalParam<std::string>(params, "hud", "");
+				if (hud.empty()) {
+					return false;
+				}
+
+				Stack::getInstance().pushString(hud);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGECancelWithHUD);
 				return true;
 			};
 
