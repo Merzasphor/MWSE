@@ -223,6 +223,16 @@ function json.savefile(fileName, object, config)
 end
 
 -------------------------------------------------
+-- Extend our base API: mge
+-------------------------------------------------
+
+function mge.getUIScale()
+	-- MGE XE uses uniform scaling, so we only need check the width.
+	return mge.getScreenWidth() / tes3.getWorldController().viewWidth
+end
+
+
+-------------------------------------------------
 -- Extend our base API: mwse
 -------------------------------------------------
 
