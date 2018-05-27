@@ -440,7 +440,18 @@ namespace mwse {
 			// MGE opcodes.
 			//
 
+			// General functions.
 			state["mge"] = state.create_table();
+			state["mge"]["getVersion"] = []() {
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEGetVersion);
+				return Stack::getInstance().popLong();
+			};
+			state["mge"]["log"] = [](std::string string) {
+				Stack::getInstance().pushString(string);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEOutputDebugString);
+			};
+
+			// HUD-related functions.
 			state["mge"]["clearHUD"] = []() {
 				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEWipeAll);
 			};
@@ -496,10 +507,6 @@ namespace mwse {
 
 				return true;
 			};
-			state["mge"]["getVersion"] = []() {
-				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEGetVersion);
-				return Stack::getInstance().popLong();
-			};
 			state["mge"]["loadHUD"] = [](sol::optional<sol::table> params) {
 				std::string hud = getOptionalParam<std::string>(params, "hud", "");
 				std::string texture = getOptionalParam<std::string>(params, "texture", "");
@@ -517,10 +524,6 @@ namespace mwse {
 				}
 
 				return true;
-			};
-			state["mge"]["log"] = [](std::string string) {
-				Stack::getInstance().pushString(string);
-				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEOutputDebugString);
 			};
 			state["mge"]["positionHUD"] = [](sol::optional<sol::table> params) {
 				std::string hud = getOptionalParam<std::string>(params, "hud", "");
