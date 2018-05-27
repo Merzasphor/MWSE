@@ -756,6 +756,111 @@ namespace mwse {
 				return true;
 			};
 
+			// Camera zoom functions.
+			state["mge"]["disableZoom"] = []() {
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEDisableZoom);
+			};
+			state["mge"]["enableZoom"] = []() {
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEEnableZoom);
+			};
+			state["mge"]["toggleZoom"] = []() {
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEToggleZoom);
+			};
+			state["mge"]["zoomIn"] = [](sol::optional<sol::table> params) {
+				double amount = getOptionalParam<double>(params, "amount", 0.0);
+
+				if (amount == 0.0) {
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEZoomIn);
+				}
+				else {
+					Stack::getInstance().pushFloat(amount);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEZoomInBy);
+				}
+			};
+			state["mge"]["zoomOut"] = [](sol::optional<sol::table> params) {
+				double amount = getOptionalParam<double>(params, "amount", 0.0);
+
+				if (amount == 0.0) {
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEZoomOut);
+				}
+				else {
+					Stack::getInstance().pushFloat(amount);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEZoomOutBy);
+				}
+			};
+			state["mge"]["setZoom"] = [](sol::optional<sol::table> params) {
+				double amount = getOptionalParam<double>(params, "amount", 0.0);
+				bool animate = getOptionalParam<double>(params, "animate", false);
+
+				if (animate) {
+					Stack::getInstance().pushFloat(amount);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEZoom);
+				}
+				else {
+					Stack::getInstance().pushFloat(amount);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGESetZoom);
+				}
+			};
+			state["mge"]["getZoom"] = []() {
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEGetZoom);
+				return Stack::getInstance().popFloat();
+			};
+			state["mge"]["stopZoom"] = []() {
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEStopZoom);
+			};
+
+			// Camera shake functions.
+			state["mge"]["enableCameraShake"] = [](sol::optional<sol::table> params) {
+				double magnitude = getOptionalParam<double>(params, "magnitude", 0.0);
+				if (magnitude != 0.0) {
+					Stack::getInstance().pushFloat(magnitude);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGESetCameraShakeMagnitude);
+				}
+
+				double acceleration = getOptionalParam<double>(params, "acceleration", 0.0);
+				if (acceleration != 0.0) {
+					Stack::getInstance().pushFloat(acceleration);
+					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGECameraShakeZoom);
+				}
+
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEEnableCameraShake);
+			};
+			state["mge"]["disableCameraShake"] = []() {
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEDisableCameraShake);
+			};
+			state["mge"]["setCameraShakeMagnitude"] = [](sol::optional<sol::table> params) {
+				double magnitude = getOptionalParam<double>(params, "magnitude", 0.0);
+				Stack::getInstance().pushFloat(magnitude);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGESetCameraShakeMagnitude);
+			};
+			state["mge"]["setCameraShakeAcceleration"] = [](sol::optional<sol::table> params) {
+				double acceleration = getOptionalParam<double>(params, "acceleration", 0.0);
+				Stack::getInstance().pushFloat(acceleration);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGECameraShakeZoom);
+			};
+
+			// Camera rotation functions.
+			state["mge"]["getScreenRotation"] = []() {
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEGetScreenRotation);
+				return Stack::getInstance().popFloat();
+			};
+			state["mge"]["modScreenRotation"] = [](sol::optional<sol::table> params) {
+				double rotation = getOptionalParam<double>(params, "rotation", 0.0);
+				Stack::getInstance().pushFloat(rotation);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGERotateScreenBy);
+			};
+			state["mge"]["setScreenRotation"] = [](sol::optional<sol::table> params) {
+				double rotation = getOptionalParam<double>(params, "rotation", 0.0);
+				Stack::getInstance().pushFloat(rotation);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGERotateScreen);
+			};
+			state["mge"]["startScreenRotation"] = []() {
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEScreenSpin);
+			};
+			state["mge"]["stopScreenRotation"] = []() {
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEStopSpinSpin);
+			};
+
 		}
 	}
 }
