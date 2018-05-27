@@ -496,6 +496,10 @@ namespace mwse {
 
 				return true;
 			};
+			state["mge"]["getVersion"] = []() {
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEGetVersion);
+				return Stack::getInstance().popLong();
+			};
 			state["mge"]["loadHUD"] = [](sol::optional<sol::table> params) {
 				std::string hud = getOptionalParam<std::string>(params, "hud", "");
 				std::string texture = getOptionalParam<std::string>(params, "texture", "");
@@ -513,6 +517,10 @@ namespace mwse {
 				}
 
 				return true;
+			};
+			state["mge"]["log"] = [](std::string string) {
+				Stack::getInstance().pushString(string);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEOutputDebugString);
 			};
 			state["mge"]["positionHUD"] = [](sol::optional<sol::table> params) {
 				std::string hud = getOptionalParam<std::string>(params, "hud", "");
