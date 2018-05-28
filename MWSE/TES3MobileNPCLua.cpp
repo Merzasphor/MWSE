@@ -52,8 +52,8 @@ namespace mwse {
 				"collidingReference", &TES3::MobileNPC::collidingReference,
 				"widthInUnits", &TES3::MobileNPC::widthInUnits,
 
-				"listTargetActors", &TES3::MobileNPC::listTargetActors,
-				"listFriendlyActors", &TES3::MobileNPC::listFriendlyActors,
+				"friendlyActors", &TES3::MobileNPC::listFriendlyActors,
+				"hostileActors", &TES3::MobileNPC::listTargetActors,
 
 				"scanTimer", &TES3::MobileNPC::scanTimer,
 				"scanInterval", &TES3::MobileNPC::scanInterval,

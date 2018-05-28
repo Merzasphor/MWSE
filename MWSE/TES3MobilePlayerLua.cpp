@@ -3,6 +3,8 @@
 #include "LuaUnifiedHeader.h"
 #include "LuaManager.h"
 
+#include "TES3Collections.h"
+
 namespace mwse {
 	namespace lua {
 		void bindTES3MobilePlayer() {
@@ -52,8 +54,8 @@ namespace mwse {
 				"collidingReference", &TES3::MobilePlayer::collidingReference,
 				"widthInUnits", &TES3::MobilePlayer::widthInUnits,
 
-				"listTargetActors", &TES3::MobilePlayer::listTargetActors,
-				"listFriendlyActors", &TES3::MobilePlayer::listFriendlyActors,
+				"friendlyActors", &TES3::MobilePlayer::listFriendlyActors,
+				"hostileActors", &TES3::MobilePlayer::listTargetActors,
 
 				"scanTimer", &TES3::MobilePlayer::scanTimer,
 				"scanInterval", &TES3::MobilePlayer::scanInterval,
