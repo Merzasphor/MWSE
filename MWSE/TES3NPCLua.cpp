@@ -74,6 +74,8 @@ namespace mwse {
 				"id", sol::readonly_property(&TES3::NPCInstance::getObjectID),
 				"name", sol::property(&TES3::NPCInstance::getName, &TES3::NPCInstance::setName),
 
+				"baseObject", &TES3::NPCInstance::baseNPC,
+
 				"model", sol::readonly_property(&TES3::NPCInstance::getModelPath),
 
 				"flags", &TES3::NPCInstance::actorFlags,

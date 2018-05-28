@@ -143,6 +143,8 @@ namespace mwse {
 				"id", sol::readonly_property(&TES3::CreatureInstance::getObjectID),
 				"name", sol::property(&TES3::CreatureInstance::getName, &TES3::CreatureInstance::setName),
 
+				"baseObject", &TES3::CreatureInstance::baseCreature,
+
 				"model", sol::readonly_property(&TES3::CreatureInstance::getModelPath),
 
 				"flags", &TES3::CreatureInstance::actorFlags,
