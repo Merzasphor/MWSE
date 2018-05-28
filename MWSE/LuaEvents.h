@@ -407,6 +407,21 @@ namespace mwse {
 				int m_ResistAttribute;
 				bool(__cdecl *m_ResistanceTestFunction)(void *, void *, int);
 			};
+
+			// ---------------------------------------------------------------------------- //
+
+			class SpellResistEvent : public GenericEvent {
+			public:
+				SpellResistEvent(TES3::SpellInstance * spellInstance, TES3::SpellEffectInstance * effectInstance, int effectIndex, int resistAttribute);
+				sol::table createEventTable();
+				sol::object getEventOptions();
+
+			protected:
+				TES3::SpellInstance* m_SpellInstance;
+				TES3::SpellEffectInstance* m_EffectInstance;
+				int m_EffectIndex;
+				int m_ResistAttribute;
+			};
 		}
 	}
 }

@@ -789,6 +789,21 @@ namespace mwse {
 		}
 
 		//
+		// Spell resist event.
+		//
+
+		void __cdecl OnSpellResist(TES3::SpellInstance * spellInstance, TES3::SpellEffectInstance * effectInstance, int effectIndex, int resistAttribute) {
+			// Call original function.
+			reinterpret_cast<void(__cdecl *)(TES3::SpellInstance *, TES3::SpellEffectInstance *, int, int)>(0x517E40)(spellInstance, effectInstance, effectIndex, resistAttribute);
+
+			// Trigger event, see if we want to overwrite the resisted percentage.
+			sol::table eventData = LuaManager::getInstance().triggerEvent(new event::SpellResistEvent(spellInstance, effectInstance, effectIndex, resistAttribute));
+			if (eventData.valid()) {
+				effectInstance->resistedPercent = eventData["resistedPercent"];
+			}
+		}
+
+		//
 		// Exercise skill event.
 		//
 
@@ -1225,6 +1240,9 @@ namespace mwse {
 			genCallEnforced(0x465BC2, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
 			genCallEnforced(0x4662C4, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
 			genCallEnforced(0x4669A2, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
+
+			// Event: Spell Resist
+			genCallEnforced(0x518616, 0x517E40, reinterpret_cast<DWORD>(OnSpellResist));
 
 			// Event: Player exercise skill.
 			genCallEnforced(0x4EB387, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));

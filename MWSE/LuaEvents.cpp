@@ -800,6 +800,9 @@ namespace mwse {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table eventData = state.create_table();
 
+				eventData["caster"] = makeLuaObject(m_EffectInstance->caster);
+				eventData["target"] = makeLuaObject(m_SpellInstance->targetReference);
+
 				eventData["spellInstance"] = makeLuaObject(m_SpellInstance);
 				eventData["deltaTime"] = m_DeltaTime;
 				eventData["effectInstance"] = m_EffectInstance;
@@ -815,6 +818,46 @@ namespace mwse {
 			}
 
 			sol::object SpellTickEvent::getEventOptions() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table options = state.create_table();
+
+				options["filter"] = makeLuaObject(m_SpellInstance->spell);
+
+				return options;
+			}
+
+			//
+			// Spell resist event.
+			//
+
+			SpellResistEvent::SpellResistEvent(TES3::SpellInstance * spellInstance, TES3::SpellEffectInstance * effectInstance, int effectIndex, int resistAttribute) :
+				GenericEvent("spellResist"),
+				m_SpellInstance(spellInstance),
+				m_EffectInstance(effectInstance),
+				m_EffectIndex(effectIndex),
+				m_ResistAttribute(resistAttribute)
+			{
+
+			}
+
+			sol::table SpellResistEvent::createEventTable() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table eventData = state.create_table();
+
+
+				eventData["caster"] = makeLuaObject(m_EffectInstance->caster);
+				eventData["target"] = makeLuaObject(m_SpellInstance->targetReference);
+				eventData["resistedPercent"] = m_EffectInstance->resistedPercent;
+
+				eventData["spellInstance"] = makeLuaObject(m_SpellInstance);
+				eventData["effectInstance"] = m_EffectInstance;
+				eventData["effectIndex"] = m_EffectIndex;
+				eventData["resistAttribute"] = m_ResistAttribute;
+				
+				return eventData;
+			}
+
+			sol::object SpellResistEvent::getEventOptions() {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table options = state.create_table();
 
