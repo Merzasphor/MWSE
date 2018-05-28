@@ -84,7 +84,7 @@ namespace TES3 {
 		float menuAlpha; // 0x90
 		bool cursorOff; // 0x94
 		float aiDistance; // 0x98
-		int difficulty; // 0x9C
+		float difficulty; // 0x9C
 		int werewolfFOV; // 0xA0
 		float projectionDistance; // 0xA4
 		GlobalVariable * gvarGameHour; // 0xA8
