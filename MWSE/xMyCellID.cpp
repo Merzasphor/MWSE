@@ -55,7 +55,7 @@ namespace mwse
 			return 0.0f;
 		}
 
-		TES3::ReferenceList* referenceList = reinterpret_cast<TES3::ReferenceList*>(reference->owningCollection);
+		TES3::ReferenceList* referenceList = reference->owningCollection.asReferenceList;
 		if (referenceList && referenceList->cell) {
 			mwse::Stack::getInstance().pushString(referenceList->cell->name);
 		}

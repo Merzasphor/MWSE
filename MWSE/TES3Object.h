@@ -1,6 +1,7 @@
 #pragma once
 
 #include "NIDefines.h"
+#include "TES3Collections.h"
 
 namespace TES3 {
 
@@ -145,6 +146,7 @@ namespace TES3 {
 	struct Probe;
 	struct Race;
 	struct Reference;
+	struct ReferenceList;
 	struct Region;
 	struct RepairTool;
 	struct Script;
@@ -282,7 +284,10 @@ namespace TES3 {
 
 	struct Object : BaseObject {
 		NI::Node * sceneNode; // 0x10
-		void * owningCollection; // 0x14
+		union {
+			TES3::LinkedList<TES3::Spell> * asSpellList;
+			ReferenceList * asReferenceList;
+		} owningCollection; // 0x14
 		void * referenceToThis; // 0x18
 		Object * previousInCollection; // 0x1C
 		Object * nextInCollection; // 0x20

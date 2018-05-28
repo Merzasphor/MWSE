@@ -87,7 +87,7 @@ namespace mwse
 		memset(newSpell, 0, sizeof(TES3::Spell));
 		newSpell->vTable = spellListHead->vTable;
 		newSpell->objectType = TES3::ObjectType::Spell;
-		newSpell->owningCollection = spellsList;
+		newSpell->owningCollection.asSpellList = spellsList;
 		newSpell->magickaCost = 1;
 
 		// Set ID/name.
