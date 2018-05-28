@@ -15,7 +15,7 @@ namespace mwse {
 
 			// Generic TES3::Object iterators. As above, but the result data will be
 			// reinterpreted at runtime.
-			bindGenericObjectIterator<TES3::MobileActor>("TES3MobileActorIterator");
+			bindGenericObjectIterator<TES3::MobileActor>("TES3MobileActorIterator", "TES3MobileActorIteratorNode");
 
 			// TArray bindings.
 			bindTArray<TES3::ItemData>("TES3ItemDataTArray");
