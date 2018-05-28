@@ -797,6 +797,18 @@ namespace mwse {
 		}
 
 		//
+		// Level up event.
+		//
+
+		void __stdcall OnLevelUp() {
+			// Call the original function we overwrote to call this one.
+			reinterpret_cast<void(__stdcall *)()>(0x626220)();
+
+			// Launch our event.
+			LuaManager::getInstance().triggerEvent(new event::LevelUpEvent());
+		}
+
+		//
 		// When an object is deleted, we need to clear any lua mapping to it.
 		//
 
@@ -1237,6 +1249,9 @@ namespace mwse {
 			genCallEnforced(0x6004CD, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
 			genCallEnforced(0x60E81C, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
 			genCallEnforced(0x60ECB2, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
+
+			// Event: Player leveled.
+			genCallEnforced(0x5DA620, 0x626220, reinterpret_cast<DWORD>(OnLevelUp));
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);

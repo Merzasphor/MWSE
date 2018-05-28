@@ -380,6 +380,15 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
+			class LevelUpEvent : public GenericEvent {
+			public:
+				LevelUpEvent();
+				sol::table createEventTable();
+				sol::object getEventOptions();
+			};
+
+			// ---------------------------------------------------------------------------- //
+
 			class SpellTickEvent : public GenericEvent {
 			public:
 				SpellTickEvent(TES3::SpellInstance * spellInstance, float deltaTime, TES3::SpellEffectInstance * effectInstance, int effectIndex, bool negateOnExpiry, int isUncapped, TES3::Statistic * statistic, void * attributeTypeInfo, int resistAttribute, bool(__cdecl *resistanceTestFunction)(void *, void *, int));

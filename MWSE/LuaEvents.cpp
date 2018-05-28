@@ -745,6 +745,38 @@ namespace mwse {
 			}
 
 			//
+			// Level up event.
+			//
+
+			LevelUpEvent::LevelUpEvent() :
+				GenericEvent("levelUp")
+			{
+
+			}
+
+			sol::table LevelUpEvent::createEventTable() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table eventData = state.create_table();
+
+				TES3::MobilePlayer* player = tes3::getWorldController()->getMobilePlayer();
+
+				eventData["level"] = reinterpret_cast<TES3::NPCInstance*>(player->reference->baseObject)->getLevel();
+
+				return eventData;
+			}
+
+			sol::object LevelUpEvent::getEventOptions() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table options = state.create_table();
+
+				TES3::MobilePlayer* player = tes3::getWorldController()->getMobilePlayer();
+
+				options["filter"] = reinterpret_cast<TES3::NPCInstance*>(player->reference->baseObject)->getLevel();
+
+				return options;
+			}
+
+			//
 			// Spell tick event.
 			//
 
