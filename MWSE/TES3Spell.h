@@ -52,6 +52,14 @@ namespace TES3 {
 		short magickaCost; // 0x32
 		Effect effects[8]; // 0x34
 		int spellFlags; //  0xF4
+
+		//
+		// Other related this-call functions.
+		//
+
+		float calculateCastChance(Reference* caster, bool checkMagicka = true, int* weakestSchoolId = 0);
+		float calculateCastChance(MobileActor* caster, bool checkMagicka = true, int* weakestSchoolId = 0);
+
 	};
 	static_assert(sizeof(Spell) == 0xF8, "TES3::Spell failed size validation");
 }

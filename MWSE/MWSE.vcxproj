@@ -287,6 +287,7 @@
     <ClCompile Include="TES3SkillLua.cpp" />
     <ClCompile Include="TES3Sound.cpp" />
     <ClCompile Include="TES3SoundLua.cpp" />
+    <ClCompile Include="TES3Spell.cpp" />
     <ClCompile Include="TES3SpellEffectInstanceLua.cpp" />
     <ClCompile Include="TES3SpellInstanceLua.cpp" />
     <ClCompile Include="TES3SpellLua.cpp" />
