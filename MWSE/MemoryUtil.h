@@ -48,6 +48,8 @@ namespace mwse {
 	// Code to generate a call in memory. This function unprotects the memory.
 	bool genCallEnforced(DWORD address, DWORD previousTo, DWORD to, DWORD size = 0x5);
 
+	bool genPushEnforced(DWORD address, DWORD value);
+
 	// Overrides a function in a virtual table.
 	void overrideVirtualTable(DWORD address, DWORD offset, DWORD to);
 

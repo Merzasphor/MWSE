@@ -131,6 +131,30 @@ namespace mwse {
 		return true;
 	}
 
+	bool genPushEnforced(DWORD address, DWORD value) {
+		// Make sure we're doing a push already.
+		BYTE instruction = *reinterpret_cast<BYTE*>(address);
+		if (instruction != 0x68) {
+#if _DEBUG
+			log::getLog() << "[MemoryUtil] Skipping call generation at 0x" << std::hex << address << ". Expected 0x68, found instruction: 0x" << (int)instruction << "." << std::endl;
+#endif
+			return false;
+		}
+
+		// Unprotect memory.
+		DWORD oldProtect;
+		VirtualProtect((DWORD*)address, 0x5, PAGE_READWRITE, &oldProtect);
+
+		// Create our call.
+		MemAccess<unsigned char>::Set(address, 0x68);
+		MemAccess<DWORD>::Set(address + 1, value);
+
+		// Protect memory again.
+		VirtualProtect((DWORD*)address, 0x5, oldProtect, &oldProtect);
+
+		return true;
+	}
+
 	void overrideVirtualTable(DWORD address, DWORD offset, DWORD to) {
 		DWORD location = address + offset;
 
