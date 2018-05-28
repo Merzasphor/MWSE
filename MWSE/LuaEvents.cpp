@@ -846,13 +846,13 @@ namespace mwse {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table eventData = state.create_table();
 
-
 				eventData["caster"] = makeLuaObject(m_SpellInstance->caster);
 				eventData["target"] = makeLuaObject(m_EffectInstance->spellTarget);
 				eventData["resistedPercent"] = m_EffectInstance->resistedPercent;
 
 				eventData["spell"] = makeLuaObject(m_SpellInstance->spell);
 				eventData["spellInstance"] = makeLuaObject(m_SpellInstance);
+				eventData["spellCastChance"] = m_SpellInstance->spell->calculateCastChance(m_SpellInstance->caster);
 				eventData["effect"] = &m_SpellInstance->spell->effects[m_EffectIndex];
 				eventData["effectIndex"] = m_EffectIndex;
 				eventData["effectInstance"] = m_EffectInstance;

@@ -70,7 +70,25 @@ namespace mwse {
 				"effects", sol::readonly_property([](TES3::Spell& self) { return std::ref(self.effects); }),
 
 				"castType", &TES3::Spell::castType,
-				"magickaCost", &TES3::Spell::magickaCost
+				"magickaCost", &TES3::Spell::magickaCost,
+
+				//
+				// Functions
+				//
+
+				"calculateCastChance", [](TES3::Spell& self, sol::table params) -> float
+			{
+				bool checkMagicka = getOptionalParam<bool>(params, "checkMagicka", true);
+				sol::object caster = params["caster"];
+				if (caster.is<TES3::Reference>()) {
+					return self.calculateCastChance(caster.as<TES3::Reference*>(), checkMagicka);
+				}
+				else if (caster.is<TES3::MobileActor>()) {
+					return self.calculateCastChance(caster.as<TES3::MobileActor*>(), checkMagicka);
+				}
+
+				return 0.0f;
+			}
 
 				);
 		}
