@@ -17,7 +17,7 @@ namespace mwse {
 				// Properties.
 				//
 
-				"spell", sol::readonly_property([](TES3::SpellEffectInstance& self) { return makeLuaObject(self.caster); }),
+				"target", sol::readonly_property([](TES3::SpellEffectInstance& self) { return makeLuaObject(self.spellTarget); }),
 				"resistedPercent", &TES3::SpellEffectInstance::resistedPercent,
 				"magnitude", &TES3::SpellEffectInstance::magnitude,
 				"timeActive", &TES3::SpellEffectInstance::timeActive,

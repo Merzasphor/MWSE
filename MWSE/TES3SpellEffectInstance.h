@@ -4,7 +4,7 @@
 
 namespace TES3 {
 	struct SpellEffectInstance {
-		Reference * caster;
+		Reference * spellTarget;
 		float resistedPercent;
 		float magnitude;
 		float timeActive;

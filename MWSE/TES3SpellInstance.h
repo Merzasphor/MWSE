@@ -27,7 +27,7 @@ namespace TES3 {
 		void * unknown_0xAC;
 		void * unknown_0xB0;
 		int spellState; // 0xB4
-		Reference * targetReference;
+		Reference * caster;
 		Item * castingItem;
 		ItemData * castingItemCondition;
 		int unknown_0xC4;

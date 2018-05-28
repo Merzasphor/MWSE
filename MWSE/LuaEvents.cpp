@@ -800,8 +800,8 @@ namespace mwse {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table eventData = state.create_table();
 
-				eventData["caster"] = makeLuaObject(m_EffectInstance->caster);
-				eventData["target"] = makeLuaObject(m_SpellInstance->targetReference);
+				eventData["caster"] = makeLuaObject(m_SpellInstance->caster);
+				eventData["target"] = makeLuaObject(m_EffectInstance->spellTarget);
 
 				eventData["spellInstance"] = makeLuaObject(m_SpellInstance);
 				eventData["deltaTime"] = m_DeltaTime;
@@ -845,8 +845,8 @@ namespace mwse {
 				sol::table eventData = state.create_table();
 
 
-				eventData["caster"] = makeLuaObject(m_EffectInstance->caster);
-				eventData["target"] = makeLuaObject(m_SpellInstance->targetReference);
+				eventData["caster"] = makeLuaObject(m_SpellInstance->caster);
+				eventData["target"] = makeLuaObject(m_EffectInstance->spellTarget);
 				eventData["resistedPercent"] = m_EffectInstance->resistedPercent;
 
 				eventData["spellInstance"] = makeLuaObject(m_SpellInstance);
