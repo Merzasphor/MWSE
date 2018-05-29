@@ -21,7 +21,11 @@ namespace TES3 {
 		void * unknown_0x18;
 		HashMap effects[8]; // 0x1C
 		void * unknown_0x9C; // Node?
-		Spell * spell; // 0xA0
+		union {
+			Object * asGeneric;
+			Alchemy * asAlchemy;
+			Spell * asSpell;
+		} source; // 0xA0
 		signed char sourceType;// 0xA4
 		void * unknown_0xA8;
 		void * unknown_0xAC;
@@ -41,6 +45,13 @@ namespace TES3 {
 		char spellText[64]; // 0xE4
 		int unknown_0x124;
 		float unknown_0x128;
+
+		//
+		// Other related this-call functions.
+		//
+
+		Effect * getSourceEffects();
+
 	};
 	static_assert(sizeof(SpellInstance) == 0x12C, "TES3::SpellInstance failed size validation");
 }

@@ -803,10 +803,10 @@ namespace mwse {
 				eventData["caster"] = makeLuaObject(m_SpellInstance->caster);
 				eventData["target"] = makeLuaObject(m_EffectInstance->spellTarget);
 
-				eventData["spell"] = makeLuaObject(m_SpellInstance->spell);
+				eventData["spell"] = makeLuaObject(m_SpellInstance->source.asGeneric);
 				eventData["spellInstance"] = makeLuaObject(m_SpellInstance);
 				eventData["deltaTime"] = m_DeltaTime;
-				eventData["effect"] = &m_SpellInstance->spell->effects[m_EffectIndex];
+				eventData["effect"] = m_SpellInstance->getSourceEffects()[m_EffectIndex];
 				eventData["effectIndex"] = m_EffectIndex;
 				eventData["effectInstance"] = m_EffectInstance;
 				eventData["negateOnExpiry"] = m_NegateOnExpiry;
@@ -823,7 +823,7 @@ namespace mwse {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table options = state.create_table();
 
-				options["filter"] = makeLuaObject(m_SpellInstance->spell);
+				options["filter"] = makeLuaObject(m_SpellInstance->source.asGeneric);
 
 				return options;
 			}
@@ -850,13 +850,17 @@ namespace mwse {
 				eventData["target"] = makeLuaObject(m_EffectInstance->spellTarget);
 				eventData["resistedPercent"] = m_EffectInstance->resistedPercent;
 
-				eventData["spell"] = makeLuaObject(m_SpellInstance->spell);
+				eventData["spell"] = makeLuaObject(m_SpellInstance->source.asGeneric);
 				eventData["spellInstance"] = makeLuaObject(m_SpellInstance);
-				eventData["spellCastChance"] = m_SpellInstance->spell->calculateCastChance(m_SpellInstance->caster);
-				eventData["effect"] = &m_SpellInstance->spell->effects[m_EffectIndex];
+				eventData["effect"] = m_SpellInstance->getSourceEffects()[m_EffectIndex];
 				eventData["effectIndex"] = m_EffectIndex;
 				eventData["effectInstance"] = m_EffectInstance;
 				eventData["resistAttribute"] = m_ResistAttribute;
+
+				// Get cast chance if it's a spell.
+				if (m_SpellInstance->sourceType == 1 || m_SpellInstance->sourceType == 2) {
+					eventData["spellCastChance"] = m_SpellInstance->source.asSpell->calculateCastChance(m_SpellInstance->caster);
+				}
 				
 				return eventData;
 			}
@@ -865,7 +869,7 @@ namespace mwse {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table options = state.create_table();
 
-				options["filter"] = makeLuaObject(m_SpellInstance->spell);
+				options["filter"] = makeLuaObject(m_SpellInstance->source.asGeneric);
 
 				return options;
 			}

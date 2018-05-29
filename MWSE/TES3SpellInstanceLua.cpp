@@ -19,19 +19,21 @@ namespace mwse {
 
 				"objectType", &TES3::SpellInstance::objectType,
 
-				"spell", sol::readonly_property([](TES3::SpellInstance& self) { return makeLuaObject(self.spell); }),
-				"type", &TES3::SpellInstance::sourceType,
+				"source", sol::readonly_property([](TES3::SpellInstance& self) { return makeLuaObject(self.source.asGeneric); }),
+				"sourceType", &TES3::SpellInstance::sourceType,
 				"state", &TES3::SpellInstance::spellState,
 				"caster", sol::readonly_property([](TES3::SpellInstance& self) { return makeLuaObject(self.caster); }),
 				"item", sol::readonly_property([](TES3::SpellInstance& self) { return makeLuaObject(self.castingItem); }),
 				"itemData", sol::readonly_property([](TES3::SpellInstance& self) { return self.castingItemCondition; }),
-				"text", sol::readonly_property([](TES3::SpellInstance& self) { return self.spellText; })
+				"text", sol::readonly_property([](TES3::SpellInstance& self) { return self.spellText; }),
+
+				"sourceEffects", sol::readonly_property([](TES3::SpellInstance& self) { return self.getSourceEffects(); })
 
 				//
 				// Functions
 				//
 
-
+				
 
 			);
 		}
