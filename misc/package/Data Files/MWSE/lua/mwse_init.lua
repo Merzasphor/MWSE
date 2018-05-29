@@ -18,6 +18,10 @@ function math.clamp(value, low, high)
 	return math.max(low, math.min(high, value))
 end
 
+function math.remap(value, lowIn, highIn, lowOut, highOut)
+	return lowOut + (value - lowIn) * (highOut - lowOut) / (highIn - lowIn)
+end
+
 -------------------------------------------------
 -- Extend base API: table
 -------------------------------------------------
