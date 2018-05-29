@@ -771,7 +771,7 @@ namespace mwse {
 		// Mobile actor apply damage event.
 		//
 
-		signed char __fastcall OnApplyDamage(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, char flag1, char flag2, char flag3) {
+		bool __fastcall OnApplyDamage(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, char flag1, char flag2, char flag3) {
 			return mobileActor->applyHealthDamage(damage, flag1, flag2, flag3);
 		}
 

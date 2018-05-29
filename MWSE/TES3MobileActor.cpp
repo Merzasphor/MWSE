@@ -125,7 +125,7 @@ namespace TES3 {
 		// Do our follow up event.
 		luaManager.triggerEvent(new mwse::lua::event::DamagedEvent(this, damage));
 
-		return true;
+		return result;
 	}
 
 	bool MobileActor::getMobileActorFlag(unsigned int flag) {
