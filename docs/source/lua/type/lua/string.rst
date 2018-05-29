@@ -4,8 +4,6 @@ String
 
 A string is an array of characters, representing text. Lua is 8-bit clean: strings can contain any 8-bit value, including embedded zeros (``'\0'``). Lua is also encoding-agnostic; it makes no assumptions about the contents of a string.
 
-.. note:: In logical expressions, ``nil`` evaluates to ``false``.
-
 
 Length
 --------------------------------------------------------
