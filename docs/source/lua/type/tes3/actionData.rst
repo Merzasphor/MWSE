@@ -2,7 +2,7 @@
 Action Data
 ========================================================
 
-This represents an action being taken by an action. This is from a `MobileCreature`_, `MobileNPC`_, or `MobilePlayer`_.
+This represents an action being taken by a `MobileCreature`_, `MobileNPC`_, or `MobilePlayer`_.
 
 
 Properties
