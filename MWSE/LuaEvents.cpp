@@ -806,7 +806,6 @@ namespace mwse {
 				eventData["spell"] = makeLuaObject(m_SpellInstance->source.asGeneric);
 				eventData["spellInstance"] = makeLuaObject(m_SpellInstance);
 				eventData["deltaTime"] = m_DeltaTime;
-				eventData["effect"] = m_SpellInstance->getSourceEffects()[m_EffectIndex];
 				eventData["effectIndex"] = m_EffectIndex;
 				eventData["effectInstance"] = m_EffectInstance;
 				eventData["negateOnExpiry"] = m_NegateOnExpiry;
@@ -815,6 +814,12 @@ namespace mwse {
 				eventData["attributeTypeInfo"] = m_AttributeTypeInfo;
 				eventData["resistAttribute"] = m_ResistAttribute;
 				eventData["resistanceTestFunction"] = m_ResistanceTestFunction;
+
+				// Get the specific effect on the source.
+				TES3::Effect * effects = m_SpellInstance->getSourceEffects();
+				if (effects) {
+					eventData["effect"] = effects[m_EffectIndex];
+				}
 
 				return eventData;
 			}
@@ -852,10 +857,15 @@ namespace mwse {
 
 				eventData["spell"] = makeLuaObject(m_SpellInstance->source.asGeneric);
 				eventData["spellInstance"] = makeLuaObject(m_SpellInstance);
-				eventData["effect"] = m_SpellInstance->getSourceEffects()[m_EffectIndex];
 				eventData["effectIndex"] = m_EffectIndex;
 				eventData["effectInstance"] = m_EffectInstance;
 				eventData["resistAttribute"] = m_ResistAttribute;
+
+				// Get the specific effect on the source.
+				TES3::Effect * effects = m_SpellInstance->getSourceEffects();
+				if (effects) {
+					eventData["effect"] = effects[m_EffectIndex];
+				}
 
 				// Get cast chance if it's a spell.
 				if (m_SpellInstance->sourceType == 1 || m_SpellInstance->sourceType == 2) {
