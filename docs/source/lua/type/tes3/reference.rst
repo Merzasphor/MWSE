@@ -42,7 +42,7 @@ Varies. Read-only. The base object that this reference contains.
 
 objectType
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Number`_. Read-only. The object's `Object Type`_, which will always be 1380336978. This matches the constant ``tes3.ObjectType.Reference``.
+`Number`_. Read-only. The object's `Object Type`_, which will always be 1380336978. This matches the constant ``tes3.objectType.reference``.
 
 orientation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
