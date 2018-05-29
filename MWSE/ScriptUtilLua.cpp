@@ -409,6 +409,16 @@ namespace mwse {
 				mwscript::StartScript(script, reference, targetScript);
 				return true;
 			};
+			state["mwscript"]["stopCombat"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				if (reference == NULL) {
+					return false;
+				}
+
+				mwscript::StopCombat(script, reference);
+				return true;
+			};
 			state["mwscript"]["stopScript"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);

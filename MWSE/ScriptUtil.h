@@ -157,6 +157,8 @@ namespace mwse
 
 		void StartScript(TES3::Script* script, TES3::Reference* reference, TES3::Script* targetScript);
 
+		void StopCombat(TES3::Script* script, TES3::Reference* reference);
+
 		void StopScript(TES3::Script* script, TES3::Script* targetScript);
 
 		void StopSound(TES3::Script* script, TES3::Reference* reference, TES3::Sound* sound);

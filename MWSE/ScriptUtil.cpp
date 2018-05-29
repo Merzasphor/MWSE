@@ -576,6 +576,10 @@ namespace mwse
 			setScriptSecondObject(cachedSecondObject);
 		}
 
+		void StopCombat(TES3::Script* script, TES3::Reference* reference) {
+			RunOriginalOpCode(script, reference, OpCode::StopCombat);
+		}
+
 		void StopScript(TES3::Script* script, TES3::Script* targetScript) {
 			// Cache previous script variables.
 			TES3::BaseObject* cachedSecondObject = getScriptSecondObject();
