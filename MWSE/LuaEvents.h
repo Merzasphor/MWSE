@@ -422,6 +422,17 @@ namespace mwse {
 				int m_EffectIndex;
 				int m_ResistAttribute;
 			};
+
+			// ---------------------------------------------------------------------------- //
+
+			class PotionBrewedEvent : public GenericEvent {
+			public:
+				PotionBrewedEvent(TES3::Alchemy * object);
+				sol::table createEventTable();
+
+			protected:
+				TES3::Alchemy * m_Object;
+			};
 		}
 	}
 }
