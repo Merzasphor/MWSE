@@ -87,9 +87,11 @@ walkDestination
 .. _`String`: ../lua/string.html
 .. _`Table`: ../lua/table.html
 
+.. _`Faction`: faction.html
 .. _`MobileCreature`: mobileCreature.html
 .. _`MobileNPC`: mobileNPC.html
 .. _`MobilePlayer`: mobileCreature.html
+.. _`NPC`: npc.html
 .. _`Weapon`: weapon.html
 .. _`Vector3`: vector3.html
 
