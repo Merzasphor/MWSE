@@ -42,6 +42,10 @@ model
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `String`_. Read-only. The path to the object's model, under *Data Files/Models*.
 
+name
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`String`_. The user-friendly name shown for the object.
+
 objectType
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `Number`_. Read-only. The object's `Object Type`_, which will always be 1330467393. This matches the constant ``tes3.objectType.armor``.
