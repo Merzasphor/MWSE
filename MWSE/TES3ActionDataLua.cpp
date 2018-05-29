@@ -14,7 +14,7 @@ namespace TES3 {
 	}
 
 	sol::object ActionData::getNockedProjectile() {
-		return mwse::lua::makeLuaObject((TES3::BaseObject*)nockedProjectile);
+		return mwse::lua::makeLuaObject(nockedProjectile);
 	}
 
 	sol::object ActionData::getStolenFrom() {
@@ -38,8 +38,8 @@ namespace mwse {
 
 				"aiBehaviourState", &TES3::ActionData::aiBehaviourState,
 				"attackDirection", &TES3::ActionData::attackDirection,
-				"animAttackState", &TES3::ActionData::animStateAttack,
-				"currentAnimGroup", &TES3::ActionData::currentAnimGroup,
+				"animationAttackState", &TES3::ActionData::animStateAttack,
+				"currentAnimationGroup", &TES3::ActionData::currentAnimGroup,
 
 				"lastBarterHoursPassed", &TES3::ActionData::lastBarterHoursPassed,
 
