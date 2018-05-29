@@ -14,9 +14,9 @@ namespace mwse {
 				// Properties.
 				//
 
-				"objectType", &TES3::Activator::objectType,
+				"objectType", sol::readonly_property(&TES3::Activator::objectType),
 
-				"boundingBox", &TES3::Activator::boundingBox,
+				"boundingBox", sol::readonly_property(&TES3::Activator::boundingBox),
 
 				"id", sol::readonly_property(&TES3::Activator::getObjectID),
 				"name", sol::property(&TES3::Activator::getName, &TES3::Activator::setName),
