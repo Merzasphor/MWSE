@@ -55,6 +55,8 @@ namespace mwse {
 				// Disable construction of this type.
 				"create", createSpell,
 
+				sol::meta_function::to_string, &TES3::Spell::getObjectID,
+
 				//
 				// Properties.
 				//

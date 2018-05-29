@@ -10,6 +10,8 @@ namespace mwse {
 				// Disable construction of this type.
 				"new", sol::no_constructor,
 
+				sol::meta_function::to_string, &TES3::Static::getObjectID,
+
 				//
 				// Properties.
 				//

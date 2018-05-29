@@ -83,6 +83,8 @@ namespace mwse {
 				// Disable construction of this type.
 				"new", sol::no_constructor,
 
+				sol::meta_function::to_string, &TES3::Creature::getObjectID,
+
 				//
 				// Properties.
 				//
@@ -131,6 +133,8 @@ namespace mwse {
 			state.new_usertype<TES3::CreatureInstance>("TES3CreatureInstance",
 				// Disable construction of this type.
 				"new", sol::no_constructor,
+
+				sol::meta_function::to_string, &TES3::CreatureInstance::getObjectID,
 
 				//
 				// Properties.

@@ -92,7 +92,7 @@ namespace mwse {
 				// Disable construction of this type.
 				"new", sol::no_constructor,
 
-				sol::meta_function::to_string, [](TES3::Reference& self) { return self.getObjectID(); },
+				sol::meta_function::to_string, &TES3::Reference::getObjectID,
 
 				//
 				// Properties: Reference
