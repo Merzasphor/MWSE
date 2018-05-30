@@ -74,7 +74,7 @@
 #include "NICameraLua.h"
 #include "NIObjectLua.h"
 #include "NINodeLua.h"
-#include "NiPickLua.h"
+#include "NIPickLua.h"
 #include "NISwitchNodeLua.h"
 
 #include "windows.h"

@@ -720,10 +720,10 @@
     <ClInclude Include="NICameraLua.h">
       <Filter>Header Files\Lua\Bindings\NI</Filter>
     </ClInclude>
-    <ClInclude Include="NiPick.h">
+    <ClInclude Include="NIPick.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
-    <ClInclude Include="NiPickLua.h">
+    <ClInclude Include="NIPickLua.h">
       <Filter>Header Files\Lua\Bindings\NI</Filter>
     </ClInclude>
     <ClInclude Include="TES3PlayerAnimationData.h">
@@ -1715,10 +1715,10 @@
     <ClCompile Include="NICameraLua.cpp">
       <Filter>Source Files\Lua\Bindings\NI</Filter>
     </ClCompile>
-    <ClCompile Include="NiPick.cpp">
+    <ClCompile Include="NIPick.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
-    <ClCompile Include="NiPickLua.cpp">
+    <ClCompile Include="NIPickLua.cpp">
       <Filter>Source Files\Lua\Bindings\NI</Filter>
     </ClCompile>
     <ClCompile Include="TES3Vectors.cpp">

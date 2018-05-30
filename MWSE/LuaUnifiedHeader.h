@@ -62,7 +62,7 @@
 #include "NIObjectNET.h"
 #include "NIAVObject.h"
 #include "NINode.h"
-#include "NiPick.h"
+#include "NIPick.h"
 #include "NISwitchNode.h"
 
 #include "sol.hpp"
