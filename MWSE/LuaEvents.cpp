@@ -803,7 +803,7 @@ namespace mwse {
 				eventData["caster"] = makeLuaObject(m_SpellInstance->caster);
 				eventData["target"] = makeLuaObject(m_EffectInstance->spellTarget);
 
-				eventData["spell"] = makeLuaObject(m_SpellInstance->source.asGeneric);
+				eventData["source"] = makeLuaObject(m_SpellInstance->source.asGeneric);
 				eventData["spellInstance"] = makeLuaObject(m_SpellInstance);
 				eventData["deltaTime"] = m_DeltaTime;
 				eventData["effectIndex"] = m_EffectIndex;
@@ -855,7 +855,7 @@ namespace mwse {
 				eventData["target"] = makeLuaObject(m_EffectInstance->spellTarget);
 				eventData["resistedPercent"] = m_EffectInstance->resistedPercent;
 
-				eventData["spell"] = makeLuaObject(m_SpellInstance->source.asGeneric);
+				eventData["source"] = makeLuaObject(m_SpellInstance->source.asGeneric);
 				eventData["spellInstance"] = makeLuaObject(m_SpellInstance);
 				eventData["effectIndex"] = m_EffectIndex;
 				eventData["effectInstance"] = m_EffectInstance;
