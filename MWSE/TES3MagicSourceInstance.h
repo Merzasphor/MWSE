@@ -23,18 +23,29 @@ namespace TES3 {
 		};
 	}
 
-	struct MagicSourceInstance : BaseObject {
-		float overrideCastChance; // 0x10
-		void * unknown_0x14;
-		void * unknown_0x18;
-		HashMap effects[8]; // 0x1C
-		void * unknown_0x9C; // Node?
+	struct MagicSourceCombo {
 		union {
 			Object * asGeneric;
 			Alchemy * asAlchemy;
 			Spell * asSpell;
 		} source; // 0xA0
 		signed char sourceType;// 0xA4
+
+		//
+		// Other related this-call functions.
+		//
+
+		Effect * getSourceEffects();
+	};
+	static_assert(sizeof(MagicSourceCombo) == 0x8, "TES3::MagicSourceCombo failed size validation");
+
+	struct MagicSourceInstance : BaseObject {
+		float overrideCastChance; // 0x10
+		void * unknown_0x14;
+		void * unknown_0x18;
+		HashMap effects[8]; // 0x1C
+		void * unknown_0x9C; // Node?
+		MagicSourceCombo sourceCombo;
 		void * unknown_0xA8;
 		void * unknown_0xAC;
 		void * unknown_0xB0;
@@ -53,13 +64,6 @@ namespace TES3 {
 		char text[64]; // 0xE4
 		int unknown_0x124;
 		float unknown_0x128;
-
-		//
-		// Other related this-call functions.
-		//
-
-		Effect * getSourceEffects();
-
 	};
 	static_assert(sizeof(MagicSourceInstance) == 0x12C, "TES3::MagicSourceInstance failed size validation");
 }
