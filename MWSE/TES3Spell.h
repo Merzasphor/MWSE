@@ -47,7 +47,7 @@ namespace TES3 {
 	struct Spell : Object {
 		char * objectID; // 0x28
 		char * name; // 0x2C
-		char castType; // 0x30
+		signed char castType; // 0x30
 		char unknown_0x31; // Undefined.
 		short magickaCost; // 0x32
 		Effect effects[8]; // 0x34
