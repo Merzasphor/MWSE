@@ -5,6 +5,8 @@
 namespace mwse {
 	namespace tes3 {
 		namespace ui {
+			TES3::UI::Block* getTopMenu();
+
 			bool requestMenuModeOff();
 			bool requestMenuModeOn(short prop = 0);
 

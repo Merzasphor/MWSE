@@ -460,6 +460,11 @@ namespace mwse {
 				Stack::getInstance().pushLong(key);
 				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEDisallowKey);
 			};
+
+			// Bind function: tes3.disableKey
+			state["tes3"]["getTopMenu"] = []() {
+				return tes3::ui::getTopMenu();
+			};
 		}
 	}
 }

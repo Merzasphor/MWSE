@@ -3,6 +3,8 @@
 #include "LuaManager.h"
 #include "LuaEvents.h"
 
+#define TES3_ui_getMenuOnTop 0x595290
+
 #define TES3_ui_menu_inventory 0x7D3988
 
 #define TES3_ui_requestMenuModeOff 0x595270
@@ -22,6 +24,10 @@
 namespace mwse {
 	namespace tes3 {
 		namespace ui {
+			TES3::UI::Block* getTopMenu() {
+				return reinterpret_cast<TES3::UI::Block*(__stdcall *)()>(TES3_ui_getMenuOnTop)();
+			}
+
 			bool requestMenuModeOff() {
 				return reinterpret_cast<signed char(__cdecl *)()>(TES3_ui_requestMenuModeOff)();
 			}
