@@ -5,7 +5,8 @@
 
 #include "TES3ActorAnimationData.h"
 #include "TES3UIBlock.h"
-#include "TES3SpellEffectInstance.h"
+#include "TES3MagicEffectInstance.h"
+#include "TES3MagicSourceInstance.h"
 
 #include "Log.h"
 
@@ -780,9 +781,9 @@ namespace mwse {
 			// Spell tick event.
 			//
 
-			SpellTickEvent::SpellTickEvent(TES3::SpellInstance * spellInstance, float deltaTime, TES3::SpellEffectInstance * effectInstance, int effectIndex, bool negateOnExpiry, int isUncapped, TES3::Statistic * statistic, void * attributeTypeInfo, int resistAttribute, bool(__cdecl *resistanceTestFunction)(void *, void *, int)) :
+			SpellTickEvent::SpellTickEvent(TES3::MagicSourceInstance * spellInstance, float deltaTime, TES3::MagicEffectInstance * effectInstance, int effectIndex, bool negateOnExpiry, int isUncapped, TES3::Statistic * statistic, void * attributeTypeInfo, int resistAttribute, bool(__cdecl *resistanceTestFunction)(void *, void *, int)) :
 				GenericEvent("spellTick"),
-				m_SpellInstance(spellInstance),
+				m_MagicSourceInstance(spellInstance),
 				m_DeltaTime(deltaTime),
 				m_EffectInstance(effectInstance),
 				m_EffectIndex(effectIndex),
@@ -800,11 +801,11 @@ namespace mwse {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table eventData = state.create_table();
 
-				eventData["caster"] = makeLuaObject(m_SpellInstance->caster);
-				eventData["target"] = makeLuaObject(m_EffectInstance->spellTarget);
+				eventData["caster"] = makeLuaObject(m_MagicSourceInstance->caster);
+				eventData["target"] = makeLuaObject(m_EffectInstance->target);
 
-				eventData["source"] = makeLuaObject(m_SpellInstance->source.asGeneric);
-				eventData["spellInstance"] = makeLuaObject(m_SpellInstance);
+				eventData["source"] = makeLuaObject(m_MagicSourceInstance->source.asGeneric);
+				eventData["sourceInstance"] = makeLuaObject(m_MagicSourceInstance);
 				eventData["deltaTime"] = m_DeltaTime;
 				eventData["effectIndex"] = m_EffectIndex;
 				eventData["effectInstance"] = m_EffectInstance;
@@ -816,7 +817,7 @@ namespace mwse {
 				eventData["resistanceTestFunction"] = m_ResistanceTestFunction;
 
 				// Get the specific effect on the source.
-				TES3::Effect * effects = m_SpellInstance->getSourceEffects();
+				TES3::Effect * effects = m_MagicSourceInstance->getSourceEffects();
 				if (effects) {
 					eventData["effect"] = effects[m_EffectIndex];
 				}
@@ -828,7 +829,7 @@ namespace mwse {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table options = state.create_table();
 
-				options["filter"] = makeLuaObject(m_SpellInstance->source.asGeneric);
+				options["filter"] = makeLuaObject(m_MagicSourceInstance->source.asGeneric);
 
 				return options;
 			}
@@ -837,9 +838,9 @@ namespace mwse {
 			// Spell resist event.
 			//
 
-			SpellResistEvent::SpellResistEvent(TES3::SpellInstance * spellInstance, TES3::SpellEffectInstance * effectInstance, int effectIndex, int resistAttribute) :
+			SpellResistEvent::SpellResistEvent(TES3::MagicSourceInstance * spellInstance, TES3::MagicEffectInstance * effectInstance, int effectIndex, int resistAttribute) :
 				GenericEvent("spellResist"),
-				m_SpellInstance(spellInstance),
+				m_MagicSourceInstance(spellInstance),
 				m_EffectInstance(effectInstance),
 				m_EffectIndex(effectIndex),
 				m_ResistAttribute(resistAttribute)
@@ -851,25 +852,25 @@ namespace mwse {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table eventData = state.create_table();
 
-				eventData["caster"] = makeLuaObject(m_SpellInstance->caster);
-				eventData["target"] = makeLuaObject(m_EffectInstance->spellTarget);
+				eventData["caster"] = makeLuaObject(m_MagicSourceInstance->caster);
+				eventData["target"] = makeLuaObject(m_EffectInstance->target);
 				eventData["resistedPercent"] = m_EffectInstance->resistedPercent;
 
-				eventData["source"] = makeLuaObject(m_SpellInstance->source.asGeneric);
-				eventData["spellInstance"] = makeLuaObject(m_SpellInstance);
+				eventData["source"] = makeLuaObject(m_MagicSourceInstance->source.asGeneric);
+				eventData["sourceInstance"] = makeLuaObject(m_MagicSourceInstance);
 				eventData["effectIndex"] = m_EffectIndex;
 				eventData["effectInstance"] = m_EffectInstance;
 				eventData["resistAttribute"] = m_ResistAttribute;
 
 				// Get the specific effect on the source.
-				TES3::Effect * effects = m_SpellInstance->getSourceEffects();
+				TES3::Effect * effects = m_MagicSourceInstance->getSourceEffects();
 				if (effects) {
 					eventData["effect"] = effects[m_EffectIndex];
 				}
 
 				// Get cast chance if it's a spell.
-				if (m_SpellInstance->sourceType == 1 || m_SpellInstance->sourceType == 2) {
-					eventData["spellCastChance"] = m_SpellInstance->source.asSpell->calculateCastChance(m_SpellInstance->caster);
+				if (m_MagicSourceInstance->sourceType == TES3::MagicSourceType::Spell || m_MagicSourceInstance->sourceType == TES3::MagicSourceType::Enchantment) {
+					eventData["spellCastChance"] = m_MagicSourceInstance->source.asSpell->calculateCastChance(m_MagicSourceInstance->caster);
 				}
 				
 				return eventData;
@@ -879,7 +880,7 @@ namespace mwse {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table options = state.create_table();
 
-				options["filter"] = makeLuaObject(m_SpellInstance->source.asGeneric);
+				options["filter"] = makeLuaObject(m_MagicSourceInstance->source.asGeneric);
 
 				return options;
 			}

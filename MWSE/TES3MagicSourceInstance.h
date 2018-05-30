@@ -15,7 +15,15 @@ namespace TES3 {
 		};
 	}
 
-	struct SpellInstance : BaseObject {
+	namespace MagicSourceType {
+		enum MagicSourceType {
+			Spell = 0x1,
+			Enchantment = 0x2,
+			Alchemy = 0x3
+		};
+	}
+
+	struct MagicSourceInstance : BaseObject {
 		float overrideCastChance; // 0x10
 		void * unknown_0x14;
 		void * unknown_0x18;
@@ -30,7 +38,7 @@ namespace TES3 {
 		void * unknown_0xA8;
 		void * unknown_0xAC;
 		void * unknown_0xB0;
-		int spellState; // 0xB4
+		int state; // 0xB4
 		Reference * caster;
 		Item * castingItem;
 		ItemData * castingItemCondition;
@@ -42,7 +50,7 @@ namespace TES3 {
 		int unknown_0xD8;
 		int unknown_0xDC;
 		int unknown_0xE0;
-		char spellText[64]; // 0xE4
+		char text[64]; // 0xE4
 		int unknown_0x124;
 		float unknown_0x128;
 
@@ -53,5 +61,5 @@ namespace TES3 {
 		Effect * getSourceEffects();
 
 	};
-	static_assert(sizeof(SpellInstance) == 0x12C, "TES3::SpellInstance failed size validation");
+	static_assert(sizeof(MagicSourceInstance) == 0x12C, "TES3::MagicSourceInstance failed size validation");
 }

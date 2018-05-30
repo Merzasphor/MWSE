@@ -168,10 +168,10 @@
     <ClInclude Include="TES3Sound.h" />
     <ClInclude Include="TES3SoundLua.h" />
     <ClInclude Include="TES3Spell.h" />
-    <ClInclude Include="TES3SpellEffectInstance.h" />
-    <ClInclude Include="TES3SpellEffectInstanceLua.h" />
-    <ClInclude Include="TES3SpellInstance.h" />
-    <ClInclude Include="TES3SpellInstanceLua.h" />
+    <ClInclude Include="TES3MagicEffectInstance.h" />
+    <ClInclude Include="TES3MagicEffectInstanceLua.h" />
+    <ClInclude Include="TES3MagicSourceInstance.h" />
+    <ClInclude Include="TES3MagicSourceInstanceLua.h" />
     <ClInclude Include="TES3SpellList.h" />
     <ClInclude Include="TES3SpellLua.h" />
     <ClInclude Include="TES3Static.h" />
@@ -288,9 +288,9 @@
     <ClCompile Include="TES3Sound.cpp" />
     <ClCompile Include="TES3SoundLua.cpp" />
     <ClCompile Include="TES3Spell.cpp" />
-    <ClCompile Include="TES3SpellEffectInstanceLua.cpp" />
-    <ClCompile Include="TES3SpellInstance.cpp" />
-    <ClCompile Include="TES3SpellInstanceLua.cpp" />
+    <ClCompile Include="TES3MagicEffectInstanceLua.cpp" />
+    <ClCompile Include="TES3MagicSourceInstance.cpp" />
+    <ClCompile Include="TES3MagicSourceInstanceLua.cpp" />
     <ClCompile Include="TES3SpellLua.cpp" />
     <ClCompile Include="TES3StaticLua.cpp" />
     <ClCompile Include="TES3Statistic.cpp" />

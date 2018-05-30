@@ -391,14 +391,14 @@ namespace mwse {
 
 			class SpellTickEvent : public GenericEvent {
 			public:
-				SpellTickEvent(TES3::SpellInstance * spellInstance, float deltaTime, TES3::SpellEffectInstance * effectInstance, int effectIndex, bool negateOnExpiry, int isUncapped, TES3::Statistic * statistic, void * attributeTypeInfo, int resistAttribute, bool(__cdecl *resistanceTestFunction)(void *, void *, int));
+				SpellTickEvent(TES3::MagicSourceInstance * spellInstance, float deltaTime, TES3::MagicEffectInstance * effectInstance, int effectIndex, bool negateOnExpiry, int isUncapped, TES3::Statistic * statistic, void * attributeTypeInfo, int resistAttribute, bool(__cdecl *resistanceTestFunction)(void *, void *, int));
 				sol::table createEventTable();
 				sol::object getEventOptions();
 
 			protected:
-				TES3::SpellInstance* m_SpellInstance;
+				TES3::MagicSourceInstance* m_MagicSourceInstance;
 				float m_DeltaTime;
-				TES3::SpellEffectInstance* m_EffectInstance;
+				TES3::MagicEffectInstance* m_EffectInstance;
 				int m_EffectIndex;
 				bool m_NegateOnExpiry;
 				int m_IsUncapped;
@@ -412,13 +412,13 @@ namespace mwse {
 
 			class SpellResistEvent : public GenericEvent {
 			public:
-				SpellResistEvent(TES3::SpellInstance * spellInstance, TES3::SpellEffectInstance * effectInstance, int effectIndex, int resistAttribute);
+				SpellResistEvent(TES3::MagicSourceInstance * spellInstance, TES3::MagicEffectInstance * effectInstance, int effectIndex, int resistAttribute);
 				sol::table createEventTable();
 				sol::object getEventOptions();
 
 			protected:
-				TES3::SpellInstance* m_SpellInstance;
-				TES3::SpellEffectInstance* m_EffectInstance;
+				TES3::MagicSourceInstance* m_MagicSourceInstance;
+				TES3::MagicEffectInstance* m_EffectInstance;
 				int m_EffectIndex;
 				int m_ResistAttribute;
 			};

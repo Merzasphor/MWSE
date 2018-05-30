@@ -3,14 +3,14 @@
 #include "TES3Object.h"
 
 namespace TES3 {
-	struct SpellEffectInstance {
-		Reference * spellTarget;
+	struct MagicEffectInstance {
+		Reference * target;
 		float resistedPercent;
 		float magnitude;
 		float timeActive;
 		float cumulativeMagnitude;
 		int state;
-		signed char spellVisual;
+		signed char visual;
 		Item * boundItem;
 		int unknown_0x20;
 		Weapon * lastUsedWeapon;

@@ -2,6 +2,6 @@
 
 namespace mwse {
 	namespace lua {
-		void bindTES3SpellInstance();
+		void bindTES3MagicSourceInstance();
 	}
 }

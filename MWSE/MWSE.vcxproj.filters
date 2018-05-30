@@ -459,9 +459,6 @@
     <ClInclude Include="MemoryUtil.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="TES3SpellInstance.h">
-      <Filter>Header Files\DataAdapters\TES3\Magic</Filter>
-    </ClInclude>
     <ClInclude Include="TES3ApparatusLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
@@ -729,17 +726,20 @@
     <ClInclude Include="NiPickLua.h">
       <Filter>Header Files\Lua\Bindings\NI</Filter>
     </ClInclude>
-    <ClInclude Include="TES3SpellEffectInstance.h">
-      <Filter>Header Files\DataAdapters\TES3\Magic</Filter>
-    </ClInclude>
-    <ClInclude Include="TES3SpellInstanceLua.h">
-      <Filter>Header Files\Lua\Bindings\TES3</Filter>
-    </ClInclude>
-    <ClInclude Include="TES3SpellEffectInstanceLua.h">
-      <Filter>Header Files\Lua\Bindings\TES3</Filter>
-    </ClInclude>
     <ClInclude Include="TES3PlayerAnimationData.h">
       <Filter>Header Files\DataAdapters\TES3\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MagicSourceInstance.h">
+      <Filter>Header Files\DataAdapters\TES3\Magic</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MagicSourceInstanceLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MagicEffectInstanceLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MagicEffectInstance.h">
+      <Filter>Header Files\DataAdapters\TES3\Magic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1721,20 +1721,20 @@
     <ClCompile Include="NiPickLua.cpp">
       <Filter>Source Files\Lua\Bindings\NI</Filter>
     </ClCompile>
-    <ClCompile Include="TES3SpellInstanceLua.cpp">
-      <Filter>Source Files\Lua\Bindings\TES3</Filter>
-    </ClCompile>
-    <ClCompile Include="TES3SpellEffectInstanceLua.cpp">
-      <Filter>Source Files\Lua\Bindings\TES3</Filter>
-    </ClCompile>
     <ClCompile Include="TES3Vectors.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3Spell.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
-    <ClCompile Include="TES3SpellInstance.cpp">
+    <ClCompile Include="TES3MagicSourceInstanceLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3MagicSourceInstance.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3MagicEffectInstanceLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

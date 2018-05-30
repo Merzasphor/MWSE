@@ -60,8 +60,8 @@
 #include "TES3SkillLua.h"
 #include "TES3SoundLua.h"
 #include "TES3SpellLua.h"
-#include "TES3SpellEffectInstanceLua.h"
-#include "TES3SpellInstanceLua.h"
+#include "TES3MagicEffectInstanceLua.h"
+#include "TES3MagicSourceInstanceLua.h"
 #include "TES3StaticLua.h"
 #include "TES3StatisticLua.h"
 #include "TES3UIBlockLua.h"
@@ -254,8 +254,8 @@ namespace mwse {
 			bindTES3Skill();
 			bindTES3Sound();
 			bindTES3Spell();
-			bindTES3SpellEffectInstance();
-			bindTES3SpellInstance();
+			bindTES3MagicEffectInstance();
+			bindTES3MagicSourceInstance();
 			bindTES3Static();
 			bindTES3Statistic();
 			bindTES3UIBlock();
@@ -792,9 +792,9 @@ namespace mwse {
 		// Spell resist event.
 		//
 
-		void __cdecl OnSpellResist(TES3::SpellInstance * spellInstance, TES3::SpellEffectInstance * effectInstance, int effectIndex, int resistAttribute) {
+		void __cdecl OnSpellResist(TES3::MagicSourceInstance * spellInstance, TES3::MagicEffectInstance * effectInstance, int effectIndex, int resistAttribute) {
 			// Call original function.
-			reinterpret_cast<void(__cdecl *)(TES3::SpellInstance *, TES3::SpellEffectInstance *, int, int)>(0x517E40)(spellInstance, effectInstance, effectIndex, resistAttribute);
+			reinterpret_cast<void(__cdecl *)(TES3::MagicSourceInstance *, TES3::MagicEffectInstance *, int, int)>(0x517E40)(spellInstance, effectInstance, effectIndex, resistAttribute);
 
 			// Trigger event, see if we want to overwrite the resisted percentage.
 			sol::table eventData = LuaManager::getInstance().triggerEvent(new event::SpellResistEvent(spellInstance, effectInstance, effectIndex, resistAttribute));
