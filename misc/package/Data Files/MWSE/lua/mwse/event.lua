@@ -35,6 +35,15 @@ function this.register(eventType, callback, options)
 	-- Make sure options is an empty table if nothing else.
 	local options = options or {}
 
+	-- If 'doOnce' was set, wrap with a call to unregister.
+	if options.doOnce then
+		local originalCallback = callback
+		callback = function (e)
+			originalCallback(e)
+			this.unregister(eventType, callback, options)
+		end
+	end
+
 	-- Make sure that the event isn't already registered.
 	local callbacks = getEventTable(eventType, options.filter)
 	local found = table.find(callbacks, callback)
