@@ -7,6 +7,7 @@
 #include "ScriptUtil.h"
 #include "UIUtil.h"
 #include "MWSEDefs.h"
+#include "CodePatchUtil.h"
 
 #include "LuaUnifiedHeader.h"
 
@@ -202,6 +203,14 @@ namespace mwse {
 				PROCESS_MEMORY_COUNTERS_EX memCounter;
 				GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&memCounter, sizeof(memCounter));
 				return memCounter.PrivateUsage;
+			};
+
+			luaState["mwse"]["hasCodePatchFeature"] = [](int id) -> sol::object {
+				if (!mcp::hasFeaturesFound()) {
+					return sol::nil;
+				}
+
+				return sol::make_object(LuaManager::getInstance().getState(), mcp::getFeatureEnabled(id));
 			};
 
 			// Add binding for base objects.
