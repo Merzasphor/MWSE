@@ -11,6 +11,7 @@
 #include "Stack.h"
 #include "Log.h"
 #include "ScriptUtil.h"
+#include "CodePatchUtil.h"
 
 namespace mwse {
 	namespace lua {
@@ -464,6 +465,14 @@ namespace mwse {
 			// Bind function: tes3.disableKey
 			state["tes3"]["getTopMenu"] = []() {
 				return tes3::ui::getTopMenu();
+			};
+
+			state["tes3"]["hasCodePatchFeature"] = [](int id) -> sol::object {
+				if (!mcp::hasFeaturesFound()) {
+					return sol::nil;
+				}
+
+				return sol::make_object(LuaManager::getInstance().getState(), mcp::getFeatureEnabled(id));
 			};
 		}
 	}
