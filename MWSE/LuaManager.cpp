@@ -465,17 +465,24 @@ namespace mwse {
 		// Hook: Enter Frame
 		//
 
+		bool lastMenuMode = true;
 		void __fastcall EnterFrame(TES3::WorldController* worldController, DWORD _UNUSED_) {
 			// Run the function before raising our event.
 			worldController->mainLoopBeforeInput();
 
-			// Send off our enterFrame event always.
+			// Fire off any button pressed events if we had one queued.
 			LuaManager& luaManager = LuaManager::getInstance();
 			if (tes3::ui::getButtonPressedIndex() != -1) {
 				luaManager.triggerButtonPressed();
 			}
 
-			//
+			// Has menu mode changed?
+			if (worldController->flagMenuMode != lastMenuMode) {
+				luaManager.triggerEvent(new event::MenuStateEvent(worldController->flagMenuMode));
+				lastMenuMode = worldController->flagMenuMode;
+			}
+
+			// Send off our enterFrame event always.
 			luaManager.triggerEvent(new event::FrameEvent(worldController->deltaTime, worldController->flagMenuMode));
 
 			// If we're not in menu mode, send off the simulate event.

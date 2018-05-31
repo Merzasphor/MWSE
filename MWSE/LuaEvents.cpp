@@ -8,6 +8,8 @@
 #include "TES3MagicEffectInstance.h"
 #include "TES3MagicSourceInstance.h"
 
+#include "UIUtil.h"
+
 #include "Log.h"
 
 namespace mwse {
@@ -901,6 +903,38 @@ namespace mwse {
 				sol::table eventData = state.create_table();
 
 				eventData["object"] = makeLuaObject(m_Object);
+
+				return eventData;
+			}
+
+			//
+			// Menu mode change event.
+			//
+
+			MenuStateEvent::MenuStateEvent(bool inMenuMode) :
+				m_InMenuMode(inMenuMode)
+			{
+
+			}
+
+			const char* MenuStateEvent::getEventName() {
+				if (m_InMenuMode) {
+					return "menuEnter";
+				}
+				else {
+					return "menuExit";
+				}
+			}
+
+			sol::table MenuStateEvent::createEventTable() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table eventData = state.create_table();
+
+				eventData["menuMode"] = m_InMenuMode;
+				if (m_InMenuMode) {
+					TES3::UI::Block * top = tes3::ui::getTopMenu();
+					eventData["menu"] = top;
+				}
 
 				return eventData;
 			}

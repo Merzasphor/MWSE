@@ -433,6 +433,18 @@ namespace mwse {
 			protected:
 				TES3::Alchemy * m_Object;
 			};
+
+			// ---------------------------------------------------------------------------- //
+
+			class MenuStateEvent : public BaseEvent {
+			public:
+				MenuStateEvent(bool inMenuMode);
+				const char* getEventName();
+				sol::table createEventTable();
+
+			protected:
+				bool m_InMenuMode;
+			};
 		}
 	}
 }
