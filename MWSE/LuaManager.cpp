@@ -40,6 +40,7 @@
 #include "TES3GameSettingLua.h"
 #include "TES3IngredientLua.h"
 #include "TES3InventoryLua.h"
+#include "TES3LeveledListLua.h"
 #include "TES3LightLua.h"
 #include "TES3LockpickLua.h"
 #include "TES3MagicEffectLua.h"
@@ -234,6 +235,7 @@ namespace mwse {
 			bindTES3GameSetting();
 			bindTES3Ingredient();
 			bindTES3Inventory();
+			bindTES3LeveledList();
 			bindTES3Light();
 			bindTES3Lockpick();
 			bindTES3MagicEffect();

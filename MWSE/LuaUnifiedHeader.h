@@ -23,6 +23,7 @@
 #include "TES3Ingredient.h"
 #include "TES3InputController.h"
 #include "TES3Inventory.h"
+#include "TES3LeveledList.h"
 #include "TES3Light.h"
 #include "TES3Lockpick.h"
 #include "TES3MagicEffect.h"

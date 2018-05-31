@@ -250,6 +250,10 @@ namespace mwse {
 			case TES3::ObjectType::Ingredient:
 				result = sol::make_object(state, reinterpret_cast<TES3::Ingredient*>(object));
 				break;
+			case TES3::ObjectType::LeveledCreature:
+			case TES3::ObjectType::LeveledItem:
+				result = sol::make_object(state, reinterpret_cast<TES3::LeveledList*>(object));
+				break;
 			case TES3::ObjectType::Light:
 				result = sol::make_object(state, reinterpret_cast<TES3::Light*>(object));
 				break;

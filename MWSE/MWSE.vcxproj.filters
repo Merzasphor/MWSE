@@ -741,6 +741,12 @@
     <ClInclude Include="TES3MagicEffectInstance.h">
       <Filter>Header Files\DataAdapters\TES3\Magic</Filter>
     </ClInclude>
+    <ClInclude Include="TES3LeveledList.h">
+      <Filter>Header Files\DataAdapters\TES3\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3LeveledListLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1734,6 +1740,12 @@
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3MagicEffectInstanceLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3LeveledList.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3LeveledListLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
   </ItemGroup>

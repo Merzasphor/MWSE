@@ -45,6 +45,8 @@
     <ClInclude Include="sol.hpp" />
     <ClInclude Include="LuaUnifiedHeader.h" />
     <ClInclude Include="sol_forward.hpp" />
+    <ClInclude Include="TES3LeveledList.h" />
+    <ClInclude Include="TES3LeveledListLua.h" />
     <ClInclude Include="TES3MobileObject.h" />
     <ClInclude Include="TES3PlayerAnimationData.h" />
     <ClInclude Include="TES3SoundGenerator.h" />
@@ -257,6 +259,8 @@
     <ClCompile Include="TES3InputController.cpp" />
     <ClCompile Include="TES3Inventory.cpp" />
     <ClCompile Include="TES3InventoryLua.cpp" />
+    <ClCompile Include="TES3LeveledList.cpp" />
+    <ClCompile Include="TES3LeveledListLua.cpp" />
     <ClCompile Include="TES3Light.cpp" />
     <ClCompile Include="TES3LightLua.cpp" />
     <ClCompile Include="TES3LockpickLua.cpp" />

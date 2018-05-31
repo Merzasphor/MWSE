@@ -128,6 +128,8 @@ namespace TES3 {
 	struct InputController;
 	struct Item;
 	struct ItemData;
+	struct LeveledList;
+	struct LeveledListNode;
 	struct Light;
 	struct Lockpick;
 	struct MagicEffectInstance;
