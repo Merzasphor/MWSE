@@ -6,7 +6,7 @@
 
 namespace mwse {
 	namespace lua {
-		void bindTES3Inventory() {
+		void bindTES3LeveledList() {
 			sol::state& state = LuaManager::getInstance().getState();
 
 			state.new_usertype<TES3::LeveledListNode>("TES3LeveledListNode",
