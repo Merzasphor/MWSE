@@ -32,3 +32,4 @@ These extra functions allow modders to add features and behavior to scripts that
     lua/api
     lua/guide
     lua/type
+    lua/event
