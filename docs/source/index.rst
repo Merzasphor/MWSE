@@ -30,6 +30,6 @@ These extra functions allow modders to add features and behavior to scripts that
     :caption: Lua Scripting:
 
     lua/api
+    lua/event
     lua/guide
     lua/type
-    lua/event

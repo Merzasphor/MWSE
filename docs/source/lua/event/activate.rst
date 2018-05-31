@@ -2,32 +2,71 @@
 activate
 ========================================================
 
-**Event Data:**
+This event is invoked whenever something is activated, typically by the player. Activation is usually done with the associated activate/use key, but may also be forced by scripts.
 
-- ``reference`` **activator**: Who or what triggered the activate event.
-- ``reference`` **target**: The reference that was activated.
+Non-player actors may also activate objects, such as when opening doors, or via MWSE functions like `xActivate`_ or ``tes3.activate()``.
 
-This event is invoked whenever something is activated, typically by the player. Activation is usually done with the associated activate/use key, but may also be triggered by scripts.
-Non-player actors may also activate objects, such as when opening doors, or via MWSE functions like ``xActivate`` or ``tes3.activate()``.
+Some examples of when the activate event fires includes:
 
-Objects that invoke the ``"activate"`` event when used by the player include anything with a name tag, such as items, doors, and NPCs, but also objects that aren't strictly supposed to be interactable, like banners or animated boats.
+- When a door is used.
+- When an item is picked up.
+- When someone attempts to open a container.
 
-**Returns:**
+.. note:: See the `Event Guide`_ for more information on event data, return values, and filters.
 
-- ``false`` prevents the event from continuing, effectively disabling activation.
+Event Data
+--------------------------------------------------------
 
-**Filters:**  
+activator
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- May be filtered by the **target** reference.
+`Reference`_. Read-only. The actor attempting to trigger the event.
 
-Example:
-::
-	--event.register(eventKey, callbackFunction, optionsTable)
+target
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`Reference`_. Read-only. The reference that is being activated.
 
-	--Show the id when the player activates an object.
-	function myOnActivateCallback(e)
-		if e.activator == tes3.getPlayerRef() then
-			tes3.messageBox{message = "Activated " .. e.target.object.id}
-		end
-	end
-	event.register("activate", myOnActivateCallback)
+Filter
+--------------------------------------------------------
+This event may be filtered by the **target** reference.
+
+Examples
+--------------------------------------------------------
+
+Show a message for what the player is activating
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: lua
+
+    -- Show the id when the player activates an object.
+    function myOnActivateCallback(e)
+        if (e.activator == tes3.getPlayerRef()) then
+            tes3.messageBox({ message = "Activated " .. e.target.object.id })
+        end
+    end
+    event.register("activate", myOnActivateCallback)
+
+Prevent the player from activating NPCs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: lua
+
+    -- Show the id when the player activates an object.
+    function myOnActivateCallback(e)
+        -- We only care if the PC is activating something.
+        if (e.activator ~= tes3.getPlayerRef()) then
+            return
+        end
+
+        -- If the player targets an NPC, block the activation.
+        if (e.target.object.objectType == tes3.objectType.npc) then
+            return false
+        end
+    end
+    event.register("activate", myOnActivateCallback)
+
+.. _`xActivate`: ../../mwscript/functions/actor/xActivate.html
+
+.. _`Event Guide`: ../guide/events.html
+
+.. _`Reference`: ../type/tes3/reference.html
