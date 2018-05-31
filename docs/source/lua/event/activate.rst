@@ -30,3 +30,4 @@ Example:
 			tes3.messageBox{message = "Activated " .. e.target.object.id}
 		end
 	end
+	event.register("activate", myOnActivateCallback)
