@@ -44,18 +44,33 @@ namespace mwse {
 			//
 
 			// Bind function: tes3.getPlayerRef
-			state["tes3"]["getPlayerRef"] = []() {
-				return tes3::getWorldController()->getMobilePlayer()->reference;
+			state["tes3"]["getPlayerRef"] = []() -> TES3::Reference* {
+				TES3::WorldController* worldController = tes3::getWorldController();
+				if (worldController) {
+					TES3::MobilePlayer* mobilePlayer = worldController->getMobilePlayer();
+					if (mobilePlayer) {
+						return mobilePlayer->reference;
+					}
+				}
+				return NULL;
 			};
 
 			// Bind function: tes3.getMobilePlayer
-			state["tes3"]["getMobilePlayer"] = []() {
-				return tes3::getWorldController()->getMobilePlayer();
+			state["tes3"]["getMobilePlayer"] = []() -> TES3::MobilePlayer* {
+				TES3::WorldController* worldController = tes3::getWorldController();
+				if (worldController) {
+					return worldController->getMobilePlayer();
+				}
+				return NULL;
 			};
 
 			// Bind function: tes3.getPlayerCell()
-			state["tes3"]["getPlayerCell"] = []() {
-				return tes3::getDataHandler()->currentCell;
+			state["tes3"]["getPlayerCell"] = []() -> TES3::Cell* {
+				TES3::DataHandler* dataHandler = tes3::getDataHandler();
+				if (dataHandler) {
+					return dataHandler->currentCell;
+				}
+				return NULL;
 			};
 
 			// Bind function: tes3.getGame
