@@ -177,6 +177,9 @@ namespace TES3 {
 		void playItemUpDownSound(BaseObject*, bool, Reference*);
 		float getSimulationTimestamp();
 
+		unsigned short getDaysInMonth(int);
+		double getHighPrecisionSimulationTimestamp();
+
 	};
 	static_assert(sizeof(WorldController) == 0x374, "TES3::WorldController failed size validation");
 }

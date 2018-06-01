@@ -145,6 +145,7 @@ namespace mwse {
 				sol::table eventData = state.create_table();
 
 				eventData["delta"] = m_Delta;
+				eventData["timestamp"] = tes3::getWorldController()->getHighPrecisionSimulationTimestamp();
 
 				return eventData;
 			}
