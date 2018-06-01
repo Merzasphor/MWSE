@@ -123,6 +123,7 @@ namespace TES3 {
 	struct GameFile;
 	struct GameSetting;
 	struct GameSettingInfo;
+	struct GlobalScript;
 	struct GlobalVariable;
 	struct InputConfig;
 	struct InputController;
@@ -158,6 +159,7 @@ namespace TES3 {
 	struct Sound;
 	struct SoundGenerator;
 	struct Spell;
+	struct StartScript;
 	struct Static;
 	struct Statistic;
 	struct Weapon;

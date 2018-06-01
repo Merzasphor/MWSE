@@ -25,7 +25,7 @@ namespace TES3 {
 		Iterator<void> * dialogs; // 0x3C
 		Iterator<Region> * regions; // 0x40
 		Iterator<void> * birthsigns; // 0x44
-		Iterator<Script> * startScripts; // 0x48
+		Iterator<StartScript> * startScripts; // 0x48
 		Skill skills[27]; // 0x4C
 		MagicEffect magicEffects[143]; // 0x05C8
 		void * lights; // 0x9DB8

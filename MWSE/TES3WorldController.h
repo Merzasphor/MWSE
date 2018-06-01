@@ -152,9 +152,9 @@ namespace TES3 {
 		int unknown_0x32C;
 		float deadFloatScale; // 0x330
 		int unknown_0x334;
-		void * lstGlobalScripts; // 0x338
-		void * listAllActors; // 0x33C
-		void * listChargableItems; // 0x340
+		Iterator<GlobalScript> * globalScripts; // 0x338
+		Iterator<MobileActor> * allActors; // 0x33C
+		Iterator<void> * chargableItems; // 0x340
 		bool showSubtitles; // 0x344
 		int countMusicTracksBattle; // 0x348
 		int countMusicTracksExplore; // 0x34C

@@ -12,6 +12,18 @@ namespace TES3 {
 	};
 	static_assert(sizeof(ScriptVariables) == 0x14, "TES3::ScriptVariables failed size validation");
 
+	struct GlobalScript {
+		Reference * reference; // 0x0
+		Script * script; // 0x4
+	};
+	static_assert(sizeof(GlobalScript) == 0x8, "TES3::GlobalScript failed size validation");
+
+	struct StartScript : BaseObject {
+		char id[32]; // 0x10
+		Script * script; // 0x30
+	};
+	static_assert(sizeof(StartScript) == 0x34, "TES3::StartScript failed size validation");
+
 	struct Script : BaseObject {
 		char name[32]; // 0x10
 		long shortCount; // 0x30
