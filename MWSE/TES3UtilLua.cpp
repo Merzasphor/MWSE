@@ -474,6 +474,10 @@ namespace mwse {
 
 				return sol::make_object(LuaManager::getInstance().getState(), mcp::getFeatureEnabled(id));
 			};
+
+			state["tes3"]["getSimulationTimestamp"] = []() {
+				return tes3::getWorldController()->getSimulationTimestamp();
+			};
 		}
 	}
 }
