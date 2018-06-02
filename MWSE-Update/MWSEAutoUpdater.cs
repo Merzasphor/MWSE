@@ -110,7 +110,6 @@ namespace MWSE
 
                 // Check the latest dev version.
                 String latestVersion = webClient.DownloadString("https://nullcascade.com/mwse/version_dev").Trim();
-                File.Delete("version_dev");
                 if (String.IsNullOrEmpty(latestVersion))
                 {
                     Console.WriteLine("ERROR: Could not determine version string!");
