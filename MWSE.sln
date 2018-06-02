@@ -10,7 +10,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MWSE", "MWSE\MWSE.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Dep_Boost", "deps\boost\Dep_Boost\Dep_Boost.vcxproj", "{633E0327-60A7-49C5-B1CF-870280D7DA07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "Updater\Updater.csproj", "{1656E43D-6595-41FF-BCCA-C26CE9F1793F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MWSE-Update", "MWSE-Update\MWSE-Update.csproj", "{1656E43D-6595-41FF-BCCA-C26CE9F1793F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
