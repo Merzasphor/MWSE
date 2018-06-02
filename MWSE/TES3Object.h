@@ -159,6 +159,7 @@ namespace TES3 {
 	struct Sound;
 	struct SoundGenerator;
 	struct Spell;
+	struct SpellList;
 	struct StartScript;
 	struct Static;
 	struct Statistic;

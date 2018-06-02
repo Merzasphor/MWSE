@@ -120,6 +120,8 @@ namespace mwse {
 				"equipment", sol::readonly_property(&TES3::Creature::equipment),
 				"barterGold", sol::property(&TES3::Creature::getBaseBarterGold, &TES3::Creature::setBaseBarterGold),
 
+				"spells", sol::readonly_property(&TES3::Creature::spellList),
+
 				"soul", &TES3::Creature::soul,
 
 				"aiConfig", sol::readonly_property(&TES3::Creature::aiConfig),
@@ -170,6 +172,8 @@ namespace mwse {
 				"inventory", sol::readonly_property(&TES3::CreatureInstance::inventory),
 				"equipment", sol::readonly_property(&TES3::CreatureInstance::equipment),
 				"barterGold", sol::property(&TES3::CreatureInstance::getBaseBarterGold, &TES3::CreatureInstance::setBaseBarterGold),
+
+				"spells", sol::readonly_property([](TES3::CreatureInstance& self) { return self.baseCreature->spellList; }),
 
 				//"aiConfig", sol::readonly_property(&TES3::CreatureInstance::aiConfig),
 

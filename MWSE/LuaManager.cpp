@@ -61,6 +61,7 @@
 #include "TES3SkillLua.h"
 #include "TES3SoundLua.h"
 #include "TES3SpellLua.h"
+#include "TES3SpellListLua.h"
 #include "TES3MagicEffectInstanceLua.h"
 #include "TES3MagicSourceInstanceLua.h"
 #include "TES3StaticLua.h"
@@ -256,6 +257,7 @@ namespace mwse {
 			bindTES3Skill();
 			bindTES3Sound();
 			bindTES3Spell();
+			bindTES3SpellList();
 			bindTES3MagicEffectInstance();
 			bindTES3MagicSourceInstance();
 			bindTES3Static();

@@ -55,6 +55,8 @@ namespace mwse {
 				"class", sol::readonly_property(&TES3::NPC::getClass),
 				"faction", sol::readonly_property(&TES3::NPC::getFaction),
 
+				"spells", sol::readonly_property(&TES3::NPC::spellList),
+
 				"aiConfig", sol::readonly_property(&TES3::NPC::getAIConfig),
 
 				"script", sol::readonly_property(&TES3::NPC::getScript)
@@ -109,6 +111,8 @@ namespace mwse {
 				"race", sol::readonly_property(&TES3::NPCInstance::getRace),
 				"class", sol::readonly_property(&TES3::NPCInstance::getClass),
 				"faction", sol::readonly_property(&TES3::NPCInstance::getFaction),
+
+				"spells", sol::readonly_property([](TES3::NPCInstance& self) { return &self.baseNPC->spellList; }),
 
 				"aiConfig", sol::readonly_property(&TES3::NPCInstance::getAIConfig),
 

@@ -175,6 +175,7 @@
     <ClInclude Include="TES3MagicSourceInstance.h" />
     <ClInclude Include="TES3MagicSourceInstanceLua.h" />
     <ClInclude Include="TES3SpellList.h" />
+    <ClInclude Include="TES3SpellListLua.h" />
     <ClInclude Include="TES3SpellLua.h" />
     <ClInclude Include="TES3Static.h" />
     <ClInclude Include="TES3StaticLua.h" />
@@ -295,6 +296,8 @@
     <ClCompile Include="TES3MagicEffectInstanceLua.cpp" />
     <ClCompile Include="TES3MagicSourceInstance.cpp" />
     <ClCompile Include="TES3MagicSourceInstanceLua.cpp" />
+    <ClCompile Include="TES3SpellList.cpp" />
+    <ClCompile Include="TES3SpellListLua.cpp" />
     <ClCompile Include="TES3SpellLua.cpp" />
     <ClCompile Include="TES3StaticLua.cpp" />
     <ClCompile Include="TES3Statistic.cpp" />
