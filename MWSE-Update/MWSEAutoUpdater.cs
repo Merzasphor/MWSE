@@ -101,10 +101,11 @@ namespace MWSE
                 WebClient webClient = new WebClient();
 
                 // Get the currently installed version.
+                String versionPath = Path.Combine(installLocation, "mwse-version.txt");
                 String currentVersion = null;
-                if (File.Exists("mwse-version.txt"))
+                if (File.Exists(versionPath))
                 {
-                    currentVersion = File.ReadAllText("mwse-version.txt").Trim();
+                    currentVersion = File.ReadAllText(versionPath).Trim();
                     Console.WriteLine("Installed version: {0}", currentVersion);
                 }
 
@@ -169,7 +170,7 @@ namespace MWSE
                 File.Delete("mwse-update.zip");
 
                 // Write the current version to the version cache file.
-                File.WriteAllText("mwse-version.txt", latestVersion);
+                File.WriteAllText(versionPath, latestVersion);
 
                 // If we're supposed to start Morrowind after, do so.
                 if (startAfter)
