@@ -10,6 +10,6 @@ Starting with MWSE version 2.1, it is possible to write scripts using the `Lua`_
 
 .. toctree::
    :maxdepth: 1
-   :glob:
 
-   guide/*
+   guide/introduction
+   guide/script-overrides
