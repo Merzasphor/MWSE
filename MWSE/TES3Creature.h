@@ -28,23 +28,23 @@ namespace TES3 {
 			int min;
 			int max;
 		};
-		char * model;
-		char * name;
-		Script * script;
-		Creature * soundGenerator;
-		int creatureType;
-		int level;
-		Attributes attributes;
-		int health;
-		int magicka;
-		int fatigue;
-		int soul;
-		Skills skills;
-		Attack attacks[3];
-		int barterGold;
-		SpellList * ptrSpellList;
-		void * aiPackageList;
-		AIConfig * aiConfig;
+		char * model; // 0x6C
+		char * name; // 0x70
+		Script * script; // 0x74
+		Creature * soundGenerator; // 0x78
+		int creatureType; // 0x7C
+		int level; // 0x80
+		Attributes attributes; // 0x84
+		int health; // 0xA4
+		int magicka; // 0xA8
+		int fatigue; // 0xAC
+		int soul; // 0xB0
+		Skills skills; // 0xB4
+		Attack attacks[3]; // 0xC0
+		int barterGold; // 0xD8
+		SpellList * spellList; // 0xDC
+		void * aiPackageList; // 0xE0
+		AIConfig * aiConfig; // 0xE4
 
 		//
 		// Lua interface functions.
