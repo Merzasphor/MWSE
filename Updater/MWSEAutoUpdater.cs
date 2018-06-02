@@ -126,7 +126,7 @@ namespace MWSE
                 Console.WriteLine(" Done.");
 
                 // Extract its contents. We can't just use ZipFile.ExtractToDirectory because it won't overwrite files.
-                Console.Write("Extracting update...");
+                Console.Write("Extracting update ...");
                 using (ZipArchive archive = ZipFile.Open("mwse-update.zip", ZipArchiveMode.Read))
                 {
                     foreach (ZipArchiveEntry file in archive.Entries)
