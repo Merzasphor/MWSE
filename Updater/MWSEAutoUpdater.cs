@@ -102,6 +102,7 @@ namespace MWSE
 
                 // Check the latest dev version.
                 String latestVersion = webClient.DownloadString("https://nullcascade.com/mwse/version_dev").Trim();
+                File.Delete("version_dev");
                 if (String.IsNullOrEmpty(latestVersion))
                 {
                     Console.WriteLine("ERROR: Could not determine version string!");
@@ -130,6 +131,11 @@ namespace MWSE
                 {
                     foreach (ZipArchiveEntry file in archive.Entries)
                     {
+                        if (file.Name == "Updater.exe")
+                        {
+                            continue;
+                        }
+
                         string completeFileName = Path.Combine(installLocation, file.FullName);
                         if (file.Name == "")
                         {
