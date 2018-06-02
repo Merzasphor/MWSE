@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using Microsoft.Win32;
@@ -54,6 +55,13 @@ namespace MWSE
                 {
                     Thread.Sleep(1000);
                 }
+            }
+
+            // Check to see if we want to start the game after checking for updates.
+            Boolean startAfter = false;
+            if (args.Contains("-startAfter"))
+            {
+                startAfter = true;
             }
 
             // Try to find Morrowind's install location, store it here.
@@ -117,6 +125,17 @@ namespace MWSE
                 if (currentVersion == latestVersion)
                 {
                     Console.WriteLine("Currently up to date.");
+
+                    // If we're supposed to start Morrowind after, do so.
+                    if (startAfter)
+                    {
+                        Console.WriteLine("Starting Morrowind.");
+                        ProcessStartInfo startInfo = new ProcessStartInfo();
+                        startInfo.WorkingDirectory = installLocation;
+                        startInfo.FileName = "Morrowind.exe";
+                        Process.Start(startInfo);
+                    }
+
                     return;
                 }
 
@@ -152,6 +171,16 @@ namespace MWSE
 
                 // Write the current version to the version cache file.
                 File.WriteAllText("mwse-version.txt", latestVersion);
+
+                // If we're supposed to start Morrowind after, do so.
+                if (startAfter)
+                {
+                    Console.WriteLine("Starting Morrowind.");
+                    ProcessStartInfo startInfo = new ProcessStartInfo();
+                    startInfo.WorkingDirectory = installLocation;
+                    startInfo.FileName = "Morrowind.exe";
+                    Process.Start(startInfo);
+                }
             }
             catch (Exception e)
             {
