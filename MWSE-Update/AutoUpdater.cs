@@ -17,7 +17,7 @@ namespace MWSE
     /// 4) Extracts the contents and cleans up after itself.
     /// 5) Saves the new version as mwse-version.txt.
     /// </summary>
-    class MWSEAutoUpdater
+    class AutoUpdater
     {
         /// <summary>
         /// Determines if Morrowind is currently running in the background.
