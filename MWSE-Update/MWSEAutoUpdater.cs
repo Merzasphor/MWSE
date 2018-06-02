@@ -149,7 +149,7 @@ namespace MWSE
                 {
                     foreach (ZipArchiveEntry file in archive.Entries)
                     {
-                        if (file.Name == "Updater.exe")
+                        if (file.Name == "MWSE-Update.exe")
                         {
                             continue;
                         }
