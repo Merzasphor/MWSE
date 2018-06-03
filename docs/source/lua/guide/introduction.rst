@@ -54,9 +54,9 @@ Events are the primary way in which script modules interact with the game. There
     -- Define our callback, which will get called when the event happens.
     local myKeyEvent(eventData)
         if (eventData.pressed) then
-            mwse.log("Key #%d was pressed.", eventData.key)
+            mwse.log("Key #%d was pressed.", eventData.keyCode)
         else
-            mwse.log("Key #%d was released.", eventData.key)
+            mwse.log("Key #%d was released.", eventData.keyCode)
         end
     end
 
