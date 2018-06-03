@@ -1,11 +1,16 @@
 #include "TES3ReferenceLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaUtil.h"
 #include "LuaManager.h"
 #include "TES3ScriptLua.h"
 
 #include "TES3Util.h"
+
+#include "NINode.h"
+
+#include "TES3Cell.h"
+#include "TES3Reference.h"
 
 namespace TES3 {
 	sol::object Reference::getBaseObject() {

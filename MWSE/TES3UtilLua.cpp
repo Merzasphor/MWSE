@@ -1,6 +1,6 @@
 #include "TES3UtilLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
 
 #include "TES3GameFile.h"
@@ -12,6 +12,20 @@
 #include "Log.h"
 #include "ScriptUtil.h"
 #include "CodePatchUtil.h"
+
+#include "NICamera.h"
+#include "NIPick.h"
+
+#include "TES3Actor.h"
+#include "TES3Cell.h"
+#include "TES3Game.h"
+#include "TES3GameSetting.h"
+#include "TES3MobilePlayer.h"
+#include "TES3Reference.h"
+#include "TES3Script.h"
+#include "TES3SoundGenerator.h"
+#include "TES3UIBlock.h"
+#include "TES3WorldController.h"
 
 namespace mwse {
 	namespace lua {

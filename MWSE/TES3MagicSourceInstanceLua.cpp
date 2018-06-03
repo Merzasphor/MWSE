@@ -1,8 +1,12 @@
 #include "TES3MagicSourceInstanceLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
 #include "LuaUtil.h"
+
+#include "TES3Item.h"
+#include "TES3MagicSourceInstance.h"
+#include "TES3Reference.h"
 
 namespace mwse {
 	namespace lua {

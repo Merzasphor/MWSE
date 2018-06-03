@@ -1,9 +1,12 @@
 #include "NIPickLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "TES3Reference.h"
+#include "NINode.h"
+#include "NIPick.h"
 #include "NIUtil.h"
 
 namespace mwse {

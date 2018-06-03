@@ -1,7 +1,9 @@
 #include "TES3FactionLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
+
+#include "TES3Faction.h"
 
 namespace TES3 {
 	sol::object Faction::getReactions() {

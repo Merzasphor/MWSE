@@ -1,7 +1,13 @@
 #include "TES3NPCLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
+
+#include "TES3NPC.h"
+#include "TES3Race.h"
+#include "TES3Class.h"
+#include "TES3Faction.h"
+#include "TES3Script.h"
 
 namespace mwse {
 	namespace lua {

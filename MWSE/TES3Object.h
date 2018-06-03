@@ -105,15 +105,19 @@ namespace TES3 {
 	struct BaseObject;
 	struct BaseObjectVirtualTable;
 	struct Bodypart;
+	struct Book;
 	struct BoundingBox;
 	struct Cell;
 	struct CellExteriorData;
 	struct Class;
+	struct Clothing;
+	struct Container;
+	struct ContainerInstance;
 	struct Creature;
 	struct CreatureInstance;
 	struct DataHandler;
-	struct DialogueInfo;
 	struct DialogueFilter;
+	struct DialogueInfo;
 	struct Door;
 	struct Effect;
 	struct Enchantment;
@@ -125,6 +129,7 @@ namespace TES3 {
 	struct GameSettingInfo;
 	struct GlobalScript;
 	struct GlobalVariable;
+	struct Ingredient;
 	struct InputConfig;
 	struct InputController;
 	struct Inventory;
@@ -140,6 +145,7 @@ namespace TES3 {
 	struct MobileActor;
 	struct MobileCreature;
 	struct MobileNPC;
+	struct MobileObject;
 	struct MobilePlayer;
 	struct MobileProjectile;
 	struct Moon;

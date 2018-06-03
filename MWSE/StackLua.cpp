@@ -1,6 +1,6 @@
 #include "StackLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaUtil.h"
 #include "LuaManager.h"
 

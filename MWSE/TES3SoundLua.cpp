@@ -1,8 +1,11 @@
 #include "TES3SoundLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
 #include "LuaUtil.h"
+
+#include "TES3Sound.h"
+#include "TES3SoundGenerator.h"
 
 namespace mwse {
 	namespace lua {

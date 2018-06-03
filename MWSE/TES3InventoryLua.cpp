@@ -1,10 +1,14 @@
 #include "TES3InventoryLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaUtil.h"
 #include "LuaManager.h"
 
 #include "TES3ScriptLua.h"
+
+#include "TES3Inventory.h"
+#include "TES3Creature.h"
+#include "TES3Script.h"
 
 namespace TES3 {
 	sol::object ItemStack::getObjectLua() {

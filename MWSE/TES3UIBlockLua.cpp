@@ -1,7 +1,9 @@
 #include "TES3UIBlock.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
+
+#include "TES3UIBlock.h"
 
 namespace mwse {
 	namespace lua {

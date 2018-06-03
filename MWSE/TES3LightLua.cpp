@@ -1,7 +1,11 @@
 #include "TES3LightLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
+
+#include "TES3Light.h"
+#include "TES3Script.h"
+#include "TES3Sound.h"
 
 namespace mwse {
 	namespace lua {
@@ -47,7 +51,7 @@ namespace mwse {
 
 				// TODO: Color exposure?
 
-				// TODO: Sound?
+				"sound", sol::readonly_property(&TES3::Light::sound),
 
 				"script", sol::readonly_property(&TES3::Light::getScript)
 

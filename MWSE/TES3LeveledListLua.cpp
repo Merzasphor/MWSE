@@ -1,8 +1,10 @@
 #include "TES3InventoryLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaUtil.h"
 #include "LuaManager.h"
+
+#include "TES3LeveledList.h"
 
 namespace mwse {
 	namespace lua {

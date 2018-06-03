@@ -1,8 +1,12 @@
 #include "TES3MobileProjectileLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
 #include "LuaUtil.h"
+
+#include "TES3MobileProjectile.h"
+#include "TES3Reference.h"
+#include "TES3Weapon.h"
 
 namespace mwse {
 	namespace lua {

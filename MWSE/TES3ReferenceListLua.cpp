@@ -1,7 +1,11 @@
 #include "TES3ReferenceLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
+
+#include "TES3Cell.h"
+#include "TES3Reference.h"
+#include "TES3ReferenceList.h"
 
 namespace mwse {
 	namespace lua {

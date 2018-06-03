@@ -1,6 +1,6 @@
 #pragma once
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 
 #include "DynamicLuaObject.h"
 

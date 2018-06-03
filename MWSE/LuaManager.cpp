@@ -8,12 +8,24 @@
 #include "UIUtil.h"
 #include "MWSEDefs.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 
 #include "LuaScript.h"
 
+#include "TES3Actor.h"
 #include "TES3ActorAnimationData.h"
+#include "TES3Alchemy.h"
+#include "TES3InputController.h"
+#include "TES3MagicEffectInstance.h"
+#include "TES3MobileActor.h"
+#include "TES3MobilePlayer.h"
+#include "TES3MobileProjectile.h"
+#include "TES3Object.h"
+#include "TES3Reference.h"
+#include "TES3UIBlock.h"
 #include "TES3UIInventoryTile.h"
+#include "TES3WorldController.h"
+#include "TES3WorldController.h"
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
 #include "StackLua.h"

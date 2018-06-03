@@ -1,8 +1,18 @@
 #include "TES3WorldControllerLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
 #include "LuaUtil.h"
+
+#include "NICamera.h"
+#include "NINode.h"
+
+#include "TES3GameSetting.h"
+#include "TES3GlobalVariable.h"
+#include "TES3InputController.h"
+#include "TES3Script.h"
+#include "TES3WeatherController.h"
+#include "TES3WorldController.h"
 
 namespace mwse {
 	namespace lua {

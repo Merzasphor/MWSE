@@ -1,8 +1,13 @@
 #include "TES3CollectionsLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaUtil.h"
 #include "LuaManager.h"
+
+#include "TES3Inventory.h"
+#include "TES3Faction.h"
+#include "TES3Spell.h"
+#include "TES3Reference.h"
 
 namespace mwse {
 	namespace lua {

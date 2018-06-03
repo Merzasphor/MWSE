@@ -1,10 +1,13 @@
 #include "TES3SpellLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaUtil.h"
 #include "LuaManager.h"
 
 #include "TES3Util.h"
+
+#include "TES3Spell.h"
+#include "TES3SpellList.h"
 
 namespace mwse {
 	namespace lua {

@@ -32,7 +32,7 @@ namespace TES3 {
 		int radius; // 0x64
 		signed char color[4]; // 0x68
 		unsigned int flags; // 0x6C
-		void * sound; // 0x70
+		Sound * sound; // 0x70
 
 		//
 		// Functions to get/set flags.

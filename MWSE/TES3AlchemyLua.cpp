@@ -2,9 +2,12 @@
 
 #include "TES3Util.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaUtil.h"
 #include "LuaManager.h"
+
+#include "TES3Alchemy.h"
+#include "TES3Script.h"
 
 #define TES3_Alchemy_ctor 0x4ABA40
 

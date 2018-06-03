@@ -1,7 +1,10 @@
 #include "TES3RepairToolLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
+
+#include "TES3RepairTool.h"
+#include "TES3Script.h"
 
 namespace mwse {
 	namespace lua {

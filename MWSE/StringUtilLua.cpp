@@ -1,6 +1,6 @@
 #include "StringUtilLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 
 #include "LuaManager.h"
 #include "StringUtil.h"

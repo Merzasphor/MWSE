@@ -1,9 +1,16 @@
 #include "TES3MobilePlayerLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
 
 #include "TES3Collections.h"
+
+#include "TES3Apparatus.h"
+#include "TES3Collections.h"
+#include "TES3MobilePlayer.h"
+#include "TES3NPC.h"
+#include "TES3Reference.h"
+#include "TES3Spell.h"
 
 namespace mwse {
 	namespace lua {

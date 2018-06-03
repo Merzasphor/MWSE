@@ -1,7 +1,9 @@
 #include "TES3Vectors.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
+
+#include "TES3Vectors.h"
 
 #include <iomanip>
 

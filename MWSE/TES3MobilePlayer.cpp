@@ -1,6 +1,6 @@
 #include "TES3MobilePlayer.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
 #include "LuaUtil.h"
 

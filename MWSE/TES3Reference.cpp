@@ -4,6 +4,10 @@
 #include "LuaUtil.h"
 #include "TES3Util.h"
 
+#include "NINode.h"
+
+#include "TES3Actor.h"
+
 #define TES3_Reference_activate 0x4E9610
 #define TES3_Reference_setActionFlag 0x4E55A0
 #define TES3_Reference_clearActionFlag 0x4E55E0

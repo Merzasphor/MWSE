@@ -7,7 +7,7 @@
 
 #include "TES3Util.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaEvents.h"
 
 namespace mwse {
@@ -23,11 +23,6 @@ namespace mwse {
 
 			// Returns a reference to the sol2 lua state.
 			sol::state& __fastcall getState() {
-#if _DEBUG
-				// Prevent us from getting the state from anything but the main thread.
-				TES3::DataHandler* dataHandler = tes3::getDataHandler();
-				assert(dataHandler == NULL || dataHandler->mainThreadID == GetCurrentThreadId());
-#endif
 				return luaState;
 			}
 

@@ -1,7 +1,10 @@
 #include "TES3MoonLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
+
+#include "TES3Moon.h"
+#include "TES3WeatherController.h"
 
 namespace mwse {
 	namespace lua {

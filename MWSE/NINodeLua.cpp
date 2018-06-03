@@ -1,11 +1,12 @@
 #include "NINode.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
 #include "NIAVObject.h"
 #include "TES3Collections.h"
+#include "NIRTTI.h"
 
 namespace mwse {
 	namespace lua {

@@ -1,7 +1,13 @@
 #include "TES3MobileCreatureLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
+
+#include "TES3Collections.h"
+#include "TES3Creature.h"
+#include "TES3MobileCreature.h"
+#include "TES3Reference.h"
+#include "TES3Spell.h"
 
 namespace mwse {
 	namespace lua {

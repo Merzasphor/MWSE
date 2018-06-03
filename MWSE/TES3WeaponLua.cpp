@@ -1,7 +1,11 @@
 #include "TES3WeaponLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
+
+#include "TES3Enchantment.h"
+#include "TES3Script.h"
+#include "TES3Weapon.h"
 
 namespace mwse {
 	namespace lua {

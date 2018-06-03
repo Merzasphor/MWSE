@@ -1,7 +1,9 @@
 #include "TES3SkillLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
+
+#include "TES3Skill.h"
 
 namespace mwse {
 	namespace lua {

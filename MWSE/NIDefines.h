@@ -9,6 +9,7 @@ namespace NI {
 	struct Pick;
 	struct PickRecord;
 	struct RTTI;
+	struct SwitchNode;
 	struct Transform;
 
 	struct Object_vTable;

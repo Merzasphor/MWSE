@@ -1,4 +1,4 @@
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaUtil.h"
 #include "LuaManager.h"
 
@@ -6,6 +6,9 @@
 
 #include "ScriptUtil.h"
 #include "ScriptUtilLua.h"
+
+#include "TES3Reference.h"
+#include "TES3Script.h"
 
 namespace mwse {
 	namespace lua {

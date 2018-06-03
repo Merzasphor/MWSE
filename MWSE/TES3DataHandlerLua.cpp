@@ -1,7 +1,14 @@
 #include "TES3DataHandlerLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaManager.h"
+
+#include "TES3Cell.h"
+#include "TES3DataHandler.h"
+#include "TES3DialogueInfo.h"
+#include "TES3GlobalVariable.h"
+#include "TES3Reference.h"
+#include "TES3Script.h"
 
 namespace mwse {
 	namespace lua {

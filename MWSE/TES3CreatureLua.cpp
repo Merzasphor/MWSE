@@ -1,8 +1,12 @@
 #include "TES3CreatureLua.h"
 
-#include "LuaUnifiedHeader.h"
+#include "sol.hpp"
 #include "LuaUtil.h"
 #include "LuaManager.h"
+
+#include "TES3Creature.h"
+#include "TES3Item.h"
+#include "TES3Script.h"
 
 namespace TES3 {
 	sol::object CreatureInstance::getAttributes() {

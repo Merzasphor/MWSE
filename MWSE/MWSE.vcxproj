@@ -43,7 +43,6 @@
     <ClInclude Include="PatchUtil.h" />
     <ClInclude Include="ScriptUtilLua.h" />
     <ClInclude Include="sol.hpp" />
-    <ClInclude Include="LuaUnifiedHeader.h" />
     <ClInclude Include="sol_forward.hpp" />
     <ClInclude Include="TES3LeveledList.h" />
     <ClInclude Include="TES3LeveledListLua.h" />

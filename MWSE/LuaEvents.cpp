@@ -3,10 +3,18 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "TES3Actor.h"
 #include "TES3ActorAnimationData.h"
-#include "TES3UIBlock.h"
+#include "TES3Alchemy.h"
+#include "TES3Cell.h"
 #include "TES3MagicEffectInstance.h"
 #include "TES3MagicSourceInstance.h"
+#include "TES3MobilePlayer.h"
+#include "TES3MobileProjectile.h"
+#include "TES3Reference.h"
+#include "TES3UIBlock.h"
+#include "TES3Weapon.h"
+#include "TES3WorldController.h"
 
 #include "UIUtil.h"
 
@@ -764,7 +772,7 @@ namespace mwse {
 
 				TES3::MobilePlayer* player = tes3::getWorldController()->getMobilePlayer();
 
-				eventData["level"] = reinterpret_cast<TES3::NPCInstance*>(player->reference->baseObject)->getLevel();
+				eventData["level"] = player->reference->baseObject->getLevel();
 
 				return eventData;
 			}
@@ -775,7 +783,7 @@ namespace mwse {
 
 				TES3::MobilePlayer* player = tes3::getWorldController()->getMobilePlayer();
 
-				options["filter"] = reinterpret_cast<TES3::NPCInstance*>(player->reference->baseObject)->getLevel();
+				options["filter"] = player->reference->baseObject->getLevel();
 
 				return options;
 			}

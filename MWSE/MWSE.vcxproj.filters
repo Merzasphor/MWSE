@@ -594,9 +594,6 @@
     <ClInclude Include="TES3CollectionsLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
-    <ClInclude Include="LuaUnifiedHeader.h">
-      <Filter>Header Files\Lua\sol2</Filter>
-    </ClInclude>
     <ClInclude Include="TES3ReferenceListLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
