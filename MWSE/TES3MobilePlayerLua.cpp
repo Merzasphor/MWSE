@@ -14,6 +14,8 @@ namespace mwse {
 				// Disable construction of this type.
 				"new", sol::no_constructor,
 
+				sol::base_classes, sol::bases<TES3::MobileActor>(),
+
 				//
 				// Properties: MACT
 				//

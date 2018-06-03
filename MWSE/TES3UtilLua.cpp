@@ -508,14 +508,11 @@ namespace mwse {
 					if (actor.is<TES3::Reference*>()) {
 						equipment = actor.as<TES3::Reference*>()->getEquipment();
 					}
-					else if (actor.is<TES3::MobileCreature*>()) {
-						equipment = actor.as<TES3::MobileCreature*>()->reference->getEquipment();
+					else if (actor.is<TES3::MobileActor*>()) {
+						equipment = actor.as<TES3::MobileActor*>()->reference->getEquipment();
 					}
-					else if (actor.is<TES3::MobileNPC*>()) {
-						equipment = actor.as<TES3::MobileNPC*>()->reference->getEquipment();
-					}
-					else if (actor.is<TES3::MobilePlayer*>()) {
-						equipment = actor.as<TES3::MobilePlayer*>()->reference->getEquipment();
+					else if (actor.is<TES3::Actor*>()) {
+						equipment = &actor.as<TES3::Actor*>()->equipment;
 					}
 				}
 				else {
@@ -531,20 +528,20 @@ namespace mwse {
 
 				// Get filter: Item Type
 				std::tuple<bool, int> filterObjectType(false, INT_MAX);
+				std::tuple<bool, int> filterSlot(false, INT_MAX);
 				if (params["objectType"].valid()) {
 					std::get<0>(filterObjectType) = true;
 					std::get<1>(filterObjectType) = (int)params["objectType"];
-				}
 
-				// Get filter: Item Slot/Type
-				std::tuple<bool, int> filterSlot(false, INT_MAX);
-				if (params["slot"].valid()) {
-					std::get<0>(filterSlot) = true;
-					std::get<1>(filterSlot) = (int)params["slot"];
-				}
-				else if (params["type"].valid()) {
-					std::get<0>(filterSlot) = true;
-					std::get<1>(filterSlot) = (int)params["type"];
+					// Get filter: Item Slot/Type
+					if (params["slot"].valid()) {
+						std::get<0>(filterSlot) = true;
+						std::get<1>(filterSlot) = (int)params["slot"];
+					}
+					else if (params["type"].valid()) {
+						std::get<0>(filterSlot) = true;
+						std::get<1>(filterSlot) = (int)params["type"];
+					}
 				}
 
 				// Get filter: Item Enchanted
