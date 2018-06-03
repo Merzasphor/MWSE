@@ -17,8 +17,8 @@ Examples
 
 .. code-block:: lua
 
-  -- Show the player's name.
+  -- Print the player's name to the log.
   local player = tes3.getPlayerRef()
-  print(player.object.name)
+  mwse.log("Player's name: %s", player.object.name)
 
 .. _`reference`: ../../type/tes3/reference.html

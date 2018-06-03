@@ -18,14 +18,14 @@ This guide is not meant to be a comprehensive introduction to the Lua language. 
 
 .. code-block:: lua
 
-    -- Define a simple function, foo, that takes a single parameter, bar.
-    local function foo(bar)
-        -- Print to the MWSE log, with the value of bar that was passed.
-        mwse.log("Called foo. Bar = %s", bar)
+    -- Define a simple function that takes a single parameter.
+    local function myFunctionName(firstFunctionParameter)
+        -- Print to the MWSE log, with the value that was passed.
+        mwse.log("Called my function with parameter = %s", firstFunctionParameter)
     end
 
-    -- Print "baz" to the MWSE log, prefixed with the function above.
-    foo("baz")
+    -- Print "foo" to the MWSE log, prefixed with the function above.
+    myFunctionName("foo")
 
 
 Morrowind Object Types
