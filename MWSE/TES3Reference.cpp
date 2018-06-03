@@ -64,4 +64,26 @@ namespace TES3 {
 	void Reference::setPosition(TES3::Vector3* positionVec) {
 		setPosition(positionVec->x, positionVec->y, positionVec->z);
 	}
+
+	TES3::Inventory * Reference::getInventory() {
+		// Only actors have equipment.
+		if (baseObject->objectType != TES3::ObjectType::Container &&
+			baseObject->objectType != TES3::ObjectType::Creature &&
+			baseObject->objectType != TES3::ObjectType::NPC) {
+			return NULL;
+		}
+
+		return &reinterpret_cast<TES3::Actor*>(baseObject)->inventory;
+	}
+
+	TES3::Iterator<EquipmentStack> * Reference::getEquipment() {
+		// Only actors have equipment.
+		if (baseObject->objectType != TES3::ObjectType::Container &&
+			baseObject->objectType != TES3::ObjectType::Creature &&
+			baseObject->objectType != TES3::ObjectType::NPC) {
+			return NULL;
+		}
+
+		return &reinterpret_cast<TES3::Actor*>(baseObject)->equipment;
+	}
 }

@@ -39,6 +39,9 @@ namespace TES3 {
 		void setPosition(float x, float y, float z);
 		void setPosition(TES3::Vector3* positionVec);
 
+		TES3::Inventory * getInventory();
+		TES3::Iterator<EquipmentStack> * getEquipment();
+
 		//
 		// Lua interface functions.
 		//

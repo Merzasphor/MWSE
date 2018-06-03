@@ -497,6 +497,94 @@ namespace mwse {
 			state["tes3"]["getSimulationTimestamp"] = []() -> double {
 				return tes3::getWorldController()->getHighPrecisionSimulationTimestamp();
 			};
+
+			state["tes3"]["getEquippedItem"] = [](sol::table params) -> sol::object {
+				sol::state& state = LuaManager::getInstance().getState();
+
+				// Find our equipment based on the object given.
+				TES3::Iterator<TES3::EquipmentStack> * equipment = NULL;
+				sol::object actor = params["actor"];
+				if (actor.valid()) {
+					if (actor.is<TES3::Reference*>()) {
+						equipment = actor.as<TES3::Reference*>()->getEquipment();
+					}
+					else if (actor.is<TES3::MobileCreature*>()) {
+						equipment = actor.as<TES3::MobileCreature*>()->reference->getEquipment();
+					}
+					else if (actor.is<TES3::MobileNPC*>()) {
+						equipment = actor.as<TES3::MobileNPC*>()->reference->getEquipment();
+					}
+					else if (actor.is<TES3::MobilePlayer*>()) {
+						equipment = actor.as<TES3::MobilePlayer*>()->reference->getEquipment();
+					}
+				}
+				else {
+					state["error"]("No actor provided.");
+					return sol::nil;
+				}
+
+				// Make sure we got the equipment.
+				if (equipment == NULL) {
+					state["error"]("The provided actor's equipment could not be resolved.");
+					return sol::nil;
+				}
+
+				// Get filter: Item Type
+				std::tuple<bool, int> filterObjectType(false, INT_MAX);
+				if (params["objectType"].valid()) {
+					std::get<0>(filterObjectType) = true;
+					std::get<1>(filterObjectType) = (int)params["objectType"];
+				}
+
+				// Get filter: Item Slot/Type
+				std::tuple<bool, int> filterSlot(false, INT_MAX);
+				if (params["slot"].valid()) {
+					std::get<0>(filterSlot) = true;
+					std::get<1>(filterSlot) = (int)params["slot"];
+				}
+				else if (params["type"].valid()) {
+					std::get<0>(filterSlot) = true;
+					std::get<1>(filterSlot) = (int)params["type"];
+				}
+
+				// Get filter: Item Enchanted
+				std::tuple<bool, bool> filterEnchanted(false, false);
+				if (params["enchanted"].valid()) {
+					std::get<0>(filterEnchanted) = true;
+					std::get<1>(filterEnchanted) = params["enchanted"];
+				}
+
+				// Loop through the items and pick the first one that matches our filters.
+				for (auto itt = equipment->head; itt != NULL; itt = itt->next) {
+					TES3::Object * object = itt->data->object;
+
+					// Filter object type.
+					if (std::get<0>(filterObjectType) && std::get<1>(filterObjectType) != object->objectType) {
+						continue;
+					}
+
+					// Filter slot/type.
+					if (std::get<0>(filterSlot) && std::get<1>(filterSlot) != object->getType()) {
+						continue;
+					}
+
+					// Filter enchanted.
+					if (std::get<0>(filterEnchanted)) {
+						TES3::Enchantment * enchantment = object->getEnchantment();
+						if (std::get<1>(filterEnchanted) == true && enchantment == NULL) {
+							continue;
+						}
+						else if (std::get<1>(filterEnchanted) == false && enchantment != NULL) {
+							continue;
+						}
+					}
+
+					// If we got this far we match all filters. Return the object.
+					return makeLuaObject(object);
+				}
+
+				return sol::nil;
+			};
 		}
 	}
 }

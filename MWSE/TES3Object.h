@@ -127,6 +127,7 @@ namespace TES3 {
 	struct GlobalVariable;
 	struct InputConfig;
 	struct InputController;
+	struct Inventory;
 	struct Item;
 	struct ItemData;
 	struct LeveledList;
