@@ -414,9 +414,6 @@
     <ClInclude Include="TES3Activator.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Other</Filter>
     </ClInclude>
-    <ClInclude Include="TES3Apparatus.h">
-      <Filter>Header Files\DataAdapters\TES3\Objects\Other</Filter>
-    </ClInclude>
     <ClInclude Include="TES3Door.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Other</Filter>
     </ClInclude>
@@ -749,6 +746,9 @@
     </ClInclude>
     <ClInclude Include="TES3SpellListLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Apparatus.h">
+      <Filter>Header Files\DataAdapters\TES3\Objects\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

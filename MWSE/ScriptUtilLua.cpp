@@ -37,7 +37,7 @@ namespace mwse {
 			state["mwscript"]["addItem"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::BaseObject* item = getOptionalParamObject<TES3::BaseObject>(params, "item");
+				TES3::Item* item = getOptionalParamObject<TES3::Item>(params, "item");
 				int count = getOptionalParam<double>(params, "count", 1.0);
 				if (item == NULL || count <= 0) {
 					return false;
@@ -88,7 +88,7 @@ namespace mwse {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
 				TES3::BaseObject* list = getOptionalParamObject<TES3::BaseObject>(params, "list");
-				TES3::PhysicalObject* item = getOptionalParamObject<TES3::PhysicalObject>(params, "item");
+				TES3::Item* item = getOptionalParamObject<TES3::Item>(params, "item");
 				short level = getOptionalParam<double>(params, "level", 0.0);
 				if (list == NULL || item == NULL || level <= 0) {
 					return false;
@@ -133,7 +133,7 @@ namespace mwse {
 			state["mwscript"]["drop"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::BaseObject* item = getOptionalParamObject<TES3::BaseObject>(params, "item");
+				TES3::Item* item = getOptionalParamObject<TES3::Item>(params, "item");
 				int count = getOptionalParam<double>(params, "count", 1.0);
 				if (item == NULL) {
 					return false;
@@ -161,7 +161,7 @@ namespace mwse {
 			state["mwscript"]["equip"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::BaseObject* item = getOptionalParamObject<TES3::BaseObject>(params, "item");
+				TES3::Item* item = getOptionalParamObject<TES3::Item>(params, "item");
 				if (item == NULL || reference == NULL) {
 					return false;
 				}
@@ -198,7 +198,7 @@ namespace mwse {
 			state["mwscript"]["hasItemEquipped"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::BaseObject* item = getOptionalParamObject<TES3::BaseObject>(params, "item");
+				TES3::Item* item = getOptionalParamObject<TES3::Item>(params, "item");
 				if (item == NULL) {
 					return false;
 				}
@@ -230,7 +230,7 @@ namespace mwse {
 			state["mwscript"]["getItemCount"] = [](sol::optional<sol::table> params) -> int {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::BaseObject* item = getOptionalParamObject<TES3::BaseObject>(params, "item");
+				TES3::Item* item = getOptionalParamObject<TES3::Item>(params, "item");
 				if (item == NULL) {
 					return 0;
 				}
@@ -331,7 +331,7 @@ namespace mwse {
 			state["mwscript"]["removeItem"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::BaseObject* item = getOptionalParamObject<TES3::BaseObject>(params, "item");
+				TES3::Item* item = getOptionalParamObject<TES3::Item>(params, "item");
 				int count = getOptionalParam<double>(params, "count", 1.0);
 				if (item == NULL) {
 					return false;

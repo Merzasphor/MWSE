@@ -24,6 +24,11 @@ namespace TES3 {
 	}
 
 	struct Weapon : Item {
+		Iterator<void> stolenList; // 0x30
+		char * name; // 0x44
+		Script * script; // 0x48
+		char * model; // 0x4C
+		char * icon; // 0x50
 		float weight; // 0x54
 		int value; // 0x58
 		char weaponType; // 0x5C
@@ -40,4 +45,5 @@ namespace TES3 {
 		int materialFlags; // 0x70
 		Enchantment * enchantment; // 0x74
 	};
+	static_assert(sizeof(Weapon) == 0x78, "TES3::Weapon failed size validation");
 }

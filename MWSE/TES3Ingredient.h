@@ -4,7 +4,7 @@
 #include "TES3Item.h"
 
 namespace TES3 {
-	struct Ingredient : PhysicalObject {
+	struct Ingredient : Item {
 		Iterator<void> stolenList; // 0x30
 		char name[32]; // 0x44
 		char model[32]; // 0x64

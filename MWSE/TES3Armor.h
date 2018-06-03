@@ -21,6 +21,11 @@ namespace TES3 {
 	}
 
 	struct Armor : Item {
+		Iterator<void> stolenList; // 0x30
+		char * name; // 0x44
+		Script * script; // 0x48
+		char * model; // 0x4C
+		char * icon; // 0x50
 		WearablePart parts[7];  // 0x54
 		unsigned int slot; // 0xA8
 		float weight; // 0xAC

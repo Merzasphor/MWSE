@@ -279,7 +279,7 @@ namespace mwse {
 			// Bind function: tes3.playItemPickupSound
 			state["tes3"]["playItemPickupSound"] = [](sol::optional<sol::table> params) {
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::BaseObject* item = getOptionalParamObject<TES3::BaseObject>(params, "item");
+				TES3::Item* item = getOptionalParamObject<TES3::Item>(params, "item");
 				bool pickup = getOptionalParam<bool>(params, "pickup", true);
 				TES3::Sound* sound = getOptionalParamSound(params, "sound");
 				if (item == NULL) {

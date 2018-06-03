@@ -83,7 +83,7 @@ namespace mwse {
 				// Disable construction of this type.
 				"new", sol::no_constructor,
 
-				sol::base_classes, sol::bases<TES3::Actor>(),
+				sol::base_classes, sol::bases<TES3::Actor, TES3::BaseObject>(),
 
 				sol::meta_function::to_string, &TES3::Creature::getObjectID,
 
@@ -138,7 +138,7 @@ namespace mwse {
 				// Disable construction of this type.
 				"new", sol::no_constructor,
 
-				sol::base_classes, sol::bases<TES3::Actor>(),
+				sol::base_classes, sol::bases<TES3::Actor, TES3::BaseObject>(),
 
 				sol::meta_function::to_string, &TES3::CreatureInstance::getObjectID,
 

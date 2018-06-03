@@ -1,4 +1,4 @@
-#include "TES3GameLua.h"
+#include "TES3GameSettingLua.h"
 
 #include "LuaUnifiedHeader.h"
 #include "LuaManager.h"
@@ -13,6 +13,8 @@ namespace mwse {
 			state.new_usertype<TES3::GameSetting>("TES3GameSetting",
 				// Disable construction of this type.
 				"new", sol::no_constructor,
+
+				sol::base_classes, sol::bases<TES3::BaseObject>(),
 
 				//
 				// Properties.

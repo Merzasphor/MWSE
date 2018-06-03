@@ -13,6 +13,8 @@ namespace mwse {
 				// Disable construction of this type.
 				"new", sol::no_constructor,
 
+				sol::base_classes, sol::bases<TES3::BaseObject>(),
+
 				sol::meta_function::to_string, &TES3::Sound::getObjectID,
 
 				//
@@ -40,6 +42,8 @@ namespace mwse {
 			state.new_usertype<TES3::SoundGenerator>("TES3SoundGenerator",
 				// Disable construction of this type.
 				"new", sol::no_constructor,
+
+				sol::base_classes, sol::bases<TES3::BaseObject>(),
 
 				//
 				// Properties.

@@ -2,6 +2,7 @@
 
 #include "TES3Object.h"
 #include "TES3Collections.h"
+#include "TES3Item.h"
 
 namespace TES3 {
 	namespace LightFlags {
@@ -18,7 +19,7 @@ namespace TES3 {
 		};
 	}
 
-	struct Light : PhysicalObject {
+	struct Light : Item {
 		void * animationData;
 		Iterator<void> stolenList; // 0x30
 		char* name; // 0x48
