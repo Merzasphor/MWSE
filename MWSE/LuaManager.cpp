@@ -224,10 +224,6 @@ namespace mwse {
 				"new", sol::no_constructor,
 				"objectType", &TES3::BaseObject::objectType
 				);
-			luaState.new_usertype<TES3::MobileObject>("TES3MobileObject",
-				"new", sol::no_constructor,
-				"objectType", &TES3::MobileObject::objectType
-				);
 
 			// Bind TES3 data types.
 			bindTES3ActionData();
