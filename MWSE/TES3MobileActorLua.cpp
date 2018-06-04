@@ -19,6 +19,7 @@ namespace mwse {
 
 			// Start our usertype for TES3::MobileActor. We must finish this with state.set_usertype.
 			auto mobileActorUsertype = state.create_simple_usertype<TES3::MobileActor>();
+			mobileActorUsertype.set("new", sol::no_constructor);
 
 			// We inherit MobileObject.
 			mobileActorUsertype.set(sol::base_classes, sol::bases<TES3::MobileObject>());

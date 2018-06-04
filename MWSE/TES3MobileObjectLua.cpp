@@ -1,4 +1,4 @@
-#include "TES3MobileProjectileLua.h"
+#include "TES3MobileObjectLua.h"
 
 #include "sol.hpp"
 #include "LuaManager.h"
@@ -15,6 +15,7 @@ namespace mwse {
 
 			// Start our usertype. We must finish this with state.set_usertype.
 			auto mobileObjectUsertype = state.create_simple_usertype<TES3::MobileObject>();
+			mobileObjectUsertype.set("new", sol::no_constructor);
 
 			// Basic property binding.
 			mobileObjectUsertype.set("movementFlags", sol::readonly_property(&TES3::MobileObject::movementFlags));
