@@ -50,6 +50,7 @@
 #include "TES3FactionLua.h"
 #include "TES3GameLua.h"
 #include "TES3GameSettingLua.h"
+#include "TES3GlobalVariableLua.h"
 #include "TES3IngredientLua.h"
 #include "TES3InventoryLua.h"
 #include "TES3LeveledListLua.h"
@@ -239,6 +240,7 @@ namespace mwse {
 			bindTES3Faction();
 			bindTES3Game();
 			bindTES3GameSetting();
+			bindTES3GlobalVariable();
 			bindTES3Ingredient();
 			bindTES3Inventory();
 			bindTES3LeveledList();

@@ -44,6 +44,7 @@
     <ClInclude Include="ScriptUtilLua.h" />
     <ClInclude Include="sol.hpp" />
     <ClInclude Include="sol_forward.hpp" />
+    <ClInclude Include="TES3GlobalVariableLua.h" />
     <ClInclude Include="TES3LeveledList.h" />
     <ClInclude Include="TES3LeveledListLua.h" />
     <ClInclude Include="TES3MobileActorLua.h" />
@@ -258,6 +259,7 @@
     <ClCompile Include="TES3FactionLua.cpp" />
     <ClCompile Include="TES3GameLua.cpp" />
     <ClCompile Include="TES3GameSettingLua.cpp" />
+    <ClCompile Include="TES3GlobalVariableLua.cpp" />
     <ClCompile Include="TES3IngredientLua.cpp" />
     <ClCompile Include="TES3InputController.cpp" />
     <ClCompile Include="TES3Inventory.cpp" />
