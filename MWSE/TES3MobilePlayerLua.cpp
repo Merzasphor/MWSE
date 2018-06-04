@@ -87,7 +87,7 @@ namespace mwse {
 			usertypeDefinition.set("exerciseSkill", &TES3::MobilePlayer::exerciseSkill);
 			usertypeDefinition.set("levelSkill", &TES3::MobilePlayer::levelSkill);
 
-			// Functions exposed as read-only properties.
+			// Functions exposed as properties.
 			usertypeDefinition.set("is3rdPerson", sol::readonly_property(&TES3::MobilePlayer::is3rdPerson));
 
 			// Finish up our usertype.

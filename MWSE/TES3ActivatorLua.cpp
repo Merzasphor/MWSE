@@ -19,7 +19,7 @@ namespace mwse {
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-			// Functions exposed as read-only properties.
+			// Functions exposed as properties.
 			usertypeDefinition.set("model", sol::property(&TES3::Activator::getModelPath, &TES3::Activator::setModelPath));
 			usertypeDefinition.set("name", sol::property(&TES3::Activator::getName, &TES3::Activator::setName));
 			usertypeDefinition.set("script", sol::property(&TES3::Activator::getScript));

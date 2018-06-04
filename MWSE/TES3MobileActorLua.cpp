@@ -196,9 +196,9 @@ namespace mwse {
 			usertypeDefinition.set("startCombat", &TES3::MobileActor::startCombat);
 			usertypeDefinition.set("stopCombat", &TES3::MobileActor::stopCombat);
 
-			// Functions exposed as read-only properties.
-			usertypeDefinition.set("cell", sol::readonly_property(&TES3::MobileActor::getCell));
-			usertypeDefinition.set("hasFreeAction", sol::readonly_property(&TES3::MobileActor::hasFreeAction));
+			// Functions exposed as properties.
+			usertypeDefinition.set("cell", sol::property(&TES3::MobileActor::getCell));
+			usertypeDefinition.set("hasFreeAction", sol::property(&TES3::MobileActor::hasFreeAction));
 
 			// Finish up our usertype.
 			state.set_usertype("TES3MobileActor", usertypeDefinition);
