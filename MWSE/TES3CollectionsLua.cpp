@@ -5,7 +5,9 @@
 #include "LuaManager.h"
 
 #include "TES3Inventory.h"
+#include "TES3Item.h"
 #include "TES3Faction.h"
+#include "TES3MobileActor.h"
 #include "TES3Spell.h"
 #include "TES3Reference.h"
 

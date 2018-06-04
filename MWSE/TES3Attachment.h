@@ -2,7 +2,6 @@
 
 #include "TES3Object.h"
 #include "TES3Item.h"
-#include "TES3MobileActor.h"
 #include "TES3Vectors.h"
 
 namespace TES3 {

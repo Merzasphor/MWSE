@@ -4,55 +4,38 @@
 #include "LuaUtil.h"
 #include "LuaManager.h"
 
-namespace TES3 {
-	sol::object ActionData::getTarget() {
-		return mwse::lua::makeLuaObject(target);
-	}
-
-	sol::object ActionData::getHitTarget() {
-		return mwse::lua::makeLuaObject(hitTarget);
-	}
-
-	sol::object ActionData::getNockedProjectile() {
-		return mwse::lua::makeLuaObject(nockedProjectile);
-	}
-
-	sol::object ActionData::getStolenFrom() {
-		return mwse::lua::makeLuaObject(stolenFromFactionOrNPC);
-	}
-}
+#include "TES3ActionData.h"
+#include "TES3MobileActor.h"
+#include "TES3Item.h"
 
 namespace mwse {
 	namespace lua {
 		void bindTES3ActionData() {
-			LuaManager::getInstance().getState().new_usertype<TES3::ActionData>("TES3ActionData",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Get our lua state.
+			sol::state& state = LuaManager::getInstance().getState();
 
-				//
-				// Properties.
-				//
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::ActionData>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				"attackSwing", &TES3::ActionData::attackSwing,
-				"physicalDamage", &TES3::ActionData::physicalDamage,
+			// Basic property binding.
+			usertypeDefinition.set("aiBehaviourState", &TES3::ActionData::aiBehaviourState);
+			usertypeDefinition.set("animationAttackState", &TES3::ActionData::animStateAttack);
+			usertypeDefinition.set("attackDirection", &TES3::ActionData::attackDirection);
+			usertypeDefinition.set("attackSwing", &TES3::ActionData::attackSwing);
+			usertypeDefinition.set("currentAnimationGroup", &TES3::ActionData::currentAnimGroup);
+			usertypeDefinition.set("lastBarterHoursPassed", &TES3::ActionData::lastBarterHoursPassed);
+			usertypeDefinition.set("physicalDamage", &TES3::ActionData::physicalDamage);
+			usertypeDefinition.set("walkDestination", &TES3::ActionData::walkDestination);
 
-				"aiBehaviourState", &TES3::ActionData::aiBehaviourState,
-				"attackDirection", &TES3::ActionData::attackDirection,
-				"animationAttackState", &TES3::ActionData::animStateAttack,
-				"currentAnimationGroup", &TES3::ActionData::currentAnimGroup,
+			// Access to other objects that need to be packaged.
+			usertypeDefinition.set("hitTarget", sol::readonly_property([](TES3::ActionData& self) { return makeLuaObject(self.hitTarget); }));
+			usertypeDefinition.set("nockedProjectile", sol::readonly_property([](TES3::ActionData& self) { return makeLuaObject(self.nockedProjectile); }));
+			usertypeDefinition.set("stolenFrom", sol::readonly_property([](TES3::ActionData& self) { return makeLuaObject(self.stolenFromFactionOrNPC); }));
+			usertypeDefinition.set("target", sol::readonly_property([](TES3::ActionData& self) { return makeLuaObject(self.target); }));
 
-				"lastBarterHoursPassed", &TES3::ActionData::lastBarterHoursPassed,
-
-				"walkDestination", &TES3::ActionData::walkDestination,
-
-				"target", sol::readonly_property(&TES3::ActionData::getTarget),
-				"hitTarget", sol::readonly_property(&TES3::ActionData::getHitTarget),
-
-				"nockedProjectile", sol::readonly_property(&TES3::ActionData::getNockedProjectile),
-
-				"stolenFrom", sol::readonly_property(&TES3::ActionData::getStolenFrom)
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("TES3ActionData", usertypeDefinition);
 		}
 	}
 }

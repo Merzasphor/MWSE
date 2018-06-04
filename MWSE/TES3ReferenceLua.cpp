@@ -10,6 +10,7 @@
 #include "NINode.h"
 
 #include "TES3Cell.h"
+#include "TES3MobileActor.h"
 #include "TES3Reference.h"
 
 namespace TES3 {

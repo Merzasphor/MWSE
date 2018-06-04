@@ -25,6 +25,7 @@
 #include "TES3Util.h"
 
 #include "TES3DataHandler.h"
+#include "TES3MobileActor.h"
 #include "TES3Skill.h"
 
 using namespace mwse;
