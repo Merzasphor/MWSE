@@ -15,22 +15,22 @@ namespace mwse {
 			sol::state& state = LuaManager::getInstance().getState();
 
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto mobileCreatureUsertype = state.create_simple_usertype<TES3::MobileCreature>();
-			mobileCreatureUsertype.set("new", sol::no_constructor);
+			auto usertypeDefinition = state.create_simple_usertype<TES3::MobileCreature>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
 			// We inherit MobileActor.
-			mobileCreatureUsertype.set(sol::base_classes, sol::bases<TES3::MobileActor, TES3::MobileObject>());
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::MobileActor, TES3::MobileObject>());
 
 			// Basic property binding.
-			mobileCreatureUsertype.set("combat", sol::readonly_property(&TES3::MobileCreature::combatSkill));
-			mobileCreatureUsertype.set("magic", sol::readonly_property(&TES3::MobileCreature::magicSkill));
-			mobileCreatureUsertype.set("stealth", sol::readonly_property(&TES3::MobileCreature::stealthSkill));
+			usertypeDefinition.set("combat", sol::readonly_property(&TES3::MobileCreature::combatSkill));
+			usertypeDefinition.set("magic", sol::readonly_property(&TES3::MobileCreature::magicSkill));
+			usertypeDefinition.set("stealth", sol::readonly_property(&TES3::MobileCreature::stealthSkill));
 
 			// Access to other objects that need to be packaged.
-			mobileCreatureUsertype.set("object", sol::readonly_property([](TES3::MobileCreature& self) { return makeLuaObject(self.creatureInstance); }));
+			usertypeDefinition.set("object", sol::readonly_property([](TES3::MobileCreature& self) { return makeLuaObject(self.creatureInstance); }));
 
 			// Finish up our usertype.
-			state.set_usertype("TES3MobileCreature", mobileCreatureUsertype);
+			state.set_usertype("TES3MobileCreature", usertypeDefinition);
 		}
 	}
 }
