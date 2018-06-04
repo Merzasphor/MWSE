@@ -30,7 +30,7 @@ namespace mwse {
 			mobileObjectUsertype.set("position", sol::readonly_property(&TES3::MobileObject::position));
 
 			// Access to other objects that need to be packaged.
-			mobileObjectUsertype.set("reference", sol::readonly_property([](TES3::MobileObject& self) { makeLuaObject(self.reference); }));
+			mobileObjectUsertype.set("reference", sol::readonly_property([](TES3::MobileObject& self) { return makeLuaObject(self.reference); }));
 
 			// Finish up our usertype.
 			state.set_usertype("TES3MobileObject", mobileObjectUsertype);

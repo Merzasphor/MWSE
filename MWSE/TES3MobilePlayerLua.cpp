@@ -6,10 +6,10 @@
 
 #include "TES3Collections.h"
 
+#include "TES3MobilePlayer.h"
 #include "TES3Apparatus.h"
 #include "TES3Collections.h"
 #include "TES3GlobalVariable.h"
-#include "TES3MobilePlayer.h"
 #include "TES3NPC.h"
 #include "TES3PlayerAnimationData.h"
 #include "TES3Reference.h"
@@ -25,7 +25,7 @@ namespace mwse {
 			auto mobilePlayerUsertype = state.create_simple_usertype<TES3::MobilePlayer>();
 			mobilePlayerUsertype.set("new", sol::no_constructor);
 
-			// We inherit MobileActor.
+			// We inherit MobileNPC, which inherits MobileActor, which inherits MobileObject.
 			mobilePlayerUsertype.set(sol::base_classes, sol::bases<TES3::MobileNPC, TES3::MobileActor, TES3::MobileObject>());
 
 			// Basic property binding.
@@ -57,17 +57,17 @@ namespace mwse {
 			mobilePlayerUsertype.set("skillProgress", sol::property([](TES3::MobilePlayer& self) { return std::ref(self.skillProgress); }));
 
 			// Access to other objects that need to be packaged.
-			mobilePlayerUsertype.set("clawMultiplier", sol::readonly_property([](TES3::MobilePlayer& self) { makeLuaObject(self.clawMultiplier); }));
-			mobilePlayerUsertype.set("firstPerson", sol::readonly_property([](TES3::MobilePlayer& self) { makeLuaObject(self.firstPerson); }));
-			mobilePlayerUsertype.set("firstPersonReference", sol::readonly_property([](TES3::MobilePlayer& self) { makeLuaObject(self.firstPersonReference); }));
-			mobilePlayerUsertype.set("knownWerewolf", sol::readonly_property([](TES3::MobilePlayer& self) { makeLuaObject(self.knownWerewolf); }));
-			mobilePlayerUsertype.set("lastUsedAlembic", sol::readonly_property([](TES3::MobilePlayer& self) { makeLuaObject(self.lastUsedAlembic); }));
-			mobilePlayerUsertype.set("lastUsedCalcinator", sol::readonly_property([](TES3::MobilePlayer& self) { makeLuaObject(self.lastUsedCalcinator); }));
-			mobilePlayerUsertype.set("lastUsedMortar", sol::readonly_property([](TES3::MobilePlayer& self) { makeLuaObject(self.lastUsedMortar); }));
-			mobilePlayerUsertype.set("lastUsedRetort", sol::readonly_property([](TES3::MobilePlayer& self) { makeLuaObject(self.lastUsedRetort); }));
+			mobilePlayerUsertype.set("clawMultiplier", sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.clawMultiplier); }));
+			mobilePlayerUsertype.set("firstPerson", sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.firstPerson); }));
+			mobilePlayerUsertype.set("firstPersonReference", sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.firstPersonReference); }));
+			mobilePlayerUsertype.set("knownWerewolf", sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.knownWerewolf); }));
+			mobilePlayerUsertype.set("lastUsedAlembic", sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.lastUsedAlembic); }));
+			mobilePlayerUsertype.set("lastUsedCalcinator", sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.lastUsedCalcinator); }));
+			mobilePlayerUsertype.set("lastUsedMortar", sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.lastUsedMortar); }));
+			mobilePlayerUsertype.set("lastUsedRetort", sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.lastUsedRetort); }));
 
 			// Overwrite MobileActor::animationData for player.
-			mobilePlayerUsertype.set("animationData", sol::readonly_property([](TES3::MobileActor& self) { return self.animationData.asPlayer; }));
+			mobilePlayerUsertype.set("animationData", sol::readonly_property([](TES3::MobilePlayer& self) { return self.animationData.asPlayer; }));
 
 			// Overwrite MobileNPC::forceSneak so that it works on the player. 
 			mobilePlayerUsertype.set("forceSneak", sol::property(

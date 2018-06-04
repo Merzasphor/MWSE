@@ -31,7 +31,7 @@ namespace mwse {
 			mobileNPCUsertype.set("skills", sol::property([](TES3::MobileNPC& self) { return std::ref(self.skills); }));
 
 			// Access to other objects that need to be packaged.
-			mobileNPCUsertype.set("object", sol::readonly_property([](TES3::MobileNPC& self) { makeLuaObject(self.npcInstance); }));
+			mobileNPCUsertype.set("object", sol::readonly_property([](TES3::MobileNPC& self) { return makeLuaObject(self.npcInstance); }));
 
 			// Friendly access to skills.
 			mobileNPCUsertype.set("acrobatics", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Acrobatics]; }));

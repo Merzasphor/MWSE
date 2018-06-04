@@ -27,7 +27,7 @@ namespace mwse {
 			mobileCreatureUsertype.set("stealth", sol::readonly_property(&TES3::MobileCreature::stealthSkill));
 
 			// Access to other objects that need to be packaged.
-			mobileCreatureUsertype.set("object", sol::readonly_property([](TES3::MobileCreature& self) { makeLuaObject(self.creatureInstance); }));
+			mobileCreatureUsertype.set("object", sol::readonly_property([](TES3::MobileCreature& self) { return makeLuaObject(self.creatureInstance); }));
 
 			// Finish up our usertype.
 			state.set_usertype("TES3MobileCreature", mobileCreatureUsertype);
