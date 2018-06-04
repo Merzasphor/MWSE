@@ -142,41 +142,39 @@ namespace mwse {
 		}
 
 		void bindTES3Alchemy() {
-			LuaManager::getInstance().getState().new_usertype<TES3::Alchemy>("TES3Alchemy",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Get our lua state.
+			sol::state& state = LuaManager::getInstance().getState();
 
-				sol::base_classes, sol::bases<TES3::Item, TES3::BaseObject>(),
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::Alchemy>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::meta_function::to_string, &TES3::Alchemy::getObjectID,
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-				"create", &createAlchemy,
+			// Basic property binding.
+			usertypeDefinition.set("flags", &TES3::Alchemy::flags);
+			usertypeDefinition.set("weight", &TES3::Alchemy::weight);
+			usertypeDefinition.set("value", &TES3::Alchemy::value);
 
-				//
-				// Properties.
-				//
+			// Indirect bindings to unions and arrays.
+			usertypeDefinition.set("effects", sol::readonly_property([](TES3::Alchemy& self) { return std::ref(self.effects); }));
 
-				"objectType", &TES3::Alchemy::objectType,
+			// Basic function binding.
+			usertypeDefinition.set("create", &createAlchemy);
 
-				"boundingBox", &TES3::Alchemy::boundingBox,
+			// Functions exposed as properties.
+			usertypeDefinition.set("autoCalc", sol::property(&TES3::Alchemy::getAutoCalc, &TES3::Alchemy::setAutoCalc));
+			usertypeDefinition.set("icon", sol::property(
+				&TES3::Alchemy::getIconPath,
+				[](TES3::Alchemy& self, std::string value) { tes3::setDataString(&self.icon, value.c_str()); }
+			));
+			usertypeDefinition.set("model", sol::property(&TES3::Alchemy::getModelPath, &TES3::Alchemy::setModelPath));
+			usertypeDefinition.set("name", sol::property(&TES3::Alchemy::getName, &TES3::Alchemy::setName));
+			usertypeDefinition.set("script", sol::property(&TES3::Alchemy::getScript));
 
-				"id", sol::readonly_property(&TES3::Alchemy::getObjectID),
-				"name", sol::property(&TES3::Alchemy::getName, &TES3::Alchemy::setName),
-
-				"icon", sol::property(&TES3::Alchemy::getIconPath, [](TES3::Alchemy& self, std::string value) { tes3::setDataString(&self.icon, value.c_str()); }),
-				"model", sol::property( &TES3::Alchemy::getModelPath, [](TES3::Alchemy& self, std::string value) { self.setModelPath(value.c_str()); } ),
-
-				"flags", &TES3::Alchemy::flags,
-				"autoCalc", sol::property(&TES3::Alchemy::getAutoCalc, &TES3::Alchemy::setAutoCalc),
-
-				"value", sol::readonly_property(&TES3::Alchemy::getValue),
-				"weight", sol::readonly_property(&TES3::Alchemy::getWeight),
-
-				"effects", sol::readonly_property([](TES3::Alchemy& self) { return std::ref(self.effects); }),
-
-				"script", sol::readonly_property(&TES3::Alchemy::getScript)
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("TES3Alchemy", usertypeDefinition);
 		}
 	}
 }
