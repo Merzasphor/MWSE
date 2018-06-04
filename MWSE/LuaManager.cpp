@@ -65,6 +65,7 @@
 #include "TES3MobileProjectileLua.h"
 #include "TES3MoonLua.h"
 #include "TES3NPCLua.h"
+#include "TES3ObjectLua.h"
 #include "TES3ProbeLua.h"
 #include "TES3RaceLua.h"
 #include "TES3ReferenceLua.h"
@@ -219,12 +220,6 @@ namespace mwse {
 				return memCounter.PrivateUsage;
 			};
 
-			// Add binding for base objects.
-			luaState.new_usertype<TES3::BaseObject>("TES3BaseObject",
-				"new", sol::no_constructor,
-				"objectType", &TES3::BaseObject::objectType
-				);
-
 			// Bind TES3 data types.
 			bindTES3ActionData();
 			bindTES3Activator();
@@ -250,15 +245,18 @@ namespace mwse {
 			bindTES3Light();
 			bindTES3Lockpick();
 			bindTES3MagicEffect();
+			bindTES3MagicEffectInstance();
+			bindTES3MagicSourceInstance();
 			bindTES3Misc();
-			bindTES3MobileObject();
 			bindTES3MobileActor();
 			bindTES3MobileCreature();
 			bindTES3MobileNPC();
+			bindTES3MobileObject();
 			bindTES3MobilePlayer();
 			bindTES3MobileProjectile();
 			bindTES3Moon();
 			bindTES3NPC();
+			bindTES3Object();
 			bindTES3Probe();
 			bindTES3Race();
 			bindTES3Reference();
@@ -270,8 +268,6 @@ namespace mwse {
 			bindTES3Sound();
 			bindTES3Spell();
 			bindTES3SpellList();
-			bindTES3MagicEffectInstance();
-			bindTES3MagicSourceInstance();
 			bindTES3Static();
 			bindTES3Statistic();
 			bindTES3UIBlock();

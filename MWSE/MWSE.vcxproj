@@ -49,6 +49,7 @@
     <ClInclude Include="TES3MobileActorLua.h" />
     <ClInclude Include="TES3MobileObject.h" />
     <ClInclude Include="TES3MobileObjectLua.h" />
+    <ClInclude Include="TES3ObjectLua.h" />
     <ClInclude Include="TES3PlayerAnimationData.h" />
     <ClInclude Include="TES3SoundGenerator.h" />
     <ClInclude Include="StackLua.h" />
@@ -282,6 +283,7 @@
     <ClCompile Include="TES3NPC.cpp" />
     <ClCompile Include="TES3NPCLua.cpp" />
     <ClCompile Include="TES3Object.cpp" />
+    <ClCompile Include="TES3ObjectLua.cpp" />
     <ClCompile Include="TES3ProbeLua.cpp" />
     <ClCompile Include="TES3RaceLua.cpp" />
     <ClCompile Include="TES3Reference.cpp" />
