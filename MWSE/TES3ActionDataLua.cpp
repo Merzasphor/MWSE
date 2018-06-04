@@ -19,7 +19,7 @@ namespace mwse {
 			usertypeDefinition.set("new", sol::no_constructor);
 
 			// Basic property binding.
-			usertypeDefinition.set("aiBehaviourState", &TES3::ActionData::aiBehaviourState);
+			usertypeDefinition.set("aiBehaviorState", &TES3::ActionData::aiBehaviourState);
 			usertypeDefinition.set("animationAttackState", &TES3::ActionData::animStateAttack);
 			usertypeDefinition.set("attackDirection", &TES3::ActionData::attackDirection);
 			usertypeDefinition.set("attackSwing", &TES3::ActionData::attackSwing);
