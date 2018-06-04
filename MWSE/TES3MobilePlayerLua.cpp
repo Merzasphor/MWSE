@@ -2,212 +2,95 @@
 
 #include "sol.hpp"
 #include "LuaManager.h"
+#include "LuaUtil.h"
 
 #include "TES3Collections.h"
 
 #include "TES3Apparatus.h"
 #include "TES3Collections.h"
+#include "TES3GlobalVariable.h"
 #include "TES3MobilePlayer.h"
 #include "TES3NPC.h"
+#include "TES3PlayerAnimationData.h"
 #include "TES3Reference.h"
 #include "TES3Spell.h"
 
 namespace mwse {
 	namespace lua {
 		void bindTES3MobilePlayer() {
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::MobilePlayer>("TES3MobilePlayer",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto mobilePlayerUsertype = state.create_simple_usertype<TES3::MobilePlayer>();
 
-				sol::base_classes, sol::bases<TES3::MobileActor>(),
+			// We inherit MobileActor.
+			mobilePlayerUsertype.set(sol::base_classes, sol::bases<TES3::MobileNPC, TES3::MobileActor, TES3::MobileObject>());
 
-				//
-				// Properties: MACT
-				//
+			// Basic property binding.
+			mobilePlayerUsertype.set("alwaysRun", &TES3::MobilePlayer::alwaysRun);
+			mobilePlayerUsertype.set("attackDisabled", &TES3::MobilePlayer::attackDisabled);
+			mobilePlayerUsertype.set("autoRun", &TES3::MobilePlayer::autoRun);
+			mobilePlayerUsertype.set("castReady", &TES3::MobilePlayer::castReady);
+			mobilePlayerUsertype.set("controlsDisabled", &TES3::MobilePlayer::controlsDisabled);
+			mobilePlayerUsertype.set("controlsDisabled", &TES3::MobilePlayer::controlsDisabled);
+			mobilePlayerUsertype.set("inactivityTime", &TES3::MobilePlayer::inactivityTime);
+			mobilePlayerUsertype.set("inJail", &TES3::MobilePlayer::playerInJail);
+			mobilePlayerUsertype.set("jumpingDisabled", &TES3::MobilePlayer::jumpingDisabled);
+			mobilePlayerUsertype.set("lastUsedAmmoCount", &TES3::MobilePlayer::lastUsedAmmoCount);
+			mobilePlayerUsertype.set("levelUpProgress", &TES3::MobilePlayer::levelUpProgress);
+			mobilePlayerUsertype.set("magicDisabled", &TES3::MobilePlayer::magicDisabled);
+			mobilePlayerUsertype.set("mouseLookDisabled", &TES3::MobilePlayer::mouseLookDisabled);
+			mobilePlayerUsertype.set("restHoursRemaining", &TES3::MobilePlayer::restHoursRemaining);
+			mobilePlayerUsertype.set("sleeping", sol::readonly_property(&TES3::MobilePlayer::sleeping));
+			mobilePlayerUsertype.set("telekinesis", &TES3::MobilePlayer::telekinesis);
+			mobilePlayerUsertype.set("travelling", &TES3::MobilePlayer::playerIsTravelling);
+			mobilePlayerUsertype.set("vanityDisabled", &TES3::MobilePlayer::vanityDisabled);
+			mobilePlayerUsertype.set("viewSwitchDisabled", &TES3::MobilePlayer::viewSwitchDisabled);
+			mobilePlayerUsertype.set("visionBonus", &TES3::MobilePlayer::visionBonus);
+			mobilePlayerUsertype.set("weaponReady", &TES3::MobilePlayer::weaponReady);
 
-				"objectType", &TES3::MobilePlayer::objectType,
+			// Indirect bindings to unions and arrays.
+			mobilePlayerUsertype.set("levelupsPerAttribute", sol::property([](TES3::MobilePlayer& self) { return std::ref(self.levelupPerAttributeCount); }));
+			mobilePlayerUsertype.set("levelupsPerSpecialization", sol::property([](TES3::MobilePlayer& self) { return std::ref(self.levelupPerSpecialization); }));
+			mobilePlayerUsertype.set("skillProgress", sol::property([](TES3::MobilePlayer& self) { return std::ref(self.skillProgress); }));
 
-				"movementFlags", &TES3::MobilePlayer::movementFlags,
-				"isSneaking", sol::readonly_property([](TES3::MobilePlayer& self) { return (self.movementFlags & TES3::ActorMovement::Crouching) != 0; }),
+			// Access to other objects that need to be packaged.
+			mobilePlayerUsertype.set("clawMultiplier", sol::readonly_property([](TES3::MobilePlayer& self) { makeLuaObject(self.clawMultiplier); }));
+			mobilePlayerUsertype.set("firstPerson", sol::readonly_property([](TES3::MobilePlayer& self) { makeLuaObject(self.firstPerson); }));
+			mobilePlayerUsertype.set("firstPersonReference", sol::readonly_property([](TES3::MobilePlayer& self) { makeLuaObject(self.firstPersonReference); }));
+			mobilePlayerUsertype.set("knownWerewolf", sol::readonly_property([](TES3::MobilePlayer& self) { makeLuaObject(self.knownWerewolf); }));
+			mobilePlayerUsertype.set("lastUsedAlembic", sol::readonly_property([](TES3::MobilePlayer& self) { makeLuaObject(self.lastUsedAlembic); }));
+			mobilePlayerUsertype.set("lastUsedCalcinator", sol::readonly_property([](TES3::MobilePlayer& self) { makeLuaObject(self.lastUsedCalcinator); }));
+			mobilePlayerUsertype.set("lastUsedMortar", sol::readonly_property([](TES3::MobilePlayer& self) { makeLuaObject(self.lastUsedMortar); }));
+			mobilePlayerUsertype.set("lastUsedRetort", sol::readonly_property([](TES3::MobilePlayer& self) { makeLuaObject(self.lastUsedRetort); }));
 
-				"prevMovementFlags", &TES3::MobilePlayer::prevMovementFlags,
+			// Overwrite MobileActor::animationData for player.
+			mobilePlayerUsertype.set("animationData", sol::readonly_property([](TES3::MobileActor& self) { return self.animationData.asPlayer; }));
 
-				"actorFlags", &TES3::MobilePlayer::actorFlags,
-				"activeAI", sol::property(
-					[](TES3::MobilePlayer& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::ActiveAI); },
-					[](TES3::MobilePlayer& self, bool set) { self.setMobileActorFlag(TES3::MobileActorFlag::ActiveAI, set); }
-					),
-				"werewolf", sol::property([](TES3::MobilePlayer& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::Werewolf); }),
-				"underwater", sol::property([](TES3::MobilePlayer& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::Underwater); }),
-				"weaponDrawn", sol::property([](TES3::MobilePlayer& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::WeaponDrawn); }),
-				"spellReadied", sol::property([](TES3::MobilePlayer& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::SpellReadied); }),
-				"inCombat", sol::property([](TES3::MobilePlayer& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::InCombat); }),
-				"attacked", sol::property([](TES3::MobilePlayer& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::Attacked); }),
-				"isCrittable", sol::property([](TES3::MobilePlayer& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::IsCrittable); }),
-				"idleAnim", sol::property([](TES3::MobilePlayer& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::IdleAnim); }),
-
-				"actorType", &TES3::MobilePlayer::actorType,
-				"reference", &TES3::MobilePlayer::reference,
-
-				"cellX", &TES3::MobilePlayer::cellX,
-				"cellY", &TES3::MobilePlayer::cellY,
-
-				"height", &TES3::MobilePlayer::height,
-				"boundSize", &TES3::MobilePlayer::boundSize,
-				"velocity", &TES3::MobilePlayer::velocity,
-				"impulseVelocity", &TES3::MobilePlayer::impulseVelocity,
-				"position", &TES3::MobilePlayer::position,
-				"lastGroundZ", &TES3::MobilePlayer::lastGroundZ,
-				"collidingReference", &TES3::MobilePlayer::collidingReference,
-				"widthInUnits", &TES3::MobilePlayer::widthInUnits,
-
-				"friendlyActors", &TES3::MobilePlayer::listFriendlyActors,
-				"hostileActors", &TES3::MobilePlayer::listTargetActors,
-
-				"scanTimer", &TES3::MobilePlayer::scanTimer,
-				"scanInterval", &TES3::MobilePlayer::scanInterval,
-				"greetTimer", &TES3::MobilePlayer::greetTimer,
-
-				"actionData", &TES3::MobilePlayer::actionData,
-				"actionBeforeCombat", &TES3::MobilePlayer::actionBeforeCombat,
-
-				//"activeMagicEffects", &TES3::MobilePlayer::activeMagicEffects,
-				"activeMagicEffectCount", &TES3::MobilePlayer::activeMagicEffectCount,
-
-				//"powers", &TES3::MobilePlayer::powers,
-
-				"nextActionWeight", &TES3::MobilePlayer::nextActionWeight,
-
-				//"animationData", &TES3::MobilePlayer::animationData,
-
-				"attributes", sol::property([](TES3::MobilePlayer& self) { return std::ref(self.attributes); }),
-				"health", &TES3::MobilePlayer::health,
-				"magicka", &TES3::MobilePlayer::magicka,
-				"encumbrance", &TES3::MobilePlayer::encumbrance,
-				"fatigue", &TES3::MobilePlayer::fatigue,
-				"magickaMultiplier", &TES3::MobilePlayer::magickaMultiplier,
-
-				"attackBonus", &TES3::MobilePlayer::attackBonus,
-				"sanctuary", &TES3::MobilePlayer::sanctuary,
-				"resistMagicka", &TES3::MobilePlayer::resistMagicka,
-				"resistFire", &TES3::MobilePlayer::resistFire,
-				"resistFrost", &TES3::MobilePlayer::resistFrost,
-				"resistShock", &TES3::MobilePlayer::resistShock,
-				"resistCommonDisease", &TES3::MobilePlayer::resistCommonDisease,
-				"resistBlightDisease", &TES3::MobilePlayer::resistBlightDisease,
-				"resistCorprus", &TES3::MobilePlayer::resistCorprus,
-				"resistPoison", &TES3::MobilePlayer::resistPoison,
-				"resistParalysis", &TES3::MobilePlayer::resistParalysis,
-				"chameleon", &TES3::MobilePlayer::chameleon,
-				"resistNormalWeapons", &TES3::MobilePlayer::resistNormalWeapons,
-				"waterBreathing", &TES3::MobilePlayer::waterBreathing,
-				"waterWalking", &TES3::MobilePlayer::waterWalking,
-				"swiftSwim", &TES3::MobilePlayer::swiftSwim,
-				"jump", &TES3::MobilePlayer::jump,
-				"levitate", &TES3::MobilePlayer::levitate,
-				"shield", &TES3::MobilePlayer::shield,
-				"sound", &TES3::MobilePlayer::sound,
-				"silence", &TES3::MobilePlayer::silence,
-				"blind", &TES3::MobilePlayer::blind,
-				"paralyze", &TES3::MobilePlayer::paralyze,
-				"invisibility", &TES3::MobilePlayer::invisibility,
-
-				"fight", &TES3::MobilePlayer::fight,
-				"flee", &TES3::MobilePlayer::flee,
-				"hello", &TES3::MobilePlayer::hello,
-				"alarm", &TES3::MobilePlayer::alarm,
-
-				"barterGold", &TES3::MobilePlayer::barterGold,
-
-				"readiedAmmoCount", &TES3::MobilePlayer::readiedAmmoCount,
-				"corpseHourstamp", &TES3::MobilePlayer::corpseHourstamp,
-				"greetDuration", &TES3::MobilePlayer::greetDuration,
-				"holdBreathTime", &TES3::MobilePlayer::holdBreathTime,
-				"currentSpell", &TES3::MobilePlayer::currentSpell,
-				"spellSource", &TES3::MobilePlayer::spellSource,
-
-				"currentEnchItem", &TES3::MobilePlayer::currentEnchItem,
-				"currentEnchItemData", &TES3::MobilePlayer::currentEnchItemData,
-				"readiedWeapon", &TES3::MobilePlayer::readiedWeapon,
-				"readiedAmmo", &TES3::MobilePlayer::readiedAmmo,
-				"readiedShield", &TES3::MobilePlayer::readiedShield,
-				"torchSlot", &TES3::MobilePlayer::torchSlot,
-
-				"arrowBone", &TES3::MobilePlayer::arrowBone,
-
-				//
-				// Properties: MACH
-				//
-
-				"object", &TES3::MobilePlayer::npcInstance,
-				"skills", sol::property([](TES3::MobilePlayer& self) { return std::ref(self.skills); }),
-
-				"forceSneak", sol::property(
-					[](TES3::MobilePlayer& self) { return (self.movementFlags & TES3::ActorMovement::Crouching) != 0; },
-					[](TES3::MobilePlayer& self, bool set)
-				{
-					if (set) {
-						self.movementFlags |= TES3::ActorMovement::Crouching;
-					}
-					else {
-						self.movementFlags &= ~TES3::ActorMovement::Crouching;
-					}
+			// Overwrite MobileNPC::forceSneak so that it works on the player. 
+			mobilePlayerUsertype.set("forceSneak", sol::property(
+				[](TES3::MobilePlayer& self) { return (self.movementFlags & TES3::ActorMovement::Crouching) != 0; },
+				[](TES3::MobilePlayer& self, bool set)
+			{
+				if (set) {
+					self.movementFlags |= TES3::ActorMovement::Crouching;
 				}
-					),
-				"forceRun", &TES3::MobilePlayer::flagForceRun,
-				"forceJump", &TES3::MobilePlayer::flagForceJump,
-				"forceMoveJump", &TES3::MobilePlayer::flagForceMoveJump,
+				else {
+					self.movementFlags &= ~TES3::ActorMovement::Crouching;
+				}
+			}
+			));
 
-				//
-				// Properties: MACP
-				//
+			// Basic function binding.
+			mobilePlayerUsertype.set("exerciseSkill", &TES3::MobilePlayer::exerciseSkill);
+			mobilePlayerUsertype.set("levelSkill", &TES3::MobilePlayer::levelSkill);
 
-				"levelupProgress", &TES3::MobilePlayer::levelUpProgress,
-				"levelupsPerAttribute", sol::property([](TES3::MobilePlayer& self) { return std::ref(self.levelupPerAttributeCount); }),
-				"levelupsPerSpecialization", sol::property([](TES3::MobilePlayer& self) { return std::ref(self.levelupPerSpecialization); }),
-				"skillProgress", sol::property([](TES3::MobilePlayer& self) { return std::ref(self.skillProgress); }),
+			// Functions exposed as read-only properties.
+			mobilePlayerUsertype.set("is3rdPerson", sol::readonly_property(&TES3::MobilePlayer::is3rdPerson));
 
-				// "bounty", &TES3::MobilePlayer::bounty,
-
-				"lastUsedAmmoCount", &TES3::MobilePlayer::lastUsedAmmoCount,
-
-				"lastUsedMortar", &TES3::MobilePlayer::apparatus0,
-				"lastUsedAlembic", &TES3::MobilePlayer::apparatus1,
-				"lastUsedCalcinator", &TES3::MobilePlayer::apparatus2,
-				"lastUsedRetort", &TES3::MobilePlayer::apparatus3,
-
-				"clawMultiplier", &TES3::MobilePlayer::clawMultiplier,
-				"knownWerewolf", &TES3::MobilePlayer::knownWerewolf,
-
-				"controlsDisabled", &TES3::MobilePlayer::controlsDisabled,
-				"jumpingDisabled", &TES3::MobilePlayer::jumpingDisabled,
-				"mouseLookDisabled", &TES3::MobilePlayer::mouselookDisabled,
-				"viewSwitchDisabled", &TES3::MobilePlayer::viewSwitchDisabled,
-				"vanityDisabled", &TES3::MobilePlayer::vanityDisabled,
-				"attackDisabled", &TES3::MobilePlayer::attackDisabled,
-				"magicDisabled", &TES3::MobilePlayer::magicDisabled,
-				"alwaysRun", &TES3::MobilePlayer::alwaysRun,
-				"autoRun", &TES3::MobilePlayer::autoRun,
-				"sleeping", &TES3::MobilePlayer::sleeping,
-				"weaponReady", &TES3::MobilePlayer::weaponReady,
-				"castReady", &TES3::MobilePlayer::castReady,
-				"isJailed", &TES3::MobilePlayer::playerInJail,
-				"isTravelling", &TES3::MobilePlayer::playerIsTravelling,
-
-				"telekinesis", &TES3::MobilePlayer::telekinesis,
-				"visionBonus", &TES3::MobilePlayer::visionBonus,
-
-				"restHoursRemaining", &TES3::MobilePlayer::restHoursRemaining,
-
-				// "birthsign", &TES3::MobilePlayer::birthsign,
-
-				// "markLocation", &TES3::MobilePlayer::markLocation,
-
-				"inactivityTime", &TES3::MobilePlayer::inactivityTime
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("TES3MobilePlayer", mobilePlayerUsertype);
 		}
 	}
 }

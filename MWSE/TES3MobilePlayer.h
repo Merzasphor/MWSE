@@ -9,29 +9,29 @@ namespace TES3 {
 		int levelupPerAttributeCount[8]; // 0x56C
 		int levelupPerSpecialization[3]; // 0x58C
 		void * bounty; // 0x598
-		Apparatus * apparatus0; // 0x59C
-		Apparatus * apparatus1; // 0x5A0
-		Apparatus * apparatus2; // 0x5A4
-		Apparatus * apparatus3; // 0x5A8
+		Apparatus * lastUsedMortar; // 0x59C
+		Apparatus * lastUsedAlembic; // 0x5A0
+		Apparatus * lastUsedCalcinator; // 0x5A4
+		Apparatus * lastUsedRetort; // 0x5A8
 		GlobalVariable * clawMultiplier; // 0x5AC
-		signed char controlsDisabled; // 0x5B0
-		signed char jumpingDisabled; // 0x5B1
-		signed char mouselookDisabled; // 0x5B2
-		signed char viewSwitchDisabled; // 0x5B3
-		signed char vanityDisabled; // 0x5B4
-		signed char attackDisabled; // 0x5B5
-		signed char magicDisabled; // 0x5B6
-		signed char alwaysRun; // 0x5B7
-		signed char autoRun; // 0x5B8
-		signed char sleeping; // 0x5B9
+		bool controlsDisabled; // 0x5B0
+		bool jumpingDisabled; // 0x5B1
+		bool mouseLookDisabled; // 0x5B2
+		bool viewSwitchDisabled; // 0x5B3
+		bool vanityDisabled; // 0x5B4
+		bool attackDisabled; // 0x5B5
+		bool magicDisabled; // 0x5B6
+		bool alwaysRun; // 0x5B7
+		bool autoRun; // 0x5B8
+		bool sleeping; // 0x5B9
 		char unknown_0x5BA; // 0x5BA // Resting related?
 		char unknown_0x5BB; // 0x5BB
 		char unknown_0x5BC; // 0x5BC
-		signed char weaponReady; // 0x5BD
-		signed char castReady; // 0x5BE
+		bool weaponReady; // 0x5BD
+		bool castReady; // 0x5BE
 		char unknown_0x5BF;
-		signed char playerInJail; // 0x5C0
-		signed char playerIsTravelling; // 0x5C1
+		bool playerInJail; // 0x5C0
+		bool playerIsTravelling; // 0x5C1
 		char unknown_0x5C2; // Undefined.
 		char unknown_0x5C3; // Undefined.
 		int telekinesis; // 0x5C4

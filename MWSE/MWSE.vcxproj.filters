@@ -747,6 +747,12 @@
     <ClInclude Include="TES3Apparatus.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Item</Filter>
     </ClInclude>
+    <ClInclude Include="TES3MobileActorLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MobileObjectLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1753,6 +1759,12 @@
     </ClCompile>
     <ClCompile Include="TES3SpellList.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3MobileActorLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3MobileObjectLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

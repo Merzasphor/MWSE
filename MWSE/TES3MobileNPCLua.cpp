@@ -2,151 +2,67 @@
 
 #include "sol.hpp"
 #include "LuaManager.h"
+#include "LuaUtil.h"
 
-#include "TES3Collections.h"
 #include "TES3MobileNPC.h"
 #include "TES3NPC.h"
-#include "TES3Reference.h"
-#include "TES3Spell.h"
+#include "TES3Skill.h"
 
 namespace mwse {
 	namespace lua {
 		void bindTES3MobileNPC() {
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::MobileNPC>("TES3MobileNPC",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto mobileNPCUsertype = state.create_simple_usertype<TES3::MobileNPC>();
 
-				sol::base_classes, sol::bases<TES3::MobileActor>(),
+			// We inherit MobileActor.
+			mobileNPCUsertype.set(sol::base_classes, sol::bases<TES3::MobileActor, TES3::MobileObject>());
 
-				//
-				// Properties: MACT
-				//
+			// Basic property binding.
+			mobileNPCUsertype.set("forceSneak", &TES3::MobileNPC::flagForceSneak);
+			mobileNPCUsertype.set("forceRun", &TES3::MobileNPC::flagForceRun);
+			mobileNPCUsertype.set("forceJump", &TES3::MobileNPC::flagForceJump);
+			mobileNPCUsertype.set("forceMoveJump", &TES3::MobileNPC::flagForceMoveJump);
 
-				"objectType", &TES3::MobileNPC::objectType,
+			// Indirect bindings to unions and arrays.
+			mobileNPCUsertype.set("skills", sol::property([](TES3::MobileNPC& self) { return std::ref(self.skills); }));
 
-				"movementFlags", &TES3::MobileNPC::movementFlags,
-				"isSneaking", sol::readonly_property([](TES3::MobileNPC& self) { return (self.movementFlags & TES3::ActorMovement::Crouching) != 0; }),
+			// Access to other objects that need to be packaged.
+			mobileNPCUsertype.set("object", sol::readonly_property([](TES3::MobileNPC& self) { makeLuaObject(self.npcInstance); }));
 
-				"prevMovementFlags", &TES3::MobileNPC::prevMovementFlags,
+			// Friendly access to skills.
+			mobileNPCUsertype.set("acrobatics", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Acrobatics]; }));
+			mobileNPCUsertype.set("alchemy", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Alchemy]; }));
+			mobileNPCUsertype.set("alteration", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Alteration]; }));
+			mobileNPCUsertype.set("armorer", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Armorer]; }));
+			mobileNPCUsertype.set("athletics", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Athletics]; }));
+			mobileNPCUsertype.set("axe", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Axe]; }));
+			mobileNPCUsertype.set("block", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Block]; }));
+			mobileNPCUsertype.set("bluntWeapon", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::BluntWeapon]; }));
+			mobileNPCUsertype.set("conjuration", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Conjuration]; }));
+			mobileNPCUsertype.set("destruction", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Destruction]; }));
+			mobileNPCUsertype.set("enchant", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Enchant]; }));
+			mobileNPCUsertype.set("handToHand", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::HandToHand]; }));
+			mobileNPCUsertype.set("heavyArmor", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::HeavyArmor]; }));
+			mobileNPCUsertype.set("illusion", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Illusion]; }));
+			mobileNPCUsertype.set("lightArmor", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::LightArmor]; }));
+			mobileNPCUsertype.set("longBlade", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::LongBlade]; }));
+			mobileNPCUsertype.set("marksman", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Marksman]; }));
+			mobileNPCUsertype.set("mediumArmor", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::MediumArmor]; }));
+			mobileNPCUsertype.set("mercantile", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Mercantile]; }));
+			mobileNPCUsertype.set("mysticism", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Mysticism]; }));
+			mobileNPCUsertype.set("restoration", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Restoration]; }));
+			mobileNPCUsertype.set("security", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Security]; }));
+			mobileNPCUsertype.set("shortBlade", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::ShortBlade]; }));
+			mobileNPCUsertype.set("sneak", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Sneak]; }));
+			mobileNPCUsertype.set("spear", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Spear]; }));
+			mobileNPCUsertype.set("speechcraft", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Speechcraft]; }));
+			mobileNPCUsertype.set("unarmored", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Unarmored]; }));
 
-				"actorFlags", &TES3::MobileNPC::actorFlags,
-				"activeAI", sol::property(
-					[](TES3::MobileNPC& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::ActiveAI); },
-					[](TES3::MobileNPC& self, bool set) { self.setMobileActorFlag(TES3::MobileActorFlag::ActiveAI, set); }
-					),
-				"werewolf", sol::property([](TES3::MobileNPC& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::Werewolf); }),
-				"underwater", sol::property([](TES3::MobileNPC& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::Underwater); }),
-				"weaponDrawn", sol::property([](TES3::MobileNPC& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::WeaponDrawn); }),
-				"spellReadied", sol::property([](TES3::MobileNPC& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::SpellReadied); }),
-				"inCombat", sol::property([](TES3::MobileNPC& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::InCombat); }),
-				"attacked", sol::property([](TES3::MobileNPC& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::Attacked); }),
-				"isCrittable", sol::property([](TES3::MobileNPC& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::IsCrittable); }),
-				"idleAnim", sol::property([](TES3::MobileNPC& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::IdleAnim); }),
-
-				"actorType", &TES3::MobileNPC::actorType,
-				"reference", &TES3::MobileNPC::reference,
-
-				"cellX", &TES3::MobileNPC::cellX,
-				"cellY", &TES3::MobileNPC::cellY,
-
-				"height", &TES3::MobileNPC::height,
-				"boundSize", &TES3::MobileNPC::boundSize,
-				"velocity", &TES3::MobileNPC::velocity,
-				"impulseVelocity", &TES3::MobileNPC::impulseVelocity,
-				"position", &TES3::MobileNPC::position,
-				"lastGroundZ", &TES3::MobileNPC::lastGroundZ,
-				"collidingReference", &TES3::MobileNPC::collidingReference,
-				"widthInUnits", &TES3::MobileNPC::widthInUnits,
-
-				"friendlyActors", &TES3::MobileNPC::listFriendlyActors,
-				"hostileActors", &TES3::MobileNPC::listTargetActors,
-
-				"scanTimer", &TES3::MobileNPC::scanTimer,
-				"scanInterval", &TES3::MobileNPC::scanInterval,
-				"greetTimer", &TES3::MobileNPC::greetTimer,
-
-				"actionData", &TES3::MobileNPC::actionData,
-				"actionBeforeCombat", &TES3::MobileNPC::actionBeforeCombat,
-
-				//"activeMagicEffects", &TES3::MobileNPC::activeMagicEffects,
-				"activeMagicEffectCount", &TES3::MobileNPC::activeMagicEffectCount,
-
-				//"powers", &TES3::MobileNPC::powers,
-
-				"nextActionWeight", &TES3::MobileNPC::nextActionWeight,
-
-				//"animationData", &TES3::MobileNPC::animationData,
-
-				"attributes", sol::property([](TES3::MobileNPC& self) { return std::ref(self.attributes); }),
-				"health", &TES3::MobileNPC::health,
-				"magicka", &TES3::MobileNPC::magicka,
-				"encumbrance", &TES3::MobileNPC::encumbrance,
-				"fatigue", &TES3::MobileNPC::fatigue,
-				"magickaMultiplier", &TES3::MobileNPC::magickaMultiplier,
-
-				"attackBonus", &TES3::MobileNPC::attackBonus,
-				"sanctuary", &TES3::MobileNPC::sanctuary,
-				"resistMagicka", &TES3::MobileNPC::resistMagicka,
-				"resistFire", &TES3::MobileNPC::resistFire,
-				"resistFrost", &TES3::MobileNPC::resistFrost,
-				"resistShock", &TES3::MobileNPC::resistShock,
-				"resistCommonDisease", &TES3::MobileNPC::resistCommonDisease,
-				"resistBlightDisease", &TES3::MobileNPC::resistBlightDisease,
-				"resistCorprus", &TES3::MobileNPC::resistCorprus,
-				"resistPoison", &TES3::MobileNPC::resistPoison,
-				"resistParalysis", &TES3::MobileNPC::resistParalysis,
-				"chameleon", &TES3::MobileNPC::chameleon,
-				"resistNormalWeapons", &TES3::MobileNPC::resistNormalWeapons,
-				"waterBreathing", &TES3::MobileNPC::waterBreathing,
-				"waterWalking", &TES3::MobileNPC::waterWalking,
-				"swiftSwim", &TES3::MobileNPC::swiftSwim,
-				"jump", &TES3::MobileNPC::jump,
-				"levitate", &TES3::MobileNPC::levitate,
-				"shield", &TES3::MobileNPC::shield,
-				"sound", &TES3::MobileNPC::sound,
-				"silence", &TES3::MobileNPC::silence,
-				"blind", &TES3::MobileNPC::blind,
-				"paralyze", &TES3::MobileNPC::paralyze,
-				"invisibility", &TES3::MobileNPC::invisibility,
-
-				"fight", &TES3::MobileNPC::fight,
-				"flee", &TES3::MobileNPC::flee,
-				"hello", &TES3::MobileNPC::hello,
-				"alarm", &TES3::MobileNPC::alarm,
-
-				"barterGold", &TES3::MobileNPC::barterGold,
-
-				"readiedAmmoCount", &TES3::MobileNPC::readiedAmmoCount,
-				"corpseHourstamp", &TES3::MobileNPC::corpseHourstamp,
-				"greetDuration", &TES3::MobileNPC::greetDuration,
-				"holdBreathTime", &TES3::MobileNPC::holdBreathTime,
-				"currentSpell", &TES3::MobileNPC::currentSpell,
-				"spellSource", &TES3::MobileNPC::spellSource,
-
-				"currentEnchItem", &TES3::MobileNPC::currentEnchItem,
-				"currentEnchItemData", &TES3::MobileNPC::currentEnchItemData,
-				"readiedWeapon", &TES3::MobileNPC::readiedWeapon,
-				"readiedAmmo", &TES3::MobileNPC::readiedAmmo,
-				"readiedShield", &TES3::MobileNPC::readiedShield,
-				"torchSlot", &TES3::MobileNPC::torchSlot,
-
-				"arrowBone", &TES3::MobileNPC::arrowBone,
-
-				//
-				// Properties: MACH
-				//
-
-				"object", &TES3::MobileNPC::npcInstance,
-				"skills", sol::property([](TES3::MobileNPC& self) { return std::ref(self.skills); }),
-
-				"forceSneak", &TES3::MobileNPC::flagForceSneak,
-				"forceRun", &TES3::MobileNPC::flagForceRun,
-				"forceJump", &TES3::MobileNPC::flagForceJump,
-				"forceMoveJump", &TES3::MobileNPC::flagForceMoveJump
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("TES3MobileNPC", mobileNPCUsertype);
 		}
 	}
 }

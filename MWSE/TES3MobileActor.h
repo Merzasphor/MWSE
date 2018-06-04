@@ -24,6 +24,35 @@ namespace TES3 {
 		};
 	}
 
+	namespace EffectAttribute {
+		enum EffectAttribute {
+			AttackBonus,
+			Sanctuary,
+			ResistMagicka,
+			ResistFire,
+			ResistFrost,
+			ResistShock,
+			ResistCommonDisease,
+			ResistBlightDisease,
+			ResistCorprus,
+			ResistPoison,
+			ResistParalysis,
+			Chameleon,
+			ResistNormalWeapons,
+			WaterBreathing,
+			WaterWalking,
+			SwiftSwim,
+			Jump,
+			Levitate,
+			Shield,
+			Sound,
+			Silence,
+			Blind,
+			Paralyze,
+			Invisibility
+		};
+	}
+
 	struct MobileActor : MobileObject {
 		void * unknown_0x60;
 		int unknown_0x64;
@@ -105,30 +134,7 @@ namespace TES3 {
 		Statistic encumbrance;
 		Statistic fatigue;
 		Statistic magickaMultiplier;
-		int attackBonus;
-		int sanctuary;
-		int resistMagicka;
-		int resistFire;
-		int resistFrost;
-		int resistShock;
-		int resistCommonDisease;
-		int resistBlightDisease;
-		int resistCorprus;
-		int resistPoison;
-		int resistParalysis;
-		int chameleon;
-		int resistNormalWeapons;
-		int waterBreathing;
-		int waterWalking;
-		int swiftSwim;
-		int jump;
-		int levitate;
-		int shield;
-		int sound;
-		int silence;
-		int blind;
-		int paralyze;
-		int invisibility;
+		int effectAttributes[24];
 		int fight;
 		int flee;
 		int hello;
@@ -181,6 +187,7 @@ namespace TES3 {
 		void stopCombat(bool);
 		void onDeath();
 		bool applyHealthDamage(float, bool, bool, bool);
+		bool hasFreeAction();
 
 		//
 		// Custom functions.

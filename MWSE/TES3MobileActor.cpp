@@ -13,6 +13,7 @@
 #define TES3_MobileActor_stopCombat 0x558720
 #define TES3_MobileActor_onDeath 0x523AA0
 #define TES3_MobileActor_applyHealthDamage 0x557CF0
+#define TES3_MobileActor_hasFreeAction 0x527580
 
 namespace TES3 {
 	signed char MobileActor::onActorCollision(int hitReferenceIndex) {
@@ -126,6 +127,10 @@ namespace TES3 {
 		luaManager.triggerEvent(new mwse::lua::event::DamagedEvent(this, damage));
 
 		return result;
+	}
+
+	bool MobileActor::hasFreeAction() {
+		return reinterpret_cast<bool(__thiscall *)(MobileActor*)>(TES3_MobileActor_hasFreeAction)(this);
 	}
 
 	bool MobileActor::getMobileActorFlag(unsigned int flag) {
