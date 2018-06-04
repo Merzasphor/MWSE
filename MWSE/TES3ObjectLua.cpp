@@ -23,6 +23,9 @@ namespace mwse {
 				auto usertypeDefinition = state.create_simple_usertype<TES3::BaseObject>();
 				usertypeDefinition.set("new", sol::no_constructor);
 
+				// Allow objects to be converted to strings using their object ID.
+				usertypeDefinition.set(sol::meta_function::to_string, &TES3::BaseObject::getObjectID);
+
 				// Basic property binding.
 				usertypeDefinition.set("objectType", sol::readonly_property(&TES3::BaseObject::objectType));
 				usertypeDefinition.set("objectFlags", sol::readonly_property(&TES3::BaseObject::objectFlags));
@@ -31,7 +34,7 @@ namespace mwse {
 				//! TODO
 
 				// Functions exposed as read-only properties.
-				usertypeDefinition.set("id", sol::readonly_property(&TES3::Object::getObjectID));
+				usertypeDefinition.set("id", sol::readonly_property(&TES3::BaseObject::getObjectID));
 				usertypeDefinition.set("sourceMod", sol::readonly_property([](TES3::BaseObject& self) { return self.sourceMod->fileName; }));
 
 				// Finish up our usertype.
@@ -44,7 +47,7 @@ namespace mwse {
 				auto usertypeDefinition = state.create_simple_usertype<TES3::Object>();
 				usertypeDefinition.set("new", sol::no_constructor);
 
-				// Inherited structures.
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 
 				// Indirect bindings to unions and arrays.
@@ -66,7 +69,7 @@ namespace mwse {
 				auto usertypeDefinition = state.create_simple_usertype<TES3::PhysicalObject>();
 				usertypeDefinition.set("new", sol::no_constructor);
 
-				// Inherited structures.
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Object, TES3::BaseObject>());
 
 				// Basic property binding.
