@@ -9,30 +9,23 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Activator() {
-			LuaManager::getInstance().getState().new_usertype<TES3::Activator>("TES3Activator",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Get our lua state.
+			sol::state& state = LuaManager::getInstance().getState();
 
-				sol::base_classes, sol::bases<TES3::BaseObject>(),
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::Activator>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::meta_function::to_string, &TES3::Activator::getObjectID,
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+			// Functions exposed as read-only properties.
+			usertypeDefinition.set("model", sol::property(&TES3::Activator::getModelPath, &TES3::Activator::setModelPath));
+			usertypeDefinition.set("name", sol::property(&TES3::Activator::getName, &TES3::Activator::setName));
+			usertypeDefinition.set("script", sol::property(&TES3::Activator::getScript));
 
-				"objectType", sol::readonly_property(&TES3::Activator::objectType),
-
-				"boundingBox", sol::readonly_property(&TES3::Activator::boundingBox),
-
-				"id", sol::readonly_property(&TES3::Activator::getObjectID),
-				"name", sol::property(&TES3::Activator::getName, &TES3::Activator::setName),
-
-				"model", sol::readonly_property(&TES3::Activator::getModelPath),
-
-				"script", sol::readonly_property(&TES3::Activator::getScript)
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("TES3Activator", usertypeDefinition);
 		}
 	}
 }
