@@ -119,7 +119,7 @@ namespace mwse {
 				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistShock] = value; }
 			));
 			mobileActorUsertype.set("resistCommonDisease", sol::property(
-w				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistCommonDisease]; },
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistCommonDisease]; },
 				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistCommonDisease] = value; }
 			));
 			mobileActorUsertype.set("resistBlightDisease", sol::property(
