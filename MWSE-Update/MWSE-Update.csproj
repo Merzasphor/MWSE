@@ -35,6 +35,9 @@
   <PropertyGroup>
     <StartupObject>MWSE.AutoUpdater</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>mwse-updater.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,6 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="mwse-updater.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
