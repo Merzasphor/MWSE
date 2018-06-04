@@ -5,43 +5,32 @@
 #include "LuaUtil.h"
 
 #include "TES3MobileProjectile.h"
-#include "TES3Reference.h"
+#include "TES3MobileActor.h"
 #include "TES3Weapon.h"
 
 namespace mwse {
 	namespace lua {
 		void bindTES3MobileProjectile() {
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::MobileProjectile>("TES3MobileProjectile",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto mobileProjectileUsertype = state.create_simple_usertype<TES3::MobileProjectile>();
+			mobileProjectileUsertype.set("new", sol::no_constructor);
 
-				//
-				// Properties.
-				//
+			// We inherit MobileObject.
+			mobileProjectileUsertype.set(sol::base_classes, sol::bases<TES3::MobileObject>());
 
-				"objectType", &TES3::MobileProjectile::objectType,
+			// Basic property binding.
+			mobileProjectileUsertype.set("disposition", &TES3::MobileProjectile::disposition);
+			mobileProjectileUsertype.set("expire", &TES3::MobileProjectile::flagExpire);
 
-				"movementFlags", &TES3::MobileProjectile::movementFlags,
-				"prevMovementFlags", &TES3::MobileProjectile::prevMovementFlags,
-				"actorFlags", &TES3::MobileProjectile::actorFlags,
-				"flagExpire", &TES3::MobileProjectile::flagExpire,
+			// Access to other objects that need to be packaged.
+			mobileProjectileUsertype.set("firingMobile", sol::readonly_property([](TES3::MobileProjectile& self) { return makeLuaObject(self.firingActor); }));
+			mobileProjectileUsertype.set("firingWeapon", sol::readonly_property([](TES3::MobileProjectile& self) { return makeLuaObject(self.firingWeapon); }));
 
-				"reference", sol::readonly_property(&TES3::MobileProjectile::reference),
-				"firingMobile", sol::readonly_property([](TES3::MobileProjectile& self) { return mwse::lua::makeLuaObject(self.firingActor); }),
-				"firingWeapon", sol::readonly_property(&TES3::MobileProjectile::firingWeapon),
-
-				"cellX", sol::readonly_property(&TES3::MobileProjectile::cellX),
-				"cellY", sol::readonly_property(&TES3::MobileProjectile::cellY),
-
-				"height", &TES3::MobileProjectile::height,
-				"boundSize", &TES3::MobileProjectile::boundSize,
-				"velocity", &TES3::MobileProjectile::velocity,
-				"impulseVelocity", &TES3::MobileProjectile::impulseVelocity,
-				"position", &TES3::MobileProjectile::position
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("TES3MobileProjectile", mobileProjectileUsertype);
 		}
 	}
 }
