@@ -94,30 +94,102 @@ namespace mwse {
 			mobileActorUsertype.set("luck", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::Attribute::Luck]; }));
 
 			// Provide some friendly exposure to effect attributes.
-			mobileActorUsertype.set("attackBonus", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::AttackBonus]; }));
-			mobileActorUsertype.set("sanctuary", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::Sanctuary]; }));
-			mobileActorUsertype.set("resistMagicka", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::ResistMagicka]; }));
-			mobileActorUsertype.set("resistFire", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::ResistFire]; }));
-			mobileActorUsertype.set("resistFrost", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::ResistFrost]; }));
-			mobileActorUsertype.set("resistShock", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::ResistShock]; }));
-			mobileActorUsertype.set("resistCommonDisease", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::ResistCommonDisease]; }));
-			mobileActorUsertype.set("resistBlightDisease", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::ResistBlightDisease]; }));
-			mobileActorUsertype.set("resistCorprus", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::ResistCorprus]; }));
-			mobileActorUsertype.set("resistPoison", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::ResistPoison]; }));
-			mobileActorUsertype.set("resistParalysis", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::ResistParalysis]; }));
-			mobileActorUsertype.set("chameleon", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::Chameleon]; }));
-			mobileActorUsertype.set("resistNormalWeapons", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::ResistNormalWeapons]; }));
-			mobileActorUsertype.set("waterBreathing", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::WaterBreathing]; }));
-			mobileActorUsertype.set("waterWalking", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::WaterWalking]; }));
-			mobileActorUsertype.set("swiftSwim", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::SwiftSwim]; }));
-			mobileActorUsertype.set("jump", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::Jump]; }));
-			mobileActorUsertype.set("levitate", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::Levitate]; }));
-			mobileActorUsertype.set("shield", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::Shield]; }));
-			mobileActorUsertype.set("sound", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::Sound]; }));
-			mobileActorUsertype.set("silence", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::Silence]; }));
-			mobileActorUsertype.set("blind", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::Blind]; }));
-			mobileActorUsertype.set("paralyze", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::Paralyze]; }));
-			mobileActorUsertype.set("invisibility", sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::EffectAttribute::Invisibility]; }));
+			mobileActorUsertype.set("attackBonus", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::AttackBonus]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::AttackBonus] = value; }
+			));
+			mobileActorUsertype.set("sanctuary", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Sanctuary]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Sanctuary] = value; }
+			));
+			mobileActorUsertype.set("resistMagicka", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistMagicka]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistMagicka] = value; }
+			));
+			mobileActorUsertype.set("resistFire", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistFire]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistFire] = value; }
+			));
+			mobileActorUsertype.set("resistFrost", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistFrost]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistFrost] = value; }
+			));
+			mobileActorUsertype.set("resistShock", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistShock]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistShock] = value; }
+			));
+			mobileActorUsertype.set("resistCommonDisease", sol::property(
+w				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistCommonDisease]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistCommonDisease] = value; }
+			));
+			mobileActorUsertype.set("resistBlightDisease", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistBlightDisease]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistBlightDisease] = value; }
+			));
+			mobileActorUsertype.set("resistCorprus", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistCorprus]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistCorprus] = value; }
+			));
+			mobileActorUsertype.set("resistPoison", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistPoison]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistPoison] = value; }
+			));
+			mobileActorUsertype.set("resistParalysis", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistParalysis]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistParalysis] = value; }
+			));
+			mobileActorUsertype.set("chameleon", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Chameleon]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Chameleon] = value; }
+			));
+			mobileActorUsertype.set("resistNormalWeapons", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistNormalWeapons]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistNormalWeapons] = value; }
+			));
+			mobileActorUsertype.set("waterBreathing", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::WaterBreathing]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::WaterBreathing] = value; }
+			));
+			mobileActorUsertype.set("waterWalking", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::WaterWalking]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::WaterWalking] = value; }
+			));
+			mobileActorUsertype.set("swiftSwim", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::SwiftSwim]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::SwiftSwim] = value; }
+			));
+			mobileActorUsertype.set("jump", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Jump]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Jump] = value; }
+			));
+			mobileActorUsertype.set("levitate", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Levitate]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Levitate] = value; }
+			));
+			mobileActorUsertype.set("shield", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Shield]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Shield] = value; }
+			));
+			mobileActorUsertype.set("sound", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Sound]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Sound] = value; }
+			));
+			mobileActorUsertype.set("silence", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Silence]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Silence] = value; }
+			));
+			mobileActorUsertype.set("blind", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Blind]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Blind] = value; }
+			));
+			mobileActorUsertype.set("paralyze", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Paralyze]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Paralyze] = value; }
+			));
+			mobileActorUsertype.set("invisibility", sol::property(
+				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Invisibility]; },
+				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Invisibility] = value; }
+			));
 
 			// Basic function binding.
 			mobileActorUsertype.set("startCombat", &TES3::MobileActor::startCombat);
