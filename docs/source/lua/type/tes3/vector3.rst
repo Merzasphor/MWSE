@@ -8,16 +8,16 @@ This structure is a collection of three floating-point numbers. It is often used
 Properties
 --------------------------------------------------------
     
-`length <vector3/length.html>`_
+`length <vector3/length.html>`_ (`Number`_)
     The length of the vector.
 
-`x <vector3/x.html>`_
+`x <vector3/x.html>`_ (`Number`_)
     The first value in the vector.
     
-`y <vector3/y.html>`_
+`y <vector3/y.html>`_ (`Number`_)
     The second value in the vector.
     
-`z <vector3/z.html>`_
+`z <vector3/z.html>`_ (`Number`_)
     The third value in the vector.
 
 
@@ -59,3 +59,6 @@ tostring
 
         -- Print the player's position.
         mwse.log("Player position: %s", tes3.getPlayerRef().position)
+
+
+.. _`Number`: ../lua/number.html
