@@ -251,7 +251,7 @@ namespace TES3 {
 		void * resolveInternalIDs; // 0xE0
 		void * unknown_0xE4;
 		unsigned char (__thiscall * getAutoCalc)(BaseObject*); // 0xE8
-		unsigned char(__thiscall * setAutoCalc)(BaseObject*, unsigned char); // 0xEC
+		void (__thiscall * setAutoCalc)(BaseObject*, unsigned char); // 0xEC
 		void * unknown_0xF0;
 		void * unknown_0xF4;
 		void * unknown_0xF8;
@@ -345,8 +345,8 @@ namespace TES3 {
 		Enchantment * getEnchantment();
 		Enchantment * setEnchantment(Enchantment*);
 		AIConfig * getAIConfig();
-		unsigned char getAutoCalc();
-		unsigned char setAutoCalc(unsigned char);
+		bool getAutoCalc();
+		void setAutoCalc(bool);
 		char* setModelPath(const char*);
 		char* setName(const char*);
 	};

@@ -153,12 +153,12 @@ namespace TES3 {
 		return vTable.object->getAIConfig(this);
 	}
 
-	unsigned char Object::getAutoCalc() {
+	bool Object::getAutoCalc() {
 		return vTable.object->getAutoCalc(this);
 	}
 
-	unsigned char Object::setAutoCalc(unsigned char value) {
-		return vTable.object->setAutoCalc(this, value);
+	void Object::setAutoCalc(bool value) {
+		vTable.object->setAutoCalc(this, value);
 	}
 
 	char* Object::setModelPath(const char* path) {
