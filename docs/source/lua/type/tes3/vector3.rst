@@ -7,6 +7,14 @@ This structure is a collection of three floating-point numbers. It is often used
 
 Properties
 --------------------------------------------------------
+
+.. toctree::
+   :hidden:
+
+   vector3/length
+   vector3/x
+   vector3/y
+   vector3/z
     
 `length <vector3/length.html>`_ (`Number`_)
     The length of the vector.
@@ -23,6 +31,15 @@ Properties
 
 Functions
 --------------------------------------------------------
+
+.. toctree::
+   :hidden:
+
+   vector3/cross
+   vector3/distance
+   vector3/dot
+   vector3/heightDifference
+   vector3/negate
 
 `cross <vector3/cross.html>`_
     Calculates the cross-product with another vector.
