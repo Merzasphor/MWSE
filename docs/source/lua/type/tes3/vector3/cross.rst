@@ -17,9 +17,8 @@ Return Value
 Parameters
 --------------------------------------------------------
 
-secondVector
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Vector3`_. The second vector to take the cross product with.
+Operand (`Vector3`_)
+    The second vector to take the cross product with.
 
 
 Example

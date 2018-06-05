@@ -17,9 +17,8 @@ Return Value
 Parameters
 --------------------------------------------------------
 
-secondVector
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Vector3`_. The second vector to get the vertical difference with.
+Operand (`Vector3`_)
+    The second vector to get the difference with.
 
 
 Example
