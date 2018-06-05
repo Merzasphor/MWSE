@@ -25,7 +25,7 @@ namespace mwse {
 			usertypeDefinition.set("script", sol::property(&TES3::Activator::getScript));
 
 			// Finish up our usertype.
-			state.set_usertype("TES3Activator", usertypeDefinition);
+			state.set_usertype("tes3activator", usertypeDefinition);
 		}
 	}
 }

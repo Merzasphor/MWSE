@@ -175,7 +175,7 @@ namespace mwse {
 			usertypeDefinition.set("script", sol::property(&TES3::Alchemy::getScript));
 
 			// Finish up our usertype.
-			state.set_usertype("TES3Alchemy", usertypeDefinition);
+			state.set_usertype("tes3alchemy", usertypeDefinition);
 		}
 	}
 }

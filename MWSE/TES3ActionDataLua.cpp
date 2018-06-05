@@ -35,7 +35,7 @@ namespace mwse {
 			usertypeDefinition.set("target", sol::readonly_property([](TES3::ActionData& self) { return makeLuaObject(self.target); }));
 
 			// Finish up our usertype.
-			state.set_usertype("TES3ActionData", usertypeDefinition);
+			state.set_usertype("tes3actionData", usertypeDefinition);
 		}
 	}
 }
