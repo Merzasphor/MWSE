@@ -10,44 +10,39 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Armor() {
-			LuaManager::getInstance().getState().new_usertype<TES3::Armor>("TES3Armor",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Get our lua state.
+			sol::state& state = LuaManager::getInstance().getState();
 
-				sol::base_classes, sol::bases<TES3::Item, TES3::BaseObject>(),
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::Armor>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::meta_function::to_string, &TES3::Armor::getObjectID,
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+			// Basic property binding.
+			usertypeDefinition.set("armorRating", &TES3::Armor::armorRating);
+			usertypeDefinition.set("enchantCapacity", &TES3::Armor::enchantCapacity);
+			usertypeDefinition.set("slot", &TES3::Armor::slot);
+			usertypeDefinition.set("value", &TES3::Armor::value);
+			usertypeDefinition.set("weight", &TES3::Armor::weight);
 
-				"objectType", sol::readonly_property(&TES3::Armor::objectType),
+			// Functions exposed as properties.
+			usertypeDefinition.set("enchantment", sol::property(&TES3::Armor::getEnchantment, &TES3::Armor::setEnchantment));
+			usertypeDefinition.set("health", sol::property(&TES3::Armor::getDurability, &TES3::Armor::setDurability));
+			usertypeDefinition.set("icon", sol::property(
+				&TES3::Armor::getIconPath,
+				[](TES3::Armor& self, const char* value) { if (strlen(value) < 32) strcpy(self.icon, value); }
+			));
+			usertypeDefinition.set("isLeftPart", sol::property(&TES3::Armor::isLeftPartOfPair));
+			usertypeDefinition.set("model", sol::property(&TES3::Armor::getModelPath, &TES3::Armor::setModelPath));
+			usertypeDefinition.set("name", sol::property(&TES3::Armor::getName, &TES3::Armor::setName));
+			usertypeDefinition.set("script", sol::property(&TES3::Armor::getScript));
+			usertypeDefinition.set("slotName", sol::property(&TES3::Armor::getTypeName));
+			usertypeDefinition.set("weightClass", sol::property(&TES3::Armor::getWeightClass));
 
-				"boundingBox", &TES3::Armor::boundingBox,
-
-				"id", sol::readonly_property(&TES3::Armor::getObjectID),
-				"name", sol::property(&TES3::Armor::getName, &TES3::Armor::setName),
-
-				"icon", sol::readonly_property(&TES3::Armor::getIconPath),
-				"model", sol::readonly_property(&TES3::Armor::getModelPath),
-
-				"slot", sol::readonly_property(&TES3::Armor::getType),
-				"slotName", sol::readonly_property(&TES3::Armor::getTypeName),
-				"isLeftPart", sol::readonly_property(&TES3::Armor::isLeftPartOfPair),
-
-				"weight", sol::readonly_property(&TES3::Armor::getWeight),
-				"weightClass", sol::readonly_property(&TES3::Armor::getWeightClass),
-				"value", sol::readonly_property(&TES3::Armor::getValue),
-				"health", sol::readonly_property(&TES3::Armor::getDurability),
-				"armorRating", &TES3::Armor::armorRating,
-
-				"enchantCapacity", &TES3::Armor::enchantCapacity,
-				"enchantment", sol::property(&TES3::Armor::getEnchantment, &TES3::Armor::setEnchantment),
-
-				"script", sol::readonly_property(&TES3::Armor::getScript)
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("tes3armor", usertypeDefinition);
 		}
 	}
 }

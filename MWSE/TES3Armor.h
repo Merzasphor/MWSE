@@ -36,7 +36,7 @@ namespace TES3 {
 		int maxCondition; // 0xB4
 		int enchantCapacity; // 0xB8
 		int armorRating; // 0xBC
-		void * enchantment; // 0xC0
+		Enchantment * enchantment; // 0xC0
 
 		//
 		// Other related this-call functions.
