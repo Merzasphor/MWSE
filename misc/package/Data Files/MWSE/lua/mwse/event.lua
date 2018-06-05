@@ -70,9 +70,10 @@ function this.unregister(eventType, callback, options)
 	local options = options or {}
 
 	local callbacks = getEventTable(eventType, options.filter)
-	-- if (not table.removevalue(callbacks, callback)) then
-	-- 	print("event.register: Attempted to unregister '" .. eventType .. "' event callback that wasn't registered.")
-	-- 	print(debug.traceback())
+	local removed = table.removevalue(callbacks, callback)
+	-- if (not removed) then
+		-- print("event.register: Attempted to unregister '" .. eventType .. "' event callback that wasn't registered.")
+		-- print(debug.traceback())
 	-- end
 end
 
