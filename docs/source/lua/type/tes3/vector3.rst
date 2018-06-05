@@ -33,4 +33,33 @@ Functions
 Meta-Functions
 --------------------------------------------------------
 
-Vector3 supports ``-``, ``+``, ``#``, and ``tostring`` meta functions.
+add
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Two vectors can be added together using the ``+`` operator.
+
+
+length
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``#`` operator can be used to get the `length`_ of the vector.
+
+
+subtract
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Two vectors can be subtracted from one another using the ``-`` operator.
+
+
+tostring
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Vectors can be serialized into a string.
+
+.. code-block:: lua
+
+    -- Print the player's position.
+    mwse.log("Player position: %s", tes3.getPlayerRef().position)
+
+
+.. _`length`: vector3/length.html
