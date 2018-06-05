@@ -10,17 +10,21 @@ Inheriting structures: `Object`_, `Physical Object`_, `Alchemy`_, `Armor`_, `Ref
 Properties
 --------------------------------------------------------
 
-id
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`String`_. Read-only. The object's unique id.
+.. toctree::
+   :hidden:
 
-objectType
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Number`_. Read-only. The object's `Object Type`_.
+   baseObject/id
+   baseObject/objectType
+   baseObject/sourceMod
+    
+`id <baseObject/id.html>`_ (`String`_)
+    The object's unique ID.
 
-sourceMod
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`String`_. Read-only. The filename of the last ESM or ESP file that modified this object.
+`objectType <baseObject/objectType.html>`_ (`Number`_)
+    The object's type.
+    
+`sourceMod <baseObject/sourceMod.html>`_ (`String`_)
+    The mod that this object is from.
 
 
 .. _`Boolean`: ../lua/boolean.html
@@ -33,5 +37,3 @@ sourceMod
 .. _`Object`: object.html
 .. _`Physical Object`: physicalObject.html
 .. _`Reference`: reference.html
-
-.. _`Object Type`: ../../../mwscript/references.html#object-types
