@@ -3,6 +3,8 @@
 #include "NIDefines.h"
 #include "TES3Collections.h"
 
+#include <string>
+
 namespace TES3 {
 
 	//
@@ -348,6 +350,7 @@ namespace TES3 {
 		bool getAutoCalc();
 		void setAutoCalc(bool);
 		char* setModelPath(const char*);
+		void setModelPathString(std::string);
 		char* setName(const char*);
 	};
 	static_assert(sizeof(Object) == 0x28, "TES3::Object failed size validation");

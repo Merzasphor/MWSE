@@ -165,6 +165,10 @@ namespace TES3 {
 		return vTable.object->setModelPath(this, path);
 	}
 
+	void Object::setModelPathString(std::string path) {
+		vTable.object->setModelPath(this, path.c_str());
+	}
+
 	char* Object::setName(const char* name) {
 		return vTable.object->setName(this, name);
 	}

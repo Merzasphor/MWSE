@@ -20,7 +20,7 @@ namespace mwse {
 			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
 			// Functions exposed as properties.
-			usertypeDefinition.set("model", sol::property(&TES3::Activator::getModelPath, &TES3::Activator::setModelPath));
+			usertypeDefinition.set("model", sol::property(&TES3::Activator::getModelPath, &TES3::Activator::setModelPathString));
 			usertypeDefinition.set("name", sol::property(&TES3::Activator::getName, &TES3::Activator::setName));
 			usertypeDefinition.set("script", sol::property(&TES3::Activator::getScript));
 

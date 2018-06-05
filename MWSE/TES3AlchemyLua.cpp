@@ -169,7 +169,7 @@ namespace mwse {
 				&TES3::Alchemy::getIconPath,
 				[](TES3::Alchemy& self, std::string value) { tes3::setDataString(&self.icon, value.c_str()); }
 			));
-			usertypeDefinition.set("model", sol::property(&TES3::Alchemy::getModelPath, &TES3::Alchemy::setModelPath));
+			usertypeDefinition.set("model", sol::property(&TES3::Alchemy::getModelPath, &TES3::Alchemy::setModelPathString));
 			usertypeDefinition.set("name", sol::property(&TES3::Alchemy::getName, &TES3::Alchemy::setName));
 			usertypeDefinition.set("script", sol::property(&TES3::Alchemy::getScript));
 
