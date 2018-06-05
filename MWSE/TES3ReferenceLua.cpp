@@ -113,24 +113,7 @@ namespace mwse {
 
 				"sceneNode", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.sceneNode); }),
 
-				"position", sol::property(
-					[](TES3::Reference& self) { return &self.position; },
-					[](TES3::Reference& self, sol::stack_object value)
-			{
-				// Is it a vector?
-				if (value.is<TES3::Vector3*>()) {
-					self.setPosition(value.as<TES3::Vector3*>());
-				}
-				// Allow a simple table to be provided.
-				else if (value.is<sol::table>()) {
-					// Get the values from the table.
-					sol::table positionTable = value.as<sol::table>();
-					if (positionTable.size() == 3) {
-						self.setPosition(positionTable[1], positionTable[2], positionTable[3]);
-					}
-				}
-			}
-					),
+				"position", sol::property(&TES3::Reference::position, &TES3::Reference::setPositionFromLua),
 				//"orientation", &TES3::Reference::orientation,
 
 				"isRespawn", sol::readonly_property(&TES3::Reference::isRespawn),

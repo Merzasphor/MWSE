@@ -55,6 +55,21 @@ namespace TES3 {
 		return reinterpret_cast<ItemDataAttachment* (__thiscall *)(Reference*, TES3::ItemData*)>(TES3_Reference_addItemDataAttachment)(this, data);
 	}
 
+	void Reference::setPositionFromLua(sol::stack_object value) {
+		// Is it a vector?
+		if (value.is<TES3::Vector3*>()) {
+			setPosition(value.as<TES3::Vector3*>());
+		}
+		// Allow a simple table to be provided.
+		else if (value.is<sol::table>()) {
+			// Get the values from the table.
+			sol::table positionTable = value.as<sol::table>();
+			if (positionTable.size() == 3) {
+				setPosition(positionTable[1], positionTable[2], positionTable[3]);
+			}
+		}
+	}
+
 	void Reference::setPosition(float x, float y, float z) {
 		sceneNode->localTranslate.x = x;
 		sceneNode->localTranslate.y = y;

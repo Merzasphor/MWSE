@@ -48,6 +48,8 @@ namespace TES3 {
 
 		sol::object getBaseObject();
 
+		void setPositionFromLua(sol::stack_object value);
+
 		// Return a table (or nil) of attachments for this object.
 		sol::object getAttachments();
 

@@ -227,6 +227,26 @@ namespace mwse {
 			return NULL;
 		}
 
+		void setVectorFromLua(TES3::Vector3* vector, sol::stack_object value) {
+			// Is it a vector?
+			if (value.is<TES3::Vector3*>()) {
+				TES3::Vector3 * newVector = value.as<TES3::Vector3*>();
+				vector->x = newVector->x;
+				vector->y = newVector->y;
+				vector->z = newVector->z;
+			}
+			// Allow a simple table to be provided.
+			else if (value.is<sol::table>()) {
+				// Get the values from the table.
+				sol::table table = value.as<sol::table>();
+				if (table.size() == 3) {
+					vector->x = table[1];
+					vector->y = table[2];
+					vector->z = table[3];
+				}
+			}
+		}
+
 		sol::object makeLuaObject(TES3::BaseObject* object) {
 			if (object == NULL) {
 				return sol::nil;

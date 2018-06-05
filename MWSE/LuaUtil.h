@@ -56,6 +56,8 @@ namespace mwse {
 		TES3::Sound* getOptionalParamSound(sol::optional<sol::table> maybeParams, const char* key);
 		TES3::Vector3* getOptionalParamVector3(sol::optional<sol::table> maybeParams, const char* key);
 
+		void setVectorFromLua(TES3::Vector3*, sol::stack_object);
+
 		sol::object makeLuaObject(TES3::BaseObject* object);
 		sol::object makeLuaObject(TES3::MobileObject* object);
 		sol::object makeLuaObject(NI::Object* object);

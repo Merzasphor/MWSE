@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sol_forward.hpp"
+
 #include "TES3Defines.h"
 
 #include "TES3Object.h"
@@ -207,6 +209,14 @@ namespace TES3 {
 		signed char onObjectCollision(int hitReferenceIndex, signed char flag);
 		signed char onTerrainCollision(int hitReferenceIndex);
 		signed char onWaterCollision(int hitReferenceIndex);
+
+		//
+		// Lua interface functions.
+		//
+
+		void setImpulseVelocityFromLua(sol::stack_object);
+		void setPositionFromLua(sol::stack_object);
+		void setVelocityFromLua(sol::stack_object);
 
 	};
 	static_assert(sizeof(MobileObject) == 0x60, "TES3::MobileObject failed size validation");

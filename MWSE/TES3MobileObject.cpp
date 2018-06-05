@@ -1,6 +1,9 @@
 #include "TES3MobileObject.h"
 
 #include "LuaManager.h"
+#include "LuaUtil.h"
+
+#include "TES3Reference.h"
 
 #define TES3_MobileObject_onActorCollision 0x5615A0
 #define TES3_MobileObject_onObjectCollision 0x5615C0
@@ -58,5 +61,25 @@ namespace TES3 {
 		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
 
 		return result;
+	}
+
+	void MobileObject::setImpulseVelocityFromLua(sol::stack_object value) {
+		// Use our util class to support vectors or a table.
+		mwse::lua::setVectorFromLua(&impulseVelocity, value);
+	}
+
+	void MobileObject::setPositionFromLua(sol::stack_object value) {
+		// Use our util class to support vectors or a table.
+		mwse::lua::setVectorFromLua(&position, value);
+
+		// Update the reference if possible.
+		if (reference) {
+			reference->setPositionFromLua(value);
+		}
+	}
+
+	void MobileObject::setVelocityFromLua(sol::stack_object value) {
+		// Use our util class to support vectors or a table.
+		mwse::lua::setVectorFromLua(&velocity, value);
 	}
 }
