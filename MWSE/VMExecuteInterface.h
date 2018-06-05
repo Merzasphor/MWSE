@@ -22,7 +22,7 @@
 
 #include "mwseString.h"
 
-#include "TES3Object.h"
+#include "TES3Defines.h"
 
 using namespace mwse;
 

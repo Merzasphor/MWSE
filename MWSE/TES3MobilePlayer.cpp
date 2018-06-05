@@ -1,11 +1,13 @@
 #include "TES3MobilePlayer.h"
 
 #include "sol.hpp"
+
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
 #include "Log.h"
 
+#include "TES3Skill.h"
 #include "TES3PlayerAnimationData.h"
 
 #define TES3_MobilePlayer_exerciseSkill 0x56A5D0

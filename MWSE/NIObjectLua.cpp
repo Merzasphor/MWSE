@@ -1,10 +1,15 @@
 #include "NIObjectLua.h"
 
 #include "sol.hpp"
+
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "NIDefines.h"
+#include "NIAVObject.h"
 #include "NINode.h"
+#include "NIObject.h"
+#include "NIObjectNET.h"
 #include "NIRTTI.h"
 
 namespace mwse {

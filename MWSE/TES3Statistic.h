@@ -1,8 +1,6 @@
 #pragma once
 
-#include "TES3Object.h"
-
-#include "sol_forward.hpp"
+#include "TES3Defines.h"
 
 namespace TES3 {
 	struct Statistic_vTable {

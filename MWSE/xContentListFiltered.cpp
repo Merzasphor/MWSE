@@ -23,7 +23,9 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+
 #include "TES3Collections.h"
+#include "TES3Inventory.h"
 
 using namespace mwse;
 

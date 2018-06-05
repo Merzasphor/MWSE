@@ -18,8 +18,10 @@
 
 #include "TES3Actor.h"
 #include "TES3Cell.h"
+#include "TES3DataHandler.h"
 #include "TES3Game.h"
 #include "TES3GameSetting.h"
+#include "TES3GlobalVariable.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
 #include "TES3Script.h"

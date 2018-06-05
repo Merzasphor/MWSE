@@ -2,10 +2,9 @@
 
 #include "sol_forward.hpp"
 
-#include "TES3Object.h"
+#include "TES3Defines.h"
+
 #include "TES3Actor.h"
-#include "TES3AIConfig.h"
-#include "TES3SpellList.h"
 
 namespace TES3 {
 	struct Creature : Actor {

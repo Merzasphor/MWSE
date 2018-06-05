@@ -5,6 +5,7 @@
 #include "Log.h"
 
 #include "TES3Util.h"
+#include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
 #include "TES3Script.h"
 #include "TES3MobilePlayer.h"

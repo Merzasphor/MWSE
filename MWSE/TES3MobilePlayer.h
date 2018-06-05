@@ -1,8 +1,9 @@
 #pragma once
 
-#include "TES3Object.h"
-#include "TES3GlobalVariable.h"
+#include "TES3Defines.h"
+
 #include "TES3MobileNPC.h"
+#include "TES3Vectors.h"
 
 namespace TES3 {
 	struct MobilePlayer : MobileNPC {

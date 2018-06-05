@@ -1,5 +1,7 @@
 #include "NIObject.h"
 
+#include "NIDefines.h"
+
 #include "NIRTTI.h"
 
 #include <cstring>

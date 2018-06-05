@@ -1,6 +1,6 @@
 #pragma once
 
-#include "TES3Object.h"
+#include "TES3Defines.h"
 
 namespace mwse {
 	namespace tes3 {

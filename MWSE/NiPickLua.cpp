@@ -1,13 +1,18 @@
 #include "NIPickLua.h"
 
 #include "sol.hpp"
+
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
-#include "TES3Reference.h"
+#include "NIUtil.h"
+#include "NIDefines.h"
 #include "NINode.h"
 #include "NIPick.h"
-#include "NIUtil.h"
+#include "NIRTTI.h"
+
+#include "TES3Defines.h"
+#include "TES3Reference.h"
 
 namespace mwse {
 	namespace lua {

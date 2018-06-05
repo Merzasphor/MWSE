@@ -276,9 +276,6 @@
     <ClInclude Include="TES3Armor.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Item</Filter>
     </ClInclude>
-    <ClInclude Include="TES3WearablePart.h">
-      <Filter>Header Files\DataAdapters\TES3\Objects\Item</Filter>
-    </ClInclude>
     <ClInclude Include="TES3Clothing.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Item</Filter>
     </ClInclude>
@@ -416,12 +413,6 @@
     </ClInclude>
     <ClInclude Include="TES3Door.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Other</Filter>
-    </ClInclude>
-    <ClInclude Include="TES3DataHandler.h">
-      <Filter>Header Files\DataAdapters\TES3</Filter>
-    </ClInclude>
-    <ClInclude Include="TES3Game.h">
-      <Filter>Header Files\DataAdapters\TES3</Filter>
     </ClInclude>
     <ClInclude Include="TES3Race.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Actor\Data</Filter>
@@ -758,6 +749,18 @@
     </ClInclude>
     <ClInclude Include="TES3GlobalVariableLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Game.h">
+      <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3DataHandler.h">
+      <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Defines.h">
+      <Filter>Header Files\DataAdapters\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3WearablePart.h">
+      <Filter>Header Files\DataAdapters\TES3\Objects\Other</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

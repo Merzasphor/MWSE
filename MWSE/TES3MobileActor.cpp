@@ -1,6 +1,7 @@
 #include "TES3MobileActor.h"
 
 #include "sol.hpp"
+
 #include "LuaManager.h"
 #include "LuaUtil.h"
 

@@ -28,6 +28,7 @@
 #include "TES3Enchantment.h"
 #include "TES3Alchemy.h"
 #include "TES3Skill.h"
+#include "TES3Spell.h"
 
 using namespace mwse;
 

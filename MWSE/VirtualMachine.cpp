@@ -33,6 +33,7 @@
 #include "TES3GlobalVariable.h"
 #include "TES3Game.h"
 #include "TES3MobilePlayer.h"
+#include "TES3Reference.h"
 #include "TES3Script.h"
 #include "TES3WorldController.h"
 

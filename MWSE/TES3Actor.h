@@ -2,8 +2,9 @@
 
 #include "sol_forward.hpp"
 
+#include "TES3Defines.h"
+
 #include "TES3Object.h"
-#include "TES3Collections.h"
 #include "TES3Inventory.h"
 
 namespace TES3 {

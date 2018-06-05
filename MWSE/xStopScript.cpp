@@ -27,6 +27,8 @@
 #include "VirtualMachine.h"
 #include "ScriptUtil.h"
 
+#include "TES3Script.h"
+
 using namespace mwse;
 
 namespace mwse

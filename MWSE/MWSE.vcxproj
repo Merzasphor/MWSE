@@ -44,6 +44,7 @@
     <ClInclude Include="ScriptUtilLua.h" />
     <ClInclude Include="sol.hpp" />
     <ClInclude Include="sol_forward.hpp" />
+    <ClInclude Include="TES3Defines.h" />
     <ClInclude Include="TES3GlobalVariableLua.h" />
     <ClInclude Include="TES3LeveledList.h" />
     <ClInclude Include="TES3LeveledListLua.h" />

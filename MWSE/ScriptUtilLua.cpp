@@ -9,6 +9,7 @@
 
 #include "TES3Reference.h"
 #include "TES3Script.h"
+#include "TES3Spell.h"
 
 namespace mwse {
 	namespace lua {

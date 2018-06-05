@@ -1,7 +1,9 @@
 #pragma once
 
-#include "TES3Object.h"
+#include "TES3Defines.h"
+
 #include "TES3MagicEffect.h"
+#include "TES3Object.h"
 
 namespace TES3 {
 	namespace EnchantmentCastType {

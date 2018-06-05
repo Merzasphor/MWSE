@@ -1,9 +1,11 @@
 #include "NISwitchNode.h"
 
 #include "sol.hpp"
+
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "NIDefines.h"
 #include "NINode.h"
 #include "NIRTTI.h"
 

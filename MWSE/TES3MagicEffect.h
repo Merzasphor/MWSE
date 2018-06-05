@@ -1,5 +1,7 @@
 #pragma once
 
+#include "TES3Object.h"
+
 namespace TES3 {
 	namespace EffectID {
 		enum EffectID {

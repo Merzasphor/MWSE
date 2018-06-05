@@ -24,7 +24,8 @@
 #include "mwOffsets.h"
 #include "mwseString.h"
 #include "OpCodes.h"
-#include "TES3Object.h"
+
+#include "TES3Defines.h"
 
 #undef PlaySound
 

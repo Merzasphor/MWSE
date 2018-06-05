@@ -1,12 +1,15 @@
 #include "NICameraLua.h"
 
 #include "sol.hpp"
+
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
 #include "NICamera.h"
 #include "NINode.h"
 #include "NIRTTI.h"
+
+#include "TES3Vectors.h"
 
 namespace mwse {
 	namespace lua {

@@ -13,6 +13,7 @@
 #include "TES3MobileProjectile.h"
 #include "TES3Reference.h"
 #include "TES3UIBlock.h"
+#include "TES3Spell.h"
 #include "TES3Weapon.h"
 #include "TES3WorldController.h"
 

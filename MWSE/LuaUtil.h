@@ -2,7 +2,9 @@
 
 #include "sol.hpp"
 
-#include "TES3Object.h"
+#include "NIDefines.h"
+
+#include "TES3Defines.h"
 
 #include "TES3Util.h"
 

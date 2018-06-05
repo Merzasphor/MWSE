@@ -6,7 +6,7 @@
 
 #include "NINode.h"
 
-#include "TES3Object.h"
+#include "TES3Defines.h"
 #include "TES3Cell.h"
 #include "TES3GameFile.h"
 #include "TES3ReferenceList.h"

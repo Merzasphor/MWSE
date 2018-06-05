@@ -2,6 +2,8 @@
 
 #include "TES3Util.h"
 
+#include "TES3Spell.h"
+
 #define TES3_SpellList_addByObject 0x4AC880
 #define TES3_SpellList_addById 0x4AC750
 #define TES3_SpellList_removeByObject 0x4ACBE0

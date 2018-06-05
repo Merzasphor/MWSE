@@ -1,6 +1,7 @@
 #pragma once
 
-#include "TES3Object.h"
+#include "TES3Defines.h"
+
 #include "TES3MobileActor.h"
 #include "TES3Statistic.h"
 

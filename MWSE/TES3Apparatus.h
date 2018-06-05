@@ -1,6 +1,9 @@
 #pragma once
 
-#include "TES3Object.h"
+#include "TES3Defines.h"
+
+#include "TES3Collections.h"
+#include "TES3Item.h"
 
 namespace TES3 {
 	namespace ApparatusType {

@@ -2,6 +2,8 @@
 
 #include "TES3ActorAnimationData.h"
 
+#include "TES3Vectors.h"
+
 namespace TES3 {
 	struct PlayerAnimationData : ActorAnimationData {
 		int unknown_0xD4;

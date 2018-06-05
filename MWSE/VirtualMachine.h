@@ -20,12 +20,12 @@
 
 #pragma once
 
-#include "TES3Script.h"
-#include "TES3Reference.h"
 #include "mwAdapter.h"
 #include "VMHookInterface.h"
 #include "VMExecuteInterface.h"
 #include "mwseString.h"
+
+#include "TES3Defines.h"
 
 using namespace mwse;
 

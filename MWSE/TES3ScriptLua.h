@@ -5,7 +5,7 @@
 #include <cstddef>
 #include <string>
 
-#include "TES3Object.h"
+#include "TES3Defines.h"
 #include "TES3Script.h"
 
 namespace mwse {

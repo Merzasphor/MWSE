@@ -1,6 +1,7 @@
 #pragma once
 
-#include "TES3Object.h"
+#include "TES3Defines.h"
+
 #include "TES3Collections.h"
 #include "TES3MagicEffect.h"
 #include "TES3Skill.h"

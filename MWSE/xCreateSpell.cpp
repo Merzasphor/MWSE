@@ -26,6 +26,7 @@
 
 #include "TES3Collections.h"
 #include "TES3DataHandler.h"
+#include "TES3Spell.h"
 
 using namespace mwse;
 

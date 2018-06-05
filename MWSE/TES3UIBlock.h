@@ -1,6 +1,6 @@
 #pragma once
 
-#include "TES3Object.h"
+#include "TES3Defines.h"
 
 #include "TES3UIString.h"
 #include "TES3UITree.h"

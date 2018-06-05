@@ -1,7 +1,8 @@
 #pragma once
 
+#include "TES3Defines.h"
+
 #include "TES3Object.h"
-#include "TES3Collections.h"
 
 namespace TES3 {
 	struct ItemData {

@@ -16,6 +16,7 @@
 #include "NIPick.h"
 #include "NISwitchNode.h"
 
+#include "TES3Defines.h"
 #include "TES3Activator.h"
 #include "TES3Alchemy.h"
 #include "TES3Apparatus.h"
@@ -26,10 +27,12 @@
 #include "TES3Clothing.h"
 #include "TES3Container.h"
 #include "TES3Creature.h"
+#include "TES3DataHandler.h"
 #include "TES3Door.h"
 #include "TES3Enchantment.h"
 #include "TES3Faction.h"
 #include "TES3GameSetting.h"
+#include "TES3GlobalVariable.h"
 #include "TES3Ingredient.h"
 #include "TES3LeveledList.h"
 #include "TES3Light.h"
@@ -55,6 +58,7 @@
 #include "TES3Spell.h"
 #include "TES3Static.h"
 #include "TES3UIBlock.h"
+#include "TES3Vectors.h"
 #include "TES3Weapon.h"
 
 #define TES3_vTable_MobileCreature 0x74AFA4

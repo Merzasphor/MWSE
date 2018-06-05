@@ -1,5 +1,8 @@
 #pragma once
 
+#include "TES3Defines.h"
+
+#include "TES3Collections.h"
 #include "TES3Item.h"
 
 namespace TES3 {

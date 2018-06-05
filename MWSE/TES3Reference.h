@@ -2,7 +2,7 @@
 
 #include "sol.hpp"
 
-#include "TES3Object.h"
+#include "TES3Defines.h"
 #include "TES3Attachment.h"
 #include "TES3Vectors.h"
 

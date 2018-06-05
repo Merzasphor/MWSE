@@ -4,9 +4,11 @@
 #include "LuaUtil.h"
 #include "LuaManager.h"
 
+#include "TES3AIConfig.h"
 #include "TES3Creature.h"
 #include "TES3Item.h"
 #include "TES3Script.h"
+#include "TES3SpellList.h"
 
 namespace TES3 {
 	sol::object CreatureInstance::getAttributes() {

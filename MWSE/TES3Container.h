@@ -1,5 +1,7 @@
 #pragma once
 
+#include "TES3Defines.h"
+
 #include "TES3Actor.h"
 
 namespace TES3 {

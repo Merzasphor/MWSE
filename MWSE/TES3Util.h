@@ -26,12 +26,12 @@
 
 #include "mwseString.h"
 
+#include "TES3Defines.h"
+
 #include "TES3Attachment.h"
 #include "TES3DataHandler.h"
-#include "TES3Inventory.h"
+#include "TES3MagicEffect.h"
 #include "TES3Collections.h"
-#include "TES3DataHandler.h"
-#include "TES3Spell.h"
 
 namespace mwse {
 	namespace tes3 {

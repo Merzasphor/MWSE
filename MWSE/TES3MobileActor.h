@@ -1,8 +1,8 @@
 #pragma once
 
-#include "TES3Object.h"
+#include "TES3Defines.h"
+
 #include "TES3ActionData.h"
-#include "TES3Collections.h"
 #include "TES3MobileObject.h"
 #include "TES3Statistic.h"
 #include "TES3Vectors.h"

@@ -23,6 +23,8 @@
 #include "mwAdapter.h"
 #include "OpCodes.h"
 
+#include "TES3Defines.h"
+
 namespace mwse
 {
 	class VMHookInterface
