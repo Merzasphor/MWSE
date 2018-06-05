@@ -17,6 +17,15 @@ Properties
 
    object/sceneNode
     
+`id <baseObject/id.html>`_ (`String`_)
+    The object's unique ID.
+
+`objectType <baseObject/objectType.html>`_ (`Number`_)
+    The object's type.
+    
+`sourceMod <baseObject/sourceMod.html>`_ (`String`_)
+    The mod that this object is from.
+    
 `sceneNode <object/sceneNode.html>`_ (`NiNode`_)
     Access to the scene graph node used by the object.
 
