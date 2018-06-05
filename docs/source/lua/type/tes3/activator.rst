@@ -16,29 +16,29 @@ Properties
    activator/name
    activator/script
     
-`id <baseObject/id.html>`_ (`String`_)
-    The object's unique ID.
-
-`objectType <baseObject/objectType.html>`_ (`Number`_)
-    The object's type.
-    
-`sourceMod <baseObject/sourceMod.html>`_ (`String`_)
-    The mod that this object is from.
-    
-`sceneNode <object/sceneNode.html>`_ (`NiNode`_)
-    Access to the scene graph node used by the object.
-    
 `boundingBox <physicalObject/boundingBox.html>`_ (`Bounding Box`_)
     The two points used to represent the object's bounding box.
+    
+`id <baseObject/id.html>`_ (`String`_)
+    The object's unique ID.
     
 `model <activator/model.html>`_ (`String`_)
     The path to the object's model, under *Data Files/Models*.
     
 `name <activator/name.html>`_ (`String`_)
     The user-friendly name shown for the object.
+
+`objectType <baseObject/objectType.html>`_ (`Number`_)
+    The object's type.
+    
+`sceneNode <object/sceneNode.html>`_ (`NiNode`_)
+    Access to the scene graph node used by the object.
     
 `script <activator/script.html>`_ (`tes3script`_)
     The currently attached script on the object, or ``nil`` if the object is not scripted.
+    
+`sourceMod <baseObject/sourceMod.html>`_ (`String`_)
+    The mod that this object is from.
 
 
 .. _`Boolean`: ../lua/boolean.html
