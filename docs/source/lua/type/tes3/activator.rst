@@ -9,29 +9,36 @@ This interface represents an activator game object.
 Properties
 --------------------------------------------------------
 
-boundingBox
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`BoundingBox`_. The bounding box used for the object when it is placed in the world.
+.. toctree::
+   :hidden:
 
-id
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`String`_. Read-only. The object's unique id.
+   activator/model
+   activator/name
+   activator/script
+    
+`id <baseObject/id.html>`_ (`String`_)
+    The object's unique ID.
 
-model
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`String`_. Read-only. The path to the object's model, under *Data Files/Models*.
-
-name
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`String`_. The user-friendly name shown for the object.
-
-objectType
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Number`_. Read-only. The object's `Object Type`_, which will always be 1230259009. This matches the constant ``tes3.objectType.activator``.
-
-script
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Script`_. Read-only. The currently attached script on the object, or ``nil`` if the object is not scripted.
+`objectType <baseObject/objectType.html>`_ (`Number`_)
+    The object's type.
+    
+`sourceMod <baseObject/sourceMod.html>`_ (`String`_)
+    The mod that this object is from.
+    
+`sceneNode <object/sceneNode.html>`_ (`NiNode`_)
+    Access to the scene graph node used by the object.
+    
+`boundingBox <physicalObject/boundingBox.html>`_ (`Bounding Box`_)
+    The two points used to represent the object's bounding box.
+    
+`model <activator/model.html>`_ (`String`_)
+    The path to the object's model, under *Data Files/Models*.
+    
+`name <activator/name.html>`_ (`String`_)
+    The user-friendly name shown for the object.
+    
+`script <activator/script.html>`_ (`tes3script`_)
+    The currently attached script on the object, or ``nil`` if the object is not scripted.
 
 
 .. _`Boolean`: ../lua/boolean.html
@@ -39,7 +46,7 @@ script
 .. _`String`: ../lua/string.html
 .. _`Table`: ../lua/table.html
 
-.. _`BoundingBox`: boundingBox.html
-.. _`Script`: script.html
+.. _`NiNode`: ../ni/node.html
 
-.. _`Object Type`: ../../../mwscript/references.html#object-types
+.. _`Bounding Box`: boundingBox.html
+.. _`tes3script`: script.html
