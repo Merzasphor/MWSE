@@ -49,10 +49,8 @@ add
 length
     The ``#`` operator can be used to get the `length <vector3/length.html>`_ of the vector.
 
-
 subtract
     Two vectors can be subtracted from one another using the ``-`` operator.
-
 
 tostring
     Vectors can be serialized into a string.
