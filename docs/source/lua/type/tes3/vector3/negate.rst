@@ -1,5 +1,5 @@
 
-heightDifference
+negate
 ========================================================
 
 This function flips the sign in all values in the `Vector3`_.
