@@ -8,78 +8,57 @@ This represents an action being taken by a `MobileCreature`_, `MobileNPC`_, or `
 Properties
 --------------------------------------------------------
 
-aiBehaviorState
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Number`_. The behavior state of the action.
+.. toctree::
+   :hidden:
 
-===== =========
-Value Behavior
-===== =========
-0     Hello
-2     Idle
-3     Attack
-4     Avoid
-6     Flee
-8     Walk
-12    Greet
-255   Undecided
-===== =========
-
-animationAttackState
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Number`_.
-
-.. warning:: This field still needs research. Please feel free to play with it, and modify the documentation.
-
-attackDirection
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Number`_. When attacking, the direction swung with the weapon. This shows if the actor was thrusting, swinging, or chopping.
-
-attackSwing
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Number`_. When attacking, this value represents how much the weapon has been pulled back. The value ranges from [0.0 - 1.0].
-
-currentAnimationGroup
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Number`_.
-
-.. warning:: This field still needs research. Please feel free to play with it, and modify the documentation.
-
-hitTarget
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`MobileCreature`_, `MobileNPC`_, or `MobilePlayer`_.
-
-.. warning:: This field still needs research. Please feel free to play with it, and modify the documentation.
-
-lastBarterHoursPassed
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Number`_.
-
-.. warning:: This field still needs research. Please feel free to play with it, and modify the documentation.
-
-nockedProjectile
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Weapon`_. The currently knocked projectile the associated actor is using.
-
-stolenFrom
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Faction`_ or `NPC`_.
-
-.. warning:: This field still needs research. Please feel free to play with it, and modify the documentation.
-
-target
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`MobileCreature`_, `MobileNPC`_, or `MobilePlayer`_.
-
-.. warning:: This field still needs research. Please feel free to play with it, and modify the documentation.
-
-physicalDamage
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Number`_. When attacking, this is the value of the weapon damage that was rolled. This value doesn't take into account the actor's strength, or other additional damage.
-
-walkDestination
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Vector3`_. If moving to a location, this is the position to be walked to.
+   actionData/aiBehaviorState
+   actionData/animationAttackState
+   actionData/attackDirection
+   actionData/attackSwing
+   actionData/currentAnimationGroup
+   actionData/hitTarget
+   actionData/lastBarterHoursPassed
+   actionData/nockedProjectile
+   actionData/physicalDamage
+   actionData/stolenFrom
+   actionData/target
+   actionData/walkDestination
+    
+`aiBehaviorState <actionData/aiBehaviorState.html>`_ (`Number`_)
+    The behavior state of the action.
+    
+`animationAttackState <actionData/animationAttackState.html>`_ (`Number`_)
+    This field still needs research. Please feel free to play with it, and modify the documentation.
+    
+`attackDirection <actionData/attackDirection.html>`_ (`Number`_)
+    When attacking, the direction swung with the weapon. This shows if the actor was thrusting, swinging, or chopping.
+    
+`attackSwing <actionData/attackSwing.html>`_ (`Number`_)
+    When attacking, this value represents how much the weapon has been pulled back.
+    
+`currentAnimationGroup <actionData/currentAnimationGroup.html>`_ (`Number`_)
+    This field still needs research. Please feel free to play with it, and modify the documentation.
+    
+`hitTarget <actionData/hitTarget.html>`_ (`MobileCreature`_, `MobileNPC`_, or `MobilePlayer`_)
+    This field still needs research. Please feel free to play with it, and modify the documentation.
+    
+`lastBarterHoursPassed <actionData/lastBarterHoursPassed.html>`_ (`Number`_)
+    This field still needs research. Please feel free to play with it, and modify the documentation.
+    
+`nockedProjectile <actionData/nockedProjectile.html>`_ (`Weapon`_)
+    The currently knocked projectile the associated actor is using.
+    
+`physicalDamage <actionData/physicalDamage.html>`_ (`Number`_)
+    When attacking, this is the value of the weapon damage that was rolled. This value doesn't take into account the actor's strength, or other additional damage.
+    
+`stolenFrom <actionData/stolenFrom.html>`_ (`Faction`_ or `NPC`_)
+    This field still needs research. Please feel free to play with it, and modify the documentation.
+    
+`target <actionData/target.html>`_ (`MobileCreature`_, `MobileNPC`_, or `MobilePlayer`_)
+    This field still needs research. Please feel free to play with it, and modify the documentation.
+    
+`walkDestination <actionData/walkDestination.html>`_ (`Vector3`_)
+    If moving to a location, this is the position to be walked to.
 
 
 .. _`Boolean`: ../lua/boolean.html
