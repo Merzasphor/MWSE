@@ -19,11 +19,11 @@ namespace mwse {
 			bindIterator<TES3::Reference>("TES3ReferenceIterator", "TES3ReferenceIteratorNode");
 			bindIterator<TES3::Faction::ReactionNode>("TES3ReactionNodeIterator", "TES3ReactionNodeIteratorNode");
 			bindIterator<TES3::ItemStack>("TES3ItemStackIterator", "TES3ItemStackIteratorNode");
-			bindIterator<TES3::Spell>("TES3SpellIterator", "TES3SpellIteratorNode");
 
 			// Generic TES3::Object iterators. As above, but the result data will be
 			// reinterpreted at runtime.
 			bindGenericObjectIterator<TES3::MobileActor>("TES3MobileActorIterator", "TES3MobileActorIteratorNode");
+			bindGenericObjectIterator<TES3::Spell>("TES3SpellIterator", "TES3SpellIteratorNode");
 
 			// TArray bindings.
 			bindTArray<TES3::ItemData>("TES3ItemDataTArray");
