@@ -12,9 +12,13 @@ Inherited structures: `Base Object`_, `Object`_.
 Properties
 --------------------------------------------------------
 
-boundingBox
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Bounding Box`_. Read-only.
+.. toctree::
+   :hidden:
+
+   physicalObject/boundingBox
+    
+`boundingBox <physicalObject/boundingBox.html>`_ (`Bounding Box`_)
+    The two points used to represent the object's bounding box.
 
 
 .. _`Boolean`: ../lua/boolean.html

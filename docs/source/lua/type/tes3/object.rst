@@ -12,9 +12,13 @@ Inherited structures: `Base Object`_.
 Properties
 --------------------------------------------------------
 
-sceneNode
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`NiNode`_. Read-only.
+.. toctree::
+   :hidden:
+
+   object/sceneNode
+    
+`sceneNode <object/sceneNode.html>`_ (`NiNode`_)
+    Access to the scene graph node used by the object.
 
 
 .. _`Boolean`: ../lua/boolean.html
@@ -22,11 +26,6 @@ sceneNode
 .. _`String`: ../lua/string.html
 .. _`Table`: ../lua/table.html
 
-.. _`Alchemy`: alchemy.html
-.. _`Armor`: armor.html
-.. _`Base Object`: baseObject.html
 .. _`NiNode`: ../ni/node.html
-.. _`Physical Object`: physicalObject.html
-.. _`Reference`: reference.html
 
 .. _`Object Type`: ../../../mwscript/references.html#object-types

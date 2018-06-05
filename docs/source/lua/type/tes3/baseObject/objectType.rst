@@ -2,6 +2,8 @@
 objectType
 ========================================================
 
+**Type**: `Number`_
+
 This property returns the `object <../baseObject.html>`_'s type.
 
 ==================== ====================================== ==========
@@ -32,6 +34,8 @@ Object Type          Friendly Access Variable               Value
 `Weapon`_            ``tes3.objectType.weapon``             1346454871
 ==================== ====================================== ==========
 
+
+.. _`Number`: ../../lua/number.html
 
 .. _`Activator`: ../activator.html
 .. _`Alchemy`: ../alchemy.html
