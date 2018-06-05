@@ -9,37 +9,33 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Apparatus() {
-			LuaManager::getInstance().getState().new_usertype<TES3::Apparatus>("TES3Apparatus",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Get our lua state.
+			sol::state& state = LuaManager::getInstance().getState();
 
-				sol::base_classes, sol::bases<TES3::Item, TES3::BaseObject>(),
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::Apparatus>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::meta_function::to_string, &TES3::Apparatus::getObjectID,
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+			// Basic property binding.
+			usertypeDefinition.set("type", &TES3::Apparatus::type);
+			usertypeDefinition.set("quality", &TES3::Apparatus::quality);
+			usertypeDefinition.set("value", &TES3::Apparatus::value);
+			usertypeDefinition.set("weight", &TES3::Apparatus::weight);
 
-				"objectType", &TES3::Apparatus::objectType,
+			// Functions exposed as properties.
+			usertypeDefinition.set("icon", sol::property(
+				&TES3::Apparatus::getIconPath,
+				[](TES3::Apparatus& self, std::string value) { if (value.length() < 32) strcpy(self.texture, value.c_str()); }
+			));
+			usertypeDefinition.set("model", sol::property(&TES3::Apparatus::getModelPath, &TES3::Apparatus::setModelPath));
+			usertypeDefinition.set("name", sol::property(&TES3::Apparatus::getName, &TES3::Apparatus::setName));
+			usertypeDefinition.set("script", sol::property(&TES3::Apparatus::getScript));
 
-				"boundingBox", &TES3::Apparatus::boundingBox,
-
-				"id", sol::readonly_property(&TES3::Apparatus::getObjectID),
-				"name", sol::property(&TES3::Apparatus::getName, &TES3::Apparatus::setName),
-
-				"icon", sol::readonly_property(&TES3::Apparatus::getIconPath),
-				"model", sol::readonly_property(&TES3::Apparatus::getModelPath),
-
-				"type", sol::readonly_property(&TES3::Apparatus::getType),
-				"typeName", sol::readonly_property(&TES3::Apparatus::getTypeName),
-				"quality", sol::readonly_property(&TES3::Apparatus::getQuality),
-				"value", sol::readonly_property(&TES3::Apparatus::getValue),
-				"weight", sol::readonly_property(&TES3::Apparatus::getWeight),
-
-				"script", sol::readonly_property(&TES3::Apparatus::getScript)
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("TES3Apparatus", usertypeDefinition);
 		}
 	}
 }
