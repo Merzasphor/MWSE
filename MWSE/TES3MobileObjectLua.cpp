@@ -27,9 +27,9 @@ namespace mwse {
 			usertypeDefinition.set("prevMovementFlags", sol::readonly_property(&TES3::MobileObject::prevMovementFlags));
 
 			// Vectors we want to handle differently, and allow table aliasing.
-			usertypeDefinition.set("impulseVelocity", sol::property(&TES3::MobileObject::impulseVelocity, &TES3::MobileObject::setImpulseVelocityFromLua));
-			usertypeDefinition.set("position", sol::property(&TES3::MobileObject::position, &TES3::MobileObject::setPositionFromLua));
-			usertypeDefinition.set("velocity", sol::property(&TES3::MobileObject::velocity, &TES3::MobileObject::setVelocityFromLua));
+			usertypeDefinition.set("impulseVelocity", sol::property([](TES3::MobileObject& self) { return &self.impulseVelocity; }, &TES3::MobileObject::setImpulseVelocityFromLua));
+			usertypeDefinition.set("position", sol::property([](TES3::MobileObject& self) { return &self.position; }, &TES3::MobileObject::setPositionFromLua));
+			usertypeDefinition.set("velocity", sol::property([](TES3::MobileObject& self) { return &self.velocity; }, &TES3::MobileObject::setVelocityFromLua));
 
 			// Access to other objects that need to be packaged.
 			usertypeDefinition.set("reference", sol::readonly_property([](TES3::MobileObject& self) { return makeLuaObject(self.reference); }));

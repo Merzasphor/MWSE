@@ -113,7 +113,7 @@ namespace mwse {
 
 				"sceneNode", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.sceneNode); }),
 
-				"position", sol::property(&TES3::Reference::position, &TES3::Reference::setPositionFromLua),
+				"position", sol::property([](TES3::Reference& self) { return &self.position; }, &TES3::Reference::setPositionFromLua),
 				//"orientation", &TES3::Reference::orientation,
 
 				"isRespawn", sol::readonly_property(&TES3::Reference::isRespawn),
