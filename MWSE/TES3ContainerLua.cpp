@@ -9,101 +9,82 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Container() {
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::Container>("TES3Container",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Binding for TES3::Container.
+			{
+				// Get our lua state.
+				sol::state& state = LuaManager::getInstance().getState();
 
-				sol::base_classes, sol::bases<TES3::Actor, TES3::BaseObject>(),
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::Container>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::meta_function::to_string, &TES3::Container::getObjectID,
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Actor, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+				// Basic property binding.
+				usertypeDefinition.set("capacity", &TES3::Container::capacity);
 
-				"objectType", &TES3::Container::objectType,
-
-				"boundingBox", &TES3::Container::boundingBox,
-
-				"id", sol::readonly_property(&TES3::Container::getObjectID),
-				"name", sol::property(&TES3::Container::getName, &TES3::Container::setName),
-
-				"model", sol::readonly_property(&TES3::Container::getModelPath),
-
-				"flags", &TES3::Container::actorFlags,
-				"organic", sol::property(
+				// Friendly access to actor flags. TODO: Fix these constants.
+				usertypeDefinition.set("organic", sol::property(
 					[](TES3::Container& self) { return self.getActorFlag(TES3::ActorFlag::Female); },
 					[](TES3::Container& self, bool set) { self.setActorFlag(TES3::ActorFlag::Female, set); }
-					),
-				"respawns", sol::property(
+				));
+				usertypeDefinition.set("respawns", sol::property(
 					[](TES3::Container& self) { return self.getActorFlag(TES3::ActorFlag::Essential); },
 					[](TES3::Container& self, bool set) { self.setActorFlag(TES3::ActorFlag::Essential, set); }
-					),
+				));
 
-				"cloneCount", &TES3::Container::cloneCount,
+				// Constant values.
+				usertypeDefinition.set("isInstance", sol::var(false));
 
-				"isRespawn", sol::readonly_property(&TES3::Container::isRespawn),
-				"isInstance", sol::var(false),
+				// Functions exposed as properties.
+				usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::Container::isRespawn));
+				usertypeDefinition.set("model", sol::property(&TES3::Container::getModelPath, &TES3::Container::setModelPath));
+				usertypeDefinition.set("name", sol::property(&TES3::Container::getName, &TES3::Container::setName));
+				usertypeDefinition.set("script", sol::readonly_property(&TES3::Container::getScript));
 
-				"inventory", sol::readonly_property(&TES3::Container::inventory),
-				"capacity", &TES3::Container::capacity,
+				// Finish up our usertype.
+				state.set_usertype("tes3actor", usertypeDefinition);
+			}
 
-				"script", sol::readonly_property(&TES3::Container::getScript),
+			// Binding for TES3::ContainerInstance.
+			{
+				// Get our lua state.
+				sol::state& state = LuaManager::getInstance().getState();
 
-				//
-				// Functions.
-				//
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::ContainerInstance>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-				"clone", &TES3::Container::clone
-
-				);
-
-			state.new_usertype<TES3::ContainerInstance>("TES3ContainerInstance",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
-
-				sol::base_classes, sol::bases<TES3::Actor, TES3::BaseObject>(),
-
-				sol::meta_function::to_string, &TES3::ContainerInstance::getObjectID,
-
-				//
-				// Properties.
-				//
-
-				"objectType", &TES3::ContainerInstance::objectType,
-
-				"boundingBox", &TES3::ContainerInstance::boundingBox,
-
-				"id", sol::readonly_property(&TES3::ContainerInstance::getObjectID),
-				"name", sol::property(&TES3::ContainerInstance::getName, &TES3::ContainerInstance::setName),
-
-				"model", sol::readonly_property(&TES3::ContainerInstance::getModelPath),
-
-				"flags", &TES3::ContainerInstance::actorFlags,
-				"organic", sol::property(
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Actor, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
+				
+				// Friendly access to actor flags. TODO: Fix these constants.
+				usertypeDefinition.set("organic", sol::property(
 					[](TES3::ContainerInstance& self) { return self.getActorFlag(TES3::ActorFlag::Female); },
 					[](TES3::ContainerInstance& self, bool set) { self.setActorFlag(TES3::ActorFlag::Female, set); }
-					),
-				"respawns", sol::property(
+				));
+				usertypeDefinition.set("respawns", sol::property(
 					[](TES3::ContainerInstance& self) { return self.getActorFlag(TES3::ActorFlag::Essential); },
 					[](TES3::ContainerInstance& self, bool set) { self.setActorFlag(TES3::ActorFlag::Essential, set); }
-					),
+				));
 
-				"cloneCount", &TES3::ContainerInstance::cloneCount,
+				// Constant values.
+				usertypeDefinition.set("isInstance", sol::var(true));
 
-				"isRespawn", sol::readonly_property(&TES3::ContainerInstance::isRespawn),
-				"isInstance", sol::var(true),
+				// Functions exposed as properties.
+				usertypeDefinition.set("capacity", sol::property(&TES3::ContainerInstance::getCapacity, &TES3::ContainerInstance::setCapacity));
+				usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::ContainerInstance::isRespawn));
+				usertypeDefinition.set("model", sol::property(&TES3::ContainerInstance::getModelPath, &TES3::ContainerInstance::setModelPath));
+				usertypeDefinition.set("name", sol::property(&TES3::ContainerInstance::getName, &TES3::ContainerInstance::setName));
+				usertypeDefinition.set("script", sol::readonly_property(&TES3::ContainerInstance::getScript));
 
-				"inventory", sol::readonly_property(&TES3::ContainerInstance::inventory),
-				"capacity", sol::property(&TES3::ContainerInstance::getCapacity, &TES3::ContainerInstance::setCapacity),
-
-				"script", sol::readonly_property(&TES3::ContainerInstance::getScript),
-
-				"container", sol::readonly_property(&TES3::ContainerInstance::container)
-
-				);
+				// Finish up our usertype.
+				state.set_usertype("tes3actor", usertypeDefinition);
+			}
 		}
 	}
 }
