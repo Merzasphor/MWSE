@@ -39,33 +39,29 @@ namespace TES3 {
 namespace mwse {
 	namespace lua {
 		void bindTES3Class() {
-			LuaManager::getInstance().getState().new_usertype<TES3::Class>("TES3Class",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Get our lua state.
+			sol::state& state = LuaManager::getInstance().getState();
 
-				sol::base_classes, sol::bases<TES3::BaseObject>(),
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::Class>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::meta_function::to_string, &TES3::Class::getObjectID,
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+			// Basic property binding.
+			usertypeDefinition.set("playable", &TES3::Class::playable);
+			usertypeDefinition.set("services", &TES3::Class::services);
+			usertypeDefinition.set("specialization", &TES3::Class::specialization);
 
-				"objectType", &TES3::Class::objectType,
+			// Functions exposed as properties.
+			usertypeDefinition.set("attributes", sol::readonly_property(&TES3::Class::getAttributes));
+			usertypeDefinition.set("majorSkills", sol::readonly_property(&TES3::Class::getMajorSkills));
+			usertypeDefinition.set("minorSkills", sol::readonly_property(&TES3::Class::getMinorSkills));
+			usertypeDefinition.set("name", sol::readonly_property(&TES3::Class::getName));
 
-				"id", sol::readonly_property(&TES3::Class::getObjectID),
-				"name", sol::readonly_property(&TES3::Class::getName),
-
-				"specialization", &TES3::Class::specialization,
-				"attributes", sol::readonly_property(&TES3::Class::getAttributes),
-				"majorSkills", sol::readonly_property(&TES3::Class::getMajorSkills),
-				"minorSkills", sol::readonly_property(&TES3::Class::getMinorSkills),
-
-				"services", &TES3::Class::services,
-
-				"playable", &TES3::Class::playable
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("tes3class", usertypeDefinition);
 		}
 	}
 }
