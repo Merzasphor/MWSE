@@ -5,34 +5,32 @@
 
 #include "TES3Door.h"
 #include "TES3Script.h"
+#include "TES3Sound.h"
 
 namespace mwse {
 	namespace lua {
 		void bindTES3Door() {
-			LuaManager::getInstance().getState().new_usertype<TES3::Door>("TES3Door",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Get our lua state.
+			sol::state& state = LuaManager::getInstance().getState();
 
-				sol::base_classes, sol::bases<TES3::BaseObject>(),
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::Door>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::meta_function::to_string, &TES3::Door::getObjectID,
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+			// Basic property binding.
+			usertypeDefinition.set("closeSound", &TES3::Door::closeSound);
+			usertypeDefinition.set("openSound", &TES3::Door::openSound);
 
-				"objectType", &TES3::Door::objectType,
+			// Functions exposed as properties.
+			usertypeDefinition.set("model", sol::property(&TES3::Door::getModelPath, &TES3::Door::setModelPath));
+			usertypeDefinition.set("name", sol::property(&TES3::Door::getName, &TES3::Door::setName));
+			usertypeDefinition.set("script", sol::property(&TES3::Door::getScript));
 
-				"boundingBox", &TES3::Door::boundingBox,
-
-				"id", sol::readonly_property(&TES3::Door::getObjectID),
-				"name", sol::property(&TES3::Door::getName, &TES3::Door::setName),
-
-				"model", sol::readonly_property(&TES3::Door::getModelPath),
-
-				"script", sol::readonly_property(&TES3::Door::getScript)
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("tes3door", usertypeDefinition);
 		}
 	}
 }
