@@ -168,7 +168,7 @@ namespace mwse {
 			usertypeDefinition.set("autoCalc", sol::property(&TES3::Alchemy::getAutoCalc, &TES3::Alchemy::setAutoCalc));
 			usertypeDefinition.set("icon", sol::property(
 				&TES3::Alchemy::getIconPath,
-				[](TES3::Alchemy& self, std::string value) { tes3::setDataString(&self.icon, value.c_str()); }
+				[](TES3::Alchemy& self, const char* value) { tes3::setDataString(&self.icon, value); }
 			));
 			usertypeDefinition.set("model", sol::property(&TES3::Alchemy::getModelPath, &TES3::Alchemy::setModelPath));
 			usertypeDefinition.set("name", sol::property(&TES3::Alchemy::getName, &TES3::Alchemy::setName));

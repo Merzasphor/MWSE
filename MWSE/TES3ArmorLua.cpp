@@ -32,7 +32,7 @@ namespace mwse {
 			usertypeDefinition.set("health", sol::property(&TES3::Armor::getDurability, &TES3::Armor::setDurability));
 			usertypeDefinition.set("icon", sol::property(
 				&TES3::Armor::getIconPath,
-				[](TES3::Armor& self, const char* value) { if (strlen(value) < 32) strcpy(self.icon, value); }
+				[](TES3::Armor& self, const char* value) { if (strlen(value) < 32) tes3::setDataString(&self.icon, value); }
 			));
 			usertypeDefinition.set("isLeftPart", sol::property(&TES3::Armor::isLeftPartOfPair));
 			usertypeDefinition.set("model", sol::property(&TES3::Armor::getModelPath, &TES3::Armor::setModelPath));

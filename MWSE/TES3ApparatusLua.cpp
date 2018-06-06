@@ -28,7 +28,7 @@ namespace mwse {
 			// Functions exposed as properties.
 			usertypeDefinition.set("icon", sol::property(
 				&TES3::Apparatus::getIconPath,
-				[](TES3::Apparatus& self, std::string value) { if (value.length() < 32) strcpy(self.texture, value.c_str()); }
+				[](TES3::Apparatus& self, const char* value) { if (strlen(value) < 32) strcpy(self.texture, value); }
 			));
 			usertypeDefinition.set("model", sol::property(&TES3::Apparatus::getModelPath, &TES3::Apparatus::setModelPath));
 			usertypeDefinition.set("name", sol::property(&TES3::Apparatus::getName, &TES3::Apparatus::setName));
