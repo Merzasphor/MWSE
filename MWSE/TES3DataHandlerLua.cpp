@@ -13,61 +13,66 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3DataHandler() {
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::NonDynamicData>("TES3NonDynamicData",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Binding for TES3::NonDynamicData
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::NonDynamicData>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-				//
-				// Properties
-				//
+				// Basic property binding.
+				usertypeDefinition.set("classes", sol::readonly_property(&TES3::NonDynamicData::classes));
+				usertypeDefinition.set("factions", sol::readonly_property(&TES3::NonDynamicData::factions));
+				usertypeDefinition.set("magicEffects", sol::readonly_property([](TES3::NonDynamicData& self) { return std::ref(self.magicEffects); }));
+				usertypeDefinition.set("objects", sol::readonly_property(&TES3::NonDynamicData::list));
+				usertypeDefinition.set("races", sol::readonly_property(&TES3::NonDynamicData::races));
+				usertypeDefinition.set("regions", sol::readonly_property(&TES3::NonDynamicData::regions));
+				usertypeDefinition.set("scripts", sol::readonly_property(&TES3::NonDynamicData::scripts));
+				usertypeDefinition.set("skills", sol::readonly_property([](TES3::NonDynamicData& self) { return std::ref(self.skills); }));
+				usertypeDefinition.set("soundGenerators", sol::readonly_property(&TES3::NonDynamicData::soundGenerators));
+				usertypeDefinition.set("sounds", sol::readonly_property(&TES3::NonDynamicData::sounds));
+				usertypeDefinition.set("spells", sol::readonly_property(&TES3::NonDynamicData::spellsList));
+				usertypeDefinition.set("startScripts", sol::readonly_property(&TES3::NonDynamicData::startScripts));
 
-				"objects", sol::readonly_property(&TES3::NonDynamicData::list),
+				// Basic function binding.
+				usertypeDefinition.set("addNewObject", &TES3::NonDynamicData::addNewObject);
+				usertypeDefinition.set("deleteObject", &TES3::NonDynamicData::deleteObject);
+				usertypeDefinition.set("findDialogInfo", &TES3::NonDynamicData::findDialogInfo);
+				usertypeDefinition.set("findFirstCloneOfActor", &TES3::NonDynamicData::findFirstCloneOfActor);
+				usertypeDefinition.set("findGlobalVariable", &TES3::NonDynamicData::findGlobalVariable);
+				usertypeDefinition.set("findScript", &TES3::NonDynamicData::findScriptByName);
+				usertypeDefinition.set("resolveObject", &TES3::NonDynamicData::resolveObject);
 
-				"skills", sol::readonly_property([](TES3::NonDynamicData& self) { return std::ref(self.skills); }),
-				"magicEffects", sol::readonly_property([](TES3::NonDynamicData& self) { return std::ref(self.magicEffects); }),
+				// Finish up our usertype.
+				state.set_usertype("tes3nonDynamicData", usertypeDefinition);
+			}
 
-				//
-				// Functions
-				//
+			// Binding for TES3::DataHandler
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::DataHandler>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-				"resolveObject", &TES3::NonDynamicData::resolveObject,
-				"findFirstCloneOfActor", &TES3::NonDynamicData::findFirstCloneOfActor,
-				"findScript", &TES3::NonDynamicData::findScriptByName,
-				"findGlobalVariable", &TES3::NonDynamicData::findGlobalVariable,
-				"findDialogInfo", &TES3::NonDynamicData::findDialogInfo,
-				"addNewObject", &TES3::NonDynamicData::addNewObject,
-				"deleteObject", &TES3::NonDynamicData::deleteObject
+				// Basic property binding.
+				usertypeDefinition.set("backgroundThread", sol::readonly_property(&TES3::DataHandler::backgroundThread));
+				usertypeDefinition.set("backgroundThreadId", sol::readonly_property(&TES3::DataHandler::backgroundThreadID));
+				usertypeDefinition.set("backgroundThreadRunning", sol::readonly_property(&TES3::DataHandler::backgroundThreadRunning));
+				usertypeDefinition.set("cellChanged", sol::readonly_property(&TES3::DataHandler::cellChanged));
+				usertypeDefinition.set("centralGridX", sol::readonly_property(&TES3::DataHandler::centralGridX));
+				usertypeDefinition.set("centralGridY", sol::readonly_property(&TES3::DataHandler::centralGridY));
+				usertypeDefinition.set("currentCell", sol::readonly_property(&TES3::DataHandler::currentCell));
+				usertypeDefinition.set("currentInteriorCell", sol::readonly_property(&TES3::DataHandler::currentInteriorCell));
+				usertypeDefinition.set("lastExteriorCell", sol::readonly_property(&TES3::DataHandler::lastExteriorCell));
+				usertypeDefinition.set("mainThread", sol::readonly_property(&TES3::DataHandler::mainThread));
+				usertypeDefinition.set("mainThreadId", sol::readonly_property(&TES3::DataHandler::mainThreadID));
+				usertypeDefinition.set("nonDynamicData", sol::readonly_property(&TES3::DataHandler::nonDynamicData));
+				usertypeDefinition.set("threadSleepTime", sol::readonly_property(&TES3::DataHandler::threadSleepTime));
 
-				);
-
-			state.new_usertype<TES3::DataHandler>("TES3DataHandler",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
-
-				//
-				// Properties
-				//
-
-				"nonDynamicData", sol::readonly_property(&TES3::DataHandler::nonDynamicData),
-
-				"currentCell", sol::readonly_property(&TES3::DataHandler::currentCell),
-				"currentInteriorCell", sol::readonly_property(&TES3::DataHandler::currentInteriorCell),
-				"lastExteriorCell", sol::readonly_property(&TES3::DataHandler::lastExteriorCell),
-				"exteriorCellData", sol::readonly_property([](TES3::DataHandler& self) { return std::ref(self.exteriorCellData); }),
-				"centralGridX", &TES3::DataHandler::centralGridX,
-				"centralGridY", &TES3::DataHandler::centralGridY,
-				"cellChanged", &TES3::DataHandler::cellChanged,
-
-				"mainThread", sol::readonly_property(&TES3::DataHandler::mainThread),
-				"mainThreadId", sol::readonly_property(&TES3::DataHandler::mainThreadID),
-				"backgroundThread", sol::readonly_property(&TES3::DataHandler::backgroundThread),
-				"backgroundThreadId", sol::readonly_property(&TES3::DataHandler::backgroundThreadID),
-				"backgroundThreadRunning", sol::readonly_property(&TES3::DataHandler::backgroundThreadRunning),
-				"threadSleepTime", sol::readonly_property(&TES3::DataHandler::threadSleepTime)
-
-				);
+				// Finish up our usertype.
+				state.set_usertype("tes3dataHandler", usertypeDefinition);
+			}
 		}
 	}
 }

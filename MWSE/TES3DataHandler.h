@@ -144,7 +144,7 @@ namespace TES3 {
 		char unknown_0xB50E;
 		char unknown_0xB50F;
 		char unknown_0xB510;
-		unsigned char backgroundThreadRunning; // 0xB511
+		bool backgroundThreadRunning; // 0xB511
 		char unknown_0xB512;
 		char unknown_0xB513;
 		int unknown_0xB514;
