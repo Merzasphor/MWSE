@@ -47,7 +47,7 @@ namespace mwse {
 				usertypeDefinition.set("script", sol::readonly_property(&TES3::Container::getScript));
 
 				// Finish up our usertype.
-				state.set_usertype("tes3actor", usertypeDefinition);
+				state.set_usertype("tes3container", usertypeDefinition);
 			}
 
 			// Binding for TES3::ContainerInstance.
@@ -83,7 +83,7 @@ namespace mwse {
 				usertypeDefinition.set("script", sol::readonly_property(&TES3::ContainerInstance::getScript));
 
 				// Finish up our usertype.
-				state.set_usertype("tes3actor", usertypeDefinition);
+				state.set_usertype("tes3containerInstance", usertypeDefinition);
 			}
 		}
 	}
