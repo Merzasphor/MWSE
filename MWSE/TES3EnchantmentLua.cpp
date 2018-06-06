@@ -8,31 +8,28 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Enchantment() {
-			LuaManager::getInstance().getState().new_usertype<TES3::Enchantment>("TES3Enchantment",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Get our lua state.
+			sol::state& state = LuaManager::getInstance().getState();
 
-				sol::base_classes, sol::bases<TES3::BaseObject>(),
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::Enchantment>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::meta_function::to_string, &TES3::Enchantment::getObjectID,
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Object, TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+			// Basic property binding.
+			usertypeDefinition.set("castType", &TES3::Enchantment::castType);
+			usertypeDefinition.set("chargeCost", &TES3::Enchantment::chargeCost);
+			usertypeDefinition.set("flags", &TES3::Enchantment::flags);
+			usertypeDefinition.set("magickaCost", &TES3::Enchantment::magickaCost);
+			usertypeDefinition.set("maxCharge", &TES3::Enchantment::maxCharge);
 
-				"objectType", &TES3::Enchantment::objectType,
+			// Indirect bindings to unions and arrays.
+			usertypeDefinition.set("effects", sol::readonly_property([](TES3::Enchantment& self) { return std::ref(self.effects); }));
 
-				"id", sol::readonly_property(&TES3::Enchantment::getObjectID),
-
-				"flags", sol::readonly(&TES3::Enchantment::flags),
-				"autoCalc", sol::property(&TES3::Enchantment::getAutoCalc, &TES3::Enchantment::setAutoCalc),
-				"type", &TES3::Enchantment::castType,
-				"cost", &TES3::Enchantment::chargeCost,
-				"charge", &TES3::Enchantment::maxCharge,
-
-				"effects", sol::readonly_property([](TES3::Enchantment& self) { return std::ref(self.effects); })
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("tes3enchantment", usertypeDefinition);
 		}
 	}
 }
