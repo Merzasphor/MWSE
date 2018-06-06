@@ -22,7 +22,7 @@ namespace TES3 {
 		unsigned char unknown_0x5B;
 		Actor * sleepCreature; // 0x5C
 		int unknown_0x60[5]; // Unknown2 in Master?
-		int unknown_0x74;
+		int currentWeatherIndex; // 0x74
 
 		//
 		// Other related this-call functions.

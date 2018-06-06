@@ -112,7 +112,7 @@ namespace TES3 {
 		void * sounds; // 0xB4D0
 		void * tempSounds; // 0xB4D4
 		void * unknown_0xB4D8; // 0xB4D8
-		char unknown_0xB4DC;
+		bool showActorDrawBounds; // 0xB4DC
 		char unknown_0xB4DD;
 		char unknown_0xB4DE;
 		char unknown_0xB4DF;
