@@ -10,42 +10,36 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Book() {
-			LuaManager::getInstance().getState().new_usertype<TES3::Book>("TES3Book",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Get our lua state.
+			sol::state& state = LuaManager::getInstance().getState();
 
-				sol::base_classes, sol::bases<TES3::Item, TES3::BaseObject>(),
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::Book>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::meta_function::to_string, &TES3::Book::getObjectID,
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+			// Basic property binding.
+			usertypeDefinition.set("enchantCapacity", &TES3::Book::enchantCapacity);
+			usertypeDefinition.set("skill", &TES3::Book::skillToRaise);
+			usertypeDefinition.set("type", &TES3::Book::bookType);
+			usertypeDefinition.set("value", &TES3::Book::value);
+			usertypeDefinition.set("weight", &TES3::Book::weight);
 
-				"objectType", &TES3::Book::objectType,
+			// Functions exposed as properties.
+			usertypeDefinition.set("enchantment", sol::property(&TES3::Book::getEnchantment, &TES3::Book::setEnchantment));
+			usertypeDefinition.set("icon", sol::property(
+				&TES3::Book::getIconPath,
+				[](TES3::Book& self, const char* value) { if (strlen(value) < 32) tes3::setDataString(&self.icon, value); }
+			));
+			usertypeDefinition.set("model", sol::property(&TES3::Book::getModelPath, &TES3::Book::setModelPath));
+			usertypeDefinition.set("name", sol::property(&TES3::Book::getName, &TES3::Book::setName));
+			usertypeDefinition.set("script", sol::property(&TES3::Book::getScript));
+			usertypeDefinition.set("text", sol::property(&TES3::Book::getBookText));
 
-				"boundingBox", &TES3::Book::boundingBox,
-
-				"id", sol::readonly_property(&TES3::Book::getObjectID),
-				"name", sol::property(&TES3::Book::getName, &TES3::Book::setName),
-
-				"icon", sol::readonly_property(&TES3::Book::getIconPath),
-				"model", sol::readonly_property(&TES3::Book::getModelPath),
-
-				"value", sol::readonly_property(&TES3::Book::getValue),
-				"weight", sol::readonly_property(&TES3::Book::getWeight),
-
-				"type", sol::readonly_property(&TES3::Book::bookType),
-				"skill", &TES3::Book::skillToRaise,
-
-				"text", sol::readonly_property(&TES3::Book::getBookText),
-
-				"enchantCapacity", &TES3::Book::enchantCapacity,
-				"enchantment", sol::property(&TES3::Book::getEnchantment, &TES3::Book::setEnchantment),
-
-				"script", sol::readonly_property(&TES3::Book::getScript)
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("tes3book", usertypeDefinition);
 		}
 	}
 }
