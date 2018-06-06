@@ -10,42 +10,37 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Clothing() {
-			LuaManager::getInstance().getState().new_usertype<TES3::Clothing>("TES3Clothing",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Get our lua state.
+			sol::state& state = LuaManager::getInstance().getState();
 
-				sol::base_classes, sol::bases<TES3::Item, TES3::BaseObject>(),
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::Clothing>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::meta_function::to_string, &TES3::Clothing::getObjectID,
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+			// Basic property binding.
+			usertypeDefinition.set("enchantCapacity", &TES3::Clothing::enchantCapacity);
+			usertypeDefinition.set("slot", &TES3::Clothing::slot);
+			usertypeDefinition.set("value", &TES3::Clothing::value);
+			usertypeDefinition.set("weight", &TES3::Clothing::weight);
 
-				"objectType", &TES3::Clothing::objectType,
+			// Functions exposed as properties.
+			usertypeDefinition.set("enchantment", sol::property(&TES3::Clothing::getEnchantment, &TES3::Clothing::setEnchantment));
+			usertypeDefinition.set("health", sol::property(&TES3::Clothing::getDurability, &TES3::Clothing::setDurability));
+			usertypeDefinition.set("icon", sol::property(
+				&TES3::Clothing::getIconPath,
+				[](TES3::Clothing& self, const char* value) { if (strlen(value) < 32) tes3::setDataString(&self.icon, value); }
+			));
+			usertypeDefinition.set("isLeftPart", sol::property(&TES3::Clothing::isLeftPartOfPair));
+			usertypeDefinition.set("model", sol::property(&TES3::Clothing::getModelPath, &TES3::Clothing::setModelPath));
+			usertypeDefinition.set("name", sol::property(&TES3::Clothing::getName, &TES3::Clothing::setName));
+			usertypeDefinition.set("script", sol::property(&TES3::Clothing::getScript));
+			usertypeDefinition.set("slotName", sol::property(&TES3::Clothing::getTypeName));
 
-				"boundingBox", &TES3::Clothing::boundingBox,
-
-				"id", sol::readonly_property(&TES3::Clothing::getObjectID),
-				"name", sol::property(&TES3::Clothing::getName, &TES3::Clothing::setName),
-
-				"icon", sol::readonly_property(&TES3::Clothing::getIconPath),
-				"model", sol::readonly_property(&TES3::Clothing::getModelPath),
-
-				"slot", sol::readonly_property(&TES3::Clothing::getType),
-				"slotName", sol::readonly_property(&TES3::Clothing::getTypeName),
-				"isLeftPart", sol::readonly_property(&TES3::Clothing::isLeftPartOfPair),
-
-				"weight", sol::readonly_property(&TES3::Clothing::getWeight),
-				"value", sol::readonly_property(&TES3::Clothing::getValue),
-				"health", sol::readonly_property(&TES3::Clothing::getDurability),
-
-				"enchantCapacity", &TES3::Clothing::enchantCapacity,
-				"enchantment", sol::property(&TES3::Clothing::getEnchantment, &TES3::Clothing::setEnchantment),
-
-				"script", sol::readonly_property(&TES3::Clothing::getScript)
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("tes3clothing", usertypeDefinition);
 		}
 	}
 }
