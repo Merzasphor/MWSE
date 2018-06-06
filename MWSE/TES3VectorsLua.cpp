@@ -14,12 +14,14 @@ namespace mwse {
 
 			state.new_usertype<TES3::Vector2>("TES3Vector2",
 				"new", sol::constructors<TES3::Vector2(), TES3::Vector2(float, float)>(),
+				"copy", [](TES3::Vector2& self) { return TES3::Vector2(self); },
 				"x", &TES3::Vector2::x,
 				"y", &TES3::Vector2::y
 			);
 
 			state.new_usertype<TES3::Vector3>("TES3Vector3",
 				"new", sol::constructors<TES3::Vector3(), TES3::Vector3(float, float, float)>(),
+				"copy", [](TES3::Vector3& self) { return TES3::Vector3(self); },
 
 				sol::meta_function::addition, &TES3::Vector3::operator+,
 				sol::meta_function::subtraction, &TES3::Vector3::operator-,
@@ -60,6 +62,7 @@ namespace mwse {
 
 			state.new_usertype<TES3::Vector4>("TES3Vector4",
 				"new", sol::constructors<TES3::Vector4(), TES3::Vector4(float, float, float, float)>(),
+				"copy", [](TES3::Vector4& self) { return TES3::Vector4(self); },
 				"x", &TES3::Vector4::x,
 				"y", &TES3::Vector4::y,
 				"z", &TES3::Vector4::z,
@@ -67,6 +70,7 @@ namespace mwse {
 				);
 
 			state.new_usertype<TES3::BoundingBox>("TES3BoundingBox",
+				"copy", [](TES3::BoundingBox& self) { return TES3::BoundingBox(self); },
 				"min", &TES3::BoundingBox::minimum,
 				"max", &TES3::BoundingBox::maximum
 				);
