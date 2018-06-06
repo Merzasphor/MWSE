@@ -27,6 +27,8 @@
 #include "TES3Script.h"
 #include "TES3GameFile.h"
 
+#include <Windows.h>
+
 using namespace mwse;
 
 namespace mwse
@@ -52,22 +54,31 @@ namespace mwse
 
 		// Start looking for our next reference.
 		TES3::Reference* next = NULL;
-		if (reference) {
-			// Try to get the next non-removed reference linked down from the passed one.
-			next = mwse::tes3::skipDeletedObjects<TES3::Reference>(reference->nextInCollection);
+		__try {
+			if (reference) {
+				// Try to get the next non-removed reference linked down from the passed one.
+				next = mwse::tes3::skipDeletedObjects<TES3::Reference>(reference);
 
-			// If we found nothing, check the stored exterior references.
-			if (next == NULL && mwse::tes3::exteriorRefs[0] != NULL) {
-				next = mwse::tes3::exteriorRefs[0];
-				for (int i = 0; i < 8; i++) {
-					mwse::tes3::exteriorRefs[i] = mwse::tes3::exteriorRefs[i + 1];
+				// If we found nothing, check the stored exterior references.
+				if (next == NULL && mwse::tes3::exteriorRefs[0] != NULL) {
+					next = mwse::tes3::exteriorRefs[0];
+					for (int i = 0; i < 8; i++) {
+						mwse::tes3::exteriorRefs[i] = mwse::tes3::exteriorRefs[i + 1];
+					}
 				}
 			}
-		}
-		else {
+			else {
 #if _DEBUG
-			mwse::log::getLog() << "xNextRef: Null argument." << std::endl;
+				mwse::log::getLog() << "xNextRef: Null argument." << std::endl;
 #endif
+			}
+		}
+		__except (EXCEPTION_EXECUTE_HANDLER) {
+			TES3::Script * script = virtualMachine.getScript();
+#if _DEBUG
+			mwse::log::getLog() << "xNextRef: Invalid object given in script " << script->sourceMod->fileName << "/" << script->name << ". Fix script to not save variables across saves!" << std::endl;
+#endif
+			next = NULL;
 		}
 
 		mwse::Stack::getInstance().pushLong((long)next);
