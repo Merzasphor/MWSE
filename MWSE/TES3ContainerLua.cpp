@@ -14,9 +14,6 @@ namespace mwse {
 
 			// Binding for TES3::Container.
 			{
-				// Get our lua state.
-				sol::state& state = LuaManager::getInstance().getState();
-
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.create_simple_usertype<TES3::Container>();
 				usertypeDefinition.set("new", sol::no_constructor);
@@ -52,9 +49,6 @@ namespace mwse {
 
 			// Binding for TES3::ContainerInstance.
 			{
-				// Get our lua state.
-				sol::state& state = LuaManager::getInstance().getState();
-
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.create_simple_usertype<TES3::ContainerInstance>();
 				usertypeDefinition.set("new", sol::no_constructor);
