@@ -58,9 +58,9 @@ namespace mwse
 
 		// Get the attached varnode.
 		auto node = tes3::getAttachedItemDataNode(reference);
-		if (node) {
-			if (node->owner && node->owner->objectID) {
-				owner = node->owner->objectID;
+		if (node && node->owner) {
+			if (node->owner) {
+				owner = node->owner->getObjectID();
 			}
 		}
 		else {

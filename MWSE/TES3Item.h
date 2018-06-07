@@ -7,7 +7,7 @@
 namespace TES3 {
 	struct ItemData {
 		int count; // 0x0
-		PhysicalObject * owner; // 0x4
+		BaseObject * owner; // 0x4
 		union {
 			long rank;
 			GlobalVariable * variable;
