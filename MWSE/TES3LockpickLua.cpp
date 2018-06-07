@@ -2,6 +2,7 @@
 
 #include "sol.hpp"
 #include "LuaManager.h"
+#include "LuaUtil.h"
 
 #include "TES3Lockpick.h"
 #include "TES3Script.h"
@@ -9,36 +10,35 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Lockpick() {
-			LuaManager::getInstance().getState().new_usertype<TES3::Lockpick>("TES3Lockpick",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Get our lua state.
+			sol::state& state = LuaManager::getInstance().getState();
 
-				sol::base_classes, sol::bases<TES3::Item, TES3::BaseObject>(),
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::Lockpick>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::meta_function::to_string, &TES3::Lockpick::getObjectID,
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+			// Basic property binding.
+			usertypeDefinition.set("condition", &TES3::Lockpick::maxCondition);
+			usertypeDefinition.set("quality", &TES3::Lockpick::quality);
+			usertypeDefinition.set("value", &TES3::Lockpick::value);
+			usertypeDefinition.set("weight", &TES3::Lockpick::weight);
 
-				"objectType", &TES3::Lockpick::objectType,
+			// Access to other objects that need to be packaged.
+			usertypeDefinition.set("script", sol::readonly_property([](TES3::Lockpick& self) { return makeLuaObject(self.getScript()); }));
 
-				"boundingBox", &TES3::Lockpick::boundingBox,
+			// Functions exposed as properties.
+			usertypeDefinition.set("icon", sol::property(
+				&TES3::Lockpick::getIconPath,
+				[](TES3::Lockpick& self, const char* value) { if (strlen(value) < 32) strcpy(self.icon, value); }
+			));
+			usertypeDefinition.set("model", sol::property(&TES3::Lockpick::getModelPath, &TES3::Lockpick::setModelPath));
+			usertypeDefinition.set("name", sol::property(&TES3::Lockpick::getName, &TES3::Lockpick::setName));
 
-				"id", sol::readonly_property(&TES3::Lockpick::getObjectID),
-				"name", sol::property(&TES3::Lockpick::getName, &TES3::Lockpick::setName),
-
-				"icon", sol::readonly_property(&TES3::Lockpick::getIconPath),
-				"model", sol::readonly_property(&TES3::Lockpick::getModelPath),
-
-				"value", sol::readonly_property(&TES3::Lockpick::getValue),
-				"weight", sol::readonly_property(&TES3::Lockpick::getWeight),
-				"quality", &TES3::Lockpick::quality,
-				"condition", &TES3::Lockpick::maxCondition,
-
-				"script", sol::readonly_property(&TES3::Lockpick::getScript)
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("tes3lockpick", usertypeDefinition);
 		}
 	}
 }

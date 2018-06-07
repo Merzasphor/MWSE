@@ -2,6 +2,7 @@
 
 #include "sol.hpp"
 #include "LuaManager.h"
+#include "LuaUtil.h"
 
 #include "TES3Probe.h"
 #include "TES3Script.h"
@@ -9,36 +10,35 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Probe() {
-			LuaManager::getInstance().getState().new_usertype<TES3::Probe>("TES3Probe",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Get our lua state.
+			sol::state& state = LuaManager::getInstance().getState();
 
-				sol::base_classes, sol::bases<TES3::Item, TES3::BaseObject>(),
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::Probe>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::meta_function::to_string, &TES3::Probe::getObjectID,
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+			// Basic property binding.
+			usertypeDefinition.set("condition", &TES3::Probe::maxCondition);
+			usertypeDefinition.set("quality", &TES3::Probe::quality);
+			usertypeDefinition.set("value", &TES3::Probe::value);
+			usertypeDefinition.set("weight", &TES3::Probe::weight);
 
-				"objectType", &TES3::Probe::objectType,
+			// Access to other objects that need to be packaged.
+			usertypeDefinition.set("script", sol::readonly_property([](TES3::Probe& self) { return makeLuaObject(self.getScript()); }));
 
-				"boundingBox", &TES3::Probe::boundingBox,
+			// Functions exposed as properties.
+			usertypeDefinition.set("icon", sol::property(
+				&TES3::Probe::getIconPath,
+				[](TES3::Probe& self, const char* value) { if (strlen(value) < 32) strcpy(self.icon, value); }
+			));
+			usertypeDefinition.set("model", sol::property(&TES3::Probe::getModelPath, &TES3::Probe::setModelPath));
+			usertypeDefinition.set("name", sol::property(&TES3::Probe::getName, &TES3::Probe::setName));
 
-				"id", sol::readonly_property(&TES3::Probe::getObjectID),
-				"name", sol::property(&TES3::Probe::getName, &TES3::Probe::setName),
-
-				"icon", sol::readonly_property(&TES3::Probe::getIconPath),
-				"model", sol::readonly_property(&TES3::Probe::getModelPath),
-
-				"value", sol::readonly_property(&TES3::Probe::getValue),
-				"weight", sol::readonly_property(&TES3::Probe::getWeight),
-				"quality", &TES3::Probe::quality,
-				"condition", &TES3::Probe::maxCondition,
-
-				"script", sol::readonly_property(&TES3::Probe::getScript)
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("tes3lockpick", usertypeDefinition);
 		}
 	}
 }
