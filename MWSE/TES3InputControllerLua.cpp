@@ -19,7 +19,7 @@ namespace mwse {
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Basic property binding.
-				usertypeDefinition.set("keyCode", &TES3::InputConfig::keyCode);
+				usertypeDefinition.set("code", &TES3::InputConfig::keyCode);
 				usertypeDefinition.set("device", &TES3::InputConfig::device);
 
 				// Finish up our usertype.
