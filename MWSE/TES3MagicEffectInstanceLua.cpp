@@ -13,36 +13,31 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3MagicEffectInstance() {
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::MagicEffectInstance>("TES3MagicEffectInstance",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::MagicEffectInstance>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				//
-				// Properties.
-				//
+			// Basic property binding.
+			usertypeDefinition.set("cumulativeMagnitude", &TES3::MagicEffectInstance::cumulativeMagnitude);
+			usertypeDefinition.set("magnitude", &TES3::MagicEffectInstance::magnitude);
+			usertypeDefinition.set("resistedPercent", &TES3::MagicEffectInstance::resistedPercent);
+			usertypeDefinition.set("state", &TES3::MagicEffectInstance::state);
+			usertypeDefinition.set("timeActive", &TES3::MagicEffectInstance::timeActive);
+			usertypeDefinition.set("visual", &TES3::MagicEffectInstance::visual);
 
-				"target", sol::readonly_property([](TES3::MagicEffectInstance& self) { return makeLuaObject(self.target); }),
-				"resistedPercent", &TES3::MagicEffectInstance::resistedPercent,
-				"magnitude", &TES3::MagicEffectInstance::magnitude,
-				"timeActive", &TES3::MagicEffectInstance::timeActive,
-				"cumulativeMagnitude", &TES3::MagicEffectInstance::cumulativeMagnitude,
-				"state", &TES3::MagicEffectInstance::state,
-				"visual", &TES3::MagicEffectInstance::visual,
-				"lastUsedWeapon", sol::readonly_property([](TES3::MagicEffectInstance& self) { return makeLuaObject(self.lastUsedWeapon); }),
-				"lastUsedArmor", sol::readonly_property([](TES3::MagicEffectInstance& self) { return makeLuaObject(self.lastUsedArmor); }),
-				"lastUsedShield", sol::readonly_property([](TES3::MagicEffectInstance& self) { return makeLuaObject(self.lastUsedShield); }),
-				"lastUsedLight", sol::readonly_property([](TES3::MagicEffectInstance& self) { return makeLuaObject(self.lastUsedLight); }),
-				"lastUsedEnchItem", sol::readonly_property([](TES3::MagicEffectInstance& self) { return makeLuaObject(self.lastUsedEnchItem); })
+			// Access to other objects that need to be packaged.
+			usertypeDefinition.set("lastUsedArmor", sol::readonly_property([](TES3::MagicEffectInstance& self) { return makeLuaObject(self.lastUsedArmor); }));
+			usertypeDefinition.set("lastUsedEnchItem", sol::readonly_property([](TES3::MagicEffectInstance& self) { return makeLuaObject(self.lastUsedEnchItem); }));
+			usertypeDefinition.set("lastUsedLight", sol::readonly_property([](TES3::MagicEffectInstance& self) { return makeLuaObject(self.lastUsedLight); }));
+			usertypeDefinition.set("lastUsedShield", sol::readonly_property([](TES3::MagicEffectInstance& self) { return makeLuaObject(self.lastUsedShield); }));
+			usertypeDefinition.set("lastUsedWeapon", sol::readonly_property([](TES3::MagicEffectInstance& self) { return makeLuaObject(self.lastUsedWeapon); }));
+			usertypeDefinition.set("target", sol::readonly_property([](TES3::MagicEffectInstance& self) { return makeLuaObject(self.target); }));
 
-				//
-				// Functions
-				//
-
-
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("tes3magicEffectInstance", usertypeDefinition);
 		}
 	}
 }
