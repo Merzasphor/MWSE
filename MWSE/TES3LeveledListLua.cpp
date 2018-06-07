@@ -9,48 +9,46 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3LeveledList() {
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::LeveledListNode>("TES3LeveledListNode",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Binding for TES3::LeveledListNode
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::LeveledListNode>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-				//
-				// Properties.
-				//
+				// Basic property binding.
+				usertypeDefinition.set("levelRequired", sol::readonly_property(&TES3::LeveledListNode::levelRequirement));
 
-				"object", sol::readonly_property([](TES3::LeveledListNode& self) { return makeLuaObject(self.object); }),
-				"levelRequired", sol::readonly_property(&TES3::LeveledListNode::levelRequirement)
+				// Access to other objects that need to be packaged.
+				usertypeDefinition.set("object", sol::readonly_property([](TES3::LeveledListNode& self) { return makeLuaObject(self.object); }));
 
-				);
+				// Finish up our usertype.
+				state.set_usertype("tes3leveledListNode", usertypeDefinition);
+			}
 
-			state.new_usertype<TES3::LeveledList>("TES3LeveledList",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Binding for TES3::LeveledList
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::LeveledList>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::base_classes, sol::bases<TES3::BaseObject>(),
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+				// Basic property binding.
+				usertypeDefinition.set("chanceForNothing", sol::readonly_property(&TES3::LeveledList::chanceForNothing));
+				usertypeDefinition.set("count", sol::readonly_property(&TES3::LeveledList::itemCount));
+				usertypeDefinition.set("flags", sol::readonly_property(&TES3::LeveledList::flags));
+				usertypeDefinition.set("list", sol::readonly_property(&TES3::LeveledList::itemList));
 
-				"objectType", &TES3::LeveledList::objectType,
+				// Basic function binding.
+				usertypeDefinition.set("pickFrom", [](TES3::LeveledList& self) { return makeLuaObject(self.resolve()); });
 
-				"id", sol::readonly_property(&TES3::LeveledList::getObjectID),
-
-				"flags", &TES3::LeveledList::flags,
-
-				"list", sol::readonly_property(&TES3::LeveledList::itemList),
-				"count", sol::readonly_property(&TES3::LeveledList::itemList),
-				"chanceForNothing", sol::readonly_property(&TES3::LeveledList::chanceForNothing),
-
-				//
-				// Functions.
-				//
-
-				"pickFrom", [](TES3::LeveledList& self) { return makeLuaObject(self.resolve()); }
-
-				);
+				// Finish up our usertype.
+				state.set_usertype("tes3leveledList", usertypeDefinition);
+			}
 		}
 	}
 }
