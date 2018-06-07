@@ -9,55 +9,70 @@
 
 namespace mwse {
 	namespace lua {
-		void bindTES3GameSetting() {
+		sol::object getDefaultValue(TES3::GameSetting& gmst) {
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::GameSetting>("TES3GameSetting",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			switch (gmst.getType()) {
+			case 'i': return sol::make_object(state, (double)gmst.getDefaultIntValue());
+			case 'f': return sol::make_object(state, (double)gmst.getDefaultFloatValue());
+			case 's': return sol::make_object(state, gmst.getDefaultStringValue());
+			}
 
-				sol::base_classes, sol::bases<TES3::BaseObject>(),
+			return sol::nil;
+		}
 
-				//
-				// Properties.
-				//
+		sol::object getValue(TES3::GameSetting& gmst) {
+			sol::state& state = LuaManager::getInstance().getState();
 
-				"objectType", sol::readonly_property(&TES3::GameSetting::objectType),
-				"objectFlags", sol::readonly_property(&TES3::GameSetting::objectFlags),
+			switch (gmst.getType()) {
+			case 'i': return sol::make_object(state, (double)gmst.value.asLong);
+			case 'f': return sol::make_object(state, (double)gmst.value.asFloat);
+			case 's': return sol::make_object(state, gmst.value.asString);
+			}
 
-				"index", sol::readonly_property(&TES3::GameSetting::index),
-				"name", sol::readonly_property([](TES3::GameSetting& self) { return tes3::getGMSTInfo(self.index)->name; }),
-				"value", sol::property(
-					[](TES3::GameSetting& self) -> sol::object
-			{
-				sol::state& state = LuaManager::getInstance().getState();
+			return sol::nil;
+		}
 
-				char type = *tes3::getGMSTInfo(self.index)->name;
-				switch (type) {
-				case 'i': return sol::make_object(state, (double)self.value.asLong);
-				case 'f': return sol::make_object(state, (double)self.value.asFloat);
-				case 's': return sol::make_object(state, self.value.asString);
+		void setValue(TES3::GameSetting& gmst, sol::object value) {
+			char type = gmst.getType();
+			if (type == 's' && value.is<std::string>()) {
+				tes3::setDataString(&gmst.value.asString, value.as<std::string>().c_str());
+			}
+			else if (value.is<double>()) {
+				if (type == 'i') {
+					gmst.value.asLong = value.as<double>();
 				}
-				return sol::nil;
-			},
-					[](TES3::GameSetting& self, sol::object value)
-			{
-				char type = *tes3::getGMSTInfo(self.index)->name;
-				if (type == 's' && value.is<std::string>()) {
-					tes3::setDataString(&self.value.asString, value.as<std::string>().c_str());
-				}
-				else if (value.is<double>()) {
-					if (type == 'i') {
-						self.value.asLong = value.as<double>();
-					} else if (type == 'f') {
-						self.value.asFloat = value.as<double>();
-					}
+				else if (type == 'f') {
+					gmst.value.asFloat = value.as<double>();
 				}
 			}
-					),
-				"type", sol::readonly_property([](TES3::GameSetting& self) { return *tes3::getGMSTInfo(self.index)->name; })
+		}
 
-				);
+		void bindTES3GameSetting() {
+			// Get our lua state.
+			sol::state& state = LuaManager::getInstance().getState();
+
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::GameSetting>();
+			usertypeDefinition.set("new", sol::no_constructor);
+
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
+
+			// Basic property binding.
+			usertypeDefinition.set("index", sol::readonly_property(&TES3::GameSetting::index));
+
+			// Override the default BaseObject bindings to return the GMST's name.
+			usertypeDefinition.set("id", sol::readonly_property(&TES3::GameSetting::getName));
+			usertypeDefinition.set(sol::meta_function::to_string, sol::readonly_property(&TES3::GameSetting::getName));
+
+			// Functions exposed as properties.
+			usertypeDefinition.set("defaultValue", sol::readonly_property(&getDefaultValue));
+			usertypeDefinition.set("type", sol::readonly_property(&TES3::GameSetting::getType));
+			usertypeDefinition.set("value", sol::property(&getValue, &setValue));
+
+			// Finish up our usertype.
+			state.set_usertype("tes3gameSetting", usertypeDefinition);
 		}
 	}
 }

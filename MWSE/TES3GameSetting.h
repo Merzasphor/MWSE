@@ -1540,6 +1540,7 @@ namespace TES3 {
 		int type; // 0x10
 	};
 
+	// The non-static object used at runtime.
 	struct GameSetting : BaseObject {
 		union {
 			long asLong;
@@ -1547,6 +1548,18 @@ namespace TES3 {
 			char * asString;
 		} value; // 0x10
 		long index; // 0x14 // Array index of this GMST
+
+		//
+		// Custom functions.
+		//
+
+		GameSettingInfo* getInfo();
+		char getType();
+		const char* getName();
+		const char* getDefaultStringValue();
+		int getDefaultIntValue();
+		float getDefaultFloatValue();
+
 	};
 	static_assert(sizeof(GameSetting) == 0x18, "TES3::GameSetting failed size validation");
 }

@@ -263,6 +263,7 @@
     <ClCompile Include="TES3Faction.cpp" />
     <ClCompile Include="TES3FactionLua.cpp" />
     <ClCompile Include="TES3GameLua.cpp" />
+    <ClCompile Include="TES3GameSetting.cpp" />
     <ClCompile Include="TES3GameSettingLua.cpp" />
     <ClCompile Include="TES3GlobalVariableLua.cpp" />
     <ClCompile Include="TES3IngredientLua.cpp" />
