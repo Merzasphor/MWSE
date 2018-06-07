@@ -601,7 +601,7 @@ namespace mwse {
 			};
 
 			state["tes3"]["getInputBinding"] = [](int code) -> TES3::InputConfig* {
-				if (code < 0 || code > 33) {
+				if (code < TES3::KeyBind::FirstKey || code > TES3::KeyBind::LastKey) {
 					return NULL;
 				}
 
@@ -609,7 +609,7 @@ namespace mwse {
 				if (worldController) {
 					TES3::InputController * inputController = worldController->inputController;
 					if (inputController) {
-						return &inputController->inputMaps[4];
+						return &inputController->inputMaps[code];
 					}
 				}
 				return NULL;
