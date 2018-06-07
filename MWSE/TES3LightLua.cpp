@@ -2,6 +2,7 @@
 
 #include "sol.hpp"
 #include "LuaManager.h"
+#include "LuaUtil.h"
 
 #include "TES3Light.h"
 #include "TES3Script.h"
@@ -10,52 +11,51 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Light() {
-			LuaManager::getInstance().getState().new_usertype<TES3::Light>("TES3Light",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Get our lua state.
+			sol::state& state = LuaManager::getInstance().getState();
 
-				sol::base_classes, sol::bases<TES3::Item, TES3::BaseObject>(),
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::Light>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::meta_function::to_string, &TES3::Light::getObjectID,
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+			// Basic property binding.
+			usertypeDefinition.set("value", &TES3::Light::value);
+			usertypeDefinition.set("weight", &TES3::Light::weight);
+			usertypeDefinition.set("time", &TES3::Light::time);
+			usertypeDefinition.set("radius", &TES3::Light::radius);
+			usertypeDefinition.set("flags", &TES3::Light::flags);
 
-				"objectType", &TES3::Light::objectType,
+			// User-friendly access to flags.
+			usertypeDefinition.set("canCarry", sol::property(&TES3::Light::getCanCarry, &TES3::Light::setCanCarry));
+			usertypeDefinition.set("flickers", sol::property(&TES3::Light::getFlickers, &TES3::Light::setFlickers));
+			usertypeDefinition.set("flickersSlowly", sol::property(&TES3::Light::getFlickersSlowly, &TES3::Light::setFlickersSlowly));
+			usertypeDefinition.set("isDynamic", sol::property(&TES3::Light::getIsDynamic, &TES3::Light::setIsDynamic));
+			usertypeDefinition.set("isFire", sol::property(&TES3::Light::getIsFire, &TES3::Light::setIsFire));
+			usertypeDefinition.set("isNegative", sol::property(&TES3::Light::getIsNegative, &TES3::Light::setIsNegative));
+			usertypeDefinition.set("isOffByDefault", sol::property(&TES3::Light::getIsOffByDefault, &TES3::Light::setIsOffByDefault));
+			usertypeDefinition.set("pulses", sol::property(&TES3::Light::getPulses, &TES3::Light::setPulses));
+			usertypeDefinition.set("pulsesSlowly", sol::property(&TES3::Light::getPulsesSlowly, &TES3::Light::setPulsesSlowly));
 
-				"boundingBox", &TES3::Light::boundingBox,
+			// Indirect bindings to unions and arrays.
+			usertypeDefinition.set("color", sol::readonly_property([](TES3::Light& self) { return std::ref(self.color); }));
 
-				"id", sol::readonly_property(&TES3::Light::getObjectID),
-				"name", sol::property(&TES3::Light::getName, &TES3::Light::setName),
+			// Access to other objects that need to be packaged.
+			usertypeDefinition.set("sound", sol::readonly_property([](TES3::Light& self) { return makeLuaObject(self.sound); }));
+			usertypeDefinition.set("script", sol::readonly_property([](TES3::Light& self) { return makeLuaObject(self.script); }));
 
-				"icon", sol::readonly_property(&TES3::Light::getIconPath),
-				"model", sol::readonly_property(&TES3::Light::getModelPath),
+			// Functions exposed as properties.
+			usertypeDefinition.set("icon", sol::property(
+				&TES3::Light::getIconPath,
+				[](TES3::Light& self, const char* value) { if (strlen(value) < 32) tes3::setDataString(&self.icon, value); }
+			));
+			usertypeDefinition.set("model", sol::property(&TES3::Light::getModelPath, &TES3::Light::setModelPath));
+			usertypeDefinition.set("name", sol::property(&TES3::Light::getName, &TES3::Light::setName));
 
-				"value", sol::readonly_property(&TES3::Light::getValue),
-				"weight", sol::readonly_property(&TES3::Light::getWeight),
-
-				"time", &TES3::Light::time,
-				"radius", &TES3::Light::radius,
-
-				"flags", &TES3::Light::flags,
-				"canCarry", sol::property(&TES3::Light::getCanCarry, &TES3::Light::setCanCarry),
-				"flickers", sol::property(&TES3::Light::getFlickers, &TES3::Light::setFlickers),
-				"flickersSlowly", sol::property(&TES3::Light::getFlickersSlowly, &TES3::Light::setFlickersSlowly),
-				"isDynamic", sol::property(&TES3::Light::getIsDynamic, &TES3::Light::setIsDynamic),
-				"isFire", sol::property(&TES3::Light::getIsFire, &TES3::Light::setIsFire),
-				"isNegative", sol::property(&TES3::Light::getIsNegative, &TES3::Light::setIsNegative),
-				"isOffByDefault", sol::property(&TES3::Light::getIsOffByDefault, &TES3::Light::setIsOffByDefault),
-				"pulses", sol::property(&TES3::Light::getPulses, &TES3::Light::setPulses),
-				"pulsesSlowly", sol::property(&TES3::Light::getPulsesSlowly, &TES3::Light::setPulsesSlowly),
-
-				// TODO: Color exposure?
-
-				"sound", sol::readonly_property(&TES3::Light::sound),
-
-				"script", sol::readonly_property(&TES3::Light::getScript)
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("tes3light", usertypeDefinition);
 		}
 	}
 }
