@@ -20,7 +20,7 @@ namespace TES3 {
 		char unknown_0x1F;
 		char unknown_0x20;
 		char unknown_0x21;
-		unsigned char screenShotsEnabled; // 0x22
+		bool screenShotsEnabled; // 0x22
 		int unknown_0x24;
 		int unknown_0x28;
 		int unknown_0x2C;
@@ -41,7 +41,7 @@ namespace TES3 {
 		char unknown_0x59;
 		char unknown_0x5A;
 		char unknown_0x5B;
-		int unknown_0x5C;
+		HWND parentWindowHandle; // 0x5C
 		HWND windowHandle; // 0x60
 		void * sgNode1;
 		int unknown_0x68;
