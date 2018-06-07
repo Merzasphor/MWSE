@@ -22,6 +22,7 @@
 #include "TES3Game.h"
 #include "TES3GameSetting.h"
 #include "TES3GlobalVariable.h"
+#include "TES3InputController.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
 #include "TES3Script.h"
@@ -597,6 +598,21 @@ namespace mwse {
 				}
 
 				return sol::nil;
+			};
+
+			state["tes3"]["getInputBinding"] = [](int code) -> TES3::InputConfig* {
+				if (code < 0 || code > 33) {
+					return NULL;
+				}
+
+				TES3::WorldController * worldController = tes3::getWorldController();
+				if (worldController) {
+					TES3::InputController * inputController = worldController->inputController;
+					if (inputController) {
+						return &inputController->inputMaps[4];
+					}
+				}
+				return NULL;
 			};
 		}
 	}
