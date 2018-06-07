@@ -31,10 +31,11 @@ namespace TES3 {
 		int unknown_0x29C;
 
 		//
-		// Lua interface functions.
+		// Custom functions.
 		//
 
-		sol::object getReactions();
+		char * getName();
+		void setName(const char*);
 
 	};
 	static_assert(sizeof(Faction::Rank) == 0x14, "TES3::Faction::Rank failed size validation");

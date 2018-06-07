@@ -260,6 +260,7 @@
     <ClCompile Include="TES3DataHandlerLua.cpp" />
     <ClCompile Include="TES3DoorLua.cpp" />
     <ClCompile Include="TES3EnchantmentLua.cpp" />
+    <ClCompile Include="TES3Faction.cpp" />
     <ClCompile Include="TES3FactionLua.cpp" />
     <ClCompile Include="TES3GameLua.cpp" />
     <ClCompile Include="TES3GameSettingLua.cpp" />

@@ -2,85 +2,71 @@
 
 #include "sol.hpp"
 #include "LuaManager.h"
+#include "LuaUtil.h"
 
 #include "TES3Faction.h"
-
-namespace TES3 {
-	sol::object Faction::getReactions() {
-		sol::state& state = mwse::lua::LuaManager::getInstance().getState();
-
-		sol::table result = state.create_table();
-		auto * node = reactions.head;
-		while (node) {
-			result.add(node->data);
-			node = node->next;
-		}
-		return result;
-	}
-}
 
 namespace mwse {
 	namespace lua {
 		void bindTES3Faction() {
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::Faction::Rank>("TES3FactionRank",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Binding for TES3::Faction::Rank
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::Faction::Rank>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-				//
-				// Properties.
-				//
+				// Basic property binding.
+				usertypeDefinition.set("reputation", &TES3::Faction::Rank::reputation);
 
-				"attributes", sol::property([](TES3::Faction::Rank& self) { return std::ref(self.reqAttributes); }),
-				"skills", sol::property([](TES3::Faction::Rank& self) { return std::ref(self.reqSkills); }),
-				"reputation", &TES3::Faction::Rank::reputation
+				// Indirect bindings to unions and arrays.
+				usertypeDefinition.set("attributes", sol::readonly_property([](TES3::Faction::Rank& self) { return std::ref(self.reqAttributes); }));
+				usertypeDefinition.set("skills", sol::readonly_property([](TES3::Faction::Rank& self) { return std::ref(self.reqSkills); }));
 
-				);
+				// Finish up our usertype.
+				state.set_usertype("tes3factionRank", usertypeDefinition);
+			}
 
-			state.new_usertype<TES3::Faction::ReactionNode>("TES3FactionReaction",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Binding for TES3::Faction::ReactionNode
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::Faction::ReactionNode>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-				//
-				// Properties.
-				//
+				// Basic property binding.
+				usertypeDefinition.set("reputation", &TES3::Faction::ReactionNode::reaction);
+				usertypeDefinition.set("faction", sol::readonly_property([](TES3::Faction::ReactionNode& self) { return makeLuaObject(self.faction); }));
 
-				"faction", sol::readonly_property(&TES3::Faction::ReactionNode::faction),
-				"reaction", &TES3::Faction::ReactionNode::reaction
+				// Finish up our usertype.
+				state.set_usertype("tes3factionReaction", usertypeDefinition);
+			}
 
-				);
+			// Binding for TES3::Faction
+			//! TODO: Provide a more friendly way to access rank names. Probably needs to be hidden behind its own struct.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::Faction>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-			state.new_usertype<TES3::Faction>("TES3Faction",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 
-				sol::base_classes, sol::bases<TES3::BaseObject>(),
+				// Basic property binding.
+				usertypeDefinition.set("reactions", sol::readonly_property(&TES3::Faction::reactions));
 
-				sol::meta_function::to_string, &TES3::Faction::getObjectID,
+				// Indirect bindings to unions and arrays.
+				usertypeDefinition.set("attributes", sol::property([](TES3::Faction& self) { return std::ref(self.attributes); }));
+				usertypeDefinition.set("ranks", sol::readonly_property([](TES3::Faction& self) { return std::ref(self.ranks); }));
+				usertypeDefinition.set("skills", sol::property([](TES3::Faction& self) { return std::ref(self.skills); }));
 
-				//
-				// Properties.
-				//
+				// Functions exposed as properties.
+				usertypeDefinition.set("name", sol::property(&TES3::Faction::getName, &TES3::Faction::setName));
 
-				"objectType", &TES3::Faction::objectType,
-
-				"id", sol::readonly_property(&TES3::Faction::getObjectID),
-				"name", sol::property([](TES3::Faction& self) { return self.name; }),
-
-				"skills", sol::property([](TES3::Faction& self) { return std::ref(self.skills); }),
-
-				"ranks", sol::readonly_property([](TES3::Faction& self) { return std::ref(self.ranks); }),
-
-				"reactions", sol::readonly_property(&TES3::Faction::getReactions),
-
-				//
-				// Functions.
-				//
-
-				"getRankName", [](TES3::Faction& self, int index) { return self.rankNames[index-1]; }
-
-				);
+				// Finish up our usertype.
+				state.set_usertype("tes3faction", usertypeDefinition);
+			}
 		}
 	}
 }
