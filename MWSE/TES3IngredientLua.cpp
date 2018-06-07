@@ -9,38 +9,36 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Ingredient() {
-			LuaManager::getInstance().getState().new_usertype<TES3::Ingredient>("TES3Ingredient",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Get our lua state.
+			sol::state& state = LuaManager::getInstance().getState();
 
-				sol::base_classes, sol::bases<TES3::Item, TES3::BaseObject>(),
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::Ingredient>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::meta_function::to_string, &TES3::Ingredient::getObjectID,
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+			// Basic property binding.
+			usertypeDefinition.set("value", &TES3::Ingredient::value);
+			usertypeDefinition.set("weight", &TES3::Ingredient::weight);
 
-				"objectType", &TES3::Ingredient::objectType,
+			// Indirect bindings to unions and arrays.
+			usertypeDefinition.set("effects", sol::readonly_property([](TES3::Ingredient& self) { return std::ref(self.effects); }));
+			usertypeDefinition.set("effectSkillIds", sol::readonly_property([](TES3::Ingredient& self) { return std::ref(self.effectSkillIds); }));
+			usertypeDefinition.set("effectAttributeIds", sol::readonly_property([](TES3::Ingredient& self) { return std::ref(self.effectAttributeIds); }));
 
-				"boundingBox", &TES3::Ingredient::boundingBox,
+			// Functions exposed as properties.
+			usertypeDefinition.set("icon", sol::property(
+				&TES3::Ingredient::getIconPath,
+				[](TES3::Ingredient& self, const char* value) { if (strlen(value) < 32) strcpy(self.texture, value); }
+			));
+			usertypeDefinition.set("model", sol::property(&TES3::Ingredient::getModelPath, &TES3::Ingredient::setModelPath));
+			usertypeDefinition.set("name", sol::property(&TES3::Ingredient::getName, &TES3::Ingredient::setName));
+			usertypeDefinition.set("script", sol::property(&TES3::Ingredient::getScript));
 
-				"id", sol::readonly_property(&TES3::Ingredient::getObjectID),
-				"name", sol::property(&TES3::Ingredient::getName, &TES3::Ingredient::setName),
-
-				"icon", sol::readonly_property(&TES3::Ingredient::getIconPath),
-				"model", sol::readonly_property(&TES3::Ingredient::getModelPath),
-
-				"value", sol::readonly_property(&TES3::Ingredient::getValue),
-				"weight", sol::readonly_property(&TES3::Ingredient::getWeight),
-
-				"effects", sol::readonly_property([](TES3::Ingredient& self) { return std::ref(self.effects); }),
-				"effectSkillIds", sol::readonly_property([](TES3::Ingredient& self) { return std::ref(self.effectSkillIds); }),
-				"effectAttributeIds", sol::readonly_property([](TES3::Ingredient& self) { return std::ref(self.effectAttributeIds); }),
-
-				"script", sol::readonly_property(&TES3::Ingredient::getScript)
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("tes3ingredient", usertypeDefinition);
 		}
 	}
 }
