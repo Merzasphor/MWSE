@@ -63,7 +63,7 @@ namespace mwse {
 			usertypeDefinition.set("unarmored", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Unarmored]; }));
 
 			// Finish up our usertype.
-			state.set_usertype("TES3MobileNPC", usertypeDefinition);
+			state.set_usertype("tes3mobileNPC", usertypeDefinition);
 		}
 	}
 }

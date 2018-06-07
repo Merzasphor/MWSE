@@ -38,7 +38,7 @@ namespace mwse {
 				usertypeDefinition.set("sourceMod", sol::readonly_property([](TES3::BaseObject& self) { return self.sourceMod->fileName; }));
 
 				// Finish up our usertype.
-				state.set_usertype("TES3BaseObject", usertypeDefinition);
+				state.set_usertype("tes3baseObject", usertypeDefinition);
 			}
 
 			// Binding for TES3::Object
@@ -60,7 +60,7 @@ namespace mwse {
 				usertypeDefinition.set("sceneReference", sol::readonly_property([](TES3::Object& self) { return makeLuaObject(self.sceneGraphReference); }));
 
 				// Finish up our usertype.
-				state.set_usertype("TES3Object", usertypeDefinition);
+				state.set_usertype("tes3object", usertypeDefinition);
 			}
 
 			// Binding for TES3::PhysicalObject
@@ -76,7 +76,7 @@ namespace mwse {
 				usertypeDefinition.set("boundingBox", sol::readonly_property(&TES3::PhysicalObject::boundingBox));
 
 				// Finish up our usertype.
-				state.set_usertype("TES3PhysicalObject", usertypeDefinition);
+				state.set_usertype("tes3physicalObject", usertypeDefinition);
 			}
 		}
 	}

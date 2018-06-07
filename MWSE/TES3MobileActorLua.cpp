@@ -202,7 +202,7 @@ namespace mwse {
 			usertypeDefinition.set("hasFreeAction", sol::property(&TES3::MobileActor::hasFreeAction));
 
 			// Finish up our usertype.
-			state.set_usertype("TES3MobileActor", usertypeDefinition);
+			state.set_usertype("tes3mobileActor", usertypeDefinition);
 		}
 	}
 }

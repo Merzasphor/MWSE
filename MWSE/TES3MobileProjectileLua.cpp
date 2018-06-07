@@ -30,7 +30,7 @@ namespace mwse {
 			usertypeDefinition.set("firingWeapon", sol::readonly_property([](TES3::MobileProjectile& self) { return makeLuaObject(self.firingWeapon); }));
 
 			// Finish up our usertype.
-			state.set_usertype("TES3MobileProjectile", usertypeDefinition);
+			state.set_usertype("tes3mobileProjectile", usertypeDefinition);
 		}
 	}
 }

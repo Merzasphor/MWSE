@@ -35,7 +35,7 @@ namespace mwse {
 			usertypeDefinition.set("reference", sol::readonly_property([](TES3::MobileObject& self) { return makeLuaObject(self.reference); }));
 
 			// Finish up our usertype.
-			state.set_usertype("TES3MobileObject", usertypeDefinition);
+			state.set_usertype("tes3mobileObject", usertypeDefinition);
 		}
 	}
 }

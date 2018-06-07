@@ -22,7 +22,7 @@ namespace mwse {
 			usertypeDefinition.set("value", &TES3::GlobalVariable::value);
 
 			// Finish up our usertype.
-			state.set_usertype("TES3GlobalVariable", usertypeDefinition);
+			state.set_usertype("tes3globalVariable", usertypeDefinition);
 		}
 	}
 }

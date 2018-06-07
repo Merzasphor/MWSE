@@ -91,7 +91,7 @@ namespace mwse {
 			usertypeDefinition.set("is3rdPerson", sol::readonly_property(&TES3::MobilePlayer::is3rdPerson));
 
 			// Finish up our usertype.
-			state.set_usertype("TES3MobilePlayer", usertypeDefinition);
+			state.set_usertype("tes3mobilePlayer", usertypeDefinition);
 		}
 	}
 }

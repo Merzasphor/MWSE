@@ -30,7 +30,7 @@ namespace mwse {
 			usertypeDefinition.set("object", sol::readonly_property([](TES3::MobileCreature& self) { return makeLuaObject(self.creatureInstance); }));
 
 			// Finish up our usertype.
-			state.set_usertype("TES3MobileCreature", usertypeDefinition);
+			state.set_usertype("tes3mobileCreature", usertypeDefinition);
 		}
 	}
 }
