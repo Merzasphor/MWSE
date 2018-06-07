@@ -765,6 +765,9 @@
     <ClInclude Include="TES3ActorLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
+    <ClInclude Include="TES3InputControllerLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1785,6 +1788,9 @@
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3ActorLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3InputControllerLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
   </ItemGroup>
