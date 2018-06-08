@@ -40,16 +40,18 @@ Show a message when the player attacks, and the target if they'd hit someone.
 
 .. code-block:: lua
 
-	function myOnAttackCallback(e)
-		if (e.reference ~= tes3.getPlayerRef()) then	--someone other than the player is attacking
+function myOnAttackCallback(e)
+	--someone other than the player is attacking
+	if (e.reference ~= tes3.getPlayerRef()) then
 		return
-		end
-
-	if (e.targetReference ~= nil) then	--we hit someone!
+	end
+	
+	--we hit someone!
+	if (e.targetReference ~= nil) then
 		tes3.messageBox({ message = "You hit " .. e.targetReference.id })
 	end
-	end
-	event.register("attack", myOnAttackCallback)
+end
+event.register("attack", myOnAttackCallback)
 
 .. _`Event Guide`: ../guide/events.html
 
