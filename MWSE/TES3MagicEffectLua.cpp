@@ -10,139 +10,143 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3MagicEffect() {
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::MagicEffect>("TES3MagicEffect",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Binding for TES3::MagicEffect
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::MagicEffect>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::base_classes, sol::bases<TES3::BaseObject>(),
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+				// Basic property binding.
+				usertypeDefinition.set("baseMagickaCost", &TES3::MagicEffect::baseMagickaCost);
+				usertypeDefinition.set("flags", &TES3::MagicEffect::flags);
+				usertypeDefinition.set("id", sol::readonly_property(&TES3::MagicEffect::id));
+				usertypeDefinition.set("lightingBlue", &TES3::MagicEffect::lightingBlue);
+				usertypeDefinition.set("lightingGreen", &TES3::MagicEffect::lightingGreen);
+				usertypeDefinition.set("lightingRed", &TES3::MagicEffect::lightingRed);
+				usertypeDefinition.set("school", &TES3::MagicEffect::school);
+				usertypeDefinition.set("size", &TES3::MagicEffect::size);
+				usertypeDefinition.set("sizeCap", &TES3::MagicEffect::sizeCap);
+				usertypeDefinition.set("speed", &TES3::MagicEffect::speed);
 
-				"objectType", &TES3::MagicEffect::objectType,
-
-				"flags", &TES3::MagicEffect::flags,
-				"baseFlags", sol::property(
+				// Allow access to base effect flags.
+				usertypeDefinition.set("baseFlags", sol::property(
 					[](TES3::MagicEffect& self) { return tes3::getBaseEffectFlags()[self.id]; },
 					[](TES3::MagicEffect& self, double value) { tes3::getBaseEffectFlags()[self.id] = value; }
-					),
+				));
 
-				// Nicer access to flags.
-				"targetsSkills", sol::property(
+				// User-friendly access to those base effects.
+				usertypeDefinition.set("targetsSkills", sol::property(
 					[](TES3::MagicEffect& self) { return tes3::getBaseEffectFlag(self.id, TES3::EffectFlag::TargetSkill); },
 					[](TES3::MagicEffect& self, bool set) { tes3::setBaseEffectFlag(self.id, TES3::EffectFlag::TargetSkill, set); }
-					),
-				"targetsAttributes", sol::property(
+				));
+				usertypeDefinition.set("targetsAttributes", sol::property(
 					[](TES3::MagicEffect& self) { return tes3::getBaseEffectFlag(self.id, TES3::EffectFlag::TargetAttribute); },
 					[](TES3::MagicEffect& self, bool set) { tes3::setBaseEffectFlag(self.id, TES3::EffectFlag::TargetAttribute, set); }
-					),
-				"hasNoDuration", sol::property(
+				));
+				usertypeDefinition.set("hasNoDuration", sol::property(
 					[](TES3::MagicEffect& self) { return tes3::getBaseEffectFlag(self.id, TES3::EffectFlag::NoDuration); },
 					[](TES3::MagicEffect& self, bool set) { tes3::setBaseEffectFlag(self.id, TES3::EffectFlag::NoDuration, set); }
-					),
-				"hasNoMagnitude", sol::property(
+				));
+				usertypeDefinition.set("hasNoMagnitude", sol::property(
 					[](TES3::MagicEffect& self) { return tes3::getBaseEffectFlag(self.id, TES3::EffectFlag::NoMagnitude); },
 					[](TES3::MagicEffect& self, bool set) { tes3::setBaseEffectFlag(self.id, TES3::EffectFlag::NoMagnitude, set); }
-					),
-				"isHarmful", sol::property(
+				));
+				usertypeDefinition.set("isHarmful", sol::property(
 					[](TES3::MagicEffect& self) { return tes3::getBaseEffectFlag(self.id, TES3::EffectFlag::Harmful); },
 					[](TES3::MagicEffect& self, bool set) { tes3::setBaseEffectFlag(self.id, TES3::EffectFlag::Harmful, set); }
-					),
-				"hasContinuousVFX", sol::property(
+				));
+				usertypeDefinition.set("hasContinuousVFX", sol::property(
 					[](TES3::MagicEffect& self) { return tes3::getBaseEffectFlag(self.id, TES3::EffectFlag::ContinuousVFX); },
 					[](TES3::MagicEffect& self, bool set) { tes3::setBaseEffectFlag(self.id, TES3::EffectFlag::ContinuousVFX, set); }
-					),
-				"canCastSelf", sol::property(
+				));
+				usertypeDefinition.set("canCastSelf", sol::property(
 					[](TES3::MagicEffect& self) { return tes3::getBaseEffectFlag(self.id, TES3::EffectFlag::CanCastSelf); },
 					[](TES3::MagicEffect& self, bool set) { tes3::setBaseEffectFlag(self.id, TES3::EffectFlag::CanCastSelf, set); }
-					),
-				"canCastTouch", sol::property(
+				));
+				usertypeDefinition.set("canCastTouch", sol::property(
 					[](TES3::MagicEffect& self) { return tes3::getBaseEffectFlag(self.id, TES3::EffectFlag::CanCastTouch); },
 					[](TES3::MagicEffect& self, bool set) { tes3::setBaseEffectFlag(self.id, TES3::EffectFlag::CanCastTouch, set); }
-					),
-				"canCastTarget", sol::property(
+				));
+				usertypeDefinition.set("canCastTarget", sol::property(
 					[](TES3::MagicEffect& self) { return tes3::getBaseEffectFlag(self.id, TES3::EffectFlag::CanCastTarget); },
 					[](TES3::MagicEffect& self, bool set) { tes3::setBaseEffectFlag(self.id, TES3::EffectFlag::CanCastTarget, set); }
-					),
-				"allowSpellmaking", sol::property(
+				));
+				usertypeDefinition.set("allowSpellmaking", sol::property(
 					[](TES3::MagicEffect& self) { return (self.flags & TES3::EffectFlag::AllowSpellmaking) != 0; },
 					[](TES3::MagicEffect& self) { self.flags |= TES3::EffectFlag::AllowSpellmaking; }
-					),
-				"allowEnchanting", sol::property(
+				));
+				usertypeDefinition.set("allowEnchanting", sol::property(
 					[](TES3::MagicEffect& self) { return (self.flags & TES3::EffectFlag::AllowEnchanting) != 0; },
 					[](TES3::MagicEffect& self) { self.flags |= TES3::EffectFlag::AllowEnchanting; }
-					),
-				"usesNegativeLighting", sol::property(
+				));
+				usertypeDefinition.set("usesNegativeLighting", sol::property(
 					[](TES3::MagicEffect& self) { return tes3::getBaseEffectFlag(self.id, TES3::EffectFlag::NegativeLighting); },
 					[](TES3::MagicEffect& self, bool set) { tes3::setBaseEffectFlag(self.id, TES3::EffectFlag::NegativeLighting, set); }
-					),
-				"appliesOnce", sol::property(
+				));
+				usertypeDefinition.set("appliesOnce", sol::property(
 					[](TES3::MagicEffect& self) { return tes3::getBaseEffectFlag(self.id, TES3::EffectFlag::AppliedOnce); },
 					[](TES3::MagicEffect& self, bool set) { tes3::setBaseEffectFlag(self.id, TES3::EffectFlag::AppliedOnce, set); }
-					),
-				"nonRecastable", sol::property(
+				));
+				usertypeDefinition.set("nonRecastable", sol::property(
 					[](TES3::MagicEffect& self) { return tes3::getBaseEffectFlag(self.id, TES3::EffectFlag::NonRecastable); },
 					[](TES3::MagicEffect& self, bool set) { tes3::setBaseEffectFlag(self.id, TES3::EffectFlag::NonRecastable, set); }
-					),
-				"illegalDaedra", sol::property(
+				));
+				usertypeDefinition.set("illegalDaedra", sol::property(
 					[](TES3::MagicEffect& self) { return tes3::getBaseEffectFlag(self.id, TES3::EffectFlag::IllegalDaedra); },
 					[](TES3::MagicEffect& self, bool set) { tes3::setBaseEffectFlag(self.id, TES3::EffectFlag::IllegalDaedra, set); }
-					),
-				"unreflectable", sol::property(
+				));
+				usertypeDefinition.set("unreflectable", sol::property(
 					[](TES3::MagicEffect& self) { return tes3::getBaseEffectFlag(self.id, TES3::EffectFlag::Unreflectable); },
 					[](TES3::MagicEffect& self, bool set) { tes3::setBaseEffectFlag(self.id, TES3::EffectFlag::Unreflectable, set); }
-					),
-				"casterLinked", sol::property(
+				));
+				usertypeDefinition.set("casterLinked", sol::property(
 					[](TES3::MagicEffect& self) { return tes3::getBaseEffectFlag(self.id, TES3::EffectFlag::CasterLinked); },
 					[](TES3::MagicEffect& self, bool set) { tes3::setBaseEffectFlag(self.id, TES3::EffectFlag::CasterLinked, set); }
-					),
+				));
 
-				"id", sol::readonly_property(&TES3::MagicEffect::id),
+				// Functions exposed as properties.
+				usertypeDefinition.set("areaSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return &self.areaSoundEffect; }));
+				usertypeDefinition.set("boltSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return &self.boltSoundEffect; }));
+				usertypeDefinition.set("castSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return &self.castSoundEffect; }));
+				usertypeDefinition.set("hitSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return &self.hitSoundEffect; }));
+				usertypeDefinition.set("icon", sol::property(
+					[](TES3::MagicEffect& self) { return self.icon; },
+					[](TES3::MagicEffect& self, const char* value) { if (strlen(value) < 32) strcpy(self.icon, value); }
+				));
+				usertypeDefinition.set("particleTexture", sol::readonly_property([](TES3::MagicEffect& self) { return &self.particleTexture; }));
 
-				"school", &TES3::MagicEffect::school,
-				"baseMagickaCost", &TES3::MagicEffect::baseMagickaCost,
+				// Finish up our usertype.
+				state.set_usertype("tes3magicEffect", usertypeDefinition);
+			}
 
-				"icon", sol::readonly_property([](TES3::MagicEffect& self) { return self.icon; }),
-				"particleTexture", sol::readonly_property([](TES3::MagicEffect& self) { return self.particleTexture; }),
-				"castSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return self.castSoundEffect; }),
-				"boltSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return self.boltSoundEffect; }),
-				"hitSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return self.hitSoundEffect; }),
-				"areaSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return self.areaSoundEffect; }),
+			// Binding for TES3::Effect
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::Effect>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-				"lightingRed", &TES3::MagicEffect::lightingRed,
-				"lightingGreen", &TES3::MagicEffect::lightingGreen,
-				"lightingBlue", &TES3::MagicEffect::lightingBlue,
+				// Basic property binding.
+				usertypeDefinition.set("attribute", &TES3::Effect::attributeID);
+				usertypeDefinition.set("duration", &TES3::Effect::duration);
+				usertypeDefinition.set("id", &TES3::Effect::effectID);
+				usertypeDefinition.set("max", &TES3::Effect::magnitudeMax);
+				usertypeDefinition.set("min", &TES3::Effect::magnitudeMin);
+				usertypeDefinition.set("radius", &TES3::Effect::radius);
+				usertypeDefinition.set("rangeType", &TES3::Effect::rangeType);
+				usertypeDefinition.set("skill", &TES3::Effect::skillID);
 
-				"size", &TES3::MagicEffect::size,
-				"speed", &TES3::MagicEffect::speed,
-				"sizeCap", &TES3::MagicEffect::sizeCap
+				// Allow easy access to the base magic effect.
+				usertypeDefinition.set("object", sol::readonly_property([](TES3::Effect& self) { return tes3::getDataHandler()->nonDynamicData->magicEffects[self.effectID]; }));
 
-				);
-
-			state.new_usertype<TES3::Effect>("TES3Effect",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
-
-				//
-				// Properties.
-				//
-
-				"id", &TES3::Effect::effectID,
-				"skill", &TES3::Effect::skillID,
-				"attribute", &TES3::Effect::attributeID,
-				"rangeType", &TES3::Effect::rangeType,
-				"radius", &TES3::Effect::radius,
-				"duration", &TES3::Effect::duration,
-				"min", &TES3::Effect::magnitudeMin,
-				"max", &TES3::Effect::magnitudeMax,
-
-				// Access to the root MGEF object.
-				"object", sol::readonly_property([](TES3::Effect& self) { return tes3::getDataHandler()->nonDynamicData->magicEffects[self.effectID]; })
-
-				);
+				// Finish up our usertype.
+				state.set_usertype("tes3creatureAttributes", usertypeDefinition);
+			}
 		}
 	}
 }
