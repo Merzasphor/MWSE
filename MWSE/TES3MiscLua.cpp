@@ -2,6 +2,7 @@
 
 #include "sol.hpp"
 #include "LuaManager.h"
+#include "LuaUtil.h"
 
 #include "TES3Misc.h"
 #include "TES3Script.h"
@@ -9,34 +10,33 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Misc() {
-			LuaManager::getInstance().getState().new_usertype<TES3::Misc>("TES3Misc",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Get our lua state.
+			sol::state& state = LuaManager::getInstance().getState();
 
-				sol::base_classes, sol::bases<TES3::Item, TES3::BaseObject>(),
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::Misc>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::meta_function::to_string, &TES3::Misc::getObjectID,
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+			// Basic property binding.
+			usertypeDefinition.set("value", &TES3::Misc::value);
+			usertypeDefinition.set("weight", &TES3::Misc::weight);
 
-				"objectType", &TES3::Misc::objectType,
+			// Access to other objects that need to be packaged.
+			usertypeDefinition.set("script", sol::readonly_property([](TES3::Misc& self) { return makeLuaObject(self.getScript()); }));
 
-				"boundingBox", &TES3::Misc::boundingBox,
+			// Functions exposed as properties.
+			usertypeDefinition.set("icon", sol::property(
+				&TES3::Misc::getIconPath,
+				[](TES3::Misc& self, const char* value) { if (strlen(value) < 32) tes3::setDataString(&self.icon, value); }
+			));
+			usertypeDefinition.set("model", sol::property(&TES3::Misc::getModelPath, &TES3::Misc::setModelPath));
+			usertypeDefinition.set("name", sol::property(&TES3::Misc::getName, &TES3::Misc::setName));
 
-				"id", sol::readonly_property(&TES3::Misc::getObjectID),
-				"name", sol::property(&TES3::Misc::getName, &TES3::Misc::setName),
-
-				"icon", sol::readonly_property(&TES3::Misc::getIconPath),
-				"model", sol::readonly_property(&TES3::Misc::getModelPath),
-
-				"value", sol::readonly_property(&TES3::Misc::getValue),
-				"weight", sol::readonly_property(&TES3::Misc::getWeight),
-
-				"script", sol::readonly_property(&TES3::Misc::getScript)
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("tes3misc", usertypeDefinition);
 		}
 	}
 }
