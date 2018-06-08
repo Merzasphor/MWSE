@@ -231,41 +231,52 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.messageBox
-			state["tes3"]["messageBox"] = [](sol::table params) {
-				// We need to make sure the strings stay in memory, we can't just snag the c-string in passing.
-				std::string buttonText[32];
-				struct {
-					const char* text[32] = {};
-				} buttonTextStruct;
-
-				//  Get the parameters out of the table and into the table.
-				std::string message = params["message"];
-				sol::optional<sol::table> maybeButtons = params["buttons"];
-				if (maybeButtons && maybeButtons.value().size() > 0) {
-					sol::table buttons = maybeButtons.value();
-					size_t size = min(buttons.size(), 32);
-					for (size_t i = 0; i < size; i++) {
-						std::string result = buttons[i+1];
-						if (result.empty()) {
-							break;
-						}
-
-						buttonText[i] = result;
-						buttonTextStruct.text[i] = buttonText[i].c_str();
-					}
-				}
-
-				// No buttons, do a normal popup.
-				else {
+			state["tes3"]["messageBox"] = [](sol::object param, sol::optional<sol::variadic_args> va) {
+				if (param.is<std::string>()) {
+					sol::state& state = LuaManager::getInstance().getState();
+					std::string message = state["string"]["format"](param, va);
 					return tes3::ui::messagePlayer(message.c_str());
 				}
+				else if (param.is<sol::table>()) {
+					sol::table params = param;
 
-				// Set up our event callback.
-				LuaManager::getInstance().setButtonPressedCallback(params["callback"]);
+					// We need to make sure the strings stay in memory, we can't just snag the c-string in passing.
+					std::string buttonText[32];
+					struct {
+						const char* text[32] = {};
+					} buttonTextStruct;
 
-				// Temporary hook into the function that creates message boxes. 
-				int result = reinterpret_cast<int(__cdecl *)(const char*, ...)>(0x5F1AA0)(message.c_str(), buttonTextStruct, NULL);
-				return result;
+					//  Get the parameters out of the table and into the table.
+					std::string message = params["message"];
+					sol::optional<sol::table> maybeButtons = params["buttons"];
+					if (maybeButtons && maybeButtons.value().size() > 0) {
+						sol::table buttons = maybeButtons.value();
+						size_t size = min(buttons.size(), 32);
+						for (size_t i = 0; i < size; i++) {
+							std::string result = buttons[i + 1];
+							if (result.empty()) {
+								break;
+							}
+
+							buttonText[i] = result;
+							buttonTextStruct.text[i] = buttonText[i].c_str();
+						}
+					}
+
+					// No buttons, do a normal popup.
+					else {
+						return tes3::ui::messagePlayer(message.c_str());
+					}
+
+					// Set up our event callback.
+					LuaManager::getInstance().setButtonPressedCallback(params["callback"]);
+
+					// Temporary hook into the function that creates message boxes. 
+					int result = reinterpret_cast<int(__cdecl *)(const char*, ...)>(0x5F1AA0)(message.c_str(), buttonTextStruct, NULL);
+					return result;
+				}
+
+				return 0;
 			};
 
 			// Bind function: tes3.saveGame
