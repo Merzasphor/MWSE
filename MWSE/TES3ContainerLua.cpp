@@ -2,6 +2,7 @@
 
 #include "sol.hpp"
 #include "LuaManager.h"
+#include "LuaUtil.h"
 
 #include "TES3Container.h"
 #include "TES3Script.h"
@@ -37,8 +38,10 @@ namespace mwse {
 				// Constant values.
 				usertypeDefinition.set("isInstance", sol::var(false));
 
+				// Basic function binding.
+				usertypeDefinition.set("clone", &TES3::Container::clone);
+
 				// Functions exposed as properties.
-				usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::Container::isRespawn));
 				usertypeDefinition.set("model", sol::property(&TES3::Container::getModelPath, &TES3::Container::setModelPath));
 				usertypeDefinition.set("name", sol::property(&TES3::Container::getName, &TES3::Container::setName));
 				usertypeDefinition.set("script", sol::readonly_property(&TES3::Container::getScript));
@@ -61,10 +64,13 @@ namespace mwse {
 					[](TES3::ContainerInstance& self) { return self.getActorFlag(TES3::ActorFlag::Female); },
 					[](TES3::ContainerInstance& self, bool set) { self.setActorFlag(TES3::ActorFlag::Female, set); }
 				));
-				usertypeDefinition.set("respawns", sol::property(
+				usertypeDefinition.set("isRespawn", sol::property(
 					[](TES3::ContainerInstance& self) { return self.getActorFlag(TES3::ActorFlag::Essential); },
 					[](TES3::ContainerInstance& self, bool set) { self.setActorFlag(TES3::ActorFlag::Essential, set); }
 				));
+
+				// Access to other objects that need to be packaged.
+				usertypeDefinition.set("container", sol::readonly_property([](TES3::ContainerInstance& self) { return makeLuaObject(self.container); }));
 
 				// Constant values.
 				usertypeDefinition.set("isInstance", sol::var(true));
