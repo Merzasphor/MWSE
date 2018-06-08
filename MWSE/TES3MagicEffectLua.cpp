@@ -145,7 +145,7 @@ namespace mwse {
 				usertypeDefinition.set("object", sol::readonly_property([](TES3::Effect& self) { return tes3::getDataHandler()->nonDynamicData->magicEffects[self.effectID]; }));
 
 				// Finish up our usertype.
-				state.set_usertype("tes3creatureAttributes", usertypeDefinition);
+				state.set_usertype("tes3effect", usertypeDefinition);
 			}
 		}
 	}
