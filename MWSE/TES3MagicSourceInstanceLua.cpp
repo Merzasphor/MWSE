@@ -11,37 +11,32 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3MagicSourceInstance() {
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::MagicSourceInstance>("TES3MagicSourceInstance",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::MagicSourceInstance>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::base_classes, sol::bases<TES3::BaseObject>(),
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+			// Basic property binding.
+			usertypeDefinition.set("itemData", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.castingItemCondition; }));
+			usertypeDefinition.set("sourceType", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.sourceCombo.sourceType; }));
+			usertypeDefinition.set("state", &TES3::MagicSourceInstance::state);
+			usertypeDefinition.set("text", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.text; }));
 
-				"objectType", &TES3::MagicSourceInstance::objectType,
+			// Access to other objects that need to be packaged.
+			usertypeDefinition.set("caster", sol::readonly_property([](TES3::MagicSourceInstance& self) { return makeLuaObject(self.caster); }));
+			usertypeDefinition.set("item", sol::readonly_property([](TES3::MagicSourceInstance& self) { return makeLuaObject(self.castingItem); }));
+			usertypeDefinition.set("source", sol::readonly_property([](TES3::MagicSourceInstance& self) { return makeLuaObject(self.sourceCombo.source.asGeneric); }));
 
-				"source", sol::readonly_property([](TES3::MagicSourceInstance& self) { return makeLuaObject(self.sourceCombo.source.asGeneric); }),
-				"sourceType", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.sourceCombo.sourceType; }),
-				"state", &TES3::MagicSourceInstance::state,
-				"caster", sol::readonly_property([](TES3::MagicSourceInstance& self) { return makeLuaObject(self.caster); }),
-				"item", sol::readonly_property([](TES3::MagicSourceInstance& self) { return makeLuaObject(self.castingItem); }),
-				"itemData", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.castingItemCondition; }),
-				"text", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.text; }),
+			// Functions exposed as properties.
+			usertypeDefinition.set("sourceEffects", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.sourceCombo.getSourceEffects(); }));
 
-				"sourceEffects", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.sourceCombo.getSourceEffects(); })
-
-				//
-				// Functions
-				//
-
-				
-
-			);
+			// Finish up our usertype.
+			state.set_usertype("tes3magicSourceInstance", usertypeDefinition);
 		}
 	}
 }
