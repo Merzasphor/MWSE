@@ -24,7 +24,7 @@ namespace TES3 {
 		int unknown_0x44;
 		char unknown_0x48;
 		char unknown_0x49;
-		unsigned char moonIsRed; // 0x4A
+		bool moonIsRed; // 0x4A
 		char unknown_0x4B;
 		int phase; // 0x4C
 		int unknown_0x50;
