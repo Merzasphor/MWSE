@@ -12,23 +12,22 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3SpellList() {
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
-			
-			state.new_usertype<TES3::SpellList>("TES3SpellList",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
 
-				//
-				// Properties.
-				//
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::GlobalScript>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				"iterator", &TES3::SpellList::list,
+			// 
+			usertypeDefinition.set("iterator", sol::readonly_property(&TES3::SpellList::list));
 
-				//
-				// Functions
-				//
+			// Basic function binding.
+			usertypeDefinition.set("containsType", &TES3::SpellList::containsType);
+			usertypeDefinition.set("getCheapest", &TES3::SpellList::getCheapest);
 
-				"add", [](TES3::SpellList& self, sol::object value)
+			// Ambiguous function binding.
+			usertypeDefinition.set("add", [](TES3::SpellList& self, sol::object value)
 			{
 				if (value.is<TES3::Spell*>()) {
 					return self.add(value.as<TES3::Spell*>());
@@ -38,9 +37,9 @@ namespace mwse {
 				}
 
 				return false;
-			},
-
-				"remove", [](TES3::SpellList& self, sol::object value)
+			}
+			);
+			usertypeDefinition.set("remove", [](TES3::SpellList& self, sol::object value)
 			{
 				if (value.is<TES3::Spell*>()) {
 					return self.remove(value.as<TES3::Spell*>());
@@ -50,9 +49,9 @@ namespace mwse {
 				}
 
 				return false;
-			},
-
-				"contains", [](TES3::SpellList& self, sol::object value)
+			}
+			);
+			usertypeDefinition.set("contains", [](TES3::SpellList& self, sol::object value)
 			{
 				if (value.is<TES3::Spell*>()) {
 					return self.contains(value.as<TES3::Spell*>());
@@ -62,13 +61,11 @@ namespace mwse {
 				}
 
 				return false;
-			},
-
-				"containsType", &TES3::SpellList::containsType,
-
-				"getCheapest", &TES3::SpellList::getCheapest
-
+			}
 			);
+
+			// Finish up our usertype.
+			state.set_usertype("tes3spellList", usertypeDefinition);
 		}
 	}
 }
