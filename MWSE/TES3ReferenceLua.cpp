@@ -57,7 +57,7 @@ namespace TES3 {
 
 			attachment->type = AttachmentType::LuaTable;
 			attachment->next = 0;
-			
+
 			// Set this as the first attachment...
 			if (attachments == NULL) {
 				attachments = attachment;
@@ -92,76 +92,56 @@ namespace mwse {
 		}
 
 		void bindTES3Reference() {
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::Reference>("TES3Reference",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::Reference>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::base_classes, sol::bases<TES3::BaseObject>(),
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Object, TES3::BaseObject>());
 
-				sol::meta_function::to_string, &TES3::Reference::getObjectID,
+			// Access to other objects that need to be packaged.
+			usertypeDefinition.set("cell", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.owningCollection.asReferenceList != NULL ? self.owningCollection.asReferenceList->cell : NULL); }));
+			usertypeDefinition.set("object", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.baseObject); }));
+			usertypeDefinition.set("sceneNode", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.sceneNode); }));
 
-				//
-				// Properties: Reference
-				//
+			// Basic function binding.
+			usertypeDefinition.set("activate", [](TES3::Reference& self, TES3::Reference& target) { target.activate(&self); });
+			usertypeDefinition.set("setActionFlag", &TES3::Reference::setActionFlag);
+			usertypeDefinition.set("clearActionFlag", &TES3::Reference::clearActionFlag);
+			usertypeDefinition.set("testActionFlag", &TES3::Reference::testActionFlag);
 
-				"id", sol::readonly_property(&TES3::Reference::getObjectID),
-				"objectType", sol::readonly(&TES3::Reference::objectType),
+			// Functions exposed as properties.
+			usertypeDefinition.set("activationReference", sol::property(&TES3::Reference::getActionReference, &TES3::Reference::setActionReference));
+			usertypeDefinition.set("attachments", sol::readonly_property(&TES3::Reference::getAttachments));
+			usertypeDefinition.set("context", sol::readonly_property([](TES3::Reference& self) { return getContext(&self); }));
+			usertypeDefinition.set("data", sol::readonly_property(&TES3::Reference::getLuaTable));
+			usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::Reference::isRespawn));
+			usertypeDefinition.set("position", sol::property([](TES3::Reference& self) { return &self.position; }, &TES3::Reference::setPositionFromLua));
 
-				"cell", sol::readonly_property([](TES3::Reference& self) { return self.owningCollection.asReferenceList != NULL ? self.owningCollection.asReferenceList->cell : NULL; }),
-
-				"sceneNode", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.sceneNode); }),
-
-				"position", sol::property([](TES3::Reference& self) { return &self.position; }, &TES3::Reference::setPositionFromLua),
-				//"orientation", &TES3::Reference::orientation,
-
-				"isRespawn", sol::readonly_property(&TES3::Reference::isRespawn),
-
-				"attachments", sol::readonly_property(&TES3::Reference::getAttachments),
-				"context", sol::readonly_property([](TES3::Reference& self) { return getContext(&self); }),
-
-				"object", sol::readonly_property(&TES3::Reference::getBaseObject),
-
-				"activationReference", sol::property(&TES3::Reference::getActionReference, &TES3::Reference::setActionReference),
-
-				"data", sol::readonly_property(&TES3::Reference::getLuaTable),
-
-				//
-				// Properties: Behave as a linked list node.
-				//
-
-				"previousNode", sol::readonly_property([](TES3::Reference& self) { return reinterpret_cast<TES3::Reference*>(self.previousInCollection); }),
-				"nextNode", sol::readonly_property([](TES3::Reference& self) { return reinterpret_cast<TES3::Reference*>(self.nextInCollection); }),
-				"nodeData", sol::readonly_property([](TES3::Reference& self) { return &self; }),
-
-				//
-				// Properties: Quick access to attachment data.
-				//
-
-				"stackSize", sol::property(
-					[](TES3::Reference& self)
+			// Quick access to attachment data.
+			usertypeDefinition.set("stackSize", sol::property(
+				[](TES3::Reference& self)
 			{
 				TES3::ItemData* itemData = tes3::getAttachedItemDataNode(&self);
 				return itemData ? itemData->count : 1;
 			},
-					[](TES3::Reference& self, double count)
+				[](TES3::Reference& self, double count)
 			{
 				TES3::ItemData* itemData = tes3::getOrCreateAttachedItemDataNode(&self);
 				itemData->count = count;
 			}
-					),
+			));
+			
+			// Allow references to behave like a linked list node.
+			usertypeDefinition.set("previousNode", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.previousInCollection); }));
+			usertypeDefinition.set("nextNode", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.nextInCollection); }));
+			usertypeDefinition.set("nodeData", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(&self); }));
 
-				//
-				// Functions
-				//
-
-				"activate", [](TES3::Reference& self, TES3::Reference& target) { target.activate(&self); },
-				"setActionFlag", &TES3::Reference::setActionFlag,
-				"clearActionFlag", &TES3::Reference::clearActionFlag,
-				"testActionFlag", &TES3::Reference::testActionFlag
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("tes3reference", usertypeDefinition);
 		}
 	}
 }
