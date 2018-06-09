@@ -1,8 +1,8 @@
 
-Alchemy
+Light
 ========================================================
 
-This interface represents an alchemy game object.
+This interface represents an light game object.
 
 Properties
 --------------------------------------------------------
@@ -37,19 +37,49 @@ Properties
       - The object's name.
    *  - script
       - `userdata`_ (read-only)
-      - The object's script.
+      - The object's script id.
    *  - value
       - `number`_ (writeable)
       - The object's value in gold.
    *  - weight
       - `number`_ (writeable)
-      - The object's weight.The object's weight.
-   *  - effects
-      - `userdata`_ (read-only)
-      - The object's effect list.
-   *  - autoCalc
+      - The object's weight.
+   *  - time
+      - `number`_ (read-only)
+      - The time this light will last while equipped by the player.
+   *  - sound
+      - `number`_ (read-only)
+      - The sound that loops while the light is equipped.
+   *  - radius
+      - `number`_ (read-only)
+      - The radius in which the light will affect other objects.
+   *  - canCarry
       - `boolean`_ (read-only)
-      - The object's value was calculated automatically.
+      - Description Here
+   *  - flickers
+      - `boolean`_ (read-only)
+      - Description Here
+   *  - flickersSlowly
+      - `boolean`_ (read-only)
+      - Description Here
+   *  - isDynamic
+      - `boolean`_ (read-only)
+      - Description Here
+   *  - isFire
+      - `boolean`_ (read-only)
+      - Description Here
+   *  - isNegative
+      - `boolean`_ (read-only)
+      - Description Here
+   *  - isOffByDefault
+      - `boolean`_ (read-only)
+      - Description Here
+   *  - pulses
+      - `boolean`_ (read-only)
+      - Description Here
+   *  - pulsesSlowly
+      - `boolean`_ (read-only)
+      - Description Here
 
 --------------------------------------------------------
 

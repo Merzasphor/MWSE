@@ -1,8 +1,8 @@
 
-Alchemy
+Clothing
 ========================================================
 
-This interface represents an alchemy game object.
+This interface represents an clothing game object.
 
 Properties
 --------------------------------------------------------
@@ -37,19 +37,31 @@ Properties
       - The object's name.
    *  - script
       - `userdata`_ (read-only)
-      - The object's script.
+      - The object's script id.
    *  - value
       - `number`_ (writeable)
       - The object's value in gold.
    *  - weight
       - `number`_ (writeable)
-      - The object's weight.The object's weight.
-   *  - effects
+      - The object's weight.
+   *  - enchantCapacity
+      - `number`_ (writeable)
+      - The object's maximum enchantment capacity.
+   *  - enchantment
       - `userdata`_ (read-only)
-      - The object's effect list.
-   *  - autoCalc
+      - The object's enchantment.
+   *  - health
+      - `number`_ (writeable)
+      - The object's durability.
+   *  - isLeftPart
       - `boolean`_ (read-only)
-      - The object's value was calculated automatically.
+      - The object uses a left inventory slot.
+   *  - slot
+      - `number`_ (read-only)
+      - Description Here
+   *  - slotName
+      - `string`_ (read-only)
+      - Description Here
 
 --------------------------------------------------------
 

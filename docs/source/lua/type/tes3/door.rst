@@ -1,8 +1,8 @@
 
-Alchemy
+Door
 ========================================================
 
-This interface represents an alchemy game object.
+This interface represents an door game object.
 
 Properties
 --------------------------------------------------------
@@ -29,27 +29,18 @@ Properties
    *  - boundingBox
       - `table`_ (read-only)
       - The two points representing the object's bounding box.
-   *  - icon
-      - `string`_ (writable)
-      - The object's icon path, relative to 'Data Files/Icons'.
    *  - name
       - `string`_ (writable)
       - The object's name.
    *  - script
       - `userdata`_ (read-only)
-      - The object's script.
-   *  - value
-      - `number`_ (writeable)
-      - The object's value in gold.
-   *  - weight
-      - `number`_ (writeable)
-      - The object's weight.The object's weight.
-   *  - effects
-      - `userdata`_ (read-only)
-      - The object's effect list.
-   *  - autoCalc
-      - `boolean`_ (read-only)
-      - The object's value was calculated automatically.
+      - The object's script id.
+   *  - closeSound
+      - `string`_ (read-only)
+      - The sound ID to be played when opening.
+   *  - openSound
+      - `string`_ (read-only)
+      - The sound ID to be played when closing.
 
 --------------------------------------------------------
 

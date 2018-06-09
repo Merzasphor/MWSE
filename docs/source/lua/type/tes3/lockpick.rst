@@ -1,8 +1,8 @@
 
-Alchemy
+Lockpick
 ========================================================
 
-This interface represents an alchemy game object.
+This interface represents an lockpick game object.
 
 Properties
 --------------------------------------------------------
@@ -37,19 +37,19 @@ Properties
       - The object's name.
    *  - script
       - `userdata`_ (read-only)
-      - The object's script.
+      - The object's script id.
    *  - value
       - `number`_ (writeable)
       - The object's value in gold.
    *  - weight
       - `number`_ (writeable)
-      - The object's weight.The object's weight.
-   *  - effects
-      - `userdata`_ (read-only)
-      - The object's effect list.
-   *  - autoCalc
-      - `boolean`_ (read-only)
-      - The object's value was calculated automatically.
+      - The object's weight.
+   *  - condition
+      - `number`_ (writeable)
+      - The object's maximum number of uses.
+   *  - quality
+      - `number`_ (writeable)
+      - The object's quality.
 
 --------------------------------------------------------
 

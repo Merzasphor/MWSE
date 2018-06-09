@@ -1,8 +1,8 @@
 
-Alchemy
+Book
 ========================================================
 
-This interface represents an alchemy game object.
+This interface represents an book game object.
 
 Properties
 --------------------------------------------------------
@@ -37,19 +37,28 @@ Properties
       - The object's name.
    *  - script
       - `userdata`_ (read-only)
-      - The object's script.
+      - The object's script id.
    *  - value
       - `number`_ (writeable)
       - The object's value in gold.
    *  - weight
       - `number`_ (writeable)
-      - The object's weight.The object's weight.
-   *  - effects
+      - The object's weight.
+   *  - enchantCapacity
+      - `number`_ (writeable)
+      - The object's maximum enchantment capacity.
+   *  - enchantment
       - `userdata`_ (read-only)
-      - The object's effect list.
-   *  - autoCalc
-      - `boolean`_ (read-only)
-      - The object's value was calculated automatically.
+      - The object's enchantment.
+   *  - skill
+      - `userdata`_ (read-only)
+      - The skill this book teaches.
+   *  - text
+      - `string`_ (read-only)
+      - The text of the book, including HTML tags.
+   *  - type
+      - `number`_ (read-only)
+      - The object's bookType.
 
 --------------------------------------------------------
 

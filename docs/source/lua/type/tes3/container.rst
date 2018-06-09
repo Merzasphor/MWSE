@@ -1,8 +1,8 @@
 
-Alchemy
+Container
 ========================================================
 
-This interface represents an alchemy game object.
+This interface represents an container game object.
 
 Properties
 --------------------------------------------------------
@@ -29,27 +29,33 @@ Properties
    *  - boundingBox
       - `table`_ (read-only)
       - The two points representing the object's bounding box.
-   *  - icon
-      - `string`_ (writable)
-      - The object's icon path, relative to 'Data Files/Icons'.
    *  - name
       - `string`_ (writable)
       - The object's name.
    *  - script
       - `userdata`_ (read-only)
-      - The object's script.
-   *  - value
+      - The object's script id.
+   *  - capacity
       - `number`_ (writeable)
-      - The object's value in gold.
-   *  - weight
-      - `number`_ (writeable)
-      - The object's weight.The object's weight.
-   *  - effects
+      - The maximum carrying capacity of the container.
+   *  - clone
       - `userdata`_ (read-only)
-      - The object's effect list.
-   *  - autoCalc
+      - Description Here
+   *  - container
+      - `userdata`_ (read-only)
+      - Description Here
+   *  - isInstance
       - `boolean`_ (read-only)
-      - The object's value was calculated automatically.
+      - Description Here
+   *  - isRespawn
+      - `boolean`_ (read-only)
+      - Description Here
+   *  - organic
+      - `boolean`_ (read-only)
+      - Description Here
+   *  - respawns
+      - `boolean`_ (read-only)
+      - Description Here
 
 --------------------------------------------------------
 

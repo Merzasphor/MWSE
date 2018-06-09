@@ -2,51 +2,45 @@
 Activator
 ========================================================
 
-    "An activator is any object that does something in the world, but cannot be picked up. Signs, flags, levers, pressure plates, etc. It may give off sound, flash lights, and any number of effects. Activators can also be given animation." -- Morrowind Construction Set
-
 This interface represents an activator game object.
 
 Properties
 --------------------------------------------------------
 
-.. toctree::
-   :hidden:
+.. list-table::
+   :widths: 1 1 99
+   :header-rows: 1
 
-   activator/model
-   activator/name
-   activator/script
-    
-`boundingBox <physicalObject/boundingBox.html>`_ (`Bounding Box`_)
-    The two points used to represent the object's bounding box.
-    
-`id <baseObject/id.html>`_ (`String`_)
-    The object's unique ID.
-    
-`model <activator/model.html>`_ (`String`_)
-    The path to the object's model, under *Data Files/Models*.
-    
-`name <activator/name.html>`_ (`String`_)
-    The user-friendly name shown for the object.
+   * - **Property**
+     - **Type**
+     - **Description**
+   *  - id
+      - `string`_ (read-only)
+      - The object's unique id.
+   *  - objectType
+      - `number`_ (read-only)
+      - The object's `objectType`_
+   *  - sourceMod
+      - `string`_ (read-only)
+      - The mod that this object is from.
+   *  - model
+      - `string`_ (writeable)
+      - The object's model path, relative to 'Data Files/Meshes'.
+   *  - boundingBox
+      - `table`_ (read-only)
+      - The two points representing the object's bounding box.
+   *  - name
+      - `string`_ (writable)
+      - The object's name.
+   *  - script
+      - `userdata`_ (read-only)
+      - The object's script id.
 
-`objectType <baseObject/objectType.html>`_ (`Number`_)
-    The object's type.
-    
-`sceneNode <object/sceneNode.html>`_ (`NiNode`_)
-    Access to the scene graph node used by the object.
-    
-`script <activator/script.html>`_ (`tes3script`_)
-    The currently attached script on the object, or ``nil`` if the object is not scripted.
-    
-`sourceMod <baseObject/sourceMod.html>`_ (`String`_)
-    The mod that this object is from.
+--------------------------------------------------------
 
-
-.. _`Boolean`: ../lua/boolean.html
-.. _`Number`: ../lua/number.html
-.. _`String`: ../lua/string.html
-.. _`Table`: ../lua/table.html
-
-.. _`NiNode`: ../ni/node.html
-
-.. _`Bounding Box`: boundingBox.html
-.. _`tes3script`: script.html
+.. _`boolean`: ../lua/boolean.rst
+.. _`number`: ../lua/number.rst
+.. _`string`: ../lua/string.rst
+.. _`table`: ../lua/table.rst
+.. _`userdata`: ../lua/userdata.rst
+.. _`objectType`: _hidden/objectType.rst

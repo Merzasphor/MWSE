@@ -108,6 +108,21 @@ html_sidebars = {
     ]
 }
 
+# Fix for table-wrapping
+# https://rackerlabs.github.io/docs-rackspace/tools/rtd-tables.html
+# doesn't even work...
+html_context = {
+    'css_files': [
+        '_static/theme_overrides.css',  # override wide tables in RTD theme
+        ],
+     }
+
+# second attempt for table-wrapping
+# http://knowyourtoolset.com/2018/02/controlling-the-width-of-a-table-with-read-the-docs/
+# also doesn't even work...
+def setup(app):
+    app.add_stylesheet('css/custom.css')
+
 
 # -- Options for HTMLHelp output ------------------------------------------
 
@@ -164,6 +179,3 @@ texinfo_documents = [
      author, 'MorrowindScriptExtenderv2', 'One line description of project.',
      'Miscellaneous'),
 ]
-
-
-
