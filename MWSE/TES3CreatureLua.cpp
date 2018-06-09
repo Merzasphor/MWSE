@@ -147,7 +147,7 @@ namespace mwse {
 
 				// Properties that directly point to the base creature.
 				usertypeDefinition.set("aiConfig", sol::readonly_property([](TES3::CreatureInstance& self) { return self.baseCreature->aiConfig; }));
-				usertypeDefinition.set("baseCreature", sol::readonly_property([](TES3::CreatureInstance& self) { return makeLuaObject(self.baseCreature); }));
+				usertypeDefinition.set("baseObject", sol::readonly_property([](TES3::CreatureInstance& self) { return makeLuaObject(self.baseCreature); }));
 				usertypeDefinition.set("skills", sol::readonly_property([](TES3::CreatureInstance& self) { return &self.baseCreature->skills; }));
 				usertypeDefinition.set("soul", sol::property(
 					[](TES3::CreatureInstance& self) { return self.baseCreature->soul; },
@@ -169,6 +169,9 @@ namespace mwse {
 				usertypeDefinition.set("model", sol::property(&TES3::CreatureInstance::getModelPath, &TES3::CreatureInstance::setModelPath));
 				usertypeDefinition.set("name", sol::property(&TES3::CreatureInstance::getName, &TES3::CreatureInstance::setName));
 				usertypeDefinition.set("script", sol::readonly_property(&TES3::CreatureInstance::getScript));
+
+				// DEPRECATED. Will remove.
+				usertypeDefinition.set("baseCreature", sol::readonly_property([](TES3::CreatureInstance& self) { return makeLuaObject(self.baseCreature); }));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3creatureInstance", usertypeDefinition);

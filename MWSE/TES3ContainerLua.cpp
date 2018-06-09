@@ -70,7 +70,7 @@ namespace mwse {
 				));
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition.set("container", sol::readonly_property([](TES3::ContainerInstance& self) { return makeLuaObject(self.container); }));
+				usertypeDefinition.set("baseObject", sol::readonly_property([](TES3::ContainerInstance& self) { return makeLuaObject(self.container); }));
 
 				// Constant values.
 				usertypeDefinition.set("isInstance", sol::var(true));
@@ -81,6 +81,9 @@ namespace mwse {
 				usertypeDefinition.set("model", sol::property(&TES3::ContainerInstance::getModelPath, &TES3::ContainerInstance::setModelPath));
 				usertypeDefinition.set("name", sol::property(&TES3::ContainerInstance::getName, &TES3::ContainerInstance::setName));
 				usertypeDefinition.set("script", sol::readonly_property(&TES3::ContainerInstance::getScript));
+
+				// DEPRECATED. Will remove in future versions.
+				usertypeDefinition.set("container", sol::readonly_property([](TES3::ContainerInstance& self) { return makeLuaObject(self.container); }));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3containerInstance", usertypeDefinition);
