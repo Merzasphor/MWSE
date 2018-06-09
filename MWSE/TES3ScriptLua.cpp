@@ -146,6 +146,44 @@ namespace mwse {
 				state.set_usertype("tes3scriptContext", usertypeDefinition);
 			}
 
+			// Binding for TES3::GlobalScript
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::GlobalScript>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				// Access to other objects that need to be packaged.
+				usertypeDefinition.set("reference", sol::readonly_property([](TES3::GlobalScript& self) { return makeLuaObject(self.reference); }));
+				usertypeDefinition.set("script", sol::readonly_property([](TES3::GlobalScript& self) { return makeLuaObject(self.script); }));
+
+				// Allow a special context to be exposed for reading variables.
+				usertypeDefinition.set("context", sol::readonly_property([](TES3::GlobalScript& self)
+				{
+					TES3::ItemData * itemData = tes3::getAttachedItemDataNode(self.reference);
+					return std::shared_ptr<ScriptContext>(new ScriptContext(self.script, itemData ? itemData->scriptData : NULL));
+				}
+				));
+
+				// Finish up our usertype.
+				state.set_usertype("tes3globalScript", usertypeDefinition);
+			}
+
+			// Binding for TES3::StartScript
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::StartScript>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
+
+				// Access to other objects that need to be packaged.
+				usertypeDefinition.set("script", sol::readonly_property([](TES3::StartScript& self) { return makeLuaObject(self.script); }));
+
+				// Finish up our usertype.
+				state.set_usertype("tes3startScript", usertypeDefinition);
+			}
+
 			// Binding for TES3::Script.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
