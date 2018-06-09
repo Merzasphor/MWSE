@@ -8,54 +8,75 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Race() {
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::Race::SkillBonus>("TES3RaceSkillBonus",
-				"new", sol::no_constructor,
+			// Binding for TES3::Race::SkillBonus.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::Race::SkillBonus>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-				"skill", &TES3::Race::SkillBonus::skill,
-				"bonus", &TES3::Race::SkillBonus::bonus
-				);
+				// Basic property binding.
+				usertypeDefinition.set("skill", &TES3::Race::SkillBonus::skill);
+				usertypeDefinition.set("bonus", &TES3::Race::SkillBonus::bonus);
 
-			state.new_usertype<TES3::Race::BaseAttribute>("TES3RaceBaseAttribute",
-				"new", sol::no_constructor,
+				// Finish up our usertype.
+				state.set_usertype("tes3raceSkillBonus", usertypeDefinition);
+			}
 
-				"male", &TES3::Race::BaseAttribute::male,
-				"female", &TES3::Race::BaseAttribute::female
-				);
+			// Binding for TES3::Race::BaseAttribute.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::Race::BaseAttribute>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-			state.new_usertype<TES3::Race::HeightWeight>("TES3RaceHeightWeight",
-				"new", sol::no_constructor,
+				// Basic property binding.
+				usertypeDefinition.set("male", &TES3::Race::BaseAttribute::male);
+				usertypeDefinition.set("female", &TES3::Race::BaseAttribute::female);
 
-				"male", &TES3::Race::HeightWeight::male,
-				"female", &TES3::Race::HeightWeight::female
-				);
+				// Finish up our usertype.
+				state.set_usertype("tes3raceBaseAttribute", usertypeDefinition);
+			}
 
-			state.new_usertype<TES3::Race>("TES3Race",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Binding for TES3::Race::HeightWeight.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::Race::HeightWeight>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::base_classes, sol::bases<TES3::BaseObject>(),
+				// Basic property binding.
+				usertypeDefinition.set("male", &TES3::Race::HeightWeight::male);
+				usertypeDefinition.set("female", &TES3::Race::HeightWeight::female);
 
-				sol::meta_function::to_string, &TES3::Race::getObjectID,
+				// Finish up our usertype.
+				state.set_usertype("tes3raceHeightWeight", usertypeDefinition);
+			}
 
-				//
-				// Properties.
-				//
+			// Binding for TES3::Race.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::Race>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-				"objectType", &TES3::Race::objectType,
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 
-				"id", sol::readonly_property(&TES3::Race::getObjectID),
-				"name", sol::readonly_property([](TES3::Race& self) { return self.name; }),
+				// Basic property binding.
+				usertypeDefinition.set("flags", &TES3::Race::flags);
+				usertypeDefinition.set("height", &TES3::Race::height);
+				usertypeDefinition.set("weight", &TES3::Race::weight);
 
-				"flags", &TES3::Race::flags,
+				// Indirect bindings to unions and arrays.
+				usertypeDefinition.set("baseAttributes", sol::readonly_property([](TES3::Race& self) { return std::ref(self.baseAttributes); }));
+				usertypeDefinition.set("skillBonuses", sol::readonly_property([](TES3::Race& self) { return std::ref(self.skillBonuses); }));
 
-				"skillBonuses", sol::readonly_property([](TES3::Race& self) { return std::ref(self.skillBonuses); }),
-				"baseAttributes", sol::readonly_property([](TES3::Race& self) { return std::ref(self.baseAttributes); }),
-				"height", &TES3::Race::height,
-				"weight", &TES3::Race::weight
+				// Functions exposed as properties.
+				usertypeDefinition.set("name", sol::readonly_property([](TES3::Race& self) { return self.name; }));
 
-				);
+				// Finish up our usertype.
+				state.set_usertype("tes3race", usertypeDefinition);
+			}
 		}
 	}
 }
