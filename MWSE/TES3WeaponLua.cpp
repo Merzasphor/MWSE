@@ -10,51 +10,44 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Weapon() {
-			LuaManager::getInstance().getState().new_usertype<TES3::Weapon>("TES3Weapon",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Disable construction of this type.
+			sol::state& state = LuaManager::getInstance().getState();
 
-				sol::base_classes, sol::bases<TES3::Item, TES3::BaseObject>(),
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::Weapon>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::meta_function::to_string, &TES3::Weapon::getObjectID,
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+			// Basic property binding.
+			usertypeDefinition.set("chopMax", &TES3::Weapon::chopMax);
+			usertypeDefinition.set("chopMin", &TES3::Weapon::chopMin);
+			usertypeDefinition.set("enchantCapacity", &TES3::Weapon::enchantCapacity);
+			usertypeDefinition.set("enchantment", sol::property(&TES3::Weapon::getEnchantment, &TES3::Weapon::setEnchantment));
+			usertypeDefinition.set("flags", &TES3::Weapon::materialFlags);
+			usertypeDefinition.set("health", sol::readonly_property(&TES3::Weapon::getDurability));
+			usertypeDefinition.set("icon", sol::readonly_property(&TES3::Weapon::getIconPath));
+			usertypeDefinition.set("model", sol::readonly_property(&TES3::Weapon::getModelPath));
+			usertypeDefinition.set("name", sol::property(&TES3::Weapon::getName, &TES3::Weapon::setName));
+			usertypeDefinition.set("reach", &TES3::Weapon::reach);
+			usertypeDefinition.set("slashMax", &TES3::Weapon::slashMax);
+			usertypeDefinition.set("slashMin", &TES3::Weapon::slashMin);
+			usertypeDefinition.set("speed", &TES3::Weapon::speed);
+			usertypeDefinition.set("thrustMax", &TES3::Weapon::thrustMax);
+			usertypeDefinition.set("thrustMin", &TES3::Weapon::thrustMin);
+			usertypeDefinition.set("type", sol::readonly_property(&TES3::Weapon::getType));
+			usertypeDefinition.set("value", sol::readonly_property(&TES3::Weapon::getValue));
+			usertypeDefinition.set("weight", sol::readonly_property(&TES3::Weapon::getWeight));
 
-				"objectType", &TES3::Weapon::objectType,
+			// Access to other objects that need to be packaged.
+			usertypeDefinition.set("script", sol::readonly_property(&TES3::Weapon::getScript));
 
-				"boundingBox", &TES3::Weapon::boundingBox,
+			// Functions exposed as properties.
+			usertypeDefinition.set("typeName", sol::readonly_property(&TES3::Weapon::getTypeName));
 
-				"id", sol::readonly_property(&TES3::Weapon::getObjectID),
-				"name", sol::property(&TES3::Weapon::getName, &TES3::Weapon::setName),
-
-				"icon", sol::readonly_property(&TES3::Weapon::getIconPath),
-				"model", sol::readonly_property(&TES3::Weapon::getModelPath),
-
-				"type", sol::readonly_property(&TES3::Weapon::getType),
-				"typeName", sol::readonly_property(&TES3::Weapon::getTypeName),
-
-				"flags", &TES3::Weapon::materialFlags,
-				"weight", sol::readonly_property(&TES3::Weapon::getWeight),
-				"value", sol::readonly_property(&TES3::Weapon::getValue),
-				"health", sol::readonly_property(&TES3::Weapon::getDurability),
-				"speed", &TES3::Weapon::speed,
-				"reach", &TES3::Weapon::reach,
-
-				"chopMin", &TES3::Weapon::chopMin,
-				"chopMax", &TES3::Weapon::chopMax,
-				"slashMin", &TES3::Weapon::slashMin,
-				"slashMax", &TES3::Weapon::slashMax,
-				"thrustMin", &TES3::Weapon::thrustMin,
-				"thrustMax", &TES3::Weapon::thrustMax,
-
-				"enchantCapacity", &TES3::Weapon::enchantCapacity,
-				"enchantment", sol::property(&TES3::Weapon::getEnchantment, &TES3::Weapon::setEnchantment),
-
-				"script", sol::readonly_property(&TES3::Weapon::getScript)
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("tes3weapon", usertypeDefinition);
 		}
 	}
 }
