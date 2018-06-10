@@ -11,20 +11,26 @@ In-Development
 
 These changes are available when building from source, or from `downloading the latest in-development build <https://nullcascade.com/mwse/mwse-dev.zip>`_.
 
-The biggest change in this version is the introduction of new Lua scripting functionality. Scripts can be `overridden <lua/guide/script-overrides.html>`_, or `independently called <mwscript/functions/lua/xLuaRunScript.html>`_ to perform actions previously impossible by mwscript.
+The biggest change in this version is the introduction of `new Lua scripting functionality <lua/guide/introduction.html>`_. Scripts can be `overridden <lua/guide/script-overrides.html>`_, or `independently called <mwscript/functions/lua/xLuaRunScript.html>`_ to perform actions previously impossible by mwscript. There's also a powerful `event-driven <lua/event.html>`_ way to write scripted mods.
 
 Additionally, arbitrary data can now be persistently stored in the save, attached to references. These references do not necessarily need a script.
 
 Added
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- ``xMyRef``: Allows an object to get a reference to itself. Moved from ``xGetRef`` to its own function for better compatibility.
+- Crash information is now collected. When the game crashes, a file called *MWSE_MiniDump.dmp* will be created in the Morrowind install folder. Zipping up this file as well as the *MWSE.dll* and *MWSE.pdb* files and sending them to a MWSE maintainer will allow them to diagnose the cause of the crash and help prevent them in future versions.
+
+- Event-driven lua scripting. See the `introduction <lua/guide/introduction.html>`_ for more information.
+
+- In-development version updater. *MWSE-Update.exe* is now included in the installation. Running this program will automatically download and install the latest in-development version of MWSE.
+
+- `Script overrides <lua/guide/script-overrides.html>`_, allowing Lua to override the behavior of a script. This enables modders to use vanilla mwscript for OpenMW compatibility, but add extra features if MWSE is installed.
 
 - ``xActivate``: Allows the forced activation of one reference to another. This allows you to make the player or NPCs pick up objects, go through doors, and otherwise perform a normal activation. Unlike the vanilla ``Activate`` function, this one wil always work and accepts variable input.
 
 - ``xLuaRunScript``: Loads and executes a lua file inside of *Data Files/MWSE/lua/scripts*. That script has the power to interact with the MWSE stack, and return any data it wants. This effectively lets custom Lua-based functions to be written so that mwscripts are not limited.
 
-- If a mwscript executes when a Lua script of the same name is available under *Data Files/MWSE/lua/overrides*, the Lua script will be executed *instead of* the base mwscript. This allows for custom Lua scripts to be written that replace mwscripts (meaning they can be attached to objects). See the guide `here <lua/guide/script-overrides.html>`_ for more details.
+- ``xMyRef``: Allows an object to get a reference to itself. Moved from ``xGetRef`` to its own function for better compatibility.
 
 Changed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -35,9 +41,12 @@ Changed
 Fixed
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- Reverted feature to get the current reference by calling ``xGetRef`` with a value of zero.
-- ``xEquipmentList``: Now returns the ammunition count, instead of always returning 1 for the count.
 - Fixed an issue where strings would be redundantly stored in memory.
+- ``xEquipmentList``: Now returns the ammunition count, instead of always returning 1 for the count.
+- ``xFileReadString``/``xFileReadText``: Added support for non-CRLF line endings. Some Wrye Mash forks use these, which caused issues.
+- ``xGetRef``: Reverted feature to get the current reference by calling ``xGetRef`` with a value of zero.
+- ``xNextRef``: Prevented the game from crashing if a script erroneously used this function. This is a common mistake for modders to make, especially with how slow pre-2.0 MWSE was. Now this won't cause crashes between save/reload. This is still not encouraged, but at least won't have the potential to completely break a save with script errors.
+- ``xSpellList``: No longer crashes when called on an actor that has no spells.
 
 v2.0.0
 -----------------------------------------------------------
