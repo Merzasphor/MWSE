@@ -10,7 +10,7 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Vectors() {
-			// Disable construction of this type.
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
 			// Binding for TES3::Vector2.

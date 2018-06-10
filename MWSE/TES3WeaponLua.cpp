@@ -10,7 +10,7 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Weapon() {
-			// Disable construction of this type.
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
 			// Start our usertype. We must finish this with state.set_usertype.
