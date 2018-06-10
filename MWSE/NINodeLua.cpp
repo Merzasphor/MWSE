@@ -13,55 +13,38 @@
 namespace mwse {
 	namespace lua {
 		void bindNINode() {
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::TArray<NI::AVObject>>("NITArrayAVObject",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Binding for TES3::TArray<NI::AVObject>.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::TArray<NI::AVObject>>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-				//
-				// Meta functions.
-				//
+				// Basic property binding.
+				usertypeDefinition.set(sol::meta_function::index, [](TES3::TArray<NI::AVObject>& self, int index) { return makeLuaObject(self.storage[index - 1]); });
+				usertypeDefinition.set(sol::meta_function::length, [](TES3::TArray<NI::AVObject>& self) { return self.filledCount; });
 
-				sol::meta_function::index, [](TES3::TArray<NI::AVObject>& self, int index) { return makeLuaObject(self.storage[index - 1]); },
-				sol::meta_function::length, [](TES3::TArray<NI::AVObject>& self) { return self.filledCount; }
+				// Finish up our usertype.
+				state.set_usertype("niAVObjectTArray", usertypeDefinition);
+			}
 
-				);
+			// Binding for NI::Node.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<NI::Node>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-			state.new_usertype<NI::Node>("NINode",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition.set(sol::base_classes, sol::bases<NI::AVObject, NI::ObjectNET, NI::Object>());
 
-				//
-				// Properties.
-				//
+				// Basic property binding.
+				usertypeDefinition.set("children", &NI::Node::children);
 
-				"runTimeTypeInformation", sol::readonly_property([](NI::Node& self) { return self.getRunTimeTypeInformation(); }),
-				"references", sol::readonly_property(&NI::Node::references),
-
-				"name", sol::readonly_property(&NI::Node::name),
-
-				"flags", &NI::Node::flags,
-				"parentNode", &NI::Node::parentNode,
-				"worldBoundOrigin", &NI::Node::worldBoundOrigin,
-				"worldBoundRadius", &NI::Node::worldBoundRadius,
-				"localRotation", &NI::Node::localRotation,
-				"localTranslate", &NI::Node::localTranslate,
-				"localScale", &NI::Node::localScale,
-				"worldTransform", &NI::Node::worldTransform,
-
-				"children", sol::readonly_property(&NI::Node::children),
-
-				//
-				// Methods.
-				//
-
-				"isOfType", [](NI::Node& self, unsigned int type) { return self.isOfType((NI::RunTimeTypeInformation::RTTI)type); },
-				"isInstanceOfType", [](NI::Node& self, unsigned int type) { return self.isInstanceOfType((NI::RunTimeTypeInformation::RTTI)type); },
-
-				"getObjectByName", [](NI::Node& self, const char* name) { return makeLuaObject(self.getObjectByName(name)); }
-
-			);
+				// Finish up our usertype.
+				state.set_usertype("niNode", usertypeDefinition);
+			}
 		}
 	}
 }

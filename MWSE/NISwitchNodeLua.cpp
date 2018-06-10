@@ -12,44 +12,21 @@
 namespace mwse {
 	namespace lua {
 		void bindNISwitchNode() {
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<NI::SwitchNode>("NISwitchNode",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<NI::SwitchNode>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				//
-				// Properties.
-				//
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<NI::Node, NI::AVObject, NI::ObjectNET, NI::Object>());
 
-				"runTimeTypeInformation", sol::readonly_property([](NI::SwitchNode& self) { return self.getRunTimeTypeInformation(); }),
-				"references", sol::readonly_property(&NI::SwitchNode::references),
+			// Basic property binding.
+			usertypeDefinition.set("switchIndex", &NI::SwitchNode::switchIndex);
 
-				"name", sol::readonly_property(&NI::SwitchNode::name),
-
-				"flags", &NI::SwitchNode::flags,
-				"parentNode", &NI::SwitchNode::parentNode,
-				"worldBoundOrigin", &NI::SwitchNode::worldBoundOrigin,
-				"worldBoundRadius", &NI::SwitchNode::worldBoundRadius,
-				"localRotation", &NI::SwitchNode::localRotation,
-				"localTranslate", &NI::SwitchNode::localTranslate,
-				"localScale", &NI::SwitchNode::localScale,
-				"worldTransform", &NI::SwitchNode::worldTransform,
-
-				"children", sol::readonly_property(&NI::SwitchNode::children),
-
-				"switchIndex", &NI::SwitchNode::switchIndex,
-
-				//
-				// Methods.
-				//
-
-				"isOfType", [](NI::SwitchNode& self, unsigned int type) { return self.isOfType((NI::RunTimeTypeInformation::RTTI)type); },
-				"isInstanceOfType", [](NI::SwitchNode& self, unsigned int type) { return self.isInstanceOfType((NI::RunTimeTypeInformation::RTTI)type); },
-
-				"getObjectByName", [](NI::Node& self, const char* name) { return makeLuaObject(self.getObjectByName(name)); }
-
-			);
+			// Finish up our usertype.
+			state.set_usertype("niSwitchNode", usertypeDefinition);
 		}
 	}
 }

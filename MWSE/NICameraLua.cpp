@@ -14,40 +14,30 @@
 namespace mwse {
 	namespace lua {
 		void bindNICamera() {
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<NI::Camera>("NICamera",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<NI::Camera>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				//
-				// Properties.
-				//
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<NI::AVObject, NI::ObjectNET, NI::Object>());
 
-				"runTimeTypeInformation", sol::readonly_property([](NI::Camera& self) { return self.getRunTimeTypeInformation(); }),
-				"references", &NI::Camera::references,
+			// Basic property binding.
+			usertypeDefinition.set("lodAdjust", &NI::Camera::LODAdjust);
+			usertypeDefinition.set("port", &NI::Camera::port);
+			usertypeDefinition.set("viewDistance", &NI::Camera::viewDistance);
+			usertypeDefinition.set("worldDirection", &NI::Camera::worldDirection);
+			usertypeDefinition.set("worldRight", &NI::Camera::worldRight);
+			usertypeDefinition.set("worldUp", &NI::Camera::worldUp);
 
-				"name", sol::readonly_property(&NI::Camera::name),
+			// Access to other objects that need to be packaged.
+			usertypeDefinition.set("renderer", sol::readonly_property([](NI::Camera& self) { return makeLuaObject(self.renderer); }));
+			usertypeDefinition.set("scene", sol::readonly_property([](NI::Camera& self) { return makeLuaObject(self.scene); }));
 
-				"flags", &NI::Camera::flags,
-				"parentNode", &NI::Camera::parentNode,
-				"worldBoundOrigin", &NI::Camera::worldBoundOrigin,
-				"worldBoundRadius", &NI::Camera::worldBoundRadius,
-				"localRotation", &NI::Camera::localRotation,
-				"localTranslate", &NI::Camera::localTranslate,
-				"localScale", &NI::Camera::localScale,
-				"worldTransform", &NI::Camera::worldTransform,
-
-				//
-				// Methods.
-				//
-
-				"isOfType", [](NI::Camera& self, unsigned int type) { return self.isOfType((NI::RunTimeTypeInformation::RTTI)type); },
-				"isInstanceOfType", [](NI::Camera& self, unsigned int type) { return self.isInstanceOfType((NI::RunTimeTypeInformation::RTTI)type); },
-
-				"getObjectByName", [](NI::Camera& self, const char* name) { return makeLuaObject(self.getObjectByName(name)); }
-
-			);
+			// Finish up our usertype.
+			state.set_usertype("niCamera", usertypeDefinition);
 		}
 	}
 }
