@@ -1,8 +1,8 @@
 
-Activator
+Clothing
 ========================================================
 
-This interface represents an activator game object.
+This interface represents an clothing game object.
 
 Properties
 --------------------------------------------------------
@@ -22,11 +22,35 @@ Properties
 **boundingBox** (`userdata`_)
     The object's `boundingBox`_.
 
+**icon** (`string`_)
+    The object's icon path, relative to 'Data Files/Icons'.
+
 **name** (`string`_)
     The object's name.
 
 **script** (`userdata`_)
     The object's script.
+
+**value** (`number`_)
+    The object's value in gold.
+
+**weight** (`number`_)
+    The object's weight.
+
+**enchantCapacity** (`number`_)
+    The object's maximum enchantment capacity.
+
+**enchantment** (`userdata`_)
+    The object's enchantment.
+
+**health** (`number`_)
+    The object's durability.
+
+**isLeftPart** (`boolean`_)
+    The object uses a left inventory slot.
+
+**slot** (`number`_)
+    The equipment slot this object occupies.
 
 
 --------------------------------------------------------

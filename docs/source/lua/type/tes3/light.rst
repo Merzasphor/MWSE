@@ -1,8 +1,8 @@
 
-Armor
+Light
 ========================================================
 
-This interface represents an armor game object.
+This interface represents an light game object.
 
 Properties
 --------------------------------------------------------
@@ -37,26 +37,41 @@ Properties
 **weight** (`number`_)
     The object's weight.
 
-**isLeftPart** (`boolean`_)
-    The object uses a left inventory slot.
+**time** (`number`_)
+    The time this light will last while equipped by the player.
 
-**armorRating** (`number`_)
-    The object's armor rating.
+**sound** (`number`_)
+    The sound that loops while the light is equipped.
 
-**enchantCapacity** (`number`_)
-    The object's maximum enchantment capacity.
+**radius** (`number`_)
+    The radius in which the light will affect other objects.
 
-**enchantment** (`userdata`_)
-    The object's enchantment.
+**canCarry** (`boolean`_)
+    Description Here
 
-**health** (`number`_)
-    The object's durability.
+**flickers** (`boolean`_)
+    Description Here
 
-**slot** (`number`_)
-    The object's equipment slot.
+**flickersSlowly** (`boolean`_)
+    Description Here
 
-**weightClass** (`number`_)
-    The object's weightClass.
+**isDynamic** (`boolean`_)
+    Description Here
+
+**isFire** (`boolean`_)
+    Description Here
+
+**isNegative** (`boolean`_)
+    Description Here
+
+**isOffByDefault** (`boolean`_)
+    Description Here
+
+**pulses** (`boolean`_)
+    Description Here
+
+**pulsesSlowly** (`boolean`_)
+    Description Here
 
 
 --------------------------------------------------------

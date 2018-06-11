@@ -1,8 +1,8 @@
 
-Activator
+Apparatus
 ========================================================
 
-This interface represents an activator game object.
+This interface represents an apparatus game object.
 
 Properties
 --------------------------------------------------------
@@ -22,11 +22,26 @@ Properties
 **boundingBox** (`userdata`_)
     The object's `boundingBox`_.
 
+**icon** (`string`_)
+    The object's icon path, relative to 'Data Files/Icons'.
+
 **name** (`string`_)
     The object's name.
 
 **script** (`userdata`_)
     The object's script.
+
+**value** (`number`_)
+    The object's value in gold.
+
+**weight** (`number`_)
+    The object's weight.
+
+**type** (`number`_)
+    The object's apparatusType.
+
+**quality** (`number`_)
+    The object's quality.
 
 
 --------------------------------------------------------

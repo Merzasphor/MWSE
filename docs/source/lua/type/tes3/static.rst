@@ -1,8 +1,8 @@
 
-Activator
+Static
 ========================================================
 
-This interface represents an activator game object.
+This interface represents an static game object.
 
 Properties
 --------------------------------------------------------
@@ -21,12 +21,6 @@ Properties
 
 **boundingBox** (`userdata`_)
     The object's `boundingBox`_.
-
-**name** (`string`_)
-    The object's name.
-
-**script** (`userdata`_)
-    The object's script.
 
 
 --------------------------------------------------------

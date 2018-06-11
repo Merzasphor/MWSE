@@ -1,8 +1,8 @@
 
-Activator
+Container
 ========================================================
 
-This interface represents an activator game object.
+This interface represents an container game object.
 
 Properties
 --------------------------------------------------------
@@ -27,6 +27,27 @@ Properties
 
 **script** (`userdata`_)
     The object's script.
+
+**capacity** (`number`_)
+    The object's maximum carrying capacity.
+
+**clone** (`userdata`_)
+    Description Here
+
+**container** (`userdata`_)
+    Description Here
+
+**isInstance** (`boolean`_)
+    Description Here
+
+**isRespawn** (`boolean`_)
+    Description Here
+
+**organic** (`boolean`_)
+    Description Here
+
+**respawns** (`boolean`_)
+    Description Here
 
 
 --------------------------------------------------------

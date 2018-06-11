@@ -1,8 +1,8 @@
 
-Activator
+Door
 ========================================================
 
-This interface represents an activator game object.
+This interface represents an door game object.
 
 Properties
 --------------------------------------------------------
@@ -27,6 +27,12 @@ Properties
 
 **script** (`userdata`_)
     The object's script.
+
+**closeSound** (`string`_)
+    The sound ID to be played when opening.
+
+**openSound** (`string`_)
+    The sound ID to be played when closing.
 
 
 --------------------------------------------------------
