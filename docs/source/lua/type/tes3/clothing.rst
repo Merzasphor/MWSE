@@ -43,9 +43,6 @@ Properties
 **enchantment** (`userdata`_)
     The object's enchantment.
 
-**health** (`number`_)
-    The object's durability.
-
 **isLeftPart** (`boolean`_)
     The object uses a left inventory slot.
 

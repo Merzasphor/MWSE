@@ -28,7 +28,6 @@ namespace mwse {
 
 			// Functions exposed as properties.
 			usertypeDefinition.set("enchantment", sol::property(&TES3::Clothing::getEnchantment, &TES3::Clothing::setEnchantment));
-			usertypeDefinition.set("health", sol::property(&TES3::Clothing::getDurability, &TES3::Clothing::setDurability));
 			usertypeDefinition.set("icon", sol::property(
 				&TES3::Clothing::getIconPath,
 				[](TES3::Clothing& self, const char* value) { if (strlen(value) < 32) tes3::setDataString(&self.icon, value); }
