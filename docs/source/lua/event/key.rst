@@ -18,19 +18,19 @@ pressed
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `Boolean`_. Read-only. True if this is a key down event, false for a key up event.
 
-controlDown
+isControlDown
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `Boolean`_. Read-only. True if control is held.
 
-shiftDown
+isShiftDown
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `Boolean`_. Read-only. True if shift is held.
 
-altDown
+isAltDown
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `Boolean`_. Read-only. True if alt is held.
 
-superDown
+isSuperDown
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `Boolean`_. Read-only. True if super (Windows key) is held.
 
@@ -48,7 +48,7 @@ Show a message when Ctrl-Z is pressed.
 .. code-block:: lua
     
     function myOnKeyCallback(e)
-        if( e.pressed && e.controlDown )
+        if( e.pressed and e.isControlDown ) then
             tes3.messageBox({ message = "You pressed Ctrl-Z, but you can't undo all your mistakes." })
         end
     end
