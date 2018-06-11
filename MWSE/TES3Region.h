@@ -29,6 +29,7 @@ namespace TES3 {
 		//
 
 		void changeWeather(int);
+		void randomizeWeather();
 
 	};
 	static_assert(sizeof(Region) == 0x78, "TES3::Region failed size validation");

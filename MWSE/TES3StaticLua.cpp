@@ -8,27 +8,21 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Static() {
-			LuaManager::getInstance().getState().new_usertype<TES3::Static>("TES3Static",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Get our lua state.
+			sol::state& state = LuaManager::getInstance().getState();
 
-				sol::base_classes, sol::bases<TES3::BaseObject>(),
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::Static>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::meta_function::to_string, &TES3::Static::getObjectID,
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+			// Functions exposed as properties.
+			usertypeDefinition.set("model", sol::property(&TES3::Static::getModelPath, &TES3::Static::setModelPath));
 
-				"objectType", &TES3::Static::objectType,
-
-				"boundingBox", &TES3::Static::boundingBox,
-
-				"id", sol::readonly_property(&TES3::Static::getObjectID),
-
-				"model", sol::readonly_property(&TES3::Static::getModelPath)
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("tes3static", usertypeDefinition);
 		}
 	}
 }

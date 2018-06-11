@@ -2,6 +2,7 @@
 
 #include "sol.hpp"
 #include "LuaManager.h"
+#include "LuaUtil.h"
 
 #include "TES3RepairTool.h"
 #include "TES3Script.h"
@@ -9,36 +10,35 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3RepairTool() {
-			LuaManager::getInstance().getState().new_usertype<TES3::RepairTool>("TES3RepairTool",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Get our lua state.
+			sol::state& state = LuaManager::getInstance().getState();
 
-				sol::base_classes, sol::bases<TES3::Item, TES3::BaseObject>(),
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::RepairTool>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::meta_function::to_string, &TES3::RepairTool::getObjectID,
+			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-				//
-				// Properties.
-				//
+			// Basic property binding.
+			usertypeDefinition.set("condition", &TES3::RepairTool::maxCondition);
+			usertypeDefinition.set("quality", &TES3::RepairTool::quality);
+			usertypeDefinition.set("value", &TES3::RepairTool::value);
+			usertypeDefinition.set("weight", &TES3::RepairTool::weight);
 
-				"objectType", &TES3::RepairTool::objectType,
+			// Access to other objects that need to be packaged.
+			usertypeDefinition.set("script", sol::readonly_property([](TES3::RepairTool& self) { return makeLuaObject(self.getScript()); }));
 
-				"boundingBox", &TES3::RepairTool::boundingBox,
+			// Functions exposed as properties.
+			usertypeDefinition.set("icon", sol::property(
+				&TES3::RepairTool::getIconPath,
+				[](TES3::RepairTool& self, const char* value) { if (strlen(value) < 32) strcpy(self.icon, value); }
+			));
+			usertypeDefinition.set("model", sol::property(&TES3::RepairTool::getModelPath, &TES3::RepairTool::setModelPath));
+			usertypeDefinition.set("name", sol::property(&TES3::RepairTool::getName, &TES3::RepairTool::setName));
 
-				"id", sol::readonly_property(&TES3::RepairTool::getObjectID),
-				"name", sol::property(&TES3::RepairTool::getName, &TES3::RepairTool::setName),
-
-				"icon", sol::readonly_property(&TES3::RepairTool::getIconPath),
-				"model", sol::readonly_property(&TES3::RepairTool::getModelPath),
-
-				"value", sol::readonly_property(&TES3::RepairTool::getValue),
-				"weight", sol::readonly_property(&TES3::RepairTool::getWeight),
-				"quality", &TES3::RepairTool::quality,
-				"condition", &TES3::RepairTool::maxCondition,
-
-				"script", sol::readonly_property(&TES3::RepairTool::getScript)
-
-				);
+			// Finish up our usertype.
+			state.set_usertype("tes3repairTool", usertypeDefinition);
 		}
 	}
 }

@@ -25,7 +25,7 @@ namespace NI {
 		AVObject * getObjectByName(const char*);
 
 		template <typename T>
-		T * getObjectByName(const char* name) {
+		T * getObjectByNameAndType(const char* name) {
 			return reinterpret_cast<T*>(vTable.asAVObject->getObjectByName(this, name));
 		}
 		

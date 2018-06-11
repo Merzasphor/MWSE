@@ -2,6 +2,7 @@
 
 #include "sol.hpp"
 #include "LuaManager.h"
+#include "LuaUtil.h"
 
 #include "TES3NPC.h"
 #include "TES3Race.h"
@@ -12,123 +13,99 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3NPC() {
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::NPC>("TES3NPC",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Binding for TES3::NPC
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::NPC>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::base_classes, sol::bases<TES3::Actor, TES3::BaseObject>(),
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Actor, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-				sol::meta_function::to_string, &TES3::NPC::getObjectID,
+				// Basic property binding.
+				usertypeDefinition.set("disposition", &TES3::NPC::disposition);
+				usertypeDefinition.set("factionIndex", &TES3::NPC::factionIndex);
+				usertypeDefinition.set("factionRank", &TES3::NPC::factionRank);
+				usertypeDefinition.set("fatigue", &TES3::NPC::fatigue);
+				usertypeDefinition.set("health", &TES3::NPC::health);
+				usertypeDefinition.set("level", &TES3::NPC::level);
+				usertypeDefinition.set("magicka", &TES3::NPC::magicka);
+				usertypeDefinition.set("reputation", &TES3::NPC::reputation);
 
-				//
-				// Properties.
-				//
+				// Indirect bindings to unions and arrays.
+				usertypeDefinition.set("attributes", sol::property([](TES3::NPC& self) { return std::ref(self.attributes); }));
+				usertypeDefinition.set("skills", sol::property([](TES3::NPC& self) { return std::ref(self.skills); }));
 
-				"objectType", &TES3::NPC::objectType,
+				// Constants.
+				usertypeDefinition.set("isInstance", sol::var(false));
 
-				"boundingBox", &TES3::NPC::boundingBox,
+				// Access to other objects that need to be packaged.
+				usertypeDefinition.set("class", sol::readonly_property([](TES3::NPC& self) { return makeLuaObject(self.class_); }));
+				usertypeDefinition.set("faction", sol::readonly_property([](TES3::NPC& self) { return makeLuaObject(self.faction); }));
+				usertypeDefinition.set("race", sol::readonly_property([](TES3::NPC& self) { return makeLuaObject(self.race); }));
+				usertypeDefinition.set("script", sol::readonly_property([](TES3::NPC& self) { return makeLuaObject(self.getScript()); }));
 
-				"id", sol::readonly_property(&TES3::NPC::getObjectID),
-				"name", sol::property(&TES3::NPC::getName, &TES3::NPC::setName),
+				// Functions exposed as properties.
+				usertypeDefinition.set("aiConfig", sol::readonly_property(&TES3::NPC::getAIConfig));
+				usertypeDefinition.set("barterGold", sol::property(&TES3::NPC::getBaseBarterGold, &TES3::NPC::setBaseBarterGold));
+				usertypeDefinition.set("isAttacked", sol::readonly_property(&TES3::NPC::getIsAttacked));
+				usertypeDefinition.set("isEssential", sol::readonly_property(&TES3::NPC::isEssential));
+				usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::NPC::isRespawn));
+				usertypeDefinition.set("model", sol::property(&TES3::NPC::getModelPath, &TES3::NPC::setModelPath));
+				usertypeDefinition.set("name", sol::property(&TES3::NPC::getName, &TES3::NPC::setName));
+				usertypeDefinition.set("spells", sol::readonly_property([](TES3::NPC& self) { return &self.spellList; }));
 
-				"model", sol::readonly_property(&TES3::NPC::getModelPath),
+				// Finish up our usertype.
+				state.set_usertype("tes3npc", usertypeDefinition);
+			}
 
-				"flags", &TES3::NPC::actorFlags,
-				"cloneCount", &TES3::NPC::cloneCount,
+			// Binding for TES3::NPCInstance
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::NPCInstance>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-				"level", sol::readonly_property(&TES3::NPC::getLevel),
-				"health", &TES3::NPC::health,
-				"magicka", &TES3::NPC::magicka,
-				"fatigue", &TES3::NPC::fatigue,
-				"attributes", sol::property([](TES3::NPC& self) { return std::ref(self.attributes); }),
-				"skills", sol::property([](TES3::NPC& self) { return std::ref(self.skills); }),
-				"reputation", &TES3::NPC::reputation,
-				"disposition", &TES3::NPC::disposition,
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Actor, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
-				"factionIndex", &TES3::NPC::factionIndex,
-				"factionRank", &TES3::NPC::factionRank,
+				// Basic property binding.
+				usertypeDefinition.set("disposition", &TES3::NPCInstance::disposition);
+				usertypeDefinition.set("factionIndex", &TES3::NPCInstance::factionIndex);
 
-				"isEssential", sol::readonly_property(&TES3::NPC::isEssential),
-				"isRespawn", sol::readonly_property(&TES3::NPC::isRespawn),
-				"isAttacked", sol::readonly_property(&TES3::NPC::getIsAttacked),
-				"isInstance", sol::var(false),
+				// Indirect bindings to unions and arrays.
+				usertypeDefinition.set("attributes", sol::property([](TES3::NPCInstance& self) { return std::ref(self.baseNPC->attributes); }));
+				usertypeDefinition.set("skills", sol::property([](TES3::NPCInstance& self) { return std::ref(self.baseNPC->skills); }));
 
-				"inventory", sol::readonly_property(&TES3::NPC::inventory),
-				"equipment", sol::readonly_property(&TES3::NPC::equipment),
-				"barterGold", sol::property(&TES3::NPC::getBaseBarterGold, &TES3::NPC::setBaseBarterGold),
+				// Constants.
+				usertypeDefinition.set("isInstance", sol::var(true));
 
-				"race", sol::readonly_property(&TES3::NPC::getRace),
-				"class", sol::readonly_property(&TES3::NPC::getClass),
-				"faction", sol::readonly_property(&TES3::NPC::getFaction),
+				// Access to other objects that need to be packaged.
+				usertypeDefinition.set("baseObject", sol::readonly_property([](TES3::NPCInstance& self) { return makeLuaObject(self.baseNPC); }));
+				usertypeDefinition.set("class", sol::readonly_property([](TES3::NPCInstance& self) { return makeLuaObject(self.baseNPC->class_); }));
+				usertypeDefinition.set("faction", sol::readonly_property([](TES3::NPCInstance& self) { return makeLuaObject(self.baseNPC->faction); }));
+				usertypeDefinition.set("race", sol::readonly_property([](TES3::NPCInstance& self) { return makeLuaObject(self.baseNPC->race); }));
+				usertypeDefinition.set("script", sol::readonly_property([](TES3::NPCInstance& self) { return makeLuaObject(self.getScript()); }));
 
-				"spells", sol::readonly_property(&TES3::NPC::spellList),
+				// Functions exposed as properties.
+				usertypeDefinition.set("aiConfig", sol::readonly_property(&TES3::NPCInstance::getAIConfig));
+				usertypeDefinition.set("barterGold", sol::property(&TES3::NPCInstance::getBaseBarterGold, &TES3::NPCInstance::setBaseBarterGold));
+				usertypeDefinition.set("health", sol::readonly_property(&TES3::NPCInstance::getDurability));
+				usertypeDefinition.set("magicka", sol::readonly_property(&TES3::NPCInstance::getMagicka));
+				usertypeDefinition.set("fatigue", sol::readonly_property(&TES3::NPCInstance::getFatigue));
+				usertypeDefinition.set("isAttacked", sol::readonly_property(&TES3::NPCInstance::getIsAttacked));
+				usertypeDefinition.set("isEssential", sol::readonly_property(&TES3::NPCInstance::isEssential));
+				usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::NPCInstance::isRespawn));
+				usertypeDefinition.set("level", sol::readonly_property(&TES3::NPCInstance::getLevel));
+				usertypeDefinition.set("model", sol::property(&TES3::NPCInstance::getModelPath, &TES3::NPCInstance::setModelPath));
+				usertypeDefinition.set("name", sol::property(&TES3::NPCInstance::getName, &TES3::NPCInstance::setName));
+				usertypeDefinition.set("spells", sol::readonly_property([](TES3::NPCInstance& self) { return &self.baseNPC->spellList; }));
 
-				"aiConfig", sol::readonly_property(&TES3::NPC::getAIConfig),
-
-				"script", sol::readonly_property(&TES3::NPC::getScript)
-
-				);
-
-			state.new_usertype<TES3::NPCInstance>("TES3NPCInstance",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
-
-				sol::base_classes, sol::bases<TES3::Actor, TES3::BaseObject>(),
-
-				sol::meta_function::to_string, &TES3::NPCInstance::getObjectID,
-
-				//
-				// Properties.
-				//
-
-				"objectType", &TES3::NPCInstance::objectType,
-
-				"boundingBox", &TES3::NPCInstance::boundingBox,
-
-				"id", sol::readonly_property(&TES3::NPCInstance::getObjectID),
-				"name", sol::property(&TES3::NPCInstance::getName, &TES3::NPCInstance::setName),
-
-				"baseObject", &TES3::NPCInstance::baseNPC,
-
-				"model", sol::readonly_property(&TES3::NPCInstance::getModelPath),
-
-				"flags", &TES3::NPCInstance::actorFlags,
-				"cloneCount", &TES3::NPCInstance::cloneCount,
-
-				"level", sol::readonly_property(&TES3::NPCInstance::getLevel),
-				"health", sol::readonly_property(&TES3::NPCInstance::getDurability),
-				"magicka", sol::readonly_property(&TES3::NPCInstance::getMagicka),
-				"fatigue", sol::readonly_property(&TES3::NPCInstance::getFatigue),
-				"attributes", sol::property([](TES3::NPCInstance& self) { return std::ref(self.baseNPC->attributes); }),
-				"skills", sol::property([](TES3::NPCInstance& self) { return std::ref(self.baseNPC->skills); }),
-				"reputation", sol::property(&TES3::NPCInstance::getReputation, &TES3::NPCInstance::setFactionIndex),
-				"disposition", &TES3::NPCInstance::disposition,
-
-				"factionIndex", sol::property(&TES3::NPCInstance::getFactionIndex, &TES3::NPCInstance::setFactionIndex),
-				"factionRank", sol::property(&TES3::NPCInstance::getFactionRank, &TES3::NPCInstance::setFactionRank),
-
-				"isEssential", sol::readonly_property(&TES3::NPCInstance::isEssential),
-				"isRespawn", sol::readonly_property(&TES3::NPCInstance::isRespawn),
-				"isAttacked", sol::readonly_property(&TES3::NPCInstance::getIsAttacked),
-				"isInstance", sol::var(true),
-
-				"inventory", sol::readonly_property(&TES3::NPC::inventory),
-				"equipment", sol::readonly_property(&TES3::NPCInstance::equipment),
-				"barterGold", sol::property(&TES3::NPCInstance::getBaseBarterGold, &TES3::NPCInstance::setBaseBarterGold),
-
-				"race", sol::readonly_property(&TES3::NPCInstance::getRace),
-				"class", sol::readonly_property(&TES3::NPCInstance::getClass),
-				"faction", sol::readonly_property(&TES3::NPCInstance::getFaction),
-
-				"spells", sol::readonly_property([](TES3::NPCInstance& self) { return &self.baseNPC->spellList; }),
-
-				"aiConfig", sol::readonly_property(&TES3::NPCInstance::getAIConfig),
-
-				"script", sol::readonly_property(&TES3::NPCInstance::getScript)
-
-				);
+				// Finish up our usertype.
+				state.set_usertype("tes3npcInstance", usertypeDefinition);
+			}
 		}
 	}
 }

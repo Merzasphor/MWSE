@@ -6,6 +6,7 @@
 
 #include "TES3Util.h"
 
+#include "TES3Reference.h"
 #include "TES3Spell.h"
 
 namespace mwse {
@@ -53,36 +54,24 @@ namespace mwse {
 		}
 
 		void bindTES3Spell() {
-			LuaManager::getInstance().getState().new_usertype<TES3::Spell>("TES3Spell",
-				// Disable construction of this type.
-				"create", createSpell,
+			// Get our lua state.
+			sol::state& state = LuaManager::getInstance().getState();
 
-				sol::base_classes, sol::bases<TES3::BaseObject>(),
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::Spell>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
-				sol::meta_function::to_string, &TES3::Spell::getObjectID,
+			// Basic property binding.
+			usertypeDefinition.set("castType", &TES3::Spell::castType);
+			usertypeDefinition.set("flags", &TES3::Spell::spellFlags);
+			usertypeDefinition.set("magickaCost", &TES3::Spell::magickaCost);
 
-				//
-				// Properties.
-				//
+			// Indirect bindings to unions and arrays.
+			usertypeDefinition.set("effects", sol::readonly_property([](TES3::Spell& self) { return std::ref(self.effects); }));
 
-				"objectType", &TES3::Spell::objectType,
-
-				"id", sol::readonly_property(&TES3::Spell::getObjectID),
-				"name", sol::property(&TES3::Spell::getName, &TES3::Spell::setName),
-
-				"flags", &TES3::Spell::spellFlags,
-				"autoCalc", sol::property(&TES3::Spell::getAutoCalc, &TES3::Spell::setAutoCalc),
-
-				"effects", sol::readonly_property([](TES3::Spell& self) { return std::ref(self.effects); }),
-
-				"castType", &TES3::Spell::castType,
-				"magickaCost", &TES3::Spell::magickaCost,
-
-				//
-				// Functions
-				//
-
-				"calculateCastChance", [](TES3::Spell& self, sol::table params) -> float
+			// Basic function binding.
+			usertypeDefinition.set("create", &createSpell);
+			usertypeDefinition.set("calculateCastChance", [](TES3::Spell& self, sol::table params) -> float
 			{
 				bool checkMagicka = getOptionalParam<bool>(params, "checkMagicka", true);
 				sol::object caster = params["caster"];
@@ -95,8 +84,14 @@ namespace mwse {
 
 				return 0.0f;
 			}
+			);
 
-				);
+			// Functions exposed as properties.
+			usertypeDefinition.set("autoCalc", sol::property(&TES3::Spell::getAutoCalc, &TES3::Spell::setAutoCalc));
+			usertypeDefinition.set("name", sol::property(&TES3::Spell::getName, &TES3::Spell::setName));
+
+			// Finish up our usertype.
+			state.set_usertype("tes3spell", usertypeDefinition);
 		}
 	}
 }

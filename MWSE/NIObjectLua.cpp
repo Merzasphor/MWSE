@@ -15,88 +15,86 @@
 namespace mwse {
 	namespace lua {
 		void bindNIObject() {
+			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<NI::RTTI>("NIRTTI",
-				"name", sol::readonly_property(&NI::RTTI::name),
-				"parent", sol::readonly_property(&NI::RTTI::baseRTTI)
-				);
+			// Binding for NI::RTTI.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<NI::RTTI>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
+				// Basic property binding.
+				usertypeDefinition.set("name", &NI::RTTI::name);
+				usertypeDefinition.set("parent", &NI::RTTI::baseRTTI);
 
-			state.new_usertype<NI::Object>("NIObject",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+				// Finish up our usertype.
+				state.set_usertype("niRTTI", usertypeDefinition);
+			}
 
-				//
-				// Properties.
-				//
+			// Binding for NI::Object.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<NI::Object>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-				"runTimeTypeInformation", sol::readonly_property([](NI::Object& self) { return self.getRunTimeTypeInformation(); }),
-				"references", &NI::Object::references,
+				// Basic property binding.
+				usertypeDefinition.set("references", sol::readonly_property(&NI::Object::references));
 
-				//
-				// Methods.
-				//
+				// Basic function binding.
+				usertypeDefinition.set("isOfType", &NI::Object::isOfType);
+				usertypeDefinition.set("isInstanceOfType", &NI::Object::isInstanceOfType);
 
-				"isOfType", [](NI::Object& self, unsigned int type) { return self.isOfType((NI::RunTimeTypeInformation::RTTI)type); },
-				"isInstanceOfType", [](NI::Object& self, unsigned int type) { return self.isInstanceOfType((NI::RunTimeTypeInformation::RTTI)type); }
+				// Functions exposed as properties.
+				usertypeDefinition.set("runTimeTypeInformation", sol::readonly_property([](NI::Object& self) { return self.getRunTimeTypeInformation(); }));
 
-			);
+				// Finish up our usertype.
+				state.set_usertype("niObject", usertypeDefinition);
+			}
 
-			state.new_usertype<NI::ObjectNET>("NIObjectNET",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+			// Binding for NI::ObjectNET.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<NI::ObjectNET>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-				//
-				// Properties.
-				//
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition.set(sol::base_classes, sol::bases<NI::Object>());
 
-				"runTimeTypeInformation", sol::readonly_property([](NI::ObjectNET& self) { return self.getRunTimeTypeInformation(); }),
-				"references", &NI::ObjectNET::references,
+				// Basic property binding.
+				usertypeDefinition.set("name", sol::readonly_property([](NI::ObjectNET& self) { return self.name; }));
 
-				"name", sol::readonly_property(&NI::ObjectNET::name),
+				// Finish up our usertype.
+				state.set_usertype("niObjectNET", usertypeDefinition);
+			}
 
-				//
-				// Methods.
-				//
+			// Binding for NI::AVObject.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<NI::AVObject>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
-				"isOfType", [](NI::ObjectNET& self, unsigned int type) { return self.isOfType((NI::RunTimeTypeInformation::RTTI)type); },
-				"isInstanceOfType", [](NI::ObjectNET& self, unsigned int type) { return self.isInstanceOfType((NI::RunTimeTypeInformation::RTTI)type); }
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition.set(sol::base_classes, sol::bases<NI::ObjectNET, NI::Object>());
 
-			);
+				// Basic property binding.
+				usertypeDefinition.set("flags", &NI::AVObject::flags);
+				usertypeDefinition.set("localRotation", &NI::AVObject::localRotation);
+				usertypeDefinition.set("localScale", &NI::AVObject::localScale);
+				usertypeDefinition.set("localTranslate", &NI::AVObject::localTranslate);
+				usertypeDefinition.set("worldBoundOrigin", &NI::AVObject::worldBoundOrigin);
+				usertypeDefinition.set("worldBoundRadius", &NI::AVObject::worldBoundRadius);
+				usertypeDefinition.set("worldTransform", &NI::AVObject::worldTransform);
 
-			state.new_usertype<NI::AVObject>("NIAVObject",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
+				// Access to other objects that need to be packaged.
+				usertypeDefinition.set("parent", sol::readonly_property([](NI::AVObject& self) { return makeLuaObject(self.parentNode); }));
 
-				//
-				// Properties.
-				//
+				// Basic function binding.
+				usertypeDefinition.set("getObjectByName", &NI::AVObject::getObjectByName);
 
-				"runTimeTypeInformation", sol::readonly_property([](NI::AVObject& self) { return self.getRunTimeTypeInformation(); }),
-				"references", &NI::AVObject::references,
-
-				"name", sol::readonly_property(&NI::AVObject::name),
-
-				"flags", &NI::AVObject::flags,
-				"parentNode", &NI::AVObject::parentNode,
-				"worldBoundOrigin", &NI::AVObject::worldBoundOrigin,
-				"worldBoundRadius", &NI::AVObject::worldBoundRadius,
-				"localRotation", &NI::AVObject::localRotation,
-				"localTranslate", &NI::AVObject::localTranslate,
-				"localScale", &NI::AVObject::localScale,
-				"worldTransform", &NI::AVObject::worldTransform,
-
-				//
-				// Methods.
-				//
-
-				"isOfType", [](NI::AVObject& self, unsigned int type) { return self.isOfType((NI::RunTimeTypeInformation::RTTI)type); },
-				"isInstanceOfType", [](NI::AVObject& self, unsigned int type) { return self.isInstanceOfType((NI::RunTimeTypeInformation::RTTI)type); },
-
-				"getObjectByName", [](NI::AVObject& self, const char* name) { return makeLuaObject(self.getObjectByName(name)); }
-
-			);
+				// Finish up our usertype.
+				state.set_usertype("niAVObject", usertypeDefinition);
+			}
 		}
 	}
 }
