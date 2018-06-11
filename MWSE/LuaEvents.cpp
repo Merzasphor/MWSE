@@ -92,7 +92,7 @@ namespace mwse {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table eventData = state.create_table();
 
-				eventData["reference"] = m_Reference;
+				eventData["reference"] = makeLuaObject(m_Reference);
 				eventData["item"] = makeLuaObject(m_Item);
 				eventData["itemData"] = m_ItemData;
 
@@ -120,7 +120,7 @@ namespace mwse {
 
 				eventData["actor"] = makeLuaObject(m_Actor);
 				if (m_MobileActor) {
-					eventData["reference"] = m_MobileActor->reference;
+					eventData["reference"] = makeLuaObject(m_MobileActor->reference);
 				}
 				eventData["item"] = makeLuaObject(m_Item);
 				eventData["itemData"] = m_ItemData;
@@ -212,8 +212,8 @@ namespace mwse {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table eventData = state.create_table();
 
-				eventData["activator"] = m_Activator;
-				eventData["target"] = m_Target;
+				eventData["activator"] = makeLuaObject(m_Activator);
+				eventData["target"] = makeLuaObject(m_Target);
 
 				return eventData;
 			}
@@ -330,7 +330,7 @@ namespace mwse {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table eventData = state.create_table();
 
-				eventData["cell"] = m_Cell;
+				eventData["cell"] = makeLuaObject(m_Cell);
 				eventData["x"] = m_X;
 				eventData["y"] = m_Y;
 				eventData["z"] = m_Z;
@@ -467,7 +467,7 @@ namespace mwse {
 
 				eventData["mobile"] = makeLuaObject(m_MobileObject);
 				eventData["reference"] = makeLuaObject(m_MobileObject->reference);
-				eventData["target"] = m_TargetReference;
+				eventData["target"] = makeLuaObject(m_TargetReference);
 
 				return eventData;
 			}
@@ -675,7 +675,7 @@ namespace mwse {
 				sol::table eventData = state.create_table();
 
 				eventData["mobile"] = makeLuaObject(m_MobileActor);
-				eventData["reference"] = m_MobileActor->reference;
+				eventData["reference"] = makeLuaObject(m_MobileActor->reference);
 
 				return eventData;
 			}
@@ -697,7 +697,7 @@ namespace mwse {
 				sol::table eventData = state.create_table();
 
 				eventData["mobile"] = makeLuaObject(m_MobileActor);
-				eventData["reference"] = m_MobileActor->reference;
+				eventData["reference"] = makeLuaObject(m_MobileActor->reference);
 				eventData["damage"] = m_Damage;
 
 				return eventData;
@@ -720,7 +720,7 @@ namespace mwse {
 				sol::table eventData = state.create_table();
 
 				eventData["mobile"] = makeLuaObject(m_MobileActor);
-				eventData["reference"] = m_MobileActor->reference;
+				eventData["reference"] = makeLuaObject(m_MobileActor->reference);
 				eventData["damage"] = m_Damage;
 
 				return eventData;
