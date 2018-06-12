@@ -3,6 +3,7 @@
 #include "TES3Defines.h"
 
 #include "TES3ActionData.h"
+#include "TES3MagicSourceInstance.h"
 #include "TES3MobileObject.h"
 #include "TES3Statistic.h"
 #include "TES3Vectors.h"
@@ -149,11 +150,7 @@ namespace TES3 {
 		char unknown_0x36F; // Undefined.
 		float holdBreathTime;
 		int unknown_0x374;
-		Spell * currentSpell;
-		unsigned char spellSource;
-		char unknown_0x37D; // Undefined.
-		char unknown_0x37E; // Undefined.
-		char unknown_0x37F; // Undefined.
+		MagicSourceCombo currentSpell;
 		Item * currentEnchItem;
 		ItemData * currentEnchItemData;
 		EquipmentStack * readiedWeapon;

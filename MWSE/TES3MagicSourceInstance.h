@@ -29,6 +29,7 @@ namespace TES3 {
 		union {
 			Object * asGeneric;
 			Alchemy * asAlchemy;
+			Enchantment * asEnchantment;
 			Spell * asSpell;
 		} source; // 0xA0
 		signed char sourceType;// 0xA4

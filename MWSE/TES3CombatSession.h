@@ -8,9 +8,9 @@ namespace TES3 {
 		int unknown_0x4; // 0x4
 		long ammoDamage; // 0x8
 		void * parentActor; // 0xC
-		Item * selectedWeapon; // 0x10
+		EquipmentStack * selectedWeapon; // 0x10
 		int unknown_0x14;
-		int unknown_0x18;
+		EquipmentStack * selectedShield; // 0x18
 		int unknown_0x1C;
 		Spell * nextSpell; // 0x20
 		void * unknown_0x24;

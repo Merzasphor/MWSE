@@ -59,15 +59,13 @@ namespace mwse
 			if (recordType == TES3::ObjectType::Creature || recordType == TES3::ObjectType::NPC) {
 				auto mobileObject = tes3::getAttachedMobileNPC(reference);
 				if (mobileObject) {
-					if (mobileObject->currentSpell) {
-						type = mobileObject->currentSpell->objectType;
+					if (mobileObject->currentSpell.source.asGeneric) {
+						type = mobileObject->currentSpell.source.asGeneric->objectType;
 						if (type == TES3::ObjectType::Spell) {
-							TES3::Spell* spell = reinterpret_cast<TES3::Spell*>(mobileObject->currentSpell);
-							id = spell->objectID;
+							id = mobileObject->currentSpell.source.asSpell->getObjectID();
 						}
 						else if (type == TES3::ObjectType::Enchantment) {
-							TES3::Enchantment* enchantment = reinterpret_cast<TES3::Enchantment*>(mobileObject->currentSpell);
-							id = enchantment->objectID;
+							id = mobileObject->currentSpell.source.asEnchantment->getObjectID();
 						}
 						else {
 #if _DEBUG

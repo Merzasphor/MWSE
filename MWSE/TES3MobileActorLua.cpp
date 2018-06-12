@@ -61,7 +61,6 @@ namespace mwse {
 			usertypeDefinition.set("readiedWeapon", &TES3::MobileActor::readiedWeapon);
 			usertypeDefinition.set("scanInterval", sol::readonly_property(&TES3::MobileActor::scanInterval));
 			usertypeDefinition.set("scanTimer", sol::readonly_property(&TES3::MobileActor::scanTimer));
-			usertypeDefinition.set("spellSource", sol::readonly_property(&TES3::MobileActor::spellSource));
 			usertypeDefinition.set("torchSlot", &TES3::MobileActor::torchSlot);
 			usertypeDefinition.set("width", sol::readonly_property(&TES3::MobileActor::widthInUnits));
 
