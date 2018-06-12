@@ -23,9 +23,9 @@ Detect if Galbedir detects the player
 
 .. code-block:: lua
 
-  local player = tes3.getPlayerRef
+  local player = tes3.getPlayerRef()
   local galbedir = tes3.getReference("galbedir")
-  if (mwscript.getDetected({ reference = galbedir, target = player }) then
+  if (mwscript.getDetected({ reference = galbedir, target = player })) then
       tes3.messageBox("Galbedir detects the player!")
   end
 
