@@ -1,8 +1,8 @@
 
-equip
+projectileExpire
 ========================================================
 
-The **equip** event fires when an actor is about to equip an item. This event allows scripts to block equipping.
+The **projectileExpire** event fires just prior to a fired projectile expiring.
 
 .. note:: See the `Event Guide`_ for more information on event data, return values, and filters.
 
@@ -10,25 +10,25 @@ The **equip** event fires when an actor is about to equip an item. This event al
 Event Data
 --------------------------------------------------------
 
-reference
+mobile
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`tes3reference`_. Read-only. A reference to the mobile actor that is equipping the item.
+`tes3mobileProjectile`_. Read-only. The mobile projectile that is expiring.
 
-item
+firingReference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`tes3baseObject`_. Read-only. The object being equipped.
+`tes3reference`_. Read-only. Reference to the actor that fired the projectile.
 
-itemData
+firingWeapon
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`tes3itemData`_. Read-only. The item data of **item**.
+`tes3weapon`_. Read-only. The weapon that fired the projectile.
 
 
 Filter
 --------------------------------------------------------
-This event may be filtered by `reference`.
+This event may be filtered by **firingReference**.
 
 
 .. _`Event Guide`: ../guide/events.html
+.. _`tes3mobileProjectile`: ../type/tes3/mobileProjectile.html
 .. _`tes3reference`: ../type/tes3/reference.html
-.. _`tes3baseObject`: ../type/tes3/baseObject.html
-.. _`tes3itemData`: ../type/tes3/itemData.html
+.. _`tes3weapon`: ../type/tes3/weapon.html
