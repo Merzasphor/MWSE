@@ -2,6 +2,8 @@
 math.clamp
 ========================================================
 
+This function clamps value between the minimum and maximum.
+
 **Parameters:**
 
 - ``number`` **value**: The number to be clamped.
@@ -12,8 +14,12 @@ math.clamp
 
 - ``number`` **result**: The clamped value.
 
-This function clamps value between the minimum and maximum.
-::
-	local x = 13
-	math.clamp(x, 0, 10)	--x is larger than max, returns 10
-	math.clamp(x, 0, 100)	--x is within min and max, returns x (13)
+.. code-block:: lua
+
+    local x = 13
+	
+    x = math.clamp(x, 0, 10)	--x is larger than max, returns 10
+	print(x)    --prints 10
+
+    x = math.clamp(x, 0, 100)	--x is within min and max, returns x (13)
+	print(x)    --prints 13

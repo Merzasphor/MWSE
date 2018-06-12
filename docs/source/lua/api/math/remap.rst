@@ -2,6 +2,8 @@
 math.remap
 ========================================================
 
+This function remaps value from one scale to another.
+
 **Parameters:**
 
 - ``number`` **value**: The number to be remapped.
@@ -14,8 +16,12 @@ math.remap
 
 - ``number`` **result**: The remapped value.
 
-This function remaps value from one scale to another.
-::
-	local x = 13
-	math.remap(x, 0, 100, -1, 1)	--remap x from a percentage to -1 to 1. returns -0.74
-	math.remap(x, 0, 100, 100, 0)	--remap x, inverting the percentage. returns 87
+.. code-block:: lua
+
+    local x = 13
+
+    x = math.remap(x, 0, 100, -1, 1)	--remap x from a percentage to -1 to 1.
+	print(x)   -- -0.74
+
+    x = math.remap(x, 0, 100, 100, 0)	--remap x, inverting the percentage.
+	print(x)   -- 87
