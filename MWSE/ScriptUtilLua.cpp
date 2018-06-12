@@ -216,6 +216,17 @@ namespace mwse {
 
 				return (reference->objectFlags & TES3::ObjectFlag::Delete) != 0;
 			};
+			state["mwscript"]["getDetected"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				TES3::Reference* target = getOptionalParamReference(params, "target");
+				if (reference == NULL || target == NULL) {
+					mwse::log::getLog() << "Something was null!" << std::endl;
+					return false;
+				}
+
+				return mwscript::GetDetected(script, reference, target);
+			};
 			state["mwscript"]["getDisabled"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);

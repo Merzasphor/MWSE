@@ -378,6 +378,20 @@ namespace mwse
 			return value != 0.0f;
 		}
 
+		bool GetDetected(TES3::Script* script, TES3::Reference* reference, TES3::Reference* target) {
+			// Cache previous script variables.
+			TES3::BaseObject* cachedSecondObject = getScriptSecondObject();
+
+			// Setup parameters and run original opcode.
+			setScriptSecondObject(target);
+			float value = RunOriginalOpCode(script, reference, OpCode::GetDetected);
+
+			// Restore original script variables.
+			setScriptSecondObject(cachedSecondObject);
+
+			return value != 0.0f;
+		}
+
 		bool GetDisabled(TES3::Script* script, TES3::Reference* reference) {
 			return (RunOriginalOpCode(script, reference, OpCode::GetDisabled) != 0.0f);
 		}

@@ -130,6 +130,8 @@ namespace mwse
 
 		bool HasItemEquipped(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate);
 
+		bool GetDetected(TES3::Script* script, TES3::Reference* reference, TES3::Reference* target);
+
 		bool GetDisabled(TES3::Script* script, TES3::Reference* reference);
 
 		float GetDistance(TES3::Script* script, TES3::Reference* reference, TES3::Reference* target);
