@@ -221,7 +221,6 @@ namespace mwse {
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
 				TES3::Reference* target = getOptionalParamReference(params, "target");
 				if (reference == NULL || target == NULL) {
-					mwse::log::getLog() << "Something was null!" << std::endl;
 					return false;
 				}
 
