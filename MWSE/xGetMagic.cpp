@@ -58,22 +58,10 @@ namespace mwse
 			TES3::ObjectType::ObjectType recordType = reference->baseObject->objectType;
 			if (recordType == TES3::ObjectType::Creature || recordType == TES3::ObjectType::NPC) {
 				auto mobileObject = tes3::getAttachedMobileNPC(reference);
-				if (mobileObject) {
-					if (mobileObject->currentSpell.source.asGeneric) {
-						type = mobileObject->currentSpell.source.asGeneric->objectType;
-						if (type == TES3::ObjectType::Spell) {
-							id = mobileObject->currentSpell.source.asSpell->getObjectID();
-						}
-						else if (type == TES3::ObjectType::Enchantment) {
-							id = mobileObject->currentSpell.source.asEnchantment->getObjectID();
-						}
-						else {
-#if _DEBUG
-							log::getLog() << "xGetMagic: Unsupported current spell type: " << type << std::endl;
-#endif
-							type = 0;
-						}
-					}
+				if (mobileObject && mobileObject->currentSpell.source.asGeneric) {
+					TES3::Object * spellSource = mobileObject->currentSpell.source.asGeneric;
+					id = spellSource->getObjectID();
+					type = spellSource->objectType;
 				}
 				else {
 #if _DEBUG
