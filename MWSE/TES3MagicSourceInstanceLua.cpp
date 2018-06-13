@@ -21,6 +21,9 @@ namespace mwse {
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 
+			// Allow object to be converted to strings using their object ID.
+			usertypeDefinition.set(sol::meta_function::to_string, &TES3::MagicEffect::getObjectID);
+
 			// Basic property binding.
 			usertypeDefinition.set("itemData", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.castingItemCondition; }));
 			usertypeDefinition.set("sourceType", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.sourceCombo.sourceType; }));

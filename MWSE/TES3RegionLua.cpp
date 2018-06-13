@@ -20,6 +20,9 @@ namespace mwse {
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 
+			// Allow object to be converted to strings using their object ID.
+			usertypeDefinition.set(sol::meta_function::to_string, &TES3::Region::getObjectID);
+
 			// Basic property binding.
 			usertypeDefinition.set("name", sol::property([](TES3::Region& self) { return self.name; }));
 			usertypeDefinition.set("weatherChanceAsh", &TES3::Region::weatherChanceAsh);

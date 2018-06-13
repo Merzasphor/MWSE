@@ -25,6 +25,9 @@ namespace mwse {
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Actor, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
+				// Allow object to be converted to strings using their object ID.
+				usertypeDefinition.set(sol::meta_function::to_string, &TES3::NPC::getObjectID);
+
 				// Basic property binding.
 				usertypeDefinition.set("disposition", &TES3::NPC::disposition);
 				usertypeDefinition.set("factionIndex", &TES3::NPC::factionIndex);
@@ -70,6 +73,9 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Actor, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
+
+				// Allow object to be converted to strings using their object ID.
+				usertypeDefinition.set(sol::meta_function::to_string, &TES3::NPCInstance::getObjectID);
 
 				// Basic property binding.
 				usertypeDefinition.set("disposition", &TES3::NPCInstance::disposition);

@@ -20,6 +20,9 @@ namespace mwse {
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
+			// Allow object to be converted to strings using their object ID.
+			usertypeDefinition.set(sol::meta_function::to_string, &TES3::Lockpick::getObjectID);
+
 			// Basic property binding.
 			usertypeDefinition.set("condition", &TES3::Lockpick::maxCondition);
 			usertypeDefinition.set("quality", &TES3::Lockpick::quality);

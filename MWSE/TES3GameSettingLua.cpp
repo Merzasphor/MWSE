@@ -59,12 +59,14 @@ namespace mwse {
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 
+			// Allow object to be converted to strings using their object ID.
+			usertypeDefinition.set(sol::meta_function::to_string, sol::readonly_property(&TES3::GameSetting::getName));
+
 			// Basic property binding.
 			usertypeDefinition.set("index", sol::readonly_property(&TES3::GameSetting::index));
 
 			// Override the default BaseObject bindings to return the GMST's name.
 			usertypeDefinition.set("id", sol::readonly_property(&TES3::GameSetting::getName));
-			usertypeDefinition.set(sol::meta_function::to_string, sol::readonly_property(&TES3::GameSetting::getName));
 
 			// Functions exposed as properties.
 			usertypeDefinition.set("defaultValue", sol::readonly_property(&getDefaultValue));

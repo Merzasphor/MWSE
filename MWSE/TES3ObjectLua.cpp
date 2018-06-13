@@ -23,9 +23,6 @@ namespace mwse {
 				auto usertypeDefinition = state.create_simple_usertype<TES3::BaseObject>();
 				usertypeDefinition.set("new", sol::no_constructor);
 
-				// Allow objects to be converted to strings using their object ID.
-				usertypeDefinition.set(sol::meta_function::to_string, &TES3::BaseObject::getObjectID);
-
 				// Basic property binding.
 				usertypeDefinition.set("objectType", sol::readonly_property(&TES3::BaseObject::objectType));
 				usertypeDefinition.set("objectFlags", sol::readonly_property(&TES3::BaseObject::objectFlags));

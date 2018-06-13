@@ -98,6 +98,9 @@ namespace mwse {
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Actor, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
+				// Allow object to be converted to strings using their object ID.
+				usertypeDefinition.set(sol::meta_function::to_string, &TES3::Creature::getObjectID);
+
 				// Basic property binding.
 				usertypeDefinition.set("aiConfig", sol::readonly_property(&TES3::Creature::aiConfig));
 				usertypeDefinition.set("attributes", sol::readonly_property(&TES3::Creature::attributes));
@@ -136,6 +139,9 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Actor, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
+
+				// Allow object to be converted to strings using their object ID.
+				usertypeDefinition.set(sol::meta_function::to_string, &TES3::CreatureInstance::getObjectID);
 
 				// Basic property binding.
 				usertypeDefinition.set("equipment", sol::readonly_property(&TES3::CreatureInstance::equipment));
