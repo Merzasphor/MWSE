@@ -7,7 +7,7 @@ namespace TES3 {
 		float combatDistance; // 0x0
 		int unknown_0x4; // 0x4
 		long ammoDamage; // 0x8
-		void * parentActor; // 0xC
+		MobileActor * parentActor; // 0xC
 		EquipmentStack * selectedWeapon; // 0x10
 		int unknown_0x14;
 		EquipmentStack * selectedShield; // 0x18

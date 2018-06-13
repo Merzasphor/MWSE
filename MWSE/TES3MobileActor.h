@@ -80,7 +80,7 @@ namespace TES3 {
 		int unknown_0x1B4;
 		int unknown_0x1B8;
 		int unknown_0x1BC;
-		void * aiCombatData; // 0x1C0
+		CombatSession * combatSession; // 0x1C0
 		char unknown_0x1C4;
 		char unknown_0x1C5;
 		char unknown_0x1C6;
