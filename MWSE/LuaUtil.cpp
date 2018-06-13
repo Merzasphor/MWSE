@@ -91,13 +91,16 @@ namespace mwse {
 
 			if (maybeParams) {
 				sol::table params = maybeParams.value();
-				sol::object maybeScript = params["reference"];
-				if (maybeScript.valid()) {
-					if (maybeScript.is<std::string>()) {
-						reference = tes3::getReference(maybeScript.as<std::string>());
+				sol::object maybeReference = params["reference"];
+				if (maybeReference.valid()) {
+					if (maybeReference.is<std::string>()) {
+						reference = tes3::getReference(maybeReference.as<std::string>());
 					}
-					else if (maybeScript.is<TES3::Reference*>()) {
-						reference = maybeScript.as<TES3::Reference*>();
+					else if (maybeReference.is<TES3::Reference*>()) {
+						reference = maybeReference.as<TES3::Reference*>();
+					}
+					else if (maybeReference.is<TES3::MobileActor*>()) {
+						reference = maybeReference.as<TES3::MobileActor*>()->reference;
 					}
 				}
 			}
@@ -138,6 +141,9 @@ namespace mwse {
 					}
 					else if (maybeValue.is<TES3::Reference*>()) {
 						value = maybeValue.as<TES3::Reference*>();
+					}
+					else if (maybeValue.is<TES3::MobileActor*>()) {
+						value = maybeValue.as<TES3::MobileActor*>()->reference;
 					}
 				}
 			}

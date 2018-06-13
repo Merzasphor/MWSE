@@ -234,7 +234,7 @@ namespace mwse {
 			state["mwscript"]["getDistance"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::Reference* target = getOptionalParamObject<TES3::Reference>(params, "target");
+				TES3::Reference* target = getOptionalParamReference(params, "target");
 				if (reference == NULL || target == NULL) {
 					return -1.0f;
 				}
