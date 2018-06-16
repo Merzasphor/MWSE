@@ -3,6 +3,7 @@
 #include "TES3Defines.h"
 
 #include "TES3ActionData.h"
+#include "TES3Inventory.h"
 #include "TES3MagicSourceInstance.h"
 #include "TES3MobileObject.h"
 #include "TES3Statistic.h"
@@ -151,8 +152,7 @@ namespace TES3 {
 		float holdBreathTime;
 		int unknown_0x374;
 		MagicSourceCombo currentSpell;
-		Item * currentEnchItem;
-		ItemData * currentEnchItemData;
+		EquipmentStack currentEnchantedItem; // Not a pointer.
 		EquipmentStack * readiedWeapon;
 		EquipmentStack * readiedAmmo;
 		EquipmentStack * readiedShield;

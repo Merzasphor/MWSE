@@ -35,8 +35,7 @@ namespace mwse {
 			usertypeDefinition.set("barterGold", &TES3::MobileActor::barterGold);
 			usertypeDefinition.set("collidingReference", sol::readonly_property(&TES3::MobileActor::collidingReference));
 			usertypeDefinition.set("corpseHourstamp", &TES3::MobileActor::corpseHourstamp);
-			usertypeDefinition.set("currentEnchItem", &TES3::MobileActor::currentEnchItem);
-			usertypeDefinition.set("currentEnchItemData", &TES3::MobileActor::currentEnchItemData);
+			usertypeDefinition.set("currentEnchantedItem", sol::readonly_property(&TES3::MobileActor::currentEnchantedItem));
 			usertypeDefinition.set("currentSpell", &TES3::MobileActor::currentSpell);
 			usertypeDefinition.set("encumbrance", sol::readonly_property(&TES3::MobileActor::encumbrance));
 			usertypeDefinition.set("fatigue", sol::readonly_property(&TES3::MobileActor::fatigue));
