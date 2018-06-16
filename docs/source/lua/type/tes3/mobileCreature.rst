@@ -320,12 +320,12 @@ Functions
 .. _`tes3statistic`: statistic.html
 .. _`tes3vector3`: vector3.html
 
-.. _`damage`: ../events/damage.html
-.. _`damaged`: ../events/damaged.html
-.. _`combatStart`: ../events/combatStart.html
-.. _`combatStarted`: ../events/combatStarted.html
-.. _`combatStop`: ../events/combatStop.html
-.. _`combatStopped`: ../events/combatStopped.html
+.. _`damage`: ../event/damage.html
+.. _`damaged`: ../event/damaged.html
+.. _`combatStart`: ../event/combatStart.html
+.. _`combatStarted`: ../event/combatStarted.html
+.. _`combatStop`: ../event/combatStop.html
+.. _`combatStopped`: ../event/combatStopped.html
 
 .. _`applyHealthDamage`: mobileActor/applyHealthDamage.html
 .. _`startCombat`: mobileActor/startCombat.html
