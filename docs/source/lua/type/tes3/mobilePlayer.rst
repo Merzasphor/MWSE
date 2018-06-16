@@ -108,9 +108,6 @@ Properties
     Easy access into **skills**.
 
 **controlsDisabled** (`boolean`_)
-    Determines if the player can jump.
-
-**controlsDisabled** (`boolean`_)
     Determines if the player controls are disabled.
 
 **corpseHourstamp** (`number`_, read-only)
@@ -226,6 +223,9 @@ Properties
 
 **jump** (`number`_)
     Easy access into **effectAttributes**.
+
+**jumpingDisabled** (`boolean`_)
+    Determines if the player can jump.
 
 **knownWerewolf** (`tes3globalVariable`_, read-only)
     Quick access to the pcknownWerewolf global variable.
