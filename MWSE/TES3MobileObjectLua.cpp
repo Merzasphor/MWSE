@@ -18,7 +18,7 @@ namespace mwse {
 			usertypeDefinition.set("new", sol::no_constructor);
 
 			// Basic property binding.
-			usertypeDefinition.set("actorFlags", sol::readonly_property(&TES3::MobileObject::actorFlags));
+			usertypeDefinition.set("flags", sol::readonly_property(&TES3::MobileObject::actorFlags));
 			usertypeDefinition.set("boundSize", sol::readonly_property(&TES3::MobileObject::boundSize));
 			usertypeDefinition.set("cellX", sol::readonly_property(&TES3::MobileObject::cellX));
 			usertypeDefinition.set("cellY", sol::readonly_property(&TES3::MobileObject::cellY));
