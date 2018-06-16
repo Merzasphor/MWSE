@@ -113,7 +113,7 @@ Properties
     The current/max health of the actor.
 
 **height** (`number`_, read-only)
-    The horizontal position of the object.
+    The vertical position of the object.
 
 **hello** (`number`_)
     The actor's current hello AI threshold.

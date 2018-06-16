@@ -25,7 +25,7 @@ Properties
     The general mobile object flags.
 
 **height** (`number`_, read-only)
-    The horizontal position of the object.
+    The vertical position of the object.
 
 **impulseVelocity** (`tes3vector3`_)
     The object's impulse velocity.
