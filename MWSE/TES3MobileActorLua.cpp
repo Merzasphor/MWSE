@@ -45,7 +45,6 @@ namespace mwse {
 			usertypeDefinition.set("greetDuration", &TES3::MobileActor::greetDuration);
 			usertypeDefinition.set("greetTimer", sol::readonly_property(&TES3::MobileActor::greetTimer));
 			usertypeDefinition.set("health", sol::readonly_property(&TES3::MobileActor::health));
-			usertypeDefinition.set("health", sol::readonly_property(&TES3::MobileActor::health));
 			usertypeDefinition.set("hello", &TES3::MobileActor::hello);
 			usertypeDefinition.set("holdBreathTime", &TES3::MobileActor::holdBreathTime);
 			usertypeDefinition.set("hostileActors", sol::readonly_property(&TES3::MobileActor::listTargetActors));
