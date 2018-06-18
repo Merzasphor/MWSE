@@ -8,36 +8,36 @@ namespace TES3 {
 	struct Weather {
 		int unknown_0x0;
 		int unknown_0x4; // Weather ID?
-		float transitionDelta;
-		float glareView;
-		int unknown_0x10;
-		Vector3 ambientSunriseCol;
-		Vector3 ambientDayCol;
-		Vector3 ambientSunsetCol;
-		Vector3 ambientNightCol;
-		Vector3 fogSunriseCol;
-		Vector3 fogDayCol;
-		Vector3 fogSunsetCol;
-		Vector3 fogNightCol;
-		Vector3 skySunriseCol;
-		Vector3 skyDayCol;
-		Vector3 skySunsetCol;
-		Vector3 skyNightCol;
-		Vector3 sunSunriseCol;
-		Vector3 sunDayCol;
-		Vector3 sunSunsetCol;
-		Vector3 sunNightCol;
-		Vector3 sundiscSunsetCol;
+		float transitionDelta; // 0x8
+		float glareView; // 0xC
+		WeatherController * weatherController; // 0x10
+		Vector3 ambientSunriseCol; // 0x14
+		Vector3 ambientDayCol; // 0x20
+		Vector3 ambientSunsetCol; // 0x2C
+		Vector3 ambientNightCol; // 0x38
+		Vector3 fogSunriseCol; // 0x44
+		Vector3 fogDayCol; // 0x50
+		Vector3 fogSunsetCol; // 0x5C
+		Vector3 fogNightCol; // 0x68
+		Vector3 skySunriseCol; // 0x74
+		Vector3 skyDayCol; // 0x80
+		Vector3 skySunsetCol; // 0x8C
+		Vector3 skyNightCol; // 0x98
+		Vector3 sunSunriseCol; // 0xA4
+		Vector3 sunDayCol; // 0xB0
+		Vector3 sunSunsetCol; // 0xBC
+		Vector3 sunNightCol; // 0xC8
+		Vector3 sundiscSunsetCol; // 0xD4
 		int unknown_0xE0;
 		int unknown_0xE4;
 		int unknown_0xE8;
 		int unknown_0xEC;
-		float cloudsMaxPercent;
-		float landFogDayDepth;
-		float landFogNightDepth;
-		float cloudsSpeed;
-		float windSpeed;
-		char * texturePathCloud;
+		float cloudsMaxPercent; // 0xF0
+		float landFogDayDepth; // 0xF4
+		float landFogNightDepth; // 0xF8
+		float cloudsSpeed; // 0xFC
+		float windSpeed; // 0x100
+		char * texturePathCloud; // 0x104
 		int unknown_0x108;
 		int unknown_0x10C;
 		int unknown_0x110;
@@ -75,7 +75,7 @@ namespace TES3 {
 		int unknown_0x190;
 		int unknown_0x194;
 		char unknown_0x198;
-		unsigned char flagUnderwaterSoundActive;
+		bool flagUnderwaterSoundActive; // 0x199
 		int unknown_0x19C;
 		int unknown_0x1A0;
 		int unknown_0x1A4;
@@ -106,7 +106,7 @@ namespace TES3 {
 		int unknown_0x208;
 		char unknown_0x20C;
 		char unknown_0x20D;
-		unsigned char soundIDAmbientLoop;
+		bool soundIDAmbientLoop; // 0x20E
 		int unknown_0x210;
 		int unknown_0x214;
 		int unknown_0x218;
