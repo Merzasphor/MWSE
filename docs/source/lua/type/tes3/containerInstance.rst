@@ -1,10 +1,8 @@
 
-Container
+Container Instance
 ========================================================
 
-An **Container** is an `Actor`_ that has no real AI. Practically speaking, it is a simple object that can hold items. Though it can technically equip items, that doesn't usually mean anything.
-
-Like all **Actor** objects, a **Container** can be cloned into a `Container Instance`_. This is usually not done until the container is opened, but can be done manually via scripts. Until the container is cloned, leveled items are not resolved.
+An **Container Instance** is a cloned `Container`_.
 
 
 Properties
@@ -15,6 +13,9 @@ Properties
 
 **barterGold** (`number`_)
     The base gold that the actor has to barter with.
+
+**baseObject** (`tes3container`_)
+    The `Container`_ that this instance was cloned from.
 
 **boundingBox** (`tes3boundingBox`_, read-only)
     The object's bounding box.
@@ -35,7 +36,7 @@ Properties
     Items the actor currently carries.
 
 **isInstance** (`boolean`_, read-only)
-    Always return ``false``. This is useful because **objectType** is the same for both **Container** and `Container Instance`_, while this field allows differentiation.
+    Always return ``true``. This is useful because **objectType** is the same for both `Container`_ and **Container Instance**, while this field allows differentiation.
 
 **model** (`string`_)
     The mesh used by the container.
@@ -59,23 +60,14 @@ Properties
     The object's originating plugin filename.
 
 
-Functions
---------------------------------------------------------
-
-`clone`_
-    Converts a **Container** into a `Container Instance`_. This requires a reference attached.
-
-
 .. _`boolean`: ../lua/boolean.html
 .. _`number`: ../lua/number.html
 .. _`string`: ../lua/string.html
 .. _`table`: ../lua/table.html
 .. _`userdata`: ../lua/userdata.html
 
-.. _`clone`: clone.html
-
 .. _`Actor`: actor.html
-.. _`Container Instance`: containerInstance.html
+.. _`Container`: container.html
 .. _`Creature Instance`: creatureInstance.html
 .. _`Creature`: creature.html
 .. _`Mobile Actor`: mobileActor.html
@@ -83,6 +75,7 @@ Functions
 .. _`NPC`: npc.html
 .. _`objectType`: baseObject/objectType.html
 .. _`tes3boundingBox`: boundingBox.html
+.. _`tes3container`: container.html
 .. _`tes3equipmentStack`: equipmentStack.html
 .. _`tes3inventory`: inventory.html
 .. _`tes3iterator`: iterator.html

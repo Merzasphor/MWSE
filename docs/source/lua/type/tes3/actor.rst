@@ -1,10 +1,12 @@
 
-Container
+Actor
 ========================================================
 
-An **Container** is an `Actor`_ that has no real AI. Practically speaking, it is a simple object that can hold items. Though it can technically equip items, that doesn't usually mean anything.
+An **Actor** (not to be confused with a `Mobile Actor`_) is an object that can be cloned and that has an inventory. Creatures, NPCs, and containers are all considered actors.
 
-Like all **Actor** objects, a **Container** can be cloned into a `Container Instance`_. This is usually not done until the container is opened, but can be done manually via scripts. Until the container is cloned, leveled items are not resolved.
+It is standard for creatures and NPCs to be composed of an actor and a mobile actor, linked together with a reference.
+
+Inheriting structures: `Container`_, `Container Instance`_, `Creature`_, `Creature Instance`_, `NPC`_, and `NPC Instance`_.
 
 
 Properties
@@ -19,9 +21,6 @@ Properties
 **boundingBox** (`tes3boundingBox`_, read-only)
     The object's bounding box.
 
-**capacity** (`number`_)
-    The weight that the container can hold.
-
 **cloneCount** (`number`_, read-only)
     The number of clones that this actor has.
 
@@ -34,36 +33,11 @@ Properties
 **inventory** (`tes3inventory`_, read-only)
     Items the actor currently carries.
 
-**isInstance** (`boolean`_, read-only)
-    Always return ``false``. This is useful because **objectType** is the same for both **Container** and `Container Instance`_, while this field allows differentiation.
-
-**model** (`string`_)
-    The mesh used by the container.
-
-**name** (`string`_)
-    The user-friendly name shown for the container.
-
 **objectType** (`number`_, read-only)
     The object's `objectType`_.
 
-**organic** (`boolean`_)
-    Quick access to the container's flags, allowing read/write access to the container's organic status.
-
-**respawns** (`boolean`_)
-    Quick access to the container's flags, allowing read/write access to the container's respawn status.
-
-**script** (`tes3script`_, read-only)
-    The script, if any, that is attached to the object.
-
 **sourceMod** (`string`_, read-only)
     The object's originating plugin filename.
-
-
-Functions
---------------------------------------------------------
-
-`clone`_
-    Converts a **Container** into a `Container Instance`_. This requires a reference attached.
 
 
 .. _`boolean`: ../lua/boolean.html
@@ -72,10 +46,8 @@ Functions
 .. _`table`: ../lua/table.html
 .. _`userdata`: ../lua/userdata.html
 
-.. _`clone`: clone.html
-
-.. _`Actor`: actor.html
 .. _`Container Instance`: containerInstance.html
+.. _`Container`: container.html
 .. _`Creature Instance`: creatureInstance.html
 .. _`Creature`: creature.html
 .. _`Mobile Actor`: mobileActor.html
@@ -86,4 +58,3 @@ Functions
 .. _`tes3equipmentStack`: equipmentStack.html
 .. _`tes3inventory`: inventory.html
 .. _`tes3iterator`: iterator.html
-.. _`tes3script`: script.html
