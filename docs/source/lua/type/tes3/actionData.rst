@@ -39,7 +39,7 @@ Properties
 `currentAnimationGroup <actionData/currentAnimationGroup.html>`_ (`Number`_)
     This field still needs research. Please feel free to play with it, and modify the documentation.
     
-`hitTarget <actionData/hitTarget.html>`_ (`MobileCreature`_, `MobileNPC`_, or `MobilePlayer`_)
+`hitTarget <actionData/hitTarget.html>`_ (`Mobile Creature`_, `Mobile NPC`_, or `Mobile Player`_)
     This field still needs research. Please feel free to play with it, and modify the documentation.
     
 `lastBarterHoursPassed <actionData/lastBarterHoursPassed.html>`_ (`Number`_)
@@ -54,7 +54,7 @@ Properties
 `stolenFrom <actionData/stolenFrom.html>`_ (`Faction`_ or `NPC`_)
     This field still needs research. Please feel free to play with it, and modify the documentation.
     
-`target <actionData/target.html>`_ (`MobileCreature`_, `MobileNPC`_, or `MobilePlayer`_)
+`target <actionData/target.html>`_ (`Mobile Creature`_, `Mobile NPC`_, or `Mobile Player`_)
     This field still needs research. Please feel free to play with it, and modify the documentation.
     
 `walkDestination <actionData/walkDestination.html>`_ (`Vector3`_)
@@ -67,9 +67,9 @@ Properties
 .. _`Table`: ../lua/table.html
 
 .. _`Faction`: faction.html
-.. _`MobileCreature`: mobileCreature.html
-.. _`MobileNPC`: mobileNPC.html
-.. _`MobilePlayer`: mobileCreature.html
+.. _`Mobile Creature`: mobileCreature.html
+.. _`Mobile NPC`: mobileNPC.html
+.. _`Mobile Player`: mobileCreature.html
 .. _`NPC`: npc.html
 .. _`Weapon`: weapon.html
 .. _`Vector3`: vector3.html
