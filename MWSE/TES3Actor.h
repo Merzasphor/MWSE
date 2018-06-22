@@ -54,7 +54,7 @@ namespace TES3 {
 	static_assert(sizeof(ActorVirtualTable) == 0x180, "TES3::ActorVirtualTable failed size validation");
 
 	struct Actor : PhysicalObject {
-		void * animationData; // 0x30
+		ActorAnimationData * animationData; // 0x30
 		unsigned int actorFlags; // 0x34 // See ActorFlag above.
 		int cloneCount; // 0x38
 		Inventory inventory; // 0x3C

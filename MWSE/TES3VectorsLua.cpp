@@ -13,6 +13,20 @@ namespace mwse {
 			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
+			// Binding for TES3::Range<int>.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::Range<int>>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				// Basic property bindings.
+				usertypeDefinition.set("min", &TES3::Range<int>::min);
+				usertypeDefinition.set("max", &TES3::Range<int>::max);
+
+				// Finish up our usertype.
+				state.set_usertype("tes3rangeInt", usertypeDefinition);
+			}
+
 			// Binding for TES3::Vector2.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.

@@ -10,84 +10,11 @@
 #include "TES3Script.h"
 #include "TES3SpellList.h"
 
-namespace TES3 {
-	sol::object CreatureInstance::getAttributes() {
-		return sol::make_object(mwse::lua::LuaManager::getInstance().getState(), &baseCreature->attributes);
-	}
-
-	sol::object CreatureInstance::getSkills() {
-		return sol::make_object(mwse::lua::LuaManager::getInstance().getState(), &baseCreature->skills);
-	}
-
-	sol::object Creature::getAttacks() {
-		sol::state& state = mwse::lua::LuaManager::getInstance().getState();
-
-		sol::table result = state.create_table();
-		for (int i = 0; i < 3; i++) {
-			result[i + 1] = sol::make_object(state, &attacks[i]);
-		}
-		return result;
-	}
-
-	sol::object CreatureInstance::getAttacks() {
-		return baseCreature->getAttacks();
-	}
-}
-
 namespace mwse {
 	namespace lua {
 		void bindTES3Creature() {
 			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
-
-			// Binding for TES3::Creature::Attributes
-			{
-				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TES3::Creature::Attributes>();
-				usertypeDefinition.set("new", sol::no_constructor);
-
-				// Basic property binding.
-				usertypeDefinition.set("agility", &TES3::Creature::Attributes::agility);
-				usertypeDefinition.set("endurance", &TES3::Creature::Attributes::endurance);
-				usertypeDefinition.set("intelligence", &TES3::Creature::Attributes::intelligence);
-				usertypeDefinition.set("luck", &TES3::Creature::Attributes::luck);
-				usertypeDefinition.set("personality", &TES3::Creature::Attributes::personality);
-				usertypeDefinition.set("speed", &TES3::Creature::Attributes::speed);
-				usertypeDefinition.set("strength", &TES3::Creature::Attributes::strength);
-				usertypeDefinition.set("willpower", &TES3::Creature::Attributes::willpower);
-
-				// Finish up our usertype.
-				state.set_usertype("tes3creatureAttributes", usertypeDefinition);
-			}
-
-			// Binding for TES3::Creature::Skills
-			{
-				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TES3::Creature::Skills>();
-				usertypeDefinition.set("new", sol::no_constructor);
-
-				// Basic property binding.
-				usertypeDefinition.set("combat", &TES3::Creature::Skills::combat);
-				usertypeDefinition.set("magic", &TES3::Creature::Skills::magic);
-				usertypeDefinition.set("stealth", &TES3::Creature::Skills::stealth);
-
-				// Finish up our usertype.
-				state.set_usertype("tes3creatureSkills", usertypeDefinition);
-			}
-
-			// Binding for TES3::Creature::Attack
-			{
-				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TES3::Creature::Attack>();
-				usertypeDefinition.set("new", sol::no_constructor);
-
-				// Basic property binding.
-				usertypeDefinition.set("min", &TES3::Creature::Attack::min);
-				usertypeDefinition.set("max", &TES3::Creature::Attack::max);
-
-				// Finish up our usertype.
-				state.set_usertype("tes3creatureAttack", usertypeDefinition);
-			}
 
 			// Binding for TES3::Creature
 			{
@@ -103,19 +30,18 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition.set("aiConfig", sol::readonly_property(&TES3::Creature::aiConfig));
-				usertypeDefinition.set("attributes", sol::readonly_property(&TES3::Creature::attributes));
-				usertypeDefinition.set("equipment", sol::readonly_property(&TES3::Creature::equipment));
-				usertypeDefinition.set("inventory", sol::readonly_property(&TES3::Creature::inventory));
 				usertypeDefinition.set("isInstance", sol::var(false));
-				usertypeDefinition.set("skills", sol::readonly_property(&TES3::Creature::skills));
 				usertypeDefinition.set("soul", &TES3::Creature::soul);
 				usertypeDefinition.set("soundCreature", &TES3::Creature::soundGenerator);
 				usertypeDefinition.set("spells", sol::readonly_property(&TES3::Creature::spellList));
 				usertypeDefinition.set("type", sol::readonly_property(&TES3::Creature::creatureType));
 
+				// Indirect bindings to unions and arrays.
+				usertypeDefinition.set("attacks", sol::readonly_property([](TES3::Creature& self) { return std::ref(self.attacks); }));
+				usertypeDefinition.set("attributes", sol::readonly_property([](TES3::Creature& self) { return std::ref(self.attributes); }));
+				usertypeDefinition.set("skills", sol::readonly_property([](TES3::Creature& self) { return std::ref(self.skills); }));
+
 				// Functions exposed as properties.
-				usertypeDefinition.set("attacks", sol::readonly_property(&TES3::Creature::getAttacks));
-				usertypeDefinition.set("barterGold", sol::property(&TES3::Creature::getBaseBarterGold, &TES3::Creature::setBaseBarterGold));
 				usertypeDefinition.set("fatigue", sol::readonly_property(&TES3::Creature::getFatigue));
 				usertypeDefinition.set("health", sol::readonly_property(&TES3::Creature::getDurability));
 				usertypeDefinition.set("isAttacked", sol::readonly_property(&TES3::Creature::getIsAttacked));
@@ -153,19 +79,19 @@ namespace mwse {
 
 				// Properties that directly point to the base creature.
 				usertypeDefinition.set("aiConfig", sol::readonly_property([](TES3::CreatureInstance& self) { return self.baseCreature->aiConfig; }));
+				usertypeDefinition.set("attacks", sol::readonly_property([](TES3::CreatureInstance& self) { return std::ref(self.baseCreature->attacks); }));
+				usertypeDefinition.set("attributes", sol::readonly_property([](TES3::CreatureInstance& self) { return std::ref(self.baseCreature->attributes); }));
 				usertypeDefinition.set("baseObject", sol::readonly_property([](TES3::CreatureInstance& self) { return makeLuaObject(self.baseCreature); }));
-				usertypeDefinition.set("skills", sol::readonly_property([](TES3::CreatureInstance& self) { return &self.baseCreature->skills; }));
 				usertypeDefinition.set("soul", sol::property(
 					[](TES3::CreatureInstance& self) { return self.baseCreature->soul; },
 					[](TES3::CreatureInstance& self, int value) { self.baseCreature->soul = value; }
 				));
 				usertypeDefinition.set("soundCreatureInstance", sol::readonly_property([](TES3::CreatureInstance& self) { return self.baseCreature->soundGenerator; }));
+				usertypeDefinition.set("skills", sol::readonly_property([](TES3::CreatureInstance& self) { return std::ref(self.baseCreature->skills); }));
 				usertypeDefinition.set("type", sol::readonly_property([](TES3::CreatureInstance& self) { return self.baseCreature->creatureType; }));
 				usertypeDefinition.set("spells", sol::readonly_property([](TES3::CreatureInstance& self) { return self.baseCreature->spellList; }));
 
 				// Functions exposed as properties.
-				usertypeDefinition.set("attacks", sol::readonly_property(&TES3::CreatureInstance::getAttacks));
-				usertypeDefinition.set("attributes", sol::readonly_property(&TES3::CreatureInstance::getAttributes));
 				usertypeDefinition.set("barterGold", sol::property(&TES3::CreatureInstance::getBaseBarterGold, &TES3::CreatureInstance::setBaseBarterGold));
 				usertypeDefinition.set("isAttacked", sol::readonly_property(&TES3::CreatureInstance::getIsAttacked));
 				usertypeDefinition.set("isEssential", sol::readonly_property(&TES3::CreatureInstance::isEssential));

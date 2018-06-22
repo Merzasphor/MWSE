@@ -70,7 +70,7 @@ namespace mwse {
 					[](TES3::ContainerInstance& self) { return self.getActorFlag(TES3::ActorFlag::Female); },
 					[](TES3::ContainerInstance& self, bool set) { self.setActorFlag(TES3::ActorFlag::Female, set); }
 				));
-				usertypeDefinition.set("isRespawn", sol::property(
+				usertypeDefinition.set("respawns", sol::property(
 					[](TES3::ContainerInstance& self) { return self.getActorFlag(TES3::ActorFlag::Essential); },
 					[](TES3::ContainerInstance& self, bool set) { self.setActorFlag(TES3::ActorFlag::Essential, set); }
 				));
