@@ -114,15 +114,15 @@ namespace mwse {
 				));
 
 				// Functions exposed as properties.
-				usertypeDefinition.set("areaSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return &self.areaSoundEffect; }));
-				usertypeDefinition.set("boltSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return &self.boltSoundEffect; }));
-				usertypeDefinition.set("castSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return &self.castSoundEffect; }));
-				usertypeDefinition.set("hitSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return &self.hitSoundEffect; }));
+				usertypeDefinition.set("areaSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return self.areaSoundEffect; }));
+				usertypeDefinition.set("boltSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return self.boltSoundEffect; }));
+				usertypeDefinition.set("castSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return self.castSoundEffect; }));
+				usertypeDefinition.set("hitSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return self.hitSoundEffect; }));
 				usertypeDefinition.set("icon", sol::property(
 					[](TES3::MagicEffect& self) { return self.icon; },
 					[](TES3::MagicEffect& self, const char* value) { if (strlen(value) < 32) strcpy(self.icon, value); }
 				));
-				usertypeDefinition.set("particleTexture", sol::readonly_property([](TES3::MagicEffect& self) { return &self.particleTexture; }));
+				usertypeDefinition.set("particleTexture", sol::readonly_property([](TES3::MagicEffect& self) { return self.particleTexture; }));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3magicEffect", usertypeDefinition);
