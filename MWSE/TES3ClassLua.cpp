@@ -6,15 +6,6 @@
 #include "TES3Class.h"
 
 namespace TES3 {
-	sol::table Class::getAttributes() {
-		sol::state& state = mwse::lua::LuaManager::getInstance().getState();
-
-		sol::table result = state.create_table();
-		result[1] = &attributes[0];
-		result[2] = &attributes[1];
-		return result;
-	}
-
 	sol::table Class::getMajorSkills() {
 		sol::state& state = mwse::lua::LuaManager::getInstance().getState();
 
@@ -53,12 +44,20 @@ namespace mwse {
 			usertypeDefinition.set(sol::meta_function::to_string, &TES3::Class::getObjectID);
 
 			// Basic property binding.
-			usertypeDefinition.set("playable", &TES3::Class::playable);
 			usertypeDefinition.set("services", &TES3::Class::services);
 			usertypeDefinition.set("specialization", &TES3::Class::specialization);
 
+			// Indirect bindings to unions and arrays.
+			usertypeDefinition.set("attributes", sol::readonly_property([](TES3::Class& self) { return std::ref(self.attributes); }));
+			usertypeDefinition.set("skills", sol::readonly_property([](TES3::Class& self) { return std::ref(self.skills); }));
+
+			// Properties that have type remapping.
+			usertypeDefinition.set("playable", sol::property(
+				[](TES3::Class& self) { return self.playable != 0; },
+				[](TES3::Class& self, bool value) { self.playable = value; }
+				));
+
 			// Functions exposed as properties.
-			usertypeDefinition.set("attributes", sol::readonly_property(&TES3::Class::getAttributes));
 			usertypeDefinition.set("majorSkills", sol::readonly_property(&TES3::Class::getMajorSkills));
 			usertypeDefinition.set("minorSkills", sol::readonly_property(&TES3::Class::getMinorSkills));
 			usertypeDefinition.set("name", sol::readonly_property(&TES3::Class::getName));

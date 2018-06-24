@@ -28,7 +28,6 @@ namespace TES3 {
 		// Lua-specific interfaces.
 		//
 
-		sol::table getAttributes();
 		sol::table getMajorSkills();
 		sol::table getMinorSkills();
 
