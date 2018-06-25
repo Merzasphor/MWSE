@@ -8,6 +8,12 @@
 #include "TES3Object.h"
 
 namespace TES3 {
+	namespace FactionMembershipFlag {
+		enum FactionMembershipFlag {
+			PlayerJoined = 0x1,
+			PlayerExpelled = 0x2
+		};
+	}
 	struct Faction : BaseObject {
 		struct Rank {
 			long reqAttributes[2];
@@ -26,9 +32,9 @@ namespace TES3 {
 		long skills[7]; // 0x260
 		int unknown_0x27C;
 		Iterator<ReactionNode> reactions; // 0x280
-		int unknown_0x294;
-		int unknown_0x298;
-		int unknown_0x29C;
+		int playerRank; // 0x294
+		int playerReputation; // 0x298
+		int playerMembershipFlags; // 0x29C	// 0x1: joined 0x2: expelled
 
 		//
 		// Custom functions.
@@ -36,6 +42,9 @@ namespace TES3 {
 
 		char * getName();
 		void setName(const char*);
+
+		bool getMembershipFlag(unsigned int);
+		void setMembershipFlag(unsigned int, bool);
 
 	};
 	static_assert(sizeof(Faction::Rank) == 0x14, "TES3::Faction::Rank failed size validation");
