@@ -20,6 +20,9 @@ Properties
 **minorSkills** (`table`_ of `number`_)
     The minor **skills** for this class.
 
+**name** (`string`_)
+    The user-friendly name for the class.
+
 **objectType** (`number`_, read-only)
     The object's `objectType`_.
 

@@ -60,7 +60,11 @@ namespace mwse {
 			// Functions exposed as properties.
 			usertypeDefinition.set("majorSkills", sol::readonly_property(&TES3::Class::getMajorSkills));
 			usertypeDefinition.set("minorSkills", sol::readonly_property(&TES3::Class::getMinorSkills));
-			usertypeDefinition.set("name", sol::readonly_property(&TES3::Class::getName));
+			// Functions exposed as properties.
+			usertypeDefinition.set("name", sol::property(
+				[](TES3::Class& self) { return self.name; },
+				[](TES3::Class& self, const char* value) { if (strlen(value) < 32) strcpy(self.name, value); }
+			));
 
 			// Finish up our usertype.
 			state.set_usertype("tes3class", usertypeDefinition);
