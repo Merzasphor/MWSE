@@ -2,7 +2,7 @@
 loaded
 ========================================================
 
-The **loaded** event fires when the player leaves menu mode. This event is preceded by the `load`_ event.
+The **loaded** event fires after the game has been successfully loaded. This event is preceded by the `load`_ event.
 
 .. note:: See the `Event Guide`_ for more information on event data, return values, and filters.
 

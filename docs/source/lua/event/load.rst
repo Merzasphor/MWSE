@@ -2,7 +2,7 @@
 load
 ========================================================
 
-The **load** event fires when the player leaves menu mode. This event allows scripts to block loading.
+The **load** event fires when the game is about to load. This event allows scripts to block loading.
 
 .. note:: See the `Event Guide`_ for more information on event data, return values, and filters.
 
