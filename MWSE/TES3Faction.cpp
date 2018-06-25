@@ -10,4 +10,17 @@ namespace TES3 {
 			strcpy(name, value);
 		}
 	}
+
+	bool Faction::getMembershipFlag(unsigned int flag) {
+		return (playerMembershipFlags & flag) != 0;
+	}
+
+	void Faction::setMembershipFlag(unsigned int flag, bool set) {
+		if (set) {
+			playerMembershipFlags |= flag;
+		}
+		else {
+			playerMembershipFlags &= ~flag;
+		}
+	}
 }

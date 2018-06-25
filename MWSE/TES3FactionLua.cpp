@@ -60,7 +60,14 @@ namespace mwse {
 				usertypeDefinition.set("reactions", sol::readonly_property(&TES3::Faction::reactions));
 				usertypeDefinition.set("playerRank", &TES3::Faction::playerRank);
 				usertypeDefinition.set("playerReputation", &TES3::Faction::playerReputation);
-				usertypeDefinition.set("playerMembershipFlags", &TES3::Faction::playerMembershipFlags);
+				usertypeDefinition.set("playerJoined", sol::property(
+					[](TES3::Faction& self) { return self.getMembershipFlag(TES3::FactionMembershipFlag::playerJoined); },
+					[](TES3::Faction& self, bool set) { self.setMembershipFlag(TES3::FactionMembershipFlag::playerJoined, set); }
+				));
+				usertypeDefinition.set("playerExpelled", sol::property(
+					[](TES3::Faction& self) { return self.getMembershipFlag(TES3::FactionMembershipFlag::playerExpelled); },
+					[](TES3::Faction& self, bool set) { self.setMembershipFlag(TES3::FactionMembershipFlag::playerExpelled, set); }
+				));
 
 				// Indirect bindings to unions and arrays.
 				usertypeDefinition.set("attributes", sol::property([](TES3::Faction& self) { return std::ref(self.attributes); }));
