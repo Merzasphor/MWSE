@@ -10,8 +10,8 @@
 namespace TES3 {
 	namespace FactionMembershipFlag {
 		enum FactionMembershipFlag {
-			playerJoined = 0x1,
-			playerExpelled = 0x2
+			PlayerJoined = 0x1,
+			PlayerExpelled = 0x2
 		};
 	}
 	struct Faction : BaseObject {

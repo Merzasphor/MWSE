@@ -61,12 +61,12 @@ namespace mwse {
 				usertypeDefinition.set("playerRank", &TES3::Faction::playerRank);
 				usertypeDefinition.set("playerReputation", &TES3::Faction::playerReputation);
 				usertypeDefinition.set("playerJoined", sol::property(
-					[](TES3::Faction& self) { return self.getMembershipFlag(TES3::FactionMembershipFlag::playerJoined); },
-					[](TES3::Faction& self, bool set) { self.setMembershipFlag(TES3::FactionMembershipFlag::playerJoined, set); }
+					[](TES3::Faction& self) { return self.getMembershipFlag(TES3::FactionMembershipFlag::PlayerJoined); },
+					[](TES3::Faction& self, bool set) { self.setMembershipFlag(TES3::FactionMembershipFlag::PlayerJoined, set); }
 				));
 				usertypeDefinition.set("playerExpelled", sol::property(
-					[](TES3::Faction& self) { return self.getMembershipFlag(TES3::FactionMembershipFlag::playerExpelled); },
-					[](TES3::Faction& self, bool set) { self.setMembershipFlag(TES3::FactionMembershipFlag::playerExpelled, set); }
+					[](TES3::Faction& self) { return self.getMembershipFlag(TES3::FactionMembershipFlag::PlayerExpelled); },
+					[](TES3::Faction& self, bool set) { self.setMembershipFlag(TES3::FactionMembershipFlag::PlayerExpelled, set); }
 				));
 
 				// Indirect bindings to unions and arrays.
