@@ -138,6 +138,12 @@ namespace mwse
 		
 		long GetItemCount(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* itemTemplate);
 
+		bool GetPCJumping(TES3::Script* script);
+
+		bool GetPCRunning(TES3::Script* script);
+
+		bool GetPCSneaking(TES3::Script* script);
+
 		bool GetSpellEffects(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate);
 
 		void PlaceAtPC(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* placedTemplate, long count, float distance, float direction);

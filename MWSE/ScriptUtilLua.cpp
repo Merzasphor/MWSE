@@ -251,6 +251,18 @@ namespace mwse {
 
 				return mwscript::GetItemCount(script, reference, item);
 			};
+			state["mwscript"]["getPCJumping"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				return mwscript::GetPCJumping(script);
+			};
+			state["mwscript"]["getPCRunning"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				return mwscript::GetPCRunning(script);
+			};
+			state["mwscript"]["getPCSneaking"] = [](sol::optional<sol::table> params) {
+				TES3::Script* script = getOptionalParamExecutionScript(params);
+				return mwscript::GetPCSneaking(script);
+			};
 			state["mwscript"]["getSpellEffects"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);

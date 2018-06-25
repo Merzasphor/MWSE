@@ -424,6 +424,18 @@ namespace mwse
 			return value;
 		}
 
+		bool GetPCJumping(TES3::Script* script) {
+			return RunOriginalOpCode(script, NULL, OpCode::GetPCJumping) == 1;
+		}
+
+		bool GetPCRunning(TES3::Script* script) {
+			return RunOriginalOpCode(script, NULL, OpCode::GetPCRunning) == 1;
+		}
+
+		bool GetPCSneaking(TES3::Script* script) {
+			return RunOriginalOpCode(script, NULL, OpCode::GetPCSneaking) == 1;
+		}
+
 		bool GetSpellEffects(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate) {
 			// Cache previous script variables.
 			TES3::BaseObject* cachedSecondObject = getScriptSecondObject();
