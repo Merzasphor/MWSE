@@ -19,6 +19,7 @@ Object Type          Friendly Access Variable               Value
 `Container`_         ``tes3.objectType.container``          1414418243
 `Creature`_          ``tes3.objectType.creature``           1095062083
 `Door`_              ``tes3.objectType.door``               1380929348
+`Faction`_           ``tes3.objectType.faction``            1413693766
 `Ingredient`_        ``tes3.objectType.ingredient``         1380404809
 `Leveled Creature`_  ``tes3.objectType.leveledCreature``    1129727308
 `Leveled Item`_      ``tes3.objectType.leveledItem``        1230390604
@@ -47,6 +48,7 @@ Object Type          Friendly Access Variable               Value
 .. _`Container`: ../container.html
 .. _`Creature`: ../creature.html
 .. _`Door`: ../door.html
+.. _`Faction`: ../faction.html
 .. _`Ingredient`: ../ingredient.html
 .. _`Leveled Creature`: ../leveledCreature.html
 .. _`Leveled Item`: ../leveledItem.html

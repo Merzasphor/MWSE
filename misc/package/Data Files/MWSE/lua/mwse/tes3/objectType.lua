@@ -9,6 +9,7 @@ return {
 	["container"] = 1414418243,
 	["creature"] = 1095062083,
 	["door"] = 1380929348,
+	["faction"] = 1413693766,
 	["ingredient"] = 1380404809,
 	["levelledCreature"] = 1129727308,
 	["levelledItem"] = 1230390604,
