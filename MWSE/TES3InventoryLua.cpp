@@ -48,7 +48,7 @@ namespace mwse {
 		}
 
 		sol::object getItemDataOwnerRequirement(TES3::ItemData& itemData) {
-			if (itemData.owner == NULL || itemData.requirement.variable == NULL) {
+			if (itemData.owner == NULL && itemData.requirement.variable == NULL) {
 				return sol::nil;
 			}
 			else if (itemData.owner->objectType == TES3::ObjectType::Faction) {
