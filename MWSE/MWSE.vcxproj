@@ -625,8 +625,8 @@
     <PostBuildEvent />
     <PostBuildEvent />
     <PostBuildEvent>
-      <Command>xcopy /y "$(TargetDir)MWSE.dll" "$(SolutionDir)..\MWSE.dll"
-xcopy /y "$(TargetDir)MWSE.pdb" "$(SolutionDir)..\MWSE.pdb"</Command>
+      <Command>copy /y "$(TargetDir)MWSE.dll" "$(SolutionDir)..\MWSE.dll"
+copy /y "$(TargetDir)MWSE.pdb" "$(SolutionDir)..\MWSE.pdb"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
