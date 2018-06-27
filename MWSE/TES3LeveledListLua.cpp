@@ -28,29 +28,54 @@ namespace mwse {
 				state.set_usertype("tes3leveledListNode", usertypeDefinition);
 			}
 
-			// Binding for TES3::LeveledList
+			// Binding for TES3::LeveledCreature
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TES3::LeveledList>();
+				auto usertypeDefinition = state.create_simple_usertype<TES3::LeveledCreature>();
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 
 				// Allow object to be converted to strings using their object ID.
-				usertypeDefinition.set(sol::meta_function::to_string, &TES3::LeveledList::getObjectID);
+				usertypeDefinition.set(sol::meta_function::to_string, &TES3::LeveledCreature::getObjectID);
 
 				// Basic property binding.
-				usertypeDefinition.set("chanceForNothing", sol::readonly_property(&TES3::LeveledList::chanceForNothing));
-				usertypeDefinition.set("count", sol::readonly_property(&TES3::LeveledList::itemCount));
-				usertypeDefinition.set("flags", sol::readonly_property(&TES3::LeveledList::flags));
-				usertypeDefinition.set("list", sol::readonly_property(&TES3::LeveledList::itemList));
+				usertypeDefinition.set("chanceForNothing", sol::readonly_property(&TES3::LeveledCreature::chanceForNothing));
+				usertypeDefinition.set("count", sol::readonly_property(&TES3::LeveledCreature::itemCount));
+				usertypeDefinition.set("flags", sol::readonly_property(&TES3::LeveledCreature::flags));
+				usertypeDefinition.set("list", sol::readonly_property(&TES3::LeveledCreature::itemList));
 
 				// Basic function binding.
-				usertypeDefinition.set("pickFrom", [](TES3::LeveledList& self) { return makeLuaObject(self.resolve()); });
+				usertypeDefinition.set("pickFrom", [](TES3::LeveledCreature& self) { return makeLuaObject(self.resolve()); });
 
 				// Finish up our usertype.
-				state.set_usertype("tes3leveledList", usertypeDefinition);
+				state.set_usertype("tes3leveledCreature", usertypeDefinition);
+			}
+
+			// Binding for TES3::LeveledItem
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::LeveledItem>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
+
+				// Allow object to be converted to strings using their object ID.
+				usertypeDefinition.set(sol::meta_function::to_string, &TES3::LeveledItem::getObjectID);
+
+				// Basic property binding.
+				usertypeDefinition.set("chanceForNothing", sol::readonly_property(&TES3::LeveledItem::chanceForNothing));
+				usertypeDefinition.set("count", sol::readonly_property(&TES3::LeveledItem::itemCount));
+				usertypeDefinition.set("flags", sol::readonly_property(&TES3::LeveledItem::flags));
+				usertypeDefinition.set("list", sol::readonly_property(&TES3::LeveledItem::itemList));
+
+				// Basic function binding.
+				usertypeDefinition.set("pickFrom", [](TES3::LeveledItem& self) { return makeLuaObject(self.resolve()); });
+
+				// Finish up our usertype.
+				state.set_usertype("tes3leveledItem", usertypeDefinition);
 			}
 		}
 	}
