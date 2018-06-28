@@ -48,7 +48,7 @@ namespace TES3 {
 		}
 	}
 
-	int Cell::getWaterLevel() {
+	float Cell::getWaterLevel() {
 		if (cellFlags & CellFlag::Interior) {
 			return waterLevelOrRegion.waterLevel;
 		}
@@ -57,13 +57,16 @@ namespace TES3 {
 		}
 	}
 
-	void Cell::setWaterLevel(int value) {
+	void Cell::setWaterLevel(float value) {
 		if (cellFlags & CellFlag::Interior) {
 			waterLevelOrRegion.waterLevel = value;
 		}
 	}
 
 	Region * Cell::getRegion() {
-		return waterLevelOrRegion.region;
+		if (!(cellFlags & CellFlag::Interior)) {
+			return waterLevelOrRegion.region;
+		}
+		return NULL;
 	}
 }

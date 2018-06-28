@@ -76,9 +76,9 @@ namespace mwse {
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Basic property binding.
-				usertypeDefinition.set("cell", &TES3::CellExteriorData::cell);
-				usertypeDefinition.set("gridX", &TES3::CellExteriorData::gridX);
-				usertypeDefinition.set("gridY", &TES3::CellExteriorData::gridY);
+				usertypeDefinition.set("cell", sol::readonly_property(&TES3::CellExteriorData::cell));
+				usertypeDefinition.set("gridX", sol::readonly_property(&TES3::CellExteriorData::gridX));
+				usertypeDefinition.set("gridY", sol::readonly_property(&TES3::CellExteriorData::gridY));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3cellExteriorData", usertypeDefinition);
@@ -95,6 +95,12 @@ namespace mwse {
 				usertypeDefinition.set("g", &TES3::PackedColor::g);
 				usertypeDefinition.set("b", &TES3::PackedColor::b);
 				usertypeDefinition.set("a", &TES3::PackedColor::a);
+
+				// 
+				usertypeDefinition.set("red", &TES3::PackedColor::r);
+				usertypeDefinition.set("green", &TES3::PackedColor::g);
+				usertypeDefinition.set("blue", &TES3::PackedColor::b);
+				usertypeDefinition.set("alpha", &TES3::PackedColor::a);
 
 				// Finish up our usertype.
 				state.set_usertype("tes3packedColor", usertypeDefinition);
@@ -113,12 +119,11 @@ namespace mwse {
 				usertypeDefinition.set(sol::meta_function::to_string, &TES3::Cell::getObjectID);
 
 				// Basic property binding.
-				usertypeDefinition.set("actors", &TES3::Cell::actors);
-				usertypeDefinition.set("activators", &TES3::Cell::activators);
+				usertypeDefinition.set("actors", sol::readonly_property(&TES3::Cell::actors));
+				usertypeDefinition.set("activators", sol::readonly_property(&TES3::Cell::activators));
 				usertypeDefinition.set("cellFlags", &TES3::Cell::cellFlags);
-				usertypeDefinition.set("pathGrid", &TES3::Cell::pathGrid);
-				usertypeDefinition.set("statics", &TES3::Cell::statics);
-				usertypeDefinition.set("moveReferences", &TES3::Cell::moveReferences);
+				usertypeDefinition.set("statics", sol::readonly_property(&TES3::Cell::statics));
+				usertypeDefinition.set("moveReferences", sol::readonly_property(&TES3::Cell::moveReferences));
 
 				// Functions exposed as properties.
 				usertypeDefinition.set("ambientColor", sol::readonly_property(
@@ -143,7 +148,20 @@ namespace mwse {
 					return NULL;
 				}
 				));
-				usertypeDefinition.set("fogDensity", sol::property(&TES3::Cell::getFogDensity, &TES3::Cell::setFogDensity));
+				usertypeDefinition.set("fogDensity", sol::property(
+					[](TES3::Cell& self) -> sol::object
+				{
+					if (self.cellFlags & TES3::CellFlag::Interior) {
+						return sol::make_object(LuaManager::getInstance().getState(), self.VariantData.interior.fogDensity);
+					}
+					return sol::nil;
+				},
+					[](TES3::Cell& self, float value)
+				{
+					if (self.cellFlags & TES3::CellFlag::Interior) {
+						self.VariantData.interior.fogDensity = value;
+					}
+				}));
 				usertypeDefinition.set("gridX", sol::readonly_property(&TES3::Cell::getGridX));
 				usertypeDefinition.set("gridY", sol::readonly_property(&TES3::Cell::getGridY));
 				usertypeDefinition.set("hasWater", sol::property(
@@ -169,7 +187,16 @@ namespace mwse {
 					return NULL;
 				}
 				));
-				usertypeDefinition.set("waterLevel", sol::property(&TES3::Cell::getWaterLevel, &TES3::Cell::setWaterLevel));
+				usertypeDefinition.set("waterLevel", sol::property(
+					[](TES3::Cell& self) -> sol::object
+				{
+					if (self.cellFlags & TES3::CellFlag::Interior) {
+						return sol::make_object(LuaManager::getInstance().getState(), self.waterLevelOrRegion.waterLevel);
+					}
+					return sol::nil;
+				},
+					&TES3::Cell::setWaterLevel
+					));
 
 				// Basic function binding.
 				usertypeDefinition.set("iterateReferences", sol::overload(iterateReferences, iterateReferencesFiltered));

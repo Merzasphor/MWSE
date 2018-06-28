@@ -80,8 +80,8 @@ namespace TES3 {
 		int getFogDensity();
 		void setFogDensity(int);
 
-		int getWaterLevel();
-		void setWaterLevel(int);
+		float getWaterLevel();
+		void setWaterLevel(float);
 
 		Region * getRegion();
 	};
