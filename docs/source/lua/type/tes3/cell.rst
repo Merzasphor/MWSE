@@ -60,6 +60,13 @@ Properties
     The water level of the cell. Only available for interior cells.
 
 
+Functions
+----------------------------------------------------------------------------------------------------
+
+**iterateReferences**
+    Returns values to be used in a ``for`` loop. This loops through **actors**, then **activators**, then **statics**. An optional parameter allows the objects to be filtered by their contained object's type.
+
+
 .. _`boolean`: ../lua/boolean.html
 .. _`number`: ../lua/number.html
 .. _`string`: ../lua/string.html
