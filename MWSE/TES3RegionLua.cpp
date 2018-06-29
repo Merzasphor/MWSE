@@ -110,7 +110,7 @@ namespace mwse {
 				// Access to other objects that need to be packaged.
 				usertypeDefinition.set("sleepCreature", sol::readonly_property([](TES3::Region& self) { return makeLuaObject(self.sleepCreature); }));
 
-				// Expose the current weather, and the index. Allow both to be used to change the weather.
+				// Expose the current weather, and allow it to be changed via setting.
 				usertypeDefinition.set("currentWeather", sol::property(
 					[](TES3::Region& self) -> TES3::Weather*
 				{
@@ -119,23 +119,18 @@ namespace mwse {
 					}
 					return tes3::getWorldController()->weatherController->arrayWeathers[self.currentWeatherIndex];
 				},
-					[](TES3::Region& self, TES3::Weather* weather)
+					[](TES3::Region& self, sol::object weather)
 				{
-					if (weather == NULL) {
-						return;
+					// Get the index, either from a weather object or directly as a number.
+					int index = -1;
+					if (weather.is<TES3::Weather>()) {
+						index = weather.as<TES3::Weather*>()->index;
+					}
+					else if (weather.is<int>()) {
+						index = weather.as<int>();
 					}
 
-					// Change weather to the given weather's index.
-					int index = weather->index;
-					if (index != self.currentWeatherIndex && index >= TES3::WeatherType::First && index <= TES3::WeatherType::Last) {
-						self.changeWeather(index);
-					}
-				}
-				));
-				usertypeDefinition.set("currentWeatherIndex", sol::property(
-					[](TES3::Region& self) { return self.currentWeatherIndex; },
-					[](TES3::Region& self, int index)
-				{
+					// If it was a valid and different index, change the weather to it.
 					if (index != self.currentWeatherIndex && index >= TES3::WeatherType::First && index <= TES3::WeatherType::Last) {
 						self.changeWeather(index);
 					}
