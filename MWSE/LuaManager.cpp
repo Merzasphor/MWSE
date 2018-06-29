@@ -16,6 +16,7 @@
 #include "TES3ActorAnimationData.h"
 #include "TES3Alchemy.h"
 #include "TES3DataHandler.h"
+#include "TES3Game.h"
 #include "TES3InputController.h"
 #include "TES3MagicEffectInstance.h"
 #include "TES3MobileActor.h"
@@ -457,6 +458,12 @@ namespace mwse {
 		//
 
 		static void _stdcall FinishInitialization() {
+			// Hook up shorthand access to data handler, world controller, and game.
+			sol::state& state = LuaManager::getInstance().getState();
+			state["tes3"]["dataHandler"] = tes3::getDataHandler();
+			state["tes3"]["worldController"] = tes3::getWorldController();
+			state["tes3"]["game"] = tes3::getGame();
+
 			LuaManager::getInstance().triggerEvent(new event::GenericEvent("initialized"));
 		}
 
