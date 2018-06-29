@@ -4,7 +4,7 @@
 #include "LuaUtil.h"
 #include "LuaManager.h"
 
-#include "TES3Actor.h"
+#include "TES3LeveledList.h"
 #include "TES3Region.h"
 #include "TES3Sound.h"
 #include "TES3Weather.h"
