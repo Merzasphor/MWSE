@@ -25,9 +25,12 @@
 #include "TES3InputController.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
+#include "TES3Region.h"
 #include "TES3Script.h"
 #include "TES3SoundGenerator.h"
 #include "TES3UIBlock.h"
+#include "TES3Weather.h"
+#include "TES3WeatherController.h"
 #include "TES3WorldController.h"
 
 namespace mwse {
@@ -624,6 +627,28 @@ namespace mwse {
 					}
 				}
 				return NULL;
+			};
+
+			state["tes3"]["getRegion"] = []() -> sol::object {
+				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				if (dataHandler && dataHandler->lastExteriorCell) {
+					return makeLuaObject(dataHandler->lastExteriorCell->getRegion());
+				}
+
+				return sol::nil;
+			};
+
+			state["tes3"]["getCurrentWeather"] = []() -> sol::object {
+				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				TES3::WorldController * worldController = tes3::getWorldController();
+				if (dataHandler && worldController && dataHandler->lastExteriorCell) {
+					TES3::Region * region = dataHandler->lastExteriorCell->getRegion();
+					if (region && region->currentWeatherIndex >= TES3::WeatherType::First && region->currentWeatherIndex <= TES3::WeatherType::Last) {
+						return sol::make_object(LuaManager::getInstance().getState(), worldController->weatherController->arrayWeathers[region->currentWeatherIndex]);
+					}
+				}
+
+				return sol::nil;
 			};
 		}
 	}
