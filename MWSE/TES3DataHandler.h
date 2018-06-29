@@ -92,7 +92,8 @@ namespace TES3 {
 		char unknown_0x9F;
 		int centralGridX; // 0xA0
 		int centralGridY; // 0xA4
-		int cellChanged; // 0xA8
+		bool cellChanged; // 0xA8
+		char padding_0xA9[3];
 		Cell * currentInteriorCell; // 0xAC
 		Cell ** interiorCellBuffer; // 0xB0
 		Cell ** exteriorCellBuffer; // 0xB4
