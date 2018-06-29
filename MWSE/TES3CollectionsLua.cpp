@@ -10,6 +10,7 @@
 #include "TES3MobileActor.h"
 #include "TES3Spell.h"
 #include "TES3Reference.h"
+#include "TES3Region.h"
 
 namespace mwse {
 	namespace lua {
@@ -19,6 +20,7 @@ namespace mwse {
 			bindIterator<TES3::Reference>("TES3ReferenceIterator", "TES3ReferenceIteratorNode");
 			bindIterator<TES3::Faction::ReactionNode>("TES3ReactionNodeIterator", "TES3ReactionNodeIteratorNode");
 			bindIterator<TES3::ItemStack>("TES3ItemStackIterator", "TES3ItemStackIteratorNode");
+			bindIterator<TES3::RegionSound>("TES3RegionSoundIterator", "TES3RegionSoundIteratorNode");
 
 			// Generic TES3::Object iterators. As above, but the result data will be
 			// reinterpreted at runtime.

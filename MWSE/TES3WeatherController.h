@@ -5,6 +5,24 @@
 #include "TES3Vectors.h"
 
 namespace TES3 {
+	namespace WeatherType {
+		enum WeatherType {
+			Clear,
+			Cloudy,
+			Foggy,
+			Overcast,
+			Rain,
+			Thunder,
+			Ash,
+			Blight,
+			Snow,
+			Blizzard,
+
+			First = Clear,
+			Last = Blizzard
+		};
+	}
+
 	struct WeatherController {
 		int sceneWeather; // 0x0
 		int unknown_0x4;
@@ -82,7 +100,7 @@ namespace TES3 {
 		int unknown_0x160;
 		int unknown_0x164;
 		int unknown_0x168;
-		int hoursBetweenWeatherChanges; // 0x16C
+		float hoursBetweenWeatherChanges; // 0x16C
 		float transitionScalar; // 0x170
 		float hoursRemaining; // 0x174
 		int unknown_0x178;
