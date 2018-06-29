@@ -111,7 +111,7 @@ namespace mwse {
 				usertypeDefinition.set("sleepCreature", sol::readonly_property([](TES3::Region& self) { return makeLuaObject(self.sleepCreature); }));
 
 				// Expose the current weather, and allow it to be changed via setting.
-				usertypeDefinition.set("currentWeather", sol::property(
+				usertypeDefinition.set("weather", sol::property(
 					[](TES3::Region& self) -> TES3::Weather*
 				{
 					if (self.currentWeatherIndex < TES3::WeatherType::First || self.currentWeatherIndex > TES3::WeatherType::Last) {
