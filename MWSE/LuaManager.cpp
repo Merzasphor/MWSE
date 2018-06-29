@@ -129,9 +129,6 @@
 
 #define TES3_ActorAnimData_attackCheckMeleeHit 0x541530
 
-#define TES3_cellChanged 0x45CEF0
-#define TES3_cellChangedWithCompanions 0x45C9B0
-
 #define TES3_BaseObject_destructor 0x4F0CA0
 
 namespace mwse {
@@ -484,6 +481,7 @@ namespace mwse {
 		// Hook: Enter Frame
 		//
 
+		TES3::Cell* lastCell = NULL;
 		bool lastMenuMode = true;
 		void __fastcall EnterFrame(TES3::WorldController* worldController, DWORD _UNUSED_) {
 			// Run the function before raising our event.
@@ -499,6 +497,13 @@ namespace mwse {
 			if (worldController->flagMenuMode != lastMenuMode) {
 				luaManager.triggerEvent(new event::MenuStateEvent(worldController->flagMenuMode));
 				lastMenuMode = worldController->flagMenuMode;
+			}
+
+			// Has our cell changed?
+			TES3::DataHandler * dataHandler = tes3::getDataHandler();
+			if (dataHandler->cellChanged) {
+				LuaManager::getInstance().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, lastCell));
+				lastCell = dataHandler->currentCell;
 			}
 
 			// Send off our enterFrame event always.
@@ -575,14 +580,32 @@ namespace mwse {
 		// Hook: On Load
 		//
 
-		signed char __fastcall OnLoad(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName) {
+		bool __fastcall OnLoad(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName) {
 			// Call our wrapper for the function so that events are triggered.
-			return nonDynamicData->loadGame(fileName);
+			TES3::LoadGameResult::LoadGameResult loaded = nonDynamicData->loadGame(fileName);
+
+			// Fire off a cell changed event as well, and update the cached last cell.
+			if (loaded == TES3::LoadGameResult::Success) {
+				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				LuaManager::getInstance().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, NULL));
+				lastCell = dataHandler->currentCell;
+			}
+
+			return loaded != TES3::LoadGameResult::Failure;
 		}
 
-		signed char __fastcall OnLoadMainMenu(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName) {
+		bool __fastcall OnLoadMainMenu(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName) {
 			// Call our wrapper for the function so that events are triggered.
-			return nonDynamicData->loadGameMainMenu(fileName);
+			TES3::LoadGameResult::LoadGameResult loaded = nonDynamicData->loadGameMainMenu(fileName);
+
+			// Fire off a cell changed event as well, and update the cached last cell.
+			if (loaded == TES3::LoadGameResult::Success) {
+				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				LuaManager::getInstance().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, NULL));
+				lastCell = dataHandler->currentCell;
+			}
+
+			return loaded != TES3::LoadGameResult::Failure;
 		}
 
 		//
@@ -591,32 +614,6 @@ namespace mwse {
 
 		void OnNewGame() {
 			tes3::startNewGame();
-		}
-
-		//
-		// Hook: On Cell Change
-		//
-
-		DWORD __cdecl OnCellChange(DWORD unk1, DWORD unk2, DWORD unk3, float x, float y, float z, TES3::Cell* cell, signed char unk4) {
-			DWORD value = reinterpret_cast<DWORD(__cdecl *)(DWORD, DWORD, DWORD, float, float, float, TES3::Cell*, signed char)>(TES3_cellChanged)(unk1, unk2, unk3, x, y, z, cell, unk4);
-
-			// Send off event.
-			if (cell != NULL) {
-				LuaManager::getInstance().triggerEvent(new event::CellChangedEvent(cell, x, y, z));
-			}
-
-			return value;
-		}
-
-		DWORD __cdecl OnCellChangeWithCompanions(DWORD unk1, DWORD unk2, DWORD unk3, float x, float y, float z, TES3::Cell* cell) {
-			DWORD value = reinterpret_cast<DWORD(__cdecl *)(DWORD, DWORD, DWORD, float, float, float, TES3::Cell*)>(TES3_cellChangedWithCompanions)(unk1, unk2, unk3, x, y, z, cell);
-
-			// Send off event.
-			if (cell != NULL) {
-				LuaManager::getInstance().triggerEvent(new event::CellChangedEvent(cell, x, y, z));
-			}
-
-			return value;
 		}
 
 		//
@@ -1037,23 +1034,6 @@ namespace mwse {
 			// Additional load/loaded events for new game.
 			genCallEnforced(0x5FCCF4, 0x5FAEA0, reinterpret_cast<DWORD>(OnNewGame));
 			genCallEnforced(0x5FCDAA, 0x5FAEA0, reinterpret_cast<DWORD>(OnNewGame));
-
-			// Event: Cell Change
-			genCallEnforced(0x45C9A2, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
-			genCallEnforced(0x45D356, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
-			genCallEnforced(0x45D3C4, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
-			genCallEnforced(0x4637B0, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
-			genCallEnforced(0x4C4B4F, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
-			genCallEnforced(0x4C51AE, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
-			genCallEnforced(0x4EA0E8, TES3_cellChangedWithCompanions, reinterpret_cast<DWORD>(OnCellChangeWithCompanions));
-			genCallEnforced(0x4EA137, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
-			genCallEnforced(0x50497D, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
-			genCallEnforced(0x5062FD, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
-			genCallEnforced(0x568360, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
-			genCallEnforced(0x56A735, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
-			genCallEnforced(0x56B7D2, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
-			genCallEnforced(0x619B84, TES3_cellChangedWithCompanions, reinterpret_cast<DWORD>(OnCellChangeWithCompanions));
-			genCallEnforced(0x619BBF, TES3_cellChanged, reinterpret_cast<DWORD>(OnCellChange));
 
 			// Event: Start Combat
 			genCallEnforced(0x5073BC, 0x530470, reinterpret_cast<DWORD>(OnStartCombat));

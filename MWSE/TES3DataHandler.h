@@ -7,6 +7,14 @@
 #include "TES3Skill.h"
 
 namespace TES3 {
+	namespace LoadGameResult {
+		enum LoadGameResult {
+			Failure = 0x0,
+			Success = 0x1,
+			Block = 0x2
+		};
+	}
+
 	struct NonDynamicData {
 		long unknown_0x00;
 		long unknown_0x04; // always 0?
@@ -47,8 +55,8 @@ namespace TES3 {
 		//
 
 		bool saveGame(const char* fileName, const char* saveName);
-		bool loadGame(const char* fileName);
-		bool loadGameMainMenu(const char* fileName);
+		LoadGameResult::LoadGameResult loadGame(const char* fileName);
+		LoadGameResult::LoadGameResult loadGameMainMenu(const char* fileName);
 
 		BaseObject* resolveObject(const char*);
 		Reference* findFirstCloneOfActor(const char*);

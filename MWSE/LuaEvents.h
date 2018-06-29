@@ -167,14 +167,12 @@ namespace mwse {
 
 			class CellChangedEvent : public ObjectFilteredEvent {
 			public:
-				CellChangedEvent(TES3::Cell* cell, float x, float y, float z);
+				CellChangedEvent(TES3::Cell* cell, TES3::Cell* previousCell);
 				sol::table createEventTable();
 
 			protected:
 				TES3::Cell* m_Cell;
-				float m_X;
-				float m_Y;
-				float m_Z;
+				TES3::Cell* m_PreviousCell;
 			};
 
 			// ---------------------------------------------------------------------------- //

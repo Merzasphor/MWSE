@@ -14,17 +14,9 @@ cell
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `tes3cell`_. Read-only. The new cell that the player has entered.
 
-x
+previousCell
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Number`_. Read-only. The X axis of the new position used.
-
-y
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Number`_. Read-only. The Y axis of the new position used.
-
-z
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Number`_. Read-only. The Z axis of the new position used.
+`tes3cell`_. Read-only. The previous cell that the player came from. This will be ``nil`` when loading a game.
 
 
 Filter
@@ -34,5 +26,4 @@ This event is filtered on **cell**. If provided, the event callback will only be
 
 .. _`Event Guide`: ../guide/events.html
 
-.. _`Number`: ../type/lua/number.html
 .. _`tes3cell`: ../type/tes3/cell.html

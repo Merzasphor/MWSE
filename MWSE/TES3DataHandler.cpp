@@ -50,12 +50,12 @@ namespace TES3 {
 		return saved;
 	}
 
-	bool NonDynamicData::loadGame(const char* fileName) {
+	LoadGameResult::LoadGameResult NonDynamicData::loadGame(const char* fileName) {
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
 		sol::table eventData = luaManager.triggerEvent(new mwse::lua::event::LoadGameEvent(fileName));
 		if (eventData.valid() && eventData["block"] == true) {
-			return true;
+			return LoadGameResult::Block;
 		}
 
 		// Fetch the names back from the event data, in case the event changed them.
@@ -63,22 +63,22 @@ namespace TES3 {
 		std::string eventFileName = eventData["filename"];
 		eventFileName += ".ess";
 
-		bool loaded = reinterpret_cast<signed char(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_loadGameInGame)(this, eventFileName.c_str());
+		bool loaded = reinterpret_cast<bool(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_loadGameInGame)(this, eventFileName.c_str());
 
 		// Pass a follow-up event if we successfully saved.
 		if (loaded) {
 			luaManager.triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str(), fileName == NULL));
 		}
 
-		return loaded;
+		return loaded ? LoadGameResult::Success : LoadGameResult::Failure;
 	}
 
-	bool NonDynamicData::loadGameMainMenu(const char* fileName) {
+	LoadGameResult::LoadGameResult NonDynamicData::loadGameMainMenu(const char* fileName) {
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
 		sol::table eventData = luaManager.triggerEvent(new mwse::lua::event::LoadGameEvent(fileName));
 		if (eventData.valid() && eventData["block"] == true) {
-			return true;
+			return LoadGameResult::Block;
 		}
 
 		// Fetch the names back from the event data, in case the event changed them.
@@ -86,14 +86,14 @@ namespace TES3 {
 		std::string eventFileName = eventData["filename"];
 		eventFileName += ".ess";
 
-		bool loaded = reinterpret_cast<signed char(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_loadGameMainMenu)(this, eventFileName.c_str());
+		bool loaded = reinterpret_cast<bool(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_loadGameMainMenu)(this, eventFileName.c_str());
 
 		// Pass a follow-up event if we successfully saved.
 		if (loaded) {
 			luaManager.triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str()));
 		}
 
-		return loaded;
+		return loaded ? LoadGameResult::Success : LoadGameResult::Failure;
 	}
 
 	BaseObject* NonDynamicData::resolveObject(const char* id) {

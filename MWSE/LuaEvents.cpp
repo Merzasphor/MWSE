@@ -316,12 +316,10 @@ namespace mwse {
 			// Cell change event.
 			//
 
-			CellChangedEvent::CellChangedEvent(TES3::Cell* cell, float x, float y, float z) :
+			CellChangedEvent::CellChangedEvent(TES3::Cell* cell, TES3::Cell* previousCell) :
 				ObjectFilteredEvent("cellChanged", cell),
 				m_Cell(cell),
-				m_X(x),
-				m_Y(y),
-				m_Z(z)
+				m_PreviousCell(previousCell)
 			{
 
 			}
@@ -331,9 +329,7 @@ namespace mwse {
 				sol::table eventData = state.create_table();
 
 				eventData["cell"] = makeLuaObject(m_Cell);
-				eventData["x"] = m_X;
-				eventData["y"] = m_Y;
-				eventData["z"] = m_Z;
+				eventData["previousCell"] = makeLuaObject(m_PreviousCell);
 
 				return eventData;
 			}
