@@ -28,6 +28,7 @@ namespace mwse {
 			usertypeDefinition.set("fogSunriseColor", &TES3::Weather::fogSunriseCol);
 			usertypeDefinition.set("fogSunsetColor", &TES3::Weather::fogSunsetCol);
 			usertypeDefinition.set("glareView", &TES3::Weather::glareView);
+			usertypeDefinition.set("index", sol::readonly_property(&TES3::Weather::index));
 			usertypeDefinition.set("landFogDayDepth", &TES3::Weather::landFogDayDepth);
 			usertypeDefinition.set("landFogNightDepth", &TES3::Weather::landFogNightDepth);
 			usertypeDefinition.set("skyDayColor", &TES3::Weather::skyDayCol);

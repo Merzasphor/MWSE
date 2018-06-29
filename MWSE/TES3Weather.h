@@ -6,8 +6,8 @@
 
 namespace TES3 {
 	struct Weather {
-		int unknown_0x0;
-		int unknown_0x4; // Weather ID?
+		void * vTable; // 0x0
+		int index; // 0x4
 		float transitionDelta; // 0x8
 		float glareView; // 0xC
 		WeatherController * weatherController; // 0x10
