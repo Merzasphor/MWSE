@@ -184,4 +184,4 @@ Properties
 .. _`tes3sound`: sound.html
 .. _`tes3spell`: spell.html
 .. _`tes3vector3`: vector3.html
-.. _`weatherController`: weatherController.html
+.. _`tes3weatherController`: weatherController.html
