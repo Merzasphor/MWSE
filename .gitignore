@@ -38,3 +38,4 @@ build/dist/
 /deps/LuaJIT/src/*.exp
 /deps/LuaJIT/src/jit/vmdef.lua
 /deps/LuaJIT/src/lua51.dll
+/MWSE/BuildDate.h

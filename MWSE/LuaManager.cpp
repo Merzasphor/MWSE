@@ -7,6 +7,7 @@
 #include "ScriptUtil.h"
 #include "UIUtil.h"
 #include "MWSEDefs.h"
+#include "BuildDate.h"
 
 #include "sol.hpp"
 
@@ -195,6 +196,9 @@ namespace mwse {
 			luaState["mwse"]["getVersion"] = []() {
 				return MWSE_VERSION_INTEGER;
 			};
+
+			luaState["mwse"]["version"] = MWSE_VERSION_INTEGER;
+			luaState["mwse"]["buildDate"] = MWSE_BUILD_DATE;
 
 			// We want to take care of this here rather than in an external file so we have access to scriptOverrides.
 			luaState["mwse"]["overrideScript"] = [](std::string scriptId, std::string target) {

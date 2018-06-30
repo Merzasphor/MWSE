@@ -638,6 +638,13 @@
       <Command>copy /y "$(TargetDir)MWSE.dll" "$(SolutionDir)..\MWSE.dll"
 copy /y "$(TargetDir)MWSE.pdb" "$(SolutionDir)..\MWSE.pdb"</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>set buildTime=
+for /f "skip=1 delims=" %%x in ('wmic os get localdatetime') do if not defined buildTime set buildTime=%%x
+echo #pragma once &gt; $(ProjectDir)/BuildDate.h
+echo. &gt;&gt; $(ProjectDir)/BuildDate.h
+echo #define MWSE_BUILD_DATE %buildTime:~0,8% &gt;&gt; $(ProjectDir)/BuildDate.h</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -664,6 +671,13 @@ copy /y "$(TargetDir)MWSE.pdb" "$(SolutionDir)..\MWSE.pdb"</Command>
       <Command>copy /y "$(TargetDir)MWSE.dll" "$(SolutionDir)..\MWSE.dll"
 copy /y "$(TargetDir)MWSE.pdb" "$(SolutionDir)..\MWSE.pdb"</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>set buildTime=
+for /f "skip=1 delims=" %%x in ('wmic os get localdatetime') do if not defined buildTime set buildTime=%%x
+echo #pragma once &gt; $(ProjectDir)/BuildDate.h
+echo. &gt;&gt; $(ProjectDir)/BuildDate.h
+echo #define MWSE_BUILD_DATE %buildTime:~0,8% &gt;&gt; $(ProjectDir)/BuildDate.h</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
