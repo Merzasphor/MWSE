@@ -33,6 +33,7 @@ namespace mwse {
 				// Basic property binding.
 				usertypeDefinition.set("ambientDayColor", sol::readonly_property(&TES3::Weather::ambientDayCol));
 				usertypeDefinition.set("ambientNightColor", sol::readonly_property(&TES3::Weather::ambientNightCol));
+				usertypeDefinition.set("ambientPlaying", sol::readonly_property(&TES3::Weather::ambientPlaying));
 				usertypeDefinition.set("ambientSunriseColor", sol::readonly_property(&TES3::Weather::ambientSunriseCol));
 				usertypeDefinition.set("ambientSunsetColor", sol::readonly_property(&TES3::Weather::ambientSunsetCol));
 				usertypeDefinition.set("cloudsMaxPercent", &TES3::Weather::cloudsMaxPercent);
@@ -56,6 +57,7 @@ namespace mwse {
 				usertypeDefinition.set("sunSunriseColor", sol::readonly_property(&TES3::Weather::sunSunriseCol));
 				usertypeDefinition.set("sunSunsetColor", sol::readonly_property(&TES3::Weather::sunSunsetCol));
 				usertypeDefinition.set("transitionDelta", &TES3::Weather::transitionDelta);
+				usertypeDefinition.set("underwaterSoundState", sol::readonly_property(&TES3::Weather::underwaterSoundState));
 				usertypeDefinition.set("windSpeed", &TES3::Weather::windSpeed);
 
 				// Binding for IDs and paths.
@@ -85,7 +87,7 @@ namespace mwse {
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Weather>());
 
 				// Basic property binding.
-				usertypeDefinition.set("stormThreshold", &TES3::WeatherAsh::stormThreshold);
+				usertypeDefinition.set("threshold", &TES3::WeatherAsh::stormThreshold);
 
 				// Finish up our usertype.
 				state.set_usertype("tes3weatherAsh", usertypeDefinition);
@@ -101,9 +103,9 @@ namespace mwse {
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Weather>());
 
 				// Basic property binding.
-				usertypeDefinition.set("diseaseChance", &TES3::WeatherBlight::diseaseChance);
+				usertypeDefinition.set("blightDiseaseChance", &TES3::WeatherBlight::diseaseChance);
 				usertypeDefinition.set("blightDiseases", sol::readonly_property(&TES3::WeatherBlight::blightDiseases));
-				usertypeDefinition.set("stormThreshold", &TES3::WeatherBlight::stormThreshold);
+				usertypeDefinition.set("threshold", &TES3::WeatherBlight::stormThreshold);
 
 				// Finish up our usertype.
 				state.set_usertype("tes3weatherBlight", usertypeDefinition);
@@ -119,7 +121,7 @@ namespace mwse {
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Weather>());
 
 				// Basic property binding.
-				usertypeDefinition.set("stormThreshold", &TES3::WeatherBlizzard::stormThreshold);
+				usertypeDefinition.set("threshold", &TES3::WeatherBlizzard::stormThreshold);
 
 				// Finish up our usertype.
 				state.set_usertype("tes3weatherBlizzard", usertypeDefinition);
@@ -187,13 +189,13 @@ namespace mwse {
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Weather>());
 
 				// Basic property binding.
-				usertypeDefinition.set("maxRaindrops", &TES3::WeatherRain::raindropsMax);
-				usertypeDefinition.set("rainActive", &TES3::WeatherRain::rainPlaying);
-				usertypeDefinition.set("rainEntranceSpeed", &TES3::WeatherRain::rainEntranceSpeed);
-				usertypeDefinition.set("rainHeightMax", &TES3::WeatherRain::rainHeightMax);
-				usertypeDefinition.set("rainHeightMin", &TES3::WeatherRain::rainHeightMin);
-				usertypeDefinition.set("rainRadius", &TES3::WeatherRain::rainRadius);
-				usertypeDefinition.set("rainThreshold", &TES3::WeatherRain::rainThreshold);
+				usertypeDefinition.set("maxParticles", &TES3::WeatherRain::raindropsMax);
+				usertypeDefinition.set("particleEntranceSpeed", &TES3::WeatherRain::rainEntranceSpeed);
+				usertypeDefinition.set("particleHeightMax", &TES3::WeatherRain::rainHeightMax);
+				usertypeDefinition.set("particleHeightMin", &TES3::WeatherRain::rainHeightMin);
+				usertypeDefinition.set("particleRadius", &TES3::WeatherRain::rainRadius);
+				usertypeDefinition.set("rainActive", sol::readonly_property(&TES3::WeatherRain::rainPlaying));
+				usertypeDefinition.set("threshold", &TES3::WeatherRain::rainThreshold);
 
 				// Binding for IDs and paths.
 				usertypeDefinition.set("rainLoopSoundId", sol::property(
@@ -218,12 +220,12 @@ namespace mwse {
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Weather>());
 
 				// Basic property binding.
-				usertypeDefinition.set("maxSnowflakes", &TES3::WeatherSnow::snowflakesMax);
-				usertypeDefinition.set("snowEntranceSpeed", &TES3::WeatherSnow::snowEntranceSpeed);
-				usertypeDefinition.set("snowHeightMax", &TES3::WeatherSnow::snowHeightMax);
-				usertypeDefinition.set("snowHeightMin", &TES3::WeatherSnow::snowHeightMin);
-				usertypeDefinition.set("snowRadius", &TES3::WeatherSnow::snowRadius);
-				usertypeDefinition.set("snowThreshold", &TES3::WeatherSnow::snowThreshold);
+				usertypeDefinition.set("maxParticles", &TES3::WeatherSnow::snowflakesMax);
+				usertypeDefinition.set("particleEntranceSpeed", &TES3::WeatherSnow::snowEntranceSpeed);
+				usertypeDefinition.set("particleHeightMax", &TES3::WeatherSnow::snowHeightMax);
+				usertypeDefinition.set("particleHeightMin", &TES3::WeatherSnow::snowHeightMin);
+				usertypeDefinition.set("particleRadius", &TES3::WeatherSnow::snowRadius);
+				usertypeDefinition.set("threshold", &TES3::WeatherSnow::snowThreshold);
 
 				// Finish up our usertype.
 				state.set_usertype("tes3weatherSnow", usertypeDefinition);
@@ -240,18 +242,22 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition.set("flashDecrement", &TES3::WeatherThunder::flashDecrement);
-				usertypeDefinition.set("maxRaindrops", &TES3::WeatherThunder::raindropsMax);
+				usertypeDefinition.set("maxParticles", &TES3::WeatherThunder::raindropsMax);
+				usertypeDefinition.set("particleEntranceSpeed", &TES3::WeatherThunder::rainEntranceSpeed);
+				usertypeDefinition.set("particleHeightMax", &TES3::WeatherThunder::rainHeightMax);
+				usertypeDefinition.set("particleHeightMin", &TES3::WeatherThunder::rainHeightMin);
+				usertypeDefinition.set("particleRadius", &TES3::WeatherThunder::rainRadius);
 				usertypeDefinition.set("rainActive", &TES3::WeatherThunder::rainPlaying);
-				usertypeDefinition.set("rainEntranceSpeed", &TES3::WeatherThunder::rainEntranceSpeed);
-				usertypeDefinition.set("rainHeightMax", &TES3::WeatherThunder::rainHeightMax);
-				usertypeDefinition.set("rainHeightMin", &TES3::WeatherThunder::rainHeightMin);
-				usertypeDefinition.set("rainRadius", &TES3::WeatherThunder::rainRadius);
-				usertypeDefinition.set("rainThreshold", &TES3::WeatherThunder::rainThreshold);
+				usertypeDefinition.set("threshold", &TES3::WeatherThunder::rainThreshold);
 				usertypeDefinition.set("thunderFrequency", &TES3::WeatherThunder::thunderFrequency);
 				usertypeDefinition.set("thunderSoundCount", &TES3::WeatherThunder::thunderSoundCount);
 				usertypeDefinition.set("thunderThreshold", &TES3::WeatherThunder::thunderThreshold);
 
 				// Binding for IDs and paths.
+				usertypeDefinition.set("rainLoopSoundId", sol::property(
+					[](TES3::WeatherThunder& self) { return self.soundIdRainLoop; },
+					[](TES3::WeatherThunder& self, const char* value) { if (strlen(value) < 260) strcpy(self.soundIdRainLoop, value); }
+				));
 				usertypeDefinition.set("thunderSound1Id", sol::property(
 					[](TES3::WeatherThunder& self) { return self.soundIdThunder1; },
 					[](TES3::WeatherThunder& self, const char* value) { if (strlen(value) < 260) strcpy(self.soundIdThunder1, value); }
