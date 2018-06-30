@@ -377,6 +377,9 @@ namespace mwse {
 			case TES3::ObjectType::Reference:
 				result = sol::make_object(state, reinterpret_cast<TES3::Reference*>(object));
 				break;
+			case TES3::ObjectType::Region:
+				result = sol::make_object(state, reinterpret_cast<TES3::Region*>(object));
+				break;
 			case TES3::ObjectType::Repair:
 				result = sol::make_object(state, reinterpret_cast<TES3::RepairTool*>(object));
 				break;
