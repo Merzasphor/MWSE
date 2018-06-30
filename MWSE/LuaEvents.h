@@ -332,6 +332,20 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
+			class KeyDownEvent : public KeyEvent {
+			public:
+				KeyDownEvent(int keyCode, bool controlDown, bool shiftDown, bool altDown, bool superDown);
+			};
+
+			// ---------------------------------------------------------------------------- //
+
+			class KeyUpEvent : public KeyEvent {
+			public:
+				KeyUpEvent(int keyCode, bool controlDown, bool shiftDown, bool altDown, bool superDown);
+			};
+
+			// ---------------------------------------------------------------------------- //
+
 			class DeathEvent : public ObjectFilteredEvent {
 			public:
 				DeathEvent(TES3::MobileActor* mobileActor);

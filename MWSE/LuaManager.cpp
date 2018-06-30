@@ -777,9 +777,15 @@ namespace mwse {
 			LuaManager& luaManager = LuaManager::getInstance();
 			for (size_t i = 0; i < 256; i++) {
 				if ((inputController->keyboardState[i] & 0x80) && !(inputController->previousKeyboardState[i] & 0x80)) {
+					luaManager.triggerEvent(new event::KeyDownEvent(i, controlDown, shiftDown, altDown, superDown));
+
+					// TODO: Remove! Deprecated generic key event.
 					luaManager.triggerEvent(new event::KeyEvent(i, true, controlDown, shiftDown, altDown, superDown));
 				}
 				else if (!(inputController->keyboardState[i] & 0x80) && (inputController->previousKeyboardState[i] & 0x80)) {
+					luaManager.triggerEvent(new event::KeyUpEvent(i, controlDown, shiftDown, altDown, superDown));
+
+					// TODO: Remove! Deprecated generic key event.
 					luaManager.triggerEvent(new event::KeyEvent(i, false, controlDown, shiftDown, altDown, superDown));
 				}
 			}

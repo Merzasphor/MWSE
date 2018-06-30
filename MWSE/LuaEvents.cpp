@@ -656,6 +656,26 @@ namespace mwse {
 			}
 
 			//
+			// Key down event.
+			//
+
+			KeyDownEvent::KeyDownEvent(int keyCode, bool controlDown, bool shiftDown, bool altDown, bool superDown) :
+				KeyEvent(keyCode, true, controlDown, shiftDown, altDown, superDown)
+			{
+				m_EventName = "keyDown";
+			}
+
+			//
+			// Key up event.
+			//
+
+			KeyUpEvent::KeyUpEvent(int keyCode, bool controlDown, bool shiftDown, bool altDown, bool superDown) :
+				KeyEvent(keyCode, false, controlDown, shiftDown, altDown, superDown)
+			{
+				m_EventName = "keyUp";
+			}
+
+			//
 			// Death event.
 			//
 
