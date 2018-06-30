@@ -60,6 +60,18 @@
 #include "TES3UIBlock.h"
 #include "TES3Vectors.h"
 #include "TES3Weapon.h"
+#include "TES3Weather.h"
+#include "TES3WeatherAsh.h"
+#include "TES3WeatherBlight.h"
+#include "TES3WeatherBlizzard.h"
+#include "TES3WeatherClear.h"
+#include "TES3WeatherCloudy.h"
+#include "TES3WeatherController.h"
+#include "TES3WeatherFoggy.h"
+#include "TES3WeatherOvercast.h"
+#include "TES3WeatherRain.h"
+#include "TES3WeatherSnow.h"
+#include "TES3WeatherThunder.h"
 
 #define TES3_vTable_MobileCreature 0x74AFA4
 #define TES3_vTable_MobileNPC 0x74AE6C
@@ -433,6 +445,29 @@ namespace mwse {
 			}
 
 			return result;
+		}
+
+		sol::object makeLuaObject(TES3::Weather* weather) {
+			if (weather == NULL) {
+				return sol::nil;
+			}
+
+			sol::state& state = LuaManager::getInstance().getState();
+
+			switch (weather->index) {
+			case TES3::WeatherType::Ash: return sol::make_object(state, reinterpret_cast<TES3::WeatherAsh*>(weather));
+			case TES3::WeatherType::Blight: return sol::make_object(state, reinterpret_cast<TES3::WeatherBlight*>(weather));
+			case TES3::WeatherType::Blizzard: return sol::make_object(state, reinterpret_cast<TES3::WeatherBlizzard*>(weather));
+			case TES3::WeatherType::Clear: return sol::make_object(state, reinterpret_cast<TES3::WeatherClear*>(weather));
+			case TES3::WeatherType::Cloudy: return sol::make_object(state, reinterpret_cast<TES3::WeatherCloudy*>(weather));
+			case TES3::WeatherType::Foggy: return sol::make_object(state, reinterpret_cast<TES3::WeatherFoggy*>(weather));
+			case TES3::WeatherType::Overcast: return sol::make_object(state, reinterpret_cast<TES3::WeatherOvercast*>(weather));
+			case TES3::WeatherType::Rain: return sol::make_object(state, reinterpret_cast<TES3::WeatherRain*>(weather));
+			case TES3::WeatherType::Snow: return sol::make_object(state, reinterpret_cast<TES3::WeatherSnow*>(weather));
+			case TES3::WeatherType::Thunder: return sol::make_object(state, reinterpret_cast<TES3::WeatherThunder*>(weather));
+			}
+
+			return sol::make_object(state, weather);
 		}
 
 		sol::object makeLuaObject(NI::Object* object) {

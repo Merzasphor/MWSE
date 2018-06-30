@@ -644,7 +644,7 @@ namespace mwse {
 				if (dataHandler && worldController && dataHandler->lastExteriorCell) {
 					TES3::Region * region = dataHandler->lastExteriorCell->getRegion();
 					if (region && region->currentWeatherIndex >= TES3::WeatherType::First && region->currentWeatherIndex <= TES3::WeatherType::Last) {
-						return sol::make_object(LuaManager::getInstance().getState(), worldController->weatherController->arrayWeathers[region->currentWeatherIndex]);
+						return makeLuaObject(worldController->weatherController->arrayWeathers[region->currentWeatherIndex]);
 					}
 				}
 

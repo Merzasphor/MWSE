@@ -112,12 +112,12 @@ namespace mwse {
 
 				// Expose the current weather, and allow it to be changed via setting.
 				usertypeDefinition.set("weather", sol::property(
-					[](TES3::Region& self) -> TES3::Weather*
+					[](TES3::Region& self) -> sol::object
 				{
 					if (self.currentWeatherIndex < TES3::WeatherType::First || self.currentWeatherIndex > TES3::WeatherType::Last) {
-						return NULL;
+						return sol::nil;
 					}
-					return tes3::getWorldController()->weatherController->arrayWeathers[self.currentWeatherIndex];
+					return makeLuaObject(tes3::getWorldController()->weatherController->arrayWeathers[self.currentWeatherIndex]);
 				},
 					[](TES3::Region& self, sol::object weather)
 				{

@@ -2,6 +2,7 @@
 
 #include "sol.hpp"
 #include "LuaManager.h"
+#include "LuaUtil.h"
 
 #include "TES3Moon.h"
 #include "TES3Weather.h"
@@ -9,6 +10,16 @@
 
 namespace mwse {
 	namespace lua {
+		sol::table getWeatherList(TES3::WeatherController * controller) {
+			sol::table results;
+
+			for (unsigned int i = TES3::WeatherType::First; i <= TES3::WeatherType::Last; i++) {
+				results[i + 1] = makeLuaObject(controller->arrayWeathers[i]);
+			}
+
+			return results;
+		}
+
 		void bindTES3WeatherController() {
 			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
@@ -20,12 +31,10 @@ namespace mwse {
 			// Basic property binding.
 			usertypeDefinition.set("currentFogColor", &TES3::WeatherController::currentSkyColor);
 			usertypeDefinition.set("currentSkyColor", &TES3::WeatherController::currentSkyColor);
-			usertypeDefinition.set("currentWeather", &TES3::WeatherController::currentWeather);
 			usertypeDefinition.set("daysRemaining", &TES3::WeatherController::daysRemaining);
 			usertypeDefinition.set("hoursBetweenWeatherChanges", &TES3::WeatherController::hoursBetweenWeatherChanges);
 			usertypeDefinition.set("hoursRemaining", &TES3::WeatherController::hoursRemaining);
 			usertypeDefinition.set("masser", sol::readonly_property(&TES3::WeatherController::moonMasser));
-			usertypeDefinition.set("nextWeather", &TES3::WeatherController::nextWeather);
 			usertypeDefinition.set("secunda", sol::readonly_property(&TES3::WeatherController::moonSecunda));
 			usertypeDefinition.set("soundUnderwater", &TES3::WeatherController::soundUnderwater);
 			usertypeDefinition.set("sunglareFaderAngleMax", &TES3::WeatherController::sunglareFaderAngleMax);
@@ -47,7 +56,11 @@ namespace mwse {
 			usertypeDefinition.set("windDirection", &TES3::WeatherController::currentSkyColor);
 
 			// Indirect bindings to unions and arrays.
-			usertypeDefinition.set("weathers", sol::readonly_property([](TES3::WeatherController& self) { return std::ref(self.arrayWeathers); }));
+			usertypeDefinition.set("weathers", sol::readonly_property([](TES3::WeatherController& self) { return getWeatherList(&self); }));
+
+			// Access to other objects that need to be packaged.
+			usertypeDefinition.set("currentWeather", sol::readonly_property([](TES3::WeatherController& self) { return makeLuaObject(self.currentWeather); }));
+			usertypeDefinition.set("nextWeather", sol::readonly_property([](TES3::WeatherController& self) { return makeLuaObject(self.nextWeather); }));
 
 			// Finish up our usertype.
 			state.set_usertype("tes3weatherController", usertypeDefinition);
