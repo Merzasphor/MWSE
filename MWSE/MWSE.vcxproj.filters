@@ -166,6 +166,9 @@
     <Filter Include="Header Files\Lua\Bindings\NI">
       <UniqueIdentifier>{719898ac-e8e4-43e3-b122-ba4970246a82}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\DataAdapters\TES3\Weather">
+      <UniqueIdentifier>{492099fe-dfdd-4766-86e8-d3f38bcca43c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Flags.h">
@@ -359,12 +362,6 @@
     </ClInclude>
     <ClInclude Include="TES3Weapon.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="TES3Weather.h">
-      <Filter>Header Files\DataAdapters\TES3\Worldspace</Filter>
-    </ClInclude>
-    <ClInclude Include="TES3WeatherController.h">
-      <Filter>Header Files\DataAdapters\TES3\Worldspace</Filter>
     </ClInclude>
     <ClInclude Include="TES3WorldController.h">
       <Filter>Header Files\DataAdapters\TES3\Worldspace</Filter>
@@ -767,6 +764,42 @@
     </ClInclude>
     <ClInclude Include="TES3InputControllerLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Weather.h">
+      <Filter>Header Files\DataAdapters\TES3\Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3WeatherController.h">
+      <Filter>Header Files\DataAdapters\TES3\Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3WeatherAsh.h">
+      <Filter>Header Files\DataAdapters\TES3\Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3WeatherClear.h">
+      <Filter>Header Files\DataAdapters\TES3\Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3WeatherCloudy.h">
+      <Filter>Header Files\DataAdapters\TES3\Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3WeatherFoggy.h">
+      <Filter>Header Files\DataAdapters\TES3\Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3WeatherOvercast.h">
+      <Filter>Header Files\DataAdapters\TES3\Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3WeatherRain.h">
+      <Filter>Header Files\DataAdapters\TES3\Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3WeatherThunder.h">
+      <Filter>Header Files\DataAdapters\TES3\Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3WeatherBlight.h">
+      <Filter>Header Files\DataAdapters\TES3\Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3WeatherSnow.h">
+      <Filter>Header Files\DataAdapters\TES3\Weather</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3WeatherBlizzard.h">
+      <Filter>Header Files\DataAdapters\TES3\Weather</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

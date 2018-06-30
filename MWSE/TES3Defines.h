@@ -88,7 +88,17 @@ namespace TES3 {
 	struct Statistic;
 	struct Weapon;
 	struct Weather;
+	struct WeatherAsh;
+	struct WeatherBlight;
+	struct WeatherBlizzard;
+	struct WeatherClear;
+	struct WeatherCloudy;
 	struct WeatherController;
+	struct WeatherFoggy;
+	struct WeatherOvercast;
+	struct WeatherRain;
+	struct WeatherSnow;
+	struct WeatherThunder;
 	struct WorldController;
 
 	namespace UI {
