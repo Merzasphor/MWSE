@@ -21,6 +21,7 @@ tes3.spellOrigin = require("mwse.tes3.spellOrigin")
 tes3.spellType = require("mwse.tes3.spellType")
 tes3.uiProperty = require("mwse.tes3.uiProperty")
 tes3.weaponType = require("mwse.tes3.weaponType")
+tes3.weather = require("mwse.tes3.weather")
 
 -------------------------------------------------
 -- Functions
