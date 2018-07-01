@@ -2,6 +2,7 @@ local tes3 = {}
 
 -- Game constants.
 tes3.apparatusType = require("mwse.tes3.apparatusType")
+tes3.armorSlot = require("mwse.tes3.armorSlot")
 tes3.attachmentType = require("mwse.tes3.attachmentType")
 tes3.attribute = require("mwse.tes3.attribute")
 tes3.attributeName = require("mwse.tes3.attributeName")
