@@ -608,7 +608,7 @@ namespace mwse {
 					}
 
 					// If we got this far we match all filters. Return the object.
-					return makeLuaObject(object);
+					return sol::make_object(state, itt->data);
 				}
 
 				return sol::nil;
