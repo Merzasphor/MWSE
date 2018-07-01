@@ -5,6 +5,7 @@
 #include "LuaUtil.h"
 
 #include "TES3Moon.h"
+#include "TES3Region.h"
 #include "TES3Weather.h"
 #include "TES3WeatherController.h"
 
@@ -35,6 +36,7 @@ namespace mwse {
 			usertypeDefinition.set("hoursBetweenWeatherChanges", &TES3::WeatherController::hoursBetweenWeatherChanges);
 			usertypeDefinition.set("hoursRemaining", &TES3::WeatherController::hoursRemaining);
 			usertypeDefinition.set("masser", sol::readonly_property(&TES3::WeatherController::moonMasser));
+			usertypeDefinition.set("region", sol::readonly_property(&TES3::WeatherController::region));
 			usertypeDefinition.set("secunda", sol::readonly_property(&TES3::WeatherController::moonSecunda));
 			usertypeDefinition.set("soundUnderwater", &TES3::WeatherController::soundUnderwater);
 			usertypeDefinition.set("sunglareFaderAngleMax", &TES3::WeatherController::sunglareFaderAngleMax);

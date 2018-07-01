@@ -122,7 +122,7 @@ namespace TES3 {
 		Vector3 underwaterCol; // 0x1B4
 		float underwaterColWeight; // 0x1C0
 		Vector3 sunglareFaderCol; // 0x1C4
-		int unknown_0x1D0;
+		Region * region; // 0x1D0
 		DataHandler * dataHandler; // 0x1D4
 		int soundUnderwater; // 0x1D8
 		int unknown_0x1DC;
