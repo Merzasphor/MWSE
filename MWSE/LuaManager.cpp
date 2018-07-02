@@ -901,11 +901,16 @@ namespace mwse {
 		// Magic cast success hook (includes spells, enchants and alchemy)
 		//
 
-		void __cdecl OnMagicCastSuccess(TES3::MagicSourceInstance* magicInstance) {
+		void __stdcall OnMagicCastSuccess(TES3::MagicSourceInstance* magicInstance) {
+			// Ignore ability spells, as they are automatically activated as NPCs enter simulation range.
+			if (magicInstance->sourceCombo.sourceType == TES3::MagicSourceType::Spell && magicInstance->sourceCombo.source.asSpell->castType == TES3::SpellCastType::Ability) {
+				return;
+			}
+			
 			LuaManager& luaManager = LuaManager::getInstance();
 			luaManager.triggerEvent(new event::MagicCastEvent(magicInstance));
 			
-			if (magicInstance->sourceCombo.sourceType == TES3::MagicSourceType::Spell && magicInstance->sourceCombo.source.asSpell->castType != TES3::SpellCastType::Ability) {
+			if (magicInstance->sourceCombo.sourceType == TES3::MagicSourceType::Spell) {
 				luaManager.triggerEvent(new event::SpellCastEvent(magicInstance, true));
 			}
 		}
@@ -936,7 +941,7 @@ namespace mwse {
 		// Spell cast failure hook (only when cast chance roll fails)
 		//
 
-		void __cdecl OnSpellCastFailure(TES3::MagicSourceInstance* magicInstance) {
+		void __stdcall OnSpellCastFailure(TES3::MagicSourceInstance* magicInstance) {
 			LuaManager& luaManager = LuaManager::getInstance();
 			luaManager.triggerEvent(new event::SpellCastEvent(magicInstance, false));
 		}
