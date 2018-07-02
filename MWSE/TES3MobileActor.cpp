@@ -5,6 +5,10 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "TES3Util.h"
+
+#include "TES3GameSetting.h"
+
 #define TES3_MobileActor_onActorCollision 0x5234A0
 #define TES3_MobileActor_onObjectCollision 0x5233B0
 #define TES3_MobileActor_onTerrainCollision 0x523310
@@ -15,6 +19,10 @@
 #define TES3_MobileActor_onDeath 0x523AA0
 #define TES3_MobileActor_applyHealthDamage 0x557CF0
 #define TES3_MobileActor_hasFreeAction 0x527580
+#define TES3_MobileActor_calculateRunSpeed 0x527050
+#define TES3_MobileActor_calculateSwimSpeed 0x5270B0
+#define TES3_MobileActor_calculateSwimRunSpeed 0x527130
+#define TES3_MobileActor_calculateFlySpeed 0x5271F0
 
 namespace TES3 {
 	signed char MobileActor::onActorCollision(int hitReferenceIndex) {
@@ -67,6 +75,10 @@ namespace TES3 {
 		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
 
 		return result;
+	}
+
+	float MobileActor::getSkillValue(int skillId) {
+		return vTable.mobileActor->getSkillValue(this, skillId);
 	}
 
 	Cell* MobileActor::getCell() {
@@ -132,6 +144,66 @@ namespace TES3 {
 
 	bool MobileActor::hasFreeAction() {
 		return reinterpret_cast<bool(__thiscall *)(MobileActor*)>(TES3_MobileActor_hasFreeAction)(this);
+	}
+
+	float MobileActor::calculateRunSpeed() {
+		// Call the original function to get the default movement speed value.
+		float speed = reinterpret_cast<float(__thiscall *)(MobileActor*)>(TES3_MobileActor_calculateRunSpeed)(this);
+
+		// Launch our event, and overwrite the speed with what was given back to us.
+		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+		sol::table eventData = luaManager.triggerEvent(new mwse::lua::event::CalculateMovementSpeed(mwse::lua::event::CalculateMovementSpeed::Run, this, speed));
+		if (eventData.valid()) {
+			speed = eventData["speed"];
+		}
+
+		return speed;
+	}
+
+	float MobileActor::calculateSwimSpeed() {
+		// Call the original function to get the default movement speed value.
+		float speed = reinterpret_cast<float(__thiscall *)(MobileActor*)>(TES3_MobileActor_calculateSwimSpeed)(this);
+
+		// Launch our event, and overwrite the speed with what was given back to us.
+		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+		sol::table eventData = luaManager.triggerEvent(new mwse::lua::event::CalculateMovementSpeed(mwse::lua::event::CalculateMovementSpeed::Swim, this, speed));
+		if (eventData.valid()) {
+			speed = eventData["speed"];
+		}
+
+		return speed;
+	}
+
+	float MobileActor::calculateSwimRunSpeed() {
+		// In this case, we don't want to call the original function. We want to redo it so that it calls
+		// the calculateSwimSpeed() function.
+		TES3::NonDynamicData * nonDynamicData = mwse::tes3::getDataHandler()->nonDynamicData;
+		float runMultiplier = nonDynamicData->GMSTs[GMST::fBaseRunMultiplier]->value.asFloat +
+			nonDynamicData->GMSTs[GMST::fAthleticsRunBonus]->value.asFloat / 100.0f * getSkillValue(SkillID::Athletics);
+		float speed = calculateSwimSpeed() * runMultiplier;
+
+		// Launch our event, and overwrite the speed with what was given back to us.
+		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+		sol::table eventData = luaManager.triggerEvent(new mwse::lua::event::CalculateMovementSpeed(mwse::lua::event::CalculateMovementSpeed::SwimRun, this, speed));
+		if (eventData.valid()) {
+			speed = eventData["speed"];
+		}
+
+		return speed;
+	}
+
+	float MobileActor::calculateFlySpeed() {
+		// Call the original function to get the default movement speed value.
+		float speed = reinterpret_cast<float(__thiscall *)(MobileActor*)>(TES3_MobileActor_calculateFlySpeed)(this);
+
+		// Launch our event, and overwrite the speed with what was given back to us.
+		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+		sol::table eventData = luaManager.triggerEvent(new mwse::lua::event::CalculateMovementSpeed(mwse::lua::event::CalculateMovementSpeed::Fly, this, speed));
+		if (eventData.valid()) {
+			speed = eventData["speed"];
+		}
+
+		return speed;
 	}
 
 	bool MobileActor::getMobileActorFlag(unsigned int flag) {

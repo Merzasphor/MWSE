@@ -86,6 +86,7 @@ namespace TES3 {
 	struct StartScript;
 	struct Static;
 	struct Statistic;
+	struct SkillStatistic;
 	struct Weapon;
 	struct Weather;
 	struct WeatherAsh;

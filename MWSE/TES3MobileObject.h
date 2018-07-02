@@ -116,7 +116,7 @@ namespace TES3 {
 		void * calculateNPCWidth; // 0xA0
 		void * calculateNPCHeight; // 0xA4
 		void * unknown_0xA8; // 0xA8
-		bool(__thiscall * is3rdPerson)(MobileActor*); // 0xAC
+		bool (__thiscall * is3rdPerson)(MobileActor*); // 0xAC
 		void * changeWerewolf; // 0xB0
 		void * calculateWalkSpeed; // 0xB4
 		void * onDeath; // 0xB8
@@ -125,8 +125,8 @@ namespace TES3 {
 		void * calculateWeaponDamage; // 0xC4
 		void * getWeaponSwingWeightProduct; // 0xC8
 		void * getReferenceData0; // 0xCC
-		void * getSkillAttribute; // 0xD0
-		void * getSkillValue; // 0xD4
+		SkillStatistic * (__thiscall * getSkillAttribute)(MobileActor*, int); // 0xD0
+		float (__thiscall * getSkillValue)(MobileActor*, int); // 0xD4
 		void * unknown_0xD8;
 		void * unknown_0xDC;
 		void * applyArmorRating; // 0xE0
