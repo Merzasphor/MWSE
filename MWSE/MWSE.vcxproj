@@ -250,6 +250,7 @@
     <ClCompile Include="TES3ActionDataLua.cpp" />
     <ClCompile Include="TES3ActivatorLua.cpp" />
     <ClCompile Include="TES3Actor.cpp" />
+    <ClCompile Include="TES3ActorAnimationData.cpp" />
     <ClCompile Include="TES3ActorLua.cpp" />
     <ClCompile Include="TES3AlchemyLua.cpp" />
     <ClCompile Include="TES3ApparatusLua.cpp" />
@@ -290,7 +291,9 @@
     <ClCompile Include="TES3MiscLua.cpp" />
     <ClCompile Include="TES3MobileActor.cpp" />
     <ClCompile Include="TES3MobileActorLua.cpp" />
+    <ClCompile Include="TES3MobileCreature.cpp" />
     <ClCompile Include="TES3MobileCreatureLua.cpp" />
+    <ClCompile Include="TES3MobileNPC.cpp" />
     <ClCompile Include="TES3MobileNPCLua.cpp" />
     <ClCompile Include="TES3MobileObjectLua.cpp" />
     <ClCompile Include="TES3MobilePlayer.cpp" />

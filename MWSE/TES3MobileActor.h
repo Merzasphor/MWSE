@@ -173,6 +173,7 @@ namespace TES3 {
 		signed char onObjectCollision(int hitReferenceIndex, signed char flag);
 		signed char onTerrainCollision(int hitReferenceIndex);
 		signed char onActivatorCollision(int hitReferenceIndex);
+		float getSkillValue(int skillId);
 
 		//
 		// Other related this-call functions.
@@ -185,6 +186,10 @@ namespace TES3 {
 		void onDeath();
 		bool applyHealthDamage(float, bool, bool, bool);
 		bool hasFreeAction();
+		float calculateRunSpeed();
+		float calculateSwimSpeed();
+		float calculateSwimRunSpeed();
+		float calculateFlySpeed();
 
 		//
 		// Custom functions.

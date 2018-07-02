@@ -51,6 +51,12 @@ namespace TES3 {
 		int unknown_0xC8;
 		int unknown_0xCC;
 		int unknown_0xD0;
+
+		//
+		// Other related this-call functions.
+		//
+
+		float calculateMovementSpeed();
 	};
 	static_assert(sizeof(ActorAnimationData) == 0xD4, "TES3::ActorAnimationData failed size validation");
 }

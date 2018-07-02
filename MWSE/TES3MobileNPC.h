@@ -17,6 +17,12 @@ namespace TES3 {
 		char unknown_0x569; // Undefined.
 		char unknown_0x56A; // Undefined.
 		char unknown_0x56B; // Undefined.
+
+		//
+		// Other related this-call functions.
+		//
+
+		float calculateWalkSpeed();
 	};
 	static_assert(sizeof(MobileNPC) == 0x56C, "TES3::MobileNPC failed size validation");
 }

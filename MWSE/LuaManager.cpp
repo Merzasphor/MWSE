@@ -22,6 +22,7 @@
 #include "TES3MagicEffectInstance.h"
 #include "TES3Spell.h"
 #include "TES3MobileActor.h"
+#include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
 #include "TES3MobileProjectile.h"
 #include "TES3Defines.h"
@@ -980,6 +981,38 @@ namespace mwse {
 			return reinterpret_cast<TES3::BaseObject*(__thiscall *)(TES3::BaseObject*)>(TES3_BaseObject_destructor)(object);
 		}
 
+		//
+		// Override functions for calculating movement speed.
+		//
+
+		float __fastcall OnMobileActorCalculateMoveSpeed(TES3::ActorAnimationData* animData, DWORD _UNUSED_) {
+			return animData->calculateMovementSpeed();
+		}
+
+		float __fastcall OnMobileCreatureCalculateWalkSpeed(TES3::MobileCreature* object, DWORD _UNUSED_) {
+			return object->calculateWalkSpeed();
+		}
+
+		float __fastcall OnMobileNPCCalculateWalkSpeed(TES3::MobileNPC* object, DWORD _UNUSED_) {
+			return object->calculateWalkSpeed();
+		}
+
+		float __fastcall OnMobileActorCalculateRunSpeed(TES3::MobileNPC* object, DWORD _UNUSED_) {
+			return object->calculateRunSpeed();
+		}
+
+		float __fastcall OnMobileActorCalculateSwimSpeed(TES3::MobileNPC* object, DWORD _UNUSED_) {
+			return object->calculateSwimSpeed();
+		}
+
+		float __fastcall OnMobileActorCalculateSwimRunSpeed(TES3::MobileNPC* object, DWORD _UNUSED_) {
+			return object->calculateSwimRunSpeed();
+		}
+
+		float __fastcall OnMobileActorCalculateFlySpeed(TES3::MobileNPC* object, DWORD _UNUSED_) {
+			return object->calculateFlySpeed();
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");
@@ -1388,11 +1421,40 @@ namespace mwse {
 			genCallEnforced(0x60E81C, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
 			genCallEnforced(0x60ECB2, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
 
-			// Brew potion event.
+			// Event: Brew potion.
 			genCallEnforced(0x59D2A9, 0x6313E0, reinterpret_cast<DWORD>(OnBrewPotion));
 
 			// Event: Player leveled.
 			genCallEnforced(0x5DA620, 0x626220, reinterpret_cast<DWORD>(OnLevelUp));
+
+			// Event: Calculate movement speed. Called after the below speed events.
+			genCallEnforced(0x53E2F2, 0x53E1A0, reinterpret_cast<DWORD>(OnMobileActorCalculateMoveSpeed));
+			genCallEnforced(0x53ED52, 0x53E1A0, reinterpret_cast<DWORD>(OnMobileActorCalculateMoveSpeed));
+			genCallEnforced(0x540C7D, 0x53E1A0, reinterpret_cast<DWORD>(OnMobileActorCalculateMoveSpeed));
+			genCallEnforced(0x55968B, 0x53E1A0, reinterpret_cast<DWORD>(OnMobileActorCalculateMoveSpeed));
+
+			// Event: Calculate walk speed.
+			overrideVirtualTableEnforced(0x74AFA4, 0xB4, 0x55AAF0, reinterpret_cast<DWORD>(OnMobileCreatureCalculateWalkSpeed));
+			overrideVirtualTableEnforced(0x74AB4C, 0xB4, 0x526F70, reinterpret_cast<DWORD>(OnMobileNPCCalculateWalkSpeed));
+			overrideVirtualTableEnforced(0x74AE6C, 0xB4, 0x526F70, reinterpret_cast<DWORD>(OnMobileNPCCalculateWalkSpeed));
+			overrideVirtualTableEnforced(0x74B174, 0xB4, 0x526F70, reinterpret_cast<DWORD>(OnMobileNPCCalculateWalkSpeed));
+
+			// Event: Calculate run speed.
+			genCallEnforced(0x53E23B, 0x527050, reinterpret_cast<DWORD>(OnMobileActorCalculateRunSpeed));
+			genCallEnforced(0x548D95, 0x527050, reinterpret_cast<DWORD>(OnMobileActorCalculateRunSpeed));
+
+			// Event: Calculate swim speed.
+			genCallEnforced(0x53E227, 0x5270B0, reinterpret_cast<DWORD>(OnMobileActorCalculateSwimSpeed));
+			genCallEnforced(0x540BB3, 0x5270B0, reinterpret_cast<DWORD>(OnMobileActorCalculateSwimSpeed));
+			genCallEnforced(0x548D87, 0x5270B0, reinterpret_cast<DWORD>(OnMobileActorCalculateSwimSpeed));
+
+			// Event: Calculate swim "run" speed.
+			genCallEnforced(0x53E21D, 0x527130, reinterpret_cast<DWORD>(OnMobileActorCalculateSwimRunSpeed));
+			genCallEnforced(0x548D7F, 0x527130, reinterpret_cast<DWORD>(OnMobileActorCalculateSwimRunSpeed));
+
+			// Event: Calculate fly speed.
+			genCallEnforced(0x53E202, 0x5271F0, reinterpret_cast<DWORD>(OnMobileActorCalculateFlySpeed));
+			genCallEnforced(0x548D6A, 0x5271F0, reinterpret_cast<DWORD>(OnMobileActorCalculateFlySpeed));
 
 			// Make magic effects writable.
 			DWORD OldProtect;
