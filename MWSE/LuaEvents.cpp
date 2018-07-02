@@ -987,7 +987,7 @@ namespace mwse {
 
 				return eventData;
 			}
-		   
+
 			sol::object MagicCastEvent::getEventOptions() {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table options = state.create_table();
@@ -1009,7 +1009,7 @@ namespace mwse {
 				}
 				else {
 					m_EventName = "spellCastFailure";
-				}                
+				}
 			}
 			
 			sol::table SpellCastEvent::createEventTable() {
@@ -1021,8 +1021,18 @@ namespace mwse {
 				eventData["source"] = makeLuaObject(m_MagicSourceInstance->sourceCombo.source.asSpell);
 				eventData["sourceInstance"] = makeLuaObject(m_MagicSourceInstance);
 				eventData["spellCastChance"] = m_MagicSourceInstance->sourceCombo.source.asSpell->calculateCastChance(m_MagicSourceInstance->caster);
+
+				return eventData;
 			}
 
+			sol::object SpellCastEvent::getEventOptions() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table options = state.create_table();
+
+				options["filter"] = makeLuaObject(m_MagicSourceInstance->sourceCombo.source.asGeneric);
+				return options;
+			}
+		   
 			//
 			// Calculate movement speed event.
 			//
@@ -1067,14 +1077,6 @@ namespace mwse {
 				return eventData;
 			}
 
-			sol::object SpellCastEvent::getEventOptions() {
-				sol::state& state = LuaManager::getInstance().getState();
-				sol::table options = state.create_table();
-
-				options["filter"] = makeLuaObject(m_MagicSourceInstance->sourceCombo.source.asGeneric);
-				return options;
-			}
-		   
 		}
 	}
 }
