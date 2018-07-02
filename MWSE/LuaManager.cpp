@@ -941,27 +941,16 @@ namespace mwse {
 			}
 
 			// Hook the RunScript function so we can intercept Lua scripts and invoke Lua code if needed.
-			DWORD OldProtect;
-			VirtualProtect((DWORD*)TES3_HOOK_RUNSCRIPT_LUACHECK, TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE, PAGE_READWRITE, &OldProtect);
-			genJump(TES3_HOOK_RUNSCRIPT_LUACHECK, reinterpret_cast<DWORD>(HookRunScript));
-			for (DWORD i = TES3_HOOK_RUNSCRIPT_LUACHECK + 5; i < TES3_HOOK_RUNSCRIPT_LUACHECK_RETURN; i++) genNOP(i);
-			VirtualProtect((DWORD*)TES3_HOOK_RUNSCRIPT_LUACHECK, TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE, OldProtect, &OldProtect);
+			genJumpUnprotected(TES3_HOOK_RUNSCRIPT_LUACHECK, HookRunScript, TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE);
 
 			// Hook the load reference function, so we can fetch attached Lua data.
-			VirtualProtect((DWORD*)TES3_HOOK_LOAD_REFERENCE, TES3_HOOK_LOAD_REFERENCE_SIZE, PAGE_READWRITE, &OldProtect);
-			genJump(TES3_HOOK_LOAD_REFERENCE, reinterpret_cast<DWORD>(HookLoadReference));
-			VirtualProtect((DWORD*)TES3_HOOK_LOAD_REFERENCE, TES3_HOOK_LOAD_REFERENCE_SIZE, OldProtect, &OldProtect);
+			genJumpUnprotected(TES3_HOOK_LOAD_REFERENCE, HookLoadReference, TES3_HOOK_LOAD_REFERENCE_SIZE);
 
 			// Hook the save reference function, so we can save attached Lua data.
-			VirtualProtect((DWORD*)TES3_HOOK_SAVE_REFERENCE, TES3_HOOK_SAVE_REFERENCE_SIZE, PAGE_READWRITE, &OldProtect);
-			genJump(TES3_HOOK_SAVE_REFERENCE, reinterpret_cast<DWORD>(HookSaveReference));
-			for (DWORD i = TES3_HOOK_SAVE_REFERENCE + 5; i < TES3_HOOK_SAVE_REFERENCE_RETURN; i++) genNOP(i);
-			VirtualProtect((DWORD*)TES3_HOOK_SAVE_REFERENCE, TES3_HOOK_SAVE_REFERENCE_SIZE, OldProtect, &OldProtect);
+			genJumpUnprotected(TES3_HOOK_SAVE_REFERENCE, HookSaveReference, TES3_HOOK_SAVE_REFERENCE_SIZE);
 
 			// Event: initialized. Hook just before we return successfully from where game data is loaded.
-			VirtualProtect((DWORD*)TES3_HOOK_FINISH_INITIALIZATION, TES3_HOOK_FINISH_INITIALIZATION_SIZE, PAGE_READWRITE, &OldProtect);
-			genJump(TES3_HOOK_FINISH_INITIALIZATION, reinterpret_cast<DWORD>(HookFinishInitialization));
-			VirtualProtect((DWORD*)TES3_HOOK_FINISH_INITIALIZATION, TES3_HOOK_FINISH_INITIALIZATION_SIZE, OldProtect, &OldProtect);
+			genJumpUnprotected(TES3_HOOK_FINISH_INITIALIZATION, HookFinishInitialization, TES3_HOOK_FINISH_INITIALIZATION_SIZE);
 
 			// Event: enterFrame. This hook can be in a couple of locations, because of MCP.
 			genCallEnforced(0x41ABB0, 0x40F610, reinterpret_cast<DWORD>(EnterFrame));
@@ -1149,10 +1138,7 @@ namespace mwse {
 			genCallEnforced(0x57548A, 0x5637F0, reinterpret_cast<DWORD>(OnProjectileExpire));
 
 			// Event: UI Event
-			VirtualProtect((DWORD*)TES3_HOOK_UI_EVENT, TES3_HOOK_UI_EVENT_SIZE, PAGE_READWRITE, &OldProtect);
-			genJump(TES3_HOOK_UI_EVENT, reinterpret_cast<DWORD>(HookUIEvent));
-			for (DWORD i = TES3_HOOK_UI_EVENT + 5; i < TES3_HOOK_UI_EVENT_RETURN; i++) genNOP(i);
-			VirtualProtect((DWORD*)TES3_HOOK_UI_EVENT, TES3_HOOK_UI_EVENT_SIZE, OldProtect, &OldProtect);
+			genJumpUnprotected(TES3_HOOK_UI_EVENT, HookUIEvent, TES3_HOOK_UI_EVENT_SIZE);
 
 			// Event: Show Rest/Wait Menu
 			genCallEnforced(0x41ADB6, 0x610170, reinterpret_cast<DWORD>(OnShowRestWaitMenu));
