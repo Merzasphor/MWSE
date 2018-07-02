@@ -459,6 +459,26 @@ namespace mwse {
 			protected:
 				bool m_InMenuMode;
 			};
+
+			// ---------------------------------------------------------------------------- //
+
+			class MagicCastEvent : public GenericEvent {
+			public:
+				MagicCastEvent(TES3::MagicSourceInstance *magicInstance);
+				sol::table createEventTable();
+
+			protected:
+				TES3::MagicSourceInstance* m_MagicSourceInstance;
+			};
+
+			class SpellCastEvent : public GenericEvent {
+			public:
+				SpellCastEvent(TES3::MagicSourceInstance *magicInstance);
+				sol::table createEventTable();
+
+			protected:
+				TES3::MagicSourceInstance* m_MagicSourceInstance;
+			};
 		}
 	}
 }

@@ -126,6 +126,14 @@
 #define TES3_HOOK_UI_EVENT_SIZE 0x5
 #define TES3_HOOK_UI_EVENT_RETURN (TES3_HOOK_UI_EVENT + TES3_HOOK_UI_EVENT_SIZE)
 
+#define TES3_HOOK_MAGIC_CAST_SUCCESS 0x5157E6
+#define TES3_HOOK_MAGIC_CAST_SUCCESS_SIZE 0xA
+#define TES3_HOOK_MAGIC_CAST_SUCCESS_RETURN (TES3_HOOK_MAGIC_CAST_SUCCESS + TES3_HOOK_MAGIC_CAST_SUCCESS_SIZE)
+
+#define TES3_HOOK_SPELL_CAST_FAILURE 0x5157D5
+#define TES3_HOOK_SPELL_CAST_FAILURE_SIZE 0xA
+#define TES3_HOOK_SPELL_CAST_FAILURE_RETURN (TES3_HOOK_SPELL_CAST_FAILURE + TES3_HOOK_SPELL_CAST_FAILURE_SIZE)
+
 #define TES3_load_writeChunk 0x4B6BA0
 #define TES3_load_readChunk 0x4B6880
 
@@ -890,6 +898,70 @@ namespace mwse {
 		}
 
 		//
+		// Magic cast success hook (includes spells, enchants and alchemy)
+		//
+
+		void __cdecl OnMagicCastSuccess(TES3::MagicSourceInstance* magicInstance) {
+			luaManager.triggerEvent(new event::MagicCastEvent(magicInstance));
+			
+			if (magicInstance->sourceCombo.sourceType == TES3::MagicSourceType::Spell && magicInstance->sourceCombo.source.asSpell.castType != TES3::SpellCastType::Ability) {
+				luaManager.triggerEvent(new event::SpellCastEvent(magicInstance, true));
+			}
+		}
+
+		static DWORD postMagicCastSuccess = TES3_HOOK_MAGIC_CAST_SUCCESS_RETURN;
+		static __declspec(naked) void HookMagicCastSuccess() {
+			_asm
+			{
+				// Save all registers.
+				pushad
+
+				// Actually use our hook.
+				push esi
+				call OnMagicCastSuccess
+
+				// Restore all registers.
+				popad
+
+				// Overwritten code.
+				mov dword ptr [esi + 0xB4], 1
+
+				// Resume normal execution.
+				jmp postMagicCastSuccess
+			}
+		}
+
+		//
+		// Spell cast failure hook (only when cast chance roll fails)
+		//
+
+		void __cdecl OnSpellCastFailure(TES3::MagicSourceInstance* magicInstance) {
+			luaManager.triggerEvent(new event::SpellCastEvent(magicInstance, false));
+		}
+
+		static DWORD postSpellCastFailure = TES3_HOOK_SPELL_CAST_FAILURE_RETURN;
+		static __declspec(naked) void HookSpellCastFailure() {
+			_asm
+			{
+				// Save all registers.
+				pushad
+
+				// Actually use our hook.
+				push esi
+				call OnSpellCastFailure
+
+				// Restore all registers.
+				popad
+
+				// Overwritten code.
+				mov dword ptr [esi + 0xB4], 7
+
+				// Resume normal execution.
+				jmp postSpellCastFailure
+			}
+		}
+
+		//
 		// When an object is deleted, we need to clear any lua mapping to it.
 		//
 
@@ -1167,6 +1239,12 @@ namespace mwse {
 			genCallEnforced(0x556AE0, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
 			genCallEnforced(0x55782C, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
 
+			// Event: Magic cast success
+			genJumpUnprotected(TES3_HOOK_MAGIC_CAST_SUCCESS, HookMagicCastSucess, TES3_HOOK_MAGIC_CAST_SUCCESS_SIZE);
+			
+			// Event: Spell cast failure
+			genJumpUnprotected(TES3_HOOK_SPELL_CAST_FAILURE, HookSpellCastFailure, TES3_HOOK_SPELL_CAST_FAILURE_SIZE);
+			
 			// Event: Spell tick.
 			genCallEnforced(0x45F1C1, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
 			genCallEnforced(0x45F221, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));

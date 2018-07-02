@@ -965,6 +965,58 @@ namespace mwse {
 				return eventData;
 			}
 
+			//
+			// Magic cast success event
+			//
+			
+			MagicCastEvent::MagicCastEvent(TES3::MagicSourceInstance* magicInstance) :
+				GenericEvent("magicCast")
+				m_MagicSourceInstance(magicInstance)
+			{
+				
+			}
+			
+			sol::table MagicCastEvent::createEventTable() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table eventData = state.create_table();
+
+				eventData["caster"] = makeLuaObject(m_MagicSourceInstance->caster);
+				eventData["target"] = makeLuaObject(m_MagicSourceInstance->target);
+				eventData["source"] = makeLuaObject(m_MagicSourceInstance->sourceCombo.source.asGeneric);
+				eventData["sourceInstance"] = makeLuaObject(m_MagicSourceInstance);
+
+				return eventData;
+			}
+		   
+			//
+			// Spell cast success/failure event
+			//
+			
+			SpellCastEvent::SpellCastEvent(TES3::MagicSourceInstance* magicInstance, bool success) :
+				GenericEvent("spellCast")
+				m_MagicSourceInstance(magicInstance)
+			{
+				if (success) {
+					m_EventName = "spellCast";
+				}
+				else {
+					m_EventName = "spellCastFailure";
+				}                
+			}
+			
+			sol::table SpellCastEvent::createEventTable() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table eventData = state.create_table();
+
+				eventData["caster"] = makeLuaObject(m_MagicSourceInstance->caster);
+				eventData["target"] = makeLuaObject(m_MagicSourceInstance->target);
+				eventData["source"] = makeLuaObject(m_MagicSourceInstance->sourceCombo.source.asSpell);
+				eventData["sourceInstance"] = makeLuaObject(m_MagicSourceInstance);
+				eventData["spellCastChance"] = m_MagicSourceInstance->sourceCombo.source.asSpell->calculateCastChance(m_MagicSourceInstance->caster);
+
+				return eventData;
+			}
+		   
 		}
 	}
 }
