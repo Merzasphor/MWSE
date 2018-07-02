@@ -51,7 +51,9 @@ namespace TES3 {
 		// Custom functions.
 		//
 
+		bool isOneHanded();
 		bool isTwoHanded();
+		bool isMelee();
 		bool isRanged();
 		bool isAmmo();
 	};
