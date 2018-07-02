@@ -46,6 +46,14 @@ namespace TES3 {
 		unsigned char thrustMax; // 0x6F
 		int materialFlags; // 0x70
 		Enchantment * enchantment; // 0x74
+
+		//
+		// Custom functions.
+		//
+
+		bool isTwoHanded();
+		bool isRanged();
+		bool isAmmo();
 	};
 	static_assert(sizeof(Weapon) == 0x78, "TES3::Weapon failed size validation");
 }

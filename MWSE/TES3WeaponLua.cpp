@@ -48,6 +48,9 @@ namespace mwse {
 
 			// Functions exposed as properties.
 			usertypeDefinition.set("typeName", sol::readonly_property(&TES3::Weapon::getTypeName));
+			usertypeDefinition.set("isTwoHanded", sol::readonly_property(&TES3::Weapon::isTwoHanded));
+			usertypeDefinition.set("isRanged", sol::readonly_property(&TES3::Weapon::isRanged));
+			usertypeDefinition.set("isAmmo", sol::readonly_property(&TES3::Weapon::isAmmo));
 
 			// Finish up our usertype.
 			state.set_usertype("tes3weapon", usertypeDefinition);
