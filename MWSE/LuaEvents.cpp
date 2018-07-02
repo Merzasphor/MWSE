@@ -988,6 +988,14 @@ namespace mwse {
 				return eventData;
 			}
 		   
+			sol::object MagicCastEvent::getEventOptions() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table options = state.create_table();
+
+				options["filter"] = makeLuaObject(m_MagicSourceInstance->sourceCombo.source.asGeneric);
+				return options;
+			}
+
 			//
 			// Spell cast success/failure event
 			//
@@ -1015,6 +1023,14 @@ namespace mwse {
 				eventData["spellCastChance"] = m_MagicSourceInstance->sourceCombo.source.asSpell->calculateCastChance(m_MagicSourceInstance->caster);
 
 				return eventData;
+			}
+
+			sol::object SpellCastEvent::getEventOptions() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table options = state.create_table();
+
+				options["filter"] = makeLuaObject(m_MagicSourceInstance->sourceCombo.source.asGeneric);
+				return options;
 			}
 		   
 		}

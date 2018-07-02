@@ -466,6 +466,7 @@ namespace mwse {
 			public:
 				MagicCastEvent(TES3::MagicSourceInstance *magicInstance);
 				sol::table createEventTable();
+				sol::object getEventOptions();
 
 			protected:
 				TES3::MagicSourceInstance* m_MagicSourceInstance;
@@ -475,6 +476,7 @@ namespace mwse {
 			public:
 				SpellCastEvent(TES3::MagicSourceInstance *magicInstance, bool success);
 				sol::table createEventTable();
+				sol::object getEventOptions();
 
 			protected:
 				TES3::MagicSourceInstance* m_MagicSourceInstance;
