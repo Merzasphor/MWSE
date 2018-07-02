@@ -29,7 +29,7 @@ speed
 
 type
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Number`_. The type of movement that was calculated. This is always 0 for this event.
+`Number`_. The type of movement that was calculated. This is always 3 for this event.
 
 
 Filter
