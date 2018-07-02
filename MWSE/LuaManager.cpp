@@ -20,6 +20,7 @@
 #include "TES3Game.h"
 #include "TES3InputController.h"
 #include "TES3MagicEffectInstance.h"
+#include "TES3Spell.h"
 #include "TES3MobileActor.h"
 #include "TES3MobilePlayer.h"
 #include "TES3MobileProjectile.h"
@@ -27,7 +28,6 @@
 #include "TES3Reference.h"
 #include "TES3UIBlock.h"
 #include "TES3UIInventoryTile.h"
-#include "TES3WorldController.h"
 #include "TES3WorldController.h"
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
@@ -902,9 +902,10 @@ namespace mwse {
 		//
 
 		void __cdecl OnMagicCastSuccess(TES3::MagicSourceInstance* magicInstance) {
+			LuaManager& luaManager = LuaManager::getInstance();
 			luaManager.triggerEvent(new event::MagicCastEvent(magicInstance));
 			
-			if (magicInstance->sourceCombo.sourceType == TES3::MagicSourceType::Spell && magicInstance->sourceCombo.source.asSpell.castType != TES3::SpellCastType::Ability) {
+			if (magicInstance->sourceCombo.sourceType == TES3::MagicSourceType::Spell && magicInstance->sourceCombo.source.asSpell->castType != TES3::SpellCastType::Ability) {
 				luaManager.triggerEvent(new event::SpellCastEvent(magicInstance, true));
 			}
 		}
@@ -936,6 +937,7 @@ namespace mwse {
 		//
 
 		void __cdecl OnSpellCastFailure(TES3::MagicSourceInstance* magicInstance) {
+			LuaManager& luaManager = LuaManager::getInstance();
 			luaManager.triggerEvent(new event::SpellCastEvent(magicInstance, false));
 		}
 
@@ -1013,16 +1015,16 @@ namespace mwse {
 			}
 
 			// Hook the RunScript function so we can intercept Lua scripts and invoke Lua code if needed.
-			genJumpUnprotected(TES3_HOOK_RUNSCRIPT_LUACHECK, HookRunScript, TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE);
+			genJumpUnprotected(TES3_HOOK_RUNSCRIPT_LUACHECK, reinterpret_cast<DWORD>(HookRunScript), TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE);
 
 			// Hook the load reference function, so we can fetch attached Lua data.
-			genJumpUnprotected(TES3_HOOK_LOAD_REFERENCE, HookLoadReference, TES3_HOOK_LOAD_REFERENCE_SIZE);
+			genJumpUnprotected(TES3_HOOK_LOAD_REFERENCE, reinterpret_cast<DWORD>(HookLoadReference), TES3_HOOK_LOAD_REFERENCE_SIZE);
 
 			// Hook the save reference function, so we can save attached Lua data.
-			genJumpUnprotected(TES3_HOOK_SAVE_REFERENCE, HookSaveReference, TES3_HOOK_SAVE_REFERENCE_SIZE);
+			genJumpUnprotected(TES3_HOOK_SAVE_REFERENCE, reinterpret_cast<DWORD>(HookSaveReference), TES3_HOOK_SAVE_REFERENCE_SIZE);
 
 			// Event: initialized. Hook just before we return successfully from where game data is loaded.
-			genJumpUnprotected(TES3_HOOK_FINISH_INITIALIZATION, HookFinishInitialization, TES3_HOOK_FINISH_INITIALIZATION_SIZE);
+			genJumpUnprotected(TES3_HOOK_FINISH_INITIALIZATION, reinterpret_cast<DWORD>(HookFinishInitialization), TES3_HOOK_FINISH_INITIALIZATION_SIZE);
 
 			// Event: enterFrame. This hook can be in a couple of locations, because of MCP.
 			genCallEnforced(0x41ABB0, 0x40F610, reinterpret_cast<DWORD>(EnterFrame));
@@ -1210,7 +1212,7 @@ namespace mwse {
 			genCallEnforced(0x57548A, 0x5637F0, reinterpret_cast<DWORD>(OnProjectileExpire));
 
 			// Event: UI Event
-			genJumpUnprotected(TES3_HOOK_UI_EVENT, HookUIEvent, TES3_HOOK_UI_EVENT_SIZE);
+			genJumpUnprotected(TES3_HOOK_UI_EVENT, reinterpret_cast<DWORD>(HookUIEvent), TES3_HOOK_UI_EVENT_SIZE);
 
 			// Event: Show Rest/Wait Menu
 			genCallEnforced(0x41ADB6, 0x610170, reinterpret_cast<DWORD>(OnShowRestWaitMenu));
@@ -1240,10 +1242,10 @@ namespace mwse {
 			genCallEnforced(0x55782C, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
 
 			// Event: Magic cast success
-			genJumpUnprotected(TES3_HOOK_MAGIC_CAST_SUCCESS, HookMagicCastSucess, TES3_HOOK_MAGIC_CAST_SUCCESS_SIZE);
+			genJumpUnprotected(TES3_HOOK_MAGIC_CAST_SUCCESS, reinterpret_cast<DWORD>(HookMagicCastSuccess), TES3_HOOK_MAGIC_CAST_SUCCESS_SIZE);
 			
 			// Event: Spell cast failure
-			genJumpUnprotected(TES3_HOOK_SPELL_CAST_FAILURE, HookSpellCastFailure, TES3_HOOK_SPELL_CAST_FAILURE_SIZE);
+			genJumpUnprotected(TES3_HOOK_SPELL_CAST_FAILURE, reinterpret_cast<DWORD>(HookSpellCastFailure), TES3_HOOK_SPELL_CAST_FAILURE_SIZE);
 			
 			// Event: Spell tick.
 			genCallEnforced(0x45F1C1, 0x518460, reinterpret_cast<DWORD>(tes3::spellEffectEvent));
@@ -1388,6 +1390,7 @@ namespace mwse {
 			genCallEnforced(0x5DA620, 0x626220, reinterpret_cast<DWORD>(OnLevelUp));
 
 			// Make magic effects writable.
+			DWORD OldProtect;
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);
 
 			// Hook generic entity deletion so that we can do any necessary cleanup.

@@ -970,7 +970,7 @@ namespace mwse {
 			//
 			
 			MagicCastEvent::MagicCastEvent(TES3::MagicSourceInstance* magicInstance) :
-				GenericEvent("magicCast")
+				GenericEvent("magicCast"),
 				m_MagicSourceInstance(magicInstance)
 			{
 				
@@ -993,7 +993,7 @@ namespace mwse {
 			//
 			
 			SpellCastEvent::SpellCastEvent(TES3::MagicSourceInstance* magicInstance, bool success) :
-				GenericEvent("spellCast")
+				GenericEvent("spellCast"),
 				m_MagicSourceInstance(magicInstance)
 			{
 				if (success) {

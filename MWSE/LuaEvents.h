@@ -473,7 +473,7 @@ namespace mwse {
 
 			class SpellCastEvent : public GenericEvent {
 			public:
-				SpellCastEvent(TES3::MagicSourceInstance *magicInstance);
+				SpellCastEvent(TES3::MagicSourceInstance *magicInstance, bool success);
 				sol::table createEventTable();
 
 			protected:
