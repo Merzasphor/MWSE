@@ -1847,6 +1847,9 @@
     <ClCompile Include="TES3ActorAnimationData.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
+    <ClCompile Include="TES3Weapon.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">
