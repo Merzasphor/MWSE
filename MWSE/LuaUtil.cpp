@@ -76,7 +76,8 @@
 #define TES3_vTable_MobileCreature 0x74AFA4
 #define TES3_vTable_MobileNPC 0x74AE6C
 #define TES3_vTable_MobilePlayer 0x74B174
-#define TES3_vTable_MobileProjectile 0x74b2b4
+#define TES3_vTable_MobileProjectile 0x74B2B4
+#define TES3_vTable_SpellProjectile 0x74B360
 
 namespace mwse {
 	namespace lua {
@@ -438,6 +439,7 @@ namespace mwse {
 				result = sol::make_object(state, reinterpret_cast<TES3::MobilePlayer*>(object));
 				break;
 			case TES3_vTable_MobileProjectile:
+			case TES3_vTable_SpellProjectile:
 				result = sol::make_object(state, reinterpret_cast<TES3::MobileProjectile*>(object));
 				break;
 			}

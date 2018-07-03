@@ -6,6 +6,7 @@
 
 #include "TES3Item.h"
 #include "TES3MagicSourceInstance.h"
+#include "TES3MobileProjectile.h"
 #include "TES3Reference.h"
 
 namespace mwse {
@@ -27,10 +28,14 @@ namespace mwse {
 			// Basic property binding.
 			usertypeDefinition.set("itemData", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.castingItemCondition; }));
 			usertypeDefinition.set("sourceType", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.sourceCombo.sourceType; }));
+			usertypeDefinition.set("timestampCastBegin", &TES3::MagicSourceInstance::timestampCastBegin);
 			usertypeDefinition.set("state", &TES3::MagicSourceInstance::state);
-			usertypeDefinition.set("text", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.text; }));
+			usertypeDefinition.set("itemID", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.castingItemID; }));
+			usertypeDefinition.set("magicID", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.magicID; }));
 
 			// Access to other objects that need to be packaged.
+			usertypeDefinition.set("target", sol::readonly_property([](TES3::MagicSourceInstance& self) { return makeLuaObject(self.target); }));
+			usertypeDefinition.set("projectile", sol::readonly_property([](TES3::MagicSourceInstance& self) { return makeLuaObject(self.magicProjectile); }));
 			usertypeDefinition.set("caster", sol::readonly_property([](TES3::MagicSourceInstance& self) { return makeLuaObject(self.caster); }));
 			usertypeDefinition.set("item", sol::readonly_property([](TES3::MagicSourceInstance& self) { return makeLuaObject(self.castingItem); }));
 			usertypeDefinition.set("source", sol::readonly_property([](TES3::MagicSourceInstance& self) { return makeLuaObject(self.sourceCombo.source.asGeneric); }));

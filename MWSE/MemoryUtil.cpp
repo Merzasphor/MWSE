@@ -24,7 +24,7 @@ namespace mwse {
 		DWORD oldProtect;
 		VirtualProtect((DWORD*)address, size, PAGE_READWRITE, &oldProtect);
 
-		// Create our call.
+		// Create our jump.
 		MemAccess<unsigned char>::Set(address, 0xE9);
 		MemAccess<DWORD>::Set(address + 1, to - address - 0x5);
 
@@ -38,7 +38,7 @@ namespace mwse {
 	}
 
 	bool genJumpEnforced(DWORD address, DWORD previousTo, DWORD to, DWORD size) {
-		// Make sure we're doing a call.
+		// Make sure we're doing a jump.
 		BYTE instruction = *reinterpret_cast<BYTE*>(address);
 		if (instruction != 0xE9) {
 #if _DEBUG
@@ -47,7 +47,7 @@ namespace mwse {
 			return false;
 		}
 
-		// Read previous call address to make sure it's what we are expecting.
+		// Read previous jump address to make sure it's what we are expecting.
 		DWORD currentCallAddress = *reinterpret_cast<DWORD*>(address + 1) + address + 0x5;
 		if (currentCallAddress != previousTo) {
 #if _DEBUG
