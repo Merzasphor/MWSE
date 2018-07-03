@@ -65,8 +65,9 @@ namespace TES3 {
 
 		bool loaded = reinterpret_cast<bool(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_loadGameInGame)(this, eventFileName.c_str());
 
-		// Pass a follow-up event if we successfully saved.
+		// Pass a follow-up event if we successfully saved and clear timers.
 		if (loaded) {
+			luaManager.clearTimers();
 			luaManager.triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str(), fileName == NULL));
 		}
 
@@ -88,8 +89,9 @@ namespace TES3 {
 
 		bool loaded = reinterpret_cast<bool(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_loadGameMainMenu)(this, eventFileName.c_str());
 
-		// Pass a follow-up event if we successfully saved.
+		// Pass a follow-up event if we successfully saved and clear timers.
 		if (loaded) {
+			luaManager.clearTimers();
 			luaManager.triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str()));
 		}
 

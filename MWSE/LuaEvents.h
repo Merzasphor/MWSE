@@ -79,24 +79,25 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class SimulateEvent : public GenericEvent {
-			public:
-				SimulateEvent(float delta);
-				sol::table createEventTable();
-
-			protected:
-				float m_Delta;
-			};
-
-			// ---------------------------------------------------------------------------- //
-
-			class FrameEvent : public SimulateEvent {
+			class FrameEvent : public GenericEvent {
 			public:
 				FrameEvent(float delta, bool menuMode);
 				sol::table createEventTable();
 
 			protected:
 				bool m_MenuMode;
+				float m_Delta;
+			};
+
+			// ---------------------------------------------------------------------------- //
+
+			class SimulateEvent : public FrameEvent {
+			public:
+				SimulateEvent(float delta, double timestamp);
+				sol::table createEventTable();
+
+			protected:
+				double m_Timestamp;
 			};
 
 			// ---------------------------------------------------------------------------- //
