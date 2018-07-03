@@ -463,6 +463,28 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
+			class MagicCastEvent : public GenericEvent {
+			public:
+				MagicCastEvent(TES3::MagicSourceInstance *magicInstance);
+				sol::table createEventTable();
+				sol::object getEventOptions();
+
+			protected:
+				TES3::MagicSourceInstance* m_MagicSourceInstance;
+			};
+
+			class SpellCastEvent : public GenericEvent {
+			public:
+				SpellCastEvent(TES3::MagicSourceInstance *magicInstance, bool success);
+				sol::table createEventTable();
+				sol::object getEventOptions();
+
+			protected:
+				TES3::MagicSourceInstance* m_MagicSourceInstance;
+			};
+
+			// ---------------------------------------------------------------------------- //
+
 			class CalculateMovementSpeed : public ObjectFilteredEvent {
 			public:
 				enum MovementType {
