@@ -20,37 +20,40 @@ namespace mwse {
 			return first->timing < second->timing;
 		}
 
+		// Single instance to the comparator used for std::upper_bound.
+		TimerComparer comparer;
+
 		//
-		// TimeKeeper
+		// TimerController
 		//
 
-		TimeKeeper::TimeKeeper() :
+		TimerController::TimerController() :
 			m_Clock(0.0)
 		{
 
 		}
 
-		TimeKeeper::TimeKeeper(double initialClock) :
+		TimerController::TimerController(double initialClock) :
 			m_Clock(initialClock)
 		{
 
 		}
 
-		void TimeKeeper::setClock(double clock) {
+		void TimerController::setClock(double clock) {
 			m_Clock = clock;
 			update();
 		}
 
-		void TimeKeeper::incrementClock(double delta) {
+		void TimerController::incrementClock(double delta) {
 			m_Clock += delta;
 			update();
 		}
 
-		double TimeKeeper::getClock() {
+		double TimerController::getClock() {
 			return m_Clock;
 		}
 
-		std::shared_ptr<Timer> TimeKeeper::createTimer(double duration, sol::protected_function callback, unsigned int iterations) {
+		std::shared_ptr<Timer> TimerController::createTimer(double duration, sol::protected_function callback, unsigned int iterations) {
 			// Validate parameters.
 			if (duration < 0.0 || iterations < 0 || callback.get_type() != sol::type::function) {
 				return nullptr;
@@ -70,7 +73,7 @@ namespace mwse {
 			return timer;
 		}
 
-		bool TimeKeeper::pauseTimer(std::shared_ptr<Timer> timer) {
+		bool TimerController::pauseTimer(std::shared_ptr<Timer> timer) {
 			// Validate timer.
 			if (timer->state != TimerState::Active) {
 				return false;
@@ -93,7 +96,7 @@ namespace mwse {
 			return true;
 		}
 
-		bool TimeKeeper::resumeTimer(std::shared_ptr<Timer> timer) {
+		bool TimerController::resumeTimer(std::shared_ptr<Timer> timer) {
 			// Validate timer.
 			if (timer->state != TimerState::Paused) {
 				return false;
@@ -108,7 +111,7 @@ namespace mwse {
 			return true;
 		}
 
-		bool TimeKeeper::resetTimer(std::shared_ptr<Timer> timer) {
+		bool TimerController::resetTimer(std::shared_ptr<Timer> timer) {
 			// Validate timer.
 			if (timer->state != TimerState::Active) {
 				return false;
@@ -123,7 +126,7 @@ namespace mwse {
 			return true;
 		}
 
-		bool TimeKeeper::cancelTimer(std::shared_ptr<Timer> timer) {
+		bool TimerController::cancelTimer(std::shared_ptr<Timer> timer) {
 			TimerState::TimerState previousState = timer->state;
 			timer->state = TimerState::Expired;
 
@@ -145,19 +148,7 @@ namespace mwse {
 			return false;
 		}
 
-		void TimeKeeper::repositionTimer(std::shared_ptr<Timer> timer) {
-			// Remove from current position.
-			auto position = std::find(m_ActiveTimers.begin(), m_ActiveTimers.end(), timer);
-			if (position == m_ActiveTimers.end()) {
-				return;
-			}
-			m_ActiveTimers.erase(position);
-
-			// Then insert it back in.
-			insertActiveTimer(timer);
-		}
-
-		void TimeKeeper::clearTimers() {
+		void TimerController::clearTimers() {
 			// Mark all timers as expired.
 			for (auto itt = m_ActiveTimers.begin(); itt != m_ActiveTimers.end(); itt++) {
 				(*itt)->state = TimerState::Expired;
@@ -168,7 +159,7 @@ namespace mwse {
 			m_PausedTimers.clear();
 		}
 
-		void TimeKeeper::update() {
+		void TimerController::update() {
 			if (m_ActiveTimers.empty()) {
 				return;
 			}
@@ -196,16 +187,29 @@ namespace mwse {
 			}
 		}
 
-		std::vector<std::shared_ptr<Timer>>::iterator TimeKeeper::insertActiveTimer(std::shared_ptr<Timer> timer) {
+		std::vector<std::shared_ptr<Timer>>::iterator TimerController::insertActiveTimer(std::shared_ptr<Timer> timer) {
 			auto position = std::upper_bound(m_ActiveTimers.begin(), m_ActiveTimers.end(), timer, comparer);
 			return m_ActiveTimers.insert(position, timer);
+		}
+
+		void TimerController::repositionTimer(std::shared_ptr<Timer> timer) {
+			// Remove from current position.
+			auto position = std::find(m_ActiveTimers.begin(), m_ActiveTimers.end(), timer);
+			if (position == m_ActiveTimers.end()) {
+				return;
+			}
+			m_ActiveTimers.erase(position);
+
+			// Then insert it back in.
+			insertActiveTimer(timer);
 		}
 
 		//
 		// Legacy functions, to help people migrate their code to the new method of performing timers.
 		//
 
-		std::shared_ptr<Timer> startTimer(TimeKeeper* controller, sol::table params) {
+		// Create and return a timer given a controller and a table of parameters.
+		std::shared_ptr<Timer> startTimer(TimerController* controller, sol::table params) {
 			// Get the timer variables.
 			double duration = getOptionalParam<double>(params, "duration", 0.0);
 			sol::function callback = getOptionalParam<sol::function>(params, "callback", sol::nil);
@@ -215,10 +219,11 @@ namespace mwse {
 			return controller->createTimer(duration, callback, iterations);
 		}
 
+		// Create a timer, as above, but get the controller from params.type.
 		std::shared_ptr<Timer> startTimerAmbiguous(sol::table params) {
 			// Get the timer controller we care about.
 			unsigned int type = getOptionalParam<unsigned int>(params, "type", TimerType::SimulationTime);
-			std::shared_ptr<TimeKeeper> controller = LuaManager::getInstance().getTimeKeeper(static_cast<TimerType::TimerType>(type));
+			std::shared_ptr<TimerController> controller = LuaManager::getInstance().getTimerController(static_cast<TimerType::TimerType>(type));
 			if (controller == nullptr) {
 				return nullptr;
 			}
@@ -227,8 +232,9 @@ namespace mwse {
 			return startTimer(controller.get(), params);
 		}
 
+		// Directly create a real-time timer.
 		std::shared_ptr<Timer> startTimerLegacyReal(double duration, sol::protected_function callback, sol::optional<int> iterations) {
-			std::shared_ptr<TimeKeeper> controller = LuaManager::getInstance().getTimeKeeper(TimerType::RealTime);
+			std::shared_ptr<TimerController> controller = LuaManager::getInstance().getTimerController(TimerType::RealTime);
 			if (controller == nullptr) {
 				return nullptr;
 			}
@@ -236,8 +242,9 @@ namespace mwse {
 			return controller->createTimer(duration, callback, iterations.value_or(1));
 		}
 
+		// Directly createa  simulation-time timer.
 		std::shared_ptr<Timer> startTimerLegacySimulation(double duration, sol::protected_function callback, sol::optional<int> iterations) {
-			std::shared_ptr<TimeKeeper> controller = LuaManager::getInstance().getTimeKeeper(TimerType::SimulationTime);
+			std::shared_ptr<TimerController> controller = LuaManager::getInstance().getTimerController(TimerType::SimulationTime);
 			if (controller == nullptr) {
 				return nullptr;
 			}
@@ -245,36 +252,42 @@ namespace mwse {
 			return controller->createTimer(duration, callback, iterations.value_or(1));
 		}
 
+		// Function to pause a given timer.
 		bool legacyTimerPause(std::shared_ptr<Timer> timer) {
 			return timer->controller->pauseTimer(timer);
 		}
 
+		// Function to resume a given timer.
 		bool legacyTimerResume(std::shared_ptr<Timer> timer) {
 			return timer->controller->resumeTimer(timer);
 		}
 
+		// Function to reset a given timer.
 		bool legacyTimerReset(std::shared_ptr<Timer> timer) {
 			return timer->controller->resetTimer(timer);
 		}
 
+		// Function to cancel a given timer.
 		bool legacyTimerCancel(std::shared_ptr<Timer> timer) {
 			return timer->controller->cancelTimer(timer);
 		}
 
+		// Create a timer that will complete in the next cycle.
 		std::shared_ptr<Timer> legacyTimerDelayOneFrame(sol::protected_function callback) {
-			std::shared_ptr<TimeKeeper> controller = LuaManager::getInstance().getTimeKeeper(TimerType::RealTime);
+			std::shared_ptr<TimerController> controller = LuaManager::getInstance().getTimerController(TimerType::RealTime);
 			if (controller == nullptr) {
 				return nullptr;
 			}
-			return controller->createTimer(0, callback, 1);
+			return controller->createTimer(0.0000001, callback, 1);
 		}
 
+		// Create a timer that will complete in the next simulation cycle.
 		std::shared_ptr<Timer> legacyTimerDelayOneSimulationFrame(sol::protected_function callback) {
-			std::shared_ptr<TimeKeeper> controller = LuaManager::getInstance().getTimeKeeper(TimerType::SimulationTime);
+			std::shared_ptr<TimerController> controller = LuaManager::getInstance().getTimerController(TimerType::SimulationTime);
 			if (controller == nullptr) {
 				return nullptr;
 			}
-			return controller->createTimer(0, callback, 1);
+			return controller->createTimer(0.0000001, callback, 1);
 		}
 
 		//
@@ -285,22 +298,22 @@ namespace mwse {
 			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
-			// Bind TimeKeeper.
+			// Bind TimerController.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TimeKeeper>();
-				usertypeDefinition.set("new", sol::constructors<TimeKeeper(), TimeKeeper(double)>());
+				auto usertypeDefinition = state.create_simple_usertype<TimerController>();
+				usertypeDefinition.set("new", sol::constructors<TimerController(), TimerController(double)>());
 
 				// Basic property binding.
-				usertypeDefinition.set("clock", sol::property(&TimeKeeper::getClock, &TimeKeeper::setClock));
+				usertypeDefinition.set("clock", sol::property(&TimerController::getClock, &TimerController::setClock));
 
 				// Allow creating timers.
-				usertypeDefinition.set("create", [](TimeKeeper& self, sol::table params) {
+				usertypeDefinition.set("create", [](TimerController& self, sol::table params) {
 					return startTimer(&self, params);
 				});
 
 				// Finish up our usertype.
-				state.set_usertype("mwseTimerManager", usertypeDefinition);
+				state.set_usertype("mwseTimerController", usertypeDefinition);
 			}
 
 			// Bind Timer.
@@ -364,9 +377,9 @@ namespace mwse {
 			state["timer"]["delayOneFrame"] = &legacyTimerDelayOneSimulationFrame;
 			state["timer"]["frame"]["delayOneFrame"] = &legacyTimerDelayOneFrame;
 
-			// Let new TimeKeepers get made.
+			// Let new TimerControllers get made.
 			state["timer"]["createController"] = []() {
-				return std::make_shared<TimeKeeper>();
+				return std::make_shared<TimerController>();
 			};
 		}
 	}

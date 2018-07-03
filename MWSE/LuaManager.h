@@ -14,7 +14,7 @@ namespace mwse {
 	namespace lua {
 		typedef std::unordered_map<unsigned long, sol::object> UserdataMap;
 
-		class TimeKeeper;
+		class TimerController;
 
 		namespace TimerType {
 			enum TimerType {
@@ -67,7 +67,7 @@ namespace mwse {
 			// Management functions for timers.
 			void updateTimers(float deltaTime, double simulationTimestamp, bool simulating);
 			void clearTimers();
-			std::shared_ptr<TimeKeeper> getTimeKeeper(TimerType::TimerType type);
+			std::shared_ptr<TimerController> getTimerController(TimerType::TimerType type);
 
 		private:
 			LuaManager();
@@ -97,9 +97,9 @@ namespace mwse {
 			UserdataMap userdataCache;
 
 			// Timers.
-			std::shared_ptr<TimeKeeper> gameTimers;
-			std::shared_ptr<TimeKeeper> simulateTimers;
-			std::shared_ptr<TimeKeeper> realTimers;
+			std::shared_ptr<TimerController> gameTimers;
+			std::shared_ptr<TimerController> simulateTimers;
+			std::shared_ptr<TimerController> realTimers;
 		};
 	}
 }

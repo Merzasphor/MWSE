@@ -172,9 +172,9 @@ namespace mwse {
 			luaState.set_panic(panic);
 
 			// Set up our timers.
-			gameTimers = std::make_shared<TimeKeeper>();
-			simulateTimers = std::make_shared<TimeKeeper>();
-			realTimers = std::make_shared<TimeKeeper>();
+			gameTimers = std::make_shared<TimerController>();
+			simulateTimers = std::make_shared<TimerController>();
+			realTimers = std::make_shared<TimerController>();
 
 
 			// Overwrite the default print function to print to the MWSE log.
@@ -1667,7 +1667,7 @@ namespace mwse {
 			//gameTimers->clearTimers();
 		}
 
-		std::shared_ptr<TimeKeeper> LuaManager::getTimeKeeper(TimerType::TimerType type) {
+		std::shared_ptr<TimerController> LuaManager::getTimerController(TimerType::TimerType type) {
 			switch (type) {
 			case TimerType::RealTime: return realTimers;
 			case TimerType::SimulationTime: return simulateTimers;
