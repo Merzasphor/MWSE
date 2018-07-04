@@ -36,7 +36,7 @@ namespace TES3 {
 
 	namespace ActorMovement {
 		enum ActorMovement {
-			Foreward = 0x1,
+			Forward = 0x1,
 			Back = 0x2,
 			Left = 0x4,
 			Right = 0x8,
@@ -44,7 +44,7 @@ namespace TES3 {
 			TurnRight = 0x20,
 			Walking = 0x100,
 			Running = 0x200,
-			Crouching = 0x400,
+			Sneaking = 0x400,
 			Swimming = 0x800,
 			Jumping = 0x1000,
 			Flying = 0x2000,

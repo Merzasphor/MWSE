@@ -189,6 +189,21 @@ namespace mwse {
 				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::WaterWalking] = value; }
 			));
 
+			// Provide some friendly exposure for movement flags.
+			usertypeDefinition.set("isFlying", sol::readonly_property([](TES3::MobileActor& self) { return (self.movementFlags & TES3::ActorMovement::Flying) != 0; }));
+			usertypeDefinition.set("isJumping", sol::readonly_property([](TES3::MobileActor& self) { return (self.movementFlags & TES3::ActorMovement::Jumping) != 0; }));
+			usertypeDefinition.set("isMovingBack", sol::readonly_property([](TES3::MobileActor& self) { return (self.movementFlags & TES3::ActorMovement::Back) != 0; }));
+			usertypeDefinition.set("isMovingForward", sol::readonly_property([](TES3::MobileActor& self) { return (self.movementFlags & TES3::ActorMovement::Forward) != 0; }));
+			usertypeDefinition.set("isMovingLeft", sol::readonly_property([](TES3::MobileActor& self) { return (self.movementFlags & TES3::ActorMovement::Left) != 0; }));
+			usertypeDefinition.set("isMovingRight", sol::readonly_property([](TES3::MobileActor& self) { return (self.movementFlags & TES3::ActorMovement::Right) != 0; }));
+			usertypeDefinition.set("isRunning", sol::readonly_property([](TES3::MobileActor& self) { return (self.movementFlags & TES3::ActorMovement::Running) != 0; }));
+			usertypeDefinition.set("isSneaking", sol::readonly_property([](TES3::MobileActor& self) { return (self.movementFlags & TES3::ActorMovement::Sneaking) != 0; }));
+			usertypeDefinition.set("isStartingJump", sol::readonly_property([](TES3::MobileActor& self) { return (self.movementFlags & TES3::ActorMovement::Jumped) != 0; }));
+			usertypeDefinition.set("isSwimming", sol::readonly_property([](TES3::MobileActor& self) { return (self.movementFlags & TES3::ActorMovement::Swimming) != 0; }));
+			usertypeDefinition.set("isTurningLeft", sol::readonly_property([](TES3::MobileActor& self) { return (self.movementFlags & TES3::ActorMovement::TurnLeft) != 0; }));
+			usertypeDefinition.set("isTurningRight", sol::readonly_property([](TES3::MobileActor& self) { return (self.movementFlags & TES3::ActorMovement::TurnRight) != 0; }));
+			usertypeDefinition.set("isWalking", sol::readonly_property([](TES3::MobileActor& self) { return (self.movementFlags & TES3::ActorMovement::Walking) != 0; }));
+
 			// Basic function binding.
 			usertypeDefinition.set("applyHealthDamage", &TES3::MobileActor::applyHealthDamage);
 			usertypeDefinition.set("startCombat", &TES3::MobileActor::startCombat);

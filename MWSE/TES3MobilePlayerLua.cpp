@@ -70,14 +70,14 @@ namespace mwse {
 
 			// Overwrite MobileNPC::forceSneak so that it works on the player. 
 			usertypeDefinition.set("forceSneak", sol::property(
-				[](TES3::MobilePlayer& self) { return (self.movementFlags & TES3::ActorMovement::Crouching) != 0; },
+				[](TES3::MobilePlayer& self) { return (self.movementFlags & TES3::ActorMovement::Sneaking) != 0; },
 				[](TES3::MobilePlayer& self, bool set)
 			{
 				if (set) {
-					self.movementFlags |= TES3::ActorMovement::Crouching;
+					self.movementFlags |= TES3::ActorMovement::Sneaking;
 				}
 				else {
-					self.movementFlags &= ~TES3::ActorMovement::Crouching;
+					self.movementFlags &= ~TES3::ActorMovement::Sneaking;
 				}
 			}
 			));

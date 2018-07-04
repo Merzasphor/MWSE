@@ -143,6 +143,45 @@ Properties
 **isCrittable** (`boolean`_, read-only)
     Easy access to **flags**. If ``true``, the actor is subject to critical hits.
 
+**isFlying** (`boolean`_, read-only)
+    Easy access to **movementFlags**.
+
+**isJumping** (`boolean`_, read-only)
+    Easy access to **movementFlags**.
+
+**isMovingBack** (`boolean`_, read-only)
+    Easy access to **movementFlags**.
+
+**isMovingForward** (`boolean`_, read-only)
+    Easy access to **movementFlags**.
+
+**isMovingLeft** (`boolean`_, read-only)
+    Easy access to **movementFlags**.
+
+**isMovingRight** (`boolean`_, read-only)
+    Easy access to **movementFlags**.
+
+**isRunning** (`boolean`_, read-only)
+    Easy access to **movementFlags**.
+
+**isSneaking** (`boolean`_, read-only)
+    Easy access to **movementFlags**.
+
+**isStartingJump** (`boolean`_, read-only)
+    Easy access to **movementFlags**.
+
+**isSwimming** (`boolean`_, read-only)
+    Easy access to **movementFlags**.
+
+**isTurningLeft** (`boolean`_, read-only)
+    Easy access to **movementFlags**.
+
+**isTurningRight** (`boolean`_, read-only)
+    Easy access to **movementFlags**.
+
+**isWalking** (`boolean`_, read-only)
+    Easy access to **movementFlags**.
+
 **jump** (`number`_)
     Easy access into **effectAttributes**.
 
