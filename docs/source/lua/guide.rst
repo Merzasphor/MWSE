@@ -13,4 +13,5 @@ Starting with MWSE version 2.1, it is possible to write scripts using the `Lua`_
 
    guide/introduction
    guide/script-overrides
+   guide/timers
    guide/scancodes
