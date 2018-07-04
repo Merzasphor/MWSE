@@ -346,6 +346,9 @@ namespace mwse {
 				usertypeDefinition.set("resume", [](std::shared_ptr<Timer> self) {
 					return self->controller->resumeTimer(self);
 				});
+				usertypeDefinition.set("reset", [](std::shared_ptr<Timer> self) {
+					return self->controller->resetTimer(self);
+				});
 				usertypeDefinition.set("cancel", [](std::shared_ptr<Timer> self) {
 					return self->controller->cancelTimer(self);
 				});
@@ -358,10 +361,14 @@ namespace mwse {
 			state["timer"] = state.create_table();
 
 			// Expose timer types.
-			state["timer"]["type"] = state.create_table();
-			state["timer"]["type"]["real"] = TimerType::RealTime;
-			state["timer"]["type"]["simulate"] = TimerType::SimulationTime;
-			state["timer"]["type"]["game"] = TimerType::GameTime;
+			state["timer"]["real"] = TimerType::RealTime;
+			state["timer"]["simulate"] = TimerType::SimulationTime;
+			state["timer"]["game"] = TimerType::GameTime;
+
+			// Expose timer states.
+			state["timer"]["active"] = TimerState::Active;
+			state["timer"]["paused"] = TimerState::Paused;
+			state["timer"]["expired"] = TimerState::Expired;
 
 			// Bind the legacy and new start functions.
 			state["timer"]["start"] = sol::overload(&startTimerAmbiguous, &startTimerLegacySimulation);
