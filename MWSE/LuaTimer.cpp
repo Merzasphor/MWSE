@@ -53,7 +53,7 @@ namespace mwse {
 			return m_Clock;
 		}
 
-		std::shared_ptr<Timer> TimerController::createTimer(double duration, sol::protected_function callback, unsigned int iterations) {
+		std::shared_ptr<Timer> TimerController::createTimer(double duration, sol::protected_function callback, int iterations) {
 			// Validate parameters.
 			if (duration < 0.0 || iterations < 0 || callback.get_type() != sol::type::function) {
 				return nullptr;
@@ -213,7 +213,12 @@ namespace mwse {
 			// Get the timer variables.
 			double duration = getOptionalParam<double>(params, "duration", 0.0);
 			sol::function callback = getOptionalParam<sol::function>(params, "callback", sol::nil);
-			unsigned int iterations = getOptionalParam<unsigned int>(params, "iterations", 1);
+			int iterations = getOptionalParam<int>(params, "iterations", 1);
+
+			// Allow infinite repeat.
+			if (iterations <= 0) {
+				iterations = 0;
+			}
 
 			// Create the timer.
 			return controller->createTimer(duration, callback, iterations);

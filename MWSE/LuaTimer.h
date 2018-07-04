@@ -42,7 +42,7 @@ namespace mwse {
 			double getClock();
 
 			// Create a new timer with fixed data.
-			std::shared_ptr<Timer> createTimer(double duration, sol::protected_function callback, unsigned int iterations = 1);
+			std::shared_ptr<Timer> createTimer(double duration, sol::protected_function callback, int iterations = 1);
 
 			// Move a timer from the active list to the inactive list, and mark it paused.
 			bool pauseTimer(std::shared_ptr<Timer> timer);
