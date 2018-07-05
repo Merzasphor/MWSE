@@ -14,6 +14,16 @@ namespace mwse {
 	namespace lua {
 		typedef std::unordered_map<unsigned long, sol::object> UserdataMap;
 
+		class TimerController;
+
+		namespace TimerType {
+			enum TimerType {
+				RealTime,
+				SimulationTime,
+				GameTime
+			};
+		}
+
 		class LuaManager {
 		public:
 			// Returns an instance to the singleton.
@@ -54,6 +64,11 @@ namespace mwse {
 			void removeUserdataFromCache(TES3::BaseObject*);
 			void removeUserdataFromCache(TES3::MobileObject*);
 
+			// Management functions for timers.
+			void updateTimers(float deltaTime, double simulationTimestamp, bool simulating);
+			void clearTimers();
+			std::shared_ptr<TimerController> getTimerController(TimerType::TimerType type);
+
 		private:
 			LuaManager();
 
@@ -80,6 +95,11 @@ namespace mwse {
 			// 
 			std::mutex userdataMapMutex;
 			UserdataMap userdataCache;
+
+			// Timers.
+			std::shared_ptr<TimerController> gameTimers;
+			std::shared_ptr<TimerController> simulateTimers;
+			std::shared_ptr<TimerController> realTimers;
 		};
 	}
 }

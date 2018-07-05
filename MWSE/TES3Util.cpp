@@ -459,6 +459,9 @@ namespace mwse {
 			// Call original function.
 			reinterpret_cast<void(__stdcall *)()>(TES3_newGame)();
 
+			// Clear any timers.
+			luaManager.clearTimers();
+
 			// Call our post-load event.
 			luaManager.triggerEvent(new mwse::lua::event::LoadedGameEvent(NULL, false, true));
 		}

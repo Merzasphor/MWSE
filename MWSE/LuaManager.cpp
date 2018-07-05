@@ -11,6 +11,8 @@
 
 #include "sol.hpp"
 
+#include "LuaTimer.h"
+
 #include "LuaScript.h"
 
 #include "TES3Actor.h"
@@ -169,6 +171,12 @@ namespace mwse {
 			// Override the default atpanic to print to the log.
 			luaState.set_panic(panic);
 
+			// Set up our timers.
+			gameTimers = std::make_shared<TimerController>();
+			simulateTimers = std::make_shared<TimerController>();
+			realTimers = std::make_shared<TimerController>();
+
+
 			// Overwrite the default print function to print to the MWSE log.
 			luaState["print"] = [](sol::object message) {
 				sol::state& state = LuaManager::getInstance().getState();
@@ -201,6 +209,12 @@ namespace mwse {
 			luaState["mwse"] = luaState.create_table();
 			luaState["mwscript"] = luaState.create_table();
 			luaState["mge"] = luaState.create_table();
+
+			// Expose timers.
+			bindLuaTimer();
+			luaState["mwse"]["realTimers"] = realTimers;
+			luaState["mwse"]["simulateTimers"] = simulateTimers;
+			luaState["mwse"]["gameTimers"] = gameTimers;
 
 			luaState["mwse"]["getVersion"] = []() {
 				return MWSE_VERSION_INTEGER;
@@ -512,6 +526,10 @@ namespace mwse {
 			if (tes3::ui::getButtonPressedIndex() != -1) {
 				luaManager.triggerButtonPressed();
 			}
+			
+			// Update timer controllers.
+			double highResolutionTimestamp = worldController->getHighPrecisionSimulationTimestamp();
+			luaManager.updateTimers(worldController->deltaTime, highResolutionTimestamp, worldController->flagMenuMode == 0);
 
 			// Has menu mode changed?
 			if (worldController->flagMenuMode != lastMenuMode) {
@@ -530,8 +548,8 @@ namespace mwse {
 			luaManager.triggerEvent(new event::FrameEvent(worldController->deltaTime, worldController->flagMenuMode));
 
 			// If we're not in menu mode, send off the simulate event.
-			if (worldController->flagMenuMode == 0) {
-				luaManager.triggerEvent(new event::SimulateEvent(worldController->deltaTime));
+			if (!worldController->flagMenuMode) {
+				luaManager.triggerEvent(new event::SimulateEvent(worldController->deltaTime, highResolutionTimestamp));
 			}
 		}
 
@@ -608,7 +626,7 @@ namespace mwse {
 			sol::state& state = LuaManager::getInstance().getState();
 			state["tes3"]["player"] = tes3::getWorldController()->getMobilePlayer()->reference;
 
-			// Fire off a cell changed event as well, and update the cached last cell.
+			// Extra things we want to do if we're successfully loading.
 			if (loaded == TES3::LoadGameResult::Success) {
 				TES3::DataHandler * dataHandler = tes3::getDataHandler();
 				LuaManager::getInstance().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, NULL));
@@ -1632,6 +1650,30 @@ namespace mwse {
 			}
 
 			userdataMapMutex.unlock();
+		}
+
+		void LuaManager::updateTimers(float deltaTime, double simulationTimestamp, bool simulating) {
+			//realTimers->incrementClock(deltaTime);
+			//gameTimers->setClock(simulationTimestamp);
+
+			if (simulating) {
+				simulateTimers->incrementClock(deltaTime);
+			}
+		}
+
+		void LuaManager::clearTimers() {
+			//realTimers->clearTimers();
+			simulateTimers->clearTimers();
+			//gameTimers->clearTimers();
+		}
+
+		std::shared_ptr<TimerController> LuaManager::getTimerController(TimerType::TimerType type) {
+			switch (type) {
+			case TimerType::RealTime: return realTimers;
+			case TimerType::SimulationTime: return simulateTimers;
+			case TimerType::GameTime: return gameTimers;
+			}
+			return nullptr;
 		}
 	}
 }

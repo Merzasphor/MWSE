@@ -22,6 +22,7 @@
     <ClInclude Include="LuaEvents.h" />
     <ClInclude Include="LuaManager.h" />
     <ClInclude Include="LuaScript.h" />
+    <ClInclude Include="LuaTimer.h" />
     <ClInclude Include="LuaUtil.h" />
     <ClInclude Include="MemoryUtil.h" />
     <ClInclude Include="NIAVObject.h" />
@@ -228,6 +229,7 @@
     <ClCompile Include="FileUtil.cpp" />
     <ClCompile Include="LuaEvents.cpp" />
     <ClCompile Include="LuaManager.cpp" />
+    <ClCompile Include="LuaTimer.cpp" />
     <ClCompile Include="LuaUtil.cpp" />
     <ClCompile Include="MemoryUtil.cpp" />
     <ClCompile Include="MgeVirtualMachine.cpp" />

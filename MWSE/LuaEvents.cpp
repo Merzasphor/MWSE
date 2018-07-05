@@ -139,40 +139,43 @@ namespace mwse {
 			}
 
 			//
-			// Simulate event.
+			// Enter frame event.
 			//
 
-			SimulateEvent::SimulateEvent(float delta) :
-				GenericEvent("simulate"),
-				m_Delta(delta)
+			FrameEvent::FrameEvent(float delta, bool menuMode) :
+				GenericEvent("enterFrame"),
+				m_Delta(delta),
+				m_MenuMode(menuMode)
 			{
 
 			}
 
-			sol::table SimulateEvent::createEventTable() {
+			sol::table FrameEvent::createEventTable() {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table eventData = state.create_table();
 
+				eventData["menuMode"] = m_MenuMode;
 				eventData["delta"] = m_Delta;
-				eventData["timestamp"] = tes3::getWorldController()->getHighPrecisionSimulationTimestamp();
 
 				return eventData;
 			}
 
 			//
-			// Enter frame event.
+			// Simulate event.
 			//
 
-			FrameEvent::FrameEvent(float delta, bool menuMode) :
-				SimulateEvent(delta),
-				m_MenuMode(menuMode)
+			SimulateEvent::SimulateEvent(float delta, double timestamp) :
+				FrameEvent(delta, false),
+				m_Timestamp(timestamp)
 			{
-				m_EventName = "enterFrame";
+				m_EventName = "simulate";
 			}
 
-			sol::table FrameEvent::createEventTable() {
-				sol::table eventData = SimulateEvent::createEventTable();
-				eventData["menuMode"] = m_MenuMode;
+			sol::table SimulateEvent::createEventTable() {
+				sol::table eventData = FrameEvent::createEventTable();
+
+				eventData["timestamp"] = m_Timestamp;
+
 				return eventData;
 			}
 
