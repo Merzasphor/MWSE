@@ -471,6 +471,9 @@ namespace mwse {
 				mwscript::StopSound(script, reference, sound);
 				return true;
 			};
+			state["mwscript"]["wakeUpPC"] = []() {
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::WakeUpPC);
+			};
 
 			//
 			// MGE opcodes.

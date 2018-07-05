@@ -9,8 +9,8 @@ namespace TES3 {
 			return reinterpret_cast<Block*(__thiscall *)(TES3::UI::Block*, signed char)>(TES3_ui_performUpdate)(this, something);
 		}
 
-		long Block::timingUpdate() {
-			return reinterpret_cast<long(__thiscall *)(TES3::UI::Block*)>(TES3_ui_timingUpdate)(this);
+		void Block::timingUpdate() {
+			reinterpret_cast<void(__thiscall *)(TES3::UI::Block*)>(TES3_ui_timingUpdate)(this);
 		}
 	}
 }

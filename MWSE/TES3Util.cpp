@@ -30,6 +30,9 @@
 
 #define TES3_data_GMSTs 0x794800
 
+#define TES3_restInterruptHour 0x7BC068
+#define TES3_restInterruptCreatures 0x7D7530
+
 namespace mwse {
 	namespace tes3 {
 		TES3::WorldController * getWorldController() {
@@ -473,6 +476,26 @@ namespace mwse {
 
 			// Call original function.
 			return reinterpret_cast<char(__cdecl *)(TES3::MagicSourceInstance *, float, TES3::MagicEffectInstance *, int, bool, int, TES3::Statistic *, void *, int, bool(__cdecl *)(void *, void *, int))>(0x518460)(spellInstance, deltaTime, effectInstance, effectIndex, negateOnExpiry, isUncapped, statistic, attributeTypeInfo, resistAttribute, funcResistTest);
+		}
+
+		int getRestHoursInterrupted() {
+			return *reinterpret_cast<int*>(TES3_restInterruptHour);
+		}
+
+		void setRestHoursInterrupted(int hour) {
+			if (hour < -1) {
+				hour = -1;
+			}
+
+			*reinterpret_cast<int*>(TES3_restInterruptHour) = hour;
+		}
+
+		int getRestInterruptCount() {
+			return *reinterpret_cast<int*>(TES3_restInterruptCreatures);
+		}
+
+		void setRestInterruptCount(int count) {
+			*reinterpret_cast<int*>(TES3_restInterruptCreatures) = count;
 		}
 
 		ExternalRealloc _realloc = NULL;
