@@ -7,6 +7,7 @@
 #include "TES3ActorAnimationData.h"
 #include "TES3Alchemy.h"
 #include "TES3Cell.h"
+#include "TES3LeveledList.h"
 #include "TES3MagicEffectInstance.h"
 #include "TES3MagicSourceInstance.h"
 #include "TES3MobilePlayer.h"
@@ -1080,6 +1081,43 @@ namespace mwse {
 				return eventData;
 			}
 
+			//
+			// Rest interruption events.
+			//
+
+			CalcRestInterruptEvent::CalcRestInterruptEvent(int count, int hour) :
+				GenericEvent("calcRestInterrupt"),
+				m_Count(count),
+				m_Hour(hour)
+			{
+
+			}
+
+			sol::table CalcRestInterruptEvent::createEventTable() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table eventData = state.create_table();
+
+				eventData["count"] = m_Count;
+				eventData["hour"] = m_Hour;
+
+				return eventData;
+			}
+
+			RestInterruptEvent::RestInterruptEvent(TES3::LeveledCreature * leveledCreature) :
+				GenericEvent("restInterrupt"),
+				m_Creature(leveledCreature)
+			{
+
+			}
+
+			sol::table RestInterruptEvent::createEventTable() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table eventData = state.create_table();
+
+				eventData["creature"] = makeLuaObject(m_Creature);
+
+				return eventData;
+			}
 		}
 	}
 }

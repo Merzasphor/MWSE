@@ -21,6 +21,7 @@
 #include "TES3DataHandler.h"
 #include "TES3Game.h"
 #include "TES3InputController.h"
+#include "TES3LeveledList.h"
 #include "TES3MagicEffectInstance.h"
 #include "TES3Spell.h"
 #include "TES3MobileActor.h"
@@ -624,7 +625,9 @@ namespace mwse {
 
 			// Update the handle on the player reference.
 			sol::state& state = LuaManager::getInstance().getState();
-			state["tes3"]["player"] = tes3::getWorldController()->getMobilePlayer()->reference;
+			auto macp = tes3::getWorldController()->getMobilePlayer();
+			state["tes3"]["mobilePlayer"] = makeLuaObject(macp);
+			state["tes3"]["player"] = makeLuaObject(macp->reference);
 
 			// Extra things we want to do if we're successfully loading.
 			if (loaded == TES3::LoadGameResult::Success) {
@@ -642,7 +645,9 @@ namespace mwse {
 
 			// Update the handle on the player reference.
 			sol::state& state = LuaManager::getInstance().getState();
-			state["tes3"]["player"] = tes3::getWorldController()->getMobilePlayer()->reference;
+			auto macp = tes3::getWorldController()->getMobilePlayer();
+			state["tes3"]["mobilePlayer"] = makeLuaObject(macp);
+			state["tes3"]["player"] = makeLuaObject(macp->reference);
 
 			// Fire off a cell changed event as well, and update the cached last cell.
 			if (loaded == TES3::LoadGameResult::Success) {
@@ -1029,6 +1034,85 @@ namespace mwse {
 
 		float __fastcall OnMobileActorCalculateFlySpeed(TES3::MobileNPC* object, DWORD _UNUSED_) {
 			return object->calculateFlySpeed();
+		}
+
+		//
+		// Event: Calculate Rest Interruption
+		//
+
+		void __cdecl OnInterruptRestCheck(bool interruptRest) {
+			// Call original function.
+			reinterpret_cast<void(__cdecl *)(bool)>(0x634B90)(interruptRest);
+
+			// Get the global values for rest interruption.
+			int count = tes3::getRestInterruptCount();
+			int hour = tes3::getRestHoursInterrupted();
+
+			// Manually reset the count when there's no interruption.
+			if (hour == -1) {
+				count = 0;
+				tes3::setRestInterruptCount(0);
+			}
+
+			// Fire off an event and change the globals accordingly.
+			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+			sol::table eventData = luaManager.triggerEvent(new event::CalcRestInterruptEvent(count, hour));
+			if (eventData.valid()) {
+				// Allow blocking any spawn.
+				if (eventData["block"] == true) {
+					tes3::setRestInterruptCount(0);
+					tes3::setRestHoursInterrupted(-1);
+					return;
+				}
+
+				// Get the values back from lua.
+				count = eventData["count"];
+				hour = eventData["hour"];
+
+				// Validate values so if one is invalid then both represent no spawn.
+				if (hour <= -1 || count == 0) {
+					count = 0;
+					hour = -1;
+				}
+
+				// Update the global values.
+				tes3::setRestInterruptCount(count);
+				tes3::setRestHoursInterrupted(hour);
+			}
+		}
+
+		TES3::Object * __fastcall OnInterruptRest(TES3::LeveledCreature* leveledCreature, DWORD _UNUSED_) {
+			// Creature that we return.
+			TES3::Object * creature = NULL;
+
+			// Fire off an event and change the determined creature.
+			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+			sol::table eventData = luaManager.triggerEvent(new event::RestInterruptEvent(leveledCreature));
+			if (eventData.valid()) {
+				// Allow blocking any spawn.
+				if (eventData["block"] == true) {
+					tes3::setRestInterruptCount(0);
+					tes3::setRestHoursInterrupted(-1);
+					return NULL;
+				}
+
+				// Allow overriding the spawn.
+				sol::object maybeCreature = eventData["creature"];
+				if (maybeCreature.is<TES3::Actor*>()) {
+					return maybeCreature.as<TES3::Actor*>();
+				}
+				else if (maybeCreature.is<TES3::LeveledCreature*>()) {
+					return maybeCreature.as<TES3::LeveledCreature*>()->resolve();
+				}
+			}
+
+			// If we were given a leveled creature initially, fall back to that.
+			if (leveledCreature) {
+				return leveledCreature->resolve();
+			}
+			else {
+				return NULL;
+			}
 		}
 
 		void LuaManager::hook() {
@@ -1473,6 +1557,13 @@ namespace mwse {
 			// Event: Calculate fly speed.
 			genCallEnforced(0x53E202, 0x5271F0, reinterpret_cast<DWORD>(OnMobileActorCalculateFlySpeed));
 			genCallEnforced(0x548D6A, 0x5271F0, reinterpret_cast<DWORD>(OnMobileActorCalculateFlySpeed));
+
+			// Event: Interrupt Rest Check
+			genCallEnforced(0x610630, 0x634B90, reinterpret_cast<DWORD>(OnInterruptRestCheck));
+			genCallEnforced(0x610776, 0x634B90, reinterpret_cast<DWORD>(OnInterruptRestCheck));
+
+			// Event: Interrupt Rest
+			genCallEnforced(0x635236, 0x4CF870, reinterpret_cast<DWORD>(OnInterruptRest));
 
 			// Make magic effects writable.
 			DWORD OldProtect;

@@ -103,7 +103,7 @@ namespace TES3 {
 			//
 
 			Block* performLayout(signed char);
-			long timingUpdate();
+			void timingUpdate();
 
 		};
 		static_assert(sizeof(Block) == 0x184, "TES3::UI::Block failed size validation");

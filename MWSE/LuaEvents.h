@@ -504,6 +504,27 @@ namespace mwse {
 				TES3::MobileActor * m_MobileActor;
 				float m_Speed;
 			};
+
+			// ---------------------------------------------------------------------------- //
+
+			class CalcRestInterruptEvent : public GenericEvent {
+			public:
+				CalcRestInterruptEvent(int count, int hour);
+				sol::table createEventTable();
+
+			protected:
+				int m_Count;
+				int m_Hour;
+			};
+
+			class RestInterruptEvent : public GenericEvent {
+			public:
+				RestInterruptEvent(TES3::LeveledCreature * leveledCreature);
+				sol::table createEventTable();
+
+			protected:
+				TES3::LeveledCreature * m_Creature;
+			};
 		}
 	}
 }
