@@ -426,7 +426,7 @@ Properties
     The skills the NPC has.
 
 **sleeping** (`boolean`_)
-    Determines if the player is currently resting.
+    Determines if the player is currently sleeping, as opposed to **waiting**.
 
 **sneak** (`tes3statistic`_, read-only)
     Easy access into **skills**.
@@ -478,6 +478,9 @@ Properties
 
 **visionBonus** (`number`_)
     The current magnitude of the night eye effect of the player.
+
+**waiting** (`boolean`_)
+    Determines if the player is currently waiting, as opposed to **sleeping**.
 
 **waterBreathing** (`number`_)
     Easy access into **effectAttributes**.
