@@ -49,24 +49,31 @@ namespace TES3 {
 	}
 
 	float Cell::getWaterLevel() {
-		if (cellFlags & CellFlag::Interior) {
-			return waterLevelOrRegion.waterLevel;
+		if (!(cellFlags & CellFlag::Interior) || cellFlags & CellFlag::BehavesAsExterior) {
+			return 0.0;
 		}
 		else {
-			return -1;
+			return (cellFlags & CellFlag::HasWater) ? waterLevelOrRegion.waterLevel : FLT_MIN;
 		}
 	}
 
 	void Cell::setWaterLevel(float value) {
-		if (cellFlags & CellFlag::Interior) {
-			waterLevelOrRegion.waterLevel = value;
+		if (!(cellFlags & CellFlag::Interior) || cellFlags & CellFlag::BehavesAsExterior) {
+			return;
+		}
+		else {
+			if (cellFlags & CellFlag::HasWater) {
+				waterLevelOrRegion.waterLevel = value;
+			}
 		}
 	}
 
 	Region * Cell::getRegion() {
-		if (!(cellFlags & CellFlag::Interior)) {
+		if (!(cellFlags & CellFlag::Interior) || cellFlags & CellFlag::BehavesAsExterior) {
 			return waterLevelOrRegion.region;
 		}
-		return NULL;
+		else {
+			return nullptr;
+		}
 	}
 }
