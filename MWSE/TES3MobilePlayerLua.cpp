@@ -42,12 +42,13 @@ namespace mwse {
 			usertypeDefinition.set("magicDisabled", &TES3::MobilePlayer::magicDisabled);
 			usertypeDefinition.set("mouseLookDisabled", &TES3::MobilePlayer::mouseLookDisabled);
 			usertypeDefinition.set("restHoursRemaining", &TES3::MobilePlayer::restHoursRemaining);
-			usertypeDefinition.set("sleeping", sol::readonly_property(&TES3::MobilePlayer::sleeping));
+			usertypeDefinition.set("sleeping", &TES3::MobilePlayer::sleeping);
 			usertypeDefinition.set("telekinesis", &TES3::MobilePlayer::telekinesis);
 			usertypeDefinition.set("travelling", &TES3::MobilePlayer::playerIsTravelling);
 			usertypeDefinition.set("vanityDisabled", &TES3::MobilePlayer::vanityDisabled);
 			usertypeDefinition.set("viewSwitchDisabled", &TES3::MobilePlayer::viewSwitchDisabled);
 			usertypeDefinition.set("visionBonus", &TES3::MobilePlayer::visionBonus);
+			usertypeDefinition.set("waiting", &TES3::MobilePlayer::waiting);
 			usertypeDefinition.set("weaponReady", &TES3::MobilePlayer::weaponReady);
 
 			// Indirect bindings to unions and arrays.

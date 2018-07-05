@@ -26,7 +26,7 @@ namespace TES3 {
 		bool autoRun; // 0x5B8
 		bool sleeping; // 0x5B9
 		char unknown_0x5BA; // 0x5BA // Resting related?
-		char unknown_0x5BB; // 0x5BB
+		bool waiting; // 0x5BB
 		char unknown_0x5BC; // 0x5BC
 		bool weaponReady; // 0x5BD
 		bool castReady; // 0x5BE
