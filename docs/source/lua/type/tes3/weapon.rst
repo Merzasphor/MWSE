@@ -88,6 +88,9 @@ Properties
 **isAmmo** (`boolean`_)
     True if the weapon is an ammo type.
 
+**type** (`weaponType`_)
+    True if the weapon is an ammo type.
+
 --------------------------------------------------------
 
 .. _`boolean`: ../lua/boolean.html
@@ -96,5 +99,6 @@ Properties
 .. _`table`: ../lua/table.html
 .. _`userdata`: ../lua/userdata.html
 .. _`objectType`: baseObject/objectType.html
+.. _`weaponType`: weapon/weaponType.html
 .. _`boundingBox`: physicalObject/boundingBox.html
 .. _`enchantment`: enchantment.html
