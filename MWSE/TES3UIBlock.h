@@ -13,24 +13,22 @@ namespace TES3 {
 			String name;
 			short id;
 			Vector vectorChildren;
-			Block *parent;
+			Block* parent;
 			Tree properties;
-			int unknown_0x34;
-			int unknown_0x38;
-			Block * uiblock_3C;
+			Block* uiblock_3C;
 			Vector vectorVerts_40;
 			Vector vector_50;
 			Vector vector_60;
 			int updateReqTimestamp;
 			char unknown_0x74;
-			unsigned char visible;
-			unsigned char alwaysUpdate_maybe;
-			unsigned char flagUsesRGBA;
-			unsigned char flagPosChanged;
-			unsigned char flagSizeChanged;
-			char flagUnknownChanged_7A;
-			char unknown_0x7B;
-			unsigned char flagUsesBlending;
+			Boolean visible;
+			Boolean flagUpdateWhenHidden_maybe;
+			Boolean flagUsesRGBA;
+			Boolean flagPosChanged;
+			Boolean flagSizeChanged;
+			Boolean flagVisibilityChanged;
+			char flagClippingChanged;
+			Boolean flagContentTypeChanged;
 			char unknown_0x7D;
 			char unknown_0x7E;
 			char unknown_0x7F;
@@ -39,71 +37,86 @@ namespace TES3 {
 			char unknown_0x82;
 			char unknown_0x83;
 			int unknown_0x84;
-			void *node_88;
-			void *extraData;
-			void *node_90;
-			int cached_offsetX;
-			int cached_offsetY;
-			int nodeMinX;
-			int nodeMaxX;
-			int nodeMinY;
-			int nodeMaxY;
-			int cached_unknown_x;
-			int cached_unknown_y;
+			void* node_88;
+			void* extraData;
+			void* node_90;
+			int cached_offsetX, cached_offsetY;
+			int nodeMinX, nodeMaxX;
+			int nodeMinY, nodeMaxY;
+			int cached_unknown_x, cached_unknown_y;
 			int borderAllSides;
-			int borderLeft;
-			int borderRight;
-			int borderBottom;
-			int borderTop;
+			int borderLeft, borderRight, borderBottom, borderTop;
 			int paddingAllSides;
-			int paddingLeft;
-			int paddingRight;
-			int paddingBottom;
-			int paddingTop;
-			int positionX;
-			int positionY;
+			int paddingLeft, paddingRight, paddingBottom, paddingTop;
+			int positionX, positionY;
 			int unknown_0xE4;
 			int unknown_0xE8;
-			int width;
-			int height;
-			int childOffsetX;
-			int childOffsetY;
-			int minWidth;
-			int minHeight;
-			int maxWidth;
-			int maxHeight;
-			int unknown_0x10C;
-			int unknown_0x110;
-			char unknown_0x114;
-			char unknown_0x115;
-			float layoutWidthFraction;
-			float layoutHeightFraction;
-			float layoutOriginFractionX;
-			float layoutOriginFractionY;
-			int clipMinX;
-			int clipMaxX;
-			int clipMinY;
-			int clipMaxY;
-			short scale;
-			int nodeOffsetX;
-			int nodeOffsetY;
-			int scaleX;
-			int scaleY;
-			float colourRed;
-			float colourGreen;
-			float colourBlue;
-			float colourAlpha;
+			int width, height;
+			int childOffsetX, childOffsetY;
+			int minWidth, minHeight;
+			int maxWidth, maxHeight;
+			int inheritedWidth, inheritedHeight;
+			char flagAutoWidth, flagAutoHeight;
+			float layoutWidthFraction, layoutHeightFraction;
+			float layoutOriginFractionX, layoutOriginFractionY;
+			int clipMinX, clipMaxX;
+			int clipMinY, clipMaxY;
+			Property scale_mode;
+			int nodeOffsetX, nodeOffsetY;
+			int scaleX, scaleY;
+			float colourRed, colourGreen, colourBlue, colourAlpha;
 			int font;
-			int type;
-			String bodyText;
-			String iconPath;
+			Property contentType;
+			String rawText;
+			String imagePath;
 
 			//
-			// Other related this-call functions.
+			// Widget creation/destruction methods
 			//
 
-			Block* performLayout(signed char);
+			Block* createBlock(UI_ID id, Boolean bReplaceThisBlock = 0);
+			Block* createButton(UI_ID id, Boolean bReplaceThisBlock = 0);
+			Block* createDragFrame(UI_ID id, Boolean bReplaceThisBlock = 0);
+			Block* createFillBar(UI_ID id, Boolean bReplaceThisBlock = 0);
+			Block* createFixedFrame(UI_ID id, Boolean bReplaceThisBlock = 0);
+			Block* createHorizontalScrollPane(UI_ID id, Boolean bReplaceThisBlock = 0);
+			Block* createHypertext(UI_ID id, Boolean bReplaceThisBlock = 0);
+			Block* createImage(UI_ID id, const char* imagePath, Boolean bReplaceThisBlock = 0);
+			Block* createLabel(UI_ID id, const char* text, Boolean bBlackText = 0, Boolean bReplaceThisBlock = 0);
+			Block* createNif(UI_ID id, const char* path, Boolean bReplaceThisBlock = 0);
+			Block* createParagraphInput(UI_ID id, Boolean bReplaceThisBlock = 0);
+			Block* createSlider(UI_ID id, Boolean bReplaceThisBlock = 0);
+			Block* createSliderVertical(UI_ID id, Boolean bReplaceThisBlock = 0);
+			Block* createTextInput(UI_ID id, Boolean bReplaceThisBlock = 0);
+			Block* createTextSelect(UI_ID id, Boolean bReplaceThisBlock = 0);
+			Block* createVerticalScrollPane(UI_ID id, Boolean bReplaceThisBlock = 0);
+			void destroy();
+
+			//
+			// Layout methods
+			//
+
+			Block* findChild(UI_ID id);
+			Block* performLayout(Boolean bUpdateTimestamp = 1);
+			void setAutoHeight(Boolean bAuto);
+			void setAutoWidth(Boolean bAuto);
+			void setVisible(Boolean bVisible);
 			long timingUpdate();
+
+			//
+			// Property methods
+			//
+
+			PropertyValue getProperty(PropertyType propType, Property prop) const;
+			const char* getText() const;
+
+			void setProperty(Property prop, int value);
+			void setProperty(Property prop, float value);
+			void setProperty(Property prop, void* value);
+			void setProperty(Property prop, Property value);
+			void setProperty(Property prop, EventCallback value);
+			void setProperty(Property prop, PropertyAccessCallback value);
+			void setText(const char *);
 
 		};
 		static_assert(sizeof(Block) == 0x184, "TES3::UI::Block failed size validation");

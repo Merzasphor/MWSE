@@ -28,6 +28,7 @@
 #include "TES3Defines.h"
 #include "TES3Reference.h"
 #include "TES3UIBlock.h"
+#include "TES3UIManager.h"
 #include "TES3UIInventoryTile.h"
 #include "TES3WorldController.h"
 
@@ -89,6 +90,7 @@
 #include "TES3StaticLua.h"
 #include "TES3StatisticLua.h"
 #include "TES3UIBlockLua.h"
+#include "TES3UIManagerLua.h"
 #include "TES3VectorsLua.h"
 #include "TES3WeaponLua.h"
 #include "TES3WeatherControllerLua.h"
@@ -288,12 +290,14 @@ namespace mwse {
 			bindTES3SpellList();
 			bindTES3Static();
 			bindTES3Statistic();
-			bindTES3UIBlock();
 			bindTES3Vectors();
 			bindTES3Weapon();
 			bindTES3Weather();
 			bindTES3WeatherController();
 			bindTES3WorldController();
+
+			bindTES3UIBlock();
+			bindTES3UIManager();
 
 			// Bind NI data types.
 			bindNICamera();
