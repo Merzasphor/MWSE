@@ -103,7 +103,7 @@ namespace TES3 {
 	struct WorldController;
 
 	namespace UI {
-		struct Block;
+		struct Element;
 		struct InventoryTile;
 		struct String;
 		struct Tree;

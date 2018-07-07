@@ -1,4 +1,4 @@
-#include "TES3UIBlock.h"
+#include "TES3UIElement.h"
 #include "TES3UIManager.h"
 #include "TES3UIMenuController.h"
 
@@ -8,7 +8,7 @@
 
 namespace mwse {
 	namespace lua {
-		using TES3::UI::Block;
+		using TES3::UI::Element;
 		using TES3::UI::UI_ID;
 
 		void bindTES3UIManager() {
@@ -22,10 +22,10 @@ namespace mwse {
 				auto id = args.get<sol::optional<UI_ID>>("id");
 				if (!id) {
 					log::getLog() << "createMenu: id argument is required." << std::endl;
-					return static_cast<Block*>(nullptr);
+					return static_cast<Element*>(nullptr);
 				}
 
-				Block* menu = TES3::UI::createMenu(id.value());
+				Element* menu = TES3::UI::createMenu(id.value());
 
 				if (args.get<bool>("fixedFrame")) {
 					menu->createFixedFrame(id.value(), 1);

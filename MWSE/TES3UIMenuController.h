@@ -9,16 +9,16 @@ namespace TES3 {
 		struct MenuInputController {
 			NI::Pick pick;
 			char unknown_0x38[0x50];
-			Block* blockTextInputFocus;
+			Element* textInputFocus;
 			char unknown_0x8C[0x20];
 
-			void acquireTextInput(Block* block);
+			void acquireTextInput(Element* element);
 		};
 		static_assert(sizeof(MenuInputController) == 0xAC, "TES3::UI::MenuInputController failed size validation");
 
 		struct MenuController {
-			Block* mainRoot;
-			Block* helpRoot;
+			Element* mainRoot;
+			Element* helpRoot;
 			NI::Node* mainNode;
 			NI::Node* helpNode;
 			MenuInputController* menuInputController;

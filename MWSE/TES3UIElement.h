@@ -8,14 +8,14 @@
 
 namespace TES3 {
 	namespace UI {
-		struct Block {
+		struct Element {
 			char tag;
 			String name;
 			short id;
 			Vector vectorChildren;
-			Block* parent;
+			Element* parent;
 			Tree properties;
-			Block* uiblock_3C;
+			Element* uielement_3C;
 			Vector vectorVerts_40;
 			Vector vector_50;
 			Vector vector_60;
@@ -74,30 +74,30 @@ namespace TES3 {
 			// Widget creation/destruction methods
 			//
 
-			Block* createBlock(UI_ID id, Boolean bReplaceThisBlock = 0);
-			Block* createButton(UI_ID id, Boolean bReplaceThisBlock = 0);
-			Block* createDragFrame(UI_ID id, Boolean bReplaceThisBlock = 0);
-			Block* createFillBar(UI_ID id, Boolean bReplaceThisBlock = 0);
-			Block* createFixedFrame(UI_ID id, Boolean bReplaceThisBlock = 0);
-			Block* createHorizontalScrollPane(UI_ID id, Boolean bReplaceThisBlock = 0);
-			Block* createHypertext(UI_ID id, Boolean bReplaceThisBlock = 0);
-			Block* createImage(UI_ID id, const char* imagePath, Boolean bReplaceThisBlock = 0);
-			Block* createLabel(UI_ID id, const char* text, Boolean bBlackText = 0, Boolean bReplaceThisBlock = 0);
-			Block* createNif(UI_ID id, const char* path, Boolean bReplaceThisBlock = 0);
-			Block* createParagraphInput(UI_ID id, Boolean bReplaceThisBlock = 0);
-			Block* createSlider(UI_ID id, Boolean bReplaceThisBlock = 0);
-			Block* createSliderVertical(UI_ID id, Boolean bReplaceThisBlock = 0);
-			Block* createTextInput(UI_ID id, Boolean bReplaceThisBlock = 0);
-			Block* createTextSelect(UI_ID id, Boolean bReplaceThisBlock = 0);
-			Block* createVerticalScrollPane(UI_ID id, Boolean bReplaceThisBlock = 0);
+			Element* createBlock(UI_ID id, Boolean bReplaceThisElement = 0);
+			Element* createButton(UI_ID id, Boolean bReplaceThisElement = 0);
+			Element* createDragFrame(UI_ID id, Boolean bReplaceThisElement = 0);
+			Element* createFillBar(UI_ID id, Boolean bReplaceThisElement = 0);
+			Element* createFixedFrame(UI_ID id, Boolean bReplaceThisElement = 0);
+			Element* createHorizontalScrollPane(UI_ID id, Boolean bReplaceThisElement = 0);
+			Element* createHypertext(UI_ID id, Boolean bReplaceThisElement = 0);
+			Element* createImage(UI_ID id, const char* imagePath, Boolean bReplaceThisElement = 0);
+			Element* createLabel(UI_ID id, const char* text, Boolean bBlackText = 0, Boolean bReplaceThisElement = 0);
+			Element* createNif(UI_ID id, const char* path, Boolean bReplaceThisElement = 0);
+			Element* createParagraphInput(UI_ID id, Boolean bReplaceThisElement = 0);
+			Element* createSlider(UI_ID id, Boolean bReplaceThisElement = 0);
+			Element* createSliderVertical(UI_ID id, Boolean bReplaceThisElement = 0);
+			Element* createTextInput(UI_ID id, Boolean bReplaceThisElement = 0);
+			Element* createTextSelect(UI_ID id, Boolean bReplaceThisElement = 0);
+			Element* createVerticalScrollPane(UI_ID id, Boolean bReplaceThisElement = 0);
 			void destroy();
 
 			//
 			// Layout methods
 			//
 
-			Block* findChild(UI_ID id);
-			Block* performLayout(Boolean bUpdateTimestamp = 1);
+			Element* findChild(UI_ID id);
+			Element* performLayout(Boolean bUpdateTimestamp = 1);
 			void setAutoHeight(Boolean bAuto);
 			void setAutoWidth(Boolean bAuto);
 			void setVisible(Boolean bVisible);
@@ -119,6 +119,6 @@ namespace TES3 {
 			void setText(const char *);
 
 		};
-		static_assert(sizeof(Block) == 0x184, "TES3::UI::Block failed size validation");
+		static_assert(sizeof(Element) == 0x184, "TES3::UI::Element failed size validation");
 	}
 }

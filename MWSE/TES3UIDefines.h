@@ -281,7 +281,7 @@ namespace TES3 {
 			FocusIcon = -0x7EF9
 		};
 
-		typedef Boolean (__cdecl *EventCallback)(Block*, Property, int, int, Block*);
+		typedef Boolean (__cdecl *EventCallback)(Element*, Property, int, int, Element*);
 		typedef void (__cdecl *PropertyAccessCallback)(Property, int, PropertyType);
 
 		union PropertyValue {

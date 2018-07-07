@@ -612,9 +612,6 @@
     <ClInclude Include="TES3UIInventoryTile.h">
       <Filter>Header Files\DataAdapters\TES3\UI</Filter>
     </ClInclude>
-    <ClInclude Include="TES3UIBlock.h">
-      <Filter>Header Files\DataAdapters\TES3\UI</Filter>
-    </ClInclude>
     <ClInclude Include="TES3UIVector.h">
       <Filter>Header Files\DataAdapters\TES3\UI</Filter>
     </ClInclude>
@@ -810,13 +807,16 @@
     <ClInclude Include="TES3UIManager.h">
       <Filter>Header Files\DataAdapters\TES3\UI</Filter>
     </ClInclude>
-    <ClInclude Include="TES3UIBlockLua.h">
-      <Filter>Header Files\Lua\Bindings\TES3\UI</Filter>
-    </ClInclude>
     <ClInclude Include="TES3UIManagerLua.h">
       <Filter>Header Files\Lua\Bindings\TES3\UI</Filter>
     </ClInclude>
     <ClInclude Include="TES3UIMenuController.h">
+      <Filter>Header Files\Lua\Bindings\TES3\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3UIElement.h">
+      <Filter>Header Files\DataAdapters\TES3\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3UIElementLua.h">
       <Filter>Header Files\Lua\Bindings\TES3\UI</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1739,9 +1739,6 @@
     <ClCompile Include="TES3UtilLua.cpp">
       <Filter>Source Files\Lua\Bindings</Filter>
     </ClCompile>
-    <ClCompile Include="TES3UIBlock.cpp">
-      <Filter>Source Files\DataAdapters\TES3\UI</Filter>
-    </ClCompile>
     <ClCompile Include="TES3InputController.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
@@ -1865,11 +1862,14 @@
     <ClCompile Include="TES3UIManagerLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3\UI</Filter>
     </ClCompile>
-    <ClCompile Include="TES3UIBlockLua.cpp">
-      <Filter>Source Files\Lua\Bindings\TES3\UI</Filter>
-    </ClCompile>
     <ClCompile Include="TES3UIMenuController.cpp">
       <Filter>Source Files\DataAdapters\TES3\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3UIElement.cpp">
+      <Filter>Source Files\DataAdapters\TES3\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3UIElementLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

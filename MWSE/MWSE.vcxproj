@@ -188,8 +188,8 @@
     <ClInclude Include="TES3StaticLua.h" />
     <ClInclude Include="TES3Statistic.h" />
     <ClInclude Include="TES3StatisticLua.h" />
-    <ClInclude Include="TES3UIBlock.h" />
-    <ClInclude Include="TES3UIBlockLua.h" />
+    <ClInclude Include="TES3UIElement.h" />
+    <ClInclude Include="TES3UIElementLua.h" />
     <ClInclude Include="TES3UIInventoryTile.h" />
     <ClInclude Include="TES3UIManager.h" />
     <ClInclude Include="TES3UIMenuController.h" />
@@ -334,8 +334,8 @@
     <ClCompile Include="TES3StaticLua.cpp" />
     <ClCompile Include="TES3Statistic.cpp" />
     <ClCompile Include="TES3StatisticLua.cpp" />
-    <ClCompile Include="TES3UIBlock.cpp" />
-    <ClCompile Include="TES3UIBlockLua.cpp" />
+    <ClCompile Include="TES3UIElement.cpp" />
+    <ClCompile Include="TES3UIElementLua.cpp" />
     <ClCompile Include="TES3UIManagerLua.cpp" />
     <ClCompile Include="TES3UIMenuController.cpp" />
     <ClCompile Include="TES3UtilLua.cpp" />

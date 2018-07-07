@@ -1,4 +1,4 @@
-#include "TES3UIBlock.h"
+#include "TES3UIElement.h"
 #include "TES3UIManager.h"
 #include "TES3UIMenuController.h"
 #include "TES3Util.h"
@@ -7,8 +7,8 @@
 namespace TES3 {
 	namespace UI {
 		const auto TES3_ui_registerID = reinterpret_cast<UI_ID (__cdecl *)(const char *)>(0x58DF10);
-		const auto TES3_ui_createMenu = reinterpret_cast<Block* (__cdecl *)(UI_ID)>(0x595400);
-		const auto TES3_ui_findMenu = reinterpret_cast<Block* (__cdecl*)(UI_ID)>(0x595370);
+		const auto TES3_ui_createMenu = reinterpret_cast<Element* (__cdecl *)(UI_ID)>(0x595400);
+		const auto TES3_ui_findMenu = reinterpret_cast<Element* (__cdecl*)(UI_ID)>(0x595370);
 		const auto TES3_ui_requestMenuModeOn = reinterpret_cast<Boolean (__cdecl*)(UI_ID)>(0x595230);
 		const auto TES3_ui_requestMenuModeOff = reinterpret_cast<Boolean (__cdecl*)(UI_ID)>(0x595270);
 		const auto TES3_ui_onMenuUnfocus = reinterpret_cast<EventCallback>(0x58F790);
@@ -21,11 +21,11 @@ namespace TES3 {
 			return static_cast<Property>(TES3_ui_registerID(name));
 		}
 
-		Block* createMenu(UI_ID id) {
+		Element* createMenu(UI_ID id) {
 			return TES3_ui_createMenu(id);
 		}
 
-		Block* findMenu(UI_ID id) {
+		Element* findMenu(UI_ID id) {
 			return TES3_ui_findMenu(id);
 		}
 
@@ -37,12 +37,12 @@ namespace TES3 {
 			return TES3_ui_requestMenuModeOff(0);
 		}
 
-		void acquireTextInput(Block* block) {
+		void acquireTextInput(Element* element) {
 			MenuController *menuController = static_cast<MenuController*>(mwse::tes3::getWorldController()->menuController);
-			menuController->menuInputController->acquireTextInput(block);
+			menuController->menuInputController->acquireTextInput(element);
 		}
 
-		void preventInventoryMenuToggle(Block* menu) {
+		void preventInventoryMenuToggle(Element* menu) {
 			menu->setProperty(Property::event_unfocus, TES3_ui_onMenuUnfocus);
 		}
 	}
