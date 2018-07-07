@@ -33,7 +33,7 @@ namespace TES3 {
 		}
 	}
 
-	int Cell::getFogDensity() {
+	float Cell::getFogDensity() {
 		if (cellFlags & CellFlag::Interior) {
 			return VariantData.interior.fogDensity;
 		}
@@ -42,7 +42,7 @@ namespace TES3 {
 		}
 	}
 
-	void Cell::setFogDensity(int value) {
+	void Cell::setFogDensity(float value) {
 		if (cellFlags & CellFlag::Interior) {
 			VariantData.interior.fogDensity = value;
 		}

@@ -77,8 +77,8 @@ namespace TES3 {
 		bool getCellFlag(unsigned int);
 		void setCellFlag(unsigned int, bool);
 
-		int getFogDensity();
-		void setFogDensity(int);
+		float getFogDensity();
+		void setFogDensity(float);
 
 		float getWaterLevel();
 		void setWaterLevel(float);
