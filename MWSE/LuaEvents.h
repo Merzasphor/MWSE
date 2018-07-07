@@ -536,6 +536,19 @@ namespace mwse {
 			protected:
 				TES3::Dialogue * m_Topic;
 			};
+
+			// ---------------------------------------------------------------------------- //
+
+			class JournalEvent : public GenericEvent {
+			public:
+				JournalEvent(TES3::Dialogue * topic, int oldIndex, int newIndex);
+				sol::table createEventTable();
+
+			protected:
+				TES3::Dialogue * m_Topic;
+				int m_OldIndex;
+				int m_NewIndex;
+			};
 		}
 	}
 }

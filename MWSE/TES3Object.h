@@ -51,6 +51,7 @@ namespace TES3 {
 			MobilePlayer = 'PCAM',
 			MobileProjectile = 'JRPM',
 			NPC = '_CPN',
+			Quest = 'SEUQ',
 			PathGrid = 'DRGP',
 			Probe = 'BORP',
 			Race = 'ECAR',

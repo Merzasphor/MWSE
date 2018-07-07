@@ -19,6 +19,14 @@ namespace TES3 {
 		unsigned char type; // 0x14
 		Iterator<DialogueInfo> info; // 0x18
 		int journalIndex; // 0x2C
+
+		//
+		// Other related this-call functions.
+		//
+
+		bool addToJournal(int index, MobileActor * actor);
+		bool setJournalIndex(int index);
+
 	};
 	static_assert(sizeof(Dialogue) == 0x30, "TES3::Dialogue failed size validation");
 }

@@ -49,6 +49,7 @@
 #include "TES3MobileProjectile.h"
 #include "TES3NPC.h"
 #include "TES3Probe.h"
+#include "TES3Quest.h"
 #include "TES3Race.h"
 #include "TES3Reference.h"
 #include "TES3Region.h"
@@ -379,6 +380,9 @@ namespace mwse {
 			break;
 			case TES3::ObjectType::Probe:
 				result = sol::make_object(state, reinterpret_cast<TES3::Probe*>(object));
+				break;
+			case TES3::ObjectType::Quest:
+				result = sol::make_object(state, reinterpret_cast<TES3::Quest*>(object));
 				break;
 			case TES3::ObjectType::Race:
 				result = sol::make_object(state, reinterpret_cast<TES3::Race*>(object));

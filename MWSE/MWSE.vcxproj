@@ -58,6 +58,7 @@
     <ClInclude Include="TES3MobileObjectLua.h" />
     <ClInclude Include="TES3ObjectLua.h" />
     <ClInclude Include="TES3PlayerAnimationData.h" />
+    <ClInclude Include="TES3Quest.h" />
     <ClInclude Include="TES3SoundGenerator.h" />
     <ClInclude Include="StackLua.h" />
     <ClInclude Include="StringUtilLua.h" />
@@ -273,6 +274,7 @@
     <ClCompile Include="TES3CreatureLua.cpp" />
     <ClCompile Include="TES3DataHandler.cpp" />
     <ClCompile Include="TES3DataHandlerLua.cpp" />
+    <ClCompile Include="TES3Dialogue.cpp" />
     <ClCompile Include="TES3DialogueLua.cpp" />
     <ClCompile Include="TES3DoorLua.cpp" />
     <ClCompile Include="TES3EnchantmentLua.cpp" />

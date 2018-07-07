@@ -8,7 +8,7 @@ namespace TES3 {
 	struct DialogueInfo : BaseObject {
 		void * unknown_0x10;
 		int unknown_0x14;
-		int unknown_0x18;
+		int index;
 		char unknown_0x1C;
 		char unknown_0x1D;
 		char unknown_0x1E;

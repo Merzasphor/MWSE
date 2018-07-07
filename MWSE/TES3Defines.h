@@ -73,6 +73,7 @@ namespace TES3 {
 	struct PlayerAnimationData;
 	struct PlayerBounty;
 	struct Probe;
+	struct Quest;
 	struct Race;
 	struct Reference;
 	struct ReferenceList;

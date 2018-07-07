@@ -19,6 +19,7 @@
 #include "TES3ActorAnimationData.h"
 #include "TES3Alchemy.h"
 #include "TES3DataHandler.h"
+#include "TES3Dialogue.h"
 #include "TES3Game.h"
 #include "TES3InputController.h"
 #include "TES3LeveledList.h"
@@ -1121,13 +1122,34 @@ namespace mwse {
 		// Event: topicAdded
 		//
 
-		void __fastcall OnAddTopic(TES3::Iterator<TES3::Dialogue> * topicList, DWORD _UNUSED_, TES3::Dialogue * topic, unsigned int index) {
+		void __fastcall OnAddTopicAtIndex(TES3::Iterator<TES3::Dialogue> * topicList, DWORD _UNUSED_, TES3::Dialogue * topic, unsigned int index) {
 			// Run overwritten function.
 			topicList->addItemAtIndex(topic, index);
 
 			// Raise event.
 			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
 			luaManager.triggerEvent(new event::AddTopicEvent(topic));
+		}
+
+		void __fastcall OnAddTopic(TES3::Iterator<TES3::Dialogue> * topicList, DWORD _UNUSED_, TES3::Dialogue * topic) {
+			// Run overwritten function.
+			topicList->addItem(topic);
+
+			// Raise event.
+			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+			luaManager.triggerEvent(new event::AddTopicEvent(topic));
+		}
+
+		//
+		// Event: Journal
+		//
+
+		bool __fastcall OnJournalAdd(TES3::Dialogue * dialogue, DWORD _UNUSED_, int index, TES3::MobileActor * actor) {
+			return dialogue->addToJournal(index, actor);
+		}
+
+		void __fastcall OnJournalSet(TES3::Dialogue * dialogue, DWORD _UNUSED_, int index) {
+			dialogue->setJournalIndex(index);
 		}
 
 		void LuaManager::hook() {
@@ -1582,8 +1604,14 @@ namespace mwse {
 			genCallEnforced(0x635236, 0x4CF870, reinterpret_cast<DWORD>(OnInterruptRest));
 
 			// Event: topicAdded
-			genCallEnforced(0x56A4FA, 0x47E4D0, reinterpret_cast<DWORD>(OnAddTopic));
-			genCallEnforced(0x56A513, 0x47E4D0, reinterpret_cast<DWORD>(OnAddTopic));
+			genCallEnforced(0x56A4FA, 0x47E4D0, reinterpret_cast<DWORD>(OnAddTopicAtIndex));
+			genCallEnforced(0x56A513, 0x47E4D0, reinterpret_cast<DWORD>(OnAddTopicAtIndex));
+			genCallEnforced(0x56A4E1, 0x47E360, reinterpret_cast<DWORD>(OnAddTopic));
+
+			// Event: Journal Update
+			genCallEnforced(0x5052B1, 0x4B2F80, reinterpret_cast<DWORD>(OnJournalAdd));
+			genCallEnforced(0x508894, 0x4B2F80, reinterpret_cast<DWORD>(OnJournalAdd));
+			genCallEnforced(0x5088E9, 0x50F8B0, reinterpret_cast<DWORD>(OnJournalSet));
 
 			// Make magic effects writable.
 			DWORD OldProtect;

@@ -75,7 +75,7 @@ namespace TES3 {
 		void * stats_60;
 		void * field_64;
 		void * splashController; // 0x68
-		void * journalController; // 0x6C
+		Iterator<Quest> * journalController; // 0x6C
 		void * spllistActiveSpells; // 0x70
 		int unknown_0x74;
 		int viewWidth; // 0x78
