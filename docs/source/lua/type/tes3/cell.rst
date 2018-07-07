@@ -45,7 +45,7 @@ Properties
     One of the containers that holds references currently in the cell.
 
 **region** (`tes3region`_, read-only)
-    The associated region with the cell. Only available for interior cells.
+    The associated region with the cell. Only available for exterior cells, or interior cells that behave as exterior cells.
 
 **restingIsIllegal** (`boolean`_)
     Friendly access into **flags**, providing access to if the cell restricts resting.
@@ -57,7 +57,7 @@ Properties
     Sun color values. Only available for interior cells.
 
 **waterLevel** (`number`_)
-    The water level of the cell. Only available for interior cells.
+    The water level of the cell. Only available for interior cells that do not behave as exterior cells.
 
 
 Functions
