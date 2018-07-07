@@ -1118,7 +1118,7 @@ namespace mwse {
 		}
 
 		//
-		// Event: onTopicAdded
+		// Event: topicAdded
 		//
 
 		void __fastcall OnAddTopic(TES3::Iterator<TES3::Dialogue> * topicList, DWORD _UNUSED_, TES3::Dialogue * topic, unsigned int index) {
@@ -1581,7 +1581,7 @@ namespace mwse {
 			// Event: Interrupt Rest
 			genCallEnforced(0x635236, 0x4CF870, reinterpret_cast<DWORD>(OnInterruptRest));
 
-			// Event: onTopicAdded
+			// Event: topicAdded
 			genCallEnforced(0x56A4FA, 0x47E4D0, reinterpret_cast<DWORD>(OnAddTopic));
 			genCallEnforced(0x56A513, 0x47E4D0, reinterpret_cast<DWORD>(OnAddTopic));
 

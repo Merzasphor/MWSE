@@ -1136,7 +1136,7 @@ namespace mwse {
 			//
 
 			AddTopicEvent::AddTopicEvent(TES3::Dialogue * topic) :
-				GenericEvent("onTopicAdded"),
+				GenericEvent("topicAdded"),
 				m_Topic(topic)
 			{
 
