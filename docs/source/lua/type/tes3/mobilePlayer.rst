@@ -122,6 +122,9 @@ Properties
 **destruction** (`tes3statistic`_, read-only)
     Easy access into **skills**.
 
+**dialogueList** (`tes3iterator`_ of `tes3dialogue`_, read-only)
+    A list of dialogue topics currently known by the player.
+
 **effectAttributes** (`table`_ array of 8 `number`_)
     Various attributes including current resistances and other spell effect magnitudes.
 
@@ -529,6 +532,7 @@ Functions
 .. _`tes3actionData`: actionData.html
 .. _`tes3apparatus`: apparatus.html
 .. _`tes3cell`: cell.html
+.. _`tes3dialogue`: dialogue.html
 .. _`tes3equipmentStack`: equipmentStack.html
 .. _`tes3globalvariable`: globalvariable.html
 .. _`tes3iterator`: iterator.html

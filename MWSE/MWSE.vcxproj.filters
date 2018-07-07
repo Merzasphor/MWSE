@@ -804,6 +804,12 @@
     <ClInclude Include="LuaTimer.h">
       <Filter>Header Files\Lua</Filter>
     </ClInclude>
+    <ClInclude Include="TES3Dialogue.h">
+      <Filter>Header Files\DataAdapters\TES3\Dialog</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3DialogueLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1849,6 +1855,9 @@
     </ClCompile>
     <ClCompile Include="TES3Weapon.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3DialogueLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -34,6 +34,7 @@ namespace mwse {
 			usertypeDefinition.set("autoRun", &TES3::MobilePlayer::autoRun);
 			usertypeDefinition.set("castReady", &TES3::MobilePlayer::castReady);
 			usertypeDefinition.set("controlsDisabled", &TES3::MobilePlayer::controlsDisabled);
+			usertypeDefinition.set("dialogueList", &TES3::MobilePlayer::dialogueList);
 			usertypeDefinition.set("inactivityTime", &TES3::MobilePlayer::inactivityTime);
 			usertypeDefinition.set("inJail", &TES3::MobilePlayer::playerInJail);
 			usertypeDefinition.set("jumpingDisabled", &TES3::MobilePlayer::jumpingDisabled);

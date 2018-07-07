@@ -525,6 +525,17 @@ namespace mwse {
 			protected:
 				TES3::LeveledCreature * m_Creature;
 			};
+
+			// ---------------------------------------------------------------------------- //
+
+			class AddTopicEvent : public GenericEvent {
+			public:
+				AddTopicEvent(TES3::Dialogue * topic);
+				sol::table createEventTable();
+
+			protected:
+				TES3::Dialogue * m_Topic;
+			};
 		}
 	}
 }

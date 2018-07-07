@@ -47,6 +47,8 @@
     <ClInclude Include="sol_forward.hpp" />
     <ClInclude Include="TES3ActorLua.h" />
     <ClInclude Include="TES3Defines.h" />
+    <ClInclude Include="TES3Dialogue.h" />
+    <ClInclude Include="TES3DialogueLua.h" />
     <ClInclude Include="TES3GlobalVariableLua.h" />
     <ClInclude Include="TES3InputControllerLua.h" />
     <ClInclude Include="TES3LeveledList.h" />
@@ -271,6 +273,7 @@
     <ClCompile Include="TES3CreatureLua.cpp" />
     <ClCompile Include="TES3DataHandler.cpp" />
     <ClCompile Include="TES3DataHandlerLua.cpp" />
+    <ClCompile Include="TES3DialogueLua.cpp" />
     <ClCompile Include="TES3DoorLua.cpp" />
     <ClCompile Include="TES3EnchantmentLua.cpp" />
     <ClCompile Include="TES3Faction.cpp" />

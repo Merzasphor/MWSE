@@ -28,6 +28,8 @@
 #include "TES3Container.h"
 #include "TES3Creature.h"
 #include "TES3DataHandler.h"
+#include "TES3Dialogue.h"
+#include "TES3DialogueInfo.h"
 #include "TES3Door.h"
 #include "TES3Enchantment.h"
 #include "TES3Faction.h"
@@ -326,6 +328,12 @@ namespace mwse {
 				}
 			}
 			break;
+			case TES3::ObjectType::Dialogue:
+				result = sol::make_object(state, reinterpret_cast<TES3::Dialogue*>(object));
+				break;
+			case TES3::ObjectType::DialogueInfo:
+				result = sol::make_object(state, reinterpret_cast<TES3::DialogueInfo*>(object));
+				break;
 			case TES3::ObjectType::Door:
 				result = sol::make_object(state, reinterpret_cast<TES3::Door*>(object));
 				break;

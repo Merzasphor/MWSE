@@ -7,6 +7,7 @@
 #include "TES3ActorAnimationData.h"
 #include "TES3Alchemy.h"
 #include "TES3Cell.h"
+#include "TES3Dialogue.h"
 #include "TES3LeveledList.h"
 #include "TES3MagicEffectInstance.h"
 #include "TES3MagicSourceInstance.h"
@@ -1126,6 +1127,26 @@ namespace mwse {
 				TES3::MobilePlayer * macp = tes3::getWorldController()->getMobilePlayer();
 				eventData["resting"] = macp->sleeping;
 				eventData["waiting"] = macp->waiting;
+
+				return eventData;
+			}
+
+			//
+			// Add topic event.
+			//
+
+			AddTopicEvent::AddTopicEvent(TES3::Dialogue * topic) :
+				GenericEvent("onTopicAdded"),
+				m_Topic(topic)
+			{
+
+			}
+
+			sol::table AddTopicEvent::createEventTable() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table eventData = state.create_table();
+
+				eventData["topic"] = makeLuaObject(m_Topic);
 
 				return eventData;
 			}

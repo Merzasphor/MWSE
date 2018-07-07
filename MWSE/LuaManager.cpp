@@ -53,6 +53,7 @@
 #include "TES3ContainerLua.h"
 #include "TES3CreatureLua.h"
 #include "TES3DataHandlerLua.h"
+#include "TES3DialogueLua.h"
 #include "TES3DoorLua.h"
 #include "TES3EnchantmentLua.h"
 #include "TES3FactionLua.h"
@@ -265,6 +266,7 @@ namespace mwse {
 			bindTES3Container();
 			bindTES3Creature();
 			bindTES3DataHandler();
+			bindTES3Dialogue();
 			bindTES3Door();
 			bindTES3Enchantment();
 			bindTES3Faction();
@@ -1115,6 +1117,19 @@ namespace mwse {
 			}
 		}
 
+		//
+		// Event: onTopicAdded
+		//
+
+		void __fastcall OnAddTopic(TES3::Iterator<TES3::Dialogue> * topicList, DWORD _UNUSED_, TES3::Dialogue * topic, unsigned int index) {
+			// Run overwritten function.
+			topicList->addItemAtIndex(topic, index);
+
+			// Raise event.
+			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+			luaManager.triggerEvent(new event::AddTopicEvent(topic));
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");
@@ -1565,6 +1580,10 @@ namespace mwse {
 
 			// Event: Interrupt Rest
 			genCallEnforced(0x635236, 0x4CF870, reinterpret_cast<DWORD>(OnInterruptRest));
+
+			// Event: onTopicAdded
+			genCallEnforced(0x56A4FA, 0x47E4D0, reinterpret_cast<DWORD>(OnAddTopic));
+			genCallEnforced(0x56A513, 0x47E4D0, reinterpret_cast<DWORD>(OnAddTopic));
 
 			// Make magic effects writable.
 			DWORD OldProtect;

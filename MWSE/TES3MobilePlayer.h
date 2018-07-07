@@ -56,7 +56,7 @@ namespace TES3 {
 		char unknown_0x66B; // Undefined.
 		int unknown_0x66C;
 		void * birthsign; // 0x670
-		void * dialogueList; // 0x674
+		Iterator<Dialogue> * dialogueList; // 0x674
 		void * markLocation; // 0x678
 		Vector3 field_67C;
 		float inactivityTime; // 0x684

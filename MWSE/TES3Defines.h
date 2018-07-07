@@ -27,6 +27,7 @@ namespace TES3 {
 	struct Creature;
 	struct CreatureInstance;
 	struct DataHandler;
+	struct Dialogue;
 	struct DialogueFilter;
 	struct DialogueInfo;
 	struct Door;
@@ -70,6 +71,7 @@ namespace TES3 {
 	struct OwnershipAttachmentNode;
 	struct PhysicalObject;
 	struct PlayerAnimationData;
+	struct PlayerBounty;
 	struct Probe;
 	struct Race;
 	struct Reference;

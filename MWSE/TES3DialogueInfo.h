@@ -6,7 +6,7 @@
 
 namespace TES3 {
 	struct DialogueInfo : BaseObject {
-		int unknown_0x10;
+		void * unknown_0x10;
 		int unknown_0x14;
 		int unknown_0x18;
 		char unknown_0x1C;

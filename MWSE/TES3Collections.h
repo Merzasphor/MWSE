@@ -44,6 +44,22 @@ namespace TES3 {
 		IteratorNode<T> * head;
 		IteratorNode<T> * tail;
 		IteratorNode<T> * current;
+
+		//
+		// Related this-call functions.
+		//
+
+		void clear() {
+			reinterpret_cast<void(__thiscall *)(Iterator<T>*)>(0x47E2F0)(this);
+		}
+
+		void addItem(T * item) {
+			reinterpret_cast<void(__thiscall *)(Iterator<T>*, T*)>(0x47E360)(this, item);
+		}
+
+		void addItemAtIndex(T * item, unsigned int index) {
+			reinterpret_cast<void(__thiscall *)(Iterator<T>*, T*, unsigned int)>(0x47E4D0)(this, item, index);
+		}
 	};
 	static_assert(sizeof(Iterator<void>) == 0x14, "TES3::Iterator failed size validation");
 
