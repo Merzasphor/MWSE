@@ -1098,7 +1098,7 @@ namespace mwse {
 
 				// Allow overriding the spawn.
 				sol::object maybeCreature = eventData["creature"];
-				if (maybeCreature.is<TES3::Actor*>()) {
+				if (maybeCreature.is<TES3::MobileNPC*>() || maybeCreature.is<TES3::MobileCreature*>()) {
 					return maybeCreature.as<TES3::Actor*>();
 				}
 				else if (maybeCreature.is<TES3::LeveledCreature*>()) {
@@ -1561,6 +1561,7 @@ namespace mwse {
 			// Event: Interrupt Rest Check
 			genCallEnforced(0x610630, 0x634B90, reinterpret_cast<DWORD>(OnInterruptRestCheck));
 			genCallEnforced(0x610776, 0x634B90, reinterpret_cast<DWORD>(OnInterruptRestCheck));
+			genCallEnforced(0x610970, 0x634B90, reinterpret_cast<DWORD>(OnInterruptRestCheck));
 
 			// Event: Interrupt Rest
 			genCallEnforced(0x635236, 0x4CF870, reinterpret_cast<DWORD>(OnInterruptRest));

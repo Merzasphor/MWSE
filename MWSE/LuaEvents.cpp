@@ -1097,8 +1097,14 @@ namespace mwse {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table eventData = state.create_table();
 
+
 				eventData["count"] = m_Count;
 				eventData["hour"] = m_Hour;
+
+				// Add easy access to sleeping and waiting state.
+				TES3::MobilePlayer * macp = tes3::getWorldController()->getMobilePlayer();
+				eventData["resting"] = macp->sleeping;
+				eventData["waiting"] = macp->waiting;
 
 				return eventData;
 			}
@@ -1115,6 +1121,11 @@ namespace mwse {
 				sol::table eventData = state.create_table();
 
 				eventData["creature"] = makeLuaObject(m_Creature);
+
+				// Add easy access to sleeping and waiting state.
+				TES3::MobilePlayer * macp = tes3::getWorldController()->getMobilePlayer();
+				eventData["resting"] = macp->sleeping;
+				eventData["waiting"] = macp->waiting;
 
 				return eventData;
 			}

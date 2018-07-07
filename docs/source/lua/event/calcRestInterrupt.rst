@@ -18,7 +18,16 @@ count
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `Number`_. The number of creatures interrupting rest. Set to 0 to prevent a spawn.
 
+resting
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`Boolean`_. If ``true``, the player is attempting to rest, as opposed to wait.
+
+waiting
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`Boolean`_. If ``true``, the player is attempting to wait, as opposed to rest.
+
 
 .. _`Event Guide`: ../guide/events.html
 
+.. _`Boolean`: ../type/lua/boolean.html
 .. _`Number`: ../type/lua/number.html
