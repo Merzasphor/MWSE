@@ -52,7 +52,7 @@ namespace mwse {
 			return prop == TES3::UI::Property::boolean_true;
 		}
 
-		TES3::UI::Boolean __cdecl eventDispatcher(Element* source, TES3::UI::Property eventID, int data0, int data1, Element*) {
+		TES3::UI::Boolean __cdecl eventDispatcher(Element* owningWidget, TES3::UI::Property eventID, int data0, int data1, Element* source) {
 			sol::state& state = LuaManager::getInstance().getState();
 
 			auto iterElements = eventMap.find(reinterpret_cast<uintptr_t>(source));
@@ -68,10 +68,10 @@ namespace mwse {
 						auto result = eventPair.second(sol::make_object(state, source), eventData);
 						if (!result.valid()) {
 							sol::error error = result;
-							log::getLog() << "Lua error encountered during UI event from widget " << source->name.cString << ":" << std::endl << error.what() << std::endl;
+							log::getLog() << "Lua error encountered during UI event from element " << source->name.cString << ":" << std::endl << error.what() << std::endl;
 						}
 						// Default return true to event system
-						sol::optional<bool> ret = result;
+						sol::optional<TES3::UI::Boolean> ret = result;
 						return ret.value_or(1);
 					}
 				}
@@ -91,7 +91,7 @@ namespace mwse {
 						auto result = eventPair.second(sol::make_object(state, source));
 						if (!result.valid()) {
 							sol::error error = result;
-							log::getLog() << "Lua error encountered during UI event from widget " << source->name.cString << ":" << std::endl << error.what() << std::endl;
+							log::getLog() << "Lua error encountered during UI event from element " << source->name.cString << ":" << std::endl << error.what() << std::endl;
 						}
 						break;
 					}
