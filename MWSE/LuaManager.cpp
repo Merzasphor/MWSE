@@ -1796,8 +1796,8 @@ namespace mwse {
 		}
 
 		void LuaManager::updateTimers(float deltaTime, double simulationTimestamp, bool simulating) {
-			//realTimers->incrementClock(deltaTime);
-			//gameTimers->setClock(simulationTimestamp);
+			realTimers->incrementClock(deltaTime);
+			gameTimers->setClock(simulationTimestamp);
 
 			if (simulating) {
 				simulateTimers->incrementClock(deltaTime);
@@ -1805,9 +1805,9 @@ namespace mwse {
 		}
 
 		void LuaManager::clearTimers() {
-			//realTimers->clearTimers();
+			realTimers->clearTimers();
 			simulateTimers->clearTimers();
-			//gameTimers->clearTimers();
+			gameTimers->clearTimers();
 		}
 
 		std::shared_ptr<TimerController> LuaManager::getTimerController(TimerType::TimerType type) {
