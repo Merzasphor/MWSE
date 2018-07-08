@@ -586,6 +586,9 @@ namespace mwse {
 				eventData["var1"] = m_Variable1;
 				eventData["var2"] = m_Variable2;
 
+				// TODO: Remove. Legacy support for older mods.
+				eventData["block"] = m_Source;
+
 				return eventData;
 			}
 
