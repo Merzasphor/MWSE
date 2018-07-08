@@ -10,6 +10,7 @@ The following individuals have contributed to the Morrowind Script Extender.
 - FreshFish
 - Grant McDorman
 - Greatness7_
+- Hrnchamd_
 - Merzasphor_
 - Michael Wallar (NullCascade_)
 - Pete Goodfellow (Petethegoat_)
@@ -17,6 +18,7 @@ The following individuals have contributed to the Morrowind Script Extender.
 - Timeslip
 
 .. _Greatness7: https://github.com/Greatness7
+.. _Hrnchamd: https://github.com/Hrnchamd
 .. _Merzasphor: https://github.com/Merzasphor
 .. _NullCascade: https://github.com/NullCascade
 .. _Petethegoat: https://github.com/Petethegoat
