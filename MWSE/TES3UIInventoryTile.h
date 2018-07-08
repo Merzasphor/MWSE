@@ -9,7 +9,7 @@ namespace TES3 {
 			ItemData * itemData; // 0x4
 			void * unknown_0x8;
 			int count; // 0xC
-			UI::Block * block; // 0x10
+			Element * element; // 0x10
 			char unknown_0x14;
 			char padding_0x15[3];
 			unsigned int flags; // 0x18

@@ -19,6 +19,7 @@
     <ClInclude Include="D3DVector.h" />
     <ClInclude Include="D3DViewport.h" />
     <ClInclude Include="DynamicLuaObject.h" />
+    <ClInclude Include="TES3UIDefines.h" />
     <ClInclude Include="LuaEvents.h" />
     <ClInclude Include="LuaManager.h" />
     <ClInclude Include="LuaScript.h" />
@@ -191,9 +192,11 @@
     <ClInclude Include="TES3StaticLua.h" />
     <ClInclude Include="TES3Statistic.h" />
     <ClInclude Include="TES3StatisticLua.h" />
-    <ClInclude Include="TES3UIBlock.h" />
-    <ClInclude Include="TES3UIBlockLua.h" />
+    <ClInclude Include="TES3UIElement.h" />
+    <ClInclude Include="TES3UIElementLua.h" />
     <ClInclude Include="TES3UIInventoryTile.h" />
+    <ClInclude Include="TES3UIManager.h" />
+    <ClInclude Include="TES3UIMenuController.h" />
     <ClInclude Include="TES3UIString.h" />
     <ClInclude Include="TES3UITree.h" />
     <ClInclude Include="TES3UIVector.h" />
@@ -221,6 +224,7 @@
     <ClInclude Include="TES3WorldController.h" />
     <ClInclude Include="TES3WorldControllerLua.h" />
     <ClInclude Include="TES3GameFile.h" />
+    <ClInclude Include="TES3UIManagerLua.h" />
     <ClInclude Include="UIUtil.h" />
     <ClInclude Include="VirtualMachine.h" />
     <ClInclude Include="VMExecuteInterface.h" />
@@ -250,6 +254,7 @@
     <ClCompile Include="RngUtil.cpp" />
     <ClCompile Include="ScriptUtil.cpp" />
     <ClCompile Include="ScriptUtilLua.cpp" />
+    <ClCompile Include="TES3UIManager.cpp" />
     <ClCompile Include="StackLua.cpp" />
     <ClCompile Include="StringUtilLua.cpp" />
     <ClCompile Include="TES3ActionDataLua.cpp" />
@@ -336,8 +341,10 @@
     <ClCompile Include="TES3StaticLua.cpp" />
     <ClCompile Include="TES3Statistic.cpp" />
     <ClCompile Include="TES3StatisticLua.cpp" />
-    <ClCompile Include="TES3UIBlock.cpp" />
-    <ClCompile Include="TES3UIBlockLua.cpp" />
+    <ClCompile Include="TES3UIElement.cpp" />
+    <ClCompile Include="TES3UIElementLua.cpp" />
+    <ClCompile Include="TES3UIManagerLua.cpp" />
+    <ClCompile Include="TES3UIMenuController.cpp" />
     <ClCompile Include="TES3UtilLua.cpp" />
     <ClCompile Include="TES3Vectors.cpp" />
     <ClCompile Include="TES3VectorsLua.cpp" />

@@ -284,12 +284,12 @@ namespace mwse {
 
 			class GenericUiPreEvent : public GenericEvent {
 			public:
-				GenericUiPreEvent(TES3::UI::Block* parent, TES3::UI::Block* block, unsigned int prop, unsigned int var1, unsigned int var2);
+				GenericUiPreEvent(TES3::UI::Element* parent, TES3::UI::Element* element, unsigned int prop, unsigned int var1, unsigned int var2);
 				sol::table createEventTable();
 
 			protected:
-				TES3::UI::Block* m_Parent;
-				TES3::UI::Block* m_Block;
+				TES3::UI::Element* m_Parent;
+				TES3::UI::Element* m_Source;
 				unsigned int m_Property;
 				unsigned int m_Variable1;
 				unsigned int m_Variable2;
@@ -299,7 +299,7 @@ namespace mwse {
 
 			class GenericUiPostEvent : public GenericUiPreEvent {
 			public:
-				GenericUiPostEvent(TES3::UI::Block* parent, TES3::UI::Block* block, unsigned int prop, unsigned int var1, unsigned int var2);
+				GenericUiPostEvent(TES3::UI::Element* parent, TES3::UI::Element* element, unsigned int prop, unsigned int var1, unsigned int var2);
 			};
 
 			// ---------------------------------------------------------------------------- //

@@ -31,7 +31,8 @@
 #include "TES3MobileProjectile.h"
 #include "TES3Defines.h"
 #include "TES3Reference.h"
-#include "TES3UIBlock.h"
+#include "TES3UIElement.h"
+#include "TES3UIManager.h"
 #include "TES3UIInventoryTile.h"
 #include "TES3WorldController.h"
 
@@ -93,7 +94,8 @@
 #include "TES3MagicSourceInstanceLua.h"
 #include "TES3StaticLua.h"
 #include "TES3StatisticLua.h"
-#include "TES3UIBlockLua.h"
+#include "TES3UIElementLua.h"
+#include "TES3UIManagerLua.h"
 #include "TES3VectorsLua.h"
 #include "TES3WeaponLua.h"
 #include "TES3WeatherControllerLua.h"
@@ -306,12 +308,14 @@ namespace mwse {
 			bindTES3SpellList();
 			bindTES3Static();
 			bindTES3Statistic();
-			bindTES3UIBlock();
 			bindTES3Vectors();
 			bindTES3Weapon();
 			bindTES3Weather();
 			bindTES3WeatherController();
 			bindTES3WorldController();
+
+			bindTES3UIElement();
+			bindTES3UIManager();
 
 			// Bind NI data types.
 			bindNICamera();
@@ -568,7 +572,7 @@ namespace mwse {
 				sol::table eventData = response;
 				if (eventData["block"] == true) {
 					// If we want to block it, we need to run some functions to clear the held item back to the inventory.
-					TES3::UI::Block* inventoryMenu = tes3::ui::getMenuNode(tes3::ui::getInventoryMenuId());
+					TES3::UI::Element* inventoryMenu = tes3::ui::getMenuNode(tes3::ui::getInventoryMenuId());
 					inventoryMenu->timingUpdate();
 					tes3::ui::inventoryAddTile(1, tile);
 					inventoryMenu->performLayout(1);
@@ -772,17 +776,17 @@ namespace mwse {
 		// UI event hooking.
 		//
 
-		signed char __cdecl OnUIEvent(DWORD function, TES3::UI::Block* parent, DWORD prop, DWORD b, DWORD c, TES3::UI::Block* block) {
+		signed char __cdecl OnUIEvent(DWORD function, TES3::UI::Element* parent, DWORD prop, DWORD b, DWORD c, TES3::UI::Element* source) {
 			// Execute event. If the event blocked the call, bail.
 			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-			sol::table eventData = luaManager.triggerEvent(new event::GenericUiPreEvent(parent, block, prop, b, c));
+			sol::table eventData = luaManager.triggerEvent(new event::GenericUiPreEvent(parent, source, prop, b, c));
 			if (eventData.valid() && eventData["block"] == true) {
 				return 0;
 			}
 
-			signed char result = reinterpret_cast<signed char (__cdecl *)(TES3::UI::Block*, DWORD, DWORD, DWORD, TES3::UI::Block*)>(function)(parent, prop, b, c, block);
+			signed char result = reinterpret_cast<signed char (__cdecl *)(TES3::UI::Element*, DWORD, DWORD, DWORD, TES3::UI::Element*)>(function)(parent, prop, b, c, source);
 
-			luaManager.triggerEvent(new event::GenericUiPostEvent(parent, block, prop, b, c));
+			luaManager.triggerEvent(new event::GenericUiPostEvent(parent, source, prop, b, c));
 
 			return result;
 		}

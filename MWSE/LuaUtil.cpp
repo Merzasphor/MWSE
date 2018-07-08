@@ -60,7 +60,7 @@
 #include "TES3SoundGenerator.h"
 #include "TES3Spell.h"
 #include "TES3Static.h"
-#include "TES3UIBlock.h"
+#include "TES3UIElement.h"
 #include "TES3Vectors.h"
 #include "TES3Weapon.h"
 #include "TES3Weather.h"
