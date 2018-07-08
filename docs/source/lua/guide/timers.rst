@@ -48,6 +48,7 @@ A timer's state (read through the ``.state`` property), can be ``timer.active``,
 A timer can be told to pause, resume, reset, or cancel.
 
 .. code-block:: lua
+
     -- Create a timer.
     local myTimer = timer.start({ duration = 60, callback = onTimerComplete })
 

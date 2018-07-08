@@ -2,7 +2,7 @@
 Action Data
 ========================================================
 
-This represents an action being taken by a `MobileCreature`_, `MobileNPC`_, or `MobilePlayer`_.
+This represents an action being taken by a `Mobile Creature`_, `Mobile NPC`_, or `Mobile Player`_.
 
 
 Properties
@@ -69,7 +69,7 @@ Properties
 .. _`Faction`: faction.html
 .. _`Mobile Creature`: mobileCreature.html
 .. _`Mobile NPC`: mobileNPC.html
-.. _`Mobile Player`: mobileCreature.html
+.. _`Mobile Player`: mobilePlayer.html
 .. _`NPC`: npc.html
 .. _`Weapon`: weapon.html
 .. _`Vector3`: vector3.html

@@ -13,17 +13,15 @@ Properties
 .. toctree::
    :hidden:
 
-   baseObject/id
    baseObject/objectType
-   baseObject/sourceMod
     
-`id <baseObject/id.html>`_ (`String`_)
+**id** (`String`_)
     The object's unique ID.
 
 `objectType <baseObject/objectType.html>`_ (`Number`_)
     The object's type.
     
-`sourceMod <baseObject/sourceMod.html>`_ (`String`_)
+**sourceMod** (`String`_)
     The mod that this object is from.
 
 
