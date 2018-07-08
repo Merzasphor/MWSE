@@ -24,8 +24,8 @@
 namespace mwse {
 	namespace tes3 {
 		namespace ui {
-			TES3::UI::Block* getTopMenu() {
-				return reinterpret_cast<TES3::UI::Block*(__stdcall *)()>(TES3_ui_getMenuOnTop)();
+			TES3::UI::Element* getTopMenu() {
+				return reinterpret_cast<TES3::UI::Element*(__stdcall *)()>(TES3_ui_getMenuOnTop)();
 			}
 
 			bool requestMenuModeOff() {
@@ -48,8 +48,8 @@ namespace mwse {
 				*reinterpret_cast<int*>(TES3_ui_buttonPressedIndex) = -1;
 			}
 
-			TES3::UI::Block* getMenuNode(short id) {
-				return reinterpret_cast<TES3::UI::Block*(__cdecl *)(short)>(TES3_ui_getMenuNode)(id);
+			TES3::UI::Element* getMenuNode(short id) {
+				return reinterpret_cast<TES3::UI::Element*(__cdecl *)(short)>(TES3_ui_getMenuNode)(id);
 			}
 
 			short getInventoryMenuId() {

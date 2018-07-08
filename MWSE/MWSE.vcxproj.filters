@@ -169,6 +169,12 @@
     <Filter Include="Header Files\DataAdapters\TES3\Weather">
       <UniqueIdentifier>{492099fe-dfdd-4766-86e8-d3f38bcca43c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Lua\Bindings\TES3\UI">
+      <UniqueIdentifier>{89bf175d-23eb-4075-9ea7-5d7378efc315}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lua\Bindings\TES3\UI">
+      <UniqueIdentifier>{f6a29ee0-5513-404b-809d-c7b453fba745}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Flags.h">
@@ -606,9 +612,6 @@
     <ClInclude Include="TES3UIInventoryTile.h">
       <Filter>Header Files\DataAdapters\TES3\UI</Filter>
     </ClInclude>
-    <ClInclude Include="TES3UIBlock.h">
-      <Filter>Header Files\DataAdapters\TES3\UI</Filter>
-    </ClInclude>
     <ClInclude Include="TES3UIVector.h">
       <Filter>Header Files\DataAdapters\TES3\UI</Filter>
     </ClInclude>
@@ -637,9 +640,6 @@
       <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
     </ClInclude>
     <ClInclude Include="TES3SoundLua.h">
-      <Filter>Header Files\Lua\Bindings\TES3</Filter>
-    </ClInclude>
-    <ClInclude Include="TES3UIBlockLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
     <ClInclude Include="TES3MobileActor.h">
@@ -812,6 +812,23 @@
     </ClInclude>
     <ClInclude Include="TES3Quest.h">
       <Filter>Header Files\DataAdapters\TES3\Dialog</Filter>
+    <ClInclude Include="TES3UIDefines.h">
+      <Filter>Header Files\DataAdapters\TES3\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3UIManager.h">
+      <Filter>Header Files\DataAdapters\TES3\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3UIManagerLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3UIMenuController.h">
+      <Filter>Header Files\Lua\Bindings\TES3\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3UIElement.h">
+      <Filter>Header Files\DataAdapters\TES3\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3UIElementLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1733,9 +1750,6 @@
     <ClCompile Include="TES3UtilLua.cpp">
       <Filter>Source Files\Lua\Bindings</Filter>
     </ClCompile>
-    <ClCompile Include="TES3UIBlock.cpp">
-      <Filter>Source Files\DataAdapters\TES3\UI</Filter>
-    </ClCompile>
     <ClCompile Include="TES3InputController.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
@@ -1752,9 +1766,6 @@
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3SoundLua.cpp">
-      <Filter>Source Files\Lua\Bindings\TES3</Filter>
-    </ClCompile>
-    <ClCompile Include="TES3UIBlockLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3Sound.cpp">
@@ -1864,6 +1875,20 @@
     </ClCompile>
     <ClCompile Include="TES3Dialogue.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    <ClCompile Include="TES3UIManager.cpp">
+      <Filter>Source Files\DataAdapters\TES3\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3UIManagerLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3UIMenuController.cpp">
+      <Filter>Source Files\DataAdapters\TES3\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3UIElement.cpp">
+      <Filter>Source Files\DataAdapters\TES3\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3UIElementLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

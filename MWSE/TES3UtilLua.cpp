@@ -28,7 +28,7 @@
 #include "TES3Region.h"
 #include "TES3Script.h"
 #include "TES3SoundGenerator.h"
-#include "TES3UIBlock.h"
+#include "TES3UIElement.h"
 #include "TES3Weather.h"
 #include "TES3WeatherController.h"
 #include "TES3WorldController.h"

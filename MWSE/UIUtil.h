@@ -5,7 +5,7 @@
 namespace mwse {
 	namespace tes3 {
 		namespace ui {
-			TES3::UI::Block* getTopMenu();
+			TES3::UI::Element* getTopMenu();
 
 			bool requestMenuModeOff();
 			bool requestMenuModeOn(short prop = 0);
@@ -14,7 +14,7 @@ namespace mwse {
 			int getButtonPressedIndex();
 			void resetButtonPressedIndex();
 
-			TES3::UI::Block* getMenuNode(short);
+			TES3::UI::Element* getMenuNode(short);
 			short getInventoryMenuId();
 
 			TES3::UI::InventoryTile* inventoryAddTile(int, TES3::UI::InventoryTile*);

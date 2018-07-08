@@ -2,6 +2,6 @@
 
 namespace mwse {
 	namespace lua {
-		void bindTES3UIBlock();
+		void bindTES3UIManager();
 	}
 }
