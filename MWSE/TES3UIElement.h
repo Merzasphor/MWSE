@@ -110,6 +110,7 @@ namespace TES3 {
 			PropertyValue getProperty(PropertyType propType, Property prop) const;
 			const char* getText() const;
 
+			void setProperty(Property prop, PropertyValue value, PropertyType type);
 			void setProperty(Property prop, int value);
 			void setProperty(Property prop, float value);
 			void setProperty(Property prop, void* value);

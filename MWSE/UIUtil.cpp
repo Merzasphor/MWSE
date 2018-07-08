@@ -84,7 +84,7 @@ namespace mwse {
 					allowRest = eventData["allowRest"];
 				}
 
-				reinterpret_cast<void(__cdecl *)(signed char)>(TES3_ui_showRestWaitMenu)(allowRest);
+				reinterpret_cast<void(__cdecl *)(bool)>(TES3_ui_showRestWaitMenu)(allowRest);
 			}
 		}
 	}

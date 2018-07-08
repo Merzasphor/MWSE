@@ -603,6 +603,35 @@ namespace mwse {
 			}
 
 			//
+			// General UI post-create event.
+			//
+
+			GenericUiCreatedEvent::GenericUiCreatedEvent(TES3::UI::Element * element) :
+				GenericEvent("uiCreated"),
+				m_Element(element)
+			{
+
+			}
+
+			sol::table GenericUiCreatedEvent::createEventTable() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table eventData = state.create_table();
+
+				eventData["element"] = m_Element;
+
+				return eventData;
+			}
+
+			sol::object GenericUiCreatedEvent::getEventOptions() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table options = state.create_table();
+
+				options["filter"] = m_Element->name.cString;
+
+				return options;
+			}
+
+			//
 			// Show rest/wait menu event.
 			//
 

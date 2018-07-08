@@ -304,6 +304,18 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
+			class GenericUiCreatedEvent : public GenericEvent {
+			public:
+				GenericUiCreatedEvent(TES3::UI::Element * parent);
+				sol::table createEventTable();
+				sol::object getEventOptions();
+
+			protected:
+				TES3::UI::Element* m_Element;
+			};
+
+			// ---------------------------------------------------------------------------- //
+
 			class ShowRestWaitMenuEvent : public GenericEvent {
 			public:
 				ShowRestWaitMenuEvent(bool allowRest, bool scripted);

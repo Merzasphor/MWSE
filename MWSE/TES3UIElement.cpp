@@ -146,6 +146,10 @@ namespace TES3 {
 			return v;
 		}
 
+		void Element::setProperty(Property prop, PropertyValue value, PropertyType type) {
+			TES3_ui_setProperty(this, prop, value, type);
+		}
+
 		void Element::setProperty(Property prop, int value) {
 			PropertyValue v;
 			v.integerValue = value;
