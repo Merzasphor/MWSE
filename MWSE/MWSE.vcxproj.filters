@@ -812,6 +812,7 @@
     </ClInclude>
     <ClInclude Include="TES3Quest.h">
       <Filter>Header Files\DataAdapters\TES3\Dialog</Filter>
+    </ClInclude>
     <ClInclude Include="TES3UIDefines.h">
       <Filter>Header Files\DataAdapters\TES3\UI</Filter>
     </ClInclude>
@@ -1875,6 +1876,7 @@
     </ClCompile>
     <ClCompile Include="TES3Dialogue.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
     <ClCompile Include="TES3UIManager.cpp">
       <Filter>Source Files\DataAdapters\TES3\UI</Filter>
     </ClCompile>
