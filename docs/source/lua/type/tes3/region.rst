@@ -15,7 +15,7 @@ Properties
     The region's user-friendly name.
 
 **objectType** (`number`_, read-only)
-    The object's `objectType`_.
+    The object's `Object Type`_.
 
 **sleepCreature** (`tes3leveledCreature`_, read-only)
     The creature that might ambush the player at this location.
@@ -77,6 +77,8 @@ Functions
 .. _`userdata`: ../lua/userdata.html
 
 .. _`Cell`: cell.html
+
+.. _`Object Type`: ../../../mwscript/references.html#object-types
 
 .. _`tes3leveledCreature`: leveledCreature.html
 .. _`tes3iterator`: iterator.html

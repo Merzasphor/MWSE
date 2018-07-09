@@ -38,11 +38,13 @@ Properties
 .. _`String`: ../lua/string.html
 .. _`Table`: ../lua/table.html
 
+.. _`NiNode`: ../ni/node.html
+
+.. _`Object Type`: ../../../mwscript/references.html#object-types
+
 .. _`Alchemy`: alchemy.html
 .. _`Armor`: armor.html
 .. _`Base Object`: baseObject.html
 .. _`Bounding Box`: boundingBox.html
 .. _`Object`: object.html
 .. _`Reference`: reference.html
-
-.. _`Object Type`: ../../../mwscript/references.html#object-types

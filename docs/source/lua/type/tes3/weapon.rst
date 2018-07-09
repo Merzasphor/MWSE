@@ -4,6 +4,7 @@ Weapon
 
 This interface represents a weapon game object.
 
+
 Properties
 --------------------------------------------------------
 

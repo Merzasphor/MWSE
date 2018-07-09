@@ -38,3 +38,9 @@ Properties
 .. _`NiNode`: ../ni/node.html
 
 .. _`Object Type`: ../../../mwscript/references.html#object-types
+
+.. _`Alchemy`: alchemy.html
+.. _`Armor`: armor.html
+.. _`Base Object`: baseObject.html
+.. _`Physical Object`: physicalObject.html
+.. _`Reference`: reference.html

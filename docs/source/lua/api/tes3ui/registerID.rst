@@ -2,7 +2,7 @@
 tes3ui.registerID
 ====================================================================================================
 
-Registers a UI element name, returning a UI_ID. Once a property is registered, this function always returns the same UI_ID. These UI_IDs are used by the API to locate elements that may not exist (a weak reference), instead of by element name.
+Registers a UI element name, returning a `UI_ID`_. Once a property is registered, this function always returns the same UI_ID. These UI_IDs are used by the API to locate elements that may not exist (a weak reference), instead of by element name.
 
 The registry namespace is shared between `Property`_ and `UI_ID`_. It is advisable to use a namespace prefix to avoid collisions with other mods.
 
@@ -13,7 +13,7 @@ The registry namespace is shared between `Property`_ and `UI_ID`_. It is advisab
 **Parameters:**
 
 - `string`_ **name**
-    The name of the UI element. 
+    The unique name of the UI element.
 
 **Returns:**
 

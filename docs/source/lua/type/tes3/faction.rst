@@ -33,7 +33,7 @@ Properties
 
 **skills** (`number`_)
     The faction's favored skills.
---------------------------------------------------------
+
 
 .. _`boolean`: ../lua/boolean.html
 .. _`number`: ../lua/number.html
