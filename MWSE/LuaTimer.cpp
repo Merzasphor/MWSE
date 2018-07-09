@@ -55,7 +55,7 @@ namespace mwse {
 
 		std::shared_ptr<Timer> TimerController::createTimer(double duration, sol::protected_function callback, int iterations) {
 			// Validate parameters.
-			if (duration < 0.0 || iterations < 0 || callback.get_type() != sol::type::function) {
+			if (duration <= 0.0 || iterations < 0 || callback.get_type() != sol::type::function) {
 				return nullptr;
 			}
 
