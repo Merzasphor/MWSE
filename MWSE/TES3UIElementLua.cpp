@@ -7,6 +7,7 @@
 
 #include "TES3UIElement.h"
 #include "TES3UIManager.h"
+#include "TES3UIManagerLua.h"
 
 #include "sol.hpp"
 #include "LuaManager.h"
@@ -17,10 +18,7 @@ namespace mwse {
 		using TES3::UI::Element;
 		using TES3::UI::UI_ID;
 
-		typedef std::pair<TES3::UI::Property, sol::protected_function> EventLuaCallback;
-		static std::unordered_map<uintptr_t, std::vector<EventLuaCallback>> eventMap;
-
-		const std::array<std::pair<const char *, TES3::UI::Property>, 19> standardNamedEvents = { {
+		const std::unordered_map<std::string, TES3::UI::Property> standardNamedEvents = {
 			{ "mouseLeave", TES3::UI::Property::event_mouse_leave },
 			{ "mouseOver", TES3::UI::Property::event_mouse_over },
 			{ "mouseDown", TES3::UI::Property::event_mouse_down },
@@ -40,7 +38,7 @@ namespace mwse {
 			{ "update", TES3::UI::Property::event_update },
 			{ "preUpdate", TES3::UI::Property::event_pre_update },
 			{ "destroy", TES3::UI::Property::event_destroy }
-		} };
+		};
 
 		const UI_ID idNull = static_cast<UI_ID>(TES3::UI::Property::null);
 
@@ -50,95 +48,6 @@ namespace mwse {
 
 		bool toBoolean(TES3::UI::Property prop) {
 			return prop == TES3::UI::Property::boolean_true;
-		}
-
-		TES3::UI::Boolean __cdecl eventDispatcher(Element* owningWidget, TES3::UI::Property eventID, int data0, int data1, Element* source) {
-			sol::state& state = LuaManager::getInstance().getState();
-
-			auto iterElements = eventMap.find(reinterpret_cast<uintptr_t>(source));
-			if (iterElements != eventMap.end()) {
-				for (const auto& eventPair : iterElements->second) {
-					if (eventPair.first == eventID) {
-						sol::table eventData = state.create_table();
-						eventData["id"] = eventID;
-						eventData["data0"] = data0;
-						eventData["data1"] = data1;
-
-						// Call into Lua
-						auto result = eventPair.second(sol::make_object(state, source), eventData);
-						if (!result.valid()) {
-							sol::error error = result;
-							log::getLog() << "Lua error encountered during UI event from element " << source->name.cString << ":" << std::endl << error.what() << std::endl;
-						}
-						// Default return true to event system
-						sol::optional<TES3::UI::Boolean> ret = result;
-						return ret.value_or(1);
-					}
-				}
-			}
-			return 1;
-		}
-
-		void __cdecl eventDestroyDispatcher(Element* source) {
-			sol::state& state = LuaManager::getInstance().getState();
-
-			// Dispatch Lua callback
-			auto iterElements = eventMap.find(reinterpret_cast<uintptr_t>(source));
-			if (iterElements != eventMap.end()) {
-				for (const auto& eventPair : iterElements->second) {
-					if (eventPair.first == TES3::UI::Property::event_destroy) {
-						// Call into Lua
-						auto result = eventPair.second(sol::make_object(state, source));
-						if (!result.valid()) {
-							sol::error error = result;
-							log::getLog() << "Lua error encountered during UI event from element " << source->name.cString << ":" << std::endl << error.what() << std::endl;
-						}
-						break;
-					}
-				}
-			}
-
-			// Remove event mappings
-			eventMap.erase(iterElements);
-		}
-
-		void registerEvent(Element& target, TES3::UI::Property eventID, sol::protected_function callback) {
-			auto key = reinterpret_cast<uintptr_t>(&target);
-			if (eventMap.find(key) == eventMap.end()) {
-				// Set a destroy hook the first time an event is added to an Element to allow cleanup
-				// This callback uses PropertyType::Pointer instead of PropertyType::EventCallback
-				target.setProperty(eventID, static_cast<void*>(&eventDestroyDispatcher));
-			}
-			auto& elementEvents = eventMap[key];
-
-			// Forward the event to our dispatcher
-			if (eventID != TES3::UI::Property::event_destroy) {
-				target.setProperty(eventID, &eventDispatcher);
-			}
-
-			// Check for existing event to replace
-			for (auto& eventPair : elementEvents) {
-				if (eventPair.first == eventID) {
-					eventPair.second = callback;
-					return;
-				}
-			}
-
-			// Add new event to list
-			elementEvents.push_back(std::make_pair(eventID, callback));
-		}
-
-		void unregisterEvent(Element& target, TES3::UI::Property eventID) {
-			auto key = reinterpret_cast<uintptr_t>(&target);
-			auto& elementEvents = eventMap[key];
-
-			// Check for existing event
-			for (auto it = elementEvents.begin(); it != elementEvents.end(); ++it) {
-				if (it->first == eventID) {
-					elementEvents.erase(it);
-					return;
-				}
-			}
 		}
 
 		void bindTES3UIElement() {
@@ -395,31 +304,29 @@ namespace mwse {
 					}
 
 					// Map friendlier event names to standard UI events
-					for (auto& x : standardNamedEvents) {
-						if (eventID == x.first) {
-							registerEvent(self, x.second, callback);
-							return;
-						}
+					auto it = standardNamedEvents.find(eventID);
+					if (it != standardNamedEvents.end()) {
+						registerUIEvent(self, it->second, callback);
+						return;
 					}
 
 					// Check UI registry for custom event
 					TES3::UI::Property prop = TES3::UI::registerProperty(eventID.c_str());
-					registerEvent(self, prop, callback);
+					registerUIEvent(self, prop, callback);
 				}
 			);
 			usertypeDefinition.set("unregister",
 				[](Element& self, const std::string& eventID) {
 					// Map friendlier event names to standard UI events
-					for (auto& x : standardNamedEvents) {
-						if (eventID == x.first) {
-							unregisterEvent(self, x.second);
-							return;
-						}
+					auto it = standardNamedEvents.find(eventID);
+					if (it != standardNamedEvents.end()) {
+						unregisterUIEvent(self, it->second);
+						return;
 					}
 
 					// Check UI registry for custom event
 					TES3::UI::Property prop = TES3::UI::registerProperty(eventID.c_str());
-					unregisterEvent(self, prop);
+					unregisterUIEvent(self, prop);
 				}
 			);
 
