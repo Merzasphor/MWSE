@@ -25,6 +25,7 @@ namespace TES3 {
 		const auto TES3_ui_factoryVertScrollPane = reinterpret_cast<TES3_UI_WidgetFactoryMethod_t>(0x648FD0);
 
 		const auto TES3_ui_findChildElement = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID)>(0x582DE0);
+		const auto TES3_ui_getTopLevelParent = reinterpret_cast<Element* (__thiscall *)(Element*)>(0x582EF0);
 		const auto TES3_ui_performLayout = reinterpret_cast<Element* (__thiscall *)(Element*, Boolean)>(0x583B70);
 		const auto TES3_ui_setAutoHeight = reinterpret_cast<void (__thiscall *)(Element*, Boolean)>(0x581400);
 		const auto TES3_ui_setAutoWidth = reinterpret_cast<void (__thiscall *)(Element*, Boolean)>(0x5813C0);
@@ -114,6 +115,10 @@ namespace TES3 {
 
 		Element* Element::findChild(UI_ID id) {
 			return TES3_ui_findChildElement(this, id);
+		}
+
+		Element* Element::getTopLevelParent() {
+			return TES3_ui_getTopLevelParent(this);
 		}
 
 		Element* Element::performLayout(Boolean bUpdateTimestamp) {

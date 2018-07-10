@@ -22,13 +22,13 @@ namespace TES3 {
 			int updateReqTimestamp;
 			char unknown_0x74;
 			Boolean visible;
-			Boolean flagUpdateWhenHidden_maybe;
+			Boolean visibleAtLastUpdate;
 			Boolean flagUsesRGBA;
 			Boolean flagPosChanged;
 			Boolean flagSizeChanged;
 			Boolean flagVisibilityChanged;
-			char flagClippingChanged;
-			Boolean flagContentTypeChanged;
+			Boolean flagClippingChanged;
+			Boolean flagContentChanged;
 			char unknown_0x7D;
 			char unknown_0x7E;
 			char unknown_0x7F;
@@ -97,6 +97,7 @@ namespace TES3 {
 			//
 
 			Element* findChild(UI_ID id);
+			Element* getTopLevelParent();
 			Element* performLayout(Boolean bUpdateTimestamp = 1);
 			void setAutoHeight(Boolean bAuto);
 			void setAutoWidth(Boolean bAuto);

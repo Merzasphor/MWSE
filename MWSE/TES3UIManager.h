@@ -12,5 +12,12 @@ namespace TES3 {
 		Boolean leaveMenuMode();
 		void acquireTextInput(Element* element);
 		void preventInventoryMenuToggle(Element* menu);
+
+		void registerWrappedText(Element* element);
+		void unregisterTextContainer(Element* textLabel);
+		Boolean __cdecl onTextContainerResizing(Element*, Property, int, int, Element*);
+		Boolean __cdecl onScrollPaneMousewheel(Element*, Property, int, int, Element*);
+
+		void hook();
 	}
 }
