@@ -51,14 +51,14 @@ namespace TES3 {
 		return reinterpret_cast<Reference* (__thiscall *)(Reference*)>(TES3_Reference_getActionReference)(this);
 	}
 
-	TES3::ItemDataAttachment* Reference::addItemDataAttachment(TES3::ItemData* data) {
-		return reinterpret_cast<ItemDataAttachment* (__thiscall *)(Reference*, TES3::ItemData*)>(TES3_Reference_addItemDataAttachment)(this, data);
+	ItemDataAttachment* Reference::addItemDataAttachment(ItemData* data) {
+		return reinterpret_cast<ItemDataAttachment* (__thiscall *)(Reference*, ItemData*)>(TES3_Reference_addItemDataAttachment)(this, data);
 	}
 
 	void Reference::setPositionFromLua(sol::stack_object value) {
 		// Is it a vector?
-		if (value.is<TES3::Vector3*>()) {
-			setPosition(value.as<TES3::Vector3*>());
+		if (value.is<Vector3*>()) {
+			setPosition(value.as<Vector3*>());
 		}
 		// Allow a simple table to be provided.
 		else if (value.is<sol::table>()) {
@@ -80,29 +80,29 @@ namespace TES3 {
 		position.z = z;
 	}
 
-	void Reference::setPosition(TES3::Vector3* positionVec) {
+	void Reference::setPosition(Vector3* positionVec) {
 		setPosition(positionVec->x, positionVec->y, positionVec->z);
 	}
 
-	TES3::Inventory * Reference::getInventory() {
+	Inventory * Reference::getInventory() {
 		// Only actors have equipment.
-		if (baseObject->objectType != TES3::ObjectType::Container &&
-			baseObject->objectType != TES3::ObjectType::Creature &&
-			baseObject->objectType != TES3::ObjectType::NPC) {
+		if (baseObject->objectType != ObjectType::Container &&
+			baseObject->objectType != ObjectType::Creature &&
+			baseObject->objectType != ObjectType::NPC) {
 			return NULL;
 		}
 
-		return &reinterpret_cast<TES3::Actor*>(baseObject)->inventory;
+		return &reinterpret_cast<Actor*>(baseObject)->inventory;
 	}
 
-	TES3::Iterator<EquipmentStack> * Reference::getEquipment() {
+	Iterator<EquipmentStack> * Reference::getEquipment() {
 		// Only actors have equipment.
-		if (baseObject->objectType != TES3::ObjectType::Container &&
-			baseObject->objectType != TES3::ObjectType::Creature &&
-			baseObject->objectType != TES3::ObjectType::NPC) {
+		if (baseObject->objectType != ObjectType::Container &&
+			baseObject->objectType != ObjectType::Creature &&
+			baseObject->objectType != ObjectType::NPC) {
 			return NULL;
 		}
 
-		return &reinterpret_cast<TES3::Actor*>(baseObject)->equipment;
+		return &reinterpret_cast<Actor*>(baseObject)->equipment;
 	}
 }

@@ -30,17 +30,17 @@ namespace TES3 {
 		void setActionReference(Reference*);
 		Reference * getActionReference();
 
-		TES3::ItemDataAttachment* addItemDataAttachment(TES3::ItemData*);
+		ItemDataAttachment* addItemDataAttachment(ItemData*);
 
 		//
 		// Other utility functions.
 		//
 
 		void setPosition(float x, float y, float z);
-		void setPosition(TES3::Vector3* positionVec);
+		void setPosition(Vector3* positionVec);
 
-		TES3::Inventory * getInventory();
-		TES3::Iterator<EquipmentStack> * getEquipment();
+		Inventory * getInventory();
+		Iterator<EquipmentStack> * getEquipment();
 
 		//
 		// Lua interface functions.
