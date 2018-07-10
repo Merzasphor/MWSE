@@ -1,6 +1,9 @@
 -- Require lua files from the right folder, instead of just the root Morrowind directory.
 package.path = "./Data Files/MWSE/lua/?.lua;"
 
+-- DLL files can be in the root, or in the main lua folder.
+package.cpath = "?.dll;./Data Files/MWSE/lua/?.dll;"
+
 function include(moduleName)
 	local module
 	pcall(function() module = require(moduleName) end)
