@@ -32,15 +32,13 @@ namespace mwse {
 				usertypeDefinition.set("filename", sol::readonly_property([](TES3::Sound& self) { return self.filename; }));
 
 				// Basic function binding.
-				usertypeDefinition.set("play", [](TES3::Sound& self, sol::optional<sol::table> params)
-				{
-					TES3::Reference* reference = getOptionalParamReference(params, "reference");
+				usertypeDefinition.set("play", [](TES3::Sound& self, sol::optional<sol::table> params) {
+					TES3::Reference * reference = getOptionalParamReference(params, "reference");
 					unsigned char volume = getOptionalParam<double>(params, "volume", 1.0) * 255;
 					float pitch = getOptionalParam<double>(params, "pitch", 1.0);
-					int flag = getOptionalParam<double>(params, "flag", 0.0);
-					return self.play(reference, volume, pitch, flag);
-				}
-				);
+					bool isNot3D = getOptionalParam<bool>(params, "isNot3D", reference == NULL);
+					return self.play(reference, volume, pitch, isNot3D);
+				});
 
 				// Finish up our usertype.
 				state.set_usertype("tes3sound", usertypeDefinition);

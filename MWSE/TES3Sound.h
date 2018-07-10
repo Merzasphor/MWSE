@@ -18,7 +18,7 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		bool play(TES3::Reference* reference, unsigned char volume = 0xFD, float pitch = 1.0f, int is3D = 0);
+		bool play(TES3::Reference* reference, unsigned char volume = 0xFD, float pitch = 1.0f, bool isNot3D = false);
 
 	};
 	static_assert(sizeof(Sound) == 0x58, "TES3::Sound failed size validation");
