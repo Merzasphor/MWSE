@@ -238,23 +238,29 @@ namespace mwse {
 		}
 
 		// Directly create a real-time timer.
-		std::shared_ptr<Timer> startTimerLegacyReal(double duration, sol::protected_function callback, sol::optional<int> iterations) {
+		std::shared_ptr<Timer> startTimerLegacyRealWithIterations(double duration, sol::protected_function callback, int iterations) {
 			std::shared_ptr<TimerController> controller = LuaManager::getInstance().getTimerController(TimerType::RealTime);
 			if (controller == nullptr) {
 				return nullptr;
 			}
 
-			return controller->createTimer(duration, callback, iterations.value_or(1));
+			return controller->createTimer(duration, callback, iterations);
+		}
+		std::shared_ptr<Timer> startTimerLegacyReal(double duration, sol::protected_function callback) {
+			return startTimerLegacyRealWithIterations(duration, callback, 1);
 		}
 
-		// Directly createa  simulation-time timer.
-		std::shared_ptr<Timer> startTimerLegacySimulation(double duration, sol::protected_function callback, sol::optional<int> iterations) {
+		// Directly create a simulation-time timer.
+		std::shared_ptr<Timer> startTimerLegacySimulationWithIterations(double duration, sol::protected_function callback, int iterations) {
 			std::shared_ptr<TimerController> controller = LuaManager::getInstance().getTimerController(TimerType::SimulationTime);
 			if (controller == nullptr) {
 				return nullptr;
 			}
 
-			return controller->createTimer(duration, callback, iterations.value_or(1));
+			return controller->createTimer(duration, callback, iterations);
+		}
+		std::shared_ptr<Timer> startTimerLegacySimulation(double duration, sol::protected_function callback) {
+			return startTimerLegacySimulationWithIterations(duration, callback, 1);
 		}
 
 		// Function to pause a given timer.
@@ -371,11 +377,11 @@ namespace mwse {
 			state["timer"]["expired"] = TimerState::Expired;
 
 			// Bind the legacy and new start functions.
-			state["timer"]["start"] = sol::overload(&startTimerAmbiguous, &startTimerLegacySimulation);
+			state["timer"]["start"] = sol::overload(&startTimerAmbiguous, &startTimerLegacySimulation, &startTimerLegacySimulationWithIterations);
 
 			// Legacy support for frame timers.
 			state["timer"]["frame"] = state.create_table();
-			state["timer"]["frame"]["start"] = &startTimerLegacyReal;
+			state["timer"]["frame"]["start"] = sol::overload(&startTimerLegacyReal, &startTimerLegacyRealWithIterations);
 
 			// Legacy support for functions.
 			state["timer"]["pause"] = &legacyTimerPause;
