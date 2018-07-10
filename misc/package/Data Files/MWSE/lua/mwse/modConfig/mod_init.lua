@@ -75,6 +75,8 @@ end
 -- Callback for when the mod config button has been clicked.
 -- Here, we'll create the GUI and set up everything.
 local function onClickModConfigButton()
+	tes3.worldController.menuClickSound:play()
+
 	local menu = tes3ui.findMenu(UIID_mwse_modConfigMenu)
 	if (menu == nil) then
 		-- Create the main menu frame.

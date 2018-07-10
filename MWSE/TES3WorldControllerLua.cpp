@@ -11,6 +11,7 @@
 #include "TES3GlobalVariable.h"
 #include "TES3InputController.h"
 #include "TES3Script.h"
+#include "TES3Sound.h"
 #include "TES3WeatherController.h"
 #include "TES3WorldController.h"
 
@@ -100,7 +101,23 @@ namespace mwse {
 				usertypeDefinition.set("year", &TES3::WorldController::gvarYear);
 
 				// Access to other objects that need to be packaged.
+				usertypeDefinition.set("criticalDamageSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundCriticalDamage); }));
+				usertypeDefinition.set("defaultLandSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundDefaultLand); }));
+				usertypeDefinition.set("defaultLandWaterSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundDefaultLandWater); }));
+				usertypeDefinition.set("drowningDamageSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundDrowningDamage); }));
+				usertypeDefinition.set("drownSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundDrown); }));
+				usertypeDefinition.set("handToHandHit2Sound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundHandToHandHit2); }));
+				usertypeDefinition.set("handToHandHitSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundHandToHandHit); }));
+				usertypeDefinition.set("healthDamageSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundHealthDamage); }));
+				usertypeDefinition.set("heavyArmorHitSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundHeavyArmorHit); }));
+				usertypeDefinition.set("itemRepairSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundItemRepair); }));
+				usertypeDefinition.set("lightArmorHitSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundLightArmorHit); }));
+				usertypeDefinition.set("mediumArmorHitSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundMediumArmorHit); }));
+				usertypeDefinition.set("menuClickSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundMenuClick); }));
+				usertypeDefinition.set("menuSizeSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundMenuSize); }));
+				usertypeDefinition.set("missSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundMiss); }));
 				usertypeDefinition.set("nodeCursor", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.nodeCursor); }));
+				usertypeDefinition.set("weaponSwishSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundWeaponSwish); }));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3worldController", usertypeDefinition);

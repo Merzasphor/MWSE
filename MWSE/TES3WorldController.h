@@ -136,22 +136,22 @@ namespace TES3 {
 		void * fogOfWarController; // 0x2E0
 		void * menuController; // 0x2E4
 		void * uiInventoryData; // 0x2E8
-		int unknown_0x2EC;
-		int unknown_0x2F0;
-		int unknown_0x2F4;
-		int unknown_0x2F8;
-		int unknown_0x2FC;
-		int unknown_0x300;
-		int unknown_0x304;
-		int unknown_0x308;
-		int unknown_0x30C;
-		int unknown_0x310;
-		int unknown_0x314;
-		int unknown_0x318;
-		int unknown_0x31C;
-		int unknown_0x320;
-		int unknown_0x324;
-		int unknown_0x328;
+		Sound * soundWeaponSwish; // 0x2EC
+		Sound * soundLightArmorHit; // 0x2F0
+		Sound * soundMediumArmorHit; // 0x2F4
+		Sound * soundHeavyArmorHit; // 0x2F8
+		Sound * soundHealthDamage; // 0x2FC
+		Sound * soundDrown; // 0x300
+		Sound * soundDrowningDamage; // 0x304
+		Sound * soundHandToHandHit; // 0x308
+		Sound * soundHandToHandHit2; // 0x30C
+		Sound * soundMiss; // 0x310
+		Sound * soundCriticalDamage; // 0x314
+		Sound * soundDefaultLand; // 0x318
+		Sound * soundDefaultLandWater; // 0x31C
+		Sound * soundMenuClick; // 0x320
+		Sound * soundMenuSize; // 0x324
+		Sound * soundItemRepair; // 0x328
 		int unknown_0x32C;
 		float deadFloatScale; // 0x330
 		int unknown_0x334;
