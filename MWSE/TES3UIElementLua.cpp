@@ -87,6 +87,10 @@ namespace mwse {
 				[](Element& self) { return self.visible != 0; },
 				[](Element& self, bool value) { self.setVisible(value); }
 			));
+			usertypeDefinition.set("acceptMouseEvents", sol::property(
+				[](Element& self) { return self.flagAcceptMouseEvents != 0; },
+				[](Element& self, bool value) { self.flagAcceptMouseEvents = value; }
+			));
 			usertypeDefinition.set("nodeMinX", &Element::nodeMinX);
 			usertypeDefinition.set("nodeMaxX", &Element::nodeMaxX);
 			usertypeDefinition.set("nodeMinY", &Element::nodeMinY);

@@ -182,6 +182,12 @@ Methods
         The newly created button.
 
     Creates a clickable button. Register the "mouseClick" event to capture a button press.
+    
+`Element`_ **createImageButton** {id = `UI_ID`_ ``optional``, idle = `string`_, over = `string`_, pressed = `string`_}  ``Uses table arguments.``
+    Returns:
+        A **block** with responsive images.
+
+    Creates a clickable button composed of images for the **idle**, **over** and **pressed** states.
 
 `Element`_ **createFillBar** {id = `UI_ID`_ ``optional``}  ``Uses table arguments.``
     Returns:

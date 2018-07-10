@@ -121,14 +121,33 @@ local function onClickModConfigButton()
 
 		-- Create container for mod content. This will be deleted whenever the pane is reloaded.
 		modConfigContainer = mainHorizontalBlock:createBlock({})
+		modConfigContainer.flowDirection = "top_to_bottom"
 		modConfigContainer.layoutWidthFraction = 1.0
 		modConfigContainer.layoutHeightFraction = 1.0
 		modConfigContainer.paddingLeft = 4
 
-		-- Dummy content until a mod is clicked.
-		menu:updateLayout()
-		local modText = modConfigContainer:createLabel({ text = "Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam eaque ipsa, quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt, explicabo. Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos, qui ratione voluptatem sequi nesciunt, neque porro quisquam est, qui dolorem ipsum, quia dolor sit amet consectetur adipisci[ng] velit, sed quia non-numquam [do] eius modi tempora inci[di]dunt, ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur, vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?" })
-		modText.wrapText = true
+		-- Splash screen.
+		local splash = modConfigContainer:createImage({ path = "textures/mwse/menu_modconfig_splash.tga" })
+		splash.layoutOriginFractionX = 0.5
+		splash.borderTop = 25
+
+		-- Create a link back to the website.
+		local site = modConfigContainer:createLabel({ text = "mwse.readthedocs.io" })
+		site.layoutOriginFractionX = 0.5
+		site.red = 112 / 255
+		site.green = 126 / 255
+		site.blue = 207 / 255
+		site:register("mouseClick", function()
+			tes3.messageBox({
+				message = "Open web browser?",
+				buttons = { tes3.getGMST(68).value, tes3.getGMST(69).value },
+				callback = function(e)
+					if (e.button == 0) then
+						os.execute("start http://mwse.readthedocs.io")
+					end
+				end
+			})
+		end)
 
 		-- Create bottom button block.
 		local bottomBlock = menu:createBlock{}
@@ -177,7 +196,12 @@ local function onCreatedMenuOptions(e)
 	end
 
 	local mainMenu = e.element
-	local button = mainMenu:createButton({ text = "Mod Configuration" })
+
+	local button = mainMenu:createImageButton({
+		idle = "textures/mwse/menu_modconfig.dds",
+		over = "textures/mwse/menu_modconfig_over.dds",
+		pressed = "textures/mwse/menu_modconfig_pressed.dds",
+	})
 	button:register("mouseClick", onClickModConfigButton)
 
 	mainMenu.autoWidth = true

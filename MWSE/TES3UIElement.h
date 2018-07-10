@@ -31,7 +31,7 @@ namespace TES3 {
 			Boolean flagContentChanged;
 			char unknown_0x7D;
 			char unknown_0x7E;
-			char unknown_0x7F;
+			Boolean flagAcceptMouseEvents;
 			char unknown_0x80;
 			char unknown_0x81;
 			char unknown_0x82;

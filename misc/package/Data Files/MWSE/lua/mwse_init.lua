@@ -243,5 +243,58 @@ function mwse.log(str, ...)
 	print(str:format(...))
 end
 
+-------------------------------------------------
+-- Usertype Extensions: tes3uiElement
+-------------------------------------------------
+
+-- Create a button composed of images that has a mouse over and mouse pressed state.
+function tes3uiElement:createImageButton(params)
+	-- Create our parent block.
+	local buttonBlock = self:createBlock({ id = params.id })
+	buttonBlock.autoWidth = true
+	buttonBlock.autoHeight = true
+	
+	-- Create our child buttons using the params provided.
+	local buttonIdle = buttonBlock:createImage({ path = params.idle })
+	local buttonOver = buttonBlock:createImage({ path = params.over })
+	local buttonPressed = buttonBlock:createImage({ path = params.pressed })
+
+	-- Prevent any of the above-created buttons from consuming the mouse events.
+	buttonIdle.acceptMouseEvents = false
+	buttonOver.acceptMouseEvents = false
+	buttonPressed.acceptMouseEvents = false
+
+	-- Hide the over/pressed buttons for now.
+	buttonOver.visible = false
+	buttonPressed.visible = false
+
+	-- Create the functions to hide/show buttons based on mouse state.
+	buttonBlock:register("mouseOver", function()
+		buttonIdle.visible = false
+		buttonOver.visible = true
+		buttonPressed.visible = false
+	end)
+	buttonBlock:register("mouseLeave", function()
+		buttonIdle.visible = true
+		buttonOver.visible = false
+		buttonPressed.visible = false
+	end)
+	buttonBlock:register("mouseDown", function()
+		buttonIdle.visible = false
+		buttonOver.visible = false
+		buttonPressed.visible = true
+	end)
+	buttonBlock:register("mouseRelease", function()
+		buttonIdle.visible = false
+		buttonOver.visible = true
+		buttonPressed.visible = false
+	end)
+
+	-- Return the created block.
+	return buttonBlock
+end
+
+-------------------------------------------------
+
 -- Report that we're initialized.
 print("MWSE Lua interface initialized.")
