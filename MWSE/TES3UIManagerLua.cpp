@@ -1,3 +1,9 @@
+#include <cstdint>
+#include <string>
+#include <unordered_map>
+#include <utility>
+#include <vector>
+
 #include "TES3UIElement.h"
 #include "TES3UIManager.h"
 #include "TES3UIMenuController.h"
@@ -62,6 +68,11 @@ namespace mwse {
 
 			// Remove event mappings
 			eventMap.erase(iterElements);
+
+			// Remove text wrapping handler if source is a menu
+			if (source == source->getTopLevelParent()) {
+				TES3::UI::unregisterTextContainer(source);
+			}
 		}
 
 		void registerUIEvent(Element& target, TES3::UI::Property eventID, sol::protected_function callback) {
@@ -105,7 +116,6 @@ namespace mwse {
 
 		void bindTES3UIManager() {
 			sol::state& state = LuaManager::getInstance().getState();
-
 			auto tes3ui = state.create_named_table("tes3ui");
 
 			tes3ui["registerID"] = TES3::UI::registerID;
@@ -121,10 +131,15 @@ namespace mwse {
 
 				if (args.get<bool>("fixedFrame")) {
 					menu->createFixedFrame(id.value(), 1);
+					// Standard behaviours
 					TES3::UI::preventInventoryMenuToggle(menu);
 				}
 				else if (args.get<bool>("dragFrame")) {
 					menu->createDragFrame(id.value(), 1);
+
+					// Handle text reflow for TextLabel children, as the UI framework assumes static text
+					static const auto propDragMenuOnResizing = TES3::UI::registerProperty("PartDragMenu_on_resizing");
+					menu->setProperty(propDragMenuOnResizing, TES3::UI::onTextContainerResizing);
 				}
 
 				return menu;

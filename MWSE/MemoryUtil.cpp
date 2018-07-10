@@ -1,7 +1,6 @@
-#include "MemoryUtil.h"
-
+#include <string.h>
 #include "MemAccess.h"
-
+#include "MemoryUtil.h"
 #include "Log.h"
 
 namespace mwse {
@@ -193,4 +192,14 @@ namespace mwse {
 
 		return true;
 	}
+
+	void writePatchUnprotected(DWORD address, const BYTE* patch, DWORD size) {
+		DWORD oldProtect;
+		VirtualProtect((DWORD*)address, size, PAGE_READWRITE, &oldProtect);
+
+		memcpy_s((void*)address, size, patch, size);
+
+		VirtualProtect((DWORD*)address, size, oldProtect, &oldProtect);
+	}
+
 }

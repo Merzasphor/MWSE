@@ -1,9 +1,5 @@
-#include <array>
-#include <cstdint>
 #include <string>
 #include <unordered_map>
-#include <utility>
-#include <vector>
 
 #include "TES3UIElement.h"
 #include "TES3UIManager.h"
@@ -178,7 +174,12 @@ namespace mwse {
 					auto prop = self.getProperty(TES3::UI::PropertyType::Property, TES3::UI::Property::wrap_text);
 					return toBoolean(prop.propertyValue);
 				},
-				[](Element& self, bool value) { self.setProperty(TES3::UI::Property::wrap_text, toBooleanProperty(value)); }
+				[](Element& self, bool value) {
+					self.setProperty(TES3::UI::Property::wrap_text, toBooleanProperty(value));
+
+					// Set a handler to reflow wrapped text on updates
+					TES3::UI::registerWrappedText(&self);
+				}
 			));
 			usertypeDefinition.set("scaleMode", sol::property(
 				[](Element& self) {
@@ -253,7 +254,11 @@ namespace mwse {
 					}
 					return text;
 				},
-				[](Element& self, const char* value) { self.setText(value); }
+				[](Element& self, const char* value) {
+					// Set text and signal menu to re-layout.
+					self.setText(value);
+					self.getTopLevelParent()->timingUpdate();
+				}
 			));
 
 			// Custom property accessor functions.
@@ -332,6 +337,7 @@ namespace mwse {
 
 			// Layout functions.
 			usertypeDefinition.set("findChild", [](Element& self, UI_ID id) { return self.findChild(id); });
+			usertypeDefinition.set("getTopLevelParent", [](Element& self) { return self.getTopLevelParent(); });
 			usertypeDefinition.set("updateLayout", [](Element& self) { self.performLayout(1); });
 
 			// Creation/destruction functions.
@@ -350,7 +356,12 @@ namespace mwse {
 				return self.createFillBar(args.get_or("id", idNull));
 			});
 			usertypeDefinition.set("createHorizontalScrollPane", [](Element& self, sol::table args) {
-				return self.createHorizontalScrollPane(args.get_or("id", idNull));
+				auto scrollpane = self.createHorizontalScrollPane(args.get_or("id", idNull));
+
+				// Add mouse wheel handlers (see event dispatch patch in TES3UIManager.cpp)
+				scrollpane->setProperty(TES3::UI::Property::event_mouse_scroll_down, TES3::UI::onScrollPaneMousewheel);
+				scrollpane->setProperty(TES3::UI::Property::event_mouse_scroll_up, TES3::UI::onScrollPaneMousewheel);
+				return scrollpane;
 			});
 			usertypeDefinition.set("createHypertext", [](Element& self, sol::table args) {
 				return self.createHypertext(args.get_or("id", idNull));
@@ -398,7 +409,12 @@ namespace mwse {
 				return self.createNif(args.get_or("id", idNull), "menu_thin_border.nif");
 			});
 			usertypeDefinition.set("createVerticalScrollPane", [](Element& self, sol::table args) {
-				return self.createVerticalScrollPane(args.get_or("id", idNull));
+				auto scrollpane = self.createVerticalScrollPane(args.get_or("id", idNull));
+
+				// Add mouse wheel handlers (see event dispatch patch in TES3UIManager.cpp)
+				scrollpane->setProperty(TES3::UI::Property::event_mouse_scroll_down, TES3::UI::onScrollPaneMousewheel);
+				scrollpane->setProperty(TES3::UI::Property::event_mouse_scroll_up, TES3::UI::onScrollPaneMousewheel);
+				return scrollpane;
 			});
 
 			usertypeDefinition.set("destroy", [](Element& self) {

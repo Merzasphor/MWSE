@@ -313,6 +313,12 @@ Methods
 
     Finds a child element matching the ``id`` argument. Searches children recursively.
 
+`Element`_ **getTopLevelMenu** ()
+    Returns:
+        The menu that the element is a descendant of.
+
+    Finds the parent menu containing the element.
+
 `boolean`_ **getPropertyBool** (`Property`_ prop)
     ..
 
@@ -321,7 +327,7 @@ Methods
 
 `number`_ **getPropertyInt** (`Property`_ prop)
     Returns:
-        The property value, or ``nil`` if the property key did not have data.
+        The property value, or ``0`` / ``false`` if the property key did not have data.
 
     Gets a property value with ``prop`` as the property key. Useful for element class-specific properties.
 

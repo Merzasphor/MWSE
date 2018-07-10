@@ -1776,6 +1776,9 @@ namespace mwse {
 			genCallEnforced(0x0, 0x595A40, reinterpret_cast<DWORD>(OnBuildUI_Tooltip));
 			*/
 
+			// UI framework hooks
+			TES3::UI::hook();
+
 			// Make magic effects writable.
 			DWORD OldProtect;
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);
