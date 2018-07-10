@@ -75,6 +75,7 @@ end
 -- Callback for when the mod config button has been clicked.
 -- Here, we'll create the GUI and set up everything.
 local function onClickModConfigButton()
+	-- Play the click sound.
 	tes3.worldController.menuClickSound:play()
 
 	local menu = tes3ui.findMenu(UIID_mwse_modConfigMenu)
@@ -142,7 +143,7 @@ local function onClickModConfigButton()
 		site:register("mouseClick", function()
 			tes3.messageBox({
 				message = "Open web browser?",
-				buttons = { tes3.getGMST(68).value, tes3.getGMST(69).value },
+				buttons = { tes3.getGMST(tes3.gmst.sYes).value, tes3.getGMST(tes3.gmst.sNo).value },
 				callback = function(e)
 					if (e.button == 0) then
 						os.execute("start http://mwse.readthedocs.io")
@@ -158,7 +159,7 @@ local function onClickModConfigButton()
 		bottomBlock.alignX = 1.0
 
 		-- Add a close button to the bottom block.
-		local closeButton = bottomBlock:createButton{ text = tes3.getGMST(27).value }
+		local closeButton = bottomBlock:createButton{ text = tes3.getGMST(tes3.gmst.sClose).value }
 		closeButton:register("mouseClick", onClickCloseButton)
 
 		-- Cause the menu to refresh itself.
