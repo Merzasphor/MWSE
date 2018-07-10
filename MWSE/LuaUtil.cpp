@@ -402,6 +402,9 @@ namespace mwse {
 			case TES3::ObjectType::Skill:
 				result = sol::make_object(state, reinterpret_cast<TES3::Skill*>(object));
 				break;
+			case TES3::ObjectType::Sound:
+				result = sol::make_object(state, reinterpret_cast<TES3::Sound*>(object));
+				break;
 			case TES3::ObjectType::Spell:
 				result = sol::make_object(state, reinterpret_cast<TES3::Spell*>(object));
 				break;
