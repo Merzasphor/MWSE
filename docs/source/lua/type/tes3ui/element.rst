@@ -17,6 +17,9 @@ Properties
 **parent** (`Element`_, read-only)
     A reference to the parent `Element`_.
 
+**children** (`Element`_ array, read-only)
+    A table containing references to children `Element`_ s. This is a copy that does not track changes.
+
 **visible** (`boolean`_)
     If the element is visible.
 
@@ -69,7 +72,9 @@ Properties
     ..
 
 **layoutHeightFraction** (`number`_, float)
-    Sets element dimensions to a multiplier of parent element dimensions. 1.0 = equal dimension to parent.
+    Sets element dimensions using a proportional sizer. The sizer starts with the parent dimension in the flow direction, subtracts any fixed dimension children leaving the proptional sizer space. Each proportionally sized element then gets an equal division of the space, multiplied by this member.
+    
+    Overrides fixed, minimum and maximum sizes unless this value is -1.0 (default).
 
 **red** (`number`_, float)
     ..
@@ -307,6 +312,12 @@ Methods
 
     Deletes an element and all its child elements. If any element is bound to text input by `tes3ui.acquireTextInput`_, the input is automatically released.
 
+**destroyChildren** ()
+    Returns:
+        none
+
+    Deletes all the child elements of this element. If any element is bound to text input by `tes3ui.acquireTextInput`_, the input is automatically released.
+
 `Element`_ **findChild** (`UI_ID`_ id)
     Returns:
         The first child element with a matching id, or ``nil`` if no match found.
@@ -336,6 +347,14 @@ Methods
         none
 
     Sets an event handler. Can be a standard event name, or an event specific to an element class.
+
+`boolean`_ **reorderChildren** (`Element`_ ``or`` `number`_ insertBefore, `Element`_ ``or`` `number`_ moveFrom, `number`_ count)
+    Returns:
+        ``true`` if the operation succeeded, or ``false`` if at least one argument was invalid.
+    
+    Moves the layout order of the children of this element. ``count`` elements are taken from starting child `Element`_ or index (0-based) ``moveFrom``, and moved before the child `Element`_ or index (0-based) ``insertBefore``. If ``count`` is -1, all children after ``moveFrom`` are moved. If any index is a negative number, then the index represents a distance from the end of the child list. 
+    
+    e.g. ``reorderChildren(0, -3, 3)`` causes the last 3 children to be moved to the start of the order (before index 0).
 
 **setPropertyBool** (`Property`_ prop, `boolean`_ value)
     ..

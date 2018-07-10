@@ -1,3 +1,6 @@
+#include "string.h"
+#include <vector>
+
 #include "TES3UIManager.h"
 #include "TES3UIElement.h"
 
@@ -8,9 +11,11 @@ namespace TES3 {
 		const auto TES3_ui_createBlock = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, Boolean)>(0x588980);
 		const auto TES3_ui_createImage = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, const char*, Boolean)>(0x588630);
 		const auto TES3_ui_createLabel = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, const char*, Boolean, Boolean)>(0x588BE0);
+		const auto TES3_ui_createNif = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, const char*, Boolean)>(0x588830);
 		const auto TES3_ui_createWidget = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, TES3_UI_WidgetFactoryMethod_t, Boolean)>(0x588140);
-		const auto TES3_ui_loadNif = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, const char*, Boolean)>(0x588830);
 		const auto TES3_deleting_dtor_UIElement = reinterpret_cast<void (__thiscall *)(Element*, char)>(0x578880);
+		const auto TES3_ui_destroyChildren = reinterpret_cast<void (__thiscall *)(Element*)>(0x578820);
+
 		const auto TES3_ui_factoryButton = reinterpret_cast<TES3_UI_WidgetFactoryMethod_t>(0x639420);
 		const auto TES3_ui_factoryDragFrame = reinterpret_cast<TES3_UI_WidgetFactoryMethod_t>(0x63B5E0);
 		const auto TES3_ui_factoryFillBar = reinterpret_cast<TES3_UI_WidgetFactoryMethod_t>(0x63E640);
@@ -78,7 +83,7 @@ namespace TES3 {
 		}
 
 		Element* Element::createNif(UI_ID id, const char* path, Boolean bReplaceThisElement) {
-			return TES3_ui_loadNif(this, id, path, bReplaceThisElement);
+			return TES3_ui_createNif(this, id, path, bReplaceThisElement);
 		}
 
 		Element* Element::createParagraphInput(UI_ID id, Boolean bReplaceThisElement) {
@@ -109,6 +114,10 @@ namespace TES3 {
 			TES3_deleting_dtor_UIElement(this, 1);
 		}
 
+		void Element::destroyChildren() {
+			TES3_ui_destroyChildren(this);
+		}
+
 		//
 		// Layout methods
 		//
@@ -117,12 +126,64 @@ namespace TES3 {
 			return TES3_ui_findChildElement(this, id);
 		}
 
+		int Element::getIndexOfChild(const Element *child) {
+			const Element** it = static_cast<const Element**>(this->vectorChildren.begin);
+			const Element** end = static_cast<const Element**>(this->vectorChildren.end);
+
+			for (int i = 0; it != this->vectorChildren.end; ++i, ++it) {
+				if (*it == child) {
+					return i;
+				}
+			}
+			return -1;
+		}
+
 		Element* Element::getTopLevelParent() {
 			return TES3_ui_getTopLevelParent(this);
 		}
 
 		Element* Element::performLayout(Boolean bUpdateTimestamp) {
 			return TES3_ui_performLayout(this, bUpdateTimestamp);
+		}
+
+		bool Element::reorderChildren(int insertBefore, int moveFrom, int count) {
+			// Move <count> children from index <moveFrom> to index <insertBefore>
+			// Negative positions indicate distance from end, negative count moves all children after moveFrom
+			if (this->vectorChildren.begin == this->vectorChildren.end) {
+				return false;
+			}
+
+			const Element** begin = static_cast<const Element**>(this->vectorChildren.begin);
+			const Element** end = static_cast<const Element**>(this->vectorChildren.end);
+			int childCount = int(end - begin);
+
+			// Convert negative indices to distance from end, and negative count to move all items after moveFrom
+			insertBefore = (insertBefore < 0) ? childCount + insertBefore : insertBefore;
+			moveFrom = (moveFrom < 0) ? childCount + moveFrom : moveFrom;
+			count = (count < 0) ? childCount - moveFrom : count;
+
+			// Array bounds checks
+			if (insertBefore < 0 || insertBefore > childCount || moveFrom < 0 || moveFrom >= childCount || count < 0 || count + moveFrom > childCount) {
+				return false;
+			}
+
+			// Copy <count> elements into a temp buffer
+			const Element** from = begin + moveFrom, ** to = begin + insertBefore;
+			std::vector<const Element*> temp(from, from + count);
+
+			// Slide <shift> children in-place, then write buffer into correct location
+			if (moveFrom < insertBefore) {
+				int shift = insertBefore - moveFrom;
+				memmove_s(from, sizeof(Element*) * shift, from + count, sizeof(Element*) * shift);
+				memmove_s(to - count, sizeof(Element*) * count, &*temp.begin(), sizeof(Element*) * count);
+			}
+			else {
+				int shift = moveFrom - insertBefore;
+				memmove_s(to + count, sizeof(Element*) * shift, to, sizeof(Element*) * shift);
+				memmove_s(to, sizeof(Element*) * count, &*temp.begin(), sizeof(Element*) * count);
+			}
+
+			return true;
 		}
 
 		void Element::setAutoHeight(Boolean bAuto) {

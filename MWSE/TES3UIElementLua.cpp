@@ -58,6 +58,17 @@ namespace mwse {
 			usertypeDefinition.set("id", sol::readonly_property(&Element::id));
 			usertypeDefinition.set("name", sol::readonly_property([](Element& self) { return self.name.cString; }));
 			usertypeDefinition.set("parent", sol::readonly_property(&Element::parent));
+			usertypeDefinition.set("children", sol::readonly_property(
+				[](const Element& self) {
+					sol::table children;
+					auto it = static_cast<const Element**>(self.vectorChildren.begin);
+					auto end = static_cast<const Element**>(self.vectorChildren.end);
+					for (int i = 1; it != end; ++it, ++i) {
+						children[i] = *it;
+					}
+					return children;
+				}
+			));
 
 			// Read-write property bindings.
 			// Many properties also set lazy-update flags through setProperty.
@@ -336,8 +347,33 @@ namespace mwse {
 			);
 
 			// Layout functions.
+			usertypeDefinition.set("destroyChildren", [](Element& self) { return self.destroyChildren(); });
 			usertypeDefinition.set("findChild", [](Element& self, UI_ID id) { return self.findChild(id); });
 			usertypeDefinition.set("getTopLevelParent", [](Element& self) { return self.getTopLevelParent(); });
+			usertypeDefinition.set("reorderChildren", [](Element& self, sol::object insertBefore, sol::object moveFrom, int count) {
+				int indexInsertBefore, indexMoveFrom;
+
+				if (insertBefore.is<int>()) {
+					indexInsertBefore = insertBefore.as<int>();
+				}
+				else {
+					indexInsertBefore = self.getIndexOfChild(insertBefore.as<Element*>());
+					if (indexInsertBefore == -1) {
+						return false;
+					}
+				}
+				if (moveFrom.is<int>()) {
+					indexMoveFrom = moveFrom.as<int>();
+				}
+				else {
+					indexMoveFrom = self.getIndexOfChild(moveFrom.as<Element*>());
+					if (indexMoveFrom == -1) {
+						return false;
+					}
+				}
+
+				return self.reorderChildren(indexInsertBefore, indexMoveFrom, count);
+			});
 			usertypeDefinition.set("updateLayout", [](Element& self) { self.performLayout(1); });
 
 			// Creation/destruction functions.
