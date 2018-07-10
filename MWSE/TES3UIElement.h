@@ -91,14 +91,17 @@ namespace TES3 {
 			Element* createTextSelect(UI_ID id, Boolean bReplaceThisElement = 0);
 			Element* createVerticalScrollPane(UI_ID id, Boolean bReplaceThisElement = 0);
 			void destroy();
+			void destroyChildren();
 
 			//
 			// Layout methods
 			//
 
 			Element* findChild(UI_ID id);
+			int getIndexOfChild(const Element *child);
 			Element* getTopLevelParent();
 			Element* performLayout(Boolean bUpdateTimestamp = 1);
+			bool reorderChildren(int insertBefore, int moveFrom, int count);
 			void setAutoHeight(Boolean bAuto);
 			void setAutoWidth(Boolean bAuto);
 			void setVisible(Boolean bVisible);
