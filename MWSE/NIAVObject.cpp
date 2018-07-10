@@ -10,4 +10,8 @@ namespace NI {
 	void AVObject::propagatePositionChange(float unk1, int unk2, int unk3) {
 		reinterpret_cast<void(__thiscall*)(AVObject*, float, int, int)>(NI_AVObject_propagatePositionChange)(this, unk1, unk2, unk3);
 	}
+
+	void AVObject::setLocalRotationMatrix(TES3::Matrix33 * matrix) {
+		reinterpret_cast<void(__thiscall *)(AVObject*, TES3::Matrix33*)>(0x50E020)(this, matrix);
+	}
 }

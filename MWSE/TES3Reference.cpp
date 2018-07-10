@@ -55,6 +55,10 @@ namespace TES3 {
 		return reinterpret_cast<ItemDataAttachment* (__thiscall *)(Reference*, ItemData*)>(TES3_Reference_addItemDataAttachment)(this, data);
 	}
 
+	Vector3* Reference::getOrientationFromAttachment() {
+		return reinterpret_cast<Vector3* (__thiscall *)(Reference*)>(0x4E5970)(this);
+	}
+
 	void Reference::setPositionFromLua(sol::stack_object value) {
 		// Is it a vector?
 		if (value.is<Vector3*>()) {
@@ -70,18 +74,79 @@ namespace TES3 {
 		}
 	}
 
+	void Reference::setOrientationFromLua(sol::stack_object value) {
+		// Is it a vector?
+		if (value.is<Vector3*>()) {
+			setOrientation(value.as<Vector3*>());
+		}
+		// Allow a simple table to be provided.
+		else if (value.is<sol::table>()) {
+			// Get the values from the table.
+			sol::table positionTable = value.as<sol::table>();
+			if (positionTable.size() == 3) {
+				setOrientation(positionTable[1], positionTable[2], positionTable[3]);
+			}
+		}
+	}
+
+	Vector3 * Reference::getPosition() {
+		return &position;
+	}
+
 	void Reference::setPosition(float x, float y, float z) {
 		sceneNode->localTranslate.x = x;
 		sceneNode->localTranslate.y = y;
 		sceneNode->localTranslate.z = z;
 		sceneNode->propagatePositionChange();
-		position.x = x;
-		position.y = y;
-		position.z = z;
+
+		Vector3 * positionPackage = getPosition();
+		positionPackage->x = x;
+		positionPackage->y = y;
+		positionPackage->z = z;
+		setObjectModified(true);
 	}
 
 	void Reference::setPosition(Vector3* positionVec) {
 		setPosition(positionVec->x, positionVec->y, positionVec->z);
+	}
+
+	Vector3 * Reference::getOrientation() {
+		// NPCs and Creatures use the base orientation in the reference struct.
+		ObjectType::ObjectType type = baseObject->objectType;
+		if (type == ObjectType::NPC || type == ObjectType::Creature) {
+			return &orientation;
+		}
+
+		// Everything else uses the positioning attachment.
+		return getOrientationFromAttachment();
+	}
+
+	void Reference::setOrientation(float x, float y, float z) {
+#if false
+		// Ugly workaround to set the angles.
+		mwse::mwscript::SetAngle(this, 'U', x);
+		mwse::mwscript::SetAngle(this, 'V', y);
+		mwse::mwscript::SetAngle(this, 'W', z);
+#else
+		// Doesn't currently work. Non-NPCs/creatures don't change their orientation.
+		Vector3 * orientationPackage = getOrientation();
+		orientationPackage->x = x;
+		orientationPackage->y = y;
+		orientationPackage->z = z;
+
+		Matrix33 tempOutArg;
+		sceneNode->setLocalRotationMatrix(updateSceneMatrix(&tempOutArg));
+		sceneNode->propagatePositionChange();
+		setObjectModified(true);
+#endif
+	}
+
+	void Reference::setOrientation(Vector3 * value) {
+		setOrientation(value->x, value->y, value->z);
+	}
+
+	Matrix33* Reference::updateSceneMatrix(Matrix33* matrix, bool unknown) {
+		return reinterpret_cast<Matrix33* (__thiscall *)(Reference*, Matrix33*, bool)>(0x4E8450)(this, matrix, unknown);
 	}
 
 	Inventory * Reference::getInventory() {

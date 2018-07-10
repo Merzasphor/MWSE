@@ -122,7 +122,16 @@ namespace mwse {
 			usertypeDefinition.set("context", sol::readonly_property([](TES3::Reference& self) { return getContext(&self); }));
 			usertypeDefinition.set("data", sol::readonly_property(&TES3::Reference::getLuaTable));
 			usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::Reference::isRespawn));
-			usertypeDefinition.set("position", sol::property([](TES3::Reference& self) { return &self.position; }, &TES3::Reference::setPositionFromLua));
+			usertypeDefinition.set("orientation", sol::property([](TES3::Reference& self) { return self.getOrientation(); }, &TES3::Reference::setOrientationFromLua));
+			usertypeDefinition.set("position", sol::property([](TES3::Reference& self) { return self.getPosition(); }, &TES3::Reference::setPositionFromLua));
+
+			// Functions for manually syncing the scene graph, for if orientation or position is manually modified.
+			usertypeDefinition.set("updateSceneGraph", [](TES3::Reference& self) {
+				TES3::Matrix33 tempOutArg;
+				self.sceneNode->setLocalRotationMatrix(self.updateSceneMatrix(&tempOutArg));
+				self.sceneNode->propagatePositionChange();
+				self.setObjectModified(true);
+			});
 
 			// Quick access to attachment data.
 			usertypeDefinition.set("stackSize", sol::property(

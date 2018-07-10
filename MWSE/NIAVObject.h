@@ -34,6 +34,7 @@ namespace NI {
 		//
 
 		void propagatePositionChange(float unk1 = 0.0f, int unk2 = 0, int unk3 = 1);
+		void setLocalRotationMatrix(TES3::Matrix33* matrix);
 
 	};
 	static_assert(sizeof(AVObject) == 0x90, "NI::AVObject failed size validation");

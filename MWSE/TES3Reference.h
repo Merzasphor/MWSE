@@ -31,13 +31,21 @@ namespace TES3 {
 		Reference * getActionReference();
 
 		ItemDataAttachment* addItemDataAttachment(ItemData*);
+		Vector3* getOrientationFromAttachment();
 
 		//
 		// Other utility functions.
 		//
 
+		Vector3 * getPosition();
 		void setPosition(float x, float y, float z);
 		void setPosition(Vector3* positionVec);
+
+		Vector3 * getOrientation();
+		void setOrientation(float x, float y, float z);
+		void setOrientation(Vector3* value);
+
+		Matrix33* updateSceneMatrix(Matrix33* matrix, bool unknown = true);
 
 		Inventory * getInventory();
 		Iterator<EquipmentStack> * getEquipment();
@@ -49,6 +57,7 @@ namespace TES3 {
 		sol::object getBaseObject();
 
 		void setPositionFromLua(sol::stack_object value);
+		void setOrientationFromLua(sol::stack_object value);
 
 		// Return a table (or nil) of attachments for this object.
 		sol::object getAttachments();
