@@ -123,6 +123,11 @@ namespace TES3 {
 			void setProperty(Property prop, PropertyAccessCallback value);
 			void setText(const char *);
 
+			//
+			// Patch methods
+			//
+			void patchUpdateLayout_propagateFlow();
+
 		};
 		static_assert(sizeof(Element) == 0x184, "TES3::UI::Element failed size validation");
 	}

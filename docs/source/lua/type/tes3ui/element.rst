@@ -134,7 +134,7 @@ Properties
     The setting for repeating text input when keys are held down. ``true`` by default.
 
 **wrapText** (`boolean`_)
-    Controls text wrapping.
+    Controls text wrapping. Setting this to ``true`` will also set ``layoutHeightFraction`` to ``1.0``, which is required for wrapping text to adjust to its container size.
 
 **justifyText** (`string`_)
     Can have values ``"left"``, ``"center"``, or ``"right"``. Controls text justification.

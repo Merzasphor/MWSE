@@ -36,6 +36,8 @@ namespace TES3 {
 		const auto TES3_ui_setAutoWidth = reinterpret_cast<void (__thiscall *)(Element*, Boolean)>(0x5813C0);
 		const auto TES3_ui_setVisible = reinterpret_cast<void (__thiscall *)(Element*, Boolean)>(0x57F2A0);
 		const auto TES3_ui_timingUpdate = reinterpret_cast<long (__thiscall *)(Element*)>(0x583B60);
+		const auto TES3_ui_updateLayout_propagateFlow = reinterpret_cast<void(__thiscall*)(Element*)>(0x584850);
+		const auto TES3_ui_updateLayoutContent = reinterpret_cast<void(__thiscall*)(Element*)>(0x583760);
 
 		const auto TES3_ui_getProperty = reinterpret_cast<void (__thiscall *)(const Element*, PropertyValue*, Property, PropertyType, const Element*, Boolean)>(0x581440);
 		const auto TES3_ui_getText = reinterpret_cast<const char* (__thiscall *)(const Element*)>(0x580BB0);
@@ -258,6 +260,23 @@ namespace TES3 {
 
 		void Element::setText(const char* text) {
 			TES3_ui_setText(this, text);
+		}
+
+		//
+		// Patch methods
+		//
+		void Element::patchUpdateLayout_propagateFlow() {
+			// Call original function
+			TES3_ui_updateLayout_propagateFlow(this);
+
+			// On size change, reflow wrapped text
+			if (flagSizeChanged && rawText.length) {
+				auto wrapped = getProperty(PropertyType::Property, Property::wrap_text).propertyValue;
+				if (wrapped == Property::boolean_true) {
+					flagContentChanged = 1;
+					TES3_ui_updateLayoutContent(this);
+				}
+			}
 		}
 
 	}

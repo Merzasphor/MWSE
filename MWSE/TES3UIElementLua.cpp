@@ -192,8 +192,10 @@ namespace mwse {
 				[](Element& self, bool value) {
 					self.setProperty(TES3::UI::Property::wrap_text, toBooleanProperty(value));
 
-					// Set a handler to reflow wrapped text on updates
-					TES3::UI::registerWrappedText(&self);
+					if (value) {
+						// Set proportional height layout, so that flagSizeChanged is updated by the layout engine
+						self.layoutHeightFraction = 1.0;
+					}
 				}
 			));
 			usertypeDefinition.set("scaleMode", sol::property(
