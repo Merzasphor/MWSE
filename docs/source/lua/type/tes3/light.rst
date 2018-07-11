@@ -2,7 +2,8 @@
 Light
 ========================================================
 
-This interface represents an light game object.
+This interface represents a light source game object.
+
 
 Properties
 --------------------------------------------------------
@@ -19,7 +20,7 @@ Properties
 **mesh** (`string`_)
     The object's mesh path, relative to 'Data Files/Meshes'.
 
-**boundingBox** (`userdata`_)
+**boundingBox** (`boundingBox`_)
     The object's `boundingBox`_.
 
 **icon** (`string`_)
@@ -73,6 +74,18 @@ Properties
 **pulsesSlowly** (`boolean`_)
     Description Here
 
+Methods
+--------------------------------------------------------
+
+`number`_ **getTimeLeft** (`tes3equipmentStack`_ x)
+    ..
+
+`number`_ **getTimeLeft** (`Reference`_ x)
+    Returns:
+        The time left until the light burns out, in seconds. It is a float, so many need to be rounded with ``math.floor`` before display.
+
+    Retrieves the remaining lifetime of this light, given the equipment stack or reference that owns it.
+
 
 --------------------------------------------------------
 
@@ -81,5 +94,8 @@ Properties
 .. _`string`: ../lua/string.html
 .. _`table`: ../lua/table.html
 .. _`userdata`: ../lua/userdata.html
+
 .. _`objectType`: baseObject/objectType.html
 .. _`boundingBox`: physicalObject/boundingBox.html
+.. _`tes3equipmentStack`: equipmentStack.html
+.. _`Reference`: reference.html

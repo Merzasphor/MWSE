@@ -4,12 +4,30 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "TES3Inventory.h"
 #include "TES3Light.h"
+#include "TES3Reference.h"
 #include "TES3Script.h"
 #include "TES3Sound.h"
+#include "TES3Util.h"
 
 namespace mwse {
 	namespace lua {
+		sol::optional<float> getTimeLeftEquipStack(const TES3::Light& light, TES3::EquipmentStack& equipStack) {
+			if (equipStack.object == &light) {
+				return (equipStack.variables) ? equipStack.variables->timeLeft : float(light.time);
+			}
+			return sol::optional<float>();
+		}
+
+		sol::optional<float> getTimeLeftReference(const TES3::Light& light, TES3::Reference& refr) {
+			if (refr.baseObject == &light) {
+				auto variables = mwse::tes3::getAttachedItemDataNode(&refr);
+				return (variables) ? variables->timeLeft : float(light.time);
+			}
+			return sol::optional<float>();
+		}
+
 		void bindTES3Light() {
 			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
@@ -56,6 +74,9 @@ namespace mwse {
 			));
 			usertypeDefinition.set("model", sol::property(&TES3::Light::getModelPath, &TES3::Light::setModelPath));
 			usertypeDefinition.set("name", sol::property(&TES3::Light::getName, &TES3::Light::setName));
+
+			// Methods.
+			usertypeDefinition.set("getTimeLeft", sol::overload(&getTimeLeftEquipStack, &getTimeLeftReference));
 
 			// Finish up our usertype.
 			state.set_usertype("tes3light", usertypeDefinition);

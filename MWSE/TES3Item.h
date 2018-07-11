@@ -12,11 +12,14 @@ namespace TES3 {
 			long rank;
 			GlobalVariable * variable;
 		} requirement; // 0x8
-		int condition; // 0xC
+		union {
+			int condition;
+			float timeLeft;
+		}; // 0xC
 		union {
 			float charge;
 			Actor* soul;
-		} enchantData;  // 0x10
+		} enchantData; // 0x10
 		Script * script; // 0x14
 		ScriptVariables * scriptData; // 0x18
 	};
