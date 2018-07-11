@@ -39,8 +39,8 @@ Show a message for what the player is activating
 .. code-block:: lua
 
     -- Show the id when the player activates an object.
-    function myOnActivateCallback(e)
-        if (e.activator == tes3.getPlayerRef()) then
+    local function myOnActivateCallback(e)
+        if (e.activator == tes3.player) then
             tes3.messageBox({ message = "Activated " .. e.target.object.id })
         end
     end
@@ -52,9 +52,9 @@ Prevent the player from activating NPCs
 .. code-block:: lua
 
     -- Show the id when the player activates an object.
-    function myOnActivateCallback(e)
+    local function myOnActivateCallback(e)
         -- We only care if the PC is activating something.
-        if (e.activator ~= tes3.getPlayerRef()) then
+        if (e.activator ~= tes3.player) then
             return
         end
 
