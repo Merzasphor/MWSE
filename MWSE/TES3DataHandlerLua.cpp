@@ -43,6 +43,7 @@ namespace mwse {
 				usertypeDefinition.set("findFirstCloneOfActor", &TES3::NonDynamicData::findFirstCloneOfActor);
 				usertypeDefinition.set("findGlobalVariable", &TES3::NonDynamicData::findGlobalVariable);
 				usertypeDefinition.set("findScript", &TES3::NonDynamicData::findScriptByName);
+				usertypeDefinition.set("findSound", &TES3::NonDynamicData::findSound);
 				usertypeDefinition.set("resolveObject", &TES3::NonDynamicData::resolveObject);
 
 				// Finish up our usertype.

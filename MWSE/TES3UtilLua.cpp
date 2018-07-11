@@ -27,6 +27,7 @@
 #include "TES3Reference.h"
 #include "TES3Region.h"
 #include "TES3Script.h"
+#include "TES3Sound.h"
 #include "TES3SoundGenerator.h"
 #include "TES3UIElement.h"
 #include "TES3Weather.h"
@@ -322,6 +323,19 @@ namespace mwse {
 
 			// Bind function: tes3.iterateList
 			state["tes3"]["iterateObjects"] = sol::overload(&iterateObjects, &iterateObjectsFiltered);
+
+			// Bind function: tes3.getSound
+			state["tes3"]["getSound"] = [](const char* id) -> TES3::Sound * {
+				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				if (dataHandler) {
+					return tes3::getDataHandler()->nonDynamicData->findSound(id);
+				}
+				else {
+					sol::state& state = LuaManager::getInstance().getState();
+					state["error"]("Function called before Data Handler was initialized.");
+					return nullptr;
+				}
+			};
 
 			// Bind function: tes3.getSoundGenerator
 			state["tes3"]["getSoundGenerator"] = [](std::string creatureId, unsigned int type) -> sol::object {
