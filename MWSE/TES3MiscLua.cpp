@@ -35,6 +35,18 @@ namespace mwse {
 				&TES3::Misc::getIconPath,
 				[](TES3::Misc& self, const char* value) { if (strlen(value) < 32) tes3::setDataString(&self.icon, value); }
 			));
+			usertypeDefinition.set("isKey", sol::property(
+				[](TES3::Misc& self) { return bool(self.flags & 1); },
+				[](TES3::Misc& self, bool value) {
+					if (value) {
+						self.flags |= 1;
+						}
+					else {
+						self.flags &= ~1;
+					}
+				}
+			));
+
 			usertypeDefinition.set("model", sol::property(&TES3::Misc::getModelPath, &TES3::Misc::setModelPath));
 			usertypeDefinition.set("name", sol::property(&TES3::Misc::getName, &TES3::Misc::setName));
 

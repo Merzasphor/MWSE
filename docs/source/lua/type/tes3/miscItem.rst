@@ -37,6 +37,9 @@ Properties
 **weight** (`number`_)
     The object's weight.
 
+**isKey** (`boolean`_)
+    True if the item is a key. Merchants do not purchase items marked as keys.
+
 
 --------------------------------------------------------
 

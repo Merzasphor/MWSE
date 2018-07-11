@@ -14,7 +14,7 @@ namespace TES3 {
 		char * icon; // 0x50
 		float weight; // 0x54
 		long value; // 0x58
-		int unknown_0x5C;
+		unsigned int flags; // 0x5C
 	};
 	static_assert(sizeof(Misc) == 0x60, "TES3::Misc failed size validation");
 }
