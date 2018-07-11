@@ -134,7 +134,7 @@ Properties
     The setting for repeating text input when keys are held down. ``true`` by default.
 
 **wrapText** (`boolean`_)
-    Controls text wrapping.
+    Controls text wrapping. Setting this to ``true`` will also set ``layoutHeightFraction`` to ``1.0``, which is required for wrapping text to adjust to its container size.
 
 **justifyText** (`string`_)
     Can have values ``"left"``, ``"center"``, or ``"right"``. Controls text justification.
@@ -192,7 +192,7 @@ Methods
     Returns:
         A **block** with responsive images.
 
-    Creates a clickable button composed of images for the **idle**, **over** and **pressed** states.
+    Creates a clickable button composed of images for the **idle**, **over** and **pressed** states. The texture must have power-of-2 dimensions (i.e. 16, 32, 64, 128, 256, 512, 1024); the final display size can be trimmed by setting width and height. Each image path is relative to ``Data Files``.
 
 `Element`_ **createFillBar** {id = `UI_ID`_ ``optional``}  ``Uses table arguments.``
     Returns:
@@ -227,8 +227,7 @@ Methods
     Returns:
         The newly created image element.
 
-    Creates an image element from a texture file. The path is relative to ``Data Files``.
-    To be documented.
+    Creates an image element from a texture file. The texture must have power-of-2 dimensions (i.e. 16, 32, 64, 128, 256, 512, 1024); the final display size can be trimmed by setting width and height. The path is relative to ``Data Files``.
 
 `Element`_ **createLabel** {id = `UI_ID`_ ``optional``, text = `string`_}  ``Uses table arguments.``
     Returns:
@@ -352,7 +351,7 @@ Methods
     Returns:
         none
 
-    Sets an event handler. Can be a standard event name, or an event specific to an element class.
+    Sets an `event`_ handler. Can be a standard `event`_ name, or an event specific to an element class. The callback receives an argument with the event data. Read the `event` page for event names and the callback signature.
 
 `boolean`_ **reorderChildren** (`Element`_ ``or`` `number`_ insertBefore, `Element`_ ``or`` `number`_ moveFrom, `number`_ count)
     Returns:
@@ -378,7 +377,7 @@ Methods
     Returns:
         none
 
-    Unregisters an event handler.
+    Unregisters an `event`_ handler.
 
 **updateLayout** ()
     Returns:
@@ -393,6 +392,7 @@ Methods
 .. _`string`: ../lua/string.html
 
 .. _`Element`: element.html
+.. _`event`: events.html
 .. _`Property`: property.html
 .. _`UI_ID`: ui_id.html
 

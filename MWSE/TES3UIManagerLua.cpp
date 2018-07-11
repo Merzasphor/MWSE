@@ -28,12 +28,14 @@ namespace mwse {
 				for (const auto& eventPair : iterElements->second) {
 					if (eventPair.first == eventID) {
 						sol::table eventData = state.create_table();
+						eventData["source"] = source;
+						eventData["widget"] = owningWidget;
 						eventData["id"] = eventID;
 						eventData["data0"] = data0;
 						eventData["data1"] = data1;
 
 						// Call into Lua
-						auto result = eventPair.second(sol::make_object(state, source), eventData);
+						auto result = eventPair.second(eventData);
 						if (!result.valid()) {
 							sol::error error = result;
 							log::getLog() << "Lua error encountered during UI event from element " << source->name.cString << ":" << std::endl << error.what() << std::endl;
@@ -55,8 +57,12 @@ namespace mwse {
 			if (iterElements != eventMap.end()) {
 				for (const auto& eventPair : iterElements->second) {
 					if (eventPair.first == TES3::UI::Property::event_destroy) {
+						sol::table eventData = state.create_table();
+						eventData["source"] = source;
+						eventData["id"] = TES3::UI::Property::event_destroy;
+
 						// Call into Lua
-						auto result = eventPair.second(sol::make_object(state, source));
+						auto result = eventPair.second(eventData);
 						if (!result.valid()) {
 							sol::error error = result;
 							log::getLog() << "Lua error encountered during UI event from element " << source->name.cString << ":" << std::endl << error.what() << std::endl;
@@ -68,11 +74,6 @@ namespace mwse {
 
 			// Remove event mappings
 			eventMap.erase(iterElements);
-
-			// Remove text wrapping handler if source is a menu
-			if (source == source->getTopLevelParent()) {
-				TES3::UI::unregisterTextContainer(source);
-			}
 		}
 
 		void registerUIEvent(Element& target, TES3::UI::Property eventID, sol::protected_function callback) {
@@ -136,10 +137,6 @@ namespace mwse {
 				}
 				else if (args.get<bool>("dragFrame")) {
 					menu->createDragFrame(id.value(), 1);
-
-					// Handle text reflow for TextLabel children, as the UI framework assumes static text
-					static const auto propDragMenuOnResizing = TES3::UI::registerProperty("PartDragMenu_on_resizing");
-					menu->setProperty(propDragMenuOnResizing, TES3::UI::onTextContainerResizing);
 				}
 
 				return menu;

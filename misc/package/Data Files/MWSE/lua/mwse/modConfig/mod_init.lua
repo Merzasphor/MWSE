@@ -26,7 +26,7 @@ local function onClickModName(e)
 	end
 
 	-- Update the current mod package.
-	currentModConfig = configMods[e.text]
+	currentModConfig = configMods[e.source.text]
 
 	-- Destroy and recreate the parent container.
 	local modConfigPane = modConfigContainer.parent
@@ -43,7 +43,7 @@ local function onClickModName(e)
 
 	-- Change the mod config title bar to include the mod's name.
 	local menu = tes3ui.findMenu(UIID_mwse_modConfigMenu)
-	menu.text = "Mod Configuration - " .. e.text
+	menu.text = "Mod Configuration - " .. e.source.text
 	menu:updateLayout()
 end
 

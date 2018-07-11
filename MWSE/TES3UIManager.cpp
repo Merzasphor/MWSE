@@ -1,7 +1,3 @@
-#include <cstdint>
-#include <unordered_map>
-#include <vector>
-
 #include "MemoryUtil.h"
 #include "TES3UIElement.h"
 #include "TES3UIManager.h"
@@ -11,8 +7,6 @@
 
 namespace TES3 {
 	namespace UI {
-		static std::unordered_map<Element*, std::vector<Element*>> wrappingTextLabels;
-
 		const DWORD TES3_hook_dispatchMousewheelUp = 0x58F19B;
 		const DWORD TES3_hook_dispatchMousewheelDown = 0x58F1CA;
 
@@ -64,31 +58,6 @@ namespace TES3 {
 		//
 		// Added functionality
 		//
-
-		void registerWrappedText(Element* textLabel) {
-			static auto propPartDragMenu = registerProperty("PartDragMenu");
-
-			Element *menu = textLabel->getTopLevelParent();
-			if (menu->getProperty(PropertyType::Property, Property::is_part).propertyValue == propPartDragMenu) {
-				wrappingTextLabels[menu].push_back(textLabel);
-			}
-		}
-
-		void unregisterTextContainer(Element* menu) {
-			wrappingTextLabels.erase(menu);
-		}
-
-		Boolean __cdecl onTextContainerResizing(Element* owningWidget, Property eventID, int data0, int data1, Element* source) {
-			// Find all text labels that are children of this container
-			auto it = wrappingTextLabels.find(source);
-			if (it != wrappingTextLabels.end()) {
-				for (auto iterTextLabel : it->second) {
-					// Cause text label to reflow on next layout during resize
-					iterTextLabel->flagContentChanged = true;
-				}
-			}
-			return 1;
-		}
 
 		Boolean __cdecl onScrollPaneMousewheel(Element* owningWidget, Property eventID, int data0, int data1, Element* source) {
 			static auto propScrollPane = registerProperty("PartScrollPane");
@@ -157,6 +126,11 @@ namespace TES3 {
 			// allowing mousewheel to apply to more than the first scrollpane in a menu
 			mwse::writePatchUnprotected(TES3_hook_dispatchMousewheelUp, (BYTE*)&patchDispatchMousewheelUp, patchDispatchMousewheelUp_size);
 			mwse::writePatchUnprotected(TES3_hook_dispatchMousewheelDown, (BYTE*)&patchDispatchMousewheelDown, patchDispatchMousewheelDown_size);
+
+			// Patch UI layout engine to reflow wrapped text content on size changes
+			auto patch = &Element::patchUpdateLayout_propagateFlow;
+			mwse::genCallEnforced(0x585E1E, 0x584850, *reinterpret_cast<DWORD*>(&patch));
+			mwse::genCallEnforced(0x5863AE, 0x584850, *reinterpret_cast<DWORD*>(&patch));
 		}
 
 	}
