@@ -630,12 +630,6 @@ namespace mwse {
 			// Call our wrapper for the function so that events are triggered.
 			TES3::LoadGameResult::LoadGameResult loaded = nonDynamicData->loadGame(fileName);
 
-			// Update the handle on the player reference.
-			sol::state& state = LuaManager::getInstance().getState();
-			auto macp = tes3::getWorldController()->getMobilePlayer();
-			state["tes3"]["mobilePlayer"] = makeLuaObject(macp);
-			state["tes3"]["player"] = makeLuaObject(macp->reference);
-
 			// Extra things we want to do if we're successfully loading.
 			if (loaded == TES3::LoadGameResult::Success) {
 				TES3::DataHandler * dataHandler = tes3::getDataHandler();
@@ -649,12 +643,6 @@ namespace mwse {
 		bool __fastcall OnLoadMainMenu(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName) {
 			// Call our wrapper for the function so that events are triggered.
 			TES3::LoadGameResult::LoadGameResult loaded = nonDynamicData->loadGameMainMenu(fileName);
-
-			// Update the handle on the player reference.
-			sol::state& state = LuaManager::getInstance().getState();
-			auto macp = tes3::getWorldController()->getMobilePlayer();
-			state["tes3"]["mobilePlayer"] = makeLuaObject(macp);
-			state["tes3"]["player"] = makeLuaObject(macp->reference);
 
 			// Fire off a cell changed event as well, and update the cached last cell.
 			if (loaded == TES3::LoadGameResult::Success) {
@@ -672,10 +660,6 @@ namespace mwse {
 
 		void OnNewGame() {
 			tes3::startNewGame();
-
-			// Update the handle on the player reference.
-			sol::state& state = LuaManager::getInstance().getState();
-			state["tes3"]["player"] = tes3::getWorldController()->getMobilePlayer()->reference;
 		}
 
 		//

@@ -5,6 +5,12 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "TES3Util.h"
+
+#include "TES3MobilePlayer.h"
+#include "TES3Reference.h"
+#include "TES3WorldController.h"
+
 #define TES3_NonDynamicData_saveGame 0x4C4250
 #define TES3_NonDynamicData_loadGameInGame 0x4C4800
 #define TES3_NonDynamicData_loadGameMainMenu 0x4C4EB0
@@ -67,6 +73,12 @@ namespace TES3 {
 
 		// Pass a follow-up event if we successfully saved and clear timers.
 		if (loaded) {
+			// Update tes3.player and tes3.mobilePlayer.
+			sol::state& state = luaManager.getState();
+			TES3::MobilePlayer * mobilePlayer = mwse::tes3::getWorldController()->getMobilePlayer();
+			state["tes3"]["mobilePlayer"] = mwse::lua::makeLuaObject(mobilePlayer);
+			state["tes3"]["player"] = mwse::lua::makeLuaObject(mobilePlayer->reference);
+
 			luaManager.clearTimers();
 			luaManager.triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str(), fileName == NULL));
 		}
@@ -91,6 +103,12 @@ namespace TES3 {
 
 		// Pass a follow-up event if we successfully saved and clear timers.
 		if (loaded) {
+			// Update tes3.player and tes3.mobilePlayer.
+			sol::state& state = luaManager.getState();
+			TES3::MobilePlayer * mobilePlayer = mwse::tes3::getWorldController()->getMobilePlayer();
+			state["tes3"]["mobilePlayer"] = mwse::lua::makeLuaObject(mobilePlayer);
+			state["tes3"]["player"] = mwse::lua::makeLuaObject(mobilePlayer->reference);
+
 			luaManager.clearTimers();
 			luaManager.triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str()));
 		}
