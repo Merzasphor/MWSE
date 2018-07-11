@@ -199,13 +199,20 @@ local function onCreatedMenuOptions(e)
 	end
 
 	local mainMenu = e.element
+	
+	local creditsButton = mainMenu:findChild(tes3ui.registerID("MenuOptions_Credits_container"))
+	local buttonContainer = creditsButton.parent
 
-	local button = mainMenu:createImageButton({
+	local button = buttonContainer:createImageButton({
 		idle = "textures/mwse/menu_modconfig.dds",
 		over = "textures/mwse/menu_modconfig_over.dds",
 		pressed = "textures/mwse/menu_modconfig_pressed.dds",
 	})
+	button.height = 50
+	button.autoHeight = false
 	button:register("mouseClick", onClickModConfigButton)
+
+	buttonContainer:reorderChildren(creditsButton, button, 1)
 
 	mainMenu.autoWidth = true
 	mainMenu.autoHeight = true
