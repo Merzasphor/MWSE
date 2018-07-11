@@ -9,6 +9,7 @@
 #include "TES3GlobalVariable.h"
 #include "TES3Reference.h"
 #include "TES3Script.h"
+#include "TES3Sound.h"
 
 namespace mwse {
 	namespace lua {
