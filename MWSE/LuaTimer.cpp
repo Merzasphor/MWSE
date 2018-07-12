@@ -168,8 +168,12 @@ namespace mwse {
 			// Keep looking at the front timer until it hasn't expired.
 			std::shared_ptr<Timer> timer = nullptr;
 			while (!m_ActiveTimers.empty() && (timer = m_ActiveTimers.front()) && timer->timing <= m_Clock) {
-				// Invoke the callback. 
-				auto result = timer->callback();
+				// Build data to send to the callback.
+				sol::table data = LuaManager::getInstance().getState().create_table();
+				data["timer"] = timer;
+
+				// Invoke the callback.
+				auto result = timer->callback(data);
 				if (!result.valid()) {
 					// If the callback encountered an error, log it.
 					sol::error error = result;
