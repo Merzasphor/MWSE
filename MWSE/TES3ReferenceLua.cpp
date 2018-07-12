@@ -134,6 +134,9 @@ namespace mwse {
 			});
 
 			// Quick access to attachment data.
+			usertypeDefinition.set("mobile", sol::property([](TES3::Reference& self) {
+				return makeLuaObject(tes3::getAttachedMobileActor(&self));
+			}));
 			usertypeDefinition.set("stackSize", sol::property(
 				[](TES3::Reference& self)
 			{

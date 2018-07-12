@@ -36,6 +36,10 @@ isRespawn
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `Boolean`_. Read-only.
 
+mobile
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`Mobile Actor`_. Read-only. The reference's associated mobile actor.
+
 object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Varies. Read-only. The base object that this reference contains.
@@ -67,6 +71,7 @@ Attachments are how reference distinguish themselves.
 .. _`String`: ../lua/string.html
 .. _`Table`: ../lua/table.html
 
+.. _`Mobile Actor`: mobileActor.html
 .. _`Vector3`: vector3.html
 
 .. _`Object Type`: ../../../mwscript/references.html#object-types
