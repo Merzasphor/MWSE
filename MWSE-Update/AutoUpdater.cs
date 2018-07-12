@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -150,17 +151,18 @@ namespace MWSE
                 {
                     foreach (ZipArchiveEntry file in archive.Entries)
                     {
+                        string completeFileName = Path.Combine(installLocation, file.FullName);
                         if (file.Name == "MWSE-Update.exe")
                         {
-                            continue;
+                            completeFileName = Path.Combine(installLocation, "MWSE-Update.updated.exe");
                         }
 
-                        string completeFileName = Path.Combine(installLocation, file.FullName);
                         if (file.Name == "")
                         {
                             Directory.CreateDirectory(Path.GetDirectoryName(completeFileName));
                             continue;
                         }
+
                         file.ExtractToFile(completeFileName, true);
                     }
                 }
@@ -171,6 +173,17 @@ namespace MWSE
 
                 // Write the current version to the version cache file.
                 File.WriteAllText(versionPath, latestVersion);
+
+                // Cleanup old files that shouldn't exist anymore. TODO: Can we do this a better way?
+                List<String> deleteList = new List<String>{ "Data Files\\MWSE\\lua\\lfs.lua" };
+                foreach (String file in deleteList)
+                {
+                    if (File.Exists(file))
+                    {
+                        Console.WriteLine("Deleting deprececated file: {0}", file);
+                        File.Delete(file);
+                    }
+                }
 
                 // If we're supposed to start Morrowind after, do so.
                 if (startAfter)

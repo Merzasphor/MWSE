@@ -21,6 +21,7 @@
 
 #include <windows.h>
 #include <dbghelp.h>
+#include <filesystem>
 
 #include "mwAdapter.h"
 #include "Log.h"
@@ -54,6 +55,14 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 		// Before we do anything else, ensure that we can make minidumps.
 		if (!mwse::patch::installMiniDumpHook()) {
 			mwse::log::getLog() << "Error: Unable to hook minidump!" << std::endl;
+		}
+
+		// Look to see if an update to the MWSE Updater was downloaded. If so, swap the exes.
+		if (std::experimental::filesystem::exists("MWSE-Update.updated.exe")) {
+			if (std::experimental::filesystem::exists("MWSE-Update.exe")) {
+				std::experimental::filesystem::remove("MWSE-Update.exe");
+			}
+			std::experimental::filesystem::rename("MWSE-Update.updated.exe", "MWSE-Update.exe");
 		}
 
 		// Initialize our main mwscript hook.
