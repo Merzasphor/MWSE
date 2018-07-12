@@ -175,7 +175,10 @@ namespace MWSE
                 File.WriteAllText(versionPath, latestVersion);
 
                 // Cleanup old files that shouldn't exist anymore. TODO: Can we do this a better way?
-                List<String> deleteList = new List<String>{ "Data Files\\MWSE\\lua\\lfs.lua" };
+                List<String> deleteList = new List<String>{
+                    "Data Files\\MWSE\\lua\\lfs.lua",
+                    "Data Files\\MWSE\\lua\\mwse\\timer.lua"
+                };
                 foreach (String file in deleteList)
                 {
                     if (File.Exists(file))
