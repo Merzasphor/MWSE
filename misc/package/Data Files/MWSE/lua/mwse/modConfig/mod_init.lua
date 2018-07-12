@@ -29,12 +29,7 @@ local function onClickModName(e)
 	currentModConfig = configMods[e.source.text]
 
 	-- Destroy and recreate the parent container.
-	local modConfigPane = modConfigContainer.parent
-	modConfigContainer:destroy()
-	modConfigContainer = modConfigPane:createBlock({})
-	modConfigContainer.layoutWidthFraction = 1.0
-	modConfigContainer.layoutHeightFraction = 1.0
-	modConfigContainer.paddingLeft = 4
+	modConfigContainer:destroyChildren()
 
 	-- Fire the mod's creation event if it has one.
 	if (currentModConfig.onCreate) then
