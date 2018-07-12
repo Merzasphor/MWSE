@@ -55,8 +55,11 @@ namespace mwse {
 
 		std::shared_ptr<Timer> TimerController::createTimer(double duration, sol::protected_function callback, int iterations) {
 			// Validate parameters.
-			if (duration <= 0.0 || iterations < 0 || callback.get_type() != sol::type::function) {
+			if (duration <= 0.0 || callback.get_type() != sol::type::function) {
 				return nullptr;
+			}
+			else if (iterations < 0) {
+				iterations = 0;
 			}
 
 			// Setup the timer structure.
@@ -338,6 +341,17 @@ namespace mwse {
 				usertypeDefinition.set("iterations", sol::readonly_property(&Timer::iterations));
 				usertypeDefinition.set("state", sol::readonly_property(&Timer::state));
 				usertypeDefinition.set("timing", sol::readonly_property(&Timer::timing));
+				usertypeDefinition.set("timeLeft", sol::readonly_property([](Timer& self) -> sol::object {
+					sol::state& state = LuaManager::getInstance().getState();
+					if (self.state == TimerState::Active) {
+						return sol::make_object(state, self.timing - self.controller->getClock());
+					}
+					else if (self.state == TimerState::Paused) {
+						return sol::make_object(state, self.timing);
+					}
+
+					return sol::nil;
+				}));
 
 				// Legacy value binding.
 				usertypeDefinition.set("t", &Timer::duration);
