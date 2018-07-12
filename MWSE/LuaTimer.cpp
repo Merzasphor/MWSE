@@ -6,6 +6,8 @@
 
 #include "LuaUtil.h"
 
+#include "Log.h"
+
 namespace mwse {
 	namespace lua {
 		//
@@ -163,30 +165,35 @@ namespace mwse {
 		}
 
 		void TimerController::update() {
-			if (m_ActiveTimers.empty()) {
-				return;
-			}
+			// Keep looking at the front timer until it hasn't expired.
+			std::shared_ptr<Timer> timer = nullptr;
+			while (!m_ActiveTimers.empty() && (timer = m_ActiveTimers.front()) && timer->timing <= m_Clock) {
+				// Invoke the callback. 
+				auto result = timer->callback();
+				if (!result.valid()) {
+					// If the callback encountered an error, log it.
+					sol::error error = result;
+					log::getLog() << "Lua error encountered in timer callback:" << std::endl << error.what() << std::endl;
+					
+					// Also cancel the timer.
+					cancelTimer(timer);
+					continue;
+				}
 
-			std::shared_ptr<Timer> timer = m_ActiveTimers.front();
-			while (timer != nullptr && timer->timing <= m_Clock) {
-				timer->callback();
-
+				// Decrement iterations if the timer uses them.
 				if (timer->iterations > 0) {
 					timer->iterations--;
+
+					// If we just hit 0 left, cancel the timer.
 					if (timer->iterations == 0) {
 						cancelTimer(timer);
-						return;
+						continue;
 					}
 				}
 
+				// Update timer and reposition it in the vector.
 				timer->timing += timer->duration;
 				repositionTimer(timer);
-
-				if (m_ActiveTimers.empty()) {
-					return;
-				}
-
-				timer = m_ActiveTimers.front();
 			}
 		}
 
@@ -341,6 +348,7 @@ namespace mwse {
 				usertypeDefinition.set("iterations", sol::readonly_property(&Timer::iterations));
 				usertypeDefinition.set("state", sol::readonly_property(&Timer::state));
 				usertypeDefinition.set("timing", sol::readonly_property(&Timer::timing));
+				usertypeDefinition.set("callback", sol::readonly_property(&Timer::callback));
 				usertypeDefinition.set("timeLeft", sol::readonly_property([](Timer& self) -> sol::object {
 					sol::state& state = LuaManager::getInstance().getState();
 					if (self.state == TimerState::Active) {
