@@ -12,6 +12,7 @@ namespace TES3 {
 		const auto TES3_ui_createImage = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, const char*, Boolean)>(0x588630);
 		const auto TES3_ui_createLabel = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, const char*, Boolean, Boolean)>(0x588BE0);
 		const auto TES3_ui_createNif = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, const char*, Boolean)>(0x588830);
+		const auto TES3_ui_createRect = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, Boolean, Boolean)>(0x588340);
 		const auto TES3_ui_createWidget = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, TES3_UI_WidgetFactoryMethod_t, Boolean)>(0x588140);
 		const auto TES3_deleting_dtor_UIElement = reinterpret_cast<void (__thiscall *)(Element*, char)>(0x578880);
 		const auto TES3_ui_destroyChildren = reinterpret_cast<void (__thiscall *)(Element*)>(0x578820);
@@ -90,6 +91,10 @@ namespace TES3 {
 
 		Element* Element::createParagraphInput(UI_ID id, Boolean bReplaceThisElement) {
 			return TES3_ui_createWidget(this, id, TES3_ui_factoryParagraphInput, bReplaceThisElement);
+		}
+
+		Element* Element::createRect(UI_ID id, Boolean bReplaceThisElement, Boolean bRandomColour) {
+			return TES3_ui_createRect(this, id, bReplaceThisElement, bRandomColour);
 		}
 
 		Element* Element::createSlider(UI_ID id, Boolean bReplaceThisElement) {

@@ -85,6 +85,7 @@ namespace TES3 {
 			Element* createLabel(UI_ID id, const char* text, Boolean bBlackText = 0, Boolean bReplaceThisElement = 0);
 			Element* createNif(UI_ID id, const char* path, Boolean bReplaceThisElement = 0);
 			Element* createParagraphInput(UI_ID id, Boolean bReplaceThisElement = 0);
+			Element* createRect(UI_ID id, Boolean bReplaceThisElement = 0, Boolean bRandomColour = 0);
 			Element* createSlider(UI_ID id, Boolean bReplaceThisElement = 0);
 			Element* createSliderVertical(UI_ID id, Boolean bReplaceThisElement = 0);
 			Element* createTextInput(UI_ID id, Boolean bReplaceThisElement = 0);

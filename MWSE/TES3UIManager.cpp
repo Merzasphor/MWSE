@@ -13,6 +13,7 @@ namespace TES3 {
 		const auto TES3_ui_registerID = reinterpret_cast<UI_ID (__cdecl *)(const char *)>(0x58DF10);
 		const auto TES3_ui_createMenu = reinterpret_cast<Element* (__cdecl *)(UI_ID)>(0x595400);
 		const auto TES3_ui_findMenu = reinterpret_cast<Element* (__cdecl*)(UI_ID)>(0x595370);
+		const auto TES3_ui_getPaletteColour = reinterpret_cast<Vector3& (__cdecl*)(Vector3&, Property)>(0x57F610);
 		const auto TES3_ui_onMenuUnfocus = reinterpret_cast<EventCallback>(0x58F790);
 		const auto TES3_ui_ScrollbarArrow_onClick = reinterpret_cast<EventCallback>(0x647A60);
 		const auto TES3_ui_requestMenuModeOn = reinterpret_cast<Boolean (__cdecl*)(UI_ID)>(0x595230);
@@ -53,6 +54,11 @@ namespace TES3 {
 
 		void preventInventoryMenuToggle(Element* menu) {
 			menu->setProperty(Property::event_unfocus, TES3_ui_onMenuUnfocus);
+		}
+
+		Vector3 getPaletteColour(Property prop) {
+			Vector3 colour;
+			return TES3_ui_getPaletteColour(colour, prop);
 		}
 
 		//

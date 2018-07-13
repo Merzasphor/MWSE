@@ -76,18 +76,12 @@ Properties
     
     Overrides fixed, minimum and maximum sizes unless this value is -1.0 (default).
 
-**red** (`number`_, float)
-    ..
-
-**green** (`number`_, float)
-    ..
-
-**blue** (`number`_, float)
-    ..
+**color** (`table`_, float[3])
+    Element RGB colour, an array of 3 floats with value range [0.0, 1.0]. For menus and rects, it sets the background colour. For text, it sets the text colour. For images, it multiplies the image by the colour.
 
 **alpha** (`number`_, float)
-    Element RGBA colour, using range 0.0-1.0. For blocks, it sets the background colour. For text, it sets the text colour.
-
+    Element alpha colour, using range [0.0, 1.0]. Used to composite elements. If you wish to hide an element completely, use ``disable`` instead.
+    
 **borderAllSides** (`number`_, integer)
     ..
 
@@ -249,6 +243,12 @@ Methods
     Creates a multi-line text input element.
     To be documented.
 
+`Element`_ **createRect** {id = `UI_ID`_ ``optional``, color = `table`_ ``float[3]``}  ``Uses table arguments.``
+    Returns:
+        The newly created rect element.
+
+    Creates a filled rect. The rect is displayed as filled with the element's colour. It supports alpha compositing.
+    
 `Element`_ **createSlider** {id = `UI_ID`_ ``optional``}  ``Uses table arguments.``
     Returns:
         The newly created slider.
@@ -390,6 +390,7 @@ Methods
 .. _`function`: ../lua/function.html
 .. _`number`: ../lua/number.html
 .. _`string`: ../lua/string.html
+.. _`table`: ../lua/table.html
 
 .. _`Element`: element.html
 .. _`event`: events.html

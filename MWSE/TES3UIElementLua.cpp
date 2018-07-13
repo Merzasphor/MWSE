@@ -142,21 +142,27 @@ namespace mwse {
 			usertypeDefinition.set("layoutHeightFraction", &TES3::UI::Element::layoutHeightFraction);
 			usertypeDefinition.set("layoutOriginFractionX", &TES3::UI::Element::layoutOriginFractionX);
 			usertypeDefinition.set("layoutOriginFractionY", &TES3::UI::Element::layoutOriginFractionY);
-			usertypeDefinition.set("red", sol::property(
-				[](Element& self) { return self.colourRed; },
-				[](Element& self, float value) { self.setProperty(TES3::UI::Property::red, value); }
-			));
-			usertypeDefinition.set("green", sol::property(
-				[](Element& self) { return self.colourGreen; },
-				[](Element& self, float value) { self.setProperty(TES3::UI::Property::green, value); }
-			));
-			usertypeDefinition.set("blue", sol::property(
-				[](Element& self) { return self.colourBlue; },
-				[](Element& self, float value) { self.setProperty(TES3::UI::Property::blue, value); }
+			usertypeDefinition.set("color", sol::property(
+				[](Element& self) {
+					sol::table c = LuaManager::getInstance().getState().create_table();
+					c[1] = self.colourRed;
+					c[2] = self.colourGreen;
+					c[3] = self.colourBlue;
+					return c;
+				},
+				[](Element& self, sol::table c) {
+					self.colourRed = c[1];
+					self.colourGreen = c[2];
+					self.colourBlue = c[3];
+					self.flagUsesRGBA = 1;
+				}
 			));
 			usertypeDefinition.set("alpha", sol::property(
 				[](Element& self) { return self.colourAlpha; },
-				[](Element& self, float value) { self.setProperty(TES3::UI::Property::alpha, value); }
+				[](Element& self, float value) {
+					self.colourAlpha = value;
+					self.flagUsesRGBA = 1;
+				}
 			));
 			usertypeDefinition.set("alignX", sol::property(
 				[](Element& self) { self.getProperty(TES3::UI::PropertyType::Float, TES3::UI::Property::align_x); },
@@ -434,6 +440,17 @@ namespace mwse {
 			});
 			usertypeDefinition.set("createParagraphInput", [](Element& self, sol::table args) {
 				return self.createParagraphInput(args.get_or("id", idNull));
+			});
+			usertypeDefinition.set("createRect", [](Element& self, sol::table args) {
+				Element* rect = self.createRect(args.get_or("id", idNull));
+				auto c = args.get<sol::table>("color");
+				if (c) {
+					self.colourRed = c[1];
+					self.colourGreen = c[2];
+					self.colourBlue = c[3];
+					self.flagUsesRGBA = 1;
+				}
+				return rect;
 			});
 			usertypeDefinition.set("createSlider", [](Element& self, sol::table args) {
 				return self.createSlider(args.get_or("id", idNull));
