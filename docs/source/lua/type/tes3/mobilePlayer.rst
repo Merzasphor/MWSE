@@ -323,6 +323,9 @@ Properties
 **marksman** (`tes3statistic`_, read-only)
     Easy access into **skills**.
 
+**markLocation** (`tes3markData`_, read-only)
+    Provides information about where the player's mark location is, including its position, facing, and cell.
+
 **mediumArmor** (`tes3statistic`_, read-only)
     Easy access into **skills**.
 

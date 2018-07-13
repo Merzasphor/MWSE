@@ -6,6 +6,12 @@
 #include "TES3Vectors.h"
 
 namespace TES3 {
+	struct MarkData {
+		Vector3 position; // 0x0
+		float rotation; // 0xC
+		Cell * cell; // 0x10
+	};
+
 	struct MobilePlayer : MobileNPC {
 		int levelupPerAttributeCount[8]; // 0x56C
 		int levelupPerSpecialization[3]; // 0x58C
@@ -57,7 +63,7 @@ namespace TES3 {
 		int unknown_0x66C;
 		void * birthsign; // 0x670
 		Iterator<Dialogue> * dialogueList; // 0x674
-		void * markLocation; // 0x678
+		MarkData * markLocation; // 0x678
 		Vector3 field_67C;
 		float inactivityTime; // 0x684
 		int humanStatsBackup; // 0x688
