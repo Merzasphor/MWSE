@@ -102,7 +102,11 @@ namespace TES3 {
 		}
 
 		Element* Element::createSliderVertical(UI_ID id, Boolean bReplaceThisElement) {
-			return TES3_ui_createWidget(this, id, TES3_ui_factorySliderVert, bReplaceThisElement);
+			Element* slider = TES3_ui_createWidget(this, id, TES3_ui_factorySliderVert, bReplaceThisElement);
+			// Set is_part prop to correct value for WidgetScrollBar
+			static Property propPart = registerProperty("PartScrollBar");
+			slider->setProperty(Property::is_part, propPart);
+			return slider;
 		}
 
 		Element* Element::createTextInput(UI_ID id, Boolean bReplaceThisElement) {

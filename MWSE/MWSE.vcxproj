@@ -200,6 +200,8 @@
     <ClInclude Include="TES3UIString.h" />
     <ClInclude Include="TES3UITree.h" />
     <ClInclude Include="TES3UIVector.h" />
+    <ClInclude Include="TES3UIWidgetsLua.h" />
+    <ClInclude Include="TES3UIWidgets.h" />
     <ClInclude Include="TES3Util.h" />
     <ClInclude Include="TES3UtilLua.h" />
     <ClInclude Include="TES3Vectors.h" />
@@ -345,6 +347,8 @@
     <ClCompile Include="TES3UIElementLua.cpp" />
     <ClCompile Include="TES3UIManagerLua.cpp" />
     <ClCompile Include="TES3UIMenuController.cpp" />
+    <ClCompile Include="TES3UIWidgets.cpp" />
+    <ClCompile Include="TES3UIWidgetsLua.cpp" />
     <ClCompile Include="TES3UtilLua.cpp" />
     <ClCompile Include="TES3Vectors.cpp" />
     <ClCompile Include="TES3VectorsLua.cpp" />
