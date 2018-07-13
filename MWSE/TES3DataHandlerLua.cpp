@@ -72,6 +72,9 @@ namespace mwse {
 				usertypeDefinition.set("nonDynamicData", sol::readonly_property(&TES3::DataHandler::nonDynamicData));
 				usertypeDefinition.set("threadSleepTime", sol::readonly_property(&TES3::DataHandler::threadSleepTime));
 
+				// Indirect bindings to unions and arrays.
+				usertypeDefinition.set("exteriorCells", sol::readonly_property([](TES3::DataHandler& self) { return std::ref(self.exteriorCellData); }));
+
 				// Finish up our usertype.
 				state.set_usertype("tes3dataHandler", usertypeDefinition);
 			}
