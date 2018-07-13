@@ -90,7 +90,7 @@ namespace mwse {
 				usertypeDefinition.set("parent", sol::readonly_property([](NI::AVObject& self) { return makeLuaObject(self.parentNode); }));
 
 				// Basic function binding.
-				usertypeDefinition.set("getObjectByName", &NI::AVObject::getObjectByName);
+				usertypeDefinition.set("getObjectByName", [](NI::AVObject& self, const char* name) { return makeLuaObject(self.getObjectByName(name)); });
 
 				// Finish up our usertype.
 				state.set_usertype("niAVObject", usertypeDefinition);
