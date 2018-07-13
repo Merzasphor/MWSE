@@ -96,6 +96,7 @@
 #include "TES3StatisticLua.h"
 #include "TES3UIElementLua.h"
 #include "TES3UIManagerLua.h"
+#include "TES3UIWidgetsLua.h"
 #include "TES3VectorsLua.h"
 #include "TES3WeaponLua.h"
 #include "TES3WeatherControllerLua.h"
@@ -316,6 +317,7 @@ namespace mwse {
 
 			bindTES3UIElement();
 			bindTES3UIManager();
+			bindTES3UIWidgets();
 
 			// Bind NI data types.
 			bindNICamera();

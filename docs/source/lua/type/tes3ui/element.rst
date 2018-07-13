@@ -20,6 +20,9 @@ Properties
 **children** (`Element`_ array, read-only)
     A table containing references to children `Element`_ s. This is a copy that does not track changes.
 
+**widget** (`object`)
+    Access to custom properties specific to a widget. These properties are documented in the widget ``create\*`` function descriptions.
+
 **visible** (`boolean`_)
     If the element is visible.
 
@@ -76,18 +79,12 @@ Properties
     
     Overrides fixed, minimum and maximum sizes unless this value is -1.0 (default).
 
-**red** (`number`_, float)
-    ..
-
-**green** (`number`_, float)
-    ..
-
-**blue** (`number`_, float)
-    ..
+**color** (`table`_, float[3])
+    Element RGB colour, an array of 3 floats with value range [0.0, 1.0]. For menus and rects, it sets the background colour. For text, it sets the text colour. For images, it multiplies the image by the colour.
 
 **alpha** (`number`_, float)
-    Element RGBA colour, using range 0.0-1.0. For blocks, it sets the background colour. For text, it sets the text colour.
-
+    Element alpha colour, using range [0.0, 1.0]. Used to composite elements. If you wish to hide an element completely, use ``disable`` instead.
+    
 **borderAllSides** (`number`_, integer)
     ..
 
@@ -194,20 +191,18 @@ Methods
 
     Creates a clickable button composed of images for the **idle**, **over** and **pressed** states. The texture must have power-of-2 dimensions (i.e. 16, 32, 64, 128, 256, 512, 1024); the final display size can be trimmed by setting width and height. Each image path is relative to ``Data Files``.
 
-`Element`_ **createFillBar** {id = `UI_ID`_ ``optional``}  ``Uses table arguments.``
+`Element`_ **createFillBar** {id = `UI_ID`_ ``optional``, current = `number`_ ``integer, optional``, max = `number`_ ``integer, optional``}  ``Uses table arguments.``
     Returns:
         The newly created fillbar.
 
     Creates a horizontal quantity indicator bar.
 
-    Custom properties used with setProperty:
-        | bool ``"Part_Fillbar_show_text"``: If text of the format "current/max" is shown.
-        | float ``"Part_Fillbar_current"``: Current (filled) value.
-        | float ``"Part_Fillbar_max"``: Maximum value.
-        | float ``"Part_Fillbar_red"``: Colour of filled area.
-        | float ``"Part_Fillbar_green"``
-        | float ``"Part_Fillbar_blue"``
-        | float ``"Part_Fillbar_alpha"``
+    Custom widget properties:
+        | `number`_ (integer) ``element.widget.current``: Current (filled) value.
+        | `number`_ (integer) ``element.widget.max``: Maximum value.
+        | `boolean`_ ``element.widget.showText``: If text of the format "current/max" is shown. Default is ``true``.
+        | `table`_ (float[3]) ``element.widget.fillColor``: Colour of filled area.
+        | `number`_ (float) ``element.widget.fillAlpha``: Alpha transparency of filled area.
 
 `Element`_ **createHorizontalScrollPane** {id = `UI_ID`_ ``optional``}  ``Uses table arguments.``
     Returns:
@@ -249,54 +244,69 @@ Methods
     Creates a multi-line text input element.
     To be documented.
 
-`Element`_ **createSlider** {id = `UI_ID`_ ``optional``}  ``Uses table arguments.``
+`Element`_ **createRect** {id = `UI_ID`_ ``optional``, color = `table`_ ``float[3]``}  ``Uses table arguments.``
+    Returns:
+        The newly created rect element.
+
+    Creates a filled rect. The rect is displayed as filled with the element's colour. It supports alpha compositing.
+    
+`Element`_ **createSlider** {id = `UI_ID`_ ``optional``, current = `number`_ ``integer``, max = `number`_ ``integer``, step = `number`_ ``integer, optional``, jump = `number`_ ``integer, optional``}  ``Uses table arguments.``
     Returns:
         The newly created slider.
 
-    Creates a horizontal slider.
+    Creates a horizontal slider. ``current`` is the initial value, ``max`` is the maximum value, ``step`` is the amount changed by the arrow buttons (default = 1), ``jump`` is the amount changed by clicking inside the slider area (default = 5).
 
-    Custom properties used with setProperty:
-        | int ``"Part_ScrollBar_step_x"``: Amount changed by left and right arrow buttons.
-        | int ``"Part_ScrollBar_jump_x"``: Amount changed by clicking inside the slider area.
-        | int ``"Part_ScrollBar_current"``: Current value.
-        | int ``"Part_ScrollBar_max"``: Max value.
+    Custom widget properties:
+        | `number`_ (integer) ``element.widget.current``: Current value.
+        | `number`_ (integer) ``element.widget.max``: Maximum value.
+        | `number`_ (integer) ``element.widget.step``: Amount changed by left and right arrow buttons.
+        | `number`_ (integer) ``element.widget.jump``: Amount changed by clicking inside the slider area.
 
     Custom events used with register:
-        | ``"Part_ScrollBar_changed"``: Triggers on value change.
+        | ``"PartScrollBar_changed"``: Triggers on value change; moving the slider is not enough if the value is the same.
 
-`Element`_ **createSliderVertical** {id = `UI_ID`_ ``optional``}  ``Uses table arguments.``
+`Element`_ **createSliderVertical** {id = `UI_ID`_ ``optional``, current = `number`_ ``integer``, max = `number`_ ``integer``, step = `number`_ ``integer, optional``, jump = `number`_ ``integer, optional``}  ``Uses table arguments.``
     Returns:
         The newly created slider.
 
     Creates a vertical slider.
 
-    Custom properties used with setProperty:
-        | int ``"Part_ScrollBar_step_x"``: Amount changed by up and down arrow buttons.
-        | int ``"Part_ScrollBar_jump_x"``: Amount changed by clicking inside the slider area.
-        | int ``"Part_ScrollBar_current"``: Current value.
-        | int ``"Part_ScrollBar_max"``: Max value.
+    Custom widget properties:
+        | `number`_ (integer) ``element.widget.current``: Current value.
+        | `number`_ (integer) ``element.widget.max``: Maximum value.
+        | `number`_ (integer) ``element.widget.step``: Amount changed by up and down arrow buttons.
+        | `number`_ (integer) ``element.widget.jump``: Amount changed by clicking inside the slider area.
 
     Custom events used with register:
-        | ``"Part_ScrollBar_changed"``: Triggers on value change.
+        | ``"PartScrollBar_changed"``: Triggers on value change; moving the slider is not enough if the value is the same.
 
 `Element`_ **createTextInput** {id = `UI_ID`_ ``optional``}  ``Uses table arguments.``
     Returns:
         The newly created text input element.
 
-    Creates a single line text input element. Read the input with the ``text`` property.
+    Creates a single line text input element. To receive input the keyboard must be captured with ``tes3ui.acquireTextInput(element)``. Read the input with the ``text`` property.
 
-    Custom properties used with setProperty:
-        | bool ``"Part_TextInput_erase_on_first_key"``: Clears the initial value if the first keypress is not an edit action.
-        | bool ``"Part_TextInput_no_limit"``: Set if no length limit is enforced.
-        | int ``"Part_TextInput_length_limit"``: Maximum input length. The engine limits most identifiers to 31 characters.
+    Custom widget properties:
+        | `boolean`_ ``element.widget.eraseOnFirstKey``: Clears the initial value if the first keypress is not an edit action. Default is ``true``.
+        | `number`_ (integer) ``element.widget.lengthLimit"``: Maximum input length, or ``nil`` for no limit. If you are setting names, the engine limits most identifiers to 31 characters. Default is ``nil``.
 
-`Element`_ **createTextSelect** {id = `UI_ID`_ ``optional``}  ``Uses table arguments.``
+`Element`_ **createTextSelect** {id = `UI_ID`_ ``optional``, state = `number`_ ``optional``}  ``Uses table arguments.``
     Returns:
-        The newly created x.
+        The newly created text select element.
 
-    Creates a selectable line of text, with configurable hover, click, and disabled colours. Can be used to create a list box by placing them in a ScrollPane.
+    Creates a selectable line of text, with configurable hover, click, and disabled colours. Can be used to create a list box by placing them in a ScrollPane. ``state`` sets the initial interaction state, documented below.
 
-    To be documented.
+    Custom widget properties:
+        | `number`_ ``element.state``: Interaction state. 1 = normal, 2 = disabled, 4 = active. Controls which colour set to use.
+        | `table`_ (float[3]) ``element.widget.idle``: Colour for normal state, no mouse interaction.
+        | `table`_ (float[3]) ``element.widget.over``: Colour for normal state, on mouseOver.
+        | `table`_ (float[3]) ``element.widget.pressed``: Colour for normal state, on mouseDown.
+        | `table`_ (float[3]) ``element.widget.idleDisabled``: Colour for disabled state, no mouse interaction.
+        | `table`_ (float[3]) ``element.widget.overDisabled``: Colour for disabled state, on mouseOver.
+        | `table`_ (float[3]) ``element.widget.pressedDisabled``: Colour for disabled state, on mouseDown.
+        | `table`_ (float[3]) ``element.widget.idleActive``: Colour for active state, no mouse interaction.
+        | `table`_ (float[3]) ``element.widget.overActive``: Colour for active state, on mouseOver.
+        | `table`_ (float[3]) ``element.widget.pressedActive``: Colour for active state, on mouseDown.
 
 `Element`_ **createThinBorder** {id = `UI_ID`_ ``optional``}  ``Uses table arguments.``
     Returns:
@@ -390,6 +400,7 @@ Methods
 .. _`function`: ../lua/function.html
 .. _`number`: ../lua/number.html
 .. _`string`: ../lua/string.html
+.. _`table`: ../lua/table.html
 
 .. _`Element`: element.html
 .. _`event`: events.html

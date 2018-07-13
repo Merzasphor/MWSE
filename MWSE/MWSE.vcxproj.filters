@@ -831,6 +831,12 @@
     <ClInclude Include="TES3UIElementLua.h">
       <Filter>Header Files\Lua\Bindings\TES3\UI</Filter>
     </ClInclude>
+    <ClInclude Include="TES3UIWidgets.h">
+      <Filter>Header Files\DataAdapters\TES3\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3UIWidgetsLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -1891,6 +1897,12 @@
     </ClCompile>
     <ClCompile Include="TES3UIElementLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3UIWidgetsLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3UIWidgets.cpp">
+      <Filter>Source Files\DataAdapters\TES3\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

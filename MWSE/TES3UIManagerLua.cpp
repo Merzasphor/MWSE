@@ -145,6 +145,11 @@ namespace mwse {
 			tes3ui["enterMenuMode"] = TES3::UI::enterMenuMode;
 			tes3ui["leaveMenuMode"] = TES3::UI::leaveMenuMode;
 			tes3ui["acquireTextInput"] = TES3::UI::acquireTextInput;
+			tes3ui.set_function("getPalette", [](const char* name) {
+				sol::state& state = LuaManager::getInstance().getState();
+				auto colour = TES3::UI::getPaletteColour(TES3::UI::registerProperty(name));
+				return state.create_table_with(1, colour.x, 2, colour.y, 3, colour.z);
+			});
 		}
 
 	}

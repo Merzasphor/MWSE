@@ -1,6 +1,7 @@
 #pragma once
 
 #include "TES3UIDefines.h"
+#include "TES3Vectors.h"
 
 namespace TES3 {
 	namespace UI {
@@ -12,6 +13,7 @@ namespace TES3 {
 		Boolean leaveMenuMode();
 		void acquireTextInput(Element* element);
 		void preventInventoryMenuToggle(Element* menu);
+		Vector3 getPaletteColour(Property prop);
 
 		Boolean __cdecl onScrollPaneMousewheel(Element*, Property, int, int, Element*);
 

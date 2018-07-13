@@ -3,7 +3,9 @@
 
 #include "TES3UIElement.h"
 #include "TES3UIManager.h"
+#include "TES3UIWidgets.h"
 #include "TES3UIManagerLua.h"
+#include "TES3UIWidgetsLua.h"
 
 #include "sol.hpp"
 #include "LuaManager.h"
@@ -69,6 +71,7 @@ namespace mwse {
 					return children;
 				}
 			));
+			usertypeDefinition.set("widget", sol::readonly_property([](Element& self) { return makeWidget(self); }));
 
 			// Read-write property bindings.
 			// Many properties also set lazy-update flags through setProperty.
@@ -142,21 +145,24 @@ namespace mwse {
 			usertypeDefinition.set("layoutHeightFraction", &TES3::UI::Element::layoutHeightFraction);
 			usertypeDefinition.set("layoutOriginFractionX", &TES3::UI::Element::layoutOriginFractionX);
 			usertypeDefinition.set("layoutOriginFractionY", &TES3::UI::Element::layoutOriginFractionY);
-			usertypeDefinition.set("red", sol::property(
-				[](Element& self) { return self.colourRed; },
-				[](Element& self, float value) { self.setProperty(TES3::UI::Property::red, value); }
-			));
-			usertypeDefinition.set("green", sol::property(
-				[](Element& self) { return self.colourGreen; },
-				[](Element& self, float value) { self.setProperty(TES3::UI::Property::green, value); }
-			));
-			usertypeDefinition.set("blue", sol::property(
-				[](Element& self) { return self.colourBlue; },
-				[](Element& self, float value) { self.setProperty(TES3::UI::Property::blue, value); }
+			usertypeDefinition.set("color", sol::property(
+				[](Element& self) {
+					sol::state& state = LuaManager::getInstance().getState();
+					return state.create_table_with(1, self.colourRed, 2, self.colourGreen, 3, self.colourBlue);
+				},
+				[](Element& self, sol::table c) {
+					self.colourRed = c[1];
+					self.colourGreen = c[2];
+					self.colourBlue = c[3];
+					self.flagUsesRGBA = 1;
+				}
 			));
 			usertypeDefinition.set("alpha", sol::property(
 				[](Element& self) { return self.colourAlpha; },
-				[](Element& self, float value) { self.setProperty(TES3::UI::Property::alpha, value); }
+				[](Element& self, float value) {
+					self.colourAlpha = value;
+					self.flagUsesRGBA = 1;
+				}
 			));
 			usertypeDefinition.set("alignX", sol::property(
 				[](Element& self) { self.getProperty(TES3::UI::PropertyType::Float, TES3::UI::Property::align_x); },
@@ -395,7 +401,11 @@ namespace mwse {
 				return button;
 			});
 			usertypeDefinition.set("createFillBar", [](Element& self, sol::table args) {
-				return self.createFillBar(args.get_or("id", idNull));
+				auto element = self.createFillBar(args.get_or("id", idNull));
+				auto fillbar = TES3::UI::WidgetFillbar::fromElement(element);
+				fillbar->setCurrent(args.get_or("current", 0));
+				fillbar->setMax(args.get_or("max", 0));
+				return element;
 			});
 			usertypeDefinition.set("createHorizontalScrollPane", [](Element& self, sol::table args) {
 				auto scrollpane = self.createHorizontalScrollPane(args.get_or("id", idNull));
@@ -435,17 +445,46 @@ namespace mwse {
 			usertypeDefinition.set("createParagraphInput", [](Element& self, sol::table args) {
 				return self.createParagraphInput(args.get_or("id", idNull));
 			});
+			usertypeDefinition.set("createRect", [](Element& self, sol::table args) {
+				Element* rect = self.createRect(args.get_or("id", idNull));
+				auto c = args.get<sol::table>("color");
+				if (c) {
+					self.colourRed = c[1];
+					self.colourGreen = c[2];
+					self.colourBlue = c[3];
+					self.flagUsesRGBA = 1;
+				}
+				return rect;
+			});
 			usertypeDefinition.set("createSlider", [](Element& self, sol::table args) {
-				return self.createSlider(args.get_or("id", idNull));
+				auto element = self.createSlider(args.get_or("id", idNull));
+				auto slider = TES3::UI::WidgetScrollBar::fromElement(element);
+				slider->setCurrent(args.get_or("current", 0));
+				slider->setMax(args.get_or("max", 0));
+				slider->setStepX(args.get_or("step", 1));
+				slider->setJumpX(args.get_or("jump", 5));
+				return element;
 			});
 			usertypeDefinition.set("createSliderVertical", [](Element& self, sol::table args) {
-				return self.createSliderVertical(args.get_or("id", idNull));
+				auto element = self.createSliderVertical(args.get_or("id", idNull));
+				auto slider = TES3::UI::WidgetScrollBar::fromElement(element);
+				slider->setCurrent(args.get_or("current", 0));
+				slider->setMax(args.get_or("max", 0));
+				slider->setStepX(args.get_or("step", 1));
+				slider->setJumpX(args.get_or("jump", 5));
+				return element;
 			});
 			usertypeDefinition.set("createTextInput", [](Element& self, sol::table args) {
 				return self.createTextInput(args.get_or("id", idNull));
 			});
 			usertypeDefinition.set("createTextSelect", [](Element& self, sol::table args) {
-				return self.createTextSelect(args.get_or("id", idNull));
+				auto element = self.createTextSelect(args.get_or("id", idNull));
+				auto textSelect = TES3::UI::WidgetTextSelect::fromElement(element);
+				auto state = args.get<sol::optional<int>>("state");
+				if (state) {
+					textSelect->setState(state.value());
+				}
+				return element;
 			});
 			usertypeDefinition.set("createThinBorder", [](Element& self, sol::table args) {
 				return self.createNif(args.get_or("id", idNull), "menu_thin_border.nif");
