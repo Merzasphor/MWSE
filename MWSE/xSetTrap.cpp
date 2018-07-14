@@ -93,7 +93,7 @@ namespace mwse
 		}
 
 		// Set the new reference.
-		lockNode->trapSpell = spell;
+		lockNode->trap = spell;
 
 		// Return success.
 		mwse::Stack::getInstance().pushLong(true);

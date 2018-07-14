@@ -36,9 +36,9 @@ namespace TES3 {
 
 	struct LockAttachmentNode {
 		int lockLevel; // 0x00
-		BaseObject * owner; // 0x04 // Faction or global?
-		Spell * trapSpell; // 0x08
-		char locked; // 0x0C
+		Misc * key; // 0x04
+		Spell * trap; // 0x08
+		bool locked; // 0x0C
 	};
 	static_assert(sizeof(LockAttachmentNode) == 0x10, "TES3::LockAttachmentNode failed size validation");
 

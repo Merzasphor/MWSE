@@ -36,6 +36,10 @@ isRespawn
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `Boolean`_. Read-only.
 
+lockNode
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`Lock Node`_. Read-only. The reference's associated lock node, if one is available.
+
 mobile
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `Mobile Actor`_. Read-only. The reference's associated mobile actor.
@@ -71,6 +75,7 @@ Attachments are how reference distinguish themselves.
 .. _`String`: ../lua/string.html
 .. _`Table`: ../lua/table.html
 
+.. _`Lock Node`: lockNode.html
 .. _`Mobile Actor`: mobileActor.html
 .. _`Vector3`: vector3.html
 

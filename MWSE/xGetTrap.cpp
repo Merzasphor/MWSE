@@ -67,7 +67,7 @@ namespace mwse
 		if (type == TES3::ObjectType::Container || type == TES3::ObjectType::Door) {
 			auto lockNode = tes3::getAttachedLockNode(reference);
 			if (lockNode) {
-				TES3::Spell* trapSpell = lockNode->trapSpell;
+				TES3::Spell* trapSpell = lockNode->trap;
 				if (trapSpell) {
 					id = trapSpell->objectID;
 					name = trapSpell->name;

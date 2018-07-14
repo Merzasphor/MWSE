@@ -134,6 +134,9 @@ namespace mwse {
 			});
 
 			// Quick access to attachment data.
+			usertypeDefinition.set("lockNode", sol::property([](TES3::Reference& self) {
+				return tes3::getAttachedLockNode(&self);
+			}));
 			usertypeDefinition.set("mobile", sol::property([](TES3::Reference& self) {
 				return makeLuaObject(tes3::getAttachedMobileActor(&self));
 			}));
@@ -143,7 +146,7 @@ namespace mwse {
 				TES3::ItemData* itemData = tes3::getAttachedItemDataNode(&self);
 				return itemData ? itemData->count : 1;
 			},
-				[](TES3::Reference& self, double count)
+				[](TES3::Reference& self, int count)
 			{
 				TES3::ItemData* itemData = tes3::getOrCreateAttachedItemDataNode(&self);
 				itemData->count = count;
