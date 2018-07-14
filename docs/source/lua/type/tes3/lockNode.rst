@@ -2,7 +2,7 @@
 Lock Node
 ========================================================
 
-Lock nodes are one of the attachments that a reference can have. This reference provides information on lock and trap state.
+Lock nodes are one of the attachments that a reference can have. This provides information on lock and trap state.
 
 
 Properties
