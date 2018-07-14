@@ -60,7 +60,7 @@ namespace mwse {
 					[](TES3::TravelDestination& self) { return makeLuaObject(self.cell); },
 					[](TES3::TravelDestination& self, TES3::Cell * cell) { self.cell = cell; }
 				));
-				usertypeDefinition.set("doorMarker", sol::property(
+				usertypeDefinition.set("marker", sol::property(
 					[](TES3::TravelDestination& self) { return makeLuaObject(self.destination); },
 					[](TES3::TravelDestination& self, TES3::Reference * destination) { self.destination = destination; }
 				));
