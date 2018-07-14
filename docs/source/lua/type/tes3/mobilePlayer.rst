@@ -219,7 +219,7 @@ Properties
     Easy access into **effectAttributes**.
 
 **is3rdPerson** (`boolean`_, read-only)
-    Determines if the player is currently in 3rd person.
+    Determines if the player is currently in third person.
 
 **isCrittable** (`boolean`_, read-only)
     Easy access to **flags**. If ``true``, the actor is subject to critical hits.

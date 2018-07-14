@@ -25,6 +25,11 @@ function math.remap(value, lowIn, highIn, lowOut, highOut)
 	return lowOut + (value - lowIn) * (highOut - lowOut) / (highIn - lowIn)
 end
 
+function math.round(value, digits)
+	local mult = 10 ^ (digits or 0)
+	return math.floor(value * mult + 0.5) / mult
+end
+
 -------------------------------------------------
 -- Extend base API: table
 -------------------------------------------------
@@ -256,7 +261,7 @@ function tes3uiElement:createImageButton(params)
 	local buttonBlock = self:createBlock({ id = params.id })
 	buttonBlock.autoWidth = true
 	buttonBlock.autoHeight = true
-	
+
 	-- Create our child buttons using the params provided.
 	local buttonIdle = buttonBlock:createImage({ path = params.idle })
 	local buttonOver = buttonBlock:createImage({ path = params.over })
