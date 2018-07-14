@@ -65,33 +65,33 @@ namespace mwse {
 			//
 
 			// Bind function: tes3.getPlayerRef
-			state["tes3"]["getPlayerRef"] = []() -> TES3::Reference* {
+			state["tes3"]["getPlayerRef"] = []() -> sol::object {
 				TES3::WorldController* worldController = tes3::getWorldController();
 				if (worldController) {
 					TES3::MobilePlayer* mobilePlayer = worldController->getMobilePlayer();
 					if (mobilePlayer) {
-						return mobilePlayer->reference;
+						return makeLuaObject(mobilePlayer->reference);
 					}
 				}
-				return NULL;
+				return sol::nil;
 			};
 
 			// Bind function: tes3.getMobilePlayer
-			state["tes3"]["getMobilePlayer"] = []() -> TES3::MobilePlayer* {
+			state["tes3"]["getMobilePlayer"] = []() -> sol::object {
 				TES3::WorldController* worldController = tes3::getWorldController();
 				if (worldController) {
-					return worldController->getMobilePlayer();
+					return makeLuaObject(worldController->getMobilePlayer());
 				}
-				return NULL;
+				return sol::nil;
 			};
 
 			// Bind function: tes3.getPlayerCell()
-			state["tes3"]["getPlayerCell"] = []() -> TES3::Cell* {
+			state["tes3"]["getPlayerCell"] = []() -> sol::object {
 				TES3::DataHandler* dataHandler = tes3::getDataHandler();
 				if (dataHandler) {
-					return dataHandler->currentCell;
+					return makeLuaObject(dataHandler->currentCell);
 				}
-				return NULL;
+				return sol::nil;
 			};
 
 			// Bind function: tes3.getGame
@@ -110,23 +110,27 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.getPlayerTarget
-			state["tes3"]["getPlayerTarget"] = []() {
-				return tes3::getGame()->playerTarget;
+			state["tes3"]["getPlayerTarget"] = []() -> sol::object {
+				TES3::Game * game = tes3::getGame();
+				if (game) {
+					return makeLuaObject(game->playerTarget);
+				}
+				return sol::nil;
 			};
 
 			// Bind function: tes3.getReference
 			state["tes3"]["getReference"] = [](sol::optional<std::string> id) {
 				if (id) {
-					return tes3::getReference(id.value());
+					return makeLuaObject(tes3::getReference(id.value()));
 				}
 				else {
-					return LuaManager::getInstance().getCurrentReference();
+					return makeLuaObject(LuaManager::getInstance().getCurrentReference());
 				}
 			};
 
 			// Bind function: tes3.getObject
 			state["tes3"]["getObject"] = [](std::string& id) -> sol::object {
-				auto dataHandler = tes3::getDataHandler();
+				TES3::DataHandler * dataHandler = tes3::getDataHandler();
 				if (dataHandler) {
 					return makeLuaObject(dataHandler->nonDynamicData->resolveObject(id.c_str()));
 				}
@@ -138,18 +142,25 @@ namespace mwse {
 				if (object) {
 					tes3::getDataHandler()->nonDynamicData->deleteObject(object);
 					object->vTable.base->destructor(object, true);
+					return true;
 				}
+				return false;
 			};
 
 			// Bind function: tes3.getScript
-			state["tes3"]["getScript"] = [](std::string& id) {
-				return tes3::getDataHandler()->nonDynamicData->findScriptByName(id.c_str());
+			state["tes3"]["getScript"] = [](std::string& id) -> sol::object {
+				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				if (dataHandler) {
+					return makeLuaObject(dataHandler->nonDynamicData->findScriptByName(id.c_str()));
+				}
+				return sol::nil;
 			};
 
 			// Bind function: tes3.getGlobal
 			state["tes3"]["getGlobal"] = [](std::string& id) -> sol::object {
-				TES3::GlobalVariable * global = tes3::getDataHandler()->nonDynamicData->findGlobalVariable(id.c_str());
-				if (global != NULL) {
+				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				if (dataHandler) {
+					TES3::GlobalVariable * global = dataHandler->nonDynamicData->findGlobalVariable(id.c_str());
 					return sol::make_object(LuaManager::getInstance().getState(), global->value);
 				}
 				return sol::nil;
@@ -157,24 +168,38 @@ namespace mwse {
 
 			// Bind function: tes3.setGlobal
 			state["tes3"]["setGlobal"] = [](std::string& id, double value) {
-				TES3::GlobalVariable * global = tes3::getDataHandler()->nonDynamicData->findGlobalVariable(id.c_str());
-				if (global != NULL) {
-					global->value = value;
+				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				if (dataHandler) {
+					TES3::GlobalVariable * global = dataHandler->nonDynamicData->findGlobalVariable(id.c_str());
+					if (global) {
+						global->value = value;
+						return true;
+					}
 				}
+				return false;
 			};
 
 			// Bind function: tes3.findGlobal
-			state["tes3"]["findGlobal"] = [](std::string& id) {
-				return tes3::getDataHandler()->nonDynamicData->findGlobalVariable(id.c_str());
+			state["tes3"]["findGlobal"] = [](std::string& id) -> sol::object {
+				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				if (dataHandler) {
+					return makeLuaObject(dataHandler->nonDynamicData->findGlobalVariable(id.c_str()));
+				}
+				return sol::nil;
 			};
 
 			// Bind function: tes3.getGMST
 			state["tes3"]["getGMST"] = [](sol::object key) -> sol::object {
+				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				if (dataHandler == nullptr) {
+					return sol::nil;
+				}
+
 				sol::state& state = LuaManager::getInstance().getState();
 				if (key.is<double>()) {
 					int index = key.as<double>();
 					if (index >= TES3::GMST::sMonthMorningstar && index <= TES3::GMST::sWitchhunter) {
-						return sol::make_object(state, tes3::getDataHandler()->nonDynamicData->GMSTs[index]);
+						return makeLuaObject(dataHandler->nonDynamicData->GMSTs[index]);
 					}
 				}
 				else if (key.is<std::string>()) {
@@ -189,9 +214,10 @@ namespace mwse {
 					}
 
 					if (index != -1) {
-						return sol::make_object(state, tes3::getDataHandler()->nonDynamicData->GMSTs[index]);
+						return makeLuaObject(dataHandler->nonDynamicData->GMSTs[index]);
 					}
 				}
+
 				return sol::nil;
 			};
 
@@ -292,9 +318,13 @@ namespace mwse {
 			};
 
 			state["tes3"]["isModActive"] = [](std::string modName) {
-				TES3::NonDynamicData* nonDynamicData = tes3::getDataHandler()->nonDynamicData;
+				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				if (dataHandler == nullptr) {
+					return false;
+				}
+
 				for (int i = 0; i < 256; i++) {
-					TES3::GameFile* gameFile = nonDynamicData->activeMods[i];
+					TES3::GameFile* gameFile = dataHandler->nonDynamicData->activeMods[i];
 					if (gameFile == NULL) {
 						return false;
 					}
@@ -374,8 +404,12 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.getCameraPosition
-			state["tes3"]["getCameraPosition"] = [](sol::optional<sol::table> params) {
-				return tes3::getWorldController()->worldCamera.camera->worldBoundOrigin;
+			state["tes3"]["getCameraPosition"] = [](sol::optional<sol::table> params) -> TES3::Vector3 * {
+				TES3::WorldController * worldController = tes3::getWorldController();
+				if (worldController) {
+					return &worldController->worldCamera.camera->worldBoundOrigin;
+				}
+				return nullptr;
 			};
 
 			// Bind function: tes3.getCameraPosition
@@ -535,12 +569,20 @@ namespace mwse {
 				return sol::make_object(LuaManager::getInstance().getState(), mcp::getFeatureEnabled(id));
 			};
 
-			state["tes3"]["getDaysInMonth"] = [](int month) {
-				return tes3::getWorldController()->getDaysInMonth(month);
+			state["tes3"]["getDaysInMonth"] = [](int month) -> sol::object {
+				TES3::WorldController * worldController = tes3::getWorldController();
+				if (worldController) {
+					return sol::make_object(LuaManager::getInstance().getState(), worldController->getDaysInMonth(month));
+				}
+				return sol::nil;
 			};
 
-			state["tes3"]["getSimulationTimestamp"] = []() -> double {
-				return tes3::getWorldController()->getHighPrecisionSimulationTimestamp();
+			state["tes3"]["getSimulationTimestamp"] = []() -> sol::object {
+				TES3::WorldController * worldController = tes3::getWorldController();
+				if (worldController) {
+					return sol::make_object(LuaManager::getInstance().getState(), worldController->getHighPrecisionSimulationTimestamp());
+				}
+				return sol::nil;
 			};
 
 			state["tes3"]["getEquippedItem"] = [](sol::table params) -> sol::object {
