@@ -132,9 +132,7 @@ local function onClickModConfigButton()
 		-- Create a link back to the website.
 		local site = modConfigContainer:createLabel({ text = "mwse.readthedocs.io" })
 		site.layoutOriginFractionX = 0.5
-		site.red = 112 / 255
-		site.green = 126 / 255
-		site.blue = 207 / 255
+		site.color = { 112 / 255, 126 / 255, 207 / 255 }
 		site:register("mouseClick", function()
 			tes3.messageBox({
 				message = "Open web browser?",
