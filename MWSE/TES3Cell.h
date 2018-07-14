@@ -31,6 +31,12 @@ namespace TES3 {
 	};
 	static_assert(sizeof(PackedColor) == 0x4, "TES3::PackedColor failed size validation");
 
+	struct MapNote {
+		Vector3 position; // 0x0
+		char * text; // 0xC
+	};
+	static_assert(sizeof(MapNote) == 0x10, "TES3::MapNote failed size validation");
+
 	struct Cell : BaseObject {
 		char * name; // 0x10
 		void * unknown_0x14;
@@ -54,7 +60,7 @@ namespace TES3 {
 		int unknown_0x7C;
 		int unknown_0x80;
 		int unknown_0x84;
-		int unknown_0x88;
+		Iterator<MapNote> * mapNotes; // 0x88
 		void * pathGrid; // 0x8C
 		union {
 			float waterLevel;

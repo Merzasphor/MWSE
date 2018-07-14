@@ -56,6 +56,7 @@ namespace TES3 {
 	struct Lockpick;
 	struct MagicEffectInstance;
 	struct MagicSourceInstance;
+	struct MapNote;
 	struct Misc;
 	struct MobileActor;
 	struct MobileCreature;
