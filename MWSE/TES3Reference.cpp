@@ -94,10 +94,12 @@ namespace TES3 {
 	}
 
 	void Reference::setPosition(float x, float y, float z) {
-		sceneNode->localTranslate.x = x;
-		sceneNode->localTranslate.y = y;
-		sceneNode->localTranslate.z = z;
-		sceneNode->propagatePositionChange();
+		if (sceneNode) {
+			sceneNode->localTranslate.x = x;
+			sceneNode->localTranslate.y = y;
+			sceneNode->localTranslate.z = z;
+			sceneNode->propagatePositionChange();
+		}
 
 		Vector3 * positionPackage = getPosition();
 		positionPackage->x = x;
