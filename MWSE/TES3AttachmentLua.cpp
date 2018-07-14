@@ -6,6 +6,7 @@
 #include "LuaUtil.h"
 
 #include "TES3Attachment.h"
+#include "TES3Cell.h"
 #include "TES3Misc.h"
 #include "TES3Spell.h"
 
@@ -46,6 +47,26 @@ namespace mwse {
 
 				// Finish up our usertype.
 				state.set_usertype("tes3lockNode", usertypeDefinition);
+			}
+
+			// Bind TES3::TravelDestination
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::TravelDestination>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				// Access to other objects that need to be packaged.
+				usertypeDefinition.set("cell", sol::property(
+					[](TES3::TravelDestination& self) { return makeLuaObject(self.cell); },
+					[](TES3::TravelDestination& self, TES3::Cell * cell) { self.cell = cell; }
+				));
+				usertypeDefinition.set("doorMarker", sol::property(
+					[](TES3::TravelDestination& self) { return makeLuaObject(self.destination); },
+					[](TES3::TravelDestination& self, TES3::Reference * destination) { self.destination = destination; }
+				));
+
+				// Finish up our usertype.
+				state.set_usertype("tes3travelDestinationNode", usertypeDefinition);
 			}
 		}
 	}

@@ -29,6 +29,9 @@ namespace TES3 {
 			case AttachmentType::Lock:
 				result["lock"] = sol::make_object(state, reinterpret_cast<LockAttachment*>(attachment)->data);
 				break;
+			case AttachmentType::TravelDestination:
+				result["travelDestination"] = sol::make_object(state, reinterpret_cast<TravelDestinationAttachment*>(attachment)->data);
+				break;
 			case AttachmentType::Variables:
 				result["variables"] = sol::make_object(state, reinterpret_cast<ItemDataAttachment*>(attachment)->data);
 				break;
@@ -136,6 +139,13 @@ namespace mwse {
 			// Quick access to attachment data.
 			usertypeDefinition.set("lockNode", sol::property([](TES3::Reference& self) {
 				return tes3::getAttachedLockNode(&self);
+			}));
+			usertypeDefinition.set("destination", sol::property([](TES3::Reference& self) -> TES3::TravelDestination * {
+				TES3::TravelDestinationAttachment * attachment = tes3::getAttachment<TES3::TravelDestinationAttachment>(&self, TES3::AttachmentType::TravelDestination);
+				if (attachment) {
+					return attachment->data;
+				}
+				return nullptr;
 			}));
 			usertypeDefinition.set("mobile", sol::property([](TES3::Reference& self) {
 				return makeLuaObject(tes3::getAttachedMobileActor(&self));

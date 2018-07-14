@@ -28,6 +28,10 @@ data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `Table`_. This table represents persistent data that will be stored in the save, attached to the reference. The data in this table is serialized as a json string and stored as part of the save game.
 
+destination
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`Travel Destination`_. Read-only. The reference's associated travel destination node, if one is available. This is used on load doors.
+
 id
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `String`_. Read-only. The object's unique id.
@@ -75,6 +79,7 @@ Attachments are how reference distinguish themselves.
 .. _`String`: ../lua/string.html
 .. _`Table`: ../lua/table.html
 
+.. _`Travel Destination`: travelDestination.html
 .. _`Lock Node`: lockNode.html
 .. _`Mobile Actor`: mobileActor.html
 .. _`Vector3`: vector3.html

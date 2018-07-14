@@ -4,6 +4,7 @@
 #include "LuaUtil.h"
 #include "LuaManager.h"
 
+#include "TES3Attachment.h"
 #include "TES3Dialogue.h"
 #include "TES3DialogueInfo.h"
 #include "TES3Inventory.h"
@@ -25,6 +26,7 @@ namespace mwse {
 			bindIterator<TES3::ItemStack>("TES3ItemStackIterator", "TES3ItemStackIteratorNode");
 			bindIterator<TES3::Reference>("TES3ReferenceIterator", "TES3ReferenceIteratorNode");
 			bindIterator<TES3::RegionSound>("TES3RegionSoundIterator", "TES3RegionSoundIteratorNode");
+			bindIterator<TES3::TravelDestination>("TES3TravelDestinationIterator", "TES3TravelDestinationIteratorNode");
 
 			// Generic TES3::Object iterators. As above, but the result data will be
 			// reinterpreted at runtime.

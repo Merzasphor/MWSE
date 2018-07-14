@@ -9,7 +9,7 @@ namespace TES3 {
 	namespace AttachmentType {
 		enum AttachmentType {
 			Lock = 0x3,
-			LoadDoor = 0x5,
+			TravelDestination = 0x5,
 			Variables = 0x6,
 			ActorData = 0x8,
 			Action = 0x9,
@@ -43,6 +43,19 @@ namespace TES3 {
 	static_assert(sizeof(LockAttachmentNode) == 0x10, "TES3::LockAttachmentNode failed size validation");
 
 	typedef AttachmentWithNode<LockAttachmentNode> LockAttachment;
+
+	//
+	// TravelDestination
+	//
+
+	struct TravelDestination {
+		Cell * cell; // 0x0
+		int unknown_0x4;
+		Reference * destination; // 0x8
+	};
+	static_assert(sizeof(TravelDestination) == 0xC, "TES3::TravelDestination failed size validation");
+
+	typedef AttachmentWithNode<TravelDestination> TravelDestinationAttachment;
 
 	//
 	// Variables
