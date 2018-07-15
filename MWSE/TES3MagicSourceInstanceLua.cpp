@@ -26,6 +26,7 @@ namespace mwse {
 			usertypeDefinition.set(sol::meta_function::to_string, &TES3::MagicEffect::getObjectID);
 
 			// Basic property binding.
+			usertypeDefinition.set("castChanceOverride", &TES3::MagicSourceInstance::overrideCastChance);
 			usertypeDefinition.set("itemData", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.castingItemCondition; }));
 			usertypeDefinition.set("sourceType", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.sourceCombo.sourceType; }));
 			usertypeDefinition.set("timestampCastBegin", &TES3::MagicSourceInstance::timestampCastBegin);
