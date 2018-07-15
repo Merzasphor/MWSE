@@ -154,7 +154,7 @@ namespace MWSE
                         string completeFileName = Path.Combine(installLocation, file.FullName);
                         if (file.Name == "MWSE-Update.exe")
                         {
-                            completeFileName = Path.Combine(installLocation, "MWSE-Update.updated.exe");
+                            completeFileName = Path.Combine(installLocation, "MWSE-Update.tmp");
                         }
 
                         if (file.Name == "")
