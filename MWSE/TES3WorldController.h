@@ -4,6 +4,7 @@
 #include "TES3Defines.h"
 
 #include "TES3Collections.h"
+#include "TES3Vectors.h"
 
 namespace TES3 {
 	struct WorldControllerRenderCamera {
@@ -47,6 +48,32 @@ namespace TES3 {
 	};
 	static_assert(sizeof(WorldControllerRenderTarget) == 0x84, "TES3::WorldControllerRenderTarget failed size validation");
 
+	struct MouseController {
+		NI::Object * cursors[5];
+		int unknown_0x14;
+		Vector3 position; // 0x18
+		Vector3 minimumPosition; // 0x24
+		Vector3 maximumPosition; // 0x30
+		NI::Node * cursorRoot; // 0x3C
+		NI::Node * cursorChildRoot; // 0x40
+		int unknown_0x44;
+		int unknown_0x48;
+		int unknown_0x4C;
+		int unknown_0x50;
+		int unknown_0x54;
+		int unknown_0x58;
+		int unknown_0x5C;
+		int unknown_0x60;
+		int unknown_0x64;
+		int unknown_0x68;
+		int unknown_0x6C;
+		int unknown_0x70;
+		int unknown_0x74;
+		int unknown_0x78;
+		int unknown_0x7C;
+	};
+	static_assert(sizeof(MouseController) == 0x80, "TES3::MouseController failed size validation");
+
 	struct WorldController {
 		int unknown_0x0;
 		int unknown_0x4;
@@ -68,7 +95,7 @@ namespace TES3 {
 		int unknown_0x44;
 		int unknown_0x48;
 		InputController * inputController; // 0x4C
-		int unknown_0x50;
+		MouseController * mouseController; // 0x50
 		Script * scriptGlobals; // 0x54
 		WeatherController * weatherController; // 0x58
 		int mobController; // 0x5C

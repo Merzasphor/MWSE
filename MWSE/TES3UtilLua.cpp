@@ -702,6 +702,18 @@ namespace mwse {
 
 				return sol::nil;
 			};
+
+			state["tes3"]["getCursorPosition"] = []() -> sol::object {
+				TES3::WorldController * worldController = tes3::getWorldController();
+				if (worldController) {
+					sol::table results = LuaManager::getInstance().getState().create_table();
+					results["x"] = worldController->mouseController->position.x;
+					results["y"] = worldController->mouseController->position.z;
+					return results;
+				}
+
+				return sol::nil;
+			};
 		}
 	}
 }
