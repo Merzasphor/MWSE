@@ -142,9 +142,10 @@ namespace TES3 {
 		int unknown_0x18D0[4];
 		int unknown_0x18E0[4];
 		int unknown_0x18F0;
-		unsigned char keyboardState[256];
-		unsigned char previousKeyboardState[256];
-		int unknown_0x1AF4[10]; // Confirmed size.
+		unsigned char keyboardState[256]; // 0x18F4
+		unsigned char previousKeyboardState[256]; // 0x19F4
+		DIMOUSESTATE2 mouseState; // 0x1AF4
+		DIMOUSESTATE2 previousMouseState; // 0x1B08
 		int unknown_0x1B1C;
 		int unknown_0x1B20[4];
 		int unknown_0x1B30;

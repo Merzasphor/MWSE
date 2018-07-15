@@ -359,6 +359,53 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
+			class MouseButtonDownEvent : public KeyEvent {
+			public:
+				MouseButtonDownEvent(int button, bool controlDown, bool shiftDown, bool altDown, bool superDown);
+				sol::table createEventTable();
+			};
+
+			// ---------------------------------------------------------------------------- //
+
+			class MouseButtonUpEvent : public KeyEvent {
+			public:
+				MouseButtonUpEvent(int button, bool controlDown, bool shiftDown, bool altDown, bool superDown);
+				sol::table createEventTable();
+			};
+
+			// ---------------------------------------------------------------------------- //
+
+			class MouseAxisEvent : public GenericEvent {
+			public:
+				MouseAxisEvent(int deltaX, int deltaY, bool controlDown, bool shiftDown, bool altDown, bool superDown);
+				sol::table createEventTable();
+
+			protected:
+				int m_DeltaX;
+				int m_DeltaY;
+				bool m_ControlDown;
+				bool m_ShiftDown;
+				bool m_AltDown;
+				bool m_SuperDown;
+			};
+
+			// ---------------------------------------------------------------------------- //
+
+			class MouseWheelEvent : public GenericEvent {
+			public:
+				MouseWheelEvent(int delta, bool controlDown, bool shiftDown, bool altDown, bool superDown);
+				sol::table createEventTable();
+
+			protected:
+				int m_Delta;
+				bool m_ControlDown;
+				bool m_ShiftDown;
+				bool m_AltDown;
+				bool m_SuperDown;
+			};
+
+			// ---------------------------------------------------------------------------- //
+
 			class DeathEvent : public ObjectFilteredEvent {
 			public:
 				DeathEvent(TES3::MobileActor* mobileActor);

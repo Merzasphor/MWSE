@@ -26,6 +26,24 @@ namespace mwse {
 				state.set_usertype("tes3inputConfig", usertypeDefinition);
 			}
 
+			// Binding for DIMOUSESTATE2
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<DIMOUSESTATE2>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				// Basic property binding.
+				usertypeDefinition.set("x", sol::readonly_property(&DIMOUSESTATE2::lX));
+				usertypeDefinition.set("y", sol::readonly_property(&DIMOUSESTATE2::lY));
+				usertypeDefinition.set("z", sol::readonly_property(&DIMOUSESTATE2::lZ));
+
+				// Indirect bindings to unions and arrays.
+				usertypeDefinition.set("buttons", sol::readonly_property([](DIMOUSESTATE2& self) { return std::ref(self.rgbButtons); }));
+
+				// Finish up our usertype.
+				state.set_usertype("tes3directInputMouseState", usertypeDefinition);
+			}
+
 			// Binding for TES3::InputController
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
@@ -34,6 +52,8 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition.set("creationFlags", sol::readonly_property(&TES3::InputController::creationFlags));
+				usertypeDefinition.set("mouseState", sol::readonly_property(&TES3::InputController::mouseState));
+				usertypeDefinition.set("previousMouseState", sol::readonly_property(&TES3::InputController::previousMouseState));
 
 				// Indirect bindings to unions and arrays.
 				usertypeDefinition.set("inputMaps", sol::readonly_property([](TES3::InputController& self) { return std::ref(self.inputMaps); }));

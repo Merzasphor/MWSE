@@ -832,6 +832,29 @@ namespace mwse {
 					luaManager.triggerEvent(new event::KeyEvent(i, false, controlDown, shiftDown, altDown, superDown));
 				}
 			}
+
+			// Do the same with mouse buttons.
+			for (size_t i = 0; i < 8; i++) {
+				if ((inputController->mouseState.rgbButtons[i] & 0x80) && !(inputController->previousMouseState.rgbButtons[i] & 0x80)) {
+					luaManager.triggerEvent(new event::MouseButtonDownEvent(i, controlDown, shiftDown, altDown, superDown));
+				}
+				else if (!(inputController->mouseState.rgbButtons[i] & 0x80) && (inputController->previousMouseState.rgbButtons[i] & 0x80)) {
+					luaManager.triggerEvent(new event::MouseButtonUpEvent(i, controlDown, shiftDown, altDown, superDown));
+				}
+			}
+
+			// Look at mouse axis events.
+			LONG mouseDeltaX = inputController->mouseState.lX;
+			LONG mouseDeltaY = inputController->mouseState.lY;
+			if (mouseDeltaX || mouseDeltaY) {
+				luaManager.triggerEvent(new event::MouseAxisEvent(mouseDeltaX, mouseDeltaY, controlDown, shiftDown, altDown, superDown));
+			}
+
+			// Finally, look at mouse scroll wheel.
+			LONG mouseDeltaZ = inputController->mouseState.lZ;
+			if (mouseDeltaZ != 0) {
+				luaManager.triggerEvent(new event::MouseWheelEvent(mouseDeltaZ, controlDown, shiftDown, altDown, superDown));
+			}
 		}
 
 		//

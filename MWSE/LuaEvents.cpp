@@ -713,6 +713,102 @@ namespace mwse {
 			}
 
 			//
+			// Mouse button down event.
+			//
+
+			MouseButtonDownEvent::MouseButtonDownEvent(int button, bool controlDown, bool shiftDown, bool altDown, bool superDown) :
+				KeyEvent(button, true, controlDown, shiftDown, altDown, superDown)
+			{
+				m_EventName = "mouseButtonDown";
+			}
+
+			sol::table MouseButtonDownEvent::createEventTable() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table eventData = KeyEvent::createEventTable();
+
+				eventData["button"] = m_KeyCode;
+
+				return eventData;
+			}
+
+			//
+			// Mouse button up event.
+			//
+
+			MouseButtonUpEvent::MouseButtonUpEvent(int button, bool controlDown, bool shiftDown, bool altDown, bool superDown) :
+				KeyEvent(button, false, controlDown, shiftDown, altDown, superDown)
+			{
+				m_EventName = "mouseButtonUp";
+			}
+
+			sol::table MouseButtonUpEvent::createEventTable() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table eventData = KeyEvent::createEventTable();
+
+				eventData["button"] = m_KeyCode;
+
+				return eventData;
+			}
+
+			//
+			// Mouse axis event.
+			//
+
+			MouseAxisEvent::MouseAxisEvent(int deltaX, int deltaY, bool controlDown, bool shiftDown, bool altDown, bool superDown) :
+				GenericEvent("mouseAxis"),
+				m_DeltaX(deltaX),
+				m_DeltaY(deltaY),
+				m_ControlDown(controlDown),
+				m_ShiftDown(shiftDown),
+				m_AltDown(altDown),
+				m_SuperDown(superDown)
+			{
+
+			}
+
+			sol::table MouseAxisEvent::createEventTable() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table eventData = state.create_table();
+
+				eventData["deltaX"] = m_DeltaX;
+				eventData["deltaY"] = m_DeltaY;
+				eventData["isControlDown"] = m_ControlDown;
+				eventData["isShiftDown"] = m_ShiftDown;
+				eventData["isAltDown"] = m_AltDown;
+				eventData["isSuperDown"] = m_SuperDown;
+
+				return eventData;
+			}
+
+			//
+			// Mouse wheel event.
+			//
+
+			MouseWheelEvent::MouseWheelEvent(int delta, bool controlDown, bool shiftDown, bool altDown, bool superDown) :
+				GenericEvent("mouseWheel"),
+				m_Delta(delta),
+				m_ControlDown(controlDown),
+				m_ShiftDown(shiftDown),
+				m_AltDown(altDown),
+				m_SuperDown(superDown)
+			{
+
+			}
+
+			sol::table MouseWheelEvent::createEventTable() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table eventData = state.create_table();
+
+				eventData["delta"] = m_Delta;
+				eventData["isControlDown"] = m_ControlDown;
+				eventData["isShiftDown"] = m_ShiftDown;
+				eventData["isAltDown"] = m_AltDown;
+				eventData["isSuperDown"] = m_SuperDown;
+
+				return eventData;
+			}
+
+			//
 			// Death event.
 			//
 
