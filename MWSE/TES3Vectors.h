@@ -25,6 +25,8 @@ namespace TES3 {
 
 		Vector3 operator+(const Vector3&);
 		Vector3 operator-(const Vector3&);
+		Vector3 operator*(const Vector3&);
+		Vector3 operator*(const float);
 
 		//
 		// Associated functions.
