@@ -1776,7 +1776,7 @@ namespace mwse {
 			genCallEnforced(0x63003C, 0x62FDB0, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_SwimBarMenu)); // SwimBarMenu
 			genCallEnforced(0x634C06, 0x634980, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_TimePassMenu)); // TimePassMenu
 			genCallEnforced(0x63600B, 0x635D00, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_TopicMenu)); // TopicMenu
-			genCallEnforced(0x617B81, 0x581F30, reinterpret_cast<DWORD>(OnUICreatedAfterSetProperty)); // TrainingMenu
+			genCallEnforced(0x6180DB, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // TrainingServiceMenu
 			genCallEnforced(0x6191D1, 0x5B03E0, reinterpret_cast<DWORD>(OnUICreatedAfterSetEventCallbackFunc)); // TravelServiceMenu
 			genCallEnforced(0x637FC6, 0x581F30, reinterpret_cast<DWORD>(OnUICreatedAfterSetProperty)); // VideoMenu
 

@@ -115,6 +115,13 @@ namespace mwse {
 			}
 		}
 
+		void triggerEvent(Element& target, TES3::UI::Property eventID, int data0, int data1) {
+			auto callback = target.getProperty(TES3::UI::PropertyType::EventCallback, eventID).eventCallback;
+			if (callback) {
+				callback(&target, eventID, data0, data1, &target);
+			}
+		}
+
 		void bindTES3UIManager() {
 			sol::state& state = LuaManager::getInstance().getState();
 			auto tes3ui = state.create_named_table("tes3ui");

@@ -714,6 +714,16 @@ namespace mwse {
 
 				return sol::nil;
 			};
+
+			state["tes3"]["getSkill"] = [](int skillID) -> sol::object {
+				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				if (dataHandler) {
+					return makeLuaObject(&dataHandler->nonDynamicData->skills[skillID]);
+				}
+
+				return sol::nil;
+			};
+
 		}
 	}
 }

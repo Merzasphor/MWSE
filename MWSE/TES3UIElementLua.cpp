@@ -1,6 +1,7 @@
 #include <string>
 #include <unordered_map>
 
+#include "LuaUtil.h"
 #include "TES3UIElement.h"
 #include "TES3UIManager.h"
 #include "TES3UIWidgets.h"
@@ -304,6 +305,13 @@ namespace mwse {
 					return self.getProperty(TES3::UI::PropertyType::Integer, prop).integerValue;
 				}
 			);
+			usertypeDefinition.set("getPropertyObject",
+				[](Element& self, const char* propertyName) {
+					TES3::UI::Property prop = TES3::UI::registerProperty(propertyName);
+					auto object = self.getProperty(TES3::UI::PropertyType::Pointer, prop).ptrValue;
+					return makeLuaObject(static_cast<TES3::BaseObject*>(object));
+				}
+			);
 			usertypeDefinition.set("setPropertyBool",
 				[](Element& self, const char* propertyName, bool value) {
 					TES3::UI::Property prop = TES3::UI::registerProperty(propertyName);
@@ -318,6 +326,12 @@ namespace mwse {
 			);
 			usertypeDefinition.set("setPropertyInt",
 				[](Element& self, const char* propertyName, int value) {
+					TES3::UI::Property prop = TES3::UI::registerProperty(propertyName);
+					self.setProperty(prop, value);
+				}
+			);
+			usertypeDefinition.set("setPropertyObject",
+				[](Element& self, const char* propertyName, TES3::BaseObject* value) {
 					TES3::UI::Property prop = TES3::UI::registerProperty(propertyName);
 					self.setProperty(prop, value);
 				}
@@ -355,6 +369,27 @@ namespace mwse {
 					// Check UI registry for custom event
 					TES3::UI::Property prop = TES3::UI::registerProperty(eventID.c_str());
 					unregisterUIEvent(self, prop);
+				}
+			);
+			usertypeDefinition.set("forwardEvent",
+				[](Element& self, sol::table eventData) {
+				if (eventData && eventData["id"].valid()) {
+					triggerEvent(self, eventData["id"], eventData["data0"], eventData["data1"]);
+				}
+			}
+			);
+			usertypeDefinition.set("triggerEvent",
+				[](Element& self, const std::string& eventID) {
+					// Map friendlier event names to standard UI events
+					auto it = standardNamedEvents.find(eventID);
+					if (it != standardNamedEvents.end()) {
+						triggerEvent(self, it->second, 0, 0);
+						return;
+					}
+
+					// Check UI registry for custom event
+					TES3::UI::Property prop = TES3::UI::registerProperty(eventID.c_str());
+					triggerEvent(self, prop, 0, 0);
 				}
 			);
 
