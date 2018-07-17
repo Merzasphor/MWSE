@@ -176,8 +176,8 @@ namespace TES3 {
 		void * unknown_0x114;
 		void * unknown_0x118;
 		void * unknown_0x11C;
-		void * getScale; // 0x120
-		void * setScale; // 0x124
+		float (__thiscall * getScale)(BaseObject*); // 0x120
+		void (__thiscall * setScale)(BaseObject*, float, bool); // 0x124
 		void * unknown_0x128;
 		void * unknown_0x12C;
 		void * unknown_0x130;
@@ -261,6 +261,8 @@ namespace TES3 {
 		void setAutoCalc(bool);
 		void setModelPath(const char*);
 		void setName(const char*);
+		float getScale();
+		void setScale(float value, bool cap = false);
 	};
 	static_assert(sizeof(Object) == 0x28, "TES3::Object failed size validation");
 

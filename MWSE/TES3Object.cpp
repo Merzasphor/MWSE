@@ -169,5 +169,13 @@ namespace TES3 {
 		vTable.object->setName(this, name);
 	}
 
+	float Object::getScale() {
+		return vTable.object->getScale(this);
+	}
+
+	void Object::setScale(float value, bool cap) {
+		vTable.object->setScale(this, value, cap);
+	}
+
 
 }

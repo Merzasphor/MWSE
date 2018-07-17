@@ -47,6 +47,9 @@ namespace mwse {
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 
+				// Basic property binding.
+				usertypeDefinition.set("scale", sol::property(&TES3::Object::getScale,[](TES3::Object& self, float value) { self.setScale(value); }));
+
 				// Indirect bindings to unions and arrays.
 				usertypeDefinition.set("owningCollection", sol::property([](TES3::Object& self) { return self.owningCollection.asReferenceList; }));
 
