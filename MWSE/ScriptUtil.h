@@ -92,7 +92,7 @@ namespace mwse
 		// Execute original op code.
 		//
 
-		float RunOriginalOpCode(TES3::Script* script, TES3::Reference* reference, OpCode::OpCode_t opCode, TES3::BaseObject* objectParam = NULL, char charParam = '_', float unk1 = 0.0f, float unk2 = 0.0f);
+		float RunOriginalOpCode(TES3::Script* script, TES3::Reference* reference, OpCode::OpCode_t opCode, TES3::BaseObject* objectParam = nullptr, char charParam = '\0');
 
 		//
 		// Wrapper functions for original opcodes.

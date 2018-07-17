@@ -45,6 +45,9 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
+		void getScriptParams(bool unknown = true);
+		float executeScriptOpCode(unsigned int opCode, char charParam, BaseObject * objectParam);
+
 		char getLocalVarIndexAndType(const char*, unsigned int*);
 
 		short getShortValue(unsigned int, bool);

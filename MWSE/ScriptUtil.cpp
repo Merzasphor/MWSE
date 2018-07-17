@@ -26,6 +26,7 @@
 #include "TES3Creature.h"
 #include "TES3Misc.h"
 #include "TES3DialogueInfo.h"
+#include "TES3Script.h"
 #include "TES3Sound.h"
 
 namespace mwse
@@ -164,7 +165,7 @@ namespace mwse
 			*reinterpret_cast<float*>(TES3_TARGET_ROTZ_IMAGE) = z;
 		}
 
-		float RunOriginalOpCode(TES3::Script* script, TES3::Reference* reference, OpCode::OpCode_t opCode, TES3::BaseObject* objectParam, char charParam, float unk1, float unk2) {
+		float RunOriginalOpCode(TES3::Script* script, TES3::Reference* reference, OpCode::OpCode_t opCode, TES3::BaseObject* objectParam, char charParam) {
 			// Cache script state.
 			TES3::Reference* cachedTargetReference = getScriptTargetReference();
 			TES3::BaseObject* cachedTargetTemplate = getScriptTargetTemplate();
@@ -172,18 +173,7 @@ namespace mwse
 
 			// Call the opcode.
 			setScriptTargetReference(reference);
-			static int origRunOpCode = 0x505770;
-			float result = 0.0f;
-			__asm {
-				mov ecx, script
-				push objectParam
-				push charParam
-				push opCode
-
-				call origRunOpCode
-
-				fstp result
-			}
+			float result = script->executeScriptOpCode(opCode, charParam, objectParam);
 
 			// Restore script state.
 			setInstructionPointer(IP);
