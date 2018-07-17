@@ -12,6 +12,7 @@
 #include "TES3InputController.h"
 #include "TES3Script.h"
 #include "TES3Sound.h"
+#include "TES3UIMenuController.h"
 #include "TES3WeatherController.h"
 #include "TES3WorldController.h"
 

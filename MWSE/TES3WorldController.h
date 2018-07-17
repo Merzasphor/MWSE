@@ -2,6 +2,7 @@
 
 #include "NIDefines.h"
 #include "TES3Defines.h"
+#include "TES3UIDefines.h"
 
 #include "TES3Collections.h"
 #include "TES3Vectors.h"
@@ -161,8 +162,8 @@ namespace TES3 {
 		WorldControllerRenderCamera unknown_0x2B0;
 		int unknown_0x2DC;
 		void * fogOfWarController; // 0x2E0
-		void * menuController; // 0x2E4
 		void * uiInventoryData; // 0x2E8
+		UI::MenuController * menuController; // 0x2E4
 		Sound * soundWeaponSwish; // 0x2EC
 		Sound * soundLightArmorHit; // 0x2F0
 		Sound * soundMediumArmorHit; // 0x2F4

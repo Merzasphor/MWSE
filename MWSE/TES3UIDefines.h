@@ -4,6 +4,8 @@
 
 namespace TES3 {
 	namespace UI {
+		struct MenuController;
+
 		typedef char Boolean;
 		typedef short UI_ID;
 

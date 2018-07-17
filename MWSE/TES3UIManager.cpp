@@ -48,8 +48,7 @@ namespace TES3 {
 		}
 
 		void acquireTextInput(Element* element) {
-			MenuController *menuController = static_cast<MenuController*>(mwse::tes3::getWorldController()->menuController);
-			menuController->menuInputController->acquireTextInput(element);
+			mwse::tes3::getWorldController()->menuController->menuInputController->acquireTextInput(element);
 		}
 
 		void preventInventoryMenuToggle(Element* menu) {
