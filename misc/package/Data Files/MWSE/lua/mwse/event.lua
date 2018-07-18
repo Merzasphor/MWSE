@@ -104,7 +104,11 @@ function this.trigger(eventType, payload, options)
 
 	local callbacks = getEventTable(eventType, options.filter)
 	for _, callback in pairs(callbacks) do
-		local result = pcall(callback, payload)
+		local status, result = pcall(callback, payload)
+		if (status == false) then
+			result = nil
+			mwse.log("Error in event callback: %s\n%s", result, debug.traceback())
+		end
 
 		-- Returning non-nil from the callback claims/blocks the event.
 		if (result ~= nil) then
