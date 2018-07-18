@@ -1171,90 +1171,47 @@ namespace mwse {
 		// Event: UI Created
 		//
 
-		void __fastcall OnUICreatedAfterSetProperty(TES3::UI::Element * element, DWORD _UNUSED_, TES3::UI::Property property, TES3::UI::PropertyValue value, TES3::UI::PropertyType type) {
+		void __fastcall OnUICreatedAfterSetProperty(TES3::UI::Element* element, DWORD _UNUSED_, TES3::UI::Property property, TES3::UI::PropertyValue value, TES3::UI::PropertyType type) {
 			// Overwritten code.
 			element->setProperty(property, value, type);
 
 			// Fire off the event.
-			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
+			LuaManager::getInstance().triggerEvent(new event::GenericUiActivatedEvent(element));
 		}
 
-		void __fastcall OnUICreatedAfterSetEventCallbackFunc(TES3::UI::Element * element, DWORD _UNUSED_, TES3::UI::Property property, TES3::UI::EventCallback callback) {
-			// Overwritten code.
-			element->setProperty(property, callback);
-
-			// Fire off the event.
-			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
-		}
-
-		void __fastcall OnUICreatedAfterTimingUpdate(TES3::UI::Element * element) {
-			// Overwritten code.
-			element->timingUpdate();
-
-			// Fire off the event.
-			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
-		}
-
-		void __fastcall OnUICreatedAfterPerformLayout(TES3::UI::Element * element, DWORD _UNUSED_, bool unknown) {
+		void __fastcall OnUICreatedAfterPerformLayout(TES3::UI::Element* element, DWORD _UNUSED_, bool unknown) {
 			// Overwritten code.
 			element->performLayout(unknown);
 
 			// Fire off the event.
-			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
+			LuaManager::getInstance().triggerEvent(new event::GenericUiActivatedEvent(element));
 		}
 
-		void __cdecl OnUICReatedAfterMenuPosition(TES3::UI::Element * element, DWORD unknown) {
-			// Call builder.
-			reinterpret_cast<void(__cdecl *)(TES3::UI::Element*, DWORD)>(0x5972C0)(element, unknown);
+		void __cdecl OnUICreatedAfterConsoleMenuFocus(TES3::UI::Element* widget, int event, int data0, int data1, TES3::UI::Element* element) {
+			// Overwritten code.
+			const auto ui_ConsoleMenu_onFocus = reinterpret_cast<void (__cdecl*)(TES3::UI::Element*,int,int,int, TES3::UI::Element*)>(0x5B23E0);
+			ui_ConsoleMenu_onFocus(widget, event, data0, data1, element);
 
 			// Fire off the event.
-			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
+			LuaManager::getInstance().triggerEvent(new event::GenericUiActivatedEvent(element));
 		}
 
-		void __cdecl OnUICreatedAfterBuild(TES3::UI::Element * element, DWORD builder) {
-			// Call builder.
-			reinterpret_cast<void(__cdecl *)(TES3::UI::Element*)>(builder)(element);
+		void __fastcall OnUICreatedAfterMenuVisibleEvent(TES3::UI::Element* element, DWORD _UNUSED_, bool unknown) {
+			// Overwritten code.
+			const auto ui_setMenuVisibleWithEvent = reinterpret_cast<void (__thiscall*)(TES3::UI::Element*, bool)>(0x582F20);
+			ui_setMenuVisibleWithEvent(element, unknown);
 
 			// Fire off the event.
-			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
+			LuaManager::getInstance().triggerEvent(new event::GenericUiActivatedEvent(element));
 		}
 
-		void __cdecl OnUICreatedAfterBuild_AttributesMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x59F3D0); }
-		void __cdecl OnUICreatedAfterBuild_AudioMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x5A10D0); }
-		void __cdecl OnUICreatedAfterBuild_BarterMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x5A2DE0); }
-		void __cdecl OnUICreatedAfterBuild_BookMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x5AB6C0); }
-		void __cdecl OnUICreatedAfterBuild_ClassChoiceMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x5B04C0); }
-		void __cdecl OnUICreatedAfterBuild_ClassMessageMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x5B1190); }
-		void __cdecl OnUICreatedAfterBuild_ConsoleMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x5B1F60); }
-		void __cdecl OnUICreatedAfterBuild_CreateClassMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x5B8D40); }
-		void __cdecl OnUICreatedAfterBuild_DialogueMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x5BDC20); }
-		void __cdecl OnUICreatedAfterBuild_EnchantmentSelfMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x5C18D0); }
-		void __cdecl OnUICreatedAfterBuild_InputMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x5C7BF0); }
-		void __cdecl OnUICreatedAfterBuild_InputSaveMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x5C89B0); }
-		void __cdecl OnUICreatedAfterBuild_JournalMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x5D59D0); }
-		void __cdecl OnUICreatedAfterBuild_LevelUpMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x5D90A0); }
-		void __cdecl OnUICreatedAfterBuild_LoadingMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x5DEB50); }
-		void __cdecl OnUICreatedAfterBuild_MapNoteEditMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x5F06D0); }
-		void __cdecl OnUICreatedAfterBuild_MessageMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x5F18C0); }
-		void __cdecl OnUICreatedAfterBuild_MultiMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x5F2F50); }
-		void __cdecl OnUICreatedAfterBuild_NameMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x5F7E00); }
-		void __cdecl OnUICreatedAfterBuild_PersuasionMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x5FFAA0); }
-		void __cdecl OnUICreatedAfterBuild_PrefsMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x600FD0); }
-		void __cdecl OnUICreatedAfterBuild_QuickMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x606600); }
-		void __cdecl OnUICreatedAfterBuild_RestWaitMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x60FC40); }
-		void __cdecl OnUICreatedAfterBuild_SpecializationMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x61F490); }
-		void __cdecl OnUICreatedAfterBuild_StatMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x6241C0); }
-		void __cdecl OnUICreatedAfterBuild_StatReviewMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x62AF20); }
-		void __cdecl OnUICreatedAfterBuild_SwimBarMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x62FDB0); }
-		void __cdecl OnUICreatedAfterBuild_TimePassMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x634980); }
-		void __cdecl OnUICreatedAfterBuild_TopicMenu(TES3::UI::Element * element) { OnUICreatedAfterBuild(element, 0x635D00); }
-
-		void __cdecl OnUICreatedAfterBuild_ScrollMenu(TES3::UI::Element * element, DWORD unknown) {
-			// Call overwritten function.
-			reinterpret_cast<void(__cdecl *)(TES3::UI::Element*, DWORD)>(0x613060)(element, unknown);
+		void __cdecl OnUICreatedAfterScrollPaneUpdate(TES3::UI::Element* element) {
+			// Overwritten code.
+			const auto ui_ScrollPane_UpdateScrollBars = reinterpret_cast<void (__cdecl*)(TES3::UI::Element*)>(0x649E40);
+			ui_ScrollPane_UpdateScrollBars(element);
 
 			// Fire off the event.
-			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
+			LuaManager::getInstance().triggerEvent(new event::GenericUiActivatedEvent(element));
 		}
 
 		//
@@ -1736,72 +1693,76 @@ namespace mwse {
 			genCallEnforced(0x5088E9, 0x50F8B0, reinterpret_cast<DWORD>(OnJournalSet));
 
 			// Event: UI Created
-			genCallEnforced(0x599A83, 0x581F30, reinterpret_cast<DWORD>(OnUICreatedAfterSetProperty)); // AlchemyMenu
-			genCallEnforced(0x5A0526, 0x581F30, reinterpret_cast<DWORD>(OnUICreatedAfterSetProperty)); // AttributesListMenu
-			genCallEnforced(0x59F66A, 0x59F3D0, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_AttributesMenu)); // AttributesMenu
-			genCallEnforced(0x5A1A9A, 0x5A10D0, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_AudioMenu)); // AudioMenu
-			genCallEnforced(0x5A3C2C, 0x5A2DE0, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_BarterMenu)); // BarterMenu
-			genCallEnforced(0x5AAA61, 0x581F30, reinterpret_cast<DWORD>(OnUICreatedAfterSetProperty)); // BirthsignMenu
-			genCallEnforced(0x5AC2FD, 0x5AB6C0, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_BookMenu)); // BookMenu
-			genCallEnforced(0x5AFA74, 0x5B03E0, reinterpret_cast<DWORD>(OnUICreatedAfterSetEventCallbackFunc)); // ChooseClassMenu
-			genCallEnforced(0x5B089A, 0x5B04C0, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_ClassChoiceMenu)); // ClassChoiceMenu
-			genCallEnforced(0x5B1564, 0x5B1190, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_ClassMessageMenu)); // ClassMessageMenu
-			genCallEnforced(0x5B229A, 0x5B1F60, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_ConsoleMenu)); // ConsoleMenu
-			genCallEnforced(0x5B438F, 0x5B03E0, reinterpret_cast<DWORD>(OnUICreatedAfterSetEventCallbackFunc)); // ContentsMenu
-			genCallEnforced(0x5BC436, 0x581F30, reinterpret_cast<DWORD>(OnUICreatedAfterSetProperty)); // ControlsMenu
-			genCallEnforced(0x5BC6E5, 0x581F30, reinterpret_cast<DWORD>(OnUICreatedAfterSetProperty)); // ControlsMenu
-			genCallEnforced(0x5BA6CB, 0x5B8D40, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_CreateClassMenu)); // CreateClassMenu
-			genCallEnforced(0x5BE438, 0x5BDC20, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_DialogueMenu)); // DialogueMenu
-			genCallEnforced(0x5C42E1, 0x581F30, reinterpret_cast<DWORD>(OnUICreatedAfterSetProperty)); // EnchantmentMenu
-			genCallEnforced(0x5C29BA, 0x5C18D0, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_EnchantmentSelfMenu)); // EnchantmentSelfMenu
-			genCallEnforced(0x5C7EFD, 0x5C7BF0, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_InputMenu)); // InputMenu
-			genCallEnforced(0x5C8C8C, 0x5C89B0, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_InputSaveMenu)); // InputSaveMenu
-			genCallEnforced(0x5CA95F, 0x583B60, reinterpret_cast<DWORD>(OnUICreatedAfterTimingUpdate)); // InventorySelectMenu
-			genCallEnforced(0x5D636D, 0x5D59D0, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_JournalMenu)); // JournalMenu
-			genCallEnforced(0x5DA091, 0x5D90A0, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_LevelUpMenu)); // LevelUpMenu
-			genCallEnforced(0x5DD07A, 0x581F30, reinterpret_cast<DWORD>(OnUICreatedAfterSetProperty)); // LoadMenu
-			genCallEnforced(0x5DED7D, 0x5DEB50, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_LoadingMenu)); // LoadingMenu
-			genCallEnforced(0x5E6DF8, 0x581F30, reinterpret_cast<DWORD>(OnUICreatedAfterSetProperty)); // MagicSelectMenu
-			genCallEnforced(0x5FCA28, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MainMenu
-			genCallEnforced(0x5E9688, 0x5B03E0, reinterpret_cast<DWORD>(OnUICreatedAfterSetEventCallbackFunc)); // MapMenu
-			genCallEnforced(0x5F097F, 0x5F06D0, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_MapNoteEditMenu)); // MapNoteEditMenu
-			genCallEnforced(0x5F1B1E, 0x5F18C0, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_MessageMenu)); // MessageMenu
-			genCallEnforced(0x5F43DF, 0x5F2F50, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_MultiMenu)); // MultiMenu
-			genCallEnforced(0x5F84BB, 0x5F7E00, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_NameMenu)); // NameMenu
-			genCallEnforced(0x5FFD1C, 0x5FFAA0, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_PersuasionMenu)); // PersuasionMenu
-			genCallEnforced(0x601CFA, 0x600FD0, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_PrefsMenu)); // PrefsMenu
-			genCallEnforced(0x60325C, 0x5B03E0, reinterpret_cast<DWORD>(OnUICreatedAfterSetEventCallbackFunc)); // QuantityMenu
-			genCallEnforced(0x6035FC, 0x581F30, reinterpret_cast<DWORD>(OnUICreatedAfterSetProperty)); // QuantityMenu
-			genCallEnforced(0x6074BA, 0x606600, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_QuickMenu)); // QuickMenu
-			genCallEnforced(0x60A53C, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // RaceSexMenu
-			genCallEnforced(0x60D5DE, 0x5B03E0, reinterpret_cast<DWORD>(OnUICreatedAfterSetEventCallbackFunc)); // RepairMenu
-			genCallEnforced(0x6151BB, 0x5B03E0, reinterpret_cast<DWORD>(OnUICreatedAfterSetEventCallbackFunc)); // RepairServiceMenu
-			genCallEnforced(0x610214, 0x60FC40, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_RestWaitMenu)); // RestWaitMenu
-			genCallEnforced(0x6115CA, 0x581F30, reinterpret_cast<DWORD>(OnUICreatedAfterSetProperty)); // SaveMenu
-			genCallEnforced(0x6138FB, 0x613060, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_ScrollMenu)); // ScrollMenu
-			genCallEnforced(0x5D365A, 0x5B03E0, reinterpret_cast<DWORD>(OnUICreatedAfterSetEventCallbackFunc)); // SelectMenu
-			genCallEnforced(0x61AA11, 0x5972C0, reinterpret_cast<DWORD>(OnUICReatedAfterMenuPosition)); // SetValuesMenu
-			genCallEnforced(0x61EA45, 0x581F30, reinterpret_cast<DWORD>(OnUICreatedAfterSetProperty)); // SkillsListMenu
-			genCallEnforced(0x61DB73, 0x5972C0, reinterpret_cast<DWORD>(OnUICReatedAfterMenuPosition)); // SkillsMenu
-			genCallEnforced(0x61F7EA, 0x61F490, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_SpecializationMenu)); // SpecializationMenu
-			genCallEnforced(0x6214DC, 0x581F30, reinterpret_cast<DWORD>(OnUICreatedAfterSetProperty)); // SpellmakingMenu
-			genCallEnforced(0x6163BF, 0x5B03E0, reinterpret_cast<DWORD>(OnUICreatedAfterSetEventCallbackFunc)); // SpellsMenu
-			genCallEnforced(0x62624A, 0x6241C0, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_StatMenu)); // StatMenu
-			genCallEnforced(0x626672, 0x6241C0, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_StatMenu)); // StatMenu
-			genCallEnforced(0x62CD5A, 0x62AF20, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_StatReviewMenu)); // StatReviewMenu
-			genCallEnforced(0x62CEFE, 0x62AF20, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_StatReviewMenu)); // StatReviewMenu
-			genCallEnforced(0x63003C, 0x62FDB0, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_SwimBarMenu)); // SwimBarMenu
-			genCallEnforced(0x634C06, 0x634980, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_TimePassMenu)); // TimePassMenu
-			genCallEnforced(0x63600B, 0x635D00, reinterpret_cast<DWORD>(OnUICreatedAfterBuild_TopicMenu)); // TopicMenu
-			genCallEnforced(0x6180DB, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // TrainingServiceMenu
-			genCallEnforced(0x6191D1, 0x5B03E0, reinterpret_cast<DWORD>(OnUICreatedAfterSetEventCallbackFunc)); // TravelServiceMenu
-			genCallEnforced(0x637FC6, 0x581F30, reinterpret_cast<DWORD>(OnUICreatedAfterSetProperty)); // VideoMenu
+			genCallEnforced(0x59DF2C, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuAlchemy
+			genCallEnforced(0x59F690, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuAttributes
+			genCallEnforced(0x5A0604, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuAttributesList
+			genCallEnforced(0x5A1AB7, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuAudio
+			genCallEnforced(0x5A3DC4, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuBarter
+			genCallEnforced(0x5AABBB, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuBirthSign
+			genCallEnforced(0x5AC433, 0x581F30, reinterpret_cast<DWORD>(OnUICreatedAfterSetProperty)); // MenuBook
+			genCallEnforced(0x5AFB92, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuChooseClass
+			genCallEnforced(0x5B08E8, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuClassChoice
+			genCallEnforced(0x5B15AB, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuClassMessage
+			genCallEnforced(0x5B2358, 0x5B23E0, reinterpret_cast<DWORD>(OnUICreatedAfterConsoleMenuFocus)); // MenuConsole
+			genCallEnforced(0x5B4696, 0x582F20, reinterpret_cast<DWORD>(OnUICreatedAfterMenuVisibleEvent)); // MenuContents
+			genCallEnforced(0x5BA6E7, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuCreateClass
+			genCallEnforced(0x5BC460, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuCtrls
+			genCallEnforced(0x5BC70F, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuCtrls
+			genCallEnforced(0x5BE59E, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuDialog
+			genCallEnforced(0x5C2A25, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuEnchantment
+			genCallEnforced(0x5C7F10, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuInput
+			genCallEnforced(0x5C8D3B, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuInputSave
+			genCallEnforced(0x5CAA92, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuInventory
+			genCallEnforced(0x5D37EE, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuInventorySelect
+			genCallEnforced(0x5D65E5, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuJournal
+			genCallEnforced(0x5DA181, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuLevelUp
+			genCallEnforced(0x5DD0B3, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuLoad
+			genCallEnforced(0x5DEE78, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuLoading
+			genCallEnforced(0x5E138D, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuMagic
+			genCallEnforced(0x5E1535, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuMagic
+			genCallEnforced(0x5E1550, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuMagic
+			genCallEnforced(0x5E75C6, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuMagicSelect
+			genCallEnforced(0x5E9789, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuMap
+			genCallEnforced(0x5F0A97, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuMapNoteEdit
+			genCallEnforced(0x5F1ED6, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuMessage
+			genCallEnforced(0x5F4823, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuMulti
+			genCallEnforced(0x5F8634, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuName
+			genCallEnforced(0x5FCA28, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuOptions
+			genCallEnforced(0x5FF250, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuOptions
+			genCallEnforced(0x600174, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuPersuasion
+			genCallEnforced(0x601D3A, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuPrefs
+			genCallEnforced(0x60352C, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuQuantity
+			genCallEnforced(0x603777, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuQuantity
+			genCallEnforced(0x6074E8, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuQuick
+			genCallEnforced(0x60AD51, 0x649E40, reinterpret_cast<DWORD>(OnUICreatedAfterScrollPaneUpdate)); // MenuRaceSex
+			genCallEnforced(0x60DCC6, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuRepair
+			genCallEnforced(0x60E0FE, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuRepair
+			genCallEnforced(0x61027D, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuRestWait
+			genCallEnforced(0x6115F1, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuSave
+			genCallEnforced(0x613990, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuScroll
+			genCallEnforced(0x615479, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuServiceRepair
+			genCallEnforced(0x61660B, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuServiceSpells
+			genCallEnforced(0x6180DB, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuServiceTraining
+			genCallEnforced(0x619580, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuServiceTravel
+			genCallEnforced(0x61B862, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuSetValues
+			genCallEnforced(0x61DBEE, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuSkills
+			genCallEnforced(0x61EB12, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuSkillsList
+			genCallEnforced(0x61F810, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuSpecialization
+			genCallEnforced(0x62150B, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuSpellmaking
+			genCallEnforced(0x626270, 0x649E40, reinterpret_cast<DWORD>(OnUICreatedAfterScrollPaneUpdate)); // MenuStat
+			genCallEnforced(0x626698, 0x649E40, reinterpret_cast<DWORD>(OnUICreatedAfterScrollPaneUpdate)); // MenuStat
+			genCallEnforced(0x6266B6, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuStat
+			genCallEnforced(0x62CD76, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuStatReview
+			genCallEnforced(0x62CF1A, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuStatReview
+			genCallEnforced(0x630097, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuSwimFillBar
+			genCallEnforced(0x634D2B, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuTimePass
+			genCallEnforced(0x63610A, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuTopic
+			genCallEnforced(0x637FE6, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuVideo
 
 			/*
 			// TODO: Figure out a good hook point for this.
-			genCallEnforced(0x455856, 0x5E2480, reinterpret_cast<DWORD>(OnBuildUI_MagicMenu));
-			genCallEnforced(0x0, 0x61A9C0, reinterpret_cast<DWORD>(OnBuildUI_SpellEffectMenu));
 			genCallEnforced(0x0, 0x595A40, reinterpret_cast<DWORD>(OnBuildUI_Tooltip));
+			genCallEnforced(0x0, 0x590D90, reinterpret_cast<DWORD>(OnBuildUI_ItemTooltip));
 			*/
 
 			// Event: Activation Target Changed

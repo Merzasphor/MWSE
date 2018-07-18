@@ -32,6 +32,12 @@ function this.register(eventType, callback, options)
 		return error("event.register: Event callback must be a valid string.")
 	end
 
+    -- Deprecated event names
+    -- TODO: Remove from stable release
+    if (eventType == "uiCreated") then
+        eventType = "uiActivated"
+    end
+
 	-- Make sure options is an empty table if nothing else.
 	local options = options or {}
 

@@ -15,6 +15,7 @@
 #include "TES3MobileProjectile.h"
 #include "TES3Reference.h"
 #include "TES3UIElement.h"
+#include "TES3UIManager.h"
 #include "TES3Spell.h"
 #include "TES3Weapon.h"
 #include "TES3WorldController.h"
@@ -606,23 +607,33 @@ namespace mwse {
 			// General UI post-create event.
 			//
 
-			GenericUiCreatedEvent::GenericUiCreatedEvent(TES3::UI::Element * element) :
-				GenericEvent("uiCreated"),
+			GenericUiActivatedEvent::GenericUiActivatedEvent(TES3::UI::Element* element) :
+				GenericEvent("uiActivated"),
 				m_Element(element)
 			{
+				// Check if the menu was just created or only made visible
+				static const auto prop = TES3::UI::registerProperty("MWSE:uiCreated");
 
+				if (element->getProperty(TES3::UI::PropertyType::Integer, prop).integerValue == 0) {
+					element->setProperty(prop, 1);
+					m_Created = true;
+				}
+				else {
+					m_Created = false;
+				}
 			}
 
-			sol::table GenericUiCreatedEvent::createEventTable() {
+			sol::table GenericUiActivatedEvent::createEventTable() {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table eventData = state.create_table();
 
 				eventData["element"] = m_Element;
+				eventData["newlyCreated"] = m_Created;
 
 				return eventData;
 			}
 
-			sol::object GenericUiCreatedEvent::getEventOptions() {
+			sol::object GenericUiActivatedEvent::getEventOptions() {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table options = state.create_table();
 

@@ -304,14 +304,15 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class GenericUiCreatedEvent : public GenericEvent {
+			class GenericUiActivatedEvent : public GenericEvent {
 			public:
-				GenericUiCreatedEvent(TES3::UI::Element * parent);
+				GenericUiActivatedEvent(TES3::UI::Element * parent);
 				sol::table createEventTable();
 				sol::object getEventOptions();
 
 			protected:
 				TES3::UI::Element* m_Element;
+				bool m_Created;
 			};
 
 			// ---------------------------------------------------------------------------- //
