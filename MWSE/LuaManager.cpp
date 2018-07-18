@@ -1257,6 +1257,23 @@ namespace mwse {
 			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
 		}
 
+		//
+		// Event: Activation Target Changed
+		//
+
+		void __fastcall OnFindActivationTarget(TES3::Game * game) {
+			// Get the current reference looked at.
+			TES3::Reference * previous = game->playerTarget;
+
+			// Call the overwritten function.
+			reinterpret_cast<void(__thiscall *)(TES3::Game*)>(0x41CA50)(game);
+
+			// If our value changed, raise an event.
+			if (previous != game->playerTarget) {
+				LuaManager::getInstance().triggerEvent(new event::ActivationTargetChangedEvent(previous, game->playerTarget));
+			}
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");
@@ -1786,6 +1803,9 @@ namespace mwse {
 			genCallEnforced(0x0, 0x61A9C0, reinterpret_cast<DWORD>(OnBuildUI_SpellEffectMenu));
 			genCallEnforced(0x0, 0x595A40, reinterpret_cast<DWORD>(OnBuildUI_Tooltip));
 			*/
+
+			// Event: Activation Target Changed
+			genCallEnforced(0x41B3D6, 0x41CA50, reinterpret_cast<DWORD>(OnFindActivationTarget));
 
 			// UI framework hooks
 			TES3::UI::hook();
