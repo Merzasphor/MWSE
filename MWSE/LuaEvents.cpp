@@ -642,6 +642,12 @@ namespace mwse {
 				return options;
 			}
 
+			GenericUiCreatedEvent::GenericUiCreatedEvent(TES3::UI::Element* element) :
+				GenericUiActivatedEvent(element)
+			{
+				m_EventName = "uiCreated";
+			}
+
 			//
 			// Show rest/wait menu event.
 			//

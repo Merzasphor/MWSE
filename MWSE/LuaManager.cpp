@@ -1177,6 +1177,9 @@ namespace mwse {
 
 			// Fire off the event.
 			LuaManager::getInstance().triggerEvent(new event::GenericUiActivatedEvent(element));
+
+			// DEPRECATED. TODO: Remove before 2.1 final.
+			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
 		}
 
 		void __fastcall OnUICreatedAfterPerformLayout(TES3::UI::Element* element, DWORD _UNUSED_, bool unknown) {
@@ -1185,6 +1188,9 @@ namespace mwse {
 
 			// Fire off the event.
 			LuaManager::getInstance().triggerEvent(new event::GenericUiActivatedEvent(element));
+
+			// DEPRECATED. TODO: Remove before 2.1 final.
+			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
 		}
 
 		void __cdecl OnUICreatedAfterConsoleMenuFocus(TES3::UI::Element* widget, int event, int data0, int data1, TES3::UI::Element* element) {
@@ -1194,6 +1200,9 @@ namespace mwse {
 
 			// Fire off the event.
 			LuaManager::getInstance().triggerEvent(new event::GenericUiActivatedEvent(element));
+
+			// DEPRECATED. TODO: Remove before 2.1 final.
+			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
 		}
 
 		void __fastcall OnUICreatedAfterMenuVisibleEvent(TES3::UI::Element* element, DWORD _UNUSED_, bool unknown) {
@@ -1203,6 +1212,9 @@ namespace mwse {
 
 			// Fire off the event.
 			LuaManager::getInstance().triggerEvent(new event::GenericUiActivatedEvent(element));
+
+			// DEPRECATED. TODO: Remove before 2.1 final.
+			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
 		}
 
 		void __cdecl OnUICreatedAfterScrollPaneUpdate(TES3::UI::Element* element) {
@@ -1212,6 +1224,9 @@ namespace mwse {
 
 			// Fire off the event.
 			LuaManager::getInstance().triggerEvent(new event::GenericUiActivatedEvent(element));
+
+			// DEPRECATED. TODO: Remove before 2.1 final.
+			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
 		}
 
 		//

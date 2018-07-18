@@ -315,6 +315,12 @@ namespace mwse {
 				bool m_Created;
 			};
 
+			// TODO: Remove deprecated event.
+			class GenericUiCreatedEvent : public GenericUiActivatedEvent {
+			public:
+				GenericUiCreatedEvent(TES3::UI::Element * parent);
+			};
+
 			// ---------------------------------------------------------------------------- //
 
 			class ShowRestWaitMenuEvent : public GenericEvent {
