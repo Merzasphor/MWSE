@@ -104,7 +104,7 @@ function this.trigger(eventType, payload, options)
 
 	local callbacks = getEventTable(eventType, options.filter)
 	for _, callback in pairs(callbacks) do
-		local result = callback(payload)
+		local result = pcall(callback, payload)
 
 		-- Returning non-nil from the callback claims/blocks the event.
 		if (result ~= nil) then
