@@ -186,6 +186,11 @@ end
 
 -- Callback for when the MenuOptions element is created. We'll extend it with our new button.
 local function onCreatedMenuOptions(e)
+	-- Only interested in menu creation, not updates
+	if (not e.newlyCreated) then
+		return
+	end
+	
 	-- Don't show the UI if we don't have any mod configs to show.
 	if (getActiveModConfigCount() == 0) then
 		return
@@ -212,7 +217,7 @@ local function onCreatedMenuOptions(e)
 
 	mainMenu:updateLayout()
 end
-event.register("uiCreated", onCreatedMenuOptions, { filter = "MenuOptions" })
+event.register("uiActivated", onCreatedMenuOptions, { filter = "MenuOptions" })
 
 -- Define a new function in the mwse namespace that lets mods register for mod config.
 function mwse.registerModConfig(name, package)
