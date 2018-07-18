@@ -106,8 +106,8 @@ function this.trigger(eventType, payload, options)
 	for _, callback in pairs(callbacks) do
 		local status, result = pcall(callback, payload)
 		if (status == false) then
-			result = nil
 			mwse.log("Error in event callback: %s\n%s", result, debug.traceback())
+			result = nil
 		end
 
 		-- Returning non-nil from the callback claims/blocks the event.
