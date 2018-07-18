@@ -603,9 +603,9 @@ namespace mwse {
 		// Hook: On Unequipped.
 		//
 
-		int __fastcall OnUnequipped(TES3::Actor* actor, DWORD _UNUSED_, TES3::BaseObject* item, char unknown1, TES3::MobileActor* mobileActor, char unknown2, TES3::ItemData* itemData) {
+		TES3::EquipmentStack * __fastcall OnUnequipped(TES3::Actor* actor, DWORD _UNUSED_, TES3::Item* item, bool deleteStack, TES3::MobileActor* mobileActor, bool updateGUI, TES3::ItemData* itemData) {
 			// Call our wrapper for the function so that events are triggered.
-			return actor->unequipItem(item, unknown1, mobileActor, unknown2, itemData);
+			return actor->unequipItem(item, deleteStack, mobileActor, updateGUI, itemData);
 		}
 
 		//

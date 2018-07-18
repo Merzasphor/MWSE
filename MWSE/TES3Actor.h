@@ -74,7 +74,7 @@ namespace TES3 {
 		//
 
 		int equipItem(TES3::BaseObject* item, TES3::ItemData* itemData, TES3::EquipmentStack** out_equipmentStack, TES3::MobileActor* mobileActor);
-		int unequipItem(TES3::BaseObject* item, char unknown1, TES3::MobileActor* mobileActor, char unknown2, TES3::ItemData* itemData);
+		TES3::EquipmentStack * unequipItem(TES3::Item* item, bool deleteStack, TES3::MobileActor* mobileActor, bool updateGUI, TES3::ItemData* itemData);
 		Reference* dropItem(BaseObject*, ItemData*, int, bool);
 
 		//

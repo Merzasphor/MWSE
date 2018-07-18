@@ -32,8 +32,8 @@ namespace TES3 {
 		return result;
 	}
 
-	int Actor::unequipItem(TES3::BaseObject* item, char unknown1, TES3::MobileActor* mobileActor, char unknown2, TES3::ItemData* itemData) {
-		int result = reinterpret_cast<int(__thiscall *)(TES3::Actor*, TES3::BaseObject*, char, TES3::MobileActor*, char, TES3::ItemData*)>(TES3_Actor_unequipItem)(this, item, unknown1, mobileActor, unknown2, itemData);
+	TES3::EquipmentStack * Actor::unequipItem(TES3::Item* item, bool deleteStack, TES3::MobileActor* mobileActor, bool updateGUI, TES3::ItemData* itemData) {
+		TES3::EquipmentStack * result = reinterpret_cast<TES3::EquipmentStack *(__thiscall *)(TES3::Actor*, TES3::Item*, bool, TES3::MobileActor*, bool, TES3::ItemData*)>(TES3_Actor_unequipItem)(this, item, deleteStack, mobileActor, updateGUI, itemData);
 
 		// Trigger or queue our event.
 		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::UnequippedEvent(this, mobileActor, item, itemData));
