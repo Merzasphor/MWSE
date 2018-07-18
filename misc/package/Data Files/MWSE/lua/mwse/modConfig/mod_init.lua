@@ -22,7 +22,10 @@ local modConfigContainer = nil
 local function onClickModName(e)
 	-- If we have a current mod, fire its close event.
 	if (currentModConfig and currentModConfig.onClose) then
-		currentModConfig.onClose(modConfigContainer)
+		local status, error = pcall(currentModConfig.onClose, modConfigContainer)
+		if (status == false) then
+			mwse.log("Error in mod config close callback: %s\n%s", error, debug.traceback())
+		end
 	end
 
 	-- Update the current mod package.
@@ -33,7 +36,10 @@ local function onClickModName(e)
 
 	-- Fire the mod's creation event if it has one.
 	if (currentModConfig.onCreate) then
-		currentModConfig.onCreate(modConfigContainer)
+		local status, error = pcall(currentModConfig.onCreate, modConfigContainer)
+		if (status == false) then
+			mwse.log("Error in mod config create callback: %s\n%s", error, debug.traceback())
+		end
 	end
 
 	-- Change the mod config title bar to include the mod's name.
@@ -46,7 +52,10 @@ end
 local function onClickCloseButton(e)
 	-- If we have a current mod, fire its close event.
 	if (currentModConfig and currentModConfig.onClose) then
-		currentModConfig.onClose(modConfigContainer)
+		local status, error = pcall(currentModConfig.onClose, modConfigContainer)
+		if (status == false) then
+			mwse.log("Error in mod config close callback: %s\n%s", error, debug.traceback())
+		end
 	end
 
 	-- Get the main menu so we can show it again.
