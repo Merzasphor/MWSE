@@ -1977,6 +1977,11 @@ namespace mwse {
 			realTimers->clearTimers();
 			simulateTimers->clearTimers();
 			gameTimers->clearTimers();
+
+			// Reset the clocks for each timer.
+			realTimers->setClock(0.0);
+			simulateTimers->setClock(0.0);
+			gameTimers->setClock(tes3::getWorldController()->getHighPrecisionSimulationTimestamp());
 		}
 
 		std::shared_ptr<TimerController> LuaManager::getTimerController(TimerType::TimerType type) {
