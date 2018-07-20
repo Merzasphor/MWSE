@@ -23,6 +23,7 @@
 #include "TES3Game.h"
 #include "TES3InputController.h"
 #include "TES3LeveledList.h"
+#include "TES3MagicEffect.h"
 #include "TES3MagicEffectInstance.h"
 #include "TES3Spell.h"
 #include "TES3MobileActor.h"
@@ -939,21 +940,32 @@ namespace mwse {
 			return result;
 		}
 
+		// Spell cast resolution hook
+
+		float __fastcall OnSpellCastResolution(TES3::Spell* spell, DWORD _UNUSED_, TES3::MobileActor* caster, bool checkMagicka, int* weakestSchoolId) {
+			return spell->castChanceOnCast(caster, checkMagicka, weakestSchoolId);
+		}
+
 		//
 		// Magic cast success hook (includes spells, enchants and alchemy)
 		//
 
-		void __stdcall OnMagicCastSuccess(TES3::MagicSourceInstance* magicInstance) {
+		void __stdcall OnMagicCastSuccess(TES3::MagicSourceInstance* magicInstance, int* pExpGainSchool) {
 			// Ignore ability spells, as they are automatically activated as NPCs enter simulation range.
 			if (magicInstance->sourceCombo.sourceType == TES3::MagicSourceType::Spell && magicInstance->sourceCombo.source.asSpell->castType == TES3::SpellCastType::Ability) {
 				return;
 			}
 			
+			// Magic from any source event
 			LuaManager& luaManager = LuaManager::getInstance();
-			luaManager.triggerEvent(new event::MagicCastEvent(magicInstance));
-			
+			luaManager.triggerEvent(new event::MagicCastedEvent(magicInstance));
+
 			if (magicInstance->sourceCombo.sourceType == TES3::MagicSourceType::Spell) {
-				luaManager.triggerEvent(new event::SpellCastEvent(magicInstance, true));
+				// Spell cast event, allows updating the school that gains experience
+				sol::table eventData = luaManager.triggerEvent(new event::SpellCastedEvent(magicInstance, true, *pExpGainSchool));
+				if (eventData.valid()) {
+					*pExpGainSchool = eventData.get_or("expGainSchool", int(TES3::MagicSchool::None));
+				}
 			}
 		}
 
@@ -965,6 +977,8 @@ namespace mwse {
 				pushad
 
 				// Actually use our hook.
+				lea eax, [ebp - 0x1C]
+				push eax
 				push esi
 				call OnMagicCastSuccess
 
@@ -983,9 +997,9 @@ namespace mwse {
 		// Spell cast failure hook (only when cast chance roll fails)
 		//
 
-		void __stdcall OnSpellCastFailure(TES3::MagicSourceInstance* magicInstance) {
+		void __stdcall OnSpellCastFailure(TES3::MagicSourceInstance* magicInstance, int* pExpGainSchool) {
 			LuaManager& luaManager = LuaManager::getInstance();
-			luaManager.triggerEvent(new event::SpellCastEvent(magicInstance, false));
+			luaManager.triggerEvent(new event::SpellCastedEvent(magicInstance, false, *pExpGainSchool));
 		}
 
 		static DWORD postSpellCastFailure = TES3_HOOK_SPELL_CAST_FAILURE_RETURN;
@@ -996,6 +1010,8 @@ namespace mwse {
 				pushad
 
 				// Actually use our hook.
+				lea eax, [ebp - 0x1C]
+				push eax
 				push esi
 				call OnSpellCastFailure
 
@@ -1511,6 +1527,9 @@ namespace mwse {
 			genCallEnforced(0x555789, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
 			genCallEnforced(0x556AE0, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
 			genCallEnforced(0x55782C, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
+
+			// Event: Spell cast resolution
+			genCallEnforced(0x5156B2, 0x4AA950, reinterpret_cast<DWORD>(OnSpellCastResolution));
 
 			// Event: Magic cast success
 			genJumpUnprotected(TES3_HOOK_MAGIC_CAST_SUCCESS, reinterpret_cast<DWORD>(HookMagicCastSuccess), TES3_HOOK_MAGIC_CAST_SUCCESS_SIZE);

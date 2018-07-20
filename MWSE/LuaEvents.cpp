@@ -1116,17 +1116,49 @@ namespace mwse {
 			}
 
 			//
+			// Spell cast chance at the point of cast resolution.
+			//
+
+			SpellCastEvent::SpellCastEvent(TES3::Spell *spell, TES3::MobileActor *caster, float castChance, int weakestSchool) :
+				GenericEvent("spellCast"),
+				m_Spell(spell),
+				m_Caster(caster),
+				m_CastChance(castChance),
+				m_WeakestSchool(weakestSchool)
+			{
+
+			}
+
+			sol::table SpellCastEvent::createEventTable() {
+				sol::table eventData = LuaManager::getInstance().getState().create_table();
+
+				eventData["caster"] = makeLuaObject(m_Caster->reference);
+				eventData["source"] = makeLuaObject(m_Spell);
+				eventData["castChance"] = m_CastChance;
+				eventData["weakestSchool"] = m_WeakestSchool;
+
+				return eventData;
+			}
+
+			sol::object SpellCastEvent::getEventOptions() {
+				sol::table options = LuaManager::getInstance().getState().create_table();
+
+				options["filter"] = makeLuaObject(m_Spell);
+				return options;
+			}
+
+			//
 			// Magic cast success event
 			//
 			
-			MagicCastEvent::MagicCastEvent(TES3::MagicSourceInstance* magicInstance) :
-				GenericEvent("magicCast"),
+			MagicCastedEvent::MagicCastedEvent(TES3::MagicSourceInstance* magicInstance) :
+				GenericEvent("magicCasted"),
 				m_MagicSourceInstance(magicInstance)
 			{
 				
 			}
 			
-			sol::table MagicCastEvent::createEventTable() {
+			sol::table MagicCastedEvent::createEventTable() {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table eventData = state.create_table();
 
@@ -1138,7 +1170,7 @@ namespace mwse {
 				return eventData;
 			}
 
-			sol::object MagicCastEvent::getEventOptions() {
+			sol::object MagicCastedEvent::getEventOptions() {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table options = state.create_table();
 
@@ -1150,19 +1182,20 @@ namespace mwse {
 			// Spell cast success/failure event
 			//
 			
-			SpellCastEvent::SpellCastEvent(TES3::MagicSourceInstance* magicInstance, bool success) :
-				GenericEvent("spellCast"),
-				m_MagicSourceInstance(magicInstance)
+			SpellCastedEvent::SpellCastedEvent(TES3::MagicSourceInstance* magicInstance, bool success, int expGainSchool) :
+				GenericEvent("spellCasted"),
+				m_MagicSourceInstance(magicInstance),
+				m_ExpGainSchool(expGainSchool)
 			{
 				if (success) {
-					m_EventName = "spellCast";
+					m_EventName = "spellCasted";
 				}
 				else {
-					m_EventName = "spellCastFailure";
+					m_EventName = "spellCastedFailure";
 				}
 			}
 			
-			sol::table SpellCastEvent::createEventTable() {
+			sol::table SpellCastedEvent::createEventTable() {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table eventData = state.create_table();
 
@@ -1170,12 +1203,12 @@ namespace mwse {
 				eventData["target"] = makeLuaObject(m_MagicSourceInstance->target);
 				eventData["source"] = makeLuaObject(m_MagicSourceInstance->sourceCombo.source.asSpell);
 				eventData["sourceInstance"] = makeLuaObject(m_MagicSourceInstance);
-				eventData["spellCastChance"] = m_MagicSourceInstance->sourceCombo.source.asSpell->calculateCastChance(m_MagicSourceInstance->caster);
+				eventData["expGainSchool"] = m_ExpGainSchool;
 
 				return eventData;
 			}
 
-			sol::object SpellCastEvent::getEventOptions() {
+			sol::object SpellCastedEvent::getEventOptions() {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table options = state.create_table();
 

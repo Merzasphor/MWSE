@@ -28,7 +28,7 @@ This event may be filtered by **element**'s ``.name`` property.
 Supported menus:
     - MenuAlchemy
     - MenuAttributes
-    - MenuAttributesList (Enchating/spellmaking effect attribute)
+    - MenuAttributesList (Enchanting/spellmaking effect attribute)
     - MenuAudio (Options, audio)
     - MenuBarter
     - MenuBirthSign
@@ -71,9 +71,9 @@ Supported menus:
     - MenuServiceSpells
     - MenuServiceTraining
     - MenuServiceTravel
-    - MenuSetValues (Enchating/spellmaking effect values)
+    - MenuSetValues (Enchanting/spellmaking effect values)
     - MenuSkills
-    - MenuSkillsList (Enchating/spellmaking effect skill)
+    - MenuSkillsList (Enchanting/spellmaking effect skill)
     - MenuSpecialization
     - MenuSpellmaking
     - MenuStat (Player attributes, skills, factions etc.)

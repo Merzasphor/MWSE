@@ -193,6 +193,7 @@ namespace TES3 {
 			Illusion,
 			Mysticism,
 			Restoration,
+			None,
 			FirstMagicSchool = Alteration,
 			LastMagicSchool = Restoration
 		};

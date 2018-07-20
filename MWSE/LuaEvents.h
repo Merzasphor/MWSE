@@ -529,9 +529,9 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class MagicCastEvent : public GenericEvent {
+			class MagicCastedEvent : public GenericEvent {
 			public:
-				MagicCastEvent(TES3::MagicSourceInstance *magicInstance);
+				MagicCastedEvent(TES3::MagicSourceInstance* magicInstance);
 				sol::table createEventTable();
 				sol::object getEventOptions();
 
@@ -541,12 +541,26 @@ namespace mwse {
 
 			class SpellCastEvent : public GenericEvent {
 			public:
-				SpellCastEvent(TES3::MagicSourceInstance *magicInstance, bool success);
+				SpellCastEvent(TES3::Spell* spell, TES3::MobileActor* caster, float castChance, int weakestSchool);
+				sol::table createEventTable();
+				sol::object getEventOptions();
+
+			protected:
+				TES3::Spell* m_Spell;
+				TES3::MobileActor* m_Caster;
+				float m_CastChance;
+				int m_WeakestSchool;
+			};
+
+			class SpellCastedEvent : public GenericEvent {
+			public:
+				SpellCastedEvent(TES3::MagicSourceInstance* magicInstance, bool success, int expGainSchool);
 				sol::table createEventTable();
 				sol::object getEventOptions();
 
 			protected:
 				TES3::MagicSourceInstance* m_MagicSourceInstance;
+				int m_ExpGainSchool;
 			};
 
 			// ---------------------------------------------------------------------------- //

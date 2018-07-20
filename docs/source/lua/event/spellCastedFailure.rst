@@ -1,8 +1,8 @@
 
-spellCast
+spellCastedFailure
 ========================================================
 
-This event is triggered just before a spell cast is resolved, at the end of the casting animation. It can control the success chance of the spell cast.
+This event is triggered when any spell fails to cast due to failing the cast chance check. It does not trigger when there is insufficient magicka.
 
 .. note:: See the `Event Guide`_ for more information on event data, return values, and filters.
 
@@ -15,20 +15,25 @@ caster
 
 `tes3reference`_. Read-only. The caster of the spell.
 
+target
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`tes3reference`_. Read-only. The target of the spell. For self-targeted spells, this matches **caster**.
+
 source
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 `tes3spell`_. Read-only. The spell information.
 
-castChance
+sourceInstance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Number`_. The percentage chance of the caster successfully casting the spell. May be modified. Setting it to 0 will cause the cast to fail.
+`tes3magicSourceInstance`_. Read-only. The unique instance of the magic source.
 
-weakestSchool
+expGainSchool
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Number`_. Read-only. Of all the magic effects in the spell, there is a magic school which the caster has the lowest skill at casting. This school determines which skill will gain experience on a successful cast.
+`Number`_. Of all the magic effects in the spell, there is a magic school which the caster has the lowest skill at casting. This school determines which skill will gain experience on a successful cast. Cast failures do not earn experience, but this information is still available if you want to implement your own experience system.
 
 School IDs can be mapped to skill IDs with ``tes3.magicSchoolSkill[school]``.
 

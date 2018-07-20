@@ -1,8 +1,10 @@
 
-spellCastFailure
+magicCasted
 ========================================================
 
-This event is triggered when any spell fails to cast due to failing the cast chance check. It does not trigger when there is insufficient magicka.
+This event is triggered when any spell or enchant is cast successfully, or when any alchemy item is used. This includes spells cast via scripts.
+
+For spells, this occurs at the end of the casting animation. For spells and enchants, it is just after the magic projectile has been constructed.
 
 .. note:: See the `Event Guide`_ for more information on event data, return values, and filters.
 
@@ -23,17 +25,13 @@ target
 source
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3spell`_. Read-only. What the spell comes from.
+`tes3alchemy`_, `tes3enchantment`_, or `tes3spell`_. Read-only. The magic source.
 
 sourceInstance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 `tes3magicSourceInstance`_. Read-only. The unique instance of the magic source.
 
-spellCastChance
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`Number`_. Read-only. The chance of the caster successfully casting the spell.
 
 
 Filter
@@ -43,8 +41,8 @@ This event may be filtered by **source**.
 
 .. _`Event Guide`: ../guide/events.html
 
-.. _`Number`: ../type/lua/number.html
-
+.. _`tes3alchemy`: ../type/tes3/alchemy.html
+.. _`tes3enchantment`: ../type/tes3/enchantment.html
 .. _`tes3magicSourceInstance`: ../type/tes3/magicSourceInstance.html
 .. _`tes3reference`: ../type/tes3/reference.html
 .. _`tes3spell`: ../type/tes3/spell.html
