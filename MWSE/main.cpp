@@ -41,6 +41,42 @@ void* external_realloc = NULL;
 
 static BOOL CALLBACK EnumSymbolsCallback(PSYMBOL_INFO, ULONG, PVOID);
 
+struct VersionStruct {
+	BYTE major;
+	BYTE minor;
+	BYTE patch;
+	BYTE build;
+};
+
+VersionStruct GetMGEVersion() {
+	DWORD dwSize = GetFileVersionInfoSize("MGEXEgui.exe", NULL);
+	if (dwSize == 0) {
+		return VersionStruct{};
+	}
+
+	BYTE * pbVersionInfo = new BYTE[dwSize];
+	if (!GetFileVersionInfo("MGEXEgui.exe", 0, dwSize, pbVersionInfo)) {
+		delete[] pbVersionInfo;
+		return VersionStruct{};
+	}
+
+	VS_FIXEDFILEINFO * pFileInfo = NULL;
+	UINT puLenFileInfo = 0;
+	if (!VerQueryValue(pbVersionInfo, TEXT("\\"), (LPVOID*)&pFileInfo, &puLenFileInfo)) {
+		delete[] pbVersionInfo;
+		return VersionStruct{};
+	}
+
+	VersionStruct version;
+	version.major = HIWORD(pFileInfo->dwProductVersionMS);
+	version.minor = LOWORD(pFileInfo->dwProductVersionMS);
+	version.patch = LOWORD(pFileInfo->dwProductVersionLS >> 16);
+	version.build = HIWORD(pFileInfo->dwProductVersionLS >> 16);
+	delete[] pbVersionInfo;
+
+	return version;
+}
+
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 	HANDLE process = NULL;
 	switch (fdwReason) {
@@ -50,11 +86,31 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 
 		// Initialize log file.
 		mwse::log::OpenLog("MWSELog.txt");
-		mwse::log::getLog() << "Morrowind Script Extender v" << MWSE_VERSION_MAJOR << "." << MWSE_VERSION_MINOR << "." << MWSE_VERSION_PATCH << " (built " << __DATE__ << ") initialized." << std::endl;
+		mwse::log::getLog() << "Morrowind Script Extender v" << MWSE_VERSION_MAJOR << "." << MWSE_VERSION_MINOR << "." << MWSE_VERSION_PATCH << " (built " << __DATE__ << ") hooked." << std::endl;
 
 		// Before we do anything else, ensure that we can make minidumps.
 		if (!mwse::patch::installMiniDumpHook()) {
-			mwse::log::getLog() << "Error: Unable to hook minidump!" << std::endl;
+			mwse::log::getLog() << "Warning: Unable to hook minidump! Crash dumps will be unavailable." << std::endl;
+		}
+
+		// Make sure we have the right version of MGE XE installed.
+		VersionStruct mgeVersion = GetMGEVersion();
+		if (mgeVersion.major == 0 && mgeVersion.minor == 0) {
+			mwse::log::getLog() << "Error: Could not determine MGE XE version." << std::endl;
+			MessageBox(NULL, "MGE XE does not seem to be installed. Please install MGE XE v0.10.0.0 or later.", "MGE XE Check Failed", MB_ICONERROR | MB_OK);
+			exit(0);
+		}
+		else if (mgeVersion.major == 0 && mgeVersion.minor < 10) {
+			mwse::log::getLog() << "Invalid MGE XE version: " << (int)mgeVersion.major << "." << (int)mgeVersion.minor << "." << (int)mgeVersion.patch << "." << (int)mgeVersion.build << std::endl;
+
+			std::stringstream ss;
+			ss << "Invalid MGE XE version found. Minimum version is 0.10.0.0.\nFound version: ";
+			ss << "Found MGE XE v" << (int)mgeVersion.major << "." << (int)mgeVersion.minor << "." << (int)mgeVersion.patch << "." << (int)mgeVersion.build;
+			MessageBox(NULL, ss.str().c_str(), "MGE XE Check Failed", MB_ICONERROR | MB_OK);
+			exit(0);
+		}
+		else {
+			mwse::log::getLog() << "Found MGE XE. Version: " << (int)mgeVersion.major << "." << (int)mgeVersion.minor << "." << (int)mgeVersion.patch << "." << (int)mgeVersion.build << std::endl;
 		}
 
 		// Look to see if an update to the MWSE Updater was downloaded. If so, swap the exes.
