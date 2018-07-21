@@ -1,8 +1,7 @@
 #include "TES3MiscLua.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
-#include "LuaUtil.h"
+#include "TES3ObjectLua.h"
 
 #include "TES3Misc.h"
 #include "TES3Script.h"
@@ -19,9 +18,7 @@ namespace mwse {
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
-
-			// Allow object to be converted to strings using their object ID.
-			usertypeDefinition.set(sol::meta_function::to_string, &TES3::Misc::getObjectID);
+			setUserdataForPhysicalObject(usertypeDefinition);
 
 			// Basic property binding.
 			usertypeDefinition.set("value", &TES3::Misc::value);

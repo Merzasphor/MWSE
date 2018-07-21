@@ -1,8 +1,7 @@
 #include "TES3SoundLua.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
-#include "LuaUtil.h"
+#include "TES3ObjectLua.h"
 
 #include "TES3Sound.h"
 #include "TES3SoundGenerator.h"
@@ -21,11 +20,10 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
-
-				// Allow object to be converted to strings using their object ID.
-				usertypeDefinition.set(sol::meta_function::to_string, &TES3::Sound::getObjectID);
+				setUserdataForBaseObject(usertypeDefinition);
 
 				// Override the id property to use the soundgen name, rather than the vtable.
+				usertypeDefinition.set(sol::meta_function::to_string, sol::readonly_property([](TES3::Sound& self) { return self.id; }));
 				usertypeDefinition.set("id", sol::readonly_property([](TES3::Sound& self) { return self.id; }));
 
 				// Access to other objects that need to be packaged.
@@ -52,9 +50,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
-
-				// Allow object to be converted to strings using their object ID.
-				usertypeDefinition.set(sol::meta_function::to_string, &TES3::SoundGenerator::getObjectID);
+				setUserdataForBaseObject(usertypeDefinition);
 
 				// Basic property binding.
 				usertypeDefinition.set("type", sol::readonly_property(&TES3::SoundGenerator::soundType));

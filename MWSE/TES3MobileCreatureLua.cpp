@@ -1,8 +1,7 @@
 #include "TES3MobileCreatureLua.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
-#include "LuaUtil.h"
+#include "TES3MobileActorLua.h"
 
 #include "TES3MobileCreature.h"
 #include "TES3Creature.h"
@@ -20,6 +19,7 @@ namespace mwse {
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::MobileActor, TES3::MobileObject>());
+			setUserdataForMobileActor(usertypeDefinition);
 
 			// Basic property binding.
 			usertypeDefinition.set("combat", sol::readonly_property(&TES3::MobileCreature::combatSkill));

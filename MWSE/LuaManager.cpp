@@ -44,7 +44,6 @@
 #include "TES3UtilLua.h"
 #include "TES3ActionDataLua.h"
 #include "TES3ActivatorLua.h"
-#include "TES3ActorLua.h"
 #include "TES3AlchemyLua.h"
 #include "TES3ApparatusLua.h"
 #include "TES3ArmorLua.h"
@@ -72,15 +71,12 @@
 #include "TES3LockpickLua.h"
 #include "TES3MagicEffectLua.h"
 #include "TES3MiscLua.h"
-#include "TES3MobileActorLua.h"
 #include "TES3MobileCreatureLua.h"
 #include "TES3MobileNPCLua.h"
-#include "TES3MobileObjectLua.h"
 #include "TES3MobilePlayerLua.h"
 #include "TES3MobileProjectileLua.h"
 #include "TES3MoonLua.h"
 #include "TES3NPCLua.h"
-#include "TES3ObjectLua.h"
 #include "TES3ProbeLua.h"
 #include "TES3RaceLua.h"
 #include "TES3ReferenceLua.h"
@@ -260,7 +256,6 @@ namespace mwse {
 			// Bind TES3 data types.
 			bindTES3ActionData();
 			bindTES3Activator();
-			bindTES3Actor();
 			bindTES3Alchemy();
 			bindTES3Apparatus();
 			bindTES3Armor();
@@ -290,15 +285,12 @@ namespace mwse {
 			bindTES3MagicEffectInstance();
 			bindTES3MagicSourceInstance();
 			bindTES3Misc();
-			bindTES3MobileActor();
 			bindTES3MobileCreature();
 			bindTES3MobileNPC();
-			bindTES3MobileObject();
 			bindTES3MobilePlayer();
 			bindTES3MobileProjectile();
 			bindTES3Moon();
 			bindTES3NPC();
-			bindTES3Object();
 			bindTES3Probe();
 			bindTES3Race();
 			bindTES3Reference();

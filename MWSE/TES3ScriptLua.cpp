@@ -1,8 +1,7 @@
 #include "TES3ScriptLua.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
-#include "LuaUtil.h"
+#include "TES3ObjectLua.h"
 
 #include "ScriptUtil.h"
 
@@ -176,6 +175,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
+				setUserdataForBaseObject(usertypeDefinition);
 
 				// Access to other objects that need to be packaged.
 				usertypeDefinition.set("script", sol::readonly_property([](TES3::StartScript& self) { return makeLuaObject(self.script); }));
@@ -192,9 +192,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
-
-				// Allow object to be converted to strings using their object ID.
-				usertypeDefinition.set(sol::meta_function::to_string, &TES3::Script::getObjectID);
+				setUserdataForBaseObject(usertypeDefinition);
 
 				// Basic property binding.
 				usertypeDefinition.set("shortVariableCount", sol::readonly_property(&TES3::Script::shortCount));

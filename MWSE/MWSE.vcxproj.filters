@@ -1841,19 +1841,7 @@
     <ClCompile Include="TES3SpellList.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
-    <ClCompile Include="TES3MobileActorLua.cpp">
-      <Filter>Source Files\Lua\Bindings\TES3</Filter>
-    </ClCompile>
-    <ClCompile Include="TES3MobileObjectLua.cpp">
-      <Filter>Source Files\Lua\Bindings\TES3</Filter>
-    </ClCompile>
-    <ClCompile Include="TES3ObjectLua.cpp">
-      <Filter>Source Files\Lua\Bindings\TES3</Filter>
-    </ClCompile>
     <ClCompile Include="TES3GlobalVariableLua.cpp">
-      <Filter>Source Files\Lua\Bindings\TES3</Filter>
-    </ClCompile>
-    <ClCompile Include="TES3ActorLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3InputControllerLua.cpp">

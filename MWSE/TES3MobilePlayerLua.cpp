@@ -1,19 +1,16 @@
 #include "TES3MobilePlayerLua.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
-#include "LuaUtil.h"
+#include "TES3MobileNPCLua.h"
 
 #include "TES3Collections.h"
 
 #include "TES3MobilePlayer.h"
 #include "TES3Apparatus.h"
-#include "TES3Cell.h"
 #include "TES3Collections.h"
 #include "TES3GlobalVariable.h"
 #include "TES3NPC.h"
 #include "TES3PlayerAnimationData.h"
-#include "TES3Reference.h"
 #include "TES3Spell.h"
 
 namespace mwse {
@@ -30,6 +27,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::MobileNPC, TES3::MobileActor, TES3::MobileObject>());
+				setUserdataForMobileNPC(usertypeDefinition);
 
 				// Basic property binding.
 				usertypeDefinition.set("alwaysRun", &TES3::MobilePlayer::alwaysRun);

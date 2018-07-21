@@ -1,8 +1,7 @@
 #include "TES3MobileProjectileLua.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
-#include "LuaUtil.h"
+#include "TES3MobileObjectLua.h"
 
 #include "TES3MobileProjectile.h"
 #include "TES3MobileActor.h"
@@ -20,6 +19,7 @@ namespace mwse {
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::MobileObject>());
+			setUserdataForMobileObject(usertypeDefinition);
 
 			// Basic property binding.
 			usertypeDefinition.set("disposition", &TES3::MobileProjectile::disposition);
