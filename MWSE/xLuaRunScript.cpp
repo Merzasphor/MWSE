@@ -68,7 +68,7 @@ namespace mwse
 			cachedModule = cacheHit->second;
 		}
 		else {
-			auto result = state.safe_script_file("./Data Files/MWSE/lua/" + scriptName + ".lua");
+			auto result = state.safe_script_file("./Data Files/MWSE/mods/" + scriptName + ".lua");
 			if (!result.valid()) {
 				sol::error error = result;
 				log::getLog() << "Lua error encountered for xLuaRunScript call of '" << scriptName << "' from script '" << virtualMachine.getScript()->name << "':" << std::endl << error.what() << std::endl;

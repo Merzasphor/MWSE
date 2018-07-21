@@ -6,7 +6,7 @@ Welcome to the MWSE-Lua interface. Starting in MWSE 2.1, modders are able to cre
 
 Unlike traditional mwscript, Lua scripting is responsive. Instead of checking every frame to see if an object is being activated, a mod might register to see if their reference was activated. This introduction covers the surface of the different components important to scripting with MWSE-Lua.
 
-Lua files do not reside in esms/esps, but rather live in the *Data Files/MWSE/lua* directory.
+Lua files do not reside in esms/esps, but rather live in the *Data Files/MWSE/ directory.
 
 .. warning:: MWSE 2.1 is currently in pre-release design/testing. There are many mods out that use it, but it is being rapidly developed. There **may be breaking changes** before version 2.1 is fully released. Consider this before deciding to use MWSE in its current state.
 
@@ -101,9 +101,9 @@ Mod Initialization Scripts
 
 So how do you access all this, and start getting your fingers into the event systems? Unlike vanilla mwscript, Lua scripts are not explicitly restricted to an actively running game. They are also not restricted to esp files -- many MWSE-Lua mods do not require an esp (though may choose to see if an esp is active for an easier user experience).
 
-By placing a file with the name ``mod_init.lua`` inside the lua folder or any of its subdirectories, that file will get executed when the game is being initialized (e.g. before any esm/esp files are accessed).
+By placing a file with the name ``main.lua`` inside the lua folder or any of its subdirectories, that file will get executed when the game is being initialized (e.g. before any esm/esp files are accessed).
 
-For example, with the file ``Data Files/MWSE/lua/mods/demo/mod_init.lua`` in place, it will get executed. With the following contents, it will ensure that when a save game is loaded, we get the save game filename printed to our log.
+For example, with the file ``Data Files/MWSE/mods/demo/main.lua`` in place, it will get executed. With the following contents, it will ensure that when a save game is loaded, we get the save game filename printed to our log.
 
 .. code-block:: lua
 
@@ -120,7 +120,7 @@ Another feature of MWSE-Lua is the ability to override the normal execution of m
 
 .. code-block:: lua
 
-    -- Use Data Files/MWSE/lua/mods/demo/override.lua for our override.
+    -- Use Data Files/MWSE/mods/demo/override.lua for our override.
     mwse.overrideScript("myScript", "mods/demo/override")
 
 The override is a module. The file listed above must return a table, and that table should have an execute function, which will get run whenever the script would get run.

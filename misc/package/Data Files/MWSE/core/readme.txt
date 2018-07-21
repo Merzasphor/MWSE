@@ -1,0 +1,1 @@
+This folder is used to hold core MWSE files. It is not safe to store mod information here!

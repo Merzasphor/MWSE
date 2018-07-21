@@ -236,7 +236,7 @@ namespace mwse {
 				TES3::Script* script = tes3::getDataHandler()->nonDynamicData->findScriptByName(scriptId.c_str());
 				if (script != NULL) {
 					sol::state& state = LuaManager::getInstance().getState();
-					sol::object result = state.safe_script_file("./Data Files/MWSE/lua/" + target + ".lua");
+					sol::object result = state.safe_script_file("./Data Files/MWSE/mods/" + target + ".lua");
 					if (result.is<sol::table>()) {
 						scriptOverrides[(unsigned long)script] = result;
 						script->dataLength = 0;
@@ -1264,7 +1264,7 @@ namespace mwse {
 
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
-			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/lua/mwse_init.lua");
+			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/core/mwse_init.lua");
 			if (!result.valid()) {
 				sol::error err = result;
 				log::getLog() << "ERROR: Failed to initialize MWSE Lua interface. Error encountered when executing mwse_init.lua:\n" << err.what() << std::endl;
@@ -1276,10 +1276,9 @@ namespace mwse {
 			bindStringUtil();
 			bindTES3Util();
 
-			// Look through the Data Files/MWSE/lua folder and see if there are any mod_init files.
-			std::string path = "Data Files/MWSE/lua/";
-			for (auto & p : std::experimental::filesystem::recursive_directory_iterator(path)) {
-				if (p.path().filename() == "mod_init.lua") {
+			// Look through the Data Files/MWSE/lua folder and see if there are any main.lua files.
+			for (auto & p : std::experimental::filesystem::recursive_directory_iterator("Data Files/MWSE/")) {
+				if (p.path().filename() == "main.lua" || p.path().filename() == "mod_init.lua") {
 					// If a parent directory is marked .disabled, ignore files in it.
 					if (p.path().string().find(".disabled\\") != std::string::npos) {
 #if _DEBUG

@@ -1,0 +1,1 @@
+This folder is used to hold common 3rd party libraries. Modules (lua or native) will be found here before any matches in the mods folder are used, but before the core folder is used.

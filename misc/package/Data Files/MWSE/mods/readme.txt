@@ -1,0 +1,1 @@
+This folder is used to hold individual MWSE-Lua mods.

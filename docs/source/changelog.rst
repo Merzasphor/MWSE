@@ -28,7 +28,7 @@ Added
 
 - ``xActivate``: Allows the forced activation of one reference to another. This allows you to make the player or NPCs pick up objects, go through doors, and otherwise perform a normal activation. Unlike the vanilla ``Activate`` function, this one wil always work and accepts variable input.
 
-- ``xLuaRunScript``: Loads and executes a lua file inside of *Data Files/MWSE/lua/scripts*. That script has the power to interact with the MWSE stack, and return any data it wants. This effectively lets custom Lua-based functions to be written so that mwscripts are not limited.
+- ``xLuaRunScript``: Loads and executes a lua file inside of *Data Files/MWSE/mods*. That script has the power to interact with the MWSE stack, and return any data it wants. This effectively lets custom Lua-based functions to be written so that mwscripts are not limited.
 
 - ``xMyRef``: Allows an object to get a reference to itself. Moved from ``xGetRef`` to its own function for better compatibility.
 

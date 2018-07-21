@@ -145,6 +145,36 @@ namespace MWSE
                 webClient.DownloadFile("https://nullcascade.com/mwse/mwse-dev.zip", "mwse-update.zip");
                 Console.WriteLine(" Done.");
 
+                // Delete pre-restructure files. TODO: Remove this before stable release.
+                Console.Write("Deleting old files ...");
+                if (Directory.Exists("Data Files\\MWSE\\lua\\mwse"))
+                {
+                    Directory.Delete("Data Files\\MWSE\\lua\\mwse", true);
+                }
+                if (File.Exists("Data Files\\MWSE\\lua\\mwse_init.lua"))
+                {
+                    File.Delete("Data Files\\MWSE\\lua\\mwse_init.lua");
+                }
+                if (File.Exists("Data Files\\MWSE\\lua\\dkjson.lua"))
+                {
+                    File.Delete("Data Files\\MWSE\\lua\\dkjson.lua");
+                }
+                if (File.Exists("Data Files\\MWSE\\lua\\lfs.lua"))
+                {
+                    File.Delete("Data Files\\MWSE\\lua\\lfs.lua");
+                }
+                if (File.Exists("Data Files\\MWSE\\lua\\lfs.dll"))
+                {
+                    File.Delete("Data Files\\MWSE\\lua\\lfs.dll");
+                }
+                Console.WriteLine(" Done.");
+
+                // Delete old core files so they can be refreshed.
+                if (Directory.Exists("Data Files\\MWSE\\core"))
+                {
+                    Directory.Delete("Data Files\\MWSE\\core", true);
+                }
+
                 // Extract its contents. We can't just use ZipFile.ExtractToDirectory because it won't overwrite files.
                 Console.Write("Extracting update ...");
                 using (ZipArchive archive = ZipFile.Open("mwse-update.zip", ZipArchiveMode.Read))
@@ -173,20 +203,6 @@ namespace MWSE
 
                 // Write the current version to the version cache file.
                 File.WriteAllText(versionPath, latestVersion);
-
-                // Cleanup old files that shouldn't exist anymore. TODO: Can we do this a better way?
-                List<String> deleteList = new List<String>{
-                    "Data Files\\MWSE\\lua\\lfs.lua",
-                    "Data Files\\MWSE\\lua\\mwse\\timer.lua"
-                };
-                foreach (String file in deleteList)
-                {
-                    if (File.Exists(file))
-                    {
-                        Console.WriteLine("Deleting deprececated file: {0}", file);
-                        File.Delete(file);
-                    }
-                }
 
                 // If we're supposed to start Morrowind after, do so.
                 if (startAfter)

@@ -1,13 +1,24 @@
--- Require lua files from the right folder, instead of just the root Morrowind directory.
-package.path = "./Data Files/MWSE/lua/?.lua;"
+-- First, look for objects in the core folder. DLL files may also exist in the root folder.
+package.path = "./Data Files/MWSE/core/?.lua;./Data Files/MWSE/core/?/init.lua;"
+package.cpath = "?.dll;./Data Files/MWSE/core/?.dll;"
 
--- DLL files can be in the root, or in the main lua folder.
-package.cpath = "?.dll;./Data Files/MWSE/lua/?.dll;"
+-- Next, look in the library folder.
+package.path = package.path .. "./Data Files/MWSE/lib/?.lua;./Data Files/MWSE/lib/?/init.lua;"
+package.cpath = package.cpath .. "./Data Files/MWSE/lib/?.dll;"
+
+-- Third, look in the mods folder.
+package.path = package.path .. "./Data Files/MWSE/mods/?.lua;./Data Files/MWSE/mods/?/init.lua;"
+package.cpath = package.cpath .. "./Data Files/MWSE/mods/?.dll;"
+
+-- Provide backwards compatibility for old versions of MWSE 2.1. This will be removed before a stable release.
+package.path = package.path .. "./Data Files/MWSE/lua/?.lua;./Data Files/MWSE/lua/?/init.lua;"
+package.cpath = package.cpath .. "./Data Files/MWSE/lua/?.dll;"
 
 function include(moduleName)
-	local module
-	pcall(function() module = require(moduleName) end)
-	return module
+	local status, result = pcall(require, moduleName)
+	if (status) then
+		return result
+	end
 end
 
 -------------------------------------------------
@@ -206,8 +217,8 @@ end
 -- Global includes
 -------------------------------------------------
 
-_G.tes3 = require("mwse.tes3.init")
-_G.event = require("mwse.event")
+_G.tes3 = require("tes3.init")
+_G.event = require("event")
 _G.json = require("dkjson")
 
 -------------------------------------------------
