@@ -472,21 +472,16 @@ namespace mwse {
 
 			class SpellTickEvent : public GenericEvent {
 			public:
-				SpellTickEvent(TES3::MagicSourceInstance * spellInstance, float deltaTime, TES3::MagicEffectInstance * effectInstance, int effectIndex, bool negateOnExpiry, int isUncapped, TES3::Statistic * statistic, void * attributeTypeInfo, int resistAttribute, bool(__cdecl *resistanceTestFunction)(void *, void *, int));
+				SpellTickEvent(int effectId, TES3::MagicSourceInstance * sourceInstance, float deltaTime, TES3::MagicEffectInstance * effectInstance, int effectIndex);
 				sol::table createEventTable();
 				sol::object getEventOptions();
 
 			protected:
-				TES3::MagicSourceInstance* m_MagicSourceInstance;
+				int m_EffectId;
+				TES3::MagicSourceInstance * m_SourceInstance;
 				float m_DeltaTime;
-				TES3::MagicEffectInstance* m_EffectInstance;
+				TES3::MagicEffectInstance * m_EffectInstance;
 				int m_EffectIndex;
-				bool m_NegateOnExpiry;
-				int m_IsUncapped;
-				TES3::Statistic* m_Statistic;
-				void* m_AttributeTypeInfo;
-				int m_ResistAttribute;
-				bool(__cdecl *m_ResistanceTestFunction)(void *, void *, int);
 			};
 
 			// ---------------------------------------------------------------------------- //

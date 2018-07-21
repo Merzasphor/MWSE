@@ -15,37 +15,30 @@ caster
 
 `tes3reference`_. Read-only. The caster of the spell.
 
-target
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`tes3reference`_. Read-only. The target of the spell. For self-targeted spells, this matches **caster**.
-
 deltaTime
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 `Number`_. Read-only. The number of seconds since the last spell tick.
 
-resistAttribute
+effect
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Number`_. Read-only. The attribute resisted. This is an index into a `tes3mobileActor`_.effectAttributes.
+`tes3magicEffect`_. Read-only. The individual effect structure on **source**.
 
-.. note:: The index here is 0-based, while Lua is 1-based.
-
-negateOnExpiry
+effectId
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Boolean`_. Read-only.
+`Number`_. Read-only. The magic effect ID that is being ticked.
 
-isUncapped
+effectIndex
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Boolean`_. Read-only.
+`Number`_. Read-only. The index of the effect in **source**'s effects list.
 
-statistic
+effectInstance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3statistic`_. Read-only.
+`tes3magicEffectInstance`_. Read-only. The unique instance of the magic effect.
 
 source
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -57,15 +50,10 @@ sourceInstance
 
 `tes3magicSourceInstance`_. Read-only. The unique instance of the magic source.
 
-effectIndex
+target
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`Number`_. Read-only. The index of the effect in **source**'s effects list.
-
-effectInstance
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`tes3magicEffectInstance`_. Read-only. The unique instance of the magic effect.
+`tes3reference`_. Read-only. The target of the spell. For self-targeted spells, this matches **caster**.
 
 
 Filter

@@ -193,11 +193,23 @@ namespace mwse {
 		return true;
 	}
 
+	void writeByteUnprotected(DWORD address, BYTE value) {
+		// Unprotect memory.
+		DWORD oldProtect;
+		VirtualProtect((DWORD*)address, 0x5, PAGE_READWRITE, &oldProtect);
+
+		// Overwrite our single byte.
+		MemAccess<unsigned char>::Set(address, value);
+
+		// Protect memory again.
+		VirtualProtect((DWORD*)address, 0x5, oldProtect, &oldProtect);
+	}
+
 	void writePatchUnprotected(DWORD address, const BYTE* patch, DWORD size) {
 		DWORD oldProtect;
 		VirtualProtect((DWORD*)address, size, PAGE_READWRITE, &oldProtect);
 
-		memcpy_s((void*)address, size, patch, size);
+		memmove_s((void*)address, size, patch, size);
 
 		VirtualProtect((DWORD*)address, size, oldProtect, &oldProtect);
 	}

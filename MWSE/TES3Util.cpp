@@ -476,15 +476,6 @@ namespace mwse {
 			luaManager.triggerEvent(new mwse::lua::event::LoadedGameEvent(NULL, false, true));
 		}
 
-		bool __cdecl spellEffectEvent(TES3::MagicSourceInstance * spellInstance, float deltaTime, TES3::MagicEffectInstance * effectInstance, int effectIndex, bool negateOnExpiry, int isUncapped, TES3::Statistic * statistic, void * attributeTypeInfo, int resistAttribute, bool(__cdecl *funcResistTest)(void *, void *, int)) {
-			// Fire off an event.
-			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-			luaManager.triggerEvent(new mwse::lua::event::SpellTickEvent(spellInstance, deltaTime, effectInstance, effectIndex, negateOnExpiry, isUncapped, statistic, attributeTypeInfo, resistAttribute, funcResistTest));
-
-			// Call original function.
-			return reinterpret_cast<char(__cdecl *)(TES3::MagicSourceInstance *, float, TES3::MagicEffectInstance *, int, bool, int, TES3::Statistic *, void *, int, bool(__cdecl *)(void *, void *, int))>(0x518460)(spellInstance, deltaTime, effectInstance, effectIndex, negateOnExpiry, isUncapped, statistic, attributeTypeInfo, resistAttribute, funcResistTest);
-		}
-
 		int getRestHoursInterrupted() {
 			return *reinterpret_cast<int*>(TES3_restInterruptHour);
 		}
