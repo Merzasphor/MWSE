@@ -5,11 +5,11 @@ namespace NI {
 		vTable.asNode->attachChild(this, child, useFirstAvailable);
 	}
 
-	AVObject * Node::detachChild(AVObject * child) {
-		return vTable.asNode->detachChild(this, child);
+	void Node::detachChild(AVObject ** out_detached, AVObject * child) {
+		vTable.asNode->detachChild(this, out_detached, child);
 	}
 
-	AVObject * Node::detachChildAt(unsigned int index) {
-		return vTable.asNode->detachChildAt(this, index);
+	void Node::detachChildAt(AVObject ** out_detached, unsigned int index) {
+		vTable.asNode->detachChildAt(this, out_detached, index);
 	}
 }

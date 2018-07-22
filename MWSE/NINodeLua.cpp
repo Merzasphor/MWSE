@@ -47,10 +47,18 @@ namespace mwse {
 					self.attachChild(child, useFirstAvailable.value_or(false));
 				});
 				usertypeDefinition.set("detachChild", [](NI::Node& self, NI::AVObject * child) {
-					return makeLuaObject(self.detachChild(child));
+					NI::AVObject * returnedChild = nullptr;
+					self.detachChild(&returnedChild, child);
+					return makeLuaObject(returnedChild);
 				});
-				usertypeDefinition.set("detachChildAt", [](NI::Node& self, unsigned int index) {
-					return makeLuaObject(self.detachChildAt(index));
+				usertypeDefinition.set("detachChildAt", [](NI::Node& self, unsigned int index) -> sol::object {
+					if (--index < 0) {
+						return sol::nil;
+					}
+
+					NI::AVObject * returnedChild = nullptr;
+					self.detachChildAt(&returnedChild, index);
+					return makeLuaObject(returnedChild);
 				});
 
 				// Finish up our usertype.
