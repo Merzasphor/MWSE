@@ -42,10 +42,12 @@ namespace mwse {
 				usertypeDefinition.set("references", sol::readonly_property(&NI::Object::references));
 
 				// Basic function binding.
+				usertypeDefinition.set("clone", [](NI::Object& self) { return makeLuaObject(self.createClone()); });
 				usertypeDefinition.set("isOfType", &NI::Object::isOfType);
 				usertypeDefinition.set("isInstanceOfType", &NI::Object::isInstanceOfType);
 
 				// Functions exposed as properties.
+				usertypeDefinition.set("RTTI", sol::readonly_property([](NI::Object& self) { return self.getRunTimeTypeInformation(); }));
 				usertypeDefinition.set("runTimeTypeInformation", sol::readonly_property([](NI::Object& self) { return self.getRunTimeTypeInformation(); }));
 
 				// Finish up our usertype.

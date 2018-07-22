@@ -17,6 +17,8 @@ namespace NI {
 
 		RTTI * getRunTimeTypeInformation();
 
+		Object * createClone();
+
 		//
 		// Other related this-call functions.
 		//
@@ -31,7 +33,7 @@ namespace NI {
 	struct Object_vTable {
 		void * destructor; // 0x0
 		RTTI * (__thiscall * getRTTI)(Object*); // 0x4
-		void * createClone; // 0x8
+		Object * (__thiscall * createClone)(Object*); // 0x8
 		void * loadBinary; // 0xC
 		void * linkObject; // 0x10
 		void * registerStreamables; // 0x14

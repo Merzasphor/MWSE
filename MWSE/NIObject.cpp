@@ -11,6 +11,10 @@ namespace NI {
 		return vTable.asObject->getRTTI(this);
 	}
 
+	Object * Object::createClone() {
+		return reinterpret_cast<Object * (__thiscall *)(Object *)>(0x6E9910)(this);
+	}
+
 	bool Object::isOfType(RunTimeTypeInformation::RTTI type) {
 		return ((unsigned int)vTable.asObject->getRTTI(this) == type);
 	}

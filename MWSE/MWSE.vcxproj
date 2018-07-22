@@ -246,6 +246,7 @@
     <ClCompile Include="MgeTes3Machine.cpp" />
     <ClCompile Include="NIAVObject.cpp" />
     <ClCompile Include="NICameraLua.cpp" />
+    <ClCompile Include="NINode.cpp" />
     <ClCompile Include="NINodeLua.cpp" />
     <ClCompile Include="NIObject.cpp" />
     <ClCompile Include="NIObjectLua.cpp" />

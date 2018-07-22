@@ -1898,6 +1898,9 @@
     <ClCompile Include="TES3AttachmentLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
+    <ClCompile Include="NINode.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">

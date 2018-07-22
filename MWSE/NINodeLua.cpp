@@ -40,7 +40,18 @@ namespace mwse {
 				usertypeDefinition.set(sol::base_classes, sol::bases<NI::AVObject, NI::ObjectNET, NI::Object>());
 
 				// Basic property binding.
-				usertypeDefinition.set("children", &NI::Node::children);
+				usertypeDefinition.set("children", sol::readonly_property(&NI::Node::children));
+
+				// Basic function binding.
+				usertypeDefinition.set("attachChild", [](NI::Node& self, NI::AVObject * child, sol::optional<bool> useFirstAvailable) {
+					self.attachChild(child, useFirstAvailable.value_or(false));
+				});
+				usertypeDefinition.set("detachChild", [](NI::Node& self, NI::AVObject * child) {
+					return makeLuaObject(self.detachChild(child));
+				});
+				usertypeDefinition.set("detachChildAt", [](NI::Node& self, unsigned int index) {
+					return makeLuaObject(self.detachChildAt(index));
+				});
 
 				// Finish up our usertype.
 				state.set_usertype("niNode", usertypeDefinition);
