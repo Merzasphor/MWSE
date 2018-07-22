@@ -1,10 +1,20 @@
 #include "NIAVObject.h"
 
+#define NI_AVObject_updateNodeEffects 0x6EB380
+#define NI_AVObject_updateTextureProperties 0x6EB0E0
 #define NI_AVObject_propagatePositionChange 0x6EB000
 
 namespace NI {
 	AVObject * AVObject::getObjectByName(const char* name) {
 		return vTable.asAVObject->getObjectByName(this, name);
+	}
+
+	void AVObject::updateNodeEffects() {
+		reinterpret_cast<void(__thiscall *)(AVObject *)>(NI_AVObject_updateNodeEffects)(this);
+	}
+
+	void AVObject::updateTextureProperties() {
+		reinterpret_cast<void(__thiscall *)(AVObject *)>(NI_AVObject_updateTextureProperties)(this);
 	}
 
 	void AVObject::propagatePositionChange(float unk1, int unk2, int unk3) {

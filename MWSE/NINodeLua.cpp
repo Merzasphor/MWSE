@@ -45,6 +45,7 @@ namespace mwse {
 				// Basic function binding.
 				usertypeDefinition.set("attachChild", [](NI::Node& self, NI::AVObject * child, sol::optional<bool> useFirstAvailable) {
 					self.attachChild(child, useFirstAvailable.value_or(false));
+					self.updateTextureProperties();
 				});
 				usertypeDefinition.set("detachChild", [](NI::Node& self, NI::AVObject * child) {
 					NI::AVObject * returnedChild = nullptr;

@@ -33,6 +33,8 @@ namespace NI {
 		// Other related this-call functions.
 		//
 
+		void updateNodeEffects();
+		void updateTextureProperties();
 		void propagatePositionChange(float unk1 = 0.0f, int unk2 = 0, int unk3 = 1);
 		void setLocalRotationMatrix(TES3::Matrix33* matrix);
 
