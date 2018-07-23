@@ -204,51 +204,51 @@ namespace TES3 {
 		}
 
 		void WidgetTextSelect::setColourOver(const float(&c)[3]) {
-			setProperty(propSelectIdle[0], c[0]);
-			setProperty(propSelectIdle[1], c[1]);
-			setProperty(propSelectIdle[2], c[2]);
+			setProperty(propSelectOver[0], c[0]);
+			setProperty(propSelectOver[1], c[1]);
+			setProperty(propSelectOver[2], c[2]);
 		}
 
 		void WidgetTextSelect::setColourPressed(const float(&c)[3]) {
-			setProperty(propSelectIdle[0], c[0]);
-			setProperty(propSelectIdle[1], c[1]);
-			setProperty(propSelectIdle[2], c[2]);
+			setProperty(propSelectPressed[0], c[0]);
+			setProperty(propSelectPressed[1], c[1]);
+			setProperty(propSelectPressed[2], c[2]);
 		}
 
 		void WidgetTextSelect::setColourDisabled(const float(&c)[3]) {
-			setProperty(propSelectIdle[0], c[0]);
-			setProperty(propSelectIdle[1], c[1]);
-			setProperty(propSelectIdle[2], c[2]);
+			setProperty(propSelectDisabled[0], c[0]);
+			setProperty(propSelectDisabled[1], c[1]);
+			setProperty(propSelectDisabled[2], c[2]);
 		}
 
 		void WidgetTextSelect::setColourDisabledOver(const float(&c)[3]) {
-			setProperty(propSelectIdle[0], c[0]);
-			setProperty(propSelectIdle[1], c[1]);
-			setProperty(propSelectIdle[2], c[2]);
+			setProperty(propSelectDisabledOver[0], c[0]);
+			setProperty(propSelectDisabledOver[1], c[1]);
+			setProperty(propSelectDisabledOver[2], c[2]);
 		}
 
 		void WidgetTextSelect::setColourDisabledPressed(const float(&c)[3]) {
-			setProperty(propSelectIdle[0], c[0]);
-			setProperty(propSelectIdle[1], c[1]);
-			setProperty(propSelectIdle[2], c[2]);
+			setProperty(propSelectDisabledPressed[0], c[0]);
+			setProperty(propSelectDisabledPressed[1], c[1]);
+			setProperty(propSelectDisabledPressed[2], c[2]);
 		}
 
 		void WidgetTextSelect::setColourActive(const float(&c)[3]) {
-			setProperty(propSelectIdle[0], c[0]);
-			setProperty(propSelectIdle[1], c[1]);
-			setProperty(propSelectIdle[2], c[2]);
+			setProperty(propSelectActive[0], c[0]);
+			setProperty(propSelectActive[1], c[1]);
+			setProperty(propSelectActive[2], c[2]);
 		}
 
 		void WidgetTextSelect::setColourActiveOver(const float(&c)[3]) {
-			setProperty(propSelectIdle[0], c[0]);
-			setProperty(propSelectIdle[1], c[1]);
-			setProperty(propSelectIdle[2], c[2]);
+			setProperty(propSelectActiveOver[0], c[0]);
+			setProperty(propSelectActiveOver[1], c[1]);
+			setProperty(propSelectActiveOver[2], c[2]);
 		}
 
 		void WidgetTextSelect::setColourActivePressed(const float(&c)[3]) {
-			setProperty(propSelectIdle[0], c[0]);
-			setProperty(propSelectIdle[1], c[1]);
-			setProperty(propSelectIdle[2], c[2]);
+			setProperty(propSelectActivePressed[0], c[0]);
+			setProperty(propSelectActivePressed[1], c[1]);
+			setProperty(propSelectActivePressed[2], c[2]);
 		}
 
 	}
