@@ -42,6 +42,34 @@ namespace mwse {
 			usertypeDefinition.set("slotName", sol::property(&TES3::Armor::getTypeName));
 			usertypeDefinition.set("weightClass", sol::property(&TES3::Armor::getWeightClass));
 
+			// Basic function binding.
+			usertypeDefinition.set("calculateArmorRating", [](TES3::Armor& self, sol::object actor) {
+				// If we're explicitly given a mobile actor, use that.
+				if (actor.is<TES3::MobileActor>()) {
+					return self.calculateArmorRating(actor.as<TES3::MobileActor*>());
+				}
+
+				// If we're given a reference, try to get its mobile actor.
+				else if (actor.is<TES3::Reference>()) {
+					TES3::MobileActor * mobileActor = tes3::getAttachedMobileActor(actor.as<TES3::Reference*>());
+					if (mobileActor) {
+						return self.calculateArmorRating(mobileActor);
+					}
+					else {
+						sol::state& state = LuaManager::getInstance().getState();
+						state["error"]("Reference does not have an attached mobile actor. Is this an NPC or creature reference?");
+						return 0.0f;
+					}
+				}
+
+				// If we were given something else, tell them they goofed.
+				else {
+					sol::state& state = LuaManager::getInstance().getState();
+					state["error"]("Invalid function call. Requires mobile actor or reference as a parameter.");
+					return 0.0f;
+				}
+			});
+
 			// Finish up our usertype.
 			state.set_usertype("tes3armor", usertypeDefinition);
 		}

@@ -43,6 +43,7 @@ namespace TES3 {
 		//
 
 		int getWeightClass();
+		float calculateArmorRating(MobileActor * actor);
 
 	};
 	static_assert(sizeof(Armor) == 0xC4, "TES3::Armor failed size validation");
