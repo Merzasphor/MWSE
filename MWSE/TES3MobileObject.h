@@ -125,7 +125,7 @@ namespace TES3 {
 		void * calculateWeaponDamage; // 0xC4
 		void * getWeaponSwingWeightProduct; // 0xC8
 		void * getReferenceData0; // 0xCC
-		SkillStatistic * (__thiscall * getSkillAttribute)(MobileActor*, int); // 0xD0
+		SkillStatistic * (__thiscall * getSkillStatistic)(MobileActor*, int); // 0xD0
 		float (__thiscall * getSkillValue)(MobileActor*, int); // 0xD4
 		void * unknown_0xD8;
 		void * unknown_0xDC;

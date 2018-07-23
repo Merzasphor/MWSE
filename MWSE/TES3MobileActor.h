@@ -173,6 +173,8 @@ namespace TES3 {
 		signed char onObjectCollision(int hitReferenceIndex, signed char flag);
 		signed char onTerrainCollision(int hitReferenceIndex);
 		signed char onActivatorCollision(int hitReferenceIndex);
+
+		SkillStatistic * getSkillStatistic(int skillId);
 		float getSkillValue(int skillId);
 
 		//

@@ -77,6 +77,10 @@ namespace TES3 {
 		return result;
 	}
 
+	SkillStatistic * MobileActor::getSkillStatistic(int skillId) {
+		return vTable.mobileActor->getSkillStatistic(this, skillId);
+	}
+
 	float MobileActor::getSkillValue(int skillId) {
 		return vTable.mobileActor->getSkillValue(this, skillId);
 	}

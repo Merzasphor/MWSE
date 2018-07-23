@@ -192,6 +192,8 @@ namespace mwse {
 
 			// Basic function binding.
 			usertypeDefinition.set("applyHealthDamage", &TES3::MobileActor::applyHealthDamage);
+			usertypeDefinition.set("getSkillStatistic", &TES3::MobileActor::getSkillStatistic);
+			usertypeDefinition.set("getSkillValue", &TES3::MobileActor::getSkillValue);
 			usertypeDefinition.set("startCombat", &TES3::MobileActor::startCombat);
 			usertypeDefinition.set("stopCombat", &TES3::MobileActor::stopCombat);
 
