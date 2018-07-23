@@ -9,7 +9,7 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 **id** (`UI_ID`_, read-only)
-    The element's ID.  The element can be later accessed by ``ancestor:findChild(id)``.
+    The element's ID.  The element can be later accessed by ``ancestor:findChild(id)``. Note that multiple elements may have the same ID, such as subparts of a widget, or list items. Therefore you may see this as an element class identifier.
 
 **name** (`string`_, read-only)
     The element's name, taken from the name registered for the ID.
@@ -20,7 +20,7 @@ Properties
 **children** (`Element`_ array, read-only)
     A table containing references to children `Element`_ s. This is a copy that does not track changes.
 
-**widget** (`object`)
+**widget** (`table`_)
     Access to custom properties specific to a widget. These properties are documented in the widget ``create\*`` function descriptions.
 
 **visible** (`boolean`_)
@@ -339,6 +339,12 @@ Methods
 
     Finds a child element matching the ``id`` argument. Searches children recursively.
 
+**forwardEvent** (`EventData`_ e)
+    Returns:
+        none
+    
+    Forwards an event to the original Morrowind event handler. This may be optionally called at any point in a callback. Note that handler may or may not destroy the event widget or the menu, so you should know how it behaves before accessing any elements after a callback. 
+    
 `Element`_ **getTopLevelMenu** ()
     Returns:
         The menu that the element is a descendant of.
@@ -362,6 +368,8 @@ Methods
         none
 
     Sets an `event`_ handler. Can be a standard `event`_ name, or an event specific to an element class. The callback receives an argument with the event data. Read the `event` page for event names and the callback signature.
+    
+    The original Morrowind callback is captured and can be invoked with the ``forwardEvent`` method. If there is an existing Lua callback, it is replaced.
 
 `boolean`_ **reorderChildren** (`Element`_ ``or`` `number`_ insertBefore, `Element`_ ``or`` `number`_ moveFrom, `number`_ count)
     Returns:
@@ -382,6 +390,15 @@ Methods
         none
 
     Sets a property value with ``prop`` as the property key. Useful for element class-specific properties.
+    
+**triggerEvent** (`EventData`_ e)
+    ..
+    
+**triggerEvent** (`string`_ eventName)
+    Returns:
+        none
+    
+    Triggers an event on an element, either using supplied event data, or by constructing new event data using ``eventName``. ``eventName`` is the same as used in ``register``.
     
 **unregister** (`string`_ eventID)
     Returns:
@@ -404,6 +421,7 @@ Methods
 
 .. _`Element`: element.html
 .. _`event`: events.html
+.. _`EventData`: events.html
 .. _`Property`: property.html
 .. _`UI_ID`: ui_id.html
 

@@ -54,6 +54,25 @@ Standard events:
     To be documented.
 
 
+Event forwarding
+-------------------------------------------------------------------------------
+
+The original Morrowind event handler is saved when you first register an event. It may be optionally invoked with the ``forwardEvent`` method.  Note that handler may or may not destroy the event widget or the menu, so you should know how it behaves before accessing any elements after a callback. 
+
+**Example**
+
+.. code-block:: lua
+
+    local function onClick(e)
+        -- pre-event code
+        e.source:forwardEvent(e)
+        -- post-event code
+    end
+    
+    local button = menu:findChild("MenuExample_Ok")
+    button:register("mouseClick", onClick)
+
+
 Event handler
 -------------------------------------------------------------------------------
 
