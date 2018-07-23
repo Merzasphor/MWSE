@@ -4,27 +4,25 @@
 #include "TES3Collections.h"
 
 namespace TES3 {
-	namespace DialogueType {
-		enum DialogueType {
-			Regular,
-			Voice,
-			Greeting,
-			Persuasion,
-			Journal
-		};
-	}
+	enum class DialogueType : unsigned char {
+		Topic,
+		Voice,
+		Greeting,
+		Persuasion,
+		Journal
+	};
 
 	struct Dialogue : BaseObject {
-		char * name; // 0x10
-		unsigned char type; // 0x14
-		Iterator<DialogueInfo> info; // 0x18
-		int journalIndex; // 0x2C
+		const char* name;
+		DialogueType type;
+		Iterator<DialogueInfo> info;
+		int journalIndex;
 
 		//
 		// Other related this-call functions.
 		//
 
-		bool addToJournal(int index, MobileActor * actor);
+		bool addToJournal(int index, MobileActor* actor);
 		bool setJournalIndex(int index);
 
 	};

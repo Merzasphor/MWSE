@@ -333,9 +333,6 @@
     <ClInclude Include="TES3DialogueInfo.h">
       <Filter>Header Files\DataAdapters\TES3\Dialog</Filter>
     </ClInclude>
-    <ClInclude Include="TES3DialogueFilter.h">
-      <Filter>Header Files\DataAdapters\TES3\Dialog</Filter>
-    </ClInclude>
     <ClInclude Include="TES3Enchantment.h">
       <Filter>Header Files\DataAdapters\TES3\Magic</Filter>
     </ClInclude>
@@ -839,6 +836,9 @@
     </ClInclude>
     <ClInclude Include="TES3AttachmentLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3DialogueConditional.h">
+      <Filter>Header Files\DataAdapters\TES3\Dialog</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

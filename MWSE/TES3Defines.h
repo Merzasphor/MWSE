@@ -28,7 +28,7 @@ namespace TES3 {
 	struct CreatureInstance;
 	struct DataHandler;
 	struct Dialogue;
-	struct DialogueFilter;
+	struct DialogueConditional;
 	struct DialogueInfo;
 	struct Door;
 	struct Effect;

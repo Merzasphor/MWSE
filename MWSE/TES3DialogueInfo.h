@@ -2,20 +2,52 @@
 
 #include "TES3Defines.h"
 
+#include "TES3Dialogue.h"
 #include "TES3Object.h"
 
 namespace TES3 {
+	enum class DialogueInfoFilterType {
+		Actor,
+		Race,
+		Class,
+		NPCFaction,
+		Cell,
+		PCFaction,
+		ResultScript,
+		Conditional0,
+		Conditional1,
+		Conditional2,
+		Conditional3,
+		Conditional4,
+		Conditional5
+	};
+
+	struct DialogueInfoFilterNode {
+		DialogueInfoFilterType tag;
+		DialogueInfoFilterNode* next;
+		union {
+			BaseObject* object;
+			Actor* actor;
+			Race* npcRace;
+			Class* npcClass;
+			Faction* npcFaction;
+			Cell* cell;
+			Faction* pcFaction;
+			const char* scriptText;
+			DialogueConditional* conditional;
+		};
+	};
+
 	struct DialogueInfo : BaseObject {
-		void * unknown_0x10;
-		int unknown_0x14;
-		int index;
-		char unknown_0x1C;
-		char unknown_0x1D;
-		char unknown_0x1E;
-		char unknown_0x1F;
-		void * conditions;
+		void* dialogLoadLinkNode;
+		DialogueType type;
+		int disposition;
+		char npcRank;
+		char npcSex;
+		char pcRank;
+		DialogueInfoFilterNode* conditions;
 		long espFileOffset;
-		Actor * speaker;
+		Actor* firstHeardFrom;
 	};
 	static_assert(sizeof(DialogueInfo) == 0x2C, "TES3::DialogueInfo failed size validation");
 }

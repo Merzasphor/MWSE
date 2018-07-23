@@ -122,7 +122,7 @@
     <ClInclude Include="TES3CombatSession.h" />
     <ClInclude Include="TES3Container.h" />
     <ClInclude Include="TES3DataHandlerLua.h" />
-    <ClInclude Include="TES3DialogueFilter.h" />
+    <ClInclude Include="TES3DialogueConditional.h" />
     <ClInclude Include="TES3DialogueInfo.h" />
     <ClInclude Include="TES3Door.h" />
     <ClInclude Include="TES3DoorLua.h" />
