@@ -23,7 +23,18 @@ namespace mwse {
 			usertypeDefinition.set(sol::base_classes, sol::bases<NI::Node, NI::AVObject, NI::ObjectNET, NI::Object>());
 
 			// Basic property binding.
-			usertypeDefinition.set("switchIndex", &NI::SwitchNode::switchIndex);
+			usertypeDefinition.set("switchIndex", sol::property(
+				[](NI::SwitchNode& self) { return self.switchIndex; },
+				[](NI::SwitchNode& self, int index)
+			{
+				if (index < 0 || index > (self.children.filledCount-1) || self.children.storage[index] == nullptr) {
+					sol::state& state = LuaManager::getInstance().getState();
+					state["error"]("Attempted to set switchIndex beyond bounds!");
+					return;
+				}
+				self.switchIndex = index;
+			}
+				));
 
 			// Finish up our usertype.
 			state.set_usertype("niSwitchNode", usertypeDefinition);
