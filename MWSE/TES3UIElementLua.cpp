@@ -306,10 +306,24 @@ namespace mwse {
 				}
 			);
 			usertypeDefinition.set("getPropertyObject",
-				[](Element& self, const char* propertyName) {
+				[](Element& self, const char* propertyName) -> sol::object {
 					TES3::UI::Property prop = TES3::UI::registerProperty(propertyName);
-					auto object = self.getProperty(TES3::UI::PropertyType::Pointer, prop).ptrValue;
-					return makeLuaObject(static_cast<TES3::BaseObject*>(object));
+					auto ptr = self.getProperty(TES3::UI::PropertyType::Pointer, prop).ptrValue;
+
+					if (!ptr) {
+						return sol::nil;
+					}
+
+					auto object = static_cast<TES3::BaseObject*>(ptr);
+
+					switch (object->objectType) {
+					case TES3::ObjectType::MobileCreature:
+					case TES3::ObjectType::MobileNPC:
+					case TES3::ObjectType::MobilePlayer:
+						return makeLuaObject(static_cast<TES3::MobileObject*>(ptr));
+					default:
+						return makeLuaObject(static_cast<TES3::BaseObject*>(ptr));
+					}
 				}
 			);
 			usertypeDefinition.set("setPropertyBool",
@@ -341,7 +355,8 @@ namespace mwse {
 			usertypeDefinition.set("register",
 				[](Element& self, const std::string& eventID, sol::protected_function callback) {
 					if (!callback.valid()) {
-						log::getLog() << "UI register event has invalid callback: target " << self.name.cString << ", event " << eventID << std::endl;
+						const char *errorSource = self.name.cString ? self.name.cString : "(unnamed)";
+						log::getLog() << "UI register event has invalid callback: target " << errorSource << ", event " << eventID << std::endl;
 						return;
 					}
 
@@ -373,14 +388,21 @@ namespace mwse {
 			);
 			usertypeDefinition.set("forwardEvent",
 				[](Element& self, sol::table eventData) {
-				if (eventData && eventData["id"].valid()) {
-					triggerEvent(self, eventData["id"], eventData["data0"], eventData["data1"]);
+				if (eventData.valid()) {
+					eventForwarder(eventData);
 				}
 			}
 			);
 			usertypeDefinition.set("triggerEvent",
-				[](Element& self, const std::string& eventID) {
+				[](Element& self, sol::object args) {
+					auto eventData = args.as<sol::table>();
+					if (eventData.valid() && eventData["id"].valid()) {
+						triggerEvent(self, eventData["id"], eventData["data0"], eventData["data1"]);
+						return;
+					}
+
 					// Map friendlier event names to standard UI events
+					auto eventID = args.as<std::string>();
 					auto it = standardNamedEvents.find(eventID);
 					if (it != standardNamedEvents.end()) {
 						triggerEvent(self, it->second, 0, 0);
