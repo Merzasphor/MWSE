@@ -840,6 +840,9 @@
     <ClInclude Include="TES3DialogueConditional.h">
       <Filter>Header Files\DataAdapters\TES3\Dialog</Filter>
     </ClInclude>
+    <ClInclude Include="TES3StdString.h">
+      <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

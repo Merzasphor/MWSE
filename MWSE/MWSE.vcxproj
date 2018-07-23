@@ -20,6 +20,7 @@
     <ClInclude Include="D3DViewport.h" />
     <ClInclude Include="DynamicLuaObject.h" />
     <ClInclude Include="TES3AttachmentLua.h" />
+    <ClInclude Include="TES3StdString.h" />
     <ClInclude Include="TES3UIDefines.h" />
     <ClInclude Include="LuaEvents.h" />
     <ClInclude Include="LuaManager.h" />

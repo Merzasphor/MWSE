@@ -3,6 +3,7 @@
 #include "TES3Defines.h"
 
 #include "TES3MobileNPC.h"
+#include "TES3StdString.h"
 #include "TES3Vectors.h"
 
 namespace TES3 {
@@ -12,10 +13,22 @@ namespace TES3 {
 		Cell * cell; // 0x10
 	};
 
+	struct PlayerBounty {
+		struct BountyData {
+			int unknown_0x0;
+			StdString tempString; // 0x4
+			int * storage; // 0x14
+			StdString * names; // 0x18
+			int storageSize; // 0x1C
+			int maybe_usedCount; // 0x20
+		};
+		BountyData * data;
+	};
+
 	struct MobilePlayer : MobileNPC {
 		int levelupPerAttributeCount[8]; // 0x56C
 		int levelupPerSpecialization[3]; // 0x58C
-		void * bounty; // 0x598
+		PlayerBounty * bounty; // 0x598
 		Apparatus * lastUsedMortar; // 0x59C
 		Apparatus * lastUsedAlembic; // 0x5A0
 		Apparatus * lastUsedCalcinator; // 0x5A4
