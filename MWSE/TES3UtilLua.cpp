@@ -29,6 +29,7 @@
 #include "TES3Script.h"
 #include "TES3Sound.h"
 #include "TES3SoundGenerator.h"
+#include "TES3Spell.h"
 #include "TES3UIElement.h"
 #include "TES3Weather.h"
 #include "TES3WeatherController.h"
@@ -724,6 +725,36 @@ namespace mwse {
 				return sol::nil;
 			};
 
+			state["tes3"]["removeEffects"] = [](sol::table params) {
+				sol::state& state = LuaManager::getInstance().getState();
+				
+				TES3::Reference * reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					state["error"]("tes3.removeEffects: No reference parameter provided.");
+					return;
+				}
+				
+				int effect = getOptionalParam<int>(params, "effect", -1);
+				int castType = getOptionalParam<int>(params, "castType", -1);
+				int chance = getOptionalParam<int>(params, "chance", 100);
+				if (chance > 100) {
+					chance = 100;
+				}
+				else if (chance < 0) {
+					chance = 0;
+				}
+
+				if (effect != -1) {
+					tes3::getWorldController()->removeSpellsByEffect(reference, effect, chance);
+				}
+				else if (castType != -1) {
+					bool removeSpell = getOptionalParam<bool>(params, "removeSpell", castType != TES3::SpellCastType::Spell);
+					tes3::getWorldController()->clearSpellEffect(reference, castType, chance, removeSpell);
+				}
+				else {
+					state["error"]("tes3.removeEffects: Must pass either 'effect' or 'castType' parameter!");
+				}
+			};
 		}
 	}
 }

@@ -33,4 +33,12 @@ namespace TES3 {
 	double WorldController::getHighPrecisionSimulationTimestamp() {
 		return (gvarYear->value * 365.0 + getDaysInMonth((int)gvarMonth->value) + gvarDay->value) * 24.0 + gvarGameHour->value;
 	}
+
+	void WorldController::removeSpellsByEffect(Reference * reference, int effectId, int percentChance) {
+		reinterpret_cast<void(__thiscall *)(void *, Reference*, int, int)>(0x455880)(spllistActiveSpells, reference, effectId, percentChance);
+	}
+
+	void WorldController::clearSpellEffect(Reference * reference, int castType, int percentChance, bool removeSpell) {
+		reinterpret_cast<void(__thiscall *)(void *, Reference*, int, int, bool)>(0x4556C0)(spllistActiveSpells, reference, castType, percentChance, removeSpell);
+	}
 }

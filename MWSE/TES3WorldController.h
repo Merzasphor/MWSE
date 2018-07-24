@@ -211,6 +211,13 @@ namespace TES3 {
 		unsigned short getDaysInMonth(int);
 		double getHighPrecisionSimulationTimestamp();
 
+		//
+		// Wrapper functions for substructures that aren't figured out yet.
+		//
+
+		void removeSpellsByEffect(Reference * reference, int effectId, int percentChance);
+		void clearSpellEffect(Reference * reference, int castType, int percentChance, bool removeSpell);
+
 	};
 	static_assert(sizeof(WorldController) == 0x374, "TES3::WorldController failed size validation");
 }
