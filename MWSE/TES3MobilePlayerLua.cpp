@@ -33,6 +33,7 @@ namespace mwse {
 				usertypeDefinition.set("alwaysRun", &TES3::MobilePlayer::alwaysRun);
 				usertypeDefinition.set("attackDisabled", &TES3::MobilePlayer::attackDisabled);
 				usertypeDefinition.set("autoRun", &TES3::MobilePlayer::autoRun);
+				usertypeDefinition.set("bounty", sol::property(&TES3::MobilePlayer::getBounty, &TES3::MobilePlayer::setBounty));
 				usertypeDefinition.set("castReady", &TES3::MobilePlayer::castReady);
 				usertypeDefinition.set("controlsDisabled", &TES3::MobilePlayer::controlsDisabled);
 				usertypeDefinition.set("dialogueList", &TES3::MobilePlayer::dialogueList);
