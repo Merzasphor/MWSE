@@ -91,6 +91,10 @@ namespace TES3 {
 		void onDeath();
 		bool is3rdPerson();
 
+		int getBounty();
+		void setBounty(int value);
+		void modBounty(int delta);
+
 	};
 	static_assert(sizeof(MobilePlayer) == 0x694, "TES3::MobilePlayer failed size validation");
 }

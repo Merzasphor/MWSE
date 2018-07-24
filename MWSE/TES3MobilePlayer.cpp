@@ -13,6 +13,9 @@
 #define TES3_MobilePlayer_exerciseSkill 0x56A5D0
 #define TES3_MobilePlayer_levelSkill 0x56BBE0
 #define TES3_MobilePlayer_onDeath 0x56A120
+#define TES3_MobilePlayer_getBounty 0x5688B0
+#define TES3_MobilePlayer_setBounty 0x5688D0
+#define TES3_MobilePlayer_modBounty 0x5688F0
 
 namespace TES3 {
 	void MobilePlayer::exerciseSkill(int skillId, float progress) {
@@ -49,5 +52,17 @@ namespace TES3 {
 
 	bool MobilePlayer::is3rdPerson() {
 		return vTable.mobileActor->is3rdPerson(this);
+	}
+
+	int MobilePlayer::getBounty() {
+		return reinterpret_cast<int(__thiscall *)(MobileActor*)>(TES3_MobilePlayer_getBounty)(this);
+	}
+
+	void MobilePlayer::setBounty(int value) {
+		reinterpret_cast<void(__thiscall *)(MobileActor*, int)>(TES3_MobilePlayer_setBounty)(this, value);
+	}
+
+	void MobilePlayer::modBounty(int delta) {
+		reinterpret_cast<void(__thiscall *)(MobileActor*, int)>(TES3_MobilePlayer_modBounty)(this, delta);
 	}
 }
