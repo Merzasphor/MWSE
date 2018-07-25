@@ -262,6 +262,16 @@ function mwse.log(str, ...)
 	print(str:format(...))
 end
 
+function mwse.loadConfig(fileName)
+	return json.loadfile(string.format("config/%s", fileName))
+end
+
+function mwse.saveConfig(fileName, object, config)
+	if (fileName and object) then
+		json.savefile(string.format("config/%s", fileName), object, config or { indent = true })
+	end
+end
+
 -------------------------------------------------
 -- Usertype Extensions: tes3uiElement
 -------------------------------------------------
