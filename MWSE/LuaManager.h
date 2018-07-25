@@ -64,6 +64,9 @@ namespace mwse {
 			void removeUserdataFromCache(TES3::BaseObject*);
 			void removeUserdataFromCache(TES3::MobileObject*);
 
+			// Helper function to execute main.lua scripts recursively in a directory.
+			void executeMainModScripts(const char* path, const char* filename = "main.lua");
+
 			// Management functions for timers.
 			void updateTimers(float deltaTime, double simulationTimestamp, bool simulating);
 			void clearTimers();

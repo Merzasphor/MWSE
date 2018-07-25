@@ -1286,6 +1286,29 @@ namespace mwse {
 			}
 		}
 
+		void LuaManager::executeMainModScripts(const char* path, const char* filename) {
+			for (auto & p : std::experimental::filesystem::recursive_directory_iterator(path)) {
+				if (p.path().filename() == filename) {
+					// If a parent directory is marked .disabled, ignore files in it.
+					if (p.path().string().find(".disabled\\") != std::string::npos) {
+						log::getLog() << "[LuaManager] Skipping mod initializer in disabled directory: " << p.path().string() << std::endl;
+						continue;
+					}
+
+					sol::protected_function_result result = luaState.do_file(p.path().string());
+					if (!result.valid()) {
+						sol::error err = result;
+						log::getLog() << "[LuaManager] ERROR: Failed to run mod initialization script:\n" << err.what() << std::endl;
+					}
+#if _DEBUG
+					else {
+						log::getLog() << "[LuaManager] Invoked mod initialization script: " << p.path().string() << std::endl;
+					}
+#endif
+				}
+			}
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/core/mwse_init.lua");
@@ -1300,29 +1323,12 @@ namespace mwse {
 			bindStringUtil();
 			bindTES3Util();
 
-			// Look through the Data Files/MWSE/lua folder and see if there are any main.lua files.
-			for (auto & p : std::experimental::filesystem::recursive_directory_iterator("Data Files/MWSE/")) {
-				if (p.path().filename() == "main.lua" || p.path().filename() == "mod_init.lua") {
-					// If a parent directory is marked .disabled, ignore files in it.
-					if (p.path().string().find(".disabled\\") != std::string::npos) {
-#if _DEBUG
-						log::getLog() << "[LuaManager] Skipping mod initializer in disabled directory: " << p.path().string() << std::endl;
-#endif
-						continue;
-					}
+			// Look for main.lua scripts in the usual directories.
+			executeMainModScripts("Data Files/MWSE/core");
+			executeMainModScripts("Data Files/MWSE/mods");
 
-					result = luaState.do_file(p.path().string());
-					if (!result.valid()) {
-						sol::error err = result;
-						log::getLog() << "[LuaManager] ERROR: Failed to run mod initialization script:\n" << err.what() << std::endl;
-					}
-#if _DEBUG
-					else {
-						log::getLog() << "[LuaManager] Invoked mod initialization script: " << p.path().string() << std::endl;
-					}
-#endif
-				}
-			}
+			// Temporary backwards compatibility for old-style MWSE mods.
+			executeMainModScripts("Data Files/MWSE/lua", "mod_init.lua");
 
 			// Hook the RunScript function so we can intercept Lua scripts and invoke Lua code if needed.
 			genJumpUnprotected(TES3_HOOK_RUNSCRIPT_LUACHECK, reinterpret_cast<DWORD>(HookRunScript), TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE);
