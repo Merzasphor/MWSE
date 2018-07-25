@@ -213,6 +213,37 @@ function string.endswith(haystack, needle)
 	return needle=='' or string.sub(haystack, -string.len(needle)) == needle
 end
 
+
+-------------------------------------------------
+-- Extend 3rd API: lfs
+-------------------------------------------------
+
+local lfs = require("lfs")
+
+-- Cache the original lfs.rmdir and replace it with a version that supports recursion.
+lfs.rmdir_old = lfs.rmdir
+local function deleteDirectoryRecursive(dir, recursive)
+	-- Default to not being recursive.
+	local recursive = recursive or false
+	if (recursive) then
+		for file in lfs.dir(dir) do
+			local path = dir .. "/" .. file
+			if (file ~= "." and file ~= "..") then
+				if (lfs.attributes(path, "mode") == "file") then
+					os.remove(path)
+				elseif (lfs.attributes(path, "mode") == "directory") then
+					deleteDirectoryRecursive(path, true)
+				end
+			end
+		end
+	end
+
+	-- Call the original function at the end.
+	return lfs.rmdir_old(dir)
+end
+lfs.rmdir = deleteDirectoryRecursive
+
+
 -------------------------------------------------
 -- Global includes
 -------------------------------------------------
