@@ -90,6 +90,7 @@ namespace TES3 {
 		void levelSkill(int skillId);
 		void onDeath();
 		bool is3rdPerson();
+		int getGold();
 
 		int getBounty();
 		void setBounty(int value);

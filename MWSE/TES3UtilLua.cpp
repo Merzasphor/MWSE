@@ -755,6 +755,12 @@ namespace mwse {
 					state["error"]("tes3.removeEffects: Must pass either 'effect' or 'castType' parameter!");
 				}
 			};
+
+			state["tes3"]["getPlayerGold"] = []() -> int {
+				auto player = tes3::getWorldController()->getMobilePlayer();
+				return player->getGold();
+			};
+
 		}
 	}
 }

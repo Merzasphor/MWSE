@@ -12,6 +12,7 @@
 
 #define TES3_MobilePlayer_exerciseSkill 0x56A5D0
 #define TES3_MobilePlayer_levelSkill 0x56BBE0
+#define TES3_MobilePlayer_getGoldHeld 0x52B450
 #define TES3_MobilePlayer_onDeath 0x56A120
 #define TES3_MobilePlayer_getBounty 0x5688B0
 #define TES3_MobilePlayer_setBounty 0x5688D0
@@ -54,15 +55,19 @@ namespace TES3 {
 		return vTable.mobileActor->is3rdPerson(this);
 	}
 
+	int MobilePlayer::getGold() {
+		return reinterpret_cast<int(__thiscall *)(MobilePlayer*)>(TES3_MobilePlayer_getGoldHeld)(this);
+	}
+
 	int MobilePlayer::getBounty() {
-		return reinterpret_cast<int(__thiscall *)(MobileActor*)>(TES3_MobilePlayer_getBounty)(this);
+		return reinterpret_cast<int(__thiscall *)(MobilePlayer*)>(TES3_MobilePlayer_getBounty)(this);
 	}
 
 	void MobilePlayer::setBounty(int value) {
-		reinterpret_cast<void(__thiscall *)(MobileActor*, int)>(TES3_MobilePlayer_setBounty)(this, value);
+		reinterpret_cast<void(__thiscall *)(MobilePlayer*, int)>(TES3_MobilePlayer_setBounty)(this, value);
 	}
 
 	void MobilePlayer::modBounty(int delta) {
-		reinterpret_cast<void(__thiscall *)(MobileActor*, int)>(TES3_MobilePlayer_modBounty)(this, delta);
+		reinterpret_cast<void(__thiscall *)(MobilePlayer*, int)>(TES3_MobilePlayer_modBounty)(this, delta);
 	}
 }
