@@ -1,6 +1,7 @@
 local tes3 = {}
 
 -- Game constants.
+tes3.animationState = require("tes3.animationState")
 tes3.apparatusType = require("tes3.apparatusType")
 tes3.armorSlot = require("tes3.armorSlot")
 tes3.attachmentType = require("tes3.attachmentType")
