@@ -48,7 +48,9 @@ namespace mwse {
 						eventData["data1"] = data1;
 
 						// Call into Lua
-						auto result = eventLua.callback(eventData);
+						// Note: sol::protected_function needs to be a local, as Lua functions can destroy it when modifying events.
+						sol::protected_function callback = eventLua.callback;
+						auto result = callback(eventData);
 						if (!result.valid()) {
 							sol::error error = result;
 							const char *errorSource = source->name.cString ? source->name.cString : "(unnamed)";
@@ -76,7 +78,9 @@ namespace mwse {
 						eventData["id"] = Property::event_destroy;
 
 						// Call into Lua
-						auto result = eventLua.callback(eventData);
+						// Note: sol::protected_function needs to be a local, as Lua functions can destroy it when modifying events.
+						sol::protected_function callback = eventLua.callback;
+						auto result = callback(eventData);
 						if (!result.valid()) {
 							sol::error error = result;
 							const char *errorSource = source->name.cString ? source->name.cString : "(unnamed)";

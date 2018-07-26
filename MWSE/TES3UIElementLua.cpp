@@ -395,8 +395,8 @@ namespace mwse {
 			);
 			usertypeDefinition.set("triggerEvent",
 				[](Element& self, sol::object args) {
-					auto eventData = args.as<sol::table>();
-					if (eventData.valid() && eventData["id"].valid()) {
+					if (args.is<sol::table>()) {
+						auto eventData = args.as<sol::table>();
 						triggerEvent(self, eventData["id"], eventData["data0"], eventData["data1"]);
 						return;
 					}
@@ -504,8 +504,9 @@ namespace mwse {
 			});
 			usertypeDefinition.set("createRect", [](Element& self, sol::table args) {
 				Element* rect = self.createRect(args.get_or("id", idNull));
-				auto c = args.get<sol::table>("color");
-				if (c) {
+				auto argColour = args.get<sol::optional<sol::table>>("color");
+				if (argColour) {
+					auto c = argColour.value();
 					self.colourRed = c[1];
 					self.colourGreen = c[2];
 					self.colourBlue = c[3];
