@@ -9,6 +9,14 @@
 #include "sol_forward.hpp"
 
 namespace TES3 {
+	namespace AlchemyFlag {
+		typedef unsigned int value_type;
+
+		enum Flag : value_type {
+			AutoCalc = 0x1
+		};
+	}
+
 	struct Alchemy : Item {
 		Iterator<void> stolenList; // 0x30
 		char * name; // 0x44
@@ -18,7 +26,7 @@ namespace TES3 {
 		float weight; // 0x54
 		short value; // 0x58
 		Effect effects[8]; // 0x5C
-		long flags; // 0x011C // 1 = AUTOCALC
+		AlchemyFlag::value_type flags; // 0x011C
 	};
 	static_assert(sizeof(Alchemy) == 0x120, "TES3::Alchemy failed size validation");
 }

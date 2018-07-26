@@ -3,6 +3,7 @@
 #include "TES3Defines.h"
 
 #include "TES3Collections.h"
+#include "TES3Spell.h"
 
 #include <string>
 
@@ -33,7 +34,7 @@ namespace TES3 {
 		// Custom functions.
 		//
 
-		bool containsType(signed char);
+		bool containsType(SpellCastType::value_type);
 
 	};
 }

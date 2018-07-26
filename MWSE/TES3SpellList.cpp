@@ -64,7 +64,7 @@ namespace TES3 {
 		return reinterpret_cast<Spell*(__thiscall*)(SpellList*)>(TES3_SpellList_getCheapest)(this);
 	}
 
-	bool SpellList::containsType(signed char type) {
+	bool SpellList::containsType(SpellCastType::value_type type) {
 		for (auto itt = list.head; itt != NULL; itt = itt->next) {
 			if (itt->data->castType == type) {
 				return true;

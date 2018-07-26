@@ -68,14 +68,14 @@ namespace mwse {
 					}
 
 					TES3::Effect* effect = &alchemy->effects[i-1];
-					effect->effectID = getOptionalParam<double>(effectParams, "id", -1);
-					effect->skillID = getOptionalParam<double>(effectParams, "skill", -1);
-					effect->attributeID = getOptionalParam<double>(effectParams, "attribute", -1);
-					effect->rangeType = getOptionalParam<double>(effectParams, "range", TES3::EffectRange::Self);
-					effect->radius = getOptionalParam<double>(effectParams, "radius", 0);
-					effect->duration = getOptionalParam<double>(effectParams, "duration", 0);
-					effect->magnitudeMin = getOptionalParam<double>(effectParams, "min", 0);
-					effect->magnitudeMax = getOptionalParam<double>(effectParams, "max", 0);
+					effect->effectID = getOptionalParam<int>(effectParams, "id", -1);
+					effect->skillID = getOptionalParam<int>(effectParams, "skill", -1);
+					effect->attributeID = getOptionalParam<int>(effectParams, "attribute", -1);
+					effect->rangeType = static_cast<TES3::EffectRange>(getOptionalParam<int>(effectParams, "range", int(TES3::EffectRange::Self)));
+					effect->radius = getOptionalParam<int>(effectParams, "radius", 0);
+					effect->duration = getOptionalParam<int>(effectParams, "duration", 0);
+					effect->magnitudeMin = getOptionalParam<int>(effectParams, "min", 0);
+					effect->magnitudeMax = getOptionalParam<int>(effectParams, "max", 0);
 				}
 			}
 

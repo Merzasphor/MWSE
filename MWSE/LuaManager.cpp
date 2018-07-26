@@ -625,7 +625,7 @@ namespace mwse {
 
 		bool __fastcall OnLoad(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName) {
 			// Call our wrapper for the function so that events are triggered.
-			TES3::LoadGameResult::LoadGameResult loaded = nonDynamicData->loadGame(fileName);
+			TES3::LoadGameResult loaded = nonDynamicData->loadGame(fileName);
 
 			// Extra things we want to do if we're successfully loading.
 			if (loaded == TES3::LoadGameResult::Success) {
@@ -639,7 +639,7 @@ namespace mwse {
 
 		bool __fastcall OnLoadMainMenu(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName) {
 			// Call our wrapper for the function so that events are triggered.
-			TES3::LoadGameResult::LoadGameResult loaded = nonDynamicData->loadGameMainMenu(fileName);
+			TES3::LoadGameResult loaded = nonDynamicData->loadGameMainMenu(fileName);
 
 			// Fire off a cell changed event as well, and update the cached last cell.
 			if (loaded == TES3::LoadGameResult::Success) {
@@ -1928,7 +1928,7 @@ namespace mwse {
 			gameTimers->setClock(tes3::getWorldController()->getHighPrecisionSimulationTimestamp());
 		}
 
-		std::shared_ptr<TimerController> LuaManager::getTimerController(TimerType::TimerType type) {
+		std::shared_ptr<TimerController> LuaManager::getTimerController(TimerType type) {
 			switch (type) {
 			case TimerType::RealTime: return realTimers;
 			case TimerType::SimulationTime: return simulateTimers;

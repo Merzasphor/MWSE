@@ -59,7 +59,7 @@ namespace mwse
 		// Validate effect index.
 		TES3::Enchantment* enchantment = tes3::getObjectById<TES3::Enchantment>(enchantId, TES3::ObjectType::Enchantment);
 		if (enchantment != NULL) {
-			type = enchantment->castType;
+			type = int(enchantment->castType);
 			cost = enchantment->chargeCost;
 			maxCharge = enchantment->maxCharge;
 			effects = tes3::getEffectCount(enchantment->effects);

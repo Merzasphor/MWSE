@@ -43,7 +43,7 @@ namespace mwse {
 			}
 
 			// Set the first effect just so that there is something? TODO: Why?
-			tes3::setEffect(newSpell->effects, 1, TES3::EffectID::WaterBreathing, TES3::SkillID::Invalid, TES3::EffectRange::Self, 0, 1, 0, 0);
+			tes3::setEffect(newSpell->effects, 1, TES3::EffectID::WaterBreathing, TES3::SkillID::Invalid, int(TES3::EffectRange::Self), 0, 1, 0, 0);
 
 			// Add object to the game.
 			tes3::getDataHandler()->nonDynamicData->addNewObject(newSpell);

@@ -7,7 +7,9 @@
 
 namespace TES3 {
 	namespace LightFlags {
-		enum LightFlags {
+		typedef unsigned int value_type;
+
+		enum Flag : value_type {
 			Dynamic = 0x1,
 			CanCarry = 0x2,
 			Negative = 0x4,
@@ -31,8 +33,8 @@ namespace TES3 {
 		long value; // 0x5C
 		int time; // 0x60
 		int radius; // 0x64
-		signed char color[4]; // 0x68
-		unsigned int flags; // 0x6C
+		unsigned char color[4]; // 0x68
+		LightFlags::value_type flags; // 0x6C
 		Sound * sound; // 0x70
 
 		//

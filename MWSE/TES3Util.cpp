@@ -281,11 +281,11 @@ namespace mwse {
 			return reinterpret_cast<unsigned int*>(TES3_DATA_EFFECT_FLAGS);
 		}
 
-		bool getBaseEffectFlag(int index, TES3::EffectFlag::EffectFlag flag) {
+		bool getBaseEffectFlag(int index, TES3::EffectFlag::Flag flag) {
 			return reinterpret_cast<unsigned int*>(TES3_DATA_EFFECT_FLAGS)[index] & flag;
 		}
 
-		void setBaseEffectFlag(int index, TES3::EffectFlag::EffectFlag flag, bool set) {
+		void setBaseEffectFlag(int index, TES3::EffectFlag::Flag flag, bool set) {
 			if (set) {
 				reinterpret_cast<unsigned int*>(TES3_DATA_EFFECT_FLAGS)[index] |= flag;
 			}
@@ -327,9 +327,10 @@ namespace mwse {
 
 			// Validate that the effect supports the range type.
 			const int flags = tes3::getBaseEffectFlags()[effectId];
-			if ((range == TES3::EffectRange::Self && !(flags & TES3::EffectFlag::CanCastSelf)) ||
-				(range == TES3::EffectRange::Touch && !(flags & TES3::EffectFlag::CanCastTouch)) ||
-				(range == TES3::EffectRange::Target && !(flags & TES3::EffectFlag::CanCastTarget))) {
+			const auto effectRange = static_cast<TES3::EffectRange>(range);
+			if ((effectRange == TES3::EffectRange::Self && !(flags & TES3::EffectFlag::CanCastSelf)) ||
+				(effectRange == TES3::EffectRange::Touch && !(flags & TES3::EffectFlag::CanCastTouch)) ||
+				(effectRange == TES3::EffectRange::Target && !(flags & TES3::EffectFlag::CanCastTarget))) {
 #if _DEBUG
 				mwse::log::getLog() << __FUNCTION__ << ": Effect " << effectId << " (with flags " << std::hex << flags << std::dec << ") does not support given range type of " << range << "." << std::endl;
 #endif
@@ -342,7 +343,7 @@ namespace mwse {
 			// Set basic effect data.
 			TES3::Effect& effect = effects[index];
 			effect.effectID = effectId;
-			effect.rangeType = range;
+			effect.rangeType = effectRange;
 			effect.radius = area;
 
 			// Set skill.

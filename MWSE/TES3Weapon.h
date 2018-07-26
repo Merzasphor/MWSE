@@ -7,7 +7,9 @@
 
 namespace TES3 {
 	namespace WeaponType {
-		enum WeaponType {
+		typedef unsigned char value_type;
+
+		enum WeaponType : value_type {
 			ShortBlade1H = 0x0,
 			LongBlade1H = 0x1,
 			LongBlade2H = 0x2,
@@ -33,7 +35,7 @@ namespace TES3 {
 		char * icon; // 0x50
 		float weight; // 0x54
 		int value; // 0x58
-		char weaponType; // 0x5C
+		WeaponType::value_type weaponType; // 0x5C
 		short maxCondition; // 0x5E
 		float speed; // 0x60
 		float reach; // 0x64

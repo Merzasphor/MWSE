@@ -6,14 +6,12 @@
 #include "TES3Item.h"
 
 namespace TES3 {
-	namespace ApparatusType {
-		enum ApparatusType {
-			ApparatusMortarPestle,
-			ApparatusAlembic,
-			ApparatusCalcinator,
-			ApparatusRetort
-		};
-	}
+	enum class ApparatusType {
+		MortarPestle,
+		Alembic,
+		Calcinator,
+		Retort
+	};
 
 	struct Apparatus : Item {
 		Iterator<void> stolenList; // 0x30
@@ -21,7 +19,7 @@ namespace TES3 {
 		char name[32]; // 0x64
 		Script * script;
 		char texture[32]; // 0x84
-		long type; // 0 = Mortar & Pestle, 1 = Alembic, 2 = Calcinator, 3 = Retort
+		ApparatusType type;
 		float quality; // 0xAC
 		float weight; // 0xB0
 		long value; // 0xB4

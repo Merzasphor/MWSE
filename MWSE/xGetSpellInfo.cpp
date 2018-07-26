@@ -61,7 +61,7 @@ namespace mwse
 		TES3::Spell* spell = tes3::getObjectById<TES3::Spell>(spellId, TES3::ObjectType::Spell);;
 		if (spell != NULL) {
 			name = spell->name;
-			type = spell->castType;
+			type = long(spell->castType);
 			cost = spell->magickaCost;
 			effects = tes3::getEffectCount(spell->effects);
 			flags = spell->spellFlags;

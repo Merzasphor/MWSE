@@ -67,7 +67,7 @@ namespace mwse
 			TES3::Enchantment* enchantment = reference->baseObject->vTable.object->getEnchantment(reference->baseObject);
 			if (enchantment) {
 				enchId = enchantment->objectID;
-				type = enchantment->castType;
+				type = int(enchantment->castType);
 				cost = enchantment->chargeCost;
 				maxCharge = enchantment->maxCharge;
 				effects = tes3::getEffectCount(enchantment->effects);

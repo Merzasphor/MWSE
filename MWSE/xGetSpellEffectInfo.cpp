@@ -67,7 +67,7 @@ namespace mwse
 				// If we found an effect, set the values.
 				if (effect && effect->effectID != TES3::EffectID::None) {
 					effectEnumId = effect->effectID;
-					rangeType = effect->rangeType;
+					rangeType = int(effect->rangeType);
 					area = effect->radius;
 					duration = effect->duration;
 					magMin = effect->magnitudeMin;

@@ -15,18 +15,15 @@ namespace NI {
 		return reinterpret_cast<Object * (__thiscall *)(Object *)>(0x6E9910)(this);
 	}
 
-	bool Object::isOfType(RunTimeTypeInformation::RTTI type) {
-		return ((unsigned int)vTable.asObject->getRTTI(this) == type);
+	bool Object::isOfType(const RTTI* type) {
+		return (vTable.asObject->getRTTI(this) == type);
 	}
 
-	bool Object::isInstanceOfType(RunTimeTypeInformation::RTTI type) {
-		RTTI * rtti = vTable.asObject->getRTTI(this);
-		while (rtti) {
-			if ((unsigned int)rtti == type) {
+	bool Object::isInstanceOfType(const RTTI* type) {
+		for (const RTTI* rtti = vTable.asObject->getRTTI(this); rtti; rtti = rtti->baseRTTI) {
+			if (rtti == type) {
 				return true;
 			}
-
-			rtti = rtti->baseRTTI;
 		}
 
 		return false;

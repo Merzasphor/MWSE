@@ -8,7 +8,9 @@
 
 namespace TES3 {
 	namespace ArmorSlot {
-		enum ArmorSlot {
+		typedef unsigned int value_type;
+
+		enum ArmorSlot : value_type {
 			Helmet = 0x0,
 			Cuirass = 0x1,
 			LeftPauldron = 0x2,
@@ -30,7 +32,7 @@ namespace TES3 {
 		char * model; // 0x4C
 		char * icon; // 0x50
 		WearablePart parts[7];  // 0x54
-		unsigned int slot; // 0xA8
+		ArmorSlot::value_type slot; // 0xA8
 		float weight; // 0xAC
 		int value; // 0xB0
 		int maxCondition; // 0xB4

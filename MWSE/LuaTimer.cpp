@@ -132,7 +132,7 @@ namespace mwse {
 		}
 
 		bool TimerController::cancelTimer(std::shared_ptr<Timer> timer) {
-			TimerState::TimerState previousState = timer->state;
+			TimerState previousState = timer->state;
 			timer->state = TimerState::Expired;
 
 			// Remove from the active list.
@@ -241,8 +241,8 @@ namespace mwse {
 		// Create a timer, as above, but get the controller from params.type.
 		std::shared_ptr<Timer> startTimerAmbiguous(sol::table params) {
 			// Get the timer controller we care about.
-			unsigned int type = getOptionalParam<unsigned int>(params, "type", TimerType::SimulationTime);
-			std::shared_ptr<TimerController> controller = LuaManager::getInstance().getTimerController(static_cast<TimerType::TimerType>(type));
+			unsigned int type = getOptionalParam<unsigned int>(params, "type", unsigned int(TimerType::SimulationTime));
+			std::shared_ptr<TimerController> controller = LuaManager::getInstance().getTimerController(static_cast<TimerType>(type));
 			if (controller == nullptr) {
 				return nullptr;
 			}

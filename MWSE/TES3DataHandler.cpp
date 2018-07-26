@@ -56,7 +56,7 @@ namespace TES3 {
 		return saved;
 	}
 
-	LoadGameResult::LoadGameResult NonDynamicData::loadGame(const char* fileName) {
+	LoadGameResult NonDynamicData::loadGame(const char* fileName) {
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
 		sol::table eventData = luaManager.triggerEvent(new mwse::lua::event::LoadGameEvent(fileName));
@@ -86,7 +86,7 @@ namespace TES3 {
 		return loaded ? LoadGameResult::Success : LoadGameResult::Failure;
 	}
 
-	LoadGameResult::LoadGameResult NonDynamicData::loadGameMainMenu(const char* fileName) {
+	LoadGameResult NonDynamicData::loadGameMainMenu(const char* fileName) {
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
 		sol::table eventData = luaManager.triggerEvent(new mwse::lua::event::LoadGameEvent(fileName));

@@ -9,7 +9,9 @@
 
 namespace TES3 {
 	namespace MobileActorFlag {
-		enum MobileActorFlag {
+		typedef unsigned int value_type;
+
+		enum Flag : value_type {
 			ActiveAI = 0x4,
 			Werewolf = 0x400,
 			Underwater = 0x800,
@@ -21,7 +23,7 @@ namespace TES3 {
 			IdleAnim = 0x10000000
 		};
 
-		enum MobileActorFlagBit {
+		enum FlagBit {
 			ActiveAIBit = 2,
 			WerewolfBit = 10,
 			UnderwaterBit = 11,
@@ -35,7 +37,9 @@ namespace TES3 {
 	}
 
 	namespace ActorMovement {
-		enum ActorMovement {
+		typedef unsigned short value_type;
+
+		enum Flag : value_type {
 			Forward = 0x1,
 			Back = 0x2,
 			Left = 0x4,
@@ -51,7 +55,7 @@ namespace TES3 {
 			Jumped = 0x4000
 		};
 
-		enum ActorMovementBit {
+		enum FlagBit {
 			ForewardBit = 0,
 			BackBit = 1,
 			LeftBit = 2,
@@ -181,11 +185,11 @@ namespace TES3 {
 			MobileActor_vTable * mobileActor;
 		} vTable; // 0x0
 		ObjectType::ObjectType objectType; // 0x4
-		unsigned short movementFlags; // 0x8
-		unsigned short prevMovementFlags; // 0xA
+		ActorMovement::value_type movementFlags; // 0x8
+		ActorMovement::value_type prevMovementFlags; // 0xA
 		short unknown_0xC;
 		short unknown_0xE; // Undefined.
-		unsigned int actorFlags; // 0x10
+		MobileActorFlag::value_type actorFlags; // 0x10
 		Reference * reference; // 0x14
 		UnknownStruct1 * hitReferences;
 		short cellX; // 0x1C

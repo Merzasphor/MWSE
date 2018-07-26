@@ -9,20 +9,22 @@
 
 namespace TES3 {
 	namespace FactionMembershipFlag {
-		enum FactionMembershipFlag {
+		typedef unsigned int value_type;
+
+		enum Flag : value_type {
 			PlayerJoined = 0x1,
 			PlayerExpelled = 0x2
 		};
 	}
 	struct Faction : BaseObject {
 		struct Rank {
-			long reqAttributes[2];
-			long reqSkills[2];
-			long reputation;
+			int reqAttributes[2];
+			int reqSkills[2];
+			int reputation;
 		};
 		struct ReactionNode {
 			Faction * faction;
-			long reaction;
+			int reaction;
 		};
 		char objectID[32]; // 0x10
 		char name[32]; // 0x30
@@ -34,7 +36,7 @@ namespace TES3 {
 		Iterator<ReactionNode> reactions; // 0x280
 		int playerRank; // 0x294
 		int playerReputation; // 0x298
-		int playerMembershipFlags; // 0x29C	// 0x1: joined 0x2: expelled
+		FactionMembershipFlag::value_type playerMembershipFlags; // 0x29C
 
 		//
 		// Custom functions.

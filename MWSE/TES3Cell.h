@@ -7,7 +7,9 @@
 
 namespace TES3 {
 	namespace CellFlag {
-		enum CellFlag {
+		typedef unsigned int value_type;
+
+		enum Flag : value_type {
 			Interior = 0x1,
 			HasWater = 0x2,
 			SleepIsIllegal = 0x4,
@@ -40,7 +42,7 @@ namespace TES3 {
 	struct Cell : BaseObject {
 		char * name; // 0x10
 		void * unknown_0x14;
-		int cellFlags; // 0x18
+		CellFlag::value_type cellFlags; // 0x18
 		union {
 			CellExteriorData exterior;
 			struct {

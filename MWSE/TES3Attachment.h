@@ -90,7 +90,9 @@ namespace TES3 {
 	//
 
 	namespace ActionFlags {
-		enum ActionFlags {
+		typedef unsigned int value_type;
+
+		enum Flag : value_type {
 			UseEnabled = 0x1,
 			OnActivate = 0x2,
 			OnDeath = 0x10,
@@ -104,7 +106,7 @@ namespace TES3 {
 	}
 
 	struct ActionAttachment : Attachment {
-		int flags;
+		ActionFlags::value_type flags;
 		Reference * reference;
 	};
 	static_assert(sizeof(ActionAttachment) == 0x10, "TES3::ActionAttachment failed size validation");

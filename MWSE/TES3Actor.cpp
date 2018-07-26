@@ -45,11 +45,11 @@ namespace TES3 {
 		return reinterpret_cast<Reference*(__thiscall *)(Actor*, BaseObject*, ItemData*, int, bool)>(TES3_Actor_dropItem)(this, item, itemData, count, matchAny);
 	}
 
-	bool Actor::getActorFlag(unsigned int flag) {
+	bool Actor::getActorFlag(ActorFlag::Flag flag) {
 		return (actorFlags & flag) != 0;
 	}
 
-	void Actor::setActorFlag(unsigned int flag, bool set) {
+	void Actor::setActorFlag(ActorFlag::Flag flag, bool set) {
 		if (set) {
 			actorFlags |= flag;
 		}

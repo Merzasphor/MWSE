@@ -6,7 +6,9 @@
 
 namespace TES3 {
 	namespace LeveledListFlags {
-		enum LeveledListFlags {
+		typedef unsigned int value_type;
+
+		enum Flags : value_type {
 			CalculateFromAllLevels = 0x1,
 			CalculateForEachItem = 0x2
 		};
@@ -22,7 +24,7 @@ namespace TES3 {
 		ActorAnimationData * animationData; // 0x30 // Why?
 		Iterator<LeveledListNode> * itemList; // 0x34
 		int itemCount; // 0x38
-		unsigned int flags; // 0x3C
+		LeveledListFlags::value_type flags; // 0x3C
 		signed char chanceForNothing; // 0x40
 
 		//
@@ -37,7 +39,7 @@ namespace TES3 {
 	struct LeveledItem : PhysicalObject {
 		Iterator<LeveledListNode> * itemList; // 0x30
 		int itemCount; // 0x34
-		unsigned int flags; // 0x38
+		LeveledListFlags::value_type flags; // 0x38
 		signed char chanceForNothing; // 0x3C
 
 		//

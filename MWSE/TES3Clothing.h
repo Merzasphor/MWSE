@@ -8,7 +8,9 @@
 
 namespace TES3 {
 	namespace ClothingSlot {
-		enum ClothingSlot {
+		typedef unsigned int value_type;
+
+		enum ClothingSlot : value_type {
 			Pants = 0x0,
 			Shoes = 0x1,
 			Shirt = 0x2,
@@ -29,7 +31,7 @@ namespace TES3 {
 		char * model; // 0x4C
 		char * icon; // 0x50
 		WearablePart parts[7];  // 0x54
-		unsigned int slot; // 0xA8
+		ClothingSlot::value_type slot; // 0xA8
 		float weight; // 0xAC
 		short value; // 0xB0
 		short enchantCapacity; // 0xB2

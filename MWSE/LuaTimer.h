@@ -9,13 +9,11 @@ namespace mwse {
 	namespace lua {
 		struct Timer;
 
-		namespace TimerState {
-			enum TimerState {
-				Active,
-				Paused,
-				Expired
-			};
-		}
+		enum class TimerState {
+			Active,
+			Paused,
+			Expired
+		};
 
 		// Comparing structure for use with std::upper_bound.
 		struct TimerComparer {
@@ -84,7 +82,7 @@ namespace mwse {
 			TimerController * controller;
 
 			// The current state of the timer.
-			TimerState::TimerState state;
+			TimerState state;
 
 			// How long the timer lasts.
 			double duration;

@@ -6,26 +6,22 @@
 #include "TES3Object.h"
 
 namespace TES3 {
-	namespace SpellEffectState {
-		enum SpellEffectState {
-			PreCast = 0,
-			Cast = 1,
-			Beginning = 4,
-			Working = 5,
-			Ending = 6,
-			Retired = 7,
-			WorkingFortify = 8,
-			EndingFortify = 9
-		};
-	}
+	enum class SpellEffectState {
+		PreCast = 0,
+		Cast = 1,
+		Beginning = 4,
+		Working = 5,
+		Ending = 6,
+		Retired = 7,
+		WorkingFortify = 8,
+		EndingFortify = 9
+	};
 
-	namespace MagicSourceType {
-		enum MagicSourceType {
-			Spell = 1,
-			Enchantment = 2,
-			Alchemy = 3
-		};
-	}
+	enum class MagicSourceType : unsigned char {
+		Spell = 1,
+		Enchantment = 2,
+		Alchemy = 3
+	};
 
 	struct MagicSourceCombo {
 		union {
@@ -34,7 +30,7 @@ namespace TES3 {
 			Enchantment * asEnchantment;
 			Spell * asSpell;
 		} source; // 0xA0
-		signed char sourceType;// 0xA4
+		MagicSourceType sourceType;// 0xA4
 
 		//
 		// Other related this-call functions.
@@ -55,7 +51,7 @@ namespace TES3 {
 		unsigned int serialNumber;
 		void * unknown_0xAC;
 		float timestampCastBegin; // 0xB0
-		int state;
+		SpellEffectState state;
 		Reference * caster;
 		Item * castingItem;
 		ItemData * castingItemCondition;

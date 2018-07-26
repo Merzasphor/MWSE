@@ -16,13 +16,11 @@ namespace mwse {
 
 		class TimerController;
 
-		namespace TimerType {
-			enum TimerType {
-				RealTime,
-				SimulationTime,
-				GameTime
-			};
-		}
+		enum class TimerType {
+			RealTime,
+			SimulationTime,
+			GameTime
+		};
 
 		class LuaManager {
 		public:
@@ -70,7 +68,7 @@ namespace mwse {
 			// Management functions for timers.
 			void updateTimers(float deltaTime, double simulationTimestamp, bool simulating);
 			void clearTimers();
-			std::shared_ptr<TimerController> getTimerController(TimerType::TimerType type);
+			std::shared_ptr<TimerController> getTimerController(TimerType type);
 
 		private:
 			LuaManager();

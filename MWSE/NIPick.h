@@ -6,39 +6,31 @@
 #include "TES3Vectors.h"
 
 namespace NI {
-	namespace PickType {
-		enum PickType {
-			FIND_ALL,
-			FIND_FIRST
-		};
-	}
+	enum class PickType {
+		FIND_ALL,
+		FIND_FIRST
+	};
 
-	namespace PickSortType {
-		enum PickSortType {
-			SORT,
-			NO_SORT
-		};
-	}
+	enum class PickSortType {
+		SORT,
+		NO_SORT
+	};
 
-	namespace PickIntersectType {
-		enum PickIntersectType {
-			BOUND_INTERSECT,
-			TRIANGLE_INTERSECT
-		};
-	}
+	enum class PickIntersectType {
+		BOUND_INTERSECT,
+		TRIANGLE_INTERSECT
+	};
 
-	namespace PickCoordinateType {
-		enum PickCoordinateType {
-			MODEL_COORDINATES,
-			WORLD_COORDINATES
-		};
-	}
+	enum class PickCoordinateType {
+		MODEL_COORDINATES,
+		WORLD_COORDINATES
+	};
 
 	struct Pick {
-		PickType::PickType pickType;
-		PickSortType::PickSortType sortType;
-		PickIntersectType::PickIntersectType intersectType;
-		PickCoordinateType::PickCoordinateType coordinateType;
+		PickType pickType;
+		PickSortType sortType;
+		PickIntersectType intersectType;
+		PickCoordinateType coordinateType;
 		bool frontOnly;
 		bool observeAppCullFlag;
 		bool unknown_0x12;

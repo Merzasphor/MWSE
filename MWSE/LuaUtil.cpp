@@ -499,26 +499,26 @@ namespace mwse {
 
 			sol::state& state = luaManager.getState();
 
-			switch ((unsigned int)object->getRunTimeTypeInformation()) {
-			case NI::RunTimeTypeInformation::AVObject:
+			switch ((uintptr_t)object->getRunTimeTypeInformation()) {
+			case NI::RTTIStaticPtr::AVObject:
 				return sol::make_object(state, reinterpret_cast<NI::AVObject*>(object));
-			case NI::RunTimeTypeInformation::Camera:
+			case NI::RTTIStaticPtr::Camera:
 				return sol::make_object(state, reinterpret_cast<NI::Camera*>(object));
-			case NI::RunTimeTypeInformation::Node:
+			case NI::RTTIStaticPtr::Node:
 				return sol::make_object(state, reinterpret_cast<NI::Node*>(object));
-			case NI::RunTimeTypeInformation::ObjectNET:
+			case NI::RTTIStaticPtr::ObjectNET:
 				return sol::make_object(state, reinterpret_cast<NI::ObjectNET*>(object));
-			case NI::RunTimeTypeInformation::SwitchNode:
+			case NI::RTTIStaticPtr::SwitchNode:
 				return sol::make_object(state, reinterpret_cast<NI::SwitchNode*>(object));
 			}
 
-			if (object->isInstanceOfType(NI::RunTimeTypeInformation::Node)) {
+			if (object->isInstanceOfType(NI::RTTIStaticPtr::Node)) {
 				return sol::make_object(state, reinterpret_cast<NI::Node*>(object));
 			}
-			else if (object->isInstanceOfType(NI::RunTimeTypeInformation::AVObject)) {
+			else if (object->isInstanceOfType(NI::RTTIStaticPtr::AVObject)) {
 				return sol::make_object(state, reinterpret_cast<NI::AVObject*>(object));
 			}
-			else if (object->isInstanceOfType(NI::RunTimeTypeInformation::ObjectNET)) {
+			else if (object->isInstanceOfType(NI::RTTIStaticPtr::ObjectNET)) {
 				return sol::make_object(state, reinterpret_cast<NI::ObjectNET*>(object));
 			}
 

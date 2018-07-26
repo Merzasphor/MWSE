@@ -6,7 +6,7 @@
 
 namespace TES3 {
 	namespace SkillID {
-		enum Skill {
+		enum SkillID {
 			Invalid = -1,
 			Block,
 			Armorer,

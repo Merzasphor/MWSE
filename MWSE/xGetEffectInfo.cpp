@@ -120,7 +120,7 @@ namespace mwse
 				else {
 					skillAttributeId = TES3::SkillID::Invalid;
 				}
-				rangeType = effect->rangeType;
+				rangeType = int(effect->rangeType);
 				area = effect->radius;
 				duration = effect->duration;
 				magMin = effect->magnitudeMin;

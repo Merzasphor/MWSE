@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 namespace NI {
 	struct AVObject;
 	struct Camera;
@@ -16,8 +18,8 @@ namespace NI {
 	struct AVObject_vTable;
 	struct Node_vTable;
 
-	namespace RunTimeTypeInformation {
-		enum RTTI {
+	namespace RTTIStaticPtr {
+		enum RTTIStaticPtr : uintptr_t {
 			Accumulator = 0x7DECC0,
 			AlphaAccumulator = 0x7DDF48,
 			AVObject = 0x7DE7CC,

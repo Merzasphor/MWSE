@@ -373,7 +373,7 @@ namespace mwse {
 				auto soundGenerators = tes3::getDataHandler()->nonDynamicData->soundGenerators;
 				const char* creatureIdCstr = creatureId.c_str();
 				for (auto itt = soundGenerators->head; itt != NULL; itt = itt->next) {
-					if (itt->data->soundType != type) {
+					if (itt->data->soundType != static_cast<TES3::SoundType>(type)) {
 						continue;
 					}
 
@@ -748,7 +748,7 @@ namespace mwse {
 					tes3::getWorldController()->removeSpellsByEffect(reference, effect, chance);
 				}
 				else if (castType != -1) {
-					bool removeSpell = getOptionalParam<bool>(params, "removeSpell", castType != TES3::SpellCastType::Spell);
+					bool removeSpell = getOptionalParam<bool>(params, "removeSpell", castType != int(TES3::SpellCastType::Spell));
 					tes3::getWorldController()->clearSpellEffect(reference, castType, chance, removeSpell);
 				}
 				else {

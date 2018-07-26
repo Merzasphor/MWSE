@@ -74,7 +74,9 @@ namespace TES3 {
 	//
 
 	namespace ObjectFlag {
-		enum ObjectFlag {
+		typedef unsigned int value_type;
+
+		enum Flag : value_type {
 			Modified = 0x2,
 			LinksResolved = 0x8,
 			Delete = 0x20,
@@ -82,10 +84,8 @@ namespace TES3 {
 			Disabled = 0x800,
 			EmptyInventory = 0x2000
 		};
-	}
 
-	namespace ObjectFlagBit {
-		enum ObjectFlagBit {
+		enum FlagBit {
 			ModifiedBit = 1,
 			LinksResolvedBit = 3,
 			DeleteBit = 5,
@@ -193,7 +193,7 @@ namespace TES3 {
 			ActorVirtualTable * actor;
 		} vTable; // 0x0
 		ObjectType::ObjectType objectType; // 0x4
-		unsigned int objectFlags; // 0x8
+		ObjectFlag::value_type objectFlags; // 0x8
 		GameFile * sourceMod; // 0xC
 
 		//

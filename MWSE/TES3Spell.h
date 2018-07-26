@@ -5,7 +5,9 @@
 
 namespace TES3 {
 	namespace SpellCastType {
-		enum SpellCastType {
+		typedef unsigned char value_type;
+
+		enum SpellCastType : value_type {
 			Spell = 0,
 			Ability = 1,
 			Blight = 2,
@@ -19,7 +21,9 @@ namespace TES3 {
 	}
 
 	namespace SpellFlag {
-		enum SpellFlag {
+		typedef unsigned int value_type;
+
+		enum Flag : value_type {
 			AutoCalc = 0x1,
 			PCStartSpell = 0x2,
 			AlwaysSucceeds = 0x4,
@@ -28,7 +32,7 @@ namespace TES3 {
 			NoSpellFlags = 0
 		};
 
-		enum SpellFlagBit {
+		enum FlagBit {
 			AutoCalcBit = 0,
 			PCStartSpellBit = 1,
 			AlwaysSucceedsBit = 2
@@ -47,11 +51,11 @@ namespace TES3 {
 	struct Spell : Object {
 		char * objectID; // 0x28
 		char * name; // 0x2C
-		signed char castType; // 0x30
+		SpellCastType::value_type castType; // 0x30
 		char unknown_0x31; // Undefined.
 		short magickaCost; // 0x32
 		Effect effects[8]; // 0x34
-		int spellFlags; //  0xF4
+		SpellFlag::value_type spellFlags; //  0xF4
 
 		//
 		// Other related this-call functions.

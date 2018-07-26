@@ -24,8 +24,10 @@ namespace NI {
 		//
 
 		// Slow, but name-based lookup of nodes.
-		bool isOfType(RunTimeTypeInformation::RTTI);
-		bool isInstanceOfType(RunTimeTypeInformation::RTTI);
+		bool isOfType(const RTTI*);
+		bool isOfType(uintptr_t rtti) { return isOfType(reinterpret_cast<RTTI*>(rtti)); }
+		bool isInstanceOfType(const RTTI*);
+		bool isInstanceOfType(uintptr_t rtti) { return isInstanceOfType(reinterpret_cast<RTTI*>(rtti)); }
 
 	};
 	static_assert(sizeof(Object) == 0x8, "NI::Object failed size validation");

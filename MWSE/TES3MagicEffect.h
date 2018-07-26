@@ -155,7 +155,9 @@ namespace TES3 {
 	}
 
 	namespace EffectFlag {
-		enum EffectFlag {
+		typedef unsigned int value_type;
+
+		enum Flag : value_type {
 			TargetSkill = 0x1,
 			TargetAttribute = 0x2,
 			NoDuration = 0x4,
@@ -177,13 +179,11 @@ namespace TES3 {
 		};
 	}
 
-	namespace EffectRange {
-		enum EffectRange {
-			Self,
-			Touch,
-			Target
-		};
-	}
+	enum class EffectRange : unsigned char {
+		Self,
+		Touch,
+		Target
+	};
 
 	namespace MagicSchool {
 		enum MagicSchool {
@@ -217,7 +217,7 @@ namespace TES3 {
 		void * unknown_0xE8; // Visual effect?
 		int school; // 0xEC
 		float baseMagickaCost; // 0xF0
-		long flags; // 0xF4 // 0x200 = spellmaking, 0x400 = enchanting, 0x800 = negative lighting effect
+		EffectFlag::value_type flags; // 0xF4
 		long lightingRed; // 0xF8
 		long lightingGreen; // 0xFC
 		long lightingBlue; // 0x0100
@@ -231,14 +231,14 @@ namespace TES3 {
 		short effectID; // 0x0
 		signed char skillID; // 0x2
 		signed char attributeID; // 0x3
-		signed char rangeType; // 0x4
+		EffectRange rangeType; // 0x4
 		char unknown_0x5;
 		char unknown_0x6;
 		char unknown_0x7;
-		long radius; // 0x8
-		long duration; // 0xC
-		long magnitudeMin; // 0x10
-		long magnitudeMax; // 0x14
+		int radius; // 0x8
+		int duration; // 0xC
+		int magnitudeMin; // 0x10
+		int magnitudeMax; // 0x14
 	};
 	static_assert(sizeof(Effect) == 0x18, "TES3::Effect failed size validation");
 }
