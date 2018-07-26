@@ -26,7 +26,7 @@ namespace mwse {
 		void PatchScriptOpEnable() {
 			TES3::ScriptVariables* scriptVars = *reinterpret_cast<TES3::ScriptVariables**>(TES3_LOCALVARIABLES_IMAGE);
 			if (scriptVars != NULL) {
-				scriptVars->unknown_0x68 &= 0xFE;
+				scriptVars->unknown_0xC &= 0xFE;
 			}
 		}
 
@@ -37,7 +37,7 @@ namespace mwse {
 		void PatchScriptOpDisable() {
 			TES3::ScriptVariables* scriptVars = *reinterpret_cast<TES3::ScriptVariables**>(TES3_LOCALVARIABLES_IMAGE);
 			if (scriptVars != NULL) {
-				scriptVars->unknown_0x68 |= 0x1;
+				scriptVars->unknown_0xC |= 0x1;
 			}
 		}
 

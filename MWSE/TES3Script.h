@@ -6,11 +6,15 @@
 
 namespace TES3 {
 	struct ScriptVariables {
-		short * shortVarValues;
-		long * longVarValues;
-		float * floatVarValues;
-		int unknown_0x68;
-		int unknown_0x6C;
+		struct WeaponHitFlags {
+			Weapon * weapon; // 0x0
+			unsigned char flags; // 0x4 // 0x10 is hit, 0x20 is hit attempt.
+		};
+		short * shortVarValues; // 0x0
+		long * longVarValues; // 0x4
+		float * floatVarValues; // 0x8
+		int unknown_0xC;
+		Iterator<WeaponHitFlags> * hitWeapons; // 0x10
 	};
 	static_assert(sizeof(ScriptVariables) == 0x14, "TES3::ScriptVariables failed size validation");
 
