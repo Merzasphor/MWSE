@@ -205,7 +205,11 @@ namespace mwse {
 		VirtualProtect((DWORD*)address, 0x5, oldProtect, &oldProtect);
 	}
 
-	void writePatchUnprotected(DWORD address, const BYTE* patch, DWORD size) {
+	void writePatchCodeUnprotected(DWORD address, const BYTE* patch, DWORD size) {
+#ifdef _DEBUG
+		// Read incremental linker trampoline to find real patch
+		patch += 5 + *reinterpret_cast<const ptrdiff_t*>(patch + 1);
+#endif
 		DWORD oldProtect;
 		VirtualProtect((DWORD*)address, size, PAGE_READWRITE, &oldProtect);
 

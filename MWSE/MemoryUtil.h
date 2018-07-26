@@ -60,5 +60,5 @@ namespace mwse {
 	void writeByteUnprotected(DWORD address, BYTE value);
 
 	// Code to write a patch to a code segment. This function unprotects the memory.
-	void writePatchUnprotected(DWORD address, const BYTE* patch, DWORD size);
+	void writePatchCodeUnprotected(DWORD address, const BYTE* patch, DWORD size);
 }
