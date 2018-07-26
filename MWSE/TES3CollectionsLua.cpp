@@ -25,6 +25,7 @@ namespace mwse {
 			bindIterator<TES3::Faction::ReactionNode>("TES3ReactionNodeIterator", "TES3ReactionNodeIteratorNode");
 			bindIterator<TES3::ItemStack>("TES3ItemStackIterator", "TES3ItemStackIteratorNode");
 			bindIterator<TES3::Reference>("TES3ReferenceIterator", "TES3ReferenceIteratorNode");
+			bindIterator<TES3::Region>("TES3RegionIterator", "TES3RegionIteratorNode");
 			bindIterator<TES3::RegionSound>("TES3RegionSoundIterator", "TES3RegionSoundIteratorNode");
 			bindIterator<TES3::TravelDestination>("TES3TravelDestinationIterator", "TES3TravelDestinationIteratorNode");
 
