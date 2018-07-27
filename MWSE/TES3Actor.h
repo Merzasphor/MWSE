@@ -78,6 +78,8 @@ namespace TES3 {
 		Object* equipItem(Object* item, ItemData* itemData, EquipmentStack** out_equipmentStack, MobileActor* mobileActor);
 		EquipmentStack* unequipItem(Object* item, bool deleteStack, MobileActor* mobileActor, bool updateGUI, ItemData* itemData);
 		Reference* dropItem(Object* item, ItemData* itemData, int count, bool matchAny);
+		void postUnequipUIRefresh(MobileActor* mobileActor);
+		EquipmentStack* getEquippedItem(Object* item);
 		EquipmentStack* getEquippedArmorBySlot(ArmorSlot::value_type slot);
 		EquipmentStack* getEquippedClothingBySlot(ClothingSlot::value_type slot);
 

@@ -246,22 +246,4 @@ namespace TES3 {
 		return true;
 	}
 
-	bool MobileActor::unequipArmor(ArmorSlot::value_type slot) {
-		Actor* actor = static_cast<Actor*>(reference->baseObject);
-		EquipmentStack* s = actor->getEquippedArmorBySlot(slot);
-		if (s) {
-			actor->unequipItem(s->object, 1, this, 1, s->variables);
-		}
-		return bool(s);
-	}
-
-	bool MobileActor::unequipClothing(ClothingSlot::value_type slot) {
-		Actor* actor = static_cast<Actor*>(reference->baseObject);
-		EquipmentStack* s = actor->getEquippedClothingBySlot(slot);
-		if (s) {
-			actor->unequipItem(s->object, 1, this, 1, s->variables);
-		}
-		return bool(s);
-	}
-
 }

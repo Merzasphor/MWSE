@@ -20,7 +20,8 @@ namespace TES3 {
 			InCombat = 0x10000,
 			Attacked = 0x20000,
 			IsCrittable = 0x8000000,
-			IdleAnim = 0x10000000
+			IdleAnim = 0x10000000,
+			BodypartsChanged = 0x80000000
 		};
 
 		enum FlagBit {
@@ -32,7 +33,8 @@ namespace TES3 {
 			InCombatBit = 16,
 			AttackedBit = 17,
 			IsCrittableBit = 27,
-			IdleAnimBit = 28
+			IdleAnimBit = 28,
+			BodypartsChangedBit = 31
 		};
 	}
 

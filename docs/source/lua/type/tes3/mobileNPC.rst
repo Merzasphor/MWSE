@@ -427,19 +427,35 @@ Functions
     Returns:
         ``true`` if the equip was successful.
     
-    Equips an item from the actor's inventory. If the item does not exist, or the the actor is currently using the item, it will fail.
+    Equips an item from the actor's inventory. If the item does not exist, or the the actor is currently attacking with another item that occupies the item's slot, it will fail.
 
-`boolean`_ **unequipArmor** (`armorSlot`_ slot)
+`boolean`_ **unequip** {`tes3object`_ item, `armorSlot`_ armorSlot, `clothingSlot`_ clothingSlot, `objectType`_ type}  ``Uses table arguments.``
     Returns:
         ``true`` if the un-equip was successful.
 
-    Un-equips armor equipped to the named slot.
+    Un-equips item(s) that match the argument given. Only one argument can be used in a call.
+    
+    **item**:
+        One equipped item matching the item given.
+        
+        e.g. ``mobileActor:unequip{ item = tes3.getObject("common_pants_01") }``
+    
+    **armorSlot**:
+        One piece of armor occupying that slot. Slot numbers can be accessed through ``tes3.weaponSlot``.
 
-`boolean`_ **unequipClothing** (`clothingSlot`_ slot)
-    Returns:
-        ``true`` if the un-equip was successful.
-
-    Un-equips clothing equipped to the named slot.
+        e.g. ``mobileActor:unequip{ armorSlot = tes3.weaponSlot.helmet }``
+    
+    **clothingSlot**:
+        One piece of clothing occupying that slot. Slot numbers can be accessed through ``tes3.clothingSlot``. Rings are the only slot that can have multiple items equipped. Call the function multiple times to un-equip them all.
+    
+        e.g. ``mobileActor:unequip{ clothingSlot = tes3.clothingSlot.belt }``
+    
+    **type**:
+        **All** items of that object type are un-equipped.
+        
+        e.g. ``mobileActor:unequip{ type = tes3.objectType.armor }``
+        
+        Weapons and ammunition can be un-equipped with this argument.
 
 
 .. _`boolean`: ../lua/boolean.html
@@ -478,3 +494,4 @@ Functions
 
 .. _`armorSlot`: armor/armorSlot.html
 .. _`clothingSlot`: clothing/clothingSlot.html
+.. _`objectType`: baseObject/objectType.html

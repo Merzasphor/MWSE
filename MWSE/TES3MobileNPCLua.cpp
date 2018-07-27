@@ -4,6 +4,53 @@
 
 namespace mwse {
 	namespace lua {
+		static bool unequip(TES3::MobileNPC& self, sol::table args) {
+			TES3::Actor* actor = static_cast<TES3::Actor*>(self.reference->baseObject);
+			TES3::EquipmentStack* s = nullptr;
+			TES3::Object* item = args.get<TES3::Object*>("item");
+			int type = args.get_or("type", 0);
+			int armourSlot = args.get_or("armorSlot", -1);
+			int clothingSlot = args.get_or("clothingSlot", -1);
+
+			if (item) {
+				// Match by item
+				s = actor->getEquippedItem(item);
+			}
+			else if (armourSlot != -1) {
+				// Match by slot
+				s = actor->getEquippedArmorBySlot(armourSlot);
+			}
+			else if (clothingSlot != -1) {
+				// Match by slot
+				s = actor->getEquippedClothingBySlot(clothingSlot);
+			}
+			if (s) {
+				// Warning: Unequipping lights during menumode with updateGUI=true triggers a Morrowind crash.
+				// UI update has been moved to a separate function.
+				actor->unequipItem(s->object, 1, &self, 0, s->variables);
+				actor->postUnequipUIRefresh(&self);
+				return true;
+			}
+
+			if (type) {
+				// Match all by objectType
+				std::vector<TES3::EquipmentStack*> matches;
+				for (auto it = actor->equipment.head; it; it = it->next) {
+					if (it->data->object->objectType == type) {
+						matches.push_back(it->data);
+					}
+				}
+				// Warning: Unequipping lights during menumode with updateGUI=true triggers a Morrowind crash.
+				// UI update has been moved to a separate function.
+				for (auto it : matches) {
+					s = it;
+					actor->unequipItem(s->object, 1, &self, 0, s->variables);
+				}
+				actor->postUnequipUIRefresh(&self);
+			}
+			return bool(s);
+		}
+
 		void bindTES3MobileNPC() {
 			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
@@ -20,8 +67,7 @@ namespace mwse {
 
 			// Basic function binding.
 			usertypeDefinition.set("equip", &TES3::MobileActor::equipItem);
-			usertypeDefinition.set("unequipArmor", &TES3::MobileActor::unequipArmor);
-			usertypeDefinition.set("unequipClothing", &TES3::MobileActor::unequipClothing);
+			usertypeDefinition.set("unequip", &unequip);
 
 			// Finish up our usertype.
 			state.set_usertype("tes3mobileNPC", usertypeDefinition);

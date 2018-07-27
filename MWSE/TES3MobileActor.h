@@ -12,6 +12,12 @@
 #include "TES3Vectors.h"
 
 namespace TES3 {
+	enum class MobileActorType : char {
+		Creature = 0,
+		NPC = 1,
+		Player = 2
+	};
+
 	namespace Attribute {
 		enum Attribute {
 			Invalid = -1,
@@ -112,7 +118,7 @@ namespace TES3 {
 		char unknown_0x225;
 		char unknown_0x226;
 		signed char nextActionWeight; // 0x227
-		signed char actorType; // 0x228
+		MobileActorType actorType; // 0x228
 		char unknown_0x229;
 		char unknown_0x22A; // Undefined.
 		char unknown_0x22B; // Undefined.
@@ -203,8 +209,6 @@ namespace TES3 {
 		void setMobileActorFlag(MobileActorFlag::Flag, bool);
 
 		bool equipItem(Object* item);
-		bool unequipArmor(ArmorSlot::value_type);
-		bool unequipClothing(ClothingSlot::value_type);
 	};
 	static_assert(sizeof(MobileActor) == 0x3B0, "TES3::MobileActor failed size validation");
 }
