@@ -587,7 +587,7 @@ namespace mwse {
 		// Hook: On Equipped.
 		//
 
-		int __fastcall OnEquipped(TES3::Actor* actor, DWORD _UNUSED_, TES3::BaseObject* item, TES3::ItemData* itemData, TES3::EquipmentStack** out_equipmentStack, TES3::MobileActor* mobileActor) {
+		TES3::Object* __fastcall OnEquipped(TES3::Actor* actor, DWORD _UNUSED_, TES3::Object* item, TES3::ItemData* itemData, TES3::EquipmentStack** out_equipmentStack, TES3::MobileActor* mobileActor) {
 			// Call our wrapper for the function so that events are triggered.
 			return actor->equipItem(item, itemData, out_equipmentStack, mobileActor);
 		}
@@ -596,7 +596,7 @@ namespace mwse {
 		// Hook: On Unequipped.
 		//
 
-		TES3::EquipmentStack * __fastcall OnUnequipped(TES3::Actor* actor, DWORD _UNUSED_, TES3::Item* item, bool deleteStack, TES3::MobileActor* mobileActor, bool updateGUI, TES3::ItemData* itemData) {
+		TES3::EquipmentStack* __fastcall OnUnequipped(TES3::Actor* actor, DWORD _UNUSED_, TES3::Object* item, bool deleteStack, TES3::MobileActor* mobileActor, bool updateGUI, TES3::ItemData* itemData) {
 			// Call our wrapper for the function so that events are triggered.
 			return actor->unequipItem(item, deleteStack, mobileActor, updateGUI, itemData);
 		}

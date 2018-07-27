@@ -5,9 +5,10 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
-#include "TES3Util.h"
-
+#include "TES3Actor.h"
 #include "TES3GameSetting.h"
+#include "TES3Reference.h"
+#include "TES3Util.h"
 
 #define TES3_MobileActor_onActorCollision 0x5234A0
 #define TES3_MobileActor_onObjectCollision 0x5233B0
@@ -25,6 +26,9 @@
 #define TES3_MobileActor_calculateFlySpeed 0x5271F0
 
 namespace TES3 {
+	const auto TES3_MobileActor_isInAttackAnim = reinterpret_cast<bool (__thiscall*)(const MobileActor*)>(0x5567D0);
+	const auto TES3_MobileActor_wearItem = reinterpret_cast<void (__thiscall*)(MobileActor*, Object*, ItemData*, bool, bool)>(0x52C770);
+
 	signed char MobileActor::onActorCollision(int hitReferenceIndex) {
 		// Grab the hit reference now, it won't be available after calling the main function.
 		TES3::Reference* hitReference = this->hitReferences->hit[hitReferenceIndex].reference;
@@ -210,11 +214,11 @@ namespace TES3 {
 		return speed;
 	}
 
-	bool MobileActor::getMobileActorFlag(unsigned int flag) {
+	bool MobileActor::getMobileActorFlag(MobileActorFlag::Flag flag) {
 		return (actorFlags & flag) != 0;
 	}
 
-	void MobileActor::setMobileActorFlag(unsigned int flag, bool set) {
+	void MobileActor::setMobileActorFlag(MobileActorFlag::Flag flag, bool set) {
 		if (set) {
 			actorFlags |= flag;
 		}
@@ -222,4 +226,42 @@ namespace TES3 {
 			actorFlags &= ~flag;
 		}
 	}
+
+	bool MobileActor::equipItem(Object* item) {
+		Actor* actor = static_cast<Actor*>(reference->baseObject);
+
+		// Equipping weapons while they are in use breaks animations and AI
+		if (item->objectType == ObjectType::Weapon && TES3_MobileActor_isInAttackAnim(this)) {
+			return false;
+		}
+		// Check if item exists in the inventory
+		ItemStack* s = actor->inventory.findItemStack(item);
+		if (!s) {
+			return false;
+		}
+		// Get first available itemdata
+		ItemData* data = (s->variables) ? s->variables->storage[0] : nullptr;
+
+		TES3_MobileActor_wearItem(this, item, data, false, false);
+		return true;
+	}
+
+	bool MobileActor::unequipArmor(ArmorSlot::value_type slot) {
+		Actor* actor = static_cast<Actor*>(reference->baseObject);
+		EquipmentStack* s = actor->getEquippedArmorBySlot(slot);
+		if (s) {
+			actor->unequipItem(s->object, 1, this, 1, s->variables);
+		}
+		return bool(s);
+	}
+
+	bool MobileActor::unequipClothing(ClothingSlot::value_type slot) {
+		Actor* actor = static_cast<Actor*>(reference->baseObject);
+		EquipmentStack* s = actor->getEquippedClothingBySlot(slot);
+		if (s) {
+			actor->unequipItem(s->object, 1, this, 1, s->variables);
+		}
+		return bool(s);
+	}
+
 }

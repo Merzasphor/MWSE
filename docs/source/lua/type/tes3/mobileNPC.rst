@@ -423,6 +423,24 @@ Functions
 `stopCombat`_
     Ends combat with a specified actor, triggering the `combatStop`_ and `combatStopped`_ events.
 
+`boolean`_ **equip** (`tes3object`_ item)
+    Returns:
+        ``true`` if the equip was successful.
+    
+    Equips an item from the actor's inventory. If the item does not exist, or the the actor is currently using the item, it will fail.
+
+`boolean`_ **unequipArmor** (`armorSlot`_ slot)
+    Returns:
+        ``true`` if the un-equip was successful.
+
+    Un-equips armor equipped to the named slot.
+
+`boolean`_ **unequipClothing** (`clothingSlot`_ slot)
+    Returns:
+        ``true`` if the un-equip was successful.
+
+    Un-equips clothing equipped to the named slot.
+
 
 .. _`boolean`: ../lua/boolean.html
 .. _`number`: ../lua/number.html
@@ -441,6 +459,7 @@ Functions
 .. _`tes3mobilePlayer`: mobilePlayer.html
 .. _`tes3npc`: npc.html
 .. _`tes3npcInstance`: npcInstance.html
+.. _`tes3object`: object.html
 .. _`tes3reference`: reference.html
 .. _`tes3spell`: spell.html
 .. _`tes3statistic`: statistic.html
@@ -456,3 +475,6 @@ Functions
 .. _`applyHealthDamage`: mobileActor/applyHealthDamage.html
 .. _`startCombat`: mobileActor/startCombat.html
 .. _`stopCombat`: mobileActor/stopCombat.html
+
+.. _`armorSlot`: armor/armorSlot.html
+.. _`clothingSlot`: clothing/clothingSlot.html

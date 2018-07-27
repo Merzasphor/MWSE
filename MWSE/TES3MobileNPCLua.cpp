@@ -18,6 +18,11 @@ namespace mwse {
 			// All binding is in the NPC function, so that mobile player doesn't have extra lookup times.
 			setUserdataForMobileNPC(usertypeDefinition);
 
+			// Basic function binding.
+			usertypeDefinition.set("equip", &TES3::MobileActor::equipItem);
+			usertypeDefinition.set("unequipArmor", &TES3::MobileActor::unequipArmor);
+			usertypeDefinition.set("unequipClothing", &TES3::MobileActor::unequipClothing);
+
 			// Finish up our usertype.
 			state.set_usertype("tes3mobileNPC", usertypeDefinition);
 		}

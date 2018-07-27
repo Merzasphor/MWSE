@@ -4,8 +4,10 @@
 
 #include "TES3Defines.h"
 
-#include "TES3Object.h"
+#include "TES3Armor.h"
+#include "TES3Clothing.h"
 #include "TES3Inventory.h"
+#include "TES3Object.h"
 
 namespace TES3 {
 	namespace ActorFlag {
@@ -73,9 +75,11 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		int equipItem(TES3::BaseObject* item, TES3::ItemData* itemData, TES3::EquipmentStack** out_equipmentStack, TES3::MobileActor* mobileActor);
-		TES3::EquipmentStack * unequipItem(TES3::Item* item, bool deleteStack, TES3::MobileActor* mobileActor, bool updateGUI, TES3::ItemData* itemData);
-		Reference* dropItem(BaseObject*, ItemData*, int, bool);
+		Object* equipItem(Object* item, ItemData* itemData, EquipmentStack** out_equipmentStack, MobileActor* mobileActor);
+		EquipmentStack* unequipItem(Object* item, bool deleteStack, MobileActor* mobileActor, bool updateGUI, ItemData* itemData);
+		Reference* dropItem(Object* item, ItemData* itemData, int count, bool matchAny);
+		EquipmentStack* getEquippedArmorBySlot(ArmorSlot::value_type slot);
+		EquipmentStack* getEquippedClothingBySlot(ClothingSlot::value_type slot);
 
 		//
 		// Custom functions.

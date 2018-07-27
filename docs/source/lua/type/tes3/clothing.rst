@@ -46,7 +46,7 @@ Properties
 **isLeftPart** (`boolean`_)
     The object uses a left inventory slot.
 
-**slot** (`number`_)
+**slot** (`clothingSlot`_)
     The equipment slot this object occupies.
 
 
@@ -59,3 +59,4 @@ Properties
 .. _`userdata`: ../lua/userdata.html
 .. _`objectType`: baseObject/objectType.html
 .. _`boundingBox`: physicalObject/boundingBox.html
+.. _`clothingSlot`: clothing/clothingSlot.html

@@ -42,6 +42,7 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
+		ItemStack* findItemStack(Object* item);
 		void resolveLeveledLists(MobileActor*);
 
 	};

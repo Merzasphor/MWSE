@@ -2,11 +2,13 @@
 
 #include "LuaManager.h"
 
-#define TES3_Actor_equipItem 0x4958B0
-#define TES3_Actor_unequipItem 0x496710
-#define TES3_Actor_dropItem 0x52C460
-
 namespace TES3 {
+	const auto TES3_Actor_equipItem = reinterpret_cast<Object* (__thiscall*)(Actor*, Object*, ItemData*, EquipmentStack**, MobileActor*)>(0x4958B0);
+	const auto TES3_Actor_unequipItem = reinterpret_cast<EquipmentStack* (__thiscall*)(Actor*, Object*, bool, MobileActor*, bool, ItemData*)>(0x496710);
+	const auto TES3_Actor_dropItem = reinterpret_cast<Reference* (__thiscall*)(Actor*, Object*, ItemData*, int, bool)>(0x52C460);
+	const auto TES3_Actor_getEquippedArmorBySlot = reinterpret_cast<EquipmentStack* (__thiscall*)(Actor*, ArmorSlot::value_type)>(0x496E60);
+	const auto TES3_Actor_getEquippedClothingBySlot = reinterpret_cast<EquipmentStack* (__thiscall*)(Actor*, ClothingSlot::value_type)>(0x496E00);
+
 	int Actor::getBaseBarterGold() {
 		return vTable.actor->getBaseBarterGold(this);
 	}
@@ -23,8 +25,8 @@ namespace TES3 {
 		return vTable.actor->clone(this, reference);
 	}
 
-	int Actor::equipItem(TES3::BaseObject* item, TES3::ItemData* itemData, TES3::EquipmentStack** out_equipmentStack, TES3::MobileActor* mobileActor) {
-		int result = reinterpret_cast<int(__thiscall *)(TES3::Actor*, TES3::BaseObject*, TES3::ItemData*, TES3::EquipmentStack**, TES3::MobileActor*)>(TES3_Actor_equipItem)(this, item, itemData, out_equipmentStack, mobileActor);
+	Object* Actor::equipItem(Object* item, ItemData* itemData, EquipmentStack** out_equipmentStack, MobileActor* mobileActor) {
+		Object* result = TES3_Actor_equipItem(this, item, itemData, out_equipmentStack, mobileActor);
 
 		// Trigger or queue our event.
 		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::EquippedEvent(this, mobileActor, item, itemData));
@@ -32,8 +34,8 @@ namespace TES3 {
 		return result;
 	}
 
-	TES3::EquipmentStack * Actor::unequipItem(TES3::Item* item, bool deleteStack, TES3::MobileActor* mobileActor, bool updateGUI, TES3::ItemData* itemData) {
-		TES3::EquipmentStack * result = reinterpret_cast<TES3::EquipmentStack *(__thiscall *)(TES3::Actor*, TES3::Item*, bool, TES3::MobileActor*, bool, TES3::ItemData*)>(TES3_Actor_unequipItem)(this, item, deleteStack, mobileActor, updateGUI, itemData);
+	EquipmentStack* Actor::unequipItem(Object* item, bool deleteStack, MobileActor* mobileActor, bool updateGUI, ItemData* itemData) {
+		EquipmentStack* result = TES3_Actor_unequipItem(this, item, deleteStack, mobileActor, updateGUI, itemData);
 
 		// Trigger or queue our event.
 		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::UnequippedEvent(this, mobileActor, item, itemData));
@@ -41,8 +43,16 @@ namespace TES3 {
 		return result;
 	}
 
-	Reference* Actor::dropItem(BaseObject* item, ItemData* itemData = 0, int count = 1, bool matchAny = true) {
-		return reinterpret_cast<Reference*(__thiscall *)(Actor*, BaseObject*, ItemData*, int, bool)>(TES3_Actor_dropItem)(this, item, itemData, count, matchAny);
+	Reference* Actor::dropItem(Object* item, ItemData* itemData = 0, int count = 1, bool matchAny = true) {
+		return TES3_Actor_dropItem(this, item, itemData, count, matchAny);
+	}
+
+	EquipmentStack* Actor::getEquippedArmorBySlot(ArmorSlot::value_type slot) {
+		return TES3_Actor_getEquippedArmorBySlot(this, slot);
+	}
+
+	EquipmentStack* Actor::getEquippedClothingBySlot(ClothingSlot::value_type slot) {
+		return TES3_Actor_getEquippedClothingBySlot(this, slot);
 	}
 
 	bool Actor::getActorFlag(ActorFlag::Flag flag) {

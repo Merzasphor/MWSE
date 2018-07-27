@@ -3,6 +3,8 @@
 #include "TES3Defines.h"
 
 #include "TES3ActionData.h"
+#include "TES3Armor.h"
+#include "TES3Clothing.h"
 #include "TES3Inventory.h"
 #include "TES3MagicSourceInstance.h"
 #include "TES3MobileObject.h"
@@ -197,9 +199,12 @@ namespace TES3 {
 		// Custom functions.
 		//
 
-		bool getMobileActorFlag(unsigned int);
-		void setMobileActorFlag(unsigned int, bool);
+		bool getMobileActorFlag(MobileActorFlag::Flag);
+		void setMobileActorFlag(MobileActorFlag::Flag, bool);
 
+		bool equipItem(Object* item);
+		bool unequipArmor(ArmorSlot::value_type);
+		bool unequipClothing(ClothingSlot::value_type);
 	};
 	static_assert(sizeof(MobileActor) == 0x3B0, "TES3::MobileActor failed size validation");
 }

@@ -52,7 +52,7 @@ Properties
 **health** (`number`_)
     The object's durability.
 
-**slot** (`number`_)
+**slot** (`armorSlot`_)
     The object's equipment slot.
 
 **weightClass** (`number`_)
@@ -68,3 +68,4 @@ Properties
 .. _`userdata`: ../lua/userdata.html
 .. _`objectType`: baseObject/objectType.html
 .. _`boundingBox`: physicalObject/boundingBox.html
+.. _`armorSlot`: armor/armorSlot.html
