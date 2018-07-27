@@ -38,13 +38,14 @@ namespace mwse {
 				// Constant values.
 				usertypeDefinition.set("isInstance", sol::var(false));
 
-				// Basic function binding.
-				usertypeDefinition.set("clone", &TES3::Container::clone);
-
 				// Functions exposed as properties.
 				usertypeDefinition.set("model", sol::property(&TES3::Container::getModelPath, &TES3::Container::setModelPath));
 				usertypeDefinition.set("name", sol::property(&TES3::Container::getName, &TES3::Container::setName));
 				usertypeDefinition.set("script", sol::readonly_property(&TES3::Container::getScript));
+
+				// TODO: Remove
+				// Deprecated functions.
+				usertypeDefinition.set("clone", &TES3::Container::clone);
 
 				// Finish up our usertype.
 				state.set_usertype("tes3container", usertypeDefinition);

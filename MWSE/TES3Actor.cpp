@@ -24,8 +24,8 @@ namespace TES3 {
 		return vTable.actor->getIsAttacked(this);
 	}
 
-	unsigned int Actor::clone(Reference* reference) {
-		return vTable.actor->clone(this, reference);
+	void Actor::clone(Reference* reference) {
+		vTable.actor->clone(this, reference);
 	}
 
 	Object* Actor::equipItem(Object* item, ItemData* itemData, EquipmentStack** out_equipmentStack, MobileActor* mobileActor) {

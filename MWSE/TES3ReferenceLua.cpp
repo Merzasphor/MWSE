@@ -112,6 +112,7 @@ namespace mwse {
 
 			// Basic function binding.
 			usertypeDefinition.set("activate", [](TES3::Reference& self, TES3::Reference& target) { target.activate(&self); });
+			usertypeDefinition.set("clone", &TES3::Reference::clone);
 			usertypeDefinition.set("setActionFlag", &TES3::Reference::setActionFlag);
 			usertypeDefinition.set("clearActionFlag", &TES3::Reference::clearActionFlag);
 			usertypeDefinition.set("testActionFlag", &TES3::Reference::testActionFlag);

@@ -172,4 +172,25 @@ namespace TES3 {
 
 		return &reinterpret_cast<Actor*>(baseObject)->equipment;
 	}
+
+	bool Reference::clone() {
+		// Check to make sure that the contained object is of the right type.
+		ObjectType::ObjectType baseType = baseObject->objectType;
+		if (baseType != ObjectType::Container && baseType != ObjectType::Creature && baseType != ObjectType::NPC) {
+			return false;
+		}
+
+		// Check to see if the base object is not an instance.
+		Actor * actor = reinterpret_cast<Actor*>(baseObject);
+		if (!(actor->actorFlags & TES3::ActorFlag::IsBase)) {
+			return false;
+		}
+
+		// Clone the object and set the reference (and its parent cell) as modified.
+		actor->clone(this);
+		setObjectModified(true);
+
+		return true;
+	}
+
 }

@@ -50,6 +50,8 @@ namespace TES3 {
 		Inventory * getInventory();
 		Iterator<EquipmentStack> * getEquipment();
 
+		bool clone();
+
 		//
 		// Lua interface functions.
 		//

@@ -59,13 +59,6 @@ Properties
     The object's originating plugin filename.
 
 
-Functions
---------------------------------------------------------
-
-`clone`_
-    Converts a **Container** into a `Container Instance`_. This requires a reference attached.
-
-
 .. _`boolean`: ../lua/boolean.html
 .. _`number`: ../lua/number.html
 .. _`string`: ../lua/string.html

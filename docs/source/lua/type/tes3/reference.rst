@@ -65,6 +65,13 @@ position
 `Vector3`_. The object's position in the world.
 
 
+Functions
+--------------------------------------------------------
+
+`clone`_
+    Converts the **baseObject** into an instance. Returns ``true`` if successful. Only non-instance containers, creatures, and NPCs can be cloned.
+
+
 Attachments
 --------------------------------------------------------
 Attachments are how reference distinguish themselves.

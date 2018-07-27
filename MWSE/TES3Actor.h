@@ -43,7 +43,7 @@ namespace TES3 {
 		void * addItem; // 0x150
 		int (__thiscall * getBaseBarterGold)(Actor*); // 0x154
 		void (__thiscall * setBaseBarterGold)(Actor*, int); // 0x158
-		unsigned int (__thiscall * clone)(Actor*, Reference*); // 0x15C
+		void (__thiscall * clone)(Actor*, Reference*); // 0x15C
 		void * onCloseInventory; // 0x160
 		void * unknown_0x164;
 		bool (__thiscall * getIsAttacked)(Actor*); // 0x168
@@ -69,7 +69,7 @@ namespace TES3 {
 		int getBaseBarterGold();
 		void setBaseBarterGold(int);
 		bool getIsAttacked();
-		unsigned int clone(Reference*);
+		void clone(Reference*);
 
 		//
 		// Other related this-call functions.
