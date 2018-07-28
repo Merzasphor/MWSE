@@ -812,13 +812,13 @@ namespace mwse {
 			// Go through the keys to see if any of the states have changed, and launch an event based on that.
 			LuaManager& luaManager = LuaManager::getInstance();
 			for (size_t i = 0; i < 256; i++) {
-				if ((inputController->keyboardState[i] & 0x80) && !(inputController->previousKeyboardState[i] & 0x80)) {
+				if (inputController->isKeyPressedThisFrame(i)) {
 					luaManager.triggerEvent(new event::KeyDownEvent(i, controlDown, shiftDown, altDown, superDown));
 
 					// TODO: Remove! Deprecated generic key event.
 					luaManager.triggerEvent(new event::KeyEvent(i, true, controlDown, shiftDown, altDown, superDown));
 				}
-				else if (!(inputController->keyboardState[i] & 0x80) && (inputController->previousKeyboardState[i] & 0x80)) {
+				else if (inputController->isKeyReleasedThisFrame(i)) {
 					luaManager.triggerEvent(new event::KeyUpEvent(i, controlDown, shiftDown, altDown, superDown));
 
 					// TODO: Remove! Deprecated generic key event.
@@ -828,10 +828,10 @@ namespace mwse {
 
 			// Do the same with mouse buttons.
 			for (size_t i = 0; i < 8; i++) {
-				if ((inputController->mouseState.rgbButtons[i] & 0x80) && !(inputController->previousMouseState.rgbButtons[i] & 0x80)) {
+				if (inputController->isMouseButtonPressedThisFrame(i)) {
 					luaManager.triggerEvent(new event::MouseButtonDownEvent(i, controlDown, shiftDown, altDown, superDown));
 				}
-				else if (!(inputController->mouseState.rgbButtons[i] & 0x80) && (inputController->previousMouseState.rgbButtons[i] & 0x80)) {
+				else if (inputController->isMouseButtonReleasedThisFrame(i)) {
 					luaManager.triggerEvent(new event::MouseButtonUpEvent(i, controlDown, shiftDown, altDown, superDown));
 				}
 			}

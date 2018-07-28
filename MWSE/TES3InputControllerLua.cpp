@@ -62,6 +62,9 @@ namespace mwse {
 
 				// Basic function binding.
 				usertypeDefinition.set("keybindTest", &TES3::InputController::keybindTest);
+				usertypeDefinition.set("isKeyDown", &TES3::InputController::isKeyDown);
+				usertypeDefinition.set("isKeyPressedThisFrame", &TES3::InputController::isKeyPressedThisFrame);
+				usertypeDefinition.set("isKeyReleasedThisFrame", &TES3::InputController::isKeyReleasedThisFrame);
 
 				// Finish up our usertype.
 				state.set_usertype("tes3inputController", usertypeDefinition);

@@ -11,4 +11,28 @@ namespace TES3 {
 	int InputController::keybindTest(unsigned int keyBind, unsigned int transition) {
 		return reinterpret_cast<int(__thiscall *)(InputController*, unsigned int, unsigned int)>(TES3_InputController_keybindTest)(this, keyBind, transition);
 	}
+
+	bool InputController::isKeyDown(unsigned char keyCode) {
+		return keyboardState[keyCode] & 0x80;
+	}
+
+	bool InputController::isKeyPressedThisFrame(unsigned char keyCode) {
+		return (keyboardState[keyCode] & 0x80) && !(previousKeyboardState[keyCode] & 0x80);
+	}
+
+	bool InputController::isKeyReleasedThisFrame(unsigned char keyCode) {
+		return !(keyboardState[keyCode] & 0x80) && (previousKeyboardState[keyCode] & 0x80);
+	}
+
+	bool InputController::isMouseButtonDown(unsigned char button) {
+		return mouseState.rgbButtons[button] & 0x80;
+	}
+
+	bool InputController::isMouseButtonPressedThisFrame(unsigned char button) {
+		return (mouseState.rgbButtons[button] & 0x80) && !(previousMouseState.rgbButtons[button] & 0x80);
+	}
+
+	bool InputController::isMouseButtonReleasedThisFrame(unsigned char button) {
+		return !(mouseState.rgbButtons[button] & 0x80) && (previousMouseState.rgbButtons[button] & 0x80);
+	}
 }

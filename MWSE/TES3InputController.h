@@ -82,73 +82,37 @@ namespace TES3 {
 	static_assert(sizeof(InputConfig) == 0x10, "TES3::InputConfig failed size validation");
 
 	struct InputController {
+		struct GamepadState {
+			DIJOYSTATE current;
+			DIJOYSTATE previous;
+		};
+		struct DeviceAxisSupport {
+			unsigned int axesSupported;
+			unsigned int deviceTypeFlag;
+		};
+		struct Unknown_0x1B28 {
+			int unknown_0x0;
+			int unknown_0x4;
+			int unknown_0x8;
+		};
 		unsigned int creationFlags; // 0x0
 		LPDIRECTINPUT8 directInputInterface; // 0x4
-		int unknown_0x8;
-		int unknown_0xC;
-		int unknown_0x10;
-		int unknown_0x14;
-		int unknown_0x18;
-		int unknown_0x1C;
-		int unknown_0x20;
-		int unknown_0x24;
+		LPDIRECTINPUTDEVICE8 * gamepadsPointers[8]; // 0x8
 		LPDIRECTINPUTDEVICE8 keyboard; // 0x28
 		LPDIRECTINPUTDEVICE8 mouse; // 0x2C
-		int unknown_0x30[320]; // Confirmed size.
-		int unknown_0x530[4];
-		int unknown_0x540[4];
-		int unknown_0x550[4];
-		int unknown_0x560[4];
-		int unknown_0x570[4];
-		int unknown_0x580[4];
-		int unknown_0x590[4];
-		int unknown_0x5A0[4];
-		int unknown_0x5B0[4];
-		int unknown_0x5C0[4];
-		int unknown_0x5D0[4];
-		int unknown_0x5E0[4];
-		int unknown_0x5F0[4];
-		int unknown_0x600[64];
-		int unknown_0x700[64];
-		int unknown_0x800[64];
-		int unknown_0x900[64];
-		int unknown_0xA00[64];
-		int unknown_0xB00[64];
-		int unknown_0xC00[64];
-		int unknown_0xD00[64];
-		int unknown_0xE00[64];
-		int unknown_0xF00[64];
-		int unknown_0x1000[64];
-		int unknown_0x1100[64];
-		int unknown_0x1200[64];
-		int unknown_0x1300[64];
-		int unknown_0x1400[64];
-		int unknown_0x1500[64];
-		int unknown_0x1600[64];
-		int unknown_0x1700[64];
-		int unknown_0x1800[4];
-		int unknown_0x1810[4];
-		int unknown_0x1820[4];
-		int unknown_0x1830[4];
-		int unknown_0x1840[4];
-		int unknown_0x1850[4];
-		int unknown_0x1860[4];
-		int unknown_0x1870[4];
-		int unknown_0x1880[4];
-		int unknown_0x1890[4];
-		int unknown_0x18A0[4];
-		int unknown_0x18B0[4];
-		int unknown_0x18C0[4];
-		int unknown_0x18D0[4];
-		int unknown_0x18E0[4];
-		int unknown_0x18F0;
+		GamepadState gamepadStates[8]; // 0x30
+		DIDEVICEINSTANCEA gamepads[8]; // 0x530
+		DIDEVCAPS gamepadCapabilities[8]; // 0x1750
+		DeviceAxisSupport gamepadAxisSupport[8];
+		int deviceCount; // 0x18F0
 		unsigned char keyboardState[256]; // 0x18F4
 		unsigned char previousKeyboardState[256]; // 0x19F4
 		DIMOUSESTATE2 mouseState; // 0x1AF4
 		DIMOUSESTATE2 previousMouseState; // 0x1B08
 		int unknown_0x1B1C;
-		int unknown_0x1B20[4];
-		int unknown_0x1B30;
+		unsigned int doubleClickTime; // 0x1B20
+		int unknown_0x1B24;
+		Unknown_0x1B28 unknown_0x1B28;
 		int unknown_0x1B34;
 		char unknown_0x1B38; // Flag of some kind.
 		char unknown_0x1B39; // Flag of some kind.
@@ -163,6 +127,21 @@ namespace TES3 {
 		void readKeyState();
 		int keybindTest(unsigned int, unsigned int);
 
+		//
+		// Custom functions.
+		//
+
+		bool isKeyDown(unsigned char keyCode);
+		bool isKeyPressedThisFrame(unsigned char keyCode);
+		bool isKeyReleasedThisFrame(unsigned char keyCode);
+
+		bool isMouseButtonDown(unsigned char button);
+		bool isMouseButtonPressedThisFrame(unsigned char button);
+		bool isMouseButtonReleasedThisFrame(unsigned char button);
+
 	};
 	static_assert(sizeof(InputController) == 0x1D5C, "TES3::InputController failed size validation");
+	static_assert(sizeof(InputController::GamepadState) == 0xA0, "TES3::InputController::GamepadState failed size validation");
+	static_assert(sizeof(InputController::DeviceAxisSupport) == 0x8, "TES3::InputController::DeviceAxisSupport failed size validation");
+	static_assert(sizeof(InputController::Unknown_0x1B28) == 0xC, "TES3::InputController::Unknown_0x1B28 failed size validation");
 }
