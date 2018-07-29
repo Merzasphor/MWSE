@@ -20,7 +20,7 @@ namespace TES3 {
 			Vector vector_50;
 			Vector vector_60;
 			int updateReqTimestamp;
-			char unknown_0x74;
+			Boolean flagExtendImageToBounds;
 			Boolean visible;
 			Boolean visibleAtLastUpdate;
 			Boolean flagUsesRGBA;

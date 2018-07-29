@@ -457,6 +457,13 @@ namespace mwse {
 				}
 				return button;
 			});
+			usertypeDefinition.set("createDivider", [](Element& self, sol::table args) {
+				auto image = self.createImage(args.get_or("id", idNull), "Textures\\menu_divider.tga");
+				image->borderAllSides = 8;
+				image->layoutWidthFraction = 1.0;
+				image->flagExtendImageToBounds = 1;
+				return image;
+			});
 			usertypeDefinition.set("createFillBar", [](Element& self, sol::table args) {
 				auto element = self.createFillBar(args.get_or("id", idNull));
 				auto fillbar = TES3::UI::WidgetFillbar::fromElement(element);

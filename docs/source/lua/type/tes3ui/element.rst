@@ -191,6 +191,12 @@ Methods
 
     Creates a clickable button composed of images for the **idle**, **over** and **pressed** states. The texture must have power-of-2 dimensions (i.e. 16, 32, 64, 128, 256, 512, 1024); the final display size can be trimmed by setting width and height. Each image path is relative to ``Data Files``.
 
+`Element`_ **createDivider** {id = `UI_ID`_ ``optional``}  ``Uses table arguments.``
+    Returns:
+        A full-width divider element.
+
+    Creates a textured horizontal divider line, as used in the magic and stat menus. Scales automatically to the container width.
+
 `Element`_ **createFillBar** {id = `UI_ID`_ ``optional``, current = `number`_ ``integer, optional``, max = `number`_ ``integer, optional``}  ``Uses table arguments.``
     Returns:
         The newly created fillbar.
