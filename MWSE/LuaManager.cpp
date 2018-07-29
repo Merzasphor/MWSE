@@ -1273,16 +1273,23 @@ namespace mwse {
 		// Event: Activation Target Changed
 		//
 
-		void __fastcall OnFindActivationTarget(TES3::Game * game) {
-			// Get the current reference looked at.
-			TES3::Reference * previous = game->playerTarget;
+		static const auto global_TES3_Game = reinterpret_cast<TES3::Game**const>(0x7C6CDC);
+		static const uintptr_t MACP__getPlayerAnimData_fieldEC = 0x567990;
+		static TES3::Reference* previousTarget;
 
-			// Call the overwritten function.
-			reinterpret_cast<void(__thiscall *)(TES3::Game*)>(0x41CA50)(game);
+		static __declspec(naked) void HookPreFindActivationTarget() {
+			_asm {
+				mov eax, ds:[0x7C6CDC]  // global_TES3_Game
+				mov eax, [eax + 0xE8]	// game->playerTarget
+				mov previousTarget, eax
+				jmp MACP__getPlayerAnimData_fieldEC
+			}
+		}
 
-			// If our value changed, raise an event.
-			if (previous != game->playerTarget) {
-				LuaManager::getInstance().triggerEvent(new event::ActivationTargetChangedEvent(previous, game->playerTarget));
+		static void HookPostFindActivationTarget() {
+			TES3::Reference *currentTarget = (*global_TES3_Game)->playerTarget;
+			if(previousTarget != currentTarget) {
+				LuaManager::getInstance().triggerEvent(new event::ActivationTargetChangedEvent(previousTarget, currentTarget));
 			}
 		}
 
@@ -1725,7 +1732,8 @@ namespace mwse {
 			*/
 
 			// Event: Activation Target Changed
-			genCallEnforced(0x41B3D6, 0x41CA50, reinterpret_cast<DWORD>(OnFindActivationTarget));
+			genCallEnforced(0x41CA64, 0x567990, reinterpret_cast<DWORD>(HookPreFindActivationTarget));
+			genJumpUnprotected(0x41CCF5, reinterpret_cast<DWORD>(HookPostFindActivationTarget));
 
 			// UI framework hooks
 			TES3::UI::hook();
