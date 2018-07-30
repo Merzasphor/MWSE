@@ -51,6 +51,7 @@ namespace mwse {
 		TES3::Reference* getOptionalParamExecutionReference(sol::optional<sol::table> maybeParams);
 		TES3::Script* getOptionalParamScript(sol::optional<sol::table> maybeParams, const char* key);
 		TES3::Reference* getOptionalParamReference(sol::optional<sol::table> maybeParams, const char* key);
+		TES3::MobileActor* getOptionalParamMobileActor(sol::optional<sol::table> maybeParams, const char* key);
 		TES3::Spell* getOptionalParamSpell(sol::optional<sol::table> maybeParams, const char* key);
 		TES3::DialogueInfo* getOptionalParamTopic(sol::optional<sol::table> maybeParams, const char* key);
 		TES3::Sound* getOptionalParamSound(sol::optional<sol::table> maybeParams, const char* key);

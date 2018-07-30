@@ -13,12 +13,15 @@
   <ItemGroup>
     <ClInclude Include="ArrayUtil.h" />
     <ClInclude Include="CodePatchUtil.h" />
+    <ClInclude Include="TES3CrimeEvent.h" />
+    <ClInclude Include="TES3CrimeTree.h" />
     <ClInclude Include="D3DColorValue.h" />
     <ClInclude Include="D3DLight.h" />
     <ClInclude Include="D3DMaterial.h" />
     <ClInclude Include="D3DVector.h" />
     <ClInclude Include="D3DViewport.h" />
     <ClInclude Include="DynamicLuaObject.h" />
+    <ClInclude Include="TES3MobController.h" />
     <ClInclude Include="TES3AttachmentLua.h" />
     <ClInclude Include="TES3StdString.h" />
     <ClInclude Include="TES3UIDefines.h" />
@@ -259,7 +262,10 @@
     <ClCompile Include="RngUtil.cpp" />
     <ClCompile Include="ScriptUtil.cpp" />
     <ClCompile Include="ScriptUtilLua.cpp" />
+    <ClCompile Include="TES3StdString.cpp" />
     <ClCompile Include="TES3AttachmentLua.cpp" />
+    <ClCompile Include="TES3CrimeEvent.cpp" />
+    <ClCompile Include="TES3MobController.cpp" />
     <ClCompile Include="TES3UIManager.cpp" />
     <ClCompile Include="StackLua.cpp" />
     <ClCompile Include="StringUtilLua.cpp" />
@@ -651,7 +657,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>dbghelp.lib;lua51.lib;luajit.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dbghelp.lib;lua51.lib;luajit.lib;version.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <PostBuildEvent />
@@ -684,7 +690,7 @@ echo #define MWSE_BUILD_DATE %buildTime:~0,8% &gt;&gt; $(ProjectDir)/BuildDate.h
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>dbghelp.lib;lua51.lib;luajit.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dbghelp.lib;lua51.lib;luajit.lib;version.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <PostBuildEvent />

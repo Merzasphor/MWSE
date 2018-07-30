@@ -151,6 +151,12 @@ namespace mwse {
 		// Original function calls in Morrowind.
 		//
 
+		template <typename T>
+		T * _new() {
+			const auto __new = reinterpret_cast<T*(__cdecl*)(size_t)>(0x727692);
+			return __new(sizeof(T));
+		}
+
 		typedef void* (__cdecl *ExternalRealloc)(void*, size_t);
 		extern ExternalRealloc _realloc;
 		void* realloc(void* address, size_t size);

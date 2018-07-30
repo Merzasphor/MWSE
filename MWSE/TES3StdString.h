@@ -6,5 +6,12 @@ namespace TES3 {
 		char * c_str; // 0x4
 		int length; // 0x8
 		int storageSize; // 0xC
+
+		//
+		// Related this-call functions.
+		//
+
+		void operator=(const char* c_str);
+
 	};
 }

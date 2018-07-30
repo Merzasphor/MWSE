@@ -99,7 +99,7 @@ namespace TES3 {
 		MouseController * mouseController; // 0x50
 		Script * scriptGlobals; // 0x54
 		WeatherController * weatherController; // 0x58
-		int mobController; // 0x5C
+		MobController * mobController; // 0x5C
 		void * stats_60;
 		void * field_64;
 		void * splashController; // 0x68

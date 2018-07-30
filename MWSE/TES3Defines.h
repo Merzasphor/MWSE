@@ -1,9 +1,9 @@
 #pragma once
 
 namespace TES3 {
-	struct Activator;
 	struct ActionAttachment;
 	struct ActionData;
+	struct Activator;
 	struct Actor;
 	struct ActorAnimationData;
 	struct ActorVirtualTable;
@@ -26,6 +26,8 @@ namespace TES3 {
 	struct ContainerInstance;
 	struct Creature;
 	struct CreatureInstance;
+	struct CrimeEvent;
+	struct CrimeTree;
 	struct DataHandler;
 	struct Dialogue;
 	struct DialogueConditional;
@@ -58,6 +60,7 @@ namespace TES3 {
 	struct MagicSourceInstance;
 	struct MapNote;
 	struct Misc;
+	struct MobController;
 	struct MobileActor;
 	struct MobileCreature;
 	struct MobileNPC;
@@ -83,6 +86,7 @@ namespace TES3 {
 	struct RepairTool;
 	struct Script;
 	struct ScriptVariables;
+	struct SkillStatistic;
 	struct Sound;
 	struct SoundGenerator;
 	struct Spell;
@@ -90,7 +94,6 @@ namespace TES3 {
 	struct StartScript;
 	struct Static;
 	struct Statistic;
-	struct SkillStatistic;
 	struct Weapon;
 	struct Weather;
 	struct WeatherAsh;

@@ -18,12 +18,15 @@
 
 #include "TES3Actor.h"
 #include "TES3Cell.h"
+#include "TES3CrimeTree.h"
 #include "TES3DataHandler.h"
 #include "TES3Game.h"
 #include "TES3GameSetting.h"
 #include "TES3GlobalVariable.h"
 #include "TES3InputController.h"
+#include "TES3MobController.h"
 #include "TES3MobilePlayer.h"
+#include "TES3NPC.h"
 #include "TES3Reference.h"
 #include "TES3Region.h"
 #include "TES3Script.h"
@@ -759,6 +762,114 @@ namespace mwse {
 			state["tes3"]["getPlayerGold"] = []() -> int {
 				auto player = tes3::getWorldController()->getMobilePlayer();
 				return player->getGold();
+			};
+
+			state["tes3"]["triggerCrime"] = [](sol::table params) {
+				sol::state& state = LuaManager::getInstance().getState();
+
+				TES3::CrimeEvent crimeEvent;
+
+				// Look at the given type.
+				int crimeType = getOptionalParam<int>(params, "type", 3);
+				if (crimeType < 1 || crimeType > 7) {
+					state["error"]("Invalid type given. Value must be between 1 and 7.");
+					return false;
+				}
+				crimeEvent.type = crimeType;
+
+				// Also set the type string based on the crime committed.
+				switch (crimeType) {
+				case 1:
+					crimeEvent.typeString = "attack";
+					break;
+				case 2:
+					crimeEvent.typeString = "killing";
+					break;
+				case 3:
+					crimeEvent.typeString = "stealing";
+					break;
+				case 4:
+					crimeEvent.typeString = "pickpocket";
+					crimeEvent.penalty = 25;
+					break;
+				case 5:
+					crimeEvent.typeString = "theft";
+					break;
+				case 6:
+					crimeEvent.typeString = "trespass";
+					break;
+				case 7:
+					crimeEvent.typeString = "werewolf";
+					break;
+				}
+
+				// Criminal is assumed to be the player if no value is supplied.
+				TES3::MobileActor * criminal = getOptionalParamMobileActor(params, "criminal");
+				if (criminal == nullptr) {
+					criminal = tes3::getWorldController()->getMobilePlayer();
+				}
+				crimeEvent.criminal = criminal;
+
+				// Set some basic crime event data.
+				crimeEvent.timestamp = timeGetTime();
+				crimeEvent.position = criminal->position;
+				crimeEvent.penalty = getOptionalParam<int>(params, "value", crimeEvent.penalty);
+
+				// Victim can be more complicated.
+				sol::object victim = params["victim"];
+				crimeEvent.victim = tes3::getWorldController()->getMobilePlayer();
+				if (victim.is<TES3::Faction>()) {
+					crimeEvent.victimFaction = victim.as<TES3::Faction*>();
+				}
+				else if (victim.is<TES3::Actor>()) {
+					crimeEvent.victim = tes3::getWorldController()->getMobilePlayer();
+					crimeEvent.victimFaction = victim.as<TES3::Actor*>()->getFaction();
+					if (victim.is<TES3::NPC>()) {
+						crimeEvent.victimBaseActor = victim.as<TES3::NPC*>();
+					}
+					else if (victim.is<TES3::NPCInstance>()) {
+						crimeEvent.victimBaseActor = victim.as<TES3::NPCInstance*>()->baseNPC;
+					}
+				}
+				else if (victim.is<TES3::MobileNPC>()) {
+					TES3::MobileNPC * mach = victim.as<TES3::MobileNPC*>();
+					crimeEvent.victim = mach;
+					crimeEvent.victimFaction = mach->npcInstance->getFaction();
+					crimeEvent.victimBaseActor = mach->npcInstance;
+				}
+
+				// Do detection and the like.
+				bool forceDetection = getOptionalParam<bool>(params, "forceDetection", false);
+				auto controller = tes3::getWorldController()->mobController->unknown_0x24;
+				if (!forceDetection && controller->detectPresence(crimeEvent.criminal)) {
+					controller->checkRadius(crimeEvent.victim, crimeEvent.unknown_0x34);
+				}
+
+				// If we were detected, add it to the list.
+				if (forceDetection || crimeEvent.unknown_0x34->size) {
+					auto v167 = crimeEvent.victim->unknown_0x1B0;
+					auto v168 = v167->b;
+					auto v169 = tes3::_new<TES3::CrimeTree>();
+					auto v170 = v167;
+					if (!v167) {
+						v170 = v169;
+					}
+					v169->a = v170;
+					auto v171 = v168;
+					if (!v168) {
+						v171 = v169;
+					}
+					v169->b = v171;
+					v167->b = v169;
+					v169->b->a = v169;
+					auto v172 = &v169->data;
+					if (v172) {
+						v172->copy(&crimeEvent);
+					}
+					crimeEvent.victim->unknown_0x1B4++;
+				}
+
+				return true;
 			};
 
 		}

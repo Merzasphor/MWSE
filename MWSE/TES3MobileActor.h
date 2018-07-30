@@ -85,7 +85,7 @@ namespace TES3 {
 		ActionData actionData; // 0xCC
 		ActionData actionBeforeCombat; // 0x13C
 		int unknown_0x1AC;
-		int unknown_0x1B0;
+		CrimeTree * unknown_0x1B0;
 		int unknown_0x1B4;
 		int unknown_0x1B8;
 		int unknown_0x1BC;

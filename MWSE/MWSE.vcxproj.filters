@@ -175,6 +175,9 @@
     <Filter Include="Header Files\Lua\Bindings\TES3\UI">
       <UniqueIdentifier>{f6a29ee0-5513-404b-809d-c7b453fba745}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\DataAdapters\TES3\Crime">
+      <UniqueIdentifier>{dd191e36-f5a8-4159-882d-f7eabf36ec1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Flags.h">
@@ -842,6 +845,15 @@
     </ClInclude>
     <ClInclude Include="TES3StdString.h">
       <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3MobController.h">
+      <Filter>Header Files\DataAdapters\TES3\Worldspace</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3CrimeEvent.h">
+      <Filter>Header Files\DataAdapters\TES3\Crime</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3CrimeTree.h">
+      <Filter>Header Files\DataAdapters\TES3\Crime</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1903,6 +1915,15 @@
     </ClCompile>
     <ClCompile Include="NINode.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3MobController.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3CrimeEvent.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3StdString.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

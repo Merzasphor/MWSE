@@ -167,6 +167,31 @@ namespace mwse {
 			return value;
 		}
 
+		TES3::MobileActor* getOptionalParamMobileActor(sol::optional<sol::table> maybeParams, const char* key) {
+			TES3::MobileActor* value = nullptr;
+
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeValue = params[key];
+				if (maybeValue.valid()) {
+					if (maybeValue.is<std::string>()) {
+						TES3::Reference * reference = tes3::getReference(maybeValue.as<std::string>());
+						if (reference) {
+							value = tes3::getAttachedMobileActor(reference);
+						}
+					}
+					else if (maybeValue.is<TES3::Reference*>()) {
+						value = tes3::getAttachedMobileActor(maybeValue.as<TES3::Reference*>());
+					}
+					else if (maybeValue.is<TES3::MobileActor*>()) {
+						value = maybeValue.as<TES3::MobileActor*>();
+					}
+				}
+			}
+
+			return value;
+		}
+
 		TES3::Spell* getOptionalParamSpell(sol::optional<sol::table> maybeParams, const char* key) {
 			TES3::Spell* value = NULL;
 
