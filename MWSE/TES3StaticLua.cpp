@@ -20,6 +20,9 @@ namespace mwse {
 			setUserdataForPhysicalObject(usertypeDefinition);
 
 			// Functions exposed as properties.
+			usertypeDefinition.set("mesh", sol::property(&TES3::Static::getModelPath, &TES3::Static::setModelPath));
+
+			// TODO: Deprecated. Remove before 2.1-stable.
 			usertypeDefinition.set("model", sol::property(&TES3::Static::getModelPath, &TES3::Static::setModelPath));
 
 			// Finish up our usertype.

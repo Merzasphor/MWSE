@@ -44,8 +44,11 @@ namespace mwse {
 				}
 			));
 
-			usertypeDefinition.set("model", sol::property(&TES3::Misc::getModelPath, &TES3::Misc::setModelPath));
+			usertypeDefinition.set("mesh", sol::property(&TES3::Misc::getModelPath, &TES3::Misc::setModelPath));
 			usertypeDefinition.set("name", sol::property(&TES3::Misc::getName, &TES3::Misc::setName));
+
+			// TODO: Deprecated. Remove before 2.1-stable.
+			usertypeDefinition.set("model", sol::property(&TES3::Misc::getModelPath, &TES3::Misc::setModelPath));
 
 			// Finish up our usertype.
 			state.set_usertype("tes3misc", usertypeDefinition);

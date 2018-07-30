@@ -26,7 +26,7 @@ Properties
 **flags** (`number`_)
     The weapon's material flags.
 
-**health** (`number`_)
+**maxCondition** (`number`_)
     The weapon's condition.
 
 **icon** (`string`_)

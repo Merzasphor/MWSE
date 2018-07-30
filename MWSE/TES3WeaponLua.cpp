@@ -27,9 +27,9 @@ namespace mwse {
 			usertypeDefinition.set("enchantCapacity", &TES3::Weapon::enchantCapacity);
 			usertypeDefinition.set("enchantment", sol::property(&TES3::Weapon::getEnchantment, &TES3::Weapon::setEnchantment));
 			usertypeDefinition.set("flags", &TES3::Weapon::materialFlags);
-			usertypeDefinition.set("health", sol::readonly_property(&TES3::Weapon::getDurability));
+			usertypeDefinition.set("maxCondition", sol::property(&TES3::Weapon::getDurability, &TES3::Weapon::setDurability));
 			usertypeDefinition.set("icon", sol::readonly_property(&TES3::Weapon::getIconPath));
-			usertypeDefinition.set("model", sol::readonly_property(&TES3::Weapon::getModelPath));
+			usertypeDefinition.set("mesh", sol::readonly_property(&TES3::Weapon::getModelPath));
 			usertypeDefinition.set("name", sol::property(&TES3::Weapon::getName, &TES3::Weapon::setName));
 			usertypeDefinition.set("reach", &TES3::Weapon::reach);
 			usertypeDefinition.set("slashMax", &TES3::Weapon::slashMax);
@@ -51,6 +51,10 @@ namespace mwse {
 			usertypeDefinition.set("isMelee", sol::readonly_property(&TES3::Weapon::isMelee));
 			usertypeDefinition.set("isRanged", sol::readonly_property(&TES3::Weapon::isRanged));
 			usertypeDefinition.set("isAmmo", sol::readonly_property(&TES3::Weapon::isAmmo));
+
+			// TODO: Deprecated. Remove before 2.1-stable.
+			usertypeDefinition.set("health", sol::readonly_property(&TES3::Weapon::getDurability));
+			usertypeDefinition.set("model", sol::readonly_property(&TES3::Weapon::getModelPath));
 
 			// Finish up our usertype.
 			state.set_usertype("tes3weapon", usertypeDefinition);

@@ -42,7 +42,7 @@ namespace mwse {
 			}
 
 			// Set model.
-			std::string model = getOptionalParam<std::string>(params, "model", "m\\Misc_Potion_Bargain_01.nif");
+			std::string model = getOptionalParam<std::string>(params, "mesh", "m\\Misc_Potion_Bargain_01.nif");
 			alchemy->setModelPath(model.c_str());
 
 			// Set texture.
@@ -170,9 +170,12 @@ namespace mwse {
 				&TES3::Alchemy::getIconPath,
 				[](TES3::Alchemy& self, const char* value) { tes3::setDataString(&self.icon, value); }
 			));
-			usertypeDefinition.set("model", sol::property(&TES3::Alchemy::getModelPath, &TES3::Alchemy::setModelPath));
+			usertypeDefinition.set("mesh", sol::property(&TES3::Alchemy::getModelPath, &TES3::Alchemy::setModelPath));
 			usertypeDefinition.set("name", sol::property(&TES3::Alchemy::getName, &TES3::Alchemy::setName));
 			usertypeDefinition.set("script", sol::property(&TES3::Alchemy::getScript));
+
+			// TODO: Deprecated. Remove before 2.1-stable.
+			usertypeDefinition.set("model", sol::property(&TES3::Alchemy::getModelPath, &TES3::Alchemy::setModelPath));
 
 			// Finish up our usertype.
 			state.set_usertype("tes3alchemy", usertypeDefinition);

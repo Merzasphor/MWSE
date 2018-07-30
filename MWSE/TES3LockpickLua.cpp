@@ -34,8 +34,11 @@ namespace mwse {
 				&TES3::Lockpick::getIconPath,
 				[](TES3::Lockpick& self, const char* value) { if (strlen(value) < 32) strcpy(self.icon, value); }
 			));
-			usertypeDefinition.set("model", sol::property(&TES3::Lockpick::getModelPath, &TES3::Lockpick::setModelPath));
+			usertypeDefinition.set("mesh", sol::property(&TES3::Lockpick::getModelPath, &TES3::Lockpick::setModelPath));
 			usertypeDefinition.set("name", sol::property(&TES3::Lockpick::getName, &TES3::Lockpick::setName));
+
+			// TODO: Deprecated. Remove before 2.1-stable.
+			usertypeDefinition.set("model", sol::property(&TES3::Lockpick::getModelPath, &TES3::Lockpick::setModelPath));
 
 			// Finish up our usertype.
 			state.set_usertype("tes3lockpick", usertypeDefinition);

@@ -39,13 +39,13 @@ namespace mwse {
 				usertypeDefinition.set("isInstance", sol::var(false));
 
 				// Functions exposed as properties.
-				usertypeDefinition.set("model", sol::property(&TES3::Container::getModelPath, &TES3::Container::setModelPath));
+				usertypeDefinition.set("mesh", sol::property(&TES3::Container::getModelPath, &TES3::Container::setModelPath));
 				usertypeDefinition.set("name", sol::property(&TES3::Container::getName, &TES3::Container::setName));
 				usertypeDefinition.set("script", sol::readonly_property(&TES3::Container::getScript));
 
-				// TODO: Remove
-				// Deprecated functions.
+				// TODO: Deprecated. Remove before 2.1-stable.
 				usertypeDefinition.set("clone", &TES3::Container::clone);
+				usertypeDefinition.set("model", sol::property(&TES3::Container::getModelPath, &TES3::Container::setModelPath));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3container", usertypeDefinition);
@@ -80,12 +80,13 @@ namespace mwse {
 				// Functions exposed as properties.
 				usertypeDefinition.set("capacity", sol::property(&TES3::ContainerInstance::getCapacity, &TES3::ContainerInstance::setCapacity));
 				usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::ContainerInstance::isRespawn));
-				usertypeDefinition.set("model", sol::property(&TES3::ContainerInstance::getModelPath, &TES3::ContainerInstance::setModelPath));
+				usertypeDefinition.set("mesh", sol::property(&TES3::ContainerInstance::getModelPath, &TES3::ContainerInstance::setModelPath));
 				usertypeDefinition.set("name", sol::property(&TES3::ContainerInstance::getName, &TES3::ContainerInstance::setName));
 				usertypeDefinition.set("script", sol::readonly_property(&TES3::ContainerInstance::getScript));
 
-				// DEPRECATED. Will remove in future versions.
+				// TODO: Deprecated. Remove before 2.1-stable.
 				usertypeDefinition.set("container", sol::readonly_property([](TES3::ContainerInstance& self) { return makeLuaObject(self.container); }));
+				usertypeDefinition.set("model", sol::property(&TES3::ContainerInstance::getModelPath, &TES3::ContainerInstance::setModelPath));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3containerInstance", usertypeDefinition);

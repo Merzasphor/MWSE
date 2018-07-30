@@ -34,10 +34,13 @@ namespace mwse {
 				&TES3::Book::getIconPath,
 				[](TES3::Book& self, const char* value) { if (strlen(value) < 32) tes3::setDataString(&self.icon, value); }
 			));
-			usertypeDefinition.set("model", sol::property(&TES3::Book::getModelPath, &TES3::Book::setModelPath));
+			usertypeDefinition.set("mesh", sol::property(&TES3::Book::getModelPath, &TES3::Book::setModelPath));
 			usertypeDefinition.set("name", sol::property(&TES3::Book::getName, &TES3::Book::setName));
 			usertypeDefinition.set("script", sol::property(&TES3::Book::getScript));
 			usertypeDefinition.set("text", sol::property(&TES3::Book::getBookText));
+
+			// TODO: Deprecated. Remove before 2.1-stable.
+			usertypeDefinition.set("model", sol::property(&TES3::Book::getModelPath, &TES3::Book::setModelPath));
 
 			// Finish up our usertype.
 			state.set_usertype("tes3book", usertypeDefinition);

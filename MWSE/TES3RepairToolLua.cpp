@@ -34,9 +34,12 @@ namespace mwse {
 				&TES3::RepairTool::getIconPath,
 				[](TES3::RepairTool& self, const char* value) { if (strlen(value) < 32) strcpy(self.icon, value); }
 			));
-			usertypeDefinition.set("model", sol::property(&TES3::RepairTool::getModelPath, &TES3::RepairTool::setModelPath));
+			usertypeDefinition.set("mesh", sol::property(&TES3::RepairTool::getModelPath, &TES3::RepairTool::setModelPath));
 			usertypeDefinition.set("name", sol::property(&TES3::RepairTool::getName, &TES3::RepairTool::setName));
 
+			// TODO: Deprecated. Remove before 2.1-stable.
+			usertypeDefinition.set("model", sol::property(&TES3::RepairTool::getModelPath, &TES3::RepairTool::setModelPath));
+			
 			// Finish up our usertype.
 			state.set_usertype("tes3repairTool", usertypeDefinition);
 		}

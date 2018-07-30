@@ -54,9 +54,12 @@ namespace mwse {
 				usertypeDefinition.set("isAttacked", sol::readonly_property(&TES3::NPC::getIsAttacked));
 				usertypeDefinition.set("isEssential", sol::readonly_property(&TES3::NPC::isEssential));
 				usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::NPC::isRespawn));
-				usertypeDefinition.set("model", sol::property(&TES3::NPC::getModelPath, &TES3::NPC::setModelPath));
+				usertypeDefinition.set("mesh", sol::property(&TES3::NPC::getModelPath, &TES3::NPC::setModelPath));
 				usertypeDefinition.set("name", sol::property(&TES3::NPC::getName, &TES3::NPC::setName));
 				usertypeDefinition.set("spells", sol::readonly_property([](TES3::NPC& self) { return &self.spellList; }));
+
+				// TODO: Deprecated. Remove before 2.1-stable.
+				usertypeDefinition.set("model", sol::property(&TES3::NPC::getModelPath, &TES3::NPC::setModelPath));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3npc", usertypeDefinition);
@@ -100,9 +103,12 @@ namespace mwse {
 				usertypeDefinition.set("isEssential", sol::readonly_property(&TES3::NPCInstance::isEssential));
 				usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::NPCInstance::isRespawn));
 				usertypeDefinition.set("level", sol::readonly_property(&TES3::NPCInstance::getLevel));
-				usertypeDefinition.set("model", sol::property(&TES3::NPCInstance::getModelPath, &TES3::NPCInstance::setModelPath));
+				usertypeDefinition.set("mesh", sol::property(&TES3::NPCInstance::getModelPath, &TES3::NPCInstance::setModelPath));
 				usertypeDefinition.set("name", sol::property(&TES3::NPCInstance::getName, &TES3::NPCInstance::setName));
 				usertypeDefinition.set("spells", sol::readonly_property([](TES3::NPCInstance& self) { return &self.baseNPC->spellList; }));
+
+				// TODO: Deprecated. Remove before 2.1-stable.
+				usertypeDefinition.set("model", sol::property(&TES3::NPCInstance::getModelPath, &TES3::NPCInstance::setModelPath));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3npcInstance", usertypeDefinition);

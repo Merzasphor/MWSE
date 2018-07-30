@@ -68,11 +68,14 @@ namespace mwse {
 				&TES3::Light::getIconPath,
 				[](TES3::Light& self, const char* value) { if (strlen(value) < 32) tes3::setDataString(&self.icon, value); }
 			));
-			usertypeDefinition.set("model", sol::property(&TES3::Light::getModelPath, &TES3::Light::setModelPath));
+			usertypeDefinition.set("mesh", sol::property(&TES3::Light::getModelPath, &TES3::Light::setModelPath));
 			usertypeDefinition.set("name", sol::property(&TES3::Light::getName, &TES3::Light::setName));
 
 			// Methods.
 			usertypeDefinition.set("getTimeLeft", sol::overload(&getTimeLeftEquipStack, &getTimeLeftReference));
+
+			// TODO: Deprecated. Remove before 2.1-stable.
+			usertypeDefinition.set("model", sol::property(&TES3::Light::getModelPath, &TES3::Light::setModelPath));
 
 			// Finish up our usertype.
 			state.set_usertype("tes3light", usertypeDefinition);

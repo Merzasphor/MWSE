@@ -30,13 +30,13 @@ namespace mwse {
 
 			// Functions exposed as properties.
 			usertypeDefinition.set("enchantment", sol::property(&TES3::Armor::getEnchantment, &TES3::Armor::setEnchantment));
-			usertypeDefinition.set("health", sol::property(&TES3::Armor::getDurability, &TES3::Armor::setDurability));
+			usertypeDefinition.set("maxCondition", sol::property(&TES3::Armor::getDurability, &TES3::Armor::setDurability));
 			usertypeDefinition.set("icon", sol::property(
 				&TES3::Armor::getIconPath,
 				[](TES3::Armor& self, const char* value) { if (strlen(value) < 32) tes3::setDataString(&self.icon, value); }
 			));
 			usertypeDefinition.set("isLeftPart", sol::property(&TES3::Armor::isLeftPartOfPair));
-			usertypeDefinition.set("model", sol::property(&TES3::Armor::getModelPath, &TES3::Armor::setModelPath));
+			usertypeDefinition.set("mesh", sol::property(&TES3::Armor::getModelPath, &TES3::Armor::setModelPath));
 			usertypeDefinition.set("name", sol::property(&TES3::Armor::getName, &TES3::Armor::setName));
 			usertypeDefinition.set("script", sol::property(&TES3::Armor::getScript));
 			usertypeDefinition.set("slotName", sol::property(&TES3::Armor::getTypeName));
@@ -69,6 +69,10 @@ namespace mwse {
 					return 0.0f;
 				}
 			});
+			
+			// TODO: Deprecated. Remove before 2.1-stable.
+			usertypeDefinition.set("health", sol::property(&TES3::Armor::getDurability, &TES3::Armor::setDurability));
+			usertypeDefinition.set("model", sol::property(&TES3::Armor::getModelPath, &TES3::Armor::setModelPath));
 
 			// Finish up our usertype.
 			state.set_usertype("tes3armor", usertypeDefinition);

@@ -7,41 +7,11 @@ This interface represents an armor game object.
 Properties
 --------------------------------------------------------
 
-**id** (`string`_)
-    The object's unique id.
-
-**objectType** (`number`_)
-    The object's `objectType`_
-
-**sourceMod** (`string`_)
-    The object's originating plugin filename.
-
-**mesh** (`string`_)
-    The object's mesh path, relative to 'Data Files/Meshes'.
+**armorRating** (`number`_)
+    The object's armor rating.
 
 **boundingBox** (`userdata`_)
     The object's `boundingBox`_.
-
-**icon** (`string`_)
-    The object's icon path, relative to 'Data Files/Icons'.
-
-**name** (`string`_)
-    The object's name.
-
-**script** (`userdata`_)
-    The object's script.
-
-**value** (`number`_)
-    The object's value in gold.
-
-**weight** (`number`_)
-    The object's weight.
-
-**isLeftPart** (`boolean`_)
-    The object uses a left inventory slot.
-
-**armorRating** (`number`_)
-    The object's armor rating.
 
 **enchantCapacity** (`number`_)
     The object's maximum enchantment capacity.
@@ -49,15 +19,44 @@ Properties
 **enchantment** (`userdata`_)
     The object's enchantment.
 
-**health** (`number`_)
+**icon** (`string`_)
+    The object's icon path, relative to 'Data Files/Icons'.
+
+**id** (`string`_)
+    The object's unique id.
+
+**isLeftPart** (`boolean`_)
+    The object uses a left inventory slot.
+
+**maxCondition** (`number`_)
     The object's durability.
+
+**mesh** (`string`_)
+    The object's mesh path, relative to 'Data Files/Meshes'.
+
+**name** (`string`_)
+    The object's name.
+
+**objectType** (`number`_)
+    The object's `objectType`_
+
+**script** (`userdata`_)
+    The object's script.
 
 **slot** (`armorSlot`_)
     The object's equipment slot.
 
+**sourceMod** (`string`_)
+    The object's originating plugin filename.
+
+**value** (`number`_)
+    The object's value in gold.
+
+**weight** (`number`_)
+    The object's weight.
+
 **weightClass** (`number`_)
     The object's weightClass.
-
 
 --------------------------------------------------------
 

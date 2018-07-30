@@ -26,9 +26,12 @@ namespace mwse {
 			usertypeDefinition.set("openSound", &TES3::Door::openSound);
 
 			// Functions exposed as properties.
-			usertypeDefinition.set("model", sol::property(&TES3::Door::getModelPath, &TES3::Door::setModelPath));
+			usertypeDefinition.set("mesh", sol::property(&TES3::Door::getModelPath, &TES3::Door::setModelPath));
 			usertypeDefinition.set("name", sol::property(&TES3::Door::getName, &TES3::Door::setName));
 			usertypeDefinition.set("script", sol::property(&TES3::Door::getScript));
+
+			// TODO: Deprecated. Remove before 2.1-stable.
+			usertypeDefinition.set("model", sol::property(&TES3::Door::getModelPath, &TES3::Door::setModelPath));
 
 			// Finish up our usertype.
 			state.set_usertype("tes3door", usertypeDefinition);

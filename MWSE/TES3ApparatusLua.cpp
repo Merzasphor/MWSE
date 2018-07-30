@@ -31,9 +31,12 @@ namespace mwse {
 				&TES3::Apparatus::getIconPath,
 				[](TES3::Apparatus& self, const char* value) { if (strlen(value) < 32) strcpy(self.texture, value); }
 			));
-			usertypeDefinition.set("model", sol::property(&TES3::Apparatus::getModelPath, &TES3::Apparatus::setModelPath));
+			usertypeDefinition.set("mesh", sol::property(&TES3::Apparatus::getModelPath, &TES3::Apparatus::setModelPath));
 			usertypeDefinition.set("name", sol::property(&TES3::Apparatus::getName, &TES3::Apparatus::setName));
 			usertypeDefinition.set("script", sol::property(&TES3::Apparatus::getScript));
+
+			// TODO: Deprecated. Remove before 2.1-stable.
+			usertypeDefinition.set("model", sol::property(&TES3::Apparatus::getModelPath, &TES3::Apparatus::setModelPath));
 
 			// Finish up our usertype.
 			state.set_usertype("tes3apparatus", usertypeDefinition);

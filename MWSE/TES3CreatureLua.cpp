@@ -46,9 +46,12 @@ namespace mwse {
 				usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::Creature::isRespawn));
 				usertypeDefinition.set("level", sol::readonly_property(&TES3::Creature::getLevel));
 				usertypeDefinition.set("magicka", sol::readonly_property(&TES3::Creature::getMagicka));
-				usertypeDefinition.set("model", sol::property(&TES3::Creature::getModelPath, &TES3::Creature::setModelPath));
+				usertypeDefinition.set("mesh", sol::property(&TES3::Creature::getModelPath, &TES3::Creature::setModelPath));
 				usertypeDefinition.set("name", sol::property(&TES3::Creature::getName, &TES3::Creature::setName));
 				usertypeDefinition.set("script", sol::readonly_property(&TES3::Creature::getScript));
+
+				// TODO: Deprecated. Remove before 2.1-stable.
+				usertypeDefinition.set("model", sol::property(&TES3::Creature::getModelPath, &TES3::Creature::setModelPath));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3creature", usertypeDefinition);
@@ -93,12 +96,13 @@ namespace mwse {
 				usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::CreatureInstance::isRespawn));
 				usertypeDefinition.set("level", sol::readonly_property(&TES3::CreatureInstance::getLevel));
 				usertypeDefinition.set("magicka", sol::readonly_property(&TES3::CreatureInstance::getMagicka));
-				usertypeDefinition.set("model", sol::property(&TES3::CreatureInstance::getModelPath, &TES3::CreatureInstance::setModelPath));
+				usertypeDefinition.set("mesh", sol::property(&TES3::CreatureInstance::getModelPath, &TES3::CreatureInstance::setModelPath));
 				usertypeDefinition.set("name", sol::property(&TES3::CreatureInstance::getName, &TES3::CreatureInstance::setName));
 				usertypeDefinition.set("script", sol::readonly_property(&TES3::CreatureInstance::getScript));
 
-				// DEPRECATED. Will remove.
+				// TODO: Deprecated. Remove before 2.1-stable.
 				usertypeDefinition.set("baseCreature", sol::readonly_property([](TES3::CreatureInstance& self) { return makeLuaObject(self.baseCreature); }));
+				usertypeDefinition.set("model", sol::property(&TES3::CreatureInstance::getModelPath, &TES3::CreatureInstance::setModelPath));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3creatureInstance", usertypeDefinition);
