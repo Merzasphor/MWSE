@@ -26,6 +26,7 @@
 #include "TES3MagicEffect.h"
 #include "TES3MagicEffectInstance.h"
 #include "TES3Spell.h"
+#include "TES3MobController.h"
 #include "TES3MobileActor.h"
 #include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
@@ -657,6 +658,23 @@ namespace mwse {
 
 		void OnNewGame() {
 			tes3::startNewGame();
+		}
+
+		void __fastcall OnNewGameViaStartingCell(TES3::MobController * mobController) {
+			// Call overwritten code.
+			mobController->checkPlayerDistance();
+
+			// Fixup lua state/shorthands.
+			LuaManager& luaManager = LuaManager::getInstance();
+			sol::state& state = luaManager.getState();
+			TES3::MobilePlayer * macp = tes3::getWorldController()->getMobilePlayer();
+			state["tes3"]["mobilePlayer"] = mwse::lua::makeLuaObject(macp);
+			state["tes3"]["player"] = mwse::lua::makeLuaObject(macp->reference);
+
+			// Fire off the loaded/cellChanged events.
+			lastCell = tes3::getDataHandler()->currentCell;
+			luaManager.triggerEvent(new event::LoadedGameEvent(nullptr, false, true));
+			luaManager.triggerEvent(new event::CellChangedEvent(lastCell, nullptr));
 		}
 
 		//
@@ -1449,6 +1467,7 @@ namespace mwse {
 			// Additional load/loaded events for new game.
 			genCallEnforced(0x5FCCF4, 0x5FAEA0, reinterpret_cast<DWORD>(OnNewGame));
 			genCallEnforced(0x5FCDAA, 0x5FAEA0, reinterpret_cast<DWORD>(OnNewGame));
+			genCallEnforced(0x41A6E4, 0x563CE0, reinterpret_cast<DWORD>(OnNewGameViaStartingCell));
 
 			// Event: Start Combat
 			genCallEnforced(0x5073BC, 0x530470, reinterpret_cast<DWORD>(OnStartCombat));
