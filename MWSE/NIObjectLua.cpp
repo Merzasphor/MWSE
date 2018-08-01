@@ -88,6 +88,12 @@ namespace mwse {
 				usertypeDefinition.set("worldBoundRadius", &NI::AVObject::worldBoundRadius);
 				usertypeDefinition.set("worldTransform", &NI::AVObject::worldTransform);
 
+				// Friendly access to flags.
+				usertypeDefinition.set("appCulled", sol::property(
+					[](NI::AVObject& self) -> bool { return (self.flags & 1) == 1; },
+					[](NI::AVObject& self, bool set) { set ? self.flags |= 1 : self.flags &= ~1; }
+				));
+
 				// Access to other objects that need to be packaged.
 				usertypeDefinition.set("parent", sol::readonly_property([](NI::AVObject& self) { return makeLuaObject(self.parentNode); }));
 
