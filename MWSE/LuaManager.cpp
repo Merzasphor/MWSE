@@ -1311,6 +1311,52 @@ namespace mwse {
 			}
 		}
 
+		//
+		// Event: Weather cycle and transition events
+		//
+
+		// Fix missing coverage of updates to lastActiveRegion
+		static __declspec(naked) void patchWeatherRegionCheck() {
+			__asm {
+				mov ecx, [esi + 0x58]	// ecx = WorldController->weatherController
+				mov [ecx + 0x1D0], eax  // weatherController->lastActiveRegion = eax
+				nop
+			}
+		}
+		const size_t patchWeatherRegionCheck_size = 0xA;
+
+		bool __fastcall OnWeatherCycle(TES3::Cell* cell, DWORD _UNUSED_) {
+			// Fire off the event.
+			LuaManager::getInstance().triggerEvent(new event::WeatherCycledEvent());
+
+			// Call original function.
+			return reinterpret_cast<bool (__thiscall *)(TES3::Cell*)>(0x4E22F0)(cell);
+		}
+
+		void __fastcall OnWeatherImmediateChange(TES3::WeatherController* controller, DWORD _UNUSED_, DWORD weatherId, DWORD transitionScalar) {
+			// Call original function.
+			reinterpret_cast<void (__thiscall *)(TES3::WeatherController*, DWORD, DWORD)>(0x441C40)(controller, weatherId, transitionScalar);
+
+			// Fire off the event, after function completes.
+			LuaManager::getInstance().triggerEvent(new event::WeatherChangedImmediateEvent());
+		}
+
+		void* __cdecl OnWeatherTransitionBegin(const char* texturePath, void* data) {
+			// Fire off the event.
+			LuaManager::getInstance().triggerEvent(new event::WeatherTransitionStartedEvent());
+
+			// Call original function.
+			return reinterpret_cast<void* (__cdecl *)(const char*, void*)>(0x6DE7F0)(texturePath, data);
+		}
+
+		void __fastcall OnWeatherTransitionEnd(void* modelData, DWORD _UNUSED_) {
+			// Fire off the event.
+			LuaManager::getInstance().triggerEvent(new event::WeatherTransitionFinishedEvent());
+
+			// Call original function.
+			reinterpret_cast<void (__thiscall *)(void*)>(0x414890)(modelData);
+		}
+
 		void LuaManager::executeMainModScripts(const char* path, const char* filename) {
 			for (auto & p : std::experimental::filesystem::recursive_directory_iterator(path)) {
 				if (p.path().filename() == filename) {
@@ -1753,6 +1799,16 @@ namespace mwse {
 			// Event: Activation Target Changed
 			genCallEnforced(0x41CA64, 0x567990, reinterpret_cast<DWORD>(HookPreFindActivationTarget));
 			genJumpUnprotected(0x41CCF5, reinterpret_cast<DWORD>(HookPostFindActivationTarget));
+
+			// Event: Weather transitions
+			genCallEnforced(0x410294, 0x4E22F0, reinterpret_cast<DWORD>(OnWeatherCycle));
+			genCallEnforced(0x410368, 0x441C40, reinterpret_cast<DWORD>(OnWeatherImmediateChange));
+			genCallEnforced(0x441084, 0x441C40, reinterpret_cast<DWORD>(OnWeatherImmediateChange));
+			genCallEnforced(0x45CE2D, 0x441C40, reinterpret_cast<DWORD>(OnWeatherImmediateChange));
+			genCallEnforced(0x45D211, 0x441C40, reinterpret_cast<DWORD>(OnWeatherImmediateChange));
+			genCallEnforced(0x441B49, 0x6DE7F0, reinterpret_cast<DWORD>(OnWeatherTransitionBegin));
+			genCallEnforced(0x440F07, 0x414890, reinterpret_cast<DWORD>(OnWeatherTransitionEnd));
+			writePatchCodeUnprotected(0x410308, (BYTE*)&patchWeatherRegionCheck, patchWeatherRegionCheck_size);
 
 			// UI framework hooks
 			TES3::UI::hook();
