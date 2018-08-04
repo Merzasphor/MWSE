@@ -1,5 +1,6 @@
 #include "TES3UtilLua.h"
 
+#include <algorithm>
 #include "sol.hpp"
 #include "LuaManager.h"
 
@@ -17,6 +18,7 @@
 #include "NIPick.h"
 
 #include "TES3Actor.h"
+#include "TES3AudioController.h"
 #include "TES3Cell.h"
 #include "TES3CrimeTree.h"
 #include "TES3DataHandler.h"
@@ -230,6 +232,8 @@ namespace mwse {
 				// Get parameters.
 				TES3::Sound* sound = getOptionalParamSound(params, "sound");
 				TES3::Reference* reference = getOptionalParamReference(params, "reference");
+				bool loop = getOptionalParam<bool>(params, "loop", false);
+				int mix = getOptionalParam<int>(params, "mixChannel", int(TES3::AudioMixType::Effects));
 				double volume = getOptionalParam<double>(params, "volume", 1.0);
 				float pitch = getOptionalParam<double>(params, "pitch", 1.0);
 
@@ -239,14 +243,13 @@ namespace mwse {
 				}
 
 				// Clamp volume. RIP no std::clamp.
-				if (volume < 0) {
-					volume = 0.0;
-				}
-				else if (volume > 1.0) {
-					volume = 1.0;
-				}
+				volume = std::max(0.0, volume);
+				volume = std::min(volume, 1.0);
 
-				tes3::getDataHandler()->addSound(sound, reference, 0, volume * 250, pitch);
+				// Apply mix and rescale to 0-250
+				volume *= 250.0 * tes3::getWorldController()->audioController->getMixVolume(static_cast<TES3::AudioMixType>(mix));
+
+				tes3::getDataHandler()->addSound(sound, reference, loop ? TES3::SoundPlayFlags::Loop : 0, volume, pitch);
 				return true;
 			};
 
@@ -261,7 +264,39 @@ namespace mwse {
 					return false;
 				}
 
-				return tes3::getDataHandler()->getSoundPlaying(sound, reference);
+				return bool(tes3::getDataHandler()->getSoundPlaying(sound, reference));
+			};
+
+			// Bind function: tes3.adjustSoundVolume
+			state["tes3"]["adjustSoundVolume"] = [](sol::optional<sol::table> params) {
+				// Get parameters.
+				TES3::Sound* sound = getOptionalParamSound(params, "sound");
+				TES3::Reference* reference = getOptionalParamReference(params, "reference");
+				int mix = getOptionalParam<int>(params, "mixChannel", int(TES3::AudioMixType::Effects));
+				double volume = getOptionalParam<double>(params, "volume", 1.0);
+
+				if (!sound || !reference) {
+					log::getLog() << "tes3.adjustSoundVolume: Valid sound and reference required." << std::endl;
+					return;
+				}
+
+				// Clamp volume.
+				volume = std::max(0.0, volume);
+				volume = std::min(volume, 1.0);
+
+				// Apply mix and rescale to 0-250
+				volume *= 250.0 * tes3::getWorldController()->audioController->getMixVolume(static_cast<TES3::AudioMixType>(mix));
+
+				tes3::getDataHandler()->adjustSoundVolume(sound, reference, volume);
+			};
+
+			// Bind function: tes3.removeSound
+			state["tes3"]["removeSound"] = [](sol::optional<sol::table> params) {
+				// Get parameters.
+				TES3::Sound* sound = getOptionalParamSound(params, "sound");
+				TES3::Reference* reference = getOptionalParamReference(params, "reference");
+
+				tes3::getDataHandler()->removeSound(sound, reference);
 			};
 
 			// Bind function: tes3.messageBox
@@ -285,7 +320,7 @@ namespace mwse {
 					sol::optional<sol::table> maybeButtons = params["buttons"];
 					if (maybeButtons && maybeButtons.value().size() > 0) {
 						sol::table buttons = maybeButtons.value();
-						size_t size = min(buttons.size(), 32);
+						size_t size = std::min(buttons.size(), size_t(32));
 						for (size_t i = 0; i < size; i++) {
 							std::string result = buttons[i + 1];
 							if (result.empty()) {

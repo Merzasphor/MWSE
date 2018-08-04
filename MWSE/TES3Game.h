@@ -3,6 +3,7 @@
 #include "NIDefines.h"
 #include "TES3Defines.h"
 
+#define NOMINMAX
 #include <Windows.h>
 
 namespace TES3 {

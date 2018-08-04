@@ -89,7 +89,7 @@ namespace TES3 {
 		int unknown_0x28;
 		float deltaTime; // 0xC
 		int unknown_0x30;
-		void * audio; // 0x34
+		AudioController * audioController; // 0x34
 		int unknown_0x38;
 		int unknown_0x3C;
 		int unknown_0x40;
