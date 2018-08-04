@@ -356,15 +356,16 @@ namespace mwse {
 				tes3::getDataHandler()->nonDynamicData->saveGame(fileName.c_str(), saveName.c_str());
 			};
 
+			// Bind function: tes3.isModActive
 			state["tes3"]["isModActive"] = [](std::string modName) {
-				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				TES3::DataHandler* dataHandler = tes3::getDataHandler();
 				if (dataHandler == nullptr) {
 					return false;
 				}
 
 				for (int i = 0; i < 256; i++) {
 					TES3::GameFile* gameFile = dataHandler->nonDynamicData->activeMods[i];
-					if (gameFile == NULL) {
+					if (gameFile == nullptr) {
 						return false;
 					}
 
@@ -375,6 +376,27 @@ namespace mwse {
 				}
 
 				return false;
+			};
+
+			// Bind function: tes3.getModList
+			state["tes3"]["getModList"] = []() -> sol::object {
+				sol::state& state = LuaManager::getInstance().getState();
+
+				TES3::DataHandler* dataHandler = tes3::getDataHandler();
+				if (dataHandler == nullptr) {
+					return sol::nil;
+				}
+
+				sol::table mods = state.create_table();
+				for (int i = 0; i < 256; i++) {
+					TES3::GameFile* gameFile = dataHandler->nonDynamicData->activeMods[i];
+					if (gameFile == nullptr) {
+						break;
+					}
+					mods[i + 1] = static_cast<const char*>(gameFile->fileName);
+				}
+
+				return mods;
 			};
 
 			// Bind function: tes3.playItemPickupSound
