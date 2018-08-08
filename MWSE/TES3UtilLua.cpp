@@ -356,6 +356,19 @@ namespace mwse {
 				tes3::getDataHandler()->nonDynamicData->saveGame(fileName.c_str(), saveName.c_str());
 			};
 
+			// Bind function: tes3.loadGame and tes3.loadGameMainMenu
+			state["tes3"]["loadGame"] = [](std::string fileName) {
+				// Char Gen State will equal 0 in the menu.
+				if (tes3::getWorldController()->gvarCharGenState->value == 0)
+				{
+					tes3::getDataHandler()->nonDynamicData->loadGameMainMenu(fileName.c_str());
+				}
+				else
+				{
+					tes3::getDataHandler()->nonDynamicData->loadGame(fileName.c_str());
+				}
+			};
+
 			// Bind function: tes3.isModActive
 			state["tes3"]["isModActive"] = [](std::string modName) {
 				TES3::DataHandler* dataHandler = tes3::getDataHandler();
