@@ -1306,7 +1306,7 @@ namespace mwse {
 
 		static void HookPostFindActivationTarget() {
 			TES3::Reference *currentTarget = (*global_TES3_Game)->playerTarget;
-			if(previousTarget != currentTarget) {
+			if (previousTarget != currentTarget) {
 				LuaManager::getInstance().triggerEvent(new event::ActivationTargetChangedEvent(previousTarget, currentTarget));
 			}
 		}
@@ -1902,17 +1902,19 @@ namespace mwse {
 			buttonPressedCallback = callback.value_or(sol::nil);
 		}
 
-		sol::object LuaManager::triggerButtonPressed() {
+		void LuaManager::triggerButtonPressed() {
 			if (buttonPressedCallback != sol::nil) {
 				sol::protected_function callback = buttonPressedCallback;
 				buttonPressedCallback = sol::nil;
 				sol::table eventData = luaState.create_table();
 				eventData["button"] = tes3::ui::getButtonPressedIndex();
 				tes3::ui::resetButtonPressedIndex();
-				return callback(eventData);
+				sol::protected_function_result result = callback(eventData);
+				if (!result.valid()) {
+					sol::error err = result;
+					log::getLog() << "Runtime error when running tes3.messageBox button callback:\n" << err.what() << std::endl;
+				}
 			}
-
-			return sol::nil;
 		}
 
 		sol::object LuaManager::getCachedUserdata(TES3::BaseObject* object) {
