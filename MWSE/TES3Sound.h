@@ -49,7 +49,7 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		bool play(int playbackFlags = 0, unsigned char volume = 0xFD, float pitch = 1.0f, bool isNot3D = true);
+		bool play(int playbackFlags = 0, unsigned char volume = 250, float pitch = 1.0f, bool isNot3D = true);
 
 	};
 	static_assert(sizeof(Sound) == 0x58, "TES3::Sound failed size validation");
