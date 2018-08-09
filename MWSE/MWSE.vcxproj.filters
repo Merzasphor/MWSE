@@ -1931,6 +1931,9 @@
     <ClCompile Include="TES3AudioController.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
+    <ClCompile Include="TES3Game.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">
