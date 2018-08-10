@@ -1357,6 +1357,28 @@ namespace mwse {
 			reinterpret_cast<void (__thiscall *)(void*)>(0x414890)(modelData);
 		}
 
+		//
+		// Event: Music, new track
+		//
+
+		bool __fastcall OnSelectMusicTrack(TES3::WorldController* controller, DWORD _UNUSED_, int situation) {
+			// Fire off the event.
+			sol::table eventData = LuaManager::getInstance().triggerEvent(new event::MusicSelectTrackEvent(situation));
+
+			if (eventData.valid()) {
+				sol::optional<std::string> musicPath = eventData["music"];
+				if (musicPath) {
+					const auto TES3_getThreadSafeStringBuffer = reinterpret_cast<char*(__thiscall*)(char*)>(0x4D51B0);
+					char* buffer = TES3_getThreadSafeStringBuffer(reinterpret_cast<char*>(0x7CB478));
+					snprintf(buffer, 512, "Data Files/music/%s", musicPath.value().c_str());
+					return true;
+				}
+			}
+
+			// Call original function.
+			return reinterpret_cast<bool(__thiscall *)(TES3::WorldController*, int)>(0x410EA0)(controller, situation);
+		}
+
 		void LuaManager::executeMainModScripts(const char* path, const char* filename) {
 			for (auto & p : std::experimental::filesystem::recursive_directory_iterator(path)) {
 				if (p.path().filename() == filename) {
@@ -1809,6 +1831,10 @@ namespace mwse {
 			genCallEnforced(0x441B49, 0x6DE7F0, reinterpret_cast<DWORD>(OnWeatherTransitionBegin));
 			genCallEnforced(0x440F07, 0x414890, reinterpret_cast<DWORD>(OnWeatherTransitionEnd));
 			writePatchCodeUnprotected(0x410308, (BYTE*)&patchWeatherRegionCheck, patchWeatherRegionCheck_size);
+
+			// Event: Select music track
+			genCallEnforced(0x40F8CA, 0x410EA0, reinterpret_cast<DWORD>(OnSelectMusicTrack));
+			genCallEnforced(0x40F901, 0x410EA0, reinterpret_cast<DWORD>(OnSelectMusicTrack));
 
 			// UI framework hooks
 			TES3::UI::hook();

@@ -662,6 +662,17 @@ namespace mwse {
 				sol::table createEventTable();
 			};
 
+			// ---------------------------------------------------------------------------- //
+
+			class MusicSelectTrackEvent : public GenericEvent {
+			public:
+				MusicSelectTrackEvent(int situation);
+				sol::table createEventTable();
+
+			protected:
+				int m_Situation;
+			};
+
 		}
 	}
 }

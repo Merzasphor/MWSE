@@ -79,7 +79,7 @@ namespace mwse {
 				usertypeDefinition.set("monthsToRespawn", &TES3::WorldController::gvarMonthsToRespawn);
 				usertypeDefinition.set("mouseSensitivityX", &TES3::WorldController::horzSensitivity);
 				usertypeDefinition.set("mouseSensitivityY", &TES3::WorldController::mouseSensitivity);
-				usertypeDefinition.set("musicState", &TES3::WorldController::musicState);
+				usertypeDefinition.set("musicSituation", &TES3::WorldController::musicSituation);
 				usertypeDefinition.set("parentWindowHandle", &TES3::WorldController::Win32_hWndParent);
 				usertypeDefinition.set("projectionDistance", &TES3::WorldController::projectionDistance);
 				usertypeDefinition.set("scriptGlobals", &TES3::WorldController::scriptGlobals);

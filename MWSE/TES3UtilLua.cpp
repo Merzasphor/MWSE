@@ -247,7 +247,7 @@ namespace mwse {
 				volume = std::min(volume, 1.0);
 
 				// Apply mix and rescale to 0-250
-				volume *= 250.0 * tes3::getWorldController()->audioController->getMixVolume(static_cast<TES3::AudioMixType>(mix));
+				volume *= 250.0 * tes3::getWorldController()->audioController->getMixVolume(TES3::AudioMixType(mix));
 
 				tes3::getDataHandler()->addSound(sound, reference, loop ? TES3::SoundPlayFlags::Loop : 0, volume, pitch);
 				return true;
@@ -285,11 +285,10 @@ namespace mwse {
 				volume = std::min(volume, 1.0);
 
 				// Apply mix and rescale to 0-250
-				volume *= 250.0 * tes3::getWorldController()->audioController->getMixVolume(static_cast<TES3::AudioMixType>(mix));
+				volume *= 250.0 * tes3::getWorldController()->audioController->getMixVolume(TES3::AudioMixType(mix));
 
 				tes3::getDataHandler()->adjustSoundVolume(sound, reference, volume);
 			};
-
 			// Bind function: tes3.removeSound
 			state["tes3"]["removeSound"] = [](sol::optional<sol::table> params) {
 				// Get parameters.
@@ -297,6 +296,23 @@ namespace mwse {
 				TES3::Reference* reference = getOptionalParamReference(params, "reference");
 
 				tes3::getDataHandler()->removeSound(sound, reference);
+			};
+
+			// Bind function: tes3.streamMusic
+			state["tes3"]["streamMusic"] = [](sol::optional<sol::table> params) {
+				// Get parameters.
+				const char* relativePath = getOptionalParam<const char*>(params, "path", nullptr);
+				int situation = getOptionalParam<int>(params, "situation", int(TES3::MusicSituation::Uninterruptible));
+				double crossfade = getOptionalParam<double>(params, "crossfade", 1.0);
+
+				if (relativePath) {
+					auto w = tes3::getWorldController();
+					char path[260];
+
+					std::snprintf(path, sizeof(path), "Data Files/music/%s", relativePath);
+					w->audioController->changeMusicTrack(path, 1000 * crossfade, 1.0);
+					w->musicSituation = TES3::MusicSituation(situation);
+				}
 			};
 
 			// Bind function: tes3.messageBox

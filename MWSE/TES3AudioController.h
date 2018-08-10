@@ -66,7 +66,12 @@ namespace TES3 {
 		float radiansYawAxis;
 		float radiansPitchAxisApproximated;
 
+		//
+		// Thiscall functions.
+		//
+
 		float getMixVolume(AudioMixType);
+		void changeMusicTrack(const char* filename, int crossfadeMillis, float volume);
 	};
 	static_assert(sizeof(AudioController) == 0x2D8, "TES3::AudioController failed size validation");
 }

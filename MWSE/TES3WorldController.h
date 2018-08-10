@@ -8,6 +8,12 @@
 #include "TES3Vectors.h"
 
 namespace TES3 {
+	enum class MusicSituation : int {
+		Explore = 0,
+		Combat = 1,
+		Uninterruptible = 2
+	};
+
 	struct WorldControllerRenderCamera {
 		void * vTable;
 		NI::Object * renderer;
@@ -189,7 +195,7 @@ namespace TES3 {
 		bool showSubtitles; // 0x344
 		int countMusicTracksBattle; // 0x348
 		int countMusicTracksExplore; // 0x34C
-		unsigned int musicState; // 0x350
+		MusicSituation musicSituation; // 0x350
 		int unknown_0x354;
 		int unknown_0x358;
 		int unknown_0x35C;
