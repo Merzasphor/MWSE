@@ -1318,7 +1318,7 @@ namespace mwse {
 		//
 
 		// Fix missing coverage of updates to lastActiveRegion
-		static __declspec(naked) void patchWeatherRegionCheck() {
+		__declspec(naked) void patchWeatherRegionCheck() {
 			__asm {
 				mov ecx, [esi + 0x58]	// ecx = WorldController->weatherController
 				mov [ecx + 0x1D0], eax  // weatherController->lastActiveRegion = eax
