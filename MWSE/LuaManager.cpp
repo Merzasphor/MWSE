@@ -21,6 +21,7 @@
 #include "TES3DataHandler.h"
 #include "TES3Dialogue.h"
 #include "TES3Game.h"
+#include "TES3GameFile.h"
 #include "TES3InputController.h"
 #include "TES3LeveledList.h"
 #include "TES3MagicEffect.h"
@@ -274,6 +275,7 @@ namespace mwse {
 			bindTES3Enchantment();
 			bindTES3Faction();
 			bindTES3Game();
+			bindTES3GameFile();
 			bindTES3GameSetting();
 			bindTES3GlobalVariable();
 			bindTES3Ingredient();

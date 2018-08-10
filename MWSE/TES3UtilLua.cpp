@@ -386,7 +386,7 @@ namespace mwse {
 					}
 
 					// Compare mod name with this active mod.
-					if (_stricmp(gameFile->fileName, modName.c_str()) == 0) {
+					if (_stricmp(gameFile->filename, modName.c_str()) == 0) {
 						return true;
 					}
 				}
@@ -409,7 +409,7 @@ namespace mwse {
 					if (gameFile == nullptr) {
 						break;
 					}
-					mods[i + 1] = static_cast<const char*>(gameFile->fileName);
+					mods[i + 1] = static_cast<const char*>(gameFile->filename);
 				}
 
 				return mods;
