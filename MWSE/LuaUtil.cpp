@@ -550,7 +550,7 @@ namespace mwse {
 			return sol::make_object(state, object);
 		}
 
-		sol::object makeLuaObject(NI::Pointer<NI::Object> object) {
+		sol::object makeLuaNiPointer(NI::Object * object) {
 			if (object == nullptr) {
 				return sol::nil;
 			}
@@ -561,25 +561,25 @@ namespace mwse {
 
 			switch ((uintptr_t)object->getRunTimeTypeInformation()) {
 			case NI::RTTIStaticPtr::AVObject:
-				return sol::make_object(state, NI::Pointer<NI::AVObject>(reinterpret_cast<NI::AVObject*>(object.get())));
+				return sol::make_object(state, NI::Pointer<NI::AVObject>(reinterpret_cast<NI::AVObject*>(object)));
 			case NI::RTTIStaticPtr::Camera:
-				return sol::make_object(state, NI::Pointer<NI::Camera>(reinterpret_cast<NI::Camera*>(object.get())));
+				return sol::make_object(state, NI::Pointer<NI::Camera>(reinterpret_cast<NI::Camera*>(object)));
 			case NI::RTTIStaticPtr::Node:
-				return sol::make_object(state, NI::Pointer<NI::Node>(reinterpret_cast<NI::Node*>(object.get())));
+				return sol::make_object(state, NI::Pointer<NI::Node>(reinterpret_cast<NI::Node*>(object)));
 			case NI::RTTIStaticPtr::ObjectNET:
-				return sol::make_object(state, NI::Pointer<NI::ObjectNET>(reinterpret_cast<NI::ObjectNET*>(object.get())));
+				return sol::make_object(state, NI::Pointer<NI::ObjectNET>(reinterpret_cast<NI::ObjectNET*>(object)));
 			case NI::RTTIStaticPtr::SwitchNode:
-				return sol::make_object(state, NI::Pointer<NI::SwitchNode>(reinterpret_cast<NI::SwitchNode*>(object.get())));
+				return sol::make_object(state, NI::Pointer<NI::SwitchNode>(reinterpret_cast<NI::SwitchNode*>(object)));
 			}
 
 			if (object->isInstanceOfType(NI::RTTIStaticPtr::Node)) {
-				return sol::make_object(state, NI::Pointer<NI::Node>(reinterpret_cast<NI::Node*>(object.get())));
+				return sol::make_object(state, NI::Pointer<NI::Node>(reinterpret_cast<NI::Node*>(object)));
 			}
 			else if (object->isInstanceOfType(NI::RTTIStaticPtr::AVObject)) {
-				return sol::make_object(state, NI::Pointer<NI::AVObject>(reinterpret_cast<NI::AVObject*>(object.get())));
+				return sol::make_object(state, NI::Pointer<NI::AVObject>(reinterpret_cast<NI::AVObject*>(object)));
 			}
 			else if (object->isInstanceOfType(NI::RTTIStaticPtr::ObjectNET)) {
-				return sol::make_object(state, NI::Pointer<NI::ObjectNET>(reinterpret_cast<NI::ObjectNET*>(object.get())));
+				return sol::make_object(state, NI::Pointer<NI::ObjectNET>(reinterpret_cast<NI::ObjectNET*>(object)));
 			}
 
 			return sol::make_object(state, object);

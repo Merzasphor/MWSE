@@ -949,15 +949,10 @@ namespace mwse {
 			};
 
 			state["tes3"]["loadMesh"] = [](const char* relativePath) -> sol::object {
-				std::string path = "Data Files\\Meshes\\";
+				std::string path = "Meshes\\";
 				path += relativePath;
 
-				NI::Stream stream;
-				if (!stream.load(path.c_str())) {
-					return sol::nil;
-				}
-
-				return makeLuaObject(*stream.loadedObject);
+				return makeLuaNiPointer(tes3::getDataHandler()->nonDynamicData->loadMesh(path.c_str()));
 			};
 		}
 	}

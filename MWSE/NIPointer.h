@@ -1,9 +1,5 @@
 #pragma once
 
-#include "TES3Util.h"
-
-#include "Log.h"
-
 #include "sol.hpp"
 
 namespace NI {

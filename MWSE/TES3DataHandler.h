@@ -6,6 +6,9 @@
 #include "TES3MagicEffect.h"
 #include "TES3Skill.h"
 
+#include "NIAVObject.h"
+#include "NIPointer.h"
+
 namespace TES3 {
 	enum class LoadGameResult {
 		Failure = 0x0,
@@ -19,7 +22,7 @@ namespace TES3 {
 		void * unknown_0x08; // Points to info about the last loaded save?
 		LinkedList<Object> * list; // 0x0C
 		LinkedList<Spell> * spellsList; // 0x10
-		void * unknown_0x14;
+		HashMap * meshes; // 0x14
 		GameSetting ** GMSTs; // 0x18 // Pointer to array of GMST pointers.
 		Iterator<Race> * races; // 0x1C
 		Iterator<void> * landTextures; // 0x20
@@ -64,6 +67,14 @@ namespace TES3 {
 		Sound* findSound(const char*);
 		bool addNewObject(BaseObject*);
 		void deleteObject(BaseObject*);
+
+		//
+		// Custom functions.
+		//
+
+		// Path is relative to Data Files.
+		NI::Pointer<NI::Object> loadMesh(const char* path);
+
 	};
 	static_assert(sizeof(NonDynamicData) == 0xB264, "TES3::NonDynamicData failed size validation");
 

@@ -52,7 +52,7 @@ namespace mwse {
 				usertypeDefinition.set("detachChild", [](NI::Node& self, NI::AVObject * child) {
 					NI::AVObject * returnedChild = nullptr;
 					self.detachChild(&returnedChild, child);
-					return makeLuaObject(NI::Pointer<NI::Object>(returnedChild));
+					return makeLuaNiPointer(returnedChild);
 				});
 				usertypeDefinition.set("detachChildAt", [](NI::Node& self, unsigned int index) -> sol::object {
 					if (--index < 0) {
@@ -61,7 +61,7 @@ namespace mwse {
 
 					NI::AVObject * returnedChild = nullptr;
 					self.detachChildAt(&returnedChild, index);
-					return makeLuaObject(NI::Pointer<NI::Object>(returnedChild));
+					return makeLuaNiPointer(returnedChild);
 				});
 
 				// Finish up our usertype.

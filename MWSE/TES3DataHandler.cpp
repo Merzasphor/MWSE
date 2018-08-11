@@ -151,6 +151,12 @@ namespace TES3 {
 		reinterpret_cast<void(__thiscall *)(NonDynamicData*, BaseObject*)>(TES3_NonDynamicData_deleteObject)(this, object);
 	}
 
+	const auto TES3_NonDynamicData_meshes_loadMesh = reinterpret_cast<NI::AVObject *(__thiscall*)(HashMap*, const char *)>(0x4EE0A0);
+
+	NI::Pointer<NI::Object> NonDynamicData::loadMesh(const char* path) {
+		return TES3_NonDynamicData_meshes_loadMesh(meshes, path);
+	}
+
 	//
 	// DataHandler
 	//
