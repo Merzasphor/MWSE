@@ -15,7 +15,10 @@
 #include "CodePatchUtil.h"
 
 #include "NICamera.h"
+#include "NINode.h"
 #include "NIPick.h"
+#include "NIRTTI.h"
+#include "NIStream.h"
 
 #include "TES3Actor.h"
 #include "TES3AudioController.h"
@@ -945,6 +948,17 @@ namespace mwse {
 				return true;
 			};
 
+			state["tes3"]["loadMesh"] = [](const char* relativePath) -> sol::object {
+				std::string path = "Data Files\\Meshes\\";
+				path += relativePath;
+
+				NI::Stream stream;
+				if (!stream.load(path.c_str())) {
+					return sol::nil;
+				}
+
+				return makeLuaObject(*stream.loadedObject);
+			};
 		}
 	}
 }
