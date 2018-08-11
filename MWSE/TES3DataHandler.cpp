@@ -74,7 +74,7 @@ namespace TES3 {
 
 		bool loaded = reinterpret_cast<bool(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_loadGameInGame)(this, eventFileName.c_str());
 
-		// Pass a follow-up event if we successfully saved and clear timers.
+		// Pass a follow-up event if we successfully loaded and clear timers.
 		if (loaded) {
 			// Update tes3.player and tes3.mobilePlayer.
 			sol::state& state = luaManager.getState();
@@ -104,7 +104,7 @@ namespace TES3 {
 
 		bool loaded = reinterpret_cast<bool(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_loadGameMainMenu)(this, eventFileName.c_str());
 
-		// Pass a follow-up event if we successfully saved and clear timers.
+		// Pass a follow-up event if we successfully loaded and clear timers.
 		if (loaded) {
 			// Update tes3.player and tes3.mobilePlayer.
 			sol::state& state = luaManager.getState();

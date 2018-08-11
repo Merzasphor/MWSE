@@ -91,5 +91,9 @@ function tes3.menuMode()
 	return tes3.getWorldController().flagMenuMode
 end
 
+-- Shortcut to check if we're in the main menu.
+function tes3.onMainMenu()
+	return tes3.worldController.charGenState.value == 0
+end
 
 return tes3
