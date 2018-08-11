@@ -65,7 +65,10 @@ namespace mwse {
 				usertypeDefinition.set(sol::base_classes, sol::bases<NI::Object>());
 
 				// Basic property binding.
-				usertypeDefinition.set("name", sol::readonly_property([](NI::ObjectNET& self) { return self.name; }));
+				usertypeDefinition.set("name", sol::property(
+					[](NI::ObjectNET& self) { return self.name; },
+					[](NI::ObjectNET& self, const char * name) { self.setName(name); }
+				));
 
 				// Finish up our usertype.
 				state.set_usertype("niObjectNET", usertypeDefinition);

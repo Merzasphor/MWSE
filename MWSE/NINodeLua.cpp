@@ -34,7 +34,9 @@ namespace mwse {
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.create_simple_usertype<NI::Node>();
-				usertypeDefinition.set("new", sol::no_constructor);
+				usertypeDefinition.set("new", []() {
+					return NI::Pointer<NI::Node>(new (tes3::_new<NI::Node>()) NI::Node());
+				});
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition.set(sol::base_classes, sol::bases<NI::AVObject, NI::ObjectNET, NI::Object>());

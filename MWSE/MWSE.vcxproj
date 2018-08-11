@@ -257,6 +257,7 @@
     <ClCompile Include="NINodeLua.cpp" />
     <ClCompile Include="NIObject.cpp" />
     <ClCompile Include="NIObjectLua.cpp" />
+    <ClCompile Include="NIObjectNET.cpp" />
     <ClCompile Include="NIPick.cpp" />
     <ClCompile Include="NIPickLua.cpp" />
     <ClCompile Include="NIStream.cpp" />
