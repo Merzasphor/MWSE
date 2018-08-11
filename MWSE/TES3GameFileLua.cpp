@@ -30,16 +30,21 @@ namespace mwse {
 			usertypeDefinition.set("cellName", sol::readonly_property([](TES3::GameFile& self) -> const char* { return self.gmdt.cellName; }));
 			usertypeDefinition.set("daysPassed", sol::readonly_property([](TES3::GameFile& self) { return self.gmdt.daysPassed; }));
 			usertypeDefinition.set("playerName", sol::readonly_property([](TES3::GameFile& self) -> const char* { return self.gmdt.playerName; }));
+			usertypeDefinition.set("fileSize", sol::readonly_property([](TES3::GameFile& self) { return double(self.getFileSize()); }));
+			usertypeDefinition.set("modifiedTime", sol::readonly_property([](TES3::GameFile& self) { return double(self.getModifiedTime()); }));
 
 			// Access to other objects that need to be packaged.
 			usertypeDefinition.set("masters", sol::readonly_property([](TES3::GameFile& self) {
 				sol::table t = LuaManager::getInstance().getState().create_table();
 				TES3::GameFile* master = self.arrayMasters;
-				for (int i = 1; master; ++i, ++master) {
+				for (int i = 1, count = self.masterNames->size; i <= count; ++i, ++master) {
 					t[i] = master;
 				}
 				return t;
 			}));
+
+			// Function bindings.
+			usertypeDefinition.set("deleteFile", [](TES3::GameFile& self) { self.deleteFile(); });
 
 			// Finish up our usertype.
 			state.set_usertype("tes3gameFile", usertypeDefinition);

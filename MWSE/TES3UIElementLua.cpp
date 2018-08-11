@@ -306,7 +306,7 @@ namespace mwse {
 				}
 			);
 			usertypeDefinition.set("getPropertyObject",
-				[](Element& self, const char* propertyName) -> sol::object {
+				[](Element& self, const char* propertyName, const char* typeCast) -> sol::object {
 					TES3::UI::Property prop = TES3::UI::registerProperty(propertyName);
 					auto ptr = self.getProperty(TES3::UI::PropertyType::Pointer, prop).ptrValue;
 
@@ -314,15 +314,25 @@ namespace mwse {
 						return sol::nil;
 					}
 
-					auto object = static_cast<TES3::BaseObject*>(ptr);
+					if (!typeCast) {
+						auto object = static_cast<TES3::BaseObject*>(ptr);
 
-					switch (object->objectType) {
-					case TES3::ObjectType::MobileCreature:
-					case TES3::ObjectType::MobileNPC:
-					case TES3::ObjectType::MobilePlayer:
-						return makeLuaObject(static_cast<TES3::MobileObject*>(ptr));
-					default:
-						return makeLuaObject(static_cast<TES3::BaseObject*>(ptr));
+						switch (object->objectType) {
+						case TES3::ObjectType::MobileCreature:
+						case TES3::ObjectType::MobileNPC:
+						case TES3::ObjectType::MobilePlayer:
+							return makeLuaObject(static_cast<TES3::MobileObject*>(ptr));
+						default:
+							return makeLuaObject(static_cast<TES3::BaseObject*>(ptr));
+						}
+					}
+					else {
+						std::string cast(typeCast);
+
+						if (cast == "tes3gameFile") {
+							return makeLuaObject(static_cast<TES3::GameFile*>(ptr));
+						}
+						return sol::nil;
 					}
 				}
 			);

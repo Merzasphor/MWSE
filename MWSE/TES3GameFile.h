@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include "TES3Collections.h"
 
 namespace TES3 {
@@ -51,6 +52,10 @@ namespace TES3 {
 		GMDT gmdt;
 		void* sgSaveImage;
 		Iterator<void>* list_570;
+
+		void deleteFile();
+		std::uint64_t getFileSize() const;
+		std::uint64_t getModifiedTime() const;
 	};
 	static_assert(sizeof(GameFile) == 0x574, "TES3::Game failed size validation");
 }

@@ -33,6 +33,7 @@
 #include "TES3Door.h"
 #include "TES3Enchantment.h"
 #include "TES3Faction.h"
+#include "TES3GameFile.h"
 #include "TES3GameSetting.h"
 #include "TES3GlobalVariable.h"
 #include "TES3Ingredient.h"
@@ -513,6 +514,15 @@ namespace mwse {
 			}
 
 			return sol::make_object(state, weather);
+		}
+
+		sol::object makeLuaObject(TES3::GameFile* gameFile) {
+			if (gameFile == NULL) {
+				return sol::nil;
+			}
+
+			sol::state& state = LuaManager::getInstance().getState();
+			return sol::make_object(state, gameFile);
 		}
 
 		sol::object makeLuaObject(NI::Object* object) {
