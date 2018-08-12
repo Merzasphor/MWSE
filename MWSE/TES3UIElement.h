@@ -100,6 +100,7 @@ namespace TES3 {
 
 			Element* findChild(UI_ID id);
 			int getIndexOfChild(const Element *child);
+			Element* getContentElement();
 			Element* getTopLevelParent();
 			Element* performLayout(Boolean bUpdateTimestamp = 1);
 			bool reorderChildren(int insertBefore, int moveFrom, int count);

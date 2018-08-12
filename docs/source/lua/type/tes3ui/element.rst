@@ -128,7 +128,7 @@ Properties
     The element's text. Text input can be read by accessing this property.
 
 **repeatKeys** (`boolean`_)
-    The setting for repeating text input when keys are held down. ``true`` by default.
+    Controls if there is repeating text input when keys are held down. ``true`` by default.
 
 **wrapText** (`boolean`_)
     Controls text wrapping. Setting this to ``true`` will also set ``layoutHeightFraction`` to ``1.0``, which is required for wrapping text to adjust to its container size.
@@ -185,6 +185,18 @@ Methods
 
     Creates a clickable button. Register the "mouseClick" event to capture a button press.
     
+    Custom widget properties:
+        | `number`_ ``element.state``: Interaction state. 1 = normal, 2 = disabled, 4 = active. Controls which colour set to use for text.
+        | `table`_ (float[3]) ``element.widget.idle``: Text colour for normal state, no mouse interaction.
+        | `table`_ (float[3]) ``element.widget.over``: Text colour for normal state, on mouseOver.
+        | `table`_ (float[3]) ``element.widget.pressed``: Text colour for normal state, on mouseDown.
+        | `table`_ (float[3]) ``element.widget.idleDisabled``: Text colour for disabled state, no mouse interaction.
+        | `table`_ (float[3]) ``element.widget.overDisabled``: Text colour for disabled state, on mouseOver.
+        | `table`_ (float[3]) ``element.widget.pressedDisabled``: Text colour for disabled state, on mouseDown.
+        | `table`_ (float[3]) ``element.widget.idleActive``: Text colour for active state, no mouse interaction.
+        | `table`_ (float[3]) ``element.widget.overActive``: Text colour for active state, on mouseOver.
+        | `table`_ (float[3]) ``element.widget.pressedActive``: Text colour for active state, on mouseDown.
+
 `Element`_ **createImageButton** {id = `UI_ID`_ ``optional``, idle = `string`_, over = `string`_, pressed = `string`_}  ``Uses table arguments.``
     Returns:
         A **block** with responsive images.
@@ -296,7 +308,7 @@ Methods
         | `boolean`_ ``element.widget.eraseOnFirstKey``: Clears the initial value if the first keypress is not an edit action. Default is ``true``.
         | `number`_ (integer) ``element.widget.lengthLimit"``: Maximum input length, or ``nil`` for no limit. If you are setting names, the engine limits most identifiers to 31 characters. Default is ``nil``.
 
-`Element`_ **createTextSelect** {id = `UI_ID`_ ``optional``, state = `number`_ ``optional``}  ``Uses table arguments.``
+`Element`_ **createTextSelect** {id = `UI_ID`_ ``optional``, text = `string`_ ``optional``, state = `number`_ ``optional``}  ``Uses table arguments.``
     Returns:
         The newly created text select element.
 
@@ -351,6 +363,12 @@ Methods
     
     Forwards an event to the original Morrowind event handler. This may be optionally called at any point in a callback. Note that handler may or may not destroy the event widget or the menu, so you should know how it behaves before accessing any elements after a callback. 
     
+`Element`_ **getContentElement** ()
+    Returns:
+        The descendant element that newly created elements are placed into, or the calling element if there is no specific descendant for children.
+
+    Some widgets like ScrollPanes are built of multiple layers of elements. When an element is created in a complex widget, it is automatically placed as a child of a content element, but other functions do not access this content element directly. This function finds this content container for any element, so that changing layout and accessing children is possible. For simple elements, the calling element will be returned so that there is always a valid containter element.
+
 `Element`_ **getTopLevelMenu** ()
     Returns:
         The menu that the element is a descendant of.

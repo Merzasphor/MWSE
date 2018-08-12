@@ -9,19 +9,21 @@ namespace mwse {
 		using TES3::UI::Element;
 		using TES3::UI::Property;
 		using TES3::UI::PropertyType;
+		using TES3::UI::WidgetButton;
 		using TES3::UI::WidgetFillbar;
 		using TES3::UI::WidgetScrollBar;
 		using TES3::UI::WidgetTextInput;
 		using TES3::UI::WidgetTextSelect;
 		using TES3::UI::registerProperty;
 
-		static Property propFillbar, propScrollBar, propTextInput, propTextSelect;
+		static Property propButton, propFillbar, propScrollBar, propTextInput, propTextSelect;
 
 		void bindTES3UIWidgets();
 
 		sol::object makeWidget(Element& element) {
 			static bool deferredInit = false;
 			if (!deferredInit) {
+				propButton = registerProperty("PartButton");
 				propFillbar = registerProperty("PartFillbar");
 				propScrollBar = registerProperty("PartScrollBar");
 				propTextInput = registerProperty("PartTextInput");
@@ -33,7 +35,10 @@ namespace mwse {
 			sol::object widget = sol::nil;
 			Property part = element.getProperty(PropertyType::Property, Property::is_part).propertyValue;
 
-			if (part == propFillbar) {
+			if (part == propButton) {
+				widget = sol::make_object(state, WidgetButton::fromElement(&element));
+			}
+			else if (part == propFillbar) {
 				widget = sol::make_object(state, WidgetFillbar::fromElement(&element));
 			}
 			else if (part == propScrollBar) {
@@ -50,6 +55,45 @@ namespace mwse {
 
 		void bindTES3UIWidgets() {
 			sol::state& state = LuaManager::getInstance().getState();
+
+			//
+			// Button (PartButton)
+			//
+			{
+				auto usertypeDefinition = state.create_simple_usertype<WidgetButton>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				usertypeDefinition.set("state", sol::property(&WidgetButton::getState, &WidgetButton::setState));
+				usertypeDefinition.set("idle", sol::property(
+					[](WidgetButton& self, sol::table c) { self.setColourIdle({ c[1], c[2], c[3] }); }
+				));
+				usertypeDefinition.set("over", sol::property(
+					[](WidgetButton& self, sol::table c) { self.setColourOver({ c[1], c[2], c[3] }); }
+				));
+				usertypeDefinition.set("pressed", sol::property(
+					[](WidgetButton& self, sol::table c) { self.setColourPressed({ c[1], c[2], c[3] }); }
+				));
+				usertypeDefinition.set("idleDisabled", sol::property(
+					[](WidgetButton& self, sol::table c) { self.setColourDisabled({ c[1], c[2], c[3] }); }
+				));
+				usertypeDefinition.set("overDisabled", sol::property(
+					[](WidgetButton& self, sol::table c) { self.setColourDisabledOver({ c[1], c[2], c[3] }); }
+				));
+				usertypeDefinition.set("pressedDisabled", sol::property(
+					[](WidgetButton& self, sol::table c) { self.setColourDisabledPressed({ c[1], c[2], c[3] }); }
+				));
+				usertypeDefinition.set("idleActive", sol::property(
+					[](WidgetButton& self, sol::table c) { self.setColourActive({ c[1], c[2], c[3] }); }
+				));
+				usertypeDefinition.set("overActive", sol::property(
+					[](WidgetButton& self, sol::table c) { self.setColourActiveOver({ c[1], c[2], c[3] }); }
+				));
+				usertypeDefinition.set("pressedActive", sol::property(
+					[](WidgetButton& self, sol::table c) { self.setColourActivePressed({ c[1], c[2], c[3] }); }
+				));
+
+				state.set_usertype("tes3uiButton", usertypeDefinition);
+			}
 
 			//
 			// FillBar (PartFillbar)

@@ -141,6 +141,12 @@ namespace mwse {
 			// Check for existing event
 			for (auto it = elementEvents.begin(); it != elementEvents.end(); ++it) {
 				if (it->id == eventID) {
+					// Restore callback
+					if (eventID != Property::event_destroy) {
+						target.setProperty(eventID, it->original);
+					}
+
+					// Remove event
 					elementEvents.erase(it);
 					return;
 				}

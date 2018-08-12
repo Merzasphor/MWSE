@@ -4,6 +4,25 @@
 
 namespace TES3 {
 	namespace UI {
+		struct WidgetButton : Element {
+			int getState() const;
+			void setState(int state);
+			void setColourIdle(const float(&c)[3]);
+			void setColourOver(const float(&c)[3]);
+			void setColourPressed(const float(&c)[3]);
+			void setColourDisabled(const float(&c)[3]);
+			void setColourDisabledOver(const float(&c)[3]);
+			void setColourDisabledPressed(const float(&c)[3]);
+			void setColourActive(const float(&c)[3]);
+			void setColourActiveOver(const float(&c)[3]);
+			void setColourActivePressed(const float(&c)[3]);
+
+			WidgetButton() = delete;
+			static WidgetButton* fromElement(Element* e);
+		private:
+			static bool initProperties();
+		};
+
 		struct WidgetFillbar : Element {
 			int getCurrent() const;
 			void setCurrent(int value);

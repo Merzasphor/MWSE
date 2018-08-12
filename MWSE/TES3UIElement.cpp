@@ -149,6 +149,11 @@ namespace TES3 {
 			return -1;
 		}
 
+		Element* Element::getContentElement() {
+			Property shunt = getProperty(PropertyType::Property, Property::shunt_children).propertyValue;
+			return int(shunt) ? findChild(static_cast<UI_ID>(shunt)) : this;
+		}
+
 		Element* Element::getTopLevelParent() {
 			return TES3_ui_getTopLevelParent(this);
 		}

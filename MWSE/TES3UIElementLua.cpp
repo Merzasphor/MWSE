@@ -428,6 +428,7 @@ namespace mwse {
 			// Layout functions.
 			usertypeDefinition.set("destroyChildren", [](Element& self) { return self.destroyChildren(); });
 			usertypeDefinition.set("findChild", [](Element& self, UI_ID id) { return self.findChild(id); });
+			usertypeDefinition.set("getContentElement", [](Element& self) { return self.getContentElement(); });
 			usertypeDefinition.set("getTopLevelParent", [](Element& self) { return self.getTopLevelParent(); });
 			usertypeDefinition.set("reorderChildren", [](Element& self, sol::object insertBefore, sol::object moveFrom, int count) {
 				int indexInsertBefore, indexMoveFrom;
@@ -554,6 +555,10 @@ namespace mwse {
 			});
 			usertypeDefinition.set("createTextSelect", [](Element& self, sol::table args) {
 				auto element = self.createTextSelect(args.get_or("id", idNull));
+				auto text = args.get<sol::optional<const char*>>("text");
+				if (text) {
+					element->setText(text.value());
+				}
 				auto textSelect = TES3::UI::WidgetTextSelect::fromElement(element);
 				auto state = args.get<sol::optional<int>>("state");
 				if (state) {
