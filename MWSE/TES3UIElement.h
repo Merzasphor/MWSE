@@ -31,7 +31,7 @@ namespace TES3 {
 			Boolean flagContentChanged;
 			char unknown_0x7D;
 			char unknown_0x7E;
-			Boolean flagAcceptMouseEvents;
+			Boolean flagConsumeMouseEvents;
 			char unknown_0x80;
 			char unknown_0x81;
 			char unknown_0x82;
@@ -57,18 +57,18 @@ namespace TES3 {
 			int maxWidth, maxHeight;
 			int inheritedWidth, inheritedHeight;
 			char flagAutoWidth, flagAutoHeight;
-			float layoutWidthFraction, layoutHeightFraction;
-			float layoutOriginFractionX, layoutOriginFractionY;
+			float widthProportional, heightProportional;
+			float absolutePosAlignX, absolutePosAlignY;
 			int clipMinX, clipMaxX;
 			int clipMinY, clipMaxY;
 			Property scale_mode;
 			int nodeOffsetX, nodeOffsetY;
-			int scaleX, scaleY;
+			float imageScaleX, imageScaleY;
 			float colourRed, colourGreen, colourBlue, colourAlpha;
 			int font;
 			Property contentType;
 			String rawText;
-			String imagePath;
+			String contentPath;
 
 			//
 			// Widget creation/destruction methods
