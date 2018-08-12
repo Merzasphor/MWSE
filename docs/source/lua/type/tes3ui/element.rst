@@ -75,7 +75,9 @@ Properties
     ..
 
 **layoutHeightFraction** (`number`_, float)
-    Sets element dimensions using a proportional sizer. The sizer starts with the parent dimension in the flow direction, subtracts any fixed dimension children leaving the proptional sizer space. Each proportionally sized element then gets an equal division of the space, multiplied by this member.
+    Sets element dimensions using a proportional sizer. The sizer starts with the parent dimension in the flow direction, subtracts any fixed dimension children leaving the proportional sizer space. Each proportionally sized element then gets an equal division of the space, multiplied by this member. Values above 1.0 are permissible.
+    
+    If layoutWidthFraction is used without layoutHeightFraction, an element may not respond to changes in parent size. It is recommended to set layoutHeightFraction, or have a fixed size sibling element if dynamic reflow is required.
     
     Overrides fixed, minimum and maximum sizes unless this value is -1.0 (default).
 
@@ -119,7 +121,7 @@ Properties
     ..
 
 **childOffsetY** (`number`_, integer)
-    Offset applied to child nodes. Used in scrollpanes.
+    Offset applied to child nodes. Used in scroll panes.
 
 **flowDirection** (`string`_)
     Can have values ``"left_to_right"`` or ``"top_to_bottom"``. Indicates which direction child elements are laid out.
@@ -367,7 +369,7 @@ Methods
     Returns:
         The descendant element that newly created elements are placed into, or the calling element if there is no specific descendant for children.
 
-    Some widgets like ScrollPanes are built of multiple layers of elements. When an element is created in a complex widget, it is automatically placed as a child of a content element, but other functions do not access this content element directly. This function finds this content container for any element, so that changing layout and accessing children is possible. For simple elements, the calling element will be returned so that there is always a valid containter element.
+    Some widgets like ScrollPanes are built of multiple layers of elements. When an element is created in a complex widget, it is automatically placed as a child of a content element, but other functions do not access this content element directly. This function finds this content container for any element, so that changing layout and accessing children is possible. For simple elements, the calling element will be returned so that there is always a valid container element.
 
 `Element`_ **getTopLevelMenu** ()
     Returns:
