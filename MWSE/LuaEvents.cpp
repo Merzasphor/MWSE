@@ -667,7 +667,7 @@ namespace mwse {
 				sol::table eventData = LuaManager::getInstance().getState().create_table();
 
 				eventData["tooltip"] = m_Tooltip;
-				eventData["object"] = m_Object;
+				eventData["object"] = makeLuaObject(m_Object);
 				eventData["itemData"] = m_ItemData;
 				eventData["count"] = m_Count;
 

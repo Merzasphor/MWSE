@@ -22,6 +22,7 @@ return {
 	["mobilePlayer"] = 1346584909,
 	["npc"] = 1598246990,
 	["probe"] = 1112494672,
+	["reference"] = 1380336978,
 	["repairItem"] = 1095779666,
 	["script"] = 1414546259,
 	["soundGenerator"] = 1195658835,
