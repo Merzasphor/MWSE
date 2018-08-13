@@ -21,6 +21,56 @@ namespace TES3 {
 			prop[3] = registerProperty(name.c_str());
 		}
 
+		static void setColourProperty(Element& e, Property(&prop)[4], const float(&c)[3]) {
+			e.setProperty(prop[0], c[0]);
+			e.setProperty(prop[1], c[1]);
+			e.setProperty(prop[2], c[2]);
+		}
+
+		//
+		// WidgetButton
+		//
+		static Property propButtonState;
+		static Property propButtonIdle[4], propButtonOver[4], propButtonPressed[4];
+		static Property propButtonDisabled[4], propButtonDisabledOver[4], propButtonDisabledPressed[4];
+		static Property propButtonActive[4], propButtonActiveOver[4], propButtonActivePressed[4];
+
+		bool WidgetButton::initProperties() {
+			propButtonState = registerProperty("PartButton_state");
+			initColourProperty(propButtonIdle, "PartButton_idle");
+			initColourProperty(propButtonOver, "PartButton_over");
+			initColourProperty(propButtonPressed, "PartButton_pressed");
+			initColourProperty(propButtonDisabled, "PartButton_disabled");
+			initColourProperty(propButtonDisabledOver, "PartButton_disabled_over");
+			initColourProperty(propButtonDisabledPressed, "PartButton_disabled_pressed");
+			initColourProperty(propButtonActive, "PartButton_active");
+			initColourProperty(propButtonActiveOver, "PartButton_active_over");
+			initColourProperty(propButtonActivePressed, "PartButton_active_pressed");
+			return true;
+		}
+
+		WidgetButton* WidgetButton::fromElement(Element* element) {
+			static bool initialized = initProperties();
+			return static_cast<WidgetButton*>(element);
+		}
+
+		int WidgetButton::getState() const {
+			return getProperty(PropertyType::Integer, propButtonState).integerValue;
+		}
+		void WidgetButton::setState(int state) {
+			setProperty(propButtonState, state);
+		}
+
+		void WidgetButton::setColourIdle(const float(&c)[3]) { setColourProperty(*this, propButtonIdle, c); }
+		void WidgetButton::setColourOver(const float(&c)[3]) { setColourProperty(*this, propButtonOver, c); }
+		void WidgetButton::setColourPressed(const float(&c)[3]) { setColourProperty(*this, propButtonPressed, c); }
+		void WidgetButton::setColourDisabled(const float(&c)[3]) { setColourProperty(*this, propButtonDisabled, c); }
+		void WidgetButton::setColourDisabledOver(const float(&c)[3]) { setColourProperty(*this, propButtonDisabledOver, c); }
+		void WidgetButton::setColourDisabledPressed(const float(&c)[3]) { setColourProperty(*this, propButtonDisabledPressed, c); }
+		void WidgetButton::setColourActive(const float(&c)[3]) { setColourProperty(*this, propButtonActive, c); }
+		void WidgetButton::setColourActiveOver(const float(&c)[3]) { setColourProperty(*this, propButtonActiveOver, c); }
+		void WidgetButton::setColourActivePressed(const float(&c)[3]) { setColourProperty(*this, propButtonActivePressed, c); }
+	
 		//
 		// WidgetFillbar
 		//
@@ -121,6 +171,75 @@ namespace TES3 {
 		}
 
 		//
+		// WidgetScrollPane
+		//
+		static UI_ID uiidScrollPaneHScroll, uiidScrollPaneVScroll;
+
+		bool WidgetScrollPane::initProperties() {
+			uiidScrollPaneHScroll = registerID("PartScrollPane_hor_scrollbar");
+			uiidScrollPaneVScroll = registerID("PartScrollPane_vert_scrollbar");
+			return true;
+		}
+
+		WidgetScrollPane* WidgetScrollPane::fromElement(Element* element) {
+			static bool initialized = initProperties();
+			return static_cast<WidgetScrollPane*>(element);
+		}
+
+		int WidgetScrollPane::getHorizontalPos() const {
+			auto scroll = WidgetScrollBar::fromElement(findChild(uiidScrollPaneHScroll));
+			return scroll->getCurrent();
+		}
+		void WidgetScrollPane::setHorizontalPos(int value) {
+			auto scroll = WidgetScrollBar::fromElement(findChild(uiidScrollPaneHScroll));
+			scroll->setCurrent(value);
+
+			const auto TES3_ui_ScrollPaneHorz_scrollBarChanged = reinterpret_cast<EventCallback>(0x649A20);
+			TES3_ui_ScrollPaneHorz_scrollBarChanged(this, Property::null, 0, 0, scroll);
+		}
+
+		int WidgetScrollPane::getVerticalPos() const {
+			auto scroll = WidgetScrollBar::fromElement(findChild(uiidScrollPaneVScroll));
+			return scroll->getCurrent();
+		}
+		void WidgetScrollPane::setVerticalPos(int value) {
+			auto scroll = WidgetScrollBar::fromElement(findChild(uiidScrollPaneVScroll));
+			scroll->setCurrent(value);
+
+			const auto TES3_ui_ScrollPaneVert_scrollBarChanged = reinterpret_cast<EventCallback>(0x649870);
+			TES3_ui_ScrollPaneVert_scrollBarChanged(this, Property::null, 0, 0, scroll);
+		}
+
+		bool WidgetScrollPane::getScrollbarVisible() const {
+			auto scrollH = findChild(uiidScrollPaneHScroll);
+			auto scrollV = findChild(uiidScrollPaneVScroll);
+
+			if (scrollH) {
+				return scrollH->visible;
+			}
+			if (scrollV) {
+				return scrollV->visible;
+			}
+			return false;
+		}
+		void WidgetScrollPane::setScrollbarVisible(bool value) {
+			auto scrollH = findChild(uiidScrollPaneHScroll);
+			auto scrollV = findChild(uiidScrollPaneVScroll);
+
+			if (scrollH) {
+				scrollH->setVisible(value);
+			}
+			if (scrollV) {
+				scrollV->setVisible(value);
+			}
+		}
+
+		void WidgetScrollPane::contentPaneChanged() {
+			const auto TES3_ui_ScrollPane_contentPaneChanged = reinterpret_cast<void (__cdecl*)(WidgetScrollPane*)>(0x649E40);
+			TES3_ui_ScrollPane_contentPaneChanged(this);
+		}
+
+		//
 		// WidgetTextInput
 		//
 		static Property propTextInputLengthLimit, propTextInputNoLimit;
@@ -197,59 +316,14 @@ namespace TES3 {
 			setProperty(propSelectState, state);
 		}
 
-		void WidgetTextSelect::setColourIdle(const float(&c)[3]) {
-			setProperty(propSelectIdle[0], c[0]);
-			setProperty(propSelectIdle[1], c[1]);
-			setProperty(propSelectIdle[2], c[2]);
-		}
-
-		void WidgetTextSelect::setColourOver(const float(&c)[3]) {
-			setProperty(propSelectOver[0], c[0]);
-			setProperty(propSelectOver[1], c[1]);
-			setProperty(propSelectOver[2], c[2]);
-		}
-
-		void WidgetTextSelect::setColourPressed(const float(&c)[3]) {
-			setProperty(propSelectPressed[0], c[0]);
-			setProperty(propSelectPressed[1], c[1]);
-			setProperty(propSelectPressed[2], c[2]);
-		}
-
-		void WidgetTextSelect::setColourDisabled(const float(&c)[3]) {
-			setProperty(propSelectDisabled[0], c[0]);
-			setProperty(propSelectDisabled[1], c[1]);
-			setProperty(propSelectDisabled[2], c[2]);
-		}
-
-		void WidgetTextSelect::setColourDisabledOver(const float(&c)[3]) {
-			setProperty(propSelectDisabledOver[0], c[0]);
-			setProperty(propSelectDisabledOver[1], c[1]);
-			setProperty(propSelectDisabledOver[2], c[2]);
-		}
-
-		void WidgetTextSelect::setColourDisabledPressed(const float(&c)[3]) {
-			setProperty(propSelectDisabledPressed[0], c[0]);
-			setProperty(propSelectDisabledPressed[1], c[1]);
-			setProperty(propSelectDisabledPressed[2], c[2]);
-		}
-
-		void WidgetTextSelect::setColourActive(const float(&c)[3]) {
-			setProperty(propSelectActive[0], c[0]);
-			setProperty(propSelectActive[1], c[1]);
-			setProperty(propSelectActive[2], c[2]);
-		}
-
-		void WidgetTextSelect::setColourActiveOver(const float(&c)[3]) {
-			setProperty(propSelectActiveOver[0], c[0]);
-			setProperty(propSelectActiveOver[1], c[1]);
-			setProperty(propSelectActiveOver[2], c[2]);
-		}
-
-		void WidgetTextSelect::setColourActivePressed(const float(&c)[3]) {
-			setProperty(propSelectActivePressed[0], c[0]);
-			setProperty(propSelectActivePressed[1], c[1]);
-			setProperty(propSelectActivePressed[2], c[2]);
-		}
-
+		void WidgetTextSelect::setColourIdle(const float(&c)[3]) { setColourProperty(*this, propSelectIdle, c); }
+		void WidgetTextSelect::setColourOver(const float(&c)[3]) { setColourProperty(*this, propSelectOver, c); }
+		void WidgetTextSelect::setColourPressed(const float(&c)[3]) { setColourProperty(*this, propSelectPressed, c); }
+		void WidgetTextSelect::setColourDisabled(const float(&c)[3]) { setColourProperty(*this, propSelectDisabled, c); }
+		void WidgetTextSelect::setColourDisabledOver(const float(&c)[3]) { setColourProperty(*this, propSelectDisabledOver, c); }
+		void WidgetTextSelect::setColourDisabledPressed(const float(&c)[3]) { setColourProperty(*this, propSelectDisabledPressed, c); }
+		void WidgetTextSelect::setColourActive(const float(&c)[3]) { setColourProperty(*this, propSelectActive, c); }
+		void WidgetTextSelect::setColourActiveOver(const float(&c)[3]) { setColourProperty(*this, propSelectActiveOver, c); }
+		void WidgetTextSelect::setColourActivePressed(const float(&c)[3]) { setColourProperty(*this, propSelectActivePressed, c); }
 	}
 }

@@ -2,14 +2,16 @@
 Element
 ========================================================
 
-A UI element, the main building block of the UI system. Elements can have custom data attached using their `Property`_ key-value store. Has many accessible layout features.
+A UI element, the main building block of the UI system. All elements are created with methods on a parent Element.  Elements have many HTML-like layout features. All layout properties can be set to ``nil`` to reset them to the default value, which will deactivate any related layout mode.
+
+Elements can have custom data attached using their `Property`_ key-value store, and specific Elements have specific ``element.widget`` accessors to control behaviour.
 
 
 Properties
 ----------------------------------------------------------------------------------------------------
 
 **id** (`UI_ID`_, read-only)
-    The element's ID.  The element can be later accessed by ``ancestor:findChild(id)``. Note that multiple elements may have the same ID, such as subparts of a widget, or list items. Therefore you may see this as an element class identifier.
+    The element's ID.  The element can be later accessed by ``ancestor:findChild(id)``. Note that multiple elements may have the same ID, such as subparts of a widget, or list items. Therefore, you may think of ids as an element class identifier.
 
 **name** (`string`_, read-only)
     The element's name, taken from the name registered for the ID.
@@ -27,25 +29,21 @@ Properties
     If the element is visible.
 
 **disabled** (`boolean`_)
-    Disables user actions on this element. May change text colour to communicate the disabled state.
+    Disables user actions on this element. Widgets may stop accepting mouse and keyboard input while disabled.
 
 **positionX** (`number`_, integer)
     ..
 
 **positionY** (`number`_, integer)
-    Element position. 0, 0 is the centre of the screen.
+    Element position relative to its parent. For top-level menus, (0, 0) is the centre of the screen.
 
-**alignX** (`number`_, float)
+**absolutePosAlignX** (`number`_, float)
     ..
 
-**alignY** (`number`_, float)
-    Sets alignment of the element inside its parent. 0.0 = left edge touches left edge of parent, 0.5 = centred, 1.0 = right edge touches right edge of parent.
-
-**layoutOriginFractionX** (`number`_, float)
-    ..
-
-**layoutOriginFractionY** (`number`_, float)
-    Sets element position to a point relative to the parent element. 0.0 = left content edge, 1.0 = right content edge.
+**absolutePosAlignY** (`number`_, float)
+    Sets element position to a point relative to the parent element. 0.0 = left/top content edge, 1.0 = right/bottom content edge. The positioning is absolute, which frees the element from the standard flow layout and allows overlapping elements.
+    
+    Bug note: Elements may not respond to widthProportional/heightProportional sizing after either of these properties are set. If you need to use both you should consider testing if it works first.
 
 **width** (`number`_, integer)
     ..
@@ -57,13 +55,13 @@ Properties
     ..
 
 **minHeight** (`number`_, integer)
-    Minimum dimensions for auto-size layout and resizeable frames.
+    Minimum dimensions for auto-size layout and resizable frames.
 
 **maxWidth** (`number`_, integer)
     ..
 
 **maxHeight** (`number`_, integer)
-    Maximum dimensions for auto-size layout and resizeable frames.
+    Maximum dimensions for auto-size layout and resizable frames.
 
 **autoWidth** (`boolean`_)
     ..
@@ -71,13 +69,15 @@ Properties
 **autoHeight** (`boolean`_)
     When ``true``, automatically expands element dimensions to fit child elements. Dimensions are restricted by minWidth, minHeight, maxWidth and maxHeight properties.
 
-**layoutWidthFraction** (`number`_, float)
+**widthProportional** (`number`_, float)
     ..
 
-**layoutHeightFraction** (`number`_, float)
-    Sets element dimensions using a proportional sizer. The sizer starts with the parent dimension in the flow direction, subtracts any fixed dimension children leaving the proptional sizer space. Each proportionally sized element then gets an equal division of the space, multiplied by this member.
+**heightProportional** (`number`_, float)
+    Sets element dimensions using a proportional sizer. The sizer starts with the parent dimension in the flow direction, subtracts any fixed dimension children leaving the proportional sizer space. Each proportionally sized element then gets an equal division of the space, multiplied by this member. Values above 1.0 are permissible.
     
-    Overrides fixed, minimum and maximum sizes unless this value is -1.0 (default).
+    Bug note: If widthProportional is used without heightProportional, an element may not respond to changes in parent size. It is recommended to set heightProportional, or have a fixed size sibling element if dynamic reflow is required.
+    
+    Overrides fixed, minimum and maximum sizes unless this value is ``nil`` (default).
 
 **color** (`table`_, float[3])
     Element RGB colour, an array of 3 floats with value range [0.0, 1.0]. For menus and rects, it sets the background colour. For text, it sets the text colour. For images, it multiplies the image by the colour.
@@ -115,11 +115,19 @@ Properties
 **paddingTop** (`number`_, integer)
     Padding size in pixels. Padding is the blank space between the edge of an element and its contents. Individual padding sizes default to -1, making it use the paddingAllSides setting.
 
+**childAlignX** (`number`_, float)
+    ..
+
+**childAlignY** (`number`_, float)
+    Sets alignment of child elements inside its parent, though it only works in specific conditions. 0.0 = left/top edge touches left/top edge of parent, 0.5 = centred, 1.0 = right/bottom edge touches right/bottom edge of parent. For negative values, there is a special case behaviour: all children but the last will be left-aligned/top-aligned, the last child will be right-aligned/bottom-aligned.
+    
+    Child alignment only works if the element has proportional sizing (using widthProportional/heightProportional) and all children use non-proportional sizing (widthProportional and heightProportional are ``nil``).
+
 **childOffsetX** (`number`_, integer)
     ..
 
 **childOffsetY** (`number`_, integer)
-    Offset applied to child nodes. Used in scrollpanes.
+    Offset in pixels, applied to child nodes. Used in scroll panes.
 
 **flowDirection** (`string`_)
     Can have values ``"left_to_right"`` or ``"top_to_bottom"``. Indicates which direction child elements are laid out.
@@ -127,14 +135,11 @@ Properties
 **text** (`string`_)
     The element's text. Text input can be read by accessing this property.
 
-**repeatKeys** (`boolean`_)
-    The setting for repeating text input when keys are held down. ``true`` by default.
-
 **wrapText** (`boolean`_)
     Controls text wrapping. Setting this to ``true`` will also set ``layoutHeightFraction`` to ``1.0``, which is required for wrapping text to adjust to its container size.
 
 **justifyText** (`string`_)
-    Can have values ``"left"``, ``"center"``, or ``"right"``. Controls text justification.
+    Can have values ``"left"``, ``"center"``, or ``"right"``. Controls text justification. To work correctly for center/right justification,  ``wrapText`` must be ``true``.
 
 **font** (`number`_, integer)
     Index of font to use for text.
@@ -143,13 +148,13 @@ Properties
         2 - Daedric
 
 **scaleMode** (`boolean`_)
-    Controls if images and NIFs are scaled to fit the element dimensions.
+    When set to ``true`` on image and NIF elements, they are scaled to fit ``width`` and ``height``.
 
 **imageScaleX** (`number`_, float)
     ..
 
 **imageScaleY** (`number`_, float)
-    Image scaling multipliers. Only applies to Image elements.
+    Image scaling multipliers. Only applies to image elements.
 
 **nodeMinX** (`number`_, integer)
     ..
@@ -169,6 +174,12 @@ Properties
 **nodeOffsetY** (`number`_, integer)
     Unknown. May be scenegraph node related.
 
+**consumeMouseEvents** (`boolean`_)
+    When ``true``, mouse events over this element are sent to event handlers, or discarded if there is no handler. When ``false``, mouse events go upwards to the first ancestor that can consume mouse events. Useful to set on widget sub-elements. ``true`` by default.
+
+**repeatKeys** (`boolean`_)
+    Controls if there is repeating text input when keys are held down. ``true`` by default.
+
 
 Methods
 ----------------------------------------------------------------------------------------------------
@@ -185,6 +196,18 @@ Methods
 
     Creates a clickable button. Register the "mouseClick" event to capture a button press.
     
+    Custom widget properties:
+        | `number`_ ``element.widget.state``: Interaction state. 1 = normal, 2 = disabled, 4 = active. Controls which colour set to use for text.
+        | `table`_ (float[3]) ``element.widget.idle``: Text colour for normal state, no mouse interaction.
+        | `table`_ (float[3]) ``element.widget.over``: Text colour for normal state, on mouseOver.
+        | `table`_ (float[3]) ``element.widget.pressed``: Text colour for normal state, on mouseDown.
+        | `table`_ (float[3]) ``element.widget.idleDisabled``: Text colour for disabled state, no mouse interaction.
+        | `table`_ (float[3]) ``element.widget.overDisabled``: Text colour for disabled state, on mouseOver.
+        | `table`_ (float[3]) ``element.widget.pressedDisabled``: Text colour for disabled state, on mouseDown.
+        | `table`_ (float[3]) ``element.widget.idleActive``: Text colour for active state, no mouse interaction.
+        | `table`_ (float[3]) ``element.widget.overActive``: Text colour for active state, on mouseOver.
+        | `table`_ (float[3]) ``element.widget.pressedActive``: Text colour for active state, on mouseDown.
+
 `Element`_ **createImageButton** {id = `UI_ID`_ ``optional``, idle = `string`_, over = `string`_, pressed = `string`_}  ``Uses table arguments.``
     Returns:
         A **block** with responsive images.
@@ -215,7 +238,13 @@ Methods
         The newly created scroll pane.
 
     Creates a horizontally scrolling pane.
-    To be documented.
+
+    Custom widget properties:
+        | `number`_ ``element.widget.positionX``: Horizontal scroll offset in pixels.
+        | `boolean`_ ``element.widget.scrollbarVisible``: Set if the scrollbar is displayed.
+
+    Custom widget methods:
+        | ``element.widget:contentsChanged()``: Call to update scroll bar slider and limits after adding or removing elements to the content container. Only required if the content size changes.
 
 `Element`_ **createHypertext** {id = `UI_ID`_ ``optional``}  ``Uses table arguments.``
     Returns:
@@ -296,14 +325,14 @@ Methods
         | `boolean`_ ``element.widget.eraseOnFirstKey``: Clears the initial value if the first keypress is not an edit action. Default is ``true``.
         | `number`_ (integer) ``element.widget.lengthLimit"``: Maximum input length, or ``nil`` for no limit. If you are setting names, the engine limits most identifiers to 31 characters. Default is ``nil``.
 
-`Element`_ **createTextSelect** {id = `UI_ID`_ ``optional``, state = `number`_ ``optional``}  ``Uses table arguments.``
+`Element`_ **createTextSelect** {id = `UI_ID`_ ``optional``, text = `string`_ ``optional``, state = `number`_ ``optional``}  ``Uses table arguments.``
     Returns:
         The newly created text select element.
 
     Creates a selectable line of text, with configurable hover, click, and disabled colours. Can be used to create a list box by placing them in a ScrollPane. ``state`` sets the initial interaction state, documented below.
 
     Custom widget properties:
-        | `number`_ ``element.state``: Interaction state. 1 = normal, 2 = disabled, 4 = active. Controls which colour set to use.
+        | `number`_ ``element.widget.state``: Interaction state. 1 = normal, 2 = disabled, 4 = active. Controls which colour set to use.
         | `table`_ (float[3]) ``element.widget.idle``: Colour for normal state, no mouse interaction.
         | `table`_ (float[3]) ``element.widget.over``: Colour for normal state, on mouseOver.
         | `table`_ (float[3]) ``element.widget.pressed``: Colour for normal state, on mouseDown.
@@ -324,8 +353,14 @@ Methods
     Returns:
         The newly created scroll pane.
 
-    Creates a vertically scrolling pane.
-    To be documented.
+    Creates a vertically scrolling pane. Useful as a list box.
+
+    Custom widget properties:
+        | `number`_ ``element.widget.positionY``: Vertical scroll offset in pixels.
+        | `boolean`_ ``element.widget.scrollbarVisible``: Set if the scrollbar is displayed.
+
+    Custom widget methods:
+        | ``element.widget:contentsChanged()``: Call to update scroll bar slider and limits after adding or removing elements to the content container. Only required if the content size changes.
 
 **destroy** ()
     Returns:
@@ -351,6 +386,12 @@ Methods
     
     Forwards an event to the original Morrowind event handler. This may be optionally called at any point in a callback. Note that handler may or may not destroy the event widget or the menu, so you should know how it behaves before accessing any elements after a callback. 
     
+`Element`_ **getContentElement** ()
+    Returns:
+        The descendant element that newly created elements are placed into, or the calling element if there is no specific descendant for children.
+
+    Some widgets like ScrollPanes are built of multiple layers of elements. When an element is created in a complex widget, it is automatically placed as a child of a content element, but other functions do not access this content element directly. This function finds this content container for any element, so that changing layout and accessing children is possible. For simple elements, the calling element will be returned so that there is always a valid container element.
+
 `Element`_ **getTopLevelMenu** ()
     Returns:
         The menu that the element is a descendant of.

@@ -320,9 +320,9 @@ function tes3uiElement:createImageButton(params)
 	local buttonPressed = buttonBlock:createImage({ path = params.pressed })
 
 	-- Prevent any of the above-created buttons from consuming the mouse events.
-	buttonIdle.acceptMouseEvents = false
-	buttonOver.acceptMouseEvents = false
-	buttonPressed.acceptMouseEvents = false
+	buttonIdle.consumeMouseEvents = false
+	buttonOver.consumeMouseEvents = false
+	buttonPressed.consumeMouseEvents = false
 
 	-- Hide the over/pressed buttons for now.
 	buttonOver.visible = false

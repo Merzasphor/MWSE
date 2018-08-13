@@ -1290,6 +1290,19 @@ namespace mwse {
 		}
 
 		//
+		// Event: UI Object Tooltip post-creation.
+		//
+
+		void __stdcall OnUIObjectTooltip(TES3::Object* object, TES3::ItemData* itemData, int count) {
+			// Call original function.
+			reinterpret_cast<void(__stdcall *)(TES3::Object*, TES3::ItemData*, int count)>(0x590D90)(object, itemData, count);
+
+			// Fire off the event.
+			TES3::UI::Element* tooltip = TES3::UI::findHelpLayerMenu(TES3::UI::UI_ID(TES3::UI::Property::HelpMenu));
+			LuaManager::getInstance().triggerEvent(new event::UiObjectTooltipEvent(tooltip, object, itemData, count));
+		}
+
+		//
 		// Event: Activation Target Changed
 		//
 
@@ -1813,6 +1826,26 @@ namespace mwse {
 			genCallEnforced(0x634D2B, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuTimePass
 			genCallEnforced(0x63610A, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuTopic
 			genCallEnforced(0x637FE6, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuVideo
+
+			// Event: UI Tooltip post-creation.
+			genCallEnforced(0x41CC2E, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
+			genCallEnforced(0x58FF1D, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
+			genCallEnforced(0x59E10D, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
+			genCallEnforced(0x5A7633, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
+			genCallEnforced(0x5B6FD1, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
+			genCallEnforced(0x5C663C, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
+			genCallEnforced(0x5CE054, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
+			genCallEnforced(0x5CE071, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
+			genCallEnforced(0x5D24B2, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
+			genCallEnforced(0x5D4B5C, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
+			genCallEnforced(0x5E4FAD, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
+			genCallEnforced(0x5E802D, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
+			genCallEnforced(0x5F6F78, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
+			genCallEnforced(0x607C33, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
+			genCallEnforced(0x607C86, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
+			genCallEnforced(0x607CA7, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
+			genCallEnforced(0x60EE6B, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
+			genCallEnforced(0x61550D, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
 
 			/*
 			// TODO: Figure out a good hook point for this.

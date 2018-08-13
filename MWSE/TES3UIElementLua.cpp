@@ -1,3 +1,4 @@
+#include <cstdint>
 #include <string>
 #include <unordered_map>
 
@@ -41,6 +42,15 @@ namespace mwse {
 
 		const UI_ID idNull = static_cast<UI_ID>(TES3::UI::Property::null);
 
+		template <typename T>
+		sol::optional<T> valueDefaultAsNil(const T& value, T default) {
+			sol::optional<T> x;
+			if (value != default) {
+				x = value;
+			}
+			return x;
+		}
+
 		TES3::UI::Property toBooleanProperty(bool x) {
 			return x ? TES3::UI::Property::boolean_true : TES3::UI::Property::boolean_false;
 		}
@@ -76,19 +86,49 @@ namespace mwse {
 
 			// Read-write property bindings.
 			// Many properties also set lazy-update flags through setProperty.
-			usertypeDefinition.set("borderAllSides", &TES3::UI::Element::borderAllSides);
-			usertypeDefinition.set("borderLeft", &TES3::UI::Element::borderLeft);
-			usertypeDefinition.set("borderRight", &TES3::UI::Element::borderRight);
-			usertypeDefinition.set("borderBottom", &TES3::UI::Element::borderBottom);
-			usertypeDefinition.set("borderTop", &TES3::UI::Element::borderTop);
-			usertypeDefinition.set("paddingAllSides", &TES3::UI::Element::paddingAllSides);
-			usertypeDefinition.set("paddingLeft", &TES3::UI::Element::paddingLeft);
-			usertypeDefinition.set("paddingRight", &TES3::UI::Element::paddingRight);
-			usertypeDefinition.set("paddingBottom", &TES3::UI::Element::paddingBottom);
-			usertypeDefinition.set("paddingTop", &TES3::UI::Element::paddingTop);
+			usertypeDefinition.set("borderAllSides", sol::property(
+				[](Element& self) { return self.borderAllSides; },
+				[](Element& self, sol::optional<int> value) { self.borderAllSides = value.value_or(0); }
+			));
+			usertypeDefinition.set("borderLeft", sol::property(
+				[](Element& self) { return valueDefaultAsNil(self.borderLeft, -1); },
+				[](Element& self, sol::optional<int> value) { self.borderLeft = value.value_or(-1); }
+			));
+			usertypeDefinition.set("borderRight", sol::property(
+				[](Element& self) { return valueDefaultAsNil(self.borderRight, -1); },
+				[](Element& self, sol::optional<int> value) { self.borderRight = value.value_or(-1); }
+			));
+			usertypeDefinition.set("borderBottom", sol::property(
+				[](Element& self) { return valueDefaultAsNil(self.borderBottom, -1); },
+				[](Element& self, sol::optional<int> value) { self.borderBottom = value.value_or(-1); }
+			));
+			usertypeDefinition.set("borderTop", sol::property(
+				[](Element& self) { return valueDefaultAsNil(self.borderTop, -1); },
+				[](Element& self, sol::optional<int> value) { self.borderTop = value.value_or(-1); }
+			));
+			usertypeDefinition.set("paddingAllSides", sol::property(
+				[](Element& self) { return self.paddingAllSides; },
+				[](Element& self, sol::optional<int> value) { self.paddingAllSides = value.value_or(0); }
+			));
+			usertypeDefinition.set("paddingLeft", sol::property(
+				[](Element& self) { return valueDefaultAsNil(self.paddingLeft, -1); },
+				[](Element& self, sol::optional<int> value) { self.paddingLeft = value.value_or(-1); }
+			));
+			usertypeDefinition.set("paddingRight", sol::property(
+				[](Element& self) { return valueDefaultAsNil(self.paddingRight, -1); },
+				[](Element& self, sol::optional<int> value) { self.paddingRight = value.value_or(-1); }
+			));
+			usertypeDefinition.set("paddingBottom", sol::property(
+				[](Element& self) { return valueDefaultAsNil(self.paddingBottom, -1); },
+				[](Element& self, sol::optional<int> value) { self.paddingBottom = value.value_or(-1); }
+			));
+			usertypeDefinition.set("paddingTop", sol::property(
+				[](Element& self) { return valueDefaultAsNil(self.paddingTop, -1); },
+				[](Element& self, sol::optional<int> value) { self.paddingTop = value.value_or(-1); }
+			));
 			usertypeDefinition.set("font", sol::property(
 				[](Element& self) { return self.font; },
-				[](Element& self, int value) { self.setProperty(TES3::UI::Property::font, value); }
+				[](Element& self, sol::optional<int> value) { self.setProperty(TES3::UI::Property::font, value.value_or(0)); }
 			));
 			usertypeDefinition.set("positionX", sol::property(
 				[](Element& self) { return self.positionX; },
@@ -100,11 +140,11 @@ namespace mwse {
 			));
 			usertypeDefinition.set("visible", sol::property(
 				[](Element& self) { return self.visible != 0; },
-				[](Element& self, bool value) { self.setVisible(value); }
+				[](Element& self, sol::optional<bool> value) { self.setVisible(value.value_or(true)); }
 			));
-			usertypeDefinition.set("acceptMouseEvents", sol::property(
-				[](Element& self) { return self.flagAcceptMouseEvents != 0; },
-				[](Element& self, bool value) { self.flagAcceptMouseEvents = value; }
+			usertypeDefinition.set("consumeMouseEvents", sol::property(
+				[](Element& self) { return self.flagConsumeMouseEvents != 0; },
+				[](Element& self, sol::optional<bool> value) { self.flagConsumeMouseEvents = value.value_or(true); }
 			));
 			usertypeDefinition.set("nodeMinX", &Element::nodeMinX);
 			usertypeDefinition.set("nodeMaxX", &Element::nodeMaxX);
@@ -119,20 +159,20 @@ namespace mwse {
 				[](Element& self, int value) { self.setProperty(TES3::UI::Property::height, value); }
 			));
 			usertypeDefinition.set("minWidth", sol::property(
-				[](Element& self) { return self.minWidth; },
-				[](Element& self, int value) { self.setProperty(TES3::UI::Property::min_width, value); }
+				[](Element& self) { return valueDefaultAsNil(self.minWidth, INT32_MIN); },
+				[](Element& self, sol::optional<int> value) { self.setProperty(TES3::UI::Property::min_width, value.value_or(INT32_MIN)); }
 			));
 			usertypeDefinition.set("minHeight", sol::property(
-				[](Element& self) { return self.minHeight; },
-				[](Element& self, int value) { self.setProperty(TES3::UI::Property::min_height, value); }
+				[](Element& self) { return valueDefaultAsNil(self.minHeight, INT32_MIN); },
+				[](Element& self, sol::optional<int> value) { self.setProperty(TES3::UI::Property::min_height, value.value_or(INT32_MIN)); }
 			));
 			usertypeDefinition.set("maxWidth", sol::property(
-				[](Element& self) { return self.maxWidth; },
-				[](Element& self, int value) { self.setProperty(TES3::UI::Property::max_width, value); }
+				[](Element& self) { return valueDefaultAsNil(self.maxWidth, INT32_MAX); },
+				[](Element& self, sol::optional<int> value) { self.setProperty(TES3::UI::Property::max_width, value.value_or(INT32_MAX)); }
 			));
 			usertypeDefinition.set("maxHeight", sol::property(
-				[](Element& self) { return self.maxHeight; },
-				[](Element& self, int value) { self.setProperty(TES3::UI::Property::max_height, value); }
+				[](Element& self) { return valueDefaultAsNil(self.maxHeight, INT32_MAX); },
+				[](Element& self, sol::optional<int> value) { self.setProperty(TES3::UI::Property::max_height, value.value_or(INT32_MAX)); }
 			));
 			usertypeDefinition.set("autoWidth", sol::property(
 				[](Element& self) { return self.flagAutoWidth != 0; },
@@ -142,10 +182,22 @@ namespace mwse {
 				[](Element& self) { return self.flagAutoHeight != 0; },
 				[](Element& self, bool value) { self.setAutoHeight(value); }
 			));
-			usertypeDefinition.set("layoutWidthFraction", &TES3::UI::Element::layoutWidthFraction);
-			usertypeDefinition.set("layoutHeightFraction", &TES3::UI::Element::layoutHeightFraction);
-			usertypeDefinition.set("layoutOriginFractionX", &TES3::UI::Element::layoutOriginFractionX);
-			usertypeDefinition.set("layoutOriginFractionY", &TES3::UI::Element::layoutOriginFractionY);
+			usertypeDefinition.set("widthProportional", sol::property(
+				[](Element& self) { return valueDefaultAsNil(self.widthProportional, -1.0f); },
+				[](Element& self, sol::optional<double> value) { self.widthProportional = value.value_or(-1.0); }
+			));
+			usertypeDefinition.set("heightProportional", sol::property(
+				[](Element& self) { return valueDefaultAsNil(self.heightProportional, -1.0f); },
+				[](Element& self, sol::optional<double> value) { self.heightProportional = value.value_or(-1.0); }
+			));
+			usertypeDefinition.set("absolutePosAlignX", sol::property(
+				[](Element& self) { return valueDefaultAsNil(self.absolutePosAlignX, -1.0f); },
+				[](Element& self, sol::optional<double> value) { self.absolutePosAlignX = value.value_or(-1.0); }
+			));
+			usertypeDefinition.set("absolutePosAlignY", sol::property(
+				[](Element& self) { return valueDefaultAsNil(self.absolutePosAlignY, -1.0f); },
+				[](Element& self, sol::optional<double> value) { self.absolutePosAlignY = value.value_or(-1.0); }
+			));
 			usertypeDefinition.set("color", sol::property(
 				[](Element& self) {
 					sol::state& state = LuaManager::getInstance().getState();
@@ -165,31 +217,31 @@ namespace mwse {
 					self.flagUsesRGBA = 1;
 				}
 			));
-			usertypeDefinition.set("alignX", sol::property(
-				[](Element& self) { self.getProperty(TES3::UI::PropertyType::Float, TES3::UI::Property::align_x); },
-				[](Element& self, float value) { self.setProperty(TES3::UI::Property::align_x, value); }
-			));
-			usertypeDefinition.set("alignY", sol::property(
-				[](Element& self) { self.getProperty(TES3::UI::PropertyType::Float, TES3::UI::Property::align_y); },
-				[](Element& self, float value) { self.setProperty(TES3::UI::Property::align_y, value); }
-			));
 			usertypeDefinition.set("flowDirection", sol::property(
 				[](Element& self) {
-				auto flow = self.getProperty(TES3::UI::PropertyType::Property, TES3::UI::Property::flow_direction).propertyValue;
-				return (flow == TES3::UI::Property::top_to_bottom) ? "top_to_bottom" : "left_to_right";
-			},
+					auto flow = self.getProperty(TES3::UI::PropertyType::Property, TES3::UI::Property::flow_direction).propertyValue;
+					return (flow == TES3::UI::Property::top_to_bottom) ? "top_to_bottom" : "left_to_right";
+				},
 				[](Element& self, std::string value) {
-				auto prop = (value == "top_to_bottom") ? TES3::UI::Property::top_to_bottom : TES3::UI::Property::left_to_right;
-				self.setProperty(TES3::UI::Property::flow_direction, prop);
-			}
+					auto prop = (value == "top_to_bottom") ? TES3::UI::Property::top_to_bottom : TES3::UI::Property::left_to_right;
+					self.setProperty(TES3::UI::Property::flow_direction, prop);
+				}
+			));
+			usertypeDefinition.set("childAlignX", sol::property(
+				[](Element& self) { return self.getProperty(TES3::UI::PropertyType::Float, TES3::UI::Property::align_x).floatValue; },
+				[](Element& self, float value) { self.setProperty(TES3::UI::Property::align_x, value); }
+			));
+			usertypeDefinition.set("childAlignY", sol::property(
+				[](Element& self) { return self.getProperty(TES3::UI::PropertyType::Float, TES3::UI::Property::align_y).floatValue; },
+				[](Element& self, float value) { self.setProperty(TES3::UI::Property::align_y, value); }
 			));
 			usertypeDefinition.set("childOffsetX", sol::property(
-				[](Element& self) { return self.childOffsetX; },
-				[](Element& self, int value) { self.setProperty(TES3::UI::Property::child_offset_x, value); }
+				[](Element& self) { return valueDefaultAsNil(self.childOffsetX, INT32_MAX); },
+				[](Element& self, sol::optional<int> value) { self.setProperty(TES3::UI::Property::child_offset_x, value.value_or(INT32_MAX)); }
 			));
 			usertypeDefinition.set("childOffsetY", sol::property(
-				[](Element& self) { return self.childOffsetY; },
-				[](Element& self, int value) { self.setProperty(TES3::UI::Property::child_offset_y, value); }
+				[](Element& self) { return valueDefaultAsNil(self.childOffsetY, INT32_MAX); },
+				[](Element& self, sol::optional<int> value) { self.setProperty(TES3::UI::Property::child_offset_y, value.value_or(INT32_MAX)); }
 			));
 			usertypeDefinition.set("wrapText", sol::property(
 				[](Element& self) {
@@ -198,19 +250,8 @@ namespace mwse {
 				},
 				[](Element& self, bool value) {
 					self.setProperty(TES3::UI::Property::wrap_text, toBooleanProperty(value));
-
-					if (value) {
-						// Set proportional height layout, so that flagSizeChanged is updated by the layout engine
-						self.layoutHeightFraction = 1.0;
-					}
+					self.flagContentChanged = 1;
 				}
-			));
-			usertypeDefinition.set("scaleMode", sol::property(
-				[](Element& self) {
-					auto prop = self.getProperty(TES3::UI::PropertyType::Property, TES3::UI::Property::scale_mode);
-					return toBoolean(prop.propertyValue);
-				},
-				[](Element& self, bool value) { self.setProperty(TES3::UI::Property::scale_mode, toBooleanProperty(value)); }
 			));
 			usertypeDefinition.set("justifyText", sol::property(
 				[](Element& self) {
@@ -229,6 +270,7 @@ namespace mwse {
 						prop = TES3::UI::Property::right;
 					}
 					self.setProperty(TES3::UI::Property::justify, prop);
+					self.flagContentChanged = 1;
 				}
 			));
 			usertypeDefinition.set("nodeOffsetX", sol::property(
@@ -246,13 +288,28 @@ namespace mwse {
 				},
 				[](Element& self, bool value) { self.setProperty(TES3::UI::Property::disabled, toBooleanProperty(value)); }
 			));
-			usertypeDefinition.set("scaleX", sol::property(
-				[](Element& self) { return self.scaleX; },
-				[](Element& self, int value) { self.setProperty(TES3::UI::Property::image_scale_x, value); }
+			usertypeDefinition.set("scaleMode", sol::property(
+				[](Element& self) {
+					return toBoolean(self.scale_mode);
+				},
+				[](Element& self, bool value) {
+					self.scale_mode = toBooleanProperty(value);
+					self.flagContentChanged = 1;
+				}
 			));
-			usertypeDefinition.set("scaleY", sol::property(
-				[](Element& self) { return self.scaleY; },
-				[](Element& self, int value) { self.setProperty(TES3::UI::Property::image_scale_y, value); }
+			usertypeDefinition.set("imageScaleX", sol::property(
+				[](Element& self) { return self.imageScaleX; },
+				[](Element& self, float value) {
+					self.imageScaleX = value;
+					self.flagContentChanged = 1;
+				}
+			));
+			usertypeDefinition.set("imageScaleY", sol::property(
+				[](Element& self) { return self.imageScaleY; },
+				[](Element& self, float value) {
+					self.imageScaleY = value;
+					self.flagContentChanged = 1;
+				}
 			));
 			usertypeDefinition.set("repeatKeys", sol::property(
 				[](Element& self) {
@@ -283,6 +340,52 @@ namespace mwse {
 					self.setText(value);
 					self.getTopLevelParent()->timingUpdate();
 				}
+			));
+			usertypeDefinition.set("contentType", sol::readonly_property([](Element& self) {
+				switch (self.contentType) {
+				case TES3::UI::Property::model:
+					return "model";
+				case TES3::UI::Property::text:
+					return "text";
+				case TES3::UI::Property::image:
+					return "image";
+				case TES3::UI::Property::rect:
+					return "rect";
+				default:
+					return "layout";
+				}
+			}));
+			usertypeDefinition.set("contentPath", sol::readonly_property([](Element& self) { return self.contentPath.cString; }));
+
+			// Deprecated properties.
+			// TODO: Remove in final release.
+			usertypeDefinition.set("layoutWidthFraction", sol::property(
+				[](Element& self) { return valueDefaultAsNil(self.widthProportional, -1.0f); },
+				[](Element& self, sol::optional<double> value) { self.widthProportional = value.value_or(-1.0); }
+			));
+			usertypeDefinition.set("layoutHeightFraction", sol::property(
+				[](Element& self) { return valueDefaultAsNil(self.heightProportional, -1.0f); },
+				[](Element& self, sol::optional<double> value) { self.heightProportional = value.value_or(-1.0); }
+			));
+			usertypeDefinition.set("layoutOriginFractionX", sol::property(
+				[](Element& self) { return valueDefaultAsNil(self.absolutePosAlignX, -1.0f); },
+				[](Element& self, sol::optional<double> value) { self.absolutePosAlignX = value.value_or(-1.0); }
+			));
+			usertypeDefinition.set("layoutOriginFractionY", sol::property(
+				[](Element& self) { return valueDefaultAsNil(self.absolutePosAlignY, -1.0f); },
+				[](Element& self, sol::optional<double> value) { self.absolutePosAlignY = value.value_or(-1.0); }
+			));
+			usertypeDefinition.set("alignX", sol::property(
+				[](Element& self) { return self.getProperty(TES3::UI::PropertyType::Float, TES3::UI::Property::align_x).floatValue; },
+				[](Element& self, float value) { self.setProperty(TES3::UI::Property::align_x, value); }
+			));
+			usertypeDefinition.set("alignY", sol::property(
+				[](Element& self) { return self.getProperty(TES3::UI::PropertyType::Float, TES3::UI::Property::align_y).floatValue; },
+				[](Element& self, float value) { self.setProperty(TES3::UI::Property::align_y, value); }
+			));
+			usertypeDefinition.set("acceptMouseEvents", sol::property(
+				[](Element& self) { return self.flagConsumeMouseEvents != 0; },
+				[](Element& self, sol::optional<bool> value) { self.flagConsumeMouseEvents = value.value_or(true); }
 			));
 
 			// Custom property accessor functions.
@@ -428,6 +531,7 @@ namespace mwse {
 			// Layout functions.
 			usertypeDefinition.set("destroyChildren", [](Element& self) { return self.destroyChildren(); });
 			usertypeDefinition.set("findChild", [](Element& self, UI_ID id) { return self.findChild(id); });
+			usertypeDefinition.set("getContentElement", [](Element& self) { return self.getContentElement(); });
 			usertypeDefinition.set("getTopLevelParent", [](Element& self) { return self.getTopLevelParent(); });
 			usertypeDefinition.set("reorderChildren", [](Element& self, sol::object insertBefore, sol::object moveFrom, int count) {
 				int indexInsertBefore, indexMoveFrom;
@@ -470,7 +574,7 @@ namespace mwse {
 			usertypeDefinition.set("createDivider", [](Element& self, sol::table args) {
 				auto image = self.createImage(args.get_or("id", idNull), "Textures\\menu_divider.tga");
 				image->borderAllSides = 8;
-				image->layoutWidthFraction = 1.0;
+				image->widthProportional = 1.0;
 				image->flagExtendImageToBounds = 1;
 				return image;
 			});
@@ -554,6 +658,10 @@ namespace mwse {
 			});
 			usertypeDefinition.set("createTextSelect", [](Element& self, sol::table args) {
 				auto element = self.createTextSelect(args.get_or("id", idNull));
+				auto text = args.get<sol::optional<const char*>>("text");
+				if (text) {
+					element->setText(text.value());
+				}
 				auto textSelect = TES3::UI::WidgetTextSelect::fromElement(element);
 				auto state = args.get<sol::optional<int>>("state");
 				if (state) {

@@ -9,21 +9,28 @@ namespace mwse {
 		using TES3::UI::Element;
 		using TES3::UI::Property;
 		using TES3::UI::PropertyType;
+		using TES3::UI::WidgetButton;
 		using TES3::UI::WidgetFillbar;
 		using TES3::UI::WidgetScrollBar;
+		using TES3::UI::WidgetScrollPane;
 		using TES3::UI::WidgetTextInput;
 		using TES3::UI::WidgetTextSelect;
 		using TES3::UI::registerProperty;
 
-		static Property propFillbar, propScrollBar, propTextInput, propTextSelect;
+		static Property propButton, propFillbar, propScrollBar;
+		static Property propScrollPaneH, propScrollPaneV;
+		static Property propTextInput, propTextSelect;
 
 		void bindTES3UIWidgets();
 
 		sol::object makeWidget(Element& element) {
 			static bool deferredInit = false;
 			if (!deferredInit) {
+				propButton = registerProperty("PartButton");
 				propFillbar = registerProperty("PartFillbar");
 				propScrollBar = registerProperty("PartScrollBar");
+				propScrollPaneH = registerProperty("PartScrollPaneHor");
+				propScrollPaneV = registerProperty("PartScrollPaneVert");
 				propTextInput = registerProperty("PartTextInput");
 				propTextSelect = registerProperty("PartTextSelect");
 				deferredInit = true;
@@ -33,11 +40,17 @@ namespace mwse {
 			sol::object widget = sol::nil;
 			Property part = element.getProperty(PropertyType::Property, Property::is_part).propertyValue;
 
-			if (part == propFillbar) {
+			if (part == propButton) {
+				widget = sol::make_object(state, WidgetButton::fromElement(&element));
+			}
+			else if (part == propFillbar) {
 				widget = sol::make_object(state, WidgetFillbar::fromElement(&element));
 			}
 			else if (part == propScrollBar) {
 				widget = sol::make_object(state, WidgetScrollBar::fromElement(&element));
+			}
+			else if (part == propScrollPaneH || part == propScrollPaneV) {
+				widget = sol::make_object(state, WidgetScrollPane::fromElement(&element));
 			}
 			else if (part == propTextInput) {
 				widget = sol::make_object(state, WidgetTextInput::fromElement(&element));
@@ -50,6 +63,45 @@ namespace mwse {
 
 		void bindTES3UIWidgets() {
 			sol::state& state = LuaManager::getInstance().getState();
+
+			//
+			// Button (PartButton)
+			//
+			{
+				auto usertypeDefinition = state.create_simple_usertype<WidgetButton>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				usertypeDefinition.set("state", sol::property(&WidgetButton::getState, &WidgetButton::setState));
+				usertypeDefinition.set("idle", sol::property(
+					[](WidgetButton& self, sol::table c) { self.setColourIdle({ c[1], c[2], c[3] }); }
+				));
+				usertypeDefinition.set("over", sol::property(
+					[](WidgetButton& self, sol::table c) { self.setColourOver({ c[1], c[2], c[3] }); }
+				));
+				usertypeDefinition.set("pressed", sol::property(
+					[](WidgetButton& self, sol::table c) { self.setColourPressed({ c[1], c[2], c[3] }); }
+				));
+				usertypeDefinition.set("idleDisabled", sol::property(
+					[](WidgetButton& self, sol::table c) { self.setColourDisabled({ c[1], c[2], c[3] }); }
+				));
+				usertypeDefinition.set("overDisabled", sol::property(
+					[](WidgetButton& self, sol::table c) { self.setColourDisabledOver({ c[1], c[2], c[3] }); }
+				));
+				usertypeDefinition.set("pressedDisabled", sol::property(
+					[](WidgetButton& self, sol::table c) { self.setColourDisabledPressed({ c[1], c[2], c[3] }); }
+				));
+				usertypeDefinition.set("idleActive", sol::property(
+					[](WidgetButton& self, sol::table c) { self.setColourActive({ c[1], c[2], c[3] }); }
+				));
+				usertypeDefinition.set("overActive", sol::property(
+					[](WidgetButton& self, sol::table c) { self.setColourActiveOver({ c[1], c[2], c[3] }); }
+				));
+				usertypeDefinition.set("pressedActive", sol::property(
+					[](WidgetButton& self, sol::table c) { self.setColourActivePressed({ c[1], c[2], c[3] }); }
+				));
+
+				state.set_usertype("tes3uiButton", usertypeDefinition);
+			}
 
 			//
 			// FillBar (PartFillbar)
@@ -82,6 +134,21 @@ namespace mwse {
 				usertypeDefinition.set("jump", sol::property(&WidgetScrollBar::getJumpX, &WidgetScrollBar::setJumpX));
 
 				state.set_usertype("tes3uiSlider", usertypeDefinition);
+			}
+
+			//
+			// ScrollPane (PartScrollPane)
+			//
+			{
+				auto usertypeDefinition = state.create_simple_usertype<WidgetScrollPane>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				usertypeDefinition.set("contentsChanged", &WidgetScrollPane::contentPaneChanged);
+				usertypeDefinition.set("positionX", sol::property(&WidgetScrollPane::getHorizontalPos, &WidgetScrollPane::setHorizontalPos));
+				usertypeDefinition.set("positionY", sol::property(&WidgetScrollPane::getVerticalPos, &WidgetScrollPane::setVerticalPos));
+				usertypeDefinition.set("scrollbarVisible", sol::property(&WidgetScrollPane::getScrollbarVisible, &WidgetScrollPane::setScrollbarVisible));
+
+				state.set_usertype("tes3uiScrollPane", usertypeDefinition);
 			}
 
 			//
