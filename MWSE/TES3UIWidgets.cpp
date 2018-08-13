@@ -171,6 +171,75 @@ namespace TES3 {
 		}
 
 		//
+		// WidgetScrollPane
+		//
+		static UI_ID uiidScrollPaneHScroll, uiidScrollPaneVScroll;
+
+		bool WidgetScrollPane::initProperties() {
+			uiidScrollPaneHScroll = registerID("PartScrollPane_hor_scrollbar");
+			uiidScrollPaneVScroll = registerID("PartScrollPane_vert_scrollbar");
+			return true;
+		}
+
+		WidgetScrollPane* WidgetScrollPane::fromElement(Element* element) {
+			static bool initialized = initProperties();
+			return static_cast<WidgetScrollPane*>(element);
+		}
+
+		int WidgetScrollPane::getHorizontalPos() const {
+			auto scroll = WidgetScrollBar::fromElement(findChild(uiidScrollPaneHScroll));
+			return scroll->getCurrent();
+		}
+		void WidgetScrollPane::setHorizontalPos(int value) {
+			auto scroll = WidgetScrollBar::fromElement(findChild(uiidScrollPaneHScroll));
+			scroll->setCurrent(value);
+
+			const auto TES3_ui_ScrollPaneHorz_scrollBarChanged = reinterpret_cast<EventCallback>(0x649A20);
+			TES3_ui_ScrollPaneHorz_scrollBarChanged(this, Property::null, 0, 0, scroll);
+		}
+
+		int WidgetScrollPane::getVerticalPos() const {
+			auto scroll = WidgetScrollBar::fromElement(findChild(uiidScrollPaneVScroll));
+			return scroll->getCurrent();
+		}
+		void WidgetScrollPane::setVerticalPos(int value) {
+			auto scroll = WidgetScrollBar::fromElement(findChild(uiidScrollPaneVScroll));
+			scroll->setCurrent(value);
+
+			const auto TES3_ui_ScrollPaneVert_scrollBarChanged = reinterpret_cast<EventCallback>(0x649870);
+			TES3_ui_ScrollPaneVert_scrollBarChanged(this, Property::null, 0, 0, scroll);
+		}
+
+		bool WidgetScrollPane::getScrollbarVisible() const {
+			auto scrollH = findChild(uiidScrollPaneHScroll);
+			auto scrollV = findChild(uiidScrollPaneVScroll);
+
+			if (scrollH) {
+				return scrollH->visible;
+			}
+			if (scrollV) {
+				return scrollV->visible;
+			}
+			return false;
+		}
+		void WidgetScrollPane::setScrollbarVisible(bool value) {
+			auto scrollH = findChild(uiidScrollPaneHScroll);
+			auto scrollV = findChild(uiidScrollPaneVScroll);
+
+			if (scrollH) {
+				scrollH->setVisible(value);
+			}
+			if (scrollV) {
+				scrollV->setVisible(value);
+			}
+		}
+
+		void WidgetScrollPane::contentPaneChanged() {
+			const auto TES3_ui_ScrollPane_contentPaneChanged = reinterpret_cast<void (__cdecl*)(WidgetScrollPane*)>(0x649E40);
+			TES3_ui_ScrollPane_contentPaneChanged(this);
+		}
+
+		//
 		// WidgetTextInput
 		//
 		static Property propTextInputLengthLimit, propTextInputNoLimit;

@@ -238,7 +238,13 @@ Methods
         The newly created scroll pane.
 
     Creates a horizontally scrolling pane.
-    To be documented.
+
+    Custom widget properties:
+        | `number`_ ``element.widget.positionX``: Horizontal scroll offset in pixels.
+        | `boolean`_ ``element.widget.scrollbarVisible``: Set if the scrollbar is displayed.
+
+    Custom widget methods:
+        | ``element.widget:contentsChanged()``: Call to update scroll bar slider and limits after adding or removing elements to the content container. Only required if the content size changes.
 
 `Element`_ **createHypertext** {id = `UI_ID`_ ``optional``}  ``Uses table arguments.``
     Returns:
@@ -347,8 +353,14 @@ Methods
     Returns:
         The newly created scroll pane.
 
-    Creates a vertically scrolling pane.
-    To be documented.
+    Creates a vertically scrolling pane. Useful as a list box.
+
+    Custom widget properties:
+        | `number`_ ``element.widget.positionY``: Vertical scroll offset in pixels.
+        | `boolean`_ ``element.widget.scrollbarVisible``: Set if the scrollbar is displayed.
+
+    Custom widget methods:
+        | ``element.widget:contentsChanged()``: Call to update scroll bar slider and limits after adding or removing elements to the content container. Only required if the content size changes.
 
 **destroy** ()
     Returns:

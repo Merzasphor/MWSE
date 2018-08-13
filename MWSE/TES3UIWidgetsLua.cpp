@@ -12,11 +12,14 @@ namespace mwse {
 		using TES3::UI::WidgetButton;
 		using TES3::UI::WidgetFillbar;
 		using TES3::UI::WidgetScrollBar;
+		using TES3::UI::WidgetScrollPane;
 		using TES3::UI::WidgetTextInput;
 		using TES3::UI::WidgetTextSelect;
 		using TES3::UI::registerProperty;
 
-		static Property propButton, propFillbar, propScrollBar, propTextInput, propTextSelect;
+		static Property propButton, propFillbar, propScrollBar;
+		static Property propScrollPaneH, propScrollPaneV;
+		static Property propTextInput, propTextSelect;
 
 		void bindTES3UIWidgets();
 
@@ -26,6 +29,8 @@ namespace mwse {
 				propButton = registerProperty("PartButton");
 				propFillbar = registerProperty("PartFillbar");
 				propScrollBar = registerProperty("PartScrollBar");
+				propScrollPaneH = registerProperty("PartScrollPaneHor");
+				propScrollPaneV = registerProperty("PartScrollPaneVert");
 				propTextInput = registerProperty("PartTextInput");
 				propTextSelect = registerProperty("PartTextSelect");
 				deferredInit = true;
@@ -43,6 +48,9 @@ namespace mwse {
 			}
 			else if (part == propScrollBar) {
 				widget = sol::make_object(state, WidgetScrollBar::fromElement(&element));
+			}
+			else if (part == propScrollPaneH || part == propScrollPaneV) {
+				widget = sol::make_object(state, WidgetScrollPane::fromElement(&element));
 			}
 			else if (part == propTextInput) {
 				widget = sol::make_object(state, WidgetTextInput::fromElement(&element));
@@ -126,6 +134,21 @@ namespace mwse {
 				usertypeDefinition.set("jump", sol::property(&WidgetScrollBar::getJumpX, &WidgetScrollBar::setJumpX));
 
 				state.set_usertype("tes3uiSlider", usertypeDefinition);
+			}
+
+			//
+			// ScrollPane (PartScrollPane)
+			//
+			{
+				auto usertypeDefinition = state.create_simple_usertype<WidgetScrollPane>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				usertypeDefinition.set("contentsChanged", &WidgetScrollPane::contentPaneChanged);
+				usertypeDefinition.set("positionX", sol::property(&WidgetScrollPane::getHorizontalPos, &WidgetScrollPane::setHorizontalPos));
+				usertypeDefinition.set("positionY", sol::property(&WidgetScrollPane::getVerticalPos, &WidgetScrollPane::setVerticalPos));
+				usertypeDefinition.set("scrollbarVisible", sol::property(&WidgetScrollPane::getScrollbarVisible, &WidgetScrollPane::setScrollbarVisible));
+
+				state.set_usertype("tes3uiScrollPane", usertypeDefinition);
 			}
 
 			//

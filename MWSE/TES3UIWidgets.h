@@ -55,6 +55,21 @@ namespace TES3 {
 			static bool initProperties();
 		};
 
+		struct WidgetScrollPane : Element {
+			int getHorizontalPos() const;
+			void setHorizontalPos(int value);
+			int getVerticalPos() const;
+			void setVerticalPos(int value);
+			bool getScrollbarVisible() const;
+			void setScrollbarVisible(bool value);
+			void contentPaneChanged();
+
+			WidgetScrollPane() = delete;
+			static WidgetScrollPane* fromElement(Element* e);
+		private:
+			static bool initProperties();
+		};
+
 		struct WidgetTextInput : Element {
 			int getLengthLimit() const;
 			void setLengthLimit(int limit);

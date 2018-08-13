@@ -98,8 +98,8 @@ namespace TES3 {
 			// Layout methods
 			//
 
-			Element* findChild(UI_ID id);
-			int getIndexOfChild(const Element *child);
+			Element* findChild(UI_ID id) const;
+			int getIndexOfChild(const Element *child) const;
 			Element* getContentElement();
 			Element* getTopLevelParent();
 			Element* performLayout(Boolean bUpdateTimestamp = 1);
