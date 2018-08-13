@@ -650,6 +650,31 @@ namespace mwse {
 			}
 
 			//
+			// UI Tooltip post-creation.
+			//
+
+			UiObjectTooltipEvent::UiObjectTooltipEvent(TES3::UI::Element* tooltip, TES3::Object* object, TES3::ItemData* itemData, int count) :
+				GenericEvent("uiObjectTooltip"),
+				m_Tooltip(tooltip),
+				m_Object(object),
+				m_ItemData(itemData),
+				m_Count(count)
+			{
+
+			}
+
+			sol::table UiObjectTooltipEvent::createEventTable() {
+				sol::table eventData = LuaManager::getInstance().getState().create_table();
+
+				eventData["tooltip"] = m_Tooltip;
+				eventData["object"] = m_Object;
+				eventData["itemData"] = m_ItemData;
+				eventData["count"] = m_Count;
+
+				return eventData;
+			}
+
+			//
 			// Show rest/wait menu event.
 			//
 

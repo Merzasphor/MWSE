@@ -8,7 +8,10 @@ namespace TES3 {
 		UI_ID registerID(const char* name);
 		Property registerProperty(const char* name);
 		Element* createMenu(UI_ID id);
+		Element* createHelpLayerMenu(UI_ID id);
+		Element* createTooltipMenu(UI_ID id);
 		Element* findMenu(UI_ID id);
+		Element* findHelpLayerMenu(UI_ID id);
 		Boolean enterMenuMode(UI_ID id);
 		Boolean leaveMenuMode();
 		void acquireTextInput(Element* element);

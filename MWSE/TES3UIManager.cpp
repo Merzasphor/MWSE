@@ -10,9 +10,14 @@ namespace TES3 {
 		const DWORD TES3_hook_dispatchMousewheelUp = 0x58F19B;
 		const DWORD TES3_hook_dispatchMousewheelDown = 0x58F1CA;
 
+		const auto TES3_uiHelpRoot = reinterpret_cast<Element* const*>(0x7D1C74);
+
 		const auto TES3_ui_registerID = reinterpret_cast<UI_ID (__cdecl *)(const char *)>(0x58DF10);
+		const auto TES3_ui_createChildElement = reinterpret_cast<Element* (__thiscall *)(Element*)>(0x582B50);
 		const auto TES3_ui_createMenu = reinterpret_cast<Element* (__cdecl *)(UI_ID)>(0x595400);
+		const auto TES3_ui_createTooltipMenu = reinterpret_cast<Element* (__cdecl *)(UI_ID)>(0x595A40);
 		const auto TES3_ui_findMenu = reinterpret_cast<Element* (__cdecl*)(UI_ID)>(0x595370);
+		const auto TES3_ui_findHelpLayerMenu = reinterpret_cast<Element* (__cdecl*)(UI_ID)>(0x595A10);
 		const auto TES3_ui_getPaletteColour = reinterpret_cast<Vector3& (__cdecl*)(Vector3&, Property)>(0x57F610);
 		const auto TES3_ui_onMenuUnfocus = reinterpret_cast<EventCallback>(0x58F790);
 		const auto TES3_ui_ScrollbarArrow_onClick = reinterpret_cast<EventCallback>(0x647A60);
@@ -35,8 +40,23 @@ namespace TES3 {
 			return TES3_ui_createMenu(id);
 		}
 
+		Element* createHelpLayerMenu(UI_ID id) {
+			// Simple replacement implementation. The Morrowind implementation is convoluted.
+			Element* menu = TES3_ui_createChildElement(*TES3_uiHelpRoot);
+			menu->createFixedFrame(id, 1);
+			return menu;
+		}
+
+		Element* createTooltipMenu(UI_ID id) {
+			return TES3_ui_createTooltipMenu(id);
+		}
+
 		Element* findMenu(UI_ID id) {
 			return TES3_ui_findMenu(id);
+		}
+
+		Element* findHelpLayerMenu(UI_ID id) {
+			return TES3_ui_findHelpLayerMenu(id);
 		}
 
 		Boolean enterMenuMode(UI_ID id) {

@@ -213,7 +213,19 @@ namespace mwse {
 
 				return menu;
 			});
+			tes3ui.set_function("createHelpLayerMenu", [](sol::table args) {
+				auto id = args.get<sol::optional<UI_ID>>("id");
+				if (!id) {
+					log::getLog() << "createHelpLayerMenu: id argument is required." << std::endl;
+					return static_cast<Element*>(nullptr);
+				}
+				return TES3::UI::createHelpLayerMenu(id.value());
+			});
+			tes3ui.set_function("createTooltipMenu", []() {
+				return TES3::UI::createTooltipMenu(TES3::UI::UI_ID(TES3::UI::Property::HelpMenu));
+			});
 			tes3ui["findMenu"] = TES3::UI::findMenu;
+			tes3ui["findHelpLayerMenu"] = TES3::UI::findHelpLayerMenu;
 			tes3ui["enterMenuMode"] = TES3::UI::enterMenuMode;
 			tes3ui["leaveMenuMode"] = TES3::UI::leaveMenuMode;
 			tes3ui["acquireTextInput"] = TES3::UI::acquireTextInput;

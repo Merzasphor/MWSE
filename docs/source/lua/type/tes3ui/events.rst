@@ -38,6 +38,8 @@ Standard events:
         A raw key press.
     **keyEnter**
         The Return key is pressed.
+    **help**
+        On mouseover, but also marking the element as having a tooltip. Create a tooltip within the callback using the `tes3ui.createTooltipMenu`_ function.
     **focus**
         When a menu is clicked on, and moved on top of other menus.
     **unfocus**
@@ -103,6 +105,8 @@ The standard type signature for events.
 .. _`function`: ../lua/function.html
 .. _`number`: ../lua/number.html
 .. _`string`: ../lua/string.html
+
+.. _`tes3ui.createTooltipMenu`: ../../api/tes3ui/createTooltipMenu.html
 
 .. _`Element`: element.html
 .. _`Property`: property.html
