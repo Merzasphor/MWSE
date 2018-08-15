@@ -33,9 +33,9 @@ namespace mwse {
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Basic property binding.
-				usertypeDefinition.set("x", sol::readonly_property(&DIMOUSESTATE2::lX));
-				usertypeDefinition.set("y", sol::readonly_property(&DIMOUSESTATE2::lY));
-				usertypeDefinition.set("z", sol::readonly_property(&DIMOUSESTATE2::lZ));
+				usertypeDefinition.set("x", &DIMOUSESTATE2::lX);
+				usertypeDefinition.set("y", &DIMOUSESTATE2::lY);
+				usertypeDefinition.set("z", &DIMOUSESTATE2::lZ);
 
 				// Indirect bindings to unions and arrays.
 				usertypeDefinition.set("buttons", sol::readonly_property([](DIMOUSESTATE2& self) { return std::ref(self.rgbButtons); }));
