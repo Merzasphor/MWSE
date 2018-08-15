@@ -687,6 +687,26 @@ namespace mwse {
 				int m_Situation;
 			};
 
+			// ---------------------------------------------------------------------------- //
+
+			class WeaponReadiedEvent : public ObjectFilteredEvent {
+			public:
+				WeaponReadiedEvent(TES3::Reference* reference);
+				sol::table createEventTable();
+
+			protected:
+				TES3::Reference* m_Reference;
+			};
+
+			class WeaponUnreadiedEvent : public ObjectFilteredEvent {
+			public:
+				WeaponUnreadiedEvent(TES3::Reference* reference);
+				sol::table createEventTable();
+
+			protected:
+				TES3::Reference* m_Reference;
+			};
+
 		}
 	}
 }
