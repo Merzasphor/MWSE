@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stddef.h>
 #include "TES3Defines.h"
 
 #include "TES3Collections.h"
@@ -37,7 +38,7 @@ namespace TES3 {
 		Iterator<void> * birthsigns; // 0x44
 		Iterator<StartScript> * startScripts; // 0x48
 		Skill skills[27]; // 0x4C
-		MagicEffect magicEffects[143]; // 0x05C8
+		MagicEffect magicEffects[143]; // 0x5C8
 		void * lights; // 0x9DB8
 		int unknown_0x9DBC[600];
 		void * unknown_0xA71C[4];
@@ -77,6 +78,11 @@ namespace TES3 {
 
 	};
 	static_assert(sizeof(NonDynamicData) == 0xB264, "TES3::NonDynamicData failed size validation");
+	static_assert(offsetof(NonDynamicData, spellsList) == 0x10, "TES3::NonDynamicData failed offset validation");
+	static_assert(offsetof(NonDynamicData, GMSTs) == 0x18, "TES3::NonDynamicData failed offset validation");
+	static_assert(offsetof(NonDynamicData, skills) == 0x4C, "TES3::NonDynamicData failed offset validation");
+	static_assert(offsetof(NonDynamicData, magicEffects) == 0x5C8, "TES3::NonDynamicData failed offset validation");
+	static_assert(offsetof(NonDynamicData, TESFiles) == 0xAE60, "TES3::NonDynamicData failed offset validation");
 
 	struct SoundEvent {
 		Reference* reference;
@@ -212,4 +218,10 @@ namespace TES3 {
 
 	};
 	static_assert(sizeof(DataHandler) == 0xB558, "TES3::DataHandler failed size validation");
+	static_assert(offsetof(DataHandler, worldObjectRoot) == 0x8C, "TES3::DataHandler failed offset validation");
+	static_assert(offsetof(DataHandler, cellChanged) == 0xA8, "TES3::DataHandler failed offset validation");
+	static_assert(offsetof(DataHandler, currentInteriorCell) == 0xAC, "TES3::DataHandler failed offset validation");
+	static_assert(offsetof(DataHandler, soundEvents) == 0xB4D0, "TES3::DataHandler failed offset validation");
+	static_assert(offsetof(DataHandler, backgroundThreadID) == 0xB4FC, "TES3::DataHandler failed offset validation");
+	static_assert(offsetof(DataHandler, currentCell) == 0xB540, "TES3::DataHandler failed offset validation");
 }

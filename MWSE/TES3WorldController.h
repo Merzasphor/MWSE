@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stddef.h>
 #include "NIDefines.h"
 #include "TES3Defines.h"
 #include "TES3UIDefines.h"
@@ -164,12 +165,12 @@ namespace TES3 {
 		WorldControllerRenderCamera armCamera; // 0x150
 		WorldControllerRenderCamera menuCamera; // 0x17C
 		WorldControllerRenderTarget characterRenderTarget; // 0x1A8
-		WorldControllerRenderTarget unknown_0x22C; // 0x22C
+		WorldControllerRenderTarget mapRenderTarget; // 0x22C
 		WorldControllerRenderCamera shadowCamera; // 0x2B0
 		int unknown_0x2DC;
 		void * fogOfWarController; // 0x2E0
-		void * uiInventoryData; // 0x2E8
 		UI::MenuController * menuController; // 0x2E4
+		void * uiInventoryData; // 0x2E8
 		Sound * soundWeaponSwish; // 0x2EC
 		Sound * soundLightArmorHit; // 0x2F0
 		Sound * soundMediumArmorHit; // 0x2F4
@@ -226,4 +227,11 @@ namespace TES3 {
 
 	};
 	static_assert(sizeof(WorldController) == 0x374, "TES3::WorldController failed size validation");
+	static_assert(offsetof(WorldController, inputController) == 0x4C, "TES3::WorldController failed offset validation");
+	static_assert(offsetof(WorldController, mobController) == 0x5C, "TES3::WorldController failed offset validation");
+	static_assert(offsetof(WorldController, gvarGameHour) == 0xA8, "TES3::WorldController failed offset validation");
+	static_assert(offsetof(WorldController, flagMenuMode) == 0xD6, "TES3::WorldController failed offset validation");
+	static_assert(offsetof(WorldController, menuController) == 0x2E4, "TES3::WorldController failed offset validation");
+	static_assert(offsetof(WorldController, globalScripts) == 0x338, "TES3::WorldController failed offset validation");
+	static_assert(offsetof(WorldController, menuController) == 0x2E4, "TES3::WorldController failed offset validation");
 }
