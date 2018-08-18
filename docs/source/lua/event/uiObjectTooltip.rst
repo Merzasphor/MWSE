@@ -18,7 +18,11 @@ tooltip
 
 object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`tes3object`_. Read-only. The object being examined. For in-world objects, this is usually a reference. For inventory tiles, it is the object itself. Always check the ``objectType``.
+`tes3object`_. Read-only. The object being examined.
+
+reference
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`tes3reference`_. Read-only. The reference being examined. Only valid for in-world objects. For inventory tiles it will always be **nil**.
 
 itemData
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -41,3 +45,4 @@ This event does not support filters.
 .. _`Element`: ../type/tes3ui/element.html
 .. _`tes3itemData`: ../type/tes3/itemData.html
 .. _`tes3object`: ../type/tes3/baseObject.html
+.. _`tes3reference`: ../type/tes3/reference.html
