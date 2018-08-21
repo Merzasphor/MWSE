@@ -687,6 +687,28 @@ namespace mwse {
 				int m_Situation;
 			};
 
+			// ---------------------------------------------------------------------------- //
+
+			class LeveledItemPickedEvent : public ObjectFilteredEvent {
+			public:
+				LeveledItemPickedEvent(TES3::LeveledItem * list, TES3::Object * vanillaResult);
+				sol::table createEventTable();
+
+			protected:
+				TES3::LeveledItem* m_List;
+				TES3::Object* m_Result;
+			};
+
+			class LeveledCreaturePickedEvent : public ObjectFilteredEvent {
+			public:
+				LeveledCreaturePickedEvent(TES3::LeveledCreature * list, TES3::Object * vanillaResult);
+				sol::table createEventTable();
+
+			protected:
+				TES3::LeveledCreature* m_List;
+				TES3::Object* m_Result;
+			};
+
 		}
 	}
 }

@@ -1470,6 +1470,48 @@ namespace mwse {
 				return eventData;
 			}
 
+			//
+			// Leveled item result picked event.
+			//
+
+			LeveledItemPickedEvent::LeveledItemPickedEvent(TES3::LeveledItem * list, TES3::Object * vanillaResult) :
+				ObjectFilteredEvent("leveledItemPicked", list),
+				m_List(list),
+				m_Result(vanillaResult)
+			{
+
+			}
+
+			sol::table LeveledItemPickedEvent::createEventTable() {
+				sol::table eventData = LuaManager::getInstance().getState().create_table();
+
+				eventData["list"] = lua::makeLuaObject(m_List);
+				eventData["pick"] = lua::makeLuaObject(m_Result);
+
+				return eventData;
+			}
+
+			//
+			// Leveled creature result picked event.
+			//
+
+			LeveledCreaturePickedEvent::LeveledCreaturePickedEvent(TES3::LeveledCreature * list, TES3::Object * vanillaResult) :
+				ObjectFilteredEvent("leveledCreaturePicked", list),
+				m_List(list),
+				m_Result(vanillaResult)
+			{
+
+			}
+
+			sol::table LeveledCreaturePickedEvent::createEventTable() {
+				sol::table eventData = LuaManager::getInstance().getState().create_table();
+
+				eventData["list"] = lua::makeLuaObject(m_List);
+				eventData["pick"] = lua::makeLuaObject(m_Result);
+
+				return eventData;
+			}
+
 		}
 	}
 }
