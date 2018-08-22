@@ -1404,11 +1404,6 @@ namespace mwse {
 		const auto TES3_MobileActor_weaponAnimState = reinterpret_cast<void(__thiscall*)(const TES3::MobileActor*, TES3::EquipmentStack *)>(0x52CB70);
 		const auto TES3_MobileActor_offhandAnimState = reinterpret_cast<void(__thiscall*)(const TES3::MobileActor*)>(0x52D5B0);
 
-		void __fastcall OnAttachWeaponMesh(TES3::Reference* reference) {
-			TES3_Reference_attachWeaponModel(reference);
-			LuaManager::getInstance().triggerEvent(new event::WeaponReadiedEvent(reference));
-		}
-
 		void __fastcall OnReadyNoWeapon(TES3::MobileActor * actor) {
 			TES3_MobileActor_offhandAnimState(actor);
 			if (actor->reference) {
@@ -1419,64 +1414,9 @@ namespace mwse {
 		void __fastcall OnDetachWeaponMesh(TES3::Reference * reference, DWORD _UNUSED_, bool isActor) {
 			TES3_Reference_detatchWeaponModel(reference, isActor);
 			TES3::AttachmentWithNode<void> * attachment = tes3::getAttachment<TES3::AttachmentWithNode<void>>(reference, static_cast<TES3::AttachmentType::AttachmentType>(1));
-			if (isActor && attachment && attachment->data) {
+			if (isActor && attachment && attachment->data && tes3::getAttachedMobileActor(reference)) {
 				LuaManager::getInstance().triggerEvent(new event::WeaponUnreadiedEvent(reference));
 			}
-		}
-
-		void __fastcall OnDetachWeaponMeshA(TES3::Reference * reference, DWORD _UNUSED_, bool isActor) {
-			mwse::log::getLog() << "OnDetachWeaponMeshA" << std::endl;
-			OnDetachWeaponMesh(reference, _UNUSED_, isActor);
-		}
-
-		void __fastcall OnDetachWeaponMeshB(TES3::Reference * reference, DWORD _UNUSED_, bool isActor) {
-			mwse::log::getLog() << "OnDetachWeaponMeshB" << std::endl;
-			OnDetachWeaponMesh(reference, _UNUSED_, isActor);
-		}
-
-		void __fastcall OnDetachWeaponMeshC(TES3::Reference * reference, DWORD _UNUSED_, bool isActor) {
-			mwse::log::getLog() << "OnDetachWeaponMeshC" << std::endl;
-			OnDetachWeaponMesh(reference, _UNUSED_, isActor);
-		}
-
-		void __fastcall OnDetachWeaponMeshD(TES3::Reference * reference, DWORD _UNUSED_, bool isActor) {
-			mwse::log::getLog() << "OnDetachWeaponMeshD" << std::endl;
-			OnDetachWeaponMesh(reference, _UNUSED_, isActor);
-		}
-
-		void __fastcall OnDetachWeaponMeshE(TES3::Reference * reference, DWORD _UNUSED_, bool isActor) {
-			mwse::log::getLog() << "OnDetachWeaponMeshE" << std::endl;
-			OnDetachWeaponMesh(reference, _UNUSED_, isActor);
-		}
-
-		void __fastcall OnDetachWeaponMeshF(TES3::Reference * reference, DWORD _UNUSED_, bool isActor) {
-			mwse::log::getLog() << "OnDetachWeaponMeshF" << std::endl;
-			OnDetachWeaponMesh(reference, _UNUSED_, isActor);
-		}
-
-		void __fastcall OnDetachWeaponMeshG(TES3::Reference * reference, DWORD _UNUSED_, bool isActor) {
-			mwse::log::getLog() << "OnDetachWeaponMeshG" << std::endl;
-			OnDetachWeaponMesh(reference, _UNUSED_, isActor);
-		}
-
-		void __fastcall OnDetachWeaponMeshH(TES3::Reference * reference, DWORD _UNUSED_, bool isActor) {
-			mwse::log::getLog() << "OnDetachWeaponMeshH" << std::endl;
-			OnDetachWeaponMesh(reference, _UNUSED_, isActor);
-		}
-
-		void __fastcall OnDetachWeaponMeshI(TES3::Reference * reference, DWORD _UNUSED_, bool isActor) {
-			mwse::log::getLog() << "OnDetachWeaponMeshI" << std::endl;
-			OnDetachWeaponMesh(reference, _UNUSED_, isActor);
-		}
-
-		void __fastcall OnDetachWeaponMeshJ(TES3::Reference * reference, DWORD _UNUSED_, bool isActor) {
-			mwse::log::getLog() << "OnDetachWeaponMeshJ" << std::endl;
-			OnDetachWeaponMesh(reference, _UNUSED_, isActor);
-		}
-
-		void __fastcall OnDetachWeaponMeshK(TES3::Reference * reference, DWORD _UNUSED_, bool isActor) {
-			mwse::log::getLog() << "OnDetachWeaponMeshK" << std::endl;
-			OnDetachWeaponMesh(reference, _UNUSED_, isActor);
 		}
 
 		void __fastcall OnWeaponAnimationState(TES3::MobileActor* actor, DWORD _UNUSED_, TES3::EquipmentStack * stack) {
@@ -1968,44 +1908,16 @@ namespace mwse {
 			genCallEnforced(0x40F8CA, 0x410EA0, reinterpret_cast<DWORD>(OnSelectMusicTrack));
 			genCallEnforced(0x40F901, 0x410EA0, reinterpret_cast<DWORD>(OnSelectMusicTrack));
 
-			// Event: Weapon ready
-#if false
-			genCallEnforced(0x495D92, 0x52CB70, reinterpret_cast<DWORD>(OnWeaponAnimationState));
-			genCallEnforced(0x495E5B, 0x52CB70, reinterpret_cast<DWORD>(OnWeaponAnimationState));
-			genCallEnforced(0x496030, 0x52CB70, reinterpret_cast<DWORD>(OnWeaponAnimationState));
-			genCallEnforced(0x49604F, 0x52CB70, reinterpret_cast<DWORD>(OnWeaponAnimationState));
-			genCallEnforced(0x496811, 0x52CB70, reinterpret_cast<DWORD>(OnWeaponAnimationState));
-			genCallEnforced(0x4E8C3C, 0x52CB70, reinterpret_cast<DWORD>(OnWeaponAnimationState));
-			genCallEnforced(0x4E8EE4, 0x52CB70, reinterpret_cast<DWORD>(OnWeaponAnimationState));
-			genCallEnforced(0x52C899, 0x52CB70, reinterpret_cast<DWORD>(OnWeaponAnimationState));
-			genCallEnforced(0x52C8B8, 0x52CB70, reinterpret_cast<DWORD>(OnWeaponAnimationState));
-			genCallEnforced(0x53FEEE, 0x52CB70, reinterpret_cast<DWORD>(OnWeaponAnimationState));
-			genCallEnforced(0x54A1FA, 0x52CB70, reinterpret_cast<DWORD>(OnWeaponAnimationState));
-			genCallEnforced(0x54A268, 0x52CB70, reinterpret_cast<DWORD>(OnWeaponAnimationState));
-			genCallEnforced(0x55A759, 0x52CB70, reinterpret_cast<DWORD>(OnWeaponAnimationState));
-			genCallEnforced(0x5CF404, 0x52CB70, reinterpret_cast<DWORD>(OnWeaponAnimationState));
-			genCallEnforced(0x5D012A, 0x52CB70, reinterpret_cast<DWORD>(OnWeaponAnimationState));
-			genCallEnforced(0x5D0C7A, 0x52CB70, reinterpret_cast<DWORD>(OnWeaponAnimationState));
-#else
-			genCallEnforced(0x4E8F27, 0x4E8F50, reinterpret_cast<DWORD>(OnAttachWeaponMesh));
-			// genCallEnforced(0x4E8FC7, 0x4E8F50, reinterpret_cast<DWORD>(OnAttachWeaponMesh));
-			genCallEnforced(0x527F7E, 0x4E8F50, reinterpret_cast<DWORD>(OnAttachWeaponMesh));
-			genCallEnforced(0x527FC4, 0x4E8F50, reinterpret_cast<DWORD>(OnAttachWeaponMesh));
-
+			// Event: Weapon ready.
 			genCallEnforced(0x527FEA, 0x52D5B0, reinterpret_cast<DWORD>(OnReadyNoWeapon));
 
-			//genCallEnforced(0x49693C, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMeshA));
-			//genCallEnforced(0x4E469A, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMeshB));
+			// Event: Weapon unready.
 			genCallEnforced(0x4E891A, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
 			genCallEnforced(0x4E8AB6, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
-			//genCallEnforced(0x4E9107, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMeshE));
-			//genCallEnforced(0x524B60, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMeshF));
 			genCallEnforced(0x528040, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
 			genCallEnforced(0x52830B, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
-			//genCallEnforced(0x52CBBC, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMeshI));
 			genCallEnforced(0x5B54E4, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
 			genCallEnforced(0x5B72CB, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
-#endif
 
 			// Event: Leveled item picked.
 			auto leveledItemPick = &TES3::LeveledItem::resolve;
