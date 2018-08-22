@@ -1933,6 +1933,21 @@ namespace mwse {
 			genCallEnforced(0x4CFB43, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
 			genCallEnforced(0x635236, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
 
+			// Event: Mobile actor attached/detached. 
+			auto setReferenceMobileActor = &TES3::Reference::setMobileActor;
+			genCallEnforced(0x4C6C88, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
+			genCallEnforced(0x4E02C9, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
+			genCallEnforced(0x4E0338, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
+			genCallEnforced(0x5636F6, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
+			genCallEnforced(0x56615A, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
+			genCallEnforced(0x5661A0, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
+			genCallEnforced(0x566338, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
+			genCallEnforced(0x566348, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
+			genCallEnforced(0x572378, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
+			genCallEnforced(0x5725D9, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
+			genCallEnforced(0x572630, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
+			genCallEnforced(0x574114, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
+
 			// UI framework hooks
 			TES3::UI::hook();
 

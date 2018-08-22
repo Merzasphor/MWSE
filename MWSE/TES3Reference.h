@@ -33,6 +33,8 @@ namespace TES3 {
 		ItemDataAttachment* addItemDataAttachment(ItemData*);
 		Vector3* getOrientationFromAttachment();
 
+		MobileActor* setMobileActor(TES3::MobileActor * mobileActor);
+
 		//
 		// Other utility functions.
 		//

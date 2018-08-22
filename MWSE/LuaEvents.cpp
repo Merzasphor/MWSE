@@ -1549,6 +1549,46 @@ namespace mwse {
 				return eventData;
 			}
 
+			//
+			// Mobile actor attached to reference event.
+			//
+
+			MobileActorAttachedEvent::MobileActorAttachedEvent(TES3::Reference * reference, TES3::MobileActor * mobileActor) :
+				ObjectFilteredEvent("mobileAttached", reference),
+				m_Reference(reference),
+				m_MobileActor(mobileActor)
+			{
+
+			}
+
+			sol::table MobileActorAttachedEvent::createEventTable() {
+				sol::table eventData = LuaManager::getInstance().getState().create_table();
+
+				eventData["reference"] = lua::makeLuaObject(m_Reference);
+				eventData["mobile"] = lua::makeLuaObject(m_MobileActor);
+
+				return eventData;
+			}
+
+			//
+			// Mobile actor detached to reference event.
+			//
+
+			MobileActorDetachedEvent::MobileActorDetachedEvent(TES3::Reference * reference) :
+				ObjectFilteredEvent("mobileDetached", reference),
+				m_Reference(reference)
+			{
+
+			}
+
+			sol::table MobileActorDetachedEvent::createEventTable() {
+				sol::table eventData = LuaManager::getInstance().getState().create_table();
+
+				eventData["reference"] = lua::makeLuaObject(m_Reference);
+
+				return eventData;
+			}
+
 		}
 	}
 }

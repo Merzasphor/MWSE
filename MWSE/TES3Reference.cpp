@@ -18,6 +18,8 @@
 #define TES3_Reference_addItemDataAttachment 0x4E5360
 
 namespace TES3 {
+	const auto TES3_Reference_setMobileActor = reinterpret_cast<MobileActor* (__thiscall*)(Reference*, MobileActor*)>(0x4E5770);
+
 	void Reference::activate(Reference* activator, int unknown) {
 		// If our event data says to block, don't let the object activate.
 		sol::object response = mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::ActivateEvent(activator, this));
@@ -57,6 +59,21 @@ namespace TES3 {
 
 	Vector3* Reference::getOrientationFromAttachment() {
 		return reinterpret_cast<Vector3* (__thiscall *)(Reference*)>(0x4E5970)(this);
+	}
+
+	MobileActor* Reference::setMobileActor(TES3::MobileActor * mobileActor) {
+		// Call original function.
+		MobileActor* result = TES3_Reference_setMobileActor(this, mobileActor);
+
+		// Fire off associated events.
+		if (mobileActor) {
+			mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileActorAttachedEvent(this, result));
+		}
+		else {
+			mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileActorDetachedEvent(this));
+		}
+
+		return result;
 	}
 
 	void Reference::setPositionFromLua(sol::stack_object value) {
