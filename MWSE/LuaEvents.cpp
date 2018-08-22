@@ -666,8 +666,17 @@ namespace mwse {
 			sol::table UiObjectTooltipEvent::createEventTable() {
 				sol::table eventData = LuaManager::getInstance().getState().create_table();
 
+				// If the object is a reference, expose its base object and the reference.
+				if (m_Object->objectType == TES3::ObjectType::Reference) {
+					eventData["object"] = makeLuaObject(reinterpret_cast<TES3::Reference*>(m_Object)->baseObject);
+					eventData["reference"] = makeLuaObject(m_Object);
+				}
+				// Otherwise just expose the object.
+				else {
+					eventData["object"] = makeLuaObject(m_Object);
+				}
+
 				eventData["tooltip"] = m_Tooltip;
-				eventData["object"] = makeLuaObject(m_Object);
 				eventData["itemData"] = m_ItemData;
 				eventData["count"] = m_Count;
 
@@ -1458,6 +1467,48 @@ namespace mwse {
 			sol::table MusicSelectTrackEvent::createEventTable() {
 				sol::table eventData = LuaManager::getInstance().getState().create_table();
 				eventData["situation"] = m_Situation;
+				return eventData;
+			}
+
+			//
+			// Leveled item result picked event.
+			//
+
+			LeveledItemPickedEvent::LeveledItemPickedEvent(TES3::LeveledItem * list, TES3::Object * vanillaResult) :
+				ObjectFilteredEvent("leveledItemPicked", list),
+				m_List(list),
+				m_Result(vanillaResult)
+			{
+
+			}
+
+			sol::table LeveledItemPickedEvent::createEventTable() {
+				sol::table eventData = LuaManager::getInstance().getState().create_table();
+
+				eventData["list"] = lua::makeLuaObject(m_List);
+				eventData["pick"] = lua::makeLuaObject(m_Result);
+
+				return eventData;
+			}
+
+			//
+			// Leveled creature result picked event.
+			//
+
+			LeveledCreaturePickedEvent::LeveledCreaturePickedEvent(TES3::LeveledCreature * list, TES3::Object * vanillaResult) :
+				ObjectFilteredEvent("leveledCreaturePicked", list),
+				m_List(list),
+				m_Result(vanillaResult)
+			{
+
+			}
+
+			sol::table LeveledCreaturePickedEvent::createEventTable() {
+				sol::table eventData = LuaManager::getInstance().getState().create_table();
+
+				eventData["list"] = lua::makeLuaObject(m_List);
+				eventData["pick"] = lua::makeLuaObject(m_Result);
+
 				return eventData;
 			}
 

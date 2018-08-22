@@ -2007,6 +2007,20 @@ namespace mwse {
 			genCallEnforced(0x5B72CB, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
 #endif
 
+			// Event: Leveled item picked.
+			auto leveledItemPick = &TES3::LeveledItem::resolve;
+			genCallEnforced(0x49A20E, 0x4D0BD0, *reinterpret_cast<DWORD*>(&leveledItemPick));
+			genCallEnforced(0x49A25B, 0x4D0BD0, *reinterpret_cast<DWORD*>(&leveledItemPick));
+			genCallEnforced(0x4D0DD3, 0x4D0BD0, *reinterpret_cast<DWORD*>(&leveledItemPick));
+
+			// Event: Leveled creature picked.
+			auto leveledCreaturePick = &TES3::LeveledCreature::resolve;
+			genCallEnforced(0x4B8C95, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
+			genCallEnforced(0x4B8E80, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
+			genCallEnforced(0x4CF9E7, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
+			genCallEnforced(0x4CFB43, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
+			genCallEnforced(0x635236, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
+
 			// UI framework hooks
 			TES3::UI::hook();
 
