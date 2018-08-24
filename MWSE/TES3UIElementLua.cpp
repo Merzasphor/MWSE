@@ -318,29 +318,7 @@ namespace mwse {
 				},
 				[](Element& self, bool value) { self.setProperty(TES3::UI::Property::repeat_keys, toBooleanProperty(value)); }
 			));
-			usertypeDefinition.set("text", sol::property(
-				[](Element& self) {
-					static auto partTextInput = TES3::UI::registerProperty("PartTextInput");
-					static auto partParaInput = TES3::UI::registerProperty("PartParagraphInput");
-					std::string text(self.getText());
-
-					// Special case code for input widgets, as getText's return value includes the text caret '|'
-					// The game's method for removing it creates extra allocations that are inconvenient to free
-					auto part = self.getProperty(TES3::UI::PropertyType::Property, TES3::UI::Property::is_part).propertyValue;
-					if (part == partTextInput || part == partParaInput) {
-						auto i = text.find('|');
-						if (i != std::string::npos) {
-							text.erase(i, 1);
-						}
-					}
-					return text;
-				},
-				[](Element& self, const char* value) {
-					// Set text and signal menu to re-layout.
-					self.setText(value);
-					self.getTopLevelParent()->timingUpdate();
-				}
-			));
+			usertypeDefinition.set("text", sol::property(getWidgetText, setWidgetText));
 			usertypeDefinition.set("contentType", sol::readonly_property([](Element& self) {
 				switch (self.contentType) {
 				case TES3::UI::Property::model:
@@ -409,7 +387,7 @@ namespace mwse {
 				}
 			);
 			usertypeDefinition.set("getPropertyObject",
-				[](Element& self, const char* propertyName, const char* typeCast) -> sol::object {
+				[](Element& self, const char* propertyName, sol::optional<std::string> typeCast) -> sol::object {
 					TES3::UI::Property prop = TES3::UI::registerProperty(propertyName);
 					auto ptr = self.getProperty(TES3::UI::PropertyType::Pointer, prop).ptrValue;
 
@@ -430,9 +408,7 @@ namespace mwse {
 						}
 					}
 					else {
-						std::string cast(typeCast);
-
-						if (cast == "tes3gameFile") {
+						if (typeCast.value() == "tes3gameFile") {
 							return makeLuaObject(static_cast<TES3::GameFile*>(ptr));
 						}
 						return sol::nil;
