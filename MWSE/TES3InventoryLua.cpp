@@ -130,6 +130,7 @@ namespace mwse {
 				usertypeDefinition.set("count", &TES3::ItemData::count);
 				usertypeDefinition.set("condition", &TES3::ItemData::condition);
 				usertypeDefinition.set("scriptVariables", &TES3::ItemData::scriptData);
+				usertypeDefinition.set("timeLeft", &TES3::ItemData::timeLeft);
 
 				// Access to other objects that need to be packaged.
 				usertypeDefinition.set("script", sol::readonly_property([](TES3::ItemData& self) { return makeLuaObject(self.script); }));

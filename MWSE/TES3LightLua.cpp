@@ -26,6 +26,10 @@ namespace mwse {
 			return sol::optional<float>();
 		}
 
+		float getTimeLeftItemData(const TES3::Light& light, TES3::ItemData& itemData) {
+			return itemData.timeLeft;
+		}
+
 		void bindTES3Light() {
 			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
@@ -72,7 +76,7 @@ namespace mwse {
 			usertypeDefinition.set("name", sol::property(&TES3::Light::getName, &TES3::Light::setName));
 
 			// Methods.
-			usertypeDefinition.set("getTimeLeft", sol::overload(&getTimeLeftEquipStack, &getTimeLeftReference));
+			usertypeDefinition.set("getTimeLeft", sol::overload(&getTimeLeftEquipStack, &getTimeLeftReference, &getTimeLeftItemData));
 
 			// TODO: Deprecated. Remove before 2.1-stable.
 			usertypeDefinition.set("model", sol::property(&TES3::Light::getModelPath, &TES3::Light::setModelPath));
