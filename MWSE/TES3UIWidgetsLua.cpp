@@ -9,32 +9,43 @@ namespace mwse {
 		using TES3::UI::Element;
 		using TES3::UI::Property;
 		using TES3::UI::PropertyType;
+		using TES3::UI::UI_ID;
 		using TES3::UI::WidgetButton;
 		using TES3::UI::WidgetFillbar;
+		using TES3::UI::WidgetParagraphInput;
 		using TES3::UI::WidgetScrollBar;
 		using TES3::UI::WidgetScrollPane;
 		using TES3::UI::WidgetTextInput;
 		using TES3::UI::WidgetTextSelect;
+		using TES3::UI::registerID;
 		using TES3::UI::registerProperty;
 
-		static Property propButton, propFillbar, propScrollBar;
-		static Property propScrollPaneH, propScrollPaneV;
+		static Property propButton, propFillbar, propParagraphInput;
+		static Property propScrollBar, propScrollPaneH, propScrollPaneV;
 		static Property propTextInput, propTextSelect;
+		static UI_ID uiidButtonText, uiidParagraphInputText;
 
 		void bindTES3UIWidgets();
 
-		sol::object makeWidget(Element& element) {
-			static bool deferredInit = false;
-			if (!deferredInit) {
+		void deferredPropInit() {
+			static bool init = false;
+			if (!init) {
 				propButton = registerProperty("PartButton");
 				propFillbar = registerProperty("PartFillbar");
+				propParagraphInput = registerProperty("PartParagraphInput");
 				propScrollBar = registerProperty("PartScrollBar");
 				propScrollPaneH = registerProperty("PartScrollPaneHor");
 				propScrollPaneV = registerProperty("PartScrollPaneVert");
 				propTextInput = registerProperty("PartTextInput");
 				propTextSelect = registerProperty("PartTextSelect");
-				deferredInit = true;
+				uiidButtonText = registerID("PartButton_text_ptr");
+				uiidParagraphInputText = registerID("PartParagraphInput_text_input");
+				init = true;
 			}
+		}
+
+		sol::object makeWidget(Element& element) {
+			deferredPropInit();
 
 			sol::state& state = LuaManager::getInstance().getState();
 			sol::object widget = sol::nil;
@@ -45,6 +56,9 @@ namespace mwse {
 			}
 			else if (part == propFillbar) {
 				widget = sol::make_object(state, WidgetFillbar::fromElement(&element));
+			}
+			else if (part == propParagraphInput) {
+				widget = sol::make_object(state, WidgetParagraphInput::fromElement(&element));
 			}
 			else if (part == propScrollBar) {
 				widget = sol::make_object(state, WidgetScrollBar::fromElement(&element));
@@ -59,6 +73,44 @@ namespace mwse {
 				widget = sol::make_object(state, WidgetTextSelect::fromElement(&element));
 			}
 			return widget;
+		}
+
+		std::string getWidgetText(Element& element) {
+			deferredPropInit();
+
+			Property part = element.getProperty(PropertyType::Property, Property::is_part).propertyValue;
+
+			if (part == propButton) {
+				return WidgetButton::fromElement(&element)->getText();
+			}
+			else if (part == propParagraphInput) {
+				return WidgetParagraphInput::fromElement(&element)->getText();
+			}
+			else if (part == propTextInput) {
+				return WidgetTextInput::fromElement(&element)->getText();
+			}
+			else {
+				return element.getText();
+			}
+		}
+
+		void setWidgetText(Element& element, const char* text) {
+			deferredPropInit();
+
+			Property part = element.getProperty(PropertyType::Property, Property::is_part).propertyValue;
+
+			if (part == propButton) {
+				WidgetButton::fromElement(&element)->setText(text);
+			}
+			else if (part == propParagraphInput) {
+				WidgetParagraphInput::fromElement(&element)->setText(text);
+			}
+			else if (part == propTextInput) {
+				WidgetTextInput::fromElement(&element)->setText(text);
+			}
+			else {
+				element.setText(text);
+			}
 		}
 
 		void bindTES3UIWidgets() {
@@ -119,6 +171,24 @@ namespace mwse {
 				usertypeDefinition.set("fillAlpha", sol::property(&WidgetFillbar::setFillAlpha));
 
 				state.set_usertype("tes3uiFillBar", usertypeDefinition);
+			}
+
+			//
+			// ParagraphInput (PartParagraphInput)
+			//
+			{
+				auto usertypeDefinition = state.create_simple_usertype<WidgetParagraphInput>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				usertypeDefinition.set("lengthLimit", sol::property(
+					[](WidgetParagraphInput& self) { return self.getLengthLimit(); },
+					[](WidgetParagraphInput& self, sol::optional<int> limit) {
+						const int defaultLength = 0x3ff;
+						self.setLengthLimit(limit.value_or(defaultLength));
+					}
+				));
+
+				state.set_usertype("tes3uiParagraphInput", usertypeDefinition);
 			}
 
 			//

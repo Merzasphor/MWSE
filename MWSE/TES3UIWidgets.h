@@ -1,5 +1,6 @@
 #pragma once
 
+#include <string>
 #include "TES3UIElement.h"
 
 namespace TES3 {
@@ -16,6 +17,8 @@ namespace TES3 {
 			void setColourActive(const float(&c)[3]);
 			void setColourActiveOver(const float(&c)[3]);
 			void setColourActivePressed(const float(&c)[3]);
+			const char* getText() const;
+			void setText(const char* text);
 
 			WidgetButton() = delete;
 			static WidgetButton* fromElement(Element* e);
@@ -35,6 +38,18 @@ namespace TES3 {
 
 			WidgetFillbar() = delete;
 			static WidgetFillbar* fromElement(Element* e);
+		private:
+			static bool initProperties();
+		};
+
+		struct WidgetParagraphInput : Element {
+			int getLengthLimit() const;
+			void setLengthLimit(int limit);
+			std::string getText() const;
+			void setText(const char* text);
+
+			WidgetParagraphInput() = delete;
+			static WidgetParagraphInput* fromElement(Element* e);
 		private:
 			static bool initProperties();
 		};
@@ -77,6 +92,8 @@ namespace TES3 {
 			void setNoLimit(bool flag);
 			bool getEraseOnFirstKey() const;
 			void setEraseOnFirstKey(bool flag);
+			std::string getText() const;
+			void setText(const char* text);
 
 			WidgetTextInput() = delete;
 			static WidgetTextInput* fromElement(Element* e);

@@ -34,6 +34,7 @@ namespace TES3 {
 		static Property propButtonIdle[4], propButtonOver[4], propButtonPressed[4];
 		static Property propButtonDisabled[4], propButtonDisabledOver[4], propButtonDisabledPressed[4];
 		static Property propButtonActive[4], propButtonActiveOver[4], propButtonActivePressed[4];
+		static UI_ID uiidButtonText;
 
 		bool WidgetButton::initProperties() {
 			propButtonState = registerProperty("PartButton_state");
@@ -46,6 +47,7 @@ namespace TES3 {
 			initColourProperty(propButtonActive, "PartButton_active");
 			initColourProperty(propButtonActiveOver, "PartButton_active_over");
 			initColourProperty(propButtonActivePressed, "PartButton_active_pressed");
+			uiidButtonText = registerID("PartButton_text_ptr");
 			return true;
 		}
 
@@ -71,6 +73,13 @@ namespace TES3 {
 		void WidgetButton::setColourActiveOver(const float(&c)[3]) { setColourProperty(*this, propButtonActiveOver, c); }
 		void WidgetButton::setColourActivePressed(const float(&c)[3]) { setColourProperty(*this, propButtonActivePressed, c); }
 	
+		const char* WidgetButton::getText() const {
+			return findChild(uiidButtonText)->getText();
+		}
+		void WidgetButton::setText(const char* text) {
+			findChild(uiidButtonText)->setText(text);
+		}
+
 		//
 		// WidgetFillbar
 		//
@@ -121,6 +130,40 @@ namespace TES3 {
 		}
 		void WidgetFillbar::setFillAlpha(float a) {
 			setProperty(propFillbarCol[3], a);
+		}
+
+		//
+		// WidgetParagraphInput
+		//
+		static Property propParagraphInputMaxLength;
+		static UI_ID uiidParagraphInputText;
+
+		bool WidgetParagraphInput::initProperties() {
+			propParagraphInputMaxLength = registerProperty("PartParagraphInput_max_length");
+			uiidParagraphInputText = registerID("PartParagraphInput_text_input");
+			return true;
+		}
+
+		WidgetParagraphInput* WidgetParagraphInput::fromElement(Element* element) {
+			static bool initialized = initProperties();
+			return static_cast<WidgetParagraphInput*>(element);
+		}
+
+		int WidgetParagraphInput::getLengthLimit() const {
+			return getProperty(PropertyType::Integer, propParagraphInputMaxLength).integerValue;
+		}
+		void WidgetParagraphInput::setLengthLimit(int limit) {
+			setProperty(propParagraphInputMaxLength, limit);
+		}
+
+		std::string WidgetParagraphInput::getText() const {
+			auto textInput = WidgetTextInput::fromElement(findChild(uiidParagraphInputText));
+			return textInput->getText();
+		}
+		void WidgetParagraphInput::setText(const char* text) {
+			std::string editText = text;
+			editText.append("|");
+			findChild(uiidParagraphInputText)->setText(editText.c_str());
 		}
 
 		//
@@ -280,6 +323,23 @@ namespace TES3 {
 		void WidgetTextInput::setEraseOnFirstKey(bool flag) {
 			auto value = flag ? Property::boolean_true : Property::boolean_false;
 			setProperty(propTextInputEraseOnFirstKey, value);
+		}
+
+		std::string WidgetTextInput::getText() const {
+			// getText's return value includes the text caret '|'
+			// The game's function for removing it creates extra allocations that are inconvenient to free.
+			std::string editText = Element::getText();
+			auto i = editText.find('|');
+			if (i != std::string::npos) {
+				editText.erase(i, 1);
+			}
+			return editText;
+		}
+		void WidgetTextInput::setText(const char* text) {
+			// Use standard setText without adding a caret.
+			// PartTextInput behaviour - First keypress will clear the line.
+			// PartParagraphInput behaviour - Caret is positioned at the end of the text, first keypress will append.
+			Element::setText(text);
 		}
 
 		//

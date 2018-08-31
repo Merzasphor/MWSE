@@ -276,8 +276,10 @@ Methods
     Returns:
         The newly created paragraph input element.
 
-    Creates a multi-line text input element.
-    To be documented.
+    Creates a multi-line text input element, with line wrapping on. To receive input the keyboard must be captured with ``tes3ui.acquireTextInput(element)``. Read the input with the ``text`` property. Write an initial value to edit by setting the ``text`` property.
+
+    Custom widget properties:
+        | `number`_ (integer) ``element.widget.lengthLimit"``: Maximum input length. Default is ``1023``.
 
 `Element`_ **createRect** {id = `UI_ID`_ ``optional``, color = `table`_ ``float[3]``}  ``Uses table arguments.``
     Returns:
@@ -319,7 +321,7 @@ Methods
     Returns:
         The newly created text input element.
 
-    Creates a single line text input element. To receive input the keyboard must be captured with ``tes3ui.acquireTextInput(element)``. Read the input with the ``text`` property.
+    Creates a single line text input element. To receive input the keyboard must be captured with ``tes3ui.acquireTextInput(element)``. Read the input with the ``text`` property. Write an initial value to display by setting the ``text`` property; that value will be cleared on the first keypress.
 
     Custom widget properties:
         | `boolean`_ ``element.widget.eraseOnFirstKey``: Clears the initial value if the first keypress is not an edit action. Default is ``true``.
