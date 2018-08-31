@@ -61,21 +61,6 @@ namespace TES3 {
 		return reinterpret_cast<Vector3* (__thiscall *)(Reference*)>(0x4E5970)(this);
 	}
 
-	MobileActor* Reference::setMobileActor(TES3::MobileActor * mobileActor) {
-		// Call original function.
-		MobileActor* result = TES3_Reference_setMobileActor(this, mobileActor);
-
-		// Fire off associated events.
-		if (mobileActor) {
-			mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileActorAttachedEvent(this, result));
-		}
-		else {
-			mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileActorDetachedEvent(this));
-		}
-
-		return result;
-	}
-
 	void Reference::setPositionFromLua(sol::stack_object value) {
 		// Is it a vector?
 		if (value.is<Vector3*>()) {

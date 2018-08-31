@@ -731,19 +731,18 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
-			class MobileActorAttachedEvent : public ObjectFilteredEvent {
+			class MobileActorActivatedEvent : public ObjectFilteredEvent {
 			public:
-				MobileActorAttachedEvent(TES3::Reference * reference, TES3::MobileActor * mobileActor);
+				MobileActorActivatedEvent(TES3::Reference * reference);
 				sol::table createEventTable();
 
 			protected:
 				TES3::Reference* m_Reference;
-				TES3::MobileActor* m_MobileActor;
 			};
 
-			class MobileActorDetachedEvent : public ObjectFilteredEvent {
+			class MobileActorDeactivatedEvent : public ObjectFilteredEvent {
 			public:
-				MobileActorDetachedEvent(TES3::Reference * reference);
+				MobileActorDeactivatedEvent(TES3::Reference * reference);
 				sol::table createEventTable();
 
 			protected:

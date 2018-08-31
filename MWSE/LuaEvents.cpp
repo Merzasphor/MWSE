@@ -1550,38 +1550,36 @@ namespace mwse {
 			}
 
 			//
-			// Mobile actor attached to reference event.
+			// Mobile actor added to mob manager event.
 			//
 
-			MobileActorAttachedEvent::MobileActorAttachedEvent(TES3::Reference * reference, TES3::MobileActor * mobileActor) :
-				ObjectFilteredEvent("mobileAttached", reference),
-				m_Reference(reference),
-				m_MobileActor(mobileActor)
-			{
-
-			}
-
-			sol::table MobileActorAttachedEvent::createEventTable() {
-				sol::table eventData = LuaManager::getInstance().getState().create_table();
-
-				eventData["reference"] = lua::makeLuaObject(m_Reference);
-				eventData["mobile"] = lua::makeLuaObject(m_MobileActor);
-
-				return eventData;
-			}
-
-			//
-			// Mobile actor detached to reference event.
-			//
-
-			MobileActorDetachedEvent::MobileActorDetachedEvent(TES3::Reference * reference) :
-				ObjectFilteredEvent("mobileDetached", reference),
+			MobileActorActivatedEvent::MobileActorActivatedEvent(TES3::Reference * reference) :
+				ObjectFilteredEvent("mobileActivated", reference),
 				m_Reference(reference)
 			{
 
 			}
 
-			sol::table MobileActorDetachedEvent::createEventTable() {
+			sol::table MobileActorActivatedEvent::createEventTable() {
+				sol::table eventData = LuaManager::getInstance().getState().create_table();
+
+				eventData["reference"] = lua::makeLuaObject(m_Reference);
+
+				return eventData;
+			}
+
+			//
+			// Mobile actor removed from mob manager event.
+			//
+
+			MobileActorDeactivatedEvent::MobileActorDeactivatedEvent(TES3::Reference * reference) :
+				ObjectFilteredEvent("mobileDeactivated", reference),
+				m_Reference(reference)
+			{
+
+			}
+
+			sol::table MobileActorDeactivatedEvent::createEventTable() {
 				sol::table eventData = LuaManager::getInstance().getState().create_table();
 
 				eventData["reference"] = lua::makeLuaObject(m_Reference);

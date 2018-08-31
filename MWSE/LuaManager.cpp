@@ -1933,20 +1933,41 @@ namespace mwse {
 			genCallEnforced(0x4CFB43, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
 			genCallEnforced(0x635236, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
 
-			// Event: Mobile actor attached/detached. 
-			auto setReferenceMobileActor = &TES3::Reference::setMobileActor;
-			genCallEnforced(0x4C6C88, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
-			genCallEnforced(0x4E02C9, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
-			genCallEnforced(0x4E0338, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
-			genCallEnforced(0x5636F6, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
-			genCallEnforced(0x56615A, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
-			genCallEnforced(0x5661A0, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
-			genCallEnforced(0x566338, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
-			genCallEnforced(0x566348, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
-			genCallEnforced(0x572378, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
-			genCallEnforced(0x5725D9, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
-			genCallEnforced(0x572630, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
-			genCallEnforced(0x574114, 0x4E5770, *reinterpret_cast<DWORD*>(&setReferenceMobileActor));
+			// Event: Mobile added to controller.
+			auto mobControllerAddMob = &TES3::MobController::addMob;
+			genCallEnforced(0x4665D5, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x484F3D, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x4C6954, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x4DC965, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x4EBCBF, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x5090BF, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x50990C, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x509A6E, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x50EFE3, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x529C3B, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x54DE92, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x57356C, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x5752C6, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x57595B, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x635390, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+
+			// Event: Mobile added to controller.
+			auto mobControllerRemoveMob = &TES3::MobController::removeMob;
+			genCallEnforced(0x4668D8, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x484E24, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x4E47C1, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x4E8911, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x4EBD8C, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x50919F, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x523A1F, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x523AE5, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x52E980, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x52EA6D, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x52EDE5, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x574FDB, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x57509A, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x57548A, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x575647, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
 
 			// UI framework hooks
 			TES3::UI::hook();
