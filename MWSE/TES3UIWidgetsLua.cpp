@@ -111,6 +111,8 @@ namespace mwse {
 			else {
 				element.setText(text);
 			}
+
+			element.getTopLevelParent()->timingUpdate();
 		}
 
 		void bindTES3UIWidgets() {
