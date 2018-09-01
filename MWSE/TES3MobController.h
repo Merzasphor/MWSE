@@ -89,6 +89,9 @@ namespace TES3 {
 		// Related this-call functions.
 		//
 
+		void addMob(Reference * reference);
+		void removeMob(Reference * reference);
+
 		void checkPlayerDistance();
 
 	};

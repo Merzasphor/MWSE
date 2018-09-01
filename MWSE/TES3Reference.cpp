@@ -18,6 +18,8 @@
 #define TES3_Reference_addItemDataAttachment 0x4E5360
 
 namespace TES3 {
+	const auto TES3_Reference_setMobileActor = reinterpret_cast<MobileActor* (__thiscall*)(Reference*, MobileActor*)>(0x4E5770);
+
 	void Reference::activate(Reference* activator, int unknown) {
 		// If our event data says to block, don't let the object activate.
 		sol::object response = mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::ActivateEvent(activator, this));
@@ -101,10 +103,17 @@ namespace TES3 {
 			sceneNode->propagatePositionChange();
 		}
 
-		Vector3 * positionPackage = getPosition();
-		positionPackage->x = x;
-		positionPackage->y = y;
-		positionPackage->z = z;
+		// Set local position.
+		position.x = x;
+		position.y = y;
+		position.z = z;
+
+		// Sync position attachment to local position.
+		auto attachment = mwse::tes3::getAttachment<TES3::NewOrientationAttachment>(this, TES3::AttachmentType::NewOrientation);
+		if (attachment) {
+			attachment->position = position;
+		}
+
 		setObjectModified(true);
 	}
 
@@ -124,23 +133,22 @@ namespace TES3 {
 	}
 
 	void Reference::setOrientation(float x, float y, float z) {
-#if false
-		// Ugly workaround to set the angles.
-		mwse::mwscript::SetAngle(this, 'U', x);
-		mwse::mwscript::SetAngle(this, 'V', y);
-		mwse::mwscript::SetAngle(this, 'W', z);
-#else
-		// Doesn't currently work. Non-NPCs/creatures don't change their orientation.
 		Vector3 * orientationPackage = getOrientation();
 		orientationPackage->x = x;
 		orientationPackage->y = y;
 		orientationPackage->z = z;
 
-		Matrix33 tempOutArg;
-		sceneNode->setLocalRotationMatrix(updateSceneMatrix(&tempOutArg));
-		sceneNode->propagatePositionChange();
+		if (orientationPackage != &orientation) {
+			orientation = *orientationPackage;
+		}
+
+		if (sceneNode) {
+			Matrix33 tempOutArg;
+			sceneNode->setLocalRotationMatrix(updateSceneMatrix(&tempOutArg));
+			sceneNode->propagatePositionChange();
+		}
+
 		setObjectModified(true);
-#endif
 	}
 
 	void Reference::setOrientation(Vector3 * value) {

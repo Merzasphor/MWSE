@@ -108,6 +108,7 @@
 #include "NINodeLua.h"
 #include "NIPickLua.h"
 #include "NISwitchNodeLua.h"
+#include "NITimeControllerLua.h"
 
 #include "windows.h"
 #include "psapi.h"
@@ -323,6 +324,7 @@ namespace mwse {
 			bindNINode();
 			bindNIPick();
 			bindNISwitchNode();
+			bindNITimeController();
 		}
 
 		//
@@ -1394,6 +1396,31 @@ namespace mwse {
 			return reinterpret_cast<bool(__thiscall *)(TES3::WorldController*, int)>(0x410EA0)(controller, situation);
 		}
 
+		//
+		// Event: Weapon Ready
+		//
+
+		const auto TES3_MobileActor_offhandAnimState = reinterpret_cast<void(__thiscall*)(const TES3::MobileActor*)>(0x52D5B0);
+
+		void __fastcall OnReadyNoWeapon(TES3::MobileActor * actor) {
+			TES3_MobileActor_offhandAnimState(actor);
+			if (actor->reference) {
+				LuaManager::getInstance().triggerEvent(new event::WeaponReadiedEvent(actor->reference));
+			}
+		}
+
+		const auto TES3_MobileActor_unreadyWeapon = reinterpret_cast<void(__thiscall*)(const TES3::MobileActor*)>(0x528000);
+
+		void __fastcall OnUnreadyWeapon(TES3::MobileActor * mobile) {
+			bool wasDrawn = (mobile->actorFlags & TES3::MobileActorFlag::WeaponDrawn);
+
+			TES3_MobileActor_unreadyWeapon(mobile);
+
+			if (mobile && mobile->reference && wasDrawn) {
+				LuaManager::getInstance().triggerEvent(new event::WeaponUnreadiedEvent(mobile->reference));
+			}
+		}
+
 		void LuaManager::executeMainModScripts(const char* path, const char* filename) {
 			for (auto & p : std::experimental::filesystem::recursive_directory_iterator(path)) {
 				if (p.path().filename() == filename) {
@@ -1871,6 +1898,20 @@ namespace mwse {
 			genCallEnforced(0x40F8CA, 0x410EA0, reinterpret_cast<DWORD>(OnSelectMusicTrack));
 			genCallEnforced(0x40F901, 0x410EA0, reinterpret_cast<DWORD>(OnSelectMusicTrack));
 
+			// Event: Weapon ready.
+			genCallEnforced(0x527FEA, 0x52D5B0, reinterpret_cast<DWORD>(OnReadyNoWeapon));
+
+			// Event: Weapon unready.
+			genCallEnforced(0x495D73, 0x528000, reinterpret_cast<DWORD>(OnUnreadyWeapon));
+			genCallEnforced(0x495E3A, 0x528000, reinterpret_cast<DWORD>(OnUnreadyWeapon));
+			genCallEnforced(0x49601C, 0x528000, reinterpret_cast<DWORD>(OnUnreadyWeapon));
+			genCallEnforced(0x53FEDB, 0x528000, reinterpret_cast<DWORD>(OnUnreadyWeapon));
+			genCallEnforced(0x558479, 0x528000, reinterpret_cast<DWORD>(OnUnreadyWeapon));
+			genCallEnforced(0x569D02, 0x528000, reinterpret_cast<DWORD>(OnUnreadyWeapon));
+			genCallEnforced(0x56AA65, 0x528000, reinterpret_cast<DWORD>(OnUnreadyWeapon));
+			genCallEnforced(0x56B0B5, 0x528000, reinterpret_cast<DWORD>(OnUnreadyWeapon));
+			genCallEnforced(0x5D0C66, 0x528000, reinterpret_cast<DWORD>(OnUnreadyWeapon));
+
 			// Event: Leveled item picked.
 			auto leveledItemPick = &TES3::LeveledItem::resolve;
 			genCallEnforced(0x49A20E, 0x4D0BD0, *reinterpret_cast<DWORD*>(&leveledItemPick));
@@ -1884,6 +1925,42 @@ namespace mwse {
 			genCallEnforced(0x4CF9E7, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
 			genCallEnforced(0x4CFB43, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
 			genCallEnforced(0x635236, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
+
+			// Event: Mobile added to controller.
+			auto mobControllerAddMob = &TES3::MobController::addMob;
+			genCallEnforced(0x4665D5, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x484F3D, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x4C6954, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x4DC965, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x4EBCBF, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x5090BF, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x50990C, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x509A6E, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x50EFE3, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x529C3B, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x54DE92, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x57356C, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x5752C6, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x57595B, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+			genCallEnforced(0x635390, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));
+
+			// Event: Mobile added to controller.
+			auto mobControllerRemoveMob = &TES3::MobController::removeMob;
+			genCallEnforced(0x4668D8, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x484E24, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x4E47C1, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x4E8911, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x4EBD8C, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x50919F, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x523A1F, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x523AE5, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x52E980, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x52EA6D, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x52EDE5, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x574FDB, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x57509A, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x57548A, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+			genCallEnforced(0x575647, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
 
 			// UI framework hooks
 			TES3::UI::hook();

@@ -689,6 +689,26 @@ namespace mwse {
 
 			// ---------------------------------------------------------------------------- //
 
+			class WeaponReadiedEvent : public ObjectFilteredEvent {
+			public:
+				WeaponReadiedEvent(TES3::Reference* reference);
+				sol::table createEventTable();
+
+			protected:
+				TES3::Reference* m_Reference;
+			};
+
+			class WeaponUnreadiedEvent : public ObjectFilteredEvent {
+			public:
+				WeaponUnreadiedEvent(TES3::Reference* reference);
+				sol::table createEventTable();
+
+			protected:
+				TES3::Reference* m_Reference;
+			};
+
+			// ---------------------------------------------------------------------------- //
+
 			class LeveledItemPickedEvent : public ObjectFilteredEvent {
 			public:
 				LeveledItemPickedEvent(TES3::LeveledItem * list, TES3::Object * vanillaResult);
@@ -707,6 +727,26 @@ namespace mwse {
 			protected:
 				TES3::LeveledCreature* m_List;
 				TES3::Object* m_Result;
+			};
+
+			// ---------------------------------------------------------------------------- //
+
+			class MobileActorActivatedEvent : public ObjectFilteredEvent {
+			public:
+				MobileActorActivatedEvent(TES3::Reference * reference);
+				sol::table createEventTable();
+
+			protected:
+				TES3::Reference* m_Reference;
+			};
+
+			class MobileActorDeactivatedEvent : public ObjectFilteredEvent {
+			public:
+				MobileActorDeactivatedEvent(TES3::Reference * reference);
+				sol::table createEventTable();
+
+			protected:
+				TES3::Reference* m_Reference;
 			};
 
 		}
