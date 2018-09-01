@@ -29,6 +29,14 @@ namespace mwse {
 			// Access to other objects that need to be packaged.
 			usertypeDefinition.set("object", sol::readonly_property([](TES3::MobileCreature& self) { return makeLuaObject(self.creatureInstance); }));
 
+			// Allow read access to movement speeds.
+			usertypeDefinition.set("moveSpeed", sol::readonly_property([](TES3::MobileCreature& self) { return self.animationData.asActor->calculateMovementSpeed(); }));
+			usertypeDefinition.set("walkSpeed", sol::readonly_property(&TES3::MobileCreature::calculateWalkSpeed));
+			usertypeDefinition.set("runSpeed", sol::readonly_property(&TES3::MobileCreature::calculateWalkSpeed));
+			usertypeDefinition.set("swimSpeed", sol::readonly_property(&TES3::MobileCreature::calculateWalkSpeed));
+			usertypeDefinition.set("swimRunSpeed", sol::readonly_property(&TES3::MobileCreature::calculateWalkSpeed));
+			usertypeDefinition.set("flySpeed", sol::readonly_property(&TES3::MobileCreature::calculateWalkSpeed));
+
 			// Finish up our usertype.
 			state.set_usertype("tes3mobileCreature", usertypeDefinition);
 		}

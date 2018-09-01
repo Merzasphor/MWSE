@@ -98,6 +98,9 @@ Properties
 **flee** (`number`_)
     The actor's current flee AI threshold.
 
+**flySpeed** (`number`_, read-only)
+    The actor's run speed, subject to the `calcFlySpeed`_ event.
+
 **friendlyActors** (`tes3iterator`_ of **tes3mobileActor**)
     A list of actors currently friendly to the actor, which might aid them in combat.
 
@@ -206,6 +209,9 @@ Properties
 **movementFlags** (`number`_, read-only)
     The object's current movement flags.
 
+**moveSpeed** (`number`_, read-only)
+    The actor's movement speed, subject to the `calcMoveSpeed`_ event.
+
 **nextActionWeight** (`number`_)
     How important the actor's next action is in their AI decision making.
 
@@ -269,6 +275,9 @@ Properties
 **resistShock** (`number`_)
     Easy access into **effectAttributes**.
 
+**runSpeed** (`number`_, read-only)
+    The actor's run speed, subject to the `calcRunSpeed`_ event.
+
 **sanctuary** (`number`_)
     Easy access into **effectAttributes**.
 
@@ -296,6 +305,12 @@ Properties
 **swiftSwim** (`number`_)
     Easy access into **effectAttributes**.
 
+**swimSpeed** (`number`_, read-only)
+    The actor's run speed, subject to the `calcSwimSpeed`_ event.
+
+**swimRunSpeed** (`number`_, read-only)
+    The actor's run speed, subject to the `calcSwimRunSpeed`_ event.
+
 **torchSlot** (`tes3equipmentStack`_)
     The currently equipped torch.
 
@@ -304,6 +319,9 @@ Properties
 
 **velocity** (`tes3vector3`_)
     The object's velocity.
+
+**walkSpeed** (`number`_, read-only)
+    The actor's walk speed, subject to the `calcWalkSpeed`_ event.
 
 **waterBreathing** (`number`_)
     Easy access into **effectAttributes**.
@@ -359,12 +377,17 @@ Functions
 .. _`tes3statistic`: statistic.html
 .. _`tes3vector3`: vector3.html
 
-.. _`damage`: ../event/damage.html
-.. _`damaged`: ../event/damaged.html
-.. _`combatStart`: ../event/combatStart.html
-.. _`combatStarted`: ../event/combatStarted.html
-.. _`combatStop`: ../event/combatStop.html
-.. _`combatStopped`: ../event/combatStopped.html
+.. _`calcFlySpeed`: ../../event/calcFlySpeed.html
+.. _`calcMoveSpeed`: ../../event/calcMoveSpeed.html
+.. _`calcRunSpeed`: ../../event/calcRunSpeed.html
+.. _`calcSwimRunSpeed`: ../../event/calcSwimRunSpeed.html
+.. _`calcSwimSpeed`: ../../event/calcSwimSpeed.html
+.. _`calcWalkSpeed`: ../../event/calcWalkSpeed.html
+.. _`combatStart`: ../../event/combatStart.html
+.. _`combatStarted`: ../../event/combatStarted.html
+.. _`combatStop`: ../../event/combatStop.html
+.. _`damage`: ../../event/damage.html
+.. _`damaged`: ../../event/damaged.html
 
 .. _`applyHealthDamage`: mobileActor/applyHealthDamage.html
 .. _`startCombat`: mobileActor/startCombat.html
