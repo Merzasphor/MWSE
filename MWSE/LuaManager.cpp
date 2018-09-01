@@ -108,6 +108,7 @@
 #include "NINodeLua.h"
 #include "NIPickLua.h"
 #include "NISwitchNodeLua.h"
+#include "NITimeControllerLua.h"
 
 #include "windows.h"
 #include "psapi.h"
@@ -323,6 +324,7 @@ namespace mwse {
 			bindNINode();
 			bindNIPick();
 			bindNISwitchNode();
+			bindNITimeController();
 		}
 
 		//

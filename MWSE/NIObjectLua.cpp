@@ -65,10 +65,16 @@ namespace mwse {
 				usertypeDefinition.set(sol::base_classes, sol::bases<NI::Object>());
 
 				// Basic property binding.
+				usertypeDefinition.set("controller", sol::readonly_property(&NI::ObjectNET::controllers));
 				usertypeDefinition.set("name", sol::property(
 					[](NI::ObjectNET& self) { return self.name; },
 					[](NI::ObjectNET& self, const char * name) { self.setName(name); }
 				));
+
+				// Basic function binding.
+				usertypeDefinition.set("prependController", &NI::ObjectNET::prependController);
+				usertypeDefinition.set("removeController", &NI::ObjectNET::removeController);
+				usertypeDefinition.set("removeAllControllers", &NI::ObjectNET::removeAllControllers);
 
 				// Finish up our usertype.
 				state.set_usertype("niObjectNET", usertypeDefinition);

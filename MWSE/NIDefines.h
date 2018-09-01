@@ -12,6 +12,7 @@ namespace NI {
 	struct PickRecord;
 	struct RTTI;
 	struct SwitchNode;
+	struct TimeController;
 	struct Transform;
 	struct TriShape;
 
