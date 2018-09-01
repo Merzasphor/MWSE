@@ -1398,10 +1398,6 @@ namespace mwse {
 		// Event: Weapon Ready
 		//
 
-		const auto TES3_Reference_attachWeaponModel = reinterpret_cast<void(__thiscall*)(const TES3::Reference*)>(0x4E8F50);
-		const auto TES3_Reference_detatchWeaponModel = reinterpret_cast<void(__thiscall*)(const TES3::Reference*, bool)>(0x4E9080);
-
-		const auto TES3_MobileActor_weaponAnimState = reinterpret_cast<void(__thiscall*)(const TES3::MobileActor*, TES3::EquipmentStack *)>(0x52CB70);
 		const auto TES3_MobileActor_offhandAnimState = reinterpret_cast<void(__thiscall*)(const TES3::MobileActor*)>(0x52D5B0);
 
 		void __fastcall OnReadyNoWeapon(TES3::MobileActor * actor) {
@@ -1410,6 +1406,8 @@ namespace mwse {
 				LuaManager::getInstance().triggerEvent(new event::WeaponReadiedEvent(actor->reference));
 			}
 		}
+
+		const auto TES3_Reference_detatchWeaponModel = reinterpret_cast<void(__thiscall*)(const TES3::Reference*, bool)>(0x4E9080);
 
 		void __fastcall OnDetachWeaponMesh(TES3::Reference * reference, DWORD _UNUSED_, bool isActor) {
 			TES3_Reference_detatchWeaponModel(reference, isActor);
