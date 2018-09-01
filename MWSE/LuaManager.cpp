@@ -1409,13 +1409,15 @@ namespace mwse {
 			}
 		}
 
-		const auto TES3_Reference_detatchWeaponModel = reinterpret_cast<void(__thiscall*)(const TES3::Reference*, bool)>(0x4E9080);
+		const auto TES3_MobileActor_unreadyWeapon = reinterpret_cast<void(__thiscall*)(const TES3::MobileActor*)>(0x528000);
 
-		void __fastcall OnDetachWeaponMesh(TES3::Reference * reference, DWORD _UNUSED_, bool isActor) {
-			TES3_Reference_detatchWeaponModel(reference, isActor);
-			TES3::AttachmentWithNode<void> * attachment = tes3::getAttachment<TES3::AttachmentWithNode<void>>(reference, static_cast<TES3::AttachmentType::AttachmentType>(1));
-			if (isActor && attachment && attachment->data && tes3::getAttachedMobileActor(reference)) {
-				LuaManager::getInstance().triggerEvent(new event::WeaponUnreadiedEvent(reference));
+		void __fastcall OnUnreadyWeapon(TES3::MobileActor * mobile) {
+			bool wasDrawn = (mobile->actorFlags & TES3::MobileActorFlag::WeaponDrawn);
+
+			TES3_MobileActor_unreadyWeapon(mobile);
+
+			if (mobile && mobile->reference && wasDrawn) {
+				LuaManager::getInstance().triggerEvent(new event::WeaponUnreadiedEvent(mobile->reference));
 			}
 		}
 
@@ -1900,12 +1902,15 @@ namespace mwse {
 			genCallEnforced(0x527FEA, 0x52D5B0, reinterpret_cast<DWORD>(OnReadyNoWeapon));
 
 			// Event: Weapon unready.
-			//genCallEnforced(0x4E891A, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
-			//genCallEnforced(0x4E8AB6, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
-			genCallEnforced(0x528040, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
-			//genCallEnforced(0x52830B, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
-			//genCallEnforced(0x5B54E4, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
-			//genCallEnforced(0x5B72CB, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
+			genCallEnforced(0x495D73, 0x528000, reinterpret_cast<DWORD>(OnUnreadyWeapon));
+			genCallEnforced(0x495E3A, 0x528000, reinterpret_cast<DWORD>(OnUnreadyWeapon));
+			genCallEnforced(0x49601C, 0x528000, reinterpret_cast<DWORD>(OnUnreadyWeapon));
+			genCallEnforced(0x53FEDB, 0x528000, reinterpret_cast<DWORD>(OnUnreadyWeapon));
+			genCallEnforced(0x558479, 0x528000, reinterpret_cast<DWORD>(OnUnreadyWeapon));
+			genCallEnforced(0x569D02, 0x528000, reinterpret_cast<DWORD>(OnUnreadyWeapon));
+			genCallEnforced(0x56AA65, 0x528000, reinterpret_cast<DWORD>(OnUnreadyWeapon));
+			genCallEnforced(0x56B0B5, 0x528000, reinterpret_cast<DWORD>(OnUnreadyWeapon));
+			genCallEnforced(0x5D0C66, 0x528000, reinterpret_cast<DWORD>(OnUnreadyWeapon));
 
 			// Event: Leveled item picked.
 			auto leveledItemPick = &TES3::LeveledItem::resolve;
