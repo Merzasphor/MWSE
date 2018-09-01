@@ -1419,18 +1419,6 @@ namespace mwse {
 			}
 		}
 
-		void __fastcall OnWeaponAnimationState(TES3::MobileActor* actor, DWORD _UNUSED_, TES3::EquipmentStack * stack) {
-			TES3_MobileActor_weaponAnimState(actor, stack);
-			if (actor->reference) {
-				if (stack) {
-					LuaManager::getInstance().triggerEvent(new event::WeaponReadiedEvent(actor->reference));
-				}
-				else {
-					LuaManager::getInstance().triggerEvent(new event::WeaponUnreadiedEvent(actor->reference));
-				}
-			}
-		}
-
 		void LuaManager::executeMainModScripts(const char* path, const char* filename) {
 			for (auto & p : std::experimental::filesystem::recursive_directory_iterator(path)) {
 				if (p.path().filename() == filename) {
@@ -1912,12 +1900,12 @@ namespace mwse {
 			genCallEnforced(0x527FEA, 0x52D5B0, reinterpret_cast<DWORD>(OnReadyNoWeapon));
 
 			// Event: Weapon unready.
-			genCallEnforced(0x4E891A, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
-			genCallEnforced(0x4E8AB6, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
+			//genCallEnforced(0x4E891A, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
+			//genCallEnforced(0x4E8AB6, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
 			genCallEnforced(0x528040, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
-			genCallEnforced(0x52830B, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
-			genCallEnforced(0x5B54E4, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
-			genCallEnforced(0x5B72CB, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
+			//genCallEnforced(0x52830B, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
+			//genCallEnforced(0x5B54E4, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
+			//genCallEnforced(0x5B72CB, 0x4E9080, reinterpret_cast<DWORD>(OnDetachWeaponMesh));
 
 			// Event: Leveled item picked.
 			auto leveledItemPick = &TES3::LeveledItem::resolve;
