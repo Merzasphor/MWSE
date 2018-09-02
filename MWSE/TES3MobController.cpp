@@ -2,6 +2,9 @@
 
 #include "LuaManager.h"
 
+#include "LuaMobileActorActivatedEvent.h"
+#include "LuaMobileActorDeactivatedEvent.h"
+
 namespace TES3 {
 	const auto TES3_MobController_0x24_checkRadius = reinterpret_cast<void(__thiscall*)(MobController_0x24*, MobileActor*, Iterator<void>*)>(0x5704B0);
 	const auto TES3_MobController_0x24_detectPresence = reinterpret_cast<bool(__thiscall*)(MobController_0x24*, MobileActor*, bool)>(0x570A60);

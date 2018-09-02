@@ -5,6 +5,11 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "LuaSaveGameEvent.h"
+#include "LuaSavedGameEvent.h"
+#include "LuaLoadGameEvent.h"
+#include "LuaLoadedGameEvent.h"
+
 #include "TES3Util.h"
 
 #include "TES3MobilePlayer.h"

@@ -2,6 +2,8 @@
 
 #include "LuaManager.h"
 
+#include "LuaJournalEvent.h"
+
 #define TES3_Dialogue_journalAdd 0x4B2F80
 #define TES3_Dialogue_journalSetIndex 0x50F8B0
 

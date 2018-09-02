@@ -2,6 +2,9 @@
 
 #include "LuaManager.h"
 
+#include "LuaMobileProjectileActorCollisionEvent.h"
+#include "LuaMobileObjectCollisionEvent.h"
+
 #define TES3_MobileProjectile_onActorCollision 0x573860
 #define TES3_MobileProjectile_onObjectCollision 0x573820
 #define TES3_MobileProjectile_onTerrainCollision 0x5737F0

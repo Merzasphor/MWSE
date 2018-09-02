@@ -2,6 +2,8 @@
 
 #include "LuaManager.h"
 
+#include "LuaCalcMovementSpeedEvent.h"
+
 #define TES3_MobileCreature_calcWalkSpeed 0x55AAF0
 
 namespace TES3 {

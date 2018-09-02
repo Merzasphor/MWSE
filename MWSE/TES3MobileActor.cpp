@@ -5,6 +5,16 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "LuaCalcMovementSpeedEvent.h"
+#include "LuaCombatStartedEvent.h"
+#include "LuaCombatStartEvent.h"
+#include "LuaCombatStopEvent.h"
+#include "LuaCombatStoppedEvent.h"
+#include "LuaDamagedEvent.h"
+#include "LuaDamageEvent.h"
+#include "LuaDeathEvent.h"
+#include "LuaMobileObjectCollisionEvent.h"
+
 #include "TES3Actor.h"
 #include "TES3GameSetting.h"
 #include "TES3Reference.h"

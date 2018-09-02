@@ -2,6 +2,8 @@
 
 #include "LuaManager.h"
 
+#include "LuaCalcMovementSpeedEvent.h"
+
 #define TES3_ActorAnimationData_calculateMovementSpeed 0x53E1A0
 
 namespace TES3 {

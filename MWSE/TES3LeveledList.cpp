@@ -2,6 +2,9 @@
 
 #include "LuaManager.h"
 
+#include "LuaLeveledCreaturePickedEvent.h"
+#include "LuaLeveledItemPickedEvent.h"
+
 #define TES3_LeveledCreature_resolve 0x4CF870
 #define TES3_LeveledItem_resolve 0x4D0BD0
 

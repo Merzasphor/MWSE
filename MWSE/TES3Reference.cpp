@@ -2,6 +2,9 @@
 
 #include "LuaManager.h"
 #include "LuaUtil.h"
+
+#include "LuaActivateEvent.h"
+
 #include "TES3Util.h"
 
 #include "NINode.h"

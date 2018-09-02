@@ -5,6 +5,9 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "LuaDeathEvent.h"
+#include "LuaSkillExerciseEvent.h"
+
 #include "Log.h"
 
 #include "TES3Skill.h"

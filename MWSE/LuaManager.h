@@ -8,7 +8,8 @@
 #include "TES3Util.h"
 
 #include "sol.hpp"
-#include "LuaEvents.h"
+
+#include "LuaBaseEvent.h"
 
 namespace mwse {
 	namespace lua {

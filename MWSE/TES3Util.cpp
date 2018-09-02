@@ -20,8 +20,10 @@
 #include "TES3WorldController.h"
 
 #include "LuaManager.h"
-#include "LuaEvents.h"
 #include "LuaUtil.h"
+
+#include "LuaLoadGameEvent.h"
+#include "LuaLoadedGameEvent.h"
 
 #define TES3_general_messagePlayer 0x5F90C0
 #define TES3_general_setStringSlot 0x47B410

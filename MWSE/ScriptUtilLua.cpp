@@ -2,6 +2,8 @@
 #include "LuaUtil.h"
 #include "LuaManager.h"
 
+#include "LuaEquipEvent.h"
+
 #include "Stack.h"
 
 #include "ScriptUtil.h"

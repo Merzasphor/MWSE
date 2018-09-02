@@ -4,6 +4,9 @@
 
 #include "LuaManager.h"
 
+#include "LuaEquippedEvent.h"
+#include "LuaUnequippedEvent.h"
+
 namespace TES3 {
 	const auto TES3_Actor_equipItem = reinterpret_cast<Object* (__thiscall*)(Actor*, Object*, ItemData*, EquipmentStack**, MobileActor*)>(0x4958B0);
 	const auto TES3_Actor_unequipItem = reinterpret_cast<EquipmentStack* (__thiscall*)(Actor*, Object*, bool, MobileActor*, bool, ItemData*)>(0x496710);

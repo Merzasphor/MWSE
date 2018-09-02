@@ -1,7 +1,8 @@
 #include "UIUtil.h"
 
 #include "LuaManager.h"
-#include "LuaEvents.h"
+
+#include "LuaShowRestWaitMenuEvent.h"
 
 #define TES3_ui_getMenuOnTop 0x595290
 

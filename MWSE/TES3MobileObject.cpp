@@ -3,6 +3,8 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "LuaMobileObjectCollisionEvent.h"
+
 #include "TES3Reference.h"
 
 #define TES3_MobileObject_onActorCollision 0x5615A0
