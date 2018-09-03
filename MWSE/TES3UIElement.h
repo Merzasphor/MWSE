@@ -113,6 +113,7 @@ namespace TES3 {
 			// Property methods
 			//
 
+			void getProperty(PropertyValue* propValue, Property prop, PropertyType propType, const Element* element = nullptr, bool checkInherited = false) const;
 			PropertyValue getProperty(PropertyType propType, Property prop) const;
 			const char* getText() const;
 

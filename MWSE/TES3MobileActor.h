@@ -215,6 +215,8 @@ namespace TES3 {
 
 		void updateDerivedStatistics(Statistic * baseStatistic);
 
+		int determineModifiedPrice(int basePrice, bool buying);
+
 		//
 		// Custom functions.
 		//

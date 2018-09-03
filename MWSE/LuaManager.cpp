@@ -21,6 +21,7 @@
 #include "TES3DataHandler.h"
 #include "TES3Dialogue.h"
 #include "TES3Game.h"
+#include "TES3GameSetting.h"
 #include "TES3InputController.h"
 #include "TES3LeveledList.h"
 #include "TES3MagicEffect.h"
@@ -113,8 +114,12 @@
 #include "LuaActivationTargetChangedEvent.h"
 #include "LuaAddTopicEvent.h"
 #include "LuaAttackEvent.h"
+#include "LuaCalcBarterPriceEvent.h"
+#include "LuaCalcRepairPriceEvent.h"
 #include "LuaCalcRestInterruptEvent.h"
-#include "LuaCalcRestInterruptEvent.h"
+#include "LuaCalcSpellPriceEvent.h"
+#include "LuaCalcTrainingPriceEvent.h"
+#include "LuaCalcTravelPriceEvent.h"
 #include "LuaCellChangedEvent.h"
 #include "LuaEquipEvent.h"
 #include "LuaFrameEvent.h"
@@ -1426,6 +1431,249 @@ namespace mwse {
 			}
 		}
 
+		//
+		// Event: Calculate barter price.
+		//
+
+		// Store the last item stack sold/bought.
+		static TES3::EquipmentStack * OnCalculateBarterPrice_stack = nullptr;
+
+		// Store the last item stack's calculated base price.
+		static int OnCalculateBarterPrice_value = 0;
+
+		// Hook point for calculating an item's price, before our real event. We'll store the above values here.
+		int __cdecl OnCalculateBarterPrice_CalcItemValue(TES3::EquipmentStack* stack) {
+			OnCalculateBarterPrice_stack = stack;
+			OnCalculateBarterPrice_value = stack->getAdjustedValue();
+			return OnCalculateBarterPrice_value;
+		}
+
+		// Use the above stored values and finish our event.
+		int __fastcall OnCalculateBarterPrice(TES3::MobileActor * mobile, DWORD _UNUSED_, int basePrice, bool buying) {
+			int price = mobile->determineModifiedPrice(basePrice, buying);
+			int count = basePrice / OnCalculateBarterPrice_value;
+
+			sol::table result = LuaManager::getInstance().triggerEvent(new event::CalculateBarterPriceEvent(mobile, basePrice, price, buying, count, OnCalculateBarterPrice_stack));
+			if (result.valid()) {
+				price = result["price"];
+			}
+
+			return price;
+		}
+
+		//
+		// Event: Calculate repair price.
+		//
+
+		// Cached value of the inventory iterator.
+		static TES3::Iterator<TES3::ItemStack>* OnCalculateRepairPriceForList_CurrentInventoryList = nullptr;
+
+		// Store the inventory list that we're looking at when generating the repair list.
+		TES3::IteratorNode<TES3::ItemStack>* __fastcall OnCalculateRepairPriceForList_GetItemList(TES3::Iterator<TES3::ItemStack>* inventoryList) {
+			OnCalculateRepairPriceForList_CurrentInventoryList = inventoryList;
+
+			auto result = inventoryList->head;
+			inventoryList->current = result;
+			return result;
+		}
+
+		// Get the price for each item on the list.
+		int __fastcall OnCalculateRepairPriceForList(TES3::MobileActor * mobile, DWORD _UNUSED_, int basePrice, bool buying) {
+			int price = mobile->determineModifiedPrice(basePrice, buying);
+
+			if (basePrice <= 0) {
+				basePrice = 1;
+			}
+
+			if (price <= 0) {
+				price = 1;
+			}
+
+			sol::table result = LuaManager::getInstance().triggerEvent(new event::CalculateRepairPriceEvent(mobile, basePrice, price, OnCalculateRepairPriceForList_CurrentInventoryList->current->data));
+			if (result.valid()) {
+				price = result["price"];
+			}
+
+			return price;
+		}
+
+		// Cache value of the item stack that is going to be repaired.
+		static TES3::ItemStack* OnCalculateRepairPrice_ItemStack = nullptr;
+
+		// Set the above value for later reference.
+		void __fastcall OnCalculateRepairPrice_GetRepairStack(const TES3::UI::Element* element, DWORD _UNUSED_, TES3::UI::PropertyValue* propValue, TES3::UI::Property prop, TES3::UI::PropertyType propType, const TES3::UI::Element* element2, bool checkInherited) {
+			element->getProperty(propValue, prop, propType, element2, checkInherited);
+			OnCalculateRepairPrice_ItemStack = (TES3::ItemStack*)propValue->ptrValue;
+		}
+
+		// Get the price for an item when actually repairing.
+		int __fastcall OnCalculateRepairPrice(TES3::MobileActor * mobile, DWORD _UNUSED_, int basePrice, bool buying) {
+			int price = mobile->determineModifiedPrice(basePrice, buying);
+
+			if (basePrice <= 0) {
+				basePrice = 1;
+			}
+
+			if (price <= 0) {
+				price = 1;
+			}
+
+			sol::table result = LuaManager::getInstance().triggerEvent(new event::CalculateRepairPriceEvent(mobile, basePrice, price, OnCalculateRepairPrice_ItemStack));
+			if (result.valid()) {
+				price = result["price"];
+			}
+
+			return price;
+		}
+
+		//
+		// Event: Calculate spell price.
+		//
+
+		// Cached value of the inventory iterator.
+		static TES3::Iterator<TES3::Spell>* OnCalculateSpellPrice_CurrentInventoryList = nullptr;
+
+		// Store the inventory list that we're looking at when generating the repair list.
+		TES3::IteratorNode<TES3::Spell>* __fastcall OnCalculateSpellPriceForList_GetSpellList(TES3::Iterator<TES3::Spell>* spellList) {
+			OnCalculateSpellPrice_CurrentInventoryList = spellList;
+
+			auto result = spellList->head;
+			spellList->current = result;
+			return result;
+		}
+
+		// Get the price for each item on the list.
+		int __fastcall OnCalculateSpellPriceForList(TES3::MobileActor * mobile, DWORD _UNUSED_, int basePrice, bool buying) {
+			int price = mobile->determineModifiedPrice(basePrice, buying);
+
+			sol::table result = LuaManager::getInstance().triggerEvent(new event::CalculateSpellPriceEvent(mobile, basePrice, price, OnCalculateSpellPrice_CurrentInventoryList->current->data));
+			if (result.valid()) {
+				price = result["price"];
+			}
+
+			return price;
+		}
+
+		static TES3::Spell* OnCalculateSpellPrice_Spell = nullptr;
+
+		void __fastcall OnCalculateSpellPrice_GetSpell(const TES3::UI::Element* element, DWORD _UNUSED_, TES3::UI::PropertyValue* propValue, TES3::UI::Property prop, TES3::UI::PropertyType propType, const TES3::UI::Element* element2, bool checkInherited) {
+			element->getProperty(propValue, prop, propType, element2, checkInherited);
+			OnCalculateSpellPrice_Spell = (TES3::Spell*)propValue->ptrValue;
+		}
+
+		int __fastcall OnCalculateSpellPrice(TES3::MobileActor * mobile, DWORD _UNUSED_, int basePrice, bool buying) {
+			int price = mobile->determineModifiedPrice(basePrice, buying);
+
+			sol::table result = LuaManager::getInstance().triggerEvent(new event::CalculateSpellPriceEvent(mobile, basePrice, price, OnCalculateSpellPrice_Spell));
+			if (result.valid()) {
+				price = result["price"];
+			}
+
+			return price;
+		}
+
+		//
+		// Event: Calculate training price.
+		//
+
+		static int OnCalculateTrainingPrice_SkillId = -1;
+
+		// Version of getting the skill value for training for the MCP patched version of the game.
+		float __fastcall OnCalculateTrainingPrice_GetSkillPatched(TES3::MobileActor* actor, DWORD _UNUSED_, int skillId) {
+			OnCalculateTrainingPrice_SkillId = skillId;
+			return actor->getSkillStatistic(skillId)->base;
+		}
+
+		// Version of getting the skill value for training for the vanilla version of the game.
+		float __fastcall OnCalculateTrainingPrice_GetSkillUnpatched(TES3::MobileActor* actor, DWORD _UNUSED_, int skillId) {
+			OnCalculateTrainingPrice_SkillId = skillId;
+			return actor->getSkillStatistic(skillId)->current;
+		}
+
+		// Our actual hook for sending off the training price event.
+		int __fastcall OnCalculateTrainingPrice(TES3::MobileActor * mobile, DWORD _UNUSED_, int basePrice, bool buying) {
+			int price = mobile->determineModifiedPrice(basePrice, buying);
+
+			sol::table result = LuaManager::getInstance().triggerEvent(new event::CalculateTrainingPriceEvent(mobile, basePrice, price, OnCalculateTrainingPrice_SkillId));
+			if (result.valid()) {
+				price = result["price"];
+			}
+
+			return price;
+		}
+
+		//
+		// Event: Calculate travel price.
+		//
+
+		// The destination list for the merchant.
+		static TES3::Iterator<TES3::TravelDestination> * OnCalculateTravelPrice_DestinationList;
+
+		// The player's friendly actor list.
+		static TES3::Iterator<TES3::MobileActor> * OnCalculateTravelPrice_CompanionList;
+
+		// A custom list of followers close enough to travel with the player.
+		static std::vector<TES3::MobileActor*> OnCalculateTravelPrice_TravelCompanionList;
+
+		// Hook for ensuring that we have the right destination list.
+		TES3::IteratorNode<TES3::TravelDestination>* __fastcall OnCalculateTravelPrice_GetDestinationList(TES3::Iterator<TES3::TravelDestination>* inventoryList) {
+			OnCalculateTravelPrice_DestinationList = inventoryList;
+
+			auto result = inventoryList->head;
+			inventoryList->current = result;
+			return result;
+		}
+
+		// Hook for ensuring that we have the right companion list.
+		TES3::IteratorNode<TES3::MobileActor>* __fastcall OnCalculateTravelPrice_GetCompanionList(TES3::Iterator<TES3::MobileActor>* inventoryList) {
+			OnCalculateTravelPrice_CompanionList = inventoryList;
+
+			OnCalculateTravelPrice_TravelCompanionList.clear();
+
+			auto result = inventoryList->head;
+			inventoryList->current = result;
+			return result;
+		}
+
+		// Hook for checking and adding companions for our custom list so we can report valid companions in the event.
+		float OnCalculateTravelPrice_CheckCompanionDistance(TES3::Vector3* destinationPosition, TES3::Vector3* playerPosition) {
+			float distance = destinationPosition->distance(playerPosition);
+			if (OnCalculateTravelPrice_CompanionList->size * 128.0f + 512.0f > distance) {
+				OnCalculateTravelPrice_TravelCompanionList.push_back(OnCalculateTravelPrice_CompanionList->current->data);
+			}
+			return distance;
+		}
+
+		// Send off our travel price event when building the destination list.
+		int __fastcall OnCalculateTravelPriceForList(TES3::MobileActor * mobile, DWORD _UNUSED_, int basePrice, bool buying) {
+			int price = mobile->determineModifiedPrice(basePrice, buying);
+
+			sol::table result = LuaManager::getInstance().triggerEvent(new event::CalculateTravelPriceEvent(mobile, basePrice, price, OnCalculateTravelPrice_DestinationList->current->data, &OnCalculateTravelPrice_TravelCompanionList));
+			if (result.valid()) {
+				price = result["price"];
+			}
+
+			return price;
+		}
+
+		// Send off our travel price event when actually selecting a destination.
+		int __fastcall OnCalculateTravelPriceForDestination(TES3::MobileActor * mobile, DWORD _UNUSED_, int basePrice, bool buying) {
+			int price = mobile->determineModifiedPrice(basePrice, buying);
+
+			// Destination is off by one, so we need the previous entry.
+			auto destination = OnCalculateTravelPrice_DestinationList->tail->data;
+			if (OnCalculateTravelPrice_DestinationList->current != nullptr) {
+				destination = OnCalculateTravelPrice_DestinationList->current->previous->data;
+			}
+
+			sol::table result = LuaManager::getInstance().triggerEvent(new event::CalculateTravelPriceEvent(mobile, basePrice, price, destination, &OnCalculateTravelPrice_TravelCompanionList));
+			if (result.valid()) {
+				price = result["price"];
+			}
+
+			return price;
+		}
+
 		void LuaManager::executeMainModScripts(const char* path, const char* filename) {
 			for (auto & p : std::experimental::filesystem::recursive_directory_iterator(path)) {
 				if (p.path().filename() == filename) {
@@ -1703,10 +1951,10 @@ namespace mwse {
 
 			// Event: Magic cast success
 			genJumpUnprotected(TES3_HOOK_MAGIC_CAST_SUCCESS, reinterpret_cast<DWORD>(HookMagicCastSuccess), TES3_HOOK_MAGIC_CAST_SUCCESS_SIZE);
-			
+
 			// Event: Spell cast failure
 			genJumpUnprotected(TES3_HOOK_SPELL_CAST_FAILURE, reinterpret_cast<DWORD>(HookSpellCastFailure), TES3_HOOK_SPELL_CAST_FAILURE_SIZE);
-			
+
 			// Event: Spell tick.
 			patchMagicEffectDispatch(0x4647E9, 0x50);
 			patchMagicEffectDispatch(0x464A56, 0x50);
@@ -1973,6 +2221,78 @@ namespace mwse {
 			genCallEnforced(0x57509A, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
 			genCallEnforced(0x57548A, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
 			genCallEnforced(0x575647, 0x5637F0, *reinterpret_cast<DWORD*>(&mobControllerRemoveMob));
+
+			// Event: Calculate barter price.
+			if (genCallEnforced(0x5A447B, 0x5A46E0, reinterpret_cast<DWORD>(OnCalculateBarterPrice_CalcItemValue))) {
+				// Merchant Window: Selling (Buy back)
+				genCallEnforced(0x5A4490, 0x52AA50, reinterpret_cast<DWORD>(OnCalculateBarterPrice));
+			}
+			if (genCallEnforced(0x5A44BA, 0x5A46E0, reinterpret_cast<DWORD>(OnCalculateBarterPrice_CalcItemValue))) {
+				// Merchant Window: Buying
+				genCallEnforced(0x5A44CF, 0x52AA50, reinterpret_cast<DWORD>(OnCalculateBarterPrice));
+			}
+			if (genCallEnforced(0x5A490E, 0x5A46E0, reinterpret_cast<DWORD>(OnCalculateBarterPrice_CalcItemValue))) {
+				// PC Window: Buying (Sell back)
+				genCallEnforced(0x5A4926, 0x52AA50, reinterpret_cast<DWORD>(OnCalculateBarterPrice));
+			}
+			if (genCallEnforced(0x5A494B, 0x5A46E0, reinterpret_cast<DWORD>(OnCalculateBarterPrice_CalcItemValue))) {
+				// PC Window: Selling
+				genCallEnforced(0x5A4963, 0x52AA50, reinterpret_cast<DWORD>(OnCalculateBarterPrice));
+			}
+
+			// Event: Calculate repair price.
+			if (genCallEnforced(0x615243, 0x47E710, reinterpret_cast<DWORD>(OnCalculateRepairPriceForList_GetItemList))) {
+				// Generate repair list.
+				genCallEnforced(0x615347, 0x52AA50, reinterpret_cast<DWORD>(OnCalculateRepairPriceForList));
+			}
+			if (genCallEnforced(0x615638, 0x581440, reinterpret_cast<DWORD>(OnCalculateRepairPrice_GetRepairStack))) {
+				// Click to repair an item.
+				genCallEnforced(0x6156AC, 0x52AA50, reinterpret_cast<DWORD>(OnCalculateRepairPrice)); // With MCP patch #33.
+				genCallEnforced(0x6156B4, 0x52AA50, reinterpret_cast<DWORD>(OnCalculateRepairPrice)); // Without MCP patch #33.
+			}
+
+			// Event: Calculate spell price.
+			if (genCallEnforced(0x61645A, 0x47E710, reinterpret_cast<DWORD>(OnCalculateSpellPriceForList_GetSpellList))) {
+				// Generate spell list.
+				genCallEnforced(0x6164A6, 0x52AA50, reinterpret_cast<DWORD>(OnCalculateSpellPriceForList));
+			}
+			if (genCallEnforced(0x6166E5, 0x581440, reinterpret_cast<DWORD>(OnCalculateSpellPrice_GetSpell))) {
+				// Actually buying a spell.
+				genCallEnforced(0x61671C, 0x52AA50, reinterpret_cast<DWORD>(OnCalculateSpellPrice));
+			}
+
+			// Event: Calculate training price. We have to make sure it works with and without MCP patch #33.
+			if (!genCallEnforced(0x617D0D, 0x736760, reinterpret_cast<DWORD>(OnCalculateTrainingPrice_GetSkillPatched))) {
+				genCallUnprotected(0x617D0D, reinterpret_cast<DWORD>(OnCalculateTrainingPrice_GetSkillUnpatched), 0x6);
+			}
+			if (!genCallEnforced(0x617E11, 0x736760, reinterpret_cast<DWORD>(OnCalculateTrainingPrice_GetSkillPatched))) {
+				genCallUnprotected(0x617E11, reinterpret_cast<DWORD>(OnCalculateTrainingPrice_GetSkillUnpatched), 0x6);
+			}
+			if (!genCallEnforced(0x617F52, 0x736760, reinterpret_cast<DWORD>(OnCalculateTrainingPrice_GetSkillPatched))) {
+				genCallUnprotected(0x617F52, reinterpret_cast<DWORD>(OnCalculateTrainingPrice_GetSkillUnpatched), 0x6);
+			}
+			if (!genCallEnforced(0x618253, 0x736760, reinterpret_cast<DWORD>(OnCalculateTrainingPrice_GetSkillPatched))) {
+				genCallUnprotected(0x618253, reinterpret_cast<DWORD>(OnCalculateTrainingPrice_GetSkillUnpatched), 0x6);
+			}
+			genCallEnforced(0x617D3B, 0x52AA50, reinterpret_cast<DWORD>(OnCalculateTrainingPrice));
+			genCallEnforced(0x617E3F, 0x52AA50, reinterpret_cast<DWORD>(OnCalculateTrainingPrice));
+			genCallEnforced(0x617F80, 0x52AA50, reinterpret_cast<DWORD>(OnCalculateTrainingPrice));
+			genCallEnforced(0x618281, 0x52AA50, reinterpret_cast<DWORD>(OnCalculateTrainingPrice));
+
+			// Event: Calculate travel price.
+			if (genCallEnforced(0x619294, 0x47E710, reinterpret_cast<DWORD>(OnCalculateTravelPrice_GetDestinationList)) &&
+				genCallEnforced(0x6193B2, 0x47E710, reinterpret_cast<DWORD>(OnCalculateTravelPrice_GetCompanionList)) &&
+				genCallEnforced(0x619430, 0x53AD70, reinterpret_cast<DWORD>(OnCalculateTravelPrice_CheckCompanionDistance))) {
+				// Generating travel list.
+				genCallEnforced(0x619488, 0x52AA50, reinterpret_cast<DWORD>(OnCalculateTravelPriceForList));
+			}
+			if (genCallEnforced(0x61966C, 0x47E710, reinterpret_cast<DWORD>(OnCalculateTravelPrice_GetDestinationList)) &&
+				genCallEnforced(0x6198AE, 0x47E710, reinterpret_cast<DWORD>(OnCalculateTravelPrice_GetCompanionList)) &&
+				genCallEnforced(0x61992C, 0x53AD70, reinterpret_cast<DWORD>(OnCalculateTravelPrice_CheckCompanionDistance))) {
+				// Actually traveling.
+				genCallEnforced(0x619770, 0x52AA50, reinterpret_cast<DWORD>(OnCalculateTravelPriceForDestination)); // Without MCP patch #33.
+				genCallEnforced(0x73691D, 0x52AA50, reinterpret_cast<DWORD>(OnCalculateTravelPriceForDestination)); // With MCP patch #33.
+			}
 
 			// UI framework hooks
 			TES3::UI::hook();

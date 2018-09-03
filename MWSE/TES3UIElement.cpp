@@ -222,6 +222,10 @@ namespace TES3 {
 		// Property methods
 		//
 
+		void Element::getProperty(PropertyValue* propValue, Property prop, PropertyType propType, const Element* element, bool checkInherited) const {
+			TES3_ui_getProperty(this, propValue, prop, propType, element, checkInherited);
+		}
+
 		PropertyValue Element::getProperty(PropertyType propType, Property prop) const {
 			PropertyValue v;
 			TES3_ui_getProperty(this, &v, prop, propType, nullptr, 0);

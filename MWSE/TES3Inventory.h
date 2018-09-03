@@ -26,6 +26,12 @@ namespace TES3 {
 		ItemData * variables; // 0x4
 
 		//
+		// Other related helper functions.
+		//
+
+		int getAdjustedValue();
+
+		//
 		// Lua interface functions.
 		//
 
