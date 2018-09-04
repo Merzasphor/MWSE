@@ -23,6 +23,8 @@ namespace TES3 {
 		const auto TES3_ui_ScrollbarArrow_onClick = reinterpret_cast<EventCallback>(0x647A60);
 		const auto TES3_ui_requestMenuModeOn = reinterpret_cast<Boolean (__cdecl*)(UI_ID)>(0x595230);
 		const auto TES3_ui_requestMenuModeOff = reinterpret_cast<Boolean (__cdecl*)(UI_ID)>(0x595270);
+		const auto TES3_ui_getServiceActor = reinterpret_cast<MobileActor* (__cdecl*)()>(0x5BFEA0);
+		const auto TES3_ui_updateDialogDisposition = reinterpret_cast<void (__cdecl*)()>(0x5C0780);
 
 		//
 		// UI framework functions
@@ -114,6 +116,14 @@ namespace TES3 {
 				return TES3_ui_ScrollbarArrow_onClick(scrollbar, eventID, data0, data1, arrow);
 			}
 			return 1;
+		}
+
+		MobileActor* getServiceActor() {
+			return TES3_ui_getServiceActor();
+		}
+
+		void updateDialogDisposition() {
+			TES3_ui_updateDialogDisposition();
 		}
 
 		//

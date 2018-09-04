@@ -57,6 +57,9 @@ namespace TES3 {
 		unsigned char getReputation();
 		void setReputation(unsigned char);
 
+		short getDisposition();
+		void setDisposition(short);
+
 		void setFactionRank(unsigned char);
 	};
 	static_assert(sizeof(NPCInstance) == 0x78, "TES3::NPCInstance failed size validation");

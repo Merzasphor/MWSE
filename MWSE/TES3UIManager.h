@@ -20,6 +20,9 @@ namespace TES3 {
 
 		Boolean __cdecl onScrollPaneMousewheel(Element*, Property, int, int, Element*);
 
+		MobileActor* getServiceActor();
+		void updateDialogDisposition();
+
 		void hook();
 	}
 }

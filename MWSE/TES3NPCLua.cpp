@@ -76,7 +76,7 @@ namespace mwse {
 				setUserdataForActor(usertypeDefinition);
 
 				// Basic property binding.
-				usertypeDefinition.set("disposition", &TES3::NPCInstance::disposition);
+				usertypeDefinition.set("disposition", sol::property(&TES3::NPCInstance::getDisposition, &TES3::NPCInstance::setDisposition));
 				usertypeDefinition.set("factionIndex", &TES3::NPCInstance::factionIndex);
 
 				// Indirect bindings to unions and arrays.
