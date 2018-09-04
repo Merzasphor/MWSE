@@ -63,6 +63,21 @@ namespace TES3 {
 		};
 	}
 
+	namespace Voiceover {
+		enum Voiceover {
+			Hello,
+			Idle,
+			Intruder,
+			Thief,
+			Hit,
+			Attack,
+			Flee,
+
+			First = Hello,
+			Last = Flee
+		};
+	}
+
 	struct MobileActor : MobileObject {
 		struct ActiveMagicEffect {
 			ActiveMagicEffect* next;
@@ -216,6 +231,8 @@ namespace TES3 {
 		void updateDerivedStatistics(Statistic * baseStatistic);
 
 		int determineModifiedPrice(int basePrice, bool buying);
+
+		void playVoiceover(int);
 
 		//
 		// Custom functions.

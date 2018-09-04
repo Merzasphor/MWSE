@@ -967,6 +967,37 @@ namespace mwse {
 
 				return makeLuaNiPointer(tes3::getDataHandler()->nonDynamicData->loadMesh(path.c_str()));
 			};
+
+			state["tes3"]["playVoiceover"] = [](sol::table params) -> bool {
+				sol::state& state = LuaManager::getInstance().getState();
+
+				// Get the actor that we're going to make say something.
+				auto actor = getOptionalParamMobileActor(params, "actor");
+				if (actor == nullptr) {
+					return false;
+				}
+
+				// Accept either a string or a number as the voiceover id.
+				int voiceover = -1;
+				sol::object voiceoverObject = params["voiceover"];
+				if (voiceoverObject.is<std::string>()) {
+					sol::object result = state["tes3"]["voiceover"][voiceoverObject.as<std::string>()];
+					if (result.is<int>()) {
+						voiceover = result.as<int>();
+					}
+				}
+				else if (voiceoverObject.is<int>()) {
+					voiceover = voiceoverObject.as<int>();
+				}
+
+				// Validate the input.
+				if (voiceover < TES3::Voiceover::First || voiceover > TES3::Voiceover::Last) {
+					return false;
+				}
+
+				actor->playVoiceover(voiceover);
+				return true;
+			};
 		}
 	}
 }

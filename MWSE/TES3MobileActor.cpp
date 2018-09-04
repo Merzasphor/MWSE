@@ -40,6 +40,7 @@ namespace TES3 {
 	const auto TES3_MobileActor_wearItem = reinterpret_cast<void (__thiscall*)(MobileActor*, Object*, ItemData*, bool, bool)>(0x52C770);
 	const auto TES3_MobileActor_calcDerivedStats = reinterpret_cast<void(__thiscall*)(const MobileActor*, Statistic*)>(0x527BC0);
 	const auto TES3_MobileActor_determineModifiedPrice = reinterpret_cast<int(__thiscall*)(const MobileActor*, int, int)>(0x52AA50);
+	const auto TES3_MobileActor_playVoiceover = reinterpret_cast<void(__thiscall*)(const MobileActor*, int)>(0x528F80);
 
 	signed char MobileActor::onActorCollision(int hitReferenceIndex) {
 		// Grab the hit reference now, it won't be available after calling the main function.
@@ -232,6 +233,10 @@ namespace TES3 {
 
 	int MobileActor::determineModifiedPrice(int basePrice, bool buying) {
 		return TES3_MobileActor_determineModifiedPrice(this, basePrice, buying);
+	}
+
+	void MobileActor::playVoiceover(int voiceover) {
+		TES3_MobileActor_playVoiceover(this, voiceover);
 	}
 
 	bool MobileActor::getMobileActorFlag(MobileActorFlag::Flag flag) {

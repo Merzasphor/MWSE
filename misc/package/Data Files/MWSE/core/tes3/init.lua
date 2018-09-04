@@ -27,6 +27,7 @@ tes3.spellOrigin = require("tes3.spellOrigin")
 tes3.spellState = require("tes3.spellState")
 tes3.spellType = require("tes3.spellType")
 tes3.uiProperty = require("tes3.uiProperty")
+tes3.voiceover = require("tes3.voiceover")
 tes3.weaponType = require("tes3.weaponType")
 tes3.weather = require("tes3.weather")
 
