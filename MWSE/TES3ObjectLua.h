@@ -19,9 +19,10 @@ namespace mwse {
 			// Allow object to be converted to strings using their object ID.
 			usertypeDefinition.set(sol::meta_function::to_string, &TES3::BaseObject::getObjectID);
 
-			// Functions exposed as read-only properties.
+			// Functions exposed as properties.
 			usertypeDefinition.set("id", sol::readonly_property(&TES3::BaseObject::getObjectID));
 			usertypeDefinition.set("sourceMod", sol::readonly_property([](TES3::BaseObject& self) { return self.sourceMod->filename; }));
+			usertypeDefinition.set("modified", sol::property(&TES3::BaseObject::getObjectModified, &TES3::BaseObject::setObjectModified));
 		}
 
 		template <typename T>

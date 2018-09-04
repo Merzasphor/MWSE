@@ -105,7 +105,7 @@ namespace TES3 {
 		int (__thiscall * saveRecordSpecific)(BaseObject*, int); // 0x8
 		int (__thiscall * loadObject)(BaseObject*, int); // 0xC
 		int (__thiscall * saveObject)(BaseObject*, int); // 0x10
-		int (__thiscall * setObjectModified)(BaseObject*, unsigned char); // 0x14
+		void (__thiscall * setObjectModified)(BaseObject*, bool); // 0x14
 		int (__thiscall * setObjectFlag40)(BaseObject*, unsigned char); // 0x18
 		void * unknown_0x1C;
 		char * (__thiscall * getObjectID)(BaseObject*); // 0x20
@@ -200,7 +200,8 @@ namespace TES3 {
 		// Function wrappers for our virtual table.
 		//
 
-		int setObjectModified(unsigned char);
+		bool getObjectModified();
+		void setObjectModified(bool);
 		char * getObjectID();
 
 	};

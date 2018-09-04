@@ -1,8 +1,12 @@
 #include "TES3Object.h"
 
 namespace TES3 {
-	int BaseObject::setObjectModified(unsigned char modified) {
-		return vTable.base->setObjectModified(this, modified);
+	bool BaseObject::getObjectModified() {
+		return (objectFlags & TES3::ObjectFlag::Modified);
+	}
+
+	void BaseObject::setObjectModified(bool modified) {
+		vTable.base->setObjectModified(this, modified);
 	}
 
 	char* BaseObject::getObjectID() {
