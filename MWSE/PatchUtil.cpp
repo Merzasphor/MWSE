@@ -7,6 +7,7 @@
 #include "TES3Util.h"
 #include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
+#include "TES3Reference.h"
 #include "TES3Script.h"
 #include "TES3MobilePlayer.h"
 #include "TES3WorldController.h"
@@ -15,6 +16,8 @@
 #include <Psapi.h>
 
 #include <dbghelp.h>
+
+#define DEBUG_INVALID_ATTACHMENT_CRASH false
 
 namespace mwse {
 	namespace patch {
@@ -76,6 +79,16 @@ namespace mwse {
 			tes3::getWorldController()->getMobilePlayer()->exerciseSkill(TES3::SkillID::Sneak, nonDynamicData->skills[TES3::SkillID::Sneak].progressActions[0]);
 		}
 
+		TES3::ItemData* __fastcall PatchCatchInvalidItemDataAttachment(TES3::Reference* reference) {
+			__try {
+				return tes3::getAttachedItemDataNode(reference);
+			}
+			__except (EXCEPTION_EXECUTE_HANDLER) {
+				mwse::log::getLog() << "ERROR: Intercepted crash when attempting to get item data for reference: " << reference->getObjectID() << std::endl;
+				return nullptr;
+			}
+		}
+
 		// Install all the patches.
 		void installPatches() {
 			// Patch: Enable/Disable
@@ -85,6 +98,11 @@ namespace mwse {
 			// Patch: Unify athletics and sneak training.
 			genCallUnprotected(0x569EE7, reinterpret_cast<DWORD>(PatchUnifyAthleticsTraining), 0xC6);
 			genCallUnprotected(0x5683D0, reinterpret_cast<DWORD>(PatchUnifySneakTraining), 0x65);
+
+#if DEBUG_INVALID_ATTACHMENT_CRASH
+			// Patch: Invalid item condition attachment.
+			genCallUnprotected(0x4E5460, reinterpret_cast<DWORD>(PatchCatchInvalidItemDataAttachment), 0x1D);
+#endif
 		}
 
 		//
