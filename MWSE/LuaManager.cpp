@@ -1501,9 +1501,10 @@ namespace mwse {
 		static TES3::ItemStack* OnCalculateRepairPrice_ItemStack = nullptr;
 
 		// Set the above value for later reference.
-		void __fastcall OnCalculateRepairPrice_GetRepairStack(const TES3::UI::Element* element, DWORD _UNUSED_, TES3::UI::PropertyValue* propValue, TES3::UI::Property prop, TES3::UI::PropertyType propType, const TES3::UI::Element* element2, bool checkInherited) {
+		TES3::UI::PropertyValue* __fastcall OnCalculateRepairPrice_GetRepairStack(const TES3::UI::Element* element, DWORD _UNUSED_, TES3::UI::PropertyValue* propValue, TES3::UI::Property prop, TES3::UI::PropertyType propType, const TES3::UI::Element* element2, bool checkInherited) {
 			element->getProperty(propValue, prop, propType, element2, checkInherited);
 			OnCalculateRepairPrice_ItemStack = (TES3::ItemStack*)propValue->ptrValue;
+			return propValue;
 		}
 
 		// Get the price for an item when actually repairing.
@@ -1556,9 +1557,10 @@ namespace mwse {
 
 		static TES3::Spell* OnCalculateSpellPrice_Spell = nullptr;
 
-		void __fastcall OnCalculateSpellPrice_GetSpell(const TES3::UI::Element* element, DWORD _UNUSED_, TES3::UI::PropertyValue* propValue, TES3::UI::Property prop, TES3::UI::PropertyType propType, const TES3::UI::Element* element2, bool checkInherited) {
+		TES3::UI::PropertyValue* __fastcall OnCalculateSpellPrice_GetSpell(const TES3::UI::Element* element, DWORD _UNUSED_, TES3::UI::PropertyValue* propValue, TES3::UI::Property prop, TES3::UI::PropertyType propType, const TES3::UI::Element* element2, bool checkInherited) {
 			element->getProperty(propValue, prop, propType, element2, checkInherited);
 			OnCalculateSpellPrice_Spell = (TES3::Spell*)propValue->ptrValue;
+			return propValue;
 		}
 
 		int __fastcall OnCalculateSpellPrice(TES3::MobileActor * mobile, DWORD _UNUSED_, int basePrice, bool buying) {
