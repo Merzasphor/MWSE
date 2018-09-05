@@ -209,8 +209,7 @@ namespace mwse {
 					return false;
 				}
 
-				mwscript::HasItemEquipped(script, reference, item);
-				return true;
+				return mwscript::HasItemEquipped(script, reference, item);
 			};
 			state["mwscript"]["getDelete"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
