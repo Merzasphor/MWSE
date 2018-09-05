@@ -40,7 +40,7 @@ namespace TES3 {
 		const auto TES3_ui_updateLayout_propagateFlow = reinterpret_cast<void(__thiscall*)(Element*)>(0x584850);
 		const auto TES3_ui_updateLayoutContent = reinterpret_cast<void(__thiscall*)(Element*)>(0x583760);
 
-		const auto TES3_ui_getProperty = reinterpret_cast<void (__thiscall *)(const Element*, PropertyValue*, Property, PropertyType, const Element*, Boolean)>(0x581440);
+		const auto TES3_ui_getProperty = reinterpret_cast<PropertyValue* (__thiscall *)(const Element*, PropertyValue*, Property, PropertyType, const Element*, Boolean)>(0x581440);
 		const auto TES3_ui_getText = reinterpret_cast<const char* (__thiscall *)(const Element*)>(0x580BB0);
 		const auto TES3_ui_setProperty = reinterpret_cast<void (__thiscall *)(Element*, Property, PropertyValue, PropertyType)>(0x581F30);
 		const auto TES3_ui_setText = reinterpret_cast<void (__thiscall *)(Element*, const char*)>(0x58AD30);
@@ -222,8 +222,8 @@ namespace TES3 {
 		// Property methods
 		//
 
-		void Element::getProperty(PropertyValue* propValue, Property prop, PropertyType propType, const Element* element, bool checkInherited) const {
-			TES3_ui_getProperty(this, propValue, prop, propType, element, checkInherited);
+		PropertyValue* Element::getProperty(PropertyValue* propValue, Property prop, PropertyType propType, const Element* element, bool checkInherited) const {
+			return TES3_ui_getProperty(this, propValue, prop, propType, element, checkInherited);
 		}
 
 		PropertyValue Element::getProperty(PropertyType propType, Property prop) const {

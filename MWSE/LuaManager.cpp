@@ -1502,8 +1502,7 @@ namespace mwse {
 
 		// Set the above value for later reference.
 		TES3::UI::PropertyValue* __fastcall OnCalculateRepairPrice_GetRepairStack(const TES3::UI::Element* element, DWORD _UNUSED_, TES3::UI::PropertyValue* propValue, TES3::UI::Property prop, TES3::UI::PropertyType propType, const TES3::UI::Element* element2, bool checkInherited) {
-			element->getProperty(propValue, prop, propType, element2, checkInherited);
-			OnCalculateRepairPrice_ItemStack = (TES3::ItemStack*)propValue->ptrValue;
+			OnCalculateRepairPrice_ItemStack = (TES3::ItemStack*)element->getProperty(propValue, prop, propType, element2, checkInherited)->ptrValue;
 			return propValue;
 		}
 
@@ -1558,8 +1557,7 @@ namespace mwse {
 		static TES3::Spell* OnCalculateSpellPrice_Spell = nullptr;
 
 		TES3::UI::PropertyValue* __fastcall OnCalculateSpellPrice_GetSpell(const TES3::UI::Element* element, DWORD _UNUSED_, TES3::UI::PropertyValue* propValue, TES3::UI::Property prop, TES3::UI::PropertyType propType, const TES3::UI::Element* element2, bool checkInherited) {
-			element->getProperty(propValue, prop, propType, element2, checkInherited);
-			OnCalculateSpellPrice_Spell = (TES3::Spell*)propValue->ptrValue;
+			OnCalculateSpellPrice_Spell = (TES3::Spell*)element->getProperty(propValue, prop, propType, element2, checkInherited)->ptrValue;
 			return propValue;
 		}
 
