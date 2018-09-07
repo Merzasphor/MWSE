@@ -1451,7 +1451,10 @@ namespace mwse {
 		// Use the above stored values and finish our event.
 		int __fastcall OnCalculateBarterPrice(TES3::MobileActor * mobile, DWORD _UNUSED_, int basePrice, bool buying) {
 			int price = mobile->determineModifiedPrice(basePrice, buying);
-			int count = basePrice / OnCalculateBarterPrice_value;
+			int count = 1;
+			if (OnCalculateBarterPrice_value > 0) {
+				count = std::abs(basePrice / OnCalculateBarterPrice_value);
+			}
 
 			sol::table result = LuaManager::getInstance().triggerEvent(new event::CalculateBarterPriceEvent(mobile, basePrice, price, buying, count, OnCalculateBarterPrice_stack));
 			if (result.valid()) {
