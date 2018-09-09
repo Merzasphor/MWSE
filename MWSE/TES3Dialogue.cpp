@@ -8,6 +8,8 @@
 #define TES3_Dialogue_journalSetIndex 0x50F8B0
 
 namespace TES3 {
+	const auto TES3_Dialogue_getFilteredInfo = reinterpret_cast<DialogueInfo* (__thiscall*)(Dialogue*, Actor*, Reference*, bool)>(0x4B29E0);
+
 	bool Dialogue::addToJournal(int index, MobileActor * actor) {
 		if (type != DialogueType::Journal) {
 			return false;
@@ -50,6 +52,10 @@ namespace TES3 {
 		}
 
 		return true;
+	}
+
+	DialogueInfo* Dialogue::getFilteredInfo(Actor* actor, Reference* reference, bool flag) {
+		return TES3_Dialogue_getFilteredInfo(this, actor, reference, flag);
 	}
 }
 

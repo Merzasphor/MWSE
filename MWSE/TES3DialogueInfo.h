@@ -39,15 +39,15 @@ namespace TES3 {
 	};
 
 	struct DialogueInfo : BaseObject {
-		void* dialogLoadLinkNode;
-		DialogueType type;
-		int disposition;
-		char npcRank;
-		char npcSex;
-		char pcRank;
-		DialogueInfoFilterNode* conditions;
-		long espFileOffset;
-		Actor* firstHeardFrom;
+		void* dialogLoadLinkNode; // 0x10
+		DialogueType type; // 0x14
+		int disposition; // 0x18
+		char npcRank; // 0x1C
+		char npcSex; // 0x1D
+		char pcRank; // 0x1E
+		DialogueInfoFilterNode* conditions; // 0x20
+		long espFileOffset; // 0x24
+		Actor* firstHeardFrom; // 0x28
 	};
 	static_assert(sizeof(DialogueInfo) == 0x2C, "TES3::DialogueInfo failed size validation");
 }
