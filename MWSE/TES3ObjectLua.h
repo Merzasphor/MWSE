@@ -23,6 +23,8 @@ namespace mwse {
 			usertypeDefinition.set("id", sol::readonly_property(&TES3::BaseObject::getObjectID));
 			usertypeDefinition.set("sourceMod", sol::readonly_property([](TES3::BaseObject& self) { return self.sourceMod->filename; }));
 			usertypeDefinition.set("modified", sol::property(&TES3::BaseObject::getObjectModified, &TES3::BaseObject::setObjectModified));
+			usertypeDefinition.set("disabled", sol::readonly_property([](TES3::BaseObject& self) { return (self.objectFlags & TES3::ObjectFlag::Disabled) != 0; }));
+			usertypeDefinition.set("deleted", sol::readonly_property([](TES3::BaseObject& self) { return (self.objectFlags & TES3::ObjectFlag::Delete) != 0; }));
 		}
 
 		template <typename T>
