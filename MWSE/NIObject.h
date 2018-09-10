@@ -8,6 +8,7 @@ namespace NI {
 			Object_vTable * asObject;
 			AVObject_vTable * asAVObject;
 			Node_vTable * asNode;
+			TriShape_vTable * asTriShape;
 		} vTable; // 0x0
 		int references; // 0x4
 

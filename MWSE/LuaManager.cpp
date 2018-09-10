@@ -110,6 +110,7 @@
 #include "NIPickLua.h"
 #include "NISwitchNodeLua.h"
 #include "NITimeControllerLua.h"
+#include "NITriShapeLua.h"
 
 #include "LuaActivationTargetChangedEvent.h"
 #include "LuaAddTopicEvent.h"
@@ -367,6 +368,7 @@ namespace mwse {
 			bindNIPick();
 			bindNISwitchNode();
 			bindNITimeController();
+			bindNITriShape();
 		}
 
 		//

@@ -83,10 +83,12 @@
     <ClInclude Include="LuaWeatherCycledEvent.h" />
     <ClInclude Include="LuaWeatherTransitionFinishedEvent.h" />
     <ClInclude Include="LuaWeatherTransitionStartedEvent.h" />
+    <ClInclude Include="NITriShape.h" />
     <ClInclude Include="NIPointer.h" />
     <ClInclude Include="NIStream.h" />
     <ClInclude Include="NITimeController.h" />
     <ClInclude Include="NITimeControllerLua.h" />
+    <ClInclude Include="NITriShapeLua.h" />
     <ClInclude Include="TES3CrimeEvent.h" />
     <ClInclude Include="TES3CrimeTree.h" />
     <ClInclude Include="D3DColorValue.h" />
@@ -403,6 +405,8 @@
     <ClCompile Include="NIStream.cpp" />
     <ClCompile Include="NISwitchNodeLua.cpp" />
     <ClCompile Include="NITimeControllerLua.cpp" />
+    <ClCompile Include="NITriShape.cpp" />
+    <ClCompile Include="NITriShapeLua.cpp" />
     <ClCompile Include="NIUtil.cpp" />
     <ClCompile Include="PatchUtil.cpp" />
     <ClCompile Include="RngUtil.cpp" />

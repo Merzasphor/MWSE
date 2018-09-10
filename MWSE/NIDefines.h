@@ -19,6 +19,7 @@ namespace NI {
 	struct Object_vTable;
 	struct AVObject_vTable;
 	struct Node_vTable;
+	struct TriShape_vTable;
 
 	namespace RTTIStaticPtr {
 		enum RTTIStaticPtr : uintptr_t {
@@ -35,6 +36,7 @@ namespace NI {
 			Node = 0x7DDEB8,
 			Property = 0x7DE720,
 			SwitchNode = 0x7DE1AC,
+			TriShape = 0x7DE550,
 			TES3ExtraData = 0x7CE280
 		};
 	}

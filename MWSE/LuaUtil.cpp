@@ -15,6 +15,7 @@
 #include "NINode.h"
 #include "NIPick.h"
 #include "NISwitchNode.h"
+#include "NITriShape.h"
 
 #include "TES3Defines.h"
 #include "TES3Activator.h"
@@ -545,10 +546,15 @@ namespace mwse {
 				return sol::make_object(state, reinterpret_cast<NI::ObjectNET*>(object));
 			case NI::RTTIStaticPtr::SwitchNode:
 				return sol::make_object(state, reinterpret_cast<NI::SwitchNode*>(object));
+			case NI::RTTIStaticPtr::TriShape:
+				return sol::make_object(state, reinterpret_cast<NI::TriShape*>(object));
 			}
 
 			if (object->isInstanceOfType(NI::RTTIStaticPtr::Node)) {
 				return sol::make_object(state, reinterpret_cast<NI::Node*>(object));
+			}
+			else if (object->isInstanceOfType(NI::RTTIStaticPtr::TriShape)) {
+				return sol::make_object(state, reinterpret_cast<NI::TriShape*>(object));
 			}
 			else if (object->isInstanceOfType(NI::RTTIStaticPtr::AVObject)) {
 				return sol::make_object(state, reinterpret_cast<NI::AVObject*>(object));
@@ -580,10 +586,15 @@ namespace mwse {
 				return sol::make_object(state, NI::Pointer<NI::ObjectNET>(reinterpret_cast<NI::ObjectNET*>(object)));
 			case NI::RTTIStaticPtr::SwitchNode:
 				return sol::make_object(state, NI::Pointer<NI::SwitchNode>(reinterpret_cast<NI::SwitchNode*>(object)));
+			case NI::RTTIStaticPtr::TriShape:
+				return sol::make_object(state, NI::Pointer<NI::TriShape>(reinterpret_cast<NI::TriShape*>(object)));
 			}
 
 			if (object->isInstanceOfType(NI::RTTIStaticPtr::Node)) {
 				return sol::make_object(state, NI::Pointer<NI::Node>(reinterpret_cast<NI::Node*>(object)));
+			}
+			else if (object->isInstanceOfType(NI::RTTIStaticPtr::TriShape)) {
+				return sol::make_object(state, NI::Pointer<NI::TriShape>(reinterpret_cast<NI::TriShape*>(object)));
 			}
 			else if (object->isInstanceOfType(NI::RTTIStaticPtr::AVObject)) {
 				return sol::make_object(state, NI::Pointer<NI::AVObject>(reinterpret_cast<NI::AVObject*>(object)));
