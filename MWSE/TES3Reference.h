@@ -31,7 +31,9 @@ namespace TES3 {
 		Reference * getActionReference();
 
 		ItemDataAttachment* addItemDataAttachment(ItemData*);
-		Vector3* getOrientationFromAttachment();
+		Vector3* getOrCreateOrientationFromAttachment();
+		Vector3* getPositionFromAttachment();
+		LockAttachmentNode* getOrCreateLockNode();
 
 		//
 		// Other utility functions.

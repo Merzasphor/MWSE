@@ -60,8 +60,16 @@ namespace TES3 {
 		return reinterpret_cast<ItemDataAttachment* (__thiscall *)(Reference*, ItemData*)>(TES3_Reference_addItemDataAttachment)(this, data);
 	}
 
-	Vector3* Reference::getOrientationFromAttachment() {
+	Vector3* Reference::getOrCreateOrientationFromAttachment() {
 		return reinterpret_cast<Vector3* (__thiscall *)(Reference*)>(0x4E5970)(this);
+	}
+
+	Vector3* Reference::getPositionFromAttachment() {
+		return reinterpret_cast<Vector3* (__thiscall *)(Reference*)>(0x4E58D0)(this);
+	}
+
+	LockAttachmentNode* Reference::getOrCreateLockNode() {
+		return reinterpret_cast<LockAttachmentNode* (__thiscall *)(Reference*)>(0x4E7DF0)(this);
 	}
 
 	void Reference::setPositionFromLua(sol::stack_object value) {
@@ -132,7 +140,7 @@ namespace TES3 {
 		}
 
 		// Everything else uses the positioning attachment.
-		return getOrientationFromAttachment();
+		return getOrCreateOrientationFromAttachment();
 	}
 
 	void Reference::setOrientation(float x, float y, float z) {
