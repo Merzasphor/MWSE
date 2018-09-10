@@ -18,6 +18,7 @@
 #include "TES3Actor.h"
 #include "TES3ActorAnimationData.h"
 #include "TES3Alchemy.h"
+#include "TES3CombatSession.h"
 #include "TES3DataHandler.h"
 #include "TES3Dialogue.h"
 #include "TES3Game.h"
@@ -55,6 +56,7 @@
 #include "TES3ClassLua.h"
 #include "TES3ClothingLua.h"
 #include "TES3CollectionsLua.h"
+#include "TES3CombatSessionLua.h"
 #include "TES3ContainerLua.h"
 #include "TES3CreatureLua.h"
 #include "TES3DataHandlerLua.h"
@@ -311,6 +313,7 @@ namespace mwse {
 			bindTES3Class();
 			bindTES3Clothing();
 			bindTES3Collections();
+			bindTES3CombatSession();
 			bindTES3Container();
 			bindTES3Creature();
 			bindTES3DataHandler();
@@ -2298,6 +2301,10 @@ namespace mwse {
 				genCallEnforced(0x619770, 0x52AA50, reinterpret_cast<DWORD>(OnCalculateTravelPriceForDestination)); // Without MCP patch #33.
 				genCallEnforced(0x73691D, 0x52AA50, reinterpret_cast<DWORD>(OnCalculateTravelPriceForDestination)); // With MCP patch #33.
 			}
+
+			// Event: Determine AI actions.
+			auto combatSessionDetermineAction = &TES3::CombatSession::determineNextAction;
+			genCallEnforced(0x5591D6, 0x538F00, *reinterpret_cast<DWORD*>(&combatSessionDetermineAction));
 
 			// UI framework hooks
 			TES3::UI::hook();

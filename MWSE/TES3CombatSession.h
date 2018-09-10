@@ -26,6 +26,13 @@ namespace TES3 {
 		char unknown_0x49;
 		char unknown_0x4A;
 		char unknown_0x4B;
+
+		//
+		// Other related this-call functions.
+		//
+
+		void determineNextAction();
+
 	};
 	static_assert(sizeof(CombatSession) == 0x4C, "TES3::CombatSession failed size validation");
 }
