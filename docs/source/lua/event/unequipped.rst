@@ -12,6 +12,10 @@ Event Data
 
 actor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`tes3actor`_. Read-only. The actor that has unequipped the item.
+
+mobile
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `tes3mobileActor`_. Read-only. The mobile actor that has unequipped the item.
 
 reference
@@ -33,6 +37,7 @@ This event does not support filters.
 
 
 .. _`Event Guide`: ../guide/events.html
+.. _`tes3actor`: ../type/tes3/actor.html
 .. _`tes3mobileActor`: ../type/tes3/mobileActor.html
 .. _`tes3reference`: ../type/tes3/reference.html
 .. _`tes3baseObject`: ../type/tes3/baseObject.html
