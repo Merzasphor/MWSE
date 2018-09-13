@@ -30,6 +30,7 @@
 #include "Stack.h"
 
 #include "TES3DataHandler.h"
+#include "TES3GameFile.h"
 #include "TES3GlobalVariable.h"
 #include "TES3Game.h"
 #include "TES3MobilePlayer.h"
@@ -576,6 +577,12 @@ mwseString& VirtualMachine::getString(long fromStack)	//ask grant, need a '*' or
 	else if (mwse::string::store::exists(fromStack))
 	{
 		return mwse::string::store::get(fromStack);
+	}
+
+	// If it's not in storage, but is probably not a char*, return an empty string and log a message.
+	else if (fromStack < 0x3F0000) {
+		mwse::log::getLog() << "ERROR: Script '" << script->getObjectID() << "' in game file '" << (script->sourceMod != nullptr ? script->sourceMod->filename : "{N/A}") << "' contained garbage string reference! String references cannot be stored across saves." << std::endl;
+		return mwse::string::store::create("");
 	}
 
 	// Otherwise, assume it's a char*, though we should never hit this case.
