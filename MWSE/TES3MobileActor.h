@@ -101,7 +101,7 @@ namespace TES3 {
 		Iterator<MobileActor> listFriendlyActors; // 0x94
 		float scanTimer; // 0xA8
 		int scanInterval; // 0xAC
-		int greetTimer; // B0
+		float greetTimer; // B0
 		Vector3 unknown_0xB4;
 		char unknown_0xC0;
 		char unknown_0xC1; // Undefined.

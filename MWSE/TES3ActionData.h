@@ -33,7 +33,7 @@ namespace TES3 {
 		char unknown_0x32; // Undefined.
 		char unknown_0x33; // Undefined.
 		Item * nockedProjectile;
-		int unknown_0x38;
+		short unknown_0x38;
 		Vector3 unknown_0x3C;
 		int unknown_0x48;
 		int unknown_0x4C;
