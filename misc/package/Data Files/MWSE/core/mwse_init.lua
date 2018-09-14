@@ -25,6 +25,13 @@ end
 -- Extend base API: math
 -------------------------------------------------
 
+-- Seed random number generator.
+-- There are reports that the first few results aren't random enough. Try and likely fail to make people happy.
+math.randomseed(os.time())
+for i = 1, 10 do
+	math.random()
+end
+
 function math.clamp(value, low, high)
 	if (low > high) then
 		low, high = high, low
