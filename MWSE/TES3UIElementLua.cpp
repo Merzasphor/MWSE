@@ -573,9 +573,14 @@ namespace mwse {
 				return self.createHypertext(args.get_or("id", idNull));
 			});
 			usertypeDefinition.set("createImage", [](Element& self, sol::table args) {
-				auto path = args.get<sol::optional<const char*>>("path");
+				auto path = args.get<sol::optional<std::string>>("path");
 				if (path) {
-					return self.createImage(args.get_or("id", idNull), path.value());
+					auto pathStr = path.value();
+					if (pathStr.find("/") != std::string::npos) {
+						std::replace(pathStr.begin(), pathStr.end(), '/', '\\');
+					}
+
+					return self.createImage(args.get_or("id", idNull), pathStr.c_str());
 				}
 				else {
 					log::getLog() << "createImage: path argument is required." << std::endl;
@@ -587,9 +592,14 @@ namespace mwse {
 				return self.createLabel(args.get_or("id", idNull), text.value_or("(nil)"));
 			});
 			usertypeDefinition.set("createNif", [](Element& self, sol::table args) {
-				auto path = args.get<sol::optional<const char*>>("path");
+				auto path = args.get<sol::optional<std::string>>("path");
 				if (path) {
-					return self.createNif(args.get_or("id", idNull), path.value());
+					auto pathStr = path.value();
+					if (pathStr.find("/") != std::string::npos) {
+						std::replace(pathStr.begin(), pathStr.end(), '/', '\\');
+					}
+
+					return self.createNif(args.get_or("id", idNull), pathStr.c_str());
 				}
 				else {
 					log::getLog() << "createNif: path argument is required." << std::endl;
