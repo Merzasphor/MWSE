@@ -10,6 +10,7 @@
 #include "TES3Inventory.h"
 #include "TES3Item.h"
 #include "TES3Faction.h"
+#include "TES3LeveledList.h"
 #include "TES3MobileActor.h"
 #include "TES3Spell.h"
 #include "TES3Reference.h"
@@ -24,6 +25,7 @@ namespace mwse {
 			bindIterator<TES3::EquipmentStack>("TES3EquipmentStackIterator", "TES3EquipmentStackIteratorNode");
 			bindIterator<TES3::Faction::ReactionNode>("TES3ReactionNodeIterator", "TES3ReactionNodeIteratorNode");
 			bindIterator<TES3::ItemStack>("TES3ItemStackIterator", "TES3ItemStackIteratorNode");
+			bindIterator<TES3::LeveledListNode>("TES3LeveledListNodeIterator", "TES3LeveledListNodeIteratorNode");
 			bindIterator<TES3::Reference>("TES3ReferenceIterator", "TES3ReferenceIteratorNode");
 			bindIterator<TES3::Region>("TES3RegionIterator", "TES3RegionIteratorNode");
 			bindIterator<TES3::RegionSound>("TES3RegionSoundIterator", "TES3RegionSoundIteratorNode");
