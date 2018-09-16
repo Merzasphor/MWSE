@@ -573,9 +573,9 @@ namespace mwse {
 				return self.createHypertext(args.get_or("id", idNull));
 			});
 			usertypeDefinition.set("createImage", [](Element& self, sol::table args) {
-				auto path = args.get<sol::optional<std::string>>("path");
+				auto path = args.get<sol::optional<const char*>>("path");
 				if (path) {
-					auto pathStr = path.value();
+					std::string pathStr = path.value();
 					if (pathStr.find("/") != std::string::npos) {
 						std::replace(pathStr.begin(), pathStr.end(), '/', '\\');
 					}
@@ -592,9 +592,9 @@ namespace mwse {
 				return self.createLabel(args.get_or("id", idNull), text.value_or("(nil)"));
 			});
 			usertypeDefinition.set("createNif", [](Element& self, sol::table args) {
-				auto path = args.get<sol::optional<std::string>>("path");
+				auto path = args.get<sol::optional<const char*>>("path");
 				if (path) {
-					auto pathStr = path.value();
+					std::string pathStr = path.value();
 					if (pathStr.find("/") != std::string::npos) {
 						std::replace(pathStr.begin(), pathStr.end(), '/', '\\');
 					}

@@ -10,6 +10,7 @@
 #include "NINode.h"
 
 #include "TES3Actor.h"
+#include "TES3Cell.h"
 
 #define TES3_Reference_activate 0x4E9610
 #define TES3_Reference_setActionFlag 0x4E55A0
@@ -207,7 +208,11 @@ namespace TES3 {
 
 		// Clone the object and set the reference (and its parent cell) as modified.
 		actor->clone(this);
+		baseObject->setObjectModified(true);
 		setObjectModified(true);
+		if (owningCollection.asReferenceList && owningCollection.asReferenceList->cell) {
+			owningCollection.asReferenceList->cell->setObjectModified(true);
+		}
 
 		return true;
 	}
