@@ -5,5 +5,5 @@ return {
 	["illusion"] = 3,
 	["mysticism"] = 4,
 	["restoration"] = 5,
-    ["none"] = 6
+	["none"] = 6
 }

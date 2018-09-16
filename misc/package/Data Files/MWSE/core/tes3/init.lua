@@ -14,6 +14,7 @@ tes3.enchantmentType = require("tes3.enchantmentType")
 tes3.gmst = require("tes3.gmst")
 tes3.keybind = require("tes3.keybind")
 tes3.keyTransition = require("tes3.keyTransition")
+tes3.magicSchool = require("tes3.magicSchool")
 tes3.musicSituation = require("tes3.musicSituation")
 tes3.objectType = require("tes3.objectType")
 tes3.skill = require("tes3.skill")
@@ -30,6 +31,9 @@ tes3.uiProperty = require("tes3.uiProperty")
 tes3.voiceover = require("tes3.voiceover")
 tes3.weaponType = require("tes3.weaponType")
 tes3.weather = require("tes3.weather")
+
+-- Second pass game constants, declared based on the above constants.
+tes3.magicSchoolSkill = require("tes3.magicSchoolSkill")
 
 -------------------------------------------------
 -- Functions
