@@ -4,6 +4,9 @@ local generalEvents = {}
 
 local filteredEvents = {}
 
+-- Temporary hack for event priorities.
+local eventPriorities = {}
+
 local function getEventTable(eventType, filter)
 	if (filter == nil) then
 		if (generalEvents[eventType] == nil) then
@@ -19,6 +22,10 @@ local function getEventTable(eventType, filter)
 		end
 		return filteredEvents[eventType][filter]
 	end
+end
+
+local function eventSorter(a, b)
+	return eventPriorities[a] > eventPriorities[b]
 end
 
 function this.register(eventType, callback, options)
@@ -44,11 +51,15 @@ function this.register(eventType, callback, options)
 		end
 	end
 
+	-- Store this callback's priority.
+	eventPriorities[callback] = options.priority or 0
+
 	-- Make sure that the event isn't already registered.
 	local callbacks = getEventTable(eventType, options.filter)
 	local found = table.find(callbacks, callback)
 	if (found == nil) then
 		table.insert(callbacks, callback)
+		table.sort(callbacks, eventSorter)
 	else
 		print("event.register: Attempted to register same '" .. eventType .. "' event callback twice.")
 		print(debug.traceback())
