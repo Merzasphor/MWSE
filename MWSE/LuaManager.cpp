@@ -150,6 +150,7 @@
 #include "LuaSpellResistEvent.h"
 #include "LuaSpellTickEvent.h"
 #include "LuaUiObjectTooltipEvent.h"
+#include "LuaUiRefreshedEvent.h"
 #include "LuaWeaponReadiedEvent.h"
 #include "LuaWeaponUnreadiedEvent.h"
 #include "LuaWeatherChangedImmediateEvent.h"
@@ -1719,6 +1720,20 @@ namespace mwse {
 			}
 		}
 
+		//
+		// Event: UI Refreshed
+		//
+
+		const auto TES3_UpdateStatsScrollPane = reinterpret_cast<bool(__cdecl*)(TES3::UI::Element *)>(0x649870);
+
+		bool __cdecl OnRefreshedStatsPane(TES3::UI::Element * element) {
+			bool result = TES3_UpdateStatsScrollPane(element);
+
+			LuaManager::getInstance().triggerEvent(new event::UiRefreshedEvent(element));
+
+			return result;
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/core/mwse_init.lua");
@@ -2323,6 +2338,9 @@ namespace mwse {
 			// Event: Skill Raised
 			genCallEnforced(0x4A28C6, 0x629FC0, reinterpret_cast<DWORD>(OnSkillRaised));
 			genCallEnforced(0x56BCF2, 0x629FC0, reinterpret_cast<DWORD>(OnSkillRaised));
+
+			// Event: UI Refreshed.
+			genCallEnforced(0x6272F9, 0x649870, reinterpret_cast<DWORD>(OnRefreshedStatsPane)); // MenuStat_scroll_pane
 
 			// UI framework hooks
 			TES3::UI::hook();

@@ -79,6 +79,7 @@
     <ClInclude Include="LuaSpellResistEvent.h" />
     <ClInclude Include="LuaSpellTickEvent.h" />
     <ClInclude Include="LuaUiObjectTooltipEvent.h" />
+    <ClInclude Include="LuaUiRefreshedEvent.h" />
     <ClInclude Include="LuaUnequippedEvent.h" />
     <ClInclude Include="LuaWeaponReadiedEvent.h" />
     <ClInclude Include="LuaWeaponUnreadiedEvent.h" />
@@ -390,6 +391,7 @@
     <ClCompile Include="LuaSpellTickEvent.cpp" />
     <ClCompile Include="LuaTimer.cpp" />
     <ClCompile Include="LuaUiObjectTooltipEvent.cpp" />
+    <ClCompile Include="LuaUiRefreshedEvent.cpp" />
     <ClCompile Include="LuaUnequippedEvent.cpp" />
     <ClCompile Include="LuaUtil.cpp" />
     <ClCompile Include="LuaWeaponReadiedEvent.cpp" />
