@@ -126,6 +126,7 @@
 #include "LuaCalcTravelPriceEvent.h"
 #include "LuaCellChangedEvent.h"
 #include "LuaEquipEvent.h"
+#include "LuaFilterInventoryEvent.h"
 #include "LuaFrameEvent.h"
 #include "LuaGenericUiActivatedEvent.h"
 #include "LuaGenericUiPostEvent.h"
@@ -1728,10 +1729,26 @@ namespace mwse {
 
 		bool __cdecl OnRefreshedStatsPane(TES3::UI::Element * element) {
 			bool result = TES3_UpdateStatsScrollPane(element);
-
 			LuaManager::getInstance().triggerEvent(new event::UiRefreshedEvent(element));
-
 			return result;
+		}
+
+		//
+		// Event: Filter Inventory File
+		//
+
+		const auto TES3_FilterInventoryTile = reinterpret_cast<bool(__cdecl*)(TES3::UI::InventoryTile *, TES3::Item *)>(0x5CC720);
+
+		bool __cdecl OnFilterInventoryTile(TES3::UI::InventoryTile * tile, TES3::Item * item) {
+			sol::table payload = LuaManager::getInstance().triggerEvent(new event::FilterInventoryEvent(tile, item));
+			if (payload.valid()) {
+				sol::object filter = payload["filter"];
+				if (filter.is<bool>()) {
+					return filter.as<bool>();
+				}
+			}
+
+			return TES3_FilterInventoryTile(tile, item);
 		}
 
 		void LuaManager::hook() {
@@ -2341,6 +2358,10 @@ namespace mwse {
 
 			// Event: UI Refreshed.
 			genCallEnforced(0x6272F9, 0x649870, reinterpret_cast<DWORD>(OnRefreshedStatsPane)); // MenuStat_scroll_pane
+
+			// Event: Inventory Filter
+			genCallEnforced(0x5CBD5F, 0x5CC720, reinterpret_cast<DWORD>(OnFilterInventoryTile));
+			genCallEnforced(0x5CCAC5, 0x5CC720, reinterpret_cast<DWORD>(OnFilterInventoryTile));
 
 			// UI framework hooks
 			TES3::UI::hook();
