@@ -16,6 +16,10 @@ reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `Reference`_. The reference associated with the change in readied weapon.
 
+weaponStack
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`Equipment Stack`_. The bundle that contains the newly readied weapon and its associated data.
+
 
 Filter
 ----------------------------------------------------------------------------------------------------
