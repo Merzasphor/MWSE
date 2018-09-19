@@ -12,12 +12,12 @@ Event Data
 
 element
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`UI Element`_. The menu element that was recreated or refreshed. The event is filtered on ``element.id``. Read-only.
+`UI Element`_. The menu element that was recreated or refreshed. The event is filtered on ``element.name``. Read-only.
 
 
 Filter
 ----------------------------------------------------------------------------------------------------
-This event may be filtered by **element**'s ``.id`` property.
+This event may be filtered by **element**'s ``.name`` property.
 
 Supported menus:
     - MenuStat_scroll_pane
