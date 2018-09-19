@@ -145,6 +145,7 @@
 #include "LuaProjectileExpireEvent.h"
 #include "LuaRestInterruptEvent.h"
 #include "LuaSimulateEvent.h"
+#include "LuaSkillRaisedEvent.h"
 #include "LuaSpellCastedEvent.h"
 #include "LuaSpellResistEvent.h"
 #include "LuaSpellTickEvent.h"
@@ -1684,6 +1685,17 @@ namespace mwse {
 			return price;
 		}
 
+		//
+		// Event: Skill raised.
+		//
+
+		const auto TES3_ShowSkillRaisedNotification = reinterpret_cast<void(__cdecl*)(int, char*)>(0x629FC0);
+
+		void __cdecl OnSkillRaised(int skillId, char * buffer) {
+			TES3_ShowSkillRaisedNotification(skillId, buffer);
+			LuaManager::getInstance().triggerEvent(new event::SkillRaisedEvent(skillId, tes3::getWorldController()->getMobilePlayer()->skills[skillId].base));
+		}
+
 		void LuaManager::executeMainModScripts(const char* path, const char* filename) {
 			for (auto & p : std::experimental::filesystem::recursive_directory_iterator(path)) {
 				if (p.path().filename() == filename) {
@@ -2307,6 +2319,10 @@ namespace mwse {
 			// Event: Determine AI actions.
 			auto combatSessionDetermineAction = &TES3::CombatSession::determineNextAction;
 			genCallEnforced(0x5591D6, 0x538F00, *reinterpret_cast<DWORD*>(&combatSessionDetermineAction));
+
+			// Event: Skill Raised
+			genCallEnforced(0x4A28C6, 0x629FC0, reinterpret_cast<DWORD>(OnSkillRaised));
+			genCallEnforced(0x56BCF2, 0x629FC0, reinterpret_cast<DWORD>(OnSkillRaised));
 
 			// UI framework hooks
 			TES3::UI::hook();

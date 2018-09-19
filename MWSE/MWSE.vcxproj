@@ -73,6 +73,7 @@
     <ClInclude Include="LuaShowRestWaitMenuEvent.h" />
     <ClInclude Include="LuaSimulateEvent.h" />
     <ClInclude Include="LuaSkillExerciseEvent.h" />
+    <ClInclude Include="LuaSkillRaisedEvent.h" />
     <ClInclude Include="LuaSpellCastedEvent.h" />
     <ClInclude Include="LuaSpellCastEvent.h" />
     <ClInclude Include="LuaSpellResistEvent.h" />
@@ -382,6 +383,7 @@
     <ClCompile Include="LuaShowRestWaitMenuEvent.cpp" />
     <ClCompile Include="LuaSimulateEvent.cpp" />
     <ClCompile Include="LuaSkillExerciseEvent.cpp" />
+    <ClCompile Include="LuaSkillRaisedEvent.cpp" />
     <ClCompile Include="LuaSpellCastedEvent.cpp" />
     <ClCompile Include="LuaSpellCastEvent.cpp" />
     <ClCompile Include="LuaSpellResistEvent.cpp" />
