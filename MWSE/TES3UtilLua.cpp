@@ -38,6 +38,7 @@
 #include "TES3Sound.h"
 #include "TES3SoundGenerator.h"
 #include "TES3Spell.h"
+#include "TES3SpellInstanceController.h"
 #include "TES3UIElement.h"
 #include "TES3Weather.h"
 #include "TES3WeatherController.h"
@@ -837,11 +838,11 @@ namespace mwse {
 				}
 
 				if (effect != -1) {
-					tes3::getWorldController()->removeSpellsByEffect(reference, effect, chance);
+					tes3::getWorldController()->spellInstanceController->removeSpellsByEffect(reference, effect, chance);
 				}
 				else if (castType != -1) {
 					bool removeSpell = getOptionalParam<bool>(params, "removeSpell", castType != int(TES3::SpellCastType::Spell));
-					tes3::getWorldController()->clearSpellEffect(reference, castType, chance, removeSpell);
+					tes3::getWorldController()->spellInstanceController->clearSpellEffect(reference, castType, chance, removeSpell);
 				}
 				else {
 					state["error"]("tes3.removeEffects: Must pass either 'effect' or 'castType' parameter!");

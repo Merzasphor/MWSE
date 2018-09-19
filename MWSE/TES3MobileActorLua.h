@@ -15,7 +15,7 @@ namespace mwse {
 			usertypeDefinition.set("actionBeforeCombat", sol::readonly_property(&TES3::MobileActor::actionBeforeCombat));
 			usertypeDefinition.set("actionData", sol::readonly_property(&TES3::MobileActor::actionData));
 			usertypeDefinition.set("activeMagicEffectCount", sol::readonly_property(&TES3::MobileActor::activeMagicEffectCount));
-			//usertypeDefinition.set("activeMagicEffects", sol::readonly_property(&TES3::MobileActor::activeMagicEffects));
+			usertypeDefinition.set("activeMagicEffects", sol::readonly_property(&TES3::MobileActor::activeMagicEffects));
 			usertypeDefinition.set("actorType", sol::readonly_property(&TES3::MobileActor::actorType));
 			usertypeDefinition.set("alarm", &TES3::MobileActor::alarm);
 			usertypeDefinition.set("barterGold", &TES3::MobileActor::barterGold);
@@ -201,5 +201,7 @@ namespace mwse {
 			usertypeDefinition.set("cell", sol::property(&TES3::MobileActor::getCell));
 			usertypeDefinition.set("hasFreeAction", sol::property(&TES3::MobileActor::hasFreeAction));
 		}
+
+		void bindTES3MobileActor();
 	}
 }

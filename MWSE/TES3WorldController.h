@@ -111,7 +111,7 @@ namespace TES3 {
 		void * field_64;
 		void * splashController; // 0x68
 		Iterator<Quest> * journalController; // 0x6C
-		void * spllistActiveSpells; // 0x70
+		SpellInstanceController * spellInstanceController; // 0x70
 		int unknown_0x74;
 		int viewWidth; // 0x78
 		int viewHeight; // 0x7C
@@ -217,13 +217,6 @@ namespace TES3 {
 
 		unsigned short getDaysInMonth(int);
 		double getHighPrecisionSimulationTimestamp();
-
-		//
-		// Wrapper functions for substructures that aren't figured out yet.
-		//
-
-		void removeSpellsByEffect(Reference * reference, int effectId, int percentChance);
-		void clearSpellEffect(Reference * reference, int castType, int percentChance, bool removeSpell);
 
 	};
 	static_assert(sizeof(WorldController) == 0x374, "TES3::WorldController failed size validation");

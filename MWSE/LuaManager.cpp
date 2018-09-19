@@ -76,6 +76,7 @@
 #include "TES3LockpickLua.h"
 #include "TES3MagicEffectLua.h"
 #include "TES3MiscLua.h"
+#include "TES3MobileActorLua.h"
 #include "TES3MobileCreatureLua.h"
 #include "TES3MobileNPCLua.h"
 #include "TES3MobilePlayerLua.h"
@@ -335,6 +336,7 @@ namespace mwse {
 			bindTES3MagicEffectInstance();
 			bindTES3MagicSourceInstance();
 			bindTES3Misc();
+			bindTES3MobileActor();
 			bindTES3MobileCreature();
 			bindTES3MobileNPC();
 			bindTES3MobilePlayer();
