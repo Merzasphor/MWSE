@@ -25,6 +25,7 @@
 #include "TES3Cell.h"
 #include "TES3CrimeTree.h"
 #include "TES3DataHandler.h"
+#include "TES3Door.h"
 #include "TES3Game.h"
 #include "TES3GameSetting.h"
 #include "TES3GlobalVariable.h"
@@ -997,6 +998,158 @@ namespace mwse {
 				}
 
 				actor->playVoiceover(voiceover);
+				return true;
+			};
+
+			state["tes3"]["getLocked"] = [](sol::table params) -> bool {
+				TES3::Reference * reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					return false;
+				}
+
+				auto node = tes3::getAttachedLockNode(reference);
+				if (node == nullptr) {
+					return false;
+				}
+
+				return node->locked;
+			};
+
+			state["tes3"]["setLockLevel"] = [](sol::table params) -> bool {
+				TES3::Reference * reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					return false;
+				}
+
+				auto node = reference->getOrCreateLockNode();
+				if (node == nullptr) {
+					return false;
+				}
+
+				int level = getOptionalParam<int>(params, "level", -1);
+				if (level >= 0) {
+					node->lockLevel = level;
+					return true;
+				}
+
+				return false;
+			};
+
+			state["tes3"]["getLockLevel"] = [](sol::table params) -> sol::optional<int> {
+				TES3::Reference * reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					return sol::optional<int>();
+				}
+
+				auto node = tes3::getAttachedLockNode(reference);
+				if (node == nullptr) {
+					return sol::optional<int>();
+				}
+
+				return node->lockLevel;
+			};
+
+			state["tes3"]["lock"] = [](sol::table params) -> bool {
+				auto reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					return false;
+				}
+
+				// Manage state for doors.
+				if (reference->baseObject->objectType == TES3::ObjectType::Door) {
+					// Clear door opening/closing flags.
+					reference->clearActionFlag(TES3::ActionFlags::DoorOpening | TES3::ActionFlags::DoorClosing | TES3::ActionFlags::DoorJammedOpening | TES3::ActionFlags::DoorJammedClosing);
+
+					// Reset orientation.
+					auto orientationAttachment = tes3::getAttachment<TES3::NewOrientationAttachment>(reference, TES3::AttachmentType::NewOrientation);
+					if (orientationAttachment) {
+						orientationAttachment->orientation.z = reference->orientation.z;
+					}
+
+					// Update the scene graph with the new orientation.
+					if (reference->sceneNode) {
+						TES3::Matrix33 tempOutArg;
+						reference->sceneNode->setLocalRotationMatrix(reference->updateSceneMatrix(&tempOutArg));
+						reference->sceneNode->propagatePositionChange();
+					}
+				}
+
+				// Get or create our lock node.
+				auto lockNode = reference->getOrCreateLockNode();
+				if (lockNode == nullptr) {
+					return false;
+				}
+
+				// Set the lock level if one was provided.
+				int lockLevel = getOptionalParam<int>(params, "level", -1);
+				if (lockLevel >= 0) {
+					lockNode->lockLevel = lockLevel;
+				}
+
+				// Set the locked state, and return true if it changed.
+				reference->setObjectModified(true);
+				if (!lockNode->locked) {
+					lockNode->locked = true;
+					return true;
+				}
+				else {
+					return false;
+				}
+			};
+
+			state["tes3"]["unlock"] = [](sol::table params) -> bool {
+				TES3::Reference * reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					return false;
+				}
+
+				auto node = tes3::getAttachedLockNode(reference);
+				if (node == nullptr) {
+					return false;
+				}
+
+				if (node->locked) {
+					node->locked = false;
+					return true;
+				}
+				else {
+					return false;
+				}
+			};
+
+			state["tes3"]["getTrap"] = [](sol::table params) -> TES3::Spell* {
+				TES3::Reference * reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					return nullptr;
+				}
+
+				auto node = tes3::getAttachedLockNode(reference);
+				if (node == nullptr) {
+					return nullptr;
+				}
+
+				return node->trap;
+			};
+
+			state["tes3"]["setTrap"] = [](sol::table params) -> bool {
+				auto reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					return false;
+				}
+
+				// Only accept doors.
+				TES3::Door* door = reinterpret_cast<TES3::Door*>(reference->baseObject);
+				if (door->objectType != TES3::ObjectType::Door) {
+					return false;
+				}
+
+				// Get or create our lock node.
+				auto lockNode = reference->getOrCreateLockNode();
+				if (lockNode == nullptr) {
+					return false;
+				}
+
+				lockNode->trap = getOptionalParamSpell(params, "spell");
 				return true;
 			};
 		}
