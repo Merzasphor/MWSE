@@ -21,7 +21,7 @@ menu
 
 Filter
 --------------------------------------------------------
-This event does not support filters.
+This event can be filtered using **menu**'s ``.name`` property.
 
 
 .. _`Event Guide`: ../guide/events.html

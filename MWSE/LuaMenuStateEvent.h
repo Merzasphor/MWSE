@@ -10,6 +10,7 @@ namespace mwse {
 				MenuStateEvent(bool inMenuMode);
 				const char* getEventName();
 				sol::table createEventTable();
+				sol::object getEventOptions();
 
 			protected:
 				bool m_InMenuMode;

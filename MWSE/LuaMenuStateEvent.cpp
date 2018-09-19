@@ -35,6 +35,18 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			sol::object MenuStateEvent::getEventOptions() {
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table options = state.create_table();
+
+				auto menu = tes3::ui::getTopMenu();
+				if (menu) {
+					options["filter"] = menu->name.cString;
+				}
+
+				return options;
+			}
 		}
 	}
 }
