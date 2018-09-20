@@ -60,6 +60,13 @@ namespace TES3 {
 		Sound * soundEffects[8];
 		int unknown_0x124;
 		float unknown_0x128;
+
+		//
+		// Other related this-call functions.
+		//
+
+		int getMagnitude(int effectIndex);
+
 	};
 	static_assert(sizeof(MagicSourceInstance) == 0x12C, "TES3::MagicSourceInstance failed size validation");
 }
