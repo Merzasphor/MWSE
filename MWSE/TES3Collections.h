@@ -14,6 +14,26 @@ namespace TES3 {
 	static_assert(sizeof(LinkedList<void>) == 0x0C, "TES3::LinkedList failed size validation");
 
 	//
+	// STL List
+	//
+
+	template <typename T>
+	struct StlListNode {
+		T * data;
+		StlListNode<T> * previous;
+		StlListNode<T> * next;
+	};
+	static_assert(sizeof(StlListNode<void>) == 0x0C, "TES3::StlListNode failed size validation");
+
+	template <typename T>
+	struct StlList {
+		unsigned long size;
+		StlListNode<T> * head;
+		StlListNode<T> * tail;
+	};
+	static_assert(sizeof(StlList<void>) == 0x0C, "TES3::StlList failed size validation");
+
+	//
 	// HashMap
 	//
 

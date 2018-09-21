@@ -35,9 +35,9 @@
 
 namespace mwse {
 	namespace tes3 {
-		TES3::WorldController * getWorldController();
-		TES3::DataHandler * getDataHandler();
-		TES3::Game * getGame();
+		__declspec(dllexport) TES3::WorldController * getWorldController();
+		__declspec(dllexport) TES3::DataHandler * getDataHandler();
+		__declspec(dllexport) TES3::Game * getGame();
 
 		TES3::Reference* getReference(const char* id);
 		TES3::Reference* getReference(std::string& id);

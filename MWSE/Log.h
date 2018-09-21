@@ -29,7 +29,7 @@ namespace mwse
 		void OpenLog(const char *path);
 		void CloseLog();
 
-		std::ostream& getLog();
+		__declspec(dllexport) std::ostream& getLog();
 		std::ostream& getDebug(); //outputs to OutputDebugString
 		
 		std::ostream& dump(std::ostream& output, const void *data, size_t length);

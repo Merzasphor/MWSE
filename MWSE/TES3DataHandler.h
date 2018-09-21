@@ -50,7 +50,30 @@ namespace TES3 {
 		int unknown_0xAE58;
 		int sgWireframeProperty; // 0xAE5C
 		void * TESFiles; // 0xAE60
-		GameFile * activeMods[256];
+		GameFile * activeMods[256]; // 0xAE64
+		StlList<Cell> * cells; // 0xB264
+		HashMap * allObjectsById; // 0xB268
+		HashMap * unknown_0xB26C;
+		char dataFilesPath[260]; // 0xB270
+		char unknown_0xB374;
+		char unknown_0xB375;
+		char unknown_0xB376;
+		char unknown_0xB377;
+		char unknown_0xB378;
+		char unknown_0xB379;
+		char unknown_0xB37A;
+		Iterator<void> * unknown_0xB37C;
+		NI::Pointer<NI::SourceTexture> mapTexture; // 0xB380
+		Reference * playerSaveGame; // 0xB384
+		int unknown_0xB388;
+		int unknown_0xB38C;
+		int unknown_0xB390;
+		int unknown_0xB394;
+		int unknown_0xB398;
+		int unknown_0xB39C;
+		int unknown_0xB3A0;
+		int unknown_0xB3A4;
+		int unknown_0xB3A8;
 
 		//
 		// Other related this-call functions.
@@ -69,6 +92,8 @@ namespace TES3 {
 		bool addNewObject(BaseObject*);
 		void deleteObject(BaseObject*);
 
+		__declspec(dllexport) Cell * getCellByGrid(int x, int y);
+
 		//
 		// Custom functions.
 		//
@@ -77,7 +102,7 @@ namespace TES3 {
 		NI::Pointer<NI::Object> loadMesh(const char* path);
 
 	};
-	static_assert(sizeof(NonDynamicData) == 0xB264, "TES3::NonDynamicData failed size validation");
+	static_assert(sizeof(NonDynamicData) == 0xB3AC, "TES3::NonDynamicData failed size validation");
 	static_assert(offsetof(NonDynamicData, spellsList) == 0x10, "TES3::NonDynamicData failed offset validation");
 	static_assert(offsetof(NonDynamicData, GMSTs) == 0x18, "TES3::NonDynamicData failed offset validation");
 	static_assert(offsetof(NonDynamicData, skills) == 0x4C, "TES3::NonDynamicData failed offset validation");

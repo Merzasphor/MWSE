@@ -11,6 +11,8 @@
 #include "TES3Script.h"
 #include "TES3Sound.h"
 
+#include "NISourceTexture.h"
+
 namespace mwse {
 	namespace lua {
 		void bindTES3DataHandler() {

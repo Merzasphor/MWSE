@@ -75,8 +75,9 @@ namespace TES3 {
 
 		Reference * getFirstObjectOfType(ObjectType::ObjectType, bool);
 
-		int getGridX();
-		int getGridY();
+		bool __declspec(dllexport) isInterior();
+		int __declspec(dllexport) getGridX();
+		int __declspec(dllexport) getGridY();
 
 		//
 		// Other getter/setter functions.

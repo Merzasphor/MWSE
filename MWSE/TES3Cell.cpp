@@ -12,6 +12,10 @@ namespace TES3 {
 		return reinterpret_cast<Reference*(__thiscall *)(Cell*, int, unsigned char)>(TES3_Cell_getFirstObjectOfType)(this, type, skipDeleted);
 	}
 
+	bool Cell::isInterior() {
+		return getCellFlag(TES3::CellFlag::Interior);
+	}
+
 	int Cell::getGridX() {
 		return reinterpret_cast<int(__thiscall *)(Cell*)>(TES3_Cell_getExteriorGridX)(this);
 	}

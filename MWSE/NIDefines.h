@@ -10,7 +10,10 @@ namespace NI {
 	struct ObjectNET;
 	struct Pick;
 	struct PickRecord;
+	struct PixelData;
+	struct PixelFormat;
 	struct RTTI;
+	struct SourceTexture;
 	struct SwitchNode;
 	struct TimeController;
 	struct Transform;

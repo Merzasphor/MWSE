@@ -5,7 +5,8 @@
 #include <Windows.h>
 
 namespace TES3 {
-	const auto TES3_TES3File_delete = reinterpret_cast<void (__thiscall *)(GameFile*)>(0x4B48F0);
+	const auto TES3_TES3File_delete = reinterpret_cast<void(__thiscall *)(GameFile*)>(0x4B48F0);
+	const auto TES3_TES3File_getChunkData = reinterpret_cast<bool(__thiscall *)(GameFile*, void*, unsigned int)>(0x4B6880);
 
 	using std::uint64_t;
 
@@ -18,6 +19,10 @@ namespace TES3 {
 				TES3_TES3File_delete(this);
 			}
 		}
+	}
+
+	bool GameFile::getChunkData(void * data, unsigned int size) {
+		return TES3_TES3File_getChunkData(this, data, size);
 	}
 
 	std::uint64_t GameFile::getFileSize() const {

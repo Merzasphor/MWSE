@@ -193,6 +193,20 @@ namespace mwse {
 		return true;
 	}
 
+	bool __declspec(dllexport) genNOPUnprotected(DWORD address, DWORD size) {
+		// Unprotect memory.
+		DWORD oldProtect;
+		VirtualProtect((DWORD*)address, size, PAGE_READWRITE, &oldProtect);
+
+		for (DWORD i = 0; i < size; i++) {
+			genNOP(address + i);
+		}
+
+		// Protect memory again.
+		VirtualProtect((DWORD*)address, size, oldProtect, &oldProtect);
+		return true;
+	}
+
 	void writeByteUnprotected(DWORD address, BYTE value) {
 		// Unprotect memory.
 		DWORD oldProtect;

@@ -53,7 +53,17 @@ namespace TES3 {
 		void* sgSaveImage;
 		Iterator<void>* list_570;
 
+		//
+		// Other related this-call functions.
+		//
+
 		void deleteFile();
+		bool __declspec(dllexport) getChunkData(void * data, unsigned int size);
+
+		//
+		// Custom functions.
+		//
+
 		std::uint64_t getFileSize() const;
 		std::uint64_t getModifiedTime() const;
 	};
