@@ -8,7 +8,7 @@
 namespace TES3 {
 	struct Land : BaseObject {
 		NI::Pointer<NI::Object> unknown_0x10;
-		int unknown_0x14;
+		int unknown_0x14; // Data chunk. Masked with & 0xFFFFFC07
 		int unknown_0x18;
 		int unknown_0x1C;
 		int unknown_0x20;

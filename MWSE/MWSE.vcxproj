@@ -108,6 +108,7 @@
     <ClInclude Include="DynamicLuaObject.h" />
     <ClInclude Include="TES3GameFileLua.h" />
     <ClInclude Include="TES3Land.h" />
+    <ClInclude Include="TES3LandTexture.h" />
     <ClInclude Include="TES3MobController.h" />
     <ClInclude Include="TES3AttachmentLua.h" />
     <ClInclude Include="TES3SpellInstanceController.h" />

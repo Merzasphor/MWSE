@@ -26,7 +26,7 @@ namespace TES3 {
 		HashMap * meshes; // 0x14
 		GameSetting ** GMSTs; // 0x18 // Pointer to array of GMST pointers.
 		Iterator<Race> * races; // 0x1C
-		Iterator<void> * landTextures; // 0x20
+		Iterator<LandTexture> * landTextures; // 0x20
 		Iterator<Class> * classes; // 0x24
 		Iterator<Faction> * factions; // 0x28
 		Iterator<Script> * scripts; // 0x2C

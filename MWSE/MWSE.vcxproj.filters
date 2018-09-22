@@ -1122,6 +1122,9 @@
     <ClInclude Include="TES3Land.h">
       <Filter>Header Files\DataAdapters\TES3\Worldspace</Filter>
     </ClInclude>
+    <ClInclude Include="TES3LandTexture.h">
+      <Filter>Header Files\DataAdapters\TES3\Worldspace</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

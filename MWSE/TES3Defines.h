@@ -52,6 +52,7 @@ namespace TES3 {
 	struct ItemData;
 	struct ItemStack;
 	struct Land;
+	struct LandTexture;
 	struct LeveledCreature;
 	struct LeveledItem;
 	struct LeveledListNode;
