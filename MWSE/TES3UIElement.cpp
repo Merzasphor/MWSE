@@ -45,6 +45,8 @@ namespace TES3 {
 		const auto TES3_ui_setProperty = reinterpret_cast<void (__thiscall *)(Element*, Property, PropertyValue, PropertyType)>(0x581F30);
 		const auto TES3_ui_setText = reinterpret_cast<void (__thiscall *)(Element*, const char*)>(0x58AD30);
 
+		const auto TES3_ui_updateSceneGraph = reinterpret_cast<void(__thiscall *)(Element*)>(0x587000);
+
 		//
 		// Widget creation/destruction methods
 		//
@@ -278,6 +280,10 @@ namespace TES3 {
 
 		void Element::setText(const char* text) {
 			TES3_ui_setText(this, text);
+		}
+
+		void Element::updateSceneGraph() {
+			TES3_ui_updateSceneGraph(this);
 		}
 
 		//

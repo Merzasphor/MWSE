@@ -5,18 +5,18 @@
 
 namespace TES3 {
 	namespace UI {
-		UI_ID registerID(const char* name);
-		Property registerProperty(const char* name);
-		Element* createMenu(UI_ID id);
-		Element* createHelpLayerMenu(UI_ID id);
-		Element* createTooltipMenu(UI_ID id);
-		Element* findMenu(UI_ID id);
-		Element* findHelpLayerMenu(UI_ID id);
-		Boolean enterMenuMode(UI_ID id);
-		Boolean leaveMenuMode();
-		void acquireTextInput(Element* element);
-		void preventInventoryMenuToggle(Element* menu);
-		Vector3 getPaletteColour(Property prop);
+		__declspec(dllexport) UI_ID registerID(const char* name);
+		__declspec(dllexport) Property registerProperty(const char* name);
+		__declspec(dllexport) Element* createMenu(UI_ID id);
+		__declspec(dllexport) Element* createHelpLayerMenu(UI_ID id);
+		__declspec(dllexport) Element* createTooltipMenu(UI_ID id);
+		__declspec(dllexport) Element* findMenu(UI_ID id);
+		__declspec(dllexport) Element* findHelpLayerMenu(UI_ID id);
+		__declspec(dllexport) Boolean enterMenuMode(UI_ID id);
+		__declspec(dllexport) Boolean leaveMenuMode();
+		__declspec(dllexport) void acquireTextInput(Element* element);
+		__declspec(dllexport) void preventInventoryMenuToggle(Element* menu);
+		__declspec(dllexport) Vector3 getPaletteColour(Property prop);
 
 		Boolean __cdecl onScrollPaneMousewheel(Element*, Property, int, int, Element*);
 
