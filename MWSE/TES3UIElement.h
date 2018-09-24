@@ -6,6 +6,10 @@
 #include "TES3UITree.h"
 #include "TES3UIVector.h"
 
+#include "NIPointer.h"
+#include "NINode.h"
+#include "NISourceTexture.h"
+
 namespace TES3 {
 	namespace UI {
 		struct Element {
@@ -37,9 +41,9 @@ namespace TES3 {
 			char unknown_0x82;
 			char unknown_0x83;
 			int unknown_0x84;
-			void* node_88;
+			NI::Pointer<NI::Node> node_88;
 			void* extraData;
-			void* node_90;
+			NI::Pointer<NI::SourceTexture> texture; // 0x90
 			int cached_offsetX, cached_offsetY;
 			int nodeMinX, nodeMaxX;
 			int nodeMinY, nodeMaxY;

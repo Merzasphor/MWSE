@@ -211,12 +211,12 @@ namespace TES3 {
 		//
 
 		void mainLoopBeforeInput();
-		MobilePlayer* getMobilePlayer();
-		void playItemUpDownSound(BaseObject*, bool, Reference*);
-		float getSimulationTimestamp();
+		_declspec(dllexport) MobilePlayer* getMobilePlayer();
+		_declspec(dllexport) void playItemUpDownSound(BaseObject*, bool, Reference*);
+		_declspec(dllexport) float getSimulationTimestamp();
 
-		unsigned short getDaysInMonth(int);
-		double getHighPrecisionSimulationTimestamp();
+		_declspec(dllexport) unsigned short getDaysInMonth(int);
+		_declspec(dllexport) double getHighPrecisionSimulationTimestamp();
 
 	};
 	static_assert(sizeof(WorldController) == 0x374, "TES3::WorldController failed size validation");

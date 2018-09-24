@@ -22,10 +22,10 @@ namespace NI {
 		// vTable wrappers.
 		//
 
-		AVObject * getObjectByName(const char*);
+		__declspec(dllexport) AVObject * getObjectByName(const char*);
 
 		template <typename T>
-		T * getObjectByNameAndType(const char* name) {
+		__declspec(dllexport) T * getObjectByNameAndType(const char* name) {
 			return reinterpret_cast<T*>(vTable.asAVObject->getObjectByName(this, name));
 		}
 		
@@ -33,10 +33,10 @@ namespace NI {
 		// Other related this-call functions.
 		//
 
-		void updateNodeEffects();
-		void updateTextureProperties();
-		void propagatePositionChange(float unk1 = 0.0f, int unk2 = 0, int unk3 = 1);
-		void setLocalRotationMatrix(TES3::Matrix33* matrix);
+		__declspec(dllexport) void updateNodeEffects();
+		__declspec(dllexport) void updateTextureProperties();
+		__declspec(dllexport) void propagatePositionChange(float unk1 = 0.0f, int unk2 = 0, int unk3 = 1);
+		__declspec(dllexport) void setLocalRotationMatrix(TES3::Matrix33* matrix);
 
 	};
 	static_assert(sizeof(AVObject) == 0x90, "NI::AVObject failed size validation");
