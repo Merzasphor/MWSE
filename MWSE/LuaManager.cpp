@@ -453,13 +453,10 @@ namespace mwse {
 				return FALSE;
 			}
 
-			// sol isn't always smart about about forming the string, so make sure that the buffer we use is safe.
-			std::string safeBuffer(buffer, strlen(buffer));
-
 			// Get our lua table, and replace it with our new table.
 			sol::state& state = LuaManager::getInstance().getState();
 			sol::table& table = reference->getLuaTable();
-			table = state["json"]["decode"](safeBuffer);
+			table = state["json"]["decode"](buffer);
 
 			// We successfully read this subrecord, so our jump location is back at the success location.
 			delete[] buffer;
