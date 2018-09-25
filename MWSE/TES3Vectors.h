@@ -23,6 +23,8 @@ namespace TES3 {
 		__declspec(dllexport) Vector3() : Vector2(), z(0) {}
 		__declspec(dllexport) Vector3(float _x, float _y, float _z) : Vector2(_x, _y), z(_z) {}
 
+		__declspec(dllexport) bool operator==(const Vector3& matrix);
+		__declspec(dllexport) bool operator!=(const Vector3& matrix);
 		__declspec(dllexport) Vector3 operator+(const Vector3&);
 		__declspec(dllexport) Vector3 operator-(const Vector3&);
 		__declspec(dllexport) Vector3 operator*(const Vector3&);
