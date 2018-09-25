@@ -98,6 +98,10 @@ namespace mwse {
 				usertypeDefinition.set("worldBoundRadius", &NI::AVObject::worldBoundRadius);
 				usertypeDefinition.set("worldTransform", &NI::AVObject::worldTransform);
 
+				// Basic function binding.
+				usertypeDefinition.set("updateNodeEffects", &NI::AVObject::updateNodeEffects);
+				usertypeDefinition.set("updateTextureProperties", &NI::AVObject::updateTextureProperties);
+
 				// Friendly access to flags.
 				usertypeDefinition.set("appCulled", sol::property(
 					[](NI::AVObject& self) -> bool { return (self.flags & 1) == 1; },
