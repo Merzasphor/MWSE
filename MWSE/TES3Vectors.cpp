@@ -48,7 +48,7 @@ namespace TES3 {
 		z = -z;
 	}
 
-	const auto TES3_Matrix33_operatorEqual = reinterpret_cast<bool(__thiscall*)(Matrix33*, const Matrix33*)>(0x6E7ED0);
+	const auto TES3_Matrix33_testEqual = reinterpret_cast<bool(__thiscall*)(Matrix33*, const Matrix33*)>(0x6E7ED0);
 	const auto TES3_Matrix33_addMatrix = reinterpret_cast<Matrix33 *(__thiscall*)(Matrix33*, Matrix33*, const Matrix33*)>(0x6E7F60);
 	const auto TES3_Matrix33_subtractMatrix = reinterpret_cast<Matrix33 *(__thiscall*)(Matrix33*, Matrix33*, const Matrix33*)>(0x6E8000);
 	const auto TES3_Matrix33_multiplyMatrix = reinterpret_cast<Matrix33 *(__thiscall*)(Matrix33*, Matrix33*, const Matrix33*)>(0x6E80A0);
@@ -59,7 +59,16 @@ namespace TES3 {
 	const auto TES3_Matrix33_toRotationX = reinterpret_cast<void(__thiscall*)(Matrix33*, float)>(0x6E7D20);
 	const auto TES3_Matrix33_toRotationY = reinterpret_cast<void(__thiscall*)(Matrix33*, float)>(0x6E7D60);
 	const auto TES3_Matrix33_toRotationZ = reinterpret_cast<void(__thiscall*)(Matrix33*, float)>(0x6E7DA0);
-	const auto TES3_Matrix33_toRotationXYZ = reinterpret_cast<void(__thiscall*)(Matrix33*, float, float, float, float) > (0x6E7DE0);
+	const auto TES3_Matrix33_toRotationXYZ = reinterpret_cast<void(__thiscall*)(Matrix33*, float, float, float, float)> (0x6E7DE0);
+	const auto TES3_Matrix33_toDiagonal = reinterpret_cast<void(__thiscall*)(Matrix33*, float, float, float)> (0x6E8D60);
+
+	const auto TES3_Matrix33_toEulerXYZ = reinterpret_cast<bool(__thiscall*)(Matrix33*, float*, float*, float*)> (0x6E8C50);
+
+	const auto TES3_Matrix33_transpose = reinterpret_cast<Matrix33*(__thiscall*)(Matrix33*, Matrix33*)> (0x6E8420);
+	const auto TES3_Matrix33_inverseRaw = reinterpret_cast<bool(__thiscall*)(Matrix33*, Matrix33*)> (0x6E82F0);
+	const auto TES3_Matrix33_inverse = reinterpret_cast<Matrix33*(__thiscall*)(Matrix33*, Matrix33*)> (0x6E83E0);
+
+	const auto TES3_Matrix33_reorthogonalize = reinterpret_cast<bool(__thiscall*)(Matrix33*)> (0x6E84A0);
 
 	Matrix33::Matrix33() : m0(), m1(), m2() {
 
@@ -72,7 +81,7 @@ namespace TES3 {
 	}
 
 	bool Matrix33::operator==(const Matrix33& matrix) {
-		return TES3_Matrix33_operatorEqual(this, &matrix);
+		return TES3_Matrix33_testEqual(this, &matrix);
 	}
 
 	bool Matrix33::operator!=(const Matrix33& matrix) {
@@ -149,29 +158,32 @@ namespace TES3 {
 		TES3_Matrix33_toRotationXYZ(this, angle, x, y, z);
 	}
 
-	//
-	// Incomplete/unmapped functions!
-	//
+	void Matrix33::toDiagonal(float x, float y, float z) {
+		TES3_Matrix33_toDiagonal(this, x, y, z);
+	}
+
+	Matrix33 Matrix33::transpose() {
+		Matrix33 result;
+		TES3_Matrix33_transpose(this, &result);
+		return result;
+	}
 
 	Matrix33 Matrix33::invert() {
-		return Matrix33();
+		Matrix33 result;
+		TES3_Matrix33_inverse(this, &result);
+		return result;
 	}
 
 	bool Matrix33::invert(Matrix33 * out_matrix) {
-		*out_matrix = Matrix33();
-		return false;
+		return TES3_Matrix33_inverseRaw(this, out_matrix);
 	}
 
-	void Matrix33::getAngleAndAxis(float * angle, float * out_x, float * out_y, float * out_z) {
-		return;
+	bool Matrix33::toEulerXYZ(float * x, float * y, float * z) {
+		return TES3_Matrix33_toEulerXYZ(this, x, y, z);
 	}
 
-	bool Matrix33::toEuler(float * out_x, float * out_y, float * out_z) {
-		return false;
-	}
-
-	bool Matrix33::fromEuler(float * out_x, float * out_y, float * out_z) {
-		return false;
+	bool Matrix33::reorthogonalize() {
+		return TES3_Matrix33_reorthogonalize(this);
 	}
 
 }

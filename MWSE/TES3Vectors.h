@@ -81,18 +81,20 @@ namespace TES3 {
 		__declspec(dllexport) void toRotationY(float y);
 		__declspec(dllexport) void toRotationZ(float z);
 		__declspec(dllexport) void toRotation(float angle, float x, float y, float z);
+		__declspec(dllexport) void toDiagonal(float x, float y, float z);
 
 		//
 		// Other related helper functions.
 		//
 
+		__declspec(dllexport) Matrix33 transpose();
+
 		__declspec(dllexport) Matrix33 invert();
 		__declspec(dllexport) bool invert(Matrix33 * out_matrix);
 
-		__declspec(dllexport) void getAngleAndAxis(float * angle, float * out_x, float * out_y, float * out_z);
+		__declspec(dllexport) bool toEulerXYZ(float * x, float * y, float * z);
 
-		__declspec(dllexport) bool toEuler(float * angle1, float * angle2, float * angle3);
-		__declspec(dllexport) bool fromEuler(float * angle1, float * angle2, float * angle3);
+		__declspec(dllexport) bool reorthogonalize();
 
 	};
 	static_assert(sizeof(Matrix33) == 0x24, "TES3::Matrix33 failed size validation");
