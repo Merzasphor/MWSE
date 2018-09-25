@@ -127,6 +127,7 @@
 #include "LuaCalcTravelPriceEvent.h"
 #include "LuaCellChangedEvent.h"
 #include "LuaEquipEvent.h"
+#include "LuaFilterBarterMenuEvent.h"
 #include "LuaFilterInventoryEvent.h"
 #include "LuaFrameEvent.h"
 #include "LuaGenericUiActivatedEvent.h"
@@ -1731,7 +1732,7 @@ namespace mwse {
 		}
 
 		//
-		// Event: Filter Inventory File
+		// Event: Filter Inventory/Barter Tile
 		//
 
 		const auto TES3_FilterInventoryTile = reinterpret_cast<bool(__cdecl*)(TES3::UI::InventoryTile *, TES3::Item *)>(0x5CC720);
@@ -1746,6 +1747,20 @@ namespace mwse {
 			}
 
 			return TES3_FilterInventoryTile(tile, item);
+		}
+
+		const auto TES3_FilterBarterTile = reinterpret_cast<bool(__cdecl*)(TES3::UI::InventoryTile *, TES3::Item *)>(0x5A5430);
+
+		bool __cdecl OnFilterBarterTile(TES3::UI::InventoryTile * tile, TES3::Item * item) {
+			sol::table payload = LuaManager::getInstance().triggerEvent(new event::FilterBarterMenuEvent(tile, item));
+			if (payload.valid()) {
+				sol::object filter = payload["filter"];
+				if (filter.is<bool>()) {
+					return filter.as<bool>();
+				}
+			}
+
+			return TES3_FilterBarterTile(tile, item);
 		}
 
 		void LuaManager::hook() {
@@ -2349,16 +2364,21 @@ namespace mwse {
 			auto combatSessionDetermineAction = &TES3::CombatSession::determineNextAction;
 			genCallEnforced(0x5591D6, 0x538F00, *reinterpret_cast<DWORD*>(&combatSessionDetermineAction));
 
-			// Event: Skill Raised
+			// Event: Skill Raised.
 			genCallEnforced(0x4A28C6, 0x629FC0, reinterpret_cast<DWORD>(OnSkillRaised));
 			genCallEnforced(0x56BCF2, 0x629FC0, reinterpret_cast<DWORD>(OnSkillRaised));
 
 			// Event: UI Refreshed.
 			genCallEnforced(0x6272F9, 0x649870, reinterpret_cast<DWORD>(OnRefreshedStatsPane)); // MenuStat_scroll_pane
 
-			// Event: Inventory Filter
+			// Event: Inventory Filter.
 			genCallEnforced(0x5CBD5F, 0x5CC720, reinterpret_cast<DWORD>(OnFilterInventoryTile));
 			genCallEnforced(0x5CCAC5, 0x5CC720, reinterpret_cast<DWORD>(OnFilterInventoryTile));
+
+			// Event: Barter Menu Filter.
+			genCallEnforced(0x5A4AAD, 0x5A5430, reinterpret_cast<DWORD>(OnFilterBarterTile));
+			genCallEnforced(0x5A4C5B, 0x5A5430, reinterpret_cast<DWORD>(OnFilterBarterTile));
+			genCallEnforced(0x5A576D, 0x5A5430, reinterpret_cast<DWORD>(OnFilterBarterTile));
 
 			// UI framework hooks
 			TES3::UI::hook();

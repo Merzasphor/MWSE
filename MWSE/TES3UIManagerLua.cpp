@@ -3,9 +3,13 @@
 #include <utility>
 #include <vector>
 
+#include "TES3MobileActor.h"
+
 #include "TES3UIElement.h"
 #include "TES3UIManager.h"
 #include "TES3UIMenuController.h"
+
+#include "LuaUtil.h"
 
 #include "sol.hpp"
 #include "LuaManager.h"
@@ -28,6 +32,7 @@ namespace mwse {
 		static std::unordered_map<Element*, void(__cdecl*)(Element*)> destroyMap;
 
 		const auto TES3_UpdateInventoryTiles = reinterpret_cast<void(__cdecl*)()>(0x5CC910);
+		const auto TES3_UpdateBarterMenuTiles = reinterpret_cast<void(__cdecl*)()>(0x5A5620);
 
 		TES3::UI::Boolean __cdecl eventDispatcher(Element* owningWidget, Property eventID, int data0, int data1, Element* source) {
 			sol::state& state = LuaManager::getInstance().getState();
@@ -237,6 +242,10 @@ namespace mwse {
 				return state.create_table_with(1, colour.x, 2, colour.y, 3, colour.z);
 			});
 			tes3ui["updateInventoryTiles"] = TES3_UpdateInventoryTiles;
+			tes3ui["updateBarterMenuTiles"] = TES3_UpdateBarterMenuTiles;
+			tes3ui["getServiceActor"] = []() {
+				return mwse::lua::makeLuaObject(TES3::UI::getServiceActor());
+			};
 		}
 
 	}

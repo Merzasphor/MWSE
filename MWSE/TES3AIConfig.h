@@ -10,7 +10,7 @@ namespace TES3 {
 		unsigned char flee; // 0x3
 		unsigned char alarm; // 0x4
 		char unknown_0x5[3];
-		int merchantFlags; // 0x8
+		unsigned int merchantFlags; // 0x8
 		Iterator<TravelDestination> * travelDestinations; // 0xC
 	};
 }

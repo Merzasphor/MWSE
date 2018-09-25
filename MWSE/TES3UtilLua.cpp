@@ -23,6 +23,7 @@
 #include "TES3Actor.h"
 #include "TES3AudioController.h"
 #include "TES3Cell.h"
+#include "TES3Class.h"
 #include "TES3CrimeTree.h"
 #include "TES3DataHandler.h"
 #include "TES3Door.h"
@@ -1151,6 +1152,53 @@ namespace mwse {
 
 				lockNode->trap = getOptionalParamSpell(params, "spell");
 				return true;
+			};
+
+			state["tes3"]["checkMerchantTradesItem"] = [](sol::table params) -> bool {
+				auto reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					return false;
+				}
+
+				TES3::Item* item = getOptionalParamObject<TES3::Item>(params, "item");
+				if (item == nullptr) {
+					return false;
+				}
+
+				auto enchantment = item->getEnchantment();
+				if (enchantment) {
+					return (reference->getAIConfig()->merchantFlags & TES3::ServiceFlag::BartersEnchantedItems);
+				}
+
+				switch (item->objectType) {
+				case TES3::ObjectType::Alchemy:
+					return (reference->getAIConfig()->merchantFlags & TES3::ServiceFlag::BartersAlchemy);
+				case TES3::ObjectType::Apparatus:
+					return (reference->getAIConfig()->merchantFlags & TES3::ServiceFlag::BartersApparatus);
+				case TES3::ObjectType::Armor:
+					return (reference->getAIConfig()->merchantFlags & TES3::ServiceFlag::BartersArmor);
+				case TES3::ObjectType::Book:
+					return (reference->getAIConfig()->merchantFlags & TES3::ServiceFlag::BartersBooks);
+				case TES3::ObjectType::Clothing:
+					return (reference->getAIConfig()->merchantFlags & TES3::ServiceFlag::BartersClothing);
+				case TES3::ObjectType::Ingredient:
+					return (reference->getAIConfig()->merchantFlags & TES3::ServiceFlag::BartersIngredients);
+				case TES3::ObjectType::Light:
+					return (reference->getAIConfig()->merchantFlags & TES3::ServiceFlag::BartersLights);
+				case TES3::ObjectType::Lockpick:
+					return (reference->getAIConfig()->merchantFlags & TES3::ServiceFlag::BartersLockpicks);
+				case TES3::ObjectType::Misc:
+					return (reference->getAIConfig()->merchantFlags & TES3::ServiceFlag::BartersMiscItems);
+				case TES3::ObjectType::Probe:
+					return (reference->getAIConfig()->merchantFlags & TES3::ServiceFlag::BartersProbes);
+				case TES3::ObjectType::Repair:
+					return (reference->getAIConfig()->merchantFlags & TES3::ServiceFlag::BartersRepairTools);
+				case TES3::ObjectType::Weapon:
+				case TES3::ObjectType::Ammo:
+					return (reference->getAIConfig()->merchantFlags & TES3::ServiceFlag::BartersWeapons);
+				}
+
+				return false;
 			};
 		}
 	}
