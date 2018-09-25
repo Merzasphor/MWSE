@@ -36,6 +36,8 @@ namespace TES3 {
 		static Property propButtonActive[4], propButtonActiveOver[4], propButtonActivePressed[4];
 		static UI_ID uiidButtonText;
 
+		const auto TES3_WidgetButton_updateStateColor = reinterpret_cast<bool(__cdecl*)(WidgetButton*)>(0x639E60);
+
 		bool WidgetButton::initProperties() {
 			propButtonState = registerProperty("PartButton_state");
 			initColourProperty(propButtonIdle, "PartButton_idle");
@@ -61,6 +63,7 @@ namespace TES3 {
 		}
 		void WidgetButton::setState(int state) {
 			setProperty(propButtonState, state);
+			TES3_WidgetButton_updateStateColor(this);
 		}
 
 		void WidgetButton::setColourIdle(const float(&c)[3]) { setColourProperty(*this, propButtonIdle, c); }
