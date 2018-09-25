@@ -6,7 +6,8 @@
 
 namespace TES3 {
 	const auto TES3_TES3File_delete = reinterpret_cast<void(__thiscall *)(GameFile*)>(0x4B48F0);
-	const auto TES3_TES3File_getChunkData = reinterpret_cast<bool(__thiscall *)(GameFile*, void*, unsigned int)>(0x4B6880);
+	const auto TES3_TES3File_readChunkData = reinterpret_cast<bool(__thiscall *)(GameFile*, void*, unsigned int)>(0x4B6880);
+	const auto TES3_TES3File_writeChunkData = reinterpret_cast<int(__thiscall *)(GameFile*, unsigned int, const void*, unsigned int)>(0x4B6BA0);
 
 	using std::uint64_t;
 
@@ -21,8 +22,12 @@ namespace TES3 {
 		}
 	}
 
-	bool GameFile::getChunkData(void * data, unsigned int size) {
-		return TES3_TES3File_getChunkData(this, data, size);
+	bool GameFile::readChunkData(void * data, unsigned int size) {
+		return TES3_TES3File_readChunkData(this, data, size);
+	}
+
+	int GameFile::writeChunkData(unsigned int tag, const void * data, unsigned int size) {
+		return TES3_TES3File_writeChunkData(this, tag, data, size);
 	}
 
 	std::uint64_t GameFile::getFileSize() const {

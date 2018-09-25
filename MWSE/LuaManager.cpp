@@ -22,6 +22,7 @@
 #include "TES3DataHandler.h"
 #include "TES3Dialogue.h"
 #include "TES3Game.h"
+#include "TES3GameFile.h"
 #include "TES3GameSetting.h"
 #include "TES3InputController.h"
 #include "TES3LeveledList.h"
@@ -192,9 +193,6 @@
 #define TES3_HOOK_SPELL_CAST_FAILURE 0x5157D5
 #define TES3_HOOK_SPELL_CAST_FAILURE_SIZE 0xA
 #define TES3_HOOK_SPELL_CAST_FAILURE_RETURN (TES3_HOOK_SPELL_CAST_FAILURE + TES3_HOOK_SPELL_CAST_FAILURE_SIZE)
-
-#define TES3_load_writeChunk 0x4B6BA0
-#define TES3_load_readChunk 0x4B6880
 
 #define TES3_ActorAnimData_attackCheckMeleeHit 0x541530
 
@@ -440,17 +438,18 @@ namespace mwse {
 		// Hook: Load reference.
 		//
 
-		static DWORD _stdcall LoadReference(TES3::Reference* reference, DWORD loader, DWORD nextSubrecordTag) {
+		static DWORD _stdcall LoadReference(TES3::Reference* reference, TES3::GameFile * loader, DWORD nextSubrecordTag) {
 			if (nextSubrecordTag != 'TAUL') {
 				return FALSE;
 			}
 
 			// Call original readChunk function.
-			char buffer[4096] = {};
-			bool success = reinterpret_cast<char*(__thiscall *)(DWORD, char*, DWORD)>(TES3_load_readChunk)(loader, buffer, 0);
+			char * buffer = new char[loader->currentChunkHeader.size];
+			bool success = loader->readChunkData(buffer, loader->currentChunkHeader.size);
 
 			// If we for whatever reason failed to load this chunk, bail.
 			if (!success) {
+				delete[] buffer;
 				return FALSE;
 			}
 
@@ -463,6 +462,7 @@ namespace mwse {
 			table = state["json"]["decode"](safeBuffer);
 
 			// We successfully read this subrecord, so our jump location is back at the success location.
+			delete[] buffer;
 			return TRUE;
 		}
 
@@ -501,7 +501,7 @@ namespace mwse {
 		// Hook: Save reference.
 		//
 
-		static void _stdcall SaveReference(TES3::Reference* reference, DWORD loader) {
+		static void _stdcall SaveReference(TES3::Reference* reference, TES3::GameFile* loader) {
 			// Get the associated table.
 			sol::table table = reference->getLuaTable();
 
@@ -515,7 +515,7 @@ namespace mwse {
 			std::string json = state["json"]["encode"](table);
 
 			// Call original writechunk function.
-			reinterpret_cast<void*(__thiscall *)(DWORD, DWORD, const char*, DWORD)>(TES3_load_writeChunk)(loader, 'TAUL', json.c_str(), json.length() + 1);
+			loader->writeChunkData('TAUL', json.c_str(), json.length() + 1);
 		}
 
 		static DWORD callbackSaveReference = TES3_HOOK_SAVE_REFERENCE_RETURN;

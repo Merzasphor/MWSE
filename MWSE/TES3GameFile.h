@@ -5,6 +5,16 @@
 
 namespace TES3 {
 	struct GameFile {
+		struct Header {
+			char tag[4];
+			unsigned int size;
+			unsigned int data;
+			unsigned int flags;
+		};
+		struct ChunkHeader {
+			char tag[4];
+			unsigned int size;
+		};
 		struct GMDT {
 			float currentHealth;
 			float maxHealth;
@@ -28,13 +38,13 @@ namespace TES3 {
 		int field_220;
 		int field_224;
 		int field_228;
-		int currFormHeader[4];
-		int currChunkHeader[2];
+		Header currentFormHeader;
+		ChunkHeader currentChunkHeader;
 		int field_244;
 		unsigned int fileOffsetNextForm;
 		unsigned int countFormBytesRead;
 		int field_250;
-		int writeFormHeader[4];
+		Header writeFormHeader;
 		unsigned int fileOffsetCurrentForm;
 		unsigned int bytesWritten;
 		char findData[0x140];	// Real type: WIN32_FIND_DATAA
@@ -58,7 +68,8 @@ namespace TES3 {
 		//
 
 		void deleteFile();
-		bool __declspec(dllexport) getChunkData(void * data, unsigned int size);
+		bool __declspec(dllexport) readChunkData(void * data, unsigned int size);
+		int __declspec(dllexport) writeChunkData(unsigned int tag, const void * data, unsigned int size);
 
 		//
 		// Custom functions.
