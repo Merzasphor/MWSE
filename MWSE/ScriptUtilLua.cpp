@@ -9,6 +9,7 @@
 #include "ScriptUtil.h"
 #include "ScriptUtilLua.h"
 
+#include "TES3Dialogue.h"
 #include "TES3Reference.h"
 #include "TES3Script.h"
 #include "TES3Spell.h"
@@ -106,8 +107,8 @@ namespace mwse {
 			state["mwscript"]["addTopic"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::DialogueInfo* topic = getOptionalParamTopic(params, "topic");
-				if (topic == NULL) {
+				TES3::Dialogue* topic = getOptionalParamDialogue(params, "topic");
+				if (topic == nullptr || topic->type != TES3::DialogueType::Topic) {
 					return false;
 				}
 

@@ -213,18 +213,18 @@ namespace mwse {
 			return value;
 		}
 
-		TES3::DialogueInfo* getOptionalParamTopic(sol::optional<sol::table> maybeParams, const char* key) {
-			TES3::DialogueInfo* value = NULL;
+		TES3::Dialogue* getOptionalParamDialogue(sol::optional<sol::table> maybeParams, const char* key) {
+			TES3::Dialogue* value = NULL;
 
 			if (maybeParams) {
 				sol::table params = maybeParams.value();
 				sol::object maybeValue = params[key];
 				if (maybeValue.valid()) {
-					if (maybeValue.is<std::string>()) {
-						value = tes3::getDataHandler()->nonDynamicData->findDialogInfo(maybeValue.as<std::string>().c_str());
+					if (maybeValue.is<const char*>()) {
+						value = tes3::getDataHandler()->nonDynamicData->findDialogue(maybeValue.as<const char*>());
 					}
-					else if (maybeValue.is<TES3::DialogueInfo*>()) {
-						value = maybeValue.as<TES3::DialogueInfo*>();
+					else if (maybeValue.is<TES3::Dialogue*>()) {
+						value = maybeValue.as<TES3::Dialogue*>();
 					}
 				}
 			}

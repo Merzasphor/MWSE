@@ -8,6 +8,8 @@
 #include "TES3Dialogue.h"
 #include "TES3DialogueConditional.h"
 #include "TES3DialogueInfo.h"
+#include "TES3MobileActor.h"
+#include "TES3Reference.h"
 
 namespace mwse {
 	namespace lua {
@@ -58,6 +60,12 @@ namespace mwse {
 				// Override id property to point to the name.
 				usertypeDefinition.set("id", sol::readonly_property(&TES3::Dialogue::name));
 
+				// Expose filtering.
+				usertypeDefinition.set("getInfo", [](TES3::Dialogue& self, sol::table params) {
+					TES3::MobileActor * mobile = getOptionalParamMobileActor(params, "actor");
+					return makeLuaObject(self.getFilteredInfo(reinterpret_cast<TES3::Actor*>(mobile->reference->baseObject), mobile->reference, true));
+				});
+
 				// Finish up our usertype.
 				state.set_usertype("tes3dialogue", usertypeDefinition);
 			}
@@ -78,7 +86,7 @@ namespace mwse {
 				usertypeDefinition.set("npcRank", sol::readonly_property(&TES3::DialogueInfo::npcRank));
 				usertypeDefinition.set("npcSex", sol::readonly_property(&TES3::DialogueInfo::npcSex));
 				usertypeDefinition.set("pcRank", sol::readonly_property(&TES3::DialogueInfo::pcRank));
-				usertypeDefinition.set("firstHeardFrom", sol::readonly_property(&TES3::DialogueInfo::firstHeardFrom));
+				usertypeDefinition.set("firstHeardFrom", sol::readonly_property([](TES3::DialogueInfo& self) { return makeLuaObject(self.firstHeardFrom); }));
 
 				// Accessor functions.
 				usertypeDefinition.set("actor", sol::property(

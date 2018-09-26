@@ -253,7 +253,7 @@ namespace mwse
 			setScriptDestinationX(cachedDestinationX);
 		}
 
-		void AddTopic(TES3::Script* script, TES3::Reference* reference, TES3::DialogueInfo* topic) {
+		void AddTopic(TES3::Script* script, TES3::Reference* reference, TES3::Dialogue* topic) {
 			// Cache destination values.
 			TES3::BaseObject* cachedSecondObject = getScriptSecondObject();
 

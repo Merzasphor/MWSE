@@ -13,6 +13,8 @@
 
 #include "NISourceTexture.h"
 
+#include "LuaUtil.h"
+
 namespace mwse {
 	namespace lua {
 		void bindTES3DataHandler() {
@@ -27,6 +29,7 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition.set("classes", sol::readonly_property(&TES3::NonDynamicData::classes));
+				usertypeDefinition.set("dialogues", sol::readonly_property(&TES3::NonDynamicData::dialogues));
 				usertypeDefinition.set("factions", sol::readonly_property(&TES3::NonDynamicData::factions));
 				usertypeDefinition.set("magicEffects", sol::readonly_property([](TES3::NonDynamicData& self) { return std::ref(self.magicEffects); }));
 				usertypeDefinition.set("objects", sol::readonly_property(&TES3::NonDynamicData::list));
@@ -42,12 +45,17 @@ namespace mwse {
 				// Basic function binding.
 				usertypeDefinition.set("addNewObject", &TES3::NonDynamicData::addNewObject);
 				usertypeDefinition.set("deleteObject", &TES3::NonDynamicData::deleteObject);
-				usertypeDefinition.set("findDialogInfo", &TES3::NonDynamicData::findDialogInfo);
-				usertypeDefinition.set("findFirstCloneOfActor", &TES3::NonDynamicData::findFirstCloneOfActor);
-				usertypeDefinition.set("findGlobalVariable", &TES3::NonDynamicData::findGlobalVariable);
-				usertypeDefinition.set("findScript", &TES3::NonDynamicData::findScriptByName);
-				usertypeDefinition.set("findSound", &TES3::NonDynamicData::findSound);
-				usertypeDefinition.set("resolveObject", &TES3::NonDynamicData::resolveObject);
+
+				// Functions that need to be wrapped.
+				usertypeDefinition.set("findDialogue", [](TES3::NonDynamicData& self, const char* id) { return makeLuaObject(self.findDialogue(id)); });
+				usertypeDefinition.set("findFirstCloneOfActor", [](TES3::NonDynamicData& self, const char* id) { return makeLuaObject(self.findFirstCloneOfActor(id)); });
+				usertypeDefinition.set("findGlobalVariable", [](TES3::NonDynamicData& self, const char* id) { return makeLuaObject(self.findGlobalVariable(id)); });
+				usertypeDefinition.set("findScript", [](TES3::NonDynamicData& self, const char* id) { return makeLuaObject(self.findScriptByName(id)); });
+				usertypeDefinition.set("findSound", [](TES3::NonDynamicData& self, const char* id) { return makeLuaObject(self.findSound(id)); });
+				usertypeDefinition.set("resolveObject", [](TES3::NonDynamicData& self, const char* id) { return makeLuaObject(self.resolveObject(id)); });
+
+				// Deprecated functions. TODO: Remove before 2.1 final.
+				usertypeDefinition.set("findDialogInfo", &TES3::NonDynamicData::findDialogue); // Badly named. Actually gives DIAL, not INFO.
 
 				// Finish up our usertype.
 				state.set_usertype("tes3nonDynamicData", usertypeDefinition);

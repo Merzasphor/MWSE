@@ -108,7 +108,7 @@ namespace mwse
 
 		void AddToLevItem(TES3::Script*, TES3::Reference*, TES3::BaseObject*, TES3::PhysicalObject*, unsigned short);
 
-		void AddTopic(TES3::Script* script, TES3::Reference* reference, TES3::DialogueInfo* topic);
+		void AddTopic(TES3::Script* script, TES3::Reference* reference, TES3::Dialogue* topic);
 
 		void AddSpell(TES3::Script* script, TES3::Reference* reference, TES3::BaseObject* spellTemplate);
 

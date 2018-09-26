@@ -17,15 +17,16 @@
 #include "TES3Sound.h"
 #include "TES3WorldController.h"
 
+#include "TES3DialogueInfo.h"
+
 #define TES3_NonDynamicData_saveGame 0x4C4250
 #define TES3_NonDynamicData_loadGameInGame 0x4C4800
 #define TES3_NonDynamicData_loadGameMainMenu 0x4C4EB0
 #define TES3_NonDynamicData_resolveObject 0x4B8B60
-#define TES3_NonDynamicData_findTemplate2 0x4BA8D0
+#define TES3_NonDynamicData_findDialogue 0x4BA8D0
 #define TES3_NonDynamicData_findFirstCloneOfActor 0x4B8F50
 #define TES3_NonDynamicData_findScriptByName 0x4BA700
 #define TES3_NonDynamicData_findGlobalVariable 0x4BA820
-#define TES3_NonDynamicData_findDialogInfo 0x4BA8D0
 #define TES3_NonDynamicData_findSound 0x4BA7A0
 #define TES3_NonDynamicData_addNewObject 0x4B8980
 #define TES3_NonDynamicData_deleteObject 0x4B8B20
@@ -140,8 +141,8 @@ namespace TES3 {
 		return reinterpret_cast<GlobalVariable*(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findGlobalVariable)(this, name);
 	}
 
-	DialogueInfo* NonDynamicData::findDialogInfo(const char* name) {
-		return reinterpret_cast<DialogueInfo*(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findDialogInfo)(this, name);
+	Dialogue* NonDynamicData::findDialogue(const char* name) {
+		return reinterpret_cast<Dialogue*(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findDialogue)(this, name);
 	}
 
 	Sound* NonDynamicData::findSound(const char* id) {

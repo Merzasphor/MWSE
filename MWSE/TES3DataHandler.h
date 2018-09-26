@@ -33,7 +33,7 @@ namespace TES3 {
 		Iterator<Sound> * sounds; // 0x30
 		Iterator<SoundGenerator> * soundGenerators; // 0x34
 		Iterator<GlobalVariable> * globals; // 0x38
-		Iterator<void> * dialogs; // 0x3C
+		Iterator<Dialogue> * dialogues; // 0x3C
 		Iterator<Region> * regions; // 0x40
 		Iterator<void> * birthsigns; // 0x44
 		Iterator<StartScript> * startScripts; // 0x48
@@ -87,7 +87,7 @@ namespace TES3 {
 		Reference* findFirstCloneOfActor(const char*);
 		Script* findScriptByName(const char*);
 		GlobalVariable* findGlobalVariable(const char*);
-		DialogueInfo* findDialogInfo(const char*);
+		Dialogue* findDialogue(const char*);
 		Sound* findSound(const char*);
 		bool addNewObject(BaseObject*);
 		void deleteObject(BaseObject*);
