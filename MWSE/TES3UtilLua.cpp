@@ -26,6 +26,7 @@
 #include "TES3Class.h"
 #include "TES3CrimeTree.h"
 #include "TES3DataHandler.h"
+#include "TES3Dialogue.h"
 #include "TES3Door.h"
 #include "TES3Game.h"
 #include "TES3GameSetting.h"
@@ -1199,6 +1200,15 @@ namespace mwse {
 				}
 
 				return false;
+			};
+
+			state["tes3"]["getJournalIndex"] = [](sol::table params) -> sol::optional<int> {
+				TES3::Dialogue * journal = getOptionalParamDialogue(params, "id");
+				if (journal == nullptr || journal->type != TES3::DialogueType::Journal) {
+					return sol::optional<int>();
+				}
+
+				return journal->journalIndex;
 			};
 		}
 	}
