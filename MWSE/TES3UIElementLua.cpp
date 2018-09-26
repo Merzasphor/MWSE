@@ -441,8 +441,23 @@ namespace mwse {
 			);
 
 			// Event functions.
-			usertypeDefinition.set("register",
-				[](Element& self, const std::string& eventID, sol::protected_function callback) {
+			usertypeDefinition.set("register", [](Element& self, const std::string& eventID, sol::object callback) {
+				// Callback is supposed to be an address. Dangerous advanced usage, sets the actual property.
+				if (callback.is<unsigned int>()) {
+					// Map friendlier event names to standard UI events1
+					auto it = standardNamedEvents.find(eventID);
+					if (it != standardNamedEvents.end()) {
+						self.setProperty(it->second, reinterpret_cast<TES3::UI::EventCallback>(callback.as<unsigned int>()));
+						return;
+					}
+
+					// Check UI registry for custom event
+					TES3::UI::Property prop = TES3::UI::registerProperty(eventID.c_str());
+					self.setProperty(prop, reinterpret_cast<TES3::UI::EventCallback>(callback.as<unsigned int>()));
+				}
+
+				// Callback is a lua event, put it into our custom handler system.
+				else if (callback.is<sol::protected_function>()) {
 					if (!callback.valid()) {
 						const char *errorSource = self.name.cString ? self.name.cString : "(unnamed)";
 						log::getLog() << "UI register event has invalid callback: target " << errorSource << ", event " << eventID << std::endl;
@@ -458,9 +473,15 @@ namespace mwse {
 
 					// Check UI registry for custom event
 					TES3::UI::Property prop = TES3::UI::registerProperty(eventID.c_str());
-					registerUIEvent(self, prop, callback);
+					registerUIEvent(self, prop, callback.as<sol::protected_function>());
 				}
-			);
+				
+				// Unrecognized type, spit an error.
+				else {
+					const char *errorSource = self.name.cString ? self.name.cString : "(unnamed)";
+					log::getLog() << "UI register event has invalid callback type: target " << errorSource << ", event " << eventID << std::endl;
+				}
+			});
 			usertypeDefinition.set("unregister",
 				[](Element& self, const std::string& eventID) {
 					// Map friendlier event names to standard UI events
