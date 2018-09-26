@@ -9,7 +9,10 @@
 #include "TES3DialogueConditional.h"
 #include "TES3DialogueInfo.h"
 #include "TES3MobileActor.h"
+#include "TES3MobilePlayer.h"
+#include "TES3Quest.h"
 #include "TES3Reference.h"
+#include "TES3WorldController.h"
 
 namespace mwse {
 	namespace lua {
@@ -59,6 +62,16 @@ namespace mwse {
 
 				// Override id property to point to the name.
 				usertypeDefinition.set("id", sol::readonly_property(&TES3::Dialogue::name));
+
+				// Expose the ability to add it to the journal.
+				usertypeDefinition.set("addToJournal", [](TES3::Dialogue& self, sol::table params) {
+					int index = getOptionalParam<int>(params, "index", 0);
+					TES3::MobileActor * actor = getOptionalParamMobileActor(params, "actor");
+					if (actor == nullptr) {
+						actor = tes3::getWorldController()->getMobilePlayer();
+					}
+					return self.addToJournal(index, actor);
+				});
 
 				// Expose filtering.
 				usertypeDefinition.set("getInfo", [](TES3::Dialogue& self, sol::table params) {
