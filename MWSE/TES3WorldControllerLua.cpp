@@ -45,6 +45,7 @@ namespace mwse {
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Basic property binding.
+				usertypeDefinition.set("activeQuests", &TES3::WorldController::journalController);
 				usertypeDefinition.set("aiDistance", &TES3::WorldController::aiDistance);
 				usertypeDefinition.set("canQuickSaveAndRest", &TES3::WorldController::canUseQuickSaveAndRest);
 				usertypeDefinition.set("characterRenderTarget", &TES3::WorldController::characterRenderTarget);

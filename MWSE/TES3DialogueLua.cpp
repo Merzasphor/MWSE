@@ -123,6 +123,27 @@ namespace mwse {
 				// Finish up our usertype.
 				state.set_usertype("tes3dialogueinfo", usertypeDefinition);
 			}
+
+			// Binding for TES3::Quest
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::Quest>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
+				setUserdataForBaseObject(usertypeDefinition);
+
+				// Basic property binding.
+				usertypeDefinition.set("dialogue", sol::readonly_property(&TES3::Quest::dialogue));
+				usertypeDefinition.set("info", sol::readonly_property(&TES3::Quest::activeInfo));
+
+				// Override id property to point to the name.
+				usertypeDefinition.set("id", sol::readonly_property(&TES3::Quest::name));
+
+				// Finish up our usertype.
+				state.set_usertype("tes3dialogue", usertypeDefinition);
+			}
 		}
 	}
 }
