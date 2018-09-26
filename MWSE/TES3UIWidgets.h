@@ -77,6 +77,7 @@ namespace TES3 {
 			void setVerticalPos(int value);
 			bool getScrollbarVisible() const;
 			void setScrollbarVisible(bool value);
+			TES3::UI::Element * getContentPane();
 			void contentPaneChanged();
 
 			WidgetScrollPane() = delete;

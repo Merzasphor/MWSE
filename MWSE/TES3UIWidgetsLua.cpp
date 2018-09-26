@@ -220,6 +220,9 @@ namespace mwse {
 				usertypeDefinition.set("positionY", sol::property(&WidgetScrollPane::getVerticalPos, &WidgetScrollPane::setVerticalPos));
 				usertypeDefinition.set("scrollbarVisible", sol::property(&WidgetScrollPane::getScrollbarVisible, &WidgetScrollPane::setScrollbarVisible));
 
+				// Quick access to the pane contents.
+				usertypeDefinition.set("contentPane", sol::readonly_property(&WidgetScrollPane::getContentPane));
+
 				state.set_usertype("tes3uiScrollPane", usertypeDefinition);
 			}
 

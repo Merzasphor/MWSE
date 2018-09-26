@@ -221,6 +221,8 @@ namespace TES3 {
 		//
 		static UI_ID uiidScrollPaneHScroll, uiidScrollPaneVScroll;
 
+		const auto TES3_WidgetScrollPane_getContentPane = reinterpret_cast<TES3::UI::Element*(__cdecl*)(WidgetScrollPane*)>(0x649CA0);
+
 		bool WidgetScrollPane::initProperties() {
 			uiidScrollPaneHScroll = registerID("PartScrollPane_hor_scrollbar");
 			uiidScrollPaneVScroll = registerID("PartScrollPane_vert_scrollbar");
@@ -278,6 +280,10 @@ namespace TES3 {
 			if (scrollV) {
 				scrollV->setVisible(value);
 			}
+		}
+
+		TES3::UI::Element * WidgetScrollPane::getContentPane() {
+			return TES3_WidgetScrollPane_getContentPane(this);
 		}
 
 		void WidgetScrollPane::contentPaneChanged() {
