@@ -128,6 +128,7 @@
 #include "LuaCellChangedEvent.h"
 #include "LuaEquipEvent.h"
 #include "LuaFilterBarterMenuEvent.h"
+#include "LuaFilterContentsMenuEvent.h"
 #include "LuaFilterInventoryEvent.h"
 #include "LuaFrameEvent.h"
 #include "LuaGenericUiActivatedEvent.h"
@@ -1763,6 +1764,20 @@ namespace mwse {
 			return TES3_FilterBarterTile(tile, item);
 		}
 
+		void __fastcall OnFilterContentsTile(TES3::Iterator<TES3::UI::InventoryTile> * list, DWORD _UNUSUED_, TES3::UI::InventoryTile * tile) {
+			sol::table payload = LuaManager::getInstance().triggerEvent(new event::FilterContentsMenuEvent(tile, tile->item));
+			if (payload.valid()) {
+				sol::object filter = payload["filter"];
+				if (filter.is<bool>()) {
+					if (!filter.as<bool>()) {
+						return;
+					}
+				}
+			}
+
+			list->addItem(tile);
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/core/mwse_init.lua");
@@ -2379,6 +2394,10 @@ namespace mwse {
 			genCallEnforced(0x5A4AAD, 0x5A5430, reinterpret_cast<DWORD>(OnFilterBarterTile));
 			genCallEnforced(0x5A4C5B, 0x5A5430, reinterpret_cast<DWORD>(OnFilterBarterTile));
 			genCallEnforced(0x5A576D, 0x5A5430, reinterpret_cast<DWORD>(OnFilterBarterTile));
+
+			// Event: Contents Menu Filter.
+			genCallEnforced(0x5B6995, 0x47E360, reinterpret_cast<DWORD>(OnFilterContentsTile));
+			genCallEnforced(0x5B7116, 0x47E360, reinterpret_cast<DWORD>(OnFilterContentsTile));
 
 			// UI framework hooks
 			TES3::UI::hook();

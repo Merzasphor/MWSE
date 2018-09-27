@@ -39,6 +39,7 @@
     <ClInclude Include="LuaDeterminedActionEvent.h" />
     <ClInclude Include="LuaEquipEvent.h" />
     <ClInclude Include="LuaEquippedEvent.h" />
+    <ClInclude Include="LuaFilterContentsMenuEvent.h" />
     <ClInclude Include="LuaFilterInventoryEvent.h" />
     <ClInclude Include="LuaFrameEvent.h" />
     <ClInclude Include="LuaGenericEvent.h" />
@@ -356,6 +357,7 @@
     <ClCompile Include="LuaEquipEvent.cpp" />
     <ClCompile Include="LuaEquippedEvent.cpp" />
     <ClCompile Include="LuaFilterBarterMenuEvent.cpp" />
+    <ClCompile Include="LuaFilterContentsMenuEvent.cpp" />
     <ClCompile Include="LuaFilterInventoryEvent.cpp" />
     <ClCompile Include="LuaFrameEvent.cpp" />
     <ClCompile Include="LuaGenericEvent.cpp" />
