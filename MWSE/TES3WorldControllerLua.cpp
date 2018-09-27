@@ -124,6 +124,9 @@ namespace mwse {
 				usertypeDefinition.set("nodeCursor", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.nodeCursor); }));
 				usertypeDefinition.set("weaponSwishSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundWeaponSwish); }));
 
+				// Basic function binding.
+				usertypeDefinition.set("applyEnchantEffect", &TES3::WorldController::applyEnchantEffect);
+
 				// Finish up our usertype.
 				state.set_usertype("tes3worldController", usertypeDefinition);
 			}

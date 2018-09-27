@@ -33,4 +33,9 @@ namespace TES3 {
 	double WorldController::getHighPrecisionSimulationTimestamp() {
 		return (gvarYear->value * 365.0 + getDaysInMonth((int)gvarMonth->value) + gvarDay->value) * 24.0 + gvarGameHour->value;
 	}
+
+	const auto TES3_WorldController_applyEnchantEffect = reinterpret_cast<bool(__thiscall*)(WorldController*, NI::Node*, Enchantment*)>(0x410B00);
+	bool WorldController::applyEnchantEffect(NI::Node* node, Enchantment * enchantment) {
+		return TES3_WorldController_applyEnchantEffect(this, node, enchantment);
+	}
 }
