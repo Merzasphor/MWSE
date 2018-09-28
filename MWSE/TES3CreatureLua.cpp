@@ -50,6 +50,32 @@ namespace mwse {
 				usertypeDefinition.set("name", sol::property(&TES3::Creature::getName, &TES3::Creature::setName));
 				usertypeDefinition.set("script", sol::readonly_property(&TES3::Creature::getScript));
 
+				// Easy access to actor flags.
+				usertypeDefinition.set("biped", sol::property(
+					[](TES3::Creature& self) { return self.getActorFlag(TES3::ActorFlagCreature::Biped); },
+					[](TES3::Creature& self, bool state) { return self.setActorFlag(TES3::ActorFlagCreature::Biped, state); }
+				));
+				usertypeDefinition.set("respawns", sol::property(
+					[](TES3::Creature& self) { return self.getActorFlag(TES3::ActorFlagCreature::Respawn); },
+					[](TES3::Creature& self, bool state) { return self.setActorFlag(TES3::ActorFlagCreature::Respawn, state); }
+				));
+				usertypeDefinition.set("usesEquipment", sol::property(
+					[](TES3::Creature& self) { return self.getActorFlag(TES3::ActorFlagCreature::WeaponAndShield); },
+					[](TES3::Creature& self, bool state) { return self.setActorFlag(TES3::ActorFlagCreature::WeaponAndShield, state); }
+				));
+				usertypeDefinition.set("swims", sol::property(
+					[](TES3::Creature& self) { return self.getActorFlag(TES3::ActorFlagCreature::Swims); },
+					[](TES3::Creature& self, bool state) { return self.setActorFlag(TES3::ActorFlagCreature::Swims, state); }
+				));
+				usertypeDefinition.set("flies", sol::property(
+					[](TES3::Creature& self) { return self.getActorFlag(TES3::ActorFlagCreature::Flies); },
+					[](TES3::Creature& self, bool state) { return self.setActorFlag(TES3::ActorFlagCreature::Flies, state); }
+				));
+				usertypeDefinition.set("walks", sol::property(
+					[](TES3::Creature& self) { return self.getActorFlag(TES3::ActorFlagCreature::Walks); },
+					[](TES3::Creature& self, bool state) { return self.setActorFlag(TES3::ActorFlagCreature::Walks, state); }
+				));
+
 				// TODO: Deprecated. Remove before 2.1-stable.
 				usertypeDefinition.set("model", sol::property(&TES3::Creature::getModelPath, &TES3::Creature::setModelPath));
 
@@ -99,6 +125,32 @@ namespace mwse {
 				usertypeDefinition.set("mesh", sol::property(&TES3::CreatureInstance::getModelPath, &TES3::CreatureInstance::setModelPath));
 				usertypeDefinition.set("name", sol::property(&TES3::CreatureInstance::getName, &TES3::CreatureInstance::setName));
 				usertypeDefinition.set("script", sol::readonly_property(&TES3::CreatureInstance::getScript));
+
+				// Easy access to actor flags.
+				usertypeDefinition.set("biped", sol::property(
+					[](TES3::CreatureInstance& self) { return self.getActorFlag(TES3::ActorFlagCreature::Biped); },
+					[](TES3::CreatureInstance& self, bool state) { return self.setActorFlag(TES3::ActorFlagCreature::Biped, state); }
+				));
+				usertypeDefinition.set("respawns", sol::property(
+					[](TES3::CreatureInstance& self) { return self.getActorFlag(TES3::ActorFlagCreature::Respawn); },
+					[](TES3::CreatureInstance& self, bool state) { return self.setActorFlag(TES3::ActorFlagCreature::Respawn, state); }
+				));
+				usertypeDefinition.set("usesEquipment", sol::property(
+					[](TES3::CreatureInstance& self) { return self.getActorFlag(TES3::ActorFlagCreature::WeaponAndShield); },
+					[](TES3::CreatureInstance& self, bool state) { return self.setActorFlag(TES3::ActorFlagCreature::WeaponAndShield, state); }
+				));
+				usertypeDefinition.set("swims", sol::property(
+					[](TES3::CreatureInstance& self) { return self.getActorFlag(TES3::ActorFlagCreature::Swims); },
+					[](TES3::CreatureInstance& self, bool state) { return self.setActorFlag(TES3::ActorFlagCreature::Swims, state); }
+				));
+				usertypeDefinition.set("flies", sol::property(
+					[](TES3::CreatureInstance& self) { return self.getActorFlag(TES3::ActorFlagCreature::Flies); },
+					[](TES3::CreatureInstance& self, bool state) { return self.setActorFlag(TES3::ActorFlagCreature::Flies, state); }
+				));
+				usertypeDefinition.set("walks", sol::property(
+					[](TES3::CreatureInstance& self) { return self.getActorFlag(TES3::ActorFlagCreature::Walks); },
+					[](TES3::CreatureInstance& self, bool state) { return self.setActorFlag(TES3::ActorFlagCreature::Walks, state); }
+				));
 
 				// TODO: Deprecated. Remove before 2.1-stable.
 				usertypeDefinition.set("baseCreature", sol::readonly_property([](TES3::CreatureInstance& self) { return makeLuaObject(self.baseCreature); }));

@@ -7,6 +7,25 @@
 #include "TES3Actor.h"
 
 namespace TES3 {
+	namespace ActorFlagCreature {
+		typedef unsigned int value_type;
+
+		enum Flag : value_type {
+			Biped = 0x1,
+			Respawn = 0x2,
+			WeaponAndShield = 0x4,
+			IsBase = 0x8,
+			Swims = 0x10,
+			Flies = 0x20,
+			Walks = 0x40,
+			Essential = 0x80,
+			SkeletonBlood = 0x400,
+			MetalBlood = 0x800,
+
+			DefaultFlags = Walks | IsBase,
+		};
+	}
+
 	namespace CreatureSkill {
 		enum CreatureSkill {
 			Combat,

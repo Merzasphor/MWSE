@@ -14,23 +14,7 @@ namespace TES3 {
 		typedef unsigned int value_type;
 
 		enum Flag : value_type {
-			Female = 0x1,
-			Essential = 0x2,
-			Respawns = 0x4,
 			IsBase = 0x8,
-			AutoCalc = 0x10,
-			BloodSkeleton = 0x400,
-			BloodMetal = 0x800,
-		};
-
-		enum FlagBit {
-			FemaleBit = 0,
-			EssentialBit = 1,
-			RespawnsBit = 2,
-			IsBaseBit = 3,
-			AutocalcBit = 4,
-			BloodSkeletonBit = 10,
-			BloodMetalBit = 11,
 		};
 	}
 
@@ -57,7 +41,7 @@ namespace TES3 {
 
 	struct Actor : PhysicalObject {
 		ActorAnimationData * animationData; // 0x30
-		ActorFlag::value_type actorFlags; // 0x34
+		unsigned int actorFlags; // 0x34
 		int cloneCount; // 0x38
 		Inventory inventory; // 0x3C
 		Iterator<EquipmentStack> equipment; // 0x58
@@ -87,8 +71,8 @@ namespace TES3 {
 		// Custom functions.
 		//
 
-		bool getActorFlag(ActorFlag::Flag);
-		void setActorFlag(ActorFlag::Flag, bool);
+		bool getActorFlag(unsigned int);
+		void setActorFlag(unsigned int, bool);
 
 	};
 	static_assert(sizeof(Actor) == 0x6C, "TES3::Actor failed size validation");

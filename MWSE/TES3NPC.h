@@ -7,6 +7,30 @@
 #include "TES3SpellList.h"
 
 namespace TES3 {
+	namespace ActorFlagNPC {
+		typedef unsigned int value_type;
+
+		enum Flag : value_type {
+			Female = 0x1,
+			Essential = 0x2,
+			Respawn = 0x4,
+			IsBase = 0x8,
+			AutoCalc = 0x10,
+			BloodSkeleton = 0x400,
+			BloodMetal = 0x800,
+		};
+
+		enum FlagBit {
+			FemaleBit = 0,
+			EssentialBit = 1,
+			RespawnsBit = 2,
+			IsBaseBit = 3,
+			AutocalcBit = 4,
+			BloodSkeletonBit = 10,
+			BloodMetalBit = 11,
+		};
+	}
+
 	struct NPCBase : Actor {
 		// No data, this is only used for shared functions.
 

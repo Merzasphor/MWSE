@@ -5,6 +5,16 @@
 #include "TES3Actor.h"
 
 namespace TES3 {
+	namespace ActorFlagContainer {
+		typedef unsigned int value_type;
+
+		enum Flag : value_type {
+			Organic = 0x1,
+			Respawns = 0x2,
+			IsBase = 0x8,
+		};
+	}
+
 	struct Container : Actor {
 		char * model;
 		char * name;

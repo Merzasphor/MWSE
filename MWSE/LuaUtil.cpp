@@ -338,7 +338,7 @@ namespace mwse {
 				break;
 			case TES3::ObjectType::Container:
 			{
-				if (reinterpret_cast<TES3::Actor*>(object)->actorFlags & TES3::ActorFlag::IsBase) {
+				if (reinterpret_cast<TES3::Actor*>(object)->actorFlags & TES3::ActorFlagContainer::IsBase) {
 					result = sol::make_object(state, reinterpret_cast<TES3::Container*>(object));
 				}
 				else {
@@ -348,7 +348,7 @@ namespace mwse {
 			break;
 			case TES3::ObjectType::Creature:
 			{
-				if (reinterpret_cast<TES3::Actor*>(object)->actorFlags & TES3::ActorFlag::IsBase) {
+				if (reinterpret_cast<TES3::Actor*>(object)->actorFlags & TES3::ActorFlagCreature::IsBase) {
 					result = sol::make_object(state, reinterpret_cast<TES3::Creature*>(object));
 				}
 				else {
@@ -397,7 +397,7 @@ namespace mwse {
 				break;
 			case TES3::ObjectType::NPC:
 			{
-				if (reinterpret_cast<TES3::Actor*>(object)->actorFlags & TES3::ActorFlag::IsBase) {
+				if (reinterpret_cast<TES3::Actor*>(object)->actorFlags & TES3::ActorFlagNPC::IsBase) {
 					result = sol::make_object(state, reinterpret_cast<TES3::NPC*>(object));
 				}
 				else {

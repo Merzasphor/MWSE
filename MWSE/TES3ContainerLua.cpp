@@ -25,14 +25,14 @@ namespace mwse {
 				// Basic property binding.
 				usertypeDefinition.set("capacity", &TES3::Container::capacity);
 
-				// Friendly access to actor flags. TODO: Fix these constants.
+				// Friendly access to actor flags.
 				usertypeDefinition.set("organic", sol::property(
-					[](TES3::Container& self) { return self.getActorFlag(TES3::ActorFlag::Female); },
-					[](TES3::Container& self, bool set) { self.setActorFlag(TES3::ActorFlag::Female, set); }
+					[](TES3::Container& self) { return self.getActorFlag(TES3::ActorFlagContainer::Organic); },
+					[](TES3::Container& self, bool set) { self.setActorFlag(TES3::ActorFlagContainer::Organic, set); }
 				));
 				usertypeDefinition.set("respawns", sol::property(
-					[](TES3::Container& self) { return self.getActorFlag(TES3::ActorFlag::Essential); },
-					[](TES3::Container& self, bool set) { self.setActorFlag(TES3::ActorFlag::Essential, set); }
+					[](TES3::Container& self) { return self.getActorFlag(TES3::ActorFlagContainer::Respawns); },
+					[](TES3::Container& self, bool set) { self.setActorFlag(TES3::ActorFlagContainer::Respawns, set); }
 				));
 
 				// Constant values.
@@ -61,14 +61,14 @@ namespace mwse {
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Actor, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
 				setUserdataForActor(usertypeDefinition);
 				
-				// Friendly access to actor flags. TODO: Fix these constants.
+				// Friendly access to actor flags.
 				usertypeDefinition.set("organic", sol::property(
-					[](TES3::ContainerInstance& self) { return self.getActorFlag(TES3::ActorFlag::Female); },
-					[](TES3::ContainerInstance& self, bool set) { self.setActorFlag(TES3::ActorFlag::Female, set); }
+					[](TES3::ContainerInstance& self) { return self.getActorFlag(TES3::ActorFlagContainer::Organic); },
+					[](TES3::ContainerInstance& self, bool set) { self.setActorFlag(TES3::ActorFlagContainer::Organic, set); }
 				));
 				usertypeDefinition.set("respawns", sol::property(
-					[](TES3::ContainerInstance& self) { return self.getActorFlag(TES3::ActorFlag::Essential); },
-					[](TES3::ContainerInstance& self, bool set) { self.setActorFlag(TES3::ActorFlag::Essential, set); }
+					[](TES3::ContainerInstance& self) { return self.getActorFlag(TES3::ActorFlagContainer::Respawns); },
+					[](TES3::ContainerInstance& self, bool set) { self.setActorFlag(TES3::ActorFlagContainer::Respawns, set); }
 				));
 
 				// Access to other objects that need to be packaged.
