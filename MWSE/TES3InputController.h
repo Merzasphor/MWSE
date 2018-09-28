@@ -125,7 +125,7 @@ namespace TES3 {
 		//
 
 		void readKeyState();
-		int keybindTest(unsigned int, unsigned int);
+		bool keybindTest(unsigned int, unsigned int);
 
 		//
 		// Custom functions.

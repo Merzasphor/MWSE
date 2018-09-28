@@ -8,8 +8,8 @@ namespace TES3 {
 		reinterpret_cast<void(__thiscall *)(InputController*)>(TES3_InputController_readKeyState)(this);
 	}
 
-	int InputController::keybindTest(unsigned int keyBind, unsigned int transition) {
-		return reinterpret_cast<int(__thiscall *)(InputController*, unsigned int, unsigned int)>(TES3_InputController_keybindTest)(this, keyBind, transition);
+	bool InputController::keybindTest(unsigned int keyBind, unsigned int transition) {
+		return reinterpret_cast<int(__thiscall *)(InputController*, unsigned int, unsigned int)>(TES3_InputController_keybindTest)(this, keyBind, transition) == 1;
 	}
 
 	bool InputController::isKeyDown(unsigned char keyCode) {
