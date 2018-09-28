@@ -212,7 +212,7 @@ namespace TES3 {
 
 		void mainLoopBeforeInput();
 		_declspec(dllexport) MobilePlayer* getMobilePlayer();
-		_declspec(dllexport) void playItemUpDownSound(BaseObject*, bool, Reference*);
+		_declspec(dllexport) void playItemUpDownSound(BaseObject* item, bool pickup = false, Reference* reference = nullptr);
 		_declspec(dllexport) float getSimulationTimestamp();
 
 		_declspec(dllexport) unsigned short getDaysInMonth(int);
