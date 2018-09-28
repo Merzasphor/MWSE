@@ -99,7 +99,10 @@ namespace mwse {
 				usertypeDefinition.set("npcRank", sol::readonly_property(&TES3::DialogueInfo::npcRank));
 				usertypeDefinition.set("npcSex", sol::readonly_property(&TES3::DialogueInfo::npcSex));
 				usertypeDefinition.set("pcRank", sol::readonly_property(&TES3::DialogueInfo::pcRank));
-				usertypeDefinition.set("firstHeardFrom", sol::readonly_property([](TES3::DialogueInfo& self) { return makeLuaObject(self.firstHeardFrom); }));
+				usertypeDefinition.set("firstHeardFrom", sol::property(
+					[](TES3::DialogueInfo& self) { return makeLuaObject(self.firstHeardFrom); },
+					[](TES3::DialogueInfo& self, TES3::Actor* actor) { self.firstHeardFrom = actor; }
+				));
 
 				// Accessor functions.
 				usertypeDefinition.set("actor", sol::property(
