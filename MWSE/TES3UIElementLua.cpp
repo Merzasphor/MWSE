@@ -682,6 +682,10 @@ namespace mwse {
 			usertypeDefinition.set("createVerticalScrollPane", [](Element& self, sol::table args) {
 				auto scrollpane = self.createVerticalScrollPane(args.get_or("id", idNull));
 
+				if (args.get_or("hideFrame", false)) {
+					scrollpane->setIcon("");
+				}
+
 				// Add mouse wheel handlers (see event dispatch patch in TES3UIManager.cpp)
 				scrollpane->setProperty(TES3::UI::Property::event_mouse_scroll_down, TES3::UI::onScrollPaneMousewheel);
 				scrollpane->setProperty(TES3::UI::Property::event_mouse_scroll_up, TES3::UI::onScrollPaneMousewheel);
