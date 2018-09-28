@@ -1210,6 +1210,24 @@ namespace mwse {
 
 				return journal->journalIndex;
 			};
+
+			state["tes3"]["getFileExists"] = [](const char* path) {
+				return tes3::resolveAssetPath(path) != 0;
+			};
+
+			state["tes3"]["getFileSource"] = [](const char* path) -> sol::optional<std::tuple<std::string, std::string>> {
+				char buffer[512];
+				int result = tes3::resolveAssetPath(path, buffer);
+
+				if (result == 1) {
+					return std::make_tuple("file", buffer);
+				}
+				else if (result == 2) {
+					return std::make_tuple("bsa", buffer);
+				}
+
+				return sol::optional<std::tuple<std::string, std::string>>();
+			};
 		}
 	}
 }

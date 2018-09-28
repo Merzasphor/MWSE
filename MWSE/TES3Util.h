@@ -147,6 +147,8 @@ namespace mwse {
 		int getRestInterruptCount();
 		void setRestInterruptCount(int);
 
+		__declspec(dllexport) int resolveAssetPath(const char* path, char * out_buffer = nullptr);
+
 		//
 		// Original function calls in Morrowind.
 		//

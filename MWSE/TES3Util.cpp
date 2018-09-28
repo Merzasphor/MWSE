@@ -499,6 +499,11 @@ namespace mwse {
 			*reinterpret_cast<int*>(TES3_restInterruptCreatures) = count;
 		}
 
+		const auto TES3_ResolveAssetPath = reinterpret_cast<int(__cdecl*)(const char *, char *)>(0x47A960);
+		int resolveAssetPath(const char* path, char * out_buffer) {
+			return TES3_ResolveAssetPath(path, out_buffer);
+		}
+
 		ExternalRealloc _realloc = NULL;
 		void* realloc(void* address, size_t size) {
 			return _realloc(address, size);
