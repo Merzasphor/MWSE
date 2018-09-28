@@ -25,6 +25,7 @@ namespace TES3 {
 		bool addToJournal(int index, MobileActor* actor);
 		bool setJournalIndex(int index);
 
+		DialogueInfo* getDeepFilteredInfo(Actor* actor, Reference* reference, bool flag);
 		DialogueInfo* getFilteredInfo(Actor* actor, Reference* reference, bool flag);
 
 	};

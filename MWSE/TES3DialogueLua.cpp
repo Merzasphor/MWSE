@@ -76,7 +76,7 @@ namespace mwse {
 				// Expose filtering.
 				usertypeDefinition.set("getInfo", [](TES3::Dialogue& self, sol::table params) {
 					TES3::MobileActor * mobile = getOptionalParamMobileActor(params, "actor");
-					return makeLuaObject(self.getFilteredInfo(reinterpret_cast<TES3::Actor*>(mobile->reference->baseObject), mobile->reference, true));
+					return makeLuaObject(self.getDeepFilteredInfo(reinterpret_cast<TES3::Actor*>(mobile->reference->baseObject), mobile->reference, true));
 				});
 
 				// Finish up our usertype.
