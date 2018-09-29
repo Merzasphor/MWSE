@@ -130,6 +130,7 @@
 #include "LuaFilterBarterMenuEvent.h"
 #include "LuaFilterContentsMenuEvent.h"
 #include "LuaFilterInventoryEvent.h"
+#include "LuaFilterInventorySelectEvent.h"
 #include "LuaFrameEvent.h"
 #include "LuaGenericUiActivatedEvent.h"
 #include "LuaGenericUiPostEvent.h"
@@ -1817,6 +1818,43 @@ namespace mwse {
 			}
 		}
 
+		bool __fastcall OnFilterInventorySelect(TES3::UI::Element * element, TES3::UI::EventCallback callback) {
+			TES3::Item * item = reinterpret_cast<TES3::Item*>(element->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D3C88)).ptrValue);
+			TES3::ItemData * itemData = reinterpret_cast<TES3::ItemData*>(element->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D3C16)).ptrValue);
+
+			const char* callbackType = TES3::UI::getInventorySelectType();
+			sol::table payload = LuaManager::getInstance().triggerEvent(new event::FilterInventorySelectEvent(callbackType, item, itemData));
+			if (payload.valid()) {
+				sol::object filter = payload["filter"];
+				if (filter.is<bool>()) {
+					return filter.as<bool>();
+				}
+			}
+
+			// Call original callback.
+			return callback(element, TES3::UI::Property::null, 0, 0, element);
+		}
+
+		__declspec(naked) void patchFilterInventorySelect() {
+			__asm {
+				mov ecx, edi
+				mov edx, eax
+				nop // Replaced with a call generation. Can't do so here, because offsets aren't accurate.
+				nop // ^
+				nop // ^
+				nop // ^
+				nop // ^
+				nop
+				nop
+				nop
+				nop
+				nop
+				nop
+				nop
+			}
+		}
+		const size_t patchFilterInventorySelect_size = 0x10;
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/core/mwse_init.lua");
@@ -2438,6 +2476,10 @@ namespace mwse {
 			genCallEnforced(0x5B6995, 0x47E360, reinterpret_cast<DWORD>(OnFilterContentsTile));
 			genCallEnforced(0x5B7116, 0x47E360, reinterpret_cast<DWORD>(OnFilterContentsTileForTakeAll));
 			genNOPUnprotected(0x5B711B, 0x1B);
+
+			// Event: Inventory Select Menu Filter.
+			mwse::writePatchCodeUnprotected(0x5D3F9C, (BYTE*)&patchFilterInventorySelect, patchFilterInventorySelect_size);
+			genCallUnprotected(0x5D3FA0, reinterpret_cast<DWORD>(OnFilterInventorySelect));
 
 			// UI framework hooks
 			TES3::UI::hook();

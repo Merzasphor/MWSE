@@ -23,6 +23,8 @@ namespace TES3 {
 		MobileActor* getServiceActor();
 		void updateDialogDisposition();
 
+		__declspec(dllexport) const char* getInventorySelectType();
+
 		void hook();
 	}
 }

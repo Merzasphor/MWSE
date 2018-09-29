@@ -34,6 +34,7 @@ namespace mwse {
 		const auto TES3_UpdateInventoryTiles = reinterpret_cast<void(__cdecl*)()>(0x5CC910);
 		const auto TES3_UpdateBarterMenuTiles = reinterpret_cast<void(__cdecl*)()>(0x5A5620);
 		const auto TES3_UpdateContentsMenuTiles = reinterpret_cast<void(__cdecl*)()>(0x5B67E0);
+		const auto TES3_UpdateInventorySelectTiles = reinterpret_cast<int(__cdecl*)()>(0x5D3E70);
 
 		TES3::UI::Boolean __cdecl eventDispatcher(Element* owningWidget, Property eventID, int data0, int data1, Element* source) {
 			sol::state& state = LuaManager::getInstance().getState();
@@ -245,6 +246,22 @@ namespace mwse {
 			tes3ui["updateInventoryTiles"] = TES3_UpdateInventoryTiles;
 			tes3ui["updateBarterMenuTiles"] = TES3_UpdateBarterMenuTiles;
 			tes3ui["updateContentsMenuTiles"] = TES3_UpdateContentsMenuTiles;
+			tes3ui["updateInventorySelectTiles"] = []() -> sol::optional<int> {
+				auto menu = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D3C14));
+				if (menu == nullptr) {
+					return sol::optional<int>();
+				}
+
+				auto pane = menu->findChild(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D821C));
+				pane->destroyChildren();
+
+				int count = TES3_UpdateInventorySelectTiles();
+
+				menu->timingUpdate();
+
+				return count;
+			};
+			tes3ui["getInventorySelectType"] = TES3::UI::getInventorySelectType;
 			tes3ui["getServiceActor"] = []() {
 				return mwse::lua::makeLuaObject(TES3::UI::getServiceActor());
 			};

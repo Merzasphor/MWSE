@@ -126,6 +126,22 @@ namespace TES3 {
 			TES3_ui_updateDialogDisposition();
 		}
 
+		const char* getInventorySelectType() {
+			const char* callbackType = "unknown";
+			auto callbackAddress = *reinterpret_cast<DWORD*>(0x7D3CA0);
+			switch (callbackAddress) {
+			case 0x59A1F0: callbackType = "alembic"; break;
+			case 0x59A160: callbackType = "calcinator"; break;
+			case 0x5C6B40: callbackType = "enchantedItem"; break;
+			case 0x59A220: callbackType = "ingredient"; break;
+			case 0x59A190: callbackType = "mortar"; break;
+			case 0x608A90: callbackType = "quick"; break;
+			case 0x59A1C0: callbackType = "retort"; break;
+			case 0x5C6B00: callbackType = "soulGemFilled"; break;
+			}
+			return callbackType;
+		}
+
 		//
 		// UI framework improvement hooks
 		//
