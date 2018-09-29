@@ -34,6 +34,13 @@ namespace NI {
 		__declspec(dllexport) unsigned int getWidth();
 		__declspec(dllexport) unsigned int getHeight();
 
+		//
+		// Static functions.
+		//
+
+		__declspec(dllexport) static Pointer<SourceTexture> createFromPath(const char* path, SourceTexture::FormatPrefs * formatPrefs);
+		__declspec(dllexport) static Pointer<SourceTexture> createFromPixelData(PixelData* pixelData, SourceTexture::FormatPrefs * formatPrefs);
+
 	};
 	static_assert(sizeof(SourceTexture) == 0x3C, "NI::SourceTexture failed size validation");
 }
