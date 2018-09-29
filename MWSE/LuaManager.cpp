@@ -206,7 +206,7 @@ namespace mwse {
 		LuaManager LuaManager::singleton;
 
 		// Fast-access mapping from a TES3::Script* to its associated Lua module.
-		static std::unordered_map<unsigned long, sol::table> scriptOverrides;
+		static std::unordered_map<unsigned long, sol::object> scriptOverrides;
 
 		// The currently executing overwritten script.
 		static LuaScript * currentOverwrittenScript = NULL;
@@ -280,11 +280,20 @@ namespace mwse {
 			luaState["mwse"]["buildDate"] = MWSE_BUILD_DATE;
 
 			// We want to take care of this here rather than in an external file so we have access to scriptOverrides.
-			luaState["mwse"]["overrideScript"] = [](std::string scriptId, std::string target) {
+			luaState["mwse"]["overrideScript"] = [](std::string scriptId, sol::object target) {
 				TES3::Script* script = tes3::getDataHandler()->nonDynamicData->findScriptByName(scriptId.c_str());
-				if (script != NULL) {
+				if (script == nullptr) {
+					return false;
+				}
+
+				if (target.is<sol::function>()) {
+					scriptOverrides[(unsigned long)script] = target;
+					script->dataLength = 0;
+					return true;
+				}
+				else if (target.is<std::string>()) {
 					sol::state& state = LuaManager::getInstance().getState();
-					sol::object result = state.safe_script_file("./Data Files/MWSE/mods/" + target + ".lua");
+					sol::object result = state.safe_script_file("./Data Files/MWSE/mods/" + target.as<std::string>() + ".lua");
 					if (result.is<sol::table>()) {
 						scriptOverrides[(unsigned long)script] = result;
 						script->dataLength = 0;
@@ -393,14 +402,27 @@ namespace mwse {
 
 			// Update the LuaManager to reference our current context.
 			lua::LuaManager& manager = lua::LuaManager::getInstance();
-			manager.setCurrentReference(*reinterpret_cast<TES3::Reference**>(TES3_SCRIPTTARGETREF_IMAGE));
+			TES3::Reference * reference = *reinterpret_cast<TES3::Reference**>(TES3_SCRIPTTARGETREF_IMAGE);
+			manager.setCurrentReference(reference);
 			manager.setCurrentScript(script);
 
 			// Get and run the execute function.
 			sol::state& state = manager.getState();
-			sol::protected_function execute = searchResult->second["execute"];
+			sol::protected_function execute;
+			if (searchResult->second.is<sol::function>()) {
+				execute = searchResult->second.as<sol::function>();
+			}
+			else if (searchResult->second.is<sol::table>()) {
+				execute = searchResult->second.as<sol::table>()["execute"];
+			}
+
 			if (execute) {
-				auto result = execute();
+				sol::table params = state.create_table();
+				params["script"] = makeLuaObject(script);
+				params["reference"] = makeLuaObject(reference);
+				params["scriptData"] = mwse::mwscript::getLocalScriptVariables();
+
+				auto result = execute(params);
 				if (!result.valid()) {
 					sol::error error = result;
 					log::getLog() << "Lua error encountered when override of script '" << script->name << "':" << std::endl << error.what() << std::endl;
