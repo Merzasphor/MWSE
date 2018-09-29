@@ -1,5 +1,7 @@
 #include "NISwitchNode.h"
 
+#include "NINodeLua.h"
+
 #include "sol.hpp"
 
 #include "LuaManager.h"
@@ -21,6 +23,7 @@ namespace mwse {
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition.set(sol::base_classes, sol::bases<NI::Node, NI::AVObject, NI::ObjectNET, NI::Object>());
+			setUserdataForNINode(usertypeDefinition);
 
 			// Basic property binding.
 			usertypeDefinition.set("switchIndex", sol::property(

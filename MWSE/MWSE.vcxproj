@@ -92,8 +92,10 @@
     <ClInclude Include="LuaWeatherTransitionFinishedEvent.h" />
     <ClInclude Include="LuaWeatherTransitionStartedEvent.h" />
     <ClInclude Include="NIPixelData.h" />
+    <ClInclude Include="NIPixelDataLua.h" />
     <ClInclude Include="NIPixelFormat.h" />
     <ClInclude Include="NISourceTexture.h" />
+    <ClInclude Include="NISourceTextureLua.h" />
     <ClInclude Include="NITriShape.h" />
     <ClInclude Include="NIPointer.h" />
     <ClInclude Include="NIStream.h" />
@@ -425,6 +427,9 @@
     <ClCompile Include="NIObjectNET.cpp" />
     <ClCompile Include="NIPick.cpp" />
     <ClCompile Include="NIPickLua.cpp" />
+    <ClCompile Include="NIPixelDataLua.cpp" />
+    <ClCompile Include="NISourceTexture.cpp" />
+    <ClCompile Include="NISourceTextureLua.cpp" />
     <ClCompile Include="NIStream.cpp" />
     <ClCompile Include="NISwitchNodeLua.cpp" />
     <ClCompile Include="NITimeControllerLua.cpp" />

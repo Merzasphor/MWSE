@@ -544,6 +544,10 @@ namespace mwse {
 				return sol::make_object(state, reinterpret_cast<NI::Node*>(object));
 			case NI::RTTIStaticPtr::ObjectNET:
 				return sol::make_object(state, reinterpret_cast<NI::ObjectNET*>(object));
+			case NI::RTTIStaticPtr::PixelData:
+				return sol::make_object(state, reinterpret_cast<NI::PixelData*>(object));
+			case NI::RTTIStaticPtr::SourceTexture:
+				return sol::make_object(state, reinterpret_cast<NI::SourceTexture*>(object));
 			case NI::RTTIStaticPtr::SwitchNode:
 				return sol::make_object(state, reinterpret_cast<NI::SwitchNode*>(object));
 			case NI::RTTIStaticPtr::TriShape:
@@ -559,8 +563,14 @@ namespace mwse {
 			else if (object->isInstanceOfType(NI::RTTIStaticPtr::AVObject)) {
 				return sol::make_object(state, reinterpret_cast<NI::AVObject*>(object));
 			}
+			else if (object->isInstanceOfType(NI::RTTIStaticPtr::SourceTexture)) {
+				return sol::make_object(state, reinterpret_cast<NI::SourceTexture*>(object));
+			}
 			else if (object->isInstanceOfType(NI::RTTIStaticPtr::ObjectNET)) {
 				return sol::make_object(state, reinterpret_cast<NI::ObjectNET*>(object));
+			}
+			else if (object->isInstanceOfType(NI::RTTIStaticPtr::PixelData)) {
+				return sol::make_object(state, reinterpret_cast<NI::PixelData*>(object));
 			}
 
 			return sol::make_object(state, object);
@@ -584,6 +594,10 @@ namespace mwse {
 				return sol::make_object(state, NI::Pointer<NI::Node>(reinterpret_cast<NI::Node*>(object)));
 			case NI::RTTIStaticPtr::ObjectNET:
 				return sol::make_object(state, NI::Pointer<NI::ObjectNET>(reinterpret_cast<NI::ObjectNET*>(object)));
+			case NI::RTTIStaticPtr::PixelData:
+				return sol::make_object(state, NI::Pointer<NI::PixelData>(reinterpret_cast<NI::PixelData*>(object)));
+			case NI::RTTIStaticPtr::SourceTexture:
+				return sol::make_object(state, NI::Pointer<NI::SourceTexture>(reinterpret_cast<NI::SourceTexture*>(object)));
 			case NI::RTTIStaticPtr::SwitchNode:
 				return sol::make_object(state, NI::Pointer<NI::SwitchNode>(reinterpret_cast<NI::SwitchNode*>(object)));
 			case NI::RTTIStaticPtr::TriShape:
@@ -599,8 +613,14 @@ namespace mwse {
 			else if (object->isInstanceOfType(NI::RTTIStaticPtr::AVObject)) {
 				return sol::make_object(state, NI::Pointer<NI::AVObject>(reinterpret_cast<NI::AVObject*>(object)));
 			}
+			else if (object->isInstanceOfType(NI::RTTIStaticPtr::SourceTexture)) {
+				return sol::make_object(state, NI::Pointer<NI::SourceTexture>(reinterpret_cast<NI::SourceTexture*>(object)));
+			}
 			else if (object->isInstanceOfType(NI::RTTIStaticPtr::ObjectNET)) {
 				return sol::make_object(state, NI::Pointer<NI::ObjectNET>(reinterpret_cast<NI::ObjectNET*>(object)));
+			}
+			else if (object->isInstanceOfType(NI::RTTIStaticPtr::PixelData)) {
+				return sol::make_object(state, NI::Pointer<NI::PixelData>(reinterpret_cast<NI::PixelData*>(object)));
 			}
 
 			return sol::make_object(state, object);

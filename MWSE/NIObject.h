@@ -9,6 +9,7 @@ namespace NI {
 			AVObject_vTable * asAVObject;
 			Node_vTable * asNode;
 			TriShape_vTable * asTriShape;
+			SourceTexture_vTable * asSourceTexture;
 		} vTable; // 0x0
 		int references; // 0x4
 

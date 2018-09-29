@@ -1,5 +1,7 @@
 #include "NICameraLua.h"
 
+#include "NIObjectLua.h"
+
 #include "sol.hpp"
 
 #include "LuaManager.h"
@@ -23,6 +25,7 @@ namespace mwse {
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition.set(sol::base_classes, sol::bases<NI::AVObject, NI::ObjectNET, NI::Object>());
+			setUserdataForNIAVObject(usertypeDefinition);
 
 			// Basic property binding.
 			usertypeDefinition.set("lodAdjust", &NI::Camera::LODAdjust);

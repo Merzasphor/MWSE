@@ -1,10 +1,13 @@
 #include "NITimeControllerLua.h"
 
+#include "NIObjectLua.h"
+
 #include "sol.hpp"
 
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "NIRTTI.h"
 #include "NITimeController.h"
 
 namespace mwse {
@@ -19,6 +22,7 @@ namespace mwse {
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition.set(sol::base_classes, sol::bases<NI::Object>());
+			setUserdataForNIObject(usertypeDefinition);
 
 			// Basic property binding.
 			usertypeDefinition.set("frequency", &NI::TimeController::frequency);

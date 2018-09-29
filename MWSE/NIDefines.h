@@ -19,9 +19,10 @@ namespace NI {
 	struct Transform;
 	struct TriShape;
 
-	struct Object_vTable;
 	struct AVObject_vTable;
 	struct Node_vTable;
+	struct Object_vTable;
+	struct SourceTexture_vTable;
 	struct TriShape_vTable;
 
 	namespace RTTIStaticPtr {
@@ -37,7 +38,9 @@ namespace NI {
 			ObjectNET = 0x7DE76C,
 			MirroredNode = 0x7C8AF8,
 			Node = 0x7DDEB8,
+			PixelData = 0x7DE0EC,
 			Property = 0x7DE720,
+			SourceTexture = 0x7DE3C0,
 			SwitchNode = 0x7DE1AC,
 			TriShape = 0x7DE550,
 			TES3ExtraData = 0x7CE280

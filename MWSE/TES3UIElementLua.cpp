@@ -83,6 +83,7 @@ namespace mwse {
 				}
 			));
 			usertypeDefinition.set("widget", sol::readonly_property([](Element& self) { return makeWidget(self); }));
+			usertypeDefinition.set("texture", &Element::texture);
 
 			// Read-write property bindings.
 			// Many properties also set lazy-update flags through setProperty.
