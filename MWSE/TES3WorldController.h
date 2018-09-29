@@ -1,6 +1,8 @@
 #pragma once
 
 #include <stddef.h>
+#include <Windows.h>
+
 #include "NIDefines.h"
 #include "TES3Defines.h"
 #include "TES3UIDefines.h"
@@ -133,9 +135,9 @@ namespace TES3 {
 		GlobalVariable * gvarTimescale; // 0xBC
 		GlobalVariable * gvarCharGenState; // 0xC0
 		GlobalVariable * gvarMonthsToRespawn; // 0xC4
-		int Win32_hWndParent; // 0xC8
-		int Win32_hWnd; // 0xCC
-		int Win32_hInstance; // 0xD0
+		HWND Win32_hWndParent; // 0xC8
+		HWND Win32_hWnd; // 0xCC
+		HINSTANCE Win32_hInstance; // 0xD0
 		bool flagEventMenuModeOn; // 0xD4
 		bool flagEventMenuModeOff; // 0xD5
 		bool flagMenuMode; // 0xD6
