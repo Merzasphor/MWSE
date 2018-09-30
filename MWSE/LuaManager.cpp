@@ -1873,13 +1873,6 @@ namespace mwse {
 			bindStringUtil();
 			bindTES3Util();
 
-			// Look for main.lua scripts in the usual directories.
-			executeMainModScripts("Data Files/MWSE/core");
-			executeMainModScripts("Data Files/MWSE/mods");
-
-			// Temporary backwards compatibility for old-style MWSE mods.
-			executeMainModScripts("Data Files/MWSE/lua", "mod_init.lua");
-
 			// Hook the RunScript function so we can intercept Lua scripts and invoke Lua code if needed.
 			genJumpUnprotected(TES3_HOOK_RUNSCRIPT_LUACHECK, reinterpret_cast<DWORD>(HookRunScript), TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE);
 
@@ -2499,6 +2492,13 @@ namespace mwse {
 			genCallEnforced(0x4EEFAA, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
 			genCallEnforced(0x4F026F, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
 			genCallEnforced(0x4F0C83, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
+
+			// Look for main.lua scripts in the usual directories.
+			executeMainModScripts("Data Files/MWSE/core");
+			executeMainModScripts("Data Files/MWSE/mods");
+
+			// Temporary backwards compatibility for old-style MWSE mods.
+			executeMainModScripts("Data Files/MWSE/lua", "mod_init.lua");
 		}
 
 		void LuaManager::cleanup() {
