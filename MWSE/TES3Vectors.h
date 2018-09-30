@@ -106,4 +106,11 @@ namespace TES3 {
 		Vector3 maximum;
 	};
 	static_assert(sizeof(BoundingBox) == 0x18, "TES3::BoundingBox failed size validation");
+
+	struct Transform {
+		TES3::Matrix33 rotation;
+		TES3::Vector3 translation;
+		float scale;
+	};
+	static_assert(sizeof(Transform) == 0x34, "TES3::Transform failed size validation");
 }

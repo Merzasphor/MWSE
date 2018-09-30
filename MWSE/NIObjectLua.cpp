@@ -70,6 +70,12 @@ namespace mwse {
 				usertypeDefinition.set(sol::base_classes, sol::bases<NI::ObjectNET, NI::Object>());
 				setUserdataForNIAVObject(usertypeDefinition);
 
+				// Basic property binding.
+				usertypeDefinition.set("rotation", &NI::AVObject::localRotation);
+				usertypeDefinition.set("translation", &NI::AVObject::localTranslate);
+				usertypeDefinition.set("scale", &NI::AVObject::localScale);
+				usertypeDefinition.set("worldTransform", &NI::AVObject::worldTransform);
+
 				// Finish up our usertype.
 				state.set_usertype("niAVObject", usertypeDefinition);
 			}

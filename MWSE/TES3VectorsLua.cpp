@@ -124,6 +124,52 @@ namespace mwse {
 				// Finish up our usertype.
 				state.set_usertype("tes3vector4", usertypeDefinition);
 			}
+
+			// Binding for TES3::Matrix33.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::Matrix33>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				// Operator overloading.
+				usertypeDefinition.set(sol::meta_function::to_string, [](TES3::Matrix33& self) {
+					std::ostringstream ss;
+					ss << std::fixed << std::setprecision(2) << std::dec
+						<< "<<<" << self.m0.x << ", " << self.m0.y << ", " << self.m0.z << ">,\n"
+						<< "  <" << self.m1.x << ", " << self.m1.y << ", " << self.m1.z << ">,\n"
+						<< "  <" << self.m2.x << ", " << self.m2.y << ", " << self.m2.z << ">>>";
+					return ss.str();
+				});
+
+				// Basic property bindings.
+				usertypeDefinition.set("x", sol::readonly_property([](TES3::Matrix33& self) { return self.m0; }));
+				usertypeDefinition.set("y", sol::readonly_property([](TES3::Matrix33& self) { return self.m1; }));
+				usertypeDefinition.set("z", sol::readonly_property([](TES3::Matrix33& self) { return self.m2; }));
+
+				// Basic function binding.
+				usertypeDefinition.set("copy", [](TES3::Matrix33& self) { return TES3::Matrix33(self); });
+
+				// Finish up our usertype.
+				state.set_usertype("tes3matrix33", usertypeDefinition);
+			}
+
+			// Binding for TES3::Transform.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::Transform>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				// Basic property bindings.
+				usertypeDefinition.set("rotation", sol::readonly_property([](TES3::Transform& self) { return self.rotation; }));
+				usertypeDefinition.set("translation", sol::readonly_property([](TES3::Transform& self) { return self.translation; }));
+				usertypeDefinition.set("scale", sol::readonly_property([](TES3::Transform& self) { return self.scale; }));
+
+				// Basic function binding.
+				usertypeDefinition.set("copy", [](TES3::Transform& self) { return TES3::Transform(self); });
+
+				// Finish up our usertype.
+				state.set_usertype("tes3transform", usertypeDefinition);
+			}
 		}
 	}
 }

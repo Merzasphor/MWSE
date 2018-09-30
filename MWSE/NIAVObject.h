@@ -14,7 +14,7 @@ namespace NI {
 		TES3::Matrix33 * localRotation; // 0x2C
 		TES3::Vector3 localTranslate; // 0x30
 		float localScale; // 0x3C
-		Transform worldTransform; // 0x40
+		TES3::Transform worldTransform; // 0x40
 		void * localBound; // 0x74
 		TES3::TArray<void> propertyList; // 078
 
