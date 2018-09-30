@@ -23,6 +23,7 @@
 
 namespace TES3 {
 	const auto TES3_Reference_setMobileActor = reinterpret_cast<MobileActor* (__thiscall*)(Reference*, MobileActor*)>(0x4E5770);
+	const auto TES3_Reference_removeAttachment = reinterpret_cast<void(__thiscall*)(Reference*, Attachment*)>(0x4E4C10);
 
 	void Reference::activate(Reference* activator, int unknown) {
 		// If our event data says to block, don't let the object activate.
@@ -71,6 +72,10 @@ namespace TES3 {
 
 	LockAttachmentNode* Reference::getOrCreateLockNode() {
 		return reinterpret_cast<LockAttachmentNode* (__thiscall *)(Reference*)>(0x4E7DF0)(this);
+	}
+
+	void Reference::removeAttachment(TES3::Attachment * attachment) {
+		TES3_Reference_removeAttachment(this, attachment);
 	}
 
 	void Reference::setPositionFromLua(sol::stack_object value) {
