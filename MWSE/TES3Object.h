@@ -200,9 +200,9 @@ namespace TES3 {
 		// Function wrappers for our virtual table.
 		//
 
-		bool getObjectModified();
-		void setObjectModified(bool);
-		char * getObjectID();
+		__declspec(dllexport) bool getObjectModified();
+		__declspec(dllexport) void setObjectModified(bool);
+		__declspec(dllexport) char * getObjectID();
 
 	};
 	static_assert(sizeof(BaseObject) == 0x10, "TES3::BaseObject failed size validation");
@@ -222,48 +222,48 @@ namespace TES3 {
 		// Function wrappers for our virtual table.
 		//
 
-		void setID(const char*);
-		char * getName();
-		char * getIconPath();
-		char * getModelPath();
-		Script * getScript();
-		char * getRaceID();
-		char * getClassID();
-		char * getBirthsignID();
-		Race * getRace();
-		Class * getClass();
-		Faction * getFaction();
-		bool isFemale();
-		int getFactionRank();
-		int getLevel();
-		signed char setDispositionRaw(signed char);
-		int modDisposition(signed int);
-		int getFactionIndex();
-		signed char setFactionIndex(signed char);
-		int getDispositionRaw();
-		signed char modFactionIndex(signed char);
-		int getType();
-		char * getTypeName();
-		float getWeight();
-		int getValue();
-		void setDurability(int);
-		int getDurability();
-		int getMagicka();
-		int getFatigue();
-		float getQuality();
-		bool isLeftPartOfPair();
-		bool isEssential();
-		bool isRespawn();
-		int getUses();
-		Enchantment * getEnchantment();
-		Enchantment * setEnchantment(Enchantment*);
-		AIConfig * getAIConfig();
-		bool getAutoCalc();
-		void setAutoCalc(bool);
-		void setModelPath(const char*);
-		void setName(const char*);
-		float getScale();
-		void setScale(float value, bool cap = false);
+		__declspec(dllexport) void setID(const char*);
+		__declspec(dllexport) char * getName();
+		__declspec(dllexport) char * getIconPath();
+		__declspec(dllexport) char * getModelPath();
+		__declspec(dllexport) Script * getScript();
+		__declspec(dllexport) char * getRaceID();
+		__declspec(dllexport) char * getClassID();
+		__declspec(dllexport) char * getBirthsignID();
+		__declspec(dllexport) Race * getRace();
+		__declspec(dllexport) Class * getClass();
+		__declspec(dllexport) Faction * getFaction();
+		__declspec(dllexport) bool isFemale();
+		__declspec(dllexport) int getFactionRank();
+		__declspec(dllexport) int getLevel();
+		__declspec(dllexport) signed char setDispositionRaw(signed char);
+		__declspec(dllexport) int modDisposition(signed int);
+		__declspec(dllexport) int getFactionIndex();
+		__declspec(dllexport) signed char setFactionIndex(signed char);
+		__declspec(dllexport) int getDispositionRaw();
+		__declspec(dllexport) signed char modFactionIndex(signed char);
+		__declspec(dllexport) int getType();
+		__declspec(dllexport) char * getTypeName();
+		__declspec(dllexport) float getWeight();
+		__declspec(dllexport) int getValue();
+		__declspec(dllexport) void setDurability(int);
+		__declspec(dllexport) int getDurability();
+		__declspec(dllexport) int getMagicka();
+		__declspec(dllexport) int getFatigue();
+		__declspec(dllexport) float getQuality();
+		__declspec(dllexport) bool isLeftPartOfPair();
+		__declspec(dllexport) bool isEssential();
+		__declspec(dllexport) bool isRespawn();
+		__declspec(dllexport) int getUses();
+		__declspec(dllexport) Enchantment * getEnchantment();
+		__declspec(dllexport) Enchantment * setEnchantment(Enchantment*);
+		__declspec(dllexport) AIConfig * getAIConfig();
+		__declspec(dllexport) bool getAutoCalc();
+		__declspec(dllexport) void setAutoCalc(bool);
+		__declspec(dllexport) void setModelPath(const char*);
+		__declspec(dllexport) void setName(const char*);
+		__declspec(dllexport) float getScale();
+		__declspec(dllexport) void setScale(float value, bool cap = false);
 	};
 	static_assert(sizeof(Object) == 0x28, "TES3::Object failed size validation");
 
