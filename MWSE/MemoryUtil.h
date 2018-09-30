@@ -65,4 +65,7 @@ namespace mwse {
 	// Code to write a patch to a code segment. This function unprotects the memory.
 	// WARNING: If passing a function address, always use a non-static function or it will crash.
 	void __declspec(dllexport) writePatchCodeUnprotected(DWORD address, const BYTE* patch, DWORD size);
+
+	// Code to determine what function an address calls.
+	DWORD __declspec(dllexport) getCallAddress(DWORD address);
 }

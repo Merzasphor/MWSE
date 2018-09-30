@@ -233,4 +233,15 @@ namespace mwse {
 		VirtualProtect((DWORD*)address, size, oldProtect, &oldProtect);
 	}
 
+	DWORD getCallAddress(DWORD address) {
+		// Make sure we're doing a call.
+		BYTE instruction = *reinterpret_cast<BYTE*>(address);
+		if (instruction != 0xE8) {
+			return NULL;
+		}
+
+		// Read previous call address to make sure it's what we are expecting.
+		return *reinterpret_cast<DWORD*>(address + 1) + address + 0x5;
+	}
+
 }
