@@ -163,9 +163,6 @@ namespace mwse {
 		//
 
 		void installPatches() {
-			sol::state& state = lua::LuaManager::getInstance().getState();
-			sol::table patches = state["mwse"]["config"]["patches"];
-
 			// Patch: Enable/Disable.
 			genCallUnprotected(0x508FEB, reinterpret_cast<DWORD>(PatchScriptOpEnable), 0x9);
 			genCallUnprotected(0x5090DB, reinterpret_cast<DWORD>(PatchScriptOpDisable), 0x9);
