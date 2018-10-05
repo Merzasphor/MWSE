@@ -104,7 +104,7 @@ namespace mwse {
 					[](TES3::DialogueInfo& self, TES3::Actor* actor) { self.firstHeardFrom = actor; }
 				));
 
-				// Accessor functions.
+				// Filter functions.
 				usertypeDefinition.set("actor", sol::property(
 					[](TES3::DialogueInfo& self) {
 						return getFilterObject(self, TES3::DialogueInfoFilterType::Actor);
@@ -135,6 +135,20 @@ namespace mwse {
 						return getFilterObject(self, TES3::DialogueInfoFilterType::PCFaction);
 					}
 				));
+
+				// Load link access.
+				usertypeDefinition.set("id", sol::readonly_property([](TES3::DialogueInfo& self) -> sol::optional<std::string> {
+					if (self.loadId()) {
+						std::string id = self.loadLinkNode->name;
+						self.unloadId();
+						return id;
+					}
+
+					return sol::optional<std::string>();
+				}));
+
+				// Functions exposed as properties.
+				usertypeDefinition.set("text", sol::readonly_property(&TES3::DialogueInfo::getText));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3dialogueinfo", usertypeDefinition);

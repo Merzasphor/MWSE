@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+
 #include "TES3Collections.h"
 
 namespace TES3 {
@@ -67,9 +68,17 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
+		GameFile(const char* path, const char* filename, void * unknown = nullptr);
+		~GameFile();
+
 		void deleteFile();
 		bool __declspec(dllexport) readChunkData(void * data, unsigned int size);
 		int __declspec(dllexport) writeChunkData(unsigned int tag, const void * data, unsigned int size);
+
+		bool collectActiveMods(bool showMasterErrors = false);
+		bool load(int unknown1 = 0, bool unknown2 = false);
+		bool loadByPath(const char* path, const char* filename, int unknown1 = 0, bool unknown2 = false);
+		bool setFilePointer(unsigned int offset);
 
 		//
 		// Custom functions.

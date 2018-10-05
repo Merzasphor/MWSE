@@ -27,6 +27,7 @@
 #include "TES3CrimeTree.h"
 #include "TES3DataHandler.h"
 #include "TES3Dialogue.h"
+#include "TES3DialogueInfo.h"
 #include "TES3Door.h"
 #include "TES3Game.h"
 #include "TES3GameSetting.h"
@@ -1227,6 +1228,31 @@ namespace mwse {
 				}
 
 				return sol::optional<std::tuple<std::string, std::string>>();
+			};
+
+			// Very slow method to get an INFO record by its ID.
+			state["tes3"]["getDialogueInfo"] = [](sol::table params) -> sol::object {
+				TES3::Dialogue * dialogue = getOptionalParamDialogue(params, "dialogue");
+				const char * id = getOptionalParam<const char*>(params, "id", nullptr);
+				if (dialogue == nullptr || id == nullptr) {
+					return sol::nil;
+				}
+
+				for (auto itt = dialogue->info.head; itt; itt = itt->next) {
+					auto dialogueInfo = itt->data;
+					if (!dialogueInfo->loadId()) {
+						continue;
+					}
+
+					if (_strcmpi(id, dialogueInfo->loadLinkNode->name) == 0) {
+						dialogueInfo->unloadId();
+						return makeLuaObject(dialogueInfo);
+					}
+
+					dialogueInfo->unloadId();
+				}
+
+				return sol::nil;
 			};
 		}
 	}
