@@ -38,4 +38,9 @@ namespace TES3 {
 	bool WorldController::applyEnchantEffect(NI::Node* node, Enchantment * enchantment) {
 		return TES3_WorldController_applyEnchantEffect(this, node, enchantment);
 	}
+
+	const auto TES3_WorldController_updateTiming = reinterpret_cast<void(__thiscall*)(WorldController*)>(0x453610);
+	void WorldController::updateTiming() {
+		TES3_WorldController_updateTiming(this);
+	}
 }

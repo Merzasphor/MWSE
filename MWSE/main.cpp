@@ -82,6 +82,9 @@ bool __fastcall OnGameStructInitialized(TES3::Game * game) {
 	// Setup our lua interface before initializing.
 	mwse::lua::LuaManager::getInstance().hook();
 
+	// Install necessary patches.
+	mwse::patch::installPatches();
+
 	return game->initialize();
 }
 
@@ -168,16 +171,16 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 			mwse::tes3::_realloc = reinterpret_cast<mwse::tes3::ExternalRealloc>(external_realloc);
 		}
 
-		// Install necessary patches.
-		mwse::patch::installPatches();
-
 		// Parse and load the features installed by the Morrowind Code Patch.
 		if (!mwse::mcp::loadFeatureList()) {
 			mwse::log::getLog() << "Failed to detect Morrowind Code Patch installed features. MCP may not be installed, or the mcpatch\\installed file may have been deleted. Mods will be unable to detect MCP feature support." << std::endl;
 		}
 
 		// Delay our lua hook until later, to ensure that Mod Organizer's VFS is hooked up.
-		mwse::genCallEnforced(0x417195, 0x417880, reinterpret_cast<DWORD>(OnGameStructInitialized));
+		if (!mwse::genCallEnforced(0x417195, 0x417880, reinterpret_cast<DWORD>(OnGameStructInitialized))) {
+			mwse::log::getLog() << "Could not hook MWSE-Lua initialization point!" << std::endl;
+			exit(1);
+		}
 	}
 	break;
 	case DLL_THREAD_ATTACH:

@@ -222,6 +222,8 @@ namespace TES3 {
 
 		_declspec(dllexport) bool applyEnchantEffect(NI::Node* node, Enchantment * enchantment);
 
+		_declspec(dllexport) void updateTiming();
+
 	};
 	static_assert(sizeof(WorldController) == 0x374, "TES3::WorldController failed size validation");
 	static_assert(offsetof(WorldController, inputController) == 0x4C, "TES3::WorldController failed offset validation");
