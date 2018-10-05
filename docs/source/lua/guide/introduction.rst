@@ -52,7 +52,7 @@ Events are the primary way in which script modules interact with the game. There
 .. code-block:: lua
 
     -- Define our callback, which will get called when the event happens.
-    local myKeyEvent(eventData)
+    local function myKeyEvent(eventData)
         if (eventData.pressed) then
             mwse.log("Key #%d was pressed.", eventData.keyCode)
         else
@@ -81,7 +81,7 @@ On top of all this are support libraries to help make modding easier. An example
 .. code-block:: lua
 
     -- Define the function we want to call when our timer completes.
-    local myTimerCallback()
+    local function myTimerCallback()
         tes3.messageBox({ message = "My timer completed!" })
     end
 
@@ -107,7 +107,7 @@ For example, with the file ``Data Files/MWSE/mods/demo/main.lua`` in place, it w
 
 .. code-block:: lua
 
-    local myLoadedGameCallback(e)
+    local function myLoadedGameCallback(e)
         mwse.log("Loaded game: %s", e.filename)
     end
     event.register("loaded", myLoadedGameCallback)
@@ -120,20 +120,12 @@ Another feature of MWSE-Lua is the ability to override the normal execution of m
 
 .. code-block:: lua
 
-    -- Use Data Files/MWSE/mods/demo/override.lua for our override.
-    mwse.overrideScript("myScript", "mods/demo/override")
-
-The override is a module. The file listed above must return a table, and that table should have an execute function, which will get run whenever the script would get run.
-
-.. code-block:: lua
-
-    local myOverrideModule = {}
-
-    function myOverrideModule.execute()
-        tes3.messageBox({ message = "I'm running from Lua, not mwscript!" })
+    local function myOverrideFunction(params)
+        tes3.messageBox(string.format("I'm running script '%s' on reference '%s' from Lua, not mwscript!", params.script.id, params.reference.id))
     end
-
-    return myOverrideModule
+    
+    -- Use the above function instead of mwscript logic.
+    mwse.overrideScript("myScript", myOverrideFunction)
 
 
 OpenMW will not be adding compatibility with MWSE mods, legacy or Lua-based. But script overrides exposes a way for modders to write mods that have extended MWSE functionality without causing issues in OpenMW. Basic functionality can be kept to mwscript, while the script can be overriden to enable advanced functionality using Lua.
