@@ -21,6 +21,7 @@
 #include "TES3CombatSession.h"
 #include "TES3DataHandler.h"
 #include "TES3Dialogue.h"
+#include "TES3DialogueInfo.h"
 #include "TES3Game.h"
 #include "TES3GameFile.h"
 #include "TES3GameSetting.h"
@@ -2492,6 +2493,31 @@ namespace mwse {
 			genCallEnforced(0x4EEFAA, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
 			genCallEnforced(0x4F026F, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
 			genCallEnforced(0x4F0C83, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
+
+			// Hook overriding dialogue info text.
+			auto dialogueInfoGetText = &TES3::DialogueInfo::getText;
+			genCallEnforced(0x4151E2, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x43204F, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x4320C4, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x4325E6, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x4B2FD9, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x50E6DC, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x50E735, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x50E76D, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x52919C, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x52933D, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x5BF029, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x5BF189, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x5BF269, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x5BF349, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x5BF449, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x5BF529, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x5BF639, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x5C060C, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x5C0A70, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x5D692B, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x5D8544, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
+			genCallEnforced(0x6004F6, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
 
 			// Look for main.lua scripts in the usual directories.
 			executeMainModScripts("Data Files/MWSE/core");

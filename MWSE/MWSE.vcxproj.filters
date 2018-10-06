@@ -1140,6 +1140,9 @@
     <ClInclude Include="NIPixelDataLua.h">
       <Filter>Header Files\Lua\Bindings\NI</Filter>
     </ClInclude>
+    <ClInclude Include="LuaInfoGetTextEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2494,6 +2497,9 @@
     </ClCompile>
     <ClCompile Include="TES3DialogueInfo.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaInfoGetTextEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
