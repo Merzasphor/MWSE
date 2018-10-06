@@ -159,6 +159,7 @@
 #include "LuaSpellTickEvent.h"
 #include "LuaUiObjectTooltipEvent.h"
 #include "LuaUiRefreshedEvent.h"
+#include "LuaUiSpellTooltipEvent.h"
 #include "LuaWeaponReadiedEvent.h"
 #include "LuaWeaponUnreadiedEvent.h"
 #include "LuaWeatherChangedImmediateEvent.h"
@@ -1344,11 +1345,29 @@ namespace mwse {
 
 		void __stdcall OnUIObjectTooltip(TES3::Object* object, TES3::ItemData* itemData, int count) {
 			// Call original function.
-			reinterpret_cast<void(__stdcall *)(TES3::Object*, TES3::ItemData*, int count)>(0x590D90)(object, itemData, count);
+			reinterpret_cast<void(__stdcall *)(TES3::Object*, TES3::ItemData*, int)>(0x590D90)(object, itemData, count);
 
 			// Fire off the event.
 			TES3::UI::Element* tooltip = TES3::UI::findHelpLayerMenu(TES3::UI::UI_ID(TES3::UI::Property::HelpMenu));
 			LuaManager::getInstance().triggerEvent(new event::UiObjectTooltipEvent(tooltip, object, itemData, count));
+		}
+
+		//
+		// Event: UI Spell Tooltip post-creation.
+		//
+
+		bool __cdecl OnUISpellTooltip(TES3::UI::Element* widget, int event, int data0, int data1, TES3::UI::Element* element) {
+			// Call original function.
+			bool created = reinterpret_cast<bool(__cdecl *)(TES3::UI::Element*, int, int, int, TES3::UI::Element*)>(0x5E45C0)(widget, event, data0, data1, element);
+
+			// Fire off the event.
+			if (created) {
+				TES3::UI::Element* tooltip = TES3::UI::findHelpLayerMenu(TES3::UI::UI_ID(TES3::UI::Property::HelpMenu));
+				TES3::Spell * spell = reinterpret_cast<TES3::Spell *>(element->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D431C)).ptrValue);
+				LuaManager::getInstance().triggerEvent(new event::UiSpellTooltipEvent(tooltip, spell));
+			}
+
+			return created;
 		}
 
 		//
@@ -2289,6 +2308,13 @@ namespace mwse {
 			genCallEnforced(0x607CA7, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
 			genCallEnforced(0x60EE6B, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
 			genCallEnforced(0x61550D, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
+
+			// Event: UI Tooltip post-creation for spells.
+			genPushEnforced(0x5E3E5D, reinterpret_cast<DWORD>(OnUISpellTooltip));
+			genPushEnforced(0x5E3EDF, reinterpret_cast<DWORD>(OnUISpellTooltip));
+			genPushEnforced(0x5E3F8E, reinterpret_cast<DWORD>(OnUISpellTooltip));
+			genPushEnforced(0x5E4069, reinterpret_cast<DWORD>(OnUISpellTooltip));
+			genPushEnforced(0x5E4165, reinterpret_cast<DWORD>(OnUISpellTooltip));
 
 			/*
 			// TODO: Figure out a good hook point for this.

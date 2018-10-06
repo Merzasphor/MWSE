@@ -1143,6 +1143,9 @@
     <ClInclude Include="LuaInfoGetTextEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="LuaUiSpellTooltipEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2499,6 +2502,9 @@
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
     <ClCompile Include="LuaInfoGetTextEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaUiSpellTooltipEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
