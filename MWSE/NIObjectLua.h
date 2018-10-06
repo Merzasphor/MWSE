@@ -55,6 +55,7 @@ namespace mwse {
 			usertypeDefinition.set("worldTransform", &NI::AVObject::worldTransform);
 
 			// Basic function binding.
+			usertypeDefinition.set("clearTransforms", &NI::AVObject::clearTransforms);
 			usertypeDefinition.set("updateNodeEffects", &NI::AVObject::updateNodeEffects);
 			usertypeDefinition.set("updateTextureProperties", &NI::AVObject::updateTextureProperties);
 

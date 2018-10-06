@@ -38,6 +38,12 @@ namespace NI {
 		__declspec(dllexport) void propagatePositionChange(float unk1 = 0.0f, int unk2 = 0, int unk3 = 1);
 		__declspec(dllexport) void setLocalRotationMatrix(TES3::Matrix33* matrix);
 
+		//
+		// Custom functions.
+		//
+
+		__declspec(dllexport) void clearTransforms();
+
 	};
 	static_assert(sizeof(AVObject) == 0x90, "NI::AVObject failed size validation");
 

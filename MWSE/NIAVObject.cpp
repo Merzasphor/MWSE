@@ -24,4 +24,12 @@ namespace NI {
 	void AVObject::setLocalRotationMatrix(TES3::Matrix33 * matrix) {
 		reinterpret_cast<void(__thiscall *)(AVObject*, TES3::Matrix33*)>(0x50E020)(this, matrix);
 	}
+
+	void AVObject::clearTransforms() {
+		localScale = 1.0f;
+		localTranslate.x = 0.0f;
+		localTranslate.y = 0.0f;
+		localTranslate.z = 0.0f;
+		setLocalRotationMatrix(reinterpret_cast<TES3::Matrix33*>(0x7DE664));
+	}
 }
