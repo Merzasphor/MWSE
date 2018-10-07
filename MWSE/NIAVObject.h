@@ -49,12 +49,14 @@ namespace NI {
 		__declspec(dllexport) void setLocalRotationMatrix(TES3::Matrix33* matrix);
 
 		__declspec(dllexport) void attachProperty(Pointer<Property> property);
+		__declspec(dllexport) Pointer<Property> * detachProperty(Pointer<Property> * out_detached, int type);
 
 		//
 		// Custom functions.
 		//
 
 		__declspec(dllexport) void clearTransforms();
+		Pointer<Property> getProperty(int type);
 
 	};
 	static_assert(sizeof(AVObject) == 0x90, "NI::AVObject failed size validation");

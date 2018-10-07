@@ -33,6 +33,7 @@ namespace mwse {
 			usertypeDefinition.set("volumeMedia", &TES3::Game::volumeMedia);
 			usertypeDefinition.set("volumeVoice", &TES3::Game::volumeVoice);
 			usertypeDefinition.set("windowHandle", sol::readonly_property(&TES3::Game::windowHandle));
+			usertypeDefinition.set("wireframeProperty", sol::readonly_property(&TES3::Game::wireframeProperty));
 			usertypeDefinition.set("worldSceneGraphRoot", sol::readonly_property(&TES3::Game::worldRoot));
 
 			// Access to other objects that need to be packaged.

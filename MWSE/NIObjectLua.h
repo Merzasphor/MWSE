@@ -63,17 +63,23 @@ namespace mwse {
 			usertypeDefinition.set("updateNodeEffects", &NI::AVObject::updateNodeEffects);
 			usertypeDefinition.set("updateTextureProperties", &NI::AVObject::updateTextureProperties);
 
+			// Functions that need their results wrapped.
+			usertypeDefinition.set("getObjectByName", [](NI::AVObject& self, const char* name) { return makeLuaObject(self.getObjectByName(name)); });
+			usertypeDefinition.set("getProperty", [](NI::AVObject& self, int type) { return makeLuaNiPointer(self.getProperty(type)); });
+			usertypeDefinition.set("parent", sol::readonly_property([](NI::AVObject& self) { return makeLuaObject(self.parentNode); }));
+
+			// Make remove property a bit more friendly.
+			usertypeDefinition.set("detachProperty", [](NI::AVObject& self, int type) {
+				NI::Pointer<NI::Property> prop;
+				self.detachProperty(&prop, type);
+				return makeLuaNiPointer(prop);
+			});
+
 			// Friendly access to flags.
 			usertypeDefinition.set("appCulled", sol::property(
 				[](NI::AVObject& self) -> bool { return (self.flags & 1) == 1; },
 				[](NI::AVObject& self, bool set) { set ? self.flags |= 1 : self.flags &= ~1; }
 			));
-
-			// Access to other objects that need to be packaged.
-			usertypeDefinition.set("parent", sol::readonly_property([](NI::AVObject& self) { return makeLuaObject(self.parentNode); }));
-
-			// Basic function binding.
-			usertypeDefinition.set("getObjectByName", [](NI::AVObject& self, const char* name) { return makeLuaObject(self.getObjectByName(name)); });
 		}
 
 		void bindNIObject();

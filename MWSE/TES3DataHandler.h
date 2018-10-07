@@ -135,7 +135,7 @@ namespace TES3 {
 		NonDynamicData * nonDynamicData; // 0x0
 		CellExteriorData* exteriorCellData[9]; // 0x4
 		void * unknown_0x28[25]; // 0x28
-		void * worldObjectRoot; // 0x8C
+		NI::Node * worldObjectRoot; // 0x8C
 		void * worldPickObjectRoot; // 0x90
 		void * worldLandscapeRoot; // 0x94
 		void * sgSunlight;
