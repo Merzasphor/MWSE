@@ -8,6 +8,7 @@ namespace NI {
 			Object_vTable * asObject;
 			AVObject_vTable * asAVObject;
 			Node_vTable * asNode;
+			Property_vTable * asProperty;
 			TriShape_vTable * asTriShape;
 			Texture_vTable * asTexture;
 			SourceTexture_vTable * asSourceTexture;

@@ -96,6 +96,7 @@
     <ClInclude Include="NIPixelData.h" />
     <ClInclude Include="NIPixelDataLua.h" />
     <ClInclude Include="NIPixelFormat.h" />
+    <ClInclude Include="NIProperty.h" />
     <ClInclude Include="NISourceTexture.h" />
     <ClInclude Include="NISourceTextureLua.h" />
     <ClInclude Include="NITexture.h" />

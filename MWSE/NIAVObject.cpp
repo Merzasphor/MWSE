@@ -5,6 +5,8 @@
 #define NI_AVObject_propagatePositionChange 0x6EB000
 
 namespace NI {
+	const auto NI_PropertyList_addHead = reinterpret_cast<void(__thiscall*)(AVObject::PropertyListNode*, Pointer<Property>)>(0x405840);
+
 	AVObject * AVObject::getObjectByName(const char* name) {
 		return vTable.asAVObject->getObjectByName(this, name);
 	}
@@ -23,6 +25,10 @@ namespace NI {
 
 	void AVObject::setLocalRotationMatrix(TES3::Matrix33 * matrix) {
 		reinterpret_cast<void(__thiscall *)(AVObject*, TES3::Matrix33*)>(0x50E020)(this, matrix);
+	}
+
+	void AVObject::attachProperty(Pointer<Property> property) {
+		NI_PropertyList_addHead(&propertyNode, property);
 	}
 
 	void AVObject::clearTransforms() {

@@ -12,6 +12,7 @@ namespace NI {
 	struct PickRecord;
 	struct PixelData;
 	struct PixelFormat;
+	struct Property;
 	struct RTTI;
 	struct SourceTexture;
 	struct SwitchNode;
@@ -23,6 +24,7 @@ namespace NI {
 	struct AVObject_vTable;
 	struct Node_vTable;
 	struct Object_vTable;
+	struct Property_vTable;
 	struct SourceTexture_vTable;
 	struct Texture_vTable;
 	struct TriShape_vTable;

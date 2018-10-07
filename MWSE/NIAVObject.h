@@ -1,11 +1,17 @@
 #pragma once
 
 #include "NIObjectNET.h"
+#include "NIProperty.h"
 #include "NITransform.h"
+
 #include "TES3Collections.h"
 
 namespace NI {
 	struct AVObject : ObjectNET {
+		struct PropertyListNode {
+			Property * data;
+			PropertyListNode * next;
+		};
 		unsigned short flags; // 0x14
 		short unknown_0x16;
 		Node * parentNode; // 0x18
@@ -16,7 +22,11 @@ namespace NI {
 		float localScale; // 0x3C
 		TES3::Transform worldTransform; // 0x40
 		void * localBound; // 0x74
-		TES3::TArray<void> propertyList; // 078
+		int unknown_0x78;
+		int unknown_0x7C;
+		int unknown_0x80;
+		int unknown_0x84;
+		PropertyListNode propertyNode; // 0x88
 
 		//
 		// vTable wrappers.
@@ -37,6 +47,8 @@ namespace NI {
 		__declspec(dllexport) void updateTextureProperties();
 		__declspec(dllexport) void propagatePositionChange(float unk1 = 0.0f, int unk2 = 0, int unk3 = 1);
 		__declspec(dllexport) void setLocalRotationMatrix(TES3::Matrix33* matrix);
+
+		__declspec(dllexport) void attachProperty(Pointer<Property> property);
 
 		//
 		// Custom functions.

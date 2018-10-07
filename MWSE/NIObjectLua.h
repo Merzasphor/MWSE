@@ -46,15 +46,19 @@ namespace mwse {
 			setUserdataForNIObjectNET(usertypeDefinition);
 
 			// Basic property binding.
+			usertypeDefinition.set("properties", sol::readonly_property(&NI::AVObject::propertyNode));
 			usertypeDefinition.set("flags", &NI::AVObject::flags);
 			usertypeDefinition.set("localRotation", &NI::AVObject::localRotation);
 			usertypeDefinition.set("localScale", &NI::AVObject::localScale);
 			usertypeDefinition.set("localTranslate", &NI::AVObject::localTranslate);
+			usertypeDefinition.set("rotation", &NI::AVObject::localRotation);
+			usertypeDefinition.set("scale", &NI::AVObject::localScale);
+			usertypeDefinition.set("translation", &NI::AVObject::localTranslate);
 			usertypeDefinition.set("worldBoundOrigin", &NI::AVObject::worldBoundOrigin);
 			usertypeDefinition.set("worldBoundRadius", &NI::AVObject::worldBoundRadius);
-			usertypeDefinition.set("worldTransform", &NI::AVObject::worldTransform);
 
 			// Basic function binding.
+			usertypeDefinition.set("attachProperty", &NI::AVObject::attachProperty);
 			usertypeDefinition.set("clearTransforms", &NI::AVObject::clearTransforms);
 			usertypeDefinition.set("updateNodeEffects", &NI::AVObject::updateNodeEffects);
 			usertypeDefinition.set("updateTextureProperties", &NI::AVObject::updateTextureProperties);

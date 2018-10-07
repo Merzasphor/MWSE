@@ -70,11 +70,19 @@ namespace mwse {
 				usertypeDefinition.set(sol::base_classes, sol::bases<NI::ObjectNET, NI::Object>());
 				setUserdataForNIAVObject(usertypeDefinition);
 
+				// Finish up our usertype.
+				state.set_usertype("niAVObject", usertypeDefinition);
+			}
+
+			// Binding for NI::AVObject::PropertyListNode.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<NI::AVObject::PropertyListNode>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
 				// Basic property binding.
-				usertypeDefinition.set("rotation", &NI::AVObject::localRotation);
-				usertypeDefinition.set("translation", &NI::AVObject::localTranslate);
-				usertypeDefinition.set("scale", &NI::AVObject::localScale);
-				usertypeDefinition.set("worldTransform", &NI::AVObject::worldTransform);
+				usertypeDefinition.set("data", sol::readonly_property([](NI::AVObject::PropertyListNode& self) { return makeLuaNiPointer(self.data); }));
+				usertypeDefinition.set("next", &NI::AVObject::PropertyListNode::next);
 
 				// Finish up our usertype.
 				state.set_usertype("niAVObject", usertypeDefinition);
