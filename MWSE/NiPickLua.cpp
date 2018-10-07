@@ -71,8 +71,8 @@ namespace mwse {
 				// Properties.
 				//
 
-				"object", &NI::PickRecord::object,
-				"parent", &NI::PickRecord::proxyParent,
+				"object", sol::readonly_property([](NI::PickRecord& self) { return makeLuaObject(self.object); }),
+				"parent", sol::readonly_property([](NI::PickRecord& self) { return makeLuaObject(self.proxyParent); }),
 				"intersection", &NI::PickRecord::intersection,
 				"distance", &NI::PickRecord::distance,
 				"triangleIndex", &NI::PickRecord::triangleIndex,

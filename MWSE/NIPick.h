@@ -56,8 +56,8 @@ namespace NI {
 	static_assert(sizeof(Pick) == 0x38, "NI::Pick failed size validation");
 
 	struct PickRecord {
-		Node * object;
-		Node * proxyParent;
+		AVObject * object;
+		AVObject * proxyParent;
 		TES3::Vector3 intersection;
 		float distance;
 		unsigned short triangleIndex;

@@ -17,28 +17,30 @@
 #include "TES3Region.h"
 #include "TES3Spell.h"
 
+#include "NIProperty.h"
+
 namespace mwse {
 	namespace lua {
 		void bindTES3Collections() {
 			// Iterator bindings.
-			bindIterator<TES3::Dialogue>("TES3DialogueIterator", "TES3DialogueIteratorNode");
-			bindIterator<TES3::DialogueInfo>("TES3DialogueInfoIterator", "TES3DialogueInfoIteratorNode");
 			bindIterator<TES3::EquipmentStack>("TES3EquipmentStackIterator", "TES3EquipmentStackIteratorNode");
 			bindIterator<TES3::Faction::ReactionNode>("TES3ReactionNodeIterator", "TES3ReactionNodeIteratorNode");
 			bindIterator<TES3::ItemStack>("TES3ItemStackIterator", "TES3ItemStackIteratorNode");
 			bindIterator<TES3::LeveledListNode>("TES3LeveledListNodeIterator", "TES3LeveledListNodeIteratorNode");
-			bindIterator<TES3::Quest>("TES3QuestIterator", "TES3QuestIteratorNode");
-			bindIterator<TES3::Reference>("TES3ReferenceIterator", "TES3ReferenceIteratorNode");
-			bindIterator<TES3::Region>("TES3RegionIterator", "TES3RegionIteratorNode");
 			bindIterator<TES3::RegionSound>("TES3RegionSoundIterator", "TES3RegionSoundIteratorNode");
 			bindIterator<TES3::TravelDestination>("TES3TravelDestinationIterator", "TES3TravelDestinationIteratorNode");
 
-			// Generic TES3::Object iterators. As above, but the result data will be
-			// reinterpreted at runtime.
+
+			// Generic TES3::Object iterators. As above, but the result data will be reinterpreted at runtime.
+			bindGenericObjectIterator<TES3::Dialogue>("TES3DialogueIterator", "TES3DialogueIteratorNode");
+			bindGenericObjectIterator<TES3::DialogueInfo>("TES3DialogueInfoIterator", "TES3DialogueInfoIteratorNode");
 			bindGenericObjectIterator<TES3::MobileActor>("TES3MobileActorIterator", "TES3MobileActorIteratorNode");
+			bindGenericObjectIterator<TES3::Quest>("TES3QuestIterator", "TES3QuestIteratorNode");
+			bindGenericObjectIterator<TES3::Reference>("TES3ReferenceIterator", "TES3ReferenceIteratorNode");
+			bindGenericObjectIterator<TES3::Region>("TES3RegionIterator", "TES3RegionIteratorNode");
 			bindGenericObjectIterator<TES3::Spell>("TES3SpellIterator", "TES3SpellIteratorNode");
 
-			// TArray bindings.
+			// Basic TArray bindings.
 			bindTArray<TES3::ItemData>("TES3ItemDataTArray");
 
 			// Bind some iterators.
