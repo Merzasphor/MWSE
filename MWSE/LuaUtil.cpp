@@ -536,40 +536,40 @@ namespace mwse {
 			sol::state& state = luaManager.getState();
 
 			switch ((uintptr_t)object->getRunTimeTypeInformation()) {
-			case NI::RTTIStaticPtr::AVObject:
+			case NI::RTTIStaticPtr::NiAVObject:
 				return sol::make_object(state, reinterpret_cast<NI::AVObject*>(object));
-			case NI::RTTIStaticPtr::Camera:
+			case NI::RTTIStaticPtr::NiCamera:
 				return sol::make_object(state, reinterpret_cast<NI::Camera*>(object));
-			case NI::RTTIStaticPtr::Node:
+			case NI::RTTIStaticPtr::NiNode:
 				return sol::make_object(state, reinterpret_cast<NI::Node*>(object));
-			case NI::RTTIStaticPtr::ObjectNET:
+			case NI::RTTIStaticPtr::NiObjectNET:
 				return sol::make_object(state, reinterpret_cast<NI::ObjectNET*>(object));
-			case NI::RTTIStaticPtr::PixelData:
+			case NI::RTTIStaticPtr::NiPixelData:
 				return sol::make_object(state, reinterpret_cast<NI::PixelData*>(object));
-			case NI::RTTIStaticPtr::SourceTexture:
+			case NI::RTTIStaticPtr::NiSourceTexture:
 				return sol::make_object(state, reinterpret_cast<NI::SourceTexture*>(object));
-			case NI::RTTIStaticPtr::SwitchNode:
+			case NI::RTTIStaticPtr::NiSwitchNode:
 				return sol::make_object(state, reinterpret_cast<NI::SwitchNode*>(object));
-			case NI::RTTIStaticPtr::TriShape:
+			case NI::RTTIStaticPtr::NiTriShape:
 				return sol::make_object(state, reinterpret_cast<NI::TriShape*>(object));
 			}
 
-			if (object->isInstanceOfType(NI::RTTIStaticPtr::Node)) {
+			if (object->isInstanceOfType(NI::RTTIStaticPtr::NiNode)) {
 				return sol::make_object(state, reinterpret_cast<NI::Node*>(object));
 			}
-			else if (object->isInstanceOfType(NI::RTTIStaticPtr::TriShape)) {
+			else if (object->isInstanceOfType(NI::RTTIStaticPtr::NiTriShape)) {
 				return sol::make_object(state, reinterpret_cast<NI::TriShape*>(object));
 			}
-			else if (object->isInstanceOfType(NI::RTTIStaticPtr::AVObject)) {
+			else if (object->isInstanceOfType(NI::RTTIStaticPtr::NiAVObject)) {
 				return sol::make_object(state, reinterpret_cast<NI::AVObject*>(object));
 			}
-			else if (object->isInstanceOfType(NI::RTTIStaticPtr::SourceTexture)) {
+			else if (object->isInstanceOfType(NI::RTTIStaticPtr::NiSourceTexture)) {
 				return sol::make_object(state, reinterpret_cast<NI::SourceTexture*>(object));
 			}
-			else if (object->isInstanceOfType(NI::RTTIStaticPtr::ObjectNET)) {
+			else if (object->isInstanceOfType(NI::RTTIStaticPtr::NiObjectNET)) {
 				return sol::make_object(state, reinterpret_cast<NI::ObjectNET*>(object));
 			}
-			else if (object->isInstanceOfType(NI::RTTIStaticPtr::PixelData)) {
+			else if (object->isInstanceOfType(NI::RTTIStaticPtr::NiPixelData)) {
 				return sol::make_object(state, reinterpret_cast<NI::PixelData*>(object));
 			}
 
@@ -586,40 +586,40 @@ namespace mwse {
 			sol::state& state = luaManager.getState();
 
 			switch ((uintptr_t)object->getRunTimeTypeInformation()) {
-			case NI::RTTIStaticPtr::AVObject:
+			case NI::RTTIStaticPtr::NiAVObject:
 				return sol::make_object(state, NI::Pointer<NI::AVObject>(reinterpret_cast<NI::AVObject*>(object)));
-			case NI::RTTIStaticPtr::Camera:
+			case NI::RTTIStaticPtr::NiCamera:
 				return sol::make_object(state, NI::Pointer<NI::Camera>(reinterpret_cast<NI::Camera*>(object)));
-			case NI::RTTIStaticPtr::Node:
+			case NI::RTTIStaticPtr::NiNode:
 				return sol::make_object(state, NI::Pointer<NI::Node>(reinterpret_cast<NI::Node*>(object)));
-			case NI::RTTIStaticPtr::ObjectNET:
+			case NI::RTTIStaticPtr::NiObjectNET:
 				return sol::make_object(state, NI::Pointer<NI::ObjectNET>(reinterpret_cast<NI::ObjectNET*>(object)));
-			case NI::RTTIStaticPtr::PixelData:
+			case NI::RTTIStaticPtr::NiPixelData:
 				return sol::make_object(state, NI::Pointer<NI::PixelData>(reinterpret_cast<NI::PixelData*>(object)));
-			case NI::RTTIStaticPtr::SourceTexture:
+			case NI::RTTIStaticPtr::NiSourceTexture:
 				return sol::make_object(state, NI::Pointer<NI::SourceTexture>(reinterpret_cast<NI::SourceTexture*>(object)));
-			case NI::RTTIStaticPtr::SwitchNode:
+			case NI::RTTIStaticPtr::NiSwitchNode:
 				return sol::make_object(state, NI::Pointer<NI::SwitchNode>(reinterpret_cast<NI::SwitchNode*>(object)));
-			case NI::RTTIStaticPtr::TriShape:
+			case NI::RTTIStaticPtr::NiTriShape:
 				return sol::make_object(state, NI::Pointer<NI::TriShape>(reinterpret_cast<NI::TriShape*>(object)));
 			}
 
-			if (object->isInstanceOfType(NI::RTTIStaticPtr::Node)) {
+			if (object->isInstanceOfType(NI::RTTIStaticPtr::NiNode)) {
 				return sol::make_object(state, NI::Pointer<NI::Node>(reinterpret_cast<NI::Node*>(object)));
 			}
-			else if (object->isInstanceOfType(NI::RTTIStaticPtr::TriShape)) {
+			else if (object->isInstanceOfType(NI::RTTIStaticPtr::NiTriShape)) {
 				return sol::make_object(state, NI::Pointer<NI::TriShape>(reinterpret_cast<NI::TriShape*>(object)));
 			}
-			else if (object->isInstanceOfType(NI::RTTIStaticPtr::AVObject)) {
+			else if (object->isInstanceOfType(NI::RTTIStaticPtr::NiAVObject)) {
 				return sol::make_object(state, NI::Pointer<NI::AVObject>(reinterpret_cast<NI::AVObject*>(object)));
 			}
-			else if (object->isInstanceOfType(NI::RTTIStaticPtr::SourceTexture)) {
+			else if (object->isInstanceOfType(NI::RTTIStaticPtr::NiSourceTexture)) {
 				return sol::make_object(state, NI::Pointer<NI::SourceTexture>(reinterpret_cast<NI::SourceTexture*>(object)));
 			}
-			else if (object->isInstanceOfType(NI::RTTIStaticPtr::ObjectNET)) {
+			else if (object->isInstanceOfType(NI::RTTIStaticPtr::NiObjectNET)) {
 				return sol::make_object(state, NI::Pointer<NI::ObjectNET>(reinterpret_cast<NI::ObjectNET*>(object)));
 			}
-			else if (object->isInstanceOfType(NI::RTTIStaticPtr::PixelData)) {
+			else if (object->isInstanceOfType(NI::RTTIStaticPtr::NiPixelData)) {
 				return sol::make_object(state, NI::Pointer<NI::PixelData>(reinterpret_cast<NI::PixelData*>(object)));
 			}
 

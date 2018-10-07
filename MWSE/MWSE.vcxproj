@@ -98,6 +98,7 @@
     <ClInclude Include="NIPixelFormat.h" />
     <ClInclude Include="NISourceTexture.h" />
     <ClInclude Include="NISourceTextureLua.h" />
+    <ClInclude Include="NITexture.h" />
     <ClInclude Include="NITriShape.h" />
     <ClInclude Include="NIPointer.h" />
     <ClInclude Include="NIStream.h" />
@@ -436,6 +437,7 @@
     <ClCompile Include="NISourceTextureLua.cpp" />
     <ClCompile Include="NIStream.cpp" />
     <ClCompile Include="NISwitchNodeLua.cpp" />
+    <ClCompile Include="NITexture.cpp" />
     <ClCompile Include="NITimeControllerLua.cpp" />
     <ClCompile Include="NITriShape.cpp" />
     <ClCompile Include="NITriShapeLua.cpp" />
