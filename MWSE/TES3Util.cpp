@@ -505,7 +505,7 @@ namespace mwse {
 		}
 
 		void * _new(size_t size) {
-			return reinterpret_cast<void*(__cdecl*)(size_t)>(0x727692)(sizeof(size));
+			return reinterpret_cast<void*(__cdecl*)(size_t)>(0x727692)(size);
 		}
 
 		ExternalRealloc _realloc = NULL;
