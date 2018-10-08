@@ -61,7 +61,7 @@ namespace TES3 {
 		int unknown_0x90;
 		int unknown_0x94;
 		void * unknown_0x98; // List?
-		NI::Pointer<NI::Node> * worldRoot; // 0x9C
+		NI::Pointer<NI::Node> worldRoot; // 0x9C
 		int unknown_0xA0;
 		int unknown_0xA4;
 		int unknown_0xA8;
