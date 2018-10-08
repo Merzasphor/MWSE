@@ -155,9 +155,10 @@ namespace mwse {
 
 		template <typename T>
 		__declspec(dllexport) T * _new() {
-			const auto __new = reinterpret_cast<T*(__cdecl*)(size_t)>(0x727692);
-			return __new(sizeof(T));
+			return reinterpret_cast<T*(__cdecl*)(size_t)>(0x727692)(sizeof(T));
 		}
+
+		__declspec(dllexport) void * _new(size_t size);
 
 		template <typename T>
 		__declspec(dllexport) void _delete(T * address) {

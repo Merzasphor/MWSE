@@ -504,6 +504,10 @@ namespace mwse {
 			return TES3_ResolveAssetPath(path, out_buffer);
 		}
 
+		void * _new(size_t size) {
+			return reinterpret_cast<void*(__cdecl*)(size_t)>(0x727692)(sizeof(size));
+		}
+
 		ExternalRealloc _realloc = NULL;
 		void* realloc(void* address, size_t size) {
 			return _realloc(address, size);

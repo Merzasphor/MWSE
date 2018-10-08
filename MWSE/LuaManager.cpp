@@ -138,6 +138,7 @@
 #include "LuaGenericUiActivatedEvent.h"
 #include "LuaGenericUiPostEvent.h"
 #include "LuaGenericUiPreEvent.h"
+#include "LuaInfoGetTextEvent.h"
 #include "LuaKeyDownEvent.h"
 #include "LuaKeyUpEvent.h"
 #include "LuaLevelUpEvent.h"
@@ -1879,6 +1880,47 @@ namespace mwse {
 		}
 		const size_t patchFilterInventorySelect_size = 0x10;
 
+		//
+		// Event: Dialogue Info Read Text
+		//
+
+		static TES3::DialogueInfo * lastReadDialogueInfo = nullptr;
+
+		TES3::GameFile * __fastcall PatchGetDialogueInfoText_GetSourceMod(TES3::DialogueInfo * dialogueInfo) {
+			lastReadDialogueInfo = dialogueInfo;
+			return dialogueInfo->sourceMod;
+		}
+
+		bool __fastcall PatchGetDialogueInfoText_ReadFromFile(TES3::GameFile * gameFile, DWORD _UNUSUED_, char * dialogueTextBuffer, size_t size) {
+			// Allow the event to override the text.
+			sol::object eventResult = mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::InfoGetTextEvent(lastReadDialogueInfo));
+			if (eventResult.valid()) {
+				sol::table eventData = eventResult;
+				sol::object text = eventData["text"];
+				if (text.is<const char*>()) {
+					// Create our new buffer.
+					const char* newText = text.as<const char*>();
+					auto length = strlen(newText);
+					char * buffer = reinterpret_cast<char*>(tes3::_new(length + 1));
+
+					// Delete the previous buffer and replace it with this one.
+					tes3::_delete(*reinterpret_cast<char**>(0x7CA5AC));
+					*reinterpret_cast<char**>(0x7CA5AC) = buffer;
+
+					// Copy into the buffer and get out of here.
+					buffer[length] = '\0';
+					strcpy(buffer, newText);
+					return true;
+				}
+			}
+
+			return gameFile->readChunkData(dialogueTextBuffer, size);
+		}
+
+		//
+		//
+		//
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/core/mwse_init.lua");
@@ -2505,6 +2547,10 @@ namespace mwse {
 			mwse::writePatchCodeUnprotected(0x5D3F9C, (BYTE*)&patchFilterInventorySelect, patchFilterInventorySelect_size);
 			genCallUnprotected(0x5D3FA0, reinterpret_cast<DWORD>(OnFilterInventorySelect));
 
+			// Hook overriding dialogue info text.
+			genCallEnforced(0x4B1BF2, 0x4EEE40, reinterpret_cast<DWORD>(PatchGetDialogueInfoText_GetSourceMod));
+			genCallEnforced(0x4B1D70, 0x4B6880, reinterpret_cast<DWORD>(PatchGetDialogueInfoText_ReadFromFile));
+
 			// UI framework hooks
 			TES3::UI::hook();
 
@@ -2519,31 +2565,6 @@ namespace mwse {
 			genCallEnforced(0x4EEFAA, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
 			genCallEnforced(0x4F026F, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
 			genCallEnforced(0x4F0C83, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
-
-			// Hook overriding dialogue info text.
-			auto dialogueInfoGetText = &TES3::DialogueInfo::getText;
-			genCallEnforced(0x4151E2, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x43204F, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x4320C4, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x4325E6, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x4B2FD9, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x50E6DC, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x50E735, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x50E76D, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x52919C, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x52933D, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x5BF029, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x5BF189, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x5BF269, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x5BF349, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x5BF449, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x5BF529, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x5BF639, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x5C060C, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x5C0A70, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x5D692B, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x5D8544, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
-			genCallEnforced(0x6004F6, 0x4B1B80, *reinterpret_cast<DWORD*>(&dialogueInfoGetText));
 
 			// Look for main.lua scripts in the usual directories.
 			executeMainModScripts("Data Files/MWSE/core");
