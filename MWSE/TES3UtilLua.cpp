@@ -1258,9 +1258,9 @@ namespace mwse {
 			// Very slow method to get an INFO record by its ID.
 			state["tes3"]["getCell"] = [](sol::table params) -> sol::object {
 				// If we were given a name, try that.
-				sol::optional<const char*> cellName = params["name"];
-				if (cellName) {
-					return makeLuaObject(tes3::getDataHandler()->nonDynamicData->getCellByName(cellName.value()));
+				sol::optional<const char*> cellId = params["id"];
+				if (cellId) {
+					return makeLuaObject(tes3::getDataHandler()->nonDynamicData->getCellByName(cellId.value()));
 				}
 
 				// Otherwise try to use X/Y.
