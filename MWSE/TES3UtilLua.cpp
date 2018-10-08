@@ -1254,6 +1254,18 @@ namespace mwse {
 
 				return sol::nil;
 			};
+
+			// Very slow method to get an INFO record by its ID.
+			state["tes3"]["getCell"] = [](sol::table params) -> sol::object {
+				// If we were given a name, try that.
+				sol::optional<const char*> cellName = params["name"];
+				if (cellName) {
+					return makeLuaObject(tes3::getDataHandler()->nonDynamicData->getCellByName(cellName.value()));
+				}
+
+				// Otherwise try to use X/Y.
+				return makeLuaObject(tes3::getDataHandler()->nonDynamicData->getCellByGrid(params["x"], params["y"]));
+			};
 		}
 	}
 }

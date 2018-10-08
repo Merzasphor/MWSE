@@ -93,6 +93,7 @@ namespace TES3 {
 		void deleteObject(BaseObject*);
 
 		__declspec(dllexport) Cell * getCellByGrid(int x, int y);
+		__declspec(dllexport) Cell * getCellByName(const char* name);
 
 		//
 		// Custom functions.

@@ -162,6 +162,11 @@ namespace TES3 {
 		return TES3_NonDynamicData_getCellByGrid(this, x, y);
 	}
 
+	const auto TES3_NonDynamicData_getCellByName = reinterpret_cast<Cell *(__thiscall*)(NonDynamicData*, const char*)>(0x4BA9B0);
+	Cell * NonDynamicData::getCellByName(const char* name) {
+		return TES3_NonDynamicData_getCellByName(this, name);
+	}
+
 	const auto TES3_NonDynamicData_meshes_loadMesh = reinterpret_cast<NI::AVObject *(__thiscall*)(HashMap*, const char *)>(0x4EE0A0);
 
 	NI::Pointer<NI::Object> NonDynamicData::loadMesh(const char* path) {
