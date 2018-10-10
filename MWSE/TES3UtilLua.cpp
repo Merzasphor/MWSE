@@ -1308,21 +1308,18 @@ namespace mwse {
 
 				// Make sure our object is of the right type.
 				if (!maybeMobile.is<TES3::MobileActor>()) {
-					mwse::log::getLog() << "Could not figure out mobile actor from parameter." << std::endl;
 					return false;
 				}
 
 				// Get the statistic name parameter.
 				sol::optional<const char*> statisticName = params["name"];
 				if (!statisticName) {
-					mwse::log::getLog() << "No statistic name provided." << std::endl;
 					return false;
 				}
 
 				// Use our lua binding to see if there's a statistic of that name.
 				sol::optional<TES3::Statistic*> maybeStatistic = maybeMobile[statisticName.value()];
 				if (!maybeStatistic) {
-					mwse::log::getLog() << "Could not resolve statistic!" << std::endl;
 					return false;
 				}
 
@@ -1368,6 +1365,8 @@ namespace mwse {
 						}
 					}
 				}
+
+				return modifiedStatistic;
 			};
 		}
 	}
