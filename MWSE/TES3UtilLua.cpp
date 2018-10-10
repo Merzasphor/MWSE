@@ -1500,16 +1500,16 @@ namespace mwse {
 
 				// Edit both.
 				if (value) {
-					statistic->modBaseCapped(value.value(), limit.value(), limit.value());
-					statistic->modCurrentCapped(value.value(), limit.value(), limit.value(), limit.value());
+					statistic->modBaseCapped(value.value(), limit.value_or(false), limit.value_or(false));
+					statistic->modCurrentCapped(value.value(), limit.value_or(false), limit.value_or(false), limit.value_or(false));
 				}
 				// If we're given a current value, modify it.
 				else if (current) {
-					statistic->modCurrentCapped(current.value(), limit.value(), limit.value(), limit.value());
+					statistic->modCurrentCapped(current.value(), limit.value_or(false), limit.value_or(false), limit.value_or(false));
 				}
 				// If we're given a base value, modify it.
 				else if (base) {
-					statistic->modBaseCapped(base.value(), limit.value(), limit.value());
+					statistic->modBaseCapped(base.value(), limit.value_or(false), limit.value_or(false));
 				}
 				else {
 					mwse::log::getLog() << "tes3.modStatistic: No edit mode provided, missing parameter 'current' or 'base' or 'value'." << std::endl;
