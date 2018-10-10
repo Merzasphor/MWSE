@@ -22,9 +22,7 @@ namespace mwse {
 			setUserdataForMobileActor(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition.set("combat", sol::readonly_property(&TES3::MobileCreature::combatSkill));
-			usertypeDefinition.set("magic", sol::readonly_property(&TES3::MobileCreature::magicSkill));
-			usertypeDefinition.set("stealth", sol::readonly_property(&TES3::MobileCreature::stealthSkill));
+			usertypeDefinition.set("skills", sol::property([](TES3::MobileCreature& self) { return std::ref(self.skills); }));
 
 			// Access to other objects that need to be packaged.
 			usertypeDefinition.set("object", sol::readonly_property([](TES3::MobileCreature& self) { return makeLuaObject(self.creatureInstance); }));
@@ -36,6 +34,11 @@ namespace mwse {
 			usertypeDefinition.set("swimSpeed", sol::readonly_property(&TES3::MobileCreature::calculateWalkSpeed));
 			usertypeDefinition.set("swimRunSpeed", sol::readonly_property(&TES3::MobileCreature::calculateWalkSpeed));
 			usertypeDefinition.set("flySpeed", sol::readonly_property(&TES3::MobileCreature::calculateWalkSpeed));
+
+			// Friendly access to skills.
+			usertypeDefinition.set("combat", sol::readonly_property([](TES3::MobileCreature& self) { return &self.skills[TES3::CreatureSkillID::Combat]; }));
+			usertypeDefinition.set("magic", sol::readonly_property([](TES3::MobileCreature& self) { return &self.skills[TES3::CreatureSkillID::Magic]; }));
+			usertypeDefinition.set("stealth", sol::readonly_property([](TES3::MobileCreature& self) { return &self.skills[TES3::CreatureSkillID::Stealth]; }));
 
 			// Finish up our usertype.
 			state.set_usertype("tes3mobileCreature", usertypeDefinition);

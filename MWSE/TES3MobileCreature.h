@@ -6,11 +6,21 @@
 #include "TES3Statistic.h"
 
 namespace TES3 {
+
+	namespace CreatureSkillID {
+		enum CreatureSkillID {
+			Combat = 0,
+			Magic = 1,
+			Stealth = 2,
+
+			FirstSkill = Combat,
+			LastSkill = Stealth
+		};
+	}
+
 	struct MobileCreature : MobileActor {
 		CreatureInstance * creatureInstance; // 0x3B0
-		Statistic combatSkill; // 0x3B4
-		Statistic magicSkill; // 0x3C0
-		Statistic stealthSkill; // 0x3C
+		Statistic skills[3]; // 0x3B4
 
 		//
 		// Other related this-call functions.
