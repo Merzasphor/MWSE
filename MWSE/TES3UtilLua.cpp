@@ -35,6 +35,7 @@
 #include "TES3GlobalVariable.h"
 #include "TES3InputController.h"
 #include "TES3MobController.h"
+#include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
 #include "TES3NPC.h"
 #include "TES3Reference.h"
@@ -1300,6 +1301,8 @@ namespace mwse {
 			};
 
 			state["tes3"]["setStatistic"] = [](sol::table params) {
+				sol::state& state = LuaManager::getInstance().getState();
+
 				// Figure out our mobile object, in case someone gives us a reference instead.
 				sol::userdata maybeMobile = params["reference"];
 				if (maybeMobile.is<TES3::Reference>()) {
@@ -1308,26 +1311,70 @@ namespace mwse {
 
 				// Make sure our object is of the right type.
 				if (!maybeMobile.is<TES3::MobileActor>()) {
-					return false;
+					mwse::log::getLog() << "tes3.setStatistic: Could not resolve parameter 'reference'." << std::endl;
+					state["debug"]["traceback"]();
+					return;
 				}
 
-				// Get the statistic name parameter.
+				// Try to get our statistic.
+				TES3::MobileActor * mobile = maybeMobile.as<TES3::MobileActor*>();
+				TES3::Statistic * statistic = nullptr;
 				sol::optional<const char*> statisticName = params["name"];
-				if (!statisticName) {
-					return false;
+				sol::optional<int> statisticSkill = params["skill"];
+				sol::optional<int> statisticAttribute = params["attribute"];
+				if (statisticSkill) {
+					if (mobile->actorType == TES3::MobileActorType::Creature) {
+						if (statisticSkill.value() >= TES3::CreatureSkillID::FirstSkill && statisticSkill.value() <= TES3::CreatureSkillID::LastSkill) {
+							statistic = &static_cast<TES3::MobileCreature*>(mobile)->skills[statisticSkill.value()];
+						}
+						else {
+							mwse::log::getLog() << "tes3.setStatistic: Invalid skill index " << std::dec << statisticSkill.value() << " for creature." << std::endl;
+							state["debug"]["traceback"]();
+							return;
+						}
+					}
+					else {
+						if (statisticSkill.value() >= TES3::SkillID::FirstSkill && statisticSkill.value() <= TES3::SkillID::LastSkill) {
+							statistic = &static_cast<TES3::MobileNPC*>(mobile)->skills[statisticSkill.value()];
+						}
+						else {
+							mwse::log::getLog() << "tes3.setStatistic: Invalid skill index " << std::dec << statisticSkill.value() << " for NPC." << std::endl;
+							state["debug"]["traceback"]();
+							return;
+						}
+					}
+				}
+				else if (statisticAttribute) {
+					if (statisticAttribute.value() >= TES3::Attribute::FirstAttribute && statisticAttribute.value() <= TES3::Attribute::LastAttribute) {
+						statistic = &mobile->attributes[statisticAttribute.value()];
+					}
+					else {
+						mwse::log::getLog() << "tes3.setStatistic: Invalid attribute index " << std::dec << statisticSkill.value() << "." << std::endl;
+						state["debug"]["traceback"]();
+						return;
+					}
+				}
+				else if (statisticName) {
+					sol::optional<TES3::Statistic*> maybeStatistic = maybeMobile[statisticName.value()];
+					if (maybeStatistic) {
+						statistic = maybeStatistic.value();
+					}
+					else {
+						mwse::log::getLog() << "tes3.setStatistic: No statistic with the given criteria could be found." << std::endl;
+						state["debug"]["traceback"]();
+						return;
+					}
 				}
 
-				// Use our lua binding to see if there's a statistic of that name.
-				sol::optional<TES3::Statistic*> maybeStatistic = maybeMobile[statisticName.value()];
-				if (!maybeStatistic) {
-					return false;
+				// This case shouldn't be hit.
+				if (statistic == nullptr) {
+					mwse::log::getLog() << "tes3.setStatistic: No statistic resolved." << std::endl;
+					state["debug"]["traceback"]();
+					return;
 				}
 
 				// Retype our variables to something more friendly, and get additional params.
-				TES3::MobileActor * mobile = maybeMobile.as<TES3::MobileActor*>();
-				TES3::Statistic * statistic = maybeStatistic.value();
 				sol::optional<bool> limit = params["limit"];
-				bool modifiedStatistic = false;
 
 				sol::optional<float> current = params["current"];
 				sol::optional<float> base = params["base"];
@@ -1336,37 +1383,157 @@ namespace mwse {
 				// Edit both.
 				if (value) {
 					statistic->setBaseAndCurrent(value.value());
-					modifiedStatistic = true;
 				}
 				// If we're given a current value, modify it.
 				else if (current) {
 					statistic->setCurrentCapped(current.value(), limit.value_or(false));
-					modifiedStatistic = true;
 				}
 				// If we're given a base value, modify it.
-				else if (current) {
+				else if (base) {
 					statistic->setBase(base.value());
-					modifiedStatistic = true;
+				}
+				else {
+					mwse::log::getLog() << "tes3.setStatistic: No edit mode provided, missing parameter 'current' or 'base' or 'value'." << std::endl;
+					state["debug"]["traceback"]();
+					return;
 				}
 
-				// If something was modified, update derived statistics and GUI.
-				if (modifiedStatistic) {
-					mobile->updateDerivedStatistics(statistic);
+				// Update any derived statistics.
+				mobile->updateDerivedStatistics(statistic);
 
-					if (mobile->actorType == TES3::MobileActorType::Player) {
-						if (statistic == &mobile->health) {
-							reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBB0)(statistic->current, statistic->base);
+				// If this was on the player update any associated GUI widgets.
+				if (mobile->actorType == TES3::MobileActorType::Player) {
+					// Update main HUD elements.
+					if (statistic == &mobile->health) {
+						reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBB0)(statistic->current, statistic->base);
+					}
+					else if (statistic == &mobile->magicka) {
+						reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBD0)(statistic->current, statistic->base);
+					}
+					else if (statistic == &mobile->fatigue) {
+						reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBF0)(statistic->current, statistic->base);
+					}
+
+					tes3::ui::updateStatsPane();
+				}
+			};
+
+			state["tes3"]["modStatistic"] = [](sol::table params) {
+				sol::state& state = LuaManager::getInstance().getState();
+
+				// Figure out our mobile object, in case someone gives us a reference instead.
+				sol::userdata maybeMobile = params["reference"];
+				if (maybeMobile.is<TES3::Reference>()) {
+					maybeMobile = maybeMobile["mobile"];
+				}
+
+				// Make sure our object is of the right type.
+				if (!maybeMobile.is<TES3::MobileActor>()) {
+					mwse::log::getLog() << "tes3.modStatistic: Could not resolve parameter 'reference'." << std::endl;
+					state["debug"]["traceback"]();
+					return;
+				}
+
+				// Try to get our statistic.
+				TES3::MobileActor * mobile = maybeMobile.as<TES3::MobileActor*>();
+				TES3::Statistic * statistic = nullptr;
+				sol::optional<const char*> statisticName = params["name"];
+				sol::optional<int> statisticSkill = params["skill"];
+				sol::optional<int> statisticAttribute = params["attribute"];
+				if (statisticSkill) {
+					if (mobile->actorType == TES3::MobileActorType::Creature) {
+						if (statisticSkill.value() >= TES3::CreatureSkillID::FirstSkill && statisticSkill.value() <= TES3::CreatureSkillID::LastSkill) {
+							statistic = &static_cast<TES3::MobileCreature*>(mobile)->skills[statisticSkill.value()];
 						}
-						else if (statistic == &mobile->magicka) {
-							reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBD0)(statistic->current, statistic->base);
+						else {
+							mwse::log::getLog() << "tes3.modStatistic: Invalid skill index " << std::dec << statisticSkill.value() << " for creature." << std::endl;
+							state["debug"]["traceback"]();
+							return;
 						}
-						else if (statistic == &mobile->fatigue) {
-							reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBF0)(statistic->current, statistic->base);
+					}
+					else {
+						if (statisticSkill.value() >= TES3::SkillID::FirstSkill && statisticSkill.value() <= TES3::SkillID::LastSkill) {
+							statistic = &static_cast<TES3::MobileNPC*>(mobile)->skills[statisticSkill.value()];
+						}
+						else {
+							mwse::log::getLog() << "tes3.modStatistic: Invalid skill index " << std::dec << statisticSkill.value() << " for NPC." << std::endl;
+							state["debug"]["traceback"]();
+							return;
 						}
 					}
 				}
+				else if (statisticAttribute) {
+					if (statisticAttribute.value() >= TES3::Attribute::FirstAttribute && statisticAttribute.value() <= TES3::Attribute::LastAttribute) {
+						statistic = &mobile->attributes[statisticAttribute.value()];
+					}
+					else {
+						mwse::log::getLog() << "tes3.modStatistic: Invalid attribute index " << std::dec << statisticSkill.value() << "." << std::endl;
+						state["debug"]["traceback"]();
+						return;
+					}
+				}
+				else if (statisticName) {
+					sol::optional<TES3::Statistic*> maybeStatistic = maybeMobile[statisticName.value()];
+					if (maybeStatistic) {
+						statistic = maybeStatistic.value();
+					}
+					else {
+						mwse::log::getLog() << "tes3.modStatistic: No statistic with the given criteria could be found." << std::endl;
+						state["debug"]["traceback"]();
+						return;
+					}
+				}
 
-				return modifiedStatistic;
+				// This case shouldn't be hit.
+				if (statistic == nullptr) {
+					mwse::log::getLog() << "tes3.modStatistic: No statistic resolved." << std::endl;
+					state["debug"]["traceback"]();
+					return;
+				}
+
+				// Retype our variables to something more friendly, and get additional params.
+				sol::optional<bool> limit = params["limit"];
+
+				sol::optional<float> current = params["current"];
+				sol::optional<float> base = params["base"];
+				sol::optional<float> value = params["value"];
+
+				// Edit both.
+				if (value) {
+					statistic->modBaseCapped(value.value(), limit.value(), limit.value());
+					statistic->modCurrentCapped(value.value(), limit.value(), limit.value(), limit.value());
+				}
+				// If we're given a current value, modify it.
+				else if (current) {
+					statistic->modCurrentCapped(current.value(), limit.value(), limit.value(), limit.value());
+				}
+				// If we're given a base value, modify it.
+				else if (base) {
+					statistic->modBaseCapped(base.value(), limit.value(), limit.value());
+				}
+				else {
+					mwse::log::getLog() << "tes3.modStatistic: No edit mode provided, missing parameter 'current' or 'base' or 'value'." << std::endl;
+					state["debug"]["traceback"]();
+					return;
+				}
+
+				// Update any derived statistics.
+				mobile->updateDerivedStatistics(statistic);
+
+				// If this was on the player update any associated GUI widgets.
+				if (mobile->actorType == TES3::MobileActorType::Player) {
+					if (statistic == &mobile->health) {
+						reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBB0)(statistic->current, statistic->base);
+					}
+					else if (statistic == &mobile->magicka) {
+						reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBD0)(statistic->current, statistic->base);
+					}
+					else if (statistic == &mobile->fatigue) {
+						reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBF0)(statistic->current, statistic->base);
+					}
+
+					tes3::ui::updateStatsPane();
+				}
 			};
 		}
 	}
