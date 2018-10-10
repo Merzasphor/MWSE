@@ -82,12 +82,6 @@ namespace TES3 {
 
 		// Pass a follow-up event if we successfully loaded and clear timers.
 		if (loaded) {
-			// Update tes3.player and tes3.mobilePlayer.
-			sol::state& state = luaManager.getState();
-			TES3::MobilePlayer * mobilePlayer = mwse::tes3::getWorldController()->getMobilePlayer();
-			state["tes3"]["mobilePlayer"] = mwse::lua::makeLuaObject(mobilePlayer);
-			state["tes3"]["player"] = mwse::lua::makeLuaObject(mobilePlayer->reference);
-
 			luaManager.clearTimers();
 			luaManager.triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str(), fileName == NULL));
 		}
@@ -112,12 +106,6 @@ namespace TES3 {
 
 		// Pass a follow-up event if we successfully loaded and clear timers.
 		if (loaded) {
-			// Update tes3.player and tes3.mobilePlayer.
-			sol::state& state = luaManager.getState();
-			TES3::MobilePlayer * mobilePlayer = mwse::tes3::getWorldController()->getMobilePlayer();
-			state["tes3"]["mobilePlayer"] = mwse::lua::makeLuaObject(mobilePlayer);
-			state["tes3"]["player"] = mwse::lua::makeLuaObject(mobilePlayer->reference);
-
 			luaManager.clearTimers();
 			luaManager.triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str()));
 		}

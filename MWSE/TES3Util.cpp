@@ -466,12 +466,6 @@ namespace mwse {
 			// Call original function.
 			reinterpret_cast<void(__stdcall *)()>(TES3_newGame)();
 
-			// Update tes3.player and tes3.mobilePlayer.
-			sol::state& state = luaManager.getState();
-			TES3::MobilePlayer * mobilePlayer = mwse::tes3::getWorldController()->getMobilePlayer();
-			state["tes3"]["mobilePlayer"] = mwse::lua::makeLuaObject(mobilePlayer);
-			state["tes3"]["player"] = mwse::lua::makeLuaObject(mobilePlayer->reference);
-
 			// Clear any timers.
 			luaManager.clearTimers();
 

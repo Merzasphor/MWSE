@@ -572,6 +572,22 @@ namespace mwse {
 		}
 
 		//
+		// Hook: Player container (re)created.
+		//
+
+		void __fastcall OnPlayerRecreated(TES3::MobController_0x24 * self) {
+			// Call overwritten function.
+			reinterpret_cast<void(__thiscall *)(TES3::MobController_0x24*)>(0x56EAE0)(self);
+
+			// Grab the new player pointers for lua.
+			// Update tes3.player and tes3.mobilePlayer.
+			sol::state& state = LuaManager::getInstance().getState();
+			TES3::MobilePlayer * mobilePlayer = self->mobilePlayer;
+			state["tes3"]["mobilePlayer"] = mwse::lua::makeLuaObject(mobilePlayer);
+			state["tes3"]["player"] = mwse::lua::makeLuaObject(mobilePlayer->reference);
+		}
+
+		//
 		// Hook: Finished initializing game code.
 		//
 
@@ -749,14 +765,8 @@ namespace mwse {
 			// Call overwritten code.
 			mobController->checkPlayerDistance();
 
-			// Fixup lua state/shorthands.
-			LuaManager& luaManager = LuaManager::getInstance();
-			sol::state& state = luaManager.getState();
-			TES3::MobilePlayer * macp = tes3::getWorldController()->getMobilePlayer();
-			state["tes3"]["mobilePlayer"] = mwse::lua::makeLuaObject(macp);
-			state["tes3"]["player"] = mwse::lua::makeLuaObject(macp->reference);
-
 			// Fire off the loaded/cellChanged events.
+			LuaManager& luaManager = LuaManager::getInstance();
 			lastCell = tes3::getDataHandler()->currentCell;
 			luaManager.triggerEvent(new event::LoadedGameEvent(nullptr, false, true));
 			luaManager.triggerEvent(new event::CellChangedEvent(lastCell, nullptr));
@@ -1943,6 +1953,9 @@ namespace mwse {
 
 			// Hook the save reference function, so we can save attached Lua data.
 			genJumpUnprotected(TES3_HOOK_SAVE_REFERENCE, reinterpret_cast<DWORD>(HookSaveReference), TES3_HOOK_SAVE_REFERENCE_SIZE);
+
+			// Hook the MACP creation functions to update lua variables that point to the player.
+			genCallEnforced(0x5635D6, 0x56EAE0, reinterpret_cast<DWORD>(OnPlayerRecreated));
 
 			// Event: initialized. Hook just before we return successfully from where game data is loaded.
 			genJumpUnprotected(TES3_HOOK_FINISH_INITIALIZATION, reinterpret_cast<DWORD>(HookFinishInitialization), TES3_HOOK_FINISH_INITIALIZATION_SIZE);
