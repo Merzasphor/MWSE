@@ -1281,7 +1281,6 @@ namespace mwse {
 			state["tes3"]["fadeOut"] = [](sol::optional<sol::table> params) {
 				TES3::Fader * fader = getOptionalParam(params, "fader", tes3::getWorldController()->transitionFader);
 				if (fader == nullptr) {
-					mwse::log::getLog() << "fadeTo: No fader provided." << std::endl;
 					return;
 				}
 
@@ -1292,7 +1291,6 @@ namespace mwse {
 			state["tes3"]["fadeTo"] = [](sol::optional<sol::table> params) {
 				TES3::Fader * fader = getOptionalParam(params, "fader", tes3::getWorldController()->transitionFader);
 				if (fader == nullptr) {
-					mwse::log::getLog() << "fadeTo: No fader provided." << std::endl;
 					return;
 				}
 
