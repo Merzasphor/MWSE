@@ -1155,6 +1155,9 @@
     <ClInclude Include="TES3Fader.h">
       <Filter>Header Files\DataAdapters\TES3\Worldspace</Filter>
     </ClInclude>
+    <ClInclude Include="LuaBookGetTextEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2521,6 +2524,9 @@
     </ClCompile>
     <ClCompile Include="TES3Fader.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaBookGetTextEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -18,6 +18,7 @@
 #include "TES3Actor.h"
 #include "TES3ActorAnimationData.h"
 #include "TES3Alchemy.h"
+#include "TES3Book.h"
 #include "TES3CombatSession.h"
 #include "TES3DataHandler.h"
 #include "TES3Dialogue.h"
@@ -2563,6 +2564,11 @@ namespace mwse {
 			// Hook overriding dialogue info text.
 			genCallEnforced(0x4B1BF2, 0x4EEE40, reinterpret_cast<DWORD>(PatchGetDialogueInfoText_GetSourceMod));
 			genCallEnforced(0x4B1D70, 0x4B6880, reinterpret_cast<DWORD>(PatchGetDialogueInfoText_ReadFromFile));
+
+			// Hook overriding dialogue info text.
+			auto bookGetText = &TES3::Book::getBookText;
+			genCallEnforced(0x4A29FA, 0x5AC2A0, *reinterpret_cast<DWORD*>(&bookGetText));
+			genCallEnforced(0x4A2A0F, 0x5AC2A0, *reinterpret_cast<DWORD*>(&bookGetText));
 
 			// UI framework hooks
 			TES3::UI::hook();

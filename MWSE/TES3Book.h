@@ -24,7 +24,7 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		char* getBookText();
+		const char* getBookText();
 
 	};
 	static_assert(sizeof(Book) == 0x70, "TES3::Book failed size validation");

@@ -36,6 +36,9 @@ namespace mwse {
 		const auto TES3_UpdateContentsMenuTiles = reinterpret_cast<void(__cdecl*)()>(0x5B67E0);
 		const auto TES3_UpdateInventorySelectTiles = reinterpret_cast<int(__cdecl*)()>(0x5D3E70);
 
+		const auto TES3_ShowBookMenu = reinterpret_cast<void(__cdecl*)(const char*)>(0x5AC2A0);
+		const auto TES3_ShowScrollMenu = reinterpret_cast<void(__cdecl*)(const char*)>(0x6138A0);
+
 		TES3::UI::Boolean __cdecl eventDispatcher(Element* owningWidget, Property eventID, int data0, int data1, Element* source) {
 			sol::state& state = LuaManager::getInstance().getState();
 
@@ -264,6 +267,12 @@ namespace mwse {
 			tes3ui["getInventorySelectType"] = TES3::UI::getInventorySelectType;
 			tes3ui["getServiceActor"] = []() {
 				return mwse::lua::makeLuaObject(TES3::UI::getServiceActor());
+			};
+			tes3ui["showScrollMenu"] = [](const char* text) {
+				TES3_ShowScrollMenu(text);
+			};
+			tes3ui["showBookMenu"] = [](const char* text) {
+				TES3_ShowBookMenu(text);
 			};
 		}
 
