@@ -1,28 +1,11 @@
 #include "TES3StatisticLua.h"
 
 #include "sol.hpp"
-#include "LuaUtil.h"
 #include "LuaManager.h"
+#include "LuaUtil.h"
 
 #include "TES3Statistic.h"
 
-namespace TES3 {
-	void Statistic::luaModBase(float value) {
-		modBaseCapped(value, false, false);
-	}
-
-	void Statistic::luaSetBase(float value) {
-		setBase(value);
-	}
-
-	void Statistic::luaModCurrent(float value) {
-		modCurrentCapped(value, false, false, false);
-	}
-
-	void Statistic::luaSetCurrent(float value) {
-		setCurrentCapped(value, false);
-	}
-}
 
 namespace mwse {
 	namespace lua {
@@ -37,8 +20,8 @@ namespace mwse {
 				// Properties.
 				//
 
-				"base", sol::property(&TES3::Statistic::getBase, &TES3::Statistic::luaSetBase),
-				"current", sol::property(&TES3::Statistic::getCurrent, &TES3::Statistic::luaSetCurrent)
+				"base", sol::property(&TES3::Statistic::getBase, [](TES3::Statistic& self, float value) { self.setBase(value); }),
+				"current", sol::property(&TES3::Statistic::getCurrent, [](TES3::Statistic& self, float value) { self.setCurrentCapped(value, false); })
 
 				);
 
@@ -50,8 +33,8 @@ namespace mwse {
 				// Properties.
 				//
 
-				"base", sol::property(&TES3::SkillStatistic::getBase, &TES3::SkillStatistic::luaSetBase),
-				"current", sol::property(&TES3::SkillStatistic::getCurrent, &TES3::SkillStatistic::luaSetCurrent),
+				"base", sol::property(&TES3::SkillStatistic::getBase, [](TES3::SkillStatistic& self, float value) { self.setBase(value); }),
+				"current", sol::property(&TES3::SkillStatistic::getCurrent, [](TES3::SkillStatistic& self, float value) { self.setCurrentCapped(value, false); }),
 				"type", &TES3::SkillStatistic::type
 
 				);

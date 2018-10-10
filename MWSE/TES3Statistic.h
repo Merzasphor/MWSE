@@ -34,16 +34,6 @@ namespace TES3 {
 		void setBaseToCurrent();
 		void setCurrentCapped(float value, bool applyCaps);
 
-		//
-		// Lua interface functions.
-		//
-
-		void luaModBase(float);
-		void luaSetBase(float);
-
-		void luaModCurrent(float);
-		void luaSetCurrent(float);
-
 	};
 	static_assert(sizeof(Statistic) == 0xC, "TES3::Statistic failed size validation");
 

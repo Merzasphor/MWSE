@@ -1298,6 +1298,77 @@ namespace mwse {
 				float duration = getOptionalParam(params, "duration", 1.0f);
 				fader->fadeTo(value, duration);
 			};
+
+			state["tes3"]["setStatistic"] = [](sol::table params) {
+				// Figure out our mobile object, in case someone gives us a reference instead.
+				sol::userdata maybeMobile = params["reference"];
+				if (maybeMobile.is<TES3::Reference>()) {
+					maybeMobile = maybeMobile["mobile"];
+				}
+
+				// Make sure our object is of the right type.
+				if (!maybeMobile.is<TES3::MobileActor>()) {
+					mwse::log::getLog() << "Could not figure out mobile actor from parameter." << std::endl;
+					return false;
+				}
+
+				// Get the statistic name parameter.
+				sol::optional<const char*> statisticName = params["name"];
+				if (!statisticName) {
+					mwse::log::getLog() << "No statistic name provided." << std::endl;
+					return false;
+				}
+
+				// Use our lua binding to see if there's a statistic of that name.
+				sol::optional<TES3::Statistic*> maybeStatistic = maybeMobile[statisticName.value()];
+				if (!maybeStatistic) {
+					mwse::log::getLog() << "Could not resolve statistic!" << std::endl;
+					return false;
+				}
+
+				// Retype our variables to something more friendly, and get additional params.
+				TES3::MobileActor * mobile = maybeMobile.as<TES3::MobileActor*>();
+				TES3::Statistic * statistic = maybeStatistic.value();
+				sol::optional<bool> limit = params["limit"];
+				bool modifiedStatistic = false;
+
+				sol::optional<float> current = params["current"];
+				sol::optional<float> base = params["base"];
+				sol::optional<float> value = params["value"];
+
+				// Edit both.
+				if (value) {
+					statistic->setBaseAndCurrent(value.value());
+					modifiedStatistic = true;
+				}
+				// If we're given a current value, modify it.
+				else if (current) {
+					statistic->setCurrentCapped(current.value(), limit.value_or(false));
+					modifiedStatistic = true;
+				}
+				// If we're given a base value, modify it.
+				else if (current) {
+					statistic->setBase(base.value());
+					modifiedStatistic = true;
+				}
+
+				// If something was modified, update derived statistics and GUI.
+				if (modifiedStatistic) {
+					mobile->updateDerivedStatistics(statistic);
+
+					if (mobile->actorType == TES3::MobileActorType::Player) {
+						if (statistic == &mobile->health) {
+							reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBB0)(statistic->current, statistic->base);
+						}
+						else if (statistic == &mobile->magicka) {
+							reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBD0)(statistic->current, statistic->base);
+						}
+						else if (statistic == &mobile->fatigue) {
+							reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBF0)(statistic->current, statistic->base);
+						}
+					}
+				}
+			};
 		}
 	}
 }
