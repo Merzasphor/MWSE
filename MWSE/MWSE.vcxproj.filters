@@ -1152,6 +1152,9 @@
     <ClInclude Include="NIProperty.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
+    <ClInclude Include="TES3Fader.h">
+      <Filter>Header Files\DataAdapters\TES3\Worldspace</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2515,6 +2518,9 @@
     </ClCompile>
     <ClCompile Include="NITexture.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Fader.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

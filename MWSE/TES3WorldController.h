@@ -199,11 +199,11 @@ namespace TES3 {
 		int countMusicTracksBattle; // 0x348
 		int countMusicTracksExplore; // 0x34C
 		MusicSituation musicSituation; // 0x350
-		int unknown_0x354;
-		int unknown_0x358;
-		int unknown_0x35C;
-		int unknown_0x360;
-		int unknown_0x364;
+		Fader * transitionFader; // 0x354
+		Fader * blindnessFader; // 0x358
+		Fader * sunglareFader; // 0x35C
+		Fader * hitFader; // 0x360
+		Fader * werewolfFader; // 0x364
 		int unknown_0x368;
 		int unknown_0x36C;
 		int unknown_0x370;

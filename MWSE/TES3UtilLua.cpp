@@ -29,6 +29,7 @@
 #include "TES3Dialogue.h"
 #include "TES3DialogueInfo.h"
 #include "TES3Door.h"
+#include "TES3Fader.h"
 #include "TES3Game.h"
 #include "TES3GameSetting.h"
 #include "TES3GlobalVariable.h"
@@ -1265,6 +1266,39 @@ namespace mwse {
 
 				// Otherwise try to use X/Y.
 				return makeLuaObject(tes3::getDataHandler()->nonDynamicData->getCellByGrid(params["x"], params["y"]));
+			};
+
+			state["tes3"]["fadeIn"] = [](sol::optional<sol::table> params) {
+				TES3::Fader * fader = getOptionalParam(params, "fader", tes3::getWorldController()->transitionFader);
+				if (fader == nullptr) {
+					return;
+				}
+
+				float duration = getOptionalParam(params, "duration", 1.0f);
+				fader->fadeTo(0.0f, duration);
+			};
+
+			state["tes3"]["fadeOut"] = [](sol::optional<sol::table> params) {
+				TES3::Fader * fader = getOptionalParam(params, "fader", tes3::getWorldController()->transitionFader);
+				if (fader == nullptr) {
+					mwse::log::getLog() << "fadeTo: No fader provided." << std::endl;
+					return;
+				}
+
+				float duration = getOptionalParam(params, "duration", 1.0f);
+				fader->fadeTo(1.0f, duration);
+			};
+
+			state["tes3"]["fadeTo"] = [](sol::optional<sol::table> params) {
+				TES3::Fader * fader = getOptionalParam(params, "fader", tes3::getWorldController()->transitionFader);
+				if (fader == nullptr) {
+					mwse::log::getLog() << "fadeTo: No fader provided." << std::endl;
+					return;
+				}
+
+				float value = getOptionalParam(params, "value", 1.0f);
+				float duration = getOptionalParam(params, "duration", 1.0f);
+				fader->fadeTo(value, duration);
 			};
 		}
 	}
