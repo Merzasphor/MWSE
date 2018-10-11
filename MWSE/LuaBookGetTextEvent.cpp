@@ -8,9 +8,9 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			BookGetTextEvent::BookGetTextEvent(TES3::Book * info) :
-				ObjectFilteredEvent("bookGetText", info),
-				m_Book(info)
+			BookGetTextEvent::BookGetTextEvent(TES3::Book * book) :
+				ObjectFilteredEvent("bookGetText", book),
+				m_Book(book)
 			{
 
 			}

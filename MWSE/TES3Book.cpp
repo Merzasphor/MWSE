@@ -17,11 +17,10 @@ namespace TES3 {
 		sol::object eventResult = mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::BookGetTextEvent(this));
 		if (eventResult.valid()) {
 			sol::table eventData = eventResult;
-			sol::object text = eventData["text"];
-			if (text.is<const char*>()) {
+			sol::optional<const char*> newText = eventData["text"];
+			if (newText) {
 				// Create our new buffer.
-				const char* newText = text.as<const char*>();
-				auto length = strlen(newText);
+				auto length = strlen(newText.value());
 				char * buffer = reinterpret_cast<char*>(mwse::tes3::_new(length + 1));
 
 				// Delete the previous buffer and replace it with this one.
@@ -30,7 +29,7 @@ namespace TES3 {
 
 				// Copy into the buffer and get out of here.
 				buffer[length] = '\0';
-				strcpy(buffer, newText);
+				strcpy(buffer, newText.value());
 				return buffer;
 			}
 		}
