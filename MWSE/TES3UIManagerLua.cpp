@@ -39,6 +39,8 @@ namespace mwse {
 		const auto TES3_ShowBookMenu = reinterpret_cast<void(__cdecl*)(const char*)>(0x5AC2A0);
 		const auto TES3_ShowScrollMenu = reinterpret_cast<void(__cdecl*)(const char*)>(0x6138A0);
 
+		const auto TES3_ConsoleLogResult = reinterpret_cast<void(__cdecl*)(const char*, bool)>(0x5B2C20);
+
 		TES3::UI::Boolean __cdecl eventDispatcher(Element* owningWidget, Property eventID, int data0, int data1, Element* source) {
 			sol::state& state = LuaManager::getInstance().getState();
 
@@ -273,6 +275,10 @@ namespace mwse {
 			};
 			tes3ui["showBookMenu"] = [](const char* text) {
 				TES3_ShowBookMenu(text);
+			};
+
+			tes3ui["logToConsole"] = [](const char* text, sol::optional<bool> isCommand) {
+				TES3_ConsoleLogResult(text, isCommand.value_or(false));
 			};
 		}
 
