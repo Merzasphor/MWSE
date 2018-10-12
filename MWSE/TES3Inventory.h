@@ -5,6 +5,7 @@
 #include "TES3Defines.h"
 
 #include "TES3Collections.h"
+#include "TES3Vectors.h"
 
 namespace TES3 {
 	struct ItemStack {
@@ -48,6 +49,7 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
+		void dropItem(MobileActor* mobileActor, Item * item, ItemData * itemData, int count, Vector3 position, Vector3 orientation, bool unknown = false);
 		ItemStack* findItemStack(Object* item);
 		void resolveLeveledLists(MobileActor*);
 

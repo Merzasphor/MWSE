@@ -140,6 +140,7 @@
 #include "LuaGenericUiPostEvent.h"
 #include "LuaGenericUiPreEvent.h"
 #include "LuaInfoGetTextEvent.h"
+#include "LuaItemDroppedEvent.h"
 #include "LuaKeyDownEvent.h"
 #include "LuaKeyUpEvent.h"
 #include "LuaLevelUpEvent.h"
@@ -1929,6 +1930,18 @@ namespace mwse {
 		}
 
 		//
+		// Event: Item Dropped.
+		//
+
+		const auto TES3_DataHandler_UpdateLightingForReference = reinterpret_cast<void(__thiscall*)(TES3::DataHandler *, TES3::Reference *)>(0x485E40);
+
+		void __fastcall OnItemDropped(TES3::DataHandler * dataHandler, DWORD _UNUSED_, TES3::Reference* reference) {
+			TES3_DataHandler_UpdateLightingForReference(dataHandler, reference);
+
+			mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::ItemDroppedEvent(reference));
+		}
+
+		//
 		//
 		//
 
@@ -2569,6 +2582,10 @@ namespace mwse {
 			auto bookGetText = &TES3::Book::getBookText;
 			genCallEnforced(0x4A29FA, 0x4A2A90, *reinterpret_cast<DWORD*>(&bookGetText));
 			genCallEnforced(0x4A2A0F, 0x4A2A90, *reinterpret_cast<DWORD*>(&bookGetText));
+
+			// Event: Item Dropped.
+			genCallEnforced(0x485FCA, 0x485E40, reinterpret_cast<DWORD>(OnItemDropped)); // MCP-added function.
+			genCallEnforced(0x49B550, 0x485E40, reinterpret_cast<DWORD>(OnItemDropped)); // Vanilla function.
 
 			// UI framework hooks
 			TES3::UI::hook();

@@ -192,6 +192,7 @@ namespace mwse {
 				usertypeDefinition.set("iterator", sol::readonly_property(&TES3::Inventory::iterator));
 
 				// Basic function binding.
+				usertypeDefinition.set("dropItem", &TES3::Inventory::dropItem);
 				usertypeDefinition.set("resolveLeveledItems", [](TES3::Inventory& self, sol::optional<TES3::MobileActor*> actor) { self.resolveLeveledLists(actor.value_or(nullptr)); });
 
 				// Finish up our usertype.

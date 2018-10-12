@@ -49,6 +49,7 @@
     <ClInclude Include="LuaGenericUiPostEvent.h" />
     <ClInclude Include="LuaGenericUiPreEvent.h" />
     <ClInclude Include="LuaInfoGetTextEvent.h" />
+    <ClInclude Include="LuaItemDroppedEvent.h" />
     <ClInclude Include="LuaJournalEvent.h" />
     <ClInclude Include="LuaKeyDownEvent.h" />
     <ClInclude Include="LuaKeyEvent.h" />
@@ -376,6 +377,7 @@
     <ClCompile Include="LuaGenericUiPostEvent.cpp" />
     <ClCompile Include="LuaGenericUiPreEvent.cpp" />
     <ClCompile Include="LuaInfoGetTextEvent.cpp" />
+    <ClCompile Include="LuaItemDroppedEvent.cpp" />
     <ClCompile Include="LuaJournalEvent.cpp" />
     <ClCompile Include="LuaKeyDownEvent.cpp" />
     <ClCompile Include="LuaKeyEvent.cpp" />
