@@ -2578,6 +2578,10 @@ namespace mwse {
 			genCallEnforced(0x4B1BF2, 0x4EEE40, reinterpret_cast<DWORD>(PatchGetDialogueInfoText_GetSourceMod));
 			genCallEnforced(0x4B1D70, 0x4B6880, reinterpret_cast<DWORD>(PatchGetDialogueInfoText_ReadFromFile));
 
+			// Event: Info Filter.
+			auto dialogueInfoFilter = &TES3::DialogueInfo::filter;
+			genCallEnforced(0x4B2A77, 0x4B0190, *reinterpret_cast<DWORD*>(&dialogueInfoFilter));
+			
 			// Hook overriding book text.
 			auto bookGetText = &TES3::Book::getBookText;
 			genCallEnforced(0x4A29FA, 0x4A2A90, *reinterpret_cast<DWORD*>(&bookGetText));
