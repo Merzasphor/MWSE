@@ -124,6 +124,7 @@
     <ClInclude Include="TES3LandTexture.h" />
     <ClInclude Include="TES3MobController.h" />
     <ClInclude Include="TES3AttachmentLua.h" />
+    <ClInclude Include="TES3ScriptCompiler.h" />
     <ClInclude Include="TES3SpellInstanceController.h" />
     <ClInclude Include="TES3StdString.h" />
     <ClInclude Include="TES3UIDefines.h" />

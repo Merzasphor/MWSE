@@ -34,6 +34,7 @@ namespace TES3 {
 		__declspec(dllexport) Vector3* getOrCreateOrientationFromAttachment();
 		__declspec(dllexport) Vector3* getPositionFromAttachment();
 		__declspec(dllexport) LockAttachmentNode* getOrCreateLockNode();
+		__declspec(dllexport) ScriptVariables * getScriptVariables();
 		__declspec(dllexport) void removeAttachment(TES3::Attachment * attachment);
 
 		//

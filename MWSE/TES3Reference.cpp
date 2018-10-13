@@ -74,6 +74,11 @@ namespace TES3 {
 		return reinterpret_cast<LockAttachmentNode* (__thiscall *)(Reference*)>(0x4E7DF0)(this);
 	}
 
+	const auto TES3_Reference_getScriptVariables = reinterpret_cast<ScriptVariables*(__thiscall*)(Reference*)>(0x4E7020);
+	ScriptVariables * Reference::getScriptVariables() {
+		return TES3_Reference_getScriptVariables(this);
+	}
+
 	void Reference::removeAttachment(TES3::Attachment * attachment) {
 		TES3_Reference_removeAttachment(this, attachment);
 	}

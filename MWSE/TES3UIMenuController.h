@@ -22,7 +22,11 @@ namespace TES3 {
 			NI::Node* mainNode; // 0x8
 			NI::Node* helpNode; // 0xC
 			MenuInputController* menuInputController; // 0x10
-			char unknown_[0x290]; // 0x14
+			int unknown_0x14;
+			int unknown_0x18;
+			int unknown_0x1C;
+			ScriptCompiler * scriptCompiler; // 0x20
+			char unknown_0x24[0x280]; // 0x24
 		};
 		static_assert(sizeof(MenuController) == 0x2A4, "TES3::UI::MenuController failed size validation");
 

@@ -89,6 +89,7 @@ namespace TES3 {
 	struct RegionSound;
 	struct RepairTool;
 	struct Script;
+	struct ScriptCompiler;
 	struct ScriptVariables;
 	struct SkillStatistic;
 	struct Sound;

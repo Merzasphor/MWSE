@@ -1164,6 +1164,9 @@
     <ClInclude Include="LuaInfoFilterEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="TES3ScriptCompiler.h">
+      <Filter>Header Files\DataAdapters\TES3\Scripting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

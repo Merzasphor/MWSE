@@ -3,6 +3,7 @@
 #include "TES3Defines.h"
 
 #include "TES3Object.h"
+#include "TES3ScriptCompiler.h"
 
 namespace TES3 {
 	struct ScriptVariables {
@@ -57,7 +58,8 @@ namespace TES3 {
 		short getShortValue(unsigned int, bool);
 		int getLongValue(unsigned int, bool);
 		float getFloatValue(unsigned int, bool);
-
+		
+		void doCommand(ScriptCompiler * compiler, const char* command, int source = TES3::CompilerSource::Default, Reference * reference = nullptr, ScriptVariables * variables = nullptr, DialogueInfo * info = nullptr, Dialogue * dialogue = nullptr);
 	};
 	static_assert(sizeof(Script) == 0x70, "TES3::Script failed size validation");
 }

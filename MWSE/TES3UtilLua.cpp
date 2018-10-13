@@ -41,11 +41,13 @@
 #include "TES3Reference.h"
 #include "TES3Region.h"
 #include "TES3Script.h"
+#include "TES3ScriptCompiler.h"
 #include "TES3Sound.h"
 #include "TES3SoundGenerator.h"
 #include "TES3Spell.h"
 #include "TES3SpellInstanceController.h"
 #include "TES3UIElement.h"
+#include "TES3UIMenuController.h"
 #include "TES3Weather.h"
 #include "TES3WeatherController.h"
 #include "TES3WorldController.h"
@@ -1587,6 +1589,42 @@ namespace mwse {
 
 					tes3::ui::updateStatsPane();
 				}
+			};
+
+			state["tes3"]["runLegacyScript"] = [](sol::table params) {
+				TES3::Script * script = getOptionalParamScript(params, "script");
+				if (script == nullptr) {
+					script = tes3::getWorldController()->scriptGlobals;
+				}
+
+				TES3::ScriptCompiler * compiler = tes3::getWorldController()->menuController->scriptCompiler;
+				int source = getOptionalParam<int>(params, "source", TES3::CompilerSource::Default);
+				if (source < TES3::CompilerSource::FirstSource || source > TES3::CompilerSource::LastSource) {
+					return false;
+				}
+
+				const char* command = getOptionalParam<const char*>(params, "command", nullptr);
+				if (command == nullptr) {
+					return false;
+				}
+
+				TES3::ScriptVariables * variables = getOptionalParam<TES3::ScriptVariables*>(params, "variables", nullptr);
+
+				TES3::Reference * reference = getOptionalParamExecutionReference(params);
+				if (reference && variables == nullptr) {
+					variables = reference->getScriptVariables();
+				}
+
+				TES3::Dialogue * dialogue = getOptionalParamDialogue(params, "dialogue");
+				TES3::DialogueInfo * dialogueInfo = getOptionalParam< TES3::DialogueInfo*>(params, "info", nullptr);
+				if (dialogue == nullptr || dialogueInfo == nullptr) {
+					dialogue = nullptr;
+					dialogueInfo = nullptr;
+					source = TES3::CompilerSource::Default;
+				}
+
+				script->doCommand(compiler, command, source, reference, variables, dialogueInfo, dialogue);
+				return true;
 			};
 		}
 	}

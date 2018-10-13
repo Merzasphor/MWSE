@@ -33,4 +33,9 @@ namespace TES3 {
 	float Script::getFloatValue(unsigned int index, bool useLocalVars) {
 		return reinterpret_cast<float(__thiscall *)(Script*, unsigned int, signed char)>(TES3_Script_getFloatValue)(this, index, useLocalVars);
 	}
+
+	const auto TES3_Script_DoCommand = reinterpret_cast<void(__thiscall*)(Script*, ScriptCompiler *, const char*, int, Reference *, ScriptVariables *, DialogueInfo *, Dialogue *)>(0x50E5A0);
+	void Script::doCommand(ScriptCompiler * compiler, const char* command, int source, Reference * reference, ScriptVariables * variables, DialogueInfo * info, Dialogue * dialogue) {
+		TES3_Script_DoCommand(this, compiler, command, source, reference, variables, info, dialogue);
+	}
 }
