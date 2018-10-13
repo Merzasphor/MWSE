@@ -1216,6 +1216,57 @@ namespace mwse {
 				return journal->journalIndex;
 			};
 
+			state["tes3"]["setJournalIndex"] = [](sol::table params) -> bool {
+				TES3::Dialogue * journal = getOptionalParamDialogue(params, "id");
+				if (journal == nullptr || journal->type != TES3::DialogueType::Journal) {
+					return false;
+				}
+
+				sol::optional<int> index = params["index"];
+				if (!index) {
+					return false;
+				}
+
+				if (!journal->setJournalIndex(index.value())) {
+					return false;
+				}
+
+				sol::optional<bool> showMessage = params["showMessage"];
+				if (showMessage.value_or(false) && tes3::ui::getMenuNode(*reinterpret_cast<short*>(0x7D3442)) == nullptr) {
+					tes3::ui::messagePlayer(tes3::getDataHandler()->nonDynamicData->GMSTs[TES3::GMST::sJournalEntry]->value.asString);
+				}
+
+				return true;
+			};
+
+			state["tes3"]["updateJournal"] = [](sol::table params) -> bool {
+				TES3::Dialogue * journal = getOptionalParamDialogue(params, "id");
+				if (journal == nullptr || journal->type != TES3::DialogueType::Journal) {
+					return false;
+				}
+
+				sol::optional<int> index = params["index"];
+				if (!index) {
+					return false;
+				}
+
+				TES3::MobileActor * actor = getOptionalParamMobileActor(params, "speaker");
+				if (actor == nullptr) {
+					actor = tes3::getWorldController()->getMobilePlayer();
+				}
+
+				if (!journal->addToJournal(index.value(), actor)) {
+					return false;
+				}
+
+				sol::optional<bool> showMessage = params["showMessage"];
+				if (showMessage.value_or(true) && tes3::ui::getMenuNode(*reinterpret_cast<short*>(0x7D3442)) == nullptr) {
+					tes3::ui::messagePlayer(tes3::getDataHandler()->nonDynamicData->GMSTs[TES3::GMST::sJournalEntry]->value.asString);
+				}
+
+				return true;
+			};
+
 			state["tes3"]["getFileExists"] = [](const char* path) {
 				return tes3::resolveAssetPath(path) != 0;
 			};

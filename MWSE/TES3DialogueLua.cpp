@@ -57,7 +57,7 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition.set("info", sol::readonly_property(&TES3::Dialogue::info));
-				usertypeDefinition.set("journalIndex", sol::readonly_property(&TES3::Dialogue::journalIndex));
+				usertypeDefinition.set("journalIndex", sol::property(&TES3::Dialogue::journalIndex, &TES3::Dialogue::setJournalIndex));
 				usertypeDefinition.set("type", sol::readonly_property(&TES3::Dialogue::type));
 
 				// Override id property to point to the name.
