@@ -140,6 +140,7 @@
 #include "LuaGenericUiPostEvent.h"
 #include "LuaGenericUiPreEvent.h"
 #include "LuaInfoGetTextEvent.h"
+#include "LuaInfoResponseEvent.h"
 #include "LuaItemDroppedEvent.h"
 #include "LuaKeyDownEvent.h"
 #include "LuaKeyUpEvent.h"
@@ -1328,6 +1329,17 @@ namespace mwse {
 			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
 		}
 
+		void __cdecl OnUICreatedAfterConsoleMenuShown(TES3::UI::Element* element) {
+			// Overwritten code.
+			reinterpret_cast<void(__cdecl*)(TES3::UI::Element*)>(0x595350)(element);
+
+			// Fire off the event.
+			LuaManager::getInstance().triggerEvent(new event::GenericUiActivatedEvent(element));
+
+			// DEPRECATED. TODO: Remove before 2.1 final.
+			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
+		}
+
 		void __fastcall OnUICreatedAfterMenuVisibleEvent(TES3::UI::Element* element, DWORD _UNUSED_, bool unknown) {
 			// Overwritten code.
 			const auto ui_setMenuVisibleWithEvent = reinterpret_cast<void (__thiscall*)(TES3::UI::Element*, bool)>(0x582F20);
@@ -1930,6 +1942,23 @@ namespace mwse {
 		}
 
 		//
+		// Event: Dialogue Info response script
+		//
+
+		void __fastcall OnRunDialogueCommand(TES3::Script * script, DWORD _UNUSUED_, TES3::ScriptCompiler * compiler, const char* command, int source, TES3::Reference * reference, TES3::ScriptVariables * variables, TES3::DialogueInfo * info, TES3::Dialogue * dialogue) {
+			// Allow the event to override the text.
+			sol::object eventResult = mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::InfoResponseEvent(command, reference, variables, dialogue, info));
+			if (eventResult.valid()) {
+				sol::table eventData = eventResult;
+				if (eventData["block"] == true) {
+					return;
+				}
+			}
+
+			script->doCommand(compiler, command, source, reference, variables, info, dialogue);
+		}
+
+		//
 		// Event: Item Dropped.
 		//
 
@@ -2303,6 +2332,7 @@ namespace mwse {
 			genCallEnforced(0x5B08E8, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuClassChoice
 			genCallEnforced(0x5B15AB, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuClassMessage
 			genCallEnforced(0x5B2358, 0x5B23E0, reinterpret_cast<DWORD>(OnUICreatedAfterConsoleMenuFocus)); // MenuConsole
+			genCallEnforced(0x5B2E35, 0x595350, reinterpret_cast<DWORD>(OnUICreatedAfterConsoleMenuShown)); // MenuConsole
 			genCallEnforced(0x5B4696, 0x582F20, reinterpret_cast<DWORD>(OnUICreatedAfterMenuVisibleEvent)); // MenuContents
 			genCallEnforced(0x5BA6E7, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuCreateClass
 			genCallEnforced(0x5BC460, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuCtrls
@@ -2574,13 +2604,16 @@ namespace mwse {
 			mwse::writePatchCodeUnprotected(0x5D3F9C, (BYTE*)&patchFilterInventorySelect, patchFilterInventorySelect_size);
 			genCallUnprotected(0x5D3FA0, reinterpret_cast<DWORD>(OnFilterInventorySelect));
 
-			// Hook overriding dialogue info text.
+			// Event: Info override text.
 			genCallEnforced(0x4B1BF2, 0x4EEE40, reinterpret_cast<DWORD>(PatchGetDialogueInfoText_GetSourceMod));
 			genCallEnforced(0x4B1D70, 0x4B6880, reinterpret_cast<DWORD>(PatchGetDialogueInfoText_ReadFromFile));
 
 			// Event: Info Filter.
 			auto dialogueInfoFilter = &TES3::DialogueInfo::filter;
 			genCallEnforced(0x4B2A77, 0x4B0190, *reinterpret_cast<DWORD*>(&dialogueInfoFilter));
+
+			// Event: Execute lua from dialogue response.
+			genCallEnforced(0x4B1FB2, 0x50E5A0, reinterpret_cast<DWORD>(OnRunDialogueCommand));
 			
 			// Hook overriding book text.
 			auto bookGetText = &TES3::Book::getBookText;

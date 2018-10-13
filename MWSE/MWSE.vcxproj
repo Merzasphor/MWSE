@@ -50,6 +50,7 @@
     <ClInclude Include="LuaGenericUiPreEvent.h" />
     <ClInclude Include="LuaInfoFilterEvent.h" />
     <ClInclude Include="LuaInfoGetTextEvent.h" />
+    <ClInclude Include="LuaInfoResponseEvent.h" />
     <ClInclude Include="LuaItemDroppedEvent.h" />
     <ClInclude Include="LuaJournalEvent.h" />
     <ClInclude Include="LuaKeyDownEvent.h" />
@@ -380,6 +381,7 @@
     <ClCompile Include="LuaGenericUiPreEvent.cpp" />
     <ClCompile Include="LuaInfoFilterEvent.cpp" />
     <ClCompile Include="LuaInfoGetTextEvent.cpp" />
+    <ClCompile Include="LuaInfoResponseEvent.cpp" />
     <ClCompile Include="LuaItemDroppedEvent.cpp" />
     <ClCompile Include="LuaJournalEvent.cpp" />
     <ClCompile Include="LuaKeyDownEvent.cpp" />

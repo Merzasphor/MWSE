@@ -1167,6 +1167,9 @@
     <ClInclude Include="TES3ScriptCompiler.h">
       <Filter>Header Files\DataAdapters\TES3\Scripting</Filter>
     </ClInclude>
+    <ClInclude Include="LuaInfoResponseEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2541,6 +2544,9 @@
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
     <ClCompile Include="LuaInfoFilterEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaInfoResponseEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
