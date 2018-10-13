@@ -1622,6 +1622,9 @@ namespace mwse {
 					dialogueInfo = nullptr;
 					source = TES3::CompilerSource::Default;
 				}
+				else {
+					source = TES3::CompilerSource::Dialogue;
+				}
 
 				script->doCommand(compiler, command, source, reference, variables, dialogueInfo, dialogue);
 				return true;
