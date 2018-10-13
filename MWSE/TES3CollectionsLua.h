@@ -123,6 +123,54 @@ namespace mwse {
 
 			);
 		}
+		template <typename T>
+		void bindGenericObjectStlList(const char* name, const char* nodeName = NULL) {
+			sol::state& state = LuaManager::getInstance().getState();
+
+			if (nodeName) {
+				state.new_usertype<TES3::StlListNode<T>>(nodeName,
+					// Disable construction of this type.
+					"new", sol::no_constructor,
+
+					//
+					// Properties
+					//
+
+					"previousNode", sol::readonly_property(&TES3::StlListNode<T>::previous),
+					"nextNode", sol::readonly_property(&TES3::StlListNode<T>::next),
+					"nodeData", sol::readonly_property([](TES3::StlListNode<T>& self) { return makeLuaObject(self.data); })
+
+					);
+			}
+
+			state.new_usertype<TES3::StlList<T>>(name,
+				// Disable construction of this type.
+				"new", sol::no_constructor,
+
+				//
+				// Meta functions.
+				//
+
+				sol::meta_function::index, [](TES3::StlList<T>& self, int index)
+			{
+				TES3::StlListNode<T>* node = self.head;
+				for (int i = 1; i < index; i++) {
+					node = node->next;
+				}
+				return makeLuaObject(node->data);
+			},
+				sol::meta_function::length, [](TES3::StlList<T>& self) { return self.size; },
+
+				//
+				// Properties
+				//
+
+				"size", sol::readonly_property(&TES3::StlList<T>::size),
+				"head", sol::readonly_property(&TES3::StlList<T>::head),
+				"tail", sol::readonly_property(&TES3::StlList<T>::tail)
+
+				);
+		}
 
 		void bindTES3Collections();
 	}

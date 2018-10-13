@@ -5,6 +5,7 @@
 #include "LuaManager.h"
 
 #include "TES3Attachment.h"
+#include "TES3Cell.h"
 #include "TES3Dialogue.h"
 #include "TES3DialogueInfo.h"
 #include "TES3Inventory.h"
@@ -30,7 +31,6 @@ namespace mwse {
 			bindIterator<TES3::RegionSound>("TES3RegionSoundIterator", "TES3RegionSoundIteratorNode");
 			bindIterator<TES3::TravelDestination>("TES3TravelDestinationIterator", "TES3TravelDestinationIteratorNode");
 
-
 			// Generic TES3::Object iterators. As above, but the result data will be reinterpreted at runtime.
 			bindGenericObjectIterator<TES3::Dialogue>("TES3DialogueIterator", "TES3DialogueIteratorNode");
 			bindGenericObjectIterator<TES3::DialogueInfo>("TES3DialogueInfoIterator", "TES3DialogueInfoIteratorNode");
@@ -39,6 +39,9 @@ namespace mwse {
 			bindGenericObjectIterator<TES3::Reference>("TES3ReferenceIterator", "TES3ReferenceIteratorNode");
 			bindGenericObjectIterator<TES3::Region>("TES3RegionIterator", "TES3RegionIteratorNode");
 			bindGenericObjectIterator<TES3::Spell>("TES3SpellIterator", "TES3SpellIteratorNode");
+
+			// Generic TES3::Object STL collections.
+			bindGenericObjectStlList<TES3::Cell>("TES3CellStlList", "TES3CellStlListNode");
 
 			// Basic TArray bindings.
 			bindTArray<TES3::ItemData>("TES3ItemDataTArray");
