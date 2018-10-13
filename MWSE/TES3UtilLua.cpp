@@ -173,13 +173,15 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.getGlobal
-			state["tes3"]["getGlobal"] = [](std::string& id) -> sol::object {
+			state["tes3"]["getGlobal"] = [](std::string& id) -> sol::optional<float> {
 				TES3::DataHandler * dataHandler = tes3::getDataHandler();
 				if (dataHandler) {
 					TES3::GlobalVariable * global = dataHandler->nonDynamicData->findGlobalVariable(id.c_str());
-					return sol::make_object(LuaManager::getInstance().getState(), global->value);
+					if (global) {
+						return global->value;
+					}
 				}
-				return sol::nil;
+				return sol::optional<float>();
 			};
 
 			// Bind function: tes3.setGlobal
