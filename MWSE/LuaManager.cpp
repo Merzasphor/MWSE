@@ -103,6 +103,7 @@
 #include "TES3StatisticLua.h"
 #include "TES3UIElementLua.h"
 #include "TES3UIManagerLua.h"
+#include "TES3UIMenuController.h"
 #include "TES3UIWidgetsLua.h"
 #include "TES3VectorsLua.h"
 #include "TES3WeaponLua.h"
@@ -124,6 +125,7 @@
 #include "LuaAddTopicEvent.h"
 #include "LuaAttackEvent.h"
 #include "LuaCalcBarterPriceEvent.h"
+#include "LuaCalcHitChanceEvent.h"
 #include "LuaCalcRepairPriceEvent.h"
 #include "LuaCalcRestInterruptEvent.h"
 #include "LuaCalcSpellPriceEvent.h"
@@ -1971,6 +1973,44 @@ namespace mwse {
 		}
 
 		//
+		// Event: Calculate hit chance.
+		//
+
+		int __fastcall OnCalculateHitChance(TES3::MobileActor * attacker, int hitChance) {
+			// Allow the event to override the text.
+			sol::object eventResult = mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::CalcHitChanceEvent(attacker, hitChance));
+			if (eventResult.valid()) {
+				sol::table eventData = eventResult;
+				hitChance = getOptionalParam<int>(eventData, "hitChance", hitChance);
+			}
+
+			// Overwritten code for this hook.
+			if (tes3::getWorldController()->menuController->unknown_0x24 % 1) {
+				const auto TES3_getThreadSafeStringBuffer = reinterpret_cast<char*(__thiscall*)(char*)>(0x4D51B0);
+				char* buffer = TES3_getThreadSafeStringBuffer(reinterpret_cast<char*>(0x7CB478));
+				sprintf(buffer, "Attack Chance %d%%, for %s to hit %s", hitChance, attacker->reference->baseObject->getObjectID(), attacker->actionData.hitTarget->reference->baseObject->getObjectID());
+				const auto TES3_ConsoleLogResult = reinterpret_cast<void(__cdecl*)(const char*, bool)>(0x5B2C20);
+				TES3_ConsoleLogResult(buffer, false);
+			}
+
+			return hitChance;
+		}
+
+		__declspec(naked) void patchCalculateHitChance() {
+			__asm {
+				mov ecx, esi		// Size: 0x2
+				mov edx, [ebp+0x8]	// Size: 0x3
+				nop // Replaced with a call generation. Can't do so here, because offsets aren't accurate.
+				nop // ^
+				nop // ^
+				nop // ^
+				nop // ^
+				mov [ebp+0x8], eax	// Size: 0x3?
+			}
+		}
+		const size_t patchCalculateHitChance_size = 0xD;
+
+		//
 		//
 		//
 
@@ -2601,7 +2641,7 @@ namespace mwse {
 			genNOPUnprotected(0x5B711B, 0x1B);
 
 			// Event: Inventory Select Menu Filter.
-			mwse::writePatchCodeUnprotected(0x5D3F9C, (BYTE*)&patchFilterInventorySelect, patchFilterInventorySelect_size);
+			writePatchCodeUnprotected(0x5D3F9C, (BYTE*)&patchFilterInventorySelect, patchFilterInventorySelect_size);
 			genCallUnprotected(0x5D3FA0, reinterpret_cast<DWORD>(OnFilterInventorySelect));
 
 			// Event: Info override text.
@@ -2623,6 +2663,11 @@ namespace mwse {
 			// Event: Item Dropped.
 			genCallEnforced(0x485FCA, 0x485E40, reinterpret_cast<DWORD>(OnItemDropped)); // MCP-added function.
 			genCallEnforced(0x49B550, 0x485E40, reinterpret_cast<DWORD>(OnItemDropped)); // Vanilla function.
+
+			// Event: Calculate hit chance.
+			genNOPUnprotected(0x55549B, 0x5C);
+			writePatchCodeUnprotected(0x55549B, (BYTE*)&patchCalculateHitChance, patchCalculateHitChance_size);
+			genCallUnprotected(0x5554A0, reinterpret_cast<DWORD>(OnCalculateHitChance));
 
 			// UI framework hooks
 			TES3::UI::hook();

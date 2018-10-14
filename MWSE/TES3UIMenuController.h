@@ -26,7 +26,8 @@ namespace TES3 {
 			int unknown_0x18;
 			int unknown_0x1C;
 			ScriptCompiler * scriptCompiler; // 0x20
-			char unknown_0x24[0x280]; // 0x24
+			int unknown_0x24;
+			char unknown_0x28[0x27C];
 		};
 		static_assert(sizeof(MenuController) == 0x2A4, "TES3::UI::MenuController failed size validation");
 

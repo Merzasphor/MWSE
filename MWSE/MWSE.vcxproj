@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClInclude Include="ArrayUtil.h" />
     <ClInclude Include="LuaBookGetTextEvent.h" />
+    <ClInclude Include="LuaCalcHitChanceEvent.h" />
     <ClInclude Include="LuaFilterBarterMenuEvent.h" />
     <ClInclude Include="LuaActivationTargetChangedEvent.h" />
     <ClInclude Include="LuaAddTopicEvent.h" />
@@ -351,6 +352,7 @@
     <ClCompile Include="LuaBaseEvent.cpp" />
     <ClCompile Include="LuaBookGetTextEvent.cpp" />
     <ClCompile Include="LuaButtonPressedEvent.cpp" />
+    <ClCompile Include="LuaCalcHitChanceEvent.cpp" />
     <ClCompile Include="LuaCalcMovementSpeedEvent.cpp" />
     <ClCompile Include="LuaCalcRepairPriceEvent.cpp" />
     <ClCompile Include="LuaCalcRestInterruptEvent.cpp" />
