@@ -1173,6 +1173,9 @@
     <ClInclude Include="LuaCalcHitChanceEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="TES3BodyPart.h">
+      <Filter>Header Files\DataAdapters\TES3\Animations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
