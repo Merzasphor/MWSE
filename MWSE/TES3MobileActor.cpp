@@ -252,6 +252,19 @@ namespace TES3 {
 		}
 	}
 
+	bool MobileActor::getMobileActorMovementFlag(ActorMovement::Flag flag) {
+		return (movementFlags & flag) != 0;
+	}
+
+	void MobileActor::setMobileActorMovementFlag(ActorMovement::Flag flag, bool set) {
+		if (set) {
+			movementFlags |= flag;
+		}
+		else {
+			movementFlags &= ~flag;
+		}
+	}
+
 	bool MobileActor::equipItem(Object* item) {
 		Actor* actor = static_cast<Actor*>(reference->baseObject);
 
