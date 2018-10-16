@@ -6,11 +6,13 @@
 #include "NIPointer.h"
 
 namespace TES3 {
+	typedef void(__stdcall* FaderCallback)();
+
 	struct Fader {
 		struct Node {
 			float duration; // 0x0
 			float target; // 0x4
-			void * callback; // 0x8
+			FaderCallback callback; // 0x8
 			Fader::Node * next; // 0xC
 		};
 		bool isActive; // 0x0
@@ -34,7 +36,7 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		void fadeTo(float value, float duration, void * callback = nullptr);
+		void fadeTo(float value, float duration, FaderCallback callback = nullptr);
 
 	};
 	static_assert(sizeof(Fader) == 0x40, "TES3::Fader failed size validation");
