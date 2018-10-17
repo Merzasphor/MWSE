@@ -1629,6 +1629,32 @@ namespace mwse {
 				script->doCommand(compiler, command, source, reference, variables, dialogueInfo, dialogue);
 				return true;
 			};
+
+			state["tes3"]["getActiveCells"] = []() -> sol::object {
+				auto dataHandler = tes3::getDataHandler();
+				if (dataHandler == nullptr) {
+					return sol::nil;
+				}
+
+				sol::state& state = LuaManager::getInstance().getState();
+				sol::table result = state.create_table();
+
+				if (dataHandler->currentInteriorCell) {
+					result[1] = makeLuaObject(dataHandler->currentInteriorCell);
+				}
+				else {
+					int exteriorCount = 0;
+					for (size_t i = 0; i < 9; i++) {
+						auto cellDataPointer = dataHandler->exteriorCellData[i];
+						if (cellDataPointer && cellDataPointer->size >= 1) {
+							exteriorCount++;
+							result[exteriorCount] = makeLuaObject(cellDataPointer->cell);
+						}
+					}
+				}
+
+				return result;
+			};
 		}
 	}
 }
