@@ -8,8 +8,8 @@ xGetMagic
 
 **Returned:**
 
-- ``string`` **objectID**: The object ID of the spell or enchantment selected.
 - ``long`` **objectType**: The `Object Type`_ of the equipped magical source.
+- ``string`` **objectID**: The object ID of the spell or enchantment selected.
 
 Returns the currently equipped spell or enchanted item. This is specifically the object that appears in the equipped magic slot and includes on-use magical items as well as spells.
 
