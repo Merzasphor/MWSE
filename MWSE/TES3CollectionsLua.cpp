@@ -8,6 +8,7 @@
 #include "TES3Cell.h"
 #include "TES3Dialogue.h"
 #include "TES3DialogueInfo.h"
+#include "TES3GlobalVariable.h"
 #include "TES3Inventory.h"
 #include "TES3Item.h"
 #include "TES3Faction.h"
@@ -34,6 +35,7 @@ namespace mwse {
 			// Generic TES3::Object iterators. As above, but the result data will be reinterpreted at runtime.
 			bindGenericObjectIterator<TES3::Dialogue>("TES3DialogueIterator", "TES3DialogueIteratorNode");
 			bindGenericObjectIterator<TES3::DialogueInfo>("TES3DialogueInfoIterator", "TES3DialogueInfoIteratorNode");
+			bindGenericObjectIterator<TES3::GlobalVariable>("TES3GlobalIterator", "TES3GlobalIteratorNode");
 			bindGenericObjectIterator<TES3::MobileActor>("TES3MobileActorIterator", "TES3MobileActorIteratorNode");
 			bindGenericObjectIterator<TES3::Quest>("TES3QuestIterator", "TES3QuestIteratorNode");
 			bindGenericObjectIterator<TES3::Reference>("TES3ReferenceIterator", "TES3ReferenceIteratorNode");

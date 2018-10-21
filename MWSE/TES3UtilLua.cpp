@@ -200,10 +200,10 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.findGlobal
-			state["tes3"]["findGlobal"] = [](std::string& id) -> sol::object {
+			state["tes3"]["findGlobal"] = [](const char* id) -> sol::object {
 				TES3::DataHandler * dataHandler = tes3::getDataHandler();
 				if (dataHandler) {
-					return makeLuaObject(dataHandler->nonDynamicData->findGlobalVariable(id.c_str()));
+					return makeLuaObject(dataHandler->nonDynamicData->findGlobalVariable(id));
 				}
 				return sol::nil;
 			};
