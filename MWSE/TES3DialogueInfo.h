@@ -63,7 +63,7 @@ namespace TES3 {
 		bool loadId();
 		void unloadId();
 
-		bool filter(Object * actor, Reference * reference, signed char source, Dialogue * dialogue);
+		bool filter(Object * actor, Reference * reference, int source, Dialogue * dialogue);
 
 	};
 	static_assert(sizeof(DialogueInfo) == 0x2C, "TES3::DialogueInfo failed size validation");
