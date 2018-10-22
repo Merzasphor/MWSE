@@ -60,6 +60,7 @@ namespace TES3 {
 
 		__declspec(dllexport) Matrix33();
 		__declspec(dllexport) Matrix33(Vector3* m0, Vector3* m1, Vector3* m2);
+		__declspec(dllexport) Matrix33(float m0x, float m0y, float m0z, float m1x, float m1y, float m1z, float m2x, float m2y, float m2z);
 
 		//
 		// Basic operators.

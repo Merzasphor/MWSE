@@ -129,12 +129,21 @@ namespace mwse {
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.create_simple_usertype<TES3::Matrix33>();
-				usertypeDefinition.set("new", sol::constructors<TES3::Matrix33(), TES3::Matrix33(TES3::Vector3*, TES3::Vector3*, TES3::Vector3*)>());
+				usertypeDefinition.set("new", sol::constructors<
+						TES3::Matrix33(), 
+						TES3::Matrix33(TES3::Vector3*, TES3::Vector3*, TES3::Vector3*),
+						TES3::Matrix33(float, float, float, float, float, float, float, float, float)
+				>());
 
 				// Operator overloading.
 				usertypeDefinition.set(sol::meta_function::addition, &TES3::Matrix33::operator+);
 				usertypeDefinition.set(sol::meta_function::subtraction, &TES3::Matrix33::operator-);
 				usertypeDefinition.set(sol::meta_function::equal_to, &TES3::Matrix33::operator==);
+				usertypeDefinition.set(sol::meta_function::multiplication, sol::overload(
+					sol::resolve<TES3::Matrix33(const float)>(&TES3::Matrix33::operator*),
+					sol::resolve<TES3::Vector3(const TES3::Vector3&)>(&TES3::Matrix33::operator*),
+					sol::resolve<TES3::Matrix33(const TES3::Matrix33&)>(&TES3::Matrix33::operator*)
+				));
 
 				// Operator overloading.
 				usertypeDefinition.set(sol::meta_function::to_string, [](TES3::Matrix33& self) {
