@@ -129,7 +129,7 @@ namespace mwse {
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.create_simple_usertype<TES3::Matrix33>();
-				usertypeDefinition.set("new", sol::constructors<TES3::Matrix33(), TES3::Vector4(TES3::Vector3*, TES3::Vector3*, TES3::Vector3*)>());
+				usertypeDefinition.set("new", sol::constructors<TES3::Matrix33(), TES3::Matrix33(TES3::Vector3*, TES3::Vector3*, TES3::Vector3*)>());
 
 				// Operator overloading.
 				usertypeDefinition.set(sol::meta_function::addition, &TES3::Matrix33::operator+);
