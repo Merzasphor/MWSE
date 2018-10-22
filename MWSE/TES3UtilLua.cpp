@@ -520,14 +520,14 @@ namespace mwse {
 			static NI::Pick* rayTestCache = NULL;
 			state["tes3"]["rayTest"] = [](sol::optional<sol::table> params) -> sol::object {
 				// Make sure we got our required position.
-				TES3::Vector3* position = getOptionalParamVector3(params, "position");
-				if (position == NULL) {
+				sol::optional<TES3::Vector3> position = getOptionalParamVector3(params, "position");
+				if (!position) {
 					return false;
 				}
 
 				// Make sure we got our required direction.
-				TES3::Vector3* direction = getOptionalParamVector3(params, "direction");
-				if (direction == NULL) {
+				sol::optional<TES3::Vector3> direction = getOptionalParamVector3(params, "direction");
+				if (!direction) {
 					return false;
 				}
 
@@ -589,7 +589,7 @@ namespace mwse {
 				rayTestCache->returnTexture = getOptionalParam<bool>(params, "returnTexture", false);
 
 				// Our pick is configured. Let's run it!
-				rayTestCache->pickObjects(position, direction);
+				rayTestCache->pickObjects(&position.value(), &direction.value());
 
 				// Did we get any results?
 				if (rayTestCache->results.filledCount == 0) {
@@ -1654,6 +1654,52 @@ namespace mwse {
 				}
 
 				return result;
+			};
+
+			state["tes3"]["positionCell"] = [](sol::table params) {
+				auto worldController = tes3::getWorldController();
+				auto macp = worldController->getMobilePlayer();
+
+				// Get the target that we're working with.
+				TES3::MobileActor * mobile = getOptionalParamMobileActor(params, "reference");
+				if (mobile == nullptr) {
+					mobile = macp;
+				}
+
+				// Get the position.
+				sol::optional<TES3::Vector3> position = getOptionalParamVector3(params, "position");
+				if (!position) {
+					return false;
+				}
+
+				// Get the orientation.
+				sol::optional<TES3::Vector3> orientation = getOptionalParamVector3(params, "orientation");
+				if (!orientation) {
+					return false;
+				}
+
+				// Get the cell.
+				TES3::Cell * cell = getOptionalParamCell(params, "cell");
+				if (cell == nullptr) {
+					return false;
+				}
+
+				// Are we dealing with the player? If so, use the special functions.
+				if (mobile == macp) {
+					sol::optional<bool> teleportCompanions = params["teleportCompanions"];
+					if (teleportCompanions.value_or(true) && macp->listFriendlyActors.size > 0) {
+						reinterpret_cast<void(__cdecl*)(TES3::Vector3, TES3::Vector3, TES3::Cell*)>(0x45C9B0)(position.value(), orientation.value(), cell);
+					}
+					else {
+						sol::optional<bool> flag = params["flag"];
+						reinterpret_cast<void(__cdecl*)(TES3::Vector3, TES3::Vector3, TES3::Cell*, int)>(0x45CEF0)(position.value(), orientation.value(), cell, flag.value());
+					}
+				}
+				else {
+					reinterpret_cast<void(__cdecl*)(TES3::Reference*, TES3::Cell*, TES3::Vector3*, float)>(0x50EDD0)(mobile->reference, cell, &position.value(), orientation.value().z);
+				}
+
+				return true;
 			};
 		}
 	}

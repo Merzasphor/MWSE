@@ -251,14 +251,14 @@ namespace mwse {
 			return value;
 		}
 
-		TES3::Vector3* getOptionalParamVector3(sol::optional<sol::table> maybeParams, const char* key) {
+		sol::optional<TES3::Vector3> getOptionalParamVector3(sol::optional<sol::table> maybeParams, const char* key) {
 			if (maybeParams) {
 				sol::table params = maybeParams.value();
 				sol::object maybeValue = params[key];
 				if (maybeValue.valid()) {
 					// Were we given a real vector?
 					if (maybeValue.is<TES3::Vector3*>()) {
-						return maybeValue.as<TES3::Vector3*>();
+						return *maybeValue.as<TES3::Vector3*>();
 					}
 
 					// Were we given a table?
@@ -268,12 +268,37 @@ namespace mwse {
 						result->x = value[1];
 						result->y = value[2];
 						result->z = value[3];
-						return result;
+						return TES3::Vector3(value[1], value[2], value[3]);
 					}
 				}
 			}
 
-			return NULL;
+			return sol::optional<TES3::Vector3>();
+		}
+
+		TES3::Cell* getOptionalParamCell(sol::optional<sol::table> maybeParams, const char* key) {
+			TES3::Cell* value = nullptr;
+
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeValue = params[key];
+				if (maybeValue.valid()) {
+					if (maybeValue.is<const char*>()) {
+						value = tes3::getDataHandler()->nonDynamicData->getCellByName(maybeValue.as<const char*>());
+					}
+					if (maybeValue.is<sol::table>()) {
+						sol::table coordsTable = maybeValue.as<sol::table>();
+						if (coordsTable.size() == 2) {
+							value = tes3::getDataHandler()->nonDynamicData->getCellByGrid(coordsTable[1], coordsTable[2]);
+						}
+					}
+					else if (maybeValue.is<TES3::Cell*>()) {
+						value = maybeValue.as<TES3::Cell*>();
+					}
+				}
+			}
+
+			return value;
 		}
 
 		void setVectorFromLua(TES3::Vector3* vector, sol::stack_object value) {

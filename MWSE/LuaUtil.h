@@ -56,7 +56,8 @@ namespace mwse {
 		TES3::Spell* getOptionalParamSpell(sol::optional<sol::table> maybeParams, const char* key);
 		TES3::Dialogue* getOptionalParamDialogue(sol::optional<sol::table> maybeParams, const char* key);
 		TES3::Sound* getOptionalParamSound(sol::optional<sol::table> maybeParams, const char* key);
-		TES3::Vector3* getOptionalParamVector3(sol::optional<sol::table> maybeParams, const char* key);
+		sol::optional<TES3::Vector3> getOptionalParamVector3(sol::optional<sol::table> maybeParams, const char* key);
+		TES3::Cell* getOptionalParamCell(sol::optional<sol::table> maybeParams, const char* key);
 
 		void setVectorFromLua(TES3::Vector3*, sol::stack_object);
 
