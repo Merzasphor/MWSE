@@ -129,7 +129,12 @@ namespace mwse {
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.create_simple_usertype<TES3::Matrix33>();
-				usertypeDefinition.set("new", sol::no_constructor);
+				usertypeDefinition.set("new", sol::constructors<TES3::Matrix33(), TES3::Vector4(TES3::Vector3*, TES3::Vector3*, TES3::Vector3*)>());
+
+				// Operator overloading.
+				usertypeDefinition.set(sol::meta_function::addition, &TES3::Matrix33::operator+);
+				usertypeDefinition.set(sol::meta_function::subtraction, &TES3::Matrix33::operator-);
+				usertypeDefinition.set(sol::meta_function::equal_to, &TES3::Matrix33::operator==);
 
 				// Operator overloading.
 				usertypeDefinition.set(sol::meta_function::to_string, [](TES3::Matrix33& self) {
@@ -148,6 +153,17 @@ namespace mwse {
 
 				// Basic function binding.
 				usertypeDefinition.set("copy", [](TES3::Matrix33& self) { return TES3::Matrix33(self); });
+				usertypeDefinition.set("invert", sol::resolve<TES3::Matrix33()>(&TES3::Matrix33::invert));
+				usertypeDefinition.set("reorthogonalize", &TES3::Matrix33::reorthogonalize);
+				usertypeDefinition.set("toDiagonal", &TES3::Matrix33::toDiagonal);
+				usertypeDefinition.set("toEulerXYZ", &TES3::Matrix33::toEulerXYZ);
+				usertypeDefinition.set("toIdentity", &TES3::Matrix33::toIdentity);
+				usertypeDefinition.set("toRotation", &TES3::Matrix33::toRotation);
+				usertypeDefinition.set("toRotationX", &TES3::Matrix33::toRotationX);
+				usertypeDefinition.set("toRotationY", &TES3::Matrix33::toRotationY);
+				usertypeDefinition.set("toRotationZ", &TES3::Matrix33::toRotationZ);
+				usertypeDefinition.set("toZero", &TES3::Matrix33::toZero);
+				usertypeDefinition.set("transpose", &TES3::Matrix33::transpose);
 
 				// Finish up our usertype.
 				state.set_usertype("tes3matrix33", usertypeDefinition);
