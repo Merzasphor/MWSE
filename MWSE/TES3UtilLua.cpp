@@ -1701,6 +1701,27 @@ namespace mwse {
 
 				return true;
 			};
+
+			state["tes3"]["getLanguageCode"] = []() {
+				return reinterpret_cast<int(__stdcall*)()>(0x4678F0)();
+			};
+
+			state["tes3"]["getLanguage"] = []() {
+				int language = reinterpret_cast<int(__stdcall*)()>(0x4678F0)();
+
+				switch (language) {
+				case 0:
+					return "eng";
+				case 1:
+					return "fra";
+				case 2:
+					return "deu";
+				case 3:
+					return "rus";
+				}
+
+				return "unk";
+			};
 		}
 	}
 }
