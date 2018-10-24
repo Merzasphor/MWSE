@@ -111,6 +111,8 @@
     <ClInclude Include="NITimeController.h" />
     <ClInclude Include="NITimeControllerLua.h" />
     <ClInclude Include="NITriShapeLua.h" />
+    <ClInclude Include="TES3AnimationData.h" />
+    <ClInclude Include="TES3AnimationGroup.h" />
     <ClInclude Include="TES3BodyPart.h" />
     <ClInclude Include="TES3CombatSessionLua.h" />
     <ClInclude Include="TES3CrimeEvent.h" />

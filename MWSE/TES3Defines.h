@@ -9,6 +9,8 @@ namespace TES3 {
 	struct ActorVirtualTable;
 	struct AIConfig;
 	struct Alchemy;
+	struct AnimationData;
+	struct AnimationGroup;
 	struct Apparatus;
 	struct Armor;
 	struct Attachment;
