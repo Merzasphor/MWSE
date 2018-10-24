@@ -4,11 +4,15 @@
 #include "MemoryUtil.h"
 #include "Log.h"
 
+#include "TES3Actor.h"
 #include "TES3DataHandler.h"
+#include "TES3GameFile.h"
 #include "TES3GameSetting.h"
+#include "TES3Misc.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
 #include "TES3Script.h"
+#include "TES3SoulGemData.h"
 #include "TES3UIElement.h"
 #include "TES3UIInventoryTile.h"
 #include "TES3WorldController.h"
@@ -159,6 +163,60 @@ namespace mwse {
 		}
 
 		//
+		// Patch: Use tes3::isSoulGem when saving inventory.
+		//
+
+		void __fastcall PatchWriteEnchantSoulData(TES3::GameFile * gameFile, TES3::ItemStack * stack, TES3::ItemData * itemData) {
+			// If it's a soul gem, write the soul ID.
+			if (tes3::isSoulGem(stack->object)) {
+				auto soul = itemData->enchantData.soul;
+				if (soul) {
+					auto id = soul->getObjectID();
+					gameFile->writeChunkData('LOSX', id, strlen(id) + 1);
+					return;
+				}
+			}
+
+			// Otherwise, give the charge if the item is enchanted.
+			auto enchant = stack->object->getEnchantment();
+			if (enchant) {
+				gameFile->writeChunkData('GHCX', &itemData->enchantData.charge, 0x4);
+			}
+		}
+
+		__declspec(naked) void patchSetupWriteEnchantSoulData() {
+			__asm {
+				mov ecx, ebx					// Size: 0x2
+				mov edx, [esp + 0x44 + 0x4]		// Size: 0x4
+				push ebp						// Size: 0x1
+				nop // Replaced with a call generation. Can't do so here, because offsets aren't accurate.
+				nop // ^
+				nop // ^
+				nop // ^
+				nop // ^
+			}
+		}
+		const size_t patchSetupWriteEnchantSoulData_size = 0xC;
+
+		bool __fastcall PatchCheckSoulTrapSoulGem(TES3::Misc * item) {
+			return tes3::isSoulGem(item);
+		}
+
+		__declspec(naked) void patchSetupCheckSoulTrapSoulGem() {
+			__asm {
+				mov ecx, esi	// Size: 0x2
+				nop // Replaced with a call generation. Can't do so here, because offsets aren't accurate.
+				nop // ^
+				nop // ^
+				nop // ^
+				nop // ^
+				test al, al		// Size: 0x2
+				jnz $ + 0xF	// Size: 0x6
+			}
+		}
+		const size_t patchSetupCheckSoulTrapSoulGem_size = 0xF;
+
+		//
 		// Install all the patches.
 		//
 
@@ -179,6 +237,42 @@ namespace mwse {
 			if (TES3_DefaultWindowMessageHandler == nullptr) {
 				log::getLog() << "[MWSE:Patch:Less Aggressive Cursor Capturing] ERROR: Failed to replace window handler using SetClassLongPtr." << std::endl;
 			}
+
+			// Make soul gem data writable.
+			DWORD OldProtect;
+			VirtualProtect((DWORD*)0x791C98, 6 * sizeof(TES3::SoulGemData), PAGE_READWRITE, &OldProtect);
+
+			// Override standard isSoulGem tests.
+			auto isSoulGem = &tes3::isSoulGem;
+			genCallEnforced(0x4E174A, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x4E79F3, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x5910EA, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x59173C, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x5A4744, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x5A55FF, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x5C5D0D, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x5C6B11, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x5CC8EF, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x5CE81F, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x608AB9, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+
+			// Change inventory saving to use the above isSoulGem check.
+			genNOPUnprotected(0x499AEF, 0x44);
+			writePatchCodeUnprotected(0x499AEF, (BYTE*)&patchSetupWriteEnchantSoulData, patchSetupWriteEnchantSoulData_size);
+			genCallUnprotected(0x499AF6, reinterpret_cast<DWORD>(PatchWriteEnchantSoulData));
+
+			// Change soul trap to use the above isSoulGem check.
+			genNOPUnprotected(0x49ACD1, 0x13);
+			writePatchCodeUnprotected(0x49ACD1, (BYTE*)&patchSetupCheckSoulTrapSoulGem, patchSetupCheckSoulTrapSoulGem_size);
+			genCallUnprotected(0x49ACD3, reinterpret_cast<DWORD>(PatchCheckSoulTrapSoulGem));
+
+			// Change soul trap inventory count check.
+			auto inventoryGetSoulGemCount = &TES3::Inventory::getSoulGemCount;
+			genCallEnforced(0x463310, 0x49AA10, *reinterpret_cast<DWORD*>(&inventoryGetSoulGemCount));
+
+			// Yet another soul gem check. Relates to reference persisting and object saving.
+			genNOPUnprotected(0x4C1A13, 0x28);
+			genCallUnprotected(0x4C1A13, reinterpret_cast<DWORD>(tes3::isSoulGem));
 		}
 
 		//

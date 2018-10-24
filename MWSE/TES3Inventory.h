@@ -53,6 +53,12 @@ namespace TES3 {
 		ItemStack* findItemStack(Object* item);
 		void resolveLeveledLists(MobileActor*);
 
+		//
+		// Custom functions.
+		//
+
+		int getSoulGemCount();
+
 	};
 	static_assert(sizeof(Inventory) == 0x1C, "TES3::Inventory failed size validation");
 }

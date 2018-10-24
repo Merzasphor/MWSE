@@ -1722,6 +1722,20 @@ namespace mwse {
 
 				return "unk";
 			};
+
+			state["tes3"]["addSoulGem"] = [](sol::table params) {
+				TES3::Misc * item = getOptionalParamObject<TES3::Misc>(params, "item");
+				if (item == nullptr) {
+					return false;
+				}
+
+				auto data = mwse::tes3::addCustomSoulGem(item);
+				if (data == nullptr) {
+					return false;
+				}
+
+				return true;
+			};
 		}
 	}
 }

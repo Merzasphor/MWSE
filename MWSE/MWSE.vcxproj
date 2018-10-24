@@ -131,6 +131,7 @@
     <ClInclude Include="TES3MobController.h" />
     <ClInclude Include="TES3AttachmentLua.h" />
     <ClInclude Include="TES3ScriptCompiler.h" />
+    <ClInclude Include="TES3SoulGemData.h" />
     <ClInclude Include="TES3SpellInstanceController.h" />
     <ClInclude Include="TES3StdString.h" />
     <ClInclude Include="TES3UIDefines.h" />
@@ -472,6 +473,7 @@
     <ClCompile Include="TES3Game.cpp" />
     <ClCompile Include="TES3GameFile.cpp" />
     <ClCompile Include="TES3GameFileLua.cpp" />
+    <ClCompile Include="TES3Misc.cpp" />
     <ClCompile Include="TES3MobileActorLua.cpp" />
     <ClCompile Include="TES3SpellInstanceController.cpp" />
     <ClCompile Include="TES3StdString.cpp" />

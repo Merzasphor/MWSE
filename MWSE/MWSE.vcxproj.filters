@@ -1185,6 +1185,9 @@
     <ClInclude Include="TES3AnimationData.h">
       <Filter>Header Files\DataAdapters\TES3\Animations</Filter>
     </ClInclude>
+    <ClInclude Include="TES3SoulGemData.h">
+      <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2569,6 +2572,9 @@
     </ClCompile>
     <ClCompile Include="TES3FaderLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Misc.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

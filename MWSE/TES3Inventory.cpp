@@ -1,5 +1,7 @@
 #include "TES3Inventory.h"
 
+#include "TES3Util.h"
+
 namespace TES3 {
 	const auto TES3_Inventory_findItemStack = reinterpret_cast<ItemStack* (__thiscall*)(Inventory*, Object*)>(0x49A6C0);
 	const auto TES3_Inventory_resolveLeveledLists = reinterpret_cast<void (__thiscall*)(Inventory*, MobileActor*)>(0x49A190);
@@ -21,5 +23,17 @@ namespace TES3 {
 
 	void Inventory::resolveLeveledLists(MobileActor* actor) {
 		TES3_Inventory_resolveLeveledLists(this, actor);
+	}
+
+	int Inventory::getSoulGemCount() {
+		int count = 0;
+
+		for (auto i = iterator.head; i; i = i->next) {
+			if (mwse::tes3::isSoulGem(i->data->object)) {
+				count++;
+			}
+		}
+
+		return count;
 	}
 }

@@ -94,6 +94,7 @@ namespace TES3 {
 	struct ScriptCompiler;
 	struct ScriptVariables;
 	struct SkillStatistic;
+	struct SoulGemData;
 	struct Sound;
 	struct SoundBuffer;
 	struct SoundGenerator;

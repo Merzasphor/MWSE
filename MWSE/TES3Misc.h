@@ -15,6 +15,14 @@ namespace TES3 {
 		float weight; // 0x54
 		long value; // 0x58
 		unsigned int flags; // 0x5C
+
+		//
+		// Custom functions.
+		//
+
+		SoulGemData * getSoulGemData();
+		bool isSoulGem();
+
 	};
 	static_assert(sizeof(Misc) == 0x60, "TES3::Misc failed size validation");
 }
