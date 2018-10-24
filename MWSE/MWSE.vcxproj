@@ -122,6 +122,7 @@
     <ClInclude Include="D3DViewport.h" />
     <ClInclude Include="DynamicLuaObject.h" />
     <ClInclude Include="TES3Fader.h" />
+    <ClInclude Include="TES3FaderLua.h" />
     <ClInclude Include="TES3GameFileLua.h" />
     <ClInclude Include="TES3Land.h" />
     <ClInclude Include="TES3LandTexture.h" />
@@ -465,6 +466,7 @@
     <ClCompile Include="TES3CombatSessionLua.cpp" />
     <ClCompile Include="TES3DialogueInfo.cpp" />
     <ClCompile Include="TES3Fader.cpp" />
+    <ClCompile Include="TES3FaderLua.cpp" />
     <ClCompile Include="TES3Game.cpp" />
     <ClCompile Include="TES3GameFile.cpp" />
     <ClCompile Include="TES3GameFileLua.cpp" />

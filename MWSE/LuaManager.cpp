@@ -23,6 +23,7 @@
 #include "TES3DataHandler.h"
 #include "TES3Dialogue.h"
 #include "TES3DialogueInfo.h"
+#include "TES3Fader.h"
 #include "TES3Game.h"
 #include "TES3GameFile.h"
 #include "TES3GameSetting.h"
@@ -67,6 +68,7 @@
 #include "TES3DoorLua.h"
 #include "TES3EnchantmentLua.h"
 #include "TES3FactionLua.h"
+#include "TES3FaderLua.h"
 #include "TES3GameLua.h"
 #include "TES3GameFileLua.h"
 #include "TES3GameSettingLua.h"
@@ -345,6 +347,7 @@ namespace mwse {
 			bindTES3Door();
 			bindTES3Enchantment();
 			bindTES3Faction();
+			bindTES3Fader();
 			bindTES3Game();
 			bindTES3GameFile();
 			bindTES3GameSetting();
@@ -2011,6 +2014,16 @@ namespace mwse {
 		const size_t patchCalculateHitChance_size = 0xD;
 
 		//
+		// Event: Filters created. 
+		//
+
+		const auto TES3_WorldController_CreateFilters = reinterpret_cast<void(__thiscall*)(TES3::WorldController *)>(0x411400);
+		void __fastcall CreateFilters(TES3::WorldController * worldController) {
+			TES3_WorldController_CreateFilters(worldController);
+			mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::GenericEvent("fadersCreated"));
+		}
+
+		//
 		//
 		//
 
@@ -2669,6 +2682,9 @@ namespace mwse {
 			writePatchCodeUnprotected(0x55549B, (BYTE*)&patchCalculateHitChance, patchCalculateHitChance_size);
 			genCallUnprotected(0x5554A0, reinterpret_cast<DWORD>(OnCalculateHitChance));
 
+			// Event: Created filters.
+			genCallEnforced(0x418A10, 0x411400, reinterpret_cast<DWORD>(CreateFilters));
+
 			// UI framework hooks
 			TES3::UI::hook();
 
@@ -2723,7 +2739,7 @@ namespace mwse {
 			TES3::DataHandler* dataHandler = tes3::getDataHandler();
 
 			// If we're on the main thread, immediately execute the event
-			if (threadId == dataHandler->mainThreadID) {
+			if (dataHandler == nullptr || threadId == dataHandler->mainThreadID) {
 				// Use this opportunity to check for background events that need to run.
 				triggerBackgroundThreadEvents();
 

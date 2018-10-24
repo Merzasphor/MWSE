@@ -1,6 +1,7 @@
 #pragma once
 
 #include "TES3Defines.h"
+#include "TES3Vectors.h"
 
 #include "NIObject.h"
 #include "NIPointer.h"
@@ -36,8 +37,22 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
+		Fader();
+		Fader(float unknownFloat, bool unknownBool = true);
+		~Fader();
+
+		void activate();
+		void deactivate();
+		
+		void updateForFrame();
+		
 		void fadeTo(float value, float duration, FaderCallback callback = nullptr);
+
+		void setColor(TES3::Vector3 color, bool alpha);
+		void removeMaterialProperty(float value);
+		void setTexture(const char* path);
 
 	};
 	static_assert(sizeof(Fader) == 0x40, "TES3::Fader failed size validation");
+	static_assert(sizeof(Fader::Node) == 0x10, "TES3::Fader::Node failed size validation");
 }

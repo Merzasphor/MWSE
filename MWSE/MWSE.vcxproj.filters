@@ -1176,6 +1176,9 @@
     <ClInclude Include="TES3BodyPart.h">
       <Filter>Header Files\DataAdapters\TES3\Animations</Filter>
     </ClInclude>
+    <ClInclude Include="TES3FaderLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2557,6 +2560,9 @@
     </ClCompile>
     <ClCompile Include="LuaCalcHitChanceEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3FaderLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
