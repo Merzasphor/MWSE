@@ -32,7 +32,6 @@ namespace MWSE
             {
                 if (process.ProcessName.Contains("Morrowind"))
                 {
-                    Console.WriteLine(process.ProcessName);
                     return true;
                 }
             }

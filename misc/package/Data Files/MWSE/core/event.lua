@@ -113,7 +113,7 @@ function this.trigger(eventType, payload, options)
 	payload.eventType = eventType
 	payload.eventFilter = options.filter
 
-	local callbacks = getEventTable(eventType, options.filter)
+	local callbacks = table.copy(getEventTable(eventType, options.filter))
 	for _, callback in pairs(callbacks) do
 		local status, result = pcall(callback, payload)
 		if (status == false) then
