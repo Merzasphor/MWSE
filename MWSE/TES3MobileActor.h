@@ -59,7 +59,12 @@ namespace TES3 {
 			Silence,
 			Blind,
 			Paralyze,
-			Invisibility
+			Invisibility,
+			Fight,
+			Flee,
+			Hello,
+			Alarm,
+			NonResistable
 		};
 	}
 
@@ -80,15 +85,16 @@ namespace TES3 {
 
 	struct MobileActor : MobileObject {
 		struct ActiveMagicEffect {
-			ActiveMagicEffect* next;
-			ActiveMagicEffect* prev;
-			unsigned int magicInstanceSerial;
-			short magicInstanceEffectIndex;
-			short magicEffectID;
-			bool isHarmful;
-			unsigned short duration;
-			unsigned short magnitudeMin;
-			unsigned char skillOrAttributeID;
+			ActiveMagicEffect* next; // 0x0
+			ActiveMagicEffect* prev; // 0x4
+			unsigned int magicInstanceSerial; // 0x8
+			short magicInstanceEffectIndex; // 0xC
+			short magicEffectID; // 0xE
+			bool isHarmful; // 0x10
+			bool unknown_0x9; // 0x11
+			unsigned short duration; // 0x14
+			unsigned short magnitudeMin; // 0x16
+			unsigned char skillOrAttributeID; // 0x18
 		};
 
 		void * unknown_0x60;
@@ -233,6 +239,10 @@ namespace TES3 {
 		int determineModifiedPrice(int basePrice, bool buying);
 
 		void playVoiceover(int);
+
+		bool isAffectedByAlchemy(Alchemy * alchemy);
+		bool isAffectedByEnchantment(Enchantment * enchantment);
+		bool isAffectedBySpell(Spell * spell);
 
 		//
 		// Custom functions.

@@ -3,6 +3,16 @@
 #include "TES3Defines.h"
 
 namespace TES3 {
+	namespace CombatSessionNextAction {
+		enum CombatSessionNextAction {
+			Undecided = 0,
+			Attack = 3,
+			AlchemyOrSummon = 6,
+			SpellCast = 8,
+			UseEnchantedItem = 10
+		};
+	}
+
 	struct CombatSession {
 		float combatDistance; // 0x0
 		int unknown_0x4; // 0x4
@@ -11,12 +21,12 @@ namespace TES3 {
 		EquipmentStack * selectedWeapon; // 0x10
 		int unknown_0x14;
 		EquipmentStack * selectedShield; // 0x18
-		int unknown_0x1C;
-		Spell * nextSpell; // 0x20
+		ItemStack * selectedAlchemy; // 0x1C
+		Spell * selectedSpell; // 0x20
 		void * unknown_0x24;
 		int nextAction; // 0x28
-		int unknown_0x2C;
-		int unknown_0x30;
+		float selectionPriority; // 0x2C
+		float alchemyPriority; // 0x30
 		int unknown_0x34;
 		void * dequeSpells; // 0x38
 		long dequeSpellsCount; // 0x3C
@@ -30,6 +40,8 @@ namespace TES3 {
 		//
 		// Other related this-call functions.
 		//
+
+		float chooseAlchemyWithEffect(short id);
 
 		void determineNextAction();
 

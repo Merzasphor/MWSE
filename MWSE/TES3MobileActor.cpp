@@ -239,6 +239,21 @@ namespace TES3 {
 		TES3_MobileActor_playVoiceover(this, voiceover);
 	}
 
+	const auto TES3_MobileActor_isAffectedByAlchemy = reinterpret_cast<bool(__thiscall*)(const MobileActor*, Alchemy*)>(0x52D1A0);
+	bool MobileActor::isAffectedByAlchemy(Alchemy * alchemy) {
+		return TES3_MobileActor_isAffectedByAlchemy(this, alchemy);
+	}
+
+	const auto TES3_MobileActor_isAffectedByEnchantment = reinterpret_cast<bool(__thiscall*)(const MobileActor*, Enchantment*)>(0x52D140);
+	bool MobileActor::isAffectedByEnchantment(Enchantment * enchantment) {
+		return TES3_MobileActor_isAffectedByEnchantment(this, enchantment);
+	}
+
+	const auto TES3_MobileActor_isAffectedBySpell = reinterpret_cast<bool(__thiscall*)(const MobileActor*, Spell*)>(0x52D0E0);
+	bool MobileActor::isAffectedBySpell(Spell * spell) {
+		return TES3_MobileActor_isAffectedBySpell(this, spell);
+	}
+
 	bool MobileActor::getMobileActorFlag(MobileActorFlag::Flag flag) {
 		return (actorFlags & flag) != 0;
 	}

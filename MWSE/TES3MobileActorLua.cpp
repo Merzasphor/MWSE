@@ -23,6 +23,7 @@ namespace mwse {
 				usertypeDefinition.set("duration", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::duration));
 				usertypeDefinition.set("effectId", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::magicEffectID));
 				usertypeDefinition.set("effectIndex", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::magicInstanceEffectIndex));
+				usertypeDefinition.set("flag9", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::unknown_0x9));
 				usertypeDefinition.set("harmful", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::isHarmful));
 				usertypeDefinition.set("magnitudeMin", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::magnitudeMin));
 				usertypeDefinition.set("next", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::next));
