@@ -2854,7 +2854,6 @@ namespace mwse {
 			TES3::UI::hook();
 
 			// Make magic effects writable.
-			DWORD OldProtect;
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);
 
 			// Hook generic entity deletion so that we can do any necessary cleanup.
