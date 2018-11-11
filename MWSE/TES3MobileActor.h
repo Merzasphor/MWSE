@@ -227,7 +227,7 @@ namespace TES3 {
 		void startCombat(MobileActor*);
 		void stopCombat(bool);
 		void onDeath();
-		bool applyHealthDamage(float, bool, bool, bool);
+		bool applyHealthDamage(float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth);
 		bool hasFreeAction();
 		float calculateRunSpeed();
 		float calculateSwimSpeed();
