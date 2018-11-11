@@ -298,8 +298,14 @@ namespace mwse {
 			luaState["mwse"]["buildDate"] = MWSE_BUILD_DATE;
 
 			// We want to take care of this here rather than in an external file so we have access to scriptOverrides.
-			luaState["mwse"]["overrideScript"] = [](std::string scriptId, sol::object target) {
-				TES3::Script* script = tes3::getDataHandler()->nonDynamicData->findScriptByName(scriptId.c_str());
+			luaState["mwse"]["overrideScript"] = [](const char* scriptId, sol::object target) {
+				auto dataHandler = tes3::getDataHandler();
+				if (dataHandler == nullptr) {
+					mwse::log::getLog() << "WARNING: mwse.overrideScript called before game data is initialized." << std::endl;
+					return false;
+				}
+
+				TES3::Script* script = dataHandler->nonDynamicData->findScriptByName(scriptId);
 				if (script == nullptr) {
 					return false;
 				}
