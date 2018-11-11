@@ -165,7 +165,6 @@ namespace mwse {
 				usertypeDefinition.set("invert", sol::resolve<TES3::Matrix33()>(&TES3::Matrix33::invert));
 				usertypeDefinition.set("reorthogonalize", &TES3::Matrix33::reorthogonalize);
 				usertypeDefinition.set("toDiagonal", &TES3::Matrix33::toDiagonal);
-				usertypeDefinition.set("toEulerXYZ", &TES3::Matrix33::toEulerXYZ);
 				usertypeDefinition.set("toIdentity", &TES3::Matrix33::toIdentity);
 				usertypeDefinition.set("toRotation", &TES3::Matrix33::toRotation);
 				usertypeDefinition.set("toRotationX", &TES3::Matrix33::toRotationX);
@@ -173,6 +172,15 @@ namespace mwse {
 				usertypeDefinition.set("toRotationZ", &TES3::Matrix33::toRotationZ);
 				usertypeDefinition.set("toZero", &TES3::Matrix33::toZero);
 				usertypeDefinition.set("transpose", &TES3::Matrix33::transpose);
+
+				// Handle functions with out values.
+				usertypeDefinition.set("toEulerXYZ", [](TES3::Matrix33& self) -> sol::optional<TES3::Vector3> {
+					float x, y, z;
+					if (self.toEulerXYZ(&x, &y, &z)) {
+						return TES3::Vector3(x, y, z);
+					}
+					return sol::optional<TES3::Vector3>();
+				});
 
 				// Finish up our usertype.
 				state.set_usertype("tes3matrix33", usertypeDefinition);
