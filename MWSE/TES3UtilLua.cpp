@@ -331,6 +331,7 @@ namespace mwse {
 
 				tes3::getDataHandler()->adjustSoundVolume(sound, reference, volume);
 			};
+
 			// Bind function: tes3.removeSound
 			state["tes3"]["removeSound"] = [](sol::optional<sol::table> params) {
 				// Get parameters.
