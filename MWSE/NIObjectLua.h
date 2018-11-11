@@ -48,14 +48,17 @@ namespace mwse {
 			// Basic property binding.
 			usertypeDefinition.set("properties", sol::readonly_property(&NI::AVObject::propertyNode));
 			usertypeDefinition.set("flags", &NI::AVObject::flags);
-			usertypeDefinition.set("localRotation", &NI::AVObject::localRotation);
-			usertypeDefinition.set("localScale", &NI::AVObject::localScale);
-			usertypeDefinition.set("localTranslate", &NI::AVObject::localTranslate);
 			usertypeDefinition.set("rotation", &NI::AVObject::localRotation);
 			usertypeDefinition.set("scale", &NI::AVObject::localScale);
 			usertypeDefinition.set("translation", &NI::AVObject::localTranslate);
 			usertypeDefinition.set("worldBoundOrigin", &NI::AVObject::worldBoundOrigin);
 			usertypeDefinition.set("worldBoundRadius", &NI::AVObject::worldBoundRadius);
+			usertypeDefinition.set("worldTransform", &NI::AVObject::worldTransform);
+
+			// TODO: Deprecated. Remove before 2.1 releases.
+			usertypeDefinition.set("localRotation", &NI::AVObject::localRotation);
+			usertypeDefinition.set("localScale", &NI::AVObject::localScale);
+			usertypeDefinition.set("localTranslate", &NI::AVObject::localTranslate);
 
 			// Basic function binding.
 			usertypeDefinition.set("attachProperty", &NI::AVObject::attachProperty);
