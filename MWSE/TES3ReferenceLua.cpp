@@ -9,8 +9,9 @@
 #include "NINode.h"
 
 #include "TES3Cell.h"
-#include "TES3MobileActor.h"
+#include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
+#include "TES3WorldController.h"
 
 namespace TES3 {
 	sol::object Reference::getBaseObject() {
@@ -106,7 +107,18 @@ namespace mwse {
 			setUserdataForObject(usertypeDefinition);
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition.set("cell", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.owningCollection.asReferenceList != NULL ? self.owningCollection.asReferenceList->cell : NULL); }));
+			usertypeDefinition.set("cell", sol::readonly_property([](TES3::Reference& self) -> sol::object {
+				// Handle case for the player.
+				if (tes3::getWorldController()->getMobilePlayer()->reference == &self) {
+					return makeLuaObject(tes3::getDataHandler()->currentCell);
+				}
+
+				if (self.owningCollection.asReferenceList == nullptr) {
+					return sol::nil;
+				}
+
+				return makeLuaObject(self.owningCollection.asReferenceList->cell);
+			}));
 			usertypeDefinition.set("object", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.baseObject); }));
 			usertypeDefinition.set("sceneNode", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.sceneNode); }));
 
