@@ -1,5 +1,6 @@
 #include "TES3Vectors.h"
 
+#define _USE_MATH_DEFINES
 #include <cmath>
 
 namespace TES3 {
@@ -198,12 +199,35 @@ namespace TES3 {
 		return TES3_Matrix33_inverseRaw(this, out_matrix);
 	}
 
-	bool Matrix33::toEulerXYZ(float * x, float * y, float * z) {
-		return TES3_Matrix33_toEulerXYZ(this, x, y, z);
-	}
-
 	bool Matrix33::reorthogonalize() {
 		return TES3_Matrix33_reorthogonalize(this);
 	}
 
+	bool Matrix33::toEulerXYZ(float * x, float * y, float * z) {
+		return TES3_Matrix33_toEulerXYZ(this, x, y, z);
+	}
+
+	bool Matrix33::toEulerZYX(float * x, float * y, float * z)
+	{
+		*x = 0; 
+		*y = asin(m2.x);
+		*z = 0;
+
+		if (*y < M_PI_2) {
+			if (*y > -M_PI_2) {
+				*z = -atan2(m1.x, m0.x);
+				*x = -atan2(m2.y, m2.z);
+				return true;
+			}
+			else {
+				*z = atan2(-m0.y, m0.z);
+				return false;
+			}
+		}
+		else {
+			*z = -atan2(-m0.y, m0.z);
+			return false;
+		}
+	}
 }
+

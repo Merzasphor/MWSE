@@ -96,6 +96,7 @@ namespace TES3 {
 		__declspec(dllexport) bool invert(Matrix33 * out_matrix);
 
 		__declspec(dllexport) bool toEulerXYZ(float * x, float * y, float * z);
+		__declspec(dllexport) bool toEulerZYX(float * x, float * y, float * z);
 
 		__declspec(dllexport) bool reorthogonalize();
 

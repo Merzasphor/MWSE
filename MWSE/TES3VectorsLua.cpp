@@ -174,12 +174,15 @@ namespace mwse {
 				usertypeDefinition.set("transpose", &TES3::Matrix33::transpose);
 
 				// Handle functions with out values.
-				usertypeDefinition.set("toEulerXYZ", [](TES3::Matrix33& self) -> sol::optional<TES3::Vector3> {
+				usertypeDefinition.set("toEulerXYZ", [](TES3::Matrix33& self) {
 					float x, y, z;
-					if (self.toEulerXYZ(&x, &y, &z)) {
-						return TES3::Vector3(x, y, z);
-					}
-					return sol::optional<TES3::Vector3>();
+					bool isUnique = self.toEulerXYZ(&x, &y, &z);
+					return std::make_tuple(TES3::Vector3(x, y, z), isUnique);
+				});
+				usertypeDefinition.set("toEulerZYX", [](TES3::Matrix33& self) {
+					float x, y, z;
+					bool isUnique = self.toEulerZYX(&x, &y, &z);
+					return std::make_tuple(TES3::Vector3(x, y, z), isUnique);
 				});
 
 				// Finish up our usertype.

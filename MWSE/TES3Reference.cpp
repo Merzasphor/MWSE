@@ -103,6 +103,13 @@ namespace TES3 {
 		if (value.is<Vector3*>()) {
 			setOrientation(value.as<Vector3*>());
 		}
+		// Is it a matrix?
+		else if (value.is<Matrix33*>()) {
+			auto matrix = value.as<TES3::Matrix33*>();
+			float x, y, z;
+			matrix->toEulerZYX(&x, &y, &z);
+			setOrientation(x, y, z);
+		}
 		// Allow a simple table to be provided.
 		else if (value.is<sol::table>()) {
 			// Get the values from the table.
