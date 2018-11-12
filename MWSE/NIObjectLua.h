@@ -55,6 +55,12 @@ namespace mwse {
 			usertypeDefinition.set("worldBoundRadius", &NI::AVObject::worldBoundRadius);
 			usertypeDefinition.set("worldTransform", &NI::AVObject::worldTransform);
 
+			// Ensure that rotation calls the required functions.
+			usertypeDefinition.set("rotation", sol::property(
+				[](NI::AVObject& self) { return self.localRotation; },
+				[](NI::AVObject& self, TES3::Matrix33* matrix) { self.setLocalRotationMatrix(matrix); }
+			));
+
 			// TODO: Deprecated. Remove before 2.1 releases.
 			usertypeDefinition.set("localRotation", &NI::AVObject::localRotation);
 			usertypeDefinition.set("localScale", &NI::AVObject::localScale);
@@ -63,6 +69,7 @@ namespace mwse {
 			// Basic function binding.
 			usertypeDefinition.set("attachProperty", &NI::AVObject::attachProperty);
 			usertypeDefinition.set("clearTransforms", &NI::AVObject::clearTransforms);
+			usertypeDefinition.set("propegatePositionChange", [](NI::AVObject& self) { self.propagatePositionChange(); });
 			usertypeDefinition.set("updateNodeEffects", &NI::AVObject::updateNodeEffects);
 			usertypeDefinition.set("updateTextureProperties", &NI::AVObject::updateTextureProperties);
 
