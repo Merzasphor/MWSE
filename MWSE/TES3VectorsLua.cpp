@@ -162,7 +162,6 @@ namespace mwse {
 
 				// Basic function binding.
 				usertypeDefinition.set("copy", [](TES3::Matrix33& self) { return TES3::Matrix33(self); });
-				usertypeDefinition.set("invert", sol::resolve<TES3::Matrix33()>(&TES3::Matrix33::invert));
 				usertypeDefinition.set("reorthogonalize", &TES3::Matrix33::reorthogonalize);
 				usertypeDefinition.set("toDiagonal", &TES3::Matrix33::toDiagonal);
 				usertypeDefinition.set("toIdentity", &TES3::Matrix33::toIdentity);
@@ -174,6 +173,11 @@ namespace mwse {
 				usertypeDefinition.set("transpose", &TES3::Matrix33::transpose);
 
 				// Handle functions with out values.
+				usertypeDefinition.set("invert", [](TES3::Matrix33& self) {
+					TES3::Matrix33 matrix;
+					bool valid = self.invert(&matrix);
+					return std::make_tuple(matrix, valid);
+				});
 				usertypeDefinition.set("toEulerXYZ", [](TES3::Matrix33& self) {
 					float x, y, z;
 					bool isUnique = self.toEulerXYZ(&x, &y, &z);
