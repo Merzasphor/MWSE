@@ -69,8 +69,8 @@ namespace TES3 {
 	const auto TES3_Matrix33_toRotationY = reinterpret_cast<void(__thiscall*)(Matrix33*, float)>(0x6E7D60);
 	const auto TES3_Matrix33_toRotationZ = reinterpret_cast<void(__thiscall*)(Matrix33*, float)>(0x6E7DA0);
 	const auto TES3_Matrix33_toRotationXYZ = reinterpret_cast<void(__thiscall*)(Matrix33*, float, float, float, float)> (0x6E7DE0);
-	const auto TES3_Matrix33_toDiagonal = reinterpret_cast<void(__thiscall*)(Matrix33*, float, float, float)> (0x6E8D60);
 
+	const auto TES3_Matrix33_fromEulerXYZ = reinterpret_cast<void(__thiscall*)(Matrix33*, float, float, float)> (0x6E8D60);
 	const auto TES3_Matrix33_toEulerXYZ = reinterpret_cast<bool(__thiscall*)(Matrix33*, float*, float*, float*)> (0x6E8C50);
 
 	const auto TES3_Matrix33_transpose = reinterpret_cast<Matrix33*(__thiscall*)(Matrix33*, Matrix33*)> (0x6E8420);
@@ -179,8 +179,8 @@ namespace TES3 {
 		TES3_Matrix33_toRotationXYZ(this, angle, x, y, z);
 	}
 
-	void Matrix33::toDiagonal(float x, float y, float z) {
-		TES3_Matrix33_toDiagonal(this, x, y, z);
+	void Matrix33::fromEulerXYZ(float x, float y, float z) {
+		TES3_Matrix33_fromEulerXYZ(this, x, y, z);
 	}
 
 	Matrix33 Matrix33::transpose() {

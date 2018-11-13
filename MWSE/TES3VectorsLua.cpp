@@ -162,8 +162,8 @@ namespace mwse {
 
 				// Basic function binding.
 				usertypeDefinition.set("copy", [](TES3::Matrix33& self) { return TES3::Matrix33(self); });
+				usertypeDefinition.set("fromEulerXYZ", &TES3::Matrix33::fromEulerXYZ);
 				usertypeDefinition.set("reorthogonalize", &TES3::Matrix33::reorthogonalize);
-				usertypeDefinition.set("toDiagonal", &TES3::Matrix33::toDiagonal);
 				usertypeDefinition.set("toIdentity", &TES3::Matrix33::toIdentity);
 				usertypeDefinition.set("toRotation", &TES3::Matrix33::toRotation);
 				usertypeDefinition.set("toRotationX", &TES3::Matrix33::toRotationX);
