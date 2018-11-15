@@ -26,6 +26,15 @@ namespace TES3 {
 		};
 	}
 
+	namespace CreatureType {
+		enum CreatureType {
+			Normal,
+			Daedra,
+			Undead,
+			Humanoid
+		};
+	}
+
 	namespace CreatureSkill {
 		enum CreatureSkill {
 			Combat,

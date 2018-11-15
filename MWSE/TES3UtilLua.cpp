@@ -137,7 +137,7 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.getReference
-			state["tes3"]["getReference"] = [](sol::optional<std::string> id) {
+			state["tes3"]["getReference"] = [](sol::optional<const char*> id) {
 				if (id) {
 					return makeLuaObject(tes3::getReference(id.value()));
 				}
@@ -147,10 +147,10 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.getObject
-			state["tes3"]["getObject"] = [](std::string& id) -> sol::object {
+			state["tes3"]["getObject"] = [](const char* id) -> sol::object {
 				TES3::DataHandler * dataHandler = tes3::getDataHandler();
 				if (dataHandler) {
-					return makeLuaObject(dataHandler->nonDynamicData->resolveObject(id.c_str()));
+					return makeLuaObject(dataHandler->nonDynamicData->resolveObject(id));
 				}
 				return sol::nil;
 			};
@@ -166,19 +166,19 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.getScript
-			state["tes3"]["getScript"] = [](std::string& id) -> sol::object {
+			state["tes3"]["getScript"] = [](const char* id) -> sol::object {
 				TES3::DataHandler * dataHandler = tes3::getDataHandler();
 				if (dataHandler) {
-					return makeLuaObject(dataHandler->nonDynamicData->findScriptByName(id.c_str()));
+					return makeLuaObject(dataHandler->nonDynamicData->findScriptByName(id));
 				}
 				return sol::nil;
 			};
 
 			// Bind function: tes3.getGlobal
-			state["tes3"]["getGlobal"] = [](std::string& id) -> sol::optional<float> {
+			state["tes3"]["getGlobal"] = [](const char* id) -> sol::optional<float> {
 				TES3::DataHandler * dataHandler = tes3::getDataHandler();
 				if (dataHandler) {
-					TES3::GlobalVariable * global = dataHandler->nonDynamicData->findGlobalVariable(id.c_str());
+					TES3::GlobalVariable * global = dataHandler->nonDynamicData->findGlobalVariable(id);
 					if (global) {
 						return global->value;
 					}
@@ -208,8 +208,36 @@ namespace mwse {
 				return sol::nil;
 			};
 
-			// Bind function: tes3.getGMST
+			// Bind function: tes3.findGMST
+			state["tes3"]["findGMST"] = [](sol::object key) -> sol::object {
+				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				if (dataHandler == nullptr) {
+					return sol::nil;
+				}
+
+				if (key.is<double>()) {
+					int index = key.as<double>();
+					if (index >= TES3::GMST::sMonthMorningstar && index <= TES3::GMST::sWitchhunter) {
+						return makeLuaObject(dataHandler->nonDynamicData->GMSTs[index]);
+					}
+				}
+				else if (key.is<const char*>()) {
+					int index = -1;
+					const char* keyStr = key.as<const char*>();
+					for (int i = 0; i <= TES3::GMST::sWitchhunter; i++) {
+						if (strcmp(tes3::getGMSTInfo(i)->name, keyStr) == 0) {
+							return makeLuaObject(dataHandler->nonDynamicData->GMSTs[i]);
+						}
+					}
+				}
+
+				return sol::nil;
+			};
+
+			// DEPRECATED: To be eventually redone after mods have transitioned away from it.
 			state["tes3"]["getGMST"] = [](sol::object key) -> sol::object {
+				mwse::log::getLog() << "WARNING: Use of deprecated function tes3.getGMST. Use tes3.findGMST instead." << std::endl;
+
 				TES3::DataHandler * dataHandler = tes3::getDataHandler();
 				if (dataHandler == nullptr) {
 					return sol::nil;
@@ -251,7 +279,7 @@ namespace mwse {
 				double volume = getOptionalParam<double>(params, "volume", 1.0);
 				float pitch = getOptionalParam<double>(params, "pitch", 1.0);
 
-				if (sound == NULL) {
+				if (sound == nullptr) {
 					log::getLog() << "tes3.playSound: Could not locate sound." << std::endl;
 					return false;
 				}
@@ -273,7 +301,7 @@ namespace mwse {
 				TES3::Sound* sound = getOptionalParamSound(params, "sound");
 				TES3::Reference* reference = getOptionalParamReference(params, "reference");
 
-				if (sound == NULL) {
+				if (sound == nullptr) {
 					log::getLog() << "tes3.getSoundPlaying: Could not locate sound." << std::endl;
 					return false;
 				}
@@ -303,6 +331,7 @@ namespace mwse {
 
 				tes3::getDataHandler()->adjustSoundVolume(sound, reference, volume);
 			};
+
 			// Bind function: tes3.removeSound
 			state["tes3"]["removeSound"] = [](sol::optional<sol::table> params) {
 				// Get parameters.
@@ -380,27 +409,27 @@ namespace mwse {
 
 			// Bind function: tes3.saveGame
 			state["tes3"]["saveGame"] = [](sol::optional<sol::table> params) {
-				std::string fileName = getOptionalParam<std::string>(params, "file", "quiksave");
-				std::string saveName = getOptionalParam<std::string>(params, "name", "Quicksave");
+				const char* fileName = getOptionalParam<const char*>(params, "file", "quiksave");
+				const char* saveName = getOptionalParam<const char*>(params, "name", "Quicksave");
 
-				tes3::getDataHandler()->nonDynamicData->saveGame(fileName.c_str(), saveName.c_str());
+				tes3::getDataHandler()->nonDynamicData->saveGame(fileName, saveName);
 			};
 
 			// Bind function: tes3.loadGame and tes3.loadGameMainMenu
-			state["tes3"]["loadGame"] = [](std::string fileName) {
+			state["tes3"]["loadGame"] = [](const char* fileName) {
 				// Char Gen State will equal 0 in the menu.
 				if (tes3::getWorldController()->gvarCharGenState->value == 0)
 				{
-					tes3::getDataHandler()->nonDynamicData->loadGameMainMenu(fileName.c_str());
+					tes3::getDataHandler()->nonDynamicData->loadGameMainMenu(fileName);
 				}
 				else
 				{
-					tes3::getDataHandler()->nonDynamicData->loadGame(fileName.c_str());
+					tes3::getDataHandler()->nonDynamicData->loadGame(fileName);
 				}
 			};
 
 			// Bind function: tes3.isModActive
-			state["tes3"]["isModActive"] = [](std::string modName) {
+			state["tes3"]["isModActive"] = [](const char* modName) {
 				TES3::DataHandler* dataHandler = tes3::getDataHandler();
 				if (dataHandler == nullptr) {
 					return false;
@@ -413,7 +442,7 @@ namespace mwse {
 					}
 
 					// Compare mod name with this active mod.
-					if (_stricmp(gameFile->filename, modName.c_str()) == 0) {
+					if (_stricmp(gameFile->filename, modName) == 0) {
 						return true;
 					}
 				}
@@ -447,7 +476,6 @@ namespace mwse {
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
 				TES3::Item* item = getOptionalParamObject<TES3::Item>(params, "item");
 				bool pickup = getOptionalParam<bool>(params, "pickup", true);
-				TES3::Sound* sound = getOptionalParamSound(params, "sound");
 				if (item == NULL) {
 					return;
 				}
@@ -459,15 +487,15 @@ namespace mwse {
 			state["tes3"]["iterateObjects"] = sol::overload(&iterateObjects, &iterateObjectsFiltered);
 
 			// Bind function: tes3.getSound
-			state["tes3"]["getSound"] = [](const char* id) -> TES3::Sound * {
+			state["tes3"]["getSound"] = [](const char* id) -> sol::object {
 				TES3::DataHandler * dataHandler = tes3::getDataHandler();
 				if (dataHandler) {
-					return tes3::getDataHandler()->nonDynamicData->findSound(id);
+					return makeLuaObject(tes3::getDataHandler()->nonDynamicData->findSound(id));
 				}
 				else {
 					sol::state& state = LuaManager::getInstance().getState();
 					state["error"]("Function called before Data Handler was initialized.");
-					return nullptr;
+					return sol::nil;
 				}
 			};
 
@@ -481,7 +509,7 @@ namespace mwse {
 					}
 
 					if (strncmp(creatureIdCstr, itt->data->name, creatureId.length()) == 0) {
-						return sol::make_object(LuaManager::getInstance().getState(), itt->data);
+						return makeLuaObject(itt->data);
 					}
 				}
 
@@ -495,7 +523,7 @@ namespace mwse {
 
 			// Bind function: tes3.getCameraVector
 			// This function currently calls out to MGE, which should be changed at some point.
-			state["tes3"]["getCameraVector"] = [](sol::optional<sol::table> params) {
+			state["tes3"]["getCameraVector"] = []() {
 				Stack& stack = Stack::getInstance();
 				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEGetEyeVec);
 
@@ -508,16 +536,16 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.getCameraPosition
-			state["tes3"]["getCameraPosition"] = [](sol::optional<sol::table> params) -> TES3::Vector3 * {
+			state["tes3"]["getCameraPosition"] = [](sol::optional<sol::table> params) -> sol::optional<TES3::Vector3> {
 				TES3::WorldController * worldController = tes3::getWorldController();
 				if (worldController) {
-					return &worldController->worldCamera.camera->worldBoundOrigin;
+					return worldController->worldCamera.camera->worldBoundOrigin;
 				}
-				return nullptr;
+				return sol::optional<TES3::Vector3>();
 			};
 
 			// Bind function: tes3.getCameraPosition
-			static NI::Pick* rayTestCache = NULL;
+			static NI::Pick* rayTestCache = nullptr;
 			state["tes3"]["rayTest"] = [](sol::optional<sol::table> params) -> sol::object {
 				// Make sure we got our required position.
 				sol::optional<TES3::Vector3> position = getOptionalParamVector3(params, "position");
@@ -532,7 +560,7 @@ namespace mwse {
 				}
 
 				// Create our pick if it doesn't exist.
-				if (rayTestCache == NULL) {
+				if (rayTestCache == nullptr) {
 					rayTestCache = NI::Pick::malloc();
 				}
 
@@ -718,51 +746,47 @@ namespace mwse {
 				}
 
 				// Get filter: Item Type
-				std::tuple<bool, int> filterObjectType(false, INT_MAX);
-				std::tuple<bool, int> filterSlot(false, INT_MAX);
+				sol::optional<int> filterObjectType;
+				sol::optional<int> filterSlot;
 				if (params["objectType"].valid()) {
-					std::get<0>(filterObjectType) = true;
-					std::get<1>(filterObjectType) = (int)params["objectType"];
+					filterObjectType = (int)params["objectType"];
 
 					// Get filter: Item Slot/Type
 					if (params["slot"].valid()) {
-						std::get<0>(filterSlot) = true;
-						std::get<1>(filterSlot) = (int)params["slot"];
+						filterSlot = (int)params["slot"];
 					}
 					else if (params["type"].valid()) {
-						std::get<0>(filterSlot) = true;
-						std::get<1>(filterSlot) = (int)params["type"];
+						filterSlot = (int)params["type"];
 					}
 				}
 
 				// Get filter: Item Enchanted
-				std::tuple<bool, bool> filterEnchanted(false, false);
+				sol::optional<bool> filterEnchanted;
 				if (params["enchanted"].valid()) {
-					std::get<0>(filterEnchanted) = true;
-					std::get<1>(filterEnchanted) = params["enchanted"];
+					filterEnchanted = (bool)params["enchanted"];
 				}
 
 				// Loop through the items and pick the first one that matches our filters.
-				for (auto itt = equipment->head; itt != NULL; itt = itt->next) {
+				for (auto itt = equipment->head; itt != nullptr; itt = itt->next) {
 					TES3::Object * object = itt->data->object;
 
 					// Filter object type.
-					if (std::get<0>(filterObjectType) && std::get<1>(filterObjectType) != object->objectType) {
+					if (filterObjectType && filterObjectType.value() != object->objectType) {
 						continue;
 					}
 
 					// Filter slot/type.
-					if (std::get<0>(filterSlot) && std::get<1>(filterSlot) != object->getType()) {
+					if (filterSlot && filterSlot.value() != object->getType()) {
 						continue;
 					}
 
 					// Filter enchanted.
-					if (std::get<0>(filterEnchanted)) {
+					if (filterEnchanted) {
 						TES3::Enchantment * enchantment = object->getEnchantment();
-						if (std::get<1>(filterEnchanted) == true && enchantment == NULL) {
+						if (filterEnchanted.value() == true && enchantment == nullptr) {
 							continue;
 						}
-						else if (std::get<1>(filterEnchanted) == false && enchantment != NULL) {
+						else if (filterEnchanted.value() == false && enchantment != nullptr) {
 							continue;
 						}
 					}
@@ -791,8 +815,19 @@ namespace mwse {
 
 			state["tes3"]["getRegion"] = []() -> sol::object {
 				TES3::DataHandler * dataHandler = tes3::getDataHandler();
-				if (dataHandler && dataHandler->lastExteriorCell) {
-					return makeLuaObject(dataHandler->lastExteriorCell->getRegion());
+				if (dataHandler) {
+					// Try to get the current cell's region first.
+					if (dataHandler->currentCell) {
+						TES3::Region * region = dataHandler->currentCell->getRegion();
+						if (region) {
+							return makeLuaObject(region);
+						}
+					}
+					
+					// Otherwise fall back to the last exterior cell's region.
+					if (dataHandler->lastExteriorCell) {
+						return makeLuaObject(dataHandler->lastExteriorCell->getRegion());
+					}
 				}
 
 				return sol::nil;
@@ -991,8 +1026,8 @@ namespace mwse {
 				// Accept either a string or a number as the voiceover id.
 				int voiceover = -1;
 				sol::object voiceoverObject = params["voiceover"];
-				if (voiceoverObject.is<std::string>()) {
-					sol::object result = state["tes3"]["voiceover"][voiceoverObject.as<std::string>()];
+				if (voiceoverObject.is<const char*>()) {
+					sol::object result = state["tes3"]["voiceover"][voiceoverObject.as<const char*>()];
 					if (result.is<int>()) {
 						voiceover = result.as<int>();
 					}
@@ -1706,7 +1741,7 @@ namespace mwse {
 				return reinterpret_cast<int(__stdcall*)()>(0x4678F0)();
 			};
 
-			state["tes3"]["getLanguage"] = []() {
+			state["tes3"]["getLanguage"] = []() -> sol::optional<std::string> {
 				int language = reinterpret_cast<int(__stdcall*)()>(0x4678F0)();
 
 				switch (language) {
@@ -1720,7 +1755,21 @@ namespace mwse {
 					return "rus";
 				}
 
-				return "unk";
+				return sol::optional<std::string>();
+			};
+
+			state["tes3"]["addSoulGem"] = [](sol::table params) {
+				TES3::Misc * item = getOptionalParamObject<TES3::Misc>(params, "item");
+				if (item == nullptr) {
+					return false;
+				}
+
+				auto data = mwse::tes3::addCustomSoulGem(item);
+				if (data == nullptr) {
+					return false;
+				}
+
+				return true;
 			};
 		}
 	}

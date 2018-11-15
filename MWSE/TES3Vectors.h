@@ -84,7 +84,6 @@ namespace TES3 {
 		__declspec(dllexport) void toRotationY(float y);
 		__declspec(dllexport) void toRotationZ(float z);
 		__declspec(dllexport) void toRotation(float angle, float x, float y, float z);
-		__declspec(dllexport) void toDiagonal(float x, float y, float z);
 
 		//
 		// Other related helper functions.
@@ -95,7 +94,9 @@ namespace TES3 {
 		__declspec(dllexport) Matrix33 invert();
 		__declspec(dllexport) bool invert(Matrix33 * out_matrix);
 
+		__declspec(dllexport) void fromEulerXYZ(float x, float y, float z);
 		__declspec(dllexport) bool toEulerXYZ(float * x, float * y, float * z);
+		__declspec(dllexport) bool toEulerZYX(float * x, float * y, float * z);
 
 		__declspec(dllexport) bool reorthogonalize();
 

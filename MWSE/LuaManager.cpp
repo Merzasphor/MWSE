@@ -15,11 +15,13 @@
 
 #include "LuaScript.h"
 
+#include "TES3Defines.h"
 #include "TES3Actor.h"
 #include "TES3ActorAnimationData.h"
 #include "TES3Alchemy.h"
 #include "TES3Book.h"
 #include "TES3CombatSession.h"
+#include "TES3Creature.h"
 #include "TES3DataHandler.h"
 #include "TES3Dialogue.h"
 #include "TES3DialogueInfo.h"
@@ -31,17 +33,18 @@
 #include "TES3LeveledList.h"
 #include "TES3MagicEffect.h"
 #include "TES3MagicEffectInstance.h"
-#include "TES3Spell.h"
+#include "TES3Misc.h"
 #include "TES3MobController.h"
 #include "TES3MobileActor.h"
 #include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
 #include "TES3MobileProjectile.h"
-#include "TES3Defines.h"
 #include "TES3Reference.h"
+#include "TES3SoulGemData.h"
+#include "TES3Spell.h"
 #include "TES3UIElement.h"
-#include "TES3UIManager.h"
 #include "TES3UIInventoryTile.h"
+#include "TES3UIManager.h"
 #include "TES3WorldController.h"
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
@@ -130,6 +133,7 @@
 #include "LuaCalcHitChanceEvent.h"
 #include "LuaCalcRepairPriceEvent.h"
 #include "LuaCalcRestInterruptEvent.h"
+#include "LuaCalcSoulValueEvent.h"
 #include "LuaCalcSpellPriceEvent.h"
 #include "LuaCalcTrainingPriceEvent.h"
 #include "LuaCalcTravelPriceEvent.h"
@@ -139,6 +143,7 @@
 #include "LuaFilterContentsMenuEvent.h"
 #include "LuaFilterInventoryEvent.h"
 #include "LuaFilterInventorySelectEvent.h"
+#include "LuaFilterSoulGemTargetEvent.h"
 #include "LuaFrameEvent.h"
 #include "LuaGenericUiActivatedEvent.h"
 #include "LuaGenericUiPostEvent.h"
@@ -293,8 +298,14 @@ namespace mwse {
 			luaState["mwse"]["buildDate"] = MWSE_BUILD_DATE;
 
 			// We want to take care of this here rather than in an external file so we have access to scriptOverrides.
-			luaState["mwse"]["overrideScript"] = [](std::string scriptId, sol::object target) {
-				TES3::Script* script = tes3::getDataHandler()->nonDynamicData->findScriptByName(scriptId.c_str());
+			luaState["mwse"]["overrideScript"] = [](const char* scriptId, sol::object target) {
+				auto dataHandler = tes3::getDataHandler();
+				if (dataHandler == nullptr) {
+					mwse::log::getLog() << "WARNING: mwse.overrideScript called before game data is initialized." << std::endl;
+					return false;
+				}
+
+				TES3::Script* script = dataHandler->nonDynamicData->findScriptByName(scriptId);
 				if (script == nullptr) {
 					return false;
 				}
@@ -2024,6 +2035,118 @@ namespace mwse {
 		}
 
 		//
+		// Events related to soul gems.
+		//
+
+		void __fastcall PatchWriteEnchantSoulData(TES3::GameFile * gameFile, TES3::ItemStack * stack, TES3::ItemData * itemData) {
+			// If it's a soul gem, write the soul ID.
+			if (tes3::isSoulGem(stack->object)) {
+				auto soul = itemData->enchantData.soul;
+				if (soul) {
+					auto id = soul->getObjectID();
+					gameFile->writeChunkData('LOSX', id, strlen(id) + 1);
+					return;
+				}
+			}
+
+			// Otherwise, give the charge if the item is enchanted.
+			auto enchant = stack->object->getEnchantment();
+			if (enchant) {
+				gameFile->writeChunkData('GHCX', &itemData->enchantData.charge, 0x4);
+			}
+		}
+
+		__declspec(naked) void patchSetupWriteEnchantSoulData() {
+			__asm {
+				mov ecx, ebx					// Size: 0x2
+				mov edx, [esp + 0x44 + 0x4]		// Size: 0x4
+				push ebp						// Size: 0x1
+				nop // Replaced with a call generation. Can't do so here, because offsets aren't accurate.
+				nop // ^
+				nop // ^
+				nop // ^
+				nop // ^
+			}
+		}
+		const size_t patchSetupWriteEnchantSoulData_size = 0xC;
+
+		bool __fastcall PatchCheckSoulTrapSoulGem(TES3::Misc * item, TES3::MobileActor * mact) {
+			if (!tes3::isSoulGem(item)) {
+				return false;
+			}
+
+			// Allow lua to dictate what souls are allowed in which soulgems.
+			sol::table payload = lua::LuaManager::getInstance().triggerEvent(new lua::event::FilterSoulGemTargetEvent(item, mact));
+			if (payload.valid()) {
+				sol::object filter = payload["filter"];
+				if (filter.is<bool>()) {
+					return filter.as<bool>();
+				}
+			}
+
+			return true;
+		}
+
+		__declspec(naked) void patchSetupCheckSoulTrapSoulGem() {
+			__asm {
+				mov ecx, esi				// Size: 0x2 // Get base item in ecx.
+				mov edx, [esp + 0x34 + 0x4]	// Size: 0x4 // Get target mobile actor from stack.
+				nop							// Replaced with a call generation. Can't do so here, because offsets aren't accurate.
+				nop							// ^
+				nop							// ^
+				nop							// ^
+				nop							// ^
+				test al, al					// Size: 0x2
+				jnz $ + 0xB					// Size: 0x6
+			}
+		}
+		const size_t patchSetupCheckSoulTrapSoulGem_size = 0x13;
+
+		int __stdcall PatchGetSoulValueForActor(TES3::Actor * actor) {
+			int value = 0;
+
+			if (actor->objectType == TES3::ObjectType::Creature) {
+				value = static_cast<TES3::Creature*>(actor)->soul;
+			}
+
+			// Allow lua to determine the soul's value.
+			sol::table payload = lua::LuaManager::getInstance().triggerEvent(new lua::event::CalculateSoulValueEvent(actor, value));
+			if (payload.valid()) {
+				sol::object eventValue = payload["value"];
+				if (eventValue.is<int>()) {
+					value = eventValue.as<int>();
+				}
+			}
+
+			return value;
+		}
+
+		int __fastcall PatchGetSoulValueForMobileActor(TES3::MobileActor * mact) {
+			return PatchGetSoulValueForActor(static_cast<TES3::CreatureInstance*>(mact->reference->baseObject)->baseCreature);
+		}
+
+		__declspec(naked) void patchEnforceSoulValueAboveZero() {
+			__asm {
+				test eax, eax	// Size: 0x2
+				jle $ + 0x3E3	// Size: 0x6
+				nop				// Size: 0x1
+			}
+		}
+		const size_t patchEnforceSoulValueAboveZero_size = 0x9;
+
+		__declspec(naked) void patchGetSoulValueForActorFromESI() {
+			__asm {
+				push esi	// Size: 0x1
+				nop			// Replaced with a call generation. Can't do so here, because offsets aren't accurate.
+				nop			// ^
+				nop			// ^
+				nop			// ^
+				nop			// ^
+			}
+		}
+		const size_t patchGetSoulValueForActorFromESI_size = 0x6;
+
+		//
 		//
 		//
 
@@ -2685,11 +2808,58 @@ namespace mwse {
 			// Event: Created filters.
 			genCallEnforced(0x418A10, 0x411400, reinterpret_cast<DWORD>(CreateFilters));
 
+			// Override standard isSoulGem tests.
+			auto isSoulGem = &tes3::isSoulGem;
+			genCallEnforced(0x4E174A, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x4E79F3, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x5910EA, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x59173C, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x5A4744, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x5A55FF, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x5C5D0D, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x5C6B11, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x5CC8EF, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x5CE81F, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+			genCallEnforced(0x608AB9, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
+
+			// Change inventory saving to use the above isSoulGem check.
+			genNOPUnprotected(0x499AEF, 0x44);
+			writePatchCodeUnprotected(0x499AEF, (BYTE*)&patchSetupWriteEnchantSoulData, patchSetupWriteEnchantSoulData_size);
+			genCallUnprotected(0x499AF6, reinterpret_cast<DWORD>(PatchWriteEnchantSoulData));
+
+			// Change soul trap to use the above isSoulGem check.
+			genNOPUnprotected(0x49ACD1, 0x13);
+			writePatchCodeUnprotected(0x49ACD1, (BYTE*)&patchSetupCheckSoulTrapSoulGem, patchSetupCheckSoulTrapSoulGem_size);
+			genCallUnprotected(0x49ACD7, reinterpret_cast<DWORD>(PatchCheckSoulTrapSoulGem));
+
+			// Change soul trap inventory count check.
+			auto inventoryGetSoulGemCount = &TES3::Inventory::getSoulGemCount;
+			genCallEnforced(0x463310, 0x49AA10, *reinterpret_cast<DWORD*>(&inventoryGetSoulGemCount));
+
+			// Yet another soul gem check. Relates to reference persisting and object saving.
+			genNOPUnprotected(0x4C1A13, 0x28);
+			genCallUnprotected(0x4C1A13, reinterpret_cast<DWORD>(tes3::isSoulGem));
+
+			// Override actor soul value check: capturing.
+			genCallEnforced(0x49AC82, 0x521610, reinterpret_cast<DWORD>(PatchGetSoulValueForMobileActor));
+			writePatchCodeUnprotected(0x49AC87, (BYTE*)&patchEnforceSoulValueAboveZero, patchEnforceSoulValueAboveZero_size);
+
+			// Override actor soul value check: enchanting
+			writePatchCodeUnprotected(0x5C5E4B, (BYTE*)&patchGetSoulValueForActorFromESI, patchGetSoulValueForActorFromESI_size);
+			genCallUnprotected(0x5C5E4C, reinterpret_cast<DWORD>(PatchGetSoulValueForActor));
+			writePatchCodeUnprotected(0x5C5E5C, (BYTE*)&patchGetSoulValueForActorFromESI, patchGetSoulValueForActorFromESI_size);
+			genCallUnprotected(0x5C5E5D, reinterpret_cast<DWORD>(PatchGetSoulValueForActor));
+			writePatchCodeUnprotected(0x5C5E6F, (BYTE*)&patchGetSoulValueForActorFromESI, patchGetSoulValueForActorFromESI_size);
+			genCallUnprotected(0x5C5E70, reinterpret_cast<DWORD>(PatchGetSoulValueForActor));
+
+			// Make soul gem data writable.
+			DWORD OldProtect;
+			VirtualProtect((DWORD*)0x791C98, 6 * sizeof(TES3::SoulGemData), PAGE_READWRITE, &OldProtect);
+
 			// UI framework hooks
 			TES3::UI::hook();
 
 			// Make magic effects writable.
-			DWORD OldProtect;
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);
 
 			// Hook generic entity deletion so that we can do any necessary cleanup.

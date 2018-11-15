@@ -10,6 +10,7 @@
 #include "ScriptUtilLua.h"
 
 #include "TES3Dialogue.h"
+#include "TES3LeveledList.h"
 #include "TES3Reference.h"
 #include "TES3Script.h"
 #include "TES3Spell.h"
@@ -70,7 +71,7 @@ namespace mwse {
 			state["mwscript"]["addToLevCreature"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				TES3::BaseObject* list = getOptionalParamObject<TES3::BaseObject>(params, "list");
+				TES3::LeveledCreature* list = getOptionalParamObject<TES3::LeveledCreature>(params, "list");
 				TES3::Actor* actor = getOptionalParamObject<TES3::Actor>(params, "creature");
 				short level = getOptionalParam<double>(params, "level", 0.0);
 				if (list == NULL || actor == NULL || level <= 0) {

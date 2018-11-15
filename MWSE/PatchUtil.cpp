@@ -4,8 +4,11 @@
 #include "MemoryUtil.h"
 #include "Log.h"
 
+#include "TES3Actor.h"
 #include "TES3DataHandler.h"
+#include "TES3GameFile.h"
 #include "TES3GameSetting.h"
+#include "TES3Misc.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
 #include "TES3Script.h"

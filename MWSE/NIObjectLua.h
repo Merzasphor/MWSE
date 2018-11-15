@@ -48,18 +48,28 @@ namespace mwse {
 			// Basic property binding.
 			usertypeDefinition.set("properties", sol::readonly_property(&NI::AVObject::propertyNode));
 			usertypeDefinition.set("flags", &NI::AVObject::flags);
-			usertypeDefinition.set("localRotation", &NI::AVObject::localRotation);
-			usertypeDefinition.set("localScale", &NI::AVObject::localScale);
-			usertypeDefinition.set("localTranslate", &NI::AVObject::localTranslate);
 			usertypeDefinition.set("rotation", &NI::AVObject::localRotation);
 			usertypeDefinition.set("scale", &NI::AVObject::localScale);
 			usertypeDefinition.set("translation", &NI::AVObject::localTranslate);
 			usertypeDefinition.set("worldBoundOrigin", &NI::AVObject::worldBoundOrigin);
 			usertypeDefinition.set("worldBoundRadius", &NI::AVObject::worldBoundRadius);
+			usertypeDefinition.set("worldTransform", &NI::AVObject::worldTransform);
+
+			// Ensure that rotation calls the required functions.
+			usertypeDefinition.set("rotation", sol::property(
+				[](NI::AVObject& self) { return self.localRotation; },
+				[](NI::AVObject& self, TES3::Matrix33* matrix) { self.setLocalRotationMatrix(matrix); }
+			));
+
+			// TODO: Deprecated. Remove before 2.1 releases.
+			usertypeDefinition.set("localRotation", &NI::AVObject::localRotation);
+			usertypeDefinition.set("localScale", &NI::AVObject::localScale);
+			usertypeDefinition.set("localTranslate", &NI::AVObject::localTranslate);
 
 			// Basic function binding.
 			usertypeDefinition.set("attachProperty", &NI::AVObject::attachProperty);
 			usertypeDefinition.set("clearTransforms", &NI::AVObject::clearTransforms);
+			usertypeDefinition.set("propegatePositionChange", [](NI::AVObject& self) { self.propagatePositionChange(); });
 			usertypeDefinition.set("updateNodeEffects", &NI::AVObject::updateNodeEffects);
 			usertypeDefinition.set("updateTextureProperties", &NI::AVObject::updateTextureProperties);
 

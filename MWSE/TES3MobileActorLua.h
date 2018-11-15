@@ -236,6 +236,21 @@ namespace mwse {
 			usertypeDefinition.set("startCombat", &TES3::MobileActor::startCombat);
 			usertypeDefinition.set("stopCombat", &TES3::MobileActor::stopCombat);
 
+			// Provide single function for isAffectedByAlchemy, etc.
+			usertypeDefinition.set("isAffectedByObject", [](TES3::MobileActor& self, sol::object param) {
+				if (param.is<TES3::Alchemy>()) {
+					return self.isAffectedByAlchemy(param.as<TES3::Alchemy*>());
+				}
+				else if (param.is<TES3::Enchantment>()) {
+					return self.isAffectedByEnchantment(param.as<TES3::Enchantment*>());
+				}
+				else if (param.is<TES3::Spell>()) {
+					return self.isAffectedBySpell(param.as<TES3::Spell*>());
+				}
+
+				return false;
+			});
+
 			// Functions exposed as properties.
 			usertypeDefinition.set("cell", sol::property(&TES3::MobileActor::getCell));
 			usertypeDefinition.set("hasFreeAction", sol::property(&TES3::MobileActor::hasFreeAction));

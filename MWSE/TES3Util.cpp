@@ -11,10 +11,12 @@
 #include "TES3DataHandler.h"
 #include "TES3Enchantment.h"
 #include "TES3GameSetting.h"
+#include "TES3Misc.h"
 #include "TES3MobilePlayer.h"
 #include "TES3NPC.h"
 #include "TES3Reference.h"
 #include "TES3Skill.h"
+#include "TES3SoulGemData.h"
 #include "TES3Spell.h"
 #include "TES3MagicSourceInstance.h"
 #include "TES3WorldController.h"
@@ -448,6 +450,62 @@ namespace mwse {
 
 		TES3::GameSettingInfo* getGMSTInfo(int index) {
 			return &reinterpret_cast<TES3::GameSettingInfo*>(TES3_data_GMSTs)[index];
+		}
+
+		static std::unordered_map<TES3::Misc*, TES3::SoulGemData*> customSoulGems;
+
+		bool isSoulGem(TES3::Object* objectOrReference) {
+			if (reinterpret_cast<bool(__cdecl *)(TES3::Object*)>(0x49ABE0)(objectOrReference)) {
+				return true;
+			}
+
+			// If we were given a reference, look at the base object.
+			if (objectOrReference->objectType == TES3::ObjectType::Reference) {
+				objectOrReference = reinterpret_cast<TES3::Reference*>(objectOrReference)->baseObject;
+			}
+
+			if (objectOrReference->objectType == TES3::ObjectType::Misc) {
+				auto searchResult = customSoulGems.find(reinterpret_cast<TES3::Misc*>(objectOrReference));
+				if (searchResult != customSoulGems.end()) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		TES3::SoulGemData * addCustomSoulGem(TES3::Misc * item) {
+			if (isSoulGem(item)) {
+				return nullptr;
+			}
+
+			auto data = new TES3::SoulGemData();
+			data->item = item;
+			data->id = item->objectID;
+			data->name = item->name;
+			data->model = item->model;
+			data->texture = item->icon;
+			data->value = item->value;
+			data->weight = item->weight;
+
+			customSoulGems[item] = data;
+			return data;
+		}
+
+		TES3::SoulGemData * getSoulGemData(TES3::Misc * item) {
+			TES3::SoulGemData * vanillaSoulGems = reinterpret_cast<TES3::SoulGemData*>(0x791C98);
+			for (size_t i = 0; i < 6; i++) {
+				if (vanillaSoulGems[i].item == item) {
+					return &vanillaSoulGems[i];
+				}
+			}
+
+			auto searchResult = customSoulGems.find(item);
+			if (searchResult != customSoulGems.end()) {
+				return searchResult->second;
+			}
+
+			return nullptr;
 		}
 
 		TES3::Reference* exteriorRefs[9] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };

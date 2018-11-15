@@ -26,6 +26,7 @@ return {
 	["repairItem"] = 1095779666,
 	["script"] = 1414546259,
 	["soundGenerator"] = 1195658835,
+	["spell"] = 1279610963,
 	["static"] = 1413567571,
 	["weapon"] = 1346454871,
 }

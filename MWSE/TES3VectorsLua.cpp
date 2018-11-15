@@ -162,10 +162,8 @@ namespace mwse {
 
 				// Basic function binding.
 				usertypeDefinition.set("copy", [](TES3::Matrix33& self) { return TES3::Matrix33(self); });
-				usertypeDefinition.set("invert", sol::resolve<TES3::Matrix33()>(&TES3::Matrix33::invert));
+				usertypeDefinition.set("fromEulerXYZ", &TES3::Matrix33::fromEulerXYZ);
 				usertypeDefinition.set("reorthogonalize", &TES3::Matrix33::reorthogonalize);
-				usertypeDefinition.set("toDiagonal", &TES3::Matrix33::toDiagonal);
-				usertypeDefinition.set("toEulerXYZ", &TES3::Matrix33::toEulerXYZ);
 				usertypeDefinition.set("toIdentity", &TES3::Matrix33::toIdentity);
 				usertypeDefinition.set("toRotation", &TES3::Matrix33::toRotation);
 				usertypeDefinition.set("toRotationX", &TES3::Matrix33::toRotationX);
@@ -173,6 +171,23 @@ namespace mwse {
 				usertypeDefinition.set("toRotationZ", &TES3::Matrix33::toRotationZ);
 				usertypeDefinition.set("toZero", &TES3::Matrix33::toZero);
 				usertypeDefinition.set("transpose", &TES3::Matrix33::transpose);
+
+				// Handle functions with out values.
+				usertypeDefinition.set("invert", [](TES3::Matrix33& self) {
+					TES3::Matrix33 matrix;
+					bool valid = self.invert(&matrix);
+					return std::make_tuple(matrix, valid);
+				});
+				usertypeDefinition.set("toEulerXYZ", [](TES3::Matrix33& self) {
+					float x, y, z;
+					bool isUnique = self.toEulerXYZ(&x, &y, &z);
+					return std::make_tuple(TES3::Vector3(x, y, z), isUnique);
+				});
+				usertypeDefinition.set("toEulerZYX", [](TES3::Matrix33& self) {
+					float x, y, z;
+					bool isUnique = self.toEulerZYX(&x, &y, &z);
+					return std::make_tuple(TES3::Vector3(x, y, z), isUnique);
+				});
 
 				// Finish up our usertype.
 				state.set_usertype("tes3matrix33", usertypeDefinition);

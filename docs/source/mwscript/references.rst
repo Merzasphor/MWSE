@@ -311,6 +311,7 @@ Value      Code  Meaning
 1095779666 REPA  Repair Item
 1414546259 SCPT  Script
 1195658835 SNDG  Sound Generator
+1279610963 SPEL  Spell
 1413567571 STAT  Static
 1346454871 WEAP  Weapon
 ========== ===== =================
