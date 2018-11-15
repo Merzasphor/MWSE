@@ -4,15 +4,33 @@
 
 #include "TES3Object.h"
 
+#include "NIPointer.h"
+
 namespace TES3 {
+	namespace BodyPartFlag {
+		enum Flag : unsigned int {
+			Female = 0x1,
+			Playable = 0x2
+		};
+
+	}
+
 	struct BodyPart : PhysicalObject {
-		char * unknown_0x30;
-		char * fileName; // 0x34
+		char * fileName; // 0x30
+		char * raceName; // 0x34
 		signed char part; // 0x38
 		bool vampiric; // 0x39
 		unsigned char flags; // 0x3A
 		signed char partType; // 0x3B
-		NI::Node * mirroredNode; // 0x3C // Type: BSMirroredNode.
+		NI::Pointer<NI::Node> mirroredNode; // 0x3C // Type: BSMirroredNode.
+
+		//
+		// Custom functions.
+		//
+
+		bool getFlag(BodyPartFlag::Flag flag);
+		void setFlag(BodyPartFlag::Flag flag, bool set);
+
 	};
 	static_assert(sizeof(BodyPart) == 0x40, "TES3::BodyPart failed size validation");
 }

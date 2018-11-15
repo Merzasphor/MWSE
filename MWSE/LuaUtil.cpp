@@ -22,6 +22,7 @@
 #include "TES3Alchemy.h"
 #include "TES3Apparatus.h"
 #include "TES3Armor.h"
+#include "TES3BodyPart.h"
 #include "TES3Book.h"
 #include "TES3Cell.h"
 #include "TES3Class.h"
@@ -348,6 +349,9 @@ namespace mwse {
 				break;
 			case TES3::ObjectType::Armor:
 				result = sol::make_object(state, reinterpret_cast<TES3::Armor*>(object));
+				break;
+			case TES3::ObjectType::Bodypart:
+				result = sol::make_object(state, reinterpret_cast<TES3::BodyPart*>(object));
 				break;
 			case TES3::ObjectType::Book:
 				result = sol::make_object(state, reinterpret_cast<TES3::Book*>(object));

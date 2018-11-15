@@ -62,8 +62,8 @@ namespace TES3 {
 		Race * race; // 0xB0
 		Class * class_; // 0xB4
 		Faction * faction; // 0xB8
-		Bodypart * head; // 0xBC
-		Bodypart * hair; // 0xC0
+		BodyPart * head; // 0xBC
+		BodyPart * hair; // 0xC0
 		SpellList spellList; // 0xC4
 		void * aiPackageList; // 0xDC
 		AIConfig aiConfig; // 0xE0

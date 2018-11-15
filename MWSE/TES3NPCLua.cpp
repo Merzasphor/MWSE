@@ -4,6 +4,7 @@
 #include "TES3ActorLua.h"
 
 #include "TES3NPC.h"
+#include "TES3BodyPart.h"
 #include "TES3Race.h"
 #include "TES3Class.h"
 #include "TES3Faction.h"
@@ -30,6 +31,8 @@ namespace mwse {
 				usertypeDefinition.set("factionIndex", &TES3::NPC::factionIndex);
 				usertypeDefinition.set("factionRank", &TES3::NPC::factionRank);
 				usertypeDefinition.set("fatigue", &TES3::NPC::fatigue);
+				usertypeDefinition.set("hair", &TES3::NPC::hair);
+				usertypeDefinition.set("head", &TES3::NPC::head);
 				usertypeDefinition.set("health", &TES3::NPC::health);
 				usertypeDefinition.set("level", &TES3::NPC::level);
 				usertypeDefinition.set("magicka", &TES3::NPC::magicka);

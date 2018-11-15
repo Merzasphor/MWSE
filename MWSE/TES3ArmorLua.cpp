@@ -4,6 +4,7 @@
 #include "TES3ObjectLua.h"
 
 #include "TES3Armor.h"
+#include "TES3BodyPart.h"
 #include "TES3Enchantment.h"
 #include "TES3Script.h"
 
@@ -24,6 +25,7 @@ namespace mwse {
 			// Basic property binding.
 			usertypeDefinition.set("armorRating", &TES3::Armor::armorRating);
 			usertypeDefinition.set("enchantCapacity", &TES3::Armor::enchantCapacity);
+			usertypeDefinition.set("parts", sol::readonly_property([](TES3::Armor& self) { return std::ref(self.parts); }));
 			usertypeDefinition.set("slot", &TES3::Armor::slot);
 			usertypeDefinition.set("value", &TES3::Armor::value);
 			usertypeDefinition.set("weight", &TES3::Armor::weight);

@@ -3,6 +3,7 @@
 #include "LuaManager.h"
 #include "TES3ObjectLua.h"
 
+#include "TES3BodyPart.h"
 #include "TES3Clothing.h"
 #include "TES3Enchantment.h"
 #include "TES3Script.h"
@@ -23,6 +24,7 @@ namespace mwse {
 
 			// Basic property binding.
 			usertypeDefinition.set("enchantCapacity", &TES3::Clothing::enchantCapacity);
+			usertypeDefinition.set("parts", sol::readonly_property([](TES3::Clothing& self) { return std::ref(self.parts); }));
 			usertypeDefinition.set("slot", &TES3::Clothing::slot);
 			usertypeDefinition.set("value", &TES3::Clothing::value);
 			usertypeDefinition.set("weight", &TES3::Clothing::weight);

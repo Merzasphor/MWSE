@@ -17,7 +17,7 @@ namespace TES3 {
 	struct AudioController;
 	struct BaseObject;
 	struct BaseObjectVirtualTable;
-	struct Bodypart;
+	struct BodyPart;
 	struct Book;
 	struct BoundingBox;
 	struct Cell;
@@ -106,6 +106,7 @@ namespace TES3 {
 	struct Statistic;
 	struct TravelDestination;
 	struct Weapon;
+	struct WearablePart;
 	struct Weather;
 	struct WeatherAsh;
 	struct WeatherBlight;

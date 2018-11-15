@@ -58,6 +58,7 @@
 #include "TES3ApparatusLua.h"
 #include "TES3ArmorLua.h"
 #include "TES3AttachmentLua.h"
+#include "TES3BodyPartLua.h"
 #include "TES3BookLua.h"
 #include "TES3CellLua.h"
 #include "TES3ClassLua.h"
@@ -345,6 +346,7 @@ namespace mwse {
 			bindTES3Apparatus();
 			bindTES3Armor();
 			bindTES3Attachment();
+			bindTES3BodyPart();
 			bindTES3Book();
 			bindTES3Cell();
 			bindTES3Class();

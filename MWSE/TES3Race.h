@@ -17,22 +17,22 @@ namespace TES3 {
 			float female;
 		};
 		struct BodyParts {
-			BaseObject * head1;
-			BaseObject * hair;
-			BaseObject * neck;
-			BaseObject * chest;
-			BaseObject * groin;
-			BaseObject * hands;
-			BaseObject * wrist;
-			BaseObject * forearm;
-			BaseObject * upper_arm;
-			BaseObject * foot;
-			BaseObject * ankle;
-			BaseObject * knee;
-			BaseObject * upper_leg;
-			BaseObject * unknown1;
-			BaseObject * tail;
-			BaseObject * head2;
+			BodyPart * head1;
+			BodyPart * hair;
+			BodyPart * neck;
+			BodyPart * chest;
+			BodyPart * groin;
+			BodyPart * hands;
+			BodyPart * wrist;
+			BodyPart * forearm;
+			BodyPart * upperArm;
+			BodyPart * foot;
+			BodyPart * ankle;
+			BodyPart * knee;
+			BodyPart * upperLeg;
+			BodyPart * clavicle;
+			BodyPart * tail;
+			BodyPart * head2;
 			int unknown2[14];
 		};
 		char id[32]; // 0x10
@@ -41,11 +41,12 @@ namespace TES3 {
 		BaseAttribute baseAttributes[8]; // 0x88 // Index corresponds to Attributes enum.
 		HeightWeight height; // 0xC8
 		HeightWeight weight; // 0xD0
-		unsigned long flags; // 0xD8 // 1 = playable, 2 = beast, 3 = both.
-		int unknown_0xDC; // Pointer?
-		int unknown_0xE0;
-		int unknown_0xE4;
+		unsigned long flags; // 0xD8 // 1 = playable, 2 = beast
+		int unknown_0xDC; // Pointer? Abilities list?
+		char * description; // 0xE0
+		unsigned int descriptionFileOffset; // 0xE4
 		BodyParts maleBody; // 0xE8
 		BodyParts femaleBody; // 0x0160
 	};
+	static_assert(sizeof(Race) == 0x1D8, "TES3::Race failed size validation");
 }
