@@ -22,6 +22,10 @@ namespace TES3 {
 		T * data;
 		StlListNode<T> * previous;
 		StlListNode<T> * next;
+
+		static StlListNode<T> * create() {
+			return reinterpret_cast<StlListNode<T> *(__thiscall *)(StlListNode<T> *)>(0x4D3FA0)(mwse::tes3::_new<StlListNode<T>>());
+		}
 	};
 	static_assert(sizeof(StlListNode<void>) == 0x0C, "TES3::StlListNode failed size validation");
 
@@ -30,6 +34,12 @@ namespace TES3 {
 		unsigned long size;
 		StlListNode<T> * head;
 		StlListNode<T> * tail;
+
+		void insertAtFront(T * data) {
+			auto node = StlListNode<T>::create();
+			node->data = data;
+			reinterpret_cast<void(__thiscall *)(StlList<T> *, StlListNode<T> *)>(0x4D41F0)(this, node);
+		}
 	};
 	static_assert(sizeof(StlList<void>) == 0x0C, "TES3::StlList failed size validation");
 

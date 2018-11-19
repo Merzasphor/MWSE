@@ -1793,6 +1793,75 @@ namespace mwse {
 
 				mwse::tes3::setArmorSlotData(slotData);
 			};
+
+			state["tes3"]["createCell"] = [](sol::table params) -> sol::object {
+				auto nonDynamicData = tes3::getDataHandler()->nonDynamicData;
+
+				TES3::Cell * cell = nullptr;
+
+				sol::optional<int> gridX = params["gridX"];
+				sol::optional<int> gridY = params["gridY"];
+				if (gridX && gridY) {
+					auto existingCell = nonDynamicData->getCellByGrid(gridX.value(), gridY.value());
+					if (existingCell) {
+						mwse::log::getLog() << "Could not create cell at coordinates <" << gridX.value() << ", " << gridY.value() << ">. Cell already exists at that location." << std::endl;
+						return sol::nil;
+					}
+
+					cell = TES3::Cell::create();
+					cell->setCellFlag(TES3::CellFlag::Interior, false);
+					cell->setGridX(gridX.value());
+					cell->setGridY(gridY.value());
+					cell->setName("");
+				}
+				else {
+					sol::optional<const char*> name = params["name"];
+					if (!name) {
+						mwse::log::getLog() << "Could not create cell. Interior cells must have a name." << std::endl;
+						return sol::nil;
+					}
+
+					auto existingCell = nonDynamicData->getCellByName(name.value());
+					if (existingCell) {
+						mwse::log::getLog() << "Could not create cell \"" << name.value() << "\". Cell already exists with the given name." << std::endl;
+						return sol::nil;
+					}
+
+					cell = TES3::Cell::create();
+					cell->setCellFlag(TES3::CellFlag::Interior, true);
+					cell->setName(name.value());
+				}
+
+				cell->setObjectModified(true);
+
+				nonDynamicData->cells->insertAtFront(cell);
+
+				return makeLuaObject(cell);
+			};
+
+			state["tes3"]["setDestination"] = [](sol::table params) {
+				TES3::Reference * reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					return false;
+				}
+
+				// Get the position.
+				sol::optional<TES3::Vector3> position = getOptionalParamVector3(params, "position");
+				if (!position) {
+					return false;
+				}
+
+				// Get the orientation.
+				sol::optional<TES3::Vector3> orientation = getOptionalParamVector3(params, "orientation");
+				if (!orientation) {
+					return false;
+				}
+
+				// Get the cell.
+				TES3::Cell * cell = getOptionalParamCell(params, "cell");
+
+				reference->setTravelDestination(&position.value(), &orientation.value(), cell);
+			};
 		}
 	}
 }

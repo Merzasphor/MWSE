@@ -184,6 +184,13 @@ namespace TES3 {
 		setOrientation(value->x, value->y, value->z);
 	}
 
+	const auto TES3_Reference_setTravelDestination = reinterpret_cast<TravelDestination*(__thiscall*)(Reference*, Vector3 *, Vector3*)>(0x4E7B80);
+	TravelDestination * Reference::setTravelDestination(Vector3 * position, Vector3 * orientation, Cell * cell) {
+		auto destination = TES3_Reference_setTravelDestination(this, position, orientation);
+		destination->cell = cell;
+		return destination;
+	}
+
 	Matrix33* Reference::updateSceneMatrix(Matrix33* matrix, bool unknown) {
 		return reinterpret_cast<Matrix33* (__thiscall *)(Reference*, Matrix33*, bool)>(0x4E8450)(this, matrix, unknown);
 	}

@@ -57,7 +57,7 @@ namespace TES3 {
 
 	struct TravelDestination {
 		Cell * cell; // 0x0
-		int unknown_0x4;
+		char * cellName; // 0x4
 		Reference * destination; // 0x8
 	};
 	static_assert(sizeof(TravelDestination) == 0xC, "TES3::TravelDestination failed size validation");

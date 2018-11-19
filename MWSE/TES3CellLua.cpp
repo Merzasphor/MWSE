@@ -160,8 +160,8 @@ namespace mwse {
 						self.VariantData.interior.fogDensity = value;
 					}
 				}));
-				usertypeDefinition.set("gridX", sol::readonly_property(&TES3::Cell::getGridX));
-				usertypeDefinition.set("gridY", sol::readonly_property(&TES3::Cell::getGridY));
+				usertypeDefinition.set("gridX", sol::property(&TES3::Cell::getGridX, &TES3::Cell::setGridX));
+				usertypeDefinition.set("gridY", sol::property(&TES3::Cell::getGridY, &TES3::Cell::setGridY));
 				usertypeDefinition.set("hasWater", sol::property(
 					[](TES3::Cell& self) { return self.getCellFlag(TES3::CellFlag::HasWater); },
 					[](TES3::Cell& self, bool set) { self.setCellFlag(TES3::CellFlag::HasWater, set); }
@@ -170,7 +170,10 @@ namespace mwse {
 					[](TES3::Cell& self) { return self.getCellFlag(TES3::CellFlag::Interior); },
 					[](TES3::Cell& self, bool set) { self.setCellFlag(TES3::CellFlag::Interior, set); }
 				));
-
+				usertypeDefinition.set("name", sol::property(
+					[](TES3::Cell& self) { return self.name; },
+					[](TES3::Cell& self, const char* name) { self.setName(name); }
+					));
 				usertypeDefinition.set("region", sol::readonly_property(&TES3::Cell::getRegion));
 				usertypeDefinition.set("restingIsIllegal", sol::property(
 					[](TES3::Cell& self) { return self.getCellFlag(TES3::CellFlag::SleepIsIllegal); },

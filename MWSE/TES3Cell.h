@@ -84,11 +84,17 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
+		static Cell* create();
+
 		Reference * getFirstObjectOfType(ObjectType::ObjectType, bool);
 
 		bool __declspec(dllexport) isInterior();
 		int __declspec(dllexport) getGridX();
+		void __declspec(dllexport) setGridX(int x);
 		int __declspec(dllexport) getGridY();
+		void __declspec(dllexport) setGridY(int y);
+
+		void setName(const char* name);
 
 		//
 		// Other getter/setter functions.
