@@ -61,7 +61,9 @@ namespace mwse {
 				usertypeDefinition.set("previousKeyboardState", sol::readonly_property([](TES3::InputController& self) { return std::ref(self.previousKeyboardState); }));
 
 				// Basic function binding.
-				usertypeDefinition.set("keybindTest", &TES3::InputController::keybindTest);
+				usertypeDefinition.set("keybindTest", [](TES3::InputController& self, unsigned int key, sol::optional<unsigned int> transition) {
+					self.keybindTest(key, transition.value_or(TES3::KeyTransition::Down));
+				});
 				usertypeDefinition.set("isKeyDown", &TES3::InputController::isKeyDown);
 				usertypeDefinition.set("isKeyPressedThisFrame", &TES3::InputController::isKeyPressedThisFrame);
 				usertypeDefinition.set("isKeyReleasedThisFrame", &TES3::InputController::isKeyReleasedThisFrame);
