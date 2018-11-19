@@ -1861,6 +1861,7 @@ namespace mwse {
 				TES3::Cell * cell = getOptionalParamCell(params, "cell");
 
 				reference->setTravelDestination(&position.value(), &orientation.value(), cell);
+				return true;
 			};
 		}
 	}
