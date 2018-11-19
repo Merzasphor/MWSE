@@ -2858,6 +2858,40 @@ namespace mwse {
 			DWORD OldProtect;
 			VirtualProtect((DWORD*)0x791C98, 6 * sizeof(TES3::SoulGemData), PAGE_READWRITE, &OldProtect);
 
+			// Allow overriding of armor rating.
+			auto armorGetRating = &TES3::Armor::calculateArmorRating;
+			genCallEnforced(0x54D421, 0x4A1120, *reinterpret_cast<DWORD*>(&armorGetRating));
+			genCallEnforced(0x54D47D, 0x4A1120, *reinterpret_cast<DWORD*>(&armorGetRating));
+			genCallEnforced(0x54D4DE, 0x4A1120, *reinterpret_cast<DWORD*>(&armorGetRating));
+			genCallEnforced(0x54D53F, 0x4A1120, *reinterpret_cast<DWORD*>(&armorGetRating));
+			genCallEnforced(0x54D5A0, 0x4A1120, *reinterpret_cast<DWORD*>(&armorGetRating));
+			genCallEnforced(0x54D601, 0x4A1120, *reinterpret_cast<DWORD*>(&armorGetRating));
+			genCallEnforced(0x54D662, 0x4A1120, *reinterpret_cast<DWORD*>(&armorGetRating));
+			genCallEnforced(0x54D6C3, 0x4A1120, *reinterpret_cast<DWORD*>(&armorGetRating));
+			genCallEnforced(0x54D712, 0x4A1120, *reinterpret_cast<DWORD*>(&armorGetRating));
+			genCallEnforced(0x54D773, 0x4A1120, *reinterpret_cast<DWORD*>(&armorGetRating));
+			genCallEnforced(0x54D7BE, 0x4A1120, *reinterpret_cast<DWORD*>(&armorGetRating));
+			genCallEnforced(0x5912EC, 0x4A1120, *reinterpret_cast<DWORD*>(&armorGetRating));
+
+			// Allow overriding of armor rating for NPCs.
+			auto armorGetRatingForNPC = &TES3::Armor::calculateArmorRatingForNPC;
+			genCallEnforced(0x4D9B95, 0x4A0FD0, *reinterpret_cast<DWORD*>(&armorGetRatingForNPC));
+			genCallEnforced(0x4D9C2E, 0x4A0FD0, *reinterpret_cast<DWORD*>(&armorGetRatingForNPC));
+			genCallEnforced(0x537AF6, 0x4A0FD0, *reinterpret_cast<DWORD*>(&armorGetRatingForNPC));
+
+			// Allow overriding of armor weight class.
+			auto armorGetWeightClass = &TES3::Armor::getWeightClass;
+			genCallEnforced(0x411256, 0x4A0F30, *reinterpret_cast<DWORD*>(&armorGetWeightClass));
+			genCallEnforced(0x46F61B, 0x4A0F30, *reinterpret_cast<DWORD*>(&armorGetWeightClass));
+			genCallEnforced(0x507BDD, 0x4A0F30, *reinterpret_cast<DWORD*>(&armorGetWeightClass));
+			genCallEnforced(0x54DA0A, 0x4A0F30, *reinterpret_cast<DWORD*>(&armorGetWeightClass));
+			genCallEnforced(0x557480, 0x4A0F30, *reinterpret_cast<DWORD*>(&armorGetWeightClass));
+			genCallEnforced(0x5916D9, 0x4A0F30, *reinterpret_cast<DWORD*>(&armorGetWeightClass));
+
+			// Allow overriding of armor slot name.
+			auto armorGetSlotName = &TES3::Armor::getSlotName;
+			overrideVirtualTableEnforced(0x748258, 0x98, 0x4A1270, *reinterpret_cast<DWORD*>(&armorGetSlotName));
+
 			// UI framework hooks
 			TES3::UI::hook();
 

@@ -21,6 +21,7 @@
 #include "NIStream.h"
 
 #include "TES3Actor.h"
+#include "TES3Armor.h"
 #include "TES3AudioController.h"
 #include "TES3Cell.h"
 #include "TES3Class.h"
@@ -1770,6 +1771,27 @@ namespace mwse {
 				}
 
 				return true;
+			};
+
+			state["tes3"]["addArmorSlot"] = [](sol::table params) {
+				sol::optional<int> slot = params["slot"];
+				if (!slot || (slot.value() >= TES3::ArmorSlot::First && slot.value() <= TES3::ArmorSlot::Last) || mwse::tes3::getArmorSlotData(slot.value())) {
+					return false;
+				}
+
+				sol::optional<const char*> name = params["name"];
+				if (!name || name.value() == nullptr) {
+					return false;
+				}
+
+				sol::optional<float> weight = params["weight"];
+
+				auto slotData = new TES3::ArmorSlotData();
+				slotData->slot = slot.value();
+				slotData->name = name.value();
+				slotData->weight = weight.value_or(0.0f);
+
+				mwse::tes3::setArmorSlotData(slotData);
 			};
 		}
 	}

@@ -133,10 +133,13 @@ namespace mwse {
 		__declspec(dllexport) void messagePlayer(const char* message);
 
 		__declspec(dllexport) TES3::GameSettingInfo* getGMSTInfo(int);
+
 		__declspec(dllexport) TES3::SoulGemData * addCustomSoulGem(TES3::Misc * item);
 		__declspec(dllexport) TES3::SoulGemData * getSoulGemData(TES3::Misc * item);
-
 		__declspec(dllexport) bool isSoulGem(TES3::Object* objectOrReference);
+
+		__declspec(dllexport) TES3::ArmorSlotData * getArmorSlotData(int slot);
+		__declspec(dllexport) void setArmorSlotData(TES3::ArmorSlotData * data);
 
 		// Used in xFirstNPC/Static/Item. The last element should never be non-null.
 		// The first eight elements are pointers to the first reference from the 8 surrounding cells.

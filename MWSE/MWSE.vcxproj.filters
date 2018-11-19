@@ -1194,6 +1194,12 @@
     <ClInclude Include="LuaCalcSoulValueEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="TES3BodyPartLua.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaCalcArmorRatingEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2593,6 +2599,9 @@
     </ClCompile>
     <ClCompile Include="TES3BodyPart.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaCalcArmorRatingEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

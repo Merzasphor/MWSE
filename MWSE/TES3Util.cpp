@@ -508,6 +508,27 @@ namespace mwse {
 			return nullptr;
 		}
 
+		static std::map<int, TES3::ArmorSlotData*> customArmorSlots;
+
+		TES3::ArmorSlotData * getArmorSlotData(int slot) {
+			auto searchResult = customArmorSlots.find(slot);
+			if (searchResult != customArmorSlots.end()) {
+				return searchResult->second;
+			}
+
+			return nullptr;
+		}
+
+		void setArmorSlotData(TES3::ArmorSlotData * data) {
+			auto searchResult = customArmorSlots.find(data->slot);
+			if (searchResult != customArmorSlots.end()) {
+				delete searchResult->second;
+				customArmorSlots.erase(data->slot);
+			}
+
+			customArmorSlots[data->slot] = data;
+		}
+
 		TES3::Reference* exteriorRefs[9] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 
 		void clearExteriorRefs() {

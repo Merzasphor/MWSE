@@ -13,6 +13,7 @@ namespace TES3 {
 	struct AnimationGroup;
 	struct Apparatus;
 	struct Armor;
+	struct ArmorSlotData;
 	struct Attachment;
 	struct AudioController;
 	struct BaseObject;
