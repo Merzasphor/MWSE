@@ -173,13 +173,14 @@ namespace mwse {
 				data["timer"] = timer;
 
 				// Invoke the callback.
-				auto result = timer->callback(data);
-				if (!result.valid()) {
-					// If the callback encountered an error, log it.
-					sol::error error = result;
-					log::getLog() << "Lua error encountered in timer callback:" << std::endl << error.what() << std::endl;
-					
-					// Also cancel the timer.
+				try {
+					sol::protected_function callback = timer->callback;
+					callback(data);
+				}
+				catch (const std::exception& e) {
+					log::getLog() << "Lua error encountered in timer callback:" << std::endl << e.what() << std::endl;
+
+					// Cancel the timer.
 					cancelTimer(timer);
 					continue;
 				}

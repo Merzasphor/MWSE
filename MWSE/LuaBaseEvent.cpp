@@ -13,13 +13,14 @@ namespace mwse {
 
 				// Trigger the function, check for lua errors.
 				sol::protected_function trigger = state["event"]["trigger"];
-				auto result = trigger(eventType, eventData, eventOptions);
-				if (!result.valid()) {
-					sol::error error = result;
-					log::getLog() << "Lua error encountered when raising " << eventType << " event:" << std::endl << error.what() << std::endl;
+				try {
+					return trigger(eventType, eventData, eventOptions);
+				}
+				catch (const std::exception& e) {
+					log::getLog() << "Lua error encountered when raising " << eventType << " event:" << std::endl << e.what() << std::endl;
 				}
 
-				return result;
+				return sol::nil;
 			}
 
 			void clearObjectFilter(sol::object filterObject) {

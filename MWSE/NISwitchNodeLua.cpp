@@ -31,9 +31,7 @@ namespace mwse {
 				[](NI::SwitchNode& self, int index)
 			{
 				if (index < 0 || index > (self.children.filledCount-1) || self.children.storage[index] == nullptr) {
-					sol::state& state = LuaManager::getInstance().getState();
-					state["error"]("Attempted to set switchIndex beyond bounds!");
-					return;
+					throw std::exception("Attempted to set switchIndex beyond bounds!");
 				}
 				self.switchIndex = index;
 			}

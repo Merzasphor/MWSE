@@ -244,7 +244,7 @@ namespace mwse {
 			luaState.open_libraries();
 
 			// Override the default atpanic to print to the log.
-			luaState.set_panic(panic);
+			luaState.set_panic(&panic);
 
 			// Set up our timers.
 			gameTimers = std::make_shared<TimerController>();
@@ -451,10 +451,11 @@ namespace mwse {
 				params["reference"] = makeLuaObject(reference);
 				params["scriptData"] = mwse::mwscript::getLocalScriptVariables();
 
-				auto result = execute(params);
-				if (!result.valid()) {
-					sol::error error = result;
-					log::getLog() << "Lua error encountered when override of script '" << script->name << "':" << std::endl << error.what() << std::endl;
+				try {
+					execute(params);
+				}
+				catch (const std::exception& e) {
+					log::getLog() << "Lua error encountered when override of script '" << script->name << "':" << std::endl << e.what() << std::endl;
 					mwscript::StopScript(script, script);
 				}
 			}
@@ -1796,16 +1797,12 @@ namespace mwse {
 						continue;
 					}
 
-					sol::protected_function_result result = luaState.do_file(p.path().string());
-					if (!result.valid()) {
-						sol::error err = result;
-						log::getLog() << "[LuaManager] ERROR: Failed to run mod initialization script:\n" << err.what() << std::endl;
+					try {
+						luaState.safe_script_file(p.path().string());
 					}
-#if _DEBUG
-					else {
-						log::getLog() << "[LuaManager] Invoked mod initialization script: " << p.path().string() << std::endl;
+					catch (const std::exception& e) {
+						log::getLog() << "[LuaManager] ERROR: Failed to run mod initialization script:" << std::endl << e.what() << std::endl;
 					}
-#endif
 				}
 			}
 		}
@@ -2154,10 +2151,12 @@ namespace mwse {
 
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
-			sol::protected_function_result result = luaState.do_file("Data Files/MWSE/core/mwse_init.lua");
-			if (!result.valid()) {
-				sol::error err = result;
-				log::getLog() << "ERROR: Failed to initialize MWSE Lua interface. Error encountered when executing mwse_init.lua:\n" << err.what() << std::endl;
+			try {
+				luaState.safe_script_file("Data Files/MWSE/core/mwse_init.lua");
+			}
+			catch (const std::exception& e) {
+				log::getLog() << "[LuaManager] ERROR: Failed to initialize MWSE Lua interface." << std::endl << e.what() << std::endl;
+				return;
 			}
 
 			// Bind libraries.
@@ -2997,10 +2996,12 @@ namespace mwse {
 				sol::table eventData = luaState.create_table();
 				eventData["button"] = tes3::ui::getButtonPressedIndex();
 				tes3::ui::resetButtonPressedIndex();
-				sol::protected_function_result result = callback(eventData);
-				if (!result.valid()) {
-					sol::error err = result;
-					log::getLog() << "Runtime error when running tes3.messageBox button callback:\n" << err.what() << std::endl;
+
+				try {
+					callback(eventData);
+				}
+				catch (const std::exception& e) {
+					log::getLog() << "Runtime error when running tes3.messageBox button callback:\n" << e.what() << std::endl;
 				}
 			}
 		}

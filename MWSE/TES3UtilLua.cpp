@@ -494,9 +494,7 @@ namespace mwse {
 					return makeLuaObject(tes3::getDataHandler()->nonDynamicData->findSound(id));
 				}
 				else {
-					sol::state& state = LuaManager::getInstance().getState();
-					state["error"]("Function called before Data Handler was initialized.");
-					return sol::nil;
+					throw std::exception("Function called before Data Handler was initialized.");
 				}
 			};
 
@@ -736,14 +734,12 @@ namespace mwse {
 					}
 				}
 				else {
-					state["error"]("No actor provided.");
-					return sol::nil;
+					throw std::exception("No actor provided.");
 				}
 
 				// Make sure we got the equipment.
-				if (equipment == NULL) {
-					state["error"]("The provided actor's equipment could not be resolved.");
-					return sol::nil;
+				if (equipment == nullptr) {
+					throw std::exception("The provided actor's equipment could not be resolved.");
 				}
 
 				// Get filter: Item Type
@@ -869,8 +865,7 @@ namespace mwse {
 				
 				TES3::Reference * reference = getOptionalParamExecutionReference(params);
 				if (reference == nullptr) {
-					state["error"]("tes3.removeEffects: No reference parameter provided.");
-					return;
+					throw std::exception("tes3.removeEffects: No reference parameter provided.");
 				}
 				
 				int effect = getOptionalParam<int>(params, "effect", -1);
@@ -891,7 +886,7 @@ namespace mwse {
 					tes3::getWorldController()->spellInstanceController->clearSpellEffect(reference, castType, chance, removeSpell);
 				}
 				else {
-					state["error"]("tes3.removeEffects: Must pass either 'effect' or 'castType' parameter!");
+					throw std::exception("tes3.removeEffects: Must pass either 'effect' or 'castType' parameter!");
 				}
 			};
 
@@ -908,8 +903,7 @@ namespace mwse {
 				// Look at the given type.
 				int crimeType = getOptionalParam<int>(params, "type", 3);
 				if (crimeType < 1 || crimeType > 7) {
-					state["error"]("Invalid type given. Value must be between 1 and 7.");
-					return false;
+					throw std::exception("Invalid type given. Value must be between 1 and 7.");
 				}
 				crimeEvent.type = crimeType;
 
@@ -1776,12 +1770,12 @@ namespace mwse {
 			state["tes3"]["addArmorSlot"] = [](sol::table params) {
 				sol::optional<int> slot = params["slot"];
 				if (!slot || (slot.value() >= TES3::ArmorSlot::First && slot.value() <= TES3::ArmorSlot::Last) || mwse::tes3::getArmorSlotData(slot.value())) {
-					return false;
+					throw std::exception("tes3.addArmorSlot: Invalid slot. An unusued slot must be provided.");
 				}
 
 				sol::optional<const char*> name = params["name"];
 				if (!name || name.value() == nullptr) {
-					return false;
+					throw std::exception("tes3.addArmorSlot: No name provided for slot.");
 				}
 
 				sol::optional<float> weight = params["weight"];

@@ -32,9 +32,7 @@ namespace mwse {
 					[](TES3::LockAttachmentNode& self, TES3::Misc * key)
 				{
 					if (key && !(key->flags & 1)) {
-						sol::state& state = LuaManager::getInstance().getState();
-						state["error"]("Invalid key specified. Object is not a key.");
-						return;
+						throw std::exception("Invalid key specified. Object is not a key.");
 					}
 
 					self.key = key;

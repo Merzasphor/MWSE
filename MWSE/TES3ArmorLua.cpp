@@ -58,17 +58,13 @@ namespace mwse {
 						return self.calculateArmorRating(mobileActor);
 					}
 					else {
-						sol::state& state = LuaManager::getInstance().getState();
-						state["error"]("Reference does not have an attached mobile actor. Is this an NPC or creature reference?");
-						return 0.0f;
+						throw std::exception("Reference does not have an attached mobile actor. Is this an NPC or creature reference?");
 					}
 				}
 
 				// If we were given something else, tell them they goofed.
 				else {
-					sol::state& state = LuaManager::getInstance().getState();
-					state["error"]("Invalid function call. Requires mobile actor or reference as a parameter.");
-					return 0.0f;
+					throw std::exception("Invalid function call. Requires mobile actor or reference as a parameter.");
 				}
 			});
 			

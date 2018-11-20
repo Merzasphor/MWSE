@@ -33,9 +33,7 @@ namespace mwse {
 
 				// We only support NPC and Faction owners.
 				if (newOwner->objectType != TES3::ObjectType::NPC && newOwner->objectType != TES3::ObjectType::Faction) {
-					sol::state& state = LuaManager::getInstance().getState();
-					state["error"]("Ownership must be an NPC or a faction.");
-					return;
+					throw std::exception("Ownership must be an NPC or a faction.");
 				}
 
 				// If the owner type is changing, reset the requirement.
@@ -62,17 +60,15 @@ namespace mwse {
 		}
 
 		void setItemDataOwnerRequirement(TES3::ItemData& itemData, sol::object value) {
-			if (itemData.owner == NULL) {
-				sol::state& state = LuaManager::getInstance().getState();
-				state["error"]("An owner must be set before the requirement can be set.");
+			if (itemData.owner == nullptr) {
+				throw std::exception("An owner must be set before the requirement can be set.");
 			}
 			else if (itemData.owner->objectType == TES3::ObjectType::Faction) {
 				if (value.is<double>()) {
 					itemData.requirement.rank = (int)value.as<double>();
 				}
 				else {
-					sol::state& state = LuaManager::getInstance().getState();
-					state["error"]("Faction ownership used. Requirement must be a rank (number).");
+					throw std::exception("Faction ownership used. Requirement must be a rank (number).");
 				}
 			}
 			else if (itemData.owner->objectType == TES3::ObjectType::NPC) {
@@ -80,8 +76,7 @@ namespace mwse {
 					itemData.requirement.variable = value.as<TES3::GlobalVariable*>();
 				}
 				else {
-					sol::state& state = LuaManager::getInstance().getState();
-					state["error"]("NPC ownership used. Requirement must be a global variable.");
+					throw std::exception("NPC ownership used. Requirement must be a global variable.");
 				}
 			}
 		}
