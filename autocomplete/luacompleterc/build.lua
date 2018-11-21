@@ -31,6 +31,27 @@ function json.savefile(fileName, object, config)
 	f:close()
 end
 
+function isTableEmpty(t)
+	for _, _ in pairs(t) do
+		return false
+	end
+	return true
+end
+
+function copyTable(t, d)
+	if (d == nil) then
+		d = {}
+	elseif (type(t) ~= "table" or type(d) ~= "table") then
+		error("Arguments for table.copy must be tables.")
+	end
+
+	for k, v in pairs(t) do
+		d[k] = v
+	end
+
+	return d
+end
+
 local function isDirectory(path)
 	if (type(path) ~= "string") then
 		return false
@@ -60,6 +81,21 @@ local definitionCount = 0
 
 local global = {}
 local namedTypes = {}
+local derivedTypes = {}
+
+local function copyDefinition(destination, package, parent)
+	copyTable(parent, destination)
+	copyTable(package, destination)
+
+	local tempFields = {}
+	if (parent.fields) then
+		copyTable(parent.fields, tempFields)
+		if (package.fields) then
+			copyTable(package.fields, tempFields)
+		end
+		destination.fields = tempFields
+	end
+end
 
 local function insertField(parent, key, package)
 	if (parent.fields == nil) then
@@ -180,6 +216,10 @@ local function buildAPI(folder, key, parentPackage, parentRawPackage)
 		insertField(parentPackage, key, package)
 	end
 
+	if (rawType == "class" and rawPackage.inherits) then
+		derivedTypes[key] = rawPackage.inherits
+	end
+
 	if (rawType == "function") then
 		assert(parentRawPackage == nil or parentRawPackage.type == "lib" or parentRawPackage.type == "class")
 		setupFunction(package, rawPackage)
@@ -248,6 +288,24 @@ for k, v in pairs(namedTypes.fields) do
 	end
 end
 
+-- Patch derived types.
+while (not isTableEmpty(derivedTypes)) do
+	local removeList = {}
+	for k, v in pairs(derivedTypes) do
+		if (derivedTypes[v] == nil) then
+			local newDefinition = {}
+			copyDefinition(newDefinition, outJson.namedTypes[k], outJson.namedTypes[v])
+			outJson.namedTypes[k] = newDefinition
+			log("Set type %s to be derived from %s.", k, v)
+			table.insert(removeList, k)
+		end
+	end
+
+	for _, v in pairs(removeList) do
+		derivedTypes[v] = nil
+	end
+end
+
 -- Patch in globals.
 for k, v in pairs(global.fields) do
 	log("Patching global: %s", k)
@@ -268,7 +326,7 @@ log("Saved to file: %s", outputFileAutocomplete)
 
 -- Get the .luacheckrc file ready to write.
 local outputFileLuaCheck = lfs.currentdir() .. "\\..\\misc\\package\\Data Files\\MWSE\\.luacheckrc"
-local fLuaCheckRC = assert(io.open(outputFileLuaCheck, "w"))
+local fLuaCheckRC = io.open(outputFileLuaCheck, "w")
 
 -- Start off by dumping the base file.
 local basePackage = io.open(lfs.currentdir() .. "\\luacompleterc\\base.luacheckrc", "r")
