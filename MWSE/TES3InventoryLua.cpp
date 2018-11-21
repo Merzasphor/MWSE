@@ -4,6 +4,7 @@
 #include "LuaUtil.h"
 #include "LuaManager.h"
 
+#include "TES3CollectionsLua.h"
 #include "TES3ScriptLua.h"
 
 #include "TES3Inventory.h"
@@ -181,6 +182,15 @@ namespace mwse {
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.create_simple_usertype<TES3::Inventory>();
 				usertypeDefinition.set("new", sol::no_constructor);
+
+				// Metamethod binding.
+				usertypeDefinition.set(sol::meta_function::pairs, [](TES3::Inventory& self) {
+					Iterator_state<TES3::ItemStack> it_state(&self.iterator);
+					return std::make_tuple(&bindIterator_pairsNext<TES3::ItemStack>, sol::user<Iterator_state<TES3::ItemStack>>(std::move(it_state)), sol::lua_nil);
+				});
+				usertypeDefinition.set(sol::meta_function::length, [](TES3::Inventory& self) {
+					return self.iterator.size;
+				});
 
 				// Basic property binding.
 				usertypeDefinition.set("flags", sol::readonly_property(&TES3::Inventory::flags));
