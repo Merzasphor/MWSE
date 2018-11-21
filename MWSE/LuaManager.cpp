@@ -2119,17 +2119,19 @@ namespace mwse {
 		}
 		const size_t patchEnforceSoulValueAboveZero_size = 0x9;
 
-		__declspec(naked) void patchGetSoulValueForActorFromESI() {
-			__asm {
-				push esi	// Size: 0x1
-				nop			// Replaced with a call generation. Can't do so here, because offsets aren't accurate.
-				nop			// ^
-				nop			// ^
-				nop			// ^
-				nop			// ^
-			}
+		int PatchSPrintFSoulValue(char* buffer, const char* format, TES3::Actor * actor) {
+			int value = PatchGetSoulValueForActor(actor);
+			int result = sprintf(buffer, format, value);
+			mwse::log::getLog() << actor->getObjectID() << "'s soul: " << std::dec << value << ". sprintf: " << buffer << std::endl;
+			return result;
 		}
-		const size_t patchGetSoulValueForActorFromESI_size = 0x6;
+
+		void __fastcall PatchSetSoulValueProperty(TES3::UI::Element* element, DWORD _UNUSED_, TES3::UI::Property property, TES3::Actor * actor, TES3::UI::PropertyType type) {
+			TES3::UI::PropertyValue value;
+			value.integerValue = PatchGetSoulValueForActor(actor);
+			mwse::log::getLog() << actor->getObjectID() << "'s soul: " << std::dec << value.integerValue << ". Type: " << (int)type << std::endl;
+			element->setProperty(property, value, type);
+		}
 
 		//
 		//
@@ -2832,12 +2834,12 @@ namespace mwse {
 			writePatchCodeUnprotected(0x49AC87, (BYTE*)&patchEnforceSoulValueAboveZero, patchEnforceSoulValueAboveZero_size);
 
 			// Override actor soul value check: enchanting
-			writePatchCodeUnprotected(0x5C5E4B, (BYTE*)&patchGetSoulValueForActorFromESI, patchGetSoulValueForActorFromESI_size);
-			genCallUnprotected(0x5C5E4C, reinterpret_cast<DWORD>(PatchGetSoulValueForActor));
-			writePatchCodeUnprotected(0x5C5E5C, (BYTE*)&patchGetSoulValueForActorFromESI, patchGetSoulValueForActorFromESI_size);
-			genCallUnprotected(0x5C5E5D, reinterpret_cast<DWORD>(PatchGetSoulValueForActor));
-			writePatchCodeUnprotected(0x5C5E6F, (BYTE*)&patchGetSoulValueForActorFromESI, patchGetSoulValueForActorFromESI_size);
-			genCallUnprotected(0x5C5E70, reinterpret_cast<DWORD>(PatchGetSoulValueForActor));
+			writeByteUnprotected(0x5C5E53, 0x56);
+			genCallEnforced(0x5C5E57, 0x581F30, reinterpret_cast<DWORD>(PatchSetSoulValueProperty));
+			writeByteUnprotected(0x5C5E62, 0x56);
+			genCallUnprotected(0x5C5E69, reinterpret_cast<DWORD>(PatchSPrintFSoulValue), 0x6);
+			genNOPUnprotected(0x5C5E6F, 0x6);
+			genCallEnforced(0x5C5E87, 0x581F30, reinterpret_cast<DWORD>(PatchSetSoulValueProperty));
 
 			// Make soul gem data writable.
 			DWORD OldProtect;
