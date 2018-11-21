@@ -2040,37 +2040,23 @@ namespace mwse {
 		// Events related to soul gems.
 		//
 
-		void __fastcall PatchWriteEnchantSoulData(TES3::GameFile * gameFile, TES3::ItemStack * stack, TES3::ItemData * itemData) {
-			// If it's a soul gem, write the soul ID.
-			if (tes3::isSoulGem(stack->object)) {
-				auto soul = itemData->enchantData.soul;
-				if (soul) {
-					auto id = soul->getObjectID();
-					gameFile->writeChunkData('LOSX', id, strlen(id) + 1);
-					return;
-				}
-			}
-
-			// Otherwise, give the charge if the item is enchanted.
-			auto enchant = stack->object->getEnchantment();
-			if (enchant) {
-				gameFile->writeChunkData('GHCX', &itemData->enchantData.charge, 0x4);
-			}
+		bool __fastcall PatchWriteEnchantSoulData(TES3::ItemStack * stack) {
+			return tes3::isSoulGem(stack->object);
 		}
 
 		__declspec(naked) void patchSetupWriteEnchantSoulData() {
 			__asm {
-				mov ecx, ebx					// Size: 0x2
-				mov edx, [esp + 0x44 + 0x4]		// Size: 0x4
-				push ebp						// Size: 0x1
+				mov ecx, [esp + 0x44 + 0x4]		// Size: 0x4
 				nop // Replaced with a call generation. Can't do so here, because offsets aren't accurate.
 				nop // ^
 				nop // ^
 				nop // ^
 				nop // ^
+				test al, al						// Size: 0x2
+				jnz $ + 0x7B					// Size: 0x6
 			}
 		}
-		const size_t patchSetupWriteEnchantSoulData_size = 0xC;
+		const size_t patchSetupWriteEnchantSoulData_size = 0x11;
 
 		bool __fastcall PatchCheckSoulTrapSoulGem(TES3::Misc * item, TES3::MobileActor * mact) {
 			if (!tes3::isSoulGem(item)) {
@@ -2825,9 +2811,9 @@ namespace mwse {
 			genCallEnforced(0x608AB9, 0x49ABE0, *reinterpret_cast<DWORD*>(&isSoulGem));
 
 			// Change inventory saving to use the above isSoulGem check.
-			genNOPUnprotected(0x499AEF, 0x44);
+			genNOPUnprotected(0x499AEF, 0x13);
 			writePatchCodeUnprotected(0x499AEF, (BYTE*)&patchSetupWriteEnchantSoulData, patchSetupWriteEnchantSoulData_size);
-			genCallUnprotected(0x499AF6, reinterpret_cast<DWORD>(PatchWriteEnchantSoulData));
+			genCallUnprotected(0x499AEF + 0x4, reinterpret_cast<DWORD>(PatchWriteEnchantSoulData));
 
 			// Change soul trap to use the above isSoulGem check.
 			genNOPUnprotected(0x49ACD1, 0x13);
