@@ -14,8 +14,8 @@ namespace mwse {
 
 			// Basic function binding.
 			usertypeDefinition.set("clone", [](NI::Object& self) { return makeLuaObject(self.createClone()); });
-			usertypeDefinition.set("isOfType", static_cast<bool (NI::Object::*)(uintptr_t)>(&NI::Object::isOfType));
-			usertypeDefinition.set("isInstanceOfType", static_cast<bool (NI::Object::*)(uintptr_t)>(&NI::Object::isInstanceOfType));
+			usertypeDefinition.set("isOfType", static_cast<bool (__thiscall NI::Object::*)(uintptr_t)>(&NI::Object::isOfType));
+			usertypeDefinition.set("isInstanceOfType", static_cast<bool (__thiscall NI::Object::*)(uintptr_t)>(&NI::Object::isInstanceOfType));
 
 			// Functions exposed as properties.
 			usertypeDefinition.set("RTTI", sol::readonly_property([](NI::Object& self) { return self.getRunTimeTypeInformation(); }));
