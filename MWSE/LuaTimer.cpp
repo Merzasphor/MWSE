@@ -307,9 +307,9 @@ namespace mwse {
 			return controller->createTimer(0.0000001, callback, 1);
 		}
 
-		// Create a timer that will complete in the next simulation cycle.
-		std::shared_ptr<Timer> legacyTimerDelayOneSimulationFrame(sol::protected_function callback) {
-			std::shared_ptr<TimerController> controller = LuaManager::getInstance().getTimerController(TimerType::SimulationTime);
+		// Create a timer that will complete in the next cycle, defaulting to simulation time.
+		std::shared_ptr<Timer> legacyTimerDelayOneFrameSpecified(sol::protected_function callback, sol::optional<int> type) {
+			std::shared_ptr<TimerController> controller = LuaManager::getInstance().getTimerController(static_cast<TimerType>(type.value_or((int)TimerType::SimulationTime)));
 			if (controller == nullptr) {
 				return nullptr;
 			}
@@ -419,7 +419,7 @@ namespace mwse {
 			state["timer"]["frame"]["reset"] = &legacyTimerReset;
 			state["timer"]["cancel"] = &legacyTimerCancel;
 			state["timer"]["frame"]["cancel"] = &legacyTimerCancel;
-			state["timer"]["delayOneFrame"] = &legacyTimerDelayOneSimulationFrame;
+			state["timer"]["delayOneFrame"] = &legacyTimerDelayOneFrameSpecified;
 			state["timer"]["frame"]["delayOneFrame"] = &legacyTimerDelayOneFrame;
 
 			// Let new TimerControllers get made.
