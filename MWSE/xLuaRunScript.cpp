@@ -68,24 +68,17 @@ namespace mwse
 			cachedModule = cacheHit->second;
 		}
 		else {
-			auto result = state.safe_script_file("./Data Files/MWSE/mods/" + scriptName + ".lua");
-			if (!result.valid()) {
-				sol::error error = result;
-				log::getLog() << "Lua error encountered for xLuaRunScript call of '" << scriptName << "' from script '" << virtualMachine.getScript()->name << "':" << std::endl << error.what() << std::endl;
+			try {
+				sol::table result = state.safe_script_file("./Data Files/MWSE/mods/" + scriptName + ".lua");
+				cachedScripts[scriptNameKey] = result;
+				cachedModule = result;
+			}
+			catch (const std::exception& e) {
+				log::getLog() << "Lua error encountered for xLuaRunScript call of '" << scriptName << "' from script '" << virtualMachine.getScript()->name << "':" << std::endl << e.what() << std::endl;
 
 				// Clear the stack, since we can't trust what the script did or did not do.
 				mwse::Stack::getInstance().clear();
 				return 0.0f;
-			}
-
-			// If we got back a table, store it in cache.
-			sol::object resultObject = result;
-			if (resultObject.is<sol::table>()) {
-#if _DEBUG
-				log::getLog() << "Inserted run script into cache: " << scriptName << std::endl;
-#endif
-				cachedScripts[scriptNameKey] = resultObject;
-				cachedModule = resultObject;
 			}
 		}
 
@@ -93,10 +86,11 @@ namespace mwse
 		if (cachedModule != sol::nil) {
 			sol::protected_function execute = cachedModule["execute"];
 			if (execute) {
-				auto result = execute();
-				if (!result.valid()) {
-					sol::error error = result;
-					log::getLog() << "Lua error encountered for xLuaRunScript call of '" << scriptName << "' from script '" << virtualMachine.getScript()->name << "':" << std::endl << error.what() << std::endl;
+				try {
+					execute();
+				}
+				catch (const std::exception& e) {
+					log::getLog() << "Lua error encountered for xLuaRunScript call of '" << scriptName << "' from script '" << virtualMachine.getScript()->name << "':" << std::endl << e.what() << std::endl;
 
 					// Clear the stack, since we can't trust what the script did or did not do.
 					mwse::Stack::getInstance().clear();

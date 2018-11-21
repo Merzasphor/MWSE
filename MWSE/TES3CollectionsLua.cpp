@@ -23,6 +23,28 @@
 
 namespace mwse {
 	namespace lua {
+		std::tuple<sol::object, sol::object> bindGenericObjectIterator_pairsNext(sol::user<Iterator_state<TES3::BaseObject>&> user_it_state, sol::this_state l) {
+			Iterator_state<TES3::BaseObject>& it_state = user_it_state;
+			if (it_state.it == nullptr) {
+				return std::make_tuple(sol::object(sol::lua_nil), sol::object(sol::lua_nil));
+			}
+
+			auto values = std::make_tuple(sol::object(l, sol::in_place, it_state.it), makeLuaObject(it_state.it->data));
+			it_state.it = it_state.it->next;
+			return values;
+		}
+
+		std::tuple<sol::object, sol::object> bindGenericObjectStlList_pairsNext(sol::user<GenericObjectStlList_iteratorState&> user_it_state, sol::this_state l) {
+			GenericObjectStlList_iteratorState& it_state = user_it_state;
+			if (it_state.it == nullptr) {
+				return std::make_tuple(sol::object(sol::lua_nil), sol::object(sol::lua_nil));
+			}
+
+			auto values = std::make_tuple(sol::object(l, sol::in_place, it_state.it->data->getObjectID()), makeLuaObject(it_state.it->data));
+			it_state.it = it_state.it->next;
+			return values;
+		}
+
 		void bindTES3Collections() {
 			// Iterator bindings.
 			bindIterator<TES3::EquipmentStack>("TES3EquipmentStackIterator", "TES3EquipmentStackIteratorNode");
