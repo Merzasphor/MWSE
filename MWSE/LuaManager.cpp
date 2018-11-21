@@ -2120,16 +2120,12 @@ namespace mwse {
 		const size_t patchEnforceSoulValueAboveZero_size = 0x9;
 
 		int PatchSPrintFSoulValue(char* buffer, const char* format, TES3::Actor * actor) {
-			int value = PatchGetSoulValueForActor(actor);
-			int result = sprintf(buffer, format, value);
-			mwse::log::getLog() << actor->getObjectID() << "'s soul: " << std::dec << value << ". sprintf: " << buffer << std::endl;
-			return result;
+			return sprintf(buffer, format, PatchGetSoulValueForActor(actor));
 		}
 
 		void __fastcall PatchSetSoulValueProperty(TES3::UI::Element* element, DWORD _UNUSED_, TES3::UI::Property property, TES3::Actor * actor, TES3::UI::PropertyType type) {
 			TES3::UI::PropertyValue value;
 			value.integerValue = PatchGetSoulValueForActor(actor);
-			mwse::log::getLog() << actor->getObjectID() << "'s soul: " << std::dec << value.integerValue << ". Type: " << (int)type << std::endl;
 			element->setProperty(property, value, type);
 		}
 
