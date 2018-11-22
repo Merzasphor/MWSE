@@ -62,7 +62,7 @@ namespace mwse {
 
 				// Basic function binding.
 				usertypeDefinition.set("keybindTest", [](TES3::InputController& self, unsigned int key, sol::optional<unsigned int> transition) {
-					self.keybindTest(key, transition.value_or(TES3::KeyTransition::Down));
+					return self.keybindTest(key, transition.value_or(TES3::KeyTransition::Down));
 				});
 				usertypeDefinition.set("isKeyDown", &TES3::InputController::isKeyDown);
 				usertypeDefinition.set("isKeyPressedThisFrame", &TES3::InputController::isKeyPressedThisFrame);
