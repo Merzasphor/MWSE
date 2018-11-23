@@ -65,7 +65,7 @@ namespace mwse {
 						try {
 							// Note: sol::protected_function needs to be a local, as Lua functions can destroy it when modifying events.
 							sol::protected_function callback = eventLua.callback;
-							sol::optional<TES3::UI::Boolean> ret = callback();
+							sol::optional<TES3::UI::Boolean> ret = callback(eventData);
 							return ret.value_or(1);
 						}
 						catch (const std::exception& e) {
@@ -97,7 +97,7 @@ namespace mwse {
 						try {
 							// Note: sol::protected_function needs to be a local, as Lua functions can destroy it when modifying events.
 							sol::protected_function callback = eventLua.callback;
-							sol::optional<TES3::UI::Boolean> ret = callback();
+							sol::optional<TES3::UI::Boolean> ret = callback(eventData);
 						}
 						catch (const std::exception& e) {
 							const char *errorSource = source->name.cString ? source->name.cString : "(unnamed)";
