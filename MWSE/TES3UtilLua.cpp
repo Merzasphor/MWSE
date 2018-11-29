@@ -237,14 +237,17 @@ namespace mwse {
 
 			// DEPRECATED: To be eventually redone after mods have transitioned away from it.
 			state["tes3"]["getGMST"] = [](sol::object key) -> sol::object {
+				sol::state& state = LuaManager::getInstance().getState();
+
+				// Display deprecation warning and traceback.
 				mwse::log::getLog() << "WARNING: Use of deprecated function tes3.getGMST. Use tes3.findGMST instead." << std::endl;
+				state["debug"]["traceback"]();
 
 				TES3::DataHandler * dataHandler = tes3::getDataHandler();
 				if (dataHandler == nullptr) {
 					return sol::nil;
 				}
 
-				sol::state& state = LuaManager::getInstance().getState();
 				if (key.is<double>()) {
 					int index = key.as<double>();
 					if (index >= TES3::GMST::sMonthMorningstar && index <= TES3::GMST::sWitchhunter) {
