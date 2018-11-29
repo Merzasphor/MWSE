@@ -95,6 +95,15 @@ local function copyDefinition(destination, package, parent)
 		end
 		destination.fields = tempFields
 	end
+
+	local tempIndex = {}
+	if (parent.metatable and parent.metatable.fields and parent.metatable.fields.__index) then
+		copyTable(parent.metatable.fields.__index, tempIndex)
+		if (package.metatable and package.metatable.fields and package.metatable.fields.__index) then
+			copyTable(package.metatable.fields.__index, tempIndex)
+		end
+		destination.metatable.fields.__index = tempIndex
+	end
 end
 
 local function insertField(parent, key, package)
@@ -108,7 +117,7 @@ local function insertMethod(parent, key, package)
 	if (parent.metatable == nil) then
 		parent.metatable = { type = "table", fields = { __index = { type = "table", fields = {} } } }
 	end
-	parent.metatable.fields.__index[key] = package
+	parent.metatable.fields.__index.fields[key] = package
 end
 
 local function setupFunction(package, raw)
@@ -228,8 +237,15 @@ local function buildAPI(folder, key, parentPackage, parentRawPackage)
 		assert(parentRawPackage.type == "class")
 		setupFunction(package, rawPackage)
 		insertMethod(parentPackage, key, package)
+
+		-- Ensure that methods have "self" as the first parameter.
+		if (package.args) then
+			table.insert(package.args, 1, { name = "self" })
+		else
+			package.args = { { name = "self" } }
+		end
 	elseif (rawType == "value") then
-		if (standardTypes[rawType]) then
+		if (standardTypes[rawPackage.valuetype]) then
 			package.type = typeRemaps[rawPackage.valuetype] or rawPackage.valuetype
 			insertField(parentPackage, key, package)
 		else
