@@ -68,13 +68,14 @@ namespace mwse
 			cachedModule = cacheHit->second;
 		}
 		else {
-			try {
-				sol::table result = state.safe_script_file("./Data Files/MWSE/mods/" + scriptName + ".lua");
+			sol::protected_function_result result = state.safe_script_file("./Data Files/MWSE/mods/" + scriptName + ".lua");
+			if (result.valid()) {
 				cachedScripts[scriptNameKey] = result;
 				cachedModule = result;
 			}
-			catch (const std::exception& e) {
-				log::getLog() << "Lua error encountered for xLuaRunScript call of '" << scriptName << "' from script '" << virtualMachine.getScript()->name << "':" << std::endl << e.what() << std::endl;
+			else {
+				sol::error error = result;
+				log::getLog() << "Lua error encountered for xLuaRunScript call of '" << scriptName << "' from script '" << virtualMachine.getScript()->name << "':" << std::endl << error.what() << std::endl;
 
 				// Clear the stack, since we can't trust what the script did or did not do.
 				mwse::Stack::getInstance().clear();
@@ -84,13 +85,12 @@ namespace mwse
 
 		// Run the script.
 		if (cachedModule != sol::nil) {
-			sol::protected_function execute = cachedModule["execute"];
+			sol::optional<sol::protected_function> execute = cachedModule["execute"];
 			if (execute) {
-				try {
-					execute();
-				}
-				catch (const std::exception& e) {
-					log::getLog() << "Lua error encountered for xLuaRunScript call of '" << scriptName << "' from script '" << virtualMachine.getScript()->name << "':" << std::endl << e.what() << std::endl;
+				sol::protected_function_result result = execute.value().call();
+				if (!result.valid()) {
+					sol::error error = result;
+					log::getLog() << "Lua error encountered for xLuaRunScript call of '" << scriptName << "' from script '" << virtualMachine.getScript()->name << "':" << std::endl << error.what() << std::endl;
 
 					// Clear the stack, since we can't trust what the script did or did not do.
 					mwse::Stack::getInstance().clear();

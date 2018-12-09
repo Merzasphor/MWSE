@@ -238,6 +238,29 @@ namespace mwse {
 			return 0;
 		}
 
+		int exceptionHandler(lua_State* L, sol::optional<const std::exception&> maybe_exception, sol::string_view description) {
+			// L is the lua state, which you can wrap in a state_view if necessary
+			// maybe_exception will contain exception, if it exists
+			// description will either be the what() of the exception or a description saying that we hit the general-case catch(...)
+			log::getLog() << "An exception occurred in a function, here's what it says ";
+			if (maybe_exception) {
+				log::getLog() << "(straight from the exception): ";
+				const std::exception& ex = *maybe_exception;
+				log::getLog() << ex.what() << std::endl;
+			}
+			else {
+				log::getLog() << "(from the description parameter): ";
+				log::getLog().write(description.data(), description.size());
+				log::getLog() << std::endl;
+			}
+
+			// you must push 1 element onto the stack to be 
+			// transported through as the error object in Lua
+			// note that Lua -- and 99.5% of all Lua users and libraries -- expects a string
+			// so we push a single string (in our case, the description of the error)
+			return sol::stack::push(L, description);
+		}
+
 		// LuaManager constructor. This is private, as a singleton.
 		LuaManager::LuaManager() {
 			// Open default lua libraries.
@@ -245,6 +268,7 @@ namespace mwse {
 
 			// Override the default atpanic to print to the log.
 			luaState.set_panic(&panic);
+			luaState.set_exception_handler(&exceptionHandler);
 
 			// Set up our timers.
 			gameTimers = std::make_shared<TimerController>();
@@ -451,11 +475,10 @@ namespace mwse {
 				params["reference"] = makeLuaObject(reference);
 				params["scriptData"] = mwse::mwscript::getLocalScriptVariables();
 
-				try {
-					execute(params);
-				}
-				catch (const std::exception& e) {
-					log::getLog() << "Lua error encountered when override of script '" << script->name << "':" << std::endl << e.what() << std::endl;
+				sol::protected_function_result result = execute(params);
+				if (!result.valid()) {
+					sol::error error = result;
+					log::getLog() << "Lua error encountered when override of script '" << script->name << "':" << std::endl << error.what() << std::endl;
 					mwscript::StopScript(script, script);
 				}
 			}
@@ -1797,11 +1820,10 @@ namespace mwse {
 						continue;
 					}
 
-					try {
-						luaState.safe_script_file(p.path().string());
-					}
-					catch (const std::exception& e) {
-						log::getLog() << "[LuaManager] ERROR: Failed to run mod initialization script:" << std::endl << e.what() << std::endl;
+					sol::protected_function_result result = luaState.safe_script_file(p.path().string(), &sol::script_pass_on_error);
+					if (!result.valid()) {
+						sol::error error = result;
+						log::getLog() << "[LuaManager] ERROR: Failed to run mod initialization script:" << std::endl << error.what() << std::endl;
 					}
 				}
 			}
@@ -2135,11 +2157,10 @@ namespace mwse {
 
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
-			try {
-				luaState.safe_script_file("Data Files/MWSE/core/mwse_init.lua");
-			}
-			catch (const std::exception& e) {
-				log::getLog() << "[LuaManager] ERROR: Failed to initialize MWSE Lua interface." << std::endl << e.what() << std::endl;
+			sol::protected_function_result result = luaState.safe_script_file("Data Files/MWSE/core/mwse_init.lua");
+			if (!result.valid()) {
+				sol::error error = result;
+				log::getLog() << "[LuaManager] ERROR: Failed to initialize MWSE Lua interface." << std::endl << error.what() << std::endl;
 				return;
 			}
 
@@ -2981,11 +3002,10 @@ namespace mwse {
 				eventData["button"] = tes3::ui::getButtonPressedIndex();
 				tes3::ui::resetButtonPressedIndex();
 
-				try {
-					callback(eventData);
-				}
-				catch (const std::exception& e) {
-					log::getLog() << "Runtime error when running tes3.messageBox button callback:\n" << e.what() << std::endl;
+				sol::protected_function_result result = callback(eventData);
+				if (!result.valid()) {
+					sol::error error = result;
+					log::getLog() << "Runtime error when running tes3.messageBox button callback:\n" << error.what() << std::endl;
 				}
 			}
 		}

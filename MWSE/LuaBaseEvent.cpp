@@ -13,11 +13,13 @@ namespace mwse {
 
 				// Trigger the function, check for lua errors.
 				sol::protected_function trigger = state["event"]["trigger"];
-				try {
-					return trigger(eventType, eventData, eventOptions);
+				sol::protected_function_result result = trigger(eventType, eventData, eventOptions);
+				if (result.valid()) {
+					return result;
 				}
-				catch (const std::exception& e) {
-					log::getLog() << "Lua error encountered when raising " << eventType << " event:" << std::endl << e.what() << std::endl;
+				else {
+					sol::error error = result;
+					log::getLog() << "Event system error encountered when raising " << eventType << " event:" << std::endl << error.what() << std::endl;
 				}
 
 				return sol::nil;

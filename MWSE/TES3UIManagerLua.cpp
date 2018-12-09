@@ -61,23 +61,23 @@ namespace mwse {
 						eventData["data0"] = data0;
 						eventData["data1"] = data1;
 
-						// Call into Lua
-						try {
-							// Note: sol::protected_function needs to be a local, as Lua functions can destroy it when modifying events.
-							sol::protected_function callback = eventLua.callback;
-							sol::optional<TES3::UI::Boolean> ret = callback(eventData);
-							return ret.value_or(1);
+						// Note: sol::protected_function needs to be a local, as Lua functions can destroy it when modifying events.
+						sol::protected_function callback = eventLua.callback;
+						sol::protected_function_result result = callback(eventData);
+						if (result.valid()) {
+							sol::optional<TES3::UI::Boolean> value = result;
+							return value.value_or(1);
 						}
-						catch (const std::exception& e) {
+						else {
+							sol::error error = result;
 							const char *errorSource = source->name.cString ? source->name.cString : "(unnamed)";
-							log::getLog() << "Lua error encountered during UI event from element " << errorSource << ":" << std::endl << e.what() << std::endl;
+							log::getLog() << "Lua error encountered during UI event from element " << errorSource << ":" << std::endl << error.what() << std::endl;
+							return 1;
 						}
-
-						// Default return true to event system
-						return 1;
 					}
 				}
 			}
+
 			return 1;
 		}
 
@@ -93,15 +93,13 @@ namespace mwse {
 						eventData["source"] = source;
 						eventData["id"] = Property::event_destroy;
 
-						// Call into Lua
-						try {
-							// Note: sol::protected_function needs to be a local, as Lua functions can destroy it when modifying events.
-							sol::protected_function callback = eventLua.callback;
-							sol::optional<TES3::UI::Boolean> ret = callback(eventData);
-						}
-						catch (const std::exception& e) {
+						// Note: sol::protected_function needs to be a local, as Lua functions can destroy it when modifying events.
+						sol::protected_function callback = eventLua.callback;
+						sol::protected_function_result result = callback();
+						if (!result.valid()) {
+							sol::error error = result;
 							const char *errorSource = source->name.cString ? source->name.cString : "(unnamed)";
-							log::getLog() << "Lua error encountered during UI event from element " << errorSource << ":" << std::endl << e.what() << std::endl;
+							log::getLog() << "Lua error encountered during UI event from element " << errorSource << ":" << std::endl << error.what() << std::endl;
 						}
 
 						break;
