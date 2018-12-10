@@ -85,7 +85,7 @@ namespace mwse {
 				usertypeDefinition.set("next", &NI::AVObject::PropertyListNode::next);
 
 				// Finish up our usertype.
-				state.set_usertype("niAVObject", usertypeDefinition);
+				state.set_usertype("niAVObjectPropertyListNode", usertypeDefinition);
 			}
 		}
 	}

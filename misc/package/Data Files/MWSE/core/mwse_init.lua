@@ -215,10 +215,12 @@ end
 function string.startswith(haystack, needle)
 	return string.sub(haystack, 1, string.len(needle)) == needle
 end
+getmetatable("").startswith = string.startswith
 
 function string.endswith(haystack, needle)
 	return needle=='' or string.sub(haystack, -string.len(needle)) == needle
 end
+getmetatable("").endswith = string.endswith
 
 
 -------------------------------------------------
@@ -317,7 +319,7 @@ end
 
 
 -------------------------------------------------
--- Extend our base API: mwse
+-- Extend our base API: tes3ui
 -------------------------------------------------
 
 function tes3ui.log(str, ...)
