@@ -84,6 +84,24 @@ namespace TES3 {
 	};
 	static_assert(sizeof(MouseController) == 0x80, "TES3::MouseController failed size validation");
 
+	struct KillCounter {
+		struct Node {
+			int count; // 0x0
+			Actor * actor; // 0x4
+		};
+		int werewolfKills; // 0x0
+		int totalKills; // 0x4
+		Iterator<Node> * killedActors;
+
+		//
+		// Custom functions.
+		//
+
+		_declspec(dllexport) void increment(MobileActor * actor);
+		_declspec(dllexport) int getKillCount(Actor * actor);
+
+	};
+
 	struct WorldController {
 		int unknown_0x0;
 		int unknown_0x4;
@@ -109,7 +127,7 @@ namespace TES3 {
 		Script * scriptGlobals; // 0x54
 		WeatherController * weatherController; // 0x58
 		MobController * mobController; // 0x5C
-		void * stats_60;
+		KillCounter * playerKills; // 0x60
 		void * field_64;
 		void * splashController; // 0x68
 		Iterator<Quest> * journalController; // 0x6C

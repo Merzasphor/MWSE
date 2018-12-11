@@ -1,6 +1,11 @@
 #include "TES3WorldController.h"
 
+#include "TES3Actor.h"
 #include "TES3GlobalVariable.h"
+#include "TES3MobilePlayer.h"
+#include "TES3Reference.h"
+
+#include "TES3Util.h"
 
 #define TES3_WorldController_mainLoopBeforeInput 0x40F610
 #define TES3_WorldController_getMobilePlayer 0x40FF20
@@ -10,6 +15,63 @@
 #define TES3_Data_cumulativeDaysForMonth 0x775E58
 
 namespace TES3 {
+
+	//
+	// KillCounter
+	//
+
+	void KillCounter::increment(MobileActor * mobile) {
+		TES3::Actor * actor = static_cast<TES3::Actor*>(mobile->reference->baseObject)->getBaseActor();
+
+		// Is this actor already in the collection?
+		KillCounter::Node * node = nullptr;
+		auto itt = killedActors->head;
+		while (itt) {
+			if (itt->data->actor == actor) {
+				node = itt->data;
+				break;
+			}
+
+			itt = itt->next;
+		}
+
+		// If it isn't in the collection, create a new node and add it.
+		if (node == nullptr) {
+			node = mwse::tes3::_new<KillCounter::Node>();
+			node->count = 0;
+			node->actor = actor;
+			killedActors->addItem(node);
+		}
+
+		// Increment kills for this actor and total kills.
+		node->count++;
+		totalKills++;
+
+		// Increment werewolf kills if the player is wolfing out.
+		if (mobile->actorType == TES3::MobileActorType::NPC && mwse::tes3::getWorldController()->getMobilePlayer()->getMobileActorFlag(TES3::MobileActorFlag::Werewolf)) {
+			werewolfKills++;
+		}
+
+		// TODO: Add back in console logging.
+	}
+
+	int KillCounter::getKillCount(Actor * actor) {
+		auto node = killedActors->head;
+		while (node) {
+			if (node->data->actor == actor) {
+				return node->data->count;
+			}
+
+			node = node->next;
+		}
+
+		return 0;
+	}
+
+	//
+	// WorldController
+	//
+
 	void WorldController::mainLoopBeforeInput() {
 		reinterpret_cast<void(__thiscall *)(WorldController*)>(TES3_WorldController_mainLoopBeforeInput)(this);
 	}
@@ -43,4 +105,6 @@ namespace TES3 {
 	void WorldController::updateTiming() {
 		TES3_WorldController_updateTiming(this);
 	}
+
+
 }

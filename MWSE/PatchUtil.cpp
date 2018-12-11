@@ -182,6 +182,15 @@ namespace mwse {
 			if (TES3_DefaultWindowMessageHandler == nullptr) {
 				log::getLog() << "[MWSE:Patch:Less Aggressive Cursor Capturing] ERROR: Failed to replace window handler using SetClassLongPtr." << std::endl;
 			}
+
+			// Patch: Optimize GetDeadCount and associated dialogue filtering/logic.
+			auto killCounterIncrement = &TES3::KillCounter::increment;
+			genCallEnforced(0x523D73, 0x55D820, *reinterpret_cast<DWORD*>(&killCounterIncrement));
+			auto killCounterGetCount = &TES3::KillCounter::getKillCount;
+			genCallEnforced(0x4B0B2E, 0x55D900, *reinterpret_cast<DWORD*>(&killCounterGetCount));
+			genCallEnforced(0x50AC85, 0x55D900, *reinterpret_cast<DWORD*>(&killCounterGetCount));
+			genCallEnforced(0x50ACAB, 0x55D900, *reinterpret_cast<DWORD*>(&killCounterGetCount));
+			genCallEnforced(0x745FF0, 0x55D900, *reinterpret_cast<DWORD*>(&killCounterGetCount));
 		}
 
 		//
