@@ -1839,19 +1839,19 @@ namespace mwse {
 			state["tes3"]["setDestination"] = [](sol::table params) {
 				TES3::Reference * reference = getOptionalParamExecutionReference(params);
 				if (reference == nullptr) {
-					return false;
+					throw std::invalid_argument("Invalid reference parameter provided.");
 				}
 
 				// Get the position.
 				sol::optional<TES3::Vector3> position = getOptionalParamVector3(params, "position");
 				if (!position) {
-					return false;
+					throw std::invalid_argument("Invalid position parameter provided.");
 				}
 
 				// Get the orientation.
 				sol::optional<TES3::Vector3> orientation = getOptionalParamVector3(params, "orientation");
 				if (!orientation) {
-					return false;
+					throw std::invalid_argument("Invalid orientation parameter provided.");
 				}
 
 				// Get the cell.
