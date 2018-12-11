@@ -36,6 +36,14 @@ namespace TES3 {
 		return vec3->z * z + vec3->y * y + vec3->x * x;
 	}
 
+	Matrix33 Vector3::outerProduct(Vector3* vec3) {
+		return Matrix33(
+			(x*vec3->x), (y*vec3->x), (z*vec3->x),
+			(x*vec3->y), (y*vec3->y), (z*vec3->y),
+			(x*vec3->z), (y*vec3->z), (z*vec3->z)
+		);
+	}
+
 	float Vector3::heightDifference(Vector3* vec3) {
 		return fabs(z - vec3->z);
 	}
@@ -55,6 +63,26 @@ namespace TES3 {
 		x = -x;
 		y = -y;
 		z = -z;
+	}
+
+	bool Vector3::normalize() {
+		float len = length();
+		if (len > 0.0f) {
+			x = x / len;
+			y = y / len;
+			z = z / len;
+			return true;
+		}
+		x = 0;
+		y = 0;
+		z = 0;
+		return false;
+	}
+
+	Vector3 Vector3::normalized() {
+		auto copy = Vector3(x, y, z);
+		copy.normalize();
+		return copy;
 	}
 
 	const auto TES3_Matrix33_testEqual = reinterpret_cast<bool(__thiscall*)(Matrix33*, const Matrix33*)>(0x6E7ED0);

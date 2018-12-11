@@ -81,9 +81,12 @@ namespace mwse {
 				usertypeDefinition.set("cross", &TES3::Vector3::crossProduct);
 				usertypeDefinition.set("distance", &TES3::Vector3::distance);
 				usertypeDefinition.set("dot", &TES3::Vector3::dotProduct);
+				usertypeDefinition.set("outerProduct", &TES3::Vector3::outerProduct);
 				usertypeDefinition.set("heightDifference", &TES3::Vector3::heightDifference);
 				usertypeDefinition.set("length", &TES3::Vector3::length);
 				usertypeDefinition.set("negate", &TES3::Vector3::negate);
+				usertypeDefinition.set("normalize", &TES3::Vector3::normalize);
+				usertypeDefinition.set("normalized", &TES3::Vector3::normalized);
 
 				// Finish up our usertype.
 				state.set_usertype("tes3vector3", usertypeDefinition);

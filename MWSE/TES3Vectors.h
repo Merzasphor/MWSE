@@ -1,6 +1,8 @@
 #pragma once
 
 namespace TES3 {
+	struct Matrix33;
+
 	template <typename T>
 	struct Range {
 		T min;
@@ -36,11 +38,14 @@ namespace TES3 {
 
 		__declspec(dllexport) Vector3 crossProduct(Vector3*);
 		__declspec(dllexport) float dotProduct(Vector3*);
-
+		__declspec(dllexport) Matrix33 outerProduct(Vector3*);
+			
 		__declspec(dllexport) float heightDifference(Vector3*);
 		__declspec(dllexport) float distance(Vector3*);
 		__declspec(dllexport) float length();
 		__declspec(dllexport) void negate();
+		__declspec(dllexport) bool normalize();
+		__declspec(dllexport) Vector3 normalized();
 
 	};
 	static_assert(sizeof(Vector3) == 0xC, "TES3::Vector3 failed size validation");
