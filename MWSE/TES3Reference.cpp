@@ -28,7 +28,7 @@ namespace TES3 {
 	void Reference::activate(Reference* activator, int unknown) {
 		// If our event data says to block, don't let the object activate.
 		sol::object response = mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::ActivateEvent(activator, this));
-		if (response != sol::nil && response.is<sol::table>()) {
+		if (response.get_type() == sol::type::table) {
 			sol::table eventData = response;
 			if (eventData["block"] == true) {
 				return;
@@ -89,7 +89,7 @@ namespace TES3 {
 			setPosition(value.as<Vector3*>());
 		}
 		// Allow a simple table to be provided.
-		else if (value.is<sol::table>()) {
+		else if (value.get_type() == sol::type::table) {
 			// Get the values from the table.
 			sol::table positionTable = value.as<sol::table>();
 			if (positionTable.size() == 3) {
@@ -111,7 +111,7 @@ namespace TES3 {
 			setOrientation(x, y, z);
 		}
 		// Allow a simple table to be provided.
-		else if (value.is<sol::table>()) {
+		else if (value.get_type() == sol::type::table) {
 			// Get the values from the table.
 			sol::table positionTable = value.as<sol::table>();
 			if (positionTable.size() == 3) {

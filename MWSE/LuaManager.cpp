@@ -343,7 +343,7 @@ namespace mwse {
 				else if (target.is<std::string>()) {
 					sol::state& state = LuaManager::getInstance().getState();
 					sol::object result = state.safe_script_file("./Data Files/MWSE/mods/" + target.as<std::string>() + ".lua");
-					if (result.is<sol::table>()) {
+					if (result.get_type() == sol::type::table) {
 						scriptOverrides[(unsigned long)script] = result;
 						script->dataLength = 0;
 						return true;
@@ -465,7 +465,7 @@ namespace mwse {
 			if (searchResult->second.is<sol::function>()) {
 				execute = searchResult->second.as<sol::function>();
 			}
-			else if (searchResult->second.is<sol::table>()) {
+			else if (searchResult->second.get_type() == sol::type::table) {
 				execute = searchResult->second.as<sol::table>()["execute"];
 			}
 
@@ -712,7 +712,7 @@ namespace mwse {
 		signed char __cdecl OnPCEquip(TES3::UI::InventoryTile* tile) {
 			// Execute event. If the event blocked the call, bail.
 			sol::object response = LuaManager::getInstance().triggerEvent(new event::EquipEvent(tes3::getWorldController()->getMobilePlayer()->reference, tile->item, tile->itemData));
-			if (response != sol::nil && response.is<sol::table>()) {
+			if (response.get_type() == sol::type::table) {
 				sol::table eventData = response;
 				if (eventData["block"] == true) {
 					// If we want to block it, we need to run some functions to clear the held item back to the inventory.

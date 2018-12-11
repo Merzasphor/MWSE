@@ -263,7 +263,7 @@ namespace mwse {
 					}
 
 					// Were we given a table?
-					else if (maybeValue.is<sol::table>()) {
+					else if (maybeValue.get_type() == sol::type::table) {
 						sol::table value = maybeValue.as<sol::table>();
 						TES3::Vector3* result = tes3::malloc<TES3::Vector3>();
 						result->x = value[1];
@@ -287,14 +287,14 @@ namespace mwse {
 					if (maybeValue.is<const char*>()) {
 						value = tes3::getDataHandler()->nonDynamicData->getCellByName(maybeValue.as<const char*>());
 					}
-					if (maybeValue.is<sol::table>()) {
+					else if (maybeValue.is<TES3::Cell*>()) {
+						value = maybeValue.as<TES3::Cell*>();
+					}
+					else if (maybeValue.get_type() == sol::type::table) {
 						sol::table coordsTable = maybeValue.as<sol::table>();
 						if (coordsTable.size() == 2) {
 							value = tes3::getDataHandler()->nonDynamicData->getCellByGrid(coordsTable[1], coordsTable[2]);
 						}
-					}
-					else if (maybeValue.is<TES3::Cell*>()) {
-						value = maybeValue.as<TES3::Cell*>();
 					}
 				}
 			}
@@ -311,7 +311,7 @@ namespace mwse {
 				vector->z = newVector->z;
 			}
 			// Allow a simple table to be provided.
-			else if (value.is<sol::table>()) {
+			else if (value.get_type() == sol::type::table) {
 				// Get the values from the table.
 				sol::table table = value.as<sol::table>();
 				if (table.size() == 3) {

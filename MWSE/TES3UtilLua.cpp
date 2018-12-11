@@ -369,7 +369,7 @@ namespace mwse {
 					std::string message = state["string"]["format"](param, va);
 					return tes3::ui::messagePlayer(message.c_str());
 				}
-				else if (param.is<sol::table>()) {
+				else if (param.get_type() == sol::type::table) {
 					sol::table params = param;
 
 					// We need to make sure the strings stay in memory, we can't just snag the c-string in passing.

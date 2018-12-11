@@ -506,7 +506,7 @@ namespace mwse {
 			);
 			usertypeDefinition.set("triggerEvent",
 				[](Element& self, sol::object args) {
-					if (args.is<sol::table>()) {
+					if (args.get_type() == sol::type::table) {
 						auto eventData = args.as<sol::table>();
 						triggerEvent(self, eventData["id"], eventData["data0"], eventData["data1"]);
 						return;

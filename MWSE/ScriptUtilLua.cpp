@@ -176,7 +176,7 @@ namespace mwse {
 
 				// Fire off the event, because script calls don't hit the same code as our hooks.
 				sol::object response = LuaManager::getInstance().triggerEvent(new event::EquipEvent(reference, item, NULL));
-				if (response != sol::nil && response.is<sol::table>()) {
+				if (response.get_type() == sol::type::table) {
 					sol::table eventData = response;
 					if (eventData["block"] == true) {
 						return false;
