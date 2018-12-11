@@ -7,7 +7,7 @@
 
 namespace TES3 {
 	struct Ingredient : Item {
-		Iterator<void> stolenList; // 0x30
+		Iterator<TES3::BaseObject> stolenList; // 0x30
 		char name[32]; // 0x44
 		char model[32]; // 0x64
 		Script * script; // 0x84

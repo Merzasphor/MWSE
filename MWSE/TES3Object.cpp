@@ -181,5 +181,12 @@ namespace TES3 {
 		vTable.object->setScale(this, value, cap);
 	}
 
+	//
+	// PhysicalObject
+	//
+
+	Iterator<BaseObject> * PhysicalObject::getStolenList() {
+		return vTable.physical->getStolenList(this);
+	}
 
 }

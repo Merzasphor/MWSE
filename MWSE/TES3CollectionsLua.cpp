@@ -55,6 +55,7 @@ namespace mwse {
 			bindIterator<TES3::TravelDestination>("TES3TravelDestinationIterator", "TES3TravelDestinationIteratorNode");
 
 			// Generic TES3::Object iterators. As above, but the result data will be reinterpreted at runtime.
+			bindGenericObjectIterator<TES3::BaseObject>("TES3BaseObjectIterator", "TES3BaseObjectIteratorNode");
 			bindGenericObjectIterator<TES3::Dialogue>("TES3DialogueIterator", "TES3DialogueIteratorNode");
 			bindGenericObjectIterator<TES3::DialogueInfo>("TES3DialogueInfoIterator", "TES3DialogueInfoIteratorNode");
 			bindGenericObjectIterator<TES3::GlobalVariable>("TES3GlobalIterator", "TES3GlobalIteratorNode");

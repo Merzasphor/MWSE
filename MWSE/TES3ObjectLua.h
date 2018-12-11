@@ -58,6 +58,9 @@ namespace mwse {
 
 			// Basic property binding.
 			usertypeDefinition.set("boundingBox", sol::readonly_property(&TES3::PhysicalObject::boundingBox));
+
+			// Functions exposed as properties.
+			usertypeDefinition.set("stolenList", sol::readonly_property(&TES3::PhysicalObject::getStolenList));
 		}
 	}
 }

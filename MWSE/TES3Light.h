@@ -24,7 +24,7 @@ namespace TES3 {
 
 	struct Light : Item {
 		void * animationData;
-		Iterator<void> stolenList; // 0x30
+		Iterator<TES3::BaseObject> stolenList; // 0x30
 		char* name; // 0x48
 		char* model; // 0x4C
 		Script * script;

@@ -18,10 +18,7 @@ namespace TES3 {
 		};
 	}
 
-	struct ActorVirtualTable : ObjectVirtualTable {
-		void * unknown_0x13C;
-		void * unknown_0x140;
-		void * getStolenList; // 0x144
+	struct ActorVirtualTable : PhysicalObjectVirtualTable {
 		void * loadAnimation; // 0x148
 		void * getBaseNPC; // 0x14C
 		void * addItem; // 0x150

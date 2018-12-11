@@ -81,6 +81,7 @@ namespace TES3 {
 	struct ObjectVirtualTable;
 	struct OwnershipAttachmentNode;
 	struct PhysicalObject;
+	struct PhysicalObjectVirtualTable;
 	struct PlayerAnimationData;
 	struct PlayerBounty;
 	struct Probe;

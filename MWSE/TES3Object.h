@@ -190,6 +190,7 @@ namespace TES3 {
 		union {
 			BaseObjectVirtualTable * base;
 			ObjectVirtualTable * object;
+			PhysicalObjectVirtualTable * physical;
 			ActorVirtualTable * actor;
 		} vTable; // 0x0
 		ObjectType::ObjectType objectType; // 0x4
@@ -267,9 +268,22 @@ namespace TES3 {
 	};
 	static_assert(sizeof(Object) == 0x28, "TES3::Object failed size validation");
 
+	struct PhysicalObjectVirtualTable : ObjectVirtualTable {
+		void * unknown_0x13C;
+		void * unknown_0x140;
+		Iterator<BaseObject> * (__thiscall * getStolenList)(PhysicalObject*); // 0x144
+	};
+
 	struct PhysicalObject : Object {
 		BoundingBox * boundingBox; // 0x28
 		char * objectID; // 0x2C
+
+		//
+		// Function wrappers for our virtual table.
+		//
+
+		__declspec(dllexport) Iterator<BaseObject> * getStolenList();
+
 	};
 	static_assert(sizeof(PhysicalObject) == 0x30, "TES3::PhysicalObject failed size validation");
 }
