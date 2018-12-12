@@ -1842,6 +1842,10 @@ namespace mwse {
 					throw std::invalid_argument("Invalid reference parameter provided.");
 				}
 
+				if (reference->baseObject->objectType != TES3::ObjectType::Door) {
+					throw std::invalid_argument("Provided reference is not a door.");
+				}
+
 				// Get the position.
 				sol::optional<TES3::Vector3> position = getOptionalParamVector3(params, "position");
 				if (!position) {
