@@ -304,7 +304,7 @@ end
 -------------------------------------------------
 
 function mwse.log(str, ...)
-	print(str:format(...))
+	print(tostring(str):format(...))
 end
 
 function mwse.loadConfig(fileName)
@@ -323,7 +323,7 @@ end
 -------------------------------------------------
 
 function tes3ui.log(str, ...)
-	tes3ui.logToConsole(str:format(...), false)
+	tes3ui.logToConsole(tostring(str):format(...), false)
 end
 
 
