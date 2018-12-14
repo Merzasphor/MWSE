@@ -10,7 +10,7 @@ namespace mwse {
 	namespace lua {
 		namespace event {
 			UiSpellTooltipEvent::UiSpellTooltipEvent(TES3::UI::Element* tooltip, TES3::Spell* spell) :
-				GenericEvent("uiSpellTooltip"),
+				ObjectFilteredEvent("uiSpellTooltip", spell),
 				m_Tooltip(tooltip),
 				m_Spell(spell)
 			{
