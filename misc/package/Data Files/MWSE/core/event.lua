@@ -36,7 +36,7 @@ function this.register(eventType, callback, options)
 
 	-- Validate callback.
 	if (type(callback) ~= "function") then
-		return error("event.register: Event callback must be a valid string.")
+		return error("event.register: Event callback must be a function.")
 	end
 
 	-- Make sure options is an empty table if nothing else.
