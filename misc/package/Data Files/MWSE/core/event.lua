@@ -51,6 +51,27 @@ function this.register(eventType, callback, options)
 		end
 	end
 
+	-- Handle conversions of filters.
+	if (options.filter) then
+		local filterType = type(options.filter)
+		if (filterType == "userdata") then
+			-- References get converted to the base object.
+			if (options.filter.objectType == tes3.objectType.reference) then
+				options.filter = options.filter.object
+				mwse.log("Warning: Event registered to reference. Reference-type filtering was deprecated on 2018-12-15, and will be removed in future versions. Please update accordingly.")
+				debug.traceback()
+			end
+
+			-- Actors and containers get converted to their base object.
+			local baseObject = options.filter.baseObject
+			if (baseObject) then
+				options.filter = baseObject
+				mwse.log("Warning: Event registered to actor clone. Switched to base object.")
+				debug.traceback()
+			end
+		end
+	end
+
 	-- Store this callback's priority.
 	eventPriorities[callback] = options.priority or 0
 
