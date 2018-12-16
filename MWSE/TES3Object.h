@@ -82,6 +82,7 @@ namespace TES3 {
 			Delete = 0x20,
 			Persistent = 0x400,
 			Disabled = 0x800,
+			SelectedByConsole = 0x1000,
 			EmptyInventory = 0x2000
 		};
 
@@ -91,6 +92,7 @@ namespace TES3 {
 			DeleteBit = 5,
 			PersistentBit = 10,
 			DisabledBit = 11,
+			SelectedByConsoleBit = 12,
 			EmptyInventoryBit = 13
 		};
 	}
