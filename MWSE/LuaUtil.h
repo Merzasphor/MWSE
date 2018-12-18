@@ -69,5 +69,8 @@ namespace mwse {
 
 		// Creates a NI::Pointer and packages it into a sol::object for reference counting.
 		sol::object makeLuaNiPointer(NI::Object* object);
+
+		// Dumps the current stacktrace to the log.
+		void logStackTrace(const char* message = nullptr);
 	}
 }

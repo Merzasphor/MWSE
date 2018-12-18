@@ -654,5 +654,20 @@ namespace mwse {
 
 			return sol::make_object(state, object);
 		}
+
+		void logStackTrace(const char* message) {
+			if (message != nullptr) {
+				log::getLog() << message << std::endl;
+			}
+
+			sol::state& state = LuaManager::getInstance().getState();
+			sol::protected_function_result result = state["debug"]["traceback"]();
+			if (result.valid()) {
+				sol::optional<std::string> asString = result;
+				if (asString) {
+					log::getLog() << asString.value() << std::endl;
+				}
+			}
+		}
 	}
 }

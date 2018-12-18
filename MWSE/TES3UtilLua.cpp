@@ -240,8 +240,7 @@ namespace mwse {
 				sol::state& state = LuaManager::getInstance().getState();
 
 				// Display deprecation warning and traceback.
-				mwse::log::getLog() << "WARNING: Use of deprecated function tes3.getGMST. Use tes3.findGMST instead." << std::endl;
-				state["debug"]["traceback"]();
+				logStackTrace("WARNING: Use of deprecated function tes3.getGMST. Use tes3.findGMST instead.");
 
 				TES3::DataHandler * dataHandler = tes3::getDataHandler();
 				if (dataHandler == nullptr) {
@@ -1399,8 +1398,7 @@ namespace mwse {
 
 				// Make sure our object is of the right type.
 				if (!maybeMobile.is<TES3::MobileActor>()) {
-					mwse::log::getLog() << "tes3.setStatistic: Could not resolve parameter 'reference'." << std::endl;
-					state["debug"]["traceback"]();
+					logStackTrace("tes3.setStatistic: Could not resolve parameter 'reference'.");
 					return;
 				}
 
@@ -1417,7 +1415,7 @@ namespace mwse {
 						}
 						else {
 							mwse::log::getLog() << "tes3.setStatistic: Invalid skill index " << std::dec << statisticSkill.value() << " for creature." << std::endl;
-							state["debug"]["traceback"]();
+							logStackTrace();
 							return;
 						}
 					}
@@ -1427,7 +1425,7 @@ namespace mwse {
 						}
 						else {
 							mwse::log::getLog() << "tes3.setStatistic: Invalid skill index " << std::dec << statisticSkill.value() << " for NPC." << std::endl;
-							state["debug"]["traceback"]();
+							logStackTrace();
 							return;
 						}
 					}
@@ -1438,7 +1436,7 @@ namespace mwse {
 					}
 					else {
 						mwse::log::getLog() << "tes3.setStatistic: Invalid attribute index " << std::dec << statisticSkill.value() << "." << std::endl;
-						state["debug"]["traceback"]();
+						logStackTrace();
 						return;
 					}
 				}
@@ -1448,16 +1446,14 @@ namespace mwse {
 						statistic = maybeStatistic.value();
 					}
 					else {
-						mwse::log::getLog() << "tes3.setStatistic: No statistic with the given criteria could be found." << std::endl;
-						state["debug"]["traceback"]();
+						logStackTrace("tes3.setStatistic: No statistic with the given criteria could be found.");
 						return;
 					}
 				}
 
 				// This case shouldn't be hit.
 				if (statistic == nullptr) {
-					mwse::log::getLog() << "tes3.setStatistic: No statistic resolved." << std::endl;
-					state["debug"]["traceback"]();
+					logStackTrace("tes3.setStatistic: No statistic resolved.");
 					return;
 				}
 
@@ -1481,8 +1477,7 @@ namespace mwse {
 					statistic->setBase(base.value());
 				}
 				else {
-					mwse::log::getLog() << "tes3.setStatistic: No edit mode provided, missing parameter 'current' or 'base' or 'value'." << std::endl;
-					state["debug"]["traceback"]();
+					logStackTrace("tes3.setStatistic: No edit mode provided, missing parameter 'current' or 'base' or 'value'.");
 					return;
 				}
 
@@ -1517,8 +1512,7 @@ namespace mwse {
 
 				// Make sure our object is of the right type.
 				if (!maybeMobile.is<TES3::MobileActor>()) {
-					mwse::log::getLog() << "tes3.modStatistic: Could not resolve parameter 'reference'." << std::endl;
-					state["debug"]["traceback"]();
+					logStackTrace("tes3.modStatistic: Could not resolve parameter 'reference'.");
 					return;
 				}
 
@@ -1535,7 +1529,7 @@ namespace mwse {
 						}
 						else {
 							mwse::log::getLog() << "tes3.modStatistic: Invalid skill index " << std::dec << statisticSkill.value() << " for creature." << std::endl;
-							state["debug"]["traceback"]();
+							logStackTrace();
 							return;
 						}
 					}
@@ -1545,7 +1539,7 @@ namespace mwse {
 						}
 						else {
 							mwse::log::getLog() << "tes3.modStatistic: Invalid skill index " << std::dec << statisticSkill.value() << " for NPC." << std::endl;
-							state["debug"]["traceback"]();
+							logStackTrace();
 							return;
 						}
 					}
@@ -1556,7 +1550,7 @@ namespace mwse {
 					}
 					else {
 						mwse::log::getLog() << "tes3.modStatistic: Invalid attribute index " << std::dec << statisticSkill.value() << "." << std::endl;
-						state["debug"]["traceback"]();
+						logStackTrace();
 						return;
 					}
 				}
@@ -1566,16 +1560,14 @@ namespace mwse {
 						statistic = maybeStatistic.value();
 					}
 					else {
-						mwse::log::getLog() << "tes3.modStatistic: No statistic with the given criteria could be found." << std::endl;
-						state["debug"]["traceback"]();
+						logStackTrace("tes3.modStatistic: No statistic with the given criteria could be found.");
 						return;
 					}
 				}
 
 				// This case shouldn't be hit.
 				if (statistic == nullptr) {
-					mwse::log::getLog() << "tes3.modStatistic: No statistic resolved." << std::endl;
-					state["debug"]["traceback"]();
+					logStackTrace("tes3.modStatistic: No statistic resolved.");
 					return;
 				}
 
@@ -1600,8 +1592,7 @@ namespace mwse {
 					statistic->modBaseCapped(base.value(), limit.value_or(false), limit.value_or(false));
 				}
 				else {
-					mwse::log::getLog() << "tes3.modStatistic: No edit mode provided, missing parameter 'current' or 'base' or 'value'." << std::endl;
-					state["debug"]["traceback"]();
+					logStackTrace("tes3.modStatistic: No edit mode provided, missing parameter 'current' or 'base' or 'value'.");
 					return;
 				}
 
