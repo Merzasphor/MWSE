@@ -151,7 +151,7 @@ local function onClickModConfigButton()
 		site:register("mouseClick", function()
 			tes3.messageBox({
 				message = "Open web browser?",
-				buttons = { tes3.getGMST(tes3.gmst.sYes).value, tes3.getGMST(tes3.gmst.sNo).value },
+				buttons = { tes3.findGMST(tes3.gmst.sYes).value, tes3.findGMST(tes3.gmst.sNo).value },
 				callback = function(e)
 					if (e.button == 0) then
 						os.execute("start http://mwse.readthedocs.io")
@@ -167,7 +167,7 @@ local function onClickModConfigButton()
 		bottomBlock.childAlignX = 1.0
 
 		-- Add a close button to the bottom block.
-		local closeButton = bottomBlock:createButton{ text = tes3.getGMST(tes3.gmst.sClose).value }
+		local closeButton = bottomBlock:createButton{ text = tes3.findGMST(tes3.gmst.sClose).value }
 		closeButton:register("mouseClick", onClickCloseButton)
 
 		-- Cause the menu to refresh itself.
