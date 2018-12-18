@@ -55,6 +55,11 @@ namespace mwse {
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 				setUserdataForBaseObject(usertypeDefinition);
 
+				// Override to-string to use the name rather than the (non-existant) id.
+				usertypeDefinition.set(sol::meta_function::to_string, [](TES3::Dialogue& self) {
+					return self.name;
+				});
+
 				// Basic property binding.
 				usertypeDefinition.set("info", sol::readonly_property(&TES3::Dialogue::info));
 				usertypeDefinition.set("journalIndex", sol::property(&TES3::Dialogue::journalIndex, &TES3::Dialogue::setJournalIndex));
