@@ -254,6 +254,21 @@ namespace TES3 {
 		return TES3_MobileActor_isAffectedBySpell(this, spell);
 	}
 
+	const auto TES3_MobileActor_isActive = reinterpret_cast<bool(__thiscall*)(const MobileActor*)>(0x50F5F0);
+	bool MobileActor::isActive() {
+		return TES3_MobileActor_isActive(this);
+	}
+
+	const auto TES3_MobileActor_setCurrentMagicSourceFiltered = reinterpret_cast<bool(__thiscall*)(const MobileActor*, Object*, int)>(0x52B220);
+	void MobileActor::setCurrentMagicSourceFiltered(Object * magic) {
+		TES3_MobileActor_setCurrentMagicSourceFiltered(this, magic, 0);
+	}
+
+	const auto TES3_MobileActor_setActionTarget = reinterpret_cast<bool(__thiscall*)(const MobileActor*, MobileActor*)>(0x52F790);
+	void MobileActor::setActionTarget(MobileActor * target) {
+		TES3_MobileActor_setActionTarget(this, target);
+	}
+
 	bool MobileActor::getMobileActorFlag(MobileActorFlag::Flag flag) {
 		return (actorFlags & flag) != 0;
 	}

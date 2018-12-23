@@ -64,6 +64,7 @@ namespace TES3 {
 	struct LockAttachmentNode;
 	struct Lockpick;
 	struct MagicEffectInstance;
+	struct MagicSourceCombo;
 	struct MagicSourceInstance;
 	struct MapNote;
 	struct Misc;

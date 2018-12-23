@@ -1855,6 +1855,46 @@ namespace mwse {
 				reference->setTravelDestination(&position.value(), &orientation.value(), cell);
 				return true;
 			};
+
+			state["tes3"]["cast"] = [](sol::table params) {
+				TES3::Reference * reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					throw std::invalid_argument("Invalid reference parameter provided.");
+				}
+
+				TES3::Reference * target = getOptionalParamReference(params, "target");
+				if (target == nullptr) {
+					throw std::invalid_argument("Invalid target parameter provided.");
+				}
+
+				TES3::Spell * spell = getOptionalParamSpell(params, "spell");
+				if (spell == nullptr) {
+					throw std::invalid_argument("Invalid spell parameter provided.");
+				}
+
+				TES3::MobileActor * casterMobile = tes3::getAttachedMobileActor(reference);
+				if (casterMobile) {
+					if (casterMobile->isActive()) {
+						casterMobile->setCurrentMagicSourceFiltered(spell);
+						casterMobile->setActionTarget(tes3::getAttachedMobileActor(target));
+						return true;
+					}
+				}
+				else {
+					TES3::MagicSourceCombo sourceCombo;
+					sourceCombo.source.asSpell = spell;
+					sourceCombo.sourceType = TES3::MagicSourceType::Spell;
+
+					auto spellInstanceController = tes3::getWorldController()->spellInstanceController;
+					auto serial = spellInstanceController->activateSpell(reference, nullptr, &sourceCombo);
+					auto spellInstance = spellInstanceController->getInstanceFromSerial(serial);
+					spellInstance->overrideCastChance = 100.0f;
+					spellInstance->target = target;
+					return true;
+				}
+
+				return false;
+			};
 		}
 	}
 }

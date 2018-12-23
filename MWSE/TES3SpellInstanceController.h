@@ -23,6 +23,7 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
+		unsigned int activateSpell(Reference * reference, void * sourceItem, MagicSourceCombo* source);
 		void removeSpellsByEffect(Reference * reference, int effectId, int percentChance);
 		void clearSpellEffect(Reference * reference, int castType, int percentChance, bool removeSpell);
 		MagicSourceInstance * getInstanceFromSerial(unsigned int serial);

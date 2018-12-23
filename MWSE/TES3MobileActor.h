@@ -244,6 +244,10 @@ namespace TES3 {
 		bool isAffectedByEnchantment(Enchantment * enchantment);
 		bool isAffectedBySpell(Spell * spell);
 
+		bool isActive();
+		void setCurrentMagicSourceFiltered(Object * magic);
+		void setActionTarget(MobileActor * target);
+
 		//
 		// Custom functions.
 		//
