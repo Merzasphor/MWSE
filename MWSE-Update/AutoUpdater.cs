@@ -58,10 +58,17 @@ namespace MWSE
             }
 
             // Check to see if we want to start the game after checking for updates.
-            Boolean startAfter = false;
+            bool startAfter = false;
             if (args.Contains("-startAfter"))
             {
                 startAfter = true;
+            }
+
+            // Check to see if we want to specifically overwrite existing non-script files.
+            bool overwriteResources = false;
+            if(args.Contains("-overwriteResources"))
+            {
+                overwriteResources = true;
             }
 
             // Try to find Morrowind's install location, store it here.
@@ -190,6 +197,13 @@ namespace MWSE
                         {
                             Directory.CreateDirectory(Path.GetDirectoryName(completeFileName));
                             continue;
+                        }
+
+                        // If it's a resource file
+                        if(file.FullName.ToLower().Contains("data files") && !file.FullName.ToLower().Contains("data files/mwse"))
+                        {
+                            if(!overwriteResources && File.Exists(completeFileName))
+                                continue;
                         }
 
                         file.ExtractToFile(completeFileName, true);
