@@ -86,7 +86,7 @@ namespace TES3 {
 		else {
 			if (!mwse::tes3::getBaseEffectFlag(effectID, EffectFlag::NoMagnitude)) {
 				if (magnitudeMin != magnitudeMax) {
-					ss << " " << magnitudeMin << ndd->GMSTs[GMST::sTo]->value.asString << " " << magnitudeMax;
+					ss << " " << magnitudeMin << " " << ndd->GMSTs[GMST::sTo]->value.asString << " " << magnitudeMax;
 				}
 				else {
 					ss << " " << magnitudeMin;

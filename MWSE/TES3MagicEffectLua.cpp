@@ -149,7 +149,7 @@ namespace mwse {
 				usertypeDefinition.set("skill", &TES3::Effect::skillID);
 
 				// Allow easy access to the base magic effect.
-				usertypeDefinition.set("object", &TES3::Effect::getEffectData);
+				usertypeDefinition.set("object", sol::readonly_property(&TES3::Effect::getEffectData));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3effect", usertypeDefinition);
