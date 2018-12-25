@@ -130,6 +130,14 @@ namespace mwse {
 				auto usertypeDefinition = state.create_simple_usertype<TES3::Effect>();
 				usertypeDefinition.set("new", sol::no_constructor);
 
+				// Convert to string.
+				usertypeDefinition.set(sol::meta_function::to_string, [](TES3::Effect& self) -> sol::optional<std::string> {
+					if (self.effectID == -1) {
+						return sol::optional<std::string>();
+					}
+					return self.toString();
+				});
+
 				// Basic property binding.
 				usertypeDefinition.set("attribute", &TES3::Effect::attributeID);
 				usertypeDefinition.set("duration", &TES3::Effect::duration);
@@ -141,7 +149,7 @@ namespace mwse {
 				usertypeDefinition.set("skill", &TES3::Effect::skillID);
 
 				// Allow easy access to the base magic effect.
-				usertypeDefinition.set("object", sol::readonly_property([](TES3::Effect& self) { return tes3::getDataHandler()->nonDynamicData->magicEffects[self.effectID]; }));
+				usertypeDefinition.set("object", &TES3::Effect::getEffectData);
 
 				// Finish up our usertype.
 				state.set_usertype("tes3effect", usertypeDefinition);

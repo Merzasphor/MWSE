@@ -134,6 +134,10 @@ namespace mwse {
 
 		__declspec(dllexport) TES3::GameSettingInfo* getGMSTInfo(int);
 
+		__declspec(dllexport) int getSkillNameGMST(int);
+		__declspec(dllexport) int getAttributeNameGMST(int);
+		__declspec(dllexport) int getCastRangeNameGMST(int);
+
 		__declspec(dllexport) TES3::SoulGemData * addCustomSoulGem(TES3::Misc * item);
 		__declspec(dllexport) TES3::SoulGemData * getSoulGemData(TES3::Misc * item);
 		__declspec(dllexport) bool isSoulGem(TES3::Object* objectOrReference);

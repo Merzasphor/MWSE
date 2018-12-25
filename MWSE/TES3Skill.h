@@ -66,6 +66,13 @@ namespace TES3 {
 		float progressActions[4];
 		void * description;
 		float descriptionFileOffset;
+
+		//
+		// Custom functions
+		//
+
+		int getNameGMST();
+
 	};
 	static_assert(sizeof(Skill) == 0x34, "TES3::Skill failed size validation");
 }

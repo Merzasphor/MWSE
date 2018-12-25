@@ -224,6 +224,13 @@ namespace TES3 {
 		float size; // 0x0104
 		float speed; // 0x0108
 		float sizeCap; // 0x010C
+
+		//
+		// Custom functions
+		//
+
+		int getNameGMST();
+
 	};
 	static_assert(sizeof(MagicEffect) == 0x0110, "TES3::EffectID:: failed size validation");
 
@@ -239,6 +246,14 @@ namespace TES3 {
 		int duration; // 0xC
 		int magnitudeMin; // 0x10
 		int magnitudeMax; // 0x14
+
+		//
+		// Custom functions
+		//
+
+		MagicEffect * getEffectData();
+		std::string toString();
+
 	};
 	static_assert(sizeof(Effect) == 0x18, "TES3::Effect failed size validation");
 }

@@ -452,6 +452,19 @@ namespace mwse {
 			return &reinterpret_cast<TES3::GameSettingInfo*>(TES3_data_GMSTs)[index];
 		}
 
+
+		int getSkillNameGMST(int id) {
+			return reinterpret_cast<int*>(0x794430)[id];
+		}
+
+		int getAttributeNameGMST(int id) {
+			return reinterpret_cast<int*>(0x794410)[id];
+		}
+
+		int getCastRangeNameGMST(int id) {
+			return reinterpret_cast<int*>(0x7947C8)[id];
+		}
+
 		static std::unordered_map<TES3::Misc*, TES3::SoulGemData*> customSoulGems;
 
 		bool isSoulGem(TES3::Object* objectOrReference) {
