@@ -5,7 +5,7 @@ Installation
 Requirements
 --------------------------------------------------------
 
-- The `Visual Studio 2017 Redistributable <https://aka.ms/vs/15/release/VC_redist.x86.exe>`_ is required for MWSE v2.0 on older versions of Windows.
+- The `Visual Studio x86 2017 Redistributable <https://aka.ms/vs/15/release/VC_redist.x86.exe>`_ is required for MWSE v2.0 on older versions of Windows. Note that you will need the x86 version, even if you already have the x64 redistributable installed.
 - The `Morrowind Graphic Extender XE <https://www.nexusmods.com/morrowind/mods/41102>`_ (MGE XE) allows MWSE to be loaded. Versions prior to 0.9.10 will not function with MWSE v2.0, and version 0.10.1 is required for MWSE nightlies.
 - The `Morrowind Code Patch <https://www.nexusmods.com/morrowind/mods/19510/?>`_ is not required, but its scripting fixes are highly recommended. Various MWSE mods also require special features from this extension.
 
