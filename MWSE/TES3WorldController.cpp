@@ -69,6 +69,20 @@ namespace TES3 {
 	}
 
 	//
+	// InventoryData
+	//
+
+	const auto TES3_InventoryData_ClearIcons = reinterpret_cast<void(__thiscall*)(InventoryData *, int)>(0x632270);
+	void InventoryData::clearIcons(int type) {
+		TES3_InventoryData_ClearIcons(this, type);
+	}
+
+	const auto TES3_InventoryData_AddInventoryItems = reinterpret_cast<void(__thiscall*)(InventoryData *, Inventory *, int)>(0x633510);
+	void InventoryData::addInventoryItems(Inventory * inventory, int type) {
+		TES3_InventoryData_AddInventoryItems(this, inventory, type);
+	}
+
+	//
 	// WorldController
 	//
 

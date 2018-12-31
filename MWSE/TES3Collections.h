@@ -105,6 +105,23 @@ namespace TES3 {
 		int endIndex; // 0xC
 		int filledCount; // 0x10
 		int growByCount; // 0x14
+
+		//
+		// Related this-call functions.
+		//
+
+		int getIndexOfValue(T * value) {
+			return reinterpret_cast<int(__cdecl *)(TArray<T>*, T*)>(0x497B60)(this, value);
+		}
+
+		//
+		// Custom functions.
+		//
+
+		bool contains(T * value) {
+			return getIndexOfValue(value) >= 0;
+		}
+
 	};
 	static_assert(sizeof(TArray<void>) == 0x18, "TES3::TArray failed size validation");
 

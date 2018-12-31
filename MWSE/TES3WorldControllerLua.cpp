@@ -73,6 +73,7 @@ namespace mwse {
 				usertypeDefinition.set("hudStyle", &TES3::WorldController::hudStyle);
 				usertypeDefinition.set("inputController", &TES3::WorldController::inputController);
 				usertypeDefinition.set("instance", &TES3::WorldController::Win32_hInstance);
+				usertypeDefinition.set("inventoryData", &TES3::WorldController::inventoryData);
 				usertypeDefinition.set("lastFrameTime", &TES3::WorldController::lastFrameTimeMillis);
 				usertypeDefinition.set("listAllActors", &TES3::WorldController::allActors);
 				usertypeDefinition.set("listChargableItems", &TES3::WorldController::chargableItems);
@@ -100,7 +101,6 @@ namespace mwse {
 				usertypeDefinition.set("systemTime", &TES3::WorldController::systemTimeMillis);
 				usertypeDefinition.set("timescale", &TES3::WorldController::gvarTimescale);
 				usertypeDefinition.set("transitionFader", sol::readonly_property(&TES3::WorldController::transitionFader));
-				usertypeDefinition.set("uiInventoryData", &TES3::WorldController::uiInventoryData);
 				usertypeDefinition.set("useBestAttack", &TES3::WorldController::useBestAttack);
 				usertypeDefinition.set("viewHeight", &TES3::WorldController::viewHeight);
 				usertypeDefinition.set("viewWidth", &TES3::WorldController::viewWidth);

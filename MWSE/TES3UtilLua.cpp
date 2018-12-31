@@ -35,6 +35,7 @@
 #include "TES3GameSetting.h"
 #include "TES3GlobalVariable.h"
 #include "TES3InputController.h"
+#include "TES3LeveledList.h"
 #include "TES3MobController.h"
 #include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
@@ -1894,6 +1895,114 @@ namespace mwse {
 				}
 
 				return false;
+			};
+
+			state["tes3"]["transferItem"] = [](sol::table params) -> int {
+				// Get the reference we are transferring from.
+				TES3::Reference * fromReference = getOptionalParamReference(params, "from");
+				if (fromReference == nullptr) {
+					throw std::invalid_argument("Invalid 'from' parameter provided.");
+				}
+
+				// Get the reference we are transferring to.
+				TES3::Reference * toReference = getOptionalParamReference(params, "to");
+				if (toReference == nullptr) {
+					throw std::invalid_argument("Invalid 'to' parameter provided.");
+				}
+
+				// Get the item we are going to transfer.
+				TES3::Item * item = getOptionalParamObject<TES3::Item>(params, "item");
+				if (item == nullptr) {
+					throw std::invalid_argument("Invalid 'item' parameter provided.");
+				}
+
+				// Make sure we're dealing with actors.
+				TES3::Actor * fromActor = static_cast<TES3::Actor*>(fromReference->baseObject);
+				if (!mwse::tes3::hasInventory(fromActor)) {
+					throw std::invalid_argument("The 'from' reference does not point to an actor.");
+				}
+				TES3::Actor * toActor = static_cast<TES3::Actor*>(toReference->baseObject);
+				if (!mwse::tes3::hasInventory(toActor)) {
+					throw std::invalid_argument("The 'to' reference does not point to an actor.");
+				}
+
+				// Do either of the references need to be cloned?
+				if (fromReference->clone()) {
+					fromActor = static_cast<TES3::Actor*>(fromReference->baseObject);
+				}
+				if (toReference->clone()) {
+					toActor = static_cast<TES3::Actor*>(toReference->baseObject);
+				}
+
+				// Is the item leveled? Let's resolve it first.
+				while (item->objectType == TES3::ObjectType::LeveledItem) {
+					item = static_cast<TES3::Item*>(reinterpret_cast<TES3::LeveledItem*>(item)->resolve());
+				}
+
+				// Get any associated item data.
+				TES3::ItemData * itemData = getOptionalParam<TES3::ItemData*>(params, "itemData", nullptr);
+
+				// Get how many items we are transferring.
+				int desiredCount = std::max(getOptionalParam(params, "count", 1), 1);
+				int fulfilledCount = 0;
+
+				// Get the mobile objects for the references, if applicable.
+				auto toMobile = mwse::tes3::getAttachedMobileActor(toReference);
+				auto fromMobile = mwse::tes3::getAttachedMobileActor(fromReference);
+
+				// Were we given an ItemData? If so, we only need to transfer one item.
+				if (itemData) {
+					if (fromActor->inventory.containsItem(item, itemData)) {
+						toActor->inventory.addItem(toMobile, item, 1, false, &itemData);
+						fromActor->inventory.removeItemWithData(fromMobile, item, itemData, 1, false);
+						fulfilledCount = 1;
+					}
+				}
+				// No ItemData? We have to go through and transfer items over one by one.
+				else {
+					TES3::ItemStack * fromStack = fromActor->inventory.findItemStack(item);
+					if (fromStack) {
+						int itemsLeftToTransfer = std::min(desiredCount, fromStack->count);
+
+						// Remove transfer items without data first.
+						int countWithoutVariables = fromStack->count - (fromStack->variables ? fromStack->variables->endIndex : 0);
+						if (countWithoutVariables > 0) {
+							toActor->inventory.addItem(toMobile, item, countWithoutVariables, false, nullptr);
+							fromActor->inventory.removeItemWithData(fromMobile, item, nullptr, countWithoutVariables, false);
+							fulfilledCount += countWithoutVariables;
+							itemsLeftToTransfer -= countWithoutVariables;
+						}
+
+						// Then transfer over items with data.
+						if (fromStack->variables) {
+							while (itemsLeftToTransfer > 0) {
+								toActor->inventory.addItem(toMobile, item, 1, false, &fromStack->variables->storage[0]);
+								fromActor->inventory.removeItemWithData(fromMobile, item, fromStack->variables->storage[0], 1, false);
+
+								fulfilledCount++;
+								itemsLeftToTransfer--;
+							}
+						}
+					}
+				}
+
+				// No items to transfer? Great, let's get out of here.
+				if (fulfilledCount == 0) {
+					return 0;
+				}
+
+				// If either of them are the player, we need to update the GUI.
+				if (getOptionalParam<bool>(params, "updateGUI", true)) {
+					auto worldController = mwse::tes3::getWorldController();
+					auto playerMobile = worldController->getMobilePlayer();
+					if (fromMobile == playerMobile || toMobile == playerMobile) {
+						worldController->inventoryData->clearIcons(2);
+						worldController->inventoryData->addInventoryItems(&playerMobile->npcInstance->inventory, 2);
+						mwse::tes3::ui::inventoryUpdateIcons();
+					}
+				}
+
+				return fulfilledCount;
 			};
 		}
 	}

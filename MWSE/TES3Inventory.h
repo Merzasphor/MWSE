@@ -49,13 +49,19 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		void dropItem(MobileActor* mobileActor, Item * item, ItemData * itemData, int count, Vector3 position, Vector3 orientation, bool unknown = false);
 		ItemStack* findItemStack(Object* item);
+
+		int addItem(MobileActor * mobile, Item * item, int count, bool something, ItemData ** itemDataRef);
+		void removeItemWithData(MobileActor * mobile, Item * item, ItemData * itemData, int count, bool deleteStackData);
+		void dropItem(MobileActor* mobileActor, Item * item, ItemData * itemData, int count, Vector3 position, Vector3 orientation, bool unknown = false);
+
 		void resolveLeveledLists(MobileActor*);
 
 		//
 		// Custom functions.
 		//
+
+		bool containsItem(Item * item, ItemData * data = nullptr);
 
 		int getSoulGemCount();
 

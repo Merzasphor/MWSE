@@ -4,6 +4,9 @@
 #include <vector>
 
 #include "TES3MobileActor.h"
+#include "TES3MobilePlayer.h"
+#include "TES3NPC.h"
+#include "TES3WorldController.h"
 
 #include "TES3UIElement.h"
 #include "TES3UIManager.h"
@@ -242,6 +245,13 @@ namespace mwse {
 			});
 			tes3ui["findMenu"] = TES3::UI::findMenu;
 			tes3ui["findHelpLayerMenu"] = TES3::UI::findHelpLayerMenu;
+			tes3ui["forcePlayerInventoryUpdate"] = []() {
+				auto worldController = mwse::tes3::getWorldController();
+				auto playerMobile = worldController->getMobilePlayer();
+				worldController->inventoryData->clearIcons(2);
+				worldController->inventoryData->addInventoryItems(&playerMobile->npcInstance->inventory, 2);
+				TES3_UpdateInventoryTiles();
+			};
 			tes3ui["enterMenuMode"] = TES3::UI::enterMenuMode;
 			tes3ui["leaveMenuMode"] = TES3::UI::leaveMenuMode;
 			tes3ui["acquireTextInput"] = TES3::UI::acquireTextInput;

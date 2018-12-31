@@ -171,7 +171,7 @@ namespace mwse {
 			auto usertypeDefinition = state.create_simple_usertype<TES3::TArray<T>>();
 			usertypeDefinition.set("new", sol::no_constructor);
 
-			//
+			// Metafunction access.
 			usertypeDefinition.set(sol::meta_function::pairs, [](TES3::TArray<T> * self) {
 				TArray_iteratorState<T> it_state(self);
 				return std::make_tuple(&bindTArray_pairsIter<T>, sol::user<TArray_iteratorState<T>>(std::move(it_state)), sol::lua_nil);
@@ -181,6 +181,14 @@ namespace mwse {
 			});
 			usertypeDefinition.set(sol::meta_function::index, [](TES3::TArray<T>& self, int index) { return self.storage[index - 1]; });
 			usertypeDefinition.set(sol::meta_function::length, [](TES3::TArray<T>& self) { return self.filledCount; });
+
+			// Function binding.
+			usertypeDefinition.set("getIndexOfValue", [](TES3::TArray<T> * self, T * value) {
+				return self->getIndexOfValue(value);
+			});
+			usertypeDefinition.set("contains", [](TES3::TArray<T> * self, T * value) {
+				return self->contains(value);
+			});
 
 			// Finish up our usertype.
 			state.set_usertype(name, usertypeDefinition);

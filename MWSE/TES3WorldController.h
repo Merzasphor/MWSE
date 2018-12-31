@@ -6,6 +6,7 @@
 #include "NIDefines.h"
 #include "TES3Defines.h"
 #include "TES3UIDefines.h"
+#include "TES3UIVector.h"
 
 #include "TES3Collections.h"
 #include "TES3Vectors.h"
@@ -91,7 +92,7 @@ namespace TES3 {
 		};
 		int werewolfKills; // 0x0
 		int totalKills; // 0x4
-		Iterator<Node> * killedActors;
+		Iterator<Node> * killedActors; // 0x8
 
 		//
 		// Custom functions.
@@ -101,6 +102,25 @@ namespace TES3 {
 		_declspec(dllexport) int getKillCount(Actor * actor);
 
 	};
+	static_assert(sizeof(KillCounter) == 0xC, "TES3::KillCounter failed size validation");
+
+	struct InventoryData {
+		UI::Vector tiles; // 0x0
+		bool unknown_0x10;
+		int unknown_0x14;
+		int unknown_0x18;
+		int unknown_0x1C;
+		int unknown_0x20;
+
+		//
+		// Other related this-call functions.
+		//
+
+		_declspec(dllexport) void clearIcons(int type);
+		_declspec(dllexport) void addInventoryItems(Inventory * inventory, int type);
+
+	};
+	static_assert(sizeof(InventoryData) == 0x24, "TES3::InventoryData failed size validation");
 
 	struct WorldController {
 		int unknown_0x0;
@@ -190,7 +210,7 @@ namespace TES3 {
 		int unknown_0x2DC;
 		void * fogOfWarController; // 0x2E0
 		UI::MenuController * menuController; // 0x2E4
-		void * uiInventoryData; // 0x2E8
+		InventoryData * inventoryData; // 0x2E8
 		Sound * soundWeaponSwish; // 0x2EC
 		Sound * soundLightArmorHit; // 0x2F0
 		Sound * soundMediumArmorHit; // 0x2F4
