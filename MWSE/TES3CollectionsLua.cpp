@@ -19,6 +19,7 @@
 #include "TES3Region.h"
 #include "TES3Spell.h"
 
+#include "NIPick.h"
 #include "NIProperty.h"
 
 namespace mwse {
@@ -70,6 +71,7 @@ namespace mwse {
 
 			// Basic TArray bindings.
 			bindTArray<TES3::ItemData>("TES3ItemDataTArray");
+			bindTArray<NI::PickRecord>("NITArrayPickRecord");
 
 			// Bind some iterators.
 			sol::state& state = LuaManager::getInstance().getState();

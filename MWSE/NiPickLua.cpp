@@ -19,19 +19,6 @@ namespace mwse {
 		void bindNIPick() {
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<TES3::TArray<NI::PickRecord>>("NITArrayPickRecord",
-				// Disable construction of this type.
-				"new", sol::no_constructor,
-
-				//
-				// Meta functions.
-				//
-
-				sol::meta_function::index, [](TES3::TArray<NI::AVObject>& self, int index) { return self.storage[index - 1]; },
-				sol::meta_function::length, [](TES3::TArray<NI::AVObject>& self) { return self.filledCount; }
-
-			);
-
 			state.new_usertype<NI::Pick>("NIPick",
 				// Disable construction of this type.
 				"new", sol::no_constructor,

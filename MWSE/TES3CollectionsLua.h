@@ -179,8 +179,14 @@ namespace mwse {
 			usertypeDefinition.set(sol::meta_function::ipairs, [](TES3::TArray<T> * self) {
 				return std::make_tuple(&bindTArray_ipairsIter<T>, self, 0);
 			});
-			usertypeDefinition.set(sol::meta_function::index, [](TES3::TArray<T>& self, int index) { return self.storage[index - 1]; });
-			usertypeDefinition.set(sol::meta_function::length, [](TES3::TArray<T>& self) { return self.filledCount; });
+			usertypeDefinition.set(sol::meta_function::index, [](TES3::TArray<T>& self, int index) {
+				index--;
+				if (index < 0 || index > self.endIndex) {
+					throw std::out_of_range("Access index out of bounds.");
+				}
+				return self.storage[index];
+			});
+			usertypeDefinition.set(sol::meta_function::length, [](TES3::TArray<T>& self) { return self.endIndex; });
 
 			// Function binding.
 			usertypeDefinition.set("getIndexOfValue", [](TES3::TArray<T> * self, T * value) {
