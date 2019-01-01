@@ -1943,7 +1943,7 @@ namespace mwse {
 				TES3::ItemData * itemData = getOptionalParam<TES3::ItemData*>(params, "itemData", nullptr);
 
 				// Get how many items we are transferring.
-				int desiredCount = std::max(getOptionalParam(params, "count", 1), 1);
+				int desiredCount = std::max(std::abs(getOptionalParam(params, "count", 1)), 1);
 				int fulfilledCount = 0;
 
 				// Get the mobile objects for the references, if applicable.
@@ -1962,10 +1962,11 @@ namespace mwse {
 				else {
 					TES3::ItemStack * fromStack = fromActor->inventory.findItemStack(item);
 					if (fromStack) {
-						int itemsLeftToTransfer = std::min(desiredCount, fromStack->count);
+						int stackCount = std::abs(fromStack->count);
+						int itemsLeftToTransfer = std::min(desiredCount, stackCount);
 
 						// Remove transfer items without data first.
-						int countWithoutVariables = fromStack->count - (fromStack->variables ? fromStack->variables->endIndex : 0);
+						int countWithoutVariables = stackCount - (fromStack->variables ? fromStack->variables->endIndex : 0);
 						if (countWithoutVariables > 0) {
 							toActor->inventory.addItem(toMobile, item, countWithoutVariables, false, nullptr);
 							fromActor->inventory.removeItemWithData(fromMobile, item, nullptr, countWithoutVariables, false);
