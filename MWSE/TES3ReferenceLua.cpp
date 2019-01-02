@@ -128,6 +128,7 @@ namespace mwse {
 			usertypeDefinition.set("setActionFlag", &TES3::Reference::setActionFlag);
 			usertypeDefinition.set("clearActionFlag", &TES3::Reference::clearActionFlag);
 			usertypeDefinition.set("testActionFlag", &TES3::Reference::testActionFlag);
+			usertypeDefinition.set("updateEquipment", &TES3::Reference::updateEquipment);
 
 			// Functions exposed as properties.
 			usertypeDefinition.set("activationReference", sol::property(&TES3::Reference::getActionReference, &TES3::Reference::setActionReference));

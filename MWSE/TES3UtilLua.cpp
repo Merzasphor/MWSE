@@ -1994,6 +1994,14 @@ namespace mwse {
 					return 0;
 				}
 
+				// Update equipment for creatures/NPCs.
+				if (fromActor->objectType == TES3::ObjectType::NPC || fromActor->objectType == TES3::ObjectType::Creature) {
+					fromReference->updateEquipment();
+				}
+				if (toActor->objectType == TES3::ObjectType::NPC || toActor->objectType == TES3::ObjectType::Creature) {
+					toReference->updateEquipment();
+				}
+
 				// If either of them are the player, we need to update the GUI.
 				if (getOptionalParam<bool>(params, "updateGUI", true)) {
 					// Update inventory menu if necessary.

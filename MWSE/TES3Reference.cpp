@@ -83,6 +83,11 @@ namespace TES3 {
 		TES3_Reference_removeAttachment(this, attachment);
 	}
 
+	const auto TES3_Reference_updateEquipment = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E8B50);
+	void Reference::updateEquipment() {
+		TES3_Reference_updateEquipment(this);
+	}
+
 	void Reference::setPositionFromLua(sol::stack_object value) {
 		// Is it a vector?
 		if (value.is<Vector3*>()) {

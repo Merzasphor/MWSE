@@ -37,6 +37,8 @@ namespace TES3 {
 		__declspec(dllexport) ScriptVariables * getScriptVariables();
 		__declspec(dllexport) void removeAttachment(TES3::Attachment * attachment);
 
+		__declspec(dllexport) void updateEquipment();
+
 		//
 		// Other utility functions.
 		//
