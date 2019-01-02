@@ -129,7 +129,6 @@ namespace TES3 {
 		struct InventoryTile;
 		struct String;
 		struct Tree;
-		struct Vector;
 	}
 
 }

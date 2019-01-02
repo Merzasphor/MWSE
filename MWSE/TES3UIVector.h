@@ -4,12 +4,13 @@
 
 namespace TES3 {
 	namespace UI {
+		template <typename T>
 		struct Vector {
 			char tag;
-			void * begin;
-			void * end;
-			void * storageEnd;
+			T * begin;
+			T * end;
+			T * storageEnd;
 		};
-		static_assert(sizeof(Vector) == 0x10, "TES3::UI::Vector failed size validation");
+		static_assert(sizeof(Vector<void>) == 0x10, "TES3::UI::Vector failed size validation");
 	}
 }

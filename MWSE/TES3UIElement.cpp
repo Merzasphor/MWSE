@@ -142,8 +142,8 @@ namespace TES3 {
 		}
 
 		int Element::getIndexOfChild(const Element *child) const {
-			const Element** it = static_cast<const Element**>(this->vectorChildren.begin);
-			const Element** end = static_cast<const Element**>(this->vectorChildren.end);
+			Element** it = vectorChildren.begin;
+			Element** end = vectorChildren.end;
 
 			for (int i = 0; it != this->vectorChildren.end; ++i, ++it) {
 				if (*it == child) {
@@ -169,12 +169,12 @@ namespace TES3 {
 		bool Element::reorderChildren(int insertBefore, int moveFrom, int count) {
 			// Move <count> children from index <moveFrom> to index <insertBefore>
 			// Negative positions indicate distance from end, negative count moves all children after moveFrom
-			if (this->vectorChildren.begin == this->vectorChildren.end) {
+			if (vectorChildren.begin == vectorChildren.end) {
 				return false;
 			}
 
-			const Element** begin = static_cast<const Element**>(this->vectorChildren.begin);
-			const Element** end = static_cast<const Element**>(this->vectorChildren.end);
+			Element** begin = vectorChildren.begin;
+			Element** end = vectorChildren.end;
 			int childCount = int(end - begin);
 
 			// Convert negative indices to distance from end, and negative count to move all items after moveFrom
@@ -188,7 +188,7 @@ namespace TES3 {
 			}
 
 			// Copy <count> elements into a temp buffer
-			const Element** from = begin + moveFrom, ** to = begin + insertBefore;
+			Element** from = begin + moveFrom, ** to = begin + insertBefore;
 			std::vector<const Element*> temp(from, from + count);
 
 			// Slide <shift> children in-place, then write buffer into correct location

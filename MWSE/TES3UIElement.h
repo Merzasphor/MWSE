@@ -16,13 +16,13 @@ namespace TES3 {
 			char tag;
 			String name;
 			short id;
-			Vector vectorChildren;
+			Vector<Element*> vectorChildren;
 			Element* parent;
 			Tree properties;
 			Element* uielement_3C;
-			Vector vectorVerts_40;
-			Vector vector_50;
-			Vector vector_60;
+			Vector<void> vectorVerts_40;
+			Vector<void> vector_50;
+			Vector<void> vector_60;
 			int updateReqTimestamp;
 			Boolean flagExtendImageToBounds;
 			Boolean visible;

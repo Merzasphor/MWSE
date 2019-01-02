@@ -105,7 +105,7 @@ namespace TES3 {
 	static_assert(sizeof(KillCounter) == 0xC, "TES3::KillCounter failed size validation");
 
 	struct InventoryData {
-		UI::Vector tiles; // 0x0
+		UI::Vector<UI::InventoryTile*> tiles; // 0x0
 		bool unknown_0x10;
 		int unknown_0x14;
 		int unknown_0x18;

@@ -76,8 +76,8 @@ namespace mwse {
 			usertypeDefinition.set("children", sol::readonly_property(
 				[](const Element& self) {
 					sol::table children = LuaManager::getInstance().getState().create_table();
-					auto it = static_cast<const Element**>(self.vectorChildren.begin);
-					auto end = static_cast<const Element**>(self.vectorChildren.end);
+					auto it = self.vectorChildren.begin;
+					auto end = self.vectorChildren.end;
 					for (int i = 1; it != end; ++it, ++i) {
 						children[i] = *it;
 					}
