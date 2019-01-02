@@ -2156,6 +2156,29 @@ namespace mwse {
 			return iterator->getNextNode();
 		}
 
+		void __inline TriggerItemTileUpdatedEventForElement(TES3::UI::Element * element, DWORD propertyAddress) {
+			TES3::UI::InventoryTile * tile = static_cast<TES3::UI::InventoryTile*>(element->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(propertyAddress)).ptrValue);
+			if (tile) {
+				lua::LuaManager::getInstance().triggerEvent(new lua::event::ItemTileUpdatedEvent(tile));
+			}
+		}
+
+		void __fastcall OnSetItemTileIcon(TES3::UI::Element * element, DWORD _UNUSED_, const char* iconPath) {
+			// Overwritten function.
+			element->setIcon(iconPath);
+
+			// Get the associated tile and fire off the update event.
+			TriggerItemTileUpdatedEventForElement(element, 0x7D3A70);
+		}
+
+		void __fastcall OnInventoryTileChildPropertySet(TES3::UI::Element* element, DWORD _UNUSED_, TES3::UI::Property property, TES3::UI::PropertyValue value, TES3::UI::PropertyType type) {
+			// Overwritten code.
+			element->setProperty(property, value, type);
+
+			// Get the associated tile and fire off the update event.
+			TriggerItemTileUpdatedEventForElement(element, 0x7D308C);
+		}
+
 		//
 		//
 		//
@@ -2902,9 +2925,12 @@ namespace mwse {
 			overrideVirtualTableEnforced(0x748258, 0x98, 0x4A1270, *reinterpret_cast<DWORD*>(&armorGetSlotName));
 
 			// Recognize when an inventory tile is updated.
-			genCallEnforced(0x5A5DA4, 0x47E720, reinterpret_cast<DWORD>(GetNextInventoryTileToUpdate)); // Barter
-			genCallEnforced(0x5B6F13, 0x47E720, reinterpret_cast<DWORD>(GetNextInventoryTileToUpdate)); // Contents
-			genCallEnforced(0x5CD147, 0x47E720, reinterpret_cast<DWORD>(GetNextInventoryTileToUpdate)); // Inventory
+			genCallEnforced(0x5A5DA4, 0x47E720, reinterpret_cast<DWORD>(GetNextInventoryTileToUpdate)); // General barter menu update.
+			genCallEnforced(0x5B6655, 0x581F30, reinterpret_cast<DWORD>(OnInventoryTileChildPropertySet)); // During click event into contents menu.
+			genCallEnforced(0x5B6F13, 0x47E720, reinterpret_cast<DWORD>(GetNextInventoryTileToUpdate)); // General contents menu update.
+			genCallEnforced(0x5CC366, 0x58AE20, reinterpret_cast<DWORD>(OnSetItemTileIcon)); // On manual AddTile.
+			genCallEnforced(0x5CD147, 0x47E720, reinterpret_cast<DWORD>(GetNextInventoryTileToUpdate)); // General inventory menu update.
+			genCallEnforced(0x5D1943, 0x58AE20, reinterpret_cast<DWORD>(OnSetItemTileIcon)); // Root purpose unclear.
 
 			// UI framework hooks
 			TES3::UI::hook();
