@@ -90,6 +90,10 @@ namespace TES3 {
 		void addItemAtIndex(T * item, unsigned int index) {
 			reinterpret_cast<void(__thiscall *)(Iterator<T>*, T*, unsigned int)>(0x47E4D0)(this, item, index);
 		}
+
+		IteratorNode<T> * getNextNode() {
+			return reinterpret_cast<IteratorNode<T> *(__thiscall *)(Iterator<T>*)>(0x47E720)(this);
+		}
 	};
 	static_assert(sizeof(Iterator<void>) == 0x14, "TES3::Iterator failed size validation");
 

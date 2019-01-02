@@ -152,6 +152,7 @@
 #include "LuaInfoGetTextEvent.h"
 #include "LuaInfoResponseEvent.h"
 #include "LuaItemDroppedEvent.h"
+#include "LuaItemTileUpdatedEvent.h"
 #include "LuaKeyDownEvent.h"
 #include "LuaKeyUpEvent.h"
 #include "LuaLevelUpEvent.h"
@@ -2145,6 +2146,15 @@ namespace mwse {
 		}
 
 		//
+		// Fire an event when item tiles are updated.
+		//
+
+		TES3::IteratorNode<TES3::UI::InventoryTile> * __fastcall GetNextInventoryTileToUpdate(TES3::Iterator<TES3::UI::InventoryTile> * iterator) {
+			lua::LuaManager::getInstance().triggerEvent(new lua::event::ItemTileUpdatedEvent(iterator->current->data));
+			return iterator->getNextNode();
+		}
+
+		//
 		//
 		//
 
@@ -2888,6 +2898,11 @@ namespace mwse {
 			// Allow overriding of armor slot name.
 			auto armorGetSlotName = &TES3::Armor::getSlotName;
 			overrideVirtualTableEnforced(0x748258, 0x98, 0x4A1270, *reinterpret_cast<DWORD*>(&armorGetSlotName));
+
+			// Recognize when an inventory tile is updated.
+			genCallEnforced(0x5A5DA4, 0x47E720, reinterpret_cast<DWORD>(GetNextInventoryTileToUpdate)); // Barter
+			genCallEnforced(0x5B6F13, 0x47E720, reinterpret_cast<DWORD>(GetNextInventoryTileToUpdate)); // Contents
+			genCallEnforced(0x5CD147, 0x47E720, reinterpret_cast<DWORD>(GetNextInventoryTileToUpdate)); // Inventory
 
 			// UI framework hooks
 			TES3::UI::hook();
