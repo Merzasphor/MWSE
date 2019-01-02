@@ -1969,10 +1969,11 @@ namespace mwse {
 						// Remove transfer items without data first.
 						int countWithoutVariables = stackCount - (fromStack->variables ? fromStack->variables->endIndex : 0);
 						if (countWithoutVariables > 0) {
-							toActor->inventory.addItem(toMobile, item, countWithoutVariables, false, nullptr);
-							fromActor->inventory.removeItemWithData(fromMobile, item, nullptr, countWithoutVariables, false);
-							fulfilledCount += countWithoutVariables;
-							itemsLeftToTransfer -= countWithoutVariables;
+							int amountToTransfer = std::min(countWithoutVariables, itemsLeftToTransfer);
+							toActor->inventory.addItem(toMobile, item, amountToTransfer, false, nullptr);
+							fromActor->inventory.removeItemWithData(fromMobile, item, nullptr, amountToTransfer, false);
+							fulfilledCount += amountToTransfer;
+							itemsLeftToTransfer -= amountToTransfer;
 						}
 
 						// Then transfer over items with data.
