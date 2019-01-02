@@ -108,6 +108,7 @@
 #include "TES3StaticLua.h"
 #include "TES3StatisticLua.h"
 #include "TES3UIElementLua.h"
+#include "TES3UIInventoryTileLua.h"
 #include "TES3UIManagerLua.h"
 #include "TES3UIMenuController.h"
 #include "TES3UIWidgetsLua.h"
@@ -420,6 +421,7 @@ namespace mwse {
 			bindTES3WorldController();
 
 			bindTES3UIElement();
+			bindTES3UIInventoryTile();
 			bindTES3UIManager();
 			bindTES3UIWidgets();
 

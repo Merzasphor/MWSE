@@ -1203,6 +1203,9 @@
     <ClInclude Include="LuaItemTileUpdatedEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="TES3UIInventoryTileLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2614,6 +2617,9 @@
     </ClCompile>
     <ClCompile Include="LuaItemTileUpdatedEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3UIInventoryTileLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

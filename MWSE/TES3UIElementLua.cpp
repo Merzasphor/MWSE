@@ -9,6 +9,8 @@
 #include "TES3UIManagerLua.h"
 #include "TES3UIWidgetsLua.h"
 
+#include "TES3UIInventoryTile.h"
+
 #include "sol.hpp"
 #include "LuaManager.h"
 #include "Log.h"
@@ -388,7 +390,7 @@ namespace mwse {
 				}
 			);
 			usertypeDefinition.set("getPropertyObject",
-				[](Element& self, const char* propertyName, sol::optional<std::string> typeCast) -> sol::object {
+				[](sol::this_state state, Element& self, const char* propertyName, sol::optional<std::string> typeCast) -> sol::object {
 					TES3::UI::Property prop = TES3::UI::registerProperty(propertyName);
 					auto ptr = self.getProperty(TES3::UI::PropertyType::Pointer, prop).ptrValue;
 
@@ -409,8 +411,16 @@ namespace mwse {
 						}
 					}
 					else {
-						if (typeCast.value() == "tes3gameFile") {
+						if (typeCast.value() == "tes3itemData") {
+							lua_State* L = state;
+							return sol::make_object(L, static_cast<TES3::ItemData*>(ptr));
+						}
+						else if (typeCast.value() == "tes3gameFile") {
 							return makeLuaObject(static_cast<TES3::GameFile*>(ptr));
+						}
+						else if (typeCast.value() == "tes3inventoryTile") {
+							lua_State* L = state;
+							return sol::make_object(L, static_cast<TES3::UI::InventoryTile*>(ptr));
 						}
 						return sol::nil;
 					}

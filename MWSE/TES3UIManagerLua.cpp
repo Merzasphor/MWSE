@@ -34,16 +34,6 @@ namespace mwse {
 		static std::unordered_map<Element*, std::vector<EventLuaCallback>> eventMap;
 		static std::unordered_map<Element*, void(__cdecl*)(Element*)> destroyMap;
 
-		const auto TES3_UpdateInventoryTiles = reinterpret_cast<void(__cdecl*)()>(0x5CC910);
-		const auto TES3_UpdateBarterMenuTiles = reinterpret_cast<void(__cdecl*)()>(0x5A5620);
-		const auto TES3_UpdateContentsMenuTiles = reinterpret_cast<void(__cdecl*)()>(0x5B67E0);
-		const auto TES3_UpdateInventorySelectTiles = reinterpret_cast<int(__cdecl*)()>(0x5D3E70);
-
-		const auto TES3_ShowBookMenu = reinterpret_cast<void(__cdecl*)(const char*)>(0x5AC2A0);
-		const auto TES3_ShowScrollMenu = reinterpret_cast<void(__cdecl*)(const char*)>(0x6138A0);
-
-		const auto TES3_ConsoleLogResult = reinterpret_cast<void(__cdecl*)(const char*, bool)>(0x5B2C20);
-
 		TES3::UI::Boolean __cdecl eventDispatcher(Element* owningWidget, Property eventID, int data0, int data1, Element* source) {
 			sol::state& state = LuaManager::getInstance().getState();
 
@@ -250,7 +240,7 @@ namespace mwse {
 				auto playerMobile = worldController->getMobilePlayer();
 				worldController->inventoryData->clearIcons(2);
 				worldController->inventoryData->addInventoryItems(&playerMobile->npcInstance->inventory, 2);
-				TES3_UpdateInventoryTiles();
+				TES3::UI::updateInventoryMenuTiles();
 			};
 			tes3ui["enterMenuMode"] = TES3::UI::enterMenuMode;
 			tes3ui["leaveMenuMode"] = TES3::UI::leaveMenuMode;
@@ -260,9 +250,9 @@ namespace mwse {
 				auto colour = TES3::UI::getPaletteColour(TES3::UI::registerProperty(name));
 				return state.create_table_with(1, colour.x, 2, colour.y, 3, colour.z);
 			});
-			tes3ui["updateInventoryTiles"] = TES3_UpdateInventoryTiles;
-			tes3ui["updateBarterMenuTiles"] = TES3_UpdateBarterMenuTiles;
-			tes3ui["updateContentsMenuTiles"] = TES3_UpdateContentsMenuTiles;
+			tes3ui["updateInventoryTiles"] = &TES3::UI::updateInventoryMenuTiles;
+			tes3ui["updateBarterMenuTiles"] = &TES3::UI::updateBarterMenuTiles;
+			tes3ui["updateContentsMenuTiles"] = &TES3::UI::updateContentsMenuTiles;
 			tes3ui["updateInventorySelectTiles"] = []() -> sol::optional<int> {
 				auto menu = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D3C14));
 				if (menu == nullptr) {
@@ -272,7 +262,7 @@ namespace mwse {
 				auto pane = menu->findChild(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D821C));
 				pane->destroyChildren();
 
-				int count = TES3_UpdateInventorySelectTiles();
+				int count = TES3::UI::updateSelectInventoryTiles();
 
 				menu->timingUpdate();
 
@@ -282,15 +272,11 @@ namespace mwse {
 			tes3ui["getServiceActor"] = []() {
 				return mwse::lua::makeLuaObject(TES3::UI::getServiceActor());
 			};
-			tes3ui["showScrollMenu"] = [](const char* text) {
-				TES3_ShowScrollMenu(text);
-			};
-			tes3ui["showBookMenu"] = [](const char* text) {
-				TES3_ShowBookMenu(text);
-			};
+			tes3ui["showScrollMenu"] = &TES3::UI::showScrollMenu;
+			tes3ui["showBookMenu"] = &TES3::UI::showBookMenu;
 
 			tes3ui["logToConsole"] = [](const char* text, sol::optional<bool> isCommand) {
-				TES3_ConsoleLogResult(text, isCommand.value_or(false));
+				TES3::UI::logToConsole(text, isCommand.value_or(false));
 			};
 		}
 

@@ -172,6 +172,41 @@ namespace TES3 {
 		}
 		const size_t patchDispatchMousewheelDown_size = 0x14;
 
+		const auto TES3_ConsoleLogResult = reinterpret_cast<void(__cdecl*)(const char*, bool)>(0x5B2C20);
+		void logToConsole(const char* text, bool isCommand) {
+			TES3_ConsoleLogResult(text, isCommand);
+		}
+
+		const auto TES3_ShowBookMenu = reinterpret_cast<void(__cdecl*)(const char*)>(0x5AC2A0);
+		void showBookMenu(const char* text) {
+			TES3_ShowBookMenu(text);
+		}
+
+		const auto TES3_ShowScrollMenu = reinterpret_cast<void(__cdecl*)(const char*)>(0x6138A0);
+		void showScrollMenu(const char* text) {
+			TES3_ShowScrollMenu(text);
+		}
+
+		const auto TES3_UpdateInventoryTiles = reinterpret_cast<void(__cdecl*)()>(0x5CC910);
+		void updateInventoryMenuTiles() {
+			TES3_UpdateInventoryTiles();
+		}
+
+		const auto TES3_UpdateContentsMenuTiles = reinterpret_cast<void(__cdecl*)()>(0x5B67E0);
+		void updateContentsMenuTiles() {
+			TES3_UpdateContentsMenuTiles();
+		}
+
+		const auto TES3_UpdateBarterMenuTiles = reinterpret_cast<void(__cdecl*)()>(0x5A5620);
+		void updateBarterMenuTiles() {
+			TES3_UpdateBarterMenuTiles();
+		}
+
+		const auto TES3_UpdateInventorySelectTiles = reinterpret_cast<int(__cdecl*)()>(0x5D3E70);
+		int updateSelectInventoryTiles() {
+			return TES3_UpdateInventorySelectTiles();
+		}
+
 		void hook() {
 			// Patch mousewheel event dispatch to not redirect to the top-level element,
 			// allowing mousewheel to apply to more than the first scrollpane in a menu

@@ -20,10 +20,20 @@ namespace TES3 {
 
 		Boolean __cdecl onScrollPaneMousewheel(Element*, Property, int, int, Element*);
 
-		MobileActor* getServiceActor();
-		void updateDialogDisposition();
+		__declspec(dllexport) MobileActor* getServiceActor();
+		__declspec(dllexport) void updateDialogDisposition();
 
 		__declspec(dllexport) const char* getInventorySelectType();
+
+		__declspec(dllexport) void logToConsole(const char* text, bool isCommand = false);
+
+		__declspec(dllexport) void showBookMenu(const char* text);
+		__declspec(dllexport) void showScrollMenu(const char* text);
+
+		__declspec(dllexport) void updateInventoryMenuTiles();
+		__declspec(dllexport) void updateContentsMenuTiles();
+		__declspec(dllexport) void updateBarterMenuTiles();
+		__declspec(dllexport) int updateSelectInventoryTiles();
 
 		void hook();
 	}

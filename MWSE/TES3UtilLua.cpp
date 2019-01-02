@@ -49,6 +49,7 @@
 #include "TES3Spell.h"
 #include "TES3SpellInstanceController.h"
 #include "TES3UIElement.h"
+#include "TES3UIManager.h"
 #include "TES3UIMenuController.h"
 #include "TES3Weather.h"
 #include "TES3WeatherController.h"
@@ -1994,12 +1995,22 @@ namespace mwse {
 
 				// If either of them are the player, we need to update the GUI.
 				if (getOptionalParam<bool>(params, "updateGUI", true)) {
+					// Update inventory menu if necessary.
 					auto worldController = mwse::tes3::getWorldController();
 					auto playerMobile = worldController->getMobilePlayer();
 					if (fromMobile == playerMobile || toMobile == playerMobile) {
 						worldController->inventoryData->clearIcons(2);
 						worldController->inventoryData->addInventoryItems(&playerMobile->npcInstance->inventory, 2);
 						mwse::tes3::ui::inventoryUpdateIcons();
+					}
+
+					// Update contents menu if necessary.
+					auto contentsMenu = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D3098));
+					if (contentsMenu) {
+						TES3::Reference * contentsReference = static_cast<TES3::Reference*>(contentsMenu->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D3048)).ptrValue);
+						if (fromReference == contentsReference || toReference == contentsReference) {
+							TES3::UI::updateContentsMenuTiles();
+						}
 					}
 				}
 
