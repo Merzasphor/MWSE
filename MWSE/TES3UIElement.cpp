@@ -45,6 +45,7 @@ namespace TES3 {
 		const auto TES3_ui_setProperty = reinterpret_cast<void (__thiscall *)(Element*, Property, PropertyValue, PropertyType)>(0x581F30);
 		const auto TES3_ui_setText = reinterpret_cast<void(__thiscall *)(Element*, const char*)>(0x58AD30);
 		const auto TES3_ui_setIcon = reinterpret_cast<void(__thiscall *)(Element*, const char*)>(0x58AE20);
+		const auto TES3_ui_setIconString = reinterpret_cast<void(__thiscall *)(Element*, String)>(0x58AF10);
 
 		const auto TES3_ui_updateSceneGraph = reinterpret_cast<void(__thiscall *)(Element*)>(0x587000);
 
@@ -285,6 +286,10 @@ namespace TES3 {
 
 		void Element::setIcon(const char* path) {
 			TES3_ui_setIcon(this, path);
+		}
+
+		void Element::setIcon(String path) {
+			TES3_ui_setIconString(this, path);
 		}
 
 		void Element::updateSceneGraph() {

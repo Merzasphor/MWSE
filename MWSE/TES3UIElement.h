@@ -130,6 +130,7 @@ namespace TES3 {
 			__declspec(dllexport) void setProperty(Property prop, PropertyAccessCallback value);
 			__declspec(dllexport) void setText(const char *);
 			__declspec(dllexport) void setIcon(const char *);
+			__declspec(dllexport) void setIcon(String);
 
 			//
 			// Other related this-call functions.
