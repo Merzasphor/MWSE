@@ -1994,6 +1994,18 @@ namespace mwse {
 					return 0;
 				}
 
+				// Play the relevant sound.
+				auto worldController = mwse::tes3::getWorldController();
+				auto playerMobile = worldController->getMobilePlayer();
+				if (getOptionalParam<bool>(params, "playSound", true)) {
+					if (toMobile == playerMobile) {
+						worldController->playItemUpDownSound(item, true);
+					}
+					else if (fromMobile == playerMobile) {
+						worldController->playItemUpDownSound(item, false);
+					}
+				}
+
 				// Update equipment for creatures/NPCs.
 				if (fromActor->objectType == TES3::ObjectType::NPC || fromActor->objectType == TES3::ObjectType::Creature) {
 					fromReference->updateEquipment();
@@ -2005,8 +2017,6 @@ namespace mwse {
 				// If either of them are the player, we need to update the GUI.
 				if (getOptionalParam<bool>(params, "updateGUI", true)) {
 					// Update inventory menu if necessary.
-					auto worldController = mwse::tes3::getWorldController();
-					auto playerMobile = worldController->getMobilePlayer();
 					if (fromMobile == playerMobile || toMobile == playerMobile) {
 						worldController->inventoryData->clearIcons(2);
 						worldController->inventoryData->addInventoryItems(&playerMobile->npcInstance->inventory, 2);
