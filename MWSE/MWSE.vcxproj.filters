@@ -2621,6 +2621,9 @@
     <ClCompile Include="TES3UIInventoryTileLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3\UI</Filter>
     </ClCompile>
+    <ClCompile Include="TES3UIInventoryTile.cpp">
+      <Filter>Source Files\DataAdapters\TES3\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">
