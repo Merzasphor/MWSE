@@ -568,8 +568,13 @@ namespace mwse {
 			usertypeDefinition.set("updateLayout", [](Element& self) { self.performLayout(1); });
 
 			// Creation/destruction functions.
-			usertypeDefinition.set("createBlock", [](Element& self, sol::table args) {
-				return self.createBlock(args.get_or("id", idNull));
+			usertypeDefinition.set("createBlock", [](Element& self, sol::optional<sol::table> args) {
+				if (args) {
+					return self.createBlock(args.value().get_or("id", idNull));
+				}
+				else {
+					return self.createBlock(idNull);
+				}
 			});
 			usertypeDefinition.set("createButton", [](Element& self, sol::table args) {
 				auto button = self.createButton(args.get_or("id", idNull));
@@ -579,8 +584,14 @@ namespace mwse {
 				}
 				return button;
 			});
-			usertypeDefinition.set("createDivider", [](Element& self, sol::table args) {
-				auto image = self.createImage(args.get_or("id", idNull), "Textures\\menu_divider.tga");
+			usertypeDefinition.set("createDivider", [](Element& self, sol::optional<sol::table> args) {
+				Element * image = nullptr;
+				if (args) {
+					image = self.createImage(args.value().get_or("id", idNull), "Textures\\menu_divider.tga");
+				}
+				else {
+					image = self.createImage(idNull, "Textures\\menu_divider.tga");
+				}
 				image->borderAllSides = 8;
 				image->widthProportional = 1.0;
 				image->flagExtendImageToBounds = 1;
@@ -593,16 +604,27 @@ namespace mwse {
 				fillbar->setMax(args.get_or("max", 0));
 				return element;
 			});
-			usertypeDefinition.set("createHorizontalScrollPane", [](Element& self, sol::table args) {
-				auto scrollpane = self.createHorizontalScrollPane(args.get_or("id", idNull));
+			usertypeDefinition.set("createHorizontalScrollPane", [](Element& self, sol::optional<sol::table> args) {
+				Element * scrollpane = nullptr;
+				if (args) {
+					scrollpane = self.createHorizontalScrollPane(args.value().get_or("id", idNull));
+				}
+				else {
+					scrollpane = self.createHorizontalScrollPane(idNull);
+				}
 
 				// Add mouse wheel handlers (see event dispatch patch in TES3UIManager.cpp)
 				scrollpane->setProperty(TES3::UI::Property::event_mouse_scroll_down, TES3::UI::onScrollPaneMousewheel);
 				scrollpane->setProperty(TES3::UI::Property::event_mouse_scroll_up, TES3::UI::onScrollPaneMousewheel);
 				return scrollpane;
 			});
-			usertypeDefinition.set("createHypertext", [](Element& self, sol::table args) {
-				return self.createHypertext(args.get_or("id", idNull));
+			usertypeDefinition.set("createHypertext", [](Element& self, sol::optional<sol::table> args) {
+				if (args) {
+					return self.createHypertext(args.value().get_or("id", idNull));
+				}
+				else {
+					return self.createHypertext(idNull);
+				}
 			});
 			usertypeDefinition.set("createImage", [](Element& self, sol::table args) {
 				auto path = args.get<sol::optional<const char*>>("path");
@@ -638,8 +660,13 @@ namespace mwse {
 				}
 				return static_cast<Element*>(nullptr);
 			});
-			usertypeDefinition.set("createParagraphInput", [](Element& self, sol::table args) {
-				return self.createParagraphInput(args.get_or("id", idNull));
+			usertypeDefinition.set("createParagraphInput", [](Element& self, sol::optional<sol::table> args) {
+				if (args) {
+					return self.createParagraphInput(args.value().get_or("id", idNull));
+				}
+				else {
+					return self.createParagraphInput(idNull);
+				}
 			});
 			usertypeDefinition.set("createRect", [](Element& self, sol::table args) {
 				Element* rect = self.createRect(args.get_or("id", idNull));
@@ -671,8 +698,13 @@ namespace mwse {
 				slider->setJumpX(args.get_or("jump", 5));
 				return element;
 			});
-			usertypeDefinition.set("createTextInput", [](Element& self, sol::table args) {
-				return self.createTextInput(args.get_or("id", idNull));
+			usertypeDefinition.set("createTextInput", [](Element& self, sol::optional<sol::table> args) {
+				if (args) {
+					return self.createTextInput(args.value().get_or("id", idNull));
+				}
+				else {
+					return self.createTextInput(idNull);
+				}
 			});
 			usertypeDefinition.set("createTextSelect", [](Element& self, sol::table args) {
 				auto element = self.createTextSelect(args.get_or("id", idNull));
@@ -687,8 +719,13 @@ namespace mwse {
 				}
 				return element;
 			});
-			usertypeDefinition.set("createThinBorder", [](Element& self, sol::table args) {
-				return self.createNif(args.get_or("id", idNull), "menu_thin_border.nif");
+			usertypeDefinition.set("createThinBorder", [](Element& self, sol::optional<sol::table> args) {
+				if (args) {
+					return self.createNif(args.value().get_or("id", idNull), "menu_thin_border.nif");
+				}
+				else {
+					return self.createNif(idNull, "menu_thin_border.nif");
+				}
 			});
 			usertypeDefinition.set("createVerticalScrollPane", [](Element& self, sol::table args) {
 				auto scrollpane = self.createVerticalScrollPane(args.get_or("id", idNull));
