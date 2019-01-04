@@ -576,12 +576,20 @@ namespace mwse {
 					return self.createBlock(idNull);
 				}
 			});
-			usertypeDefinition.set("createButton", [](Element& self, sol::table args) {
-				auto button = self.createButton(args.get_or("id", idNull));
-				auto text = args.get<sol::optional<const char*>>("text");
-				if (text) {
-					button->setText(text.value());
+			usertypeDefinition.set("createButton", [](Element& self, sol::optional<sol::table> args) {
+				Element * button = nullptr;
+				if (args) {
+					button = self.createButton(args.value().get_or("id", idNull));
+
+					auto text = args.value().get<sol::optional<const char*>>("text");
+					if (text) {
+						button->setText(text.value());
+					}
 				}
+				else {
+					button = self.createButton(idNull);
+				}
+
 				return button;
 			});
 			usertypeDefinition.set("createDivider", [](Element& self, sol::optional<sol::table> args) {
@@ -597,11 +605,20 @@ namespace mwse {
 				image->flagExtendImageToBounds = 1;
 				return image;
 			});
-			usertypeDefinition.set("createFillBar", [](Element& self, sol::table args) {
-				auto element = self.createFillBar(args.get_or("id", idNull));
-				auto fillbar = TES3::UI::WidgetFillbar::fromElement(element);
-				fillbar->setCurrent(args.get_or("current", 0));
-				fillbar->setMax(args.get_or("max", 0));
+			usertypeDefinition.set("createFillBar", [](Element& self, sol::optional<sol::table> args) {
+				Element * element = nullptr;
+				if (args) {
+					element = self.createFillBar(args.value().get_or("id", idNull));
+					auto fillbar = TES3::UI::WidgetFillbar::fromElement(element);
+					fillbar->setCurrent(args.value().get_or("current", 0));
+					fillbar->setMax(args.value().get_or("max", 0));
+				}
+				else {
+					element = self.createFillBar(idNull);
+					auto fillbar = TES3::UI::WidgetFillbar::fromElement(element);
+					fillbar->setCurrent(0);
+					fillbar->setMax(0);
+				}
 				return element;
 			});
 			usertypeDefinition.set("createHorizontalScrollPane", [](Element& self, sol::optional<sol::table> args) {
