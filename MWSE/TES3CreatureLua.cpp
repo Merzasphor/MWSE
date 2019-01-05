@@ -31,7 +31,7 @@ namespace mwse {
 				usertypeDefinition.set("soul", &TES3::Creature::soul);
 				usertypeDefinition.set("soundCreature", &TES3::Creature::soundGenerator);
 				usertypeDefinition.set("spells", sol::readonly_property(&TES3::Creature::spellList));
-				usertypeDefinition.set("type", sol::readonly_property(&TES3::Creature::creatureType));
+				usertypeDefinition.set("type", &TES3::Creature::creatureType);
 
 				// Indirect bindings to unions and arrays.
 				usertypeDefinition.set("attacks", sol::readonly_property([](TES3::Creature& self) { return std::ref(self.attacks); }));
