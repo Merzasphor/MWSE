@@ -18,7 +18,7 @@ namespace D3D {
 		float theta;
 		float phi;
 	};
-	static_assert(sizeof(Light) == 0x4C, "TES3::Light failed size validation");
+	static_assert(sizeof(Light) == 0x4C, "D3D::Light failed size validation");
 
 	struct Light8 {
 		int type;
@@ -33,5 +33,5 @@ namespace D3D {
 		float theta;
 		float phi;
 	};
-	static_assert(sizeof(Light8) == 0x48, "TES3::Light8 failed size validation");
+	static_assert(sizeof(Light8) == 0x48, "D3D::Light8 failed size validation");
 }

@@ -6,5 +6,5 @@ namespace D3D {
 		float y;
 		float z;
 	};
-	static_assert(sizeof(Vector) == 0xC, "TES3::Vector failed size validation");
+	static_assert(sizeof(Vector) == 0xC, "D3D::Vector failed size validation");
 }

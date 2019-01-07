@@ -7,5 +7,5 @@ namespace D3D {
 		float b;
 		float a;
 	};
-	static_assert(sizeof(ColorValue) == 0x10, "TES3::ColorValue failed size validation");
+	static_assert(sizeof(ColorValue) == 0x10, "D3D::ColorValue failed size validation");
 }

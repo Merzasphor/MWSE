@@ -10,5 +10,5 @@ namespace D3D {
 		ColorValue emissive;
 		float power;
 	};
-	static_assert(sizeof(Material) == 0x44, "TES3::Material failed size validation");
+	static_assert(sizeof(Material) == 0x44, "D3D::Material failed size validation");
 }
