@@ -25,6 +25,7 @@
 #include "TES3AudioController.h"
 #include "TES3Cell.h"
 #include "TES3Class.h"
+#include "TES3Container.h"
 #include "TES3CrimeTree.h"
 #include "TES3DataHandler.h"
 #include "TES3Dialogue.h"
@@ -1952,12 +1953,25 @@ namespace mwse {
 				auto toMobile = toReference->getAttachedMobileActor();
 				auto fromMobile = fromReference->getAttachedMobileActor();
 
+				// Get the maximum weight of the container.
+				float maxCapacity = -1.0f;
+				float currentWeight = 0.0f;
+				float itemWeight = item->getWeight();
+				if (toActor->objectType == TES3::ObjectType::Container && getOptionalParam<bool>(params, "limitCapacity", true)) {
+					maxCapacity = static_cast<TES3::Container*>(toReference->getBaseObject())->capacity;
+					currentWeight = toActor->inventory.calculateContainedWeight();
+					if (currentWeight > maxCapacity) {
+						return 0;
+					}
+				}
+
 				// Were we given an ItemData? If so, we only need to transfer one item.
 				if (itemData) {
-					if (fromActor->inventory.containsItem(item, itemData)) {
+					if ((maxCapacity == -1.0f || currentWeight + itemWeight <= maxCapacity) && fromActor->inventory.containsItem(item, itemData)) {
 						toActor->inventory.addItem(toMobile, item, 1, false, &itemData);
 						fromActor->inventory.removeItemWithData(fromMobile, item, itemData, 1, false);
 						fulfilledCount = 1;
+						currentWeight += itemWeight;
 					}
 				}
 				// No ItemData? We have to go through and transfer items over one by one.
@@ -1966,6 +1980,15 @@ namespace mwse {
 					if (fromStack) {
 						int stackCount = std::abs(fromStack->count);
 						int itemsLeftToTransfer = std::min(desiredCount, stackCount);
+
+						// If we're limited by capacity, find out how many items we really want to transfer.
+						if (maxCapacity != -1.0f) {
+							itemsLeftToTransfer = std::floorf((maxCapacity - currentWeight) / itemWeight);
+						}
+
+						if (itemsLeftToTransfer <= 0) {
+							return 0;
+						}
 
 						// Remove transfer items without data first.
 						int countWithoutVariables = stackCount - (fromStack->variables ? fromStack->variables->endIndex : 0);
@@ -2032,6 +2055,8 @@ namespace mwse {
 							TES3::UI::updateContentsMenuTiles();
 						}
 					}
+
+					// TODO: Update the companion value and carrying capacity.
 				}
 
 				return fulfilledCount;
