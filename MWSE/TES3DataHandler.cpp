@@ -15,6 +15,7 @@
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
 #include "TES3Sound.h"
+#include "TES3Spell.h"
 #include "TES3WorldController.h"
 
 #include "TES3DialogueInfo.h"
@@ -121,6 +122,14 @@ namespace TES3 {
 		return reinterpret_cast<Reference*(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findFirstCloneOfActor)(this, baseId);
 	}
 
+	Spell* NonDynamicData::getSpellById(const char* id) {
+		TES3::Spell * spell = spellsList->head;
+		while (spell != NULL && _stricmp(id, spell->objectID) != 0) {
+			spell = reinterpret_cast<TES3::Spell*>(spell->nextInCollection);
+		}
+		return spell;
+	}
+
 	Script* NonDynamicData::findScriptByName(const char* name) {
 		return reinterpret_cast<Script*(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findScriptByName)(this, name);
 	}
@@ -164,6 +173,10 @@ namespace TES3 {
 	//
 	// DataHandler
 	//
+
+	DataHandler * DataHandler::get() {
+		return *reinterpret_cast<TES3::DataHandler**>(0x7C67E0);
+	}
 
 	void DataHandler::addSound(Sound* sound, Reference* reference, int playbackFlags, unsigned char volume, float pitch, bool isVoiceover, int unknown) {
 		reinterpret_cast<void(__thiscall *)(DataHandler*, Sound*, Reference*, int, unsigned char, float, int, int)>(TES3_DataHandler_addSound)(this, sound, reference, playbackFlags, volume, pitch, isVoiceover, unknown);

@@ -28,6 +28,13 @@ namespace TES3 {
 		short magickaCost; // 0x32
 		Effect effects[8]; // 0x34
 		EnchantmentFlags::value_type flags; // 0xF4
+
+		//
+		// Custom functions.
+		//
+
+		size_t getActiveEffectCount();
+
 	};
 	static_assert(sizeof(Enchantment) == 0xF8, "TES3::Enchantment failed size validation");
 }

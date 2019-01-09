@@ -24,6 +24,7 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 #include "TES3MobilePlayer.h"
+#include "TES3WorldController.h"
 
 using namespace mwse;
 
@@ -49,8 +50,7 @@ namespace mwse
 		long progress = mwse::Stack::getInstance().popLong();
 
 		// Get the associated MACP record.
-		TES3::Reference* reference = virtualMachine.getReference("player");
-		auto mobileObject = tes3::getAttachedMobilePlayer(reference);
+		auto mobileObject = TES3::WorldController::get()->getMobilePlayer();
 		if (mobileObject == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetProgressLevel: Could not find MACP record for reference." << std::endl;

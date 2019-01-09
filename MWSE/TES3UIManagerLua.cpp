@@ -236,7 +236,7 @@ namespace mwse {
 			tes3ui["findMenu"] = TES3::UI::findMenu;
 			tes3ui["findHelpLayerMenu"] = TES3::UI::findHelpLayerMenu;
 			tes3ui["forcePlayerInventoryUpdate"] = []() {
-				auto worldController = mwse::tes3::getWorldController();
+				auto worldController = TES3::WorldController::get();
 				auto playerMobile = worldController->getMobilePlayer();
 				worldController->inventoryData->clearIcons(2);
 				worldController->inventoryData->addInventoryItems(&playerMobile->npcInstance->inventory, 2);

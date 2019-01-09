@@ -246,6 +246,9 @@ namespace TES3 {
 		int unknown_0x36C;
 		int unknown_0x370;
 
+		// Get singleton.
+		_declspec (dllexport) static WorldController * get();
+
 		//
 		// Other related this-call functions.
 		//

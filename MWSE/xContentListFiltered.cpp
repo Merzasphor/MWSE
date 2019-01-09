@@ -24,8 +24,10 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Actor.h"
 #include "TES3Collections.h"
 #include "TES3Inventory.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -109,6 +111,14 @@ namespace mwse {
 			return 0.0f;
 		}
 
+		if (!reference->baseObject->isActor()) {
+#if _DEBUG
+			mwse::log::getLog() << "xContentListFiltered: Reference is not for an actor." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushFloat(0.0f);
+			return 0.0f;
+		}
+
 		// Results.
 		char* id = NULL;
 		long count = 0;
@@ -120,7 +130,7 @@ namespace mwse {
 
 		// If we aren't given a node, get the first one.
 		if (node == NULL) {
-			node = tes3::getFirstInventoryNode(reference);
+			node = static_cast<TES3::Actor*>(reference->baseObject)->inventory.iterator.head;
 
 			// Pass over any records that don't match the current filter.
 			while (node && node->data && node->data->object && !passesFilter(node->data->object, filter)) {

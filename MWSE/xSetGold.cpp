@@ -23,7 +23,9 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+
 #include "TES3MobileNPC.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -48,15 +50,22 @@ namespace mwse
 		long gold = mwse::Stack::getInstance().popLong();
 
 		TES3::Reference* reference = virtualMachine.getReference();
-		TES3::MobileActor* node = tes3::getAttachedMobileActor(reference);
-		if (node == NULL) {
+		if (reference == nullptr) {
 #if _DEBUG
-			mwse::log::getLog() << "xSetGold: Could not find attached MACP node." << std::endl;
+			mwse::log::getLog() << "xSetGold: No reference provided." << std::endl;
 #endif
 			return 0.0f;
 		}
 
-		node->barterGold = gold;
+		TES3::MobileActor* mobile = reference->getAttachedMobileActor();
+		if (mobile == nullptr) {
+#if _DEBUG
+			mwse::log::getLog() << "xSetGold: Could not find attached mobile actor." << std::endl;
+#endif
+			return 0.0f;
+		}
+
+		mobile->barterGold = gold;
 
 		return 0.0f;
 	}

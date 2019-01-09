@@ -8,6 +8,7 @@
 #include "LuaUtil.h"
 
 #include "NIRTTI.h"
+#include "NIObjectNET.h"
 #include "NITimeController.h"
 
 namespace mwse {

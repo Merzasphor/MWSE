@@ -24,10 +24,12 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 #include "ArrayUtil.h"
+
 #include "TES3MobileNPC.h"
 #include "TES3NPC.h"
 #include "TES3Reference.h"
 #include "TES3Race.h"
+#include "TES3Skill.h"
 
 using namespace mwse;
 

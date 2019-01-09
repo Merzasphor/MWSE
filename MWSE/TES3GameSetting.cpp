@@ -3,8 +3,12 @@
 #include "TES3Util.h"
 
 namespace TES3 {
+	GameSettingInfo * GameSettingInfo::get(int id) {
+		return &reinterpret_cast<TES3::GameSettingInfo*>(0x794800)[id];
+	}
+
 	GameSettingInfo * GameSetting::getInfo() {
-		return mwse::tes3::getGMSTInfo(index);
+		return GameSettingInfo::get(index);
 	}
 
 	char GameSetting::getType() {

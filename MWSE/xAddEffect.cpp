@@ -25,6 +25,7 @@
 #include "TES3Util.h"
 
 #include "TES3Alchemy.h"
+#include "TES3DataHandler.h"
 #include "TES3Enchantment.h"
 #include "TES3Spell.h"
 
@@ -58,13 +59,15 @@ namespace mwse
 		long duration = mwse::Stack::getInstance().popLong();
 		long magMin = mwse::Stack::getInstance().popLong();
 		long magMax = mwse::Stack::getInstance().popLong();
+		size_t effectCount = 0;
 
 		// Get the desired effect.
 		TES3::Effect* effects = NULL;
 		if (type == TES3::ObjectType::Spell) {
-			TES3::Spell* spell = tes3::getSpellById(id.c_str());
+			TES3::Spell* spell = TES3::DataHandler::get()->nonDynamicData->getSpellById(id.c_str());
 			if (spell) {
 				effects = spell->effects;
+				effectCount = spell->getActiveEffectCount();
 			}
 			else {
 #if _DEBUG
@@ -75,9 +78,10 @@ namespace mwse
 			}
 		}
 		else if (type == TES3::ObjectType::Enchantment) {
-			TES3::Enchantment* enchant = tes3::getObjectById<TES3::Enchantment>(id);
+			TES3::Enchantment* enchant = TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<TES3::Enchantment>(id.c_str(), TES3::ObjectType::Enchantment);
 			if (enchant) {
 				effects = enchant->effects;
+				effectCount = enchant->getActiveEffectCount();
 			}
 			else {
 #if _DEBUG
@@ -88,9 +92,10 @@ namespace mwse
 			}
 		}
 		else if (type == TES3::ObjectType::Alchemy) {
-			TES3::Alchemy* alchemy = tes3::getObjectById<TES3::Alchemy>(id);
+			TES3::Alchemy* alchemy = TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<TES3::Alchemy>(id.c_str(), TES3::ObjectType::Alchemy);
 			if (alchemy) {
 				effects = alchemy->effects;
+				effectCount = alchemy->getActiveEffectCount();
 			}
 			else {
 #if _DEBUG
@@ -109,7 +114,6 @@ namespace mwse
 		}
 
 		// Get effect count.
-		size_t effectCount = tes3::getEffectCount(effects);
 		if (effectCount == 8) {
 #if _DEBUG
 			mwse::log::getLog() << "xAddEffect: Record already contains 8 effects." << std::endl;

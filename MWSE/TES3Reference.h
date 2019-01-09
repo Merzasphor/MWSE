@@ -60,11 +60,20 @@ namespace TES3 {
 
 		__declspec(dllexport) bool clone();
 
+		__declspec(dllexport) bool insertAttachment(Attachment* attachment);
+		__declspec(dllexport) Attachment* getAttachment(AttachmentType::AttachmentType type);
+		__declspec(dllexport) MobileObject* getAttachedMobileObject();
+		__declspec(dllexport) MobileActor* getAttachedMobileActor();
+		__declspec(dllexport) MobileCreature* getAttachedMobileCreature();
+		__declspec(dllexport) MobileNPC* getAttachedMobileNPC();
+		__declspec(dllexport) MobileProjectile* getAttachedMobileProjectile();
+		__declspec(dllexport) ItemData* getAttachedItemData();
+		__declspec(dllexport) ItemData* getOrCreateAttachedItemData();
+		__declspec(dllexport) LockAttachmentNode* getAttachedLockNode();
+
 		//
 		// Lua interface functions.
 		//
-
-		sol::object getBaseObject();
 
 		void setPositionFromLua(sol::stack_object value);
 		void setOrientationFromLua(sol::stack_object value);

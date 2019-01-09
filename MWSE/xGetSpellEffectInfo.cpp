@@ -24,6 +24,7 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3DataHandler.h"
 #include "TES3Spell.h"
 
 using namespace mwse;
@@ -61,7 +62,7 @@ namespace mwse
 		// Validate effect index.
 		if (effectIndex >= 1 && effectIndex <= 8) {
 			// Get the desired effect.
-			TES3::Spell* spell = tes3::getObjectById<TES3::Spell>(effectId, TES3::ObjectType::Spell);
+			TES3::Spell* spell = TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<TES3::Spell>(effectId, TES3::ObjectType::Spell);
 			if (spell) {
 				TES3::Effect* effect = &spell->effects[effectIndex - 1];
 				// If we found an effect, set the values.

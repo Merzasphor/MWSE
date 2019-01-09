@@ -110,4 +110,12 @@ namespace TES3 {
 			actorFlags &= ~flag;
 		}
 	}
+
+	bool Actor::isBaseActor() {
+		return (actorFlags & TES3::ActorFlag::IsBase);
+	}
+
+	bool Actor::isClone() {
+		return !(actorFlags & TES3::ActorFlag::IsBase);
+	}
 }

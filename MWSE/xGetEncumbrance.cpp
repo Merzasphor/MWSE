@@ -95,7 +95,7 @@ namespace mwse
 		double encumbrance = -999999.0;
 
 		// Get associated MACP node.
-		auto mobileObject = tes3::getAttachedMobileNPC(reference);
+		auto mobileObject = reference->getAttachedMobileActor();
 		if (mobileObject == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetEncumbrance: No associated macp record found for reference." << std::endl;

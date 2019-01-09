@@ -27,6 +27,8 @@
 #include "VirtualMachine.h"
 #include "ScriptUtil.h"
 
+#include "TES3DataHandler.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -52,7 +54,7 @@ namespace mwse
 		mwseString& scriptName = virtualMachine.getString(mwse::Stack::getInstance().popLong());
 
 		// Try to get the target script.
-		TES3::Script* targetScript = tes3::getDataHandler()->nonDynamicData->findScriptByName(scriptName.c_str());
+		TES3::Script* targetScript = TES3::DataHandler::get()->nonDynamicData->findScriptByName(scriptName.c_str());
 		if (targetScript == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xScriptRunning: No script could be found with name '" << scriptName << "'." << std::endl;

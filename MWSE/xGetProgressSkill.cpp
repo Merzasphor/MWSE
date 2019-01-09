@@ -23,8 +23,11 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+
 #include "TES3MobilePlayer.h"
+#include "TES3Reference.h"
 #include "TES3Skill.h"
+#include "TES3WorldController.h"
 
 using namespace mwse;
 
@@ -60,36 +63,10 @@ namespace mwse
 		}
 
 		// Get reference.
-		TES3::Reference* reference = virtualMachine.getReference("player");
-		if (reference == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetProgressSkill: Could not find reference." << std::endl;
-#endif
-			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
-			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
-			return 0.0f;
-		}
+		auto macp = TES3::WorldController::get()->getMobilePlayer();
 
-		// Get the associated MACP record.
-		auto mobileObject = tes3::getAttachedMobilePlayer(reference);
-		if (mobileObject == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetProgressSkill: Could not find MACP record for reference." << std::endl;
-#endif
-			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
-			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
-			return 0.0f;
-		}
-		else if (mobileObject->objectType != TES3::ObjectType::MobilePlayer) {
-#if _DEBUG
-			mwse::log::getLog() << "xGetProgressSkill: Attached mobile object is not for the player." << std::endl;
-#endif
-			mwse::Stack::getInstance().pushLong(INVALID_VALUE);
-			return 0.0f;
-		}
-
-		float progress = mobileObject->skillProgress[skillIndex];
-		float normalized = 100.0f * progress / tes3::getSkillRequirement(reference, skillIndex);
+		float progress = macp->skillProgress[skillIndex];
+		float normalized = 100.0f * progress / macp->getSkillRequirement(skillIndex);
 
 		// Push the desired values.
 		mwse::Stack::getInstance().pushFloat(normalized);

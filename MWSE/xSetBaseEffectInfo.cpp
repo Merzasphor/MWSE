@@ -71,7 +71,7 @@ namespace mwse
 			return 0.0f;
 		}
 
-		TES3::MagicEffect& effect = tes3::getDataHandler()->nonDynamicData->magicEffects[id];
+		TES3::MagicEffect& effect = TES3::DataHandler::get()->nonDynamicData->magicEffects[id];
 		effect.school = school;
 		effect.baseMagickaCost = baseMagickaCost;
 

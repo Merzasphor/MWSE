@@ -495,7 +495,7 @@ void TES3MACHINE::CheckForSkillUp(long skill_id)
 #if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
 #endif
-	tes3::getWorldController()->getMobilePlayer()->levelSkill(skill_id);
+	TES3::WorldController::get()->getMobilePlayer()->levelSkill(skill_id);
 }
 
 TES3::MobilePlayer* TES3MACHINE::GetMacpRecord()
@@ -503,7 +503,7 @@ TES3::MobilePlayer* TES3MACHINE::GetMacpRecord()
 #if DEBUG_MGE_VM
 	mwse::log::getLog() << __FUNCTION__ << std::endl;
 #endif
-	return tes3::getWorldController()->getMobilePlayer();
+	return TES3::WorldController::get()->getMobilePlayer();
 }
 
 long TES3MACHINE::GetRandomLong(long min, long max)

@@ -23,8 +23,10 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+
 #include "TES3MobileNPC.h"
 #include "TES3Reference.h"
+#include "TES3Skill.h"
 
 using namespace mwse;
 
@@ -78,7 +80,7 @@ namespace mwse
 		}
 
 		// Get the associated MACP record.
-		auto mobileObject = tes3::getAttachedMobileNPC(reference);
+		auto mobileObject = reference->getAttachedMobileNPC();
 		if (mobileObject == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetSkill: Could not find MACP record for reference." << std::endl;

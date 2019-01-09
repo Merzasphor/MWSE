@@ -16,6 +16,7 @@
 #include "LuaMobileObjectCollisionEvent.h"
 
 #include "TES3Actor.h"
+#include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
 #include "TES3Reference.h"
 #include "TES3Util.h"
@@ -198,7 +199,7 @@ namespace TES3 {
 	float MobileActor::calculateSwimRunSpeed() {
 		// In this case, we don't want to call the original function. We want to redo it so that it calls
 		// the calculateSwimSpeed() function.
-		TES3::NonDynamicData * nonDynamicData = mwse::tes3::getDataHandler()->nonDynamicData;
+		TES3::NonDynamicData * nonDynamicData = TES3::DataHandler::get()->nonDynamicData;
 		float runMultiplier = nonDynamicData->GMSTs[GMST::fBaseRunMultiplier]->value.asFloat +
 			nonDynamicData->GMSTs[GMST::fAthleticsRunBonus]->value.asFloat / 100.0f * getSkillValue(SkillID::Athletics);
 		float speed = calculateSwimSpeed() * runMultiplier;

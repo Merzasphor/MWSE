@@ -56,7 +56,7 @@ namespace mwse
 		}
 
 		// Get the string. No real sanity checks here...
-		char * value = tes3::getDataHandler()->nonDynamicData->GMSTs[gmstId]->value.asString;
+		char * value = TES3::DataHandler::get()->nonDynamicData->GMSTs[gmstId]->value.asString;
 
 		mwse::Stack::getInstance().pushString(value);
 

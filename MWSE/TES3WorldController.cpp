@@ -48,7 +48,7 @@ namespace TES3 {
 		totalKills++;
 
 		// Increment werewolf kills if the player is wolfing out.
-		if (mobile->actorType == TES3::MobileActorType::NPC && mwse::tes3::getWorldController()->getMobilePlayer()->getMobileActorFlag(TES3::MobileActorFlag::Werewolf)) {
+		if (mobile->actorType == TES3::MobileActorType::NPC && TES3::WorldController::get()->getMobilePlayer()->getMobileActorFlag(TES3::MobileActorFlag::Werewolf)) {
 			werewolfKills++;
 		}
 
@@ -85,6 +85,10 @@ namespace TES3 {
 	//
 	// WorldController
 	//
+
+	WorldController * WorldController::get() {
+		return *reinterpret_cast<TES3::WorldController**>(0x7C67DC);
+	}
 
 	void WorldController::mainLoopBeforeInput() {
 		reinterpret_cast<void(__thiscall *)(WorldController*)>(TES3_WorldController_mainLoopBeforeInput)(this);

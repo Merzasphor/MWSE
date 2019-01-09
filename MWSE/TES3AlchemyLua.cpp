@@ -18,7 +18,7 @@ namespace mwse {
 
 			// Do we already have an object of this ID?
 			std::string id = getOptionalParam<std::string>(params, "id", "");
-			if (!id.empty() && tes3::getDataHandler()->nonDynamicData->resolveObject(id.c_str()) != NULL) {
+			if (!id.empty() && TES3::DataHandler::get()->nonDynamicData->resolveObject(id.c_str()) != NULL) {
 				return NULL;
 			}
 
@@ -85,7 +85,7 @@ namespace mwse {
 			}
 
 			// We have our alchemy object. But is it unique?
-			for (TES3::Alchemy* testObject = reinterpret_cast<TES3::Alchemy*>(tes3::getDataHandler()->nonDynamicData->list->head);
+			for (TES3::Alchemy* testObject = reinterpret_cast<TES3::Alchemy*>(TES3::DataHandler::get()->nonDynamicData->list->head);
 				testObject != NULL;
 				testObject = reinterpret_cast<TES3::Alchemy*>(testObject->nextInCollection)) {
 				// We only care about alchemy objects.
@@ -105,7 +105,7 @@ namespace mwse {
 				}
 
 				// Check effects.
-				if (!tes3::effectsMatch(alchemy->effects, testObject->effects)) {
+				if (!alchemy->effectsMatchWith(testObject)) {
 					continue;
 				}
 
@@ -135,7 +135,7 @@ namespace mwse {
 			}
 
 			// All good? Add and return the object.
-			if (!tes3::getDataHandler()->nonDynamicData->addNewObject(alchemy)) {
+			if (!TES3::DataHandler::get()->nonDynamicData->addNewObject(alchemy)) {
 				return NULL;
 			}
 			return alchemy;

@@ -24,9 +24,10 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
-#include "TES3MagicEffect.h"
-#include "TES3Enchantment.h"
 #include "TES3Alchemy.h"
+#include "TES3DataHandler.h"
+#include "TES3Enchantment.h"
+#include "TES3MagicEffect.h"
 #include "TES3Skill.h"
 #include "TES3Spell.h"
 
@@ -69,7 +70,7 @@ namespace mwse
 			// Get the desired effect.
 			TES3::Effect* effect = NULL;
 			if (effectType == TES3::ObjectType::Spell) {
-				TES3::Spell* spell = tes3::getObjectById<TES3::Spell>(effectId, TES3::ObjectType::Spell);
+				TES3::Spell* spell = TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<TES3::Spell>(effectId.c_str(), TES3::ObjectType::Spell);
 				if (spell) {
 					effect = &spell->effects[effectIndex - 1];
 				}
@@ -80,7 +81,7 @@ namespace mwse
 				}
 			}
 			else if (effectType == TES3::ObjectType::Enchantment) {
-				TES3::Enchantment* enchant = tes3::getObjectById<TES3::Enchantment>(effectId, TES3::ObjectType::Enchantment);
+				TES3::Enchantment* enchant = TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<TES3::Enchantment>(effectId.c_str(), TES3::ObjectType::Enchantment);
 				if (enchant) {
 					effect = &enchant->effects[effectIndex - 1];
 				}
@@ -91,7 +92,7 @@ namespace mwse
 				}
 			}
 			else if (effectType == TES3::ObjectType::Alchemy) {
-				TES3::Alchemy* alchemy = tes3::getObjectById<TES3::Alchemy>(effectId, TES3::ObjectType::Alchemy);
+				TES3::Alchemy* alchemy = TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<TES3::Alchemy>(effectId.c_str(), TES3::ObjectType::Alchemy);
 				if (alchemy) {
 					effect = &alchemy->effects[effectIndex - 1];
 				}

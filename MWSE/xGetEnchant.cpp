@@ -70,11 +70,11 @@ namespace mwse
 				type = int(enchantment->castType);
 				cost = enchantment->chargeCost;
 				maxCharge = enchantment->maxCharge;
-				effects = tes3::getEffectCount(enchantment->effects);
+				effects = enchantment->getActiveEffectCount();
 				autocalc = enchantment->vTable.object->getAutoCalc(enchantment);
 
 				// Get the current charge.
-				auto varNode = tes3::getAttachedItemDataNode(reference);
+				auto varNode = reference->getAttachedItemData();
 				if (varNode) {
 					currCharge = varNode->enchantData.charge;
 				}

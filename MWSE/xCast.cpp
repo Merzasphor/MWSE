@@ -27,6 +27,8 @@
 #include "VirtualMachine.h"
 #include "ScriptUtil.h"
 
+#include "TES3DataHandler.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -62,7 +64,7 @@ namespace mwse
 		}
 
 		// Get spell template by the id.
-		TES3::Spell* spell = tes3::getSpellById(spellId.c_str());
+		TES3::Spell* spell = TES3::DataHandler::get()->nonDynamicData->getSpellById(spellId.c_str());
 		if (spell == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xCast: No template found with id '" << spellId << "'." << std::endl;

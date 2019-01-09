@@ -24,6 +24,8 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Reference.h"
+
 using namespace mwse;
 
 namespace mwse {
@@ -54,7 +56,20 @@ namespace mwse {
 		// Get weight.
 		float weight = 0.0f;
 		try {
-			weight = tes3::getWeight(reference, true);
+			// Get record.
+			auto object = reference->baseObject;
+			if (object == NULL) {
+				throw std::exception("No base object found.");
+			}
+
+			// Get base weight for the record.
+			weight = object->getWeight();
+
+			// Multiply the value by the count of the item.
+			auto varNode = reference->getAttachedItemData();
+			if (varNode) {
+				weight *= varNode->count;
+			}
 		}
 		catch (std::exception& e) {
 #if _DEBUG

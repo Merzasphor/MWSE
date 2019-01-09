@@ -24,6 +24,9 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Item.h"
+#include "TES3Reference.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -58,7 +61,7 @@ namespace mwse
 		}
 
 		// Get associated varnode, and the condition from it.
-		auto varNode = tes3::getAttachedItemDataNode(reference);
+		auto varNode = reference->getAttachedItemData();
 		if (varNode != NULL) {
 			varNode->condition = value;
 		}

@@ -64,6 +64,13 @@ namespace TES3 {
 		float calculateCastChance(Reference* caster, bool checkMagicka = true, int* weakestSchoolId = 0);
 		float calculateCastChance(MobileActor* caster, bool checkMagicka = true, int* weakestSchoolId = 0);
 		float castChanceOnCast(MobileActor* caster, bool checkMagicka, int* weakestSchoolId);
+
+		//
+		// Custom functions.
+		//
+
+		size_t getActiveEffectCount();
+
 	};
 	static_assert(sizeof(Spell) == 0xF8, "TES3::Spell failed size validation");
 }

@@ -24,6 +24,7 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3DataHandler.h"
 #include "TES3Spell.h"
 
 using namespace mwse;
@@ -58,12 +59,12 @@ namespace mwse
 		long origin = 0;
 
 		// Get spell data by id.
-		TES3::Spell* spell = tes3::getObjectById<TES3::Spell>(spellId, TES3::ObjectType::Spell);;
+		TES3::Spell* spell = TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<TES3::Spell>(spellId, TES3::ObjectType::Spell);;
 		if (spell != NULL) {
 			name = spell->name;
 			type = long(spell->castType);
 			cost = spell->magickaCost;
-			effects = tes3::getEffectCount(spell->effects);
+			effects = spell->getActiveEffectCount();
 			flags = spell->spellFlags;
 			origin = spell->objectFlags & 0x3;
 		}

@@ -15,6 +15,7 @@ namespace TES3 {
 
 	namespace ObjectType {
 		enum ObjectType {
+			Invalid = 0,
 			Activator = 'ITCA',
 			Alchemy = 'HCLA',
 			Ammo = 'OMMA',
@@ -207,6 +208,14 @@ namespace TES3 {
 		__declspec(dllexport) void setObjectModified(bool);
 		__declspec(dllexport) char * getObjectID();
 
+		//
+		// Custom functions.
+		//
+
+		BaseObject * getBaseObject();
+
+		bool isActor();
+
 	};
 	static_assert(sizeof(BaseObject) == 0x10, "TES3::BaseObject failed size validation");
 
@@ -267,6 +276,13 @@ namespace TES3 {
 		__declspec(dllexport) void setName(const char*);
 		__declspec(dllexport) float getScale();
 		__declspec(dllexport) void setScale(float value, bool cap = false);
+
+		//
+		// Custom functions.
+		//
+
+		__declspec(dllexport) Object * skipDeletedObjects();
+
 	};
 	static_assert(sizeof(Object) == 0x28, "TES3::Object failed size validation");
 

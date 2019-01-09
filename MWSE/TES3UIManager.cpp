@@ -70,7 +70,7 @@ namespace TES3 {
 		}
 
 		void acquireTextInput(Element* element) {
-			mwse::tes3::getWorldController()->menuController->menuInputController->acquireTextInput(element);
+			TES3::WorldController::get()->menuController->menuInputController->acquireTextInput(element);
 		}
 
 		void preventInventoryMenuToggle(Element* menu) {

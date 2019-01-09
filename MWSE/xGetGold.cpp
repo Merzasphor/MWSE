@@ -60,7 +60,7 @@ namespace mwse
 
 		// Try to get the gold from the macp record.
 		short gold = 0;
-		auto mobileObject = tes3::getAttachedMobileNPC(reference);
+		auto mobileObject = reference->getAttachedMobileActor();
 		if (mobileObject) {
 			gold = mobileObject->barterGold;
 		}

@@ -20,7 +20,7 @@ namespace mwse {
 
 		sol::optional<float> getTimeLeftReference(const TES3::Light& light, TES3::Reference& refr) {
 			if (refr.baseObject == &light) {
-				auto variables = mwse::tes3::getAttachedItemDataNode(&refr);
+				auto variables = refr.getAttachedItemData();
 				return (variables) ? variables->timeLeft : float(light.time);
 			}
 			return sol::optional<float>();

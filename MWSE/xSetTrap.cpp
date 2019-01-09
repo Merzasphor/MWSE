@@ -23,6 +23,8 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+
+#include "TES3DataHandler.h"
 #include "TES3Reference.h"
 
 using namespace mwse;
@@ -68,7 +70,7 @@ namespace mwse
 		}
 
 		// Get attached lock node.
-		auto lockNode = tes3::getAttachedLockNode(reference);
+		auto lockNode = reference->getAttachedLockNode();
 		if (!lockNode) {
 #if _DEBUG
 			log::getLog() << "xSetTrap: Could not obtain lock node." << std::endl;
@@ -82,7 +84,7 @@ namespace mwse
 		if (spellId) {
 			// Get the spell based on the ID given.
 			mwseString& spellObjId = virtualMachine.getString(spellId);
-			spell = tes3::getSpellById(spellObjId.c_str());
+			spell = TES3::DataHandler::get()->nonDynamicData->getSpellById(spellObjId.c_str());
 			if (!spell) {
 #if _DEBUG
 				log::getLog() << "xSetTrap: No spell could be found with id '" << spellObjId << "'." << std::endl;

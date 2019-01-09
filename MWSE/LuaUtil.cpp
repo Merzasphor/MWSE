@@ -93,7 +93,7 @@ namespace mwse {
 				sol::object maybeScript = params["_script"];
 				if (maybeScript.valid()) {
 					if (maybeScript.is<std::string>()) {
-						return tes3::getDataHandler()->nonDynamicData->findScriptByName(maybeScript.as<std::string>().c_str());
+						return TES3::DataHandler::get()->nonDynamicData->findScriptByName(maybeScript.as<std::string>().c_str());
 					}
 					else if (maybeScript.is<TES3::Script*>()) {
 						return maybeScript.as<TES3::Script*>();
@@ -137,7 +137,7 @@ namespace mwse {
 				sol::object maybeValue = params[key];
 				if (maybeValue.valid()) {
 					if (maybeValue.is<std::string>()) {
-						return tes3::getDataHandler()->nonDynamicData->findScriptByName(maybeValue.as<std::string>().c_str());
+						return TES3::DataHandler::get()->nonDynamicData->findScriptByName(maybeValue.as<std::string>().c_str());
 					}
 					else if (maybeValue.is<TES3::Script*>()) {
 						return maybeValue.as<TES3::Script*>();
@@ -180,11 +180,11 @@ namespace mwse {
 					if (maybeValue.is<std::string>()) {
 						TES3::Reference * reference = tes3::getReference(maybeValue.as<std::string>());
 						if (reference) {
-							value = tes3::getAttachedMobileActor(reference);
+							value = reference->getAttachedMobileActor();
 						}
 					}
 					else if (maybeValue.is<TES3::Reference*>()) {
-						value = tes3::getAttachedMobileActor(maybeValue.as<TES3::Reference*>());
+						value = maybeValue.as<TES3::Reference*>()->getAttachedMobileActor();
 					}
 					else if (maybeValue.is<TES3::MobileActor*>()) {
 						value = maybeValue.as<TES3::MobileActor*>();
@@ -203,7 +203,7 @@ namespace mwse {
 				sol::object maybeValue = params[key];
 				if (maybeValue.valid()) {
 					if (maybeValue.is<std::string>()) {
-						value = tes3::getSpellById(maybeValue.as<std::string>().c_str());
+						value = TES3::DataHandler::get()->nonDynamicData->getSpellById(maybeValue.as<std::string>().c_str());
 					}
 					else if (maybeValue.is<TES3::Spell*>()) {
 						value = maybeValue.as<TES3::Spell*>();
@@ -222,7 +222,7 @@ namespace mwse {
 				sol::object maybeValue = params[key];
 				if (maybeValue.valid()) {
 					if (maybeValue.is<const char*>()) {
-						value = tes3::getDataHandler()->nonDynamicData->findDialogue(maybeValue.as<const char*>());
+						value = TES3::DataHandler::get()->nonDynamicData->findDialogue(maybeValue.as<const char*>());
 					}
 					else if (maybeValue.is<TES3::Dialogue*>()) {
 						value = maybeValue.as<TES3::Dialogue*>();
@@ -241,7 +241,7 @@ namespace mwse {
 				sol::object maybeValue = params[key];
 				if (maybeValue.valid()) {
 					if (maybeValue.is<std::string>()) {
-						value = tes3::getDataHandler()->nonDynamicData->findSound(maybeValue.as<std::string>().c_str());
+						value = TES3::DataHandler::get()->nonDynamicData->findSound(maybeValue.as<std::string>().c_str());
 					}
 					else if (maybeValue.is<TES3::Sound*>()) {
 						value = maybeValue.as<TES3::Sound*>();
@@ -285,7 +285,7 @@ namespace mwse {
 				sol::object maybeValue = params[key];
 				if (maybeValue.valid()) {
 					if (maybeValue.is<const char*>()) {
-						value = tes3::getDataHandler()->nonDynamicData->getCellByName(maybeValue.as<const char*>());
+						value = TES3::DataHandler::get()->nonDynamicData->getCellByName(maybeValue.as<const char*>());
 					}
 					else if (maybeValue.is<TES3::Cell*>()) {
 						value = maybeValue.as<TES3::Cell*>();
@@ -293,7 +293,7 @@ namespace mwse {
 					else if (maybeValue.get_type() == sol::type::table) {
 						sol::table coordsTable = maybeValue.as<sol::table>();
 						if (coordsTable.size() == 2) {
-							value = tes3::getDataHandler()->nonDynamicData->getCellByGrid(coordsTable[1], coordsTable[2]);
+							value = TES3::DataHandler::get()->nonDynamicData->getCellByGrid(coordsTable[1], coordsTable[2]);
 						}
 					}
 				}

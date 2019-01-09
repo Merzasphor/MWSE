@@ -12,12 +12,12 @@ namespace mwse {
 	namespace lua {
 		TES3::Spell* createSpell(std::string id, std::string name) {
 			// Make sure a spell doesn't already exist with this id.
-			if (tes3::getObjectById<TES3::Spell>(id, TES3::ObjectType::Spell) != NULL) {
+			if (TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<TES3::Spell>(id, TES3::ObjectType::Spell) != NULL) {
 				return NULL;
 			}
 
 			// Get spell list.
-			TES3::LinkedList<TES3::Spell>* spellsList = tes3::getDataHandler()->nonDynamicData->spellsList;
+			TES3::LinkedList<TES3::Spell>* spellsList = TES3::DataHandler::get()->nonDynamicData->spellsList;
 			TES3::Spell* spellListHead = spellsList->head;
 
 			// Create new spell.
@@ -46,7 +46,7 @@ namespace mwse {
 			tes3::setEffect(newSpell->effects, 1, TES3::EffectID::WaterBreathing, TES3::SkillID::Invalid, int(TES3::EffectRange::Self), 0, 1, 0, 0);
 
 			// Add object to the game.
-			tes3::getDataHandler()->nonDynamicData->addNewObject(newSpell);
+			TES3::DataHandler::get()->nonDynamicData->addNewObject(newSpell);
 
 			// Finally return the spell.
 			return newSpell;

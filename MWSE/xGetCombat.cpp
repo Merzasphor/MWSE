@@ -24,6 +24,7 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 #include "TES3MobileNPC.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -47,7 +48,15 @@ namespace mwse
 	{
 		// Get MACP record.
 		TES3::Reference* reference = virtualMachine.getReference();
-		auto mobileObject = tes3::getAttachedMobileNPC(reference);
+		if (reference == nullptr) {
+#if _DEBUG
+			mwse::log::getLog() << "xGetCombat: No reference provided." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushLong(0);
+			return 0.0f;
+		}
+
+		auto mobileObject = reference->getAttachedMobileActor();
 		if (mobileObject == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetCombat: No mach node found." << std::endl;

@@ -23,7 +23,11 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+
 #include "TES3MobilePlayer.h"
+#include "TES3Reference.h"
+#include "TES3Skill.h"
+#include "TES3WorldController.h"
 
 using namespace mwse;
 
@@ -51,8 +55,7 @@ namespace mwse
 		long normalized = mwse::Stack::getInstance().popLong();
 
 		// Get the associated MACP record.
-		TES3::Reference* reference = virtualMachine.getReference("player");
-		auto mobileObject = tes3::getAttachedMobilePlayer(reference);
+		auto mobileObject = TES3::WorldController::get()->getMobilePlayer();
 		if (mobileObject == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetProgressSkill: Could not find MACP record for reference." << std::endl;
@@ -81,7 +84,7 @@ namespace mwse
 
 		// Normalize skill progress.
 		if (normalized) {
-			progress = tes3::getSkillRequirement(reference, skillIndex) * progress / 100.0f;
+			progress = mobileObject->getSkillRequirement(skillIndex) * progress / 100.0f;
 		}
 
 		// Set progress.

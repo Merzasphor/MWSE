@@ -24,7 +24,9 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Actor.h"
 #include "TES3Inventory.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -56,11 +58,19 @@ namespace mwse
 			return 0.0f;
 		}
 
+		if (!reference->baseObject->isActor()) {
+#if _DEBUG
+			mwse::log::getLog() << "xGetEncumb: Reference is not for an actor." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushFloat(0.0f);
+			return 0.0f;
+		}
+
 		bool hasLeveledContent = false;
 		float totalWeight = 0.0f;
 
 		// Loop through the inventory nodes of the reference, adding weight for each item found.
-		TES3::IteratorNode<TES3::ItemStack>* inventoryListNode = tes3::getFirstInventoryNode(reference);
+		TES3::IteratorNode<TES3::ItemStack>* inventoryListNode = static_cast<TES3::Actor*>(reference->baseObject)->inventory.iterator.head;
 		while (inventoryListNode) {
 			TES3::ItemStack* inventoryNode = inventoryListNode->data;
 			if (inventoryNode) {

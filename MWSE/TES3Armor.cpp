@@ -8,9 +8,11 @@
 
 #include "TES3Util.h"
 
+#include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
 #include "TES3MobileActor.h"
 #include "TES3NPC.h"
+#include "TES3Skill.h"
 
 namespace TES3 {
 	const auto TES3_Armor_calculateArmorRating = reinterpret_cast<float(__thiscall *)(Armor*, MobileActor*)>(0x4A1120);
@@ -44,7 +46,7 @@ namespace TES3 {
 				return 0.0f;
 			}
 
-			return armorRating * armorSkillValue / mwse::tes3::getDataHandler()->nonDynamicData->GMSTs[TES3::GMST::iBaseArmorSkill]->value.asLong;
+			return armorRating * armorSkillValue / TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::iBaseArmorSkill]->value.asLong;
 		}
 
 		return TES3_Armor_calculateArmorRating(this, actor);
@@ -81,7 +83,7 @@ namespace TES3 {
 				return 0.0f;
 			}
 
-			return armorRating * armorSkillValue / mwse::tes3::getDataHandler()->nonDynamicData->GMSTs[TES3::GMST::iBaseArmorSkill]->value.asLong;
+			return armorRating * armorSkillValue / TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::iBaseArmorSkill]->value.asLong;
 		}
 
 		return TES3_Armor_calculateArmorRatingForNPC(this, npc);
@@ -113,7 +115,7 @@ namespace TES3 {
 			}
 
 			float armorEpsilon = *reinterpret_cast<float*>(0x7483A0);
-			auto dataHandler = mwse::tes3::getDataHandler();
+			auto dataHandler = TES3::DataHandler::get();
 			if (slotData->weight * dataHandler->nonDynamicData->GMSTs[TES3::GMST::fLightMaxMod]->value.asFloat + armorEpsilon < weight) {
 				return ArmorWeightClass::Light;
 			}

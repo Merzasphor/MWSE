@@ -24,6 +24,7 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3DataHandler.h"
 #include "TES3Enchantment.h"
 
 using namespace mwse;
@@ -71,7 +72,7 @@ namespace mwse
 			return false;
 		}
 
-		TES3::Enchantment* enchant = tes3::getObjectById<TES3::Enchantment>(enchantId, TES3::ObjectType::Enchantment);
+		TES3::Enchantment* enchant = TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<TES3::Enchantment>(enchantId, TES3::ObjectType::Enchantment);
 		if (enchant == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetEnchantInfo: No effect found given id '" << enchantId << "'." << std::endl;

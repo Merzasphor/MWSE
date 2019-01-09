@@ -2,6 +2,7 @@
 
 #include "TES3Util.h"
 
+#include "TES3DataHandler.h"
 #include "TES3Spell.h"
 
 #define TES3_SpellList_addByObject 0x4AC880
@@ -48,8 +49,8 @@ namespace TES3 {
 	}
 
 	bool SpellList::contains(const char* id) {
-		Spell* spell = mwse::tes3::getSpellById(id);
-		if (spell == NULL) {
+		Spell* spell = TES3::DataHandler::get()->nonDynamicData->getSpellById(id);
+		if (spell == nullptr) {
 			return false;
 		}
 

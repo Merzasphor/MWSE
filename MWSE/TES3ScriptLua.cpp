@@ -158,7 +158,7 @@ namespace mwse {
 				// Allow a special context to be exposed for reading variables.
 				usertypeDefinition.set("context", sol::readonly_property([](TES3::GlobalScript& self)
 				{
-					TES3::ItemData * itemData = tes3::getAttachedItemDataNode(self.reference);
+					TES3::ItemData * itemData = self.reference->getAttachedItemData();
 					return std::shared_ptr<ScriptContext>(new ScriptContext(self.script, itemData ? itemData->scriptData : NULL));
 				}
 				));

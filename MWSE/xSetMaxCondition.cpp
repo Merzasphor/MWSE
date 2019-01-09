@@ -100,7 +100,7 @@ namespace mwse
 		}
 
 		// If there's a variable node containing condition, and we need to change it, do so.
-		auto varNode = tes3::getAttachedItemDataNode(reference);
+		auto varNode = reference->getAttachedItemData();
 		if (varNode && varNode->condition > maxCondition) {
 			varNode->condition = maxCondition;
 			success = true;

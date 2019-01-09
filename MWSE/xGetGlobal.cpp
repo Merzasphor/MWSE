@@ -49,7 +49,7 @@ namespace mwse {
 		float value = 0.0f;
 
 		// Get global.
-		const TES3::GlobalVariable* global = tes3::getDataHandler()->nonDynamicData->findGlobalVariable(variable.c_str());
+		const TES3::GlobalVariable* global = TES3::DataHandler::get()->nonDynamicData->findGlobalVariable(variable.c_str());
 		if (global == NULL) {
 			mwse::log::getLog() << "xGetGlobal: Global '" << variable << "' could not be found." << std::endl;
 			mwse::Stack::getInstance().pushFloat(0.0f);

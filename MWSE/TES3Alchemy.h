@@ -27,6 +27,14 @@ namespace TES3 {
 		short value; // 0x58
 		Effect effects[8]; // 0x5C
 		AlchemyFlag::value_type flags; // 0x011C
+
+		//
+		// Custom functions.
+		//
+
+		size_t getActiveEffectCount();
+		bool effectsMatchWith(Alchemy * other);
+
 	};
 	static_assert(sizeof(Alchemy) == 0x120, "TES3::Alchemy failed size validation");
 }

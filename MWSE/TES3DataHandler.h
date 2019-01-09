@@ -79,18 +79,19 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		bool saveGame(const char* fileName, const char* saveName);
-		LoadGameResult loadGame(const char* fileName);
-		LoadGameResult loadGameMainMenu(const char* fileName);
+		__declspec(dllexport) bool saveGame(const char* fileName, const char* saveName);
+		__declspec(dllexport) LoadGameResult loadGame(const char* fileName);
+		__declspec(dllexport) LoadGameResult loadGameMainMenu(const char* fileName);
 
-		BaseObject* resolveObject(const char*);
-		Reference* findFirstCloneOfActor(const char*);
-		Script* findScriptByName(const char*);
-		GlobalVariable* findGlobalVariable(const char*);
-		Dialogue* findDialogue(const char*);
-		Sound* findSound(const char*);
-		bool addNewObject(BaseObject*);
-		void deleteObject(BaseObject*);
+		__declspec(dllexport) BaseObject* resolveObject(const char*);
+		__declspec(dllexport) Reference* findFirstCloneOfActor(const char*);
+		__declspec(dllexport) Spell* getSpellById(const char*);
+		__declspec(dllexport) Script* findScriptByName(const char*);
+		__declspec(dllexport) GlobalVariable* findGlobalVariable(const char*);
+		__declspec(dllexport) Dialogue* findDialogue(const char*);
+		__declspec(dllexport) Sound* findSound(const char*);
+		__declspec(dllexport) bool addNewObject(BaseObject*);
+		__declspec(dllexport) void deleteObject(BaseObject*);
 
 		__declspec(dllexport) Cell * getCellByGrid(int x, int y);
 		__declspec(dllexport) Cell * getCellByName(const char* name);
@@ -102,6 +103,24 @@ namespace TES3 {
 		// Path is relative to Data Files.
 		NI::Pointer<NI::Object> loadMesh(const char* path);
 
+		// Wrapper around resolveObject that enforces type.
+		template <typename T>
+		__declspec(dllexport) T * resolveObjectByType(const char* id, ObjectType::ObjectType type = ObjectType::Invalid) {
+			TES3::BaseObject* potentialResult = resolveObject(id);
+			if (!potentialResult) {
+				return nullptr;
+			}
+			else if (type != 0 && potentialResult->objectType != type) {
+				return nullptr;
+			}
+
+			return static_cast<T*>(potentialResult);
+		}
+
+		template <typename T>
+		__declspec(dllexport) T* resolveObjectByType(const std::string& id, ObjectType::ObjectType type = ObjectType::Invalid) {
+			return resolveObjectByType<T>(id.c_str(), type);
+		}
 	};
 	static_assert(sizeof(NonDynamicData) == 0xB3AC, "TES3::NonDynamicData failed size validation");
 	static_assert(offsetof(NonDynamicData, spellsList) == 0x10, "TES3::NonDynamicData failed offset validation");
@@ -231,6 +250,9 @@ namespace TES3 {
 		char unknown_0xB54F;
 		long exteriorCellDataBufferSize; // 0xB550
 		void * exteriorCellDataBuffer; // 0xB554
+
+		// Get singleton.
+		_declspec (dllexport) static DataHandler * get();
 
 		//
 		// Other related this-call functions.

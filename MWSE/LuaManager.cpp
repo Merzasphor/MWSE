@@ -319,7 +319,7 @@ namespace mwse {
 
 			// We want to take care of this here rather than in an external file so we have access to scriptOverrides.
 			luaState["mwse"]["overrideScript"] = [](const char* scriptId, sol::object target) {
-				auto dataHandler = tes3::getDataHandler();
+				auto dataHandler = TES3::DataHandler::get();
 				if (dataHandler == nullptr) {
 					mwse::log::getLog() << "WARNING: mwse.overrideScript called before game data is initialized." << std::endl;
 					return false;
@@ -635,9 +635,9 @@ namespace mwse {
 		static void _stdcall FinishInitialization() {
 			// Hook up shorthand access to data handler, world controller, and game.
 			sol::state& state = LuaManager::getInstance().getState();
-			state["tes3"]["dataHandler"] = tes3::getDataHandler();
-			state["tes3"]["worldController"] = tes3::getWorldController();
-			state["tes3"]["game"] = tes3::getGame();
+			state["tes3"]["dataHandler"] = TES3::DataHandler::get();
+			state["tes3"]["worldController"] = TES3::WorldController::get();
+			state["tes3"]["game"] = TES3::Game::get();
 
 			LuaManager::getInstance().triggerEvent(new event::GenericEvent("initialized"));
 		}
@@ -686,7 +686,7 @@ namespace mwse {
 			}
 
 			// Has our cell changed?
-			TES3::DataHandler * dataHandler = tes3::getDataHandler();
+			TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 			if (dataHandler->cellChanged) {
 				LuaManager::getInstance().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, lastCell));
 				lastCell = dataHandler->currentCell;
@@ -707,7 +707,7 @@ namespace mwse {
 
 		signed char __cdecl OnPCEquip(TES3::UI::InventoryTile* tile) {
 			// Execute event. If the event blocked the call, bail.
-			sol::object response = LuaManager::getInstance().triggerEvent(new event::EquipEvent(tes3::getWorldController()->getMobilePlayer()->reference, tile->item, tile->itemData));
+			sol::object response = LuaManager::getInstance().triggerEvent(new event::EquipEvent(TES3::WorldController::get()->getMobilePlayer()->reference, tile->item, tile->itemData));
 			if (response.get_type() == sol::type::table) {
 				sol::table eventData = response;
 				if (eventData["block"] == true) {
@@ -772,7 +772,7 @@ namespace mwse {
 
 			// Extra things we want to do if we're successfully loading.
 			if (loaded == TES3::LoadGameResult::Success) {
-				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				LuaManager::getInstance().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, NULL));
 				lastCell = dataHandler->currentCell;
 			}
@@ -786,7 +786,7 @@ namespace mwse {
 
 			// Fire off a cell changed event as well, and update the cached last cell.
 			if (loaded == TES3::LoadGameResult::Success) {
-				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				LuaManager::getInstance().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, NULL));
 				lastCell = dataHandler->currentCell;
 			}
@@ -808,7 +808,7 @@ namespace mwse {
 
 			// Fire off the loaded/cellChanged events.
 			LuaManager& luaManager = LuaManager::getInstance();
-			lastCell = tes3::getDataHandler()->currentCell;
+			lastCell = TES3::DataHandler::get()->currentCell;
 			luaManager.triggerEvent(new event::LoadedGameEvent(nullptr, false, true));
 			luaManager.triggerEvent(new event::CellChangedEvent(lastCell, nullptr));
 		}
@@ -1030,7 +1030,8 @@ namespace mwse {
 
 		void __fastcall OnProjectileExpire(void* mobController, DWORD _UNUSED_, TES3::Reference* reference) {
 			// Get the fired projectile, and trigger an event for it.
-			TES3::MobileProjectile* projectile = tes3::getAttachment<TES3::AttachmentWithNode<TES3::MobileProjectile>>(reference, TES3::AttachmentType::ActorData)->data;
+			
+			TES3::MobileProjectile* projectile = reference->getAttachedMobileProjectile();
 			LuaManager::getInstance().triggerEvent(new event::ProjectileExpireEvent(projectile));
 
 			// Call overwritten function.
@@ -1804,7 +1805,7 @@ namespace mwse {
 
 		void __cdecl OnSkillRaised(int skillId, char * buffer) {
 			TES3_ShowSkillRaisedNotification(skillId, buffer);
-			LuaManager::getInstance().triggerEvent(new event::SkillRaisedEvent(skillId, tes3::getWorldController()->getMobilePlayer()->skills[skillId].base));
+			LuaManager::getInstance().triggerEvent(new event::SkillRaisedEvent(skillId, TES3::WorldController::get()->getMobilePlayer()->skills[skillId].base));
 		}
 
 		void LuaManager::executeMainModScripts(const char* path, const char* filename) {
@@ -1896,7 +1897,7 @@ namespace mwse {
 
 			list->addItem(tile);
 			if (list->size == 1) {
-				tes3::getWorldController()->playItemUpDownSound(tile->item);
+				TES3::WorldController::get()->playItemUpDownSound(tile->item);
 			}
 		}
 
@@ -2016,7 +2017,7 @@ namespace mwse {
 			}
 
 			// Overwritten code for this hook.
-			if (tes3::getWorldController()->menuController->unknown_0x24 % 1) {
+			if (TES3::WorldController::get()->menuController->unknown_0x24 % 1) {
 				const auto TES3_getThreadSafeStringBuffer = reinterpret_cast<char*(__thiscall*)(char*)>(0x4D51B0);
 				char* buffer = TES3_getThreadSafeStringBuffer(reinterpret_cast<char*>(0x7CB478));
 				sprintf(buffer, "Attack Chance %d%%, for %s to hit %s", hitChance, attacker->reference->baseObject->getObjectID(), attacker->actionData.hitTarget->reference->baseObject->getObjectID());
@@ -2982,7 +2983,7 @@ namespace mwse {
 
 		sol::object LuaManager::triggerEvent(event::BaseEvent* baseEvent) {
 			DWORD threadId = GetCurrentThreadId();
-			TES3::DataHandler* dataHandler = tes3::getDataHandler();
+			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
 
 			// If we're on the main thread, immediately execute the event
 			if (dataHandler == nullptr || threadId == dataHandler->mainThreadID) {
@@ -3139,7 +3140,7 @@ namespace mwse {
 			// Reset the clocks for each timer.
 			realTimers->setClock(0.0);
 			simulateTimers->setClock(0.0);
-			gameTimers->setClock(tes3::getWorldController()->getHighPrecisionSimulationTimestamp());
+			gameTimers->setClock(TES3::WorldController::get()->getHighPrecisionSimulationTimestamp());
 		}
 
 		std::shared_ptr<TimerController> LuaManager::getTimerController(TimerType type) {

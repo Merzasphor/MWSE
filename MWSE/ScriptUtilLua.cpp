@@ -9,8 +9,10 @@
 #include "ScriptUtil.h"
 #include "ScriptUtilLua.h"
 
+#include "TES3Creature.h"
 #include "TES3Dialogue.h"
 #include "TES3LeveledList.h"
+#include "TES3Misc.h"
 #include "TES3Reference.h"
 #include "TES3Script.h"
 #include "TES3Spell.h"

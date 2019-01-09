@@ -17,7 +17,7 @@ namespace mwse {
 
 			sol::table WeatherTransitionFinishedEvent::createEventTable() {
 				sol::table eventData = LuaManager::getInstance().getState().create_table();
-				auto controller = tes3::getWorldController()->weatherController;
+				auto controller = TES3::WorldController::get()->weatherController;
 
 				eventData["to"] = makeLuaObject(controller->currentWeather);
 

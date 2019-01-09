@@ -55,10 +55,10 @@ namespace mwse {
 		//
 
 		void PatchUnifyAthleticsTraining() {
-			TES3::WorldController* worldController = tes3::getWorldController();
+			TES3::WorldController* worldController = TES3::WorldController::get();
 			TES3::MobilePlayer* mobilePlayer = worldController->getMobilePlayer();
 
-			TES3::Skill* athletics = &tes3::getDataHandler()->nonDynamicData->skills[TES3::SkillID::Athletics];
+			TES3::Skill* athletics = &TES3::DataHandler::get()->nonDynamicData->skills[TES3::SkillID::Athletics];
 
 			// If we're running, use the first progress.
 			if (mobilePlayer->movementFlags & TES3::ActorMovement::Running) {
@@ -76,13 +76,13 @@ namespace mwse {
 		//
 
 		void PatchUnifySneakTraining() {
-			TES3::NonDynamicData* nonDynamicData = tes3::getDataHandler()->nonDynamicData;
+			TES3::NonDynamicData* nonDynamicData = TES3::DataHandler::get()->nonDynamicData;
 
 			// Decrement sneak use delay counter.
 			*reinterpret_cast<float*>(0x7D16E0) = *reinterpret_cast<float*>(0x7D16E0) - nonDynamicData->GMSTs[TES3::GMST::fSneakUseDelay]->value.asFloat;
 
 			// Excercise sneak.
-			tes3::getWorldController()->getMobilePlayer()->exerciseSkill(TES3::SkillID::Sneak, nonDynamicData->skills[TES3::SkillID::Sneak].progressActions[0]);
+			TES3::WorldController::get()->getMobilePlayer()->exerciseSkill(TES3::SkillID::Sneak, nonDynamicData->skills[TES3::SkillID::Sneak].progressActions[0]);
 		}
 
 		//
@@ -99,7 +99,7 @@ namespace mwse {
 			case WM_ACTIVATE:
 			{
 				if (wParam) {
-					auto worldController = tes3::getWorldController();
+					auto worldController = TES3::WorldController::get();
 					if (worldController) {
 						worldController->updateTiming();
 					}
@@ -178,7 +178,7 @@ namespace mwse {
 			genCallEnforced(0x5CDFD0, 0x581440, reinterpret_cast<DWORD>(PatchPaperdollTooltipCrashFix));
 
 			// Patch (optional): Change window cursor behavior.
-			TES3_DefaultWindowMessageHandler = (WNDPROC)SetClassLongPtr(tes3::getWorldController()->Win32_hWndParent, GCLP_WNDPROC, (LONG_PTR)PatchLessAggressiveCursorCapturingWindowHandle);
+			TES3_DefaultWindowMessageHandler = (WNDPROC)SetClassLongPtr(TES3::WorldController::get()->Win32_hWndParent, GCLP_WNDPROC, (LONG_PTR)PatchLessAggressiveCursorCapturingWindowHandle);
 			if (TES3_DefaultWindowMessageHandler == nullptr) {
 				log::getLog() << "[MWSE:Patch:Less Aggressive Cursor Capturing] ERROR: Failed to replace window handler using SetClassLongPtr." << std::endl;
 			}

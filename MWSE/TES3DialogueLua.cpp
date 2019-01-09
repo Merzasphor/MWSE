@@ -73,7 +73,7 @@ namespace mwse {
 					int index = getOptionalParam<int>(params, "index", 0);
 					TES3::MobileActor * actor = getOptionalParamMobileActor(params, "actor");
 					if (actor == nullptr) {
-						actor = tes3::getWorldController()->getMobilePlayer();
+						actor = TES3::WorldController::get()->getMobilePlayer();
 					}
 					return self.addToJournal(index, actor);
 				});

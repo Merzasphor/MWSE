@@ -51,16 +51,16 @@ namespace mwse
 		// Clear elements in our stored exterior ref list.
 		mwse::tes3::clearExteriorRefs();
 
-		TES3::Reference* reference = NULL;
-		TES3::DataHandler* dataHandler = mwse::tes3::getDataHandler();
-		if (dataHandler->currentInteriorCell != NULL) {
-			reference = mwse::tes3::skipDeletedObjects<TES3::Reference>(dataHandler->currentInteriorCell->statics.head);
+		TES3::Reference* reference = nullptr;
+		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+		if (dataHandler->currentInteriorCell != nullptr) {
+			reference = static_cast<TES3::Reference*>(dataHandler->currentInteriorCell->statics.head->skipDeletedObjects());
 		}
 		else {
 			auto cellPointer = dataHandler->exteriorCellData[TES3::CellGrid::Center];
 			if (cellPointer->size >= 1) {
 				// Get the start of the list for the center cell. We'll check that it's valid later.
-				reference = mwse::tes3::skipDeletedObjects<TES3::Reference>(cellPointer->cell->statics.head);
+				reference = static_cast<TES3::Reference*>(cellPointer->cell->statics.head->skipDeletedObjects());
 				int exteriorCount = 0;
 				for (int i = 0; i < 9; i++) {
 					if (i == TES3::CellGrid::Center) {
@@ -69,8 +69,8 @@ namespace mwse
 
 					cellPointer = dataHandler->exteriorCellData[i];
 					if (cellPointer->size >= 1) {
-						TES3::Reference* tempReference = mwse::tes3::skipDeletedObjects<TES3::Reference>(cellPointer->cell->statics.head);
-						if (tempReference != NULL) {
+						TES3::Reference* tempReference = static_cast<TES3::Reference*>(cellPointer->cell->statics.head->skipDeletedObjects());
+						if (tempReference != nullptr) {
 							mwse::tes3::exteriorRefs[exteriorCount] = tempReference;
 							exteriorCount++;
 						}
@@ -81,14 +81,14 @@ namespace mwse
 				}
 
 				// Make sure that we end our list with a NULL, so we know we're done.
-				mwse::tes3::exteriorRefs[exteriorCount] = NULL;
+				mwse::tes3::exteriorRefs[exteriorCount] = nullptr;
 
 				// Make sure the reference in the center cell is valid.
 				// If not, use the reference from another exterior cell.
-				if (reference == NULL && exteriorCount > 0) {
+				if (reference == nullptr && exteriorCount > 0) {
 					exteriorCount--;
 					reference = mwse::tes3::exteriorRefs[exteriorCount];
-					mwse::tes3::exteriorRefs[exteriorCount] = NULL;
+					mwse::tes3::exteriorRefs[exteriorCount] = nullptr;
 				}
 			}
 		}

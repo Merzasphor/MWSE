@@ -72,6 +72,9 @@ namespace TES3 {
 		bool getActorFlag(unsigned int);
 		void setActorFlag(unsigned int, bool);
 
+		bool isBaseActor();
+		bool isClone();
+
 	};
 	static_assert(sizeof(Actor) == 0x6C, "TES3::Actor failed size validation");
 }

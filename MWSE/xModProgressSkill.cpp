@@ -23,8 +23,11 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
+#include "TES3Skill.h"
+#include "TES3WorldController.h"
 
 using namespace mwse;
 
@@ -66,32 +69,16 @@ namespace mwse
 			return 0.0f;
 		}
 
-		// Make sure we're looking at an NPC or creature.
-		TES3::Reference* reference = virtualMachine.getReference("player");
-		if (reference->baseObject->objectType != TES3::ObjectType::NPC) {
-#if _DEBUG
-			mwse::log::getLog() << "xModProgressSkill: Called on non-NPC reference." << std::endl;
-#endif
-			mwse::Stack::getInstance().pushLong(0);
-			return 0.0f;
-		}
-
-		// Get the associated MACP record.
-		auto mobileObject = tes3::getAttachedMobilePlayer(reference);
-		if (mobileObject == NULL) {
-#if _DEBUG
-			mwse::log::getLog() << "xModProgressSkill: Could not find MACP record for reference." << std::endl;
-#endif
-			mwse::Stack::getInstance().pushLong(0);
-			return 0.0f;
-		}
+		// 
+		auto macp = TES3::WorldController::get()->getMobilePlayer();
 
 		// Mod value.
-		float progress = mobileObject->skillProgress[skillId];
+		float progress = macp->skillProgress[skillId];
+
 		// Normalize progress, then add mod, then convert back.
 		// This avoids some floating point precision errors.
 		if (normalize) {
-			const float requirement = tes3::getSkillRequirement(reference, skillId);
+			const float requirement = macp->getSkillRequirement(skillId);
 			progress = 100.0f * progress / requirement + modValue;
 			progress = requirement * progress / 100.0f;
 		}
@@ -102,10 +89,10 @@ namespace mwse
 		if (progress < 0.0f) {
 			progress = 0.0f;
 		}
-		mobileObject->skillProgress[skillId] = progress;
+		macp->skillProgress[skillId] = progress;
 
 		// Call Morrowind's native CheckForSkillUp function.
-		mobileObject->levelSkill(skillId);
+		macp->levelSkill(skillId);
 
 		// Push to indicate success.
 		mwse::Stack::getInstance().pushLong(1);

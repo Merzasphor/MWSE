@@ -24,6 +24,7 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 #include "TES3MobileNPC.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -49,7 +50,15 @@ namespace mwse
 	{
 		// Get the associated MACP record.
 		TES3::Reference* reference = virtualMachine.getReference();
-		auto mobileObject = tes3::getAttachedMobileNPC(reference);
+		if (reference == nullptr) {
+#if _DEBUG
+			mwse::log::getLog() << "xGetBaseWil: No reference provided." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushFloat(INVALID_VALUE);
+			return 0.0f;
+		}
+
+		auto mobileObject = reference->getAttachedMobileActor();
 		if (mobileObject == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetBaseWil: Could not find MACP record for reference." << std::endl;

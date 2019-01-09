@@ -24,6 +24,7 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 #include "TES3Reference.h"
+#include "TES3Actor.h"
 
 using namespace mwse;
 
@@ -55,14 +56,8 @@ namespace mwse
 			return 0.0f;
 		}
 
-		// Get the base object.
-		TES3::BaseObject* object = reference->baseObject;
-		if (tes3::getHasBaseRecord(object)) {
-			object = tes3::getBaseRecord(object);
-		}
-
 		// Push the found objectId.
-		char* objectId = object->vTable.object->getObjectID(object);
+		const char* objectId = reference->getBaseObject()->getObjectID();
 		if (objectId) {
 			mwse::Stack::getInstance().pushString(objectId);
 		}

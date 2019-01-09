@@ -106,7 +106,7 @@ namespace mwse
 		spellName = spell->name;
 		spellType = spell->castType;
 		spellCost = spell->magickaCost;
-		spellEffectCount = tes3::getEffectCount(spell->effects);
+		spellEffectCount = spell->getActiveEffectCount();
 		spellFlags = spell->spellFlags;
 
 		// Push the data back to mwscript.

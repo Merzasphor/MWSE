@@ -48,7 +48,7 @@ namespace TES3 {
 	}
 
 	bool GameFile::collectActiveMods(bool showMasterErrors) {
-		return TES3_TES3File_collectActiveMods2(this, mwse::tes3::getDataHandler()->nonDynamicData->TESFiles, showMasterErrors);
+		return TES3_TES3File_collectActiveMods2(this, TES3::DataHandler::get()->nonDynamicData->TESFiles, showMasterErrors);
 	}
 
 	bool GameFile::load(int unknown1, bool unknown2) {

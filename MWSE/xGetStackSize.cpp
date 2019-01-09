@@ -24,6 +24,9 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Item.h"
+#include "TES3Reference.h"
+
 namespace mwse {
 	class xGetStackSize : mwse::InstructionInterface_t {
 	public:
@@ -51,7 +54,7 @@ namespace mwse {
 
 		// Get the associated variable node and its item count.
 		long count = 0;
-		auto varNode = tes3::getAttachedItemDataNode(reference);
+		auto varNode = reference->getAttachedItemData();
 		if (varNode) {
 			count = varNode->count;
 		}

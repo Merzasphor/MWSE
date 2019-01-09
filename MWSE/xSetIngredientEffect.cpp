@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3DataHandler.h"
 #include "TES3Ingredient.h"
 
 using namespace mwse;
@@ -53,7 +54,7 @@ namespace mwse
 		long skillAttributeId = Stack::getInstance().popLong();
 
 		// Get the ingredient.
-		TES3::Ingredient* ingredient = tes3::getObjectById<TES3::Ingredient>(id, TES3::ObjectType::Ingredient);
+		TES3::Ingredient* ingredient = TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<TES3::Ingredient>(id, TES3::ObjectType::Ingredient);
 		if (ingredient == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetIngredientEffect: No ingredient record found with id '" << id << "'." << std::endl;

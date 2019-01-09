@@ -7,6 +7,9 @@
 
 #include "TES3Defines.h"
 
+#include "TES3DataHandler.h"
+#include "TES3Vectors.h"
+
 #include "TES3Util.h"
 
 #include <unordered_map>
@@ -37,7 +40,7 @@ namespace mwse {
 				sol::object maybeValue = params[key];
 				if (maybeValue.valid()) {
 					if (maybeValue.is<std::string>()) {
-						value = tes3::getObjectById<T>(maybeValue.as<std::string>().c_str());
+						value = TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<T>(maybeValue.as<std::string>().c_str());
 					}
 					else if (maybeValue.is<T*>()) {
 						value = maybeValue.as<T*>();

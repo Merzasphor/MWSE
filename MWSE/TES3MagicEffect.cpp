@@ -11,7 +11,18 @@ namespace TES3 {
 	}
 
 	MagicEffect * Effect::getEffectData() {
-		return &mwse::tes3::getDataHandler()->nonDynamicData->magicEffects[effectID];
+		return &TES3::DataHandler::get()->nonDynamicData->magicEffects[effectID];
+	}
+
+	bool Effect::matchesEffectsWith(const Effect * other ) {
+		return effectID == other->effectID &&
+			skillID == other->skillID &&
+			attributeID == other->attributeID &&
+			rangeType == other->rangeType &&
+			radius == other->radius &&
+			duration == other->duration &&
+			magnitudeMin == other->magnitudeMin &&
+			magnitudeMax == other->magnitudeMax;
 	}
 
 	std::string Effect::toString() {
@@ -20,7 +31,7 @@ namespace TES3 {
 		}
 
 		// Some data we'll want to hold onto.
-		NonDynamicData * ndd = mwse::tes3::getDataHandler()->nonDynamicData;
+		NonDynamicData * ndd = TES3::DataHandler::get()->nonDynamicData;
 		MagicEffect * effectData = getEffectData();
 
 		// We'll use a string stream and build up the result.

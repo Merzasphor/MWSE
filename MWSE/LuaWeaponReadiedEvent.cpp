@@ -21,7 +21,7 @@ namespace mwse {
 				sol::table eventData = state.create_table();
 
 				eventData["reference"] = makeLuaObject(m_Reference);
-				eventData["weaponStack"] = tes3::getAttachedMobileActor(m_Reference)->readiedWeapon;
+				eventData["weaponStack"] = m_Reference->getAttachedMobileActor()->readiedWeapon;
 
 				return eventData;
 			}

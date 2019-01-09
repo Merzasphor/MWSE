@@ -86,7 +86,7 @@ namespace mwse
 		}
 
 		// Get the associated MACP record.
-		auto mobileObject = tes3::getAttachedMobileNPC(reference);
+		auto mobileObject = reference->getAttachedMobileActor();
 		if (mobileObject == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xModAttribute: Could not find MACP record for reference." << std::endl;

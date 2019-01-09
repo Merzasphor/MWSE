@@ -1538,6 +1538,13 @@ namespace TES3 {
 		int defaultIntValue; // 0x8
 		float defaultFloatValue; // 0xC
 		int type; // 0x10
+
+		//
+		// Custom functions.
+		//
+
+		static GameSettingInfo * get(int id);
+
 	};
 
 	// The non-static object used at runtime.

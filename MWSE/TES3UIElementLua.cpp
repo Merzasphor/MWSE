@@ -11,6 +11,8 @@
 
 #include "TES3UIInventoryTile.h"
 
+#include "TES3Item.h"
+
 #include "sol.hpp"
 #include "LuaManager.h"
 #include "Log.h"

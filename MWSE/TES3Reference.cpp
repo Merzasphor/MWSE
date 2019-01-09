@@ -11,6 +11,12 @@
 
 #include "TES3Actor.h"
 #include "TES3Cell.h"
+#include "TES3Class.h"
+#include "TES3GameSetting.h"
+#include "TES3MobileCreature.h"
+#include "TES3MobilePlayer.h"
+#include "TES3MobileProjectile.h"
+#include "TES3NPC.h"
 
 #define TES3_Reference_activate 0x4E9610
 #define TES3_Reference_setActionFlag 0x4E55A0
@@ -143,7 +149,7 @@ namespace TES3 {
 		position.z = z;
 
 		// Sync position attachment to local position.
-		auto attachment = mwse::tes3::getAttachment<TES3::NewOrientationAttachment>(this, TES3::AttachmentType::NewOrientation);
+		auto attachment = static_cast<NewOrientationAttachment*>(getAttachment(AttachmentType::NewOrientation));
 		if (attachment) {
 			attachment->position = position;
 		}
@@ -244,6 +250,94 @@ namespace TES3 {
 		}
 
 		return true;
+	}
+
+	bool Reference::insertAttachment(Attachment* attachment) {
+		// If there are no attachments, set this as the first.
+		if (attachments == nullptr) {
+			attachments = attachment;
+			return true;
+		}
+
+		// Go through the attachments, and return false if we already have this attachment type.
+		Attachment * tempAttachment = attachments;
+		Attachment * lastAttachment = nullptr;
+		while (tempAttachment) {
+			if (tempAttachment->type == attachment->type) {
+				return false;
+			}
+			lastAttachment = tempAttachment;
+			tempAttachment = tempAttachment->next;
+		}
+
+		// Link the attachment.
+		lastAttachment->next = attachment;
+		return true;
+	}
+
+	Attachment * Reference::getAttachment(AttachmentType::AttachmentType type) {
+		Attachment* attachment = attachments;
+		while (attachment && attachment->type != type) {
+			attachment = attachment->next;
+		}
+		return attachment;
+	}
+
+	MobileObject* Reference::getAttachedMobileObject() {
+		auto attachment = getAttachment(AttachmentType::ActorData);
+		if (attachment) {
+			return static_cast<MobileActorAttachment*>(attachment)->data;
+		}
+		return nullptr;
+	}
+
+	MobileActor* Reference::getAttachedMobileActor() {
+		return static_cast<MobileActor*>(getAttachedMobileObject());
+	}
+
+	MobileCreature* Reference::getAttachedMobileCreature() {
+		auto mobile = getAttachedMobileActor();
+		if (mobile == nullptr || mobile->actorType != MobileActorType::Creature) {
+			return nullptr;
+		}
+		return static_cast<MobileCreature*>(mobile);
+	}
+
+	MobileNPC* Reference::getAttachedMobileNPC() {
+		auto mobile = getAttachedMobileActor();
+		if (mobile == nullptr || (mobile->actorType != MobileActorType::NPC && mobile->actorType != MobileActorType::Player)) {
+			return nullptr;
+		}
+		return static_cast<MobileNPC*>(mobile);
+	}
+
+	MobileProjectile* Reference::getAttachedMobileProjectile() {
+		return static_cast<MobileProjectile*>(getAttachedMobileObject());
+	}
+
+	ItemData* Reference::getAttachedItemData() {
+		auto attachment = static_cast<TES3::ItemDataAttachment*>(getAttachment(TES3::AttachmentType::Variables));
+		if (attachment) {
+			return attachment->data;
+		}
+		return nullptr;
+	}
+
+	ItemData* Reference::getOrCreateAttachedItemData() {
+		auto data = getAttachedItemData();
+		if (data == nullptr) {
+			data = TES3::ItemData::createForObject(baseObject);
+			addItemDataAttachment(data);
+		}
+		return data;
+	}
+
+	LockAttachmentNode* Reference::getAttachedLockNode() {
+		auto attachment = static_cast<TES3::LockAttachment*>(getAttachment(TES3::AttachmentType::Lock));
+		if (attachment) {
+			return attachment->data;
+		}
+		return nullptr;
 	}
 
 }

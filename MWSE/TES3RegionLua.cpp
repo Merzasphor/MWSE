@@ -114,7 +114,7 @@ namespace mwse {
 					if (self.currentWeatherIndex < TES3::WeatherType::First || self.currentWeatherIndex > TES3::WeatherType::Last) {
 						return sol::nil;
 					}
-					return makeLuaObject(tes3::getWorldController()->weatherController->arrayWeathers[self.currentWeatherIndex]);
+					return makeLuaObject(TES3::WorldController::get()->weatherController->arrayWeathers[self.currentWeatherIndex]);
 				},
 					[](TES3::Region& self, sol::object weather)
 				{

@@ -40,32 +40,17 @@
 
 namespace mwse {
 	namespace tes3 {
-		TES3::WorldController * getWorldController() {
-			// Prior to 2.1, this was getMaster
-			return *reinterpret_cast<TES3::WorldController**>(TES3_WORLD_CONTROLLER_IMAGE);
-		}
-
-		TES3::DataHandler * getDataHandler() {
-			// Prior to 2.1, this was getCellMaster
-			return *reinterpret_cast<TES3::DataHandler**>(TES3_DATA_HANDLER_IMAGE);
-		}
-
-		TES3::Game * getGame() {
-			// Prior to 2.1, this was getViewMaster
-			return *reinterpret_cast<TES3::Game**>(TES3_GAME_IMAGE);
-		}
-
 		TES3::Reference* getReference(const char* id) {
 
 			bool isplayer = !_stricmp(id, "player") || !_stricmp(id, "playersavegame");
 			if (isplayer) {
-				TES3::WorldController* worldController = getWorldController();
+				TES3::WorldController* worldController = TES3::WorldController::get();
 				if (worldController) {
 					return worldController->getMobilePlayer()->reference;
 				}
 			}
 			else {
-				TES3::DataHandler* dataHandler = getDataHandler();
+				TES3::DataHandler* dataHandler = TES3::DataHandler::get();
 				if (dataHandler) {
 					return dataHandler->nonDynamicData->findFirstCloneOfActor(id);
 				}
@@ -78,207 +63,8 @@ namespace mwse {
 			return getReference(id.c_str());
 		}
 
-		TES3::Spell* getSpellById(const char* id) {
-			TES3::Spell * spell = getDataHandler()->nonDynamicData->spellsList->head;
-			while (spell != NULL && _stricmp(id, spell->objectID) != 0) {
-				spell = reinterpret_cast<TES3::Spell*>(spell->nextInCollection);
-			}
-
-			return spell;
-		}
-
-		TES3::Spell* getSpellById(std::string& id) {
-			return getSpellById(id.c_str());
-		}
-
-		TES3::IteratorNode<TES3::ItemStack> * getFirstInventoryNode(TES3::Reference* reference) {
-			TES3::IteratorNode<TES3::ItemStack> * node = NULL;
-
-			if (hasInventory(reference->baseObject)) {
-				node = reinterpret_cast<TES3::Actor*>(reference->baseObject)->inventory.iterator.head;
-			}
-
-			return node;
-		}
-
-		bool hasInventory(TES3::BaseObject* record) {
-			TES3::ObjectType::ObjectType type = record->objectType;
-			return (type == TES3::ObjectType::NPC || type == TES3::ObjectType::Creature || type == TES3::ObjectType::Container);
-		}
-
-		long getValue(TES3::Reference* reference, bool multiplyByCount) {
-			// Get record.
-			TES3::BaseObject* object = reference->baseObject;
-			if (object == NULL) {
-				throw std::exception("No base record found.");
-			}
-
-			// Get base value for the record.
-			long value = object->vTable.object->getValue(object);
-
-			// Multiply the value by the count of the item.
-			if (multiplyByCount) {
-				auto varNode = tes3::getAttachedItemDataNode(reference);
-				if (varNode) {
-					value *= varNode->count;
-				}
-			}
-
-			return value;
-		}
-
-		float getWeight(TES3::Reference* reference, bool multiplyByCount) {
-			// Get record.
-			TES3::BaseObject* object = reference->baseObject;
-			if (object == NULL) {
-				throw std::exception("No base object found.");
-			}
-
-			// Get base weight for the record.
-			float weight = object->vTable.object->getWeight(object);
-
-			// Multiply the value by the count of the item.
-			if (multiplyByCount) {
-				auto varNode = tes3::getAttachedItemDataNode(reference);
-				if (varNode) {
-					weight *= varNode->count;
-				}
-			}
-
-			return weight;
-		}
-
-		TES3::Enchantment* getEnchantment(TES3::BaseObject* object) {
-			return object->vTable.object->getEnchantment(object);
-		}
-
-		bool getHasBaseRecord(TES3::BaseObject* record) {
-			if (record == NULL) {
-				return false;
-			}
-
-			switch (record->objectType) {
-			case TES3::ObjectType::NPC:
-			case TES3::ObjectType::Creature:
-				return true;
-			default:
-				return false;
-			}
-		}
-
-		TES3::BaseObject* getBaseRecord(TES3::BaseObject* reference) {
-			if (!getHasBaseRecord(reference)) {
-				return NULL;
-			}
-
-			TES3::NPC* base = reinterpret_cast<TES3::NPCInstance*>(reference)->baseNPC;
-			if (base == NULL) {
-				return NULL;
-			}
-			else if (base->objectType != reference->objectType) {
-				return NULL;
-			}
-
-			return reinterpret_cast<TES3::BaseObject*>(base);
-		}
-
 		char* setDataString(char** container, const char* string) {
 			return reinterpret_cast<char*(__cdecl *)(char**, const char*)>(TES3_general_setStringSlot)(container, string);
-		}
-
-		bool insertAttachment(TES3::Reference* reference, TES3::Attachment* attachment) {
-			if (reference == NULL || attachment == NULL) {
-				return false;
-			}
-
-			// Make sure no attachment already exists of this type.
-			if (tes3::getAttachment<TES3::Attachment>(reference, attachment->type) != NULL) {
-				return false;
-			}
-
-			// If there are no attachments, set this as the first.
-			if (reference->attachments == NULL) {
-				reference->attachments = attachment;
-				return true;
-			}
-
-			// Otherwise, get the last attachment.
-			TES3::Attachment* lastAttachment = reference->attachments;
-			while (lastAttachment->next != NULL) {
-				lastAttachment = lastAttachment->next;
-			}
-
-			// Link the attachment.
-			lastAttachment->next = attachment;
-			return true;
-		}
-
-		TES3::MobileActor* getAttachedMobileActor(TES3::Reference* reference) {
-			auto attachment = getAttachment<TES3::MobileActorAttachment>(reference, TES3::AttachmentType::ActorData);
-			if (attachment) {
-				return attachment->data;
-			}
-
-			return NULL;
-		}
-
-		TES3::MobileCreature* getAttachedMobileCreature(TES3::Reference* reference) {
-			auto attachment = getAttachment<TES3::MobileActorAttachment>(reference, TES3::AttachmentType::ActorData);
-			if (attachment) {
-				return reinterpret_cast<TES3::MobileCreature*>(attachment->data);
-			}
-
-			return NULL;
-		}
-
-		TES3::MobileNPC* getAttachedMobileNPC(TES3::Reference* reference) {
-			auto attachment = getAttachment<TES3::MobileActorAttachment>(reference, TES3::AttachmentType::ActorData);
-			if (attachment) {
-				return reinterpret_cast<TES3::MobileNPC*>(attachment->data);
-			}
-
-			return NULL;
-		}
-
-		TES3::MobilePlayer* getAttachedMobilePlayer(TES3::Reference* reference) {
-			auto attachment = getAttachment<TES3::MobileActorAttachment>(reference, TES3::AttachmentType::ActorData);
-			if (attachment) {
-				return reinterpret_cast<TES3::MobilePlayer*>(attachment->data);
-			}
-
-			return NULL;
-		}
-
-		TES3::ItemData* getAttachedItemDataNode(TES3::Reference* reference) {
-			auto attachment = getAttachment<TES3::ItemDataAttachment>(reference, TES3::AttachmentType::Variables);
-			if (attachment) {
-				return attachment->data;
-			}
-
-			return NULL;
-		}
-
-		TES3::ItemData* getOrCreateAttachedItemDataNode(TES3::Reference* reference) {
-			TES3::ItemData* itemData = tes3::getAttachedItemDataNode(reference);
-			if (itemData == NULL) {
-				itemData = tes3::createNewItemCondition(reference->baseObject);
-				reference->addItemDataAttachment(itemData);
-			}
-
-			return itemData;
-		}
-
-		TES3::LockAttachmentNode* getAttachedLockNode(TES3::Reference* reference) {
-			auto attachment = getAttachment<TES3::LockAttachment>(reference, TES3::AttachmentType::Lock);
-			if (attachment) {
-				return attachment->data;
-			}
-
-			return NULL;
-		}
-
-		TES3::ItemData* createNewItemCondition(TES3::Object* object) {
-			return reinterpret_cast<TES3::ItemData*(__cdecl *)(TES3::Object*)>(TES3_createNewItemData)(object);
 		}
 
 		unsigned int* getBaseEffectFlags() {
@@ -296,16 +82,6 @@ namespace mwse {
 			else {
 				reinterpret_cast<unsigned int*>(TES3_DATA_EFFECT_FLAGS)[index] &= ~flag;
 			}
-		}
-
-		size_t getEffectCount(const TES3::Effect* effectArray) {
-			size_t count = 0;
-			for (size_t i = 0; i < 8; i++) {
-				if (effectArray[i].effectID != TES3::EffectID::None) {
-					count++;
-				}
-			}
-			return count;
 		}
 
 		bool setEffect(TES3::Effect * effects, long index, long effectId,
@@ -387,57 +163,8 @@ namespace mwse {
 			return true;
 		}
 
-		bool effectsMatch(TES3::Effect* effectsA, TES3::Effect* effectsB, long count) {
-			for (int i = 0; i < count; i++) {
-				if (effectsA[i].effectID != effectsB[i].effectID ||
-					effectsA[i].skillID != effectsB[i].skillID ||
-					effectsA[i].attributeID != effectsB[i].attributeID ||
-					effectsA[i].rangeType != effectsB[i].rangeType ||
-					effectsA[i].radius != effectsB[i].radius ||
-					effectsA[i].duration != effectsB[i].duration ||
-					effectsA[i].magnitudeMin != effectsB[i].magnitudeMin ||
-					effectsA[i].magnitudeMax != effectsB[i].magnitudeMax) {
-					return false;
-				}
-			}
-			return true;
-		}
-
-		float getSkillRequirement(TES3::Reference* reference, long skillId) {
-			// This function only works on NPCs.
-			if (reference->baseObject->objectType != TES3::ObjectType::NPC) {
-				return -1.0f;
-			}
-
-			TES3::DataHandler* dataHandler = getDataHandler();
-			TES3::GameSetting ** gmsts = dataHandler->nonDynamicData->GMSTs;
-
-			TES3::MobileNPC* mobileObject = reinterpret_cast<TES3::MobileNPC*>(getAttachedMobileActor(reference));
-			const TES3::SkillStatistic& skill = mobileObject->skills[skillId];
-
-			// Multiply requirement by skill type bonus.
-			float requirement = skill.base + 1.0f;
-			if (skill.type == TES3::SkillType::Misc) {
-				requirement *= gmsts[TES3::GMST::fMiscSkillBonus]->value.asFloat;
-			}
-			else if (skill.type == TES3::SkillType::Minor) {
-				requirement *= gmsts[TES3::GMST::fMinorSkillBonus]->value.asFloat;
-			}
-			else if (skill.type == TES3::SkillType::Major) {
-				requirement *= gmsts[TES3::GMST::fMajorSkillBonus]->value.asFloat;
-			}
-
-			// Multiply requirement by specialization bonus.
-			TES3::Class* classRecord = reinterpret_cast<TES3::NPCInstance*>(mobileObject->reference->baseObject)->baseNPC->class_;
-			if (dataHandler->nonDynamicData->skills[skillId].specialization == classRecord->specialization) {
-				requirement *= gmsts[TES3::GMST::fSpecialSkillBonus]->value.asFloat;
-			}
-
-			return requirement;
-		}
-
 		void checkForLevelUp(long progress) {
-			TES3::NonDynamicData* nonDynamicData = getDataHandler()->nonDynamicData;
+			TES3::NonDynamicData* nonDynamicData = TES3::DataHandler::get()->nonDynamicData;
 			if (progress >= nonDynamicData->GMSTs[TES3::GMST::iLevelupTotal]->value.asLong) {
 				const char* levelUpMessage = nonDynamicData->GMSTs[TES3::GMST::sLevelUpMsg]->value.asString;
 				messagePlayer(levelUpMessage);
@@ -446,10 +173,6 @@ namespace mwse {
 
 		void messagePlayer(const char* message) {
 			reinterpret_cast<void(__cdecl *)(const char*, int, int)>(TES3_general_messagePlayer)(message, 0, 1);
-		}
-
-		TES3::GameSettingInfo* getGMSTInfo(int index) {
-			return &reinterpret_cast<TES3::GameSettingInfo*>(TES3_data_GMSTs)[index];
 		}
 
 

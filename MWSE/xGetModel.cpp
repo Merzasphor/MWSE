@@ -23,6 +23,8 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+
+#include "TES3DataHandler.h"
 #include "TES3Reference.h"
 
 using namespace mwse;
@@ -54,7 +56,7 @@ namespace mwse
 		if (param) {
 			// Get the record by id string.
 			mwseString& id = virtualMachine.getString(param);
-			TES3::BaseObject* record = tes3::getObjectById<TES3::BaseObject>(id);
+			TES3::BaseObject* record = TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<TES3::BaseObject>(id);
 			if (record == NULL) {
 #if _DEBUG
 				log::getLog() << "xGetModel: No record found for id '" << id << "'." << std::endl;

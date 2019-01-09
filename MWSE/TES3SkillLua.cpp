@@ -32,7 +32,7 @@ namespace mwse {
 			// Functions as properties.
 			usertypeDefinition.set("name", sol::readonly_property(
 				[](const TES3::Skill& self) {
-					auto dataHandler = tes3::getDataHandler();
+					auto dataHandler = TES3::DataHandler::get();
 					return dataHandler->nonDynamicData->GMSTs[0x380 + self.skill]->value.asString;
 				}
 			));

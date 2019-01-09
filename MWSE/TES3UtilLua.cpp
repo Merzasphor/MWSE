@@ -36,6 +36,7 @@
 #include "TES3GlobalVariable.h"
 #include "TES3InputController.h"
 #include "TES3LeveledList.h"
+#include "TES3Misc.h"
 #include "TES3MobController.h"
 #include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
@@ -58,7 +59,7 @@
 namespace mwse {
 	namespace lua {
 		auto iterateObjectsFiltered(unsigned int desiredType) {
-			TES3::Object* object = tes3::getDataHandler()->nonDynamicData->list->head;
+			TES3::Object* object = TES3::DataHandler::get()->nonDynamicData->list->head;
 			return [object, desiredType]() mutable -> sol::object {
 				while (object && desiredType != 0 && object->objectType != desiredType) {
 					object = object->nextInCollection;
@@ -87,7 +88,7 @@ namespace mwse {
 
 			// Bind function: tes3.getPlayerRef
 			state["tes3"]["getPlayerRef"] = []() -> sol::object {
-				TES3::WorldController* worldController = tes3::getWorldController();
+				TES3::WorldController* worldController = TES3::WorldController::get();
 				if (worldController) {
 					TES3::MobilePlayer* mobilePlayer = worldController->getMobilePlayer();
 					if (mobilePlayer) {
@@ -99,7 +100,7 @@ namespace mwse {
 
 			// Bind function: tes3.getMobilePlayer
 			state["tes3"]["getMobilePlayer"] = []() -> sol::object {
-				TES3::WorldController* worldController = tes3::getWorldController();
+				TES3::WorldController* worldController = TES3::WorldController::get();
 				if (worldController) {
 					return makeLuaObject(worldController->getMobilePlayer());
 				}
@@ -108,7 +109,7 @@ namespace mwse {
 
 			// Bind function: tes3.getPlayerCell()
 			state["tes3"]["getPlayerCell"] = []() -> sol::object {
-				TES3::DataHandler* dataHandler = tes3::getDataHandler();
+				TES3::DataHandler* dataHandler = TES3::DataHandler::get();
 				if (dataHandler) {
 					return makeLuaObject(dataHandler->currentCell);
 				}
@@ -117,22 +118,22 @@ namespace mwse {
 
 			// Bind function: tes3.getGame
 			state["tes3"]["getGame"] = []() {
-				return tes3::getGame();
+				return TES3::Game::get();
 			};
 
 			// Bind function: tes3.getDataHandler
 			state["tes3"]["getDataHandler"] = []() {
-				return tes3::getDataHandler();
+				return TES3::DataHandler::get();
 			};
 
 			// Bind function: tes3.getGame
 			state["tes3"]["getWorldController"] = []() {
-				return tes3::getWorldController();
+				return TES3::WorldController::get();
 			};
 
 			// Bind function: tes3.getPlayerTarget
 			state["tes3"]["getPlayerTarget"] = []() -> sol::object {
-				TES3::Game * game = tes3::getGame();
+				TES3::Game * game = TES3::Game::get();
 				if (game) {
 					return makeLuaObject(game->playerTarget);
 				}
@@ -151,7 +152,7 @@ namespace mwse {
 
 			// Bind function: tes3.getObject
 			state["tes3"]["getObject"] = [](const char* id) -> sol::object {
-				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler) {
 					return makeLuaObject(dataHandler->nonDynamicData->resolveObject(id));
 				}
@@ -161,7 +162,7 @@ namespace mwse {
 			state["tes3"]["deleteObject"] = [](sol::object maybe) {
 				TES3::BaseObject* object = maybe.as<TES3::BaseObject*>();
 				if (object) {
-					tes3::getDataHandler()->nonDynamicData->deleteObject(object);
+					TES3::DataHandler::get()->nonDynamicData->deleteObject(object);
 					object->vTable.base->destructor(object, true);
 					return true;
 				}
@@ -170,7 +171,7 @@ namespace mwse {
 
 			// Bind function: tes3.getScript
 			state["tes3"]["getScript"] = [](const char* id) -> sol::object {
-				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler) {
 					return makeLuaObject(dataHandler->nonDynamicData->findScriptByName(id));
 				}
@@ -179,7 +180,7 @@ namespace mwse {
 
 			// Bind function: tes3.getGlobal
 			state["tes3"]["getGlobal"] = [](const char* id) -> sol::optional<float> {
-				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler) {
 					TES3::GlobalVariable * global = dataHandler->nonDynamicData->findGlobalVariable(id);
 					if (global) {
@@ -191,7 +192,7 @@ namespace mwse {
 
 			// Bind function: tes3.setGlobal
 			state["tes3"]["setGlobal"] = [](std::string& id, double value) {
-				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler) {
 					TES3::GlobalVariable * global = dataHandler->nonDynamicData->findGlobalVariable(id.c_str());
 					if (global) {
@@ -204,7 +205,7 @@ namespace mwse {
 
 			// Bind function: tes3.findGlobal
 			state["tes3"]["findGlobal"] = [](const char* id) -> sol::object {
-				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler) {
 					return makeLuaObject(dataHandler->nonDynamicData->findGlobalVariable(id));
 				}
@@ -213,7 +214,7 @@ namespace mwse {
 
 			// Bind function: tes3.findGMST
 			state["tes3"]["findGMST"] = [](sol::object key) -> sol::object {
-				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler == nullptr) {
 					return sol::nil;
 				}
@@ -228,7 +229,7 @@ namespace mwse {
 					int index = -1;
 					const char* keyStr = key.as<const char*>();
 					for (int i = 0; i <= TES3::GMST::sWitchhunter; i++) {
-						if (strcmp(tes3::getGMSTInfo(i)->name, keyStr) == 0) {
+						if (strcmp(TES3::GameSettingInfo::get(i)->name, keyStr) == 0) {
 							return makeLuaObject(dataHandler->nonDynamicData->GMSTs[i]);
 						}
 					}
@@ -244,7 +245,7 @@ namespace mwse {
 				// Display deprecation warning and traceback.
 				logStackTrace("WARNING: Use of deprecated function tes3.getGMST. Use tes3.findGMST instead.");
 
-				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler == nullptr) {
 					return sol::nil;
 				}
@@ -259,7 +260,7 @@ namespace mwse {
 					int index = -1;
 					std::string keyStr = key.as<std::string>();
 					for (int i = 0; i <= TES3::GMST::sWitchhunter; i++) {
-						TES3::GameSettingInfo* info = tes3::getGMSTInfo(i);
+						TES3::GameSettingInfo* info = TES3::GameSettingInfo::get(i);
 						if (strcmp(info->name, keyStr.c_str()) == 0) {
 							index = i;
 							break;
@@ -294,9 +295,9 @@ namespace mwse {
 				volume = std::min(volume, 1.0);
 
 				// Apply mix and rescale to 0-250
-				volume *= 250.0 * tes3::getWorldController()->audioController->getMixVolume(TES3::AudioMixType(mix));
+				volume *= 250.0 * TES3::WorldController::get()->audioController->getMixVolume(TES3::AudioMixType(mix));
 
-				tes3::getDataHandler()->addSound(sound, reference, loop ? TES3::SoundPlayFlags::Loop : 0, volume, pitch);
+				TES3::DataHandler::get()->addSound(sound, reference, loop ? TES3::SoundPlayFlags::Loop : 0, volume, pitch);
 				return true;
 			};
 
@@ -311,7 +312,7 @@ namespace mwse {
 					return false;
 				}
 
-				return bool(tes3::getDataHandler()->getSoundPlaying(sound, reference));
+				return bool(TES3::DataHandler::get()->getSoundPlaying(sound, reference));
 			};
 
 			// Bind function: tes3.adjustSoundVolume
@@ -332,9 +333,9 @@ namespace mwse {
 				volume = std::min(volume, 1.0);
 
 				// Apply mix and rescale to 0-250
-				volume *= 250.0 * tes3::getWorldController()->audioController->getMixVolume(TES3::AudioMixType(mix));
+				volume *= 250.0 * TES3::WorldController::get()->audioController->getMixVolume(TES3::AudioMixType(mix));
 
-				tes3::getDataHandler()->adjustSoundVolume(sound, reference, volume);
+				TES3::DataHandler::get()->adjustSoundVolume(sound, reference, volume);
 			};
 
 			// Bind function: tes3.removeSound
@@ -343,7 +344,7 @@ namespace mwse {
 				TES3::Sound* sound = getOptionalParamSound(params, "sound");
 				TES3::Reference* reference = getOptionalParamReference(params, "reference");
 
-				tes3::getDataHandler()->removeSound(sound, reference);
+				TES3::DataHandler::get()->removeSound(sound, reference);
 			};
 
 			// Bind function: tes3.streamMusic
@@ -354,7 +355,7 @@ namespace mwse {
 				double crossfade = getOptionalParam<double>(params, "crossfade", 1.0);
 
 				if (relativePath) {
-					auto w = tes3::getWorldController();
+					auto w = TES3::WorldController::get();
 					char path[260];
 
 					std::snprintf(path, sizeof(path), "Data Files/music/%s", relativePath);
@@ -417,25 +418,25 @@ namespace mwse {
 				const char* fileName = getOptionalParam<const char*>(params, "file", "quiksave");
 				const char* saveName = getOptionalParam<const char*>(params, "name", "Quicksave");
 
-				tes3::getDataHandler()->nonDynamicData->saveGame(fileName, saveName);
+				TES3::DataHandler::get()->nonDynamicData->saveGame(fileName, saveName);
 			};
 
 			// Bind function: tes3.loadGame and tes3.loadGameMainMenu
 			state["tes3"]["loadGame"] = [](const char* fileName) {
 				// Char Gen State will equal 0 in the menu.
-				if (tes3::getWorldController()->gvarCharGenState->value == 0)
+				if (TES3::WorldController::get()->gvarCharGenState->value == 0)
 				{
-					tes3::getDataHandler()->nonDynamicData->loadGameMainMenu(fileName);
+					TES3::DataHandler::get()->nonDynamicData->loadGameMainMenu(fileName);
 				}
 				else
 				{
-					tes3::getDataHandler()->nonDynamicData->loadGame(fileName);
+					TES3::DataHandler::get()->nonDynamicData->loadGame(fileName);
 				}
 			};
 
 			// Bind function: tes3.isModActive
 			state["tes3"]["isModActive"] = [](const char* modName) {
-				TES3::DataHandler* dataHandler = tes3::getDataHandler();
+				TES3::DataHandler* dataHandler = TES3::DataHandler::get();
 				if (dataHandler == nullptr) {
 					return false;
 				}
@@ -459,7 +460,7 @@ namespace mwse {
 			state["tes3"]["getModList"] = []() -> sol::object {
 				sol::state& state = LuaManager::getInstance().getState();
 
-				TES3::DataHandler* dataHandler = tes3::getDataHandler();
+				TES3::DataHandler* dataHandler = TES3::DataHandler::get();
 				if (dataHandler == nullptr) {
 					return sol::nil;
 				}
@@ -485,7 +486,7 @@ namespace mwse {
 					return;
 				}
 
-				tes3::getWorldController()->playItemUpDownSound(item, pickup, reference);
+				TES3::WorldController::get()->playItemUpDownSound(item, pickup, reference);
 			};
 
 			// Bind function: tes3.iterateList
@@ -493,9 +494,9 @@ namespace mwse {
 
 			// Bind function: tes3.getSound
 			state["tes3"]["getSound"] = [](const char* id) -> sol::object {
-				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler) {
-					return makeLuaObject(tes3::getDataHandler()->nonDynamicData->findSound(id));
+					return makeLuaObject(TES3::DataHandler::get()->nonDynamicData->findSound(id));
 				}
 				else {
 					throw std::exception("Function called before Data Handler was initialized.");
@@ -504,7 +505,7 @@ namespace mwse {
 
 			// Bind function: tes3.getSoundGenerator
 			state["tes3"]["getSoundGenerator"] = [](std::string creatureId, unsigned int type) -> sol::object {
-				auto soundGenerators = tes3::getDataHandler()->nonDynamicData->soundGenerators;
+				auto soundGenerators = TES3::DataHandler::get()->nonDynamicData->soundGenerators;
 				const char* creatureIdCstr = creatureId.c_str();
 				for (auto itt = soundGenerators->head; itt != NULL; itt = itt->next) {
 					if (itt->data->soundType != static_cast<TES3::SoundType>(type)) {
@@ -540,7 +541,7 @@ namespace mwse {
 
 			// Bind function: tes3.getCameraPosition
 			state["tes3"]["getCameraPosition"] = [](sol::optional<sol::table> params) -> sol::optional<TES3::Vector3> {
-				TES3::WorldController * worldController = tes3::getWorldController();
+				TES3::WorldController * worldController = TES3::WorldController::get();
 				if (worldController) {
 					return worldController->worldCamera.camera->worldBoundOrigin;
 				}
@@ -573,7 +574,7 @@ namespace mwse {
 				}
 
 				// TODO: Allow specifying the root?
-				rayTestCache->root = tes3::getGame()->worldRoot;
+				rayTestCache->root = TES3::Game::get()->worldRoot;
 
 				// Are we finding all or the first?
 				if (getOptionalParam<bool>(params, "findAll", false)) {
@@ -646,7 +647,7 @@ namespace mwse {
 
 			// Bind function: tes3.is3rdPerson
 			state["tes3"]["is3rdPerson"] = []() {
-				return tes3::getWorldController()->getMobilePlayer()->is3rdPerson();
+				return TES3::WorldController::get()->getMobilePlayer()->is3rdPerson();
 			};
 
 			// Bind function: tes3.tapKey
@@ -705,7 +706,7 @@ namespace mwse {
 			};
 
 			state["tes3"]["getDaysInMonth"] = [](int month) -> sol::object {
-				TES3::WorldController * worldController = tes3::getWorldController();
+				TES3::WorldController * worldController = TES3::WorldController::get();
 				if (worldController) {
 					return sol::make_object(LuaManager::getInstance().getState(), worldController->getDaysInMonth(month));
 				}
@@ -713,7 +714,7 @@ namespace mwse {
 			};
 
 			state["tes3"]["getSimulationTimestamp"] = []() -> sol::object {
-				TES3::WorldController * worldController = tes3::getWorldController();
+				TES3::WorldController * worldController = TES3::WorldController::get();
 				if (worldController) {
 					return sol::make_object(LuaManager::getInstance().getState(), worldController->getHighPrecisionSimulationTimestamp());
 				}
@@ -804,7 +805,7 @@ namespace mwse {
 					return NULL;
 				}
 
-				TES3::WorldController * worldController = tes3::getWorldController();
+				TES3::WorldController * worldController = TES3::WorldController::get();
 				if (worldController) {
 					TES3::InputController * inputController = worldController->inputController;
 					if (inputController) {
@@ -815,7 +816,7 @@ namespace mwse {
 			};
 
 			state["tes3"]["getRegion"] = []() -> sol::object {
-				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler) {
 					// Try to get the current cell's region first.
 					if (dataHandler->currentCell) {
@@ -835,7 +836,7 @@ namespace mwse {
 			};
 
 			state["tes3"]["getCurrentWeather"] = []() -> sol::object {
-				TES3::WorldController * worldController = tes3::getWorldController();
+				TES3::WorldController * worldController = TES3::WorldController::get();
 				if (worldController) {
 					return makeLuaObject(worldController->weatherController->currentWeather);
 				}
@@ -844,7 +845,7 @@ namespace mwse {
 			};
 
 			state["tes3"]["getCursorPosition"] = []() -> sol::object {
-				TES3::WorldController * worldController = tes3::getWorldController();
+				TES3::WorldController * worldController = TES3::WorldController::get();
 				if (worldController) {
 					sol::table results = LuaManager::getInstance().getState().create_table();
 					results["x"] = worldController->mouseController->position.x;
@@ -856,7 +857,7 @@ namespace mwse {
 			};
 
 			state["tes3"]["getSkill"] = [](int skillID) -> sol::object {
-				TES3::DataHandler * dataHandler = tes3::getDataHandler();
+				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler) {
 					return makeLuaObject(&dataHandler->nonDynamicData->skills[skillID]);
 				}
@@ -883,11 +884,11 @@ namespace mwse {
 				}
 
 				if (effect != -1) {
-					tes3::getWorldController()->spellInstanceController->removeSpellsByEffect(reference, effect, chance);
+					TES3::WorldController::get()->spellInstanceController->removeSpellsByEffect(reference, effect, chance);
 				}
 				else if (castType != -1) {
 					bool removeSpell = getOptionalParam<bool>(params, "removeSpell", castType != int(TES3::SpellCastType::Spell));
-					tes3::getWorldController()->spellInstanceController->clearSpellEffect(reference, castType, chance, removeSpell);
+					TES3::WorldController::get()->spellInstanceController->clearSpellEffect(reference, castType, chance, removeSpell);
 				}
 				else {
 					throw std::exception("tes3.removeEffects: Must pass either 'effect' or 'castType' parameter!");
@@ -895,7 +896,7 @@ namespace mwse {
 			};
 
 			state["tes3"]["getPlayerGold"] = []() -> int {
-				auto player = tes3::getWorldController()->getMobilePlayer();
+				auto player = TES3::WorldController::get()->getMobilePlayer();
 				return player->getGold();
 			};
 
@@ -940,7 +941,7 @@ namespace mwse {
 				// Criminal is assumed to be the player if no value is supplied.
 				TES3::MobileActor * criminal = getOptionalParamMobileActor(params, "criminal");
 				if (criminal == nullptr) {
-					criminal = tes3::getWorldController()->getMobilePlayer();
+					criminal = TES3::WorldController::get()->getMobilePlayer();
 				}
 				crimeEvent.criminal = criminal;
 
@@ -951,12 +952,12 @@ namespace mwse {
 
 				// Victim can be more complicated.
 				sol::object victim = params["victim"];
-				crimeEvent.victim = tes3::getWorldController()->getMobilePlayer();
+				crimeEvent.victim = TES3::WorldController::get()->getMobilePlayer();
 				if (victim.is<TES3::Faction>()) {
 					crimeEvent.victimFaction = victim.as<TES3::Faction*>();
 				}
 				else if (victim.is<TES3::Actor>()) {
-					crimeEvent.victim = tes3::getWorldController()->getMobilePlayer();
+					crimeEvent.victim = TES3::WorldController::get()->getMobilePlayer();
 					crimeEvent.victimFaction = victim.as<TES3::Actor*>()->getFaction();
 					if (victim.is<TES3::NPC>()) {
 						crimeEvent.victimBaseActor = victim.as<TES3::NPC*>();
@@ -974,7 +975,7 @@ namespace mwse {
 
 				// Do detection and the like.
 				bool forceDetection = getOptionalParam<bool>(params, "forceDetection", false);
-				auto controller = tes3::getWorldController()->mobController->unknown_0x24;
+				auto controller = TES3::WorldController::get()->mobController->unknown_0x24;
 				if (!forceDetection && controller->detectPresence(crimeEvent.criminal)) {
 					controller->checkRadius(crimeEvent.victim, crimeEvent.unknown_0x34);
 				}
@@ -1010,7 +1011,7 @@ namespace mwse {
 				std::string path = "Meshes\\";
 				path += relativePath;
 
-				return makeLuaNiPointer(tes3::getDataHandler()->nonDynamicData->loadMesh(path.c_str()));
+				return makeLuaNiPointer(TES3::DataHandler::get()->nonDynamicData->loadMesh(path.c_str()));
 			};
 
 			state["tes3"]["playVoiceover"] = [](sol::table params) -> bool {
@@ -1050,7 +1051,7 @@ namespace mwse {
 					return false;
 				}
 
-				auto node = tes3::getAttachedLockNode(reference);
+				auto node = reference->getAttachedLockNode();
 				if (node == nullptr) {
 					return false;
 				}
@@ -1084,7 +1085,7 @@ namespace mwse {
 					return sol::optional<int>();
 				}
 
-				auto node = tes3::getAttachedLockNode(reference);
+				auto node = reference->getAttachedLockNode();
 				if (node == nullptr) {
 					return sol::optional<int>();
 				}
@@ -1104,7 +1105,7 @@ namespace mwse {
 					reference->clearActionFlag(TES3::ActionFlags::DoorOpening | TES3::ActionFlags::DoorClosing | TES3::ActionFlags::DoorJammedOpening | TES3::ActionFlags::DoorJammedClosing);
 
 					// Reset orientation.
-					auto orientationAttachment = tes3::getAttachment<TES3::NewOrientationAttachment>(reference, TES3::AttachmentType::NewOrientation);
+					auto orientationAttachment = static_cast<TES3::NewOrientationAttachment*>(reference->getAttachment(TES3::AttachmentType::NewOrientation));
 					if (orientationAttachment) {
 						orientationAttachment->orientation.z = reference->orientation.z;
 					}
@@ -1146,7 +1147,7 @@ namespace mwse {
 					return false;
 				}
 
-				auto node = tes3::getAttachedLockNode(reference);
+				auto node = reference->getAttachedLockNode();
 				if (node == nullptr) {
 					return false;
 				}
@@ -1166,7 +1167,7 @@ namespace mwse {
 					return nullptr;
 				}
 
-				auto node = tes3::getAttachedLockNode(reference);
+				auto node = reference->getAttachedLockNode();
 				if (node == nullptr) {
 					return nullptr;
 				}
@@ -1269,7 +1270,7 @@ namespace mwse {
 
 				sol::optional<bool> showMessage = params["showMessage"];
 				if (showMessage.value_or(false) && tes3::ui::getMenuNode(*reinterpret_cast<short*>(0x7D3442)) == nullptr) {
-					tes3::ui::messagePlayer(tes3::getDataHandler()->nonDynamicData->GMSTs[TES3::GMST::sJournalEntry]->value.asString);
+					tes3::ui::messagePlayer(TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::sJournalEntry]->value.asString);
 				}
 
 				return true;
@@ -1288,7 +1289,7 @@ namespace mwse {
 
 				TES3::MobileActor * actor = getOptionalParamMobileActor(params, "speaker");
 				if (actor == nullptr) {
-					actor = tes3::getWorldController()->getMobilePlayer();
+					actor = TES3::WorldController::get()->getMobilePlayer();
 				}
 
 				if (!journal->addToJournal(index.value(), actor)) {
@@ -1297,7 +1298,7 @@ namespace mwse {
 
 				sol::optional<bool> showMessage = params["showMessage"];
 				if (showMessage.value_or(true) && tes3::ui::getMenuNode(*reinterpret_cast<short*>(0x7D3442)) == nullptr) {
-					tes3::ui::messagePlayer(tes3::getDataHandler()->nonDynamicData->GMSTs[TES3::GMST::sJournalEntry]->value.asString);
+					tes3::ui::messagePlayer(TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::sJournalEntry]->value.asString);
 				}
 
 				return true;
@@ -1351,15 +1352,15 @@ namespace mwse {
 				// If we were given a name, try that.
 				sol::optional<const char*> cellId = params["id"];
 				if (cellId) {
-					return makeLuaObject(tes3::getDataHandler()->nonDynamicData->getCellByName(cellId.value()));
+					return makeLuaObject(TES3::DataHandler::get()->nonDynamicData->getCellByName(cellId.value()));
 				}
 
 				// Otherwise try to use X/Y.
-				return makeLuaObject(tes3::getDataHandler()->nonDynamicData->getCellByGrid(params["x"], params["y"]));
+				return makeLuaObject(TES3::DataHandler::get()->nonDynamicData->getCellByGrid(params["x"], params["y"]));
 			};
 
 			state["tes3"]["fadeIn"] = [](sol::optional<sol::table> params) {
-				TES3::Fader * fader = getOptionalParam(params, "fader", tes3::getWorldController()->transitionFader);
+				TES3::Fader * fader = getOptionalParam(params, "fader", TES3::WorldController::get()->transitionFader);
 				if (fader == nullptr) {
 					return;
 				}
@@ -1369,7 +1370,7 @@ namespace mwse {
 			};
 
 			state["tes3"]["fadeOut"] = [](sol::optional<sol::table> params) {
-				TES3::Fader * fader = getOptionalParam(params, "fader", tes3::getWorldController()->transitionFader);
+				TES3::Fader * fader = getOptionalParam(params, "fader", TES3::WorldController::get()->transitionFader);
 				if (fader == nullptr) {
 					return;
 				}
@@ -1379,7 +1380,7 @@ namespace mwse {
 			};
 
 			state["tes3"]["fadeTo"] = [](sol::optional<sol::table> params) {
-				TES3::Fader * fader = getOptionalParam(params, "fader", tes3::getWorldController()->transitionFader);
+				TES3::Fader * fader = getOptionalParam(params, "fader", TES3::WorldController::get()->transitionFader);
 				if (fader == nullptr) {
 					return;
 				}
@@ -1620,10 +1621,10 @@ namespace mwse {
 			state["tes3"]["runLegacyScript"] = [](sol::table params) {
 				TES3::Script * script = getOptionalParamScript(params, "script");
 				if (script == nullptr) {
-					script = tes3::getWorldController()->scriptGlobals;
+					script = TES3::WorldController::get()->scriptGlobals;
 				}
 
-				TES3::ScriptCompiler * compiler = tes3::getWorldController()->menuController->scriptCompiler;
+				TES3::ScriptCompiler * compiler = TES3::WorldController::get()->menuController->scriptCompiler;
 				int source = getOptionalParam<int>(params, "source", TES3::CompilerSource::Default);
 				if (source < TES3::CompilerSource::FirstSource || source > TES3::CompilerSource::LastSource) {
 					return false;
@@ -1657,7 +1658,7 @@ namespace mwse {
 			};
 
 			state["tes3"]["getActiveCells"] = []() -> sol::object {
-				auto dataHandler = tes3::getDataHandler();
+				auto dataHandler = TES3::DataHandler::get();
 				if (dataHandler == nullptr) {
 					return sol::nil;
 				}
@@ -1683,7 +1684,7 @@ namespace mwse {
 			};
 
 			state["tes3"]["positionCell"] = [](sol::table params) {
-				auto worldController = tes3::getWorldController();
+				auto worldController = TES3::WorldController::get();
 				auto macp = worldController->getMobilePlayer();
 
 				// Get the target that we're working with.
@@ -1785,7 +1786,7 @@ namespace mwse {
 			};
 
 			state["tes3"]["createCell"] = [](sol::table params) -> sol::object {
-				auto nonDynamicData = tes3::getDataHandler()->nonDynamicData;
+				auto nonDynamicData = TES3::DataHandler::get()->nonDynamicData;
 
 				TES3::Cell * cell = nullptr;
 
@@ -1874,11 +1875,11 @@ namespace mwse {
 					throw std::invalid_argument("Invalid spell parameter provided.");
 				}
 
-				TES3::MobileActor * casterMobile = tes3::getAttachedMobileActor(reference);
+				TES3::MobileActor * casterMobile = reference->getAttachedMobileActor();
 				if (casterMobile) {
 					if (casterMobile->isActive()) {
 						casterMobile->setCurrentMagicSourceFiltered(spell);
-						casterMobile->setActionTarget(tes3::getAttachedMobileActor(target));
+						casterMobile->setActionTarget(target->getAttachedMobileActor());
 						return true;
 					}
 				}
@@ -1887,7 +1888,7 @@ namespace mwse {
 					sourceCombo.source.asSpell = spell;
 					sourceCombo.sourceType = TES3::MagicSourceType::Spell;
 
-					auto spellInstanceController = tes3::getWorldController()->spellInstanceController;
+					auto spellInstanceController = TES3::WorldController::get()->spellInstanceController;
 					auto serial = spellInstanceController->activateSpell(reference, nullptr, &sourceCombo);
 					auto spellInstance = spellInstanceController->getInstanceFromSerial(serial);
 					spellInstance->overrideCastChance = 100.0f;
@@ -1919,11 +1920,11 @@ namespace mwse {
 
 				// Make sure we're dealing with actors.
 				TES3::Actor * fromActor = static_cast<TES3::Actor*>(fromReference->baseObject);
-				if (!mwse::tes3::hasInventory(fromActor)) {
+				if (!fromActor->isActor()) {
 					throw std::invalid_argument("The 'from' reference does not point to an actor.");
 				}
 				TES3::Actor * toActor = static_cast<TES3::Actor*>(toReference->baseObject);
-				if (!mwse::tes3::hasInventory(toActor)) {
+				if (!toActor->isActor()) {
 					throw std::invalid_argument("The 'to' reference does not point to an actor.");
 				}
 
@@ -1948,8 +1949,8 @@ namespace mwse {
 				int fulfilledCount = 0;
 
 				// Get the mobile objects for the references, if applicable.
-				auto toMobile = mwse::tes3::getAttachedMobileActor(toReference);
-				auto fromMobile = mwse::tes3::getAttachedMobileActor(fromReference);
+				auto toMobile = toReference->getAttachedMobileActor();
+				auto fromMobile = fromReference->getAttachedMobileActor();
 
 				// Were we given an ItemData? If so, we only need to transfer one item.
 				if (itemData) {
@@ -1995,7 +1996,7 @@ namespace mwse {
 				}
 
 				// Play the relevant sound.
-				auto worldController = mwse::tes3::getWorldController();
+				auto worldController = TES3::WorldController::get();
 				auto playerMobile = worldController->getMobilePlayer();
 				if (getOptionalParam<bool>(params, "playSound", true)) {
 					if (toMobile == playerMobile) {

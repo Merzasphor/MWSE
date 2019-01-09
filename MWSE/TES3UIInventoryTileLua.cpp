@@ -6,6 +6,8 @@
 #include "TES3UIElement.h"
 #include "TES3UIInventoryTile.h"
 
+#include "TES3Item.h"
+
 namespace mwse {
 	namespace lua {
 		void bindTES3UIInventoryTile() {

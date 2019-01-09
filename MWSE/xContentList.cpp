@@ -24,7 +24,9 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Actor.h"
 #include "TES3Inventory.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -72,8 +74,8 @@ namespace mwse {
 		TES3::IteratorNode<TES3::ItemStack>* next = NULL;
 
 		// If we aren't given a node, get the first one.
-		if (node == NULL) {
-			node = tes3::getFirstInventoryNode(reference);
+		if (node == NULL && reference->baseObject->isActor()) {
+			node = static_cast<TES3::Actor*>(reference->baseObject)->inventory.iterator.head;
 		}
 
 		// Validate the node we've obtained.

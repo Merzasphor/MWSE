@@ -22,6 +22,13 @@ namespace TES3 {
 		} enchantData; // 0x10
 		Script * script; // 0x14
 		ScriptVariables * scriptData; // 0x18
+
+		//
+		// Related static functions.
+		// 
+
+		static ItemData * createForObject(BaseObject * object);
+
 	};
 	static_assert(sizeof(ItemData) == 0x1C, "TES3::ItemData failed size validation");
 

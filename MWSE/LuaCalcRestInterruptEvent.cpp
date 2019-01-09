@@ -25,7 +25,7 @@ namespace mwse {
 				eventData["hour"] = m_Hour;
 
 				// Add easy access to sleeping and waiting state.
-				TES3::MobilePlayer * macp = tes3::getWorldController()->getMobilePlayer();
+				TES3::MobilePlayer * macp = TES3::WorldController::get()->getMobilePlayer();
 				eventData["resting"] = macp->sleeping;
 				eventData["waiting"] = macp->waiting;
 

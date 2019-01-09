@@ -24,6 +24,7 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3DataHandler.h"
 #include "TES3Enchantment.h"
 
 using namespace mwse;
@@ -57,12 +58,12 @@ namespace mwse
 		long autocalc = 0;
 
 		// Validate effect index.
-		TES3::Enchantment* enchantment = tes3::getObjectById<TES3::Enchantment>(enchantId, TES3::ObjectType::Enchantment);
+		TES3::Enchantment* enchantment = TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<TES3::Enchantment>(enchantId, TES3::ObjectType::Enchantment);
 		if (enchantment != NULL) {
 			type = int(enchantment->castType);
 			cost = enchantment->chargeCost;
 			maxCharge = enchantment->maxCharge;
-			effects = tes3::getEffectCount(enchantment->effects);
+			effects = enchantment->getActiveEffectCount();
 			autocalc = enchantment->vTable.object->getAutoCalc(enchantment);
 		}
 		else {

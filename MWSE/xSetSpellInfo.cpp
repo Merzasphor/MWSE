@@ -24,6 +24,7 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3DataHandler.h"
 #include "TES3Spell.h"
 
 using namespace mwse;
@@ -82,7 +83,7 @@ namespace mwse
 		}
 
 		// Get spell data by id.
-		TES3::Spell* spell = tes3::getObjectById<TES3::Spell>(spellId, TES3::ObjectType::Spell);;
+		TES3::Spell* spell = TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<TES3::Spell>(spellId, TES3::ObjectType::Spell);;
 		if (spell == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xSetSpellInfo: Could not find spell of id '" << spellId << "'" << std::endl;

@@ -2,6 +2,8 @@
 
 #include "TES3Util.h"
 
+#include "TES3Item.h"
+
 namespace TES3 {
 	//
 	// EquipmentStack

@@ -88,7 +88,7 @@ namespace mwse
 		}
 
 		// Get skill info.
-		TES3::Skill& skillInfo = tes3::getDataHandler()->nonDynamicData->skills[skillIndex];
+		TES3::Skill& skillInfo = TES3::DataHandler::get()->nonDynamicData->skills[skillIndex];
 
 		// Store old specialization for future check.
 		long oldSpecialization = skillInfo.specialization;
@@ -103,7 +103,7 @@ namespace mwse
 
 		// If our specialization changed, check for a skill level up.
 		if (oldSpecialization != specialization) {
-			tes3::getWorldController()->getMobilePlayer()->levelSkill(skillIndex);
+			TES3::WorldController::get()->getMobilePlayer()->levelSkill(skillIndex);
 		}
 
 		mwse::Stack::getInstance().pushLong(true);

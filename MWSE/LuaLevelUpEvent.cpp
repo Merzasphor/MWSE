@@ -19,7 +19,7 @@ namespace mwse {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table eventData = state.create_table();
 
-				TES3::MobilePlayer* player = tes3::getWorldController()->getMobilePlayer();
+				TES3::MobilePlayer* player = TES3::WorldController::get()->getMobilePlayer();
 
 				eventData["level"] = player->reference->baseObject->getLevel();
 
@@ -30,7 +30,7 @@ namespace mwse {
 				sol::state& state = LuaManager::getInstance().getState();
 				sol::table options = state.create_table();
 
-				TES3::MobilePlayer* player = tes3::getWorldController()->getMobilePlayer();
+				TES3::MobilePlayer* player = TES3::WorldController::get()->getMobilePlayer();
 
 				options["filter"] = player->reference->baseObject->getLevel();
 

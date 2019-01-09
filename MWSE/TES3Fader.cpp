@@ -13,7 +13,7 @@ namespace TES3 {
 
 	const auto TES3_Fader_ctor = reinterpret_cast<Fader*(__thiscall*)(Fader*, float, bool)>(0x4091B0);
 	Fader::Fader() {
-		auto worldController = mwse::tes3::getWorldController();
+		auto worldController = TES3::WorldController::get();
 
 		float distance = 1130.0f;
 		if (worldController && worldController->nodeCursor) {

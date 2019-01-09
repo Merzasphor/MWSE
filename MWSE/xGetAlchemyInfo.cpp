@@ -23,7 +23,9 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+
 #include "TES3Alchemy.h"
+#include "TES3DataHandler.h"
 
 using namespace mwse;
 
@@ -49,8 +51,8 @@ namespace mwse
 		mwseString& id = virtualMachine.getString(Stack::getInstance().popLong());
 
 		// Get the record by its id.
-		TES3::Alchemy* record = tes3::getObjectById<TES3::Alchemy>(id);
-		if (record == NULL) {
+		TES3::Alchemy* record = TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<TES3::Alchemy>(id);
+		if (record == nullptr) {
 #if _DEBUG
 			mwse::log::getLog() << "xGetAlchemyInfo: No record found by id '" << id << "'." << std::endl;
 #endif
@@ -68,7 +70,7 @@ namespace mwse
 		}
 
 		long flags = record->flags;
-		long effectCount = tes3::getEffectCount(record->effects);
+		long effectCount = record->getActiveEffectCount();
 
 		mwse::Stack::getInstance().pushLong(flags);
 		mwse::Stack::getInstance().pushLong(effectCount);

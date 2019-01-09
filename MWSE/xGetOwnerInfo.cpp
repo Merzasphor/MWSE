@@ -24,8 +24,10 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
-#include "TES3GlobalVariable.h"
 #include "TES3Faction.h"
+#include "TES3GlobalVariable.h"
+#include "TES3Item.h"
+#include "TES3Reference.h"
 
 using namespace mwse;
 
@@ -55,7 +57,7 @@ namespace mwse
 		TES3::Reference* reference = virtualMachine.getReference();
 		if (reference) {
 			// Get the attached varnode as owner information.
-			auto varNode = tes3::getAttachedItemDataNode(reference);
+			auto varNode = reference->getAttachedItemData();
 			if (varNode) {
 				TES3::BaseObject* owner = varNode->owner;
 				if (owner) {

@@ -90,6 +90,9 @@ namespace TES3 {
 		char unknown_0x10C;
 		char unknown_0x10D[3]; // Padding.
 
+		// Get singleton.
+		_declspec (dllexport) static Game * get();
+
 		//
 		// Other related this-call functions.
 		//

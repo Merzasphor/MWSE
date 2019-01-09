@@ -53,7 +53,7 @@ namespace mwse {
 
 				// If we're given a reference, try to get its mobile actor.
 				else if (actor.is<TES3::Reference>()) {
-					TES3::MobileActor * mobileActor = tes3::getAttachedMobileActor(actor.as<TES3::Reference*>());
+					TES3::MobileActor * mobileActor = actor.as<TES3::Reference*>()->getAttachedMobileActor();
 					if (mobileActor) {
 						return self.calculateArmorRating(mobileActor);
 					}

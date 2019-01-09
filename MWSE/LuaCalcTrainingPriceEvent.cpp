@@ -29,7 +29,7 @@ namespace mwse {
 					eventData["reference"] = makeLuaObject(m_MobileActor->reference);
 				}
 
-				eventData["skill"] = tes3::getWorldController()->getMobilePlayer()->getSkillStatistic(m_SkillId);
+				eventData["skill"] = TES3::WorldController::get()->getMobilePlayer()->getSkillStatistic(m_SkillId);
 				eventData["skillId"] = m_SkillId;
 
 				eventData["basePrice"] = m_BasePrice;

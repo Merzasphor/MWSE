@@ -93,7 +93,7 @@ namespace mwse
 		}
 		
 		// Set up the attachment node.
-		auto activator = tes3::getAttachment<TES3::ActionAttachment>(target, TES3::AttachmentType::Action);
+		auto activator = static_cast<TES3::ActionAttachment*>(target->getAttachment(TES3::AttachmentType::Action));
 		if (activator == NULL) {
 			activator = tes3::malloc<TES3::ActionAttachment>();
 			activator->type = TES3::AttachmentType::Action;
@@ -101,7 +101,7 @@ namespace mwse
 			activator->reference = NULL;
 			activator->flags = 1;
 
-			tes3::insertAttachment(target, reinterpret_cast<TES3::Attachment*>(activator));
+			target->insertAttachment(activator);
 		}
 
 		// Ensure that our flags and reference is accurate.

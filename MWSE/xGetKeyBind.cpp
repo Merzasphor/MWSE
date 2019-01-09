@@ -67,7 +67,7 @@ namespace mwse {
 		}
 
 		// Get our structure.
-		TES3::InputConfig& config = tes3::getWorldController()->inputController->inputMaps[inputIndex];
+		TES3::InputConfig& config = TES3::WorldController::get()->inputController->inputMaps[inputIndex];
 
 		// Get the basic codes/return values.
 		long scanCode = config.keyCode;

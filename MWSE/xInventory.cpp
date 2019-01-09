@@ -24,9 +24,9 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3Actor.h"
 #include "TES3Inventory.h"
-
-using namespace mwse;
+#include "TES3Reference.h"
 
 namespace mwse
 {
@@ -57,8 +57,16 @@ namespace mwse
 			mwse::Stack::getInstance().pushLong(0);
 			return 0.0f;
 		}
+
+		if (!reference->baseObject->isActor()) {
+#if _DEBUG
+			mwse::log::getLog() << "xInventory: Reference is not for an actor." << std::endl;
+#endif
+			mwse::Stack::getInstance().pushFloat(0.0f);
+			return 0.0f;
+		}
 		
-		TES3::IteratorNode<TES3::ItemStack>* firstItem = tes3::getFirstInventoryNode(reference);
+		TES3::IteratorNode<TES3::ItemStack>* firstItem = static_cast<TES3::Actor*>(reference->baseObject)->inventory.iterator.head;
 		if (firstItem == NULL) {
 			mwse::Stack::getInstance().pushLong(0);
 			mwse::Stack::getInstance().pushLong(0);

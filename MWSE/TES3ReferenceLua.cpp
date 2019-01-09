@@ -9,15 +9,12 @@
 #include "NINode.h"
 
 #include "TES3Cell.h"
+#include "TES3DataHandler.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
 #include "TES3WorldController.h"
 
 namespace TES3 {
-	sol::object Reference::getBaseObject() {
-		return mwse::lua::makeLuaObject(baseObject);
-	}
-
 	sol::object Reference::getAttachments() {
 		sol::state& state = mwse::lua::LuaManager::getInstance().getState();
 
@@ -86,7 +83,7 @@ namespace TES3 {
 namespace mwse {
 	namespace lua {
 		sol::object getContext(TES3::Reference* reference) {
-			auto variables = tes3::getAttachedItemDataNode(reference);
+			auto variables = reference->getAttachedItemData();
 			if (variables == NULL) {
 				return sol::nil;
 			}
@@ -109,8 +106,8 @@ namespace mwse {
 			// Access to other objects that need to be packaged.
 			usertypeDefinition.set("cell", sol::readonly_property([](TES3::Reference& self) -> sol::object {
 				// Handle case for the player.
-				if (tes3::getWorldController()->getMobilePlayer()->reference == &self) {
-					return makeLuaObject(tes3::getDataHandler()->currentCell);
+				if (TES3::WorldController::get()->getMobilePlayer()->reference == &self) {
+					return makeLuaObject(TES3::DataHandler::get()->currentCell);
 				}
 
 				if (self.owningCollection.asReferenceList == nullptr) {
@@ -149,27 +146,27 @@ namespace mwse {
 
 			// Quick access to attachment data.
 			usertypeDefinition.set("lockNode", sol::property([](TES3::Reference& self) {
-				return tes3::getAttachedLockNode(&self);
+				return self.getAttachedLockNode();
 			}));
 			usertypeDefinition.set("destination", sol::property([](TES3::Reference& self) -> TES3::TravelDestination * {
-				TES3::TravelDestinationAttachment * attachment = tes3::getAttachment<TES3::TravelDestinationAttachment>(&self, TES3::AttachmentType::TravelDestination);
+				TES3::TravelDestinationAttachment * attachment = static_cast<TES3::TravelDestinationAttachment*>(self.getAttachment(TES3::AttachmentType::TravelDestination));
 				if (attachment) {
 					return attachment->data;
 				}
 				return nullptr;
 			}));
 			usertypeDefinition.set("mobile", sol::property([](TES3::Reference& self) {
-				return makeLuaObject(tes3::getAttachedMobileActor(&self));
+				return makeLuaObject(self.getAttachedMobileActor());
 			}));
 			usertypeDefinition.set("stackSize", sol::property(
 				[](TES3::Reference& self)
 			{
-				TES3::ItemData* itemData = tes3::getAttachedItemDataNode(&self);
+				TES3::ItemData* itemData = self.getAttachedItemData();
 				return itemData ? itemData->count : 1;
 			},
 				[](TES3::Reference& self, int count)
 			{
-				TES3::ItemData* itemData = tes3::getOrCreateAttachedItemDataNode(&self);
+				TES3::ItemData* itemData = self.getOrCreateAttachedItemData();
 				itemData->count = count;
 			}
 			));

@@ -47,7 +47,7 @@ namespace mwse
 
 	float xPCCellID::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		TES3::DataHandler* masterCell = tes3::getDataHandler();
+		TES3::DataHandler* masterCell = TES3::DataHandler::get();
 		if (masterCell == NULL) {
 #if _DEBUG
 			mwse::log::getLog() << "xPCCellID: Cell master could not be found." << std::endl;

@@ -239,9 +239,6 @@ namespace TES3 {
 		signed char skillID; // 0x2
 		signed char attributeID; // 0x3
 		EffectRange rangeType; // 0x4
-		char unknown_0x5;
-		char unknown_0x6;
-		char unknown_0x7;
 		int radius; // 0x8
 		int duration; // 0xC
 		int magnitudeMin; // 0x10
@@ -252,6 +249,8 @@ namespace TES3 {
 		//
 
 		MagicEffect * getEffectData();
+		bool matchesEffectsWith(const Effect *);
+
 		std::string toString();
 
 	};

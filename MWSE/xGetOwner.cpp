@@ -24,6 +24,10 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3DataHandler.h"
+#include "TES3Item.h"
+#include "TES3Reference.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -57,7 +61,7 @@ namespace mwse
 		char* owner = NULL;
 
 		// Get the attached varnode.
-		auto node = tes3::getAttachedItemDataNode(reference);
+		auto node = reference->getAttachedItemData();
 		if (node && node->owner) {
 			if (node->owner) {
 				owner = node->owner->getObjectID();

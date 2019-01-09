@@ -24,6 +24,7 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3DataHandler.h"
 #include "TES3Enchantment.h"
 
 using namespace mwse;
@@ -61,7 +62,7 @@ namespace mwse
 		// Validate effect index.
 		if (effectIndex >= 1 && effectIndex <= 8) {
 			// Get the desired effect.
-			TES3::Enchantment* enchant = tes3::getObjectById<TES3::Enchantment>(effectId, TES3::ObjectType::Enchantment);
+			TES3::Enchantment* enchant = TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<TES3::Enchantment>(effectId, TES3::ObjectType::Enchantment);
 			if (enchant) {
 				TES3::Effect* effect = &enchant->effects[effectIndex - 1];
 				// If we found an effect, set the values.

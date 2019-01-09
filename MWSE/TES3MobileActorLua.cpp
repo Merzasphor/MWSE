@@ -33,12 +33,12 @@ namespace mwse {
 
 				// Expose easy access to the instance's magnitude.
 				usertypeDefinition.set("magnitude", sol::readonly_property([](TES3::MobileActor::ActiveMagicEffect& self) {
-					return tes3::getWorldController()->spellInstanceController->getInstanceFromSerial(self.magicInstanceSerial)->getMagnitude(self.magicInstanceEffectIndex);
+					return TES3::WorldController::get()->spellInstanceController->getInstanceFromSerial(self.magicInstanceSerial)->getMagnitude(self.magicInstanceEffectIndex);
 				}));
 
 				// Expose quick access to the source instance.
 				usertypeDefinition.set("instance", sol::readonly_property([](TES3::MobileActor::ActiveMagicEffect& self) {
-					return tes3::getWorldController()->spellInstanceController->getInstanceFromSerial(self.magicInstanceSerial);
+					return TES3::WorldController::get()->spellInstanceController->getInstanceFromSerial(self.magicInstanceSerial);
 				}));
 
 				// Finish up our usertype.
