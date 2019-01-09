@@ -9,9 +9,9 @@
 
 namespace TES3 {
 	float Spell::calculateCastChance(Reference* caster, bool checkMagicka, int* weakestSchoolId) {
-		MobileActor* mobileCaster = caster->getAttachedMobileActor();
-		if (mobileCaster == nullptr) {
-			return 0.0f;
+		MobileActor* mobileCaster = nullptr;
+		if (caster) {
+			mobileCaster = caster->getAttachedMobileActor();
 		}
 
 		return calculateCastChance(mobileCaster, checkMagicka, weakestSchoolId);
