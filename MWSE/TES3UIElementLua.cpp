@@ -338,7 +338,10 @@ namespace mwse {
 					return "layout";
 				}
 			}));
-			usertypeDefinition.set("contentPath", sol::readonly_property([](Element& self) { return self.contentPath.cString; }));
+			usertypeDefinition.set("contentPath", sol::property(
+				[](Element& self) { return self.contentPath.cString; },
+				[](Element& self, sol::optional<const char*> path) { self.setIcon(path.value_or("")); }
+			));
 
 			// Deprecated properties.
 			// TODO: Remove in final release.
