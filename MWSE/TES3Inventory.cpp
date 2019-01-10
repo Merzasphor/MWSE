@@ -56,6 +56,14 @@ namespace TES3 {
 		return false;
 	}
 
+	float Inventory::calculateContainedWeight() {
+		float weight = 0.0f;
+		for (auto i = iterator.head; i; i = i->next) {
+			weight += i->data->object->getWeight() * std::abs(i->data->count);
+		}
+		return weight;
+	}
+
 	int Inventory::getSoulGemCount() {
 		int count = 0;
 

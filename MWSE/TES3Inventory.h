@@ -63,6 +63,8 @@ namespace TES3 {
 
 		bool containsItem(Item * item, ItemData * data = nullptr);
 
+		float calculateContainedWeight();
+
 		int getSoulGemCount();
 
 	};
