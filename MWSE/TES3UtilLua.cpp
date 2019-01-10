@@ -1953,11 +1953,17 @@ namespace mwse {
 				auto toMobile = toReference->getAttachedMobileActor();
 				auto fromMobile = fromReference->getAttachedMobileActor();
 
-				// Get the maximum weight of the container.
+				// Manage anything we need to regarding containers.
 				float maxCapacity = -1.0f;
 				float currentWeight = 0.0f;
 				float itemWeight = item->getWeight();
 				if (toActor->objectType == TES3::ObjectType::Container && getOptionalParam<bool>(params, "limitCapacity", true)) {
+					// Prevent placing items into organic containers.
+					if (toActor->getActorFlag(TES3::ActorFlagContainer::Organic)) {
+						return 0;
+					}
+
+					// Figure out the max capacity and currently stored weight of the container.
 					maxCapacity = static_cast<TES3::Container*>(toReference->getBaseObject())->capacity;
 					currentWeight = toActor->inventory.calculateContainedWeight();
 					if (currentWeight > maxCapacity) {
@@ -1983,7 +1989,7 @@ namespace mwse {
 
 						// If we're limited by capacity, find out how many items we really want to transfer.
 						if (maxCapacity != -1.0f) {
-							itemsLeftToTransfer = std::floorf((maxCapacity - currentWeight) / itemWeight);
+							itemsLeftToTransfer = std::min(itemsLeftToTransfer, (int)std::floorf((maxCapacity - currentWeight) / itemWeight));
 						}
 
 						if (itemsLeftToTransfer <= 0) {
@@ -2050,13 +2056,26 @@ namespace mwse {
 					// Update contents menu if necessary.
 					auto contentsMenu = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D3098));
 					if (contentsMenu) {
+						// Make sure that the contents reference is one of the ones we care about.
 						TES3::Reference * contentsReference = static_cast<TES3::Reference*>(contentsMenu->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D3048)).ptrValue);
 						if (fromReference == contentsReference || toReference == contentsReference) {
+							// If we're looking at a companion, we need to update the profit value and trigger the GUI updates.
+							float isCompanion = *reinterpret_cast<float*>(0x7D3184);
+							if (isCompanion != 0.0f) {
+								float& companionProfit = *reinterpret_cast<float*>(0x7D3188);
+								if (toReference == contentsReference) {
+									companionProfit += fulfilledCount * item->getValue();
+								}
+								else {
+									companionProfit -= fulfilledCount * item->getValue();
+								}
+								TES3::UI::updateContentsCompanionElements();
+							}
+
+							// We also need to update the menu tiles.
 							TES3::UI::updateContentsMenuTiles();
 						}
 					}
-
-					// TODO: Update the companion value and carrying capacity.
 				}
 
 				return fulfilledCount;

@@ -197,6 +197,11 @@ namespace TES3 {
 			TES3_UpdateContentsMenuTiles();
 		}
 
+		const auto TES3_UpdateContentsCompanionElements = reinterpret_cast<void(__cdecl*)()>(0x5B7830);
+		void updateContentsCompanionElements() {
+			TES3_UpdateContentsCompanionElements();
+		}
+
 		const auto TES3_UpdateBarterMenuTiles = reinterpret_cast<void(__cdecl*)()>(0x5A5620);
 		void updateBarterMenuTiles() {
 			TES3_UpdateBarterMenuTiles();

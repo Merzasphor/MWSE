@@ -32,6 +32,7 @@ namespace TES3 {
 
 		__declspec(dllexport) void updateInventoryMenuTiles();
 		__declspec(dllexport) void updateContentsMenuTiles();
+		__declspec(dllexport) void updateContentsCompanionElements();
 		__declspec(dllexport) void updateBarterMenuTiles();
 		__declspec(dllexport) int updateSelectInventoryTiles();
 
