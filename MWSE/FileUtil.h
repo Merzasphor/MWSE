@@ -21,9 +21,6 @@
 
 #pragma once
 
-#include "mwseString.h"
-#include "Log.h"
-
 #include <string>
 #include <map>
 #include <stdio.h>

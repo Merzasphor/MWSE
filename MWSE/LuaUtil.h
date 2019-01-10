@@ -10,8 +10,6 @@
 #include "TES3DataHandler.h"
 #include "TES3Vectors.h"
 
-#include "TES3Util.h"
-
 #include <unordered_map>
 
 namespace mwse {

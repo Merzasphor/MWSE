@@ -13,8 +13,6 @@
 
 #include <unordered_map>
 
-#include "sol_forward.hpp"
-
 struct DynamicLuaObject {
 	std::unordered_map<std::string, sol::object> entries;
 

@@ -1,6 +1,8 @@
 #pragma once
 
-#include "LuaObjectFilteredEvent.h"
+#include "LuaGenericEvent.h"
+
+#include "TES3Defines.h"
 
 namespace mwse {
 	namespace lua {

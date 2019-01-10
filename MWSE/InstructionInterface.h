@@ -20,10 +20,11 @@
 
 #pragma once
 
-#include "VMExecuteInterface.h"
 #include "OpCodes.h"
 
 namespace mwse {
+    class VMExecuteInterface;
+
     class InstructionInterface_t {
         public:
             inline OpCode::OpCode_t getOpCode() const { return opcode; }

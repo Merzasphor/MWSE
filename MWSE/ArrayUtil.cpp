@@ -1,5 +1,7 @@
 #include "ArrayUtil.h"
 
+#include "Log.h"
+
 namespace mwse {
 	Arrays Arrays::singleton;
 

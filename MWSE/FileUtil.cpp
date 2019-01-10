@@ -1,5 +1,7 @@
 #include "FileUtil.h"
 
+#include "Log.h"
+
 namespace mwse {
 	FileSystem FileSystem::singleton;
 
