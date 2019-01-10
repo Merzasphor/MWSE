@@ -124,7 +124,7 @@ namespace mwse
 		spell->castType = static_cast<TES3::SpellCastType::value_type>(type);
 		spell->spellFlags = flags;
 		if (origin != 0) {
-			spell->sourceMod = (TES3::GameFile*)origin;
+			spell->objectFlags = (TES3::ObjectFlag::value_type)origin;
 		}
 
 		// Report success.
