@@ -35,6 +35,10 @@ namespace TES3 {
 		vTable.actor->clone(this, reference);
 	}
 
+	void Actor::onCloseInventory(Actor* actor, Reference* reference, int unknown) {
+		vTable.actor->onCloseInventory(actor, reference, unknown);
+	}
+
 	Object* Actor::equipItem(Object* item, ItemData* itemData, EquipmentStack** out_equipmentStack, MobileActor* mobileActor) {
 		Object* result = TES3_Actor_equipItem(this, item, itemData, out_equipmentStack, mobileActor);
 

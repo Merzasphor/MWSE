@@ -16,6 +16,11 @@ namespace mwse {
 
 			// Functions exposed as properties.
 			usertypeDefinition.set("barterGold", sol::property(&TES3::Actor::getBaseBarterGold, &TES3::Actor::setBaseBarterGold));
+
+			// Function exposing.
+			usertypeDefinition.set("onInventoryClose", [](TES3::Actor& self, sol::optional<TES3::Reference*> reference, sol::optional<int> unknown) {
+				self.onCloseInventory(&self, reference.value_or(nullptr), unknown.value_or(0));
+			});
 		}
 	}
 }
