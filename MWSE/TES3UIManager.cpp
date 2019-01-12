@@ -212,6 +212,11 @@ namespace TES3 {
 			return TES3_UpdateInventorySelectTiles();
 		}
 
+		void pushNewUIID(DWORD address, const char* name) {
+			DWORD id = registerID(name);
+			mwse::genPushEnforced(address, id);
+		}
+
 		void hook() {
 			// Patch mousewheel event dispatch to not redirect to the top-level element,
 			// allowing mousewheel to apply to more than the first scrollpane in a menu
@@ -222,6 +227,30 @@ namespace TES3 {
 			auto patch = &Element::patchUpdateLayout_propagateFlow;
 			mwse::genCallEnforced(0x585E1E, 0x584850, *reinterpret_cast<DWORD*>(&patch));
 			mwse::genCallEnforced(0x5863AE, 0x584850, *reinterpret_cast<DWORD*>(&patch));
+
+			// Provide some UI IDs for elements that don't have them.
+			pushNewUIID(0x590F59, "HelpMenu_iconBlock");
+			pushNewUIID(0x590FBD, "HelpMenu_icon");
+			pushNewUIID(0x5911DC, "HelpMenu_name");
+			pushNewUIID(0x591293, "HelpMenu_uses");
+			pushNewUIID(0x5912CD, "HelpMenu_quality");
+			pushNewUIID(0x591315, "HelpMenu_armorRating");
+			pushNewUIID(0x59136B, "HelpMenu_destinationTo");
+			pushNewUIID(0x591383, "HelpMenu_destinationCell");
+			pushNewUIID(0x5914E7, "HelpMenu_chop");
+			pushNewUIID(0x59151D, "HelpMenu_slash");
+			pushNewUIID(0x591553, "HelpMenu_thrust");
+			pushNewUIID(0x59166A, "HelpMenu_weight");
+			pushNewUIID(0x59172F, "HelpMenu_weight");
+			pushNewUIID(0x591790, "HelpMenu_value");
+			pushNewUIID(0x5917EF, "HelpMenu_value");
+			pushNewUIID(0x59195F, "HelpMenu_effectBlock");
+			pushNewUIID(0x5919BE, "HelpMenu_effectIcon");
+			pushNewUIID(0x591E8F, "HelpMenu_effectLabel");
+			pushNewUIID(0x59231C, "HelpMenu_castType");
+			pushNewUIID(0x5929E0, "HelpMenu_effectsBlock");
+			pushNewUIID(0x592A5E, "HelpMenu_charges");
+			pushNewUIID(0x592B98, "HelpMenu_owner");
 		}
 
 	}
