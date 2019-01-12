@@ -17,6 +17,12 @@ namespace TES3 {
 		unsigned int flags; // 0x5C
 
 		//
+		// Other related this-call functions.
+		//
+
+		int getGoldStackCount();
+
+		//
 		// Custom functions.
 		//
 

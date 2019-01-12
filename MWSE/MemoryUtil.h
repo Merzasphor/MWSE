@@ -48,6 +48,7 @@ namespace mwse {
 	// Code to generate a call in memory. This function unprotects the memory.
 	bool __declspec(dllexport) genCallEnforced(DWORD address, DWORD previousTo, DWORD to, DWORD size = 0x5);
 
+	bool __declspec(dllexport) genPushEnforced(DWORD address, BYTE value);
 	bool __declspec(dllexport) genPushEnforced(DWORD address, DWORD value);
 
 	// Overrides a function in a virtual table.

@@ -30,7 +30,6 @@
 #define TES3_general_messagePlayer 0x5F90C0
 #define TES3_general_setStringSlot 0x47B410
 
-#define TES3_createNewItemData 0x4E7750
 #define TES3_newGame 0x5FAEA0
 
 #define TES3_data_GMSTs 0x794800

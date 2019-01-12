@@ -4,6 +4,7 @@
 #include "TES3ObjectLua.h"
 
 #include "TES3Item.h"
+#include "TES3ItemData.h"
 #include "TES3MagicSourceInstance.h"
 #include "TES3MobileProjectile.h"
 #include "TES3Reference.h"

@@ -25,7 +25,7 @@
 #include "TES3Util.h"
 
 #include "TES3DataHandler.h"
-#include "TES3Item.h"
+#include "TES3ItemData.h"
 #include "TES3Reference.h"
 
 using namespace mwse;

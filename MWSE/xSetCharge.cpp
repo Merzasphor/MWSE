@@ -23,6 +23,8 @@
 #include "Stack.h"
 #include "InstructionInterface.h"
 #include "TES3Util.h"
+
+#include "TES3ItemData.h"
 #include "TES3Reference.h"
 
 using namespace mwse;
@@ -69,7 +71,7 @@ namespace mwse {
 		// return the maximum charge from the enchantment record.
 		auto varNode = reference->getAttachedItemData();
 		if (varNode) {
-			varNode->enchantData.charge = charge;
+			varNode->charge = charge;
 		}
 		else {
 #if _DEBUG

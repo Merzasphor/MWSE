@@ -8,6 +8,7 @@
 #include "TES3ScriptLua.h"
 
 #include "TES3Inventory.h"
+#include "TES3ItemData.h"
 #include "TES3GlobalVariable.h"
 #include "TES3Creature.h"
 #include "TES3Script.h"
@@ -39,7 +40,7 @@ namespace mwse {
 
 				// If the owner type is changing, reset the requirement.
 				if (itemData.owner->objectType != newOwner->objectType) {
-					itemData.requirement.variable = NULL;
+					itemData.requiredVariable = nullptr;
 				}
 
 				itemData.owner = newOwner;
@@ -47,14 +48,14 @@ namespace mwse {
 		}
 
 		sol::object getItemDataOwnerRequirement(TES3::ItemData& itemData) {
-			if (itemData.owner == NULL) {
+			if (itemData.owner == nullptr) {
 				return sol::nil;
 			}
 			else if (itemData.owner->objectType == TES3::ObjectType::Faction) {
-				return sol::make_object(LuaManager::getInstance().getState(), itemData.requirement.rank);
+				return sol::make_object(LuaManager::getInstance().getState(), itemData.requiredRank);
 			}
 			else if (itemData.owner->objectType == TES3::ObjectType::NPC) {
-				return makeLuaObject(itemData.requirement.variable);
+				return makeLuaObject(itemData.requiredVariable);
 			}
 
 			return sol::nil;
@@ -66,7 +67,7 @@ namespace mwse {
 			}
 			else if (itemData.owner->objectType == TES3::ObjectType::Faction) {
 				if (value.is<double>()) {
-					itemData.requirement.rank = (int)value.as<double>();
+					itemData.requiredRank = (int)value.as<double>();
 				}
 				else {
 					throw std::exception("Faction ownership used. Requirement must be a rank (number).");
@@ -74,7 +75,7 @@ namespace mwse {
 			}
 			else if (itemData.owner->objectType == TES3::ObjectType::NPC) {
 				if (value.is<TES3::GlobalVariable*>()) {
-					itemData.requirement.variable = value.as<TES3::GlobalVariable*>();
+					itemData.requiredVariable = value.as<TES3::GlobalVariable*>();
 				}
 				else {
 					throw std::exception("NPC ownership used. Requirement must be a global variable.");
@@ -82,33 +83,49 @@ namespace mwse {
 			}
 		}
 
-		float getItemDataCharge(TES3::ItemData& itemData) {
-			return itemData.enchantData.charge;
-		}
-
-		void setItemDataCharge(TES3::ItemData& itemData, float charge) {
-			itemData.enchantData.charge = charge;
-		}
-
 		sol::object getItemDataSoul(TES3::ItemData& itemData) {
 			// Make our best attempt at making sure this actually has a soul. This is not reliable!
-			if (itemData.enchantData.charge == -1.0f) {
+			if (itemData.charge == -1.0f) {
 				return sol::nil;
 			}
 
-			return makeLuaObject(itemData.enchantData.soul);
+			return makeLuaObject(itemData.soul);
 		}
 
 		void setItemDataSoul(TES3::ItemData& itemData, sol::object soul) {
 			// Make our best attempt at making sure this actually has a soul. This is not reliable!
-			if (itemData.enchantData.charge == -1.0f) {
+			if (itemData.charge == -1.0f) {
 				return;
 			}
 			else if (soul.is<TES3::Creature*>()) {
-				itemData.enchantData.soul = soul.as<TES3::Creature*>();
+				itemData.soul = soul.as<TES3::Creature*>();
 			}
 			else if (soul.is<TES3::CreatureInstance*>()) {
-				itemData.enchantData.soul = soul.as<TES3::CreatureInstance*>()->baseCreature;
+				itemData.soul = soul.as<TES3::CreatureInstance*>()->baseCreature;
+			}
+		}
+
+		sol::object getItemDataLuaData(TES3::ItemData& itemData) {
+			if (itemData.luaData == nullptr) {
+				itemData.luaData = new TES3::ItemData::LuaData();
+			}
+			return itemData.luaData->data;
+		}
+
+		void setItemDataLuaData(TES3::ItemData& itemData, sol::object data) {
+			if (data == sol::nil) {
+				if (itemData.luaData) {
+					delete itemData.luaData;
+				}
+			}
+			else if (data.is<sol::table>()) {
+				if (itemData.luaData == nullptr) {
+					itemData.luaData = new TES3::ItemData::LuaData();
+				}
+				itemData.luaData->data = data;
+			}
+			else {
+				throw std::exception("Invalid data type assignment. Must be a table or nil.");
 			}
 		}
 
@@ -123,6 +140,7 @@ namespace mwse {
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Basic property binding.
+				usertypeDefinition.set("charge", &TES3::ItemData::charge);
 				usertypeDefinition.set("count", &TES3::ItemData::count);
 				usertypeDefinition.set("condition", &TES3::ItemData::condition);
 				usertypeDefinition.set("scriptVariables", &TES3::ItemData::scriptData);
@@ -131,11 +149,13 @@ namespace mwse {
 				// Access to other objects that need to be packaged.
 				usertypeDefinition.set("script", sol::readonly_property([](TES3::ItemData& self) { return makeLuaObject(self.script); }));
 
-				// Functions exposed as properties.
-				usertypeDefinition.set("charge", sol::property(&getItemDataCharge, &setItemDataCharge));
+				// Complex properties that need special handling.
 				usertypeDefinition.set("owner", sol::property(&getItemDataOwner, &setItemDataOwner));
 				usertypeDefinition.set("requirement", sol::property(&getItemDataOwnerRequirement, &setItemDataOwnerRequirement));
 				usertypeDefinition.set("soul", sol::property(&getItemDataSoul, &setItemDataSoul));
+
+				// 
+				usertypeDefinition.set("data", sol::property(&getItemDataLuaData, &setItemDataLuaData));
 
 				// Add the ability to get the unique script context from this itemdata for ease of mwscript interaction.
 				usertypeDefinition.set("context", sol::readonly_property([](TES3::ItemData& self) { return std::shared_ptr<ScriptContext>(new ScriptContext(self.script, self.scriptData)); }));

@@ -75,6 +75,9 @@ namespace TES3 {
 		bool __declspec(dllexport) readChunkData(void * data, unsigned int size);
 		int __declspec(dllexport) writeChunkData(unsigned int tag, const void * data, unsigned int size);
 
+		bool hasNextSubrecord();
+		int getNextSubrecord();
+
 		bool collectActiveMods(bool showMasterErrors = false);
 		bool load(int unknown1 = 0, bool unknown2 = false);
 		bool loadByPath(const char* path, const char* filename, int unknown1 = 0, bool unknown2 = false);

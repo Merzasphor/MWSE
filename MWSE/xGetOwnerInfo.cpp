@@ -26,7 +26,7 @@
 
 #include "TES3Faction.h"
 #include "TES3GlobalVariable.h"
-#include "TES3Item.h"
+#include "TES3ItemData.h"
 #include "TES3Reference.h"
 
 using namespace mwse;
@@ -64,14 +64,14 @@ namespace mwse
 					type = owner->objectType;
 					if (type == TES3::ObjectType::NPC) {
 						id = owner->vTable.object->getObjectID(owner);
-						if (varNode->requirement.variable) {
-							rank = mwse::string::store::getOrCreate(varNode->requirement.variable->name);
+						if (varNode->requiredVariable) {
+							rank = mwse::string::store::getOrCreate(varNode->requiredVariable->name);
 						}
 					}
 					else if (type == TES3::ObjectType::Faction) {
 						TES3::Faction * faction = reinterpret_cast<TES3::Faction*>(owner);
 						id = faction->objectID;
-						rank = varNode->requirement.rank;
+						rank = varNode->requiredRank;
 					}
 					else {
 #if _DEBUG

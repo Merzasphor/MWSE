@@ -4,6 +4,7 @@
 #include "TES3ObjectLua.h"
 
 #include "TES3Inventory.h"
+#include "TES3ItemData.h"
 #include "TES3Light.h"
 #include "TES3Reference.h"
 #include "TES3Script.h"

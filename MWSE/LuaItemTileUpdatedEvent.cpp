@@ -4,6 +4,7 @@
 #include "LuaUtil.h"
 
 #include "TES3Item.h"
+#include "TES3ItemData.h"
 #include "TES3UIElement.h"
 #include "TES3UIInventoryTile.h"
 

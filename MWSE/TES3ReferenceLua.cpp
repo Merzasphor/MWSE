@@ -10,6 +10,7 @@
 
 #include "TES3Cell.h"
 #include "TES3DataHandler.h"
+#include "TES3ItemData.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
 #include "TES3WorldController.h"
@@ -44,39 +45,16 @@ namespace TES3 {
 	}
 
 	sol::table& Reference::getLuaTable() {
-		// Get previous attachment.
-		LuaTableAttachment* attachment = reinterpret_cast<LuaTableAttachment*>(attachments);
-		while (attachment && attachment->type != AttachmentType::LuaTable) {
-			attachment = reinterpret_cast<LuaTableAttachment*>(attachment->next);
+		auto attachment = getOrCreateAttachedItemData();
+		if (attachment == nullptr) {
+			throw std::exception("Could not create ItemData attachment.");
 		}
 
-		// Create the attachment if it needs to be made.
-		if (attachment == NULL) {
-			// We need to ensure that our default sol::table is initialized, so ensure that new is invoked.
-			attachment = new (mwse::tes3::malloc<LuaTableAttachment>()) LuaTableAttachment();
-
-			attachment->type = AttachmentType::LuaTable;
-			attachment->next = 0;
-
-			// Set this as the first attachment...
-			if (attachments == NULL) {
-				attachments = attachment;
-			}
-			// ... or link up the attachment.
-			else {
-				auto lastAttachment = attachments;
-				while (lastAttachment->next) {
-					lastAttachment = lastAttachment->next;
-				}
-				lastAttachment->next = attachment;
-			}
-
-			// Create our empty table.
-			sol::state& state = mwse::lua::LuaManager::getInstance().getState();
-			attachment->table = state.create_table();
+		if (attachment->luaData == nullptr) {
+			attachment->luaData = new ItemData::LuaData();
 		}
 
-		return attachment->table;
+		return attachment->luaData->data;
 	}
 }
 

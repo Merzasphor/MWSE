@@ -24,6 +24,7 @@
 #include "InstructionInterface.h"
 #include "TES3Util.h"
 
+#include "TES3ItemData.h"
 #include "TES3Reference.h"
 #include "TES3Enchantment.h"
 
@@ -79,8 +80,8 @@ namespace mwse
 			// If there's charge data in an attached node, update it.
 			auto varNode = reference->getAttachedItemData();
 			if (varNode) {
-				if (varNode->enchantData.charge >= maxCharge) {
-					varNode->enchantData.charge = maxCharge;
+				if (varNode->charge >= maxCharge) {
+					varNode->charge = maxCharge;
 				}
 			}
 

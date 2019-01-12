@@ -91,6 +91,10 @@ namespace TES3 {
 			reinterpret_cast<void(__thiscall *)(Iterator<T>*, T*, unsigned int)>(0x47E4D0)(this, item, index);
 		}
 
+		IteratorNode<T> * getFirstNode() {
+			return reinterpret_cast<IteratorNode<T> *(__thiscall *)(Iterator<T>*)>(0x47E710)(this);
+		}
+
 		IteratorNode<T> * getNextNode() {
 			return reinterpret_cast<IteratorNode<T> *(__thiscall *)(Iterator<T>*)>(0x47E720)(this);
 		}

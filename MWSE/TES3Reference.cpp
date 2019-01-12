@@ -13,6 +13,7 @@
 #include "TES3Cell.h"
 #include "TES3Class.h"
 #include "TES3GameSetting.h"
+#include "TES3ItemData.h"
 #include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
 #include "TES3MobileProjectile.h"
@@ -323,13 +324,9 @@ namespace TES3 {
 		return nullptr;
 	}
 
+	const auto TES3_Reference_getOrCreateAttachedItemData = reinterpret_cast<ItemData* (__thiscall*)(Reference*)>(0x4E7640);
 	ItemData* Reference::getOrCreateAttachedItemData() {
-		auto data = getAttachedItemData();
-		if (data == nullptr) {
-			data = TES3::ItemData::createForObject(baseObject);
-			addItemDataAttachment(data);
-		}
-		return data;
+		return TES3_Reference_getOrCreateAttachedItemData(this);
 	}
 
 	LockAttachmentNode* Reference::getAttachedLockNode() {
