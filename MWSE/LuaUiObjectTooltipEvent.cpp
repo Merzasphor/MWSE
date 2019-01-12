@@ -3,6 +3,7 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "TES3ItemData.h"
 #include "TES3Reference.h"
 #include "TES3UIElement.h"
 
@@ -24,16 +25,17 @@ namespace mwse {
 
 				// If the object is a reference, expose its base object and the reference.
 				if (m_Object->objectType == TES3::ObjectType::Reference) {
-					eventData["object"] = makeLuaObject(reinterpret_cast<TES3::Reference*>(m_Object)->baseObject);
+					eventData["object"] = makeLuaObject(static_cast<TES3::Reference*>(m_Object)->baseObject);
 					eventData["reference"] = makeLuaObject(m_Object);
+					eventData["itemData"] = static_cast<TES3::Reference*>(m_Object)->getAttachedItemData();
 				}
 				// Otherwise just expose the object.
 				else {
 					eventData["object"] = makeLuaObject(m_Object);
+					eventData["itemData"] = m_ItemData;
 				}
 
 				eventData["tooltip"] = m_Tooltip;
-				eventData["itemData"] = m_ItemData;
 				eventData["count"] = m_Count;
 
 				return eventData;

@@ -4,6 +4,7 @@
 #include "LuaUtil.h"
 
 #include "TES3Actor.h"
+#include "TES3ItemData.h"
 #include "TES3MobileActor.h"
 #include "TES3Reference.h"
 

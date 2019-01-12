@@ -36,6 +36,7 @@
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
 #include "TES3Script.h"
+#include "TES3ItemData.h"
 #include "TES3WorldController.h"
 
 using namespace mwse;

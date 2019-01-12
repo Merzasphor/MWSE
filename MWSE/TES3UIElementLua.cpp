@@ -12,6 +12,7 @@
 #include "TES3UIInventoryTile.h"
 
 #include "TES3Item.h"
+#include "TES3ItemData.h"
 
 #include "sol.hpp"
 #include "LuaManager.h"

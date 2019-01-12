@@ -27,33 +27,11 @@ namespace TES3{
 	}
 
 	bool Weapon::isMelee() {
-		switch (weaponType)
-		{
-		case WeaponType::ShortBlade1H:
-		case WeaponType::LongBlade1H:
-		case WeaponType::Blunt1H:
-		case WeaponType::Axe1H:
-		case WeaponType::LongBlade2H:
-		case WeaponType::Axe2H:
-		case WeaponType::Spear2H:
-		case WeaponType::Blunt2close:
-		case WeaponType::Blunt2wide:
-			return true;
-		}
-
-		return false;
+		return weaponType < WeaponType::Thrown;
 	}
 
 	bool Weapon::isRanged() {
-		switch (weaponType)
-		{
-		case WeaponType::Bow:
-		case WeaponType::Crossbow:
-		case WeaponType::Thrown:
-			return true;
-		}
-
-		return false;
+		return weaponType >= WeaponType::Thrown;
 	}
 
 	bool Weapon::isAmmo() {

@@ -47,6 +47,16 @@ namespace TES3 {
 		return TES3_TES3File_writeChunkData(this, tag, data, size);
 	}
 
+	const auto TES3_TES3File_hasNextSubrecord = reinterpret_cast<bool(__thiscall *)(GameFile*)>(0x4B67F0);
+	bool GameFile::hasNextSubrecord() {
+		return TES3_TES3File_hasNextSubrecord(this);
+	}
+
+	const auto TES3_TES3File_getNextSubrecord = reinterpret_cast<int(__thiscall *)(GameFile*)>(0x4B67C0);
+	int GameFile::getNextSubrecord() {
+		return TES3_TES3File_getNextSubrecord(this);
+	}
+
 	bool GameFile::collectActiveMods(bool showMasterErrors) {
 		return TES3_TES3File_collectActiveMods2(this, TES3::DataHandler::get()->nonDynamicData->TESFiles, showMasterErrors);
 	}

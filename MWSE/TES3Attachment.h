@@ -14,8 +14,7 @@ namespace TES3 {
 			Variables = 0x6,
 			ActorData = 0x8,
 			Action = 0x9,
-			NewOrientation = 0xA,
-			LuaTable = 0x0100
+			NewOrientation = 0xA
 		};
 	}
 

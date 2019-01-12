@@ -26,10 +26,11 @@
 
 #include "TES3Armor.h"
 #include "TES3Clothing.h"
-#include "TES3Weapon.h"
-#include "TES3NPC.h"
 #include "TES3Enchantment.h"
+#include "TES3ItemData.h"
+#include "TES3NPC.h"
 #include "TES3Reference.h"
+#include "TES3Weapon.h"
 
 using namespace mwse;
 

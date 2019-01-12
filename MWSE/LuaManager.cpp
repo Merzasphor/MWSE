@@ -30,6 +30,7 @@
 #include "TES3GameFile.h"
 #include "TES3GameSetting.h"
 #include "TES3InputController.h"
+#include "TES3ItemData.h"
 #include "TES3LeveledList.h"
 #include "TES3MagicEffect.h"
 #include "TES3MagicEffectInstance.h"
@@ -504,111 +505,6 @@ namespace mwse {
 
 				// Resume normal execution.
 				jmp callbackRunScript
-			}
-		}
-
-		//
-		// Hook: Load reference.
-		//
-
-		static DWORD _stdcall LoadReference(TES3::Reference* reference, TES3::GameFile * loader, DWORD nextSubrecordTag) {
-			if (nextSubrecordTag != 'TAUL') {
-				return FALSE;
-			}
-
-			// Call original readChunk function.
-			char * buffer = new char[loader->currentChunkHeader.size];
-			bool success = loader->readChunkData(buffer, loader->currentChunkHeader.size);
-
-			// If we for whatever reason failed to load this chunk, bail.
-			if (!success) {
-				delete[] buffer;
-				return FALSE;
-			}
-
-			// Get our lua table, and replace it with our new table.
-			sol::state& state = LuaManager::getInstance().getState();
-			sol::table& table = reference->getLuaTable();
-			table = state["json"]["decode"](buffer);
-
-			// We successfully read this subrecord, so our jump location is back at the success location.
-			delete[] buffer;
-			return TRUE;
-		}
-
-		static DWORD callbackLoadReferenceMiss = TES3_HOOK_LOAD_REFERENCE_RETURN;
-		static DWORD callbackLoadReferenceHit = TES3_HOOK_LOAD_REFERENCE_RETURN_SUCCESS;
-		static __declspec(naked) void HookLoadReference() {
-			_asm
-			{
-				// Save the registers.
-				pushad
-
-				// Actually use our hook.
-				push eax
-				push ebx
-				push[esp + 0x510 + 0x20 + 0x8 + 0x4] // Current frame + pushad + previous arguments + argument 0
-				call LoadReference
-
-				// If we returned false, continue normal execution.
-				test eax, eax
-				jz HookLoadReferenceContinue
-
-				// Otherwise, jump to our success location.
-				popad
-				cmp eax, 'MANM'
-				jmp callbackLoadReferenceHit
-
-		HookLoadReferenceContinue:
-				// Return normal execution instead.
-				popad
-				cmp eax, 'MANM'
-				jmp callbackLoadReferenceMiss
-			}
-		}
-
-		//
-		// Hook: Save reference.
-		//
-
-		static void _stdcall SaveReference(TES3::Reference* reference, TES3::GameFile* loader) {
-			// Get the associated table.
-			sol::table table = reference->getLuaTable();
-
-			// If it is empty, don't bother saving it.
-			if (table.empty()) {
-				return;
-			}
-
-			// Convert the table to json for storage.
-			sol::state& state = LuaManager::getInstance().getState();
-			std::string json = state["json"]["encode"](table);
-
-			// Call original writechunk function.
-			loader->writeChunkData('TAUL', json.c_str(), json.length() + 1);
-		}
-
-		static DWORD callbackSaveReference = TES3_HOOK_SAVE_REFERENCE_RETURN;
-		static __declspec(naked) void HookSaveReference() {
-			_asm
-			{
-				// Save registers.
-				pushad
-
-				// Actually use our hook.
-				push esi
-				push ebp
-				call SaveReference
-
-				// Restore registers.
-				popad
-
-				// Overwritten code.
-				mov eax, [ebp+0x8]
-				shr eax, 5
-
-				// Resume normal execution.
-				jmp callbackSaveReference
 			}
 		}
 
@@ -1595,9 +1491,7 @@ namespace mwse {
 		TES3::IteratorNode<TES3::ItemStack>* __fastcall OnCalculateRepairPriceForList_GetItemList(TES3::Iterator<TES3::ItemStack>* inventoryList) {
 			OnCalculateRepairPriceForList_CurrentInventoryList = inventoryList;
 
-			auto result = inventoryList->head;
-			inventoryList->current = result;
-			return result;
+			return inventoryList->getFirstNode();
 		}
 
 		// Get the price for each item on the list.
@@ -1739,23 +1633,19 @@ namespace mwse {
 		static std::vector<TES3::MobileActor*> OnCalculateTravelPrice_TravelCompanionList;
 
 		// Hook for ensuring that we have the right destination list.
-		TES3::IteratorNode<TES3::TravelDestination>* __fastcall OnCalculateTravelPrice_GetDestinationList(TES3::Iterator<TES3::TravelDestination>* inventoryList) {
-			OnCalculateTravelPrice_DestinationList = inventoryList;
+		TES3::IteratorNode<TES3::TravelDestination>* __fastcall OnCalculateTravelPrice_GetDestinationList(TES3::Iterator<TES3::TravelDestination>* iterator) {
+			OnCalculateTravelPrice_DestinationList = iterator;
 
-			auto result = inventoryList->head;
-			inventoryList->current = result;
-			return result;
+			return iterator->getFirstNode();
 		}
 
 		// Hook for ensuring that we have the right companion list.
-		TES3::IteratorNode<TES3::MobileActor>* __fastcall OnCalculateTravelPrice_GetCompanionList(TES3::Iterator<TES3::MobileActor>* inventoryList) {
-			OnCalculateTravelPrice_CompanionList = inventoryList;
+		TES3::IteratorNode<TES3::MobileActor>* __fastcall OnCalculateTravelPrice_GetCompanionList(TES3::Iterator<TES3::MobileActor>* iterator) {
+			OnCalculateTravelPrice_CompanionList = iterator;
 
 			OnCalculateTravelPrice_TravelCompanionList.clear();
 
-			auto result = inventoryList->head;
-			inventoryList->current = result;
-			return result;
+			return iterator->getFirstNode();
 		}
 
 		// Hook for checking and adding companions for our custom list so we can report valid companions in the event.
@@ -2181,6 +2071,259 @@ namespace mwse {
 		}
 
 		//
+		// Handle all the hacks needed to get ItemData transferred over to a bigger structure.
+		//
+
+		const auto TES3_ItemData_Deleting = reinterpret_cast<TES3::ItemData*(__thiscall*)(TES3::ItemData *, bool)>(0x4E5410);
+		TES3::ItemData * __fastcall OnDeletingItemData(TES3::ItemData * itemData, DWORD _UNUSED_, bool deleting) {
+			if (itemData->luaData) {
+				delete itemData->luaData;
+			}
+			return TES3_ItemData_Deleting(itemData, deleting);
+		}
+
+		__declspec(naked) void patchInlineItemDataCreation() {
+			__asm {
+				push edx		// Size: 0x1
+				push ecx		// Size: 0x1
+				mov ecx, eax	// Size: 0x2
+				nop				// Replaced with a call generation. Can't do so here, because offsets aren't accurate.
+				nop				// ^
+				nop				// ^
+				nop				// ^
+				nop				// ^
+				pop ecx			// Size: 0x1
+				pop edx			// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+			}
+		}
+		const size_t patchInlineItemDataCreation_size = 0x1C;
+
+		void __inline GeneratePatchForInlineItemDataCreation(DWORD address) {
+			writePatchCodeUnprotected(address, (BYTE*)&patchInlineItemDataCreation, patchInlineItemDataCreation_size);
+			genCallUnprotected(address + 0x4, reinterpret_cast<DWORD>(&TES3::ItemData::ctor));
+		}
+
+		// Requires that the pointer is in EBX
+		__declspec(naked) void patchInlineItemDataDestruction() {
+			__asm {
+				push edx		// Size: 0x1
+				push ecx		// Size: 0x1
+				mov ecx, ebx	// Size: 0x2
+				nop				// Replaced with a call generation. Can't do so here, because offsets aren't accurate.
+				nop				// ^
+				nop				// ^
+				nop				// ^
+				nop				// ^ Size: 0x5
+				pop ecx			// Size: 0x1
+				pop edx			// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+			}
+		}
+		const size_t patchInlineItemDataDestruction_size = 0x27;
+
+		void __inline GeneratePatchForInlineItemDataDestruction(DWORD address) {
+			writePatchCodeUnprotected(address, (BYTE*)&patchInlineItemDataDestruction, patchInlineItemDataDestruction_size);
+			genCallUnprotected(address + 0x4, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+		}
+
+		//
+		// Handle saving of our extra ItemData information.
+		//
+
+		// Data we use to keep track of the currently saving item data record.
+		TES3::Iterator<TES3::ItemStack> * currentlySavingInventoryIterator = nullptr;
+		int currentlySavingInventoyItemDataIndex = 0;
+
+		// Get a hold of the inventory we're looking at.
+		TES3::IteratorNode<TES3::ItemStack> * __fastcall GetFirstSavedItemStack(TES3::Iterator<TES3::ItemStack> * iterator) {
+			currentlySavingInventoryIterator = iterator;
+			return iterator->getFirstNode();
+		}
+
+		// Get a hold of the current index in ItemData storage we're looking at.
+		int __fastcall WriteItemDataIndex(TES3::GameFile * gameFile, DWORD _UNUSED_, unsigned int tag, const void * data, unsigned int size) {
+			currentlySavingInventoyItemDataIndex = *static_cast<const int*>(data);
+			return gameFile->writeChunkData(tag, data, size);
+		}
+
+		// The last extra data written. We'll add the lua data here if needed.
+		int __fastcall WriteItemDataCondition(TES3::GameFile * gameFile, DWORD _UNUSED_, unsigned int tag, const void * data, unsigned int size) {
+			// Overwritten code.
+			int result = gameFile->writeChunkData(tag, data, size);
+
+			TES3::ItemData * itemData = currentlySavingInventoryIterator->current->data->variables->storage[currentlySavingInventoyItemDataIndex];
+			if (itemData->luaData) {
+				sol::table table = itemData->luaData->data;
+
+				// If it is empty, don't bother saving it.
+				if (!table.empty()) {
+					// Convert the table to json for storage.
+					sol::state& state = LuaManager::getInstance().getState();
+					std::string json = state["json"]["encode"](table);
+
+					// Call original writechunk function.
+					gameFile->writeChunkData('TAUL', json.c_str(), json.length() + 1);
+				}
+			}
+
+			return result;
+		}
+
+		// Get a handle on the last created ItemData when loading.
+		TES3::ItemData * saveLoadItemData = nullptr;
+		TES3::ItemData * __fastcall CreateItemDataFromLoading(TES3::ItemData * itemData) {
+			saveLoadItemData = itemData;
+			return TES3::ItemData::ctor(itemData);
+		}
+
+		// When we load a next record while loading an actor, check to see if it's a lua extension and save it to the last loaded ItemData.
+		int __fastcall LoadNextRecordForActor(TES3::GameFile * gameFile) {
+			int result = gameFile->getNextSubrecord();
+
+			// Load the lua data into the last loaded ItemData.
+			if (result == 'TAUL') {
+				char * buffer = new char[gameFile->currentChunkHeader.size];
+				bool success = gameFile->readChunkData(buffer, gameFile->currentChunkHeader.size);
+
+				// If we for whatever reason failed to load this chunk, bail.
+				if (success) {
+					// Get our lua table, and replace it with our new table.
+					sol::state& state = LuaManager::getInstance().getState();
+					saveLoadItemData->luaData = new TES3::ItemData::LuaData();
+					saveLoadItemData->luaData->data = state["json"]["decode"](buffer);
+				}
+
+				// Clean up the buffer we made.
+				delete[] buffer;
+			}
+
+			// It's safe to return LUAT here, it will just pass to the next load for us.
+			return result;
+		}
+
+		// Get ItemData for reference being saved.
+		TES3::Reference * TESTING_SHIT = nullptr;
+		TES3::ItemData * __fastcall GetItemDataForReferenceSaving(TES3::Reference * reference) {
+			TESTING_SHIT = reference;
+			auto itemData = reference->getAttachedItemData();
+			saveLoadItemData = itemData;
+			return itemData;
+		}
+
+		// The last extra data written for references. We'll add the lua data here if needed.
+		int __fastcall WriteReferenceItemDataCondition(TES3::GameFile * gameFile, DWORD _UNUSED_, unsigned int tag, const void * data, unsigned int size) {
+			// Overwritten code.
+			int result = gameFile->writeChunkData(tag, data, size);
+
+			if (saveLoadItemData->luaData) {
+				sol::table table = saveLoadItemData->luaData->data;
+
+				// If it is empty, don't bother saving it.
+				if (!table.empty()) {
+					// Convert the table to json for storage.
+					sol::state& state = LuaManager::getInstance().getState();
+					std::string json = state["json"]["encode"](table);
+
+					// Call original writechunk function.
+					gameFile->writeChunkData('TAUL', json.c_str(), json.length() + 1);
+				}
+			}
+
+			return result;
+		}
+
+		// Get reference that is being loaded.
+		TES3::Reference * loadSaveReference = nullptr;
+		TES3::MobileActor * __fastcall LoadReferenceGetMACT(TES3::Reference * reference) {
+			loadSaveReference = reference;
+			return reference->getAttachedMobileActor();
+		}
+
+		// When we load a next record while loading an actor, check to see if it's a lua extension and save it to the last loaded ItemData.
+		int __fastcall LoadNextRecordForReference(TES3::GameFile * gameFile) {
+			int result = gameFile->getNextSubrecord();
+
+			// Load the lua data into the last loaded ItemData.
+			if (result == 'TAUL') {
+				char * buffer = new char[gameFile->currentChunkHeader.size];
+				bool success = gameFile->readChunkData(buffer, gameFile->currentChunkHeader.size);
+
+				// If we for whatever reason failed to load this chunk, bail.
+				if (success) {
+					// Get our lua table, and replace it with our new table.
+					sol::state& state = LuaManager::getInstance().getState();
+					auto itemData = loadSaveReference->getAttachedItemData();
+					if (itemData) {
+						itemData->luaData = new TES3::ItemData::LuaData();
+						itemData->luaData->data = state["json"]["decode"](buffer);
+					}
+#if _DEBUG
+					else {
+						mwse::log::getLog() << "WARNING: Loading reference didn't have a condition attachment!" << std::endl;
+					}
+#endif
+				}
+
+				// Clean up the buffer we made.
+				delete[] buffer;
+
+				if (gameFile->hasNextSubrecord()) {
+					result = gameFile->getNextSubrecord();
+				}
+				else {
+					result = 0;
+				}
+			}
+
+			// It's safe to return XLUA here, it will just pass to the next load for us.
+			return result;
+		}
+
+		//
 		//
 		//
 
@@ -2201,12 +2344,6 @@ namespace mwse {
 
 			// Hook the RunScript function so we can intercept Lua scripts and invoke Lua code if needed.
 			genJumpUnprotected(TES3_HOOK_RUNSCRIPT_LUACHECK, reinterpret_cast<DWORD>(HookRunScript), TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE);
-
-			// Hook the load reference function, so we can fetch attached Lua data.
-			genJumpUnprotected(TES3_HOOK_LOAD_REFERENCE, reinterpret_cast<DWORD>(HookLoadReference), TES3_HOOK_LOAD_REFERENCE_SIZE);
-
-			// Hook the save reference function, so we can save attached Lua data.
-			genJumpUnprotected(TES3_HOOK_SAVE_REFERENCE, reinterpret_cast<DWORD>(HookSaveReference), TES3_HOOK_SAVE_REFERENCE_SIZE);
 
 			// Hook the MACP creation functions to update lua variables that point to the player.
 			genCallEnforced(0x5635D6, 0x56EAE0, reinterpret_cast<DWORD>(OnPlayerRecreated));
@@ -2932,6 +3069,96 @@ namespace mwse {
 			genCallEnforced(0x5CC366, 0x58AE20, reinterpret_cast<DWORD>(OnSetItemTileIcon)); // On manual AddTile.
 			genCallEnforced(0x5CD147, 0x47E720, reinterpret_cast<DWORD>(GetNextInventoryTileToUpdate)); // General inventory menu update.
 			genCallEnforced(0x5D1943, 0x58AE20, reinterpret_cast<DWORD>(OnSetItemTileIcon)); // Root purpose unclear.
+
+			// Override ItemData creation/deletion.
+			genPushEnforced(0x498A50, (BYTE)sizeof(TES3::ItemData)) && genCallEnforced(0x498A6C, 0x4E44B0, reinterpret_cast<DWORD>(&TES3::ItemData::ctor));
+			genPushEnforced(0x498DB4, (BYTE)sizeof(TES3::ItemData)) && genCallEnforced(0x498DD0, 0x4E44B0, reinterpret_cast<DWORD>(&TES3::ItemData::ctor));
+			genPushEnforced(0x49AAF9, (BYTE)sizeof(TES3::ItemData)) && genCallEnforced(0x49AB17, 0x4E44B0, reinterpret_cast<DWORD>(&TES3::ItemData::ctor));
+			genPushEnforced(0x49ADA9, (BYTE)sizeof(TES3::ItemData)) && genCallEnforced(0x49ADC1, 0x4E44B0, reinterpret_cast<DWORD>(&TES3::ItemData::ctor));
+			genPushEnforced(0x49AEEC, (BYTE)sizeof(TES3::ItemData)) && genCallEnforced(0x49AF08, 0x4E44B0, reinterpret_cast<DWORD>(&TES3::ItemData::ctor));
+			genPushEnforced(0x49E590, (BYTE)sizeof(TES3::ItemData)) && genCallEnforced(0x49E5AF, 0x4E44B0, reinterpret_cast<DWORD>(CreateItemDataFromLoading));
+			genPushEnforced(0x49E630, (BYTE)sizeof(TES3::ItemData)) && genCallEnforced(0x49E64F, 0x4E44B0, reinterpret_cast<DWORD>(CreateItemDataFromLoading));
+			genPushEnforced(0x4A4FFC, (BYTE)sizeof(TES3::ItemData)) && genCallEnforced(0x4A5018, 0x4E44B0, reinterpret_cast<DWORD>(CreateItemDataFromLoading));
+			genPushEnforced(0x4A5099, (BYTE)sizeof(TES3::ItemData)) && genCallEnforced(0x4A50B5, 0x4E44B0, reinterpret_cast<DWORD>(CreateItemDataFromLoading));
+			genPushEnforced(0x4D9497, (BYTE)sizeof(TES3::ItemData)) && genCallEnforced(0x4D94B6, 0x4E44B0, reinterpret_cast<DWORD>(CreateItemDataFromLoading));
+			genPushEnforced(0x4D9537, (BYTE)sizeof(TES3::ItemData)) && genCallEnforced(0x4D9556, 0x4E44B0, reinterpret_cast<DWORD>(CreateItemDataFromLoading));
+			genPushEnforced(0x5142D3, (BYTE)sizeof(TES3::ItemData)) && genCallEnforced(0x5142F2, 0x4E44B0, reinterpret_cast<DWORD>(&TES3::ItemData::ctor));
+			genCallEnforced(0x45519C, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+			genCallEnforced(0x46579B, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+			genCallEnforced(0x496664, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+			genCallEnforced(0x497C6E, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+			genCallEnforced(0x4990A8, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+			genCallEnforced(0x49912D, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+			genCallEnforced(0x499299, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+			genCallEnforced(0x49931B, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+			genCallEnforced(0x49987E, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+			genCallEnforced(0x49B859, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+			genCallEnforced(0x49B8AD, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+			genCallEnforced(0x4E4AA6, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+			genCallEnforced(0x4E70D5, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+			genCallEnforced(0x5124B6, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+			genCallEnforced(0x52C3DE, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+			genCallEnforced(0x52C41D, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+			genCallEnforced(0x5A6492, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+			genCallEnforced(0x5C47A3, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+			genCallEnforced(0x5C4C36, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
+			genCallEnforced(0x4E48A7, 0x4E5410, reinterpret_cast<DWORD>(OnDeletingItemData));
+			genCallEnforced(0x46589C, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x465CFC, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x465D92, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x465F1A, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x495402, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x496383, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x49803E, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x49825F, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x49A38C, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x49B28F, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x4E70F3, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x514FFD, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x573705, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x573D24, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x5A62DC, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x5CE707, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x5CEAF9, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x5CEDC8, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x5CF2D5, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x5CF667, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x5CFEA4, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genCallEnforced(0x5D030D, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			GeneratePatchForInlineItemDataCreation(0x4E7673);
+			GeneratePatchForInlineItemDataDestruction(0x4E53A7);
+			GeneratePatchForInlineItemDataDestruction(0x4E76DA);
+			GeneratePatchForInlineItemDataDestruction(0x4E78F8);
+
+			// Override item data fully repaired comparison to ensure there are no lua variables.
+			genCallEnforced(0x41089C, 0x4E7970, reinterpret_cast<DWORD>(&TES3::ItemData::isFullyRepaired));
+			genCallEnforced(0x465643, 0x4E7970, reinterpret_cast<DWORD>(&TES3::ItemData::isFullyRepaired));
+			genCallEnforced(0x496BF0, 0x4E7970, reinterpret_cast<DWORD>(&TES3::ItemData::isFullyRepaired));
+			genCallEnforced(0x497C58, 0x4E7970, reinterpret_cast<DWORD>(&TES3::ItemData::isFullyRepaired));
+			genCallEnforced(0x4E162B, 0x4E7970, reinterpret_cast<DWORD>(&TES3::ItemData::isFullyRepaired));
+			genCallEnforced(0x52C400, 0x4E7970, reinterpret_cast<DWORD>(&TES3::ItemData::isFullyRepaired));
+			genCallEnforced(0x52C6A2, 0x4E7970, reinterpret_cast<DWORD>(&TES3::ItemData::isFullyRepaired));
+			genCallEnforced(0x5B4F07, 0x4E7970, reinterpret_cast<DWORD>(&TES3::ItemData::isFullyRepaired));
+			genCallEnforced(0x5E1826, 0x4E7970, reinterpret_cast<DWORD>(&TES3::ItemData::isFullyRepaired));
+			genCallEnforced(0x60E172, 0x4E7970, reinterpret_cast<DWORD>(&TES3::ItemData::isFullyRepaired));
+			genCallEnforced(0x60E566, 0x4E7970, reinterpret_cast<DWORD>(&TES3::ItemData::isFullyRepaired));
+			genCallEnforced(0x615789, 0x4E7970, reinterpret_cast<DWORD>(&TES3::ItemData::isFullyRepaired));
+			genCallEnforced(0x633A6F, 0x4E7970, reinterpret_cast<DWORD>(&TES3::ItemData::isFullyRepaired));
+
+			// File loading/saving hooks for extended ItemData structure.
+			genCallEnforced(0x4998EA, 0x47E710, reinterpret_cast<DWORD>(GetFirstSavedItemStack));
+			genCallEnforced(0x4999BB, 0x4B6BA0, reinterpret_cast<DWORD>(WriteItemDataIndex));
+			genCallEnforced(0x499B40, 0x4B6BA0, reinterpret_cast<DWORD>(WriteItemDataCondition));
+			genCallEnforced(0x49D747, 0x4B67C0, reinterpret_cast<DWORD>(LoadNextRecordForActor));
+			genCallEnforced(0x49E6BF, 0x4B67C0, reinterpret_cast<DWORD>(LoadNextRecordForActor));
+			genCallEnforced(0x4A4741, 0x4B67C0, reinterpret_cast<DWORD>(LoadNextRecordForActor));
+			genCallEnforced(0x4A5140, 0x4B67C0, reinterpret_cast<DWORD>(LoadNextRecordForActor));
+			genCallEnforced(0x4D849B, 0x4B67C0, reinterpret_cast<DWORD>(LoadNextRecordForActor));
+			genCallEnforced(0x4D95C8, 0x4B67C0, reinterpret_cast<DWORD>(LoadNextRecordForActor));
+			genCallEnforced(0x4E1615, 0x4E5460, reinterpret_cast<DWORD>(GetItemDataForReferenceSaving));
+			genCallEnforced(0x4E1856, 0x4B6BA0, reinterpret_cast<DWORD>(WriteReferenceItemDataCondition));
+			genCallEnforced(0x4DE3C6, 0x4E5750, reinterpret_cast<DWORD>(LoadReferenceGetMACT));
+			genCallEnforced(0x4DE426, 0x4B67C0, reinterpret_cast<DWORD>(LoadNextRecordForReference));
 
 			// UI framework hooks
 			TES3::UI::hook();

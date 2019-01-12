@@ -25,11 +25,12 @@
 #include "TES3Util.h"
 
 #include "TES3Armor.h"
-#include "TES3Weapon.h"
-#include "TES3Clothing.h"
 #include "TES3Book.h"
-#include "TES3Reference.h"
+#include "TES3Clothing.h"
 #include "TES3Enchantment.h"
+#include "TES3ItemData.h"
+#include "TES3Reference.h"
+#include "TES3Weapon.h"
 
 using namespace mwse;
 
@@ -76,7 +77,7 @@ namespace mwse
 				// Get the current charge.
 				auto varNode = reference->getAttachedItemData();
 				if (varNode) {
-					currCharge = varNode->enchantData.charge;
+					currCharge = varNode->charge;
 				}
 				else {
 					currCharge = maxCharge;

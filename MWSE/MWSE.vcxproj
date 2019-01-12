@@ -131,6 +131,7 @@
     <ClInclude Include="TES3Fader.h" />
     <ClInclude Include="TES3FaderLua.h" />
     <ClInclude Include="TES3GameFileLua.h" />
+    <ClInclude Include="TES3ItemData.h" />
     <ClInclude Include="TES3Land.h" />
     <ClInclude Include="TES3LandTexture.h" />
     <ClInclude Include="TES3MobController.h" />
@@ -488,6 +489,7 @@
     <ClCompile Include="TES3GameFile.cpp" />
     <ClCompile Include="TES3GameFileLua.cpp" />
     <ClCompile Include="TES3Item.cpp" />
+    <ClCompile Include="TES3ItemData.cpp" />
     <ClCompile Include="TES3MagicEffect.cpp" />
     <ClCompile Include="TES3Misc.cpp" />
     <ClCompile Include="TES3MobileActorLua.cpp" />

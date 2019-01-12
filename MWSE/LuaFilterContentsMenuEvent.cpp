@@ -3,8 +3,9 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
-#include "TES3UIInventoryTile.h"
 #include "TES3Item.h"
+#include "TES3ItemData.h"
+#include "TES3UIInventoryTile.h"
 
 namespace mwse {
 	namespace lua {

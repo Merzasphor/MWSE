@@ -11,6 +11,7 @@
 #include "TES3GlobalVariable.h"
 #include "TES3Inventory.h"
 #include "TES3Item.h"
+#include "TES3ItemData.h"
 #include "TES3Faction.h"
 #include "TES3LeveledList.h"
 #include "TES3MobileActor.h"

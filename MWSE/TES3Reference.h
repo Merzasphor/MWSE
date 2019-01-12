@@ -7,10 +7,6 @@
 #include "TES3Vectors.h"
 
 namespace TES3 {
-	struct LuaTableAttachment : Attachment {
-		sol::table table;
-	};
-
 	struct Reference : Object {
 		PhysicalObject * baseObject; // 0x28
 		Vector3 orientation; // 0x2c
