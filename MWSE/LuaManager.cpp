@@ -3155,12 +3155,10 @@ namespace mwse {
 			genCallEnforced(0x4A5140, 0x4B67C0, reinterpret_cast<DWORD>(LoadNextRecordForActor));
 			genCallEnforced(0x4D849B, 0x4B67C0, reinterpret_cast<DWORD>(LoadNextRecordForActor));
 			genCallEnforced(0x4D95C8, 0x4B67C0, reinterpret_cast<DWORD>(LoadNextRecordForActor));
-#if true
 			genCallEnforced(0x4E1615, 0x4E5460, reinterpret_cast<DWORD>(GetItemDataForReferenceSaving));
 			genCallEnforced(0x4E1856, 0x4B6BA0, reinterpret_cast<DWORD>(WriteReferenceItemDataCondition));
 			genCallEnforced(0x4DE3C6, 0x4E5750, reinterpret_cast<DWORD>(LoadReferenceGetMACT));
 			genCallEnforced(0x4DE426, 0x4B67C0, reinterpret_cast<DWORD>(LoadNextRecordForReference));
-#endif
 
 			// UI framework hooks
 			TES3::UI::hook();
