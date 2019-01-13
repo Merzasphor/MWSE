@@ -190,7 +190,7 @@ end
 -- Get the number of mods that aren't hidden.
 local function getActiveModConfigCount()
 	local count = 0
-	for name, package in pairs(configMods) do
+	for _, package in pairs(configMods) do
 		-- Allow package.hidden to be set to prevent it from showing up in the list.
 		if (not package.hidden) then
 			count = count + 1
@@ -217,8 +217,12 @@ local function onCreatedMenuOptions(e)
 	local buttonContainer = creditsButton.parent
 
 	local button = buttonContainer:createImageButton({
+		id = tes3ui.registerID("MenuOptions_MCM_container"),
+		idleId = tes3ui.registerID("MenuOptions_MCMidlebutton"),
 		idle = "textures/mwse/menu_modconfig.dds",
+		overId = tes3ui.registerID("MenuOptions_MCMoverbutton"),
 		over = "textures/mwse/menu_modconfig_over.dds",
+		pressedId = tes3ui.registerID("MenuOptions_MCMpressedbutton"),
 		pressed = "textures/mwse/menu_modconfig_pressed.dds",
 	})
 	button.height = 50

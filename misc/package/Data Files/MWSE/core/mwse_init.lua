@@ -333,15 +333,32 @@ end
 
 -- Create a button composed of images that has a mouse over and mouse pressed state.
 function tes3uiElement:createImageButton(params)
+	-- Get the button block params.
+	local blockParams = params.blockParams or {
+		id = params.id,
+	}
+	local idleParams = params.idleParams or {
+		id = params.idleId,
+		path = params.idle,
+	}
+	local overParams = params.overParams or {
+		id = params.overId,
+		path = params.over,
+	}
+	local pressedParams = params.pressedParams or {
+		id = params.pressedId,
+		path = params.pressed,
+	}
+
 	-- Create our parent block.
-	local buttonBlock = self:createBlock({ id = params.id })
+	local buttonBlock = self:createBlock(blockParams)
 	buttonBlock.autoWidth = true
 	buttonBlock.autoHeight = true
 
 	-- Create our child buttons using the params provided.
-	local buttonIdle = buttonBlock:createImage({ path = params.idle })
-	local buttonOver = buttonBlock:createImage({ path = params.over })
-	local buttonPressed = buttonBlock:createImage({ path = params.pressed })
+	local buttonIdle = buttonBlock:createImage(idleParams)
+	local buttonOver = buttonBlock:createImage(overParams)
+	local buttonPressed = buttonBlock:createImage(pressedParams)
 
 	-- Prevent any of the above-created buttons from consuming the mouse events.
 	buttonIdle.consumeMouseEvents = false
