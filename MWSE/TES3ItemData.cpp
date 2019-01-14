@@ -72,9 +72,9 @@ namespace TES3 {
 				itemData->condition = object->getDurability();
 			}
 			break;
-		case TES3::ObjectType::Apparatus:
 		case TES3::ObjectType::Lockpick:
 		case TES3::ObjectType::Probe:
+		case TES3::ObjectType::Repair:
 			itemData->condition = object->getUses();
 			break;
 		case TES3::ObjectType::Light:

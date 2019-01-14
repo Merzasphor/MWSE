@@ -2246,9 +2246,7 @@ namespace mwse {
 		}
 
 		// Get ItemData for reference being saved.
-		TES3::Reference * TESTING_SHIT = nullptr;
 		TES3::ItemData * __fastcall GetItemDataForReferenceSaving(TES3::Reference * reference) {
-			TESTING_SHIT = reference;
 			auto itemData = reference->getAttachedItemData();
 			saveLoadItemData = itemData;
 			return itemData;
