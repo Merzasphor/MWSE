@@ -173,6 +173,10 @@ namespace MWSE
                 {
                     File.Delete("Data Files\\MWSE\\lua\\lfs.dll");
                 }
+                if (File.Exists("MWSE.pdb"))
+                {
+                    File.Delete("MWSE.pdb");
+                }
                 Console.WriteLine(" Done.");
 
                 // Delete old core files so they can be refreshed.
