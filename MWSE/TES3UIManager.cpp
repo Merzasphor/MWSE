@@ -251,6 +251,9 @@ namespace TES3 {
 			pushNewUIID(0x5929E0, "HelpMenu_effectsBlock");
 			pushNewUIID(0x592A5E, "HelpMenu_charges");
 			pushNewUIID(0x592B98, "HelpMenu_owner");
+			pushNewUIID(0x592014, "HelpMenu_effectBlock");	// Ingredients
+			pushNewUIID(0x5922C1, "HelpMenu_effectIcon");	// Ingredients
+			pushNewUIID(0x59206D, "HelpMenu_effectLabel");	// Ingredients
 		}
 
 	}
