@@ -229,31 +229,43 @@ namespace TES3 {
 			mwse::genCallEnforced(0x5863AE, 0x584850, *reinterpret_cast<DWORD*>(&patch));
 
 			// Provide some UI IDs for elements that don't have them.
-			pushNewUIID(0x590F59, "HelpMenu_iconBlock");
+			pushNewUIID(0x590F59, "HelpMenu_titleBlock");
 			pushNewUIID(0x590FBD, "HelpMenu_icon");
 			pushNewUIID(0x5911DC, "HelpMenu_name");
 			pushNewUIID(0x591293, "HelpMenu_uses");
-			pushNewUIID(0x5912CD, "HelpMenu_quality");
+			pushNewUIID(0x5912CD, "HelpMenu_qualityCondition");
 			pushNewUIID(0x591315, "HelpMenu_armorRating");
 			pushNewUIID(0x59136B, "HelpMenu_destinationTo");
 			pushNewUIID(0x591383, "HelpMenu_destinationCell");
+			pushNewUIID(0x5914AB, "HelpMenu_weaponType");
 			pushNewUIID(0x5914E7, "HelpMenu_chop");
 			pushNewUIID(0x59151D, "HelpMenu_slash");
-			pushNewUIID(0x591553, "HelpMenu_thrust");
+			pushNewUIID(0x591553, "HelpMenu_thrust");	// Attack for ammo
 			pushNewUIID(0x59166A, "HelpMenu_weight");
 			pushNewUIID(0x59172F, "HelpMenu_weight");
 			pushNewUIID(0x591790, "HelpMenu_value");
 			pushNewUIID(0x5917EF, "HelpMenu_value");
-			pushNewUIID(0x59195F, "HelpMenu_effectBlock");
-			pushNewUIID(0x5919BE, "HelpMenu_effectIcon");
-			pushNewUIID(0x591E8F, "HelpMenu_effectLabel");
+			pushNewUIID(0x59195F, "HelpMenu_effectBlock");	// Potions
+			pushNewUIID(0x5919BE, "HelpMenu_effectIcon");	// Potions
+			pushNewUIID(0x591E8F, "HelpMenu_effectLabel");	// Potions
 			pushNewUIID(0x59231C, "HelpMenu_castType");
-			pushNewUIID(0x5929E0, "HelpMenu_effectsBlock");
-			pushNewUIID(0x592A5E, "HelpMenu_charges");
+			pushNewUIID(0x5929E0, "HelpMenu_chargeBlock");
+			pushNewUIID(0x592A5E, "HelpMenu_chargeLabel");
 			pushNewUIID(0x592B98, "HelpMenu_owner");
 			pushNewUIID(0x592014, "HelpMenu_effectBlock");	// Ingredients
 			pushNewUIID(0x5922C1, "HelpMenu_effectIcon");	// Ingredients
 			pushNewUIID(0x59206D, "HelpMenu_effectLabel");	// Ingredients
+			pushNewUIID(0x59232A, "HelpMenu_enchantmentContainer");
+			pushNewUIID(0x5923B5, "HelpMenu_enchantEffectBlock");
+			pushNewUIID(0x592425, "icon_container");	//enchant effect
+			pushNewUIID(0x59294B, "label_container");	//enchant effect
+			pushNewUIID(0x5929A9, "HelpMenu_enchantEffectLabel");
+			pushNewUIID(0x59145F, "HelpMenu_weaponType");	//patched ammo and marksman weapons
+			pushNewUIID(0x5F0DD0, "HelpMenu_mapNoteBlock");
+			pushNewUIID(0x5F0E13, "HelpMenu_mapNoteIcon");
+			pushNewUIID(0x5F0EE5, "HelpMenu_mapNoteLabel");
+			pushNewUIID(0x5915E6, "HelpMenu_locked");
+			pushNewUIID(0x591614, "HelpMenu_trapped");
 		}
 
 	}
