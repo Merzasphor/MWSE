@@ -1194,9 +1194,6 @@
     <ClInclude Include="LuaCalcSoulValueEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
-    <ClInclude Include="TES3BodyPartLua.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="LuaCalcArmorRatingEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
@@ -1208,6 +1205,9 @@
     </ClInclude>
     <ClInclude Include="TES3ItemData.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3BodyPartLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
