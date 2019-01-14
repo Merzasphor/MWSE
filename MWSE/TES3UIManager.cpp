@@ -187,6 +187,42 @@ namespace TES3 {
 			TES3_ShowScrollMenu(text);
 		}
 
+
+		const auto TES3_UpdateFillBar = reinterpret_cast<void(__cdecl*)(UI_ID, float, float)>(0x6262D0);
+		void updateFillBar(UI_ID id, float current, float max) {
+			TES3_UpdateFillBar(id, current, max);
+		}
+
+		const auto TES3_UpdateHealthFillBar = reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBB0);
+		void updateHealthFillBar(float current, float max) {
+			TES3_UpdateHealthFillBar(current, max);
+		}
+
+		const auto TES3_UpdateMagickaFillBar = reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBD0);
+		void updateMagickaFillBar(float current, float max) {
+			TES3_UpdateMagickaFillBar(current, max);
+		}
+
+		const auto TES3_UpdateFatigueFillBar = reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBF0);
+		void updateFatigueFillBar(float current, float max) {
+			TES3_UpdateFatigueFillBar(current, max);
+		}
+
+		const auto TES3_UpdateEncumbrance = reinterpret_cast<void(__cdecl*)()>(0x5CD1B0);
+		void updateEncumbranceBar() {
+			TES3_UpdateEncumbrance();
+		}
+
+		const auto TES3_UpdatePlayerAttribute = reinterpret_cast<void(__cdecl*)(float, int)>(0x626410);
+		void updatePlayerAttribute(float current, int attributeId) {
+			TES3_UpdatePlayerAttribute(current, attributeId);
+		}
+
+		const auto TES3_UpdateStatsPane = reinterpret_cast<void(__cdecl*)()>(0x6266D0);
+		void updateStatsPane() {
+			TES3_UpdateStatsPane();
+		}
+
 		const auto TES3_UpdateInventoryTiles = reinterpret_cast<void(__cdecl*)()>(0x5CC910);
 		void updateInventoryMenuTiles() {
 			TES3_UpdateInventoryTiles();

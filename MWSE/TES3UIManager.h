@@ -30,6 +30,14 @@ namespace TES3 {
 		__declspec(dllexport) void showBookMenu(const char* text);
 		__declspec(dllexport) void showScrollMenu(const char* text);
 
+		__declspec(dllexport) void updateFillBar(UI_ID id, float current, float max);
+		__declspec(dllexport) void updateHealthFillBar(float current, float max);
+		__declspec(dllexport) void updateMagickaFillBar(float current, float max);
+		__declspec(dllexport) void updateFatigueFillBar(float current, float max);
+		__declspec(dllexport) void updateEncumbranceBar();
+		__declspec(dllexport) void updatePlayerAttribute(float current, int attributeId);
+		__declspec(dllexport) void updateStatsPane();
+
 		__declspec(dllexport) void updateInventoryMenuTiles();
 		__declspec(dllexport) void updateContentsMenuTiles();
 		__declspec(dllexport) void updateContentsCompanionElements();

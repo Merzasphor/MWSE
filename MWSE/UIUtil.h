@@ -22,8 +22,6 @@ namespace mwse {
 			__declspec(dllexport) signed char equipInventoryTile(TES3::UI::InventoryTile*);
 			__declspec(dllexport) void flagPaperDollUpdate();
 
-			__declspec(dllexport) void updateStatsPane();
-
 			__declspec(dllexport) void showRestWaitMenu(bool allowRest, bool scripted = true);
 		}
 	}

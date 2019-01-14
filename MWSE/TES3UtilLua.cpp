@@ -1490,18 +1490,28 @@ namespace mwse {
 
 				// If this was on the player update any associated GUI widgets.
 				if (mobile->actorType == TES3::MobileActorType::Player) {
-					// Update main HUD elements.
+					// Manually update health/magicka/fatigue UI elements.
 					if (statistic == &mobile->health) {
-						reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBB0)(statistic->current, statistic->base);
+						TES3::UI::updateHealthFillBar(statistic->current, statistic->base);
 					}
 					else if (statistic == &mobile->magicka) {
-						reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBD0)(statistic->current, statistic->base);
+						TES3::UI::updateMagickaFillBar(statistic->current, statistic->base);
 					}
 					else if (statistic == &mobile->fatigue) {
-						reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBF0)(statistic->current, statistic->base);
+						TES3::UI::updateFatigueFillBar(statistic->current, statistic->base);
+					}
+					else {
+						// Check to see if an attribute was edited.
+						for (size_t i = TES3::Attribute::FirstAttribute; i <= TES3::Attribute::LastAttribute; i++) {
+							if (statistic == &mobile->attributes[i]) {
+								TES3::UI::updateEncumbranceBar();
+								TES3::UI::updatePlayerAttribute(statistic->getCurrent(), i);
+								break;
+							}
+						}
 					}
 
-					tes3::ui::updateStatsPane();
+					TES3::UI::updateStatsPane();
 				}
 			};
 
@@ -1605,17 +1615,28 @@ namespace mwse {
 
 				// If this was on the player update any associated GUI widgets.
 				if (mobile->actorType == TES3::MobileActorType::Player) {
+					// Manually update health/magicka/fatigue UI elements.
 					if (statistic == &mobile->health) {
-						reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBB0)(statistic->current, statistic->base);
+						TES3::UI::updateHealthFillBar(statistic->current, statistic->base);
 					}
 					else if (statistic == &mobile->magicka) {
-						reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBD0)(statistic->current, statistic->base);
+						TES3::UI::updateMagickaFillBar(statistic->current, statistic->base);
 					}
 					else if (statistic == &mobile->fatigue) {
-						reinterpret_cast<void(__cdecl*)(float, float)>(0x50FBF0)(statistic->current, statistic->base);
+						TES3::UI::updateFatigueFillBar(statistic->current, statistic->base);
+					}
+					else {
+						// Check to see if an attribute was edited.
+						for (size_t i = TES3::Attribute::FirstAttribute; i <= TES3::Attribute::LastAttribute; i++) {
+							if (statistic == &mobile->attributes[i]) {
+								TES3::UI::updateEncumbranceBar();
+								TES3::UI::updatePlayerAttribute(statistic->getCurrent(), i);
+								break;
+							}
+						}
 					}
 
-					tes3::ui::updateStatsPane();
+					TES3::UI::updateStatsPane();
 				}
 			};
 
