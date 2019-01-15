@@ -34,6 +34,11 @@ namespace TES3 {
 			return TES3_ui_registerID(name);
 		}
 
+		const auto TES3_ui_lookupID = reinterpret_cast<const char*(__cdecl *)(UI_ID)>(0x57B220);
+		const char* lookupID(UI_ID id) {
+			return TES3_ui_lookupID(id);
+		}
+
 		Property registerProperty(const char *name) {
 			return static_cast<Property>(TES3_ui_registerID(name));
 		}
@@ -303,6 +308,5 @@ namespace TES3 {
 			pushNewUIID(0x5915E6, "HelpMenu_locked");
 			pushNewUIID(0x591614, "HelpMenu_trapped");
 		}
-
 	}
 }

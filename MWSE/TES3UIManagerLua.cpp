@@ -201,6 +201,7 @@ namespace mwse {
 			auto tes3ui = state.create_named_table("tes3ui");
 
 			tes3ui["registerID"] = TES3::UI::registerID;
+			tes3ui["lookupID"] = TES3::UI::lookupID;
 			tes3ui["registerProperty"] = TES3::UI::registerProperty;
 			tes3ui.set_function("createMenu", [](sol::table args) {
 				auto id = args.get<sol::optional<UI_ID>>("id");
@@ -278,6 +279,45 @@ namespace mwse {
 			tes3ui["logToConsole"] = [](const char* text, sol::optional<bool> isCommand) {
 				TES3::UI::logToConsole(text, isCommand.value_or(false));
 			};
+
+			// Add binding for TES3::UI::TreeItem type.
+			// TODO: Move this to its own file after TES3::UI::Tree has been made a template.
+			{
+				auto usertypeDefinition = state.create_simple_usertype<TES3::UI::TreeItem>();
+
+				usertypeDefinition.set("id", &TES3::UI::TreeItem::key);
+				usertypeDefinition.set("name", sol::property([](TES3::UI::TreeItem& self) {
+					return TES3::UI::lookupID(self.key);
+				}));
+				usertypeDefinition.set("type", sol::property([](TES3::UI::TreeItem& self) {
+					return unsigned int(self.valueType) & 0x7F;
+				}));
+				usertypeDefinition.set("value", sol::property([](TES3::UI::TreeItem& self) -> sol::object {
+					sol::state& state = LuaManager::getInstance().getState();
+
+					unsigned int type = unsigned int(self.valueType) & 0x7F;
+
+					switch (type) {
+					case TES3::UI::PropertyType::Integer:
+						return sol::make_object(state, self.value.integerValue);
+					case TES3::UI::PropertyType::Float:
+						return sol::make_object(state, self.value.floatValue);
+					case TES3::UI::PropertyType::Property:
+						if (self.value.propertyValue == TES3::UI::Property::boolean_true) {
+							return sol::make_object(state, true);
+						}
+						else if (self.value.propertyValue == TES3::UI::Property::boolean_false) {
+							return sol::make_object(state, false);
+						}
+						else {
+							return sol::make_object(state, self.value.propertyValue);
+						}
+					}
+					return sol::nil;
+				}));
+
+				state.set_usertype("tes3uiProperty", usertypeDefinition);
+			}
 		}
 
 	}

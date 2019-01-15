@@ -64,6 +64,19 @@ namespace mwse {
 			return prop == TES3::UI::Property::boolean_true;
 		}
 
+		// Helper function to build a table for an element's properties.
+		void addPropertyToTable(sol::table& table, TES3::UI::TreeNode * node) {
+			TES3::UI::TreeNode * sentinal = *reinterpret_cast<TES3::UI::TreeNode**>(0x7D1CEC);
+			if (node == sentinal) {
+				return;
+			}
+
+			table.add(node->item);
+
+			addPropertyToTable(table, node->branchLess);
+			addPropertyToTable(table, node->branchGreaterThanOrEqual);
+		}
+
 		void bindTES3UIElement() {
 			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
@@ -87,6 +100,13 @@ namespace mwse {
 					return children;
 				}
 			));
+			usertypeDefinition.set("properties", sol::readonly_property([](const Element& self) {
+				sol::table result = LuaManager::getInstance().getState().create_table();
+
+				addPropertyToTable(result, self.properties.root->nextLeafOrRoot);
+
+				return result;
+			}));
 			usertypeDefinition.set("widget", sol::readonly_property([](Element& self) { return makeWidget(self); }));
 			usertypeDefinition.set("texture", &Element::texture);
 

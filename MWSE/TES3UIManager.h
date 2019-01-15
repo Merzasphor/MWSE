@@ -6,6 +6,7 @@
 namespace TES3 {
 	namespace UI {
 		__declspec(dllexport) UI_ID registerID(const char* name);
+		__declspec(dllexport) const char* lookupID(UI_ID id);
 		__declspec(dllexport) Property registerProperty(const char* name);
 		__declspec(dllexport) Element* createMenu(UI_ID id);
 		__declspec(dllexport) Element* createHelpLayerMenu(UI_ID id);
