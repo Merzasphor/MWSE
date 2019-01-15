@@ -68,7 +68,7 @@ namespace TES3 {
 			itemData->condition = object->getDurability();
 			break;
 		case TES3::ObjectType::Weapon:
-			if (static_cast<Weapon*>(object)->isMelee()) {
+			if (static_cast<Weapon*>(object)->hasDurability()) {
 				itemData->condition = object->getDurability();
 			}
 			break;

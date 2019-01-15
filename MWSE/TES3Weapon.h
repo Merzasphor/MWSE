@@ -58,6 +58,7 @@ namespace TES3 {
 		bool isMelee();
 		bool isRanged();
 		bool isAmmo();
+		bool hasDurability();
 	};
 	static_assert(sizeof(Weapon) == 0x78, "TES3::Weapon failed size validation");
 }

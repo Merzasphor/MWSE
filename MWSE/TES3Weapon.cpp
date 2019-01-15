@@ -27,21 +27,18 @@ namespace TES3{
 	}
 
 	bool Weapon::isMelee() {
-		return weaponType < WeaponType::Thrown;
+		return weaponType <= WeaponType::Axe2H;
 	}
 
 	bool Weapon::isRanged() {
-		return weaponType >= WeaponType::Thrown;
+		return weaponType >= WeaponType::Bow && weaponType <= WeaponType::Thrown;
 	}
 
 	bool Weapon::isAmmo() {
-		switch (weaponType)
-		{
-		case WeaponType::Arrow:
-		case WeaponType::Bolt:
-			return true;
-		}
+		return weaponType == WeaponType::Arrow || weaponType == WeaponType::Bolt;
+	}
 
-		return false;
+	bool Weapon::hasDurability() {
+		return weaponType <= TES3::WeaponType::Crossbow;
 	}
 }

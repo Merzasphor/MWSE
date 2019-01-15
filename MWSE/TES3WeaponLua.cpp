@@ -45,12 +45,13 @@ namespace mwse {
 			usertypeDefinition.set("script", sol::readonly_property(&TES3::Weapon::getScript));
 
 			// Functions exposed as properties.
-			usertypeDefinition.set("typeName", sol::readonly_property(&TES3::Weapon::getTypeName));
+			usertypeDefinition.set("hasDurability", sol::readonly_property(&TES3::Weapon::hasDurability));
 			usertypeDefinition.set("isOneHanded", sol::readonly_property(&TES3::Weapon::isOneHanded));
 			usertypeDefinition.set("isTwoHanded", sol::readonly_property(&TES3::Weapon::isTwoHanded));
 			usertypeDefinition.set("isMelee", sol::readonly_property(&TES3::Weapon::isMelee));
 			usertypeDefinition.set("isRanged", sol::readonly_property(&TES3::Weapon::isRanged));
 			usertypeDefinition.set("isAmmo", sol::readonly_property(&TES3::Weapon::isAmmo));
+			usertypeDefinition.set("typeName", sol::readonly_property(&TES3::Weapon::getTypeName));
 
 			// TODO: Deprecated. Remove before 2.1-stable.
 			usertypeDefinition.set("health", sol::readonly_property(&TES3::Weapon::getDurability));
