@@ -217,8 +217,23 @@ namespace mwse {
 				usertypeDefinition.set("iterator", sol::readonly_property(&TES3::Inventory::iterator));
 
 				// Basic function binding.
+				usertypeDefinition.set("addItem", [](TES3::Inventory& self, sol::table params) {
+					TES3::MobileActor * mact = getOptionalParamMobileActor(params, "mobile");
+					TES3::Item * item = getOptionalParamObject<TES3::Item>(params, "item");
+					int count = getOptionalParam<int>(params, "count", 1);
+					TES3::ItemData * itemData = getOptionalParam<TES3::ItemData*>(params, "itemData", nullptr);
+					self.addItem(mact, item, count, false, itemData ? &itemData : nullptr);
+				});
 				usertypeDefinition.set("contains", &TES3::Inventory::containsItem);
 				usertypeDefinition.set("dropItem", &TES3::Inventory::dropItem);
+				usertypeDefinition.set("removeItem", [](TES3::Inventory& self, sol::table params) {
+					TES3::MobileActor * mact = getOptionalParamMobileActor(params, "mobile");
+					TES3::Item * item = getOptionalParamObject<TES3::Item>(params, "item");
+					int count = getOptionalParam<int>(params, "count", 1);
+					TES3::ItemData * itemData = getOptionalParam<TES3::ItemData*>(params, "itemData", nullptr);
+					bool deleteItemData = getOptionalParam<bool>(params, "deleteItemData", false);
+					self.removeItemWithData(mact, item, itemData, count, deleteItemData);
+				});
 				usertypeDefinition.set("resolveLeveledItems", [](TES3::Inventory& self, sol::optional<TES3::MobileActor*> actor) { self.resolveLeveledLists(actor.value_or(nullptr)); });
 
 				// Finish up our usertype.
