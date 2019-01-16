@@ -38,8 +38,8 @@ namespace mwse {
 			usertypeDefinition.set("thrustMax", &TES3::Weapon::thrustMax);
 			usertypeDefinition.set("thrustMin", &TES3::Weapon::thrustMin);
 			usertypeDefinition.set("type", sol::readonly_property(&TES3::Weapon::getType));
-			usertypeDefinition.set("value", sol::readonly_property(&TES3::Weapon::getValue));
-			usertypeDefinition.set("weight", sol::readonly_property(&TES3::Weapon::getWeight));
+			usertypeDefinition.set("value", &TES3::Weapon::value);
+			usertypeDefinition.set("weight", &TES3::Weapon::weight);
 
 			// Access to other objects that need to be packaged.
 			usertypeDefinition.set("script", sol::readonly_property(&TES3::Weapon::getScript));
