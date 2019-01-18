@@ -419,7 +419,12 @@ namespace mwse {
 				const char* fileName = getOptionalParam<const char*>(params, "file", "quiksave");
 				const char* saveName = getOptionalParam<const char*>(params, "name", "Quicksave");
 
-				TES3::DataHandler::get()->nonDynamicData->saveGame(fileName, saveName);
+				// Prevent saves from happening if the player is dead.
+				if (TES3::WorldController::get()->getMobilePlayer()->health.current <= 0) {
+					return false;
+				}
+
+				return TES3::DataHandler::get()->nonDynamicData->saveGame(fileName, saveName);
 			};
 
 			// Bind function: tes3.loadGame and tes3.loadGameMainMenu

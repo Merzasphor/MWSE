@@ -9,4 +9,6 @@ return {
 			{ name = "name", type = "string", default = "Quicksave", description = "The display name of the save." },
 		},
 	}},
+	returns = "saved",
+	valuetype = "boolean",
 }
