@@ -226,6 +226,7 @@ namespace mwse {
 				});
 				usertypeDefinition.set("contains", &TES3::Inventory::containsItem);
 				usertypeDefinition.set("dropItem", &TES3::Inventory::dropItem);
+				usertypeDefinition.set("calculateWeight", &TES3::Inventory::calculateContainedWeight);
 				usertypeDefinition.set("removeItem", [](TES3::Inventory& self, sol::table params) {
 					TES3::MobileActor * mact = getOptionalParamMobileActor(params, "mobile");
 					TES3::Item * item = getOptionalParamObject<TES3::Item>(params, "item");
