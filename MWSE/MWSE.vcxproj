@@ -115,6 +115,8 @@
     <ClInclude Include="NITimeController.h" />
     <ClInclude Include="NITimeControllerLua.h" />
     <ClInclude Include="NITriShapeLua.h" />
+    <ClInclude Include="TES3AIData.h" />
+    <ClInclude Include="TES3AILua.h" />
     <ClInclude Include="TES3AnimationData.h" />
     <ClInclude Include="TES3AnimationGroup.h" />
     <ClInclude Include="TES3BodyPart.h" />
@@ -475,6 +477,8 @@
     <ClCompile Include="RngUtil.cpp" />
     <ClCompile Include="ScriptUtil.cpp" />
     <ClCompile Include="ScriptUtilLua.cpp" />
+    <ClCompile Include="TES3AIData.cpp" />
+    <ClCompile Include="TES3AILua.cpp" />
     <ClCompile Include="TES3Alchemy.cpp" />
     <ClCompile Include="TES3AudioController.cpp" />
     <ClCompile Include="TES3BodyPart.cpp" />

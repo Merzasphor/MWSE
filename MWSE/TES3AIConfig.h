@@ -13,4 +13,5 @@ namespace TES3 {
 		unsigned int merchantFlags; // 0x8
 		Iterator<TravelDestination> * travelDestinations; // 0xC
 	};
+	static_assert(sizeof(AIConfig) == 0x10, "TES3::AIConfig failed size validation");
 }

@@ -114,7 +114,7 @@ namespace TES3 {
 		char unknown_0xC2; // Undefined.
 		char unknown_0xC3; // Undefined.
 		float unknown_0xC4;
-		void * aiPackageData; // 0xC8
+		AIData * aiData; // 0xC8
 		ActionData actionData; // 0xCC
 		ActionData actionBeforeCombat; // 0x13C
 		int unknown_0x1AC;

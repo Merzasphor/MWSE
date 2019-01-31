@@ -3,6 +3,7 @@
 #include "TES3MobileObjectLua.h"
 
 #include "TES3ActorAnimationData.h"
+#include "TES3AIData.h"
 #include "TES3Cell.h"
 
 namespace mwse {
@@ -17,6 +18,7 @@ namespace mwse {
 			usertypeDefinition.set("activeMagicEffectCount", sol::readonly_property(&TES3::MobileActor::activeMagicEffectCount));
 			usertypeDefinition.set("activeMagicEffects", sol::readonly_property(&TES3::MobileActor::activeMagicEffects));
 			usertypeDefinition.set("actorType", sol::readonly_property(&TES3::MobileActor::actorType));
+			usertypeDefinition.set("aiData", sol::readonly_property(&TES3::MobileActor::aiData));
 			usertypeDefinition.set("alarm", &TES3::MobileActor::alarm);
 			usertypeDefinition.set("barterGold", &TES3::MobileActor::barterGold);
 			usertypeDefinition.set("collidingReference", sol::readonly_property(&TES3::MobileActor::collidingReference));

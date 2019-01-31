@@ -55,6 +55,7 @@
 #include "TES3UtilLua.h"
 #include "TES3ActionDataLua.h"
 #include "TES3ActivatorLua.h"
+#include "TES3AILua.h"
 #include "TES3AlchemyLua.h"
 #include "TES3ApparatusLua.h"
 #include "TES3ArmorLua.h"
@@ -362,6 +363,7 @@ namespace mwse {
 			// Bind TES3 data types.
 			bindTES3ActionData();
 			bindTES3Activator();
+			bindTES3AI();
 			bindTES3Alchemy();
 			bindTES3Apparatus();
 			bindTES3Armor();

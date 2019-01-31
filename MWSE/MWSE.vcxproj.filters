@@ -1209,6 +1209,12 @@
     <ClInclude Include="TES3BodyPartLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
+    <ClInclude Include="TES3AIData.h">
+      <Filter>Header Files\DataAdapters\TES3\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3AILua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2638,6 +2644,12 @@
     </ClCompile>
     <ClCompile Include="TES3Item.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3AIData.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3AILua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
