@@ -61,6 +61,11 @@ namespace TES3 {
 		return result;
 	}
 
+	const auto TES3_Actor_unequipAllItems = reinterpret_cast<void(__thiscall*)(Actor*, MobileActor*)>(0x496680);
+	void Actor::unequipAllItems(MobileActor * mobileActor) {
+		TES3_Actor_unequipAllItems(this, mobileActor);
+	}
+
 	Reference* Actor::dropItem(Object* item, ItemData* itemData = 0, int count = 1, bool matchAny = true) {
 		return TES3_Actor_dropItem(this, item, itemData, count, matchAny);
 	}

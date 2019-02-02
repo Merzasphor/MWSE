@@ -1979,6 +1979,9 @@ namespace mwse {
 				auto toMobile = toReference->getAttachedMobileActor();
 				auto fromMobile = fromReference->getAttachedMobileActor();
 
+				// Are we looking at a non-container?
+				auto fromIsContainer = (fromActor->objectType == TES3::ObjectType::Container);
+
 				// Manage anything we need to regarding containers.
 				float maxCapacity = -1.0f;
 				float currentWeight = 0.0f;
@@ -2002,6 +2005,11 @@ namespace mwse {
 					if ((maxCapacity == -1.0f || currentWeight + itemWeight <= maxCapacity) && fromActor->inventory.containsItem(item, itemData)) {
 						toActor->inventory.addItem(toMobile, item, 1, false, &itemData);
 						fromActor->inventory.removeItemWithData(fromMobile, item, itemData, 1, false);
+
+						if (!fromIsContainer) {
+							fromActor->unequipItem(item, true, fromMobile, false, itemData);
+						}
+
 						fulfilledCount = 1;
 						currentWeight += itemWeight;
 					}
@@ -2035,8 +2043,13 @@ namespace mwse {
 						// Then transfer over items with data.
 						if (fromStack->variables) {
 							while (itemsLeftToTransfer > 0) {
+								auto itemData = fromStack->variables->storage[0];
 								toActor->inventory.addItem(toMobile, item, 1, false, &fromStack->variables->storage[0]);
-								fromActor->inventory.removeItemWithData(fromMobile, item, fromStack->variables->storage[0], 1, false);
+								fromActor->inventory.removeItemWithData(fromMobile, item, itemData, 1, false);
+
+								if (!fromIsContainer) {
+									fromActor->unequipItem(item, true, fromMobile, false, itemData);
+								}
 
 								fulfilledCount++;
 								itemsLeftToTransfer--;
@@ -2063,7 +2076,7 @@ namespace mwse {
 				}
 
 				// Update equipment for creatures/NPCs.
-				if (fromActor->objectType == TES3::ObjectType::NPC || fromActor->objectType == TES3::ObjectType::Creature) {
+				if (!fromIsContainer) {
 					fromReference->updateEquipment();
 				}
 				if (toActor->objectType == TES3::ObjectType::NPC || toActor->objectType == TES3::ObjectType::Creature) {
