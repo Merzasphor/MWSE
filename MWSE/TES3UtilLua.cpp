@@ -21,6 +21,8 @@
 #include "NIStream.h"
 
 #include "TES3Actor.h"
+#include "TES3AIData.h"
+#include "TES3AIPackage.h"
 #include "TES3Armor.h"
 #include "TES3AudioController.h"
 #include "TES3Cell.h"
@@ -2118,6 +2120,50 @@ namespace mwse {
 				}
 
 				return fulfilledCount;
+			};
+
+			state["tes3"]["getCurrentAIPackageId"] = [](sol::table params) {
+				TES3::MobileActor * mobileActor = getOptionalParamMobileActor(params, "reference");
+				if (mobileActor == nullptr) {
+					throw std::invalid_argument("Invalid reference parameter provided.");
+				}
+
+				if (mobileActor->aiData != nullptr) {
+					auto currentPackage = mobileActor->aiData->getActivePackage();
+					if (currentPackage != nullptr) {
+						return currentPackage->packageType;
+					}
+				}
+
+				return -1;
+			};
+
+			state["tes3"]["setAITravel"] = [](sol::table params) {
+				TES3::MobileActor * mobileActor = getOptionalParamMobileActor(params, "reference");
+				if (mobileActor == nullptr) {
+					throw std::invalid_argument("Invalid reference parameter provided.");
+				}
+
+				TES3::MobileActor * target = getOptionalParamMobileActor(params, "target");
+				if (target == nullptr) {
+					throw std::invalid_argument("Invalid target parameter provided.");
+				}
+
+				auto destination = getOptionalParamVector3(params, "destination");
+				if (!destination) {
+					throw std::invalid_argument("Invalid destination parameter provided.");
+				}
+
+				auto config = tes3::_new<TES3::AIPackageConfigExtended>();
+				config->unknown_0x0 = 4;
+				config->position = destination.value();
+				config->unknown_0x10 = getOptionalParam<bool>(params, "unknown1", false);
+				config->unknown_0x18 = 0;
+				config->unknown_0x1C = getOptionalParam<bool>(params, "unknown2", false);
+				config->actor = static_cast<TES3::Actor*>(target->reference->getBaseObject());
+
+				auto actor = static_cast<TES3::Actor*>(target->reference->baseObject);
+				actor->setAIPackage(mobileActor->reference, config);
 			};
 		}
 	}

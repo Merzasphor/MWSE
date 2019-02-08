@@ -39,6 +39,10 @@ namespace TES3 {
 		vTable.actor->onCloseInventory(actor, reference, unknown);
 	}
 
+	void Actor::setAIPackage(Reference* reference, AIPackageConfig* packageConfig) {
+		vTable.actor->setAIPackage(this, reference, packageConfig);
+	}
+
 	Object* Actor::equipItem(Object* item, ItemData* itemData, EquipmentStack** out_equipmentStack, MobileActor* mobileActor) {
 		Object* result = TES3_Actor_equipItem(this, item, itemData, out_equipmentStack, mobileActor);
 

@@ -5,8 +5,17 @@
 #include "TES3Vectors.h"
 
 namespace TES3 {
+	struct AIPackageVirtualTable {
+		AIPackage* (__thiscall * deleting)(AIPackage*, bool); // 0x0
+		void (__thiscall * simulate)(AIPackage*); // 0x4
+		bool (__thiscall * movement)(AIPackage*); // 0x8
+		bool (__thiscall * initialize)(AIPackage*); // 0xC
+		void (__thiscall * cleanup)(AIPackage*); // 0x10
+	};
+	static_assert(sizeof(AIPackageVirtualTable) == 0x14, "TES3::AIPackage_vTable failed size validation");
+
 	struct AIPackage {
-		void * vTable; // 0x0
+		AIPackageVirtualTable * vTable; // 0x0
 		char unknown_0x4;
 		bool moving; // 0x5
 		char unknown_0x6[2];
@@ -23,8 +32,18 @@ namespace TES3 {
 		bool started; // 0x31
 		bool reset; // 0x32
 		bool finalized; // 0x33
-		void * owningActor; // 0x34
+		MobileActor * owningActor; // 0x34
 		Cell * destinationCell; // 0x38
+
+		//
+		// vTable accessor functions.
+		//
+
+		void simulate();
+		bool movement();
+		bool initialize();
+		void cleanup();
+
 	};
 	static_assert(sizeof(AIPackage) == 0x3C, "TES3::AIPackage failed size validation");
 }

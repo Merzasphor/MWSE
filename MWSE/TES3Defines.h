@@ -11,6 +11,7 @@ namespace TES3 {
 	struct AIData;
 	struct AIPackage;
 	struct AIPackageActivate;
+	struct AIPackageConfig;
 	struct AIPackageEscort;
 	struct AIPackageFollow;
 	struct AIPackageTravel;

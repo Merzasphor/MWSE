@@ -479,6 +479,7 @@
     <ClCompile Include="ScriptUtilLua.cpp" />
     <ClCompile Include="TES3AIData.cpp" />
     <ClCompile Include="TES3AILua.cpp" />
+    <ClCompile Include="TES3AIPackage.cpp" />
     <ClCompile Include="TES3Alchemy.cpp" />
     <ClCompile Include="TES3AudioController.cpp" />
     <ClCompile Include="TES3BodyPart.cpp" />
