@@ -2,6 +2,7 @@
 
 #include "LuaManager.h"
 #include "TES3ObjectLua.h"
+#include "TES3CollectionsLua.h"
 
 #include "TES3Faction.h"
 
@@ -77,6 +78,9 @@ namespace mwse {
 				// Finish up our usertype.
 				state.set_usertype("tes3faction", usertypeDefinition);
 			}
+
+			// Bind iterator access.
+			bindGenericObjectIterator<TES3::Faction>("tes3factionIterator", "tes3factionIteratorNode");
 		}
 	}
 }

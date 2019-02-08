@@ -146,6 +146,11 @@ namespace TES3 {
 		return reinterpret_cast<Sound*(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findSound)(this, id);
 	}
 
+	const auto TES3_NonDynamicData_findFaction = reinterpret_cast<Faction *(__thiscall*)(NonDynamicData*, const char*)>(0x4BA750);
+	Faction* NonDynamicData::findFaction(const char* id) {
+		return TES3_NonDynamicData_findFaction(this, id);
+	}
+
 	bool NonDynamicData::addNewObject(BaseObject* object) {
 		return reinterpret_cast<signed char(__thiscall *)(NonDynamicData*, BaseObject*)>(TES3_NonDynamicData_addNewObject)(this, object);
 	}

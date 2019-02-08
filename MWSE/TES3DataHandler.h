@@ -90,6 +90,7 @@ namespace TES3 {
 		__declspec(dllexport) GlobalVariable* findGlobalVariable(const char*);
 		__declspec(dllexport) Dialogue* findDialogue(const char*);
 		__declspec(dllexport) Sound* findSound(const char*);
+		__declspec(dllexport) Faction* findFaction(const char*);
 		__declspec(dllexport) bool addNewObject(BaseObject*);
 		__declspec(dllexport) void deleteObject(BaseObject*);
 

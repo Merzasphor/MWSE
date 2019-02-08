@@ -33,6 +33,7 @@
 #include "TES3Dialogue.h"
 #include "TES3DialogueInfo.h"
 #include "TES3Door.h"
+#include "TES3Faction.h"
 #include "TES3Fader.h"
 #include "TES3Game.h"
 #include "TES3GameSetting.h"
@@ -525,6 +526,14 @@ namespace mwse {
 					}
 				}
 
+				return sol::nil;
+			};
+
+			state["tes3"]["getFaction"] = [](const char* id) -> sol::object {
+				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
+				if (dataHandler) {
+					return makeLuaObject(dataHandler->nonDynamicData->findFaction(id));
+				}
 				return sol::nil;
 			};
 
