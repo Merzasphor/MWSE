@@ -23,6 +23,9 @@
 #include "TES3Actor.h"
 #include "TES3AIData.h"
 #include "TES3AIPackage.h"
+#include "TES3AIPackageActivate.h"
+#include "TES3AIPackageTravel.h"
+#include "TES3AIPackageWander.h"
 #include "TES3Armor.h"
 #include "TES3AudioController.h"
 #include "TES3Cell.h"
@@ -2147,6 +2150,26 @@ namespace mwse {
 				return -1;
 			};
 
+			state["tes3"]["setAIActivate"] = [](sol::table params) {
+				TES3::MobileActor * mobileActor = getOptionalParamMobileActor(params, "reference");
+				if (mobileActor == nullptr) {
+					throw std::invalid_argument("Invalid reference parameter provided.");
+				}
+
+				TES3::Reference * target = getOptionalParamReference(params, "target");
+				if (target == nullptr) {
+					throw std::invalid_argument("Invalid target parameter provided.");
+				}
+
+				auto config = tes3::_new<TES3::AIPackageActivate::Config>();
+				config->type = TES3::AIPackageConfigType::Activate;
+				config->target = target;
+				config->reset = getOptionalParam<bool>(params, "reset", false);
+
+				auto actor = static_cast<TES3::Actor*>(mobileActor->reference->baseObject);
+				actor->setAIPackage(config, mobileActor->reference);
+			};
+
 			state["tes3"]["setAITravel"] = [](sol::table params) {
 				TES3::MobileActor * mobileActor = getOptionalParamMobileActor(params, "reference");
 				if (mobileActor == nullptr) {
@@ -2158,10 +2181,37 @@ namespace mwse {
 					throw std::invalid_argument("Invalid destination parameter provided.");
 				}
 
-				auto config = tes3::_new<TES3::AIPackageConfigExtended>();
+				auto config = tes3::_new<TES3::AIPackageTravel::Config>();
 				config->type = TES3::AIPackageConfigType::Travel;
 				config->position = destination.value();
 				config->reset = getOptionalParam<bool>(params, "reset", false);
+
+				auto actor = static_cast<TES3::Actor*>(mobileActor->reference->baseObject);
+				actor->setAIPackage(config, mobileActor->reference);
+			};
+
+			state["tes3"]["setAIWander"] = [](sol::table params) {
+				TES3::MobileActor * mobileActor = getOptionalParamMobileActor(params, "reference");
+				if (mobileActor == nullptr) {
+					throw std::invalid_argument("Invalid reference parameter provided.");
+				}
+
+				sol::optional<sol::table> maybeIdles = params["idles"];
+				if (!maybeIdles || maybeIdles.value().get_type() != sol::type::table) {
+					throw std::invalid_argument("Invalid idles table provided.");
+				}
+
+				auto config = tes3::_new<TES3::AIPackageWander::Config>();
+				config->type = TES3::AIPackageConfigType::Wander;
+				config->range = getOptionalParam<double>(params, "range", 0.0);
+				config->duration = getOptionalParam<double>(params, "duration", 0.0);
+				config->time = getOptionalParam<double>(params, "time", 0.0);
+				config->reset = getOptionalParam<bool>(params, "reset", false);
+
+				sol::table idles = maybeIdles.value();
+				for (size_t i = 0; i < 8; i++) {
+					config->idles[i] = idles.get_or(i, 0);
+				}
 
 				auto actor = static_cast<TES3::Actor*>(mobileActor->reference->baseObject);
 				actor->setAIPackage(config, mobileActor->reference);
