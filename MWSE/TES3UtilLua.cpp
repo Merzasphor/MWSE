@@ -24,6 +24,7 @@
 #include "TES3AIData.h"
 #include "TES3AIPackage.h"
 #include "TES3AIPackageActivate.h"
+#include "TES3AIPackageFollow.h"
 #include "TES3AIPackageTravel.h"
 #include "TES3AIPackageWander.h"
 #include "TES3Armor.h"
@@ -2164,7 +2165,35 @@ namespace mwse {
 				auto config = tes3::_new<TES3::AIPackageActivate::Config>();
 				config->type = TES3::AIPackageConfigType::Activate;
 				config->target = target;
-				config->reset = getOptionalParam<bool>(params, "reset", false);
+				config->reset = getOptionalParam<bool>(params, "reset", true);
+
+				auto actor = static_cast<TES3::Actor*>(mobileActor->reference->baseObject);
+				actor->setAIPackage(config, mobileActor->reference);
+			};
+
+			state["tes3"]["setAIFollow"] = [](sol::table params) {
+				TES3::MobileActor * mobileActor = getOptionalParamMobileActor(params, "reference");
+				if (mobileActor == nullptr) {
+					throw std::invalid_argument("Invalid reference parameter provided.");
+				}
+
+				TES3::Reference * target = getOptionalParamReference(params, "target");
+				if (target == nullptr || !target->baseObject->isActor()) {
+					throw std::invalid_argument("Invalid target parameter provided.");
+				}
+
+				auto destination = getOptionalParamVector3(params, "destination");
+				if (!destination) {
+					throw std::invalid_argument("Invalid destination parameter provided.");
+				}
+
+				auto config = tes3::_new<TES3::AIPackageFollow::Config>();
+				config->type = TES3::AIPackageConfigType::Follow;
+				config->destination = destination.value();
+				config->duration = getOptionalParam<double>(params, "duration", 0.0);
+				config->actor = static_cast<TES3::Actor*>(target->getBaseObject());
+				config->cell = getOptionalParamCell(params, "cell");
+				config->reset = getOptionalParam<bool>(params, "reset", true);
 
 				auto actor = static_cast<TES3::Actor*>(mobileActor->reference->baseObject);
 				actor->setAIPackage(config, mobileActor->reference);
@@ -2184,7 +2213,7 @@ namespace mwse {
 				auto config = tes3::_new<TES3::AIPackageTravel::Config>();
 				config->type = TES3::AIPackageConfigType::Travel;
 				config->position = destination.value();
-				config->reset = getOptionalParam<bool>(params, "reset", false);
+				config->reset = getOptionalParam<bool>(params, "reset", true);
 
 				auto actor = static_cast<TES3::Actor*>(mobileActor->reference->baseObject);
 				actor->setAIPackage(config, mobileActor->reference);
@@ -2206,7 +2235,7 @@ namespace mwse {
 				config->range = getOptionalParam<double>(params, "range", 0.0);
 				config->duration = getOptionalParam<double>(params, "duration", 0.0);
 				config->time = getOptionalParam<double>(params, "time", 0.0);
-				config->reset = getOptionalParam<bool>(params, "reset", false);
+				config->reset = getOptionalParam<bool>(params, "reset", true);
 
 				sol::table idles = maybeIdles.value();
 				for (size_t i = 0; i < 8; i++) {
