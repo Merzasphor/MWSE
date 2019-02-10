@@ -421,6 +421,9 @@ namespace mwse {
 			case TES3::ObjectType::Lockpick:
 				result = sol::make_object(state, reinterpret_cast<TES3::Lockpick*>(object));
 				break;
+			case TES3::ObjectType::MagicEffect:
+				result = sol::make_object(state, reinterpret_cast<TES3::MagicEffect*>(object));
+				break;
 			case TES3::ObjectType::Misc:
 				result = sol::make_object(state, reinterpret_cast<TES3::Misc*>(object));
 				break;
