@@ -200,6 +200,64 @@ namespace mwse {
 			state.set_usertype(name, usertypeDefinition);
 		}
 
+		template <typename T>
+		sol::optional<std::tuple<int, sol::object>> bindGenericObjectTArray_pairsIter(sol::user<TArray_iteratorState<T>&> user_state, sol::this_state l) {
+			TArray_iteratorState<T>& state = user_state;
+			if (state.index >= state.tarray->filledCount) {
+				return sol::optional<std::tuple<int, sol::object>>();
+			}
+
+			auto values = std::make_tuple(state.index, sol::object(l, sol::in_place, makeLuaObject(state.tarray->storage[state.index])));
+			state.index++;
+			return values;
+		}
+
+		template <typename T>
+		sol::optional<std::tuple<int, sol::object>> bindGenericObjectTArray_ipairsIter(TES3::TArray<T> * tarray, int index, sol::this_state l) {
+			if (++index > tarray->filledCount) {
+				return sol::optional<std::tuple<int, sol::object>>();
+			}
+
+			return std::make_tuple(index, sol::object(l, sol::in_place, makeLuaObject(tarray->storage[index - 1])));
+		}
+
+		template <typename T>
+		void bindGenericObjectTArray(const char* name) {
+			sol::state& state = LuaManager::getInstance().getState();
+
+			// Start our usertype. We must finish this with state.set_usertype.
+			auto usertypeDefinition = state.create_simple_usertype<TES3::TArray<T>>();
+			usertypeDefinition.set("new", sol::no_constructor);
+
+			// Metafunction access.
+			usertypeDefinition.set(sol::meta_function::pairs, [](TES3::TArray<T> * self) {
+				TArray_iteratorState<T> it_state(self);
+				return std::make_tuple(&bindGenericObjectTArray_pairsIter<T>, sol::user<TArray_iteratorState<T>>(std::move(it_state)), sol::lua_nil);
+			});
+			usertypeDefinition.set(sol::meta_function::ipairs, [](TES3::TArray<T> * self) {
+				return std::make_tuple(&bindGenericObjectTArray_ipairsIter<T>, self, 0);
+			});
+			usertypeDefinition.set(sol::meta_function::index, [](TES3::TArray<T>& self, int index) {
+				index--;
+				if (index < 0 || index > self.endIndex) {
+					throw std::out_of_range("Access index out of bounds.");
+				}
+				return makeLuaObject(self.storage[index]);
+			});
+			usertypeDefinition.set(sol::meta_function::length, [](TES3::TArray<T>& self) { return self.endIndex; });
+
+			// Function binding.
+			usertypeDefinition.set("getIndexOfValue", [](TES3::TArray<T> * self, T * value) {
+				return self->getIndexOfValue(value);
+			});
+			usertypeDefinition.set("contains", [](TES3::TArray<T> * self, T * value) {
+				return self->contains(value);
+			});
+
+			// Finish up our usertype.
+			state.set_usertype(name, usertypeDefinition);
+		}
+
 		//
 		// TES3::StlList<T>
 		//

@@ -12,6 +12,8 @@
 
 #include "TES3Collections.h"
 
+#include "TES3CollectionsLua.h"
+
 namespace mwse {
 	namespace lua {
 		void bindNINode() {
@@ -19,24 +21,7 @@ namespace mwse {
 			sol::state& state = LuaManager::getInstance().getState();
 
 			// Binding for TES3::TArray<NI::AVObject>.
-			{
-				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TES3::TArray<NI::AVObject>>();
-				usertypeDefinition.set("new", sol::no_constructor);
-
-				// Basic property binding.
-				usertypeDefinition.set(sol::meta_function::index, [](TES3::TArray<NI::AVObject>& self, int index) -> sol::object {
-					index--;
-					if (index < 0 || index >= self.filledCount) {
-						throw std::out_of_range("Array index out of bounds.");
-					}
-					return makeLuaObject(self.storage[index]);
-				});
-				usertypeDefinition.set(sol::meta_function::length, [](TES3::TArray<NI::AVObject>& self) { return self.filledCount; });
-
-				// Finish up our usertype.
-				state.set_usertype("niAVObjectTArray", usertypeDefinition);
-			}
+			bindGenericObjectTArray<NI::AVObject>("niAVObjectTArray");
 
 			// Binding for NI::Node.
 			{
