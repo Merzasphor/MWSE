@@ -541,6 +541,14 @@ namespace mwse {
 				return sol::nil;
 			};
 
+			state["tes3"]["getMagicEffect"] = [](int id) -> sol::object {
+				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
+				if (dataHandler && id >= TES3::EffectID::FirstEffect && id <= TES3::EffectID::LastEffect) {
+					return makeLuaObject(&dataHandler->nonDynamicData->magicEffects[id]);
+				}
+				return sol::nil;
+			};
+
 			// Bind function: tes3.newGame
 			state["tes3"]["newGame"] = []() {
 				tes3::startNewGame();
