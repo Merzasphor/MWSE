@@ -2153,26 +2153,18 @@ namespace mwse {
 					throw std::invalid_argument("Invalid reference parameter provided.");
 				}
 
-				TES3::MobileActor * target = getOptionalParamMobileActor(params, "target");
-				if (target == nullptr) {
-					throw std::invalid_argument("Invalid target parameter provided.");
-				}
-
 				auto destination = getOptionalParamVector3(params, "destination");
 				if (!destination) {
 					throw std::invalid_argument("Invalid destination parameter provided.");
 				}
 
 				auto config = tes3::_new<TES3::AIPackageConfigExtended>();
-				config->unknown_0x0 = 4;
+				config->type = TES3::AIPackageConfigType::Travel;
 				config->position = destination.value();
-				config->unknown_0x10 = getOptionalParam<bool>(params, "unknown1", false);
-				config->unknown_0x18 = 0;
-				config->unknown_0x1C = getOptionalParam<bool>(params, "unknown2", false);
-				config->actor = static_cast<TES3::Actor*>(target->reference->getBaseObject());
+				config->reset = getOptionalParam<bool>(params, "reset", false);
 
-				auto actor = static_cast<TES3::Actor*>(target->reference->baseObject);
-				actor->setAIPackage(mobileActor->reference, config);
+				auto actor = static_cast<TES3::Actor*>(mobileActor->reference->baseObject);
+				actor->setAIPackage(config, mobileActor->reference);
 			};
 		}
 	}

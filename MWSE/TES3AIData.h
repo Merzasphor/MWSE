@@ -21,10 +21,16 @@ namespace TES3 {
 	};
 	static_assert(sizeof(AIData) == 0x98, "TES3::AIData failed size validation");
 
+	namespace AIPackageConfigType {
+		enum AIPackageConfigType {
+			Travel = 0x1,
+		};
+	}
+
 	struct AIPackageConfig {
-		int unknown_0x0;
+		int type; // 0x0
 		Vector3 position; // 0x4
-		bool unknown_0x10;
+		bool reset; // 0x10
 		bool unknown_0x11;
 		bool unknown_0x12;
 		bool unknown_0x13;

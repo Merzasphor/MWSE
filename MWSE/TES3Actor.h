@@ -32,7 +32,7 @@ namespace TES3 {
 		void * unknown_0x170;
 		void * unknown_0x174;
 		void * unknown_0x178;
-		void (__thiscall * setAIPackage)(Actor*, Reference*, AIPackageConfig*); // 0x17C
+		void (__thiscall * setAIPackage)(Actor*, AIPackageConfig*, Reference*); // 0x17C
 	};
 	static_assert(sizeof(ActorVirtualTable) == 0x180, "TES3::ActorVirtualTable failed size validation");
 
@@ -53,7 +53,7 @@ namespace TES3 {
 		bool getIsAttacked();
 		void clone(Reference*);
 		void onCloseInventory(Actor* actor, Reference* reference, int unknown = 0);
-		void setAIPackage(Reference* reference, AIPackageConfig* packageConfig);
+		void setAIPackage(AIPackageConfig* packageConfig, Reference* reference);
 
 		//
 		// Other related this-call functions.
