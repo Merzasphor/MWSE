@@ -2183,13 +2183,15 @@ namespace mwse {
 				}
 
 				auto destination = getOptionalParamVector3(params, "destination");
-				if (!destination) {
-					throw std::invalid_argument("Invalid destination parameter provided.");
-				}
 
 				auto config = tes3::_new<TES3::AIPackageFollow::Config>();
 				config->type = TES3::AIPackageConfigType::Follow;
-				config->destination = destination.value();
+				if (destination) {
+					config->destination = destination.value();
+				}
+				else {
+					config->destination = TES3::Vector3(FLT_MAX, FLT_MAX, 0.0f);
+				}
 				config->duration = getOptionalParam<double>(params, "duration", 0.0);
 				config->actor = static_cast<TES3::Actor*>(target->getBaseObject());
 				config->cell = getOptionalParamCell(params, "cell");
