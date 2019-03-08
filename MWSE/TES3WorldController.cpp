@@ -12,6 +12,7 @@
 #define TES3_WorldController_playItemUpDownSound 0x411050
 #define TES3_WorldController_getSimulationTimestamp 0x411000
 
+#define TES3_Data_daysInMonth 0x775E40
 #define TES3_Data_cumulativeDaysForMonth 0x775E58
 
 namespace TES3 {
@@ -107,11 +108,21 @@ namespace TES3 {
 	}
 
 	unsigned short WorldController::getDaysInMonth(int month) {
+		if (month < 0 || month > 11) {
+			return -1;
+		}
+		return reinterpret_cast<unsigned short*>(TES3_Data_daysInMonth)[month];
+	}
+
+	unsigned short WorldController::getCumulativeDaysForMonth(int month) {
+		if (month < 0 || month > 11) {
+			return -1;
+		}
 		return reinterpret_cast<unsigned short*>(TES3_Data_cumulativeDaysForMonth)[month];
 	}
 
 	double WorldController::getHighPrecisionSimulationTimestamp() {
-		return (gvarYear->value * 365.0 + getDaysInMonth((int)gvarMonth->value) + gvarDay->value) * 24.0 + gvarGameHour->value;
+		return (gvarYear->value * 365.0 + getCumulativeDaysForMonth((int)gvarMonth->value) + gvarDay->value) * 24.0 + gvarGameHour->value;
 	}
 
 	const auto TES3_WorldController_applyEnchantEffect = reinterpret_cast<bool(__thiscall*)(WorldController*, NI::Node*, Enchantment*)>(0x410B00);

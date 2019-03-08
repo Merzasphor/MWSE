@@ -259,6 +259,7 @@ namespace TES3 {
 		_declspec(dllexport) float getSimulationTimestamp();
 
 		_declspec(dllexport) unsigned short getDaysInMonth(int);
+		_declspec(dllexport) unsigned short WorldController::getCumulativeDaysForMonth(int month);
 		_declspec(dllexport) double getHighPrecisionSimulationTimestamp();
 
 		_declspec(dllexport) bool applyEnchantEffect(NI::Node* node, Enchantment * enchantment);

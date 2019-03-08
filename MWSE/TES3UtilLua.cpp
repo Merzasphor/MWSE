@@ -742,6 +742,14 @@ namespace mwse {
 				return sol::nil;
 			};
 
+			state["tes3"]["getCumulativeDaysForMonth"] = [](int month) -> sol::object {
+				TES3::WorldController * worldController = TES3::WorldController::get();
+				if (worldController) {
+					return sol::make_object(LuaManager::getInstance().getState(), worldController->getCumulativeDaysForMonth(month));
+				}
+				return sol::nil;
+			};
+
 			state["tes3"]["getSimulationTimestamp"] = []() -> sol::object {
 				TES3::WorldController * worldController = TES3::WorldController::get();
 				if (worldController) {
