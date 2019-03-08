@@ -67,6 +67,9 @@ namespace TES3 {
 		__declspec(dllexport) ItemData* getOrCreateAttachedItemData();
 		__declspec(dllexport) LockAttachmentNode* getAttachedLockNode();
 
+		bool getEmptyInventoryFlag();
+		void setEmptyInventoryFlag(bool);
+
 		//
 		// Lua interface functions.
 		//

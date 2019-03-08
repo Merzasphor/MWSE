@@ -216,6 +216,9 @@ namespace TES3 {
 
 		bool isActor();
 
+		bool getBaseObjectFlag(unsigned int);
+		void setBaseObjectFlag(unsigned int, bool);
+
 	};
 	static_assert(sizeof(BaseObject) == 0x10, "TES3::BaseObject failed size validation");
 

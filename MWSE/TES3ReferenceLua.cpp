@@ -110,6 +110,7 @@ namespace mwse {
 			usertypeDefinition.set("attachments", sol::readonly_property(&TES3::Reference::getAttachments));
 			usertypeDefinition.set("context", sol::readonly_property([](TES3::Reference& self) { return getContext(&self); }));
 			usertypeDefinition.set("data", sol::readonly_property(&TES3::Reference::getLuaTable));
+			usertypeDefinition.set("isEmpty", sol::property(&TES3::Reference::getEmptyInventoryFlag, &TES3::Reference::setEmptyInventoryFlag));
 			usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::Reference::isRespawn));
 			usertypeDefinition.set("orientation", sol::property([](TES3::Reference& self) { return self.getOrientation(); }, &TES3::Reference::setOrientationFromLua));
 			usertypeDefinition.set("position", sol::property([](TES3::Reference& self) { return self.getPosition(); }, &TES3::Reference::setPositionFromLua));

@@ -207,6 +207,14 @@ namespace TES3 {
 		return reinterpret_cast<Matrix33* (__thiscall *)(Reference*, Matrix33*, bool)>(0x4E8450)(this, matrix, unknown);
 	}
 
+	bool Reference::getEmptyInventoryFlag() {
+		return getBaseObjectFlag(TES3::ObjectFlag::EmptyInventory);
+    }
+
+    void Reference::setEmptyInventoryFlag(bool set) {
+		setBaseObjectFlag(TES3::ObjectFlag::EmptyInventory, set);
+    }
+
 	Inventory * Reference::getInventory() {
 		// Only actors have equipment.
 		if (baseObject->objectType != ObjectType::Container &&
