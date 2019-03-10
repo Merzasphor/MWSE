@@ -236,6 +236,7 @@ namespace mwse {
 			usertypeDefinition.set("getSkillStatistic", &TES3::MobileActor::getSkillStatistic);
 			usertypeDefinition.set("getSkillValue", &TES3::MobileActor::getSkillValue);
 			usertypeDefinition.set("startCombat", &TES3::MobileActor::startCombat);
+			usertypeDefinition.set("startDialogue", &TES3::MobileActor::startDialogue);
 			usertypeDefinition.set("stopCombat", &TES3::MobileActor::stopCombat);
 
 			// Provide single function for isAffectedByAlchemy, etc.

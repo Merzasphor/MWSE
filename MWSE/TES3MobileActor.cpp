@@ -240,6 +240,11 @@ namespace TES3 {
 		TES3_MobileActor_playVoiceover(this, voiceover);
 	}
 
+	const auto TES3_MobileActor_startDialogue = reinterpret_cast<void(__thiscall*)(const MobileActor*)>(0x529260);
+	void MobileActor::startDialogue() {
+		TES3_MobileActor_startDialogue(this);
+	}
+
 	const auto TES3_MobileActor_isAffectedByAlchemy = reinterpret_cast<bool(__thiscall*)(const MobileActor*, Alchemy*)>(0x52D1A0);
 	bool MobileActor::isAffectedByAlchemy(Alchemy * alchemy) {
 		return TES3_MobileActor_isAffectedByAlchemy(this, alchemy);

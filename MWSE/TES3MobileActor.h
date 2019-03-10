@@ -239,6 +239,7 @@ namespace TES3 {
 		int determineModifiedPrice(int basePrice, bool buying);
 
 		void playVoiceover(int);
+		void startDialogue();
 
 		bool isAffectedByAlchemy(Alchemy * alchemy);
 		bool isAffectedByEnchantment(Enchantment * enchantment);
