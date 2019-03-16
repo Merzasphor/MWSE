@@ -1957,6 +1957,12 @@ namespace mwse {
 				return false;
 			};
 
+			// 0x615160
+			state["tes3"]["showRepairServiceMenu"] = []() {
+				reinterpret_cast<int(__cdecl *)(TES3::MobileActor*)>(0x615160)(TES3::WorldController::get()->getMobilePlayer());
+				TES3::UI::enterMenuMode(TES3::UI::registerID("MenuServiceRepair"));
+			};
+
 			state["tes3"]["transferItem"] = [](sol::table params) -> int {
 				// Get the reference we are transferring from.
 				TES3::Reference * fromReference = getOptionalParamReference(params, "from");

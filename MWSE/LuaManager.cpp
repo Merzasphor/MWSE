@@ -984,6 +984,22 @@ namespace mwse {
 		}
 
 		//
+		// Patch ui_reenableMenuDialogue function to exit menumode if there is no dialogue menu.
+		//
+		void __cdecl ReenableMenuDialogue()
+		{
+			TES3::UI::Element* dialog = TES3::UI::findMenu(TES3::UI::registerID("MenuDialog"));
+			if (dialog != nullptr)
+			{
+				dialog->setVisible(true);
+			}
+			else
+			{
+				TES3::UI::leaveMenuMode();
+			}
+		}
+
+		//
 		// Exercise skill event.
 		//
 
@@ -3159,6 +3175,24 @@ namespace mwse {
 			genCallEnforced(0x4E1856, 0x4B6BA0, reinterpret_cast<DWORD>(WriteReferenceItemDataCondition));
 			genCallEnforced(0x4DE3C6, 0x4E5750, reinterpret_cast<DWORD>(LoadReferenceGetMACT));
 			genCallEnforced(0x4DE426, 0x4B67C0, reinterpret_cast<DWORD>(LoadNextRecordForReference));
+
+			// Patch ui_reenableMenuDialogue
+			genCallEnforced(0x5A3E76, 0x5C0B60, reinterpret_cast<DWORD>(ReenableMenuDialogue));
+			genCallEnforced(0x5A6DF6, 0x5C0B60, reinterpret_cast<DWORD>(ReenableMenuDialogue));
+			genCallEnforced(0x5A6F48, 0x5C0B60, reinterpret_cast<DWORD>(ReenableMenuDialogue));
+			genCallEnforced(0x5A72C7, 0x5C0B60, reinterpret_cast<DWORD>(ReenableMenuDialogue));
+			genCallEnforced(0x5B774F, 0x5C0B60, reinterpret_cast<DWORD>(ReenableMenuDialogue));
+			genCallEnforced(0x5C34D7, 0x5C0B60, reinterpret_cast<DWORD>(ReenableMenuDialogue));
+			genCallEnforced(0x5C4D22, 0x5C0B60, reinterpret_cast<DWORD>(ReenableMenuDialogue));
+			genCallEnforced(0x61555C, 0x5C0B60, reinterpret_cast<DWORD>(ReenableMenuDialogue));
+			genCallEnforced(0x615841, 0x5C0B60, reinterpret_cast<DWORD>(ReenableMenuDialogue));
+			genCallEnforced(0x61666C, 0x5C0B60, reinterpret_cast<DWORD>(ReenableMenuDialogue));
+			genCallEnforced(0x6167DF, 0x5C0B60, reinterpret_cast<DWORD>(ReenableMenuDialogue));
+			genCallEnforced(0x61816C, 0x5C0B60, reinterpret_cast<DWORD>(ReenableMenuDialogue));
+			genCallEnforced(0x6183E1, 0x5C0B60, reinterpret_cast<DWORD>(ReenableMenuDialogue));
+			genCallEnforced(0x6195CC, 0x5C0B60, reinterpret_cast<DWORD>(ReenableMenuDialogue));
+			genCallEnforced(0x621CCF, 0x5C0B60, reinterpret_cast<DWORD>(ReenableMenuDialogue));
+			genCallEnforced(0x622DBE, 0x5C0B60, reinterpret_cast<DWORD>(ReenableMenuDialogue));
 
 			// UI framework hooks
 			TES3::UI::hook();
