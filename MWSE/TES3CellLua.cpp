@@ -53,8 +53,7 @@ namespace mwse {
 				}
 
 				// Get the object we want to return.
-				sol::state& state = LuaManager::getInstance().getState();
-				sol::object ret = sol::make_object(state, reference);
+				sol::object ret = lua::makeLuaObject(reference);
 
 				// Get the next reference. If we're at the end of the list, go to the next one.
 				reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
