@@ -2,6 +2,7 @@
 
 #include "TES3Util.h"
 
+#include "TES3DataHandler.h"
 #include "TES3Enchantment.h"
 #include "TES3Light.h"
 #include "TES3Misc.h"
@@ -10,6 +11,13 @@
 #include "LuaManager.h"
 
 #include <unordered_set>
+#include <Windows.h>
+
+#if _DEBUG
+#define DEBUG_CUSTOM_ITEMDATA_EXTENSIONS TRUE
+#else
+#define DEBUG_CUSTOM_ITEMDATA_EXTENSIONS FALSE
+#endif
 
 namespace TES3 {
 	//
@@ -35,7 +43,7 @@ namespace TES3 {
 	//
 
 	ItemData::LuaData::LuaData() {
-		data = mwse::lua::LuaManager::getInstance().getState().create_table();
+		data = mwse::lua::LuaManager::getInstance().createTable();
 	}
 
 	ItemData::ItemData() {
@@ -52,10 +60,29 @@ namespace TES3 {
 		return self;
 	}
 
+	std::queue<TES3::ItemData::LuaData*> threadedDeletionQueue;
+
 	void ItemData::dtor(ItemData * self) {
 		ItemDataVanilla::dtor(self);
+
 		if (self->luaData) {
-			delete self->luaData;
+			// If we're destructing from a background thread, we need to queue the deletion.
+			auto dataHandler = TES3::DataHandler::get();
+			if (dataHandler != nullptr && dataHandler->mainThreadID != GetCurrentThreadId()) {
+				threadedDeletionQueue.push(self->luaData);
+				self->luaData = nullptr;
+			}
+			else {
+				// Clean up any background thread deletions that are pending first.
+				while (!threadedDeletionQueue.empty()) {
+					auto itemData = threadedDeletionQueue.front();
+					threadedDeletionQueue.pop();
+					delete itemData;
+				}
+
+				delete self->luaData;
+				self->luaData = nullptr;
+			}
 		}
 	}
 
@@ -100,10 +127,42 @@ namespace TES3 {
 		}
 
 		if (itemData->luaData) {
-			return itemData->luaData->data.empty();
+			// We can only check the table state from the main thread. If we aren't on the main thread, assume that the table isn't empty.
+			if (TES3::DataHandler::get()->mainThreadID == GetCurrentThreadId()) {
+				return itemData->luaData->data.empty();
+			}
+			else {
+				return false;
+			}
 		}
 
 		return true;
 	}
 
+	void ItemData::setLuaDataTable(sol::object data) {
+		if (data == sol::nil) {
+			if (luaData != nullptr) {
+				luaData->data = sol::nil;
+				delete luaData;
+				luaData = nullptr;
+			}
+		}
+		else if (data.is<sol::table>()) {
+			if (luaData == nullptr) {
+				luaData = new TES3::ItemData::LuaData();
+			}
+			luaData->data = data;
+		}
+		else {
+			throw std::exception("Invalid data type assignment. Must be a table or nil.");
+		}
+	}
+
+	sol::table ItemData::getOrCreateLuaDataTable() {
+		if (luaData == nullptr) {
+			luaData = new ItemData::LuaData();
+		}
+
+		return luaData->data;
+	}
 }

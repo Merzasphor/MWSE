@@ -37,10 +37,11 @@ namespace TES3 {
 
 
 	struct ItemData : ItemDataVanilla {
-		struct LuaData {
-			sol::table data;
-
+		class LuaData {
+		public:
 			LuaData();
+
+			sol::table data;
 		};
 		LuaData * luaData;
 
@@ -57,5 +58,13 @@ namespace TES3 {
 		static ItemData * __cdecl createForObject(Object * object);
 
 		static bool __cdecl isFullyRepaired(ItemData * itemData, Item * item, bool fromBarterMenu = false);
+
+		//
+		// Custom functions.
+		//
+
+		void setLuaDataTable(sol::object data);
+		sol::table getOrCreateLuaDataTable();
+
 	};
 }

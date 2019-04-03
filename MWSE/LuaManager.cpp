@@ -189,6 +189,7 @@
 #include "psapi.h"
 
 #include <filesystem>
+#include <unordered_map>
 
 #define TES3_HOOK_RUNSCRIPT_LUACHECK 0x5029A4
 #define TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE 0x6
@@ -302,9 +303,9 @@ namespace mwse {
 				);
 
 			// Create the base of API tables.
-			luaState["mwse"] = luaState.create_table();
-			luaState["mwscript"] = luaState.create_table();
-			luaState["mge"] = luaState.create_table();
+			luaState["mwse"] = createTable();
+			luaState["mwscript"] = createTable();
+			luaState["mge"] = createTable();
 
 			// Expose timers.
 			bindLuaTimer();
@@ -469,7 +470,7 @@ namespace mwse {
 			}
 
 			if (execute) {
-				sol::table params = state.create_table();
+				sol::table params = LuaManager::getInstance().createTable();
 				params["script"] = makeLuaObject(script);
 				params["reference"] = makeLuaObject(reference);
 				params["scriptData"] = mwse::mwscript::getLocalScriptVariables();
@@ -2076,26 +2077,28 @@ namespace mwse {
 		// Handle all the hacks needed to get ItemData transferred over to a bigger structure.
 		//
 
-		const auto TES3_ItemData_Deleting = reinterpret_cast<TES3::ItemData*(__thiscall*)(TES3::ItemData *, bool)>(0x4E5410);
 		TES3::ItemData * __fastcall OnDeletingItemData(TES3::ItemData * itemData, DWORD _UNUSED_, bool deleting) {
-			if (itemData->luaData) {
-				delete itemData->luaData;
+			TES3::ItemData::dtor(itemData);
+			
+			if (deleting) {
+				tes3::_delete(itemData);
 			}
-			return TES3_ItemData_Deleting(itemData, deleting);
+
+			return itemData;
 		}
 
 		__declspec(naked) void patchInlineItemDataCreation() {
 			__asm {
-				push edx		// Size: 0x1
-				push ecx		// Size: 0x1
 				mov ecx, eax	// Size: 0x2
 				nop				// Replaced with a call generation. Can't do so here, because offsets aren't accurate.
 				nop				// ^
 				nop				// ^
 				nop				// ^
 				nop				// ^
-				pop ecx			// Size: 0x1
-				pop edx			// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
+				nop				// Size: 0x1
 				nop				// Size: 0x1
 				nop				// Size: 0x1
 				nop				// Size: 0x1
@@ -2119,7 +2122,7 @@ namespace mwse {
 
 		void __inline GeneratePatchForInlineItemDataCreation(DWORD address) {
 			writePatchCodeUnprotected(address, (BYTE*)&patchInlineItemDataCreation, patchInlineItemDataCreation_size);
-			genCallUnprotected(address + 0x4, reinterpret_cast<DWORD>(&TES3::ItemData::ctor));
+			genCallUnprotected(address + 0x2, reinterpret_cast<DWORD>(&TES3::ItemData::ctor));
 		}
 
 		// Requires that the pointer is in EBX
@@ -2178,7 +2181,7 @@ namespace mwse {
 
 		// Data we use to keep track of the currently saving item data record.
 		TES3::Iterator<TES3::ItemStack> * currentlySavingInventoryIterator = nullptr;
-		int currentlySavingInventoyItemDataIndex = 0;
+		unsigned int currentlySavingInventoyItemDataIndex = 0;
 
 		// Get a hold of the inventory we're looking at.
 		TES3::IteratorNode<TES3::ItemStack> * __fastcall GetFirstSavedItemStack(TES3::Iterator<TES3::ItemStack> * iterator) {
@@ -2187,8 +2190,8 @@ namespace mwse {
 		}
 
 		// Get a hold of the current index in ItemData storage we're looking at.
-		int __fastcall WriteItemDataIndex(TES3::GameFile * gameFile, DWORD _UNUSED_, unsigned int tag, const void * data, unsigned int size) {
-			currentlySavingInventoyItemDataIndex = *static_cast<const int*>(data);
+		int __fastcall WriteItemDataIndex(TES3::GameFile * gameFile, DWORD _UNUSED_, unsigned int tag, const unsigned int * data, unsigned int size) {
+			currentlySavingInventoyItemDataIndex = *data;
 			return gameFile->writeChunkData(tag, data, size);
 		}
 
@@ -2216,9 +2219,9 @@ namespace mwse {
 		}
 
 		// Get a handle on the last created ItemData when loading.
-		TES3::ItemData * saveLoadItemData = nullptr;
+		std::unordered_map<DWORD, TES3::ItemData*> saveLoadItemDataMap;
 		TES3::ItemData * __fastcall CreateItemDataFromLoading(TES3::ItemData * itemData) {
-			saveLoadItemData = itemData;
+			saveLoadItemDataMap[GetCurrentThreadId()] = itemData;
 			return TES3::ItemData::ctor(itemData);
 		}
 
@@ -2235,8 +2238,12 @@ namespace mwse {
 				if (success) {
 					// Get our lua table, and replace it with our new table.
 					sol::state& state = LuaManager::getInstance().getState();
-					saveLoadItemData->luaData = new TES3::ItemData::LuaData();
-					saveLoadItemData->luaData->data = state["json"]["decode"](buffer);
+					auto threadID = GetCurrentThreadId();
+					auto saveLoadItemData = saveLoadItemDataMap[threadID];
+					if (saveLoadItemData && saveLoadItemData->luaData == nullptr) {
+						saveLoadItemData->setLuaDataTable(state["json"]["decode"](buffer));
+						saveLoadItemDataMap.erase(threadID);
+					}
 				}
 
 				// Clean up the buffer we made.
@@ -2250,7 +2257,7 @@ namespace mwse {
 		// Get ItemData for reference being saved.
 		TES3::ItemData * __fastcall GetItemDataForReferenceSaving(TES3::Reference * reference) {
 			auto itemData = reference->getAttachedItemData();
-			saveLoadItemData = itemData;
+			saveLoadItemDataMap[GetCurrentThreadId()] = itemData;
 			return itemData;
 		}
 
@@ -2259,6 +2266,7 @@ namespace mwse {
 			// Overwritten code.
 			int result = gameFile->writeChunkData(tag, data, size);
 
+			auto saveLoadItemData = saveLoadItemDataMap[GetCurrentThreadId()];
 			if (saveLoadItemData->luaData) {
 				sol::table table = saveLoadItemData->luaData->data;
 
@@ -2273,13 +2281,14 @@ namespace mwse {
 				}
 			}
 
+			saveLoadItemData = nullptr;
 			return result;
 		}
 
 		// Get reference that is being loaded.
-		TES3::Reference * loadSaveReference = nullptr;
+		std::unordered_map<DWORD, TES3::Reference*> saveLoadReferenceMap;
 		TES3::MobileActor * __fastcall LoadReferenceGetMACT(TES3::Reference * reference) {
-			loadSaveReference = reference;
+			saveLoadReferenceMap[GetCurrentThreadId()] = reference;
 			return reference->getAttachedMobileActor();
 		}
 
@@ -2296,10 +2305,11 @@ namespace mwse {
 				if (success) {
 					// Get our lua table, and replace it with our new table.
 					sol::state& state = LuaManager::getInstance().getState();
-					auto itemData = loadSaveReference->getAttachedItemData();
+					auto itemData = saveLoadReferenceMap[GetCurrentThreadId()]->getAttachedItemData();
 					if (itemData) {
-						itemData->luaData = new TES3::ItemData::LuaData();
-						itemData->luaData->data = state["json"]["decode"](buffer);
+						if (itemData->luaData == nullptr) {
+							itemData->setLuaDataTable(state["json"]["decode"](buffer));
+						}
 					}
 #if _DEBUG
 					else {
@@ -2319,13 +2329,34 @@ namespace mwse {
 				}
 			}
 
-			// It's safe to return XLUA here, it will just pass to the next load for us.
+			// It's safe to return LUAT here, it will just pass to the next load for us.
 			return result;
 		}
 
 		//
 		//
 		//
+
+		sol::state& LuaManager::getState() {
+#if _DEBUG
+			auto dataHandler = TES3::DataHandler::get();
+			if (dataHandler != nullptr && dataHandler->mainThreadID != GetCurrentThreadId()) {
+				throw std::exception("Cannot be called from outside the main thread.");
+			}
+#endif
+
+			return luaState;
+		}
+
+		sol::table LuaManager::createTable() {
+#if _DEBUG
+			auto dataHandler = TES3::DataHandler::get();
+			if (dataHandler != nullptr && dataHandler->mainThreadID != GetCurrentThreadId()) {
+				throw std::exception("Cannot be called from outside the main thread.");
+			}
+#endif
+			return luaState.create_table();
+		}
 
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
@@ -3103,6 +3134,7 @@ namespace mwse {
 			genCallEnforced(0x5C47A3, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
 			genCallEnforced(0x5C4C36, 0x4E44E0, reinterpret_cast<DWORD>(&TES3::ItemData::dtor));
 			genCallEnforced(0x4E48A7, 0x4E5410, reinterpret_cast<DWORD>(OnDeletingItemData));
+			genPushEnforced(0x4E7761, (BYTE)sizeof(TES3::ItemData));
 			genCallEnforced(0x46589C, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
 			genCallEnforced(0x465CFC, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
 			genCallEnforced(0x465D92, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
@@ -3125,6 +3157,7 @@ namespace mwse {
 			genCallEnforced(0x5CF667, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
 			genCallEnforced(0x5CFEA4, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
 			genCallEnforced(0x5D030D, 0x4E7750, reinterpret_cast<DWORD>(&TES3::ItemData::createForObject));
+			genPushEnforced(0x4E7665, (BYTE)sizeof(TES3::ItemData));
 			GeneratePatchForInlineItemDataCreation(0x4E7673);
 			GeneratePatchForInlineItemDataDestruction(0x4E53A7);
 			GeneratePatchForInlineItemDataDestruction(0x4E76DA);
@@ -3262,7 +3295,7 @@ namespace mwse {
 			if (buttonPressedCallback != sol::nil) {
 				sol::protected_function callback = buttonPressedCallback;
 				buttonPressedCallback = sol::nil;
-				sol::table eventData = luaState.create_table();
+				sol::table eventData = createTable();
 				eventData["button"] = tes3::ui::getButtonPressedIndex();
 				tes3::ui::resetButtonPressedIndex();
 
