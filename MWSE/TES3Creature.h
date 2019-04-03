@@ -73,7 +73,7 @@ namespace TES3 {
 		void * sgNode_7C;
 		int field_80;
 		void * sgNode_84;
-		AIPackageConfig * aiConfig; // 0x88
+		AIPackageConfig * aiPackageConfig; // 0x88
 	};
 	static_assert(sizeof(CreatureInstance) == 0x8C, "TES3::CreatureInstance failed size validation");
 }

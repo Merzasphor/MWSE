@@ -76,7 +76,7 @@ namespace TES3 {
 		short disposition; // 0x70
 		unsigned char factionIndex; // 0x72
 		char unknown_0x73; // Padding.
-		AIPackageConfig * aiConfig; // 0x74
+		AIPackageConfig * aiPackageConfig; // 0x74
 
 		unsigned char getReputation();
 		void setReputation(unsigned char);

@@ -14,27 +14,27 @@ namespace mwse {
 			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
-			// Binding for TES3::AIData
+			// Binding for TES3::AIPlanner
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TES3::AIData>();
+				auto usertypeDefinition = state.create_simple_usertype<TES3::AIPlanner>();
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Basic property binding.
-				usertypeDefinition.set("currentPackageIndex", sol::readonly_property(&TES3::AIData::currentPackageIndex));
-				usertypeDefinition.set("nextOpenPackageIndex", sol::readonly_property(&TES3::AIData::nextOpenPackageIndex));
+				usertypeDefinition.set("indexActivePackage", sol::readonly_property(&TES3::AIPlanner::indexActivePackage));
+				usertypeDefinition.set("countPackages", sol::readonly_property(&TES3::AIPlanner::countPackages));
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition.set("mobile", sol::readonly_property([](TES3::AIData& self) { return makeLuaObject(self.mobileActor); }));
+				usertypeDefinition.set("mobile", sol::readonly_property([](TES3::AIPlanner& self) { return makeLuaObject(self.mobileActor); }));
 
 				// Basic function binding.
-				usertypeDefinition.set("getActivePackage", &TES3::AIData::getActivePackage);
+				usertypeDefinition.set("getActivePackage", &TES3::AIPlanner::getActivePackage);
 
 				// Indirect bindings to unions and arrays.
-				usertypeDefinition.set("packages", sol::readonly_property([](TES3::AIData& self) { return std::ref(self.packages); }));
+				usertypeDefinition.set("packages", sol::readonly_property([](TES3::AIPlanner& self) { return std::ref(self.packages); }));
 
 				// Finish up our usertype.
-				state.set_usertype("tes3aiData", usertypeDefinition);
+				state.set_usertype("tes3aiPlanner", usertypeDefinition);
 			}
 
 			// Binding for TES3::AIPackage

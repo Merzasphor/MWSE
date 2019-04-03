@@ -270,21 +270,6 @@
     <ClInclude Include="TES3AIConfig.h">
       <Filter>Header Files\DataAdapters\TES3\AI</Filter>
     </ClInclude>
-    <ClInclude Include="TES3AIPackageActivate.h">
-      <Filter>Header Files\DataAdapters\TES3\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="TES3AIPackageEscort.h">
-      <Filter>Header Files\DataAdapters\TES3\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="TES3AIPackageFollow.h">
-      <Filter>Header Files\DataAdapters\TES3\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="TES3AIPackageTravel.h">
-      <Filter>Header Files\DataAdapters\TES3\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="TES3AIPackageWander.h">
-      <Filter>Header Files\DataAdapters\TES3\AI</Filter>
-    </ClInclude>
     <ClInclude Include="TES3Actor.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Actor</Filter>
     </ClInclude>
