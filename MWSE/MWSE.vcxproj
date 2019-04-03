@@ -119,6 +119,7 @@
     <ClInclude Include="TES3AILua.h" />
     <ClInclude Include="TES3AnimationData.h" />
     <ClInclude Include="TES3AnimationGroup.h" />
+    <ClInclude Include="TES3AudioControllerLua.h" />
     <ClInclude Include="TES3BodyPart.h" />
     <ClInclude Include="TES3BodyPartLua.h" />
     <ClInclude Include="TES3CombatSessionLua.h" />
@@ -482,6 +483,7 @@
     <ClCompile Include="TES3AIPackage.cpp" />
     <ClCompile Include="TES3Alchemy.cpp" />
     <ClCompile Include="TES3AudioController.cpp" />
+    <ClCompile Include="TES3AudioControllerLua.cpp" />
     <ClCompile Include="TES3BodyPart.cpp" />
     <ClCompile Include="TES3BodyPartLua.cpp" />
     <ClCompile Include="TES3CombatSession.cpp" />
@@ -892,7 +894,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;SOL_SAFE_USERTYPE;SOL_EXCEPTIONS_SAFE_PROPAGATION;_DEBUG;MWSE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;SOL_SAFE_USERTYPE;SOL_EXCEPTIONS_SAFE_PROPAGATION;_DEBUG;MWSE_EXPORTS;_WINDOWS;_USRDLL;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -923,7 +925,7 @@ echo #define MWSE_BUILD_DATE %buildTime:~0,8% &gt;&gt; $(ProjectDir)/BuildDate.h
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;SOL_SAFE_USERTYPE;SOL_EXCEPTIONS_SAFE_PROPAGATION;NDEBUG;MWSE_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;SOL_SAFE_USERTYPE;SOL_EXCEPTIONS_SAFE_PROPAGATION;NDEBUG;MWSE_EXPORTS;_WINDOWS;_USRDLL;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
