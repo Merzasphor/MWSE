@@ -7,6 +7,7 @@
 #include "NICamera.h"
 #include "NINode.h"
 
+#include "TES3AudioController.h"
 #include "TES3Fader.h"
 #include "TES3GameSetting.h"
 #include "TES3GlobalVariable.h"
@@ -49,6 +50,7 @@ namespace mwse {
 				usertypeDefinition.set("activeQuests", &TES3::WorldController::journalController);
 				usertypeDefinition.set("aiDistance", &TES3::WorldController::aiDistance);
 				usertypeDefinition.set("armCamera", &TES3::WorldController::armCamera);
+				usertypeDefinition.set("audioController", sol::readonly_property(&TES3::WorldController::audioController));
 				usertypeDefinition.set("blindnessFader", sol::readonly_property(&TES3::WorldController::blindnessFader));
 				usertypeDefinition.set("canQuickSaveAndRest", &TES3::WorldController::canUseQuickSaveAndRest);
 				usertypeDefinition.set("characterRenderTarget", &TES3::WorldController::characterRenderTarget);

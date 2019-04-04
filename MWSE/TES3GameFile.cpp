@@ -1,7 +1,6 @@
 #include "TES3GameFile.h"
 
 #include <string.h>
-#define NOMINMAX
 #include <Windows.h>
 
 #include "TES3Util.h"

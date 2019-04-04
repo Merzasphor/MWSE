@@ -5,7 +5,6 @@
 #include "NIDefines.h"
 #include "NIPointer.h"
 
-#define NOMINMAX
 #include <Windows.h>
 
 namespace TES3 {

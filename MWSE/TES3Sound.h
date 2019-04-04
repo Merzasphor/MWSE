@@ -4,6 +4,9 @@
 
 #include "TES3Object.h"
 
+#include <dsound.h>
+#undef PlaySound
+
 namespace TES3 {
 	namespace SoundPlayFlags {
 		typedef int value_type;
@@ -14,8 +17,8 @@ namespace TES3 {
 	}
 
 	struct SoundBuffer {
-		void* lpSoundBuffer;
-		void* lpSound3DBuffer;
+		IDirectSoundBuffer * lpSoundBuffer;
+		IDirectSound3DBuffer * lpSound3DBuffer;
 		char fileHeader[16];
 		short unknown_0x18;
 		int unknown_0x1C;
@@ -50,6 +53,9 @@ namespace TES3 {
 		//
 
 		bool play(int playbackFlags = 0, unsigned char volume = 250, float pitch = 1.0f, bool isNot3D = true);
+		void stop();
+
+		bool isPlaying();
 
 	};
 	static_assert(sizeof(Sound) == 0x58, "TES3::Sound failed size validation");

@@ -36,6 +36,8 @@ namespace mwse {
 					float pitch = getOptionalParam<double>(params, "pitch", 1.0);
 					return self.play(loop ? TES3::SoundPlayFlags::Loop : 0, volume, pitch, true);
 				});
+				usertypeDefinition.set("stop", &TES3::Sound::stop);
+				usertypeDefinition.set("isPlaying", &TES3::Sound::isPlaying);
 
 				// Finish up our usertype.
 				state.set_usertype("tes3sound", usertypeDefinition);
