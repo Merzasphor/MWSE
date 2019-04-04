@@ -77,6 +77,9 @@ namespace mwse {
 			//
 			void bindData();
 
+			//
+			void removeThreadedUserdataFromCache();
+
 			// 
 			static LuaManager singleton;
 

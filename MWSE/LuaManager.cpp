@@ -3342,6 +3342,13 @@ namespace mwse {
 		}
 
 		sol::object LuaManager::getCachedUserdata(TES3::BaseObject* object) {
+#if _DEBUG
+			auto dataHandler = TES3::DataHandler::get();
+			if (dataHandler != nullptr && dataHandler->mainThreadID != GetCurrentThreadId()) {
+				throw std::exception("Cached userdata can only be obtained from the main thread!");
+			}
+#endif
+
 			userdataMapMutex.lock();
 
 			sol::object result = sol::nil;
@@ -3372,28 +3379,45 @@ namespace mwse {
 		}
 
 		void LuaManager::insertUserdataIntoCache(TES3::BaseObject* object, sol::object luaObject) {
+			removeThreadedUserdataFromCache();
+
 			userdataMapMutex.lock();
 			userdataCache[(unsigned long)object] = luaObject;
 			userdataMapMutex.unlock();
 		}
 
 		void LuaManager::insertUserdataIntoCache(TES3::MobileObject* object, sol::object luaObject) {
+			removeThreadedUserdataFromCache();
+
 			userdataMapMutex.lock();
 			userdataCache[(unsigned long)object] = luaObject;
 			userdataMapMutex.unlock();
 		}
 
+		std::queue<TES3::BaseObject*> threadedBaseObjectCacheDeletionQueue;
+		std::queue<TES3::MobileObject*> threadedMobileObjectCacheDeletionQueue;
+
 		void LuaManager::removeUserdataFromCache(TES3::BaseObject* object) {
+			removeThreadedUserdataFromCache();
+
 			userdataMapMutex.lock();
 
 			if (!userdataCache.empty()) {
-				UserdataMap::iterator it = userdataCache.find((unsigned long)object);
-				if (it != userdataCache.end()) {
-					// Clear any events that make use of this object.
-					event::clearObjectFilter(it->second);
+				// Clear any events that make use of this object.
+				auto dataHandler = TES3::DataHandler::get();
+				if (dataHandler == nullptr || dataHandler->mainThreadID == GetCurrentThreadId()) {
+					UserdataMap::iterator it = userdataCache.find((unsigned long)object);
+					if (it != userdataCache.end()) {
+						// Clear any events that make use of this object.
+						event::clearObjectFilter(it->second);
 
-					// Remove it from the cache.
-					userdataCache.erase(it);
+						// Remove it from the cache.
+						userdataCache.erase(it);
+					}
+				}
+				else {
+					// We're on a background thread and need to clean up later.
+					threadedBaseObjectCacheDeletionQueue.push(object);
 				}
 			}
 
@@ -3401,16 +3425,67 @@ namespace mwse {
 		}
 
 		void LuaManager::removeUserdataFromCache(TES3::MobileObject* object) {
+			removeThreadedUserdataFromCache();
+
 			userdataMapMutex.lock();
 
 			if (!userdataCache.empty()) {
-				UserdataMap::iterator it = userdataCache.find((unsigned long)object);
-				if (it != userdataCache.end()) {
-					// Clear any events that make use of this object.
-					event::clearObjectFilter(it->second);
+				// Clear any events that make use of this object.
+				auto dataHandler = TES3::DataHandler::get();
+				if (dataHandler == nullptr || dataHandler->mainThreadID == GetCurrentThreadId()) {
+					UserdataMap::iterator it = userdataCache.find((unsigned long)object);
+					if (it != userdataCache.end()) {
+						// Clear any events that make use of this object.
+						event::clearObjectFilter(it->second);
 
-					// Remove it from the cache.
-					userdataCache.erase(it);
+						// Remove it from the cache.
+						userdataCache.erase(it);
+					}
+				}
+				else {
+					// We're on a background thread and need to clean up later.
+					threadedMobileObjectCacheDeletionQueue.push(object);
+				}
+			}
+
+			userdataMapMutex.unlock();
+		}
+
+		void LuaManager::removeThreadedUserdataFromCache() {
+			auto dataHandler = TES3::DataHandler::get();
+			if (dataHandler != nullptr && dataHandler->mainThreadID != GetCurrentThreadId()) {
+				return;
+			}
+
+			userdataMapMutex.lock();
+
+			while (!threadedBaseObjectCacheDeletionQueue.empty()) {
+				auto object = threadedBaseObjectCacheDeletionQueue.front();
+				threadedBaseObjectCacheDeletionQueue.pop();
+
+				if (!userdataCache.empty()) {
+					UserdataMap::iterator it = userdataCache.find((unsigned long)object);
+					if (it != userdataCache.end()) {
+						// Clear any events that make use of this object.
+						event::clearObjectFilter(it->second);
+
+						userdataCache.erase(it);
+					}
+				}
+			}
+
+			while (!threadedMobileObjectCacheDeletionQueue.empty()) {
+				auto object = threadedMobileObjectCacheDeletionQueue.front();
+				threadedMobileObjectCacheDeletionQueue.pop();
+
+				if (!userdataCache.empty()) {
+					UserdataMap::iterator it = userdataCache.find((unsigned long)object);
+					if (it != userdataCache.end()) {
+						// Clear any events that make use of this object.
+						event::clearObjectFilter(it->second);
+
+						userdataCache.erase(it);
+					}
 				}
 			}
 
