@@ -99,4 +99,65 @@ namespace TES3 {
 		strncpy_s(nextMusicFilePath, path, newLength);
 	}
 
+	double AudioController::getMusicDuration() {
+		IMediaPosition * positioning;
+		if (musicGraph->QueryInterface(IID_IMediaPosition, (LPVOID*)&positioning) < 0) {
+			throw std::runtime_error("Music Error: Could not query IMediaPosition interface.");
+		}
+
+		REFTIME duration;
+		if (positioning->get_Duration(&duration) < 0) {
+			positioning->Release();
+			throw std::runtime_error("Music Error: Could not fetch media duration.");
+		}
+
+		positioning->Release();
+		return duration;
+	}
+
+	double AudioController::getMusicPosition() {
+		IMediaPosition * positioning;
+		if (musicGraph->QueryInterface(IID_IMediaPosition, (LPVOID*)&positioning) < 0) {
+			throw std::runtime_error("Music Error: Could not query IMediaPosition interface.");
+		}
+
+		REFTIME position;
+		if (positioning->get_CurrentPosition(&position) < 0) {
+			positioning->Release();
+			throw std::runtime_error("Music Error: Could not fetch media position.");
+		}
+
+		positioning->Release();
+		return position;
+	}
+
+	void AudioController::setMusicPosition(double position) {
+		if (position < 0.0) {
+			position = 0.0;
+		}
+
+		IMediaPosition * positioning;
+		if (musicGraph->QueryInterface(IID_IMediaPosition, (LPVOID*)&positioning) < 0) {
+			throw std::runtime_error("Music Error: Could not query IMediaPosition interface.");
+		}
+
+		REFTIME duration;
+		if (positioning->get_Duration(&duration) < 0) {
+			positioning->Release();
+			throw std::runtime_error("Music Error: Could not fetch media duration.");
+		}
+
+		if (position > duration) {
+			positioning->Release();
+			return;
+		}
+
+		if (positioning->put_CurrentPosition(position) < 0) {
+			positioning->Release();
+			throw std::runtime_error("Music Error: Failed to put current media position.");
+		}
+
+		positioning->Release();
+	}
+
 }

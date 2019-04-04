@@ -25,7 +25,7 @@ namespace mwse {
 			usertypeDefinition.set("pitchAxis", &TES3::AudioController::pitchAxisApproximated);
 			usertypeDefinition.set("yawAxis", &TES3::AudioController::yawAxis);
 
-			// Properties bound as functions.
+			// Properties exposed through functions.
 			usertypeDefinition.set("currentMusicFilePath", sol::property(&TES3::AudioController::getCurrentMusicFilePath, &TES3::AudioController::setCurrentMusicFilePath));
 			usertypeDefinition.set("nextMusicFilePath", sol::property(&TES3::AudioController::getNextMusicFilePath, &TES3::AudioController::setNextMusicFilePath));
 			usertypeDefinition.set("volumeEffects", sol::property(&TES3::AudioController::getNormalizedEffectsVolume, &TES3::AudioController::setNormalizedEffectsVolume));
@@ -36,6 +36,10 @@ namespace mwse {
 
 			// Basic function binding.
 			usertypeDefinition.set("getMixVolume", &TES3::AudioController::getMixVolume);
+
+			// Functions exposed as properties.
+			usertypeDefinition.set("musicDuration", sol::readonly_property(&TES3::AudioController::getMusicDuration));
+			usertypeDefinition.set("musicPosition", sol::property(&TES3::AudioController::getMusicPosition, &TES3::AudioController::setMusicPosition));
 			
 			// Wrapped functions.
 			usertypeDefinition.set("changeMusicTrack", [](TES3::AudioController& self, const char* filename, sol::optional<int> crossfade, sol::optional<float> volume) {

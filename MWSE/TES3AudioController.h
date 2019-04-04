@@ -4,6 +4,8 @@
 #include "TES3Vectors.h"
 
 #include <dsound.h>
+#include <dshow.h>
+#undef PlaySound
 
 namespace TES3 {
 	enum class AudioMixType {
@@ -14,39 +16,27 @@ namespace TES3 {
 		Music
 	};
 
+	//
+	// Flag notes:
+	//	unknown_0x4:
+	//		- 0x1: Supports static 3D buffers?
+	//		- 0x4: Supports streaming 3D buffers?
+	//	unknown_0x8:
+	//		- 0x1: Maybe playing state?
+	//		- 0x2: Maybe pause state?
+	//		- 0x4: Maybe loop state?
+	//
+
 	struct AudioController {
 		char unknown_0x0;
 		char unknown_0x1;
 		int unknown_0x4; // Flags.
 		int unknown_0x8; // Flags.
-		LPDIRECTSOUND directSound; // 0xC
-		LPDIRECTSOUNDBUFFER lpPrimaryBuffer; // 0x10
-		LPDIRECTSOUNDBUFFER lpListener3D; // 0x14
-		char unknown_0x18;
-		LPDSCAPS soundCaps; // 0x1C
-		int unknown_0x20;
-		int unknown_0x24;
-		int unknown_0x28;
-		int unknown_0x2C;
-		int unknown_0x30;
-		int unknown_0x34;
-		int unknown_0x38;
-		int unknown_0x3C;
-		int unknown_0x40;
-		int unknown_0x44;
-		int unknown_0x48;
-		int unknown_0x4C;
-		int unknown_0x50;
-		int unknown_0x54;
-		int unknown_0x58;
-		int unknown_0x5C;
-		int unknown_0x60;
-		int unknown_0x64;
-		int unknown_0x68;
-		int unknown_0x6C;
-		int unknown_0x70;
-		int unknown_0x74;
-		int unknown_0x78;
+		IDirectSound * directSound; // 0xC
+		IDirectSoundBuffer * primaryBuffer; // 0x10
+		IDirectSound3DListener * primary3DListener; // 0x14
+		unsigned char soundQuality3D; // 0x18
+		DSCAPS capabilities; // 0x1C
 		char nextMusicFilePath[260]; // 0x7C
 		char currentMusicFilePath[260]; // 0x180
 		int timestampBeginFade; // 0x284
@@ -57,9 +47,9 @@ namespace TES3 {
 		unsigned char volumeEffects; // 0x298
 		unsigned char volumeVoice; // 0x299
 		unsigned char volumeFootsteps; // 0x29A
-		int unknown_0x29C;
-		LPDIRECTSOUNDBUFFER bufferMusic; // 0x2A0
-		LPDIRECTSOUNDBUFFER bufferMusic2; // 0x2A4
+		LPLONG musicPan; // 0x29C
+		IGraphBuilder * musicGraph; // 0x2A0
+		IBasicAudio * musicAudio; // 0x2A4
 		bool disableAudio; // 0x2A8
 		Vector3 listenerPosition; // 0x2AC
 		Vector3 unknown_0x2B8; // Orientation.
@@ -79,7 +69,23 @@ namespace TES3 {
 		// Custom functions.
 		//
 
+		const char* getCurrentMusicFilePath();
+		void setCurrentMusicFilePath(const char* path);
+
+		const char* getNextMusicFilePath();
+		void setNextMusicFilePath(const char* path);
+
 		float getMixVolume(AudioMixType mixType);
+
+		float getMusicVolume();
+
+		double getMusicDuration();
+		double getMusicPosition();
+		void setMusicPosition(double position);
+
+		//
+		// Wrapper functions to expose volumes in a consistent format.
+		//
 
 		float getNormalizedMasterVolume();
 		void setNormalizedMasterVolume(float value);
@@ -92,14 +98,6 @@ namespace TES3 {
 
 		float getNormalizedFootstepsVolume();
 		void setNormalizedFootstepsVolume(float value);
-
-		float getMusicVolume();
-
-		const char* getCurrentMusicFilePath();
-		void setCurrentMusicFilePath(const char* path);
-
-		const char* getNextMusicFilePath();
-		void setNextMusicFilePath(const char* path);
 
 	};
 	static_assert(sizeof(AudioController) == 0x2D8, "TES3::AudioController failed size validation");
