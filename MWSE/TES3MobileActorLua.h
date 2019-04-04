@@ -18,7 +18,7 @@ namespace mwse {
 			usertypeDefinition.set("activeMagicEffectCount", sol::readonly_property(&TES3::MobileActor::activeMagicEffectCount));
 			usertypeDefinition.set("activeMagicEffects", sol::readonly_property(&TES3::MobileActor::activeMagicEffects));
 			usertypeDefinition.set("actorType", sol::readonly_property(&TES3::MobileActor::actorType));
-			usertypeDefinition.set("aiData", sol::readonly_property(&TES3::MobileActor::aiData));
+			usertypeDefinition.set("aiPlanner", sol::readonly_property(&TES3::MobileActor::aiPlanner));
 			usertypeDefinition.set("alarm", &TES3::MobileActor::alarm);
 			usertypeDefinition.set("barterGold", &TES3::MobileActor::barterGold);
 			usertypeDefinition.set("collidingReference", sol::readonly_property(&TES3::MobileActor::collidingReference));

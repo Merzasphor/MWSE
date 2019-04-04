@@ -8,7 +8,6 @@ namespace TES3 {
 	struct ActorAnimationData;
 	struct ActorVirtualTable;
 	struct AIConfig;
-	struct AIData;
 	struct AIPackage;
 	struct AIPackageActivate;
 	struct AIPackageConfig;
@@ -16,6 +15,7 @@ namespace TES3 {
 	struct AIPackageFollow;
 	struct AIPackageTravel;
 	struct AIPackageWander;
+	struct AIPlanner;
 	struct Alchemy;
 	struct AnimationData;
 	struct AnimationGroup;

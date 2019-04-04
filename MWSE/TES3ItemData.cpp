@@ -13,12 +13,6 @@
 #include <unordered_set>
 #include <Windows.h>
 
-#if _DEBUG
-#define DEBUG_CUSTOM_ITEMDATA_EXTENSIONS TRUE
-#else
-#define DEBUG_CUSTOM_ITEMDATA_EXTENSIONS FALSE
-#endif
-
 namespace TES3 {
 	//
 	// Vanilla ItemData

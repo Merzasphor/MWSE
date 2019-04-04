@@ -230,11 +230,6 @@
     <ClInclude Include="TES3AIBehavior.h" />
     <ClInclude Include="TES3AIConfig.h" />
     <ClInclude Include="TES3AIPackage.h" />
-    <ClInclude Include="TES3AIPackageActivate.h" />
-    <ClInclude Include="TES3AIPackageEscort.h" />
-    <ClInclude Include="TES3AIPackageFollow.h" />
-    <ClInclude Include="TES3AIPackageTravel.h" />
-    <ClInclude Include="TES3AIPackageWander.h" />
     <ClInclude Include="TES3Armor.h" />
     <ClInclude Include="TES3Attachment.h" />
     <ClInclude Include="TES3Book.h" />
