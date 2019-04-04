@@ -5,5 +5,4 @@ return {
 	["escort"] = 2,
 	["follow"] = 3,
 	["activate"] = 4,
-	["pursue"] = 5,
 }

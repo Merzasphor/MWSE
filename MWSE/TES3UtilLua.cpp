@@ -23,10 +23,6 @@
 #include "TES3Actor.h"
 #include "TES3AIData.h"
 #include "TES3AIPackage.h"
-#include "TES3AIPackageActivate.h"
-#include "TES3AIPackageFollow.h"
-#include "TES3AIPackageTravel.h"
-#include "TES3AIPackageWander.h"
 #include "TES3Armor.h"
 #include "TES3AudioController.h"
 #include "TES3Cell.h"
@@ -2158,16 +2154,26 @@ namespace mwse {
 			};
 
 			state["tes3"]["getCurrentAIPackageId"] = [](sol::table params) {
+				TES3::Reference * refr = getOptionalParamReference(params, "reference");
 				TES3::MobileActor * mobileActor = getOptionalParamMobileActor(params, "reference");
-				if (mobileActor == nullptr) {
-					throw std::invalid_argument("Invalid reference parameter provided.");
-				}
-
-				if (mobileActor->aiData != nullptr) {
-					auto currentPackage = mobileActor->aiData->getActivePackage();
-					if (currentPackage != nullptr) {
-						return currentPackage->packageType;
+				if (mobileActor) {
+					if (mobileActor->aiPlanner != nullptr) {
+						auto currentPackage = mobileActor->aiPlanner->getActivePackage();
+						if (currentPackage != nullptr) {
+							return int(currentPackage->packageType);
+						}
 					}
+				}
+				else if (refr && refr->baseObject->isActor()) {
+					TES3::Actor * actor = static_cast<TES3::Actor*>(refr->baseObject);
+					auto currentConfig = actor->getAIPackageConfig();
+					if (currentConfig != nullptr) {
+						// Convert config type to AIPackageType
+						return int(currentConfig->toPackageType());
+					}
+				}
+				else {
+					throw std::invalid_argument("Invalid reference parameter provided.");
 				}
 
 				return -1;
@@ -2214,6 +2220,34 @@ namespace mwse {
 				else {
 					config->destination = TES3::Vector3(FLT_MAX, FLT_MAX, 0.0f);
 				}
+				config->duration = getOptionalParam<double>(params, "duration", 0.0);
+				config->actor = static_cast<TES3::Actor*>(target->getBaseObject());
+				config->cell = getOptionalParamCell(params, "cell");
+				config->reset = getOptionalParam<bool>(params, "reset", true);
+
+				auto actor = static_cast<TES3::Actor*>(mobileActor->reference->baseObject);
+				actor->setAIPackage(config, mobileActor->reference);
+			};
+
+			state["tes3"]["setAIEscort"] = [](sol::table params) {
+				TES3::MobileActor * mobileActor = getOptionalParamMobileActor(params, "reference");
+				if (mobileActor == nullptr) {
+					throw std::invalid_argument("Invalid reference parameter provided.");
+				}
+
+				TES3::Reference * target = getOptionalParamReference(params, "target");
+				if (target == nullptr || !target->baseObject->isActor()) {
+					throw std::invalid_argument("Invalid target parameter provided.");
+				}
+
+				auto destination = getOptionalParamVector3(params, "destination");
+				if (!destination) {
+					throw std::invalid_argument("Destination parameter is missing.");
+				}
+
+				auto config = tes3::_new<TES3::AIPackageEscort::Config>();
+				config->type = TES3::AIPackageConfigType::Escort;
+				config->destination = destination.value();
 				config->duration = getOptionalParam<double>(params, "duration", 0.0);
 				config->actor = static_cast<TES3::Actor*>(target->getBaseObject());
 				config->cell = getOptionalParamCell(params, "cell");
