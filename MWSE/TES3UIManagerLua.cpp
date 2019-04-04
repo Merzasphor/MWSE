@@ -276,10 +276,10 @@ namespace mwse {
 			};
 			tes3ui["showScrollMenu"] = &TES3::UI::showScrollMenu;
 			tes3ui["showBookMenu"] = &TES3::UI::showBookMenu;
-
 			tes3ui["logToConsole"] = [](const char* text, sol::optional<bool> isCommand) {
 				TES3::UI::logToConsole(text, isCommand.value_or(false));
 			};
+			tes3ui["stealHelpMenu"] = &TES3::UI::stealHelpMenu;
 
 			// Add binding for TES3::UI::TreeItem type.
 			// TODO: Move this to its own file after TES3::UI::Tree has been made a template.

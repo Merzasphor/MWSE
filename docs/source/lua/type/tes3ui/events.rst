@@ -48,7 +48,7 @@ Standard events:
         Before the menu layout is updated.
     **update**
         After the menu layout is updated.
-	**destroy**
+    **destroy**
         When the UI element is destroyed, before any data or children are destroyed.
 
 

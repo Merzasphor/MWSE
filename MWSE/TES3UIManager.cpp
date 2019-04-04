@@ -10,10 +10,12 @@ namespace TES3 {
 		const DWORD TES3_hook_dispatchMousewheelUp = 0x58F19B;
 		const DWORD TES3_hook_dispatchMousewheelDown = 0x58F1CA;
 
+		const auto TES3_uiMainRoot = reinterpret_cast<Element* const*>(0x7D1C28);
 		const auto TES3_uiHelpRoot = reinterpret_cast<Element* const*>(0x7D1C74);
 
 		const auto TES3_ui_registerID = reinterpret_cast<UI_ID (__cdecl *)(const char *)>(0x58DF10);
 		const auto TES3_ui_createChildElement = reinterpret_cast<Element* (__thiscall *)(Element*)>(0x582B50);
+		const auto TES3_ui_reattachToParent = reinterpret_cast<void (__thiscall *)(Element*, Element*)>(0x57B850);
 		const auto TES3_ui_createMenu = reinterpret_cast<Element* (__cdecl *)(UI_ID)>(0x595400);
 		const auto TES3_ui_createTooltipMenu = reinterpret_cast<Element* (__cdecl *)(UI_ID)>(0x595A40);
 		const auto TES3_ui_findMenu = reinterpret_cast<Element* (__cdecl*)(UI_ID)>(0x595370);
@@ -145,6 +147,29 @@ namespace TES3 {
 			case 0x5C6B00: callbackType = "soulGemFilled"; break;
 			}
 			return callbackType;
+		}
+
+		void stealHelpMenu() {
+			// Move HelpMenu from help layer to main layer.
+			Element *help = TES3_ui_findHelpLayerMenu(static_cast<UI_ID>(Property::HelpMenu));
+			if (help) {
+				// Remove menu from help layer child vector.
+				Element **p = help->parent->vectorChildren.begin;
+				while (*p != help) {
+					++p;
+				}
+				for (size_t n = (help->parent->vectorChildren.end - p) + 1; n; --n) {
+					*p = *(p + 1);
+				}
+				help->parent->vectorChildren.end--;
+				*p = 0;
+
+				// Place menu in main layer.
+				TES3_ui_reattachToParent(help, *TES3_uiMainRoot);
+
+				// Add an empty dummy menu to staisfy game code that expects the help menu.
+				createTooltipMenu(static_cast<UI_ID>(Property::HelpMenu));
+			}
 		}
 
 		//
