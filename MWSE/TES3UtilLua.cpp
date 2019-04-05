@@ -46,6 +46,7 @@
 #include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
 #include "TES3NPC.h"
+#include "TES3PlayerAnimationData.h" 
 #include "TES3Reference.h"
 #include "TES3Region.h"
 #include "TES3Script.h"
@@ -577,10 +578,32 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.getCameraPosition
-			state["tes3"]["getCameraPosition"] = [](sol::optional<sol::table> params) -> sol::optional<TES3::Vector3> {
+			state["tes3"]["getCameraPosition"] = []() -> sol::optional<TES3::Vector3> {
 				TES3::WorldController * worldController = TES3::WorldController::get();
 				if (worldController) {
 					return worldController->worldCamera.camera->worldBoundOrigin;
+				}
+				return sol::optional<TES3::Vector3>();
+			};
+
+			// Bind function: tes3.getPlayerEyePosition
+			state["tes3"]["getPlayerEyePosition"] = []() -> sol::optional<TES3::Vector3> {
+				auto worldController = TES3::WorldController::get();
+				if (worldController) {
+					auto mobilePlayer = worldController->getMobilePlayer();
+					if (mobilePlayer) {
+						return mobilePlayer->animationData.asPlayer->firstPersonHeadCameraNode->worldTransform.translation;
+					}
+				}
+				return sol::optional<TES3::Vector3>();
+			};
+
+			// Bind function: tes3.getPlayerEyeVector
+			state["tes3"]["getPlayerEyeVector"] = []() -> sol::optional<TES3::Vector3> {
+				auto worldController = TES3::WorldController::get();
+				if (worldController) {
+					auto rotation = worldController->armCamera.cameraRoot->localRotation;
+					return TES3::Vector3(rotation->m0.y, rotation->m1.y, rotation->m2.y);
 				}
 				return sol::optional<TES3::Vector3>();
 			};
