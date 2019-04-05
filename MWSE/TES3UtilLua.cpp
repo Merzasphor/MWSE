@@ -28,6 +28,7 @@
 #include "TES3Cell.h"
 #include "TES3Class.h"
 #include "TES3Container.h"
+#include "TES3Creature.h"
 #include "TES3CrimeTree.h"
 #include "TES3DataHandler.h"
 #include "TES3Dialogue.h"
@@ -514,14 +515,25 @@ namespace mwse {
 
 			// Bind function: tes3.getSoundGenerator
 			state["tes3"]["getSoundGenerator"] = [](std::string creatureId, unsigned int type) -> sol::object {
-				auto soundGenerators = TES3::DataHandler::get()->nonDynamicData->soundGenerators;
-				const char* creatureIdCstr = creatureId.c_str();
-				for (auto itt = soundGenerators->head; itt != NULL; itt = itt->next) {
+				auto nonDynamicData = TES3::DataHandler::get()->nonDynamicData;
+				auto creature = nonDynamicData->resolveObjectByType<TES3::Creature>(creatureId, TES3::ObjectType::Creature);
+				if (creature == nullptr) {
+					return sol::nil;
+				}
+
+				while (creature->soundGenerator) {
+					creature = creature->soundGenerator;
+				}
+
+				auto soundGenerators = nonDynamicData->soundGenerators;
+				const char* id = creature->getObjectID();
+				size_t idLength = strnlen_s(id, 32);
+				for (auto itt = soundGenerators->head; itt != nullptr; itt = itt->next) {
 					if (itt->data->soundType != static_cast<TES3::SoundType>(type)) {
 						continue;
 					}
 
-					if (strncmp(creatureIdCstr, itt->data->name, creatureId.length()) == 0) {
+					if (_strnicmp(id, itt->data->name, idLength) == 0) {
 						return makeLuaObject(itt->data);
 					}
 				}

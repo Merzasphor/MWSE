@@ -473,6 +473,9 @@ namespace mwse {
 			case TES3::ObjectType::Sound:
 				result = sol::make_object(state, reinterpret_cast<TES3::Sound*>(object));
 				break;
+			case TES3::ObjectType::SoundGenerator:
+				result = sol::make_object(state, reinterpret_cast<TES3::SoundGenerator*>(object));
+				break;
 			case TES3::ObjectType::Spell:
 				result = sol::make_object(state, reinterpret_cast<TES3::Spell*>(object));
 				break;
