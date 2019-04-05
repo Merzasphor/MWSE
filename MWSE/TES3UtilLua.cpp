@@ -578,7 +578,7 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.getCameraPosition
-			state["tes3"]["getCameraPosition"] = [](sol::optional<sol::table> params) -> sol::optional<TES3::Vector3> {
+			state["tes3"]["getCameraPosition"] = []() -> sol::optional<TES3::Vector3> {
 				TES3::WorldController * worldController = TES3::WorldController::get();
 				if (worldController) {
 					return worldController->worldCamera.camera->worldBoundOrigin;
@@ -587,25 +587,25 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.getPlayerEyePosition
-			state["tes3"]["getPlayerEyePosition"] = []() {
-				auto * worldController = TES3::WorldController::get();
+			state["tes3"]["getPlayerEyePosition"] = []() -> sol::optional<TES3::Vector3> {
+				auto worldController = TES3::WorldController::get();
 				if (worldController) {
-					auto * mobilePlayer = worldController->getMobilePlayer();
+					auto mobilePlayer = worldController->getMobilePlayer();
 					if (mobilePlayer) {
 						return mobilePlayer->animationData.asPlayer->firstPersonHeadCameraNode->worldTransform.translation;
 					}
 				}
-				return TES3::Vector3();
+				return sol::optional<TES3::Vector3>();
 			};
 
 			// Bind function: tes3.getPlayerEyeVector
-			state["tes3"]["getPlayerEyeVector"] = []() {
-				auto * worldController = TES3::WorldController::get();
+			state["tes3"]["getPlayerEyeVector"] = []() -> sol::optional<TES3::Vector3> {
+				auto worldController = TES3::WorldController::get();
 				if (worldController) {
 					auto rotation = worldController->armCamera.cameraRoot->localRotation;
 					return TES3::Vector3(rotation->m0.y, rotation->m1.y, rotation->m2.y);
 				}
-				return TES3::Vector3();
+				return sol::optional<TES3::Vector3>();
 			};
 
 			// Bind function: tes3.getCameraPosition
