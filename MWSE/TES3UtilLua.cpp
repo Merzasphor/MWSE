@@ -46,6 +46,7 @@
 #include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
 #include "TES3NPC.h"
+#include "TES3PlayerAnimationData.h" 
 #include "TES3Reference.h"
 #include "TES3Region.h"
 #include "TES3Script.h"
@@ -583,6 +584,28 @@ namespace mwse {
 					return worldController->worldCamera.camera->worldBoundOrigin;
 				}
 				return sol::optional<TES3::Vector3>();
+			};
+
+			// Bind function: tes3.getPlayerEyePosition
+			state["tes3"]["getPlayerEyePosition"] = []() {
+				auto * worldController = TES3::WorldController::get();
+				if (worldController) {
+					auto * mobilePlayer = worldController->getMobilePlayer();
+					if (mobilePlayer) {
+						return mobilePlayer->animationData.asPlayer->firstPersonHeadCameraNode->worldTransform.translation;
+					}
+				}
+				return TES3::Vector3();
+			};
+
+			// Bind function: tes3.getPlayerEyeVector
+			state["tes3"]["getPlayerEyeVector"] = []() {
+				auto * worldController = TES3::WorldController::get();
+				if (worldController) {
+					auto rotation = worldController->armCamera.cameraRoot->localRotation;
+					return TES3::Vector3(rotation->m0.y, rotation->m1.y, rotation->m2.y);
+				}
+				return TES3::Vector3();
 			};
 
 			// Bind function: tes3.getCameraPosition
