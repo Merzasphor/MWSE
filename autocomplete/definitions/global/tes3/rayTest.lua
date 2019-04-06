@@ -17,6 +17,7 @@ return {
 			{ name = "returnNormal", type = "boolean", default = true },
 			{ name = "returnSmoothNormal", type = "boolean", default = false },
 			{ name = "returnTexture", type = "boolean", default = false },
+			{ name = "ignore", type = "table", description = "An array of references and/or scene graph nodes to cull from the result(s).", optional = true },
 		},
 	}},
 	returns = "result",
