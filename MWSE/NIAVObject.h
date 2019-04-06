@@ -38,6 +38,9 @@ namespace NI {
 		__declspec(dllexport) T * getObjectByNameAndType(const char* name) {
 			return reinterpret_cast<T*>(vTable.asAVObject->getObjectByName(this, name));
 		}
+
+		bool getAppCulled();
+		void setAppCulled(bool culled);
 		
 		//
 		// Other related this-call functions.
@@ -71,8 +74,8 @@ namespace NI {
 		void * unknown_0x44;
 		void * unknown_0x48;
 		void * unknown_0x4C;
-		void * setAppCulled; // 0x50
-		void * getAppCulled; // 0x54
+		void (__thiscall * setAppCulled)(AVObject*, bool); // 0x50
+		bool (__thiscall * getAppCulled)(AVObject*); // 0x54
 		void * unknown_0x58;
 		AVObject * (__thiscall * getObjectByName)(AVObject*, const char*); // 0x5C
 		void * unknown_0x60;

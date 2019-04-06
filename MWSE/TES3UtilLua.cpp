@@ -610,7 +610,7 @@ namespace mwse {
 
 			// Bind function: tes3.getCameraPosition
 			static NI::Pick* rayTestCache = nullptr;
-			state["tes3"]["rayTest"] = [](sol::optional<sol::table> params) -> sol::object {
+			state["tes3"]["rayTest"] = [](sol::table params) -> sol::object {
 				// Make sure we got our required position.
 				sol::optional<TES3::Vector3> position = getOptionalParamVector3(params, "position");
 				if (!position) {
@@ -680,8 +680,43 @@ namespace mwse {
 				rayTestCache->returnSmoothNormal = getOptionalParam<bool>(params, "returnSmoothNormal", false);
 				rayTestCache->returnTexture = getOptionalParam<bool>(params, "returnTexture", false);
 
+				// Allow defining references/nodes to ignore from the raytest.
+				std::vector<NI::Node*> ignoreRestoreList;
+				sol::optional<sol::table> ignoreTable = params["ignore"];
+				if (ignoreTable) {
+					for (const auto& kvPair : ignoreTable.value()) {
+						sol::object value = kvPair.second;
+						if (value.is<NI::Node>()) {
+							auto node = value.as<NI::Node*>();
+							if (!node->getAppCulled()) {
+								// Cull the node, and add it to a list to set as unculled later.
+								node->setAppCulled(true);
+								ignoreRestoreList.push_back(node);
+							}
+						}
+						else if (value.is<TES3::Reference>()) {
+							auto reference = value.as<TES3::Reference*>();
+							if (reference->sceneNode) {
+								if (!reference->sceneNode->getAppCulled()) {
+									// Cull the node, and add it to a list to set as unculled later.
+									reference->sceneNode->setAppCulled(true);
+									ignoreRestoreList.push_back(reference->sceneNode);
+								}
+							}
+						}
+						else {
+							throw std::exception("tes3.rayTest: Invalid item in ignore list. Must contain only scene graph nodes or references.");
+						}
+					}
+				}
+
 				// Our pick is configured. Let's run it!
 				rayTestCache->pickObjects(&position.value(), &direction.value());
+
+				// Restore previous cull states.
+				for (auto itt = ignoreRestoreList.begin(); itt != ignoreRestoreList.end(); itt++) {
+					(*itt)->setAppCulled(false);
+				}
 
 				// Did we get any results?
 				if (rayTestCache->results.filledCount == 0) {

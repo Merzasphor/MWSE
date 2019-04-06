@@ -86,10 +86,7 @@ namespace mwse {
 			});
 
 			// Friendly access to flags.
-			usertypeDefinition.set("appCulled", sol::property(
-				[](NI::AVObject& self) -> bool { return (self.flags & 1) == 1; },
-				[](NI::AVObject& self, bool set) { set ? self.flags |= 1 : self.flags &= ~1; }
-			));
+			usertypeDefinition.set("appCulled", sol::property(&NI::AVObject::getAppCulled, &NI::AVObject::setAppCulled));
 		}
 
 		void bindNIObject();

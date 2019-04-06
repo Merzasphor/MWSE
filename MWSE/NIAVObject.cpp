@@ -16,6 +16,14 @@ namespace NI {
 		return vTable.asAVObject->getObjectByName(this, name);
 	}
 
+	bool AVObject::getAppCulled() {
+		return vTable.asAVObject->getAppCulled(this);
+	}
+
+	void AVObject::setAppCulled(bool culled) {
+		vTable.asAVObject->setAppCulled(this, culled);
+	}
+
 	void AVObject::updateNodeEffects() {
 		reinterpret_cast<void(__thiscall *)(AVObject *)>(NI_AVObject_updateNodeEffects)(this);
 	}
