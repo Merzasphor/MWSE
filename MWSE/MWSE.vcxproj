@@ -102,9 +102,16 @@
     <ClInclude Include="LuaWeatherCycledEvent.h" />
     <ClInclude Include="LuaWeatherTransitionFinishedEvent.h" />
     <ClInclude Include="LuaWeatherTransitionStartedEvent.h" />
+    <ClInclude Include="NIColor.h" />
+    <ClInclude Include="NIColorLua.h" />
+    <ClInclude Include="NIDynamicEffect.h" />
+    <ClInclude Include="NIDynamicEffectLua.h" />
+    <ClInclude Include="NILight.h" />
+    <ClInclude Include="NILightLua.h" />
     <ClInclude Include="NIPixelData.h" />
     <ClInclude Include="NIPixelDataLua.h" />
     <ClInclude Include="NIPixelFormat.h" />
+    <ClInclude Include="NIPointLight.h" />
     <ClInclude Include="NIProperty.h" />
     <ClInclude Include="NISourceTexture.h" />
     <ClInclude Include="NISourceTextureLua.h" />
@@ -452,6 +459,9 @@
     <ClCompile Include="MgeTes3Machine.cpp" />
     <ClCompile Include="NIAVObject.cpp" />
     <ClCompile Include="NICameraLua.cpp" />
+    <ClCompile Include="NIColor.cpp" />
+    <ClCompile Include="NIColorLua.cpp" />
+    <ClCompile Include="NILightLua.cpp" />
     <ClCompile Include="NINode.cpp" />
     <ClCompile Include="NINodeLua.cpp" />
     <ClCompile Include="NIObject.cpp" />

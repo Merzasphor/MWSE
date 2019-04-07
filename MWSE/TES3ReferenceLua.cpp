@@ -7,6 +7,7 @@
 #include "TES3Util.h"
 
 #include "NINode.h"
+#include "NIPointLight.h"
 
 #include "TES3Cell.h"
 #include "TES3DataHandler.h"
@@ -135,6 +136,13 @@ namespace mwse {
 					return attachment->data;
 				}
 				return nullptr;
+			}));
+			usertypeDefinition.set("light", sol::property([](TES3::Reference& self) -> sol::object {
+				auto attachment = static_cast<TES3::LightAttachment*>(self.getAttachment(TES3::AttachmentType::Light));
+				if (attachment) {
+					return makeLuaObject(attachment->data->light);
+				}
+				return sol::nil;
 			}));
 			usertypeDefinition.set("mobile", sol::property([](TES3::Reference& self) {
 				return makeLuaObject(self.getAttachedMobileActor());

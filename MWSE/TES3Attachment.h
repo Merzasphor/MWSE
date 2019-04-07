@@ -9,6 +9,7 @@ namespace TES3 {
 	namespace AttachmentType {
 		enum AttachmentType {
 			Animation = 0x0,
+			Light = 0x2,
 			Lock = 0x3,
 			TravelDestination = 0x5,
 			Variables = 0x6,
@@ -35,6 +36,18 @@ namespace TES3 {
 	//
 
 	typedef AttachmentWithNode<AnimationData> AnimationAttachment;
+
+	//
+	// Lights
+	//
+
+	struct LightAttachmentNode {
+		NI::Light * light; // 0x0
+		float unknown_0x4;
+	};
+	static_assert(sizeof(LightAttachmentNode) == 0x8, "TES3::LightAttachmentNode failed size validation");
+
+	typedef AttachmentWithNode<LightAttachmentNode> LightAttachment;
 
 	//
 	// Locks

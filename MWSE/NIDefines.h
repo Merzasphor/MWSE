@@ -5,6 +5,9 @@
 namespace NI {
 	struct AVObject;
 	struct Camera;
+	struct Color;
+	struct DynamicEffect;
+	struct Light;
 	struct Node;
 	struct Object;
 	struct ObjectNET;
@@ -12,6 +15,7 @@ namespace NI {
 	struct PickRecord;
 	struct PixelData;
 	struct PixelFormat;
+	struct PointLight;
 	struct Property;
 	struct RTTI;
 	struct SourceTexture;

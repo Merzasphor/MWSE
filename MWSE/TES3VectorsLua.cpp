@@ -5,6 +5,8 @@
 
 #include "TES3Vectors.h"
 
+#include "NIColor.h"
+
 #include <iomanip>
 
 namespace mwse {
@@ -87,6 +89,9 @@ namespace mwse {
 				usertypeDefinition.set("negate", &TES3::Vector3::negate);
 				usertypeDefinition.set("normalize", &TES3::Vector3::normalize);
 				usertypeDefinition.set("normalized", &TES3::Vector3::normalized);
+
+				// Conversion to NI::Color.
+				usertypeDefinition.set("toColor", [](TES3::Vector3& self) { return NI::Color(self.x, self.y, self.z); });
 
 				// Finish up our usertype.
 				state.set_usertype("tes3vector3", usertypeDefinition);
