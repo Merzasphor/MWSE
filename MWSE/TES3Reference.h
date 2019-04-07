@@ -64,6 +64,7 @@ namespace TES3 {
 		__declspec(dllexport) MobileNPC* getAttachedMobileNPC();
 		__declspec(dllexport) MobileProjectile* getAttachedMobileProjectile();
 		__declspec(dllexport) ItemData* getAttachedItemData();
+		__declspec(dllexport) void setAttachedItemData(ItemData * itemData);
 		__declspec(dllexport) ItemData* getOrCreateAttachedItemData();
 		__declspec(dllexport) LockAttachmentNode* getAttachedLockNode();
 

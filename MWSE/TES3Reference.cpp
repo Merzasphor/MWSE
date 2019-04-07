@@ -332,9 +332,20 @@ namespace TES3 {
 		return nullptr;
 	}
 
-	const auto TES3_Reference_getOrCreateAttachedItemData = reinterpret_cast<ItemData* (__thiscall*)(Reference*)>(0x4E7640);
+	const auto TES3_Reference_setAttachedItemData = reinterpret_cast<void(__thiscall*)(Reference*, ItemData*)>(0x4E5360);
+	void Reference::setAttachedItemData(ItemData * itemData) {
+		TES3_Reference_setAttachedItemData(this, itemData);
+	}
+
 	ItemData* Reference::getOrCreateAttachedItemData() {
-		return TES3_Reference_getOrCreateAttachedItemData(this);
+		auto itemData = getAttachedItemData();
+
+		if (itemData == nullptr) {
+			itemData = ItemData::createForObject(baseObject);
+			setAttachedItemData(itemData);
+		}
+
+		return itemData;
 	}
 
 	LockAttachmentNode* Reference::getAttachedLockNode() {
