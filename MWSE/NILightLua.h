@@ -25,6 +25,9 @@ namespace mwse {
 			usertypeDefinition.set("constantAttenuation", &NI::PointLight::constantAttenuation);
 			usertypeDefinition.set("linearAttenuation", &NI::PointLight::linearAttenuation);
 			usertypeDefinition.set("quadraticAttenuation", &NI::PointLight::quadraticAttenuation);
+
+			// Basic function binding.
+			usertypeDefinition.set("setAttenuationForRadius", &NI::PointLight::setAttenuationForRadius);
 		}
 
 		void bindNILight();

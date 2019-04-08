@@ -2690,6 +2690,9 @@
     <ClCompile Include="TES3Ingredient.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
+    <ClCompile Include="NIPointLight.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">

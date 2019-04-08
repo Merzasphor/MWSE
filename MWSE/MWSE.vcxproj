@@ -474,6 +474,7 @@
     <ClCompile Include="NIPick.cpp" />
     <ClCompile Include="NIPickLua.cpp" />
     <ClCompile Include="NIPixelDataLua.cpp" />
+    <ClCompile Include="NIPointLight.cpp" />
     <ClCompile Include="NISourceTexture.cpp" />
     <ClCompile Include="NISourceTextureLua.cpp" />
     <ClCompile Include="NIStream.cpp" />

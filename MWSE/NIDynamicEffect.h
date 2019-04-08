@@ -7,8 +7,8 @@ namespace NI {
 		bool enabled; // 0x90
 		int index; // 0x94
 		int unknown_0x98;
-		int unknown_0x9C;
-		NodeLinkedList affectedNodes;
+		unsigned int revisionId; // 0x9C
+		NodeLinkedList affectedNodes; // 0xA0
 	};
 	static_assert(sizeof(DynamicEffect) == 0xA8, "NI::DynamicEffect failed size validation");
 }
