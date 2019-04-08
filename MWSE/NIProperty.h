@@ -2,6 +2,8 @@
 
 #include "NIObjectNET.h"
 
+#include "NILinkedList.h"
+
 namespace NI {
 	struct Property_vTable : Object_vTable {
 		int(__thiscall * getType)(Property*); // 0x2C
@@ -37,4 +39,6 @@ namespace NI {
 
 	};
 	static_assert(sizeof(Property) == 0x18, "NI::Property failed size validation");
+
+	typedef LinkedList<Property> PropertyLinkedList;
 }

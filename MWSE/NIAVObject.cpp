@@ -10,7 +10,7 @@
 namespace NI {
 	const auto NI_AVObject_detachPropertyByType = reinterpret_cast<Pointer<Property> *(__thiscall*)(AVObject*, Pointer<Property>*, int)>(0x6EAE20);
 
-	const auto NI_PropertyList_addHead = reinterpret_cast<void(__thiscall*)(AVObject::PropertyListNode*, Pointer<Property>)>(0x405840);
+	const auto NI_PropertyList_addHead = reinterpret_cast<void(__thiscall*)(PropertyLinkedList*, Pointer<Property>)>(0x405840);
 
 	AVObject * AVObject::getObjectByName(const char* name) {
 		return vTable.asAVObject->getObjectByName(this, name);
@@ -57,7 +57,7 @@ namespace NI {
 	}
 
 	Pointer<Property> AVObject::getProperty(int type) {
-		PropertyListNode * propNode = &propertyNode;
+		auto propNode = &propertyNode;
 		if (propNode->data == nullptr) {
 			return nullptr;
 		}

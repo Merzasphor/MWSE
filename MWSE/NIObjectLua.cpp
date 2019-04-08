@@ -74,18 +74,32 @@ namespace mwse {
 				state.set_usertype("niAVObject", usertypeDefinition);
 			}
 
-			// Binding for NI::AVObject::PropertyListNode.
+			// Binding for NI::PropertyLinkedList.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<NI::AVObject::PropertyListNode>();
+				auto usertypeDefinition = state.create_simple_usertype<NI::PropertyLinkedList>();
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Basic property binding.
-				usertypeDefinition.set("data", sol::readonly_property([](NI::AVObject::PropertyListNode& self) { return makeLuaNiPointer(self.data); }));
-				usertypeDefinition.set("next", &NI::AVObject::PropertyListNode::next);
+				usertypeDefinition.set("data", sol::readonly_property([](NI::PropertyLinkedList& self) { return makeLuaNiPointer(self.data); }));
+				usertypeDefinition.set("next", &NI::PropertyLinkedList::next);
 
 				// Finish up our usertype.
-				state.set_usertype("niAVObjectPropertyListNode", usertypeDefinition);
+				state.set_usertype("niPropertyLinkedList", usertypeDefinition);
+			}
+
+			// Binding for NI::NodeLinkedList.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<NI::NodeLinkedList>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				// Basic property binding.
+				usertypeDefinition.set("data", sol::readonly_property([](NI::NodeLinkedList& self) { return makeLuaNiPointer(self.data); }));
+				usertypeDefinition.set("next", &NI::NodeLinkedList::next);
+
+				// Finish up our usertype.
+				state.set_usertype("niNodeLinkedList", usertypeDefinition);
 			}
 		}
 	}

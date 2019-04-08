@@ -110,6 +110,7 @@
     <ClInclude Include="NIDynamicEffectLua.h" />
     <ClInclude Include="NILight.h" />
     <ClInclude Include="NILightLua.h" />
+    <ClInclude Include="NILinkedList.h" />
     <ClInclude Include="NIPixelData.h" />
     <ClInclude Include="NIPixelDataLua.h" />
     <ClInclude Include="NIPixelFormat.h" />

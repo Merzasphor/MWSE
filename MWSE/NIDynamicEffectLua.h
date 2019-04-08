@@ -14,6 +14,7 @@ namespace mwse {
 			setUserdataForNIAVObject(usertypeDefinition);
 
 			// Basic property binding.
+			usertypeDefinition.set("affectedNodes", &NI::DynamicEffect::affectedNodes);
 			usertypeDefinition.set("enabled", &NI::DynamicEffect::enabled);
 		}
 	}

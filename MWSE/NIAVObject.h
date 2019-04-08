@@ -8,10 +8,6 @@
 
 namespace NI {
 	struct AVObject : ObjectNET {
-		struct PropertyListNode {
-			Property * data;
-			PropertyListNode * next;
-		};
 		unsigned short flags; // 0x14
 		short unknown_0x16;
 		Node * parentNode; // 0x18
@@ -26,7 +22,7 @@ namespace NI {
 		int unknown_0x7C;
 		int unknown_0x80;
 		int unknown_0x84;
-		PropertyListNode propertyNode; // 0x88
+		PropertyLinkedList propertyNode; // 0x88
 
 		//
 		// vTable wrappers.

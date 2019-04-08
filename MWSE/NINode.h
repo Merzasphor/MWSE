@@ -31,4 +31,6 @@ namespace NI {
 		void * updateBoundUpwards; // 0xA4
 	};
 	static_assert(sizeof(Node_vTable) == 0xA8, "NI::Node's vtable failed size validation");
+
+	typedef LinkedList<Node> NodeLinkedList;
 }
