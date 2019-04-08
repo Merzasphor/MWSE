@@ -17,6 +17,14 @@ namespace TES3 {
 		long effects[4]; // 0xB0
 		long effectSkillIds[4]; // 0xC0
 		long effectAttributeIds[4]; // 0xD0
+
+		//
+		// Custom functions.
+		//
+
+		// Isn't defined by the vtable, have to overwrite here.
+		void setName(const char* n);
+
 	};
 	static_assert(sizeof(Ingredient) == 0xE0, "TES3::Ingredient failed size validation");
 }
