@@ -3,9 +3,11 @@
 #include <cstdint>
 
 namespace NI {
+	struct AmbientLight;
 	struct AVObject;
 	struct Camera;
 	struct Color;
+	struct DirectionalLight;
 	struct DynamicEffect;
 	struct Light;
 	struct Node;
@@ -19,6 +21,7 @@ namespace NI {
 	struct Property;
 	struct RTTI;
 	struct SourceTexture;
+	struct SpotLight;
 	struct SwitchNode;
 	struct Texture;
 	struct TimeController;

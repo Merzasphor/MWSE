@@ -102,8 +102,10 @@
     <ClInclude Include="LuaWeatherCycledEvent.h" />
     <ClInclude Include="LuaWeatherTransitionFinishedEvent.h" />
     <ClInclude Include="LuaWeatherTransitionStartedEvent.h" />
+    <ClInclude Include="NIAmbientLight.h" />
     <ClInclude Include="NIColor.h" />
     <ClInclude Include="NIColorLua.h" />
+    <ClInclude Include="NIDirectionalLight.h" />
     <ClInclude Include="NIDynamicEffect.h" />
     <ClInclude Include="NIDynamicEffectLua.h" />
     <ClInclude Include="NILight.h" />
@@ -115,6 +117,7 @@
     <ClInclude Include="NIProperty.h" />
     <ClInclude Include="NISourceTexture.h" />
     <ClInclude Include="NISourceTextureLua.h" />
+    <ClInclude Include="NISpotLight.h" />
     <ClInclude Include="NITexture.h" />
     <ClInclude Include="NITriShape.h" />
     <ClInclude Include="NIPointer.h" />

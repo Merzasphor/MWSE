@@ -6,8 +6,10 @@
 #include "LuaUtil.h"
 
 #include "NINode.h"
-#include "NIPointLight.h"
+#include "NIAmbientLight.h"
+#include "NIDirectionalLight.h"
 #include "NIRTTI.h"
+#include "NISpotLight.h"
 
 namespace mwse {
 	namespace lua {
@@ -43,6 +45,37 @@ namespace mwse {
 				state.set_usertype("niLight", usertypeDefinition);
 			}
 
+			// Binding for NI::AmbientLight.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<NI::AmbientLight>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				// Inherit NI::Light.
+				usertypeDefinition.set(sol::base_classes, sol::bases<NI::Object, NI::ObjectNET, NI::AVObject, NI::DynamicEffect, NI::Light>());
+				setUserdataForNILight(usertypeDefinition);
+
+				// Finish up our usertype.
+				state.set_usertype("niAmbientLight", usertypeDefinition);
+			}
+
+			// Binding for NI::DirectionalLight.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<NI::DirectionalLight>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				// Inherit NI::Light.
+				usertypeDefinition.set(sol::base_classes, sol::bases<NI::Object, NI::ObjectNET, NI::AVObject, NI::DynamicEffect, NI::Light>());
+				setUserdataForNILight(usertypeDefinition);
+
+				// Basic property binding.
+				usertypeDefinition.set("direction", &NI::DirectionalLight::direction);
+
+				// Finish up our usertype.
+				state.set_usertype("niDirectionalLight", usertypeDefinition);
+			}
+
 			// Binding for NI::PointLight.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
@@ -51,15 +84,29 @@ namespace mwse {
 
 				// Inherit NI::Light.
 				usertypeDefinition.set(sol::base_classes, sol::bases<NI::Object, NI::ObjectNET, NI::AVObject, NI::DynamicEffect, NI::Light>());
-				setUserdataForNILight(usertypeDefinition);
-
-				// Basic property binding.
-				usertypeDefinition.set("constantAttenuation", &NI::PointLight::constantAttenuation);
-				usertypeDefinition.set("linearAttenuation", &NI::PointLight::linearAttenuation);
-				usertypeDefinition.set("quadraticAttenuation", &NI::PointLight::quadraticAttenuation);
+				setUserdataForNIPointLight(usertypeDefinition);
 
 				// Finish up our usertype.
 				state.set_usertype("niPointLight", usertypeDefinition);
+			}
+
+			// Binding for NI::SpotLight.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<NI::SpotLight>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				// Inherit NI::Light.
+				usertypeDefinition.set(sol::base_classes, sol::bases<NI::Object, NI::ObjectNET, NI::AVObject, NI::DynamicEffect, NI::Light, NI::PointLight>());
+				setUserdataForNIPointLight(usertypeDefinition);
+
+				// Basic property binding.
+				usertypeDefinition.set("direction", &NI::SpotLight::direction);
+				usertypeDefinition.set("spotAngle", &NI::SpotLight::spotAngle);
+				usertypeDefinition.set("spotExponent", &NI::SpotLight::spotExponent);
+
+				// Finish up our usertype.
+				state.set_usertype("niSpotLight", usertypeDefinition);
 			}
 		}
 	}

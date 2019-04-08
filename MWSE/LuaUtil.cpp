@@ -6,15 +6,18 @@
 #include "TES3Util.h"
 #include "Log.h"
 
+#include "NIAmbientLight.h"
 #include "NIAVObject.h"
 #include "NICamera.h"
 #include "NIDefines.h"
+#include "NIDirectionalLight.h"
 #include "NINode.h"
 #include "NIObject.h"
 #include "NIObjectNET.h"
 #include "NIPick.h"
 #include "NIPointLight.h"
 #include "NIRTTI.h"
+#include "NISpotLight.h"
 #include "NISwitchNode.h"
 #include "NITriShape.h"
 
@@ -609,10 +612,14 @@ namespace mwse {
 			sol::state& state = luaManager.getState();
 
 			switch ((uintptr_t)object->getRunTimeTypeInformation()) {
+			case NI::RTTIStaticPtr::NiAmbientLight:
+				return sol::make_object(state, reinterpret_cast<NI::AmbientLight*>(object));
 			case NI::RTTIStaticPtr::NiAVObject:
 				return sol::make_object(state, reinterpret_cast<NI::AVObject*>(object));
 			case NI::RTTIStaticPtr::NiCamera:
 				return sol::make_object(state, reinterpret_cast<NI::Camera*>(object));
+			case NI::RTTIStaticPtr::NiDirectionalLight:
+				return sol::make_object(state, reinterpret_cast<NI::DirectionalLight*>(object));
 			case NI::RTTIStaticPtr::NiNode:
 				return sol::make_object(state, reinterpret_cast<NI::Node*>(object));
 			case NI::RTTIStaticPtr::NiObjectNET:
@@ -623,6 +630,8 @@ namespace mwse {
 				return sol::make_object(state, reinterpret_cast<NI::PointLight*>(object));
 			case NI::RTTIStaticPtr::NiSourceTexture:
 				return sol::make_object(state, reinterpret_cast<NI::SourceTexture*>(object));
+			case NI::RTTIStaticPtr::NiSpotLight:
+				return sol::make_object(state, reinterpret_cast<NI::SpotLight*>(object));
 			case NI::RTTIStaticPtr::NiSwitchNode:
 				return sol::make_object(state, reinterpret_cast<NI::SwitchNode*>(object));
 			case NI::RTTIStaticPtr::NiTriShape:
@@ -634,9 +643,6 @@ namespace mwse {
 			}
 			else if (object->isInstanceOfType(NI::RTTIStaticPtr::NiTriShape)) {
 				return sol::make_object(state, reinterpret_cast<NI::TriShape*>(object));
-			}
-			else if (object->isInstanceOfType(NI::RTTIStaticPtr::NiLight)) {
-				return sol::make_object(state, reinterpret_cast<NI::Light*>(object));
 			}
 			else if (object->isInstanceOfType(NI::RTTIStaticPtr::NiDynamicEffect)) {
 				return sol::make_object(state, reinterpret_cast<NI::DynamicEffect*>(object));
@@ -674,10 +680,14 @@ namespace mwse {
 			sol::state& state = luaManager.getState();
 
 			switch ((uintptr_t)object->getRunTimeTypeInformation()) {
+			case NI::RTTIStaticPtr::NiAmbientLight:
+				return sol::make_object(state, NI::Pointer<NI::AmbientLight>(reinterpret_cast<NI::AmbientLight*>(object)));
 			case NI::RTTIStaticPtr::NiAVObject:
 				return sol::make_object(state, NI::Pointer<NI::AVObject>(reinterpret_cast<NI::AVObject*>(object)));
 			case NI::RTTIStaticPtr::NiCamera:
 				return sol::make_object(state, NI::Pointer<NI::Camera>(reinterpret_cast<NI::Camera*>(object)));
+			case NI::RTTIStaticPtr::NiDirectionalLight:
+				return sol::make_object(state, NI::Pointer<NI::DirectionalLight>(reinterpret_cast<NI::DirectionalLight*>(object)));
 			case NI::RTTIStaticPtr::NiNode:
 				return sol::make_object(state, NI::Pointer<NI::Node>(reinterpret_cast<NI::Node*>(object)));
 			case NI::RTTIStaticPtr::NiObjectNET:
@@ -688,6 +698,8 @@ namespace mwse {
 				return sol::make_object(state, NI::Pointer<NI::PointLight>(reinterpret_cast<NI::PointLight*>(object)));
 			case NI::RTTIStaticPtr::NiSourceTexture:
 				return sol::make_object(state, NI::Pointer<NI::SourceTexture>(reinterpret_cast<NI::SourceTexture*>(object)));
+			case NI::RTTIStaticPtr::NiSpotLight:
+				return sol::make_object(state, NI::Pointer<NI::SpotLight>(reinterpret_cast<NI::SpotLight*>(object)));
 			case NI::RTTIStaticPtr::NiSwitchNode:
 				return sol::make_object(state, NI::Pointer<NI::SwitchNode>(reinterpret_cast<NI::SwitchNode*>(object)));
 			case NI::RTTIStaticPtr::NiTriShape:
@@ -699,9 +711,6 @@ namespace mwse {
 			}
 			else if (object->isInstanceOfType(NI::RTTIStaticPtr::NiTriShape)) {
 				return sol::make_object(state, NI::Pointer<NI::TriShape>(reinterpret_cast<NI::TriShape*>(object)));
-			}
-			else if (object->isInstanceOfType(NI::RTTIStaticPtr::NiLight)) {
-				return sol::make_object(state, NI::Pointer<NI::Light>(reinterpret_cast<NI::Light*>(object)));
 			}
 			else if (object->isInstanceOfType(NI::RTTIStaticPtr::NiDynamicEffect)) {
 				return sol::make_object(state, NI::Pointer<NI::DynamicEffect>(reinterpret_cast<NI::DynamicEffect*>(object)));
