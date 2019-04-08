@@ -7,6 +7,7 @@
 
 #include "NIDefines.h"
 #include "NIAVObject.h"
+#include "NIDynamicEffect.h"
 #include "NINode.h"
 #include "NIObject.h"
 #include "NIObjectNET.h"
@@ -74,18 +75,18 @@ namespace mwse {
 				state.set_usertype("niAVObject", usertypeDefinition);
 			}
 
-			// Binding for NI::PropertyLinkedList.
+			// Binding for NI::DynamicEffectLinkedList.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<NI::PropertyLinkedList>();
+				auto usertypeDefinition = state.create_simple_usertype<NI::DynamicEffectLinkedList>();
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Basic property binding.
-				usertypeDefinition.set("data", sol::readonly_property([](NI::PropertyLinkedList& self) { return makeLuaNiPointer(self.data); }));
-				usertypeDefinition.set("next", &NI::PropertyLinkedList::next);
+				usertypeDefinition.set("data", sol::readonly_property([](NI::DynamicEffectLinkedList& self) { return makeLuaNiPointer(self.data); }));
+				usertypeDefinition.set("next", &NI::DynamicEffectLinkedList::next);
 
 				// Finish up our usertype.
-				state.set_usertype("niPropertyLinkedList", usertypeDefinition);
+				state.set_usertype("niDynamicEffectLinkedList", usertypeDefinition);
 			}
 
 			// Binding for NI::NodeLinkedList.
@@ -100,6 +101,20 @@ namespace mwse {
 
 				// Finish up our usertype.
 				state.set_usertype("niNodeLinkedList", usertypeDefinition);
+			}
+
+			// Binding for NI::PropertyLinkedList.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<NI::PropertyLinkedList>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				// Basic property binding.
+				usertypeDefinition.set("data", sol::readonly_property([](NI::PropertyLinkedList& self) { return makeLuaNiPointer(self.data); }));
+				usertypeDefinition.set("next", &NI::PropertyLinkedList::next);
+
+				// Finish up our usertype.
+				state.set_usertype("niPropertyLinkedList", usertypeDefinition);
 			}
 		}
 	}

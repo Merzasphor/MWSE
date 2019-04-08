@@ -11,6 +11,7 @@ namespace mwse {
 
 			// Basic property binding.
 			usertypeDefinition.set("children", sol::readonly_property(&NI::Node::children));
+			usertypeDefinition.set("effectList", sol::readonly_property(&NI::Node::effectList));
 
 			// Basic function binding.
 			usertypeDefinition.set("attachChild", [](NI::Node& self, NI::AVObject * child, sol::optional<bool> useFirstAvailable) {

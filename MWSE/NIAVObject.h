@@ -1,6 +1,7 @@
 #pragma once
 
 #include "NIObjectNET.h"
+#include "NILinkedList.h"
 #include "NIProperty.h"
 #include "NITransform.h"
 

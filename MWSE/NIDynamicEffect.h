@@ -1,6 +1,6 @@
 #pragma once
 
-#include "NINode.h"
+#include "NIAVObject.h"
 
 namespace NI {
 	struct DynamicEffect : AVObject {

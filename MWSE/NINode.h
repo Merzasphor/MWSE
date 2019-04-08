@@ -6,8 +6,7 @@
 namespace NI {
 	struct Node : AVObject {
 		TES3::TArray<AVObject> children; // 0x90
-		void * effectList; // 0xA8 // Maybe?
-		void * bound; // 0xAC // Maybe?
+		DynamicEffectLinkedList effectList; // 0xA8
 
 		Node();
 		~Node();
@@ -31,6 +30,4 @@ namespace NI {
 		void * updateBoundUpwards; // 0xA4
 	};
 	static_assert(sizeof(Node_vTable) == 0xA8, "NI::Node's vtable failed size validation");
-
-	typedef LinkedList<Node> NodeLinkedList;
 }

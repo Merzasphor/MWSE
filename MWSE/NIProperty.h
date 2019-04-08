@@ -39,6 +39,4 @@ namespace NI {
 
 	};
 	static_assert(sizeof(Property) == 0x18, "NI::Property failed size validation");
-
-	typedef LinkedList<Property> PropertyLinkedList;
 }
