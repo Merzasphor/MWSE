@@ -72,8 +72,6 @@ namespace NI {
 			quadraticAttenuation = 0.0f;
 		}
 
-		dimmer = 1.0f;
-
 		revisionId++;
 	}
 }
