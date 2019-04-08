@@ -9,6 +9,19 @@ namespace NI {
 		int unknown_0x98;
 		unsigned int revisionId; // 0x9C
 		NodeLinkedList affectedNodes; // 0xA0
+
+		//
+		// vTable wrappers.
+		//
+
+		int getType();
+
 	};
 	static_assert(sizeof(DynamicEffect) == 0xA8, "NI::DynamicEffect failed size validation");
+
+
+	struct DynamicEffect_vTable : AVObject_vTable {
+		int (__thiscall * getType)(DynamicEffect*); // 0x94
+	};
+	static_assert(sizeof(DynamicEffect_vTable) == 0x98, "NI::DynamicEffect's vtable failed size validation");
 }

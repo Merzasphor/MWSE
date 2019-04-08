@@ -2693,6 +2693,9 @@
     <ClCompile Include="NIPointLight.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
+    <ClCompile Include="NIDynamicEffect.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">

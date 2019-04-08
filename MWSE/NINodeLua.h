@@ -1,6 +1,7 @@
 #pragma once
 
 #include "NIObjectLua.h"
+#include "NIDynamicEffect.h"
 
 namespace mwse {
 	namespace lua {
@@ -32,6 +33,9 @@ namespace mwse {
 				self.detachChildAt(&returnedChild, index);
 				return makeLuaNiPointer(returnedChild);
 			});
+
+			// Functions that need their results wrapped.
+			usertypeDefinition.set("getEffect", [](NI::Node& self, int type) { return makeLuaNiPointer(self.getEffect(type)); });
 		}
 
 		void bindNINode();

@@ -7,6 +7,7 @@ namespace NI {
 		union {
 			Object_vTable * asObject;
 			AVObject_vTable * asAVObject;
+			DynamicEffect_vTable * asDynamicEffect;
 			Node_vTable * asNode;
 			Property_vTable * asProperty;
 			TriShape_vTable * asTriShape;

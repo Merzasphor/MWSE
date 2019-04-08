@@ -36,8 +36,8 @@ namespace NI {
 			return reinterpret_cast<T*>(vTable.asAVObject->getObjectByName(this, name));
 		}
 
-		bool getAppCulled();
-		void setAppCulled(bool culled);
+		__declspec(dllexport) bool getAppCulled();
+		__declspec(dllexport) void setAppCulled(bool culled);
 		
 		//
 		// Other related this-call functions.
@@ -56,7 +56,7 @@ namespace NI {
 		//
 
 		__declspec(dllexport) void clearTransforms();
-		Pointer<Property> getProperty(int type);
+		__declspec(dllexport) Pointer<Property> getProperty(int type);
 
 	};
 	static_assert(sizeof(AVObject) == 0x90, "NI::AVObject failed size validation");

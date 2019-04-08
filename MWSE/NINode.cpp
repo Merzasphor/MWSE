@@ -1,5 +1,7 @@
 #include "NINode.h"
 
+#include "NIDynamicEffect.h"
+
 namespace NI {
 	const auto NI_Node_ctor = reinterpret_cast<void(__thiscall*)(const Node*)>(0x6C81E0);
 
@@ -21,5 +23,18 @@ namespace NI {
 
 	void Node::detachChildAt(AVObject ** out_detached, unsigned int index) {
 		vTable.asNode->detachChildAt(this, out_detached, index);
+	}
+
+	Pointer<DynamicEffect> Node::getEffect(int type) {
+		auto effectNode = &effectList;
+		while (effectNode) {
+			if (effectNode->data && effectNode->data->getType() == type) {
+				return effectNode->data;
+			}
+
+			effectNode = effectNode->next;
+		}
+
+		return nullptr;
 	}
 }

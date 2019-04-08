@@ -29,6 +29,7 @@ namespace NI {
 	struct TriShape;
 
 	struct AVObject_vTable;
+	struct DynamicEffect_vTable;
 	struct Node_vTable;
 	struct Object_vTable;
 	struct Property_vTable;
