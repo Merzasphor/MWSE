@@ -80,7 +80,7 @@ namespace mwse {
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.create_simple_usertype<NI::PointLight>();
-				usertypeDefinition.set("new", sol::no_constructor);
+				usertypeDefinition.set("new", []() { return makeLuaNiPointer(NI::PointLight::create()); });
 
 				// Inherit NI::Light.
 				usertypeDefinition.set(sol::base_classes, sol::bases<NI::Object, NI::ObjectNET, NI::AVObject, NI::DynamicEffect, NI::Light>());

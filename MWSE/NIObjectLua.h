@@ -69,7 +69,7 @@ namespace mwse {
 			// Basic function binding.
 			usertypeDefinition.set("attachProperty", &NI::AVObject::attachProperty);
 			usertypeDefinition.set("clearTransforms", &NI::AVObject::clearTransforms);
-			usertypeDefinition.set("propegatePositionChange", [](NI::AVObject& self) { self.propagatePositionChange(); });
+			usertypeDefinition.set("propagatePositionChange", [](NI::AVObject& self) { self.propagatePositionChange(); });
 			usertypeDefinition.set("updateNodeEffects", &NI::AVObject::updateNodeEffects);
 			usertypeDefinition.set("updateTextureProperties", &NI::AVObject::updateTextureProperties);
 
@@ -87,6 +87,9 @@ namespace mwse {
 
 			// Friendly access to flags.
 			usertypeDefinition.set("appCulled", sol::property(&NI::AVObject::getAppCulled, &NI::AVObject::setAppCulled));
+
+			// Legacy access. TODO: Remove.
+			usertypeDefinition.set("propegatePositionChange", [](NI::AVObject& self) { self.propagatePositionChange(); });
 		}
 
 		void bindNIObject();

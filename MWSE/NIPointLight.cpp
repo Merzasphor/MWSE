@@ -2,6 +2,8 @@
 
 #include "TES3DataHandler.h"
 
+#include "TES3Util.h"
+
 namespace TES3 {
 	enum LightAttenuationFlag {
 		UseConstant = 0x1,
@@ -24,6 +26,18 @@ namespace TES3 {
 }
 
 namespace NI {
+	Pointer<PointLight> PointLight::create() {
+		PointLight * light = mwse::tes3::_new<PointLight>();
+		light->ctor();
+
+		light->vTable.asDynamicEffect = reinterpret_cast<DynamicEffect_vTable*>(0x749D40);
+		light->constantAttenuation = 0.0f;
+		light->linearAttenuation = 1.0f;
+		light->quadraticAttenuation = 0.0f;
+
+		return light;
+	}
+
 	void PointLight::setAttenuationForRadius(unsigned int radius) {
 		// Get constant attenuation.
 		if (TES3::LightAttenuation_Flags & TES3::LightAttenuationFlag::UseConstant) {

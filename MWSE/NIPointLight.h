@@ -2,6 +2,8 @@
 
 #include "NILight.h"
 
+#include "NIPointer.h"
+
 namespace NI {
 	struct PointLight : Light {
 		float constantAttenuation; // 0xD0
@@ -11,6 +13,8 @@ namespace NI {
 		//
 		// Custom functions.
 		//
+
+		static Pointer<PointLight> create();
 
 		void setAttenuationForRadius(unsigned int radius);
 

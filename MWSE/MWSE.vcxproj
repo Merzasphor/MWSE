@@ -466,6 +466,7 @@
     <ClCompile Include="NIColor.cpp" />
     <ClCompile Include="NIColorLua.cpp" />
     <ClCompile Include="NIDynamicEffect.cpp" />
+    <ClCompile Include="NILight.cpp" />
     <ClCompile Include="NILightLua.cpp" />
     <ClCompile Include="NINode.cpp" />
     <ClCompile Include="NINodeLua.cpp" />
