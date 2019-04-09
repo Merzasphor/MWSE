@@ -8,6 +8,7 @@
 #include "TES3Util.h"
 
 #include "NINode.h"
+#include "NIPointLight.h"
 
 #include "TES3Actor.h"
 #include "TES3Cell.h"
@@ -88,6 +89,45 @@ namespace TES3 {
 
 	void Reference::removeAttachment(TES3::Attachment * attachment) {
 		TES3_Reference_removeAttachment(this, attachment);
+	}
+
+	const auto TES3_Reference_detachDynamicLightFromAffectedNodes = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4EBA00);
+	void Reference::detachDynamicLightFromAffectedNodes() {
+		TES3_Reference_detachDynamicLightFromAffectedNodes(this);
+	}
+
+	const auto TES3_Reference_deleteDynamicLightAttachment = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E50F0);
+	void Reference::deleteDynamicLightAttachment() {
+		detachDynamicLightFromAffectedNodes();
+		TES3_Reference_deleteDynamicLightAttachment(this);
+	}
+
+	LightAttachmentNode* Reference::getAttachedDynamicLight() {
+		auto attachment = static_cast<TES3::LightAttachment*>(getAttachment(TES3::AttachmentType::Light));
+		return attachment ? attachment->data : nullptr;
+	}
+
+	LightAttachmentNode* Reference::getOrCreateAttachedDynamicLight(NI::PointLight * light, float value) {
+		auto attachmentNode = getAttachedDynamicLight();
+		if (attachmentNode) {
+			return attachmentNode;
+		}
+
+		auto attachment = mwse::tes3::_new<TES3::LightAttachment>();
+		attachment->type = TES3::AttachmentType::Light;
+		attachment->next = nullptr;
+
+		attachmentNode = mwse::tes3::_new<TES3::LightAttachmentNode>();
+		memset(attachmentNode, 0, sizeof(TES3::LightAttachmentNode));
+		attachmentNode->light = light;
+		attachmentNode->unknown_0x4 = value;
+		attachment->data = attachmentNode;
+		
+		insertAttachment(attachment);
+
+		TES3::DataHandler::get()->setDynamicLightingForReference(this);
+
+		return attachment->data;
 	}
 
 	const auto TES3_Reference_updateEquipment = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E8B50);

@@ -33,7 +33,7 @@ namespace NI {
 
 		template <typename T>
 		__declspec(dllexport) T * getObjectByNameAndType(const char* name) {
-			return reinterpret_cast<T*>(vTable.asAVObject->getObjectByName(this, name));
+			return static_cast<T*>(vTable.asAVObject->getObjectByName(this, name));
 		}
 
 		__declspec(dllexport) bool getAppCulled();

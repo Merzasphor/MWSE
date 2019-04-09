@@ -208,4 +208,9 @@ namespace TES3 {
 		reinterpret_cast<void(__thiscall *)(DataHandler*, Sound*, Reference*)>(TES3_DataHandler_removeSound)(this, sound, reference);
 	}
 
+	const auto TES3_DataHandler_setDynamicLightingForReference = reinterpret_cast<void(__thiscall*)(DataHandler*, Reference*)>(0x485B00);
+	void DataHandler::setDynamicLightingForReference(Reference* reference) {
+		TES3_DataHandler_setDynamicLightingForReference(this, reference);
+	}
+
 }

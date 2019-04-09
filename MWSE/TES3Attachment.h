@@ -5,6 +5,8 @@
 #include "TES3Item.h"
 #include "TES3Vectors.h"
 
+#include "NIPointer.h"
+
 namespace TES3 {
 	namespace AttachmentType {
 		enum AttachmentType {
@@ -42,7 +44,7 @@ namespace TES3 {
 	//
 
 	struct LightAttachmentNode {
-		NI::Light * light; // 0x0
+		NI::Pointer<NI::Light> light; // 0x0
 		float unknown_0x4;
 	};
 	static_assert(sizeof(LightAttachmentNode) == 0x8, "TES3::LightAttachmentNode failed size validation");

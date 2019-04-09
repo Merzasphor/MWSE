@@ -33,6 +33,9 @@ namespace TES3 {
 		__declspec(dllexport) ScriptVariables * getScriptVariables();
 		__declspec(dllexport) void removeAttachment(TES3::Attachment * attachment);
 
+		__declspec(dllexport) void detachDynamicLightFromAffectedNodes();
+		__declspec(dllexport) void deleteDynamicLightAttachment();
+
 		__declspec(dllexport) void updateEquipment();
 
 		//
@@ -67,6 +70,9 @@ namespace TES3 {
 		__declspec(dllexport) void setAttachedItemData(ItemData * itemData);
 		__declspec(dllexport) ItemData* getOrCreateAttachedItemData();
 		__declspec(dllexport) LockAttachmentNode* getAttachedLockNode();
+
+		__declspec(dllexport) LightAttachmentNode* getAttachedDynamicLight();
+		__declspec(dllexport) LightAttachmentNode* getOrCreateAttachedDynamicLight(NI::PointLight *, float);
 
 		bool getEmptyInventoryFlag();
 		void setEmptyInventoryFlag(bool);

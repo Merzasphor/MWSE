@@ -16,6 +16,20 @@ namespace mwse {
 			// Get our lua state.
 			sol::state& state = LuaManager::getInstance().getState();
 
+			// Bind TES3::LightAttachmentNode
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::LightAttachmentNode>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				// Access to node properties.
+				usertypeDefinition.set("light", &TES3::LightAttachmentNode::light);
+				usertypeDefinition.set("value", &TES3::LightAttachmentNode::unknown_0x4);
+
+				// Finish up our usertype.
+				state.set_usertype("tes3lightNode", usertypeDefinition);
+			}
+
 			// Bind TES3::LockAttachmentNode
 			{
 				// Start our usertype. We must finish this with state.set_usertype.

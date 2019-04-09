@@ -102,9 +102,13 @@ namespace mwse {
 
 			// Basic function binding.
 			usertypeDefinition.set("activate", [](TES3::Reference& self, TES3::Reference& target) { target.activate(&self); });
-			usertypeDefinition.set("clone", &TES3::Reference::clone);
-			usertypeDefinition.set("setActionFlag", &TES3::Reference::setActionFlag);
 			usertypeDefinition.set("clearActionFlag", &TES3::Reference::clearActionFlag);
+			usertypeDefinition.set("clone", &TES3::Reference::clone);
+			usertypeDefinition.set("deleteDynamicLightAttachment", &TES3::Reference::deleteDynamicLightAttachment);
+			usertypeDefinition.set("detachDynamicLightFromAffectedNodes", &TES3::Reference::detachDynamicLightFromAffectedNodes);
+			usertypeDefinition.set("getAttachedDynamicLight", &TES3::Reference::getAttachedDynamicLight);
+			usertypeDefinition.set("getOrCreateAttachedDynamicLight", &TES3::Reference::getOrCreateAttachedDynamicLight);
+			usertypeDefinition.set("setActionFlag", &TES3::Reference::setActionFlag);
 			usertypeDefinition.set("testActionFlag", &TES3::Reference::testActionFlag);
 			usertypeDefinition.set("updateEquipment", &TES3::Reference::updateEquipment);
 
