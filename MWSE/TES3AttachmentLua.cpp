@@ -5,6 +5,8 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "NIPointLight.h"
+
 #include "TES3Attachment.h"
 #include "TES3Cell.h"
 #include "TES3Misc.h"
