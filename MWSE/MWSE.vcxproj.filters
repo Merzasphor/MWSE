@@ -1236,6 +1236,9 @@
     <ClInclude Include="NILinkedList.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
+    <ClInclude Include="TES3UIMenuControllerLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2698,6 +2701,9 @@
     </ClCompile>
     <ClCompile Include="NILight.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3UIMenuControllerLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

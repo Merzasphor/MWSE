@@ -46,6 +46,7 @@
 #include "TES3UIElement.h"
 #include "TES3UIInventoryTile.h"
 #include "TES3UIManager.h"
+#include "TES3UIMenuController.h"
 #include "TES3WorldController.h"
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
@@ -113,7 +114,7 @@
 #include "TES3UIElementLua.h"
 #include "TES3UIInventoryTileLua.h"
 #include "TES3UIManagerLua.h"
-#include "TES3UIMenuController.h"
+#include "TES3UIMenuControllerLua.h"
 #include "TES3UIWidgetsLua.h"
 #include "TES3VectorsLua.h"
 #include "TES3WeaponLua.h"
@@ -431,6 +432,7 @@ namespace mwse {
 			bindTES3UIElement();
 			bindTES3UIInventoryTile();
 			bindTES3UIManager();
+			bindTES3UIMenuController();
 			bindTES3UIWidgets();
 
 			// Bind NI data types.
