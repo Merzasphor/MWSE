@@ -4,6 +4,26 @@
 
 namespace mwse {
 	namespace lua {
+		static bool equip(TES3::MobileNPC& self, sol::object arg) {
+			if (arg.is<TES3::Item>()) {
+				return self.equipItem(arg.as<TES3::Item*>());
+			}
+
+			sol::table params = arg;
+
+			TES3::Item * item = getOptionalParamObject<TES3::Item>(params, "item");
+			if (item == nullptr) {
+				return false;
+			}
+
+			TES3::ItemData * itemData = getOptionalParam(params, "itemData", nullptr);
+
+			bool addItem = getOptionalParam<bool>(params, "addItem", false);
+			bool forceSpecifiedItemData = getOptionalParam<bool>(params, "forceSpecifiedItemData", false);
+
+			return self.equipItem(item, itemData, addItem, forceSpecifiedItemData);
+		}
+
 		static bool unequip(TES3::MobileNPC& self, sol::table args) {
 			TES3::Actor* actor = static_cast<TES3::Actor*>(self.reference->baseObject);
 			TES3::EquipmentStack* s = nullptr;
@@ -66,7 +86,7 @@ namespace mwse {
 			setUserdataForMobileNPC(usertypeDefinition);
 
 			// Basic function binding.
-			usertypeDefinition.set("equip", &TES3::MobileActor::equipItem);
+			usertypeDefinition.set("equip", &equip);
 			usertypeDefinition.set("unequip", &unequip);
 
 			// Finish up our usertype.

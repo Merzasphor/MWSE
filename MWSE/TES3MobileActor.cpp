@@ -301,7 +301,7 @@ namespace TES3 {
 		}
 	}
 
-	bool MobileActor::equipItem(Object* item) {
+	bool MobileActor::equipItem(Object* item, ItemData* itemData, bool addItem, bool forceSpecifiedItemData) {
 		Actor* actor = static_cast<Actor*>(reference->baseObject);
 
 		// Equipping weapons while they are in use breaks animations and AI
@@ -313,10 +313,13 @@ namespace TES3 {
 		if (!s) {
 			return false;
 		}
-		// Get first available itemdata
-		ItemData* data = (s->variables) ? s->variables->storage[0] : nullptr;
 
-		TES3_MobileActor_wearItem(this, item, data, false, false);
+		// Get first available itemdata if one isn't provided.
+		if (!forceSpecifiedItemData && itemData == nullptr && s->variables != nullptr) {
+			itemData = s->variables->storage[0];
+		}
+
+		TES3_MobileActor_wearItem(this, item, itemData, addItem, false);
 		return true;
 	}
 

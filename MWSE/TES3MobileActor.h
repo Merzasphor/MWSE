@@ -259,7 +259,7 @@ namespace TES3 {
 		bool getMobileActorMovementFlag(ActorMovement::Flag);
 		void setMobileActorMovementFlag(ActorMovement::Flag, bool);
 
-		bool equipItem(Object* item);
+		bool equipItem(Object* item, ItemData * itemData = nullptr, bool addItem = false, bool forceSpecifiedItemData = false);
 	};
 	static_assert(sizeof(MobileActor::ActiveMagicEffect) == 0x18, "TES3::MobileActor::ActiveMagicEffect failed size validation");
 	static_assert(sizeof(MobileActor) == 0x3B0, "TES3::MobileActor failed size validation");
