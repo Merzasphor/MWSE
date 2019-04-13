@@ -214,6 +214,7 @@ namespace TES3 {
 	}
 
 	void Reference::setOrientation(float x, float y, float z) {
+		// Orientation uses Euler ZYX angles.
 		Vector3 * orientationPackage = getOrientation();
 		orientationPackage->x = x;
 		orientationPackage->y = y;
@@ -225,7 +226,7 @@ namespace TES3 {
 
 		if (sceneNode) {
 			Matrix33 tempOutArg;
-			sceneNode->setLocalRotationMatrix(updateSceneMatrix(&tempOutArg));
+			sceneNode->setLocalRotationMatrix(updateSceneMatrix(&tempOutArg, false));
 			sceneNode->propagatePositionChange();
 		}
 
@@ -243,8 +244,8 @@ namespace TES3 {
 		return destination;
 	}
 
-	Matrix33* Reference::updateSceneMatrix(Matrix33* matrix, bool unknown) {
-		return reinterpret_cast<Matrix33* (__thiscall *)(Reference*, Matrix33*, bool)>(0x4E8450)(this, matrix, unknown);
+	Matrix33* Reference::updateSceneMatrix(Matrix33* matrix, bool eulerXYZ) {
+		return reinterpret_cast<Matrix33* (__thiscall *)(Reference*, Matrix33*, bool)>(0x4E8450)(this, matrix, eulerXYZ);
 	}
 
 	bool Reference::getEmptyInventoryFlag() {

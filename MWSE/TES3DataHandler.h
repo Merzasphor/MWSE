@@ -157,9 +157,9 @@ namespace TES3 {
 		CellExteriorData* exteriorCellData[9]; // 0x4
 		void * unknown_0x28[25]; // 0x28
 		NI::Node * worldObjectRoot; // 0x8C
-		void * worldPickObjectRoot; // 0x90
-		void * worldLandscapeRoot; // 0x94
-		void * sgSunlight;
+		NI::Node * worldPickObjectRoot; // 0x90
+		NI::Node * worldLandscapeRoot; // 0x94
+		NI::DirectionalLight * sgSunlight;
 		void * sgFogProperty;
 		int centralGridX; // 0xA0
 		int centralGridY; // 0xA4

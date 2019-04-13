@@ -11,6 +11,7 @@
 #include "TES3Script.h"
 #include "TES3Sound.h"
 
+#include "NINode.h"
 #include "NISourceTexture.h"
 
 #include "LuaUtil.h"
@@ -83,6 +84,9 @@ namespace mwse {
 				usertypeDefinition.set("mainThreadId", sol::readonly_property(&TES3::DataHandler::mainThreadID));
 				usertypeDefinition.set("nonDynamicData", sol::readonly_property(&TES3::DataHandler::nonDynamicData));
 				usertypeDefinition.set("threadSleepTime", sol::readonly_property(&TES3::DataHandler::threadSleepTime));
+				usertypeDefinition.set("worldObjectRoot", sol::readonly_property(&TES3::DataHandler::worldObjectRoot));
+				usertypeDefinition.set("worldPickObjectRoot", sol::readonly_property(&TES3::DataHandler::worldPickObjectRoot));
+				usertypeDefinition.set("worldLandscapeRoot", sol::readonly_property(&TES3::DataHandler::worldLandscapeRoot));
 
 				// Indirect bindings to unions and arrays.
 				usertypeDefinition.set("exteriorCells", sol::readonly_property([](TES3::DataHandler& self) { return std::ref(self.exteriorCellData); }));

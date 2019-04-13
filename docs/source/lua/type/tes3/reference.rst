@@ -58,7 +58,7 @@ objectType
 
 orientation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Vector3`_. The object's orientation in the world.
+`Vector3`_. The object's orientation in the world, in ZYX Euler angles using radians. This is how the engine handles orientation internally. The mwscript SetAngle commands use XYZ Euler angles in degrees, but only for temporary animation, as the command sets an override that does not load/save correctly. When translating mwscript you should review all rotation logic to use radians and ZYX Euler.
 
 position
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -52,7 +52,7 @@ namespace TES3 {
 
 		__declspec(dllexport) TravelDestination * setTravelDestination(Vector3 * position, Vector3 * orientation, Cell * cell = nullptr);
 
-		__declspec(dllexport) Matrix33* updateSceneMatrix(Matrix33* matrix, bool unknown = true);
+		__declspec(dllexport) Matrix33* updateSceneMatrix(Matrix33* matrix, bool eulerXYZ = false);
 
 		__declspec(dllexport) Inventory * getInventory();
 		__declspec(dllexport) Iterator<EquipmentStack> * getEquipment();
