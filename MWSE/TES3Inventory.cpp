@@ -53,7 +53,7 @@ namespace TES3 {
 			return stack->variables->contains(data);
 		}
 
-		return false;
+		return true;
 	}
 
 	float Inventory::calculateContainedWeight() {

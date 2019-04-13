@@ -200,7 +200,21 @@ namespace mwse {
 					TES3::ItemData * itemData = getOptionalParam<TES3::ItemData*>(params, "itemData", nullptr);
 					self.addItem(mact, item, count, false, itemData ? &itemData : nullptr);
 				});
-				usertypeDefinition.set("contains", &TES3::Inventory::containsItem);
+				usertypeDefinition.set("contains", [](TES3::Inventory& self, sol::object itemOrItemId, sol::optional<TES3::ItemData*> itemData) {
+					if (itemOrItemId.is<TES3::Item*>()) {
+						auto item = itemOrItemId.as<TES3::Item*>();
+						return self.containsItem(item, itemData.value_or(nullptr));
+					}
+					else if (itemOrItemId.is<const char*>()) {
+						TES3::DataHandler * dataHandler = TES3::DataHandler::get();
+						if (dataHandler) {
+							auto itemId = itemOrItemId.as<const char*>();
+							auto item = dataHandler->nonDynamicData->resolveObjectByType<TES3::Item>(itemId);
+							return self.containsItem(item, itemData.value_or(nullptr));
+						}
+					}
+					return false;
+				});
 				usertypeDefinition.set("dropItem", &TES3::Inventory::dropItem);
 				usertypeDefinition.set("calculateWeight", &TES3::Inventory::calculateContainedWeight);
 				usertypeDefinition.set("removeItem", [](TES3::Inventory& self, sol::table params) {
