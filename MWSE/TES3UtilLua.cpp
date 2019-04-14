@@ -1843,7 +1843,7 @@ namespace mwse {
 					}
 					else {
 						sol::optional<bool> flag = params["flag"];
-						reinterpret_cast<void(__cdecl*)(TES3::Vector3, TES3::Vector3, TES3::Cell*, int)>(0x45CEF0)(position.value(), orientation.value(), cell, flag.value());
+						reinterpret_cast<void(__cdecl*)(TES3::Vector3, TES3::Vector3, TES3::Cell*, int)>(0x45CEF0)(position.value(), orientation.value(), cell, flag.value_or(true));
 					}
 				}
 				else {
