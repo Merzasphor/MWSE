@@ -14,7 +14,7 @@ namespace NI {
 			Texture_vTable * asTexture;
 			SourceTexture_vTable * asSourceTexture;
 		} vTable; // 0x0
-		int references; // 0x4
+		int refCount; // 0x4
 
 		//
 		// vTable Wrappers

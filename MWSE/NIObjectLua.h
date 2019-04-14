@@ -10,7 +10,7 @@ namespace mwse {
 		template <typename T>
 		void setUserdataForNIObject(sol::simple_usertype<T>& usertypeDefinition) {
 			// Basic property binding.
-			usertypeDefinition.set("references", sol::readonly_property(&NI::Object::references));
+			usertypeDefinition.set("refCount", sol::readonly_property(&NI::Object::refCount));
 
 			// Basic function binding.
 			usertypeDefinition.set("clone", [](NI::Object& self) { return makeLuaObject(self.createClone()); });

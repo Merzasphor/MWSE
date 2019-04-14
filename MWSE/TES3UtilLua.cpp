@@ -623,6 +623,9 @@ namespace mwse {
 					return false;
 				}
 
+				// Get optional maximum search distance.
+				double maxDistance = getOptionalParam<double>(params, "maxDistance", 0.0);
+
 				// Create our pick if it doesn't exist.
 				if (rayTestCache == nullptr) {
 					rayTestCache = NI::Pick::malloc();
@@ -711,7 +714,7 @@ namespace mwse {
 				}
 
 				// Our pick is configured. Let's run it!
-				rayTestCache->pickObjects(&position.value(), &direction.value());
+				rayTestCache->pickObjects(&position.value(), &direction.value(), false, maxDistance);
 
 				// Restore previous cull states.
 				for (auto itt = ignoreRestoreList.begin(); itt != ignoreRestoreList.end(); itt++) {

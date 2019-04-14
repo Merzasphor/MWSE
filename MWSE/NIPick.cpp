@@ -17,8 +17,8 @@ namespace NI {
 		mwse::tes3::free(this);
 	}
 
-	void Pick::pickObjects(TES3::Vector3 * origin, TES3::Vector3 * direction, bool append, float unknown) {
-		reinterpret_cast<void(__thiscall*)(Pick*, TES3::Vector3*, TES3::Vector3*, bool, float)>(NI_Pick_pickObjects)(this, origin, direction, append, unknown);
+	void Pick::pickObjects(TES3::Vector3 * origin, TES3::Vector3 * direction, bool append, float maxDistance) {
+		reinterpret_cast<void(__thiscall*)(Pick*, TES3::Vector3*, TES3::Vector3*, bool, float)>(NI_Pick_pickObjects)(this, origin, direction, append, maxDistance);
 	}
 
 	void Pick::clearResults() {

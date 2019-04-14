@@ -19,7 +19,7 @@ namespace mwse {
 		void bindNIPick() {
 			sol::state& state = LuaManager::getInstance().getState();
 
-			state.new_usertype<NI::Pick>("NIPick",
+			state.new_usertype<NI::Pick>("niPick",
 				// Disable construction of this type.
 				"new", sol::no_constructor,
 
@@ -50,7 +50,7 @@ namespace mwse {
 
 				);
 
-			state.new_usertype<NI::PickRecord>("NIPickRecord",
+			state.new_usertype<NI::PickRecord>("niPickRecord",
 				// Disable construction of this type.
 				"new", sol::no_constructor,
 
