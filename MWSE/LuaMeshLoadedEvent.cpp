@@ -20,7 +20,7 @@ namespace mwse {
 				sol::table eventData = state.create_table();
 
 				eventData["path"] = m_Path;
-				eventData["mesh"] = makeLuaNiPointer(m_Mesh);
+				eventData["node"] = makeLuaNiPointer(m_Mesh);
 
 				return eventData;
 			}
