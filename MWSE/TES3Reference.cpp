@@ -93,6 +93,11 @@ namespace TES3 {
 		TES3_Reference_removeAttachment(this, attachment);
 	}
 
+	const auto TES3_Reference_ensureScriptDataIsInstanced = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E7050);
+	void Reference::ensureScriptDataIsInstanced() {
+		TES3_Reference_ensureScriptDataIsInstanced(this);
+	}
+
 	const auto TES3_Reference_detachDynamicLightFromAffectedNodes = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4EBA00);
 	void Reference::detachDynamicLightFromAffectedNodes() {
 		TES3_Reference_detachDynamicLightFromAffectedNodes(this);
@@ -147,7 +152,8 @@ namespace TES3 {
 			// Get the values from the table.
 			sol::table positionTable = value.as<sol::table>();
 			if (positionTable.size() == 3) {
-				setPosition(positionTable[1], positionTable[2], positionTable[3]);
+				Vector3 pos(positionTable[1], positionTable[2], positionTable[3]);
+				setPosition(&pos);
 			}
 		}
 	}
@@ -160,16 +166,17 @@ namespace TES3 {
 		// Is it a matrix?
 		else if (value.is<Matrix33*>()) {
 			auto matrix = value.as<TES3::Matrix33*>();
-			float x, y, z;
-			matrix->toEulerZYX(&x, &y, &z);
-			setOrientation(x, y, z);
+			Vector3 euler;
+			matrix->toEulerZYX(&euler.x, &euler.y, &euler.z);
+			setOrientation(&euler);
 		}
 		// Allow a simple table to be provided.
 		else if (value.get_type() == sol::type::table) {
 			// Get the values from the table.
 			sol::table positionTable = value.as<sol::table>();
 			if (positionTable.size() == 3) {
-				setOrientation(positionTable[1], positionTable[2], positionTable[3]);
+				Vector3 ori(positionTable[1], positionTable[2], positionTable[3]);
+				setOrientation(&ori);
 			}
 		}
 	}
@@ -178,18 +185,33 @@ namespace TES3 {
 		return &position;
 	}
 
-	void Reference::setPosition(float x, float y, float z) {
-		if (sceneNode) {
-			sceneNode->localTranslate.x = x;
-			sceneNode->localTranslate.y = y;
-			sceneNode->localTranslate.z = z;
-			sceneNode->propagatePositionChange();
+	void Reference::setPosition(const Vector3 * newPosition) {
+		// Check if the target position is in a different cell.
+		Cell * relocateCell = nullptr;
+		if (owningCollection.asReferenceList) {
+			auto cell = this->owningCollection.asReferenceList->cell;
+			if (cell && !cell->isPointInCell(newPosition->x, newPosition->y)) {
+				int cellX = Cell::toGridCoord(newPosition->x), cellY = Cell::toGridCoord(newPosition->y);
+				relocateCell = DataHandler::get()->nonDynamicData->getCellByGrid(cellX, cellY);
+			}
 		}
+		
+		if (relocateCell) {
+			// Use relocation helper function.
+			// Note that relocate only saves correctly for persistent or player owned refs.
+			relocate(relocateCell, newPosition);
+			// Script item data needs to be instanced if the item is now active but has not been seen before.
+			ensureScriptDataIsInstanced();
+		}
+		else {
+			// Reference has not changed cell, allowing a lower impact update.
+			position = *newPosition;
 
-		// Set local position.
-		position.x = x;
-		position.y = y;
-		position.z = z;
+			if (sceneNode) {
+				sceneNode->localTranslate = position;
+				sceneNode->propagatePositionChange();
+			}
+		}
 
 		// Sync position attachment to local position.
 		auto attachment = static_cast<NewOrientationAttachment*>(getAttachment(AttachmentType::NewOrientation));
@@ -198,10 +220,6 @@ namespace TES3 {
 		}
 
 		setObjectModified(true);
-	}
-
-	void Reference::setPosition(Vector3* positionVec) {
-		setPosition(positionVec->x, positionVec->y, positionVec->z);
 	}
 
 	Vector3 * Reference::getOrientation() {
@@ -215,12 +233,10 @@ namespace TES3 {
 		return getOrCreateOrientationFromAttachment();
 	}
 
-	void Reference::setOrientation(float x, float y, float z) {
+	void Reference::setOrientation(const Vector3 * newOrientation) {
 		// Orientation uses Euler ZYX angles.
 		Vector3 * orientationPackage = getOrientation();
-		orientationPackage->x = x;
-		orientationPackage->y = y;
-		orientationPackage->z = z;
+		*orientationPackage = *newOrientation;
 
 		if (orientationPackage != &orientation) {
 			orientation = *orientationPackage;
@@ -235,12 +251,8 @@ namespace TES3 {
 		setObjectModified(true);
 	}
 
-	void Reference::setOrientation(Vector3 * value) {
-		setOrientation(value->x, value->y, value->z);
-	}
-
-	const auto TES3_Reference_setTravelDestination = reinterpret_cast<TravelDestination*(__thiscall*)(Reference*, Vector3 *, Vector3*)>(0x4E7B80);
-	TravelDestination * Reference::setTravelDestination(Vector3 * position, Vector3 * orientation, Cell * cell) {
+	const auto TES3_Reference_setTravelDestination = reinterpret_cast<TravelDestination*(__thiscall*)(Reference*, const Vector3 *, const Vector3*)>(0x4E7B80);
+	TravelDestination * Reference::setTravelDestination(const Vector3 * position, const Vector3 * orientation, Cell * cell) {
 		auto destination = TES3_Reference_setTravelDestination(this, position, orientation);
 		destination->cell = cell;
 		return destination;
@@ -280,6 +292,15 @@ namespace TES3 {
 		return &reinterpret_cast<Actor*>(baseObject)->equipment;
 	}
 
+	const auto TES3_game_relocateReference = reinterpret_cast<void(__cdecl*)(Reference*, Cell*, const Vector3*, float)>(0x50EDD0);
+	void Reference::relocate(Cell * cell, const Vector3 * position) {
+		// Note that relocate only saves correctly for persistent or player owned refs.
+		// Restore Z orientation after relocation, as it does not perform all the updates that setOrientation does.
+		float restoreOriZ = orientation.z;
+		TES3_game_relocateReference(this, cell, position, 0);
+		orientation.z = restoreOriZ;
+	}
+
 	bool Reference::clone() {
 		// Check to make sure that the contained object is of the right type.
 		ObjectType::ObjectType baseType = baseObject->objectType;
@@ -293,13 +314,10 @@ namespace TES3 {
 			return false;
 		}
 
-		// Clone the object and set the reference (and its parent cell) as modified.
+		// Clone the object and set the reference (and implicitly its parent cell) as modified.
 		actor->clone(this);
 		baseObject->setObjectModified(true);
 		setObjectModified(true);
-		if (owningCollection.asReferenceList && owningCollection.asReferenceList->cell) {
-			owningCollection.asReferenceList->cell->setObjectModified(true);
-		}
 
 		return true;
 	}

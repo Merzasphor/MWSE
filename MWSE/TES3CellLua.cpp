@@ -125,7 +125,6 @@ namespace mwse {
 				usertypeDefinition.set("activators", sol::readonly_property(&TES3::Cell::activators));
 				usertypeDefinition.set("cellFlags", &TES3::Cell::cellFlags);
 				usertypeDefinition.set("statics", sol::readonly_property(&TES3::Cell::statics));
-				usertypeDefinition.set("moveReferences", sol::readonly_property(&TES3::Cell::moveReferences));
 
 				// Functions exposed as properties.
 				usertypeDefinition.set("ambientColor", sol::readonly_property(

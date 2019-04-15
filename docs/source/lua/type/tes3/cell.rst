@@ -41,9 +41,6 @@ Properties
 **isInterior** (`boolean`_)
     Friendly access into **flags**, providing access to if the cell is an interior.
 
-**moveReferences** (`tes3iterator`_ of `tes3reference`_, read-only)
-    One of the containers that holds references currently in the cell.
-
 **region** (`tes3region`_, read-only)
     The associated region with the cell. Only available for exterior cells, or interior cells that behave as exterior cells.
 

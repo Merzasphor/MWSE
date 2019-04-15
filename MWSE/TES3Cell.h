@@ -43,6 +43,17 @@ namespace TES3 {
 	static_assert(sizeof(MapNote) == 0x10, "TES3::MapNote failed size validation");
 
 	struct Cell : BaseObject {
+		struct MovedRef {
+			unsigned char flags;
+			Reference * reference;
+			unsigned int sourceID;
+			union {
+				const char * targetCellName;
+				const struct {
+					int gridX, gridY;
+				} * targetCellXY;
+			} duringLoad;
+		};
 		struct struct_0x84 {
 			int unknown_0x0;
 			int unknown_0x4;
@@ -52,7 +63,7 @@ namespace TES3 {
 			NI::Pointer<NI::SourceTexture> texture; // 0x14
 		};
 		char * name; // 0x10
-		void * unknown_0x14;
+		NI::Node * pickObjectsRoot;
 		CellFlag::value_type cellFlags; // 0x18
 		union {
 			CellExteriorData exterior;
@@ -63,13 +74,13 @@ namespace TES3 {
 				float fogDensity; // 0xC
 			} interior;
 		} VariantData; // 0x1C
-		void * unknown_0x2C;
+		NI::Node * staticObjectsRoot;
 		ReferenceList actors; // 0x30
 		ReferenceList activators; // 0x40
-		void * unknown_0x50; // Pointer list?
+		Iterator<MovedRef> * movedReferences; // 0x50
 		int unknown_0x54;
 		ReferenceList statics; // 0x58
-		Iterator<Reference> moveReferences; // 0x68
+		Iterator<void> allSourceMods; // 0x68
 		int unknown_0x7C;
 		int unknown_0x80;
 		struct_0x84 * unknown_0x84;
@@ -110,6 +121,13 @@ namespace TES3 {
 		void setWaterLevel(float);
 
 		Region * getRegion();
+
+		//
+		// Helper functions.
+		//
+
+		bool isPointInCell(float x, float y);
+		static int toGridCoord(float x) { return int(x) >> 13;  }
 	};
 	static_assert(sizeof(Cell) == 0x94, "TES3::Cell failed size validation");
 }

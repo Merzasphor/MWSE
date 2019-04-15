@@ -12,8 +12,8 @@ namespace TES3 {
 		Vector3 orientation; // 0x2c
 		Vector3 position; // 0x38
 		Attachment * attachments; // 0x44
-		int sourceID; // 0x48
-		int targetID; // 0x4C
+		unsigned int sourceID; // 0x48
+		unsigned int targetID; // 0x4C
 
 		//
 		// Other related this-call functions.
@@ -32,6 +32,7 @@ namespace TES3 {
 		__declspec(dllexport) LockAttachmentNode* getOrCreateLockNode();
 		__declspec(dllexport) ScriptVariables * getScriptVariables();
 		__declspec(dllexport) void removeAttachment(TES3::Attachment * attachment);
+		__declspec(dllexport) void ensureScriptDataIsInstanced();
 
 		__declspec(dllexport) void detachDynamicLightFromAffectedNodes();
 		__declspec(dllexport) void deleteDynamicLightAttachment();
@@ -43,20 +44,19 @@ namespace TES3 {
 		//
 
 		__declspec(dllexport) Vector3 * getPosition();
-		__declspec(dllexport) void setPosition(float x, float y, float z);
-		__declspec(dllexport) void setPosition(Vector3* positionVec);
+		__declspec(dllexport) void setPosition(const Vector3 * newPosition);
 
 		__declspec(dllexport) Vector3 * getOrientation();
-		__declspec(dllexport) void setOrientation(float x, float y, float z);
-		__declspec(dllexport) void setOrientation(Vector3* value);
+		__declspec(dllexport) void setOrientation(const Vector3 * newOrientation);
 
-		__declspec(dllexport) TravelDestination * setTravelDestination(Vector3 * position, Vector3 * orientation, Cell * cell = nullptr);
+		__declspec(dllexport) TravelDestination * setTravelDestination(const Vector3 * position, const Vector3 * orientation, Cell * cell = nullptr);
 
 		__declspec(dllexport) Matrix33* updateSceneMatrix(Matrix33* matrix, bool eulerXYZ = false);
 
 		__declspec(dllexport) Inventory * getInventory();
 		__declspec(dllexport) Iterator<EquipmentStack> * getEquipment();
 
+		__declspec(dllexport) void relocate(Cell * cell, const Vector3 * position);
 		__declspec(dllexport) bool clone();
 
 		__declspec(dllexport) bool insertAttachment(Attachment* attachment);

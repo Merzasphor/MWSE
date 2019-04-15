@@ -58,11 +58,16 @@ objectType
 
 orientation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-`Vector3`_. The object's orientation in the world, in ZYX Euler angles using radians. This is how the engine handles orientation internally. The mwscript SetAngle commands use XYZ Euler angles in degrees, but only for temporary animation, as the command sets an override that does not load/save correctly. When translating mwscript you should review all rotation logic to use radians and ZYX Euler.
+`Vector3`_. The object's orientation in the world, in ZYX Euler angles using radians. This is how the engine handles orientation internally.
+
+The mwscript SetAngle commands use XYZ Euler angles in degrees, but only for temporary animation, as the command sets an override that does not load/save correctly. When translating mwscript you should review all rotation logic to use radians and ZYX Euler.
 
 position
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 `Vector3`_. The object's position in the world.
+
+Objects can be moved between exterior cells by setting position, like mwscript ``Position``, but the change will only load/save correctly for persistent refs, actors, or player owned refs. Unfortunately, for non-persistent refs in exterior cells, it may duplicate the object on load. Moving objects within the same cell and interior cells are safe.
+
 
 
 Functions
