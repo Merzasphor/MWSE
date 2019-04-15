@@ -46,8 +46,8 @@ function this.register(eventType, callback, options)
 	if options.doOnce then
 		local originalCallback = callback
 		callback = function (e)
-			originalCallback(e)
 			this.unregister(eventType, callback, options)
+			originalCallback(e)
 		end
 	end
 
