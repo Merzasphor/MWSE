@@ -76,7 +76,8 @@ namespace mwse {
 			void showRestWaitMenu(bool allowRest, bool scripted) {
 				// Execute event. If the event blocked the call, bail.
 				mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-				sol::table eventData = luaManager.triggerEvent(new mwse::lua::event::ShowRestWaitMenuEvent(allowRest, scripted));
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::ShowRestWaitMenuEvent(allowRest, scripted));
 				if (eventData.valid()) {
 					if (eventData["block"] == true) {
 						return;

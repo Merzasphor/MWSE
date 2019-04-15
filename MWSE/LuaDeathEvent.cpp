@@ -17,8 +17,9 @@ namespace mwse {
 			}
 
 			sol::table DeathEvent::createEventTable() {
-				sol::state& state = LuaManager::getInstance().getState();
-				sol::table eventData = LuaManager::getInstance().createTable();
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table eventData = state.create_table();
 
 				eventData["mobile"] = makeLuaObject(m_MobileActor);
 				eventData["reference"] = makeLuaObject(m_MobileActor->reference);

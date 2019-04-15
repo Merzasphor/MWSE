@@ -81,7 +81,8 @@ namespace mwse {
 
 		void bindTES3UIElement() {
 			// Get our lua state.
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
 			auto usertypeDefinition = state.create_simple_usertype<Element>();
@@ -93,10 +94,10 @@ namespace mwse {
 			usertypeDefinition.set("parent", sol::readonly_property(&Element::parent));
 			usertypeDefinition.set("children", sol::readonly_property(
 				[](const Element& self) {
-					if (TES3::DataHandler::get()->mainThreadID != GetCurrentThreadId()) {
-						throw std::exception("Cannot be called from outside the main thread.");
-					}
-					sol::table children = LuaManager::getInstance().createTable();
+					auto& luaManager = mwse::lua::LuaManager::getInstance();
+					auto stateHandle = luaManager.getThreadSafeStateHandle();
+					sol::state& state = stateHandle.state;
+					sol::table children = state.create_table();
 					auto it = self.vectorChildren.begin;
 					auto end = self.vectorChildren.end;
 					for (int i = 1; it != end; ++it, ++i) {
@@ -106,7 +107,10 @@ namespace mwse {
 				}
 			));
 			usertypeDefinition.set("properties", sol::readonly_property([](const Element& self) {
-				sol::table result = LuaManager::getInstance().createTable();
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table result = state.create_table();
 
 				addPropertyToTable(result, self.properties.root->nextLeafOrRoot);
 
@@ -231,7 +235,9 @@ namespace mwse {
 			));
 			usertypeDefinition.set("color", sol::property(
 				[](Element& self) {
-					sol::state& state = LuaManager::getInstance().getState();
+					auto& luaManager = mwse::lua::LuaManager::getInstance();
+					auto stateHandle = luaManager.getThreadSafeStateHandle();
+					sol::state& state = stateHandle.state;
 					return state.create_table_with(1, self.colourRed, 2, self.colourGreen, 3, self.colourBlue);
 				},
 				[](Element& self, sol::table c) {
@@ -421,7 +427,11 @@ namespace mwse {
 				}
 			);
 			usertypeDefinition.set("getPropertyObject",
-				[](sol::this_state state, Element& self, const char* propertyName, sol::optional<std::string> typeCast) -> sol::object {
+				[](Element& self, const char* propertyName, sol::optional<std::string> typeCast) -> sol::object {
+					auto& luaManager = mwse::lua::LuaManager::getInstance();
+					auto stateHandle = luaManager.getThreadSafeStateHandle();
+					sol::state& state = stateHandle.state;
+
 					TES3::UI::Property prop = TES3::UI::registerProperty(propertyName);
 					auto ptr = self.getProperty(TES3::UI::PropertyType::Pointer, prop).ptrValue;
 

@@ -13,7 +13,8 @@ namespace TES3 {
 
 		// Launch our event, and overwrite the speed with what was given back to us.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		sol::table eventData = luaManager.triggerEvent(new mwse::lua::event::CalculateMovementSpeed(mwse::lua::event::CalculateMovementSpeed::Walk, this, speed));
+		auto stateHandle = luaManager.getThreadSafeStateHandle();
+		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CalculateMovementSpeed(mwse::lua::event::CalculateMovementSpeed::Walk, this, speed));
 		if (eventData.valid()) {
 			speed = eventData["speed"];
 		}

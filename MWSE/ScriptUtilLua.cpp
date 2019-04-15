@@ -20,7 +20,8 @@
 namespace mwse {
 	namespace lua {
 		void bindScriptUtil() {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			//
 			// Get context on the current execution.
@@ -177,7 +178,9 @@ namespace mwse {
 				}
 
 				// Fire off the event, because script calls don't hit the same code as our hooks.
-				sol::object response = LuaManager::getInstance().triggerEvent(new event::EquipEvent(reference, item, NULL));
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::object response = stateHandle.triggerEvent(new event::EquipEvent(reference, item, NULL));
 				if (response.get_type() == sol::type::table) {
 					sol::table eventData = response;
 					if (eventData["block"] == true) {

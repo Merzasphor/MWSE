@@ -18,7 +18,8 @@ namespace mwse {
 	namespace lua {
 		void bindNINode() {
 			// Get our lua state.
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			// Binding for TES3::TArray<NI::AVObject>.
 			bindGenericObjectTArray<NI::AVObject>("niAVObjectTArray");

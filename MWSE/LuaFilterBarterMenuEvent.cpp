@@ -19,8 +19,9 @@ namespace mwse {
 			}
 
 			sol::table FilterBarterMenuEvent::createEventTable() {
-				sol::state& state = LuaManager::getInstance().getState();
-				sol::table eventData = LuaManager::getInstance().createTable();
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table eventData = state.create_table();
 
 				eventData["tile"] = m_Tile;
 				eventData["item"] = makeLuaObject(m_Item);

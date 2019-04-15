@@ -21,7 +21,9 @@ namespace mwse {
 			}
 
 			sol::table CalculateSpellPriceEvent::createEventTable() {
-				sol::table eventData = LuaManager::getInstance().createTable();
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table eventData = state.create_table();
 
 				eventData["mobile"] = makeLuaObject(m_MobileActor);
 				if (m_MobileActor) {

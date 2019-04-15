@@ -8,7 +8,8 @@
 namespace mwse {
 	namespace lua {
 		void bindStringUtil() {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			//
 			// Extend mwse library with extra functions to replace %L in MWSE.
@@ -30,19 +31,18 @@ namespace mwse {
 			// Also provide a way to interact with the string storage.
 			//
 
-			state["mwse"]["string"] = LuaManager::getInstance().createTable();
+			state["mwse"]["string"] = state.create_table();
 
 			state["mwse"]["string"]["create"] = [](std::string value) -> int {
 				return mwse::string::store::getOrCreate(value.c_str());
 			};
 
-			state["mwse"]["string"]["get"] = [](double value) -> sol::object {
+			state["mwse"]["string"]["get"] = [](double value) -> sol::optional<std::string> {
 				try {
-					sol::state& state = LuaManager::getInstance().getState();
-					return sol::make_object(state, (std::string)mwse::string::store::get(value));
+					return mwse::string::store::get(value).c_str();
 				}
 				catch (std::exception& e) {
-					return sol::nil;
+					return sol::optional<std::string>();
 				}
 			};
 		}

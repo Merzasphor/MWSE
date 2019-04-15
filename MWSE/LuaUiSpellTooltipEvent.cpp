@@ -18,7 +18,9 @@ namespace mwse {
 			}
 
 			sol::table UiSpellTooltipEvent::createEventTable() {
-				sol::table eventData = LuaManager::getInstance().createTable();
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table eventData = state.create_table();
 
 				eventData["tooltip"] = m_Tooltip;
 				eventData["spell"] = makeLuaObject(m_Spell);

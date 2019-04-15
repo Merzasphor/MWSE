@@ -14,7 +14,8 @@
 namespace mwse {
 	namespace lua {
 		TES3::Alchemy* createAlchemy(sol::table params) {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			// Do we already have an object of this ID?
 			std::string id = getOptionalParam<std::string>(params, "id", "");
@@ -143,7 +144,8 @@ namespace mwse {
 
 		void bindTES3Alchemy() {
 			// Get our lua state.
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
 			auto usertypeDefinition = state.create_simple_usertype<TES3::Alchemy>();

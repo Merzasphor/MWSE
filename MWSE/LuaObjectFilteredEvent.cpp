@@ -31,7 +31,9 @@ namespace mwse {
 			}
 
 			sol::object ObjectFilteredEvent::getEventOptions() {
-				sol::table options = LuaManager::getInstance().createTable();
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table options = state.create_table();
 				options["filter"] = makeLuaObject(m_EventFilter);
 				return options;
 			}

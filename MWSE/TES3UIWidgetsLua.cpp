@@ -47,7 +47,8 @@ namespace mwse {
 		sol::object makeWidget(Element& element) {
 			deferredPropInit();
 
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 			sol::object widget = sol::nil;
 			Property part = element.getProperty(PropertyType::Property, Property::is_part).propertyValue;
 
@@ -116,7 +117,8 @@ namespace mwse {
 		}
 
 		void bindTES3UIWidgets() {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			//
 			// Button (PartButton)

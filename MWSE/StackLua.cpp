@@ -10,9 +10,10 @@
 namespace mwse {
 	namespace lua {
 		void bindMWSEStack() {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
-			state["mwse"]["stack"] = LuaManager::getInstance().createTable();
+			state["mwse"]["stack"] = state.create_table();
 
 			//
 			// Functions for pushing values.

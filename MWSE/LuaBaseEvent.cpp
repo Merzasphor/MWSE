@@ -9,7 +9,8 @@ namespace mwse {
 	namespace lua {
 		namespace event {
 			sol::object trigger(const char* eventType, sol::table eventData, sol::object eventOptions) {
-				sol::state& state = LuaManager::getInstance().getState();
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
 
 				// Trigger the function, check for lua errors.
 				sol::protected_function trigger = state["event"]["trigger"];
@@ -26,7 +27,9 @@ namespace mwse {
 			}
 
 			void clearObjectFilter(sol::object filterObject) {
-				sol::state& state = LuaManager::getInstance().getState();
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+
 				sol::protected_function trigger = state["event"]["clear"];
 				trigger(sol::nil, filterObject);
 			}

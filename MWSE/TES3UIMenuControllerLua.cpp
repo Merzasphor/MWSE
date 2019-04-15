@@ -14,7 +14,8 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3UIMenuController() {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			// Binding for TES3::UI::FontColor
 			{

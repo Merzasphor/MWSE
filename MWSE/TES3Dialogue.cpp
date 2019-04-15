@@ -25,7 +25,7 @@ namespace TES3 {
 
 		// If the journal index changed, raise an event that it was modified.
 		if (journalIndex > oldIndex) {
-			mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::JournalEvent(this, oldIndex, index));
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::JournalEvent(this, oldIndex, index));
 		}
 
 		return added;
@@ -50,7 +50,7 @@ namespace TES3 {
 
 		// Raise a modified event.
 		if (journalIndex > oldIndex) {
-			mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::JournalEvent(this, oldIndex, index));
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::JournalEvent(this, oldIndex, index));
 		}
 
 		return true;

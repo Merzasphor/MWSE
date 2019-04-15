@@ -8,7 +8,9 @@
 namespace mwse {
 	namespace lua {
 		sol::object getDefaultValue(TES3::GameSetting& gmst) {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			switch (gmst.getType()) {
 			case 'i': return sol::make_object(state, (double)gmst.getDefaultIntValue());
@@ -20,7 +22,9 @@ namespace mwse {
 		}
 
 		sol::object getValue(TES3::GameSetting& gmst) {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			switch (gmst.getType()) {
 			case 'i': return sol::make_object(state, (double)gmst.value.asLong);
@@ -32,6 +36,10 @@ namespace mwse {
 		}
 
 		void setValue(TES3::GameSetting& gmst, sol::object value) {
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
+
 			char type = gmst.getType();
 			if (type == 's' && value.is<std::string>()) {
 				tes3::setDataString(&gmst.value.asString, value.as<std::string>().c_str());
@@ -48,7 +56,8 @@ namespace mwse {
 
 		void bindTES3GameSetting() {
 			// Get our lua state.
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
 			auto usertypeDefinition = state.create_simple_usertype<TES3::GameSetting>();

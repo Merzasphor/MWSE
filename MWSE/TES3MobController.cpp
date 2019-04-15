@@ -28,13 +28,13 @@ namespace TES3 {
 	void MobController::addMob(Reference * reference) {
 		TES3_MobController_addMob(this, reference);
 
-		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileActorActivatedEvent(reference));
+		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileActorActivatedEvent(reference));
 	}
 
 	void MobController::removeMob(Reference * reference) {
 		TES3_MobController_removeMob(this, reference);
 
-		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileActorDeactivatedEvent(reference));
+		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileActorDeactivatedEvent(reference));
 	}
 
 	void MobController::checkPlayerDistance() {

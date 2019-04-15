@@ -10,7 +10,8 @@ namespace mwse {
 	namespace lua {
 		void bindTES3GameFile() {
 			// Get our lua state.
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
 			auto usertypeDefinition = state.create_simple_usertype<TES3::GameFile>();
@@ -35,7 +36,10 @@ namespace mwse {
 
 			// Access to other objects that need to be packaged.
 			usertypeDefinition.set("masters", sol::readonly_property([](TES3::GameFile& self) {
-				sol::table t = LuaManager::getInstance().createTable();
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table t = state.create_table();
 				TES3::GameFile* master = self.arrayMasters;
 				for (int i = 1, count = self.masterNames->size; i <= count; ++i, ++master) {
 					t[i] = master;

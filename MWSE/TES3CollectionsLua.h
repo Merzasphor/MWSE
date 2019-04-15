@@ -37,7 +37,8 @@ namespace mwse {
 
 		template <typename T>
 		void bindGenericObjectIterator(const char* name, const char* nodeName = NULL) {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			if (nodeName) {
 				// Start our usertype. We must finish this with state.set_usertype.
@@ -83,7 +84,8 @@ namespace mwse {
 
 		template <typename T>
 		void bindIterator(const char* name, const char* nodeName = NULL) {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			if (nodeName) {
 				// Start our usertype. We must finish this with state.set_usertype.
@@ -165,7 +167,8 @@ namespace mwse {
 
 		template <typename T>
 		void bindTArray(const char* name) {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
 			auto usertypeDefinition = state.create_simple_usertype<TES3::TArray<T>>();
@@ -223,7 +226,8 @@ namespace mwse {
 
 		template <typename T>
 		void bindGenericObjectTArray(const char* name) {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
 			auto usertypeDefinition = state.create_simple_usertype<TES3::TArray<T>>();
@@ -274,7 +278,8 @@ namespace mwse {
 
 		template <typename T>
 		void bindGenericObjectStlList(const char* name, const char* nodeName = NULL) {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			if (nodeName) {
 				// Start our usertype. We must finish this with state.set_usertype.

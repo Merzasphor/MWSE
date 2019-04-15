@@ -17,8 +17,9 @@ namespace mwse {
 			}
 
 			sol::table MagicCastedEvent::createEventTable() {
-				sol::state& state = LuaManager::getInstance().getState();
-				sol::table eventData = LuaManager::getInstance().createTable();
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table eventData = state.create_table();
 
 				eventData["caster"] = makeLuaObject(m_MagicSourceInstance->caster);
 				eventData["target"] = makeLuaObject(m_MagicSourceInstance->target);
@@ -29,8 +30,9 @@ namespace mwse {
 			}
 
 			sol::object MagicCastedEvent::getEventOptions() {
-				sol::state& state = LuaManager::getInstance().getState();
-				sol::table options = LuaManager::getInstance().createTable();
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table options = state.create_table();
 
 				options["filter"] = makeLuaObject(m_MagicSourceInstance->sourceCombo.source.asGeneric);
 				return options;

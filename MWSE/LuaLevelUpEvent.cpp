@@ -16,8 +16,9 @@ namespace mwse {
 			}
 
 			sol::table LevelUpEvent::createEventTable() {
-				sol::state& state = LuaManager::getInstance().getState();
-				sol::table eventData = LuaManager::getInstance().createTable();
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table eventData = state.create_table();
 
 				TES3::MobilePlayer* player = TES3::WorldController::get()->getMobilePlayer();
 
@@ -27,8 +28,9 @@ namespace mwse {
 			}
 
 			sol::object LevelUpEvent::getEventOptions() {
-				sol::state& state = LuaManager::getInstance().getState();
-				sol::table options = LuaManager::getInstance().createTable();
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table options = state.create_table();
 
 				TES3::MobilePlayer* player = TES3::WorldController::get()->getMobilePlayer();
 

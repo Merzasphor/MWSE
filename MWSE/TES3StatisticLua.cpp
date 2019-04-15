@@ -10,7 +10,8 @@
 namespace mwse {
 	namespace lua {
 		void bindTES3Statistic() {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			{
 				// Start our usertype. We must finish this with state.set_usertype.

@@ -16,7 +16,10 @@ namespace mwse {
 			}
 
 			sol::table WeatherChangedImmediateEvent::createEventTable() {
-				sol::table eventData = LuaManager::getInstance().createTable();
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table eventData = state.create_table();
+
 				auto controller = TES3::WorldController::get()->weatherController;
 
 				eventData["to"] = makeLuaObject(controller->currentWeather);

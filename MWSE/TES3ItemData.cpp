@@ -37,7 +37,7 @@ namespace TES3 {
 	//
 
 	ItemData::LuaData::LuaData() {
-		data = mwse::lua::LuaManager::getInstance().createTable();
+		data = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().state.create_table();
 	}
 
 	ItemData::ItemData() {
@@ -54,29 +54,13 @@ namespace TES3 {
 		return self;
 	}
 
-	std::queue<TES3::ItemData::LuaData*> threadedDeletionQueue;
-
 	void ItemData::dtor(ItemData * self) {
 		ItemDataVanilla::dtor(self);
 
 		if (self->luaData) {
-			// If we're destructing from a background thread, we need to queue the deletion.
-			auto dataHandler = TES3::DataHandler::get();
-			if (dataHandler != nullptr && dataHandler->mainThreadID != GetCurrentThreadId()) {
-				threadedDeletionQueue.push(self->luaData);
-				self->luaData = nullptr;
-			}
-			else {
-				// Clean up any background thread deletions that are pending first.
-				while (!threadedDeletionQueue.empty()) {
-					auto itemData = threadedDeletionQueue.front();
-					threadedDeletionQueue.pop();
-					delete itemData;
-				}
-
-				delete self->luaData;
-				self->luaData = nullptr;
-			}
+			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+			delete self->luaData;
+			self->luaData = nullptr;
 		}
 	}
 
@@ -121,13 +105,8 @@ namespace TES3 {
 		}
 
 		if (itemData->luaData) {
-			// We can only check the table state from the main thread. If we aren't on the main thread, assume that the table isn't empty.
-			if (TES3::DataHandler::get()->mainThreadID == GetCurrentThreadId()) {
-				return itemData->luaData->data.empty();
-			}
-			else {
-				return false;
-			}
+			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+			return itemData->luaData->data.empty();
 		}
 
 		return true;

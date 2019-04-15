@@ -24,7 +24,9 @@ namespace TES3 {
 	bool DialogueInfo::filter(Object * actor, Reference * reference, int source, Dialogue * dialogue) {
 		bool result = TES3_DialogueInfo_filter(this, actor, reference, source, dialogue);
 
-		sol::table eventData = mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::InfoFilterEvent(this, actor, reference, source, dialogue, result));
+		auto& luaManager = mwse::lua::LuaManager::getInstance();
+		auto stateHandle = luaManager.getThreadSafeStateHandle();
+		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::InfoFilterEvent(this, actor, reference, source, dialogue, result));
 		sol::object passes = eventData["passes"];
 		if (passes.is<bool>()) {
 			result = passes.as<bool>();

@@ -280,7 +280,9 @@ namespace mwse {
 
 			// Overwrite the default print function to print to the MWSE log.
 			luaState["print"] = [](sol::object message) {
-				sol::state& state = LuaManager::getInstance().getState();
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
 				std::string result = state["tostring"](message);
 				log::getLog() << result << std::endl;
 			};
@@ -307,9 +309,9 @@ namespace mwse {
 				);
 
 			// Create the base of API tables.
-			luaState["mwse"] = createTable();
-			luaState["mwscript"] = createTable();
-			luaState["mge"] = createTable();
+			luaState["mwse"] = luaState.create_table();
+			luaState["mwscript"] = luaState.create_table();
+			luaState["mge"] = luaState.create_table();
 
 			// Expose timers.
 			bindLuaTimer();
@@ -343,7 +345,9 @@ namespace mwse {
 					return true;
 				}
 				else if (target.is<std::string>()) {
-					sol::state& state = LuaManager::getInstance().getState();
+					auto& luaManager = mwse::lua::LuaManager::getInstance();
+					auto stateHandle = luaManager.getThreadSafeStateHandle();
+					sol::state& state = stateHandle.state;
 					sol::object result = state.safe_script_file("./Data Files/MWSE/mods/" + target.as<std::string>() + ".lua");
 					if (result.get_type() == sol::type::table) {
 						scriptOverrides[(unsigned long)script] = result;
@@ -468,7 +472,8 @@ namespace mwse {
 			manager.setCurrentScript(script);
 
 			// Get and run the execute function.
-			sol::state& state = manager.getState();
+			auto stateHandle = manager.getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 			sol::protected_function execute;
 			if (searchResult->second.is<sol::function>()) {
 				execute = searchResult->second.as<sol::function>();
@@ -478,7 +483,7 @@ namespace mwse {
 			}
 
 			if (execute) {
-				sol::table params = LuaManager::getInstance().createTable();
+				sol::table params = state.create_table();
 				params["script"] = makeLuaObject(script);
 				params["reference"] = makeLuaObject(reference);
 				params["scriptData"] = mwse::mwscript::getLocalScriptVariables();
@@ -529,7 +534,8 @@ namespace mwse {
 
 			// Grab the new player pointers for lua.
 			// Update tes3.player and tes3.mobilePlayer.
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 			TES3::MobilePlayer * mobilePlayer = self->mobilePlayer;
 			state["tes3"]["mobilePlayer"] = mwse::lua::makeLuaObject(mobilePlayer);
 			state["tes3"]["player"] = mwse::lua::makeLuaObject(mobilePlayer->reference);
@@ -541,12 +547,13 @@ namespace mwse {
 
 		static void _stdcall FinishInitialization() {
 			// Hook up shorthand access to data handler, world controller, and game.
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state &state = stateHandle.state;
 			state["tes3"]["dataHandler"] = TES3::DataHandler::get();
 			state["tes3"]["worldController"] = TES3::WorldController::get();
 			state["tes3"]["game"] = TES3::Game::get();
 
-			LuaManager::getInstance().triggerEvent(new event::GenericEvent("initialized"));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::GenericEvent("initialized"));
 		}
 
 		static DWORD callbackFinishedInitialization = TES3_HOOK_FINISH_INITIALIZATION_RETURN;
@@ -578,6 +585,7 @@ namespace mwse {
 
 			// Fire off any button pressed events if we had one queued.
 			LuaManager& luaManager = LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			if (tes3::ui::getButtonPressedIndex() != -1) {
 				luaManager.triggerButtonPressed();
 			}
@@ -588,23 +596,23 @@ namespace mwse {
 
 			// Has menu mode changed?
 			if (worldController->flagMenuMode != lastMenuMode) {
-				luaManager.triggerEvent(new event::MenuStateEvent(worldController->flagMenuMode));
+				stateHandle.triggerEvent(new event::MenuStateEvent(worldController->flagMenuMode));
 				lastMenuMode = worldController->flagMenuMode;
 			}
 
 			// Has our cell changed?
 			TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 			if (dataHandler->cellChanged) {
-				LuaManager::getInstance().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, lastCell));
+				stateHandle.triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, lastCell));
 				lastCell = dataHandler->currentCell;
 			}
 
 			// Send off our enterFrame event always.
-			luaManager.triggerEvent(new event::FrameEvent(worldController->deltaTime, worldController->flagMenuMode));
+			stateHandle.triggerEvent(new event::FrameEvent(worldController->deltaTime, worldController->flagMenuMode));
 
 			// If we're not in menu mode, send off the simulate event.
 			if (!worldController->flagMenuMode) {
-				luaManager.triggerEvent(new event::SimulateEvent(worldController->deltaTime, highResolutionTimestamp));
+				stateHandle.triggerEvent(new event::SimulateEvent(worldController->deltaTime, highResolutionTimestamp));
 			}
 		}
 
@@ -614,7 +622,9 @@ namespace mwse {
 
 		signed char __cdecl OnPCEquip(TES3::UI::InventoryTile* tile) {
 			// Execute event. If the event blocked the call, bail.
-			sol::object response = LuaManager::getInstance().triggerEvent(new event::EquipEvent(TES3::WorldController::get()->getMobilePlayer()->reference, tile->item, tile->itemData));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::object response = stateHandle.triggerEvent(new event::EquipEvent(TES3::WorldController::get()->getMobilePlayer()->reference, tile->item, tile->itemData));
 			if (response.get_type() == sol::type::table) {
 				sol::table eventData = response;
 				if (eventData["block"] == true) {
@@ -680,7 +690,7 @@ namespace mwse {
 			// Extra things we want to do if we're successfully loading.
 			if (loaded == TES3::LoadGameResult::Success) {
 				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
-				LuaManager::getInstance().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, NULL));
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, NULL));
 				lastCell = dataHandler->currentCell;
 			}
 
@@ -694,7 +704,7 @@ namespace mwse {
 			// Fire off a cell changed event as well, and update the cached last cell.
 			if (loaded == TES3::LoadGameResult::Success) {
 				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
-				LuaManager::getInstance().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, NULL));
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, NULL));
 				lastCell = dataHandler->currentCell;
 			}
 
@@ -715,9 +725,10 @@ namespace mwse {
 
 			// Fire off the loaded/cellChanged events.
 			LuaManager& luaManager = LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			lastCell = TES3::DataHandler::get()->currentCell;
-			luaManager.triggerEvent(new event::LoadedGameEvent(nullptr, false, true));
-			luaManager.triggerEvent(new event::CellChangedEvent(lastCell, nullptr));
+			stateHandle.triggerEvent(new event::LoadedGameEvent(nullptr, false, true));
+			stateHandle.triggerEvent(new event::CellChangedEvent(lastCell, nullptr));
 		}
 
 		//
@@ -747,7 +758,7 @@ namespace mwse {
 			reinterpret_cast<void(__thiscall *)(TES3::ActorAnimationData*)>(TES3_ActorAnimData_attackCheckMeleeHit)(animData);
 
 			// Prepare our event data.
-			LuaManager::getInstance().triggerEvent(new event::AttackEvent(animData));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::AttackEvent(animData));
 		}
 
 		//
@@ -821,14 +832,15 @@ namespace mwse {
 		signed char __cdecl OnUIEvent(DWORD function, TES3::UI::Element* parent, DWORD prop, DWORD b, DWORD c, TES3::UI::Element* source) {
 			// Execute event. If the event blocked the call, bail.
 			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-			sol::table eventData = luaManager.triggerEvent(new event::GenericUiPreEvent(parent, source, prop, b, c));
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new event::GenericUiPreEvent(parent, source, prop, b, c));
 			if (eventData.valid() && eventData["block"] == true) {
 				return 0;
 			}
 
 			signed char result = reinterpret_cast<signed char (__cdecl *)(TES3::UI::Element*, DWORD, DWORD, DWORD, TES3::UI::Element*)>(function)(parent, prop, b, c, source);
 
-			luaManager.triggerEvent(new event::GenericUiPostEvent(parent, source, prop, b, c));
+			stateHandle.triggerEvent(new event::GenericUiPostEvent(parent, source, prop, b, c));
 
 			return result;
 		}
@@ -872,28 +884,29 @@ namespace mwse {
 
 			// Go through the keys to see if any of the states have changed, and launch an event based on that.
 			LuaManager& luaManager = LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			for (size_t i = 0; i < 256; i++) {
 				if (inputController->isKeyPressedThisFrame(i)) {
-					luaManager.triggerEvent(new event::KeyDownEvent(i, controlDown, shiftDown, altDown, superDown));
+					stateHandle.triggerEvent(new event::KeyDownEvent(i, controlDown, shiftDown, altDown, superDown));
 
 					// TODO: Remove! Deprecated generic key event.
-					luaManager.triggerEvent(new event::KeyEvent(i, true, controlDown, shiftDown, altDown, superDown));
+					stateHandle.triggerEvent(new event::KeyEvent(i, true, controlDown, shiftDown, altDown, superDown));
 				}
 				else if (inputController->isKeyReleasedThisFrame(i)) {
-					luaManager.triggerEvent(new event::KeyUpEvent(i, controlDown, shiftDown, altDown, superDown));
+					stateHandle.triggerEvent(new event::KeyUpEvent(i, controlDown, shiftDown, altDown, superDown));
 
 					// TODO: Remove! Deprecated generic key event.
-					luaManager.triggerEvent(new event::KeyEvent(i, false, controlDown, shiftDown, altDown, superDown));
+					stateHandle.triggerEvent(new event::KeyEvent(i, false, controlDown, shiftDown, altDown, superDown));
 				}
 			}
 
 			// Do the same with mouse buttons.
 			for (size_t i = 0; i < 8; i++) {
 				if (inputController->isMouseButtonPressedThisFrame(i)) {
-					luaManager.triggerEvent(new event::MouseButtonDownEvent(i, controlDown, shiftDown, altDown, superDown));
+					stateHandle.triggerEvent(new event::MouseButtonDownEvent(i, controlDown, shiftDown, altDown, superDown));
 				}
 				else if (inputController->isMouseButtonReleasedThisFrame(i)) {
-					luaManager.triggerEvent(new event::MouseButtonUpEvent(i, controlDown, shiftDown, altDown, superDown));
+					stateHandle.triggerEvent(new event::MouseButtonUpEvent(i, controlDown, shiftDown, altDown, superDown));
 				}
 			}
 
@@ -901,13 +914,13 @@ namespace mwse {
 			LONG mouseDeltaX = inputController->mouseState.lX;
 			LONG mouseDeltaY = inputController->mouseState.lY;
 			if (mouseDeltaX || mouseDeltaY) {
-				luaManager.triggerEvent(new event::MouseAxisEvent(mouseDeltaX, mouseDeltaY, controlDown, shiftDown, altDown, superDown));
+				stateHandle.triggerEvent(new event::MouseAxisEvent(mouseDeltaX, mouseDeltaY, controlDown, shiftDown, altDown, superDown));
 			}
 
 			// Finally, look at mouse scroll wheel.
 			LONG mouseDeltaZ = inputController->mouseState.lZ;
 			if (mouseDeltaZ != 0) {
-				luaManager.triggerEvent(new event::MouseWheelEvent(mouseDeltaZ, controlDown, shiftDown, altDown, superDown));
+				stateHandle.triggerEvent(new event::MouseWheelEvent(mouseDeltaZ, controlDown, shiftDown, altDown, superDown));
 			}
 		}
 
@@ -939,7 +952,7 @@ namespace mwse {
 			// Get the fired projectile, and trigger an event for it.
 			
 			TES3::MobileProjectile* projectile = reference->getAttachedMobileProjectile();
-			LuaManager::getInstance().triggerEvent(new event::ProjectileExpireEvent(projectile));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::ProjectileExpireEvent(projectile));
 
 			// Call overwritten function.
 			reinterpret_cast<void(__thiscall *)(void*, TES3::Reference*)>(0x5637F0)(mobController, reference);
@@ -954,7 +967,9 @@ namespace mwse {
 			reinterpret_cast<void(__cdecl *)(TES3::MagicSourceInstance *, TES3::MagicEffectInstance *, int, int)>(0x517E40)(spellInstance, effectInstance, effectIndex, resistAttribute);
 
 			// Trigger event, see if we want to overwrite the resisted percentage.
-			sol::table eventData = LuaManager::getInstance().triggerEvent(new event::SpellResistEvent(spellInstance, effectInstance, effectIndex, resistAttribute));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new event::SpellResistEvent(spellInstance, effectInstance, effectIndex, resistAttribute));
 			if (eventData.valid()) {
 				effectInstance->resistedPercent = eventData["resistedPercent"];
 			}
@@ -965,7 +980,9 @@ namespace mwse {
 		//
 
 		void __cdecl MagicEffectDispatch(TES3::EffectID::EffectID effectId, TES3::MagicSourceInstance * sourceInstance, float deltaTime, TES3::MagicEffectInstance * effectInstance, int effectIndex) {
-			sol::table eventData = LuaManager::getInstance().triggerEvent(new event::SpellTickEvent(effectId, sourceInstance, deltaTime, effectInstance, effectIndex));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new event::SpellTickEvent(effectId, sourceInstance, deltaTime, effectInstance, effectIndex));
 			if (eventData.valid()) {
 				if (eventData["block"] == true) {
 					// We still need the main effect event function to be called for visual effects and durations to be handled.
@@ -1025,7 +1042,7 @@ namespace mwse {
 			reinterpret_cast<void(__stdcall *)()>(0x626220)();
 
 			// Launch our event.
-			LuaManager::getInstance().triggerEvent(new event::LevelUpEvent());
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::LevelUpEvent());
 		}
 
 		//
@@ -1037,7 +1054,7 @@ namespace mwse {
 			DWORD result = reinterpret_cast<DWORD(__thiscall*)(TES3::UI::InventoryTile*, TES3::Object*, TES3::ItemData*, DWORD, DWORD, DWORD, DWORD)>(0x6313E0)(inventoryTile, object, itemData, unk1, unk2, unk3, unk4);
 
 			// Pass a lua event.
-			LuaManager::getInstance().triggerEvent(new event::PotionBrewedEvent(object));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PotionBrewedEvent(object));
 
 			return result;
 		}
@@ -1060,11 +1077,12 @@ namespace mwse {
 			
 			// Magic from any source event
 			LuaManager& luaManager = LuaManager::getInstance();
-			luaManager.triggerEvent(new event::MagicCastedEvent(magicInstance));
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			stateHandle.triggerEvent(new event::MagicCastedEvent(magicInstance));
 
 			if (magicInstance->sourceCombo.sourceType == TES3::MagicSourceType::Spell) {
 				// Spell cast event, allows updating the school that gains experience
-				sol::table eventData = luaManager.triggerEvent(new event::SpellCastedEvent(magicInstance, true, *pExpGainSchool));
+				sol::table eventData = stateHandle.triggerEvent(new event::SpellCastedEvent(magicInstance, true, *pExpGainSchool));
 				if (eventData.valid()) {
 					*pExpGainSchool = eventData.get_or("expGainSchool", int(TES3::MagicSchool::None));
 				}
@@ -1100,8 +1118,7 @@ namespace mwse {
 		//
 
 		void __stdcall OnSpellCastFailure(TES3::MagicSourceInstance* magicInstance, int* pExpGainSchool) {
-			LuaManager& luaManager = LuaManager::getInstance();
-			luaManager.triggerEvent(new event::SpellCastedEvent(magicInstance, false, *pExpGainSchool));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SpellCastedEvent(magicInstance, false, *pExpGainSchool));
 		}
 
 		static DWORD postSpellCastFailure = TES3_HOOK_SPELL_CAST_FAILURE_RETURN;
@@ -1134,7 +1151,7 @@ namespace mwse {
 
 		TES3::BaseObject* __fastcall OnEntityDelete(TES3::BaseObject* object) {
 			// Clear the object from the userdata cache.
-			LuaManager::getInstance().removeUserdataFromCache(object);
+			LuaManager::getInstance().getThreadSafeStateHandle().removeUserdataFromCache(object);
 
 			// Let the object finally die.
 			return reinterpret_cast<TES3::BaseObject*(__thiscall *)(TES3::BaseObject*)>(TES3_BaseObject_destructor)(object);
@@ -1160,7 +1177,8 @@ namespace mwse {
 
 			// Fire off an event and change the globals accordingly.
 			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-			sol::table eventData = luaManager.triggerEvent(new event::CalcRestInterruptEvent(count, hour));
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new event::CalcRestInterruptEvent(count, hour));
 			if (eventData.valid()) {
 				// Allow blocking any spawn.
 				if (eventData["block"] == true) {
@@ -1191,7 +1209,8 @@ namespace mwse {
 
 			// Fire off an event and change the determined creature.
 			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-			sol::table eventData = luaManager.triggerEvent(new event::RestInterruptEvent(leveledCreature));
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new event::RestInterruptEvent(leveledCreature));
 			if (eventData.valid()) {
 				// Allow blocking any spawn.
 				if (eventData["block"] == true) {
@@ -1228,8 +1247,7 @@ namespace mwse {
 			topicList->addItemAtIndex(topic, index);
 
 			// Raise event.
-			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-			luaManager.triggerEvent(new event::AddTopicEvent(topic));
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::AddTopicEvent(topic));
 		}
 
 		void __fastcall OnAddTopic(TES3::Iterator<TES3::Dialogue> * topicList, DWORD _UNUSED_, TES3::Dialogue * topic) {
@@ -1237,8 +1255,7 @@ namespace mwse {
 			topicList->addItem(topic);
 
 			// Raise event.
-			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-			luaManager.triggerEvent(new event::AddTopicEvent(topic));
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::AddTopicEvent(topic));
 		}
 
 		//
@@ -1262,10 +1279,10 @@ namespace mwse {
 			element->setProperty(property, value, type);
 
 			// Fire off the event.
-			LuaManager::getInstance().triggerEvent(new event::GenericUiActivatedEvent(element));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::GenericUiActivatedEvent(element));
 
 			// DEPRECATED. TODO: Remove before 2.1 final.
-			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::GenericUiCreatedEvent(element));
 		}
 
 		void __fastcall OnUICreatedAfterPerformLayout(TES3::UI::Element* element, DWORD _UNUSED_, bool unknown) {
@@ -1273,10 +1290,10 @@ namespace mwse {
 			element->performLayout(unknown);
 
 			// Fire off the event.
-			LuaManager::getInstance().triggerEvent(new event::GenericUiActivatedEvent(element));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::GenericUiActivatedEvent(element));
 
 			// DEPRECATED. TODO: Remove before 2.1 final.
-			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::GenericUiCreatedEvent(element));
 		}
 
 		void __cdecl OnUICreatedAfterConsoleMenuFocus(TES3::UI::Element* widget, int event, int data0, int data1, TES3::UI::Element* element) {
@@ -1285,10 +1302,10 @@ namespace mwse {
 			ui_ConsoleMenu_onFocus(widget, event, data0, data1, element);
 
 			// Fire off the event.
-			LuaManager::getInstance().triggerEvent(new event::GenericUiActivatedEvent(element));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::GenericUiActivatedEvent(element));
 
 			// DEPRECATED. TODO: Remove before 2.1 final.
-			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::GenericUiCreatedEvent(element));
 		}
 
 		void __cdecl OnUICreatedAfterConsoleMenuShown(TES3::UI::Element* element) {
@@ -1296,10 +1313,10 @@ namespace mwse {
 			reinterpret_cast<void(__cdecl*)(TES3::UI::Element*)>(0x595350)(element);
 
 			// Fire off the event.
-			LuaManager::getInstance().triggerEvent(new event::GenericUiActivatedEvent(element));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::GenericUiActivatedEvent(element));
 
 			// DEPRECATED. TODO: Remove before 2.1 final.
-			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::GenericUiCreatedEvent(element));
 		}
 
 		void __fastcall OnUICreatedAfterMenuVisibleEvent(TES3::UI::Element* element, DWORD _UNUSED_, bool unknown) {
@@ -1308,10 +1325,10 @@ namespace mwse {
 			ui_setMenuVisibleWithEvent(element, unknown);
 
 			// Fire off the event.
-			LuaManager::getInstance().triggerEvent(new event::GenericUiActivatedEvent(element));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::GenericUiActivatedEvent(element));
 
 			// DEPRECATED. TODO: Remove before 2.1 final.
-			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::GenericUiCreatedEvent(element));
 		}
 
 		void __cdecl OnUICreatedAfterScrollPaneUpdate(TES3::UI::Element* element) {
@@ -1320,10 +1337,10 @@ namespace mwse {
 			ui_ScrollPane_UpdateScrollBars(element);
 
 			// Fire off the event.
-			LuaManager::getInstance().triggerEvent(new event::GenericUiActivatedEvent(element));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::GenericUiActivatedEvent(element));
 
 			// DEPRECATED. TODO: Remove before 2.1 final.
-			LuaManager::getInstance().triggerEvent(new event::GenericUiCreatedEvent(element));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::GenericUiCreatedEvent(element));
 		}
 
 		//
@@ -1336,7 +1353,7 @@ namespace mwse {
 
 			// Fire off the event.
 			TES3::UI::Element* tooltip = TES3::UI::findHelpLayerMenu(TES3::UI::UI_ID(TES3::UI::Property::HelpMenu));
-			LuaManager::getInstance().triggerEvent(new event::UiObjectTooltipEvent(tooltip, object, itemData, count));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::UiObjectTooltipEvent(tooltip, object, itemData, count));
 		}
 
 		//
@@ -1351,7 +1368,7 @@ namespace mwse {
 			if (created) {
 				TES3::UI::Element* tooltip = TES3::UI::findHelpLayerMenu(TES3::UI::UI_ID(TES3::UI::Property::HelpMenu));
 				TES3::Spell * spell = reinterpret_cast<TES3::Spell *>(element->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D431C)).ptrValue);
-				LuaManager::getInstance().triggerEvent(new event::UiSpellTooltipEvent(tooltip, spell));
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::UiSpellTooltipEvent(tooltip, spell));
 			}
 
 			return created;
@@ -1377,7 +1394,7 @@ namespace mwse {
 		static void HookPostFindActivationTarget() {
 			TES3::Reference *currentTarget = (*global_TES3_Game)->playerTarget;
 			if (previousTarget != currentTarget) {
-				LuaManager::getInstance().triggerEvent(new event::ActivationTargetChangedEvent(previousTarget, currentTarget));
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::ActivationTargetChangedEvent(previousTarget, currentTarget));
 			}
 		}
 
@@ -1397,7 +1414,7 @@ namespace mwse {
 
 		bool __fastcall OnWeatherCycle(TES3::Cell* cell, DWORD _UNUSED_) {
 			// Fire off the event.
-			LuaManager::getInstance().triggerEvent(new event::WeatherCycledEvent());
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::WeatherCycledEvent());
 
 			// Call original function.
 			return reinterpret_cast<bool (__thiscall *)(TES3::Cell*)>(0x4E22F0)(cell);
@@ -1408,12 +1425,12 @@ namespace mwse {
 			reinterpret_cast<void (__thiscall *)(TES3::WeatherController*, DWORD, DWORD)>(0x441C40)(controller, weatherId, transitionScalar);
 
 			// Fire off the event, after function completes.
-			LuaManager::getInstance().triggerEvent(new event::WeatherChangedImmediateEvent());
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::WeatherChangedImmediateEvent());
 		}
 
 		void* __cdecl OnWeatherTransitionBegin(const char* texturePath, void* data) {
 			// Fire off the event.
-			LuaManager::getInstance().triggerEvent(new event::WeatherTransitionStartedEvent());
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::WeatherTransitionStartedEvent());
 
 			// Call original function.
 			return reinterpret_cast<void* (__cdecl *)(const char*, void*)>(0x6DE7F0)(texturePath, data);
@@ -1421,7 +1438,7 @@ namespace mwse {
 
 		void __fastcall OnWeatherTransitionEnd(void* modelData, DWORD _UNUSED_) {
 			// Fire off the event.
-			LuaManager::getInstance().triggerEvent(new event::WeatherTransitionFinishedEvent());
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::WeatherTransitionFinishedEvent());
 
 			// Call original function.
 			reinterpret_cast<void (__thiscall *)(void*)>(0x414890)(modelData);
@@ -1433,7 +1450,9 @@ namespace mwse {
 
 		bool __fastcall OnSelectMusicTrack(TES3::WorldController* controller, DWORD _UNUSED_, int situation) {
 			// Fire off the event.
-			sol::table eventData = LuaManager::getInstance().triggerEvent(new event::MusicSelectTrackEvent(situation));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new event::MusicSelectTrackEvent(situation));
 
 			if (eventData.valid()) {
 				sol::optional<std::string> musicPath = eventData["music"];
@@ -1458,7 +1477,7 @@ namespace mwse {
 		void __fastcall OnReadyNoWeapon(TES3::MobileActor * actor) {
 			TES3_MobileActor_offhandAnimState(actor);
 			if (actor->reference) {
-				LuaManager::getInstance().triggerEvent(new event::WeaponReadiedEvent(actor->reference));
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::WeaponReadiedEvent(actor->reference));
 			}
 		}
 
@@ -1470,7 +1489,7 @@ namespace mwse {
 			TES3_MobileActor_unreadyWeapon(mobile);
 
 			if (mobile && mobile->reference && wasDrawn) {
-				LuaManager::getInstance().triggerEvent(new event::WeaponUnreadiedEvent(mobile->reference));
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::WeaponUnreadiedEvent(mobile->reference));
 			}
 		}
 
@@ -1499,7 +1518,9 @@ namespace mwse {
 				count = std::abs(basePrice / OnCalculateBarterPrice_value);
 			}
 
-			sol::table result = LuaManager::getInstance().triggerEvent(new event::CalculateBarterPriceEvent(mobile, basePrice, price, buying, count, OnCalculateBarterPrice_stack));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table result = stateHandle.triggerEvent(new event::CalculateBarterPriceEvent(mobile, basePrice, price, buying, count, OnCalculateBarterPrice_stack));
 			if (result.valid()) {
 				price = result["price"];
 			}
@@ -1533,7 +1554,9 @@ namespace mwse {
 				price = 1;
 			}
 
-			sol::table result = LuaManager::getInstance().triggerEvent(new event::CalculateRepairPriceEvent(mobile, basePrice, price, OnCalculateRepairPriceForList_CurrentInventoryList->current->data));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table result = stateHandle.triggerEvent(new event::CalculateRepairPriceEvent(mobile, basePrice, price, OnCalculateRepairPriceForList_CurrentInventoryList->current->data));
 			if (result.valid()) {
 				price = result["price"];
 			}
@@ -1562,7 +1585,9 @@ namespace mwse {
 				price = 1;
 			}
 
-			sol::table result = LuaManager::getInstance().triggerEvent(new event::CalculateRepairPriceEvent(mobile, basePrice, price, OnCalculateRepairPrice_ItemStack));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table result = stateHandle.triggerEvent(new event::CalculateRepairPriceEvent(mobile, basePrice, price, OnCalculateRepairPrice_ItemStack));
 			if (result.valid()) {
 				price = result["price"];
 			}
@@ -1590,7 +1615,9 @@ namespace mwse {
 		int __fastcall OnCalculateSpellPriceForList(TES3::MobileActor * mobile, DWORD _UNUSED_, int basePrice, bool buying) {
 			int price = mobile->determineModifiedPrice(basePrice, buying);
 
-			sol::table result = LuaManager::getInstance().triggerEvent(new event::CalculateSpellPriceEvent(mobile, basePrice, price, OnCalculateSpellPrice_CurrentInventoryList->current->data));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table result = stateHandle.triggerEvent(new event::CalculateSpellPriceEvent(mobile, basePrice, price, OnCalculateSpellPrice_CurrentInventoryList->current->data));
 			if (result.valid()) {
 				price = result["price"];
 			}
@@ -1608,7 +1635,9 @@ namespace mwse {
 		int __fastcall OnCalculateSpellPrice(TES3::MobileActor * mobile, DWORD _UNUSED_, int basePrice, bool buying) {
 			int price = mobile->determineModifiedPrice(basePrice, buying);
 
-			sol::table result = LuaManager::getInstance().triggerEvent(new event::CalculateSpellPriceEvent(mobile, basePrice, price, OnCalculateSpellPrice_Spell));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table result = stateHandle.triggerEvent(new event::CalculateSpellPriceEvent(mobile, basePrice, price, OnCalculateSpellPrice_Spell));
 			if (result.valid()) {
 				price = result["price"];
 			}
@@ -1638,7 +1667,9 @@ namespace mwse {
 		int __fastcall OnCalculateTrainingPrice(TES3::MobileActor * mobile, DWORD _UNUSED_, int basePrice, bool buying) {
 			int price = mobile->determineModifiedPrice(basePrice, buying);
 
-			sol::table result = LuaManager::getInstance().triggerEvent(new event::CalculateTrainingPriceEvent(mobile, basePrice, price, OnCalculateTrainingPrice_SkillId));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table result = stateHandle.triggerEvent(new event::CalculateTrainingPriceEvent(mobile, basePrice, price, OnCalculateTrainingPrice_SkillId));
 			if (result.valid()) {
 				price = result["price"];
 			}
@@ -1688,7 +1719,9 @@ namespace mwse {
 		int __fastcall OnCalculateTravelPriceForList(TES3::MobileActor * mobile, DWORD _UNUSED_, int basePrice, bool buying) {
 			int price = mobile->determineModifiedPrice(basePrice, buying);
 
-			sol::table result = LuaManager::getInstance().triggerEvent(new event::CalculateTravelPriceEvent(mobile, basePrice, price, OnCalculateTravelPrice_DestinationList->current->data, &OnCalculateTravelPrice_TravelCompanionList));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table result = stateHandle.triggerEvent(new event::CalculateTravelPriceEvent(mobile, basePrice, price, OnCalculateTravelPrice_DestinationList->current->data, &OnCalculateTravelPrice_TravelCompanionList));
 			if (result.valid()) {
 				price = result["price"];
 			}
@@ -1706,7 +1739,9 @@ namespace mwse {
 				destination = OnCalculateTravelPrice_DestinationList->current->previous->data;
 			}
 
-			sol::table result = LuaManager::getInstance().triggerEvent(new event::CalculateTravelPriceEvent(mobile, basePrice, price, destination, &OnCalculateTravelPrice_TravelCompanionList));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table result = stateHandle.triggerEvent(new event::CalculateTravelPriceEvent(mobile, basePrice, price, destination, &OnCalculateTravelPrice_TravelCompanionList));
 			if (result.valid()) {
 				price = result["price"];
 			}
@@ -1722,7 +1757,7 @@ namespace mwse {
 
 		void __cdecl OnSkillRaised(int skillId, char * buffer) {
 			TES3_ShowSkillRaisedNotification(skillId, buffer);
-			LuaManager::getInstance().triggerEvent(new event::SkillRaisedEvent(skillId, TES3::WorldController::get()->getMobilePlayer()->skills[skillId].base));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SkillRaisedEvent(skillId, TES3::WorldController::get()->getMobilePlayer()->skills[skillId].base));
 		}
 
 		void LuaManager::executeMainModScripts(const char* path, const char* filename) {
@@ -1751,7 +1786,7 @@ namespace mwse {
 
 		bool __cdecl OnRefreshedStatsPane(TES3::UI::Element * element) {
 			bool result = TES3_UpdateStatsScrollPane(element);
-			LuaManager::getInstance().triggerEvent(new event::UiRefreshedEvent(element));
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::UiRefreshedEvent(element));
 			return result;
 		}
 
@@ -1762,7 +1797,9 @@ namespace mwse {
 		const auto TES3_FilterInventoryTile = reinterpret_cast<bool(__cdecl*)(TES3::UI::InventoryTile *, TES3::Item *)>(0x5CC720);
 
 		bool __cdecl OnFilterInventoryTile(TES3::UI::InventoryTile * tile, TES3::Item * item) {
-			sol::table payload = LuaManager::getInstance().triggerEvent(new event::FilterInventoryEvent(tile, item));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table payload = stateHandle.triggerEvent(new event::FilterInventoryEvent(tile, item));
 			if (payload.valid()) {
 				sol::object filter = payload["filter"];
 				if (filter.is<bool>()) {
@@ -1776,7 +1813,9 @@ namespace mwse {
 		const auto TES3_FilterBarterTile = reinterpret_cast<bool(__cdecl*)(TES3::UI::InventoryTile *, TES3::Item *)>(0x5A5430);
 
 		bool __cdecl OnFilterBarterTile(TES3::UI::InventoryTile * tile, TES3::Item * item) {
-			sol::table payload = LuaManager::getInstance().triggerEvent(new event::FilterBarterMenuEvent(tile, item));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table payload = stateHandle.triggerEvent(new event::FilterBarterMenuEvent(tile, item));
 			if (payload.valid()) {
 				sol::object filter = payload["filter"];
 				if (filter.is<bool>()) {
@@ -1788,7 +1827,9 @@ namespace mwse {
 		}
 
 		void __fastcall OnFilterContentsTile(TES3::Iterator<TES3::UI::InventoryTile> * list, DWORD _UNUSUED_, TES3::UI::InventoryTile * tile) {
-			sol::table payload = LuaManager::getInstance().triggerEvent(new event::FilterContentsMenuEvent(tile, tile->item));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table payload = stateHandle.triggerEvent(new event::FilterContentsMenuEvent(tile, tile->item));
 			if (payload.valid()) {
 				sol::object filter = payload["filter"];
 				if (filter.is<bool>()) {
@@ -1802,7 +1843,9 @@ namespace mwse {
 		}
 
 		void __fastcall OnFilterContentsTileForTakeAll(TES3::Iterator<TES3::UI::InventoryTile> * list, DWORD _UNUSUED_, TES3::UI::InventoryTile * tile) {
-			sol::table payload = LuaManager::getInstance().triggerEvent(new event::FilterContentsMenuEvent(tile, tile->item));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table payload = stateHandle.triggerEvent(new event::FilterContentsMenuEvent(tile, tile->item));
 			if (payload.valid()) {
 				sol::object filter = payload["filter"];
 				if (filter.is<bool>()) {
@@ -1823,7 +1866,9 @@ namespace mwse {
 			TES3::ItemData * itemData = reinterpret_cast<TES3::ItemData*>(element->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D3C16)).ptrValue);
 
 			const char* callbackType = TES3::UI::getInventorySelectType();
-			sol::table payload = LuaManager::getInstance().triggerEvent(new event::FilterInventorySelectEvent(callbackType, item, itemData));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table payload = stateHandle.triggerEvent(new event::FilterInventorySelectEvent(callbackType, item, itemData));
 			if (payload.valid()) {
 				sol::object filter = payload["filter"];
 				if (filter.is<bool>()) {
@@ -1868,7 +1913,9 @@ namespace mwse {
 
 		bool __fastcall PatchGetDialogueInfoText_ReadFromFile(TES3::GameFile * gameFile, DWORD _UNUSUED_, char * dialogueTextBuffer, size_t size) {
 			// Allow the event to override the text.
-			sol::object eventResult = mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::InfoGetTextEvent(lastReadDialogueInfo));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::InfoGetTextEvent(lastReadDialogueInfo));
 			if (eventResult.valid()) {
 				sol::table eventData = eventResult;
 				sol::object text = eventData["text"];
@@ -1898,7 +1945,9 @@ namespace mwse {
 
 		void __fastcall OnRunDialogueCommand(TES3::Script * script, DWORD _UNUSUED_, TES3::ScriptCompiler * compiler, const char* command, int source, TES3::Reference * reference, TES3::ScriptVariables * variables, TES3::DialogueInfo * info, TES3::Dialogue * dialogue) {
 			// Allow the event to override the text.
-			sol::object eventResult = mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::InfoResponseEvent(command, reference, variables, dialogue, info));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::InfoResponseEvent(command, reference, variables, dialogue, info));
 			if (eventResult.valid()) {
 				sol::table eventData = eventResult;
 				if (eventData["block"] == true) {
@@ -1918,7 +1967,7 @@ namespace mwse {
 		void __fastcall OnItemDropped(TES3::DataHandler * dataHandler, DWORD _UNUSED_, TES3::Reference* reference) {
 			TES3_DataHandler_UpdateLightingForReference(dataHandler, reference);
 
-			mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::ItemDroppedEvent(reference));
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ItemDroppedEvent(reference));
 		}
 
 		//
@@ -1927,7 +1976,9 @@ namespace mwse {
 
 		int __fastcall OnCalculateHitChance(TES3::MobileActor * attacker, int hitChance) {
 			// Allow the event to override the text.
-			sol::object eventResult = mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::CalcHitChanceEvent(attacker, hitChance));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::CalcHitChanceEvent(attacker, hitChance));
 			if (eventResult.valid()) {
 				sol::table eventData = eventResult;
 				hitChance = getOptionalParam<int>(eventData, "hitChance", hitChance);
@@ -1966,7 +2017,7 @@ namespace mwse {
 		const auto TES3_WorldController_CreateFilters = reinterpret_cast<void(__thiscall*)(TES3::WorldController *)>(0x411400);
 		void __fastcall CreateFilters(TES3::WorldController * worldController) {
 			TES3_WorldController_CreateFilters(worldController);
-			mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::GenericEvent("fadersCreated"));
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::GenericEvent("fadersCreated"));
 		}
 
 		//
@@ -1997,7 +2048,9 @@ namespace mwse {
 			}
 
 			// Allow lua to dictate what souls are allowed in which soulgems.
-			sol::table payload = lua::LuaManager::getInstance().triggerEvent(new lua::event::FilterSoulGemTargetEvent(item, mact));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table payload = stateHandle.triggerEvent(new lua::event::FilterSoulGemTargetEvent(item, mact));
 			if (payload.valid()) {
 				sol::object filter = payload["filter"];
 				if (filter.is<bool>()) {
@@ -2031,7 +2084,9 @@ namespace mwse {
 			}
 
 			// Allow lua to determine the soul's value.
-			sol::table payload = lua::LuaManager::getInstance().triggerEvent(new lua::event::CalculateSoulValueEvent(actor, value));
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table payload = stateHandle.triggerEvent(new lua::event::CalculateSoulValueEvent(actor, value));
 			if (payload.valid()) {
 				sol::object eventValue = payload["value"];
 				if (eventValue.is<int>()) {
@@ -2070,14 +2125,14 @@ namespace mwse {
 		//
 
 		TES3::IteratorNode<TES3::UI::InventoryTile> * __fastcall GetNextInventoryTileToUpdate(TES3::Iterator<TES3::UI::InventoryTile> * iterator) {
-			lua::LuaManager::getInstance().triggerEvent(new lua::event::ItemTileUpdatedEvent(iterator->current->data));
+			lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new lua::event::ItemTileUpdatedEvent(iterator->current->data));
 			return iterator->getNextNode();
 		}
 
 		void __inline TriggerItemTileUpdatedEventForElement(TES3::UI::Element * element, DWORD propertyAddress) {
 			TES3::UI::InventoryTile * tile = static_cast<TES3::UI::InventoryTile*>(element->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(propertyAddress)).ptrValue);
 			if (tile) {
-				lua::LuaManager::getInstance().triggerEvent(new lua::event::ItemTileUpdatedEvent(tile));
+				lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new lua::event::ItemTileUpdatedEvent(tile));
 			}
 		}
 
@@ -2231,7 +2286,8 @@ namespace mwse {
 				// If it is empty, don't bother saving it.
 				if (!table.empty()) {
 					// Convert the table to json for storage.
-					sol::state& state = LuaManager::getInstance().getState();
+					auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+					sol::state &state = stateHandle.state;
 					std::string json = state["json"]["encode"](table);
 
 					// Call original writechunk function.
@@ -2261,7 +2317,8 @@ namespace mwse {
 				// If we for whatever reason failed to load this chunk, bail.
 				if (success) {
 					// Get our lua table, and replace it with our new table.
-					sol::state& state = LuaManager::getInstance().getState();
+					auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+					sol::state &state = stateHandle.state;
 					auto threadID = GetCurrentThreadId();
 					auto saveLoadItemData = saveLoadItemDataMap[threadID];
 					if (saveLoadItemData && saveLoadItemData->luaData == nullptr) {
@@ -2297,7 +2354,8 @@ namespace mwse {
 				// If it is empty, don't bother saving it.
 				if (!table.empty()) {
 					// Convert the table to json for storage.
-					sol::state& state = LuaManager::getInstance().getState();
+					auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+					sol::state &state = stateHandle.state;
 					std::string json = state["json"]["encode"](table);
 
 					// Call original writechunk function.
@@ -2328,7 +2386,8 @@ namespace mwse {
 				// If we for whatever reason failed to load this chunk, bail.
 				if (success) {
 					// Get our lua table, and replace it with our new table.
-					sol::state& state = LuaManager::getInstance().getState();
+					auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+					sol::state &state = stateHandle.state;
 					auto itemData = saveLoadReferenceMap[GetCurrentThreadId()]->getAttachedItemData();
 					if (itemData) {
 						if (itemData->luaData == nullptr) {
@@ -2361,25 +2420,50 @@ namespace mwse {
 		//
 		//
 
-		sol::state& LuaManager::getState() {
-#if _DEBUG
-			auto dataHandler = TES3::DataHandler::get();
-			if (dataHandler != nullptr && dataHandler->mainThreadID != GetCurrentThreadId()) {
-				throw std::exception("Cannot be called from outside the main thread.");
-			}
-#endif
-
-			return luaState;
+		ThreadedStateHandle::ThreadedStateHandle(LuaManager * manager) : luaManager(manager), state(manager->luaState) {
+			luaManager->claimLuaThread();
 		}
 
-		sol::table LuaManager::createTable() {
-#if _DEBUG
-			auto dataHandler = TES3::DataHandler::get();
-			if (dataHandler != nullptr && dataHandler->mainThreadID != GetCurrentThreadId()) {
-				throw std::exception("Cannot be called from outside the main thread.");
-			}
-#endif
-			return luaState.create_table();
+		ThreadedStateHandle::~ThreadedStateHandle() {
+			luaManager->releaseLuaThread();
+		}
+
+		sol::object ThreadedStateHandle::triggerEvent(event::BaseEvent* e) {
+			return luaManager->triggerEvent(e);
+		}
+
+
+		// Guarded access to the userdata cache.
+		sol::object ThreadedStateHandle::getCachedUserdata(TES3::BaseObject* o) {
+			return luaManager->getCachedUserdata(o);
+		}
+
+		sol::object ThreadedStateHandle::getCachedUserdata(TES3::MobileObject* mo) {
+			return luaManager->getCachedUserdata(mo);
+		}
+
+		void ThreadedStateHandle::insertUserdataIntoCache(TES3::BaseObject* o, sol::object lo) {
+			luaManager->insertUserdataIntoCache(o, lo);
+		}
+
+		void ThreadedStateHandle::insertUserdataIntoCache(TES3::MobileObject* mo, sol::object lo) {
+			luaManager->insertUserdataIntoCache(mo, lo);
+		}
+
+		void ThreadedStateHandle::removeUserdataFromCache(TES3::BaseObject* o) {
+			luaManager->removeUserdataFromCache(o);
+		}
+
+		void ThreadedStateHandle::removeUserdataFromCache(TES3::MobileObject* mo) {
+			luaManager->removeUserdataFromCache(mo);
+		}
+
+		//
+		//
+		//
+
+		ThreadedStateHandle LuaManager::getThreadSafeStateHandle() {
+			return ThreadedStateHandle(this);
 		}
 
 		void LuaManager::hook() {
@@ -3235,6 +3319,17 @@ namespace mwse {
 			genCallEnforced(0x621CCF, 0x5C0B60, reinterpret_cast<DWORD>(ReenableMenuDialogue));
 			genCallEnforced(0x622DBE, 0x5C0B60, reinterpret_cast<DWORD>(ReenableMenuDialogue));
 
+			// Mesh loaded event.
+			auto meshDataLoadMesh = &TES3::MeshData::loadMesh;
+			genCallEnforced(0x4194DB, 0x4EE0A0, *reinterpret_cast<DWORD*>(&meshDataLoadMesh));
+			genCallEnforced(0x4C29C7, 0x4EE0A0, *reinterpret_cast<DWORD*>(&meshDataLoadMesh));
+			genCallEnforced(0x4C2CE8, 0x4EE0A0, *reinterpret_cast<DWORD*>(&meshDataLoadMesh));
+			genCallEnforced(0x4F0445, 0x4EE0A0, *reinterpret_cast<DWORD*>(&meshDataLoadMesh));
+			genCallEnforced(0x4F053D, 0x4EE0A0, *reinterpret_cast<DWORD*>(&meshDataLoadMesh));
+			genCallEnforced(0x4F13B8, 0x4EE0A0, *reinterpret_cast<DWORD*>(&meshDataLoadMesh));
+			genCallEnforced(0x54B48F, 0x4EE0A0, *reinterpret_cast<DWORD*>(&meshDataLoadMesh));
+			genCallEnforced(0x57BB39, 0x4EE0A0, *reinterpret_cast<DWORD*>(&meshDataLoadMesh));
+
 			// UI framework hooks
 			TES3::UI::hook();
 
@@ -3284,49 +3379,11 @@ namespace mwse {
 		}
 
 		sol::object LuaManager::triggerEvent(event::BaseEvent* baseEvent) {
-			DWORD threadId = GetCurrentThreadId();
-			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+			auto stateHandle = getThreadSafeStateHandle();
 
-			// If we're on the main thread, immediately execute the event
-			if (dataHandler == nullptr || threadId == dataHandler->mainThreadID) {
-				// Use this opportunity to check for background events that need to run.
-				triggerBackgroundThreadEvents();
-
-				// Execute the original event.
-				sol::object response = event::trigger(baseEvent->getEventName(), baseEvent->createEventTable(), baseEvent->getEventOptions());
-				delete baseEvent;
-				return response;
-			}
-
-			// If we're not on the main thread, queue the event to run once we are.
-			else if (threadId == dataHandler->backgroundThreadID) {
-				backgroundThreadEventsMutex.lock();
-				backgroundThreadEvents.push(baseEvent);
-				backgroundThreadEventsMutex.unlock();
-			}
-
-			// If we're not on the main thread or the background thread we don't know WTF is going on.
-			else {
-				throw new std::exception("Event triggered from unknown thread!");
-			}
-
-			return sol::nil;
-		}
-
-		void LuaManager::triggerBackgroundThreadEvents() {
-			backgroundThreadEventsMutex.lock();
-
-			while (backgroundThreadEvents.size() > 0) {
-				// Pop the event off the stack.
-				event::BaseEvent* baseEvent = backgroundThreadEvents.front();
-				backgroundThreadEvents.pop();
-
-				// Trigger it.
-				event::trigger(baseEvent->getEventName(), baseEvent->createEventTable(), baseEvent->getEventOptions());
-				delete baseEvent;
-			}
-
-			backgroundThreadEventsMutex.unlock();
+			sol::object response = event::trigger(baseEvent->getEventName(), baseEvent->createEventTable(), baseEvent->getEventOptions());
+			delete baseEvent;
+			return response;
 		}
 
 		void LuaManager::setButtonPressedCallback(sol::optional<sol::protected_function> callback) {
@@ -3334,10 +3391,12 @@ namespace mwse {
 		}
 
 		void LuaManager::triggerButtonPressed() {
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			if (buttonPressedCallback != sol::nil) {
 				sol::protected_function callback = buttonPressedCallback;
 				buttonPressedCallback = sol::nil;
-				sol::table eventData = createTable();
+				sol::state &state = stateHandle.state;
+				sol::table eventData = state.create_table();
 				eventData["button"] = tes3::ui::getButtonPressedIndex();
 				tes3::ui::resetButtonPressedIndex();
 
@@ -3350,13 +3409,6 @@ namespace mwse {
 		}
 
 		sol::object LuaManager::getCachedUserdata(TES3::BaseObject* object) {
-#if _DEBUG
-			auto dataHandler = TES3::DataHandler::get();
-			if (dataHandler != nullptr && dataHandler->mainThreadID != GetCurrentThreadId()) {
-				throw std::exception("Cached userdata can only be obtained from the main thread!");
-			}
-#endif
-
 			userdataMapMutex.lock();
 
 			sol::object result = sol::nil;
@@ -3387,16 +3439,12 @@ namespace mwse {
 		}
 
 		void LuaManager::insertUserdataIntoCache(TES3::BaseObject* object, sol::object luaObject) {
-			removeThreadedUserdataFromCache();
-
 			userdataMapMutex.lock();
 			userdataCache[(unsigned long)object] = luaObject;
 			userdataMapMutex.unlock();
 		}
 
 		void LuaManager::insertUserdataIntoCache(TES3::MobileObject* object, sol::object luaObject) {
-			removeThreadedUserdataFromCache();
-
 			userdataMapMutex.lock();
 			userdataCache[(unsigned long)object] = luaObject;
 			userdataMapMutex.unlock();
@@ -3406,26 +3454,19 @@ namespace mwse {
 		std::queue<TES3::MobileObject*> threadedMobileObjectCacheDeletionQueue;
 
 		void LuaManager::removeUserdataFromCache(TES3::BaseObject* object) {
-			removeThreadedUserdataFromCache();
-
 			userdataMapMutex.lock();
 
 			if (!userdataCache.empty()) {
-				// Clear any events that make use of this object.
-				auto dataHandler = TES3::DataHandler::get();
-				if (dataHandler == nullptr || dataHandler->mainThreadID == GetCurrentThreadId()) {
-					UserdataMap::iterator it = userdataCache.find((unsigned long)object);
-					if (it != userdataCache.end()) {
-						// Clear any events that make use of this object.
-						event::clearObjectFilter(it->second);
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 
-						// Remove it from the cache.
-						userdataCache.erase(it);
-					}
-				}
-				else {
-					// We're on a background thread and need to clean up later.
-					threadedBaseObjectCacheDeletionQueue.push(object);
+				// Clear any events that make use of this object.
+				UserdataMap::iterator it = userdataCache.find((unsigned long)object);
+				if (it != userdataCache.end()) {
+					// Clear any events that make use of this object.
+					event::clearObjectFilter(it->second);
+
+					// Remove it from the cache.
+					userdataCache.erase(it);
 				}
 			}
 
@@ -3433,67 +3474,19 @@ namespace mwse {
 		}
 
 		void LuaManager::removeUserdataFromCache(TES3::MobileObject* object) {
-			removeThreadedUserdataFromCache();
-
 			userdataMapMutex.lock();
 
 			if (!userdataCache.empty()) {
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+
 				// Clear any events that make use of this object.
-				auto dataHandler = TES3::DataHandler::get();
-				if (dataHandler == nullptr || dataHandler->mainThreadID == GetCurrentThreadId()) {
-					UserdataMap::iterator it = userdataCache.find((unsigned long)object);
-					if (it != userdataCache.end()) {
-						// Clear any events that make use of this object.
-						event::clearObjectFilter(it->second);
+				UserdataMap::iterator it = userdataCache.find((unsigned long)object);
+				if (it != userdataCache.end()) {
+					// Clear any events that make use of this object.
+					event::clearObjectFilter(it->second);
 
-						// Remove it from the cache.
-						userdataCache.erase(it);
-					}
-				}
-				else {
-					// We're on a background thread and need to clean up later.
-					threadedMobileObjectCacheDeletionQueue.push(object);
-				}
-			}
-
-			userdataMapMutex.unlock();
-		}
-
-		void LuaManager::removeThreadedUserdataFromCache() {
-			auto dataHandler = TES3::DataHandler::get();
-			if (dataHandler != nullptr && dataHandler->mainThreadID != GetCurrentThreadId()) {
-				return;
-			}
-
-			userdataMapMutex.lock();
-
-			while (!threadedBaseObjectCacheDeletionQueue.empty()) {
-				auto object = threadedBaseObjectCacheDeletionQueue.front();
-				threadedBaseObjectCacheDeletionQueue.pop();
-
-				if (!userdataCache.empty()) {
-					UserdataMap::iterator it = userdataCache.find((unsigned long)object);
-					if (it != userdataCache.end()) {
-						// Clear any events that make use of this object.
-						event::clearObjectFilter(it->second);
-
-						userdataCache.erase(it);
-					}
-				}
-			}
-
-			while (!threadedMobileObjectCacheDeletionQueue.empty()) {
-				auto object = threadedMobileObjectCacheDeletionQueue.front();
-				threadedMobileObjectCacheDeletionQueue.pop();
-
-				if (!userdataCache.empty()) {
-					UserdataMap::iterator it = userdataCache.find((unsigned long)object);
-					if (it != userdataCache.end()) {
-						// Clear any events that make use of this object.
-						event::clearObjectFilter(it->second);
-
-						userdataCache.erase(it);
-					}
+					// Remove it from the cache.
+					userdataCache.erase(it);
 				}
 			}
 
@@ -3527,6 +3520,14 @@ namespace mwse {
 			case TimerType::GameTime: return gameTimers;
 			}
 			return nullptr;
+		}
+
+		void LuaManager::claimLuaThread() {
+			stateThreadMutex.lock();
+		}
+
+		void LuaManager::releaseLuaThread() {
+			stateThreadMutex.unlock();
 		}
 	}
 }

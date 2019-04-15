@@ -13,7 +13,8 @@ namespace mwse {
 	namespace lua {
 
 		sol::object ScriptContext::index(std::string key) {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			TES3::ScriptVariables* vars = getScriptVariables();
 
@@ -82,7 +83,8 @@ namespace mwse {
 		//
 
 		sol::object getLocalVarData(TES3::Script* script, const char* name, bool useLocals = true) {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			unsigned int index = 0;
 			char type = script->getLocalVarIndexAndType(name, &index);
@@ -102,8 +104,10 @@ namespace mwse {
 				return sol::nil;
 			}
 
-			sol::state& state = LuaManager::getInstance().getState();
-			sol::table results = LuaManager::getInstance().createTable();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
+
+			sol::table results = state.create_table();
 
 			// Append any short variables.
 			for (int i = 0; i < script->shortCount; i++) {
@@ -128,7 +132,8 @@ namespace mwse {
 
 		void bindTES3Script() {
 			// Get our lua state.
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			// Binding for ScriptContext.
 			{

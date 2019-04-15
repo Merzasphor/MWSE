@@ -14,7 +14,9 @@ namespace TES3 {
 		Object * result = reinterpret_cast<Object*(__thiscall *)(LeveledCreature*)>(TES3_LeveledCreature_resolve)(this);
 
 		// Allow the event to override the pick.
-		sol::object eventResult = mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::LeveledCreaturePickedEvent(this, result));
+		auto& luaManager = mwse::lua::LuaManager::getInstance();
+		auto stateHandle = luaManager.getThreadSafeStateHandle();
+		sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::LeveledCreaturePickedEvent(this, result));
 		if (eventResult.valid()) {
 			sol::table eventData = eventResult;
 
@@ -33,7 +35,9 @@ namespace TES3 {
 		Object * result = reinterpret_cast<Object*(__thiscall *)(LeveledItem*)>(TES3_LeveledItem_resolve)(this);
 
 		// Allow the event to override the pick.
-		sol::object eventResult = mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::LeveledItemPickedEvent(this, result));
+		auto& luaManager = mwse::lua::LuaManager::getInstance();
+		auto stateHandle = luaManager.getThreadSafeStateHandle();
+		sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::LeveledItemPickedEvent(this, result));
 		if (eventResult.valid()) {
 			sol::table eventData = eventResult;
 

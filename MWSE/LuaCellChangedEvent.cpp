@@ -17,8 +17,9 @@ namespace mwse {
 			}
 
 			sol::table CellChangedEvent::createEventTable() {
-				sol::state& state = LuaManager::getInstance().getState();
-				sol::table eventData = LuaManager::getInstance().createTable();
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table eventData = state.create_table();
 
 				eventData["cell"] = makeLuaObject(m_Cell);
 				eventData["previousCell"] = makeLuaObject(m_PreviousCell);

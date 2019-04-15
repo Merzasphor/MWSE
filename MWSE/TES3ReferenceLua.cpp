@@ -19,9 +19,10 @@
 namespace TES3 {
 	sol::object Reference::getAttachments() {
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		sol::state& state = luaManager.getState();
+		auto stateHandle = luaManager.getThreadSafeStateHandle();
+		sol::state& state = stateHandle.state;
 
-		sol::table result = luaManager.createTable();
+		sol::table result = state.create_table();
 
 		Attachment* attachment = this->attachments;
 		while (attachment) {
@@ -47,11 +48,6 @@ namespace TES3 {
 	}
 
 	sol::table Reference::getLuaTable() {
-		auto dataHandler = TES3::DataHandler::get();
-		if (dataHandler != nullptr && dataHandler->mainThreadID != GetCurrentThreadId()) {
-			throw std::exception("Cannot be called from outside the main thread.");
-		}
-
 		auto attachment = getOrCreateAttachedItemData();
 		if (attachment == nullptr) {
 			throw std::exception("Could not create ItemData attachment.");
@@ -63,18 +59,22 @@ namespace TES3 {
 
 namespace mwse {
 	namespace lua {
-		sol::object getContext(TES3::Reference* reference) {
-			auto variables = reference->getAttachedItemData();
+		sol::object getContext(TES3::Reference& reference) {
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
+
+			auto variables = reference.getAttachedItemData();
 			if (variables == NULL) {
 				return sol::nil;
 			}
-			sol::state& state = mwse::lua::LuaManager::getInstance().getState();
 			return sol::make_object(state, std::shared_ptr<ScriptContext>(new ScriptContext(variables->script, variables->scriptData)));
 		}
 
 		void bindTES3Reference() {
 			// Get our lua state.
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
 			auto usertypeDefinition = state.create_simple_usertype<TES3::Reference>();
@@ -115,7 +115,7 @@ namespace mwse {
 			// Functions exposed as properties.
 			usertypeDefinition.set("activationReference", sol::property(&TES3::Reference::getActionReference, &TES3::Reference::setActionReference));
 			usertypeDefinition.set("attachments", sol::readonly_property(&TES3::Reference::getAttachments));
-			usertypeDefinition.set("context", sol::readonly_property([](TES3::Reference& self) { return getContext(&self); }));
+			usertypeDefinition.set("context", sol::readonly_property(&getContext));
 			usertypeDefinition.set("data", sol::readonly_property(&TES3::Reference::getLuaTable));
 			usertypeDefinition.set("isEmpty", sol::property(&TES3::Reference::getEmptyInventoryFlag, &TES3::Reference::setEmptyInventoryFlag));
 			usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::Reference::isRespawn));

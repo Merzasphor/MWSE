@@ -21,7 +21,7 @@ namespace TES3 {
 		signed char result = reinterpret_cast<char(__thiscall *)(MobileObject*, int)>(TES3_MobileObject_onActorCollision)(this, hitReferenceIndex);
 
 		// Fire off our hit event.
-		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
 
 		return result;
 	}
@@ -34,7 +34,7 @@ namespace TES3 {
 		signed char result = reinterpret_cast<char(__thiscall *)(MobileObject*, int, signed char)>(TES3_MobileObject_onObjectCollision)(this, hitReferenceIndex, flag);
 
 		// Fire off our hit event.
-		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
 
 		return result;
 	}
@@ -47,7 +47,7 @@ namespace TES3 {
 		signed char result = reinterpret_cast<char(__thiscall *)(MobileObject*, int)>(TES3_MobileObject_onTerrainCollision)(this, hitReferenceIndex);
 
 		// Fire off our hit event.
-		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
 
 		return result;
 	}
@@ -60,7 +60,7 @@ namespace TES3 {
 		signed char result = reinterpret_cast<char(__thiscall *)(MobileObject*, int)>(TES3_MobileObject_onWaterCollision)(this, hitReferenceIndex);
 
 		// Fire off our hit event.
-		mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
 
 		return result;
 	}

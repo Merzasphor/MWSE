@@ -52,7 +52,10 @@ namespace mwse {
 				return sol::nil;
 			}
 			else if (itemData.owner->objectType == TES3::ObjectType::Faction) {
-				return sol::make_object(LuaManager::getInstance().getState(), itemData.requiredRank);
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				return sol::make_object(state, itemData.requiredRank);
 			}
 			else if (itemData.owner->objectType == TES3::ObjectType::NPC) {
 				return makeLuaObject(itemData.requiredVariable);
@@ -107,7 +110,8 @@ namespace mwse {
 
 		void bindTES3Inventory() {
 			// Get our lua state.
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			// Binding for TES3::ItemData
 			{

@@ -86,7 +86,8 @@ namespace mwse {
 		}
 
 		void bindTES3Util() {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			//
 			// Extend tes3 library with extra functions.
@@ -246,7 +247,9 @@ namespace mwse {
 
 			// DEPRECATED: To be eventually redone after mods have transitioned away from it.
 			state["tes3"]["getGMST"] = [](sol::object key) -> sol::object {
-				sol::state& state = LuaManager::getInstance().getState();
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
 
 				// Display deprecation warning and traceback.
 				logStackTrace("WARNING: Use of deprecated function tes3.getGMST. Use tes3.findGMST instead.");
@@ -372,8 +375,14 @@ namespace mwse {
 
 			// Bind function: tes3.messageBox
 			state["tes3"]["messageBox"] = [](sol::object param, sol::optional<sol::variadic_args> va) {
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+
 				if (param.is<std::string>()) {
-					sol::state& state = LuaManager::getInstance().getState();
+					auto& luaManager = mwse::lua::LuaManager::getInstance();
+					auto stateHandle = luaManager.getThreadSafeStateHandle();
+					sol::state& state = stateHandle.state;
 					std::string message = state["string"]["format"](param, va);
 					return tes3::ui::messagePlayer(message.c_str());
 				}
@@ -412,8 +421,7 @@ namespace mwse {
 					LuaManager::getInstance().setButtonPressedCallback(params["callback"]);
 
 					// Temporary hook into the function that creates message boxes. 
-					int result = reinterpret_cast<int(__cdecl *)(const char*, ...)>(0x5F1AA0)(message.c_str(), buttonTextStruct, NULL);
-					return result;
+					return reinterpret_cast<int(__cdecl *)(const char*, ...)>(0x5F1AA0)(message.c_str(), buttonTextStruct, NULL);
 				}
 
 				return 0;
@@ -469,14 +477,16 @@ namespace mwse {
 
 			// Bind function: tes3.getModList
 			state["tes3"]["getModList"] = []() -> sol::object {
-				sol::state& state = LuaManager::getInstance().getState();
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
 
 				TES3::DataHandler* dataHandler = TES3::DataHandler::get();
 				if (dataHandler == nullptr) {
 					return sol::nil;
 				}
 
-				sol::table mods = LuaManager::getInstance().createTable();
+				sol::table mods = state.create_table();
 				for (int i = 0; i < 256; i++) {
 					TES3::GameFile* gameFile = dataHandler->nonDynamicData->activeMods[i];
 					if (gameFile == nullptr) {
@@ -611,6 +621,10 @@ namespace mwse {
 			// Bind function: tes3.getCameraPosition
 			static NI::Pick* rayTestCache = nullptr;
 			state["tes3"]["rayTest"] = [](sol::table params) -> sol::object {
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+
 				// Make sure we got our required position.
 				sol::optional<TES3::Vector3> position = getOptionalParamVector3(params, "position");
 				if (!position) {
@@ -728,12 +742,11 @@ namespace mwse {
 
 				// Are we looking for a single result?
 				else if (rayTestCache->pickType == NI::PickType::FIND_FIRST) {
-					return sol::make_object(LuaManager::getInstance().getState(), rayTestCache->results.storage[0]);
+					return sol::make_object(state, rayTestCache->results.storage[0]);
 				}
 
 				// We're now in multi-result mode. We'll store these in a table.
-				sol::state& state = LuaManager::getInstance().getState();
-				sol::table results = LuaManager::getInstance().createTable();
+				sol::table results = state.create_table();
 				
 				// Go through and clone the results in a way that will play nice.
 				for (int i = 0; i < rayTestCache->results.filledCount; i++) {
@@ -795,41 +808,39 @@ namespace mwse {
 				return tes3::ui::getTopMenu();
 			};
 
-			state["tes3"]["hasCodePatchFeature"] = [](int id) -> sol::object {
+			state["tes3"]["hasCodePatchFeature"] = [](int id) -> sol::optional<bool> {
 				if (!mcp::hasFeaturesFound()) {
-					return sol::nil;
+					return sol::optional<bool>();
 				}
 
-				return sol::make_object(LuaManager::getInstance().getState(), mcp::getFeatureEnabled(id));
+				return mcp::getFeatureEnabled(id);
 			};
 
-			state["tes3"]["getDaysInMonth"] = [](int month) -> sol::object {
+			state["tes3"]["getDaysInMonth"] = [](int month) -> sol::optional<int> {
 				TES3::WorldController * worldController = TES3::WorldController::get();
 				if (worldController) {
-					return sol::make_object(LuaManager::getInstance().getState(), worldController->getDaysInMonth(month));
+					return worldController->getDaysInMonth(month);
 				}
-				return sol::nil;
+				return sol::optional<int>();
 			};
 
-			state["tes3"]["getCumulativeDaysForMonth"] = [](int month) -> sol::object {
+			state["tes3"]["getCumulativeDaysForMonth"] = [](int month) -> sol::optional<int> {
 				TES3::WorldController * worldController = TES3::WorldController::get();
 				if (worldController) {
-					return sol::make_object(LuaManager::getInstance().getState(), worldController->getCumulativeDaysForMonth(month));
+					return worldController->getCumulativeDaysForMonth(month);
 				}
-				return sol::nil;
+				return sol::optional<int>();
 			};
 
-			state["tes3"]["getSimulationTimestamp"] = []() -> sol::object {
+			state["tes3"]["getSimulationTimestamp"] = []() -> sol::optional<double> {
 				TES3::WorldController * worldController = TES3::WorldController::get();
 				if (worldController) {
-					return sol::make_object(LuaManager::getInstance().getState(), worldController->getHighPrecisionSimulationTimestamp());
+					return worldController->getHighPrecisionSimulationTimestamp();
 				}
-				return sol::nil;
+				return sol::optional<double>();
 			};
 
-			state["tes3"]["getEquippedItem"] = [](sol::table params) -> sol::object {
-				sol::state& state = LuaManager::getInstance().getState();
-
+			state["tes3"]["getEquippedItem"] = [](sol::table params) -> TES3::EquipmentStack* {
 				// Find our equipment based on the object given.
 				TES3::Iterator<TES3::EquipmentStack> * equipment = NULL;
 				sol::object actor = params["actor"];
@@ -900,15 +911,15 @@ namespace mwse {
 					}
 
 					// If we got this far we match all filters. Return the object.
-					return sol::make_object(state, itt->data);
+					return itt->data;
 				}
 
-				return sol::nil;
+				return nullptr;
 			};
 
 			state["tes3"]["getInputBinding"] = [](int code) -> TES3::InputConfig* {
 				if (code < TES3::KeyBind::FirstKey || code > TES3::KeyBind::LastKey) {
-					return NULL;
+					return nullptr;
 				}
 
 				TES3::WorldController * worldController = TES3::WorldController::get();
@@ -918,7 +929,7 @@ namespace mwse {
 						return &inputController->inputMaps[code];
 					}
 				}
-				return NULL;
+				return nullptr;
 			};
 
 			state["tes3"]["getRegion"] = []() -> sol::object {
@@ -953,7 +964,10 @@ namespace mwse {
 			state["tes3"]["getCursorPosition"] = []() -> sol::object {
 				TES3::WorldController * worldController = TES3::WorldController::get();
 				if (worldController) {
-					sol::table results = LuaManager::getInstance().createTable();
+					auto& luaManager = mwse::lua::LuaManager::getInstance();
+					auto stateHandle = luaManager.getThreadSafeStateHandle();
+					sol::state& state = stateHandle.state;
+					sol::table results = state.create_table();
 					results["x"] = worldController->mouseController->position.x;
 					results["y"] = worldController->mouseController->position.z;
 					return results;
@@ -972,7 +986,9 @@ namespace mwse {
 			};
 
 			state["tes3"]["removeEffects"] = [](sol::table params) {
-				sol::state& state = LuaManager::getInstance().getState();
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
 				
 				TES3::Reference * reference = getOptionalParamExecutionReference(params);
 				if (reference == nullptr) {
@@ -1007,7 +1023,9 @@ namespace mwse {
 			};
 
 			state["tes3"]["triggerCrime"] = [](sol::table params) {
-				sol::state& state = LuaManager::getInstance().getState();
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
 
 				TES3::CrimeEvent crimeEvent;
 
@@ -1121,7 +1139,9 @@ namespace mwse {
 			};
 
 			state["tes3"]["playVoiceover"] = [](sol::table params) -> bool {
-				sol::state& state = LuaManager::getInstance().getState();
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
 
 				// Get the actor that we're going to make say something.
 				auto actor = getOptionalParamMobileActor(params, "actor");
@@ -1497,7 +1517,9 @@ namespace mwse {
 			};
 
 			state["tes3"]["setStatistic"] = [](sol::table params) {
-				sol::state& state = LuaManager::getInstance().getState();
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
 
 				// Figure out our mobile object, in case someone gives us a reference instead.
 				sol::userdata maybeMobile = params["reference"];
@@ -1621,7 +1643,9 @@ namespace mwse {
 			};
 
 			state["tes3"]["modStatistic"] = [](sol::table params) {
-				sol::state& state = LuaManager::getInstance().getState();
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
 
 				// Figure out our mobile object, in case someone gives us a reference instead.
 				sol::userdata maybeMobile = params["reference"];
@@ -1790,8 +1814,10 @@ namespace mwse {
 					return sol::nil;
 				}
 
-				sol::state& state = LuaManager::getInstance().getState();
-				sol::table result = LuaManager::getInstance().createTable();
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table result = state.create_table();
 
 				if (dataHandler->currentInteriorCell) {
 					result[1] = makeLuaObject(dataHandler->currentInteriorCell);

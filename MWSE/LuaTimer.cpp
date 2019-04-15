@@ -169,7 +169,10 @@ namespace mwse {
 			std::shared_ptr<Timer> timer = nullptr;
 			while (!m_ActiveTimers.empty() && (timer = m_ActiveTimers.front()) && timer->timing <= m_Clock) {
 				// Build data to send to the callback.
-				sol::table data = LuaManager::getInstance().createTable();
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table data = state.create_table();
+
 				data["timer"] = timer;
 
 				// Invoke the callback.
@@ -321,7 +324,8 @@ namespace mwse {
 
 		void bindLuaTimer() {
 			// Get our lua state.
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			// Bind TimerController.
 			{
@@ -353,16 +357,15 @@ namespace mwse {
 				usertypeDefinition.set("state", sol::readonly_property(&Timer::state));
 				usertypeDefinition.set("timing", sol::readonly_property(&Timer::timing));
 				usertypeDefinition.set("callback", sol::readonly_property(&Timer::callback));
-				usertypeDefinition.set("timeLeft", sol::readonly_property([](Timer& self) -> sol::object {
-					sol::state& state = LuaManager::getInstance().getState();
+				usertypeDefinition.set("timeLeft", sol::readonly_property([](Timer& self) -> sol::optional<double> {
 					if (self.state == TimerState::Active) {
-						return sol::make_object(state, self.timing - self.controller->getClock());
+						return self.timing - self.controller->getClock();
 					}
 					else if (self.state == TimerState::Paused) {
-						return sol::make_object(state, self.timing);
+						return self.timing;
 					}
 
-					return sol::nil;
+					return sol::optional<double>();
 				}));
 
 				// Legacy value binding.
@@ -390,7 +393,7 @@ namespace mwse {
 			}
 
 			// Create our timer library.
-			state["timer"] = LuaManager::getInstance().createTable();
+			state["timer"] = state.create_table();
 
 			// Expose timer types.
 			state["timer"]["real"] = TimerType::RealTime;
@@ -406,7 +409,7 @@ namespace mwse {
 			state["timer"]["start"] = sol::overload(&startTimerAmbiguous, &startTimerLegacySimulation, &startTimerLegacySimulationWithIterations);
 
 			// Legacy support for frame timers.
-			state["timer"]["frame"] = LuaManager::getInstance().createTable();
+			state["timer"]["frame"] = state.create_table();
 			state["timer"]["frame"]["start"] = sol::overload(&startTimerLegacyReal, &startTimerLegacyRealWithIterations);
 
 			// Legacy support for functions.

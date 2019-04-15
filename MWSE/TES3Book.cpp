@@ -14,7 +14,9 @@
 namespace TES3 {
 	const char* Book::getBookText() {
 		// Allow the event to override the text.
-		sol::object eventResult = mwse::lua::LuaManager::getInstance().triggerEvent(new mwse::lua::event::BookGetTextEvent(this));
+		auto& luaManager = mwse::lua::LuaManager::getInstance();
+		auto stateHandle = luaManager.getThreadSafeStateHandle();
+		sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::BookGetTextEvent(this));
 		if (eventResult.valid()) {
 			sol::table eventData = eventResult;
 			sol::optional<const char*> newText = eventData["text"];

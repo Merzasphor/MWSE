@@ -333,22 +333,16 @@ namespace mwse {
 				return sol::nil;
 			}
 
-#if _DEBUG
-			auto dataHandler = TES3::DataHandler::get();
-			if (dataHandler != nullptr && dataHandler->mainThreadID != GetCurrentThreadId()) {
-				throw std::exception("Cannot be called from outside the main thread.");
-			}
-#endif
-
 			LuaManager& luaManager = LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
 
 			// Search in cache first.
-			sol::object result = luaManager.getCachedUserdata(object);
+			sol::object result = stateHandle.getCachedUserdata(object);
 			if (result != sol::nil) {
 				return result;
 			}
 
-			sol::state& state = luaManager.getState();
+			sol::state& state = stateHandle.state;
 
 			switch (object->objectType) {
 			case TES3::ObjectType::Activator:
@@ -497,7 +491,7 @@ namespace mwse {
 
 			// Insert the object into cache.
 			if (result != sol::nil) {
-				luaManager.insertUserdataIntoCache(object, result);
+				stateHandle.insertUserdataIntoCache(object, result);
 			}
 
 			return result;
@@ -508,22 +502,16 @@ namespace mwse {
 				return sol::nil;
 			}
 
-#if _DEBUG
-			auto dataHandler = TES3::DataHandler::get();
-			if (dataHandler != nullptr && dataHandler->mainThreadID != GetCurrentThreadId()) {
-				throw std::exception("Cannot be called from outside the main thread.");
-			}
-#endif
-
 			LuaManager& luaManager = LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
 
 			// Search in cache first.
-			sol::object result = luaManager.getCachedUserdata(object);
+			sol::object result = stateHandle.getCachedUserdata(object);
 			if (result != sol::nil) {
 				return result;
 			}
 
-			sol::state& state = luaManager.getState();
+			sol::state& state = stateHandle.state;
 
 			switch ((unsigned int)object->vTable.mobileObject) {
 			case TES3_vTable_MobileCreature:
@@ -543,7 +531,7 @@ namespace mwse {
 
 			// Insert the object into cache.
 			if (result != sol::nil) {
-				luaManager.insertUserdataIntoCache(object, result);
+				stateHandle.insertUserdataIntoCache(object, result);
 			}
 
 			return result;
@@ -554,14 +542,8 @@ namespace mwse {
 				return sol::nil;
 			}
 
-#if _DEBUG
-			auto dataHandler = TES3::DataHandler::get();
-			if (dataHandler != nullptr && dataHandler->mainThreadID != GetCurrentThreadId()) {
-				throw std::exception("Cannot be called from outside the main thread.");
-			}
-#endif
-
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			switch (weather->index) {
 			case TES3::WeatherType::Ash: return sol::make_object(state, reinterpret_cast<TES3::WeatherAsh*>(weather));
@@ -580,36 +562,24 @@ namespace mwse {
 		}
 
 		sol::object makeLuaObject(TES3::GameFile* gameFile) {
-			if (gameFile == NULL) {
+			if (gameFile == nullptr) {
 				return sol::nil;
 			}
 
-#if _DEBUG
-			auto dataHandler = TES3::DataHandler::get();
-			if (dataHandler != nullptr && dataHandler->mainThreadID != GetCurrentThreadId()) {
-				throw std::exception("Cannot be called from outside the main thread.");
-			}
-#endif
-
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 			return sol::make_object(state, gameFile);
 		}
 
 		sol::object makeLuaObject(NI::Object* object) {
-			if (object == NULL) {
+			if (object == nullptr) {
 				return sol::nil;
 			}
 
 			LuaManager& luaManager = LuaManager::getInstance();
 
-#if _DEBUG
-			auto dataHandler = TES3::DataHandler::get();
-			if (dataHandler != nullptr && dataHandler->mainThreadID != GetCurrentThreadId()) {
-				throw std::exception("Cannot be called from outside the main thread.");
-			}
-#endif
-
-			sol::state& state = luaManager.getState();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			switch ((uintptr_t)object->getRunTimeTypeInformation()) {
 			case NI::RTTIStaticPtr::NiAmbientLight:
@@ -668,16 +638,9 @@ namespace mwse {
 				return sol::nil;
 			}
 
-#if _DEBUG
-			auto dataHandler = TES3::DataHandler::get();
-			if (dataHandler != nullptr && dataHandler->mainThreadID != GetCurrentThreadId()) {
-				throw std::exception("Cannot be called from outside the main thread.");
-			}
-#endif
-
 			LuaManager& luaManager = LuaManager::getInstance();
-
-			sol::state& state = luaManager.getState();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			switch ((uintptr_t)object->getRunTimeTypeInformation()) {
 			case NI::RTTIStaticPtr::NiAmbientLight:
@@ -736,7 +699,8 @@ namespace mwse {
 				log::getLog() << message << std::endl;
 			}
 
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 			sol::protected_function_result result = state["debug"]["traceback"]();
 			if (result.valid()) {
 				sol::optional<std::string> asString = result;

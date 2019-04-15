@@ -36,7 +36,8 @@ namespace mwse {
 
 		TES3::UI::Boolean __cdecl eventDispatcher(Element* owningWidget, Property eventID, int data0, int data1, Element* source) {
 			LuaManager& luaManager = LuaManager::getInstance();
-			sol::state& state = luaManager.getState();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			// Handle inheritance
 			Element* target = source;
@@ -48,7 +49,7 @@ namespace mwse {
 			if (iterElements != eventMap.end()) {
 				for (const auto& eventLua : iterElements->second) {
 					if (eventLua.id == eventID) {
-						sol::table eventData = luaManager.createTable();
+						sol::table eventData = state.create_table();
 						eventData["source"] = source;
 						eventData["widget"] = owningWidget;
 						eventData["id"] = eventID;
@@ -76,14 +77,15 @@ namespace mwse {
 		}
 
 		void __cdecl eventDestroyDispatcher(Element* source) {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			// Dispatch Lua callback
 			auto iterElements = eventMap.find(source);
 			if (iterElements != eventMap.end()) {
 				for (const auto& eventLua : iterElements->second) {
 					if (eventLua.id == Property::event_destroy) {
-						sol::table eventData = LuaManager::getInstance().createTable();
+						sol::table eventData = state.create_table();
 						eventData["source"] = source;
 						eventData["id"] = Property::event_destroy;
 
@@ -164,7 +166,8 @@ namespace mwse {
 		}
 
 		TES3::UI::Boolean eventForwarder(sol::table eventData) {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			Element* source = eventData["source"];
 			Element* owningWidget = eventData["widget"];
@@ -198,7 +201,8 @@ namespace mwse {
 		}
 
 		void bindTES3UIManager() {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 			auto tes3ui = state.create_named_table("tes3ui");
 
 			tes3ui["registerID"] = TES3::UI::registerID;
@@ -247,11 +251,13 @@ namespace mwse {
 			tes3ui["enterMenuMode"] = TES3::UI::enterMenuMode;
 			tes3ui["leaveMenuMode"] = TES3::UI::leaveMenuMode;
 			tes3ui["acquireTextInput"] = TES3::UI::acquireTextInput;
-			tes3ui.set_function("getPalette", [](const char* name) {
-				sol::state& state = LuaManager::getInstance().getState();
+			tes3ui["getPalette"] = [](const char* name) {
+				auto& luaManager = LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::state_view state = stateHandle.state;
 				auto colour = TES3::UI::getPaletteColour(TES3::UI::registerProperty(name));
 				return state.create_table_with(1, colour.x, 2, colour.y, 3, colour.z);
-			});
+			};
 			tes3ui["updateInventoryTiles"] = &TES3::UI::updateInventoryMenuTiles;
 			tes3ui["updateBarterMenuTiles"] = &TES3::UI::updateBarterMenuTiles;
 			tes3ui["updateContentsMenuTiles"] = &TES3::UI::updateContentsMenuTiles;
@@ -294,7 +300,9 @@ namespace mwse {
 					return unsigned int(self.valueType) & 0x7F;
 				}));
 				usertypeDefinition.set("value", sol::property([](TES3::UI::TreeItem& self) -> sol::object {
-					sol::state& state = LuaManager::getInstance().getState();
+					auto& luaManager = mwse::lua::LuaManager::getInstance();
+					auto stateHandle = luaManager.getThreadSafeStateHandle();
+					sol::state& state = stateHandle.state;
 
 					unsigned int type = unsigned int(self.valueType) & 0x7F;
 

@@ -18,7 +18,8 @@ namespace mwse {
 	namespace lua {
 		void bindNIObject() {
 			// Get our lua state.
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			// Binding for NI::RTTI.
 			{

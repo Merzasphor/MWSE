@@ -11,9 +11,7 @@
 namespace mwse {
 	namespace lua {
 		auto iterateReferencesFiltered(TES3::Cell* cell, unsigned int desiredType) {
-			if (TES3::DataHandler::get()->mainThreadID != GetCurrentThreadId()) {
-				throw std::exception("Cannot be called from outside the main thread.");
-			}
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 
 			unsigned int currentList = 0;
 
@@ -72,7 +70,8 @@ namespace mwse {
 
 		void bindTES3Cell() {
 			// Get our lua state.
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			// Binding for TES3::CellExteriorData
 			{
@@ -152,12 +151,12 @@ namespace mwse {
 				}
 				));
 				usertypeDefinition.set("fogDensity", sol::property(
-					[](TES3::Cell& self) -> sol::object
+					[](TES3::Cell& self) -> sol::optional<float>
 				{
 					if (self.cellFlags & TES3::CellFlag::Interior) {
-						return sol::make_object(LuaManager::getInstance().getState(), self.VariantData.interior.fogDensity);
+						return self.VariantData.interior.fogDensity;
 					}
-					return sol::nil;
+					return sol::optional<float>();
 				},
 					[](TES3::Cell& self, float value)
 				{
@@ -194,12 +193,12 @@ namespace mwse {
 				}
 				));
 				usertypeDefinition.set("waterLevel", sol::property(
-					[](TES3::Cell& self) -> sol::object
+					[](TES3::Cell& self) -> sol::optional<float>
 				{
 					if (self.cellFlags & TES3::CellFlag::Interior) {
-						return sol::make_object(LuaManager::getInstance().getState(), self.waterLevelOrRegion.waterLevel);
+						return self.waterLevelOrRegion.waterLevel;
 					}
-					return sol::nil;
+					return sol::optional<float>();
 				},
 					&TES3::Cell::setWaterLevel
 					));

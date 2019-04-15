@@ -18,8 +18,9 @@ namespace mwse {
 			}
 
 			sol::table CombatStartEvent::createEventTable() {
-				sol::state& state = LuaManager::getInstance().getState();
-				sol::table eventData = LuaManager::getInstance().createTable();
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table eventData = state.create_table();
 
 				eventData["actor"] = makeLuaObject(m_MobileActor);
 				eventData["target"] = makeLuaObject(m_Target);

@@ -16,7 +16,9 @@ namespace mwse {
 			}
 
 			sol::table MobileActorDeactivatedEvent::createEventTable() {
-				sol::table eventData = LuaManager::getInstance().createTable();
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table eventData = state.create_table();
 
 				eventData["reference"] = lua::makeLuaObject(m_Reference);
 

@@ -17,7 +17,8 @@
 namespace mwse {
 	namespace lua {
 		void bindNIPick() {
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			state.new_usertype<NI::Pick>("niPick",
 				// Disable construction of this type.

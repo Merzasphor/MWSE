@@ -18,8 +18,9 @@ namespace mwse {
 			}
 
 			sol::table JournalEvent::createEventTable() {
-				sol::state& state = LuaManager::getInstance().getState();
-				sol::table eventData = LuaManager::getInstance().createTable();
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table eventData = state.create_table();
 
 				eventData["topic"] = makeLuaObject(m_Topic);
 				eventData["index"] = m_NewIndex;

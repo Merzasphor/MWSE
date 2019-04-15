@@ -75,7 +75,8 @@ namespace mwse {
 			bindTArray<NI::PickRecord>("NITArrayPickRecord");
 
 			// Bind some iterators.
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 			state.new_usertype<TES3::LinkedList<TES3::Object>>("TES3ObjectLinkedList",
 				// Disable construction of this type.
 				"new", sol::no_constructor,

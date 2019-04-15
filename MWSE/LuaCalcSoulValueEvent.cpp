@@ -19,7 +19,9 @@ namespace mwse {
 			}
 
 			sol::table CalculateSoulValueEvent::createEventTable() {
-				sol::table eventData = LuaManager::getInstance().createTable();
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table eventData = state.create_table();
 
 				eventData["actor"] = makeLuaObject(m_Actor);
 				eventData["value"] = m_Value;

@@ -30,7 +30,8 @@ namespace TES3 {
 		if (castType != TES3::SpellCastType::Ability) {
 			// Trigger event, and update the cast chance.
 			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-			sol::table eventData = luaManager.triggerEvent(new mwse::lua::event::SpellCastEvent(this, caster, castChance, *weakestSchoolId));
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::SpellCastEvent(this, caster, castChance, *weakestSchoolId));
 			if (eventData.valid()) {
 				castChance = eventData.get<float>("castChance");
 			}

@@ -50,14 +50,15 @@ namespace mwse
 
 	float xLuaRunScript::execute(mwse::VMExecuteInterface &virtualMachine)
 	{
-		sol::state& state = lua::LuaManager::getInstance().getState();
+		lua::LuaManager& manager = lua::LuaManager::getInstance();
+		auto stateHandle = manager.getThreadSafeStateHandle();
+		sol::state& state = stateHandle.state;
 
 		// Get parameters.
 		long scriptNameKey = mwse::Stack::getInstance().popLong();
 		mwseString& scriptName = virtualMachine.getString(scriptNameKey);
 
 		// Update the LuaManager to reference our current context.
-		lua::LuaManager& manager = lua::LuaManager::getInstance();
 		manager.setCurrentReference(virtualMachine.getReference());
 		manager.setCurrentScript(virtualMachine.getScript());
 		

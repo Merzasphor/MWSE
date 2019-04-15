@@ -7,7 +7,10 @@
 
 namespace TES3 {
 	sol::table Class::getMajorSkills() {
-		sol::table result = mwse::lua::LuaManager::getInstance().createTable();
+		auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+		sol::state& state = stateHandle.state;
+
+		sol::table result = state.create_table();
 		for (int i = 0; i < 5; i++) {
 			result[i + 1] = &skills[i * 2];
 		}
@@ -15,7 +18,10 @@ namespace TES3 {
 	}
 
 	sol::table Class::getMinorSkills() {
-		sol::table result = mwse::lua::LuaManager::getInstance().createTable();
+		auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+		sol::state& state = stateHandle.state;
+
+		sol::table result = state.create_table();
 		for (int i = 0; i < 5; i++) {
 			result[i + 1] = &skills[i * 2 + 1];
 		}
@@ -27,7 +33,8 @@ namespace mwse {
 	namespace lua {
 		void bindTES3Class() {
 			// Get our lua state.
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
 			auto usertypeDefinition = state.create_simple_usertype<TES3::Class>();
@@ -137,9 +144,12 @@ namespace mwse {
 			usertypeDefinition.set("description", sol::property(
 				[](TES3::Class& self) -> sol::object
 			{
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+
 				// If the description is already loaded, just return it.
 				if (self.description) {
-					sol::state& state = LuaManager::getInstance().getState();
 					return sol::make_object(state, self.description);
 				}
 
@@ -148,7 +158,6 @@ namespace mwse {
 					char * description = self.loadDescription();
 					if (description) {
 						// We loaded successfully, package, free, then return.
-						sol::state& state = LuaManager::getInstance().getState();
 						sol::object value = sol::make_object(state, description);
 						self.freeDescription();
 						return value;

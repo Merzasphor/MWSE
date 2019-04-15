@@ -15,7 +15,8 @@ namespace mwse {
 	namespace lua {
 		void bindNILight() {
 			// Get our lua state.
-			sol::state& state = LuaManager::getInstance().getState();
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
 
 			// Binding for NI::DynamicEffect. TODO: MOVE THIS OUTSIDE OF HERE AT SOME POINT!
 			{

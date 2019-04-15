@@ -12,8 +12,9 @@ namespace mwse {
 			}
 
 			sol::table MouseButtonDownEvent::createEventTable() {
-				sol::state& state = LuaManager::getInstance().getState();
-				sol::table eventData = KeyEvent::createEventTable();
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table eventData = state.create_table();
 
 				eventData["button"] = m_KeyCode;
 
