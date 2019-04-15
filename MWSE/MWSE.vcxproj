@@ -68,6 +68,7 @@
     <ClInclude Include="LuaLoadGameEvent.h" />
     <ClInclude Include="LuaMagicCastedEvent.h" />
     <ClInclude Include="LuaMenuStateEvent.h" />
+    <ClInclude Include="LuaMeshLoadedEvent.h" />
     <ClInclude Include="LuaMobileActorActivatedEvent.h" />
     <ClInclude Include="LuaMobileActorDeactivatedEvent.h" />
     <ClInclude Include="LuaMobileObjectCollisionEvent.h" />
@@ -422,6 +423,7 @@
     <ClCompile Include="LuaLoadGameEvent.cpp" />
     <ClCompile Include="LuaMagicCastedEvent.cpp" />
     <ClCompile Include="LuaMenuStateEvent.cpp" />
+    <ClCompile Include="LuaMeshLoadedEvent.cpp" />
     <ClCompile Include="LuaMobileActorActivatedEvent.cpp" />
     <ClCompile Include="LuaMobileActorDeactivatedEvent.cpp" />
     <ClCompile Include="LuaMobileObjectWaterImpactEvent.cpp" />

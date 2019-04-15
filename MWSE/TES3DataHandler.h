@@ -17,13 +17,21 @@ namespace TES3 {
 		Block = 0x2
 	};
 
+	struct MeshData {
+		HashMap * NIFs; // 0x0
+		HashMap * KFs; // 0x4
+
+		// Path is relative to Data Files.
+		NI::AVObject * loadMesh(const char* path);
+	};
+
 	struct NonDynamicData {
 		long unknown_0x00;
 		long unknown_0x04; // always 0?
 		void * unknown_0x08; // Points to info about the last loaded save?
 		LinkedList<Object> * list; // 0x0C
 		LinkedList<Spell> * spellsList; // 0x10
-		HashMap * meshes; // 0x14
+		MeshData * meshData; // 0x14
 		GameSetting ** GMSTs; // 0x18 // Pointer to array of GMST pointers.
 		Iterator<Race> * races; // 0x1C
 		Iterator<LandTexture> * landTextures; // 0x20

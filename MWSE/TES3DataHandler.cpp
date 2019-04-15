@@ -20,6 +20,8 @@
 
 #include "TES3DialogueInfo.h"
 
+#include "LuaMeshLoadedEvent.h"
+
 #define TES3_NonDynamicData_saveGame 0x4C4250
 #define TES3_NonDynamicData_loadGameInGame 0x4C4800
 #define TES3_NonDynamicData_loadGameMainMenu 0x4C4EB0
@@ -41,13 +43,28 @@
 namespace TES3 {
 
 	//
+	// MeshData
+	//
+
+	const auto TES3_MeshData_loadMesh = reinterpret_cast<NI::AVObject *(__thiscall*)(MeshData*, const char *)>(0x4EE0A0);
+	NI::AVObject * MeshData::loadMesh(const char* path) {
+		auto countBefore = NIFs->count;
+		auto mesh = TES3_MeshData_loadMesh(this, path);
+		if (mesh && NIFs->count > countBefore) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MeshLoadedEvent(path, mesh));
+		}
+		return mesh;
+	}
+
+	//
 	// NonDynamicData
 	//
 
 	bool NonDynamicData::saveGame(const char* fileName, const char* saveName) {
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		sol::table eventData = luaManager.triggerEvent(new mwse::lua::event::SaveGameEvent(saveName, fileName));
+		auto stateHandle = luaManager.getThreadSafeStateHandle();
+		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::SaveGameEvent(saveName, fileName));
 		if (eventData.valid() && eventData["block"] == true) {
 			return true;
 		}
@@ -60,7 +77,7 @@ namespace TES3 {
 
 		// Pass a follow-up event if we successfully saved.
 		if (saved) {
-			luaManager.triggerEvent(new mwse::lua::event::SavedGameEvent(eventSaveName.c_str(), eventFileName.c_str()));
+			stateHandle.triggerEvent(new mwse::lua::event::SavedGameEvent(eventSaveName.c_str(), eventFileName.c_str()));
 		}
 
 		return saved;
@@ -69,7 +86,8 @@ namespace TES3 {
 	LoadGameResult NonDynamicData::loadGame(const char* fileName) {
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		sol::table eventData = luaManager.triggerEvent(new mwse::lua::event::LoadGameEvent(fileName));
+		auto stateHandle = luaManager.getThreadSafeStateHandle();
+		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::LoadGameEvent(fileName));
 		if (eventData.valid() && eventData["block"] == true) {
 			return LoadGameResult::Block;
 		}
@@ -84,7 +102,7 @@ namespace TES3 {
 		// Pass a follow-up event if we successfully loaded and clear timers.
 		if (loaded) {
 			luaManager.clearTimers();
-			luaManager.triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str(), fileName == NULL));
+			stateHandle.triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str(), fileName == NULL));
 		}
 
 		return loaded ? LoadGameResult::Success : LoadGameResult::Failure;
@@ -93,7 +111,8 @@ namespace TES3 {
 	LoadGameResult NonDynamicData::loadGameMainMenu(const char* fileName) {
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		sol::table eventData = luaManager.triggerEvent(new mwse::lua::event::LoadGameEvent(fileName));
+		auto stateHandle = luaManager.getThreadSafeStateHandle();
+		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::LoadGameEvent(fileName));
 		if (eventData.valid() && eventData["block"] == true) {
 			return LoadGameResult::Block;
 		}
@@ -108,7 +127,7 @@ namespace TES3 {
 		// Pass a follow-up event if we successfully loaded and clear timers.
 		if (loaded) {
 			luaManager.clearTimers();
-			luaManager.triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str()));
+			stateHandle.triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str()));
 		}
 
 		return loaded ? LoadGameResult::Success : LoadGameResult::Failure;
@@ -167,12 +186,6 @@ namespace TES3 {
 	const auto TES3_NonDynamicData_getCellByName = reinterpret_cast<Cell *(__thiscall*)(NonDynamicData*, const char*)>(0x4BA9B0);
 	Cell * NonDynamicData::getCellByName(const char* name) {
 		return TES3_NonDynamicData_getCellByName(this, name);
-	}
-
-	const auto TES3_NonDynamicData_meshes_loadMesh = reinterpret_cast<NI::AVObject *(__thiscall*)(HashMap*, const char *)>(0x4EE0A0);
-
-	NI::Pointer<NI::Object> NonDynamicData::loadMesh(const char* path) {
-		return TES3_NonDynamicData_meshes_loadMesh(meshes, path);
 	}
 
 	//

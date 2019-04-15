@@ -1135,7 +1135,7 @@ namespace mwse {
 				std::string path = "Meshes\\";
 				path += relativePath;
 
-				return makeLuaNiPointer(TES3::DataHandler::get()->nonDynamicData->loadMesh(path.c_str()));
+				return makeLuaNiPointer(TES3::DataHandler::get()->nonDynamicData->meshData->loadMesh(path.c_str()));
 			};
 
 			state["tes3"]["playVoiceover"] = [](sol::table params) -> bool {

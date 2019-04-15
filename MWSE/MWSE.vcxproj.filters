@@ -1239,6 +1239,9 @@
     <ClInclude Include="TES3UIMenuControllerLua.h">
       <Filter>Header Files\Lua\Bindings\TES3\UI</Filter>
     </ClInclude>
+    <ClInclude Include="LuaMeshLoadedEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2704,6 +2707,9 @@
     </ClCompile>
     <ClCompile Include="TES3UIMenuControllerLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaMeshLoadedEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
