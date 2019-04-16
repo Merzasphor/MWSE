@@ -68,7 +68,7 @@ Functions
 `NiAVObject`_ **getObjectByName** (`string`_ name)
     Searches the current object and children for an object with the given name.
 
-``NiProperty`` **getProperty** (`type`_ propertyType)
+``NiProperty`` **getProperty** (``NiPropertyType`` propertyType)
     Finds a property by type.
 
 **attachProperty** (``NiProperty`` property)
@@ -104,7 +104,7 @@ Inherited from ``NiObjectNET``:
 
 Inherited from ``NiObject``:
 
-`NiObject`_ **clone** ()
+``NiObject`` **clone** ()
     Creates a shallow copy of this object.
 
 `boolean`_ **isOfType** (``RTTI`` rtti)

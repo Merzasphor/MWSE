@@ -73,7 +73,7 @@ Objects can be moved between exterior cells by setting position, like mwscript `
 Functions
 --------------------------------------------------------
 
-`clone`_
+**clone**
     Converts the **baseObject** into an instance. Returns ``true`` if successful. Only non-instance containers, creatures, and NPCs can be cloned.
 
 

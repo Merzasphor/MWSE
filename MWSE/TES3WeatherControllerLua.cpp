@@ -2,6 +2,7 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "NINode.h"
 #include "TES3Moon.h"
 #include "TES3Region.h"
 #include "TES3Weather.h"
@@ -38,6 +39,13 @@ namespace mwse {
 			usertypeDefinition.set("masser", sol::readonly_property(&TES3::WeatherController::moonMasser));
 			usertypeDefinition.set("secunda", sol::readonly_property(&TES3::WeatherController::moonSecunda));
 			usertypeDefinition.set("lastActiveRegion", sol::readonly_property(&TES3::WeatherController::lastActiveRegion));
+			usertypeDefinition.set("sceneRainRoot", sol::readonly_property(&TES3::WeatherController::sgRainRoot));
+			usertypeDefinition.set("sceneSkyRoot", sol::readonly_property(&TES3::WeatherController::sgSkyRoot));
+			usertypeDefinition.set("sceneSnowRoot", sol::readonly_property(&TES3::WeatherController::sgSnowRoot));
+			usertypeDefinition.set("sceneStormRoot", sol::readonly_property(&TES3::WeatherController::sgStormRoot));
+			usertypeDefinition.set("sceneSunBase", sol::readonly_property(&TES3::WeatherController::sgSunBase));
+			usertypeDefinition.set("sceneSunGlare", sol::readonly_property(&TES3::WeatherController::sgSunGlare));
+			usertypeDefinition.set("sceneSunVis", sol::readonly_property(&TES3::WeatherController::sgSunVis));
 			usertypeDefinition.set("sunglareFaderAngleMax", &TES3::WeatherController::sunglareFaderAngleMax);
 			usertypeDefinition.set("sunglareFaderColor", &TES3::WeatherController::sunglareFaderCol);
 			usertypeDefinition.set("sunglareFaderMax", &TES3::WeatherController::sunglareFaderMax);

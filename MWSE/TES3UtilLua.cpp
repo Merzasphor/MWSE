@@ -19,6 +19,7 @@
 #include "NIPick.h"
 #include "NIRTTI.h"
 #include "NIStream.h"
+#include "NITriShape.h"
 
 #include "TES3Actor.h"
 #include "TES3AIData.h"
@@ -727,8 +728,8 @@ namespace mwse {
 					}
 				}
 
-				// Our pick is configured. Let's run it!
-				rayTestCache->pickObjects(&position.value(), &direction.value(), false, maxDistance);
+				// Our pick is configured. Let's run it! (Use normalized direction for skinned mesh fix later.)
+				rayTestCache->pickObjects(&position.value(), &direction.value().normalized(), false, maxDistance);
 
 				// Restore previous cull states.
 				for (auto itt = ignoreRestoreList.begin(); itt != ignoreRestoreList.end(); itt++) {
@@ -740,8 +741,28 @@ namespace mwse {
 					return sol::nil;
 				}
 
+				// Fix distances and missing intersection data for skinned nodes.
+				auto distanceScale = 1.0 / direction.value().length();
+				auto skinnedCorrection = (maxDistance != 0.0) ? maxDistance : 1.0;
+
+				for (int i = 0; i < rayTestCache->results.filledCount; i++) {
+					// Adjust distance as if direction was not normalized.
+					auto r = rayTestCache->results.storage[i];
+					r->distance *= distanceScale;
+
+					// Skinned nodes only have usable scaled distance data.
+					if ((uintptr_t)r->object->getRunTimeTypeInformation() == NI::RTTIStaticPtr::NiTriShape) {
+						auto node = static_cast<const NI::TriShape*>(r->object);
+						if (node->skinInstance) {
+							r->distance *= skinnedCorrection;
+							r->intersection = position.value() + direction.value() * r->distance;
+							r->normal = (r->intersection - node->worldBoundOrigin).normalized();
+						}
+					}
+				}
+
 				// Are we looking for a single result?
-				else if (rayTestCache->pickType == NI::PickType::FIND_FIRST) {
+				if (rayTestCache->pickType == NI::PickType::FIND_FIRST) {
 					return sol::make_object(state, rayTestCache->results.storage[0]);
 				}
 
