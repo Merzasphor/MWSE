@@ -1,6 +1,6 @@
 #include "NIColor.h"
 
-#include <algorithm>
+#include <cmath>
 
 namespace NI {
 	bool Color::operator==(const Color& c) {
