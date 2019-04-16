@@ -166,10 +166,10 @@ namespace mwse {
 
 		void TimerController::update() {
 			// Keep looking at the front timer until it hasn't expired.
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			std::shared_ptr<Timer> timer = nullptr;
 			while (!m_ActiveTimers.empty() && (timer = m_ActiveTimers.front()) && timer->timing <= m_Clock) {
 				// Build data to send to the callback.
-				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 				sol::state& state = stateHandle.state;
 				sol::table data = state.create_table();
 
@@ -210,6 +210,8 @@ namespace mwse {
 		}
 
 		void TimerController::repositionTimer(std::shared_ptr<Timer> timer) {
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+
 			// Remove from current position.
 			auto position = std::find(m_ActiveTimers.begin(), m_ActiveTimers.end(), timer);
 			if (position == m_ActiveTimers.end()) {

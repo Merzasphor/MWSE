@@ -52,9 +52,7 @@ namespace TES3 {
 
 		// Trigger or queue our event, if this actor has a mobile actor.
 		if (mobileActor) {
-			auto& luaManager = mwse::lua::LuaManager::getInstance();
-			auto stateHandle = luaManager.getThreadSafeStateHandle();
-			stateHandle.triggerEvent(new mwse::lua::event::EquippedEvent(this, mobileActor, item, itemData));
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::EquippedEvent(this, mobileActor, item, itemData));
 		}
 
 		return result;
@@ -65,9 +63,7 @@ namespace TES3 {
 
 		// Trigger or queue our event if there's an attached mobile actor.
 		if (mobileActor) {
-			auto& luaManager = mwse::lua::LuaManager::getInstance();
-			auto stateHandle = luaManager.getThreadSafeStateHandle();
-			stateHandle.triggerEvent(new mwse::lua::event::UnequippedEvent(this, mobileActor, item, itemData));
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::UnequippedEvent(this, mobileActor, item, itemData));
 		}
 
 		return result;

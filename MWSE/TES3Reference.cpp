@@ -35,13 +35,14 @@ namespace TES3 {
 
 	void Reference::activate(Reference* activator, int unknown) {
 		// If our event data says to block, don't let the object activate.
-		auto& luaManager = mwse::lua::LuaManager::getInstance();
-		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::object response = stateHandle.triggerEvent(new mwse::lua::event::ActivateEvent(activator, this));
-		if (response.get_type() == sol::type::table) {
-			sol::table eventData = response;
-			if (eventData["block"] == true) {
-				return;
+		{
+			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::object response = stateHandle.triggerEvent(new mwse::lua::event::ActivateEvent(activator, this));
+			if (response.get_type() == sol::type::table) {
+				sol::table eventData = response;
+				if (eventData["block"] == true) {
+					return;
+				}
 			}
 		}
 

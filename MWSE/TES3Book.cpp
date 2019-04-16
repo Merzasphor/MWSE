@@ -14,25 +14,26 @@
 namespace TES3 {
 	const char* Book::getBookText() {
 		// Allow the event to override the text.
-		auto& luaManager = mwse::lua::LuaManager::getInstance();
-		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::BookGetTextEvent(this));
-		if (eventResult.valid()) {
-			sol::table eventData = eventResult;
-			sol::optional<const char*> newText = eventData["text"];
-			if (newText) {
-				// Create our new buffer.
-				auto length = strlen(newText.value());
-				char * buffer = reinterpret_cast<char*>(mwse::tes3::_new(length + 1));
+		{
+			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::BookGetTextEvent(this));
+			if (eventResult.valid()) {
+				sol::table eventData = eventResult;
+				sol::optional<const char*> newText = eventData["text"];
+				if (newText) {
+					// Create our new buffer.
+					auto length = strlen(newText.value());
+					char * buffer = reinterpret_cast<char*>(mwse::tes3::_new(length + 1));
 
-				// Delete the previous buffer and replace it with this one.
-				mwse::tes3::_delete(*reinterpret_cast<char**>(0x7CA44C));
-				*reinterpret_cast<char**>(0x7CA44C) = buffer;
+					// Delete the previous buffer and replace it with this one.
+					mwse::tes3::_delete(*reinterpret_cast<char**>(0x7CA44C));
+					*reinterpret_cast<char**>(0x7CA44C) = buffer;
 
-				// Copy into the buffer and get out of here.
-				buffer[length] = '\0';
-				strcpy(buffer, newText.value());
-				return buffer;
+					// Copy into the buffer and get out of here.
+					buffer[length] = '\0';
+					strcpy(buffer, newText.value());
+					return buffer;
+				}
 			}
 		}
 

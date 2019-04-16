@@ -110,33 +110,37 @@ namespace TES3 {
 	void MobileActor::startCombat(MobileActor* target) {
 		// Invoke our first event and check if it is blocked.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CombatStartEvent(this, target));
-		if (eventData.valid() && eventData["block"] == true) {
-			return;
+		{
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CombatStartEvent(this, target));
+			if (eventData.valid() && eventData["block"] == true) {
+				return;
+			}
 		}
 
 		// Call original function.
 		reinterpret_cast<void(__thiscall *)(MobileActor*, MobileActor*)>(TES3_MobileActor_startCombat)(this, target);
 
 		// Do our follow up started event.
-		stateHandle.triggerEvent(new mwse::lua::event::CombatStartedEvent(this, target));
+		luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::CombatStartedEvent(this, target));
 	}
 
 	void MobileActor::stopCombat(bool something) {
 		// Invoke our combat stop event and check if it is blocked.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CombatStopEvent(this));
-		if (eventData.valid() && eventData["block"] == true) {
-			return;
+		{
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CombatStopEvent(this));
+			if (eventData.valid() && eventData["block"] == true) {
+				return;
+			}
 		}
 
 		// Call original function.
 		reinterpret_cast<void(__thiscall *)(MobileActor*, bool)>(TES3_MobileActor_stopCombat)(this, something);
 
 		// Do our follow up stopped event.
-		stateHandle.triggerEvent(new mwse::lua::event::CombatStoppedEvent(this));
+		luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::CombatStoppedEvent(this));
 	}
 
 	void MobileActor::onDeath() {
@@ -149,20 +153,22 @@ namespace TES3 {
 	bool MobileActor::applyHealthDamage(float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
 		// Invoke our combat stop event and check if it is blocked.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::DamageEvent(this, damage));
-		if (eventData.valid()) {
-			if (eventData["block"] == true) {
-				return false;
-			}
+		{
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::DamageEvent(this, damage));
+			if (eventData.valid()) {
+				if (eventData["block"] == true) {
+					return false;
+				}
 
-			damage = eventData["damage"];
+				damage = eventData["damage"];
+			}
 		}
 
 		bool result = reinterpret_cast<signed char(__thiscall *)(MobileActor*, float, bool, bool, bool)>(TES3_MobileActor_applyHealthDamage)(this, damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
 
 		// Do our follow up event.
-		stateHandle.triggerEvent(new mwse::lua::event::DamagedEvent(this, damage));
+		luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::DamagedEvent(this, damage));
 
 		return result;
 	}
