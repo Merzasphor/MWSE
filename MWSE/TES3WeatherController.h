@@ -40,8 +40,8 @@ namespace TES3 {
 		NI::Node* sgSkyNight; // 0x50
 		NI::Node* sgSkyAtmosphere; // 0x54
 		NI::Node* sgSkyClouds; // 0x58
-		NI::Node* sgRain; // 0x5C
-		NI::Node* sgSnow; // 0x60
+		NI::Node* sgRainRoot; // 0x5C
+		NI::Node* sgSnowRoot; // 0x60
 		NI::TriShape* sgTriRain; // 0x64
 		NI::Node* sgSnowflake; // 0x68
 		NI::Node* sgStormRoot; // 0x6C
@@ -56,7 +56,7 @@ namespace TES3 {
 		Vector3 currentSkyColor; // 0x90
 		Vector3 currentFogColor; // 0x9C
 		void* unknown_0xA8;
-		void* sgSkyLight; // 0xAC
+		NI::DirectionalLight* sgSkyLight; // 0xAC
 		int unknown_0xB0;
 		int unknown_0xB4;
 		Vector3 windVelocityCurrWeather; // 0xB8
