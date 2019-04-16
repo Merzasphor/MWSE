@@ -742,6 +742,11 @@ namespace mwse {
 							}
 						}
 						else {
+							// Restore previous cull states.
+							for (const auto node : ignoreRestoreList) {
+								node->setAppCulled(false);
+							}
+
 							throw std::exception("tes3.rayTest: Invalid item in ignore list. Must contain only scene graph nodes or references.");
 						}
 					}
