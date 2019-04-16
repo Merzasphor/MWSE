@@ -585,7 +585,6 @@ namespace mwse {
 
 			// Fire off any button pressed events if we had one queued.
 			LuaManager& luaManager = LuaManager::getInstance();
-			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			if (tes3::ui::getButtonPressedIndex() != -1) {
 				luaManager.triggerButtonPressed();
 			}
@@ -596,23 +595,23 @@ namespace mwse {
 
 			// Has menu mode changed?
 			if (worldController->flagMenuMode != lastMenuMode) {
-				stateHandle.triggerEvent(new event::MenuStateEvent(worldController->flagMenuMode));
+				luaManager.getThreadSafeStateHandle().triggerEvent(new event::MenuStateEvent(worldController->flagMenuMode));
 				lastMenuMode = worldController->flagMenuMode;
 			}
 
 			// Has our cell changed?
 			TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 			if (dataHandler->cellChanged) {
-				stateHandle.triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, lastCell));
+				luaManager.getThreadSafeStateHandle().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, lastCell));
 				lastCell = dataHandler->currentCell;
 			}
 
 			// Send off our enterFrame event always.
-			stateHandle.triggerEvent(new event::FrameEvent(worldController->deltaTime, worldController->flagMenuMode));
+			luaManager.getThreadSafeStateHandle().triggerEvent(new event::FrameEvent(worldController->deltaTime, worldController->flagMenuMode));
 
 			// If we're not in menu mode, send off the simulate event.
 			if (!worldController->flagMenuMode) {
-				stateHandle.triggerEvent(new event::SimulateEvent(worldController->deltaTime, highResolutionTimestamp));
+				luaManager.getThreadSafeStateHandle().triggerEvent(new event::SimulateEvent(worldController->deltaTime, highResolutionTimestamp));
 			}
 		}
 
@@ -832,15 +831,17 @@ namespace mwse {
 		signed char __cdecl OnUIEvent(DWORD function, TES3::UI::Element* parent, DWORD prop, DWORD b, DWORD c, TES3::UI::Element* source) {
 			// Execute event. If the event blocked the call, bail.
 			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-			auto stateHandle = luaManager.getThreadSafeStateHandle();
-			sol::table eventData = stateHandle.triggerEvent(new event::GenericUiPreEvent(parent, source, prop, b, c));
-			if (eventData.valid() && eventData["block"] == true) {
-				return 0;
+			{
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::table eventData = stateHandle.triggerEvent(new event::GenericUiPreEvent(parent, source, prop, b, c));
+				if (eventData.valid() && eventData["block"] == true) {
+					return 0;
+				}
 			}
 
 			signed char result = reinterpret_cast<signed char (__cdecl *)(TES3::UI::Element*, DWORD, DWORD, DWORD, TES3::UI::Element*)>(function)(parent, prop, b, c, source);
 
-			stateHandle.triggerEvent(new event::GenericUiPostEvent(parent, source, prop, b, c));
+			luaManager.getThreadSafeStateHandle().triggerEvent(new event::GenericUiPostEvent(parent, source, prop, b, c));
 
 			return result;
 		}
