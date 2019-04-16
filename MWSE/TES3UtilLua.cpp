@@ -619,8 +619,9 @@ namespace mwse {
 				return sol::optional<TES3::Vector3>();
 			};
 
-			// Bind function: tes3.getCameraPosition
+			// Bind function: tes3.rayTest
 			static NI::Pick* rayTestCache = nullptr;
+			static std::vector<NI::AVObject*> rayTestIgnoreRoots;
 			state["tes3"]["rayTest"] = [](sol::table params) -> sol::object {
 				auto& luaManager = mwse::lua::LuaManager::getInstance();
 				auto stateHandle = luaManager.getThreadSafeStateHandle();
@@ -698,8 +699,26 @@ namespace mwse {
 				rayTestCache->returnSmoothNormal = getOptionalParam<bool>(params, "returnSmoothNormal", false);
 				rayTestCache->returnTexture = getOptionalParam<bool>(params, "returnTexture", false);
 
+				// Default root nodes to ignore.
+				std::vector<NI::AVObject*> ignoreRestoreList;
+				if (rayTestIgnoreRoots.empty()) {
+					auto weather = TES3::WorldController::get()->weatherController;
+					auto world = TES3::Game::get()->worldRoot;
+					rayTestIgnoreRoots.push_back(weather->sgRainRoot);
+					rayTestIgnoreRoots.push_back(weather->sgSnowRoot);
+					rayTestIgnoreRoots.push_back(weather->sgStormRoot);
+					rayTestIgnoreRoots.push_back(world->getObjectByName("WorldProjectileRoot"));
+					rayTestIgnoreRoots.push_back(world->getObjectByName("WorldSpellRoot"));
+					rayTestIgnoreRoots.push_back(world->getObjectByName("WorldVFXRoot"));
+				}
+				for (const auto node : rayTestIgnoreRoots) {
+					if (!node->getAppCulled()) {
+						node->setAppCulled(true);
+						ignoreRestoreList.push_back(node);
+					}
+				}
+
 				// Allow defining references/nodes to ignore from the raytest.
-				std::vector<NI::Node*> ignoreRestoreList;
 				sol::optional<sol::table> ignoreTable = params["ignore"];
 				if (ignoreTable) {
 					for (const auto& kvPair : ignoreTable.value()) {
