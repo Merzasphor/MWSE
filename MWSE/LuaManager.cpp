@@ -692,6 +692,7 @@ namespace mwse {
 				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, NULL));
 				lastCell = dataHandler->currentCell;
+				TES3::UI::setSuppressingHelpMenu(false);
 			}
 
 			return loaded != TES3::LoadGameResult::Failure;
@@ -706,6 +707,7 @@ namespace mwse {
 				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, NULL));
 				lastCell = dataHandler->currentCell;
+				TES3::UI::setSuppressingHelpMenu(false);
 			}
 
 			return loaded != TES3::LoadGameResult::Failure;
@@ -1351,9 +1353,15 @@ namespace mwse {
 			// Call original function.
 			reinterpret_cast<void(__stdcall *)(TES3::Object*, TES3::ItemData*, int)>(0x590D90)(object, itemData, count);
 
-			// Fire off the event.
-			TES3::UI::Element* tooltip = TES3::UI::findHelpLayerMenu(TES3::UI::UI_ID(TES3::UI::Property::HelpMenu));
-			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::UiObjectTooltipEvent(tooltip, object, itemData, count));
+			// Check for suppression of world object tooltips.
+			if (TES3::UI::isSuppressingHelpMenu() && object->objectType == TES3::ObjectType::Reference) {
+				TES3::UI::suppressHelpMenu();
+			}
+			else {
+				// Fire off the event.
+				TES3::UI::Element* tooltip = TES3::UI::findHelpLayerMenu(TES3::UI::UI_ID(TES3::UI::Property::HelpMenu));
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::UiObjectTooltipEvent(tooltip, object, itemData, count));
+			}
 		}
 
 		//

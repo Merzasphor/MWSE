@@ -26,6 +26,9 @@ namespace TES3 {
 
 		__declspec(dllexport) const char* getInventorySelectType();
 		__declspec(dllexport) void stealHelpMenu();
+		__declspec(dllexport) void suppressHelpMenu();
+		__declspec(dllexport) bool isSuppressingHelpMenu();
+		__declspec(dllexport) void setSuppressingHelpMenu(bool);
 
 		__declspec(dllexport) void logToConsole(const char* text, bool isCommand = false);
 

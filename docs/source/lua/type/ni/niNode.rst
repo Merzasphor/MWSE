@@ -12,7 +12,7 @@ Properties
     Child nodes. Read-only.
 
 **effectList** (`table`_ of ``NiDynamicEffect``)
-    List of ``NiDynamicEffect``s active on the node.
+    List of ``NiDynamicEffect``\s active on the node.
 
 
 Inherited from `NiAVObject`_:
@@ -90,7 +90,7 @@ Inherited from `NiAVObject`_:
 `NiAVObject`_ **getObjectByName** (`string`_ name)
     Searches the current object and children for an object with the given name.
 
-``NiProperty`` **getProperty** (`type`_ propertyType)
+``NiProperty`` **getProperty** (``NiPropertyType`` propertyType)
     Finds a property by type.
 
 **attachProperty** (``NiProperty`` property)
@@ -126,7 +126,7 @@ Inherited from ``NiObjectNET``:
 
 Inherited from ``NiObject``:
 
-`NiObject`_ **clone** ()
+``NiObject`` **clone** ()
     Creates a shallow copy of this object.
 
 `boolean`_ **isOfType** (``RTTI`` rtti)

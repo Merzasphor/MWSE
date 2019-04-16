@@ -7,6 +7,8 @@
 
 namespace TES3 {
 	namespace UI {
+		static bool bSuppressHelpMenu = false;
+
 		const DWORD TES3_hook_dispatchMousewheelUp = 0x58F19B;
 		const DWORD TES3_hook_dispatchMousewheelDown = 0x58F1CA;
 
@@ -169,6 +171,27 @@ namespace TES3 {
 
 				// Add an empty dummy menu to staisfy game code that expects the help menu.
 				createTooltipMenu(static_cast<UI_ID>(Property::HelpMenu));
+			}
+		}
+
+		void suppressHelpMenu() {
+			// Hide help menu without releasing the scene node, for code that expects its presence.
+			Element *help = TES3_ui_findHelpLayerMenu(static_cast<UI_ID>(Property::HelpMenu));
+			if (help) {
+				help->maxWidth = 0;
+				help->maxHeight = 0;
+				help->performLayout(1);
+			}
+		}
+
+		bool isSuppressingHelpMenu() {
+			return bSuppressHelpMenu;
+		}
+
+		void setSuppressingHelpMenu(bool suppress) {
+			bSuppressHelpMenu = suppress;
+			if (suppress) {
+				suppressHelpMenu();
 			}
 		}
 

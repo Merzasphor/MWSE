@@ -248,6 +248,9 @@ namespace mwse {
 				worldController->inventoryData->addInventoryItems(&playerMobile->npcInstance->inventory, 2);
 				TES3::UI::updateInventoryMenuTiles();
 			};
+			tes3ui["menuMode"] = []() {
+				return TES3::WorldController::get()->flagMenuMode;
+			};
 			tes3ui["enterMenuMode"] = TES3::UI::enterMenuMode;
 			tes3ui["leaveMenuMode"] = TES3::UI::leaveMenuMode;
 			tes3ui["acquireTextInput"] = TES3::UI::acquireTextInput;
@@ -286,6 +289,7 @@ namespace mwse {
 				TES3::UI::logToConsole(text, isCommand.value_or(false));
 			};
 			tes3ui["stealHelpMenu"] = &TES3::UI::stealHelpMenu;
+			tes3ui["suppressTooltip"] = &TES3::UI::setSuppressingHelpMenu;
 
 			// Add binding for TES3::UI::TreeItem type.
 			// TODO: Move this to its own file after TES3::UI::Tree has been made a template.
