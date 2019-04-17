@@ -1,6 +1,6 @@
 return {
 	type = "function",
-	description = [[Registers a new slot to be used..]],
+	description = [[Registers a new slot to be used.]],
 	arguments = {{
 		name = "params",
 		type = "table",
