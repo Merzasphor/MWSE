@@ -55,7 +55,7 @@ namespace TES3 {
 		NI::TriShape* sgTriSunGlare; // 0x8C
 		Vector3 currentSkyColor; // 0x90
 		Vector3 currentFogColor; // 0x9C
-		void* unknown_0xA8;
+		NI::Pick * unknown_0xA8;
 		NI::DirectionalLight* sgSkyLight; // 0xAC
 		int unknown_0xB0;
 		int unknown_0xB4;
