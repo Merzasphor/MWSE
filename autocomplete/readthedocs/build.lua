@@ -91,6 +91,16 @@ local function isDirectory(path)
 	return (attributes and attributes.mode == "directory")
 end
 
+local function copyFile(src, dst)
+	local source = io.open(src, "r")
+	local destination = io.open(dst, "w")
+
+	destination:write(source:read("*a"))
+
+	source:close()
+	destination:close()
+end
+
 local standardTypes = {
 	["function"] = true,
 	["table"] = true,
@@ -108,11 +118,22 @@ local rstHeaders = {
 }
 
 local typeLinks = {
-	tes3actor = "lua/type/tes3/actor",
-	tes3equipmentStack = "lua/type/tes3/equipmentStack",
-	tes3mobileActor = "lua/type/tes3/mobileActor",
-	tes3reference = "lua/type/tes3/reference",
+	["bool"] = "lua/type/boolean",
+	["boolean"] = "lua/type/boolean",
+	["function"] = "lua/type/function",
+	["nil"] = "lua/type/nil",
+	["number"] = "lua/type/number",
+	["string"] = "lua/type/string",
+	["table"] = "lua/type/table",
 }
+
+for entry in lfs.dir(definitionsFolder .. "\\namedTypes") do
+	local extension = entry:match("[^.]+$")
+	if (extension == "lua") then
+		local name = entry:match("[^/]+$"):sub(1, -1 * (#extension + 2))
+		typeLinks[name] = "lua/type/" .. name
+	end
+end
 
 -- 
 -- Events
@@ -290,7 +311,7 @@ local function buildAPIEntryForFunction(package)
 			-- Add it to the description.
 			file:write("Accepts parameters through a table with the given keys:\n\n")
 			for _, param in pairs(package.arguments[1].tableParams) do
-				file:write("**" .. (param.name or "...") .. "** (" .. breakoutMultipleTypes(param.type) .. ")\n")
+				file:write((param.name or "...") .. " (" .. breakoutMultipleTypes(param.type) .. ")\n")
 				file:write("    ")
 				if (param.default) then
 					file:write("Default: ``" .. tostring(param.default) .. "``")
@@ -313,12 +334,12 @@ local function buildAPIEntryForFunction(package)
 			end
 		else
 			for _, param in ipairs(package.arguments) do
-				file:write("**" .. (param.name or "...") .. "** (" .. breakoutMultipleTypes(param.type) .. ")\n")
+				file:write((param.name or "...") .. " (" .. breakoutMultipleTypes(param.type) .. ")\n")
 				file:write("    ")
 				if (param.default) then
 					file:write("Default: ``" .. tostring(param.default) .. "``")
 				elseif (param.optional) then
-					file:write("Optional.")
+					file:write("Optional")
 				end
 				if (param.description) then
 					if (param.default or param.optional) then
@@ -360,13 +381,13 @@ local function buildAPIEntryForFunction(package)
 	-- Write out any link information.
 	if (package.links) then
 		for k, v in pairs(package.links) do
-			file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
+			file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
 		end
 	end
 
 	-- Also write out all our type links.
 	for k, v in pairs(typeLinks) do
-		file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
+		file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
 	end
 
 	-- Close up shop.
@@ -528,9 +549,9 @@ for entry in lfs.dir(definitionsFolder .. "\\global") do
 	end
 end
 
--- 
+--
 -- Named Types
--- 
+--
 
 local function buildNamedTypeEntryForValue(package)
 	local key = package.key
@@ -544,7 +565,7 @@ local function buildNamedTypeEntryForValue(package)
 	local file = io.open(outPath, "w")
 
 	-- Write out the main header.
-	file:write(parent.key .. "." .. key .. "\n" .. rstHeaders[1] .. "\n\n")
+	file:write(key .. "\n" .. rstHeaders[1] .. "\n\n")
 
 	-- Print out the main description.
 	local packagePath = folder .. "\\" .. key .. "\\"
@@ -590,13 +611,155 @@ local function buildNamedTypeEntryForValue(package)
 	-- Write out any link information.
 	if (package.links) then
 		for k, v in pairs(package.links) do
-			file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
+			file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
 		end
 	end
 
 	-- Also write out all our type links.
 	for k, v in pairs(typeLinks) do
-		file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
+		file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
+	end
+
+	-- Close up shop.
+	file:close()
+end
+
+local function buildNamedTypeEntryForFunction(package)
+	local key = package.key
+	local folder = package.folder
+	local parent = package.parent
+
+	if (package.type == "method") then
+		parent.methods = parent.methods or {}
+		table.insert(parent.methods, package)
+	else
+		parent.functions = parent.functions or {}
+		table.insert(parent.functions, package)
+	end
+
+	-- Open the output file.
+	local outPath = "..\\docs\\source\\lua\\type\\" .. parent.key .. "\\" .. key .. ".rst"
+	local file = io.open(outPath, "w")
+
+	-- Write out the main header.
+	file:write(key .. "\n" .. rstHeaders[1] .. "\n\n")
+
+	-- Print out the main description.
+	local packagePath = folder .. "\\" .. key .. "\\"
+	if (lfs.attributes(packagePath .. "\\" .. "description.rst", "mode") == "file") then
+		local rstFilePath = packagePath .. "description.rst"
+		local rstFile = io.open(rstFilePath, "r")
+		file:write(trimString(rstFile:read("*a")) .. "\n\n")
+		rstFile:close()
+	elseif (package.description) then
+		file:write(package.description .. "\n\n")
+	else
+		file:write("No description is currently available." .. "\n\n")
+	end
+
+	-- Print out the return value.
+	local returns = getStandardizedReturn(package)
+	if (lfs.attributes(packagePath .. "\\" .. "returns.rst", "mode") == "file") then
+		file:write("Returns\n" .. rstHeaders[2] .. "\n\n")
+		local rstFilePath = packagePath .. "returns.rst"
+		local rstFile = io.open(rstFilePath, "r")
+		file:write(trimString(rstFile:read("*a")) .. "\n\n")
+		rstFile:close()
+	elseif (returns) then
+		file:write("Returns\n" .. rstHeaders[2] .. "\n\n")
+		for _, r in pairs(returns) do
+			if (r.description) then
+				file:write("`" .. r.type .. "`_. " .. r.description .. "\n\n")
+			else
+				file:write("`" .. r.type .. "`_.\n\n")
+			end
+		end
+	end
+
+	-- Print out parameters.
+	if (package.arguments) then
+		file:write("Parameters\n" .. rstHeaders[2] .. "\n\n")
+		if (type(package.arguments) == "table" and #package.arguments == 1 and package.arguments[1].tableParams) then
+			-- Add it to the description.
+			file:write("Accepts parameters through a table with the given keys:\n\n")
+			for _, param in pairs(package.arguments[1].tableParams) do
+				file:write((param.name or "...") .. " (" .. breakoutMultipleTypes(param.type) .. ")\n")
+				file:write("    ")
+				if (param.default) then
+					file:write("Default: ``" .. tostring(param.default) .. "``")
+				elseif (param.optional) then
+					file:write("Optional")
+				end
+				if (param.description) then
+					if (param.default or param.optional) then
+						file:write(". " .. param.description .. "\n\n")
+					else
+						file:write(param.description .. "\n\n")
+					end
+				else
+					if (param.default or param.optional) then
+						file:write(". No description available.\n\n")
+					else
+						file:write("No description available.\n\n")
+					end
+				end
+			end
+		else
+			for _, param in ipairs(package.arguments) do
+				file:write((param.name or "...") .. " (" .. breakoutMultipleTypes(param.type) .. ")\n")
+				file:write("    ")
+				if (param.default) then
+					file:write("Default: ``" .. tostring(param.default) .. "``")
+				elseif (param.optional) then
+					file:write("Optional")
+				end
+				if (param.description) then
+					if (param.default or param.optional) then
+						file:write(". " .. param.description .. "\n\n")
+					else
+						file:write(param.description .. "\n\n")
+					end
+				else
+					file:write("No description available.\n\n")
+				end
+			end
+		end
+	end
+
+	-- Write out examples.
+	if (package.examples) then
+		file:write("Examples\n" .. rstHeaders[2] .. "\n\n")
+		for k, v in pairs(package.examples) do
+			file:write((v.title or k) .. "\n" .. rstHeaders[3] .. "\n\n")
+
+			if (v.description) then
+				file:write(v.description .. "\n\n")
+			end
+
+			file:write(".. code-block:: " .. (v.language or "lua") .. "\n\n")
+
+			local exampleFilePath = packagePath .. k .. "." .. (v.extension or "lua")
+			for line in io.lines(exampleFilePath) do
+				if (trimString(line) ~= "") then
+					file:write("    " .. line:gsub("\t", "    ") .. "\n")
+				else
+					file:write("\n")
+				end
+			end
+			file:write("\n\n")
+		end
+	end
+
+	-- Write out any link information.
+	if (package.links) then
+		for k, v in pairs(package.links) do
+			file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
+		end
+	end
+
+	-- Also write out all our type links.
+	for k, v in pairs(typeLinks) do
+		file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
 	end
 
 	-- Close up shop.
@@ -605,6 +768,8 @@ end
 
 local typeEntryDispatchers = {
 	["value"] = buildNamedTypeEntryForValue,
+	["method"] = buildNamedTypeEntryForFunction,
+	["function"] = buildNamedTypeEntryForFunction,
 }
 
 local function buildNamedTypeEntry(folder, key, parent)
@@ -626,29 +791,46 @@ end
 
 local builtTypes = {}
 
-local function buildInheritedTable(package, type)
-	local result = {}
+local function sortByKey(a, b)
+	return a.key < b.key
+end
 
-	-- 
-	if (package.inherits) then
-		result = buildInheritedTable(builtTypes[package.inherits], type) or {}
+local function writeOutPackageEntries(t, file, package, title)
+	if (t == nil or #t == 0) then
+		return
 	end
 
+	file:write(title .. "\n" .. rstHeaders[2] .. "\n\n")
+
 	-- 
-	if (package[type]) then
-		for k, v in ipairs(package[type]) do
-			result[v.key] = package
+	for _, v in ipairs(t) do
+		if (v.valuetype) then
+			file:write("`" .. v.key .. "`_ (" .. breakoutMultipleTypes(v.valuetype) .. ")\n")
+		else
+			file:write("`" .. v.key .. "`_\n")
 		end
+		file:write("    " .. (v.brief or v.description or "No description available.") .. "\n\n")
 	end
 
-	-- If we have anything in the table, return it, otherwise give back nil.
-	for _, _ in pairs(result) do
-		return result
+	-- Build out hidden TOC tree.
+	file:write(".. toctree::\n    :hidden:\n\n")
+	for _, v in ipairs(t) do
+		file:write("    " .. package.key .. "/" .. v.key .. "\n")
 	end
-	return nil
+	file:write("\n")
+
+	-- Also put in link definitions.
+	for _, v in ipairs(t) do
+		file:write(".. _`" .. v.key .. "`: " .. package.key .. "/" .. v.key .. ".html\n")
+	end
 end
 
 local function buildNamedType(folder, key)
+	-- Skip redundantly building the same package twice.
+	if (builtTypes[key]) then
+		return
+	end
+
 	-- Load our base package.
 	local path = folder .. "\\" .. key .. ".lua"
 	log("Building type: " .. key .. " ...")
@@ -662,7 +844,7 @@ local function buildNamedType(folder, key)
 		return
 	end
 
-	-- Handle inherited class.
+	-- Build the inherited class if it hasn't been built already.
 	if (package.inherits and not builtTypes[package.inherits]) then
 		buildNamedType(folder, package.inherits)
 	end
@@ -680,6 +862,41 @@ local function buildNamedType(folder, key)
 	-- Create a folder for children.
 	lfs.mkdir("..\\docs\\source\\lua\\type\\" .. key)
 
+	-- Write out inherited children.
+	if (package.inherits) then
+		-- Copy over raw files.
+		local inheritedFolder = "..\\docs\\source\\lua\\type\\" .. package.inherits
+		for entry in lfs.dir(inheritedFolder) do
+			local extension = entry:match("[^.]+$")
+			if (extension == "rst") then
+				local inheritedPath = inheritedFolder .. "\\" .. entry
+				local localPath = "..\\docs\\source\\lua\\type\\" .. key .. "\\" .. entry
+				copyFile(inheritedPath, localPath)
+			end
+		end
+
+		-- Copy over properties.
+		local inheritedType = builtTypes[package.inherits]
+		if (inheritedType.values) then
+			package.values = package.values or {}
+			for k, v in pairs(inheritedType.values) do
+				package.values[k] = v
+			end
+		end
+		if (inheritedType.methods) then
+			package.methods = package.methods or {}
+			for k, v in pairs(inheritedType.methods) do
+				package.methods[k] = v
+			end
+		end
+		if (inheritedType.functions) then
+			package.functions = package.functions or {}
+			for k, v in pairs(inheritedType.functions) do
+				package.functions[k] = v
+			end
+		end
+	end
+
 	-- Write out children.
 	for entry in lfs.dir(folder .. "\\" .. key) do
 		local extension = entry:match("[^.]+$")
@@ -688,33 +905,26 @@ local function buildNamedType(folder, key)
 		end
 	end
 
-	-- Write TOCs.
-	local fullValues = buildInheritedTable(package, "values")
-	if (fullValues) then
-		file:write("Values\n" .. rstHeaders[2] .. "\n\n")
-		file:write(".. toctree::\n    :maxdepth: 1\n\n")
-		for k, v in pairs(fullValues) do
-			file:write("    " .. v.key .. "/" .. k .. "\n")
+	-- Sort tables by contained keys.
+	if (package.values) then table.sort(package.values, sortByKey) end
+	if (package.methods) then table.sort(package.methods, sortByKey) end
+	if (package.functions) then table.sort(package.functions, sortByKey) end
+
+	-- Write out properties, etc.
+	writeOutPackageEntries(package.values, file, package, "Properties")
+	writeOutPackageEntries(package.methods, file, package, "Methods")
+	writeOutPackageEntries(package.functions, file, package, "Functions")
+
+	-- Write out any link information.
+	if (package.links) then
+		for k, v in pairs(package.links) do
+			file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
 		end
-		file:write("\n")
 	end
-	local fullMethods = buildInheritedTable(package, "methods")
-	if (fullMethods) then
-		file:write("Methods\n" .. rstHeaders[2] .. "\n\n")
-		file:write(".. toctree::\n    :maxdepth: 1\n\n")
-		for _, k in pairs(fullMethods) do
-			file:write("    " .. key .. "/" .. k.key .. "\n")
-		end
-		file:write("\n")
-	end
-	local fullFunctions = buildInheritedTable(package, "functions")
-	if (fullFunctions) then
-		file:write("Functions\n" .. rstHeaders[2] .. "\n\n")
-		file:write(".. toctree::\n    :maxdepth: 1\n\n")
-		for _, k in pairs(fullFunctions) do
-			file:write("    " .. key .. "/" .. k.key .. "\n")
-		end
-		file:write("\n")
+
+	-- Also write out all our type links.
+	for k, v in pairs(typeLinks) do
+		file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
 	end
 
 	-- Close up shop.
