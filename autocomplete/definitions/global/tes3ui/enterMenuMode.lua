@@ -4,5 +4,6 @@ return {
 	arguments = {
 		{ name = "id", type = "number" },
 	},
-	returns = "boolean",
+	returnDescription = "true if the menu was switched, or false if it was already active.",
+	valuetype = "boolean",
 }

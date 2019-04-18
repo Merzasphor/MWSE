@@ -10,5 +10,5 @@ return {
 			{ name = "fixedFrame", type = "boolean", default = false, description = "Constructs a fixed (non-draggable) frame and background for the menu. The layout system should automatically centre and size it to fit whatever is added to the menu." },
 		},
 	}},
-	returns = "tes3uiElement",
+	valuetype = "tes3uiElement",
 }

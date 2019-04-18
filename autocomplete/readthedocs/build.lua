@@ -135,6 +135,11 @@ for entry in lfs.dir(definitionsFolder .. "\\namedTypes") do
 	end
 end
 
+
+local function breakoutMultipleTypes(str)
+	return "`" .. table.concat(splitString(str, "|"), "`_, `") .. "`_"
+end
+
 -- 
 -- Events
 -- 
@@ -172,7 +177,7 @@ local function buildEvent(folder, key)
 			file:write(k .. "\n" .. rstHeaders[3] .. "\n\n")
 
 			if (typeLinks[v.type]) then
-				file:write("`" .. v.type .. "`_. ")
+				file:write(breakoutMultipleTypes(v.type))
 			else
 				file:write(v.type .. ". ")
 			end
@@ -238,12 +243,12 @@ end
 
 local function getStandardizedReturn(raw)
 	if (type(raw.valuetype) == "string") then
-		return { { type = raw.valuetype } }
+		return { { type = raw.valuetype, name = raw.returns, description = raw.returnDescription } }
 	elseif (type(raw.returns) == "table") then
 		local returns = {}
 
 		for _, v in pairs(raw.returns) do
-			table.insert(returns, { type = v.type })
+			table.insert(returns, v)
 		end
 
 		if (#returns == 0) then
@@ -252,10 +257,6 @@ local function getStandardizedReturn(raw)
 
 		return returns
 	end
-end
-
-local function breakoutMultipleTypes(str)
-	return "`" .. table.concat(splitString(str, "|"), "`_, `") .. "`_"
 end
 
 local function buildAPIEntryForFunction(package)
@@ -297,9 +298,9 @@ local function buildAPIEntryForFunction(package)
 		file:write("Returns\n" .. rstHeaders[2] .. "\n\n")
 		for _, r in pairs(returns) do
 			if (r.description) then
-				file:write("`" .. r.type .. "`_. " .. r.description .. "\n\n")
+				file:write(breakoutMultipleTypes(r.type) .. ". " .. r.description .. "\n\n")
 			else
-				file:write("`" .. r.type .. "`_.\n\n")
+				file:write(breakoutMultipleTypes(r.type) .. ".\n\n")
 			end
 		end
 	end
@@ -313,13 +314,13 @@ local function buildAPIEntryForFunction(package)
 			for _, param in pairs(package.arguments[1].tableParams) do
 				file:write((param.name or "...") .. " (" .. breakoutMultipleTypes(param.type) .. ")\n")
 				file:write("    ")
-				if (param.default) then
+				if (param.default ~= nil) then
 					file:write("Default: ``" .. tostring(param.default) .. "``")
 				elseif (param.optional) then
 					file:write("Optional")
 				end
 				
-				if (param.default or param.optional) then
+				if ((param.default ~= nil) or param.optional) then
 					file:write(". " .. (param.description or "No description available.") .. "\n\n")
 				else
 					file:write((param.description or "No description available.") .. "\n\n")
@@ -329,13 +330,13 @@ local function buildAPIEntryForFunction(package)
 			for _, param in ipairs(package.arguments) do
 				file:write((param.name or "...") .. " (" .. breakoutMultipleTypes(param.type) .. ")\n")
 				file:write("    ")
-				if (param.default) then
+				if (param.default ~= nil) then
 					file:write("Default: ``" .. tostring(param.default) .. "``")
 				elseif (param.optional) then
 					file:write("Optional")
 				end
 				
-				if (param.default or param.optional) then
+				if ((param.default ~= nil) or param.optional) then
 					file:write(". " .. (param.description or "No description available.") .. "\n\n")
 				else
 					file:write((param.description or "No description available.") .. "\n\n")
@@ -659,9 +660,9 @@ local function buildNamedTypeEntryForFunction(package)
 		file:write("Returns\n" .. rstHeaders[2] .. "\n\n")
 		for _, r in pairs(returns) do
 			if (r.description) then
-				file:write("`" .. r.type .. "`_. " .. r.description .. "\n\n")
+				file:write(breakoutMultipleTypes(r.type) .. ". " .. r.description .. "\n\n")
 			else
-				file:write("`" .. r.type .. "`_.\n\n")
+				file:write(breakoutMultipleTypes(r.type) .. ".\n\n")
 			end
 		end
 	end
@@ -675,13 +676,13 @@ local function buildNamedTypeEntryForFunction(package)
 			for _, param in pairs(package.arguments[1].tableParams) do
 				file:write((param.name or "...") .. " (" .. breakoutMultipleTypes(param.type) .. ")\n")
 				file:write("    ")
-				if (param.default) then
+				if (param.default ~= nil) then
 					file:write("Default: ``" .. tostring(param.default) .. "``")
 				elseif (param.optional) then
 					file:write("Optional")
 				end
 				
-				if (param.default or param.optional) then
+				if ((param.default ~= nil) or param.optional) then
 					file:write(". " .. (param.description or "No description available.") .. "\n\n")
 				else
 					file:write((param.description or "No description available.") .. "\n\n")
@@ -691,13 +692,13 @@ local function buildNamedTypeEntryForFunction(package)
 			for _, param in ipairs(package.arguments) do
 				file:write((param.name or "...") .. " (" .. breakoutMultipleTypes(param.type) .. ")\n")
 				file:write("    ")
-				if (param.default) then
+				if (param.default ~= nil) then
 					file:write("Default: ``" .. tostring(param.default) .. "``")
 				elseif (param.optional) then
 					file:write("Optional")
 				end
 				
-				if (param.default or param.optional) then
+				if ((param.default ~= nil) or param.optional) then
 					file:write(". " .. (param.description or "No description available.") .. "\n\n")
 				else
 					file:write((param.description or "No description available.") .. "\n\n")
