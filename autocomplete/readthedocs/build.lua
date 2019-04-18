@@ -318,18 +318,11 @@ local function buildAPIEntryForFunction(package)
 				elseif (param.optional) then
 					file:write("Optional")
 				end
-				if (param.description) then
-					if (param.default or param.optional) then
-						file:write(". " .. param.description .. "\n\n")
-					else
-						file:write(param.description .. "\n\n")
-					end
+				
+				if (param.default or param.optional) then
+					file:write(". " .. (param.description or "No description available.") .. "\n\n")
 				else
-					if (param.default or param.optional) then
-						file:write(". No description available.\n\n")
-					else
-						file:write("No description available.\n\n")
-					end
+					file:write((param.description or "No description available.") .. "\n\n")
 				end
 			end
 		else
@@ -341,14 +334,11 @@ local function buildAPIEntryForFunction(package)
 				elseif (param.optional) then
 					file:write("Optional")
 				end
-				if (param.description) then
-					if (param.default or param.optional) then
-						file:write(". " .. param.description .. "\n\n")
-					else
-						file:write(param.description .. "\n\n")
-					end
+				
+				if (param.default or param.optional) then
+					file:write(". " .. (param.description or "No description available.") .. "\n\n")
 				else
-					file:write("No description available.\n\n")
+					file:write((param.description or "No description available.") .. "\n\n")
 				end
 			end
 		end
@@ -690,18 +680,11 @@ local function buildNamedTypeEntryForFunction(package)
 				elseif (param.optional) then
 					file:write("Optional")
 				end
-				if (param.description) then
-					if (param.default or param.optional) then
-						file:write(". " .. param.description .. "\n\n")
-					else
-						file:write(param.description .. "\n\n")
-					end
+				
+				if (param.default or param.optional) then
+					file:write(". " .. (param.description or "No description available.") .. "\n\n")
 				else
-					if (param.default or param.optional) then
-						file:write(". No description available.\n\n")
-					else
-						file:write("No description available.\n\n")
-					end
+					file:write((param.description or "No description available.") .. "\n\n")
 				end
 			end
 		else
@@ -713,14 +696,11 @@ local function buildNamedTypeEntryForFunction(package)
 				elseif (param.optional) then
 					file:write("Optional")
 				end
-				if (param.description) then
-					if (param.default or param.optional) then
-						file:write(". " .. param.description .. "\n\n")
-					else
-						file:write(param.description .. "\n\n")
-					end
+				
+				if (param.default or param.optional) then
+					file:write(". " .. (param.description or "No description available.") .. "\n\n")
 				else
-					file:write("No description available.\n\n")
+					file:write((param.description or "No description available.") .. "\n\n")
 				end
 			end
 		end
@@ -823,6 +803,7 @@ local function writeOutPackageEntries(t, file, package, title)
 	for _, v in ipairs(t) do
 		file:write(".. _`" .. v.key .. "`: " .. package.key .. "/" .. v.key .. ".html\n")
 	end
+	file:write("\n")
 end
 
 local function buildNamedType(folder, key)
