@@ -215,6 +215,11 @@ namespace TES3 {
 		return reinterpret_cast<Sound*(__thiscall *)(DataHandler*, const char*, Reference*, int, unsigned char, float, int)>(TES3_DataHandler_addSoundByName)(this, soundId, reference, playbackFlags, volume, pitch, unknown);
 	}
 
+	const auto TES3_DataHandler_addTemporySound = reinterpret_cast<void(__thiscall*)(DataHandler*, const char*, Reference*, int, int, float, bool, Sound*)>(0x48C2B0);
+	void DataHandler::addTemporySound(const char* path, Reference * reference, int playbackFlags, int volume, float pitch, bool isVoiceover, Sound * sound) {
+		TES3_DataHandler_addTemporySound(this, path, reference, playbackFlags, volume, pitch, isVoiceover, sound);
+	}
+
 	SoundEvent* DataHandler::getSoundPlaying(Sound* sound, Reference* reference) {
 		return reinterpret_cast<SoundEvent*(__thiscall *)(DataHandler*, Sound*, Reference*)>(TES3_DataHandler_getSoundPlaying)(this, sound, reference);
 	}

@@ -2447,6 +2447,41 @@ namespace mwse {
 				auto actor = static_cast<TES3::Actor*>(mobileActor->reference->baseObject);
 				actor->setAIPackage(config, mobileActor->reference);
 			};
+
+			state["tes3"]["say"] = [](sol::table params) {
+				auto dataHandler = TES3::DataHandler::get();
+				auto worldController = TES3::WorldController::get();
+				if (worldController == nullptr || dataHandler == nullptr) {
+					throw std::invalid_argument("Cannoy be called before tes3worldController and tes3dataHandler are initialized.");
+				}
+
+				TES3::Reference * reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					throw std::invalid_argument("Invalid reference parameter provided.");
+				}
+
+				const char* path = getOptionalParam<const char*>(params, "soundPath", nullptr);
+				if (path == nullptr) {
+					throw std::invalid_argument("Invalid soundPath parameter provided.");
+				}
+
+				float pitch = getOptionalParam(params, "pitch", 1.0f);
+
+				// Apply volume, using mix channel and rescale to 0-250.
+				float volume = std::min(std::max(0.0f, getOptionalParam(params, "volume", 1.0f)), 1.0f);
+				volume *= 250.0 * worldController->audioController->getMixVolume(TES3::AudioMixType::Voice);
+
+				// Show a messagebox.
+				if (worldController->showSubtitles || getOptionalParam(params, "forceSubtitle", false)) {
+					const char* subtitle = getOptionalParam<const char*>(params, "subtitle", nullptr);
+					if (subtitle != nullptr) {
+						tes3::ui::messagePlayer(subtitle);
+					}
+				}
+
+				// Play the related sound.
+				dataHandler->addTemporySound(path, reference, 0, volume, pitch, true);
+			};
 		}
 	}
 }
