@@ -45,7 +45,7 @@ namespace MWSE
         /// <param name="args">
         /// Arguments. Currently none supported.
         /// </param>
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
             // Check to see if Morrowind is running; wait for it to close.
             if (IsMorrowindRunning())
@@ -100,7 +100,7 @@ namespace MWSE
 #if _DEBUG
                 Console.ReadKey();
 #endif
-                return;
+                return 1;
             }
 
             try
@@ -122,9 +122,9 @@ namespace MWSE
                 {
                     Console.WriteLine("ERROR: Could not determine version string!");
 #if _DEBUG
-                Console.ReadKey();
+                    Console.ReadKey();
 #endif
-                    return;
+                    return 2;
                 }
                 Console.WriteLine("Newest version: {0}", latestVersion);
 
@@ -143,7 +143,7 @@ namespace MWSE
                         Process.Start(startInfo);
                     }
 
-                    return;
+                    return 0;
                 }
 
                 // Download the update.
@@ -242,6 +242,8 @@ namespace MWSE
 #if _DEBUG
             Console.ReadKey();
 #endif
+
+            return 0;
         }
     }
 }
