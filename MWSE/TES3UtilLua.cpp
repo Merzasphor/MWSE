@@ -289,13 +289,14 @@ namespace mwse {
 			state["tes3"]["playSound"] = [](sol::optional<sol::table> params) {
 				// Get parameters.
 				TES3::Sound* sound = getOptionalParamSound(params, "sound");
+				const char* soundPath = getOptionalParam<const char*>(params, "soundPath", nullptr);
 				TES3::Reference* reference = getOptionalParamReference(params, "reference");
 				bool loop = getOptionalParam<bool>(params, "loop", false);
 				int mix = getOptionalParam<int>(params, "mixChannel", int(TES3::AudioMixType::Effects));
 				double volume = getOptionalParam<double>(params, "volume", 1.0);
 				float pitch = getOptionalParam<double>(params, "pitch", 1.0);
 
-				if (sound == nullptr) {
+				if (sound == nullptr && soundPath == nullptr) {
 					log::getLog() << "tes3.playSound: Could not locate sound." << std::endl;
 					return false;
 				}
@@ -307,8 +308,17 @@ namespace mwse {
 				// Apply mix and rescale to 0-250
 				volume *= 250.0 * TES3::WorldController::get()->audioController->getMixVolume(TES3::AudioMixType(mix));
 
-				TES3::DataHandler::get()->addSound(sound, reference, loop ? TES3::SoundPlayFlags::Loop : 0, volume, pitch);
-				return true;
+				if (soundPath) {
+					bool isVoiceover = getOptionalParam<bool>(params, "isVoiceover", false);
+					TES3::DataHandler::get()->addTemporySound(soundPath, reference, loop ? TES3::SoundPlayFlags::Loop : 0, volume, pitch, isVoiceover, sound);
+					return true;
+				}
+				else if (sound) {
+					TES3::DataHandler::get()->addSound(sound, reference, loop ? TES3::SoundPlayFlags::Loop : 0, volume, pitch);
+					return true;
+				}
+
+				return false;
 			};
 
 			// Bind function: tes3.getSoundPlaying
