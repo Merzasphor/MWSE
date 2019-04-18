@@ -1,5 +1,5 @@
 return {
-	brief = "This event is raised when the player gains access to a new dialogue topic.",
+	description = "This event is raised when the player gains access to a new dialogue topic.",
 	eventData = {
 		current = {
 			type = "tes3dialogue",

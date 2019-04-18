@@ -1,7 +1,7 @@
 tes3.removeSound
 ====================================================================================================
 
-Removes a sound that is active.
+Stops a sound playing. Without a reference, it will match unattached sounds. With a reference, it will only match a sound playing on that specific reference.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -9,10 +9,10 @@ Parameters
 Accepts parameters through a table with the given keys:
 
 sound (`tes3sound`_, `string`_)
-    No description available.
+    The sound object, or id of the sound to look for.
 
 reference (`tes3reference`_, `tes3mobileActor`_, `string`_)
-    Optional. No description available.
+    Optional. The reference the sound is attached to.
 
 .. _`tes3bodyPart`: ../../../lua/type/tes3bodyPart.html
 .. _`string`: ../../../lua/type/string.html

@@ -9,7 +9,7 @@ Parameters
 Accepts parameters through a table with the given keys:
 
 sound (`tes3sound`_, `string`_)
-    No description available.
+    The sound object, or id of the sound to look for.
 
 reference (`tes3reference`_, `tes3mobileActor`_, `string`_)
     The reference to attach the sound to.

@@ -14,13 +14,13 @@ Parameters
 Accepts parameters through a table with the given keys:
 
 sound (`tes3sound`_, `string`_)
-    No description available.
+    The sound object, or id of the sound to look for.
 
 reference (`tes3reference`_, `tes3mobileActor`_, `string`_)
     Optional. The reference to attach the sound to.
 
 loop (`boolean`_)
-    No description available.
+    Default: ``false``. If true, the sound will loop.
 
 mixChannel (`number`_)
     Default: ``tes3.audioMixType.effects``. The channel to base volume off of. Maps to tes3.audioMixType constants.
@@ -29,7 +29,7 @@ volume (`number`_)
     Default: ``1.0``. A value between 0.0 and 1.0 to scale the volume off of.
 
 pitch (`number`_)
-    No description available.
+    Default: ``1.0``. The pitch-shift multiplier. For 22kHz audio (most typical) it can have the range [0.005, 4.5]; for 44kHz audio it can have the range [0.0025, 2.25].
 
 .. _`tes3bodyPart`: ../../../lua/type/tes3bodyPart.html
 .. _`string`: ../../../lua/type/string.html

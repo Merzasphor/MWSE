@@ -3,6 +3,11 @@ tes3ui.getServiceActor
 
 Returns the mobile actor currently providing services to the player.
 
+Returns
+----------------------------------------------------------------------------------------------------
+
+`tes3mobileActor`_.
+
 .. _`tes3bodyPart`: ../../../lua/type/tes3bodyPart.html
 .. _`string`: ../../../lua/type/string.html
 .. _`mwseTimer`: ../../../lua/type/mwseTimer.html

@@ -5,6 +5,11 @@ Registers a property name, returning a Property. Once a property is registered, 
 
 The registry namespace is shared between Property and UI_ID. It is advisable to use a namespace prefix to avoid collisions with other mods.
 
+Returns
+----------------------------------------------------------------------------------------------------
+
+`number`_.
+
 Parameters
 ----------------------------------------------------------------------------------------------------
 

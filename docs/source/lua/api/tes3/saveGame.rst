@@ -14,10 +14,10 @@ Parameters
 Accepts parameters through a table with the given keys:
 
 file (`string`_)
-    Default: ``quiksave``. The filename of the save that will be created, without extension.
+    Default: ``"quiksave"``. The filename of the save that will be created, without extension.
 
 name (`string`_)
-    Default: ``Quicksave``. The display name of the save.
+    Default: ``"Quicksave"``. The display name of the save.
 
 .. _`tes3bodyPart`: ../../../lua/type/tes3bodyPart.html
 .. _`string`: ../../../lua/type/string.html

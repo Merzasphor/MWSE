@@ -1,5 +1,5 @@
 return {
-	brief = "This event is raised when the potential activation target for the player changes.",
+	description = "This event is raised when the potential activation target for the player changes.",
 	eventData = {
 		current = {
 			type = "tes3reference",

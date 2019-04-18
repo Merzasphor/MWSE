@@ -7,6 +7,11 @@ Note, to create tooltips with the correct behaviour, use tes3ui.createTooltipMen
 
 Unlike standard menus, help layer menus are always created with a fixed frame.
 
+Returns
+----------------------------------------------------------------------------------------------------
+
+`tes3uiElement`_.
+
 Parameters
 ----------------------------------------------------------------------------------------------------
 

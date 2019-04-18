@@ -20,7 +20,7 @@ index (`number`_)
     No description available.
 
 showMessage (`boolean`_)
-    If set, a message may be shown to the player.
+    Default: ``false``. If set, a message may be shown to the player.
 
 .. _`tes3bodyPart`: ../../../lua/type/tes3bodyPart.html
 .. _`string`: ../../../lua/type/string.html

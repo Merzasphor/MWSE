@@ -1,7 +1,7 @@
 tes3.getSoundPlaying
 ====================================================================================================
 
-Determines if a sound is playing, optionally filtered to a given reference.
+Without a reference, this function returns true if the sound is playing unattached or on any reference. With a reference, it returns true if the sound is playing on that specific reference.
 
 Returns
 ----------------------------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ Parameters
 Accepts parameters through a table with the given keys:
 
 sound (`tes3sound`_, `string`_)
-    No description available.
+    The sound object, or the ID of the sound to look for.
 
 reference (`tes3reference`_, `tes3mobileActor`_, `string`_)
     Optional. No description available.

@@ -18,7 +18,7 @@ current (`number`_)
     Optional. If set, the current value will be set.
 
 limit (`boolean`_)
-    If set, the attribute won't rise above 100 or fall below 0.
+    Default: ``false``. If set, the attribute won't rise above 100 or fall below 0.
 
 name (`string`_)
     Optional. A generic name of an attribute to set.

@@ -7,7 +7,7 @@ Parameters
 ----------------------------------------------------------------------------------------------------
 
 filename (`string`_)
-    No description available.
+    The full filename of the save that we want to load, including extension.
 
 .. _`tes3bodyPart`: ../../../lua/type/tes3bodyPart.html
 .. _`string`: ../../../lua/type/string.html

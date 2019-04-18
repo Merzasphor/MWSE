@@ -8,6 +8,12 @@ Returns
 
 `string`_.
 
+Parameters
+----------------------------------------------------------------------------------------------------
+
+attributeId (`number`_)
+    The attribute id to get the name of, from tes3.attributeName constants.
+
 .. _`tes3bodyPart`: ../../../lua/type/tes3bodyPart.html
 .. _`string`: ../../../lua/type/string.html
 .. _`mwseTimer`: ../../../lua/type/mwseTimer.html

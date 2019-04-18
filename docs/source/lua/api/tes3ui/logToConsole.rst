@@ -10,7 +10,7 @@ text (`string`_)
     No description available.
 
 isCommand (`boolean`_)
-    No description available.
+    Default: ``false``. No description available.
 
 .. _`tes3bodyPart`: ../../../lua/type/tes3bodyPart.html
 .. _`string`: ../../../lua/type/string.html

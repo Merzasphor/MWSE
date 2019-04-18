@@ -12,6 +12,7 @@ Functions
     tes3ui/acquireTextInput
     tes3ui/createHelpLayerMenu
     tes3ui/createMenu
+    tes3ui/createTooltipMenu
     tes3ui/enterMenuMode
     tes3ui/findHelpLayerMenu
     tes3ui/findMenu

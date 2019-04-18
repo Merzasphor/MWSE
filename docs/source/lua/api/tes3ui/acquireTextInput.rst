@@ -7,7 +7,7 @@ Parameters
 ----------------------------------------------------------------------------------------------------
 
 element (`tes3uiElemenet`_)
-    No description available.
+    Optional. No description available.
 
 .. _`tes3bodyPart`: ../../../lua/type/tes3bodyPart.html
 .. _`string`: ../../../lua/type/string.html

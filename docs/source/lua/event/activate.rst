@@ -19,12 +19,12 @@ Event Data
 activator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3reference`_. Read-only. The actor attempting to trigger the event.
+`tes3reference`_Read-only. The actor attempting to trigger the event.
 
 target
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3reference`_. Read-only. The reference that is being activated.
+`tes3reference`_Read-only. The reference that is being activated.
 
 Examples
 ----------------------------------------------------------------------------------------------------
@@ -64,9 +64,8 @@ Prevent the player from activating NPCs
     event.register("activate", myOnActivateCallback)
 
 
-.. _`Event Guide`: ../../lua/guide/events.html
-.. _`Reference`: ../../lua/type/tes3/reference.html
 .. _`xActivate`: ../../mwscript/functions/actor/xActivate.html
+.. _`Event Guide`: ../../lua/guide/events.html
 .. _`tes3bodyPart`: ../../lua/type/tes3bodyPart.html
 .. _`string`: ../../lua/type/string.html
 .. _`mwseTimer`: ../../lua/type/mwseTimer.html

@@ -3,11 +3,16 @@ tes3ui.findMenu
 
 Locates a top-level menu through its id.
 
+Returns
+----------------------------------------------------------------------------------------------------
+
+`tes3uiElement`_.
+
 Parameters
 ----------------------------------------------------------------------------------------------------
 
 id (`number`_)
-    No description available.
+    The ID of the menu to locate.
 
 .. _`tes3bodyPart`: ../../../lua/type/tes3bodyPart.html
 .. _`string`: ../../../lua/type/string.html

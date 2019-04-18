@@ -6,7 +6,7 @@ Preforms a ray test and returns various information related to the result(s). If
 Returns
 ----------------------------------------------------------------------------------------------------
 
-`niPickRecord`_.
+`niPickRecord`_, `table`_.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -14,43 +14,81 @@ Parameters
 Accepts parameters through a table with the given keys:
 
 position (`tes3vector3`_, `table`_)
-    No description available.
+    Position of the ray origin.
 
 direction (`tes3vector3`_, `table`_)
-    No description available.
+    Direction of the ray. Does not have to be unit length.
 
 findAll (`boolean`_)
-    If true, the ray test won't stop after the first result.
+    Default: ``false``. If true, the ray test won't stop after the first result.
+
+maxDistance (`number`_)
+    Optional. The maximum distance that the test will run.
 
 sort (`boolean`_)
     Default: ``true``. If true, the results will be sorted by distance from the origin position.
 
 useModelBounds (`boolean`_)
-    If true, model bounds will be tested for intersection. Otherwise triangles will be used.
+    Default: ``false``. If true, model bounds will be tested for intersection. Otherwise triangles will be used.
 
 useModelCoordinates (`boolean`_)
-    If true, model coordinates will be used instead of world coordinates.
+    Default: ``false``. If true, model coordinates will be used instead of world coordinates.
 
 useBackTriangles (`boolean`_)
-    No description available.
+    Default: ``false``. Include intersections with back-facing triangles.
 
 observeAppCullFlag (`boolean`_)
-    Default: ``true``. No description available.
+    Default: ``true``. Ignore intersections with culled (hidden) models.
 
 returnColor (`boolean`_)
-    No description available.
+    Default: ``false``. Calculate and return the vertex color at intersections.
 
 returnNormal (`boolean`_)
-    Default: ``true``. No description available.
+    Default: ``true``. Calculate and return the vertex normal at intersections.
 
 returnSmoothNormal (`boolean`_)
-    No description available.
+    Default: ``false``. Use normal interpolation for calculating vertex normals.
 
 returnTexture (`boolean`_)
-    No description available.
+    Default: ``false``. Calculate and return the texture coordinate at intersections.
 
 ignore (`table`_)
     Optional. An array of references and/or scene graph nodes to cull from the result(s).
+
+Examples
+----------------------------------------------------------------------------------------------------
+
+Get Activation Target
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This example performs a ray test to match the normal activation target test. Unlike ``tes3.getPlayerTarget()`` this will return objects not normally available for activation.
+
+.. code-block:: lua
+
+    local hitResult = tes3.rayTest({ position = tes3.getPlayerEyePosition(), direction = tes3.getPlayerEyeVector() })
+    local hitReference = hitResult and hitResult.reference
+    if (hitReference == nil) then
+        return
+    end
+
+    tes3.messageBox("The player is looking at a '%s'", hitReference.object.name or hitReference.object.id)
+
+
+Get Camera Target
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This example performs a ray test to see what the camera is currently looking at.
+
+.. code-block:: lua
+
+    local hitResult = tes3.rayTest({ position = tes3.getCameraPosition(), direction = tes3.getCameraVector() })
+    local hitReference = hitResult and hitResult.reference
+    if (hitReference == nil) then
+        return
+    end
+
+    tes3.messageBox("The camera is looking at a '%s'", hitReference.object.name or hitReference.object.id)
+
 
 .. _`tes3bodyPart`: ../../../lua/type/tes3bodyPart.html
 .. _`string`: ../../../lua/type/string.html

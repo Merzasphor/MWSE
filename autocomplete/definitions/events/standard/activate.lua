@@ -1,5 +1,5 @@
 return {
-	brief = "This event is invoked whenever something is activated, typically by the player. Activation is usually done with the associated activate/use key, but may also be forced by scripts.",
+	description = "This event is invoked whenever something is activated, typically by the player. Activation is usually done with the associated activate/use key, but may also be forced by scripts.",
 	eventData = {
 		activator = {
 			type = "tes3reference",

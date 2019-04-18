@@ -12,7 +12,7 @@ Parameters
 ----------------------------------------------------------------------------------------------------
 
 filename (`string`_)
-    No description available.
+    The filename of the mod to find, including the extension.
 
 .. _`tes3bodyPart`: ../../../lua/type/tes3bodyPart.html
 .. _`string`: ../../../lua/type/string.html

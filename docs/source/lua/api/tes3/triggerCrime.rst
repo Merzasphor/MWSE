@@ -17,7 +17,7 @@ criminal (`tes3mobileActor`_, `tes3reference`_, `string`_)
     Default: ``tes3.mobilePlayer``. No description available.
 
 forceDetection (`boolean`_)
-    Can be set to true to ignore normal detection checks.
+    Default: ``false``. Can be set to true to ignore normal detection checks.
 
 type (`number`_)
     Default: ``tes3.crimeType.stealing``. Maps to tes3.crimeType constants.
