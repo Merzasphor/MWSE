@@ -1,0 +1,218 @@
+tes3class
+====================================================================================================
+
+A core object representing a character class.
+
+Properties
+----------------------------------------------------------------------------------------------------
+
+`attributes`_ (`table`_)
+    An array-style table of the two attribute IDs associated with the class.
+
+`bartersAlchemy`_ (`boolean`_)
+    If true, the class will barter alchemy items.
+
+`bartersApparatus`_ (`boolean`_)
+    If true, the class will barter apparatus items.
+
+`bartersArmor`_ (`boolean`_)
+    If true, the class will barter armor items.
+
+`bartersBooks`_ (`boolean`_)
+    If true, the class will barter book items.
+
+`bartersClothing`_ (`boolean`_)
+    If true, the class will barter clothing items.
+
+`bartersEnchantedItems`_ (`boolean`_)
+    If true, the class will barter enchanted items.
+
+`bartersIngredients`_ (`boolean`_)
+    If true, the class will barter ingredient items.
+
+`bartersLights`_ (`boolean`_)
+    If true, the class will barter light items.
+
+`bartersLockpicks`_ (`boolean`_)
+    If true, the class will barter lockpick items.
+
+`bartersMiscItems`_ (`boolean`_)
+    If true, the class will barter misc items.
+
+`bartersProbes`_ (`boolean`_)
+    If true, the class will barter probe items.
+
+`bartersRepairTools`_ (`boolean`_)
+    If true, the class will barter repair items.
+
+`bartersWeapons`_ (`boolean`_)
+    If true, the class will barter weapon items.
+
+`deleted`_ (`boolean`_)
+    The deleted state of the object.
+
+`description`_ (`string`_)
+    Loads from disk and returns the description of the class.
+
+`disabled`_ (`boolean`_)
+    The disabled state of the object.
+
+`id`_ (`string`_)
+    The unique identifier for the object.
+
+`majorSkills`_ (`table`_)
+    An array-style table of the 5 skills IDs associated with the class' major skills.
+
+`minorSkills`_ (`table`_)
+    An array-style table of the 5 skills IDs associated with the class' major skills.
+
+`modified`_ (`boolean`_)
+    The modification state of the object since the last save.
+
+`name`_ (`string`_)
+    The player-facing name for the object.
+
+`objectFlags`_ (`number`_)
+    The raw flags of the object.
+
+`objectType`_ (`number`_)
+    The type of object. Maps to values in tes3.objectType.
+
+`offersEnchanting`_ (`boolean`_)
+    If true, the class will offer repair services.
+
+`offersRepairs`_ (`boolean`_)
+    If true, the class will offer enchanting services.
+
+`offersSpellmaking`_ (`boolean`_)
+    If true, the class will offer spellmaking services.
+
+`offersSpells`_ (`boolean`_)
+    If true, the class will offer spell selling services.
+
+`offersTraining`_ (`boolean`_)
+    If true, the class will offer spell training services.
+
+`playable`_ (`boolean`_)
+    If true, the class is selectable at character generation.
+
+`skills`_ (`table`_)
+    An array-style table of the 10 skills IDs associated with the class. For major or minor skills specifically, use the majorSkills and MinorSkills properties.
+
+`sourceMod`_ (`string`_)
+    The filename of the mod that owns this object.
+
+`specialization`_ (`number`_)
+    The specialization for the class. Maps to the tes3.specialization table.
+
+.. toctree::
+    :hidden:
+
+    tes3class/attributes
+    tes3class/bartersAlchemy
+    tes3class/bartersApparatus
+    tes3class/bartersArmor
+    tes3class/bartersBooks
+    tes3class/bartersClothing
+    tes3class/bartersEnchantedItems
+    tes3class/bartersIngredients
+    tes3class/bartersLights
+    tes3class/bartersLockpicks
+    tes3class/bartersMiscItems
+    tes3class/bartersProbes
+    tes3class/bartersRepairTools
+    tes3class/bartersWeapons
+    tes3class/deleted
+    tes3class/description
+    tes3class/disabled
+    tes3class/id
+    tes3class/majorSkills
+    tes3class/minorSkills
+    tes3class/modified
+    tes3class/name
+    tes3class/objectFlags
+    tes3class/objectType
+    tes3class/offersEnchanting
+    tes3class/offersRepairs
+    tes3class/offersSpellmaking
+    tes3class/offersSpells
+    tes3class/offersTraining
+    tes3class/playable
+    tes3class/skills
+    tes3class/sourceMod
+    tes3class/specialization
+
+.. _`attributes`: tes3class/attributes.html
+.. _`bartersAlchemy`: tes3class/bartersAlchemy.html
+.. _`bartersApparatus`: tes3class/bartersApparatus.html
+.. _`bartersArmor`: tes3class/bartersArmor.html
+.. _`bartersBooks`: tes3class/bartersBooks.html
+.. _`bartersClothing`: tes3class/bartersClothing.html
+.. _`bartersEnchantedItems`: tes3class/bartersEnchantedItems.html
+.. _`bartersIngredients`: tes3class/bartersIngredients.html
+.. _`bartersLights`: tes3class/bartersLights.html
+.. _`bartersLockpicks`: tes3class/bartersLockpicks.html
+.. _`bartersMiscItems`: tes3class/bartersMiscItems.html
+.. _`bartersProbes`: tes3class/bartersProbes.html
+.. _`bartersRepairTools`: tes3class/bartersRepairTools.html
+.. _`bartersWeapons`: tes3class/bartersWeapons.html
+.. _`deleted`: tes3class/deleted.html
+.. _`description`: tes3class/description.html
+.. _`disabled`: tes3class/disabled.html
+.. _`id`: tes3class/id.html
+.. _`majorSkills`: tes3class/majorSkills.html
+.. _`minorSkills`: tes3class/minorSkills.html
+.. _`modified`: tes3class/modified.html
+.. _`name`: tes3class/name.html
+.. _`objectFlags`: tes3class/objectFlags.html
+.. _`objectType`: tes3class/objectType.html
+.. _`offersEnchanting`: tes3class/offersEnchanting.html
+.. _`offersRepairs`: tes3class/offersRepairs.html
+.. _`offersSpellmaking`: tes3class/offersSpellmaking.html
+.. _`offersSpells`: tes3class/offersSpells.html
+.. _`offersTraining`: tes3class/offersTraining.html
+.. _`playable`: tes3class/playable.html
+.. _`skills`: tes3class/skills.html
+.. _`sourceMod`: tes3class/sourceMod.html
+.. _`specialization`: tes3class/specialization.html
+
+.. _`tes3bodyPart`: ../../lua/type/tes3bodyPart.html
+.. _`string`: ../../lua/type/string.html
+.. _`mwseTimer`: ../../lua/type/mwseTimer.html
+.. _`tes3book`: ../../lua/type/tes3book.html
+.. _`tes3matrix33`: ../../lua/type/tes3matrix33.html
+.. _`nil`: ../../lua/type/nil.html
+.. _`tes3actor`: ../../lua/type/tes3actor.html
+.. _`tes3clothing`: ../../lua/type/tes3clothing.html
+.. _`tes3vector3`: ../../lua/type/tes3vector3.html
+.. _`tes3activator`: ../../lua/type/tes3activator.html
+.. _`niAVObject`: ../../lua/type/niAVObject.html
+.. _`tes3boundingBox`: ../../lua/type/tes3boundingBox.html
+.. _`tes3lockNode`: ../../lua/type/tes3lockNode.html
+.. _`tes3cell`: ../../lua/type/tes3cell.html
+.. _`tes3class`: ../../lua/type/tes3class.html
+.. _`tes3apparatus`: ../../lua/type/tes3apparatus.html
+.. _`number`: ../../lua/type/number.html
+.. _`tes3actionData`: ../../lua/type/tes3actionData.html
+.. _`niRTTI`: ../../lua/type/niRTTI.html
+.. _`niObjectNET`: ../../lua/type/niObjectNET.html
+.. _`function`: ../../lua/type/function.html
+.. _`tes3baseObject`: ../../lua/type/tes3baseObject.html
+.. _`tes3armor`: ../../lua/type/tes3armor.html
+.. _`tes3reference`: ../../lua/type/tes3reference.html
+.. _`tes3packedColor`: ../../lua/type/tes3packedColor.html
+.. _`bool`: ../../lua/type/boolean.html
+.. _`tes3rangeInt`: ../../lua/type/tes3rangeInt.html
+.. _`mwseTimerController`: ../../lua/type/mwseTimerController.html
+.. _`tes3wearablePart`: ../../lua/type/tes3wearablePart.html
+.. _`tes3vector4`: ../../lua/type/tes3vector4.html
+.. _`tes3vector2`: ../../lua/type/tes3vector2.html
+.. _`tes3cellExteriorData`: ../../lua/type/tes3cellExteriorData.html
+.. _`tes3travelDestinationNode`: ../../lua/type/tes3travelDestinationNode.html
+.. _`tes3transform`: ../../lua/type/tes3transform.html
+.. _`niObject`: ../../lua/type/niObject.html
+.. _`tes3physicalObject`: ../../lua/type/tes3physicalObject.html
+.. _`tes3alchemy`: ../../lua/type/tes3alchemy.html
+.. _`table`: ../../lua/type/table.html
+.. _`boolean`: ../../lua/type/boolean.html
+.. _`tes3object`: ../../lua/type/tes3object.html

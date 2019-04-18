@@ -1,45 +1,73 @@
-
 tes3.playSound
-========================================================
+====================================================================================================
 
-**Parameters:**
+Plays a sound on a given reference. Provides control over volume (including volume channel), pitch, and loop control.
 
-- `Sound`_ or `string`_ **sound**:
-    The sound object, or id of the sound to look for.
+Returns
+----------------------------------------------------------------------------------------------------
 
-- `Reference`_ or `MobileActor`_ or `string`_ **reference** ``optional``:
-    The reference to attach the sound to.
+`boolean`_.
 
-- `boolean`_ **loop** ``optional``:
-    The sound will loop if this is ``true``. Defaults to ``false``.
+Parameters
+----------------------------------------------------------------------------------------------------
 
-- `number`_ **mixChannel** ``optional``:
-    A channel index that determines which game volume setting affects this sound. The channels are master, voice, effects, footsteps, and music, which can be selected from the table ``tes3.soundMix``. The default is ``effects``.
+Accepts parameters through a table with the given keys:
 
-- `number`_ **volume** ``optional``:
-    The volume of the playback in the range [0.0, 1.0]. This final volume is also affected by the mix channel. The default is ``1.0``.
+sound (`tes3sound`_, `string`_)
+    No description available.
 
-- `number`_ **pitch** ``optional``:
-    The pitch-shift multiplier. For 22kHz audio (most typical) it can have the range [0.005, 4.5]; for 44kHz audio it can have the range [0.0025, 2.25]. The default is ``1.0``.
+reference (`tes3reference`_, `tes3mobileActor`_, `string`_)
+    Optional. The reference to attach the sound to.
 
-**Returned:**
+loop (`boolean`_)
+    No description available.
 
-- `boolean`_ **result**: ``true`` if the sound object existed.
+mixChannel (`number`_)
+    Default: ``tes3.audioMixType.effects``. The channel to base volume off of. Maps to tes3.audioMixType constants.
 
-This function plays ``sound``. If reference is given, the sound is played by an emitter located at the reference's centre. If no reference is given, the sound is output directly.
+volume (`number`_)
+    Default: ``1.0``. A value between 0.0 and 1.0 to scale the volume off of.
 
-Examples
---------------------------------------------------------
+pitch (`number`_)
+    No description available.
 
-.. code-block:: lua
-
-  local s = tes3.getSound("sneeze")
-  tes3.playSound{ sound = s, mixChannel = tes3.soundMix.voice, volume = 0.7 }
-
-.. _`boolean`: ../../type/lua/boolean.html
-.. _`number`: ../../type/lua/number.html
-.. _`string`: ../../type/lua/string.html
-
-.. _`MobileActor`: ../../type/tes3/mobileActor.html
-.. _`Reference`: ../../type/tes3/reference.html
-.. _`Sound`: ../../type/tes3/sound.html
+.. _`tes3bodyPart`: ../../../lua/type/tes3bodyPart.html
+.. _`string`: ../../../lua/type/string.html
+.. _`mwseTimer`: ../../../lua/type/mwseTimer.html
+.. _`tes3book`: ../../../lua/type/tes3book.html
+.. _`tes3matrix33`: ../../../lua/type/tes3matrix33.html
+.. _`nil`: ../../../lua/type/nil.html
+.. _`tes3actor`: ../../../lua/type/tes3actor.html
+.. _`tes3clothing`: ../../../lua/type/tes3clothing.html
+.. _`tes3vector3`: ../../../lua/type/tes3vector3.html
+.. _`tes3activator`: ../../../lua/type/tes3activator.html
+.. _`niAVObject`: ../../../lua/type/niAVObject.html
+.. _`tes3boundingBox`: ../../../lua/type/tes3boundingBox.html
+.. _`tes3lockNode`: ../../../lua/type/tes3lockNode.html
+.. _`tes3cell`: ../../../lua/type/tes3cell.html
+.. _`tes3class`: ../../../lua/type/tes3class.html
+.. _`tes3apparatus`: ../../../lua/type/tes3apparatus.html
+.. _`number`: ../../../lua/type/number.html
+.. _`tes3actionData`: ../../../lua/type/tes3actionData.html
+.. _`niRTTI`: ../../../lua/type/niRTTI.html
+.. _`niObjectNET`: ../../../lua/type/niObjectNET.html
+.. _`function`: ../../../lua/type/function.html
+.. _`tes3baseObject`: ../../../lua/type/tes3baseObject.html
+.. _`tes3armor`: ../../../lua/type/tes3armor.html
+.. _`tes3reference`: ../../../lua/type/tes3reference.html
+.. _`tes3packedColor`: ../../../lua/type/tes3packedColor.html
+.. _`bool`: ../../../lua/type/boolean.html
+.. _`tes3rangeInt`: ../../../lua/type/tes3rangeInt.html
+.. _`mwseTimerController`: ../../../lua/type/mwseTimerController.html
+.. _`tes3wearablePart`: ../../../lua/type/tes3wearablePart.html
+.. _`tes3vector4`: ../../../lua/type/tes3vector4.html
+.. _`tes3vector2`: ../../../lua/type/tes3vector2.html
+.. _`tes3cellExteriorData`: ../../../lua/type/tes3cellExteriorData.html
+.. _`tes3travelDestinationNode`: ../../../lua/type/tes3travelDestinationNode.html
+.. _`tes3transform`: ../../../lua/type/tes3transform.html
+.. _`niObject`: ../../../lua/type/niObject.html
+.. _`tes3physicalObject`: ../../../lua/type/tes3physicalObject.html
+.. _`tes3alchemy`: ../../../lua/type/tes3alchemy.html
+.. _`table`: ../../../lua/type/table.html
+.. _`boolean`: ../../../lua/type/boolean.html
+.. _`tes3object`: ../../../lua/type/tes3object.html

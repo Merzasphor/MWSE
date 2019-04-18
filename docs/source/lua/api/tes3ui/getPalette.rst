@@ -1,76 +1,51 @@
-
 tes3ui.getPalette
 ====================================================================================================
 
-Gets a standard palette colour.
+Gets a standard palette colour. Returns an array containing the RGB colour values, in the range [0.0, 1.0].
 
-.. code-block:: lua
+Parameters
+----------------------------------------------------------------------------------------------------
 
-    text.color = tes3ui.getPalette("answer_color")
+name (`string`_)
+    No description available.
 
-**Parameters:**
-
-- `string`_ **name**
-    The name of the palette colour.
-    
-**Returns:**
-
-- `table`_ (float[3])
-    An array containing the RGB colour values, in the range [0.0, 1.0].
-
-Standard colour names:
-    - black_color
-    - white_color
-    - normal_color
-    - normal_over_color
-    - normal_pressed_color
-    - active_color
-    - active_over_color
-    - active_pressed_color
-    - disabled_color
-    - disabled_over_color
-    - disabled_pressed_color
-    - link_color
-    - link_over_color
-    - link_pressed_color
-    - journal_link_color
-    - journal_link_over_color
-    - journal_link_pressed_color
-    - journal_topic_color
-    - journal_topic_over_color
-    - journal_topic_pressed_color
-    - journal_finished_quest_color
-    - journal_finished_quest_over_color
-    - journal_finished_quest_pressed_color
-    - answer_color
-    - answer_over_color
-    - answer_pressed_color
-    - header_color
-    - notify_color
-    - big_normal_color
-    - big_normal_over_color
-    - big_normal_pressed_color
-    - big_link_color
-    - big_link_over_color
-    - big_link_pressed_color
-    - big_answer_color
-    - big_answer_over_color
-    - big_answer_pressed_color
-    - big_header_color
-    - big_notify_color
-    - background_color
-    - focus_color
-    - health_npc_color
-    - health_color
-    - magic_color
-    - fatigue_color
-    - misc_color
-    - weapon_fill_color
-    - magic_fill_color
-    - positive_color
-    - negative_color
-    - count_color
-            
-
-.. _`string`: ../../type/lua/string.html
-.. _`table`: ../lua/table.html
+.. _`tes3bodyPart`: ../../../lua/type/tes3bodyPart.html
+.. _`string`: ../../../lua/type/string.html
+.. _`mwseTimer`: ../../../lua/type/mwseTimer.html
+.. _`tes3book`: ../../../lua/type/tes3book.html
+.. _`tes3matrix33`: ../../../lua/type/tes3matrix33.html
+.. _`nil`: ../../../lua/type/nil.html
+.. _`tes3actor`: ../../../lua/type/tes3actor.html
+.. _`tes3clothing`: ../../../lua/type/tes3clothing.html
+.. _`tes3vector3`: ../../../lua/type/tes3vector3.html
+.. _`tes3activator`: ../../../lua/type/tes3activator.html
+.. _`niAVObject`: ../../../lua/type/niAVObject.html
+.. _`tes3boundingBox`: ../../../lua/type/tes3boundingBox.html
+.. _`tes3lockNode`: ../../../lua/type/tes3lockNode.html
+.. _`tes3cell`: ../../../lua/type/tes3cell.html
+.. _`tes3class`: ../../../lua/type/tes3class.html
+.. _`tes3apparatus`: ../../../lua/type/tes3apparatus.html
+.. _`number`: ../../../lua/type/number.html
+.. _`tes3actionData`: ../../../lua/type/tes3actionData.html
+.. _`niRTTI`: ../../../lua/type/niRTTI.html
+.. _`niObjectNET`: ../../../lua/type/niObjectNET.html
+.. _`function`: ../../../lua/type/function.html
+.. _`tes3baseObject`: ../../../lua/type/tes3baseObject.html
+.. _`tes3armor`: ../../../lua/type/tes3armor.html
+.. _`tes3reference`: ../../../lua/type/tes3reference.html
+.. _`tes3packedColor`: ../../../lua/type/tes3packedColor.html
+.. _`bool`: ../../../lua/type/boolean.html
+.. _`tes3rangeInt`: ../../../lua/type/tes3rangeInt.html
+.. _`mwseTimerController`: ../../../lua/type/mwseTimerController.html
+.. _`tes3wearablePart`: ../../../lua/type/tes3wearablePart.html
+.. _`tes3vector4`: ../../../lua/type/tes3vector4.html
+.. _`tes3vector2`: ../../../lua/type/tes3vector2.html
+.. _`tes3cellExteriorData`: ../../../lua/type/tes3cellExteriorData.html
+.. _`tes3travelDestinationNode`: ../../../lua/type/tes3travelDestinationNode.html
+.. _`tes3transform`: ../../../lua/type/tes3transform.html
+.. _`niObject`: ../../../lua/type/niObject.html
+.. _`tes3physicalObject`: ../../../lua/type/tes3physicalObject.html
+.. _`tes3alchemy`: ../../../lua/type/tes3alchemy.html
+.. _`table`: ../../../lua/type/table.html
+.. _`boolean`: ../../../lua/type/boolean.html
+.. _`tes3object`: ../../../lua/type/tes3object.html

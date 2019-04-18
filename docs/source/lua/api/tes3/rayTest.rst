@@ -1,74 +1,94 @@
-
 tes3.rayTest
-========================================================
+====================================================================================================
 
-Performs a ray test against the game world, returning a ``pickRecord`` with many details on the intersection location. Note that it is relatively CPU intensive, so it should be limited to an active feature.
+Preforms a ray test and returns various information related to the result(s). If findAll is set, the result will be a table of results, otherwise only the first result is returned.
 
-.. code-block:: lua
-
-    local hitResult = tes3.rayTest({ position = ref.position, direction = tes3vector3.new(0, 0, -1), ignore = { ref } })
-    if (hitResult) then
-        tes3.messageBox{ message = "Hit " .. hitResult.reference.object.id }
-    end
-
-    
-Return Value
+Returns
 ----------------------------------------------------------------------------------------------------
 
-`NiPickRecord`_ or ``table`` of `NiPickRecord`_. Data about the intersection, or an array if **findAll** is true. ``nil`` if no intersections are found.
-
+`niPickRecord`_.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 
-All parameters are delivered via a table.
+Accepts parameters through a table with the given keys:
 
-- `Vector3`_ **position** ``required``
-    Position of the ray origin.
+position (`tes3vector3`_, `table`_)
+    No description available.
 
-- `Vector3`_ **direction** ``required``
-    Direction of the ray. Does not have to be unit length.
+direction (`tes3vector3`_, `table`_)
+    No description available.
 
-- `number`_ **maxDistance** ``optional``
-    Maximum distance to trace. Using maxDistance when possible helps reduce the performance cost of ray traces, particularly in exteriors.
+findAll (`boolean`_)
+    If true, the ray test won't stop after the first result.
 
-- `string`_ **ignore** ``optional``
-    A list of references or scene nodes that should be ignored by the ray cast. Useful for avoid occulsion by a target object or the player.
+sort (`boolean`_)
+    Default: ``true``. If true, the results will be sorted by distance from the origin position.
 
-- `string`_ **findAll** ``optional`` (default: false)
-    If the test should find all ray intersections, instead of only the first.
+useModelBounds (`boolean`_)
+    If true, model bounds will be tested for intersection. Otherwise triangles will be used.
 
-- `string`_ **sort** ``optional`` (default: true)
-    Sort intersections by distance.
-    
-- `string`_ **useModelBounds** ``optional`` (default: false)
-    Use model bounds for intersection, instead of exact triangles.
-    
-- `string`_ **useModelCoordinates** ``optional`` (default: false)
-    Use model coordinates, instead of world coordinates.
-    
-- `string`_ **useBackTriangles** ``optional`` (default: false)
-    Include intersections with back-facing triangles.
-    
-- `string`_ **observeAppCullFlag** ``optional`` (default: true)
-    Ignore intersections with culled (hidden) models.
-    
-- `string`_ **returnColor** ``optional`` (default: )
-    Calculate and return the vertex color at intersections.
-    
-- `string`_ **returnNormal** ``optional`` (default: true)
-    Calculate and return the vertex normal at intersections.
-    
-- `string`_ **returnSmoothNormal** ``optional`` (default: false)
-    Use normal interpolation for calculating vertex normals.
-    
-- `string`_ **returnTexture** ``optional`` (default: false)
-    Calculate and return the texture coordinate at intersections.
+useModelCoordinates (`boolean`_)
+    If true, model coordinates will be used instead of world coordinates.
 
+useBackTriangles (`boolean`_)
+    No description available.
 
+observeAppCullFlag (`boolean`_)
+    Default: ``true``. No description available.
 
-.. _`number`: ../lua/number.html
-.. _`string`: ../lua/string.html
+returnColor (`boolean`_)
+    No description available.
 
-.. _`Vector3`: ../../type/tes3/vector3.html
-.. _`NiPickRecord`: ../../type/ni/niPickRecord.html
+returnNormal (`boolean`_)
+    Default: ``true``. No description available.
+
+returnSmoothNormal (`boolean`_)
+    No description available.
+
+returnTexture (`boolean`_)
+    No description available.
+
+ignore (`table`_)
+    Optional. An array of references and/or scene graph nodes to cull from the result(s).
+
+.. _`tes3bodyPart`: ../../../lua/type/tes3bodyPart.html
+.. _`string`: ../../../lua/type/string.html
+.. _`mwseTimer`: ../../../lua/type/mwseTimer.html
+.. _`tes3book`: ../../../lua/type/tes3book.html
+.. _`tes3matrix33`: ../../../lua/type/tes3matrix33.html
+.. _`nil`: ../../../lua/type/nil.html
+.. _`tes3actor`: ../../../lua/type/tes3actor.html
+.. _`tes3clothing`: ../../../lua/type/tes3clothing.html
+.. _`tes3vector3`: ../../../lua/type/tes3vector3.html
+.. _`tes3activator`: ../../../lua/type/tes3activator.html
+.. _`niAVObject`: ../../../lua/type/niAVObject.html
+.. _`tes3boundingBox`: ../../../lua/type/tes3boundingBox.html
+.. _`tes3lockNode`: ../../../lua/type/tes3lockNode.html
+.. _`tes3cell`: ../../../lua/type/tes3cell.html
+.. _`tes3class`: ../../../lua/type/tes3class.html
+.. _`tes3apparatus`: ../../../lua/type/tes3apparatus.html
+.. _`number`: ../../../lua/type/number.html
+.. _`tes3actionData`: ../../../lua/type/tes3actionData.html
+.. _`niRTTI`: ../../../lua/type/niRTTI.html
+.. _`niObjectNET`: ../../../lua/type/niObjectNET.html
+.. _`function`: ../../../lua/type/function.html
+.. _`tes3baseObject`: ../../../lua/type/tes3baseObject.html
+.. _`tes3armor`: ../../../lua/type/tes3armor.html
+.. _`tes3reference`: ../../../lua/type/tes3reference.html
+.. _`tes3packedColor`: ../../../lua/type/tes3packedColor.html
+.. _`bool`: ../../../lua/type/boolean.html
+.. _`tes3rangeInt`: ../../../lua/type/tes3rangeInt.html
+.. _`mwseTimerController`: ../../../lua/type/mwseTimerController.html
+.. _`tes3wearablePart`: ../../../lua/type/tes3wearablePart.html
+.. _`tes3vector4`: ../../../lua/type/tes3vector4.html
+.. _`tes3vector2`: ../../../lua/type/tes3vector2.html
+.. _`tes3cellExteriorData`: ../../../lua/type/tes3cellExteriorData.html
+.. _`tes3travelDestinationNode`: ../../../lua/type/tes3travelDestinationNode.html
+.. _`tes3transform`: ../../../lua/type/tes3transform.html
+.. _`niObject`: ../../../lua/type/niObject.html
+.. _`tes3physicalObject`: ../../../lua/type/tes3physicalObject.html
+.. _`tes3alchemy`: ../../../lua/type/tes3alchemy.html
+.. _`table`: ../../../lua/type/table.html
+.. _`boolean`: ../../../lua/type/boolean.html
+.. _`tes3object`: ../../../lua/type/tes3object.html
