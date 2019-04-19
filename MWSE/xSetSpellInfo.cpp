@@ -104,7 +104,10 @@ namespace mwse
 			}
 			
 			// Expand name length if needed.
-			if (name.length() > strlen(spell->name)) {
+			if (spell->name == nullptr) {
+				spell->name = (char*)tes3::_new(32);
+			}
+			else if (name.length() > strlen(spell->name)) {
 				spell->name = reinterpret_cast<char*>(tes3::realloc(spell->name, 32));
 			}
 
