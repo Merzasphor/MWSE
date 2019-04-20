@@ -178,7 +178,7 @@ namespace mwse {
 				usertypeDefinition.set("id", sol::readonly_property(&TES3::Quest::name));
 
 				// Finish up our usertype.
-				state.set_usertype("tes3dialogue", usertypeDefinition);
+				state.set_usertype("tes3quest", usertypeDefinition);
 			}
 		}
 	}
