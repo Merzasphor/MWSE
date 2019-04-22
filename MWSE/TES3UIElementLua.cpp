@@ -581,6 +581,7 @@ namespace mwse {
 			usertypeDefinition.set("destroyChildren", [](Element& self) { return self.destroyChildren(); });
 			usertypeDefinition.set("findChild", [](Element& self, UI_ID id) { return self.findChild(id); });
 			usertypeDefinition.set("getContentElement", [](Element& self) { return self.getContentElement(); });
+			usertypeDefinition.set("getTopLevelMenu", [](Element& self) { return self.getTopLevelParent(); });
 			usertypeDefinition.set("getTopLevelParent", [](Element& self) { return self.getTopLevelParent(); });
 			usertypeDefinition.set("reorderChildren", [](Element& self, sol::object insertBefore, sol::object moveFrom, int count) {
 				int indexInsertBefore, indexMoveFrom;
@@ -731,10 +732,10 @@ namespace mwse {
 				auto argColour = args.get<sol::optional<sol::table>>("color");
 				if (argColour) {
 					auto c = argColour.value();
-					self.colourRed = c[1];
-					self.colourGreen = c[2];
-					self.colourBlue = c[3];
-					self.flagUsesRGBA = 1;
+					rect->colourRed = c[1];
+					rect->colourGreen = c[2];
+					rect->colourBlue = c[3];
+					rect->flagUsesRGBA = 1;
 				}
 				return rect;
 			});
