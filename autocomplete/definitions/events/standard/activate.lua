@@ -22,7 +22,6 @@ return {
 		},
 	},
 	links = {
-		["Event Guide"] = "lua/guide/events",
 		["xActivate"] = "mwscript/functions/actor/xActivate",
 	},
 }

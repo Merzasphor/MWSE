@@ -7,5 +7,3 @@ Some examples of when the activate event fires includes:
 - When a door is used.
 - When an item is picked up.
 - When someone attempts to open a container.
-
-.. note:: See the `Event Guide`_ for more information on event data, return values, and filters.
