@@ -21,7 +21,7 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition.set("id", sol::readonly_property(&TES3::SoulGemData::id));
-				usertypeDefinition.set("model", sol::readonly_property(&TES3::SoulGemData::model));
+				usertypeDefinition.set("mesh", sol::readonly_property(&TES3::SoulGemData::mesh));
 				usertypeDefinition.set("name", sol::readonly_property(&TES3::SoulGemData::name));
 				usertypeDefinition.set("texture", sol::readonly_property(&TES3::SoulGemData::texture));
 				usertypeDefinition.set("value", &TES3::SoulGemData::value);
@@ -29,6 +29,9 @@ namespace mwse {
 
 				// Data that needs to be packaged.
 				usertypeDefinition.set("item", sol::readonly_property([](TES3::SoulGemData& self) { makeLuaObject(self.item); }));
+
+				// TODO: Deprecated. Remove before 2.1-stable.
+				usertypeDefinition.set("model", sol::readonly_property(&TES3::SoulGemData::mesh));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3soulGemData", usertypeDefinition);
