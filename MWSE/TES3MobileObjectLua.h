@@ -11,6 +11,7 @@ namespace mwse {
 		template <typename T>
 		void setUserdataForMobileObject(sol::simple_usertype<T>& usertypeDefinition) {
 			// Basic property binding.
+			usertypeDefinition.set("objectType", sol::readonly_property(&TES3::MobileObject::objectType));
 			usertypeDefinition.set("flags", sol::readonly_property(&TES3::MobileObject::actorFlags));
 			usertypeDefinition.set("boundSize", sol::readonly_property(&TES3::MobileObject::boundSize));
 			usertypeDefinition.set("cellX", sol::readonly_property(&TES3::MobileObject::cellX));
