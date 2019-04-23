@@ -98,7 +98,13 @@ The standard type signature for events.
             ..
             
         **data1** (`number`_)
-            Event-specific data values. For mouse events, these are the X and Y coordinates of the pointer. For keyboard events, data0 is the scancode.
+            Event-specific raw data values. For mouse events, these are the screen X and Y coordinates of the pointer. For keyboard events, data0 is the `scan code`_.
+        
+        **relativeX** (`number`_)
+            ..
+            
+        **relativeY** (`number`_)
+            For mouse events only. X and Y coordinates of the pointer relative to the top-left of the element.
 
 
 .. _`boolean`: ../lua/boolean.html
@@ -106,8 +112,9 @@ The standard type signature for events.
 .. _`number`: ../lua/number.html
 .. _`string`: ../lua/string.html
 
-.. _`tes3ui.createTooltipMenu`: ../../api/tes3ui/createTooltipMenu.html
-
 .. _`Element`: element.html
 .. _`Property`: property.html
 .. _`UI_ID`: ui_id.html
+
+.. _`tes3ui.createTooltipMenu`: ../../api/tes3ui/createTooltipMenu.html
+.. _`scan code`: ../../guide/scancodes.html

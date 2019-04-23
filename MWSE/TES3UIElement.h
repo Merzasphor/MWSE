@@ -53,8 +53,7 @@ namespace TES3 {
 			int paddingAllSides;
 			int paddingLeft, paddingRight, paddingBottom, paddingTop;
 			int positionX, positionY;
-			int unknown_0xE4;
-			int unknown_0xE8;
+			int cached_screenX, cached_screenY;
 			int width, height;
 			int childOffsetX, childOffsetY;
 			int minWidth, minHeight;
