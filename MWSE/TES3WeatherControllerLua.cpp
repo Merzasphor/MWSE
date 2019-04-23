@@ -85,6 +85,7 @@ namespace mwse {
 					self.lastActiveRegion->currentWeatherIndex = weatherId;
 				}
 			});
+			usertypeDefinition.set("updateVisuals", &TES3::WeatherController::updateVisuals);
 
 			// Finish up our usertype.
 			state.set_usertype("tes3weatherController", usertypeDefinition);
