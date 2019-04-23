@@ -12,7 +12,8 @@
 namespace mwse {
 	namespace lua {
 		sol::table getWeatherList(TES3::WeatherController * controller) {
-			sol::table results;
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::table results = stateHandle.state.create_table();
 
 			for (unsigned int i = TES3::WeatherType::First; i <= TES3::WeatherType::Last; i++) {
 				results[i + 1] = makeLuaObject(controller->arrayWeathers[i]);
