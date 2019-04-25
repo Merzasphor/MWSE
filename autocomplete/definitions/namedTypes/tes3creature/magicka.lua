@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[The creature's max magicka.]],
+	description = [[The actor's max magicka.]],
 	readOnly = true,
 	valuetype = "number",
 }

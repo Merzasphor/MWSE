@@ -94,11 +94,11 @@ namespace mwse {
 				setUserdataForBaseObject(usertypeDefinition);
 
 				// Basic property binding.
-				usertypeDefinition.set("femaleBody", &TES3::Race::femaleBody);
+				usertypeDefinition.set("femaleBody", sol::readonly_property(&TES3::Race::femaleBody));
 				usertypeDefinition.set("flags", &TES3::Race::flags);
-				usertypeDefinition.set("height", &TES3::Race::height);
-				usertypeDefinition.set("maleBody", &TES3::Race::maleBody);
-				usertypeDefinition.set("weight", &TES3::Race::weight);
+				usertypeDefinition.set("height", sol::readonly_property(&TES3::Race::height));
+				usertypeDefinition.set("maleBody", sol::readonly_property(&TES3::Race::maleBody));
+				usertypeDefinition.set("weight", sol::readonly_property(&TES3::Race::weight));
 
 				// Indirect bindings to unions and arrays.
 				usertypeDefinition.set("baseAttributes", sol::readonly_property([](TES3::Race& self) { return std::ref(self.baseAttributes); }));

@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[The creature's max fatigue.]],
+	description = [[The actor's max fatigue.]],
 	readOnly = true,
 	valuetype = "number",
 }
