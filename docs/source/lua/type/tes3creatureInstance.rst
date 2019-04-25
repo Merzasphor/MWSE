@@ -19,9 +19,6 @@ Properties
     Simplified access to the base creature's attributes. A table of eight numbers, representing the base values for the creature's attributes.
 
 `barterGold`_ (`number`_)
-    The amount of gold that the actor has to trade with.
-
-`barterGold`_ (`number`_)
     The amount of gold that the creature has to barter with.
 
 `baseObject`_ (`tes3creature`_)
@@ -43,10 +40,10 @@ Properties
     The disabled state of the object.
 
 `equipment`_ (`tes3iterator`_)
-    A collection that contains the currently equipped items.
+    The items currently equipped to the actor.
 
 `equipment`_ (`tes3iterator`_)
-    The items currently equipped to the actor.
+    A collection that contains the currently equipped items.
 
 `fatigue`_ (`number`_)
     The creature's current fatigue.
@@ -61,10 +58,10 @@ Properties
     The unique identifier for the object.
 
 `inventory`_ (`tes3iterator`_)
-    The items currently carried by the actor.
+    A collection that contains the items in the actor's inventory.
 
 `inventory`_ (`tes3iterator`_)
-    A collection that contains the items in the actor's inventory.
+    The items currently carried by the actor.
 
 `isAttacked`_ (`boolean`_)
     If true, the creature attacked flag is set.
@@ -164,7 +161,6 @@ Properties
     tes3creatureInstance/attacks
     tes3creatureInstance/attributes
     tes3creatureInstance/barterGold
-    tes3creatureInstance/barterGold
     tes3creatureInstance/baseObject
     tes3creatureInstance/biped
     tes3creatureInstance/boundingBox
@@ -214,7 +210,6 @@ Properties
 .. _`aiConfig`: tes3creatureInstance/aiConfig.html
 .. _`attacks`: tes3creatureInstance/attacks.html
 .. _`attributes`: tes3creatureInstance/attributes.html
-.. _`barterGold`: tes3creatureInstance/barterGold.html
 .. _`barterGold`: tes3creatureInstance/barterGold.html
 .. _`baseObject`: tes3creatureInstance/baseObject.html
 .. _`biped`: tes3creatureInstance/biped.html
@@ -276,6 +271,7 @@ Methods
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html
+.. _`tes3npc`: ../../lua/type/tes3npc.html
 .. _`tes3book`: ../../lua/type/tes3book.html
 .. _`tes3matrix33`: ../../lua/type/tes3matrix33.html
 .. _`tes3actor`: ../../lua/type/tes3actor.html
@@ -286,6 +282,7 @@ Methods
 .. _`tes3magicSourceInstance`: ../../lua/type/tes3magicSourceInstance.html
 .. _`niAVObject`: ../../lua/type/niAVObject.html
 .. _`tes3iterator`: ../../lua/type/tes3iterator.html
+.. _`tes3raceHeightWeight`: ../../lua/type/tes3raceHeightWeight.html
 .. _`tes3class`: ../../lua/type/tes3class.html
 .. _`tes3mobileProjectile`: ../../lua/type/tes3mobileProjectile.html
 .. _`tes3apparatus`: ../../lua/type/tes3apparatus.html
@@ -294,46 +291,53 @@ Methods
 .. _`niRTTI`: ../../lua/type/niRTTI.html
 .. _`niObjectNET`: ../../lua/type/niObjectNET.html
 .. _`tes3armor`: ../../lua/type/tes3armor.html
-.. _`tes3reference`: ../../lua/type/tes3reference.html
+.. _`tes3npcInstance`: ../../lua/type/tes3npcInstance.html
 .. _`tes3dataHandler`: ../../lua/type/tes3dataHandler.html
 .. _`tes3rangeInt`: ../../lua/type/tes3rangeInt.html
 .. _`tes3dialogueInfo`: ../../lua/type/tes3dialogueInfo.html
 .. _`tes3dialogue`: ../../lua/type/tes3dialogue.html
 .. _`tes3gameFile`: ../../lua/type/tes3gameFile.html
 .. _`tes3faction`: ../../lua/type/tes3faction.html
+.. _`tes3wearablePart`: ../../lua/type/tes3wearablePart.html
 .. _`tes3inputController`: ../../lua/type/tes3inputController.html
 .. _`tes3lockpick`: ../../lua/type/tes3lockpick.html
 .. _`tes3combatSession`: ../../lua/type/tes3combatSession.html
 .. _`boolean`: ../../lua/type/boolean.html
+.. _`tes3vector4`: ../../lua/type/tes3vector4.html
 .. _`tes3magicEffect`: ../../lua/type/tes3magicEffect.html
 .. _`string`: ../../lua/type/string.html
+.. _`tes3referenceList`: ../../lua/type/tes3referenceList.html
 .. _`tes3iteratorNode`: ../../lua/type/tes3iteratorNode.html
 .. _`tes3fader`: ../../lua/type/tes3fader.html
 .. _`tes3quest`: ../../lua/type/tes3quest.html
 .. _`tes3nonDynamicData`: ../../lua/type/tes3nonDynamicData.html
 .. _`tes3ingredient`: ../../lua/type/tes3ingredient.html
+.. _`tes3race`: ../../lua/type/tes3race.html
 .. _`tes3gameSetting`: ../../lua/type/tes3gameSetting.html
-.. _`table`: ../../lua/type/table.html
-.. _`tes3mobileNPC`: ../../lua/type/tes3mobileNPC.html
-.. _`tes3wearablePart`: ../../lua/type/tes3wearablePart.html
-.. _`tes3vector3`: ../../lua/type/tes3vector3.html
-.. _`tes3vector4`: ../../lua/type/tes3vector4.html
 .. _`tes3vector2`: ../../lua/type/tes3vector2.html
-.. _`tes3activator`: ../../lua/type/tes3activator.html
+.. _`table`: ../../lua/type/table.html
 .. _`tes3travelDestinationNode`: ../../lua/type/tes3travelDestinationNode.html
+.. _`tes3transform`: ../../lua/type/tes3transform.html
+.. _`tes3mobileNPC`: ../../lua/type/tes3mobileNPC.html
+.. _`tes3soulGemData`: ../../lua/type/tes3soulGemData.html
+.. _`tes3vector3`: ../../lua/type/tes3vector3.html
+.. _`tes3reference`: ../../lua/type/tes3reference.html
+.. _`tes3raceSkillBonus`: ../../lua/type/tes3raceSkillBonus.html
+.. _`tes3activator`: ../../lua/type/tes3activator.html
+.. _`tes3raceBodyParts`: ../../lua/type/tes3raceBodyParts.html
 .. _`tes3inventory`: ../../lua/type/tes3inventory.html
 .. _`tes3boundingBox`: ../../lua/type/tes3boundingBox.html
 .. _`tes3markData`: ../../lua/type/tes3markData.html
-.. _`tes3transform`: ../../lua/type/tes3transform.html
+.. _`tes3raceBaseAttribute`: ../../lua/type/tes3raceBaseAttribute.html
 .. _`tes3creatureInstance`: ../../lua/type/tes3creatureInstance.html
 .. _`tes3effect`: ../../lua/type/tes3effect.html
 .. _`tes3game`: ../../lua/type/tes3game.html
-.. _`tes3soulGemData`: ../../lua/type/tes3soulGemData.html
 .. _`tes3probe`: ../../lua/type/tes3probe.html
-.. _`tes3object`: ../../lua/type/tes3object.html
 .. _`tes3physicalObject`: ../../lua/type/tes3physicalObject.html
-.. _`number`: ../../lua/type/number.html
+.. _`tes3object`: ../../lua/type/tes3object.html
 .. _`nil`: ../../lua/type/nil.html
+.. _`number`: ../../lua/type/number.html
+.. _`tes3moon`: ../../lua/type/tes3moon.html
 .. _`tes3mobilePlayer`: ../../lua/type/tes3mobilePlayer.html
 .. _`tes3mobileObject`: ../../lua/type/tes3mobileObject.html
 .. _`tes3misc`: ../../lua/type/tes3misc.html
