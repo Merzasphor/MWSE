@@ -697,7 +697,7 @@ namespace mwse {
 					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEWithHUD);
 				}
 
-				for (int i = 4; i >= 0; i--) {
+				for (int i = 4; i > 0; i--) {
 					Stack::getInstance().pushFloat(values[i]);
 				}
 				Stack::getInstance().pushString(variable);
@@ -801,7 +801,7 @@ namespace mwse {
 					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEWithHUD);
 				}
 
-				for (int i = 4; i >= 0; i--) {
+				for (int i = 4; i > 0; i--) {
 					Stack::getInstance().pushFloat(values[i]);
 				}
 				Stack::getInstance().pushString(variable);
@@ -913,6 +913,25 @@ namespace mwse {
 			};
 			state["mge"]["stopScreenRotation"] = []() {
 				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEStopSpinSpin);
+			};
+
+			// MGE XE rendering functions.
+			state["mge"]["setWeatherScattering"] = [](sol::optional<sol::table> params) {
+				sol::table outscatter = getOptionalParam<sol::table>(params, "outscatter", sol::nil);
+				sol::table inscatter = getOptionalParam<sol::table>(params, "inscatter", sol::nil);
+
+				if (outscatter == sol::nil || outscatter.size() != 3 || inscatter == sol::nil || inscatter.size() != 3) {
+					return false;
+				}
+
+				for (int i = 3; i > 0; i--) {
+					Stack::getInstance().pushFloat(inscatter[i]);
+				}
+				for (int i = 3; i > 0; i--) {
+					Stack::getInstance().pushFloat(outscatter[i]);
+				}
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::xSetWeatherScattering);
+				return true;
 			};
 
 		}
