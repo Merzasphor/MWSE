@@ -27,6 +27,10 @@ namespace TES3 {
 		return speed;
 	}
 
+	int MobileNPC::getDisposition() {
+		return this->vTable.mobileNPC->getDisposition(this);
+	}
+
 	float MobileNPC::getSkillRequirement(int skillId) {
 		const SkillStatistic& skill = skills[skillId];
 

@@ -78,9 +78,12 @@ namespace TES3 {
 	struct Misc;
 	struct MobController;
 	struct MobileActor;
+	struct MobileActor_vTable;
 	struct MobileCreature;
 	struct MobileNPC;
+	struct MobileNPC_vTable;
 	struct MobileObject;
+	struct MobileObject_vTable;
 	struct MobilePlayer;
 	struct MobileProjectile;
 	struct Moon;

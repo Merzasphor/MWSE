@@ -23,6 +23,7 @@ namespace TES3 {
 		//
 
 		float calculateWalkSpeed();
+		int getDisposition();
 
 		//
 		// Custom functions.

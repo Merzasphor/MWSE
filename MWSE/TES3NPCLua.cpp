@@ -28,7 +28,7 @@ namespace mwse {
 				setUserdataForActor(usertypeDefinition);
 
 				// Basic property binding.
-				usertypeDefinition.set("disposition", &TES3::NPC::disposition);
+				usertypeDefinition.set("baseDisposition", &TES3::NPC::baseDisposition);
 				usertypeDefinition.set("factionIndex", &TES3::NPC::factionIndex);
 				usertypeDefinition.set("factionRank", &TES3::NPC::factionRank);
 				usertypeDefinition.set("fatigue", &TES3::NPC::fatigue);
@@ -98,7 +98,8 @@ namespace mwse {
 				setUserdataForActor(usertypeDefinition);
 
 				// Basic property binding.
-				usertypeDefinition.set("disposition", sol::property(&TES3::NPCInstance::getDisposition, &TES3::NPCInstance::setDisposition));
+				usertypeDefinition.set("disposition", sol::property([](TES3::NPCInstance& self) { return self.getDisposition(false); }));
+				usertypeDefinition.set("baseDisposition", sol::property(&TES3::NPCInstance::getBaseDisposition, &TES3::NPCInstance::setBaseDisposition));
 				usertypeDefinition.set("factionIndex", &TES3::NPCInstance::factionIndex);
 
 				// Indirect bindings to unions and arrays.

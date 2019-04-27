@@ -5,14 +5,25 @@
 #include "TES3MobileNPC.h"
 #include "TES3UIElement.h"
 
-#define TES3_NPC_getDisposition 0x4DA330
-
 #define TES3_UI_ID_MenuDialog 0x7D3442
 #define TES3_UI_ID_MenuDialog_start_disposition 0x7D3486
 
 namespace TES3 {
-	float NPCBase::getDisposition(bool clamp = true) {
+	//
+	// NPC Base
+	//
+
+	int NPCBase::getBaseDisposition(bool clamp = true) {
 		return vTable.actor->getDispositionRaw(this);
+	}
+
+	//
+	// NPC Instance
+	//
+
+	const auto TES3_NPCInstance_calculateDisposition = reinterpret_cast<int (__thiscall*)(const NPCInstance*, bool)>(0x4DA330);
+	int NPCInstance::getDisposition(bool clamp) {
+		return TES3_NPCInstance_calculateDisposition(this, clamp);
 	}
 
 	unsigned char NPCInstance::getReputation() {
@@ -23,18 +34,18 @@ namespace TES3 {
 		baseNPC->reputation = value;
 	}
 
-	short NPCInstance::getDisposition() {
-		return disposition;
+	short NPCInstance::getBaseDisposition() {
+		return baseDisposition;
 	}
 
-	void NPCInstance::setDisposition(short value) {
-		disposition = value;
+	void NPCInstance::setBaseDisposition(short value) {
+		baseDisposition = value;
 
 		// Handle case where we're in dialog with this character.
 		auto menuDialog = TES3::UI::findMenu(*reinterpret_cast<short*>(TES3_UI_ID_MenuDialog));
 		auto serviceActor = TES3::UI::getServiceActor();
 		if (menuDialog && serviceActor && serviceActor->actorType == TES3::MobileActorType::NPC && reinterpret_cast<TES3::MobileNPC*>(serviceActor)->npcInstance == this) {
-			menuDialog->setProperty(static_cast<TES3::UI::Property>(*reinterpret_cast<short*>(TES3_UI_ID_MenuDialog_start_disposition)), disposition);
+			menuDialog->setProperty(static_cast<TES3::UI::Property>(*reinterpret_cast<short*>(TES3_UI_ID_MenuDialog_start_disposition)), baseDisposition);
 			TES3::UI::updateDialogDisposition();
 		}
 	}
