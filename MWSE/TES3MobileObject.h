@@ -122,7 +122,7 @@ namespace TES3 {
 		void * calculateNPCWidth; // 0xA0
 		void * calculateNPCHeight; // 0xA4
 		void * unknown_0xA8; // 0xA8
-		bool (__thiscall * is3rdPerson)(MobileActor*); // 0xAC
+		bool(__thiscall * is3rdPerson)(MobileActor*); // 0xAC
 		void * changeWerewolf; // 0xB0
 		void * calculateWalkSpeed; // 0xB4
 		void * onDeath; // 0xB8
@@ -132,11 +132,11 @@ namespace TES3 {
 		void * getWeaponSwingWeightProduct; // 0xC8
 		void * getReferenceData0; // 0xCC
 		SkillStatistic * (__thiscall * getSkillStatistic)(MobileActor*, int); // 0xD0
-		float (__thiscall * getSkillValue)(MobileActor*, int); // 0xD4
+		float(__thiscall * getSkillValue)(MobileActor*, int); // 0xD4
 		void * unknown_0xD8;
 		void * unknown_0xDC;
 		void * applyArmorRating; // 0xE0
-		float (__thiscall * calculateArmorRating)(MobileActor*, int*); // 0xE4
+		float(__thiscall * calculateArmorRating)(MobileActor*, int*); // 0xE4
 		void * getReadiedWeaponCurrentSkill; // 0xE8
 		void * getReadiedWeaponAnimationGroup; // 0xEC
 		void * onWeaponEquip; // 0xF0
@@ -147,6 +147,12 @@ namespace TES3 {
 		void * unknown_0x104; // 0x104
 	};
 	static_assert(sizeof(MobileActor_vTable) == 0x108, "TES3::MobileActor_vTable failed size validation");
+
+	struct MobileNPC_vTable : MobileActor_vTable {
+		void * unpackSkillValues; // 0x108
+		int (__thiscall * getDisposition)(MobileNPC*); // 0x10C
+	};
+	static_assert(sizeof(MobileNPC_vTable) == 0x110, "TES3::MobileNPC_vTable failed size validation");
 
 	struct MobileObject {
 		struct UnknownStruct1 {
@@ -185,6 +191,7 @@ namespace TES3 {
 		union {
 			MobileObject_vTable * mobileObject;
 			MobileActor_vTable * mobileActor;
+			MobileNPC_vTable * mobileNPC;
 		} vTable; // 0x0
 		ObjectType::ObjectType objectType; // 0x4
 		ActorMovement::value_type movementFlags; // 0x8

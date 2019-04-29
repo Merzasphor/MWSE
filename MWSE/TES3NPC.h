@@ -38,7 +38,7 @@ namespace TES3 {
 		// Related this-call functions.
 		//
 
-		float getDisposition(bool);
+		int getBaseDisposition(bool);
 
 	};
 
@@ -54,7 +54,7 @@ namespace TES3 {
 		short health; // 0xA2
 		short magicka; // 0xA4
 		short fatigue; // 0xA6
-		signed char disposition; // 0xA8
+		signed char baseDisposition; // 0xA8
 		unsigned char factionIndex; // 0xA9
 		unsigned char factionRank; // 0xAA
 		char unknown_0xAB; // Padding.
@@ -73,16 +73,26 @@ namespace TES3 {
 
 	struct NPCInstance : NPCBase {
 		NPC * baseNPC; // 0x6C
-		short disposition; // 0x70
+		short baseDisposition; // 0x70
 		unsigned char factionIndex; // 0x72
 		char unknown_0x73; // Padding.
 		AIPackageConfig * aiPackageConfig; // 0x74
 
+		//
+		// Related this-call functions.
+		//
+
+		int getDisposition(bool clamp = false);
+
+		//
+		// Custom functions.
+		//
+
 		unsigned char getReputation();
 		void setReputation(unsigned char);
 
-		short getDisposition();
-		void setDisposition(short);
+		short getBaseDisposition();
+		void setBaseDisposition(short);
 
 		void setFactionRank(unsigned char);
 	};

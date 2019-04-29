@@ -126,6 +126,12 @@ namespace TES3 {
 		//
 
 		void switchWeather(int weatherId, float startingTransition);
+		
+		//
+		// Helper functions.
+		//
+
+		void updateVisuals();
 	};
 	static_assert(sizeof(WeatherController) == 0x1F0, "TES3::WeatherController failed size validation");
 }

@@ -60,6 +60,12 @@ namespace mwse {
 						eventData["data0"] = data0;
 						eventData["data1"] = data1;
 
+						// For mouse events, convert screen coordinates to element relative coordinates.
+						if (eventID >= Property::event_mouse_leave && eventID <= Property::event_mouse_release) {
+							eventData["relativeX"] = data0 - source->cached_screenX;
+							eventData["relativeY"] = source->cached_screenY - data1;
+						}
+
 						// Note: sol::protected_function needs to be a local, as Lua functions can destroy it when modifying events.
 						sol::protected_function callback = eventLua.callback;
 						sol::protected_function_result result = callback(eventData);
