@@ -57,7 +57,6 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition.set("reactions", sol::readonly_property(&TES3::Faction::reactions));
-				usertypeDefinition.set("playerRank", &TES3::Faction::playerRank);
 				usertypeDefinition.set("playerReputation", &TES3::Faction::playerReputation);
 				usertypeDefinition.set("playerJoined", sol::property(
 					[](TES3::Faction& self) { return self.getMembershipFlag(TES3::FactionMembershipFlag::PlayerJoined); },
@@ -75,6 +74,7 @@ namespace mwse {
 
 				// Functions exposed as properties.
 				usertypeDefinition.set("name", sol::property(&TES3::Faction::getName, &TES3::Faction::setName));
+				usertypeDefinition.set("playerRank", sol::property(&TES3::Faction::getEffectivePlayerRank, &TES3::Faction::setEffectivePlayerRank));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3faction", usertypeDefinition);
