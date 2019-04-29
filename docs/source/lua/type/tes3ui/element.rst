@@ -244,7 +244,7 @@ Methods
         | `boolean`_ ``element.widget.scrollbarVisible``: Set if the scrollbar is displayed.
 
     Custom widget methods:
-        | ``element.widget:contentsChanged()``: Call to update scroll bar slider and limits after adding or removing elements to the content container. Only required if the content size changes.
+        | ``element.widget:contentsChanged()``: Call to update scroll bar slider and limits after adding or removing elements to the content container. Because content size depends on layout, this must be run after a menu:updateLayout(). Only required if the content size changes.
 
 `Element`_ **createHypertext** {id = `UI_ID`_ ``optional``}  ``Uses table arguments.``
     Returns:
@@ -362,7 +362,7 @@ Methods
         | `boolean`_ ``element.widget.scrollbarVisible``: Set if the scrollbar is displayed.
 
     Custom widget methods:
-        | ``element.widget:contentsChanged()``: Call to update scroll bar slider and limits after adding or removing elements to the content container. Only required if the content size changes.
+        | ``element.widget:contentsChanged()``: Call to update scroll bar slider and limits after adding or removing elements to the content container. Because content size depends on layout, this must be run after a menu:updateLayout(). Only required if the content size changes.
 
 **destroy** ()
     Returns:
