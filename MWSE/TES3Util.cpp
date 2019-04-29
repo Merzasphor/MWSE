@@ -218,7 +218,7 @@ namespace mwse {
 			data->item = item;
 			data->id = item->objectID;
 			data->name = item->name;
-			data->model = item->model;
+			data->mesh = item->model;
 			data->texture = item->icon;
 			data->value = item->value;
 			data->weight = item->weight;

@@ -49,35 +49,35 @@ namespace mwse {
 
 		void bindTES3Collections() {
 			// Iterator bindings.
-			bindIterator<TES3::EquipmentStack>("TES3EquipmentStackIterator", "TES3EquipmentStackIteratorNode");
-			bindIterator<TES3::Faction::ReactionNode>("TES3ReactionNodeIterator", "TES3ReactionNodeIteratorNode");
-			bindIterator<TES3::ItemStack>("TES3ItemStackIterator", "TES3ItemStackIteratorNode");
-			bindIterator<TES3::LeveledListNode>("TES3LeveledListNodeIterator", "TES3LeveledListNodeIteratorNode");
-			bindIterator<TES3::RegionSound>("TES3RegionSoundIterator", "TES3RegionSoundIteratorNode");
-			bindIterator<TES3::TravelDestination>("TES3TravelDestinationIterator", "TES3TravelDestinationIteratorNode");
+			bindIterator<TES3::EquipmentStack>("tes3equipmentStackIterator", "tes3equipmentStackIteratorNode");
+			bindIterator<TES3::Faction::ReactionNode>("tes3reactionNodeIterator", "tes3reactionNodeIteratorNode");
+			bindIterator<TES3::ItemStack>("tes3itemStackIterator", "tes3itemStackIteratorNode");
+			bindIterator<TES3::LeveledListNode>("tes3leveledListNodeIterator", "tes3leveledListNodeIteratorNode");
+			bindIterator<TES3::RegionSound>("tes3regionSoundIterator", "tes3regionSoundIteratorNode");
+			bindIterator<TES3::TravelDestination>("tes3travelDestinationIterator", "tes3travelDestinationIteratorNode");
 
 			// Generic TES3::Object iterators. As above, but the result data will be reinterpreted at runtime.
-			bindGenericObjectIterator<TES3::BaseObject>("TES3BaseObjectIterator", "TES3BaseObjectIteratorNode");
-			bindGenericObjectIterator<TES3::Dialogue>("TES3DialogueIterator", "TES3DialogueIteratorNode");
-			bindGenericObjectIterator<TES3::DialogueInfo>("TES3DialogueInfoIterator", "TES3DialogueInfoIteratorNode");
-			bindGenericObjectIterator<TES3::GlobalVariable>("TES3GlobalIterator", "TES3GlobalIteratorNode");
-			bindGenericObjectIterator<TES3::MobileActor>("TES3MobileActorIterator", "TES3MobileActorIteratorNode");
-			bindGenericObjectIterator<TES3::Quest>("TES3QuestIterator", "TES3QuestIteratorNode");
-			bindGenericObjectIterator<TES3::Reference>("TES3ReferenceIterator", "TES3ReferenceIteratorNode");
-			bindGenericObjectIterator<TES3::Region>("TES3RegionIterator", "TES3RegionIteratorNode");
-			bindGenericObjectIterator<TES3::Spell>("TES3SpellIterator", "TES3SpellIteratorNode");
+			bindGenericObjectIterator<TES3::BaseObject>("tes3baseObjectIterator", "tes3baseObjectIteratorNode");
+			bindGenericObjectIterator<TES3::Dialogue>("tes3dialogueIterator", "tes3dialogueIteratorNode");
+			bindGenericObjectIterator<TES3::DialogueInfo>("tes3dialogueInfoIterator", "tes3dialogueInfoIteratorNode");
+			bindGenericObjectIterator<TES3::GlobalVariable>("tes3globalIterator", "tes3globalIteratorNode");
+			bindGenericObjectIterator<TES3::MobileActor>("tes3mobileActorIterator", "tes3mobileActorIteratorNode");
+			bindGenericObjectIterator<TES3::Quest>("tes3questIterator", "tes3questIteratorNode");
+			bindGenericObjectIterator<TES3::Reference>("tes3referenceIterator", "tes3referenceIteratorNode");
+			bindGenericObjectIterator<TES3::Region>("tes3regionIterator", "tes3regionIteratorNode");
+			bindGenericObjectIterator<TES3::Spell>("tes3spellIterator", "tes3spellIteratorNode");
 
 			// Generic TES3::Object STL collections.
-			bindGenericObjectStlList<TES3::Cell>("TES3CellStlList", "TES3CellStlListNode");
+			bindGenericObjectStlList<TES3::Cell>("tes3cellStlList", "tes3cellStlListNode");
 
 			// Basic TArray bindings.
-			bindTArray<TES3::ItemData>("TES3ItemDataTArray");
-			bindTArray<NI::PickRecord>("NITArrayPickRecord");
+			bindTArray<TES3::ItemData>("tes3itemDataTArray");
+			bindTArray<NI::PickRecord>("niTArrayPickRecord");
 
 			// Bind some iterators.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
-			state.new_usertype<TES3::LinkedList<TES3::Object>>("TES3ObjectLinkedList",
+			state.new_usertype<TES3::LinkedList<TES3::Object>>("tes3objectLinkedList",
 				// Disable construction of this type.
 				"new", sol::no_constructor,
 

@@ -3,9 +3,13 @@
 #include <utility>
 #include <vector>
 
+#include "TES3GameSetting.h"
+#include "TES3Item.h"
+#include "TES3ItemData.h"
 #include "TES3MobileActor.h"
 #include "TES3MobilePlayer.h"
 #include "TES3NPC.h"
+#include "TES3Reference.h"
 #include "TES3WorldController.h"
 
 #include "TES3UIElement.h"
@@ -206,6 +210,147 @@ namespace mwse {
 			}
 		}
 
+		//
+		// Functions related to handling the InventorySelect menu.
+		//
+
+		static bool inventorySelectLuaCallbackCloseAfter = true;
+		static sol::protected_function inventorySelectLuaCallback = sol::nil;
+		bool __cdecl luaDispatchedSelectCallback(Element* element, Property property, int data0, int data1, Element * elementAgain) {
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			if (inventorySelectLuaCallback.valid()) {
+				sol::table params = stateHandle.state.create_table();
+
+				auto MenuInventorySelect_object = reinterpret_cast<TES3::BaseObject*>(element->getProperty(PropertyType::Pointer, *reinterpret_cast<Property*>(0x7D3B7A)).ptrValue);
+				auto MenuInventorySelect_extra = reinterpret_cast<TES3::ItemData*>(element->getProperty(PropertyType::Pointer, *reinterpret_cast<Property*>(0x7D3C48)).ptrValue);
+				auto MenuInventorySelect_count = element->getProperty(PropertyType::Pointer, *reinterpret_cast<Property*>(0x7D3BCE)).integerValue;
+				auto MenuInventorySelect_container = reinterpret_cast<TES3::Inventory*>(element->getProperty(PropertyType::Pointer, *reinterpret_cast<Property*>(0x7D3C32)).ptrValue);
+				auto MenuInventorySelect_container_object = reinterpret_cast<TES3::Actor*>(element->getProperty(PropertyType::Pointer, *reinterpret_cast<Property*>(0x7D3C3C)).ptrValue);
+
+				params["item"] = makeLuaObject(MenuInventorySelect_object);
+				params["itemData"] = MenuInventorySelect_extra;
+				params["count"] = MenuInventorySelect_extra ? MenuInventorySelect_extra->count : MenuInventorySelect_count;
+				params["inventory"] = MenuInventorySelect_container;
+				params["actor"] = makeLuaObject(MenuInventorySelect_container_object);
+
+				inventorySelectLuaCallback(params);
+			}
+
+			if (inventorySelectLuaCallbackCloseAfter) {
+				TES3::UI::leaveMenuMode();
+			}
+
+			return true;
+		}
+
+		static sol::protected_function inventorySelectLuaFilter = sol::nil;
+		bool __cdecl luaDispatchedSelectFilter(Element* element, Property property, int data0, int data1, Element * elementAgain) {
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			if (inventorySelectLuaFilter.valid()) {
+				sol::table params = stateHandle.state.create_table();
+
+				auto MenuInventorySelect_filter_object = reinterpret_cast<TES3::BaseObject*>(element->getProperty(PropertyType::Pointer, *reinterpret_cast<Property*>(0x7D3C88)).ptrValue);
+				auto MenuInventorySelect_filter_extra = reinterpret_cast<TES3::ItemData*>(element->getProperty(PropertyType::Pointer, *reinterpret_cast<Property*>(0x7D3C16)).ptrValue);
+
+				params["item"] = makeLuaObject(MenuInventorySelect_filter_object);
+				params["itemData"] = MenuInventorySelect_filter_extra;
+
+				sol::object result = inventorySelectLuaFilter(params);
+				if (result.is<bool>()) {
+					return result.as<bool>();
+				}
+			}
+
+			return true;
+		}
+
+		const auto TES3_UI_showSelectMenu = reinterpret_cast<void (__cdecl*)(TES3::Actor*, EventCallback*, const char*)>(0x5D35B0);
+		void showSelectMenu(TES3::Actor * actor, EventCallback* callback, const char* titleText) {
+			TES3_UI_showSelectMenu(actor, callback, titleText);
+		}
+
+		const std::unordered_map<std::string, EventCallback*> inventorySelectFilterIdMap = {
+			{ "alembic", reinterpret_cast<EventCallback*>(0x59A1F0) },
+			{ "calcinator", reinterpret_cast<EventCallback*>(0x59A160) },
+			{ "enchanted", reinterpret_cast<EventCallback*>(0x5C6B40) },
+			{ "ingredients", reinterpret_cast<EventCallback*>(0x59A220) },
+			{ "mortar", reinterpret_cast<EventCallback*>(0x59A190) },
+			{ "quickUse", reinterpret_cast<EventCallback*>(0x608A90) },
+			{ "retort", reinterpret_cast<EventCallback*>(0x59A1C0) },
+			{ "soulgemFilled", reinterpret_cast<EventCallback*>(0x5C6B00) },
+		};
+
+		void showInventorySelectMenu(sol::table params) {
+			// Get our actor.
+			TES3::Reference * actorRef = getOptionalParamExecutionReference(params);
+			if (actorRef == nullptr) {
+				actorRef = TES3::WorldController::get()->getMobilePlayer()->reference;
+			}
+			else if (!actorRef->baseObject->isActor()) {
+				throw std::exception("Invalid reference passed to tes3ui.showInventorySelectMenu. Must be an actor.");
+			}
+			TES3::Actor * actor = static_cast<TES3::Actor*>(actorRef->baseObject);
+
+			// Get our callback.
+			EventCallback * callback = reinterpret_cast<EventCallback*>(&luaDispatchedSelectCallback);
+			inventorySelectLuaCallback = getOptionalParam<sol::protected_function>(params, "callback", sol::nil);
+			if (!inventorySelectLuaCallback.valid()) {
+				throw std::exception("Invalid callback argument provided.");
+			}
+
+			// Get our filter.
+			EventCallback * filter = nullptr;
+			inventorySelectLuaFilter = sol::nil;
+			sol::object maybeFilter = params["filter"];
+			if (maybeFilter.is<sol::protected_function>()) {
+				filter = reinterpret_cast<EventCallback*>(&luaDispatchedSelectFilter);
+				inventorySelectLuaFilter = maybeFilter;
+			}
+			else if (maybeFilter.is<std::string>()) {
+				std::string callbackId = maybeFilter.as<std::string>();
+				auto findResult = inventorySelectFilterIdMap.find(callbackId);
+				if (findResult == inventorySelectFilterIdMap.end()) {
+					throw std::exception("Invalid filter ID provided.");
+				}
+				filter = findResult->second;
+			}
+			else {
+				throw std::exception("Invalid filter argument provided. Must be a function, or a string ID.");
+			}
+
+			// And our title text.
+			const char* titleText = getOptionalParam<const char*>(params, "title", nullptr);
+			if (titleText == nullptr) {
+				throw std::exception("Invalid title argument passed to tes3ui.showInventorySelectMenu.");
+			}
+
+			// Allow overwriting of our "no item found" text.
+			auto sInventorySelectNoItems = TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::sInventorySelectNoItems];
+			const char* oldNoResultsText = sInventorySelectNoItems->value.asString;
+			const char* noResultsText = getOptionalParam<const char*>(params, "noResultsText", nullptr);
+			if (noResultsText != nullptr) {
+				sInventorySelectNoItems->value.asString = (char*)noResultsText;
+			}
+
+			// Do we close the menu after?
+			inventorySelectLuaCallbackCloseAfter = getOptionalParam<bool>(params, "leaveMenuMode", !TES3::WorldController::get()->flagMenuMode);
+
+			// Set our filter and show the menu.
+			*reinterpret_cast<EventCallback**>(0x7D3CA0) = filter;
+			showSelectMenu(actor, callback, titleText);
+
+			// Restore the previous results text.
+			if (noResultsText != nullptr) {
+				sInventorySelectNoItems->value.asString = (char*)oldNoResultsText;
+			}
+
+			// If the menu was successfully shown, enter menu mode.
+			auto MenuInventorySelect = *reinterpret_cast<UI_ID*>(0x7D3C14);
+			if (TES3::UI::findMenu(MenuInventorySelect)) {
+				TES3::UI::enterMenuMode(MenuInventorySelect);
+			}
+		}
+
 		void bindTES3UIManager() {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
@@ -270,6 +415,7 @@ namespace mwse {
 			tes3ui["updateInventoryTiles"] = &TES3::UI::updateInventoryMenuTiles;
 			tes3ui["updateBarterMenuTiles"] = &TES3::UI::updateBarterMenuTiles;
 			tes3ui["updateContentsMenuTiles"] = &TES3::UI::updateContentsMenuTiles;
+			tes3ui["showInventorySelectMenu"] = &showInventorySelectMenu;
 			tes3ui["updateInventorySelectTiles"] = []() -> sol::optional<int> {
 				auto menu = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D3C14));
 				if (menu == nullptr) {
