@@ -12,7 +12,8 @@ namespace TES3 {
 	const auto TES3_WeatherController_updateColours = reinterpret_cast<void(__thiscall*)(WeatherController*, float)>(0x43E000);
 	const auto TES3_WeatherController_updateClouds = reinterpret_cast<void(__thiscall*)(WeatherController*, float)>(0x43EC20);
 	const auto TES3_WeatherController_updateCloudVertexCols = reinterpret_cast<void(__thiscall*)(WeatherController*)>(0x43EDE0);
-	const auto TES3_WeatherController_updateSun = reinterpret_cast<void(__thiscall*)(WeatherController*, float)>(0x43F5F0);
+	const auto TES3_WeatherController_updateSunCols = reinterpret_cast<void(__thiscall*)(WeatherController*, float)>(0x43F5F0);
+	const auto TES3_WeatherController_updateSun = reinterpret_cast<void(__thiscall*)(WeatherController*, float)>(0x43FF80);
 	const auto TES3_WeatherController_updateTick = reinterpret_cast<void(__thiscall*)(WeatherController*, NI::Property*, float, bool, float)>(0x440C80);
 
 	void WeatherController::switchWeather(int weatherId, float startingTransition) {
@@ -30,6 +31,7 @@ namespace TES3 {
 		TES3_WeatherController_updateColours(this, gameHour);
 		TES3_WeatherController_updateCloudVertexCols(this);
 		TES3_WeatherController_updateAmbient(this, gameHour);
+		TES3_WeatherController_updateSunCols(this, gameHour);
 		TES3_WeatherController_updateSun(this, gameHour);
 
 		// setBackgroundToFog decrements the refCount
