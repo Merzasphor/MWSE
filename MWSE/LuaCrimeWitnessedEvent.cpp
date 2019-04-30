@@ -11,11 +11,19 @@ namespace mwse {
 	namespace lua {
 		namespace event {
 			CrimeWitnessedEvent::CrimeWitnessedEvent(TES3::MobileActor * witness, TES3::CrimeEvent * crime) :
-				ObjectFilteredEvent("crimeWitnessed", witness->reference ? witness->reference->getBaseObject() : nullptr),
+				GenericEvent("crimeWitnessed"),
 				m_Witness(witness),
 				m_Crime(crime)
 			{
 
+			}
+
+			sol::object CrimeWitnessedEvent::getEventOptions() {
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table options = state.create_table();
+				options["filter"] = m_Crime->typeString.c_str;
+				return options;
 			}
 
 			sol::table CrimeWitnessedEvent::createEventTable() {

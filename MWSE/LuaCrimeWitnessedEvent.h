@@ -5,9 +5,10 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class CrimeWitnessedEvent : public ObjectFilteredEvent {
+			class CrimeWitnessedEvent : public GenericEvent {
 			public:
 				CrimeWitnessedEvent(TES3::MobileActor * witness, TES3::CrimeEvent * crime);
+				sol::object getEventOptions();
 				sol::table createEventTable();
 
 			protected:
