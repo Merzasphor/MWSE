@@ -67,6 +67,16 @@ namespace mwse {
 			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 			setUserdataForBaseObject(usertypeDefinition);
 
+			// Allow object to be converted to strings using their object ID.
+			usertypeDefinition.set(sol::meta_function::to_string, &TES3::GameSetting::getName);
+
+			// Allow object to be serialized to json.
+			usertypeDefinition.set("__tojson", [](TES3::GameSetting& self, sol::table state) {
+				std::ostringstream ss;
+				ss << "\"tes3gameSetting:" << self.getName() << "\"";
+				return ss.str();
+			});
+
 			// Basic property binding.
 			usertypeDefinition.set("index", sol::readonly_property(&TES3::GameSetting::index));
 

@@ -65,6 +65,13 @@ namespace TES3 {
 
 		bool filter(Object * actor, Reference * reference, int source, Dialogue * dialogue);
 
+		//
+		// Custom functions.
+		//
+
+		// Loads the string of numbers from disk and returns them.
+		std::string getLongIDFromFile();
+
 	};
 	static_assert(sizeof(DialogueInfo) == 0x2C, "TES3::DialogueInfo failed size validation");
 }

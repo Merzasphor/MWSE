@@ -19,6 +19,13 @@ namespace mwse {
 			// Allow object to be converted to strings using their object ID.
 			usertypeDefinition.set(sol::meta_function::to_string, &TES3::BaseObject::getObjectID);
 
+			// Allow objects to be serialized to json using their ID.
+			usertypeDefinition.set("__tojson", [](TES3::BaseObject& self, sol::table state) {
+				std::ostringstream ss;
+				ss << "\"tes3baseObject:" << self.getObjectID() << "\"";
+				return ss.str();
+			});
+
 			// Functions exposed as properties.
 			usertypeDefinition.set("id", sol::readonly_property(&TES3::BaseObject::getObjectID));
 			usertypeDefinition.set("sourceMod", sol::readonly_property(

@@ -88,6 +88,16 @@ namespace mwse {
 			auto usertypeDefinition = state.create_simple_usertype<Element>();
 			usertypeDefinition.set("new", sol::no_constructor);
 
+			// Allow elements to be converted to strings using their object ID.
+			usertypeDefinition.set(sol::meta_function::to_string, [](Element& self) { return self.name.cString; });
+
+			// Allow elements to be serialized to json using their ID/name.
+			usertypeDefinition.set("__tojson", [](Element& self, sol::table state) {
+				std::ostringstream ss;
+				ss << "\"tes3uiElement:" << self.id << ":" << self.name.cString << "\"";
+				return ss.str();
+			});
+
 			// Read-only property bindings.
 			usertypeDefinition.set("id", sol::readonly_property(&Element::id));
 			usertypeDefinition.set("name", sol::readonly_property([](Element& self) { return self.name.cString; }));

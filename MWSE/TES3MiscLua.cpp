@@ -19,6 +19,16 @@ namespace mwse {
 				auto usertypeDefinition = state.create_simple_usertype<TES3::SoulGemData>();
 				usertypeDefinition.set("new", sol::no_constructor);
 
+				// Allow object to be converted to strings using their object ID.
+				usertypeDefinition.set(sol::meta_function::to_string, [](TES3::SoulGemData& self) { self.id; });
+
+				// Allow object to be serialized to json.
+				usertypeDefinition.set("__tojson", [](TES3::SoulGemData& self, sol::table state) {
+					std::ostringstream ss;
+					ss << "\"tes3soulGemData:" << self.id << "\"";
+					return ss.str();
+				});
+
 				// Basic property binding.
 				usertypeDefinition.set("id", sol::readonly_property(&TES3::SoulGemData::id));
 				usertypeDefinition.set("mesh", sol::readonly_property(&TES3::SoulGemData::mesh));

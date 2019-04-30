@@ -34,4 +34,13 @@ namespace TES3 {
 
 		return result;
 	}
+
+	std::string DialogueInfo::getLongIDFromFile() {
+		if (loadId()) {
+			std::string id = loadLinkNode->name;
+			unloadId();
+			return id;
+		}
+		return "";
+	}
 }
