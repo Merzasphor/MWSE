@@ -2549,6 +2549,42 @@ namespace mwse {
 
 				return false;
 			};
+
+			state["tes3"]["dropItem"] = [](sol::table params) {
+				// Who is dropping?
+				TES3::MobileActor * mobile = getOptionalParamMobileActor(params, "reference");
+				if (mobile == nullptr) {
+					throw std::invalid_argument("Invalid reference parameter provided.");
+				}
+				
+				// What are they dropping?
+				TES3::Item * item = getOptionalParamObject<TES3::Item>(params, "item");
+				if (item == nullptr) {
+					throw std::invalid_argument("Invalid item parameter provided.");
+				}
+
+				// Get data about what is being dropped.
+				TES3::ItemData * itemData = getOptionalParam<TES3::ItemData*>(params, "itemData", nullptr);
+				int count = getOptionalParam<int>(params, "count", 1);
+				bool matchExact = getOptionalParam<bool>(params, "matchExact", true);
+
+				// Drop the item.
+				mobile->dropItem(item, itemData, count, matchExact);
+				auto droppedReference = mobile->getCell()->statics.tail;
+
+				// Update inventory tiles if needed.
+				if (getOptionalParam<bool>(params, "updateGUI", true)) {
+					auto worldController = TES3::WorldController::get();
+					auto macp = worldController->getMobilePlayer();
+					if (mobile == macp) {
+						worldController->inventoryData->clearIcons(2);
+						worldController->inventoryData->addInventoryItems(&macp->npcInstance->inventory, 2);
+						mwse::tes3::ui::inventoryUpdateIcons();
+					}
+				}
+
+				return makeLuaObject(droppedReference);
+			};
 		}
 	}
 }

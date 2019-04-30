@@ -10,7 +10,6 @@
 namespace TES3 {
 	const auto TES3_Actor_equipItem = reinterpret_cast<Object* (__thiscall*)(Actor*, Object*, ItemData*, EquipmentStack**, MobileActor*)>(0x4958B0);
 	const auto TES3_Actor_unequipItem = reinterpret_cast<EquipmentStack* (__thiscall*)(Actor*, Object*, bool, MobileActor*, bool, ItemData*)>(0x496710);
-	const auto TES3_Actor_dropItem = reinterpret_cast<Reference* (__thiscall*)(Actor*, Object*, ItemData*, int, bool)>(0x52C460);
 	const auto TES3_Actor_getEquippedArmorBySlot = reinterpret_cast<EquipmentStack* (__thiscall*)(Actor*, ArmorSlot::value_type)>(0x496E60);
 	const auto TES3_Actor_getEquippedClothingBySlot = reinterpret_cast<EquipmentStack* (__thiscall*)(Actor*, ClothingSlot::value_type)>(0x496E00);
 	const auto TES3_Actor_getEquippedItem = reinterpret_cast<EquipmentStack* (__thiscall*)(Actor*, Object*)>(0x496DD0);
@@ -72,10 +71,6 @@ namespace TES3 {
 	const auto TES3_Actor_unequipAllItems = reinterpret_cast<void(__thiscall*)(Actor*, MobileActor*)>(0x496680);
 	void Actor::unequipAllItems(MobileActor * mobileActor) {
 		TES3_Actor_unequipAllItems(this, mobileActor);
-	}
-
-	Reference* Actor::dropItem(Object* item, ItemData* itemData = 0, int count = 1, bool matchAny = true) {
-		return TES3_Actor_dropItem(this, item, itemData, count, matchAny);
 	}
 
 	void Actor::postUnequipUIRefresh(MobileActor* mobileActor) {

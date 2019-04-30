@@ -249,6 +249,8 @@ namespace TES3 {
 		void setCurrentMagicSourceFiltered(Object * magic);
 		void setActionTarget(MobileActor * target);
 
+		void dropItem(Object * item, ItemData * itemData = nullptr, int count = 1, bool exact = true);
+
 		//
 		// Custom functions.
 		//

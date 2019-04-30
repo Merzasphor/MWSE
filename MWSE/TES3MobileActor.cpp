@@ -288,6 +288,11 @@ namespace TES3 {
 		TES3_MobileActor_setActionTarget(this, target);
 	}
 
+	const auto TES3_MobileActor_dropItem = reinterpret_cast<void (__thiscall*)(MobileActor*, Object*, ItemData*, int, bool)>(0x52C460);
+	void MobileActor::dropItem(Object * item, ItemData * itemData, int count, bool exact) {
+		return TES3_MobileActor_dropItem(this, item, itemData, count, exact);
+	}
+
 	bool MobileActor::getMobileActorFlag(MobileActorFlag::Flag flag) {
 		return (actorFlags & flag) != 0;
 	}
