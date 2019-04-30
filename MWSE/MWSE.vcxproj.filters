@@ -1245,6 +1245,9 @@
     <ClInclude Include="TES3CrimeController.h">
       <Filter>Header Files\DataAdapters\TES3\Crime</Filter>
     </ClInclude>
+    <ClInclude Include="LuaCrimeWitnessedEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2719,6 +2722,9 @@
     </ClCompile>
     <ClCompile Include="TES3CrimeController.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaCrimeWitnessedEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

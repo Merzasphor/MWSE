@@ -24,7 +24,12 @@ namespace TES3 {
 		CrimeEvent();
 		~CrimeEvent();
 
+		CrimeEvent * ctor();
+		void dtor();
+
 		void copy(CrimeEvent* crimeEvent);
+
+
 	};
 	static_assert(sizeof(CrimeEvent) == 0x3C, "TES3::CrimeEvent failed size validation");
 }

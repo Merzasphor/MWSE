@@ -22,6 +22,7 @@
 #include "TES3Book.h"
 #include "TES3CombatSession.h"
 #include "TES3Creature.h"
+#include "TES3CrimeEvent.h"
 #include "TES3DataHandler.h"
 #include "TES3Dialogue.h"
 #include "TES3DialogueInfo.h"
@@ -146,6 +147,7 @@
 #include "LuaCalcTrainingPriceEvent.h"
 #include "LuaCalcTravelPriceEvent.h"
 #include "LuaCellChangedEvent.h"
+#include "LuaCrimeWitnessedEvent.h"
 #include "LuaEquipEvent.h"
 #include "LuaFilterBarterMenuEvent.h"
 #include "LuaFilterContentsMenuEvent.h"
@@ -2442,6 +2444,25 @@ namespace mwse {
 		}
 
 		//
+		// Event: Crime witnessed.
+		//
+
+		TES3::MobileActor * lastProcessedCrimeActor = nullptr;
+
+		const auto TES3_MobileActor_ProcessCrimes = reinterpret_cast<void(__thiscall*)(TES3::MobileActor*)>(0x522040);
+		void __fastcall OnProcessCrimes(TES3::MobileActor * mact) {
+			lastProcessedCrimeActor = mact;
+			TES3_MobileActor_ProcessCrimes(mact);
+		}
+
+		void __fastcall OnCrimeWitnessedEnd(TES3::CrimeEvent * crimeEvent) {
+			LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new lua::event::CrimeWitnessedEvent(lastProcessedCrimeActor, crimeEvent));
+
+			// Call overwritten code.
+			crimeEvent->dtor();
+		}
+
+		//
 		//
 		//
 
@@ -3354,6 +3375,10 @@ namespace mwse {
 			genCallEnforced(0x4F13B8, 0x4EE0A0, *reinterpret_cast<DWORD*>(&meshDataLoadMesh));
 			genCallEnforced(0x54B48F, 0x4EE0A0, *reinterpret_cast<DWORD*>(&meshDataLoadMesh));
 			genCallEnforced(0x57BB39, 0x4EE0A0, *reinterpret_cast<DWORD*>(&meshDataLoadMesh));
+
+			// Event: CrimeWitnessed
+			genCallEnforced(0x521DB2, 0x522040, reinterpret_cast<DWORD>(OnProcessCrimes));
+			genCallEnforced(0x53184A, 0x51F580, reinterpret_cast<DWORD>(OnCrimeWitnessedEnd));
 
 			// UI framework hooks
 			TES3::UI::hook();
