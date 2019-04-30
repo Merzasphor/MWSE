@@ -61,6 +61,13 @@ function table.size(t)
 	return count
 end
 
+function table.empty(t)
+	for _ in pairs(t) do
+		return false
+	end
+	return true
+end
+
 function table.choice(t)
 	-- We need to get a list of all of our keys first.
 	local keys = {}
