@@ -135,8 +135,9 @@
     <ClInclude Include="TES3BodyPart.h" />
     <ClInclude Include="TES3BodyPartLua.h" />
     <ClInclude Include="TES3CombatSessionLua.h" />
+    <ClInclude Include="TES3CrimeController.h" />
     <ClInclude Include="TES3CrimeEvent.h" />
-    <ClInclude Include="TES3CrimeTree.h" />
+    <ClInclude Include="TES3CrimeEventList.h" />
     <ClInclude Include="D3DColorValue.h" />
     <ClInclude Include="D3DLight.h" />
     <ClInclude Include="D3DMaterial.h" />
@@ -503,6 +504,8 @@
     <ClCompile Include="TES3BodyPartLua.cpp" />
     <ClCompile Include="TES3CombatSession.cpp" />
     <ClCompile Include="TES3CombatSessionLua.cpp" />
+    <ClCompile Include="TES3CrimeController.cpp" />
+    <ClCompile Include="TES3CrimeEventList.cpp" />
     <ClCompile Include="TES3DialogueInfo.cpp" />
     <ClCompile Include="TES3Enchantment.cpp" />
     <ClCompile Include="TES3Fader.cpp" />

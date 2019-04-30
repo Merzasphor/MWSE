@@ -38,8 +38,9 @@ namespace TES3 {
 	struct ContainerInstance;
 	struct Creature;
 	struct CreatureInstance;
+	struct CrimeController;
 	struct CrimeEvent;
-	struct CrimeTree;
+	struct CrimeEventList;
 	struct DataHandler;
 	struct Dialogue;
 	struct DialogueConditional;

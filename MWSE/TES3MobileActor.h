@@ -5,6 +5,7 @@
 #include "TES3ActionData.h"
 #include "TES3Armor.h"
 #include "TES3Clothing.h"
+#include "TES3CrimeController.h"
 #include "TES3Inventory.h"
 #include "TES3MagicSourceInstance.h"
 #include "TES3MobileObject.h"
@@ -117,9 +118,7 @@ namespace TES3 {
 		AIPlanner * aiPlanner; // 0xC8
 		ActionData actionData; // 0xCC
 		ActionData actionBeforeCombat; // 0x13C
-		int unknown_0x1AC;
-		CrimeTree * unknown_0x1B0;
-		int unknown_0x1B4;
+		CrimeController crimesA; // 0x1AC
 		int unknown_0x1B8;
 		int unknown_0x1BC;
 		CombatSession * combatSession; // 0x1C0
@@ -165,12 +164,7 @@ namespace TES3 {
 			ActorAnimationData * asActor;
 			PlayerAnimationData * asPlayer;
 		} animationData; // 0x244
-		char unknown_0x248;
-		char unknown_0x249; // Undefined.
-		char unknown_0x24A; // Undefined.
-		char unknown_0x24B; // Undefined.
-		void * unknown_0x24C;
-		int unknown_0x250;
+		CrimeController crimesB; // 0x248
 		Statistic attributes[8];
 		Statistic health;
 		Statistic magicka;

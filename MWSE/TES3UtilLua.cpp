@@ -30,7 +30,7 @@
 #include "TES3Class.h"
 #include "TES3Container.h"
 #include "TES3Creature.h"
-#include "TES3CrimeTree.h"
+#include "TES3CrimeEventList.h"
 #include "TES3DataHandler.h"
 #include "TES3Dialogue.h"
 #include "TES3DialogueInfo.h"
@@ -1157,31 +1157,13 @@ namespace mwse {
 				bool forceDetection = getOptionalParam<bool>(params, "forceDetection", false);
 				auto controller = TES3::WorldController::get()->mobController->unknown_0x24;
 				if (!forceDetection && controller->detectPresence(crimeEvent.criminal)) {
-					controller->checkRadius(crimeEvent.victim, crimeEvent.unknown_0x34);
+					controller->checkRadius(crimeEvent.victim, crimeEvent.witnesses);
 				}
 
 				// If we were detected, add it to the list.
-				if (forceDetection || crimeEvent.unknown_0x34->size) {
-					auto v167 = crimeEvent.victim->unknown_0x1B0;
-					auto v168 = v167->b;
-					auto v169 = tes3::_new<TES3::CrimeTree>();
-					auto v170 = v167;
-					if (!v167) {
-						v170 = v169;
-					}
-					v169->a = v170;
-					auto v171 = v168;
-					if (!v168) {
-						v171 = v169;
-					}
-					v169->b = v171;
-					v167->b = v169;
-					v169->b->a = v169;
-					auto v172 = &v169->data;
-					if (v172) {
-						v172->copy(&crimeEvent);
-					}
-					crimeEvent.victim->unknown_0x1B4++;
+				if (forceDetection || crimeEvent.witnesses->size > 0) {
+					auto crimeController = &crimeEvent.victim->crimesA;
+					crimeController->insertCrime(&crimeEvent);
 				}
 
 				return true;
