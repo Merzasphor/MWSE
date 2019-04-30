@@ -32,6 +32,8 @@ namespace mwse {
 				sol::table eventData = state.create_table();
 
 				eventData["type"] = m_Crime->typeString.c_str;
+				eventData["position"] = m_Crime->position;
+				eventData["realTimestamp"] = m_Crime->timestamp;
 				eventData["value"] = m_Crime->penalty;
 				eventData["witness"] = makeLuaObject(m_Witness->reference);
 				eventData["witnessMobile"] = makeLuaObject(m_Witness);
