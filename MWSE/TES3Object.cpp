@@ -209,6 +209,10 @@ namespace TES3 {
 		vTable.object->setScale(this, value, cap);
 	}
 
+	NI::Node * Object::getSceneGraphNode() {
+		return vTable.object->getSceneGraphNode(this);
+	}
+
 	Object * Object::skipDeletedObjects() {
 		TES3::Object * object = this;
 		while (object && (object->objectFlags & TES3::ObjectFlag::Delete) == TES3::ObjectFlag::Delete)

@@ -74,8 +74,8 @@ namespace TES3 {
 		__declspec(dllexport) LightAttachmentNode* getAttachedDynamicLight();
 		__declspec(dllexport) LightAttachmentNode* getOrCreateAttachedDynamicLight(NI::PointLight *, float);
 
-		bool getEmptyInventoryFlag();
-		void setEmptyInventoryFlag(bool);
+		__declspec(dllexport) bool getEmptyInventoryFlag();
+		__declspec(dllexport) void setEmptyInventoryFlag(bool);
 
 		//
 		// Lua interface functions.
