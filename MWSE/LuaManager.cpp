@@ -3380,6 +3380,10 @@ namespace mwse {
 			genCallEnforced(0x521DB2, 0x522040, reinterpret_cast<DWORD>(OnProcessCrimes));
 			genCallEnforced(0x53184A, 0x51F580, reinterpret_cast<DWORD>(OnCrimeWitnessedEnd));
 
+			// Event: Reference Scene Graph Node Created
+			auto referenceGetSceneGraphNode = &TES3::Reference::getSceneGraphNode;
+			overrideVirtualTableEnforced(0x74A140, 0x2C, 0x4E81A0, *reinterpret_cast<DWORD*>(&referenceGetSceneGraphNode));
+
 			// UI framework hooks
 			TES3::UI::hook();
 

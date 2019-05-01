@@ -4,6 +4,7 @@
 #include "LuaUtil.h"
 
 #include "LuaActivateEvent.h"
+#include "LuaReferenceSceneNodeCreatedEvent.h"
 
 #include "TES3Util.h"
 
@@ -270,6 +271,18 @@ namespace TES3 {
     void Reference::setEmptyInventoryFlag(bool set) {
 		setBaseObjectFlag(TES3::ObjectFlag::EmptyInventory, set);
     }
+
+	const auto TES3_Reference_getSceneGraphNode = reinterpret_cast<NI::Node*(__thiscall*)(Reference*)>(0x4E81A0);
+	NI::Node * Reference::getSceneGraphNode() {
+		auto previousNode = sceneNode;
+		auto newNode = TES3_Reference_getSceneGraphNode(this);
+
+		if (previousNode != newNode) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ReferenceSceneNodeCreatedEvent(this));
+		}
+
+		return newNode;
+	}
 
 	Inventory * Reference::getInventory() {
 		// Only actors have equipment.

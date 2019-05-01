@@ -83,6 +83,7 @@
     <ClInclude Include="LuaObjectFilteredEvent.h" />
     <ClInclude Include="LuaPotionBrewedEvent.h" />
     <ClInclude Include="LuaProjectileExpireEvent.h" />
+    <ClInclude Include="LuaReferenceSceneNodeCreatedEvent.h" />
     <ClInclude Include="LuaRestInterruptEvent.h" />
     <ClInclude Include="LuaSavedGameEvent.h" />
     <ClInclude Include="LuaSaveGameEvent.h" />
@@ -441,6 +442,7 @@
     <ClCompile Include="LuaObjectFilteredEvent.cpp" />
     <ClCompile Include="LuaPotionBrewedEvent.cpp" />
     <ClCompile Include="LuaProjectileExpireEvent.cpp" />
+    <ClCompile Include="LuaReferenceSceneNodeCreatedEvent.cpp" />
     <ClCompile Include="LuaRestInterruptEvent.cpp" />
     <ClCompile Include="LuaSavedGameEvent.cpp" />
     <ClCompile Include="LuaSaveGameEvent.cpp" />
