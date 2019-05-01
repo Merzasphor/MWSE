@@ -168,6 +168,9 @@ namespace mwse {
 				// Functions exposed as properties.
 				usertypeDefinition.set("text", sol::readonly_property(&TES3::DialogueInfo::getText));
 
+				// Basic function binding.
+				usertypeDefinition.set("runScript", &TES3::DialogueInfo::runScript);
+
 				// Finish up our usertype.
 				state.set_usertype("tes3dialogueinfo", usertypeDefinition);
 			}

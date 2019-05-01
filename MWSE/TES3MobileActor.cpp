@@ -293,6 +293,11 @@ namespace TES3 {
 		return TES3_MobileActor_dropItem(this, item, itemData, count, exact);
 	}
 
+	const auto TES3_MobileActor_persuade = reinterpret_cast<bool(__thiscall*)(MobileActor*, int, int)>(0x529D10);
+	bool MobileActor::persuade(int random, int persuasionIndex) {
+		return TES3_MobileActor_persuade(this, random, persuasionIndex);
+	}
+
 	bool MobileActor::getMobileActorFlag(MobileActorFlag::Flag flag) {
 		return (actorFlags & flag) != 0;
 	}

@@ -67,5 +67,10 @@ namespace TES3 {
 	DialogueInfo* Dialogue::getFilteredInfo(Actor* actor, Reference* reference, bool flag) {
 		return TES3_Dialogue_getFilteredInfo(this, actor, reference, flag);
 	}
+
+	const auto TES3_getDialogue = reinterpret_cast<Dialogue* (__cdecl*)(int, int)>(0x4B2C00);
+	Dialogue* Dialogue::getDialogue(int type, int page) {
+		return TES3_getDialogue(type, page);
+	}
 }
 

@@ -2567,6 +2567,42 @@ namespace mwse {
 
 				return makeLuaObject(droppedReference);
 			};
+
+			state["tes3"]["persuade"] = [](sol::table params) {
+				auto actor = getOptionalParamMobileActor(params, "actor");
+				if (actor == nullptr) {
+					throw std::invalid_argument("Invalid actor parameter provided.");
+				}
+
+				auto rng = rand() % 100;
+
+				int index = getOptionalParam<int>(params, "index", -1);
+
+				if (index >= 0 && index <= 6) {
+					return actor->persuade(rng, index);
+				}
+				else {
+					auto fBribe100Mod = TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::fBribe100Mod];
+					float modifier = getOptionalParam<float>(params, "modifier", 0.0f);
+					if (modifier <= 0.0f) {
+						throw std::invalid_argument("Invalid modifier parameter provided.");
+					}
+
+					float oldModifier = fBribe100Mod->value.asFloat;
+					fBribe100Mod->value.asFloat = modifier;
+
+					bool result = actor->persuade(rng, 4);
+					fBribe100Mod->value.asFloat = oldModifier;
+
+					return result;
+				}
+			};
+
+			state["tes3"]["findDialogue"] = [](sol::table params) {
+				int type = getOptionalParam<int>(params, "type", -1);
+				int page = getOptionalParam<int>(params, "page", -1);
+				return makeLuaObject(TES3::Dialogue::getDialogue(type, page));
+			};
 		}
 	}
 }

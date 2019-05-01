@@ -245,6 +245,9 @@ namespace TES3 {
 
 		void dropItem(Object * item, ItemData * itemData = nullptr, int count = 1, bool exact = true);
 
+		// Always returns false for non-MACH.
+		bool persuade(int random, int persuasionIndex);
+
 		//
 		// Custom functions.
 		//

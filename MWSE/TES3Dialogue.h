@@ -28,6 +28,12 @@ namespace TES3 {
 		DialogueInfo* getDeepFilteredInfo(Actor* actor, Reference* reference, bool flag);
 		DialogueInfo* getFilteredInfo(Actor* actor, Reference* reference, bool flag);
 
+		//
+		// Other related static functions.
+		//
+
+		static Dialogue* getDialogue(int type, int page);
+
 	};
 	static_assert(sizeof(Dialogue) == 0x30, "TES3::Dialogue failed size validation");
 }

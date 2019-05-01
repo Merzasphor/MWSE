@@ -210,6 +210,15 @@ namespace mwse {
 			}
 		}
 
+		const auto TES3_showDialogueMessage = reinterpret_cast<void (__cdecl*)(const char*, int, int)>(0x5C00A0);
+		void showDialogueMessage(sol::table params) {
+			const char* text = getOptionalParam<const char*>(params, "text", nullptr);
+			int style = getOptionalParam<int>(params, "style", 0);
+			int answerIndex = getOptionalParam<int>(params, "answerIndex", 0);
+
+			TES3_showDialogueMessage(text, style, answerIndex);
+		}
+
 		//
 		// Functions related to handling the InventorySelect menu.
 		//
@@ -442,6 +451,8 @@ namespace mwse {
 			};
 			tes3ui["stealHelpMenu"] = &TES3::UI::stealHelpMenu;
 			tes3ui["suppressTooltip"] = &TES3::UI::setSuppressingHelpMenu;
+			tes3ui["showDialogueMessage"] = &showDialogueMessage;
+			tes3ui["updateDialogDisposition"] = &TES3::UI::updateDialogDisposition;
 
 			// Add binding for TES3::UI::TreeItem type.
 			// TODO: Move this to its own file after TES3::UI::Tree has been made a template.

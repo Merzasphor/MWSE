@@ -35,6 +35,11 @@ namespace TES3 {
 		return result;
 	}
 
+	const auto TES3_DialogueInfo_runScript = reinterpret_cast<void(__thiscall*)(DialogueInfo*, Reference*)>(0x4B1E40);
+	void DialogueInfo::runScript(Reference * reference) {
+		TES3_DialogueInfo_runScript(this, reference);
+	}
+
 	std::string DialogueInfo::getLongIDFromFile() {
 		if (loadId()) {
 			std::string id = loadLinkNode->name;
