@@ -22,7 +22,7 @@ namespace mwse {
 			setUserdataForPhysicalObject(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition.set("condition", &TES3::Lockpick::maxCondition);
+			usertypeDefinition.set("maxCondition", &TES3::Lockpick::maxCondition);
 			usertypeDefinition.set("quality", &TES3::Lockpick::quality);
 			usertypeDefinition.set("value", &TES3::Lockpick::value);
 			usertypeDefinition.set("weight", &TES3::Lockpick::weight);
@@ -39,6 +39,7 @@ namespace mwse {
 			usertypeDefinition.set("name", sol::property(&TES3::Lockpick::getName, &TES3::Lockpick::setName));
 
 			// TODO: Deprecated. Remove before 2.1-stable.
+			usertypeDefinition.set("condition", &TES3::Lockpick::maxCondition);
 			usertypeDefinition.set("model", sol::property(&TES3::Lockpick::getModelPath, &TES3::Lockpick::setModelPath));
 
 			// Finish up our usertype.

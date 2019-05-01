@@ -22,7 +22,7 @@ namespace mwse {
 			setUserdataForPhysicalObject(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition.set("condition", &TES3::RepairTool::maxCondition);
+			usertypeDefinition.set("maxCondition", &TES3::RepairTool::maxCondition);
 			usertypeDefinition.set("quality", &TES3::RepairTool::quality);
 			usertypeDefinition.set("value", &TES3::RepairTool::value);
 			usertypeDefinition.set("weight", &TES3::RepairTool::weight);
@@ -39,6 +39,7 @@ namespace mwse {
 			usertypeDefinition.set("name", sol::property(&TES3::RepairTool::getName, &TES3::RepairTool::setName));
 
 			// TODO: Deprecated. Remove before 2.1-stable.
+			usertypeDefinition.set("condition", &TES3::RepairTool::maxCondition);
 			usertypeDefinition.set("model", sol::property(&TES3::RepairTool::getModelPath, &TES3::RepairTool::setModelPath));
 			
 			// Finish up our usertype.
