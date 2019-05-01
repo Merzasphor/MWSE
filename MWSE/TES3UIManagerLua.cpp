@@ -242,7 +242,17 @@ namespace mwse {
 				params["inventory"] = MenuInventorySelect_container;
 				params["actor"] = makeLuaObject(MenuInventorySelect_container_object);
 
-				inventorySelectLuaCallback(params);
+				sol::protected_function_result result =  inventorySelectLuaCallback(params);
+				if (!result.valid()) {
+					sol::error error = result;
+					log::getLog() << "Lua error encountered during UI inventory select callback:" << std::endl << error.what() << std::endl;
+
+					if (inventorySelectLuaCallbackCloseAfter) {
+						TES3::UI::leaveMenuMode();
+					}
+
+					return false;
+				}
 			}
 
 			if (inventorySelectLuaCallbackCloseAfter) {
@@ -264,9 +274,18 @@ namespace mwse {
 				params["item"] = makeLuaObject(MenuInventorySelect_filter_object);
 				params["itemData"] = MenuInventorySelect_filter_extra;
 
-				sol::object result = inventorySelectLuaFilter(params);
-				if (result.is<bool>()) {
-					return result.as<bool>();
+				sol::protected_function_result result = inventorySelectLuaFilter(params);
+				if (!result.valid()) {
+					sol::error error = result;
+					log::getLog() << "Lua error encountered during UI inventory select filtering for item '" << MenuInventorySelect_filter_object->getObjectID() << "':" << std::endl << error.what() << std::endl;
+
+					return false;
+				}
+				else {
+					sol::object resultObject = result;
+					if (resultObject.is<bool>()) {
+						return resultObject.as<bool>();
+					}
 				}
 			}
 
