@@ -4,6 +4,7 @@
 #include <Windows.h>
 
 #include "NIDefines.h"
+
 #include "TES3Defines.h"
 #include "TES3UIDefines.h"
 #include "TES3UIVector.h"
@@ -122,6 +123,17 @@ namespace TES3 {
 	};
 	static_assert(sizeof(InventoryData) == 0x24, "TES3::InventoryData failed size validation");
 
+	struct Font {
+		short propertyCount; // 0x0
+		const char* filePath; // 0x4
+		NI::Property * texturingProperties[8]; // 0x8 // Up to 8 NiTexturingProperty pointers, filled count is stored by propertyCount.
+		NI::Property * vertexColorProperty; // 0x28 // NiVertexColorProperty.
+		int unknown_0x2C;
+		int unknown_0x30;
+		void * rawFontData; // 0x34 // The raw .fnt file contents.
+	};
+	static_assert(sizeof(Font) == 0x38, "TES3::Font failed size validation");
+
 	struct WorldController {
 		int unknown_0x0;
 		int unknown_0x4;
@@ -139,9 +151,7 @@ namespace TES3 {
 		AudioController * audioController; // 0x34
 		int unknown_0x38;
 		int unknown_0x3C;
-		int unknown_0x40;
-		int unknown_0x44;
-		int unknown_0x48;
+		Font * fonts[3]; // 0x40
 		InputController * inputController; // 0x4C
 		MouseController * mouseController; // 0x50
 		Script * scriptGlobals; // 0x54
