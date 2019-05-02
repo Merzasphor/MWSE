@@ -3384,6 +3384,15 @@ namespace mwse {
 			auto referenceGetSceneGraphNode = &TES3::Reference::getSceneGraphNode;
 			overrideVirtualTableEnforced(0x74A140, 0x2C, 0x4E81A0, *reinterpret_cast<DWORD*>(&referenceGetSceneGraphNode));
 
+			// Event: Convert reference to item.
+			auto inventoryAddItemByReference = &TES3::Inventory::addItemByReference;
+			genCallEnforced(0x49582F, 0x497BC0, *reinterpret_cast<DWORD*>(&inventoryAddItemByReference));
+			genCallEnforced(0x49586B, 0x497BC0, *reinterpret_cast<DWORD*>(&inventoryAddItemByReference));
+			genCallEnforced(0x4DDF71, 0x497BC0, *reinterpret_cast<DWORD*>(&inventoryAddItemByReference));
+			genCallEnforced(0x52C441, 0x497BC0, *reinterpret_cast<DWORD*>(&inventoryAddItemByReference));
+			genCallEnforced(0x573E46, 0x497BC0, *reinterpret_cast<DWORD*>(&inventoryAddItemByReference));
+			genCallEnforced(0x5A64CD, 0x497BC0, *reinterpret_cast<DWORD*>(&inventoryAddItemByReference));
+
 			// UI framework hooks
 			TES3::UI::hook();
 

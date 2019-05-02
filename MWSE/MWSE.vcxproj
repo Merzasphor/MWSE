@@ -16,6 +16,7 @@
     <ClInclude Include="LuaCalcArmorRatingEvent.h" />
     <ClInclude Include="LuaCalcHitChanceEvent.h" />
     <ClInclude Include="LuaCalcSoulValueEvent.h" />
+    <ClInclude Include="LuaConvertReferenceToItemEvent.h" />
     <ClInclude Include="LuaCrimeWitnessedEvent.h" />
     <ClInclude Include="LuaFilterBarterMenuEvent.h" />
     <ClInclude Include="LuaActivationTargetChangedEvent.h" />
@@ -393,6 +394,7 @@
     <ClCompile Include="LuaCombatStartEvent.cpp" />
     <ClCompile Include="LuaCombatStopEvent.cpp" />
     <ClCompile Include="LuaCombatStoppedEvent.cpp" />
+    <ClCompile Include="LuaConvertReferenceToItemEvent.cpp" />
     <ClCompile Include="LuaCrimeWitnessedEvent.cpp" />
     <ClCompile Include="LuaDamagedEvent.cpp" />
     <ClCompile Include="LuaDamageEvent.cpp" />

@@ -1251,6 +1251,9 @@
     <ClInclude Include="LuaReferenceSceneNodeCreatedEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="LuaConvertReferenceToItemEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2730,6 +2733,9 @@
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
     <ClCompile Include="LuaReferenceSceneNodeCreatedEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaConvertReferenceToItemEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
