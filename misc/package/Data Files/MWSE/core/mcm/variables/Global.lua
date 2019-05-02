@@ -6,11 +6,11 @@ GlobalVar.inGameOnly = true
 
 
 function GlobalVar:get()
-    return tes3.findGlobal(self.id).value
+	return tes3.findGlobal(self.id).value
 end
 
 function GlobalVar:set(newValue)
-    tes3.findGlobal(self.id).value = newValue
+	tes3.findGlobal(self.id).value = newValue
 end
 
 return GlobalVar 

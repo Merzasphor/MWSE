@@ -1,6 +1,6 @@
 --[[
-    OnOffButton: Toggles a variable between true and false, showing "On" or "Off" 
-    in the button text
+	OnOffButton: Toggles a variable between true and false, showing "On" or "Off" 
+	in the button text
 
 ]]--
 
@@ -10,21 +10,21 @@ OnOffButton.defaultSetting = false
 
 
 function OnOffButton:getText()
-    local text = (
-        self.variable.value and 
-        tes3.findGMST(tes3.gmst.sOn).value or 
-        tes3.findGMST(tes3.gmst.sOff).value
-    )
-    return text
+	local text = (
+		self.variable.value and 
+		tes3.findGMST(tes3.gmst.sOn).value or 
+		tes3.findGMST(tes3.gmst.sOff).value
+	)
+	return text
 end
 
 function OnOffButton:press()
-    --Toggle variable
-    self.variable.value = not self.variable.value 
-    --Set button text
-    self:setText(self:getText())
-    --Do this after changing the variable so the callback is correct
-    self:update()
+	--Toggle variable
+	self.variable.value = not self.variable.value 
+	--Set button text
+	self:setText(self:getText())
+	--Do this after changing the variable so the callback is correct
+	self:update()
 end
 
 

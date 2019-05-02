@@ -1,5 +1,5 @@
 return {
-    left = "left",
-    right = "right",
-    center = "center"
+	left = "left",
+	right = "right",
+	center = "center"
 }
