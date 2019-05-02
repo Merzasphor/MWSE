@@ -65,6 +65,7 @@ namespace TES3 {
 		void unequipAllItems(MobileActor * mobileActor);
 		void postUnequipUIRefresh(MobileActor* mobileActor);
 		EquipmentStack* getEquippedItem(Object* item);
+		EquipmentStack* getEquippedItemExact(Object* item, ItemData* itemData);
 		EquipmentStack* getEquippedArmorBySlot(ArmorSlot::value_type slot);
 		EquipmentStack* getEquippedClothingBySlot(ClothingSlot::value_type slot);
 

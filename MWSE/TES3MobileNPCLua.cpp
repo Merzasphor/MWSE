@@ -17,11 +17,11 @@ namespace mwse {
 			}
 
 			TES3::ItemData * itemData = getOptionalParam(params, "itemData", nullptr);
-
 			bool addItem = getOptionalParam<bool>(params, "addItem", false);
-			bool forceSpecifiedItemData = getOptionalParam<bool>(params, "forceSpecifiedItemData", false);
+			bool selectBestCondition = getOptionalParam<bool>(params, "selectBestCondition", false);
+			bool selectWorstCondition = getOptionalParam<bool>(params, "selectWorstCondition", false);
 
-			return self.equipItem(item, itemData, addItem, forceSpecifiedItemData);
+			return self.equipItem(item, itemData, addItem, selectBestCondition, selectWorstCondition);
 		}
 
 		static bool unequip(TES3::MobileNPC& self, sol::table args) {

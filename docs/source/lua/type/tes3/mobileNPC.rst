@@ -441,11 +441,17 @@ Functions
 `stopCombat`_
     Ends combat with a specified actor, triggering the `combatStop`_ and `combatStopped`_ events.
 
-`boolean`_ **equip** (`tes3object`_ item)
+`boolean`_ **equip** {`tes3object`_ item, `tes3itemData`_ itemData, `boolean`_ addItem, `boolean`_ selectBestCondition, `boolean`_ selectWorstCondition}  ``Uses table arguments.``
     Returns:
         ``true`` if the equip was successful.
     
-    Equips an item from the actor's inventory. If the item does not exist, or the the actor is currently attacking with another item that occupies the item's slot, it will fail.
+    Equips an item from the actor's inventory. If the actor is currently attacking with another item that occupies the item's slot, equip will fail and return ``false``.
+    
+    If the item does not exist, it will be created if ``addItem`` is ``true``, otherwise equip will return ``false``.
+    
+    If ``itemData`` is supplied, the function will try to equip that exact item, otherwise any of the ``item``\s in the inventory will be chosen, preferring an already equipped item.
+    
+    If ``selectBestCondition`` is ``true``, the most repaired, charged, or most uses remaining item will be selected. If ``selectWorstCondition`` is ``true``, the least repaired, charged, or least uses remaining item will be selected.
 
 `boolean`_ **unequip** {`tes3object`_ item, `armorSlot`_ armorSlot, `clothingSlot`_ clothingSlot, `objectType`_ type}  ``Uses table arguments.``
     Returns:
@@ -487,6 +493,7 @@ Functions
 .. _`tes3cell`: cell.html
 .. _`tes3equipmentStack`: equipmentStack.html
 .. _`tes3iterator`: iterator.html
+.. _`tes3itemData`: itemData.html
 .. _`tes3mobileActor`: mobileActor.html
 .. _`tes3mobileCreature`: mobileCreature.html
 .. _`tes3mobileObject`: mobileObject.html

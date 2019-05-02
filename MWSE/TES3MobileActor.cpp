@@ -18,6 +18,7 @@
 #include "TES3Actor.h"
 #include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
+#include "TES3ItemData.h"
 #include "TES3Reference.h"
 #include "TES3Util.h"
 
@@ -324,25 +325,95 @@ namespace TES3 {
 		}
 	}
 
-	bool MobileActor::equipItem(Object* item, ItemData* itemData, bool addItem, bool forceSpecifiedItemData) {
+	bool MobileActor::equipItem(Object* item, ItemData* itemData, bool addItem, bool selectBestCondition, bool selectWorstCondition) {
 		Actor* actor = static_cast<Actor*>(reference->baseObject);
 
-		// Equipping weapons while they are in use breaks animations and AI
+		// Equipping weapons while they are in use breaks animations and AI.
 		if (item->objectType == ObjectType::Weapon && TES3_MobileActor_isInAttackAnim(this)) {
 			return false;
 		}
-		// Check if item exists in the inventory
+
+		// Check if item exists in the inventory.
 		ItemStack* s = actor->inventory.findItemStack(item);
 		if (!s) {
+			if (addItem) {
+				TES3_MobileActor_wearItem(this, item, itemData, addItem, false);
+				return true;
+			}
+			return false;
+		}
+		else if (itemData && !s->variables->contains(itemData)) {
 			return false;
 		}
 
-		// Get first available itemdata if one isn't provided.
-		if (!forceSpecifiedItemData && itemData == nullptr && s->variables != nullptr) {
-			itemData = s->variables->storage[0];
+		// Prefer an already equipped item when selecting an item data match.
+		EquipmentStack* equipped = actor->getEquippedItem(item);
+
+		// Select item based on best/worst condition.
+		if (selectBestCondition) {
+			// Use already equipped item if it has full condition.
+			if (equipped && ItemData::isFullyRepaired(equipped->variables, static_cast<TES3::Item*>(equipped->object))) {
+				return true;
+			}
+
+			// Scan for best item condition.
+			itemData = nullptr;
+
+			// Only scan if necessary; fully repaired items exist if stack count is greater than variables count.
+			if (s->variables && s->count == s->variables->filledCount) {
+				int bestCondition = -1;
+				float bestCharge = -1.0f;
+
+				for (ItemData **it = &s->variables->storage[0]; it < &s->variables->storage[s->variables->endIndex]; ++it) {
+					// Select best condition, secondarily select best charge.
+					ItemData *i = *it;
+					if (i && i->condition > bestCondition || (i->condition == bestCondition && i->charge > bestCharge)) {
+						itemData = i;
+						bestCondition = i->condition;
+						bestCharge = i->charge;
+					}
+				}
+			}
+		}
+		else if (selectWorstCondition) {
+			// Scan for worst item condition.
+			itemData = nullptr;
+
+			if (s->variables) {
+				int worstCondition = s->variables->storage[0]->condition;
+				float worstCharge = s->variables->storage[0]->charge;
+				itemData = s->variables->storage[0];
+
+				for (ItemData **it = &s->variables->storage[0]; it < &s->variables->storage[s->variables->endIndex]; ++it) {
+					// Select worst condition, secondarily select worst charge.
+					ItemData *i = *it;
+					if (i && i->condition < worstCondition || (i->condition == worstCondition && i->charge < worstCharge)) {
+						itemData = i;
+						worstCondition = i->condition;
+						worstCharge = i->charge;
+					}
+				}
+			}
+		}
+		// Get any matching item if no itemdata and no flags are set.
+		else if (itemData == nullptr) {
+			// Prefer to match an already equipped item.
+			if (equipped) {
+				return true;
+			}
+			// Get first available itemdata if one isn't provided.
+			else if (s->variables != nullptr) {
+				itemData = s->variables->storage[0];
+			}
 		}
 
-		TES3_MobileActor_wearItem(this, item, itemData, addItem, false);
+		// Check if selected item is already equipped, to avoid a Morrowind crash.
+		// wearItem unequips the slot first, and unequipping a fully repaired item may deallocate the existing itemData.
+		if (actor->getEquippedItemExact(item, itemData)) {
+			return true;
+		}
+
+		TES3_MobileActor_wearItem(this, item, itemData, false, false);
 		return true;
 	}
 
