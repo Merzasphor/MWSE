@@ -19,6 +19,31 @@ function mcm.register(template)
     mwse.registerModConfig(template.name, modConfig)
 end
 
+--Depreciated
+function mcm.registerModData(mcmData)
+    --object returned to be used in modConfigMenu
+    local modConfig = {}
+
+    ---CREATE MCM---
+    function modConfig.onCreate(container)
+        local templateClass = mcmData.template or "Template"
+        local templatePath = ( "mcm.components.templates." .. templateClass)
+        local template = require(templatePath):new(mcmData)
+        template:create(container)
+        modConfig.onClose = template.onClose
+    end
+
+    mwse.log( "%s mod config registered", mcmData.name )
+
+    return modConfig
+end
+
+--Depreciated
+function mcm.registerMCM(mcmData)
+    local newMCM = mcm.registerModData( mcmData ) 
+    mwse.registerModConfig(mcmData.name, newMCM)
+end
+
 --[[
     Check if key being accessed is in the form "create{class}" where
     {class} is a component or variable class.
@@ -27,7 +52,6 @@ end
     component instance. If a parentBlock was also passed, then also
     create the element on the parent. 
 
-    
 ]]--
 function mcm.__index(tbl, key)
 
