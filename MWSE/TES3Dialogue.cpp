@@ -55,7 +55,10 @@ namespace TES3 {
 	DialogueInfo* Dialogue::getDeepFilteredInfo(Actor* actor, Reference* reference, bool flag) {
 		auto info = getFilteredInfo(actor, reference, flag);
 		if (info == nullptr) {
-			info = getDialogue((int)DialogueType::Topic, 0)->getFilteredInfo(actor, reference, flag);
+			auto dialogue = getDialogue(3, 0);
+			if (dialogue) {
+				info = dialogue->getFilteredInfo(actor, reference, flag);
+			}
 		}
 		return info;
 	}
