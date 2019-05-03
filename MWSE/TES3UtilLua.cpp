@@ -2206,6 +2206,12 @@ namespace mwse {
 							int amountToTransfer = std::min(countWithoutVariables, itemsLeftToTransfer);
 							toActor->inventory.addItem(toMobile, item, amountToTransfer, false, nullptr);
 							fromActor->inventory.removeItemWithData(fromMobile, item, nullptr, amountToTransfer, false);
+
+							// Check for ammunition, as unlike other equipment, it does not generate itemData when equipped.
+							if (!fromIsContainer && item->objectType == TES3::ObjectType::Ammo) {
+								fromActor->unequipItem(item, true, fromMobile, false, nullptr);
+							}
+
 							fulfilledCount += amountToTransfer;
 							itemsLeftToTransfer -= amountToTransfer;
 						}
@@ -2245,12 +2251,13 @@ namespace mwse {
 					}
 				}
 
-				// Update equipment for creatures/NPCs.
-				if (!fromIsContainer) {
+				// Update body parts for creatures/NPCs that may have items unequipped.
+				if (fromMobile) {
 					fromReference->updateEquipment();
-				}
-				if (toActor->objectType == TES3::ObjectType::NPC || toActor->objectType == TES3::ObjectType::Creature) {
-					toReference->updateEquipment();
+
+					if (fromMobile == playerMobile) {
+						playerMobile->firstPersonReference->updateEquipment();
+					}
 				}
 
 				// If either of them are the player, we need to update the GUI.
