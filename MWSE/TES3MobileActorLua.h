@@ -24,7 +24,6 @@ namespace mwse {
 			usertypeDefinition.set("collidingReference", sol::readonly_property(&TES3::MobileActor::collidingReference));
 			usertypeDefinition.set("corpseHourstamp", &TES3::MobileActor::corpseHourstamp);
 			usertypeDefinition.set("currentEnchantedItem", sol::readonly_property(&TES3::MobileActor::currentEnchantedItem));
-			usertypeDefinition.set("currentSpell", &TES3::MobileActor::currentSpell);
 			usertypeDefinition.set("encumbrance", sol::readonly_property(&TES3::MobileActor::encumbrance));
 			usertypeDefinition.set("fatigue", sol::readonly_property(&TES3::MobileActor::fatigue));
 			usertypeDefinition.set("fight", &TES3::MobileActor::fight);
@@ -53,6 +52,7 @@ namespace mwse {
 			// Indirect bindings to unions and arrays.
 			usertypeDefinition.set("animationData", sol::readonly_property([](TES3::MobileActor& self) { return self.animationData.asActor; }));
 			usertypeDefinition.set("attributes", sol::readonly_property([](TES3::MobileActor& self) { return std::ref(self.attributes); }));
+			usertypeDefinition.set("currentSpell", sol::readonly_property([](TES3::MobileActor& self) { return makeLuaObject(self.currentSpell.source.asGeneric); }));
 			usertypeDefinition.set("effectAttributes", sol::readonly_property([](TES3::MobileActor& self) { return std::ref(self.effectAttributes); }));
 
 			// Friendly access to actor flags.

@@ -10,7 +10,7 @@
 
 namespace TES3 {
 	namespace AlchemyFlag {
-		typedef unsigned int value_type;
+		typedef unsigned short value_type;
 
 		enum Flag : value_type {
 			AutoCalc = 0x1

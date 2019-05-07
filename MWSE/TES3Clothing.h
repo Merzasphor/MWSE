@@ -8,7 +8,7 @@
 
 namespace TES3 {
 	namespace ClothingSlot {
-		typedef unsigned int value_type;
+		typedef unsigned char value_type;
 
 		enum ClothingSlot : value_type {
 			Pants = 0x0,

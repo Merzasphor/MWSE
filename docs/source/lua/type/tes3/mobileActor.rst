@@ -73,8 +73,8 @@ Properties
 **currentEnchantedItem** (`tes3equipmentStack`_, read-only)
     The equipment stack associated with the item currently in the enchanted item slot.
 
-**currentSpell** (`tes3spell`_)
-    The spell that the actor has readied.
+**currentSpell** (`tes3spell`_ or `tes3enchantment`_)
+    The spell or enchantment that the actor has readied to cast.
 
 **effectAttributes** (`table`_ array of 8 `number`_)
     Various attributes including current resistances and other spell effect magnitudes.
