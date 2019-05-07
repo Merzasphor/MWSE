@@ -6,16 +6,16 @@ Sends all text input to the specified element. Suppresses keybinds while active.
 
 .. code-block:: lua
 
-    tes3ui.acquireTextInput(id_input)
+    tes3ui.acquireTextInput(inputElement)
 
 **Parameters:**
 
-- `UI_ID`_ **elementID**
-    The ID of the UI element to receive text input, or ``nil``.
+- `Element`_ **inputElement**
+    The UI element to receive text input, or ``nil``.
 
 **Returns:**
 
 - *None*
 
 
-.. _`UI_ID`: ../../type/tes3ui/ui_id.html
+.. _`Element`: ../../type/tes3ui/element.html

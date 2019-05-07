@@ -400,17 +400,23 @@ Methods
 
     Finds the parent menu containing the element.
 
-`boolean`_ **getPropertyBool** (`Property`_ prop)
+`boolean`_ **getPropertyBool** (`string`_ propName)
     ..
 
-`number`_ **getPropertyFloat** (`Property`_ prop)
+`number`_ **getPropertyFloat** (`string`_ propName)
     ..
 
-`number`_ **getPropertyInt** (`Property`_ prop)
+`number`_ **getPropertyInt** (`string`_ propName)
+    ..
+
+`object`_ **getPropertyObject** (`string`_ propName, `string`_ expectedUsertype ``optional``)
+
     Returns:
-        The property value, or ``0`` / ``false`` if the property key did not have data.
+        The property value, or ``false``\, ``0``\, or ``nil`` if the property key did not have data.
 
-    Gets a property value with ``prop`` as the property key. Useful for element class-specific properties.
+    Properties are named variables attached to an element. Gets a property value with ``propName`` as the property key. Morrowind uses these to bind variables to the UI. Useful for element class-specific properties.
+    
+    For ``getPropertyObject``, an expected return value not derived from ``tes3baseObject`` requires the usertype to be provided as well. A return value derived from ``tes3baseObject`` should not provide the extra parameter.
 
 **register** (`string`_ eventID, `function`_ callback)
     Returns:
@@ -428,13 +434,16 @@ Methods
     
     e.g. ``reorderChildren(0, -3, 3)`` causes the last 3 children to be moved to the start of the order (before index 0).
 
-**setPropertyBool** (`Property`_ prop, `boolean`_ value)
+**setPropertyBool** (`string`_ propName, `boolean`_ value)
     ..
 
-**setPropertyFloat** (`Property`_ prop, `number`_ value)
+**setPropertyFloat** (`string`_ propName, `number`_ value)
     ..
 
-**setPropertyInt** (`Property`_ prop, `number`_ value)
+**setPropertyInt** (`string`_ propName, `number`_ value)
+    ..
+
+**setPropertyObject** (`string`_ propName, `object`_ value)
     Returns:
         none
 

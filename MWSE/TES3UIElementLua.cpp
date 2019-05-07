@@ -463,15 +463,16 @@ namespace mwse {
 					}
 					else {
 						if (typeCast.value() == "tes3itemData") {
-							lua_State* L = state;
-							return sol::make_object(L, static_cast<TES3::ItemData*>(ptr));
+							return sol::make_object(state, static_cast<TES3::ItemData*>(ptr));
 						}
 						else if (typeCast.value() == "tes3gameFile") {
 							return makeLuaObject(static_cast<TES3::GameFile*>(ptr));
 						}
 						else if (typeCast.value() == "tes3inventoryTile") {
-							lua_State* L = state;
-							return sol::make_object(L, static_cast<TES3::UI::InventoryTile*>(ptr));
+							return sol::make_object(state, static_cast<TES3::UI::InventoryTile*>(ptr));
+						}
+						else if (typeCast.value() == "tes3uiElement") {
+							return sol::make_object(state, static_cast<TES3::UI::Element*>(ptr));
 						}
 						return sol::nil;
 					}
