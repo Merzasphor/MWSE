@@ -132,6 +132,11 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 			std::experimental::filesystem::rename("MWSE-Update.tmp", "MWSE-Update.exe");
 		}
 
+		// Delete any old crash dumps.
+		if (std::experimental::filesystem::exists("MWSE_MiniDump.dmp")) {
+			std::experimental::filesystem::remove("MWSE_MiniDump.dmp");
+		}
+
 		// Initialize our main mwscript hook.
 		mwse::mwAdapter::Hook();
 
