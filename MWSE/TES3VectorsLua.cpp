@@ -70,7 +70,7 @@ namespace mwse {
 				// Allow objects to be serialized to json using their ID.
 				usertypeDefinition.set("__tojson", [](TES3::Vector3& self, sol::table jsonState) {
 					std::ostringstream ss;
-					ss << "[" << self.x << "," << self.y << "," << self.z << "]";
+					ss << "[\"x\":" << self.x << ",\"y\":" << self.y << ",\"z\":" << self.z << "]";
 					return ss.str();
 				});
 
