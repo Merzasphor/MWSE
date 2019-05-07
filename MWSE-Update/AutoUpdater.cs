@@ -177,6 +177,10 @@ namespace MWSE
                 {
                     File.Delete("MWSE.pdb");
                 }
+                if(File.Exists("MWSELog.txt"))
+                {
+                    File.Delete("MWSELog.txt");
+                }
                 Console.WriteLine(" Done.");
 
                 // Delete old core files so they can be refreshed.
