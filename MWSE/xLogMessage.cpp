@@ -31,7 +31,7 @@ using namespace mwse;
 
 namespace mwse
 {
-	// Provides an interface to mwse::log, allowing scripts to write to the default MWSELog.txt file.
+	// Provides an interface to mwse::log, allowing scripts to write to the default MWSE.log file.
 	// 
 	// MWScript Usage:
 	//	<none> xLogMessage sFormat ...
