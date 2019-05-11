@@ -43,8 +43,13 @@ namespace mwse {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
 
-			// Handle inheritance
+			// Find dispatch target. Almost always source, but is owningWidget for 'focus' and 'unfocus' events.
 			Element* target = source;
+			if (eventID == Property::event_focus || eventID == Property::event_unfocus) {
+				target = owningWidget;
+			}
+
+			// Handle inheritance.
 			while (target && target->getProperty(PropertyType::Property, eventID).propertyValue == Property::inherit) {
 				target = target->parent;
 			}
@@ -70,14 +75,14 @@ namespace mwse {
 						sol::protected_function callback = eventLua.callback;
 						sol::protected_function_result result = callback(eventData);
 						if (result.valid()) {
-							sol::optional<TES3::UI::Boolean> value = result;
-							return value.value_or(1);
+							sol::optional<bool> value = result;
+							return value.value_or(true);
 						}
 						else {
 							sol::error error = result;
 							const char *errorSource = source->name.cString ? source->name.cString : "(unnamed)";
 							log::getLog() << "Lua error encountered during UI event from element " << errorSource << ":" << std::endl << error.what() << std::endl;
-							return 1;
+							return true;
 						}
 					}
 				}

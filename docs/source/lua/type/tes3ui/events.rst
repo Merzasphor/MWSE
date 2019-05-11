@@ -43,7 +43,7 @@ Standard events:
     **focus**
         When a menu is clicked on, and moved on top of other menus.
     **unfocus**
-        When another menu is clicked on. Also checked when the inventory menu is toggled.
+        Just before another menu is clicked on, or a widget in that menu receives an event, or when the menu mode is toggled off. You may return false from this event to prevent the menu from being deselected, and to prevent leaving menu mode.
     **preUpdate**
         Before the menu layout is updated.
     **update**
