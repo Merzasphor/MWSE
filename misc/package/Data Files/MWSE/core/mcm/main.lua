@@ -96,6 +96,12 @@ local function onClickModConfigButton()
 		menu.positionX = menu.width / -2
 		menu.positionY = menu.height / 2
 
+		-- Register and block unfocus event, to prevent players
+		-- messing up state by opening their inventory.
+		menu:register("unfocus", function(e)
+			return false
+		end)
+
 		-- Create the left-right flow.
 		local mainHorizontalBlock = menu:createBlock({})
 		mainHorizontalBlock.flowDirection = "left_to_right"
