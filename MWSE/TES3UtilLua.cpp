@@ -1278,7 +1278,7 @@ namespace mwse {
 					if (reference->sceneNode) {
 						TES3::Matrix33 tempOutArg;
 						reference->sceneNode->setLocalRotationMatrix(reference->updateSceneMatrix(&tempOutArg));
-						reference->sceneNode->propagatePositionChange();
+						reference->sceneNode->update();
 					}
 				}
 

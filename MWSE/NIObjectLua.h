@@ -69,27 +69,43 @@ namespace mwse {
 			// Basic function binding.
 			usertypeDefinition.set("attachProperty", &NI::AVObject::attachProperty);
 			usertypeDefinition.set("clearTransforms", &NI::AVObject::clearTransforms);
-			usertypeDefinition.set("propagatePositionChange", [](NI::AVObject& self) { self.propagatePositionChange(); });
-			usertypeDefinition.set("updateNodeEffects", &NI::AVObject::updateNodeEffects);
-			usertypeDefinition.set("updateTextureProperties", &NI::AVObject::updateTextureProperties);
+			usertypeDefinition.set("propagatePositionChange", [](NI::AVObject& self) { self.update(); });
+			usertypeDefinition.set("updateEffects", &NI::AVObject::updateEffects);
+			usertypeDefinition.set("updateProperties", &NI::AVObject::updateProperties);
 
 			// Functions that need their results wrapped.
 			usertypeDefinition.set("getObjectByName", [](NI::AVObject& self, const char* name) { return makeLuaObject(self.getObjectByName(name)); });
-			usertypeDefinition.set("getProperty", [](NI::AVObject& self, int type) { return makeLuaNiPointer(self.getProperty(type)); });
+			usertypeDefinition.set("getProperty", [](NI::AVObject& self, int type) { return makeLuaNiPointer(self.getProperty(NI::PropertyType(type))); });
 			usertypeDefinition.set("parent", sol::readonly_property([](NI::AVObject& self) { return makeLuaObject(self.parentNode); }));
 
 			// Make remove property a bit more friendly.
 			usertypeDefinition.set("detachProperty", [](NI::AVObject& self, int type) {
 				NI::Pointer<NI::Property> prop;
-				self.detachProperty(&prop, type);
+				self.detachProperty(&prop, NI::PropertyType(type));
 				return makeLuaNiPointer(prop);
+			});
+
+			// Update function with table arguments.
+			usertypeDefinition.set("update", [](NI::AVObject& self, sol::optional<sol::table> args) {
+				if (args) {
+					auto values = args.value();
+					float time = values.get_or("time", 0.0f);
+					bool updateControllers = values.get_or("controllers", false);
+					bool updateBounds = values.get_or("bounds", true);
+
+					self.update(time, updateControllers, updateBounds);
+				}
+				else {
+					self.update();
+				}
 			});
 
 			// Friendly access to flags.
 			usertypeDefinition.set("appCulled", sol::property(&NI::AVObject::getAppCulled, &NI::AVObject::setAppCulled));
 
 			// Legacy access. TODO: Remove.
-			usertypeDefinition.set("propegatePositionChange", [](NI::AVObject& self) { self.propagatePositionChange(); });
+			usertypeDefinition.set("propegatePositionChange", [](NI::AVObject& self) { self.update(); });
+			usertypeDefinition.set("updateNodeEffects", &NI::AVObject::updateEffects);
 		}
 
 		void bindNIObject();

@@ -485,6 +485,7 @@
     <ClCompile Include="NIObjectNET.cpp" />
     <ClCompile Include="NIPick.cpp" />
     <ClCompile Include="NIPickLua.cpp" />
+    <ClCompile Include="NIPixelData.cpp" />
     <ClCompile Include="NIPixelDataLua.cpp" />
     <ClCompile Include="NIPointLight.cpp" />
     <ClCompile Include="NISourceTexture.cpp" />

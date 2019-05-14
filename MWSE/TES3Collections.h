@@ -7,7 +7,7 @@ namespace TES3 {
 
 	template <typename T>
 	struct LinkedList {
-		unsigned long size;
+		size_t size;
 		T * head;
 		T * tail;
 	};
@@ -31,7 +31,7 @@ namespace TES3 {
 
 	template <typename T>
 	struct StlList {
-		unsigned long size;
+		size_t size;
 		StlListNode<T> * head;
 		StlListNode<T> * tail;
 
@@ -49,8 +49,8 @@ namespace TES3 {
 
 	struct HashMap {
 		void * vTable; // 0x0
-		long count; // 0x4
-		long bucketCount; // 0x8
+		size_t count; // 0x4
+		size_t bucketCount; // 0x8
 		void * buckets; // 0xC
 	};
 	static_assert(sizeof(HashMap) == 0x10, "TES3::HashMap failed size validation");
@@ -70,7 +70,7 @@ namespace TES3 {
 	template <typename T>
 	struct Iterator {
 		void * vTable;
-		int size;
+		size_t size;
 		IteratorNode<T> * head;
 		IteratorNode<T> * tail;
 		IteratorNode<T> * current;
@@ -87,8 +87,8 @@ namespace TES3 {
 			reinterpret_cast<void(__thiscall *)(Iterator<T>*, T*)>(0x47E360)(this, item);
 		}
 
-		void addItemAtIndex(T * item, unsigned int index) {
-			reinterpret_cast<void(__thiscall *)(Iterator<T>*, T*, unsigned int)>(0x47E4D0)(this, item, index);
+		void addItemAtIndex(T * item, size_t index) {
+			reinterpret_cast<void(__thiscall *)(Iterator<T>*, T*, size_t)>(0x47E4D0)(this, item, index);
 		}
 
 		IteratorNode<T> * getFirstNode() {
@@ -109,24 +109,32 @@ namespace TES3 {
 	struct TArray {
 		void * vTable; // 0x0
 		T ** storage; // 0x4
-		int storageCount; // 0x8
-		int endIndex; // 0xC
-		int filledCount; // 0x10
-		int growByCount; // 0x14
+		size_t storageCount; // 0x8
+		size_t endIndex; // 0xC
+		size_t filledCount; // 0x10
+		size_t growByCount; // 0x14
 
 		//
-		// Related this-call functions.
+		// Related functions.
 		//
 
-		int getIndexOfValue(T * value) {
-			return reinterpret_cast<int(__cdecl *)(TArray<T>*, T*)>(0x497B60)(this, value);
+		// getIndexOfValue returns -1 if not found.
+		int getIndexOfValue(T * value) const {
+			return reinterpret_cast<int(__cdecl *)(const TArray<T>*, T*)>(0x497B60)(this, value);
 		}
 
 		//
 		// Custom functions.
 		//
 
-		bool contains(T * value) {
+		T * at(size_t pos) const {
+			if (pos >= storageCount) {
+				throw std::out_of_range("TES3::TArray::at - Access out of bounds.");
+			}
+			return storage[pos];
+		}
+
+		bool contains(T * value) const {
 			return getIndexOfValue(value) >= 0;
 		}
 
