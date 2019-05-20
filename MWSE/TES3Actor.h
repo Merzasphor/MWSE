@@ -79,6 +79,8 @@ namespace TES3 {
 		bool isBaseActor();
 		bool isClone();
 
+		bool tradesItemType(ObjectType::ObjectType type);
+
 	};
 	static_assert(sizeof(Actor) == 0x6C, "TES3::Actor failed size validation");
 }

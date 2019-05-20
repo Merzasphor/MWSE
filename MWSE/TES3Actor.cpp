@@ -135,4 +135,38 @@ namespace TES3 {
 	bool Actor::isClone() {
 		return !(actorFlags & TES3::ActorFlag::IsBase);
 	}
+
+	bool Actor::tradesItemType(ObjectType::ObjectType type) {
+		auto config = getAIConfig();
+
+		switch (type) {
+		case TES3::ObjectType::Alchemy:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersAlchemy);
+		case TES3::ObjectType::Apparatus:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersApparatus);
+		case TES3::ObjectType::Armor:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersArmor);
+		case TES3::ObjectType::Book:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersBooks);
+		case TES3::ObjectType::Clothing:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersClothing);
+		case TES3::ObjectType::Ingredient:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersIngredients);
+		case TES3::ObjectType::Light:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersLights);
+		case TES3::ObjectType::Lockpick:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersLockpicks);
+		case TES3::ObjectType::Misc:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersMiscItems);
+		case TES3::ObjectType::Probe:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersProbes);
+		case TES3::ObjectType::Repair:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersRepairTools);
+		case TES3::ObjectType::Weapon:
+		case TES3::ObjectType::Ammo:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersWeapons);
+		}
+
+		return false;
+	}
 }
