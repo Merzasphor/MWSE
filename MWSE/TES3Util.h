@@ -76,6 +76,8 @@ namespace mwse {
 		// Original function calls in Morrowind.
 		//
 
+		__declspec(dllexport) int rand(unsigned int arg0 = 0);
+
 		template <typename T>
 		__declspec(dllexport) T * _new() {
 			return reinterpret_cast<T*(__cdecl*)(size_t)>(0x727692)(sizeof(T));

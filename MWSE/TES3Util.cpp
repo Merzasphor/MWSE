@@ -312,6 +312,11 @@ namespace mwse {
 			return TES3_ResolveAssetPath(path, out_buffer);
 		}
 
+		const auto TES3_rand = reinterpret_cast<int(__cdecl*)(int)>(0x47B3B0);
+		int rand(unsigned int arg0) {
+			return TES3_rand(arg0);
+		}
+
 		void * _new(size_t size) {
 			return reinterpret_cast<void*(__cdecl*)(size_t)>(0x727692)(size);
 		}

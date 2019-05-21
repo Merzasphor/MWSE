@@ -3,6 +3,7 @@
 #include "TES3Defines.h"
 
 #include "TES3ActionData.h"
+#include "TES3AIBehavior.h"
 #include "TES3Armor.h"
 #include "TES3Clothing.h"
 #include "TES3CrimeController.h"
@@ -211,6 +212,9 @@ namespace TES3 {
 
 		SkillStatistic * getSkillStatistic(int skillId);
 		float getSkillValue(int skillId);
+
+		float applyArmorRating(float damage, float swing, bool damageEquipment);
+		float calculateArmorRating(int * armorItemCount = nullptr);
 
 		//
 		// Other related this-call functions.

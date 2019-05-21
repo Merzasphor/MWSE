@@ -138,6 +138,7 @@
 #include "LuaActivationTargetChangedEvent.h"
 #include "LuaAddTopicEvent.h"
 #include "LuaAttackEvent.h"
+#include "LuaCalcHitArmorPieceEvent.h"
 #include "LuaCalcBarterPriceEvent.h"
 #include "LuaCalcHitChanceEvent.h"
 #include "LuaCalcRepairPriceEvent.h"
@@ -3393,6 +3394,12 @@ namespace mwse {
 			genCallEnforced(0x52C441, 0x497BC0, *reinterpret_cast<DWORD*>(&inventoryAddItemByReference));
 			genCallEnforced(0x573E46, 0x497BC0, *reinterpret_cast<DWORD*>(&inventoryAddItemByReference));
 			genCallEnforced(0x5A64CD, 0x497BC0, *reinterpret_cast<DWORD*>(&inventoryAddItemByReference));
+
+
+			// Event: Calc Armor Piece Hit.
+			auto mobileNPCApplyArmorRating = &TES3::MobileNPC::applyArmorRating;
+			overrideVirtualTableEnforced(0x74AE6C, 0xE0, 0x54D820, *reinterpret_cast<DWORD*>(&mobileNPCApplyArmorRating)); // MACH
+			overrideVirtualTableEnforced(0x74B174, 0xE0, 0x54D820, *reinterpret_cast<DWORD*>(&mobileNPCApplyArmorRating)); // MACP
 
 			// UI framework hooks
 			TES3::UI::hook();

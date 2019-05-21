@@ -135,7 +135,7 @@ namespace TES3 {
 		float(__thiscall * getSkillValue)(MobileActor*, int); // 0xD4
 		void * unknown_0xD8;
 		void * unknown_0xDC;
-		void * applyArmorRating; // 0xE0
+		float(__thiscall * applyArmorRating)(MobileActor*, float, float, bool); // 0xE0
 		float(__thiscall * calculateArmorRating)(MobileActor*, int*); // 0xE4
 		void * getReadiedWeaponCurrentSkill; // 0xE8
 		void * getReadiedWeaponAnimationGroup; // 0xEC

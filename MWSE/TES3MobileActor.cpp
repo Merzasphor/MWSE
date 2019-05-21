@@ -16,10 +16,13 @@
 #include "LuaMobileObjectCollisionEvent.h"
 
 #include "TES3Actor.h"
+#include "TES3AudioController.h"
 #include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
 #include "TES3ItemData.h"
 #include "TES3Reference.h"
+#include "TES3WorldController.h"
+
 #include "TES3Util.h"
 
 #define TES3_MobileActor_onActorCollision 0x5234A0
@@ -102,6 +105,14 @@ namespace TES3 {
 
 	float MobileActor::getSkillValue(int skillId) {
 		return vTable.mobileActor->getSkillValue(this, skillId);
+	}
+
+	float MobileActor::applyArmorRating(float damage, float swing, bool damageEquipment) {
+		return vTable.mobileActor->applyArmorRating(this, damage, swing, damageEquipment);
+	}
+
+	float MobileActor::calculateArmorRating(int * armorItemCount) {
+		return vTable.mobileActor->calculateArmorRating(this, armorItemCount);
 	}
 
 	Cell* MobileActor::getCell() {

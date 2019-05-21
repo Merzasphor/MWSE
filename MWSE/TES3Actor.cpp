@@ -4,6 +4,7 @@
 #include "TES3Class.h"
 #include "TES3MobileActor.h"
 #include "TES3MobilePlayer.h"
+#include "TES3Reference.h"
 
 #include "LuaManager.h"
 
@@ -80,7 +81,6 @@ namespace TES3 {
 	void Actor::postUnequipUIRefresh(MobileActor* mobileActor) {
 		// UI refresh code from the tail of TES3_Actor_unequipItem
 		// Required to work around a crashing bug with unequipping lights
-		const auto TES3_Reference_updateBodyParts = reinterpret_cast<void (__thiscall*)(Reference*)>(0x4E8B50);
 		const auto TES3_ui_inventoryUpdateIcons = reinterpret_cast<void (__cdecl*)()>(0x5CC910);
 		const auto TES3_ui_inventoryUpdateWindowTitle = reinterpret_cast<void (__cdecl*)()>(0x5CE080);
 		const auto TES3_ui_updateCharacterImage = reinterpret_cast<void (__cdecl*)(bool)>(0x5CD2A0);
@@ -90,8 +90,8 @@ namespace TES3 {
 			auto player = static_cast<MobilePlayer*>(mobileActor);
 
 			if (player->actorFlags & MobileActorFlag::BodypartsChanged) {
-				TES3_Reference_updateBodyParts(player->reference);
-				TES3_Reference_updateBodyParts(player->firstPersonReference);
+				player->reference->updateEquipment();
+				player->firstPersonReference->updateEquipment();
 				player->actorFlags &= ~MobileActorFlag::BodypartsChanged;
 			}
 
