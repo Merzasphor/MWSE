@@ -1,4 +1,7 @@
 #include "TES3Actor.h"
+
+#include "TES3AIConfig.h"
+#include "TES3Class.h"
 #include "TES3MobileActor.h"
 #include "TES3MobilePlayer.h"
 
