@@ -770,64 +770,64 @@ namespace mwse {
 		// Collision events: Mobile Object
 		//
 
-		char __fastcall OnMobileObjectActorCollision(TES3::MobileObject* object, DWORD _UNUSED_, int referenceIndex) {
-			return object->onActorCollision(referenceIndex);
+		bool __fastcall OnMobileObjectActorCollision(TES3::MobileObject* object, DWORD _UNUSED_, int collisionIndex) {
+			return object->onActorCollision(collisionIndex);
 		}
 
-		char __fastcall OnMobileObjectObjectCollision(TES3::MobileObject* object, DWORD _UNUSED_, int referenceIndex, signed char flag) {
-			return object->onObjectCollision(referenceIndex, flag);
+		bool __fastcall OnMobileObjectObjectCollision(TES3::MobileObject* object, DWORD _UNUSED_, int collisionIndex, bool flag) {
+			return object->onObjectCollision(collisionIndex, flag);
 		}
 
-		char __fastcall OnMobileObjectTerrainCollision(TES3::MobileObject* object, DWORD _UNUSED_, int referenceIndex) {
-			return object->onTerrainCollision(referenceIndex);
+		bool __fastcall OnMobileObjectTerrainCollision(TES3::MobileObject* object, DWORD _UNUSED_, int collisionIndex) {
+			return object->onTerrainCollision(collisionIndex);
 		}
 
-		char __fastcall OnMobileObjectWaterCollision(TES3::MobileObject* object, DWORD _UNUSED_, int referenceIndex) {
-			return object->onWaterCollision(referenceIndex);
+		bool __fastcall OnMobileObjectWaterCollision(TES3::MobileObject* object, DWORD _UNUSED_, int collisionIndex) {
+			return object->onWaterCollision(collisionIndex);
 		}
 
-		char __fastcall OnMobileObjectActivatorCollision(TES3::MobileObject* object, DWORD _UNUSED_, int referenceIndex) {
-			return object->onObjectCollision(referenceIndex, 0);
+		bool __fastcall OnMobileObjectActivatorCollision(TES3::MobileObject* object, DWORD _UNUSED_, int collisionIndex) {
+			return object->onObjectCollision(collisionIndex, 0);
 		}
 
 		//
 		// Collision events: Mobile Actor
 		//
 
-		char __fastcall OnMobileActorActorCollision(TES3::MobileActor* object, DWORD _UNUSED_, int referenceIndex) {
-			return object->onActorCollision(referenceIndex);
+		bool __fastcall OnMobileActorActorCollision(TES3::MobileActor* object, DWORD _UNUSED_, int collisionIndex) {
+			return object->onActorCollision(collisionIndex);
 		}
 
-		char __fastcall OnMobileActorObjectCollision(TES3::MobileActor* object, DWORD _UNUSED_, int referenceIndex, signed char flag) {
-			return object->onObjectCollision(referenceIndex, flag);
+		bool __fastcall OnMobileActorObjectCollision(TES3::MobileActor* object, DWORD _UNUSED_, int collisionIndex, bool flag) {
+			return object->onObjectCollision(collisionIndex, flag);
 		}
 
-		char __fastcall OnMobileActorTerrainCollision(TES3::MobileActor* object, DWORD _UNUSED_, int referenceIndex) {
-			return object->onTerrainCollision(referenceIndex);
+		bool __fastcall OnMobileActorTerrainCollision(TES3::MobileActor* object, DWORD _UNUSED_, int collisionIndex) {
+			return object->onTerrainCollision(collisionIndex);
 		}
 
-		char __fastcall OnMobileActorActivatorCollision(TES3::MobileActor* object, DWORD _UNUSED_, int referenceIndex) {
-			return object->onObjectCollision(referenceIndex, 0);
+		bool __fastcall OnMobileActorActivatorCollision(TES3::MobileActor* object, DWORD _UNUSED_, int collisionIndex) {
+			return object->onObjectCollision(collisionIndex, 0);
 		}
 
 		//
 		// Collision events: Mobile Projectile
 		//
 
-		char __fastcall OnMobileProjectileActorCollision(TES3::MobileProjectile* object, DWORD _UNUSED_, int referenceIndex) {
-			return object->onActorCollision(referenceIndex);
+		bool __fastcall OnMobileProjectileActorCollision(TES3::MobileProjectile* object, DWORD _UNUSED_, int collisionIndex) {
+			return object->onActorCollision(collisionIndex);
 		}
 
-		char __fastcall OnMobileProjectileObjectCollision(TES3::MobileProjectile* object, DWORD _UNUSED_, int referenceIndex, signed char flag) {
-			return object->onObjectCollision(referenceIndex, flag);
+		bool __fastcall OnMobileProjectileObjectCollision(TES3::MobileProjectile* object, DWORD _UNUSED_, int collisionIndex, bool flag) {
+			return object->onObjectCollision(collisionIndex, flag);
 		}
 
-		char __fastcall OnMobileProjectileTerrainCollision(TES3::MobileProjectile* object, DWORD _UNUSED_, int referenceIndex) {
-			return object->onTerrainCollision(referenceIndex);
+		bool __fastcall OnMobileProjectileTerrainCollision(TES3::MobileProjectile* object, DWORD _UNUSED_, int collisionIndex) {
+			return object->onTerrainCollision(collisionIndex);
 		}
 
-		char __fastcall OnMobileProjectileWaterCollision(TES3::MobileProjectile* object, DWORD _UNUSED_, int referenceIndex) {
-			return object->onWaterCollision(referenceIndex);
+		bool __fastcall OnMobileProjectileWaterCollision(TES3::MobileProjectile* object, DWORD _UNUSED_, int collisionIndex) {
+			return object->onWaterCollision(collisionIndex);
 		}
 
 		//

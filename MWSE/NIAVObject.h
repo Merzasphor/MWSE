@@ -10,7 +10,7 @@
 namespace NI {
 	struct AVObject : ObjectNET {
 		unsigned short flags; // 0x14
-		short unknown_0x16;
+		short pad_16;
 		Node * parentNode; // 0x18
 		TES3::Vector3 worldBoundOrigin; // 0x1C
 		float worldBoundRadius; // 0x28
@@ -18,11 +18,11 @@ namespace NI {
 		TES3::Vector3 localTranslate; // 0x30
 		float localScale; // 0x3C
 		TES3::Transform worldTransform; // 0x40
-		void * localBound; // 0x74
-		int unknown_0x78;
-		int unknown_0x7C;
-		int unknown_0x80;
-		int unknown_0x84;
+		TES3::Vector3 * velocities; // 0x74
+		void * modelABV; // 0x78
+		void * worldABV; // 0x7C
+		int (__cdecl * collideCallback)(void*); // 0x80
+		void * collideCallbackUserData; // 0x84
 		PropertyLinkedList propertyNode; // 0x88
 
 		//
