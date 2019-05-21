@@ -19,18 +19,18 @@ namespace TES3 {
 	}
 
 	struct ActorVirtualTable : PhysicalObjectVirtualTable {
-		void * loadAnimation; // 0x148
+		bool (__thiscall * loadAnimation)(Actor*); // 0x148
 		Actor * (__thiscall * getBaseActor)(Actor*); // 0x14C
-		void * addItem; // 0x150
+		int (__thiscall * addItem)(Actor*, Item*, int, bool); // 0x150
 		int (__thiscall * getBaseBarterGold)(Actor*); // 0x154
 		void (__thiscall * setBaseBarterGold)(Actor*, int); // 0x158
 		void (__thiscall * clone)(Actor*, Reference*); // 0x15C
 		void (__thiscall * onCloseInventory)(Actor*, Reference*, int); // 0x160
-		void * unknown_0x164;
-		bool (__thiscall * getIsAttacked)(Actor*); // 0x168
-		void * unknown_0x16C;
-		void * unknown_0x170;
-		void * unknown_0x174;
+		bool (__thiscall * isGuard)(Actor*); // 0x164
+		bool (__thiscall * canSwim)(Actor*); // 0x168
+		bool (__thiscall * canWalk)(Actor*); // 0x16C
+		bool (__thiscall * canFly)(Actor*); // 0x170
+		bool (__thiscall * isOrganic)(Actor*); // 0x174
 		AIPackageConfig * (__thiscall * getAIPackageConfig)(Actor*); // 0x178
 		void (__thiscall * setAIPackage)(Actor*, AIPackageConfig*, Reference*); // 0x17C
 	};
@@ -50,7 +50,6 @@ namespace TES3 {
 		Actor * getBaseActor();
 		int getBaseBarterGold();
 		void setBaseBarterGold(int);
-		bool getIsAttacked();
 		void clone(Reference*);
 		void onCloseInventory(Actor* actor, Reference* reference, int unknown = 0);
 		AIPackageConfig * getAIPackageConfig();

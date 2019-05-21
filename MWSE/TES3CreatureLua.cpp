@@ -42,7 +42,6 @@ namespace mwse {
 				// Functions exposed as properties.
 				usertypeDefinition.set("fatigue", sol::readonly_property(&TES3::Creature::getFatigue));
 				usertypeDefinition.set("health", sol::readonly_property(&TES3::Creature::getDurability));
-				usertypeDefinition.set("isAttacked", sol::readonly_property(&TES3::Creature::getIsAttacked));
 				usertypeDefinition.set("isEssential", sol::readonly_property(&TES3::Creature::isEssential));
 				usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::Creature::isRespawn));
 				usertypeDefinition.set("level", sol::readonly_property(&TES3::Creature::getLevel));
@@ -118,7 +117,6 @@ namespace mwse {
 
 				// Functions exposed as properties.
 				usertypeDefinition.set("barterGold", sol::property(&TES3::CreatureInstance::getBaseBarterGold, &TES3::CreatureInstance::setBaseBarterGold));
-				usertypeDefinition.set("isAttacked", sol::readonly_property(&TES3::CreatureInstance::getIsAttacked));
 				usertypeDefinition.set("isEssential", sol::readonly_property(&TES3::CreatureInstance::isEssential));
 				usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::CreatureInstance::isRespawn));
 				usertypeDefinition.set("level", sol::readonly_property(&TES3::CreatureInstance::getLevel));
