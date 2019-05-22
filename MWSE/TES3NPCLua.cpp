@@ -55,6 +55,7 @@ namespace mwse {
 				// Functions exposed as properties.
 				usertypeDefinition.set("aiConfig", sol::readonly_property(&TES3::NPC::getAIConfig));
 				usertypeDefinition.set("barterGold", sol::property(&TES3::NPC::getBaseBarterGold, &TES3::NPC::setBaseBarterGold));
+				usertypeDefinition.set("isGuard", sol::readonly_property(&TES3::NPC::isGuard));
 				usertypeDefinition.set("isEssential", sol::readonly_property(&TES3::NPC::isEssential));
 				usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::NPC::isRespawn));
 				usertypeDefinition.set("mesh", sol::property(&TES3::NPC::getModelPath, &TES3::NPC::setModelPath));
@@ -121,6 +122,7 @@ namespace mwse {
 				usertypeDefinition.set("health", sol::readonly_property(&TES3::NPCInstance::getDurability));
 				usertypeDefinition.set("magicka", sol::readonly_property(&TES3::NPCInstance::getMagicka));
 				usertypeDefinition.set("fatigue", sol::readonly_property(&TES3::NPCInstance::getFatigue));
+				usertypeDefinition.set("isGuard", sol::readonly_property(&TES3::NPCInstance::isGuard));
 				usertypeDefinition.set("isEssential", sol::readonly_property(&TES3::NPCInstance::isEssential));
 				usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::NPCInstance::isRespawn));
 				usertypeDefinition.set("level", sol::readonly_property(&TES3::NPCInstance::getLevel));
