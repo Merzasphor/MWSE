@@ -18,6 +18,7 @@
 #define TES3_ui_inventory_addTile 0x5CBCC0
 #define TES3_ui_inventory_updateIcons 0x5CC910
 #define TES3_ui_inventory_equipInventoryTileToPlayer 0x5CE130
+#define TES3_ui_inventory_equipInventoryItemToPlayer 0x5D1190
 #define TES3_ui_data_inventory_updatePaperDoll 0x7B6D04
 
 #define TES3_ui_showRestWaitMenu 0x610170
@@ -67,6 +68,10 @@ namespace mwse {
 
 			signed char equipInventoryTile(TES3::UI::InventoryTile* tile) {
 				return reinterpret_cast<signed char(__cdecl *)(TES3::UI::InventoryTile*)>(TES3_ui_inventory_equipInventoryTileToPlayer)(tile);
+			}
+
+			signed char equipInventoryItemToPlayer(TES3::PhysicalObject* object, TES3::ItemData* data) {
+				return reinterpret_cast<signed char(__cdecl *)(TES3::PhysicalObject*, TES3::ItemData*)>(TES3_ui_inventory_equipInventoryItemToPlayer)(object, data);
 			}
 
 			void flagPaperDollUpdate() {
