@@ -211,7 +211,7 @@ namespace TES3 {
 
 			if (sceneNode) {
 				sceneNode->localTranslate = position;
-				sceneNode->propagatePositionChange();
+				sceneNode->update();
 			}
 		}
 
@@ -247,7 +247,7 @@ namespace TES3 {
 		if (sceneNode) {
 			Matrix33 tempOutArg;
 			sceneNode->setLocalRotationMatrix(updateSceneMatrix(&tempOutArg, false));
-			sceneNode->propagatePositionChange();
+			sceneNode->update();
 		}
 
 		setObjectModified(true);

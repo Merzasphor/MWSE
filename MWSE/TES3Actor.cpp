@@ -1,6 +1,10 @@
 #include "TES3Actor.h"
+
+#include "TES3AIConfig.h"
+#include "TES3Class.h"
 #include "TES3MobileActor.h"
 #include "TES3MobilePlayer.h"
+#include "TES3Reference.h"
 
 #include "LuaManager.h"
 
@@ -25,10 +29,6 @@ namespace TES3 {
 
 	void Actor::setBaseBarterGold(int value) {
 		vTable.actor->setBaseBarterGold(this, value);
-	}
-
-	bool Actor::getIsAttacked() {
-		return vTable.actor->getIsAttacked(this);
 	}
 
 	void Actor::clone(Reference* reference) {
@@ -77,7 +77,6 @@ namespace TES3 {
 	void Actor::postUnequipUIRefresh(MobileActor* mobileActor) {
 		// UI refresh code from the tail of TES3_Actor_unequipItem
 		// Required to work around a crashing bug with unequipping lights
-		const auto TES3_Reference_updateBodyParts = reinterpret_cast<void (__thiscall*)(Reference*)>(0x4E8B50);
 		const auto TES3_ui_inventoryUpdateIcons = reinterpret_cast<void (__cdecl*)()>(0x5CC910);
 		const auto TES3_ui_inventoryUpdateWindowTitle = reinterpret_cast<void (__cdecl*)()>(0x5CE080);
 		const auto TES3_ui_updateCharacterImage = reinterpret_cast<void (__cdecl*)(bool)>(0x5CD2A0);
@@ -87,8 +86,8 @@ namespace TES3 {
 			auto player = static_cast<MobilePlayer*>(mobileActor);
 
 			if (player->actorFlags & MobileActorFlag::BodypartsChanged) {
-				TES3_Reference_updateBodyParts(player->reference);
-				TES3_Reference_updateBodyParts(player->firstPersonReference);
+				player->reference->updateEquipment();
+				player->firstPersonReference->updateEquipment();
 				player->actorFlags &= ~MobileActorFlag::BodypartsChanged;
 			}
 
@@ -134,5 +133,39 @@ namespace TES3 {
 
 	bool Actor::isClone() {
 		return !(actorFlags & TES3::ActorFlag::IsBase);
+	}
+
+	bool Actor::tradesItemType(ObjectType::ObjectType type) {
+		auto config = getAIConfig();
+
+		switch (type) {
+		case TES3::ObjectType::Alchemy:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersAlchemy);
+		case TES3::ObjectType::Apparatus:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersApparatus);
+		case TES3::ObjectType::Armor:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersArmor);
+		case TES3::ObjectType::Book:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersBooks);
+		case TES3::ObjectType::Clothing:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersClothing);
+		case TES3::ObjectType::Ingredient:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersIngredients);
+		case TES3::ObjectType::Light:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersLights);
+		case TES3::ObjectType::Lockpick:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersLockpicks);
+		case TES3::ObjectType::Misc:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersMiscItems);
+		case TES3::ObjectType::Probe:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersProbes);
+		case TES3::ObjectType::Repair:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersRepairTools);
+		case TES3::ObjectType::Weapon:
+		case TES3::ObjectType::Ammo:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersWeapons);
+		}
+
+		return false;
 	}
 }

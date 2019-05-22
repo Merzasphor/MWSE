@@ -23,6 +23,9 @@ namespace TES3 {
 			LeftBracer = 0x9,
 			RightBracer = 0xA,
 
+			// Unusued in Morrowind itself, only used for MWSE operations.
+			Invalid = 0xFFFFFFFF,
+
 			First = Helmet,
 			Last = RightBracer,
 		};
@@ -31,7 +34,7 @@ namespace TES3 {
 	namespace ArmorWeightClass {
 		typedef unsigned int value_type;
 
-		enum ArmorSlot : value_type {
+		enum ArmorWeightClass : value_type {
 			Light = 0x0,
 			Medium = 0x1,
 			Heavy = 0x2,

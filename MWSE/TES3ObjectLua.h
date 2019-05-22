@@ -56,7 +56,7 @@ namespace mwse {
 			usertypeDefinition.set("nextInCollection", sol::readonly_property([](TES3::Object& self) { return makeLuaObject(self.nextInCollection); }));
 			usertypeDefinition.set("previousInCollection", sol::readonly_property([](TES3::Object& self) { return makeLuaObject(self.previousInCollection); }));
 			usertypeDefinition.set("sceneNode", sol::readonly_property([](TES3::Object& self) { return makeLuaObject(self.sceneNode); }));
-			usertypeDefinition.set("sceneReference", sol::readonly_property([](TES3::Object& self) { return makeLuaObject(self.sceneGraphReference); }));
+			usertypeDefinition.set("sceneCollisionRoot", sol::readonly_property([](TES3::Object& self) { return makeLuaObject(self.sceneCollisionRoot); }));
 		}
 
 		template <typename T>

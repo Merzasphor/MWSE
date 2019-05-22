@@ -127,7 +127,7 @@ namespace mwse {
 			usertypeDefinition.set("updateSceneGraph", [](TES3::Reference& self) {
 				TES3::Matrix33 tempOutArg;
 				self.sceneNode->setLocalRotationMatrix(self.updateSceneMatrix(&tempOutArg));
-				self.sceneNode->propagatePositionChange();
+				self.sceneNode->update();
 				self.setObjectModified(true);
 			});
 

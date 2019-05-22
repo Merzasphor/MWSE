@@ -41,9 +41,9 @@ namespace TES3 {
 			char unknown_0x82;
 			char unknown_0x83;
 			int unknown_0x84;
-			NI::Pointer<NI::Node> node_88;
+			NI::Pointer<NI::Node> sceneNode;
 			void* extraData;
-			NI::Pointer<NI::SourceTexture> texture; // 0x90
+			NI::Pointer<NI::SourceTexture> texture;
 			int cached_offsetX, cached_offsetY;
 			int nodeMinX, nodeMaxX;
 			int nodeMinY, nodeMaxY;

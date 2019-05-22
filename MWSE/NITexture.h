@@ -12,10 +12,31 @@ namespace NI {
 
 	struct Texture : ObjectNET {
 		struct FormatPrefs {
-			int pixelLayout; // 0x0
-			int mipMapped; // 0x4
-			int alphaFormat; // 0x8
+			enum struct PixelLayout {
+				PALETTIZED_8,
+				HIGH_COLOR_16,
+				TRUE_COLOR_32,
+				COMPRESSED,
+				BUMPMAP,
+				PIX_DEFAULT
+			};
+			enum struct MipFlag {
+				NO,
+				YES,
+				MIP_DEFAULT
+			};
+			enum struct AlphaFormat {
+				NONE,
+				BINARY,
+				SMOOTH,
+				ALPHA_DEFAULT
+			};
+			PixelLayout pixelLayout; // 0x0
+			MipFlag mipMapped; // 0x4
+			AlphaFormat alphaFormat; // 0x8
 		};
+		static_assert(sizeof(Texture::FormatPrefs) == 0xC, "NI::Texture::FormatPrefs failed size validation");
+
 		FormatPrefs formatPrefs; // 0x14;
 		void * renderData; // 0x20
 		Texture * previousTexture; // 0x24

@@ -231,7 +231,7 @@ namespace TES3 {
 		void * referenceToThis; // 0x18
 		Object * previousInCollection; // 0x1C
 		Object * nextInCollection; // 0x20
-		NI::Node * sceneGraphReference; // 0x24
+		NI::Node * sceneCollisionRoot; // 0x24
 
 		//
 		// Function wrappers for our virtual table.

@@ -1254,6 +1254,9 @@
     <ClInclude Include="LuaConvertReferenceToItemEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="LuaCalcHitArmorPieceEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2737,6 +2740,12 @@
     </ClCompile>
     <ClCompile Include="LuaConvertReferenceToItemEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaCalcHitArmorPieceEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="NIPixelData.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

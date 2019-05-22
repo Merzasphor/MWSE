@@ -4,7 +4,7 @@
 
 namespace NI {
 	struct SourceTexture_vTable : Texture_vTable {
-		void * unknown_0x34;
+		void * loadPixelDataFromFile; // 0x34
 		void * clearPixelData; // 0x38
 	};
 

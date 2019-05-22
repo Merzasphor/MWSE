@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArrayUtil.h" />
+    <ClInclude Include="LuaCalcHitArmorPieceEvent.h" />
     <ClInclude Include="LuaBookGetTextEvent.h" />
     <ClInclude Include="LuaCalcArmorRatingEvent.h" />
     <ClInclude Include="LuaCalcHitChanceEvent.h" />
@@ -380,6 +381,7 @@
     <ClCompile Include="LuaBookGetTextEvent.cpp" />
     <ClCompile Include="LuaButtonPressedEvent.cpp" />
     <ClCompile Include="LuaCalcArmorRatingEvent.cpp" />
+    <ClCompile Include="LuaCalcHitArmorPieceEvent.cpp" />
     <ClCompile Include="LuaCalcHitChanceEvent.cpp" />
     <ClCompile Include="LuaCalcMovementSpeedEvent.cpp" />
     <ClCompile Include="LuaCalcRepairPriceEvent.cpp" />
@@ -485,6 +487,7 @@
     <ClCompile Include="NIObjectNET.cpp" />
     <ClCompile Include="NIPick.cpp" />
     <ClCompile Include="NIPickLua.cpp" />
+    <ClCompile Include="NIPixelData.cpp" />
     <ClCompile Include="NIPixelDataLua.cpp" />
     <ClCompile Include="NIPointLight.cpp" />
     <ClCompile Include="NISourceTexture.cpp" />

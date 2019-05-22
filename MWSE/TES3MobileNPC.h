@@ -19,6 +19,12 @@ namespace TES3 {
 		char unknown_0x56B; // Undefined.
 
 		//
+		// vTable accessor functions.
+		//
+
+		float applyArmorRating(float damage, float swing, bool damageEquipment);
+
+		//
 		// Other related this-call functions.
 		//
 
