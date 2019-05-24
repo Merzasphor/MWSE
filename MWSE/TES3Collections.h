@@ -123,9 +123,24 @@ namespace TES3 {
 			return reinterpret_cast<int(__cdecl *)(const TArray<T>*, T*)>(0x497B60)(this, value);
 		}
 
+		void setAtIndex(unsigned int index, T * value) {
+			reinterpret_cast<void(__thiscall *)(const TArray<T>*, unsigned int, T*)>(0x4975D0)(this, index, value);
+		}
+
+		void setSize(unsigned int size) {
+			reinterpret_cast<void(__thiscall *)(const TArray<T>*, unsigned int)>(0x47C5A0)(this, size);
+		}
+
 		//
 		// Custom functions.
 		//
+
+		T *& operator[](const size_t pos) {
+			if (pos >= storageCount) {
+				throw std::out_of_range("TES3::TArray - Access out of bounds.");
+			}
+			return &storage[pos];
+		}
 
 		T * at(size_t pos) const {
 			if (pos >= storageCount) {
@@ -136,6 +151,10 @@ namespace TES3 {
 
 		bool contains(T * value) const {
 			return getIndexOfValue(value) >= 0;
+		}
+
+		__inline unsigned int size() {
+			return storageCount;
 		}
 
 	};
