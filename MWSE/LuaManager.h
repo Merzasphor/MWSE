@@ -11,6 +11,8 @@
 
 #include "LuaBaseEvent.h"
 
+#include "LuaDisableableEventManager.h"
+
 namespace mwse {
 	namespace lua {
 		typedef std::unordered_map<unsigned long, sol::object> UserdataMap;
@@ -93,6 +95,7 @@ namespace mwse {
 			void bindData();
 
 			// Event management.
+			mwse::lua::event::DisableableEventManager m_DisableableEventManager;
 			sol::object triggerEvent(event::BaseEvent*);
 
 			// Guarded access to the userdata cache.

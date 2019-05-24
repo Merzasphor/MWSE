@@ -135,6 +135,8 @@
 #include "NITimeControllerLua.h"
 #include "NITriShapeLua.h"
 
+#include "LuaDisableableEventManager.h"
+
 #include "LuaActivationTargetChangedEvent.h"
 #include "LuaAddTopicEvent.h"
 #include "LuaAttackEvent.h"
@@ -454,6 +456,10 @@ namespace mwse {
 			bindNISwitchNode();
 			bindNITimeController();
 			bindNITriShape();
+
+			// Bind our disable event manager.
+			mwse::lua::event::DisableableEventManager::bindToLua();
+			luaState["mwse"]["disableableEvents"] = &m_DisableableEventManager;
 		}
 
 		//

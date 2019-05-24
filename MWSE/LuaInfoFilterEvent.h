@@ -2,10 +2,12 @@
 
 #include "LuaObjectFilteredEvent.h"
 
+#include "LuaDisableableEvent.h"
+
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class InfoFilterEvent : public ObjectFilteredEvent {
+			class InfoFilterEvent : public ObjectFilteredEvent, public DisableableEvent<InfoFilterEvent> {
 			public:
 				InfoFilterEvent(TES3::DialogueInfo * info, TES3::Object * actor, TES3::Reference * reference, int flag, TES3::Dialogue * dialogue, bool passes);
 				sol::table createEventTable();
