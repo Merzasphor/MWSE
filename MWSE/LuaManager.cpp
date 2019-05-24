@@ -648,20 +648,21 @@ namespace mwse {
 
 		// Hook: On PC Equip (quickslots, etc)
 
-		signed char __cdecl OnPCEquipItem(TES3::PhysicalObject* object, TES3::ItemData* data)
-		{
+		signed char __cdecl OnPCEquipItem(TES3::PhysicalObject* object, TES3::ItemData* data) {
 			// Execute event. If the event blocked the call, bail.
-			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
-			sol::object response = stateHandle.triggerEvent(new event::EquipEvent(TES3::WorldController::get()->getMobilePlayer()->reference, object, data));
-			if (response.get_type() == sol::type::table) {
-				sol::table eventData = response;
-				if (eventData["block"] == true) {
-					return 0;
+			{
+				auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::object response = stateHandle.triggerEvent(new event::EquipEvent(TES3::WorldController::get()->getMobilePlayer()->reference, object, data));
+				if (response.get_type() == sol::type::table) {
+					sol::table eventData = response;
+					if (eventData["block"] == true) {
+						return 0;
+					}
 				}
 			}
 
 			// Call the original function.
-			return tes3::ui::equipInventoryItemToPlayer(object, data);
+			return tes3::ui::equipInventoryItem(object, data);
 		}
 
 		//
@@ -2567,7 +2568,6 @@ namespace mwse {
 			// 0x5D1190 ui_inventoryEquipItemToPlayer calls
 			genCallEnforced(0x5E4399, 0x5D1190, reinterpret_cast<DWORD>(OnPCEquipItem)); //magic menu
 			genCallEnforced(0x5E43A0, 0x5D1190, reinterpret_cast<DWORD>(OnPCEquipItem)); //magic menu
-			genCallEnforced(0x52C7CF, 0x5D1190, reinterpret_cast<DWORD>(OnPCEquipItem)); //bound armor
 			genCallEnforced(0x60878B, 0x5D1190, reinterpret_cast<DWORD>(OnPCEquipItem)); //quick slots
 
 			// Event: equipped.

@@ -70,7 +70,7 @@ namespace mwse {
 				return reinterpret_cast<signed char(__cdecl *)(TES3::UI::InventoryTile*)>(TES3_ui_inventory_equipInventoryTileToPlayer)(tile);
 			}
 
-			signed char equipInventoryItemToPlayer(TES3::PhysicalObject* object, TES3::ItemData* data) {
+			signed char equipInventoryItem(TES3::PhysicalObject* object, TES3::ItemData* data) {
 				return reinterpret_cast<signed char(__cdecl *)(TES3::PhysicalObject*, TES3::ItemData*)>(TES3_ui_inventory_equipInventoryItemToPlayer)(object, data);
 			}
 
