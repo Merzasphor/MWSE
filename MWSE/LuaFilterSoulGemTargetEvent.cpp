@@ -30,6 +30,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool FilterSoulGemTargetEvent::m_EventEnabled = false;
 		}
 	}
 }

@@ -39,7 +39,9 @@ namespace TES3 {
 
 	const auto TES3_Inventory_AddItemByReference = reinterpret_cast<ItemData*(__thiscall*)(Inventory*, MobileActor *, Reference *, int *)>(0x497BC0);
 	ItemData* Inventory::addItemByReference(MobileActor * mobile, Reference * reference, int * out_count) {
-		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ConvertReferenceToItemEvent(reference));
+		if (mwse::lua::event::ConvertReferenceToItemEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ConvertReferenceToItemEvent(reference));
+		}
 		return TES3_Inventory_AddItemByReference(this, mobile, reference, out_count);
 	}
 

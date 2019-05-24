@@ -1,7 +1,6 @@
 #pragma once
 
 #include "LuaObjectFilteredEvent.h"
-
 #include "LuaDisableableEvent.h"
 
 namespace mwse {

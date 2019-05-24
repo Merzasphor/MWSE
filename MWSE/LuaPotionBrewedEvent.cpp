@@ -24,6 +24,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool PotionBrewedEvent::m_EventEnabled = false;
 		}
 	}
 }

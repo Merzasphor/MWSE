@@ -26,6 +26,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool LeveledCreaturePickedEvent::m_EventEnabled = false;
 		}
 	}
 }

@@ -1,11 +1,12 @@
 #pragma once
 
 #include "LuaGenericEvent.h"
+#include "LuaDisableableEvent.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class SaveGameEvent : public GenericEvent {
+			class SaveGameEvent : public GenericEvent, public DisableableEvent<SaveGameEvent> {
 			public:
 				SaveGameEvent(const char* saveName, const char* fileName);
 				sol::table createEventTable();

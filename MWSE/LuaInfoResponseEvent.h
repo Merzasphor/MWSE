@@ -1,11 +1,12 @@
 #pragma once
 
 #include "LuaObjectFilteredEvent.h"
+#include "LuaDisableableEvent.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class InfoResponseEvent : public ObjectFilteredEvent {
+			class InfoResponseEvent : public ObjectFilteredEvent, public DisableableEvent<InfoResponseEvent> {
 			public:
 				InfoResponseEvent(const char* command, TES3::Reference * reference, TES3::ScriptVariables * variables, TES3::Dialogue * dialogue, TES3::DialogueInfo * info);
 				sol::table createEventTable();

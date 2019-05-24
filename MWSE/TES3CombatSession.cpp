@@ -14,16 +14,21 @@ namespace TES3 {
 	const auto TES3_CombatSession_determineNextAction = reinterpret_cast<void (__thiscall*)(CombatSession*)>(0x538F00);
 	void CombatSession::determineNextAction() {
 		auto& luaManager = mwse::lua::LuaManager::getInstance();
-		{
+		if (mwse::lua::event::DetermineActionEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table result = stateHandle.triggerEvent(new mwse::lua::event::DetermineActionEvent(this));
 			if (result.valid() && result["block"] == true) {
-				stateHandle.triggerEvent(new mwse::lua::event::DeterminedActionEvent(this));
+				if (mwse::lua::event::DeterminedActionEvent::getEventEnabled()) {
+					stateHandle.triggerEvent(new mwse::lua::event::DeterminedActionEvent(this));
+				}
 				return;
 			}
 		}
 
 		TES3_CombatSession_determineNextAction(this);
-		luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::DeterminedActionEvent(this));
+
+		if (mwse::lua::event::DeterminedActionEvent::getEventEnabled()) {
+			luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::DeterminedActionEvent(this));
+		}
 	}
 }

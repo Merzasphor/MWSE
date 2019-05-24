@@ -55,7 +55,7 @@ namespace TES3 {
 		Object* result = TES3_Actor_equipItem(this, item, itemData, out_equipmentStack, mobileActor);
 
 		// Trigger or queue our event, if this actor has a mobile actor.
-		if (mobileActor) {
+		if (mobileActor && mwse::lua::event::EquippedEvent::getEventEnabled()) {
 			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::EquippedEvent(this, mobileActor, item, itemData));
 		}
 
@@ -66,7 +66,7 @@ namespace TES3 {
 		EquipmentStack* result = TES3_Actor_unequipItem(this, item, deleteStack, mobileActor, updateGUI, itemData);
 
 		// Trigger or queue our event if there's an attached mobile actor.
-		if (mobileActor) {
+		if (mobileActor && mwse::lua::event::UnequippedEvent::getEventEnabled()) {
 			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::UnequippedEvent(this, mobileActor, item, itemData));
 		}
 

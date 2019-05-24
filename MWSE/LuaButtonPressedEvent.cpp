@@ -21,6 +21,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool ButtonPressedEvent::m_EventEnabled = false;
 		}
 	}
 }

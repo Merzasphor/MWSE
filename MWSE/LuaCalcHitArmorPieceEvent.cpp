@@ -36,6 +36,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool CalcHitArmorPiece::m_EventEnabled = false;
 		}
 	}
 }

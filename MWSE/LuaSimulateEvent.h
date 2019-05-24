@@ -1,17 +1,19 @@
 #pragma once
 
-#include "LuaFrameEvent.h"
+#include "LuaGenericEvent.h"
+#include "LuaDisableableEvent.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
-			// As FrameEvent, but limited to when simulation is occuring.
-			class SimulateEvent : public FrameEvent {
+			// Enter frame event.
+			class SimulateEvent : public GenericEvent, public DisableableEvent<SimulateEvent> {
 			public:
 				SimulateEvent(float delta, double timestamp);
 				sol::table createEventTable();
 
 			protected:
+				float m_Delta;
 				double m_Timestamp;
 			};
 		}

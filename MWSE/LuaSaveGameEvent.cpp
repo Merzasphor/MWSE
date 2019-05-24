@@ -33,6 +33,8 @@ namespace mwse {
 
 				return options;
 			}
+
+			bool SaveGameEvent::m_EventEnabled = false;
 		}
 	}
 }

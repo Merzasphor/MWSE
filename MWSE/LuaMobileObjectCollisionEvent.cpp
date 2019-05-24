@@ -28,6 +28,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool MobileObjectCollisionEvent::m_EventEnabled = false;
 		}
 	}
 }

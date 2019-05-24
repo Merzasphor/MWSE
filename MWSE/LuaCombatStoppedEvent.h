@@ -1,11 +1,12 @@
 #pragma once
 
 #include "LuaObjectFilteredEvent.h"
+#include "LuaDisableableEvent.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class CombatStoppedEvent : public ObjectFilteredEvent {
+			class CombatStoppedEvent : public ObjectFilteredEvent, public DisableableEvent<CombatStoppedEvent> {
 			public:
 				CombatStoppedEvent(TES3::MobileActor* mobileActor);
 				sol::table createEventTable();

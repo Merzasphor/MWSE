@@ -1,13 +1,14 @@
 #pragma once
 
 #include "LuaGenericEvent.h"
+#include "LuaDisableableEvent.h"
 
 #include "TES3Defines.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class SpellCastEvent : public GenericEvent {
+			class SpellCastEvent : public GenericEvent, public DisableableEvent<SpellCastEvent> {
 			public:
 				SpellCastEvent(TES3::Spell* spell, TES3::MobileActor* caster, float castChance, int weakestSchool);
 				sol::table createEventTable();

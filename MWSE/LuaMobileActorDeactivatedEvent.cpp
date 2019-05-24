@@ -24,6 +24,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool MobileActorDeactivatedEvent::m_EventEnabled = false;
 		}
 	}
 }

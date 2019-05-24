@@ -38,6 +38,8 @@ namespace mwse {
 
 				return options;
 			}
+
+			bool LevelUpEvent::m_EventEnabled = false;
 		}
 	}
 }

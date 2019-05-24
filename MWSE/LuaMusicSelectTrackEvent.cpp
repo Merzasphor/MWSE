@@ -19,6 +19,8 @@ namespace mwse {
 				eventData["situation"] = m_Situation;
 				return eventData;
 			}
+
+			bool MusicSelectTrackEvent::m_EventEnabled = false;
 		}
 	}
 }

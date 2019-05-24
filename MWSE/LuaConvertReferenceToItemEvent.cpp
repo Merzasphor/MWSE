@@ -24,6 +24,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool ConvertReferenceToItemEvent::m_EventEnabled = false;
 		}
 	}
 }

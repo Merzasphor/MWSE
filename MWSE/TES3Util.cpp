@@ -275,7 +275,9 @@ namespace mwse {
 		void startNewGame() {
 			// Call our load event.
 			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-			luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadGameEvent(NULL, false, true));
+			if (mwse::lua::event::LoadGameEvent::getEventEnabled()) {
+				luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadGameEvent(NULL, false, true));
+			}
 
 			// Call original function.
 			reinterpret_cast<void(__stdcall *)()>(TES3_newGame)();
@@ -284,7 +286,9 @@ namespace mwse {
 			luaManager.clearTimers();
 
 			// Call our post-load event.
-			luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadedGameEvent(NULL, false, true));
+			if (mwse::lua::event::LoadedGameEvent::getEventEnabled()) {
+				luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadedGameEvent(NULL, false, true));
+			}
 		}
 
 		int getRestHoursInterrupted() {

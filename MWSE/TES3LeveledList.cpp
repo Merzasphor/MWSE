@@ -14,17 +14,19 @@ namespace TES3 {
 		Object * result = reinterpret_cast<Object*(__thiscall *)(LeveledCreature*)>(TES3_LeveledCreature_resolve)(this);
 
 		// Allow the event to override the pick.
-		auto& luaManager = mwse::lua::LuaManager::getInstance();
-		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::LeveledCreaturePickedEvent(this, result));
-		if (eventResult.valid()) {
-			sol::table eventData = eventResult;
+		if (mwse::lua::event::LeveledCreaturePickedEvent::getEventEnabled()) {
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::LeveledCreaturePickedEvent(this, result));
+			if (eventResult.valid()) {
+				sol::table eventData = eventResult;
 
-			if (eventData["block"] == true) {
-				return nullptr;
+				if (eventData["block"] == true) {
+					return nullptr;
+				}
+
+				result = eventData["pick"];
 			}
-
-			result = eventData["pick"];
 		}
 
 		return result;
@@ -35,17 +37,19 @@ namespace TES3 {
 		Object * result = reinterpret_cast<Object*(__thiscall *)(LeveledItem*)>(TES3_LeveledItem_resolve)(this);
 
 		// Allow the event to override the pick.
-		auto& luaManager = mwse::lua::LuaManager::getInstance();
-		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::LeveledItemPickedEvent(this, result));
-		if (eventResult.valid()) {
-			sol::table eventData = eventResult;
+		if (mwse::lua::event::LeveledItemPickedEvent::getEventEnabled()) {
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::LeveledItemPickedEvent(this, result));
+			if (eventResult.valid()) {
+				sol::table eventData = eventResult;
 
-			if (eventData["block"] == true) {
-				return nullptr;
+				if (eventData["block"] == true) {
+					return nullptr;
+				}
+
+				result = eventData["pick"];
 			}
-			
-			result = eventData["pick"];
 		}
 
 		return result;

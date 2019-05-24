@@ -49,6 +49,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool CalculateTravelPriceEvent::m_EventEnabled = false;
 		}
 	}
 }

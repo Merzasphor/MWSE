@@ -55,7 +55,9 @@ namespace TES3 {
 		bool result = TES3_MobileActor_onActorCollision(this, collisionIndex);
 
 		// Fire off our hit event.
-		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		if (mwse::lua::event::MobileObjectCollisionEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		}
 
 		return result;
 	}
@@ -68,7 +70,9 @@ namespace TES3 {
 		bool result = TES3_MobileActor_onObjectCollision(this, collisionIndex, flag);
 
 		// Fire off our hit event.
-		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		if (mwse::lua::event::MobileObjectCollisionEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		}
 
 		return result;
 	}
@@ -81,7 +85,9 @@ namespace TES3 {
 		bool result = TES3_MobileActor_onTerrainCollision(this, collisionIndex);
 
 		// Fire off our hit event.
-		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		if (mwse::lua::event::MobileObjectCollisionEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		}
 
 		return result;
 	}
@@ -94,7 +100,9 @@ namespace TES3 {
 		bool result = TES3_MobileActor_onActivatorCollision(this, collisionIndex);
 
 		// Fire off our hit event.
-		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		if (mwse::lua::event::MobileObjectCollisionEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		}
 
 		return result;
 	}
@@ -122,7 +130,7 @@ namespace TES3 {
 	void MobileActor::startCombat(MobileActor* target) {
 		// Invoke our first event and check if it is blocked.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		{
+		if (mwse::lua::event::CombatStartEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CombatStartEvent(this, target));
 			if (eventData.valid() && eventData["block"] == true) {
@@ -134,13 +142,15 @@ namespace TES3 {
 		reinterpret_cast<void(__thiscall *)(MobileActor*, MobileActor*)>(TES3_MobileActor_startCombat)(this, target);
 
 		// Do our follow up started event.
-		luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::CombatStartedEvent(this, target));
+		if (mwse::lua::event::CombatStartedEvent::getEventEnabled()) {
+			luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::CombatStartedEvent(this, target));
+		}
 	}
 
 	void MobileActor::stopCombat(bool something) {
 		// Invoke our combat stop event and check if it is blocked.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		{
+		if (mwse::lua::event::CombatStopEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CombatStopEvent(this));
 			if (eventData.valid() && eventData["block"] == true) {
@@ -152,20 +162,24 @@ namespace TES3 {
 		reinterpret_cast<void(__thiscall *)(MobileActor*, bool)>(TES3_MobileActor_stopCombat)(this, something);
 
 		// Do our follow up stopped event.
-		luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::CombatStoppedEvent(this));
+		if (mwse::lua::event::CombatStoppedEvent::getEventEnabled()) {
+			luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::CombatStoppedEvent(this));
+		}
 	}
 
 	void MobileActor::onDeath() {
 		reinterpret_cast<void(__thiscall *)(MobileActor*)>(TES3_MobileActor_onDeath)(this);
 
 		// Trigger death event.
-		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::DeathEvent(this));
+		if (mwse::lua::event::DeathEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::DeathEvent(this));
+		}
 	}
 
 	bool MobileActor::applyHealthDamage(float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
 		// Invoke our combat stop event and check if it is blocked.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		{
+		if (mwse::lua::event::DamageEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::DamageEvent(this, damage));
 			if (eventData.valid()) {
@@ -180,7 +194,9 @@ namespace TES3 {
 		bool result = reinterpret_cast<signed char(__thiscall *)(MobileActor*, float, bool, bool, bool)>(TES3_MobileActor_applyHealthDamage)(this, damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
 
 		// Do our follow up event.
-		luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::DamagedEvent(this, damage));
+		if (mwse::lua::event::DamagedEvent::getEventEnabled()) {
+			luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::DamagedEvent(this, damage));
+		}
 
 		return result;
 	}
@@ -194,11 +210,13 @@ namespace TES3 {
 		float speed = reinterpret_cast<float(__thiscall *)(MobileActor*)>(TES3_MobileActor_calculateRunSpeed)(this);
 
 		// Launch our event, and overwrite the speed with what was given back to us.
-		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CalculateMovementSpeed(mwse::lua::event::CalculateMovementSpeed::Run, this, speed));
-		if (eventData.valid()) {
-			speed = eventData["speed"];
+		if (mwse::lua::event::CalculateMovementSpeed::getEventEnabled()) {
+			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CalculateMovementSpeed(mwse::lua::event::CalculateMovementSpeed::Run, this, speed));
+			if (eventData.valid()) {
+				speed = eventData["speed"];
+			}
 		}
 
 		return speed;
@@ -209,11 +227,13 @@ namespace TES3 {
 		float speed = reinterpret_cast<float(__thiscall *)(MobileActor*)>(TES3_MobileActor_calculateSwimSpeed)(this);
 
 		// Launch our event, and overwrite the speed with what was given back to us.
-		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CalculateMovementSpeed(mwse::lua::event::CalculateMovementSpeed::Swim, this, speed));
-		if (eventData.valid()) {
-			speed = eventData["speed"];
+		if (mwse::lua::event::CalculateMovementSpeed::getEventEnabled()) {
+			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CalculateMovementSpeed(mwse::lua::event::CalculateMovementSpeed::Swim, this, speed));
+			if (eventData.valid()) {
+				speed = eventData["speed"];
+			}
 		}
 
 		return speed;
@@ -228,11 +248,13 @@ namespace TES3 {
 		float speed = calculateSwimSpeed() * runMultiplier;
 
 		// Launch our event, and overwrite the speed with what was given back to us.
-		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CalculateMovementSpeed(mwse::lua::event::CalculateMovementSpeed::SwimRun, this, speed));
-		if (eventData.valid()) {
-			speed = eventData["speed"];
+		if (mwse::lua::event::CalculateMovementSpeed::getEventEnabled()) {
+			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CalculateMovementSpeed(mwse::lua::event::CalculateMovementSpeed::SwimRun, this, speed));
+			if (eventData.valid()) {
+				speed = eventData["speed"];
+			}
 		}
 
 		return speed;
@@ -243,11 +265,13 @@ namespace TES3 {
 		float speed = reinterpret_cast<float(__thiscall *)(MobileActor*)>(TES3_MobileActor_calculateFlySpeed)(this);
 
 		// Launch our event, and overwrite the speed with what was given back to us.
-		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CalculateMovementSpeed(mwse::lua::event::CalculateMovementSpeed::Fly, this, speed));
-		if (eventData.valid()) {
-			speed = eventData["speed"];
+		if (mwse::lua::event::CalculateMovementSpeed::getEventEnabled()) {
+			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CalculateMovementSpeed(mwse::lua::event::CalculateMovementSpeed::Fly, this, speed));
+			if (eventData.valid()) {
+				speed = eventData["speed"];
+			}
 		}
 
 		return speed;

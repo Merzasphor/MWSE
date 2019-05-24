@@ -28,6 +28,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool DamagedEvent::m_EventEnabled = false;
 		}
 	}
 }

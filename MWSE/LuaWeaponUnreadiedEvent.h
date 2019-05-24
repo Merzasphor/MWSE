@@ -1,11 +1,12 @@
 #pragma once
 
 #include "LuaObjectFilteredEvent.h"
+#include "LuaDisableableEvent.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class WeaponUnreadiedEvent : public ObjectFilteredEvent {
+			class WeaponUnreadiedEvent : public ObjectFilteredEvent, public DisableableEvent<WeaponUnreadiedEvent> {
 			public:
 				WeaponUnreadiedEvent(TES3::Reference* reference);
 				sol::table createEventTable();

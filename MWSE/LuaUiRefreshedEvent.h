@@ -1,13 +1,14 @@
 #pragma once
 
 #include "LuaGenericEvent.h"
+#include "LuaDisableableEvent.h"
 
 #include "TES3Defines.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class UiRefreshedEvent : public GenericEvent {
+			class UiRefreshedEvent : public GenericEvent, public DisableableEvent<UiRefreshedEvent> {
 			public:
 				UiRefreshedEvent(TES3::UI::Element * element);
 				sol::table createEventTable();

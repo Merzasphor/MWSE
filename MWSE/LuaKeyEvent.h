@@ -1,6 +1,7 @@
 #pragma once
 
 #include "LuaGenericEvent.h"
+#include "LuaDisableableEvent.h"
 
 namespace mwse {
 	namespace lua {

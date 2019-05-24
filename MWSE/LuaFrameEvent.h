@@ -1,12 +1,13 @@
 #pragma once
 
 #include "LuaGenericEvent.h"
+#include "LuaDisableableEvent.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
 			// Enter frame event.
-			class FrameEvent : public GenericEvent {
+			class FrameEvent : public GenericEvent, public DisableableEvent<FrameEvent> {
 			public:
 				FrameEvent(float delta, bool menuMode);
 				sol::table createEventTable();

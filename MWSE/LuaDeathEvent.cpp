@@ -26,6 +26,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool DeathEvent::m_EventEnabled = false;
 		}
 	}
 }

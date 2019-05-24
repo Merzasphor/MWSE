@@ -31,6 +31,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool MouseAxisEvent::m_EventEnabled = false;
 		}
 	}
 }

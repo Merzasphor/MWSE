@@ -49,6 +49,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool CalculateArmorRatingEvent::m_EventEnabled = false;
 		}
 	}
 }

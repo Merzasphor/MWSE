@@ -20,7 +20,7 @@ namespace TES3 {
 		bool added = reinterpret_cast<bool(__thiscall *)(Dialogue*, int, MobileActor *)>(TES3_Dialogue_journalAdd)(this, index, actor);
 
 		// If the journal index changed, raise an event that it was modified.
-		if (journalIndex > oldIndex) {
+		if (journalIndex > oldIndex && mwse::lua::event::JournalEvent::getEventEnabled()) {
 			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::JournalEvent(this, oldIndex, index));
 		}
 
@@ -45,7 +45,7 @@ namespace TES3 {
 		journalIndex = index;
 
 		// Raise a modified event.
-		if (journalIndex > oldIndex) {
+		if (journalIndex > oldIndex && mwse::lua::event::JournalEvent::getEventEnabled()) {
 			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::JournalEvent(this, oldIndex, index));
 		}
 

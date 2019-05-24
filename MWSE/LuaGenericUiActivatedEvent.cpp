@@ -46,6 +46,8 @@ namespace mwse {
 				return options;
 			}
 
+			bool GenericUiActivatedEvent::m_EventEnabled = false;
+
 			GenericUiCreatedEvent::GenericUiCreatedEvent(TES3::UI::Element* element) :
 				GenericUiActivatedEvent(element)
 			{

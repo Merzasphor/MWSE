@@ -8,6 +8,8 @@ namespace mwse {
 			{
 				m_EventName = "keyDown";
 			}
+
+			bool KeyDownEvent::m_EventEnabled = false;
 		}
 	}
 }

@@ -26,6 +26,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool WeaponReadiedEvent::m_EventEnabled = false;
 		}
 	}
 }

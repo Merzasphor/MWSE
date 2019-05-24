@@ -25,7 +25,6 @@ namespace mwse {
 				return eventData;
 			}
 
-
 			sol::object MeshLoadedEvent::getEventOptions() {
 				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 				sol::state& state = stateHandle.state;
@@ -33,6 +32,8 @@ namespace mwse {
 				options["filter"] = m_Path;
 				return options;
 			}
+
+			bool MeshLoadedEvent::m_EventEnabled = false;
 		}
 	}
 }

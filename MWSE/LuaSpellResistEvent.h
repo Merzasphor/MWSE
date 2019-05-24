@@ -1,13 +1,14 @@
 #pragma once
 
 #include "LuaGenericEvent.h"
+#include "LuaDisableableEvent.h"
 
 #include "TES3Defines.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class SpellResistEvent : public GenericEvent {
+			class SpellResistEvent : public GenericEvent, public DisableableEvent<SpellResistEvent> {
 			public:
 				SpellResistEvent(TES3::MagicSourceInstance * spellInstance, TES3::MagicEffectInstance * effectInstance, int effectIndex, int resistAttribute);
 				sol::table createEventTable();

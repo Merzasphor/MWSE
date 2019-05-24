@@ -40,6 +40,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool CrimeWitnessedEvent::m_EventEnabled = false;
 		}
 	}
 }

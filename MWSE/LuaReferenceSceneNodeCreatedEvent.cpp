@@ -24,6 +24,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool ReferenceSceneNodeCreatedEvent::m_EventEnabled = false;
 		}
 	}
 }

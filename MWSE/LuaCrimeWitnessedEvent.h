@@ -1,11 +1,12 @@
 #pragma once
 
 #include "LuaObjectFilteredEvent.h"
+#include "LuaDisableableEvent.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class CrimeWitnessedEvent : public GenericEvent {
+			class CrimeWitnessedEvent : public GenericEvent, public DisableableEvent<CrimeWitnessedEvent> {
 			public:
 				CrimeWitnessedEvent(TES3::MobileActor * witness, TES3::CrimeEvent * crime);
 				sol::object getEventOptions();

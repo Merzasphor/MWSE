@@ -49,6 +49,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool CalculateMovementSpeed::m_EventEnabled = false;
 		}
 	}
 }

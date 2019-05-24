@@ -90,6 +90,7 @@ function this.register(eventType, callback, options)
 
 	-- If this is a disableable event, enable it.
 	if (disableableEvents[eventType] == false) then
+		mwse.log("[MWSE] Core event with ID '%s' enabled.", eventType)
 		disableableEvents[eventType] = true
 	end
 end

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "LuaGenericEvent.h"
+#include "LuaDisableableEvent.h"
 
 #include "NIObject.h"
 #include "NIPointer.h"
@@ -8,7 +9,7 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class MeshLoadedEvent : public GenericEvent {
+			class MeshLoadedEvent : public GenericEvent, public DisableableEvent<MeshLoadedEvent> {
 			public:
 				MeshLoadedEvent(const char* path, NI::AVObject * mesh);
 				sol::table createEventTable();

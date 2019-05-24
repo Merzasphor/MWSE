@@ -1,13 +1,14 @@
 #pragma once
 
 #include "LuaGenericEvent.h"
+#include "LuaDisableableEvent.h"
 
 #include "TES3Defines.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class FilterInventorySelectEvent : public GenericEvent {
+			class FilterInventorySelectEvent : public GenericEvent, public DisableableEvent<FilterInventorySelectEvent> {
 			public:
 				FilterInventorySelectEvent(const char * type, TES3::Item * item, TES3::ItemData * itemData);
 				sol::table createEventTable();

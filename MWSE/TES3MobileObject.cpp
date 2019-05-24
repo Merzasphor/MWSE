@@ -22,7 +22,9 @@ namespace TES3 {
 		bool result = TES3_MobileObject_onActorCollision(this, collisionIndex);
 
 		// Fire off our hit event.
-		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		if (mwse::lua::event::MobileObjectCollisionEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		}
 
 		return result;
 	}
@@ -35,7 +37,9 @@ namespace TES3 {
 		bool result = TES3_MobileObject_onObjectCollision(this, collisionIndex, flag);
 
 		// Fire off our hit event.
-		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		if (mwse::lua::event::MobileObjectCollisionEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		}
 
 		return result;
 	}
@@ -48,7 +52,9 @@ namespace TES3 {
 		bool result = TES3_MobileObject_onTerrainCollision(this, collisionIndex);
 
 		// Fire off our hit event.
-		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		if (mwse::lua::event::MobileObjectCollisionEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		}
 
 		return result;
 	}
@@ -61,7 +67,9 @@ namespace TES3 {
 		bool result = TES3_MobileObject_onWaterCollision(this, collisionIndex);
 
 		// Fire off our hit event.
-		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		if (mwse::lua::event::MobileObjectCollisionEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		}
 
 		return result;
 	}
@@ -74,7 +82,9 @@ namespace TES3 {
 		bool result = TES3_MobileObject_onActivatorCollision(this, collisionIndex);
 
 		// Fire off our hit event.
-		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		if (mwse::lua::event::MobileObjectCollisionEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileObjectCollisionEvent(this, hitReference));
+		}
 
 		return result;
 	}

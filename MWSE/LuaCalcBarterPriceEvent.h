@@ -1,11 +1,12 @@
 #pragma once
 
 #include "LuaObjectFilteredEvent.h"
+#include "LuaDisableableEvent.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class CalculateBarterPriceEvent : public ObjectFilteredEvent {
+			class CalculateBarterPriceEvent : public ObjectFilteredEvent, public DisableableEvent<CalculateBarterPriceEvent> {
 			public:
 				CalculateBarterPriceEvent(TES3::MobileActor * mobileActor, int basePrice, int price, bool buying, int count = 1, TES3::EquipmentStack* item = nullptr);
 				sol::table createEventTable();

@@ -26,6 +26,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool LeveledItemPickedEvent::m_EventEnabled = false;
 		}
 	}
 }

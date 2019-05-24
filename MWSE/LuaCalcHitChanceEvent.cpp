@@ -35,6 +35,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool CalcHitChanceEvent::m_EventEnabled = false;
 		}
 	}
 }

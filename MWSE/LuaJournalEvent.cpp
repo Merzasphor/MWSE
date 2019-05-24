@@ -29,6 +29,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool JournalEvent::m_EventEnabled = false;
 		}
 	}
 }

@@ -40,6 +40,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool MobileProjectileActorCollisionEvent::m_EventEnabled = false;
 		}
 	}
 }

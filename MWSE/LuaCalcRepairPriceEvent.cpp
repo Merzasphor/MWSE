@@ -42,6 +42,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool CalculateRepairPriceEvent::m_EventEnabled = false;
 		}
 	}
 }

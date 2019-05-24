@@ -24,6 +24,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool WeaponUnreadiedEvent::m_EventEnabled = false;
 		}
 	}
 }

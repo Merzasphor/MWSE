@@ -36,7 +36,7 @@ namespace TES3 {
 
 	void Reference::activate(Reference* activator, int unknown) {
 		// If our event data says to block, don't let the object activate.
-		{
+		if (mwse::lua::event::ActivateEvent::getEventEnabled()) {
 			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::object response = stateHandle.triggerEvent(new mwse::lua::event::ActivateEvent(activator, this));
 			if (response.get_type() == sol::type::table) {
@@ -277,7 +277,7 @@ namespace TES3 {
 		auto previousNode = sceneNode;
 		auto newNode = TES3_Reference_getSceneGraphNode(this);
 
-		if (previousNode != newNode) {
+		if (previousNode != newNode && mwse::lua::event::ReferenceSceneNodeCreatedEvent::getEventEnabled()) {
 			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ReferenceSceneNodeCreatedEvent(this));
 		}
 

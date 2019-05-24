@@ -39,6 +39,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool CalculateTrainingPriceEvent::m_EventEnabled = false;
 		}
 	}
 }

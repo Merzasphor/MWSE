@@ -5,7 +5,7 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class MouseButtonUpEvent : public KeyEvent {
+			class MouseButtonUpEvent : public KeyEvent, public DisableableEvent<MouseButtonUpEvent> {
 			public:
 				MouseButtonUpEvent(int button, bool controlDown, bool shiftDown, bool altDown, bool superDown);
 				sol::table createEventTable();

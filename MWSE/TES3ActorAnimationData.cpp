@@ -12,10 +12,12 @@ namespace TES3 {
 		float speed = reinterpret_cast<float(__thiscall *)(ActorAnimationData*)>(TES3_ActorAnimationData_calculateMovementSpeed)(this);
 
 		// Launch our event, and overwrite the speed with what was given back to us.
-		auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CalculateMovementSpeed(mwse::lua::event::CalculateMovementSpeed::Move, this->mobileActor, speed));
-		if (eventData.valid()) {
-			speed = eventData["speed"];
+		if (mwse::lua::event::CalculateMovementSpeed::getEventEnabled()) {
+			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CalculateMovementSpeed(mwse::lua::event::CalculateMovementSpeed::Move, this->mobileActor, speed));
+			if (eventData.valid()) {
+				speed = eventData["speed"];
+			}
 		}
 
 		return speed;

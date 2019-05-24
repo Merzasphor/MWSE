@@ -50,7 +50,7 @@ namespace TES3 {
 	NI::AVObject * MeshData::loadMesh(const char* path) {
 		auto countBefore = NIFs->count;
 		auto mesh = TES3_MeshData_loadMesh(this, path);
-		if (mesh && NIFs->count > countBefore) {
+		if (mesh && NIFs->count > countBefore && mwse::lua::event::MeshLoadedEvent::getEventEnabled()) {
 			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MeshLoadedEvent(path, mesh));
 		}
 		return mesh;
@@ -66,7 +66,7 @@ namespace TES3 {
 
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		{
+		if (mwse::lua::event::SaveGameEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::SaveGameEvent(saveName, fileName));
 			if (eventData.valid() && eventData["block"] == true) {
@@ -81,7 +81,7 @@ namespace TES3 {
 		bool saved = reinterpret_cast<signed char(__thiscall *)(NonDynamicData*, const char*, const char*)>(TES3_NonDynamicData_saveGame)(this, eventFileName.c_str(), eventSaveName.c_str());
 
 		// Pass a follow-up event if we successfully saved.
-		if (saved) {
+		if (saved && mwse::lua::event::SavedGameEvent::getEventEnabled()) {
 			luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::SavedGameEvent(eventSaveName.c_str(), eventFileName.c_str()));
 		}
 
@@ -92,7 +92,7 @@ namespace TES3 {
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
 		std::string eventFileName;
-		{
+		if (mwse::lua::event::LoadGameEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::LoadGameEvent(fileName));
 			if (eventData.valid() && eventData["block"] == true) {
@@ -110,7 +110,10 @@ namespace TES3 {
 		// Pass a follow-up event if we successfully loaded and clear timers.
 		if (loaded) {
 			luaManager.clearTimers();
-			luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str(), fileName == NULL));
+
+			if (mwse::lua::event::LoadedGameEvent::getEventEnabled()) {
+				luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str(), fileName == NULL));
+			}
 		}
 
 		return loaded ? LoadGameResult::Success : LoadGameResult::Failure;
@@ -120,7 +123,7 @@ namespace TES3 {
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
 		std::string eventFileName;
-		{
+		if (mwse::lua::event::LoadGameEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::LoadGameEvent(fileName));
 			if (eventData.valid() && eventData["block"] == true) {
@@ -138,7 +141,10 @@ namespace TES3 {
 		// Pass a follow-up event if we successfully loaded and clear timers.
 		if (loaded) {
 			luaManager.clearTimers();
-			luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str()));
+
+			if (mwse::lua::event::LoadedGameEvent::getEventEnabled()) {
+				luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str()));
+			}
 		}
 
 		return loaded ? LoadGameResult::Success : LoadGameResult::Failure;

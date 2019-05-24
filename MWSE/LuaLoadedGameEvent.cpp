@@ -56,6 +56,8 @@ namespace mwse {
 
 				return options;
 			}
+
+			bool LoadedGameEvent::m_EventEnabled = false;
 		}
 	}
 }

@@ -37,6 +37,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool CalculateSpellPriceEvent::m_EventEnabled = false;
 		}
 	}
 }

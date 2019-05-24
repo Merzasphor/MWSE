@@ -39,6 +39,8 @@ namespace mwse {
 				options["filter"] = m_Tile->element->getTopLevelParent()->name.cString;
 				return options;
 			}
+
+			bool ItemTileUpdatedEvent::m_EventEnabled = false;
 		}
 	}
 }

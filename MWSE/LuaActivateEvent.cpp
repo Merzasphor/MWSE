@@ -26,6 +26,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool ActivateEvent::m_EventEnabled = false;
 		}
 	}
 }

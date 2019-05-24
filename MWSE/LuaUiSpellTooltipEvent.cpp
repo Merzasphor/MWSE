@@ -27,6 +27,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool UiSpellTooltipEvent::m_EventEnabled = false;
 		}
 	}
 }

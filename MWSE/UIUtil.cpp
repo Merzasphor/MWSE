@@ -80,15 +80,17 @@ namespace mwse {
 
 			void showRestWaitMenu(bool allowRest, bool scripted) {
 				// Execute event. If the event blocked the call, bail.
-				mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-				auto stateHandle = luaManager.getThreadSafeStateHandle();
-				sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::ShowRestWaitMenuEvent(allowRest, scripted));
-				if (eventData.valid()) {
-					if (eventData["block"] == true) {
-						return;
-					}
+				if (mwse::lua::event::ShowRestWaitMenuEvent::getEventEnabled()) {
+					mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+					auto stateHandle = luaManager.getThreadSafeStateHandle();
+					sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::ShowRestWaitMenuEvent(allowRest, scripted));
+					if (eventData.valid()) {
+						if (eventData["block"] == true) {
+							return;
+						}
 
-					allowRest = eventData["allowRest"];
+						allowRest = eventData["allowRest"];
+					}
 				}
 
 				reinterpret_cast<void(__cdecl *)(bool)>(TES3_ui_showRestWaitMenu)(allowRest);

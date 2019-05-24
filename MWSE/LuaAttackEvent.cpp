@@ -33,6 +33,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool AttackEvent::m_EventEnabled = false;
 		}
 	}
 }
