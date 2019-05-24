@@ -31,6 +31,10 @@ namespace TES3 {
 		vTable.actor->setBaseBarterGold(this, value);
 	}
 
+	bool Actor::isGuard() {
+		return vTable.actor->isGuard(this);
+	}
+
 	void Actor::clone(Reference* reference) {
 		vTable.actor->clone(this, reference);
 	}
