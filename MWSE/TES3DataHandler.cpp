@@ -61,8 +61,8 @@ namespace TES3 {
 	//
 
 	bool NonDynamicData::saveGame(const char* fileName, const char* saveName) {
-		std::string eventFileName;
-		std::string eventSaveName;
+		std::string eventFileName = fileName ? fileName : "";
+		std::string eventSaveName = saveName;
 
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
@@ -91,7 +91,8 @@ namespace TES3 {
 	LoadGameResult NonDynamicData::loadGame(const char* fileName) {
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		std::string eventFileName;
+		std::string eventFileName = fileName;
+
 		if (mwse::lua::event::LoadGameEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::LoadGameEvent(fileName));
@@ -122,7 +123,8 @@ namespace TES3 {
 	LoadGameResult NonDynamicData::loadGameMainMenu(const char* fileName) {
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		std::string eventFileName;
+		std::string eventFileName = fileName;
+
 		if (mwse::lua::event::LoadGameEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::LoadGameEvent(fileName));
