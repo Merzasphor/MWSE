@@ -43,14 +43,14 @@ namespace mwse {
 				setUserdataForNIObjectNET(usertypeDefinition);
 
 				// Basic property binding.
-				usertypeDefinition.set("fileName", &NI::SourceTexture::formatPrefs);
 				usertypeDefinition.set("formatPrefs", &NI::SourceTexture::formatPrefs);
 				usertypeDefinition.set("isStatic", &NI::SourceTexture::isStatic);
 				usertypeDefinition.set("pixelData", &NI::SourceTexture::pixelData);
-				usertypeDefinition.set("platformFileName", &NI::SourceTexture::formatPrefs);
 
 				// Functions bound as properties.
+				usertypeDefinition.set("fileName", sol::readonly_property(&NI::SourceTexture::fileName));
 				usertypeDefinition.set("height", sol::readonly_property(&NI::SourceTexture::getHeight));
+				usertypeDefinition.set("platformFileName", sol::readonly_property(&NI::SourceTexture::platformFileName));
 				usertypeDefinition.set("width", sol::readonly_property(&NI::SourceTexture::getWidth));
 
 				// Finish up our usertype.
