@@ -32,7 +32,7 @@ namespace mwse {
 				state.set_usertype("tes3uiFontColor", usertypeDefinition);
 			}
 
-			// Binding for TES3::UI::FontColor
+			// Binding for TES3::UI::MenuController
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.create_simple_usertype<TES3::UI::MenuController>();

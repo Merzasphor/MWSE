@@ -859,7 +859,7 @@ namespace mwse {
 				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEDisallowKey);
 			};
 
-			// Bind function: tes3.disableKey
+			// TODO: tes3.getTopMenu is deprecated.
 			state["tes3"]["getTopMenu"] = []() {
 				return tes3::ui::getTopMenu();
 			};

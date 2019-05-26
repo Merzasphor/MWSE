@@ -31,7 +31,7 @@ Standard events:
     **mouseStillPressed**
         Mouse cursor positioned over an element, after a mouseDown over the element. Triggers every frame.
     **mouseStillPressedOutside**
-        Mouse cursor positioned outside an element, after a mouseDown over the element. Triggers every frame.
+        Apparently not working in the engine. Mouse cursor positioned outside an element, after a mouseDown over the element. Triggers every frame.
     **mouseRelease**
         Left mouse button up over an element.
     **keyPress**

@@ -425,6 +425,7 @@ namespace mwse {
 			});
 			tes3ui["findMenu"] = TES3::UI::findMenu;
 			tes3ui["findHelpLayerMenu"] = TES3::UI::findHelpLayerMenu;
+			tes3ui["getMenuOnTop"] = TES3::UI::getMenuOnTop;
 			tes3ui["forcePlayerInventoryUpdate"] = []() {
 				auto worldController = TES3::WorldController::get();
 				auto playerMobile = worldController->getMobilePlayer();

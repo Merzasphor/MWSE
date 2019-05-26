@@ -22,6 +22,7 @@ namespace TES3 {
 		const auto TES3_ui_createTooltipMenu = reinterpret_cast<Element* (__cdecl *)(UI_ID)>(0x595A40);
 		const auto TES3_ui_findMenu = reinterpret_cast<Element* (__cdecl*)(UI_ID)>(0x595370);
 		const auto TES3_ui_findHelpLayerMenu = reinterpret_cast<Element* (__cdecl*)(UI_ID)>(0x595A10);
+		const auto TES3_ui_getMenuOnTop = reinterpret_cast<Element* (__cdecl*)()>(0x595290);
 		const auto TES3_ui_getPaletteColour = reinterpret_cast<Vector3& (__cdecl*)(Vector3&, Property)>(0x57F610);
 		const auto TES3_ui_onMenuUnfocus = reinterpret_cast<EventCallback>(0x58F790);
 		const auto TES3_ui_ScrollbarArrow_onClick = reinterpret_cast<EventCallback>(0x647A60);
@@ -68,6 +69,10 @@ namespace TES3 {
 
 		Element* findHelpLayerMenu(UI_ID id) {
 			return TES3_ui_findHelpLayerMenu(id);
+		}
+
+		Element* getMenuOnTop() {
+			return TES3_ui_getMenuOnTop();
 		}
 
 		Boolean enterMenuMode(UI_ID id) {

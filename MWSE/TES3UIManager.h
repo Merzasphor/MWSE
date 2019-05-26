@@ -13,6 +13,7 @@ namespace TES3 {
 		__declspec(dllexport) Element* createTooltipMenu(UI_ID id);
 		__declspec(dllexport) Element* findMenu(UI_ID id);
 		__declspec(dllexport) Element* findHelpLayerMenu(UI_ID id);
+		__declspec(dllexport) Element* getMenuOnTop();
 		__declspec(dllexport) Boolean enterMenuMode(UI_ID id);
 		__declspec(dllexport) Boolean leaveMenuMode();
 		__declspec(dllexport) void acquireTextInput(Element* element);
