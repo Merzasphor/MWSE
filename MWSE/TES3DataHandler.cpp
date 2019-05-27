@@ -91,7 +91,7 @@ namespace TES3 {
 	LoadGameResult NonDynamicData::loadGame(const char* fileName) {
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		std::string eventFileName = fileName;
+		std::string eventFileName = fileName ? fileName : "";
 
 		if (mwse::lua::event::LoadGameEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
@@ -123,7 +123,7 @@ namespace TES3 {
 	LoadGameResult NonDynamicData::loadGameMainMenu(const char* fileName) {
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		std::string eventFileName = fileName;
+		std::string eventFileName = fileName ? fileName : "";
 
 		if (mwse::lua::event::LoadGameEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
