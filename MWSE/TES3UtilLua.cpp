@@ -2263,6 +2263,78 @@ namespace mwse {
 				return fulfilledCount;
 			};
 
+			state["tes3"]["addItemData"] = [](sol::table params) -> TES3::ItemData* {
+				auto luaState = LuaManager::getInstance().getThreadSafeStateHandle();
+
+				// Get the reference of the item or item container.
+				TES3::Reference * toReference = getOptionalParamReference(params, "to");
+				if (toReference == nullptr) {
+					throw std::invalid_argument("Invalid 'to' parameter provided.");
+				}
+				// Check if it's setting a world reference or an item in a container.
+				TES3::Actor * toActor = static_cast<TES3::Actor*>(toReference->baseObject);
+				if (!toActor->isActor()) {
+					// It's a reference. This is the easy part.
+					return toReference->getOrCreateAttachedItemData();
+				}
+
+				// Get the item we are going to transfer.
+				TES3::Item * item = getOptionalParamObject<TES3::Item>(params, "item");
+				if (item == nullptr) {
+					throw std::invalid_argument("Invalid 'item' parameter provided.");
+				}
+
+				// Does the reference need to be cloned?
+				if (toReference->clone()) {
+					toActor = static_cast<TES3::Actor*>(toReference->baseObject);
+				}
+
+				// Try to find an ItemData-less item and add ItemData for it.
+				TES3::ItemStack * stack = toActor->inventory.findItemStack(item);
+				if (!stack || stack->count < 1) {
+					throw std::runtime_error("The actor does possess any of 'item'.");
+				}
+
+				if (!stack->variables) {
+					// Create array required to hold ItemData.
+					stack->variables = TES3::TArray<TES3::ItemData>::create();
+				}
+				else if (stack->count <= stack->variables->filledCount) {
+					// All items already have ItemData.
+					return nullptr;
+				}
+
+				// Finally add ItemData to stack.
+				TES3::ItemData * itemData = TES3::ItemData::createForObject(item);
+				stack->variables->add(itemData);
+
+				// If either of them are the player, we need to update the GUI.
+				auto worldController = TES3::WorldController::get();
+				auto toMobile = toReference->getAttachedMobileActor();
+				auto playerMobile = worldController->getMobilePlayer();
+
+				if (getOptionalParam<bool>(params, "updateGUI", true)) {
+					// Update inventory menu if necessary.
+					if (toMobile == playerMobile) {
+						worldController->inventoryData->clearIcons(2);
+						worldController->inventoryData->addInventoryItems(&playerMobile->npcInstance->inventory, 2);
+						mwse::tes3::ui::inventoryUpdateIcons();
+					}
+
+					// Update contents menu if necessary.
+					auto contentsMenu = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D3098));
+					if (contentsMenu) {
+						// Make sure that the contents reference is one of the ones we care about.
+						TES3::Reference * contentsReference = static_cast<TES3::Reference*>(contentsMenu->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D3048)).ptrValue);
+						if (toReference == contentsReference) {
+							TES3::UI::updateContentsMenuTiles();
+						}
+					}
+				}
+
+				return itemData;
+			};
+
 			state["tes3"]["getCurrentAIPackageId"] = [](sol::table params) {
 				TES3::Reference * refr = getOptionalParamReference(params, "reference");
 				TES3::MobileActor * mobileActor = getOptionalParamMobileActor(params, "reference");

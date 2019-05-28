@@ -119,25 +119,37 @@ namespace TES3 {
 		//
 
 		// getIndexOfValue returns -1 if not found.
-		int getIndexOfValue(T * value) const {
-			return reinterpret_cast<int(__cdecl *)(const TArray<T>*, T*)>(0x497B60)(this, value);
+		int getIndexOfValue(const T * value) const {
+			return reinterpret_cast<int(__cdecl *)(const TArray<T>*, const T*)>(0x497B60)(this, value);
 		}
 
-		void setAtIndex(unsigned int index, T * value) {
-			reinterpret_cast<void(__thiscall *)(const TArray<T>*, unsigned int, T*)>(0x4975D0)(this, index, value);
+		void setAtIndex(size_t index, const T * value) {
+			// Note final parameter is a reference.
+			reinterpret_cast<void(__thiscall *)(TArray<T>*, size_t, const T*&)>(0x4975D0)(this, index, value);
 		}
 
-		void setSize(unsigned int size) {
-			reinterpret_cast<void(__thiscall *)(const TArray<T>*, unsigned int)>(0x47C5A0)(this, size);
+		void setSize(size_t size) {
+			reinterpret_cast<void(__thiscall *)(TArray<T>*, size_t)>(0x47C5A0)(this, size);
 		}
 
 		//
 		// Custom functions.
 		//
 
+		static TArray<T> * create(size_t size = 1) {
+			TArray<T> * arr = mwse::tes3::_new<TArray<T>>();
+			arr->vTable = reinterpret_cast<void*>(0x747A60);
+			arr->storageCount = size;
+			arr->growByCount = size;
+			arr->endIndex = 0;
+			arr->filledCount = 0;
+			arr->storage = reinterpret_cast<T**>(mwse::tes3::_new(size * sizeof(T*)));
+			return arr;
+		}
+
 		T *& operator[](const size_t pos) {
 			if (pos >= storageCount) {
-				throw std::out_of_range("TES3::TArray - Access out of bounds.");
+				throw std::out_of_range("TES3::TArray::operator[] - Access out of bounds.");
 			}
 			return &storage[pos];
 		}
@@ -153,8 +165,18 @@ namespace TES3 {
 			return getIndexOfValue(value) >= 0;
 		}
 
-		__inline unsigned int size() {
+		__inline size_t size() const {
 			return storageCount;
+		}
+
+		size_t add(T * value) {
+			size_t index = endIndex;
+
+			if (index == storageCount) {
+				setSize(storageCount + growByCount);
+			}
+			setAtIndex(index, value);
+			return index;
 		}
 
 	};
