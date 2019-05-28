@@ -7,7 +7,8 @@ namespace mwse {
 		namespace event {
 			SimulateEvent::SimulateEvent(float delta, double timestamp) :
 				GenericEvent("simulate"),
-				m_Delta(delta)
+				m_Delta(delta),
+				m_Timestamp(timestamp)
 			{
 
 			}
