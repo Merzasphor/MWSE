@@ -2062,7 +2062,6 @@ namespace mwse {
 				return false;
 			};
 
-			// 0x615160
 			state["tes3"]["showRepairServiceMenu"] = []() {
 				reinterpret_cast<int(__cdecl *)(TES3::MobileActor*)>(0x615160)(TES3::WorldController::get()->getMobilePlayer());
 				TES3::UI::enterMenuMode(TES3::UI::registerID("MenuServiceRepair"));
@@ -2103,11 +2102,6 @@ namespace mwse {
 				}
 				if (toReference->clone()) {
 					toActor = static_cast<TES3::Actor*>(toReference->baseObject);
-				}
-
-				// Is the item leveled? Let's resolve it first.
-				while (item->objectType == TES3::ObjectType::LeveledItem) {
-					item = static_cast<TES3::Item*>(reinterpret_cast<TES3::LeveledItem*>(item)->resolve());
 				}
 
 				// Get any associated item data.
