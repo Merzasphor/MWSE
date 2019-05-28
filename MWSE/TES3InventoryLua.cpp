@@ -168,6 +168,7 @@ namespace mwse {
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Basic property binding.
+				usertypeDefinition.set("itemData", &TES3::EquipmentStack::variables);
 				usertypeDefinition.set("variables", &TES3::EquipmentStack::variables);
 
 				// Access to other objects that need to be packaged.
