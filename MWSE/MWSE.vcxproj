@@ -123,6 +123,7 @@
     <ClInclude Include="NIPixelFormat.h" />
     <ClInclude Include="NIPointLight.h" />
     <ClInclude Include="NIProperty.h" />
+    <ClInclude Include="NIPropertyLua.h" />
     <ClInclude Include="NISourceTexture.h" />
     <ClInclude Include="NISourceTextureLua.h" />
     <ClInclude Include="NISpotLight.h" />
@@ -493,6 +494,7 @@
     <ClCompile Include="NIPixelData.cpp" />
     <ClCompile Include="NIPixelDataLua.cpp" />
     <ClCompile Include="NIPointLight.cpp" />
+    <ClCompile Include="NIPropertyLua.cpp" />
     <ClCompile Include="NISourceTexture.cpp" />
     <ClCompile Include="NISourceTextureLua.cpp" />
     <ClCompile Include="NIStream.cpp" />

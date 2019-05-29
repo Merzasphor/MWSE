@@ -582,6 +582,8 @@ namespace mwse {
 			sol::state& state = stateHandle.state;
 
 			switch ((uintptr_t)object->getRunTimeTypeInformation()) {
+			case NI::RTTIStaticPtr::NiAlphaProperty:
+				return sol::make_object(state, reinterpret_cast<NI::AlphaProperty*>(object));
 			case NI::RTTIStaticPtr::NiAmbientLight:
 				return sol::make_object(state, reinterpret_cast<NI::AmbientLight*>(object));
 			case NI::RTTIStaticPtr::NiAVObject:
@@ -590,6 +592,10 @@ namespace mwse {
 				return sol::make_object(state, reinterpret_cast<NI::Camera*>(object));
 			case NI::RTTIStaticPtr::NiDirectionalLight:
 				return sol::make_object(state, reinterpret_cast<NI::DirectionalLight*>(object));
+			case NI::RTTIStaticPtr::NiFogProperty:
+				return sol::make_object(state, reinterpret_cast<NI::FogProperty*>(object));
+			case NI::RTTIStaticPtr::NiMaterialProperty:
+				return sol::make_object(state, reinterpret_cast<NI::MaterialProperty*>(object));
 			case NI::RTTIStaticPtr::NiNode:
 				return sol::make_object(state, reinterpret_cast<NI::Node*>(object));
 			case NI::RTTIStaticPtr::NiObjectNET:
@@ -602,10 +608,16 @@ namespace mwse {
 				return sol::make_object(state, reinterpret_cast<NI::SourceTexture*>(object));
 			case NI::RTTIStaticPtr::NiSpotLight:
 				return sol::make_object(state, reinterpret_cast<NI::SpotLight*>(object));
+			case NI::RTTIStaticPtr::NiStencilProperty:
+				return sol::make_object(state, reinterpret_cast<NI::StencilProperty*>(object));
 			case NI::RTTIStaticPtr::NiSwitchNode:
 				return sol::make_object(state, reinterpret_cast<NI::SwitchNode*>(object));
+			case NI::RTTIStaticPtr::NiTexturingProperty:
+				return sol::make_object(state, reinterpret_cast<NI::TexturingProperty*>(object));
 			case NI::RTTIStaticPtr::NiTriShape:
 				return sol::make_object(state, reinterpret_cast<NI::TriShape*>(object));
+			case NI::RTTIStaticPtr::NiVertexColorProperty:
+				return sol::make_object(state, reinterpret_cast<NI::VertexColorProperty*>(object));
 			}
 
 			if (object->isInstanceOfType(NI::RTTIStaticPtr::NiNode)) {
@@ -643,6 +655,8 @@ namespace mwse {
 			sol::state& state = stateHandle.state;
 
 			switch ((uintptr_t)object->getRunTimeTypeInformation()) {
+			case NI::RTTIStaticPtr::NiAlphaProperty:
+				return sol::make_object(state, NI::Pointer<NI::AlphaProperty>(reinterpret_cast<NI::AlphaProperty*>(object)));
 			case NI::RTTIStaticPtr::NiAmbientLight:
 				return sol::make_object(state, NI::Pointer<NI::AmbientLight>(reinterpret_cast<NI::AmbientLight*>(object)));
 			case NI::RTTIStaticPtr::NiAVObject:
@@ -651,6 +665,10 @@ namespace mwse {
 				return sol::make_object(state, NI::Pointer<NI::Camera>(reinterpret_cast<NI::Camera*>(object)));
 			case NI::RTTIStaticPtr::NiDirectionalLight:
 				return sol::make_object(state, NI::Pointer<NI::DirectionalLight>(reinterpret_cast<NI::DirectionalLight*>(object)));
+			case NI::RTTIStaticPtr::NiFogProperty:
+				return sol::make_object(state, NI::Pointer<NI::FogProperty>(reinterpret_cast<NI::FogProperty*>(object)));
+			case NI::RTTIStaticPtr::NiMaterialProperty:
+				return sol::make_object(state, NI::Pointer<NI::MaterialProperty>(reinterpret_cast<NI::MaterialProperty*>(object)));
 			case NI::RTTIStaticPtr::NiNode:
 				return sol::make_object(state, NI::Pointer<NI::Node>(reinterpret_cast<NI::Node*>(object)));
 			case NI::RTTIStaticPtr::NiObjectNET:
@@ -663,10 +681,16 @@ namespace mwse {
 				return sol::make_object(state, NI::Pointer<NI::SourceTexture>(reinterpret_cast<NI::SourceTexture*>(object)));
 			case NI::RTTIStaticPtr::NiSpotLight:
 				return sol::make_object(state, NI::Pointer<NI::SpotLight>(reinterpret_cast<NI::SpotLight*>(object)));
+			case NI::RTTIStaticPtr::NiStencilProperty:
+				return sol::make_object(state, NI::Pointer<NI::StencilProperty>(reinterpret_cast<NI::StencilProperty*>(object)));
 			case NI::RTTIStaticPtr::NiSwitchNode:
 				return sol::make_object(state, NI::Pointer<NI::SwitchNode>(reinterpret_cast<NI::SwitchNode*>(object)));
+			case NI::RTTIStaticPtr::NiTexturingProperty:
+				return sol::make_object(state, NI::Pointer<NI::TexturingProperty>(reinterpret_cast<NI::TexturingProperty*>(object)));
 			case NI::RTTIStaticPtr::NiTriShape:
 				return sol::make_object(state, NI::Pointer<NI::TriShape>(reinterpret_cast<NI::TriShape*>(object)));
+			case NI::RTTIStaticPtr::NiVertexColorProperty:
+				return sol::make_object(state, NI::Pointer<NI::VertexColorProperty>(reinterpret_cast<NI::VertexColorProperty*>(object)));
 			}
 
 			if (object->isInstanceOfType(NI::RTTIStaticPtr::NiNode)) {

@@ -130,6 +130,7 @@
 #include "NILightLua.h"
 #include "NIPickLua.h"
 #include "NIPixelDataLua.h"
+#include "NIPropertyLua.h"
 #include "NISourceTextureLua.h"
 #include "NISwitchNodeLua.h"
 #include "NITimeControllerLua.h"
@@ -452,6 +453,7 @@ namespace mwse {
 			bindNILight();
 			bindNIPick();
 			bindNIPixelData();
+			bindNIProperties();
 			bindNISourceTexture();
 			bindNISwitchNode();
 			bindNITimeController();

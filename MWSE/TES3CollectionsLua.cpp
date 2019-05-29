@@ -73,6 +73,7 @@ namespace mwse {
 			// Basic TArray bindings.
 			bindTArray<TES3::ItemData>("tes3itemDataTArray");
 			bindTArray<NI::PickRecord>("niTArrayPickRecord");
+			bindTArray<NI::TexturingProperty::Map>("niTArrayTexturingPropertyMap");
 
 			// Bind some iterators.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();

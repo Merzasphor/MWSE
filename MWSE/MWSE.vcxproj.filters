@@ -1263,6 +1263,9 @@
     <ClInclude Include="LuaDisableableEventManager.h">
       <Filter>Header Files\Lua</Filter>
     </ClInclude>
+    <ClInclude Include="NIPropertyLua.h">
+      <Filter>Header Files\Lua\Bindings\NI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2755,6 +2758,9 @@
     </ClCompile>
     <ClCompile Include="LuaDisableableEventManager.cpp">
       <Filter>Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="NIPropertyLua.cpp">
+      <Filter>Source Files\Lua\Bindings\NI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
