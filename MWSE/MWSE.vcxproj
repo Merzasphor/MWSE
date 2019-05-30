@@ -79,6 +79,8 @@
     <ClInclude Include="LuaMobileObjectCollisionEvent.h" />
     <ClInclude Include="LuaMobileObjectWaterImpactEvent.h" />
     <ClInclude Include="LuaMobileProjectileActorCollisionEvent.h" />
+    <ClInclude Include="LuaMobileProjectileObjectCollisionEvent.h" />
+    <ClInclude Include="LuaMobileProjectileTerrainCollisionEvent.h" />
     <ClInclude Include="LuaMouseAxisEvent.h" />
     <ClInclude Include="LuaMouseButtonDownEvent.h" />
     <ClInclude Include="LuaMouseButtonUpEvent.h" />
@@ -141,6 +143,7 @@
     <ClInclude Include="TES3AudioControllerLua.h" />
     <ClInclude Include="TES3BodyPart.h" />
     <ClInclude Include="TES3BodyPartLua.h" />
+    <ClInclude Include="TES3CollisionLua.h" />
     <ClInclude Include="TES3CombatSessionLua.h" />
     <ClInclude Include="TES3CrimeController.h" />
     <ClInclude Include="TES3CrimeEvent.h" />
@@ -442,6 +445,8 @@
     <ClCompile Include="LuaMobileProjectileActorCollisionEvent.cpp" />
     <ClCompile Include="LuaManager.cpp" />
     <ClCompile Include="LuaMobileObjectCollisionEvent.cpp" />
+    <ClCompile Include="LuaMobileProjectileObjectCollisionEvent.cpp" />
+    <ClCompile Include="LuaMobileProjectileTerrainCollisionEvent.cpp" />
     <ClCompile Include="LuaMouseAxisEvent.cpp" />
     <ClCompile Include="LuaMouseButtonDownEvent.cpp" />
     <ClCompile Include="LuaMouseButtonUpEvent.cpp" />
@@ -516,6 +521,7 @@
     <ClCompile Include="TES3AudioControllerLua.cpp" />
     <ClCompile Include="TES3BodyPart.cpp" />
     <ClCompile Include="TES3BodyPartLua.cpp" />
+    <ClCompile Include="TES3CollisionLua.cpp" />
     <ClCompile Include="TES3CombatSession.cpp" />
     <ClCompile Include="TES3CombatSessionLua.cpp" />
     <ClCompile Include="TES3CrimeController.cpp" />

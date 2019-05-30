@@ -1,4 +1,4 @@
-#include "LuaMobileProjectileActorCollisionEvent.h"
+#include "LuaMobileProjectileObjectCollisionEvent.h"
 
 #include "LuaManager.h"
 #include "LuaUtil.h"
@@ -11,8 +11,8 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			MobileProjectileActorCollisionEvent::MobileProjectileActorCollisionEvent(TES3::MobileProjectile* projectile, TES3::Reference* targetReference, TES3::Vector3& point, TES3::Vector3& pos, TES3::Vector3& vel) :
-				ObjectFilteredEvent("projectileHitActor", projectile->firingActor->reference),
+			MobileProjectileObjectCollisionEvent::MobileProjectileObjectCollisionEvent(TES3::MobileProjectile* projectile, TES3::Reference* targetReference, TES3::Vector3& point, TES3::Vector3& pos, TES3::Vector3& vel) :
+				ObjectFilteredEvent("projectileHitObject", projectile->firingActor->reference),
 				m_Projectile(projectile),
 				m_TargetReference(targetReference),
 				m_CollisionPoint(point),
@@ -22,7 +22,7 @@ namespace mwse {
 
 			}
 
-			sol::table MobileProjectileActorCollisionEvent::createEventTable() {
+			sol::table MobileProjectileObjectCollisionEvent::createEventTable() {
 				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 				sol::state& state = stateHandle.state;
 				sol::table eventData = state.create_table();
@@ -47,7 +47,7 @@ namespace mwse {
 				return eventData;
 			}
 
-			bool MobileProjectileActorCollisionEvent::m_EventEnabled = false;
+			bool MobileProjectileObjectCollisionEvent::m_EventEnabled = false;
 		}
 	}
 }

@@ -64,6 +64,8 @@
 #include "LuaMobileObjectCollisionEvent.h"
 #include "LuaMobileObjectWaterImpactEvent.h"
 #include "LuaMobileProjectileActorCollisionEvent.h"
+#include "LuaMobileProjectileObjectCollisionEvent.h"
+#include "LuaMobileProjectileTerrainCollisionEvent.h"
 #include "LuaMouseAxisEvent.h"
 #include "LuaMouseButtonDownEvent.h"
 #include "LuaMouseButtonUpEvent.h"
@@ -178,6 +180,8 @@ namespace mwse {
 				usertypeDefinition.set("potionBrewed", sol::property(&PotionBrewedEvent::getEventEnabled, &PotionBrewedEvent::setEventEnabled));
 				usertypeDefinition.set("projectileExpire", sol::property(&ProjectileExpireEvent::getEventEnabled, &ProjectileExpireEvent::setEventEnabled));
 				usertypeDefinition.set("projectileHitActor", sol::property(&MobileProjectileActorCollisionEvent::getEventEnabled, &MobileProjectileActorCollisionEvent::setEventEnabled));
+				usertypeDefinition.set("projectileHitObject", sol::property(&MobileProjectileObjectCollisionEvent::getEventEnabled, &MobileProjectileObjectCollisionEvent::setEventEnabled));
+				usertypeDefinition.set("projectileHitTerrain", sol::property(&MobileProjectileTerrainCollisionEvent::getEventEnabled, &MobileProjectileTerrainCollisionEvent::setEventEnabled));
 				usertypeDefinition.set("referenceSceneNodeCreated", sol::property(&ReferenceSceneNodeCreatedEvent::getEventEnabled, &ReferenceSceneNodeCreatedEvent::setEventEnabled));
 				usertypeDefinition.set("restInterrupt", sol::property(&RestInterruptEvent::getEventEnabled, &RestInterruptEvent::setEventEnabled));
 				usertypeDefinition.set("save", sol::property(&SaveGameEvent::getEventEnabled, &SaveGameEvent::setEventEnabled));

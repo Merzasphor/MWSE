@@ -8,9 +8,9 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class MobileProjectileActorCollisionEvent : public ObjectFilteredEvent, public DisableableEvent<MobileProjectileActorCollisionEvent> {
+			class MobileProjectileObjectCollisionEvent : public ObjectFilteredEvent, public DisableableEvent<MobileProjectileObjectCollisionEvent> {
 			public:
-				MobileProjectileActorCollisionEvent(TES3::MobileProjectile* projectile, TES3::Reference* targetReference, TES3::Vector3& point, TES3::Vector3& pos, TES3::Vector3& vel);
+				MobileProjectileObjectCollisionEvent(TES3::MobileProjectile* projectile, TES3::Reference* targetReference, TES3::Vector3& point, TES3::Vector3& pos, TES3::Vector3& vel);
 				sol::table createEventTable();
 
 			protected:

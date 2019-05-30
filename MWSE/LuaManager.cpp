@@ -69,6 +69,7 @@
 #include "TES3ClassLua.h"
 #include "TES3ClothingLua.h"
 #include "TES3CollectionsLua.h"
+#include "TES3CollisionLua.h"
 #include "TES3CombatSessionLua.h"
 #include "TES3ContainerLua.h"
 #include "TES3CreatureLua.h"
@@ -390,6 +391,7 @@ namespace mwse {
 			bindTES3Class();
 			bindTES3Clothing();
 			bindTES3Collections();
+			bindTES3Collision();
 			bindTES3CombatSession();
 			bindTES3Container();
 			bindTES3Creature();
@@ -2844,9 +2846,9 @@ namespace mwse {
 
 			// Collision events: Mobile Projectile
 			overrideVirtualTableEnforced(0x74B2B4, 0x80, 0x573860, reinterpret_cast<DWORD>(OnMobileProjectileActorCollision));
-#if false
 			overrideVirtualTableEnforced(0x74B2B4, 0x84, 0x573820, reinterpret_cast<DWORD>(OnMobileProjectileObjectCollision));
 			overrideVirtualTableEnforced(0x74B2B4, 0x88, 0x5737F0, reinterpret_cast<DWORD>(OnMobileProjectileTerrainCollision));
+#if false
 			overrideVirtualTableEnforced(0x74B2B4, 0x8C, 0x573790, reinterpret_cast<DWORD>(OnMobileProjectileWaterCollision));
 #endif
 
