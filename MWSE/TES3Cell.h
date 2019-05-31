@@ -20,14 +20,6 @@ namespace TES3 {
 		};
 	}
 
-	struct CellExteriorData {
-		int size; // 0x0
-		Cell* cell; // 0x4
-		int gridX; // 0x8
-		int gridY; // 0xC
-	};
-	static_assert(sizeof(CellExteriorData) == 0x10, "TES3::CellExteriorData failed size validation");
-	
 	struct PackedColor {
 		unsigned char r; // 0x0
 		unsigned char g; // 0x1
@@ -66,7 +58,12 @@ namespace TES3 {
 		NI::Node * pickObjectsRoot;
 		CellFlag::value_type cellFlags; // 0x18
 		union {
-			CellExteriorData exterior;
+			struct {
+				TES3::PackedColor regionMapColor; // 0x0
+				void* landscape; // 0x4
+				int gridX; // 0x8
+				int gridY; // 0xC
+			} exterior;
 			struct {
 				PackedColor ambientColor; // 0x0
 				PackedColor sunColor; // 0x4

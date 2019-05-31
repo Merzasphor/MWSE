@@ -73,21 +73,6 @@ namespace mwse {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
 
-			// Binding for TES3::CellExteriorData
-			{
-				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TES3::CellExteriorData>();
-				usertypeDefinition.set("new", sol::no_constructor);
-
-				// Basic property binding.
-				usertypeDefinition.set("cell", sol::readonly_property(&TES3::CellExteriorData::cell));
-				usertypeDefinition.set("gridX", sol::readonly_property(&TES3::CellExteriorData::gridX));
-				usertypeDefinition.set("gridY", sol::readonly_property(&TES3::CellExteriorData::gridY));
-
-				// Finish up our usertype.
-				state.set_usertype("tes3cellExteriorData", usertypeDefinition);
-			}
-
 			// Binding for TES3::PackedColor
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
@@ -177,11 +162,13 @@ namespace mwse {
 					[](TES3::Cell& self) { return self.name; },
 					[](TES3::Cell& self, const char* name) { self.setName(name); }
 					));
+				usertypeDefinition.set("pickObjectsRoot", sol::readonly_property(&TES3::Cell::pickObjectsRoot));
 				usertypeDefinition.set("region", sol::readonly_property(&TES3::Cell::getRegion));
 				usertypeDefinition.set("restingIsIllegal", sol::property(
 					[](TES3::Cell& self) { return self.getCellFlag(TES3::CellFlag::SleepIsIllegal); },
 					[](TES3::Cell& self, bool set) { self.setCellFlag(TES3::CellFlag::SleepIsIllegal, set); }
 				));
+				usertypeDefinition.set("staticObjectsRoot", sol::readonly_property(&TES3::Cell::staticObjectsRoot));
 				usertypeDefinition.set("sunColor", sol::readonly_property(
 					[](TES3::Cell& self) -> TES3::PackedColor*
 				{

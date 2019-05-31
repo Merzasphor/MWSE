@@ -161,14 +161,20 @@ namespace TES3 {
 	}
 
 	struct DataHandler {
+		struct ExteriorCellData {
+			unsigned char loadingFlags;
+			Cell * cell;
+			void * landRenderData;
+		};
+
 		NonDynamicData * nonDynamicData; // 0x0
-		CellExteriorData* exteriorCellData[9]; // 0x4
-		void * unknown_0x28[25]; // 0x28
+		ExteriorCellData* exteriorCellData[9]; // 0x4
+		ExteriorCellData* backgroundLoadExteriorCellData[25]; // 0x28
 		NI::Node * worldObjectRoot; // 0x8C
 		NI::Node * worldPickObjectRoot; // 0x90
 		NI::Node * worldLandscapeRoot; // 0x94
 		NI::DirectionalLight * sgSunlight;
-		void * sgFogProperty;
+		NI::FogProperty * sgFogProperty;
 		int centralGridX; // 0xA0
 		int centralGridY; // 0xA4
 		bool cellChanged; // 0xA8
@@ -198,11 +204,8 @@ namespace TES3 {
 		char unknown_0xB4E5;
 		char unknown_0xB4E6;
 		char unknown_0xB4E7;
-		char unknown_0xB4E8;
-		char unknown_0xB4E9;
-		char unknown_0xB4EA;
-		char unknown_0xB4EB;
-		int unknown_0xB4EC;
+		void * textureManager;
+		void * waterController;
 		int unknown_0xB4F0;
 		int unknown_0xB4F4;
 		char unknown_0xB4F8;
@@ -249,15 +252,9 @@ namespace TES3 {
 		char unknown_0xB53F;
 		Cell * currentCell; // 0xB540
 		Cell * lastExteriorCell; // 0xB544
-		char unknown_0xB548;
-		char unknown_0xB549;
-		char unknown_0xB54A;
-		char unknown_0xB54B;
-		char unknown_0xB54C;
-		char unknown_0xB54D;
-		char unknown_0xB54E;
-		char unknown_0xB54F;
-		long exteriorCellDataBufferSize; // 0xB550
+		Sound * soundRegionalRandomSfx; // 0xB548
+		Sound * currentAmbientWaterSound; // 0xB54C
+		int exteriorCellDataBufferSize; // 0xB550
 		void * exteriorCellDataBuffer; // 0xB554
 
 		// Get singleton.
@@ -284,4 +281,5 @@ namespace TES3 {
 	static_assert(offsetof(DataHandler, soundEvents) == 0xB4D0, "TES3::DataHandler failed offset validation");
 	static_assert(offsetof(DataHandler, backgroundThreadID) == 0xB4FC, "TES3::DataHandler failed offset validation");
 	static_assert(offsetof(DataHandler, currentCell) == 0xB540, "TES3::DataHandler failed offset validation");
+	static_assert(sizeof(DataHandler::ExteriorCellData) == 0xC, "TES3::DataHandler::ExteriorCellData failed size validation");
 }

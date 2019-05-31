@@ -1836,7 +1836,7 @@ namespace mwse {
 					int exteriorCount = 0;
 					for (size_t i = 0; i < 9; i++) {
 						auto cellDataPointer = dataHandler->exteriorCellData[i];
-						if (cellDataPointer && cellDataPointer->size >= 1) {
+						if (cellDataPointer && cellDataPointer->loadingFlags >= 1) {
 							exteriorCount++;
 							result[exteriorCount] = makeLuaObject(cellDataPointer->cell);
 						}
