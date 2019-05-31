@@ -13,7 +13,7 @@ namespace mwse {
 			usertypeDefinition.set("refCount", sol::readonly_property(&NI::Object::refCount));
 
 			// Basic function binding.
-			usertypeDefinition.set("clone", [](NI::Object& self) { return makeLuaObject(self.createClone()); });
+			usertypeDefinition.set("clone", [](NI::Object& self) { return makeLuaNiPointer(self.createClone()); });
 			usertypeDefinition.set("isOfType", static_cast<bool (__thiscall NI::Object::*)(uintptr_t)>(&NI::Object::isOfType));
 			usertypeDefinition.set("isInstanceOfType", static_cast<bool (__thiscall NI::Object::*)(uintptr_t)>(&NI::Object::isInstanceOfType));
 
@@ -48,7 +48,6 @@ namespace mwse {
 			// Basic property binding.
 			usertypeDefinition.set("properties", sol::readonly_property(&NI::AVObject::propertyNode));
 			usertypeDefinition.set("flags", &NI::AVObject::flags);
-			usertypeDefinition.set("rotation", &NI::AVObject::localRotation);
 			usertypeDefinition.set("scale", &NI::AVObject::localScale);
 			usertypeDefinition.set("translation", &NI::AVObject::localTranslate);
 			usertypeDefinition.set("worldBoundOrigin", &NI::AVObject::worldBoundOrigin);
@@ -74,9 +73,9 @@ namespace mwse {
 			usertypeDefinition.set("updateProperties", &NI::AVObject::updateProperties);
 
 			// Functions that need their results wrapped.
-			usertypeDefinition.set("getObjectByName", [](NI::AVObject& self, const char* name) { return makeLuaObject(self.getObjectByName(name)); });
+			usertypeDefinition.set("getObjectByName", [](NI::AVObject& self, const char* name) { return makeLuaNiPointer(self.getObjectByName(name)); });
 			usertypeDefinition.set("getProperty", [](NI::AVObject& self, int type) { return makeLuaNiPointer(self.getProperty(NI::PropertyType(type))); });
-			usertypeDefinition.set("parent", sol::readonly_property([](NI::AVObject& self) { return makeLuaObject(self.parentNode); }));
+			usertypeDefinition.set("parent", sol::readonly_property([](NI::AVObject& self) { return makeLuaNiPointer(self.parentNode); }));
 
 			// Make remove property a bit more friendly.
 			usertypeDefinition.set("detachProperty", [](NI::AVObject& self, int type) {
