@@ -5,7 +5,7 @@
 
 namespace mwse {
 	namespace lua {
-		// Speed-optimized binding for NI::AVObject.
+		// Speed-optimized binding for NI::Node.
 		template <typename T>
 		void setUserdataForNINode(sol::simple_usertype<T>& usertypeDefinition) {
 			setUserdataForNIAVObject(usertypeDefinition);

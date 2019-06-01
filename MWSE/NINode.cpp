@@ -10,7 +10,8 @@ namespace NI {
 	}
 
 	Node::~Node() {
-		vTable.asObject->destructor(this, 1);
+		// Call dtor without deletion.
+		vTable.asObject->destructor(this, 0);
 	}
 
 	void Node::attachChild(AVObject * child, bool useFirstAvailable) {
@@ -23,6 +24,10 @@ namespace NI {
 
 	void Node::detachChildAt(AVObject ** out_detached, unsigned int index) {
 		vTable.asNode->detachChildAt(this, out_detached, index);
+	}
+
+	void Node::setChildAt(AVObject ** out_detached, unsigned int index, AVObject * child) {
+		vTable.asNode->setChildAt(this, out_detached, index, child);
 	}
 
 	Pointer<DynamicEffect> Node::getEffect(int type) {
