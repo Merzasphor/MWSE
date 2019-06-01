@@ -112,6 +112,8 @@
     <ClInclude Include="LuaWeatherTransitionFinishedEvent.h" />
     <ClInclude Include="LuaWeatherTransitionStartedEvent.h" />
     <ClInclude Include="NIAmbientLight.h" />
+    <ClInclude Include="NICollisionSwitch.h" />
+    <ClInclude Include="NICollisionSwitchLua.h" />
     <ClInclude Include="NIColor.h" />
     <ClInclude Include="NIColorLua.h" />
     <ClInclude Include="NIDirectionalLight.h" />
@@ -484,6 +486,7 @@
     <ClCompile Include="MgeTes3Machine.cpp" />
     <ClCompile Include="NIAVObject.cpp" />
     <ClCompile Include="NICameraLua.cpp" />
+    <ClCompile Include="NICollisionSwitchLua.cpp" />
     <ClCompile Include="NIColor.cpp" />
     <ClCompile Include="NIColorLua.cpp" />
     <ClCompile Include="NIDynamicEffect.cpp" />

@@ -9,6 +9,7 @@
 #include "NIAmbientLight.h"
 #include "NIAVObject.h"
 #include "NICamera.h"
+#include "NICollisionSwitch.h"
 #include "NIDefines.h"
 #include "NIDirectionalLight.h"
 #include "NINode.h"
@@ -590,6 +591,8 @@ namespace mwse {
 				return sol::make_object(state, reinterpret_cast<NI::AVObject*>(object));
 			case NI::RTTIStaticPtr::NiCamera:
 				return sol::make_object(state, reinterpret_cast<NI::Camera*>(object));
+			case NI::RTTIStaticPtr::NiCollisionSwitch:
+				return sol::make_object(state, reinterpret_cast<NI::CollisionSwitch*>(object));
 			case NI::RTTIStaticPtr::NiDirectionalLight:
 				return sol::make_object(state, reinterpret_cast<NI::DirectionalLight*>(object));
 			case NI::RTTIStaticPtr::NiFogProperty:
@@ -663,6 +666,8 @@ namespace mwse {
 				return sol::make_object(state, NI::Pointer<NI::AVObject>(reinterpret_cast<NI::AVObject*>(object)));
 			case NI::RTTIStaticPtr::NiCamera:
 				return sol::make_object(state, NI::Pointer<NI::Camera>(reinterpret_cast<NI::Camera*>(object)));
+			case NI::RTTIStaticPtr::NiCollisionSwitch:
+				return sol::make_object(state, NI::Pointer<NI::CollisionSwitch>(reinterpret_cast<NI::CollisionSwitch*>(object)));
 			case NI::RTTIStaticPtr::NiDirectionalLight:
 				return sol::make_object(state, NI::Pointer<NI::DirectionalLight>(reinterpret_cast<NI::DirectionalLight*>(object)));
 			case NI::RTTIStaticPtr::NiFogProperty:
