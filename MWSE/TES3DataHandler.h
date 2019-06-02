@@ -109,9 +109,6 @@ namespace TES3 {
 		// Custom functions.
 		//
 
-		// Path is relative to Data Files.
-		NI::Pointer<NI::Object> loadMesh(const char* path);
-
 		// Wrapper around resolveObject that enforces type.
 		template <typename T>
 		__declspec(dllexport) T * resolveObjectByType(const char* id, ObjectType::ObjectType type = ObjectType::Invalid) {
