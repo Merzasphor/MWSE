@@ -70,11 +70,6 @@ namespace mwse {
 			// Generic TES3::Object STL collections.
 			bindGenericObjectStlList<TES3::Cell>("tes3cellStlList", "tes3cellStlListNode");
 
-			// Basic TArray bindings.
-			bindTArray<TES3::ItemData>("tes3itemDataTArray");
-			bindTArray<NI::PickRecord>("niTArrayPickRecord");
-			bindTArray<NI::TexturingProperty::Map>("niTArrayTexturingPropertyMap");
-
 			// Bind some iterators.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;

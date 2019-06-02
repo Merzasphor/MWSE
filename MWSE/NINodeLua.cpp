@@ -12,7 +12,7 @@
 
 #include "TES3Collections.h"
 
-#include "TES3CollectionsLua.h"
+#include "TES3TArrayLua.h"
 
 namespace mwse {
 	namespace lua {
