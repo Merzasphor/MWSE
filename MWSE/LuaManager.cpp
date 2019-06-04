@@ -3003,6 +3003,7 @@ namespace mwse {
 			genCallEnforced(0x5B15AB, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuClassMessage
 			genCallEnforced(0x5B2358, 0x5B23E0, reinterpret_cast<DWORD>(OnUICreatedAfterConsoleMenuFocus)); // MenuConsole
 			genCallEnforced(0x5B2E35, 0x595350, reinterpret_cast<DWORD>(OnUICreatedAfterConsoleMenuShown)); // MenuConsole
+			genCallEnforced(0x5B2E56, 0x595350, reinterpret_cast<DWORD>(OnUICreatedAfterConsoleMenuShown)); // MenuConsole
 			genCallEnforced(0x5B4696, 0x582F20, reinterpret_cast<DWORD>(OnUICreatedAfterMenuVisibleEvent)); // MenuContents
 			genCallEnforced(0x5BA6E7, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuCreateClass
 			genCallEnforced(0x5BC460, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuCtrls
