@@ -303,9 +303,6 @@
     <ClInclude Include="TES3Container.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="TES3CombatSession.h">
-      <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
-    </ClInclude>
     <ClInclude Include="TES3Inventory.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Actor</Filter>
     </ClInclude>
@@ -1134,9 +1131,6 @@
     <ClInclude Include="NIProperty.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
-    <ClInclude Include="TES3Fader.h">
-      <Filter>Header Files\DataAdapters\TES3\Worldspace</Filter>
-    </ClInclude>
     <ClInclude Include="LuaBookGetTextEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
@@ -1283,6 +1277,12 @@
     </ClInclude>
     <ClInclude Include="TES3TArrayLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Fader.h">
+      <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3CombatSession.h">
+      <Filter>Header Files\DataAdapters\TES3\AI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

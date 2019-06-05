@@ -2597,7 +2597,7 @@ namespace mwse {
 
 				// Drop the item.
 				mobile->dropItem(item, itemData, count, matchExact);
-				auto droppedReference = mobile->getCell()->statics.tail;
+				auto droppedReference = mobile->getCell()->temporaryRefs.tail;
 
 				// Update inventory tiles if needed.
 				if (getOptionalParam<bool>(params, "updateGUI", true)) {

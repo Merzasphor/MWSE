@@ -46,7 +46,12 @@ namespace TES3 {
 				} * targetCellXY;
 			} duringLoad;
 		};
-		struct struct_0x84 {
+		struct SourceMod {
+			GameFile * sourceFile;
+			unsigned int fileOffsetCellRecord;
+			unsigned int fileOffsetTempRefs;
+		};
+		struct MappingVisuals {
 			int unknown_0x0;
 			int unknown_0x4;
 			int unknown_0x8;
@@ -54,13 +59,14 @@ namespace TES3 {
 			int unknown_0x10;
 			NI::Pointer<NI::SourceTexture> texture; // 0x14
 		};
+
 		char * name; // 0x10
 		NI::Node * pickObjectsRoot;
 		CellFlag::value_type cellFlags; // 0x18
 		union {
 			struct {
 				TES3::PackedColor regionMapColor; // 0x0
-				void* landscape; // 0x4
+				void * landscape; // 0x4
 				int gridX; // 0x8
 				int gridY; // 0xC
 			} exterior;
@@ -73,14 +79,14 @@ namespace TES3 {
 		} VariantData; // 0x1C
 		NI::Node * staticObjectsRoot;
 		ReferenceList actors; // 0x30
-		ReferenceList activators; // 0x40
+		ReferenceList persistentRefs; // 0x40
 		Iterator<MovedRef> * movedReferences; // 0x50
-		int unknown_0x54;
-		ReferenceList statics; // 0x58
-		Iterator<void> allSourceMods; // 0x68
-		int unknown_0x7C;
-		int unknown_0x80;
-		struct_0x84 * unknown_0x84;
+		Iterator<unsigned int> * moveRefSourceIDs; // 0x54
+		ReferenceList temporaryRefs; // 0x58
+		Iterator<SourceMod> allSourceMods; // 0x68
+		void * fogOfWarData;
+		GameFile * lastModifyingFile;
+		MappingVisuals * mappingVisuals;
 		Iterator<MapNote> * mapNotes; // 0x88
 		void * pathGrid; // 0x8C
 		union {
@@ -127,4 +133,7 @@ namespace TES3 {
 		static int toGridCoord(float x) { return int(x) >> 13;  }
 	};
 	static_assert(sizeof(Cell) == 0x94, "TES3::Cell failed size validation");
+	static_assert(sizeof(Cell::MovedRef) == 0x10, "TES3::Cell::MovedRef failed size validation");
+	static_assert(sizeof(Cell::SourceMod) == 0xC, "TES3::Cell::SourceMod failed size validation");
+	static_assert(sizeof(Cell::MappingVisuals) == 0x18, "TES3::Cell::MappingVisuals failed size validation");
 }
