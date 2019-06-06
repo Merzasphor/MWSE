@@ -762,6 +762,8 @@ namespace mwse {
 			MGEGetSunColour = 0x3727,
 			MGEGetSunDir = 0x3728,
 			MGEGetVersion = 0x3703,
+			MGEGetWeatherDLFog = 0x3A8A,
+			MGEGetWeatherPPLLight = 0x3A8C,
 			MGEGetWidth = 0x3704,
 			MGEGetZoom = 0x3777,
 			MGEHammerKey = 0x3736,
@@ -860,6 +862,8 @@ namespace mwse {
 			MGESetTexDrawColour = 0x377F,
 			MGESetTexDrawOrigin = 0x377D,
 			MGESetTexDrawScale = 0x377E,
+			MGESetWeatherDLFog = 0x3A8B,
+			MGESetWeatherPPLLight = 0x3A8D,
 			MGESetZoom = 0x3774,
 			MGEShaderSetFloat = 0x3AB2,
 			MGEShaderSetLong = 0x3AB3,
@@ -901,6 +905,7 @@ namespace mwse {
 			MGEZoomOutBy = 0x3773,
 			xGetDeleted = 0x3A05,
 			xGetGS = 0x3A00,
+			xGetWeatherScattering = 0x3A89,
 			xIsAirborne = 0x3AEA,
 			xIsScripted = 0x3A06,
 			xLastActorHit = 0x3A07,
@@ -925,7 +930,6 @@ namespace mwse {
 			xSetWeatherSun = 0x3A83,
 			xSetWeatherWindSpeed = 0x3A88,
 			xTransformVec = 0x3AE9
-
 		};
 	}
 }

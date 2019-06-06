@@ -3413,6 +3413,44 @@ function
     Param2 = Float
 	Opcode = 0x3a88
 end
+function
+	Name = XGetWeatherScattering
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Float | Many
+	Opcode = 0x3a89
+end
+function
+	Name = MGEGetWeatherDLFog
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Float | Many
+    Param1 = Short
+	Opcode = 0x3a8a
+end
+function
+	Name = MGESetWeatherDLFog
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = None
+    Param1 = Short
+    Param2 = Float
+    Param3 = Float
+	Opcode = 0x3a8b
+end
+function
+	Name = MGEGetWeatherPPLLight
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = Float | Many
+    Param1 = Short
+	Opcode = 0x3a8c
+end
+function
+	Name = MGESetWeatherPPLLight
+	Options = MWSE | AllowGlobal | ShortVar | AllowVar
+	Return = None
+    Param1 = Short
+    Param2 = Float
+    Param3 = Float
+	Opcode = 0x3a8d
+end
 
 function
 	Name = MGEEnableShader

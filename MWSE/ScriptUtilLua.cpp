@@ -935,7 +935,50 @@ namespace mwse {
 				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::xSetWeatherScattering);
 				return true;
 			};
+			state["mge"]["getWeatherScattering"] = []() {
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table inscatter = state.create_table();
+				sol::table outscatter = state.create_table();
 
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::xGetWeatherScattering);
+				inscatter[3] = Stack::getInstance().popFloat();
+				inscatter[2] = Stack::getInstance().popFloat();
+				inscatter[1] = Stack::getInstance().popFloat();
+				outscatter[3] = Stack::getInstance().popFloat();
+				outscatter[2] = Stack::getInstance().popFloat();
+				outscatter[1] = Stack::getInstance().popFloat();
+
+				return std::make_tuple(outscatter, inscatter);
+			};
+			state["mge"]["getWeatherDLFog"] = [](int weatherID) {
+				Stack::getInstance().pushLong(weatherID);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEGetWeatherDLFog);
+
+				float fogOffset = Stack::getInstance().popFloat();
+				float fogDistMult = Stack::getInstance().popFloat();
+				return std::make_tuple(fogDistMult, fogOffset);
+			};
+			state["mge"]["setWeatherDLFog"] = [](int weatherID, float fogDistMult, float fogOffset) {
+				Stack::getInstance().pushFloat(fogOffset);
+				Stack::getInstance().pushFloat(fogDistMult);
+				Stack::getInstance().pushLong(weatherID);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGESetWeatherDLFog);
+			};
+			state["mge"]["getWeatherPPLLight"] = [](int weatherID) {
+				Stack::getInstance().pushLong(weatherID);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEGetWeatherPPLLight);
+
+				float ambMult = Stack::getInstance().popFloat();
+				float sunMult = Stack::getInstance().popFloat();
+				return std::make_tuple(sunMult, ambMult);
+			};
+			state["mge"]["setWeatherPPLLight"] = [](int weatherID, float sunMult, float ambMult) {
+				Stack::getInstance().pushFloat(ambMult);
+				Stack::getInstance().pushFloat(sunMult);
+				Stack::getInstance().pushLong(weatherID);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGESetWeatherPPLLight);
+			};
 		}
 	}
 }
