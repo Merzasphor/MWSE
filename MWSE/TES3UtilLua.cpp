@@ -2275,6 +2275,10 @@ namespace mwse {
 				TES3::Actor * toActor = static_cast<TES3::Actor*>(toReference->baseObject);
 				if (!toActor->isActor()) {
 					// It's a reference. This is the easy part.
+					// Return nil if there is already itemData, or return the newly-created itemData.
+					if (toReference->getAttachedItemData()) {
+						return nullptr;
+					}
 					return toReference->getOrCreateAttachedItemData();
 				}
 
@@ -2292,7 +2296,7 @@ namespace mwse {
 				// Try to find an ItemData-less item and add ItemData for it.
 				TES3::ItemStack * stack = toActor->inventory.findItemStack(item);
 				if (!stack || stack->count < 1) {
-					throw std::runtime_error("The actor does possess any of 'item'.");
+					throw std::runtime_error("The actor does not possess any of 'item'.");
 				}
 
 				if (!stack->variables) {
