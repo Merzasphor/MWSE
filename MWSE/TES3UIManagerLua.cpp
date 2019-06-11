@@ -439,6 +439,7 @@ namespace mwse {
 			tes3ui["enterMenuMode"] = TES3::UI::enterMenuMode;
 			tes3ui["leaveMenuMode"] = TES3::UI::leaveMenuMode;
 			tes3ui["acquireTextInput"] = TES3::UI::acquireTextInput;
+			tes3ui["captureMouseDrag"] = TES3::UI::captureMouseDrag;
 			tes3ui["getPalette"] = [](const char* name) {
 				auto& luaManager = LuaManager::getInstance();
 				auto stateHandle = luaManager.getThreadSafeStateHandle();

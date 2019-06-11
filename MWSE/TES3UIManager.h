@@ -17,6 +17,7 @@ namespace TES3 {
 		__declspec(dllexport) Boolean enterMenuMode(UI_ID id);
 		__declspec(dllexport) Boolean leaveMenuMode();
 		__declspec(dllexport) void acquireTextInput(Element* element);
+		__declspec(dllexport) void captureMouseDrag(bool capture);
 		__declspec(dllexport) void preventInventoryMenuToggle(Element* menu);
 		__declspec(dllexport) Vector3 getPaletteColour(Property prop);
 

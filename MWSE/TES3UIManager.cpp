@@ -14,6 +14,7 @@ namespace TES3 {
 
 		const auto TES3_uiMainRoot = reinterpret_cast<Element* const*>(0x7D1C28);
 		const auto TES3_uiHelpRoot = reinterpret_cast<Element* const*>(0x7D1C74);
+		const auto TES3_ui_captureMouseDrag = reinterpret_cast<bool*>(0x7D207D);
 
 		const auto TES3_ui_registerID = reinterpret_cast<UI_ID (__cdecl *)(const char *)>(0x58DF10);
 		const auto TES3_ui_createChildElement = reinterpret_cast<Element* (__thiscall *)(Element*)>(0x582B50);
@@ -85,6 +86,10 @@ namespace TES3 {
 
 		void acquireTextInput(Element* element) {
 			TES3::WorldController::get()->menuController->menuInputController->acquireTextInput(element);
+		}
+
+		void captureMouseDrag(bool capture) {
+			*TES3_ui_captureMouseDrag = capture;
 		}
 
 		void preventInventoryMenuToggle(Element* menu) {
