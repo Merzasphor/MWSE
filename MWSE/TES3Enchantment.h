@@ -23,9 +23,9 @@ namespace TES3 {
 	struct Enchantment : Object {
 		char * objectID; // 0x28
 		EnchantmentCastType castType; // 0x2C
-		short chargeCost; // 0x2E
-		short maxCharge; // 0x30
-		short magickaCost; // 0x32
+		unsigned short chargeCost; // 0x2E
+		unsigned short maxCharge; // 0x30
+		short pad_32; // 0x32
 		Effect effects[8]; // 0x34
 		EnchantmentFlags::value_type flags; // 0xF4
 

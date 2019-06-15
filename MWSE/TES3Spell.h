@@ -53,7 +53,7 @@ namespace TES3 {
 		char * name; // 0x2C
 		SpellCastType::value_type castType; // 0x30
 		char unknown_0x31; // Undefined.
-		short magickaCost; // 0x32
+		unsigned short magickaCost; // 0x32
 		Effect effects[8]; // 0x34
 		SpellFlag::value_type spellFlags; //  0xF4
 

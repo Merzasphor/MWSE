@@ -100,7 +100,7 @@ namespace TES3 {
 
 	struct AIPackageWander : AIPackage {
 		struct Config : AIPackageConfig {
-			short range; // 0x4
+			unsigned short range; // 0x4
 			unsigned char duration; // 0x6
 			unsigned char time; // 0x7
 			unsigned char idles[8]; // 0x08

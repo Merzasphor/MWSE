@@ -24,7 +24,7 @@ namespace TES3 {
 		char * model; // 0x4C
 		char * icon; // 0x50
 		float weight; // 0x54
-		short value; // 0x58
+		unsigned short value; // 0x58
 		Effect effects[8]; // 0x5C
 		AlchemyFlag::value_type flags; // 0x011C
 

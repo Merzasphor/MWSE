@@ -24,7 +24,6 @@ namespace mwse {
 			usertypeDefinition.set("castType", &TES3::Enchantment::castType);
 			usertypeDefinition.set("chargeCost", &TES3::Enchantment::chargeCost);
 			usertypeDefinition.set("flags", &TES3::Enchantment::flags);
-			usertypeDefinition.set("magickaCost", &TES3::Enchantment::magickaCost);
 			usertypeDefinition.set("maxCharge", &TES3::Enchantment::maxCharge);
 
 			// Indirect bindings to unions and arrays.
