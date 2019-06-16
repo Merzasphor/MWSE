@@ -26,7 +26,7 @@ namespace mwse {
 		template <typename T>
 		sol::optional<std::tuple<int, sol::object>> bindTArray_pairsIter(sol::user<TArray_iteratorState<T>&> user_state, sol::this_state l) {
 			TArray_iteratorState<T>& state = user_state;
-			if (state.index >= state.tarray->filledCount) {
+			if (state.index >= state.tarray->endIndex) {
 				return sol::optional<std::tuple<int, sol::object>>();
 			}
 
@@ -37,7 +37,7 @@ namespace mwse {
 
 		template <typename T>
 		sol::optional<std::tuple<int, sol::object>> bindTArray_ipairsIter(TES3::TArray<T> * tarray, int index, sol::this_state l) {
-			if (++index > tarray->filledCount) {
+			if (++index > tarray->endIndex) {
 				return sol::optional<std::tuple<int, sol::object>>();
 			}
 
@@ -63,7 +63,7 @@ namespace mwse {
 				});
 			usertypeDefinition.set(sol::meta_function::index, [](TES3::TArray<T>& self, int index) {
 				index--;
-				if (index < 0 || index > self.endIndex) {
+				if (index < 0 || index >= self.endIndex) {
 					throw std::out_of_range("Access index out of bounds.");
 				}
 				return self.storage[index];
@@ -85,7 +85,7 @@ namespace mwse {
 		template <typename T>
 		sol::optional<std::tuple<int, sol::object>> bindGenericObjectTArray_pairsIter(sol::user<TArray_iteratorState<T>&> user_state, sol::this_state l) {
 			TArray_iteratorState<T>& state = user_state;
-			if (state.index >= state.tarray->filledCount) {
+			if (state.index >= state.tarray->endIndex) {
 				return sol::optional<std::tuple<int, sol::object>>();
 			}
 
@@ -96,7 +96,7 @@ namespace mwse {
 
 		template <typename T>
 		sol::optional<std::tuple<int, sol::object>> bindGenericObjectTArray_ipairsIter(TES3::TArray<T> * tarray, int index, sol::this_state l) {
-			if (++index > tarray->filledCount) {
+			if (++index > tarray->endIndex) {
 				return sol::optional<std::tuple<int, sol::object>>();
 			}
 
@@ -122,7 +122,7 @@ namespace mwse {
 				});
 			usertypeDefinition.set(sol::meta_function::index, [](TES3::TArray<T>& self, int index) {
 				index--;
-				if (index < 0 || index > self.endIndex) {
+				if (index < 0 || index >= self.endIndex) {
 					throw std::out_of_range("Access index out of bounds.");
 				}
 				return makeLuaObject(self.storage[index]);
