@@ -238,12 +238,9 @@ namespace TES3 {
 		char unknown_0xB531;
 		char unknown_0xB532;
 		char unknown_0xB533;
-		char unknown_0xB534;
-		char unknown_0xB535;
-		char unknown_0xB536;
-		char unknown_0xB537;
-		int criticalSection; // 0xB538
-		char unknown_0xB53C;
+		void * criticalSectionAudioEvents; // 0xB534
+		void * criticalSection; // 0xB538
+		bool useCellTransitionFader;
 		char unknown_0xB53D;
 		char unknown_0xB53E;
 		char unknown_0xB53F;

@@ -1883,6 +1883,14 @@ namespace mwse {
 
 				// Are we dealing with the player? If so, use the special functions.
 				if (mobile == macp) {
+					sol::optional<bool> suppressFaderOpt = params["suppressFader"];
+					bool suppressFader = suppressFaderOpt.value_or(false);
+					bool faderInitialState = TES3::DataHandler::get()->useCellTransitionFader;
+
+					if (suppressFader) {
+						TES3::DataHandler::get()->useCellTransitionFader = false;
+					}
+
 					sol::optional<bool> teleportCompanions = params["teleportCompanions"];
 					if (teleportCompanions.value_or(true) && macp->listFriendlyActors.size > 0) {
 						const auto TES3_cellChangeWithCompanions = reinterpret_cast<void(__cdecl*)(TES3::Vector3, TES3::Vector3, TES3::Cell*)>(0x45C9B0);
@@ -1892,6 +1900,10 @@ namespace mwse {
 						const auto TES3_cellChange = reinterpret_cast<void(__cdecl*)(TES3::Vector3, TES3::Vector3, TES3::Cell*, int)>(0x45CEF0);
 						sol::optional<bool> flag = params["flag"];
 						TES3_cellChange(position.value(), orientation.value(), cell, flag.value_or(true));
+					}
+
+					if (suppressFader) {
+						TES3::DataHandler::get()->useCellTransitionFader = faderInitialState;
 					}
 				}
 				else {
