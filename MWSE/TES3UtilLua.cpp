@@ -1865,28 +1865,38 @@ namespace mwse {
 				// Get the orientation.
 				sol::optional<TES3::Vector3> orientation = getOptionalParamVector3(params, "orientation");
 				if (!orientation) {
-					return false;
+					orientation = mobile->reference->orientation;
 				}
 
 				// Get the cell.
 				TES3::Cell * cell = getOptionalParamCell(params, "cell");
 				if (cell == nullptr) {
-					return false;
+					// Try to find an exterior cell from the position.
+					int gridX = TES3::Cell::toGridCoord(position.value().x);
+					int gridY = TES3::Cell::toGridCoord(position.value().y);
+					cell = TES3::DataHandler::get()->nonDynamicData->getCellByGrid(gridX, gridY);
+
+					if (cell == nullptr) {
+						return false;
+					}
 				}
 
 				// Are we dealing with the player? If so, use the special functions.
 				if (mobile == macp) {
 					sol::optional<bool> teleportCompanions = params["teleportCompanions"];
 					if (teleportCompanions.value_or(true) && macp->listFriendlyActors.size > 0) {
-						reinterpret_cast<void(__cdecl*)(TES3::Vector3, TES3::Vector3, TES3::Cell*)>(0x45C9B0)(position.value(), orientation.value(), cell);
+						const auto TES3_cellChangeWithCompanions = reinterpret_cast<void(__cdecl*)(TES3::Vector3, TES3::Vector3, TES3::Cell*)>(0x45C9B0);
+						TES3_cellChangeWithCompanions(position.value(), orientation.value(), cell);
 					}
 					else {
+						const auto TES3_cellChange = reinterpret_cast<void(__cdecl*)(TES3::Vector3, TES3::Vector3, TES3::Cell*, int)>(0x45CEF0);
 						sol::optional<bool> flag = params["flag"];
-						reinterpret_cast<void(__cdecl*)(TES3::Vector3, TES3::Vector3, TES3::Cell*, int)>(0x45CEF0)(position.value(), orientation.value(), cell, flag.value_or(true));
+						TES3_cellChange(position.value(), orientation.value(), cell, flag.value_or(true));
 					}
 				}
 				else {
-					reinterpret_cast<void(__cdecl*)(TES3::Reference*, TES3::Cell*, TES3::Vector3*, float)>(0x50EDD0)(mobile->reference, cell, &position.value(), orientation.value().z);
+					const auto TES3_relocateReference = reinterpret_cast<void(__cdecl*)(TES3::Reference*, TES3::Cell*, TES3::Vector3*, float)>(0x50EDD0);
+					TES3_relocateReference(mobile->reference, cell, &position.value(), orientation.value().z);
 				}
 
 				return true;
