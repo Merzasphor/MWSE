@@ -704,6 +704,15 @@ namespace mwse {
 		}
 
 		//
+		// Hook: On Biped parts update.
+		//
+
+		bool __fastcall OnUpdateBipedParts(TES3::Reference* reference) {
+			// Call our wrapper for the function so that events are triggered.
+			return reference->updateBipedParts();
+		}
+
+		//
 		// Hook: On Activate
 		//
 
@@ -2742,6 +2751,25 @@ namespace mwse {
 			genCallEnforced(0x5D09F0, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
 			genCallEnforced(0x5D0B4B, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
 			genCallEnforced(0x5D0C54, 0x496710, reinterpret_cast<DWORD>(OnUnequipped));
+
+			// Event: bodyPartsUpdated.
+			genCallEnforced(0x4E6BFB, 0x4E8B50, reinterpret_cast<DWORD>(OnUpdateBipedParts));
+			genCallEnforced(0x508CFC, 0x4E8B50, reinterpret_cast<DWORD>(OnUpdateBipedParts));
+			genCallEnforced(0x508D86, 0x4E8B50, reinterpret_cast<DWORD>(OnUpdateBipedParts));
+			genCallEnforced(0x508DE8, 0x4E8B50, reinterpret_cast<DWORD>(OnUpdateBipedParts));
+			genCallEnforced(0x5240CE, 0x4E8B50, reinterpret_cast<DWORD>(OnUpdateBipedParts));
+			genCallEnforced(0x52C6E6, 0x4E8B50, reinterpret_cast<DWORD>(OnUpdateBipedParts));
+			genCallEnforced(0x52C95C, 0x4E8B50, reinterpret_cast<DWORD>(OnUpdateBipedParts));
+			genCallEnforced(0x567D17, 0x4E8B50, reinterpret_cast<DWORD>(OnUpdateBipedParts));
+			genCallEnforced(0x567D1F, 0x4E8B50, reinterpret_cast<DWORD>(OnUpdateBipedParts));
+			genCallEnforced(0x56AA8E, 0x4E8B50, reinterpret_cast<DWORD>(OnUpdateBipedParts));
+			genCallEnforced(0x56AAC0, 0x4E8B50, reinterpret_cast<DWORD>(OnUpdateBipedParts));
+			genCallEnforced(0x56B0DE, 0x4E8B50, reinterpret_cast<DWORD>(OnUpdateBipedParts));
+			genCallEnforced(0x56B110, 0x4E8B50, reinterpret_cast<DWORD>(OnUpdateBipedParts));
+			genCallEnforced(0x5D054F, 0x4E8B50, reinterpret_cast<DWORD>(OnUpdateBipedParts));
+			genCallEnforced(0x5D0583, 0x4E8B50, reinterpret_cast<DWORD>(OnUpdateBipedParts));
+			genCallEnforced(0x5D0A1D, 0x4E8B50, reinterpret_cast<DWORD>(OnUpdateBipedParts));
+			genCallEnforced(0x5D0A4F, 0x4E8B50, reinterpret_cast<DWORD>(OnUpdateBipedParts));
 
 			// Event: activate.
 			genCallEnforced(0x41CCC8, 0x4E9610, reinterpret_cast<DWORD>(OnActivate));

@@ -111,7 +111,7 @@ namespace mwse {
 			usertypeDefinition.set("getOrCreateAttachedDynamicLight", &TES3::Reference::getOrCreateAttachedDynamicLight);
 			usertypeDefinition.set("setActionFlag", &TES3::Reference::setActionFlag);
 			usertypeDefinition.set("testActionFlag", &TES3::Reference::testActionFlag);
-			usertypeDefinition.set("updateEquipment", &TES3::Reference::updateEquipment);
+			usertypeDefinition.set("updateEquipment", &TES3::Reference::updateBipedParts);
 
 			// Functions exposed as properties.
 			usertypeDefinition.set("activationReference", sol::property(&TES3::Reference::getActionReference, &TES3::Reference::setActionReference));

@@ -4,6 +4,7 @@
 #include "LuaUtil.h"
 
 #include "LuaActivateEvent.h"
+#include "LuaBodyPartsUpdatedEvent.h"
 #include "LuaReferenceSceneNodeCreatedEvent.h"
 
 #include "TES3Util.h"
@@ -139,9 +140,16 @@ namespace TES3 {
 		return attachment->data;
 	}
 
-	const auto TES3_Reference_updateEquipment = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E8B50);
-	void Reference::updateEquipment() {
-		TES3_Reference_updateEquipment(this);
+	const auto TES3_Reference_updateBipedParts = reinterpret_cast<bool (__thiscall*)(Reference*)>(0x4E8B50);
+	bool Reference::updateBipedParts() {
+		bool result = TES3_Reference_updateBipedParts(this);
+
+		auto actor = getAttachedMobileActor();
+		if (actor && mwse::lua::event::BodyPartsUpdatedEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::BodyPartsUpdatedEvent(this, actor));
+		}
+
+		return result;
 	}
 
 	void Reference::setPositionFromLua(sol::stack_object value) {

@@ -21,6 +21,7 @@
     <ClInclude Include="LuaCrimeWitnessedEvent.h" />
     <ClInclude Include="LuaDisableableEvent.h" />
     <ClInclude Include="LuaDisableableEventManager.h" />
+    <ClInclude Include="LuaBodyPartsUpdatedEvent.h" />
     <ClInclude Include="LuaFilterBarterMenuEvent.h" />
     <ClInclude Include="LuaActivationTargetChangedEvent.h" />
     <ClInclude Include="LuaAddTopicEvent.h" />
@@ -414,6 +415,7 @@
     <ClCompile Include="LuaDeterminedActionEvent.cpp" />
     <ClCompile Include="LuaDisableableEventManager.cpp" />
     <ClCompile Include="LuaEquipEvent.cpp" />
+    <ClCompile Include="LuaBodyPartsUpdatedEvent.cpp" />
     <ClCompile Include="LuaEquippedEvent.cpp" />
     <ClCompile Include="LuaFilterBarterMenuEvent.cpp" />
     <ClCompile Include="LuaFilterContentsMenuEvent.cpp" />

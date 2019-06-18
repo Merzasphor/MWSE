@@ -37,7 +37,7 @@ namespace TES3 {
 		__declspec(dllexport) void detachDynamicLightFromAffectedNodes();
 		__declspec(dllexport) void deleteDynamicLightAttachment();
 
-		__declspec(dllexport) void updateEquipment();
+		__declspec(dllexport) bool updateBipedParts();
 
 		//
 		// Other utility functions.

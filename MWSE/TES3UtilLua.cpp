@@ -2219,10 +2219,10 @@ namespace mwse {
 
 				// Update body parts for creatures/NPCs that may have items unequipped.
 				if (fromMobile) {
-					fromReference->updateEquipment();
+					fromReference->updateBipedParts();
 
 					if (fromMobile == playerMobile) {
-						playerMobile->firstPersonReference->updateEquipment();
+						playerMobile->firstPersonReference->updateBipedParts();
 					}
 				}
 

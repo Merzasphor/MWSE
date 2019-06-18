@@ -90,8 +90,8 @@ namespace TES3 {
 			auto player = static_cast<MobilePlayer*>(mobileActor);
 
 			if (player->actorFlags & MobileActorFlag::BodypartsChanged) {
-				player->reference->updateEquipment();
-				player->firstPersonReference->updateEquipment();
+				player->reference->updateBipedParts();
+				player->firstPersonReference->updateBipedParts();
 				player->actorFlags &= ~MobileActorFlag::BodypartsChanged;
 			}
 

@@ -6,6 +6,7 @@
 #include "LuaActivationTargetChangedEvent.h"
 #include "LuaAddTopicEvent.h"
 #include "LuaAttackEvent.h"
+#include "LuaBodyPartsUpdatedEvent.h"
 #include "LuaBookGetTextEvent.h"
 #include "LuaButtonPressedEvent.h"
 #include "LuaCalcArmorRatingEvent.h"
@@ -112,6 +113,7 @@ namespace mwse {
 				usertypeDefinition.set("activate", sol::property(&ActivateEvent::getEventEnabled, &ActivateEvent::setEventEnabled));
 				usertypeDefinition.set("activationTargetChanged", sol::property(&ActivationTargetChangedEvent::getEventEnabled, &ActivationTargetChangedEvent::setEventEnabled));
 				usertypeDefinition.set("attack", sol::property(&AttackEvent::getEventEnabled, &AttackEvent::setEventEnabled));
+				usertypeDefinition.set("bodyPartsUpdated", sol::property(&BodyPartsUpdatedEvent::getEventEnabled, &BodyPartsUpdatedEvent::setEventEnabled));
 				usertypeDefinition.set("bookGetText", sol::property(&BookGetTextEvent::getEventEnabled, &BookGetTextEvent::setEventEnabled));
 				usertypeDefinition.set("buttonPressed", sol::property(&ButtonPressedEvent::getEventEnabled, &ButtonPressedEvent::setEventEnabled));
 				usertypeDefinition.set("calcArmorPieceHit", sol::property(&CalcHitArmorPiece::getEventEnabled, &CalcHitArmorPiece::setEventEnabled));
