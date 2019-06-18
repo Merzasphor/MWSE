@@ -132,6 +132,9 @@ namespace mwse {
 			});
 
 			// Quick access to attachment data.
+			usertypeDefinition.set("itemData", sol::property([](TES3::Reference& self) {
+				return self.getAttachedItemData();
+			}));
 			usertypeDefinition.set("lockNode", sol::property([](TES3::Reference& self) {
 				return self.getAttachedLockNode();
 			}));
