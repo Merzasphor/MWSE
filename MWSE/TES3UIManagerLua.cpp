@@ -476,6 +476,9 @@ namespace mwse {
 				TES3::UI::logToConsole(text, isCommand.value_or(false));
 			};
 			tes3ui["stealHelpMenu"] = &TES3::UI::stealHelpMenu;
+			tes3ui["refreshTooltip"] = []() {
+				TES3::WorldController::get()->menuController->menuInputController->updateObjectTooltip();
+			};
 			tes3ui["suppressTooltip"] = &TES3::UI::setSuppressingHelpMenu;
 			tes3ui["showDialogueMessage"] = &showDialogueMessage;
 			tes3ui["updateDialogDisposition"] = &TES3::UI::updateDialogDisposition;

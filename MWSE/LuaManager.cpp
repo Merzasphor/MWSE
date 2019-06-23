@@ -188,7 +188,6 @@
 #include "LuaSpellCastedEvent.h"
 #include "LuaSpellResistEvent.h"
 #include "LuaSpellTickEvent.h"
-#include "LuaUiObjectTooltipEvent.h"
 #include "LuaUiRefreshedEvent.h"
 #include "LuaUiSpellTooltipEvent.h"
 #include "LuaWeaponReadiedEvent.h"
@@ -1449,25 +1448,6 @@ namespace mwse {
 
 				// DEPRECATED. TODO: Remove before 2.1 final.
 				stateHandle.triggerEvent(new event::GenericUiCreatedEvent(element));
-			}
-		}
-
-		//
-		// Event: UI Object Tooltip post-creation.
-		//
-
-		void __stdcall OnUIObjectTooltip(TES3::Object* object, TES3::ItemData* itemData, int count) {
-			// Call original function.
-			reinterpret_cast<void(__stdcall *)(TES3::Object*, TES3::ItemData*, int)>(0x590D90)(object, itemData, count);
-
-			// Check for suppression of world object tooltips.
-			if (TES3::UI::isSuppressingHelpMenu() && object->objectType == TES3::ObjectType::Reference) {
-				TES3::UI::suppressHelpMenu();
-			}
-			else if (event::UiObjectTooltipEvent::getEventEnabled()) {
-				// Fire off the event.
-				TES3::UI::Element* tooltip = TES3::UI::findHelpLayerMenu(TES3::UI::UI_ID(TES3::UI::Property::HelpMenu));
-				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::UiObjectTooltipEvent(tooltip, object, itemData, count));
 			}
 		}
 
@@ -3089,24 +3069,25 @@ namespace mwse {
 			genCallEnforced(0x637FE6, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuVideo
 
 			// Event: UI Tooltip post-creation.
-			genCallEnforced(0x41CC2E, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
-			genCallEnforced(0x58FF1D, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
-			genCallEnforced(0x59E10D, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
-			genCallEnforced(0x5A7633, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
-			genCallEnforced(0x5B6FD1, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
-			genCallEnforced(0x5C663C, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
-			genCallEnforced(0x5CE054, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
-			genCallEnforced(0x5CE071, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
-			genCallEnforced(0x5D24B2, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
-			genCallEnforced(0x5D4B5C, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
-			genCallEnforced(0x5E4FAD, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
-			genCallEnforced(0x5E802D, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
-			genCallEnforced(0x5F6F78, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
-			genCallEnforced(0x607C33, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
-			genCallEnforced(0x607C86, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
-			genCallEnforced(0x607CA7, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
-			genCallEnforced(0x60EE6B, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
-			genCallEnforced(0x61550D, 0x590D90, reinterpret_cast<DWORD>(OnUIObjectTooltip));
+			auto displayObjectTooltip = &TES3::UI::MenuInputController::displayObjectTooltip;
+			genCallEnforced(0x41CC2E, 0x590D90, *reinterpret_cast<DWORD*>(&displayObjectTooltip));
+			genCallEnforced(0x58FF1D, 0x590D90, *reinterpret_cast<DWORD*>(&displayObjectTooltip));
+			genCallEnforced(0x59E10D, 0x590D90, *reinterpret_cast<DWORD*>(&displayObjectTooltip));
+			genCallEnforced(0x5A7633, 0x590D90, *reinterpret_cast<DWORD*>(&displayObjectTooltip));
+			genCallEnforced(0x5B6FD1, 0x590D90, *reinterpret_cast<DWORD*>(&displayObjectTooltip));
+			genCallEnforced(0x5C663C, 0x590D90, *reinterpret_cast<DWORD*>(&displayObjectTooltip));
+			genCallEnforced(0x5CE054, 0x590D90, *reinterpret_cast<DWORD*>(&displayObjectTooltip));
+			genCallEnforced(0x5CE071, 0x590D90, *reinterpret_cast<DWORD*>(&displayObjectTooltip));
+			genCallEnforced(0x5D24B2, 0x590D90, *reinterpret_cast<DWORD*>(&displayObjectTooltip));
+			genCallEnforced(0x5D4B5C, 0x590D90, *reinterpret_cast<DWORD*>(&displayObjectTooltip));
+			genCallEnforced(0x5E4FAD, 0x590D90, *reinterpret_cast<DWORD*>(&displayObjectTooltip));
+			genCallEnforced(0x5E802D, 0x590D90, *reinterpret_cast<DWORD*>(&displayObjectTooltip));
+			genCallEnforced(0x5F6F78, 0x590D90, *reinterpret_cast<DWORD*>(&displayObjectTooltip));
+			genCallEnforced(0x607C33, 0x590D90, *reinterpret_cast<DWORD*>(&displayObjectTooltip));
+			genCallEnforced(0x607C86, 0x590D90, *reinterpret_cast<DWORD*>(&displayObjectTooltip));
+			genCallEnforced(0x607CA7, 0x590D90, *reinterpret_cast<DWORD*>(&displayObjectTooltip));
+			genCallEnforced(0x60EE6B, 0x590D90, *reinterpret_cast<DWORD*>(&displayObjectTooltip));
+			genCallEnforced(0x61550D, 0x590D90, *reinterpret_cast<DWORD*>(&displayObjectTooltip));
 
 			// Event: UI Tooltip post-creation for spells.
 			genPushEnforced(0x5E3E5D, reinterpret_cast<DWORD>(OnUISpellTooltip));
