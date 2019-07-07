@@ -49,8 +49,8 @@ namespace mwse {
 				target = owningWidget;
 			}
 
-			// Handle inheritance.
-			while (target && target->getProperty(PropertyType::Property, eventID).propertyValue == Property::inherit) {
+			// Handle event bubbling.
+			while (target && target->getProperty(PropertyType::EventCallback, eventID).eventCallback == nullptr) {
 				target = target->parent;
 			}
 
@@ -190,9 +190,14 @@ namespace mwse {
 			int data0 = eventData["data0"];
 			int data1 = eventData["data1"];
 
-			// Handle inheritance
+			// Find dispatch target. Almost always source, but is owningWidget for 'focus' and 'unfocus' events.
 			Element* target = source;
-			while (target && target->getProperty(PropertyType::Property, eventID).propertyValue == Property::inherit) {
+			if (eventID == Property::event_focus || eventID == Property::event_unfocus) {
+				target = owningWidget;
+			}
+
+			// Handle event bubbling.
+			while (target && target->getProperty(PropertyType::EventCallback, eventID).eventCallback == nullptr) {
 				target = target->parent;
 			}
 
@@ -200,7 +205,7 @@ namespace mwse {
 			if (iterElements != eventMap.end()) {
 				for (const auto& eventLua : iterElements->second) {
 					if (eventLua.id == eventID && eventLua.original) {
-						// Call original callback
+						// Call original callback.
 						return eventLua.original(owningWidget, eventID, data0, data1, source);
 					}
 				}
