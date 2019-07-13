@@ -50,8 +50,15 @@ namespace mwse {
 			}
 
 			// Handle event bubbling.
-			while (target && target->getProperty(PropertyType::EventCallback, eventID).eventCallback == nullptr) {
-				target = target->parent;
+			while (target) {
+				if (target->getProperty(PropertyType::Property, eventID).propertyValue == Property::inherit
+					|| target->getProperty(PropertyType::EventCallback, eventID).eventCallback == nullptr) {
+
+					target = target->parent;
+				}
+				else {
+					break;
+				}
 			}
 
 			auto iterElements = eventMap.find(target);
@@ -59,7 +66,8 @@ namespace mwse {
 				for (const auto& eventLua : iterElements->second) {
 					if (eventLua.id == eventID) {
 						sol::table eventData = state.create_table();
-						eventData["source"] = source;
+						eventData["forwardSource"] = source;
+						eventData["source"] = target;
 						eventData["widget"] = owningWidget;
 						eventData["id"] = eventID;
 						eventData["data0"] = data0;
@@ -67,8 +75,8 @@ namespace mwse {
 
 						// For mouse events, convert screen coordinates to element relative coordinates.
 						if (eventID >= Property::event_mouse_leave && eventID <= Property::event_mouse_release) {
-							eventData["relativeX"] = data0 - source->cached_screenX;
-							eventData["relativeY"] = source->cached_screenY - data1;
+							eventData["relativeX"] = data0 - target->cached_screenX;
+							eventData["relativeY"] = target->cached_screenY - data1;
 						}
 
 						// Note: sol::protected_function needs to be a local, as Lua functions can destroy it when modifying events.
@@ -80,7 +88,7 @@ namespace mwse {
 						}
 						else {
 							sol::error error = result;
-							const char *errorSource = source->name.cString ? source->name.cString : "(unnamed)";
+							const char *errorSource = target->name.cString ? target->name.cString : "(unnamed)";
 							log::getLog() << "Lua error encountered during UI event from element " << errorSource << ":" << std::endl << error.what() << std::endl;
 							return true;
 						}
@@ -184,22 +192,14 @@ namespace mwse {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
 
-			Element* source = eventData["source"];
+			Element* source = eventData["forwardSource"];
 			Element* owningWidget = eventData["widget"];
 			Property eventID = eventData["id"];
 			int data0 = eventData["data0"];
 			int data1 = eventData["data1"];
 
-			// Find dispatch target. Almost always source, but is owningWidget for 'focus' and 'unfocus' events.
-			Element* target = source;
-			if (eventID == Property::event_focus || eventID == Property::event_unfocus) {
-				target = owningWidget;
-			}
-
-			// Handle event bubbling.
-			while (target && target->getProperty(PropertyType::EventCallback, eventID).eventCallback == nullptr) {
-				target = target->parent;
-			}
+			// Use dispatch target resolved by eventDispatcher().
+			Element* target = eventData["source"];
 
 			auto iterElements = eventMap.find(target);
 			if (iterElements != eventMap.end()) {
