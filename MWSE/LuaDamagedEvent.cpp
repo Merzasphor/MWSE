@@ -3,8 +3,12 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "TES3MagicEffectInstance.h"
 #include "TES3MobileActor.h"
+#include "TES3MobileProjectile.h"
 #include "TES3Reference.h"
+
+#include "LuaDamageEvent.h"
 
 namespace mwse {
 	namespace lua {
@@ -22,8 +26,31 @@ namespace mwse {
 				sol::state& state = stateHandle.state;
 				sol::table eventData = state.create_table();
 
-				eventData["mobile"] = makeLuaObject(m_MobileActor);
-				eventData["reference"] = makeLuaObject(m_MobileActor->reference);
+				if (m_MobileActor) {
+					eventData["mobile"] = makeLuaObject(m_MobileActor);
+					eventData["reference"] = makeLuaObject(m_MobileActor->reference);
+				}
+
+				if (DamageEvent::m_Attacker) {
+					eventData["attacker"] = makeLuaObject(DamageEvent::m_Attacker);
+					eventData["attackerReference"] = makeLuaObject(DamageEvent::m_Attacker->reference);
+				}
+
+				if (DamageEvent::m_Projectile) {
+					eventData["projectile"] = makeLuaObject(DamageEvent::m_Projectile);
+				}
+
+				if (DamageEvent::m_MagicSourceInstance) {
+					eventData["magicSourceInstance"] = DamageEvent::m_MagicSourceInstance;
+				}
+				if (DamageEvent::m_MagicEffectInstance) {
+					eventData["magicEffectInstance"] = DamageEvent::m_MagicEffectInstance;
+				}
+
+				if (DamageEvent::m_Source) {
+					eventData["source"] = DamageEvent::m_Source;
+				}
+
 				eventData["damage"] = m_Damage;
 
 				return eventData;

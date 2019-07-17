@@ -11,6 +11,12 @@ namespace mwse {
 				DamageEvent(TES3::MobileActor* mobileActor, float damage);
 				sol::table createEventTable();
 
+				static TES3::MobileActor * m_Attacker;
+				static TES3::MobileProjectile * m_Projectile;
+				static TES3::MagicSourceInstance * m_MagicSourceInstance;
+				static TES3::MagicEffectInstance * m_MagicEffectInstance;
+				static const char * m_Source;
+
 			protected:
 				TES3::MobileActor * m_MobileActor;
 				float m_Damage;

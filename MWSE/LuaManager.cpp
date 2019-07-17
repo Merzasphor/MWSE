@@ -155,6 +155,7 @@
 #include "LuaCalcTravelPriceEvent.h"
 #include "LuaCellChangedEvent.h"
 #include "LuaCrimeWitnessedEvent.h"
+#include "LuaDamageEvent.h"
 #include "LuaEquipEvent.h"
 #include "LuaFilterBarterMenuEvent.h"
 #include "LuaFilterContentsMenuEvent.h"
@@ -1010,8 +1011,56 @@ namespace mwse {
 		// Mobile actor apply damage event.
 		//
 
-		bool __fastcall OnApplyDamage(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, char flag1, char flag2, char flag3) {
-			return mobileActor->applyHealthDamage(damage, flag1, flag2, flag3);
+		bool __fastcall OnApplyDamageFromScript(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
+			mwse::lua::event::DamageEvent::m_Source = "script";
+			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+			mwse::lua::event::DamageEvent::m_Source = nullptr;
+			return result;
+		}
+
+		bool __fastcall OnApplyDamageFromFalling(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
+			mwse::lua::event::DamageEvent::m_Source = "fall";
+			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+			mwse::lua::event::DamageEvent::m_Source = nullptr;
+			return result;
+		}
+
+		bool __fastcall OnApplyDamageFromSuffocation(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
+			mwse::lua::event::DamageEvent::m_Source = "suffocation";
+			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+			mwse::lua::event::DamageEvent::m_Source = nullptr;
+			return result;
+		}
+
+		bool __fastcall OnApplyDamageFromAttack(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
+			mwse::lua::event::DamageEvent::m_Source = "attack";
+			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+			mwse::lua::event::DamageEvent::m_Source = nullptr;
+			return result;
+		}
+
+		bool __fastcall OnApplyDamageFromMagic(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
+			mwse::lua::event::DamageEvent::m_Source = "magic";
+			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+			mwse::lua::event::DamageEvent::m_Source = nullptr;
+			return result;
+		}
+
+		bool __fastcall OnApplyDamageFromMagicShield(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
+			mwse::lua::event::DamageEvent::m_Source = "shield";
+			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+			mwse::lua::event::DamageEvent::m_Source = nullptr;
+			return result;
+		}
+
+		const auto TES3_AttributeSpellEffect = reinterpret_cast<bool(__cdecl*)(TES3::MagicSourceInstance*, bool, TES3::Statistic*, void*, TES3::MagicEffectInstance*, float, int)>(0x519110);
+		bool __cdecl AttributeSpellEffect(TES3::MagicSourceInstance * sourceInstance, bool a2, TES3::Statistic * statistic, void * a4, TES3::MagicEffectInstance * effectInstance, float delta, int a6) {
+			mwse::lua::event::DamageEvent::m_MagicSourceInstance = sourceInstance;
+			mwse::lua::event::DamageEvent::m_MagicEffectInstance = effectInstance;
+			auto result = TES3_AttributeSpellEffect(sourceInstance, a2, statistic, a4, effectInstance, delta, a6);
+			mwse::lua::event::DamageEvent::m_MagicSourceInstance = nullptr;
+			mwse::lua::event::DamageEvent::m_MagicEffectInstance = nullptr;
+			return result;
 		}
 
 		//
@@ -2886,16 +2935,23 @@ namespace mwse {
 			overrideVirtualTable(0x74B174, 0xB8, reinterpret_cast<DWORD>(OnMobilePlayerDeath)); // MACP
 
 			// Event: Damage(d)
-			genCallEnforced(0x50B72C, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
-			genCallEnforced(0x50B7AB, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
-			genCallEnforced(0x50D138, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
-			genCallEnforced(0x50D1B4, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
-			genCallEnforced(0x524884, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
-			genCallEnforced(0x52978F, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
-			genCallEnforced(0x5299CB, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
-			genCallEnforced(0x555789, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
-			genCallEnforced(0x556AE0, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
-			genCallEnforced(0x55782C, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamage));
+			genCallEnforced(0x50B72C, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromScript));
+			genCallEnforced(0x50B7AB, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromScript));
+			genCallEnforced(0x50D138, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromScript));
+			genCallEnforced(0x50D1B4, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromScript));
+			genCallEnforced(0x524884, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromSuffocation));
+			genCallEnforced(0x52978F, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromFalling));
+			genCallEnforced(0x5299CB, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromSuffocation));
+			genCallEnforced(0x555789, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromMagicShield));
+			genCallEnforced(0x556AE0, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromAttack));
+			genCallEnforced(0x55782C, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromMagic));
+			auto mobileActorApplyHitModifiers = &TES3::MobileActor::applyHitModifiers;
+			genCallEnforced(0x5577C6, 0x5568F0, *reinterpret_cast<DWORD*>(&mobileActorApplyHitModifiers));
+			genCallEnforced(0x573C51, 0x5568F0, *reinterpret_cast<DWORD*>(&mobileActorApplyHitModifiers));
+			genCallEnforced(0x518526, 0x519110, reinterpret_cast<DWORD>(AttributeSpellEffect));
+			genCallEnforced(0x51889D, 0x519110, reinterpret_cast<DWORD>(AttributeSpellEffect));
+			genCallEnforced(0x518D5C, 0x519110, reinterpret_cast<DWORD>(AttributeSpellEffect));
+			genCallEnforced(0x518F9F, 0x519110, reinterpret_cast<DWORD>(AttributeSpellEffect));
 
 			// Event: Spell cast resolution
 			genCallEnforced(0x5156B2, 0x4AA950, reinterpret_cast<DWORD>(OnSpellCastResolution));

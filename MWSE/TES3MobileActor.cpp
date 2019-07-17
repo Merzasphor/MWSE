@@ -123,6 +123,20 @@ namespace TES3 {
 		return vTable.mobileActor->calculateArmorRating(this, armorItemCount);
 	}
 
+	const auto TES3_MobileActor_applyHitModifiers = reinterpret_cast<void(__thiscall *)(MobileActor*, MobileActor*, MobileActor*, float, float, MobileProjectile*, bool)>(0x5568F0);
+	void MobileActor::applyHitModifiers(MobileActor * attacker, MobileActor * defender, float unknown, float swing, MobileProjectile * projectile, bool unknown2) {
+		// Clean up damage event data.
+		mwse::lua::event::DamageEvent::m_Attacker = attacker;
+		mwse::lua::event::DamageEvent::m_Projectile = projectile;
+
+		// Call original function.
+		TES3_MobileActor_applyHitModifiers(this, attacker, defender, unknown, swing, projectile, unknown2);
+
+		// Setup damage event data.
+		mwse::lua::event::DamageEvent::m_Attacker = nullptr;
+		mwse::lua::event::DamageEvent::m_Projectile = nullptr;
+	}
+
 	Cell* MobileActor::getCell() {
 		return reinterpret_cast<Cell*(__thiscall *)(MobileActor*)>(TES3_MobileActor_getCell)(this);
 	}
