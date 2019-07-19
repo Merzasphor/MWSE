@@ -267,7 +267,10 @@ namespace TES3 {
 		void adjustSoundVolume(Sound*, Reference*, unsigned char volume);
 		void removeSound(Sound*, Reference*);
 
-		void setDynamicLightingForReference(Reference*);
+		void updateLightingForReference(Reference * reference);
+		void setDynamicLightingForReference(Reference* reference);
+
+		void updateCollisionGroupsForActiveCells(bool unknown = true);
 
 	};
 	static_assert(sizeof(DataHandler) == 0xB558, "TES3::DataHandler failed size validation");

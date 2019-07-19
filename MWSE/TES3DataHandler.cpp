@@ -250,9 +250,19 @@ namespace TES3 {
 		reinterpret_cast<void(__thiscall *)(DataHandler*, Sound*, Reference*)>(TES3_DataHandler_removeSound)(this, sound, reference);
 	}
 
+	const auto TES3_DataHandler_updateLightingForReference = reinterpret_cast<void(__thiscall*)(TES3::DataHandler *, TES3::Reference *)>(0x485E40);
+	void DataHandler::updateLightingForReference(Reference * reference) {
+		TES3_DataHandler_updateLightingForReference(this, reference);
+	}
+
 	const auto TES3_DataHandler_setDynamicLightingForReference = reinterpret_cast<void(__thiscall*)(DataHandler*, Reference*)>(0x485B00);
 	void DataHandler::setDynamicLightingForReference(Reference* reference) {
 		TES3_DataHandler_setDynamicLightingForReference(this, reference);
+	}
+
+	const auto TES3_DataHandler_updateCollisionGroupsForActiveCells = reinterpret_cast<void(__thiscall*)(DataHandler*, bool)>(0x488950);
+	void DataHandler::updateCollisionGroupsForActiveCells(bool unknown) {
+		TES3_DataHandler_updateCollisionGroupsForActiveCells(this, unknown);
 	}
 
 }

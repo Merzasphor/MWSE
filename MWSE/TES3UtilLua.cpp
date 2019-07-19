@@ -2074,6 +2074,18 @@ namespace mwse {
 						mact->enterLeaveSimulation(true);
 					}
 				}
+				// Lights need to be configured.
+				else if (object->objectType == TES3::ObjectType::Light) {
+					dataHandler->updateLightingForReference(reference);
+					dataHandler->setDynamicLightingForReference(reference);
+
+					// They also need collision.
+					dataHandler->updateCollisionGroupsForActiveCells();
+				}
+				// For all other things, just reset collision.
+				else {
+					dataHandler->updateCollisionGroupsForActiveCells();
+				}
 
 				// Make sure everything is set as modified.
 				reference->setObjectModified(true);
