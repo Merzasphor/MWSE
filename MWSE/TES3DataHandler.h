@@ -105,6 +105,8 @@ namespace TES3 {
 		__declspec(dllexport) Cell * getCellByGrid(int x, int y);
 		__declspec(dllexport) Cell * getCellByName(const char* name);
 
+		__declspec(dllexport) float createReference(PhysicalObject * object, Vector3 * position, Vector3 * orientation, bool& cellWasCreated, Reference * existingReference = nullptr, Cell * cell = nullptr);
+
 		//
 		// Custom functions.
 		//

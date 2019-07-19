@@ -35,6 +35,16 @@ namespace TES3 {
 	const auto TES3_Reference_setMobileActor = reinterpret_cast<MobileActor* (__thiscall*)(Reference*, MobileActor*)>(0x4E5770);
 	const auto TES3_Reference_removeAttachment = reinterpret_cast<void(__thiscall*)(Reference*, Attachment*)>(0x4E4C10);
 
+	const auto TES3_Reference_ctor = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E4510);
+	Reference::Reference() {
+		TES3_Reference_ctor(this);
+	}
+
+	const auto TES3_Reference_dtor = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E45C0);
+	Reference::~Reference() {
+		TES3_Reference_dtor(this);
+	}
+
 	void Reference::activate(Reference* activator, int unknown) {
 		// If our event data says to block, don't let the object activate.
 		if (mwse::lua::event::ActivateEvent::getEventEnabled()) {

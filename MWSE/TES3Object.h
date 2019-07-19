@@ -201,6 +201,13 @@ namespace TES3 {
 		GameFile * sourceMod; // 0xC
 
 		//
+		// Basic operators.
+		//
+
+		__declspec(dllexport) static void *operator new(size_t size);
+		__declspec(dllexport) static void operator delete(void *block);
+
+		//
 		// Function wrappers for our virtual table.
 		//
 

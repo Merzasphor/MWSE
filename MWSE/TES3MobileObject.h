@@ -86,7 +86,7 @@ namespace TES3 {
 		void * resolveCollisions; // 0x18
 		void * unknown_0x1C;
 		void * simulate; // 0x20
-		void * isActor; // 0x24
+		bool (__thiscall * isActor)(MobileObject*); // 0x24
 		void * unknown_0x28;
 		void * unknown_0x2C;
 		void * unknown_0x30;
@@ -105,7 +105,7 @@ namespace TES3 {
 		void * setJumping; // 0x64
 		void * unknown_0x68;
 		void * waterImpact; // 0x6C
-		void * unknown_0x70;
+		void (__thiscall * enterLeaveSimulation)(MobileObject*, bool); // 0x70
 		void * setActorFlag8; // 0x74
 		void * setActorFlag40; // 0x78
 		void * unknown_0x7C;
@@ -212,6 +212,9 @@ namespace TES3 {
 		bool onTerrainCollision(int collisionIndex);
 		bool onWaterCollision(int collisionIndex);
 		bool onActivatorCollision(int collisionIndex);
+
+		bool isActor();
+		void enterLeaveSimulation(bool entering);
 
 		//
 		// Lua interface functions.

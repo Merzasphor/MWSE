@@ -42,6 +42,11 @@ namespace TES3 {
 		TES3_Cell_setName(this, name);
 	}
 
+	const auto TES3_Cell_insertReference = reinterpret_cast<void(__thiscall *)(Cell*, Reference*)>(0x4DC030);
+	void Cell::insertReference(Reference* reference) {
+		TES3_Cell_insertReference(this, reference);
+	}
+
 	bool Cell::getCellFlag(unsigned int flag) {
 		return (cellFlags & flag);
 	}

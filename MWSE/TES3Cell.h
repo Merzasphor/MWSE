@@ -110,6 +110,8 @@ namespace TES3 {
 
 		void setName(const char* name);
 
+		void __declspec(dllexport) insertReference(Reference* reference);
+
 		//
 		// Other getter/setter functions.
 		//

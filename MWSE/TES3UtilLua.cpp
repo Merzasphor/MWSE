@@ -2015,6 +2015,72 @@ namespace mwse {
 				return makeLuaObject(cell);
 			};
 
+			state["tes3"]["createReference"] = [](sol::table params) -> sol::object {
+				auto dataHandler = TES3::DataHandler::get();
+
+				// Get the object we are going to create a reference for.
+				auto object = getOptionalParamObject<TES3::PhysicalObject>(params, "object");
+				if (object == nullptr) {
+					throw std::invalid_argument("Invalid 'object' parameter provided.");
+				}
+
+				// Get the position.
+				auto maybePosition = getOptionalParamVector3(params, "position");
+				if (!maybePosition) {
+					throw std::invalid_argument("Invalid 'position' parameter provided.");
+				}
+
+				// Get the orientation.
+				auto maybeOrientation = getOptionalParamVector3(params, "orientation");
+				if (!maybeOrientation) {
+					throw std::invalid_argument("Invalid 'orientation' parameter provided.");
+				}
+
+				// Try to resolve the sell, either by what we were given, or a valid cell based on the given position.
+				TES3::Cell * cell = getOptionalParamCell(params, "cell");
+				if (cell == nullptr || (!cell->isInterior() && !cell->isPointInCell(maybePosition.value().x, maybePosition.value().y))) {
+					int cellX = TES3::Cell::toGridCoord(maybePosition.value().x);
+					int cellY = TES3::Cell::toGridCoord(maybePosition.value().y);
+					cell = dataHandler->nonDynamicData->getCellByGrid(cellX, cellY);
+				}
+
+				// Make sure we actually got a cell.
+				if (cell == nullptr) {
+					throw std::invalid_argument("Invalid 'cell' parameter provided. Please provide a cell, or give a valid exterior position.");
+				}
+
+				// Create reference.
+				TES3::Reference * reference = new TES3::Reference();
+				reference->baseObject = object;
+
+				// Scale as needed.
+				float scale = getOptionalParam<float>(params, "scale", 1.0f);
+				if (scale != 1.0f) {
+					reference->setScale(scale);
+				}
+
+				// Add it to the cell lists/data handler.
+				bool cellWasCreated = false;
+				dataHandler->nonDynamicData->createReference(object, &maybePosition.value(), &maybeOrientation.value(), cellWasCreated, reference, cell);
+				reference->ensureScriptDataIsInstanced();
+				cell->insertReference(reference);
+
+				// Did we just make an actor? If so we need to add it to the mob manager.
+				if (object->objectType == TES3::ObjectType::Creature || object->objectType == TES3::ObjectType::NPC) {
+					TES3::WorldController::get()->mobController->addMob(reference);
+					auto mact = reference->getAttachedMobileActor();
+					if (mact && mact->isActor()) {
+						mact->enterLeaveSimulation(true);
+					}
+				}
+
+				// Make sure everything is set as modified.
+				reference->setObjectModified(true);
+				cell->setObjectModified(true);
+
+				return makeLuaObject(reference);
+			};
+
 			state["tes3"]["setDestination"] = [](sol::table params) {
 				TES3::Reference * reference = getOptionalParamExecutionReference(params);
 				if (reference == nullptr) {

@@ -3,7 +3,16 @@
 #include "TES3Actor.h"
 #include "TES3Reference.h"
 
+#include "TES3Util.h"
+
 namespace TES3 {
+	void * BaseObject::operator new(size_t size) {
+		return mwse::tes3::_new(size);
+	}
+	void BaseObject::operator delete(void * address) {
+		mwse::tes3::_delete(address);
+	}
+
 	bool BaseObject::getObjectModified() {
 		return (objectFlags & TES3::ObjectFlag::Modified);
 	}

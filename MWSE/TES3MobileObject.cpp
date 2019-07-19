@@ -89,6 +89,14 @@ namespace TES3 {
 		return result;
 	}
 
+	bool MobileObject::isActor() {
+		return vTable.mobileObject->isActor(this);
+	}
+
+	void MobileObject::enterLeaveSimulation(bool entering) {
+		vTable.mobileObject->enterLeaveSimulation(this, entering);
+	}
+
 	void MobileObject::setImpulseVelocityFromLua(sol::stack_object value) {
 		// Use our util class to support vectors or a table.
 		mwse::lua::setVectorFromLua(&impulseVelocity, value);

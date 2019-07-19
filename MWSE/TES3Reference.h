@@ -16,6 +16,13 @@ namespace TES3 {
 		unsigned int targetID; // 0x4C
 
 		//
+		// Basic operators.
+		//
+
+		Reference();
+		~Reference();
+
+		//
 		// Other related this-call functions.
 		//
 
