@@ -2031,9 +2031,10 @@ namespace mwse {
 				}
 
 				// Get the orientation.
+				TES3::Vector3 orientation(0.0f, 0.0f, 0.0f);
 				auto maybeOrientation = getOptionalParamVector3(params, "orientation");
-				if (!maybeOrientation) {
-					throw std::invalid_argument("Invalid 'orientation' parameter provided.");
+				if (maybeOrientation) {
+					orientation = maybeOrientation.value();
 				}
 
 				// Try to resolve the sell, either by what we were given, or a valid cell based on the given position.
@@ -2061,7 +2062,7 @@ namespace mwse {
 
 				// Add it to the cell lists/data handler.
 				bool cellWasCreated = false;
-				dataHandler->nonDynamicData->createReference(object, &maybePosition.value(), &maybeOrientation.value(), cellWasCreated, reference, cell);
+				dataHandler->nonDynamicData->createReference(object, &maybePosition.value(), &orientation, cellWasCreated, reference, cell);
 				reference->ensureScriptDataIsInstanced();
 				cell->insertReference(reference);
 
