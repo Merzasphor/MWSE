@@ -70,6 +70,10 @@ namespace TES3 {
 		return vTable.object->getScript(this);
 	}
 
+	Sound* Object::getSound() {
+		return vTable.object->getSound(this);
+	}
+
 	char* Object::getRaceID() {
 		return vTable.object->getRaceID(this);
 	}

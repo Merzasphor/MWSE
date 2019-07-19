@@ -20,7 +20,9 @@
 #include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
 #include "TES3MobileProjectile.h"
+#include "TES3MobController.h"
 #include "TES3NPC.h"
+#include "TES3WorldController.h"
 
 #define TES3_Reference_activate 0x4E9610
 #define TES3_Reference_setActionFlag 0x4E55A0
@@ -199,6 +201,90 @@ namespace TES3 {
 				setOrientation(&ori);
 			}
 		}
+	}
+
+	bool Reference::enable() {
+		// Make sure we're not already enabled.
+		if (!getDisabled()) {
+			return false;
+		}
+		setBaseObjectFlag(TES3::ObjectFlag::Disabled, false);
+
+		auto dataHandler = TES3::DataHandler::get();
+
+		// Don't cull the scene node.
+		getSceneGraphNode()->setAppCulled(false);
+
+		// Enable simulation for creatures/NPCs.
+		if (baseObject->objectType == TES3::ObjectType::Creature || baseObject->objectType == TES3::ObjectType::NPC) {
+			TES3::WorldController::get()->mobController->addMob(this);
+			getAttachedMobileActor()->enterLeaveSimulationByDistance();
+		}
+		// Update lights for objects.
+		else if (baseObject->objectType == TES3::ObjectType::Light) {
+			dataHandler->updateLightingForReference(this);
+			dataHandler->setDynamicLightingForReference(this);
+
+			// Also update collision.
+			dataHandler->updateCollisionGroupsForActiveCells();
+		}
+		// Update collision for everything else.
+		else {
+			dataHandler->updateCollisionGroupsForActiveCells();
+		}
+
+		// Finally flag as modified.
+		setObjectModified(true);
+
+		return true;
+	}
+
+	bool Reference::disable() {
+		// Make sure we're not already disabled.
+		if (getDisabled()) {
+			return false;
+		}
+		setBaseObjectFlag(TES3::ObjectFlag::Disabled, true);
+
+		auto dataHandler = TES3::DataHandler::get();
+
+		// Cull the scene node.
+		getSceneGraphNode()->setAppCulled(true);
+
+		// Leave simulation if we have a mobile.
+		if (baseObject->objectType == TES3::ObjectType::Creature || baseObject->objectType == TES3::ObjectType::NPC) {
+			auto mact = getAttachedMobileObject();
+			if (mact) {
+				mact->enterLeaveSimulation(false);
+				TES3::WorldController::get()->mobController->removeMob(this);
+			}
+		}
+		// Update lights for objects.
+		else if (baseObject->objectType == TES3::ObjectType::Light) {
+			detachDynamicLightFromAffectedNodes();
+
+			// Also update collision.
+			dataHandler->updateCollisionGroupsForActiveCells();
+		}
+		// Update collision for everything else.
+		else {
+			dataHandler->updateCollisionGroupsForActiveCells();
+		}
+
+		// Clean up any sounds.
+		auto sound = baseObject->getSound();
+		if (sound) {
+			dataHandler->removeSound(sound, this);
+		}
+
+		// Finally flag as modified.
+		setObjectModified(true);
+
+		return true;
+	}
+
+	bool Reference::getDisabled() {
+		return getBaseObjectFlag(TES3::ObjectFlag::Disabled);
 	}
 
 	Vector3 * Reference::getPosition() {

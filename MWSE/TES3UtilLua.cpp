@@ -2753,6 +2753,32 @@ namespace mwse {
 				int page = getOptionalParam<int>(params, "page", -1);
 				return makeLuaObject(TES3::Dialogue::getDialogue(type, page));
 			};
+
+			state["tes3"]["setEnabled"] = [](sol::table params) {
+				TES3::Reference * reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided.");
+				}
+
+				// Allow toggling.
+				if (getOptionalParam<bool>(params, "toggle", false)) {
+					if (reference->getDisabled()) {
+						return reference->enable();
+					}
+					else {
+						return reference->disable();
+					}
+				}
+				// Otherwise base it on enabled (default true).
+				else {
+					if (getOptionalParam<bool>(params, "enabled", true)) {
+						return reference->enable();
+					}
+					else {
+						return reference->disable();
+					}
+				}
+			};
 		}
 	}
 }

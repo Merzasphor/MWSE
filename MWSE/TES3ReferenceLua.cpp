@@ -114,6 +114,8 @@ namespace mwse {
 			usertypeDefinition.set("clone", &TES3::Reference::clone);
 			usertypeDefinition.set("deleteDynamicLightAttachment", &TES3::Reference::deleteDynamicLightAttachment);
 			usertypeDefinition.set("detachDynamicLightFromAffectedNodes", &TES3::Reference::detachDynamicLightFromAffectedNodes);
+			usertypeDefinition.set("disable", &TES3::Reference::disable);
+			usertypeDefinition.set("enable", &TES3::Reference::enable);
 			usertypeDefinition.set("getAttachedDynamicLight", &TES3::Reference::getAttachedDynamicLight);
 			usertypeDefinition.set("getOrCreateAttachedDynamicLight", &TES3::Reference::getOrCreateAttachedDynamicLight);
 			usertypeDefinition.set("setActionFlag", &TES3::Reference::setActionFlag);

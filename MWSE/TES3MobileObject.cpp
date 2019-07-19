@@ -97,6 +97,11 @@ namespace TES3 {
 		vTable.mobileObject->enterLeaveSimulation(this, entering);
 	}
 
+	const auto TES3_MobileObject_enterLeaveSimulationByDistance = reinterpret_cast<void(__thiscall *)(MobileObject*)>(0x55FFC0);
+	void MobileObject::enterLeaveSimulationByDistance() {
+		TES3_MobileObject_enterLeaveSimulationByDistance(this);
+	}
+
 	void MobileObject::setImpulseVelocityFromLua(sol::stack_object value) {
 		// Use our util class to support vectors or a table.
 		mwse::lua::setVectorFromLua(&impulseVelocity, value);

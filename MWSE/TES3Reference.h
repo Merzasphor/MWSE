@@ -50,6 +50,10 @@ namespace TES3 {
 		// Other utility functions.
 		//
 
+		__declspec(dllexport) bool enable();
+		__declspec(dllexport) bool disable();
+		__declspec(dllexport) bool getDisabled();
+
 		__declspec(dllexport) Vector3 * getPosition();
 		__declspec(dllexport) void setPosition(const Vector3 * newPosition);
 

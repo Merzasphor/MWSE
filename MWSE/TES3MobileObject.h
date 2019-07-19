@@ -217,6 +217,12 @@ namespace TES3 {
 		void enterLeaveSimulation(bool entering);
 
 		//
+		// Other related this-call functions.
+		//
+
+		void enterLeaveSimulationByDistance();
+
+		//
 		// Lua interface functions.
 		//
 

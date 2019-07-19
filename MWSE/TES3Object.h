@@ -127,7 +127,7 @@ namespace TES3 {
 		void * unknown_0x44;
 		char * (__thiscall * getModelPath)(BaseObject*); // 0x48
 		Script * (__thiscall * getScript)(BaseObject*); // 0x4C
-		void * unknown_0x50;
+		Sound * (__thiscall * getSound)(BaseObject*); // 0x50
 		char * (__thiscall * getRaceID)(BaseObject*); // 0x54
 		char * (__thiscall * getClassID)(BaseObject*); // 0x58
 		char * (__thiscall * getBirthsignID)(BaseObject*); // 0x5C
@@ -249,6 +249,7 @@ namespace TES3 {
 		__declspec(dllexport) char * getIconPath();
 		__declspec(dllexport) char * getModelPath();
 		__declspec(dllexport) Script * getScript();
+		__declspec(dllexport) Sound * getSound();
 		__declspec(dllexport) char * getRaceID();
 		__declspec(dllexport) char * getClassID();
 		__declspec(dllexport) char * getBirthsignID();
