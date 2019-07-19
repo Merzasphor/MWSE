@@ -1,11 +1,12 @@
 #pragma once
 
 #include "LuaGenericEvent.h"
+#include "LuaDisableableEvent.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class SkillExerciseEvent : public GenericEvent {
+			class SkillExerciseEvent : public GenericEvent, public DisableableEvent<SkillExerciseEvent> {
 			public:
 				SkillExerciseEvent(int skillId, float progress);
 				sol::table createEventTable();

@@ -36,10 +36,10 @@ namespace TES3 {
 		float weight; // 0x54
 		int value; // 0x58
 		WeaponType::value_type weaponType; // 0x5C
-		short maxCondition; // 0x5E
+		unsigned short maxCondition; // 0x5E
 		float speed; // 0x60
 		float reach; // 0x64
-		short enchantCapacity; // 0x68
+		unsigned short enchantCapacity; // 0x68
 		unsigned char chopMin; // 0x6A
 		unsigned char chopMax; // 0x6B
 		unsigned char slashMin; // 0x6C

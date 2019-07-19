@@ -12,6 +12,7 @@ namespace mwse {
 
 			class BaseEvent {
 			public:
+				virtual ~BaseEvent() {}
 				virtual const char* getEventName() { return nullptr; };
 				virtual sol::table createEventTable() { return sol::nil; };
 				virtual sol::object getEventOptions() { return sol::nil; }

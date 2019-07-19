@@ -24,6 +24,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool BookGetTextEvent::m_EventEnabled = false;
 		}
 	}
 }

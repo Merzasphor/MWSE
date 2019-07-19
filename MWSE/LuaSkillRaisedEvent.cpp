@@ -33,6 +33,8 @@ namespace mwse {
 
 				return options;
 			}
+
+			bool SkillRaisedEvent::m_EventEnabled = false;
 		}
 	}
 }

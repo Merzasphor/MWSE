@@ -118,7 +118,7 @@ namespace TES3 {
 	struct ObjectVirtualTable : BaseObjectVirtualTable {
 		void * copyEntity;
 		void (__thiscall * setID)(BaseObject*, const char*); // 0x10C
-		void * getVisualNode;
+		NI::Node * (__thiscall * getSceneGraphNode)(BaseObject*); // 0x110
 		void * unknown_0x30;
 		void * unknown_0x34;
 		char * (__thiscall * getName)(BaseObject*); // 0x38
@@ -127,7 +127,7 @@ namespace TES3 {
 		void * unknown_0x44;
 		char * (__thiscall * getModelPath)(BaseObject*); // 0x48
 		Script * (__thiscall * getScript)(BaseObject*); // 0x4C
-		void * unknown_0x50;
+		Sound * (__thiscall * getSound)(BaseObject*); // 0x50
 		char * (__thiscall * getRaceID)(BaseObject*); // 0x54
 		char * (__thiscall * getClassID)(BaseObject*); // 0x58
 		char * (__thiscall * getBirthsignID)(BaseObject*); // 0x5C
@@ -201,6 +201,13 @@ namespace TES3 {
 		GameFile * sourceMod; // 0xC
 
 		//
+		// Basic operators.
+		//
+
+		__declspec(dllexport) static void *operator new(size_t size);
+		__declspec(dllexport) static void operator delete(void *block);
+
+		//
 		// Function wrappers for our virtual table.
 		//
 
@@ -231,7 +238,7 @@ namespace TES3 {
 		void * referenceToThis; // 0x18
 		Object * previousInCollection; // 0x1C
 		Object * nextInCollection; // 0x20
-		NI::Node * sceneGraphReference; // 0x24
+		NI::Node * sceneCollisionRoot; // 0x24
 
 		//
 		// Function wrappers for our virtual table.
@@ -242,6 +249,7 @@ namespace TES3 {
 		__declspec(dllexport) char * getIconPath();
 		__declspec(dllexport) char * getModelPath();
 		__declspec(dllexport) Script * getScript();
+		__declspec(dllexport) Sound * getSound();
 		__declspec(dllexport) char * getRaceID();
 		__declspec(dllexport) char * getClassID();
 		__declspec(dllexport) char * getBirthsignID();
@@ -279,6 +287,12 @@ namespace TES3 {
 		__declspec(dllexport) void setName(const char*);
 		__declspec(dllexport) float getScale();
 		__declspec(dllexport) void setScale(float value, bool cap = false);
+
+		//
+		// Function wrappers for our virtual table.
+		//
+
+		__declspec(dllexport) NI::Node * getSceneGraphNode();
 
 		//
 		// Custom functions.

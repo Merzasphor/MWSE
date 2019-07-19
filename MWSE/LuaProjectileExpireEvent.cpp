@@ -40,6 +40,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool ProjectileExpireEvent::m_EventEnabled = false;
 		}
 	}
 }

@@ -65,6 +65,20 @@ namespace mwse {
 				state.set_usertype("tes3nonDynamicData", usertypeDefinition);
 			}
 
+			// Binding for TES3::DataHandler::ExteriorCellData
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::DataHandler::ExteriorCellData>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				// Basic property binding.
+				usertypeDefinition.set("cell", sol::readonly_property(&TES3::DataHandler::ExteriorCellData::cell));
+				usertypeDefinition.set("loadingFlags", sol::readonly_property(&TES3::DataHandler::ExteriorCellData::loadingFlags));
+
+				// Finish up our usertype.
+				state.set_usertype("tes3dataHandlerExteriorCellData", usertypeDefinition);
+			}
+
 			// Binding for TES3::DataHandler
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
@@ -85,6 +99,7 @@ namespace mwse {
 				usertypeDefinition.set("mainThreadId", sol::readonly_property(&TES3::DataHandler::mainThreadID));
 				usertypeDefinition.set("nonDynamicData", sol::readonly_property(&TES3::DataHandler::nonDynamicData));
 				usertypeDefinition.set("threadSleepTime", sol::readonly_property(&TES3::DataHandler::threadSleepTime));
+				usertypeDefinition.set("useCellTransitionFader", &TES3::DataHandler::useCellTransitionFader);
 				usertypeDefinition.set("worldObjectRoot", sol::readonly_property(&TES3::DataHandler::worldObjectRoot));
 				usertypeDefinition.set("worldPickObjectRoot", sol::readonly_property(&TES3::DataHandler::worldPickObjectRoot));
 				usertypeDefinition.set("worldLandscapeRoot", sol::readonly_property(&TES3::DataHandler::worldLandscapeRoot));

@@ -13,6 +13,13 @@ namespace TES3 {
 			char unknown_0x8C[0x20];
 
 			void acquireTextInput(Element* element);
+			void displayObjectTooltip(TES3::Object * object, TES3::ItemData * itemData, int count = 0);
+
+			//
+			// Custom functions.
+			//
+
+			void updateObjectTooltip();
 		};
 		static_assert(sizeof(MenuInputController) == 0xAC, "TES3::UI::MenuInputController failed size validation");
 

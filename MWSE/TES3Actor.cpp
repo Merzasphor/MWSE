@@ -1,6 +1,10 @@
 #include "TES3Actor.h"
+
+#include "TES3AIConfig.h"
+#include "TES3Class.h"
 #include "TES3MobileActor.h"
 #include "TES3MobilePlayer.h"
+#include "TES3Reference.h"
 
 #include "LuaManager.h"
 
@@ -10,10 +14,10 @@
 namespace TES3 {
 	const auto TES3_Actor_equipItem = reinterpret_cast<Object* (__thiscall*)(Actor*, Object*, ItemData*, EquipmentStack**, MobileActor*)>(0x4958B0);
 	const auto TES3_Actor_unequipItem = reinterpret_cast<EquipmentStack* (__thiscall*)(Actor*, Object*, bool, MobileActor*, bool, ItemData*)>(0x496710);
-	const auto TES3_Actor_dropItem = reinterpret_cast<Reference* (__thiscall*)(Actor*, Object*, ItemData*, int, bool)>(0x52C460);
 	const auto TES3_Actor_getEquippedArmorBySlot = reinterpret_cast<EquipmentStack* (__thiscall*)(Actor*, ArmorSlot::value_type)>(0x496E60);
 	const auto TES3_Actor_getEquippedClothingBySlot = reinterpret_cast<EquipmentStack* (__thiscall*)(Actor*, ClothingSlot::value_type)>(0x496E00);
 	const auto TES3_Actor_getEquippedItem = reinterpret_cast<EquipmentStack* (__thiscall*)(Actor*, Object*)>(0x496DD0);
+	const auto TES3_Actor_getEquippedItemExact = reinterpret_cast<EquipmentStack* (__thiscall*)(Actor*, Object*, ItemData*)>(0x496D90);
 
 	Actor * Actor::getBaseActor() {
 		return vTable.actor->getBaseActor(this);
@@ -27,8 +31,8 @@ namespace TES3 {
 		vTable.actor->setBaseBarterGold(this, value);
 	}
 
-	bool Actor::getIsAttacked() {
-		return vTable.actor->getIsAttacked(this);
+	bool Actor::isGuard() {
+		return vTable.actor->isGuard(this);
 	}
 
 	void Actor::clone(Reference* reference) {
@@ -51,7 +55,7 @@ namespace TES3 {
 		Object* result = TES3_Actor_equipItem(this, item, itemData, out_equipmentStack, mobileActor);
 
 		// Trigger or queue our event, if this actor has a mobile actor.
-		if (mobileActor) {
+		if (mobileActor && mwse::lua::event::EquippedEvent::getEventEnabled()) {
 			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::EquippedEvent(this, mobileActor, item, itemData));
 		}
 
@@ -62,7 +66,7 @@ namespace TES3 {
 		EquipmentStack* result = TES3_Actor_unequipItem(this, item, deleteStack, mobileActor, updateGUI, itemData);
 
 		// Trigger or queue our event if there's an attached mobile actor.
-		if (mobileActor) {
+		if (mobileActor && mwse::lua::event::UnequippedEvent::getEventEnabled()) {
 			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::UnequippedEvent(this, mobileActor, item, itemData));
 		}
 
@@ -74,14 +78,9 @@ namespace TES3 {
 		TES3_Actor_unequipAllItems(this, mobileActor);
 	}
 
-	Reference* Actor::dropItem(Object* item, ItemData* itemData = 0, int count = 1, bool matchAny = true) {
-		return TES3_Actor_dropItem(this, item, itemData, count, matchAny);
-	}
-
 	void Actor::postUnequipUIRefresh(MobileActor* mobileActor) {
 		// UI refresh code from the tail of TES3_Actor_unequipItem
 		// Required to work around a crashing bug with unequipping lights
-		const auto TES3_Reference_updateBodyParts = reinterpret_cast<void (__thiscall*)(Reference*)>(0x4E8B50);
 		const auto TES3_ui_inventoryUpdateIcons = reinterpret_cast<void (__cdecl*)()>(0x5CC910);
 		const auto TES3_ui_inventoryUpdateWindowTitle = reinterpret_cast<void (__cdecl*)()>(0x5CE080);
 		const auto TES3_ui_updateCharacterImage = reinterpret_cast<void (__cdecl*)(bool)>(0x5CD2A0);
@@ -91,8 +90,8 @@ namespace TES3 {
 			auto player = static_cast<MobilePlayer*>(mobileActor);
 
 			if (player->actorFlags & MobileActorFlag::BodypartsChanged) {
-				TES3_Reference_updateBodyParts(player->reference);
-				TES3_Reference_updateBodyParts(player->firstPersonReference);
+				player->reference->updateBipedParts();
+				player->firstPersonReference->updateBipedParts();
 				player->actorFlags &= ~MobileActorFlag::BodypartsChanged;
 			}
 
@@ -105,6 +104,10 @@ namespace TES3 {
 
 	EquipmentStack* Actor::getEquippedItem(Object* item) {
 		return TES3_Actor_getEquippedItem(this, item);
+	}
+
+	EquipmentStack* Actor::getEquippedItemExact(Object* item, ItemData* itemData) {
+		return TES3_Actor_getEquippedItemExact(this, item, itemData);
 	}
 
 	EquipmentStack* Actor::getEquippedArmorBySlot(ArmorSlot::value_type slot) {
@@ -134,5 +137,39 @@ namespace TES3 {
 
 	bool Actor::isClone() {
 		return !(actorFlags & TES3::ActorFlag::IsBase);
+	}
+
+	bool Actor::tradesItemType(ObjectType::ObjectType type) {
+		auto config = getAIConfig();
+
+		switch (type) {
+		case TES3::ObjectType::Alchemy:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersAlchemy);
+		case TES3::ObjectType::Apparatus:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersApparatus);
+		case TES3::ObjectType::Armor:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersArmor);
+		case TES3::ObjectType::Book:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersBooks);
+		case TES3::ObjectType::Clothing:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersClothing);
+		case TES3::ObjectType::Ingredient:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersIngredients);
+		case TES3::ObjectType::Light:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersLights);
+		case TES3::ObjectType::Lockpick:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersLockpicks);
+		case TES3::ObjectType::Misc:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersMiscItems);
+		case TES3::ObjectType::Probe:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersProbes);
+		case TES3::ObjectType::Repair:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersRepairTools);
+		case TES3::ObjectType::Weapon:
+		case TES3::ObjectType::Ammo:
+			return (config->merchantFlags & TES3::ServiceFlag::BartersWeapons);
+		}
+
+		return false;
 	}
 }

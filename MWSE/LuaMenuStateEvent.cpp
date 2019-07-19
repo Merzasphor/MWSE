@@ -49,6 +49,8 @@ namespace mwse {
 
 				return options;
 			}
+
+			bool MenuStateEvent::m_EventEnabled = false;
 		}
 	}
 }

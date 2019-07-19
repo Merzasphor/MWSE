@@ -1,4 +1,5 @@
 #include "LuaObjectFilteredEvent.h"
+#include "LuaDisableableEvent.h"
 
 #include "LuaManager.h"
 #include "LuaUtil.h"

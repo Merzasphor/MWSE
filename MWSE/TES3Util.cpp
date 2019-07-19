@@ -27,16 +27,6 @@
 #include "LuaLoadGameEvent.h"
 #include "LuaLoadedGameEvent.h"
 
-#define TES3_general_messagePlayer 0x5F90C0
-#define TES3_general_setStringSlot 0x47B410
-
-#define TES3_newGame 0x5FAEA0
-
-#define TES3_data_GMSTs 0x794800
-
-#define TES3_restInterruptHour 0x7BC068
-#define TES3_restInterruptCreatures 0x7D7530
-
 namespace mwse {
 	namespace tes3 {
 		TES3::Reference* getReference(const char* id) {
@@ -62,8 +52,9 @@ namespace mwse {
 			return getReference(id.c_str());
 		}
 
+		const auto TES3_general_setStringSlot = reinterpret_cast<char*(__cdecl *)(char**, const char*)>(0x47B410);
 		char* setDataString(char** container, const char* string) {
-			return reinterpret_cast<char*(__cdecl *)(char**, const char*)>(TES3_general_setStringSlot)(container, string);
+			return TES3_general_setStringSlot(container, string);
 		}
 
 		unsigned int* getBaseEffectFlags() {
@@ -170,8 +161,9 @@ namespace mwse {
 			}
 		}
 
+		const auto TES3_general_messagePlayer = reinterpret_cast<void(__cdecl *)(const char*, int, int)>(0x5F90C0);
 		void messagePlayer(const char* message) {
-			reinterpret_cast<void(__cdecl *)(const char*, int, int)>(TES3_general_messagePlayer)(message, 0, 1);
+			TES3_general_messagePlayer(message, 0, 1);
 		}
 
 
@@ -272,23 +264,31 @@ namespace mwse {
 			}
 		}
 
+		const auto TES3_newGame = reinterpret_cast<void(__stdcall *)()>(0x5FAEA0);
 		void startNewGame() {
 			// Call our load event.
 			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-			luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadGameEvent(NULL, false, true));
+			if (mwse::lua::event::LoadGameEvent::getEventEnabled()) {
+				luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadGameEvent(NULL, false, true));
+			}
 
 			// Call original function.
-			reinterpret_cast<void(__stdcall *)()>(TES3_newGame)();
+			TES3_newGame();
 
 			// Clear any timers.
 			luaManager.clearTimers();
 
 			// Call our post-load event.
-			luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadedGameEvent(NULL, false, true));
+			if (mwse::lua::event::LoadedGameEvent::getEventEnabled()) {
+				luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadedGameEvent(NULL, false, true));
+			}
 		}
 
+		const auto TES3_restInterruptHour = reinterpret_cast<int*>(0x7BC068);
+		const auto TES3_restInterruptCreatures = reinterpret_cast<int*>(0x7D7530);
+
 		int getRestHoursInterrupted() {
-			return *reinterpret_cast<int*>(TES3_restInterruptHour);
+			return *TES3_restInterruptHour;
 		}
 
 		void setRestHoursInterrupted(int hour) {
@@ -296,24 +296,30 @@ namespace mwse {
 				hour = -1;
 			}
 
-			*reinterpret_cast<int*>(TES3_restInterruptHour) = hour;
+			*TES3_restInterruptHour = hour;
 		}
 
 		int getRestInterruptCount() {
-			return *reinterpret_cast<int*>(TES3_restInterruptCreatures);
+			return *TES3_restInterruptCreatures;
 		}
 
 		void setRestInterruptCount(int count) {
-			*reinterpret_cast<int*>(TES3_restInterruptCreatures) = count;
+			*TES3_restInterruptCreatures = count;
 		}
 
-		const auto TES3_ResolveAssetPath = reinterpret_cast<int(__cdecl*)(const char *, char *)>(0x47A960);
+		const auto TES3_ResolveAssetPath = reinterpret_cast<int(__cdecl*)(const char*, char*)>(0x47A960);
 		int resolveAssetPath(const char* path, char * out_buffer) {
 			return TES3_ResolveAssetPath(path, out_buffer);
 		}
 
+		const auto TES3_rand = reinterpret_cast<int(__cdecl*)(int)>(0x47B3B0);
+		int rand(unsigned int arg0) {
+			return TES3_rand(arg0);
+		}
+
+		const auto TES3_operator_new = reinterpret_cast<void*(__cdecl*)(size_t)>(0x727692);
 		void * _new(size_t size) {
-			return reinterpret_cast<void*(__cdecl*)(size_t)>(0x727692)(size);
+			return TES3_operator_new(size);
 		}
 
 		ExternalRealloc _realloc = NULL;

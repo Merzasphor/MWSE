@@ -1,4 +1,3 @@
-
 --[[
 	Mod configuration system.
 
@@ -17,6 +16,9 @@ local currentModConfig = nil
 
 -- Reusable access to UI elements.
 local modConfigContainer = nil
+
+-- Expose the mcm API.
+mwse.mcm = require("mcm.mcm")
 
 -- Callback for when a mod name has been clicked in the left pane.
 local function onClickModName(e)
@@ -93,6 +95,12 @@ local function onClickModConfigButton()
 		menu.height = 800
 		menu.positionX = menu.width / -2
 		menu.positionY = menu.height / 2
+
+		-- Register and block unfocus event, to prevent players
+		-- messing up state by opening their inventory.
+		menu:register("unfocus", function(e)
+			return false
+		end)
 
 		-- Create the left-right flow.
 		local mainHorizontalBlock = menu:createBlock({})

@@ -34,6 +34,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool GenericUiPreEvent::m_EventEnabled = false;
 		}
 	}
 }

@@ -23,7 +23,6 @@ namespace mwse {
 			setUserdataForMobileObject(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition.set("disposition", &TES3::MobileProjectile::disposition);
 			usertypeDefinition.set("expire", &TES3::MobileProjectile::flagExpire);
 
 			// Access to other objects that need to be packaged.

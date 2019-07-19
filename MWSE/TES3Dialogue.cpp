@@ -8,10 +8,6 @@
 #define TES3_Dialogue_journalSetIndex 0x50F8B0
 
 namespace TES3 {
-	const auto TES3_Dialogue_getFilteredInfo = reinterpret_cast<DialogueInfo* (__thiscall*)(Dialogue*, Actor*, Reference*, bool)>(0x4B29E0);
-
-	const auto TES3_getBaseDialogue = reinterpret_cast<Dialogue* (__cdecl*)(int, int)>(0x4B2C00);
-
 	bool Dialogue::addToJournal(int index, MobileActor * actor) {
 		if (type != DialogueType::Journal) {
 			return false;
@@ -24,7 +20,7 @@ namespace TES3 {
 		bool added = reinterpret_cast<bool(__thiscall *)(Dialogue*, int, MobileActor *)>(TES3_Dialogue_journalAdd)(this, index, actor);
 
 		// If the journal index changed, raise an event that it was modified.
-		if (journalIndex > oldIndex) {
+		if (journalIndex > oldIndex && mwse::lua::event::JournalEvent::getEventEnabled()) {
 			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::JournalEvent(this, oldIndex, index));
 		}
 
@@ -49,7 +45,7 @@ namespace TES3 {
 		journalIndex = index;
 
 		// Raise a modified event.
-		if (journalIndex > oldIndex) {
+		if (journalIndex > oldIndex && mwse::lua::event::JournalEvent::getEventEnabled()) {
 			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::JournalEvent(this, oldIndex, index));
 		}
 
@@ -59,13 +55,22 @@ namespace TES3 {
 	DialogueInfo* Dialogue::getDeepFilteredInfo(Actor* actor, Reference* reference, bool flag) {
 		auto info = getFilteredInfo(actor, reference, flag);
 		if (info == nullptr) {
-			info = TES3_getBaseDialogue(3, 0)->getFilteredInfo(actor, reference, flag);
+			auto dialogue = getDialogue(3, 0);
+			if (dialogue) {
+				info = dialogue->getFilteredInfo(actor, reference, flag);
+			}
 		}
 		return info;
 	}
 
+	const auto TES3_Dialogue_getFilteredInfo = reinterpret_cast<DialogueInfo* (__thiscall*)(Dialogue*, Actor*, Reference*, bool)>(0x4B29E0);
 	DialogueInfo* Dialogue::getFilteredInfo(Actor* actor, Reference* reference, bool flag) {
 		return TES3_Dialogue_getFilteredInfo(this, actor, reference, flag);
+	}
+
+	const auto TES3_getDialogue = reinterpret_cast<Dialogue* (__cdecl*)(int, int)>(0x4B2C00);
+	Dialogue* Dialogue::getDialogue(int type, int page) {
+		return TES3_getDialogue(type, page);
 	}
 }
 

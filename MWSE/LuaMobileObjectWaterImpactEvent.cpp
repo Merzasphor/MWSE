@@ -27,6 +27,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool MobileObjectWaterImpactEvent::m_EventEnabled = false;
 		}
 	}
 }

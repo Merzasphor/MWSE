@@ -43,10 +43,22 @@ namespace mwse {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
 
-			// Handle inheritance
+			// Find dispatch target. Almost always source, but is owningWidget for 'focus' and 'unfocus' events.
 			Element* target = source;
-			while (target && target->getProperty(PropertyType::Property, eventID).propertyValue == Property::inherit) {
-				target = target->parent;
+			if (eventID == Property::event_focus || eventID == Property::event_unfocus) {
+				target = owningWidget;
+			}
+
+			// Handle event bubbling.
+			while (target) {
+				if (target->getProperty(PropertyType::Property, eventID).propertyValue == Property::inherit
+					|| target->getProperty(PropertyType::EventCallback, eventID).eventCallback == nullptr) {
+
+					target = target->parent;
+				}
+				else {
+					break;
+				}
 			}
 
 			auto iterElements = eventMap.find(target);
@@ -54,7 +66,8 @@ namespace mwse {
 				for (const auto& eventLua : iterElements->second) {
 					if (eventLua.id == eventID) {
 						sol::table eventData = state.create_table();
-						eventData["source"] = source;
+						eventData["forwardSource"] = source;
+						eventData["source"] = target;
 						eventData["widget"] = owningWidget;
 						eventData["id"] = eventID;
 						eventData["data0"] = data0;
@@ -62,22 +75,22 @@ namespace mwse {
 
 						// For mouse events, convert screen coordinates to element relative coordinates.
 						if (eventID >= Property::event_mouse_leave && eventID <= Property::event_mouse_release) {
-							eventData["relativeX"] = data0 - source->cached_screenX;
-							eventData["relativeY"] = source->cached_screenY - data1;
+							eventData["relativeX"] = data0 - target->cached_screenX;
+							eventData["relativeY"] = target->cached_screenY - data1;
 						}
 
 						// Note: sol::protected_function needs to be a local, as Lua functions can destroy it when modifying events.
 						sol::protected_function callback = eventLua.callback;
 						sol::protected_function_result result = callback(eventData);
 						if (result.valid()) {
-							sol::optional<TES3::UI::Boolean> value = result;
-							return value.value_or(1);
+							sol::optional<bool> value = result;
+							return value.value_or(true);
 						}
 						else {
 							sol::error error = result;
-							const char *errorSource = source->name.cString ? source->name.cString : "(unnamed)";
+							const char *errorSource = target->name.cString ? target->name.cString : "(unnamed)";
 							log::getLog() << "Lua error encountered during UI event from element " << errorSource << ":" << std::endl << error.what() << std::endl;
-							return 1;
+							return true;
 						}
 					}
 				}
@@ -179,23 +192,20 @@ namespace mwse {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
 
-			Element* source = eventData["source"];
+			Element* source = eventData["forwardSource"];
 			Element* owningWidget = eventData["widget"];
 			Property eventID = eventData["id"];
 			int data0 = eventData["data0"];
 			int data1 = eventData["data1"];
 
-			// Handle inheritance
-			Element* target = source;
-			while (target && target->getProperty(PropertyType::Property, eventID).propertyValue == Property::inherit) {
-				target = target->parent;
-			}
+			// Use dispatch target resolved by eventDispatcher().
+			Element* target = eventData["source"];
 
 			auto iterElements = eventMap.find(target);
 			if (iterElements != eventMap.end()) {
 				for (const auto& eventLua : iterElements->second) {
 					if (eventLua.id == eventID && eventLua.original) {
-						// Call original callback
+						// Call original callback.
 						return eventLua.original(owningWidget, eventID, data0, data1, source);
 					}
 				}
@@ -208,6 +218,15 @@ namespace mwse {
 			if (callback) {
 				callback(&target, eventID, data0, data1, &target);
 			}
+		}
+
+		const auto TES3_showDialogueMessage = reinterpret_cast<void (__cdecl*)(const char*, int, int)>(0x5C00A0);
+		void showDialogueMessage(sol::table params) {
+			const char* text = getOptionalParam<const char*>(params, "text", nullptr);
+			int style = getOptionalParam<int>(params, "style", 0);
+			int answerIndex = getOptionalParam<int>(params, "answerIndex", 0);
+
+			TES3_showDialogueMessage(text, style, answerIndex);
 		}
 
 		//
@@ -233,7 +252,17 @@ namespace mwse {
 				params["inventory"] = MenuInventorySelect_container;
 				params["actor"] = makeLuaObject(MenuInventorySelect_container_object);
 
-				inventorySelectLuaCallback(params);
+				sol::protected_function_result result =  inventorySelectLuaCallback(params);
+				if (!result.valid()) {
+					sol::error error = result;
+					log::getLog() << "Lua error encountered during UI inventory select callback:" << std::endl << error.what() << std::endl;
+
+					if (inventorySelectLuaCallbackCloseAfter) {
+						TES3::UI::leaveMenuMode();
+					}
+
+					return false;
+				}
 			}
 
 			if (inventorySelectLuaCallbackCloseAfter) {
@@ -255,9 +284,18 @@ namespace mwse {
 				params["item"] = makeLuaObject(MenuInventorySelect_filter_object);
 				params["itemData"] = MenuInventorySelect_filter_extra;
 
-				sol::object result = inventorySelectLuaFilter(params);
-				if (result.is<bool>()) {
-					return result.as<bool>();
+				sol::protected_function_result result = inventorySelectLuaFilter(params);
+				if (!result.valid()) {
+					sol::error error = result;
+					log::getLog() << "Lua error encountered during UI inventory select filtering for item '" << MenuInventorySelect_filter_object->getObjectID() << "':" << std::endl << error.what() << std::endl;
+
+					return false;
+				}
+				else {
+					sol::object resultObject = result;
+					if (resultObject.is<bool>()) {
+						return resultObject.as<bool>();
+					}
 				}
 			}
 
@@ -392,6 +430,7 @@ namespace mwse {
 			});
 			tes3ui["findMenu"] = TES3::UI::findMenu;
 			tes3ui["findHelpLayerMenu"] = TES3::UI::findHelpLayerMenu;
+			tes3ui["getMenuOnTop"] = TES3::UI::getMenuOnTop;
 			tes3ui["forcePlayerInventoryUpdate"] = []() {
 				auto worldController = TES3::WorldController::get();
 				auto playerMobile = worldController->getMobilePlayer();
@@ -405,6 +444,7 @@ namespace mwse {
 			tes3ui["enterMenuMode"] = TES3::UI::enterMenuMode;
 			tes3ui["leaveMenuMode"] = TES3::UI::leaveMenuMode;
 			tes3ui["acquireTextInput"] = TES3::UI::acquireTextInput;
+			tes3ui["captureMouseDrag"] = TES3::UI::captureMouseDrag;
 			tes3ui["getPalette"] = [](const char* name) {
 				auto& luaManager = LuaManager::getInstance();
 				auto stateHandle = luaManager.getThreadSafeStateHandle();
@@ -441,7 +481,12 @@ namespace mwse {
 				TES3::UI::logToConsole(text, isCommand.value_or(false));
 			};
 			tes3ui["stealHelpMenu"] = &TES3::UI::stealHelpMenu;
+			tes3ui["refreshTooltip"] = []() {
+				TES3::WorldController::get()->menuController->menuInputController->updateObjectTooltip();
+			};
 			tes3ui["suppressTooltip"] = &TES3::UI::setSuppressingHelpMenu;
+			tes3ui["showDialogueMessage"] = &showDialogueMessage;
+			tes3ui["updateDialogDisposition"] = &TES3::UI::updateDialogDisposition;
 
 			// Add binding for TES3::UI::TreeItem type.
 			// TODO: Move this to its own file after TES3::UI::Tree has been made a template.

@@ -36,6 +36,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool EquippedEvent::m_EventEnabled = false;
 		}
 	}
 }

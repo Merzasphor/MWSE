@@ -29,6 +29,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool MouseWheelEvent::m_EventEnabled = false;
 		}
 	}
 }

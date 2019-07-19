@@ -17,15 +17,15 @@ namespace mwse {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
 
-			// Binding for TES3::SourceTexture::FormatPrefs.
+			// Binding for NI::SourceTexture::FormatPrefs.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.create_simple_usertype<NI::SourceTexture::FormatPrefs>();
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Basic property binding.
-				usertypeDefinition.set("alphaFormat", &NI::SourceTexture::FormatPrefs::alphaFormat);
-				usertypeDefinition.set("mipMapped", &NI::SourceTexture::FormatPrefs::mipMapped);
+				usertypeDefinition.set("alphaLayout", &NI::SourceTexture::FormatPrefs::alphaFormat);
+				usertypeDefinition.set("mipLayout", &NI::SourceTexture::FormatPrefs::mipMapped);
 				usertypeDefinition.set("pixelLayout", &NI::SourceTexture::FormatPrefs::pixelLayout);
 
 				// Finish up our usertype.
@@ -43,13 +43,14 @@ namespace mwse {
 				setUserdataForNIObjectNET(usertypeDefinition);
 
 				// Basic property binding.
-				usertypeDefinition.set("fileName", &NI::SourceTexture::formatPrefs);
 				usertypeDefinition.set("formatPrefs", &NI::SourceTexture::formatPrefs);
+				usertypeDefinition.set("isStatic", &NI::SourceTexture::isStatic);
 				usertypeDefinition.set("pixelData", &NI::SourceTexture::pixelData);
-				usertypeDefinition.set("platformFileName", &NI::SourceTexture::formatPrefs);
 
 				// Functions bound as properties.
+				usertypeDefinition.set("fileName", sol::readonly_property(&NI::SourceTexture::fileName));
 				usertypeDefinition.set("height", sol::readonly_property(&NI::SourceTexture::getHeight));
+				usertypeDefinition.set("platformFileName", sol::readonly_property(&NI::SourceTexture::platformFileName));
 				usertypeDefinition.set("width", sol::readonly_property(&NI::SourceTexture::getWidth));
 
 				// Finish up our usertype.

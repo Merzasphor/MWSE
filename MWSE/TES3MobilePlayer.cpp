@@ -24,7 +24,7 @@
 namespace TES3 {
 	void MobilePlayer::exerciseSkill(int skillId, float progress) {
 		// Invoke our exercise skill event and allow skill blocking.
-		{
+		if (mwse::lua::event::SkillExerciseEvent::getEventEnabled()) {
 			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::SkillExerciseEvent(skillId, progress));
 			if (eventData.valid()) {
@@ -53,7 +53,9 @@ namespace TES3 {
 		reinterpret_cast<void(__thiscall *)(MobileActor*)>(TES3_MobilePlayer_onDeath)(this);
 
 		// Trigger death event.
-		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::DeathEvent(this));
+		if (mwse::lua::event::DeathEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::DeathEvent(this));
+		}
 	}
 
 	bool MobilePlayer::is3rdPerson() {

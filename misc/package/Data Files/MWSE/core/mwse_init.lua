@@ -32,6 +32,10 @@ for i = 1, 10 do
 	math.random()
 end
 
+function math.lerp(v0, v1, t)
+	return (1 - t) * v0 + t * v1;
+end
+
 function math.clamp(value, low, high)
 	if (low > high) then
 		low, high = high, low
@@ -59,6 +63,13 @@ function table.size(t)
 		count = count + 1
 	end
 	return count
+end
+
+function table.empty(t)
+	for _ in pairs(t) do
+		return false
+	end
+	return true
 end
 
 function table.choice(t)

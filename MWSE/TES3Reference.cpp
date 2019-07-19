@@ -4,6 +4,8 @@
 #include "LuaUtil.h"
 
 #include "LuaActivateEvent.h"
+#include "LuaBodyPartsUpdatedEvent.h"
+#include "LuaReferenceSceneNodeCreatedEvent.h"
 
 #include "TES3Util.h"
 
@@ -18,7 +20,9 @@
 #include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
 #include "TES3MobileProjectile.h"
+#include "TES3MobController.h"
 #include "TES3NPC.h"
+#include "TES3WorldController.h"
 
 #define TES3_Reference_activate 0x4E9610
 #define TES3_Reference_setActionFlag 0x4E55A0
@@ -33,9 +37,19 @@ namespace TES3 {
 	const auto TES3_Reference_setMobileActor = reinterpret_cast<MobileActor* (__thiscall*)(Reference*, MobileActor*)>(0x4E5770);
 	const auto TES3_Reference_removeAttachment = reinterpret_cast<void(__thiscall*)(Reference*, Attachment*)>(0x4E4C10);
 
+	const auto TES3_Reference_ctor = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E4510);
+	Reference::Reference() {
+		TES3_Reference_ctor(this);
+	}
+
+	const auto TES3_Reference_dtor = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E45C0);
+	Reference::~Reference() {
+		TES3_Reference_dtor(this);
+	}
+
 	void Reference::activate(Reference* activator, int unknown) {
 		// If our event data says to block, don't let the object activate.
-		{
+		if (mwse::lua::event::ActivateEvent::getEventEnabled()) {
 			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::object response = stateHandle.triggerEvent(new mwse::lua::event::ActivateEvent(activator, this));
 			if (response.get_type() == sol::type::table) {
@@ -138,9 +152,16 @@ namespace TES3 {
 		return attachment->data;
 	}
 
-	const auto TES3_Reference_updateEquipment = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E8B50);
-	void Reference::updateEquipment() {
-		TES3_Reference_updateEquipment(this);
+	const auto TES3_Reference_updateBipedParts = reinterpret_cast<bool (__thiscall*)(Reference*)>(0x4E8B50);
+	bool Reference::updateBipedParts() {
+		bool result = TES3_Reference_updateBipedParts(this);
+
+		auto actor = getAttachedMobileActor();
+		if (actor && mwse::lua::event::BodyPartsUpdatedEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::BodyPartsUpdatedEvent(this, actor));
+		}
+
+		return result;
 	}
 
 	void Reference::setPositionFromLua(sol::stack_object value) {
@@ -182,6 +203,90 @@ namespace TES3 {
 		}
 	}
 
+	bool Reference::enable() {
+		// Make sure we're not already enabled.
+		if (!getDisabled()) {
+			return false;
+		}
+		setBaseObjectFlag(TES3::ObjectFlag::Disabled, false);
+
+		auto dataHandler = TES3::DataHandler::get();
+
+		// Don't cull the scene node.
+		getSceneGraphNode()->setAppCulled(false);
+
+		// Enable simulation for creatures/NPCs.
+		if (baseObject->objectType == TES3::ObjectType::Creature || baseObject->objectType == TES3::ObjectType::NPC) {
+			TES3::WorldController::get()->mobController->addMob(this);
+			getAttachedMobileActor()->enterLeaveSimulationByDistance();
+		}
+		// Update lights for objects.
+		else if (baseObject->objectType == TES3::ObjectType::Light) {
+			dataHandler->updateLightingForReference(this);
+			dataHandler->setDynamicLightingForReference(this);
+
+			// Also update collision.
+			dataHandler->updateCollisionGroupsForActiveCells();
+		}
+		// Update collision for everything else.
+		else {
+			dataHandler->updateCollisionGroupsForActiveCells();
+		}
+
+		// Finally flag as modified.
+		setObjectModified(true);
+
+		return true;
+	}
+
+	bool Reference::disable() {
+		// Make sure we're not already disabled.
+		if (getDisabled()) {
+			return false;
+		}
+		setBaseObjectFlag(TES3::ObjectFlag::Disabled, true);
+
+		auto dataHandler = TES3::DataHandler::get();
+
+		// Cull the scene node.
+		getSceneGraphNode()->setAppCulled(true);
+
+		// Leave simulation if we have a mobile.
+		if (baseObject->objectType == TES3::ObjectType::Creature || baseObject->objectType == TES3::ObjectType::NPC) {
+			auto mact = getAttachedMobileObject();
+			if (mact) {
+				mact->enterLeaveSimulation(false);
+				TES3::WorldController::get()->mobController->removeMob(this);
+			}
+		}
+		// Update lights for objects.
+		else if (baseObject->objectType == TES3::ObjectType::Light) {
+			detachDynamicLightFromAffectedNodes();
+
+			// Also update collision.
+			dataHandler->updateCollisionGroupsForActiveCells();
+		}
+		// Update collision for everything else.
+		else {
+			dataHandler->updateCollisionGroupsForActiveCells();
+		}
+
+		// Clean up any sounds.
+		auto sound = baseObject->getSound();
+		if (sound) {
+			dataHandler->removeSound(sound, this);
+		}
+
+		// Finally flag as modified.
+		setObjectModified(true);
+
+		return true;
+	}
+
+	bool Reference::getDisabled() {
+		return getBaseObjectFlag(TES3::ObjectFlag::Disabled);
+	}
+
 	Vector3 * Reference::getPosition() {
 		return &position;
 	}
@@ -210,7 +315,7 @@ namespace TES3 {
 
 			if (sceneNode) {
 				sceneNode->localTranslate = position;
-				sceneNode->propagatePositionChange();
+				sceneNode->update();
 			}
 		}
 
@@ -246,7 +351,7 @@ namespace TES3 {
 		if (sceneNode) {
 			Matrix33 tempOutArg;
 			sceneNode->setLocalRotationMatrix(updateSceneMatrix(&tempOutArg, false));
-			sceneNode->propagatePositionChange();
+			sceneNode->update();
 		}
 
 		setObjectModified(true);
@@ -270,6 +375,18 @@ namespace TES3 {
     void Reference::setEmptyInventoryFlag(bool set) {
 		setBaseObjectFlag(TES3::ObjectFlag::EmptyInventory, set);
     }
+
+	const auto TES3_Reference_getSceneGraphNode = reinterpret_cast<NI::Node*(__thiscall*)(Reference*)>(0x4E81A0);
+	NI::Node * Reference::getSceneGraphNode() {
+		auto previousNode = sceneNode;
+		auto newNode = TES3_Reference_getSceneGraphNode(this);
+
+		if (previousNode != newNode && mwse::lua::event::ReferenceSceneNodeCreatedEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ReferenceSceneNodeCreatedEvent(this));
+		}
+
+		return newNode;
+	}
 
 	Inventory * Reference::getInventory() {
 		// Only actors have equipment.

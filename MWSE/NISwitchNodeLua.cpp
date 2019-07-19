@@ -29,14 +29,12 @@ namespace mwse {
 			// Basic property binding.
 			usertypeDefinition.set("switchIndex", sol::property(
 				[](NI::SwitchNode& self) { return self.switchIndex; },
-				[](NI::SwitchNode& self, int index)
-			{
-				if (index < 0 || index > (self.children.filledCount-1) || self.children.storage[index] == nullptr) {
-					throw std::exception("Attempted to set switchIndex beyond bounds!");
-				}
-				self.switchIndex = index;
-			}
-				));
+				[](NI::SwitchNode& self, int index) {
+					if (index < 0 || index > (self.children.filledCount-1) || self.children.storage[index] == nullptr) {
+						throw std::exception("Attempted to set switchIndex beyond bounds!");
+					}
+					self.switchIndex = index;
+				}));
 
 			// Finish up our usertype.
 			state.set_usertype("niSwitchNode", usertypeDefinition);

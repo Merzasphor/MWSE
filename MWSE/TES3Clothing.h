@@ -8,7 +8,7 @@
 
 namespace TES3 {
 	namespace ClothingSlot {
-		typedef unsigned int value_type;
+		typedef unsigned char value_type;
 
 		enum ClothingSlot : value_type {
 			Pants = 0x0,
@@ -33,8 +33,8 @@ namespace TES3 {
 		WearablePart parts[7];  // 0x54
 		ClothingSlot::value_type slot; // 0xA8
 		float weight; // 0xAC
-		short value; // 0xB0
-		short enchantCapacity; // 0xB2
+		unsigned short value; // 0xB0
+		unsigned short enchantCapacity; // 0xB2
 		Enchantment * enchantment; // 0xB4
 	};
 	static_assert(sizeof(Clothing) == 0xB8, "TES3::Clothing failed size validation");

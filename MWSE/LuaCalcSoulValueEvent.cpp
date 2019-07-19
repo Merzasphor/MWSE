@@ -28,6 +28,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool CalculateSoulValueEvent::m_EventEnabled = false;
 		}
 	}
 }

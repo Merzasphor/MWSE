@@ -3,8 +3,10 @@
 #include "TES3Defines.h"
 
 #include "TES3ActionData.h"
+#include "TES3AIBehavior.h"
 #include "TES3Armor.h"
 #include "TES3Clothing.h"
+#include "TES3CrimeController.h"
 #include "TES3Inventory.h"
 #include "TES3MagicSourceInstance.h"
 #include "TES3MobileObject.h"
@@ -97,12 +99,6 @@ namespace TES3 {
 			unsigned char skillOrAttributeID; // 0x18
 		};
 
-		void * unknown_0x60;
-		float thisFrameDistanceMoved;
-		Vector3 thisFrameDeltaPosition;
-		float unknown_0x74;
-		int unknown_0x78;
-		char unknown_0x7C;
 		Iterator<MobileActor> listTargetActors; // 0x80
 		Iterator<MobileActor> listFriendlyActors; // 0x94
 		float scanTimer; // 0xA8
@@ -113,13 +109,11 @@ namespace TES3 {
 		char unknown_0xC1; // Undefined.
 		char unknown_0xC2; // Undefined.
 		char unknown_0xC3; // Undefined.
-		float unknown_0xC4;
+		float timer_0xC4;
 		AIPlanner * aiPlanner; // 0xC8
 		ActionData actionData; // 0xCC
 		ActionData actionBeforeCombat; // 0x13C
-		int unknown_0x1AC;
-		CrimeTree * unknown_0x1B0;
-		int unknown_0x1B4;
+		CrimeController crimesA; // 0x1AC
 		int unknown_0x1B8;
 		int unknown_0x1BC;
 		CombatSession * combatSession; // 0x1C0
@@ -130,32 +124,17 @@ namespace TES3 {
 		ActiveMagicEffect* activeMagicEffects; // 0x1C8
 		int activeMagicEffectCount; // 0x1CC
 		int unknown_0x1D0;
-		char unknown_0x1D4;
-		char unknown_0x1D5; // Undefined.
-		char unknown_0x1D6; // Undefined.
-		char unknown_0x1D7; // Undefined.
-		float unknown_0x1D8;
-		Vector3 unknown_0x1DC;
-		Vector3 unknown_0x1E8;
-		Vector3 unknown_0x1F4;
-		int unknown_0x200;
-		int unknown_0x204;
-		int unknown_0x208;
-		short unknown_0x20C;
-		short unknown_0x20E;
-		short unknown_0x210;
-		char unknown_0x212;
-		char unknown_0x213;
+		Collision collision_1D4;
 		HashMap powers;
 		char unknown_0x224;
-		char unknown_0x225;
+		char prevAIBehaviourState;
 		char unknown_0x226;
 		signed char nextActionWeight; // 0x227
 		MobileActorType actorType; // 0x228
 		char unknown_0x229;
 		char unknown_0x22A; // Undefined.
 		char unknown_0x22B; // Undefined.
-		int lastGroundZ; // 0x22C
+		float lastGroundZ; // 0x22C
 		int unknown_0x230;
 		Reference * collidingReference; // 0x234
 		int unknown_0x238;
@@ -165,12 +144,7 @@ namespace TES3 {
 			ActorAnimationData * asActor;
 			PlayerAnimationData * asPlayer;
 		} animationData; // 0x244
-		char unknown_0x248;
-		char unknown_0x249; // Undefined.
-		char unknown_0x24A; // Undefined.
-		char unknown_0x24B; // Undefined.
-		void * unknown_0x24C;
-		int unknown_0x250;
+		CrimeController crimesB; // 0x248
 		Statistic attributes[8];
 		Statistic health;
 		Statistic magicka;
@@ -184,7 +158,7 @@ namespace TES3 {
 		int alarm;
 		int barterGold;
 		short widthInUnits;
-		short unknown_0x366;
+		short heightInUnits;
 		short readiedAmmoCount;
 		short corpseHourstamp;
 		short greetDuration;
@@ -210,13 +184,17 @@ namespace TES3 {
 		// vTable accessor functions.
 		//
 
-		signed char onActorCollision(int hitReferenceIndex);
-		signed char onObjectCollision(int hitReferenceIndex, signed char flag);
-		signed char onTerrainCollision(int hitReferenceIndex);
-		signed char onActivatorCollision(int hitReferenceIndex);
+		bool onActorCollision(int collisionIndex);
+		bool onObjectCollision(int collisionIndex, bool flag);
+		bool onTerrainCollision(int collisionIndex);
+		bool onActivatorCollision(int collisionIndex);
 
 		SkillStatistic * getSkillStatistic(int skillId);
 		float getSkillValue(int skillId);
+
+		float applyArmorRating(float damage, float swing, bool damageEquipment);
+		float calculateArmorRating(int * armorItemCount = nullptr);
+		void applyHitModifiers(MobileActor * attacker, MobileActor * defender, float unknown, float swing, MobileProjectile * projectile = nullptr, bool unknown2 = false);
 
 		//
 		// Other related this-call functions.
@@ -249,6 +227,11 @@ namespace TES3 {
 		void setCurrentMagicSourceFiltered(Object * magic);
 		void setActionTarget(MobileActor * target);
 
+		void dropItem(Object * item, ItemData * itemData = nullptr, int count = 1, bool exact = true);
+
+		// Always returns false for non-MACH.
+		bool persuade(int random, int persuasionIndex);
+
 		//
 		// Custom functions.
 		//
@@ -259,7 +242,7 @@ namespace TES3 {
 		bool getMobileActorMovementFlag(ActorMovement::Flag);
 		void setMobileActorMovementFlag(ActorMovement::Flag, bool);
 
-		bool equipItem(Object* item, ItemData * itemData = nullptr, bool addItem = false, bool forceSpecifiedItemData = false);
+		bool equipItem(Object* item, ItemData * itemData = nullptr, bool addItem = false, bool selectBestCondition = false, bool selectWorstCondition = false);
 	};
 	static_assert(sizeof(MobileActor::ActiveMagicEffect) == 0x18, "TES3::MobileActor::ActiveMagicEffect failed size validation");
 	static_assert(sizeof(MobileActor) == 0x3B0, "TES3::MobileActor failed size validation");

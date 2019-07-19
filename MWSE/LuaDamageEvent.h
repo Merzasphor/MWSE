@@ -1,14 +1,21 @@
 #pragma once
 
 #include "LuaObjectFilteredEvent.h"
+#include "LuaDisableableEvent.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class DamageEvent : public ObjectFilteredEvent {
+			class DamageEvent : public ObjectFilteredEvent, public DisableableEvent<DamageEvent> {
 			public:
 				DamageEvent(TES3::MobileActor* mobileActor, float damage);
 				sol::table createEventTable();
+
+				static TES3::MobileActor * m_Attacker;
+				static TES3::MobileProjectile * m_Projectile;
+				static TES3::MagicSourceInstance * m_MagicSourceInstance;
+				static TES3::MagicEffectInstance * m_MagicEffectInstance;
+				static const char * m_Source;
 
 			protected:
 				TES3::MobileActor * m_MobileActor;

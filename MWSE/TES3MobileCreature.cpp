@@ -12,11 +12,13 @@ namespace TES3 {
 		float speed = reinterpret_cast<float(__thiscall *)(MobileCreature*)>(TES3_MobileCreature_calcWalkSpeed)(this);
 
 		// Launch our event, and overwrite the speed with what was given back to us.
-		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CalculateMovementSpeed(mwse::lua::event::CalculateMovementSpeed::Walk, this, speed));
-		if (eventData.valid()) {
-			speed = eventData["speed"];
+		if (mwse::lua::event::CalculateMovementSpeed::getEventEnabled()) {
+			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CalculateMovementSpeed(mwse::lua::event::CalculateMovementSpeed::Walk, this, speed));
+			if (eventData.valid()) {
+				speed = eventData["speed"];
+			}
 		}
 
 		return speed;

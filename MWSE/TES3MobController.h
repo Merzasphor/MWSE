@@ -36,7 +36,7 @@ namespace TES3 {
 		//
 
 		bool detectPresence(MobileActor * actor, bool unknown = true);
-		void checkRadius(MobileActor * actor, Iterator<void> * container);
+		void checkRadius(MobileActor * actor, Iterator<AIPlanner> * container);
 		void checkPlayerDistance();
 
 	};

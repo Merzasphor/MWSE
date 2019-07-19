@@ -20,6 +20,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool MouseButtonDownEvent::m_EventEnabled = false;
 		}
 	}
 }

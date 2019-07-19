@@ -4,23 +4,25 @@
 
 namespace NI {
 	struct PixelFormat {
-		int format; // 0x0
-		int unknown_0x4;
-		int unknown_0x8;
-		int unknown_0xC;
-		int unknown_0x10;
-		unsigned char bitsPerPixel; // 0x14
-		int unknown_0x18;
-		int unknown_0x1C;
-		int unknown_0x20;
-		int unknown_0x24; // Maybe bits per pixel?
-	};
-	static_assert(sizeof(PixelFormat) == 0x28, "NI::PixelFormat failed size validation");
+		enum struct Format : int {
+			RGB = 0,
+			RGBA = 1,
+			PALETTE = 2,
+			PALETTE_ALPHA = 3,
+			BGR = 4,
+			BGRA = 5,
+			COMPRESS1 = 6,
+			COMPRESS3 = 7,
+			COMPRESS5 = 8,
+			RGB24_NONINTERLEAVED = 9,
+			BUMP = 10,
+			BUMPLUMA = 11
+		};
 
-	struct PixelRGB {
-		unsigned char r;
-		unsigned char g;
-		unsigned char b;
+		Format format;
+		unsigned int channelMasks[4];
+		unsigned int bitsPerPixel;
+		unsigned int compareBits[2];
 	};
-	static_assert(sizeof(PixelRGB) == 0x3, "NI::PixelRGB failed size validation");
+	static_assert(sizeof(PixelFormat) == 0x20, "NI::PixelFormat failed size validation");
 }

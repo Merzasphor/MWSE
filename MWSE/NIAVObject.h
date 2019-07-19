@@ -10,7 +10,7 @@
 namespace NI {
 	struct AVObject : ObjectNET {
 		unsigned short flags; // 0x14
-		short unknown_0x16;
+		short pad_16;
 		Node * parentNode; // 0x18
 		TES3::Vector3 worldBoundOrigin; // 0x1C
 		float worldBoundRadius; // 0x28
@@ -18,11 +18,11 @@ namespace NI {
 		TES3::Vector3 localTranslate; // 0x30
 		float localScale; // 0x3C
 		TES3::Transform worldTransform; // 0x40
-		void * localBound; // 0x74
-		int unknown_0x78;
-		int unknown_0x7C;
-		int unknown_0x80;
-		int unknown_0x84;
+		TES3::Vector3 * velocities; // 0x74
+		void * modelABV; // 0x78
+		void * worldABV; // 0x7C
+		int (__cdecl * collideCallback)(void*); // 0x80
+		void * collideCallbackUserData; // 0x84
 		PropertyLinkedList propertyNode; // 0x88
 
 		//
@@ -43,20 +43,20 @@ namespace NI {
 		// Other related this-call functions.
 		//
 
-		__declspec(dllexport) void updateNodeEffects();
-		__declspec(dllexport) void updateTextureProperties();
-		__declspec(dllexport) void propagatePositionChange(float unk1 = 0.0f, int unk2 = 0, int unk3 = 1);
+		__declspec(dllexport) void update(float fTime = 0.0f, bool bUpdateControllers = false, bool bUpdateBounds = true);
+		__declspec(dllexport) void updateEffects();
+		__declspec(dllexport) void updateProperties();
 		__declspec(dllexport) void setLocalRotationMatrix(TES3::Matrix33* matrix);
 
 		__declspec(dllexport) void attachProperty(Pointer<Property> property);
-		__declspec(dllexport) Pointer<Property> * detachProperty(Pointer<Property> * out_detached, int type);
+		__declspec(dllexport) Pointer<Property> * detachProperty(Pointer<Property> * out_detached, PropertyType type);
 
 		//
 		// Custom functions.
 		//
 
 		__declspec(dllexport) void clearTransforms();
-		__declspec(dllexport) Pointer<Property> getProperty(int type);
+		__declspec(dllexport) Pointer<Property> getProperty(PropertyType type);
 
 	};
 	static_assert(sizeof(AVObject) == 0x90, "NI::AVObject failed size validation");

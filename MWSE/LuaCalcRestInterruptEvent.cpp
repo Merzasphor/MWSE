@@ -32,6 +32,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool CalcRestInterruptEvent::m_EventEnabled = false;
 		}
 	}
 }

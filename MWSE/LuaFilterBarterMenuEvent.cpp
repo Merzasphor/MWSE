@@ -29,6 +29,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool FilterBarterMenuEvent::m_EventEnabled = false;
 		}
 	}
 }

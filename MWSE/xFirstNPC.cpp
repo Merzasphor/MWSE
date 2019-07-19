@@ -57,7 +57,7 @@ namespace mwse
 		}
 		else {
 			auto cellPointer = dataHandler->exteriorCellData[TES3::CellGrid::Center];
-			if (cellPointer->size == 1) {
+			if (cellPointer->loadingFlags == 1) {
 				// Get the start of the list for the center cell. We'll check that it's valid later.
 				reference = static_cast<TES3::Reference*>(cellPointer->cell->actors.head->skipDeletedObjects());
 				int exteriorCount = 0;
@@ -67,7 +67,7 @@ namespace mwse
 					}
 
 					cellPointer = dataHandler->exteriorCellData[i];
-					if (cellPointer->size == 1) {
+					if (cellPointer->loadingFlags == 1) {
 						TES3::Reference* tempReference = static_cast<TES3::Reference*>(cellPointer->cell->actors.head->skipDeletedObjects());
 						if (tempReference != NULL) {
 							mwse::tes3::exteriorRefs[exteriorCount] = tempReference;
@@ -75,7 +75,7 @@ namespace mwse
 						}
 					}
 					else {
-						mwse::log::getLog() << "xFirstNPC: Exterior size is " << cellPointer->size << ". Skipping exterior " << i << "." << std::endl;
+						mwse::log::getLog() << "xFirstNPC: Exterior flags is " << cellPointer->loadingFlags << ". Skipping exterior " << i << "." << std::endl;
 					}
 				}
 				

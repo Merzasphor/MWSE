@@ -23,6 +23,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool FrameEvent::m_EventEnabled = false;
 		}
 	}
 }

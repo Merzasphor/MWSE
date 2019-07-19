@@ -5,7 +5,7 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class KeyDownEvent : public KeyEvent {
+			class KeyDownEvent : public KeyEvent, public DisableableEvent<KeyDownEvent> {
 			public:
 				KeyDownEvent(int keyCode, bool controlDown, bool shiftDown, bool altDown, bool superDown);
 			};

@@ -18,6 +18,7 @@
 #define TES3_ui_inventory_addTile 0x5CBCC0
 #define TES3_ui_inventory_updateIcons 0x5CC910
 #define TES3_ui_inventory_equipInventoryTileToPlayer 0x5CE130
+#define TES3_ui_inventory_equipInventoryItemToPlayer 0x5D1190
 #define TES3_ui_data_inventory_updatePaperDoll 0x7B6D04
 
 #define TES3_ui_showRestWaitMenu 0x610170
@@ -69,21 +70,27 @@ namespace mwse {
 				return reinterpret_cast<signed char(__cdecl *)(TES3::UI::InventoryTile*)>(TES3_ui_inventory_equipInventoryTileToPlayer)(tile);
 			}
 
+			signed char equipInventoryItem(TES3::PhysicalObject* object, TES3::ItemData* data) {
+				return reinterpret_cast<signed char(__cdecl *)(TES3::PhysicalObject*, TES3::ItemData*)>(TES3_ui_inventory_equipInventoryItemToPlayer)(object, data);
+			}
+
 			void flagPaperDollUpdate() {
 				*reinterpret_cast<signed char*>(TES3_ui_data_inventory_updatePaperDoll) = 1;
 			}
 
 			void showRestWaitMenu(bool allowRest, bool scripted) {
 				// Execute event. If the event blocked the call, bail.
-				mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-				auto stateHandle = luaManager.getThreadSafeStateHandle();
-				sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::ShowRestWaitMenuEvent(allowRest, scripted));
-				if (eventData.valid()) {
-					if (eventData["block"] == true) {
-						return;
-					}
+				if (mwse::lua::event::ShowRestWaitMenuEvent::getEventEnabled()) {
+					mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+					auto stateHandle = luaManager.getThreadSafeStateHandle();
+					sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::ShowRestWaitMenuEvent(allowRest, scripted));
+					if (eventData.valid()) {
+						if (eventData["block"] == true) {
+							return;
+						}
 
-					allowRest = eventData["allowRest"];
+						allowRest = eventData["allowRest"];
+					}
 				}
 
 				reinterpret_cast<void(__cdecl *)(bool)>(TES3_ui_showRestWaitMenu)(allowRest);

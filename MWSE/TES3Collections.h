@@ -7,7 +7,7 @@ namespace TES3 {
 
 	template <typename T>
 	struct LinkedList {
-		unsigned long size;
+		size_t size;
 		T * head;
 		T * tail;
 	};
@@ -31,7 +31,7 @@ namespace TES3 {
 
 	template <typename T>
 	struct StlList {
-		unsigned long size;
+		size_t size;
 		StlListNode<T> * head;
 		StlListNode<T> * tail;
 
@@ -49,8 +49,8 @@ namespace TES3 {
 
 	struct HashMap {
 		void * vTable; // 0x0
-		long count; // 0x4
-		long bucketCount; // 0x8
+		size_t count; // 0x4
+		size_t bucketCount; // 0x8
 		void * buckets; // 0xC
 	};
 	static_assert(sizeof(HashMap) == 0x10, "TES3::HashMap failed size validation");
@@ -70,7 +70,7 @@ namespace TES3 {
 	template <typename T>
 	struct Iterator {
 		void * vTable;
-		int size;
+		size_t size;
 		IteratorNode<T> * head;
 		IteratorNode<T> * tail;
 		IteratorNode<T> * current;
@@ -87,8 +87,8 @@ namespace TES3 {
 			reinterpret_cast<void(__thiscall *)(Iterator<T>*, T*)>(0x47E360)(this, item);
 		}
 
-		void addItemAtIndex(T * item, unsigned int index) {
-			reinterpret_cast<void(__thiscall *)(Iterator<T>*, T*, unsigned int)>(0x47E4D0)(this, item, index);
+		void addItemAtIndex(T * item, size_t index) {
+			reinterpret_cast<void(__thiscall *)(Iterator<T>*, T*, size_t)>(0x47E4D0)(this, item, index);
 		}
 
 		IteratorNode<T> * getFirstNode() {
@@ -109,25 +109,74 @@ namespace TES3 {
 	struct TArray {
 		void * vTable; // 0x0
 		T ** storage; // 0x4
-		int storageCount; // 0x8
-		int endIndex; // 0xC
-		int filledCount; // 0x10
-		int growByCount; // 0x14
+		size_t storageCount; // 0x8
+		size_t endIndex; // 0xC
+		size_t filledCount; // 0x10
+		size_t growByCount; // 0x14
 
 		//
-		// Related this-call functions.
+		// Related functions.
 		//
 
-		int getIndexOfValue(T * value) {
-			return reinterpret_cast<int(__cdecl *)(TArray<T>*, T*)>(0x497B60)(this, value);
+		// getIndexOfValue returns -1 if not found.
+		int getIndexOfValue(const T * value) const {
+			return reinterpret_cast<int(__cdecl *)(const TArray<T>*, const T*)>(0x497B60)(this, value);
+		}
+
+		void setAtIndex(size_t index, const T * value) {
+			// Note final parameter is a reference.
+			reinterpret_cast<void(__thiscall *)(TArray<T>*, size_t, const T*&)>(0x4975D0)(this, index, value);
+		}
+
+		void setSize(size_t size) {
+			reinterpret_cast<void(__thiscall *)(TArray<T>*, size_t)>(0x47C5A0)(this, size);
 		}
 
 		//
 		// Custom functions.
 		//
 
-		bool contains(T * value) {
+		static TArray<T> * create(size_t size = 1) {
+			TArray<T> * arr = mwse::tes3::_new<TArray<T>>();
+			arr->vTable = reinterpret_cast<void*>(0x747A60);
+			arr->storageCount = size;
+			arr->growByCount = size;
+			arr->endIndex = 0;
+			arr->filledCount = 0;
+			arr->storage = reinterpret_cast<T**>(mwse::tes3::_new(size * sizeof(T*)));
+			return arr;
+		}
+
+		T *& operator[](const size_t pos) {
+			if (pos >= storageCount) {
+				throw std::out_of_range("TES3::TArray::operator[] - Access out of bounds.");
+			}
+			return &storage[pos];
+		}
+
+		T * at(size_t pos) const {
+			if (pos >= storageCount) {
+				throw std::out_of_range("TES3::TArray::at - Access out of bounds.");
+			}
+			return storage[pos];
+		}
+
+		bool contains(T * value) const {
 			return getIndexOfValue(value) >= 0;
+		}
+
+		__inline size_t size() const {
+			return storageCount;
+		}
+
+		size_t add(T * value) {
+			size_t index = endIndex;
+
+			if (index == storageCount) {
+				setSize(storageCount + growByCount);
+			}
+			setAtIndex(index, value);
+			return index;
 		}
 
 	};

@@ -29,6 +29,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool FilterContentsMenuEvent::m_EventEnabled = false;
 		}
 	}
 }

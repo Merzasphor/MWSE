@@ -59,6 +59,8 @@ namespace mwse {
 
 				return options;
 			}
+
+			bool SpellResistEvent::m_EventEnabled = false;
 		}
 	}
 }

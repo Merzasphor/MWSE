@@ -42,6 +42,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool UiObjectTooltipEvent::m_EventEnabled = false;
 		}
 	}
 }

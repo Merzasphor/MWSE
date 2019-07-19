@@ -12,10 +12,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArrayUtil.h" />
+    <ClInclude Include="LuaCalcHitArmorPieceEvent.h" />
     <ClInclude Include="LuaBookGetTextEvent.h" />
     <ClInclude Include="LuaCalcArmorRatingEvent.h" />
     <ClInclude Include="LuaCalcHitChanceEvent.h" />
     <ClInclude Include="LuaCalcSoulValueEvent.h" />
+    <ClInclude Include="LuaConvertReferenceToItemEvent.h" />
+    <ClInclude Include="LuaCrimeWitnessedEvent.h" />
+    <ClInclude Include="LuaDisableableEvent.h" />
+    <ClInclude Include="LuaDisableableEventManager.h" />
+    <ClInclude Include="LuaBodyPartsUpdatedEvent.h" />
     <ClInclude Include="LuaFilterBarterMenuEvent.h" />
     <ClInclude Include="LuaActivationTargetChangedEvent.h" />
     <ClInclude Include="LuaAddTopicEvent.h" />
@@ -74,6 +80,8 @@
     <ClInclude Include="LuaMobileObjectCollisionEvent.h" />
     <ClInclude Include="LuaMobileObjectWaterImpactEvent.h" />
     <ClInclude Include="LuaMobileProjectileActorCollisionEvent.h" />
+    <ClInclude Include="LuaMobileProjectileObjectCollisionEvent.h" />
+    <ClInclude Include="LuaMobileProjectileTerrainCollisionEvent.h" />
     <ClInclude Include="LuaMouseAxisEvent.h" />
     <ClInclude Include="LuaMouseButtonDownEvent.h" />
     <ClInclude Include="LuaMouseButtonUpEvent.h" />
@@ -82,6 +90,7 @@
     <ClInclude Include="LuaObjectFilteredEvent.h" />
     <ClInclude Include="LuaPotionBrewedEvent.h" />
     <ClInclude Include="LuaProjectileExpireEvent.h" />
+    <ClInclude Include="LuaReferenceSceneNodeCreatedEvent.h" />
     <ClInclude Include="LuaRestInterruptEvent.h" />
     <ClInclude Include="LuaSavedGameEvent.h" />
     <ClInclude Include="LuaSaveGameEvent.h" />
@@ -104,6 +113,8 @@
     <ClInclude Include="LuaWeatherTransitionFinishedEvent.h" />
     <ClInclude Include="LuaWeatherTransitionStartedEvent.h" />
     <ClInclude Include="NIAmbientLight.h" />
+    <ClInclude Include="NICollisionSwitch.h" />
+    <ClInclude Include="NICollisionSwitchLua.h" />
     <ClInclude Include="NIColor.h" />
     <ClInclude Include="NIColorLua.h" />
     <ClInclude Include="NIDirectionalLight.h" />
@@ -117,6 +128,7 @@
     <ClInclude Include="NIPixelFormat.h" />
     <ClInclude Include="NIPointLight.h" />
     <ClInclude Include="NIProperty.h" />
+    <ClInclude Include="NIPropertyLua.h" />
     <ClInclude Include="NISourceTexture.h" />
     <ClInclude Include="NISourceTextureLua.h" />
     <ClInclude Include="NISpotLight.h" />
@@ -134,9 +146,11 @@
     <ClInclude Include="TES3AudioControllerLua.h" />
     <ClInclude Include="TES3BodyPart.h" />
     <ClInclude Include="TES3BodyPartLua.h" />
+    <ClInclude Include="TES3CollisionLua.h" />
     <ClInclude Include="TES3CombatSessionLua.h" />
+    <ClInclude Include="TES3CrimeController.h" />
     <ClInclude Include="TES3CrimeEvent.h" />
-    <ClInclude Include="TES3CrimeTree.h" />
+    <ClInclude Include="TES3CrimeEventList.h" />
     <ClInclude Include="D3DColorValue.h" />
     <ClInclude Include="D3DLight.h" />
     <ClInclude Include="D3DMaterial.h" />
@@ -155,6 +169,7 @@
     <ClInclude Include="TES3SoulGemData.h" />
     <ClInclude Include="TES3SpellInstanceController.h" />
     <ClInclude Include="TES3StdString.h" />
+    <ClInclude Include="TES3TArrayLua.h" />
     <ClInclude Include="TES3UIDefines.h" />
     <ClInclude Include="LuaManager.h" />
     <ClInclude Include="LuaScript.h" />
@@ -376,6 +391,7 @@
     <ClCompile Include="LuaBookGetTextEvent.cpp" />
     <ClCompile Include="LuaButtonPressedEvent.cpp" />
     <ClCompile Include="LuaCalcArmorRatingEvent.cpp" />
+    <ClCompile Include="LuaCalcHitArmorPieceEvent.cpp" />
     <ClCompile Include="LuaCalcHitChanceEvent.cpp" />
     <ClCompile Include="LuaCalcMovementSpeedEvent.cpp" />
     <ClCompile Include="LuaCalcRepairPriceEvent.cpp" />
@@ -390,12 +406,16 @@
     <ClCompile Include="LuaCombatStartEvent.cpp" />
     <ClCompile Include="LuaCombatStopEvent.cpp" />
     <ClCompile Include="LuaCombatStoppedEvent.cpp" />
+    <ClCompile Include="LuaConvertReferenceToItemEvent.cpp" />
+    <ClCompile Include="LuaCrimeWitnessedEvent.cpp" />
     <ClCompile Include="LuaDamagedEvent.cpp" />
     <ClCompile Include="LuaDamageEvent.cpp" />
     <ClCompile Include="LuaDeathEvent.cpp" />
     <ClCompile Include="LuaDetermineActionEvent.cpp" />
     <ClCompile Include="LuaDeterminedActionEvent.cpp" />
+    <ClCompile Include="LuaDisableableEventManager.cpp" />
     <ClCompile Include="LuaEquipEvent.cpp" />
+    <ClCompile Include="LuaBodyPartsUpdatedEvent.cpp" />
     <ClCompile Include="LuaEquippedEvent.cpp" />
     <ClCompile Include="LuaFilterBarterMenuEvent.cpp" />
     <ClCompile Include="LuaFilterContentsMenuEvent.cpp" />
@@ -430,6 +450,8 @@
     <ClCompile Include="LuaMobileProjectileActorCollisionEvent.cpp" />
     <ClCompile Include="LuaManager.cpp" />
     <ClCompile Include="LuaMobileObjectCollisionEvent.cpp" />
+    <ClCompile Include="LuaMobileProjectileObjectCollisionEvent.cpp" />
+    <ClCompile Include="LuaMobileProjectileTerrainCollisionEvent.cpp" />
     <ClCompile Include="LuaMouseAxisEvent.cpp" />
     <ClCompile Include="LuaMouseButtonDownEvent.cpp" />
     <ClCompile Include="LuaMouseButtonUpEvent.cpp" />
@@ -438,6 +460,7 @@
     <ClCompile Include="LuaObjectFilteredEvent.cpp" />
     <ClCompile Include="LuaPotionBrewedEvent.cpp" />
     <ClCompile Include="LuaProjectileExpireEvent.cpp" />
+    <ClCompile Include="LuaReferenceSceneNodeCreatedEvent.cpp" />
     <ClCompile Include="LuaRestInterruptEvent.cpp" />
     <ClCompile Include="LuaSavedGameEvent.cpp" />
     <ClCompile Include="LuaSaveGameEvent.cpp" />
@@ -466,6 +489,7 @@
     <ClCompile Include="MgeTes3Machine.cpp" />
     <ClCompile Include="NIAVObject.cpp" />
     <ClCompile Include="NICameraLua.cpp" />
+    <ClCompile Include="NICollisionSwitchLua.cpp" />
     <ClCompile Include="NIColor.cpp" />
     <ClCompile Include="NIColorLua.cpp" />
     <ClCompile Include="NIDynamicEffect.cpp" />
@@ -478,8 +502,10 @@
     <ClCompile Include="NIObjectNET.cpp" />
     <ClCompile Include="NIPick.cpp" />
     <ClCompile Include="NIPickLua.cpp" />
+    <ClCompile Include="NIPixelData.cpp" />
     <ClCompile Include="NIPixelDataLua.cpp" />
     <ClCompile Include="NIPointLight.cpp" />
+    <ClCompile Include="NIPropertyLua.cpp" />
     <ClCompile Include="NISourceTexture.cpp" />
     <ClCompile Include="NISourceTextureLua.cpp" />
     <ClCompile Include="NIStream.cpp" />
@@ -501,8 +527,11 @@
     <ClCompile Include="TES3AudioControllerLua.cpp" />
     <ClCompile Include="TES3BodyPart.cpp" />
     <ClCompile Include="TES3BodyPartLua.cpp" />
+    <ClCompile Include="TES3CollisionLua.cpp" />
     <ClCompile Include="TES3CombatSession.cpp" />
     <ClCompile Include="TES3CombatSessionLua.cpp" />
+    <ClCompile Include="TES3CrimeController.cpp" />
+    <ClCompile Include="TES3CrimeEventList.cpp" />
     <ClCompile Include="TES3DialogueInfo.cpp" />
     <ClCompile Include="TES3Enchantment.cpp" />
     <ClCompile Include="TES3Fader.cpp" />
@@ -522,6 +551,7 @@
     <ClCompile Include="TES3AttachmentLua.cpp" />
     <ClCompile Include="TES3CrimeEvent.cpp" />
     <ClCompile Include="TES3MobController.cpp" />
+    <ClCompile Include="TES3TArrayLua.cpp" />
     <ClCompile Include="TES3UIInventoryTile.cpp" />
     <ClCompile Include="TES3UIInventoryTileLua.cpp" />
     <ClCompile Include="TES3UIManager.cpp" />

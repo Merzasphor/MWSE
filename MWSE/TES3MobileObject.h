@@ -4,6 +4,8 @@
 
 #include "TES3Defines.h"
 
+#include "NINode.h"
+#include "NIPointer.h"
 #include "TES3Object.h"
 #include "TES3Vectors.h"
 
@@ -84,7 +86,7 @@ namespace TES3 {
 		void * resolveCollisions; // 0x18
 		void * unknown_0x1C;
 		void * simulate; // 0x20
-		void * isActor; // 0x24
+		bool (__thiscall * isActor)(MobileObject*); // 0x24
 		void * unknown_0x28;
 		void * unknown_0x2C;
 		void * unknown_0x30;
@@ -103,15 +105,15 @@ namespace TES3 {
 		void * setJumping; // 0x64
 		void * unknown_0x68;
 		void * waterImpact; // 0x6C
-		void * unknown_0x70;
+		void (__thiscall * enterLeaveSimulation)(MobileObject*, bool); // 0x70
 		void * setActorFlag8; // 0x74
 		void * setActorFlag40; // 0x78
 		void * unknown_0x7C;
-		char(__thiscall * onActorCollision)(MobileProjectile*, int); // 0x80
-		void * unknown_0x84;
-		void * unknown_0x88;
-		void * unknown_0x8C;
-		void * unknown_0x90;
+		bool (__thiscall * onActorCollision)(MobileProjectile*, int); // 0x80
+		bool (__thiscall * onObjectCollision)(MobileProjectile*, int, bool); // 0x84
+		bool (__thiscall * onTerrainCollision)(MobileProjectile*, int); // 0x88
+		bool (__thiscall * onWaterCollision)(MobileProjectile*, int); // 0x8C
+		bool (__thiscall * onActivatorCollision)(MobileProjectile*, int); // 0x90
 		void * unknown_0x94;
 	};
 	static_assert(sizeof(MobileObject_vTable) == 0x98, "TES3::MobileObject_vTable failed size validation");
@@ -135,7 +137,7 @@ namespace TES3 {
 		float(__thiscall * getSkillValue)(MobileActor*, int); // 0xD4
 		void * unknown_0xD8;
 		void * unknown_0xDC;
-		void * applyArmorRating; // 0xE0
+		float(__thiscall * applyArmorRating)(MobileActor*, float, float, bool); // 0xE0
 		float(__thiscall * calculateArmorRating)(MobileActor*, int*); // 0xE4
 		void * getReadiedWeaponCurrentSkill; // 0xE8
 		void * getReadiedWeaponAnimationGroup; // 0xEC
@@ -155,39 +157,20 @@ namespace TES3 {
 	static_assert(sizeof(MobileNPC_vTable) == 0x110, "TES3::MobileNPC_vTable failed size validation");
 
 	struct MobileObject {
-		struct UnknownStruct1 {
-			struct UnknownStruct2 {
-				TES3::Reference * reference;
-				int unknown_0x4;
-				int unknown_0x8;
-				int unknown_0xC;
-				int unknown_0x10;
-				int unknown_0x14;
-				int unknown_0x18;
-				int unknown_0x1C;
-				int unknown_0x20;
-				int unknown_0x24;
-				int unknown_0x28;
-				int unknown_0x2C;
-				int unknown_0x30;
-				int unknown_0x34;
-				int unknown_0x38;
-				int unknown_0x3C;
-			};
-			int unknown_0x0;
-			int unknown_0x4;
-			int unknown_0x8;
-			int unknown_0xC;
-			int unknown_0x10;
-			int unknown_0x14;
-			int unknown_0x18;
-			int unknown_0x1C;
-			int unknown_0x20;
-			int unknown_0x24;
-			int unknown_0x28;
-			int unknown_0x2C;
-			UnknownStruct2 hit[20];
+		struct Collision {
+			bool valid;
+			float fTime;
+			TES3::Vector3 point;
+			TES3::Vector3 objectPosAtCollision;
+			TES3::Vector3 velocity;
+			NI::Pointer<NI::Node> colliderRoot;
+			TES3::Reference * colliderRef;
+			NI::Pointer<NI::Node> node_34;
+			short quantizedNormal[3];
+			unsigned char collisionType;
+			unsigned char unknown_3F;
 		};
+
 		union {
 			MobileObject_vTable * mobileObject;
 			MobileActor_vTable * mobileActor;
@@ -200,7 +183,7 @@ namespace TES3 {
 		short unknown_0xE; // Undefined.
 		MobileActorFlag::value_type actorFlags; // 0x10
 		Reference * reference; // 0x14
-		UnknownStruct1 * hitReferences;
+		Collision * arrayCollisionResults; // 0x18
 		short cellX; // 0x1C
 		short cellY; // 0x1E
 		short unknown_0x20;
@@ -213,15 +196,31 @@ namespace TES3 {
 		Vector3 velocity; // 0x3C
 		Vector3 impulseVelocity; // 0x48
 		Vector3 position; // 0x54
+		void * collisionGroup;
+		float thisFrameDistanceMoved;
+		Vector3 thisFrameDeltaPosition;
+		float unknown_0x74;
+		void * lightMagicEffectData;
+		unsigned char countCollisionResults;
 
 		//
 		// vTable accessor functions.
 		//
 
-		signed char onActorCollision(int hitReferenceIndex);
-		signed char onObjectCollision(int hitReferenceIndex, signed char flag);
-		signed char onTerrainCollision(int hitReferenceIndex);
-		signed char onWaterCollision(int hitReferenceIndex);
+		bool onActorCollision(int collisionIndex);
+		bool onObjectCollision(int collisionIndex, bool flag);
+		bool onTerrainCollision(int collisionIndex);
+		bool onWaterCollision(int collisionIndex);
+		bool onActivatorCollision(int collisionIndex);
+
+		bool isActor();
+		void enterLeaveSimulation(bool entering);
+
+		//
+		// Other related this-call functions.
+		//
+
+		void enterLeaveSimulationByDistance();
 
 		//
 		// Lua interface functions.
@@ -232,5 +231,6 @@ namespace TES3 {
 		void setVelocityFromLua(sol::stack_object);
 
 	};
-	static_assert(sizeof(MobileObject) == 0x60, "TES3::MobileObject failed size validation");
+	static_assert(sizeof(MobileObject) == 0x80, "TES3::MobileObject failed size validation");
+	static_assert(sizeof(MobileObject::Collision) == 0x40, "TES3::MobileObject::Collision failed size validation");
 }

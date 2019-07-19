@@ -16,6 +16,13 @@ namespace TES3 {
 		unsigned int targetID; // 0x4C
 
 		//
+		// Basic operators.
+		//
+
+		Reference();
+		~Reference();
+
+		//
 		// Other related this-call functions.
 		//
 
@@ -37,11 +44,15 @@ namespace TES3 {
 		__declspec(dllexport) void detachDynamicLightFromAffectedNodes();
 		__declspec(dllexport) void deleteDynamicLightAttachment();
 
-		__declspec(dllexport) void updateEquipment();
+		__declspec(dllexport) bool updateBipedParts();
 
 		//
 		// Other utility functions.
 		//
+
+		__declspec(dllexport) bool enable();
+		__declspec(dllexport) bool disable();
+		__declspec(dllexport) bool getDisabled();
 
 		__declspec(dllexport) Vector3 * getPosition();
 		__declspec(dllexport) void setPosition(const Vector3 * newPosition);
@@ -74,8 +85,11 @@ namespace TES3 {
 		__declspec(dllexport) LightAttachmentNode* getAttachedDynamicLight();
 		__declspec(dllexport) LightAttachmentNode* getOrCreateAttachedDynamicLight(NI::PointLight *, float);
 
-		bool getEmptyInventoryFlag();
-		void setEmptyInventoryFlag(bool);
+		__declspec(dllexport) bool getEmptyInventoryFlag();
+		__declspec(dllexport) void setEmptyInventoryFlag(bool);
+
+		// Override for references to raise an event when their scene node is created.
+		__declspec(dllexport) NI::Node * getSceneGraphNode();
 
 		//
 		// Lua interface functions.

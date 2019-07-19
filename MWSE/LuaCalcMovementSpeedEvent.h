@@ -1,11 +1,12 @@
 #pragma once
 
 #include "LuaObjectFilteredEvent.h"
+#include "LuaDisableableEvent.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class CalculateMovementSpeed : public ObjectFilteredEvent {
+			class CalculateMovementSpeed : public ObjectFilteredEvent, public DisableableEvent<CalculateMovementSpeed> {
 			public:
 				enum MovementType {
 					Move,

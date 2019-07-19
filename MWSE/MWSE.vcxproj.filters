@@ -303,9 +303,6 @@
     <ClInclude Include="TES3Container.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Actor</Filter>
     </ClInclude>
-    <ClInclude Include="TES3CombatSession.h">
-      <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
-    </ClInclude>
     <ClInclude Include="TES3Inventory.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Actor</Filter>
     </ClInclude>
@@ -840,9 +837,6 @@
     <ClInclude Include="TES3CrimeEvent.h">
       <Filter>Header Files\DataAdapters\TES3\Crime</Filter>
     </ClInclude>
-    <ClInclude Include="TES3CrimeTree.h">
-      <Filter>Header Files\DataAdapters\TES3\Crime</Filter>
-    </ClInclude>
     <ClInclude Include="NIPointer.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
@@ -1137,9 +1131,6 @@
     <ClInclude Include="NIProperty.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
-    <ClInclude Include="TES3Fader.h">
-      <Filter>Header Files\DataAdapters\TES3\Worldspace</Filter>
-    </ClInclude>
     <ClInclude Include="LuaBookGetTextEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
@@ -1240,6 +1231,60 @@
       <Filter>Header Files\Lua\Bindings\TES3\UI</Filter>
     </ClInclude>
     <ClInclude Include="LuaMeshLoadedEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3CrimeEventList.h">
+      <Filter>Header Files\DataAdapters\TES3\Crime</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3CrimeController.h">
+      <Filter>Header Files\DataAdapters\TES3\Crime</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaCrimeWitnessedEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaReferenceSceneNodeCreatedEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaConvertReferenceToItemEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaCalcHitArmorPieceEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaDisableableEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaDisableableEventManager.h">
+      <Filter>Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="NIPropertyLua.h">
+      <Filter>Header Files\Lua\Bindings\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3CollisionLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaMobileProjectileObjectCollisionEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaMobileProjectileTerrainCollisionEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="NICollisionSwitch.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="NICollisionSwitchLua.h">
+      <Filter>Header Files\Lua\Bindings\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3TArrayLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Fader.h">
+      <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3CombatSession.h">
+      <Filter>Header Files\DataAdapters\TES3\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaBodyPartsUpdatedEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2709,6 +2754,51 @@
       <Filter>Source Files\Lua\Bindings\TES3\UI</Filter>
     </ClCompile>
     <ClCompile Include="LuaMeshLoadedEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3CrimeEventList.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3CrimeController.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaCrimeWitnessedEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaReferenceSceneNodeCreatedEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaConvertReferenceToItemEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaCalcHitArmorPieceEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="NIPixelData.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaDisableableEventManager.cpp">
+      <Filter>Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="NIPropertyLua.cpp">
+      <Filter>Source Files\Lua\Bindings\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3CollisionLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaMobileProjectileObjectCollisionEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaMobileProjectileTerrainCollisionEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="NICollisionSwitchLua.cpp">
+      <Filter>Source Files\Lua\Bindings\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3TArrayLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaBodyPartsUpdatedEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>

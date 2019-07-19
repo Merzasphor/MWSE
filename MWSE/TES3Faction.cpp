@@ -1,6 +1,14 @@
 #include "TES3Faction.h"
 
 namespace TES3 {
+	int Faction::getEffectivePlayerRank() {
+		if (getMembershipFlag(FactionMembershipFlag::PlayerJoined)) {
+			return playerRank;
+		}
+
+		return -1;
+	}
+
 	char * Faction::getName() {
 		return name;
 	}
@@ -21,6 +29,17 @@ namespace TES3 {
 		}
 		else {
 			playerMembershipFlags &= ~flag;
+		}
+	}
+
+	void Faction::setEffectivePlayerRank(int rank) {
+		if (rank < 0) {
+			setMembershipFlag(FactionMembershipFlag::PlayerJoined, false);
+			playerRank = -1;
+		}
+		else {
+			setMembershipFlag(FactionMembershipFlag::PlayerJoined, true);
+			playerRank = rank;
 		}
 	}
 }

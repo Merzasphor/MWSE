@@ -3,7 +3,16 @@
 #include "TES3Actor.h"
 #include "TES3Reference.h"
 
+#include "TES3Util.h"
+
 namespace TES3 {
+	void * BaseObject::operator new(size_t size) {
+		return mwse::tes3::_new(size);
+	}
+	void BaseObject::operator delete(void * address) {
+		mwse::tes3::_delete(address);
+	}
+
 	bool BaseObject::getObjectModified() {
 		return (objectFlags & TES3::ObjectFlag::Modified);
 	}
@@ -59,6 +68,10 @@ namespace TES3 {
 
 	Script* Object::getScript() {
 		return vTable.object->getScript(this);
+	}
+
+	Sound* Object::getSound() {
+		return vTable.object->getSound(this);
 	}
 
 	char* Object::getRaceID() {
@@ -207,6 +220,10 @@ namespace TES3 {
 
 	void Object::setScale(float value, bool cap) {
 		vTable.object->setScale(this, value, cap);
+	}
+
+	NI::Node * Object::getSceneGraphNode() {
+		return vTable.object->getSceneGraphNode(this);
 	}
 
 	Object * Object::skipDeletedObjects() {

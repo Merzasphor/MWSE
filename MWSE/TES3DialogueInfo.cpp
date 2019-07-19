@@ -24,14 +24,30 @@ namespace TES3 {
 	bool DialogueInfo::filter(Object * actor, Reference * reference, int source, Dialogue * dialogue) {
 		bool result = TES3_DialogueInfo_filter(this, actor, reference, source, dialogue);
 
-		auto& luaManager = mwse::lua::LuaManager::getInstance();
-		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::InfoFilterEvent(this, actor, reference, source, dialogue, result));
-		sol::object passes = eventData["passes"];
-		if (passes.is<bool>()) {
-			result = passes.as<bool>();
+		if (mwse::lua::event::InfoFilterEvent::getEventEnabled()) {
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::InfoFilterEvent(this, actor, reference, source, dialogue, result));
+			sol::object passes = eventData["passes"];
+			if (passes.is<bool>()) {
+				result = passes.as<bool>();
+			}
 		}
 
 		return result;
+	}
+
+	const auto TES3_DialogueInfo_runScript = reinterpret_cast<void(__thiscall*)(DialogueInfo*, Reference*)>(0x4B1E40);
+	void DialogueInfo::runScript(Reference * reference) {
+		TES3_DialogueInfo_runScript(this, reference);
+	}
+
+	std::string DialogueInfo::getLongIDFromFile() {
+		if (loadId()) {
+			std::string id = loadLinkNode->name;
+			unloadId();
+			return id;
+		}
+		return "";
 	}
 }

@@ -26,6 +26,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool WeatherTransitionFinishedEvent::m_EventEnabled = false;
 		}
 	}
 }

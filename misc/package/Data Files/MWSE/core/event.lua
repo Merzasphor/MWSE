@@ -28,6 +28,8 @@ local function eventSorter(a, b)
 	return eventPriorities[a] > eventPriorities[b]
 end
 
+local disableableEvents = mwse.disableableEvents
+
 function this.register(eventType, callback, options)
 	-- Validate event type.
 	if (type(eventType) ~= "string" or eventType == "") then
@@ -84,6 +86,11 @@ function this.register(eventType, callback, options)
 	else
 		print("event.register: Attempted to register same '" .. eventType .. "' event callback twice.")
 		print(debug.traceback())
+	end
+
+	-- If this is a disableable event, enable it.
+	if (disableableEvents[eventType] == false) then
+		disableableEvents[eventType] = true
 	end
 end
 

@@ -1,11 +1,12 @@
 #pragma once
 
 #include "LuaObjectFilteredEvent.h"
+#include "LuaDisableableEvent.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class FilterInventoryEvent : public ObjectFilteredEvent {
+			class FilterInventoryEvent : public ObjectFilteredEvent, public DisableableEvent<FilterInventoryEvent> {
 			public:
 				FilterInventoryEvent(TES3::UI::InventoryTile * tile, TES3::Item * item);
 				sol::table createEventTable();

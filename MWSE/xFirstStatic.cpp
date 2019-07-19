@@ -53,13 +53,13 @@ namespace mwse
 		TES3::Reference* reference = NULL;
 		TES3::DataHandler* dataHandler = TES3::DataHandler::get();
 		if (dataHandler->currentInteriorCell != NULL) {
-			reference = static_cast<TES3::Reference*>(dataHandler->currentInteriorCell->activators.head->skipDeletedObjects());
+			reference = static_cast<TES3::Reference*>(dataHandler->currentInteriorCell->persistentRefs.head->skipDeletedObjects());
 		}
 		else {
 			auto cellPointer = dataHandler->exteriorCellData[TES3::CellGrid::Center];
-			if (cellPointer->size >= 1) {
+			if (cellPointer->loadingFlags >= 1) {
 				// Get the start of the list for the center cell. We'll check that it's valid later.
-				reference = static_cast<TES3::Reference*>(cellPointer->cell->activators.head->skipDeletedObjects());
+				reference = static_cast<TES3::Reference*>(cellPointer->cell->persistentRefs.head->skipDeletedObjects());
 				int exteriorCount = 0;
 				for (int i = 0; i < 9; i++) {
 					if (i == TES3::CellGrid::Center) {
@@ -67,15 +67,15 @@ namespace mwse
 					}
 
 					cellPointer = dataHandler->exteriorCellData[i];
-					if (cellPointer->size >= 1) {
-						TES3::Reference* tempReference = static_cast<TES3::Reference*>(cellPointer->cell->activators.head->skipDeletedObjects());
+					if (cellPointer->loadingFlags >= 1) {
+						TES3::Reference* tempReference = static_cast<TES3::Reference*>(cellPointer->cell->persistentRefs.head->skipDeletedObjects());
 						if (tempReference != NULL) {
 							mwse::tes3::exteriorRefs[exteriorCount] = tempReference;
 							exteriorCount++;
 						}
 					}
 					else {
-						mwse::log::getLog() << "xFirstStatic: Exterior size is " << cellPointer->size << ". Skipping exterior " << i << "." << std::endl;
+						mwse::log::getLog() << "xFirstStatic: Exterior flags is " << cellPointer->loadingFlags << ". Skipping exterior " << i << "." << std::endl;
 					}
 				}
 

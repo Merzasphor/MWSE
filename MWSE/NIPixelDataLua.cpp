@@ -3,12 +3,14 @@
 #include "NIObjectLua.h"
 
 #include "sol.hpp"
+#include "Log.h"
 
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
 #include "NIPixelData.h"
 #include "NIRTTI.h"
+#include "NISourceTexture.h"
 
 namespace mwse {
 	namespace lua {
@@ -17,11 +19,11 @@ namespace mwse {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
 
-			// Binding for NI::SourceTexture.
+			// Binding for NI::PixelData.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.create_simple_usertype<NI::PixelData>();
-				usertypeDefinition.set("new", sol::no_constructor);
+				usertypeDefinition.set("new", sol::factories(&NI::PixelData::create));
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition.set(sol::base_classes, sol::bases<NI::Object>());
@@ -32,31 +34,80 @@ namespace mwse {
 				usertypeDefinition.set("mipMapLevels", sol::readonly_property(&NI::PixelData::mipMapLevels));
 
 				// Basic function binding.
-				usertypeDefinition.set("getWidth", [](NI::PixelData& self, sol::optional<int> mipMapLevel) -> sol::optional<int> {
-					if (!mipMapLevel) {
-						return self.widths[0];
-					}
-
-					if (mipMapLevel < 1 || mipMapLevel.value() - 1 > self.mipMapLevels) {
-						return sol::optional<int>();
-					}
-
-					return self.widths[mipMapLevel.value() - 1];
+				usertypeDefinition.set("createSourceTexture", [](NI::PixelData& self) {
+					using FormatPrefs = NI::Texture::FormatPrefs;
+					FormatPrefs prefs = { FormatPrefs::PixelLayout::PIX_DEFAULT, FormatPrefs::MipFlag::MIP_DEFAULT, FormatPrefs::AlphaFormat::ALPHA_DEFAULT };
+					return NI::SourceTexture::createFromPixelData(&self, &prefs);
 				});
-				usertypeDefinition.set("getHeight", [](NI::PixelData& self, sol::optional<int> mipMapLevel) -> sol::optional<int> {
-					if (!mipMapLevel) {
-						return self.heights[0];
+				usertypeDefinition.set("getWidth", [](NI::PixelData& self, sol::optional<unsigned int> mipMapLevel) -> sol::optional<unsigned int> {
+					unsigned int level = mipMapLevel.value_or(1) - 1;
+
+					if (level < 0 || level >= self.mipMapLevels) {
+						return sol::optional<unsigned int>();
 					}
 
-					if (mipMapLevel < 1 || mipMapLevel.value() - 1 > self.mipMapLevels) {
-						return sol::optional<int>();
+					return self.widths[level];
+				});
+				usertypeDefinition.set("getHeight", [](NI::PixelData& self, sol::optional<unsigned int> mipMapLevel) -> sol::optional<unsigned int> {
+					unsigned int level = mipMapLevel.value_or(1) - 1;
+
+					if (level < 0 || level >= self.mipMapLevels) {
+						return sol::optional<unsigned int>();
 					}
 
-					return self.heights[mipMapLevel.value() - 1];
+					return self.heights[level];
+				});
+				usertypeDefinition.set("setPixelsByte", [](NI::PixelData& self, sol::table data, sol::optional<unsigned int> mipMapLevel) {
+					unsigned int level = mipMapLevel.value_or(1) - 1;
+					if (level < 0 || level >= self.mipMapLevels) {
+						log::getLog() << "setPixels: Invalid mip level." << std::endl;
+						return;
+					}
+
+					// Check that the array is the correct size.
+					size_t srcSize = data.size();
+					size_t destSize = self.bytesPerPixel * self.widths[level] * self.heights[level];
+					if (srcSize != destSize) {
+						log::getLog() << "setPixels: data array argument (" << srcSize << ") is not the same size as the PixelData target (" << destSize << ")." << std::endl;
+						return;
+					}
+
+					// Convert number array to byte data.
+					unsigned char *dest = self.pixels + self.offsets[level];
+					for (size_t i = 1; i <= srcSize; ++i) {
+						*dest++ = unsigned char(data[i]);
+					}
+
+					// Indicate the pixel data has changed.
+					self.revisionID++;
+				});
+				usertypeDefinition.set("setPixelsFloat", [](NI::PixelData& self, sol::table data, sol::optional<unsigned int> mipMapLevel) {
+					unsigned int level = mipMapLevel.value_or(1) - 1;
+					if (level < 0 || level >= self.mipMapLevels) {
+						log::getLog() << "setPixels: Invalid mip level." << std::endl;
+						return;
+					}
+
+					// Check that the array is the correct size.
+					size_t srcSize = data.size();
+					size_t destSize = self.bytesPerPixel * self.widths[level] * self.heights[level];
+					if (srcSize != destSize) {
+						log::getLog() << "setPixels: data array argument (" << srcSize << ") is not the same size as the PixelData target (" << destSize << ")." << std::endl;
+						return;
+					}
+
+					// Convert number array to byte data.
+					unsigned char *dest = self.pixels + self.offsets[level];
+					for (size_t i = 1; i <= srcSize; ++i) {
+						*dest++ = unsigned char(255.0 * double(data[i]) + 0.5);
+					}
+
+					// Indicate the pixel data has changed.
+					self.revisionID++;
 				});
 
 				// Finish up our usertype.
-				state.set_usertype("niSourceTexture", usertypeDefinition);
+				state.set_usertype("niPixelData", usertypeDefinition);
 			}
 		}
 	}

@@ -5,7 +5,7 @@
 
 namespace mwse {
 	namespace lua {
-		// Speed-optimized binding for NI::AVObject.
+		// Speed-optimized binding for NI::Node.
 		template <typename T>
 		void setUserdataForNINode(sol::simple_usertype<T>& usertypeDefinition) {
 			setUserdataForNIAVObject(usertypeDefinition);
@@ -17,7 +17,7 @@ namespace mwse {
 			// Basic function binding.
 			usertypeDefinition.set("attachChild", [](NI::Node& self, NI::AVObject * child, sol::optional<bool> useFirstAvailable) {
 				self.attachChild(child, useFirstAvailable.value_or(false));
-				self.updateTextureProperties();
+				self.updateProperties();
 			});
 			usertypeDefinition.set("detachChild", [](NI::Node& self, NI::AVObject * child) {
 				NI::AVObject * returnedChild = nullptr;

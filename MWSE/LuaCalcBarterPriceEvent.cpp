@@ -44,6 +44,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool CalculateBarterPriceEvent::m_EventEnabled = false;
 		}
 	}
 }

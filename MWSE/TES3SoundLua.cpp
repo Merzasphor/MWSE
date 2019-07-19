@@ -27,6 +27,13 @@ namespace mwse {
 				usertypeDefinition.set(sol::meta_function::to_string, sol::readonly_property([](TES3::Sound& self) { return self.id; }));
 				usertypeDefinition.set("id", sol::readonly_property([](TES3::Sound& self) { return self.id; }));
 
+				// Allow object to be serialized to json.
+				usertypeDefinition.set("__tojson", [](TES3::Sound& self, sol::table state) {
+					std::ostringstream ss;
+					ss << "\"tes3sound:" << self.id << "\"";
+					return ss.str();
+				});
+
 				// Access to other objects that need to be packaged.
 				usertypeDefinition.set("filename", sol::readonly_property([](TES3::Sound& self) { return self.filename; }));
 
@@ -53,6 +60,13 @@ namespace mwse {
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 				setUserdataForBaseObject(usertypeDefinition);
+
+				// Allow object to be serialized to json.
+				usertypeDefinition.set("__tojson", [](TES3::SoundGenerator& self, sol::table state) {
+					std::ostringstream ss;
+					ss << "\"tes3soundGenerator:" << self.name << "\"";
+					return ss.str();
+				});
 
 				// Basic property binding.
 				usertypeDefinition.set("type", sol::readonly_property(&TES3::SoundGenerator::soundType));

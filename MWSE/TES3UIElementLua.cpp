@@ -3,16 +3,15 @@
 #include <unordered_map>
 
 #include "LuaUtil.h"
-#include "TES3UIElement.h"
-#include "TES3UIManager.h"
-#include "TES3UIWidgets.h"
-#include "TES3UIManagerLua.h"
-#include "TES3UIWidgetsLua.h"
-
-#include "TES3UIInventoryTile.h"
-
+#include "NIProperty.h"
 #include "TES3Item.h"
 #include "TES3ItemData.h"
+#include "TES3UIElement.h"
+#include "TES3UIInventoryTile.h"
+#include "TES3UIManager.h"
+#include "TES3UIManagerLua.h"
+#include "TES3UIWidgets.h"
+#include "TES3UIWidgetsLua.h"
 
 #include "sol.hpp"
 #include "LuaManager.h"
@@ -88,6 +87,16 @@ namespace mwse {
 			auto usertypeDefinition = state.create_simple_usertype<Element>();
 			usertypeDefinition.set("new", sol::no_constructor);
 
+			// Allow elements to be converted to strings using their object ID.
+			usertypeDefinition.set(sol::meta_function::to_string, [](Element& self) { return self.name.cString; });
+
+			// Allow elements to be serialized to json using their ID/name.
+			usertypeDefinition.set("__tojson", [](Element& self, sol::table state) {
+				std::ostringstream ss;
+				ss << "\"tes3uiElement:" << self.id << ":" << self.name.cString << "\"";
+				return ss.str();
+			});
+
 			// Read-only property bindings.
 			usertypeDefinition.set("id", sol::readonly_property(&Element::id));
 			usertypeDefinition.set("name", sol::readonly_property([](Element& self) { return self.name.cString; }));
@@ -116,8 +125,22 @@ namespace mwse {
 
 				return result;
 			}));
+			usertypeDefinition.set("sceneNode", sol::readonly_property(&TES3::UI::Element::sceneNode));
+			usertypeDefinition.set("contentType", sol::readonly_property([](Element& self) {
+				switch (self.contentType) {
+				case TES3::UI::Property::model:
+					return "model";
+				case TES3::UI::Property::text:
+					return "text";
+				case TES3::UI::Property::image:
+					return "image";
+				case TES3::UI::Property::rect:
+					return "rect";
+				default:
+					return "layout";
+				}
+			}));
 			usertypeDefinition.set("widget", sol::readonly_property([](Element& self) { return makeWidget(self); }));
-			usertypeDefinition.set("texture", &Element::texture);
 
 			// Read-write property bindings.
 			// Many properties also set lazy-update flags through setProperty.
@@ -325,6 +348,16 @@ namespace mwse {
 				},
 				[](Element& self, bool value) { self.setProperty(TES3::UI::Property::disabled, toBooleanProperty(value)); }
 			));
+			usertypeDefinition.set("texture", sol::property(
+				[](Element& self) {
+					return self.texture;
+				},
+				[](Element& self, NI::SourceTexture& texture) {
+					self.texture = &texture;
+					self.contentType = TES3::UI::Property::image;
+					self.flagContentChanged = 1;
+				}
+			));
 			usertypeDefinition.set("scaleMode", sol::property(
 				[](Element& self) {
 					return toBoolean(self.scale_mode);
@@ -348,6 +381,30 @@ namespace mwse {
 					self.flagContentChanged = 1;
 				}
 			));
+			usertypeDefinition.set("imageFilter", sol::property(
+				[](Element& self) {
+					if (self.sceneNode && self.texture) {
+						using FilterMode = NI::TexturingProperty::FilterMode;
+						auto prop = self.sceneNode->children.at(0)->getProperty(NI::PropertyType::Texturing);
+						if (prop) {
+							auto texturing = static_cast<NI::TexturingProperty*>(prop.get());
+							return texturing->maps.at(0)->filterMode != FilterMode::NEAREST;
+						}
+					}
+					return true;
+				},
+				[](Element& self, bool filter) {
+					if (self.sceneNode && self.texture) {
+						using FilterMode = NI::TexturingProperty::FilterMode;
+						auto prop = self.sceneNode->children.at(0)->getProperty(NI::PropertyType::Texturing);
+						if (prop) {
+							auto texturing = static_cast<NI::TexturingProperty*>(prop.get());
+							texturing->maps.at(0)->filterMode = filter ? FilterMode::BILERP : FilterMode::NEAREST;
+							self.sceneNode->updateProperties();
+						}
+					}
+				}
+			));
 			usertypeDefinition.set("repeatKeys", sol::property(
 				[](Element& self) {
 					auto prop = self.getProperty(TES3::UI::PropertyType::Property, TES3::UI::Property::repeat_keys);
@@ -356,20 +413,6 @@ namespace mwse {
 				[](Element& self, bool value) { self.setProperty(TES3::UI::Property::repeat_keys, toBooleanProperty(value)); }
 			));
 			usertypeDefinition.set("text", sol::property(getWidgetText, setWidgetText));
-			usertypeDefinition.set("contentType", sol::readonly_property([](Element& self) {
-				switch (self.contentType) {
-				case TES3::UI::Property::model:
-					return "model";
-				case TES3::UI::Property::text:
-					return "text";
-				case TES3::UI::Property::image:
-					return "image";
-				case TES3::UI::Property::rect:
-					return "rect";
-				default:
-					return "layout";
-				}
-			}));
 			usertypeDefinition.set("contentPath", sol::property(
 				[](Element& self) { return self.contentPath.cString; },
 				[](Element& self, sol::optional<const char*> path) { self.setIcon(path.value_or("")); }
@@ -453,15 +496,16 @@ namespace mwse {
 					}
 					else {
 						if (typeCast.value() == "tes3itemData") {
-							lua_State* L = state;
-							return sol::make_object(L, static_cast<TES3::ItemData*>(ptr));
+							return sol::make_object(state, static_cast<TES3::ItemData*>(ptr));
 						}
 						else if (typeCast.value() == "tes3gameFile") {
 							return makeLuaObject(static_cast<TES3::GameFile*>(ptr));
 						}
 						else if (typeCast.value() == "tes3inventoryTile") {
-							lua_State* L = state;
-							return sol::make_object(L, static_cast<TES3::UI::InventoryTile*>(ptr));
+							return sol::make_object(state, static_cast<TES3::UI::InventoryTile*>(ptr));
+						}
+						else if (typeCast.value() == "tes3uiElement") {
+							return sol::make_object(state, static_cast<TES3::UI::Element*>(ptr));
 						}
 						return sol::nil;
 					}

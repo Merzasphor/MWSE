@@ -1,13 +1,41 @@
 #include "LuaGenericUiPostEvent.h"
 
+#include "LuaManager.h"
+
+#include "TES3UIElement.h"
+
 namespace mwse {
 	namespace lua {
 		namespace event {
-			GenericUiPostEvent::GenericUiPostEvent(TES3::UI::Element* parent, TES3::UI::Element* source, unsigned int prop, unsigned int var1, unsigned int var2) :
-				GenericUiPreEvent(parent, source, prop, var1, var2)
+			GenericUiPostEvent::GenericUiPostEvent(TES3::UI::Element* parent, TES3::UI::Element* element, unsigned int prop, unsigned int var1, unsigned int var2) :
+				GenericEvent("uiEvent"),
+				m_Parent(parent),
+				m_Source(element),
+				m_Property(prop),
+				m_Variable1(var1),
+				m_Variable2(var2)
 			{
-				m_EventName = "uiEvent";
+
 			}
+
+			sol::table GenericUiPostEvent::createEventTable() {
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table eventData = state.create_table();
+
+				eventData["parent"] = m_Parent;
+				eventData["source"] = m_Source;
+				eventData["property"] = m_Property;
+				eventData["var1"] = m_Variable1;
+				eventData["var2"] = m_Variable2;
+
+				// TODO: Remove. Legacy support for older mods.
+				eventData["block"] = m_Source;
+
+				return eventData;
+			}
+
+			bool GenericUiPostEvent::m_EventEnabled = false;
 		}
 	}
 }

@@ -25,7 +25,7 @@ namespace mwse {
 			usertypeDefinition.set(sol::meta_function::to_string, &TES3::Probe::getObjectID);
 
 			// Basic property binding.
-			usertypeDefinition.set("condition", &TES3::Probe::maxCondition);
+			usertypeDefinition.set("maxCondition", &TES3::Probe::maxCondition);
 			usertypeDefinition.set("quality", &TES3::Probe::quality);
 			usertypeDefinition.set("value", &TES3::Probe::value);
 			usertypeDefinition.set("weight", &TES3::Probe::weight);
@@ -42,6 +42,7 @@ namespace mwse {
 			usertypeDefinition.set("name", sol::property(&TES3::Probe::getName, &TES3::Probe::setName));
 
 			// TODO: Deprecated. Remove before 2.1-stable.
+			usertypeDefinition.set("condition", &TES3::Probe::maxCondition);
 			usertypeDefinition.set("model", sol::property(&TES3::Probe::getModelPath, &TES3::Probe::setModelPath));
 
 			// Finish up our usertype.

@@ -178,13 +178,15 @@ namespace mwse {
 				}
 
 				// Fire off the event, because script calls don't hit the same code as our hooks.
-				auto& luaManager = mwse::lua::LuaManager::getInstance();
-				auto stateHandle = luaManager.getThreadSafeStateHandle();
-				sol::object response = stateHandle.triggerEvent(new event::EquipEvent(reference, item, NULL));
-				if (response.get_type() == sol::type::table) {
-					sol::table eventData = response;
-					if (eventData["block"] == true) {
-						return false;
+				if (event::EquipEvent::getEventEnabled()) {
+					auto& luaManager = mwse::lua::LuaManager::getInstance();
+					auto stateHandle = luaManager.getThreadSafeStateHandle();
+					sol::object response = stateHandle.triggerEvent(new event::EquipEvent(reference, item, NULL));
+					if (response.get_type() == sol::type::table) {
+						sol::table eventData = response;
+						if (eventData["block"] == true) {
+							return false;
+						}
 					}
 				}
 
@@ -399,14 +401,11 @@ namespace mwse {
 			state["mwscript"]["setDelete"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
-				bool del = getOptionalParam<bool>(params, "delete", true);
 
-				if (del) {
-					reference->objectFlags |= TES3::ObjectFlag::Delete;
-				}
-				else {
-					reference->objectFlags &= ~TES3::ObjectFlag::Delete;
-				}
+				bool del = getOptionalParam<bool>(params, "delete", true);
+				reference->setBaseObjectFlag(TES3::ObjectFlag::Delete, del);
+
+				reference->setObjectModified(true);
 
 				return true;
 			};
@@ -697,7 +696,7 @@ namespace mwse {
 					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEWithHUD);
 				}
 
-				for (int i = 4; i >= 0; i--) {
+				for (int i = 4; i > 0; i--) {
 					Stack::getInstance().pushFloat(values[i]);
 				}
 				Stack::getInstance().pushString(variable);
@@ -801,7 +800,7 @@ namespace mwse {
 					mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEWithHUD);
 				}
 
-				for (int i = 4; i >= 0; i--) {
+				for (int i = 4; i > 0; i--) {
 					Stack::getInstance().pushFloat(values[i]);
 				}
 				Stack::getInstance().pushString(variable);
@@ -915,6 +914,68 @@ namespace mwse {
 				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEStopSpinSpin);
 			};
 
+			// MGE XE rendering functions.
+			state["mge"]["setWeatherScattering"] = [](sol::optional<sol::table> params) {
+				sol::table outscatter = getOptionalParam<sol::table>(params, "outscatter", sol::nil);
+				sol::table inscatter = getOptionalParam<sol::table>(params, "inscatter", sol::nil);
+
+				if (outscatter == sol::nil || outscatter.size() != 3 || inscatter == sol::nil || inscatter.size() != 3) {
+					return false;
+				}
+
+				for (int i = 3; i > 0; i--) {
+					Stack::getInstance().pushFloat(inscatter[i]);
+				}
+				for (int i = 3; i > 0; i--) {
+					Stack::getInstance().pushFloat(outscatter[i]);
+				}
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::xSetWeatherScattering);
+				return true;
+			};
+			state["mge"]["getWeatherScattering"] = []() {
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::table inscatter = state.create_table();
+				sol::table outscatter = state.create_table();
+
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::xGetWeatherScattering);
+				inscatter[3] = Stack::getInstance().popFloat();
+				inscatter[2] = Stack::getInstance().popFloat();
+				inscatter[1] = Stack::getInstance().popFloat();
+				outscatter[3] = Stack::getInstance().popFloat();
+				outscatter[2] = Stack::getInstance().popFloat();
+				outscatter[1] = Stack::getInstance().popFloat();
+
+				return std::make_tuple(outscatter, inscatter);
+			};
+			state["mge"]["getWeatherDLFog"] = [](int weatherID) {
+				Stack::getInstance().pushLong(weatherID);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEGetWeatherDLFog);
+
+				float fogOffset = Stack::getInstance().popFloat();
+				float fogDistMult = Stack::getInstance().popFloat();
+				return std::make_tuple(fogDistMult, fogOffset);
+			};
+			state["mge"]["setWeatherDLFog"] = [](int weatherID, float fogDistMult, float fogOffset) {
+				Stack::getInstance().pushFloat(fogOffset);
+				Stack::getInstance().pushFloat(fogDistMult);
+				Stack::getInstance().pushLong(weatherID);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGESetWeatherDLFog);
+			};
+			state["mge"]["getWeatherPPLLight"] = [](int weatherID) {
+				Stack::getInstance().pushLong(weatherID);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGEGetWeatherPPLLight);
+
+				float ambMult = Stack::getInstance().popFloat();
+				float sunMult = Stack::getInstance().popFloat();
+				return std::make_tuple(sunMult, ambMult);
+			};
+			state["mge"]["setWeatherPPLLight"] = [](int weatherID, float sunMult, float ambMult) {
+				Stack::getInstance().pushFloat(ambMult);
+				Stack::getInstance().pushFloat(sunMult);
+				Stack::getInstance().pushLong(weatherID);
+				mwscript::RunOriginalOpCode(NULL, NULL, OpCode::MGESetWeatherPPLLight);
+			};
 		}
 	}
 }

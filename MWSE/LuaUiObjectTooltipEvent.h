@@ -1,13 +1,14 @@
 #pragma once
 
 #include "LuaGenericEvent.h"
+#include "LuaDisableableEvent.h"
 
 #include "TES3Defines.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class UiObjectTooltipEvent : public GenericEvent {
+			class UiObjectTooltipEvent : public GenericEvent, public DisableableEvent<UiObjectTooltipEvent> {
 			public:
 				UiObjectTooltipEvent(TES3::UI::Element* tooltip, TES3::Object* object, TES3::ItemData* itemData, int count);
 				sol::table createEventTable();

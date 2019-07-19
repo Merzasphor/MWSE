@@ -3,6 +3,10 @@
 #include "TES3Util.h"
 
 #include "TES3Item.h"
+#include "TES3Reference.h"
+
+#include "LuaManager.h"
+#include "LuaConvertReferenceToItemEvent.h"
 
 namespace TES3 {
 	//
@@ -26,6 +30,19 @@ namespace TES3 {
 	const auto TES3_Inventory_AddItem = reinterpret_cast<int(__thiscall*)(Inventory*, MobileActor *, Item *, int, bool, ItemData **)>(0x498530);
 	int Inventory::addItem(MobileActor * mobile, Item * item, int count, bool something, ItemData ** itemDataRef) {
 		return TES3_Inventory_AddItem(this, mobile, item, count, something, itemDataRef);
+	}
+
+	const auto TES3_Inventory_AddItemWithoutData = reinterpret_cast<int(__thiscall*)(Inventory*, MobileActor *, Item *, int, bool)>(0x497CD0);
+	int Inventory::addItemWithoutData(MobileActor * mobile, Item * item, int count, bool something) {
+		return TES3_Inventory_AddItemWithoutData(this, mobile, item, count, something);
+	}
+
+	const auto TES3_Inventory_AddItemByReference = reinterpret_cast<ItemData*(__thiscall*)(Inventory*, MobileActor *, Reference *, int *)>(0x497BC0);
+	ItemData* Inventory::addItemByReference(MobileActor * mobile, Reference * reference, int * out_count) {
+		if (mwse::lua::event::ConvertReferenceToItemEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ConvertReferenceToItemEvent(reference));
+		}
+		return TES3_Inventory_AddItemByReference(this, mobile, reference, out_count);
 	}
 
 	const auto TES3_Inventory_RemoveItemWithData = reinterpret_cast<void(__thiscall*)(Inventory*, MobileActor*, Item *, ItemData *, int, bool)>(0x499550);

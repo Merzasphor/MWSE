@@ -28,6 +28,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool WeatherTransitionStartedEvent::m_EventEnabled = false;
 		}
 	}
 }

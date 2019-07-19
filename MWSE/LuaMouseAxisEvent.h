@@ -1,11 +1,12 @@
 #pragma once
 
 #include "LuaGenericEvent.h"
+#include "LuaDisableableEvent.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class MouseAxisEvent : public GenericEvent {
+			class MouseAxisEvent : public GenericEvent, public DisableableEvent<MouseAxisEvent> {
 			public:
 				MouseAxisEvent(int deltaX, int deltaY, bool controlDown, bool shiftDown, bool altDown, bool superDown);
 				sol::table createEventTable();

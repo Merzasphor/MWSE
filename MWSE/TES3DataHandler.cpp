@@ -50,7 +50,7 @@ namespace TES3 {
 	NI::AVObject * MeshData::loadMesh(const char* path) {
 		auto countBefore = NIFs->count;
 		auto mesh = TES3_MeshData_loadMesh(this, path);
-		if (mesh && NIFs->count > countBefore) {
+		if (mesh && NIFs->count > countBefore && mwse::lua::event::MeshLoadedEvent::getEventEnabled()) {
 			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MeshLoadedEvent(path, mesh));
 		}
 		return mesh;
@@ -61,12 +61,12 @@ namespace TES3 {
 	//
 
 	bool NonDynamicData::saveGame(const char* fileName, const char* saveName) {
-		std::string eventFileName;
-		std::string eventSaveName;
+		std::string eventFileName = fileName ? fileName : "";
+		std::string eventSaveName = saveName;
 
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		{
+		if (mwse::lua::event::SaveGameEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::SaveGameEvent(saveName, fileName));
 			if (eventData.valid() && eventData["block"] == true) {
@@ -81,7 +81,7 @@ namespace TES3 {
 		bool saved = reinterpret_cast<signed char(__thiscall *)(NonDynamicData*, const char*, const char*)>(TES3_NonDynamicData_saveGame)(this, eventFileName.c_str(), eventSaveName.c_str());
 
 		// Pass a follow-up event if we successfully saved.
-		if (saved) {
+		if (saved && mwse::lua::event::SavedGameEvent::getEventEnabled()) {
 			luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::SavedGameEvent(eventSaveName.c_str(), eventFileName.c_str()));
 		}
 
@@ -91,8 +91,9 @@ namespace TES3 {
 	LoadGameResult NonDynamicData::loadGame(const char* fileName) {
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		std::string eventFileName;
-		{
+		std::string eventFileName = fileName ? fileName : "";
+
+		if (mwse::lua::event::LoadGameEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::LoadGameEvent(fileName));
 			if (eventData.valid() && eventData["block"] == true) {
@@ -110,7 +111,10 @@ namespace TES3 {
 		// Pass a follow-up event if we successfully loaded and clear timers.
 		if (loaded) {
 			luaManager.clearTimers();
-			luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str(), fileName == NULL));
+
+			if (mwse::lua::event::LoadedGameEvent::getEventEnabled()) {
+				luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str(), fileName == NULL));
+			}
 		}
 
 		return loaded ? LoadGameResult::Success : LoadGameResult::Failure;
@@ -119,8 +123,9 @@ namespace TES3 {
 	LoadGameResult NonDynamicData::loadGameMainMenu(const char* fileName) {
 		// Execute event. If the event blocked the call, bail.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		std::string eventFileName;
-		{
+		std::string eventFileName = fileName ? fileName : "";
+
+		if (mwse::lua::event::LoadGameEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::LoadGameEvent(fileName));
 			if (eventData.valid() && eventData["block"] == true) {
@@ -138,7 +143,10 @@ namespace TES3 {
 		// Pass a follow-up event if we successfully loaded and clear timers.
 		if (loaded) {
 			luaManager.clearTimers();
-			luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str()));
+
+			if (mwse::lua::event::LoadedGameEvent::getEventEnabled()) {
+				luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str()));
+			}
 		}
 
 		return loaded ? LoadGameResult::Success : LoadGameResult::Failure;
@@ -199,6 +207,11 @@ namespace TES3 {
 		return TES3_NonDynamicData_getCellByName(this, name);
 	}
 
+	const auto TES3_NonDynamicData_createReference = reinterpret_cast<float(__thiscall*)(NonDynamicData*, PhysicalObject*, Vector3*, Vector3*, bool&, Reference*, Cell*)>(0x4C0E80);
+	float NonDynamicData::createReference(PhysicalObject * object, Vector3 * position, Vector3 * orientation, bool& cellWasCreated, Reference * existingReference, Cell * cell) {
+		return TES3_NonDynamicData_createReference(this, object, position, orientation, cellWasCreated, existingReference, cell);
+	}
+
 	//
 	// DataHandler
 	//
@@ -237,9 +250,19 @@ namespace TES3 {
 		reinterpret_cast<void(__thiscall *)(DataHandler*, Sound*, Reference*)>(TES3_DataHandler_removeSound)(this, sound, reference);
 	}
 
+	const auto TES3_DataHandler_updateLightingForReference = reinterpret_cast<void(__thiscall*)(TES3::DataHandler *, TES3::Reference *)>(0x485E40);
+	void DataHandler::updateLightingForReference(Reference * reference) {
+		TES3_DataHandler_updateLightingForReference(this, reference);
+	}
+
 	const auto TES3_DataHandler_setDynamicLightingForReference = reinterpret_cast<void(__thiscall*)(DataHandler*, Reference*)>(0x485B00);
 	void DataHandler::setDynamicLightingForReference(Reference* reference) {
 		TES3_DataHandler_setDynamicLightingForReference(this, reference);
+	}
+
+	const auto TES3_DataHandler_updateCollisionGroupsForActiveCells = reinterpret_cast<void(__thiscall*)(DataHandler*, bool)>(0x488950);
+	void DataHandler::updateCollisionGroupsForActiveCells(bool unknown) {
+		TES3_DataHandler_updateCollisionGroupsForActiveCells(this, unknown);
 	}
 
 }

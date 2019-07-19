@@ -6,7 +6,7 @@
 #include "LuaMobileActorDeactivatedEvent.h"
 
 namespace TES3 {
-	const auto TES3_MobController_0x24_checkRadius = reinterpret_cast<void(__thiscall*)(MobController_0x24*, MobileActor*, Iterator<void>*)>(0x5704B0);
+	const auto TES3_MobController_0x24_checkRadius = reinterpret_cast<void(__thiscall*)(MobController_0x24*, MobileActor*, Iterator<AIPlanner>*)>(0x5704B0);
 	const auto TES3_MobController_0x24_detectPresence = reinterpret_cast<bool(__thiscall*)(MobController_0x24*, MobileActor*, bool)>(0x570A60);
 	const auto TES3_MobController_0x24_checkPlayerDist = reinterpret_cast<void(__thiscall*)(MobController_0x24*)>(0x56F730);
 
@@ -17,7 +17,7 @@ namespace TES3 {
 		return TES3_MobController_0x24_detectPresence(this, actor, unknown);
 	}
 
-	void MobController_0x24::checkRadius(MobileActor * actor, Iterator<void> * container) {
+	void MobController_0x24::checkRadius(MobileActor * actor, Iterator<AIPlanner> * container) {
 		TES3_MobController_0x24_checkRadius(this, actor, container);
 	}
 
@@ -28,13 +28,17 @@ namespace TES3 {
 	void MobController::addMob(Reference * reference) {
 		TES3_MobController_addMob(this, reference);
 
-		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileActorActivatedEvent(reference));
+		if (mwse::lua::event::MobileActorActivatedEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileActorActivatedEvent(reference));
+		}
 	}
 
 	void MobController::removeMob(Reference * reference) {
 		TES3_MobController_removeMob(this, reference);
 
-		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileActorDeactivatedEvent(reference));
+		if (mwse::lua::event::MobileActorDeactivatedEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileActorDeactivatedEvent(reference));
+		}
 	}
 
 	void MobController::checkPlayerDistance() {

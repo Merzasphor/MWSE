@@ -42,6 +42,8 @@ namespace mwse {
 
 				return options;
 			}
+
+			bool SpellCastEvent::m_EventEnabled = false;
 		}
 	}
 }

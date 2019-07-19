@@ -37,6 +37,8 @@ namespace mwse {
 				options["filter"] = makeLuaObject(m_MagicSourceInstance->sourceCombo.source.asGeneric);
 				return options;
 			}
+
+			bool MagicCastedEvent::m_EventEnabled = false;
 		}
 	}
 }

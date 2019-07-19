@@ -18,7 +18,7 @@ namespace TES3 {
 	const auto TES3_Armor_calculateArmorRating = reinterpret_cast<float(__thiscall *)(Armor*, MobileActor*)>(0x4A1120);
 	float Armor::calculateArmorRating(MobileActor * actor) {
 		// Allow the event to override the value.
-		{
+		if (mwse::lua::event::CalculateArmorRatingEvent::getEventEnabled()) {
 			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::CalculateArmorRatingEvent(this, actor));
 			if (eventResult.valid()) {
@@ -58,7 +58,7 @@ namespace TES3 {
 	const auto TES3_Armor_calculateArmorRatingForNPC = reinterpret_cast<float(__thiscall *)(Armor*, NPC*)>(0x4A0FD0);
 	float Armor::calculateArmorRatingForNPC(NPC * npc) {
 		// Allow the event to override the value.
-		{
+		if (mwse::lua::event::CalculateArmorRatingEvent::getEventEnabled()) {
 			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::CalculateArmorRatingEvent(this, npc));
 			if (eventResult.valid()) {

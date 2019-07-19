@@ -1,13 +1,14 @@
 #pragma once
 
 #include "LuaGenericEvent.h"
+#include "LuaDisableableEvent.h"
 
 #include "TES3Defines.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
-			class JournalEvent : public GenericEvent {
+			class JournalEvent : public GenericEvent, public DisableableEvent<JournalEvent> {
 			public:
 				JournalEvent(TES3::Dialogue * topic, int oldIndex, int newIndex);
 				sol::table createEventTable();

@@ -27,6 +27,8 @@ namespace mwse {
 
 				return eventData;
 			}
+
+			bool CombatStartedEvent::m_EventEnabled = false;
 		}
 	}
 }

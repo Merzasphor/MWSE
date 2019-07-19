@@ -8,6 +8,8 @@ namespace mwse {
 			{
 
 			}
+
+			bool WeatherCycledEvent::m_EventEnabled = false;
 		}
 	}
 }

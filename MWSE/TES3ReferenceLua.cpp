@@ -51,12 +51,19 @@ namespace TES3 {
 	}
 
 	sol::table Reference::getLuaTable() {
-		auto attachment = getOrCreateAttachedItemData();
-		if (attachment == nullptr) {
-			throw std::exception("Could not create ItemData attachment.");
+		auto itemData = getAttachedItemData();
+
+		// Create the item data if it doesn't already exist.
+		if (itemData == nullptr) {
+			itemData = ItemData::createForObject(baseObject);
+			setAttachedItemData(itemData);
+		}
+		// Prevent adding a lua table if there's more than one item involved.
+		else if (itemData->count > 1) {
+			throw std::exception("Cannot create lua data when more than one item is present.");
 		}
 
-		return attachment->getOrCreateLuaDataTable();
+		return itemData->getOrCreateLuaDataTable();
 	}
 }
 
@@ -88,6 +95,7 @@ namespace mwse {
 			setUserdataForObject(usertypeDefinition);
 
 			// Access to other objects that need to be packaged.
+			usertypeDefinition.set("baseObject", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.getBaseObject()); }));
 			usertypeDefinition.set("cell", sol::readonly_property([](TES3::Reference& self) -> sol::object {
 				// Handle case for the player.
 				if (TES3::WorldController::get()->getMobilePlayer()->reference == &self) {
@@ -109,11 +117,13 @@ namespace mwse {
 			usertypeDefinition.set("clone", &TES3::Reference::clone);
 			usertypeDefinition.set("deleteDynamicLightAttachment", &TES3::Reference::deleteDynamicLightAttachment);
 			usertypeDefinition.set("detachDynamicLightFromAffectedNodes", &TES3::Reference::detachDynamicLightFromAffectedNodes);
+			usertypeDefinition.set("disable", &TES3::Reference::disable);
+			usertypeDefinition.set("enable", &TES3::Reference::enable);
 			usertypeDefinition.set("getAttachedDynamicLight", &TES3::Reference::getAttachedDynamicLight);
 			usertypeDefinition.set("getOrCreateAttachedDynamicLight", &TES3::Reference::getOrCreateAttachedDynamicLight);
 			usertypeDefinition.set("setActionFlag", &TES3::Reference::setActionFlag);
 			usertypeDefinition.set("testActionFlag", &TES3::Reference::testActionFlag);
-			usertypeDefinition.set("updateEquipment", &TES3::Reference::updateEquipment);
+			usertypeDefinition.set("updateEquipment", &TES3::Reference::updateBipedParts);
 
 			// Functions exposed as properties.
 			usertypeDefinition.set("activationReference", sol::property(&TES3::Reference::getActionReference, &TES3::Reference::setActionReference));
@@ -129,11 +139,14 @@ namespace mwse {
 			usertypeDefinition.set("updateSceneGraph", [](TES3::Reference& self) {
 				TES3::Matrix33 tempOutArg;
 				self.sceneNode->setLocalRotationMatrix(self.updateSceneMatrix(&tempOutArg));
-				self.sceneNode->propagatePositionChange();
+				self.sceneNode->update();
 				self.setObjectModified(true);
 			});
 
 			// Quick access to attachment data.
+			usertypeDefinition.set("itemData", sol::property([](TES3::Reference& self) {
+				return self.getAttachedItemData();
+			}));
 			usertypeDefinition.set("lockNode", sol::property([](TES3::Reference& self) {
 				return self.getAttachedLockNode();
 			}));

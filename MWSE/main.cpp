@@ -96,7 +96,7 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 		// Initialize once for each new process. Return FALSE to fail DLL load.
 
 		// Initialize log file.
-		mwse::log::OpenLog("MWSELog.txt");
+		mwse::log::OpenLog("MWSE.log");
 		mwse::log::getLog() << "Morrowind Script Extender v" << MWSE_VERSION_MAJOR << "." << MWSE_VERSION_MINOR << "." << MWSE_VERSION_PATCH << " (built " << __DATE__ << ") hooked." << std::endl;
 
 		// Before we do anything else, ensure that we can make minidumps.
@@ -130,6 +130,11 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 				std::experimental::filesystem::remove("MWSE-Update.exe");
 			}
 			std::experimental::filesystem::rename("MWSE-Update.tmp", "MWSE-Update.exe");
+		}
+
+		// Delete any old crash dumps.
+		if (std::experimental::filesystem::exists("MWSE_MiniDump.dmp")) {
+			std::experimental::filesystem::remove("MWSE_MiniDump.dmp");
 		}
 
 		// Initialize our main mwscript hook.

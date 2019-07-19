@@ -33,6 +33,8 @@ namespace mwse {
 
 				return options;
 			}
+
+			bool UiRefreshedEvent::m_EventEnabled = false;
 		}
 	}
 }

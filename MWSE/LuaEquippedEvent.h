@@ -1,12 +1,13 @@
 #pragma once
 
 #include "LuaObjectFilteredEvent.h"
+#include "LuaDisableableEvent.h"
 
 namespace mwse {
 	namespace lua {
 		namespace event {
 			// Equipped event. Called after something is equipped.
-			class EquippedEvent : public ObjectFilteredEvent {
+			class EquippedEvent : public ObjectFilteredEvent, public DisableableEvent<EquippedEvent> {
 			public:
 				EquippedEvent(TES3::Actor* a, TES3::MobileActor* ma, TES3::BaseObject* i, TES3::ItemData* id);
 				sol::table createEventTable();

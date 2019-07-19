@@ -14,6 +14,7 @@ namespace TES3 {
 
 		const auto TES3_uiMainRoot = reinterpret_cast<Element* const*>(0x7D1C28);
 		const auto TES3_uiHelpRoot = reinterpret_cast<Element* const*>(0x7D1C74);
+		const auto TES3_ui_captureMouseDrag = reinterpret_cast<bool*>(0x7D207D);
 
 		const auto TES3_ui_registerID = reinterpret_cast<UI_ID (__cdecl *)(const char *)>(0x58DF10);
 		const auto TES3_ui_createChildElement = reinterpret_cast<Element* (__thiscall *)(Element*)>(0x582B50);
@@ -22,6 +23,7 @@ namespace TES3 {
 		const auto TES3_ui_createTooltipMenu = reinterpret_cast<Element* (__cdecl *)(UI_ID)>(0x595A40);
 		const auto TES3_ui_findMenu = reinterpret_cast<Element* (__cdecl*)(UI_ID)>(0x595370);
 		const auto TES3_ui_findHelpLayerMenu = reinterpret_cast<Element* (__cdecl*)(UI_ID)>(0x595A10);
+		const auto TES3_ui_getMenuOnTop = reinterpret_cast<Element* (__cdecl*)()>(0x595290);
 		const auto TES3_ui_getPaletteColour = reinterpret_cast<Vector3& (__cdecl*)(Vector3&, Property)>(0x57F610);
 		const auto TES3_ui_onMenuUnfocus = reinterpret_cast<EventCallback>(0x58F790);
 		const auto TES3_ui_ScrollbarArrow_onClick = reinterpret_cast<EventCallback>(0x647A60);
@@ -70,6 +72,10 @@ namespace TES3 {
 			return TES3_ui_findHelpLayerMenu(id);
 		}
 
+		Element* getMenuOnTop() {
+			return TES3_ui_getMenuOnTop();
+		}
+
 		Boolean enterMenuMode(UI_ID id) {
 			return TES3_ui_requestMenuModeOn(id);
 		}
@@ -80,6 +86,10 @@ namespace TES3 {
 
 		void acquireTextInput(Element* element) {
 			TES3::WorldController::get()->menuController->menuInputController->acquireTextInput(element);
+		}
+
+		void captureMouseDrag(bool capture) {
+			*TES3_ui_captureMouseDrag = capture;
 		}
 
 		void preventInventoryMenuToggle(Element* menu) {

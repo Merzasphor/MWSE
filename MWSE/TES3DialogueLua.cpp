@@ -57,8 +57,13 @@ namespace mwse {
 				setUserdataForBaseObject(usertypeDefinition);
 
 				// Override to-string to use the name rather than the (non-existant) id.
-				usertypeDefinition.set(sol::meta_function::to_string, [](TES3::Dialogue& self) {
-					return self.name;
+				usertypeDefinition.set(sol::meta_function::to_string, [](TES3::Dialogue& self) { return self.name; });
+
+				// Override tojson to use the name rather than the (non-existant) id.
+				usertypeDefinition.set("__tojson", [](TES3::Dialogue& self) {
+					std::ostringstream ss;
+					ss << "\"tes3dialogue:" << self.name << "\"";
+					return ss.str();
 				});
 
 				// Basic property binding.
@@ -98,6 +103,13 @@ namespace mwse {
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 				setUserdataForBaseObject(usertypeDefinition);
+
+				// Allow dialogue to be serialized to json using its ID.
+				usertypeDefinition.set("__tojson", [](TES3::DialogueInfo& self, sol::table state) {
+					std::ostringstream ss;
+					ss << "\"tes3dialogueInfo:" << self.getLongIDFromFile() << "\"";
+					return ss.str();
+				});
 
 				// Basic property binding.
 				usertypeDefinition.set("type", sol::readonly_property(&TES3::DialogueInfo::type));
@@ -156,6 +168,9 @@ namespace mwse {
 				// Functions exposed as properties.
 				usertypeDefinition.set("text", sol::readonly_property(&TES3::DialogueInfo::getText));
 
+				// Basic function binding.
+				usertypeDefinition.set("runScript", &TES3::DialogueInfo::runScript);
+
 				// Finish up our usertype.
 				state.set_usertype("tes3dialogueinfo", usertypeDefinition);
 			}
@@ -169,6 +184,13 @@ namespace mwse {
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 				setUserdataForBaseObject(usertypeDefinition);
+
+				// Allow objects to be serialized to json using their ID.
+				usertypeDefinition.set("__tojson", [](TES3::BaseObject& self, sol::table state) {
+					std::ostringstream ss;
+					ss << "\"tes3quest:" << self.getObjectID() << "\"";
+					return ss.str();
+				});
 
 				// Basic property binding.
 				usertypeDefinition.set("dialogue", sol::readonly_property(&TES3::Quest::dialogue));

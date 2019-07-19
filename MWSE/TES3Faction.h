@@ -48,6 +48,9 @@ namespace TES3 {
 		bool getMembershipFlag(unsigned int);
 		void setMembershipFlag(unsigned int, bool);
 
+		int getEffectivePlayerRank();
+		void setEffectivePlayerRank(int rank);
+
 	};
 	static_assert(sizeof(Faction::Rank) == 0x14, "TES3::Faction::Rank failed size validation");
 	static_assert(sizeof(Faction::ReactionNode) == 0x8, "TES3::Faction::ReactionNode failed size validation");

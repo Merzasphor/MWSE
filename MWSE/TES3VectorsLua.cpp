@@ -61,13 +61,18 @@ namespace mwse {
 					sol::resolve<TES3::Vector3(const float)>(&TES3::Vector3::operator*)
 				));
 				usertypeDefinition.set(sol::meta_function::length, &TES3::Vector3::length);
-				usertypeDefinition.set(sol::meta_function::to_string, [](TES3::Vector3& self)
-				{
+				usertypeDefinition.set(sol::meta_function::to_string, [](TES3::Vector3& self) {
 					std::ostringstream ss;
 					ss << std::fixed << std::setprecision(2) << "<" << self.x << ", " << self.y << ", " << self.z << ">";
 					return ss.str();
-				}
-				);
+				});
+
+				// Allow objects to be serialized to json using their ID.
+				usertypeDefinition.set("__tojson", [](TES3::Vector3& self, sol::table jsonState) {
+					std::ostringstream ss;
+					ss << "[\"x\":" << self.x << ",\"y\":" << self.y << ",\"z\":" << self.z << "]";
+					return ss.str();
+				});
 
 				// Basic property bindings.
 				usertypeDefinition.set("x", &TES3::Vector3::x);
