@@ -2169,6 +2169,179 @@ namespace mwse {
 				TES3::UI::enterMenuMode(TES3::UI::registerID("MenuServiceRepair"));
 			};
 
+			state["tes3"]["addItem"] = [](sol::table params) -> int {
+				// Get the reference we are manipulating.
+				TES3::Reference * reference = getOptionalParamReference(params, "reference");
+				if (reference == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided.");
+				}
+
+				// Get the item we are going to add.
+				TES3::Item * item = getOptionalParamObject<TES3::Item>(params, "item");
+				if (item == nullptr) {
+					throw std::invalid_argument("Invalid 'item' parameter provided.");
+				}
+
+				// Make sure we're dealing with actors.
+				TES3::Actor * actor = static_cast<TES3::Actor*>(reference->baseObject);
+				if (!actor->isActor()) {
+					throw std::invalid_argument("The 'reference' reference does not point to an actor.");
+				}
+
+				// Clone the object if needed.
+				if (reference->clone()) {
+					actor = static_cast<TES3::Actor*>(reference->baseObject);
+				}
+
+				// Get how many items we are adding.
+				int fulfilledCount = 0;
+				int desiredCount = std::max(std::abs(getOptionalParam(params, "count", 1)), 1);
+				if (getOptionalParam<bool>(params, "limit", false)) {
+					// Prevent placing items into organic containers.
+					if (actor->getActorFlag(TES3::ActorFlagContainer::Organic)) {
+						return 0;
+					}
+
+					// Figure out how many more of the item can fit in the container.
+					auto maxCapacity = static_cast<TES3::Container*>(reference->getBaseObject())->capacity;
+					auto currentWeight = actor->inventory.calculateContainedWeight();
+					int fulfilledCount = std::min((int)((maxCapacity - currentWeight) / item->getWeight()), desiredCount);
+				}
+				else {
+					fulfilledCount = desiredCount;
+				}
+
+				// No items to add? Great, let's get out of here.
+				if (fulfilledCount == 0) {
+					return 0;
+				}
+
+				// Add the item and return the added count, since we do no inventory checking.
+				auto mobile = reference->getAttachedMobileActor();
+				actor->inventory.addItem(mobile, item, fulfilledCount, false, nullptr);
+
+				// Play the relevant sound.
+				auto worldController = TES3::WorldController::get();
+				auto playerMobile = worldController->getMobilePlayer();
+				if (getOptionalParam<bool>(params, "playSound", true)) {
+					if (mobile == playerMobile) {
+						worldController->playItemUpDownSound(item, true);
+					}
+				}
+
+				// Update body parts for creatures/NPCs that may have items unequipped.
+				if (mobile) {
+					reference->updateBipedParts();
+
+					if (mobile == playerMobile) {
+						playerMobile->firstPersonReference->updateBipedParts();
+					}
+				}
+
+				// If either of them are the player, we need to update the GUI.
+				if (getOptionalParam<bool>(params, "updateGUI", true)) {
+					// Update inventory menu if necessary.
+					if (mobile == playerMobile) {
+						worldController->inventoryData->clearIcons(2);
+						worldController->inventoryData->addInventoryItems(&playerMobile->npcInstance->inventory, 2);
+						mwse::tes3::ui::inventoryUpdateIcons();
+					}
+
+					// Update contents menu if necessary.
+					auto contentsMenu = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D3098));
+					if (contentsMenu) {
+						TES3::Reference * contentsReference = static_cast<TES3::Reference*>(contentsMenu->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D3048)).ptrValue);
+						if (reference == contentsReference) {
+							TES3::UI::updateContentsMenuTiles();
+						}
+					}
+				}
+
+				return fulfilledCount;
+			};
+
+			state["tes3"]["removeItem"] = [](sol::table params) -> int {
+				// Get the reference we are manipulating.
+				TES3::Reference * reference = getOptionalParamReference(params, "reference");
+				if (reference == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided.");
+				}
+
+				// Get the item we are going to remove.
+				TES3::Item * item = getOptionalParamObject<TES3::Item>(params, "item");
+				if (item == nullptr) {
+					throw std::invalid_argument("Invalid 'item' parameter provided.");
+				}
+
+				// Make sure we're dealing with actors.
+				TES3::Actor * actor = static_cast<TES3::Actor*>(reference->baseObject);
+				if (!actor->isActor()) {
+					throw std::invalid_argument("The 'reference' reference does not point to an actor.");
+				}
+
+				// Clone the object if needed.
+				if (reference->clone()) {
+					actor = static_cast<TES3::Actor*>(reference->baseObject);
+				}
+
+				// Get how many items we are removing.
+				int desiredCount = std::max(std::abs(getOptionalParam(params, "count", 1)), 1);
+
+				TES3::ItemStack * stack = actor->inventory.findItemStack(item);
+				if (stack == nullptr) {
+					return 0;
+				}
+				int fulfilledCount = std::min(desiredCount, stack->count);
+
+				// No items to remove? Great, let's get out of here.
+				if (fulfilledCount == 0) {
+					return 0;
+				}
+
+				// Add the item and return the added count, since we do no inventory checking.
+				auto mobile = reference->getAttachedMobileActor();
+				actor->inventory.removeItemWithData(mobile, item, nullptr, fulfilledCount, false);
+
+				// Play the relevant sound.
+				auto worldController = TES3::WorldController::get();
+				auto playerMobile = worldController->getMobilePlayer();
+				if (getOptionalParam<bool>(params, "playSound", true)) {
+					if (mobile == playerMobile) {
+						worldController->playItemUpDownSound(item, false);
+					}
+				}
+
+				// Update body parts for creatures/NPCs that may have items unequipped.
+				if (mobile) {
+					reference->updateBipedParts();
+
+					if (mobile == playerMobile) {
+						playerMobile->firstPersonReference->updateBipedParts();
+					}
+				}
+
+				// If either of them are the player, we need to update the GUI.
+				if (getOptionalParam<bool>(params, "updateGUI", true)) {
+					// Update inventory menu if necessary.
+					if (mobile == playerMobile) {
+						worldController->inventoryData->clearIcons(2);
+						worldController->inventoryData->addInventoryItems(&playerMobile->npcInstance->inventory, 2);
+						mwse::tes3::ui::inventoryUpdateIcons();
+					}
+
+					// Update contents menu if necessary.
+					auto contentsMenu = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D3098));
+					if (contentsMenu) {
+						TES3::Reference * contentsReference = static_cast<TES3::Reference*>(contentsMenu->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D3048)).ptrValue);
+						if (reference == contentsReference) {
+							TES3::UI::updateContentsMenuTiles();
+						}
+					}
+				}
+
+				return fulfilledCount;
+			};
+
 			state["tes3"]["transferItem"] = [](sol::table params) -> int {
 				// Get the reference we are transferring from.
 				TES3::Reference * fromReference = getOptionalParamReference(params, "from");
