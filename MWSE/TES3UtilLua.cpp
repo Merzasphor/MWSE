@@ -2788,11 +2788,15 @@ namespace mwse {
 				}
 
 				auto animData = reference->getAttachedAnimationData();
-				if (animData) {
+				if (animData == nullptr) {
 					return;
 				}
 
 				int group = getOptionalParam<int>(params, "group", 0);
+				if (group < 0 || group > 149) {
+					throw std::invalid_argument("Invalid 'group' parameter provided: must be between 0 and 149.");
+				}
+
 				int startFlag = getOptionalParam<int>(params, "startFlag", 0);
 				int loopCount = getOptionalParam<int>(params, "loopCount", -1);
 
@@ -2811,7 +2815,7 @@ namespace mwse {
 				}
 
 				auto animData = reference->getAttachedAnimationData();
-				if (animData) {
+				if (animData == nullptr) {
 					return;
 				}
 
