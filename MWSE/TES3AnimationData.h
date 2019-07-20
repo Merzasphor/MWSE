@@ -19,7 +19,7 @@ namespace TES3 {
 		int unknown_0x2C;
 		int unknown_0x30;
 		int unknown_0x34;
-		unsigned char unknown_0x3C[3];
+		unsigned char currentAnimGroup[3]; // 0x38
 		int unknown_0x3C[3];
 		int unknown_0x48[3];
 		unsigned int unknown_0x54; // Flags?
@@ -118,8 +118,8 @@ namespace TES3 {
 		int unknown_0x4CC;
 		int unknown_0x4D0;
 		int unknown_0x4D4;
-		int unknown_0x4D8;
-		int unknown_0x4DC;
+		float playbackSpeed; // 0x4D8
+		float weaponSpeed; // 0x4DC
 		int unknown_0x4E0;
 		int unknown_0x4E4;
 		int unknown_0x4E8;
@@ -165,6 +165,19 @@ namespace TES3 {
 		int unknown_0x7D8;
 		bool unknown_0x7DC;
 		int unknown_0x7E0;
+
+		//
+		// Other related this-call functions.
+		//
+
+		void playAnimationGroupForIndex(int animationGroup, int triIndex, int startFlag = 0, int loopCount = -1);
+
+		//
+		// Custom functions.
+		//
+
+		void playAnimationGroup(int animationGroup, int startFlag = 0, int loopCount = -1);
+
 	};
-	static_assert(sizeof(AnimationAttachment) == 0x7E4, "TES3::AnimationAttachment failed size validation");
+	static_assert(sizeof(AnimationData) == 0x7E4, "TES3::AnimationAttachment failed size validation");
 }

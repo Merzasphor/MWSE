@@ -534,5 +534,13 @@ namespace TES3 {
 		}
 		return nullptr;
 	}
+	
+	AnimationData* Reference::getAttachedAnimationData() {
+		auto attachment = static_cast<TES3::AnimationAttachment*>(getAttachment(TES3::AttachmentType::Animation));
+		if (attachment) {
+			return attachment->data;
+		}
+		return nullptr;
+	}
 
 }

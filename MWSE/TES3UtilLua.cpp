@@ -21,6 +21,7 @@
 #include "NIStream.h"
 #include "NITriShape.h"
 
+#include "TES3AnimationData.h"
 #include "TES3Actor.h"
 #include "TES3AIData.h"
 #include "TES3AIPackage.h"
@@ -2778,6 +2779,43 @@ namespace mwse {
 						return reference->disable();
 					}
 				}
+			};
+
+			state["tes3"]["playAnimation"] = [](sol::table params) {
+				TES3::Reference * reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided.");
+				}
+
+				auto animData = reference->getAttachedAnimationData();
+				if (animData) {
+					return;
+				}
+
+				int group = getOptionalParam<int>(params, "group", 0);
+				int startFlag = getOptionalParam<int>(params, "startFlag", 0);
+				int loopCount = getOptionalParam<int>(params, "loopCount", -1);
+
+				auto mact = reference->getAttachedMobileActor();
+				if (mact) {
+					mact->setMobileActorFlag(TES3::MobileActorFlag::IdleAnim, group != 0);
+				}
+
+				animData->playAnimationGroup(group, startFlag, loopCount);
+			};
+
+			state["tes3"]["skipAnimationFrame"] = [](sol::table params) {
+				TES3::Reference * reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided.");
+				}
+
+				auto animData = reference->getAttachedAnimationData();
+				if (animData) {
+					return;
+				}
+
+				animData->unknown_0x54 |= 0xFFFF;
 			};
 		}
 	}

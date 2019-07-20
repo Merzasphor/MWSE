@@ -81,6 +81,7 @@ namespace TES3 {
 		__declspec(dllexport) void setAttachedItemData(ItemData * itemData);
 		__declspec(dllexport) ItemData* getOrCreateAttachedItemData();
 		__declspec(dllexport) LockAttachmentNode* getAttachedLockNode();
+		__declspec(dllexport) AnimationData* getAttachedAnimationData();
 
 		__declspec(dllexport) LightAttachmentNode* getAttachedDynamicLight();
 		__declspec(dllexport) LightAttachmentNode* getOrCreateAttachedDynamicLight(NI::PointLight *, float);
