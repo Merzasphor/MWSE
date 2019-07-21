@@ -29,7 +29,6 @@
 #define TES3_MobileActor_startCombat 0x530470
 #define TES3_MobileActor_stopCombat 0x558720
 #define TES3_MobileActor_onDeath 0x523AA0
-#define TES3_MobileActor_applyHealthDamage 0x557CF0
 #define TES3_MobileActor_hasFreeAction 0x527580
 #define TES3_MobileActor_calculateRunSpeed 0x527050
 #define TES3_MobileActor_calculateSwimSpeed 0x5270B0
@@ -190,6 +189,7 @@ namespace TES3 {
 		}
 	}
 
+	const auto TES3_MobileActor_applyHealthDamage = reinterpret_cast<void(__thiscall *)(MobileActor*, MobileActor*, MobileActor*, float, float, MobileProjectile*, bool)>(0x5568F0);
 	bool MobileActor::applyHealthDamage(float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
 		// Invoke our combat stop event and check if it is blocked.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
@@ -205,14 +205,18 @@ namespace TES3 {
 			}
 		}
 
-		bool result = reinterpret_cast<signed char(__thiscall *)(MobileActor*, float, bool, bool, bool)>(TES3_MobileActor_applyHealthDamage)(this, damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+		bool checkForKnockdown = reinterpret_cast<bool (__thiscall *)(MobileActor*, float, bool, bool, bool)>(0x557CF0)(this, damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
 
 		// Do our follow up event.
 		if (mwse::lua::event::DamagedEvent::getEventEnabled()) {
-			luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::DamagedEvent(this, damage));
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::DamagedEvent(this, damage, checkForKnockdown));
+			if (eventData.valid()) {
+				checkForKnockdown = eventData["checkForKnockdown"];
+			}
 		}
 
-		return result;
+		return checkForKnockdown;
 	}
 
 	bool MobileActor::hasFreeAction() {

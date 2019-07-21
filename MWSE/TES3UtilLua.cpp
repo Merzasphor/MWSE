@@ -21,6 +21,7 @@
 #include "NIStream.h"
 #include "NITriShape.h"
 
+#include "TES3AnimationData.h"
 #include "TES3Actor.h"
 #include "TES3AIData.h"
 #include "TES3AIPackage.h"
@@ -2168,6 +2169,179 @@ namespace mwse {
 				TES3::UI::enterMenuMode(TES3::UI::registerID("MenuServiceRepair"));
 			};
 
+			state["tes3"]["addItem"] = [](sol::table params) -> int {
+				// Get the reference we are manipulating.
+				TES3::Reference * reference = getOptionalParamReference(params, "reference");
+				if (reference == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided.");
+				}
+
+				// Get the item we are going to add.
+				TES3::Item * item = getOptionalParamObject<TES3::Item>(params, "item");
+				if (item == nullptr) {
+					throw std::invalid_argument("Invalid 'item' parameter provided.");
+				}
+
+				// Make sure we're dealing with actors.
+				TES3::Actor * actor = static_cast<TES3::Actor*>(reference->baseObject);
+				if (!actor->isActor()) {
+					throw std::invalid_argument("The 'reference' reference does not point to an actor.");
+				}
+
+				// Clone the object if needed.
+				if (reference->clone()) {
+					actor = static_cast<TES3::Actor*>(reference->baseObject);
+				}
+
+				// Get how many items we are adding.
+				int fulfilledCount = 0;
+				int desiredCount = std::max(std::abs(getOptionalParam(params, "count", 1)), 1);
+				if (getOptionalParam<bool>(params, "limit", false)) {
+					// Prevent placing items into organic containers.
+					if (actor->getActorFlag(TES3::ActorFlagContainer::Organic)) {
+						return 0;
+					}
+
+					// Figure out how many more of the item can fit in the container.
+					auto maxCapacity = static_cast<TES3::Container*>(reference->getBaseObject())->capacity;
+					auto currentWeight = actor->inventory.calculateContainedWeight();
+					int fulfilledCount = std::min((int)((maxCapacity - currentWeight) / item->getWeight()), desiredCount);
+				}
+				else {
+					fulfilledCount = desiredCount;
+				}
+
+				// No items to add? Great, let's get out of here.
+				if (fulfilledCount == 0) {
+					return 0;
+				}
+
+				// Add the item and return the added count, since we do no inventory checking.
+				auto mobile = reference->getAttachedMobileActor();
+				actor->inventory.addItem(mobile, item, fulfilledCount, false, nullptr);
+
+				// Play the relevant sound.
+				auto worldController = TES3::WorldController::get();
+				auto playerMobile = worldController->getMobilePlayer();
+				if (getOptionalParam<bool>(params, "playSound", true)) {
+					if (mobile == playerMobile) {
+						worldController->playItemUpDownSound(item, true);
+					}
+				}
+
+				// Update body parts for creatures/NPCs that may have items unequipped.
+				if (mobile) {
+					reference->updateBipedParts();
+
+					if (mobile == playerMobile) {
+						playerMobile->firstPersonReference->updateBipedParts();
+					}
+				}
+
+				// If either of them are the player, we need to update the GUI.
+				if (getOptionalParam<bool>(params, "updateGUI", true)) {
+					// Update inventory menu if necessary.
+					if (mobile == playerMobile) {
+						worldController->inventoryData->clearIcons(2);
+						worldController->inventoryData->addInventoryItems(&playerMobile->npcInstance->inventory, 2);
+						mwse::tes3::ui::inventoryUpdateIcons();
+					}
+
+					// Update contents menu if necessary.
+					auto contentsMenu = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D3098));
+					if (contentsMenu) {
+						TES3::Reference * contentsReference = static_cast<TES3::Reference*>(contentsMenu->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D3048)).ptrValue);
+						if (reference == contentsReference) {
+							TES3::UI::updateContentsMenuTiles();
+						}
+					}
+				}
+
+				return fulfilledCount;
+			};
+
+			state["tes3"]["removeItem"] = [](sol::table params) -> int {
+				// Get the reference we are manipulating.
+				TES3::Reference * reference = getOptionalParamReference(params, "reference");
+				if (reference == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided.");
+				}
+
+				// Get the item we are going to remove.
+				TES3::Item * item = getOptionalParamObject<TES3::Item>(params, "item");
+				if (item == nullptr) {
+					throw std::invalid_argument("Invalid 'item' parameter provided.");
+				}
+
+				// Make sure we're dealing with actors.
+				TES3::Actor * actor = static_cast<TES3::Actor*>(reference->baseObject);
+				if (!actor->isActor()) {
+					throw std::invalid_argument("The 'reference' reference does not point to an actor.");
+				}
+
+				// Clone the object if needed.
+				if (reference->clone()) {
+					actor = static_cast<TES3::Actor*>(reference->baseObject);
+				}
+
+				// Get how many items we are removing.
+				int desiredCount = std::max(std::abs(getOptionalParam(params, "count", 1)), 1);
+
+				TES3::ItemStack * stack = actor->inventory.findItemStack(item);
+				if (stack == nullptr) {
+					return 0;
+				}
+				int fulfilledCount = std::min(desiredCount, stack->count);
+
+				// No items to remove? Great, let's get out of here.
+				if (fulfilledCount == 0) {
+					return 0;
+				}
+
+				// Add the item and return the added count, since we do no inventory checking.
+				auto mobile = reference->getAttachedMobileActor();
+				actor->inventory.removeItemWithData(mobile, item, nullptr, fulfilledCount, false);
+
+				// Play the relevant sound.
+				auto worldController = TES3::WorldController::get();
+				auto playerMobile = worldController->getMobilePlayer();
+				if (getOptionalParam<bool>(params, "playSound", true)) {
+					if (mobile == playerMobile) {
+						worldController->playItemUpDownSound(item, false);
+					}
+				}
+
+				// Update body parts for creatures/NPCs that may have items unequipped.
+				if (mobile) {
+					reference->updateBipedParts();
+
+					if (mobile == playerMobile) {
+						playerMobile->firstPersonReference->updateBipedParts();
+					}
+				}
+
+				// If either of them are the player, we need to update the GUI.
+				if (getOptionalParam<bool>(params, "updateGUI", true)) {
+					// Update inventory menu if necessary.
+					if (mobile == playerMobile) {
+						worldController->inventoryData->clearIcons(2);
+						worldController->inventoryData->addInventoryItems(&playerMobile->npcInstance->inventory, 2);
+						mwse::tes3::ui::inventoryUpdateIcons();
+					}
+
+					// Update contents menu if necessary.
+					auto contentsMenu = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D3098));
+					if (contentsMenu) {
+						TES3::Reference * contentsReference = static_cast<TES3::Reference*>(contentsMenu->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D3048)).ptrValue);
+						if (reference == contentsReference) {
+							TES3::UI::updateContentsMenuTiles();
+						}
+					}
+				}
+
+				return fulfilledCount;
+			};
+
 			state["tes3"]["transferItem"] = [](sol::table params) -> int {
 				// Get the reference we are transferring from.
 				TES3::Reference * fromReference = getOptionalParamReference(params, "from");
@@ -2778,6 +2952,47 @@ namespace mwse {
 						return reference->disable();
 					}
 				}
+			};
+
+			state["tes3"]["playAnimation"] = [](sol::table params) {
+				TES3::Reference * reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided.");
+				}
+
+				auto animData = reference->getAttachedAnimationData();
+				if (animData == nullptr) {
+					return;
+				}
+
+				int group = getOptionalParam<int>(params, "group", 0);
+				if (group < 0 || group > 149) {
+					throw std::invalid_argument("Invalid 'group' parameter provided: must be between 0 and 149.");
+				}
+
+				int startFlag = getOptionalParam<int>(params, "startFlag", 0);
+				int loopCount = getOptionalParam<int>(params, "loopCount", -1);
+
+				auto mact = reference->getAttachedMobileActor();
+				if (mact) {
+					mact->setMobileActorFlag(TES3::MobileActorFlag::IdleAnim, group != 0);
+				}
+
+				animData->playAnimationGroup(group, startFlag, loopCount);
+			};
+
+			state["tes3"]["skipAnimationFrame"] = [](sol::table params) {
+				TES3::Reference * reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided.");
+				}
+
+				auto animData = reference->getAttachedAnimationData();
+				if (animData == nullptr) {
+					return;
+				}
+
+				animData->unknown_0x54 |= 0xFFFF;
 			};
 		}
 	}

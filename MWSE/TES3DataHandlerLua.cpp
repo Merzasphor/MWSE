@@ -107,6 +107,9 @@ namespace mwse {
 				// Indirect bindings to unions and arrays.
 				usertypeDefinition.set("exteriorCells", sol::readonly_property([](TES3::DataHandler& self) { return std::ref(self.exteriorCellData); }));
 
+				// Basic function binding.
+				usertypeDefinition.set("updateCollisionGroupsForActiveCells", &TES3::DataHandler::updateCollisionGroupsForActiveCells);
+
 				// Finish up our usertype.
 				state.set_usertype("tes3dataHandler", usertypeDefinition);
 			}
