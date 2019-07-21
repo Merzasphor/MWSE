@@ -13,5 +13,5 @@ return {
 			{ name = "updateGUI", type = "boolean", default = true, description = "If false, the player or contents menu won't be updated." },
 		},
 	}},
-	returns = {{ name = "createdData", type = "tes3itemData" }},
+	returns = {{ name = "createdReference", type = "tes3reference" }},
 }
