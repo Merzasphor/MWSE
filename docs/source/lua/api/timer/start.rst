@@ -14,16 +14,16 @@ Parameters
 Accepts parameters through a table with the given keys:
 
 type (`number`_)
-    No description available.
+    Optional. Defaults to timer.simulate.
 
 duration (`number`_)
-    No description available.
+    Duration time in seconds.
 
 callback (`function`_)
-    No description available.
+    Function to call when the timer expires.
 
 iterations (`number`_)
-    Optional. No description available.
+    Number of iterations. Optional. Defaults to 1. 
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html
