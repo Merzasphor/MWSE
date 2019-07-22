@@ -1346,9 +1346,9 @@ namespace mwse {
 					return false;
 				}
 
-				// Only accept doors.
-				TES3::Door* door = reinterpret_cast<TES3::Door*>(reference->baseObject);
-				if (door->objectType != TES3::ObjectType::Door) {
+				// Only accept containers or doors.
+				auto objectType = reference->baseObject->objectType;
+				if (objectType != TES3::ObjectType::Container && objectType != TES3::ObjectType::Door) {
 					return false;
 				}
 
