@@ -1,35 +1,32 @@
-tes3.dropItem
+tes3.removeItem
 ====================================================================================================
 
-Drops one or more items from a reference's inventory onto the ground at their feet.
+Removes an item to a given reference's inventory.
 
 Returns
 ----------------------------------------------------------------------------------------------------
 
-`tes3reference`_.
+`number`_.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 
 Accepts parameters through a table with the given keys:
 
-reference (`tes3mobileActor`_, `tes3reference`_, `string`_)
-    The reference whose inventory will be modified.
+reference (`tes3reference`_, `tes3mobileActor`_, `string`_)
+    Who to give items to.
 
 item (`tes3item`_, `string`_)
-    The item to drop.
-
-itemData (`tes3itemData`_)
-    Optional. The item data to match.
+    The item to remove.
 
 count (`number`_)
-    Default: ``1``. The number of items to drop.
+    Default: ``1``. The maximum number of items to remove.
 
-matchExact (`boolean`_)
-    Default: ``true``. If true, the exact item will be matched. This is important if you want to drop an item without item data.
+playSound (`boolean`_)
+    Default: ``true``. If false, the up/down sound for the item won't be played.
 
 updateGUI (`boolean`_)
-    Default: ``true``. If false, the player or contents menu won't be updated.
+    Default: ``true``. If false, the function won't manually resync the player's GUI state. This can result in some optimizations, though `tes3ui.forcePlayerInventoryUpdate()` must manually be called after all inventory updates are finished.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

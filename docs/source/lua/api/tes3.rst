@@ -22,6 +22,7 @@ Functions
     :maxdepth: 1
 
     tes3/addArmorSlot
+    tes3/addItem
     tes3/addItemData
     tes3/addSoulGem
     tes3/adjustSoundVolume
@@ -99,6 +100,7 @@ Functions
     tes3/newGame
     tes3/onMainMenu
     tes3/persuade
+    tes3/playAnimation
     tes3/playItemPickupSound
     tes3/playSound
     tes3/playVoiceover
@@ -107,6 +109,7 @@ Functions
     tes3/rayTest
     tes3/releaseKey
     tes3/removeEffects
+    tes3/removeItem
     tes3/removeSound
     tes3/runLegacyScript
     tes3/saveGame
@@ -124,6 +127,7 @@ Functions
     tes3/setStatistic
     tes3/setTrap
     tes3/showRepairServiceMenu
+    tes3/skipAnimationFrame
     tes3/streamMusic
     tes3/tapKey
     tes3/transferItem

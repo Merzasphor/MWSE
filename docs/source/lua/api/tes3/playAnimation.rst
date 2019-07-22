@@ -1,12 +1,7 @@
-tes3.dropItem
+tes3.playAnimation
 ====================================================================================================
 
-Drops one or more items from a reference's inventory onto the ground at their feet.
-
-Returns
-----------------------------------------------------------------------------------------------------
-
-`tes3reference`_.
+Plays a given animation group. Optional flags can be used to define how the group starts.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -14,22 +9,16 @@ Parameters
 Accepts parameters through a table with the given keys:
 
 reference (`tes3mobileActor`_, `tes3reference`_, `string`_)
-    The reference whose inventory will be modified.
+    The reference that will play the animation.
 
-item (`tes3item`_, `string`_)
-    The item to drop.
+group (`number`_)
+    Default: ``0``. The group id -- a value from 0 to 149. Maps to tes3.animationGroup.* constants.
 
-itemData (`tes3itemData`_)
-    Optional. The item data to match.
+startFlag (`number`_)
+    Default: ``0``. A flag for starting the group with, matching tes3.animationStartFlag.* constants.
 
-count (`number`_)
-    Default: ``1``. The number of items to drop.
-
-matchExact (`boolean`_)
-    Default: ``true``. If true, the exact item will be matched. This is important if you want to drop an item without item data.
-
-updateGUI (`boolean`_)
-    Default: ``true``. If false, the player or contents menu won't be updated.
+loopCount (`number`_)
+    Optional. If provided, the animation will loop a given number of times.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html
