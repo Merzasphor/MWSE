@@ -178,6 +178,21 @@ namespace mwse {
 		return true;
 	}
 
+	bool genPushUnprotected(DWORD address, DWORD value) {
+		// Unprotect memory.
+		DWORD oldProtect;
+		VirtualProtect((DWORD*)address, 0x5, PAGE_READWRITE, &oldProtect);
+
+		// Create our call.
+		MemAccess<unsigned char>::Set(address, 0x68);
+		MemAccess<DWORD>::Set(address + 1, value);
+
+		// Protect memory again.
+		VirtualProtect((DWORD*)address, 0x5, oldProtect, &oldProtect);
+
+		return true;
+	}
+
 	void overrideVirtualTable(DWORD address, DWORD offset, DWORD to) {
 		DWORD location = address + offset;
 

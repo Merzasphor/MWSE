@@ -112,6 +112,7 @@
     <ClInclude Include="LuaWeatherCycledEvent.h" />
     <ClInclude Include="LuaWeatherTransitionFinishedEvent.h" />
     <ClInclude Include="LuaWeatherTransitionStartedEvent.h" />
+    <ClInclude Include="MemoryUtilLua.h" />
     <ClInclude Include="NIAmbientLight.h" />
     <ClInclude Include="NICollisionSwitch.h" />
     <ClInclude Include="NICollisionSwitchLua.h" />
@@ -485,6 +486,7 @@
     <ClCompile Include="LuaWeatherTransitionFinishedEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionStartedEvent.cpp" />
     <ClCompile Include="MemoryUtil.cpp" />
+    <ClCompile Include="MemoryUtilLua.cpp" />
     <ClCompile Include="MgeVirtualMachine.cpp" />
     <ClCompile Include="MgeTes3Machine.cpp" />
     <ClCompile Include="NIAVObject.cpp" />

@@ -1287,6 +1287,9 @@
     <ClInclude Include="LuaBodyPartsUpdatedEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="MemoryUtilLua.h">
+      <Filter>Header Files\Lua\Bindings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2803,6 +2806,9 @@
     </ClCompile>
     <ClCompile Include="TES3AnimationData.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryUtilLua.cpp">
+      <Filter>Source Files\Lua\Bindings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

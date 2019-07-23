@@ -51,6 +51,7 @@
 #include "TES3WorldController.h"
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
+#include "MemoryUtilLua.h"
 #include "StackLua.h"
 #include "ScriptUtilLua.h"
 #include "StringUtilLua.h"
@@ -2691,6 +2692,7 @@ namespace mwse {
 			}
 
 			// Bind libraries.
+			bindMWSEMemoryUtil();
 			bindMWSEStack();
 			bindScriptUtil();
 			bindStringUtil();

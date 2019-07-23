@@ -51,6 +51,8 @@ namespace mwse {
 	bool __declspec(dllexport) genPushEnforced(DWORD address, BYTE value);
 	bool __declspec(dllexport) genPushEnforced(DWORD address, DWORD value);
 
+	bool __declspec(dllexport) genPushUnprotected(DWORD address, DWORD value);
+
 	// Overrides a function in a virtual table.
 	void __declspec(dllexport) overrideVirtualTable(DWORD address, DWORD offset, DWORD to);
 
