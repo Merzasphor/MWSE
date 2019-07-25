@@ -92,7 +92,17 @@ namespace mwse {
 				return sol::nil;
 			}
 
-			return makeLuaObject(itemData.soul);
+			// Return nil if anything explodes here, as the value is unreliable.
+			try {
+				if (itemData.soul != nullptr && itemData.soul->isActor()) {
+					return makeLuaObject(itemData.soul);
+				}
+			}
+			catch (std::exception& e) {
+				return sol::nil;
+			}
+
+			return sol::nil;
 		}
 
 		void setItemDataSoul(TES3::ItemData& itemData, sol::object soul) {
