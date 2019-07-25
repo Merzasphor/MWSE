@@ -2,6 +2,7 @@
 
 #include "TES3Util.h"
 
+#include "TES3Actor.h"
 #include "TES3DataHandler.h"
 #include "TES3Enchantment.h"
 #include "TES3Light.h"
@@ -110,6 +111,19 @@ namespace TES3 {
 		}
 
 		return true;
+	}
+
+	Actor * ItemData::getSoulActor() {
+		__try {
+			if (soul != nullptr && soul->isActor()) {
+				return soul;
+			}
+		}
+		__except (EXCEPTION_EXECUTE_HANDLER) {
+			return nullptr;
+		}
+
+		return nullptr;
 	}
 
 	void ItemData::setLuaDataTable(sol::object data) {

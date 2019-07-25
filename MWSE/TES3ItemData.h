@@ -63,6 +63,8 @@ namespace TES3 {
 		// Custom functions.
 		//
 
+		Actor * getSoulActor();
+
 		void setLuaDataTable(sol::object data);
 		sol::table getOrCreateLuaDataTable();
 

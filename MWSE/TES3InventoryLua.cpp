@@ -87,22 +87,7 @@ namespace mwse {
 		}
 
 		sol::object getItemDataSoul(TES3::ItemData& itemData) {
-			// Make our best attempt at making sure this actually has a soul. This is not reliable!
-			if (itemData.charge == -1.0f) {
-				return sol::nil;
-			}
-
-			// Return nil if anything explodes here, as the value is unreliable.
-			try {
-				if (itemData.soul != nullptr && itemData.soul->isActor()) {
-					return makeLuaObject(itemData.soul);
-				}
-			}
-			catch (std::exception& e) {
-				return sol::nil;
-			}
-
-			return sol::nil;
+			return makeLuaObject(itemData.getSoulActor());
 		}
 
 		void setItemDataSoul(TES3::ItemData& itemData, sol::object soul) {
