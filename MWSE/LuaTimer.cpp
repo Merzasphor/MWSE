@@ -57,7 +57,10 @@ namespace mwse {
 
 		std::shared_ptr<Timer> TimerController::createTimer(double duration, sol::protected_function callback, int iterations) {
 			// Validate parameters.
-			if (duration <= 0.0 || callback.get_type() != sol::type::function) {
+			if (callback == sol::nil) {
+				throw std::invalid_argument("Could not create timer: Callback function is nil.");
+			}
+			else if (duration <= 0.0 || callback.get_type() != sol::type::function) {
 				return nullptr;
 			}
 			else if (iterations < 0) {
