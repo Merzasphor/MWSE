@@ -34,10 +34,6 @@ namespace mwse {
 
 		__declspec(dllexport) char* setDataString(char**, const char*);
 
-		__declspec(dllexport) unsigned int* getBaseEffectFlags();
-		__declspec(dllexport) bool getBaseEffectFlag(int index, TES3::EffectFlag::Flag flag);
-		__declspec(dllexport) void setBaseEffectFlag(int index, TES3::EffectFlag::Flag flag, bool set);
-
 		__declspec(dllexport) bool setEffect(TES3::Effect * effects, long index, long effectId,
 			long skillAttributeId, long range, long area, long duration,
 			long minimumMagnitude, long maximumMagnitude);

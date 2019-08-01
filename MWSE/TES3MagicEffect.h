@@ -211,10 +211,10 @@ namespace TES3 {
 		char boltSoundEffect[32]; // 0x7C
 		char hitSoundEffect[32]; // 0x9C
 		char areaSoundEffect[32]; // 0xBC
-		void * unknown_0xDC; // Visual effect?
-		void * unknown_0xE0; // Visual effect?
-		void * unknown_0xE4; // Visual effect?
-		void * unknown_0xE8; // Visual effect?
+		PhysicalObject * castEffect; // 0xDC
+		PhysicalObject * boltEffect; // 0xE0
+		PhysicalObject * hitEffect; // 0xE4
+		PhysicalObject * areaEffect; // 0xE8
 		int school; // 0xEC
 		float baseMagickaCost; // 0xF0
 		EffectFlag::value_type flags; // 0xF4
@@ -224,6 +224,17 @@ namespace TES3 {
 		float size; // 0x0104
 		float speed; // 0x0108
 		float sizeCap; // 0x010C
+
+		MagicEffect();
+		MagicEffect(int id);
+		~MagicEffect();
+
+		//
+		// Other related this-call functions.
+		//
+
+		void resolveLinks(NonDynamicData * nonDynamicData);
+		void clearData();
 
 		//
 		// Custom functions

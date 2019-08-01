@@ -26,6 +26,7 @@
 
 #include "TES3DataHandler.h"
 #include "TES3MagicEffect.h"
+#include "TES3MagicEffectController.h"
 
 using namespace mwse;
 
@@ -62,16 +63,17 @@ namespace mwse
 		}
 
 		// Get the effect.
-		TES3::MagicEffect& effect = TES3::DataHandler::get()->nonDynamicData->magicEffects[id];
+		auto nonDynamicData = TES3::DataHandler::get()->nonDynamicData;
+		TES3::MagicEffect * effect = nonDynamicData->getMagicEffect(id);
 
 		// Flags are a unique case. There is other data associated with flags that we want
 		// to expose, so we will return it here.
 		// TODO: Programmatically allow setting/getting these normally hard-coded values.
-		Stack::getInstance().pushLong(effect.flags | tes3::getBaseEffectFlags()[id]);
+		Stack::getInstance().pushLong(effect->flags | nonDynamicData->magicEffects->getEffectFlags(id));
 
 		// Push other results.
-		Stack::getInstance().pushFloat(effect.baseMagickaCost);
-		Stack::getInstance().pushLong(effect.school);
+		Stack::getInstance().pushFloat(effect->baseMagickaCost);
+		Stack::getInstance().pushLong(effect->school);
 
 		return 0.0f;
 	}

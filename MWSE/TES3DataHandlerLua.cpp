@@ -35,7 +35,7 @@ namespace mwse {
 				usertypeDefinition.set("dialogues", sol::readonly_property(&TES3::NonDynamicData::dialogues));
 				usertypeDefinition.set("factions", sol::readonly_property(&TES3::NonDynamicData::factions));
 				usertypeDefinition.set("globals", sol::readonly_property(&TES3::NonDynamicData::globals));
-				usertypeDefinition.set("magicEffects", sol::readonly_property([](TES3::NonDynamicData& self) { return std::ref(self.magicEffects); }));
+				//usertypeDefinition.set("magicEffects", sol::readonly_property([](TES3::NonDynamicData& self) { return std::ref(self.magicEffects); }));
 				usertypeDefinition.set("objects", sol::readonly_property(&TES3::NonDynamicData::list));
 				usertypeDefinition.set("races", sol::readonly_property(&TES3::NonDynamicData::races));
 				usertypeDefinition.set("regions", sol::readonly_property(&TES3::NonDynamicData::regions));

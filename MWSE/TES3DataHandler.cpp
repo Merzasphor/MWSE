@@ -12,6 +12,7 @@
 
 #include "TES3Util.h"
 
+#include "TES3MagicEffectController.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
 #include "TES3Sound.h"
@@ -205,6 +206,10 @@ namespace TES3 {
 	const auto TES3_NonDynamicData_getCellByName = reinterpret_cast<Cell *(__thiscall*)(NonDynamicData*, const char*)>(0x4BA9B0);
 	Cell * NonDynamicData::getCellByName(const char* name) {
 		return TES3_NonDynamicData_getCellByName(this, name);
+	}
+
+	MagicEffect * NonDynamicData::getMagicEffect(int id) {
+		return magicEffects->getEffectObject(id);
 	}
 
 	const auto TES3_NonDynamicData_createReference = reinterpret_cast<float(__thiscall*)(NonDynamicData*, PhysicalObject*, Vector3*, Vector3*, bool&, Reference*, Cell*)>(0x4C0E80);

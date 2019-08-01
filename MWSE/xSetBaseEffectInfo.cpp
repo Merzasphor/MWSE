@@ -71,14 +71,14 @@ namespace mwse
 			return 0.0f;
 		}
 
-		TES3::MagicEffect& effect = TES3::DataHandler::get()->nonDynamicData->magicEffects[id];
-		effect.school = school;
-		effect.baseMagickaCost = baseMagickaCost;
+		TES3::MagicEffect * effect = TES3::DataHandler::get()->nonDynamicData->getMagicEffect(id);
+		effect->school = school;
+		effect->baseMagickaCost = baseMagickaCost;
 
 		// Flags are a unique case. We added extra information in xGetBaseEffectInfo. We
 		// need to strip that back out here, and make sure only the right bits are set.
 		// TODO: Programmatically allow setting/getting these normally hard-coded values.
-		effect.flags = (flags & (TES3::EffectFlag::AllowSpellmaking | TES3::EffectFlag::AllowEnchanting | TES3::EffectFlag::NegativeLighting));
+		effect->flags = (flags & (TES3::EffectFlag::AllowSpellmaking | TES3::EffectFlag::AllowEnchanting | TES3::EffectFlag::NegativeLighting));
 
 		Stack::getInstance().pushLong(true);
 
