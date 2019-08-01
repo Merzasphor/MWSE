@@ -3011,9 +3011,20 @@ namespace mwse {
 				// Create the effect and assign basic properties.
 				auto effect = new TES3::MagicEffect(id);
 				effect->baseMagickaCost = getOptionalParam<float>(params, "baseCost", 1.0f);
+				effect->school = getOptionalParam<int>(params, "school", 0);
 				effect->size = getOptionalParam<float>(params, "size", 1.0f);
 				effect->sizeCap = getOptionalParam<float>(params, "sizeCap", 1.0f);
 				effect->speed = getOptionalParam<float>(params, "speed", 1.0f);
+				
+				// Description.
+				sol::optional<std::string> description = params["description"];
+				if (description) {
+					effect->description = new char[description.value().length() + 1];
+					strcpy_s(effect->description, description.value().length() + 1, description.value().c_str());
+				}
+				else {
+					effect->description = "No description available.";
+				}
 
 				// Set color.
 				auto lighting = getOptionalParamVector3(params, "lighting");
@@ -3141,6 +3152,9 @@ namespace mwse {
 				if (onTick) {
 					magicEffectController->effectLuaTickFunctions[id] = onTick.value();
 				}
+
+				// Set the GMST as the negative effect ID for custom hooks later.
+				magicEffectController->effectNameGMSTs[id] = -id;
 
 				return makeLuaObject(effect);
 			};

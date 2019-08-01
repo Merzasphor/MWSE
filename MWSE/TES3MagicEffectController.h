@@ -9,7 +9,7 @@
 #include "TES3MagicEffect.h"
 
 namespace TES3 {
-#define MAX_EFFECT_COUNT 1024U
+#define MAX_EFFECT_COUNT SHRT_MAX
 
 	class MagicEffectController {
 	public:
@@ -19,6 +19,8 @@ namespace TES3 {
 		// MagicEffect object functions.
 		MagicEffect* getEffectObject(int id);
 		void addEffectObject(MagicEffect* effect);
+
+		const char * getEffectName(int id);
 
 		// Flag manipulation.
 		static unsigned int getEffectFlags(int id);

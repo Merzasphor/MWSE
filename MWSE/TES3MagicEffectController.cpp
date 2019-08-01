@@ -4,9 +4,17 @@
 
 #include "TES3DataHandler.h"
 #include "TES3GameFile.h"
+#include "TES3GameSetting.h"
 #include "TES3MagicEffect.h"
 #include "TES3MagicEffectInstance.h"
 #include "TES3MagicSourceInstance.h"
+#include "TES3MobilePlayer.h"
+#include "TES3NPC.h"
+#include "TES3WorldController.h"
+
+#include "TES3UIElement.h"
+#include "TES3UIManager.h"
+#include "TES3UIWidgets.h"
 
 #include "LuaManager.h"
 #include "sol.hpp"
@@ -47,6 +55,19 @@ namespace TES3 {
 
 	void MagicEffectController::addEffectObject(MagicEffect* effect) {
 		effectObjects[effect->id] = effect;
+	}
+
+	const char * MagicEffectController::getEffectName(int id) {
+		if (id <= EffectID::LastEffect) {
+			return TES3::DataHandler::get()->nonDynamicData->GMSTs[effectNameGMSTs[id]]->value.asString;
+		}
+
+		auto itt = effectCustomNames.find(id);
+		if (itt == effectCustomNames.end()) {
+			return nullptr;
+		}
+
+		return itt->second.c_str();
 	}
 
 	unsigned int MagicEffectController::getEffectFlags(int id) {
@@ -230,6 +251,75 @@ namespace TES3 {
 		}
 	}
 
+	// Rewrite of the spellmaking population code to make use of our custom effect collection.
+	const auto TES3_UI_SortSpellmakingMenu = reinterpret_cast<void (__stdcall*)()>(0x621EB0);
+	void __cdecl PopulateSpellmakingMenu() {
+		auto menuSpellmaking = UI::findMenu(*reinterpret_cast<UI::UI_ID*>(0x7D698C));
+		if (menuSpellmaking == nullptr) {
+			return;
+		}
+
+		auto effectsScroll = reinterpret_cast<UI::WidgetScrollPane*>(menuSpellmaking->getProperty(UI::PropertyType::Pointer, *reinterpret_cast<UI::Property*>(0x7D6990)).ptrValue);
+		auto effectsScrollContent = effectsScroll->getContentPane();
+		if (effectsScrollContent == nullptr) {
+			return;
+		}
+		
+		auto ndd = TES3::DataHandler::get()->nonDynamicData;
+		auto magicEffectController = ndd->magicEffects;
+		auto macp = TES3::WorldController::get()->getMobilePlayer();
+		auto spellList = macp->getCombatSpellList();
+
+		for (auto effectItt : magicEffectController->effectObjects) {
+			auto effect = effectItt.second;
+			bool hasEffect = false;
+			if (effect->flags & EffectFlag::AllowSpellmaking) {
+				for (auto spellListItt = spellList->getFirstNode(); spellListItt != nullptr; spellListItt = spellListItt->next) {
+					if (hasEffect) {
+						break;
+					}
+
+					auto spell = spellListItt->data;
+					if (spell->castType != SpellCastType::Spell) {
+						continue;
+					}
+
+					for (size_t i = 0; i < 8; i++) {
+						if (spell->effects[i].effectID == effect->id) {
+							hasEffect = true;
+							break;
+						}
+					}
+				}
+			}
+
+			if (hasEffect) {
+				auto effectText = effectsScrollContent->createTextSelect(static_cast<UI::UI_ID>(UI::Property::null));
+				effectText->setText(magicEffectController->getEffectName(effect->id));
+				effectText->setProperty(*reinterpret_cast<UI::Property*>(0x7D698E), effect);
+				effectText->setProperty(UI::Property::help_tooltip, (UI::EventCallback)0x622E70);
+				effectText->setProperty(UI::Property::event_mouse_click, (UI::EventCallback)0x621990);
+			}
+		}
+
+		// Sort the list.
+		TES3_UI_SortSpellmakingMenu();
+	}
+
+	GameSetting temporaryNameGMST;
+	GameSetting * __fastcall getSpellNameGMST(DataHandler * dataHandler, DWORD EDX, int gmstId) {
+		if (gmstId < 0) {
+			temporaryNameGMST.value.asString = (char*)dataHandler->nonDynamicData->magicEffects->effectCustomNames[gmstId * -1].c_str();
+			return &temporaryNameGMST;
+		}
+		else {
+			return dataHandler->nonDynamicData->GMSTs[gmstId];
+		}
+	}
+	char * __fastcall getSpellNameString(WorldController * worldController, DWORD EDX, int gmstId) {
+		return getSpellNameGMST(TES3::DataHandler::get(), EDX, gmstId)->value.asString;
+	}
+
 	void patchMagicEffectDispatch(DWORD address, BYTE pushInstruction) {
 		// Push the switch index onto the stack.
 		mwse::writeByteUnprotected(address, pushInstruction);
@@ -260,6 +350,45 @@ namespace TES3 {
 
 		// Resolve links.
 		mwse::genCallUnprotected(0x4BB6E7, (DWORD)ResolveAllLinks, 0x1C);
+
+		// Make it so that every lookup for the name GMST instead looks to our custom temporary spell name GMST.
+		mwse::genCallEnforced(0x4A92BC, 0x488810, (DWORD)getSpellNameGMST);
+		mwse::genCallEnforced(0x4A934D, 0x488810, (DWORD)getSpellNameGMST);
+		mwse::genCallEnforced(0x4A93DE, 0x488810, (DWORD)getSpellNameGMST);
+		mwse::genCallEnforced(0x4A946F, 0x488810, (DWORD)getSpellNameGMST);
+		mwse::genCallEnforced(0x4AB7F6, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x51601F, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x5160EC, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x5161E3, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x5162B0, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x591BEC, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x5922A0, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x592683, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x59E9CA, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x5A9882, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x5A9F0B, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x5AA593, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x5C3665, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x5C3791, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x5C37D8, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x5C5202, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x5C68A0, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x5E4B8C, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x5E513E, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x5E7C73, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x608160, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x60C123, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x616CDD, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x61AD67, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x61C5CA, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x621E3E, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x621F71, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x621FB8, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x6230C0, 0x40F930, (DWORD)getSpellNameString);
+		mwse::genCallEnforced(0x62F10D, 0x40F930, (DWORD)getSpellNameString);
+
+		// Fix spellmaking list population.
+		mwse::genCallEnforced(0x6210B4, 0x621CE0, (DWORD)PopulateSpellmakingMenu);
 
 		// Call custom effect dispatchers (and the spell tick event).
 		patchMagicEffectDispatch(0x4647E9, 0x50);
