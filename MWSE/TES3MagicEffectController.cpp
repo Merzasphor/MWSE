@@ -59,7 +59,7 @@ namespace TES3 {
 
 	const char * MagicEffectController::getEffectName(int id) {
 		if (id <= EffectID::LastEffect) {
-			return TES3::DataHandler::get()->nonDynamicData->GMSTs[effectNameGMSTs[id]]->value.asString;
+			return DataHandler::get()->nonDynamicData->GMSTs[effectNameGMSTs[id]]->value.asString;
 		}
 
 		auto itt = effectCustomNames.find(id);
@@ -189,7 +189,7 @@ namespace TES3 {
 
 			// 
 			effect->clearData();
-			effect->setBaseObjectFlag(TES3::ObjectFlag::Delete, 0);
+			effect->setBaseObjectFlag(ObjectFlag::Delete, 0);
 
 			// 
 			bool wasFlag1Set = effect->getBaseObjectFlag(1);
@@ -211,38 +211,168 @@ namespace TES3 {
 		}
 	}
 
-	void __cdecl MagicEffectDispatch(TES3::EffectID::EffectID effectId, TES3::MagicSourceInstance * sourceInstance, float deltaTime, TES3::MagicEffectInstance * effectInstance, int effectIndex) {
+	const auto TES3_TriggerSpellSummonEvent = reinterpret_cast<void(__cdecl *)(MagicSourceInstance *, float, MagicEffectInstance *, int, const char*)>(0x466950);
+	void triggerSpellSummonEvent(sol::table data, std::string id) {
+		MagicSourceInstance * sourceInstance = data["sourceInstance"];
+		float deltaTime = data["deltaTime"];
+		MagicEffectInstance * effectInstance = data["effectInstance"];
+		int effectIndex = data["effectIndex"];
+
+		TES3_TriggerSpellSummonEvent(sourceInstance, deltaTime, effectInstance, effectIndex, id.c_str());
+	}
+
+	const auto TES3_TriggerSpellBoundArmorEvent = reinterpret_cast<void(__cdecl *)(MagicSourceInstance *, float, MagicEffectInstance *, int, const char*, const char*)>(0x466270);
+	void triggerSpellBoundArmorEvent(sol::table data, std::string id, sol::optional<std::string> id2) {
+		MagicSourceInstance * sourceInstance = data["sourceInstance"];
+		float deltaTime = data["deltaTime"];
+		MagicEffectInstance * effectInstance = data["effectInstance"];
+		int effectIndex = data["effectIndex"];
+
+		const char * id2cs = nullptr;
+		if (id2) {
+			id2cs = id2.value().c_str();
+		}
+
+		TES3_TriggerSpellBoundArmorEvent(sourceInstance, deltaTime, effectInstance, effectIndex, id.c_str(), id2cs);
+	}
+
+	const auto TES3_TriggerSpellBoundWeaponEvent = reinterpret_cast<void(__cdecl *)(MagicSourceInstance *, float, MagicEffectInstance *, int, const char*)>(0x463C35);
+	void triggerSpellBoundWeaponEvent(sol::table data, std::string& id) {
+		MagicSourceInstance * sourceInstance = data["sourceInstance"];
+		float deltaTime = data["deltaTime"];
+		MagicEffectInstance * effectInstance = data["effectInstance"];
+		int effectIndex = data["effectIndex"];
+
+		TES3_TriggerSpellBoundWeaponEvent(sourceInstance, deltaTime, effectInstance, effectIndex, id.c_str());
+	}
+
+	sol::protected_function genericLuaSpellResistCallback = sol::nil;
+	bool __cdecl genericLuaSpellResist(MagicSourceInstance * sourceInstance, MagicEffectInstance * effectInstance, int effectIndex) {
+		if (genericLuaSpellResistCallback != sol::nil) {
+			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::optional<bool> result = genericLuaSpellResistCallback(stateHandle.state.create_table_with(
+				"sourceInstance", sourceInstance,
+				"effectInstance", effectInstance,
+				"effectIndex", effectIndex
+			));
+			return result.value_or(false);
+		}
+
+		return false;
+	}
+
+	const auto TES3_TriggerSpellEffectEvent = reinterpret_cast<bool(__cdecl *)(MagicSourceInstance *, float, MagicEffectInstance *, int, bool, bool, void *, DWORD, int, bool(__cdecl *)(MagicSourceInstance *, MagicEffectInstance *, int))>(0x518460);
+	sol::object triggerSpellEffectEvent(sol::table data, sol::this_state s) {
+		// Get the important data from the table/effect info.
+		int effectId = data["effectId"];
+		MagicSourceInstance * sourceInstance = data["sourceInstance"];
+		float deltaTime = data["deltaTime"];
+		MagicEffectInstance * effectInstance = data["effectInstance"];
+		int effectIndex = data["effectIndex"];
+		bool negateOnExpiry = data.get_or("negateOnExpiry", true);
+		bool isUncapped = data.get_or("isUncapped", (MagicEffectController::effectFlags[effectId] >> 12) & 0xFFFFFF01);
+		int attribute = data.get_or("attribute", 28);
+
+		// The return value can be an integer or a float.
+		union {
+			int asInt;
+			float asFloat;
+		} genericEventValue;
+		genericEventValue.asInt = 0;
+
+		// Figure out what kind of return value we're looking for.
+		int eventTypeEnum = data.get_or("eventType", 0);
+		DWORD eventType = 0x7886F0;
+		void * eventValue = &genericEventValue;
+		switch (eventTypeEnum) {
+		case 0:
+		case 1:
+			eventType = 0x7886F0;
+			genericEventValue.asInt = data.get_or("eventValue", 0);
+			break;
+		case 2:
+			eventType = 0x788700;
+			genericEventValue.asFloat = data.get_or("eventValue", 0.0f);
+			break;
+		}
+
+		// Allow defining a custom resist function.
+		bool(__cdecl * resistFunction)(MagicSourceInstance *, MagicEffectInstance *, int) = nullptr;
+		sol::optional<sol::protected_function> resistLuaFunction = data["onResist"];
+		if (resistLuaFunction) {
+			genericLuaSpellResistCallback = resistLuaFunction.value();
+			resistFunction = genericLuaSpellResist;
+		}
+
+		// Run the actual event trigger.
+		data["eventResult"] = TES3_TriggerSpellEffectEvent(sourceInstance, deltaTime, effectInstance, effectIndex, negateOnExpiry, isUncapped, eventValue, eventType, attribute, resistFunction);
+
+		// Figure out our return type.
+		sol::object result = sol::nil;
+		switch (eventTypeEnum) {
+		case 0:
+			result = sol::make_object(s, genericEventValue.asInt != 0);
+			break;
+		case 1:
+			result = sol::make_object(s, genericEventValue.asInt);
+			break;
+		case 2:
+			result = sol::make_object(s, genericEventValue.asFloat);
+			break;
+		}
+
+		return result;
+	}
+
+	sol::table packageSpellTickTable(sol::state& state, EffectID::EffectID effectId, MagicSourceInstance * sourceInstance, float deltaTime, MagicEffectInstance * effectInstance, int effectIndex) {
+		auto tbl = state.create_table();
+
+		tbl["effectId"] = effectId;
+		tbl["sourceInstance"] = sourceInstance;
+		tbl["deltaTime"] = deltaTime;
+		tbl["effectInstance"] = effectInstance;
+		tbl["effectIndex"] = effectIndex;
+
+		tbl["trigger"] = triggerSpellEffectEvent;
+		tbl["triggerSummon"] = triggerSpellSummonEvent;
+		tbl["triggerBoundArmor"] = triggerSpellBoundArmorEvent;
+		tbl["triggerBoundWeapon"] = triggerSpellBoundWeaponEvent;
+
+		return tbl;
+	}
+
+	void __cdecl MagicEffectDispatch(EffectID::EffectID effectId, MagicSourceInstance * sourceInstance, float deltaTime, MagicEffectInstance * effectInstance, int effectIndex) {
 		if (mwse::lua::event::SpellTickEvent::getEventEnabled()) {
 			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::SpellTickEvent(effectId, sourceInstance, deltaTime, effectInstance, effectIndex));
 			if (eventData.valid()) {
 				if (eventData["block"] == true) {
 					// We still need the main effect event function to be called for visual effects and durations to be handled.
-					int flags = (TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlags(effectId) >> 12) & 0xFFFFFF01;
+					int flags = (DataHandler::get()->nonDynamicData->magicEffects->getEffectFlags(effectId) >> 12) & 0xFFFFFF01;
 					int value = 0;
-					reinterpret_cast<char(__cdecl *)(TES3::MagicSourceInstance *, float, TES3::MagicEffectInstance *, int, bool, int, int *, DWORD, int, bool(__cdecl *)(void *, void *, int))>(0x518460)(sourceInstance, deltaTime, effectInstance, effectIndex, true, flags, &value, 0x7886F0, 0x1C, nullptr);
+					TES3_TriggerSpellEffectEvent(sourceInstance, deltaTime, effectInstance, effectIndex, true, flags, &value, 0x7886F0, 0x1C, nullptr);
 					return;
 				}
 			}
 		}
 
-		if (effectId >= EffectID::FirstEffect && effectId <= EffectID::LastEffect) {
-			reinterpret_cast<void(__cdecl **)(TES3::MagicSourceInstance *, float, TES3::MagicEffectInstance *, int)>(0x7884B0)[effectId](sourceInstance, deltaTime, effectInstance, effectIndex);
+		if (effectId <= EffectID::LastEffect) {
+			reinterpret_cast<void(__cdecl **)(MagicSourceInstance *, float, MagicEffectInstance *, int)>(0x7884B0)[effectId](sourceInstance, deltaTime, effectInstance, effectIndex);
 		}
 		else {
-			auto magicEffectController = TES3::DataHandler::get()->nonDynamicData->magicEffects;
+			auto magicEffectController = DataHandler::get()->nonDynamicData->magicEffects;
 			auto itt = magicEffectController->effectLuaTickFunctions.find(effectId);
 
 			// No result? Do some basic things.
 			if (itt == magicEffectController->effectLuaTickFunctions.end()) {
-				int flags = (TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlags(effectId) >> 12) & 0xFFFFFF01;
+				int flags = (DataHandler::get()->nonDynamicData->magicEffects->getEffectFlags(effectId) >> 12) & 0xFFFFFF01;
 				int value = 0;
-				reinterpret_cast<char(__cdecl *)(TES3::MagicSourceInstance *, float, TES3::MagicEffectInstance *, int, bool, int, int *, DWORD, int, bool(__cdecl *)(void *, void *, int))>(0x518460)(sourceInstance, deltaTime, effectInstance, effectIndex, true, flags, &value, 0x7886F0, 0x1C, nullptr);
+				TES3_TriggerSpellEffectEvent(sourceInstance, deltaTime, effectInstance, effectIndex, true, flags, &value, 0x7886F0, 0x1C, nullptr);
 				return;
 			}
 
 			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
-			sol::protected_function_result result = itt->second(effectId, sourceInstance, deltaTime, effectInstance, effectIndex);
+			sol::protected_function_result result = itt->second(packageSpellTickTable(stateHandle.state, effectId, sourceInstance, deltaTime, effectInstance, effectIndex));
 			if (!result.valid()) {
 				sol::error error = result;
 				mwse::log::getLog() << "Lua error encountered in magic effect dispatch function:" << std::endl << error.what() << std::endl;
@@ -265,9 +395,9 @@ namespace TES3 {
 			return;
 		}
 		
-		auto ndd = TES3::DataHandler::get()->nonDynamicData;
+		auto ndd = DataHandler::get()->nonDynamicData;
 		auto magicEffectController = ndd->magicEffects;
-		auto macp = TES3::WorldController::get()->getMobilePlayer();
+		auto macp = WorldController::get()->getMobilePlayer();
 		auto spellList = macp->getCombatSpellList();
 
 		for (auto effectItt : magicEffectController->effectObjects) {
@@ -317,7 +447,7 @@ namespace TES3 {
 		}
 	}
 	char * __fastcall getSpellNameString(WorldController * worldController, DWORD EDX, int gmstId) {
-		return getSpellNameGMST(TES3::DataHandler::get(), EDX, gmstId)->value.asString;
+		return getSpellNameGMST(DataHandler::get(), EDX, gmstId)->value.asString;
 	}
 
 	void patchMagicEffectDispatch(DWORD address, BYTE pushInstruction) {
