@@ -909,6 +909,7 @@ namespace TES3 {
 		mwse::writeDoubleWordEnforced(0x538475 + 0x3, 0x787950, effectCounterAddress);
 
 		// Write the previous data to the new effect counters array.
+		std::fill_n((int*)effectCounters, 5 * MAX_EFFECT_COUNT, 143);
 		memcpy_s(effectCounters, sizeof(effectCounters), (void*)0x787950, sizeof(DWORD) * 5 * 143);
 	}
 }
