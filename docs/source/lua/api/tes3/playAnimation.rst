@@ -16,6 +16,12 @@ group (`number`_)
 
 startFlag (`number`_)
     Default: ``0``. A flag for starting the group with, matching tes3.animationStartFlag.* constants.
+    0 = Normal. The current animation will finish its full cycle, and the new animation will start from its
+    beginning.
+    1 = Immediate Start. The current animation will stop regardless of the frame it is on, and the new animation will
+    start from its beginning.
+    2 = Immediate Loop. The current animation will stop regardless of the frame it is on, and the new animation will
+    start at the beginning of its loop cycle. 
 
 loopCount (`number`_)
     Optional. If provided, the animation will loop a given number of times.
