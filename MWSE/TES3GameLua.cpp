@@ -37,6 +37,9 @@ namespace mwse {
 			usertypeDefinition.set("wireframeProperty", sol::readonly_property(&TES3::Game::wireframeProperty));
 			usertypeDefinition.set("worldSceneGraphRoot", sol::readonly_property(&TES3::Game::worldRoot));
 
+			// Basic function binding.
+			usertypeDefinition.set("setGamma", &TES3::Game::setGamma);
+
 			// Access to other objects that need to be packaged.
 			usertypeDefinition.set("playerTarget", sol::readonly_property([](TES3::Game& self) { return makeLuaObject(self.playerTarget); }));
 

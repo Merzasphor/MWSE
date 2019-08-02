@@ -9,4 +9,8 @@ namespace TES3 {
 	bool Game::initialize() {
 		return TES3_Game_initialize(this);
 	}
+
+	void Game::setGamma(float value) {
+		vTable->setGamma(this, value);
+	}
 }
