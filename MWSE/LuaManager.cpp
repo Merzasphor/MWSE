@@ -2682,6 +2682,16 @@ namespace mwse {
 			return ThreadedStateHandle(this);
 		}
 
+		// Override for how os.exit works to clear up a few system things.
+		void customOSExit(sol::optional<int> code) {
+			auto game = TES3::Game::get();
+			if (game) {
+				game->setGamma(1.0f);
+			}
+
+			exit(code.value_or(0));
+		}
+
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
 			sol::protected_function_result result = luaState.safe_script_file("Data Files/MWSE/core/mwse_init.lua");
@@ -2697,6 +2707,9 @@ namespace mwse {
 			bindScriptUtil();
 			bindStringUtil();
 			bindTES3Util();
+
+			// Alter existing libraries.
+			luaState["os"]["exit"] = customOSExit;
 
 			// Hook the RunScript function so we can intercept Lua scripts and invoke Lua code if needed.
 			genJumpUnprotected(TES3_HOOK_RUNSCRIPT_LUACHECK, reinterpret_cast<DWORD>(HookRunScript), TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE);

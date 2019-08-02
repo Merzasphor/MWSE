@@ -8,8 +8,37 @@
 #include <Windows.h>
 
 namespace TES3 {
+	struct Game_vTable {
+		void * unknown_0x0;
+		void * unknown_0x4;
+		void * unknown_0x8;
+		void * unknown_0xC;
+		void * unknown_0x10;
+		void * unknown_0x14;
+		void * unknown_0x18;
+		void * unknown_0x1C;
+		void * unknown_0x20;
+		void * unknown_0x24;
+		void * unknown_0x28;
+		void * unknown_0x2C;
+		void * unknown_0x30;
+		void * unknown_0x34;
+		void * unknown_0x38;
+		void * unknown_0x3C;
+		void * unknown_0x40;
+		void * unknown_0x44;
+		void * unknown_0x48;
+		void * unknown_0x4C;
+		void(__thiscall * setGamma)(Game*, float);
+		void * unknown_0x54;
+		void * unknown_0x58;
+		void * unknown_0x5C;
+		void * unknown_0x60;
+	};
+	static_assert(sizeof(Game_vTable) == 0x64, "TES3::Game_vTable failed size validation");
+
 	struct Game {
-		void * vTable;
+		Game_vTable * vTable;
 		void * unknown_0x4;
 		int unknown_0x8;
 		int unknown_0xC;
@@ -97,6 +126,7 @@ namespace TES3 {
 		//
 
 		bool initialize();
+		void setGamma(float value);
 
 	};
 	static_assert(sizeof(Game) == 0x110, "TES3::Game failed size validation");

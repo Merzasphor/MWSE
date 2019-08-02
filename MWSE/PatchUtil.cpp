@@ -6,6 +6,7 @@
 
 #include "TES3Actor.h"
 #include "TES3DataHandler.h"
+#include "TES3Game.h"
 #include "TES3GameFile.h"
 #include "TES3GameSetting.h"
 #include "TES3Misc.h"
@@ -322,6 +323,12 @@ namespace mwse {
 				return reinterpret_cast<int(__stdcall *)(HINSTANCE, HINSTANCE, LPSTR, int)>(0x416E10)(hInstance, hPrevInstance, lpCmdLine, nShowCmd);
 			}
 			__except (CreateMiniDump(GetExceptionInformation()), EXCEPTION_EXECUTE_HANDLER) {
+				// Try to reset gamma.
+				auto game = TES3::Game::get();
+				if (game) {
+					game->setGamma(1.0f);
+				}
+
 				return 0;
 			}
 
