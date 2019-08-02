@@ -2655,7 +2655,7 @@ namespace mwse {
 				game->setGamma(1.0f);
 			}
 
-			exit(code.value_or(0));
+			_exit(code.value_or(1));
 		}
 
 		void LuaManager::hook() {
