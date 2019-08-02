@@ -25,6 +25,33 @@ callback (`function`_)
 iterations (`number`_)
     Optional. No description available.
 
+----------------------------------------------------------------------------------------------------
+
+Examples
+----------------------------------------------------------------------------------------------------
+
+Show a countdown message 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: lua
+
+	local timeLeft = 0;
+
+	local function OnTimerExpired() 
+		timeLeft = timeLeft - 1;
+		tes3.messageBox('%d seconds left', timeLeft);
+	end
+
+    local function OnActivate(eventData)
+        if eventData.activator == tes3.player then
+			timeLeft = 10;
+			timer.start{ duration = 1, iterations = 10, type = timer.simulate, callback = OnTimerExpired };
+        end
+    end
+    event.register("activate", OnActivate)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html
 .. _`tes3npc`: ../../../lua/type/tes3npc.html
