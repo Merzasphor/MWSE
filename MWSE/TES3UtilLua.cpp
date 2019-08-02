@@ -1238,6 +1238,7 @@ namespace mwse {
 				int level = getOptionalParam<int>(params, "level", -1);
 				if (level >= 0) {
 					node->lockLevel = level;
+					reference->setObjectModified(true);
 					return true;
 				}
 
@@ -1319,6 +1320,7 @@ namespace mwse {
 
 				if (node->locked) {
 					node->locked = false;
+					reference->setObjectModified(true);
 					return true;
 				}
 				else {
@@ -1359,6 +1361,7 @@ namespace mwse {
 				}
 
 				lockNode->trap = getOptionalParamSpell(params, "spell");
+				reference->setObjectModified(true);
 				return true;
 			};
 
@@ -1626,6 +1629,11 @@ namespace mwse {
 				// Update any derived statistics.
 				mobile->updateDerivedStatistics(statistic);
 
+				// Ensure the reference is flagged as modified.
+				if (mobile->reference) {
+					mobile->reference->setObjectModified(true);
+				}
+
 				// If this was on the player update any associated GUI widgets.
 				if (mobile->actorType == TES3::MobileActorType::Player) {
 					// Manually update health/magicka/fatigue UI elements.
@@ -1752,6 +1760,11 @@ namespace mwse {
 
 				// Update any derived statistics.
 				mobile->updateDerivedStatistics(statistic);
+
+				// Ensure the reference is flagged as modified.
+				if (mobile->reference) {
+					mobile->reference->setObjectModified(true);
+				}
 
 				// If this was on the player update any associated GUI widgets.
 				if (mobile->actorType == TES3::MobileActorType::Player) {
@@ -1910,6 +1923,11 @@ namespace mwse {
 				else {
 					const auto TES3_relocateReference = reinterpret_cast<void(__cdecl*)(TES3::Reference*, TES3::Cell*, TES3::Vector3*, float)>(0x50EDD0);
 					TES3_relocateReference(mobile->reference, cell, &position.value(), orientation.value().z);
+				}
+
+				// Ensure the reference is flagged as modified.
+				if (mobile->reference) {
+					mobile->reference->setObjectModified(true);
 				}
 
 				return true;
@@ -2121,6 +2139,7 @@ namespace mwse {
 				TES3::Cell * cell = getOptionalParamCell(params, "cell");
 
 				reference->setTravelDestination(&position.value(), &orientation.value(), cell);
+				reference->setObjectModified(true);
 				return true;
 			};
 
@@ -2257,6 +2276,7 @@ namespace mwse {
 					}
 				}
 
+				reference->setObjectModified(true);
 				return fulfilledCount;
 			};
 
@@ -2339,6 +2359,7 @@ namespace mwse {
 					}
 				}
 
+				reference->setObjectModified(true);
 				return fulfilledCount;
 			};
 
@@ -2535,6 +2556,8 @@ namespace mwse {
 					}
 				}
 
+				fromReference->setObjectModified(true);
+				toReference->setObjectModified(true);
 				return fulfilledCount;
 			};
 
@@ -2554,6 +2577,7 @@ namespace mwse {
 					if (toReference->getAttachedItemData()) {
 						return nullptr;
 					}
+					toReference->setObjectModified(true);
 					return toReference->getOrCreateAttachedItemData();
 				}
 
@@ -2611,6 +2635,7 @@ namespace mwse {
 					}
 				}
 
+				toReference->setObjectModified(true);
 				return itemData;
 			};
 
@@ -2903,6 +2928,7 @@ namespace mwse {
 				int index = getOptionalParam<int>(params, "index", -1);
 
 				if (index >= 0 && index <= 6) {
+					actor->reference->setObjectModified(true);
 					return actor->persuade(rng, index);
 				}
 				else {
@@ -2917,6 +2943,8 @@ namespace mwse {
 
 					bool result = actor->persuade(rng, 4);
 					fBribe100Mod->value.asFloat = oldModifier;
+
+					actor->reference->setObjectModified(true);
 
 					return result;
 				}
@@ -2933,6 +2961,8 @@ namespace mwse {
 				if (reference == nullptr) {
 					throw std::invalid_argument("Invalid 'reference' parameter provided.");
 				}
+
+				reference->setObjectModified(true);
 
 				// Allow toggling.
 				if (getOptionalParam<bool>(params, "toggle", false)) {
