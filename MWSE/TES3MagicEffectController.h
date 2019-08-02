@@ -11,6 +11,42 @@
 namespace TES3 {
 #define MAX_EFFECT_COUNT SHRT_MAX
 
+	namespace MagicEffectAttribute {
+		typedef unsigned int value_type;
+
+		enum EffectAttribute : value_type {
+			AttackBonus = 0,
+			Sanctuary = 1,
+			ResistMagicka = 2,
+			ResistFire = 3,
+			ResistFrost = 4,
+			ResistShock = 5,
+			ResistCommonDisease = 6,
+			ResistBlightDisease = 7,
+			ResistCorprus = 8,
+			ResistPoison = 9,
+			ResistParalysis = 10,
+			Chameleon = 11,
+			ResistNormalWeapons = 12,
+			WaterBreathing = 13,
+			WaterWalking = 14,
+			SwiftSwim = 15,
+			Jump = 16,
+			Levitate = 17,
+			Shield = 18,
+			Sound = 19,
+			Silence = 20,
+			Blind = 21,
+			Paralyze = 22,
+			Invisibility = 23,
+			Fight = 24,
+			Flee = 25,
+			Hello = 26,
+			Alarm = 27,
+			NonResistable = 28,
+		};
+	}
+
 	class MagicEffectController {
 	public:
 		MagicEffectController();

@@ -261,7 +261,7 @@ namespace TES3 {
 		return false;
 	}
 
-	const auto TES3_TriggerSpellEffectEvent = reinterpret_cast<bool(__cdecl *)(MagicSourceInstance *, float, MagicEffectInstance *, int, bool, bool, void *, DWORD, int, bool(__cdecl *)(MagicSourceInstance *, MagicEffectInstance *, int))>(0x518460);
+	const auto TES3_TriggerSpellEffectEvent = reinterpret_cast<bool(__cdecl *)(MagicSourceInstance *, float, MagicEffectInstance *, int, bool, bool, void *, DWORD, unsigned int, bool(__cdecl *)(MagicSourceInstance *, MagicEffectInstance *, int))>(0x518460);
 	sol::object triggerSpellEffectEvent(sol::table data, sol::this_state s) {
 		// Get the important data from the table/effect info.
 		int effectId = data["effectId"];
@@ -271,7 +271,7 @@ namespace TES3 {
 		int effectIndex = data["effectIndex"];
 		bool negateOnExpiry = data.get_or("negateOnExpiry", true);
 		bool isUncapped = data.get_or("isUncapped", (MagicEffectController::effectFlags[effectId] >> 12) & 0xFFFFFF01);
-		int attribute = data.get_or("attribute", 28);
+		unsigned int attribute = data.get_or("attribute", (unsigned int)MagicEffectAttribute::NonResistable);
 
 		// The return value can be an integer or a float.
 		union {
@@ -311,7 +311,7 @@ namespace TES3 {
 		sol::object result = sol::nil;
 		switch (eventTypeEnum) {
 		case 0:
-			result = sol::make_object(s, genericEventValue.asInt != 0);
+			result = sol::make_object(s, genericEventValue.asInt > 0);
 			break;
 		case 1:
 			result = sol::make_object(s, genericEventValue.asInt);
