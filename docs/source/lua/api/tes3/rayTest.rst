@@ -10,7 +10,24 @@ Performs a ray test against the game world, returning a ``pickRecord`` with many
     if (hitResult) then
         tes3.messageBox{ message = "Hit " .. hitResult.reference.object.id }
     end
+.. code-block:: lua
 
+    local function RayTestDown(ref)
+
+        local result = tes3.rayTest{ position = ref.position, direction = tes3vector3.new(0,0,-1), findAll = true, ignore = {ref} };
+
+        if result then
+            for i, hit in pairs(result) do
+                if hit.reference then
+                    mwse.log('Ray hit #%d: %s', hit.reference.id);
+                else
+                    local shouldBeLand = hit.object.parent.parent;
+                    mwse.log("Ray hit #%d: %s", i, shouldBeLand.name);
+                end
+            end
+        end
+    end
+    
     
 Return Value
 ----------------------------------------------------------------------------------------------------
