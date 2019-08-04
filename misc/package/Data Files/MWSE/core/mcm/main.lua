@@ -52,6 +52,8 @@ end
 
 -- Callback for when the close button has been clicked.
 local function onClickCloseButton(e)
+	
+	event.unregister("keyDown", onClickCloseButton, { filter = tes3.scanCode.escape })
 	-- If we have a current mod, fire its close event.
 	if (currentModConfig and currentModConfig.onClose) then
 		local status, error = pcall(currentModConfig.onClose, modConfigContainer)
@@ -177,7 +179,7 @@ local function onClickModConfigButton()
 		-- Add a close button to the bottom block.
 		local closeButton = bottomBlock:createButton{ text = tes3.findGMST(tes3.gmst.sClose).value }
 		closeButton:register("mouseClick", onClickCloseButton)
-
+		event.register("keyDown", onClickCloseButton, { filter = tes3.scanCode.escape })
 		-- Cause the menu to refresh itself.
 		menu:updateLayout()
 	else
