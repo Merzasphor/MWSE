@@ -19,6 +19,7 @@
 #include "LuaManager.h"
 #include "sol.hpp"
 #include "LuaSpellTickEvent.h"
+#include "LuaUtil.h"
 
 #include "Log.h"
 
@@ -450,6 +451,37 @@ namespace TES3 {
 		return getSpellNameGMST(DataHandler::get(), EDX, gmstId)->value.asString;
 	}
 
+	const auto TES3_MagicSourceInstance_ProjectileHit = reinterpret_cast<void(__thiscall*)(MagicSourceInstance*, MobileObject::Collision*)>(0x5175C0);
+	void __fastcall OnSpellProjectileHit(MagicSourceInstance * self, DWORD EDX, MobileObject::Collision * collision) {
+		TES3_MagicSourceInstance_ProjectileHit(self, collision);
+
+		auto magicEffectController = DataHandler::get()->nonDynamicData->magicEffects;
+		auto effects = self->sourceCombo.getSourceEffects();
+		for (size_t i = 0; i < 8; i++) {
+			auto effectId = effects[i].effectID;
+			if (effectId == -1) {
+				break;
+			}
+
+			auto itt = magicEffectController->effectLuaCollisionFunctions.find(effectId);
+			if (itt != magicEffectController->effectLuaCollisionFunctions.end()) {
+				auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+
+				sol::table params = stateHandle.state.create_table();
+				params["effectId"] = effectId;
+				params["sourceInstance"] = mwse::lua::makeLuaObject(self);
+				params["collision"] = collision;
+
+				sol::protected_function_result result = itt->second(params);
+				if (!result.valid()) {
+					sol::error error = result;
+					mwse::log::getLog() << "Lua error encountered in magic effect collision function:" << std::endl << error.what() << std::endl;
+					return;
+				}
+			}
+		}
+	}
+
 	void patchMagicEffectDispatch(DWORD address, BYTE pushInstruction) {
 		// Push the switch index onto the stack.
 		mwse::writeByteUnprotected(address, pushInstruction);
@@ -480,6 +512,14 @@ namespace TES3 {
 
 		// Resolve links.
 		mwse::genCallUnprotected(0x4BB6E7, (DWORD)ResolveAllLinks, 0x1C);
+
+		// Trigger any events on spell collision.
+		mwse::genCallEnforced(0x573775, 0x5175C0, (DWORD)OnSpellProjectileHit);
+		mwse::genCallEnforced(0x573D96, 0x5175C0, (DWORD)OnSpellProjectileHit);
+		mwse::genCallEnforced(0x574D75, 0x5175C0, (DWORD)OnSpellProjectileHit);
+		mwse::genCallEnforced(0x574DF1, 0x5175C0, (DWORD)OnSpellProjectileHit);
+		mwse::genCallEnforced(0x574E90, 0x5175C0, (DWORD)OnSpellProjectileHit);
+		mwse::genCallEnforced(0x574F02, 0x5175C0, (DWORD)OnSpellProjectileHit);
 
 		// Make it so that every lookup for the name GMST instead looks to our custom temporary spell name GMST.
 		mwse::genCallEnforced(0x4A92BC, 0x488810, (DWORD)getSpellNameGMST);

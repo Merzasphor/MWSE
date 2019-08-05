@@ -3001,7 +3001,7 @@ namespace mwse {
 
 				// Get the new ID.
 				int id = getOptionalParam<int>(params, "id", -1);;
-				if (!id || id <= TES3::EffectID::LastEffect) {
+				if (id <= TES3::EffectID::LastEffect) {
 					throw std::invalid_argument("Invalid 'id' parameter provided. It must be an integer greater than 142.");
 				}
 				else if (magicEffectController->getEffectObject(id)) {
@@ -3029,9 +3029,9 @@ namespace mwse {
 				// Set color.
 				auto lighting = getOptionalParamVector3(params, "lighting");
 				if (lighting) {
-					effect->lightingRed = lighting.value().x * 255;
-					effect->lightingGreen = lighting.value().y * 255;
-					effect->lightingBlue = lighting.value().z * 255;
+					effect->lightingRed = std::min(std::max(lighting.value().x, 0.0f), 1.0f) * 255;
+					effect->lightingGreen = std::min(std::max(lighting.value().y, 0.0f), 1.0f) * 255;
+					effect->lightingBlue = std::min(std::max(lighting.value().z, 0.0f), 1.0f) * 255;
 				}
 				else {
 					effect->lightingRed = 255;
@@ -3151,6 +3151,10 @@ namespace mwse {
 				sol::optional<sol::protected_function> onTick = params["onTick"];
 				if (onTick) {
 					magicEffectController->effectLuaTickFunctions[id] = onTick.value();
+				}
+				sol::optional<sol::protected_function> onCollision = params["onCollision"];
+				if (onCollision) {
+					magicEffectController->effectLuaCollisionFunctions[id] = onCollision.value();
 				}
 
 				// Set the GMST as the negative effect ID for custom hooks later.

@@ -69,6 +69,7 @@ namespace TES3 {
 		// Implemented.
 		std::unordered_map<int, MagicEffect*> effectObjects;
 		std::unordered_map<int, sol::protected_function> effectLuaTickFunctions;
+		std::unordered_map<int, sol::protected_function> effectLuaCollisionFunctions;
 		std::unordered_map<int, std::string> effectCustomNames;
 
 		// Unimplemented.
