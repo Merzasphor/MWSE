@@ -34,6 +34,7 @@
 #include "TES3ItemData.h"
 #include "TES3LeveledList.h"
 #include "TES3MagicEffect.h"
+#include "TES3MagicEffectController.h"
 #include "TES3MagicEffectInstance.h"
 #include "TES3Misc.h"
 #include "TES3MobController.h"
@@ -1096,41 +1097,6 @@ namespace mwse {
 					effectInstance->resistedPercent = eventData["resistedPercent"];
 				}
 			}
-		}
-
-		//
-		// Spell tick event.
-		//
-
-		void __cdecl MagicEffectDispatch(TES3::EffectID::EffectID effectId, TES3::MagicSourceInstance * sourceInstance, float deltaTime, TES3::MagicEffectInstance * effectInstance, int effectIndex) {
-			if (event::SpellTickEvent::getEventEnabled()) {
-				auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
-				sol::table eventData = stateHandle.triggerEvent(new event::SpellTickEvent(effectId, sourceInstance, deltaTime, effectInstance, effectIndex));
-				if (eventData.valid()) {
-					if (eventData["block"] == true) {
-						// We still need the main effect event function to be called for visual effects and durations to be handled.
-						int flags = (tes3::getBaseEffectFlags()[effectId] >> 12) & 0xFFFFFF01;
-						int value = 0;
-						reinterpret_cast<char(__cdecl *)(TES3::MagicSourceInstance *, float, TES3::MagicEffectInstance *, int, bool, int, int *, DWORD, int, bool(__cdecl *)(void *, void *, int))>(0x518460)(sourceInstance, deltaTime, effectInstance, effectIndex, true, flags, &value, 0x7886F0, 0x1C, nullptr);
-						return;
-					}
-				}
-			}
-
-			reinterpret_cast<void (__cdecl **)(TES3::MagicSourceInstance *, float, TES3::MagicEffectInstance *, int)>(0x7884B0)[effectId](sourceInstance, deltaTime, effectInstance, effectIndex);
-		}
-
-		void patchMagicEffectDispatch(DWORD address, BYTE pushInstruction) {
-			// Push the switch index onto the stack.
-			writeByteUnprotected(address, pushInstruction);
-
-			// Call our dispatch handler.
-			genCallUnprotected(address + 1, reinterpret_cast<DWORD>(MagicEffectDispatch));
-
-			// Fix ESP by popping the value back. We throw the value into a register that won't be used.
-			// This is done to try to keep the instructions all of the same size, so that stepping over the 
-			// instructions in another debugger doesn't show as being ugly.
-			writeByteUnprotected(address + 6, 0x59);
 		}
 
 		//
@@ -2976,11 +2942,6 @@ namespace mwse {
 			// Event: Spell cast failure
 			genJumpUnprotected(TES3_HOOK_SPELL_CAST_FAILURE, reinterpret_cast<DWORD>(HookSpellCastFailure), TES3_HOOK_SPELL_CAST_FAILURE_SIZE);
 
-			// Event: Spell tick.
-			patchMagicEffectDispatch(0x4647E9, 0x50);
-			patchMagicEffectDispatch(0x464A56, 0x50);
-			patchMagicEffectDispatch(0x515AB1, 0x51);
-
 			// Event: Spell Resist
 			genCallEnforced(0x518616, 0x517E40, reinterpret_cast<DWORD>(OnSpellResist));
 
@@ -3619,6 +3580,9 @@ namespace mwse {
 
 			// UI framework hooks
 			TES3::UI::hook();
+
+			// Install custom magic effect hooks.
+			TES3::MagicEffectController::InstallCustomMagicEffectController();
 
 			// Make magic effects writable.
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);

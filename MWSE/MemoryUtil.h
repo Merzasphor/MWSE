@@ -62,8 +62,10 @@ namespace mwse {
 	// Write NOP instructions over a space.
 	bool __declspec(dllexport) genNOPUnprotected(DWORD address, DWORD size);
 
-	// Write a single byte to memory.
+	// Write a single value to memory.
 	void __declspec(dllexport) writeByteUnprotected(DWORD address, BYTE value);
+	void __declspec(dllexport) writeDoubleWordUnprotected(DWORD address, DWORD value);
+	void __declspec(dllexport) writeDoubleWordEnforced(DWORD address, DWORD previousValue, DWORD value);
 
 	// Code to write a patch to a code segment. This function unprotects the memory.
 	// WARNING: If passing a function address, always use a non-static function or it will crash.

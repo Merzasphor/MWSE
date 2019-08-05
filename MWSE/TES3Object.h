@@ -104,10 +104,10 @@ namespace TES3 {
 
 	struct BaseObjectVirtualTable {
 		void (__thiscall * destructor)(BaseObject*, signed char); // 0x0
-		int (__thiscall * loadObjectSpecific)(BaseObject*, int); // 0x4
-		int (__thiscall * saveRecordSpecific)(BaseObject*, int); // 0x8
-		int (__thiscall * loadObject)(BaseObject*, int); // 0xC
-		int (__thiscall * saveObject)(BaseObject*, int); // 0x10
+		int (__thiscall * loadObjectSpecific)(BaseObject*, GameFile*); // 0x4
+		int (__thiscall * saveRecordSpecific)(BaseObject*, GameFile*); // 0x8
+		int (__thiscall * loadObject)(BaseObject*, GameFile*); // 0xC
+		int (__thiscall * saveObject)(BaseObject*, GameFile*); // 0x10
 		void (__thiscall * setObjectModified)(BaseObject*, bool); // 0x14
 		int (__thiscall * setObjectFlag40)(BaseObject*, unsigned char); // 0x18
 		void * unknown_0x1C;

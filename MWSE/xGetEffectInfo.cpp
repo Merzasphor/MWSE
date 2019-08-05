@@ -28,6 +28,7 @@
 #include "TES3DataHandler.h"
 #include "TES3Enchantment.h"
 #include "TES3MagicEffect.h"
+#include "TES3MagicEffectController.h"
 #include "TES3Skill.h"
 #include "TES3Spell.h"
 
@@ -111,7 +112,7 @@ namespace mwse
 			// If we found an effect, set the values.
 			if (effect && effect->effectID != TES3::EffectID::None) {
 				effectEnumId = effect->effectID;
-				int effectFlags = tes3::getBaseEffectFlags()[effectEnumId];
+				int effectFlags = TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlags(effectEnumId);
 				if (effectFlags & TES3::EffectFlag::TargetSkill) {
 					skillAttributeId = effect->skillID;
 				}

@@ -4,14 +4,43 @@
 
 #include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
+#include "TES3MagicEffectController.h"
 
 namespace TES3 {
+	const auto TES3_MagicEffect_ctor = reinterpret_cast<void(__thiscall*)(MagicEffect*)>(0x4A8C90);
+	MagicEffect::MagicEffect() {
+		TES3_MagicEffect_ctor(this);
+	}
+
+	MagicEffect::MagicEffect(int newId) {
+		TES3_MagicEffect_ctor(this);
+		id = newId;
+	}
+
+	const auto TES3_MagicEffect_dtor = reinterpret_cast<void(__thiscall*)(MagicEffect*)>(0x4A8E70);
+	MagicEffect::~MagicEffect() {
+		TES3_MagicEffect_dtor(this);
+	}
+
+	const auto TES3_MagicEffect_resolveLinks = reinterpret_cast<void(__thiscall*)(MagicEffect*, NonDynamicData*)>(0x4A9240);
+	void MagicEffect::resolveLinks(NonDynamicData * nonDynamicData) {
+		TES3_MagicEffect_resolveLinks(this, nonDynamicData);
+	}
+
+	const auto TES3_MagicEffect_clearData = reinterpret_cast<void(__thiscall*)(MagicEffect*)>(0x4A8D20);
+	void MagicEffect::clearData() {
+		TES3_MagicEffect_clearData(this);
+	}
+
 	int MagicEffect::getNameGMST() {
+		if (id < EffectID::FirstEffect || id > EffectID::LastEffect) {
+			return -1;
+		}
 		return reinterpret_cast<int*>(0x79454C)[id];
 	}
 
 	MagicEffect * Effect::getEffectData() {
-		return &TES3::DataHandler::get()->nonDynamicData->magicEffects[effectID];
+		return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectObject(effectID);
 	}
 
 	bool Effect::matchesEffectsWith(const Effect * other ) {
@@ -39,7 +68,7 @@ namespace TES3 {
 
 		// Get the base name. If the effect uses skills/attributes we need to remap the name.
 		int nameGMST = effectData->getNameGMST();
-		if (mwse::tes3::getBaseEffectFlag(effectID, EffectFlag::TargetSkill)) {
+		if (ndd->magicEffects->getEffectFlag(effectID, EffectFlag::TargetSkill)) {
 			const char* skillName = ndd->GMSTs[mwse::tes3::getSkillNameGMST(skillID)]->value.asString;
 			switch (nameGMST) {
 			case GMST::sEffectFortifySkill:
@@ -59,7 +88,7 @@ namespace TES3 {
 				break;
 			}
 		}
-		else if (mwse::tes3::getBaseEffectFlag(effectID, EffectFlag::TargetAttribute)) {
+		else if (ndd->magicEffects->getEffectFlag(effectID, EffectFlag::TargetAttribute)) {
 			const char* attributeName = ndd->GMSTs[mwse::tes3::getAttributeNameGMST(attributeID)]->value.asString;
 			switch (nameGMST) {
 			case GMST::sEffectFortifyAttribute:
@@ -79,8 +108,11 @@ namespace TES3 {
 				break;
 			}
 		}
-		else {
+		else if (nameGMST > 0) {
 			ss << ndd->GMSTs[nameGMST]->value.asString;
+		}
+		else {
+			ss << ndd->magicEffects->effectCustomNames[effectID];
 		}
 
 		// Add on the magnitude. Fortify magicka has its own logic because it has an x suffix.
@@ -95,7 +127,7 @@ namespace TES3 {
 			}
 		}
 		else {
-			if (!mwse::tes3::getBaseEffectFlag(effectID, EffectFlag::NoMagnitude)) {
+			if (!ndd->magicEffects->getEffectFlag(effectID, EffectFlag::NoMagnitude)) {
 				if (magnitudeMin != magnitudeMax) {
 					ss << " " << magnitudeMin << " " << ndd->GMSTs[GMST::sTo]->value.asString << " " << magnitudeMax;
 				}
@@ -161,7 +193,7 @@ namespace TES3 {
 		}
 
 		// Add on the duration.
-		if (!mwse::tes3::getBaseEffectFlag(effectID, EffectFlag::NoDuration) && duration > 1) {
+		if (!ndd->magicEffects->getEffectFlag(effectID, EffectFlag::NoDuration) && duration > 1) {
 			ss << " " << ndd->GMSTs[GMST::sfor]->value.asString << " " << duration << " " << ndd->GMSTs[GMST::sseconds]->value.asString;
 		}
 

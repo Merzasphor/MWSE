@@ -249,13 +249,42 @@ namespace mwse {
 	void writeByteUnprotected(DWORD address, BYTE value) {
 		// Unprotect memory.
 		DWORD oldProtect;
-		VirtualProtect((DWORD*)address, 0x5, PAGE_READWRITE, &oldProtect);
+		VirtualProtect((DWORD*)address, sizeof(BYTE), PAGE_READWRITE, &oldProtect);
 
 		// Overwrite our single byte.
-		MemAccess<unsigned char>::Set(address, value);
+		MemAccess<BYTE>::Set(address, value);
 
 		// Protect memory again.
-		VirtualProtect((DWORD*)address, 0x5, oldProtect, &oldProtect);
+		VirtualProtect((DWORD*)address, sizeof(BYTE), oldProtect, &oldProtect);
+	}
+
+	void writeDoubleWordUnprotected(DWORD address, DWORD value) {
+		// Unprotect memory.
+		DWORD oldProtect;
+		VirtualProtect((DWORD*)address, sizeof(DWORD), PAGE_READWRITE, &oldProtect);
+
+		// Overwrite our single byte.
+		MemAccess<DWORD>::Set(address, value);
+
+		// Protect memory again.
+		VirtualProtect((DWORD*)address, sizeof(DWORD), oldProtect, &oldProtect);
+	}
+
+	void writeDoubleWordEnforced(DWORD address, DWORD previousValue, DWORD value) {
+		DWORD currentValue = *reinterpret_cast<DWORD*>(address);
+		if (currentValue != previousValue) {
+			throw std::runtime_error("Could not write DWORD value. Current memory is of an unexpected value.");
+		}
+
+		// Unprotect memory.
+		DWORD oldProtect;
+		VirtualProtect((DWORD*)address, sizeof(DWORD), PAGE_READWRITE, &oldProtect);
+
+		// Overwrite our single byte.
+		MemAccess<DWORD>::Set(address, value);
+
+		// Protect memory again.
+		VirtualProtect((DWORD*)address, sizeof(DWORD), oldProtect, &oldProtect);
 	}
 
 	// WARNING: If passing a function address, always use a non-static function or it will crash.

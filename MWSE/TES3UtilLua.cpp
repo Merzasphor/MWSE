@@ -44,6 +44,7 @@
 #include "TES3InputController.h"
 #include "TES3ItemData.h"
 #include "TES3LeveledList.h"
+#include "TES3MagicEffectController.h"
 #include "TES3Misc.h"
 #include "TES3MobController.h"
 #include "TES3MobileCreature.h"
@@ -576,7 +577,7 @@ namespace mwse {
 			state["tes3"]["getMagicEffect"] = [](int id) -> sol::object {
 				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler && id >= TES3::EffectID::FirstEffect && id <= TES3::EffectID::LastEffect) {
-					return makeLuaObject(&dataHandler->nonDynamicData->magicEffects[id]);
+					return makeLuaObject(dataHandler->nonDynamicData->getMagicEffect(id));
 				}
 				return sol::nil;
 			};
@@ -3023,6 +3024,173 @@ namespace mwse {
 				}
 
 				animData->unknown_0x54 |= 0xFFFF;
+			};
+
+			state["tes3"]["addMagicEffect"] = [](sol::table params) {
+				auto magicEffectController = TES3::DataHandler::get()->nonDynamicData->magicEffects;
+
+				// Get the new ID.
+				int id = getOptionalParam<int>(params, "id", -1);;
+				if (id <= TES3::EffectID::LastEffect) {
+					throw std::invalid_argument("Invalid 'id' parameter provided. It must be an integer greater than 142.");
+				}
+				else if (magicEffectController->getEffectObject(id)) {
+					throw std::invalid_argument("Invalid 'id' parameter provided. An effect with this id already exists.");
+				}
+
+				// Create the effect and assign basic properties.
+				auto effect = new TES3::MagicEffect(id);
+				effect->baseMagickaCost = getOptionalParam<float>(params, "baseCost", 1.0f);
+				effect->school = getOptionalParam<int>(params, "school", 0);
+				effect->size = getOptionalParam<float>(params, "size", 1.0f);
+				effect->sizeCap = getOptionalParam<float>(params, "sizeCap", 1.0f);
+				effect->speed = getOptionalParam<float>(params, "speed", 1.0f);
+				
+				// Description.
+				sol::optional<std::string> description = params["description"];
+				if (description) {
+					effect->description = new char[description.value().length() + 1];
+					strcpy_s(effect->description, description.value().length() + 1, description.value().c_str());
+				}
+				else {
+					effect->description = "No description available.";
+				}
+
+				// Set color.
+				auto lighting = getOptionalParamVector3(params, "lighting");
+				if (lighting) {
+					effect->lightingRed = std::min(std::max(lighting.value().x, 0.0f), 1.0f) * 255;
+					effect->lightingGreen = std::min(std::max(lighting.value().y, 0.0f), 1.0f) * 255;
+					effect->lightingBlue = std::min(std::max(lighting.value().z, 0.0f), 1.0f) * 255;
+				}
+				else {
+					effect->lightingRed = 255;
+					effect->lightingGreen = 255;
+					effect->lightingBlue = 255;
+				}
+
+				sol::optional<std::string> icon = params["icon"];
+				if (!icon || icon.value().length() >= 31) {
+					delete effect;
+					throw std::invalid_argument("Invalid 'icon' parameter provided. Must be a string no longer than 31 characters long.");
+				}
+				else {
+					strcpy_s(effect->icon, 32, icon.value().c_str());
+				}
+
+				sol::optional<std::string> particleTexture = params["particleTexture"];
+				if (!particleTexture || particleTexture.value().length() >= 31) {
+					delete effect;
+					throw std::invalid_argument("Invalid 'particleTexture' parameter provided. Must be a string no longer than 31 characters long.");
+				}
+				else {
+					strcpy_s(effect->particleTexture, 32, particleTexture.value().c_str());
+				}
+
+				sol::optional<std::string> castSound = params["castSound"];
+				if (!castSound || castSound.value().length() >= 31) {
+					delete effect;
+					throw std::invalid_argument("Invalid 'castSound' parameter provided. Must be a string no longer than 31 characters long.");
+				}
+				else {
+					strcpy_s(effect->castSoundEffect, 32, castSound.value().c_str());
+				}
+
+				sol::optional<std::string> boltSound = params["boltSound"];
+				if (!boltSound || boltSound.value().length() >= 31) {
+					delete effect;
+					throw std::invalid_argument("Invalid 'boltSound' parameter provided. Must be a string no longer than 31 characters long.");
+				}
+				else {
+					strcpy_s(effect->boltSoundEffect, 32, boltSound.value().c_str());
+				}
+
+				sol::optional<std::string> hitSound = params["hitSound"];
+				if (!hitSound || hitSound.value().length() >= 31) {
+					delete effect;
+					throw std::invalid_argument("Invalid 'hitSound' parameter provided. Must be a string no longer than 31 characters long.");
+				}
+				else {
+					strcpy_s(effect->hitSoundEffect, 32, hitSound.value().c_str());
+				}
+
+				sol::optional<std::string> areaSound = params["areaSound"];
+				if (!areaSound || areaSound.value().length() >= 31) {
+					delete effect;
+					throw std::invalid_argument("Invalid 'areaSound' parameter provided. Must be a string no longer than 31 characters long.");
+				}
+				else {
+					strcpy_s(effect->areaSoundEffect, 32, areaSound.value().c_str());
+				}
+
+				effect->castEffect = getOptionalParamObject<TES3::PhysicalObject>(params, "castVFX");
+				effect->boltEffect = getOptionalParamObject<TES3::PhysicalObject>(params, "boltVFX");
+				effect->hitEffect = getOptionalParamObject<TES3::PhysicalObject>(params, "hitVFX");
+				effect->areaEffect = getOptionalParamObject<TES3::PhysicalObject>(params, "areaVFX");
+
+				sol::optional<std::string> name = params["name"];
+				if (name) {
+					magicEffectController->effectCustomNames[id] = name.value();
+				}
+				else {
+					magicEffectController->effectCustomNames[id] = "Unnamed Effect";
+				}
+
+				// Actually add the effect.
+				magicEffectController->addEffectObject(effect);
+
+				// Set individual flags.
+				magicEffectController->setEffectFlags(id, 0U);
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::AllowEnchanting,
+					getOptionalParam<bool>(params, "allowEnchanting", true));
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::AllowSpellmaking,
+					getOptionalParam<bool>(params, "allowSpellmaking", true));
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::AppliedOnce,
+					getOptionalParam<bool>(params, "appliesOnce", true));
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::CanCastSelf,
+					getOptionalParam<bool>(params, "canCastSelf", true));
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::CanCastTarget,
+					getOptionalParam<bool>(params, "canCastTarget", true));
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::CanCastTouch,
+					getOptionalParam<bool>(params, "canCastTouch", true));
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::CasterLinked,
+					getOptionalParam<bool>(params, "casterLinked", true));
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::ContinuousVFX,
+					getOptionalParam<bool>(params, "hasContinuousVFX", true));
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::NoDuration,
+					getOptionalParam<bool>(params, "hasNoDuration", true));
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::NoMagnitude,
+					getOptionalParam<bool>(params, "hasNoMagnitude", true));
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::IllegalDaedra,
+					getOptionalParam<bool>(params, "illegalDaedra", true));
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::Harmful,
+					getOptionalParam<bool>(params, "isHarmful", true));
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::NonRecastable,
+					getOptionalParam<bool>(params, "nonRecastable", true));
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::TargetAttribute,
+					getOptionalParam<bool>(params, "targetsAttributes", true));
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::TargetSkill,
+					getOptionalParam<bool>(params, "targetsSkills", true));
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::Unreflectable,
+					getOptionalParam<bool>(params, "unreflectable", true));
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::NegativeLighting,
+					getOptionalParam<bool>(params, "usesNegativeLighting", true));
+				effect->flags = magicEffectController->getEffectFlags(id);
+
+				// Get the tick function.
+				sol::optional<sol::protected_function> onTick = params["onTick"];
+				if (onTick) {
+					magicEffectController->effectLuaTickFunctions[id] = onTick.value();
+				}
+				sol::optional<sol::protected_function> onCollision = params["onCollision"];
+				if (onCollision) {
+					magicEffectController->effectLuaCollisionFunctions[id] = onCollision.value();
+				}
+
+				// Set the GMST as the negative effect ID for custom hooks later.
+				magicEffectController->effectNameGMSTs[id] = -id;
+
+				return makeLuaObject(effect);
 			};
 		}
 	}

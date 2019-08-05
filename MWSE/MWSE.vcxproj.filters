@@ -1290,6 +1290,9 @@
     <ClInclude Include="MemoryUtilLua.h">
       <Filter>Header Files\Lua\Bindings</Filter>
     </ClInclude>
+    <ClInclude Include="TES3MagicEffectController.h">
+      <Filter>Header Files\DataAdapters\TES3\Magic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2809,6 +2812,9 @@
     </ClCompile>
     <ClCompile Include="MemoryUtilLua.cpp">
       <Filter>Source Files\Lua\Bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3MagicEffectController.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

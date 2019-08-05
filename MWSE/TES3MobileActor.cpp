@@ -327,6 +327,11 @@ namespace TES3 {
 		return TES3_MobileActor_isAffectedBySpell(this, spell);
 	}
 
+	const auto TES3_MobileActor_getCombatSpellList = reinterpret_cast<Iterator<Spell> *(__thiscall*)(const MobileActor*)>(0x52B3C0);
+	Iterator<Spell> * MobileActor::getCombatSpellList() {
+		return TES3_MobileActor_getCombatSpellList(this);
+	}
+
 	const auto TES3_MobileActor_isActive = reinterpret_cast<bool(__thiscall*)(const MobileActor*)>(0x50F5F0);
 	bool MobileActor::isActive() {
 		return TES3_MobileActor_isActive(this);

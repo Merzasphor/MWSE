@@ -112,6 +112,7 @@
     <ClInclude Include="LuaWeatherCycledEvent.h" />
     <ClInclude Include="LuaWeatherTransitionFinishedEvent.h" />
     <ClInclude Include="LuaWeatherTransitionStartedEvent.h" />
+    <ClInclude Include="TES3MagicEffectController.h" />
     <ClInclude Include="MemoryUtilLua.h" />
     <ClInclude Include="NIAmbientLight.h" />
     <ClInclude Include="NICollisionSwitch.h" />
@@ -485,6 +486,7 @@
     <ClCompile Include="LuaWeatherCycledEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionFinishedEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionStartedEvent.cpp" />
+    <ClCompile Include="TES3MagicEffectController.cpp" />
     <ClCompile Include="MemoryUtil.cpp" />
     <ClCompile Include="MemoryUtilLua.cpp" />
     <ClCompile Include="MgeVirtualMachine.cpp" />

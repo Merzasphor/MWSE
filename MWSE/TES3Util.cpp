@@ -11,6 +11,7 @@
 #include "TES3DataHandler.h"
 #include "TES3Enchantment.h"
 #include "TES3GameSetting.h"
+#include "TES3MagicEffectController.h"
 #include "TES3Misc.h"
 #include "TES3MobilePlayer.h"
 #include "TES3NPC.h"
@@ -57,23 +58,6 @@ namespace mwse {
 			return TES3_general_setStringSlot(container, string);
 		}
 
-		unsigned int* getBaseEffectFlags() {
-			return reinterpret_cast<unsigned int*>(TES3_DATA_EFFECT_FLAGS);
-		}
-
-		bool getBaseEffectFlag(int index, TES3::EffectFlag::Flag flag) {
-			return reinterpret_cast<unsigned int*>(TES3_DATA_EFFECT_FLAGS)[index] & flag;
-		}
-
-		void setBaseEffectFlag(int index, TES3::EffectFlag::Flag flag, bool set) {
-			if (set) {
-				reinterpret_cast<unsigned int*>(TES3_DATA_EFFECT_FLAGS)[index] |= flag;
-			}
-			else {
-				reinterpret_cast<unsigned int*>(TES3_DATA_EFFECT_FLAGS)[index] &= ~flag;
-			}
-		}
-
 		bool setEffect(TES3::Effect * effects, long index, long effectId,
 			long skillAttributeId, long range, long area, long duration,
 			long minimumMagnitude, long maximumMagnitude) {
@@ -96,7 +80,7 @@ namespace mwse {
 			}
 
 			// Validate that the effect supports the range type.
-			const int flags = tes3::getBaseEffectFlags()[effectId];
+			const int flags = TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlags(effectId);
 			const auto effectRange = static_cast<TES3::EffectRange>(range);
 			if ((effectRange == TES3::EffectRange::Self && !(flags & TES3::EffectFlag::CanCastSelf)) ||
 				(effectRange == TES3::EffectRange::Touch && !(flags & TES3::EffectFlag::CanCastTouch)) ||

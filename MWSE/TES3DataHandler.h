@@ -4,11 +4,12 @@
 #include "TES3Defines.h"
 
 #include "TES3Collections.h"
-#include "TES3MagicEffect.h"
 #include "TES3Skill.h"
 
 #include "NIAVObject.h"
 #include "NIPointer.h"
+
+#define MWSE_CUSTOM_EFFECTS
 
 namespace TES3 {
 	enum class LoadGameResult {
@@ -46,7 +47,12 @@ namespace TES3 {
 		Iterator<void> * birthsigns; // 0x44
 		Iterator<StartScript> * startScripts; // 0x48
 		Skill skills[27]; // 0x4C
+#ifdef MWSE_CUSTOM_EFFECTS
+		MagicEffectController * magicEffects; // 0x5C8
+		unsigned char freed_0x5CC[0x97EC]; // Unused space free for plundering.
+#else
 		MagicEffect magicEffects[143]; // 0x5C8
+#endif
 		void * lights; // 0x9DB8
 		int unknown_0x9DBC[600];
 		void * unknown_0xA71C[4];
@@ -104,6 +110,8 @@ namespace TES3 {
 
 		__declspec(dllexport) Cell * getCellByGrid(int x, int y);
 		__declspec(dllexport) Cell * getCellByName(const char* name);
+
+		__declspec(dllexport) MagicEffect * getMagicEffect(int id);
 
 		__declspec(dllexport) float createReference(PhysicalObject * object, Vector3 * position, Vector3 * orientation, bool& cellWasCreated, Reference * existingReference = nullptr, Cell * cell = nullptr);
 
