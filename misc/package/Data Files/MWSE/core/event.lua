@@ -133,6 +133,10 @@ function this.clear(eventType, filter)
 	end
 end
 
+local function onEventError(error)
+	mwse.log("Error in event callback: %s\n%s", error, debug.traceback())
+end
+
 function this.trigger(eventType, payload, options)
 	-- Make sure params are an empty table if nothing else.
 	local payload = payload or {}
@@ -143,9 +147,8 @@ function this.trigger(eventType, payload, options)
 
 	local callbacks = table.copy(getEventTable(eventType, options.filter))
 	for _, callback in pairs(callbacks) do
-		local status, result = pcall(callback, payload)
+		local status, result = xpcall(callback, onEventError, payload)
 		if (status == false) then
-			mwse.log("Error in event callback: %s\n%s", result, debug.traceback())
 			result = nil
 		end
 
