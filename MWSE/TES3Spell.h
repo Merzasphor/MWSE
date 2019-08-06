@@ -70,6 +70,7 @@ namespace TES3 {
 		//
 
 		size_t getActiveEffectCount();
+		int getFirstIndexOfEffect(int effectId);
 
 	};
 	static_assert(sizeof(Spell) == 0xF8, "TES3::Spell failed size validation");

@@ -165,6 +165,8 @@ namespace mwse {
 
 			// Basic function binding.
 			usertypeDefinition.set("create", &createAlchemy);
+			usertypeDefinition.set("getActiveEffectCount", &TES3::Alchemy::getActiveEffectCount);
+			usertypeDefinition.set("getFirstIndexOfEffect", &TES3::Alchemy::getFirstIndexOfEffect);
 
 			// Functions exposed as properties.
 			usertypeDefinition.set("autoCalc", sol::property(&TES3::Alchemy::getAutoCalc, &TES3::Alchemy::setAutoCalc));

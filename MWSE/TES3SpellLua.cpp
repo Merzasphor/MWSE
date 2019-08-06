@@ -75,20 +75,22 @@ namespace mwse {
 
 			// Basic function binding.
 			usertypeDefinition.set("create", &createSpell);
-			usertypeDefinition.set("calculateCastChance", [](TES3::Spell& self, sol::table params) -> float
-			{
-				bool checkMagicka = getOptionalParam<bool>(params, "checkMagicka", true);
-				sol::object caster = params["caster"];
-				if (caster.is<TES3::Reference>()) {
-					return self.calculateCastChance(caster.as<TES3::Reference*>(), checkMagicka);
-				}
-				else if (caster.is<TES3::MobileActor>()) {
-					return self.calculateCastChance(caster.as<TES3::MobileActor*>(), checkMagicka);
-				}
+			usertypeDefinition.set("calculateCastChance",
+				[](TES3::Spell& self, sol::table params) -> float {
+					bool checkMagicka = getOptionalParam<bool>(params, "checkMagicka", true);
+					sol::object caster = params["caster"];
+					if (caster.is<TES3::Reference>()) {
+						return self.calculateCastChance(caster.as<TES3::Reference*>(), checkMagicka);
+					}
+					else if (caster.is<TES3::MobileActor>()) {
+						return self.calculateCastChance(caster.as<TES3::MobileActor*>(), checkMagicka);
+					}
 
-				return 0.0f;
-			}
+					return 0.0f;
+				}
 			);
+			usertypeDefinition.set("getActiveEffectCount", &TES3::Spell::getActiveEffectCount);
+			usertypeDefinition.set("getFirstIndexOfEffect", &TES3::Spell::getFirstIndexOfEffect);
 
 			// Functions exposed as properties.
 			usertypeDefinition.set("autoCalc", sol::property(&TES3::Spell::getAutoCalc, &TES3::Spell::setAutoCalc));

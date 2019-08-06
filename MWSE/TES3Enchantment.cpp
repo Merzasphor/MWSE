@@ -10,4 +10,13 @@ namespace TES3 {
 		}
 		return count;
 	}
+
+	int Enchantment::getFirstIndexOfEffect(int effectId) {
+		for (size_t i = 0; i < 8; i++) {
+			if (effects[i].effectID = effectId) {
+				return i;
+			}
+		}
+		return -1;
+	}
 }

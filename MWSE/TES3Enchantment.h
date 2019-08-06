@@ -34,6 +34,7 @@ namespace TES3 {
 		//
 
 		size_t getActiveEffectCount();
+		int getFirstIndexOfEffect(int effectId);
 
 	};
 	static_assert(sizeof(Enchantment) == 0xF8, "TES3::Enchantment failed size validation");
