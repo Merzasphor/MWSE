@@ -330,6 +330,17 @@ end
 
 
 -------------------------------------------------
+-- Extend our base API: tes3
+-------------------------------------------------
+
+function tes3.claimSpellEffectId(name, id)
+	assert(table.find(tes3.effect, id) == nil, "Effect ID is not unique.")
+	assert(tes3.effect[name] == nil, "Effect name is not unique.")
+	tes3.effect[name] = id
+end
+
+
+-------------------------------------------------
 -- Extend our base API: tes3ui
 -------------------------------------------------
 
