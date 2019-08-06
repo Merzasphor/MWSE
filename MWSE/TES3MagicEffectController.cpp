@@ -382,6 +382,61 @@ namespace TES3 {
 		}
 	}
 
+	// Rewrite of the enchanting population code to make use of our custom effect collection.
+	const auto TES3_UI_SortEnchantingMenu = reinterpret_cast<void(__stdcall*)()>(0x5C36D0);
+	void __cdecl PopulateEnchantingMenu() {
+		auto menuEnchanting = UI::findMenu(*reinterpret_cast<UI::UI_ID*>(0x7D36BC));
+		if (menuEnchanting == nullptr) {
+			return;
+		}
+
+		auto effectsScroll = reinterpret_cast<UI::WidgetScrollPane*>(menuEnchanting->getProperty(UI::PropertyType::Pointer, *reinterpret_cast<UI::Property*>(0x7D35AC)).ptrValue);
+		auto effectsScrollContent = effectsScroll->getContentPane();
+		if (effectsScrollContent == nullptr) {
+			return;
+		}
+
+		auto ndd = DataHandler::get()->nonDynamicData;
+		auto magicEffectController = ndd->magicEffects;
+		auto macp = WorldController::get()->getMobilePlayer();
+		auto spellList = macp->getCombatSpellList();
+
+		for (auto effectItt : magicEffectController->effectObjects) {
+			auto effect = effectItt.second;
+			bool hasEffect = false;
+			if (effect->flags & EffectFlag::AllowEnchanting) {
+				for (auto spellListItt = spellList->getFirstNode(); spellListItt != nullptr; spellListItt = spellListItt->next) {
+					if (hasEffect) {
+						break;
+					}
+
+					auto spell = spellListItt->data;
+					if (spell->castType != SpellCastType::Spell) {
+						continue;
+					}
+
+					for (size_t i = 0; i < 8; i++) {
+						if (spell->effects[i].effectID == effect->id) {
+							hasEffect = true;
+							break;
+						}
+					}
+				}
+			}
+
+			if (hasEffect) {
+				auto effectText = effectsScrollContent->createTextSelect(static_cast<UI::UI_ID>(UI::Property::null));
+				effectText->setText(magicEffectController->getEffectName(effect->id));
+				effectText->setProperty(*reinterpret_cast<UI::Property*>(0x7D36BA), effect);
+				effectText->setProperty(UI::Property::help_tooltip, (UI::EventCallback)0x5C6650);
+				effectText->setProperty(UI::Property::event_mouse_click, (UI::EventCallback)0x5C2E50);
+			}
+		}
+
+		// Sort the list.
+		TES3_UI_SortEnchantingMenu();
+	}
+
 	// Rewrite of the spellmaking population code to make use of our custom effect collection.
 	const auto TES3_UI_SortSpellmakingMenu = reinterpret_cast<void (__stdcall*)()>(0x621EB0);
 	void __cdecl PopulateSpellmakingMenu() {
@@ -557,7 +612,8 @@ namespace TES3 {
 		mwse::genCallEnforced(0x6230C0, 0x40F930, (DWORD)getSpellNameString);
 		mwse::genCallEnforced(0x62F10D, 0x40F930, (DWORD)getSpellNameString);
 
-		// Fix spellmaking list population.
+		// Fix enchanting/spellmaking list population.
+		mwse::genCallEnforced(0x5C24F1, 0x5C3500, (DWORD)PopulateEnchantingMenu);
 		mwse::genCallEnforced(0x6210B4, 0x621CE0, (DWORD)PopulateSpellmakingMenu);
 
 		// Call custom effect dispatchers (and the spell tick event).
