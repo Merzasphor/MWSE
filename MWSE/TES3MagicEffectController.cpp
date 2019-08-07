@@ -263,66 +263,77 @@ namespace TES3 {
 	}
 
 	const auto TES3_TriggerSpellEffectEvent = reinterpret_cast<bool(__cdecl *)(MagicSourceInstance *, float, MagicEffectInstance *, int, bool, bool, void *, DWORD, unsigned int, bool(__cdecl *)(MagicSourceInstance *, MagicEffectInstance *, int))>(0x518460);
-	sol::object triggerSpellEffectEvent(sol::table data, sol::this_state s) {
+	std::tuple<bool, sol::object> triggerSpellEffectEvent(sol::table self, sol::table data, sol::this_state s) {
 		// Get the important data from the table/effect info.
-		int effectId = data["effectId"];
-		MagicSourceInstance * sourceInstance = data["sourceInstance"];
-		float deltaTime = data["deltaTime"];
-		MagicEffectInstance * effectInstance = data["effectInstance"];
-		int effectIndex = data["effectIndex"];
+		int effectId = self["effectId"];
+		MagicSourceInstance * sourceInstance = self["sourceInstance"];
+		float deltaTime = self["deltaTime"];
+		MagicEffectInstance * effectInstance = self["effectInstance"];
+		int effectIndex = self["effectIndex"];
 		bool negateOnExpiry = data.get_or("negateOnExpiry", true);
 		bool isUncapped = data.get_or("isUncapped", (MagicEffectController::effectFlags[effectId] >> 12) & 0xFFFFFF01);
 		unsigned int attribute = data.get_or("attribute", (unsigned int)MagicEffectAttribute::NonResistable);
 
-		// The return value can be an integer or a float.
+		// Provide values to modify.
 		union {
 			int asInt;
 			float asFloat;
 		} genericEventValue;
 		genericEventValue.asInt = 0;
+		Statistic * statisticEventValue = nullptr;
+		void * eventValue = nullptr;
 
 		// Figure out what kind of return value we're looking for.
-		int eventTypeEnum = data.get_or("eventType", 0);
-		DWORD eventType = 0x7886F0;
-		void * eventValue = &genericEventValue;
+		DWORD eventType = 0;
+		int eventTypeEnum = data.get_or("type", 0);
 		switch (eventTypeEnum) {
 		case 0:
 		case 1:
 			eventType = 0x7886F0;
-			genericEventValue.asInt = data.get_or("eventValue", 0);
+			genericEventValue.asInt = data.get_or("value", 0);
+			eventValue = &genericEventValue;
 			break;
 		case 2:
 			eventType = 0x788700;
-			genericEventValue.asFloat = data.get_or("eventValue", 0.0f);
+			genericEventValue.asFloat = data.get_or("value", 0.0f);
+			eventValue = &genericEventValue;
+			break;
+		case 3:
+			eventType = 0x788760;
+			statisticEventValue = data["value"];
+			eventValue = statisticEventValue;
 			break;
 		}
 
 		// Allow defining a custom resist function.
 		bool(__cdecl * resistFunction)(MagicSourceInstance *, MagicEffectInstance *, int) = nullptr;
-		sol::optional<sol::protected_function> resistLuaFunction = data["onResist"];
+		sol::optional<sol::protected_function> resistLuaFunction = data["resistanceCheck"];
 		if (resistLuaFunction) {
 			genericLuaSpellResistCallback = resistLuaFunction.value();
 			resistFunction = genericLuaSpellResist;
 		}
 
 		// Run the actual event trigger.
-		data["eventResult"] = TES3_TriggerSpellEffectEvent(sourceInstance, deltaTime, effectInstance, effectIndex, negateOnExpiry, isUncapped, eventValue, eventType, attribute, resistFunction);
+		bool eventResult = TES3_TriggerSpellEffectEvent(sourceInstance, deltaTime, effectInstance, effectIndex, negateOnExpiry, isUncapped, eventValue, eventType, attribute, resistFunction);
 
 		// Figure out our return type.
-		sol::object result = sol::nil;
+		sol::object modifiedValue = sol::nil;
 		switch (eventTypeEnum) {
 		case 0:
-			result = sol::make_object(s, genericEventValue.asInt > 0);
+			modifiedValue = sol::make_object(s, genericEventValue.asInt > 0);
 			break;
 		case 1:
-			result = sol::make_object(s, genericEventValue.asInt);
+			modifiedValue = sol::make_object(s, genericEventValue.asInt);
 			break;
 		case 2:
-			result = sol::make_object(s, genericEventValue.asFloat);
+			modifiedValue = sol::make_object(s, genericEventValue.asFloat);
+			break;
+		case 3:
+			modifiedValue = sol::make_object(s, (Statistic*)eventValue);
 			break;
 		}
 
-		return result;
+		return std::make_tuple(eventResult, modifiedValue);
 	}
 
 	sol::table packageSpellTickTable(sol::state& state, EffectID::EffectID effectId, MagicSourceInstance * sourceInstance, float deltaTime, MagicEffectInstance * effectInstance, int effectIndex) {

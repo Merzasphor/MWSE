@@ -4,4 +4,5 @@ return {
 	["int"] = 1,
 	["integer"] = 1,
 	["float"] = 2,
+	["modStatistic"] = 3,
 }
