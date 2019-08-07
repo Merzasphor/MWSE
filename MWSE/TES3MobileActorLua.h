@@ -238,6 +238,7 @@ namespace mwse {
 			usertypeDefinition.set("startCombat", &TES3::MobileActor::startCombat);
 			usertypeDefinition.set("startDialogue", &TES3::MobileActor::startDialogue);
 			usertypeDefinition.set("stopCombat", &TES3::MobileActor::stopCombat);
+			usertypeDefinition.set("updateDerivedStatistics", &TES3::MobileActor::updateDerivedStatistics);
 
 			// Provide single function for isAffectedByAlchemy, etc.
 			usertypeDefinition.set("isAffectedByObject", [](TES3::MobileActor& self, sol::object param) {
