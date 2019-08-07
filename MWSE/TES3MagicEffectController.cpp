@@ -977,7 +977,8 @@ namespace TES3 {
 		mwse::writeDoubleWordEnforced(0x60C337 + 0x3, 0x747D88, effectFlagAddresses);
 		mwse::writeDoubleWordEnforced(0x616AEE + 0x2, 0x747D88, effectFlagAddresses);
 		mwse::writeDoubleWordEnforced(0x616E15 + 0x3, 0x747D88, effectFlagAddresses);
-		mwse::writeDoubleWordEnforced(0x61AEB8 + 0x3, 0x747D88, effectFlagAddresses);
+		mwse::writeDoubleWordEnforced(0x61AEC1 + 0x3, 0x747D88, effectFlagAddresses); // Without MCP
+		mwse::writeDoubleWordEnforced(0x61AEB8 + 0x3, 0x747D88, effectFlagAddresses); // With MCP
 		mwse::writeDoubleWordEnforced(0x61AF4D + 0x3, 0x747D88, effectFlagAddresses);
 		mwse::writeDoubleWordEnforced(0x61B131 + 0x3, 0x747D88, effectFlagAddresses);
 		mwse::writeDoubleWordEnforced(0x61B29F + 0x3, 0x747D88, effectFlagAddresses);

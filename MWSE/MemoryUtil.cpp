@@ -270,10 +270,13 @@ namespace mwse {
 		VirtualProtect((DWORD*)address, sizeof(DWORD), oldProtect, &oldProtect);
 	}
 
-	void writeDoubleWordEnforced(DWORD address, DWORD previousValue, DWORD value) {
+	bool writeDoubleWordEnforced(DWORD address, DWORD previousValue, DWORD value) {
 		DWORD currentValue = *reinterpret_cast<DWORD*>(address);
 		if (currentValue != previousValue) {
-			throw std::runtime_error("Could not write DWORD value. Current memory is of an unexpected value.");
+#ifdef _DEBUG
+			log::getLog() << "[MemoryUtil] Skipping write double word at 0x" << std::hex << address << ". Expected previous value of0x" << previousValue << ", found 0x" << currentValue << "." << std::endl;
+#endif
+			return false;
 		}
 
 		// Unprotect memory.
@@ -285,6 +288,8 @@ namespace mwse {
 
 		// Protect memory again.
 		VirtualProtect((DWORD*)address, sizeof(DWORD), oldProtect, &oldProtect);
+
+		return true;
 	}
 
 	// WARNING: If passing a function address, always use a non-static function or it will crash.
