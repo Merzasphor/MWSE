@@ -263,13 +263,18 @@ namespace TES3 {
 	}
 
 	const auto TES3_TriggerSpellEffectEvent = reinterpret_cast<bool(__cdecl *)(MagicSourceInstance *, float, MagicEffectInstance *, int, bool, bool, void *, DWORD, unsigned int, bool(__cdecl *)(MagicSourceInstance *, MagicEffectInstance *, int))>(0x518460);
-	std::tuple<bool, sol::object> triggerSpellEffectEvent(sol::table self, sol::table data, sol::this_state s) {
+	std::tuple<bool, sol::object> triggerSpellEffectEvent(sol::table self, sol::optional<sol::table> maybe_data, sol::this_state s) {
+		sol::state_view state = s;
+
 		// Get the important data from the table/effect info.
 		int effectId = self["effectId"];
 		MagicSourceInstance * sourceInstance = self["sourceInstance"];
 		float deltaTime = self["deltaTime"];
 		MagicEffectInstance * effectInstance = self["effectInstance"];
 		int effectIndex = self["effectIndex"];
+
+		// Get other params from a custom table.
+		sol::table data = maybe_data.value_or(state.create_table());
 		bool negateOnExpiry = data.get_or("negateOnExpiry", true);
 		bool isUncapped = data.get_or("isUncapped", (MagicEffectController::effectFlags[effectId] >> 12) & 0xFFFFFF01);
 		unsigned int attribute = data.get_or("attribute", (unsigned int)MagicEffectAttribute::NonResistable);
