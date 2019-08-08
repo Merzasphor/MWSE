@@ -1,12 +1,12 @@
 return {
 	description = "This event is invoked whenever something is activated, typically by the player. Activation is usually done with the associated activate/use key, but may also be forced by scripts.",
 	eventData = {
-		activator = {
+		["activator"] = {
 			type = "tes3reference",
 			readonly = true,
 			description = "The actor attempting to trigger the event.",
 		},
-		target = {
+		["target"] = {
 			type = "tes3reference",
 			readonly = true,
 			description = "The reference that is being activated.",

@@ -1,21 +1,21 @@
 return {
 	description = "One of the movement events, calcSwimSpeed is used when calculating the movement speed while in water.",
 	eventData = {
-		mobile = {
+		["mobile"] = {
 			type = "tes3mobileActor",
 			readonly = true,
 			description = "The mobile actor whose speed is being calculated.",
 		},
-		reference = {
+		["reference"] = {
 			type = "tes3reference",
 			readonly = true,
 			description = "mobile’s related reference.",
 		},
-		speed = {
+		["speed"] = {
 			type = "number",
 			description = "The previous speed calculated, starting with the base engine values.",
 		},
-		type = {
+		["type"] = {
 			type = "number",
 			readonly = true,
 			description = "The type of movement that was calculated. This is always 3 for this event.",

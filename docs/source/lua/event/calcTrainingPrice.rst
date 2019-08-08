@@ -11,15 +11,20 @@ mobile
 
 `tes3mobileActor`_. Read-only. The mobile actor of the trainer the player is interacting with.
 
+basePrice
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`number`_. Read-only. The price before adjustment.
+
 price
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 `number`_. The adjusted price of the training.
 
-basePrice
+skill
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_. Read-only. The price before adjustment.
+tes3statisticSkill. Read-only. The ID of the skill to be trained.
 
 reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -29,7 +34,7 @@ reference
 skillId
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_. The ID of the skill to be trained.
+`number`_. Read-only. The ID of the skill to be trained.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

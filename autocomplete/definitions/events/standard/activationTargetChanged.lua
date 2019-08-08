@@ -1,12 +1,12 @@
 return {
 	description = "This event is raised when the potential activation target for the player changes.",
 	eventData = {
-		current = {
+		["current"] = {
 			type = "tes3reference",
 			readonly = true,
 			description = "The activation target for the player, should they press the activation key.",
 		},
-		previous = {
+		["previous"] = {
 			type = "tes3reference",
 			readonly = true,
 			description = "The previous activation target.",

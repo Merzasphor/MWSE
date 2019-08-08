@@ -1,35 +1,47 @@
-calcArmorRating
+calcArmorPieceHit
 ====================================================================================================
 
-This event is fired before an actor's armor rating has been calculated, and can be used to override the armor that the actor is given.
+This event is raised just after determining which armor piece, if any, was hit with an attack. The slots can be modified, to draw focus onto specific armor slots.
+
+The following table is used by default to determine what armor piece is hit:
+
+============ =============== ===============
+Roll (1-100) Slot            Fallback
+============ =============== ===============
+1-29         Cuirass         *None*
+30-34        Shield          Cuirass
+35-39        Shield          Left Pauldron
+40-49        Left Pauldron   *None*
+50-59        Right Pauldron  *None*
+60-69        Greaves         *None*
+70-79        Helmet          *None*
+80-89        Boots           *None*
+90-94        Right Gauntlet  Right Bracer
+95-100       Left Gauntlet   Left Bracer
+============ =============== ===============
 
 Event Data
 ----------------------------------------------------------------------------------------------------
 
+fallback
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`number`_. A secondary slot to check for equipment on, if no armor is found using the primary slot.
+
 mobile
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3mobileActor`_. Read-only. The mobile whose AR is being calculated. May not always be available.
-
-armor
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`tes3armor`_. Read-only. The armor piece whose AR is being calculated.
-
-armorRating
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`number`_. If set, the given armor rating will be used instead of the one calculated.
+`tes3mobileActor`_. Read-only. The mobile who is being hit.
 
 reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3reference`_. Read-only. A shortcut to the mobile's reference. May not always be available.
+`tes3reference`_. Read-only. A shortcut to the mobile's reference.
 
-npc
+slot
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3npc`_. Read-only. The NPC object whose AR is being calculated. May not always be available.
+`number`_. The primary slot that is targeted.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

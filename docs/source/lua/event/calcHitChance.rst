@@ -21,15 +21,15 @@ target
 
 `tes3reference`_. Read-only. A shortcut to the target mobile's reference. May not always be available.
 
+hitChance
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`number`_. The hit chance for the actor. This may be adjusted.
+
 attacker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 `tes3reference`_. Read-only. A shortcut to the mobile's reference.
-
-price
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`number`_. The hit chance for the actor. This may be adjusted.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

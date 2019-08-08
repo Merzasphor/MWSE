@@ -1,30 +1,30 @@
 return {
 	description = "This event is raised when determining the hit chance for an actor.",
 	eventData = {
-		attackerMobile = {
-			type = "tes3mobileActor",
-			readonly = true,
-			description = "The mobile who is making the attack.",
-		},
-		attacker = {
+		["attacker"] = {
 			type = "tes3reference",
 			readonly = true,
 			description = "A shortcut to the mobile's reference.",
 		},
-		targetMobile = {
+		["attackerMobile"] = {
 			type = "tes3mobileActor",
 			readonly = true,
-			description = "The mobile who is being attacked. May not always be available.",
+			description = "The mobile who is making the attack.",
 		},
-		target = {
+		["target"] = {
 			type = "tes3reference",
 			readonly = true,
 			description = "A shortcut to the target mobile's reference. May not always be available.",
 		},
-		price = {
+		["targetMobile"] = {
+			type = "tes3mobileActor",
+			readonly = true,
+			description = "The mobile who is being attacked. May not always be available.",
+		},
+		["hitChance"] = {
 			type = "number",
 			description = "The hit chance for the actor. This may be adjusted.",
 		},
 	},
-	filter = "attacker",
+	filter = "attacker.baseObject",
 }

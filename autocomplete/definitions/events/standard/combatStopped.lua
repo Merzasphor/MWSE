@@ -1,7 +1,7 @@
 return {
 	description = "The combatStopped event occurs after an actor has left combat.",
 	eventData = {
-		actor = {
+		["actor"] = {
 			type = "tes3mobileActor",
 			readonly = true,
 			description = "The mobile actor who has left combat.",
