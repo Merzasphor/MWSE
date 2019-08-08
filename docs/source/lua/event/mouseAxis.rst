@@ -1,20 +1,35 @@
-enterFrame
+mouseAxis
 ====================================================================================================
 
-The enterFrame event occurs at the start of every frame, including when the game is paused or in menu mode.
+The mouseAxis event fires when the mouse is moved, providing deltaX and deltaY values.
 
 Event Data
 ----------------------------------------------------------------------------------------------------
 
-delta
+deltaY
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_. Read-only. The number of seconds since the last frame.
+`number`_. Read-only. The difference in vertical mouse position from the previous frame.
 
-menuMode
+isControlDown
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`boolean`_. Read-only. If the game is paused- in the inventory or a menu, etc.
+`number`_. Read-only. True if control is held.
+
+isSuperDown
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`number`_. Read-only. True if super (Windows key) is held.
+
+deltaX
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`number`_. Read-only. The difference in horizontal mouse position from the previous frame.
+
+isAltDown
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`number`_. Read-only. True if alt  is held.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

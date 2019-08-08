@@ -1,20 +1,20 @@
-enterFrame
+musicSelectTrack
 ====================================================================================================
 
-The enterFrame event occurs at the start of every frame, including when the game is paused or in menu mode.
+The musicSelectTrack event occurs when new music is needed after a playing music track ends, or the combat situation changes. It allows you to select your own music for the current conditions by setting eventData.music. However, it does not control transitions to combat music, which in the future will be available in another event.
 
 Event Data
 ----------------------------------------------------------------------------------------------------
 
-delta
+music
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_. Read-only. The number of seconds since the last frame.
+`string`_. If set to the path of a given track (relative to Data Files/music), it will play the given path instead of a random one.
 
-menuMode
+situation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`boolean`_. Read-only. If the game is paused- in the inventory or a menu, etc.
+`number`_. Read-only. Maps to tes3.musicSituation.*, indicating combat or non-combat music.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

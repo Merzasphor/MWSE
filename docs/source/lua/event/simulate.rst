@@ -1,10 +1,15 @@
-enterFrame
+simulate
 ====================================================================================================
 
-The enterFrame event occurs at the start of every frame, including when the game is paused or in menu mode.
+The simulate event occurs at the start of every frame, excluding when the game is paused or in menu mode.
 
 Event Data
 ----------------------------------------------------------------------------------------------------
+
+timestamp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`number`_. Read-only. The number of seconds since the beginning of the 3rd Era (similar to the Unix Epoch).
 
 delta
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -14,7 +19,7 @@ delta
 menuMode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`boolean`_. Read-only. If the game is paused- in the inventory or a menu, etc.
+`boolean`_. Read-only. Always false, maintained only for consistency with the enterFrame event.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

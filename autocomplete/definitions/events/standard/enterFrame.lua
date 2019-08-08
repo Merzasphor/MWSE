@@ -6,12 +6,7 @@ return {
 			readonly = true,
 			description = "The number of seconds since the last frame.",
 		},
-		timestamp = {
-			type = "number",
-			readonly = true,
-			description = "The number of seconds since the beginning of the 3rd Era. (similar to the Unix Epoch)",
-		},
-		menumode = {
+		menuMode = {
 			type = "boolean",
 			readonly = true,
 			description = "If the game is paused- in the inventory or a menu, etc.",

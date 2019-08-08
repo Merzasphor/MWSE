@@ -1,20 +1,20 @@
-enterFrame
+uiShowRestMenu
 ====================================================================================================
 
-The enterFrame event occurs at the start of every frame, including when the game is paused or in menu mode.
+The uiShowRestMenu event is raised when the rest menu is about to be displayed. It allows the callback to change if sleeping is allowed, or to prevent the UI from showing at all.
 
 Event Data
 ----------------------------------------------------------------------------------------------------
 
-delta
+allowRest
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_. Read-only. The number of seconds since the last frame.
+`boolean`_. true if the player is allowed to sleep (determined primarily from the cell flags), or false if they must wait instead. This value can be modified.
 
-menuMode
+scripted
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`boolean`_. Read-only. If the game is paused- in the inventory or a menu, etc.
+`boolean`_. Read-only. This value is true when the menu is shown from using the ShowRestMenu or equivalent function.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

@@ -1,20 +1,15 @@
-enterFrame
+potionBrewed
 ====================================================================================================
 
-The enterFrame event occurs at the start of every frame, including when the game is paused or in menu mode.
+The potionBrewed event is raised when the player brews a new potion.
 
 Event Data
 ----------------------------------------------------------------------------------------------------
 
-delta
+object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_. Read-only. The number of seconds since the last frame.
-
-menuMode
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`boolean`_. Read-only. If the game is paused- in the inventory or a menu, etc.
+`tes3alchemy`_. Read-only. The potion created by the player.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

@@ -1,20 +1,25 @@
-enterFrame
+restInterrupt
 ====================================================================================================
 
-The enterFrame event occurs at the start of every frame, including when the game is paused or in menu mode.
+This event is invoked when a rest is about to be interrupted. The ambushing spawn can be overridden by changing the creature parameter.
 
 Event Data
 ----------------------------------------------------------------------------------------------------
 
-delta
+resting
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_. Read-only. The number of seconds since the last frame.
+`boolean`_. Read-only. If true, the player is attempting to rest, as opposed to wait.
 
-menuMode
+creature
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`boolean`_. Read-only. If the game is paused- in the inventory or a menu, etc.
+tes3creature|tes3npc|tes3leveledCreature. The creature that is interrupting rest. Can be set to a creature, NPC, or leveled creature.
+
+waiting
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`boolean`_. Read-only. If true, the player is attempting to wait, as opposed to rest.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

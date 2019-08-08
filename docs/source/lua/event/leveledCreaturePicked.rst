@@ -1,20 +1,20 @@
-enterFrame
+leveledCreaturePicked
 ====================================================================================================
 
-The enterFrame event occurs at the start of every frame, including when the game is paused or in menu mode.
+This event is called after any leveled creature list is resolved. he event may be filtered by its list, and its pick can be overwritten. While this event allows for customization, the leveled list may be altered directly as well.
 
 Event Data
 ----------------------------------------------------------------------------------------------------
 
-delta
+tes3creature
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_. Read-only. The number of seconds since the last frame.
+`number`_. The result of the pick by vanilla mechanism. This can be modified to change the result to something else.
 
-menuMode
+list
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`boolean`_. Read-only. If the game is paused- in the inventory or a menu, etc.
+`tes3leveledCreature`_. Read-only. The list responsible for creating a pick.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html
