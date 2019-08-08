@@ -10,5 +10,6 @@ Functions
     :maxdepth: 1
 
     string/endswith
+    string/format
     string/startswith
 

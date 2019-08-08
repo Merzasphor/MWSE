@@ -1,12 +1,12 @@
-tes3ui.getMenuOnTop
+tes3ui.menuMode
 ====================================================================================================
 
-Returns the top-most, active menu.
+Checks if the game is in menu mode.
 
 Returns
 ----------------------------------------------------------------------------------------------------
 
-`tes3uiElement`_.
+`boolean`_. true if in menu mode.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

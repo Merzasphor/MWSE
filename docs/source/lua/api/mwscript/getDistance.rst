@@ -1,12 +1,18 @@
-tes3ui.getMenuOnTop
+mwscript.getDistance
 ====================================================================================================
 
-Returns the top-most, active menu.
+Wrapper for the GetDistance mwscript function.
 
-Returns
+Parameters
 ----------------------------------------------------------------------------------------------------
 
-`tes3uiElement`_.
+Accepts parameters through a table with the given keys:
+
+reference (`tes3reference`_, `tes3mobileActor`_, `string`_)
+    Optional. The target reference for this command to be executed on. Defaults to the normal script execution reference.
+
+target (`tes3reference`_, `tes3mobileActor`_, `string`_)
+    Actor to check distance to.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

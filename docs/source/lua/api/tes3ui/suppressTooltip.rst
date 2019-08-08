@@ -1,12 +1,13 @@
-tes3ui.getMenuOnTop
+tes3ui.suppressTooltip
 ====================================================================================================
 
-Returns the top-most, active menu.
+Controls hiding of world object tooltips.
 
-Returns
+Parameters
 ----------------------------------------------------------------------------------------------------
 
-`tes3uiElement`_.
+suppress (`boolean`_)
+    Turns on suppression if true, immediately hiding any active tooltip and further world object tooltips. Turns off suppression if false.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

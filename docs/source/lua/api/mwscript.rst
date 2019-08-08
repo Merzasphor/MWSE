@@ -1,7 +1,7 @@
 mwscript
 ====================================================================================================
 
-The mwscript library allows vanilla mwscript functions to be called. This is not always ideal, and this library is deprecated.
+The mwscript library allows vanilla mwscript functions to be called. This is not always ideal, and this library is deprecated. Avoid using it if at all possible.
 
 Functions
 ----------------------------------------------------------------------------------------------------
@@ -25,6 +25,7 @@ Functions
     mwscript/getButtonPressed
     mwscript/getDetected
     mwscript/getDisabled
+    mwscript/getDistance
     mwscript/getItemCount
     mwscript/getPCJumping
     mwscript/getPCRunning
