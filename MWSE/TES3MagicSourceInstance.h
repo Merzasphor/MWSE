@@ -4,6 +4,7 @@
 
 #include "TES3Collections.h"
 #include "TES3Object.h"
+#include "TES3Vectors.h"
 
 namespace TES3 {
 	enum class SpellEffectState {
@@ -66,6 +67,7 @@ namespace TES3 {
 		//
 
 		int getMagnitude(int effectIndex);
+		void playSpellVFX(float duration, Vector3 position, Reference* attachedReference, int unknown0, PhysicalObject* effectVisual, int effectIndex = 0, int unknown1 = 0);
 
 	};
 	static_assert(sizeof(MagicSourceInstance) == 0x12C, "TES3::MagicSourceInstance failed size validation");

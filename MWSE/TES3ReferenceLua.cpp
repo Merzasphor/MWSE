@@ -27,6 +27,9 @@ namespace TES3 {
 		Attachment* attachment = this->attachments;
 		while (attachment) {
 			switch (attachment->type) {
+			case AttachmentType::Light:
+				result["light"] = sol::make_object(state, reinterpret_cast<LockAttachment*>(attachment)->data);
+				break;
 			case AttachmentType::Lock:
 				result["lock"] = sol::make_object(state, reinterpret_cast<LockAttachment*>(attachment)->data);
 				break;

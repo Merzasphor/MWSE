@@ -4,5 +4,5 @@ return {
 	arguments = {
 		{ name = "id", type = "number" },
 	},
-	returns = "tes3uiElement",
+	valuetype = "tes3uiElement",
 }

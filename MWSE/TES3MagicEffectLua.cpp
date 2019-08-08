@@ -24,8 +24,12 @@ namespace mwse {
 				setUserdataForBaseObject(usertypeDefinition);
 
 				// Basic property binding.
+				usertypeDefinition.set("areaVisualEffect", &TES3::MagicEffect::areaEffect);
 				usertypeDefinition.set("baseMagickaCost", &TES3::MagicEffect::baseMagickaCost);
+				usertypeDefinition.set("boltVisualEffect", &TES3::MagicEffect::boltEffect);
+				usertypeDefinition.set("castVisualEffect", &TES3::MagicEffect::castEffect);
 				usertypeDefinition.set("flags", &TES3::MagicEffect::flags);
+				usertypeDefinition.set("hitVisualEffect", &TES3::MagicEffect::hitEffect);
 				usertypeDefinition.set("id", sol::readonly_property(&TES3::MagicEffect::id));
 				usertypeDefinition.set("lightingBlue", &TES3::MagicEffect::lightingBlue);
 				usertypeDefinition.set("lightingGreen", &TES3::MagicEffect::lightingGreen);

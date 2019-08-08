@@ -7,6 +7,7 @@
 #include "TES3DataHandler.h"
 #include "TES3DialogueInfo.h"
 #include "TES3GlobalVariable.h"
+#include "TES3MagicEffectController.h"
 #include "TES3Reference.h"
 #include "TES3Script.h"
 #include "TES3Sound.h"
@@ -35,7 +36,6 @@ namespace mwse {
 				usertypeDefinition.set("dialogues", sol::readonly_property(&TES3::NonDynamicData::dialogues));
 				usertypeDefinition.set("factions", sol::readonly_property(&TES3::NonDynamicData::factions));
 				usertypeDefinition.set("globals", sol::readonly_property(&TES3::NonDynamicData::globals));
-				//usertypeDefinition.set("magicEffects", sol::readonly_property([](TES3::NonDynamicData& self) { return std::ref(self.magicEffects); }));
 				usertypeDefinition.set("objects", sol::readonly_property(&TES3::NonDynamicData::list));
 				usertypeDefinition.set("races", sol::readonly_property(&TES3::NonDynamicData::races));
 				usertypeDefinition.set("regions", sol::readonly_property(&TES3::NonDynamicData::regions));
@@ -57,6 +57,18 @@ namespace mwse {
 				usertypeDefinition.set("findScript", [](TES3::NonDynamicData& self, const char* id) { return makeLuaObject(self.findScriptByName(id)); });
 				usertypeDefinition.set("findSound", [](TES3::NonDynamicData& self, const char* id) { return makeLuaObject(self.findSound(id)); });
 				usertypeDefinition.set("resolveObject", [](TES3::NonDynamicData& self, const char* id) { return makeLuaObject(self.resolveObject(id)); });
+
+				// Provide legacy access to magic effects table.
+				usertypeDefinition.set("magicEffects", sol::readonly_property(
+					[](TES3::NonDynamicData& self, sol::this_state s) {
+						sol::state_view state = s;
+						sol::table results = state.create_table();
+						for (auto itt : self.magicEffects->effectObjects) {
+							results.add(itt.second);
+						}
+						return results;
+					}
+				));
 
 				// Deprecated functions. TODO: Remove before 2.1 final.
 				usertypeDefinition.set("findDialogInfo", &TES3::NonDynamicData::findDialogue); // Badly named. Actually gives DIAL, not INFO.

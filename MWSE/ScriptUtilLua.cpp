@@ -220,11 +220,12 @@ namespace mwse {
 
 				return mwscript::HasItemEquipped(script, reference, item);
 			};
+			// Obsolete. Do not document.
 			state["mwscript"]["getDelete"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
 
-				return (reference->objectFlags & TES3::ObjectFlag::Delete) != 0;
+				return reference->getBaseObjectFlag(TES3::ObjectFlag::Delete);
 			};
 			state["mwscript"]["getDetected"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
@@ -283,6 +284,7 @@ namespace mwse {
 
 				return mwscript::GetSpellEffects(script, reference, spell);
 			};
+			// Obsolete. Do not document.
 			state["mwscript"]["onActivate"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
@@ -292,6 +294,7 @@ namespace mwse {
 				reference->clearActionFlag(TES3::ActionFlags::OnActivate);
 				return result;
 			};
+			// Obsolete. Do not document.
 			state["mwscript"]["onDeath"] = [](sol::optional<sol::table> params) {
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
 
@@ -299,6 +302,7 @@ namespace mwse {
 				reference->clearActionFlag(TES3::ActionFlags::OnDeath);
 				return result;
 			};
+			// Obsolete. Do not document.
 			state["mwscript"]["onKnockout"] = [](sol::optional<sol::table> params) {
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
 
@@ -306,6 +310,7 @@ namespace mwse {
 				reference->clearActionFlag(TES3::ActionFlags::OnKnockout);
 				return result;
 			};
+			// Obsolete. Do not document.
 			state["mwscript"]["onMurder"] = [](sol::optional<sol::table> params) {
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
 
@@ -398,6 +403,7 @@ namespace mwse {
 
 				return mwscript::ScriptRunning(script, targetScript);
 			};
+			// Obsolete. Do not document.
 			state["mwscript"]["setDelete"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);

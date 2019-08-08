@@ -11,6 +11,15 @@ namespace TES3 {
 		return count;
 	}
 
+	int Alchemy::getFirstIndexOfEffect(int effectId) {
+		for (size_t i = 0; i < 8; i++) {
+			if (effects[i].effectID = effectId) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
 	bool Alchemy::effectsMatchWith(Alchemy * other) {
 		for (size_t i = 0; i < 8; i++) {
 			if (effects[i].matchesEffectsWith(&other->effects[i])) {

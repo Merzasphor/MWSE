@@ -54,7 +54,6 @@ namespace mwse {
 
 				// Functions exposed as properties.
 				usertypeDefinition.set("aiConfig", sol::readonly_property(&TES3::NPC::getAIConfig));
-				usertypeDefinition.set("barterGold", sol::property(&TES3::NPC::getBaseBarterGold, &TES3::NPC::setBaseBarterGold));
 				usertypeDefinition.set("isGuard", sol::readonly_property(&TES3::NPC::isGuard));
 				usertypeDefinition.set("isEssential", sol::readonly_property(&TES3::NPC::isEssential));
 				usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::NPC::isRespawn));
@@ -67,6 +66,13 @@ namespace mwse {
 					[](TES3::NPC& self) { return self.getActorFlag(TES3::ActorFlagNPC::Female); },
 					[](TES3::NPC& self, bool state) { return self.setActorFlag(TES3::ActorFlagNPC::Female, state); }
 				));
+				usertypeDefinition.set("autoCalc", sol::property(
+					[](TES3::NPC& self) { return self.getActorFlag(TES3::ActorFlagNPC::AutoCalc); },
+					[](TES3::NPC& self, bool state) { return self.setActorFlag(TES3::ActorFlagNPC::AutoCalc, state); }
+				));
+
+				// TODO: Deprecated. Remove before 2.1-stable.
+				usertypeDefinition.set("model", sol::property(&TES3::NPC::getModelPath, &TES3::NPC::setModelPath));
 				usertypeDefinition.set("essential", sol::property(
 					[](TES3::NPC& self) { return self.getActorFlag(TES3::ActorFlagNPC::Essential); },
 					[](TES3::NPC& self, bool state) { return self.setActorFlag(TES3::ActorFlagNPC::Essential, state); }
@@ -75,13 +81,6 @@ namespace mwse {
 					[](TES3::NPC& self) { return self.getActorFlag(TES3::ActorFlagNPC::Respawn); },
 					[](TES3::NPC& self, bool state) { return self.setActorFlag(TES3::ActorFlagNPC::Respawn, state); }
 				));
-				usertypeDefinition.set("autoCalc", sol::property(
-					[](TES3::NPC& self) { return self.getActorFlag(TES3::ActorFlagNPC::AutoCalc); },
-					[](TES3::NPC& self, bool state) { return self.setActorFlag(TES3::ActorFlagNPC::AutoCalc, state); }
-				));
-
-				// TODO: Deprecated. Remove before 2.1-stable.
-				usertypeDefinition.set("model", sol::property(&TES3::NPC::getModelPath, &TES3::NPC::setModelPath));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3npc", usertypeDefinition);
@@ -135,6 +134,13 @@ namespace mwse {
 					[](TES3::NPCInstance& self) { return self.getActorFlag(TES3::ActorFlagNPC::Female); },
 					[](TES3::NPCInstance& self, bool state) { return self.setActorFlag(TES3::ActorFlagNPC::Female, state); }
 				));
+				usertypeDefinition.set("autoCalc", sol::property(
+					[](TES3::NPCInstance& self) { return self.getActorFlag(TES3::ActorFlagNPC::AutoCalc); },
+					[](TES3::NPCInstance& self, bool state) { return self.setActorFlag(TES3::ActorFlagNPC::AutoCalc, state); }
+				));
+
+				// TODO: Deprecated. Remove before 2.1-stable.
+				usertypeDefinition.set("model", sol::property(&TES3::NPCInstance::getModelPath, &TES3::NPCInstance::setModelPath));
 				usertypeDefinition.set("essential", sol::property(
 					[](TES3::NPCInstance& self) { return self.getActorFlag(TES3::ActorFlagNPC::Essential); },
 					[](TES3::NPCInstance& self, bool state) { return self.setActorFlag(TES3::ActorFlagNPC::Essential, state); }
@@ -143,13 +149,6 @@ namespace mwse {
 					[](TES3::NPCInstance& self) { return self.getActorFlag(TES3::ActorFlagNPC::Respawn); },
 					[](TES3::NPCInstance& self, bool state) { return self.setActorFlag(TES3::ActorFlagNPC::Respawn, state); }
 				));
-				usertypeDefinition.set("autoCalc", sol::property(
-					[](TES3::NPCInstance& self) { return self.getActorFlag(TES3::ActorFlagNPC::AutoCalc); },
-					[](TES3::NPCInstance& self, bool state) { return self.setActorFlag(TES3::ActorFlagNPC::AutoCalc, state); }
-				));
-
-				// TODO: Deprecated. Remove before 2.1-stable.
-				usertypeDefinition.set("model", sol::property(&TES3::NPCInstance::getModelPath, &TES3::NPCInstance::setModelPath));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3npcInstance", usertypeDefinition);

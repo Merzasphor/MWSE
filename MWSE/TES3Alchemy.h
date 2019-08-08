@@ -33,6 +33,7 @@ namespace TES3 {
 		//
 
 		size_t getActiveEffectCount();
+		int getFirstIndexOfEffect(int effectId);
 		bool effectsMatchWith(Alchemy * other);
 
 	};

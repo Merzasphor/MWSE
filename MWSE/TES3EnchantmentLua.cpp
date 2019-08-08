@@ -26,6 +26,10 @@ namespace mwse {
 			usertypeDefinition.set("flags", &TES3::Enchantment::flags);
 			usertypeDefinition.set("maxCharge", &TES3::Enchantment::maxCharge);
 
+			// Basic function binding.
+			usertypeDefinition.set("getActiveEffectCount", &TES3::Enchantment::getActiveEffectCount);
+			usertypeDefinition.set("getFirstIndexOfEffect", &TES3::Enchantment::getFirstIndexOfEffect);
+
 			// Indirect bindings to unions and arrays.
 			usertypeDefinition.set("effects", sol::readonly_property([](TES3::Enchantment& self) { return std::ref(self.effects); }));
 

@@ -1,0 +1,30 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "..\\make.bat clean"
+        },
+        {
+            "label": "build - HTML (clean)",
+            "type": "shell",
+            "command": "..\\make.bat html",
+            "dependsOn": [
+                "clean"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "build - HTML",
+            "type": "shell",
+            "command": "..\\make.bat html",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

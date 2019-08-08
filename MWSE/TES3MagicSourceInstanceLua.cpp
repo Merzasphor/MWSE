@@ -35,6 +35,29 @@ namespace mwse {
 
 			// Basic function binding.
 			usertypeDefinition.set("getMagnitudeForIndex", &TES3::MagicSourceInstance::getMagnitude);
+			usertypeDefinition.set("playVisualEffect",
+				[](TES3::MagicSourceInstance& self, sol::table params) {
+					int effectIndex = getOptionalParam<int>(params, "effectIndex", -1);
+					if (effectIndex < 0 || effectIndex > 7) {
+						throw std::invalid_argument("Invalid 'effectIndex' parameter. Must be a number between 0 and 7.");
+					}
+
+					auto position = mwse::lua::getOptionalParamVector3(params, "position");
+					if (!position) {
+						throw std::invalid_argument("Invalid 'position' parameter. Must be a table[3] or tes3vector3.");
+					}
+
+					auto visual = getOptionalParamObject<TES3::PhysicalObject>(params, "visual");
+					if (visual == nullptr) {
+						throw std::invalid_argument("Invalid 'visual' parameter. Must be a valid tes3physicalObject or string that can resolve into one.");
+					}
+
+					float duration = getOptionalParam<float>(params, "duration", 1.0f);
+					TES3::Reference* reference = getOptionalParamExecutionReference(params);
+
+					self.playSpellVFX(duration, position.value(), reference, 0, visual, effectIndex, 0);
+				}
+			);
 
 			// Access to other objects that need to be packaged.
 			usertypeDefinition.set("target", sol::readonly_property([](TES3::MagicSourceInstance& self) { return makeLuaObject(self.target); }));
