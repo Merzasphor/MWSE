@@ -9,12 +9,12 @@ Event Data
 skill
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_Read-only. The skill that is gaining experience. This can be changed to provide experience to a different skill.
+`number`_. Read-only. The skill that is gaining experience. This can be changed to provide experience to a different skill.
 
 progress
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_The amount of experience that skill is gaining. Note that experience is not on a scale of 1 to 100. This value is modifiable.
+`number`_. The amount of experience that skill is gaining. Note that experience is not on a scale of 1 to 100. This value is modifiable.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

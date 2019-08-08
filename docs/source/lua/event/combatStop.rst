@@ -9,7 +9,7 @@ Event Data
 actor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3mobileActor`_Read-only. The mobile actor who is exiting combat.
+`tes3mobileActor`_. Read-only. The mobile actor who is exiting combat.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

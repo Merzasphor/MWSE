@@ -9,22 +9,22 @@ Event Data
 targetReference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3reference`_Read-only. A shortcut to the reference being attacked.
+`tes3reference`_. Read-only. A shortcut to the reference being attacked.
 
 mobile
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3mobileActor`_Read-only. The mobile actor making the attack.
+`tes3mobileActor`_. Read-only. The mobile actor making the attack.
 
 reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3reference`_Read-only. A shortcut to the reference that is attacking.
+`tes3reference`_. Read-only. A shortcut to the reference that is attacking.
 
 targetMobile
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3mobileActor`_Read-only. The mobile actor being attacked.
+`tes3mobileActor`_. Read-only. The mobile actor being attacked.
 
 Examples
 ----------------------------------------------------------------------------------------------------

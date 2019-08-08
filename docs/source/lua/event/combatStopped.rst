@@ -9,7 +9,7 @@ Event Data
 actor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3mobileActor`_Read-only. The mobile actor who has left combat.
+`tes3mobileActor`_. Read-only. The mobile actor who has left combat.
 
 .. _`combatStop`: ../../lua/event/combatStop.html
 .. _`tes3creature`: ../../lua/type/tes3creature.html

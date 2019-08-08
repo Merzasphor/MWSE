@@ -9,12 +9,12 @@ Event Data
 target
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3mobileActor`_Read-only. The mobile actor who combat has been triggered against.
+`tes3mobileActor`_. Read-only. The mobile actor who combat has been triggered against.
 
 actor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3mobileActor`_Read-only. The mobile actor who has entered combat.
+`tes3mobileActor`_. Read-only. The mobile actor who has entered combat.
 
 .. _`combatStart`: ../../lua/event/combatStart.html
 .. _`tes3creature`: ../../lua/type/tes3creature.html

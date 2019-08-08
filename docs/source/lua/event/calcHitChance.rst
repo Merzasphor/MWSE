@@ -9,27 +9,27 @@ Event Data
 attackerMobile
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3mobileActor`_Read-only. The mobile who is making the attack.
+`tes3mobileActor`_. Read-only. The mobile who is making the attack.
 
 targetMobile
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3mobileActor`_Read-only. The mobile who is being attacked. May not always be available.
+`tes3mobileActor`_. Read-only. The mobile who is being attacked. May not always be available.
 
 target
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3reference`_Read-only. A shortcut to the target mobile's reference. May not always be available.
+`tes3reference`_. Read-only. A shortcut to the target mobile's reference. May not always be available.
 
 attacker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3reference`_Read-only. A shortcut to the mobile's reference.
+`tes3reference`_. Read-only. A shortcut to the mobile's reference.
 
 price
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_The hit chance for the actor. This may be adjusted.
+`number`_. The hit chance for the actor. This may be adjusted.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

@@ -9,22 +9,22 @@ Event Data
 count
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_The number of creatures interrupting rest. Set to 0 to prevent a spawn.
+`number`_. The number of creatures interrupting rest. Set to 0 to prevent a spawn.
 
 resting
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`boolean`_If true, the player is attempting to rest, as opposed to wait.
+`boolean`_. If true, the player is attempting to rest, as opposed to wait.
 
 hour
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_The hour of rest remaining that the rest will be interrupted on.
+`number`_. The hour of rest remaining that the rest will be interrupted on.
 
 waiting
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`boolean`_If true, the player is attempting to wait, as opposed to rest.
+`boolean`_. If true, the player is attempting to wait, as opposed to rest.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

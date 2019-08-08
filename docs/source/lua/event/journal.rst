@@ -9,22 +9,22 @@ Event Data
 topic
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3dialogue`_Read-only. The topic that dictates the journal entry.
+`tes3dialogue`_. Read-only. The topic that dictates the journal entry.
 
 previousIndex
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_Read-only. The previous index of the journal state.
+`number`_. Read-only. The previous index of the journal state.
 
 index
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_Read-only. The new index of the journal state.
+`number`_. Read-only. The new index of the journal state.
 
 new
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`boolean`_Read-only. If true, the journal is newly added to the player. This effectively means that index has increased past 0.
+`boolean`_. Read-only. If true, the journal is newly added to the player. This effectively means that index has increased past 0.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

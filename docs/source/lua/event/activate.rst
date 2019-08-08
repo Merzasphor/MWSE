@@ -17,12 +17,12 @@ Event Data
 activator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3reference`_Read-only. The actor attempting to trigger the event.
+`tes3reference`_. Read-only. The actor attempting to trigger the event.
 
 target
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3reference`_Read-only. The reference that is being activated.
+`tes3reference`_. Read-only. The reference that is being activated.
 
 Examples
 ----------------------------------------------------------------------------------------------------

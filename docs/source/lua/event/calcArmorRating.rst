@@ -9,22 +9,22 @@ Event Data
 armor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3armor`_Read-only. The armor piece whose AR is being calculated.
+`tes3armor`_. Read-only. The armor piece whose AR is being calculated.
 
 mobile
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3mobileActor`_Read-only. The mobile whose AR is being calculated. May not always be available.
+`tes3mobileActor`_. Read-only. The mobile whose AR is being calculated. May not always be available.
 
 reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3reference`_Read-only. A shortcut to the mobile's reference. May not always be available.
+`tes3reference`_. Read-only. A shortcut to the mobile's reference. May not always be available.
 
 npc
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3npc`_Read-only. The NPC object whose AR is being calculated. May not always be available.
+`tes3npc`_. Read-only. The NPC object whose AR is being calculated. May not always be available.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

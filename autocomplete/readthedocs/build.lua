@@ -177,7 +177,7 @@ local function buildEvent(folder, key)
 			file:write(k .. "\n" .. rstHeaders[3] .. "\n\n")
 
 			if (typeLinks[v.type]) then
-				file:write(breakoutMultipleTypes(v.type))
+				file:write(breakoutMultipleTypes(v.type) .. ". ")
 			else
 				file:write(v.type .. ". ")
 			end

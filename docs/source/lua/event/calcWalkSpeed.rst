@@ -16,22 +16,22 @@ Event Data
 speed
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_The previous speed calculated, starting with the base engine values.
+`number`_. The previous speed calculated, starting with the base engine values.
 
 mobile
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3mobileActor`_Read-only. The mobile actor whose speed is being calculated.
+`tes3mobileActor`_. Read-only. The mobile actor whose speed is being calculated.
 
 reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3reference`_Read-only. mobile’s related reference.
+`tes3reference`_. Read-only. mobile’s related reference.
 
 type
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_Read-only. The type of movement that was calculated. This is always 1 for this event.
+`number`_. Read-only. The type of movement that was calculated. This is always 1 for this event.
 
 .. _`calcSwimRunSpeed`: ../../lua/event/calcSwimRunSpeed.html
 .. _`calcMoveSpeed`: ../../lua/event/calcMoveSpeed.html

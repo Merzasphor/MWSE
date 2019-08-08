@@ -9,17 +9,17 @@ Event Data
 menumode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`boolean`_Read-only. If the game is paused- in the inventory or a menu, etc.
+`boolean`_. Read-only. If the game is paused- in the inventory or a menu, etc.
 
 timestamp
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_Read-only. The number of seconds since the beginning of the 3rd Era. (similar to the Unix Epoch)
+`number`_. Read-only. The number of seconds since the beginning of the 3rd Era. (similar to the Unix Epoch)
 
 delta
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_Read-only. The number of seconds since the last frame.
+`number`_. Read-only. The number of seconds since the last frame.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

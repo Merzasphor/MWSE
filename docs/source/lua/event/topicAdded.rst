@@ -9,7 +9,7 @@ Event Data
 current
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3dialogue`_Read-only. The topic that was newly added to the player's list of topics.
+`tes3dialogue`_. Read-only. The topic that was newly added to the player's list of topics.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

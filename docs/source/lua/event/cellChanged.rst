@@ -9,12 +9,12 @@ Event Data
 previousCell
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3cell`_Read-only. The previous cell that the player came from. This will be nil when loading a game.
+`tes3cell`_. Read-only. The previous cell that the player came from. This will be nil when loading a game.
 
 cell
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3cell`_Read-only. The new cell that the player has entered.
+`tes3cell`_. Read-only. The new cell that the player has entered.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

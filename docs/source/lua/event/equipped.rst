@@ -9,27 +9,27 @@ Event Data
 actor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3actor`_Read-only. The actor that has equipped the item.
+`tes3actor`_. Read-only. The actor that has equipped the item.
 
 item
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3baseObject`_Read-only. The object that has been equipped.
+`tes3baseObject`_. Read-only. The object that has been equipped.
 
 itemData
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3itemData`_Read-only. The item data of item.
+`tes3itemData`_. Read-only. The item data of item.
 
 reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3reference`_Read-only. actor’s associated reference.
+`tes3reference`_. Read-only. actor’s associated reference.
 
 mobile
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3mobileActor`_Read-only. The mobile actor that has equipped the item.
+`tes3mobileActor`_. Read-only. The mobile actor that has equipped the item.
 
 .. _`equip`: ../../lua/event/equip.html
 .. _`tes3creature`: ../../lua/type/tes3creature.html
