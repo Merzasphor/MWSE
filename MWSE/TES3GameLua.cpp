@@ -22,7 +22,6 @@ namespace mwse {
 
 			// Basic property binding.
 			usertypeDefinition.set("parentWindowHandle", sol::readonly_property(&TES3::Game::parentWindowHandle));
-			usertypeDefinition.set("playerTarget", sol::readonly_property(&TES3::Game::playerTarget));
 			usertypeDefinition.set("renderDistance", &TES3::Game::renderDistance);
 			usertypeDefinition.set("screenShotsEnabled", &TES3::Game::screenShotsEnabled);
 			usertypeDefinition.set("screenX", sol::readonly_property(&TES3::Game::screenX));

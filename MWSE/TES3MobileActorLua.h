@@ -41,7 +41,7 @@ namespace mwse {
 			usertypeDefinition.set("nextActionWeight", sol::readonly_property(&TES3::MobileActor::nextActionWeight));
 			//usertypeDefinition.set("powers", sol::readonly_property(&TES3::MobileActor::powers));
 			usertypeDefinition.set("readiedAmmo", &TES3::MobileActor::readiedAmmo);
-			usertypeDefinition.set("readiedAmmoCount", sol::readonly_property(&TES3::MobileActor::readiedAmmoCount));
+			usertypeDefinition.set("readiedAmmoCount", &TES3::MobileActor::readiedAmmoCount);
 			usertypeDefinition.set("readiedShield", &TES3::MobileActor::readiedShield);
 			usertypeDefinition.set("readiedWeapon", &TES3::MobileActor::readiedWeapon);
 			usertypeDefinition.set("scanInterval", sol::readonly_property(&TES3::MobileActor::scanInterval));

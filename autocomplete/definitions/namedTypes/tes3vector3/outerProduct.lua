@@ -4,5 +4,5 @@ return {
 	arguments = {
 		{ name = "vec", type = "tes3vector3" },
 	},
-	valuetype = "tes3matrix3",
+	valuetype = "tes3matrix33",
 }
