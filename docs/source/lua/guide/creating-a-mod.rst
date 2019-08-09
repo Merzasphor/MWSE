@@ -6,41 +6,11 @@ This guide will demonstrate the most basic steps of creating a mod for *The Elde
 
 To facilitate this, this guide will explain how to create a mod that displays a unique messagebox every time the player draws a two-handed weapon.
 
-This guide assumes that you have a basic understanding of the Lua Scripting Language, event based programming, and have at least minimal general programming and Visual Studio Code experience.
-
-Simple Development Workflow
+Development Workflow
 --------------------------------------------------------
-A Development Workflow is the environment and processes used to facilitate software development. There are many ways that you can develop MWSE-Lua mods. This guide offers one possible way. For the purposes of this guide, this guide will assume that you are using the Development Workflow described here.
+This guide assumes that you have setup a development environment. 
 
-A simple development environment consists of the following software applications:
-
-- A clean Morrowind install, hereafter referred to as the Morrowind-Dev install.
-- A `Wrye Mash`_ install linked to the Mororwind-Dev install.
-- `Visual Studio Code`_ with the Lua AutoComplete extension installed.
-- A current set of MWSE Lua AutoComplete files. These can be downloaded from the `Morrowind Modding Discord`_ MWSE channel.
-
-To setup this environment, do the following:
-
-1. Create a clean Morrowind install, Morrowind-Dev.
-2. Install Wrye Mash
-3. Configure Wrye Mash to use your Morrowind-Dev install as the Morrowind directory.
-4. Configure Wrye Mash to use your development folder as the Mod directory. This can be any location on your computer where you want to store your development files.
-5. Install Visual Studio Code.
-6. Install the Lua AutoComplete extension in Visual Studio Code.
-7. In Visual Studio Code, open the Mod directory from step 4 as a work space. 
-8. Place the MWSE Lua AutoComplete files in this directory.
-
-To use this environment to develop mods while maintaining a clean install, you can do the following:
-
-1. Make changes as needed to your code.
-2. Open Wrye Mash.
-3. If you created or deleted files as part of your code changes, use Wrye Mash's 'Refresh Data' tool to reload the install files for your mod.
-4. Install your updated mod using Wrye Mash.
-5. Start Morrowind and complete testing as needed.
-6. Close Morrowind.
-7. Uninstall your updated mod using Wrye Mash.
-
-This workflow ensures that you maintain a clean Morrowind-Dev install, do not have mod conflicts during testing, and are always testing with the most up-to-date files.
+If you are have not set one up, or do not know how to, please refer to the `Development Workflow`_ guide.
 
 Creating the Mod File Structure
 --------------------------------------------------------
@@ -212,3 +182,4 @@ Here is the final code in *main.lua* for the demo mod:
 .. _`Visual Studio Code`: https://code.visualstudio.com
 .. _`Morrowind Modding Discord`: https://discordapp.com/invite/QDEBbaP
 .. _`events`: ../events.html
+.. _`Development Workflow`: ../development-workflows.html
