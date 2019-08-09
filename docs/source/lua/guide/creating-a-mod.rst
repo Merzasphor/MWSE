@@ -8,17 +8,16 @@ To facilitate this, this guide will explain how to create a mod that displays a 
 
 This guide assumes that you have a basic understanding of the Lua Scripting Language, event based programming, and have at least minimal general programming and Visual Studio Code experience.
 
-
 Simple Development Workflow
 --------------------------------------------------------
-A Development Workflow is the environment and processes used to facilitate software development. There are many ways that you can develop MWSE 2.1 Lua mods. This guide offers one possible way. For the purposes of this guide, this guide will assume that you are using the Development Workflow described here.
+A Development Workflow is the environment and processes used to facilitate software development. There are many ways that you can develop MWSE-Lua mods. This guide offers one possible way. For the purposes of this guide, this guide will assume that you are using the Development Workflow described here.
 
 A simple development environment consists of the following software applications:
 
 - A clean Morrowind install, hereafter referred to as the Morrowind-Dev install.
-- A Wrye Mash install linked to the Mororwind-Dev install.
-- Visual Studio Code with the Lua AutoComplete extension installed.
-- A current set of MWSE Lua AutoComplete files. These can be downloaded from the Morrowind Modding Discord MWSE channel.
+- A `Wrye Mash`_ install linked to the Mororwind-Dev install.
+- `Visual Studio Code`_ with the Lua AutoComplete extension installed.
+- A current set of MWSE Lua AutoComplete files. These can be downloaded from the `Morrowind Modding Discord`_ MWSE channel.
 
 To setup this environment, do the following:
 
@@ -166,13 +165,13 @@ This guide provided a simple introduction to modding *The Elder Scrolls III: Mor
 
 This guide:
 - explained how to set up a simple development environment and showed one possible workflow to use that environment.
-- explained the required folder structure to create a MWSE mod.
+- explained the required folder structure to create a MWSE-Lua mod.
 - explained the basics of event registration and callbacks.
 - explained how to implement some basic logic in an event callback.
 
-At this point, you should look at the MWSE ReadTheDocs for additional information on the MWSE API. 
+At this point, you should look at the MWSE ReadTheDocs for additional information on the MWSE-Lua API. Documentation is constantly being improved upon, so ask a question in the Morrowind Modding Community Discord if you need help.
 
-Here is the final script for the demo mod:
+Here is the final code in *main.lua* for the demo mod:
 
 .. code-block:: lua
    :linenos:
@@ -205,3 +204,11 @@ Here is the final script for the demo mod:
     
     -- Register our initialized function to the initialized event.
     event.register("initialized", initialized)
+
+
+
+
+.. _`Wrye Mash`: https://www.nexusmods.com/morrowind/mods/45439
+.. _`Visual Studio Code`: https://code.visualstudio.com
+.. _`Morrowind Modding Discord`: https://discordapp.com/invite/QDEBbaP
+.. _`events`: ../events.html
