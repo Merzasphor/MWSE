@@ -12,6 +12,7 @@ Starting with MWSE version 2.1, it is possible to write scripts using the `Lua`_
    :maxdepth: 1
 
    guide/introduction
+   guide/creating-a-mod
    guide/script-overrides
    guide/timers
    guide/scancodes

@@ -1,21 +1,21 @@
 return {
 	description = "This event is called when an actor’s movement speed is calculated. The event allows modification of this value, to dehardcode actor movement speeds. Invoked after all other movement speed events are finished.",
 	eventData = {
-		mobile = {
+		["mobile"] = {
 			type = "tes3mobileActor",
 			readonly = true,
 			description = "The mobile actor whose speed is being calculated.",
 		},
-		reference = {
+		["reference"] = {
 			type = "tes3reference",
 			readonly = true,
 			description = "mobile’s related reference.",
 		},
-		speed = {
+		["speed"] = {
 			type = "number",
 			description = "The previous speed calculated, starting with the base engine values.",
 		},
-		type = {
+		["type"] = {
 			type = "number",
 			readonly = true,
 			description = "The type of movement that was calculated. This is always 0 for this event.",

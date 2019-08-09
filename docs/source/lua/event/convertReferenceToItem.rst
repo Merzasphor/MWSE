@@ -1,35 +1,15 @@
-calcArmorRating
+convertReferenceToItem
 ====================================================================================================
 
-This event is fired before an actor's armor rating has been calculated, and can be used to override the armor that the actor is given.
+This event is raised when an in-world tes3reference for an item is about to be converted to fit into a tes3itemStack.
 
 Event Data
 ----------------------------------------------------------------------------------------------------
 
-mobile
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`tes3mobileActor`_. Read-only. The mobile whose AR is being calculated. May not always be available.
-
-armor
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`tes3armor`_. Read-only. The armor piece whose AR is being calculated.
-
-armorRating
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`number`_. If set, the given armor rating will be used instead of the one calculated.
-
 reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3reference`_. Read-only. A shortcut to the mobile's reference. May not always be available.
-
-npc
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`tes3npc`_. Read-only. The NPC object whose AR is being calculated. May not always be available.
+`tes3reference`_. Read-only. The reference about to be converted.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

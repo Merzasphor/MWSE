@@ -1,35 +1,20 @@
-calcArmorRating
+calcSoulValue
 ====================================================================================================
 
-This event is fired before an actor's armor rating has been calculated, and can be used to override the armor that the actor is given.
+This event is raised when determining the value of a soul, unmodified by GMSTs. The value can be modified, or used to provide a soul value to NPCs who would normally not be allowed one.
 
 Event Data
 ----------------------------------------------------------------------------------------------------
 
-mobile
+value
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3mobileActor`_. Read-only. The mobile whose AR is being calculated. May not always be available.
+`number`_. The value of the actor's soul.
 
-armor
+actor
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3armor`_. Read-only. The armor piece whose AR is being calculated.
-
-armorRating
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`number`_. If set, the given armor rating will be used instead of the one calculated.
-
-reference
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`tes3reference`_. Read-only. A shortcut to the mobile's reference. May not always be available.
-
-npc
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`tes3npc`_. Read-only. The NPC object whose AR is being calculated. May not always be available.
+tes3creature|tes3npc. Read-only. The actor whose soul is being evaluated.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

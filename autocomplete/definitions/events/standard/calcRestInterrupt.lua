@@ -1,20 +1,22 @@
 return {
-	description = "This event is called when the player is about to start resting. The hour and count of creatures can be modified, or disabled.",
+	description = "This event is called when the player is about to start resting. The hour and count of creatures can be modified, or disabled. Blocking this event blocks any interrupting spawn.",
 	eventData = {
-		hour = {
+		["hour"] = {
 			type = "number",
 			description = "The hour of rest remaining that the rest will be interrupted on.",
 		},
-		count = {
+		["count"] = {
 			type = "number",
 			description = "The number of creatures interrupting rest. Set to 0 to prevent a spawn.",
 		},
-		resting = {
+		["resting"] = {
 			type = "boolean",
+			readonly = true,
 			description = "If true, the player is attempting to rest, as opposed to wait.",
 		},
-		waiting = {
+		["waiting"] = {
 			type = "boolean",
+			readonly = true,
 			description = "If true, the player is attempting to wait, as opposed to rest.",
 		},
 	},

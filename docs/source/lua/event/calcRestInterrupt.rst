@@ -1,7 +1,7 @@
 calcRestInterrupt
 ====================================================================================================
 
-This event is called when the player is about to start resting. The hour and count of creatures can be modified, or disabled.
+This event is called when the player is about to start resting. The hour and count of creatures can be modified, or disabled. Blocking this event blocks any interrupting spawn.
 
 Event Data
 ----------------------------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ count
 resting
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`boolean`_. If true, the player is attempting to rest, as opposed to wait.
+`boolean`_. Read-only. If true, the player is attempting to rest, as opposed to wait.
 
 hour
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -24,7 +24,7 @@ hour
 waiting
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`boolean`_. If true, the player is attempting to wait, as opposed to rest.
+`boolean`_. Read-only. If true, the player is attempting to wait, as opposed to rest.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html
