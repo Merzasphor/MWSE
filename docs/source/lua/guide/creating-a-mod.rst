@@ -32,7 +32,7 @@ Next, the folder structure for MWSE must be created:
 
 - In "MWSE Guide Demo", create a folder named "MWSE". This is the folder that contains any MWSE code.
 - In "MWSE", create a folder named "mods". This is the folder that contains any MWSE mod code. Other options include "lib" for user-made frameworks and libraries.
-- In "mods", create a folder names "MWSE-Guide-Demo". This is the folder that contains the MWSE code for our mod. This folder can include spaces in the folder name. In a normal Morrowind install, you may see other folders here. These represent other mod's code files.
+- In "mods", create a folder named "MWSE-Guide-Demo". This is the folder that contains the MWSE code for our mod. This folder can include spaces in the folder name. In a normal Morrowind install, you may see other folders here. These represent other mod's code files.
 
 The newly created folder structure should look like this:
 

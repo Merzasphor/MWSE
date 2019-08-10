@@ -15,7 +15,7 @@ For new developers, a simple development workflow is enough to start writing cod
 To setup this environment, do the following:
 
 1. Create a clean Morrowind install, Morrowind-Dev.
-2. In the **Morrowind\\Data Files\\MWSE** directory, develop your mod.
+2. In the **Morrowind\\Data Files\\MWSE** directory, develop your mod using your preferred code editor.
 
 To use this environment to develop mods while maintaining a clean install, you can do the following:
 
@@ -23,7 +23,9 @@ To use this environment to develop mods while maintaining a clean install, you c
 2. Start Morrowind and complete testing as needed.
 3. Close Morrowind.
 
-This workflow has some drawbacks. If you develop your mods directly in your Morrowind-Dev install, you have to be aware of other mod installations to prevent conflicts during testing.
+Most MWSE developers prefer to use `Visual Studio Code`_ with the LuaCoderAssist extension installed as their preferred code editor. This provides syntax highlighting and auto-completion for Lua scripts. Part of the *Advanced Development Workflow* section describes how to install this program. 
+
+.. warning:: This workflow has some drawbacks. If you develop your mods directly in your Morrowind-Dev install, you have to be aware of other mod installations to prevent conflicts during testing.
 
 Advanced Development Workflow
 --------------------------------------------------------
@@ -35,7 +37,7 @@ A more advanced development environment consists of the following software appli
 
 - A clean Morrowind install, hereafter referred to as the Morrowind-Dev install.
 - A `Wrye Mash`_ install linked to the Mororwind-Dev install.
-- `Visual Studio Code`_ with the Lua AutoComplete extension installed.
+- `Visual Studio Code`_ with the LuaCoderAssist extension installed.
 - A current set of MWSE LuaCoderAssist AutoComplete files. These can be downloaded from the `Morrowind Modding Discord`_ MWSE channel.
 
 To setup this environment, do the following:
