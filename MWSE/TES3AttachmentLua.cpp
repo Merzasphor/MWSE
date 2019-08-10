@@ -27,7 +27,7 @@ namespace mwse {
 
 				// Access to node properties.
 				usertypeDefinition.set("light", &TES3::LightAttachmentNode::light);
-				usertypeDefinition.set("value", &TES3::LightAttachmentNode::unknown_0x4);
+				usertypeDefinition.set("value", &TES3::LightAttachmentNode::flickerPhase);
 
 				// Finish up our usertype.
 				state.set_usertype("tes3lightNode", usertypeDefinition);

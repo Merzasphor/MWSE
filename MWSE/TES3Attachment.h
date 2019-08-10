@@ -45,7 +45,7 @@ namespace TES3 {
 
 	struct LightAttachmentNode {
 		NI::Pointer<NI::Light> light; // 0x0
-		float unknown_0x4;
+		float flickerPhase; // 0x4
 	};
 	static_assert(sizeof(LightAttachmentNode) == 0x8, "TES3::LightAttachmentNode failed size validation");
 

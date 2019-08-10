@@ -142,7 +142,7 @@ namespace TES3 {
 		attachmentNode = mwse::tes3::_new<TES3::LightAttachmentNode>();
 		memset(attachmentNode, 0, sizeof(TES3::LightAttachmentNode));
 		attachmentNode->light = light;
-		attachmentNode->unknown_0x4 = value;
+		attachmentNode->flickerPhase = value;
 		attachment->data = attachmentNode;
 		
 		insertAttachment(attachment);
