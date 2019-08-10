@@ -1,4 +1,4 @@
-========================================================
+
 Development Workflows
 ========================================================
 
@@ -10,10 +10,12 @@ A Development Workflow is the environment and processes used to facilitate softw
 
 Simple Development Workflow
 --------------------------------------------------------
+For new developers, a simple development workflow is enough to start writing code. Once you are more comfortable in the environment, you can change parts of it as needed to increase your efficiency.
+
 To setup this environment, do the following:
 
 1. Create a clean Morrowind install, Morrowind-Dev.
-2. In the *Morrowind\Data Files\MWSE* directory, develop your mod.
+2. In the **Morrowind\\Data Files\\MWSE** directory, develop your mod.
 
 To use this environment to develop mods while maintaining a clean install, you can do the following:
 
@@ -26,6 +28,8 @@ This workflow has some drawbacks. If you develop your mods directly in your Morr
 Advanced Development Workflow
 --------------------------------------------------------
 Please note that the workflow described below is the preferred environment of the author. Please, feel free to choose to use other code editors, text editors, mod management tools, or extensions as you see fit.
+
+This part of the guide assumes that you have some experience modding Morrowind and working with coding tools.
 
 A more advanced development environment consists of the following software applications:
 
