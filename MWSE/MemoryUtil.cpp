@@ -274,7 +274,7 @@ namespace mwse {
 		DWORD currentValue = *reinterpret_cast<DWORD*>(address);
 		if (currentValue != previousValue) {
 #ifdef _DEBUG
-			log::getLog() << "[MemoryUtil] Skipping write double word at 0x" << std::hex << address << ". Expected previous value of0x" << previousValue << ", found 0x" << currentValue << "." << std::endl;
+			log::getLog() << "[MemoryUtil] Skipping write double word at 0x" << std::hex << address << ". Expected previous value of 0x" << previousValue << ", found 0x" << currentValue << "." << std::endl;
 #endif
 			return false;
 		}
