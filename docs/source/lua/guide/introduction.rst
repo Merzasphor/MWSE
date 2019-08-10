@@ -27,6 +27,7 @@ This guide is not meant to be a comprehensive introduction to the Lua language. 
     -- Print "foo" to the MWSE log, prefixed with the function above.
     myFunctionName("foo")
 
+For a broader introduction to the Lua scripting language, refer to the `Introduction to Lua`_ guide. 
 
 Morrowind Object Types
 --------------------------------------------------------
@@ -69,6 +70,8 @@ We can also pass filters to events. For the key event, the filter is the key tha
 
     -- If we use this instead of the above registration, we filter to key 22 (U).
     event.register("key", myKeyEvent, { filter = 22 })
+
+For a broader introduction to event based programming, refer to the `Introduction to Event Based Programming`_ guide.
 
 The details of which events are available and what event data is exposed to them can be found on the `events`_ page.
 
@@ -134,11 +137,14 @@ OpenMW will not be adding compatibility with MWSE mods, legacy or Lua-based. But
 Getting Started
 --------------------------------------------------------
 
-Not sure where to start? Try the `Creating a Mod`_ guide, which covers the creation of a new mod from start to finish using MWSE-Lua.
+Not sure where to start? Take a look at setting up a `Development Workflow`_, Then, try the `Creating a Mod`_ guide, which covers the creation of a new mod from start to finish using MWSE-Lua.
 
 .. _`Lua`: https://www.lua.org/
 .. _`tes3 types`: ../type/tes3.html
 .. _`events`: ../events.html
 .. _`timer`: ../api/timer.html
+.. _`Development Workflow`: development-workflows.html
 .. _`Creating a Mod`: creating-a-mod.html
+.. _`Introduction to Lua`: ../introduction-to-lua.html
+.. _`Introduction To Event Based Programming`: ../introduction-to-event-based-programming.html
 .. _`Sky Diversity`: https://www.nexusmods.com/morrowind/mods/44345

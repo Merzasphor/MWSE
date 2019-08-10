@@ -1,4 +1,4 @@
-========================================================
+
 Creating A Mod
 ========================================================
 
@@ -6,41 +6,19 @@ This guide will demonstrate the most basic steps of creating a mod for *The Elde
 
 To facilitate this, this guide will explain how to create a mod that displays a unique messagebox every time the player draws a two-handed weapon.
 
-This guide assumes that you have a basic understanding of the Lua Scripting Language, event based programming, and have at least minimal general programming and Visual Studio Code experience.
-
-Simple Development Workflow
+Development Workflow
 --------------------------------------------------------
-A Development Workflow is the environment and processes used to facilitate software development. There are many ways that you can develop MWSE-Lua mods. This guide offers one possible way. For the purposes of this guide, this guide will assume that you are using the Development Workflow described here.
+A Development Workflow is the environment and processes used to facilitate software development. This guide assumes that you have setup a development environment. 
 
-A simple development environment consists of the following software applications:
+If you have not set up a development environment, or do not know how to, please refer to the `Development Workflow`_ guide to set one up.
 
-- A clean Morrowind install, hereafter referred to as the Morrowind-Dev install.
-- A `Wrye Mash`_ install linked to the Mororwind-Dev install.
-- `Visual Studio Code`_ with the Lua AutoComplete extension installed.
-- A current set of MWSE Lua AutoComplete files. These can be downloaded from the `Morrowind Modding Discord`_ MWSE channel.
+Introduction to the Lua Scripting Language
+--------------------------------------------------------
+If you have basic knowledge of the Lua scripting language, you may skip this section. If you are not familiar with the Lua scripting language, please take a moment to read the `Introduction to Lua`_ guide. 
 
-To setup this environment, do the following:
-
-1. Create a clean Morrowind install, Morrowind-Dev.
-2. Install Wrye Mash
-3. Configure Wrye Mash to use your Morrowind-Dev install as the Morrowind directory.
-4. Configure Wrye Mash to use your development folder as the Mod directory. This can be any location on your computer where you want to store your development files.
-5. Install Visual Studio Code.
-6. Install the Lua AutoComplete extension in Visual Studio Code.
-7. In Visual Studio Code, open the Mod directory from step 4 as a work space. 
-8. Place the MWSE Lua AutoComplete files in this directory.
-
-To use this environment to develop mods while maintaining a clean install, you can do the following:
-
-1. Make changes as needed to your code.
-2. Open Wrye Mash.
-3. If you created or deleted files as part of your code changes, use Wrye Mash's 'Refresh Data' tool to reload the install files for your mod.
-4. Install your updated mod using Wrye Mash.
-5. Start Morrowind and complete testing as needed.
-6. Close Morrowind.
-7. Uninstall your updated mod using Wrye Mash.
-
-This workflow ensures that you maintain a clean Morrowind-Dev install, do not have mod conflicts during testing, and are always testing with the most up-to-date files.
+Introduction to Event Based Programming
+--------------------------------------------------------
+If you have basic knowledge of event based programming, you may skip this section. If you are not familiar with event based programming, please take a moment to read the `Introduction to Event Based Programming`_ guide.
 
 Creating the Mod File Structure
 --------------------------------------------------------
@@ -53,20 +31,18 @@ This folder will contain all of the mod files needed to run the mod.
 Next, the folder structure for MWSE must be created:
 
 - In "MWSE Guide Demo", create a folder named "MWSE". This is the folder that contains any MWSE code.
-- In "MWSE", create a folder named "mods". This is the folder that contains any MWSE mod code. Other options are "core", for the MWSE framework files, and "lib" for user-made frameworks and libraries.
-- In "mods", create a folder names "MWSE-Guide-Demo". This is the folder that contains the MWSE code for our mod. This folder can include spaces in the folder name. In a normal Morrowind install, you may see other folders here. These represent other mod's code files.
+- In "MWSE", create a folder named "mods". This is the folder that contains any MWSE mod code. Other options include "lib" for user-made frameworks and libraries.
+- In "mods", create a folder named "MWSE-Guide-Demo". This is the folder that contains the MWSE code for our mod. This folder can include spaces in the folder name. In a normal Morrowind install, you may see other folders here. These represent other mod's code files.
 
 The newly created folder structure should look like this:
 
-- MWSE Guide Demo
-    - MWSE
-        - mods
-            - MWSE-Guide-Demo
+- **MWSE Guide Demo\\MWSE\\mods\\MWSE-Guide-Demo**
 
 Now that the folder structure is complete, you must create a code file to run your code in. 
-- In "mods", create a file named *main.lua*. This file will contain the Lua code for the mod. 
 
-Generally, the main file of your mod should be named *main.lua*. This file should configure and initialize any other code files in your mod. The name *main.lua* is not required, but it is convention.
+- In "MWSE-Guide-Demo", create a file named *main.lua*. This file will contain the Lua code for the mod. 
+
+**The main file of your mod must be named main.lua**. This file should configure and initialize any other code files in your mod. The name *main.lua* is required by MWSE.
 
 
 Registering an Event
@@ -122,8 +98,6 @@ Now, we want to register an event for what we are actually interested in. In thi
 2. Add a simple messagebox command.
 3. Register our `showMessageboxOnWeaponReadied` function to the `weaponReadied` event.
 
-.. warning:: Be careful when registering events outside of the initialized event. It is possible to access data that is unavailable in a given event, causing bugs or a crash-to-desktop.
-
 At this point, the mod can be tested to confirm the events are set up correctly. To do this, follow the workflow described at the beginning of this guide. When you draw your weapon in-game, you should see a messagebox popup!
 
 The details of which events are available and what event data is exposed to them can be found on the `events`_ page.
@@ -157,19 +131,19 @@ Now that the required events have been set up, the `showMessageboxOnWeaponReadie
 3. The first part of this if condition checks that the reference exists. This should be done to prevent null reference exceptions. The second part of this if condition performs our validation: it ensures that the weapon being readied is a two-handed weapon.
 4. Show a messagebox with some custom object information. `.name` is available on any object.
 
-The mod should be tested again, using the workflow described at the beginning of this guide. When drawing a two-handed weapon, you should now see a custom messagebox!
+The mod should be tested again. When drawing a two-handed weapon, you should now see a custom messagebox!
 
 Conclusion
 --------------------------------------------------------
 This guide provided a simple introduction to modding *The Elder Scrolls III: Morrowind* using MWSE 2.1 Lua. 
 
 This guide:
-- explained how to set up a simple development environment and showed one possible workflow to use that environment.
+
 - explained the required folder structure to create a MWSE-Lua mod.
 - explained the basics of event registration and callbacks.
 - explained how to implement some basic logic in an event callback.
 
-At this point, you should look at the MWSE ReadTheDocs for additional information on the MWSE-Lua API. Documentation is constantly being improved upon, so ask a question in the Morrowind Modding Community Discord if you need help.
+At this point, you can continue reading the MWSE-Lua documentation. Documentation is constantly being improved upon, so ask a question in the `Morrowind Modding Discord`_ if you need help.
 
 Here is the final code in *main.lua* for the demo mod:
 
@@ -212,3 +186,6 @@ Here is the final code in *main.lua* for the demo mod:
 .. _`Visual Studio Code`: https://code.visualstudio.com
 .. _`Morrowind Modding Discord`: https://discordapp.com/invite/QDEBbaP
 .. _`events`: ../events.html
+.. _`Development Workflow`: ../Guide/development-workflows.html
+.. _`Introduction to Lua`: ../Guide/introduction-to-lua.html
+.. _`Introduction To Event Based Programming`: ../Guide/introduction-to-event-based-programming.html
