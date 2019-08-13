@@ -24,19 +24,15 @@ Creating the Mod File Structure
 --------------------------------------------------------
 Now that you have setup a development workflow, you are ready to create a mod. 
 
-In Visual Studio Code, in your Mod directory work space, create a new folder. Name the folder whatever display name you want to use for your mod. For this guide, we will name the folder "MWSE Guide Demo".
-
-This folder will contain all of the mod files needed to run the mod. 
-
 Next, the folder structure for MWSE must be created:
 
-- In "MWSE Guide Demo", create a folder named "MWSE". This is the folder that contains any MWSE code.
+- In the Morrowind "Data Files" directory, create a folder named "MWSE". This is the folder that contains any MWSE code.
 - In "MWSE", create a folder named "mods". This is the folder that contains any MWSE mod code. Other options include "lib" for user-made frameworks and libraries.
 - In "mods", create a folder named "MWSE-Guide-Demo". This is the folder that contains the MWSE code for our mod. This folder can include spaces in the folder name. In a normal Morrowind install, you may see other folders here. These represent other mod's code files.
 
 The newly created folder structure should look like this:
 
-- **MWSE Guide Demo\\MWSE\\mods\\MWSE-Guide-Demo**
+- **Morrowind\\Data Files\\MWSE\\mods\\MWSE-Guide-Demo**
 
 Now that the folder structure is complete, you must create a code file to run your code in. 
 
@@ -186,6 +182,6 @@ Here is the final code in *main.lua* for the demo mod:
 .. _`Visual Studio Code`: https://code.visualstudio.com
 .. _`Morrowind Modding Discord`: https://discordapp.com/invite/QDEBbaP
 .. _`events`: ../events.html
-.. _`Development Workflow`: ../Guide/development-workflows.html
-.. _`Introduction to Lua`: ../Guide/introduction-to-lua.html
-.. _`Introduction To Event Based Programming`: ../Guide/introduction-to-event-based-programming.html
+.. _`Development Workflow`: ../guide/development-workflows.html
+.. _`Introduction to Lua`: ../guide/introduction-to-lua.html
+.. _`Introduction To Event Based Programming`: ../guide/introduction-to-event-based-programming.html
