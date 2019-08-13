@@ -1,7 +1,7 @@
 tes3itemData
 ====================================================================================================
 
-A set of variables that differentiates one item from another.
+A set of variables that differentiates one item from another. Item data stored on an object reference can be accessed with ``reference.attachments.variables`` or ``reference.itemData``.
 
 Properties
 ----------------------------------------------------------------------------------------------------
@@ -19,7 +19,7 @@ Properties
     A generic lua table that data can be written to, and synced to/from the save. All information stored must be valid for serialization to json.
 
 `owner`_ (`tes3npc`_, `tes3faction`_, `nil`_)
-    The script associated with the scriptVariables.
+    NPC or faction the item belongs to.
 
 `requirement`_ (`tes3globalVariable`_, `number`_, `nil`_)
     A requirement, typically associated with ownership and when the player may freely interact with an object. The type depends on the owner. Faction owners provide a required rank as a number, while NPCs provide a global variable to check.
@@ -35,6 +35,44 @@ Properties
 
 `timeLeft`_ (`number`_)
     The time remaining on a light. Provides incorrect values on non-light items, which instead have a condition property.
+
+Examples
+----------------------------------------------------------------------------------------------------
+
+When player looks at an item, show the name of its owner.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: lua
+
+    local function OnActivationTargetChanged(eventData)
+        local ref = eventData.current;
+        if ref and ref.itemData and ref.itemData.owner then
+            tes3.messageBox("This %s belongs to %s", ref.object.name, ref.itemData.owner.name);
+        end
+    end
+    event.register("activationTargetChanged", OnActivationTargetChanged); 
+
+
+Find lights in the player's inventory and log the time they have left.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: lua
+
+    for node in tes3.iterate(tes3.player.object.inventory.iterator) do
+        if node.object.objectType == tes3.objectType.light then
+            if node.variables then
+                for i = 1, #node.variables do
+                    local vars = node.variables[i]
+                    if vars.timeLeft then
+                        mwse.log("%s will burn for %f seconds", node.object, vars.timeLeft)
+                    end
+                end
+            else
+                mwse.log("Player never equipped %s. It will burn for %f seconds", node.object,  node.object.time)
+            end
+        end
+    end
+
 
 .. toctree::
     :hidden:
