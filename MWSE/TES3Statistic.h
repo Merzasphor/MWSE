@@ -40,6 +40,13 @@ namespace TES3 {
 
 	struct SkillStatistic : Statistic {
 		unsigned int type; // 0xC // Not specialization?
+
+		//
+		// Other related this-call functions.
+		//
+
+		void modSkillCapped(float delta, bool capAt0 = false, bool capAt100 = false);
+
 	};
 	static_assert(sizeof(SkillStatistic) == 0x10, "TES3::SkillStatistic failed size validation");
 }
