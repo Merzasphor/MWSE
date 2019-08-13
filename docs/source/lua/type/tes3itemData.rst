@@ -67,8 +67,8 @@ Find lights in the player's inventory and log the time they have left.
                         mwse.log("%s will burn for %f seconds", node.object, vars.timeLeft)
                     end
                 end
-            else
-                mwse.log("Player never equipped %s. It will burn for %f seconds", node.object,  node.object.time)
+            else -- item data block is created when player equips a light
+                mwse.log("%s will burn for %f seconds", node.object,  node.object.time)
             end
         end
     end
