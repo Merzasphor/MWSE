@@ -1293,6 +1293,12 @@
     <ClInclude Include="TES3MagicEffectController.h">
       <Filter>Header Files\DataAdapters\TES3\Magic</Filter>
     </ClInclude>
+    <ClInclude Include="LuaDisarmTrapEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaPickLockEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2815,6 +2821,12 @@
     </ClCompile>
     <ClCompile Include="TES3MagicEffectController.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaDisarmTrapEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaPickLockEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

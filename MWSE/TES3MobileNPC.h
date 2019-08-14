@@ -36,6 +36,7 @@ namespace TES3 {
 		//
 
 		__declspec(dllexport) float getSkillRequirement(int skillId);
+
 	};
 	static_assert(sizeof(MobileNPC) == 0x56C, "TES3::MobileNPC failed size validation");
 }

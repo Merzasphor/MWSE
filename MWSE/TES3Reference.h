@@ -89,6 +89,8 @@ namespace TES3 {
 		__declspec(dllexport) bool getEmptyInventoryFlag();
 		__declspec(dllexport) void setEmptyInventoryFlag(bool);
 
+		void attemptUnlockDisarm(MobileNPC * disarmer, Item * tool, ItemData * itemData = nullptr);
+
 		// Override for references to raise an event when their scene node is created.
 		__declspec(dllexport) NI::Node * getSceneGraphNode();
 

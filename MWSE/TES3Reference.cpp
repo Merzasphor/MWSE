@@ -5,6 +5,8 @@
 
 #include "LuaActivateEvent.h"
 #include "LuaBodyPartsUpdatedEvent.h"
+#include "LuaDisarmTrapEvent.h"
+#include "LuaPickLockEvent.h"
 #include "LuaReferenceSceneNodeCreatedEvent.h"
 
 #include "TES3Util.h"
@@ -13,8 +15,10 @@
 #include "NIPointLight.h"
 
 #include "TES3Actor.h"
+#include "TES3AudioController.h"
 #include "TES3Cell.h"
 #include "TES3Class.h"
+#include "TES3Game.h"
 #include "TES3GameSetting.h"
 #include "TES3ItemData.h"
 #include "TES3MobileCreature.h"
@@ -375,6 +379,126 @@ namespace TES3 {
     void Reference::setEmptyInventoryFlag(bool set) {
 		setBaseObjectFlag(TES3::ObjectFlag::EmptyInventory, set);
     }
+
+	void Reference::attemptUnlockDisarm(MobileNPC * disarmer, Item * tool, ItemData * toolItemData) {
+		if (baseObject->objectType != ObjectType::Door && baseObject->objectType != ObjectType::Container) {
+			return;
+		}
+
+		auto dataHandler = DataHandler::get();
+		auto ndd = dataHandler->nonDynamicData;
+		auto worldController = TES3::WorldController::get();
+
+		auto lockData = getAttachedLockNode();
+
+		if (tool->objectType == ObjectType::Probe) {
+			if (toolItemData) {
+				toolItemData->condition--;
+			}
+
+			if (lockData && lockData->trap) {
+				// chance = (security + agility/5 + luck/10) * quality * fatigueTerm + trapCost * fTrapCostMult
+				float chance =
+					(disarmer->getSkillValue(SkillID::Security)
+						+ disarmer->attributes[Attribute::Agility].getCurrent() * 0.2f
+						+ disarmer->attributes[Attribute::Luck].getCurrent() * 0.1f)
+					* tool->getQuality()
+					* disarmer->getFatigueTerm()
+					+ lockData->trap->magickaCost * ndd->GMSTs[GMST::fTrapCostMult]->value.asFloat;
+
+				if (mwse::lua::event::DisarmTrapEvent::getEventEnabled()) {
+					auto& luaManager = mwse::lua::LuaManager::getInstance();
+					auto stateHandle = luaManager.getThreadSafeStateHandle();
+					sol::table result = stateHandle.triggerEvent(new mwse::lua::event::DisarmTrapEvent(this, lockData, disarmer, tool, toolItemData, chance));
+					if (result.valid()) {
+						if (result.get_or("block", false)) {
+							return;
+						}
+						chance = result["chance"];
+					}
+				}
+
+				if (chance <= 0 || chance <= (mwse::tes3::rand() % 100)) {
+					dataHandler->addSound("Disarm Trap Fail", this, 0, worldController->audioController->getMixVolume(AudioMixType::Effects) * 250);
+					if (chance <= 0) {
+						mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sTrapImpossible]->value.asString);
+					}
+					else {
+						mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sTrapFail]->value.asString);
+					}
+				}
+				else {
+					lockData->trap = nullptr;
+					setObjectModified(true);
+					Game::get()->clearTarget();
+					dataHandler->addSound("Disarm Trap", this, 0, worldController->audioController->getMixVolume(AudioMixType::Effects) * 250);
+
+					auto macp = worldController->getMobilePlayer();
+					if (macp == disarmer) {
+						macp->exerciseSkill(SkillID::Security, ndd->skills[SkillID::Security].progressActions[0]);
+						mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sTrapSuccess]->value.asString);
+					}
+				}
+			}
+		}
+		else if (tool->objectType == ObjectType::Lockpick) {
+			if (lockData == nullptr) {
+				return;
+			}
+
+			if (toolItemData) {
+				toolItemData->condition--;
+			}
+
+			if (lockData->lockLevel <= 0) {
+				return;
+			}
+
+			// chance = (security + agility/5 + luck/10) * quality * fatigueTerm + lockLevel * fPickLockMult
+			float chance =
+				(disarmer->getSkillValue(SkillID::Security)
+					+ disarmer->attributes[Attribute::Agility].getCurrent() * 0.2f
+					+ disarmer->attributes[Attribute::Luck].getCurrent() * 0.1f)
+				* tool->getQuality()
+				* disarmer->getFatigueTerm()
+				+ lockData->lockLevel * ndd->GMSTs[GMST::fPickLockMult]->value.asFloat;
+
+
+			if (mwse::lua::event::PickLockEvent::getEventEnabled()) {
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::table result = stateHandle.triggerEvent(new mwse::lua::event::PickLockEvent(this, lockData, disarmer, tool, toolItemData, chance));
+				if (result.valid()) {
+					if (result.get_or("block", false)) {
+						return;
+					}
+					chance = result["chance"];
+				}
+			}
+
+			if (chance <= 0 || chance <= (mwse::tes3::rand() % 100)) {
+				dataHandler->addSound("Open Lock Fail", this, 0, worldController->audioController->getMixVolume(AudioMixType::Effects) * 250);
+				if (chance <= 0) {
+					mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sLockImpossible]->value.asString);
+				}
+				else {
+					mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sLockFail]->value.asString);
+				}
+			}
+			else {
+				lockData->locked = false;
+				setObjectModified(true);
+				Game::get()->clearTarget();
+				dataHandler->addSound("Open Lock", this, 0, worldController->audioController->getMixVolume(AudioMixType::Effects) * 250);
+
+				auto macp = worldController->getMobilePlayer();
+				if (macp == disarmer) {
+					macp->exerciseSkill(SkillID::Security, ndd->skills[SkillID::Security].progressActions[1]);
+					mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sLockSuccess]->value.asString);
+				}
+			}
+		}
+	}
 
 	const auto TES3_Reference_getSceneGraphNode = reinterpret_cast<NI::Node*(__thiscall*)(Reference*)>(0x4E81A0);
 	NI::Node * Reference::getSceneGraphNode() {

@@ -140,6 +140,11 @@ namespace TES3 {
 		return reinterpret_cast<Cell*(__thiscall *)(MobileActor*)>(TES3_MobileActor_getCell)(this);
 	}
 
+	const auto TES3_MobileActor_getFatigueTerm = reinterpret_cast<float(__thiscall *)(MobileActor*)>(0x527610);
+	float MobileActor::getFatigueTerm() {
+		return TES3_MobileActor_getFatigueTerm(this);
+	}
+
 	void MobileActor::startCombat(MobileActor* target) {
 		// Invoke our first event and check if it is blocked.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();

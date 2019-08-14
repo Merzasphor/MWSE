@@ -32,6 +32,7 @@
 #include "LuaDeathEvent.h"
 #include "LuaDetermineActionEvent.h"
 #include "LuaDeterminedActionEvent.h"
+#include "LuaDisarmTrapEvent.h"
 #include "LuaEquipEvent.h"
 #include "LuaEquippedEvent.h"
 #include "LuaFilterBarterMenuEvent.h"
@@ -72,6 +73,7 @@
 #include "LuaMouseButtonUpEvent.h"
 #include "LuaMouseWheelEvent.h"
 #include "LuaMusicSelectTrackEvent.h"
+#include "LuaPickLockEvent.h"
 #include "LuaPotionBrewedEvent.h"
 #include "LuaProjectileExpireEvent.h"
 #include "LuaReferenceSceneNodeCreatedEvent.h"
@@ -168,6 +170,7 @@ namespace mwse {
 				usertypeDefinition.set("levelUp", sol::property(&LevelUpEvent::getEventEnabled, &LevelUpEvent::setEventEnabled));
 				usertypeDefinition.set("load", sol::property(&LoadGameEvent::getEventEnabled, &LoadGameEvent::setEventEnabled));
 				usertypeDefinition.set("loaded", sol::property(&LoadedGameEvent::getEventEnabled, &LoadedGameEvent::setEventEnabled));
+				usertypeDefinition.set("lockPick", sol::property(&PickLockEvent::getEventEnabled, &PickLockEvent::setEventEnabled));
 				usertypeDefinition.set("magicCasted", sol::property(&MagicCastedEvent::getEventEnabled, &MagicCastedEvent::setEventEnabled));
 				usertypeDefinition.set("menuEnter", sol::property(&MenuStateEvent::getEventEnabled, &MenuStateEvent::setEventEnabled));
 				usertypeDefinition.set("menuExit", sol::property(&MenuStateEvent::getEventEnabled, &MenuStateEvent::setEventEnabled));
@@ -196,6 +199,7 @@ namespace mwse {
 				usertypeDefinition.set("spellResist", sol::property(&SpellResistEvent::getEventEnabled, &SpellResistEvent::setEventEnabled));
 				usertypeDefinition.set("spellTick", sol::property(&SpellTickEvent::getEventEnabled, &SpellTickEvent::setEventEnabled));
 				usertypeDefinition.set("topicAdded", sol::property(&AddTopicEvent::getEventEnabled, &AddTopicEvent::setEventEnabled));
+				usertypeDefinition.set("trapDisarm", sol::property(&DisarmTrapEvent::getEventEnabled, &DisarmTrapEvent::setEventEnabled));
 				usertypeDefinition.set("uiActivated", sol::property(&GenericUiActivatedEvent::getEventEnabled, &GenericUiActivatedEvent::setEventEnabled));
 				usertypeDefinition.set("uiEvent", sol::property(&GenericUiPostEvent::getEventEnabled, &GenericUiPostEvent::setEventEnabled));
 				usertypeDefinition.set("uiObjectTooltip", sol::property(&UiObjectTooltipEvent::getEventEnabled, &UiObjectTooltipEvent::setEventEnabled));
@@ -210,7 +214,6 @@ namespace mwse {
 				usertypeDefinition.set("weatherCycled", sol::property(&WeatherCycledEvent::getEventEnabled, &WeatherCycledEvent::setEventEnabled));
 				usertypeDefinition.set("weatherTransitionFinished", sol::property(&WeatherTransitionFinishedEvent::getEventEnabled, &WeatherTransitionFinishedEvent::setEventEnabled));
 				usertypeDefinition.set("weatherTransitionStarted", sol::property(&WeatherTransitionStartedEvent::getEventEnabled, &WeatherTransitionStartedEvent::setEventEnabled));
-
 
 				// Finish up our usertype.
 				state.set_usertype("mwseDisableableEventManager", usertypeDefinition);

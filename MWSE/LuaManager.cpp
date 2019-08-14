@@ -3600,6 +3600,10 @@ namespace mwse {
 			overrideVirtualTableEnforced(0x74AE6C, 0xE0, 0x54D820, *reinterpret_cast<DWORD*>(&mobileNPCApplyArmorRating)); // MACH
 			overrideVirtualTableEnforced(0x74B174, 0xE0, 0x54D820, *reinterpret_cast<DWORD*>(&mobileNPCApplyArmorRating)); // MACP
 
+			// Events: disarmTrap/pickLock
+			auto referenceAttemptUnlockDisarm = &TES3::Reference::attemptUnlockDisarm;
+			genCallEnforced(0x569A62, 0x4EB160, *reinterpret_cast<DWORD*>(&referenceAttemptUnlockDisarm));
+
 			// UI framework hooks
 			TES3::UI::hook();
 

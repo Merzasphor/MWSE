@@ -122,11 +122,18 @@ namespace TES3 {
 		_declspec (dllexport) static Game * get();
 
 		//
+		// vTable accessor functions.
+		//
+
+		void setGamma(float value);
+
+		//
 		// Other related this-call functions.
 		//
 
 		bool initialize();
-		void setGamma(float value);
+
+		void clearTarget();
 
 	};
 	static_assert(sizeof(Game) == 0x110, "TES3::Game failed size validation");

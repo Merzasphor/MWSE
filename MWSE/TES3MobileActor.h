@@ -202,6 +202,8 @@ namespace TES3 {
 
 		Cell* getCell();
 
+		float getFatigueTerm();
+
 		void startCombat(MobileActor*);
 		void stopCombat(bool);
 		void onDeath();
