@@ -242,7 +242,7 @@ namespace mwse {
 
 				auto MenuInventorySelect_object = reinterpret_cast<TES3::BaseObject*>(element->getProperty(PropertyType::Pointer, *reinterpret_cast<Property*>(0x7D3B7A)).ptrValue);
 				auto MenuInventorySelect_extra = reinterpret_cast<TES3::ItemData*>(element->getProperty(PropertyType::Pointer, *reinterpret_cast<Property*>(0x7D3C48)).ptrValue);
-				auto MenuInventorySelect_count = element->getProperty(PropertyType::Pointer, *reinterpret_cast<Property*>(0x7D3BCE)).integerValue;
+				auto MenuInventorySelect_count = element->getProperty(PropertyType::Integer, *reinterpret_cast<Property*>(0x7D3BCE)).integerValue;
 				auto MenuInventorySelect_container = reinterpret_cast<TES3::Inventory*>(element->getProperty(PropertyType::Pointer, *reinterpret_cast<Property*>(0x7D3C32)).ptrValue);
 				auto MenuInventorySelect_container_object = reinterpret_cast<TES3::Actor*>(element->getProperty(PropertyType::Pointer, *reinterpret_cast<Property*>(0x7D3C3C)).ptrValue);
 
