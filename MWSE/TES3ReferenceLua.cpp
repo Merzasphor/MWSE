@@ -144,9 +144,22 @@ namespace mwse {
 			});
 
 			// Quick access to attachment data.
-			usertypeDefinition.set("itemData", sol::property([](TES3::Reference& self) {
-				return self.getAttachedItemData();
-			}));
+			usertypeDefinition.set("itemData", sol::property(
+				[](TES3::Reference& self)
+				{
+					return self.getAttachedItemData();
+				},
+				[](TES3::Reference& self, TES3::ItemData * value)
+				{
+					auto attachment = static_cast<TES3::ItemDataAttachment*>(self.getAttachment(TES3::AttachmentType::Variables));
+					if (attachment) {
+						attachment->data = value;
+					}
+					else if (value != nullptr) {
+						self.addItemDataAttachment(value);
+					}
+				}
+			));
 			usertypeDefinition.set("lockNode", sol::property([](TES3::Reference& self) {
 				return self.getAttachedLockNode();
 			}));

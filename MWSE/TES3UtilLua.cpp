@@ -2202,6 +2202,8 @@ namespace mwse {
 					throw std::invalid_argument("Invalid 'item' parameter provided.");
 				}
 
+				TES3::ItemData * itemData = getOptionalParam<TES3::ItemData*>(params, "itemData", nullptr);
+
 				// Make sure we're dealing with actors.
 				TES3::Actor * actor = static_cast<TES3::Actor*>(reference->baseObject);
 				if (!actor->isActor()) {
@@ -2216,6 +2218,10 @@ namespace mwse {
 				// Get how many items we are adding.
 				int fulfilledCount = 0;
 				int desiredCount = std::max(std::abs(getOptionalParam(params, "count", 1)), 1);
+				if (itemData != nullptr) {
+					desiredCount = 1;
+				}
+
 				if (getOptionalParam<bool>(params, "limit", false)) {
 					// Prevent placing items into organic containers.
 					if (actor->getActorFlag(TES3::ActorFlagContainer::Organic)) {
@@ -2238,7 +2244,7 @@ namespace mwse {
 
 				// Add the item and return the added count, since we do no inventory checking.
 				auto mobile = reference->getAttachedMobileActor();
-				actor->inventory.addItem(mobile, item, fulfilledCount, false, nullptr);
+				actor->inventory.addItem(mobile, item, fulfilledCount, false, &itemData);
 
 				// Play the relevant sound.
 				auto worldController = TES3::WorldController::get();
@@ -2294,6 +2300,9 @@ namespace mwse {
 					throw std::invalid_argument("Invalid 'item' parameter provided.");
 				}
 
+				TES3::ItemData * itemData = getOptionalParam<TES3::ItemData*>(params, "itemData", nullptr);
+				auto deleteItemData = getOptionalParam<bool>(params, "deleteItemData", itemData != nullptr);
+
 				// Make sure we're dealing with actors.
 				TES3::Actor * actor = static_cast<TES3::Actor*>(reference->baseObject);
 				if (!actor->isActor()) {
@@ -2305,13 +2314,24 @@ namespace mwse {
 					actor = static_cast<TES3::Actor*>(reference->baseObject);
 				}
 
-				// Get how many items we are removing.
+				// Get how many items we are removing. Force to 1 if we supply an itemData.
 				int desiredCount = std::max(std::abs(getOptionalParam(params, "count", 1)), 1);
+				if (itemData != nullptr) {
+					desiredCount = 1;
+				}
 
+				// Make sure that the inventory contains the item.
 				TES3::ItemStack * stack = actor->inventory.findItemStack(item);
 				if (stack == nullptr) {
 					return 0;
 				}
+
+				// If we were given an itemData, make sure that it's here.
+				if (itemData != nullptr && stack->variables != nullptr && !stack->variables->contains(itemData)) {
+					return 0;
+				}
+
+				// Limit removal by stack count.
 				int fulfilledCount = std::min(desiredCount, stack->count);
 
 				// No items to remove? Great, let's get out of here.
@@ -2321,7 +2341,7 @@ namespace mwse {
 
 				// Add the item and return the added count, since we do no inventory checking.
 				auto mobile = reference->getAttachedMobileActor();
-				actor->inventory.removeItemWithData(mobile, item, nullptr, fulfilledCount, false);
+				actor->inventory.removeItemWithData(mobile, item, itemData, fulfilledCount, deleteItemData);
 
 				// Play the relevant sound.
 				auto worldController = TES3::WorldController::get();

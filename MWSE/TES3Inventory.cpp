@@ -28,8 +28,8 @@ namespace TES3 {
 	}
 
 	const auto TES3_Inventory_AddItem = reinterpret_cast<int(__thiscall*)(Inventory*, MobileActor *, Item *, int, bool, ItemData **)>(0x498530);
-	int Inventory::addItem(MobileActor * mobile, Item * item, int count, bool something, ItemData ** itemDataRef) {
-		return TES3_Inventory_AddItem(this, mobile, item, count, something, itemDataRef);
+	int Inventory::addItem(MobileActor * mobile, Item * item, int count, bool overwriteCount, ItemData ** itemDataRef) {
+		return TES3_Inventory_AddItem(this, mobile, item, count, overwriteCount, itemDataRef);
 	}
 
 	const auto TES3_Inventory_AddItemWithoutData = reinterpret_cast<int(__thiscall*)(Inventory*, MobileActor *, Item *, int, bool)>(0x497CD0);

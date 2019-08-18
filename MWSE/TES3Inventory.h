@@ -51,7 +51,7 @@ namespace TES3 {
 
 		ItemStack* findItemStack(Object* item);
 
-		int addItem(MobileActor * mobile, Item * item, int count, bool something, ItemData ** itemDataRef);
+		int addItem(MobileActor * mobile, Item * item, int count, bool overwriteCount, ItemData ** itemDataRef);
 		int addItemWithoutData(MobileActor * mobile, Item * item, int count, bool something);
 		ItemData* addItemByReference(MobileActor * mobile, Reference * reference, int * out_count);
 		void removeItemWithData(MobileActor * mobile, Item * item, ItemData * itemData, int count, bool deleteStackData);
