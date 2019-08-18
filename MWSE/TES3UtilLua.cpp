@@ -2339,8 +2339,13 @@ namespace mwse {
 					return 0;
 				}
 
-				// Add the item and return the added count, since we do no inventory checking.
+				// Try to unequip the item if it's equipped.
 				auto mobile = reference->getAttachedMobileActor();
+				if (itemData != nullptr) {
+					actor->unequipItem(item, true, mobile, false, itemData);
+				}
+
+				// Add the item and return the added count, since we do no inventory checking.
 				actor->inventory.removeItemWithData(mobile, item, itemData, fulfilledCount, deleteItemData);
 
 				// Play the relevant sound.
