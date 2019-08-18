@@ -15,6 +15,7 @@ namespace mwse {
 			// Basic property binding.
 			usertypeDefinition.set("actionBeforeCombat", sol::readonly_property(&TES3::MobileActor::actionBeforeCombat));
 			usertypeDefinition.set("actionData", sol::readonly_property(&TES3::MobileActor::actionData));
+			usertypeDefinition.set("activeMagicEffectList", sol::readonly_property(&TES3::MobileActor::activeMagicEffects));
 			usertypeDefinition.set("actorType", sol::readonly_property(&TES3::MobileActor::actorType));
 			usertypeDefinition.set("aiPlanner", sol::readonly_property(&TES3::MobileActor::aiPlanner));
 			usertypeDefinition.set("alarm", &TES3::MobileActor::alarm);
