@@ -25,6 +25,7 @@
 #include "TES3Actor.h"
 #include "TES3AIData.h"
 #include "TES3AIPackage.h"
+#include "TES3Alchemy.h"
 #include "TES3Armor.h"
 #include "TES3AudioController.h"
 #include "TES3Cell.h"
@@ -36,6 +37,7 @@
 #include "TES3Dialogue.h"
 #include "TES3DialogueInfo.h"
 #include "TES3Door.h"
+#include "TES3Enchantment.h"
 #include "TES3Faction.h"
 #include "TES3Fader.h"
 #include "TES3Game.h"
@@ -3049,6 +3051,56 @@ namespace mwse {
 				}
 
 				animData->unknown_0x54 |= 0xFFFF;
+			};
+
+			state["tes3"]["isAffectedBy"] = [](sol::table params) {
+				TES3::Reference * reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided.");
+				}
+
+				auto mact = reference->getAttachedMobileActor();
+				if (mact == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided. No mobile actor found.");
+				}
+
+				// Are we checking for being affected by an object?
+				int effectId = getOptionalParam<int>(params, "effect", -1);
+				TES3::BaseObject * object = getOptionalParamObject<TES3::BaseObject>(params, "object");
+				if (object != nullptr) {
+					if (object->objectType == TES3::ObjectType::Alchemy) {
+						return mact->isAffectedByAlchemy(static_cast<TES3::Alchemy*>(object));
+					}
+					else if (object->objectType == TES3::ObjectType::Enchantment) {
+						return mact->isAffectedByEnchantment(static_cast<TES3::Enchantment*>(object));
+					}
+					else if (object->objectType == TES3::ObjectType::Spell) {
+						return mact->isAffectedBySpell(static_cast<TES3::Spell*>(object));
+					}
+					else if (object->objectType == TES3::ObjectType::MagicEffect) {
+						effectId = static_cast<TES3::MagicEffect*>(object)->id;
+					}
+					else {
+						throw std::invalid_argument("Invalid 'object' parameter provided.");
+					}
+				}
+
+				// Check based on effect ID.
+				if (effectId > -1) {
+					auto firstEffect = mact->activeMagicEffects.firstEffect;
+					auto itt = firstEffect->next;
+					while (itt != firstEffect) {
+						if (itt->magicEffectID == effectId) {
+							return true;
+						}
+						itt = itt->next;
+					}
+				}
+				else {
+					throw std::invalid_argument("Invalid 'effect' parameter provided.");
+				}
+
+				return false;
 			};
 
 			state["tes3"]["addMagicEffect"] = [](sol::table params) {

@@ -15,8 +15,6 @@ namespace mwse {
 			// Basic property binding.
 			usertypeDefinition.set("actionBeforeCombat", sol::readonly_property(&TES3::MobileActor::actionBeforeCombat));
 			usertypeDefinition.set("actionData", sol::readonly_property(&TES3::MobileActor::actionData));
-			usertypeDefinition.set("activeMagicEffectCount", sol::readonly_property(&TES3::MobileActor::activeMagicEffectCount));
-			usertypeDefinition.set("activeMagicEffects", sol::readonly_property(&TES3::MobileActor::activeMagicEffects));
 			usertypeDefinition.set("actorType", sol::readonly_property(&TES3::MobileActor::actorType));
 			usertypeDefinition.set("aiPlanner", sol::readonly_property(&TES3::MobileActor::aiPlanner));
 			usertypeDefinition.set("alarm", &TES3::MobileActor::alarm);
@@ -258,6 +256,10 @@ namespace mwse {
 			// Functions exposed as properties.
 			usertypeDefinition.set("cell", sol::property(&TES3::MobileActor::getCell));
 			usertypeDefinition.set("hasFreeAction", sol::property(&TES3::MobileActor::hasFreeAction));
+
+			// Legacy support for old structures.
+			usertypeDefinition.set("activeMagicEffects", sol::readonly_property([](TES3::MobileActor& self) { return self.activeMagicEffects.firstEffect; }));
+			usertypeDefinition.set("activeMagicEffectCount", sol::readonly_property([](TES3::MobileActor& self) { return self.activeMagicEffects.count; }));
 		}
 
 		void bindTES3MobileActor();

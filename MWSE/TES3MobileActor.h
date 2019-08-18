@@ -98,6 +98,11 @@ namespace TES3 {
 			unsigned short magnitudeMin; // 0x16
 			unsigned char skillOrAttributeID; // 0x18
 		};
+		struct ActiveMagicEffects {
+			bool unknown_0x0;
+			ActiveMagicEffect * firstEffect; // 0x4
+			int count; // 0x8
+		};
 
 		Iterator<MobileActor> listTargetActors; // 0x80
 		Iterator<MobileActor> listFriendlyActors; // 0x94
@@ -117,12 +122,7 @@ namespace TES3 {
 		int unknown_0x1B8;
 		int unknown_0x1BC;
 		CombatSession * combatSession; // 0x1C0
-		char unknown_0x1C4;
-		char unknown_0x1C5;
-		char unknown_0x1C6;
-		char unknown_0x1C7;
-		ActiveMagicEffect* activeMagicEffects; // 0x1C8
-		int activeMagicEffectCount; // 0x1CC
+		ActiveMagicEffects activeMagicEffects; // 0x1C4
 		int unknown_0x1D0;
 		Collision collision_1D4;
 		HashMap powers;
@@ -248,6 +248,7 @@ namespace TES3 {
 
 		bool equipItem(Object* item, ItemData * itemData = nullptr, bool addItem = false, bool selectBestCondition = false, bool selectWorstCondition = false);
 	};
+	static_assert(sizeof(MobileActor::ActiveMagicEffects) == 0xC, "TES3::MobileActor::ActiveMagicEffects failed size validation");
 	static_assert(sizeof(MobileActor::ActiveMagicEffect) == 0x18, "TES3::MobileActor::ActiveMagicEffect failed size validation");
 	static_assert(sizeof(MobileActor) == 0x3B0, "TES3::MobileActor failed size validation");
 }
