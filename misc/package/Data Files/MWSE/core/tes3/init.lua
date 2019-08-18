@@ -1,6 +1,7 @@
 local tes3 = {}
 
 -- Game constants.
+tes3.actionFlag = require("tes3.actionFlag")
 tes3.actorType = require("tes3.actorType")
 tes3.aiPackage = require("tes3.aiPackage")
 tes3.animationGroup = require("tes3.animationGroup")
@@ -20,8 +21,8 @@ tes3.effect = require("tes3.effect")
 tes3.effectAttribute = require("tes3.effectAttribute")
 tes3.effectEventType = require("tes3.effectEventType")
 tes3.effectRange = require("tes3.effectRange")
-tes3.event = require("tes3.event")
 tes3.enchantmentType = require("tes3.enchantmentType")
+tes3.event = require("tes3.event")
 tes3.flowDirection = require("tes3.flowDirection")
 tes3.gmst = require("tes3.gmst")
 tes3.justifyText = require("tes3.justifyText")
