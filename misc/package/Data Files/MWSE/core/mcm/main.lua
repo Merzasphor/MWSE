@@ -80,6 +80,10 @@ local function onClickCloseButton(e)
 	end
 end
 
+local function caseInsensitiveSorter(a, b)
+	return a:lower() < b:lower()
+end
+
 -- Callback for when the mod config button has been clicked.
 -- Here, we'll create the GUI and set up everything.
 local function onClickModConfigButton()
@@ -126,7 +130,7 @@ local function onClickModConfigButton()
 				table.insert(sortedConfigModNames, name)
 			end
 		end
-		table.sort(sortedConfigModNames)
+		table.sort(sortedConfigModNames, caseInsensitiveSorter)
 
 		-- Fill in the mod list.
 		for i = 1, #sortedConfigModNames do
