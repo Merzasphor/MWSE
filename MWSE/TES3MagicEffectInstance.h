@@ -6,7 +6,7 @@ namespace TES3 {
 	struct MagicEffectInstance {
 		Reference * target; // 0x0
 		float resistedPercent; // 0x4
-		float magnitude; // 0x8
+		int magnitude; // 0x8
 		float timeActive; // 0xC
 		float cumulativeMagnitude; // 0x10
 		int state; // 0x14
