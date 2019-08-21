@@ -30,7 +30,10 @@ namespace mwse {
 		}
 
 		void setItemDataOwner(TES3::ItemData& itemData, sol::object value) {
-			if (value.is<TES3::BaseObject*>()) {
+			if (value == sol::nil) { 
+				itemData.owner = nullptr; 
+			}
+			else if (value.is<TES3::BaseObject*>()) {
 				TES3::BaseObject * newOwner = value.as<TES3::BaseObject*>();
 
 				// We only support NPC and Faction owners.
