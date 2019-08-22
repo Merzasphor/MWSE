@@ -396,9 +396,6 @@ namespace mwse {
 				sol::state& state = stateHandle.state;
 
 				if (param.is<std::string>()) {
-					auto& luaManager = mwse::lua::LuaManager::getInstance();
-					auto stateHandle = luaManager.getThreadSafeStateHandle();
-					sol::state& state = stateHandle.state;
 					std::string message = state["string"]["format"](param, va);
 					return tes3::ui::messagePlayer(message.c_str());
 				}
