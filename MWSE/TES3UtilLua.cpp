@@ -439,7 +439,16 @@ namespace mwse {
 					// Temporary hook into the function that creates message boxes. 
 					return reinterpret_cast<int(__cdecl *)(const char*, ...)>(0x5F1AA0)(message.c_str(), buttonTextStruct, NULL);
 				}
-
+				else {
+					sol::protected_function_result result = state["tostring"](param);
+					if (result.valid()) {
+						sol::optional<const char*> asString = result;
+						if (asString) {
+							return tes3::ui::messagePlayer(asString.value()); 
+						}
+					}
+					throw std::exception("tes3.messageBox: Unable to convert parameter to string.");
+				}
 				return 0;
 			};
 
