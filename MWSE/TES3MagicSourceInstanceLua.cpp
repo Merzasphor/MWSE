@@ -27,11 +27,12 @@ namespace mwse {
 			// Basic property binding.
 			usertypeDefinition.set("castChanceOverride", &TES3::MagicSourceInstance::overrideCastChance);
 			usertypeDefinition.set("itemData", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.castingItemCondition; }));
-			usertypeDefinition.set("sourceType", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.sourceCombo.sourceType; }));
-			usertypeDefinition.set("timestampCastBegin", &TES3::MagicSourceInstance::timestampCastBegin);
-			usertypeDefinition.set("state", &TES3::MagicSourceInstance::state);
 			usertypeDefinition.set("itemID", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.castingItemID; }));
 			usertypeDefinition.set("magicID", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.magicID; }));
+			usertypeDefinition.set("serialNumber", sol::readonly_property(&TES3::MagicSourceInstance::serialNumber));
+			usertypeDefinition.set("sourceType", sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.sourceCombo.sourceType; }));
+			usertypeDefinition.set("state", &TES3::MagicSourceInstance::state);
+			usertypeDefinition.set("timestampCastBegin", &TES3::MagicSourceInstance::timestampCastBegin);
 
 			// Basic function binding.
 			usertypeDefinition.set("getMagnitudeForIndex", &TES3::MagicSourceInstance::getMagnitude);
