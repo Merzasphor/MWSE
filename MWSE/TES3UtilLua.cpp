@@ -2253,10 +2253,15 @@ namespace mwse {
 					return 0;
 				}
 
-				// Delete the item data if it's fully repaired.
-				if (TES3::ItemData::isFullyRepaired(itemData, item)) {
-					delete itemData;
-					itemData = nullptr;
+				if (itemData) {
+					// Clear the owner, if any.
+					itemData->owner = nullptr;
+
+					// Delete the item data if it's fully repaired.
+					if (TES3::ItemData::isFullyRepaired(itemData, item)) {
+						delete itemData;
+						itemData = nullptr;
+					}
 				}
 
 				// Add the item and return the added count, since we do no inventory checking.
