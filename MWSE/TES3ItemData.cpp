@@ -107,8 +107,8 @@ namespace TES3 {
 	}
 
 	const auto TES3_IsItemFullyRepaired = reinterpret_cast<bool(__cdecl *)(ItemDataVanilla*, Item*, bool)>(0x4E7970);
-	bool ItemData::isFullyRepaired(ItemData * itemData, Item * item, bool checkOwner) {
-		if (!TES3_IsItemFullyRepaired(itemData, item, checkOwner)) {
+	bool ItemData::isFullyRepaired(ItemData * itemData, Item * item, bool ignoreOwnership) {
+		if (!TES3_IsItemFullyRepaired(itemData, item, ignoreOwnership)) {
 			return false;
 		}
 

@@ -64,7 +64,7 @@ namespace TES3 {
 
 		static ItemData * __cdecl createForObject(Object * object);
 
-		static bool __cdecl isFullyRepaired(ItemData * itemData, Item * item, bool checkOwner = false);
+		static bool __cdecl isFullyRepaired(ItemData * itemData, Item * item, bool ignoreOwnership = false);
 
 		//
 		// Custom functions.
