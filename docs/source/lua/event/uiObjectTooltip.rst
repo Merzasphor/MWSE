@@ -29,7 +29,7 @@ reference
 count
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_. Read-only. The number of items in the stack.
+`number`_. Read-only. The number of items in the stack. Only valid for inventory tiles. For in-world objects and inventory tiles that have only 1 item will return 0.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html
