@@ -19,6 +19,13 @@ namespace TES3 {
 	// Vanilla ItemData
 	//
 
+	void * ItemDataVanilla::operator new(size_t size) {
+		return mwse::tes3::_new(size);
+	}
+	void ItemDataVanilla::operator delete(void * address) {
+		mwse::tes3::_delete(address);
+	}
+
 	const auto TES3_ItemData_constructor = reinterpret_cast<ItemDataVanilla*(__thiscall *)(ItemDataVanilla*)>(0x4E44B0);
 	ItemDataVanilla * ItemDataVanilla::ctor(ItemDataVanilla * self) {
 		return TES3_ItemData_constructor(self);
@@ -100,8 +107,8 @@ namespace TES3 {
 	}
 
 	const auto TES3_IsItemFullyRepaired = reinterpret_cast<bool(__cdecl *)(ItemDataVanilla*, Item*, bool)>(0x4E7970);
-	bool ItemData::isFullyRepaired(ItemData * itemData, Item * item, bool fromBarterMenu) {
-		if (!TES3_IsItemFullyRepaired(itemData, item, fromBarterMenu)) {
+	bool ItemData::isFullyRepaired(ItemData * itemData, Item * item, bool checkOwner) {
+		if (!TES3_IsItemFullyRepaired(itemData, item, checkOwner)) {
 			return false;
 		}
 

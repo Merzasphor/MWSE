@@ -24,6 +24,13 @@ namespace TES3 {
 		ScriptVariables * scriptData; // 0x18
 
 		//
+		// Basic operators.
+		//
+
+		static void * operator new(size_t size);
+		static void operator delete(void *block);
+
+		//
 		// Related static functions.
 		// 
 
@@ -57,7 +64,7 @@ namespace TES3 {
 
 		static ItemData * __cdecl createForObject(Object * object);
 
-		static bool __cdecl isFullyRepaired(ItemData * itemData, Item * item, bool fromBarterMenu = false);
+		static bool __cdecl isFullyRepaired(ItemData * itemData, Item * item, bool checkOwner = false);
 
 		//
 		// Custom functions.
