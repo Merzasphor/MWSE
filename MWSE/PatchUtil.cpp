@@ -20,6 +20,7 @@
 #include "TES3Util.h"
 
 #include "LuaManager.h"
+#include "LuaUtil.h"
 
 #include <Windows.h>
 #include <Psapi.h>
@@ -274,12 +275,12 @@ namespace mwse {
 
 		void CreateMiniDump(EXCEPTION_POINTERS* pep) {
 			log::getLog() << std::endl;
-			log::getLog() << "[MiniDump] Morrowind has crashed! To help improve game stability, send MWSE_Minidump.dmp to NullCascade@gmail.com or to NullCascade#1010 on Discord." << std::endl;
+			log::getLog() << "Morrowind has crashed! To help improve game stability, send MWSE_Minidump.dmp and mwse.log to NullCascade@gmail.com or to NullCascade#1010 on Discord." << std::endl;
 
 			// Display the memory usage in the log.
 			PROCESS_MEMORY_COUNTERS_EX memCounter;
 			GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&memCounter, sizeof(memCounter));
-			log::getLog() << "[MiniDump] Memory usage: " << memCounter.PrivateUsage << " bytes." << std::endl;
+			log::getLog() << "Memory usage: " << memCounter.PrivateUsage << " bytes." << std::endl;
 
 			// Open the file.
 			HANDLE hFile = CreateFile("MWSE_MiniDump.dmp", GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -306,18 +307,22 @@ namespace mwse {
 				BOOL rv = MiniDumpWriteDump(GetCurrentProcess(), GetCurrentProcessId(), hFile, mdt, (pep != 0) ? &mdei : 0, 0, &mci);
 
 				if (!rv) {
-					log::getLog() << "[MiniDump] Creation failed. Error: 0x" << std::hex << GetLastError() << std::endl;
+					log::getLog() << "MiniDump creation failed. Error: 0x" << std::hex << GetLastError() << std::endl;
 				}
 				else {
-					log::getLog() << "[MiniDump] Creation successful." << std::endl;
+					log::getLog() << "MiniDump creation successful." << std::endl;
 				}
 
 				// Close the file
 				CloseHandle(hFile);
 			}
 			else {
-				log::getLog() << "[MiniDump] Creation failed. Could not get file handle. Error: " << GetLastError() << std::endl;
+				log::getLog() << "MiniDump creation failed. Could not get file handle. Error: " << GetLastError() << std::endl;
 			}
+
+			// Try to print the lua stack trace.
+			log::getLog() << "Lua traceback at time of crash:" << std::endl;
+			mwse::lua::logStackTrace();
 		}
 
 		int __stdcall onWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
