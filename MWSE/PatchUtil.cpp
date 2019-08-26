@@ -260,7 +260,6 @@ namespace mwse {
 				// Does the module have ModuleReferencedByMemory flag set? 
 				if (pOutput->ModuleWriteFlags & ModuleWriteDataSeg) {
 					if (!isDataSectionNeeded(pInput->Module.FullPath)) {
-						log::getLog() << "[MiniDump] Excluding module data sections: 0x" << pInput->Module.FullPath << std::endl;
 						pOutput->ModuleWriteFlags &= (~ModuleWriteDataSeg);
 					}
 				}
@@ -275,12 +274,12 @@ namespace mwse {
 
 		void CreateMiniDump(EXCEPTION_POINTERS* pep) {
 			log::getLog() << std::endl;
-			log::getLog() << "Morrowind has crashed! To help improve game stability, send MWSE_Minidump.dmp to NullCascade@gmail.com or to NullCascade#1010 on Discord." << std::endl;
+			log::getLog() << "[MiniDump] Morrowind has crashed! To help improve game stability, send MWSE_Minidump.dmp to NullCascade@gmail.com or to NullCascade#1010 on Discord." << std::endl;
 
 			// Display the memory usage in the log.
 			PROCESS_MEMORY_COUNTERS_EX memCounter;
 			GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&memCounter, sizeof(memCounter));
-			log::getLog() << "Memory usage: " << memCounter.PrivateUsage << " bytes." << std::endl;
+			log::getLog() << "[MiniDump] Memory usage: " << memCounter.PrivateUsage << " bytes." << std::endl;
 
 			// Open the file.
 			HANDLE hFile = CreateFile("MWSE_MiniDump.dmp", GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
