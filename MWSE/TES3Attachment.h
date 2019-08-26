@@ -127,7 +127,7 @@ namespace TES3 {
 	}
 
 	struct ActionAttachment : Attachment {
-		ActionFlags::value_type flags;
+		mwse::bitset32 flags;
 		Reference * reference;
 	};
 	static_assert(sizeof(ActionAttachment) == 0x10, "TES3::ActionAttachment failed size validation");

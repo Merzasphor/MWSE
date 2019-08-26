@@ -25,7 +25,7 @@ namespace TES3 {
 
 	struct MobController_0x24 {
 		MobilePlayer * mobilePlayer; // 0x0
-		Iterator<void> unknown_0x4;
+		Iterator<MobileActor> unknown_0x4;
 		bool unknown_0x18;
 		bool unknown_0x19; // Maybe force new actions?
 		_RTL_CRITICAL_SECTION criticalSection;

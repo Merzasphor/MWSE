@@ -225,7 +225,7 @@ namespace mwse {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
 
-				return reference->getBaseObjectFlag(TES3::ObjectFlag::Delete);
+				return reference->objectFlags.test(TES3::ObjectFlag::DeleteBit);
 			};
 			state["mwscript"]["getDetected"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
@@ -409,7 +409,7 @@ namespace mwse {
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
 
 				bool del = getOptionalParam<bool>(params, "delete", true);
-				reference->setBaseObjectFlag(TES3::ObjectFlag::Delete, del);
+				reference->objectFlags.set(TES3::ObjectFlag::DeleteBit, del);
 
 				reference->setObjectModified(true);
 

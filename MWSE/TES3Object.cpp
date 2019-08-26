@@ -242,17 +242,4 @@ namespace TES3 {
 	Iterator<BaseObject> * PhysicalObject::getStolenList() {
 		return vTable.physical->getStolenList(this);
 	}
-
-	bool BaseObject::getBaseObjectFlag(unsigned int flag) {
-		return (objectFlags & flag) != 0;
-	}
-
-	void BaseObject::setBaseObjectFlag(unsigned int flag, bool set) {
-		if (set) {
-			objectFlags |= flag;
-		}
-		else {
-			objectFlags &= ~flag;
-		}
-	}
 }

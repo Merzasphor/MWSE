@@ -8,6 +8,8 @@
 #include "TES3GameFile.h"
 #include "TES3ReferenceList.h"
 
+#include <bitset>
+
 namespace mwse {
 	namespace lua {
 		template <typename T>
@@ -38,8 +40,8 @@ namespace mwse {
 			}
 			));
 			usertypeDefinition.set("modified", sol::property(&TES3::BaseObject::getObjectModified, &TES3::BaseObject::setObjectModified));
-			usertypeDefinition.set("disabled", sol::readonly_property([](TES3::BaseObject& self) { return (self.objectFlags & TES3::ObjectFlag::Disabled) != 0; }));
-			usertypeDefinition.set("deleted", sol::readonly_property([](TES3::BaseObject& self) { return (self.objectFlags & TES3::ObjectFlag::Delete) != 0; }));
+			usertypeDefinition.set("disabled", sol::readonly_property([](TES3::BaseObject& self) { return self.objectFlags.test(TES3::ObjectFlag::DisabledBit); }));
+			usertypeDefinition.set("deleted", sol::readonly_property([](TES3::BaseObject& self) { return self.objectFlags.test(TES3::ObjectFlag::DeleteBit); }));
 		}
 
 		template <typename T>

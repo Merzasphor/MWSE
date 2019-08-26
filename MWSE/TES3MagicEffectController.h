@@ -59,10 +59,10 @@ namespace TES3 {
 		const char * getEffectName(int id);
 
 		// Flag manipulation.
-		static unsigned int getEffectFlags(int id);
+		static mwse::bitset32 getEffectFlags(int id);
 		static void setEffectFlags(int id, unsigned int flags);
-		static bool getEffectFlag(int id, EffectFlag::Flag flag);
-		static void setEffectFlag(int id, EffectFlag::Flag flag, bool value);
+		static bool getEffectFlag(int id, EffectFlag::FlagBit flag);
+		static void setEffectFlag(int id, EffectFlag::FlagBit flag, bool value);
 
 		static void InstallCustomMagicEffectController();
 
@@ -74,7 +74,7 @@ namespace TES3 {
 
 		// Unimplemented.
 		static unsigned int effectNameGMSTs[MAX_EFFECT_COUNT];
-		static unsigned int effectFlags[MAX_EFFECT_COUNT];
+		static mwse::bitset32 effectFlags[MAX_EFFECT_COUNT];
 		static unsigned int effectCounters[MAX_EFFECT_COUNT][5];
 	};
 }

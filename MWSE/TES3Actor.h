@@ -38,7 +38,7 @@ namespace TES3 {
 
 	struct Actor : PhysicalObject {
 		ActorAnimationData * animationData; // 0x30
-		unsigned int actorFlags; // 0x34
+		mwse::bitset32 actorFlags; // 0x34
 		int cloneCount; // 0x38
 		Inventory inventory; // 0x3C
 		Iterator<EquipmentStack> equipment; // 0x58
@@ -72,9 +72,6 @@ namespace TES3 {
 		//
 		// Custom functions.
 		//
-
-		bool getActorFlag(unsigned int);
-		void setActorFlag(unsigned int, bool);
 
 		bool isBaseActor();
 		bool isClone();

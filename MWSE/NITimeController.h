@@ -5,9 +5,11 @@
 #include "NIObject.h"
 #include "NIPointer.h"
 
+#include "Bitset.h"
+
 namespace NI {
 	struct TimeController : Object {
-		unsigned short deprecatedFlags; // 0x8
+		mwse::bitset16 deprecatedFlags; // 0x8
 		float frequency; // 0xC
 		float phase; // 0x10
 		float lowKeyFrame; // 0x14

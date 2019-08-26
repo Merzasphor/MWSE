@@ -20,7 +20,7 @@ namespace TES3 {
 		char * raceName; // 0x34
 		signed char part; // 0x38
 		bool vampiric; // 0x39
-		unsigned char flags; // 0x3A
+		mwse::bitset8 flags; // 0x3A
 		signed char partType; // 0x3B
 		NI::Pointer<NI::Node> mirroredNode; // 0x3C // Type: BSMirroredNode.
 

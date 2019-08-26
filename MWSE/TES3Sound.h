@@ -22,7 +22,7 @@ namespace TES3 {
 		char fileHeader[16];
 		short unknown_0x18;
 		int unknown_0x1C;
-		int flags;
+		mwse::bitset32 flags;
 		int waveSize;
 		int unknown_0x28;
 		unsigned char* wavHeader;

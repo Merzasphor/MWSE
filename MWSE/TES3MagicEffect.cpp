@@ -68,7 +68,7 @@ namespace TES3 {
 
 		// Get the base name. If the effect uses skills/attributes we need to remap the name.
 		int nameGMST = effectData->getNameGMST();
-		if (ndd->magicEffects->getEffectFlag(effectID, EffectFlag::TargetSkill)) {
+		if (ndd->magicEffects->getEffectFlag(effectID, EffectFlag::TargetSkillBit)) {
 			const char* skillName = ndd->GMSTs[mwse::tes3::getSkillNameGMST(skillID)]->value.asString;
 			switch (nameGMST) {
 			case GMST::sEffectFortifySkill:
@@ -88,7 +88,7 @@ namespace TES3 {
 				break;
 			}
 		}
-		else if (ndd->magicEffects->getEffectFlag(effectID, EffectFlag::TargetAttribute)) {
+		else if (ndd->magicEffects->getEffectFlag(effectID, EffectFlag::TargetAttributeBit)) {
 			const char* attributeName = ndd->GMSTs[mwse::tes3::getAttributeNameGMST(attributeID)]->value.asString;
 			switch (nameGMST) {
 			case GMST::sEffectFortifyAttribute:
@@ -127,7 +127,7 @@ namespace TES3 {
 			}
 		}
 		else {
-			if (!ndd->magicEffects->getEffectFlag(effectID, EffectFlag::NoMagnitude)) {
+			if (!ndd->magicEffects->getEffectFlag(effectID, EffectFlag::NoMagnitudeBit)) {
 				if (magnitudeMin != magnitudeMax) {
 					ss << " " << magnitudeMin << " " << ndd->GMSTs[GMST::sTo]->value.asString << " " << magnitudeMax;
 				}
@@ -193,7 +193,7 @@ namespace TES3 {
 		}
 
 		// Add on the duration.
-		if (!ndd->magicEffects->getEffectFlag(effectID, EffectFlag::NoDuration) && duration > 1) {
+		if (!ndd->magicEffects->getEffectFlag(effectID, EffectFlag::NoDurationBit) && duration > 1) {
 			ss << " " << ndd->GMSTs[GMST::sfor]->value.asString << " " << duration << " " << ndd->GMSTs[GMST::sseconds]->value.asString;
 		}
 

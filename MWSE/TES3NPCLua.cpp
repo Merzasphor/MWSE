@@ -63,23 +63,23 @@ namespace mwse {
 
 				// Easy access to actor flags.
 				usertypeDefinition.set("female", sol::property(
-					[](TES3::NPC& self) { return self.getActorFlag(TES3::ActorFlagNPC::Female); },
-					[](TES3::NPC& self, bool state) { return self.setActorFlag(TES3::ActorFlagNPC::Female, state); }
+					[](TES3::NPC& self) { return self.actorFlags.test(TES3::ActorFlagNPC::FemaleBit); },
+					[](TES3::NPC& self, bool state) { return self.actorFlags.set(TES3::ActorFlagNPC::FemaleBit, state); }
 				));
 				usertypeDefinition.set("autoCalc", sol::property(
-					[](TES3::NPC& self) { return self.getActorFlag(TES3::ActorFlagNPC::AutoCalc); },
-					[](TES3::NPC& self, bool state) { return self.setActorFlag(TES3::ActorFlagNPC::AutoCalc, state); }
+					[](TES3::NPC& self) { return self.actorFlags.test(TES3::ActorFlagNPC::AutoCalcBit); },
+					[](TES3::NPC& self, bool state) { return self.actorFlags.set(TES3::ActorFlagNPC::AutoCalcBit, state); }
 				));
 
 				// TODO: Deprecated. Remove before 2.1-stable.
 				usertypeDefinition.set("model", sol::property(&TES3::NPC::getModelPath, &TES3::NPC::setModelPath));
 				usertypeDefinition.set("essential", sol::property(
-					[](TES3::NPC& self) { return self.getActorFlag(TES3::ActorFlagNPC::Essential); },
-					[](TES3::NPC& self, bool state) { return self.setActorFlag(TES3::ActorFlagNPC::Essential, state); }
+					[](TES3::NPC& self) { return self.actorFlags.test(TES3::ActorFlagNPC::EssentialBit); },
+					[](TES3::NPC& self, bool state) { return self.actorFlags.set(TES3::ActorFlagNPC::EssentialBit, state); }
 				));
 				usertypeDefinition.set("respawns", sol::property(
-					[](TES3::NPC& self) { return self.getActorFlag(TES3::ActorFlagNPC::Respawn); },
-					[](TES3::NPC& self, bool state) { return self.setActorFlag(TES3::ActorFlagNPC::Respawn, state); }
+					[](TES3::NPC& self) { return self.actorFlags.test(TES3::ActorFlagNPC::RespawnBit); },
+					[](TES3::NPC& self, bool state) { return self.actorFlags.set(TES3::ActorFlagNPC::RespawnBit, state); }
 				));
 
 				// Finish up our usertype.
@@ -131,23 +131,23 @@ namespace mwse {
 
 				// Easy access to actor flags.
 				usertypeDefinition.set("female", sol::property(
-					[](TES3::NPCInstance& self) { return self.getActorFlag(TES3::ActorFlagNPC::Female); },
-					[](TES3::NPCInstance& self, bool state) { return self.setActorFlag(TES3::ActorFlagNPC::Female, state); }
+					[](TES3::NPCInstance& self) { return self.actorFlags.test(TES3::ActorFlagNPC::FemaleBit); },
+					[](TES3::NPCInstance& self, bool state) { return self.actorFlags.set(TES3::ActorFlagNPC::FemaleBit, state); }
 				));
 				usertypeDefinition.set("autoCalc", sol::property(
-					[](TES3::NPCInstance& self) { return self.getActorFlag(TES3::ActorFlagNPC::AutoCalc); },
-					[](TES3::NPCInstance& self, bool state) { return self.setActorFlag(TES3::ActorFlagNPC::AutoCalc, state); }
+					[](TES3::NPCInstance& self) { return self.actorFlags.test(TES3::ActorFlagNPC::AutoCalcBit); },
+					[](TES3::NPCInstance& self, bool state) { return self.actorFlags.set(TES3::ActorFlagNPC::AutoCalcBit, state); }
 				));
 
 				// TODO: Deprecated. Remove before 2.1-stable.
 				usertypeDefinition.set("model", sol::property(&TES3::NPCInstance::getModelPath, &TES3::NPCInstance::setModelPath));
 				usertypeDefinition.set("essential", sol::property(
-					[](TES3::NPCInstance& self) { return self.getActorFlag(TES3::ActorFlagNPC::Essential); },
-					[](TES3::NPCInstance& self, bool state) { return self.setActorFlag(TES3::ActorFlagNPC::Essential, state); }
+					[](TES3::NPCInstance& self) { return self.actorFlags.test(TES3::ActorFlagNPC::EssentialBit); },
+					[](TES3::NPCInstance& self, bool state) { return self.actorFlags.set(TES3::ActorFlagNPC::EssentialBit, state); }
 				));
 				usertypeDefinition.set("respawns", sol::property(
-					[](TES3::NPCInstance& self) { return self.getActorFlag(TES3::ActorFlagNPC::Respawn); },
-					[](TES3::NPCInstance& self, bool state) { return self.setActorFlag(TES3::ActorFlagNPC::Respawn, state); }
+					[](TES3::NPCInstance& self) { return self.actorFlags.test(TES3::ActorFlagNPC::Respawn); },
+					[](TES3::NPCInstance& self, bool state) { return self.actorFlags.set(TES3::ActorFlagNPC::RespawnBit, state); }
 				));
 
 				// Finish up our usertype.

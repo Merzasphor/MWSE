@@ -46,7 +46,7 @@ namespace TES3 {
 		unsigned char slashMax; // 0x6D
 		unsigned char thrustMin; // 0x6E
 		unsigned char thrustMax; // 0x6F
-		int materialFlags; // 0x70
+		mwse::bitset32 materialFlags; // 0x70
 		Enchantment * enchantment; // 0x74
 
 		//

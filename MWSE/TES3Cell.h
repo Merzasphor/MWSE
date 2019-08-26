@@ -36,7 +36,7 @@ namespace TES3 {
 
 	struct Cell : BaseObject {
 		struct MovedRef {
-			unsigned char flags;
+			mwse::bitset8 flags;
 			Reference * reference;
 			unsigned int sourceID;
 			union {
@@ -62,7 +62,7 @@ namespace TES3 {
 
 		char * name; // 0x10
 		NI::Node * pickObjectsRoot;
-		CellFlag::value_type cellFlags; // 0x18
+		mwse::bitset32 cellFlags; // 0x18
 		union {
 			struct {
 				TES3::PackedColor regionMapColor; // 0x0

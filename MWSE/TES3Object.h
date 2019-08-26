@@ -5,6 +5,8 @@
 
 #include "TES3Collections.h"
 
+#include "Bitset.h"
+
 #include <string>
 
 namespace TES3 {
@@ -197,7 +199,7 @@ namespace TES3 {
 			ActorVirtualTable * actor;
 		} vTable; // 0x0
 		ObjectType::ObjectType objectType; // 0x4
-		ObjectFlag::value_type objectFlags; // 0x8
+		mwse::bitset32 objectFlags; // 0x8
 		GameFile * sourceMod; // 0xC
 
 		//
@@ -222,9 +224,6 @@ namespace TES3 {
 		BaseObject * getBaseObject();
 
 		bool isActor();
-
-		bool getBaseObjectFlag(unsigned int);
-		void setBaseObjectFlag(unsigned int, bool);
 
 	};
 	static_assert(sizeof(BaseObject) == 0x10, "TES3::BaseObject failed size validation");

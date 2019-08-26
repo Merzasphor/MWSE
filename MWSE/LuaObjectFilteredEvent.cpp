@@ -24,7 +24,7 @@ namespace mwse {
 					// If we were given an actor, get the base actor.
 					if (m_EventFilter->objectType == TES3::ObjectType::Container || m_EventFilter->objectType == TES3::ObjectType::Creature || m_EventFilter->objectType == TES3::ObjectType::NPC) {
 						auto asActor = static_cast<TES3::Actor*>(m_EventFilter);
-						if (!asActor->getActorFlag(TES3::ActorFlag::IsBase)) {
+						if (asActor->isClone()) {
 							m_EventFilter = asActor->getBaseActor();
 						}
 					}

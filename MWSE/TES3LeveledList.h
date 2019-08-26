@@ -24,7 +24,7 @@ namespace TES3 {
 		ActorAnimationData * animationData; // 0x30 // Why?
 		Iterator<LeveledListNode> * itemList; // 0x34
 		int itemCount; // 0x38
-		LeveledListFlags::value_type flags; // 0x3C
+		mwse::bitset32 flags; // 0x3C
 		signed char chanceForNothing; // 0x40
 
 		//
@@ -39,7 +39,7 @@ namespace TES3 {
 	struct LeveledItem : PhysicalObject {
 		Iterator<LeveledListNode> * itemList; // 0x30
 		int itemCount; // 0x34
-		LeveledListFlags::value_type flags; // 0x38
+		mwse::bitset32 flags; // 0x38
 		signed char chanceForNothing; // 0x3C
 
 		//

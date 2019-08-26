@@ -212,7 +212,7 @@ namespace TES3 {
 		if (!getDisabled()) {
 			return false;
 		}
-		setBaseObjectFlag(TES3::ObjectFlag::Disabled, false);
+		objectFlags.set(TES3::ObjectFlag::DisabledBit, false);
 
 		auto dataHandler = TES3::DataHandler::get();
 
@@ -248,7 +248,7 @@ namespace TES3 {
 		if (getDisabled()) {
 			return false;
 		}
-		setBaseObjectFlag(TES3::ObjectFlag::Disabled, true);
+		objectFlags.set(TES3::ObjectFlag::DisabledBit, true);
 
 		auto dataHandler = TES3::DataHandler::get();
 
@@ -288,7 +288,7 @@ namespace TES3 {
 	}
 
 	bool Reference::getDisabled() {
-		return getBaseObjectFlag(TES3::ObjectFlag::Disabled);
+		return objectFlags.test(TES3::ObjectFlag::DisabledBit);
 	}
 
 	Vector3 * Reference::getPosition() {
@@ -373,11 +373,11 @@ namespace TES3 {
 	}
 
 	bool Reference::getEmptyInventoryFlag() {
-		return getBaseObjectFlag(TES3::ObjectFlag::EmptyInventory);
+		return objectFlags.test(TES3::ObjectFlag::EmptyInventoryBit);
     }
 
     void Reference::setEmptyInventoryFlag(bool set) {
-		setBaseObjectFlag(TES3::ObjectFlag::EmptyInventory, set);
+		objectFlags.set(TES3::ObjectFlag::EmptyInventoryBit, set);
     }
 
 	void Reference::attemptUnlockDisarm(MobileNPC * disarmer, Item * tool, ItemData * toolItemData) {

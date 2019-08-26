@@ -41,7 +41,7 @@ namespace TES3 {
 		BaseAttribute baseAttributes[8]; // 0x88 // Index corresponds to Attributes enum.
 		HeightWeight height; // 0xC8
 		HeightWeight weight; // 0xD0
-		unsigned long flags; // 0xD8 // 1 = playable, 2 = beast
+		mwse::bitset32 flags; // 0xD8 // 1 = playable, 2 = beast
 		int unknown_0xDC; // Pointer? Abilities list?
 		char * description; // 0xE0
 		unsigned int descriptionFileOffset; // 0xE4

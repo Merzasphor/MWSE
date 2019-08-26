@@ -14,7 +14,7 @@ namespace TES3 {
 		char * icon; // 0x50
 		float weight; // 0x54
 		long value; // 0x58
-		unsigned int flags; // 0x5C
+		mwse::bitset32 flags; // 0x5C
 
 		//
 		// Other related this-call functions.

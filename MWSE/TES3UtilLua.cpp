@@ -2232,7 +2232,7 @@ namespace mwse {
 
 				if (getOptionalParam<bool>(params, "limit", false)) {
 					// Prevent placing items into organic containers.
-					if (actor->getActorFlag(TES3::ActorFlagContainer::Organic)) {
+					if (actor->actorFlags.test(TES3::ActorFlagContainer::OrganicBit)) {
 						return 0;
 					}
 
@@ -2465,7 +2465,7 @@ namespace mwse {
 				float itemWeight = item->getWeight();
 				if (toActor->objectType == TES3::ObjectType::Container && getOptionalParam<bool>(params, "limitCapacity", true)) {
 					// Prevent placing items into organic containers.
-					if (toActor->getActorFlag(TES3::ActorFlagContainer::Organic)) {
+					if (toActor->actorFlags.test(TES3::ActorFlagContainer::OrganicBit)) {
 						return 0;
 					}
 
@@ -3235,39 +3235,39 @@ namespace mwse {
 
 				// Set individual flags.
 				magicEffectController->setEffectFlags(id, 0U);
-				magicEffectController->setEffectFlag(id, TES3::EffectFlag::AllowEnchanting,
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::AllowEnchantingBit,
 					getOptionalParam<bool>(params, "allowEnchanting", true));
-				magicEffectController->setEffectFlag(id, TES3::EffectFlag::AllowSpellmaking,
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::AllowSpellmakingBit,
 					getOptionalParam<bool>(params, "allowSpellmaking", true));
-				magicEffectController->setEffectFlag(id, TES3::EffectFlag::AppliedOnce,
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::AppliedOnceBit,
 					getOptionalParam<bool>(params, "appliesOnce", true));
-				magicEffectController->setEffectFlag(id, TES3::EffectFlag::CanCastSelf,
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::CanCastSelfBit,
 					getOptionalParam<bool>(params, "canCastSelf", true));
-				magicEffectController->setEffectFlag(id, TES3::EffectFlag::CanCastTarget,
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::CanCastTargetBit,
 					getOptionalParam<bool>(params, "canCastTarget", true));
-				magicEffectController->setEffectFlag(id, TES3::EffectFlag::CanCastTouch,
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::CanCastTouchBit,
 					getOptionalParam<bool>(params, "canCastTouch", true));
-				magicEffectController->setEffectFlag(id, TES3::EffectFlag::CasterLinked,
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::CasterLinkedBit,
 					getOptionalParam<bool>(params, "casterLinked", true));
-				magicEffectController->setEffectFlag(id, TES3::EffectFlag::ContinuousVFX,
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::ContinuousVFXBit,
 					getOptionalParam<bool>(params, "hasContinuousVFX", true));
-				magicEffectController->setEffectFlag(id, TES3::EffectFlag::NoDuration,
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::NoDurationBit,
 					getOptionalParam<bool>(params, "hasNoDuration", true));
-				magicEffectController->setEffectFlag(id, TES3::EffectFlag::NoMagnitude,
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::NoMagnitudeBit,
 					getOptionalParam<bool>(params, "hasNoMagnitude", true));
-				magicEffectController->setEffectFlag(id, TES3::EffectFlag::IllegalDaedra,
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::IllegalDaedraBit,
 					getOptionalParam<bool>(params, "illegalDaedra", true));
-				magicEffectController->setEffectFlag(id, TES3::EffectFlag::Harmful,
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::HarmfulBit,
 					getOptionalParam<bool>(params, "isHarmful", true));
-				magicEffectController->setEffectFlag(id, TES3::EffectFlag::NonRecastable,
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::NonRecastableBit,
 					getOptionalParam<bool>(params, "nonRecastable", true));
-				magicEffectController->setEffectFlag(id, TES3::EffectFlag::TargetAttribute,
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::TargetAttributeBit,
 					getOptionalParam<bool>(params, "targetsAttributes", true));
-				magicEffectController->setEffectFlag(id, TES3::EffectFlag::TargetSkill,
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::TargetSkillBit,
 					getOptionalParam<bool>(params, "targetsSkills", true));
-				magicEffectController->setEffectFlag(id, TES3::EffectFlag::Unreflectable,
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::UnreflectableBit,
 					getOptionalParam<bool>(params, "unreflectable", true));
-				magicEffectController->setEffectFlag(id, TES3::EffectFlag::NegativeLighting,
+				magicEffectController->setEffectFlag(id, TES3::EffectFlag::NegativeLightingBit,
 					getOptionalParam<bool>(params, "usesNegativeLighting", true));
 				effect->flags = magicEffectController->getEffectFlags(id);
 

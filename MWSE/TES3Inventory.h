@@ -7,6 +7,8 @@
 #include "TES3Collections.h"
 #include "TES3Vectors.h"
 
+#include "Bitset.h"
+
 namespace TES3 {
 	struct ItemStack {
 		int count; // 0x0
@@ -41,7 +43,7 @@ namespace TES3 {
 	static_assert(sizeof(EquipmentStack) == 0x8, "TES3::EquipmentStack failed size validation");
 
 	struct Inventory {
-		unsigned int flags; // 0x0
+		mwse::bitset32 flags; // 0x0
 		Iterator<ItemStack> iterator; // 0x4
 		int unknown_0x18;
 

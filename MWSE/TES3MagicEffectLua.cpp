@@ -47,40 +47,40 @@ namespace mwse {
 
 				// User-friendly access to those base effects.
 				usertypeDefinition.set("targetsSkills", sol::property(
-					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::TargetSkill); },
-					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::TargetSkill, set); }
+					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::TargetSkillBit); },
+					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::TargetSkillBit, set); }
 				));
 				usertypeDefinition.set("targetsAttributes", sol::property(
-					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::TargetAttribute); },
-					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::TargetAttribute, set); }
+					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::TargetAttributeBit); },
+					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::TargetAttributeBit, set); }
 				));
 				usertypeDefinition.set("hasNoDuration", sol::property(
-					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::NoDuration); },
-					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::NoDuration, set); }
+					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::NoDurationBit); },
+					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::NoDurationBit, set); }
 				));
 				usertypeDefinition.set("hasNoMagnitude", sol::property(
-					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::NoMagnitude); },
-					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::NoMagnitude, set); }
+					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::NoMagnitudeBit); },
+					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::NoMagnitudeBit, set); }
 				));
 				usertypeDefinition.set("isHarmful", sol::property(
-					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::Harmful); },
-					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::Harmful, set); }
+					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::HarmfulBit); },
+					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::HarmfulBit, set); }
 				));
 				usertypeDefinition.set("hasContinuousVFX", sol::property(
-					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::ContinuousVFX); },
-					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::ContinuousVFX, set); }
+					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::ContinuousVFXBit); },
+					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::ContinuousVFXBit, set); }
 				));
 				usertypeDefinition.set("canCastSelf", sol::property(
-					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::CanCastSelf); },
-					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::CanCastSelf, set); }
+					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::CanCastSelfBit); },
+					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::CanCastSelfBit, set); }
 				));
 				usertypeDefinition.set("canCastTouch", sol::property(
-					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::CanCastTouch); },
-					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::CanCastTouch, set); }
+					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::CanCastTouchBit); },
+					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::CanCastTouchBit, set); }
 				));
 				usertypeDefinition.set("canCastTarget", sol::property(
-					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::CanCastTarget); },
-					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::CanCastTarget, set); }
+					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::CanCastTargetBit); },
+					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::CanCastTargetBit, set); }
 				));
 				usertypeDefinition.set("allowSpellmaking", sol::property(
 					[](TES3::MagicEffect& self) { return (self.flags & TES3::EffectFlag::AllowSpellmaking) != 0; },
@@ -91,28 +91,28 @@ namespace mwse {
 					[](TES3::MagicEffect& self) { self.flags |= TES3::EffectFlag::AllowEnchanting; }
 				));
 				usertypeDefinition.set("usesNegativeLighting", sol::property(
-					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::NegativeLighting); },
-					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::NegativeLighting, set); }
+					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::NegativeLightingBit); },
+					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::NegativeLightingBit, set); }
 				));
 				usertypeDefinition.set("appliesOnce", sol::property(
-					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::AppliedOnce); },
-					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::AppliedOnce, set); }
+					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::AppliedOnceBit); },
+					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::AppliedOnceBit, set); }
 				));
 				usertypeDefinition.set("nonRecastable", sol::property(
-					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::NonRecastable); },
-					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::NonRecastable, set); }
+					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::NonRecastableBit); },
+					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::NonRecastableBit, set); }
 				));
 				usertypeDefinition.set("illegalDaedra", sol::property(
-					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::IllegalDaedra); },
-					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::IllegalDaedra, set); }
+					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::IllegalDaedraBit); },
+					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::IllegalDaedraBit, set); }
 				));
 				usertypeDefinition.set("unreflectable", sol::property(
-					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::Unreflectable); },
-					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::Unreflectable, set); }
+					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::UnreflectableBit); },
+					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::UnreflectableBit, set); }
 				));
 				usertypeDefinition.set("casterLinked", sol::property(
-					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::CasterLinked); },
-					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::CasterLinked, set); }
+					[](TES3::MagicEffect& self) { return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(self.id, TES3::EffectFlag::CasterLinkedBit); },
+					[](TES3::MagicEffect& self, bool set) { TES3::DataHandler::get()->nonDynamicData->magicEffects->setEffectFlag(self.id, TES3::EffectFlag::CasterLinkedBit, set); }
 				));
 
 				// Functions exposed as properties.

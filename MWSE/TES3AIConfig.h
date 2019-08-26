@@ -10,7 +10,7 @@ namespace TES3 {
 		unsigned char flee; // 0x3
 		unsigned char alarm; // 0x4
 		char unknown_0x5[3];
-		unsigned int merchantFlags; // 0x8
+		mwse::bitset32 merchantFlags; // 0x8
 		Iterator<TravelDestination> * travelDestinations; // 0xC
 	};
 	static_assert(sizeof(AIConfig) == 0x10, "TES3::AIConfig failed size validation");

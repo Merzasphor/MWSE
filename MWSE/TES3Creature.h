@@ -24,6 +24,19 @@ namespace TES3 {
 
 			DefaultFlags = Walks | IsBase,
 		};
+
+		enum FlagBit {
+			BipedBit = 0,
+			RespawnBit = 1,
+			WeaponAndShieldBit = 2,
+			IsBaseBit = 3,
+			SwimsBit = 4,
+			FliesBit = 5,
+			WalksBit = 6,
+			EssentialBit = 7,
+			SkeletonBloodBit = 10,
+			MetalBloodBit = 11,
+		};
 	}
 
 	namespace CreatureType {

@@ -23,9 +23,9 @@ namespace TES3 {
 		enum FlagBit {
 			FemaleBit = 0,
 			EssentialBit = 1,
-			RespawnsBit = 2,
+			RespawnBit = 2,
 			IsBaseBit = 3,
-			AutocalcBit = 4,
+			AutoCalcBit = 4,
 			BloodSkeletonBit = 10,
 			BloodMetalBit = 11,
 		};

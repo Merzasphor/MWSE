@@ -3,6 +3,8 @@
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
 
+#include "Bitset.h"
+
 namespace TES3 {
 	namespace KeyBind {
 		enum KeyBind {
@@ -95,7 +97,7 @@ namespace TES3 {
 			int unknown_0x4;
 			int unknown_0x8;
 		};
-		unsigned int creationFlags; // 0x0
+		mwse::bitset32 creationFlags; // 0x0
 		LPDIRECTINPUT8 directInputInterface; // 0x4
 		LPDIRECTINPUTDEVICE8 * gamepadsPointers[8]; // 0x8
 		LPDIRECTINPUTDEVICE8 keyboard; // 0x28

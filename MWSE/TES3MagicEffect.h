@@ -177,6 +177,27 @@ namespace TES3 {
 			Unreflectable = 0x10000,
 			CasterLinked = 0x20000
 		};
+
+		enum FlagBit {
+			TargetSkillBit = 0,
+			TargetAttributeBit = 1,
+			NoDurationBit = 2,
+			NoMagnitudeBit = 3,
+			HarmfulBit = 4,
+			ContinuousVFXBit = 5,
+			CanCastSelfBit = 6,
+			CanCastTouchBit = 7,
+			CanCastTargetBit = 8,
+			AllowSpellmakingBit = 9,
+			AllowEnchantingBit = 10,
+			NegativeLightingBit = 11,
+			AppliedOnceBit = 12,
+			UnknownChameleonBit = 13,
+			NonRecastableBit = 14,
+			IllegalDaedraBit = 15,
+			UnreflectableBit = 16,
+			CasterLinkedBit = 17
+		};
 	}
 
 	enum class EffectRange : unsigned char {
@@ -217,7 +238,7 @@ namespace TES3 {
 		PhysicalObject * areaEffect; // 0xE8
 		int school; // 0xEC
 		float baseMagickaCost; // 0xF0
-		EffectFlag::value_type flags; // 0xF4
+		mwse::bitset32 flags; // 0xF4
 		long lightingRed; // 0xF8
 		long lightingGreen; // 0xFC
 		long lightingBlue; // 0x0100

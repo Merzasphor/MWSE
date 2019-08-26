@@ -26,7 +26,7 @@ namespace TES3 {
 		float weight; // 0x54
 		unsigned short value; // 0x58
 		Effect effects[8]; // 0x5C
-		AlchemyFlag::value_type flags; // 0x011C
+		mwse::bitset16 flags; // 0x011C
 
 		//
 		// Custom functions.

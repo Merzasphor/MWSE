@@ -28,12 +28,12 @@ namespace mwse {
 
 				// Friendly access to actor flags.
 				usertypeDefinition.set("organic", sol::property(
-					[](TES3::Container& self) { return self.getActorFlag(TES3::ActorFlagContainer::Organic); },
-					[](TES3::Container& self, bool set) { self.setActorFlag(TES3::ActorFlagContainer::Organic, set); }
+					[](TES3::Container& self) { return self.actorFlags.test(TES3::ActorFlagContainer::OrganicBit); },
+					[](TES3::Container& self, bool set) { self.actorFlags.set(TES3::ActorFlagContainer::OrganicBit, set); }
 				));
 				usertypeDefinition.set("respawns", sol::property(
-					[](TES3::Container& self) { return self.getActorFlag(TES3::ActorFlagContainer::Respawns); },
-					[](TES3::Container& self, bool set) { self.setActorFlag(TES3::ActorFlagContainer::Respawns, set); }
+					[](TES3::Container& self) { return self.actorFlags.test(TES3::ActorFlagContainer::RespawnsBit); },
+					[](TES3::Container& self, bool set) { self.actorFlags.set(TES3::ActorFlagContainer::RespawnsBit, set); }
 				));
 
 				// Constant values.
@@ -64,12 +64,12 @@ namespace mwse {
 				
 				// Friendly access to actor flags.
 				usertypeDefinition.set("organic", sol::property(
-					[](TES3::ContainerInstance& self) { return self.getActorFlag(TES3::ActorFlagContainer::Organic); },
-					[](TES3::ContainerInstance& self, bool set) { self.setActorFlag(TES3::ActorFlagContainer::Organic, set); }
+					[](TES3::ContainerInstance& self) { return self.actorFlags.test(TES3::ActorFlagContainer::OrganicBit); },
+					[](TES3::ContainerInstance& self, bool set) { self.actorFlags.set(TES3::ActorFlagContainer::OrganicBit, set); }
 				));
 				usertypeDefinition.set("respawns", sol::property(
-					[](TES3::ContainerInstance& self) { return self.getActorFlag(TES3::ActorFlagContainer::Respawns); },
-					[](TES3::ContainerInstance& self, bool set) { self.setActorFlag(TES3::ActorFlagContainer::Respawns, set); }
+					[](TES3::ContainerInstance& self) { return self.actorFlags.test(TES3::ActorFlagContainer::RespawnsBit); },
+					[](TES3::ContainerInstance& self, bool set) { self.actorFlags.set(TES3::ActorFlagContainer::RespawnsBit, set); }
 				));
 
 				// Access to other objects that need to be packaged.

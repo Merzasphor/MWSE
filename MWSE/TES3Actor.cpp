@@ -118,19 +118,6 @@ namespace TES3 {
 		return TES3_Actor_getEquippedClothingBySlot(this, slot);
 	}
 
-	bool Actor::getActorFlag(unsigned int flag) {
-		return (actorFlags & flag) != 0;
-	}
-
-	void Actor::setActorFlag(unsigned int flag, bool set) {
-		if (set) {
-			actorFlags |= flag;
-		}
-		else {
-			actorFlags &= ~flag;
-		}
-	}
-
 	bool Actor::isBaseActor() {
 		return (actorFlags & TES3::ActorFlag::IsBase);
 	}

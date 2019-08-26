@@ -80,7 +80,7 @@ namespace mwse {
 			}
 
 			// Validate that the effect supports the range type.
-			const int flags = TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlags(effectId);
+			auto flags = TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlags(effectId);
 			const auto effectRange = static_cast<TES3::EffectRange>(range);
 			if ((effectRange == TES3::EffectRange::Self && !(flags & TES3::EffectFlag::CanCastSelf)) ||
 				(effectRange == TES3::EffectRange::Touch && !(flags & TES3::EffectFlag::CanCastTouch)) ||

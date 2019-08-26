@@ -25,7 +25,7 @@
 
 namespace TES3 {
 	unsigned int MagicEffectController::effectNameGMSTs[MAX_EFFECT_COUNT] = {};
-	unsigned int MagicEffectController::effectFlags[MAX_EFFECT_COUNT] = {};
+	mwse::bitset32 MagicEffectController::effectFlags[MAX_EFFECT_COUNT] = {};
 	unsigned int MagicEffectController::effectCounters[MAX_EFFECT_COUNT][5] = {};
 
 	MagicEffectController::MagicEffectController() {
@@ -71,7 +71,7 @@ namespace TES3 {
 		return itt->second.c_str();
 	}
 
-	unsigned int MagicEffectController::getEffectFlags(int id) {
+	mwse::bitset32 MagicEffectController::getEffectFlags(int id) {
 		return effectFlags[id];
 	}
 
@@ -79,17 +79,12 @@ namespace TES3 {
 		effectFlags[id] = flags;
 	}
 
-	bool MagicEffectController::getEffectFlag(int id, EffectFlag::Flag flag) {
-		return effectFlags[id] & flag;
+	bool MagicEffectController::getEffectFlag(int id, EffectFlag::FlagBit flag) {
+		return effectFlags[id].test(flag);
 	}
 
-	void MagicEffectController::setEffectFlag(int id, EffectFlag::Flag flag, bool value) {
-		if (value) {
-			effectFlags[id] |= flag;
-		}
-		else {
-			effectFlags[id] &= ~flag;
-		}
+	void MagicEffectController::setEffectFlag(int id, EffectFlag::FlagBit flag, bool value) {
+		effectFlags[id].set(flag, value);
 	}
 
 	//
@@ -149,15 +144,15 @@ namespace TES3 {
 		if (!(sourceMod->flags_4D8 & 1)) {
 			MagicEffect tempEffect;
 
-			bool wasFlag1Set = tempEffect.getBaseObjectFlag(1);
+			bool wasFlag1Set = tempEffect.objectFlags.test(0);
 			tempEffect.vTable.base->loadObjectSpecific(&tempEffect, sourceMod);
 			tempEffect.sourceMod = sourceMod;
 
 			if (wasFlag1Set) {
-				tempEffect.setBaseObjectFlag(1, true);
+				tempEffect.objectFlags.set(0, true);
 			}
 			else {
-				tempEffect.setBaseObjectFlag(1, sourceMod->flags_4D8 & 1);
+				tempEffect.objectFlags.set(0, sourceMod->flags_4D8 & 1);
 			}
 
 			if (sourceMod->flags_4D8 & 0x8) {
@@ -174,7 +169,7 @@ namespace TES3 {
 
 			if (!(sourceMod->flags_4D8 & 0x20)) {
 				effect->sourceMod = sourceMod;
-				effect->setBaseObjectFlag(ObjectFlag::Delete, tempEffect.getBaseObjectFlag(ObjectFlag::Delete));
+				effect->objectFlags.set(ObjectFlag::DeleteBit, tempEffect.objectFlags.test(ObjectFlag::DeleteBit));
 			}
 
 			if (sourceMod->flags_4D8 & 0x8) {
@@ -190,18 +185,18 @@ namespace TES3 {
 
 			// 
 			effect->clearData();
-			effect->setBaseObjectFlag(ObjectFlag::Delete, 0);
+			effect->objectFlags.set(ObjectFlag::DeleteBit, 0);
 
 			// 
-			bool wasFlag1Set = effect->getBaseObjectFlag(1);
+			bool wasFlag1Set = effect->objectFlags.test(0);
 			effect->vTable.base->loadObjectSpecific(effect, sourceMod);
 			effect->sourceMod = sourceMod;
 
 			if (wasFlag1Set) {
-				effect->setBaseObjectFlag(1, true);
+				effect->objectFlags.set(0, true);
 			}
 			else {
-				effect->setBaseObjectFlag(1, sourceMod->flags_4D8 & 1);
+				effect->objectFlags.set(0, sourceMod->flags_4D8 & 1);
 			}
 
 			if (sourceMod->flags_4D8 & 0x8) {
