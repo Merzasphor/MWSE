@@ -274,10 +274,13 @@ namespace mwse {
 		}
 
 		void CreateMiniDump(EXCEPTION_POINTERS* pep) {
+			log::getLog() << std::endl;
+			log::getLog() << "Morrowind has crashed! To help improve game stability, send MWSE_Minidump.dmp to NullCascade@gmail.com or to NullCascade#1010 on Discord." << std::endl;
+
 			// Display the memory usage in the log.
 			PROCESS_MEMORY_COUNTERS_EX memCounter;
 			GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&memCounter, sizeof(memCounter));
-			log::getLog() << "Creating minidump. Memory usage: " << memCounter.PrivateUsage << std::endl;
+			log::getLog() << "Memory usage: " << memCounter.PrivateUsage << " bytes." << std::endl;
 
 			// Open the file.
 			HANDLE hFile = CreateFile("MWSE_MiniDump.dmp", GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
