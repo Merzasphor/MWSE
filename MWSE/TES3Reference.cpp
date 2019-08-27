@@ -396,28 +396,36 @@ namespace TES3 {
 				toolItemData->condition--;
 			}
 
+			float chance = 0.0f;
+
 			if (lockData && lockData->trap) {
 				// chance = (security + agility/5 + luck/10) * quality * fatigueTerm + trapCost * fTrapCostMult
-				float chance =
+				chance =
 					(disarmer->getSkillValue(SkillID::Security)
 						+ disarmer->attributes[Attribute::Agility].getCurrent() * 0.2f
 						+ disarmer->attributes[Attribute::Luck].getCurrent() * 0.1f)
 					* tool->getQuality()
 					* disarmer->getFatigueTerm()
 					+ lockData->trap->magickaCost * ndd->GMSTs[GMST::fTrapCostMult]->value.asFloat;
+			}
 
-				if (mwse::lua::event::DisarmTrapEvent::getEventEnabled()) {
-					auto& luaManager = mwse::lua::LuaManager::getInstance();
-					auto stateHandle = luaManager.getThreadSafeStateHandle();
-					sol::table result = stateHandle.triggerEvent(new mwse::lua::event::DisarmTrapEvent(this, lockData, disarmer, tool, toolItemData, chance));
-					if (result.valid()) {
-						if (result.get_or("block", false)) {
-							return;
-						}
-						chance = result["chance"];
+			if (mwse::lua::event::DisarmTrapEvent::getEventEnabled()) {
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::table result = stateHandle.triggerEvent(new mwse::lua::event::DisarmTrapEvent(this, lockData, disarmer, tool, toolItemData, chance, lockData && lockData->trap));
+				if (result.valid()) {
+					if (result.get_or("block", false)) {
+						return;
+					}
+					chance = result["chance"];
+
+					if (result["clearTarget"]) {
+						Game::get()->clearTarget();
 					}
 				}
+			}
 
+			if (lockData && lockData->trap) {
 				if (chance <= 0 || chance <= (mwse::tes3::rand() % 100)) {
 					dataHandler->addSound("Disarm Trap Fail", this, 0, worldController->audioController->getMixVolume(AudioMixType::Effects) * 250);
 					if (chance <= 0) {
