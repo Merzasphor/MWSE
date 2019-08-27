@@ -14,7 +14,12 @@ isSuperDown
 isAltDown
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_. Read-only. True if alt  is held.
+`number`_. Read-only. True if alt is held.
+
+isShiftDown
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`number`_. Read-only. True if shift is held.
 
 isControlDown
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -43,7 +48,7 @@ Displays a simple message when Z is pressed while control is held.
     end
 
     -- Filter by the scan code to get Z key presses only.
-    event.register("key", myOnKeyCallback, { filter = tes3.scanCode.z } )
+    event.register("keyDown", myOnKeyCallback, { filter = tes3.scanCode.z } )
 
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
