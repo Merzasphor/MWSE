@@ -8,7 +8,7 @@ namespace mwse {
 		namespace event {
 			class DisarmTrapEvent : public ObjectFilteredEvent, public DisableableEvent<DisarmTrapEvent> {
 			public:
-				DisarmTrapEvent(TES3::Reference * reference, TES3::LockAttachmentNode * lockData, TES3::MobileNPC * disarmer, TES3::Item * tool, TES3::ItemData * itemData, float chance);
+				DisarmTrapEvent(TES3::Reference * reference, TES3::LockAttachmentNode * lockData, TES3::MobileNPC * disarmer, TES3::Item * tool, TES3::ItemData * itemData, float chance, bool trapPresent);
 				sol::table createEventTable();
 
 			protected:
@@ -18,6 +18,7 @@ namespace mwse {
 				TES3::Item * m_Tool;
 				TES3::ItemData * m_ItemData;
 				float m_Chance;
+				bool m_TrapPresent;
 			};
 		}
 	}

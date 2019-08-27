@@ -472,7 +472,7 @@ namespace mwse {
 			luaState["mwse"]["disableableEvents"] = &m_DisableableEventManager;
 
 			// Fix the bit library to support mwse bitsets.
-			luaState["bit"]["band"] = [](sol::object input, unsigned int flag) {
+			luaState["bit"]["band"] = [](sol::object input, unsigned int flag) -> unsigned long {
 				if (input.is<unsigned int>()) {
 					return input.as<unsigned int>() & flag;
 				}
@@ -488,7 +488,7 @@ namespace mwse {
 
 				throw std::invalid_argument("First value must be an unsigned integer or a bitset.");
 			};
-			luaState["bit"]["bor"] = [](sol::object input, unsigned long flag) {
+			luaState["bit"]["bor"] = [](sol::object input, unsigned long flag) -> unsigned long {
 				if (input.is<unsigned int>()) {
 					return input.as<unsigned int>() | flag;
 				}
