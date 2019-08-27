@@ -1,7 +1,7 @@
 uiObjectTooltip
 ====================================================================================================
 
-The uiObjectTooltip event triggers when a new tooltip is displayed for all in-world objects and items, and inventory tiles in all dialogues. The tooltip will be already be built. Tooltips for inventory tiles are built on mouseover, while tooltips for in-world objects are rebuilt every frame.
+The uiObjectTooltip event triggers when a new tooltip is displayed for all in-world objects and items, and inventory tiles in all dialogues. The tooltip will be already be built. Tooltips for in-world objects are built on mouseover, while tooltips for inventory tiles are rebuilt every frame.
 
 Event Data
 ----------------------------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ reference
 count
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_. Read-only. The number of items in the stack.
+`number`_. Read-only. The number of items in the stack. Only valid for inventory tiles. For in-world objects and inventory tiles that have only 1 item will return 0.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html
