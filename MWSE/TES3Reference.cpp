@@ -450,59 +450,62 @@ namespace TES3 {
 			}
 		}
 		else if (tool->objectType == ObjectType::Lockpick) {
-			if (lockData == nullptr) {
-				return;
+
+			float chance = 0.0f;
+
+			if (lockData && lockData->lockLevel > 0) {
+
+				if (toolItemData) {
+					toolItemData->condition--;
+				}
+
+				// chance = (security + agility/5 + luck/10) * quality * fatigueTerm + lockLevel * fPickLockMult
+				chance =
+					(disarmer->getSkillValue(SkillID::Security)
+						+ disarmer->attributes[Attribute::Agility].getCurrent() * 0.2f
+						+ disarmer->attributes[Attribute::Luck].getCurrent() * 0.1f)
+					* tool->getQuality()
+					* disarmer->getFatigueTerm()
+					+ lockData->lockLevel * ndd->GMSTs[GMST::fPickLockMult]->value.asFloat;
 			}
-
-			if (toolItemData) {
-				toolItemData->condition--;
-			}
-
-			if (lockData->lockLevel <= 0) {
-				return;
-			}
-
-			// chance = (security + agility/5 + luck/10) * quality * fatigueTerm + lockLevel * fPickLockMult
-			float chance =
-				(disarmer->getSkillValue(SkillID::Security)
-					+ disarmer->attributes[Attribute::Agility].getCurrent() * 0.2f
-					+ disarmer->attributes[Attribute::Luck].getCurrent() * 0.1f)
-				* tool->getQuality()
-				* disarmer->getFatigueTerm()
-				+ lockData->lockLevel * ndd->GMSTs[GMST::fPickLockMult]->value.asFloat;
-
 
 			if (mwse::lua::event::PickLockEvent::getEventEnabled()) {
 				auto& luaManager = mwse::lua::LuaManager::getInstance();
 				auto stateHandle = luaManager.getThreadSafeStateHandle();
-				sol::table result = stateHandle.triggerEvent(new mwse::lua::event::PickLockEvent(this, lockData, disarmer, tool, toolItemData, chance));
+				sol::table result = stateHandle.triggerEvent(new mwse::lua::event::PickLockEvent(this, lockData, disarmer, tool, toolItemData, chance, lockData && (lockData->lockLevel > 0)));
 				if (result.valid()) {
 					if (result.get_or("block", false)) {
 						return;
 					}
 					chance = result["chance"];
+						
+					if (result["clearTarget"]) {
+						Game::get()->clearTarget();
+					}
 				}
 			}
 
-			if (chance <= 0 || chance <= (mwse::tes3::rand() % 100)) {
-				dataHandler->addSound("Open Lock Fail", this, 0, worldController->audioController->getMixVolume(AudioMixType::Effects) * 250);
-				if (chance <= 0) {
-					mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sLockImpossible]->value.asString);
+			if (lockData && lockData->lockLevel > 0) {
+				if (chance <= 0 || chance <= (mwse::tes3::rand() % 100)) {
+					dataHandler->addSound("Open Lock Fail", this, 0, worldController->audioController->getMixVolume(AudioMixType::Effects) * 250);
+					if (chance <= 0) {
+						mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sLockImpossible]->value.asString);
+					}
+					else {
+						mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sLockFail]->value.asString);
+					}
 				}
 				else {
-					mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sLockFail]->value.asString);
-				}
-			}
-			else {
-				lockData->locked = false;
-				setObjectModified(true);
-				Game::get()->clearTarget();
-				dataHandler->addSound("Open Lock", this, 0, worldController->audioController->getMixVolume(AudioMixType::Effects) * 250);
+					lockData->locked = false;
+					setObjectModified(true);
+					Game::get()->clearTarget();
+					dataHandler->addSound("Open Lock", this, 0, worldController->audioController->getMixVolume(AudioMixType::Effects) * 250);
 
-				auto macp = worldController->getMobilePlayer();
-				if (macp == disarmer) {
-					macp->exerciseSkill(SkillID::Security, ndd->skills[SkillID::Security].progressActions[1]);
-					mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sLockSuccess]->value.asString);
+					auto macp = worldController->getMobilePlayer();
+					if (macp == disarmer) {
+						macp->exerciseSkill(SkillID::Security, ndd->skills[SkillID::Security].progressActions[1]);
+						mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sLockSuccess]->value.asString);
+					}
 				}
 			}
 		}

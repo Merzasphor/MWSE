@@ -10,14 +10,15 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			PickLockEvent::PickLockEvent(TES3::Reference * reference, TES3::LockAttachmentNode * lockData, TES3::MobileNPC * picker, TES3::Item * tool, TES3::ItemData * itemData, float chance) :
+			PickLockEvent::PickLockEvent(TES3::Reference * reference, TES3::LockAttachmentNode * lockData, TES3::MobileNPC * picker, TES3::Item * tool, TES3::ItemData * itemData, float chance, bool lockPresent) :
 				ObjectFilteredEvent("lockPick", reference->baseObject),
 				m_Reference(reference),
 				m_LockData(lockData),
 				m_Picker(picker),
 				m_Tool(tool),
 				m_ItemData(itemData),
-				m_Chance(chance)
+				m_Chance(chance),
+				m_LockPresent(lockPresent)
 			{
 
 			}
@@ -36,6 +37,7 @@ namespace mwse {
 				eventData["toolItemData"] = m_ItemData;
 
 				eventData["chance"] = m_Chance;
+				eventData["lockPresent"] = m_LockPresent;
 
 				return eventData;
 			}
