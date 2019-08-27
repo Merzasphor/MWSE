@@ -477,13 +477,13 @@ namespace mwse {
 					return input.as<unsigned int>() & flag;
 				}
 				else if (input.is<mwse::bitset32>()) {
-					return input.is<mwse::bitset32>() & flag;
+					return input.as<mwse::bitset32>() & flag;
 				}
 				else if (input.is<mwse::bitset16>()) {
-					return input.is<mwse::bitset16>() & flag;
+					return input.as<mwse::bitset16>() & flag;
 				}
 				else if (input.is<mwse::bitset8>()) {
-					return input.is<mwse::bitset8>() & flag;
+					return input.as<mwse::bitset8>() & flag;
 				}
 
 				throw std::invalid_argument("First value must be an unsigned integer or a bitset.");
