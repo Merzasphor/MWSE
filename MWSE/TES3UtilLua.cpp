@@ -71,10 +71,24 @@
 namespace mwse {
 	namespace lua {
 		auto iterateObjectsFiltered(unsigned int desiredType) {
-			TES3::Object* object = TES3::DataHandler::get()->nonDynamicData->list->head;
+			auto ndd = TES3::DataHandler::get()->nonDynamicData;
+
+			TES3::Object * object = nullptr;
+			if (desiredType == TES3::ObjectType::Spell) {
+				object = ndd->spellsList->head;
+			}
+			else {
+				object = ndd->list->head;
+			}
+
 			return [object, desiredType]() mutable -> sol::object {
 				while (object && desiredType != 0 && object->objectType != desiredType) {
 					object = object->nextInCollection;
+				}
+
+				auto ndd = TES3::DataHandler::get()->nonDynamicData;
+				if (desiredType == 0 && object == ndd->list->tail) {
+					object = ndd->spellsList->head;
 				}
 
 				if (object == NULL) {
