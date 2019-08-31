@@ -55,6 +55,9 @@ namespace mwse {
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 				setUserdataForBaseObject(usertypeDefinition);
 
+				// Override the id property from BaseObject
+				usertypeDefinition.set("id", sol::readonly_property(&TES3::Faction::getFactionId));
+
 				// Basic property binding.
 				usertypeDefinition.set("reactions", sol::readonly_property(&TES3::Faction::reactions));
 				usertypeDefinition.set("playerReputation", &TES3::Faction::playerReputation);
