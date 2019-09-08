@@ -204,16 +204,16 @@ namespace TES3 {
 		// Basic operators.
 		//
 
-		__declspec(dllexport) static void *operator new(size_t size);
-		__declspec(dllexport) static void operator delete(void *block);
+		static void *operator new(size_t size);
+		static void operator delete(void *block);
 
 		//
 		// Function wrappers for our virtual table.
 		//
 
-		__declspec(dllexport) bool getObjectModified();
-		__declspec(dllexport) void setObjectModified(bool);
-		__declspec(dllexport) char * getObjectID();
+		bool getObjectModified();
+		void setObjectModified(bool);
+		char * getObjectID();
 
 		//
 		// Custom functions.
@@ -241,61 +241,61 @@ namespace TES3 {
 		// Function wrappers for our virtual table.
 		//
 
-		__declspec(dllexport) void setID(const char*);
-		__declspec(dllexport) char * getName();
-		__declspec(dllexport) char * getIconPath();
-		__declspec(dllexport) char * getModelPath();
-		__declspec(dllexport) Script * getScript();
-		__declspec(dllexport) Sound * getSound();
-		__declspec(dllexport) char * getRaceID();
-		__declspec(dllexport) char * getClassID();
-		__declspec(dllexport) char * getBirthsignID();
-		__declspec(dllexport) Race * getRace();
-		__declspec(dllexport) Class * getClass();
-		__declspec(dllexport) Faction * getFaction();
-		__declspec(dllexport) bool isFemale();
-		__declspec(dllexport) int getFactionRank();
-		__declspec(dllexport) int getLevel();
-		__declspec(dllexport) signed char setDispositionRaw(signed char);
-		__declspec(dllexport) int modDisposition(signed int);
-		__declspec(dllexport) int getFactionIndex();
-		__declspec(dllexport) signed char setFactionIndex(signed char);
-		__declspec(dllexport) int getDispositionRaw();
-		__declspec(dllexport) signed char modFactionIndex(signed char);
-		__declspec(dllexport) int getType();
-		__declspec(dllexport) char * getTypeName();
-		__declspec(dllexport) float getWeight();
-		__declspec(dllexport) int getValue();
-		__declspec(dllexport) void setDurability(int);
-		__declspec(dllexport) int getDurability();
-		__declspec(dllexport) int getMagicka();
-		__declspec(dllexport) int getFatigue();
-		__declspec(dllexport) float getQuality();
-		__declspec(dllexport) bool isLeftPartOfPair();
-		__declspec(dllexport) bool isEssential();
-		__declspec(dllexport) bool isRespawn();
-		__declspec(dllexport) int getUses();
-		__declspec(dllexport) Enchantment * getEnchantment();
-		__declspec(dllexport) Enchantment * setEnchantment(Enchantment*);
-		__declspec(dllexport) AIConfig * getAIConfig();
-		__declspec(dllexport) bool getAutoCalc();
-		__declspec(dllexport) void setAutoCalc(bool);
-		__declspec(dllexport) void setModelPath(const char*);
-		__declspec(dllexport) void setName(const char*);
-		__declspec(dllexport) float getScale();
-		__declspec(dllexport) void setScale(float value, bool cap = false);
+		void setID(const char*);
+		char * getName();
+		char * getIconPath();
+		char * getModelPath();
+		Script * getScript();
+		Sound * getSound();
+		char * getRaceID();
+		char * getClassID();
+		char * getBirthsignID();
+		Race * getRace();
+		Class * getClass();
+		Faction * getFaction();
+		bool isFemale();
+		int getFactionRank();
+		int getLevel();
+		signed char setDispositionRaw(signed char);
+		int modDisposition(signed int);
+		int getFactionIndex();
+		signed char setFactionIndex(signed char);
+		int getDispositionRaw();
+		signed char modFactionIndex(signed char);
+		int getType();
+		char * getTypeName();
+		float getWeight();
+		int getValue();
+		void setDurability(int);
+		int getDurability();
+		int getMagicka();
+		int getFatigue();
+		float getQuality();
+		bool isLeftPartOfPair();
+		bool isEssential();
+		bool isRespawn();
+		int getUses();
+		Enchantment * getEnchantment();
+		Enchantment * setEnchantment(Enchantment*);
+		AIConfig * getAIConfig();
+		bool getAutoCalc();
+		void setAutoCalc(bool);
+		void setModelPath(const char*);
+		void setName(const char*);
+		float getScale();
+		void setScale(float value, bool cap = false);
 
 		//
 		// Function wrappers for our virtual table.
 		//
 
-		__declspec(dllexport) NI::Node * getSceneGraphNode();
+		NI::Node * getSceneGraphNode();
 
 		//
 		// Custom functions.
 		//
 
-		__declspec(dllexport) Object * skipDeletedObjects();
+		Object * skipDeletedObjects();
 
 	};
 	static_assert(sizeof(Object) == 0x28, "TES3::Object failed size validation");
@@ -314,7 +314,7 @@ namespace TES3 {
 		// Function wrappers for our virtual table.
 		//
 
-		__declspec(dllexport) Iterator<BaseObject> * getStolenList();
+		Iterator<BaseObject> * getStolenList();
 
 	};
 	static_assert(sizeof(PhysicalObject) == 0x30, "TES3::PhysicalObject failed size validation");

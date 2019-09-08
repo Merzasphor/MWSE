@@ -232,7 +232,7 @@ namespace mwse {
 		return true;
 	}
 
-	bool __declspec(dllexport) genNOPUnprotected(DWORD address, DWORD size) {
+	bool genNOPUnprotected(DWORD address, DWORD size) {
 		// Unprotect memory.
 		DWORD oldProtect;
 		VirtualProtect((DWORD*)address, size, PAGE_READWRITE, &oldProtect);

@@ -28,49 +28,49 @@ namespace mwse {
 	};
 
 	// Code to generate a jump in memory. Don't forget to unprotect it first!
-	void __declspec(dllexport) genJump(DWORD Address, DWORD To);
+	void genJump(DWORD Address, DWORD To);
 
 	// Code to generate a call in memory. Don't forget to unprotect it first!
-	void __declspec(dllexport) genCall(DWORD Address, DWORD To);
+	void genCall(DWORD Address, DWORD To);
 
 	// Code to generate a nop in memory. Don't forget to unprotect it first!
-	void __declspec(dllexport) genNOP(DWORD Address);
+	void genNOP(DWORD Address);
 
 	// Code to generate a call in memory. This function unprotects the memory.
-	void __declspec(dllexport) genJumpUnprotected(DWORD address, DWORD to, DWORD size = 0x5);
+	void genJumpUnprotected(DWORD address, DWORD to, DWORD size = 0x5);
 
 	// Code to generate a call in memory. This function unprotects the memory.
-	bool __declspec(dllexport) genJumpEnforced(DWORD address, DWORD previousTo, DWORD to, DWORD size = 0x5);
+	bool genJumpEnforced(DWORD address, DWORD previousTo, DWORD to, DWORD size = 0x5);
 
 	// Code to generate a call in memory. This function unprotects the memory.
-	void __declspec(dllexport) genCallUnprotected(DWORD address, DWORD to, DWORD size = 0x5);
+	void genCallUnprotected(DWORD address, DWORD to, DWORD size = 0x5);
 
 	// Code to generate a call in memory. This function unprotects the memory.
-	bool __declspec(dllexport) genCallEnforced(DWORD address, DWORD previousTo, DWORD to, DWORD size = 0x5);
+	bool genCallEnforced(DWORD address, DWORD previousTo, DWORD to, DWORD size = 0x5);
 
-	bool __declspec(dllexport) genPushEnforced(DWORD address, BYTE value);
-	bool __declspec(dllexport) genPushEnforced(DWORD address, DWORD value);
+	bool genPushEnforced(DWORD address, BYTE value);
+	bool genPushEnforced(DWORD address, DWORD value);
 
-	bool __declspec(dllexport) genPushUnprotected(DWORD address, DWORD value);
+	bool genPushUnprotected(DWORD address, DWORD value);
 
 	// Overrides a function in a virtual table.
-	void __declspec(dllexport) overrideVirtualTable(DWORD address, DWORD offset, DWORD to);
+	void overrideVirtualTable(DWORD address, DWORD offset, DWORD to);
 
 	// Overrides a function in a virtual table.
-	bool __declspec(dllexport) overrideVirtualTableEnforced(DWORD address, DWORD offset, DWORD previousTo, DWORD to);
+	bool overrideVirtualTableEnforced(DWORD address, DWORD offset, DWORD previousTo, DWORD to);
 
 	// Write NOP instructions over a space.
-	bool __declspec(dllexport) genNOPUnprotected(DWORD address, DWORD size);
+	bool genNOPUnprotected(DWORD address, DWORD size);
 
 	// Write a single value to memory.
-	void __declspec(dllexport) writeByteUnprotected(DWORD address, BYTE value);
-	void __declspec(dllexport) writeDoubleWordUnprotected(DWORD address, DWORD value);
-	bool __declspec(dllexport) writeDoubleWordEnforced(DWORD address, DWORD previousValue, DWORD value);
+	void writeByteUnprotected(DWORD address, BYTE value);
+	void writeDoubleWordUnprotected(DWORD address, DWORD value);
+	bool writeDoubleWordEnforced(DWORD address, DWORD previousValue, DWORD value);
 
 	// Code to write a patch to a code segment. This function unprotects the memory.
 	// WARNING: If passing a function address, always use a non-static function or it will crash.
-	void __declspec(dllexport) writePatchCodeUnprotected(DWORD address, const BYTE* patch, DWORD size);
+	void writePatchCodeUnprotected(DWORD address, const BYTE* patch, DWORD size);
 
 	// Code to determine what function an address calls.
-	DWORD __declspec(dllexport) getCallAddress(DWORD address);
+	DWORD getCallAddress(DWORD address);
 }

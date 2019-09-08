@@ -102,15 +102,15 @@ namespace TES3 {
 
 		Reference * getFirstObjectOfType(ObjectType::ObjectType, bool);
 
-		bool __declspec(dllexport) isInterior();
-		int __declspec(dllexport) getGridX();
-		void __declspec(dllexport) setGridX(int x);
-		int __declspec(dllexport) getGridY();
-		void __declspec(dllexport) setGridY(int y);
+		bool isInterior();
+		int getGridX();
+		void setGridX(int x);
+		int getGridY();
+		void setGridY(int y);
 
 		void setName(const char* name);
 
-		void __declspec(dllexport) insertReference(Reference* reference);
+		void insertReference(Reference* reference);
 
 		//
 		// Other getter/setter functions.

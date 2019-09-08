@@ -17,7 +17,7 @@ namespace NI {
 		unsigned int bytesPerPixel; // 0x40 // Determined by format data.
 		unsigned int revisionID;
 
-		__declspec(dllexport) static PixelData* create(unsigned int width, unsigned int height);
+		static PixelData* create(unsigned int width, unsigned int height);
 	};
 	static_assert(sizeof(PixelData) == 0x48, "NI::PixelData failed size validation");
 }

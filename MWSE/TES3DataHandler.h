@@ -93,27 +93,27 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		__declspec(dllexport) bool saveGame(const char* fileName, const char* saveName);
-		__declspec(dllexport) LoadGameResult loadGame(const char* fileName);
-		__declspec(dllexport) LoadGameResult loadGameMainMenu(const char* fileName);
+		bool saveGame(const char* fileName, const char* saveName);
+		LoadGameResult loadGame(const char* fileName);
+		LoadGameResult loadGameMainMenu(const char* fileName);
 
-		__declspec(dllexport) BaseObject* resolveObject(const char*);
-		__declspec(dllexport) Reference* findFirstCloneOfActor(const char*);
-		__declspec(dllexport) Spell* getSpellById(const char*);
-		__declspec(dllexport) Script* findScriptByName(const char*);
-		__declspec(dllexport) GlobalVariable* findGlobalVariable(const char*);
-		__declspec(dllexport) Dialogue* findDialogue(const char*);
-		__declspec(dllexport) Sound* findSound(const char*);
-		__declspec(dllexport) Faction* findFaction(const char*);
-		__declspec(dllexport) bool addNewObject(BaseObject*);
-		__declspec(dllexport) void deleteObject(BaseObject*);
+		BaseObject* resolveObject(const char*);
+		Reference* findFirstCloneOfActor(const char*);
+		Spell* getSpellById(const char*);
+		Script* findScriptByName(const char*);
+		GlobalVariable* findGlobalVariable(const char*);
+		Dialogue* findDialogue(const char*);
+		Sound* findSound(const char*);
+		Faction* findFaction(const char*);
+		bool addNewObject(BaseObject*);
+		void deleteObject(BaseObject*);
 
-		__declspec(dllexport) Cell * getCellByGrid(int x, int y);
-		__declspec(dllexport) Cell * getCellByName(const char* name);
+		Cell * getCellByGrid(int x, int y);
+		Cell * getCellByName(const char* name);
 
-		__declspec(dllexport) MagicEffect * getMagicEffect(int id);
+		MagicEffect * getMagicEffect(int id);
 
-		__declspec(dllexport) float createReference(PhysicalObject * object, Vector3 * position, Vector3 * orientation, bool& cellWasCreated, Reference * existingReference = nullptr, Cell * cell = nullptr);
+		float createReference(PhysicalObject * object, Vector3 * position, Vector3 * orientation, bool& cellWasCreated, Reference * existingReference = nullptr, Cell * cell = nullptr);
 
 		//
 		// Custom functions.
@@ -121,7 +121,7 @@ namespace TES3 {
 
 		// Wrapper around resolveObject that enforces type.
 		template <typename T>
-		__declspec(dllexport) T * resolveObjectByType(const char* id, ObjectType::ObjectType type = ObjectType::Invalid) {
+		T * resolveObjectByType(const char* id, ObjectType::ObjectType type = ObjectType::Invalid) {
 			TES3::BaseObject* potentialResult = resolveObject(id);
 			if (!potentialResult) {
 				return nullptr;
@@ -134,7 +134,7 @@ namespace TES3 {
 		}
 
 		template <typename T>
-		__declspec(dllexport) T* resolveObjectByType(const std::string& id, ObjectType::ObjectType type = ObjectType::Invalid) {
+		T* resolveObjectByType(const std::string& id, ObjectType::ObjectType type = ObjectType::Invalid) {
 			return resolveObjectByType<T>(id.c_str(), type);
 		}
 	};

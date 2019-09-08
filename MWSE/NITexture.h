@@ -46,8 +46,8 @@ namespace NI {
 		// vTable wrappers.
 		//
 
-		__declspec(dllexport) unsigned int getWidth();
-		__declspec(dllexport) unsigned int getHeight();
+		unsigned int getWidth();
+		unsigned int getHeight();
 
 	};
 	static_assert(sizeof(Texture) == 0x2C, "NI::Texture failed size validation");

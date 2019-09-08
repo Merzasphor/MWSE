@@ -72,8 +72,8 @@ namespace TES3 {
 		~GameFile();
 
 		void deleteFile();
-		bool __declspec(dllexport) readChunkData(void * data, unsigned int size);
-		int __declspec(dllexport) writeChunkData(unsigned int tag, const void * data, unsigned int size);
+		bool readChunkData(void * data, unsigned int size);
+		int writeChunkData(unsigned int tag, const void * data, unsigned int size);
 
 		bool hasNextSubrecord();
 		int getNextSubrecord();

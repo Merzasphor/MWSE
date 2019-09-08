@@ -35,7 +35,7 @@ namespace NI {
 		// vTable wrappers.
 		//
 
-		__declspec(dllexport) __inline PropertyType getType() {
+		__inline PropertyType getType() {
 			return static_cast<PropertyType>(vTable.asProperty->getType(this));
 		}
 

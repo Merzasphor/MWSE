@@ -29,34 +29,34 @@ namespace NI {
 		// vTable wrappers.
 		//
 
-		__declspec(dllexport) AVObject * getObjectByName(const char*);
+		AVObject * getObjectByName(const char*);
 
 		template <typename T>
-		__declspec(dllexport) T * getObjectByNameAndType(const char* name) {
+		T * getObjectByNameAndType(const char* name) {
 			return static_cast<T*>(vTable.asAVObject->getObjectByName(this, name));
 		}
 
-		__declspec(dllexport) bool getAppCulled();
-		__declspec(dllexport) void setAppCulled(bool culled);
+		bool getAppCulled();
+		void setAppCulled(bool culled);
 		
 		//
 		// Other related this-call functions.
 		//
 
-		__declspec(dllexport) void update(float fTime = 0.0f, bool bUpdateControllers = false, bool bUpdateBounds = true);
-		__declspec(dllexport) void updateEffects();
-		__declspec(dllexport) void updateProperties();
-		__declspec(dllexport) void setLocalRotationMatrix(TES3::Matrix33* matrix);
+		void update(float fTime = 0.0f, bool bUpdateControllers = false, bool bUpdateBounds = true);
+		void updateEffects();
+		void updateProperties();
+		void setLocalRotationMatrix(TES3::Matrix33* matrix);
 
-		__declspec(dllexport) void attachProperty(Pointer<Property> property);
-		__declspec(dllexport) Pointer<Property> * detachProperty(Pointer<Property> * out_detached, PropertyType type);
+		void attachProperty(Pointer<Property> property);
+		Pointer<Property> * detachProperty(Pointer<Property> * out_detached, PropertyType type);
 
 		//
 		// Custom functions.
 		//
 
-		__declspec(dllexport) void clearTransforms();
-		__declspec(dllexport) Pointer<Property> getProperty(PropertyType type);
+		void clearTransforms();
+		Pointer<Property> getProperty(PropertyType type);
 
 	};
 	static_assert(sizeof(AVObject) == 0x90, "NI::AVObject failed size validation");

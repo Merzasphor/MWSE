@@ -24,7 +24,7 @@ namespace NI {
 		// Custom functions.
 		//
 
-		__declspec(dllexport) Pointer<DynamicEffect> getEffect(int type);
+		Pointer<DynamicEffect> getEffect(int type);
 
 	};
 	static_assert(sizeof(Node) == 0xB0, "NI::Node failed size validation");
