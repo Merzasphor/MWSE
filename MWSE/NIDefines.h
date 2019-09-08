@@ -22,6 +22,7 @@ namespace NI {
 	struct RTTI;
 	struct SourceTexture;
 	struct SpotLight;
+	struct Stream;
 	struct SwitchNode;
 	struct Texture;
 	struct TimeController;
@@ -33,6 +34,7 @@ namespace NI {
 	struct Node_vTable;
 	struct Object_vTable;
 	struct Property_vTable;
+	struct Renderer_vTable;
 	struct SourceTexture_vTable;
 	struct Texture_vTable;
 	struct TriShape_vTable;

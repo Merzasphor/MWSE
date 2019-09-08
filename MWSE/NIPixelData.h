@@ -20,4 +20,11 @@ namespace NI {
 		static PixelData* create(unsigned int width, unsigned int height);
 	};
 	static_assert(sizeof(PixelData) == 0x48, "NI::PixelData failed size validation");
+
+	struct PixelRGB {
+		unsigned char r;
+		unsigned char g;
+		unsigned char b;
+	};
+	static_assert(sizeof(PixelRGB) == 0x3, "NI::PixelRGB failed size validation");
 }

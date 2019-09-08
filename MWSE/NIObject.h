@@ -10,11 +10,22 @@ namespace NI {
 			DynamicEffect_vTable * asDynamicEffect;
 			Node_vTable * asNode;
 			Property_vTable * asProperty;
+			Renderer_vTable * asRenderer;
 			TriShape_vTable * asTriShape;
 			Texture_vTable * asTexture;
 			SourceTexture_vTable * asSourceTexture;
 		} vTable; // 0x0
 		int refCount; // 0x4
+
+		//
+		// Basic operators.
+		//
+
+		Object();
+		~Object();
+
+		static void *operator new(size_t size);
+		static void operator delete(void *block);
 
 		//
 		// vTable Wrappers
@@ -43,11 +54,11 @@ namespace NI {
 		void (__thiscall * destructor)(Object*, int); // 0x0
 		RTTI * (__thiscall * getRTTI)(Object*); // 0x4
 		Object * (__thiscall * createClone)(Object*); // 0x8
-		void * loadBinary; // 0xC
+		Object * (__thiscall * loadBinary)(Object*, Stream*); // 0xC
 		void * linkObject; // 0x10
 		void * registerStreamables; // 0x14
 		void * saveBinary; // 0x18
-		void * isEqual; // 0x1C
+		bool (__thiscall * isEqual)(Object*, Object*); // 0x1C
 		void * getViewerStrings; // 0x20
 		void * addViewerStrings; // 0x24
 		void * unknown_0x28; // 0x28

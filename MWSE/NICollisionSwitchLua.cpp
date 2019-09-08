@@ -21,7 +21,7 @@ namespace mwse {
 			// Start our usertype. We must finish this with state.set_usertype.
 			auto usertypeDefinition = state.create_simple_usertype<NI::CollisionSwitch>();
 			usertypeDefinition.set("new", []() {
-				return NI::Pointer<NI::CollisionSwitch>(new (tes3::_new<NI::CollisionSwitch>()) NI::CollisionSwitch());
+				return NI::Pointer<NI::CollisionSwitch>(new NI::CollisionSwitch());
 			});
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.

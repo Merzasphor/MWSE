@@ -6,7 +6,27 @@
 
 #include <cstring>
 
+#include "TES3Util.h"
+
 namespace NI {
+	const auto NI_Object_ctor = reinterpret_cast<Object * (__thiscall*)(Object *)>(0x6E98A0);
+	Object::Object() {
+		NI_Object_ctor(this);
+	}
+
+	const auto NI_Object_dtor = reinterpret_cast<Object * (__thiscall*)(Object *)>(0x6E98F0);
+	Object::~Object() {
+		NI_Object_dtor(this);
+	}
+
+	void * Object::operator new(size_t size) {
+		return mwse::tes3::_new(size);
+	}
+
+	void Object::operator delete(void * address) {
+		mwse::tes3::_delete(address);
+	}
+
 	RTTI * Object::getRunTimeTypeInformation() {
 		return vTable.asObject->getRTTI(this);
 	}
