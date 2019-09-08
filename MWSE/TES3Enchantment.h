@@ -27,7 +27,7 @@ namespace TES3 {
 		unsigned short maxCharge; // 0x30
 		short pad_32; // 0x32
 		Effect effects[8]; // 0x34
-		mwse::bitset32 flags; // 0xF4
+		unsigned int flags; // 0xF4
 
 		//
 		// Custom functions.

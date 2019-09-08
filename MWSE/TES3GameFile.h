@@ -4,15 +4,13 @@
 
 #include "TES3Collections.h"
 
-#include "Bitset.h"
-
 namespace TES3 {
 	struct GameFile {
 		struct Header {
 			char tag[4];
 			unsigned int size;
 			unsigned int data;
-			mwse::bitset32 flags;
+			unsigned int flags;
 		};
 		struct ChunkHeader {
 			char tag[4];

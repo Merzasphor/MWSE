@@ -238,7 +238,7 @@ namespace TES3 {
 		PhysicalObject * areaEffect; // 0xE8
 		int school; // 0xEC
 		float baseMagickaCost; // 0xF0
-		mwse::bitset32 flags; // 0xF4
+		unsigned int flags; // 0xF4
 		long lightingRed; // 0xF8
 		long lightingGreen; // 0xFC
 		long lightingBlue; // 0x0100

@@ -6,6 +6,8 @@
 #include "TES3Container.h"
 #include "TES3Script.h"
 
+#include "BitUtil.h"
+
 namespace mwse {
 	namespace lua {
 		void bindTES3Container() {
@@ -28,12 +30,12 @@ namespace mwse {
 
 				// Friendly access to actor flags.
 				usertypeDefinition.set("organic", sol::property(
-					[](TES3::Container& self) { return self.actorFlags.test(TES3::ActorFlagContainer::OrganicBit); },
-					[](TES3::Container& self, bool set) { self.actorFlags.set(TES3::ActorFlagContainer::OrganicBit, set); }
+					[](TES3::Container& self) { return BITMASK_TEST(self.actorFlags, TES3::ActorFlagContainer::Organic); },
+					[](TES3::Container& self, bool set) { BITMASK_SET(self.actorFlags, TES3::ActorFlagContainer::Organic, set); }
 				));
 				usertypeDefinition.set("respawns", sol::property(
-					[](TES3::Container& self) { return self.actorFlags.test(TES3::ActorFlagContainer::RespawnsBit); },
-					[](TES3::Container& self, bool set) { self.actorFlags.set(TES3::ActorFlagContainer::RespawnsBit, set); }
+					[](TES3::Container& self) { return BITMASK_TEST(self.actorFlags, TES3::ActorFlagContainer::Respawns); },
+					[](TES3::Container& self, bool set) { BITMASK_SET(self.actorFlags, TES3::ActorFlagContainer::Respawns, set); }
 				));
 
 				// Constant values.
@@ -64,12 +66,12 @@ namespace mwse {
 				
 				// Friendly access to actor flags.
 				usertypeDefinition.set("organic", sol::property(
-					[](TES3::ContainerInstance& self) { return self.actorFlags.test(TES3::ActorFlagContainer::OrganicBit); },
-					[](TES3::ContainerInstance& self, bool set) { self.actorFlags.set(TES3::ActorFlagContainer::OrganicBit, set); }
+					[](TES3::ContainerInstance& self) { return BITMASK_TEST(self.actorFlags, TES3::ActorFlagContainer::Organic); },
+					[](TES3::ContainerInstance& self, bool set) { BITMASK_SET(self.actorFlags, TES3::ActorFlagContainer::Organic, set); }
 				));
 				usertypeDefinition.set("respawns", sol::property(
-					[](TES3::ContainerInstance& self) { return self.actorFlags.test(TES3::ActorFlagContainer::RespawnsBit); },
-					[](TES3::ContainerInstance& self, bool set) { self.actorFlags.set(TES3::ActorFlagContainer::RespawnsBit, set); }
+					[](TES3::ContainerInstance& self) { return BITMASK_TEST(self.actorFlags, TES3::ActorFlagContainer::Respawns); },
+					[](TES3::ContainerInstance& self, bool set) { BITMASK_SET(self.actorFlags, TES3::ActorFlagContainer::Respawns, set); }
 				));
 
 				// Access to other objects that need to be packaged.

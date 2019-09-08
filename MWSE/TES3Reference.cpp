@@ -28,6 +28,8 @@
 #include "TES3NPC.h"
 #include "TES3WorldController.h"
 
+#include "BitUtil.h"
+
 #define TES3_Reference_activate 0x4E9610
 #define TES3_Reference_setActionFlag 0x4E55A0
 #define TES3_Reference_clearActionFlag 0x4E55E0
@@ -212,7 +214,7 @@ namespace TES3 {
 		if (!getDisabled()) {
 			return false;
 		}
-		objectFlags.set(TES3::ObjectFlag::DisabledBit, false);
+		BIT_SET_OFF(objectFlags, ObjectFlag::DisabledBit);
 
 		auto dataHandler = TES3::DataHandler::get();
 
@@ -248,7 +250,7 @@ namespace TES3 {
 		if (getDisabled()) {
 			return false;
 		}
-		objectFlags.set(TES3::ObjectFlag::DisabledBit, true);
+		BIT_SET_ON(objectFlags, ObjectFlag::DisabledBit);
 
 		auto dataHandler = TES3::DataHandler::get();
 
@@ -288,7 +290,7 @@ namespace TES3 {
 	}
 
 	bool Reference::getDisabled() {
-		return objectFlags.test(TES3::ObjectFlag::DisabledBit);
+		return BIT_TEST(objectFlags, ObjectFlag::DisabledBit);
 	}
 
 	Vector3 * Reference::getPosition() {
@@ -373,11 +375,11 @@ namespace TES3 {
 	}
 
 	bool Reference::getEmptyInventoryFlag() {
-		return objectFlags.test(TES3::ObjectFlag::EmptyInventoryBit);
+		return BIT_TEST(objectFlags, ObjectFlag::EmptyInventoryBit);
     }
 
     void Reference::setEmptyInventoryFlag(bool set) {
-		objectFlags.set(TES3::ObjectFlag::EmptyInventoryBit, set);
+		BIT_SET(objectFlags, ObjectFlag::EmptyInventoryBit, set);
     }
 
 	void Reference::attemptUnlockDisarm(MobileNPC * disarmer, Item * tool, ItemData * toolItemData) {

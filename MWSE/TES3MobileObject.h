@@ -177,11 +177,11 @@ namespace TES3 {
 			MobileNPC_vTable * mobileNPC;
 		} vTable; // 0x0
 		ObjectType::ObjectType objectType; // 0x4
-		mwse::bitset16 movementFlags; // 0x8
-		mwse::bitset16 prevMovementFlags; // 0xA
+		unsigned short movementFlags; // 0x8
+		unsigned short prevMovementFlags; // 0xA
 		short unknown_0xC;
 		short unknown_0xE; // Undefined.
-		mwse::bitset32 actorFlags; // 0x10
+		unsigned int actorFlags; // 0x10
 		Reference * reference; // 0x14
 		Collision * arrayCollisionResults; // 0x18
 		short cellX; // 0x1C

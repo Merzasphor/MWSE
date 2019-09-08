@@ -13,8 +13,8 @@ namespace NI {
 		void * normal; // 0x20
 		void * color; // 0x24
 		void * texture; // 0x28
-		mwse::bitset16 dataFlags; // 0x2C
-		mwse::bitset16 dirtyFlags; // 0x2E
+		unsigned short dataFlags; // 0x2C
+		unsigned short dirtyFlags; // 0x2E
 		bool keepFlags; // 0x30
 		bool compressFlags; // 0x31
 		bool unknown_0x32;

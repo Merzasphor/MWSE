@@ -36,7 +36,7 @@ namespace TES3 {
 		Iterator<ReactionNode> reactions; // 0x280
 		int playerRank; // 0x294
 		int playerReputation; // 0x298
-		mwse::bitset32 playerMembershipFlags; // 0x29C
+		unsigned int playerMembershipFlags; // 0x29C
 
 		//
 		// Custom functions.

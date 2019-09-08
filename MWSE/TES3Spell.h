@@ -55,7 +55,7 @@ namespace TES3 {
 		char unknown_0x31; // Undefined.
 		unsigned short magickaCost; // 0x32
 		Effect effects[8]; // 0x34
-		mwse::bitset32 spellFlags; //  0xF4
+		unsigned int spellFlags; //  0xF4
 
 		//
 		// Other related this-call functions.

@@ -9,7 +9,7 @@ namespace TES3 {
 	struct ScriptVariables {
 		struct WeaponHitFlags {
 			Weapon * weapon; // 0x0
-			mwse::bitset8 flags; // 0x4 // 0x10 is hit, 0x20 is hit attempt.
+			unsigned char flags; // 0x4 // 0x10 is hit, 0x20 is hit attempt.
 		};
 		short * shortVarValues; // 0x0
 		long * longVarValues; // 0x4

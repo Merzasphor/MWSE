@@ -470,40 +470,6 @@ namespace mwse {
 			// Bind our disable event manager.
 			mwse::lua::event::DisableableEventManager::bindToLua();
 			luaState["mwse"]["disableableEvents"] = &m_DisableableEventManager;
-
-			// Fix the bit library to support mwse bitsets.
-			luaState["bit"]["band"] = [](sol::object input, unsigned int flag) -> unsigned long {
-				if (input.is<unsigned int>()) {
-					return input.as<unsigned int>() & flag;
-				}
-				else if (input.is<mwse::bitset32>()) {
-					return input.as<mwse::bitset32>() & flag;
-				}
-				else if (input.is<mwse::bitset16>()) {
-					return input.as<mwse::bitset16>() & flag;
-				}
-				else if (input.is<mwse::bitset8>()) {
-					return input.as<mwse::bitset8>() & flag;
-				}
-
-				throw std::invalid_argument("First value must be an unsigned integer or a bitset.");
-			};
-			luaState["bit"]["bor"] = [](sol::object input, unsigned long flag) -> unsigned long {
-				if (input.is<unsigned int>()) {
-					return input.as<unsigned int>() | flag;
-				}
-				else if (input.is<mwse::bitset32>()) {
-					return input.as<mwse::bitset32>() | flag;
-				}
-				else if (input.is<mwse::bitset16>()) {
-					return input.as<mwse::bitset16>() | flag;
-				}
-				else if (input.is<mwse::bitset8>()) {
-					return input.as<mwse::bitset8>() | flag;
-				}
-
-				throw std::invalid_argument("First value must be an unsigned integer or a bitset.");
-			};
 		}
 
 		//

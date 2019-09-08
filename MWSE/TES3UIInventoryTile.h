@@ -4,8 +4,6 @@
 
 #include "TES3Collections.h"
 
-#include "Bitset.h"
-
 namespace TES3 {
 	namespace UI {
 		enum class InventoryTileType : int {
@@ -43,7 +41,7 @@ namespace TES3 {
 			Element * element; // 0x10
 			char unknown_0x14;
 			char padding_0x15[3];
-			mwse::bitset32 flags; // 0x18
+			unsigned int flags; // 0x18
 			char itemId[32]; // 0x1C
 			unsigned int tileType; // 0x3C
 			bool isBoundItem; // 0x40

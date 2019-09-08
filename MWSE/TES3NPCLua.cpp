@@ -10,6 +10,8 @@
 #include "TES3Faction.h"
 #include "TES3Script.h"
 
+#include "BitUtil.h"
+
 namespace mwse {
 	namespace lua {
 		void bindTES3NPC() {
@@ -63,23 +65,23 @@ namespace mwse {
 
 				// Easy access to actor flags.
 				usertypeDefinition.set("female", sol::property(
-					[](TES3::NPC& self) { return self.actorFlags.test(TES3::ActorFlagNPC::FemaleBit); },
-					[](TES3::NPC& self, bool state) { return self.actorFlags.set(TES3::ActorFlagNPC::FemaleBit, state); }
+					[](TES3::NPC& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagNPC::FemaleBit); },
+					[](TES3::NPC& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagNPC::FemaleBit, state); }
 				));
 				usertypeDefinition.set("autoCalc", sol::property(
-					[](TES3::NPC& self) { return self.actorFlags.test(TES3::ActorFlagNPC::AutoCalcBit); },
-					[](TES3::NPC& self, bool state) { return self.actorFlags.set(TES3::ActorFlagNPC::AutoCalcBit, state); }
+					[](TES3::NPC& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagNPC::AutoCalcBit); },
+					[](TES3::NPC& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagNPC::AutoCalcBit, state); }
 				));
 
 				// TODO: Deprecated. Remove before 2.1-stable.
 				usertypeDefinition.set("model", sol::property(&TES3::NPC::getModelPath, &TES3::NPC::setModelPath));
 				usertypeDefinition.set("essential", sol::property(
-					[](TES3::NPC& self) { return self.actorFlags.test(TES3::ActorFlagNPC::EssentialBit); },
-					[](TES3::NPC& self, bool state) { return self.actorFlags.set(TES3::ActorFlagNPC::EssentialBit, state); }
+					[](TES3::NPC& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagNPC::EssentialBit); },
+					[](TES3::NPC& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagNPC::EssentialBit, state); }
 				));
 				usertypeDefinition.set("respawns", sol::property(
-					[](TES3::NPC& self) { return self.actorFlags.test(TES3::ActorFlagNPC::RespawnBit); },
-					[](TES3::NPC& self, bool state) { return self.actorFlags.set(TES3::ActorFlagNPC::RespawnBit, state); }
+					[](TES3::NPC& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagNPC::RespawnBit); },
+					[](TES3::NPC& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagNPC::RespawnBit, state); }
 				));
 
 				// Finish up our usertype.
@@ -131,23 +133,23 @@ namespace mwse {
 
 				// Easy access to actor flags.
 				usertypeDefinition.set("female", sol::property(
-					[](TES3::NPCInstance& self) { return self.actorFlags.test(TES3::ActorFlagNPC::FemaleBit); },
-					[](TES3::NPCInstance& self, bool state) { return self.actorFlags.set(TES3::ActorFlagNPC::FemaleBit, state); }
+					[](TES3::NPCInstance& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagNPC::FemaleBit); },
+					[](TES3::NPCInstance& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagNPC::FemaleBit, state); }
 				));
 				usertypeDefinition.set("autoCalc", sol::property(
-					[](TES3::NPCInstance& self) { return self.actorFlags.test(TES3::ActorFlagNPC::AutoCalcBit); },
-					[](TES3::NPCInstance& self, bool state) { return self.actorFlags.set(TES3::ActorFlagNPC::AutoCalcBit, state); }
+					[](TES3::NPCInstance& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagNPC::AutoCalcBit); },
+					[](TES3::NPCInstance& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagNPC::AutoCalcBit, state); }
 				));
 
 				// TODO: Deprecated. Remove before 2.1-stable.
 				usertypeDefinition.set("model", sol::property(&TES3::NPCInstance::getModelPath, &TES3::NPCInstance::setModelPath));
 				usertypeDefinition.set("essential", sol::property(
-					[](TES3::NPCInstance& self) { return self.actorFlags.test(TES3::ActorFlagNPC::EssentialBit); },
-					[](TES3::NPCInstance& self, bool state) { return self.actorFlags.set(TES3::ActorFlagNPC::EssentialBit, state); }
+					[](TES3::NPCInstance& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagNPC::EssentialBit); },
+					[](TES3::NPCInstance& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagNPC::EssentialBit, state); }
 				));
 				usertypeDefinition.set("respawns", sol::property(
-					[](TES3::NPCInstance& self) { return self.actorFlags.test(TES3::ActorFlagNPC::Respawn); },
-					[](TES3::NPCInstance& self, bool state) { return self.actorFlags.set(TES3::ActorFlagNPC::RespawnBit, state); }
+					[](TES3::NPCInstance& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagNPC::RespawnBit); },
+					[](TES3::NPCInstance& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagNPC::RespawnBit, state); }
 				));
 
 				// Finish up our usertype.

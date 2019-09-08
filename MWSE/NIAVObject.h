@@ -7,11 +7,9 @@
 
 #include "TES3Collections.h"
 
-#include "Bitset.h"
-
 namespace NI {
 	struct AVObject : ObjectNET {
-		mwse::bitset16 flags; // 0x14
+		unsigned short flags; // 0x14
 		short pad_16;
 		Node * parentNode; // 0x18
 		TES3::Vector3 worldBoundOrigin; // 0x1C

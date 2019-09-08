@@ -9,6 +9,8 @@
 #include "TES3Script.h"
 #include "TES3SpellList.h"
 
+#include "BitUtil.h"
+
 namespace mwse {
 	namespace lua {
 		void bindTES3Creature() {
@@ -52,28 +54,28 @@ namespace mwse {
 
 				// Easy access to actor flags.
 				usertypeDefinition.set("biped", sol::property(
-					[](TES3::Creature& self) { return self.actorFlags.test(TES3::ActorFlagCreature::BipedBit); },
-					[](TES3::Creature& self, bool state) { return self.actorFlags.set(TES3::ActorFlagCreature::BipedBit, state); }
+					[](TES3::Creature& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagCreature::BipedBit); },
+					[](TES3::Creature& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagCreature::BipedBit, state); }
 				));
 				usertypeDefinition.set("respawns", sol::property(
-					[](TES3::Creature& self) { return self.actorFlags.test(TES3::ActorFlagCreature::RespawnBit); },
-					[](TES3::Creature& self, bool state) { return self.actorFlags.set(TES3::ActorFlagCreature::RespawnBit, state); }
+					[](TES3::Creature& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagCreature::RespawnBit); },
+					[](TES3::Creature& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagCreature::RespawnBit, state); }
 				));
 				usertypeDefinition.set("usesEquipment", sol::property(
-					[](TES3::Creature& self) { return self.actorFlags.test(TES3::ActorFlagCreature::WeaponAndShieldBit); },
-					[](TES3::Creature& self, bool state) { return self.actorFlags.set(TES3::ActorFlagCreature::WeaponAndShieldBit, state); }
+					[](TES3::Creature& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagCreature::WeaponAndShieldBit); },
+					[](TES3::Creature& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagCreature::WeaponAndShieldBit, state); }
 				));
 				usertypeDefinition.set("swims", sol::property(
-					[](TES3::Creature& self) { return self.actorFlags.test(TES3::ActorFlagCreature::SwimsBit); },
-					[](TES3::Creature& self, bool state) { return self.actorFlags.set(TES3::ActorFlagCreature::SwimsBit, state); }
+					[](TES3::Creature& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagCreature::SwimsBit); },
+					[](TES3::Creature& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagCreature::SwimsBit, state); }
 				));
 				usertypeDefinition.set("flies", sol::property(
-					[](TES3::Creature& self) { return self.actorFlags.test(TES3::ActorFlagCreature::FliesBit); },
-					[](TES3::Creature& self, bool state) { return self.actorFlags.set(TES3::ActorFlagCreature::FliesBit, state); }
+					[](TES3::Creature& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagCreature::FliesBit); },
+					[](TES3::Creature& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagCreature::FliesBit, state); }
 				));
 				usertypeDefinition.set("walks", sol::property(
-					[](TES3::Creature& self) { return self.actorFlags.test(TES3::ActorFlagCreature::WalksBit); },
-					[](TES3::Creature& self, bool state) { return self.actorFlags.set(TES3::ActorFlagCreature::WalksBit, state); }
+					[](TES3::Creature& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagCreature::WalksBit); },
+					[](TES3::Creature& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagCreature::WalksBit, state); }
 				));
 
 				// TODO: Deprecated. Remove before 2.1-stable.
@@ -127,28 +129,28 @@ namespace mwse {
 
 				// Easy access to actor flags.
 				usertypeDefinition.set("biped", sol::property(
-					[](TES3::CreatureInstance& self) { return self.actorFlags.test(TES3::ActorFlagCreature::BipedBit); },
-					[](TES3::CreatureInstance& self, bool state) { return self.actorFlags.set(TES3::ActorFlagCreature::BipedBit, state); }
+					[](TES3::CreatureInstance& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagCreature::BipedBit); },
+					[](TES3::CreatureInstance& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagCreature::BipedBit, state); }
 				));
 				usertypeDefinition.set("respawns", sol::property(
-					[](TES3::CreatureInstance& self) { return self.actorFlags.test(TES3::ActorFlagCreature::RespawnBit); },
-					[](TES3::CreatureInstance& self, bool state) { return self.actorFlags.set(TES3::ActorFlagCreature::RespawnBit, state); }
+					[](TES3::CreatureInstance& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagCreature::RespawnBit); },
+					[](TES3::CreatureInstance& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagCreature::RespawnBit, state); }
 				));
 				usertypeDefinition.set("usesEquipment", sol::property(
-					[](TES3::CreatureInstance& self) { return self.actorFlags.test(TES3::ActorFlagCreature::WeaponAndShieldBit); },
-					[](TES3::CreatureInstance& self, bool state) { return self.actorFlags.set(TES3::ActorFlagCreature::WeaponAndShieldBit, state); }
+					[](TES3::CreatureInstance& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagCreature::WeaponAndShieldBit); },
+					[](TES3::CreatureInstance& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagCreature::WeaponAndShieldBit, state); }
 				));
 				usertypeDefinition.set("swims", sol::property(
-					[](TES3::CreatureInstance& self) { return self.actorFlags.test(TES3::ActorFlagCreature::SwimsBit); },
-					[](TES3::CreatureInstance& self, bool state) { return self.actorFlags.set(TES3::ActorFlagCreature::SwimsBit, state); }
+					[](TES3::CreatureInstance& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagCreature::SwimsBit); },
+					[](TES3::CreatureInstance& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagCreature::SwimsBit, state); }
 				));
 				usertypeDefinition.set("flies", sol::property(
-					[](TES3::CreatureInstance& self) { return self.actorFlags.test(TES3::ActorFlagCreature::FliesBit); },
-					[](TES3::CreatureInstance& self, bool state) { return self.actorFlags.set(TES3::ActorFlagCreature::FliesBit, state); }
+					[](TES3::CreatureInstance& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagCreature::FliesBit); },
+					[](TES3::CreatureInstance& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagCreature::FliesBit, state); }
 				));
 				usertypeDefinition.set("walks", sol::property(
-					[](TES3::CreatureInstance& self) { return self.actorFlags.test(TES3::ActorFlagCreature::WalksBit); },
-					[](TES3::CreatureInstance& self, bool state) { return self.actorFlags.set(TES3::ActorFlagCreature::WalksBit, state); }
+					[](TES3::CreatureInstance& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagCreature::WalksBit); },
+					[](TES3::CreatureInstance& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagCreature::WalksBit, state); }
 				));
 
 				// TODO: Deprecated. Remove before 2.1-stable.

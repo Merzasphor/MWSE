@@ -68,6 +68,8 @@
 #include "TES3WeatherController.h"
 #include "TES3WorldController.h"
 
+#include "BitUtil.h"
+
 namespace mwse {
 	namespace lua {
 		auto iterateObjectsFiltered(unsigned int desiredType) {
@@ -2246,7 +2248,7 @@ namespace mwse {
 
 				if (getOptionalParam<bool>(params, "limit", false)) {
 					// Prevent placing items into organic containers.
-					if (actor->actorFlags.test(TES3::ActorFlagContainer::OrganicBit)) {
+					if (BIT_TEST(actor->actorFlags, TES3::ActorFlagContainer::OrganicBit)) {
 						return 0;
 					}
 
@@ -2479,7 +2481,7 @@ namespace mwse {
 				float itemWeight = item->getWeight();
 				if (toActor->objectType == TES3::ObjectType::Container && getOptionalParam<bool>(params, "limitCapacity", true)) {
 					// Prevent placing items into organic containers.
-					if (toActor->actorFlags.test(TES3::ActorFlagContainer::OrganicBit)) {
+					if (BIT_TEST(toActor->actorFlags, TES3::ActorFlagContainer::OrganicBit)) {
 						return 0;
 					}
 

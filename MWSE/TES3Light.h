@@ -34,7 +34,7 @@ namespace TES3 {
 		int time; // 0x60
 		int radius; // 0x64
 		unsigned char color[4]; // 0x68
-		mwse::bitset32 flags; // 0x6C
+		unsigned int flags; // 0x6C
 		Sound * sound; // 0x70
 
 		//

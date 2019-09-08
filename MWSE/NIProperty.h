@@ -6,8 +6,6 @@
 #include "NILinkedList.h"
 #include "TES3Collections.h"
 
-#include "Bitset.h"
-
 namespace NI {
 	enum class PropertyType : int {
 		Alpha = 0x0,
@@ -31,7 +29,7 @@ namespace NI {
 	static_assert(sizeof(Property_vTable) == 0x34, "NI::Property's vtable failed size validation");
 
 	struct Property : ObjectNET {
-		mwse::bitset16 flags;
+		unsigned short flags;
 
 		//
 		// vTable wrappers.

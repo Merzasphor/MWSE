@@ -17,6 +17,8 @@
 #include "TES3Script.h"
 #include "TES3Spell.h"
 
+#include "BitUtil.h"
+
 namespace mwse {
 	namespace lua {
 		void bindScriptUtil() {
@@ -225,7 +227,7 @@ namespace mwse {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
 
-				return reference->objectFlags.test(TES3::ObjectFlag::DeleteBit);
+				return BITMASK_TEST(reference->objectFlags, TES3::ObjectFlag::Delete);
 			};
 			state["mwscript"]["getDetected"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
@@ -409,7 +411,7 @@ namespace mwse {
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
 
 				bool del = getOptionalParam<bool>(params, "delete", true);
-				reference->objectFlags.set(TES3::ObjectFlag::DeleteBit, del);
+				BITMASK_SET_ON(reference->objectFlags, TES3::ObjectFlag::Delete);
 
 				reference->setObjectModified(true);
 

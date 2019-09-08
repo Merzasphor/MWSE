@@ -5,8 +5,6 @@
 
 #include "TES3Collections.h"
 
-#include "Bitset.h"
-
 #include <string>
 
 namespace TES3 {
@@ -199,7 +197,7 @@ namespace TES3 {
 			ActorVirtualTable * actor;
 		} vTable; // 0x0
 		ObjectType::ObjectType objectType; // 0x4
-		mwse::bitset32 objectFlags; // 0x8
+		unsigned int objectFlags; // 0x8
 		GameFile * sourceMod; // 0xC
 
 		//

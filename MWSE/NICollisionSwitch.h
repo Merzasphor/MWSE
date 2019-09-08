@@ -2,22 +2,23 @@
 
 #include "NINode.h"
 
+#include "BitUtil.h"
+
 namespace NI {
 	struct CollisionSwitch : Node {
 		static const unsigned short flagCollision = 0x20;
-		static const size_t flagCollisionBit = 5;
 
 		CollisionSwitch() {
 			vTable.asNode = reinterpret_cast<NI::Node_vTable*>(0x74F418);
-			flags.set(flagCollisionBit, true);
+			BITMASK_SET_ON(flags, flagCollision);
 		}
 
 		bool getCollisionActive() {
-			return flags.test(flagCollisionBit);
+			return BITMASK_TEST(flags, flagCollision);
 		}
 
 		void setCollisionActive(bool active) {
-			flags.set(flagCollisionBit, active);
+			BITMASK_SET(flags, flagCollision, active);
 		}
 	};
 	static_assert(sizeof(CollisionSwitch) == 0xB0, "NI::CollisionSwitch failed size validation");

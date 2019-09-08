@@ -169,7 +169,7 @@ namespace TES3 {
 
 	struct DataHandler {
 		struct ExteriorCellData {
-			mwse::bitset8 loadingFlags;
+			unsigned char loadingFlags;
 			Cell * cell;
 			void * landRenderData;
 		};
