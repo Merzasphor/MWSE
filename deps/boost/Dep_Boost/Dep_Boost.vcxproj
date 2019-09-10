@@ -71,13 +71,13 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)deps\boost;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
-    <TargetName>libboost_regex-vc140-mt-sgd-1_60</TargetName>
+    <TargetName>libboost_regex-vc142-mt-sgd-x32-1_71</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(SolutionDir)deps\boost;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
-    <TargetName>libboost_regex-vc140-mt-s-1_60</TargetName>
+    <TargetName>libboost_regex-vc142-mt-s-x32-1_71</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
