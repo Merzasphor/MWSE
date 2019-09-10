@@ -491,16 +491,16 @@ namespace mwse {
 			// Add binding for TES3::UI::TreeItem type.
 			// TODO: Move this to its own file after TES3::UI::Tree has been made a template.
 			{
-				auto usertypeDefinition = state.create_simple_usertype<TES3::UI::TreeItem>();
+				auto usertypeDefinition = state.new_usertype<TES3::UI::TreeItem>("tes3uiProperty");
 
-				usertypeDefinition.set("id", &TES3::UI::TreeItem::key);
-				usertypeDefinition.set("name", sol::property([](TES3::UI::TreeItem& self) {
+				usertypeDefinition["id"] = &TES3::UI::TreeItem::key;
+				usertypeDefinition["name"] = sol::property([](TES3::UI::TreeItem& self) {
 					return TES3::UI::lookupID(self.key);
-				}));
-				usertypeDefinition.set("type", sol::property([](TES3::UI::TreeItem& self) {
+				});
+				usertypeDefinition["type"] = sol::property([](TES3::UI::TreeItem& self) {
 					return unsigned int(self.valueType) & 0x7F;
-				}));
-				usertypeDefinition.set("value", sol::property([](TES3::UI::TreeItem& self) -> sol::object {
+				});
+				usertypeDefinition["value"] = sol::property([](TES3::UI::TreeItem& self) -> sol::object {
 					auto& luaManager = mwse::lua::LuaManager::getInstance();
 					auto stateHandle = luaManager.getThreadSafeStateHandle();
 					sol::state& state = stateHandle.state;
@@ -524,9 +524,9 @@ namespace mwse {
 						}
 					}
 					return sol::nil;
-				}));
+				});
 
-				state.set_usertype("tes3uiProperty", usertypeDefinition);
+				
 			}
 		}
 

@@ -47,61 +47,52 @@ namespace mwse {
 			// Binding for TES3::MobileActor::ActiveMagicEffects
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TES3::MobileActor::ActiveMagicEffects>();
-				usertypeDefinition.set("new", sol::no_constructor);
+				auto usertypeDefinition = state.new_usertype<TES3::MobileActor::ActiveMagicEffects>("tes3activeMagicEffects");
+				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Allow the use of # and ipairs.
-				usertypeDefinition.set(sol::meta_function::pairs,
-					[](TES3::MobileActor::ActiveMagicEffects& self)
-					{
-						ActiveMagicEffects_IteratorState itt;
-						itt.current = self.firstEffect->next;
-						itt.end = self.firstEffect;
-						return std::make_tuple(&ActiveMagicEffects_pairs, sol::user<ActiveMagicEffects_IteratorState>(std::move(itt)), sol::lua_nil);
-					}
-				);
-				usertypeDefinition.set(sol::meta_function::ipairs, [](TES3::MobileActor::ActiveMagicEffects& self) { return std::make_tuple(&ActiveMagicEffects_ipairs, self, 0); });
-				usertypeDefinition.set(sol::meta_function::length, [](TES3::MobileActor::ActiveMagicEffects& self) { return self.count; });
+				usertypeDefinition[sol::meta_function::pairs] = [](TES3::MobileActor::ActiveMagicEffects& self) {
+					ActiveMagicEffects_IteratorState itt;
+					itt.current = self.firstEffect->next;
+					itt.end = self.firstEffect;
+					return std::make_tuple(&ActiveMagicEffects_pairs, sol::user<ActiveMagicEffects_IteratorState>(std::move(itt)), sol::lua_nil);
+				};
+				usertypeDefinition[sol::meta_function::ipairs] = [](TES3::MobileActor::ActiveMagicEffects& self) { return std::make_tuple(&ActiveMagicEffects_ipairs, self, 0); };
+				usertypeDefinition[sol::meta_function::length] = [](TES3::MobileActor::ActiveMagicEffects& self) { return self.count; };
 
 				// Basic property binding.
-				usertypeDefinition.set("first", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffects::firstEffect));
-				usertypeDefinition.set("count", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffects::count));
-
-				// Finish up our usertype.
-				state.set_usertype("tes3activeMagicEffects", usertypeDefinition);
+				usertypeDefinition["first"] = sol::readonly_property(&TES3::MobileActor::ActiveMagicEffects::firstEffect);
+				usertypeDefinition["count"] = sol::readonly_property(&TES3::MobileActor::ActiveMagicEffects::count);
 			}
 
 			// Binding for TES3::MobileActor::ActiveMagicEffect
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TES3::MobileActor::ActiveMagicEffect>();
-				usertypeDefinition.set("new", sol::no_constructor);
+				auto usertypeDefinition = state.new_usertype<TES3::MobileActor::ActiveMagicEffect>("tes3activeMagicEffect");
+				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
-				usertypeDefinition.set("attributeId", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::skillOrAttributeID));
-				usertypeDefinition.set("duration", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::duration));
-				usertypeDefinition.set("effectId", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::magicEffectID));
-				usertypeDefinition.set("effectIndex", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::magicInstanceEffectIndex));
-				usertypeDefinition.set("flag9", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::unknown_0x9));
-				usertypeDefinition.set("harmful", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::isHarmful));
-				usertypeDefinition.set("magnitudeMin", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::magnitudeMin));
-				usertypeDefinition.set("next", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::next));
-				usertypeDefinition.set("previous", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::prev));
-				usertypeDefinition.set("serial", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::magicInstanceSerial));
-				usertypeDefinition.set("skillId", sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::skillOrAttributeID));
+				usertypeDefinition["attributeId"] = sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::skillOrAttributeID);
+				usertypeDefinition["duration"] = sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::duration);
+				usertypeDefinition["effectId"] = sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::magicEffectID);
+				usertypeDefinition["effectIndex"] = sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::magicInstanceEffectIndex);
+				usertypeDefinition["flag9"] = sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::unknown_0x9);
+				usertypeDefinition["harmful"] = sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::isHarmful);
+				usertypeDefinition["magnitudeMin"] = sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::magnitudeMin);
+				usertypeDefinition["next"] = sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::next);
+				usertypeDefinition["previous"] = sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::prev);
+				usertypeDefinition["serial"] = sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::magicInstanceSerial);
+				usertypeDefinition["skillId"] = sol::readonly_property(&TES3::MobileActor::ActiveMagicEffect::skillOrAttributeID);
 
 				// Expose easy access to the instance's magnitude.
-				usertypeDefinition.set("magnitude", sol::readonly_property([](TES3::MobileActor::ActiveMagicEffect& self) {
+				usertypeDefinition["magnitude"] = sol::readonly_property([](TES3::MobileActor::ActiveMagicEffect& self) {
 					return TES3::WorldController::get()->spellInstanceController->getInstanceFromSerial(self.magicInstanceSerial)->getMagnitude(self.magicInstanceEffectIndex);
-				}));
+				});
 
 				// Expose quick access to the source instance.
-				usertypeDefinition.set("instance", sol::readonly_property([](TES3::MobileActor::ActiveMagicEffect& self) {
+				usertypeDefinition["instance"] = sol::readonly_property([](TES3::MobileActor::ActiveMagicEffect& self) {
 					return TES3::WorldController::get()->spellInstanceController->getInstanceFromSerial(self.magicInstanceSerial);
-				}));
-
-				// Finish up our usertype.
-				state.set_usertype("tes3activeMagicEffect", usertypeDefinition);
+				});
 			}
 		}
 	}

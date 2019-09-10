@@ -304,20 +304,16 @@ namespace mwse {
 
 		void LuaManager::bindData() {
 			// Bind our LuaScript type, which is used for holding script contexts.
-			luaState.new_usertype<LuaScript>("LuaScript",
-				sol::constructors<LuaScript()>(),
+			{
+				auto usertypeDefinition = luaState.new_usertype<LuaScript>("mwseLuaScript");
+				usertypeDefinition[sol::meta_function::index] = &DynamicLuaObject::dynamic_get;
+				usertypeDefinition[sol::meta_function::index] = &DynamicLuaObject::dynamic_set;
+				usertypeDefinition[sol::meta_function::length] = [](DynamicLuaObject& d) { return d.entries.size(); };
 
-				// Implement dynamic object metafunctions.
-				sol::meta_function::index, &DynamicLuaObject::dynamic_get,
-				sol::meta_function::new_index, &DynamicLuaObject::dynamic_set,
-				sol::meta_function::length, [](DynamicLuaObject& d) { return d.entries.size(); },
-
-				// Set up read-only properties.
-				"script", sol::readonly(&LuaScript::script),
-				"reference", sol::readonly(&LuaScript::reference),
-				"context", sol::readonly_property([](LuaScript& self) { return std::shared_ptr<ScriptContext>(new ScriptContext(self.script)); })
-
-				);
+				usertypeDefinition["script"] = sol::readonly(&LuaScript::script);
+				usertypeDefinition["reference"] = sol::readonly(&LuaScript::reference);
+				usertypeDefinition["context"] = sol::readonly_property([](LuaScript& self) { return std::shared_ptr<ScriptContext>(new ScriptContext(self.script)); });
+			}
 
 			// Create the base of API tables.
 			luaState["mwse"] = luaState.create_table();

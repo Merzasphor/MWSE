@@ -6,6 +6,7 @@
 
 #include "TES3Util.h"
 
+#include "TES3MobileActor.h"
 #include "TES3Spell.h"
 #include "TES3SpellList.h"
 
@@ -17,18 +18,18 @@ namespace mwse {
 			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.create_simple_usertype<TES3::SpellList>();
-			usertypeDefinition.set("new", sol::no_constructor);
+			auto usertypeDefinition = state.new_usertype<TES3::SpellList>("tes3spellList");
+			usertypeDefinition["new"] = sol::no_constructor;
 
 			// 
-			usertypeDefinition.set("iterator", sol::readonly_property(&TES3::SpellList::list));
+			usertypeDefinition["iterator"] = sol::readonly_property(&TES3::SpellList::list);
 
 			// Basic function binding.
-			usertypeDefinition.set("containsType", &TES3::SpellList::containsType);
-			usertypeDefinition.set("getCheapest", &TES3::SpellList::getCheapest);
+			usertypeDefinition["containsType"] = &TES3::SpellList::containsType;
+			usertypeDefinition["getCheapest"] = &TES3::SpellList::getCheapest;
 
 			// Ambiguous function binding.
-			usertypeDefinition.set("add", [](TES3::SpellList& self, sol::object value) {
+			usertypeDefinition["add"] = [](TES3::SpellList& self, sol::object value) {
 				if (value.is<TES3::Spell*>()) {
 					return self.add(value.as<TES3::Spell*>());
 				}
@@ -37,8 +38,8 @@ namespace mwse {
 				}
 
 				return false;
-			});
-			usertypeDefinition.set("remove", [](TES3::SpellList& self, sol::object value) {
+			};
+			usertypeDefinition["remove"] = [](TES3::SpellList& self, sol::object value) {
 				if (value.is<TES3::Spell*>()) {
 					return self.remove(value.as<TES3::Spell*>());
 				}
@@ -47,8 +48,8 @@ namespace mwse {
 				}
 
 				return false;
-			});
-			usertypeDefinition.set("contains", [](TES3::SpellList& self, sol::object value) {
+			};
+			usertypeDefinition["contains"] = [](TES3::SpellList& self, sol::object value) {
 				if (value.is<TES3::Spell*>()) {
 					return self.contains(value.as<TES3::Spell*>());
 				}
@@ -57,10 +58,7 @@ namespace mwse {
 				}
 
 				return false;
-			});
-
-			// Finish up our usertype.
-			state.set_usertype("tes3spellList", usertypeDefinition);
+			};
 		}
 	}
 }

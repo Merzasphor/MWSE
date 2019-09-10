@@ -22,24 +22,24 @@ namespace mwse {
 			// Binding for NI::PixelData.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<NI::PixelData>();
-				usertypeDefinition.set("new", sol::factories(&NI::PixelData::create));
+				auto usertypeDefinition = state.new_usertype<NI::PixelData>("niPixelData");
+				usertypeDefinition["new"] = sol::factories(&NI::PixelData::create);
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
-				usertypeDefinition.set(sol::base_classes, sol::bases<NI::Object>());
+				usertypeDefinition[sol::base_classes] = sol::bases<NI::Object>();
 				setUserdataForNIObject(usertypeDefinition);
 
 				// Basic property binding.
-				usertypeDefinition.set("bytesPerPixel", sol::readonly_property(&NI::PixelData::bytesPerPixel));
-				usertypeDefinition.set("mipMapLevels", sol::readonly_property(&NI::PixelData::mipMapLevels));
+				usertypeDefinition["bytesPerPixel"] = sol::readonly_property(&NI::PixelData::bytesPerPixel);
+				usertypeDefinition["mipMapLevels"] = sol::readonly_property(&NI::PixelData::mipMapLevels);
 
 				// Basic function binding.
-				usertypeDefinition.set("createSourceTexture", [](NI::PixelData& self) {
+				usertypeDefinition["createSourceTexture"] = [](NI::PixelData& self) {
 					using FormatPrefs = NI::Texture::FormatPrefs;
 					FormatPrefs prefs = { FormatPrefs::PixelLayout::PIX_DEFAULT, FormatPrefs::MipFlag::MIP_DEFAULT, FormatPrefs::AlphaFormat::ALPHA_DEFAULT };
 					return NI::SourceTexture::createFromPixelData(&self, &prefs);
-				});
-				usertypeDefinition.set("getWidth", [](NI::PixelData& self, sol::optional<unsigned int> mipMapLevel) -> sol::optional<unsigned int> {
+				};
+				usertypeDefinition["getWidth"] = [](NI::PixelData& self, sol::optional<unsigned int> mipMapLevel) -> sol::optional<unsigned int> {
 					unsigned int level = mipMapLevel.value_or(1) - 1;
 
 					if (level < 0 || level >= self.mipMapLevels) {
@@ -47,8 +47,8 @@ namespace mwse {
 					}
 
 					return self.widths[level];
-				});
-				usertypeDefinition.set("getHeight", [](NI::PixelData& self, sol::optional<unsigned int> mipMapLevel) -> sol::optional<unsigned int> {
+				};
+				usertypeDefinition["getHeight"] = [](NI::PixelData& self, sol::optional<unsigned int> mipMapLevel) -> sol::optional<unsigned int> {
 					unsigned int level = mipMapLevel.value_or(1) - 1;
 
 					if (level < 0 || level >= self.mipMapLevels) {
@@ -56,8 +56,8 @@ namespace mwse {
 					}
 
 					return self.heights[level];
-				});
-				usertypeDefinition.set("setPixelsByte", [](NI::PixelData& self, sol::table data, sol::optional<unsigned int> mipMapLevel) {
+				};
+				usertypeDefinition["setPixelsByte"] = [](NI::PixelData& self, sol::table data, sol::optional<unsigned int> mipMapLevel) {
 					unsigned int level = mipMapLevel.value_or(1) - 1;
 					if (level < 0 || level >= self.mipMapLevels) {
 						log::getLog() << "setPixels: Invalid mip level." << std::endl;
@@ -80,8 +80,8 @@ namespace mwse {
 
 					// Indicate the pixel data has changed.
 					self.revisionID++;
-				});
-				usertypeDefinition.set("setPixelsFloat", [](NI::PixelData& self, sol::table data, sol::optional<unsigned int> mipMapLevel) {
+				};
+				usertypeDefinition["setPixelsFloat"] = [](NI::PixelData& self, sol::table data, sol::optional<unsigned int> mipMapLevel) {
 					unsigned int level = mipMapLevel.value_or(1) - 1;
 					if (level < 0 || level >= self.mipMapLevels) {
 						log::getLog() << "setPixels: Invalid mip level." << std::endl;
@@ -104,10 +104,7 @@ namespace mwse {
 
 					// Indicate the pixel data has changed.
 					self.revisionID++;
-				});
-
-				// Finish up our usertype.
-				state.set_usertype("niPixelData", usertypeDefinition);
+				};
 			}
 		}
 	}

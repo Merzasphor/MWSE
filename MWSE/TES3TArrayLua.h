@@ -50,7 +50,7 @@ namespace mwse {
 			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.create_simple_usertype<TES3::TArray<T>>();
+			auto usertypeDefinition = state.new_usertype<TES3::TArray<T>>(name);
 			usertypeDefinition.set("new", sol::no_constructor);
 
 			// Metafunction access.
@@ -77,9 +77,6 @@ namespace mwse {
 			usertypeDefinition.set("contains", [](TES3::TArray<T> * self, T * value) {
 				return self->contains(value);
 				});
-
-			// Finish up our usertype.
-			state.set_usertype(name, usertypeDefinition);
 		}
 
 		template <typename T>
@@ -109,7 +106,7 @@ namespace mwse {
 			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.create_simple_usertype<TES3::TArray<T>>();
+			auto usertypeDefinition = state.new_usertype<TES3::TArray<T>>(name);
 			usertypeDefinition.set("new", sol::no_constructor);
 
 			// Metafunction access.
@@ -136,9 +133,6 @@ namespace mwse {
 			usertypeDefinition.set("contains", [](TES3::TArray<T> * self, T * value) {
 				return self->contains(value);
 				});
-
-			// Finish up our usertype.
-			state.set_usertype(name, usertypeDefinition);
 		}
 
 		//

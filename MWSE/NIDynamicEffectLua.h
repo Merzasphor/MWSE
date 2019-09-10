@@ -10,7 +10,7 @@ namespace mwse {
 	namespace lua {
 		// Speed-optimized binding for NI::ObjectNET.
 		template <typename T>
-		void setUserdataForNIDynamicEffect(sol::simple_usertype<T>& usertypeDefinition) {
+		void setUserdataForNIDynamicEffect(T& usertypeDefinition) {
 			setUserdataForNIAVObject(usertypeDefinition);
 
 			// Basic property binding.

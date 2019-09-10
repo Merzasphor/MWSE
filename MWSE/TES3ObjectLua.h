@@ -13,7 +13,7 @@
 namespace mwse {
 	namespace lua {
 		template <typename T>
-		void setUserdataForBaseObject(sol::simple_usertype<T>& usertypeDefinition) {
+		void setUserdataForBaseObject(T& usertypeDefinition) {
 			// Basic property binding.
 			usertypeDefinition.set("objectType", sol::readonly_property(&TES3::BaseObject::objectType));
 			usertypeDefinition.set("objectFlags", sol::readonly_property(&TES3::BaseObject::objectFlags));
@@ -45,7 +45,7 @@ namespace mwse {
 		}
 
 		template <typename T>
-		void setUserdataForObject(sol::simple_usertype<T>& usertypeDefinition) {
+		void setUserdataForObject(T& usertypeDefinition) {
 			setUserdataForBaseObject(usertypeDefinition);
 
 			// Basic property binding.
@@ -62,7 +62,7 @@ namespace mwse {
 		}
 
 		template <typename T>
-		void setUserdataForPhysicalObject(sol::simple_usertype<T>& usertypeDefinition) {
+		void setUserdataForPhysicalObject(T& usertypeDefinition) {
 			setUserdataForObject(usertypeDefinition);
 
 			// Basic property binding.

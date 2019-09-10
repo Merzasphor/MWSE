@@ -5,6 +5,7 @@
 
 #include "TES3Util.h"
 
+#include "TES3MobileActor.h"
 #include "TES3Reference.h"
 #include "TES3Spell.h"
 
@@ -58,46 +59,41 @@ namespace mwse {
 			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.create_simple_usertype<TES3::Spell>();
-			usertypeDefinition.set("new", sol::no_constructor);
+			auto usertypeDefinition = state.new_usertype<TES3::Spell>("tes3spell");
+			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
-			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Object, TES3::BaseObject>());
+			usertypeDefinition[sol::base_classes] = sol::bases<TES3::Object, TES3::BaseObject>();
 			setUserdataForObject(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition.set("castType", &TES3::Spell::castType);
-			usertypeDefinition.set("flags", &TES3::Spell::spellFlags);
-			usertypeDefinition.set("magickaCost", &TES3::Spell::magickaCost);
+			usertypeDefinition["castType"] = &TES3::Spell::castType;
+			usertypeDefinition["flags"] = &TES3::Spell::spellFlags;
+			usertypeDefinition["magickaCost"] = &TES3::Spell::magickaCost;
 
 			// Indirect bindings to unions and arrays.
-			usertypeDefinition.set("effects", sol::readonly_property([](TES3::Spell& self) { return std::ref(self.effects); }));
+			usertypeDefinition["effects"] = sol::readonly_property([](TES3::Spell& self) { return std::ref(self.effects); });
 
 			// Basic function binding.
-			usertypeDefinition.set("create", &createSpell);
-			usertypeDefinition.set("calculateCastChance",
-				[](TES3::Spell& self, sol::table params) -> float {
-					bool checkMagicka = getOptionalParam<bool>(params, "checkMagicka", true);
-					sol::object caster = params["caster"];
-					if (caster.is<TES3::Reference>()) {
-						return self.calculateCastChance(caster.as<TES3::Reference*>(), checkMagicka);
-					}
-					else if (caster.is<TES3::MobileActor>()) {
-						return self.calculateCastChance(caster.as<TES3::MobileActor*>(), checkMagicka);
-					}
-
-					return 0.0f;
+			usertypeDefinition["create"] = &createSpell;
+			usertypeDefinition["calculateCastChance"] = [](TES3::Spell& self, sol::table params) -> float {
+				bool checkMagicka = getOptionalParam<bool>(params, "checkMagicka", true);
+				sol::object caster = params["caster"];
+				if (caster.is<TES3::Reference>()) {
+					return self.calculateCastChance(caster.as<TES3::Reference*>(), checkMagicka);
 				}
-			);
-			usertypeDefinition.set("getActiveEffectCount", &TES3::Spell::getActiveEffectCount);
-			usertypeDefinition.set("getFirstIndexOfEffect", &TES3::Spell::getFirstIndexOfEffect);
+				else if (caster.is<TES3::MobileActor>()) {
+					return self.calculateCastChance(caster.as<TES3::MobileActor*>(), checkMagicka);
+				}
+
+				return 0.0f;
+			};
+			usertypeDefinition["getActiveEffectCount"] = &TES3::Spell::getActiveEffectCount;
+			usertypeDefinition["getFirstIndexOfEffect"] = &TES3::Spell::getFirstIndexOfEffect;
 
 			// Functions exposed as properties.
-			usertypeDefinition.set("autoCalc", sol::property(&TES3::Spell::getAutoCalc, &TES3::Spell::setAutoCalc));
-			usertypeDefinition.set("name", sol::property(&TES3::Spell::getName, &TES3::Spell::setName));
-
-			// Finish up our usertype.
-			state.set_usertype("tes3spell", usertypeDefinition);
+			usertypeDefinition["autoCalc"] = sol::property(&TES3::Spell::getAutoCalc, &TES3::Spell::setAutoCalc);
+			usertypeDefinition["name"] = sol::property(&TES3::Spell::getName, &TES3::Spell::setName);
 		}
 	}
 }

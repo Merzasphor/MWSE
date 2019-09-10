@@ -335,34 +335,31 @@ namespace mwse {
 			// Bind TimerController.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TimerController>();
-				usertypeDefinition.set("new", sol::constructors<TimerController(), TimerController(double)>());
+				auto usertypeDefinition = state.new_usertype<TimerController>("mwseTimerController");
+				usertypeDefinition["new"] = sol::constructors<TimerController(), TimerController(double)>();
 
 				// Basic property binding.
-				usertypeDefinition.set("clock", sol::property(&TimerController::getClock, &TimerController::setClock));
+				usertypeDefinition["clock"] = sol::property(&TimerController::getClock, &TimerController::setClock);
 
 				// Allow creating timers.
-				usertypeDefinition.set("create", [](TimerController& self, sol::table params) {
+				usertypeDefinition["create"] = [](TimerController& self, sol::table params) {
 					return startTimer(&self, params);
-				});
-
-				// Finish up our usertype.
-				state.set_usertype("mwseTimerController", usertypeDefinition);
+				};
 			}
 
 			// Bind Timer.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<Timer>();
-				usertypeDefinition.set("new", sol::no_constructor);
+				auto usertypeDefinition = state.new_usertype<Timer>("mwseTimer");
+				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
-				usertypeDefinition.set("duration", sol::readonly_property(&Timer::duration));
-				usertypeDefinition.set("iterations", sol::readonly_property(&Timer::iterations));
-				usertypeDefinition.set("state", sol::readonly_property(&Timer::state));
-				usertypeDefinition.set("timing", sol::readonly_property(&Timer::timing));
-				usertypeDefinition.set("callback", sol::readonly_property(&Timer::callback));
-				usertypeDefinition.set("timeLeft", sol::readonly_property([](Timer& self) -> sol::optional<double> {
+				usertypeDefinition["duration"] = sol::readonly_property(&Timer::duration);
+				usertypeDefinition["iterations"] = sol::readonly_property(&Timer::iterations);
+				usertypeDefinition["state"] = sol::readonly_property(&Timer::state);
+				usertypeDefinition["timing"] = sol::readonly_property(&Timer::timing);
+				usertypeDefinition["callback"] = sol::readonly_property(&Timer::callback);
+				usertypeDefinition["timeLeft"] = sol::readonly_property([](Timer& self) -> sol::optional<double> {
 					if (self.state == TimerState::Active) {
 						return self.timing - self.controller->getClock();
 					}
@@ -371,30 +368,27 @@ namespace mwse {
 					}
 
 					return sol::optional<double>();
-				}));
+				});
 
 				// Legacy value binding.
-				usertypeDefinition.set("t", &Timer::duration);
-				usertypeDefinition.set("c", &Timer::callback);
-				usertypeDefinition.set("i", &Timer::iterations);
-				usertypeDefinition.set("f", &Timer::timing);
+				usertypeDefinition["t"] = &Timer::duration;
+				usertypeDefinition["c"] = &Timer::callback;
+				usertypeDefinition["i"] = &Timer::iterations;
+				usertypeDefinition["f"] = &Timer::timing;
 
 				// Allow creating timers.
-				usertypeDefinition.set("pause", [](std::shared_ptr<Timer> self) {
+				usertypeDefinition["pause"] = [](std::shared_ptr<Timer> self) {
 					return self->controller->pauseTimer(self);
-				});
-				usertypeDefinition.set("resume", [](std::shared_ptr<Timer> self) {
+				};
+				usertypeDefinition["resume"] = [](std::shared_ptr<Timer> self) {
 					return self->controller->resumeTimer(self);
-				});
-				usertypeDefinition.set("reset", [](std::shared_ptr<Timer> self) {
+				};
+				usertypeDefinition["reset"] = [](std::shared_ptr<Timer> self) {
 					return self->controller->resetTimer(self);
-				});
-				usertypeDefinition.set("cancel", [](std::shared_ptr<Timer> self) {
+				};
+				usertypeDefinition["cancel"] = [](std::shared_ptr<Timer> self) {
 					return self->controller->cancelTimer(self);
-				});
-
-				// Finish up our usertype.
-				state.set_usertype("mwseTimer", usertypeDefinition);
+				};
 			}
 
 			// Create our timer library.

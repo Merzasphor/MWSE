@@ -8,7 +8,7 @@ namespace mwse {
 	namespace lua {
 		// Speed-optimized binding for NI::Object.
 		template <typename T>
-		void setUserdataForNIObject(sol::simple_usertype<T>& usertypeDefinition) {
+		void setUserdataForNIObject(T& usertypeDefinition) {
 			// Basic property binding.
 			usertypeDefinition.set("refCount", sol::readonly_property(&NI::Object::refCount));
 
@@ -24,7 +24,7 @@ namespace mwse {
 
 		// Speed-optimized binding for NI::ObjectNET.
 		template <typename T>
-		void setUserdataForNIObjectNET(sol::simple_usertype<T>& usertypeDefinition) {
+		void setUserdataForNIObjectNET(T& usertypeDefinition) {
 			setUserdataForNIObject(usertypeDefinition);
 
 			// Basic property binding.
@@ -42,7 +42,7 @@ namespace mwse {
 
 		// Speed-optimized binding for NI::AVObject.
 		template <typename T>
-		void setUserdataForNIAVObject(sol::simple_usertype<T>& usertypeDefinition) {
+		void setUserdataForNIAVObject(T& usertypeDefinition) {
 			setUserdataForNIObjectNET(usertypeDefinition);
 
 			// Basic property binding.

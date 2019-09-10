@@ -148,41 +148,38 @@ namespace mwse {
 			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.create_simple_usertype<TES3::Alchemy>();
-			usertypeDefinition.set("new", sol::no_constructor);
+			auto usertypeDefinition = state.new_usertype<TES3::Alchemy>("tes3alchemy");
+			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
-			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>());
+			usertypeDefinition[sol::base_classes] = sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>();
 			setUserdataForPhysicalObject(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition.set("flags", &TES3::Alchemy::flags);
-			usertypeDefinition.set("weight", &TES3::Alchemy::weight);
-			usertypeDefinition.set("value", &TES3::Alchemy::value);
+			usertypeDefinition["flags"] = &TES3::Alchemy::flags;
+			usertypeDefinition["weight"] = &TES3::Alchemy::weight;
+			usertypeDefinition["value"] = &TES3::Alchemy::value;
 
 			// Indirect bindings to unions and arrays.
-			usertypeDefinition.set("effects", sol::readonly_property([](TES3::Alchemy& self) { return std::ref(self.effects); }));
+			usertypeDefinition["effects"] = sol::readonly_property([](TES3::Alchemy& self) { return std::ref(self.effects); });
 
 			// Basic function binding.
-			usertypeDefinition.set("create", &createAlchemy);
-			usertypeDefinition.set("getActiveEffectCount", &TES3::Alchemy::getActiveEffectCount);
-			usertypeDefinition.set("getFirstIndexOfEffect", &TES3::Alchemy::getFirstIndexOfEffect);
+			usertypeDefinition["create"] = &createAlchemy;
+			usertypeDefinition["getActiveEffectCount"] = &TES3::Alchemy::getActiveEffectCount;
+			usertypeDefinition["getFirstIndexOfEffect"] = &TES3::Alchemy::getFirstIndexOfEffect;
 
 			// Functions exposed as properties.
-			usertypeDefinition.set("autoCalc", sol::property(&TES3::Alchemy::getAutoCalc, &TES3::Alchemy::setAutoCalc));
-			usertypeDefinition.set("icon", sol::property(
+			usertypeDefinition["autoCalc"] = sol::property(&TES3::Alchemy::getAutoCalc, &TES3::Alchemy::setAutoCalc);
+			usertypeDefinition["icon"] = sol::property(
 				&TES3::Alchemy::getIconPath,
 				[](TES3::Alchemy& self, const char* value) { tes3::setDataString(&self.icon, value); }
-			));
-			usertypeDefinition.set("mesh", sol::property(&TES3::Alchemy::getModelPath, &TES3::Alchemy::setModelPath));
-			usertypeDefinition.set("name", sol::property(&TES3::Alchemy::getName, &TES3::Alchemy::setName));
-			usertypeDefinition.set("script", sol::property(&TES3::Alchemy::getScript));
+			);
+			usertypeDefinition["mesh"] = sol::property(&TES3::Alchemy::getModelPath, &TES3::Alchemy::setModelPath);
+			usertypeDefinition["name"] = sol::property(&TES3::Alchemy::getName, &TES3::Alchemy::setName);
+			usertypeDefinition["script"] = sol::property(&TES3::Alchemy::getScript);
 
 			// TODO: Deprecated. Remove before 2.1-stable.
-			usertypeDefinition.set("model", sol::property(&TES3::Alchemy::getModelPath, &TES3::Alchemy::setModelPath));
-
-			// Finish up our usertype.
-			state.set_usertype("tes3alchemy", usertypeDefinition);
+			usertypeDefinition["model"] = sol::property(&TES3::Alchemy::getModelPath, &TES3::Alchemy::setModelPath);
 		}
 	}
 }

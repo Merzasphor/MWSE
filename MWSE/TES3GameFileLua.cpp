@@ -14,28 +14,28 @@ namespace mwse {
 			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.create_simple_usertype<TES3::GameFile>();
-			usertypeDefinition.set("new", sol::no_constructor);
+			auto usertypeDefinition = state.new_usertype<TES3::GameFile>("tes3gameFile");
+			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Basic property binding.
-			usertypeDefinition.set("filename", sol::readonly_property([](TES3::GameFile& self) -> const char* { return self.filename; }));
-			usertypeDefinition.set("path", sol::readonly_property([](TES3::GameFile& self) -> const char* { return self.path; }));
-			usertypeDefinition.set("author", sol::readonly_property([](TES3::GameFile& self) -> const char* { return self.author; }));;
-			usertypeDefinition.set("description", sol::readonly_property([](TES3::GameFile& self) -> const char* { return self.description; }));
-			usertypeDefinition.set("currentHealth", sol::readonly_property([](TES3::GameFile& self) { return self.gmdt.currentHealth; }));
-			usertypeDefinition.set("maxHealth", sol::readonly_property([](TES3::GameFile& self) { return self.gmdt.currentHealth; }));
-			usertypeDefinition.set("gameHour", sol::readonly_property([](TES3::GameFile& self) { return self.gmdt.gameHour; }));
-			usertypeDefinition.set("day", sol::readonly_property([](TES3::GameFile& self) { return self.gmdt.day; }));
-			usertypeDefinition.set("month", sol::readonly_property([](TES3::GameFile& self) { return self.gmdt.month; }));
-			usertypeDefinition.set("year", sol::readonly_property([](TES3::GameFile& self) { return self.gmdt.year; }));
-			usertypeDefinition.set("cellName", sol::readonly_property([](TES3::GameFile& self) -> const char* { return self.gmdt.cellName; }));
-			usertypeDefinition.set("daysPassed", sol::readonly_property([](TES3::GameFile& self) { return self.gmdt.daysPassed; }));
-			usertypeDefinition.set("playerName", sol::readonly_property([](TES3::GameFile& self) -> const char* { return self.gmdt.playerName; }));
-			usertypeDefinition.set("fileSize", sol::readonly_property([](TES3::GameFile& self) { return double(self.getFileSize()); }));
-			usertypeDefinition.set("modifiedTime", sol::readonly_property([](TES3::GameFile& self) { return double(self.getModifiedTime()); }));
+			usertypeDefinition["filename"] = sol::readonly_property([](TES3::GameFile& self) -> const char* { return self.filename; });
+			usertypeDefinition["path"] = sol::readonly_property([](TES3::GameFile& self) -> const char* { return self.path; });
+			usertypeDefinition["author"] = sol::readonly_property([](TES3::GameFile& self) -> const char* { return self.author; });;
+			usertypeDefinition["description"] = sol::readonly_property([](TES3::GameFile& self) -> const char* { return self.description; });
+			usertypeDefinition["currentHealth"] = sol::readonly_property([](TES3::GameFile& self) { return self.gmdt.currentHealth; });
+			usertypeDefinition["maxHealth"] = sol::readonly_property([](TES3::GameFile& self) { return self.gmdt.currentHealth; });
+			usertypeDefinition["gameHour"] = sol::readonly_property([](TES3::GameFile& self) { return self.gmdt.gameHour; });
+			usertypeDefinition["day"] = sol::readonly_property([](TES3::GameFile& self) { return self.gmdt.day; });
+			usertypeDefinition["month"] = sol::readonly_property([](TES3::GameFile& self) { return self.gmdt.month; });
+			usertypeDefinition["year"] = sol::readonly_property([](TES3::GameFile& self) { return self.gmdt.year; });
+			usertypeDefinition["cellName"] = sol::readonly_property([](TES3::GameFile& self) -> const char* { return self.gmdt.cellName; });
+			usertypeDefinition["daysPassed"] = sol::readonly_property([](TES3::GameFile& self) { return self.gmdt.daysPassed; });
+			usertypeDefinition["playerName"] = sol::readonly_property([](TES3::GameFile& self) -> const char* { return self.gmdt.playerName; });
+			usertypeDefinition["fileSize"] = sol::readonly_property([](TES3::GameFile& self) { return double(self.getFileSize()); });
+			usertypeDefinition["modifiedTime"] = sol::readonly_property([](TES3::GameFile& self) { return double(self.getModifiedTime()); });
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition.set("masters", sol::readonly_property([](TES3::GameFile& self) {
+			usertypeDefinition["masters"] = sol::readonly_property([](TES3::GameFile& self) {
 				auto& luaManager = mwse::lua::LuaManager::getInstance();
 				auto stateHandle = luaManager.getThreadSafeStateHandle();
 				sol::state& state = stateHandle.state;
@@ -45,13 +45,10 @@ namespace mwse {
 					t[i] = master;
 				}
 				return t;
-			}));
+			});
 
 			// Function bindings.
-			usertypeDefinition.set("deleteFile", [](TES3::GameFile& self) { self.deleteFile(); });
-
-			// Finish up our usertype.
-			state.set_usertype("tes3gameFile", usertypeDefinition);
+			usertypeDefinition["deleteFile"] = [](TES3::GameFile& self) { self.deleteFile(); };
 		}
 	}
 }

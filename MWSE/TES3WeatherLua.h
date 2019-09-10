@@ -9,7 +9,7 @@
 namespace mwse {
 	namespace lua {
 		template <typename T>
-		void setUserdataForWeather(sol::simple_usertype<T>& usertypeDefinition) {
+		void setUserdataForWeather(T& usertypeDefinition) {
 			// Basic property binding.
 			usertypeDefinition.set("ambientDayColor", sol::readonly_property(&TES3::Weather::ambientDayCol));
 			usertypeDefinition.set("ambientNightColor", sol::readonly_property(&TES3::Weather::ambientNightCol));

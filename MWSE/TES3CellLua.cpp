@@ -76,43 +76,40 @@ namespace mwse {
 			// Binding for TES3::PackedColor
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TES3::PackedColor>();
-				usertypeDefinition.set("new", sol::no_constructor);
+				auto usertypeDefinition = state.new_usertype<TES3::PackedColor>("tes3packedColor");
+				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
-				usertypeDefinition.set("r", &TES3::PackedColor::r);
-				usertypeDefinition.set("g", &TES3::PackedColor::g);
-				usertypeDefinition.set("b", &TES3::PackedColor::b);
-				usertypeDefinition.set("a", &TES3::PackedColor::a);
+				usertypeDefinition["r"] = &TES3::PackedColor::r;
+				usertypeDefinition["g"] = &TES3::PackedColor::g;
+				usertypeDefinition["b"] = &TES3::PackedColor::b;
+				usertypeDefinition["a"] = &TES3::PackedColor::a;
 
 				// 
-				usertypeDefinition.set("red", &TES3::PackedColor::r);
-				usertypeDefinition.set("green", &TES3::PackedColor::g);
-				usertypeDefinition.set("blue", &TES3::PackedColor::b);
-				usertypeDefinition.set("alpha", &TES3::PackedColor::a);
-
-				// Finish up our usertype.
-				state.set_usertype("tes3packedColor", usertypeDefinition);
+				usertypeDefinition["red"] = &TES3::PackedColor::r;
+				usertypeDefinition["green"] = &TES3::PackedColor::g;
+				usertypeDefinition["blue"] = &TES3::PackedColor::b;
+				usertypeDefinition["alpha"] = &TES3::PackedColor::a;
 			}
 
 			// Binding for TES3::Cell
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TES3::Cell>();
-				usertypeDefinition.set("new", sol::no_constructor);
+				auto usertypeDefinition = state.new_usertype<TES3::Cell>("tes3cell");
+				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
-				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
+				usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
 				setUserdataForBaseObject(usertypeDefinition);
 
 				// Basic property binding.
-				usertypeDefinition.set("actors", sol::readonly_property(&TES3::Cell::actors));
-				usertypeDefinition.set("activators", sol::readonly_property(&TES3::Cell::persistentRefs));
-				usertypeDefinition.set("cellFlags", &TES3::Cell::cellFlags);
-				usertypeDefinition.set("statics", sol::readonly_property(&TES3::Cell::temporaryRefs));
+				usertypeDefinition["actors"] = sol::readonly_property(&TES3::Cell::actors);
+				usertypeDefinition["activators"] = sol::readonly_property(&TES3::Cell::persistentRefs);
+				usertypeDefinition["cellFlags"] = &TES3::Cell::cellFlags;
+				usertypeDefinition["statics"] = sol::readonly_property(&TES3::Cell::temporaryRefs);
 
 				// Functions exposed as properties.
-				usertypeDefinition.set("ambientColor", sol::readonly_property(
+				usertypeDefinition["ambientColor"] = sol::readonly_property(
 					[](TES3::Cell& self) -> TES3::PackedColor*
 					{
 						if (self.cellFlags & TES3::CellFlag::Interior) {
@@ -120,12 +117,12 @@ namespace mwse {
 						}
 						return nullptr;
 					}
-				));
-				usertypeDefinition.set("behavesAsExterior", sol::property(
+				);
+				usertypeDefinition["behavesAsExterior"] = sol::property(
 					[](TES3::Cell& self) { return self.getCellFlag(TES3::CellFlag::BehavesAsExterior); },
 					[](TES3::Cell& self, bool set) { self.setCellFlag(TES3::CellFlag::BehavesAsExterior, set); }
-				));
-				usertypeDefinition.set("fogColor", sol::readonly_property(
+				);
+				usertypeDefinition["fogColor"] = sol::readonly_property(
 					[](TES3::Cell& self) -> TES3::PackedColor*
 					{
 						if (self.cellFlags & TES3::CellFlag::Interior) {
@@ -133,8 +130,8 @@ namespace mwse {
 						}
 						return nullptr;
 					}
-				));
-				usertypeDefinition.set("fogDensity", sol::property(
+				);
+				usertypeDefinition["fogDensity"] = sol::property(
 					[](TES3::Cell& self) -> sol::optional<float>
 					{
 						if (self.cellFlags & TES3::CellFlag::Interior) {
@@ -148,29 +145,29 @@ namespace mwse {
 							self.VariantData.interior.fogDensity = value;
 						}
 					}
-				));
-				usertypeDefinition.set("gridX", sol::property(&TES3::Cell::getGridX, &TES3::Cell::setGridX));
-				usertypeDefinition.set("gridY", sol::property(&TES3::Cell::getGridY, &TES3::Cell::setGridY));
-				usertypeDefinition.set("hasWater", sol::property(
+				);
+				usertypeDefinition["gridX"] = sol::property(&TES3::Cell::getGridX, &TES3::Cell::setGridX);
+				usertypeDefinition["gridY"] = sol::property(&TES3::Cell::getGridY, &TES3::Cell::setGridY);
+				usertypeDefinition["hasWater"] = sol::property(
 					[](TES3::Cell& self) { return self.getCellFlag(TES3::CellFlag::HasWater); },
 					[](TES3::Cell& self, bool set) { self.setCellFlag(TES3::CellFlag::HasWater, set); }
-				));
-				usertypeDefinition.set("isInterior", sol::property(
+				);
+				usertypeDefinition["isInterior"] = sol::property(
 					[](TES3::Cell& self) { return self.getCellFlag(TES3::CellFlag::Interior); },
 					[](TES3::Cell& self, bool set) { self.setCellFlag(TES3::CellFlag::Interior, set); }
-				));
-				usertypeDefinition.set("name", sol::property(
+				);
+				usertypeDefinition["name"] = sol::property(
 					[](TES3::Cell& self) { return self.name; },
 					[](TES3::Cell& self, const char* name) { self.setName(name); }
-				));
-				usertypeDefinition.set("pickObjectsRoot", sol::readonly_property(&TES3::Cell::pickObjectsRoot));
-				usertypeDefinition.set("region", sol::readonly_property(&TES3::Cell::getRegion));
-				usertypeDefinition.set("restingIsIllegal", sol::property(
+				);
+				usertypeDefinition["pickObjectsRoot"] = sol::readonly_property(&TES3::Cell::pickObjectsRoot);
+				usertypeDefinition["region"] = sol::readonly_property(&TES3::Cell::getRegion);
+				usertypeDefinition["restingIsIllegal"] = sol::property(
 					[](TES3::Cell& self) { return self.getCellFlag(TES3::CellFlag::SleepIsIllegal); },
 					[](TES3::Cell& self, bool set) { self.setCellFlag(TES3::CellFlag::SleepIsIllegal, set); }
-				));
-				usertypeDefinition.set("staticObjectsRoot", sol::readonly_property(&TES3::Cell::staticObjectsRoot));
-				usertypeDefinition.set("sunColor", sol::readonly_property(
+				);
+				usertypeDefinition["staticObjectsRoot"] = sol::readonly_property(&TES3::Cell::staticObjectsRoot);
+				usertypeDefinition["sunColor"] = sol::readonly_property(
 					[](TES3::Cell& self) -> TES3::PackedColor*
 					{
 						if (self.cellFlags & TES3::CellFlag::Interior) {
@@ -178,8 +175,8 @@ namespace mwse {
 						}
 						return nullptr;
 					}
-				));
-				usertypeDefinition.set("waterLevel", sol::property(
+				);
+				usertypeDefinition["waterLevel"] = sol::property(
 					[](TES3::Cell& self) -> sol::optional<float>
 					{
 						if (self.cellFlags & TES3::CellFlag::Interior) {
@@ -188,13 +185,10 @@ namespace mwse {
 						return sol::optional<float>();
 					},
 					&TES3::Cell::setWaterLevel
-				));
+				);
 
 				// Basic function binding.
-				usertypeDefinition.set("iterateReferences", sol::overload(iterateReferences, iterateReferencesFiltered));
-
-				// Finish up our usertype.
-				state.set_usertype("tes3cell", usertypeDefinition);
+				usertypeDefinition["iterateReferences"] = sol::overload(iterateReferences, iterateReferencesFiltered);
 			}
 		}
 	}

@@ -59,7 +59,7 @@ namespace mwse {
 
             void add(InstructionInterface_t &implementation);
 
-            inline InstructionInterface_t *get(const OpCode::OpCode_t opcode) throw (IllegalOpCode)
+            inline InstructionInterface_t *get(const OpCode::OpCode_t opcode)
             {
                 unsigned int primary_index = (opcode >> 8) & 0xFF;
                 unsigned int secondary_index = opcode & 0xFF;

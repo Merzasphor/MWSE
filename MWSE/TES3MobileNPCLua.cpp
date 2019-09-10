@@ -2,6 +2,10 @@
 
 #include "LuaManager.h"
 
+#include "TES3Alchemy.h"
+#include "TES3Enchantment.h"
+#include "TES3Spell.h"
+
 namespace mwse {
 	namespace lua {
 		static bool equip(TES3::MobileNPC& self, sol::object arg) {
@@ -77,21 +81,18 @@ namespace mwse {
 			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.create_simple_usertype<TES3::MobileNPC>();
-			usertypeDefinition.set("new", sol::no_constructor);
+			auto usertypeDefinition = state.new_usertype<TES3::MobileNPC>("tes3mobileNPC");
+			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
-			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::MobileActor, TES3::MobileObject>());
+			usertypeDefinition[sol::base_classes] = sol::bases<TES3::MobileActor, TES3::MobileObject>();
 
 			// All binding is in the NPC function, so that mobile player doesn't have extra lookup times.
 			setUserdataForMobileNPC(usertypeDefinition);
 
 			// Basic function binding.
-			usertypeDefinition.set("equip", &equip);
-			usertypeDefinition.set("unequip", &unequip);
-
-			// Finish up our usertype.
-			state.set_usertype("tes3mobileNPC", usertypeDefinition);
+			usertypeDefinition["equip"] = &equip;
+			usertypeDefinition["unequip"] = &unequip;
 		}
 	}
 }

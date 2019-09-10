@@ -19,25 +19,22 @@ namespace mwse {
 			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.create_simple_usertype<NI::SwitchNode>();
-			usertypeDefinition.set("new", sol::no_constructor);
+			auto usertypeDefinition = state.new_usertype<NI::SwitchNode>("niSwitchNode");
+			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
-			usertypeDefinition.set(sol::base_classes, sol::bases<NI::Node, NI::AVObject, NI::ObjectNET, NI::Object>());
+			usertypeDefinition[sol::base_classes] = sol::bases<NI::Node, NI::AVObject, NI::ObjectNET, NI::Object>();
 			setUserdataForNINode(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition.set("switchIndex", sol::property(
+			usertypeDefinition["switchIndex"] = sol::property(
 				[](NI::SwitchNode& self) { return self.switchIndex; },
 				[](NI::SwitchNode& self, int index) {
 					if (index < 0 || index > (self.children.filledCount-1) || self.children.storage[index] == nullptr) {
 						throw std::exception("Attempted to set switchIndex beyond bounds!");
 					}
 					self.switchIndex = index;
-				}));
-
-			// Finish up our usertype.
-			state.set_usertype("niSwitchNode", usertypeDefinition);
+				});
 		}
 	}
 }

@@ -87,16 +87,16 @@ namespace mwse {
 			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.create_simple_usertype<TES3::Reference>();
-			usertypeDefinition.set("new", sol::no_constructor);
+			auto usertypeDefinition = state.new_usertype<TES3::Reference>("tes3reference");
+			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
-			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::Object, TES3::BaseObject>());
+			usertypeDefinition[sol::base_classes] = sol::bases<TES3::Object, TES3::BaseObject>();
 			setUserdataForObject(usertypeDefinition);
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition.set("baseObject", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.getBaseObject()); }));
-			usertypeDefinition.set("cell", sol::readonly_property([](TES3::Reference& self) -> sol::object {
+			usertypeDefinition["baseObject"] = sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.getBaseObject()); });
+			usertypeDefinition["cell"] = sol::readonly_property([](TES3::Reference& self) -> sol::object {
 				// Handle case for the player.
 				if (TES3::WorldController::get()->getMobilePlayer()->reference == &self) {
 					return makeLuaObject(TES3::DataHandler::get()->currentCell);
@@ -107,44 +107,44 @@ namespace mwse {
 				}
 
 				return makeLuaObject(self.owningCollection.asReferenceList->cell);
-			}));
-			usertypeDefinition.set("object", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.baseObject); }));
-			usertypeDefinition.set("sceneNode", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.sceneNode); }));
+			});
+			usertypeDefinition["object"] = sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.baseObject); });
+			usertypeDefinition["sceneNode"] = sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.sceneNode); });
 
 			// Basic function binding.
-			usertypeDefinition.set("activate", [](TES3::Reference& self, TES3::Reference& target) { target.activate(&self); });
-			usertypeDefinition.set("clearActionFlag", &TES3::Reference::clearActionFlag);
-			usertypeDefinition.set("clone", &TES3::Reference::clone);
-			usertypeDefinition.set("deleteDynamicLightAttachment", &TES3::Reference::deleteDynamicLightAttachment);
-			usertypeDefinition.set("detachDynamicLightFromAffectedNodes", &TES3::Reference::detachDynamicLightFromAffectedNodes);
-			usertypeDefinition.set("disable", &TES3::Reference::disable);
-			usertypeDefinition.set("enable", &TES3::Reference::enable);
-			usertypeDefinition.set("getAttachedDynamicLight", &TES3::Reference::getAttachedDynamicLight);
-			usertypeDefinition.set("getOrCreateAttachedDynamicLight", &TES3::Reference::getOrCreateAttachedDynamicLight);
-			usertypeDefinition.set("setActionFlag", &TES3::Reference::setActionFlag);
-			usertypeDefinition.set("testActionFlag", &TES3::Reference::testActionFlag);
-			usertypeDefinition.set("updateEquipment", &TES3::Reference::updateBipedParts);
+			usertypeDefinition["activate"] = [](TES3::Reference& self, TES3::Reference& target) { target.activate(&self); };
+			usertypeDefinition["clearActionFlag"] = &TES3::Reference::clearActionFlag;
+			usertypeDefinition["clone"] = &TES3::Reference::clone;
+			usertypeDefinition["deleteDynamicLightAttachment"] = &TES3::Reference::deleteDynamicLightAttachment;
+			usertypeDefinition["detachDynamicLightFromAffectedNodes"] = &TES3::Reference::detachDynamicLightFromAffectedNodes;
+			usertypeDefinition["disable"] = &TES3::Reference::disable;
+			usertypeDefinition["enable"] = &TES3::Reference::enable;
+			usertypeDefinition["getAttachedDynamicLight"] = &TES3::Reference::getAttachedDynamicLight;
+			usertypeDefinition["getOrCreateAttachedDynamicLight"] = &TES3::Reference::getOrCreateAttachedDynamicLight;
+			usertypeDefinition["setActionFlag"] = &TES3::Reference::setActionFlag;
+			usertypeDefinition["testActionFlag"] = &TES3::Reference::testActionFlag;
+			usertypeDefinition["updateEquipment"] = &TES3::Reference::updateBipedParts;
 
 			// Functions exposed as properties.
-			usertypeDefinition.set("activationReference", sol::property(&TES3::Reference::getActionReference, &TES3::Reference::setActionReference));
-			usertypeDefinition.set("attachments", sol::readonly_property(&TES3::Reference::getAttachments));
-			usertypeDefinition.set("context", sol::readonly_property(&getContext));
-			usertypeDefinition.set("data", sol::readonly_property(&TES3::Reference::getLuaTable));
-			usertypeDefinition.set("isEmpty", sol::property(&TES3::Reference::getEmptyInventoryFlag, &TES3::Reference::setEmptyInventoryFlag));
-			usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::Reference::isRespawn));
-			usertypeDefinition.set("orientation", sol::property([](TES3::Reference& self) { return self.getOrientation(); }, &TES3::Reference::setOrientationFromLua));
-			usertypeDefinition.set("position", sol::property([](TES3::Reference& self) { return self.getPosition(); }, &TES3::Reference::setPositionFromLua));
+			usertypeDefinition["activationReference"] = sol::property(&TES3::Reference::getActionReference, &TES3::Reference::setActionReference);
+			usertypeDefinition["attachments"] = sol::readonly_property(&TES3::Reference::getAttachments);
+			usertypeDefinition["context"] = sol::readonly_property(&getContext);
+			usertypeDefinition["data"] = sol::readonly_property(&TES3::Reference::getLuaTable);
+			usertypeDefinition["isEmpty"] = sol::property(&TES3::Reference::getEmptyInventoryFlag, &TES3::Reference::setEmptyInventoryFlag);
+			usertypeDefinition["isRespawn"] = sol::readonly_property(&TES3::Reference::isRespawn);
+			usertypeDefinition["orientation"] = sol::property([](TES3::Reference& self) { return self.getOrientation(); }, &TES3::Reference::setOrientationFromLua);
+			usertypeDefinition["position"] = sol::property([](TES3::Reference& self) { return self.getPosition(); }, &TES3::Reference::setPositionFromLua);
 
 			// Functions for manually syncing the scene graph, for if orientation or position is manually modified.
-			usertypeDefinition.set("updateSceneGraph", [](TES3::Reference& self) {
+			usertypeDefinition["updateSceneGraph"] = [](TES3::Reference& self) {
 				TES3::Matrix33 tempOutArg;
 				self.sceneNode->setLocalRotationMatrix(self.updateSceneMatrix(&tempOutArg));
 				self.sceneNode->update();
 				self.setObjectModified(true);
-			});
+			};
 
 			// Quick access to attachment data.
-			usertypeDefinition.set("itemData", sol::property(
+			usertypeDefinition["itemData"] = sol::property(
 				[](TES3::Reference& self)
 				{
 					return self.getAttachedItemData();
@@ -159,28 +159,28 @@ namespace mwse {
 						self.addItemDataAttachment(value);
 					}
 				}
-			));
-			usertypeDefinition.set("lockNode", sol::property([](TES3::Reference& self) {
+			);
+			usertypeDefinition["lockNode"] = sol::property([](TES3::Reference& self) {
 				return self.getAttachedLockNode();
-			}));
-			usertypeDefinition.set("destination", sol::property([](TES3::Reference& self) -> TES3::TravelDestination * {
+			});
+			usertypeDefinition["destination"] = sol::property([](TES3::Reference& self) -> TES3::TravelDestination * {
 				TES3::TravelDestinationAttachment * attachment = static_cast<TES3::TravelDestinationAttachment*>(self.getAttachment(TES3::AttachmentType::TravelDestination));
 				if (attachment) {
 					return attachment->data;
 				}
 				return nullptr;
-			}));
-			usertypeDefinition.set("light", sol::property([](TES3::Reference& self) -> sol::object {
+			});
+			usertypeDefinition["light"] = sol::property([](TES3::Reference& self) -> sol::object {
 				auto attachment = static_cast<TES3::LightAttachment*>(self.getAttachment(TES3::AttachmentType::Light));
 				if (attachment) {
 					return makeLuaObject(attachment->data->light);
 				}
 				return sol::nil;
-			}));
-			usertypeDefinition.set("mobile", sol::property([](TES3::Reference& self) {
+			});
+			usertypeDefinition["mobile"] = sol::property([](TES3::Reference& self) {
 				return makeLuaObject(self.getAttachedMobileActor());
-			}));
-			usertypeDefinition.set("stackSize", sol::property(
+			});
+			usertypeDefinition["stackSize"] = sol::property(
 				[](TES3::Reference& self)
 			{
 				TES3::ItemData* itemData = self.getAttachedItemData();
@@ -191,15 +191,12 @@ namespace mwse {
 				TES3::ItemData* itemData = self.getOrCreateAttachedItemData();
 				itemData->count = count;
 			}
-			));
+			);
 			
 			// Allow references to behave like a linked list node.
-			usertypeDefinition.set("previousNode", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.previousInCollection); }));
-			usertypeDefinition.set("nextNode", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.nextInCollection); }));
-			usertypeDefinition.set("nodeData", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(&self); }));
-
-			// Finish up our usertype.
-			state.set_usertype("tes3reference", usertypeDefinition);
+			usertypeDefinition["previousNode"] = sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.previousInCollection); });
+			usertypeDefinition["nextNode"] = sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.nextInCollection); });
+			usertypeDefinition["nodeData"] = sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(&self); });
 		}
 	}
 }

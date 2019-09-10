@@ -138,81 +138,67 @@ namespace mwse {
 			// Binding for ScriptContext.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<ScriptContext>();
-				usertypeDefinition.set("new", sol::no_constructor);
+				auto usertypeDefinition = state.new_usertype<ScriptContext>("tes3scriptContext");
+				usertypeDefinition["new"] = sol::no_constructor;
 
-				usertypeDefinition.set(sol::meta_function::length, &ScriptContext::length);
+				usertypeDefinition[sol::meta_function::length] = &ScriptContext::length;
 
 				// Allow variables to be get/set using their variable name.
-				usertypeDefinition.set(sol::meta_function::index, &ScriptContext::index);
-				usertypeDefinition.set(sol::meta_function::new_index, &ScriptContext::new_index);
-
-				// Finish up our usertype.
-				state.set_usertype("tes3scriptContext", usertypeDefinition);
+				usertypeDefinition[sol::meta_function::index] = &ScriptContext::index;
+				usertypeDefinition[sol::meta_function::new_index] = &ScriptContext::new_index;
 			}
 
 			// Binding for TES3::GlobalScript
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TES3::GlobalScript>();
-				usertypeDefinition.set("new", sol::no_constructor);
+				auto usertypeDefinition = state.new_usertype<TES3::GlobalScript>("tes3globalScript");
+				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition.set("reference", sol::readonly_property([](TES3::GlobalScript& self) { return makeLuaObject(self.reference); }));
-				usertypeDefinition.set("script", sol::readonly_property([](TES3::GlobalScript& self) { return makeLuaObject(self.script); }));
+				usertypeDefinition["reference"] = sol::readonly_property([](TES3::GlobalScript& self) { return makeLuaObject(self.reference); });
+				usertypeDefinition["script"] = sol::readonly_property([](TES3::GlobalScript& self) { return makeLuaObject(self.script); });
 
 				// Allow a special context to be exposed for reading variables.
-				usertypeDefinition.set("context", sol::readonly_property([](TES3::GlobalScript& self)
-				{
+				usertypeDefinition["context"] = sol::readonly_property([](TES3::GlobalScript& self) {
 					TES3::ItemData * itemData = self.reference->getAttachedItemData();
 					return std::shared_ptr<ScriptContext>(new ScriptContext(self.script, itemData ? itemData->scriptData : NULL));
-				}
-				));
-
-				// Finish up our usertype.
-				state.set_usertype("tes3globalScript", usertypeDefinition);
+				});
 			}
 
 			// Binding for TES3::StartScript
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TES3::StartScript>();
-				usertypeDefinition.set("new", sol::no_constructor);
+				auto usertypeDefinition = state.new_usertype<TES3::StartScript>("tes3startScript");
+				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
-				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
+				usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
 				setUserdataForBaseObject(usertypeDefinition);
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition.set("script", sol::readonly_property([](TES3::StartScript& self) { return makeLuaObject(self.script); }));
-
-				// Finish up our usertype.
-				state.set_usertype("tes3startScript", usertypeDefinition);
+				usertypeDefinition["script"] = sol::readonly_property([](TES3::StartScript& self) { return makeLuaObject(self.script); });
 			}
 
 			// Binding for TES3::Script.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TES3::Script>();
-				usertypeDefinition.set("new", sol::no_constructor);
+				auto usertypeDefinition = state.new_usertype<TES3::Script>("tes3script");
+				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
-				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
+				usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
 				setUserdataForBaseObject(usertypeDefinition);
 
 				// Basic property binding.
-				usertypeDefinition.set("shortVariableCount", sol::readonly_property(&TES3::Script::shortCount));
-				usertypeDefinition.set("longVariableCount", sol::readonly_property(&TES3::Script::longCount));
-				usertypeDefinition.set("floatVariableCount", sol::readonly_property(&TES3::Script::floatCount));
+				usertypeDefinition["shortVariableCount"] = sol::readonly_property(&TES3::Script::shortCount);
+				usertypeDefinition["longVariableCount"] = sol::readonly_property(&TES3::Script::longCount);
+				usertypeDefinition["floatVariableCount"] = sol::readonly_property(&TES3::Script::floatCount);
 
 				// Basic function binding.
-				usertypeDefinition.set("getVariableData", [](TES3::Script& self, sol::optional<bool> useLocals) { return getLocalVarData(&self, useLocals.value_or(true)); });
+				usertypeDefinition["getVariableData"] = [](TES3::Script& self, sol::optional<bool> useLocals) { return getLocalVarData(&self, useLocals.value_or(true)); };
 
 				// Allow a special context to be exposed for reading variables.
-				usertypeDefinition.set("context", sol::readonly_property([](TES3::Script& self) { return std::shared_ptr<ScriptContext>(new ScriptContext(&self, &self.varValues)); }));
-
-				// Finish up our usertype.
-				state.set_usertype("tes3script", usertypeDefinition);
+				usertypeDefinition["context"] = sol::readonly_property([](TES3::Script& self) { return std::shared_ptr<ScriptContext>(new ScriptContext(&self, &self.varValues)); });
 			}
 		}
 	}

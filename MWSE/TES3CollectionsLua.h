@@ -42,20 +42,17 @@ namespace mwse {
 
 			if (nodeName) {
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TES3::IteratorNode<T>>();
+				auto usertypeDefinition = state.new_usertype<TES3::IteratorNode<T>>(nodeName);
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				//
 				usertypeDefinition.set("previousNode", sol::readonly_property(&TES3::IteratorNode<T>::previous));
 				usertypeDefinition.set("nextNode", sol::readonly_property(&TES3::IteratorNode<T>::next));
 				usertypeDefinition.set("nodeData", sol::readonly_property([](TES3::IteratorNode<T>& self) { return makeLuaObject(self.data); }));
-
-				// Finish up our usertype.
-				state.set_usertype(nodeName, usertypeDefinition);
 			}
 
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.create_simple_usertype<TES3::Iterator<T>>();
+			auto usertypeDefinition = state.new_usertype<TES3::Iterator<T>>(name);
 			usertypeDefinition.set("new", sol::no_constructor);
 
 			// Metamethod binding.
@@ -77,9 +74,6 @@ namespace mwse {
 			usertypeDefinition.set("head", sol::readonly_property(&TES3::Iterator<T>::head));
 			usertypeDefinition.set("tail", sol::readonly_property(&TES3::Iterator<T>::tail));
 			usertypeDefinition.set("current", sol::readonly_property(&TES3::Iterator<T>::current));
-
-			// Finish up our usertype.
-			state.set_usertype(name, usertypeDefinition);
 		}
 
 		template <typename T>
@@ -89,20 +83,17 @@ namespace mwse {
 
 			if (nodeName) {
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TES3::IteratorNode<T>>();
+				auto usertypeDefinition = state.new_usertype<TES3::IteratorNode<T>>(nodeName);
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				//
 				usertypeDefinition.set("previousNode", sol::readonly_property(&TES3::IteratorNode<T>::previous));
 				usertypeDefinition.set("nextNode", sol::readonly_property(&TES3::IteratorNode<T>::next));
 				usertypeDefinition.set("nodeData", sol::readonly_property([](TES3::IteratorNode<T>& self) { return self.data; }));
-
-				// Finish up our usertype.
-				state.set_usertype(nodeName, usertypeDefinition);
 			}
 
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.create_simple_usertype<TES3::Iterator<T>>();
+			auto usertypeDefinition = state.new_usertype<TES3::Iterator<T>>(name);
 			usertypeDefinition.set("new", sol::no_constructor);
 
 			// Metamethod binding.
@@ -124,9 +115,6 @@ namespace mwse {
 			usertypeDefinition.set("head", sol::readonly_property(&TES3::Iterator<T>::head));
 			usertypeDefinition.set("tail", sol::readonly_property(&TES3::Iterator<T>::tail));
 			usertypeDefinition.set("current", sol::readonly_property(&TES3::Iterator<T>::current));
-
-			// Finish up our usertype.
-			state.set_usertype(name, usertypeDefinition);
 		}
 
 		//
@@ -150,20 +138,17 @@ namespace mwse {
 
 			if (nodeName) {
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TES3::StlListNode<T>>();
+				auto usertypeDefinition = state.new_usertype<TES3::StlListNode<T>>(nodeName);
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				//
 				usertypeDefinition.set("previousNode", sol::readonly_property(&TES3::StlListNode<T>::previous));
 				usertypeDefinition.set("nextNode", sol::readonly_property(&TES3::StlListNode<T>::next));
 				usertypeDefinition.set("nodeData", sol::readonly_property([](TES3::StlListNode<T>& self) { return makeLuaObject(self.data); }));
-
-				// Finish up our usertype.
-				state.set_usertype(nodeName, usertypeDefinition);
 			}
 
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.create_simple_usertype<TES3::StlList<T>>();
+			auto usertypeDefinition = state.new_usertype<TES3::StlList<T>>(name);
 			usertypeDefinition.set("new", sol::no_constructor);
 
 			// Metamethod binding.
@@ -186,9 +171,6 @@ namespace mwse {
 			usertypeDefinition.set("size", sol::readonly_property(&TES3::StlList<T>::size));
 			usertypeDefinition.set("head", sol::readonly_property(&TES3::StlList<T>::head));
 			usertypeDefinition.set("tail", sol::readonly_property(&TES3::StlList<T>::tail));
-
-			// Finish up our usertype.
-			state.set_usertype(name, usertypeDefinition);
 		}
 
 		//

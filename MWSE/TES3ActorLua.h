@@ -5,7 +5,7 @@
 namespace mwse {
 	namespace lua {
 		template <typename T>
-		void setUserdataForActor(sol::simple_usertype<T>& usertypeDefinition) {
+		void setUserdataForActor(T& usertypeDefinition) {
 			setUserdataForPhysicalObject(usertypeDefinition);
 
 			// Basic property binding.

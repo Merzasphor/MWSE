@@ -16,27 +16,24 @@ namespace mwse {
 			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.create_simple_usertype<TES3::ActionData>();
-			usertypeDefinition.set("new", sol::no_constructor);
+			auto usertypeDefinition = state.new_usertype<TES3::ActionData>("tes3actionData");
+			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Basic property binding.
-			usertypeDefinition.set("aiBehaviorState", &TES3::ActionData::aiBehaviourState);
-			usertypeDefinition.set("animationAttackState", &TES3::ActionData::animStateAttack);
-			usertypeDefinition.set("attackDirection", &TES3::ActionData::attackDirection);
-			usertypeDefinition.set("attackSwing", &TES3::ActionData::attackSwing);
-			usertypeDefinition.set("currentAnimationGroup", &TES3::ActionData::currentAnimGroup);
-			usertypeDefinition.set("lastBarterHoursPassed", &TES3::ActionData::lastBarterHoursPassed);
-			usertypeDefinition.set("physicalDamage", &TES3::ActionData::physicalDamage);
-			usertypeDefinition.set("walkDestination", &TES3::ActionData::walkDestination);
+			usertypeDefinition["aiBehaviorState"] = &TES3::ActionData::aiBehaviourState;
+			usertypeDefinition["animationAttackState"] = &TES3::ActionData::animStateAttack;
+			usertypeDefinition["attackDirection"] = &TES3::ActionData::attackDirection;
+			usertypeDefinition["attackSwing"] = &TES3::ActionData::attackSwing;
+			usertypeDefinition["currentAnimationGroup"] = &TES3::ActionData::currentAnimGroup;
+			usertypeDefinition["lastBarterHoursPassed"] = &TES3::ActionData::lastBarterHoursPassed;
+			usertypeDefinition["physicalDamage"] = &TES3::ActionData::physicalDamage;
+			usertypeDefinition["walkDestination"] = &TES3::ActionData::walkDestination;
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition.set("hitTarget", sol::readonly_property([](TES3::ActionData& self) { return makeLuaObject(self.hitTarget); }));
-			usertypeDefinition.set("nockedProjectile", sol::readonly_property([](TES3::ActionData& self) { return makeLuaObject(self.nockedProjectile); }));
-			usertypeDefinition.set("stolenFrom", sol::readonly_property([](TES3::ActionData& self) { return makeLuaObject(self.stolenFromFactionOrNPC); }));
-			usertypeDefinition.set("target", sol::readonly_property([](TES3::ActionData& self) { return makeLuaObject(self.target); }));
-
-			// Finish up our usertype.
-			state.set_usertype("tes3actionData", usertypeDefinition);
+			usertypeDefinition["hitTarget"] = sol::readonly_property([](TES3::ActionData& self) { return makeLuaObject(self.hitTarget); });
+			usertypeDefinition["nockedProjectile"] = sol::readonly_property([](TES3::ActionData& self) { return makeLuaObject(self.nockedProjectile); });
+			usertypeDefinition["stolenFrom"] = sol::readonly_property([](TES3::ActionData& self) { return makeLuaObject(self.stolenFromFactionOrNPC); });
+			usertypeDefinition["target"] = sol::readonly_property([](TES3::ActionData& self) { return makeLuaObject(self.target); });
 		}
 	}
 }
