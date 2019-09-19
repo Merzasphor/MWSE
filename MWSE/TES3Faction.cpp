@@ -9,7 +9,7 @@ namespace TES3 {
 		return -1;
 	}
 
-	char * Faction::getFactionId() {
+	char * Faction::getObjectID() {
 		return objectID;
 	}
 

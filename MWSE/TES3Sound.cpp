@@ -4,6 +4,10 @@
 #include "TES3WorldController.h"
 
 namespace TES3 {
+	char* Sound::getObjectID() {
+		return id;
+	}
+
 	const auto TES3_Sound_play = reinterpret_cast<bool (__thiscall *)(Sound*, int, unsigned char, float, bool)>(0x510A40);
 	bool Sound::play(int playbackFlags, unsigned char volume, float pitch, bool isNot3D) {
 		unsigned int master = TES3::WorldController::get()->audioController->volumeMaster;

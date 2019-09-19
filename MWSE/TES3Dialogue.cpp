@@ -8,6 +8,10 @@
 #define TES3_Dialogue_journalSetIndex 0x50F8B0
 
 namespace TES3 {
+	char* Dialogue::getObjectID() {
+		return name;
+	}
+
 	bool Dialogue::addToJournal(int index, MobileActor * actor) {
 		if (type != DialogueType::Journal) {
 			return false;

@@ -93,9 +93,6 @@ namespace mwse {
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 				setUserdataForBaseObject(usertypeDefinition);
 
-				// The vtable gets the name instead of the id. Overwrite this property to get the right value.
-				usertypeDefinition.set("id", sol::readonly_property([](TES3::Race& self) { return self.id; }));
-
 				// Basic property binding.
 				usertypeDefinition.set("femaleBody", sol::readonly_property(&TES3::Race::femaleBody));
 				usertypeDefinition.set("flags", &TES3::Race::flags);

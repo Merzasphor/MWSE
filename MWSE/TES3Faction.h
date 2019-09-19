@@ -39,10 +39,14 @@ namespace TES3 {
 		unsigned int playerMembershipFlags; // 0x29C
 
 		//
-		// Custom functions.
+		// Virtual table overrides.
 		//
 
-		char * getFactionId();
+		char* getObjectID();
+
+		//
+		// Custom functions.
+		//
 
 		char * getName();
 		void setName(const char*);

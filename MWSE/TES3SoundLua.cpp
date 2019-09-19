@@ -23,10 +23,6 @@ namespace mwse {
 				usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 				setUserdataForBaseObject(usertypeDefinition);
 
-				// Override the id property to use the sound name, rather than the vtable.
-				usertypeDefinition.set(sol::meta_function::to_string, sol::readonly_property([](TES3::Sound& self) { return self.id; }));
-				usertypeDefinition.set("id", sol::readonly_property([](TES3::Sound& self) { return self.id; }));
-
 				// Allow object to be serialized to json.
 				usertypeDefinition.set("__tojson", [](TES3::Sound& self, sol::table state) {
 					std::ostringstream ss;
@@ -70,9 +66,6 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition.set("type", sol::readonly_property(&TES3::SoundGenerator::soundType));
-
-				// Override the id property to use the soundgen name, rather than the vtable.
-				usertypeDefinition.set("id", sol::readonly_property([](TES3::SoundGenerator& self) { return self.name; }));
 
 				// Access to other objects that need to be packaged.
 				usertypeDefinition.set("sound", sol::readonly_property([](TES3::SoundGenerator& self) { return makeLuaObject(self.sound); }));

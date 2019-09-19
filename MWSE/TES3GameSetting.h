@@ -1557,6 +1557,12 @@ namespace TES3 {
 		long index; // 0x14 // Array index of this GMST
 
 		//
+		// Virtual table overrides.
+		//
+
+		char * getObjectID();
+
+		//
 		// Custom functions.
 		//
 

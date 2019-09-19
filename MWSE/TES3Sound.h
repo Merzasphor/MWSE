@@ -49,6 +49,12 @@ namespace TES3 {
 		SoundBuffer* soundBuffer;
 
 		//
+		// Virtual table overrides.
+		//
+
+		char * getObjectID();
+
+		//
 		// Other related this-call functions.
 		//
 

@@ -71,9 +71,6 @@ namespace mwse {
 				usertypeDefinition.set("journalIndex", sol::property(&TES3::Dialogue::journalIndex, &TES3::Dialogue::setJournalIndex));
 				usertypeDefinition.set("type", sol::readonly_property(&TES3::Dialogue::type));
 
-				// Override id property to point to the name.
-				usertypeDefinition.set("id", sol::readonly_property(&TES3::Dialogue::name));
-
 				// Expose the ability to add it to the journal.
 				usertypeDefinition.set("addToJournal", [](TES3::Dialogue& self, sol::table params) {
 					int index = getOptionalParam<int>(params, "index", 0);
@@ -195,9 +192,6 @@ namespace mwse {
 				// Basic property binding.
 				usertypeDefinition.set("dialogue", sol::readonly_property(&TES3::Quest::dialogue));
 				usertypeDefinition.set("info", sol::readonly_property(&TES3::Quest::activeInfo));
-
-				// Override id property to point to the name.
-				usertypeDefinition.set("id", sol::readonly_property(&TES3::Quest::name));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3quest", usertypeDefinition);

@@ -80,9 +80,6 @@ namespace mwse {
 			// Basic property binding.
 			usertypeDefinition.set("index", sol::readonly_property(&TES3::GameSetting::index));
 
-			// Override the default BaseObject bindings to return the GMST's name.
-			usertypeDefinition.set("id", sol::readonly_property(&TES3::GameSetting::getName));
-
 			// Functions exposed as properties.
 			usertypeDefinition.set("defaultValue", sol::readonly_property(&getDefaultValue));
 			usertypeDefinition.set("type", sol::readonly_property(&TES3::GameSetting::getType));

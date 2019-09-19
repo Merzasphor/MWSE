@@ -44,9 +44,6 @@ namespace mwse {
 			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 			setUserdataForBaseObject(usertypeDefinition);
 
-			// The vtable gets the name instead of the id. Overwrite this property to get the right value.
-			usertypeDefinition.set("id", sol::readonly_property([](TES3::Class& self) { return self.id; }));
-
 			// Basic property binding.
 			usertypeDefinition.set("services", &TES3::Class::services);
 			usertypeDefinition.set("specialization", &TES3::Class::specialization);
