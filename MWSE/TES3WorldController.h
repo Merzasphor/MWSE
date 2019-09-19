@@ -267,6 +267,7 @@ namespace TES3 {
 		_declspec(dllexport) MobilePlayer* getMobilePlayer();
 		_declspec(dllexport) void playItemUpDownSound(BaseObject* item, bool pickup = false, Reference* reference = nullptr);
 		_declspec(dllexport) float getSimulationTimestamp();
+		_declspec(dllexport) void processGlobalScripts();
 
 		_declspec(dllexport) unsigned short getDaysInMonth(int);
 		_declspec(dllexport) unsigned short WorldController::getCumulativeDaysForMonth(int month);
@@ -275,6 +276,8 @@ namespace TES3 {
 		_declspec(dllexport) bool applyEnchantEffect(NI::Node* node, Enchantment * enchantment);
 
 		_declspec(dllexport) void updateTiming();
+		_declspec(dllexport) void advanceDay();
+		_declspec(dllexport) void updateEnvironmentLightingWeather();
 
 	};
 	static_assert(sizeof(WorldController) == 0x374, "TES3::WorldController failed size validation");

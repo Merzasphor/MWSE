@@ -107,6 +107,11 @@ namespace TES3 {
 		return reinterpret_cast<float(__thiscall *)(WorldController*)>(TES3_WorldController_getSimulationTimestamp)(this);
 	}
 
+	const auto TES3_WorldController_processGlobalScripts = reinterpret_cast<void(__thiscall*)(WorldController*)>(0x40FBE0);
+	void WorldController::processGlobalScripts() {
+		TES3_WorldController_processGlobalScripts(this);
+	}
+
 	unsigned short WorldController::getDaysInMonth(int month) {
 		if (month < 0 || month > 11) {
 			return -1;
@@ -135,5 +140,13 @@ namespace TES3 {
 		TES3_WorldController_updateTiming(this);
 	}
 
+	const auto TES3_WorldController_advanceDay = reinterpret_cast<void(__thiscall*)(WorldController*)>(0x40FF50);
+	void WorldController::advanceDay() {
+		TES3_WorldController_advanceDay(this);
+	}
 
+	const auto TES3_WorldController_updateEnvironmentLightingWeather = reinterpret_cast<void(__thiscall*)(WorldController*)>(0x4100D0);
+	void WorldController::updateEnvironmentLightingWeather() {
+		TES3_WorldController_updateEnvironmentLightingWeather(this);
+	}
 }

@@ -3302,6 +3302,44 @@ namespace mwse {
 
 				return makeLuaObject(effect);
 			};
+
+			state["tes3"]["advanceTime"] = [](sol::table params) {
+				double rawHours = getOptionalParam<double>(params, "hours", 0.0);
+				double hoursPassed = 0.0;
+
+				// Leverage the resting/waiting system if we're advancing by an hour or more.
+				if (rawHours >= 1.0) {
+					int hoursToAdvance = std::floor(rawHours);
+
+					auto worldController = TES3::WorldController::get();
+					worldController->gvarGameHour->value += rawHours - hoursToAdvance;
+					hoursPassed += rawHours - hoursToAdvance;
+
+					bool resting = getOptionalParam<bool>(params, "resting", false);
+					bool updateEnvironment = getOptionalParam<bool>(params, "updateEnvironment", true);
+
+					auto macp = worldController->getMobilePlayer();
+					macp->restHoursRemaining = hoursToAdvance;
+					macp->sleeping = resting;
+					macp->waiting = !resting;
+
+					while (macp->restHoursRemaining > 0) {
+						reinterpret_cast<void(__cdecl*)(bool)>(0x6350B0)(updateEnvironment);
+						hoursPassed += 1;
+					}
+				}
+				// Otherwise, just do the bare minimum.
+				else {
+					auto worldController = TES3::WorldController::get();
+					worldController->gvarGameHour->value += rawHours;
+					worldController->advanceDay();
+					worldController->updateEnvironmentLightingWeather();
+					worldController->processGlobalScripts();
+					hoursPassed += rawHours;
+				}
+
+				return hoursPassed;
+			};
 		}
 	}
 }
