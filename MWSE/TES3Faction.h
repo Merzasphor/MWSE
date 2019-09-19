@@ -42,6 +42,8 @@ namespace TES3 {
 		// Custom functions.
 		//
 
+		char * getFactionId();
+
 		char * getName();
 		void setName(const char*);
 
