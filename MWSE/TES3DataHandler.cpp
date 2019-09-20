@@ -198,6 +198,11 @@ namespace TES3 {
 		reinterpret_cast<void(__thiscall *)(NonDynamicData*, BaseObject*)>(TES3_NonDynamicData_deleteObject)(this, object);
 	}
 
+	const auto TES3_NonDynamicData_respawnContainers = reinterpret_cast<void(__thiscall*)(NonDynamicData*)>(0x4C3B00);
+	void NonDynamicData::respawnContainers() {
+		TES3_NonDynamicData_respawnContainers(this);
+	}
+
 	const auto TES3_NonDynamicData_getCellByGrid = reinterpret_cast<Cell *(__thiscall*)(NonDynamicData*, int, int)>(0x4BAA10);
 	Cell * NonDynamicData::getCellByGrid(int x, int y) {
 		return TES3_NonDynamicData_getCellByGrid(this, x, y);

@@ -3332,7 +3332,7 @@ namespace mwse {
 				else {
 					auto worldController = TES3::WorldController::get();
 					worldController->gvarGameHour->value += rawHours;
-					worldController->advanceDay();
+					worldController->checkForDayWrapping();
 					worldController->updateEnvironmentLightingWeather();
 					worldController->processGlobalScripts();
 					hoursPassed += rawHours;

@@ -276,8 +276,14 @@ namespace TES3 {
 		_declspec(dllexport) bool applyEnchantEffect(NI::Node* node, Enchantment * enchantment);
 
 		_declspec(dllexport) void updateTiming();
-		_declspec(dllexport) void advanceDay();
 		_declspec(dllexport) void updateEnvironmentLightingWeather();
+
+		//
+		// Custom functions.
+		//
+
+		_declspec(dllexport) void tickClock();
+		_declspec(dllexport) void checkForDayWrapping();
 
 	};
 	static_assert(sizeof(WorldController) == 0x374, "TES3::WorldController failed size validation");

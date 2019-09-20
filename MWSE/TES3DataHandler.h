@@ -107,6 +107,7 @@ namespace TES3 {
 		Faction* findFaction(const char*);
 		bool addNewObject(BaseObject*);
 		void deleteObject(BaseObject*);
+		void respawnContainers();
 
 		Cell * getCellByGrid(int x, int y);
 		Cell * getCellByName(const char* name);

@@ -1,9 +1,12 @@
 #include "TES3WorldController.h"
 
 #include "TES3Actor.h"
+#include "TES3DataHandler.h"
+#include "TES3GameSetting.h"
 #include "TES3GlobalVariable.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
+#include "TES3WeatherController.h"
 
 #include "TES3Util.h"
 
@@ -140,13 +143,75 @@ namespace TES3 {
 		TES3_WorldController_updateTiming(this);
 	}
 
-	const auto TES3_WorldController_advanceDay = reinterpret_cast<void(__thiscall*)(WorldController*)>(0x40FF50);
-	void WorldController::advanceDay() {
-		TES3_WorldController_advanceDay(this);
-	}
-
 	const auto TES3_WorldController_updateEnvironmentLightingWeather = reinterpret_cast<void(__thiscall*)(WorldController*)>(0x4100D0);
 	void WorldController::updateEnvironmentLightingWeather() {
 		TES3_WorldController_updateEnvironmentLightingWeather(this);
+	}
+
+	void WorldController::tickClock() {
+		gvarGameHour->value += (deltaTime * gvarTimescale->value) / 3600.0f;
+		checkForDayWrapping();
+	}
+
+	void WorldController::checkForDayWrapping() {
+		// Make sure we didn't somehow move backwards.
+		if (gvarGameHour->value < 0.0f) {
+			gvarGameHour->value = 0.0f;
+			return;
+		}
+		// If we're not at midnight yet, we don't need to tick over.
+		else if (gvarGameHour->value < 24.0f) {
+			return;
+		}
+
+		// Keep decrementing 24 hours until we've caught up.
+		auto ndd = TES3::DataHandler::get()->nonDynamicData;
+		bool respawnContainers = false;
+		while (gvarGameHour->value >= 24.0f) {
+			gvarGameHour->value -= 24.0f;
+
+			// Tell the weather controller that a day has passed.
+			weatherController->daysRemaining--;
+			if (weatherController->daysRemaining < 0) {
+				weatherController->daysRemaining = 0;
+			}
+
+			// Drop these values to integers to be later set back to the global values.
+			int day = gvarDay->value;
+			int month = gvarMonth->value;
+			int year = gvarYear->value;
+
+			// Are we advancing to the next month?
+			int daysInMonth = getDaysInMonth(month);
+			if (day > daysInMonth) {
+				day = 1;
+				month++;
+
+				// Do we need to respawn containers?
+				int monthsToRespawn = --gvarMonthsToRespawn->value;
+				if (monthsToRespawn <= 0) {
+					respawnContainers = true;
+					gvarMonthsToRespawn->value = ndd->GMSTs[TES3::GMST::iMonthsToRespawn]->value.asLong;
+				}
+				else {
+					gvarMonthsToRespawn->value = monthsToRespawn;
+				}
+			}
+
+			// The next year?
+			if (month >= 12) {
+				month = 0;
+				year++;
+			}
+
+			// Update global variables.
+			gvarDay->value = day;
+			gvarMonth->value = month;
+			gvarYear->value = year;
+		}
+
+		if (respawnContainers) {
+			ndd->respawnContainers();
+		}
 	}
 }

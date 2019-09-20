@@ -193,6 +193,13 @@ namespace mwse {
 			genCallEnforced(0x50AC85, 0x55D900, *reinterpret_cast<DWORD*>(&killCounterGetCount));
 			genCallEnforced(0x50ACAB, 0x55D900, *reinterpret_cast<DWORD*>(&killCounterGetCount));
 			genCallEnforced(0x745FF0, 0x55D900, *reinterpret_cast<DWORD*>(&killCounterGetCount));
+
+			// Patch: Don't truncate hour when advancing time past midnight.
+			// Also don't nudge time forward by small extra increments when resting.
+			auto WorldController_tickClock = &TES3::WorldController::tickClock;
+			genCallEnforced(0x41B857, 0x40FF50, *reinterpret_cast<DWORD*>(&WorldController_tickClock));
+			auto WorldController_checkForDayWrapping = &TES3::WorldController::checkForDayWrapping;
+			genCallEnforced(0x6350E9, 0x40FF50, *reinterpret_cast<DWORD*>(&WorldController_checkForDayWrapping));
 		}
 
 		//
