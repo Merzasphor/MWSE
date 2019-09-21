@@ -168,6 +168,15 @@ namespace TES3 {
 		auto ndd = TES3::DataHandler::get()->nonDynamicData;
 		bool respawnContainers = false;
 		while (gvarGameHour->value >= 24.0f) {
+			// Drop these values to integers to be later set back to the global values.
+			int day = gvarDay->value;
+			int daysPassed = gvarDaysPassed->value;
+			int month = gvarMonth->value;
+			int year = gvarYear->value;
+
+			// Increment day count, reduce game hour by 24.
+			day++;
+			daysPassed++;
 			gvarGameHour->value -= 24.0f;
 
 			// Tell the weather controller that a day has passed.
@@ -175,11 +184,6 @@ namespace TES3 {
 			if (weatherController->daysRemaining < 0) {
 				weatherController->daysRemaining = 0;
 			}
-
-			// Drop these values to integers to be later set back to the global values.
-			int day = gvarDay->value;
-			int month = gvarMonth->value;
-			int year = gvarYear->value;
 
 			// Are we advancing to the next month?
 			int daysInMonth = getDaysInMonth(month);
@@ -206,6 +210,7 @@ namespace TES3 {
 
 			// Update global variables.
 			gvarDay->value = day;
+			gvarDaysPassed->value = daysPassed;
 			gvarMonth->value = month;
 			gvarYear->value = year;
 		}
