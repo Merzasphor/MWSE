@@ -41,6 +41,8 @@
 #include <boost/type_traits/is_array.hpp>
 #endif
 
+#include <functional>
+
 namespace boost
 {
     template <class A, class B>
@@ -254,7 +256,7 @@ namespace boost
 #if !defined(BOOST_NO_TEMPLATE_PARTIAL_SPECIALIZATION)
 
     template <class T> struct hash
-        : std::unary_function<T, std::size_t>
+        : std::function<std::size_t(T)>
     {
 #if !defined(BOOST_NO_FUNCTION_TEMPLATE_ORDERING)
         std::size_t operator()(T const& val) const
