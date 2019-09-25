@@ -30,6 +30,8 @@
 #pragma warning(pop)
 #endif
 
+#include <memory>
+
 namespace boost{
 #ifdef BOOST_MSVC
 #pragma warning(push)
@@ -57,7 +59,7 @@ private:
 public: 
    typedef          sub_match<BidiIterator>                         value_type;
 #if  !defined(BOOST_NO_STD_ALLOCATOR) && !(defined(BOOST_MSVC) && defined(_STLPORT_VERSION))
-   typedef typename Allocator::const_reference                              const_reference;
+   using const_reference = typename std::allocator_traits< Allocator >::value_type const &;
 #else
    typedef          const value_type&                                       const_reference;
 #endif
