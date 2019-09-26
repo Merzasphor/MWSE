@@ -1920,6 +1920,10 @@ namespace mwse {
 		}
 
 		void LuaManager::executeMainModScripts(const char* path, const char* filename) {
+			if (!std::filesystem::exists(path)) {
+				return;
+			}
+
 			for (auto & p : std::filesystem::recursive_directory_iterator(path)) {
 				if (p.path().filename() == filename) {
 					// If a parent directory is marked .disabled, ignore files in it.
