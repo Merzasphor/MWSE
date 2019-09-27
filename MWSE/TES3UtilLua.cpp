@@ -2279,7 +2279,12 @@ namespace mwse {
 
 				// Add the item and return the added count, since we do no inventory checking.
 				auto mobile = reference->getAttachedMobileActor();
-				actor->inventory.addItem(mobile, item, fulfilledCount, false, &itemData);
+				if (itemData) {
+					fulfilledCount = actor->inventory.addItem(mobile, item, fulfilledCount, false, &itemData);
+				}
+				else {
+					fulfilledCount = actor->inventory.addItemWithoutData(mobile, item, fulfilledCount, false);
+				}
 
 				// Play the relevant sound.
 				auto worldController = TES3::WorldController::get();
