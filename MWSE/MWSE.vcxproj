@@ -117,6 +117,8 @@
     <ClInclude Include="LuaWeatherTransitionStartedEvent.h" />
     <ClInclude Include="NIDX8Renderer.h" />
     <ClInclude Include="NIRenderer.h" />
+    <ClInclude Include="NITextureEffect.h" />
+    <ClInclude Include="NITexturingProperty.h" />
     <ClInclude Include="TES3MagicEffectController.h" />
     <ClInclude Include="MemoryUtilLua.h" />
     <ClInclude Include="NIAmbientLight.h" />

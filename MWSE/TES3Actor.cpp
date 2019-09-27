@@ -51,6 +51,10 @@ namespace TES3 {
 		vTable.actor->setAIPackage(this, packageConfig, reference);
 	}
 
+	int Actor::addItem(Item* item, int count, bool something) {
+		return vTable.actor->addItem(this, item, count, something);
+	}
+
 	Object* Actor::equipItem(Object* item, ItemData* itemData, EquipmentStack** out_equipmentStack, MobileActor* mobileActor) {
 		Object* result = TES3_Actor_equipItem(this, item, itemData, out_equipmentStack, mobileActor);
 
