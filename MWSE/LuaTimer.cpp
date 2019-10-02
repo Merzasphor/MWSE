@@ -117,6 +117,7 @@ namespace mwse {
 			insertActiveTimer(timer);
 
 			timer->state = TimerState::Active;
+			timer->timing = timer->timing + m_Clock;
 
 			return true;
 		}
