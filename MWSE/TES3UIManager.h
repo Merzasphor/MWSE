@@ -44,6 +44,8 @@ namespace TES3 {
 		void updateEncumbranceBar();
 		void updatePlayerAttribute(float current, int attributeId);
 		void updateStatsPane();
+		void updateSpellmakingMenu();
+		void updateEnchantingMenu();
 
 		void updateInventoryMenuTiles();
 		void updateContentsMenuTiles();
