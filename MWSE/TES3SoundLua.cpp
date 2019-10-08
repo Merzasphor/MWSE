@@ -43,6 +43,9 @@ namespace mwse {
 				usertypeDefinition.set("stop", &TES3::Sound::stop);
 				usertypeDefinition.set("isPlaying", &TES3::Sound::isPlaying);
 
+				// Expose float-based volume control.
+				usertypeDefinition.set("volume", sol::property(&TES3::Sound::getVolume, &TES3::Sound::setVolume));
+
 				// Finish up our usertype.
 				state.set_usertype("tes3sound", usertypeDefinition);
 			}

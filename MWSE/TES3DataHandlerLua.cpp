@@ -104,6 +104,7 @@ namespace mwse {
 				usertypeDefinition.set("cellChanged", sol::readonly_property(&TES3::DataHandler::cellChanged));
 				usertypeDefinition.set("centralGridX", sol::readonly_property(&TES3::DataHandler::centralGridX));
 				usertypeDefinition.set("centralGridY", sol::readonly_property(&TES3::DataHandler::centralGridY));
+				usertypeDefinition.set("currentAmbientWaterSound", &TES3::DataHandler::currentAmbientWaterSound);
 				usertypeDefinition.set("currentCell", sol::readonly_property(&TES3::DataHandler::currentCell));
 				usertypeDefinition.set("currentInteriorCell", sol::readonly_property(&TES3::DataHandler::currentInteriorCell));
 				usertypeDefinition.set("lastExteriorCell", sol::readonly_property(&TES3::DataHandler::lastExteriorCell));
