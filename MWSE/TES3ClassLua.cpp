@@ -12,7 +12,7 @@ namespace TES3 {
 
 		sol::table result = state.create_table();
 		for (int i = 0; i < 5; i++) {
-			result[i + 1] = &skills[i * 2];
+			result[i + 1] = skills[i * 2 + 1];
 		}
 		return result;
 	}
@@ -23,7 +23,7 @@ namespace TES3 {
 
 		sol::table result = state.create_table();
 		for (int i = 0; i < 5; i++) {
-			result[i + 1] = &skills[i * 2 + 1];
+			result[i + 1] = skills[i * 2];
 		}
 		return result;
 	}
