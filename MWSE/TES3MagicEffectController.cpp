@@ -537,6 +537,7 @@ namespace TES3 {
 
 				sol::table params = stateHandle.state.create_table();
 				params["effectId"] = effectId;
+				params["effectIndex"] = i;
 				params["sourceInstance"] = mwse::lua::makeLuaObject(self);
 				params["collision"] = collision;
 
