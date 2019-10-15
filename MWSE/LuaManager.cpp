@@ -2685,7 +2685,7 @@ namespace mwse {
 
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
-			sol::protected_function_result result = luaState.safe_script_file("Data Files/MWSE/core/mwse_init.lua");
+			sol::protected_function_result result = luaState.safe_script_file("Data Files\\MWSE\\core\\mwse_init.lua");
 			if (!result.valid()) {
 				sol::error error = result;
 				log::getLog() << "[LuaManager] ERROR: Failed to initialize MWSE Lua interface." << std::endl << error.what() << std::endl;
@@ -3626,11 +3626,11 @@ namespace mwse {
 			genCallEnforced(0x4F0C83, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
 
 			// Look for main.lua scripts in the usual directories.
-			executeMainModScripts("Data Files/MWSE/core");
-			executeMainModScripts("Data Files/MWSE/mods");
+			executeMainModScripts("Data Files\\MWSE\\core");
+			executeMainModScripts("Data Files\\MWSE\\mods");
 
 			// Temporary backwards compatibility for old-style MWSE mods.
-			executeMainModScripts("Data Files/MWSE/lua", "mod_init.lua");
+			executeMainModScripts("Data Files\\MWSE\\lua", "mod_init.lua");
 		}
 
 		void LuaManager::cleanup() {
