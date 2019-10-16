@@ -1924,7 +1924,7 @@ namespace mwse {
 				return;
 			}
 
-			for (auto & p : std::filesystem::recursive_directory_iterator(path)) {
+			for (auto & p : std::filesystem::recursive_directory_iterator(path, std::filesystem::directory_options::follow_directory_symlink)) {
 				if (p.path().filename() == filename) {
 					// If a parent directory is marked .disabled, ignore files in it.
 					if (p.path().string().find(".disabled\\") != std::string::npos) {
