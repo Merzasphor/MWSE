@@ -712,7 +712,9 @@ namespace mwse {
 			if (OnPCEquipItemDoubled_blocked) {
 				return 0;
 			}
-			return OnPCEquipItem(object, data);
+
+			// Call the original function.
+			return tes3::ui::equipInventoryItem(object, data);
 		}
 
 		//
