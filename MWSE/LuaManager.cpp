@@ -687,6 +687,34 @@ namespace mwse {
 			return tes3::ui::equipInventoryItem(object, data);
 		}
 
+		static bool OnPCEquipItemDoubled_blocked = false;
+		signed char __cdecl OnPCEquipItemDoubled(TES3::PhysicalObject* object, TES3::ItemData* data) {
+			OnPCEquipItemDoubled_blocked = false;
+
+			// Execute event. If the event blocked the call, bail.
+			if (event::EquipEvent::getEventEnabled()) {
+				auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::object response = stateHandle.triggerEvent(new event::EquipEvent(TES3::WorldController::get()->getMobilePlayer()->reference, object, data));
+				if (response.get_type() == sol::type::table) {
+					sol::table eventData = response;
+					if (eventData["block"] == true) {
+						OnPCEquipItemDoubled_blocked = true;
+						return 0;
+					}
+				}
+			}
+
+			// Call the original function.
+			return tes3::ui::equipInventoryItem(object, data);
+		}
+
+		signed char __cdecl OnPCEquipItemDoubledFollowUp(TES3::PhysicalObject* object, TES3::ItemData* data) {
+			if (OnPCEquipItemDoubled_blocked) {
+				return 0;
+			}
+			return OnPCEquipItem(object, data);
+		}
+
 		//
 		// Hook: On Equipped.
 		//
@@ -2721,8 +2749,8 @@ namespace mwse {
 			genCallEnforced(0x60E70F, 0x5CE130, reinterpret_cast<DWORD>(OnPCEquip));
 			genCallEnforced(0x60E9BE, 0x5CE130, reinterpret_cast<DWORD>(OnPCEquip));
 			// ui_inventoryEquipItemToPlayer calls
-			genCallEnforced(0x5E4399, 0x5D1190, reinterpret_cast<DWORD>(OnPCEquipItem)); //magic menu
-			genCallEnforced(0x5E43A0, 0x5D1190, reinterpret_cast<DWORD>(OnPCEquipItem)); //magic menu
+			genCallEnforced(0x5E4399, 0x5D1190, reinterpret_cast<DWORD>(OnPCEquipItemDoubled)); //magic menu
+			genCallEnforced(0x5E43A0, 0x5D1190, reinterpret_cast<DWORD>(OnPCEquipItemDoubledFollowUp)); //magic menu
 			genCallEnforced(0x60878B, 0x5D1190, reinterpret_cast<DWORD>(OnPCEquipItem)); //quick slots
 			// TODO: cosmetic issue when readying enchantments- item name notification pops up even when the equip is blocked.
 
