@@ -185,6 +185,10 @@ namespace TES3 {
 		}
 	}
 
+	bool MobileActor::isDead() {
+		return actionData.animStateAttack == AttackAnimationState::Dead || actionData.animStateAttack == AttackAnimationState::Dying;
+	}
+
 	void MobileActor::onDeath() {
 		reinterpret_cast<void(__thiscall *)(MobileActor*)>(TES3_MobileActor_onDeath)(this);
 

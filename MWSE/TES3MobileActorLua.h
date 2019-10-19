@@ -34,6 +34,7 @@ namespace mwse {
 			usertypeDefinition.set("hello", &TES3::MobileActor::hello);
 			usertypeDefinition.set("holdBreathTime", &TES3::MobileActor::holdBreathTime);
 			usertypeDefinition.set("hostileActors", sol::readonly_property(&TES3::MobileActor::listTargetActors));
+			usertypeDefinition.set("isDead", sol::readonly_property(&TES3::MobileActor::isDead));
 			usertypeDefinition.set("lastGroundZ", &TES3::MobileActor::lastGroundZ);
 			usertypeDefinition.set("magicka", sol::readonly_property(&TES3::MobileActor::magicka));
 			usertypeDefinition.set("magickaMultiplier", sol::readonly_property(&TES3::MobileActor::magickaMultiplier));
