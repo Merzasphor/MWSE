@@ -1888,11 +1888,12 @@ namespace mwse {
 			state["tes3"]["positionCell"] = [](sol::table params) {
 				auto worldController = TES3::WorldController::get();
 				auto macp = worldController->getMobilePlayer();
+				auto playerRef = macp->reference;
 
 				// Get the target that we're working with.
-				TES3::MobileActor * mobile = getOptionalParamMobileActor(params, "reference");
-				if (mobile == nullptr) {
-					mobile = macp;
+				auto reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					reference = playerRef;
 				}
 
 				// Get the position.
@@ -1904,7 +1905,7 @@ namespace mwse {
 				// Get the orientation.
 				sol::optional<TES3::Vector3> orientation = getOptionalParamVector3(params, "orientation");
 				if (!orientation) {
-					orientation = mobile->reference->orientation;
+					orientation = reference->orientation;
 				}
 
 				// Get the cell.
@@ -1921,7 +1922,7 @@ namespace mwse {
 				}
 
 				// Are we dealing with the player? If so, use the special functions.
-				if (mobile == macp) {
+				if (reference == playerRef) {
 					sol::optional<bool> suppressFaderOpt = params["suppressFader"];
 					bool suppressFader = suppressFaderOpt.value_or(false);
 					bool faderInitialState = TES3::DataHandler::get()->useCellTransitionFader;
@@ -1947,13 +1948,12 @@ namespace mwse {
 				}
 				else {
 					const auto TES3_relocateReference = reinterpret_cast<void(__cdecl*)(TES3::Reference*, TES3::Cell*, TES3::Vector3*, float)>(0x50EDD0);
-					TES3_relocateReference(mobile->reference, cell, &position.value(), orientation.value().z);
+					TES3_relocateReference(reference, cell, &position.value(), orientation.value().z);
 				}
 
-				// Ensure the reference is flagged as modified.
-				if (mobile->reference) {
-					mobile->reference->setObjectModified(true);
-				}
+				// Ensure the reference and cell is flagged as modified.
+				reference->setObjectModified(true);
+				cell->setObjectModified(true);
 
 				return true;
 			};
