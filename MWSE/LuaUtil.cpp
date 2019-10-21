@@ -345,147 +345,134 @@ namespace mwse {
 
 			sol::state& state = stateHandle.state;
 
-			switch (object->objectType) {
-			case TES3::ObjectType::Activator:
+			switch ((uint32_t)object->vTable.object) {
+			case TES3::VirtualTableAddress::Activator:
 				result = sol::make_object(state, reinterpret_cast<TES3::Activator*>(object));
 				break;
-			case TES3::ObjectType::Alchemy:
+			case TES3::VirtualTableAddress::Alchemy:
 				result = sol::make_object(state, reinterpret_cast<TES3::Alchemy*>(object));
 				break;
-			case TES3::ObjectType::Apparatus:
+			case TES3::VirtualTableAddress::Apparatus:
 				result = sol::make_object(state, reinterpret_cast<TES3::Apparatus*>(object));
 				break;
-			case TES3::ObjectType::Armor:
+			case TES3::VirtualTableAddress::Armor:
 				result = sol::make_object(state, reinterpret_cast<TES3::Armor*>(object));
 				break;
-			case TES3::ObjectType::Bodypart:
+			case TES3::VirtualTableAddress::BodyPart:
 				result = sol::make_object(state, reinterpret_cast<TES3::BodyPart*>(object));
 				break;
-			case TES3::ObjectType::Book:
+			case TES3::VirtualTableAddress::Book:
 				result = sol::make_object(state, reinterpret_cast<TES3::Book*>(object));
 				break;
-			case TES3::ObjectType::Cell:
+			case TES3::VirtualTableAddress::Cell:
 				result = sol::make_object(state, reinterpret_cast<TES3::Cell*>(object));
 				break;
-			case TES3::ObjectType::Class:
+			case TES3::VirtualTableAddress::Class:
 				result = sol::make_object(state, reinterpret_cast<TES3::Class*>(object));
 				break;
-			case TES3::ObjectType::Clothing:
+			case TES3::VirtualTableAddress::Clothing:
 				result = sol::make_object(state, reinterpret_cast<TES3::Clothing*>(object));
 				break;
-			case TES3::ObjectType::Container:
-			{
-				if (reinterpret_cast<TES3::Actor*>(object)->actorFlags & TES3::ActorFlagContainer::IsBase) {
-					result = sol::make_object(state, reinterpret_cast<TES3::Container*>(object));
-				}
-				else {
-					result = sol::make_object(state, reinterpret_cast<TES3::ContainerInstance*>(object));
-				}
-			}
-			break;
-			case TES3::ObjectType::Creature:
-			{
-				if (reinterpret_cast<TES3::Actor*>(object)->actorFlags & TES3::ActorFlagCreature::IsBase) {
-					result = sol::make_object(state, reinterpret_cast<TES3::Creature*>(object));
-				}
-				else {
-					result = sol::make_object(state, reinterpret_cast<TES3::CreatureInstance*>(object));
-				}
-			}
-			break;
-			case TES3::ObjectType::Dialogue:
+			case TES3::VirtualTableAddress::ContainerBase:
+				result = sol::make_object(state, reinterpret_cast<TES3::Container*>(object));
+				break;
+			case TES3::VirtualTableAddress::ContainerInstance:
+				result = sol::make_object(state, reinterpret_cast<TES3::ContainerInstance*>(object));
+				break;
+			case TES3::VirtualTableAddress::CreatureBase:
+				result = sol::make_object(state, reinterpret_cast<TES3::Creature*>(object));
+				break;
+			case TES3::VirtualTableAddress::CreatureInstance:
+				result = sol::make_object(state, reinterpret_cast<TES3::CreatureInstance*>(object));
+				break;
+			case TES3::VirtualTableAddress::Dialogue:
 				result = sol::make_object(state, reinterpret_cast<TES3::Dialogue*>(object));
 				break;
-			case TES3::ObjectType::DialogueInfo:
+			case TES3::VirtualTableAddress::DialogueInfo:
 				result = sol::make_object(state, reinterpret_cast<TES3::DialogueInfo*>(object));
 				break;
-			case TES3::ObjectType::Door:
+			case TES3::VirtualTableAddress::Door:
 				result = sol::make_object(state, reinterpret_cast<TES3::Door*>(object));
 				break;
-			case TES3::ObjectType::Enchantment:
+			case TES3::VirtualTableAddress::Enchantment:
 				result = sol::make_object(state, reinterpret_cast<TES3::Enchantment*>(object));
 				break;
-			case TES3::ObjectType::Faction:
+			case TES3::VirtualTableAddress::Faction:
 				result = sol::make_object(state, reinterpret_cast<TES3::Faction*>(object));
 				break;
-			case TES3::ObjectType::Global:
+			case TES3::VirtualTableAddress::GlobalVariable:
 				result = sol::make_object(state, reinterpret_cast<TES3::GlobalVariable*>(object));
 				break;
-			case TES3::ObjectType::GameSetting:
+			case TES3::VirtualTableAddress::GameSetting:
 				result = sol::make_object(state, reinterpret_cast<TES3::GameSetting*>(object));
 				break;
-			case TES3::ObjectType::Ingredient:
+			case TES3::VirtualTableAddress::Ingredient:
 				result = sol::make_object(state, reinterpret_cast<TES3::Ingredient*>(object));
 				break;
-			case TES3::ObjectType::LeveledCreature:
+			case TES3::VirtualTableAddress::LeveledCreature:
 				result = sol::make_object(state, reinterpret_cast<TES3::LeveledCreature*>(object));
 				break;
-			case TES3::ObjectType::LeveledItem:
+			case TES3::VirtualTableAddress::LeveledItem:
 				result = sol::make_object(state, reinterpret_cast<TES3::LeveledItem*>(object));
 				break;
-			case TES3::ObjectType::Light:
+			case TES3::VirtualTableAddress::Light:
 				result = sol::make_object(state, reinterpret_cast<TES3::Light*>(object));
 				break;
-			case TES3::ObjectType::Lockpick:
+			case TES3::VirtualTableAddress::Lockpick:
 				result = sol::make_object(state, reinterpret_cast<TES3::Lockpick*>(object));
 				break;
-			case TES3::ObjectType::MagicEffect:
+			case TES3::VirtualTableAddress::MagicEffect:
 				result = sol::make_object(state, reinterpret_cast<TES3::MagicEffect*>(object));
 				break;
-			case TES3::ObjectType::Misc:
+			case TES3::VirtualTableAddress::Miscellaneous:
 				result = sol::make_object(state, reinterpret_cast<TES3::Misc*>(object));
 				break;
-			case TES3::ObjectType::NPC:
-			{
-				if (reinterpret_cast<TES3::Actor*>(object)->actorFlags & TES3::ActorFlagNPC::IsBase) {
-					result = sol::make_object(state, reinterpret_cast<TES3::NPC*>(object));
-				}
-				else {
-					result = sol::make_object(state, reinterpret_cast<TES3::NPCInstance*>(object));
-				}
-			}
-			break;
-			case TES3::ObjectType::Probe:
+			case TES3::VirtualTableAddress::NPCBase:
+				result = sol::make_object(state, reinterpret_cast<TES3::NPC*>(object));
+				break;
+			case TES3::VirtualTableAddress::NPCInstance:
+				result = sol::make_object(state, reinterpret_cast<TES3::NPCInstance*>(object));
+				break;
+			case TES3::VirtualTableAddress::Probe:
 				result = sol::make_object(state, reinterpret_cast<TES3::Probe*>(object));
 				break;
-			case TES3::ObjectType::Quest:
+			case TES3::VirtualTableAddress::Quest:
 				result = sol::make_object(state, reinterpret_cast<TES3::Quest*>(object));
 				break;
-			case TES3::ObjectType::Race:
+			case TES3::VirtualTableAddress::Race:
 				result = sol::make_object(state, reinterpret_cast<TES3::Race*>(object));
 				break;
-			case TES3::ObjectType::Reference:
+			case TES3::VirtualTableAddress::Reference:
 				result = sol::make_object(state, reinterpret_cast<TES3::Reference*>(object));
 				break;
-			case TES3::ObjectType::Region:
+			case TES3::VirtualTableAddress::Region:
 				result = sol::make_object(state, reinterpret_cast<TES3::Region*>(object));
 				break;
-			case TES3::ObjectType::Repair:
+			case TES3::VirtualTableAddress::RepairTool:
 				result = sol::make_object(state, reinterpret_cast<TES3::RepairTool*>(object));
 				break;
-			case TES3::ObjectType::Script:
+			case TES3::VirtualTableAddress::Script:
 				result = sol::make_object(state, reinterpret_cast<TES3::Script*>(object));
 				break;
-			case TES3::ObjectType::Skill:
+			case TES3::VirtualTableAddress::Skill:
 				result = sol::make_object(state, reinterpret_cast<TES3::Skill*>(object));
 				break;
-			case TES3::ObjectType::Sound:
+			case TES3::VirtualTableAddress::Sound:
 				result = sol::make_object(state, reinterpret_cast<TES3::Sound*>(object));
 				break;
-			case TES3::ObjectType::SoundGenerator:
+			case TES3::VirtualTableAddress::SoundGenerator:
 				result = sol::make_object(state, reinterpret_cast<TES3::SoundGenerator*>(object));
 				break;
-			case TES3::ObjectType::Spell:
+			case TES3::VirtualTableAddress::Spell:
 				result = sol::make_object(state, reinterpret_cast<TES3::Spell*>(object));
 				break;
-			case TES3::ObjectType::MagicSourceInstance:
+			case TES3::VirtualTableAddress::MagicSourceInstance:
 				result = sol::make_object(state, reinterpret_cast<TES3::MagicSourceInstance*>(object));
 				break;
-			case TES3::ObjectType::Static:
+			case TES3::VirtualTableAddress::Static:
 				result = sol::make_object(state, reinterpret_cast<TES3::Static*>(object));
 				break;
-			case TES3::ObjectType::Ammo:
-			case TES3::ObjectType::Weapon:
+			case TES3::VirtualTableAddress::Weapon:
 				result = sol::make_object(state, reinterpret_cast<TES3::Weapon*>(object));
 				break;
 			}
