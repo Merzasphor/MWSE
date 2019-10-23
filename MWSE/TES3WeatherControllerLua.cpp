@@ -2,6 +2,7 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "NIDirectionalLight.h"
 #include "NINode.h"
 #include "TES3Moon.h"
 #include "TES3Region.h"
@@ -41,6 +42,7 @@ namespace mwse {
 			usertypeDefinition.set("secunda", sol::readonly_property(&TES3::WeatherController::moonSecunda));
 			usertypeDefinition.set("lastActiveRegion", sol::readonly_property(&TES3::WeatherController::lastActiveRegion));
 			usertypeDefinition.set("sceneRainRoot", sol::readonly_property(&TES3::WeatherController::sgRainRoot));
+			usertypeDefinition.set("sceneSkyLight", sol::readonly_property(&TES3::WeatherController::sgSkyLight));
 			usertypeDefinition.set("sceneSkyRoot", sol::readonly_property(&TES3::WeatherController::sgSkyRoot));
 			usertypeDefinition.set("sceneSnowRoot", sol::readonly_property(&TES3::WeatherController::sgSnowRoot));
 			usertypeDefinition.set("sceneStormRoot", sol::readonly_property(&TES3::WeatherController::sgStormRoot));
