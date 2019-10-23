@@ -5,15 +5,18 @@
 namespace NI {
 	struct Object {
 		union {
-			Object_vTable * asObject;
 			AVObject_vTable * asAVObject;
 			DynamicEffect_vTable * asDynamicEffect;
+			Geometry_vTable * asGeometry;
+			GeometryData_vTable * asGeometryData;
 			Node_vTable * asNode;
+			Object_vTable * asObject;
 			Property_vTable * asProperty;
 			Renderer_vTable * asRenderer;
-			TriShape_vTable * asTriShape;
-			Texture_vTable * asTexture;
 			SourceTexture_vTable * asSourceTexture;
+			Texture_vTable * asTexture;
+			TriBasedGeometryData_vTable* asTriBasedGeometryData;
+			TriShape_vTable * asTriShape;
 		} vTable; // 0x0
 		int refCount; // 0x4
 

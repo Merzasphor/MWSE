@@ -25,11 +25,23 @@ namespace mwse {
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
-				usertypeDefinition.set(sol::base_classes, sol::bases<NI::AVObject, NI::ObjectNET, NI::Object>());
+				usertypeDefinition.set(sol::base_classes, sol::bases<NI::TriBasedGeometry, NI::Geometry, NI::AVObject, NI::ObjectNET, NI::Object>());
 				setUserdataForNIAVObject(usertypeDefinition);
 
 				// Basic property binding.
 				usertypeDefinition.set("data", sol::property(&NI::TriShape::getModelData, &NI::TriShape::setModelData));
+
+				// Get vertex list as a self-contained collection.
+				usertypeDefinition.set("vertices", sol::readonly_property(
+					[](NI::TriShape& self) {
+						auto data = self.getModelData();
+						std::vector<TES3::Vector3*> vertices;
+						for (unsigned short i = 0; i < data->vertexCount; i++) {
+							vertices.push_back(&data->vertex[i]);
+						}
+						return std::move(vertices);
+					}
+				));
 
 				// Finish up our usertype.
 				state.set_usertype("niTriShape", usertypeDefinition);

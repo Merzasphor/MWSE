@@ -5,10 +5,14 @@
 namespace NI {
 	struct AmbientLight;
 	struct AVObject;
+	struct Bound;
 	struct Camera;
 	struct Color;
+	struct ColorA;
 	struct DirectionalLight;
 	struct DynamicEffect;
+	struct Geometry;
+	struct GeometryData;
 	struct Light;
 	struct Node;
 	struct Object;
@@ -27,16 +31,22 @@ namespace NI {
 	struct Texture;
 	struct TimeController;
 	struct Transform;
+	struct TriBasedGeometry;
+	struct TriBasedGeometryData;
 	struct TriShape;
+	struct TriShapeData;
 
 	struct AVObject_vTable;
 	struct DynamicEffect_vTable;
+	struct Geometry_vTable;
+	struct GeometryData_vTable;
 	struct Node_vTable;
 	struct Object_vTable;
 	struct Property_vTable;
 	struct Renderer_vTable;
 	struct SourceTexture_vTable;
 	struct Texture_vTable;
+	struct TriBasedGeometryData_vTable;
 	struct TriShape_vTable;
 
 	namespace RTTIStaticPtr {

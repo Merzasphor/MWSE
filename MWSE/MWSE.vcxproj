@@ -115,10 +115,16 @@
     <ClInclude Include="LuaWeatherCycledEvent.h" />
     <ClInclude Include="LuaWeatherTransitionFinishedEvent.h" />
     <ClInclude Include="LuaWeatherTransitionStartedEvent.h" />
+    <ClInclude Include="NIBound.h" />
     <ClInclude Include="NIDX8Renderer.h" />
+    <ClInclude Include="NIGeometry.h" />
+    <ClInclude Include="NIGeometryData.h" />
     <ClInclude Include="NIRenderer.h" />
     <ClInclude Include="NITextureEffect.h" />
     <ClInclude Include="NITexturingProperty.h" />
+    <ClInclude Include="NiTriBasedGeometry.h" />
+    <ClInclude Include="NiTriBasedGeometryData.h" />
+    <ClInclude Include="NiTriShapeData.h" />
     <ClInclude Include="TES3MagicEffectController.h" />
     <ClInclude Include="MemoryUtilLua.h" />
     <ClInclude Include="NIAmbientLight.h" />
@@ -495,6 +501,9 @@
     <ClCompile Include="LuaWeatherCycledEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionFinishedEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionStartedEvent.cpp" />
+    <ClCompile Include="NIGeometry.cpp" />
+    <ClCompile Include="NIGeometryData.cpp" />
+    <ClCompile Include="NiTriBasedGeometryData.cpp" />
     <ClCompile Include="TES3MagicEffectController.cpp" />
     <ClCompile Include="MemoryUtil.cpp" />
     <ClCompile Include="MemoryUtilLua.cpp" />
@@ -525,7 +534,6 @@
     <ClCompile Include="NISwitchNodeLua.cpp" />
     <ClCompile Include="NITexture.cpp" />
     <ClCompile Include="NITimeControllerLua.cpp" />
-    <ClCompile Include="NITriShape.cpp" />
     <ClCompile Include="NITriShapeLua.cpp" />
     <ClCompile Include="NIUtil.cpp" />
     <ClCompile Include="PatchUtil.cpp" />
