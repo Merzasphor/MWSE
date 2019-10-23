@@ -11,6 +11,8 @@
 #include "NIRTTI.h"
 #include "NITriShape.h"
 
+#include <nonstd/span.hpp>
+
 namespace mwse {
 	namespace lua {
 		void bindNITriShape() {
@@ -35,11 +37,7 @@ namespace mwse {
 				usertypeDefinition.set("vertices", sol::readonly_property(
 					[](NI::TriShape& self) {
 						auto data = self.getModelData();
-						std::vector<TES3::Vector3*> vertices;
-						for (unsigned short i = 0; i < data->vertexCount; i++) {
-							vertices.push_back(&data->vertex[i]);
-						}
-						return std::move(vertices);
+						return nonstd::span(data->vertex, data->vertexCount);
 					}
 				));
 
