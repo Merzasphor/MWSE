@@ -1332,6 +1332,9 @@
     <ClInclude Include="NiTriShapeData.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
+    <ClInclude Include="LuaObjectInvalidatedEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2875,6 +2878,9 @@
     </ClCompile>
     <ClCompile Include="NIGeometry.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaObjectInvalidatedEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -73,6 +73,7 @@
 #include "LuaMouseButtonUpEvent.h"
 #include "LuaMouseWheelEvent.h"
 #include "LuaMusicSelectTrackEvent.h"
+#include "LuaObjectInvalidatedEvent.h"
 #include "LuaPickLockEvent.h"
 #include "LuaPotionBrewedEvent.h"
 #include "LuaProjectileExpireEvent.h"
@@ -182,6 +183,7 @@ namespace mwse {
 				usertypeDefinition.set("mouseButtonUp", sol::property(&MouseButtonUpEvent::getEventEnabled, &MouseButtonUpEvent::setEventEnabled));
 				usertypeDefinition.set("mouseWheel", sol::property(&MouseWheelEvent::getEventEnabled, &MouseWheelEvent::setEventEnabled));
 				usertypeDefinition.set("musicSelectTrack", sol::property(&MusicSelectTrackEvent::getEventEnabled, &MusicSelectTrackEvent::setEventEnabled));
+				usertypeDefinition.set("objectInvalidated", sol::property(&ObjectInvalidatedEvent::getEventEnabled, &ObjectInvalidatedEvent::setEventEnabled));
 				usertypeDefinition.set("potionBrewed", sol::property(&PotionBrewedEvent::getEventEnabled, &PotionBrewedEvent::setEventEnabled));
 				usertypeDefinition.set("projectileExpire", sol::property(&ProjectileExpireEvent::getEventEnabled, &ProjectileExpireEvent::setEventEnabled));
 				usertypeDefinition.set("projectileHitActor", sol::property(&MobileProjectileActorCollisionEvent::getEventEnabled, &MobileProjectileActorCollisionEvent::setEventEnabled));

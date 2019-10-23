@@ -183,6 +183,7 @@
 #include "LuaMouseButtonUpEvent.h"
 #include "LuaMouseWheelEvent.h"
 #include "LuaMusicSelectTrackEvent.h"
+#include "LuaObjectInvalidatedEvent.h"
 #include "LuaPotionBrewedEvent.h"
 #include "LuaProjectileExpireEvent.h"
 #include "LuaRestInterruptEvent.h"
@@ -3772,6 +3773,9 @@ namespace mwse {
 				// Clear any events that make use of this object.
 				UserdataMap::iterator it = userdataCache.find((unsigned long)object);
 				if (it != userdataCache.end()) {
+					// Let people know that this object is invalidated.
+					stateHandle.triggerEvent(new event::ObjectInvalidatedEvent(it->second));
+
 					// Clear any events that make use of this object.
 					event::clearObjectFilter(it->second);
 
@@ -3792,6 +3796,9 @@ namespace mwse {
 				// Clear any events that make use of this object.
 				UserdataMap::iterator it = userdataCache.find((unsigned long)object);
 				if (it != userdataCache.end()) {
+					// Let people know that this object is invalidated.
+					stateHandle.triggerEvent(new event::ObjectInvalidatedEvent(it->second));
+
 					// Clear any events that make use of this object.
 					event::clearObjectFilter(it->second);
 
