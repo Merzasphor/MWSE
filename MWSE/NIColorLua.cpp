@@ -18,7 +18,7 @@ namespace mwse {
 
 			// Start our usertype. We must finish this with state.set_usertype.
 			auto usertypeDefinition = state.create_simple_usertype<NI::Color>();
-			usertypeDefinition.set("new", sol::no_constructor);
+			usertypeDefinition.set("new", sol::constructors<NI::Color(), NI::Color(float, float, float)>());
 
 			// Operator overloading.
 			usertypeDefinition.set(sol::meta_function::addition, &NI::Color::operator+);
