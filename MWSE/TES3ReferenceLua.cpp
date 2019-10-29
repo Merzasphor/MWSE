@@ -70,6 +70,10 @@ namespace TES3 {
 namespace mwse {
 	namespace lua {
 		sol::object getContext(TES3::Reference& reference) {
+			if (reference.baseObject->getScript() == nullptr) {
+				return sol::nil;
+			}
+
 			auto& luaManager = mwse::lua::LuaManager::getInstance();
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
