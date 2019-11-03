@@ -46,6 +46,7 @@
 #include "TES3InputController.h"
 #include "TES3ItemData.h"
 #include "TES3LeveledList.h"
+#include "TES3Light.h"
 #include "TES3MagicEffectController.h"
 #include "TES3Misc.h"
 #include "TES3MobController.h"
@@ -2118,18 +2119,22 @@ namespace mwse {
 						mact->enterLeaveSimulation(true);
 					}
 				}
+				// Activators, containers, and statics need collision.
+				else if (object->objectType == TES3::ObjectType::Activator || object->objectType == TES3::ObjectType::Container || object->objectType == TES3::ObjectType::Static) {
+					dataHandler->updateCollisionGroupsForActiveCells();
+				}
 				// Lights need to be configured.
 				else if (object->objectType == TES3::ObjectType::Light) {
-					dataHandler->updateLightingForReference(reference);
 					dataHandler->setDynamicLightingForReference(reference);
 
-					// They also need collision.
-					dataHandler->updateCollisionGroupsForActiveCells();
+					// Non-carryable lights also need collision.
+					if (!static_cast<TES3::Light*>(object)->getCanCarry()) {
+						dataHandler->updateCollisionGroupsForActiveCells();
+					}
 				}
-				// For all other things, just reset collision.
-				else {
-					dataHandler->updateCollisionGroupsForActiveCells();
-				}
+
+				// Ensure the reference receives scene lighting.
+				dataHandler->updateLightingForReference(reference);
 
 				// Make sure everything is set as modified.
 				reference->setObjectModified(true);

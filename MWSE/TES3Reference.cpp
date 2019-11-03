@@ -21,6 +21,7 @@
 #include "TES3Game.h"
 #include "TES3GameSetting.h"
 #include "TES3ItemData.h"
+#include "TES3Light.h"
 #include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
 #include "TES3MobileProjectile.h"
@@ -226,18 +227,22 @@ namespace TES3 {
 			TES3::WorldController::get()->mobController->addMob(this);
 			getAttachedMobileActor()->enterLeaveSimulationByDistance();
 		}
-		// Update lights for objects.
+		// Activators, containers, and statics need collision.
+		else if (baseObject->objectType == TES3::ObjectType::Activator || baseObject->objectType == TES3::ObjectType::Container || baseObject->objectType == TES3::ObjectType::Static) {
+			dataHandler->updateCollisionGroupsForActiveCells();
+		}
+		// Lights need to be configured.
 		else if (baseObject->objectType == TES3::ObjectType::Light) {
-			dataHandler->updateLightingForReference(this);
 			dataHandler->setDynamicLightingForReference(this);
 
-			// Also update collision.
-			dataHandler->updateCollisionGroupsForActiveCells();
+			// Non-carryable lights also need collision.
+			if (!static_cast<TES3::Light*>(baseObject)->getCanCarry()) {
+				dataHandler->updateCollisionGroupsForActiveCells();
+			}
 		}
-		// Update collision for everything else.
-		else {
-			dataHandler->updateCollisionGroupsForActiveCells();
-		}
+
+		// Ensure the reference receives scene lighting.
+		dataHandler->updateLightingForReference(this);
 
 		// Finally flag as modified.
 		setObjectModified(true);
