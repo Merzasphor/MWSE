@@ -3146,6 +3146,34 @@ namespace mwse {
 				return false;
 			};
 
+			state["tes3"]["getEffectMagnitude"] = [](sol::table params) {
+				auto mact = getOptionalParamMobileActor(params, "mobile");
+				if (mact == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided. No mobile actor found.");
+				}
+
+				int effectId = getOptionalParam<int>(params, "effect", -1);
+				if (effectId >= TES3::EffectID::FirstEffect && effectId <= TES3::EffectID::LastEffect) {
+					return mact->effectAttributes[effectId];
+				} else if (!TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(effectId, TES3::EffectFlag::NoMagnitudeBit)) {
+					int magnitude = 0;
+					auto firstEffect = mact->activeMagicEffects.firstEffect;
+					auto itt = firstEffect->next;
+					while (itt != firstEffect) {
+						if (itt->magicEffectID == effectId) {
+							magnitude += itt->magnitudeMin;
+						}
+						itt = itt->next;
+					}
+					return magnitude;
+				}
+				else {
+					throw std::invalid_argument("Invalid 'effect' parameter provided.");
+				}
+
+				return 0;
+			};
+
 			state["tes3"]["addMagicEffect"] = [](sol::table params) {
 				auto magicEffectController = TES3::DataHandler::get()->nonDynamicData->magicEffects;
 
