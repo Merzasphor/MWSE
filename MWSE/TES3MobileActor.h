@@ -97,6 +97,14 @@ namespace TES3 {
 			unsigned short duration; // 0x14
 			unsigned short magnitudeMin; // 0x16
 			unsigned char skillOrAttributeID; // 0x18
+
+			//
+			// Custom functions.
+			//
+
+			MagicSourceInstance* getInstance();
+			int getMagnitude();
+
 		};
 		struct ActiveMagicEffects {
 			bool unknown_0x0;
