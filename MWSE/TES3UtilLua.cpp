@@ -3147,7 +3147,12 @@ namespace mwse {
 			};
 
 			state["tes3"]["getEffectMagnitude"] = [](sol::table params) {
-				auto mact = getOptionalParamMobileActor(params, "mobile");
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided.");
+				}
+
+				auto mact = reference->getAttachedMobileActor();
 				if (mact == nullptr) {
 					throw std::invalid_argument("Invalid 'reference' parameter provided. No mobile actor found.");
 				}
