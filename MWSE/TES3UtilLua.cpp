@@ -3153,9 +3153,7 @@ namespace mwse {
 				}
 
 				int effectId = getOptionalParam<int>(params, "effect", -1);
-				if (effectId >= TES3::EffectID::FirstEffect && effectId <= TES3::EffectID::LastEffect) {
-					return mact->effectAttributes[effectId];
-				} else if (!TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(effectId, TES3::EffectFlag::NoMagnitudeBit)) {
+				if (!TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(effectId, TES3::EffectFlag::NoMagnitudeBit)) {
 					int magnitude = 0;
 					auto firstEffect = mact->activeMagicEffects.firstEffect;
 					auto itt = firstEffect->next;
@@ -3166,9 +3164,6 @@ namespace mwse {
 						itt = itt->next;
 					}
 					return magnitude;
-				}
-				else {
-					throw std::invalid_argument("Invalid 'effect' parameter provided.");
 				}
 
 				return 0;
