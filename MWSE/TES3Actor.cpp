@@ -96,6 +96,7 @@ namespace TES3 {
 			if (player->actorFlags & MobileActorFlag::BodypartsChanged) {
 				player->reference->updateBipedParts();
 				player->firstPersonReference->updateBipedParts();
+				player->updateOpacity();
 				player->actorFlags &= ~MobileActorFlag::BodypartsChanged;
 			}
 

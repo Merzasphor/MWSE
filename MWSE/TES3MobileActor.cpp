@@ -16,6 +16,7 @@
 #include "LuaMobileObjectCollisionEvent.h"
 
 #include "TES3Actor.h"
+#include "TES3ActorAnimationData.h"
 #include "TES3AudioController.h"
 #include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
@@ -491,6 +492,12 @@ namespace TES3 {
 
 		TES3_MobileActor_wearItem(this, item, itemData, false, false);
 		return true;
+	}
+
+	void MobileActor::updateOpacity() {
+		if (animationData.asActor) {
+			animationData.asActor->updateOpacity();
+		}
 	}
 
 }

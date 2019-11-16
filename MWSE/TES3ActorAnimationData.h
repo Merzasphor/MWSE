@@ -1,8 +1,10 @@
 #pragma once
 
 #include "TES3Defines.h"
-
 #include "TES3Vectors.h"
+
+#include "NIPointer.h"
+#include "NIProperty.h"
 
 namespace TES3 {
 	struct ActorAnimationDataVirtualTable {
@@ -28,9 +30,9 @@ namespace TES3 {
 		float unknown_0x34;
 		MobileActor * mobileActor; // 0x38
 		int unknown_0x3C;
-		void * unknown_0x40; // NiPointer
-		void * unknown_0x44; // NiPointer
-		void * unknown_0x48; // NiPointer
+		NI::Pointer<NI::AlphaProperty> alphaProperty; // 0x40
+		NI::Pointer<NI::MaterialProperty> materialProperty; // 0x44
+		NI::Pointer<NI::VertexColorProperty> vertexColorProperty; // 0x48
 		Matrix33 unknown_0x4C;
 		Matrix33 unknown_0x70;
 		int unknown_0x94;
@@ -57,6 +59,16 @@ namespace TES3 {
 		//
 
 		float calculateMovementSpeed();
+
+		float getOpacity();
+		void setOpacity(float value);
+
+		//
+		// Custom functions.
+		//
+
+		// Fixes any transparency values.
+		void updateOpacity();
 	};
 	static_assert(sizeof(ActorAnimationData) == 0xD4, "TES3::ActorAnimationData failed size validation");
 }

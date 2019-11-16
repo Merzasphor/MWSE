@@ -2307,6 +2307,8 @@ namespace mwse {
 					if (mobile == playerMobile) {
 						playerMobile->firstPersonReference->updateBipedParts();
 					}
+
+					mobile->updateOpacity();
 				}
 
 				// If either of them are the player, we need to update the GUI.
@@ -2409,6 +2411,8 @@ namespace mwse {
 					if (mobile == playerMobile) {
 						playerMobile->firstPersonReference->updateBipedParts();
 					}
+
+					mobile->updateOpacity();
 				}
 
 				// If either of them are the player, we need to update the GUI.
@@ -2591,6 +2595,8 @@ namespace mwse {
 					if (fromMobile == playerMobile) {
 						playerMobile->firstPersonReference->updateBipedParts();
 					}
+
+					fromMobile->updateOpacity();
 				}
 
 				// If either of them are the player, we need to update the GUI.
