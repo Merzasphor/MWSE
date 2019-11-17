@@ -3170,7 +3170,7 @@ namespace mwse {
 					auto itt = firstEffect->next;
 					while (itt != firstEffect) {
 						if (itt->magicEffectID == effectId) {
-							magnitude += itt->getMagnitude();
+							magnitude += itt->magnitudeMin;
 						}
 						itt = itt->next;
 					}
