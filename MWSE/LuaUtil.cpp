@@ -55,6 +55,7 @@
 #include "TES3MobileNPC.h"
 #include "TES3MobilePlayer.h"
 #include "TES3MobileProjectile.h"
+#include "TES3MobileSpellProjectile.h"
 #include "TES3NPC.h"
 #include "TES3Probe.h"
 #include "TES3Quest.h"
@@ -512,8 +513,10 @@ namespace mwse {
 				result = sol::make_object(state, reinterpret_cast<TES3::MobilePlayer*>(object));
 				break;
 			case TES3_vTable_MobileProjectile:
-			case TES3_vTable_SpellProjectile:
 				result = sol::make_object(state, reinterpret_cast<TES3::MobileProjectile*>(object));
+				break;
+			case TES3_vTable_SpellProjectile:
+				result = sol::make_object(state, reinterpret_cast<TES3::MobileSpellProjectile*>(object));
 				break;
 			}
 
