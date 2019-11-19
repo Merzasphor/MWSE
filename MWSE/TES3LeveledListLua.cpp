@@ -19,7 +19,7 @@ namespace mwse {
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Basic property binding.
-				usertypeDefinition.set("levelRequired", sol::readonly_property(&TES3::LeveledListNode::levelRequirement));
+				usertypeDefinition.set("levelRequired", &TES3::LeveledListNode::levelRequirement);
 
 				// Access to other objects that need to be packaged.
 				usertypeDefinition.set("object", sol::readonly_property([](TES3::LeveledListNode& self) { return makeLuaObject(self.object); }));
