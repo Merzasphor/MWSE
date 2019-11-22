@@ -68,6 +68,13 @@ namespace TES3 {
 		const char * getSlotName();
 		int getWeightClass();
 
+		//
+		// Custom functions.
+		//
+
+		// Overwrite vtable call to actually do something.
+		void setDurability(int value);
+
 	};
 	static_assert(sizeof(Armor) == 0xC4, "TES3::Armor failed size validation");
 

@@ -41,4 +41,8 @@ namespace TES3{
 	bool Weapon::hasDurability() {
 		return weaponType <= TES3::WeaponType::Crossbow;
 	}
+
+	void Weapon::setDurability(int value) {
+		maxCondition = value;
+	}
 }
