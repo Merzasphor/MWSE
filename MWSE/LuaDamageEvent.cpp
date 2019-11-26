@@ -40,6 +40,14 @@ namespace mwse {
 
 				if (m_MagicSourceInstance) {
 					eventData["magicSourceInstance"] = m_MagicSourceInstance;
+
+					// Get the attacker as the caster of the spell.
+					if (!m_Attacker) {
+						eventData["attackerReference"] = makeLuaObject(m_MagicSourceInstance->caster);
+						if (m_MagicSourceInstance->caster) {
+							eventData["attacker"] = makeLuaObject(m_MagicSourceInstance->caster->getAttachedMobileActor());
+						}
+					}
 				}
 				if (m_MagicEffectInstance) {
 					eventData["magicEffectInstance"] = m_MagicEffectInstance;
