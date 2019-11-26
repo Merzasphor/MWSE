@@ -87,28 +87,17 @@ namespace mwse {
 			__delete(address);
 		}
 
-		typedef void* (__cdecl *ExternalRealloc)(void*, size_t);
-		extern ExternalRealloc _realloc;
 		void* realloc(void* address, size_t size);
 
-		typedef void* (__cdecl *ExternalMalloc)(size_t);
-		extern ExternalMalloc _malloc;
 		void* malloc(size_t size);
 
 		template <typename T>
-		T* malloc(size_t size) {
-			return reinterpret_cast<T*>(_malloc(size));
-		}
-
-		template <typename T>
 		T* malloc() {
-			T * ret = reinterpret_cast<T*>(_malloc(sizeof(T)));
+			T * ret = reinterpret_cast<T*>(malloc(sizeof(T)));
 			memset(ret, 0, sizeof(T));
 			return ret;
 		}
 
-		typedef void(__cdecl *ExternalFree)(void*);
-		extern ExternalFree _free;
 		void free(void* address);
 	}
 };

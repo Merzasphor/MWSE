@@ -36,11 +36,6 @@
 #include "TES3Game.h"
 
 TES3MACHINE* mge_virtual_machine = NULL;
-void* external_malloc = NULL;
-void* external_free = NULL;
-void* external_realloc = NULL;
-
-static BOOL CALLBACK EnumSymbolsCallback(PSYMBOL_INFO, ULONG, PVOID);
 
 struct VersionStruct {
 	BYTE major;
@@ -143,39 +138,6 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 		// Create MGE VM interface.
 		mge_virtual_machine = new TES3MACHINE();
 
-		// Find the addresses of malloc(), realloc(), free() that MW uses, so that we can interact with its heap.
-		process = GetCurrentProcess();
-		SymInitialize(process, NULL, TRUE);
-		SymEnumSymbols(process, 0, "msvcrt!*", EnumSymbolsCallback, NULL);
-		SymCleanup(process);
-
-		// Ensure that we got malloc.
-		if (external_malloc == NULL) {
-			mwse::log::getLog() << "Error: unable to find malloc()" << std::endl;
-			exit(1);
-		}
-		else {
-			mwse::tes3::_malloc = reinterpret_cast<mwse::tes3::ExternalMalloc>(external_malloc);
-		}
-
-		// Ensure that we got free.
-		if (external_free == NULL) {
-			mwse::log::getLog() << "Error: unable to find free()" << std::endl;
-			exit(1);
-		}
-		else {
-			mwse::tes3::_free = reinterpret_cast<mwse::tes3::ExternalFree>(external_free);
-		}
-
-		// Ensure that we got realloc.
-		if (external_realloc == NULL) {
-			mwse::log::getLog() << "Error: unable to find realloc()" << std::endl;
-			exit(1);
-		}
-		else {
-			mwse::tes3::_realloc = reinterpret_cast<mwse::tes3::ExternalRealloc>(external_realloc);
-		}
-
 		// Parse and load the features installed by the Morrowind Code Patch.
 		if (!mwse::mcp::loadFeatureList()) {
 			mwse::log::getLog() << "Failed to detect Morrowind Code Patch installed features. MCP may not be installed, or the mcpatch\\installed file may have been deleted. Mods will be unable to detect MCP feature support." << std::endl;
@@ -218,20 +180,4 @@ TES3MACHINE* MWSEGetVM()
 bool MWSEAddInstruction(OPCODE op, INSTRUCTION *ins)
 {
 	return mge_virtual_machine->AddInstruction(op, ins);
-}
-
-static BOOL CALLBACK EnumSymbolsCallback(PSYMBOL_INFO symbol_info,
-	ULONG /*symbol_size*/,
-	PVOID /*user_context*/)
-{
-	if (strcmp(symbol_info->Name, "malloc") == 0) {
-		external_malloc = reinterpret_cast<void*>(symbol_info->Address);
-	}
-	else if (strcmp(symbol_info->Name, "free") == 0) {
-		external_free = reinterpret_cast<void*>(symbol_info->Address);
-	}
-	else if (strcmp(symbol_info->Name, "realloc") == 0) {
-		external_realloc = reinterpret_cast<void*>(symbol_info->Address);
-	}
-	return TRUE;
 }
