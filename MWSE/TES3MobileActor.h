@@ -245,6 +245,10 @@ namespace TES3 {
 		// Always returns false for non-MACH.
 		bool persuade(int random, int persuasionIndex);
 
+		bool getIsWerewolf();
+		void setIsWerewolf(bool set);
+		void changeWerewolfState(bool isWerewolf);
+
 		//
 		// Custom functions.
 		//

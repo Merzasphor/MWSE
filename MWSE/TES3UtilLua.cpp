@@ -3384,6 +3384,62 @@ namespace mwse {
 
 				return hoursPassed;
 			};
+
+			state["tes3"]["beginTransform"] = [](sol::table params) {
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided.");
+				}
+
+				auto mact = reference->getAttachedMobileActor();
+				if (mact == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided. No mobile actor found.");
+				}
+
+				if (mact->getIsWerewolf()) {
+					return false;
+				}
+
+				if (mact->isDead()) {
+					return false;
+				}
+
+				mact->changeWerewolfState(true);
+				mact->setMobileActorFlag(TES3::MobileActorFlag::BodypartsChanged, false);
+
+				auto macp = TES3::WorldController::get()->getMobilePlayer();
+				if (mact == macp) {
+					// TODO
+				}
+			};
+
+			state["tes3"]["undoTransform"] = [](sol::table params) {
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided.");
+				}
+
+				auto mact = reference->getAttachedMobileActor();
+				if (mact == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided. No mobile actor found.");
+				}
+
+				if (!mact->getIsWerewolf()) {
+					return false;
+				}
+
+				if (mact->isDead()) {
+					return false;
+				}
+
+				mact->changeWerewolfState(false);
+				mact->setMobileActorFlag(TES3::MobileActorFlag::BodypartsChanged, true);
+
+				auto macp = TES3::WorldController::get()->getMobilePlayer();
+				if (mact == macp) {
+					// TODO
+				}
+			};
 		}
 	}
 }

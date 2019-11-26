@@ -376,6 +376,18 @@ namespace TES3 {
 		return TES3_MobileActor_persuade(this, random, persuasionIndex);
 	}
 
+	bool MobileActor::getIsWerewolf() {
+		return getMobileActorFlag(TES3::MobileActorFlag::Werewolf);
+	}
+
+	void MobileActor::setIsWerewolf(bool set) {
+		setMobileActorFlag(TES3::MobileActorFlag::Werewolf, set);
+	}
+	
+	void MobileActor::changeWerewolfState(bool isWerewolf) {
+		vTable.mobileActor->changeWerewolf(this, isWerewolf);
+	}
+
 	bool MobileActor::getMobileActorFlag(MobileActorFlag::Flag flag) {
 		return (actorFlags & flag) != 0;
 	}
