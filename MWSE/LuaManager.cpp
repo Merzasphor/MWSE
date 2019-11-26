@@ -597,7 +597,6 @@ namespace mwse {
 		// Hook: Enter Frame
 		//
 
-		TES3::Cell* lastCell = NULL;
 		bool lastMenuMode = true;
 		void __fastcall EnterFrame(TES3::WorldController* worldController, DWORD _UNUSED_) {
 			// Run the function before raising our event.
@@ -623,11 +622,11 @@ namespace mwse {
 
 			// Has our cell changed?
 			TES3::DataHandler * dataHandler = TES3::DataHandler::get();
-			if (dataHandler->cellChanged) {
+			if (dataHandler->currentCell != TES3::DataHandler::previousVisitedCell) {
 				if (event::CellChangedEvent::getEventEnabled()) {
-					luaManager.getThreadSafeStateHandle().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, lastCell));
+					luaManager.getThreadSafeStateHandle().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, TES3::DataHandler::previousVisitedCell));
 				}
-				lastCell = dataHandler->currentCell;
+				TES3::DataHandler::previousVisitedCell = dataHandler->currentCell;
 			}
 
 			// Send off our enterFrame event always.
@@ -770,38 +769,12 @@ namespace mwse {
 		bool __fastcall OnLoad(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName) {
 			// Call our wrapper for the function so that events are triggered.
 			TES3::LoadGameResult loaded = nonDynamicData->loadGame(fileName);
-
-			// Extra things we want to do if we're successfully loading.
-			if (loaded == TES3::LoadGameResult::Success) {
-				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
-
-				if (event::CellChangedEvent::getEventEnabled()) {
-					LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, NULL));
-				}
-
-				lastCell = dataHandler->currentCell;
-				TES3::UI::setSuppressingHelpMenu(false);
-			}
-
 			return loaded != TES3::LoadGameResult::Failure;
 		}
 
 		bool __fastcall OnLoadMainMenu(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName) {
 			// Call our wrapper for the function so that events are triggered.
 			TES3::LoadGameResult loaded = nonDynamicData->loadGameMainMenu(fileName);
-
-			// Fire off a cell changed event as well, and update the cached last cell.
-			if (loaded == TES3::LoadGameResult::Success) {
-				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
-
-				if (event::CellChangedEvent::getEventEnabled()) {
-					LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, NULL));
-				}
-
-				lastCell = dataHandler->currentCell;
-				TES3::UI::setSuppressingHelpMenu(false);
-			}
-
 			return loaded != TES3::LoadGameResult::Failure;
 		}
 
@@ -820,12 +793,8 @@ namespace mwse {
 			// Fire off the loaded/cellChanged events.
 			LuaManager& luaManager = LuaManager::getInstance();
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
-			lastCell = TES3::DataHandler::get()->currentCell;
 			if (event::LoadedGameEvent::getEventEnabled()) {
 				stateHandle.triggerEvent(new event::LoadedGameEvent(nullptr, false, true));
-			}
-			if (event::CellChangedEvent::getEventEnabled()) {
-				stateHandle.triggerEvent(new event::CellChangedEvent(lastCell, nullptr));
 			}
 		}
 

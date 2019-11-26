@@ -262,6 +262,12 @@ namespace TES3 {
 		int exteriorCellDataBufferSize; // 0xB550
 		void * exteriorCellDataBuffer; // 0xB554
 
+		//
+		// Custom static data.
+		//
+
+		static Cell* previousVisitedCell;
+
 		// Get singleton.
 		_declspec (dllexport) static DataHandler * get();
 

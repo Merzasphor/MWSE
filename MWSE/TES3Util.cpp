@@ -260,6 +260,7 @@ namespace mwse {
 			TES3_newGame();
 
 			// Clear any timers.
+			TES3::DataHandler::previousVisitedCell = nullptr;
 			luaManager.clearTimers();
 
 			// Call our post-load event.
