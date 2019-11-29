@@ -1489,7 +1489,6 @@ namespace mwse {
 		// Event: Activation Target Changed
 		//
 
-		static const auto global_TES3_Game = reinterpret_cast<TES3::Game**const>(0x7C6CDC);
 		static const uintptr_t MACP__getPlayerAnimData_fieldEC = 0x567990;
 		static TES3::Reference* previousTarget;
 
@@ -1503,7 +1502,7 @@ namespace mwse {
 		}
 
 		static void HookPostFindActivationTarget() {
-			TES3::Reference *currentTarget = (*global_TES3_Game)->playerTarget;
+			TES3::Reference *currentTarget = TES3::Game::get()->playerTarget;
 			if (previousTarget != currentTarget && event::ActivationTargetChangedEvent::getEventEnabled()) {
 				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::ActivationTargetChangedEvent(previousTarget, currentTarget));
 			}

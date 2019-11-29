@@ -1,9 +1,11 @@
 #pragma once
 
 #include "TES3Defines.h"
+#include "TES3Collections.h"
 
 #include "NIDefines.h"
 #include "NIPointer.h"
+#include "NIAmbientLight.h"
 
 #include <Windows.h>
 
@@ -74,7 +76,7 @@ namespace TES3 {
 		char unknown_0x5B;
 		HWND parentWindowHandle; // 0x5C
 		HWND windowHandle; // 0x60
-		void * sgNode1;
+		NI::Object* renderer; // 0x64
 		int unknown_0x68;
 		int unknown_0x6C;
 		int unknown_0x70;
@@ -88,19 +90,19 @@ namespace TES3 {
 		int unknown_0x8C;
 		int unknown_0x90;
 		int unknown_0x94;
-		void * unknown_0x98; // List?
+		Iterator<NI::ObjectNET>* unknown_0x98;
 		NI::Pointer<NI::Node> worldRoot; // 0x9C
-		int unknown_0xA0;
-		int unknown_0xA4;
-		int unknown_0xA8;
-		int unknown_0xAC;
+		NI::Pointer<NI::Node> worldObjectRoot; // 0xA0
+		NI::Pointer<NI::Node> worldPickObjectRoot; // 0xA4
+		NI::Pointer<NI::Node> worldLandscapeRoot; // 0xA8
+		NI::Pointer<NI::Node> debugRoot; // 0xAC
 		NI::Pointer<NI::Property> wireframeProperty; // 0xB0
-		int unknown_0xB4;
-		int unknown_0xB8;
-		int unknown_0xBC;
+		NI::Pointer<NI::AmbientLight> activationAmbientLight; // 0xB4
+		NI::Pointer<NI::Node> gridString; // 0xB8
+		NI::Pointer<NI::Node> collideString; // 0xBC
 		int unknown_0xC0;
 		int unknown_0xC4;
-		int unknown_0xC8;
+		NI::Pointer<NI::Node> textureString; // 0xC8
 		int unknown_0xCC;
 		void * unknown_0xD0[3]; // SG nodes?
 		int unknown_0xDC;
@@ -108,7 +110,7 @@ namespace TES3 {
 		int unknown_0xE4;
 		Reference * playerTarget; // 0xE8
 		int unknown_0xEC;
-		int unknown_0xF0;
+		NI::Pointer<NI::FogProperty> fogProperty; // 0xF0
 		int unknown_0xF4;
 		int unknown_0xF8;
 		int unknown_0xFC;
