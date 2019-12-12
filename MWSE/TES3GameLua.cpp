@@ -21,8 +21,14 @@ namespace mwse {
 			usertypeDefinition.set("new", sol::no_constructor);
 
 			// Basic property binding.
+			usertypeDefinition.set("activationAmbientLight", sol::readonly_property(&TES3::Game::activationAmbientLight));
+			usertypeDefinition.set("debugRoot", sol::readonly_property(&TES3::Game::debugRoot));
+			usertypeDefinition.set("fogProperty", sol::readonly_property(&TES3::Game::fogProperty));
 			usertypeDefinition.set("parentWindowHandle", sol::readonly_property(&TES3::Game::parentWindowHandle));
 			usertypeDefinition.set("renderDistance", &TES3::Game::renderDistance);
+			usertypeDefinition.set("sceneGraphCollideString", sol::readonly_property(&TES3::Game::collideString));
+			usertypeDefinition.set("sceneGraphGridString", sol::readonly_property(&TES3::Game::gridString));
+			usertypeDefinition.set("sceneGraphTextureString", sol::readonly_property(&TES3::Game::textureString));
 			usertypeDefinition.set("screenShotsEnabled", &TES3::Game::screenShotsEnabled);
 			usertypeDefinition.set("screenX", sol::readonly_property(&TES3::Game::screenX));
 			usertypeDefinition.set("screenY", sol::readonly_property(&TES3::Game::screenY));
@@ -34,6 +40,9 @@ namespace mwse {
 			usertypeDefinition.set("volumeVoice", &TES3::Game::volumeVoice);
 			usertypeDefinition.set("windowHandle", sol::readonly_property(&TES3::Game::windowHandle));
 			usertypeDefinition.set("wireframeProperty", sol::readonly_property(&TES3::Game::wireframeProperty));
+			usertypeDefinition.set("worldLandscapeRoot", sol::readonly_property(&TES3::Game::worldLandscapeRoot));
+			usertypeDefinition.set("worldObjectRoot", sol::readonly_property(&TES3::Game::worldObjectRoot));
+			usertypeDefinition.set("worldPickRoot", sol::readonly_property(&TES3::Game::worldPickObjectRoot));
 			usertypeDefinition.set("worldSceneGraphRoot", sol::readonly_property(&TES3::Game::worldRoot));
 
 			// Basic function binding.
