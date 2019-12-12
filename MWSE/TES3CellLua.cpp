@@ -6,66 +6,58 @@
 #include "TES3Cell.h"
 #include "TES3Region.h"
 
+#include <unordered_set>
 #include <Windows.h>
 
 namespace mwse {
 	namespace lua {
-		auto iterateReferencesFiltered(TES3::Cell* cell, unsigned int desiredType) {
-			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-
-			unsigned int currentList = 0;
-
+		auto iterateReferencesFiltered(const TES3::Cell& cell, const std::unordered_set<unsigned int> desiredTypes) {
 			// Prepare the lists we care about.
 			std::queue<TES3::Reference*> referenceListQueue;
-			if (cell->actors.size > 0) {
-				referenceListQueue.push(cell->actors.head);
+			if (cell.actors.size > 0) {
+				referenceListQueue.push(cell.actors.head);
 			}
-			if (cell->persistentRefs.size > 0) {
-				referenceListQueue.push(cell->persistentRefs.head);
+			if (cell.persistentRefs.size > 0) {
+				referenceListQueue.push(cell.persistentRefs.head);
 			}
-			if (cell->temporaryRefs.size > 0) {
-				referenceListQueue.push(cell->temporaryRefs.head);
+			if (cell.temporaryRefs.size > 0) {
+				referenceListQueue.push(cell.temporaryRefs.head);
 			}
 
 			// Get the first reference we care about.
-			TES3::Reference* reference = NULL;
+			TES3::Reference* reference = nullptr;
 			if (!referenceListQueue.empty()) {
 				reference = referenceListQueue.front();
 				referenceListQueue.pop();
 			}
 
-			return [cell, reference, referenceListQueue, desiredType]() mutable -> sol::object {
-				while (reference && desiredType != 0 && reference->baseObject->objectType != desiredType) {
+			return [cell, reference, referenceListQueue, desiredTypes]() mutable -> sol::object {
+				while (reference && !desiredTypes.empty() && !desiredTypes.count(reference->baseObject->objectType)) {
 					reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
 
 					// If we hit the end of the list, check for the next list.
-					if (reference == NULL && !referenceListQueue.empty()) {
+					if (reference == nullptr && !referenceListQueue.empty()) {
 						reference = referenceListQueue.front();
 						referenceListQueue.pop();
 					}
 				}
 
-				// If we didn't find an object, return nil.
-				if (reference == NULL) {
+				if (reference == nullptr) {
 					return sol::nil;
 				}
 
 				// Get the object we want to return.
 				sol::object ret = lua::makeLuaObject(reference);
 
-				// Get the next reference. If we're at the end of the list, go to the next one.
+				// Get the next reference. If we're at the end of the list, go to the next one
 				reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
-				if (reference == NULL && !referenceListQueue.empty()) {
+				if (reference == nullptr && !referenceListQueue.empty()) {
 					reference = referenceListQueue.front();
 					referenceListQueue.pop();
 				}
 
 				return ret;
 			};
-		}
-
-		auto iterateReferences(TES3::Cell* cell) {
-			return iterateReferencesFiltered(cell, 0);
 		}
 
 		void bindTES3Cell() {
@@ -191,7 +183,28 @@ namespace mwse {
 				));
 
 				// Basic function binding.
-				usertypeDefinition.set("iterateReferences", sol::overload(iterateReferences, iterateReferencesFiltered));
+				usertypeDefinition.set("iterateReferences", [](TES3::Cell& self, sol::optional<sol::object> param) {
+					std::unordered_set<unsigned int> filters;
+
+					if (param) {
+						if (param.value().is<unsigned int>()) {
+							filters.insert(param.value().as<unsigned int>());
+						}
+						else if (param.value().is<sol::table>()) {
+							sol::table filterTable = param.value().as<sol::table>();
+							for (const auto& kv : filterTable) {
+								if (kv.second.is<unsigned int>()) {
+									filters.insert(kv.second.as<unsigned int>());
+								}
+							}
+						}
+						else {
+							throw std::invalid_argument("Iteration can only be filtered by object type, a table of object types, or must not have any filter.");
+						}
+					}
+
+					return iterateReferencesFiltered(self, std::move(filters));
+				});
 
 				// Finish up our usertype.
 				state.set_usertype("tes3cell", usertypeDefinition);
