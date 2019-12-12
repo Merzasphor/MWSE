@@ -71,41 +71,57 @@
 
 #include "BitUtil.h"
 
+#include <unordered_set>
+
 namespace mwse {
 	namespace lua {
-		auto iterateObjectsFiltered(unsigned int desiredType) {
+		auto iterateObjects(const std::unordered_set<unsigned int> desiredTypes) {
 			auto ndd = TES3::DataHandler::get()->nonDynamicData;
 
-			TES3::Object * object = nullptr;
-			if (desiredType == TES3::ObjectType::Spell) {
-				object = ndd->spellsList->head;
+			// Prepare the lists we care about.
+			std::queue<TES3::Object*> objectListQueue;
+			bool searchingSpells = desiredTypes.count(TES3::ObjectType::Spell);
+			if (searchingSpells) {
+				objectListQueue.push(ndd->spellsList->head);
 			}
-			else {
-				object = ndd->list->head;
+			if (desiredTypes.size() != 1 || !searchingSpells) {
+				objectListQueue.push(ndd->list->head);
 			}
 
-			return [object, desiredType]() mutable -> sol::object {
-				while (object && desiredType != 0 && object->objectType != desiredType) {
-					object = object->nextInCollection;
+			// Get the first reference we care about.
+			TES3::Object* object = nullptr;
+			if (!objectListQueue.empty()) {
+				object = objectListQueue.front();
+				objectListQueue.pop();
+			}
+
+			return [object, objectListQueue, desiredTypes]() mutable -> sol::object {
+				while (object && !desiredTypes.empty() && !desiredTypes.count(object->objectType)) {
+					object = reinterpret_cast<TES3::Reference*>(object->nextInCollection);
+
+					// If we hit the end of the list, check for the next list.
+					if (object == nullptr && !objectListQueue.empty()) {
+						object = objectListQueue.front();
+						objectListQueue.pop();
+					}
 				}
 
-				auto ndd = TES3::DataHandler::get()->nonDynamicData;
-				if (desiredType == 0 && object == ndd->list->tail) {
-					object = ndd->spellsList->head;
-				}
-
-				if (object == NULL) {
+				if (object == nullptr) {
 					return sol::nil;
 				}
 
-				sol::object ret = makeLuaObject(object);
-				object = object->nextInCollection;
+				// Get the object we want to return.
+				sol::object ret = lua::makeLuaObject(object);
+
+				// Get the next reference. If we're at the end of the list, go to the next one
+				object = reinterpret_cast<TES3::Reference*>(object->nextInCollection);
+				if (object == nullptr && !objectListQueue.empty()) {
+					object = objectListQueue.front();
+					objectListQueue.pop();
+				}
+
 				return ret;
 			};
-		}
-
-		auto iterateObjects() {
-			return iterateObjectsFiltered(0);
 		}
 
 		void bindTES3Util() {
@@ -550,7 +566,28 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.iterateList
-			state["tes3"]["iterateObjects"] = sol::overload(&iterateObjects, &iterateObjectsFiltered);
+			state["tes3"]["iterateObjects"] = [](sol::optional<sol::object> filter) {
+				std::unordered_set<unsigned int> filters;
+
+				if (filter) {
+					if (filter.value().is<unsigned int>()) {
+						filters.insert(filter.value().as<unsigned int>());
+					}
+					else if (filter.value().is<sol::table>()) {
+						sol::table filterTable = filter.value().as<sol::table>();
+						for (const auto& kv : filterTable) {
+							if (kv.second.is<unsigned int>()) {
+								filters.insert(kv.second.as<unsigned int>());
+							}
+						}
+					}
+					else {
+						throw std::invalid_argument("Iteration can only be filtered by object type, a table of object types, or must not have any filter.");
+					}
+				}
+
+				return iterateObjects(std::move(filters));
+			};
 
 			// Bind function: tes3.getSound
 			state["tes3"]["getSound"] = [](const char* id) -> sol::object {
