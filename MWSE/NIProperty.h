@@ -124,4 +124,9 @@ namespace NI {
 		int lighting;
 	};
 	static_assert(sizeof(VertexColorProperty) == 0x20, "NI::VertexColorProperty failed size validation");
+
+	struct ZBufferProperty : Property {
+		unsigned int mask; // 0x18
+	};
+	static_assert(sizeof(ZBufferProperty) == 0x1C, "NI::ZBufferProperty failed size validation");
 }

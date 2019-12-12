@@ -110,7 +110,7 @@ namespace TES3 {
 		return vTable.object->getLevel(this);
 	}
 
-	signed char Object::setDispositionRaw(signed char value) {
+	void Object::setDispositionRaw(signed char value) {
 		return vTable.object->setDispositionRaw(this, value);
 	}
 
