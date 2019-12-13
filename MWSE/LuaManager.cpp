@@ -21,6 +21,7 @@
 #include "TES3Alchemy.h"
 #include "TES3Book.h"
 #include "TES3CombatSession.h"
+#include "TES3Container.h"
 #include "TES3Creature.h"
 #include "TES3CrimeEvent.h"
 #include "TES3DataHandler.h"
@@ -3596,7 +3597,6 @@ namespace mwse {
 			genCallEnforced(0x573E46, 0x497BC0, *reinterpret_cast<DWORD*>(&inventoryAddItemByReference));
 			genCallEnforced(0x5A64CD, 0x497BC0, *reinterpret_cast<DWORD*>(&inventoryAddItemByReference));
 
-
 			// Event: Calc Armor Piece Hit.
 			auto mobileNPCApplyArmorRating = &TES3::MobileNPC::applyArmorRating;
 			overrideVirtualTableEnforced(0x74AE6C, 0xE0, 0x54D820, *reinterpret_cast<DWORD*>(&mobileNPCApplyArmorRating)); // MACH
@@ -3605,6 +3605,16 @@ namespace mwse {
 			// Events: disarmTrap/pickLock
 			auto referenceAttemptUnlockDisarm = &TES3::Reference::attemptUnlockDisarm;
 			genCallEnforced(0x569A62, 0x4EB160, *reinterpret_cast<DWORD*>(&referenceAttemptUnlockDisarm));
+
+			// Event: containerClosed.
+			auto actorOnCloseInventory = &TES3::Actor::onCloseInventory;
+			auto containerOnCloseInventory = &TES3::ContainerInstance::onCloseInventory;
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::NPCBase, offsetof(TES3::ActorVirtualTable, onCloseInventory), 0x58D230, *reinterpret_cast<DWORD*>(&actorOnCloseInventory));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::NPCInstance, offsetof(TES3::ActorVirtualTable, onCloseInventory), 0x58D230, *reinterpret_cast<DWORD*>(&actorOnCloseInventory));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::CreatureBase, offsetof(TES3::ActorVirtualTable, onCloseInventory), 0x58D230, *reinterpret_cast<DWORD*>(&actorOnCloseInventory));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::CreatureInstance, offsetof(TES3::ActorVirtualTable, onCloseInventory), 0x58D230, *reinterpret_cast<DWORD*>(&actorOnCloseInventory));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::ContainerBase, offsetof(TES3::ActorVirtualTable, onCloseInventory), 0x58D230, *reinterpret_cast<DWORD*>(&actorOnCloseInventory));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::ContainerInstance, offsetof(TES3::ActorVirtualTable, onCloseInventory), 0x4A4460, *reinterpret_cast<DWORD*>(&containerOnCloseInventory));
 
 			// UI framework hooks
 			TES3::UI::hook();

@@ -8,6 +8,7 @@
 
 #include "LuaManager.h"
 
+#include "LuaContainerClosedEvent.h"
 #include "LuaEquippedEvent.h"
 #include "LuaUnequippedEvent.h"
 
@@ -39,8 +40,11 @@ namespace TES3 {
 		vTable.actor->clone(this, reference);
 	}
 
-	void Actor::onCloseInventory(Actor* actor, Reference* reference, int unknown) {
-		vTable.actor->onCloseInventory(actor, reference, unknown);
+	void Actor::onCloseInventory(Reference* reference, int unknown) {
+		// Trigger or queue our event.
+		if (mwse::lua::event::ContainerClosedEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ContainerClosedEvent(reference));
+		}
 	}
 
 	AIPackageConfig * Actor::getAIPackageConfig() {

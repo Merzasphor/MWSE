@@ -36,6 +36,7 @@ namespace TES3 {
 		// Base object helper functions.
 		//
 
+		void onCloseInventory(Reference* reference, int unknown = 0);
 		float getCapacity();
 		void setCapacity(float);
 

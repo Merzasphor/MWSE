@@ -1338,6 +1338,9 @@
     <ClInclude Include="TES3MobileSpellProjectile.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Actor\Mobile</Filter>
     </ClInclude>
+    <ClInclude Include="LuaContainerClosedEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2887,6 +2890,9 @@
     </ClCompile>
     <ClCompile Include="TES3MobileSpellProjectile.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaContainerClosedEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

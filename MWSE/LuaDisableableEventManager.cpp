@@ -25,6 +25,7 @@
 #include "LuaCombatStartedEvent.h"
 #include "LuaCombatStopEvent.h"
 #include "LuaCombatStoppedEvent.h"
+#include "LuaContainerClosedEvent.h"
 #include "LuaConvertReferenceToItemEvent.h"
 #include "LuaCrimeWitnessedEvent.h"
 #include "LuaDamageEvent.h"
@@ -142,6 +143,7 @@ namespace mwse {
 				usertypeDefinition.set("combatStarted", sol::property(&CombatStartedEvent::getEventEnabled, &CombatStartedEvent::setEventEnabled));
 				usertypeDefinition.set("combatStop", sol::property(&CombatStopEvent::getEventEnabled, &CombatStopEvent::setEventEnabled));
 				usertypeDefinition.set("combatStopped", sol::property(&CombatStoppedEvent::getEventEnabled, &CombatStoppedEvent::setEventEnabled));
+				usertypeDefinition.set("containerClosed", sol::property(&ContainerClosedEvent::getEventEnabled, &ContainerClosedEvent::setEventEnabled));
 				usertypeDefinition.set("convertReferenceToItem", sol::property(&ConvertReferenceToItemEvent::getEventEnabled, &ConvertReferenceToItemEvent::setEventEnabled));
 				usertypeDefinition.set("crimeWitnessed", sol::property(&CrimeWitnessedEvent::getEventEnabled, &CrimeWitnessedEvent::setEventEnabled));
 				usertypeDefinition.set("damage", sol::property(&DamageEvent::getEventEnabled, &DamageEvent::setEventEnabled));
