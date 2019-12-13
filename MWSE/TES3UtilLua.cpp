@@ -727,9 +727,6 @@ namespace mwse {
 					rayTestCache->clearResults();
 				}
 
-				// TODO: Allow specifying the root?
-				//rayTestCache->root = TES3::Game::get()->worldRoot;
-				
 				// Added ablity to use any node
 				// In Lua Script use "root = tes3.mobilePlayer.firstPersonReference.sceneNode"
 				// to have rayTest scan 1st person scene node
@@ -855,7 +852,7 @@ namespace mwse {
 					r->distance *= distanceScale;
 
 					// Skinned nodes only have usable scaled distance data.
-					if ((uintptr_t)r->object->getRunTimeTypeInformation() == NI::RTTIStaticPtr::NiTriShape) {
+					if (r->object->isInstanceOfType(NI::RTTIStaticPtr::NiTriShape)) {
 						auto node = static_cast<const NI::TriShape*>(r->object);
 						if (node->skinInstance) {
 							r->distance *= skinnedCorrection;
@@ -864,12 +861,10 @@ namespace mwse {
 						}
 					}
 				}
-				
-				// New Parameter: Ignore Skinned results.
+
+				// Parameter: Ignore Skinned results.
 				// Removes results of skinned objects
 				if (getOptionalParam<bool>(params, "ignoreSkinned", false)) {
-					int i2 = 0;
-
 					// We're now in multi-result mode. We'll store these in a table.
 					sol::table results = state.create_table();
 
@@ -877,27 +872,27 @@ namespace mwse {
 					// Skip any results that have a skinInstance
 					for (int i = 0; i < rayTestCache->results.filledCount; i++) {
 						auto r = rayTestCache->results.storage[i];
-						if ((uintptr_t)r->object->getRunTimeTypeInformation() == NI::RTTIStaticPtr::NiTriShape) {
+						if (r->object->isInstanceOfType(NI::RTTIStaticPtr::NiTriShape)) {
 							auto node = static_cast<const NI::TriShape*>(r->object);
 							if (!node->skinInstance) {
-								i2++;
-								results[i2] = rayTestCache->results.storage[i];
+								results.add(rayTestCache->results.storage[i]);
 							}
 						}
-						else
-						{
-							i2++;
-							results[i2] = rayTestCache->results.storage[i];
+						else {
+							results.add(rayTestCache->results.storage[i]);
 						}
 					}
-					//Return nothing if all results were skinned
-					if (i2 == 0){
+
+					// Return nothing if all results were skinned.
+					if (results.empty()) {
 						return sol::nil;
 					}
+
 					// Are we looking for a single result?
 					if (rayTestCache->pickType == NI::PickType::FIND_FIRST) {
 						return results[1];
 					}
+
 					return results;
 				}
 				else {
@@ -909,15 +904,14 @@ namespace mwse {
 
 					// We're now in multi-result mode. We'll store these in a table.
 					sol::table results = state.create_table();
-				
+
 					// Go through and clone the results in a way that will play nice.
 					for (int i = 0; i < rayTestCache->results.filledCount; i++) {
-						results[i + 1] = rayTestCache->results.storage[i];
+						results.add(rayTestCache->results.storage[i]);
 					}
-	
+
 					return results;
 				}
-
 			};
 
 			// Bind function: tes3.is3rdPerson
