@@ -26,6 +26,7 @@
 #include "TES3AIData.h"
 #include "TES3AIPackage.h"
 #include "TES3Alchemy.h"
+#include "TES3Archive.h"
 #include "TES3Armor.h"
 #include "TES3AudioController.h"
 #include "TES3Cell.h"
@@ -551,6 +552,18 @@ namespace mwse {
 				}
 
 				return mods;
+			};
+
+			state["tes3"]["getArchiveList"] = []() {
+				std::vector<std::string> archives;
+
+				TES3::Archive* archive = **reinterpret_cast<TES3::Archive***>(0x7C9F74);
+				while (archive) {
+					archives.insert(archives.begin(), std::string(archive->path, strnlen_s(archive->path, 128)));
+					archive = archive->nextArchive;
+				}
+
+				return archives;
 			};
 
 			// Bind function: tes3.playItemPickupSound

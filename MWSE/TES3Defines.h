@@ -20,6 +20,7 @@ namespace TES3 {
 	struct AnimationData;
 	struct AnimationGroup;
 	struct Apparatus;
+	struct Archive;
 	struct Armor;
 	struct ArmorSlotData;
 	struct Attachment;

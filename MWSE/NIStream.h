@@ -50,14 +50,11 @@ namespace NI {
 		int unknown_0xA4;
 		int unknown_0xA8;
 		int unknown_0xAC;
-		int unknown_0xB0;
-		int unknown_0xB4;
-		int unknown_0xB8;
 
 		Stream();
 		~Stream();
 
 		bool load(const char* file);
 	};
-	static_assert(sizeof(Stream) == 0xBC, "NI::Stream failed size validation");
+	static_assert(sizeof(Stream) == 0xB0, "NI::Stream failed size validation");
 }
