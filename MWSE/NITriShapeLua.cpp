@@ -41,6 +41,14 @@ namespace mwse {
 					}
 				));
 
+				// Get normal list as a self-contained collection.
+				usertypeDefinition.set("normals", sol::readonly_property(
+					[](NI::TriShape& self) {
+						auto data = self.getModelData();
+						return nonstd::span(data->normal, data->vertexCount);
+					}
+				));
+
 				// Finish up our usertype.
 				state.set_usertype("niTriShape", usertypeDefinition);
 			}
