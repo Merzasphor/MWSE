@@ -39,6 +39,11 @@ namespace TES3 {
 		return reinterpret_cast<int*>(0x79454C)[id];
 	}
 
+	void MagicEffect::setDescription( const char *value )
+	{
+		mwse::tes3::setDataString( &description, value );
+	}
+
 	MagicEffect * Effect::getEffectData() {
 		return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectObject(effectID);
 	}
