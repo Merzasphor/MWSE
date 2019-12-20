@@ -3542,10 +3542,7 @@ namespace mwse {
 				}
 
 				// Get the orientation.
-				sol::optional<TES3::Vector3> orientation = getOptionalParamVector3(params, "orientation");
-				if (!orientation) {
-					orientation = macp->reference->orientation;
-				}
+				float rotation = getOptionalParam<float>(params, "rotation", macp->reference->orientation.z);
 
 				// Get the cell.
 				TES3::Cell* cell = getOptionalParamCell(params, "cell");
@@ -3564,7 +3561,7 @@ namespace mwse {
 				}
 
 				macp->markLocation->position = position.value();
-				macp->markLocation->rotation = orientation.value().z;
+				macp->markLocation->rotation = rotation;
 				macp->markLocation->cell = cell;
 			};
 
