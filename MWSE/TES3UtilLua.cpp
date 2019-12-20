@@ -3569,6 +3569,7 @@ namespace mwse {
 				auto macp = TES3::WorldController::get()->getMobilePlayer();
 				if (macp->markLocation) {
 					tes3::_delete(macp->markLocation);
+					macp->markLocation = nullptr;
 				}
 			};
 		}
