@@ -109,7 +109,10 @@ namespace mwse {
 				usertypeDefinition.set("rotation", &TES3::MarkData::rotation);
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition.set("cell", sol::readonly_property([](TES3::MarkData& self) { return makeLuaObject(self.cell); }));
+				usertypeDefinition.set("cell", sol::property(
+					[](TES3::MarkData& self) { return makeLuaObject(self.cell); },
+					[](TES3::MarkData& self, sol::optional<TES3::Cell*> cell) { self.cell = cell.value_or(nullptr); }
+				));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3markData", usertypeDefinition);
