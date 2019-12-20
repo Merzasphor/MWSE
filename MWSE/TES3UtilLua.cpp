@@ -3498,6 +3498,8 @@ namespace mwse {
 				if (mact == macp) {
 					// TODO
 				}
+
+				return true;
 			};
 
 			state["tes3"]["undoTransform"] = [](sol::table params) {
@@ -3525,6 +3527,51 @@ namespace mwse {
 				auto macp = TES3::WorldController::get()->getMobilePlayer();
 				if (mact == macp) {
 					// TODO
+				}
+
+				return true;
+			};
+
+			state["tes3"]["setMarkLocation"] = [](sol::table params) {
+				auto macp = TES3::WorldController::get()->getMobilePlayer();
+
+				// Get the position.
+				sol::optional<TES3::Vector3> position = getOptionalParamVector3(params, "position");
+				if (!position) {
+					throw std::invalid_argument("Invalid 'position' parameter provided.");
+				}
+
+				// Get the orientation.
+				sol::optional<TES3::Vector3> orientation = getOptionalParamVector3(params, "orientation");
+				if (!orientation) {
+					orientation = macp->reference->orientation;
+				}
+
+				// Get the cell.
+				TES3::Cell* cell = getOptionalParamCell(params, "cell");
+				if (cell == nullptr) {
+					// Try to find an exterior cell from the position.
+					int gridX = TES3::Cell::toGridCoord(position.value().x);
+					int gridY = TES3::Cell::toGridCoord(position.value().y);
+					cell = TES3::DataHandler::get()->nonDynamicData->getCellByGrid(gridX, gridY);
+					if (cell == nullptr) {
+						throw std::invalid_argument("Invalid 'cell' parameter provided. Could not resolve cell by exterior position.");
+					}
+				}
+
+				if (macp->markLocation == nullptr) {
+					macp->markLocation = tes3::_new<TES3::MarkData>();
+				}
+
+				macp->markLocation->position = position.value();
+				macp->markLocation->rotation = orientation.value().z;
+				macp->markLocation->cell = cell;
+			};
+
+			state["tes3"]["clearMarkLocation"] = []() {
+				auto macp = TES3::WorldController::get()->getMobilePlayer();
+				if (macp->markLocation) {
+					tes3::_delete(macp->markLocation);
 				}
 			};
 		}
