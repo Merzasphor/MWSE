@@ -1890,11 +1890,19 @@ namespace mwse {
 
 		const auto TES3_ShowSkillRaisedNotification = reinterpret_cast<void(__cdecl*)(int, char*)>(0x629FC0);
 
-		void __cdecl OnSkillRaised(int skillId, char * buffer) {
+		void __cdecl OnSkillRaisedBook(int skillId, char* buffer) {
 			TES3_ShowSkillRaisedNotification(skillId, buffer);
-			
+
 			if (event::SkillRaisedEvent::getEventEnabled()) {
-				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SkillRaisedEvent(skillId, TES3::WorldController::get()->getMobilePlayer()->skills[skillId].base));
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SkillRaisedEvent(skillId, TES3::WorldController::get()->getMobilePlayer()->skills[skillId].base, "book"));
+			}
+		}
+
+		void __cdecl OnSkillRaisedProgress(int skillId, char* buffer) {
+			TES3_ShowSkillRaisedNotification(skillId, buffer);
+
+			if (event::SkillRaisedEvent::getEventEnabled()) {
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SkillRaisedEvent(skillId, TES3::WorldController::get()->getMobilePlayer()->skills[skillId].base, "progress"));
 			}
 		}
 
@@ -1915,7 +1923,7 @@ namespace mwse {
 			}
 
 			if (event::SkillRaisedEvent::getEventEnabled()) {
-				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SkillRaisedEvent(skillId, skill->base));
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SkillRaisedEvent(skillId, skill->base, "training"));
 			}
 		}
 
@@ -3316,8 +3324,8 @@ namespace mwse {
 			genCallEnforced(0x5591D6, 0x538F00, *reinterpret_cast<DWORD*>(&combatSessionDetermineAction));
 
 			// Event: Skill Raised.
-			genCallEnforced(0x4A28C6, 0x629FC0, reinterpret_cast<DWORD>(OnSkillRaised));
-			genCallEnforced(0x56BCF2, 0x629FC0, reinterpret_cast<DWORD>(OnSkillRaised));
+			genCallEnforced(0x4A28C6, 0x629FC0, reinterpret_cast<DWORD>(OnSkillRaisedBook));
+			genCallEnforced(0x56BCF2, 0x629FC0, reinterpret_cast<DWORD>(OnSkillRaisedProgress));
 			genCallEnforced(0x618355, 0x401060, reinterpret_cast<DWORD>(OnSkillTrained));
 
 			// Event: UI Refreshed.
