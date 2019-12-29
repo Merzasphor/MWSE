@@ -2301,6 +2301,19 @@ namespace mwse {
 				return false;
 			};
 
+			state[ "tes3" ][ "getMagicSourceInstanceBySerial" ] = []( sol::table params )
+			{
+				int serialNumber = getOptionalParam< double >( params, "serialNumber", -1 );
+
+				if( serialNumber <= -1 )
+					throw std::invalid_argument( "Invalid 'serialNumber' parameter provided." );
+
+				auto spellInstanceController = TES3::WorldController::get()->spellInstanceController;
+				auto magicSourceInstance = spellInstanceController->getInstanceFromSerial( serialNumber );
+
+				return makeLuaObject( magicSourceInstance );
+			};
+
 			state["tes3"]["showRepairServiceMenu"] = []() {
 				reinterpret_cast<int(__cdecl *)(TES3::MobileActor*)>(0x615160)(TES3::WorldController::get()->getMobilePlayer());
 				TES3::UI::enterMenuMode(TES3::UI::registerID("MenuServiceRepair"));
