@@ -7,8 +7,64 @@
 #include "TES3Script.h"
 #include "TES3SoulGemData.h"
 
+constexpr auto TES3_MiscItem_ctor = []()
+{
+	auto miscItem = mwse::tes3::malloc< TES3::Misc >();
+	reinterpret_cast< void( __thiscall * )( TES3::Misc * ) >( 0x4A6320 )( miscItem );
+	return miscItem;
+};
+
 namespace mwse {
 	namespace lua {
+		TES3::Misc* createMiscItem( sol::table params )
+		{
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			auto &state = stateHandle.state;
+
+			std::string id = getOptionalParam< std::string >( params, "id", {} );
+
+			if( id.empty() || id.size() > 31 )
+				return nullptr;
+
+			if( TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ) != nullptr )
+				return nullptr;
+
+			auto miscItem = TES3_MiscItem_ctor();
+
+			std::string name = getOptionalParam< std::string >( params, "name", "Miscellaneous item" );
+			if( name.size() > 31 )
+				return nullptr;
+
+			miscItem->setName( name.c_str() );
+
+			auto script = getOptionalParamScript( params, "script" );
+
+			if( script != nullptr )
+				miscItem->script = script;
+
+			auto mesh = getOptionalParam< std::string >( params, "mesh", {} );
+
+			if( !mesh.empty() && mesh.size() < 31 )
+				miscItem->setModelPath( mesh.c_str() );
+
+			std::string icon = getOptionalParam< std::string >( params, "icon", {} );
+
+			if( !icon.empty() && icon.size() < 31 )
+				tes3::setDataString( &miscItem->icon, icon.c_str() );
+
+			miscItem->objectFlags = getOptionalParam< double >( params, "objectFlags", 0.0 );
+			miscItem->weight = getOptionalParam< double >( params, "weight", 0.0 );
+			miscItem->value = getOptionalParam< double >( params, "value", 0.0 );
+			miscItem->flags = getOptionalParam< double >( params, "flags", 0.0 );
+
+			miscItem->objectFlags |= TES3::ObjectFlag::Modified;
+
+			if( !TES3::DataHandler::get()->nonDynamicData->addNewObject( miscItem ) )
+				return nullptr;
+
+			return miscItem;
+		}
+
 		void bindTES3Misc() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -87,6 +143,9 @@ namespace mwse {
 
 				// TODO: Deprecated. Remove before 2.1-stable.
 				usertypeDefinition.set("model", sol::property(&TES3::Misc::getModelPath, &TES3::Misc::setModelPath));
+
+				// utility function bindings
+				usertypeDefinition.set( "create", &createMiscItem );
 
 				// Finish up our usertype.
 				state.set_usertype("tes3misc", usertypeDefinition);

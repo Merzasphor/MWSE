@@ -5,8 +5,45 @@
 
 #include "TES3Static.h"
 
+constexpr auto TES3_Static_ctor = []()
+{
+	auto staticObject = mwse::tes3::malloc< TES3::Static >();
+	reinterpret_cast< void( __thiscall * )( TES3::Static * ) >( 0x4A72D0 )( staticObject );
+	return staticObject;
+};
+
 namespace mwse {
 	namespace lua {
+		TES3::Static * createStatic( sol::table params )
+		{
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			auto &state = stateHandle.state;
+
+			std::string id = getOptionalParam< std::string >( params, "id", {} );
+
+			if( id.empty() || id.size() > 31 )
+				return nullptr;
+
+			if( TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ) != nullptr )
+				return nullptr;
+
+			auto activator = TES3_Static_ctor();
+
+			auto model = getOptionalParam< std::string >( params, "model", {} );
+
+			if( !model.empty() && model.size() < 31 )
+				activator->setModelPath( model.c_str() );
+
+			activator->objectFlags = getOptionalParam< double >( params, "objectFlags", 0.0 );
+
+			activator->objectFlags |= TES3::ObjectFlag::Modified;
+
+			if( !TES3::DataHandler::get()->nonDynamicData->addNewObject( activator ) )
+				return nullptr;
+
+			return activator;
+		}
+
 		void bindTES3Static() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -25,6 +62,9 @@ namespace mwse {
 
 			// TODO: Deprecated. Remove before 2.1-stable.
 			usertypeDefinition.set("model", sol::property(&TES3::Static::getModelPath, &TES3::Static::setModelPath));
+
+			// utility function bindings
+			usertypeDefinition.set( "create", &createStatic );
 
 			// Finish up our usertype.
 			state.set_usertype("tes3static", usertypeDefinition);
