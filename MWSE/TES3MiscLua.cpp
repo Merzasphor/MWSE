@@ -16,25 +16,23 @@ constexpr auto TES3_MiscItem_ctor = []()
 
 namespace mwse {
 	namespace lua {
-		TES3::Misc* createMiscItem( sol::table params )
+		auto createMiscItem( sol::table params )
 		{
-			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-			auto &state = stateHandle.state;
-
 			std::string id = getOptionalParam< std::string >( params, "id", {} );
 
 			if( id.empty() || id.size() > 31 )
-				return nullptr;
+				throw std::invalid_argument( "tes3misc.create: 'id' parameter must be provided and less than 32 character long." );
 
 			if( TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ) != nullptr )
-				return nullptr;
-
-			auto miscItem = TES3_MiscItem_ctor();
+				throw std::invalid_argument( "tes3misc.create: 'id' parameter already assigned to an existing misc item." );
 
 			std::string name = getOptionalParam< std::string >( params, "name", "Miscellaneous item" );
 			if( name.size() > 31 )
-				return nullptr;
+				throw std::invalid_argument( "tes3misc.create: 'name' parameter must be less than 32 character long." );
 
+			auto miscItem = TES3_MiscItem_ctor();
+
+			miscItem->setID( id.c_str() );
 			miscItem->setName( name.c_str() );
 
 			auto script = getOptionalParamScript( params, "script" );
@@ -60,9 +58,9 @@ namespace mwse {
 			miscItem->objectFlags |= TES3::ObjectFlag::Modified;
 
 			if( !TES3::DataHandler::get()->nonDynamicData->addNewObject( miscItem ) )
-				return nullptr;
+				throw std::runtime_error( "tes3misc.create: could not add the newly created misc item in its proper collection." );
 
-			return miscItem;
+			return makeLuaObject( miscItem );
 		}
 
 		void bindTES3Misc() {

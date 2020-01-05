@@ -14,18 +14,15 @@ constexpr auto TES3_Static_ctor = []()
 
 namespace mwse {
 	namespace lua {
-		TES3::Static * createStatic( sol::table params )
+		auto createStatic( sol::table params )
 		{
-			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-			auto &state = stateHandle.state;
-
 			std::string id = getOptionalParam< std::string >( params, "id", {} );
 
 			if( id.empty() || id.size() > 31 )
-				return nullptr;
+				throw std::invalid_argument( "tes3static.create: 'id' parameter must be provided and less than 32 character long." );
 
 			if( TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ) != nullptr )
-				return nullptr;
+				throw std::invalid_argument( "tes3static.create: 'id' parameter already assigned to an existing static." );
 
 			auto staticObject = TES3_Static_ctor();
 
@@ -41,9 +38,9 @@ namespace mwse {
 			staticObject->objectFlags |= TES3::ObjectFlag::Modified;
 
 			if( !TES3::DataHandler::get()->nonDynamicData->addNewObject( staticObject ) )
-				return nullptr;
+				throw std::runtime_error( "tes3static.create: could not add the newly created static in its proper collection." );
 
-			return staticObject;
+			return makeLuaObject( staticObject );
 		}
 
 		void bindTES3Static() {

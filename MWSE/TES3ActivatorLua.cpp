@@ -16,27 +16,23 @@ constexpr auto TES3_Activator_ctor = []()
 
 namespace mwse {
 	namespace lua {
-		TES3::Activator * createActivator( sol::table params )
+		auto createActivator( sol::table params )
 		{
-			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-			auto &state = stateHandle.state;
-
 			std::string id = getOptionalParam< std::string >( params, "id", {} );
 
 			if( id.empty() || id.size() > 31 )
-				return nullptr;
+				throw std::invalid_argument( "tes3activator.create: 'id' parameter must be provided and less than 32 character long." );
 
 			if( TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ) != nullptr )
-				return nullptr;
+				throw std::invalid_argument( "tes3activator.create: 'id' parameter already assigned to an existing activator." );
+
+			std::string name = getOptionalParam< std::string >( params, "name", "Activator" );
+			if( name.size() > 31 )
+				throw std::invalid_argument( "tes3activator.create: 'name' parameter must be less than 32 character long." );
 
 			auto activator = TES3_Activator_ctor();
 
 			activator->setID( id.c_str() );
-
-			std::string name = getOptionalParam< std::string >( params, "name", "Activator" );
-			if( name.size() > 31 )
-				return nullptr;
-
 			activator->setName( name.c_str() );
 
 			auto script = getOptionalParamScript( params, "script" );
@@ -54,9 +50,9 @@ namespace mwse {
 			activator->objectFlags |= TES3::ObjectFlag::Modified;
 
 			if( !TES3::DataHandler::get()->nonDynamicData->addNewObject( activator ) )
-				return nullptr;
+				throw std::runtime_error( "tes3activator.create: could not add the newly created activator in its proper collection." );
 
-			return activator;
+			return makeLuaObject( activator );
 		}
 
 		void bindTES3Activator() {
