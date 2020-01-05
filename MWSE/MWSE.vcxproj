@@ -90,6 +90,7 @@
     <ClInclude Include="LuaMouseButtonUpEvent.h" />
     <ClInclude Include="LuaMouseWheelEvent.h" />
     <ClInclude Include="LuaMusicSelectTrackEvent.h" />
+    <ClInclude Include="LuaObject.h" />
     <ClInclude Include="LuaObjectFilteredEvent.h" />
     <ClInclude Include="LuaObjectInvalidatedEvent.h" />
     <ClInclude Include="LuaPickLockEvent.h" />
@@ -478,6 +479,7 @@
     <ClCompile Include="LuaMouseButtonUpEvent.cpp" />
     <ClCompile Include="LuaMouseWheelEvent.cpp" />
     <ClCompile Include="LuaMusicSelectTrackEvent.cpp" />
+    <ClCompile Include="LuaObject.cpp" />
     <ClCompile Include="LuaObjectFilteredEvent.cpp" />
     <ClCompile Include="LuaObjectInvalidatedEvent.cpp" />
     <ClCompile Include="LuaPickLockEvent.cpp" />

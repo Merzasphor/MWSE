@@ -6,55 +6,10 @@
 
 #include "TES3Activator.h"
 #include "TES3Script.h"
-
-constexpr auto TES3_Activator_ctor = []()
-{
-	auto activator = mwse::tes3::malloc< TES3::Activator >();
-	reinterpret_cast< void( __thiscall * )( TES3::Activator * ) >( 0x49F990 )( activator );
-	return activator;
-};
+#include "LuaObject.h"
 
 namespace mwse {
 	namespace lua {
-		auto createActivator( sol::table params )
-		{
-			std::string id = getOptionalParam< std::string >( params, "id", {} );
-
-			if( id.empty() || id.size() > 31 )
-				throw std::invalid_argument( "tes3activator.create: 'id' parameter must be provided and less than 32 character long." );
-
-			if( TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ) != nullptr )
-				throw std::invalid_argument( "tes3activator.create: 'id' parameter already assigned to an existing activator." );
-
-			std::string name = getOptionalParam< std::string >( params, "name", "Activator" );
-			if( name.size() > 31 )
-				throw std::invalid_argument( "tes3activator.create: 'name' parameter must be less than 32 character long." );
-
-			auto activator = TES3_Activator_ctor();
-
-			activator->setID( id.c_str() );
-			activator->setName( name.c_str() );
-
-			auto script = getOptionalParamScript( params, "script" );
-
-			if( script != nullptr )
-				activator->script = script;
-
-			auto mesh = getOptionalParam< std::string >( params, "mesh", {} );
-
-			if( !mesh.empty() && mesh.size() < 31 )
-				activator->setModelPath( mesh.c_str() );
-
-			activator->objectFlags = getOptionalParam< double >( params, "objectFlags", 0.0 );
-
-			activator->objectFlags |= TES3::ObjectFlag::Modified;
-
-			if( !TES3::DataHandler::get()->nonDynamicData->addNewObject( activator ) )
-				throw std::runtime_error( "tes3activator.create: could not add the newly created activator in its proper collection." );
-
-			return makeLuaObject( activator );
-		}
-
 		void bindTES3Activator() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();

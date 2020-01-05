@@ -4,45 +4,10 @@
 #include "TES3ObjectLua.h"
 
 #include "TES3Static.h"
-
-constexpr auto TES3_Static_ctor = []()
-{
-	auto staticObject = mwse::tes3::malloc< TES3::Static >();
-	reinterpret_cast< void( __thiscall * )( TES3::Static * ) >( 0x4A72D0 )( staticObject );
-	return staticObject;
-};
+#include "LuaObject.h"
 
 namespace mwse {
 	namespace lua {
-		auto createStatic( sol::table params )
-		{
-			std::string id = getOptionalParam< std::string >( params, "id", {} );
-
-			if( id.empty() || id.size() > 31 )
-				throw std::invalid_argument( "tes3static.create: 'id' parameter must be provided and less than 32 character long." );
-
-			if( TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ) != nullptr )
-				throw std::invalid_argument( "tes3static.create: 'id' parameter already assigned to an existing static." );
-
-			auto staticObject = TES3_Static_ctor();
-
-			staticObject->setID( id.c_str() );
-
-			auto mesh = getOptionalParam< std::string >( params, "mesh", {} );
-
-			if( !mesh.empty() && mesh.size() < 31 )
-				staticObject->setModelPath( mesh.c_str() );
-
-			staticObject->objectFlags = getOptionalParam< double >( params, "objectFlags", 0.0 );
-
-			staticObject->objectFlags |= TES3::ObjectFlag::Modified;
-
-			if( !TES3::DataHandler::get()->nonDynamicData->addNewObject( staticObject ) )
-				throw std::runtime_error( "tes3static.create: could not add the newly created static in its proper collection." );
-
-			return makeLuaObject( staticObject );
-		}
-
 		void bindTES3Static() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
