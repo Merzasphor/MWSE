@@ -27,21 +27,23 @@ namespace mwse {
 			if( TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ) != nullptr )
 				return nullptr;
 
-			auto activator = TES3_Static_ctor();
+			auto staticObject = TES3_Static_ctor();
 
-			auto model = getOptionalParam< std::string >( params, "model", {} );
+			staticObject->setID( id.c_str() );
 
-			if( !model.empty() && model.size() < 31 )
-				activator->setModelPath( model.c_str() );
+			auto mesh = getOptionalParam< std::string >( params, "mesh", {} );
 
-			activator->objectFlags = getOptionalParam< double >( params, "objectFlags", 0.0 );
+			if( !mesh.empty() && mesh.size() < 31 )
+				staticObject->setModelPath( mesh.c_str() );
 
-			activator->objectFlags |= TES3::ObjectFlag::Modified;
+			staticObject->objectFlags = getOptionalParam< double >( params, "objectFlags", 0.0 );
 
-			if( !TES3::DataHandler::get()->nonDynamicData->addNewObject( activator ) )
+			staticObject->objectFlags |= TES3::ObjectFlag::Modified;
+
+			if( !TES3::DataHandler::get()->nonDynamicData->addNewObject( staticObject ) )
 				return nullptr;
 
-			return activator;
+			return staticObject;
 		}
 
 		void bindTES3Static() {

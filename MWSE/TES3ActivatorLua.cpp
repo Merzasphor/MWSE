@@ -31,6 +31,8 @@ namespace mwse {
 
 			auto activator = TES3_Activator_ctor();
 
+			activator->setID( id.c_str() );
+
 			std::string name = getOptionalParam< std::string >( params, "name", "Activator" );
 			if( name.size() > 31 )
 				return nullptr;
@@ -42,10 +44,10 @@ namespace mwse {
 			if( script != nullptr )
 				activator->script = script;
 
-			auto model = getOptionalParam< std::string >( params, "model", {} );
+			auto mesh = getOptionalParam< std::string >( params, "mesh", {} );
 
-			if( !model.empty() && model.size() < 31 )
-				activator->setModelPath( model.c_str() );
+			if( !mesh.empty() && mesh.size() < 31 )
+				activator->setModelPath( mesh.c_str() );
 
 			activator->objectFlags = getOptionalParam< double >( params, "objectFlags", 0.0 );
 
