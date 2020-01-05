@@ -17,7 +17,7 @@ ObjectCreatorBase *ObjectCreatorFactory::getObjectCreator( TES3::ObjectType::Obj
 		objectCreator_.reset( new ObjectCreator< TES3::Activator >() );
 		break;
 	default:
-		objectCreator_.reset( new ObjectCreator<> );
+		objectCreator_.reset( new InvalidObjectCreator() );
 		break;
 	}
 

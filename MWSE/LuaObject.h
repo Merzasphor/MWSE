@@ -30,24 +30,22 @@ protected:
 	}
 };
 
-template< typename ObjectType = void >
+template< typename ObjectType >
 class ObjectCreator : public ObjectCreatorBase
 {
 public:
-	using ObjectCreatorBase::ObjectCreatorBase;
-
 	sol::object create( sol::table, bool ) const override
 	{
 		throw std::runtime_error{ "Cannot create an object of that type." };
 	}
 };
 
+using InvalidObjectCreator = ObjectCreator< void >;
+
 template<>
 class ObjectCreator< TES3::Activator > : public ObjectCreatorBase
 {
 public:
-	using ObjectCreatorBase::ObjectCreatorBase;
-
 	sol::object create( sol::table params, bool getIfExists ) const override
 	{
 		std::string id = getOptionalParam< std::string >( params, "id", {} );
@@ -96,8 +94,6 @@ template<>
 class ObjectCreator< TES3::Misc > : public ObjectCreatorBase
 {
 public:
-	using ObjectCreatorBase::ObjectCreatorBase;
-
 	sol::object create( sol::table params, bool getIfExists ) const override
 	{
 		std::string id = getOptionalParam< std::string >( params, "id", {} );
@@ -153,8 +149,6 @@ template<>
 class ObjectCreator< TES3::Static > : public ObjectCreatorBase
 {
 public:
-	using ObjectCreatorBase::ObjectCreatorBase;
-
 	sol::object create( sol::table params, bool getIfExists ) const override
 	{
 		std::string id = getOptionalParam< std::string >( params, "id", {} );
@@ -191,7 +185,6 @@ private:
 class ObjectCreatorFactory
 {
 public:
-
 	ObjectCreatorBase *getObjectCreator( TES3::ObjectType::ObjectType objectType );
 
 private:
