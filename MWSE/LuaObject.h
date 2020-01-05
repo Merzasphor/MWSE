@@ -15,7 +15,7 @@ namespace mwse::lua
 class ObjectCreatorBase
 {
 public:
-	virtual sol::object create( sol::table params ) const = 0;
+	virtual sol::object create( sol::table, bool ) const = 0;
 
 protected:
 	template< typename ObjectType >
@@ -36,7 +36,7 @@ class ObjectCreator : public ObjectCreatorBase
 public:
 	using ObjectCreatorBase::ObjectCreatorBase;
 
-	sol::object create( sol::table ) const override
+	sol::object create( sol::table, bool ) const override
 	{
 		throw std::runtime_error{ "Cannot create an object of that type." };
 	}
@@ -48,15 +48,16 @@ class ObjectCreator< TES3::Activator > : public ObjectCreatorBase
 public:
 	using ObjectCreatorBase::ObjectCreatorBase;
 
-	sol::object create( sol::table params ) const override
+	sol::object create( sol::table params, bool getIfExists ) const override
 	{
 		std::string id = getOptionalParam< std::string >( params, "id", {} );
 
 		if( id.empty() || id.size() > 31 )
 			throw std::invalid_argument( "tes3activator.create: 'id' parameter must be provided and less than 32 character long." );
 
-		if( TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ) != nullptr )
-			throw std::invalid_argument( "tes3activator.create: 'id' parameter already assigned to an existing activator." );
+
+		if( auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ); existingObject != nullptr )
+			return getIfExists ? makeLuaObject( existingObject ) : throw std::invalid_argument( "tes3activator.create: 'id' parameter already assigned to an existing activator." );
 
 		std::string name = getOptionalParam< std::string >( params, "name", "Activator" );
 		if( name.size() > 31 )
@@ -97,15 +98,15 @@ class ObjectCreator< TES3::Misc > : public ObjectCreatorBase
 public:
 	using ObjectCreatorBase::ObjectCreatorBase;
 
-	sol::object create( sol::table params ) const override
+	sol::object create( sol::table params, bool getIfExists ) const override
 	{
 		std::string id = getOptionalParam< std::string >( params, "id", {} );
 
 		if( id.empty() || id.size() > 31 )
 			throw std::invalid_argument( "tes3misc.create: 'id' parameter must be provided and less than 32 character long." );
 
-		if( TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ) != nullptr )
-			throw std::invalid_argument( "tes3misc.create: 'id' parameter already assigned to an existing misc item." );
+		if( auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ); existingObject != nullptr )
+			return getIfExists ? makeLuaObject( existingObject ) : throw std::invalid_argument( "tes3misc.create: 'id' parameter already assigned to an existing misc item." );
 
 		std::string name = getOptionalParam< std::string >( params, "name", "Miscellaneous item" );
 		if( name.size() > 31 )
@@ -154,15 +155,15 @@ class ObjectCreator< TES3::Static > : public ObjectCreatorBase
 public:
 	using ObjectCreatorBase::ObjectCreatorBase;
 
-	sol::object create( sol::table params ) const override
+	sol::object create( sol::table params, bool getIfExists ) const override
 	{
 		std::string id = getOptionalParam< std::string >( params, "id", {} );
 
 		if( id.empty() || id.size() > 31 )
 			throw std::invalid_argument( "tes3static.create: 'id' parameter must be provided and less than 32 character long." );
 
-		if( TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ) != nullptr )
-			throw std::invalid_argument( "tes3static.create: 'id' parameter already assigned to an existing static." );
+		if( auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ); existingObject != nullptr )
+			return getIfExists ? makeLuaObject( existingObject ) : throw std::invalid_argument( "tes3static.create: 'id' parameter already assigned to an existing static." );
 
 		auto staticObject = constructObjectFromConstructorAddress< TES3::Static >( TES3_Static_ctor );
 

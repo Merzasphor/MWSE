@@ -12,7 +12,7 @@ namespace mwse {
 	namespace lua {
 		auto createActivator( sol::table params )
 		{
-			return ObjectCreatorFactory{}.getObjectCreator( TES3::ObjectType::Activator )->create( params );
+			return ObjectCreatorFactory{}.getObjectCreator( TES3::ObjectType::Activator )->create( params, false );
 		}
 
 		void bindTES3Activator() {
