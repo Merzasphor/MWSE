@@ -10,6 +10,11 @@
 
 namespace mwse {
 	namespace lua {
+		auto createMiscItem( sol::table params )
+		{
+			return ObjectCreatorFactory{}.getObjectCreator( TES3::ObjectType::Misc )->create( params );
+		}
+		
 		void bindTES3Misc() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();

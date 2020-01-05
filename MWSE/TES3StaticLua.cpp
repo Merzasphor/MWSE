@@ -8,6 +8,11 @@
 
 namespace mwse {
 	namespace lua {
+		auto createStatic( sol::table params )
+		{
+			return ObjectCreatorFactory{}.getObjectCreator( TES3::ObjectType::Static )->create( params );
+		}
+		
 		void bindTES3Static() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();

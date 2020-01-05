@@ -10,6 +10,11 @@
 
 namespace mwse {
 	namespace lua {
+		auto createActivator( sol::table params )
+		{
+			return ObjectCreatorFactory{}.getObjectCreator( TES3::ObjectType::Activator )->create( params );
+		}
+
 		void bindTES3Activator() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
