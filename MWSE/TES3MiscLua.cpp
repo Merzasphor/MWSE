@@ -12,7 +12,7 @@ namespace mwse {
 	namespace lua {
 		auto createMiscItem( sol::table params )
 		{
-			return ObjectCreatorFactory{}.getObjectCreator( TES3::ObjectType::Misc )->create( params, false );
+			return makeObjectCreator( TES3::ObjectType::Misc )->create( params, false );
 		}
 		
 		void bindTES3Misc() {

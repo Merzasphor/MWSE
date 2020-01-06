@@ -2238,7 +2238,7 @@ namespace mwse {
 
 				bool getIfExists = getOptionalParam( params, "getIfExists", true );
 
-				return ObjectCreatorFactory{}.getObjectCreator( objectType )->create( params, getIfExists );
+				return makeObjectCreator( objectType )->create( params, getIfExists );
 			};
 
 			state["tes3"]["setDestination"] = [](sol::table params) {

@@ -3,25 +3,19 @@
 namespace mwse::lua
 {
 
-ObjectCreatorBase *ObjectCreatorFactory::getObjectCreator( TES3::ObjectType::ObjectType objectType )
+std::unique_ptr< ObjectCreatorBase > makeObjectCreator( TES3::ObjectType::ObjectType objectType )
 {
 	switch( objectType )
 	{
 	case TES3::ObjectType::Activator:
-		objectCreator_.reset( new ObjectCreator< TES3::Activator >() );
-		break;
+		return std::make_unique< ObjectCreator< TES3::Activator > >();
 	case TES3::ObjectType::Misc:
-		objectCreator_.reset( new ObjectCreator< TES3::Activator >() );
-		break;
+		return std::make_unique< ObjectCreator< TES3::Misc > >();
 	case TES3::ObjectType::Static:
-		objectCreator_.reset( new ObjectCreator< TES3::Activator >() );
-		break;
+		return std::make_unique< ObjectCreator< TES3::Static > >();
 	default:
-		objectCreator_.reset( new InvalidObjectCreator() );
-		break;
+		return std::make_unique< InvalidObjectCreator >();
 	}
-
-	return objectCreator_.get();
 }
 
 }

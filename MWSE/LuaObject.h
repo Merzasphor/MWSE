@@ -16,18 +16,6 @@ class ObjectCreatorBase
 {
 public:
 	virtual sol::object create( sol::table, bool ) const = 0;
-
-protected:
-	template< typename ObjectType >
-	static auto constructObjectFromConstructorAddress( int ctorAddress )
-	{
-		auto instance = mwse::tes3::malloc< ObjectType >();
-
-		auto ctor = reinterpret_cast< void( __thiscall * )( ObjectType * ) >( ctorAddress );
-		ctor( instance );
-
-		return instance;
-	}
 };
 
 template< typename ObjectType >
@@ -61,7 +49,7 @@ public:
 		if( name.size() > 31 )
 			throw std::invalid_argument( "tes3activator.create: 'name' parameter must be less than 32 character long." );
 
-		auto activator = constructObjectFromConstructorAddress< TES3::Activator >( TES3_Activator_ctor );
+		auto activator = new TES3::Activator();
 
 		activator->setID( id.c_str() );
 		activator->setName( name.c_str() );
@@ -108,7 +96,7 @@ public:
 		if( name.size() > 31 )
 			throw std::invalid_argument( "tes3misc.create: 'name' parameter must be less than 32 character long." );
 
-		auto miscItem = constructObjectFromConstructorAddress< TES3::Misc >( TES3_MiscItem_ctor );
+		auto miscItem = new TES3::Misc();
 
 		miscItem->setID( id.c_str() );
 		miscItem->setName( name.c_str() );
@@ -159,7 +147,7 @@ public:
 		if( auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ); existingObject != nullptr )
 			return getIfExists ? makeLuaObject( existingObject ) : throw std::invalid_argument( "tes3static.create: 'id' parameter already assigned to an existing static." );
 
-		auto staticObject = constructObjectFromConstructorAddress< TES3::Static >( TES3_Static_ctor );
+		auto staticObject = new TES3::Static();
 
 		staticObject->setID( id.c_str() );
 
@@ -182,13 +170,6 @@ private:
 	static constexpr auto TES3_Static_ctor = 0x4A72D0;
 };
 
-class ObjectCreatorFactory
-{
-public:
-	ObjectCreatorBase *getObjectCreator( TES3::ObjectType::ObjectType objectType );
-
-private:
-	std::unique_ptr< ObjectCreatorBase > objectCreator_;
-};
+std::unique_ptr< ObjectCreatorBase > makeObjectCreator( TES3::ObjectType::ObjectType objectType );
 
 }
