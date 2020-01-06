@@ -90,6 +90,7 @@
     <ClInclude Include="LuaMouseButtonUpEvent.h" />
     <ClInclude Include="LuaMouseWheelEvent.h" />
     <ClInclude Include="LuaMusicSelectTrackEvent.h" />
+    <ClInclude Include="LuaObject.h" />
     <ClInclude Include="LuaObjectFilteredEvent.h" />
     <ClInclude Include="LuaObjectInvalidatedEvent.h" />
     <ClInclude Include="LuaPickLockEvent.h" />
@@ -478,6 +479,7 @@
     <ClCompile Include="LuaMouseButtonUpEvent.cpp" />
     <ClCompile Include="LuaMouseWheelEvent.cpp" />
     <ClCompile Include="LuaMusicSelectTrackEvent.cpp" />
+    <ClCompile Include="LuaObject.cpp" />
     <ClCompile Include="LuaObjectFilteredEvent.cpp" />
     <ClCompile Include="LuaObjectInvalidatedEvent.cpp" />
     <ClCompile Include="LuaPickLockEvent.cpp" />
@@ -510,6 +512,7 @@
     <ClCompile Include="NIGeometry.cpp" />
     <ClCompile Include="NIGeometryData.cpp" />
     <ClCompile Include="NiTriBasedGeometryData.cpp" />
+    <ClCompile Include="TES3Activator.cpp" />
     <ClCompile Include="TES3MagicEffectController.cpp" />
     <ClCompile Include="MemoryUtil.cpp" />
     <ClCompile Include="MemoryUtilLua.cpp" />
@@ -579,6 +582,7 @@
     <ClCompile Include="TES3Skill.cpp" />
     <ClCompile Include="TES3SoundGenerator.cpp" />
     <ClCompile Include="TES3SpellInstanceController.cpp" />
+    <ClCompile Include="TES3Static.cpp" />
     <ClCompile Include="TES3StdString.cpp" />
     <ClCompile Include="TES3AttachmentLua.cpp" />
     <ClCompile Include="TES3CrimeEvent.cpp" />

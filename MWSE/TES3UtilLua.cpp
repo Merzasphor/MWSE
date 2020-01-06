@@ -13,6 +13,7 @@
 #include "Log.h"
 #include "ScriptUtil.h"
 #include "CodePatchUtil.h"
+#include "LuaObject.h"
 
 #include "NICamera.h"
 #include "NINode.h"
@@ -2229,6 +2230,15 @@ namespace mwse {
 				cell->setObjectModified(true);
 
 				return makeLuaObject(reference);
+			};
+
+			state[ "tes3" ][ "createObject" ] = []( sol::table params )
+			{
+				TES3::ObjectType::ObjectType objectType = getOptionalParam( params, "objectType", TES3::ObjectType::Invalid );
+
+				bool getIfExists = getOptionalParam( params, "getIfExists", true );
+
+				return makeObjectCreator( objectType )->create( params, getIfExists );
 			};
 
 			state["tes3"]["setDestination"] = [](sol::table params) {
