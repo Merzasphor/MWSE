@@ -4,9 +4,15 @@
 #include "TES3ObjectLua.h"
 
 #include "TES3Enchantment.h"
+#include "LuaObject.h"
 
 namespace mwse {
 	namespace lua {
+		auto createEnchantment( sol::table params )
+		{
+			return makeObjectCreator( TES3::ObjectType::Enchantment )->create( params, false );
+		}
+
 		void bindTES3Enchantment() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -32,6 +38,9 @@ namespace mwse {
 
 			// Indirect bindings to unions and arrays.
 			usertypeDefinition.set("effects", sol::readonly_property([](TES3::Enchantment& self) { return std::ref(self.effects); }));
+
+			// utility function bindings
+			usertypeDefinition.set( "create", &createEnchantment );
 
 			// Finish up our usertype.
 			state.set_usertype("tes3enchantment", usertypeDefinition);

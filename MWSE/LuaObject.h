@@ -8,6 +8,7 @@
 #include "TES3Activator.h"
 #include "TES3Misc.h"
 #include "TES3Static.h"
+#include "TES3Enchantment.h"
 
 namespace mwse::lua
 {
@@ -24,7 +25,7 @@ class ObjectCreator : public ObjectCreatorBase
 public:
 	sol::object create( sol::table, bool ) const override
 	{
-		throw std::runtime_error{ "Cannot create an object of that type." };
+		throw std::runtime_error{ "tes3.createObject: Cannot create an object of that type." };
 	}
 };
 
@@ -38,16 +39,17 @@ public:
 	{
 		std::string id = getOptionalParam< std::string >( params, "id", {} );
 
-		if( id.empty() || id.size() > 31 )
-			throw std::invalid_argument( "tes3activator.create: 'id' parameter must be provided and less than 32 character long." );
-
+		if( id.size() > 31 )
+			throw std::invalid_argument{ "tes3activator.create: 'id' parameter must be less than 32 character long." };
 
 		if( auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ); existingObject != nullptr )
-			return getIfExists ? makeLuaObject( existingObject ) : throw std::invalid_argument( "tes3activator.create: 'id' parameter already assigned to an existing activator." );
+			return ( getIfExists && ( existingObject->objectType == TES3::ObjectType::Activator ) ) ?
+			makeLuaObject( existingObject ) :
+			throw std::invalid_argument{ "tes3activator.create: 'id' parameter already assigned to an existing object that is not an activator." };
 
 		std::string name = getOptionalParam< std::string >( params, "name", "Activator" );
 		if( name.size() > 31 )
-			throw std::invalid_argument( "tes3activator.create: 'name' parameter must be less than 32 character long." );
+			throw std::invalid_argument{ "tes3activator.create: 'name' parameter must be less than 32 character long." };
 
 		auto activator = new TES3::Activator();
 
@@ -73,9 +75,6 @@ public:
 
 		return makeLuaObject( activator );
 	}
-
-private:
-	static constexpr auto TES3_Activator_ctor = 0x49F990;
 };
 
 template<>
@@ -86,15 +85,17 @@ public:
 	{
 		std::string id = getOptionalParam< std::string >( params, "id", {} );
 
-		if( id.empty() || id.size() > 31 )
-			throw std::invalid_argument( "tes3misc.create: 'id' parameter must be provided and less than 32 character long." );
+		if( id.size() > 31 )
+			throw std::invalid_argument{ "tes3misc.create: 'id' parameter must be less than 32 character long." };
 
 		if( auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ); existingObject != nullptr )
-			return getIfExists ? makeLuaObject( existingObject ) : throw std::invalid_argument( "tes3misc.create: 'id' parameter already assigned to an existing misc item." );
+			return ( getIfExists && existingObject->objectType == TES3::ObjectType::Misc ) ?
+			makeLuaObject( existingObject ) :
+			throw std::invalid_argument{ "tes3misc.create: 'id' parameter already assigned to an existing object that is not a misc item." };
 
 		std::string name = getOptionalParam< std::string >( params, "name", "Miscellaneous item" );
 		if( name.size() > 31 )
-			throw std::invalid_argument( "tes3misc.create: 'name' parameter must be less than 32 character long." );
+			throw std::invalid_argument{ "tes3misc.create: 'name' parameter must be less than 32 character long." };
 
 		auto miscItem = new TES3::Misc();
 
@@ -128,9 +129,6 @@ public:
 
 		return makeLuaObject( miscItem );
 	}
-
-private:
-	static constexpr auto TES3_MiscItem_ctor = 0x4A6320;
 };
 
 template<>
@@ -141,11 +139,13 @@ public:
 	{
 		std::string id = getOptionalParam< std::string >( params, "id", {} );
 
-		if( id.empty() || id.size() > 31 )
-			throw std::invalid_argument( "tes3static.create: 'id' parameter must be provided and less than 32 character long." );
+		if( id.size() > 31 )
+			throw std::invalid_argument{ "tes3static.create: 'id' parameter must be less than 32 character long." };
 
 		if( auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ); existingObject != nullptr )
-			return getIfExists ? makeLuaObject( existingObject ) : throw std::invalid_argument( "tes3static.create: 'id' parameter already assigned to an existing static." );
+			return ( getIfExists && existingObject->objectType == TES3::ObjectType::Static ) ?
+			makeLuaObject( existingObject ) :
+			throw std::invalid_argument{ "tes3static.create: 'id' parameter already assigned to an existing object that is not a static." };
 
 		auto staticObject = new TES3::Static();
 
@@ -165,9 +165,51 @@ public:
 
 		return makeLuaObject( staticObject );
 	}
+};
 
-private:
-	static constexpr auto TES3_Static_ctor = 0x4A72D0;
+template<>
+class ObjectCreator< TES3::Enchantment > : public ObjectCreatorBase
+{
+public:
+	sol::object create( sol::table params, bool getIfExists ) const override
+	{
+		std::string id = getOptionalParam< std::string >( params, "id", {} );
+
+		if( id.size() > 31 )
+			throw std::invalid_argument{ "tes3enchantment.create: 'id' parameter must be less than 32 character long." };
+
+		if( auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ); existingObject != nullptr )
+			return ( getIfExists && existingObject->objectType == TES3::ObjectType::Enchantment ) ?
+			makeLuaObject( existingObject ) :
+			throw std::invalid_argument{ "tes3enchantment.create: 'id' parameter already assigned to an existing object that is not an enchantment." };
+
+		auto castType = getOptionalParam( params, "castType", TES3::EnchantmentCastType::Invalid );
+		if( castType >= TES3::EnchantmentCastType::Invalid )
+			throw std::invalid_argument{ "tes3enchantment.create: 'castType' parameter as an incorrect value. Use values in tes3.enchantmentType" };
+
+		unsigned short chargeCost = getOptionalParam< double >( params, "chargeCost", 0.0 );
+		if( chargeCost == 0 )
+			throw std::invalid_argument{ "tes3enchantment.create: 'chargeCost' parameter must be greater than 0." };
+
+		unsigned short maxCharge = getOptionalParam< double >( params, "maxCharge", 0.0 );
+		if( maxCharge == 0 )
+			throw std::invalid_argument{ "tes3enchantment.create: 'maxCharge' parameter must be greater than 0." };
+
+		auto enchantment = new TES3::Enchantment();
+
+		enchantment->setID( id.c_str() );
+		enchantment->castType = castType;
+		enchantment->chargeCost = chargeCost;
+		enchantment->maxCharge = maxCharge;
+		enchantment->flags = getOptionalParam< double >( params, "flags", 0.0 );
+		enchantment->objectFlags = getOptionalParam< double >( params, "objectFlags", 0.0 );
+		enchantment->objectFlags |= TES3::ObjectFlag::Modified;
+
+		if( !TES3::DataHandler::get()->nonDynamicData->addNewObject( enchantment ) )
+			throw std::runtime_error( "tes3enchantment.create: could not add the newly created enchantment in its proper collection." );
+
+		return makeLuaObject( enchantment );
+	}
 };
 
 std::unique_ptr< ObjectCreatorBase > makeObjectCreator( TES3::ObjectType::ObjectType objectType );
