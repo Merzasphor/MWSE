@@ -24,12 +24,8 @@ namespace mwse {
 				setUserdataForBaseObject(usertypeDefinition);
 
 				// Basic property binding.
-				usertypeDefinition.set("areaVisualEffect", &TES3::MagicEffect::areaEffect);
 				usertypeDefinition.set("baseMagickaCost", &TES3::MagicEffect::baseMagickaCost);
-				usertypeDefinition.set("boltVisualEffect", &TES3::MagicEffect::boltEffect);
-				usertypeDefinition.set("castVisualEffect", &TES3::MagicEffect::castEffect);
 				usertypeDefinition.set("flags", &TES3::MagicEffect::flags);
-				usertypeDefinition.set("hitVisualEffect", &TES3::MagicEffect::hitEffect);
 				usertypeDefinition.set("id", sol::readonly_property(&TES3::MagicEffect::id));
 				usertypeDefinition.set("lightingBlue", &TES3::MagicEffect::lightingBlue);
 				usertypeDefinition.set("lightingGreen", &TES3::MagicEffect::lightingGreen);
@@ -121,9 +117,25 @@ namespace mwse {
 					[]( TES3::MagicEffect &self ) { return self.description; },
 					[]( TES3::MagicEffect &self, sol::optional< const char * >value ) { self.setDescription( value.value_or( nullptr ) ); } ) );
 				usertypeDefinition.set("areaSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return self.areaSoundEffect; }));
+				usertypeDefinition.set("areaVisualEffect", sol::property(
+					[](TES3::MagicEffect& self) { return makeLuaObject(self.areaEffect); },
+					[](TES3::MagicEffect& self, TES3::PhysicalObject* value) { self.areaEffect = value; }
+				));
 				usertypeDefinition.set("boltSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return self.boltSoundEffect; }));
+				usertypeDefinition.set("boltVisualEffect", sol::property(
+					[](TES3::MagicEffect& self) { return makeLuaObject(self.boltEffect); },
+					[](TES3::MagicEffect& self, TES3::PhysicalObject* value) { self.boltEffect = value; }
+				));
 				usertypeDefinition.set("castSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return self.castSoundEffect; }));
+				usertypeDefinition.set("castVisualEffect", sol::property(
+					[](TES3::MagicEffect& self) { return makeLuaObject(self.castEffect); },
+					[](TES3::MagicEffect& self, TES3::PhysicalObject* value) { self.castEffect = value; }
+				));
 				usertypeDefinition.set("hitSoundEffect", sol::readonly_property([](TES3::MagicEffect& self) { return self.hitSoundEffect; }));
+				usertypeDefinition.set("hitVisualEffect", sol::property(
+					[](TES3::MagicEffect& self) { return makeLuaObject(self.hitEffect); },
+					[](TES3::MagicEffect& self, TES3::PhysicalObject* value) { self.hitEffect = value; }
+					));
 				usertypeDefinition.set("icon", sol::property(
 					[](TES3::MagicEffect& self) { return self.icon; },
 					[](TES3::MagicEffect& self, const char* value) { if (strlen(value) < 32) strcpy(self.icon, value); }
