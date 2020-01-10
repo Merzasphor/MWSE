@@ -13,6 +13,8 @@ std::unique_ptr< ObjectCreatorBase > makeObjectCreator( TES3::ObjectType::Object
 		return std::make_unique< ObjectCreator< TES3::Misc > >();
 	case TES3::ObjectType::Static:
 		return std::make_unique< ObjectCreator< TES3::Static > >();
+	case TES3::ObjectType::Enchantment:
+		return std::make_unique< ObjectCreator< TES3::Enchantment> >();
 	default:
 		return std::make_unique< InvalidObjectCreator >();
 	}

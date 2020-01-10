@@ -10,17 +10,14 @@ namespace TES3 {
 		Once,
 		OnStrike,
 		OnUse,
-		Constant
+		Constant,
+		Invalid
 	};
 
-	namespace EnchantmentFlags {
-		typedef unsigned int value_type;
-
-		enum Flag : value_type {
-		};
-	}
-
 	struct Enchantment : Object {
+		Enchantment();
+		~Enchantment();
+
 		char * objectID; // 0x28
 		EnchantmentCastType castType; // 0x2C
 		unsigned short chargeCost; // 0x2E
