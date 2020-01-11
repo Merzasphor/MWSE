@@ -51,20 +51,20 @@ public:
 		if( name.size() > 31 )
 			throw std::invalid_argument{ "tes3activator.create: 'name' parameter must be less than 32 character long." };
 
+		auto mesh = getOptionalParam< std::string >( params, "mesh", {} );
+		if( mesh.size() > 31 )
+			throw std::invalid_argument{ "tes3activator.create: 'mesh' parameter must be less than 32 character long." };
+
 		auto activator = new TES3::Activator();
 
 		activator->setID( id.c_str() );
 		activator->setName( name.c_str() );
+		activator->setModelPath( mesh.c_str() );
 
 		auto script = getOptionalParamScript( params, "script" );
 
 		if( script != nullptr )
 			activator->script = script;
-
-		auto mesh = getOptionalParam< std::string >( params, "mesh", {} );
-
-		if( !mesh.empty() && mesh.size() < 31 )
-			activator->setModelPath( mesh.c_str() );
 
 		activator->objectFlags = getOptionalParam< double >( params, "objectFlags", 0.0 );
 
@@ -97,20 +97,20 @@ public:
 		if( name.size() > 31 )
 			throw std::invalid_argument{ "tes3misc.create: 'name' parameter must be less than 32 character long." };
 
+		std::string mesh = getOptionalParam< std::string >( params, "mesh", {} );
+		if( mesh.size() > 31 )
+			throw std::invalid_argument{ "tes3misc.create: 'mesh' parameter must be less than 32 character long." };
+
 		auto miscItem = new TES3::Misc();
 
 		miscItem->setID( id.c_str() );
 		miscItem->setName( name.c_str() );
+		miscItem->setModelPath( mesh.c_str() );
 
 		auto script = getOptionalParamScript( params, "script" );
 
 		if( script != nullptr )
 			miscItem->script = script;
-
-		auto mesh = getOptionalParam< std::string >( params, "mesh", {} );
-
-		if( !mesh.empty() && mesh.size() < 31 )
-			miscItem->setModelPath( mesh.c_str() );
 
 		std::string icon = getOptionalParam< std::string >( params, "icon", {} );
 
@@ -147,14 +147,14 @@ public:
 			makeLuaObject( existingObject ) :
 			throw std::invalid_argument{ "tes3static.create: 'id' parameter already assigned to an existing object that is not a static." };
 
+		std::string mesh = getOptionalParam< std::string >( params, "mesh", {} );
+		if( mesh.size() > 31 )
+			throw std::invalid_argument{ "tes3static.create: 'mesh' parameter must be less than 32 character long." };
+
 		auto staticObject = new TES3::Static();
 
 		staticObject->setID( id.c_str() );
-
-		auto mesh = getOptionalParam< std::string >( params, "mesh", {} );
-
-		if( !mesh.empty() && mesh.size() < 31 )
-			staticObject->setModelPath( mesh.c_str() );
+		staticObject->setModelPath( mesh.c_str() );
 
 		staticObject->objectFlags = getOptionalParam< double >( params, "objectFlags", 0.0 );
 
