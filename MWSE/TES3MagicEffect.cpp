@@ -44,6 +44,54 @@ namespace TES3 {
 		mwse::tes3::setDataString( &description, value );
 	}
 
+	const char* MagicEffect::getIcon() {
+		return icon;
+	}
+
+	void MagicEffect::setIcon(const char* path) {
+		strcpy_s(icon, sizeof(icon), path);
+	}
+
+	const char* MagicEffect::getParticleTexture() {
+		return particleTexture;
+	}
+
+	void MagicEffect::setParticleTexture(const char* path) {
+		strcpy_s(particleTexture, sizeof(particleTexture), path);
+	}
+
+	const char* MagicEffect::getCastSoundEffect() {
+		return castSoundEffect;
+	}
+
+	void MagicEffect::setCastSoundEffect(const char* path) {
+		strcpy_s(castSoundEffect, sizeof(castSoundEffect), path);
+	}
+
+	const char* MagicEffect::getBoltSoundEffect() {
+		return boltSoundEffect;
+	}
+
+	void MagicEffect::setBoltSoundEffect(const char* path) {
+		strcpy_s(boltSoundEffect, sizeof(boltSoundEffect), path);
+	}
+
+	const char* MagicEffect::getHitSoundEffect() {
+		return hitSoundEffect;
+	}
+
+	void MagicEffect::setHitSoundEffect(const char* path) {
+		strcpy_s(hitSoundEffect, sizeof(hitSoundEffect), path);
+	}
+
+	const char* MagicEffect::getAreaSoundEffect() {
+		return areaSoundEffect;
+	}
+
+	void MagicEffect::setAreaSoundEffect(const char* path) {
+		strcpy_s(areaSoundEffect, sizeof(areaSoundEffect), path);
+	}
+
 	MagicEffect * Effect::getEffectData() {
 		return TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectObject(effectID);
 	}

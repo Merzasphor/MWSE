@@ -264,6 +264,20 @@ namespace TES3 {
 		int getNameGMST();
 		void setDescription( const char *value );
 
+		const char* getIcon();
+		void setIcon(const char* path);
+
+		const char* getParticleTexture();
+		void setParticleTexture(const char* path);
+		const char* getCastSoundEffect();
+		void setCastSoundEffect(const char* path);
+		const char* getBoltSoundEffect();
+		void setBoltSoundEffect(const char* path);
+		const char* getHitSoundEffect();
+		void setHitSoundEffect(const char* path);
+		const char* getAreaSoundEffect();
+		void setAreaSoundEffect(const char* path);
+
 	};
 	static_assert(sizeof(MagicEffect) == 0x0110, "TES3::EffectID:: failed size validation");
 
