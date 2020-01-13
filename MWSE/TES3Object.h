@@ -316,6 +316,14 @@ namespace TES3 {
 
 		Iterator<BaseObject> * getStolenList();
 
+		//
+		// Other related this-call functions.
+		//
+
+		void addStolenFlag(BaseObject* stolenFrom);
+		void removeStolenFlag(BaseObject* stolenFrom);
+		bool getStolenFlag(BaseObject* stolenFrom);
+
 	};
 	static_assert(sizeof(PhysicalObject) == 0x30, "TES3::PhysicalObject failed size validation");
 }

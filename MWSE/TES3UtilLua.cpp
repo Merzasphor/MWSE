@@ -3595,6 +3595,45 @@ namespace mwse {
 					macp->markLocation = nullptr;
 				}
 			};
+
+			state["tes3"]["getItemIsStolen"] = [](sol::table params) {
+				auto item = getOptionalParamObject<TES3::Item>(params, "item");
+				auto from = getOptionalParamObject<TES3::BaseObject>(params, "from");
+
+				if (item == nullptr) {
+					throw std::invalid_argument("Invalid 'item' parameter provided.");
+				}
+				else if (from == nullptr) {
+					throw std::invalid_argument("Invalid 'from' parameter provided.");
+				}
+				else if (item->getStolenList() == nullptr) {
+					throw std::invalid_argument("Invalid 'item' parameter provided. Does not support a stolen list.");
+				}
+
+				return item->getStolenFlag(from);
+			};
+
+			state["tes3"]["setItemIsStolen"] = [](sol::table params) {
+				auto item = getOptionalParamObject<TES3::Item>(params, "item");
+				auto from = getOptionalParamObject<TES3::BaseObject>(params, "from");
+
+				if (item == nullptr) {
+					throw std::invalid_argument("Invalid 'item' parameter provided.");
+				}
+				else if (from == nullptr) {
+					throw std::invalid_argument("Invalid 'from' parameter provided.");
+				}
+				else if (item->getStolenList() == nullptr) {
+					throw std::invalid_argument("Invalid 'item' parameter provided. Does not support a stolen list.");
+				}
+
+				if (getOptionalParam<bool>(params, "stolen", true)) {
+					item->addStolenFlag(from);
+				}
+				else {
+					item->removeStolenFlag(from);
+				}
+			};
 		}
 	}
 }

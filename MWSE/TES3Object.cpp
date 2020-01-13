@@ -242,4 +242,19 @@ namespace TES3 {
 	Iterator<BaseObject> * PhysicalObject::getStolenList() {
 		return vTable.physical->getStolenList(this);
 	}
+
+	const auto TES3_PhysicalObject_addStolenFlag = reinterpret_cast<void(__thiscall*)(PhysicalObject*, BaseObject*)>(0x4EFEE0);
+	void PhysicalObject::addStolenFlag(BaseObject* stolenFrom) {
+		TES3_PhysicalObject_addStolenFlag(this, stolenFrom);
+	}
+
+	const auto TES3_PhysicalObject_removeStolenFlag = reinterpret_cast<void(__thiscall*)(PhysicalObject*, BaseObject*)>(0x4EFF10);
+	void PhysicalObject::removeStolenFlag(BaseObject* stolenFrom) {
+		TES3_PhysicalObject_removeStolenFlag(this, stolenFrom);
+	}
+
+	const auto TES3_PhysicalObject_getStolenFlag = reinterpret_cast<bool(__thiscall*)(PhysicalObject*, BaseObject*)>(0x4EFEB0);
+	bool PhysicalObject::getStolenFlag(BaseObject* stolenFrom) {
+		return TES3_PhysicalObject_getStolenFlag(this, stolenFrom);
+	}
 }
