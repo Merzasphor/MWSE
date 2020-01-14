@@ -22,7 +22,10 @@ namespace mwse {
 			usertypeDefinition.set("deactivate", &TES3::Fader::deactivate);
 			usertypeDefinition.set("update", &TES3::Fader::updateForFrame);
 			usertypeDefinition.set("setTexture", &TES3::Fader::setTexture);
-			usertypeDefinition.set("removeMaterialProperty", &TES3::Fader::removeMaterialProperty);
+			usertypeDefinition.set("updateMaterialProperty", &TES3::Fader::updateMaterialProperty);
+
+			// Old bindings. Kept for backwards compatibility.
+			usertypeDefinition.set("removeMaterialProperty", &TES3::Fader::updateMaterialProperty);
 
 			// Expose writing active state as mapping for activate/deactivate.
 			usertypeDefinition.set("active", sol::property(

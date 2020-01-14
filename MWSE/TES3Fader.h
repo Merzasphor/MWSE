@@ -49,7 +49,7 @@ namespace TES3 {
 		void fadeTo(float value, float duration, FaderCallback callback = nullptr);
 
 		void setColor(TES3::Vector3 color, bool alpha);
-		void removeMaterialProperty(float value);
+		void updateMaterialProperty(float value);
 		void setTexture(const char* path);
 
 	};

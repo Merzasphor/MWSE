@@ -62,9 +62,9 @@ namespace TES3 {
 		TES3_Fader_setColor(this, color, alpha);
 	}
 
-	const auto TES3_Fader_removeMaterialProperty = reinterpret_cast<void(__thiscall*)(Fader*, float)>(0x4098F0);
-	void Fader::removeMaterialProperty(float value) {
-		TES3_Fader_removeMaterialProperty(this, value);
+	const auto TES3_Fader_updateMaterialProperty = reinterpret_cast<void(__thiscall*)(Fader*, float)>(0x4098F0);
+	void Fader::updateMaterialProperty(float value) {
+		TES3_Fader_updateMaterialProperty(this, value);
 	}
 
 	const auto TES3_Fader_setTexture = reinterpret_cast<void(__thiscall*)(Fader*, const char*)>(0x40A3E0);
