@@ -21,6 +21,15 @@
 namespace TES3 {
 
 	//
+	// WorldControllerRenderCamera
+	//
+
+	const auto TES3_WorldControllerRenderCamera_CameraData_SetFOV = reinterpret_cast<void(__thiscall*)(WorldControllerRenderCamera::CameraData*, float)>(0x632270);
+	void WorldControllerRenderCamera::CameraData::setFOV(float degrees) {
+		TES3_WorldControllerRenderCamera_CameraData_SetFOV(this, degrees);
+	}
+
+	//
 	// KillCounter
 	//
 

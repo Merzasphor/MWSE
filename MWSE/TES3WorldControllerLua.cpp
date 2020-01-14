@@ -35,7 +35,9 @@ namespace mwse {
 				usertypeDefinition.set("renderer", sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.renderer); }));
 				usertypeDefinition.set("root", sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.root); }));
 				usertypeDefinition.set("cameraRoot", sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.cameraRoot); }));
-				usertypeDefinition.set("camera", sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.camera); }));
+
+				// Legacy support for substructures.
+				usertypeDefinition.set("camera", sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.cameraData.camera); }));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3worldControllerRenderCamera", usertypeDefinition);

@@ -20,18 +20,29 @@ namespace TES3 {
 	};
 
 	struct WorldControllerRenderCamera {
-		void * vTable;
-		NI::Object * renderer;
-		NI::Object * root;
-		NI::Node * cameraRoot;
-		NI::Camera * camera;
-		float unknown_0x14;
-		float unknown_0x18;
-		float unknown_0x1C;
-		float unknown_0x20;
-		float unknown_0x24;
-		float unknown_0x28;
+		struct CameraData {
+			NI::Camera* camera; // 0x0
+			NI::Node* unknown_0x4;
+			float fovDegrees; // 0x8
+			float nearPlaneDistance; // 0xC
+			float farPlaneDistance; // 0x10
+			float viewportWidth; // 0x14
+			float viewportHeight; // 0x18
+
+			//
+			// Other related this-call functions.
+			//
+
+			void setFOV(float degrees);
+
+		};
+		void* vTable; // 0x0
+		NI::Object * renderer; // 0x4
+		NI::Object * root; // 0x8
+		NI::Node * cameraRoot; // 0xC
+		CameraData cameraData; // 0x10
 	};
+	static_assert(sizeof(WorldControllerRenderCamera::CameraData) == 0x1C, "TES3::WorldControllerRenderCamera::CameraData failed size validation");
 	static_assert(sizeof(WorldControllerRenderCamera) == 0x2C, "TES3::WorldControllerRenderCamera failed size validation");
 
 	struct WorldControllerRenderTarget : WorldControllerRenderCamera {

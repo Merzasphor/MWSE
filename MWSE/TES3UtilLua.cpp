@@ -681,7 +681,7 @@ namespace mwse {
 			state["tes3"]["getCameraPosition"] = []() -> sol::optional<TES3::Vector3> {
 				TES3::WorldController * worldController = TES3::WorldController::get();
 				if (worldController) {
-					return worldController->worldCamera.camera->worldBoundOrigin;
+					return worldController->worldCamera.cameraData.camera->worldBoundOrigin;
 				}
 				return sol::optional<TES3::Vector3>();
 			};
@@ -3519,7 +3519,16 @@ namespace mwse {
 
 				auto macp = TES3::WorldController::get()->getMobilePlayer();
 				if (mact == macp) {
-					// TODO
+					auto worldController = TES3::WorldController::get();
+
+					// Change FOV.
+					worldController->shadowCamera.cameraData.setFOV(worldController->werewolfFOV);
+					worldController->worldCamera.cameraData.setFOV(worldController->werewolfFOV);
+
+					// Update faders.
+					worldController->werewolfFader->updateMaterialProperty(1.0f);
+					worldController->sunglareFader->deactivate();
+					worldController->werewolfFader->activate();
 				}
 
 				return true;
@@ -3549,7 +3558,15 @@ namespace mwse {
 
 				auto macp = TES3::WorldController::get()->getMobilePlayer();
 				if (mact == macp) {
-					// TODO
+					auto worldController = TES3::WorldController::get();
+
+					// Change FOV.
+					worldController->shadowCamera.cameraData.setFOV(75.0f);
+					worldController->worldCamera.cameraData.setFOV(75.0f);
+
+					// Update faders.
+					worldController->sunglareFader->activate();
+					worldController->werewolfFader->deactivate();
 				}
 
 				return true;
