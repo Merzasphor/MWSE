@@ -202,7 +202,6 @@ namespace mwse {
 			type == TES3::ObjectType::Clothing || type == TES3::ObjectType::Weapon)
 		{
 			subtype = object->vTable.object->getType(object);
-			log::getLog() << "xEquipmentList::getItemSubType : " << object->vTable.object->getObjectID(object) << " = " << subtype - 1 << std::endl;
 		}
 
 		return subtype;
