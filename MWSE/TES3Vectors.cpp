@@ -85,6 +85,14 @@ namespace TES3 {
 		return copy;
 	}
 
+	Vector3 Vector3::interpolate(const Vector3& targetPoint, const float distance) const {
+		auto line = targetPoint - *this;
+		if (line.normalize()) {
+			return *this + (line * distance);
+		}
+		return Vector3();
+	}
+
 	const auto TES3_Matrix33_testEqual = reinterpret_cast<bool(__thiscall*)(Matrix33*, const Matrix33*)>(0x6E7ED0);
 	const auto TES3_Matrix33_addMatrix = reinterpret_cast<Matrix33 *(__thiscall*)(Matrix33*, Matrix33*, const Matrix33*)>(0x6E7F60);
 	const auto TES3_Matrix33_subtractMatrix = reinterpret_cast<Matrix33 *(__thiscall*)(Matrix33*, Matrix33*, const Matrix33*)>(0x6E8000);

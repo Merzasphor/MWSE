@@ -46,6 +46,7 @@ namespace TES3 {
 		void negate();
 		bool normalize();
 		Vector3 normalized();
+		Vector3 interpolate(const Vector3&, const float) const;
 
 	};
 	static_assert(sizeof(Vector3) == 0xC, "TES3::Vector3 failed size validation");
