@@ -4,39 +4,39 @@
 #include <cmath>
 
 namespace TES3 {
-	bool Vector3::operator==(const Vector3& vec3) {
+	bool Vector3::operator==(const Vector3& vec3) const {
 		return x == vec3.x && y == vec3.y && z == vec3.z;
 	}
 
-	bool Vector3::operator!=(const Vector3& vec3) {
+	bool Vector3::operator!=(const Vector3& vec3) const {
 		return x != vec3.x || y != vec3.y || z != vec3.z;
 	}
 
-	Vector3 Vector3::operator+(const Vector3& vec3) {
+	Vector3 Vector3::operator+(const Vector3& vec3) const {
 		return Vector3(x + vec3.x, y + vec3.y, z + vec3.z);
 	}
 
-	Vector3 Vector3::operator-(const Vector3& vec3) {
+	Vector3 Vector3::operator-(const Vector3& vec3) const {
 		return Vector3(x - vec3.x, y - vec3.y, z - vec3.z);
 	}
 
-	Vector3 Vector3::operator*(const Vector3 & vec3) {
+	Vector3 Vector3::operator*(const Vector3 & vec3) const {
 		return Vector3(x * vec3.x, y * vec3.y, z * vec3.z);
 	}
 
-	Vector3 Vector3::operator*(const float scalar) {
+	Vector3 Vector3::operator*(const float scalar) const {
 		return Vector3(x * scalar, y * scalar, z * scalar);
 	}
 
-	Vector3 Vector3::crossProduct(Vector3* vec3) {
+	Vector3 Vector3::crossProduct(Vector3* vec3) const {
 		return Vector3(y * vec3->z - z * vec3->y, z * vec3->x - vec3->z * x, x * vec3->y - y * vec3->x);
 	}
 
-	float Vector3::dotProduct(Vector3* vec3) {
+	float Vector3::dotProduct(Vector3* vec3) const {
 		return vec3->z * z + vec3->y * y + vec3->x * x;
 	}
 
-	Matrix33 Vector3::outerProduct(Vector3* vec3) {
+	Matrix33 Vector3::outerProduct(Vector3* vec3) const {
 		return Matrix33(
 			(x*vec3->x), (y*vec3->x), (z*vec3->x),
 			(x*vec3->y), (y*vec3->y), (z*vec3->y),
@@ -44,18 +44,18 @@ namespace TES3 {
 		);
 	}
 
-	float Vector3::heightDifference(Vector3* vec3) {
+	float Vector3::heightDifference(Vector3* vec3) const {
 		return fabs(z - vec3->z);
 	}
 
-	float Vector3::distance(Vector3* vec3) {
+	float Vector3::distance(Vector3* vec3) const {
 		float dx = x - vec3->x;
 		float dy = y - vec3->y;
 		float dz = z - vec3->z;
 		return sqrt(dz * dz + dx * dx + dy * dy);
 	}
 
-	float Vector3::length() {
+	float Vector3::length() const {
 		return sqrt(x * x + y * y + z * z);
 	}
 
@@ -79,7 +79,7 @@ namespace TES3 {
 		return false;
 	}
 
-	Vector3 Vector3::normalized() {
+	Vector3 Vector3::normalized() const {
 		auto copy = Vector3(x, y, z);
 		copy.normalize();
 		return copy;
