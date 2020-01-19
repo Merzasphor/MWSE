@@ -28,110 +28,118 @@ namespace mwse {
 			// Binding for TES3::WorldControllerRenderCamera.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.new_usertype<TES3::WorldControllerRenderCamera>("tes3worldControllerRenderCamera");
-				usertypeDefinition["new"] = sol::no_constructor;
+				auto usertypeDefinition = state.create_simple_usertype<TES3::WorldControllerRenderCamera>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["renderer"] = sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.renderer); });
-				usertypeDefinition["root"] = sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.root); });
-				usertypeDefinition["cameraRoot"] = sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.cameraRoot); });
-				usertypeDefinition["camera"] = sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.camera); });
+				usertypeDefinition.set("renderer", sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.renderer); }));
+				usertypeDefinition.set("root", sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.root); }));
+				usertypeDefinition.set("cameraRoot", sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.cameraRoot); }));
+
+				// Legacy support for substructures.
+				usertypeDefinition.set("camera", sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.cameraData.camera); }));
+
+				// Finish up our usertype.
+				state.set_usertype("tes3worldControllerRenderCamera", usertypeDefinition);
 			}
 
 			// Binding for TES3::WorldController.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.new_usertype<TES3::WorldController>("tes3worldController");
-				usertypeDefinition["new"] = sol::no_constructor;
+				auto usertypeDefinition = state.create_simple_usertype<TES3::WorldController>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Basic property binding.
-				usertypeDefinition["activeQuests"] = &TES3::WorldController::journalController;
-				usertypeDefinition["aiDistance"] = &TES3::WorldController::aiDistance;
-				usertypeDefinition["armCamera"] = &TES3::WorldController::armCamera;
-				usertypeDefinition["audioController"] = sol::readonly_property(&TES3::WorldController::audioController);
-				usertypeDefinition["blindnessFader"] = sol::readonly_property(&TES3::WorldController::blindnessFader);
-				usertypeDefinition["canQuickSaveAndRest"] = &TES3::WorldController::canUseQuickSaveAndRest;
-				usertypeDefinition["characterRenderTarget"] = &TES3::WorldController::characterRenderTarget;
-				usertypeDefinition["charGenState"] = &TES3::WorldController::gvarCharGenState;
-				usertypeDefinition["countMusicTracksBattle"] = &TES3::WorldController::countMusicTracksBattle;
-				usertypeDefinition["countMusicTracksExplore"] = &TES3::WorldController::countMusicTracksExplore;
-				usertypeDefinition["cursorOff"] = &TES3::WorldController::cursorOff;
-				usertypeDefinition["day"] = &TES3::WorldController::gvarDay;
-				usertypeDefinition["daysPassed"] = &TES3::WorldController::gvarDaysPassed;
-				usertypeDefinition["deadFloatScale"] = &TES3::WorldController::deadFloatScale;
-				usertypeDefinition["deltaTime"] = &TES3::WorldController::deltaTime;
-				usertypeDefinition["difficulty"] = &TES3::WorldController::difficulty;
-				usertypeDefinition["flagEventMenuModeOff"] = &TES3::WorldController::flagEventMenuModeOff;
-				usertypeDefinition["flagEventMenuModeOn"] = &TES3::WorldController::flagEventMenuModeOn;
-				usertypeDefinition["flagLevitationDisabled"] = &TES3::WorldController::flagLevitationDisabled;
-				usertypeDefinition["flagMenuMode"] = &TES3::WorldController::flagMenuMode;
-				usertypeDefinition["flagTeleportingDisabled"] = &TES3::WorldController::flagTeleportingDisabled;
-				usertypeDefinition["fogOfWarController"] = &TES3::WorldController::fogOfWarController;
-				usertypeDefinition["helpDelay"] = &TES3::WorldController::helpDelay;
-				usertypeDefinition["hitFader"] = sol::readonly_property(&TES3::WorldController::hitFader);
-				usertypeDefinition["hour"] = &TES3::WorldController::gvarGameHour;
-				usertypeDefinition["hudStyle"] = &TES3::WorldController::hudStyle;
-				usertypeDefinition["inputController"] = &TES3::WorldController::inputController;
-				usertypeDefinition["instance"] = &TES3::WorldController::Win32_hInstance;
-				usertypeDefinition["inventoryData"] = &TES3::WorldController::inventoryData;
-				usertypeDefinition["lastFrameTime"] = &TES3::WorldController::lastFrameTimeMillis;
-				usertypeDefinition["listAllActors"] = &TES3::WorldController::allActors;
-				usertypeDefinition["listChargableItems"] = &TES3::WorldController::chargableItems;
-				usertypeDefinition["lstGlobalScripts"] = &TES3::WorldController::globalScripts;
-				usertypeDefinition["maxFPS"] = &TES3::WorldController::maxFPS;
-				usertypeDefinition["menuAlpha"] = &TES3::WorldController::menuAlpha;
-				usertypeDefinition["menuCamera"] = &TES3::WorldController::menuCamera;
-				usertypeDefinition["menuController"] = &TES3::WorldController::menuController;
-				usertypeDefinition["month"] = &TES3::WorldController::gvarMonth;
-				usertypeDefinition["monthsToRespawn"] = &TES3::WorldController::gvarMonthsToRespawn;
-				usertypeDefinition["mouseSensitivityX"] = &TES3::WorldController::horzSensitivity;
-				usertypeDefinition["mouseSensitivityY"] = &TES3::WorldController::mouseSensitivity;
-				usertypeDefinition["musicSituation"] = &TES3::WorldController::musicSituation;
-				usertypeDefinition["parentWindowHandle"] = &TES3::WorldController::Win32_hWndParent;
-				usertypeDefinition["projectionDistance"] = &TES3::WorldController::projectionDistance;
-				usertypeDefinition["scriptGlobals"] = &TES3::WorldController::scriptGlobals;
-				usertypeDefinition["shaderWaterReflectTerrain"] = &TES3::WorldController::shaderWaterReflectsTerrain;
-				usertypeDefinition["shaderWaterReflectUpdate"] = &TES3::WorldController::shaderWaterReflectUpdate;
-				usertypeDefinition["shadowCamera"] = &TES3::WorldController::shadowCamera;
-				usertypeDefinition["shadows"] = &TES3::WorldController::bShadows;
-				usertypeDefinition["showSubtitles"] = &TES3::WorldController::showSubtitles;
-				usertypeDefinition["splashscreenCamera"] = &TES3::WorldController::splashscreenCamera;
-				usertypeDefinition["stopGameLoop"] = &TES3::WorldController::stopGameLoop;
-				usertypeDefinition["sunglareFader"] = sol::readonly_property(&TES3::WorldController::sunglareFader);
-				usertypeDefinition["systemTime"] = &TES3::WorldController::systemTimeMillis;
-				usertypeDefinition["timescale"] = &TES3::WorldController::gvarTimescale;
-				usertypeDefinition["transitionFader"] = sol::readonly_property(&TES3::WorldController::transitionFader);
-				usertypeDefinition["useBestAttack"] = &TES3::WorldController::useBestAttack;
-				usertypeDefinition["viewHeight"] = &TES3::WorldController::viewHeight;
-				usertypeDefinition["viewWidth"] = &TES3::WorldController::viewWidth;
-				usertypeDefinition["weatherController"] = &TES3::WorldController::weatherController;
-				usertypeDefinition["werewolfFader"] = sol::readonly_property(&TES3::WorldController::werewolfFader);
-				usertypeDefinition["werewolfFOV"] = &TES3::WorldController::werewolfFOV;
-				usertypeDefinition["windowHandle"] = &TES3::WorldController::Win32_hWnd;
-				usertypeDefinition["worldCamera"] = &TES3::WorldController::worldCamera;
-				usertypeDefinition["year"] = &TES3::WorldController::gvarYear;
+				usertypeDefinition.set("activeQuests", &TES3::WorldController::journalController);
+				usertypeDefinition.set("aiDistance", &TES3::WorldController::aiDistance);
+				usertypeDefinition.set("armCamera", &TES3::WorldController::armCamera);
+				usertypeDefinition.set("audioController", sol::readonly_property(&TES3::WorldController::audioController));
+				usertypeDefinition.set("blindnessFader", sol::readonly_property(&TES3::WorldController::blindnessFader));
+				usertypeDefinition.set("canQuickSaveAndRest", &TES3::WorldController::canUseQuickSaveAndRest);
+				usertypeDefinition.set("characterRenderTarget", &TES3::WorldController::characterRenderTarget);
+				usertypeDefinition.set("charGenState", &TES3::WorldController::gvarCharGenState);
+				usertypeDefinition.set("countMusicTracksBattle", &TES3::WorldController::countMusicTracksBattle);
+				usertypeDefinition.set("countMusicTracksExplore", &TES3::WorldController::countMusicTracksExplore);
+				usertypeDefinition.set("cursorOff", &TES3::WorldController::cursorOff);
+				usertypeDefinition.set("day", &TES3::WorldController::gvarDay);
+				usertypeDefinition.set("daysPassed", &TES3::WorldController::gvarDaysPassed);
+				usertypeDefinition.set("deadFloatScale", &TES3::WorldController::deadFloatScale);
+				usertypeDefinition.set("deltaTime", &TES3::WorldController::deltaTime);
+				usertypeDefinition.set("difficulty", &TES3::WorldController::difficulty);
+				usertypeDefinition.set("flagEventMenuModeOff", &TES3::WorldController::flagEventMenuModeOff);
+				usertypeDefinition.set("flagEventMenuModeOn", &TES3::WorldController::flagEventMenuModeOn);
+				usertypeDefinition.set("flagLevitationDisabled", &TES3::WorldController::flagLevitationDisabled);
+				usertypeDefinition.set("flagMenuMode", &TES3::WorldController::flagMenuMode);
+				usertypeDefinition.set("flagTeleportingDisabled", &TES3::WorldController::flagTeleportingDisabled);
+				usertypeDefinition.set("fogOfWarController", &TES3::WorldController::fogOfWarController);
+				usertypeDefinition.set("helpDelay", &TES3::WorldController::helpDelay);
+				usertypeDefinition.set("hitFader", sol::readonly_property(&TES3::WorldController::hitFader));
+				usertypeDefinition.set("hour", &TES3::WorldController::gvarGameHour);
+				usertypeDefinition.set("hudStyle", &TES3::WorldController::hudStyle);
+				usertypeDefinition.set("inputController", &TES3::WorldController::inputController);
+				usertypeDefinition.set("instance", &TES3::WorldController::Win32_hInstance);
+				usertypeDefinition.set("inventoryData", &TES3::WorldController::inventoryData);
+				usertypeDefinition.set("lastFrameTime", &TES3::WorldController::lastFrameTimeMillis);
+				usertypeDefinition.set("listAllActors", &TES3::WorldController::allActors);
+				usertypeDefinition.set("listChargableItems", &TES3::WorldController::chargableItems);
+				usertypeDefinition.set("lstGlobalScripts", &TES3::WorldController::globalScripts);
+				usertypeDefinition.set("maxFPS", &TES3::WorldController::maxFPS);
+				usertypeDefinition.set("menuAlpha", &TES3::WorldController::menuAlpha);
+				usertypeDefinition.set("menuCamera", &TES3::WorldController::menuCamera);
+				usertypeDefinition.set("menuController", &TES3::WorldController::menuController);
+				usertypeDefinition.set("month", &TES3::WorldController::gvarMonth);
+				usertypeDefinition.set("monthsToRespawn", &TES3::WorldController::gvarMonthsToRespawn);
+				usertypeDefinition.set("mouseSensitivityX", &TES3::WorldController::horzSensitivity);
+				usertypeDefinition.set("mouseSensitivityY", &TES3::WorldController::mouseSensitivity);
+				usertypeDefinition.set("musicSituation", &TES3::WorldController::musicSituation);
+				usertypeDefinition.set("parentWindowHandle", &TES3::WorldController::Win32_hWndParent);
+				usertypeDefinition.set("projectionDistance", &TES3::WorldController::projectionDistance);
+				usertypeDefinition.set("scriptGlobals", &TES3::WorldController::scriptGlobals);
+				usertypeDefinition.set("shaderWaterReflectTerrain", &TES3::WorldController::shaderWaterReflectsTerrain);
+				usertypeDefinition.set("shaderWaterReflectUpdate", &TES3::WorldController::shaderWaterReflectUpdate);
+				usertypeDefinition.set("shadowCamera", &TES3::WorldController::shadowCamera);
+				usertypeDefinition.set("shadows", &TES3::WorldController::bShadows);
+				usertypeDefinition.set("showSubtitles", &TES3::WorldController::showSubtitles);
+				usertypeDefinition.set("splashscreenCamera", &TES3::WorldController::splashscreenCamera);
+				usertypeDefinition.set("stopGameLoop", &TES3::WorldController::stopGameLoop);
+				usertypeDefinition.set("sunglareFader", sol::readonly_property(&TES3::WorldController::sunglareFader));
+				usertypeDefinition.set("systemTime", &TES3::WorldController::systemTimeMillis);
+				usertypeDefinition.set("timescale", &TES3::WorldController::gvarTimescale);
+				usertypeDefinition.set("transitionFader", sol::readonly_property(&TES3::WorldController::transitionFader));
+				usertypeDefinition.set("useBestAttack", &TES3::WorldController::useBestAttack);
+				usertypeDefinition.set("viewHeight", &TES3::WorldController::viewHeight);
+				usertypeDefinition.set("viewWidth", &TES3::WorldController::viewWidth);
+				usertypeDefinition.set("weatherController", &TES3::WorldController::weatherController);
+				usertypeDefinition.set("werewolfFader", sol::readonly_property(&TES3::WorldController::werewolfFader));
+				usertypeDefinition.set("werewolfFOV", &TES3::WorldController::werewolfFOV);
+				usertypeDefinition.set("windowHandle", &TES3::WorldController::Win32_hWnd);
+				usertypeDefinition.set("worldCamera", &TES3::WorldController::worldCamera);
+				usertypeDefinition.set("year", &TES3::WorldController::gvarYear);
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["criticalDamageSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundCriticalDamage); });
-				usertypeDefinition["defaultLandSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundDefaultLand); });
-				usertypeDefinition["defaultLandWaterSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundDefaultLandWater); });
-				usertypeDefinition["drowningDamageSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundDrowningDamage); });
-				usertypeDefinition["drownSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundDrown); });
-				usertypeDefinition["handToHandHit2Sound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundHandToHandHit2); });
-				usertypeDefinition["handToHandHitSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundHandToHandHit); });
-				usertypeDefinition["healthDamageSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundHealthDamage); });
-				usertypeDefinition["heavyArmorHitSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundHeavyArmorHit); });
-				usertypeDefinition["itemRepairSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundItemRepair); });
-				usertypeDefinition["lightArmorHitSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundLightArmorHit); });
-				usertypeDefinition["mediumArmorHitSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundMediumArmorHit); });
-				usertypeDefinition["menuClickSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundMenuClick); });
-				usertypeDefinition["menuSizeSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundMenuSize); });
-				usertypeDefinition["missSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundMiss); });
-				usertypeDefinition["nodeCursor"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.nodeCursor); });
-				usertypeDefinition["weaponSwishSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundWeaponSwish); });
+				usertypeDefinition.set("criticalDamageSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundCriticalDamage); }));
+				usertypeDefinition.set("defaultLandSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundDefaultLand); }));
+				usertypeDefinition.set("defaultLandWaterSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundDefaultLandWater); }));
+				usertypeDefinition.set("drowningDamageSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundDrowningDamage); }));
+				usertypeDefinition.set("drownSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundDrown); }));
+				usertypeDefinition.set("handToHandHit2Sound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundHandToHandHit2); }));
+				usertypeDefinition.set("handToHandHitSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundHandToHandHit); }));
+				usertypeDefinition.set("healthDamageSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundHealthDamage); }));
+				usertypeDefinition.set("heavyArmorHitSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundHeavyArmorHit); }));
+				usertypeDefinition.set("itemRepairSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundItemRepair); }));
+				usertypeDefinition.set("lightArmorHitSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundLightArmorHit); }));
+				usertypeDefinition.set("mediumArmorHitSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundMediumArmorHit); }));
+				usertypeDefinition.set("menuClickSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundMenuClick); }));
+				usertypeDefinition.set("menuSizeSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundMenuSize); }));
+				usertypeDefinition.set("missSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundMiss); }));
+				usertypeDefinition.set("nodeCursor", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.nodeCursor); }));
+				usertypeDefinition.set("weaponSwishSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundWeaponSwish); }));
 
 				// Basic function binding.
-				usertypeDefinition["applyEnchantEffect"] = &TES3::WorldController::applyEnchantEffect;
+				usertypeDefinition.set("applyEnchantEffect", &TES3::WorldController::applyEnchantEffect);
+
+				// Finish up our usertype.
+				state.set_usertype("tes3worldController", usertypeDefinition);
 			}
 		}
 	}

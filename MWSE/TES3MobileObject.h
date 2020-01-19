@@ -125,7 +125,7 @@ namespace TES3 {
 		void * calculateNPCHeight; // 0xA4
 		void * unknown_0xA8; // 0xA8
 		bool(__thiscall * is3rdPerson)(MobileActor*); // 0xAC
-		void * changeWerewolf; // 0xB0
+		void(__thiscall* changeWerewolf)(MobileActor*, bool); // 0xB0
 		void * calculateWalkSpeed; // 0xB4
 		void * onDeath; // 0xB8
 		void * calculateAttackMin; // 0xBC

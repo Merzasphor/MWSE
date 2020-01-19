@@ -16,11 +16,13 @@
 #include "LuaMobileObjectCollisionEvent.h"
 
 #include "TES3Actor.h"
+#include "TES3ActorAnimationData.h"
 #include "TES3AudioController.h"
 #include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
 #include "TES3ItemData.h"
 #include "TES3Reference.h"
+#include "TES3SpellInstanceController.h"
 #include "TES3WorldController.h"
 
 #include "TES3Util.h"
@@ -45,6 +47,14 @@ namespace TES3 {
 	const auto TES3_MobileActor_calcDerivedStats = reinterpret_cast<void(__thiscall*)(const MobileActor*, Statistic*)>(0x527BC0);
 	const auto TES3_MobileActor_determineModifiedPrice = reinterpret_cast<int(__thiscall*)(const MobileActor*, int, int)>(0x52AA50);
 	const auto TES3_MobileActor_playVoiceover = reinterpret_cast<void(__thiscall*)(const MobileActor*, int)>(0x528F80);
+
+	MagicSourceInstance* MobileActor::ActiveMagicEffect::getInstance() {
+		return WorldController::get()->spellInstanceController->getInstanceFromSerial(magicInstanceSerial);
+	}
+
+	int MobileActor::ActiveMagicEffect::getMagnitude() {
+		return getInstance()->getMagnitude(magicInstanceEffectIndex);
+	}
 
 	bool MobileActor::onActorCollision(int collisionIndex) {
 		// Grab the hit reference now, it won't be available after calling the main function.
@@ -183,6 +193,10 @@ namespace TES3 {
 		if (mwse::lua::event::CombatStoppedEvent::getEventEnabled()) {
 			luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::CombatStoppedEvent(this));
 		}
+	}
+
+	bool MobileActor::isDead() {
+		return actionData.animStateAttack == AttackAnimationState::Dead || actionData.animStateAttack == AttackAnimationState::Dying;
 	}
 
 	void MobileActor::onDeath() {
@@ -362,6 +376,18 @@ namespace TES3 {
 		return TES3_MobileActor_persuade(this, random, persuasionIndex);
 	}
 
+	bool MobileActor::getIsWerewolf() {
+		return getMobileActorFlag(TES3::MobileActorFlag::Werewolf);
+	}
+
+	void MobileActor::setIsWerewolf(bool set) {
+		setMobileActorFlag(TES3::MobileActorFlag::Werewolf, set);
+	}
+	
+	void MobileActor::changeWerewolfState(bool isWerewolf) {
+		vTable.mobileActor->changeWerewolf(this, isWerewolf);
+	}
+
 	bool MobileActor::getMobileActorFlag(MobileActorFlag::Flag flag) {
 		return (actorFlags & flag) != 0;
 	}
@@ -478,6 +504,12 @@ namespace TES3 {
 
 		TES3_MobileActor_wearItem(this, item, itemData, false, false);
 		return true;
+	}
+
+	void MobileActor::updateOpacity() {
+		if (animationData.asActor) {
+			animationData.asActor->updateOpacity();
+		}
 	}
 
 }

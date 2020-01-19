@@ -136,4 +136,8 @@ namespace TES3 {
 		// Finally, we fall back to the vanilla function.
 		return TES3_Armor_getWeightClass(this);
 	}
+
+	void Armor::setDurability(int value) {
+		maxCondition = value;
+	}
 }

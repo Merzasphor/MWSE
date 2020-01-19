@@ -4,6 +4,9 @@
 
 #include "LuaCalcMovementSpeedEvent.h"
 
+#include "TES3MobilePlayer.h"
+#include "TES3WorldController.h"
+
 #define TES3_ActorAnimationData_calculateMovementSpeed 0x53E1A0
 
 namespace TES3 {
@@ -21,5 +24,44 @@ namespace TES3 {
 		}
 
 		return speed;
+	}
+
+	const auto TES3_ActorAnimationData_getOpacity = reinterpret_cast<float(__thiscall*)(ActorAnimationData*)>(0x542130);
+	float ActorAnimationData::getOpacity() {
+		return TES3_ActorAnimationData_getOpacity(this);
+	}
+
+	const auto TES3_ActorAnimationData_setOpacity = reinterpret_cast<void(__thiscall*)(ActorAnimationData*, float)>(0x542030);
+	void ActorAnimationData::setOpacity(float value) {
+		TES3_ActorAnimationData_setOpacity(this, value);
+	}
+
+	void ActorAnimationData::updateOpacity() {
+		const auto invisibility = mobileActor->effectAttributes[TES3::EffectAttribute::Invisibility];
+		const auto chameleon = mobileActor->effectAttributes[TES3::EffectAttribute::Chameleon];
+
+		// We care about invisibility first.
+		if (invisibility > 0) {
+			if (mobileActor == TES3::WorldController::get()->getMobilePlayer()) {
+				setOpacity(0.25f);
+			}
+			else {
+				setOpacity(0.05f);
+			}
+		}
+		// Fall back to chameleon, based on magnitude.
+		else if (chameleon > 0) {
+			float opacity = 1.0f - (float(chameleon) / 100.0f);
+			if (mobileActor == TES3::WorldController::get()->getMobilePlayer()) {
+				setOpacity(std::clamp(opacity, 0.25f, 75.0f));
+			}
+			else {
+				setOpacity(std::clamp(opacity, 0.0f, 75.0f));
+			}
+		}
+		// If all else fails we go for no Opacity.
+		else {
+			setOpacity(1.0f);
+		}
 	}
 }

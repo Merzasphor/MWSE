@@ -8,6 +8,7 @@
 
 #include "LuaManager.h"
 
+#include "LuaContainerClosedEvent.h"
 #include "LuaEquippedEvent.h"
 #include "LuaUnequippedEvent.h"
 
@@ -39,8 +40,11 @@ namespace TES3 {
 		vTable.actor->clone(this, reference);
 	}
 
-	void Actor::onCloseInventory(Actor* actor, Reference* reference, int unknown) {
-		vTable.actor->onCloseInventory(actor, reference, unknown);
+	void Actor::onCloseInventory(Reference* reference, int unknown) {
+		// Trigger or queue our event.
+		if (mwse::lua::event::ContainerClosedEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ContainerClosedEvent(reference));
+		}
 	}
 
 	AIPackageConfig * Actor::getAIPackageConfig() {
@@ -49,6 +53,10 @@ namespace TES3 {
 
 	void Actor::setAIPackage(AIPackageConfig* packageConfig, Reference* reference) {
 		vTable.actor->setAIPackage(this, packageConfig, reference);
+	}
+
+	int Actor::addItem(Item* item, int count, bool something) {
+		return vTable.actor->addItem(this, item, count, something);
 	}
 
 	Object* Actor::equipItem(Object* item, ItemData* itemData, EquipmentStack** out_equipmentStack, MobileActor* mobileActor) {
@@ -92,6 +100,7 @@ namespace TES3 {
 			if (player->actorFlags & MobileActorFlag::BodypartsChanged) {
 				player->reference->updateBipedParts();
 				player->firstPersonReference->updateBipedParts();
+				player->updateOpacity();
 				player->actorFlags &= ~MobileActorFlag::BodypartsChanged;
 			}
 

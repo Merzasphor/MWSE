@@ -6,9 +6,15 @@
 #include "TES3Misc.h"
 #include "TES3Script.h"
 #include "TES3SoulGemData.h"
+#include "LuaObject.h"
 
 namespace mwse {
 	namespace lua {
+		auto createMiscItem( sol::table params )
+		{
+			return makeObjectCreator( TES3::ObjectType::Misc )->create( params, false );
+		}
+		
 		void bindTES3Misc() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -84,6 +90,9 @@ namespace mwse {
 
 				// TODO: Deprecated. Remove before 2.1-stable.
 				usertypeDefinition["model"] = sol::property(&TES3::Misc::getModelPath, &TES3::Misc::setModelPath);
+
+				// utility function bindings
+				usertypeDefinition.set( "create", &createMiscItem );
 			}
 		}
 	}

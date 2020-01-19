@@ -13,6 +13,7 @@
 #include "Log.h"
 #include "ScriptUtil.h"
 #include "CodePatchUtil.h"
+#include "LuaObject.h"
 
 #include "NICamera.h"
 #include "NINode.h"
@@ -26,6 +27,7 @@
 #include "TES3AIData.h"
 #include "TES3AIPackage.h"
 #include "TES3Alchemy.h"
+#include "TES3Archive.h"
 #include "TES3Armor.h"
 #include "TES3AudioController.h"
 #include "TES3Cell.h"
@@ -46,6 +48,7 @@
 #include "TES3InputController.h"
 #include "TES3ItemData.h"
 #include "TES3LeveledList.h"
+#include "TES3Light.h"
 #include "TES3MagicEffectController.h"
 #include "TES3Misc.h"
 #include "TES3MobController.h"
@@ -70,41 +73,57 @@
 
 #include "BitUtil.h"
 
+#include <unordered_set>
+
 namespace mwse {
 	namespace lua {
-		auto iterateObjectsFiltered(unsigned int desiredType) {
+		auto iterateObjects(const std::unordered_set<unsigned int> desiredTypes) {
 			auto ndd = TES3::DataHandler::get()->nonDynamicData;
 
-			TES3::Object * object = nullptr;
-			if (desiredType == TES3::ObjectType::Spell) {
-				object = ndd->spellsList->head;
+			// Prepare the lists we care about.
+			std::queue<TES3::Object*> objectListQueue;
+			bool searchingSpells = desiredTypes.count(TES3::ObjectType::Spell);
+			if (searchingSpells) {
+				objectListQueue.push(ndd->spellsList->head);
 			}
-			else {
-				object = ndd->list->head;
+			if (desiredTypes.size() != 1 || !searchingSpells) {
+				objectListQueue.push(ndd->list->head);
 			}
 
-			return [object, desiredType]() mutable -> sol::object {
-				while (object && desiredType != 0 && object->objectType != desiredType) {
-					object = object->nextInCollection;
+			// Get the first reference we care about.
+			TES3::Object* object = nullptr;
+			if (!objectListQueue.empty()) {
+				object = objectListQueue.front();
+				objectListQueue.pop();
+			}
+
+			return [object, objectListQueue, desiredTypes]() mutable -> sol::object {
+				while (object && !desiredTypes.empty() && !desiredTypes.count(object->objectType)) {
+					object = reinterpret_cast<TES3::Reference*>(object->nextInCollection);
+
+					// If we hit the end of the list, check for the next list.
+					if (object == nullptr && !objectListQueue.empty()) {
+						object = objectListQueue.front();
+						objectListQueue.pop();
+					}
 				}
 
-				auto ndd = TES3::DataHandler::get()->nonDynamicData;
-				if (desiredType == 0 && object == ndd->list->tail) {
-					object = ndd->spellsList->head;
-				}
-
-				if (object == NULL) {
+				if (object == nullptr) {
 					return sol::nil;
 				}
 
-				sol::object ret = makeLuaObject(object);
-				object = object->nextInCollection;
+				// Get the object we want to return.
+				sol::object ret = lua::makeLuaObject(object);
+
+				// Get the next reference. If we're at the end of the list, go to the next one
+				object = reinterpret_cast<TES3::Reference*>(object->nextInCollection);
+				if (object == nullptr && !objectListQueue.empty()) {
+					object = objectListQueue.front();
+					objectListQueue.pop();
+				}
+
 				return ret;
 			};
-		}
-
-		auto iterateObjects() {
-			return iterateObjectsFiltered(0);
 		}
 
 		void bindTES3Util() {
@@ -536,6 +555,18 @@ namespace mwse {
 				return mods;
 			};
 
+			state["tes3"]["getArchiveList"] = []() {
+				std::vector<std::string> archives;
+
+				TES3::Archive* archive = **reinterpret_cast<TES3::Archive***>(0x7C9F74);
+				while (archive) {
+					archives.insert(archives.begin(), std::string(archive->path, strnlen_s(archive->path, 128)));
+					archive = archive->nextArchive;
+				}
+
+				return archives;
+			};
+
 			// Bind function: tes3.playItemPickupSound
 			state["tes3"]["playItemPickupSound"] = [](sol::optional<sol::table> params) {
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
@@ -549,7 +580,28 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.iterateList
-			state["tes3"]["iterateObjects"] = sol::overload(&iterateObjects, &iterateObjectsFiltered);
+			state["tes3"]["iterateObjects"] = [](sol::optional<sol::object> filter) {
+				std::unordered_set<unsigned int> filters;
+
+				if (filter) {
+					if (filter.value().is<unsigned int>()) {
+						filters.insert(filter.value().as<unsigned int>());
+					}
+					else if (filter.value().is<sol::table>()) {
+						sol::table filterTable = filter.value().as<sol::table>();
+						for (const auto& kv : filterTable) {
+							if (kv.second.is<unsigned int>()) {
+								filters.insert(kv.second.as<unsigned int>());
+							}
+						}
+					}
+					else {
+						throw std::invalid_argument("Iteration can only be filtered by object type, a table of object types, or must not have any filter.");
+					}
+				}
+
+				return iterateObjects(std::move(filters));
+			};
 
 			// Bind function: tes3.getSound
 			state["tes3"]["getSound"] = [](const char* id) -> sol::object {
@@ -629,7 +681,7 @@ namespace mwse {
 			state["tes3"]["getCameraPosition"] = []() -> sol::optional<TES3::Vector3> {
 				TES3::WorldController * worldController = TES3::WorldController::get();
 				if (worldController) {
-					return worldController->worldCamera.camera->worldBoundOrigin;
+					return worldController->worldCamera.cameraData.camera->worldBoundOrigin;
 				}
 				return sol::optional<TES3::Vector3>();
 			};
@@ -689,8 +741,10 @@ namespace mwse {
 					rayTestCache->clearResults();
 				}
 
-				// TODO: Allow specifying the root?
-				rayTestCache->root = TES3::Game::get()->worldRoot;
+				// Added ablity to use any node
+				// In Lua Script use "root = tes3.mobilePlayer.firstPersonReference.sceneNode"
+				// to have rayTest scan 1st person scene node
+				rayTestCache->root = getOptionalParam<NI::Node*>(params, "root", TES3::Game::get()->worldRoot);
 
 				// Are we finding all or the first?
 				if (getOptionalParam<bool>(params, "findAll", false)) {
@@ -812,7 +866,7 @@ namespace mwse {
 					r->distance *= distanceScale;
 
 					// Skinned nodes only have usable scaled distance data.
-					if ((uintptr_t)r->object->getRunTimeTypeInformation() == NI::RTTIStaticPtr::NiTriShape) {
+					if (r->object->isInstanceOfType(NI::RTTIStaticPtr::NiTriShape)) {
 						auto node = static_cast<const NI::TriShape*>(r->object);
 						if (node->skinInstance) {
 							r->distance *= skinnedCorrection;
@@ -822,20 +876,56 @@ namespace mwse {
 					}
 				}
 
-				// Are we looking for a single result?
-				if (rayTestCache->pickType == NI::PickType::FIND_FIRST) {
-					return sol::make_object(state, rayTestCache->results.storage[0]);
-				}
+				// Parameter: Ignore Skinned results.
+				// Removes results of skinned objects
+				if (getOptionalParam<bool>(params, "ignoreSkinned", false)) {
+					// We're now in multi-result mode. We'll store these in a table.
+					sol::table results = state.create_table();
 
-				// We're now in multi-result mode. We'll store these in a table.
-				sol::table results = state.create_table();
-				
-				// Go through and clone the results in a way that will play nice.
-				for (int i = 0; i < rayTestCache->results.filledCount; i++) {
-					results[i + 1] = rayTestCache->results.storage[i];
-				}
+					// Go through and clone the results in a way that will play nice.
+					// Skip any results that have a skinInstance
+					for (int i = 0; i < rayTestCache->results.filledCount; i++) {
+						auto r = rayTestCache->results.storage[i];
+						if (r->object->isInstanceOfType(NI::RTTIStaticPtr::NiTriShape)) {
+							auto node = static_cast<const NI::TriShape*>(r->object);
+							if (!node->skinInstance) {
+								results.add(rayTestCache->results.storage[i]);
+							}
+						}
+						else {
+							results.add(rayTestCache->results.storage[i]);
+						}
+					}
 
-				return results;
+					// Return nothing if all results were skinned.
+					if (results.empty()) {
+						return sol::nil;
+					}
+
+					// Are we looking for a single result?
+					if (rayTestCache->pickType == NI::PickType::FIND_FIRST) {
+						return results[1];
+					}
+
+					return results;
+				}
+				else {
+					// Treat results as normal
+					// Are we looking for a single result?
+					if (rayTestCache->pickType == NI::PickType::FIND_FIRST) {
+						return sol::make_object(state, rayTestCache->results.storage[0]);
+					}
+
+					// We're now in multi-result mode. We'll store these in a table.
+					sol::table results = state.create_table();
+
+					// Go through and clone the results in a way that will play nice.
+					for (int i = 0; i < rayTestCache->results.filledCount; i++) {
+						results.add(rayTestCache->results.storage[i]);
+					}
+
+					return results;
+				}
 			};
 
 			// Bind function: tes3.is3rdPerson
@@ -1888,11 +1978,12 @@ namespace mwse {
 			state["tes3"]["positionCell"] = [](sol::table params) {
 				auto worldController = TES3::WorldController::get();
 				auto macp = worldController->getMobilePlayer();
+				auto playerRef = macp->reference;
 
 				// Get the target that we're working with.
-				TES3::MobileActor * mobile = getOptionalParamMobileActor(params, "reference");
-				if (mobile == nullptr) {
-					mobile = macp;
+				auto reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					reference = playerRef;
 				}
 
 				// Get the position.
@@ -1904,7 +1995,7 @@ namespace mwse {
 				// Get the orientation.
 				sol::optional<TES3::Vector3> orientation = getOptionalParamVector3(params, "orientation");
 				if (!orientation) {
-					orientation = mobile->reference->orientation;
+					orientation = reference->orientation;
 				}
 
 				// Get the cell.
@@ -1921,7 +2012,7 @@ namespace mwse {
 				}
 
 				// Are we dealing with the player? If so, use the special functions.
-				if (mobile == macp) {
+				if (reference == playerRef) {
 					sol::optional<bool> suppressFaderOpt = params["suppressFader"];
 					bool suppressFader = suppressFaderOpt.value_or(false);
 					bool faderInitialState = TES3::DataHandler::get()->useCellTransitionFader;
@@ -1947,13 +2038,12 @@ namespace mwse {
 				}
 				else {
 					const auto TES3_relocateReference = reinterpret_cast<void(__cdecl*)(TES3::Reference*, TES3::Cell*, TES3::Vector3*, float)>(0x50EDD0);
-					TES3_relocateReference(mobile->reference, cell, &position.value(), orientation.value().z);
+					TES3_relocateReference(reference, cell, &position.value(), orientation.value().z);
 				}
 
-				// Ensure the reference is flagged as modified.
-				if (mobile->reference) {
-					mobile->reference->setObjectModified(true);
-				}
+				// Ensure the reference and cell is flagged as modified.
+				reference->setObjectModified(true);
+				cell->setObjectModified(true);
 
 				return true;
 			};
@@ -2118,24 +2208,37 @@ namespace mwse {
 						mact->enterLeaveSimulation(true);
 					}
 				}
+				// Activators, containers, and statics need collision.
+				else if (object->objectType == TES3::ObjectType::Activator || object->objectType == TES3::ObjectType::Container || object->objectType == TES3::ObjectType::Static) {
+					dataHandler->updateCollisionGroupsForActiveCells();
+				}
 				// Lights need to be configured.
 				else if (object->objectType == TES3::ObjectType::Light) {
-					dataHandler->updateLightingForReference(reference);
 					dataHandler->setDynamicLightingForReference(reference);
 
-					// They also need collision.
-					dataHandler->updateCollisionGroupsForActiveCells();
+					// Non-carryable lights also need collision.
+					if (!static_cast<TES3::Light*>(object)->getCanCarry()) {
+						dataHandler->updateCollisionGroupsForActiveCells();
+					}
 				}
-				// For all other things, just reset collision.
-				else {
-					dataHandler->updateCollisionGroupsForActiveCells();
-				}
+
+				// Ensure the reference receives scene lighting.
+				dataHandler->updateLightingForReference(reference);
 
 				// Make sure everything is set as modified.
 				reference->setObjectModified(true);
 				cell->setObjectModified(true);
 
 				return makeLuaObject(reference);
+			};
+
+			state[ "tes3" ][ "createObject" ] = []( sol::table params )
+			{
+				TES3::ObjectType::ObjectType objectType = getOptionalParam( params, "objectType", TES3::ObjectType::Invalid );
+
+				bool getIfExists = getOptionalParam( params, "getIfExists", true );
+
+				return makeObjectCreator( objectType )->create( params, getIfExists );
 			};
 
 			state["tes3"]["setDestination"] = [](sol::table params) {
@@ -2206,6 +2309,19 @@ namespace mwse {
 				}
 
 				return false;
+			};
+
+			state[ "tes3" ][ "getMagicSourceInstanceBySerial" ] = []( sol::table params )
+			{
+				int serialNumber = getOptionalParam< double >( params, "serialNumber", -1 );
+
+				if( serialNumber <= -1 )
+					throw std::invalid_argument( "Invalid 'serialNumber' parameter provided." );
+
+				auto spellInstanceController = TES3::WorldController::get()->spellInstanceController;
+				auto magicSourceInstance = spellInstanceController->getInstanceFromSerial( serialNumber );
+
+				return makeLuaObject( magicSourceInstance );
 			};
 
 			state["tes3"]["showRepairServiceMenu"] = []() {
@@ -2279,7 +2395,12 @@ namespace mwse {
 
 				// Add the item and return the added count, since we do no inventory checking.
 				auto mobile = reference->getAttachedMobileActor();
-				actor->inventory.addItem(mobile, item, fulfilledCount, false, &itemData);
+				if (itemData) {
+					fulfilledCount = actor->inventory.addItem(mobile, item, fulfilledCount, false, &itemData);
+				}
+				else {
+					fulfilledCount = actor->inventory.addItemWithoutData(mobile, item, fulfilledCount, false);
+				}
 
 				// Play the relevant sound.
 				auto worldController = TES3::WorldController::get();
@@ -2297,6 +2418,8 @@ namespace mwse {
 					if (mobile == playerMobile) {
 						playerMobile->firstPersonReference->updateBipedParts();
 					}
+
+					mobile->updateOpacity();
 				}
 
 				// If either of them are the player, we need to update the GUI.
@@ -2399,6 +2522,8 @@ namespace mwse {
 					if (mobile == playerMobile) {
 						playerMobile->firstPersonReference->updateBipedParts();
 					}
+
+					mobile->updateOpacity();
 				}
 
 				// If either of them are the player, we need to update the GUI.
@@ -2581,6 +2706,8 @@ namespace mwse {
 					if (fromMobile == playerMobile) {
 						playerMobile->firstPersonReference->updateBipedParts();
 					}
+
+					fromMobile->updateOpacity();
 				}
 
 				// If either of them are the player, we need to update the GUI.
@@ -3136,6 +3263,34 @@ namespace mwse {
 				return false;
 			};
 
+			state["tes3"]["getEffectMagnitude"] = [](sol::table params) {
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided.");
+				}
+
+				auto mact = reference->getAttachedMobileActor();
+				if (mact == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided. No mobile actor found.");
+				}
+
+				int effectId = getOptionalParam<int>(params, "effect", -1);
+				if (!TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(effectId, TES3::EffectFlag::NoMagnitudeBit)) {
+					int magnitude = 0;
+					auto firstEffect = mact->activeMagicEffects.firstEffect;
+					auto itt = firstEffect->next;
+					while (itt != firstEffect) {
+						if (itt->magicEffectID == effectId) {
+							magnitude += itt->magnitudeMin;
+						}
+						itt = itt->next;
+					}
+					return magnitude;
+				}
+
+				return 0;
+			};
+
 			state["tes3"]["addMagicEffect"] = [](sol::table params) {
 				auto magicEffectController = TES3::DataHandler::get()->nonDynamicData->magicEffects;
 
@@ -3159,11 +3314,10 @@ namespace mwse {
 				// Description.
 				sol::optional<std::string> description = params["description"];
 				if (description) {
-					effect->description = new char[description.value().length() + 1];
-					strcpy_s(effect->description, description.value().length() + 1, description.value().c_str());
+					effect->setDescription( description.value().c_str() );
 				}
 				else {
-					effect->description = "No description available.";
+					effect->setDescription( "No description available." );
 				}
 
 				// Set color.
@@ -3301,6 +3455,201 @@ namespace mwse {
 				magicEffectController->effectNameGMSTs[id] = -id;
 
 				return makeLuaObject(effect);
+			};
+
+			state["tes3"]["advanceTime"] = [](sol::table params) {
+				double rawHours = getOptionalParam<double>(params, "hours", 0.0);
+				double hoursPassed = 0.0;
+
+				// Leverage the resting/waiting system if we're advancing by an hour or more.
+				if (rawHours >= 1.0) {
+					int hoursToAdvance = std::floor(rawHours);
+
+					auto worldController = TES3::WorldController::get();
+					worldController->gvarGameHour->value += rawHours - hoursToAdvance;
+					hoursPassed += rawHours - hoursToAdvance;
+
+					bool resting = getOptionalParam<bool>(params, "resting", false);
+					bool updateEnvironment = getOptionalParam<bool>(params, "updateEnvironment", true);
+
+					auto macp = worldController->getMobilePlayer();
+					macp->restHoursRemaining = hoursToAdvance;
+					macp->sleeping = resting;
+					macp->waiting = !resting;
+
+					while (macp->restHoursRemaining > 0) {
+						reinterpret_cast<void(__cdecl*)(bool)>(0x6350B0)(updateEnvironment);
+						hoursPassed += 1;
+					}
+				}
+				// Otherwise, just do the bare minimum.
+				else {
+					auto worldController = TES3::WorldController::get();
+					worldController->gvarGameHour->value += rawHours;
+					worldController->checkForDayWrapping();
+					worldController->updateEnvironmentLightingWeather();
+					worldController->processGlobalScripts();
+					hoursPassed += rawHours;
+				}
+
+				return hoursPassed;
+			};
+
+			state["tes3"]["beginTransform"] = [](sol::table params) {
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided.");
+				}
+
+				auto mact = reference->getAttachedMobileActor();
+				if (mact == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided. No mobile actor found.");
+				}
+
+				if (mact->getIsWerewolf()) {
+					return false;
+				}
+
+				if (mact->isDead()) {
+					return false;
+				}
+
+				mact->changeWerewolfState(true);
+				mact->setMobileActorFlag(TES3::MobileActorFlag::BodypartsChanged, false);
+
+				auto macp = TES3::WorldController::get()->getMobilePlayer();
+				if (mact == macp) {
+					auto worldController = TES3::WorldController::get();
+
+					// Change FOV.
+					worldController->shadowCamera.cameraData.setFOV(worldController->werewolfFOV);
+					worldController->worldCamera.cameraData.setFOV(worldController->werewolfFOV);
+
+					// Update faders.
+					worldController->werewolfFader->updateMaterialProperty(1.0f);
+					worldController->sunglareFader->deactivate();
+					worldController->werewolfFader->activate();
+				}
+
+				return true;
+			};
+
+			state["tes3"]["undoTransform"] = [](sol::table params) {
+				TES3::Reference* reference = getOptionalParamExecutionReference(params);
+				if (reference == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided.");
+				}
+
+				auto mact = reference->getAttachedMobileActor();
+				if (mact == nullptr) {
+					throw std::invalid_argument("Invalid 'reference' parameter provided. No mobile actor found.");
+				}
+
+				if (!mact->getIsWerewolf()) {
+					return false;
+				}
+
+				if (mact->isDead()) {
+					return false;
+				}
+
+				mact->changeWerewolfState(false);
+				mact->setMobileActorFlag(TES3::MobileActorFlag::BodypartsChanged, true);
+
+				auto macp = TES3::WorldController::get()->getMobilePlayer();
+				if (mact == macp) {
+					auto worldController = TES3::WorldController::get();
+
+					// Change FOV.
+					worldController->shadowCamera.cameraData.setFOV(75.0f);
+					worldController->worldCamera.cameraData.setFOV(75.0f);
+
+					// Update faders.
+					worldController->sunglareFader->activate();
+					worldController->werewolfFader->deactivate();
+				}
+
+				return true;
+			};
+
+			state["tes3"]["setMarkLocation"] = [](sol::table params) {
+				auto macp = TES3::WorldController::get()->getMobilePlayer();
+
+				// Get the position.
+				sol::optional<TES3::Vector3> position = getOptionalParamVector3(params, "position");
+				if (!position) {
+					throw std::invalid_argument("Invalid 'position' parameter provided.");
+				}
+
+				// Get the orientation.
+				float rotation = getOptionalParam<float>(params, "rotation", macp->reference->orientation.z);
+
+				// Get the cell.
+				TES3::Cell* cell = getOptionalParamCell(params, "cell");
+				if (cell == nullptr) {
+					// Try to find an exterior cell from the position.
+					int gridX = TES3::Cell::toGridCoord(position.value().x);
+					int gridY = TES3::Cell::toGridCoord(position.value().y);
+					cell = TES3::DataHandler::get()->nonDynamicData->getCellByGrid(gridX, gridY);
+					if (cell == nullptr) {
+						throw std::invalid_argument("Invalid 'cell' parameter provided. Could not resolve cell by exterior position.");
+					}
+				}
+
+				if (macp->markLocation == nullptr) {
+					macp->markLocation = tes3::_new<TES3::MarkData>();
+				}
+
+				macp->markLocation->position = position.value();
+				macp->markLocation->rotation = rotation;
+				macp->markLocation->cell = cell;
+			};
+
+			state["tes3"]["clearMarkLocation"] = []() {
+				auto macp = TES3::WorldController::get()->getMobilePlayer();
+				if (macp->markLocation) {
+					tes3::_delete(macp->markLocation);
+					macp->markLocation = nullptr;
+				}
+			};
+
+			state["tes3"]["getItemIsStolen"] = [](sol::table params) {
+				auto item = getOptionalParamObject<TES3::Item>(params, "item");
+				auto from = getOptionalParamObject<TES3::BaseObject>(params, "from");
+
+				if (item == nullptr) {
+					throw std::invalid_argument("Invalid 'item' parameter provided.");
+				}
+				else if (from == nullptr) {
+					throw std::invalid_argument("Invalid 'from' parameter provided.");
+				}
+				else if (item->getStolenList() == nullptr) {
+					throw std::invalid_argument("Invalid 'item' parameter provided. Does not support a stolen list.");
+				}
+
+				return item->getStolenFlag(from);
+			};
+
+			state["tes3"]["setItemIsStolen"] = [](sol::table params) {
+				auto item = getOptionalParamObject<TES3::Item>(params, "item");
+				auto from = getOptionalParamObject<TES3::BaseObject>(params, "from");
+
+				if (item == nullptr) {
+					throw std::invalid_argument("Invalid 'item' parameter provided.");
+				}
+				else if (from == nullptr) {
+					throw std::invalid_argument("Invalid 'from' parameter provided.");
+				}
+				else if (item->getStolenList() == nullptr) {
+					throw std::invalid_argument("Invalid 'item' parameter provided. Does not support a stolen list.");
+				}
+
+				if (getOptionalParam<bool>(params, "stolen", true)) {
+					item->addStolenFlag(from);
+				}
+				else {
+					item->removeStolenFlag(from);
+				}
 			};
 		}
 	}

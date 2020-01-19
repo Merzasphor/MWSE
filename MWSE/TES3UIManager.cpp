@@ -286,6 +286,16 @@ namespace TES3 {
 			TES3_UpdateStatsPane();
 		}
 
+		const auto TES3_UI_UpdateSpellmakingMenu = reinterpret_cast<void(__cdecl*)()>(0x622020);
+		void updateSpellmakingMenu() {
+			TES3_UI_UpdateSpellmakingMenu();
+		}
+
+		const auto TES3_UI_UpdateEnchantingMenu = reinterpret_cast<void(__cdecl*)()>(0x5C3840);
+		void updateEnchantingMenu() {
+			TES3_UI_UpdateEnchantingMenu();
+		}
+
 		const auto TES3_UpdateInventoryTiles = reinterpret_cast<void(__cdecl*)()>(0x5CC910);
 		void updateInventoryMenuTiles() {
 			TES3_UpdateInventoryTiles();

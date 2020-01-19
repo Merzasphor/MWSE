@@ -11,6 +11,10 @@ namespace TES3 {
 		return GameSettingInfo::get(index);
 	}
 
+	char * GameSetting::getObjectID() {
+		return getInfo()->name;
+	}
+
 	char GameSetting::getType() {
 		// The type is unreliable, instead use the first character of the name.
 		return getInfo()->name[0];

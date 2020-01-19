@@ -6,9 +6,15 @@
 
 #include "TES3Activator.h"
 #include "TES3Script.h"
+#include "LuaObject.h"
 
 namespace mwse {
 	namespace lua {
+		auto createActivator( sol::table params )
+		{
+			return makeObjectCreator( TES3::ObjectType::Activator )->create( params, false );
+		}
+
 		void bindTES3Activator() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -29,6 +35,9 @@ namespace mwse {
 
 			// TODO: Deprecated. Remove before 2.1-stable.
 			usertypeDefinition["model"] = sol::property(&TES3::Activator::getModelPath, &TES3::Activator::setModelPath);
+
+			// utility function bindings
+			usertypeDefinition.set( "create", &createActivator );
 		}
 	}
 }

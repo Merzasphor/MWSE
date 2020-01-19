@@ -51,8 +51,8 @@ namespace mwse {
 				usertypeDefinition[sol::meta_function::addition] = &TES3::Vector3::operator+;
 				usertypeDefinition[sol::meta_function::subtraction] = &TES3::Vector3::operator-;
 				usertypeDefinition[sol::meta_function::multiplication] = sol::overload(
-					sol::resolve<TES3::Vector3(const TES3::Vector3&)>(&TES3::Vector3::operator*),
-					sol::resolve<TES3::Vector3(const float)>(&TES3::Vector3::operator*)
+					sol::resolve<TES3::Vector3(const TES3::Vector3&) const>(&TES3::Vector3::operator*),
+					sol::resolve<TES3::Vector3(const float) const>(&TES3::Vector3::operator*)
 				);
 				usertypeDefinition[sol::meta_function::length] = &TES3::Vector3::length;
 				usertypeDefinition[sol::meta_function::to_string] = [](TES3::Vector3& self) {
@@ -89,6 +89,7 @@ namespace mwse {
 				usertypeDefinition["negate"] = &TES3::Vector3::negate;
 				usertypeDefinition["normalize"] = &TES3::Vector3::normalize;
 				usertypeDefinition["normalized"] = &TES3::Vector3::normalized;
+				usertypeDefinition.set("interpolate", &TES3::Vector3::interpolate);
 
 				// Conversion to NI::Color.
 				usertypeDefinition["toColor"] = [](TES3::Vector3& self) { return NI::Color(self.x, self.y, self.z); };

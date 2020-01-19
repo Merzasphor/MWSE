@@ -2,6 +2,8 @@
 
 #include "TES3Defines.h"
 
+#include "TES3Object.h"
+
 namespace TES3 {
 	struct Race : BaseObject {
 		struct SkillBonus {
@@ -47,6 +49,12 @@ namespace TES3 {
 		unsigned int descriptionFileOffset; // 0xE4
 		BodyParts maleBody; // 0xE8
 		BodyParts femaleBody; // 0x0160
+
+		//
+		// Virtual table overrides.
+		//
+
+		char * getObjectID();
 	};
 	static_assert(sizeof(Race) == 0x1D8, "TES3::Race failed size validation");
 }

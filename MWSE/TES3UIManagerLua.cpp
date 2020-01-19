@@ -487,6 +487,8 @@ namespace mwse {
 			tes3ui["suppressTooltip"] = &TES3::UI::setSuppressingHelpMenu;
 			tes3ui["showDialogueMessage"] = &showDialogueMessage;
 			tes3ui["updateDialogDisposition"] = &TES3::UI::updateDialogDisposition;
+			tes3ui["updateSpellmakingMenu"] = TES3::UI::updateSpellmakingMenu;
+			tes3ui["updateEnchantingMenu"] = TES3::UI::updateEnchantingMenu;
 
 			// Add binding for TES3::UI::TreeItem type.
 			// TODO: Move this to its own file after TES3::UI::Tree has been made a template.

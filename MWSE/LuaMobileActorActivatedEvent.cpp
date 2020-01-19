@@ -21,6 +21,7 @@ namespace mwse {
 				sol::table eventData = state.create_table();
 
 				eventData["reference"] = lua::makeLuaObject(m_Reference);
+				eventData["mobile"] = lua::makeLuaObject(m_Reference->getAttachedMobileObject());
 
 				return eventData;
 			}

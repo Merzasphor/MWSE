@@ -4,9 +4,15 @@
 #include "TES3ObjectLua.h"
 
 #include "TES3Static.h"
+#include "LuaObject.h"
 
 namespace mwse {
 	namespace lua {
+		auto createStatic( sol::table params )
+		{
+			return makeObjectCreator( TES3::ObjectType::Static )->create( params, false );
+		}
+		
 		void bindTES3Static() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -25,6 +31,9 @@ namespace mwse {
 
 			// TODO: Deprecated. Remove before 2.1-stable.
 			usertypeDefinition["model"] = sol::property(&TES3::Static::getModelPath, &TES3::Static::setModelPath);
+
+			// utility function bindings
+			usertypeDefinition.set( "create", &createStatic );
 		}
 	}
 }

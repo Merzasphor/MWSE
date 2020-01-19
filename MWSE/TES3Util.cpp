@@ -260,6 +260,7 @@ namespace mwse {
 			TES3_newGame();
 
 			// Clear any timers.
+			TES3::DataHandler::previousVisitedCell = nullptr;
 			luaManager.clearTimers();
 
 			// Call our post-load event.
@@ -306,19 +307,19 @@ namespace mwse {
 			return TES3_operator_new(size);
 		}
 
-		ExternalRealloc _realloc = NULL;
+		const auto TES3_operator_realloc = reinterpret_cast<void* (__cdecl**)(void*, size_t)>(0x746288);
 		void* realloc(void* address, size_t size) {
-			return _realloc(address, size);
+			return (*TES3_operator_realloc)(address, size);
 		}
 
-		ExternalMalloc _malloc = NULL;
+		const auto TES3_operator_malloc = reinterpret_cast<void* (__cdecl*)(size_t)>(0x727738);
 		void* malloc(size_t size) {
-			return _malloc(size);
+			return TES3_operator_malloc(size);
 		}
 
-		ExternalFree _free = NULL;
+		const auto TES3_operator_free = reinterpret_cast<void (__cdecl*)(void*)>(0x727732);
 		void free(void* address) {
-			_free(address);
+			TES3_operator_free(address);
 		}
 	}
 }

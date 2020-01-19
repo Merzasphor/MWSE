@@ -138,7 +138,7 @@ namespace TES3 {
 		int (__thiscall * getFactionRank)(BaseObject*); // 0x70
 		int (__thiscall * getLevel)(BaseObject*); // 0x74
 		void * unknown_0x78;
-		signed char (__thiscall * setDispositionRaw)(BaseObject*, signed char); // 0x7C
+		void (__thiscall * setDispositionRaw)(BaseObject*, int); // 0x7C
 		int (__thiscall * modDisposition)(BaseObject*, signed int); // 0x80
 		int (__thiscall * getFactionIndex)(BaseObject*); // 0x84
 		signed char (__thiscall * setFactionIndex)(BaseObject*, signed char); // 0x88
@@ -256,7 +256,7 @@ namespace TES3 {
 		bool isFemale();
 		int getFactionRank();
 		int getLevel();
-		signed char setDispositionRaw(signed char);
+		void setDispositionRaw(signed char);
 		int modDisposition(signed int);
 		int getFactionIndex();
 		signed char setFactionIndex(signed char);
@@ -315,6 +315,14 @@ namespace TES3 {
 		//
 
 		Iterator<BaseObject> * getStolenList();
+
+		//
+		// Other related this-call functions.
+		//
+
+		void addStolenFlag(BaseObject* stolenFrom);
+		void removeStolenFlag(BaseObject* stolenFrom);
+		bool getStolenFlag(BaseObject* stolenFrom);
 
 	};
 	static_assert(sizeof(PhysicalObject) == 0x30, "TES3::PhysicalObject failed size validation");

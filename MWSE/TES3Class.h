@@ -45,7 +45,8 @@ namespace TES3 {
 		// Virtual table overrides.
 		//
 
-		char* getName();
+		char * getObjectID();
+		char * getName();
 
 		//
 		// Custom functions.

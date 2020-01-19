@@ -49,13 +49,27 @@ namespace TES3 {
 		SoundBuffer* soundBuffer;
 
 		//
+		// Virtual table overrides.
+		//
+
+		char * getObjectID();
+
+		//
 		// Other related this-call functions.
 		//
 
 		bool play(int playbackFlags = 0, unsigned char volume = 250, float pitch = 1.0f, bool isNot3D = true);
 		void stop();
+		void setVolumeRaw(unsigned char volume);
 
 		bool isPlaying();
+
+		//
+		// Custom functions.
+		//
+
+		float getVolume();
+		void setVolume(float volume);
 
 	};
 	static_assert(sizeof(Sound) == 0x58, "TES3::Sound failed size validation");

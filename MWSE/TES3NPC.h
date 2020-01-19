@@ -48,8 +48,8 @@ namespace TES3 {
 		Script * script; // 0x74
 		void * linkedObjectIDs; // 0x78
 		short level; // 0x7C
-		signed char attributes[8]; // 0x7E
-		signed char skills[27]; // 0x86
+		unsigned char attributes[8]; // 0x7E
+		unsigned char skills[27]; // 0x86
 		unsigned char reputation; // 0xA1
 		short health; // 0xA2
 		short magicka; // 0xA4

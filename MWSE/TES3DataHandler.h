@@ -107,6 +107,7 @@ namespace TES3 {
 		Faction* findFaction(const char*);
 		bool addNewObject(BaseObject*);
 		void deleteObject(BaseObject*);
+		void respawnContainers();
 
 		Cell * getCellByGrid(int x, int y);
 		Cell * getCellByName(const char* name);
@@ -260,6 +261,12 @@ namespace TES3 {
 		Sound * currentAmbientWaterSound; // 0xB54C
 		int exteriorCellDataBufferSize; // 0xB550
 		void * exteriorCellDataBuffer; // 0xB554
+
+		//
+		// Custom static data.
+		//
+
+		static Cell* previousVisitedCell;
 
 		// Get singleton.
 		_declspec (dllexport) static DataHandler * get();

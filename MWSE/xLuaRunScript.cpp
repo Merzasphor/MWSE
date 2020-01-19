@@ -69,7 +69,7 @@ namespace mwse
 			cachedModule = cacheHit->second;
 		}
 		else {
-			sol::protected_function_result result = state.safe_script_file("./Data Files/MWSE/mods/" + scriptName + ".lua");
+			sol::protected_function_result result = state.safe_script_file(".\\Data Files\\MWSE\\mods\\" + scriptName + ".lua");
 			if (result.valid()) {
 				sol::object r = result;
 				if (r.is<sol::table>()) {

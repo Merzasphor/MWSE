@@ -21,6 +21,12 @@ namespace TES3 {
 		int unknown_0x30;
 		Sound* sound;
 		SoundType soundType;
+
+		//
+		// Virtual table overrides.
+		//
+
+		char * getObjectID();
 	};
 	static_assert(sizeof(SoundGenerator) == 0x3C, "TES3::SoundGenerator failed size validation");
 }

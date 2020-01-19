@@ -60,33 +60,33 @@ namespace mwse {
 			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.new_usertype<TES3::GameSetting>("tes3gameSetting");
-			usertypeDefinition["new"] = sol::no_constructor;
+			auto usertypeDefinition = state.create_simple_usertype<TES3::GameSetting>();
+			usertypeDefinition.set("new", sol::no_constructor);
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
-			usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
+			usertypeDefinition.set(sol::base_classes, sol::bases<TES3::BaseObject>());
 			setUserdataForBaseObject(usertypeDefinition);
 
 			// Allow object to be converted to strings using their object ID.
-			usertypeDefinition[sol::meta_function::to_string] = &TES3::GameSetting::getName;
+			usertypeDefinition.set(sol::meta_function::to_string, &TES3::GameSetting::getName);
 
 			// Allow object to be serialized to json.
-			usertypeDefinition["__tojson"] = [](TES3::GameSetting& self, sol::table state) {
+			usertypeDefinition.set("__tojson", [](TES3::GameSetting& self, sol::table state) {
 				std::ostringstream ss;
 				ss << "\"tes3gameSetting:" << self.getName() << "\"";
 				return ss.str();
-			};
+			});
 
 			// Basic property binding.
-			usertypeDefinition["index"] = sol::readonly_property(&TES3::GameSetting::index);
-
-			// Override the default BaseObject bindings to return the GMST's name.
-			usertypeDefinition["id"] = sol::readonly_property(&TES3::GameSetting::getName);
+			usertypeDefinition.set("index", sol::readonly_property(&TES3::GameSetting::index));
 
 			// Functions exposed as properties.
-			usertypeDefinition["defaultValue"] = sol::readonly_property(&getDefaultValue);
-			usertypeDefinition["type"] = sol::readonly_property(&TES3::GameSetting::getType);
-			usertypeDefinition["value"] = sol::property(&getValue, &setValue);
+			usertypeDefinition.set("defaultValue", sol::readonly_property(&getDefaultValue));
+			usertypeDefinition.set("type", sol::readonly_property(&TES3::GameSetting::getType));
+			usertypeDefinition.set("value", sol::property(&getValue, &setValue));
+
+			// Finish up our usertype.
+			state.set_usertype("tes3gameSetting", usertypeDefinition);
 		}
 	}
 }

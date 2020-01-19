@@ -1,18 +1,18 @@
 -- First, look for objects in the core folder. DLL files may also exist in the root folder.
-package.path = "./Data Files/MWSE/core/?.lua;./Data Files/MWSE/core/?/init.lua;"
-package.cpath = "?.dll;./Data Files/MWSE/core/?.dll;"
+package.path = ".\\Data Files\\MWSE\\core\\?.lua;.\\Data Files\\MWSE\\core\\?\\init.lua;"
+package.cpath = "?.dll;.\\Data Files\\MWSE\\core\\?.dll;"
 
 -- Next, look in the library folder.
-package.path = package.path .. "./Data Files/MWSE/lib/?.lua;./Data Files/MWSE/lib/?/init.lua;"
-package.cpath = package.cpath .. "./Data Files/MWSE/lib/?.dll;"
+package.path = package.path .. ".\\Data Files\\MWSE\\lib\\?.lua;.\\Data Files\\MWSE\\lib\\?\\init.lua;"
+package.cpath = package.cpath .. ".\\Data Files\\MWSE\\lib\\?.dll;"
 
 -- Third, look in the mods folder.
-package.path = package.path .. "./Data Files/MWSE/mods/?.lua;./Data Files/MWSE/mods/?/init.lua;"
-package.cpath = package.cpath .. "./Data Files/MWSE/mods/?.dll;"
+package.path = package.path .. ".\\Data Files\\MWSE\\mods\\?.lua;.\\Data Files\\MWSE\\mods\\?\\init.lua;"
+package.cpath = package.cpath .. ".\\Data Files\\MWSE\\mods\\?.dll;"
 
 -- Provide backwards compatibility for old versions of MWSE 2.1. This will be removed before a stable release.
-package.path = package.path .. "./Data Files/MWSE/lua/?.lua;./Data Files/MWSE/lua/?/init.lua;"
-package.cpath = package.cpath .. "./Data Files/MWSE/lua/?.dll;"
+package.path = package.path .. ".\\Data Files\\MWSE\\lua\\?.lua;.\\Data Files\\MWSE\\lua\\?\\init.lua;"
+package.cpath = package.cpath .. ".\\Data Files\\MWSE\\lua\\?.dll;"
 
 function include(moduleName)
 	local status, result = pcall(require, moduleName)
@@ -247,7 +247,7 @@ local function deleteDirectoryRecursive(dir, recursive)
 	local recursive = recursive or false
 	if (recursive) then
 		for file in lfs.dir(dir) do
-			local path = dir .. "/" .. file
+			local path = dir .. "\\" .. file
 			if (file ~= "." and file ~= "..") then
 				if (lfs.attributes(path, "mode") == "file") then
 					os.remove(path)
@@ -283,7 +283,7 @@ function json.loadfile(fileName)
 	end
 
 	-- Load the contents of the file.
-	local f = io.open("Data Files/MWSE/" .. fileName, "r")
+	local f = io.open("Data Files\\MWSE\\" .. fileName, "r")
 	if (f == nil) then
 		return nil
 	end
@@ -319,12 +319,12 @@ function mwse.log(str, ...)
 end
 
 function mwse.loadConfig(fileName)
-	return json.loadfile(string.format("config/%s", fileName))
+	return json.loadfile(string.format("config\\%s", fileName))
 end
 
 function mwse.saveConfig(fileName, object, config)
 	if (fileName and object) then
-		json.savefile(string.format("config/%s", fileName), object, config or { indent = true })
+		json.savefile(string.format("config\\%s", fileName), object, config or { indent = true })
 	end
 end
 

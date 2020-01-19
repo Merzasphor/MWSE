@@ -21,6 +21,7 @@
 #include "TES3Alchemy.h"
 #include "TES3Book.h"
 #include "TES3CombatSession.h"
+#include "TES3Container.h"
 #include "TES3Creature.h"
 #include "TES3CrimeEvent.h"
 #include "TES3DataHandler.h"
@@ -183,6 +184,7 @@
 #include "LuaMouseButtonUpEvent.h"
 #include "LuaMouseWheelEvent.h"
 #include "LuaMusicSelectTrackEvent.h"
+#include "LuaObjectInvalidatedEvent.h"
 #include "LuaPotionBrewedEvent.h"
 #include "LuaProjectileExpireEvent.h"
 #include "LuaRestInterruptEvent.h"
@@ -304,16 +306,20 @@ namespace mwse {
 
 		void LuaManager::bindData() {
 			// Bind our LuaScript type, which is used for holding script contexts.
-			{
-				auto usertypeDefinition = luaState.new_usertype<LuaScript>("mwseLuaScript");
-				usertypeDefinition[sol::meta_function::index] = &DynamicLuaObject::dynamic_get;
-				usertypeDefinition[sol::meta_function::index] = &DynamicLuaObject::dynamic_set;
-				usertypeDefinition[sol::meta_function::length] = [](DynamicLuaObject& d) { return d.entries.size(); };
+			luaState.new_usertype<LuaScript>("LuaScript",
+				sol::constructors<LuaScript()>(),
 
-				usertypeDefinition["script"] = sol::readonly(&LuaScript::script);
-				usertypeDefinition["reference"] = sol::readonly(&LuaScript::reference);
-				usertypeDefinition["context"] = sol::readonly_property([](LuaScript& self) { return std::shared_ptr<ScriptContext>(new ScriptContext(self.script)); });
-			}
+				// Implement dynamic object metafunctions.
+				sol::meta_function::index, &DynamicLuaObject::dynamic_get,
+				sol::meta_function::new_index, &DynamicLuaObject::dynamic_set,
+				sol::meta_function::length, [](DynamicLuaObject& d) { return d.entries.size(); },
+
+				// Set up read-only properties.
+				"script", sol::readonly(&LuaScript::script),
+				"reference", sol::readonly(&LuaScript::reference),
+				"context", sol::readonly_property([](LuaScript& self) { return std::shared_ptr<ScriptContext>(new ScriptContext(self.script)); })
+
+				);
 
 			// Create the base of API tables.
 			luaState["mwse"] = luaState.create_table();
@@ -592,7 +598,6 @@ namespace mwse {
 		// Hook: Enter Frame
 		//
 
-		TES3::Cell* lastCell = NULL;
 		bool lastMenuMode = true;
 		void __fastcall EnterFrame(TES3::WorldController* worldController, DWORD _UNUSED_) {
 			// Run the function before raising our event.
@@ -618,11 +623,11 @@ namespace mwse {
 
 			// Has our cell changed?
 			TES3::DataHandler * dataHandler = TES3::DataHandler::get();
-			if (dataHandler->cellChanged) {
+			if (dataHandler->currentCell != TES3::DataHandler::previousVisitedCell) {
 				if (event::CellChangedEvent::getEventEnabled()) {
-					luaManager.getThreadSafeStateHandle().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, lastCell));
+					luaManager.getThreadSafeStateHandle().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, TES3::DataHandler::previousVisitedCell));
 				}
-				lastCell = dataHandler->currentCell;
+				TES3::DataHandler::previousVisitedCell = dataHandler->currentCell;
 			}
 
 			// Send off our enterFrame event always.
@@ -683,6 +688,36 @@ namespace mwse {
 			return tes3::ui::equipInventoryItem(object, data);
 		}
 
+		static bool OnPCEquipItemDoubled_blocked = false;
+		signed char __cdecl OnPCEquipItemDoubled(TES3::PhysicalObject* object, TES3::ItemData* data) {
+			OnPCEquipItemDoubled_blocked = false;
+
+			// Execute event. If the event blocked the call, bail.
+			if (event::EquipEvent::getEventEnabled()) {
+				auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::object response = stateHandle.triggerEvent(new event::EquipEvent(TES3::WorldController::get()->getMobilePlayer()->reference, object, data));
+				if (response.get_type() == sol::type::table) {
+					sol::table eventData = response;
+					if (eventData["block"] == true) {
+						OnPCEquipItemDoubled_blocked = true;
+						return 0;
+					}
+				}
+			}
+
+			// Call the original function.
+			return tes3::ui::equipInventoryItem(object, data);
+		}
+
+		signed char __cdecl OnPCEquipItemDoubledFollowUp(TES3::PhysicalObject* object, TES3::ItemData* data) {
+			if (OnPCEquipItemDoubled_blocked) {
+				return 0;
+			}
+
+			// Call the original function.
+			return tes3::ui::equipInventoryItem(object, data);
+		}
+
 		//
 		// Hook: On Equipped.
 		//
@@ -735,38 +770,12 @@ namespace mwse {
 		bool __fastcall OnLoad(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName) {
 			// Call our wrapper for the function so that events are triggered.
 			TES3::LoadGameResult loaded = nonDynamicData->loadGame(fileName);
-
-			// Extra things we want to do if we're successfully loading.
-			if (loaded == TES3::LoadGameResult::Success) {
-				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
-
-				if (event::CellChangedEvent::getEventEnabled()) {
-					LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, NULL));
-				}
-
-				lastCell = dataHandler->currentCell;
-				TES3::UI::setSuppressingHelpMenu(false);
-			}
-
 			return loaded != TES3::LoadGameResult::Failure;
 		}
 
 		bool __fastcall OnLoadMainMenu(TES3::NonDynamicData* nonDynamicData, DWORD _UNUSED_, const char* fileName) {
 			// Call our wrapper for the function so that events are triggered.
 			TES3::LoadGameResult loaded = nonDynamicData->loadGameMainMenu(fileName);
-
-			// Fire off a cell changed event as well, and update the cached last cell.
-			if (loaded == TES3::LoadGameResult::Success) {
-				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
-
-				if (event::CellChangedEvent::getEventEnabled()) {
-					LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::CellChangedEvent(dataHandler->currentCell, NULL));
-				}
-
-				lastCell = dataHandler->currentCell;
-				TES3::UI::setSuppressingHelpMenu(false);
-			}
-
 			return loaded != TES3::LoadGameResult::Failure;
 		}
 
@@ -785,12 +794,8 @@ namespace mwse {
 			// Fire off the loaded/cellChanged events.
 			LuaManager& luaManager = LuaManager::getInstance();
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
-			lastCell = TES3::DataHandler::get()->currentCell;
 			if (event::LoadedGameEvent::getEventEnabled()) {
 				stateHandle.triggerEvent(new event::LoadedGameEvent(nullptr, false, true));
-			}
-			if (event::CellChangedEvent::getEventEnabled()) {
-				stateHandle.triggerEvent(new event::CellChangedEvent(lastCell, nullptr));
 			}
 		}
 
@@ -1485,7 +1490,6 @@ namespace mwse {
 		// Event: Activation Target Changed
 		//
 
-		static const auto global_TES3_Game = reinterpret_cast<TES3::Game**const>(0x7C6CDC);
 		static const uintptr_t MACP__getPlayerAnimData_fieldEC = 0x567990;
 		static TES3::Reference* previousTarget;
 
@@ -1499,7 +1503,7 @@ namespace mwse {
 		}
 
 		static void HookPostFindActivationTarget() {
-			TES3::Reference *currentTarget = (*global_TES3_Game)->playerTarget;
+			TES3::Reference *currentTarget = TES3::Game::get()->playerTarget;
 			if (previousTarget != currentTarget && event::ActivationTargetChangedEvent::getEventEnabled()) {
 				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::ActivationTargetChangedEvent(previousTarget, currentTarget));
 			}
@@ -1886,11 +1890,19 @@ namespace mwse {
 
 		const auto TES3_ShowSkillRaisedNotification = reinterpret_cast<void(__cdecl*)(int, char*)>(0x629FC0);
 
-		void __cdecl OnSkillRaised(int skillId, char * buffer) {
+		void __cdecl OnSkillRaisedBook(int skillId, char* buffer) {
 			TES3_ShowSkillRaisedNotification(skillId, buffer);
-			
+
 			if (event::SkillRaisedEvent::getEventEnabled()) {
-				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SkillRaisedEvent(skillId, TES3::WorldController::get()->getMobilePlayer()->skills[skillId].base));
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SkillRaisedEvent(skillId, TES3::WorldController::get()->getMobilePlayer()->skills[skillId].base, "book"));
+			}
+		}
+
+		void __cdecl OnSkillRaisedProgress(int skillId, char* buffer) {
+			TES3_ShowSkillRaisedNotification(skillId, buffer);
+
+			if (event::SkillRaisedEvent::getEventEnabled()) {
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SkillRaisedEvent(skillId, TES3::WorldController::get()->getMobilePlayer()->skills[skillId].base, "progress"));
 			}
 		}
 
@@ -1911,12 +1923,16 @@ namespace mwse {
 			}
 
 			if (event::SkillRaisedEvent::getEventEnabled()) {
-				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SkillRaisedEvent(skillId, skill->base));
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SkillRaisedEvent(skillId, skill->base, "training"));
 			}
 		}
 
 		void LuaManager::executeMainModScripts(const char* path, const char* filename) {
-			for (auto & p : std::filesystem::recursive_directory_iterator(path)) {
+			if (!std::filesystem::exists(path)) {
+				return;
+			}
+
+			for (auto & p : std::filesystem::recursive_directory_iterator(path, std::filesystem::directory_options::follow_directory_symlink)) {
 				if (p.path().filename() == filename) {
 					// If a parent directory is marked .disabled, ignore files in it.
 					if (p.path().string().find(".disabled\\") != std::string::npos) {
@@ -2677,7 +2693,7 @@ namespace mwse {
 
 		void LuaManager::hook() {
 			// Execute mwse_init.lua
-			sol::protected_function_result result = luaState.safe_script_file("Data Files/MWSE/core/mwse_init.lua");
+			sol::protected_function_result result = luaState.safe_script_file("Data Files\\MWSE\\core\\mwse_init.lua");
 			if (!result.valid()) {
 				sol::error error = result;
 				log::getLog() << "[LuaManager] ERROR: Failed to initialize MWSE Lua interface." << std::endl << error.what() << std::endl;
@@ -2709,12 +2725,11 @@ namespace mwse {
 
 			// Event: equip.
 			genCallEnforced(0x5CB8E7, 0x5CE130, reinterpret_cast<DWORD>(OnPCEquip));
-			genCallEnforced(0x5D11D9, 0x5CE130, reinterpret_cast<DWORD>(OnPCEquip));
 			genCallEnforced(0x60E70F, 0x5CE130, reinterpret_cast<DWORD>(OnPCEquip));
 			genCallEnforced(0x60E9BE, 0x5CE130, reinterpret_cast<DWORD>(OnPCEquip));
 			// ui_inventoryEquipItemToPlayer calls
-			genCallEnforced(0x5E4399, 0x5D1190, reinterpret_cast<DWORD>(OnPCEquipItem)); //magic menu
-			genCallEnforced(0x5E43A0, 0x5D1190, reinterpret_cast<DWORD>(OnPCEquipItem)); //magic menu
+			genCallEnforced(0x5E4399, 0x5D1190, reinterpret_cast<DWORD>(OnPCEquipItemDoubled)); //magic menu
+			genCallEnforced(0x5E43A0, 0x5D1190, reinterpret_cast<DWORD>(OnPCEquipItemDoubledFollowUp)); //magic menu
 			genCallEnforced(0x60878B, 0x5D1190, reinterpret_cast<DWORD>(OnPCEquipItem)); //quick slots
 			// TODO: cosmetic issue when readying enchantments- item name notification pops up even when the equip is blocked.
 
@@ -3309,8 +3324,8 @@ namespace mwse {
 			genCallEnforced(0x5591D6, 0x538F00, *reinterpret_cast<DWORD*>(&combatSessionDetermineAction));
 
 			// Event: Skill Raised.
-			genCallEnforced(0x4A28C6, 0x629FC0, reinterpret_cast<DWORD>(OnSkillRaised));
-			genCallEnforced(0x56BCF2, 0x629FC0, reinterpret_cast<DWORD>(OnSkillRaised));
+			genCallEnforced(0x4A28C6, 0x629FC0, reinterpret_cast<DWORD>(OnSkillRaisedBook));
+			genCallEnforced(0x56BCF2, 0x629FC0, reinterpret_cast<DWORD>(OnSkillRaisedProgress));
 			genCallEnforced(0x618355, 0x401060, reinterpret_cast<DWORD>(OnSkillTrained));
 
 			// Event: UI Refreshed.
@@ -3590,7 +3605,6 @@ namespace mwse {
 			genCallEnforced(0x573E46, 0x497BC0, *reinterpret_cast<DWORD*>(&inventoryAddItemByReference));
 			genCallEnforced(0x5A64CD, 0x497BC0, *reinterpret_cast<DWORD*>(&inventoryAddItemByReference));
 
-
 			// Event: Calc Armor Piece Hit.
 			auto mobileNPCApplyArmorRating = &TES3::MobileNPC::applyArmorRating;
 			overrideVirtualTableEnforced(0x74AE6C, 0xE0, 0x54D820, *reinterpret_cast<DWORD*>(&mobileNPCApplyArmorRating)); // MACH
@@ -3599,6 +3613,16 @@ namespace mwse {
 			// Events: disarmTrap/pickLock
 			auto referenceAttemptUnlockDisarm = &TES3::Reference::attemptUnlockDisarm;
 			genCallEnforced(0x569A62, 0x4EB160, *reinterpret_cast<DWORD*>(&referenceAttemptUnlockDisarm));
+
+			// Event: containerClosed.
+			auto actorOnCloseInventory = &TES3::Actor::onCloseInventory;
+			auto containerOnCloseInventory = &TES3::ContainerInstance::onCloseInventory;
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::NPCBase, offsetof(TES3::ActorVirtualTable, onCloseInventory), 0x58D230, *reinterpret_cast<DWORD*>(&actorOnCloseInventory));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::NPCInstance, offsetof(TES3::ActorVirtualTable, onCloseInventory), 0x58D230, *reinterpret_cast<DWORD*>(&actorOnCloseInventory));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::CreatureBase, offsetof(TES3::ActorVirtualTable, onCloseInventory), 0x58D230, *reinterpret_cast<DWORD*>(&actorOnCloseInventory));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::CreatureInstance, offsetof(TES3::ActorVirtualTable, onCloseInventory), 0x58D230, *reinterpret_cast<DWORD*>(&actorOnCloseInventory));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::ContainerBase, offsetof(TES3::ActorVirtualTable, onCloseInventory), 0x58D230, *reinterpret_cast<DWORD*>(&actorOnCloseInventory));
+			overrideVirtualTableEnforced(TES3::VirtualTableAddress::ContainerInstance, offsetof(TES3::ActorVirtualTable, onCloseInventory), 0x4A4460, *reinterpret_cast<DWORD*>(&containerOnCloseInventory));
 
 			// UI framework hooks
 			TES3::UI::hook();
@@ -3618,11 +3642,11 @@ namespace mwse {
 			genCallEnforced(0x4F0C83, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
 
 			// Look for main.lua scripts in the usual directories.
-			executeMainModScripts("Data Files/MWSE/core");
-			executeMainModScripts("Data Files/MWSE/mods");
+			executeMainModScripts("Data Files\\MWSE\\core");
+			executeMainModScripts("Data Files\\MWSE\\mods");
 
 			// Temporary backwards compatibility for old-style MWSE mods.
-			executeMainModScripts("Data Files/MWSE/lua", "mod_init.lua");
+			executeMainModScripts("Data Files\\MWSE\\lua", "mod_init.lua");
 		}
 
 		void LuaManager::cleanup() {
@@ -3735,6 +3759,9 @@ namespace mwse {
 				// Clear any events that make use of this object.
 				UserdataMap::iterator it = userdataCache.find((unsigned long)object);
 				if (it != userdataCache.end()) {
+					// Let people know that this object is invalidated.
+					stateHandle.triggerEvent(new event::ObjectInvalidatedEvent(it->second));
+
 					// Clear any events that make use of this object.
 					event::clearObjectFilter(it->second);
 
@@ -3755,6 +3782,9 @@ namespace mwse {
 				// Clear any events that make use of this object.
 				UserdataMap::iterator it = userdataCache.find((unsigned long)object);
 				if (it != userdataCache.end()) {
+					// Let people know that this object is invalidated.
+					stateHandle.triggerEvent(new event::ObjectInvalidatedEvent(it->second));
+
 					// Clear any events that make use of this object.
 					event::clearObjectFilter(it->second);
 

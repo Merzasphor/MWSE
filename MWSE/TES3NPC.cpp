@@ -39,7 +39,7 @@ namespace TES3 {
 	}
 
 	void NPCInstance::setBaseDisposition(short value) {
-		baseDisposition = value;
+		vTable.actor->setDispositionRaw(this, value);
 
 		// Handle case where we're in dialog with this character.
 		auto menuDialog = TES3::UI::findMenu(*reinterpret_cast<short*>(TES3_UI_ID_MenuDialog));

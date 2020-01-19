@@ -22,7 +22,7 @@ namespace mwse {
 
 			// Function exposing.
 			usertypeDefinition.set("onInventoryClose", [](TES3::Actor& self, sol::optional<TES3::Reference*> reference, sol::optional<int> unknown) {
-				self.onCloseInventory(&self, reference.value_or(nullptr), unknown.value_or(0));
+				self.onCloseInventory(reference.value_or(nullptr), unknown.value_or(0));
 			});
 		}
 	}

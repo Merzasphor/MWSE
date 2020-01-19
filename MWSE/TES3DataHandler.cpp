@@ -5,23 +5,22 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
-#include "LuaSaveGameEvent.h"
-#include "LuaSavedGameEvent.h"
 #include "LuaLoadGameEvent.h"
 #include "LuaLoadedGameEvent.h"
+#include "LuaMeshLoadedEvent.h"
+#include "LuaSaveGameEvent.h"
+#include "LuaSavedGameEvent.h"
 
 #include "TES3Util.h"
 
+#include "TES3DialogueInfo.h"
 #include "TES3MagicEffectController.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
 #include "TES3Sound.h"
 #include "TES3Spell.h"
 #include "TES3WorldController.h"
-
-#include "TES3DialogueInfo.h"
-
-#include "LuaMeshLoadedEvent.h"
+#include "TES3UIManager.h"
 
 #define TES3_NonDynamicData_saveGame 0x4C4250
 #define TES3_NonDynamicData_loadGameInGame 0x4C4800
@@ -42,6 +41,8 @@
 #define TES3_Audio_setBufferVolume 0x4029F0
 
 namespace TES3 {
+
+	Cell* DataHandler::previousVisitedCell = nullptr;
 
 	//
 	// MeshData
@@ -111,11 +112,15 @@ namespace TES3 {
 
 		// Pass a follow-up event if we successfully loaded and clear timers.
 		if (loaded) {
+			DataHandler::previousVisitedCell = nullptr;
 			luaManager.clearTimers();
 
 			if (mwse::lua::event::LoadedGameEvent::getEventEnabled()) {
 				luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str(), fileName == NULL));
 			}
+
+			// Extra things we want to do if we're successfully loading.
+			TES3::UI::setSuppressingHelpMenu(false);
 		}
 
 		return loaded ? LoadGameResult::Success : LoadGameResult::Failure;
@@ -143,11 +148,15 @@ namespace TES3 {
 
 		// Pass a follow-up event if we successfully loaded and clear timers.
 		if (loaded) {
+			DataHandler::previousVisitedCell = nullptr;
 			luaManager.clearTimers();
 
 			if (mwse::lua::event::LoadedGameEvent::getEventEnabled()) {
 				luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str()));
 			}
+
+			// Extra things we want to do if we're successfully loading.
+			TES3::UI::setSuppressingHelpMenu(false);
 		}
 
 		return loaded ? LoadGameResult::Success : LoadGameResult::Failure;
@@ -196,6 +205,11 @@ namespace TES3 {
 
 	void NonDynamicData::deleteObject(BaseObject* object) {
 		reinterpret_cast<void(__thiscall *)(NonDynamicData*, BaseObject*)>(TES3_NonDynamicData_deleteObject)(this, object);
+	}
+
+	const auto TES3_NonDynamicData_respawnContainers = reinterpret_cast<void(__thiscall*)(NonDynamicData*)>(0x4C3B00);
+	void NonDynamicData::respawnContainers() {
+		TES3_NonDynamicData_respawnContainers(this);
 	}
 
 	const auto TES3_NonDynamicData_getCellByGrid = reinterpret_cast<Cell *(__thiscall*)(NonDynamicData*, int, int)>(0x4BAA10);

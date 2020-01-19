@@ -19,4 +19,9 @@ namespace NI {
 		void clamp();
 	};
 	static_assert(sizeof(Color) == 0xC, "NI::Color failed size validation");
+
+	struct ColorA : Color {
+		float a;
+	};
+	static_assert(sizeof(ColorA) == 0x10, "NI::ColorA failed size validation");
 }

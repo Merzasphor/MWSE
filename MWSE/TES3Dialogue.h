@@ -13,10 +13,16 @@ namespace TES3 {
 	};
 
 	struct Dialogue : BaseObject {
-		const char* name;
+		char * name;
 		DialogueType type;
 		Iterator<DialogueInfo> info;
 		int journalIndex;
+
+		//
+		// Virtual table overrides.
+		//
+
+		char * getObjectID();
 
 		//
 		// Other related this-call functions.

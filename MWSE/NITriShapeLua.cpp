@@ -11,6 +11,8 @@
 #include "NIRTTI.h"
 #include "NITriShape.h"
 
+#include <nonstd/span.hpp>
+
 namespace mwse {
 	namespace lua {
 		void bindNITriShape() {
@@ -21,15 +23,34 @@ namespace mwse {
 			// Binding for NI::TriShape.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.new_usertype<NI::TriShape>("niTriShape");
-				usertypeDefinition["new"] = sol::no_constructor;
+				auto usertypeDefinition = state.create_simple_usertype<NI::TriShape>();
+				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
-				usertypeDefinition[sol::base_classes] = sol::bases<NI::AVObject, NI::ObjectNET, NI::Object>();
+				usertypeDefinition.set(sol::base_classes, sol::bases<NI::TriBasedGeometry, NI::Geometry, NI::AVObject, NI::ObjectNET, NI::Object>());
 				setUserdataForNIAVObject(usertypeDefinition);
 
 				// Basic property binding.
-				usertypeDefinition["data"] = sol::property(&NI::TriShape::getModelData, &NI::TriShape::setModelData);
+				usertypeDefinition.set("data", sol::property(&NI::TriShape::getModelData, &NI::TriShape::setModelData));
+
+				// Get vertex list as a self-contained collection.
+				usertypeDefinition.set("vertices", sol::readonly_property(
+					[](NI::TriShape& self) {
+						auto data = self.getModelData();
+						return nonstd::span(data->vertex, data->vertexCount);
+					}
+				));
+
+				// Get normal list as a self-contained collection.
+				usertypeDefinition.set("normals", sol::readonly_property(
+					[](NI::TriShape& self) {
+						auto data = self.getModelData();
+						return nonstd::span(data->normal, data->vertexCount);
+					}
+				));
+
+				// Finish up our usertype.
+				state.set_usertype("niTriShape", usertypeDefinition);
 			}
 		}
 	}

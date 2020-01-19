@@ -52,9 +52,10 @@ namespace TES3 {
 		void setBaseBarterGold(int);
 		bool isGuard();
 		void clone(Reference*);
-		void onCloseInventory(Actor* actor, Reference* reference, int unknown = 0);
+		void onCloseInventory(Reference* reference, int unknown = 0);
 		AIPackageConfig * getAIPackageConfig();
 		void setAIPackage(AIPackageConfig* packageConfig, Reference* reference);
+		int addItem(Item* item, int count, bool something = false);
 
 		//
 		// Other related this-call functions.

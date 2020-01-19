@@ -97,6 +97,14 @@ namespace TES3 {
 			unsigned short duration; // 0x14
 			unsigned short magnitudeMin; // 0x16
 			unsigned char skillOrAttributeID; // 0x18
+
+			//
+			// Custom functions.
+			//
+
+			MagicSourceInstance* getInstance();
+			int getMagnitude();
+
 		};
 		struct ActiveMagicEffects {
 			bool unknown_0x0;
@@ -206,6 +214,7 @@ namespace TES3 {
 
 		void startCombat(MobileActor*);
 		void stopCombat(bool);
+		bool isDead();
 		void onDeath();
 		bool applyHealthDamage(float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth);
 		bool hasFreeAction();
@@ -236,6 +245,10 @@ namespace TES3 {
 		// Always returns false for non-MACH.
 		bool persuade(int random, int persuasionIndex);
 
+		bool getIsWerewolf();
+		void setIsWerewolf(bool set);
+		void changeWerewolfState(bool isWerewolf);
+
 		//
 		// Custom functions.
 		//
@@ -247,6 +260,8 @@ namespace TES3 {
 		void setMobileActorMovementFlag(ActorMovement::Flag, bool);
 
 		bool equipItem(Object* item, ItemData * itemData = nullptr, bool addItem = false, bool selectBestCondition = false, bool selectWorstCondition = false);
+
+		void updateOpacity();
 	};
 	static_assert(sizeof(MobileActor::ActiveMagicEffects) == 0xC, "TES3::MobileActor::ActiveMagicEffects failed size validation");
 	static_assert(sizeof(MobileActor::ActiveMagicEffect) == 0x18, "TES3::MobileActor::ActiveMagicEffect failed size validation");

@@ -25,27 +25,28 @@ namespace TES3 {
 		Vector3() : Vector2(), z(0) {}
 		Vector3(float _x, float _y, float _z) : Vector2(_x, _y), z(_z) {}
 
-		bool operator==(const Vector3& matrix);
-		bool operator!=(const Vector3& matrix);
-		Vector3 operator+(const Vector3&);
-		Vector3 operator-(const Vector3&);
-		Vector3 operator*(const Vector3&);
-		Vector3 operator*(const float);
+		bool operator==(const Vector3& matrix) const;
+		bool operator!=(const Vector3& matrix) const;
+		Vector3 operator+(const Vector3&) const;
+		Vector3 operator-(const Vector3&) const;
+		Vector3 operator*(const Vector3&) const;
+		Vector3 operator*(const float) const;
 
 		//
 		// Associated functions.
 		//
 
-		Vector3 crossProduct(Vector3*);
-		float dotProduct(Vector3*);
-		Matrix33 outerProduct(Vector3*);
+		Vector3 crossProduct(Vector3*) const;
+		float dotProduct(Vector3*) const;
+		Matrix33 outerProduct(Vector3*) const;
 			
-		float heightDifference(Vector3*);
-		float distance(Vector3*);
-		float length();
+		float heightDifference(Vector3*) const;
+		float distance(Vector3*) const;
+		float length() const;
 		void negate();
 		bool normalize();
-		Vector3 normalized();
+		Vector3 normalized() const;
+		Vector3 interpolate(const Vector3&, const float) const;
 
 	};
 	static_assert(sizeof(Vector3) == 0xC, "TES3::Vector3 failed size validation");

@@ -18,6 +18,7 @@
     <ClInclude Include="LuaCalcArmorRatingEvent.h" />
     <ClInclude Include="LuaCalcHitChanceEvent.h" />
     <ClInclude Include="LuaCalcSoulValueEvent.h" />
+    <ClInclude Include="LuaContainerClosedEvent.h" />
     <ClInclude Include="LuaConvertReferenceToItemEvent.h" />
     <ClInclude Include="LuaCrimeWitnessedEvent.h" />
     <ClInclude Include="LuaDisableableEvent.h" />
@@ -89,7 +90,9 @@
     <ClInclude Include="LuaMouseButtonUpEvent.h" />
     <ClInclude Include="LuaMouseWheelEvent.h" />
     <ClInclude Include="LuaMusicSelectTrackEvent.h" />
+    <ClInclude Include="LuaObject.h" />
     <ClInclude Include="LuaObjectFilteredEvent.h" />
+    <ClInclude Include="LuaObjectInvalidatedEvent.h" />
     <ClInclude Include="LuaPickLockEvent.h" />
     <ClInclude Include="LuaPotionBrewedEvent.h" />
     <ClInclude Include="LuaProjectileExpireEvent.h" />
@@ -115,8 +118,17 @@
     <ClInclude Include="LuaWeatherCycledEvent.h" />
     <ClInclude Include="LuaWeatherTransitionFinishedEvent.h" />
     <ClInclude Include="LuaWeatherTransitionStartedEvent.h" />
+    <ClInclude Include="NIBound.h" />
     <ClInclude Include="NIDX8Renderer.h" />
+    <ClInclude Include="NIGeometry.h" />
+    <ClInclude Include="NIGeometryData.h" />
     <ClInclude Include="NIRenderer.h" />
+    <ClInclude Include="NITextureEffect.h" />
+    <ClInclude Include="NITexturingProperty.h" />
+    <ClInclude Include="NiTriBasedGeometry.h" />
+    <ClInclude Include="NiTriBasedGeometryData.h" />
+    <ClInclude Include="NiTriShapeData.h" />
+    <ClInclude Include="TES3Archive.h" />
     <ClInclude Include="TES3MagicEffectController.h" />
     <ClInclude Include="MemoryUtilLua.h" />
     <ClInclude Include="NIAmbientLight.h" />
@@ -172,6 +184,7 @@
     <ClInclude Include="TES3LandTexture.h" />
     <ClInclude Include="TES3MobController.h" />
     <ClInclude Include="TES3AttachmentLua.h" />
+    <ClInclude Include="TES3MobileSpellProjectile.h" />
     <ClInclude Include="TES3ScriptCompiler.h" />
     <ClInclude Include="TES3SoulGemData.h" />
     <ClInclude Include="TES3SpellInstanceController.h" />
@@ -413,6 +426,7 @@
     <ClCompile Include="LuaCombatStartEvent.cpp" />
     <ClCompile Include="LuaCombatStopEvent.cpp" />
     <ClCompile Include="LuaCombatStoppedEvent.cpp" />
+    <ClCompile Include="LuaContainerClosedEvent.cpp" />
     <ClCompile Include="LuaConvertReferenceToItemEvent.cpp" />
     <ClCompile Include="LuaCrimeWitnessedEvent.cpp" />
     <ClCompile Include="LuaDamagedEvent.cpp" />
@@ -465,7 +479,9 @@
     <ClCompile Include="LuaMouseButtonUpEvent.cpp" />
     <ClCompile Include="LuaMouseWheelEvent.cpp" />
     <ClCompile Include="LuaMusicSelectTrackEvent.cpp" />
+    <ClCompile Include="LuaObject.cpp" />
     <ClCompile Include="LuaObjectFilteredEvent.cpp" />
+    <ClCompile Include="LuaObjectInvalidatedEvent.cpp" />
     <ClCompile Include="LuaPickLockEvent.cpp" />
     <ClCompile Include="LuaPotionBrewedEvent.cpp" />
     <ClCompile Include="LuaProjectileExpireEvent.cpp" />
@@ -493,6 +509,10 @@
     <ClCompile Include="LuaWeatherCycledEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionFinishedEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionStartedEvent.cpp" />
+    <ClCompile Include="NIGeometry.cpp" />
+    <ClCompile Include="NIGeometryData.cpp" />
+    <ClCompile Include="NiTriBasedGeometryData.cpp" />
+    <ClCompile Include="TES3Activator.cpp" />
     <ClCompile Include="TES3MagicEffectController.cpp" />
     <ClCompile Include="MemoryUtil.cpp" />
     <ClCompile Include="MemoryUtilLua.cpp" />
@@ -523,7 +543,6 @@
     <ClCompile Include="NISwitchNodeLua.cpp" />
     <ClCompile Include="NITexture.cpp" />
     <ClCompile Include="NITimeControllerLua.cpp" />
-    <ClCompile Include="NITriShape.cpp" />
     <ClCompile Include="NITriShapeLua.cpp" />
     <ClCompile Include="NIUtil.cpp" />
     <ClCompile Include="PatchUtil.cpp" />
@@ -557,8 +576,13 @@
     <ClCompile Include="TES3MagicEffect.cpp" />
     <ClCompile Include="TES3Misc.cpp" />
     <ClCompile Include="TES3MobileActorLua.cpp" />
+    <ClCompile Include="TES3MobileSpellProjectile.cpp" />
+    <ClCompile Include="TES3Quest.cpp" />
+    <ClCompile Include="TES3Race.cpp" />
     <ClCompile Include="TES3Skill.cpp" />
+    <ClCompile Include="TES3SoundGenerator.cpp" />
     <ClCompile Include="TES3SpellInstanceController.cpp" />
+    <ClCompile Include="TES3Static.cpp" />
     <ClCompile Include="TES3StdString.cpp" />
     <ClCompile Include="TES3AttachmentLua.cpp" />
     <ClCompile Include="TES3CrimeEvent.cpp" />
@@ -937,13 +961,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)deps\boost;$(SolutionDir)deps\LuaJIT\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)deps\boost;$(SolutionDir)deps\LuaJIT\src;$(SolutionDir)deps\span-lite;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
     <LibraryPath>$(OutDir);$(SolutionDir)deps\LuaJIT\src;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)deps\boost;$(SolutionDir)deps\LuaJIT\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)deps\boost;$(SolutionDir)deps\LuaJIT\src;$(SolutionDir)deps\span-lite;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
     <LibraryPath>$(OutDir);$(SolutionDir)deps\LuaJIT\src;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -955,9 +979,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;SOL_SAFE_USERTYPE;SOL_EXCEPTIONS_SAFE_PROPAGATION;_DEBUG;MWSE_EXPORTS;_WINDOWS;_USRDLL;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -989,8 +1012,8 @@ echo #define MWSE_BUILD_DATE %buildTime:~0,8% &gt;&gt; $(ProjectDir)/BuildDate.h
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;SOL_SAFE_USERTYPE;SOL_EXCEPTIONS_SAFE_PROPAGATION;NDEBUG;MWSE_EXPORTS;_WINDOWS;_USRDLL;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
