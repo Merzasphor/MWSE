@@ -40,7 +40,7 @@ namespace mwse {
 			usertypeDefinition["effects"] = sol::readonly_property([](TES3::Enchantment& self) { return std::ref(self.effects); });
 
 			// utility function bindings
-			usertypeDefinition.set( "create", &createEnchantment );
+			usertypeDefinition["create"] = &createEnchantment;
 		}
 	}
 }

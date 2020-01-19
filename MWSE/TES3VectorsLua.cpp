@@ -89,7 +89,7 @@ namespace mwse {
 				usertypeDefinition["negate"] = &TES3::Vector3::negate;
 				usertypeDefinition["normalize"] = &TES3::Vector3::normalize;
 				usertypeDefinition["normalized"] = &TES3::Vector3::normalized;
-				usertypeDefinition.set("interpolate", &TES3::Vector3::interpolate);
+				usertypeDefinition["interpolate"] = &TES3::Vector3::interpolate;
 
 				// Conversion to NI::Color.
 				usertypeDefinition["toColor"] = [](TES3::Vector3& self) { return NI::Color(self.x, self.y, self.z); };

@@ -33,7 +33,7 @@ namespace mwse {
 			usertypeDefinition["model"] = sol::property(&TES3::Static::getModelPath, &TES3::Static::setModelPath);
 
 			// utility function bindings
-			usertypeDefinition.set( "create", &createStatic );
+			usertypeDefinition["create"] = &createStatic;
 		}
 	}
 }

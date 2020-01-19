@@ -92,7 +92,7 @@ namespace mwse {
 				usertypeDefinition["model"] = sol::property(&TES3::Misc::getModelPath, &TES3::Misc::setModelPath);
 
 				// utility function bindings
-				usertypeDefinition.set( "create", &createMiscItem );
+				usertypeDefinition["create"] = &createMiscItem;
 			}
 		}
 	}

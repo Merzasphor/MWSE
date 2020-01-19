@@ -10,10 +10,10 @@ namespace mwse {
 			setUserdataForNIDynamicEffect(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition.set("ambient", &NI::Light::ambient);
-			usertypeDefinition.set("diffuse", &NI::Light::diffuse);
-			usertypeDefinition.set("dimmer", &NI::Light::dimmer);
-			usertypeDefinition.set("specular", &NI::Light::specular);
+			usertypeDefinition["ambient"] = &NI::Light::ambient;
+			usertypeDefinition["diffuse"] = &NI::Light::diffuse;
+			usertypeDefinition["dimmer"] = &NI::Light::dimmer;
+			usertypeDefinition["specular"] = &NI::Light::specular;
 		}
 
 		// Speed-optimized binding for NI::PointLight.
@@ -22,12 +22,12 @@ namespace mwse {
 			setUserdataForNILight(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition.set("constantAttenuation", &NI::PointLight::constantAttenuation);
-			usertypeDefinition.set("linearAttenuation", &NI::PointLight::linearAttenuation);
-			usertypeDefinition.set("quadraticAttenuation", &NI::PointLight::quadraticAttenuation);
+			usertypeDefinition["constantAttenuation"] = &NI::PointLight::constantAttenuation;
+			usertypeDefinition["linearAttenuation"] = &NI::PointLight::linearAttenuation;
+			usertypeDefinition["quadraticAttenuation"] = &NI::PointLight::quadraticAttenuation;
 
 			// Basic function binding.
-			usertypeDefinition.set("setAttenuationForRadius", &NI::PointLight::setAttenuationForRadius);
+			usertypeDefinition["setAttenuationForRadius"] = &NI::PointLight::setAttenuationForRadius;
 		}
 
 		void bindNILight();

@@ -51,32 +51,32 @@ namespace mwse {
 
 			// Start our usertype. We must finish this with state.set_usertype.
 			auto usertypeDefinition = state.new_usertype<TES3::TArray<T>>(name);
-			usertypeDefinition.set("new", sol::no_constructor);
+			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Metafunction access.
-			usertypeDefinition.set(sol::meta_function::pairs, [](TES3::TArray<T> * self) {
+			usertypeDefinition[sol::meta_function::pairs] = [](TES3::TArray<T> * self) {
 				TArray_iteratorState<T> it_state(self);
 				return std::make_tuple(&bindTArray_pairsIter<T>, sol::user<TArray_iteratorState<T>>(std::move(it_state)), sol::lua_nil);
-				});
-			usertypeDefinition.set(sol::meta_function::ipairs, [](TES3::TArray<T> * self) {
+				};
+			usertypeDefinition[sol::meta_function::ipairs] = [](TES3::TArray<T> * self) {
 				return std::make_tuple(&bindTArray_ipairsIter<T>, self, 0);
-				});
-			usertypeDefinition.set(sol::meta_function::index, [](TES3::TArray<T>& self, int index) {
+				};
+			usertypeDefinition[sol::meta_function::index] = [](TES3::TArray<T>& self, int index) {
 				index--;
 				if (index < 0 || index >= self.endIndex) {
 					throw std::out_of_range("Access index out of bounds.");
 				}
 				return self.storage[index];
-				});
-			usertypeDefinition.set(sol::meta_function::length, [](TES3::TArray<T>& self) { return self.endIndex; });
+				};
+			usertypeDefinition[sol::meta_function::length] = [](TES3::TArray<T>& self) { return self.endIndex; };
 
 			// Function binding.
-			usertypeDefinition.set("getIndexOfValue", [](TES3::TArray<T> * self, T * value) {
+			usertypeDefinition["getIndexOfValue"] = [](TES3::TArray<T> * self, T * value) {
 				return self->getIndexOfValue(value);
-				});
-			usertypeDefinition.set("contains", [](TES3::TArray<T> * self, T * value) {
+				};
+			usertypeDefinition["contains"] = [](TES3::TArray<T> * self, T * value) {
 				return self->contains(value);
-				});
+				};
 		}
 
 		template <typename T>
@@ -107,32 +107,32 @@ namespace mwse {
 
 			// Start our usertype. We must finish this with state.set_usertype.
 			auto usertypeDefinition = state.new_usertype<TES3::TArray<T>>(name);
-			usertypeDefinition.set("new", sol::no_constructor);
+			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Metafunction access.
-			usertypeDefinition.set(sol::meta_function::pairs, [](TES3::TArray<T> * self) {
+			usertypeDefinition[sol::meta_function::pairs] = [](TES3::TArray<T> * self) {
 				TArray_iteratorState<T> it_state(self);
 				return std::make_tuple(&bindGenericObjectTArray_pairsIter<T>, sol::user<TArray_iteratorState<T>>(std::move(it_state)), sol::lua_nil);
-				});
-			usertypeDefinition.set(sol::meta_function::ipairs, [](TES3::TArray<T> * self) {
+				};
+			usertypeDefinition[sol::meta_function::ipairs] = [](TES3::TArray<T> * self) {
 				return std::make_tuple(&bindGenericObjectTArray_ipairsIter<T>, self, 0);
-				});
-			usertypeDefinition.set(sol::meta_function::index, [](TES3::TArray<T>& self, int index) {
+				};
+			usertypeDefinition[sol::meta_function::index] = [](TES3::TArray<T>& self, int index) {
 				index--;
 				if (index < 0 || index >= self.endIndex) {
 					throw std::out_of_range("Access index out of bounds.");
 				}
 				return makeLuaObject(self.storage[index]);
-				});
-			usertypeDefinition.set(sol::meta_function::length, [](TES3::TArray<T>& self) { return self.endIndex; });
+				};
+			usertypeDefinition[sol::meta_function::length] = [](TES3::TArray<T>& self) { return self.endIndex; };
 
 			// Function binding.
-			usertypeDefinition.set("getIndexOfValue", [](TES3::TArray<T> * self, T * value) {
+			usertypeDefinition["getIndexOfValue"] = [](TES3::TArray<T> * self, T * value) {
 				return self->getIndexOfValue(value);
-				});
-			usertypeDefinition.set("contains", [](TES3::TArray<T> * self, T * value) {
+				};
+			usertypeDefinition["contains"] = [](TES3::TArray<T> * self, T * value) {
 				return self->contains(value);
-				});
+				};
 		}
 
 		//

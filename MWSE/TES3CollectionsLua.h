@@ -43,37 +43,37 @@ namespace mwse {
 			if (nodeName) {
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::IteratorNode<T>>(nodeName);
-				usertypeDefinition.set("new", sol::no_constructor);
+				usertypeDefinition["new"] = sol::no_constructor;
 
 				//
-				usertypeDefinition.set("previousNode", sol::readonly_property(&TES3::IteratorNode<T>::previous));
-				usertypeDefinition.set("nextNode", sol::readonly_property(&TES3::IteratorNode<T>::next));
-				usertypeDefinition.set("nodeData", sol::readonly_property([](TES3::IteratorNode<T>& self) { return makeLuaObject(self.data); }));
+				usertypeDefinition["previousNode"] = sol::readonly_property(&TES3::IteratorNode<T>::previous);
+				usertypeDefinition["nextNode"] = sol::readonly_property(&TES3::IteratorNode<T>::next);
+				usertypeDefinition["nodeData"] = sol::readonly_property([](TES3::IteratorNode<T>& self) { return makeLuaObject(self.data); });
 			}
 
 			// Start our usertype. We must finish this with state.set_usertype.
 			auto usertypeDefinition = state.new_usertype<TES3::Iterator<T>>(name);
-			usertypeDefinition.set("new", sol::no_constructor);
+			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Metamethod binding.
-			usertypeDefinition.set(sol::meta_function::pairs, [](TES3::Iterator<T> * self) {
+			usertypeDefinition[sol::meta_function::pairs] = [](TES3::Iterator<T> * self) {
 				Iterator_state<TES3::BaseObject> it_state(reinterpret_cast<TES3::Iterator<TES3::BaseObject>*>(self));
 				return std::make_tuple(&bindGenericObjectIterator_pairsNext, sol::user<Iterator_state<TES3::BaseObject>>(std::move(it_state)), sol::lua_nil);
-			});
-			usertypeDefinition.set(sol::meta_function::index, [](TES3::Iterator<T>& self, int index) {
+			};
+			usertypeDefinition[sol::meta_function::index] = [](TES3::Iterator<T>& self, int index) {
 				TES3::IteratorNode<T>* node = self.head;
 				for (int i = 1; i < index; i++) {
 					node = node->next;
 				}
 				return makeLuaObject(node->data);
-			});
-			usertypeDefinition.set(sol::meta_function::length, [](TES3::Iterator<T>& self) { return self.size; });
+			};
+			usertypeDefinition[sol::meta_function::length] = [](TES3::Iterator<T>& self) { return self.size; };
 
 			//
-			usertypeDefinition.set("size", sol::readonly_property(&TES3::Iterator<T>::size));
-			usertypeDefinition.set("head", sol::readonly_property(&TES3::Iterator<T>::head));
-			usertypeDefinition.set("tail", sol::readonly_property(&TES3::Iterator<T>::tail));
-			usertypeDefinition.set("current", sol::readonly_property(&TES3::Iterator<T>::current));
+			usertypeDefinition["size"] = sol::readonly_property(&TES3::Iterator<T>::size);
+			usertypeDefinition["head"] = sol::readonly_property(&TES3::Iterator<T>::head);
+			usertypeDefinition["tail"] = sol::readonly_property(&TES3::Iterator<T>::tail);
+			usertypeDefinition["current"] = sol::readonly_property(&TES3::Iterator<T>::current);
 		}
 
 		template <typename T>
@@ -84,37 +84,37 @@ namespace mwse {
 			if (nodeName) {
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::IteratorNode<T>>(nodeName);
-				usertypeDefinition.set("new", sol::no_constructor);
+				usertypeDefinition["new"] = sol::no_constructor;
 
 				//
-				usertypeDefinition.set("previousNode", sol::readonly_property(&TES3::IteratorNode<T>::previous));
-				usertypeDefinition.set("nextNode", sol::readonly_property(&TES3::IteratorNode<T>::next));
-				usertypeDefinition.set("nodeData", sol::readonly_property([](TES3::IteratorNode<T>& self) { return self.data; }));
+				usertypeDefinition["previousNode"] = sol::readonly_property(&TES3::IteratorNode<T>::previous);
+				usertypeDefinition["nextNode"] = sol::readonly_property(&TES3::IteratorNode<T>::next);
+				usertypeDefinition["nodeData"] = sol::readonly_property([](TES3::IteratorNode<T>& self) { return self.data; });
 			}
 
 			// Start our usertype. We must finish this with state.set_usertype.
 			auto usertypeDefinition = state.new_usertype<TES3::Iterator<T>>(name);
-			usertypeDefinition.set("new", sol::no_constructor);
+			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Metamethod binding.
-			usertypeDefinition.set(sol::meta_function::pairs, [](TES3::Iterator<T> * self) {
+			usertypeDefinition[sol::meta_function::pairs] = [](TES3::Iterator<T> * self) {
 				Iterator_state<T> it_state(self);
 				return std::make_tuple(&bindIterator_pairsNext<T>, sol::user<Iterator_state<T>>(std::move(it_state)), sol::lua_nil);
-			});
-			usertypeDefinition.set(sol::meta_function::index, [](TES3::Iterator<T>& self, int index) {
+			};
+			usertypeDefinition[sol::meta_function::index] = [](TES3::Iterator<T>& self, int index) {
 				TES3::IteratorNode<T>* node = self.head;
 				for (int i = 1; i < index; i++) {
 					node = node->next;
 				}
 				return node->data;
-			});
-			usertypeDefinition.set(sol::meta_function::length, [](TES3::Iterator<T>& self) { return self.size; });
+			};
+			usertypeDefinition[sol::meta_function::length] = [](TES3::Iterator<T>& self) { return self.size; };
 
 			//
-			usertypeDefinition.set("size", sol::readonly_property(&TES3::Iterator<T>::size));
-			usertypeDefinition.set("head", sol::readonly_property(&TES3::Iterator<T>::head));
-			usertypeDefinition.set("tail", sol::readonly_property(&TES3::Iterator<T>::tail));
-			usertypeDefinition.set("current", sol::readonly_property(&TES3::Iterator<T>::current));
+			usertypeDefinition["size"] = sol::readonly_property(&TES3::Iterator<T>::size);
+			usertypeDefinition["head"] = sol::readonly_property(&TES3::Iterator<T>::head);
+			usertypeDefinition["tail"] = sol::readonly_property(&TES3::Iterator<T>::tail);
+			usertypeDefinition["current"] = sol::readonly_property(&TES3::Iterator<T>::current);
 		}
 
 		//
@@ -139,38 +139,38 @@ namespace mwse {
 			if (nodeName) {
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::StlListNode<T>>(nodeName);
-				usertypeDefinition.set("new", sol::no_constructor);
+				usertypeDefinition["new"] = sol::no_constructor;
 
 				//
-				usertypeDefinition.set("previousNode", sol::readonly_property(&TES3::StlListNode<T>::previous));
-				usertypeDefinition.set("nextNode", sol::readonly_property(&TES3::StlListNode<T>::next));
-				usertypeDefinition.set("nodeData", sol::readonly_property([](TES3::StlListNode<T>& self) { return makeLuaObject(self.data); }));
+				usertypeDefinition["previousNode"] = sol::readonly_property(&TES3::StlListNode<T>::previous);
+				usertypeDefinition["nextNode"] = sol::readonly_property(&TES3::StlListNode<T>::next);
+				usertypeDefinition["nodeData"] = sol::readonly_property([](TES3::StlListNode<T>& self) { return makeLuaObject(self.data); });
 			}
 
 			// Start our usertype. We must finish this with state.set_usertype.
 			auto usertypeDefinition = state.new_usertype<TES3::StlList<T>>(name);
-			usertypeDefinition.set("new", sol::no_constructor);
+			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Metamethod binding.
-			usertypeDefinition.set(sol::meta_function::pairs, [](TES3::StlList<T> * self) {
+			usertypeDefinition[sol::meta_function::pairs] = [](TES3::StlList<T> * self) {
 				GenericObjectStlList_iteratorState it_state(reinterpret_cast<TES3::StlList<TES3::Object>*>(self));
 				return std::make_tuple(&bindGenericObjectStlList_pairsNext, sol::user<GenericObjectStlList_iteratorState>(std::move(it_state)), sol::lua_nil);
-			});
-			usertypeDefinition.set(sol::meta_function::index, [](TES3::StlList<T>& self, int index) {
+			};
+			usertypeDefinition[sol::meta_function::index] = [](TES3::StlList<T>& self, int index) {
 				TES3::StlListNode<T>* node = self.head;
 				for (int i = 1; i < index; i++) {
 					node = node->next;
 				}
 				return makeLuaObject(node->data);
-			});
-			usertypeDefinition.set(sol::meta_function::length, [](TES3::StlList<T>& self, int index) {
+			};
+			usertypeDefinition[sol::meta_function::length] = [](TES3::StlList<T>& self, int index) {
 				return self.size;
-			});
+			};
 
 			// Basic property binding.
-			usertypeDefinition.set("size", sol::readonly_property(&TES3::StlList<T>::size));
-			usertypeDefinition.set("head", sol::readonly_property(&TES3::StlList<T>::head));
-			usertypeDefinition.set("tail", sol::readonly_property(&TES3::StlList<T>::tail));
+			usertypeDefinition["size"] = sol::readonly_property(&TES3::StlList<T>::size);
+			usertypeDefinition["head"] = sol::readonly_property(&TES3::StlList<T>::head);
+			usertypeDefinition["tail"] = sol::readonly_property(&TES3::StlList<T>::tail);
 		}
 
 		//

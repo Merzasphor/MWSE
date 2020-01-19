@@ -29,69 +29,66 @@ namespace mwse {
 			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.create_simple_usertype<TES3::WeatherController>();
-			usertypeDefinition.set("new", sol::no_constructor);
+			auto usertypeDefinition = state.new_usertype<TES3::WeatherController>("tes3weatherController");
+			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Basic property binding.
-			usertypeDefinition.set("currentFogColor", &TES3::WeatherController::currentFogColor);
-			usertypeDefinition.set("currentSkyColor", &TES3::WeatherController::currentSkyColor);
-			usertypeDefinition.set("hoursBetweenWeatherChanges", &TES3::WeatherController::hoursBetweenWeatherChanges);
-			usertypeDefinition.set("daysRemaining", &TES3::WeatherController::daysRemaining);
-			usertypeDefinition.set("hoursRemaining", &TES3::WeatherController::hoursRemaining);
-			usertypeDefinition.set("masser", sol::readonly_property(&TES3::WeatherController::moonMasser));
-			usertypeDefinition.set("secunda", sol::readonly_property(&TES3::WeatherController::moonSecunda));
-			usertypeDefinition.set("lastActiveRegion", sol::readonly_property(&TES3::WeatherController::lastActiveRegion));
-			usertypeDefinition.set("sceneRainRoot", sol::readonly_property(&TES3::WeatherController::sgRainRoot));
-			usertypeDefinition.set("sceneSkyLight", sol::readonly_property(&TES3::WeatherController::sgSkyLight));
-			usertypeDefinition.set("sceneSkyRoot", sol::readonly_property(&TES3::WeatherController::sgSkyRoot));
-			usertypeDefinition.set("sceneSnowRoot", sol::readonly_property(&TES3::WeatherController::sgSnowRoot));
-			usertypeDefinition.set("sceneStormRoot", sol::readonly_property(&TES3::WeatherController::sgStormRoot));
-			usertypeDefinition.set("sceneSunBase", sol::readonly_property(&TES3::WeatherController::sgSunBase));
-			usertypeDefinition.set("sceneSunGlare", sol::readonly_property(&TES3::WeatherController::sgSunGlare));
-			usertypeDefinition.set("sceneSunVis", sol::readonly_property(&TES3::WeatherController::sgSunVis));
-			usertypeDefinition.set("sunglareFaderAngleMax", &TES3::WeatherController::sunglareFaderAngleMax);
-			usertypeDefinition.set("sunglareFaderColor", &TES3::WeatherController::sunglareFaderCol);
-			usertypeDefinition.set("sunglareFaderMax", &TES3::WeatherController::sunglareFaderMax);
-			usertypeDefinition.set("sunriseDuration", &TES3::WeatherController::sunriseDuration);
-			usertypeDefinition.set("sunriseHour", &TES3::WeatherController::sunriseHour);
-			usertypeDefinition.set("sunsetDuration", &TES3::WeatherController::sunsetDuration);
-			usertypeDefinition.set("sunsetHour", &TES3::WeatherController::sunsetHour);
-			usertypeDefinition.set("timescaleClouds", &TES3::WeatherController::bTimescaleClouds);
-			usertypeDefinition.set("transitionScalar", &TES3::WeatherController::transitionScalar);
-			usertypeDefinition.set("underwaterColor", &TES3::WeatherController::underwaterCol);
-			usertypeDefinition.set("underwaterColorWeight", &TES3::WeatherController::underwaterColWeight);
-			usertypeDefinition.set("underwaterDayFog", &TES3::WeatherController::underwaterDayFog);
-			usertypeDefinition.set("underwaterIndoorFog", &TES3::WeatherController::underwaterIndoorFog);
-			usertypeDefinition.set("underwaterNightFog", &TES3::WeatherController::underwaterNightFog);
-			usertypeDefinition.set("underwaterSunriseFog", &TES3::WeatherController::underwaterSunriseFog);
-			usertypeDefinition.set("underwaterSunsetFog", &TES3::WeatherController::underwaterSunsetFog);
-			usertypeDefinition.set("windVelocityCurrWeather", &TES3::WeatherController::windVelocityCurrWeather);
-			usertypeDefinition.set("windVelocityNextWeather", &TES3::WeatherController::windVelocityNextWeather);
+			usertypeDefinition["currentFogColor"] = &TES3::WeatherController::currentFogColor;
+			usertypeDefinition["currentSkyColor"] = &TES3::WeatherController::currentSkyColor;
+			usertypeDefinition["hoursBetweenWeatherChanges"] = &TES3::WeatherController::hoursBetweenWeatherChanges;
+			usertypeDefinition["daysRemaining"] = &TES3::WeatherController::daysRemaining;
+			usertypeDefinition["hoursRemaining"] = &TES3::WeatherController::hoursRemaining;
+			usertypeDefinition["masser"] = sol::readonly_property(&TES3::WeatherController::moonMasser);
+			usertypeDefinition["secunda"] = sol::readonly_property(&TES3::WeatherController::moonSecunda);
+			usertypeDefinition["lastActiveRegion"] = sol::readonly_property(&TES3::WeatherController::lastActiveRegion);
+			usertypeDefinition["sceneRainRoot"] = sol::readonly_property(&TES3::WeatherController::sgRainRoot);
+			usertypeDefinition["sceneSkyLight"] = sol::readonly_property(&TES3::WeatherController::sgSkyLight);
+			usertypeDefinition["sceneSkyRoot"] = sol::readonly_property(&TES3::WeatherController::sgSkyRoot);
+			usertypeDefinition["sceneSnowRoot"] = sol::readonly_property(&TES3::WeatherController::sgSnowRoot);
+			usertypeDefinition["sceneStormRoot"] = sol::readonly_property(&TES3::WeatherController::sgStormRoot);
+			usertypeDefinition["sceneSunBase"] = sol::readonly_property(&TES3::WeatherController::sgSunBase);
+			usertypeDefinition["sceneSunGlare"] = sol::readonly_property(&TES3::WeatherController::sgSunGlare);
+			usertypeDefinition["sceneSunVis"] = sol::readonly_property(&TES3::WeatherController::sgSunVis);
+			usertypeDefinition["sunglareFaderAngleMax"] = &TES3::WeatherController::sunglareFaderAngleMax;
+			usertypeDefinition["sunglareFaderColor"] = &TES3::WeatherController::sunglareFaderCol;
+			usertypeDefinition["sunglareFaderMax"] = &TES3::WeatherController::sunglareFaderMax;
+			usertypeDefinition["sunriseDuration"] = &TES3::WeatherController::sunriseDuration;
+			usertypeDefinition["sunriseHour"] = &TES3::WeatherController::sunriseHour;
+			usertypeDefinition["sunsetDuration"] = &TES3::WeatherController::sunsetDuration;
+			usertypeDefinition["sunsetHour"] = &TES3::WeatherController::sunsetHour;
+			usertypeDefinition["timescaleClouds"] = &TES3::WeatherController::bTimescaleClouds;
+			usertypeDefinition["transitionScalar"] = &TES3::WeatherController::transitionScalar;
+			usertypeDefinition["underwaterColor"] = &TES3::WeatherController::underwaterCol;
+			usertypeDefinition["underwaterColorWeight"] = &TES3::WeatherController::underwaterColWeight;
+			usertypeDefinition["underwaterDayFog"] = &TES3::WeatherController::underwaterDayFog;
+			usertypeDefinition["underwaterIndoorFog"] = &TES3::WeatherController::underwaterIndoorFog;
+			usertypeDefinition["underwaterNightFog"] = &TES3::WeatherController::underwaterNightFog;
+			usertypeDefinition["underwaterSunriseFog"] = &TES3::WeatherController::underwaterSunriseFog;
+			usertypeDefinition["underwaterSunsetFog"] = &TES3::WeatherController::underwaterSunsetFog;
+			usertypeDefinition["windVelocityCurrWeather"] = &TES3::WeatherController::windVelocityCurrWeather;
+			usertypeDefinition["windVelocityNextWeather"] = &TES3::WeatherController::windVelocityNextWeather;
 
 			// Indirect bindings to unions and arrays.
-			usertypeDefinition.set("weathers", sol::readonly_property([](TES3::WeatherController& self) { return getWeatherList(&self); }));
+			usertypeDefinition["weathers"] = sol::readonly_property([](TES3::WeatherController& self) { return getWeatherList(&self); });
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition.set("currentWeather", sol::readonly_property([](TES3::WeatherController& self) { return makeLuaObject(self.currentWeather); }));
-			usertypeDefinition.set("nextWeather", sol::readonly_property([](TES3::WeatherController& self) { return makeLuaObject(self.nextWeather); }));
+			usertypeDefinition["currentWeather"] = sol::readonly_property([](TES3::WeatherController& self) { return makeLuaObject(self.currentWeather); });
+			usertypeDefinition["nextWeather"] = sol::readonly_property([](TES3::WeatherController& self) { return makeLuaObject(self.nextWeather); });
 
 			// Basic function bindings.
-			usertypeDefinition.set("switchImmediate", [](TES3::WeatherController& self, int weatherId) {
+			usertypeDefinition["switchImmediate"] = [](TES3::WeatherController& self, int weatherId) {
 				if (self.lastActiveRegion) {
 					self.lastActiveRegion->currentWeatherIndex = weatherId;
 				}
 				self.switchWeather(weatherId, 1.0f);
-			});
-			usertypeDefinition.set("switchTransition", [](TES3::WeatherController& self, int weatherId) {
+			};
+			usertypeDefinition["switchTransition"] = [](TES3::WeatherController& self, int weatherId) {
 				self.switchWeather(weatherId, 0.001f);
 				if (self.lastActiveRegion) {
 					self.lastActiveRegion->currentWeatherIndex = weatherId;
 				}
-			});
-			usertypeDefinition.set("updateVisuals", &TES3::WeatherController::updateVisuals);
-
-			// Finish up our usertype.
-			state.set_usertype("tes3weatherController", usertypeDefinition);
+			};
+			usertypeDefinition["updateVisuals"] = &TES3::WeatherController::updateVisuals;
 		}
 	}
 }

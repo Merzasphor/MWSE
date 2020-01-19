@@ -11,20 +11,20 @@ namespace mwse {
 			setUserdataForNIAVObject(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition.set("children", sol::readonly_property(&NI::Node::children));
-			usertypeDefinition.set("effectList", sol::readonly_property(&NI::Node::effectList));
+			usertypeDefinition["children"] = sol::readonly_property(&NI::Node::children);
+			usertypeDefinition["effectList"] = sol::readonly_property(&NI::Node::effectList);
 
 			// Basic function binding.
-			usertypeDefinition.set("attachChild", [](NI::Node& self, NI::AVObject * child, sol::optional<bool> useFirstAvailable) {
+			usertypeDefinition["attachChild"] = [](NI::Node& self, NI::AVObject * child, sol::optional<bool> useFirstAvailable) {
 				self.attachChild(child, useFirstAvailable.value_or(false));
 				self.updateProperties();
-			});
-			usertypeDefinition.set("detachChild", [](NI::Node& self, NI::AVObject * child) {
+			};
+			usertypeDefinition["detachChild"] = [](NI::Node& self, NI::AVObject * child) {
 				NI::AVObject * returnedChild = nullptr;
 				self.detachChild(&returnedChild, child);
 				return makeLuaNiPointer(returnedChild);
-			});
-			usertypeDefinition.set("detachChildAt", [](NI::Node& self, unsigned int index) -> sol::object {
+			};
+			usertypeDefinition["detachChildAt"] = [](NI::Node& self, unsigned int index) -> sol::object {
 				if (--index < 0) {
 					return sol::nil;
 				}
@@ -32,10 +32,10 @@ namespace mwse {
 				NI::AVObject * returnedChild = nullptr;
 				self.detachChildAt(&returnedChild, index);
 				return makeLuaNiPointer(returnedChild);
-			});
+			};
 
 			// Functions that need their results wrapped.
-			usertypeDefinition.set("getEffect", [](NI::Node& self, int type) { return makeLuaNiPointer(self.getEffect(type)); });
+			usertypeDefinition["getEffect"] = [](NI::Node& self, int type) { return makeLuaNiPointer(self.getEffect(type)); };
 		}
 
 		void bindNINode();
