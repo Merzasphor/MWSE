@@ -18,6 +18,7 @@
     <ClInclude Include="LuaCalcArmorRatingEvent.h" />
     <ClInclude Include="LuaCalcHitChanceEvent.h" />
     <ClInclude Include="LuaCalcSoulValueEvent.h" />
+    <ClInclude Include="LuaCalcSunDamageScalarEvent.h" />
     <ClInclude Include="LuaContainerClosedEvent.h" />
     <ClInclude Include="LuaConvertReferenceToItemEvent.h" />
     <ClInclude Include="LuaCrimeWitnessedEvent.h" />
@@ -420,6 +421,7 @@
     <ClCompile Include="LuaCalcBarterPriceEvent.cpp" />
     <ClCompile Include="LuaCalcSoulValueEvent.cpp" />
     <ClCompile Include="LuaCalcSpellPriceEvent.cpp" />
+    <ClCompile Include="LuaCalcSunDamageScalarEvent.cpp" />
     <ClCompile Include="LuaCalcTrainingPriceEvent.cpp" />
     <ClCompile Include="LuaCalcTravelPriceEvent.cpp" />
     <ClCompile Include="LuaCellChangedEvent.cpp" />

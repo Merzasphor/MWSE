@@ -76,6 +76,7 @@ namespace mwse {
 			usertypeDefinition.set("nextWeather", sol::readonly_property([](TES3::WeatherController& self) { return makeLuaObject(self.nextWeather); }));
 
 			// Basic function bindings.
+			usertypeDefinition.set("calcSunDamageScalar", &TES3::WeatherController::calcSunDamageScalar);
 			usertypeDefinition.set("switchImmediate", [](TES3::WeatherController& self, int weatherId) {
 				if (self.lastActiveRegion) {
 					self.lastActiveRegion->currentWeatherIndex = weatherId;

@@ -1350,6 +1350,9 @@
     <ClInclude Include="LuaIsGuardEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="LuaCalcSunDamageScalarEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2913,6 +2916,9 @@
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
     <ClCompile Include="LuaIsGuardEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaCalcSunDamageScalarEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>

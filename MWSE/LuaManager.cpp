@@ -50,6 +50,7 @@
 #include "TES3UIInventoryTile.h"
 #include "TES3UIManager.h"
 #include "TES3UIMenuController.h"
+#include "TES3WeatherController.h"
 #include "TES3WorldController.h"
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
@@ -3627,6 +3628,10 @@ namespace mwse {
 			// Allow overriding of guard status.
 			auto npcBaseIsGuard = &TES3::NPCBase::isGuard;
 			overrideVirtualTableEnforced(0x0749DE8, offsetof(TES3::ActorVirtualTable, isGuard), 0x04DA5E0, *reinterpret_cast<DWORD*>(&npcBaseIsGuard));
+
+			// Allow overriding of sun damage calculation.
+			auto weatherControllerCalcSunDamageScalar = &TES3::WeatherController::calcSunDamageScalar;
+			genCallEnforced(0x0464C1C, 0x0440630, *reinterpret_cast<DWORD*>(&referenceAttemptUnlockDisarm));
 
 			// UI framework hooks
 			TES3::UI::hook();

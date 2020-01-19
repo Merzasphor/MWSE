@@ -18,6 +18,7 @@
 #include "LuaCalcRestInterruptEvent.h"
 #include "LuaCalcSoulValueEvent.h"
 #include "LuaCalcSpellPriceEvent.h"
+#include "LuaCalcSunDamageScalarEvent.h"
 #include "LuaCalcTrainingPriceEvent.h"
 #include "LuaCalcTravelPriceEvent.h"
 #include "LuaCellChangedEvent.h"
@@ -132,6 +133,7 @@ namespace mwse {
 				usertypeDefinition.set("calcRunSpeed", sol::property(&CalculateMovementSpeed::getEventEnabled, &CalculateMovementSpeed::setEventEnabled));
 				usertypeDefinition.set("calcSoulValue", sol::property(&CalculateSoulValueEvent::getEventEnabled, &CalculateSoulValueEvent::setEventEnabled));
 				usertypeDefinition.set("calcSpellPrice", sol::property(&CalculateSpellPriceEvent::getEventEnabled, &CalculateSpellPriceEvent::setEventEnabled));
+				usertypeDefinition.set("calcSunDamageScalar", sol::property(&CalcSunDamageScalarEvent::getEventEnabled, &CalcSunDamageScalarEvent::setEventEnabled));
 				usertypeDefinition.set("calcSwimRunSpeed", sol::property(&CalculateMovementSpeed::getEventEnabled, &CalculateMovementSpeed::setEventEnabled));
 				usertypeDefinition.set("calcSwimSpeed", sol::property(&CalculateMovementSpeed::getEventEnabled, &CalculateMovementSpeed::setEventEnabled));
 				usertypeDefinition.set("calcTrainingPrice", sol::property(&CalculateTrainingPriceEvent::getEventEnabled, &CalculateTrainingPriceEvent::setEventEnabled));
