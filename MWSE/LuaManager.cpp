@@ -3624,6 +3624,10 @@ namespace mwse {
 			overrideVirtualTableEnforced(TES3::VirtualTableAddress::ContainerBase, offsetof(TES3::ActorVirtualTable, onCloseInventory), 0x58D230, *reinterpret_cast<DWORD*>(&actorOnCloseInventory));
 			overrideVirtualTableEnforced(TES3::VirtualTableAddress::ContainerInstance, offsetof(TES3::ActorVirtualTable, onCloseInventory), 0x4A4460, *reinterpret_cast<DWORD*>(&containerOnCloseInventory));
 
+			// Allow overriding of guard status.
+			auto npcBaseIsGuard = &TES3::NPCBase::isGuard;
+			overrideVirtualTableEnforced(0x0749DE8, offsetof(TES3::ActorVirtualTable, isGuard), 0x04DA5E0, *reinterpret_cast<DWORD*>(&npcBaseIsGuard));
+
 			// UI framework hooks
 			TES3::UI::hook();
 

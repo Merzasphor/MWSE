@@ -5,6 +5,9 @@
 #include "TES3MobileNPC.h"
 #include "TES3UIElement.h"
 
+#include "LuaManager.h"
+#include "LuaIsGuardEvent.h"
+
 #define TES3_UI_ID_MenuDialog 0x7D3442
 #define TES3_UI_ID_MenuDialog_start_disposition 0x7D3486
 
@@ -15,6 +18,22 @@ namespace TES3 {
 
 	int NPCBase::getBaseDisposition(bool clamp = true) {
 		return vTable.actor->getDispositionRaw(this);
+	}
+
+
+	const auto TES3_NPCBase_isGuard = reinterpret_cast<bool(__thiscall*)(NPCBase*)>(0x04DA5E0);
+	bool NPCBase::isGuard() {
+		bool isGuard = TES3_NPCBase_isGuard(this);
+
+		// Trigger isGuard event.
+		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+		auto stateHandle = luaManager.getThreadSafeStateHandle();
+		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::IsGuardEvent(this, isGuard));
+		if (eventData.valid()) {
+			isGuard = eventData.get<bool>("isGuard");
+		}
+
+		return isGuard;
 	}
 
 	//
