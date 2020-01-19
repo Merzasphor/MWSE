@@ -135,7 +135,7 @@ namespace mwse {
 				);
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["rainLoopSound"] = sol::readonly_property([](TES3::WeatherRain& self) { return makeLuaObject(self.rainLoopSound); });
+				usertypeDefinition["rainLoopSound"] = sol::readonly_property([](TES3::WeatherRain& self) { return self.rainLoopSound; });
 			}
 
 			// Binding for TES3::WeatherSnow
@@ -203,11 +203,11 @@ namespace mwse {
 				);
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["rainLoopSound"] = sol::readonly_property([](TES3::WeatherThunder& self) { return makeLuaObject(self.rainLoopSound); });
-				usertypeDefinition["thunderSound1"] = sol::readonly_property([](TES3::WeatherThunder& self) { return makeLuaObject(self.thunderSound1); });
-				usertypeDefinition["thunderSound2"] = sol::readonly_property([](TES3::WeatherThunder& self) { return makeLuaObject(self.thunderSound2); });
-				usertypeDefinition["thunderSound3"] = sol::readonly_property([](TES3::WeatherThunder& self) { return makeLuaObject(self.thunderSound3); });
-				usertypeDefinition["thunderSound4"] = sol::readonly_property([](TES3::WeatherThunder& self) { return makeLuaObject(self.thunderSound4); });
+				usertypeDefinition["rainLoopSound"] = sol::readonly_property([](TES3::WeatherThunder& self) { return self.rainLoopSound; });
+				usertypeDefinition["thunderSound1"] = sol::readonly_property([](TES3::WeatherThunder& self) { return self.thunderSound1; });
+				usertypeDefinition["thunderSound2"] = sol::readonly_property([](TES3::WeatherThunder& self) { return self.thunderSound2; });
+				usertypeDefinition["thunderSound3"] = sol::readonly_property([](TES3::WeatherThunder& self) { return self.thunderSound3; });
+				usertypeDefinition["thunderSound4"] = sol::readonly_property([](TES3::WeatherThunder& self) { return self.thunderSound4; });
 			}
 		}
 	}

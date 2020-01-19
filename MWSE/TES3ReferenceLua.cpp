@@ -28,19 +28,19 @@ namespace TES3 {
 		while (attachment) {
 			switch (attachment->type) {
 			case AttachmentType::Light:
-				result["light"] = sol::make_object(state, reinterpret_cast<LockAttachment*>(attachment)->data);
+				result["light"] = reinterpret_cast<LockAttachment*>(attachment)->data;
 				break;
 			case AttachmentType::Lock:
-				result["lock"] = sol::make_object(state, reinterpret_cast<LockAttachment*>(attachment)->data);
+				result["lock"] = reinterpret_cast<LockAttachment*>(attachment)->data;
 				break;
 			case AttachmentType::TravelDestination:
-				result["travelDestination"] = sol::make_object(state, reinterpret_cast<TravelDestinationAttachment*>(attachment)->data);
+				result["travelDestination"] = reinterpret_cast<TravelDestinationAttachment*>(attachment)->data;
 				break;
 			case AttachmentType::Variables:
-				result["variables"] = sol::make_object(state, reinterpret_cast<ItemDataAttachment*>(attachment)->data);
+				result["variables"] = reinterpret_cast<ItemDataAttachment*>(attachment)->data;
 				break;
 			case AttachmentType::ActorData:
-				result["actor"] = mwse::lua::makeLuaObject(reinterpret_cast<MobileActorAttachment*>(attachment)->data);
+				result["actor"] = reinterpret_cast<MobileActorAttachment*>(attachment)->data;
 				break;
 			}
 
@@ -99,21 +99,21 @@ namespace mwse {
 			setUserdataForObject(usertypeDefinition);
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition["baseObject"] = sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.getBaseObject()); });
-			usertypeDefinition["cell"] = sol::readonly_property([](TES3::Reference& self) -> sol::object {
+			usertypeDefinition["baseObject"] = sol::readonly_property([](TES3::Reference& self) { return self.getBaseObject(); });
+			usertypeDefinition["cell"] = sol::readonly_property([](TES3::Reference& self) -> TES3::Cell* {
 				// Handle case for the player.
 				if (TES3::WorldController::get()->getMobilePlayer()->reference == &self) {
-					return makeLuaObject(TES3::DataHandler::get()->currentCell);
+					return TES3::DataHandler::get()->currentCell;
 				}
 
 				if (self.owningCollection.asReferenceList == nullptr) {
-					return sol::nil;
+					return nullptr;
 				}
 
-				return makeLuaObject(self.owningCollection.asReferenceList->cell);
+				return self.owningCollection.asReferenceList->cell;
 			});
-			usertypeDefinition["object"] = sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.baseObject); });
-			usertypeDefinition["sceneNode"] = sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.sceneNode); });
+			usertypeDefinition["object"] = sol::readonly_property([](TES3::Reference& self) { return self.baseObject; });
+			usertypeDefinition["sceneNode"] = sol::readonly_property([](TES3::Reference& self) { return self.sceneNode; });
 
 			// Basic function binding.
 			usertypeDefinition["activate"] = [](TES3::Reference& self, TES3::Reference& target) { target.activate(&self); };
@@ -174,15 +174,15 @@ namespace mwse {
 				}
 				return nullptr;
 			});
-			usertypeDefinition["light"] = sol::property([](TES3::Reference& self) -> sol::object {
+			usertypeDefinition["light"] = sol::property([](TES3::Reference& self) -> NI::Pointer<NI::Light> {
 				auto attachment = static_cast<TES3::LightAttachment*>(self.getAttachment(TES3::AttachmentType::Light));
 				if (attachment) {
-					return makeLuaObject(attachment->data->light);
+					return attachment->data->light;
 				}
-				return sol::nil;
+				return nullptr;
 			});
 			usertypeDefinition["mobile"] = sol::property([](TES3::Reference& self) {
-				return makeLuaObject(self.getAttachedMobileActor());
+				return self.getAttachedMobileActor();
 			});
 			usertypeDefinition["stackSize"] = sol::property(
 				[](TES3::Reference& self)
@@ -198,9 +198,9 @@ namespace mwse {
 			);
 			
 			// Allow references to behave like a linked list node.
-			usertypeDefinition["previousNode"] = sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.previousInCollection); });
-			usertypeDefinition["nextNode"] = sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.nextInCollection); });
-			usertypeDefinition["nodeData"] = sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(&self); });
+			usertypeDefinition["previousNode"] = sol::readonly_property([](TES3::Reference& self) { return self.previousInCollection; });
+			usertypeDefinition["nextNode"] = sol::readonly_property([](TES3::Reference& self) { return self.nextInCollection; });
+			usertypeDefinition["nodeData"] = sol::readonly_property([](TES3::Reference& self) { return &self; });
 		}
 	}
 }

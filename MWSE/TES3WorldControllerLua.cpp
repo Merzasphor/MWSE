@@ -32,12 +32,12 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["renderer"] = sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.renderer); });
-				usertypeDefinition["root"] = sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.root); });
-				usertypeDefinition["cameraRoot"] = sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.cameraRoot); });
+				usertypeDefinition["renderer"] = sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return self.renderer; });
+				usertypeDefinition["root"] = sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return self.root; });
+				usertypeDefinition["cameraRoot"] = sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return self.cameraRoot; });
 
 				// Legacy support for substructures.
-				usertypeDefinition["camera"] = sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return makeLuaObject(self.cameraData.camera); });
+				usertypeDefinition["camera"] = sol::readonly_property([](TES3::WorldControllerRenderCamera& self) { return self.cameraData.camera; });
 			}
 
 			// Binding for TES3::WorldController.
@@ -114,23 +114,23 @@ namespace mwse {
 				usertypeDefinition["year"] = &TES3::WorldController::gvarYear;
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["criticalDamageSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundCriticalDamage); });
-				usertypeDefinition["defaultLandSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundDefaultLand); });
-				usertypeDefinition["defaultLandWaterSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundDefaultLandWater); });
-				usertypeDefinition["drowningDamageSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundDrowningDamage); });
-				usertypeDefinition["drownSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundDrown); });
-				usertypeDefinition["handToHandHit2Sound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundHandToHandHit2); });
-				usertypeDefinition["handToHandHitSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundHandToHandHit); });
-				usertypeDefinition["healthDamageSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundHealthDamage); });
-				usertypeDefinition["heavyArmorHitSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundHeavyArmorHit); });
-				usertypeDefinition["itemRepairSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundItemRepair); });
-				usertypeDefinition["lightArmorHitSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundLightArmorHit); });
-				usertypeDefinition["mediumArmorHitSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundMediumArmorHit); });
-				usertypeDefinition["menuClickSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundMenuClick); });
-				usertypeDefinition["menuSizeSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundMenuSize); });
-				usertypeDefinition["missSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundMiss); });
-				usertypeDefinition["nodeCursor"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.nodeCursor); });
-				usertypeDefinition["weaponSwishSound"] = sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundWeaponSwish); });
+				usertypeDefinition["criticalDamageSound"] = sol::readonly_property([](TES3::WorldController& self) { return self.soundCriticalDamage; });
+				usertypeDefinition["defaultLandSound"] = sol::readonly_property([](TES3::WorldController& self) { return self.soundDefaultLand; });
+				usertypeDefinition["defaultLandWaterSound"] = sol::readonly_property([](TES3::WorldController& self) { return self.soundDefaultLandWater; });
+				usertypeDefinition["drowningDamageSound"] = sol::readonly_property([](TES3::WorldController& self) { return self.soundDrowningDamage; });
+				usertypeDefinition["drownSound"] = sol::readonly_property([](TES3::WorldController& self) { return self.soundDrown; });
+				usertypeDefinition["handToHandHit2Sound"] = sol::readonly_property([](TES3::WorldController& self) { return self.soundHandToHandHit2; });
+				usertypeDefinition["handToHandHitSound"] = sol::readonly_property([](TES3::WorldController& self) { return self.soundHandToHandHit; });
+				usertypeDefinition["healthDamageSound"] = sol::readonly_property([](TES3::WorldController& self) { return self.soundHealthDamage; });
+				usertypeDefinition["heavyArmorHitSound"] = sol::readonly_property([](TES3::WorldController& self) { return self.soundHeavyArmorHit; });
+				usertypeDefinition["itemRepairSound"] = sol::readonly_property([](TES3::WorldController& self) { return self.soundItemRepair; });
+				usertypeDefinition["lightArmorHitSound"] = sol::readonly_property([](TES3::WorldController& self) { return self.soundLightArmorHit; });
+				usertypeDefinition["mediumArmorHitSound"] = sol::readonly_property([](TES3::WorldController& self) { return self.soundMediumArmorHit; });
+				usertypeDefinition["menuClickSound"] = sol::readonly_property([](TES3::WorldController& self) { return self.soundMenuClick; });
+				usertypeDefinition["menuSizeSound"] = sol::readonly_property([](TES3::WorldController& self) { return self.soundMenuSize; });
+				usertypeDefinition["missSound"] = sol::readonly_property([](TES3::WorldController& self) { return self.soundMiss; });
+				usertypeDefinition["nodeCursor"] = sol::readonly_property([](TES3::WorldController& self) { return self.nodeCursor; });
+				usertypeDefinition["weaponSwishSound"] = sol::readonly_property([](TES3::WorldController& self) { return self.soundWeaponSwish; });
 
 				// Basic function binding.
 				usertypeDefinition["applyEnchantEffect"] = &TES3::WorldController::applyEnchantEffect;

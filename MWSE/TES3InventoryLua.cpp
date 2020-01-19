@@ -13,20 +13,10 @@
 #include "TES3Creature.h"
 #include "TES3Script.h"
 
-namespace TES3 {
-	sol::object ItemStack::getObjectLua() {
-		return mwse::lua::makeLuaObject(object);
-	}
-
-	sol::object EquipmentStack::getObjectLua() {
-		return mwse::lua::makeLuaObject(object);
-	}
-}
-
 namespace mwse {
 	namespace lua {
-		sol::object getItemDataOwner(TES3::ItemData& itemData) {
-			return makeLuaObject(itemData.owner);
+		TES3::BaseObject* getItemDataOwner(TES3::ItemData& itemData) {
+			return itemData.owner;
 		}
 
 		void setItemDataOwner(TES3::ItemData& itemData, sol::object value) {
@@ -61,7 +51,10 @@ namespace mwse {
 				return sol::make_object(state, itemData.requiredRank);
 			}
 			else if (itemData.owner->objectType == TES3::ObjectType::NPC) {
-				return makeLuaObject(itemData.requiredVariable);
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				return TES3::BaseObject::getOrCreateLuaObject(state, itemData.requiredVariable);
 			}
 
 			return sol::nil;
@@ -89,8 +82,8 @@ namespace mwse {
 			}
 		}
 
-		sol::object getItemDataSoul(TES3::ItemData& itemData) {
-			return makeLuaObject(itemData.getSoulActor());
+		TES3::Actor* getItemDataSoul(TES3::ItemData& itemData) {
+			return itemData.getSoulActor();
 		}
 
 		void setItemDataSoul(TES3::ItemData& itemData, sol::object soul) {
@@ -125,7 +118,7 @@ namespace mwse {
 				usertypeDefinition["timeLeft"] = &TES3::ItemData::timeLeft;
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["script"] = sol::readonly_property([](TES3::ItemData& self) { return makeLuaObject(self.script); });
+				usertypeDefinition["script"] = sol::readonly_property([](TES3::ItemData& self) { return self.script; });
 
 				// Complex properties that need special handling.
 				usertypeDefinition["owner"] = sol::property(&getItemDataOwner, &setItemDataOwner);
@@ -150,7 +143,7 @@ namespace mwse {
 				usertypeDefinition["variables"] = &TES3::ItemStack::variables;
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["object"] = sol::readonly_property([](TES3::ItemStack& self) { return makeLuaObject(self.object); });
+				usertypeDefinition["object"] = sol::readonly_property([](TES3::ItemStack& self) { return self.object; });
 			}
 
 			// Binding for TES3::EquipmentStack
@@ -164,7 +157,7 @@ namespace mwse {
 				usertypeDefinition["variables"] = &TES3::EquipmentStack::variables;
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["object"] = sol::readonly_property([](TES3::EquipmentStack& self) { return makeLuaObject(self.object); });
+				usertypeDefinition["object"] = sol::readonly_property([](TES3::EquipmentStack& self) { return self.object; });
 			}
 
 			// Binding for TES3::Inventory

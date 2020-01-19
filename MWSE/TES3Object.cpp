@@ -1,16 +1,69 @@
 #include "TES3Object.h"
 
-#include "TES3Actor.h"
-#include "TES3Reference.h"
-
 #include "TES3Util.h"
+
+#include "TES3Activator.h"
+#include "TES3Alchemy.h"
+#include "TES3AnimationGroup.h"
+#include "TES3Apparatus.h"
+#include "TES3Armor.h"
+#include "TES3BodyPart.h"
+#include "TES3Book.h"
+#include "TES3Cell.h"
+#include "TES3Class.h"
+#include "TES3Clothing.h"
+#include "TES3Container.h"
+#include "TES3Creature.h"
+#include "TES3Dialogue.h"
+#include "TES3DialogueInfo.h"
+#include "TES3Door.h"
+#include "TES3Enchantment.h"
+#include "TES3Faction.h"
+#include "TES3GameSetting.h"
+#include "TES3GlobalVariable.h"
+#include "TES3Ingredient.h"
+#include "TES3Land.h"
+#include "TES3LeveledList.h"
+#include "TES3Light.h"
+#include "TES3Lockpick.h"
+#include "TES3MagicEffect.h"
+#include "TES3MagicSourceInstance.h"
+#include "TES3Misc.h"
+#include "TES3NPC.h"
+#include "TES3Probe.h"
+#include "TES3Quest.h"
+#include "TES3Race.h"
+#include "TES3Reference.h"
+#include "TES3Region.h"
+#include "TES3RepairTool.h"
+#include "TES3Script.h"
+#include "TES3Skill.h"
+#include "TES3Sound.h"
+#include "TES3SoundGenerator.h"
+#include "TES3Spell.h"
+#include "TES3Static.h"
+#include "TES3Weapon.h"
+
+#include "sol.hpp"
+
+#include "LuaManager.h"
+#include "LuaObjectInvalidatedEvent.h"
+
+#include <mutex>
 
 namespace TES3 {
 	void * BaseObject::operator new(size_t size) {
 		return mwse::tes3::_new(size);
 	}
+
 	void BaseObject::operator delete(void * address) {
 		mwse::tes3::_delete(address);
+	}
+
+	const auto BaseObject_dtor = reinterpret_cast<TES3::BaseObject * (__thiscall*)(TES3::BaseObject*)>(0x4F0CA0);
+	void BaseObject::dtor() {
+		clearCachedLuaObject(this);
+		BaseObject_dtor(this);
 	}
 
 	bool BaseObject::getObjectModified() {
@@ -48,6 +101,205 @@ namespace TES3 {
 		default:
 			return false;
 		}
+	}
+
+	static std::unordered_map<const BaseObject*, sol::object> baseObjectCache;
+	static std::mutex baseObjectCacheMutex;
+
+	sol::object BaseObject::getOrCreateLuaObject(lua_State* L, const BaseObject* object) {
+		if (object == nullptr) {
+			return sol::nil;
+		}
+
+		baseObjectCacheMutex.lock();
+
+		auto cacheHit = baseObjectCache.find(object);
+		if (cacheHit != baseObjectCache.end()) {
+			auto result = cacheHit->second;
+			baseObjectCacheMutex.unlock();
+			return result;
+		}
+
+		sol::object ref = sol::nil;
+		switch ((uint32_t)object->vTable.object) {
+		case TES3::VirtualTableAddress::Activator:
+			ref = sol::make_object(L, static_cast<const TES3::Activator*>(object));
+			break;
+		case TES3::VirtualTableAddress::Alchemy:
+			ref = sol::make_object(L, static_cast<const TES3::Alchemy*>(object));
+			break;
+		case TES3::VirtualTableAddress::AnimationGroup:
+			ref = sol::make_object(L, static_cast<const TES3::AnimationGroup*>(object));
+			break;
+		case TES3::VirtualTableAddress::Apparatus:
+			ref = sol::make_object(L, static_cast<const TES3::Apparatus*>(object));
+			break;
+		case TES3::VirtualTableAddress::Armor:
+			ref = sol::make_object(L, static_cast<const TES3::Armor*>(object));
+			break;
+		case TES3::VirtualTableAddress::BodyPart:
+			ref = sol::make_object(L, static_cast<const TES3::BodyPart*>(object));
+			break;
+		case TES3::VirtualTableAddress::Book:
+			ref = sol::make_object(L, static_cast<const TES3::Book*>(object));
+			break;
+		case TES3::VirtualTableAddress::Cell:
+			ref = sol::make_object(L, static_cast<const TES3::Cell*>(object));
+			break;
+		case TES3::VirtualTableAddress::Class:
+			ref = sol::make_object(L, static_cast<const TES3::Class*>(object));
+			break;
+		case TES3::VirtualTableAddress::Clothing:
+			ref = sol::make_object(L, static_cast<const TES3::Clothing*>(object));
+			break;
+		case TES3::VirtualTableAddress::ContainerBase:
+			ref = sol::make_object(L, static_cast<const TES3::Container*>(object));
+			break;
+		case TES3::VirtualTableAddress::ContainerInstance:
+			ref = sol::make_object(L, static_cast<const TES3::ContainerInstance*>(object));
+			break;
+		case TES3::VirtualTableAddress::CreatureBase:
+			ref = sol::make_object(L, static_cast<const TES3::Creature*>(object));
+			break;
+		case TES3::VirtualTableAddress::CreatureInstance:
+			ref = sol::make_object(L, static_cast<const TES3::CreatureInstance*>(object));
+			break;
+		case TES3::VirtualTableAddress::Dialogue:
+			ref = sol::make_object(L, static_cast<const TES3::Dialogue*>(object));
+			break;
+		case TES3::VirtualTableAddress::DialogueInfo:
+			ref = sol::make_object(L, static_cast<const TES3::DialogueInfo*>(object));
+			break;
+		case TES3::VirtualTableAddress::Door:
+			ref = sol::make_object(L, static_cast<const TES3::Door*>(object));
+			break;
+		case TES3::VirtualTableAddress::Enchantment:
+			ref = sol::make_object(L, static_cast<const TES3::Enchantment*>(object));
+			break;
+		case TES3::VirtualTableAddress::Faction:
+			ref = sol::make_object(L, static_cast<const TES3::Faction*>(object));
+			break;
+		case TES3::VirtualTableAddress::GlobalVariable:
+			ref = sol::make_object(L, static_cast<const TES3::GlobalVariable*>(object));
+			break;
+		case TES3::VirtualTableAddress::GameSetting:
+			ref = sol::make_object(L, static_cast<const TES3::GameSetting*>(object));
+			break;
+		case TES3::VirtualTableAddress::Ingredient:
+			ref = sol::make_object(L, static_cast<const TES3::Ingredient*>(object));
+			break;
+		case TES3::VirtualTableAddress::Land:
+			ref = sol::make_object(L, static_cast<const TES3::Land*>(object));
+			break;
+		case TES3::VirtualTableAddress::LeveledCreature:
+			ref = sol::make_object(L, static_cast<const TES3::LeveledCreature*>(object));
+			break;
+		case TES3::VirtualTableAddress::LeveledItem:
+			ref = sol::make_object(L, static_cast<const TES3::LeveledItem*>(object));
+			break;
+		case TES3::VirtualTableAddress::Light:
+			ref = sol::make_object(L, static_cast<const TES3::Light*>(object));
+			break;
+		case TES3::VirtualTableAddress::Lockpick:
+			ref = sol::make_object(L, static_cast<const TES3::Lockpick*>(object));
+			break;
+		case TES3::VirtualTableAddress::MagicEffect:
+			ref = sol::make_object(L, static_cast<const TES3::MagicEffect*>(object));
+			break;
+		case TES3::VirtualTableAddress::Miscellaneous:
+			ref = sol::make_object(L, static_cast<const TES3::Misc*>(object));
+			break;
+		case TES3::VirtualTableAddress::NPCBase:
+			ref = sol::make_object(L, static_cast<const TES3::NPC*>(object));
+			break;
+		case TES3::VirtualTableAddress::NPCInstance:
+			ref = sol::make_object(L, static_cast<const TES3::NPCInstance*>(object));
+			break;
+		case TES3::VirtualTableAddress::Probe:
+			ref = sol::make_object(L, static_cast<const TES3::Probe*>(object));
+			break;
+		case TES3::VirtualTableAddress::Quest:
+			ref = sol::make_object(L, static_cast<const TES3::Quest*>(object));
+			break;
+		case TES3::VirtualTableAddress::Race:
+			ref = sol::make_object(L, static_cast<const TES3::Race*>(object));
+			break;
+		case TES3::VirtualTableAddress::Reference:
+			ref = sol::make_object(L, static_cast<const TES3::Reference*>(object));
+			break;
+		case TES3::VirtualTableAddress::Region:
+			ref = sol::make_object(L, static_cast<const TES3::Region*>(object));
+			break;
+		case TES3::VirtualTableAddress::RepairTool:
+			ref = sol::make_object(L, static_cast<const TES3::RepairTool*>(object));
+			break;
+		case TES3::VirtualTableAddress::Script:
+			ref = sol::make_object(L, static_cast<const TES3::Script*>(object));
+			break;
+		case TES3::VirtualTableAddress::Skill:
+			ref = sol::make_object(L, static_cast<const TES3::Skill*>(object));
+			break;
+		case TES3::VirtualTableAddress::Sound:
+			ref = sol::make_object(L, static_cast<const TES3::Sound*>(object));
+			break;
+		case TES3::VirtualTableAddress::SoundGenerator:
+			ref = sol::make_object(L, static_cast<const TES3::SoundGenerator*>(object));
+			break;
+		case TES3::VirtualTableAddress::Spell:
+			ref = sol::make_object(L, static_cast<const TES3::Spell*>(object));
+			break;
+		case TES3::VirtualTableAddress::MagicSourceInstance:
+			ref = sol::make_object(L, static_cast<const TES3::MagicSourceInstance*>(object));
+			break;
+		case TES3::VirtualTableAddress::Static:
+			ref = sol::make_object(L, static_cast<const TES3::Static*>(object));
+			break;
+		case TES3::VirtualTableAddress::Weapon:
+			ref = sol::make_object(L, static_cast<const TES3::Weapon*>(object));
+			break;
+		default:
+			ref = sol::make_object(L, object);
+			break;
+		}
+
+		if (ref != sol::nil) {
+			baseObjectCache[object] = ref;
+		}
+
+		baseObjectCacheMutex.unlock();
+
+		return ref;
+	}
+
+	int BaseObject::pushCachedLuaObject(lua_State* L, const BaseObject* object) {
+		return getOrCreateLuaObject(L, object).push(L);
+	}
+
+	void BaseObject::clearCachedLuaObject(const BaseObject* object) {
+		if (!baseObjectCache.empty()) {
+			baseObjectCacheMutex.lock();
+
+			// Clear any events that make use of this object.
+			auto it = baseObjectCache.find(object);
+			if (it != baseObjectCache.end()) {
+				// Let people know that this object is invalidated.
+				mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ObjectInvalidatedEvent(it->second));
+
+				// Clear any events that make use of this object.
+				mwse::lua::event::clearObjectFilter(it->second);
+
+				// Remove it from the cache.
+				baseObjectCache.erase(it);
+			}
+
+			baseObjectCacheMutex.unlock();
+		}
+	}
+
+	void BaseObject::clearCachedLuaObjects() {
+		baseObjectCacheMutex.lock();
+		baseObjectCache.clear();
+		baseObjectCacheMutex.unlock();
 	}
 
 	void Object::setID(const char* id) {
@@ -258,3 +510,57 @@ namespace TES3 {
 		return TES3_PhysicalObject_getStolenFlag(this, stolenFrom);
 	}
 }
+
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Activator);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Actor);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Alchemy);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::AnimationGroup);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Apparatus);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Armor);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::BaseObject);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::BodyPart);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Book);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Cell);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Class);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Clothing);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Container);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::ContainerInstance);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Creature);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::CreatureInstance);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Dialogue);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::DialogueInfo);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Door);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Enchantment);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Faction);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::GameSetting);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::GlobalVariable);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Ingredient);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Item);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Land);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::LeveledCreature);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::LeveledItem);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Light);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Lockpick);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::MagicEffect);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::MagicSourceInstance);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Misc);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::NPC);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::NPCBase);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::NPCInstance);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Object);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::PhysicalObject);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Probe);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Quest);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Race);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Reference);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Region);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::RepairTool);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Script);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Skill);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Sound);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::SoundGenerator);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Spell);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::StartScript);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Static);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Weapon);
+

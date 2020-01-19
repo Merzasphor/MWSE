@@ -26,7 +26,7 @@ namespace mwse {
 			usertypeDefinition["velocity"] = sol::property([](TES3::MobileObject& self) { return &self.velocity; }, &TES3::MobileObject::setVelocityFromLua);
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition["reference"] = sol::readonly_property([](TES3::MobileObject& self) { return makeLuaObject(self.reference); });
+			usertypeDefinition["reference"] = sol::readonly_property([](TES3::MobileObject& self) { return self.reference; });
 		}
 	}
 }

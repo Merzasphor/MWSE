@@ -25,24 +25,24 @@
 
 namespace mwse {
 	namespace lua {
-		std::tuple<sol::object, sol::object> bindGenericObjectIterator_pairsNext(sol::user<Iterator_state<TES3::BaseObject>&> user_it_state, sol::this_state l) {
+		std::tuple<sol::object, TES3::BaseObject*> bindGenericObjectIterator_pairsNext(sol::user<Iterator_state<TES3::BaseObject>&> user_it_state, sol::this_state l) {
 			Iterator_state<TES3::BaseObject>& it_state = user_it_state;
 			if (it_state.it == nullptr) {
-				return std::make_tuple(sol::object(sol::lua_nil), sol::object(sol::lua_nil));
+				return std::make_tuple(sol::object(sol::lua_nil), nullptr);
 			}
 
-			auto values = std::make_tuple(sol::object(l, sol::in_place, it_state.it), makeLuaObject(it_state.it->data));
+			auto values = std::make_tuple(sol::object(l, sol::in_place, it_state.it), it_state.it->data);
 			it_state.it = it_state.it->next;
 			return values;
 		}
 
-		std::tuple<sol::object, sol::object> bindGenericObjectStlList_pairsNext(sol::user<GenericObjectStlList_iteratorState&> user_it_state, sol::this_state l) {
+		std::tuple<sol::object, TES3::BaseObject*> bindGenericObjectStlList_pairsNext(sol::user<GenericObjectStlList_iteratorState&> user_it_state, sol::this_state l) {
 			GenericObjectStlList_iteratorState& it_state = user_it_state;
 			if (it_state.it == nullptr) {
-				return std::make_tuple(sol::object(sol::lua_nil), sol::object(sol::lua_nil));
+				return std::make_tuple(sol::object(sol::lua_nil), nullptr);
 			}
 
-			auto values = std::make_tuple(sol::object(l, sol::in_place, it_state.it->data->getObjectID()), makeLuaObject(it_state.it->data));
+			auto values = std::make_tuple(sol::object(l, sol::in_place, it_state.it->data->getObjectID()), it_state.it->data);
 			it_state.it = it_state.it->next;
 			return values;
 		}
@@ -88,7 +88,7 @@ namespace mwse {
 					object = object->nextInCollection;
 					index--;
 				}
-				return makeLuaObject(object);
+				return object;
 			},
 				sol::meta_function::length, [](TES3::LinkedList<TES3::Object>& self) { return self.size; }
 

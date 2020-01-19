@@ -62,15 +62,6 @@ namespace mwse {
 
 		void setVectorFromLua(TES3::Vector3*, sol::stack_object);
 
-		sol::object makeLuaObject(TES3::BaseObject* object);
-		sol::object makeLuaObject(TES3::MobileObject* object);
-		sol::object makeLuaObject(TES3::Weather* weather);
-		sol::object makeLuaObject(TES3::GameFile* gameFile);
-		sol::object makeLuaObject(NI::Object* object);
-
-		// Creates a NI::Pointer and packages it into a sol::object for reference counting.
-		sol::object makeLuaNiPointer(NI::Object* object);
-
 		// Dumps the current stacktrace to the log.
 		void logStackTrace(const char* message = nullptr);
 	}

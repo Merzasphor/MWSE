@@ -13,9 +13,9 @@ namespace mwse {
 			usertypeDefinition["refCount"] = sol::readonly_property(&NI::Object::refCount);
 
 			// Basic function binding.
-			usertypeDefinition["clone"] = [](NI::Object& self) { return makeLuaNiPointer(self.createClone()); };
-			usertypeDefinition["isOfType"] = static_cast<bool (__thiscall NI::Object::*)(uintptr_t)>(&NI::Object::isOfType);
-			usertypeDefinition["isInstanceOfType"] = static_cast<bool (__thiscall NI::Object::*)(uintptr_t)>(&NI::Object::isInstanceOfType);
+			usertypeDefinition["clone"] = [](NI::Object& self) { return self.createClone(); };
+			usertypeDefinition["isOfType"] = sol::resolve<bool(uintptr_t) const>(&NI::Object::isOfType);
+			usertypeDefinition["isInstanceOfType"] = sol::resolve<bool(uintptr_t) const>(&NI::Object::isInstanceOfType);
 
 			// Functions exposed as properties.
 			usertypeDefinition["RTTI"] = sol::readonly_property([](NI::Object& self) { return self.getRunTimeTypeInformation(); });
@@ -73,15 +73,15 @@ namespace mwse {
 			usertypeDefinition["updateProperties"] = &NI::AVObject::updateProperties;
 
 			// Functions that need their results wrapped.
-			usertypeDefinition["getObjectByName"] = [](NI::AVObject& self, const char* name) { return makeLuaNiPointer(self.getObjectByName(name)); };
-			usertypeDefinition["getProperty"] = [](NI::AVObject& self, int type) { return makeLuaNiPointer(self.getProperty(NI::PropertyType(type))); };
-			usertypeDefinition["parent"] = sol::readonly_property([](NI::AVObject& self) { return makeLuaNiPointer(self.parentNode); });
+			usertypeDefinition["getObjectByName"] = [](NI::AVObject& self, const char* name) { return self.getObjectByName(name); };
+			usertypeDefinition["getProperty"] = [](NI::AVObject& self, int type) { return self.getProperty(NI::PropertyType(type)); };
+			usertypeDefinition["parent"] = sol::readonly_property([](NI::AVObject& self) { return self.parentNode; });
 
 			// Make remove property a bit more friendly.
 			usertypeDefinition["detachProperty"] = [](NI::AVObject& self, int type) {
 				NI::Pointer<NI::Property> prop;
 				self.detachProperty(&prop, NI::PropertyType(type));
-				return makeLuaNiPointer(prop);
+				return prop;
 			};
 
 			// Update function with table arguments.

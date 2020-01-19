@@ -28,17 +28,17 @@ namespace mwse {
 				sol::table eventData = state.create_table();
 
 				if (m_MobileActor) {
-					eventData["mobile"] = makeLuaObject(m_MobileActor);
-					eventData["reference"] = makeLuaObject(m_MobileActor->reference);
+					eventData["mobile"] = m_MobileActor;
+					eventData["reference"] = m_MobileActor->reference;
 				}
 
 				if (DamageEvent::m_Attacker) {
-					eventData["attacker"] = makeLuaObject(DamageEvent::m_Attacker);
-					eventData["attackerReference"] = makeLuaObject(DamageEvent::m_Attacker->reference);
+					eventData["attacker"] = DamageEvent::m_Attacker;
+					eventData["attackerReference"] = DamageEvent::m_Attacker->reference;
 				}
 
 				if (DamageEvent::m_Projectile) {
-					eventData["projectile"] = makeLuaObject(DamageEvent::m_Projectile);
+					eventData["projectile"] = DamageEvent::m_Projectile;
 				}
 
 				if (DamageEvent::m_MagicSourceInstance) {
@@ -46,9 +46,9 @@ namespace mwse {
 
 					// Get the attacker as the caster of the spell.
 					if (!DamageEvent::m_Attacker) {
-						eventData["attackerReference"] = makeLuaObject(DamageEvent::m_MagicSourceInstance->caster);
+						eventData["attackerReference"] = DamageEvent::m_MagicSourceInstance->caster;
 						if (DamageEvent::m_MagicSourceInstance->caster) {
-							eventData["attacker"] = makeLuaObject(DamageEvent::m_MagicSourceInstance->caster->getAttachedMobileActor());
+							eventData["attacker"] = DamageEvent::m_MagicSourceInstance->caster->getAttachedMobileActor();
 						}
 					}
 				}

@@ -16,7 +16,7 @@
 
 namespace mwse {
 	namespace lua {
-		sol::object getFilterObject(TES3::DialogueInfo& info, TES3::DialogueInfoFilterType type) {
+		TES3::BaseObject* getFilterObject(TES3::DialogueInfo& info, TES3::DialogueInfoFilterType type) {
 			TES3::DialogueInfoFilterNode *node;
 
 			for (node = info.conditions; node; node = node->next) {
@@ -25,7 +25,7 @@ namespace mwse {
 				}
 			}
 			if (!node) {
-				return sol::nil;
+				return nullptr;
 			}
 
 			switch (type) {
@@ -35,9 +35,9 @@ namespace mwse {
 			case TES3::DialogueInfoFilterType::NPCFaction:
 			case TES3::DialogueInfoFilterType::Cell:
 			case TES3::DialogueInfoFilterType::PCFaction:
-				return makeLuaObject(node->object);
+				return node->object;
 			default:
-				return sol::nil;
+				return nullptr;
 			}
 		}
 
@@ -84,7 +84,7 @@ namespace mwse {
 				// Expose filtering.
 				usertypeDefinition["getInfo"] = [](TES3::Dialogue& self, sol::table params) {
 					TES3::MobileActor * mobile = getOptionalParamMobileActor(params, "actor");
-					return makeLuaObject(self.getDeepFilteredInfo(reinterpret_cast<TES3::Actor*>(mobile->reference->baseObject), mobile->reference, true));
+					return self.getDeepFilteredInfo(reinterpret_cast<TES3::Actor*>(mobile->reference->baseObject), mobile->reference, true);
 				};
 			}
 
@@ -112,7 +112,7 @@ namespace mwse {
 				usertypeDefinition["npcSex"] = sol::readonly_property(&TES3::DialogueInfo::npcSex);
 				usertypeDefinition["pcRank"] = sol::readonly_property(&TES3::DialogueInfo::pcRank);
 				usertypeDefinition["firstHeardFrom"] = sol::property(
-					[](TES3::DialogueInfo& self) { return makeLuaObject(self.firstHeardFrom); },
+					[](TES3::DialogueInfo& self) { return self.firstHeardFrom; },
 					[](TES3::DialogueInfo& self, TES3::Actor* actor) { self.firstHeardFrom = actor; }
 				);
 

@@ -4,8 +4,11 @@
 
 #include "LuaUtil.h"
 #include "NIProperty.h"
+
+#include "TES3GameFile.h"
 #include "TES3Item.h"
 #include "TES3ItemData.h"
+#include "TES3MobileObject.h"
 #include "TES3UIElement.h"
 #include "TES3UIInventoryTile.h"
 #include "TES3UIManager.h"
@@ -428,9 +431,9 @@ namespace mwse {
 					case TES3::ObjectType::MobileCreature:
 					case TES3::ObjectType::MobileNPC:
 					case TES3::ObjectType::MobilePlayer:
-						return makeLuaObject(static_cast<TES3::MobileObject*>(ptr));
+						return TES3::MobileObject::getOrCreateLuaObject(state, static_cast<TES3::MobileObject*>(ptr));
 					default:
-						return makeLuaObject(static_cast<TES3::BaseObject*>(ptr));
+						return TES3::BaseObject::getOrCreateLuaObject(state, static_cast<TES3::BaseObject*>(ptr));
 					}
 				}
 				else {
@@ -438,7 +441,7 @@ namespace mwse {
 						return sol::make_object(state, static_cast<TES3::ItemData*>(ptr));
 					}
 					else if (typeCast.value() == "tes3gameFile") {
-						return makeLuaObject(static_cast<TES3::GameFile*>(ptr));
+						return sol::make_object(state, static_cast<TES3::GameFile*>(ptr));
 					}
 					else if (typeCast.value() == "tes3inventoryTile") {
 						return sol::make_object(state, static_cast<TES3::UI::InventoryTile*>(ptr));

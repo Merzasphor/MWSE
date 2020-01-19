@@ -44,7 +44,7 @@ namespace mwse {
 				usertypeDefinition["weight"] = &TES3::SoulGemData::weight;
 
 				// Data that needs to be packaged.
-				usertypeDefinition["item"] = sol::readonly_property([](TES3::SoulGemData& self) { makeLuaObject(self.item); });
+				usertypeDefinition["item"] = sol::readonly_property([](TES3::SoulGemData& self) { self.item; });
 
 				// TODO: Deprecated. Remove before 2.1-stable.
 				usertypeDefinition["model"] = sol::readonly_property(&TES3::SoulGemData::mesh);
@@ -64,7 +64,7 @@ namespace mwse {
 				usertypeDefinition["weight"] = &TES3::Misc::weight;
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["script"] = sol::readonly_property([](TES3::Misc& self) { return makeLuaObject(self.getScript()); });
+				usertypeDefinition["script"] = sol::readonly_property([](TES3::Misc& self) { return self.getScript(); });
 
 				// Functions exposed as properties.
 				usertypeDefinition["icon"] = sol::property(

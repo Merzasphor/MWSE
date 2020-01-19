@@ -22,13 +22,13 @@ namespace mwse {
 				sol::state& state = stateHandle.state;
 				sol::table eventData = state.create_table();
 
-				eventData["mobile"] = makeLuaObject(m_AnimationData->mobileActor);
-				eventData["reference"] = makeLuaObject(m_AnimationData->mobileActor->reference);
+				eventData["mobile"] = m_AnimationData->mobileActor;
+				eventData["reference"] = m_AnimationData->mobileActor->reference;
 
 				TES3::MobileActor* target = m_AnimationData->mobileActor->actionData.hitTarget;
 				if (target) {
-					eventData["targetMobile"] = makeLuaObject(target);
-					eventData["targetReference"] = makeLuaObject(target->reference);
+					eventData["targetMobile"] = target;
+					eventData["targetReference"] = target->reference;
 				}
 
 				return eventData;

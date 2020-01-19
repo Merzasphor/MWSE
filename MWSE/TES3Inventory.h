@@ -13,12 +13,6 @@ namespace TES3 {
 		Object * object; // 0x4
 		TArray<ItemData> * variables; // 0x8
 
-		//
-		// Lua interface functions.
-		//
-
-		sol::object getObjectLua();
-
 	};
 	static_assert(sizeof(ItemStack) == 0xC, "TES3::ItemStack failed size validation");
 
@@ -31,12 +25,6 @@ namespace TES3 {
 		//
 
 		int getAdjustedValue();
-
-		//
-		// Lua interface functions.
-		//
-
-		sol::object getObjectLua();
 	};
 	static_assert(sizeof(EquipmentStack) == 0x8, "TES3::EquipmentStack failed size validation");
 

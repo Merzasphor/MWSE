@@ -51,12 +51,12 @@ namespace mwse {
 				usertypeDefinition["deleteObject"] = &TES3::NonDynamicData::deleteObject;
 
 				// Functions that need to be wrapped.
-				usertypeDefinition["findDialogue"] = [](TES3::NonDynamicData& self, const char* id) { return makeLuaObject(self.findDialogue(id)); };
-				usertypeDefinition["findFirstCloneOfActor"] = [](TES3::NonDynamicData& self, const char* id) { return makeLuaObject(self.findFirstCloneOfActor(id)); };
-				usertypeDefinition["findGlobalVariable"] = [](TES3::NonDynamicData& self, const char* id) { return makeLuaObject(self.findGlobalVariable(id)); };
-				usertypeDefinition["findScript"] = [](TES3::NonDynamicData& self, const char* id) { return makeLuaObject(self.findScriptByName(id)); };
-				usertypeDefinition["findSound"] = [](TES3::NonDynamicData& self, const char* id) { return makeLuaObject(self.findSound(id)); };
-				usertypeDefinition["resolveObject"] = [](TES3::NonDynamicData& self, const char* id) { return makeLuaObject(self.resolveObject(id)); };
+				usertypeDefinition["findDialogue"] = [](TES3::NonDynamicData& self, const char* id) { return self.findDialogue(id); };
+				usertypeDefinition["findFirstCloneOfActor"] = [](TES3::NonDynamicData& self, const char* id) { return self.findFirstCloneOfActor(id); };
+				usertypeDefinition["findGlobalVariable"] = [](TES3::NonDynamicData& self, const char* id) { return self.findGlobalVariable(id); };
+				usertypeDefinition["findScript"] = [](TES3::NonDynamicData& self, const char* id) { return self.findScriptByName(id); };
+				usertypeDefinition["findSound"] = [](TES3::NonDynamicData& self, const char* id) { return self.findSound(id); };
+				usertypeDefinition["resolveObject"] = [](TES3::NonDynamicData& self, const char* id) { return self.resolveObject(id); };
 
 				// Provide legacy access to magic effects table.
 				usertypeDefinition["magicEffects"] = sol::readonly_property(

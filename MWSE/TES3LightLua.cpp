@@ -66,8 +66,8 @@ namespace mwse {
 			usertypeDefinition["color"] = sol::readonly_property([](TES3::Light& self) { return std::ref(self.color); });
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition["sound"] = sol::readonly_property([](TES3::Light& self) { return makeLuaObject(self.sound); });
-			usertypeDefinition["script"] = sol::readonly_property([](TES3::Light& self) { return makeLuaObject(self.script); });
+			usertypeDefinition["sound"] = sol::readonly_property([](TES3::Light& self) { return self.sound; });
+			usertypeDefinition["script"] = sol::readonly_property([](TES3::Light& self) { return self.script; });
 
 			// Functions exposed as properties.
 			usertypeDefinition["icon"] = sol::property(

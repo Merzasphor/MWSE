@@ -119,22 +119,22 @@ namespace mwse {
 				);
 				usertypeDefinition["areaSoundEffect"] = sol::property(&TES3::MagicEffect::getAreaSoundEffect, &TES3::MagicEffect::setAreaSoundEffect);
 				usertypeDefinition["areaVisualEffect"] = sol::property(
-					[](TES3::MagicEffect& self) { return makeLuaObject(self.areaEffect); },
+					[](TES3::MagicEffect& self) { return self.areaEffect; },
 					[](TES3::MagicEffect& self, TES3::PhysicalObject* value) { self.areaEffect = value; }
 				);
 				usertypeDefinition["boltSoundEffect"] = sol::property(&TES3::MagicEffect::getBoltSoundEffect, &TES3::MagicEffect::setBoltSoundEffect);
 				usertypeDefinition["boltVisualEffect"] = sol::property(
-					[](TES3::MagicEffect& self) { return makeLuaObject(self.boltEffect); },
+					[](TES3::MagicEffect& self) { return self.boltEffect; },
 					[](TES3::MagicEffect& self, TES3::PhysicalObject* value) { self.boltEffect = value; }
 				);
 				usertypeDefinition["castSoundEffect"] = sol::property(&TES3::MagicEffect::getCastSoundEffect, &TES3::MagicEffect::setCastSoundEffect);
 				usertypeDefinition["castVisualEffect"] = sol::property(
-					[](TES3::MagicEffect& self) { return makeLuaObject(self.castEffect); },
+					[](TES3::MagicEffect& self) { return self.castEffect; },
 					[](TES3::MagicEffect& self, TES3::PhysicalObject* value) { self.castEffect = value; }
 				);
 				usertypeDefinition["hitSoundEffect"] = sol::property(&TES3::MagicEffect::getHitSoundEffect, &TES3::MagicEffect::setHitSoundEffect);
 				usertypeDefinition["hitVisualEffect"] = sol::property(
-					[](TES3::MagicEffect& self) { return makeLuaObject(self.hitEffect); },
+					[](TES3::MagicEffect& self) { return self.hitEffect; },
 					[](TES3::MagicEffect& self, TES3::PhysicalObject* value) { self.hitEffect = value; }
 					);
 				usertypeDefinition["icon"] = sol::property(&TES3::MagicEffect::getIcon, &TES3::MagicEffect::setIcon);

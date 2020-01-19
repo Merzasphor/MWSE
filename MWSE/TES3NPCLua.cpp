@@ -49,10 +49,10 @@ namespace mwse {
 				usertypeDefinition["isInstance"] = sol::var(false);
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["class"] = sol::readonly_property([](TES3::NPC& self) { return makeLuaObject(self.class_); });
-				usertypeDefinition["faction"] = sol::readonly_property([](TES3::NPC& self) { return makeLuaObject(self.faction); });
-				usertypeDefinition["race"] = sol::readonly_property([](TES3::NPC& self) { return makeLuaObject(self.race); });
-				usertypeDefinition["script"] = sol::readonly_property([](TES3::NPC& self) { return makeLuaObject(self.getScript()); });
+				usertypeDefinition["class"] = sol::readonly_property([](TES3::NPC& self) { return self.class_; });
+				usertypeDefinition["faction"] = sol::readonly_property([](TES3::NPC& self) { return self.faction; });
+				usertypeDefinition["race"] = sol::readonly_property([](TES3::NPC& self) { return self.race; });
+				usertypeDefinition["script"] = sol::readonly_property([](TES3::NPC& self) { return self.getScript(); });
 
 				// Functions exposed as properties.
 				usertypeDefinition["aiConfig"] = sol::readonly_property(&TES3::NPC::getAIConfig);
@@ -108,11 +108,11 @@ namespace mwse {
 				usertypeDefinition["isInstance"] = sol::var(true);
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["baseObject"] = sol::readonly_property([](TES3::NPCInstance& self) { return makeLuaObject(self.baseNPC); });
-				usertypeDefinition["class"] = sol::readonly_property([](TES3::NPCInstance& self) { return makeLuaObject(self.baseNPC->class_); });
-				usertypeDefinition["faction"] = sol::readonly_property([](TES3::NPCInstance& self) { return makeLuaObject(self.baseNPC->faction); });
-				usertypeDefinition["race"] = sol::readonly_property([](TES3::NPCInstance& self) { return makeLuaObject(self.baseNPC->race); });
-				usertypeDefinition["script"] = sol::readonly_property([](TES3::NPCInstance& self) { return makeLuaObject(self.getScript()); });
+				usertypeDefinition["baseObject"] = sol::readonly_property([](TES3::NPCInstance& self) { return self.baseNPC; });
+				usertypeDefinition["class"] = sol::readonly_property([](TES3::NPCInstance& self) { return self.baseNPC->class_; });
+				usertypeDefinition["faction"] = sol::readonly_property([](TES3::NPCInstance& self) { return self.baseNPC->faction; });
+				usertypeDefinition["race"] = sol::readonly_property([](TES3::NPCInstance& self) { return self.baseNPC->race; });
+				usertypeDefinition["script"] = sol::readonly_property([](TES3::NPCInstance& self) { return self.getScript(); });
 
 				// Functions exposed as properties.
 				usertypeDefinition["aiConfig"] = sol::readonly_property(&TES3::NPCInstance::getAIConfig);

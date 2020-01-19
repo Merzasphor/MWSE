@@ -28,8 +28,8 @@ namespace mwse {
 			usertypeDefinition["velocity"] = sol::readonly_property(&Collision::velocity);
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition["colliderRef"] = sol::readonly_property([](Collision& self) { return makeLuaObject(self.colliderRef); });
-			usertypeDefinition["colliderRoot"] = sol::readonly_property([](Collision& self) { return makeLuaNiPointer(self.colliderRoot); });
+			usertypeDefinition["colliderRef"] = sol::readonly_property([](Collision& self) { return self.colliderRef; });
+			usertypeDefinition["colliderRoot"] = sol::readonly_property([](Collision& self) { return self.colliderRoot; });
 			usertypeDefinition["normal"] = sol::readonly_property([](Collision& self) {
 				return TES3::Vector3(self.quantizedNormal[0] * quantizer, self.quantizedNormal[1] * quantizer, self.quantizedNormal[2] * quantizer);
 			});

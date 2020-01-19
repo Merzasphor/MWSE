@@ -81,11 +81,11 @@ namespace mwse {
 
 			state["mwse"]["stack"]["popObject"] = []() {
 				Stack& stack = Stack::getInstance();
-				sol::optional<sol::object> maybe_ret;
+				TES3::BaseObject* ret = nullptr;
 				if (!stack.empty()) {
-					maybe_ret = lua::makeLuaObject(reinterpret_cast<TES3::BaseObject*>(Stack::getInstance().popLong()));
+					ret = reinterpret_cast<TES3::BaseObject*>(Stack::getInstance().popLong());
 				}
-				return maybe_ret;
+				return ret;
 			};
 
 			//

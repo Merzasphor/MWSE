@@ -49,7 +49,7 @@ namespace mwse {
 			usertypeDefinition["setGamma"] = &TES3::Game::setGamma;
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition["playerTarget"] = sol::readonly_property([](TES3::Game& self) { return makeLuaObject(self.playerTarget); });
+			usertypeDefinition["playerTarget"] = sol::readonly_property([](TES3::Game& self) { return self.playerTarget; });
 		}
 	}
 }

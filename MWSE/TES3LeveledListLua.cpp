@@ -22,7 +22,7 @@ namespace mwse {
 				usertypeDefinition["levelRequired"] = &TES3::LeveledListNode::levelRequirement;
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["object"] = sol::readonly_property([](TES3::LeveledListNode& self) { return makeLuaObject(self.object); });
+				usertypeDefinition["object"] = sol::readonly_property([](TES3::LeveledListNode& self) { return self.object; });
 			}
 
 			// Binding for TES3::LeveledCreature
@@ -42,7 +42,7 @@ namespace mwse {
 				usertypeDefinition["list"] = sol::readonly_property(&TES3::LeveledCreature::itemList);
 
 				// Basic function binding.
-				usertypeDefinition["pickFrom"] = [](TES3::LeveledCreature& self) { return makeLuaObject(self.resolve()); };
+				usertypeDefinition["pickFrom"] = [](TES3::LeveledCreature& self) { return self.resolve(); };
 			}
 
 			// Binding for TES3::LeveledItem
@@ -65,7 +65,7 @@ namespace mwse {
 				usertypeDefinition["list"] = sol::readonly_property(&TES3::LeveledItem::itemList);
 
 				// Basic function binding.
-				usertypeDefinition["pickFrom"] = [](TES3::LeveledItem& self) { return makeLuaObject(self.resolve()); };
+				usertypeDefinition["pickFrom"] = [](TES3::LeveledItem& self) { return self.resolve(); };
 			}
 		}
 	}

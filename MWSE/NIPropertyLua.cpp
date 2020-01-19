@@ -136,7 +136,7 @@ namespace mwse {
 
 				// Properties that need extra work before returning.
 				usertypeDefinition["texture"] = sol::property(
-					[](NI::TexturingProperty::Map& self) { return makeLuaNiPointer(self.texture); },
+					[](NI::TexturingProperty::Map& self) { return self.texture; },
 					[](NI::TexturingProperty::Map& self, NI::Texture * texture) { self.texture = texture; }
 				);
 			}

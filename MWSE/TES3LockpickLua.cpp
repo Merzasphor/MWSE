@@ -28,7 +28,7 @@ namespace mwse {
 			usertypeDefinition["weight"] = &TES3::Lockpick::weight;
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition["script"] = sol::readonly_property([](TES3::Lockpick& self) { return makeLuaObject(self.getScript()); });
+			usertypeDefinition["script"] = sol::readonly_property([](TES3::Lockpick& self) { return self.getScript(); });
 
 			// Functions exposed as properties.
 			usertypeDefinition["icon"] = sol::property(

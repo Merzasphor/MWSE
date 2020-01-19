@@ -72,7 +72,7 @@ namespace mwse {
 				);
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["baseObject"] = sol::readonly_property([](TES3::ContainerInstance& self) { return makeLuaObject(self.container); });
+				usertypeDefinition["baseObject"] = sol::readonly_property([](TES3::ContainerInstance& self) { return self.container; });
 
 				// Constant values.
 				usertypeDefinition["isInstance"] = sol::var(true);
@@ -85,7 +85,7 @@ namespace mwse {
 				usertypeDefinition["script"] = sol::readonly_property(&TES3::ContainerInstance::getScript);
 
 				// TODO: Deprecated. Remove before 2.1-stable.
-				usertypeDefinition["container"] = sol::readonly_property([](TES3::ContainerInstance& self) { return makeLuaObject(self.container); });
+				usertypeDefinition["container"] = sol::readonly_property([](TES3::ContainerInstance& self) { return self.container; });
 				usertypeDefinition["model"] = sol::property(&TES3::ContainerInstance::getModelPath, &TES3::ContainerInstance::setModelPath);
 			}
 		}

@@ -31,7 +31,7 @@ namespace mwse {
 			usertypeDefinition["selectionPriority"] = &TES3::CombatSession::selectionPriority;
 
 			// Properties that need to be packaged.
-			usertypeDefinition["mobile"] = sol::readonly_property([](TES3::CombatSession& self) { return makeLuaObject(self.parentActor); });
+			usertypeDefinition["mobile"] = sol::readonly_property([](TES3::CombatSession& self) { return self.parentActor; });
 
 			// Basic function binding.
 			usertypeDefinition["selectAlchemyWithEffect"] = &TES3::CombatSession::chooseAlchemyWithEffect;

@@ -24,7 +24,7 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["sound"] =  [](TES3::RegionSound& self) { return makeLuaObject(self.sound); };
+				usertypeDefinition["sound"] =  [](TES3::RegionSound& self) { return self.sound; };
 
 				// Restrict chance [0-100].
 				usertypeDefinition["chance"] = sol::property(
@@ -103,16 +103,16 @@ namespace mwse {
 				);
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["sleepCreature"] = sol::readonly_property([](TES3::Region& self) { return makeLuaObject(self.sleepCreature); });
+				usertypeDefinition["sleepCreature"] = sol::readonly_property([](TES3::Region& self) { return self.sleepCreature; });
 
 				// Expose the current weather, and allow it to be changed via setting.
 				usertypeDefinition["weather"] = sol::property(
-					[](TES3::Region& self) -> sol::object
+					[](TES3::Region& self) -> TES3::Weather*
 				{
 					if (self.currentWeatherIndex < TES3::WeatherType::First || self.currentWeatherIndex > TES3::WeatherType::Last) {
-						return sol::nil;
+						return nullptr;
 					}
-					return makeLuaObject(TES3::WorldController::get()->weatherController->arrayWeathers[self.currentWeatherIndex]);
+					return TES3::WorldController::get()->weatherController->arrayWeathers[self.currentWeatherIndex];
 				},
 					[](TES3::Region& self, sol::object weather)
 				{

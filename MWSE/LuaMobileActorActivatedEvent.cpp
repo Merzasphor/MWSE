@@ -3,6 +3,7 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "TES3MobileObject.h"
 #include "TES3Reference.h"
 
 namespace mwse {
@@ -20,8 +21,8 @@ namespace mwse {
 				sol::state& state = stateHandle.state;
 				sol::table eventData = state.create_table();
 
-				eventData["reference"] = lua::makeLuaObject(m_Reference);
-				eventData["mobile"] = lua::makeLuaObject(m_Reference->getAttachedMobileObject());
+				eventData["reference"] = m_Reference;
+				eventData["mobile"] = m_Reference->getAttachedMobileObject();
 
 				return eventData;
 			}

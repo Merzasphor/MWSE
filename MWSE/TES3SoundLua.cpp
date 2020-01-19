@@ -68,7 +68,7 @@ namespace mwse {
 				usertypeDefinition["type"] = sol::readonly_property(&TES3::SoundGenerator::soundType);
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["sound"] = sol::readonly_property([](TES3::SoundGenerator& self) { return makeLuaObject(self.sound); });
+				usertypeDefinition["sound"] = sol::readonly_property([](TES3::SoundGenerator& self) { return self.sound; });
 			}
 		}
 	}

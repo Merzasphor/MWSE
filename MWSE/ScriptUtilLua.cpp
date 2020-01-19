@@ -320,7 +320,7 @@ namespace mwse {
 				reference->clearActionFlag(TES3::ActionFlags::OnMurder);
 				return result;
 			};
-			state["mwscript"]["placeAtPC"] = [](sol::optional<sol::table> params) -> sol::object {
+			state["mwscript"]["placeAtPC"] = [](sol::optional<sol::table> params) -> TES3::Reference* {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
 				TES3::BaseObject* object = getOptionalParamObject<TES3::BaseObject>(params, "object");
@@ -328,11 +328,11 @@ namespace mwse {
 				double distance = getOptionalParam<double>(params, "distance", 256.0);
 				double direction = getOptionalParam<double>(params, "direction", 1.0);
 				if (object == NULL) {
-					return sol::nil;
+					return nullptr;
 				}
 
 				mwscript::PlaceAtPC(script, reference, object, count, distance, direction);
-				return makeLuaObject(mwscript::lastCreatedPlaceAtPCReference);
+				return mwscript::lastCreatedPlaceAtPCReference;
 			};
 			state["mwscript"]["playSound"] = [](sol::optional<sol::table> params) {
 				TES3::Script* script = getOptionalParamExecutionScript(params);

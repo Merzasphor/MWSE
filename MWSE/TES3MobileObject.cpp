@@ -3,11 +3,23 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "LuaObjectInvalidatedEvent.h"
 #include "LuaMobileObjectCollisionEvent.h"
 
+#include "TES3MobileCreature.h"
+#include "TES3MobileNPC.h"
+#include "TES3MobilePlayer.h"
+#include "TES3MobileProjectile.h"
+#include "TES3MobileSpellProjectile.h"
 #include "TES3Reference.h"
 
 namespace TES3 {
+#define TES3_vTable_MobileCreature 0x74AFA4
+#define TES3_vTable_MobileNPC 0x74AE6C
+#define TES3_vTable_MobilePlayer 0x74B174
+#define TES3_vTable_MobileProjectile 0x74B2B4
+#define TES3_vTable_SpellProjectile 0x74B360
+
 	const auto TES3_MobileObject_onActorCollision = reinterpret_cast<bool(__thiscall *)(MobileObject*, int)>(0x5615A0);
 	const auto TES3_MobileObject_onObjectCollision = reinterpret_cast<bool(__thiscall *)(MobileObject*, int, bool)>(0x5615C0);
 	const auto TES3_MobileObject_onTerrainCollision = reinterpret_cast<bool(__thiscall *)(MobileObject*, int)>(0x5615E0);
@@ -121,4 +133,85 @@ namespace TES3 {
 		// Use our util class to support vectors or a table.
 		mwse::lua::setVectorFromLua(&velocity, value);
 	}
+
+	static std::unordered_map<const MobileObject*, sol::object> mobileObjectCache;
+	static std::mutex mobileObjectCacheMutex;
+
+	sol::object MobileObject::getOrCreateLuaObject(lua_State* L, const MobileObject* object) {
+		if (object == nullptr) {
+			return sol::nil;
+		}
+
+		mobileObjectCacheMutex.lock();
+
+		auto cacheHit = mobileObjectCache.find(object);
+		if (cacheHit != mobileObjectCache.end()) {
+			auto result = cacheHit->second;
+			mobileObjectCacheMutex.unlock();
+			return result;
+		}
+
+		sol::object ref = sol::nil;
+		switch ((unsigned int)object->vTable.mobileObject) {
+		case TES3_vTable_MobileCreature:
+			ref = sol::make_object(L, static_cast<const TES3::MobileCreature*>(object));
+			break;
+		case TES3_vTable_MobileNPC:
+			ref = sol::make_object(L, static_cast<const TES3::MobileNPC*>(object));
+			break;
+		case TES3_vTable_MobilePlayer:
+			ref = sol::make_object(L, static_cast<const TES3::MobilePlayer*>(object));
+			break;
+		case TES3_vTable_MobileProjectile:
+			ref = sol::make_object(L, static_cast<const TES3::MobileProjectile*>(object));
+			break;
+		case TES3_vTable_SpellProjectile:
+			ref = sol::make_object(L, static_cast<const TES3::MobileSpellProjectile*>(object));
+			break;
+		}
+
+		mobileObjectCache[object] = ref;
+		mobileObjectCacheMutex.unlock();
+
+		return ref;
+	}
+
+	int MobileObject::pushCachedLuaObject(lua_State* L, const MobileObject* object) {
+		return getOrCreateLuaObject(L, object).push(L);
+	}
+
+	void MobileObject::clearCachedLuaObject(const MobileObject* object) {
+		if (!mobileObjectCache.empty()) {
+			mobileObjectCacheMutex.lock();
+
+			// Clear any events that make use of this object.
+			auto it = mobileObjectCache.find(object);
+			if (it != mobileObjectCache.end()) {
+				// Let people know that this object is invalidated.
+				mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ObjectInvalidatedEvent(it->second));
+
+				// Clear any events that make use of this object.
+				mwse::lua::event::clearObjectFilter(it->second);
+
+				// Remove it from the cache.
+				mobileObjectCache.erase(it);
+			}
+
+			mobileObjectCacheMutex.unlock();
+		}
+	}
+
+	void MobileObject::clearCachedLuaObjects() {
+		mobileObjectCacheMutex.lock();
+		mobileObjectCache.clear();
+		mobileObjectCacheMutex.unlock();
+	}
 }
+
+MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_BODY(TES3::MobileActor);
+MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_BODY(TES3::MobileCreature);
+MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_BODY(TES3::MobileNPC);
+MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_BODY(TES3::MobileObject);
+MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_BODY(TES3::MobilePlayer);
+MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_BODY(TES3::MobileProjectile);
+MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_BODY(TES3::MobileSpellProjectile);

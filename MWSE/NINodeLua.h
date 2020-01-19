@@ -19,23 +19,23 @@ namespace mwse {
 				self.attachChild(child, useFirstAvailable.value_or(false));
 				self.updateProperties();
 			};
-			usertypeDefinition["detachChild"] = [](NI::Node& self, NI::AVObject * child) {
+			usertypeDefinition["detachChild"] = [](NI::Node& self, NI::AVObject * child)-> NI::Pointer<NI::AVObject> {
 				NI::AVObject * returnedChild = nullptr;
 				self.detachChild(&returnedChild, child);
-				return makeLuaNiPointer(returnedChild);
+				return returnedChild;
 			};
-			usertypeDefinition["detachChildAt"] = [](NI::Node& self, unsigned int index) -> sol::object {
+			usertypeDefinition["detachChildAt"] = [](NI::Node& self, unsigned int index) -> NI::Pointer<NI::AVObject> {
 				if (--index < 0) {
-					return sol::nil;
+					return nullptr;
 				}
 
 				NI::AVObject * returnedChild = nullptr;
 				self.detachChildAt(&returnedChild, index);
-				return makeLuaNiPointer(returnedChild);
+				return returnedChild;
 			};
 
 			// Functions that need their results wrapped.
-			usertypeDefinition["getEffect"] = [](NI::Node& self, int type) { return makeLuaNiPointer(self.getEffect(type)); };
+			usertypeDefinition["getEffect"] = [](NI::Node& self, int type) { return self.getEffect(type); };
 		}
 
 		void bindNINode();

@@ -86,7 +86,7 @@ namespace mwse {
 				return sol::optional<std::tuple<int, sol::object>>();
 			}
 
-			auto values = std::make_tuple(state.index, sol::object(l, sol::in_place, makeLuaObject(state.tarray->storage[state.index])));
+			auto values = std::make_tuple(state.index, sol::object(l, sol::in_place, state.tarray->storage[state.index]));
 			state.index++;
 			return values;
 		}
@@ -97,7 +97,7 @@ namespace mwse {
 				return sol::optional<std::tuple<int, sol::object>>();
 			}
 
-			return std::make_tuple(index, sol::object(l, sol::in_place, makeLuaObject(tarray->storage[index - 1])));
+			return std::make_tuple(index, sol::object(l, sol::in_place, tarray->storage[index - 1]));
 		}
 
 		template <typename T>
@@ -122,7 +122,7 @@ namespace mwse {
 				if (index < 0 || index >= self.endIndex) {
 					throw std::out_of_range("Access index out of bounds.");
 				}
-				return makeLuaObject(self.storage[index]);
+				return self.storage[index];
 				};
 			usertypeDefinition[sol::meta_function::length] = [](TES3::TArray<T>& self) { return self.endIndex; };
 

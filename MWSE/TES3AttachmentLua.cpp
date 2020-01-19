@@ -42,7 +42,7 @@ namespace mwse {
 
 				// Access to other objects that need to be packaged.
 				usertypeDefinition["key"] = sol::property(
-					[](TES3::LockAttachmentNode& self) { return makeLuaObject(self.key); },
+					[](TES3::LockAttachmentNode& self) { return self.key; },
 					[](TES3::LockAttachmentNode& self, TES3::Misc * key)
 				{
 					if (key && !(key->flags & 1)) {
@@ -53,7 +53,7 @@ namespace mwse {
 				}
 				);
 				usertypeDefinition["trap"] = sol::property(
-					[](TES3::LockAttachmentNode& self) { return makeLuaObject(self.trap); },
+					[](TES3::LockAttachmentNode& self) { return self.trap; },
 					[](TES3::LockAttachmentNode& self, TES3::Spell * spell) { self.trap = spell; }
 				);
 			}
@@ -66,11 +66,11 @@ namespace mwse {
 
 				// Access to other objects that need to be packaged.
 				usertypeDefinition["cell"] = sol::property(
-					[](TES3::TravelDestination& self) { return makeLuaObject(self.cell); },
+					[](TES3::TravelDestination& self) { return self.cell; },
 					[](TES3::TravelDestination& self, TES3::Cell * cell) { self.cell = cell; }
 				);
 				usertypeDefinition["marker"] = sol::property(
-					[](TES3::TravelDestination& self) { return makeLuaObject(self.destination); },
+					[](TES3::TravelDestination& self) { return self.destination; },
 					[](TES3::TravelDestination& self, TES3::Reference * destination) { self.destination = destination; }
 				);
 			}

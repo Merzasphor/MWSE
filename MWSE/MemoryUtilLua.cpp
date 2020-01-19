@@ -9,6 +9,7 @@
 #include "Log.h"
 
 #include "TES3Inventory.h"
+#include "TES3MobileObject.h"
 
 namespace mwse {
 	namespace lua {
@@ -429,8 +430,8 @@ namespace mwse {
 			convertTo["uint"] = [](DWORD arg) { return arg; };
 			convertTo["float"] = [](DWORD arg) { return *reinterpret_cast<float*>(&arg); };
 			convertTo["string"] = [](DWORD arg) { return reinterpret_cast<const char*>(arg); };
-			convertTo["tes3object"] = [](DWORD arg) { return makeLuaObject(reinterpret_cast<TES3::BaseObject*>(arg)); };
-			convertTo["tes3mobileObject"] = [](DWORD arg) { return makeLuaObject(reinterpret_cast<TES3::MobileObject*>(arg)); };
+			convertTo["tes3object"] = [](DWORD arg) { return reinterpret_cast<TES3::BaseObject*>(arg); };
+			convertTo["tes3mobileObject"] = [](DWORD arg) { return reinterpret_cast<TES3::MobileObject*>(arg); };
 			convertTo["tes3inventory"] = [](DWORD arg) { return reinterpret_cast<TES3::Inventory*>(arg); };
 			memory["convertTo"] = convertTo;
 

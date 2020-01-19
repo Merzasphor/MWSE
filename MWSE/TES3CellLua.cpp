@@ -31,7 +31,7 @@ namespace mwse {
 				referenceListQueue.pop();
 			}
 
-			return [cell, reference, referenceListQueue, desiredTypes]() mutable -> sol::object {
+			return [cell, reference, referenceListQueue, desiredTypes]() mutable -> TES3::Reference* {
 				while (reference && !desiredTypes.empty() && !desiredTypes.count(reference->baseObject->objectType)) {
 					reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
 
@@ -43,11 +43,11 @@ namespace mwse {
 				}
 
 				if (reference == nullptr) {
-					return sol::nil;
+					return nullptr;
 				}
 
 				// Get the object we want to return.
-				sol::object ret = lua::makeLuaObject(reference);
+				auto ret = reference;
 
 				// Get the next reference. If we're at the end of the list, go to the next one
 				reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);

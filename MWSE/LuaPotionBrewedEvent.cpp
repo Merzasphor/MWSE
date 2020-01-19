@@ -20,7 +20,7 @@ namespace mwse {
 				sol::state& state = stateHandle.state;
 				sol::table eventData = state.create_table();
 
-				eventData["object"] = makeLuaObject(m_Object);
+				eventData["object"] = m_Object;
 
 				return eventData;
 			}

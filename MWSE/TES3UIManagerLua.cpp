@@ -246,11 +246,11 @@ namespace mwse {
 				auto MenuInventorySelect_container = reinterpret_cast<TES3::Inventory*>(element->getProperty(PropertyType::Pointer, *reinterpret_cast<Property*>(0x7D3C32)).ptrValue);
 				auto MenuInventorySelect_container_object = reinterpret_cast<TES3::Actor*>(element->getProperty(PropertyType::Pointer, *reinterpret_cast<Property*>(0x7D3C3C)).ptrValue);
 
-				params["item"] = makeLuaObject(MenuInventorySelect_object);
+				params["item"] = MenuInventorySelect_object;
 				params["itemData"] = MenuInventorySelect_extra;
 				params["count"] = MenuInventorySelect_extra ? MenuInventorySelect_extra->count : MenuInventorySelect_count;
 				params["inventory"] = MenuInventorySelect_container;
-				params["actor"] = makeLuaObject(MenuInventorySelect_container_object);
+				params["actor"] = MenuInventorySelect_container_object;
 
 				sol::protected_function_result result =  inventorySelectLuaCallback(params);
 				if (!result.valid()) {
@@ -281,7 +281,7 @@ namespace mwse {
 				auto MenuInventorySelect_filter_object = reinterpret_cast<TES3::BaseObject*>(element->getProperty(PropertyType::Pointer, *reinterpret_cast<Property*>(0x7D3C88)).ptrValue);
 				auto MenuInventorySelect_filter_extra = reinterpret_cast<TES3::ItemData*>(element->getProperty(PropertyType::Pointer, *reinterpret_cast<Property*>(0x7D3C16)).ptrValue);
 
-				params["item"] = makeLuaObject(MenuInventorySelect_filter_object);
+				params["item"] = MenuInventorySelect_filter_object;
 				params["itemData"] = MenuInventorySelect_filter_extra;
 
 				sol::protected_function_result result = inventorySelectLuaFilter(params);
@@ -428,9 +428,9 @@ namespace mwse {
 			tes3ui.set_function("createTooltipMenu", []() {
 				return TES3::UI::createTooltipMenu(TES3::UI::UI_ID(TES3::UI::Property::HelpMenu));
 			});
-			tes3ui["findMenu"] = TES3::UI::findMenu;
-			tes3ui["findHelpLayerMenu"] = TES3::UI::findHelpLayerMenu;
-			tes3ui["getMenuOnTop"] = TES3::UI::getMenuOnTop;
+			tes3ui["findMenu"] = &TES3::UI::findMenu;
+			tes3ui["findHelpLayerMenu"] = &TES3::UI::findHelpLayerMenu;
+			tes3ui["getMenuOnTop"] = &TES3::UI::getMenuOnTop;
 			tes3ui["forcePlayerInventoryUpdate"] = []() {
 				auto worldController = TES3::WorldController::get();
 				auto playerMobile = worldController->getMobilePlayer();
@@ -441,10 +441,10 @@ namespace mwse {
 			tes3ui["menuMode"] = []() {
 				return TES3::WorldController::get()->flagMenuMode;
 			};
-			tes3ui["enterMenuMode"] = TES3::UI::enterMenuMode;
-			tes3ui["leaveMenuMode"] = TES3::UI::leaveMenuMode;
-			tes3ui["acquireTextInput"] = TES3::UI::acquireTextInput;
-			tes3ui["captureMouseDrag"] = TES3::UI::captureMouseDrag;
+			tes3ui["enterMenuMode"] = &TES3::UI::enterMenuMode;
+			tes3ui["leaveMenuMode"] = &TES3::UI::leaveMenuMode;
+			tes3ui["acquireTextInput"] = &TES3::UI::acquireTextInput;
+			tes3ui["captureMouseDrag"] = &TES3::UI::captureMouseDrag;
 			tes3ui["getPalette"] = [](const char* name) {
 				auto& luaManager = LuaManager::getInstance();
 				auto stateHandle = luaManager.getThreadSafeStateHandle();
@@ -471,10 +471,8 @@ namespace mwse {
 
 				return count;
 			};
-			tes3ui["getInventorySelectType"] = TES3::UI::getInventorySelectType;
-			tes3ui["getServiceActor"] = []() {
-				return mwse::lua::makeLuaObject(TES3::UI::getServiceActor());
-			};
+			tes3ui["getInventorySelectType"] = &TES3::UI::getInventorySelectType;
+			tes3ui["getServiceActor"] = &TES3::UI::getServiceActor;
 			tes3ui["showScrollMenu"] = &TES3::UI::showScrollMenu;
 			tes3ui["showBookMenu"] = &TES3::UI::showBookMenu;
 			tes3ui["logToConsole"] = [](const char* text, sol::optional<bool> isCommand) {

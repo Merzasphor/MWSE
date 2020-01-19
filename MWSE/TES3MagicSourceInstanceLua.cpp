@@ -59,11 +59,11 @@ namespace mwse {
 			};
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition["target"] = sol::readonly_property([](TES3::MagicSourceInstance& self) { return makeLuaObject(self.target); });
-			usertypeDefinition["projectile"] = sol::readonly_property([](TES3::MagicSourceInstance& self) { return makeLuaObject(self.magicProjectile); });
-			usertypeDefinition["caster"] = sol::readonly_property([](TES3::MagicSourceInstance& self) { return makeLuaObject(self.caster); });
-			usertypeDefinition["item"] = sol::readonly_property([](TES3::MagicSourceInstance& self) { return makeLuaObject(self.castingItem); });
-			usertypeDefinition["source"] = sol::readonly_property([](TES3::MagicSourceInstance& self) { return makeLuaObject(self.sourceCombo.source.asGeneric); });
+			usertypeDefinition["target"] = sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.target; });
+			usertypeDefinition["projectile"] = sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.magicProjectile; });
+			usertypeDefinition["caster"] = sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.caster; });
+			usertypeDefinition["item"] = sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.castingItem; });
+			usertypeDefinition["source"] = sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.sourceCombo.source.asGeneric; });
 
 			// Functions exposed as properties.
 			usertypeDefinition["sourceEffects"] = sol::readonly_property([](TES3::MagicSourceInstance& self) { return self.sourceCombo.getSourceEffects(); });

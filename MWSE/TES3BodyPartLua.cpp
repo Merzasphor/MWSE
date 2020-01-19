@@ -33,7 +33,7 @@ namespace mwse {
 
 				// Properties that need extra work before returning.
 				usertypeDefinition["sceneNode"] = sol::property(
-					[](TES3::BodyPart& self) { return makeLuaNiPointer(self.mirroredNode); },
+					[](TES3::BodyPart& self) { return self.mirroredNode; },
 					[](TES3::BodyPart& self, NI::Node * node) { return self.mirroredNode = node; }
 				);
 

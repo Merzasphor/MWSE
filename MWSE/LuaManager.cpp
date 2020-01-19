@@ -505,8 +505,8 @@ namespace mwse {
 
 			if (execute) {
 				sol::table params = state.create_table();
-				params["script"] = makeLuaObject(script);
-				params["reference"] = makeLuaObject(reference);
+				params["script"] = script;
+				params["reference"] = reference;
 				params["scriptData"] = mwse::mwscript::getLocalScriptVariables();
 
 				sol::protected_function_result result = execute(params);
@@ -558,8 +558,8 @@ namespace mwse {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
 			TES3::MobilePlayer * mobilePlayer = self->mobilePlayer;
-			state["tes3"]["mobilePlayer"] = mwse::lua::makeLuaObject(mobilePlayer);
-			state["tes3"]["player"] = mwse::lua::makeLuaObject(mobilePlayer->reference);
+			state["tes3"]["mobilePlayer"] = mobilePlayer;
+			state["tes3"]["player"] = mobilePlayer->reference;
 		}
 
 		//
@@ -1242,18 +1242,6 @@ namespace mwse {
 				// Resume normal execution.
 				jmp postSpellCastFailure
 			}
-		}
-
-		//
-		// When an object is deleted, we need to clear any lua mapping to it.
-		//
-
-		TES3::BaseObject* __fastcall OnEntityDelete(TES3::BaseObject* object) {
-			// Clear the object from the userdata cache.
-			LuaManager::getInstance().getThreadSafeStateHandle().removeUserdataFromCache(object);
-
-			// Let the object finally die.
-			return reinterpret_cast<TES3::BaseObject*(__thiscall *)(TES3::BaseObject*)>(TES3_BaseObject_destructor)(object);
 		}
 
 		//
@@ -2647,32 +2635,6 @@ namespace mwse {
 			return luaManager->triggerEvent(e);
 		}
 
-
-		// Guarded access to the userdata cache.
-		sol::object ThreadedStateHandle::getCachedUserdata(TES3::BaseObject* o) {
-			return luaManager->getCachedUserdata(o);
-		}
-
-		sol::object ThreadedStateHandle::getCachedUserdata(TES3::MobileObject* mo) {
-			return luaManager->getCachedUserdata(mo);
-		}
-
-		void ThreadedStateHandle::insertUserdataIntoCache(TES3::BaseObject* o, sol::object lo) {
-			luaManager->insertUserdataIntoCache(o, lo);
-		}
-
-		void ThreadedStateHandle::insertUserdataIntoCache(TES3::MobileObject* mo, sol::object lo) {
-			luaManager->insertUserdataIntoCache(mo, lo);
-		}
-
-		void ThreadedStateHandle::removeUserdataFromCache(TES3::BaseObject* o) {
-			luaManager->removeUserdataFromCache(o);
-		}
-
-		void ThreadedStateHandle::removeUserdataFromCache(TES3::MobileObject* mo) {
-			luaManager->removeUserdataFromCache(mo);
-		}
-
 		//
 		//
 		//
@@ -3634,12 +3596,13 @@ namespace mwse {
 			VirtualProtect((DWORD*)TES3_DATA_EFFECT_FLAGS, 4 * 143, PAGE_READWRITE, &OldProtect);
 
 			// Hook generic entity deletion so that we can do any necessary cleanup.
-			genCallEnforced(0x4AA15B, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
-			genCallEnforced(0x4AAF10, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
-			genCallEnforced(0x4E49EE, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
-			genCallEnforced(0x4EEFAA, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
-			genCallEnforced(0x4F026F, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
-			genCallEnforced(0x4F0C83, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
+			auto baseObjectDestructor = &TES3::BaseObject::dtor;
+			genCallEnforced(0x4AA15B, 0x4F0CA0, *reinterpret_cast<DWORD*>(&baseObjectDestructor));
+			genCallEnforced(0x4AAF10, 0x4F0CA0, *reinterpret_cast<DWORD*>(&baseObjectDestructor));
+			genCallEnforced(0x4E49EE, 0x4F0CA0, *reinterpret_cast<DWORD*>(&baseObjectDestructor));
+			genCallEnforced(0x4EEFAA, 0x4F0CA0, *reinterpret_cast<DWORD*>(&baseObjectDestructor));
+			genCallEnforced(0x4F026F, 0x4F0CA0, *reinterpret_cast<DWORD*>(&baseObjectDestructor));
+			genCallEnforced(0x4F0C83, 0x4F0CA0, *reinterpret_cast<DWORD*>(&baseObjectDestructor));
 
 			// Look for main.lua scripts in the usual directories.
 			executeMainModScripts("Data Files\\MWSE\\core");
@@ -3654,9 +3617,11 @@ namespace mwse {
 			// closing mid-execution.
 			scriptOverrides.clear();
 
-			userdataMapMutex.lock();
-			userdataCache.clear();
-			userdataMapMutex.unlock();
+			// Clear cached userdata.
+			TES3::BaseObject::clearCachedLuaObjects();
+			TES3::MobileObject::clearCachedLuaObjects();
+			TES3::Weather::clearCachedLuaObjects();
+			NI::Object::clearCachedLuaObjects();
 		}
 
 		TES3::Script* LuaManager::getCurrentScript() {
@@ -3703,97 +3668,6 @@ namespace mwse {
 					log::getLog() << "Runtime error when running tes3.messageBox button callback:\n" << error.what() << std::endl;
 				}
 			}
-		}
-
-		sol::object LuaManager::getCachedUserdata(TES3::BaseObject* object) {
-			userdataMapMutex.lock();
-
-			sol::object result = sol::nil;
-
-			UserdataMap::iterator searchResult = userdataCache.find((unsigned long)object);
-			if (searchResult != userdataCache.end()) {
-				result = searchResult->second;
-			}
-
-			userdataMapMutex.unlock();
-
-			return result;
-		}
-
-		sol::object LuaManager::getCachedUserdata(TES3::MobileObject* object) {
-			userdataMapMutex.lock();
-
-			sol::object result = sol::nil;
-
-			UserdataMap::iterator searchResult = userdataCache.find((unsigned long)object);
-			if (searchResult != userdataCache.end()) {
-				result = searchResult->second;
-			}
-
-			userdataMapMutex.unlock();
-
-			return result;
-		}
-
-		void LuaManager::insertUserdataIntoCache(TES3::BaseObject* object, sol::object luaObject) {
-			userdataMapMutex.lock();
-			userdataCache[(unsigned long)object] = luaObject;
-			userdataMapMutex.unlock();
-		}
-
-		void LuaManager::insertUserdataIntoCache(TES3::MobileObject* object, sol::object luaObject) {
-			userdataMapMutex.lock();
-			userdataCache[(unsigned long)object] = luaObject;
-			userdataMapMutex.unlock();
-		}
-
-		std::queue<TES3::BaseObject*> threadedBaseObjectCacheDeletionQueue;
-		std::queue<TES3::MobileObject*> threadedMobileObjectCacheDeletionQueue;
-
-		void LuaManager::removeUserdataFromCache(TES3::BaseObject* object) {
-			userdataMapMutex.lock();
-
-			if (!userdataCache.empty()) {
-				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-
-				// Clear any events that make use of this object.
-				UserdataMap::iterator it = userdataCache.find((unsigned long)object);
-				if (it != userdataCache.end()) {
-					// Let people know that this object is invalidated.
-					stateHandle.triggerEvent(new event::ObjectInvalidatedEvent(it->second));
-
-					// Clear any events that make use of this object.
-					event::clearObjectFilter(it->second);
-
-					// Remove it from the cache.
-					userdataCache.erase(it);
-				}
-			}
-
-			userdataMapMutex.unlock();
-		}
-
-		void LuaManager::removeUserdataFromCache(TES3::MobileObject* object) {
-			userdataMapMutex.lock();
-
-			if (!userdataCache.empty()) {
-				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-
-				// Clear any events that make use of this object.
-				UserdataMap::iterator it = userdataCache.find((unsigned long)object);
-				if (it != userdataCache.end()) {
-					// Let people know that this object is invalidated.
-					stateHandle.triggerEvent(new event::ObjectInvalidatedEvent(it->second));
-
-					// Clear any events that make use of this object.
-					event::clearObjectFilter(it->second);
-
-					// Remove it from the cache.
-					userdataCache.erase(it);
-				}
-			}
-
-			userdataMapMutex.unlock();
 		}
 
 		void LuaManager::updateTimers(float deltaTime, double simulationTimestamp, bool simulating) {

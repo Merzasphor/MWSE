@@ -51,7 +51,7 @@ namespace mwse {
 			);
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition["ambientLoopSound"] = sol::readonly_property([](TES3::Weather& self) { return makeLuaObject(self.soundAmbientLoop); });
+			usertypeDefinition["ambientLoopSound"] = sol::readonly_property([](TES3::Weather& self) { return self.soundAmbientLoop; });
 		}
 
 		void bindTES3Weather();

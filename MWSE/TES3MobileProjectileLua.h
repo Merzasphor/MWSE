@@ -12,8 +12,8 @@ namespace mwse {
 			usertypeDefinition["expire"] = &TES3::MobileProjectile::flagExpire;
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition["firingMobile"] = sol::readonly_property([](TES3::MobileProjectile& self) { return makeLuaObject(self.firingActor); });
-			usertypeDefinition["firingWeapon"] = sol::readonly_property([](TES3::MobileProjectile& self) { return makeLuaObject(self.firingWeapon); });
+			usertypeDefinition["firingMobile"] = sol::readonly_property([](TES3::MobileProjectile& self) { return self.firingActor; });
+			usertypeDefinition["firingWeapon"] = sol::readonly_property([](TES3::MobileProjectile& self) { return self.firingWeapon; });
 		}
 
 		void bindTES3MobileProjectile();

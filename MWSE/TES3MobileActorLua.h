@@ -52,7 +52,7 @@ namespace mwse {
 			// Indirect bindings to unions and arrays.
 			usertypeDefinition["animationData"] = sol::readonly_property([](TES3::MobileActor& self) { return self.animationData.asActor; });
 			usertypeDefinition["attributes"] = sol::readonly_property([](TES3::MobileActor& self) { return std::ref(self.attributes); });
-			usertypeDefinition["currentSpell"] = sol::readonly_property([](TES3::MobileActor& self) { return makeLuaObject(self.currentSpell.source.asGeneric); });
+			usertypeDefinition["currentSpell"] = sol::readonly_property([](TES3::MobileActor& self) { return self.currentSpell.source.asGeneric; });
 			usertypeDefinition["effectAttributes"] = sol::readonly_property([](TES3::MobileActor& self) { return std::ref(self.effectAttributes); });
 
 			// Friendly access to actor flags.

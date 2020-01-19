@@ -22,7 +22,7 @@ namespace mwse {
 			usertypeDefinition["skills"] = sol::property([](TES3::MobileNPC& self) { return std::ref(self.skills); });
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition["object"] = sol::readonly_property([](TES3::MobileNPC& self) { return makeLuaObject(self.npcInstance); });
+			usertypeDefinition["object"] = sol::readonly_property([](TES3::MobileNPC& self) { return self.npcInstance; });
 
 			// Allow read access to movement speeds.
 			usertypeDefinition["moveSpeed"] = sol::readonly_property([](TES3::MobileNPC& self) { return self.animationData.asActor->calculateMovementSpeed(); });

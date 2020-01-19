@@ -16,14 +16,14 @@ namespace mwse::lua
 class ObjectCreatorBase
 {
 public:
-	virtual sol::object create( sol::table, bool ) const = 0;
+	virtual TES3::BaseObject* create( sol::table, bool ) const = 0;
 };
 
 template< typename ObjectType >
 class ObjectCreator : public ObjectCreatorBase
 {
 public:
-	sol::object create( sol::table, bool ) const override
+	TES3::BaseObject* create( sol::table, bool ) const override
 	{
 		throw std::runtime_error{ "tes3.createObject: Cannot create an object of that type." };
 	}
@@ -35,7 +35,7 @@ template<>
 class ObjectCreator< TES3::Activator > : public ObjectCreatorBase
 {
 public:
-	sol::object create( sol::table params, bool getIfExists ) const override
+	TES3::BaseObject* create( sol::table params, bool getIfExists ) const override
 	{
 		std::string id = getOptionalParam< std::string >( params, "id", {} );
 
@@ -44,7 +44,7 @@ public:
 
 		if( auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ); existingObject != nullptr )
 			return ( getIfExists && ( existingObject->objectType == TES3::ObjectType::Activator ) ) ?
-			makeLuaObject( existingObject ) :
+			 existingObject  :
 			throw std::invalid_argument{ "tes3activator.create: 'id' parameter already assigned to an existing object that is not an activator." };
 
 		std::string name = getOptionalParam< std::string >( params, "name", "Activator" );
@@ -73,7 +73,7 @@ public:
 		if( !TES3::DataHandler::get()->nonDynamicData->addNewObject( activator ) )
 			throw std::runtime_error( "tes3activator.create: could not add the newly created activator in its proper collection." );
 
-		return makeLuaObject( activator );
+		return  activator ;
 	}
 };
 
@@ -81,7 +81,7 @@ template<>
 class ObjectCreator< TES3::Misc > : public ObjectCreatorBase
 {
 public:
-	sol::object create( sol::table params, bool getIfExists ) const override
+	TES3::BaseObject* create( sol::table params, bool getIfExists ) const override
 	{
 		std::string id = getOptionalParam< std::string >( params, "id", {} );
 
@@ -90,7 +90,7 @@ public:
 
 		if( auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ); existingObject != nullptr )
 			return ( getIfExists && existingObject->objectType == TES3::ObjectType::Misc ) ?
-			makeLuaObject( existingObject ) :
+			 existingObject  :
 			throw std::invalid_argument{ "tes3misc.create: 'id' parameter already assigned to an existing object that is not a misc item." };
 
 		std::string name = getOptionalParam< std::string >( params, "name", "Miscellaneous item" );
@@ -127,7 +127,7 @@ public:
 		if( !TES3::DataHandler::get()->nonDynamicData->addNewObject( miscItem ) )
 			throw std::runtime_error( "tes3misc.create: could not add the newly created misc item in its proper collection." );
 
-		return makeLuaObject( miscItem );
+		return  miscItem ;
 	}
 };
 
@@ -135,7 +135,7 @@ template<>
 class ObjectCreator< TES3::Static > : public ObjectCreatorBase
 {
 public:
-	sol::object create( sol::table params, bool getIfExists ) const override
+	TES3::BaseObject* create( sol::table params, bool getIfExists ) const override
 	{
 		std::string id = getOptionalParam< std::string >( params, "id", {} );
 
@@ -144,7 +144,7 @@ public:
 
 		if( auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ); existingObject != nullptr )
 			return ( getIfExists && existingObject->objectType == TES3::ObjectType::Static ) ?
-			makeLuaObject( existingObject ) :
+			 existingObject  :
 			throw std::invalid_argument{ "tes3static.create: 'id' parameter already assigned to an existing object that is not a static." };
 
 		std::string mesh = getOptionalParam< std::string >( params, "mesh", {} );
@@ -163,7 +163,7 @@ public:
 		if( !TES3::DataHandler::get()->nonDynamicData->addNewObject( staticObject ) )
 			throw std::runtime_error( "tes3static.create: could not add the newly created static in its proper collection." );
 
-		return makeLuaObject( staticObject );
+		return  staticObject ;
 	}
 };
 
@@ -171,7 +171,7 @@ template<>
 class ObjectCreator< TES3::Enchantment > : public ObjectCreatorBase
 {
 public:
-	sol::object create( sol::table params, bool getIfExists ) const override
+	TES3::BaseObject* create( sol::table params, bool getIfExists ) const override
 	{
 		std::string id = getOptionalParam< std::string >( params, "id", {} );
 
@@ -180,7 +180,7 @@ public:
 
 		if( auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject( id.c_str() ); existingObject != nullptr )
 			return ( getIfExists && existingObject->objectType == TES3::ObjectType::Enchantment ) ?
-			makeLuaObject( existingObject ) :
+			 existingObject  :
 			throw std::invalid_argument{ "tes3enchantment.create: 'id' parameter already assigned to an existing object that is not an enchantment." };
 
 		auto castType = getOptionalParam( params, "castType", TES3::EnchantmentCastType::Invalid );
@@ -208,7 +208,7 @@ public:
 		if( !TES3::DataHandler::get()->nonDynamicData->addNewObject( enchantment ) )
 			throw std::runtime_error( "tes3enchantment.create: could not add the newly created enchantment in its proper collection." );
 
-		return makeLuaObject( enchantment );
+		return  enchantment ;
 	}
 };
 

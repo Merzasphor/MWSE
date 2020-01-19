@@ -31,7 +31,7 @@ namespace mwse {
 			usertypeDefinition["weight"] = &TES3::Probe::weight;
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition["script"] = sol::readonly_property([](TES3::Probe& self) { return makeLuaObject(self.getScript()); });
+			usertypeDefinition["script"] = sol::readonly_property([](TES3::Probe& self) { return self.getScript(); });
 
 			// Functions exposed as properties.
 			usertypeDefinition["icon"] = sol::property(

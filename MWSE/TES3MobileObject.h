@@ -230,7 +230,24 @@ namespace TES3 {
 		void setPositionFromLua(sol::stack_object);
 		void setVelocityFromLua(sol::stack_object);
 
+		// Storage for cached userdata.
+		static sol::object getOrCreateLuaObject(lua_State* L, const MobileObject* object);
+		static int pushCachedLuaObject(lua_State* L, const MobileObject* object);
+		static void clearCachedLuaObject(const MobileObject* object);
+		static void clearCachedLuaObjects();
+
 	};
 	static_assert(sizeof(MobileObject) == 0x80, "TES3::MobileObject failed size validation");
 	static_assert(sizeof(MobileObject::Collision) == 0x40, "TES3::MobileObject::Collision failed size validation");
 }
+
+#define MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_DEF(T) int sol_lua_push(sol::types<T*>, lua_State* L, const T* object);
+#define MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_BODY(T) int sol_lua_push(sol::types<T*>, lua_State* L, const T* object) { return T::pushCachedLuaObject(L, object); }
+
+MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_DEF(TES3::MobileActor);
+MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_DEF(TES3::MobileCreature);
+MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_DEF(TES3::MobileNPC);
+MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_DEF(TES3::MobileObject);
+MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_DEF(TES3::MobilePlayer);
+MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_DEF(TES3::MobileProjectile);
+MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_DEF(TES3::MobileSpellProjectile);

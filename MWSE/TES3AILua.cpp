@@ -26,7 +26,7 @@ namespace mwse {
 				usertypeDefinition["countPackages"] = sol::readonly_property(&TES3::AIPlanner::countPackages);
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["mobile"] = sol::readonly_property([](TES3::AIPlanner& self) { return makeLuaObject(self.mobileActor); });
+				usertypeDefinition["mobile"] = sol::readonly_property([](TES3::AIPlanner& self) { return self.mobileActor; });
 
 				// Basic function binding.
 				usertypeDefinition["getActivePackage"] = &TES3::AIPlanner::getActivePackage;
@@ -54,7 +54,7 @@ namespace mwse {
 				usertypeDefinition["type"] = sol::readonly_property(&TES3::AIPackage::packageType);
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["destinationCell"] = sol::readonly_property([](TES3::AIPackage& self) { return makeLuaObject(self.destinationCell); });
+				usertypeDefinition["destinationCell"] = sol::readonly_property([](TES3::AIPackage& self) { return self.destinationCell; });
 			}
 		}
 	}

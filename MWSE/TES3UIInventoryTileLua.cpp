@@ -29,7 +29,7 @@ namespace mwse {
 			usertypeDefinition["type"] = sol::readonly_property(&TES3::UI::InventoryTile::tileType);
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition["item"] = sol::readonly_property([](TES3::UI::InventoryTile& self) { return makeLuaObject(self.item); });
+			usertypeDefinition["item"] = sol::readonly_property([](TES3::UI::InventoryTile& self) { return self.item; });
 
 			// Access into flags.
 			usertypeDefinition["isBartered"] = sol::readonly_property([](TES3::UI::InventoryTile& self) { return self.getFlag(TES3::UI::InventoryTileFlag::Bartered); });

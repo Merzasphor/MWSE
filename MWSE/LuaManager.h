@@ -34,14 +34,6 @@ namespace mwse {
 			// Trigger a thread-safe event.
 			sol::object triggerEvent(event::BaseEvent*);
 
-			// Guarded access to the userdata cache.
-			sol::object getCachedUserdata(TES3::BaseObject*);
-			sol::object getCachedUserdata(TES3::MobileObject*);
-			void insertUserdataIntoCache(TES3::BaseObject*, sol::object);
-			void insertUserdataIntoCache(TES3::MobileObject*, sol::object);
-			void removeUserdataFromCache(TES3::BaseObject*);
-			void removeUserdataFromCache(TES3::MobileObject*);
-
 			sol::state& state;
 
 		private:
@@ -98,14 +90,6 @@ namespace mwse {
 			mwse::lua::event::DisableableEventManager m_DisableableEventManager;
 			sol::object triggerEvent(event::BaseEvent*);
 
-			// Guarded access to the userdata cache.
-			sol::object getCachedUserdata(TES3::BaseObject*);
-			sol::object getCachedUserdata(TES3::MobileObject*);
-			void insertUserdataIntoCache(TES3::BaseObject*, sol::object);
-			void insertUserdataIntoCache(TES3::MobileObject*, sol::object);
-			void removeUserdataFromCache(TES3::BaseObject*);
-			void removeUserdataFromCache(TES3::MobileObject*);
-
 			// 
 			static LuaManager singleton;
 
@@ -120,10 +104,6 @@ namespace mwse {
 
 			// Storage for our current button pressed callback.
 			sol::protected_function buttonPressedCallback = sol::nil;
-
-			// 
-			std::mutex userdataMapMutex;
-			UserdataMap userdataCache;
 
 			// Timers.
 			std::shared_ptr<TimerController> gameTimers;

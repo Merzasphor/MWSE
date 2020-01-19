@@ -94,6 +94,7 @@ namespace TES3 {
 	struct Moon;
 	struct NonDynamicData;
 	struct NPC;
+	struct NPCBase;
 	struct NPCInstance;
 	struct Object;
 	struct ObjectVirtualTable;
@@ -113,6 +114,7 @@ namespace TES3 {
 	struct Script;
 	struct ScriptCompiler;
 	struct ScriptVariables;
+	struct Skill;
 	struct SkillStatistic;
 	struct SoulGemData;
 	struct Sound;

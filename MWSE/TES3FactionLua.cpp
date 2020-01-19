@@ -35,7 +35,7 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition["reputation"] = &TES3::Faction::ReactionNode::reaction;
-				usertypeDefinition["faction"] = sol::readonly_property([](TES3::Faction::ReactionNode& self) { return makeLuaObject(self.faction); });
+				usertypeDefinition["faction"] = sol::readonly_property([](TES3::Faction::ReactionNode& self) { return self.faction; });
 			}
 
 			// Binding for TES3::Faction

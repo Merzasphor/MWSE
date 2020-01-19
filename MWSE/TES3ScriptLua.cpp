@@ -155,8 +155,8 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["reference"] = sol::readonly_property([](TES3::GlobalScript& self) { return makeLuaObject(self.reference); });
-				usertypeDefinition["script"] = sol::readonly_property([](TES3::GlobalScript& self) { return makeLuaObject(self.script); });
+				usertypeDefinition["reference"] = sol::readonly_property([](TES3::GlobalScript& self) { return self.reference; });
+				usertypeDefinition["script"] = sol::readonly_property([](TES3::GlobalScript& self) { return self.script; });
 
 				// Allow a special context to be exposed for reading variables.
 				usertypeDefinition["context"] = sol::readonly_property([](TES3::GlobalScript& self) {
@@ -176,7 +176,7 @@ namespace mwse {
 				setUserdataForBaseObject(usertypeDefinition);
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["script"] = sol::readonly_property([](TES3::StartScript& self) { return makeLuaObject(self.script); });
+				usertypeDefinition["script"] = sol::readonly_property([](TES3::StartScript& self) { return self.script; });
 			}
 
 			// Binding for TES3::Script.

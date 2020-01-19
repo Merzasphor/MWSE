@@ -25,17 +25,17 @@ namespace mwse {
 				sol::table eventData = state.create_table();
 
 				if (m_MobileActor) {
-					eventData["mobile"] = makeLuaObject(m_MobileActor);
-					eventData["reference"] = makeLuaObject(m_MobileActor->reference);
+					eventData["mobile"] = m_MobileActor;
+					eventData["reference"] = m_MobileActor->reference;
 				}
 
 				if (m_Attacker) {
-					eventData["attacker"] = makeLuaObject(m_Attacker);
-					eventData["attackerReference"] = makeLuaObject(m_Attacker->reference);
+					eventData["attacker"] = m_Attacker;
+					eventData["attackerReference"] = m_Attacker->reference;
 				}
 
 				if (m_Projectile) {
-					eventData["projectile"] = makeLuaObject(m_Projectile);
+					eventData["projectile"] = m_Projectile;
 				}
 
 				if (m_MagicSourceInstance) {
@@ -43,9 +43,9 @@ namespace mwse {
 
 					// Get the attacker as the caster of the spell.
 					if (!m_Attacker) {
-						eventData["attackerReference"] = makeLuaObject(m_MagicSourceInstance->caster);
+						eventData["attackerReference"] = m_MagicSourceInstance->caster;
 						if (m_MagicSourceInstance->caster) {
-							eventData["attacker"] = makeLuaObject(m_MagicSourceInstance->caster->getAttachedMobileActor());
+							eventData["attacker"] = m_MagicSourceInstance->caster->getAttachedMobileActor();
 						}
 					}
 				}

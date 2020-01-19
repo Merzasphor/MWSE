@@ -59,8 +59,8 @@ namespace mwse {
 				// Properties.
 				//
 
-				"object", sol::readonly_property([](NI::PickRecord& self) { return makeLuaObject(self.object); }),
-				"parent", sol::readonly_property([](NI::PickRecord& self) { return makeLuaObject(self.proxyParent); }),
+				"object", sol::readonly_property([](NI::PickRecord& self) { return self.object; }),
+				"parent", sol::readonly_property([](NI::PickRecord& self) { return self.proxyParent; }),
 				"intersection", &NI::PickRecord::intersection,
 				"distance", &NI::PickRecord::distance,
 				"triangleIndex", &NI::PickRecord::triangleIndex,
@@ -70,7 +70,7 @@ namespace mwse {
 				"color", &NI::PickRecord::color,
 
 				// Provide quick reference to the associated object's reference.
-				"reference", sol::readonly_property([](NI::PickRecord& self) { return makeLuaObject(NI::getAssociatedReference(self.object)); })
+				"reference", sol::readonly_property([](NI::PickRecord& self) { return NI::getAssociatedReference(self.object); })
 
 				);
 		}

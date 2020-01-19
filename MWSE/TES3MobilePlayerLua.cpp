@@ -65,14 +65,14 @@ namespace mwse {
 				usertypeDefinition["skillProgress"] = sol::property([](TES3::MobilePlayer& self) { return std::ref(self.skillProgress); });
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["clawMultiplier"] = sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.clawMultiplier); });
-				usertypeDefinition["firstPerson"] = sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.firstPerson); });
-				usertypeDefinition["firstPersonReference"] = sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.firstPersonReference); });
-				usertypeDefinition["knownWerewolf"] = sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.knownWerewolf); });
-				usertypeDefinition["lastUsedAlembic"] = sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.lastUsedAlembic); });
-				usertypeDefinition["lastUsedCalcinator"] = sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.lastUsedCalcinator); });
-				usertypeDefinition["lastUsedMortar"] = sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.lastUsedMortar); });
-				usertypeDefinition["lastUsedRetort"] = sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.lastUsedRetort); });
+				usertypeDefinition["clawMultiplier"] = sol::readonly_property([](TES3::MobilePlayer& self) { return self.clawMultiplier; });
+				usertypeDefinition["firstPerson"] = sol::readonly_property([](TES3::MobilePlayer& self) { return self.firstPerson; });
+				usertypeDefinition["firstPersonReference"] = sol::readonly_property([](TES3::MobilePlayer& self) { return self.firstPersonReference; });
+				usertypeDefinition["knownWerewolf"] = sol::readonly_property([](TES3::MobilePlayer& self) { return self.knownWerewolf; });
+				usertypeDefinition["lastUsedAlembic"] = sol::readonly_property([](TES3::MobilePlayer& self) { return self.lastUsedAlembic; });
+				usertypeDefinition["lastUsedCalcinator"] = sol::readonly_property([](TES3::MobilePlayer& self) { return self.lastUsedCalcinator; });
+				usertypeDefinition["lastUsedMortar"] = sol::readonly_property([](TES3::MobilePlayer& self) { return self.lastUsedMortar; });
+				usertypeDefinition["lastUsedRetort"] = sol::readonly_property([](TES3::MobilePlayer& self) { return self.lastUsedRetort; });
 
 				// Overwrite MobileActor::animationData for player.
 				usertypeDefinition["animationData"] = sol::readonly_property([](TES3::MobilePlayer& self) { return self.animationData.asPlayer; });
@@ -110,7 +110,7 @@ namespace mwse {
 
 				// Access to other objects that need to be packaged.
 				usertypeDefinition["cell"] = sol::property(
-					[](TES3::MarkData& self) { return makeLuaObject(self.cell); },
+					[](TES3::MarkData& self) { return self.cell; },
 					[](TES3::MarkData& self, sol::optional<TES3::Cell*> cell) { self.cell = cell.value_or(nullptr); }
 				);
 			}

@@ -97,7 +97,7 @@ namespace mwse {
 				objectListQueue.pop();
 			}
 
-			return [object, objectListQueue, desiredTypes]() mutable -> sol::object {
+			return [object, objectListQueue, desiredTypes]() mutable -> TES3::Object* {
 				while (object && !desiredTypes.empty() && !desiredTypes.count(object->objectType)) {
 					object = reinterpret_cast<TES3::Reference*>(object->nextInCollection);
 
@@ -109,11 +109,11 @@ namespace mwse {
 				}
 
 				if (object == nullptr) {
-					return sol::nil;
+					return nullptr;
 				}
 
 				// Get the object we want to return.
-				sol::object ret = lua::makeLuaObject(object);
+				auto ret = object;
 
 				// Get the next reference. If we're at the end of the list, go to the next one
 				object = reinterpret_cast<TES3::Reference*>(object->nextInCollection);
@@ -135,33 +135,33 @@ namespace mwse {
 			//
 
 			// Bind function: tes3.getPlayerRef
-			state["tes3"]["getPlayerRef"] = []() -> sol::object {
+			state["tes3"]["getPlayerRef"] = []() -> TES3::Reference* {
 				TES3::WorldController* worldController = TES3::WorldController::get();
 				if (worldController) {
 					TES3::MobilePlayer* mobilePlayer = worldController->getMobilePlayer();
 					if (mobilePlayer) {
-						return makeLuaObject(mobilePlayer->reference);
+						return mobilePlayer->reference;
 					}
 				}
-				return sol::nil;
+				return nullptr;
 			};
 
 			// Bind function: tes3.getMobilePlayer
-			state["tes3"]["getMobilePlayer"] = []() -> sol::object {
+			state["tes3"]["getMobilePlayer"] = []() -> TES3::MobilePlayer* {
 				TES3::WorldController* worldController = TES3::WorldController::get();
 				if (worldController) {
-					return makeLuaObject(worldController->getMobilePlayer());
+					return worldController->getMobilePlayer();
 				}
-				return sol::nil;
+				return nullptr;
 			};
 
 			// Bind function: tes3.getPlayerCell()
-			state["tes3"]["getPlayerCell"] = []() -> sol::object {
+			state["tes3"]["getPlayerCell"] = []() -> TES3::Cell* {
 				TES3::DataHandler* dataHandler = TES3::DataHandler::get();
 				if (dataHandler) {
-					return makeLuaObject(dataHandler->currentCell);
+					return dataHandler->currentCell;
 				}
-				return sol::nil;
+				return nullptr;
 			};
 
 			// Bind function: tes3.getGame
@@ -180,31 +180,31 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.getPlayerTarget
-			state["tes3"]["getPlayerTarget"] = []() -> sol::object {
+			state["tes3"]["getPlayerTarget"] = []() -> TES3::Reference* {
 				TES3::Game * game = TES3::Game::get();
 				if (game) {
-					return makeLuaObject(game->playerTarget);
+					return game->playerTarget;
 				}
-				return sol::nil;
+				return nullptr;
 			};
 
 			// Bind function: tes3.getReference
 			state["tes3"]["getReference"] = [](sol::optional<const char*> id) {
 				if (id) {
-					return makeLuaObject(tes3::getReference(id.value()));
+					return tes3::getReference(id.value());
 				}
 				else {
-					return makeLuaObject(LuaManager::getInstance().getCurrentReference());
+					return LuaManager::getInstance().getCurrentReference();
 				}
 			};
 
 			// Bind function: tes3.getObject
-			state["tes3"]["getObject"] = [](const char* id) -> sol::object {
+			state["tes3"]["getObject"] = [](const char* id) -> TES3::BaseObject* {
 				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler) {
-					return makeLuaObject(dataHandler->nonDynamicData->resolveObject(id));
+					return dataHandler->nonDynamicData->resolveObject(id);
 				}
-				return sol::nil;
+				return nullptr;
 			};
 
 			state["tes3"]["deleteObject"] = [](sol::object maybe) {
@@ -218,12 +218,12 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.getScript
-			state["tes3"]["getScript"] = [](const char* id) -> sol::object {
+			state["tes3"]["getScript"] = [](const char* id) -> TES3::Script* {
 				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler) {
-					return makeLuaObject(dataHandler->nonDynamicData->findScriptByName(id));
+					return dataHandler->nonDynamicData->findScriptByName(id);
 				}
-				return sol::nil;
+				return nullptr;
 			};
 
 			// Bind function: tes3.getGlobal
@@ -252,25 +252,25 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.findGlobal
-			state["tes3"]["findGlobal"] = [](const char* id) -> sol::object {
+			state["tes3"]["findGlobal"] = [](const char* id) -> TES3::GlobalVariable* {
 				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler) {
-					return makeLuaObject(dataHandler->nonDynamicData->findGlobalVariable(id));
+					return dataHandler->nonDynamicData->findGlobalVariable(id);
 				}
-				return sol::nil;
+				return nullptr;
 			};
 
 			// Bind function: tes3.findGMST
-			state["tes3"]["findGMST"] = [](sol::object key) -> sol::object {
+			state["tes3"]["findGMST"] = [](sol::object key) -> TES3::GameSetting* {
 				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler == nullptr) {
-					return sol::nil;
+					return nullptr;
 				}
 
 				if (key.is<double>()) {
 					int index = key.as<double>();
 					if (index >= TES3::GMST::sMonthMorningstar && index <= TES3::GMST::sWitchhunter) {
-						return makeLuaObject(dataHandler->nonDynamicData->GMSTs[index]);
+						return dataHandler->nonDynamicData->GMSTs[index];
 					}
 				}
 				else if (key.is<const char*>()) {
@@ -278,16 +278,16 @@ namespace mwse {
 					const char* keyStr = key.as<const char*>();
 					for (int i = 0; i <= TES3::GMST::sWitchhunter; i++) {
 						if (strcmp(TES3::GameSettingInfo::get(i)->name, keyStr) == 0) {
-							return makeLuaObject(dataHandler->nonDynamicData->GMSTs[i]);
+							return dataHandler->nonDynamicData->GMSTs[i];
 						}
 					}
 				}
 
-				return sol::nil;
+				return nullptr;
 			};
 
 			// DEPRECATED: To be eventually redone after mods have transitioned away from it.
-			state["tes3"]["getGMST"] = [](sol::object key) -> sol::object {
+			state["tes3"]["getGMST"] = [](sol::object key) -> TES3::GameSetting* {
 				auto& luaManager = mwse::lua::LuaManager::getInstance();
 				auto stateHandle = luaManager.getThreadSafeStateHandle();
 				sol::state& state = stateHandle.state;
@@ -297,13 +297,13 @@ namespace mwse {
 
 				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler == nullptr) {
-					return sol::nil;
+					return nullptr;
 				}
 
 				if (key.is<double>()) {
 					int index = key.as<double>();
 					if (index >= TES3::GMST::sMonthMorningstar && index <= TES3::GMST::sWitchhunter) {
-						return makeLuaObject(dataHandler->nonDynamicData->GMSTs[index]);
+						return dataHandler->nonDynamicData->GMSTs[index];
 					}
 				}
 				else if (key.is<std::string>()) {
@@ -318,11 +318,11 @@ namespace mwse {
 					}
 
 					if (index != -1) {
-						return makeLuaObject(dataHandler->nonDynamicData->GMSTs[index]);
+						return dataHandler->nonDynamicData->GMSTs[index];
 					}
 				}
 
-				return sol::nil;
+				return nullptr;
 			};
 
 			// Bind function: tes3.playSound
@@ -604,10 +604,10 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.getSound
-			state["tes3"]["getSound"] = [](const char* id) -> sol::object {
+			state["tes3"]["getSound"] = [](const char* id) -> TES3::Sound* {
 				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler) {
-					return makeLuaObject(TES3::DataHandler::get()->nonDynamicData->findSound(id));
+					return TES3::DataHandler::get()->nonDynamicData->findSound(id);
 				}
 				else {
 					throw std::exception("Function called before Data Handler was initialized.");
@@ -615,11 +615,11 @@ namespace mwse {
 			};
 
 			// Bind function: tes3.getSoundGenerator
-			state["tes3"]["getSoundGenerator"] = [](std::string creatureId, unsigned int type) -> sol::object {
+			state["tes3"]["getSoundGenerator"] = [](std::string creatureId, unsigned int type) -> TES3::SoundGenerator* {
 				auto nonDynamicData = TES3::DataHandler::get()->nonDynamicData;
 				auto creature = nonDynamicData->resolveObjectByType<TES3::Creature>(creatureId, TES3::ObjectType::Creature);
 				if (creature == nullptr) {
-					return sol::nil;
+					return nullptr;
 				}
 
 				while (creature->soundGenerator) {
@@ -635,27 +635,27 @@ namespace mwse {
 					}
 
 					if (_strnicmp(id, itt->data->name, idLength) == 0) {
-						return makeLuaObject(itt->data);
+						return itt->data;
 					}
 				}
 
-				return sol::nil;
+				return nullptr;
 			};
 
-			state["tes3"]["getFaction"] = [](const char* id) -> sol::object {
+			state["tes3"]["getFaction"] = [](const char* id) -> TES3::Faction* {
 				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler) {
-					return makeLuaObject(dataHandler->nonDynamicData->findFaction(id));
+					return dataHandler->nonDynamicData->findFaction(id);
 				}
-				return sol::nil;
+				return nullptr;
 			};
 
-			state["tes3"]["getMagicEffect"] = [](int id) -> sol::object {
+			state["tes3"]["getMagicEffect"] = [](int id) -> TES3::MagicEffect* {
 				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler && id >= TES3::EffectID::FirstEffect && id <= TES3::EffectID::LastEffect) {
-					return makeLuaObject(dataHandler->nonDynamicData->getMagicEffect(id));
+					return dataHandler->nonDynamicData->getMagicEffect(id);
 				}
-				return sol::nil;
+				return nullptr;
 			};
 
 			// Bind function: tes3.newGame
@@ -1104,33 +1104,33 @@ namespace mwse {
 				return nullptr;
 			};
 
-			state["tes3"]["getRegion"] = []() -> sol::object {
+			state["tes3"]["getRegion"] = []() -> TES3::Region* {
 				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler) {
 					// Try to get the current cell's region first.
 					if (dataHandler->currentCell) {
 						TES3::Region * region = dataHandler->currentCell->getRegion();
 						if (region) {
-							return makeLuaObject(region);
+							return region;
 						}
 					}
 					
 					// Otherwise fall back to the last exterior cell's region.
 					if (dataHandler->lastExteriorCell) {
-						return makeLuaObject(dataHandler->lastExteriorCell->getRegion());
+						return dataHandler->lastExteriorCell->getRegion();
 					}
 				}
 
-				return sol::nil;
+				return nullptr;
 			};
 
-			state["tes3"]["getCurrentWeather"] = []() -> sol::object {
+			state["tes3"]["getCurrentWeather"] = []() -> TES3::Weather* {
 				TES3::WorldController * worldController = TES3::WorldController::get();
 				if (worldController) {
-					return makeLuaObject(worldController->weatherController->currentWeather);
+					return worldController->weatherController->currentWeather;
 				}
 
-				return sol::nil;
+				return nullptr;
 			};
 
 			state["tes3"]["getCursorPosition"] = []() -> sol::object {
@@ -1148,13 +1148,13 @@ namespace mwse {
 				return sol::nil;
 			};
 
-			state["tes3"]["getSkill"] = [](int skillID) -> sol::object {
+			state["tes3"]["getSkill"] = [](int skillID) -> TES3::Skill* {
 				TES3::DataHandler * dataHandler = TES3::DataHandler::get();
 				if (dataHandler) {
-					return makeLuaObject(&dataHandler->nonDynamicData->skills[skillID]);
+					return &dataHandler->nonDynamicData->skills[skillID];
 				}
 
-				return sol::nil;
+				return nullptr;
 			};
 
 			state["tes3"]["removeEffects"] = [](sol::table params) {
@@ -1285,11 +1285,11 @@ namespace mwse {
 				return true;
 			};
 
-			state["tes3"]["loadMesh"] = [](const char* relativePath) -> sol::object {
+			state["tes3"]["loadMesh"] = [](const char* relativePath) -> NI::Pointer<NI::AVObject> {
 				std::string path = "Meshes\\";
 				path += relativePath;
 
-				return makeLuaNiPointer(TES3::DataHandler::get()->nonDynamicData->meshData->loadMesh(path.c_str()));
+				return TES3::DataHandler::get()->nonDynamicData->meshData->loadMesh(path.c_str());
 			};
 
 			state["tes3"]["playVoiceover"] = [](sol::table params) -> bool {
@@ -1578,11 +1578,11 @@ namespace mwse {
 			};
 
 			// Very slow method to get an INFO record by its ID.
-			state["tes3"]["getDialogueInfo"] = [](sol::table params) -> sol::object {
+			state["tes3"]["getDialogueInfo"] = [](sol::table params) -> TES3::DialogueInfo* {
 				TES3::Dialogue * dialogue = getOptionalParamDialogue(params, "dialogue");
 				const char * id = getOptionalParam<const char*>(params, "id", nullptr);
 				if (dialogue == nullptr || id == nullptr) {
-					return sol::nil;
+					return nullptr;
 				}
 
 				for (auto itt = dialogue->info.head; itt; itt = itt->next) {
@@ -1593,25 +1593,25 @@ namespace mwse {
 
 					if (_strcmpi(id, dialogueInfo->loadLinkNode->name) == 0) {
 						dialogueInfo->unloadId();
-						return makeLuaObject(dialogueInfo);
+						return dialogueInfo;
 					}
 
 					dialogueInfo->unloadId();
 				}
 
-				return sol::nil;
+				return nullptr;
 			};
 
 			// Very slow method to get an INFO record by its ID.
-			state["tes3"]["getCell"] = [](sol::table params) -> sol::object {
+			state["tes3"]["getCell"] = [](sol::table params) -> TES3::Cell* {
 				// If we were given a name, try that.
 				sol::optional<const char*> cellId = params["id"];
 				if (cellId) {
-					return makeLuaObject(TES3::DataHandler::get()->nonDynamicData->getCellByName(cellId.value()));
+					return TES3::DataHandler::get()->nonDynamicData->getCellByName(cellId.value());
 				}
 
 				// Otherwise try to use X/Y.
-				return makeLuaObject(TES3::DataHandler::get()->nonDynamicData->getCellByGrid(params["x"], params["y"]));
+				return TES3::DataHandler::get()->nonDynamicData->getCellByGrid(params["x"], params["y"]);
 			};
 
 			state["tes3"]["fadeIn"] = [](sol::optional<sol::table> params) {
@@ -1959,7 +1959,7 @@ namespace mwse {
 				sol::table result = state.create_table();
 
 				if (dataHandler->currentInteriorCell) {
-					result[1] = makeLuaObject(dataHandler->currentInteriorCell);
+					result[1] = dataHandler->currentInteriorCell;
 				}
 				else {
 					int exteriorCount = 0;
@@ -1967,7 +1967,7 @@ namespace mwse {
 						auto cellDataPointer = dataHandler->exteriorCellData[i];
 						if (cellDataPointer && cellDataPointer->loadingFlags >= 1) {
 							exteriorCount++;
-							result[exteriorCount] = makeLuaObject(cellDataPointer->cell);
+							result[exteriorCount] = cellDataPointer->cell;
 						}
 					}
 				}
@@ -2104,7 +2104,7 @@ namespace mwse {
 				mwse::tes3::setArmorSlotData(slotData);
 			};
 
-			state["tes3"]["createCell"] = [](sol::table params) -> sol::object {
+			state["tes3"]["createCell"] = [](sol::table params) -> TES3::Cell* {
 				auto nonDynamicData = TES3::DataHandler::get()->nonDynamicData;
 
 				TES3::Cell * cell = nullptr;
@@ -2115,7 +2115,7 @@ namespace mwse {
 					auto existingCell = nonDynamicData->getCellByGrid(gridX.value(), gridY.value());
 					if (existingCell) {
 						mwse::log::getLog() << "Could not create cell at coordinates <" << gridX.value() << ", " << gridY.value() << ">. Cell already exists at that location." << std::endl;
-						return sol::nil;
+						return nullptr;
 					}
 
 					cell = TES3::Cell::create();
@@ -2128,13 +2128,13 @@ namespace mwse {
 					sol::optional<const char*> name = params["name"];
 					if (!name) {
 						mwse::log::getLog() << "Could not create cell. Interior cells must have a name." << std::endl;
-						return sol::nil;
+						return nullptr;
 					}
 
 					auto existingCell = nonDynamicData->getCellByName(name.value());
 					if (existingCell) {
 						mwse::log::getLog() << "Could not create cell \"" << name.value() << "\". Cell already exists with the given name." << std::endl;
-						return sol::nil;
+						return nullptr;
 					}
 
 					cell = TES3::Cell::create();
@@ -2146,10 +2146,10 @@ namespace mwse {
 
 				nonDynamicData->cells->insertAtFront(cell);
 
-				return makeLuaObject(cell);
+				return cell;
 			};
 
-			state["tes3"]["createReference"] = [](sol::table params) -> sol::object {
+			state["tes3"]["createReference"] = [](sol::table params) -> TES3::Reference* {
 				auto dataHandler = TES3::DataHandler::get();
 
 				// Get the object we are going to create a reference for.
@@ -2229,7 +2229,7 @@ namespace mwse {
 				reference->setObjectModified(true);
 				cell->setObjectModified(true);
 
-				return makeLuaObject(reference);
+				return reference;
 			};
 
 			state[ "tes3" ][ "createObject" ] = []( sol::table params )
@@ -2321,7 +2321,7 @@ namespace mwse {
 				auto spellInstanceController = TES3::WorldController::get()->spellInstanceController;
 				auto magicSourceInstance = spellInstanceController->getInstanceFromSerial( serialNumber );
 
-				return makeLuaObject( magicSourceInstance );
+				return  magicSourceInstance ;
 			};
 
 			state["tes3"]["showRepairServiceMenu"] = []() {
@@ -3102,7 +3102,7 @@ namespace mwse {
 					}
 				}
 
-				return makeLuaObject(droppedReference);
+				return droppedReference;
 			};
 
 			state["tes3"]["persuade"] = [](sol::table params) {
@@ -3141,7 +3141,7 @@ namespace mwse {
 			state["tes3"]["findDialogue"] = [](sol::table params) {
 				int type = getOptionalParam<int>(params, "type", -1);
 				int page = getOptionalParam<int>(params, "page", -1);
-				return makeLuaObject(TES3::Dialogue::getDialogue(type, page));
+				return TES3::Dialogue::getDialogue(type, page);
 			};
 
 			state["tes3"]["setEnabled"] = [](sol::table params) {
@@ -3454,7 +3454,7 @@ namespace mwse {
 				// Set the GMST as the negative effect ID for custom hooks later.
 				magicEffectController->effectNameGMSTs[id] = -id;
 
-				return makeLuaObject(effect);
+				return effect;
 			};
 
 			state["tes3"]["advanceTime"] = [](sol::table params) {

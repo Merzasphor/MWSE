@@ -21,7 +21,7 @@ namespace mwse {
 			}
 		};
 
-		std::tuple<sol::object, sol::object> bindGenericObjectIterator_pairsNext(sol::user<Iterator_state<TES3::BaseObject>&> user_it_state, sol::this_state l);
+		std::tuple<sol::object, TES3::BaseObject*> bindGenericObjectIterator_pairsNext(sol::user<Iterator_state<TES3::BaseObject>&> user_it_state, sol::this_state l);
 
 		template <typename T>
 		std::tuple<sol::object, sol::object> bindIterator_pairsNext(sol::user<Iterator_state<T>&> user_it_state, sol::this_state l) {
@@ -48,7 +48,7 @@ namespace mwse {
 				//
 				usertypeDefinition["previousNode"] = sol::readonly_property(&TES3::IteratorNode<T>::previous);
 				usertypeDefinition["nextNode"] = sol::readonly_property(&TES3::IteratorNode<T>::next);
-				usertypeDefinition["nodeData"] = sol::readonly_property([](TES3::IteratorNode<T>& self) { return makeLuaObject(self.data); });
+				usertypeDefinition["nodeData"] = sol::readonly_property([](TES3::IteratorNode<T>& self) { return self.data; });
 			}
 
 			// Start our usertype. We must finish this with state.set_usertype.
@@ -65,7 +65,7 @@ namespace mwse {
 				for (int i = 1; i < index; i++) {
 					node = node->next;
 				}
-				return makeLuaObject(node->data);
+				return node->data;
 			};
 			usertypeDefinition[sol::meta_function::length] = [](TES3::Iterator<T>& self) { return self.size; };
 
@@ -129,7 +129,7 @@ namespace mwse {
 			}
 		};
 
-		std::tuple<sol::object, sol::object> bindGenericObjectStlList_pairsNext(sol::user<GenericObjectStlList_iteratorState&> user_it_state, sol::this_state l);
+		std::tuple<sol::object, TES3::BaseObject*> bindGenericObjectStlList_pairsNext(sol::user<GenericObjectStlList_iteratorState&> user_it_state, sol::this_state l);
 
 		template <typename T>
 		void bindGenericObjectStlList(const char* name, const char* nodeName = NULL) {
@@ -144,7 +144,7 @@ namespace mwse {
 				//
 				usertypeDefinition["previousNode"] = sol::readonly_property(&TES3::StlListNode<T>::previous);
 				usertypeDefinition["nextNode"] = sol::readonly_property(&TES3::StlListNode<T>::next);
-				usertypeDefinition["nodeData"] = sol::readonly_property([](TES3::StlListNode<T>& self) { return makeLuaObject(self.data); });
+				usertypeDefinition["nodeData"] = sol::readonly_property([](TES3::StlListNode<T>& self) { return self.data; });
 			}
 
 			// Start our usertype. We must finish this with state.set_usertype.
@@ -161,7 +161,7 @@ namespace mwse {
 				for (int i = 1; i < index; i++) {
 					node = node->next;
 				}
-				return makeLuaObject(node->data);
+				return node->data;
 			};
 			usertypeDefinition[sol::meta_function::length] = [](TES3::StlList<T>& self, int index) {
 				return self.size;

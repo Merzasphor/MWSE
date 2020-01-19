@@ -101,6 +101,8 @@
 #include "LuaWeatherTransitionFinishedEvent.h"
 #include "LuaWeatherTransitionStartedEvent.h"
 
+#include "sol.hpp"
+
 namespace mwse {
 	namespace lua {
 		namespace event {

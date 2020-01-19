@@ -21,8 +21,8 @@ namespace mwse {
 				sol::state& state = stateHandle.state;
 				sol::table eventData = state.create_table();
 
-				eventData["list"] = lua::makeLuaObject(m_List);
-				eventData["pick"] = lua::makeLuaObject(m_Result);
+				eventData["list"] = m_List;
+				eventData["pick"] = m_Result;
 
 				return eventData;
 			}

@@ -98,13 +98,13 @@ namespace mwse {
 				usertypeDefinition["health"] = sol::readonly_property(&TES3::CreatureInstance::getDurability);
 				usertypeDefinition["inventory"] = sol::readonly_property(&TES3::CreatureInstance::inventory);
 				usertypeDefinition["isInstance"] = sol::var(true);
-				usertypeDefinition["weapon"] = sol::readonly_property([](TES3::CreatureInstance& self) { return makeLuaObject(self.weapon); });
+				usertypeDefinition["weapon"] = sol::readonly_property([](TES3::CreatureInstance& self) { return self.weapon; });
 
 				// Properties that directly point to the base creature.
 				usertypeDefinition["aiConfig"] = sol::readonly_property([](TES3::CreatureInstance& self) { return self.baseCreature->aiConfig; });
 				usertypeDefinition["attacks"] = sol::readonly_property([](TES3::CreatureInstance& self) { return std::ref(self.baseCreature->attacks); });
 				usertypeDefinition["attributes"] = sol::readonly_property([](TES3::CreatureInstance& self) { return std::ref(self.baseCreature->attributes); });
-				usertypeDefinition["baseObject"] = sol::readonly_property([](TES3::CreatureInstance& self) { return makeLuaObject(self.baseCreature); });
+				usertypeDefinition["baseObject"] = sol::readonly_property([](TES3::CreatureInstance& self) { return self.baseCreature; });
 				usertypeDefinition["soul"] = sol::property(
 					[](TES3::CreatureInstance& self) { return self.baseCreature->soul; },
 					[](TES3::CreatureInstance& self, int value) { self.baseCreature->soul = value; }
@@ -151,7 +151,7 @@ namespace mwse {
 				);
 
 				// TODO: Deprecated. Remove before 2.1-stable.
-				usertypeDefinition["baseCreature"] = sol::readonly_property([](TES3::CreatureInstance& self) { return makeLuaObject(self.baseCreature); });
+				usertypeDefinition["baseCreature"] = sol::readonly_property([](TES3::CreatureInstance& self) { return self.baseCreature; });
 				usertypeDefinition["model"] = sol::property(&TES3::CreatureInstance::getModelPath, &TES3::CreatureInstance::setModelPath);
 			}
 		}

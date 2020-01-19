@@ -3,10 +3,12 @@
 #include <cstdint>
 
 namespace NI {
+	struct AlphaProperty;
 	struct AmbientLight;
 	struct AVObject;
 	struct Bound;
 	struct Camera;
+	struct CollisionSwitch;
 	struct Color;
 	struct ColorA;
 	struct DirectionalLight;
@@ -15,6 +17,7 @@ namespace NI {
 	struct Geometry;
 	struct GeometryData;
 	struct Light;
+	struct MaterialProperty;
 	struct Node;
 	struct Object;
 	struct ObjectNET;
@@ -27,15 +30,19 @@ namespace NI {
 	struct RTTI;
 	struct SourceTexture;
 	struct SpotLight;
+	struct StencilProperty;
 	struct Stream;
 	struct SwitchNode;
 	struct Texture;
+	struct TexturingProperty;
 	struct TimeController;
 	struct Transform;
 	struct TriBasedGeometry;
 	struct TriBasedGeometryData;
 	struct TriShape;
 	struct TriShapeData;
+	struct VertexColorProperty;
+
 
 	struct AVObject_vTable;
 	struct DynamicEffect_vTable;

@@ -17,7 +17,7 @@ namespace mwse {
 			sol::table results = stateHandle.state.create_table();
 
 			for (unsigned int i = TES3::WeatherType::First; i <= TES3::WeatherType::Last; i++) {
-				results[i + 1] = makeLuaObject(controller->arrayWeathers[i]);
+				results[i + 1] = controller->arrayWeathers[i];
 			}
 
 			return results;
@@ -72,8 +72,8 @@ namespace mwse {
 			usertypeDefinition["weathers"] = sol::readonly_property([](TES3::WeatherController& self) { return getWeatherList(&self); });
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition["currentWeather"] = sol::readonly_property([](TES3::WeatherController& self) { return makeLuaObject(self.currentWeather); });
-			usertypeDefinition["nextWeather"] = sol::readonly_property([](TES3::WeatherController& self) { return makeLuaObject(self.nextWeather); });
+			usertypeDefinition["currentWeather"] = sol::readonly_property([](TES3::WeatherController& self) { return self.currentWeather; });
+			usertypeDefinition["nextWeather"] = sol::readonly_property([](TES3::WeatherController& self) { return self.nextWeather; });
 
 			// Basic function bindings.
 			usertypeDefinition["switchImmediate"] = [](TES3::WeatherController& self, int weatherId) {

@@ -71,7 +71,7 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
-				usertypeDefinition["data"] = sol::readonly_property([](NI::DynamicEffectLinkedList& self) { return makeLuaNiPointer(self.data); });
+				usertypeDefinition["data"] = sol::readonly_property([](NI::DynamicEffectLinkedList& self) { return self.data; });
 				usertypeDefinition["next"] = &NI::DynamicEffectLinkedList::next;
 			}
 
@@ -82,7 +82,7 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
-				usertypeDefinition["data"] = sol::readonly_property([](NI::NodeLinkedList& self) { return makeLuaNiPointer(self.data); });
+				usertypeDefinition["data"] = sol::readonly_property([](NI::NodeLinkedList& self) { return self.data; });
 				usertypeDefinition["next"] = &NI::NodeLinkedList::next;
 			}
 
@@ -93,7 +93,7 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
-				usertypeDefinition["data"] = sol::readonly_property([](NI::PropertyLinkedList& self) { return makeLuaNiPointer(self.data); });
+				usertypeDefinition["data"] = sol::readonly_property([](NI::PropertyLinkedList& self) { return self.data; });
 				usertypeDefinition["next"] = &NI::PropertyLinkedList::next;
 			}
 		}
