@@ -125,16 +125,16 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 		}
 
 		// Look to see if an update to the MWSE Updater was downloaded. If so, swap the exes.
-		if (std::experimental::filesystem::exists("MWSE-Update.tmp")) {
-			if (std::experimental::filesystem::exists("MWSE-Update.exe")) {
-				std::experimental::filesystem::remove("MWSE-Update.exe");
+		if (std::filesystem::exists("MWSE-Update.tmp")) {
+			if (std::filesystem::exists("MWSE-Update.exe")) {
+				std::filesystem::remove("MWSE-Update.exe");
 			}
-			std::experimental::filesystem::rename("MWSE-Update.tmp", "MWSE-Update.exe");
+			std::filesystem::rename("MWSE-Update.tmp", "MWSE-Update.exe");
 		}
 
 		// Delete any old crash dumps.
-		if (std::experimental::filesystem::exists("MWSE_MiniDump.dmp")) {
-			std::experimental::filesystem::remove("MWSE_MiniDump.dmp");
+		if (std::filesystem::exists("MWSE_MiniDump.dmp")) {
+			std::filesystem::remove("MWSE_MiniDump.dmp");
 		}
 
 		// Initialize our main mwscript hook.
