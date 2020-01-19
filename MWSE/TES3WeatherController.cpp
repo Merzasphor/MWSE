@@ -28,7 +28,7 @@ namespace TES3 {
 		auto stateHandle = luaManager.getThreadSafeStateHandle();
 		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CalcSunDamageScalarEvent(sunDamage));
 		if (eventData.valid()) {
-			sunDamage = eventData.get<bool>("sunDamage");
+			sunDamage = eventData.get<float>("sunDamage");
 		}
 
 		return sunDamage;

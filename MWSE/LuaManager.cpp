@@ -3631,7 +3631,7 @@ namespace mwse {
 
 			// Allow overriding of sun damage calculation.
 			auto weatherControllerCalcSunDamageScalar = &TES3::WeatherController::calcSunDamageScalar;
-			genCallEnforced(0x0464C1C, 0x0440630, *reinterpret_cast<DWORD*>(&referenceAttemptUnlockDisarm));
+			genCallEnforced(0x0464C1C, 0x0440630, *reinterpret_cast<DWORD*>(&weatherControllerCalcSunDamageScalar));
 
 			// UI framework hooks
 			TES3::UI::hook();
