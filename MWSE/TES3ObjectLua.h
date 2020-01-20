@@ -46,16 +46,14 @@ namespace mwse {
 			setUserdataForBaseObject(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition["scale"] = sol::property(&T::getScale, [](T& self, float value) { self.setScale(value); });
+			usertypeDefinition["nextInCollection"] = sol::readonly_property(&T::nextInCollection);
+			usertypeDefinition["previousInCollection"] = sol::readonly_property(&T::previousInCollection);
+			usertypeDefinition["scale"] = sol::property(&T::getScale, &T::setScale);
+			usertypeDefinition["sceneNode"] = sol::readonly_property(&T::sceneNode);
+			usertypeDefinition["sceneCollisionRoot"] = sol::readonly_property(&T::sceneCollisionRoot);
 
 			// Indirect bindings to unions and arrays.
 			usertypeDefinition["owningCollection"] = sol::property([](T& self) { return self.owningCollection.asReferenceList; });
-
-			// Access to other objects that need to be packaged.
-			usertypeDefinition["nextInCollection"] = sol::readonly_property([](T& self) { return self.nextInCollection; });
-			usertypeDefinition["previousInCollection"] = sol::readonly_property([](T& self) { return self.previousInCollection; });
-			usertypeDefinition["sceneNode"] = sol::readonly_property([](T& self) { return self.sceneNode; });
-			usertypeDefinition["sceneCollisionRoot"] = sol::readonly_property([](T& self) { return self.sceneCollisionRoot; });
 		}
 
 		template <typename T>

@@ -81,8 +81,12 @@ namespace NI {
 	static_assert(sizeof(Object_vTable) == 0x2C, "NI::Object's vtable failed size validation");
 }
 
-#define MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(T) int sol_lua_push(sol::types<T*>, lua_State* L, const T* object);
-#define MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(T) int sol_lua_push(sol::types<T*>, lua_State* L, const T* object) { return T::pushCachedLuaObject(L, object); }
+#define MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(T)\
+int sol_lua_push(sol::types<T*>, lua_State* L, const T* object);\
+int sol_lua_push(sol::types<T>, lua_State* L, const T& object);
+#define MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(T)\
+int sol_lua_push(sol::types<T*>, lua_State* L, const T* object) { return T::pushCachedLuaObject(L, object); }\
+int sol_lua_push(sol::types<T>, lua_State* L, const T& object) { return T::pushCachedLuaObject(L, &object); }
 
 MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::AlphaProperty);
 MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::AmbientLight);

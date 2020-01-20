@@ -25,15 +25,13 @@ namespace mwse {
 			usertypeDefinition["attackDirection"] = &TES3::ActionData::attackDirection;
 			usertypeDefinition["attackSwing"] = &TES3::ActionData::attackSwing;
 			usertypeDefinition["currentAnimationGroup"] = &TES3::ActionData::currentAnimGroup;
+			usertypeDefinition["hitTarget"] = sol::readonly_property(&TES3::ActionData::hitTarget);
 			usertypeDefinition["lastBarterHoursPassed"] = &TES3::ActionData::lastBarterHoursPassed;
+			usertypeDefinition["nockedProjectile"] = sol::readonly_property(&TES3::ActionData::nockedProjectile);
 			usertypeDefinition["physicalDamage"] = &TES3::ActionData::physicalDamage;
+			usertypeDefinition["stolenFrom"] = sol::readonly_property(&TES3::ActionData::stolenFromFactionOrNPC);
+			usertypeDefinition["target"] = sol::readonly_property(&TES3::ActionData::target);
 			usertypeDefinition["walkDestination"] = &TES3::ActionData::walkDestination;
-
-			// Access to other objects that need to be packaged.
-			usertypeDefinition["hitTarget"] = sol::readonly_property([](TES3::ActionData& self) { return self.hitTarget; });
-			usertypeDefinition["nockedProjectile"] = sol::readonly_property([](TES3::ActionData& self) { return self.nockedProjectile; });
-			usertypeDefinition["stolenFrom"] = sol::readonly_property([](TES3::ActionData& self) { return self.stolenFromFactionOrNPC; });
-			usertypeDefinition["target"] = sol::readonly_property([](TES3::ActionData& self) { return self.target; });
 		}
 	}
 }

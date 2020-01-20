@@ -73,9 +73,9 @@ namespace mwse {
 			usertypeDefinition["updateProperties"] = &NI::AVObject::updateProperties;
 
 			// Functions that need their results wrapped.
-			usertypeDefinition["getObjectByName"] = [](NI::AVObject& self, const char* name) { return self.getObjectByName(name); };
+			usertypeDefinition["getObjectByName"] = &NI::AVObject::getObjectByName;
 			usertypeDefinition["getProperty"] = [](NI::AVObject& self, int type) { return self.getProperty(NI::PropertyType(type)); };
-			usertypeDefinition["parent"] = sol::readonly_property([](NI::AVObject& self) { return self.parentNode; });
+			usertypeDefinition["parent"] = sol::readonly_property(&NI::AVObject::parentNode);
 
 			// Make remove property a bit more friendly.
 			usertypeDefinition["detachProperty"] = [](NI::AVObject& self, int type) {

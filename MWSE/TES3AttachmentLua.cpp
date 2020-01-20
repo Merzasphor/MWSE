@@ -65,14 +65,8 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["cell"] = sol::property(
-					[](TES3::TravelDestination& self) { return self.cell; },
-					[](TES3::TravelDestination& self, TES3::Cell * cell) { self.cell = cell; }
-				);
-				usertypeDefinition["marker"] = sol::property(
-					[](TES3::TravelDestination& self) { return self.destination; },
-					[](TES3::TravelDestination& self, TES3::Reference * destination) { self.destination = destination; }
-				);
+				usertypeDefinition["cell"] = &TES3::TravelDestination::cell;
+				usertypeDefinition["marker"] = &TES3::TravelDestination::destination;
 			}
 		}
 	}

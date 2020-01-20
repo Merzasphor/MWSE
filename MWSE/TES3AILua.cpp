@@ -22,11 +22,9 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
-				usertypeDefinition["indexActivePackage"] = sol::readonly_property(&TES3::AIPlanner::indexActivePackage);
 				usertypeDefinition["countPackages"] = sol::readonly_property(&TES3::AIPlanner::countPackages);
-
-				// Access to other objects that need to be packaged.
-				usertypeDefinition["mobile"] = sol::readonly_property([](TES3::AIPlanner& self) { return self.mobileActor; });
+				usertypeDefinition["indexActivePackage"] = sol::readonly_property(&TES3::AIPlanner::indexActivePackage);
+				usertypeDefinition["mobile"] = sol::readonly_property(&TES3::AIPlanner::mobileActor);
 
 				// Basic function binding.
 				usertypeDefinition["getActivePackage"] = &TES3::AIPlanner::getActivePackage;
@@ -42,6 +40,7 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
+				usertypeDefinition["destinationCell"] = sol::readonly_property(&TES3::AIPackage::destinationCell);
 				usertypeDefinition["distance"] = sol::readonly_property(&TES3::AIPackage::distance);
 				usertypeDefinition["duration"] = sol::readonly_property(&TES3::AIPackage::duration);
 				usertypeDefinition["hourOfDay"] = sol::readonly_property(&TES3::AIPackage::hourOfDay);
@@ -52,9 +51,6 @@ namespace mwse {
 				usertypeDefinition["isStarted"] = sol::readonly_property(&TES3::AIPackage::started);
 				usertypeDefinition["targetPosition"] = sol::readonly_property(&TES3::AIPackage::targetPosition);
 				usertypeDefinition["type"] = sol::readonly_property(&TES3::AIPackage::packageType);
-
-				// Access to other objects that need to be packaged.
-				usertypeDefinition["destinationCell"] = sol::readonly_property([](TES3::AIPackage& self) { return self.destinationCell; });
 			}
 		}
 	}

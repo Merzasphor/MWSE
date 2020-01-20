@@ -95,7 +95,7 @@ namespace NI {
 		}
 
 		// Loop through RTTI information until we find a type we like.
-		const RTTI* currentRTTI = object->getRunTimeTypeInformation();
+		auto currentRTTI = object->getRunTimeTypeInformation();
 		sol::object ref = sol::nil;
 		while (currentRTTI != nullptr && ref == sol::nil) {
 			switch ((uintptr_t)currentRTTI) {
