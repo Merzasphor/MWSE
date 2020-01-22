@@ -3633,6 +3633,14 @@ namespace mwse {
 			auto weatherControllerCalcSunDamageScalar = &TES3::WeatherController::calcSunDamageScalar;
 			genCallEnforced(0x0464C1C, 0x0440630, *reinterpret_cast<DWORD*>(&weatherControllerCalcSunDamageScalar));
 
+			// Allow defining certain objects as sourceless.
+			auto isSourcelessObject = &TES3::BaseObject::isSourcelessObject;
+			genCallEnforced(0x4BC3E0, 0x4C1980, *reinterpret_cast<DWORD*>(&isSourcelessObject));
+			genCallEnforced(0x4BC57F, 0x4C1980, *reinterpret_cast<DWORD*>(&isSourcelessObject));
+			genCallEnforced(0x4C0C1C, 0x4C1980, *reinterpret_cast<DWORD*>(&isSourcelessObject));
+			genCallEnforced(0x4C0DC8, 0x4C1980, *reinterpret_cast<DWORD*>(&isSourcelessObject));
+			genCallEnforced(0x4C7715, 0x4C1980, *reinterpret_cast<DWORD*>(&isSourcelessObject));
+
 			// UI framework hooks
 			TES3::UI::hook();
 

@@ -5,6 +5,8 @@
 
 #include "TES3Util.h"
 
+#include <unordered_set>
+
 namespace TES3 {
 	void * BaseObject::operator new(size_t size) {
 		return mwse::tes3::_new(size);
@@ -48,6 +50,17 @@ namespace TES3 {
 		default:
 			return false;
 		}
+	}
+
+	std::unordered_set<BaseObject*> sourcelessObjects;
+
+	const auto TES3_isSourcelessObject = reinterpret_cast<bool(__stdcall*)(BaseObject*)>(0x4C1980);
+	bool __stdcall BaseObject::isSourcelessObject(BaseObject* object) {
+		return TES3_isSourcelessObject(object) || sourcelessObjects.find(object) != sourcelessObjects.end();
+	}
+	
+	void BaseObject::setSourcelessObject(BaseObject* object) {
+		sourcelessObjects.insert(object);
 	}
 
 	void Object::setID(const char* id) {

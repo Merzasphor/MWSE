@@ -9,6 +9,7 @@
 #include "TES3Misc.h"
 #include "TES3Static.h"
 #include "TES3Enchantment.h"
+#include "TES3WorldController.h"
 
 namespace mwse::lua
 {
@@ -73,6 +74,11 @@ public:
 		if( !TES3::DataHandler::get()->nonDynamicData->addNewObject( activator ) )
 			throw std::runtime_error( "tes3activator.create: could not add the newly created activator in its proper collection." );
 
+		// If created outside of a save game, mark the object as sourceless.
+		if (getOptionalParam<bool>(params, "sourceless", false) || TES3::WorldController::get()->getMobilePlayer() == nullptr) {
+			TES3::BaseObject::setSourcelessObject(activator);
+		}
+
 		return makeLuaObject( activator );
 	}
 };
@@ -127,6 +133,11 @@ public:
 		if( !TES3::DataHandler::get()->nonDynamicData->addNewObject( miscItem ) )
 			throw std::runtime_error( "tes3misc.create: could not add the newly created misc item in its proper collection." );
 
+		// If created outside of a save game, mark the object as sourceless.
+		if (getOptionalParam<bool>(params, "sourceless", false) || TES3::WorldController::get()->getMobilePlayer() == nullptr) {
+			TES3::BaseObject::setSourcelessObject(miscItem);
+		}
+
 		return makeLuaObject( miscItem );
 	}
 };
@@ -162,6 +173,11 @@ public:
 
 		if( !TES3::DataHandler::get()->nonDynamicData->addNewObject( staticObject ) )
 			throw std::runtime_error( "tes3static.create: could not add the newly created static in its proper collection." );
+
+		// If created outside of a save game, mark the object as sourceless.
+		if (getOptionalParam<bool>(params, "sourceless", false) || TES3::WorldController::get()->getMobilePlayer() == nullptr) {
+			TES3::BaseObject::setSourcelessObject(staticObject);
+		}
 
 		return makeLuaObject( staticObject );
 	}
@@ -207,6 +223,11 @@ public:
 
 		if( !TES3::DataHandler::get()->nonDynamicData->addNewObject( enchantment ) )
 			throw std::runtime_error( "tes3enchantment.create: could not add the newly created enchantment in its proper collection." );
+
+		// If created outside of a save game, mark the object as sourceless.
+		if (getOptionalParam<bool>(params, "sourceless", false) || TES3::WorldController::get()->getMobilePlayer() == nullptr) {
+			TES3::BaseObject::setSourcelessObject(enchantment);
+		}
 
 		return makeLuaObject( enchantment );
 	}

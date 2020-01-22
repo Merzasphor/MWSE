@@ -223,6 +223,9 @@ namespace TES3 {
 
 		bool isActor();
 
+		static bool __stdcall isSourcelessObject(BaseObject* object);
+		static void setSourcelessObject(BaseObject* object);
+
 	};
 	static_assert(sizeof(BaseObject) == 0x10, "TES3::BaseObject failed size validation");
 
