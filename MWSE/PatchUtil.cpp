@@ -289,6 +289,10 @@ namespace mwse {
 			GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&memCounter, sizeof(memCounter));
 			log::getLog() << "Memory usage: " << memCounter.PrivateUsage << " bytes." << std::endl;
 
+			// Try to print the lua stack trace.
+			log::getLog() << "Lua traceback at time of crash:" << std::endl;
+			mwse::lua::logStackTrace();
+
 			// Open the file.
 			HANDLE hFile = CreateFile("MWSE_MiniDump.dmp", GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
@@ -326,10 +330,6 @@ namespace mwse {
 			else {
 				log::getLog() << "MiniDump creation failed. Could not get file handle. Error: " << GetLastError() << std::endl;
 			}
-
-			// Try to print the lua stack trace.
-			log::getLog() << "Lua traceback at time of crash:" << std::endl;
-			mwse::lua::logStackTrace();
 		}
 
 		int __stdcall onWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {

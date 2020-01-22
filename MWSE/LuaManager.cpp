@@ -383,6 +383,12 @@ namespace mwse {
 				return memCounter.PrivateUsage;
 			};
 
+			luaState["mwse"]["crash"] = []() {
+				// You're not my manager!
+				int* x = nullptr;
+				*x = 4;
+			};
+
 			// Bind TES3 data types.
 			bindTES3ActionData();
 			bindTES3Activator();

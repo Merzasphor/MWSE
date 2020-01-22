@@ -70,8 +70,8 @@ namespace TES3 {
 		HashMap * unknown_0xB26C;
 		char dataFilesPath[260]; // 0xB270
 		char unknown_0xB374;
-		char unknown_0xB375;
-		char unknown_0xB376;
+		bool isSaving; // 0xB375
+		bool isModifyingMasters; // 0xB376
 		char unknown_0xB377;
 		char unknown_0xB378;
 		char unknown_0xB379;
