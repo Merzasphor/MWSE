@@ -5,6 +5,9 @@
 
 #include "TES3Collections.h"
 
+#include "NIPointer.h"
+#include "NINode.h"
+
 #include <string>
 
 namespace TES3 {
@@ -116,9 +119,9 @@ namespace TES3 {
 	static_assert(sizeof(BaseObjectVirtualTable) == 0x24, "TES3::BaseObjectVirtualTable failed size validation");
 
 	struct ObjectVirtualTable : BaseObjectVirtualTable {
-		void * copyEntity;
-		void (__thiscall * setID)(BaseObject*, const char*); // 0x10C
-		NI::Node * (__thiscall * getSceneGraphNode)(BaseObject*); // 0x110
+		void * copyEntity; // 0x24
+		void (__thiscall * setID)(BaseObject*, const char*); // 0x28
+		NI::Node * (__thiscall * getSceneGraphNode)(BaseObject*); // 0x2C
 		void * unknown_0x30;
 		void * unknown_0x34;
 		char * (__thiscall * getName)(BaseObject*); // 0x38
@@ -238,7 +241,7 @@ namespace TES3 {
 		void * referenceToThis; // 0x18
 		Object * previousInCollection; // 0x1C
 		Object * nextInCollection; // 0x20
-		NI::Node * sceneCollisionRoot; // 0x24
+		NI::Pointer<NI::Node> sceneCollisionRoot; // 0x24
 
 		//
 		// Function wrappers for our virtual table.

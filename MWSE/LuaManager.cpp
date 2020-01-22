@@ -3764,9 +3764,6 @@ namespace mwse {
 			userdataMapMutex.unlock();
 		}
 
-		std::queue<TES3::BaseObject*> threadedBaseObjectCacheDeletionQueue;
-		std::queue<TES3::MobileObject*> threadedMobileObjectCacheDeletionQueue;
-
 		void LuaManager::removeUserdataFromCache(TES3::BaseObject* object) {
 			userdataMapMutex.lock();
 

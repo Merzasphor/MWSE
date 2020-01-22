@@ -3122,9 +3122,6 @@ namespace mwse {
 				else {
 					auto fBribe100Mod = TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::fBribe100Mod];
 					float modifier = getOptionalParam<float>(params, "modifier", 0.0f);
-					if (modifier <= 0.0f) {
-						throw std::invalid_argument("Invalid modifier parameter provided.");
-					}
 
 					float oldModifier = fBribe100Mod->value.asFloat;
 					fBribe100Mod->value.asFloat = modifier;
