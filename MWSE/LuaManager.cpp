@@ -639,7 +639,7 @@ namespace mwse {
 
 			// Send off our enterFrame event always.
 			if (event::FrameEvent::getEventEnabled()) {
-				luaManager.getThreadSafeStateHandle().triggerEvent(new event::FrameEvent(worldController->deltaTime, worldController->flagMenuMode));
+				luaManager.getThreadSafeStateHandle().triggerEvent(new event::FrameEvent(worldController->deltaTime, worldController->flagMenuMode, highResolutionTimestamp));
 			}
 
 			// If we're not in menu mode, send off the simulate event.
