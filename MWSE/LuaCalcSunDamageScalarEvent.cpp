@@ -8,9 +8,9 @@
 namespace mwse {
     namespace lua {
         namespace event {
-            CalcSunDamageScalarEvent::CalcSunDamageScalarEvent(float sunDamage) :
+            CalcSunDamageScalarEvent::CalcSunDamageScalarEvent(float damage) :
                 GenericEvent("calcSunDamageScalar"),
-                m_SunDamage(sunDamage)
+                m_Damage(damage)
             {
 
             }
@@ -20,7 +20,7 @@ namespace mwse {
                 sol::state& state = stateHandle.state;
                 sol::table eventData = state.create_table();
 
-                eventData["sunDamage"] = m_SunDamage;
+                eventData["damage"] = m_Damage;
 
                 return eventData;
             }

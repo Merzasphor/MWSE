@@ -21,17 +21,17 @@ namespace TES3 {
 	const auto TES3_WeatherController_updateTick = reinterpret_cast<void(__thiscall*)(WeatherController*, NI::Property*, float, bool, float)>(0x440C80);
 
 	float WeatherController::calcSunDamageScalar() {
-		float sunDamage = TES3_WeatherController_calcSunDamageScalar(this);
+		float damage = TES3_WeatherController_calcSunDamageScalar(this);
 
 		// Trigger calcSunDamageScalar event.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
 		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CalcSunDamageScalarEvent(sunDamage));
+		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CalcSunDamageScalarEvent(damage));
 		if (eventData.valid()) {
-			sunDamage = eventData.get<float>("sunDamage");
+			damage = eventData.get<float>("damage");
 		}
 
-		return sunDamage;
+		return damage;
 	}
 
 	void WeatherController::switchWeather(int weatherId, float startingTransition) {

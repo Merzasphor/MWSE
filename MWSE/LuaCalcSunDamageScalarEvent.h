@@ -10,11 +10,11 @@ namespace mwse {
 		namespace event {
 			class CalcSunDamageScalarEvent : public GenericEvent, public DisableableEvent<CalcSunDamageScalarEvent> {
 			public:
-				CalcSunDamageScalarEvent(float sunDamage);
+				CalcSunDamageScalarEvent(float damage);
 				sol::table createEventTable();
 
 			protected:
-				float m_SunDamage;
+				float m_Damage;
 			};
 		}
 	}
