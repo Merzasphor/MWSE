@@ -217,8 +217,8 @@ namespace TES3 {
 		char unknown_0xE5;
 		char unknown_0xE6;
 		bool shaderWaterReflectsTerrain; // 0xE7
-		int mouseSensitivity; // 0xE8
-		int horzSensitivity; // 0xEC
+		float mouseSensitivity; // 0xE8
+		float horzSensitivity; // 0xEC
 		int shaderWaterReflectUpdate; // 0xF0
 		NI::Node * nodeCursor; // 0xF4
 		WorldControllerRenderCamera splashscreenCamera; // 0xF8
