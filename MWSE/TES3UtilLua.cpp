@@ -517,8 +517,9 @@ namespace mwse {
 					return false;
 				}
 
-				for (int i = 0; i < 256; i++) {
-					TES3::GameFile* gameFile = dataHandler->nonDynamicData->activeMods[i];
+				auto ndd = dataHandler->nonDynamicData;
+				for (int i = 0; i < ndd->activeModCount; i++) {
+					TES3::GameFile* gameFile = ndd->activeMods[i];
 					if (gameFile == nullptr) {
 						return false;
 					}
@@ -543,9 +544,10 @@ namespace mwse {
 					return sol::nil;
 				}
 
+				auto ndd = dataHandler->nonDynamicData;
 				sol::table mods = state.create_table();
-				for (int i = 0; i < 256; i++) {
-					TES3::GameFile* gameFile = dataHandler->nonDynamicData->activeMods[i];
+				for (int i = 0; i < ndd->activeModCount; i++) {
+					TES3::GameFile* gameFile = ndd->activeMods[i];
 					if (gameFile == nullptr) {
 						break;
 					}
