@@ -96,6 +96,10 @@ namespace mwse {
 		}
 
 		void setWidgetText(Element& element, const char* text) {
+			if (text == nullptr) {
+				text = "";
+			}
+
 			deferredPropInit();
 
 			Property part = element.getProperty(PropertyType::Property, Property::is_part).propertyValue;
