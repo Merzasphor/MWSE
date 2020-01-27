@@ -9,7 +9,7 @@
 #include "NIAVObject.h"
 #include "NIPointer.h"
 
-#define MWSE_CUSTOM_TES3NonDynamicData
+#define MWSE_CUSTOM_EFFECTS
 
 namespace TES3 {
 	enum class LoadGameResult {
@@ -47,12 +47,11 @@ namespace TES3 {
 		Iterator<void> * birthsigns; // 0x44
 		Iterator<StartScript> * startScripts; // 0x48
 		Skill skills[27]; // 0x4C
-#ifdef MWSE_CUSTOM_TES3NonDynamicData
+#ifdef MWSE_CUSTOM_EFFECTS
 		MagicEffectController * magicEffects; // 0x5C8
-		GameFile* activeMods[1024]; // 0x5CC
-		unsigned char freed_0x5CC[0x87EC]; // Unused space free for plundering.
+		unsigned char freed_0x5CC[0x97EC]; // Unused space free for plundering.
 #else
-		MagicEffect magicEffects[143]; // 0x5C8 // Relocated off of MagicEffectController.
+		MagicEffect magicEffects[143]; // 0x5C8
 #endif
 		void * lights; // 0x9DB8
 		int unknown_0x9DBC[600];
@@ -65,11 +64,7 @@ namespace TES3 {
 		int unknown_0xAE58;
 		int sgWireframeProperty; // 0xAE5C
 		void * TESFiles; // 0xAE60
-#ifdef MWSE_CUSTOM_TES3NonDynamicData
-		unsigned char freed_0xAE64[0x400]; // Unused space free for plundering.
-#else
-		GameFile* activeMods[256]; // 0xAE64 // Relocated and resized at 0x5CC.
-#endif
+		GameFile * activeMods[256]; // 0xAE64
 		StlList<Cell> * cells; // 0xB264
 		HashMap * allObjectsById; // 0xB268
 		HashMap * unknown_0xB26C;
@@ -148,6 +143,7 @@ namespace TES3 {
 	static_assert(offsetof(NonDynamicData, spellsList) == 0x10, "TES3::NonDynamicData failed offset validation");
 	static_assert(offsetof(NonDynamicData, GMSTs) == 0x18, "TES3::NonDynamicData failed offset validation");
 	static_assert(offsetof(NonDynamicData, skills) == 0x4C, "TES3::NonDynamicData failed offset validation");
+	static_assert(offsetof(NonDynamicData, magicEffects) == 0x5C8, "TES3::NonDynamicData failed offset validation");
 	static_assert(offsetof(NonDynamicData, TESFiles) == 0xAE60, "TES3::NonDynamicData failed offset validation");
 
 	struct SoundEvent {

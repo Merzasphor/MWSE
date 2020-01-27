@@ -96,7 +96,6 @@ namespace TES3 {
 	void __fastcall InitializeController(NonDynamicData * ndd) {
 		ndd->magicEffects = new MagicEffectController();
 
-		memset(ndd->activeMods, 0x0, sizeof(ndd->activeMods));
 		memset(ndd->freed_0x5CC, 0x0, sizeof(ndd->freed_0x5CC));
 
 		for (int i = EffectID::FirstEffect; i <= EffectID::LastEffect; i++) {

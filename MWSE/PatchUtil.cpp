@@ -200,20 +200,6 @@ namespace mwse {
 			genCallEnforced(0x41B857, 0x40FF50, *reinterpret_cast<DWORD*>(&WorldController_tickClock));
 			auto WorldController_checkForDayWrapping = &TES3::WorldController::checkForDayWrapping;
 			genCallEnforced(0x6350E9, 0x40FF50, *reinterpret_cast<DWORD*>(&WorldController_checkForDayWrapping));
-
-			// Patch: Raise esm/esp limit from 256 to 1024.
-			writeDoubleWordEnforced(0x4B7A22 + 0x1, 256U, sizeof(TES3::NonDynamicData::activeMods));
-			writeDoubleWordEnforced(0x4B7A27 + 0x2, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
-			writeDoubleWordEnforced(0x4B87A9 + 0x2, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
-			writeDoubleWordEnforced(0x4BB498 + 0x3, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
-			writeDoubleWordEnforced(0x4BB4AE + 0x3, 256U, sizeof(TES3::NonDynamicData::activeMods));
-			writeDoubleWordEnforced(0x4BB56F + 0x3, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
-			writeDoubleWordEnforced(0x4BB588 + 0x3, 256U, sizeof(TES3::NonDynamicData::activeMods));
-			writeDoubleWordEnforced(0x4BB5ED + 0x2, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
-			writeDoubleWordEnforced(0x4BB650 + 0x3, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
-			writeDoubleWordEnforced(0x4BBD21 + 0x2, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
-			writeDoubleWordEnforced(0x4BD252 + 0x2, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
-			writeDoubleWordEnforced(0x4C8B92 + 0x2, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
 		}
 
 		//
