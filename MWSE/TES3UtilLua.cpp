@@ -1561,6 +1561,30 @@ namespace mwse {
 				return true;
 			};
 
+			state["tes3"]["addJournalEntry"] = [](sol::table params) {
+				auto worldController = TES3::WorldController::get();
+				if (worldController == nullptr) {
+					throw std::runtime_error("Function called before world controller is loaded.");
+				}
+
+				auto journalHTML = worldController->journalHTML;
+				if (journalHTML == nullptr || journalHTML->data == nullptr) {
+					throw std::runtime_error("No current journal data exists.");
+				}
+
+				const char* text = getOptionalParam<const char*>(params, "text", nullptr);
+				if (text == nullptr) {
+					throw std::invalid_argument("Invalid 'text' parameter provided.");
+				}
+
+				journalHTML->writeTimestampedEntry(text);
+
+				sol::optional<bool> showMessage = params["showMessage"];
+				if (showMessage.value_or(true)) {
+					journalHTML->showJournalUpdateNotification();
+				}
+			};
+
 			state["tes3"]["getFileExists"] = [](const char* path) {
 				return tes3::resolveAssetPath(path) != 0;
 			};

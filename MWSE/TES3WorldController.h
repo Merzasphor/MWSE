@@ -37,9 +37,9 @@ namespace TES3 {
 
 		};
 		void* vTable; // 0x0
-		NI::Object * renderer; // 0x4
-		NI::Object * root; // 0x8
-		NI::Node * cameraRoot; // 0xC
+		NI::Object* renderer; // 0x4
+		NI::Object* root; // 0x8
+		NI::Node* cameraRoot; // 0xC
 		CameraData cameraData; // 0x10
 	};
 	static_assert(sizeof(WorldControllerRenderCamera::CameraData) == 0x1C, "TES3::WorldControllerRenderCamera::CameraData failed size validation");
@@ -72,13 +72,13 @@ namespace TES3 {
 	static_assert(sizeof(WorldControllerRenderTarget) == 0x84, "TES3::WorldControllerRenderTarget failed size validation");
 
 	struct MouseController {
-		NI::Object * cursors[5];
+		NI::Object* cursors[5];
 		int unknown_0x14;
 		Vector3 position; // 0x18
 		Vector3 minimumPosition; // 0x24
 		Vector3 maximumPosition; // 0x30
-		NI::Node * cursorRoot; // 0x3C
-		NI::Node * cursorChildRoot; // 0x40
+		NI::Node* cursorRoot; // 0x3C
+		NI::Node* cursorChildRoot; // 0x40
 		int unknown_0x44;
 		int unknown_0x48;
 		int unknown_0x4C;
@@ -100,18 +100,18 @@ namespace TES3 {
 	struct KillCounter {
 		struct Node {
 			int count; // 0x0
-			Actor * actor; // 0x4
+			Actor* actor; // 0x4
 		};
 		int werewolfKills; // 0x0
 		int totalKills; // 0x4
-		Iterator<Node> * killedActors; // 0x8
+		Iterator<Node>* killedActors; // 0x8
 
 		//
 		// Custom functions.
 		//
 
-		_declspec(dllexport) void increment(MobileActor * actor);
-		_declspec(dllexport) int getKillCount(Actor * actor);
+		_declspec(dllexport) void increment(MobileActor* actor);
+		_declspec(dllexport) int getKillCount(Actor* actor);
 
 	};
 	static_assert(sizeof(KillCounter) == 0xC, "TES3::KillCounter failed size validation");
@@ -129,7 +129,7 @@ namespace TES3 {
 		//
 
 		_declspec(dllexport) void clearIcons(int type);
-		_declspec(dllexport) void addInventoryItems(Inventory * inventory, int type);
+		_declspec(dllexport) void addInventoryItems(Inventory* inventory, int type);
 
 	};
 	static_assert(sizeof(InventoryData) == 0x24, "TES3::InventoryData failed size validation");
@@ -137,13 +137,35 @@ namespace TES3 {
 	struct Font {
 		short propertyCount; // 0x0
 		const char* filePath; // 0x4
-		NI::Property * texturingProperties[8]; // 0x8 // Up to 8 NiTexturingProperty pointers, filled count is stored by propertyCount.
-		NI::Property * vertexColorProperty; // 0x28 // NiVertexColorProperty.
+		NI::Property* texturingProperties[8]; // 0x8 // Up to 8 NiTexturingProperty pointers, filled count is stored by propertyCount.
+		NI::Property* vertexColorProperty; // 0x28 // NiVertexColorProperty.
 		int unknown_0x2C;
 		int unknown_0x30;
-		void * rawFontData; // 0x34 // The raw .fnt file contents.
+		void* rawFontData; // 0x34 // The raw .fnt file contents.
 	};
 	static_assert(sizeof(Font) == 0x38, "TES3::Font failed size validation");
+
+	struct JournalHTML {
+		bool changedSinceLastSync; // 0x0
+		char* data; // 0x4
+		unsigned int length; // 0x8
+
+		//
+		// Other related this-call functions.
+		//
+
+		void updateJournal(DialogueInfo* info, MobileActor* updatingActor = nullptr);
+
+		//
+		// Custom functions
+		//
+
+		void writeTimestampedEntry(const char* text);
+		void writeText(const char* text);
+		void showJournalUpdateNotification();
+
+	};
+	static_assert(sizeof(JournalHTML) == 0xC, "TES3::JournalHTML failed size validation");
 
 	struct WorldController {
 		int unknown_0x0;
@@ -169,7 +191,7 @@ namespace TES3 {
 		WeatherController * weatherController; // 0x58
 		MobController * mobController; // 0x5C
 		KillCounter * playerKills; // 0x60
-		void * field_64;
+		JournalHTML* journalHTML; // 0x64
 		void * splashController; // 0x68
 		Iterator<Quest> * journalController; // 0x6C
 		SpellInstanceController * spellInstanceController; // 0x70
@@ -281,7 +303,8 @@ namespace TES3 {
 		_declspec(dllexport) void processGlobalScripts();
 
 		_declspec(dllexport) unsigned short getDaysInMonth(int);
-		_declspec(dllexport) unsigned short WorldController::getCumulativeDaysForMonth(int month);
+		_declspec(dllexport) unsigned short getCumulativeDaysForMonth(int month);
+		_declspec(dllexport) const char* getNameForMonth(int month);
 		_declspec(dllexport) double getHighPrecisionSimulationTimestamp();
 
 		_declspec(dllexport) bool applyEnchantEffect(NI::Node* node, Enchantment * enchantment);
