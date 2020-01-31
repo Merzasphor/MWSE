@@ -2489,7 +2489,7 @@ namespace mwse {
 					// Convert the table to json for storage.
 					auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 					sol::state &state = stateHandle.state;
-					std::string json = state["json"]["encode"](table);
+					std::string json = state["mwse"]["encodeForSave"](table);
 
 					// Call original writechunk function.
 					gameFile->writeChunkData('TAUL', json.c_str(), json.length() + 1);
@@ -2557,7 +2557,7 @@ namespace mwse {
 					// Convert the table to json for storage.
 					auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 					sol::state &state = stateHandle.state;
-					std::string json = state["json"]["encode"](table);
+					std::string json = state["mwse"]["encodeForSave"](table);
 
 					// Call original writechunk function.
 					gameFile->writeChunkData('TAUL', json.c_str(), json.length() + 1);

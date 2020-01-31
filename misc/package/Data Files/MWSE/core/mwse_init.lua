@@ -300,6 +300,22 @@ function json.savefile(fileName, object, config)
 	f:close()
 end
 
+function json.traceexception(reason, value, state, defaultmessage)
+	mwse.log("json.encode: Error when encoding value '%s'. Buffer at time of error:\n%s", value, table.concat(state.buffer))
+end
+
+local originalEncode = json.encode
+function json.encode(object, state)
+	state = state or {}
+
+	-- Trace encoding errors to the log by default unless another exception is provided.
+	if (state.exception == nil and state.trace) then
+		state.exception = json.traceexception
+	end
+
+	return originalEncode(object, state)
+end
+
 -------------------------------------------------
 -- Extend our base API: mge
 -------------------------------------------------
@@ -328,6 +344,19 @@ function mwse.saveConfig(fileName, object, config)
 	end
 end
 
+-- Exception handler called when an object can't be correctly validated in the save.
+local function exceptionWhenSaving(reason, value, state, defaultmessage)
+	-- Log the occurrence.
+	mwse.log("WARNING: Could not encode value '%s' when attempting to save data. Buffer at time of error:\n%s", value, table.concat(state.buffer))
+
+	-- Keep the value in the table, but null it out.
+	return "null"
+end
+
+-- Custom function for safely saving an object.
+function mwse.encodeForSave(object)
+	return json.encode(object, { exception = exceptionWhenSaving })
+end
 
 -------------------------------------------------
 -- Extend our base API: tes3
