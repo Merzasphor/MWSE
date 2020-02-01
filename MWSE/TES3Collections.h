@@ -69,7 +69,10 @@ namespace TES3 {
 
 	template <typename T>
 	struct Iterator {
-		void * vTable;
+		struct VirtualTable {
+			void(__thiscall* destructor)(Iterator<T>*, bool); // 0x0
+		};
+		VirtualTable* vTable;
 		size_t size;
 		IteratorNode<T> * head;
 		IteratorNode<T> * tail;
@@ -87,8 +90,12 @@ namespace TES3 {
 			reinterpret_cast<void(__thiscall *)(Iterator<T>*, T*)>(0x47E360)(this, item);
 		}
 
-		void addItemAtIndex(T * item, size_t index) {
-			reinterpret_cast<void(__thiscall *)(Iterator<T>*, T*, size_t)>(0x47E4D0)(this, item, index);
+		void addItemAtIndex(T* item, size_t index) {
+			reinterpret_cast<void(__thiscall*)(Iterator<T>*, T*, size_t)>(0x47E4D0)(this, item, index);
+		}
+
+		void removeItemByValue(T* value) {
+			reinterpret_cast<void(__thiscall*)(Iterator<T>*, T*)>(0x47E6A0)(this, value);
 		}
 
 		IteratorNode<T> * getFirstNode() {

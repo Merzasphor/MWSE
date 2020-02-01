@@ -297,6 +297,11 @@ namespace mwse {
 			return TES3_ResolveAssetPath(path, out_buffer);
 		}
 
+		const auto TES3_getThreadSafeStringBuffer = reinterpret_cast<char* (__thiscall*)(char*)>(0x4D51B0);
+		char* getThreadSafeStringBuffer() {
+			return TES3_getThreadSafeStringBuffer(reinterpret_cast<char*>(0x7CB478));
+		}
+
 		const auto TES3_rand = reinterpret_cast<int(__cdecl*)(int)>(0x47B3B0);
 		int rand(unsigned int arg0) {
 			return TES3_rand(arg0);

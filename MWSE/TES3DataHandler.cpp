@@ -222,6 +222,11 @@ namespace TES3 {
 		return TES3_NonDynamicData_getCellByName(this, name);
 	}
 
+	const auto TES3_NonDynamicData_getRegionById = reinterpret_cast<Region * (__thiscall*)(NonDynamicData*, const char*)>(0x4BA610);
+	Region* NonDynamicData::getRegion(const char* id) {
+		return TES3_NonDynamicData_getRegionById(this, id);
+	}
+
 	MagicEffect * NonDynamicData::getMagicEffect(int id) {
 		return magicEffects->getEffectObject(id);
 	}

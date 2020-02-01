@@ -4,6 +4,7 @@
 #include "TES3Defines.h"
 
 #include "TES3Collections.h"
+#include "TES3MagicEffect.h"
 #include "TES3Skill.h"
 
 #include "NIAVObject.h"
@@ -111,6 +112,7 @@ namespace TES3 {
 
 		Cell * getCellByGrid(int x, int y);
 		Cell * getCellByName(const char* name);
+		Region* getRegion(const char* id);
 
 		MagicEffect * getMagicEffect(int id);
 

@@ -44,13 +44,23 @@ namespace TES3 {
 	const auto TES3_Reference_setMobileActor = reinterpret_cast<MobileActor* (__thiscall*)(Reference*, MobileActor*)>(0x4E5770);
 	const auto TES3_Reference_removeAttachment = reinterpret_cast<void(__thiscall*)(Reference*, Attachment*)>(0x4E4C10);
 
-	const auto TES3_Reference_ctor = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E4510);
 	Reference::Reference() {
+		// Do not add code here. Always place new logic in the ctor function, which gets called in Morrowind.exe.
+		ctor();
+	}
+
+	Reference::~Reference() {
+		// Do not add code here. Always place new logic in the dtor function, which gets called in Morrowind.exe.
+		dtor();
+	}
+
+	const auto TES3_Reference_ctor = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E4510);
+	void Reference::ctor() {
 		TES3_Reference_ctor(this);
 	}
 
 	const auto TES3_Reference_dtor = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E45C0);
-	Reference::~Reference() {
+	void Reference::dtor() {
 		TES3_Reference_dtor(this);
 	}
 

@@ -68,6 +68,8 @@ namespace mwse {
 
 		int resolveAssetPath(const char* path, char * out_buffer = nullptr);
 
+		char* getThreadSafeStringBuffer();
+
 		//
 		// Original function calls in Morrowind.
 		//

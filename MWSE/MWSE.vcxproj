@@ -583,6 +583,7 @@
     <ClCompile Include="TES3MobileSpellProjectile.cpp" />
     <ClCompile Include="TES3Quest.cpp" />
     <ClCompile Include="TES3Race.cpp" />
+    <ClCompile Include="TES3ReferenceList.cpp" />
     <ClCompile Include="TES3Skill.cpp" />
     <ClCompile Include="TES3SoundGenerator.cpp" />
     <ClCompile Include="TES3SpellInstanceController.cpp" />

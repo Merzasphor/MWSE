@@ -46,14 +46,24 @@ namespace TES3 {
 		return TES3_TES3File_writeChunkData(this, tag, data, size);
 	}
 
+	const auto TES3_TES3File_getFirstSubrecord = reinterpret_cast<unsigned int(__thiscall*)(GameFile*)>(0x4B6750);
+	unsigned int GameFile::getFirstSubrecord() {
+		return TES3_TES3File_getFirstSubrecord(this);
+	}
+
 	const auto TES3_TES3File_hasNextSubrecord = reinterpret_cast<bool(__thiscall *)(GameFile*)>(0x4B67F0);
 	bool GameFile::hasNextSubrecord() {
 		return TES3_TES3File_hasNextSubrecord(this);
 	}
 
-	const auto TES3_TES3File_getNextSubrecord = reinterpret_cast<int(__thiscall *)(GameFile*)>(0x4B67C0);
-	int GameFile::getNextSubrecord() {
+	const auto TES3_TES3File_getNextSubrecord = reinterpret_cast<unsigned int(__thiscall *)(GameFile*)>(0x4B67C0);
+	unsigned int GameFile::getNextSubrecord() {
 		return TES3_TES3File_getNextSubrecord(this);
+	}
+
+	const auto TES3_TES3File_isRecordEnd = reinterpret_cast<int(__thiscall*)(GameFile*)>(0x4B67F0);
+	bool GameFile::isRecordEnd() {
+		return TES3_TES3File_isRecordEnd(this);
 	}
 
 	bool GameFile::collectActiveMods(bool showMasterErrors) {
@@ -70,6 +80,11 @@ namespace TES3 {
 
 	bool GameFile::setFilePointer(unsigned int offset) {
 		return TES3_TES3File_setFilePointer(this, offset);
+	}
+
+	const auto TES3_TES3File_getMaster = reinterpret_cast<GameFile*(__thiscall*)(GameFile*, unsigned int)>(0x4B67C0);
+	GameFile* GameFile::getMaster(unsigned int index) {
+		return TES3_TES3File_getMaster(this, index);
 	}
 
 	std::uint64_t GameFile::getFileSize() const {

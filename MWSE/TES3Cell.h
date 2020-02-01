@@ -36,14 +36,16 @@ namespace TES3 {
 
 	struct Cell : BaseObject {
 		struct MovedRef {
+			struct Coordinates {
+				int gridX;
+				int gridY;
+			};
 			unsigned char flags;
 			Reference * reference;
 			unsigned int sourceID;
 			union {
-				const char * targetCellName;
-				const struct {
-					int gridX, gridY;
-				} * targetCellXY;
+				const char* targetCellName;
+				Coordinates* targetCellXY;
 			} duringLoad;
 		};
 		struct SourceMod {
@@ -109,6 +111,8 @@ namespace TES3 {
 		void setGridY(int y);
 
 		void setName(const char* name);
+
+		void addMapNote(Vector3* position, float positionZ, const char* text);
 
 		void insertReference(Reference* reference);
 

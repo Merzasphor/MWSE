@@ -1582,8 +1582,7 @@ namespace mwse {
 				if (eventData.valid()) {
 					sol::optional<std::string> musicPath = eventData["music"];
 					if (musicPath) {
-						const auto TES3_getThreadSafeStringBuffer = reinterpret_cast<char*(__thiscall*)(char*)>(0x4D51B0);
-						char* buffer = TES3_getThreadSafeStringBuffer(reinterpret_cast<char*>(0x7CB478));
+						char* buffer = mwse::tes3::getThreadSafeStringBuffer();
 						snprintf(buffer, 512, "Data Files/music/%s", musicPath.value().c_str());
 						return true;
 					}
@@ -2177,8 +2176,7 @@ namespace mwse {
 
 			// Overwritten code for this hook.
 			if (TES3::WorldController::get()->menuController->unknown_0x24 % 1) {
-				const auto TES3_getThreadSafeStringBuffer = reinterpret_cast<char*(__thiscall*)(char*)>(0x4D51B0);
-				char* buffer = TES3_getThreadSafeStringBuffer(reinterpret_cast<char*>(0x7CB478));
+				char* buffer = mwse::tes3::getThreadSafeStringBuffer();
 				sprintf(buffer, "Attack Chance %d%%, for %s to hit %s", hitChance, attacker->reference->baseObject->getObjectID(), attacker->actionData.hitTarget->reference->baseObject->getObjectID());
 				const auto TES3_ConsoleLogResult = reinterpret_cast<void(__cdecl*)(const char*, bool)>(0x5B2C20);
 				TES3_ConsoleLogResult(buffer, false);

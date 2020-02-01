@@ -26,6 +26,9 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
+		void ctor();
+		void dtor();
+
 		void activate(Reference* activator, int unknown = 1);
 		void setActionFlag(int);
 		void clearActionFlag(int);
