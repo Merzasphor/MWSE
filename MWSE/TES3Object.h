@@ -185,7 +185,7 @@ namespace TES3 {
 		float (__thiscall * getScale)(BaseObject*); // 0x120
 		void (__thiscall * setScale)(BaseObject*, float, bool); // 0x124
 		void * unknown_0x128;
-		void * unknown_0x12C;
+		int(__thiscall* unknown_0x12C)(BaseObject*); // 0x12C
 		void * unknown_0x130;
 		void * loadModel; // 0x134
 		void * unknown_0x138;

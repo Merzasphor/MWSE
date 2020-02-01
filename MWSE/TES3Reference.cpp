@@ -115,6 +115,11 @@ namespace TES3 {
 		TES3_Reference_removeAttachment(this, attachment);
 	}
 
+	const auto TES3_Reference_removeAllAttachments = reinterpret_cast<ScriptVariables * (__thiscall*)(Reference*)>(0x4E4A10);
+	void Reference::removeAllAttachments() {
+		TES3_Reference_removeAllAttachments(this);
+	}
+
 	const auto TES3_Reference_ensureScriptDataIsInstanced = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E7050);
 	void Reference::ensureScriptDataIsInstanced() {
 		TES3_Reference_ensureScriptDataIsInstanced(this);
@@ -296,6 +301,17 @@ namespace TES3 {
 
 	bool Reference::getDisabled() {
 		return BIT_TEST(objectFlags, ObjectFlag::DisabledBit);
+	}
+
+	void Reference::setDeleted() {
+		disable();
+		if (baseObject) {
+			// This always seems to return 0 and do nothing.
+			// But we'll keep it for consistency.
+			baseObject->vTable.object->unknown_0x12C(baseObject);
+		}
+		removeAllAttachments();
+		setScale(1.0f);
 	}
 
 	Vector3 * Reference::getPosition() {

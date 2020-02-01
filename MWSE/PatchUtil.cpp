@@ -17,6 +17,7 @@
 #include "TES3UIInventoryTile.h"
 #include "TES3WorldController.h"
 
+#include "BitUtil.h"
 #include "TES3Util.h"
 
 #include "LuaManager.h"
@@ -162,6 +163,23 @@ namespace mwse {
 
 			return propValue;
 		}
+		
+		//
+		// Patch: Try to be better about deleting objects.
+		//
+		// In the original game, mwscript's SetDelete function simply sets the delete bit flag.
+		// This is inadequate, as background objects can still cause issues. This overwrite 
+		// forces the mwscript opcode to properly disable, clean, then flag the object.
+		//
+
+		void __fastcall PatchMWScriptSetDelete(TES3::Reference* reference, DWORD _UNUSED_, bool setDelete) {
+			if (setDelete) {
+				reference->setDeleted();
+			}
+			else {
+				BIT_SET_OFF(reference->objectFlags, TES3::ObjectFlag::DeleteBit);
+			}
+		}
 
 		//
 		// Install all the patches.
@@ -200,6 +218,9 @@ namespace mwse {
 			genCallEnforced(0x41B857, 0x40FF50, *reinterpret_cast<DWORD*>(&WorldController_tickClock));
 			auto WorldController_checkForDayWrapping = &TES3::WorldController::checkForDayWrapping;
 			genCallEnforced(0x6350E9, 0x40FF50, *reinterpret_cast<DWORD*>(&WorldController_checkForDayWrapping));
+
+			// Patch: Try to be better about deleting objects.
+			genCallEnforced(0x50C538, 0x4EEC70, reinterpret_cast<DWORD>(PatchMWScriptSetDelete));
 		}
 
 		//

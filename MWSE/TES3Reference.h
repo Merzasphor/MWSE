@@ -38,7 +38,8 @@ namespace TES3 {
 		Vector3* getPositionFromAttachment();
 		LockAttachmentNode* getOrCreateLockNode();
 		ScriptVariables * getScriptVariables();
-		void removeAttachment(TES3::Attachment * attachment);
+		void removeAttachment(TES3::Attachment* attachment);
+		void removeAllAttachments();
 		void ensureScriptDataIsInstanced();
 
 		void detachDynamicLightFromAffectedNodes();
@@ -53,6 +54,8 @@ namespace TES3 {
 		bool enable();
 		bool disable();
 		bool getDisabled();
+
+		void setDeleted();
 
 		Vector3 * getPosition();
 		void setPosition(const Vector3 * newPosition);
