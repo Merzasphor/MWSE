@@ -53,6 +53,15 @@ namespace mwse {
 				usertypeDefinition.set("platformFileName", sol::readonly_property(&NI::SourceTexture::platformFileName));
 				usertypeDefinition.set("width", sol::readonly_property(&NI::SourceTexture::getWidth));
 
+				// Functions that need their results wrapped.
+				usertypeDefinition.set("createFromPath", 
+					[](const char* path) { 
+						using FormatPrefs = NI::Texture::FormatPrefs;
+						FormatPrefs prefs = { FormatPrefs::PixelLayout::PIX_DEFAULT, FormatPrefs::MipFlag::MIP_DEFAULT, FormatPrefs::AlphaFormat::ALPHA_DEFAULT };
+						return makeLuaNiPointer(NI::SourceTexture::createFromPath(path, &prefs));
+					}
+				);
+
 				// Finish up our usertype.
 				state.set_usertype("niSourceTexture", usertypeDefinition);
 			}
