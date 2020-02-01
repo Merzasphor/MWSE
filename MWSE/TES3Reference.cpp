@@ -312,6 +312,7 @@ namespace TES3 {
 		}
 		removeAllAttachments();
 		setScale(1.0f);
+		BIT_SET_ON(objectFlags, ObjectFlag::DeleteBit);
 	}
 
 	Vector3 * Reference::getPosition() {
