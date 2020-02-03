@@ -1,7 +1,7 @@
 tes3itemData
 ====================================================================================================
 
-A set of variables that differentiates one item from another. Item data stored on an object reference can be accessed with ``reference.attachments.variables`` or ``reference.itemData``.
+A set of variables that differentiates one item from another.
 
 Properties
 ----------------------------------------------------------------------------------------------------
@@ -19,7 +19,7 @@ Properties
     A generic lua table that data can be written to, and synced to/from the save. All information stored must be valid for serialization to json.
 
 `owner`_ (`tes3npc`_, `tes3faction`_, `nil`_)
-    NPC or faction the item belongs to.
+    The script associated with the scriptVariables.
 
 `requirement`_ (`tes3globalVariable`_, `number`_, `nil`_)
     A requirement, typically associated with ownership and when the player may freely interact with an object. The type depends on the owner. Faction owners provide a required rank as a number, while NPCs provide a global variable to check.
@@ -35,44 +35,6 @@ Properties
 
 `timeLeft`_ (`number`_)
     The time remaining on a light. Provides incorrect values on non-light items, which instead have a condition property.
-
-Examples
-----------------------------------------------------------------------------------------------------
-
-When player looks at an item, show the name of its owner.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: lua
-
-    local function OnActivationTargetChanged(eventData)
-        local ref = eventData.current;
-        if ref and ref.itemData and ref.itemData.owner then
-            tes3.messageBox("This %s belongs to %s", ref.object.name, ref.itemData.owner.name);
-        end
-    end
-    event.register("activationTargetChanged", OnActivationTargetChanged); 
-
-
-Find lights in the player's inventory and log the time they have left.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: lua
-
-    for node in tes3.iterate(tes3.player.object.inventory.iterator) do
-        if node.object.objectType == tes3.objectType.light then
-            if node.variables then
-                for i = 1, #node.variables do
-                    local vars = node.variables[i]
-                    if vars.timeLeft then
-                        mwse.log("%s will burn for %f seconds", node.object, vars.timeLeft)
-                    end
-                end
-            else -- item data block is created when player equips a light
-                mwse.log("%s will burn for %f seconds", node.object,  node.object.time)
-            end
-        end
-    end
-
 
 .. toctree::
     :hidden:
@@ -119,12 +81,24 @@ Find lights in the player's inventory and log the time they have left.
 .. _`tes3door`: ../../lua/type/tes3door.html
 .. _`tes3directInputMouseState`: ../../lua/type/tes3directInputMouseState.html
 .. _`niRTTI`: ../../lua/type/niRTTI.html
+.. _`tes3weatherThunder`: ../../lua/type/tes3weatherThunder.html
 .. _`niObjectNET`: ../../lua/type/niObjectNET.html
+.. _`tes3weatherSnow`: ../../lua/type/tes3weatherSnow.html
+.. _`tes3weatherRain`: ../../lua/type/tes3weatherRain.html
+.. _`tes3light`: ../../lua/type/tes3light.html
+.. _`tes3clothing`: ../../lua/type/tes3clothing.html
 .. _`tes3armor`: ../../lua/type/tes3armor.html
+.. _`tes3weatherController`: ../../lua/type/tes3weatherController.html
 .. _`tes3npcInstance`: ../../lua/type/tes3npcInstance.html
+.. _`tes3mobilePlayer`: ../../lua/type/tes3mobilePlayer.html
+.. _`nil`: ../../lua/type/nil.html
 .. _`tes3dataHandler`: ../../lua/type/tes3dataHandler.html
 .. _`tes3rangeInt`: ../../lua/type/tes3rangeInt.html
 .. _`tes3dialogueInfo`: ../../lua/type/tes3dialogueInfo.html
+.. _`tes3weatherBlizzard`: ../../lua/type/tes3weatherBlizzard.html
+.. _`tes3weatherAsh`: ../../lua/type/tes3weatherAsh.html
+.. _`tes3container`: ../../lua/type/tes3container.html
+.. _`tes3weather`: ../../lua/type/tes3weather.html
 .. _`tes3dialogue`: ../../lua/type/tes3dialogue.html
 .. _`tes3gameFile`: ../../lua/type/tes3gameFile.html
 .. _`tes3faction`: ../../lua/type/tes3faction.html
@@ -165,10 +139,10 @@ Find lights in the player's inventory and log the time they have left.
 .. _`tes3probe`: ../../lua/type/tes3probe.html
 .. _`tes3physicalObject`: ../../lua/type/tes3physicalObject.html
 .. _`tes3object`: ../../lua/type/tes3object.html
-.. _`nil`: ../../lua/type/nil.html
+.. _`tes3weatherClear`: ../../lua/type/tes3weatherClear.html
 .. _`number`: ../../lua/type/number.html
 .. _`tes3moon`: ../../lua/type/tes3moon.html
-.. _`tes3mobilePlayer`: ../../lua/type/tes3mobilePlayer.html
+.. _`tes3weatherCloudy`: ../../lua/type/tes3weatherCloudy.html
 .. _`tes3mobileObject`: ../../lua/type/tes3mobileObject.html
 .. _`tes3misc`: ../../lua/type/tes3misc.html
 .. _`tes3leveledListNode`: ../../lua/type/tes3leveledListNode.html
@@ -180,17 +154,17 @@ Find lights in the player's inventory and log the time they have left.
 .. _`tes3bodyPart`: ../../lua/type/tes3bodyPart.html
 .. _`tes3factionRank`: ../../lua/type/tes3factionRank.html
 .. _`mwseTimer`: ../../lua/type/mwseTimer.html
-.. _`tes3container`: ../../lua/type/tes3container.html
+.. _`tes3weatherBlight`: ../../lua/type/tes3weatherBlight.html
 .. _`tes3packedColor`: ../../lua/type/tes3packedColor.html
 .. _`bool`: ../../lua/type/boolean.html
 .. _`tes3equipmentStack`: ../../lua/type/tes3equipmentStack.html
-.. _`tes3clothing`: ../../lua/type/tes3clothing.html
+.. _`tes3weatherFoggy`: ../../lua/type/tes3weatherFoggy.html
 .. _`mwseTimerController`: ../../lua/type/mwseTimerController.html
 .. _`tes3leveledCreature`: ../../lua/type/tes3leveledCreature.html
 .. _`tes3lockNode`: ../../lua/type/tes3lockNode.html
 .. _`tes3activeMagicEffect`: ../../lua/type/tes3activeMagicEffect.html
 .. _`tes3cellExteriorData`: ../../lua/type/tes3cellExteriorData.html
-.. _`tes3light`: ../../lua/type/tes3light.html
+.. _`tes3weatherOvercast`: ../../lua/type/tes3weatherOvercast.html
 .. _`tes3leveledItem`: ../../lua/type/tes3leveledItem.html
 .. _`tes3alchemy`: ../../lua/type/tes3alchemy.html
 .. _`tes3enchantment`: ../../lua/type/tes3enchantment.html
