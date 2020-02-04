@@ -219,8 +219,12 @@ namespace mwse {
 			auto WorldController_checkForDayWrapping = &TES3::WorldController::checkForDayWrapping;
 			genCallEnforced(0x6350E9, 0x40FF50, *reinterpret_cast<DWORD*>(&WorldController_checkForDayWrapping));
 
+			// This patch seems to be causing some people to crash. Attachments are being recreated incorrectly or
+			// something. Need to find a better place to do this...
+#if false
 			// Patch: Try to be better about deleting objects.
 			genCallEnforced(0x50C538, 0x4EEC70, reinterpret_cast<DWORD>(PatchMWScriptSetDelete));
+#endif
 		}
 
 		//
