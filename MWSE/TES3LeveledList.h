@@ -32,6 +32,8 @@ namespace TES3 {
 		//
 
 		Object * resolve();
+		bool insert(BaseObject* entry, short level);
+		bool remove(BaseObject* entry, short level = -1);
 
 	};
 	static_assert(sizeof(LeveledCreature) == 0x44, "TES3::LeveledCreature failed size validation");
@@ -47,6 +49,8 @@ namespace TES3 {
 		//
 
 		Object * resolve();
+		bool insert(BaseObject* entry, short level);
+		bool remove(BaseObject* entry, short level = -1);
 
 	};
 	static_assert(sizeof(LeveledItem) == 0x40, "TES3::LeveledItem failed size validation");

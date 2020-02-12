@@ -45,7 +45,9 @@ namespace mwse {
 				usertypeDefinition.set("list", sol::readonly_property(&TES3::LeveledCreature::itemList));
 
 				// Basic function binding.
+				usertypeDefinition.set("insert", &TES3::LeveledCreature::insert);
 				usertypeDefinition.set("pickFrom", [](TES3::LeveledCreature& self) { return makeLuaObject(self.resolve()); });
+				usertypeDefinition.set("remove", &TES3::LeveledCreature::remove);
 
 				// Finish up our usertype.
 				state.set_usertype("tes3leveledCreature", usertypeDefinition);
@@ -71,7 +73,9 @@ namespace mwse {
 				usertypeDefinition.set("list", sol::readonly_property(&TES3::LeveledItem::itemList));
 
 				// Basic function binding.
+				usertypeDefinition.set("insert", &TES3::LeveledItem::insert);
 				usertypeDefinition.set("pickFrom", [](TES3::LeveledItem& self) { return makeLuaObject(self.resolve()); });
+				usertypeDefinition.set("remove", &TES3::LeveledItem::remove);
 
 				// Finish up our usertype.
 				state.set_usertype("tes3leveledItem", usertypeDefinition);
