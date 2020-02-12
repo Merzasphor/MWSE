@@ -26,6 +26,12 @@ namespace NI {
 		void * unknown_0x1D4;
 		int unknown_0x1D8;
 		float LODAdjust; // 0x1DC
+
+		//
+		// Other related this-call functions.
+		//
+
+		void click(bool something = false);
 	};
 	static_assert(sizeof(Camera) == 0x1E0, "NI::Camera failed size validation");
 }

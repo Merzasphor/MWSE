@@ -4,6 +4,9 @@
 #include <Windows.h>
 
 #include "NIDefines.h"
+#include "NIDirectionalLight.h"
+#include "NIRenderedTexture.h"
+#include "NIProperty.h"
 
 #include "TES3Defines.h"
 #include "TES3UIDefines.h"
@@ -46,28 +49,28 @@ namespace TES3 {
 	static_assert(sizeof(WorldControllerRenderCamera) == 0x2C, "TES3::WorldControllerRenderCamera failed size validation");
 
 	struct WorldControllerRenderTarget : WorldControllerRenderCamera {
-		int unknown_0x2C;
-		int unknown_0x30;
+		NI::Pointer<NI::RenderedTexture> renderedTexture; // 0x2C
+		NI::Pointer<NI::Object> unknown_0x30;
 		int unknown_0x34;
 		int unknown_0x38;
 		int unknown_0x3C;
 		int unknown_0x40;
 		int unknown_0x44;
 		int unknown_0x48;
-		int unknown_0x4C;
+		NI::Pointer<NI::ZBufferProperty> zBufferProperty; // 0x4C
 		int unknown_0x50;
 		int unknown_0x54;
-		int unknown_0x58;
+		NI::Pointer<NI::Object> unknown_0x58; // OffscreenSceneGraph::MasterPropertyAccumulator
 		int unknown_0x5C;
-		int unknown_0x60;
+		NI::Pointer<NI::DirectionalLight> directionalLight; // 0x60
 		int unknown_0x64;
-		int unknown_0x68;
+		NI::Pointer<NI::Object> unknown_0x68; // NiScreenPolygon
 		int unknown_0x6C;
 		int unknown_0x70;
 		int unknown_0x74;
 		int unknown_0x78;
-		int unknown_0x7C;
-		int unknown_0x80;
+		NI::Pointer<NI::AlphaProperty> alphaProperty; // 0x7C
+		NI::Pointer<NI::VertexColorProperty> vertexColorProperty; // 0x80
 	};
 	static_assert(sizeof(WorldControllerRenderTarget) == 0x84, "TES3::WorldControllerRenderTarget failed size validation");
 

@@ -124,6 +124,8 @@
     <ClInclude Include="NIDX8Renderer.h" />
     <ClInclude Include="NIGeometry.h" />
     <ClInclude Include="NIGeometryData.h" />
+    <ClInclude Include="NIRect.h" />
+    <ClInclude Include="NIRenderedTexture.h" />
     <ClInclude Include="NIRenderer.h" />
     <ClInclude Include="NITextureEffect.h" />
     <ClInclude Include="NITexturingProperty.h" />
@@ -513,8 +515,11 @@
     <ClCompile Include="LuaWeatherCycledEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionFinishedEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionStartedEvent.cpp" />
+    <ClCompile Include="NICamera.cpp" />
     <ClCompile Include="NIGeometry.cpp" />
     <ClCompile Include="NIGeometryData.cpp" />
+    <ClCompile Include="NIRenderedTexture.cpp" />
+    <ClCompile Include="NIRenderer.cpp" />
     <ClCompile Include="NiTriBasedGeometryData.cpp" />
     <ClCompile Include="TES3Activator.cpp" />
     <ClCompile Include="TES3MagicEffectController.cpp" />

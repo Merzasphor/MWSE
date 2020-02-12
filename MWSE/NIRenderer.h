@@ -4,16 +4,18 @@
 
 #include "NIObject.h"
 #include "NIProperty.h"
+#include "NIRect.h"
+#include "NITexture.h"
 
 #include "NIPointer.h"
 
 namespace NI {
 	struct Renderer_vTable : Object_vTable {
-		void * getDriverInfo; // 0x2C
-		void * getFlags; // 0x30
-		void * findClosestPixelFormat; // 0x34
+		char*(__thiscall* getDriverInfo)(Renderer*); // 0x2C
+		unsigned int(__thiscall* getCapabilityFlags)(Renderer*); // 0x30
+		const Texture::FormatPrefs* (__thiscall* findClosestPixelFormat)(Renderer*, Texture::FormatPrefs*); // 0x34
 		void * unknown_0x38;
-		void * setRenderTarget; // 0x3C
+		bool(__thiscall* setRenderTarget)(Renderer*, RenderedTexture*); // 0x3C
 		void * swapBuffers; // 0x40
 		void * clearBuffer; // 0x44
 		void * getLeftRightSwap; // 0x48
@@ -21,7 +23,7 @@ namespace NI {
 		void * setUseWBuffer; // 0x50
 		void * getBackBufferWidth; // 0x54
 		void * getBackBufferHeight; // 0x58
-		void * takeScreenshot; // 0x5C
+		PixelData*(__thiscall* takeScreenshot)(Renderer*, const Rect<unsigned int>*); // 0x5C
 		void * imageBlt; // 0x60
 		void * setDepthClear; // 0x64
 		void * setBackgroundColor; // 0x68
@@ -32,8 +34,8 @@ namespace NI {
 		void * PrecacheTexture; // 0x7C
 		void * purgeAllTextures; // 0x80
 		void * purgeTexture; // 0x84
-		void * getTextureMemoryStats; // 0x88
-		void * getTextureStats; // 0x8C
+		bool(__thiscall* getTextureMemoryStats)(Renderer*, unsigned int&, unsigned int&); // 0x88
+		bool(__thiscall* getTextureStats)(Renderer*, unsigned int&, unsigned int&, unsigned int&, unsigned int&, unsigned int&, unsigned int&); // 0x8C
 		void * getTextureManagerStatus; // 0x90
 		void * setMipmapSkipLevel; // 0x94
 		void * getMipmapSkipLevel; // 0x98
@@ -74,6 +76,19 @@ namespace NI {
 		Pointer<Object> currentEffect; // 0x10
 		unsigned int precacheCriticalSection; // 0x14
 		unsigned int sourceDataCriticalSection; // 0x18
+
+		//
+		// vTable accessor functions.
+		//
+
+		char* getDriverInfo();
+		unsigned int getCapabilityFlags();
+		const Texture::FormatPrefs* findClosestPixelFormat(Texture::FormatPrefs* toFormat);
+		bool setRenderTarget(RenderedTexture* texture = nullptr);
+		PixelData* takeScreenshot(const Rect<unsigned int>* bounds);
+		bool getTextureMemoryStats(unsigned int& total, unsigned int& available);
+		bool getTextureStats(unsigned int& loadedTextures, unsigned int& usedTextures, unsigned int& stateChanges, unsigned int& newTextures, unsigned int& evictedTextures, unsigned int& bytesTransferred);
+
 	};
 	static_assert(sizeof(Renderer) == 0x1C, "NI::Renderer failed size validation");
 }

@@ -1353,6 +1353,12 @@
     <ClInclude Include="LuaCalcSunDamageScalarEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="NIRenderedTexture.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="NIRect.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2923,6 +2929,15 @@
     </ClCompile>
     <ClCompile Include="TES3ReferenceList.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="NIRenderedTexture.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NIRenderer.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NICamera.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

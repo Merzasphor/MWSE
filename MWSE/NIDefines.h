@@ -24,6 +24,8 @@ namespace NI {
 	struct PixelFormat;
 	struct PointLight;
 	struct Property;
+	struct RenderedTexture;
+	struct Renderer;
 	struct RTTI;
 	struct SourceTexture;
 	struct SpotLight;
