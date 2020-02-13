@@ -222,10 +222,6 @@
 #define TES3_HOOK_LOAD_REFERENCE_RETURN (TES3_HOOK_LOAD_REFERENCE + TES3_HOOK_LOAD_REFERENCE_SIZE)
 #define TES3_HOOK_LOAD_REFERENCE_RETURN_SUCCESS 0x4DE406
 
-#define TES3_HOOK_FINISH_INITIALIZATION 0x4BBC0C
-#define TES3_HOOK_FINISH_INITIALIZATION_SIZE 0x5
-#define TES3_HOOK_FINISH_INITIALIZATION_RETURN (TES3_HOOK_FINISH_INITIALIZATION + TES3_HOOK_FINISH_INITIALIZATION_SIZE)
-
 #define TES3_HOOK_UI_EVENT 0x58371A
 #define TES3_HOOK_UI_EVENT_SIZE 0x5
 #define TES3_HOOK_UI_EVENT_RETURN (TES3_HOOK_UI_EVENT + TES3_HOOK_UI_EVENT_SIZE)
@@ -573,7 +569,10 @@ namespace mwse {
 		// Hook: Finished initializing game code.
 		//
 
-		static void _stdcall FinishInitialization() {
+		void __fastcall FinishInitialization(TES3::Iterator<void>* itt) {
+			// Call overwritten code.
+			itt->clear();
+
 			// Hook up shorthand access to data handler, world controller, and game.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state &state = stateHandle.state;
@@ -582,23 +581,6 @@ namespace mwse {
 			state["tes3"]["game"] = TES3::Game::get();
 
 			stateHandle.triggerEvent(new event::GenericEvent("initialized"));
-		}
-
-		static DWORD callbackFinishedInitialization = TES3_HOOK_FINISH_INITIALIZATION_RETURN;
-		static __declspec(naked) void HookFinishInitialization() {
-			_asm
-			{
-				// Save the registers.
-				pushad
-
-				// Actually use our hook.
-				call FinishInitialization
-
-				// Resume normal execution.
-				popad
-				mov eax, 1
-				jmp callbackFinishedInitialization
-			}
 		}
 
 		//
@@ -2722,7 +2704,8 @@ namespace mwse {
 			genCallEnforced(0x5635D6, 0x56EAE0, reinterpret_cast<DWORD>(OnPlayerRecreated));
 
 			// Event: initialized. Hook just before we return successfully from where game data is loaded.
-			genJumpUnprotected(TES3_HOOK_FINISH_INITIALIZATION, reinterpret_cast<DWORD>(HookFinishInitialization), TES3_HOOK_FINISH_INITIALIZATION_SIZE);
+			genCallEnforced(0x4BB440, 0x47E280, reinterpret_cast<DWORD>(FinishInitialization));
+			genCallEnforced(0x4BBC07, 0x47E280, reinterpret_cast<DWORD>(FinishInitialization));
 
 			// Event: enterFrame. This hook can be in a couple of locations, because of MCP.
 			genCallEnforced(0x41ABB0, 0x40F610, reinterpret_cast<DWORD>(EnterFrame));

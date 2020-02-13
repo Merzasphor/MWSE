@@ -40,14 +40,7 @@ namespace TES3 {
 		}
 	}
 
-	DWORD lastAddressFetching = NULL;
-
 	MagicEffect* MagicEffectController::getEffectObject(int id) {
-		// Get the calling address.
-		byte ** asmEBP;
-		__asm { mov asmEBP, ebp };
-		lastAddressFetching = DWORD(asmEBP[1] - 0x5);
-
 		auto itt = effectObjects.find(id);
 		if (itt == effectObjects.end()) {
 			return nullptr;
@@ -118,7 +111,7 @@ namespace TES3 {
 		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::GenericEvent("magicEffectsResolved"));
 	}
 
-	MagicEffect * _fastcall getMagicEffectData(NonDynamicData * ndd, DWORD _UNUSED_, int effectId) {
+	MagicEffect* _fastcall getMagicEffectData(NonDynamicData* ndd, DWORD _UNUSED_, int effectId) {
 		return ndd->magicEffects->getEffectObject(effectId);
 	}
 
