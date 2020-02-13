@@ -16,6 +16,7 @@ namespace mwse {
 			usertypeDefinition.set("clone", [](NI::Object& self) { return makeLuaNiPointer(self.createClone()); });
 			usertypeDefinition.set("isOfType", static_cast<bool (__thiscall NI::Object::*)(uintptr_t)>(&NI::Object::isOfType));
 			usertypeDefinition.set("isInstanceOfType", static_cast<bool (__thiscall NI::Object::*)(uintptr_t)>(&NI::Object::isInstanceOfType));
+			usertypeDefinition.set("saveBinary", &NI::Object::saveBinary);
 
 			// Functions exposed as properties.
 			usertypeDefinition.set("RTTI", sol::readonly_property([](NI::Object& self) { return self.getRunTimeTypeInformation(); }));

@@ -3,6 +3,7 @@
 #include "NIDefines.h"
 
 #include "NIRTTI.h"
+#include "NIStream.h"
 
 #include <cstring>
 
@@ -51,5 +52,11 @@ namespace NI {
 		}
 
 		return false;
+	}
+
+	bool Object::saveBinary(const char* filename) {
+		Stream stream;
+		stream.insertObject(this);
+		return stream.save(filename);
 	}
 }
