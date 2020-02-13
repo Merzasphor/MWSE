@@ -124,6 +124,9 @@
     <ClInclude Include="NIDX8Renderer.h" />
     <ClInclude Include="NIGeometry.h" />
     <ClInclude Include="NIGeometryData.h" />
+    <ClInclude Include="NIParticleModifier.h" />
+    <ClInclude Include="NIParticleSystemController.h" />
+    <ClInclude Include="NIPerParticleData.h" />
     <ClInclude Include="NIRect.h" />
     <ClInclude Include="NIRenderedTexture.h" />
     <ClInclude Include="NIRenderer.h" />
