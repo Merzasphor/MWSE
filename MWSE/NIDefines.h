@@ -5,6 +5,7 @@
 namespace NI {
 	struct AmbientLight;
 	struct AVObject;
+	struct BinaryStream;
 	struct Bound;
 	struct Camera;
 	struct Color;
