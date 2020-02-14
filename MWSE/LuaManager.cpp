@@ -132,6 +132,7 @@
 #include "NICameraLua.h"
 #include "NICollisionSwitchLua.h"
 #include "NIColorLua.h"
+#include "NIGeometryDataLua.h"
 #include "NINodeLua.h"
 #include "NIObjectLua.h"
 #include "NILightLua.h"
@@ -461,6 +462,7 @@ namespace mwse {
 			bindNICamera();
 			bindNICollisionSwitch();
 			bindNIColor();
+			bindNIGeometryData();
 			bindNINode();
 			bindNIObject();
 			bindNILight();

@@ -125,6 +125,7 @@
     <ClInclude Include="NIDX8Renderer.h" />
     <ClInclude Include="NIGeometry.h" />
     <ClInclude Include="NIGeometryData.h" />
+    <ClInclude Include="NIGeometryDataLua.h" />
     <ClInclude Include="NIParticleModifier.h" />
     <ClInclude Include="NIParticleSystemController.h" />
     <ClInclude Include="NIPerParticleData.h" />
@@ -132,7 +133,6 @@
     <ClInclude Include="NIRenderedTexture.h" />
     <ClInclude Include="NIRenderer.h" />
     <ClInclude Include="NITextureEffect.h" />
-    <ClInclude Include="NITexturingProperty.h" />
     <ClInclude Include="NiTriBasedGeometry.h" />
     <ClInclude Include="NiTriBasedGeometryData.h" />
     <ClInclude Include="NiTriShapeData.h" />
@@ -524,6 +524,7 @@
     <ClCompile Include="NICamera.cpp" />
     <ClCompile Include="NIGeometry.cpp" />
     <ClCompile Include="NIGeometryData.cpp" />
+    <ClCompile Include="NIGeometryDataLua.cpp" />
     <ClCompile Include="NIRenderedTexture.cpp" />
     <ClCompile Include="NIRenderer.cpp" />
     <ClCompile Include="NiTriBasedGeometryData.cpp" />

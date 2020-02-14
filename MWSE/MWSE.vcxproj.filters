@@ -1311,9 +1311,6 @@
     <ClInclude Include="NITextureEffect.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
-    <ClInclude Include="NITexturingProperty.h">
-      <Filter>Header Files\DataAdapters\NI</Filter>
-    </ClInclude>
     <ClInclude Include="NIGeometry.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
@@ -1373,6 +1370,9 @@
     </ClInclude>
     <ClInclude Include="TES3HashMap.h">
       <Filter>Header Files\DataAdapters\TES3\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="NIGeometryDataLua.h">
+      <Filter>Header Files\Lua\Bindings\NI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2956,6 +2956,9 @@
     </ClCompile>
     <ClCompile Include="NIBinaryStream.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NIGeometryDataLua.cpp">
+      <Filter>Source Files\Lua\Bindings\NI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
