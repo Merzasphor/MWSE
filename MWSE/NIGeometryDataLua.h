@@ -15,8 +15,8 @@ namespace mwse {
 			// Basic property binding.
 			usertypeDefinition.set("bounds", &NI::GeometryData::bounds);
 			usertypeDefinition.set("compressFlags", &NI::GeometryData::compressFlags);
-			usertypeDefinition.set("dataFlags", &NI::GeometryData::bounds);
-			usertypeDefinition.set("dirtyFlags", &NI::GeometryData::bounds);
+			usertypeDefinition.set("dataFlags", &NI::GeometryData::dataFlags);
+			usertypeDefinition.set("dirtyFlags", &NI::GeometryData::dirtyFlags);
 			usertypeDefinition.set("id", &NI::GeometryData::id);
 			usertypeDefinition.set("keepFlags", &NI::GeometryData::keepFlags);
 			usertypeDefinition.set("vertexCount", sol::readonly_property(&NI::GeometryData::getVertexCount));
