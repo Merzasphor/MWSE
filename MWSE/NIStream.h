@@ -4,7 +4,7 @@
 
 #include "NIPointer.h"
 
-#include "TES3Collections.h"
+#include "TES3HashMap.h"
 
 namespace NI {
 	struct Stream {
@@ -26,7 +26,7 @@ namespace NI {
 		int unknown_0x3C;
 		int unknown_0x40;
 		int unknown_0x44;
-		TES3::HashMap unknown_0x48;
+		TES3::HashMap<int, Object*> unknown_0x48;
 		BinaryStream* inStream; // 0x58
 		BinaryStream* outStream; // 0x5C
 		int unknown_0x60;
@@ -42,9 +42,9 @@ namespace NI {
 		int unknown_0x88;
 		int unknown_0x8C;
 		int unknown_0x90;
-		TES3::HashMap unknown_0x94;
+		TES3::HashMap<int, Object*> unknown_0x94;
 		int unknown_0xA4;
-		TES3::HashMap* unknown_0xA8;
+		TES3::HashMap<int, Object*>* unknown_0xA8;
 		int unknown_0xAC;
 
 		Stream();

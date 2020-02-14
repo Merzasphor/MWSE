@@ -4,6 +4,7 @@
 #include "TES3Defines.h"
 
 #include "TES3Collections.h"
+#include "TES3HashMap.h"
 #include "TES3MagicEffect.h"
 #include "TES3Skill.h"
 
@@ -20,8 +21,8 @@ namespace TES3 {
 	};
 
 	struct MeshData {
-		HashMap * NIFs; // 0x0
-		HashMap * KFs; // 0x4
+		HashMap<int, NI::Object*>* NIFs; // 0x0
+		HashMap<int, NI::Object*>* KFs; // 0x4
 
 		// Path is relative to Data Files.
 		NI::AVObject * loadMesh(const char* path);
@@ -67,8 +68,8 @@ namespace TES3 {
 		void * TESFiles; // 0xAE60
 		GameFile * activeMods[256]; // 0xAE64
 		StlList<Cell> * cells; // 0xB264
-		HashMap * allObjectsById; // 0xB268
-		HashMap * unknown_0xB26C;
+		HashMap<const char*, BaseObject*>* allObjectsById; // 0xB268
+		HashMap<int, void*>* unknown_0xB26C;
 		char dataFilesPath[260]; // 0xB270
 		char unknown_0xB374;
 		bool isSaving; // 0xB375

@@ -44,18 +44,6 @@ namespace TES3 {
 	static_assert(sizeof(StlList<void>) == 0x0C, "TES3::StlList failed size validation");
 
 	//
-	// HashMap
-	//
-
-	struct HashMap {
-		void * vTable; // 0x0
-		size_t count; // 0x4
-		size_t bucketCount; // 0x8
-		void * buckets; // 0xC
-	};
-	static_assert(sizeof(HashMap) == 0x10, "TES3::HashMap failed size validation");
-
-	//
 	// Iterators.
 	//
 

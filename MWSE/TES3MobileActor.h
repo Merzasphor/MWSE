@@ -7,6 +7,7 @@
 #include "TES3Armor.h"
 #include "TES3Clothing.h"
 #include "TES3CrimeController.h"
+#include "TES3HashMap.h"
 #include "TES3Inventory.h"
 #include "TES3MagicSourceInstance.h"
 #include "TES3MobileObject.h"
@@ -133,7 +134,7 @@ namespace TES3 {
 		ActiveMagicEffects activeMagicEffects; // 0x1C4
 		int unknown_0x1D0;
 		Collision collision_1D4;
-		HashMap powers;
+		HashMap<void*, void*> powers;
 		char unknown_0x224;
 		char prevAIBehaviourState;
 		char unknown_0x226;
