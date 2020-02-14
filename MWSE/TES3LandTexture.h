@@ -5,12 +5,13 @@
 
 #include "NIPointer.h"
 #include "NISourceTexture.h"
+#include "NITexturingProperty.h"
 
 namespace TES3 {
 	struct LandTexture : BaseObject {
 		struct PropertyMap {
 			LandTexture * landTexture; // 0x0
-			NI::Pointer<NI::Object> textureProperty; // 0x4
+			NI::Pointer<NI::TexturingProperty> textureProperty; // 0x4
 		};
 		char id[32]; // 0x10
 		NI::Pointer<NI::SourceTexture> texture; // 0x30 // Loaded texture.
