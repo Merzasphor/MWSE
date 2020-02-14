@@ -22,10 +22,10 @@ namespace mwse {
 			usertypeDefinition.set("vertexCount", sol::readonly_property(&NI::GeometryData::getVertexCount));
 
 			// Safe access to arrays.
-			usertypeDefinition.set("colors", [](NI::GeometryData& self) { return nonstd::span(self.color, self.getVertexCount()); });
-			usertypeDefinition.set("normals", [](NI::GeometryData& self) { return nonstd::span(self.normal, self.getVertexCount()); });
-			usertypeDefinition.set("textures", [](NI::GeometryData& self) { return nonstd::span(self.texture, self.getVertexCount()); });
-			usertypeDefinition.set("vertices", [](NI::GeometryData& self) { return nonstd::span(self.vertex, self.getVertexCount()); });
+			usertypeDefinition.set("colors", sol::readonly_property([](NI::GeometryData& self) { return nonstd::span(self.color, self.vertexCount); }));
+			usertypeDefinition.set("normals", sol::readonly_property([](NI::GeometryData& self) { return nonstd::span(self.normal, self.vertexCount); }));
+			usertypeDefinition.set("textures", sol::readonly_property([](NI::GeometryData& self) { return nonstd::span(self.texture, self.vertexCount); }));
+			usertypeDefinition.set("vertices", sol::readonly_property([](NI::GeometryData& self) { return nonstd::span(self.vertex, self.vertexCount); }));
 
 			// Basic function binding.
 			usertypeDefinition.set("markAsChanged", &NI::GeometryData::markAsChanged);
