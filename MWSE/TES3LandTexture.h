@@ -4,8 +4,8 @@
 #include "TES3Collections.h"
 
 #include "NIPointer.h"
+#include "NIProperty.h"
 #include "NISourceTexture.h"
-#include "NITexturingProperty.h"
 
 namespace TES3 {
 	struct LandTexture : BaseObject {
