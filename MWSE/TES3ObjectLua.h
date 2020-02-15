@@ -54,7 +54,7 @@ namespace mwse {
 			// Access to other objects that need to be packaged.
 			usertypeDefinition.set("nextInCollection", sol::readonly_property([](T& self) { return makeLuaObject(self.nextInCollection); }));
 			usertypeDefinition.set("previousInCollection", sol::readonly_property([](T& self) { return makeLuaObject(self.previousInCollection); }));
-			usertypeDefinition.set("sceneNode", sol::readonly_property([](T& self) { return makeLuaObject(self.sceneNode); }));
+			usertypeDefinition.set("sceneNode", sol::readonly_property([](T& self) { return makeLuaObject(self.getSceneGraphNode()); }));
 			usertypeDefinition.set("sceneCollisionRoot", sol::readonly_property([](T& self) { return makeLuaObject(self.sceneCollisionRoot); }));
 		}
 
