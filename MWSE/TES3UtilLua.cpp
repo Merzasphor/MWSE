@@ -1287,11 +1287,31 @@ namespace mwse {
 				return true;
 			};
 
-			state["tes3"]["loadMesh"] = [](const char* relativePath) -> sol::object {
+			state["tes3"]["loadMesh"] = [](const char* relativePath, sol::optional<bool> useCached) -> sol::object {
 				std::string path = "Meshes\\";
 				path += relativePath;
 
-				return makeLuaNiPointer(TES3::DataHandler::get()->nonDynamicData->meshData->loadMesh(path.c_str()));
+				if (useCached.value_or(true)) {
+					return makeLuaNiPointer(TES3::DataHandler::get()->nonDynamicData->meshData->loadMesh(path.c_str()));
+				}
+				else {
+					// Create a non-cached version by calling the constructors manually without the usual checking.
+					using NodeType = TES3::HashMap<char*, NI::Object*>::Node;
+					const auto node_ctor = reinterpret_cast<void(__thiscall*)(NodeType*, const char*)>(0x4ED6C0);
+					const auto node_dtor = reinterpret_cast<void(__thiscall*)(NodeType*)>(0x4EDB70);
+
+					auto node = new NodeType();
+					node_ctor(node, path.c_str());
+
+					auto result = makeLuaNiPointer(node->value);
+
+					node_dtor(node);
+					delete node;
+
+					return result;
+				}
+
+				return sol::nil;
 			};
 
 			state["tes3"]["playVoiceover"] = [](sol::table params) -> bool {
