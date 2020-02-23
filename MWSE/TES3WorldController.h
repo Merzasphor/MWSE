@@ -253,8 +253,8 @@ namespace TES3 {
 		WorldControllerRenderTarget characterRenderTarget; // 0x1A8
 		WorldControllerRenderTarget mapRenderTarget; // 0x22C
 		WorldControllerRenderCamera shadowCamera; // 0x2B0
-		int unknown_0x2DC;
-		void * fogOfWarController; // 0x2E0
+		void* shadowManager; // 0x2DC
+		void* fogOfWarController; // 0x2E0
 		UI::MenuController * menuController; // 0x2E4
 		InventoryData * inventoryData; // 0x2E8
 		Sound * soundWeaponSwish; // 0x2EC

@@ -227,6 +227,10 @@ namespace TES3 {
 		vTable.object->setName(this, name);
 	}
 
+	void Object::resetVisualNode(NI::Node* node) {
+		vTable.object->resetVisualNode(this, node);
+	}
+
 	float Object::getScale() {
 		return vTable.object->getScale(this);
 	}

@@ -22,6 +22,7 @@ namespace TES3 {
 			Activator = 'ITCA',
 			Alchemy = 'HCLA',
 			Ammo = 'OMMA',
+			AnimationGroup = 'GINA',
 			Apparatus = 'APPA',
 			Armor = 'OMRA',
 			Birthsign = 'NGSB',
@@ -57,9 +58,9 @@ namespace TES3 {
 			MobileProjectile = 'JRPM',
 			NPC = '_CPN',
 			NPCClone = 'CCPN',
-			Quest = 'SEUQ',
 			PathGrid = 'DRGP',
 			Probe = 'BORP',
+			Quest = 'SEUQ',
 			Race = 'ECAR',
 			Reference = 'RFER',
 			Region = 'NGER',
@@ -183,7 +184,7 @@ namespace TES3 {
 		void * unknown_0x110;
 		void * unknown_0x114;
 		void * unknown_0x118;
-		void * unknown_0x11C;
+		void(__thiscall* resetVisualNode)(BaseObject*, NI::Node*); // 0x11C
 		float (__thiscall * getScale)(BaseObject*); // 0x120
 		void (__thiscall * setScale)(BaseObject*, float, bool); // 0x124
 		void * unknown_0x128;
@@ -290,6 +291,7 @@ namespace TES3 {
 		void setAutoCalc(bool);
 		void setModelPath(const char*);
 		void setName(const char*);
+		void resetVisualNode(NI::Node* node = nullptr);
 		float getScale();
 		void setScale(float value, bool cap = false);
 

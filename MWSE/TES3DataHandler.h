@@ -26,12 +26,16 @@ namespace TES3 {
 
 		// Path is relative to Data Files.
 		NI::AVObject * loadMesh(const char* path);
+
+	template <typename OT>
+	struct ObjectMapContainer {
+		HashMap<const char*, OT*>* map;
 	};
 
 	struct NonDynamicData {
 		int activeModCount; // 0x0
 		long unknown_0x04; // always 0?
-		void * unknown_0x08; // Points to info about the last loaded save?
+		GameFile* unknown_0x08; // Points to info about the last loaded save?
 		LinkedList<Object> * list; // 0x0C
 		LinkedList<Spell> * spellsList; // 0x10
 		MeshData * meshData; // 0x14
@@ -65,11 +69,11 @@ namespace TES3 {
 		int unknown_0xAE54;
 		int unknown_0xAE58;
 		int sgWireframeProperty; // 0xAE5C
-		void * TESFiles; // 0xAE60
-		GameFile * activeMods[256]; // 0xAE64
+		void* TESFiles; // 0xAE60
+		GameFile* activeMods[256]; // 0xAE64
 		StlList<Cell> * cells; // 0xB264
-		HashMap<const char*, BaseObject*>* allObjectsById; // 0xB268
-		HashMap<int, void*>* unknown_0xB26C;
+		ObjectMapContainer<BaseObject>* allObjectsById; // 0xB268
+		ObjectMapContainer<Dialogue>* allDialoguesById; // 0xB26C
 		char dataFilesPath[260]; // 0xB270
 		char unknown_0xB374;
 		bool isSaving; // 0xB375

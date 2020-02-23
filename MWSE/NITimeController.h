@@ -14,7 +14,7 @@ namespace NI {
 		float highKeyFrame; // 0x18
 		float startTime; // 0x1C
 		float lastTime; // 0x20
-		int unknown_0x24;
+		float unknown_0x24;
 		ObjectNET * target; // 0x28
 		Pointer<TimeController> nextController; // 0x2C
 		bool unknown_0x30; // Force update? Compute scaled time?
