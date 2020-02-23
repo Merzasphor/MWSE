@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 namespace TES3 {
 	struct Matrix33;
 
@@ -25,12 +27,14 @@ namespace TES3 {
 		Vector3() : Vector2(), z(0) {}
 		Vector3(float _x, float _y, float _z) : Vector2(_x, _y), z(_z) {}
 
-		bool operator==(const Vector3& matrix) const;
-		bool operator!=(const Vector3& matrix) const;
+		bool operator==(const Vector3& vector) const;
+		bool operator!=(const Vector3& vector) const;
 		Vector3 operator+(const Vector3&) const;
 		Vector3 operator-(const Vector3&) const;
 		Vector3 operator*(const Vector3&) const;
 		Vector3 operator*(const float) const;
+
+		friend std::ostream& operator<<(std::ostream& str, const Vector3& vector);
 
 		//
 		// Associated functions.
@@ -79,6 +83,9 @@ namespace TES3 {
 		Matrix33 operator*(const Matrix33& matrix);
 		Vector3 operator*(const Vector3& vector);
 		Matrix33 operator*(float scalar);
+
+		friend std::ostream& operator<<(std::ostream& str, const Matrix33& matrix);
+
 
 		//
 		// Set the matrix to specific useful values.

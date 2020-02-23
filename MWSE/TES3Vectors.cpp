@@ -1,9 +1,9 @@
 #include "TES3Vectors.h"
 
-#define _USE_MATH_DEFINES
-#include <cmath>
-
 namespace TES3 {
+	constexpr double MATH_PI = 3.14159265358979323846;
+	constexpr double MATH_PI_2 = MATH_PI / 2;
+
 	bool Vector3::operator==(const Vector3& vec3) const {
 		return x == vec3.x && y == vec3.y && z == vec3.z;
 	}
@@ -26,6 +26,11 @@ namespace TES3 {
 
 	Vector3 Vector3::operator*(const float scalar) const {
 		return Vector3(x * scalar, y * scalar, z * scalar);
+	}
+
+	std::ostream& operator<<(std::ostream& str, const Vector3& vector) {
+		str << "(" << vector.x << "," << vector.y << "," << vector.z << ")";
+		return str;
 	}
 
 	Vector3 Vector3::crossProduct(Vector3* vec3) const {
@@ -183,6 +188,11 @@ namespace TES3 {
 		return result;
 	}
 
+	std::ostream& operator<<(std::ostream& str, const Matrix33& matrix) {
+		str << "[" << matrix.m0 << "," << matrix.m1 << "," << matrix.m2 << "]";
+		return str;
+	}
+
 	void Matrix33::toZero() {
 		m0.x = 0.0f;
 		m0.y = 0.0f;
@@ -243,14 +253,13 @@ namespace TES3 {
 		return TES3_Matrix33_toEulerXYZ(this, x, y, z);
 	}
 
-	bool Matrix33::toEulerZYX(float * x, float * y, float * z)
-	{
+	bool Matrix33::toEulerZYX(float * x, float * y, float * z) {
 		*x = 0; 
 		*y = asin(m2.x);
 		*z = 0;
 
-		if (*y < M_PI_2) {
-			if (*y > -M_PI_2) {
+		if (*y < MATH_PI_2) {
+			if (*y > -MATH_PI_2) {
 				*z = -atan2(m1.x, m0.x);
 				*x = -atan2(m2.y, m2.z);
 				return true;
