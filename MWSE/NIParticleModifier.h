@@ -1,6 +1,7 @@
 #pragma once
 
 #include "NIObject.h"
+#include "NIPointer.h"
 
 #include "TES3Vectors.h"
 

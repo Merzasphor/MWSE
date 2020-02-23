@@ -2,7 +2,6 @@
 
 #include "NITimeController.h"
 
-#include "NIParticleCollider.h"
 #include "NIParticleModifier.h"
 
 #include "TES3Cell.h"

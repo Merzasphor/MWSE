@@ -8,6 +8,8 @@
 #include "TES3MagicEffect.h"
 #include "TES3Skill.h"
 
+#include "TES3AnimationData.h"
+
 #include "NIAVObject.h"
 #include "NIPointer.h"
 
@@ -19,13 +21,22 @@ namespace TES3 {
 		Success = 0x1,
 		Block = 0x2
 	};
+	enum class BaseAnimationIndex : int {
+		Male,
+		MaleFirstPerson,
+		Female,
+		FemaleFirstPerson,
+		COUNT
+	};
 
 	struct MeshData {
-		HashMap<int, NI::Object*>* NIFs; // 0x0
-		HashMap<int, NI::Object*>* KFs; // 0x4
+		HashMap<const char*, NI::Node*>* NIFs; // 0x0
+		HashMap<const char*, KeyframeDefinition*>* KFs; // 0x4
 
 		// Path is relative to Data Files.
-		NI::AVObject * loadMesh(const char* path);
+		NI::AVObject* loadMesh(const char* path);
+		KeyframeDefinition* loadKeyFrame(const char* path, const char* animation);
+	};
 
 	template <typename OT>
 	struct ObjectMapContainer {
@@ -60,14 +71,12 @@ namespace TES3 {
 		MagicEffect magicEffects[143]; // 0x5C8
 #endif
 		void * lights; // 0x9DB8
-		int unknown_0x9DBC[600];
-		void * unknown_0xA71C[4];
-		int unknown_0xA72C[4];
-		int unknown_0xA73C[450];
-		void * unknown_0xAE44[3];
-		int unknown_0xAE50;
-		int unknown_0xAE54;
-		int unknown_0xAE58;
+		AnimationGroup* baseAnimationGroups[4][150]; // 0x9DBC
+		NI::Pointer<NI::Node> baseSkeletons[4]; // 0xA71C
+		KeyframeDefinition* baseAnimations[4]; // 0xA72C
+		AnimationGroup* baseBeastAnimationGroups[3][150]; // 0xA73C
+		NI::Pointer<NI::Node> baseBeastSkeletons[3]; // 0x0xAE44
+		KeyframeDefinition* baseBeastAnimations[3]; // 0xAE50
 		int sgWireframeProperty; // 0xAE5C
 		void* TESFiles; // 0xAE60
 		GameFile* activeMods[256]; // 0xAE64

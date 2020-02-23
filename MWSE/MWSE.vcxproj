@@ -123,9 +123,12 @@
     <ClInclude Include="NIBinaryStream.h" />
     <ClInclude Include="NIBound.h" />
     <ClInclude Include="NIDX8Renderer.h" />
+    <ClInclude Include="NIExtraData.h" />
     <ClInclude Include="NIGeometry.h" />
     <ClInclude Include="NIGeometryData.h" />
     <ClInclude Include="NIGeometryDataLua.h" />
+    <ClInclude Include="NIKeyframeController.h" />
+    <ClInclude Include="NiKeyframeManager.h" />
     <ClInclude Include="NIParticleModifier.h" />
     <ClInclude Include="NIParticleSystemController.h" />
     <ClInclude Include="NIPerParticleData.h" />
@@ -137,6 +140,7 @@
     <ClInclude Include="NiTriBasedGeometryData.h" />
     <ClInclude Include="NiTriShapeData.h" />
     <ClInclude Include="TES3Archive.h" />
+    <ClInclude Include="TES3BodyPartManager.h" />
     <ClInclude Include="TES3HashMap.h" />
     <ClInclude Include="TES3MagicEffectController.h" />
     <ClInclude Include="MemoryUtilLua.h" />

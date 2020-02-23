@@ -11,6 +11,7 @@ namespace TES3 {
 	namespace AttachmentType {
 		enum AttachmentType {
 			Animation = 0x0,
+			BodyPartManager = 0x1,
 			Light = 0x2,
 			Lock = 0x3,
 			TravelDestination = 0x5,
@@ -38,6 +39,12 @@ namespace TES3 {
 	//
 
 	typedef AttachmentWithNode<AnimationData> AnimationAttachment;
+
+	//
+	// Body Part Manager.
+	//
+
+	typedef AttachmentWithNode<BodyPartManager> BodyPartManagerAttachment;
 
 	//
 	// Lights

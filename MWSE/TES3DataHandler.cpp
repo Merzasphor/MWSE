@@ -58,6 +58,11 @@ namespace TES3 {
 		return mesh;
 	}
 
+	const auto TES3_MeshData_loadKeyFrame = reinterpret_cast<KeyframeDefinition * (__thiscall*)(MeshData*, const char*, const char*)>(0x4EE200);
+	KeyframeDefinition* MeshData::loadKeyFrame(const char* path, const char* animation) {
+		return TES3_MeshData_loadKeyFrame(this, path, animation);
+	}
+
 	//
 	// NonDynamicData
 	//

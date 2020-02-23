@@ -62,7 +62,7 @@ namespace mwse {
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Basic property binding.
-				usertypeDefinition.set("head1", &TES3::Race::BodyParts::head1);
+				usertypeDefinition.set("head1", &TES3::Race::BodyParts::head);
 				usertypeDefinition.set("hair", &TES3::Race::BodyParts::hair);
 				usertypeDefinition.set("neck", &TES3::Race::BodyParts::neck);
 				usertypeDefinition.set("chest", &TES3::Race::BodyParts::chest);
@@ -77,7 +77,7 @@ namespace mwse {
 				usertypeDefinition.set("upperLeg", &TES3::Race::BodyParts::upperLeg);
 				usertypeDefinition.set("clavicle", &TES3::Race::BodyParts::clavicle);
 				usertypeDefinition.set("tail", &TES3::Race::BodyParts::tail);
-				usertypeDefinition.set("head2", &TES3::Race::BodyParts::head2);
+				usertypeDefinition.set("head2", &TES3::Race::BodyParts::vampireHead);
 
 				// Finish up our usertype.
 				state.set_usertype("tes3raceBodyParts", usertypeDefinition);
