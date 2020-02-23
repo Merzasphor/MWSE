@@ -97,9 +97,6 @@
     <Filter Include="Header Files\DataAdapters\TES3\_Unsorted_">
       <UniqueIdentifier>{661ff29e-17e0-4fd6-bda3-599f9823c9c8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\DataAdapters\Direct3D">
-      <UniqueIdentifier>{c69f450d-0ef0-43a1-ac94-ffaeb5bf967d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\DataAdapters\TES3\Dialog">
       <UniqueIdentifier>{2b3c3dd7-acd0-41a8-8ee8-12e9c3e71ef4}</UniqueIdentifier>
     </Filter>
@@ -305,21 +302,6 @@
     </ClInclude>
     <ClInclude Include="TES3Inventory.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="D3DColorValue.h">
-      <Filter>Header Files\DataAdapters\Direct3D</Filter>
-    </ClInclude>
-    <ClInclude Include="D3DLight.h">
-      <Filter>Header Files\DataAdapters\Direct3D</Filter>
-    </ClInclude>
-    <ClInclude Include="D3DMaterial.h">
-      <Filter>Header Files\DataAdapters\Direct3D</Filter>
-    </ClInclude>
-    <ClInclude Include="D3DVector.h">
-      <Filter>Header Files\DataAdapters\Direct3D</Filter>
-    </ClInclude>
-    <ClInclude Include="D3DViewport.h">
-      <Filter>Header Files\DataAdapters\Direct3D</Filter>
     </ClInclude>
     <ClInclude Include="TES3DialogueInfo.h">
       <Filter>Header Files\DataAdapters\TES3\Dialog</Filter>
