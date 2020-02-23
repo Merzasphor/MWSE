@@ -13,6 +13,8 @@
 #include "NIAVObject.h"
 #include "NIPointer.h"
 
+#include <Windows.h>
+
 #define MWSE_CUSTOM_EFFECTS
 
 namespace TES3 {
@@ -61,7 +63,7 @@ namespace TES3 {
 		Iterator<GlobalVariable> * globals; // 0x38
 		Iterator<Dialogue> * dialogues; // 0x3C
 		Iterator<Region> * regions; // 0x40
-		Iterator<void> * birthsigns; // 0x44
+		Iterator<BaseObject> * birthsigns; // 0x44
 		Iterator<StartScript> * startScripts; // 0x48
 		Skill skills[27]; // 0x4C
 #ifdef MWSE_CUSTOM_EFFECTS
@@ -70,7 +72,7 @@ namespace TES3 {
 #else
 		MagicEffect magicEffects[143]; // 0x5C8
 #endif
-		void * lights; // 0x9DB8
+		StlList<Light>* lights; // 0x9DB8
 		AnimationGroup* baseAnimationGroups[4][150]; // 0x9DBC
 		NI::Pointer<NI::Node> baseSkeletons[4]; // 0xA71C
 		KeyframeDefinition* baseAnimations[4]; // 0xA72C
@@ -78,7 +80,7 @@ namespace TES3 {
 		NI::Pointer<NI::Node> baseBeastSkeletons[3]; // 0x0xAE44
 		KeyframeDefinition* baseBeastAnimations[3]; // 0xAE50
 		int sgWireframeProperty; // 0xAE5C
-		void* TESFiles; // 0xAE60
+		StlList<GameFile>* TESFiles; // 0xAE60
 		GameFile* activeMods[256]; // 0xAE64
 		StlList<Cell> * cells; // 0xB264
 		ObjectMapContainer<BaseObject>* allObjectsById; // 0xB268
@@ -91,15 +93,10 @@ namespace TES3 {
 		char unknown_0xB378;
 		char unknown_0xB379;
 		char unknown_0xB37A;
-		Iterator<void> * unknown_0xB37C;
+		Iterator<BaseObject>* initiallyLoadedObjects; // 0xB37C
 		NI::Pointer<NI::SourceTexture> mapTexture; // 0xB380
 		Reference * playerSaveGame; // 0xB384
-		int unknown_0xB388;
-		int unknown_0xB38C;
-		int unknown_0xB390;
-		int unknown_0xB394;
-		int unknown_0xB398;
-		int unknown_0xB39C;
+		_RTL_CRITICAL_SECTION criticalSection; // 0xB388
 		int unknown_0xB3A0;
 		int unknown_0xB3A4;
 		int unknown_0xB3A8;
