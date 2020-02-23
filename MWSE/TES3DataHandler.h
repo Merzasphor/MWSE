@@ -79,7 +79,7 @@ namespace TES3 {
 		AnimationGroup* baseBeastAnimationGroups[3][150]; // 0xA73C
 		NI::Pointer<NI::Node> baseBeastSkeletons[3]; // 0x0xAE44
 		KeyframeDefinition* baseBeastAnimations[3]; // 0xAE50
-		int sgWireframeProperty; // 0xAE5C
+		NI::Pointer<NI::Property> collisionWireframeProperty; // 0xAE5C
 		StlList<GameFile>* TESFiles; // 0xAE60
 		GameFile* activeMods[256]; // 0xAE64
 		StlList<Cell> * cells; // 0xB264
@@ -205,7 +205,7 @@ namespace TES3 {
 		Cell ** exteriorCellBuffer; // 0xB4
 		int unknown_0xB8;
 		int unknown_0xBC;
-		Iterator<void> collisionGrid[2304]; // 0xC0
+		Iterator<Reference> collisionReferenceGrid[48][48]; // 0xC0
 		int collision_0xB4C0;
 		int collision_0xB4C4;
 		int collision_0xB4C8;
@@ -225,7 +225,7 @@ namespace TES3 {
 		char unknown_0xB4E5;
 		char unknown_0xB4E6;
 		char unknown_0xB4E7;
-		void * textureManager;
+		HashMap<const char*, NI::Pointer<NI::SourceTexture>>* textures; // 0xB4E8
 		void * waterController;
 		int unknown_0xB4F0;
 		int unknown_0xB4F4;
@@ -262,8 +262,8 @@ namespace TES3 {
 		char unknown_0xB531;
 		char unknown_0xB532;
 		char unknown_0xB533;
-		void * criticalSectionAudioEvents; // 0xB534
-		void * criticalSection; // 0xB538
+		_RTL_CRITICAL_SECTION* criticalSectionAudioEvents; // 0xB534
+		_RTL_CRITICAL_SECTION* criticalSection; // 0xB538
 		bool useCellTransitionFader;
 		char unknown_0xB53D;
 		char unknown_0xB53E;
