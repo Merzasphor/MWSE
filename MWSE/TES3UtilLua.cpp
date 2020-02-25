@@ -2667,6 +2667,7 @@ namespace mwse {
 				// Were we given an ItemData? If so, we only need to transfer one item.
 				if (itemData) {
 					if ((maxCapacity == -1.0f || currentWeight + itemWeight <= maxCapacity) && fromActor->inventory.containsItem(item, itemData)) {
+						fromActor->unequipItem(item, false, fromMobile, false, itemData);
 						toActor->inventory.addItem(toMobile, item, 1, false, &itemData);
 						fromActor->inventory.removeItemWithData(fromMobile, item, itemData, 1, false);
 
@@ -2714,6 +2715,7 @@ namespace mwse {
 						if (fromStack->variables) {
 							while (itemsLeftToTransfer > 0) {
 								auto itemData = fromStack->variables->storage[0];
+								fromActor->unequipItem(item, false, fromMobile, false, itemData);
 								toActor->inventory.addItem(toMobile, item, 1, false, &fromStack->variables->storage[0]);
 								fromActor->inventory.removeItemWithData(fromMobile, item, itemData, 1, false);
 
