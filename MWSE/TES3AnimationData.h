@@ -171,6 +171,7 @@ namespace TES3 {
 		//
 
 		void playAnimationGroupForIndex(int animationGroup, int triIndex, int startFlag = 0, int loopCount = -1);
+		void setHeadNode(NI::Node* head);
 
 		//
 		// Custom functions.

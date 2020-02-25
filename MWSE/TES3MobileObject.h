@@ -196,7 +196,7 @@ namespace TES3 {
 		Vector3 velocity; // 0x3C
 		Vector3 impulseVelocity; // 0x48
 		Vector3 position; // 0x54
-		void * collisionGroup;
+		void * collisionGroup; // 0x60
 		float thisFrameDistanceMoved;
 		Vector3 thisFrameDeltaPosition;
 		float unknown_0x74;

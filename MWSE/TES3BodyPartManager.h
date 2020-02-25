@@ -37,7 +37,7 @@ namespace TES3 {
 				COUNT,
 			};
 			NI::Pointer<NI::Node> node; // 0x0
-			int unknown_0x4;
+			unsigned int flags; // 0x4
 			Vector3 translation; // 0x8
 			Matrix33 rotation; // 0x14
 		};
@@ -78,16 +78,32 @@ namespace TES3 {
 				Tail,
 				COUNT,
 			};
-			int unknown_0x0;
-			Item* item; // 0x4
-			BodyPart* bodyPart; // 0x8
-			NI::Pointer<NI::Node> node; // 0xC
+			Item* item; // 0x0
+			BodyPart* bodyPart; // 0x4
+			NI::Pointer<NI::Node> node; // 0x8
+			unsigned int flags; // 0xC
 		};
 		AttachNode attachNodes[25]; // 0x0
-		ActiveBodyPart activeBodyParts[3][27]; // 0x578
-		int unknown_0xA88;
-		int unknown_0xA8C;
+		int unknown_0x578;
+		ActiveBodyPart activeBodyParts[3][27]; // 0x57C
+		float animationPhase; // 0xA8C
 		Reference* reference; // 0xA90
+
+		//
+		// Related this-call functions.
+		//
+
+		ActiveBodyPart* getActiveBodyPartForItem(Item* item);
+		NI::Node* getActiveBodyPartNode(ActiveBodyPart::Layer layer, ActiveBodyPart::Index index);
+
+		void setActivePartData(ActiveBodyPart::Layer layer, ActiveBodyPart::Index index, bool overwriteData = true, NI::Node* node = nullptr);
+		void setBodyPartForItem(Item* item, ActiveBodyPart::Index index, BodyPart* bodyPart, bool isFirstPerson = false);
+		void setBodyPartByIdForItem(Item* item, ActiveBodyPart::Index index, const char* bodyPartId, bool isFirstPerson = false);
+
+		void removeEquippedLayers();
+
+		void updateForReference(Reference* reference);
+
 	};
 	static_assert(sizeof(BodyPartManager) == 0xA94, "TES3::BodyPartManager failed size validation");
 	static_assert(sizeof(BodyPartManager::AttachNode) == 0x38, "TES3::BodyPartManager::AttachNode failed size validation");

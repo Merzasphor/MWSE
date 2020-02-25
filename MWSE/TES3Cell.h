@@ -34,6 +34,32 @@ namespace TES3 {
 	};
 	static_assert(sizeof(MapNote) == 0x10, "TES3::MapNote failed size validation");
 
+	struct PathGrid : BaseObject {
+		struct Node {
+			int unknown_0x0;
+			int unknown_0x4;
+			int unknown_0x8;
+			Iterator<void>* connectedNodes; // 0xC
+			PathGrid* parentGrid; // 0x10
+			int unknown_0x14;
+			NI::Pointer<NI::Node> debugNode; // 0x18
+		};
+
+		NI::Pointer<NI::Node> sceneNode; // 0x10
+		char unknown_0x14;
+		char unknown_0x15;
+		char unknown_0x16;
+		char unknown_0x17;
+		Cell* parentCell; // 0x18
+		short unknown_0x1C;
+		short unknown_0x1E;
+		Iterator<Node> nodes; // 0x20
+		unsigned int fileOffset; // 0x34
+		char unknown_0x38;
+	};
+	static_assert(sizeof(PathGrid) == 0x3C, "TES3::PathGrid failed size validation");
+	static_assert(sizeof(PathGrid::Node) == 0x1C, "TES3::PathGrid::Node failed size validation");
+
 	struct Cell : BaseObject {
 		struct MovedRef {
 			struct Coordinates {
