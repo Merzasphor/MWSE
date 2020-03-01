@@ -92,6 +92,9 @@ namespace TES3 {
 		LightAttachmentNode* getAttachedDynamicLight();
 		LightAttachmentNode* getOrCreateAttachedDynamicLight(NI::PointLight *, float);
 
+		void setDynamicLighting();
+		void updateLighting();
+
 		bool getEmptyInventoryFlag();
 		void setEmptyInventoryFlag(bool);
 

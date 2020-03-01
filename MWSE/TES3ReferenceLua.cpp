@@ -125,6 +125,8 @@ namespace mwse {
 			usertypeDefinition.set("enable", &TES3::Reference::enable);
 			usertypeDefinition.set("getAttachedDynamicLight", &TES3::Reference::getAttachedDynamicLight);
 			usertypeDefinition.set("getOrCreateAttachedDynamicLight", &TES3::Reference::getOrCreateAttachedDynamicLight);
+			usertypeDefinition.set("setDynamicLighting", &TES3::Reference::setDynamicLighting);
+			usertypeDefinition.set("updateLighting", &TES3::Reference::updateLighting);
 			usertypeDefinition.set("setActionFlag", &TES3::Reference::setActionFlag);
 			usertypeDefinition.set("testActionFlag", &TES3::Reference::testActionFlag);
 			usertypeDefinition.set("updateEquipment", &TES3::Reference::updateBipedParts);
