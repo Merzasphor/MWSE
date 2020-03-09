@@ -2667,7 +2667,7 @@ namespace mwse {
 				// Were we given an ItemData? If so, we only need to transfer one item.
 				if (itemData) {
 					if ((maxCapacity == -1.0f || currentWeight + itemWeight <= maxCapacity) && fromActor->inventory.containsItem(item, itemData)) {
-						fromActor->unequipItem(item, false, fromMobile, false, itemData);
+						fromActor->unequipItem(item, true, fromMobile, false, itemData);
 						toActor->inventory.addItem(toMobile, item, 1, false, &itemData);
 						fromActor->inventory.removeItemWithData(fromMobile, item, itemData, 1, false);
 
@@ -2712,20 +2712,35 @@ namespace mwse {
 						}
 
 						// Then transfer over items with data.
-						if (fromStack->variables) {
-							while (itemsLeftToTransfer > 0) {
-								auto itemData = fromStack->variables->storage[0];
-								fromActor->unequipItem(item, false, fromMobile, false, itemData);
-								toActor->inventory.addItem(toMobile, item, 1, false, &fromStack->variables->storage[0]);
-								fromActor->inventory.removeItemWithData(fromMobile, item, itemData, 1, false);
+						while (itemsLeftToTransfer > 0) {
+							TES3::ItemData** itemDataRef = nullptr;
 
-								if (!fromIsContainer) {
-									fromActor->unequipItem(item, true, fromMobile, false, itemData);
+							if (fromStack->variables) {
+								// We need to unequip the item first.
+								auto removedEquipStack = fromActor->unequipItem(item, false, fromMobile, false, fromStack->variables->storage[0]);
+								if (removedEquipStack == nullptr) {
+									// If nothing was returned then the item wasn't equipped. So transfer using the first data.
+									itemDataRef = &fromStack->variables->storage[0];
 								}
+								else {
+									// Item was unequipped, but remains the first item? Preserve the item data.
+									if (fromStack->variables && fromStack->variables->storage[0] == removedEquipStack->variables) {
+										itemDataRef = &fromStack->variables->storage[0];
+									}
 
-								fulfilledCount++;
-								itemsLeftToTransfer--;
+									// Clean up after our check and manually delete.
+									removedEquipStack->object = nullptr;
+									removedEquipStack->variables = nullptr;
+									mwse::tes3::_delete(removedEquipStack);
+									removedEquipStack = nullptr;
+								}
 							}
+
+							toActor->inventory.addItem(toMobile, item, 1, false, itemDataRef);
+							fromActor->inventory.removeItemWithData(fromMobile, item, itemDataRef ? *itemDataRef : nullptr, 1, false);
+
+							fulfilledCount++;
+							itemsLeftToTransfer--;
 						}
 					}
 				}
