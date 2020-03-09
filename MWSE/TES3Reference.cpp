@@ -174,6 +174,19 @@ namespace TES3 {
 		return attachment->data;
 	}
 
+	void Reference::setDynamicLighting() {
+		auto dataHandler = TES3::DataHandler::get();
+
+		dataHandler->setDynamicLightingForReference(this);
+	}
+
+	void Reference::updateLighting() {
+		auto dataHandler = TES3::DataHandler::get();
+
+		// Ensure the reference receives scene lighting.
+		dataHandler->updateLightingForReference(this);
+	}
+
 	const auto TES3_Reference_updateBipedParts = reinterpret_cast<bool (__thiscall*)(Reference*)>(0x4E8B50);
 	bool Reference::updateBipedParts() {
 		bool result = TES3_Reference_updateBipedParts(this);
