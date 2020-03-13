@@ -9,6 +9,7 @@
 #include "NINode.h"
 #include "NIPointLight.h"
 
+#include "TES3BodyPartManager.h"
 #include "TES3Cell.h"
 #include "TES3DataHandler.h"
 #include "TES3ItemData.h"
@@ -41,6 +42,9 @@ namespace TES3 {
 				break;
 			case AttachmentType::ActorData:
 				result["actor"] = mwse::lua::makeLuaObject(reinterpret_cast<MobileActorAttachment*>(attachment)->data);
+				break;
+			case AttachmentType::BodyPartManager:
+				result["bodyPartManager"] = reinterpret_cast<BodyPartManagerAttachment*>(attachment)->data;
 				break;
 			}
 
@@ -150,6 +154,15 @@ namespace mwse {
 			});
 
 			// Quick access to attachment data.
+			usertypeDefinition.set("bodyPartManager", sol::property(
+				[](TES3::Reference& self) -> TES3::BodyPartManager* {
+					auto attachment = self.getAttachment(TES3::AttachmentType::BodyPartManager);
+					if (attachment) {
+						return reinterpret_cast<TES3::BodyPartManagerAttachment*>(attachment)->data;
+					}
+					return nullptr;
+				}
+			));
 			usertypeDefinition.set("itemData", sol::property(
 				[](TES3::Reference& self)
 				{
