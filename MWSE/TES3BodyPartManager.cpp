@@ -1,6 +1,18 @@
 #include "TES3BodyPartManager.h"
 
+#include "LuaManager.h"
+#include "sol.hpp"
+
+#include "LuaBodyPartAssignedEvent.h"
+
 namespace TES3 {
+	const auto TES3_BodyPartManager_ctor = reinterpret_cast<BodyPartManager* (__thiscall*)(BodyPartManager*, NI::Node*, Reference*)>(0x472580);
+	BodyPartManager* BodyPartManager::ctor(NI::Node* parentNode, Reference* ref) {
+		TES3_BodyPartManager_ctor(this, parentNode, ref);
+		reference = ref;
+		return this;
+	}
+
 	const auto TES3_BodyPartManager_getActiveBodyPartForItem = reinterpret_cast<BodyPartManager::ActiveBodyPart * (__thiscall*)(BodyPartManager*, Item*)>(0x472DA0);
 	BodyPartManager::ActiveBodyPart* BodyPartManager::getActiveBodyPartForItem(Item* item) {
 		return TES3_BodyPartManager_getActiveBodyPartForItem(this, item);
@@ -18,6 +30,17 @@ namespace TES3 {
 
 	const auto TES3_BodyPartManager_setBodyPartForItem = reinterpret_cast<void(__thiscall*)(BodyPartManager*, Item*, BodyPartManager::ActiveBodyPart::Index, BodyPart*, int)>(0x473CB0);
 	void BodyPartManager::setBodyPartForItem(Item* item, ActiveBodyPart::Index index, BodyPart* bodyPart, bool isFirstPerson) {
+		if (mwse::lua::event::BodyPartAssignedEvent::getEventEnabled()) {
+			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::BodyPartAssignedEvent(this, reference, item, index, bodyPart, isFirstPerson));
+			if (eventData.valid()) {
+				bodyPart = eventData.get_or("bodyPart", bodyPart);
+				if (eventData.get_or("block", false)) {
+					return;
+				}
+			}
+		}
+
 		TES3_BodyPartManager_setBodyPartForItem(this, item, index, bodyPart, isFirstPerson);
 	}
 
@@ -34,5 +57,9 @@ namespace TES3 {
 	const auto TES3_BodyPartManager_updateForReference = reinterpret_cast<void(__thiscall*)(BodyPartManager*, Reference*)>(0x473EA0);
 	void BodyPartManager::updateForReference(Reference* reference) {
 		TES3_BodyPartManager_updateForReference(this, reference);
+	}
+
+	BodyPartManager::ActiveBodyPart* BodyPartManager::getActiveBodyPart(ActiveBodyPart::Layer layer, ActiveBodyPart::Index index) {
+		return &activeBodyParts[int(layer)][int(index)];
 	}
 }

@@ -20,6 +20,7 @@
 #include "TES3ActorAnimationData.h"
 #include "TES3Alchemy.h"
 #include "TES3Book.h"
+#include "TES3BodyPartManager.h"
 #include "TES3CombatSession.h"
 #include "TES3Container.h"
 #include "TES3Creature.h"
@@ -3616,11 +3617,11 @@ namespace mwse {
 
 			// Allow overriding of guard status.
 			auto npcBaseIsGuard = &TES3::NPCBase::isGuard;
-			overrideVirtualTableEnforced(0x0749DE8, offsetof(TES3::ActorVirtualTable, isGuard), 0x04DA5E0, *reinterpret_cast<DWORD*>(&npcBaseIsGuard));
+			overrideVirtualTableEnforced(0x749DE8, offsetof(TES3::ActorVirtualTable, isGuard), 0x04DA5E0, *reinterpret_cast<DWORD*>(&npcBaseIsGuard));
 
 			// Allow overriding of sun damage calculation.
 			auto weatherControllerCalcSunDamageScalar = &TES3::WeatherController::calcSunDamageScalar;
-			genCallEnforced(0x0464C1C, 0x0440630, *reinterpret_cast<DWORD*>(&weatherControllerCalcSunDamageScalar));
+			genCallEnforced(0x0464C1C, 0x440630, *reinterpret_cast<DWORD*>(&weatherControllerCalcSunDamageScalar));
 
 			// Allow defining certain objects as sourceless.
 			auto isSourcelessObject = &TES3::BaseObject::isSourcelessObject;
@@ -3629,6 +3630,22 @@ namespace mwse {
 			genCallEnforced(0x4C0C1C, 0x4C1980, *reinterpret_cast<DWORD*>(&isSourcelessObject));
 			genCallEnforced(0x4C0DC8, 0x4C1980, *reinterpret_cast<DWORD*>(&isSourcelessObject));
 			genCallEnforced(0x4C7715, 0x4C1980, *reinterpret_cast<DWORD*>(&isSourcelessObject));
+
+			// Allow overriding body part assignment.
+			auto bodyPartManagerSetBodyPartForItem = &TES3::BodyPartManager::setBodyPartForItem;
+			genCallEnforced(0x4730DD, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
+			genCallEnforced(0x473CA6, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
+			genCallEnforced(0x4A12D0, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
+			genCallEnforced(0x4A3B8E, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
+			genCallEnforced(0x4D9F7C, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
+			genCallEnforced(0x4D9FBC, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
+
+			// Fix BPM constructor to always have a reference. 
+			auto bodyPartManagerConstructor = &TES3::BodyPartManager::ctor;
+			genCallEnforced(0x4D8235, 0x472580, *reinterpret_cast<DWORD*>(&bodyPartManagerConstructor));
+			genCallEnforced(0x4D8248, 0x472580, *reinterpret_cast<DWORD*>(&bodyPartManagerConstructor));
+			genCallEnforced(0x4DA1B0, 0x472580, *reinterpret_cast<DWORD*>(&bodyPartManagerConstructor));
+			genCallEnforced(0x4DA1C3, 0x472580, *reinterpret_cast<DWORD*>(&bodyPartManagerConstructor));
 
 			// UI framework hooks
 			TES3::UI::hook();

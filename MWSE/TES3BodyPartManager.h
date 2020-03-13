@@ -93,6 +93,8 @@ namespace TES3 {
 		// Related this-call functions.
 		//
 
+		BodyPartManager* ctor(NI::Node* parentNode, Reference* reference);
+
 		ActiveBodyPart* getActiveBodyPartForItem(Item* item);
 		NI::Node* getActiveBodyPartNode(ActiveBodyPart::Layer layer, ActiveBodyPart::Index index);
 
@@ -103,6 +105,12 @@ namespace TES3 {
 		void removeEquippedLayers();
 
 		void updateForReference(Reference* reference);
+
+		//
+		// Custom functions.
+		//
+
+		ActiveBodyPart* getActiveBodyPart(ActiveBodyPart::Layer layer, ActiveBodyPart::Index index);
 
 	};
 	static_assert(sizeof(BodyPartManager) == 0xA94, "TES3::BodyPartManager failed size validation");
