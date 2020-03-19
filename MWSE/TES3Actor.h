@@ -79,6 +79,9 @@ namespace TES3 {
 
 		bool tradesItemType(ObjectType::ObjectType type);
 
+		int getBloodType();
+		void setBloodType(int value);
+
 	};
 	static_assert(sizeof(Actor) == 0x6C, "TES3::Actor failed size validation");
 }

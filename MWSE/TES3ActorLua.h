@@ -16,6 +16,7 @@ namespace mwse {
 
 			// Functions exposed as properties.
 			usertypeDefinition.set("barterGold", sol::property(&TES3::Actor::getBaseBarterGold, &TES3::Actor::setBaseBarterGold));
+			usertypeDefinition.set("blood", sol::property(&TES3::Actor::getBloodType, &TES3::Actor::setBloodType));
 
 			// Basic function binding.
 			usertypeDefinition.set("tradesItemType", &TES3::Actor::tradesItemType);

@@ -168,4 +168,18 @@ namespace TES3 {
 
 		return false;
 	}
+
+	int Actor::getBloodType() {
+		return (actorFlags >> 0xA) & 0x7;
+	}
+
+	void Actor::setBloodType(int value) {
+		if (value < 0 || value > 7) {
+			throw std::invalid_argument("Type must be between 0 and 7.");
+		}
+
+		// Clear blood flags.
+		actorFlags &= ~0x1C00;
+		actorFlags |= (value << 0xA);
+	}
 }
