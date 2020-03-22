@@ -2621,6 +2621,21 @@ namespace mwse {
 			crimeEvent->dtor();
 		}
 
+		// Write errors to mwse.log as well.WINBASEAPI
+		BOOL WINAPI WriteToWarningsFile(HANDLE hFile, LPCVOID lpBuffer, DWORD nNumberOfBytesToWrite, LPDWORD lpNumberOfBytesWritten, LPOVERLAPPED lpOverlapped) {
+			// Overwritten code.
+			auto result = WriteFile(hFile, lpBuffer, nNumberOfBytesToWrite, lpNumberOfBytesWritten, lpOverlapped);
+
+			// Also log to mwse.log with stack trace.
+			if (LuaManager::getInstance().getReadOnlyStateView().stack_top() != 0) {
+				auto trimmedWarning = string::trim_copy((const char*)lpBuffer);
+				log::getLog() << "Morrowind has raised a warning with a lua stack trace: " << trimmedWarning << std::endl;
+				logStackTrace();
+			}
+
+			return result;
+		}
+
 		//
 		//
 		//
@@ -2669,6 +2684,10 @@ namespace mwse {
 
 		ThreadedStateHandle LuaManager::getThreadSafeStateHandle() {
 			return ThreadedStateHandle(this);
+		}
+
+		const sol::state_view& LuaManager::getReadOnlyStateView() {
+			return luaState;
 		}
 
 		// Override for how os.exit works to clear up a few system things.
@@ -3646,6 +3665,10 @@ namespace mwse {
 			genCallEnforced(0x4D8248, 0x472580, *reinterpret_cast<DWORD*>(&bodyPartManagerConstructor));
 			genCallEnforced(0x4DA1B0, 0x472580, *reinterpret_cast<DWORD*>(&bodyPartManagerConstructor));
 			genCallEnforced(0x4DA1C3, 0x472580, *reinterpret_cast<DWORD*>(&bodyPartManagerConstructor));
+
+			// Create lua tracebacks when a warning is created.
+			genCallUnprotected(0x4774D1, reinterpret_cast<DWORD>(WriteToWarningsFile), 0x6);
+			genCallUnprotected(0x476EA7, reinterpret_cast<DWORD>(WriteToWarningsFile), 0x6);
 
 			// UI framework hooks
 			TES3::UI::hook();
