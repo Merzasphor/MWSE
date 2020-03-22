@@ -170,6 +170,23 @@ namespace TES3 {
 	};
 	static_assert(sizeof(JournalHTML) == 0xC, "TES3::JournalHTML failed size validation");
 
+	struct SplashController {
+		struct ActiveSplash {
+			NI::Pointer<NI::Node> node; // 0x0
+			float age; // 0x4
+			float maxAge; // 0x8
+		};
+		int bloodMeshCount; // 0x0
+		int bloodTextureCount; // 0x4
+		NI::Pointer<NI::Node> bloodMeshes[4]; // 0x8
+		float bloodSplashDurations[6]; // 0x18 // ActiveSplash::maxAge for the used mesh index offset by 1. First and last entries seem unused garbage...
+		NI::Pointer<NI::SourceTexture> bloodTextures[8]; // 0x30
+		NI::Pointer<NI::TexturingProperty> bloodTextureProperties[8]; // 0x50
+		Iterator<ActiveSplash>* activeSplashes; // 0x70
+	};
+	static_assert(sizeof(SplashController) == 0x74, "TES3::SplashController failed size validation");
+	static_assert(sizeof(SplashController::ActiveSplash) == 0xC, "TES3::SplashController::ActiveSplash failed size validation");
+
 	struct WorldController {
 		int unknown_0x0;
 		int unknown_0x4;
@@ -195,7 +212,7 @@ namespace TES3 {
 		MobController * mobController; // 0x5C
 		KillCounter * playerKills; // 0x60
 		JournalHTML* journalHTML; // 0x64
-		void * splashController; // 0x68
+		SplashController* splashController; // 0x68
 		Iterator<Quest> * journalController; // 0x6C
 		SpellInstanceController * spellInstanceController; // 0x70
 		int unknown_0x74;
