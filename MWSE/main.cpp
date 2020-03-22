@@ -31,6 +31,7 @@
 #include "CodePatchUtil.h"
 #include "PatchUtil.h"
 #include "MWSEDefs.h"
+#include "BuildDate.h"
 
 #include "LuaManager.h"
 #include "TES3Game.h"
