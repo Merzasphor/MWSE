@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 
 namespace MWSE
 {
@@ -20,6 +21,16 @@ namespace MWSE
     /// </summary>
     class AutoUpdater
     {
+        /// <summary>
+        /// Where we download the file from.
+        /// </summary>
+        static string DownloadURL = "https://github.com/MWSE/MWSE/releases/download/build-automatic/mwse.zip";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        static string GitHubVersionInfoURL = "https://api.github.com/repos/MWSE/MWSE/releases/tags/build-automatic";
+
         /// <summary>
         /// Determines if Morrowind is currently running in the background.
         /// </summary>
@@ -37,6 +48,33 @@ namespace MWSE
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Fetches a remote URL json's content, and attempts to interpret it as a C# object.
+        /// </summary>
+        /// <typeparam name="T">The object to attempt to convert to.</typeparam>
+        /// <param name="url">The URL to fetch the json from.</param>
+        /// <returns></returns>
+        private static T DownloadSerializedJsonData<T>(string url) where T : new()
+        {
+            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+            request.Method = "GET";
+            request.Proxy = null;
+            request.PreAuthenticate = true;
+            request.UserAgent = "MWSE-Updater";
+
+            var json = string.Empty;
+            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+            {
+                using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                {
+                    json = reader.ReadToEnd();
+                }
+
+            }
+
+            return !string.IsNullOrEmpty(json) ? JsonConvert.DeserializeObject<T>(json) : new T();
         }
 
         /// <summary>
@@ -116,8 +154,19 @@ namespace MWSE
                     Console.WriteLine("Installed version: {0}", currentVersion);
                 }
 
+                // Download information from GitHub.
+                var releaseInfo = DownloadSerializedJsonData<GitHubRelease>(GitHubVersionInfoURL);
+                if (releaseInfo == null)
+                {
+                    Console.WriteLine("ERROR: Could not fetch remote version information!");
+#if _DEBUG
+                    Console.ReadKey();
+#endif
+                    return 2;
+                }
+
                 // Check the latest dev version.
-                String latestVersion = webClient.DownloadString("https://nullcascade.com/mwse/version_dev").Trim();
+                String latestVersion = releaseInfo.target_commitish;
                 if (String.IsNullOrEmpty(latestVersion))
                 {
                     Console.WriteLine("ERROR: Could not determine version string!");
@@ -148,7 +197,7 @@ namespace MWSE
 
                 // Download the update.
                 Console.Write("Downloading update ...");
-                webClient.DownloadFile("https://nullcascade.com/mwse/mwse-dev.zip", "mwse-update.zip");
+                webClient.DownloadFile(DownloadURL, "mwse-update.zip");
                 Console.WriteLine(" Done.");
 
                 // Delete pre-restructure files. TODO: Remove this before stable release.
