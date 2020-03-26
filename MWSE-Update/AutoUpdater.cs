@@ -13,9 +13,9 @@ namespace MWSE
 {
     /// <summary>
     /// The main auto updater program. The program will do the following:
-    /// 1) Reads a text file at https://nullcascade.com/mwse/version_dev
-    /// 2) Compares its version information to the local mwse-version.txt file.
-    /// 3) If the version doesn't match, it downloads the file from https://nullcascade.com/mwse/mwse-dev.zip
+    /// 1) Reads the GitHub API to find the commit hash for the latest release.
+    /// 2) Compares its information to the local mwse-version.txt file.
+    /// 3) If the version doesn't match, it downloads the file from https://github.com/MWSE/MWSE/releases/download/build-automatic/mwse.zip
     /// 4) Extracts the contents and cleans up after itself.
     /// 5) Saves the new version as mwse-version.txt.
     /// </summary>
@@ -25,10 +25,6 @@ namespace MWSE
         /// Where we download the file from.
         /// </summary>
         static string DownloadURL = "https://github.com/MWSE/MWSE/releases/download/build-automatic/mwse.zip";
-
-        /// <summary>
-        /// 
-        /// </summary>
         static string GitHubVersionInfoURL = "https://api.github.com/repos/MWSE/MWSE/releases/tags/build-automatic";
 
         /// <summary>
@@ -186,9 +182,11 @@ namespace MWSE
                     if (startAfter)
                     {
                         Console.WriteLine("Starting Morrowind.");
-                        ProcessStartInfo startInfo = new ProcessStartInfo();
-                        startInfo.WorkingDirectory = installLocation;
-                        startInfo.FileName = "Morrowind.exe";
+                        ProcessStartInfo startInfo = new ProcessStartInfo
+                        {
+                            WorkingDirectory = installLocation,
+                            FileName = "Morrowind.exe"
+                        };
                         Process.Start(startInfo);
                     }
 
@@ -200,7 +198,7 @@ namespace MWSE
                 webClient.DownloadFile(DownloadURL, "mwse-update.zip");
                 Console.WriteLine(" Done.");
 
-                // Delete pre-restructure files. TODO: Remove this before stable release.
+                // Delete pre-restructure files.
                 Console.Write("Deleting old files ...");
                 if (Directory.Exists("Data Files\\MWSE\\lua\\mwse"))
                 {
@@ -278,9 +276,11 @@ namespace MWSE
                 if (startAfter)
                 {
                     Console.WriteLine("Starting Morrowind.");
-                    ProcessStartInfo startInfo = new ProcessStartInfo();
-                    startInfo.WorkingDirectory = installLocation;
-                    startInfo.FileName = "Morrowind.exe";
+                    ProcessStartInfo startInfo = new ProcessStartInfo
+                    {
+                        WorkingDirectory = installLocation,
+                        FileName = "Morrowind.exe"
+                    };
                     Process.Start(startInfo);
                 }
             }
