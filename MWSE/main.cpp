@@ -36,6 +36,8 @@
 #include "LuaManager.h"
 #include "TES3Game.h"
 
+#include <unordered_set>
+
 TES3MACHINE* mge_virtual_machine = NULL;
 
 struct VersionStruct {
@@ -120,12 +122,18 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 			mwse::log::getLog() << "Found MGE XE. Version: " << (int)mgeVersion.major << "." << (int)mgeVersion.minor << "." << (int)mgeVersion.patch << "." << (int)mgeVersion.build << std::endl;
 		}
 
-		// Look to see if an update to the MWSE Updater was downloaded. If so, swap the exes.
-		if (std::filesystem::exists("MWSE-Update.tmp")) {
-			if (std::filesystem::exists("MWSE-Update.exe")) {
-				std::filesystem::remove("MWSE-Update.exe");
+		// Look to see if an update to the MWSE Updater was downloaded. If so, swap the temp files.
+		std::unordered_set<std::string> updaterTempFiles;
+		updaterTempFiles.insert("MWSE-Update.exe");
+		updaterTempFiles.insert("Newtonsoft.Json.dll");
+		for (const std::string& destFile : updaterTempFiles) {
+			const std::string tempFile = destFile + ".tmp";
+			if (std::filesystem::exists(tempFile)) {
+				if (std::filesystem::exists(destFile)) {
+					std::filesystem::remove(destFile);
+				}
+				std::filesystem::rename(tempFile, destFile);
 			}
-			std::filesystem::rename("MWSE-Update.tmp", "MWSE-Update.exe");
 		}
 
 		// Delete any old crash dumps.

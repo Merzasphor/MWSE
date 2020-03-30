@@ -238,14 +238,15 @@ namespace MWSE
 
                 // Extract its contents. We can't just use ZipFile.ExtractToDirectory because it won't overwrite files.
                 Console.Write("Extracting update ...");
+                HashSet<string> tempFiles = new HashSet<string> { "MWSE-Update.exe", "Newtonsoft.Json.dll" };
                 using (ZipArchive archive = ZipFile.Open("mwse-update.zip", ZipArchiveMode.Read))
                 {
                     foreach (ZipArchiveEntry file in archive.Entries)
                     {
                         string completeFileName = Path.Combine(installLocation, file.FullName);
-                        if (file.Name == "MWSE-Update.exe")
+                        if (tempFiles.Contains(file.Name))
                         {
-                            completeFileName = Path.Combine(installLocation, "MWSE-Update.tmp");
+                            completeFileName = Path.Combine(installLocation, file.Name + ".tmp");
                         }
 
                         if (file.Name == "")
