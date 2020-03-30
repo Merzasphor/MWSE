@@ -3783,8 +3783,6 @@ namespace mwse {
 			tes3["unhammerKey"] = unhammerKey;
 			tes3["unlock"] = unlock;
 			tes3["updateJournal"] = updateJournal;
-				}
-			};
 		}
 	}
 }
