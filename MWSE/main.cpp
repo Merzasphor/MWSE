@@ -122,6 +122,14 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 			mwse::log::getLog() << "Found MGE XE. Version: " << (int)mgeVersion.major << "." << (int)mgeVersion.minor << "." << (int)mgeVersion.patch << "." << (int)mgeVersion.build << std::endl;
 		}
 
+		// Legacy support for old updater exe swap method.
+		if (std::filesystem::exists("MWSE-Update.tmp")) {
+			if (std::filesystem::exists("MWSE-Update.exe")) {
+				std::filesystem::remove("MWSE-Update.exe");
+			}
+			std::filesystem::rename("MWSE-Update.tmp", "MWSE-Update.exe");
+		}
+		
 		// Look to see if an update to the MWSE Updater was downloaded. If so, swap the temp files.
 		std::unordered_set<std::string> updaterTempFiles;
 		updaterTempFiles.insert("MWSE-Update.exe");
