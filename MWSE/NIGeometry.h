@@ -2,7 +2,6 @@
 
 #include "NIAVObject.h"
 #include "NIGeometryData.h"
-#include "NIPointer.h"
 
 namespace NI {
 	struct Geometry_vTable : AVObject_vTable {

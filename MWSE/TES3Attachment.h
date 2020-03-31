@@ -5,8 +5,6 @@
 #include "TES3Item.h"
 #include "TES3Vectors.h"
 
-#include "NIPointer.h"
-
 namespace TES3 {
 	namespace AttachmentType {
 		enum AttachmentType {

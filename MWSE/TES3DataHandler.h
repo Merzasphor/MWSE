@@ -11,7 +11,6 @@
 #include "TES3AnimationData.h"
 
 #include "NIAVObject.h"
-#include "NIPointer.h"
 
 #include <Windows.h>
 

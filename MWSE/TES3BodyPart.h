@@ -4,8 +4,6 @@
 
 #include "TES3Object.h"
 
-#include "NIPointer.h"
-
 namespace TES3 {
 	namespace BodyPartFlag {
 		enum Flag : unsigned int {

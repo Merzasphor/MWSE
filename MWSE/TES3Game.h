@@ -4,7 +4,6 @@
 #include "TES3Collections.h"
 
 #include "NIDefines.h"
-#include "NIPointer.h"
 #include "NIAmbientLight.h"
 
 #include <Windows.h>

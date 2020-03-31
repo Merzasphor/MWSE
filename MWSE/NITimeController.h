@@ -3,7 +3,6 @@
 #include "NIDefines.h"
 
 #include "NIObject.h"
-#include "NIPointer.h"
 
 namespace NI {
 	struct TimeController : Object {

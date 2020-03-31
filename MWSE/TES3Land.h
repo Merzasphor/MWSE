@@ -3,7 +3,6 @@
 #include "TES3Object.h"
 
 #include "NIObject.h"
-#include "NIPointer.h"
 
 namespace TES3 {
 	struct Land : BaseObject {

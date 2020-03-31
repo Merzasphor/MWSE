@@ -6,7 +6,6 @@
 #include "TES3UITree.h"
 #include "TES3UIVector.h"
 
-#include "NIPointer.h"
 #include "NINode.h"
 #include "NISourceTexture.h"
 

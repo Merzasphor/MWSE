@@ -4,7 +4,6 @@
 #include "TES3Vectors.h"
 
 #include "NIObject.h"
-#include "NIPointer.h"
 
 namespace TES3 {
 	typedef void(__stdcall* FaderCallback)();

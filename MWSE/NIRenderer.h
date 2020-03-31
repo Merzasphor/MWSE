@@ -7,8 +7,6 @@
 #include "NIRect.h"
 #include "NITexture.h"
 
-#include "NIPointer.h"
-
 namespace NI {
 	struct Renderer_vTable : Object_vTable {
 		char*(__thiscall* getDriverInfo)(Renderer*); // 0x2C

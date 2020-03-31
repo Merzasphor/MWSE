@@ -2,8 +2,6 @@
 
 #include "NILight.h"
 
-#include "NIPointer.h"
-
 namespace NI {
 	struct PointLight : Light {
 		float constantAttenuation; // 0xD0

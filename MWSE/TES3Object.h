@@ -5,7 +5,6 @@
 
 #include "TES3Collections.h"
 
-#include "NIPointer.h"
 #include "NINode.h"
 
 #include <string>

@@ -11,7 +11,6 @@
 #include "NINode.h"
 #include "NIObject.h"
 #include "NIObjectNET.h"
-#include "NIPointer.h"
 #include "NIRTTI.h"
 
 namespace mwse {

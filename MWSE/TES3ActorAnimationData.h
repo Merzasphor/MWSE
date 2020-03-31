@@ -4,7 +4,6 @@
 #include "TES3Vectors.h"
 
 #include "NIExtraData.h"
-#include "NIPointer.h"
 #include "NIProperty.h"
 
 namespace TES3 {

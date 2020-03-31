@@ -2,7 +2,6 @@
 
 #include "TES3Defines.h"
 
-#include "NIPointer.h"
 #include "NINode.h"
 
 namespace TES3 {

@@ -3,7 +3,6 @@
 #include "sol.hpp"
 
 #include "NIDefines.h"
-#include "NIPointer.h"
 
 #include "TES3Defines.h"
 

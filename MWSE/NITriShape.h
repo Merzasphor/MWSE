@@ -3,7 +3,6 @@
 #include "NIAVObject.h"
 #include "NiTriBasedGeometry.h"
 #include "NiTriShapeData.h"
-#include "NIPointer.h"
 
 namespace NI {
 	struct TriShape_vTable : TriBasedGeometry_vTable {

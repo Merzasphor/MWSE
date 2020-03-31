@@ -1,7 +1,6 @@
 #pragma once
 
 #include "NIObject.h"
-#include "NIPointer.h"
 #include "NITimeController.h"
 
 namespace NI {

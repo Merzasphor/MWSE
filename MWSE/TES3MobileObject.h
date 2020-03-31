@@ -5,7 +5,6 @@
 #include "TES3Defines.h"
 
 #include "NINode.h"
-#include "NIPointer.h"
 #include "TES3Object.h"
 #include "TES3Vectors.h"
 

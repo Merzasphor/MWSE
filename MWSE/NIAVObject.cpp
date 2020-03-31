@@ -1,7 +1,6 @@
 #include "NIAVObject.h"
 
 #include "NIProperty.h"
-#include "NIPointer.h"
 
 #define NI_AVObject_updateEffects 0x6EB380
 #define NI_AVObject_updateProperties 0x6EB0E0
