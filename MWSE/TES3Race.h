@@ -19,23 +19,54 @@ namespace TES3 {
 			float female;
 		};
 		struct BodyParts {
-			BodyPart * head1;
-			BodyPart * hair;
-			BodyPart * neck;
-			BodyPart * chest;
-			BodyPart * groin;
-			BodyPart * hands;
-			BodyPart * wrist;
-			BodyPart * forearm;
-			BodyPart * upperArm;
-			BodyPart * foot;
-			BodyPart * ankle;
-			BodyPart * knee;
-			BodyPart * upperLeg;
-			BodyPart * clavicle;
-			BodyPart * tail;
-			BodyPart * head2;
-			int unknown2[14];
+			BodyPart* head;
+			BodyPart* hair;
+			BodyPart* neck;
+			BodyPart* chest;
+			BodyPart* groin;
+			BodyPart* hands;
+			BodyPart* wrist;
+			BodyPart* forearm;
+			BodyPart* upperArm;
+			BodyPart* foot;
+			BodyPart* ankle;
+			BodyPart* knee;
+			BodyPart* upperLeg;
+			BodyPart* clavicle;
+			BodyPart* tail;
+			BodyPart* vampireHead;
+			BodyPart* vampireHair;
+			BodyPart* vampireNeck;
+			BodyPart* vampireChest;
+			BodyPart* vampireGroin;
+			BodyPart* vampireHands;
+			BodyPart* vampireWrist;
+			BodyPart* vampireForearm;
+			BodyPart* vampireUpperArm;
+			BodyPart* vampireFoot;
+			BodyPart* vampireAnkle;
+			BodyPart* vampireKnee;
+			BodyPart* vampireUpperLeg;
+			BodyPart* vampireClavicle;
+			BodyPart* vampireTail;
+		};
+		enum class PartIndex : int {
+			Head,
+			Hair,
+			Neck,
+			Chest,
+			Groin,
+			Hands,
+			Wrist,
+			Forearm,
+			UpperArm,
+			Foot,
+			Ankle,
+			Knee,
+			UpperLeg,
+			Clavicle,
+			Tail,
+			COUNT,
 		};
 		char id[32]; // 0x10
 		char name[32]; // 0x30
@@ -47,14 +78,28 @@ namespace TES3 {
 		int unknown_0xDC; // Pointer? Abilities list?
 		char * description; // 0xE0
 		unsigned int descriptionFileOffset; // 0xE4
-		BodyParts maleBody; // 0xE8
-		BodyParts femaleBody; // 0x0160
+		union {
+			// Split struct out for legacy lua access.
+			struct {
+				BodyParts maleBody; // 0xE8
+				BodyParts femaleBody; // 0x0160
+			};
+			BodyPart* bodyParts[int(PartIndex::COUNT) * 2 * 2]; // 0xE8 // Body parts for both sexes and each vampirism state.
+		};
 
 		//
 		// Virtual table overrides.
 		//
 
 		char * getObjectID();
+
+		//
+		// Other this-call functions.
+		//
+
+		// Falls back to non-vampire if no vampiric body part is found, then to male if no female bodypart is found.
+		BodyPart* getBodyPart(bool isFemale, bool isVampire, PartIndex index);
+
 	};
 	static_assert(sizeof(Race) == 0x1D8, "TES3::Race failed size validation");
 }

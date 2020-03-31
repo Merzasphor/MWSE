@@ -31,6 +31,7 @@
 #include "CodePatchUtil.h"
 #include "PatchUtil.h"
 #include "MWSEDefs.h"
+#include "BuildDate.h"
 
 #include "LuaManager.h"
 #include "TES3Game.h"
@@ -119,12 +120,28 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 			mwse::log::getLog() << "Found MGE XE. Version: " << (int)mgeVersion.major << "." << (int)mgeVersion.minor << "." << (int)mgeVersion.patch << "." << (int)mgeVersion.build << std::endl;
 		}
 
-		// Look to see if an update to the MWSE Updater was downloaded. If so, swap the exes.
+		// Legacy support for old updater exe swap method.
 		if (std::filesystem::exists("MWSE-Update.tmp")) {
 			if (std::filesystem::exists("MWSE-Update.exe")) {
 				std::filesystem::remove("MWSE-Update.exe");
 			}
 			std::filesystem::rename("MWSE-Update.tmp", "MWSE-Update.exe");
+		}
+
+		// List of temporary files that the updater couldn't update, and so need to be swapped out.
+		std::vector<std::string> updaterTempFiles;
+		updaterTempFiles.push_back("MWSE-Update.exe");
+		updaterTempFiles.push_back("Newtonsoft.Json.dll");
+		
+		// Look to see if an update to the MWSE Updater was downloaded. If so, swap the temp files.
+		for (const std::string& destFile : updaterTempFiles) {
+			const std::string tempFile = destFile + ".tmp";
+			if (std::filesystem::exists(tempFile)) {
+				if (std::filesystem::exists(destFile)) {
+					std::filesystem::remove(destFile);
+				}
+				std::filesystem::rename(tempFile, destFile);
+			}
 		}
 
 		// Delete any old crash dumps.

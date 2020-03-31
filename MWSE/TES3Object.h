@@ -5,9 +5,10 @@
 
 #include "TES3Collections.h"
 
-#include <string>
+#include "NIPointer.h"
+#include "NINode.h"
 
-#include "sol_forward.hpp"
+#include <string>
 
 namespace TES3 {
 
@@ -21,6 +22,7 @@ namespace TES3 {
 			Activator = 'ITCA',
 			Alchemy = 'HCLA',
 			Ammo = 'OMMA',
+			AnimationGroup = 'GINA',
 			Apparatus = 'APPA',
 			Armor = 'OMRA',
 			Birthsign = 'NGSB',
@@ -31,6 +33,7 @@ namespace TES3 {
 			Clothing = 'TOLC',
 			Container = 'TNOC',
 			Creature = 'AERC',
+			CreatureClone = 'CERC',
 			Dialogue = 'LAID',
 			DialogueInfo = 'OFNI',
 			Door = 'ROOD',
@@ -54,9 +57,10 @@ namespace TES3 {
 			MobilePlayer = 'PCAM',
 			MobileProjectile = 'JRPM',
 			NPC = '_CPN',
-			Quest = 'SEUQ',
+			NPCClone = 'CCPN',
 			PathGrid = 'DRGP',
 			Probe = 'BORP',
+			Quest = 'SEUQ',
 			Race = 'ECAR',
 			Reference = 'RFER',
 			Region = 'NGER',
@@ -118,9 +122,9 @@ namespace TES3 {
 	static_assert(sizeof(BaseObjectVirtualTable) == 0x24, "TES3::BaseObjectVirtualTable failed size validation");
 
 	struct ObjectVirtualTable : BaseObjectVirtualTable {
-		void * copyEntity;
-		void (__thiscall * setID)(BaseObject*, const char*); // 0x10C
-		NI::Node * (__thiscall * getSceneGraphNode)(BaseObject*); // 0x110
+		void * copyEntity; // 0x24
+		void (__thiscall * setID)(BaseObject*, const char*); // 0x28
+		NI::Node * (__thiscall * getSceneGraphNode)(BaseObject*); // 0x2C
 		void * unknown_0x30;
 		void * unknown_0x34;
 		char * (__thiscall * getName)(BaseObject*); // 0x38
@@ -180,11 +184,11 @@ namespace TES3 {
 		void * unknown_0x110;
 		void * unknown_0x114;
 		void * unknown_0x118;
-		void * unknown_0x11C;
+		void(__thiscall* resetVisualNode)(BaseObject*, NI::Node*); // 0x11C
 		float (__thiscall * getScale)(BaseObject*); // 0x120
 		void (__thiscall * setScale)(BaseObject*, float, bool); // 0x124
 		void * unknown_0x128;
-		void * unknown_0x12C;
+		int(__thiscall* unknown_0x12C)(BaseObject*); // 0x12C
 		void * unknown_0x130;
 		void * loadModel; // 0x134
 		void * unknown_0x138;
@@ -228,6 +232,9 @@ namespace TES3 {
 
 		bool isActor();
 
+		static bool __stdcall isSourcelessObject(BaseObject* object);
+		static void setSourcelessObject(BaseObject* object);
+
 		// Storage for cached userdata.
 		static sol::object getOrCreateLuaObject(lua_State* L, const BaseObject* object);
 		static int pushCachedLuaObject(lua_State* L, const BaseObject* object);
@@ -246,7 +253,7 @@ namespace TES3 {
 		void * referenceToThis; // 0x18
 		Object * previousInCollection; // 0x1C
 		Object * nextInCollection; // 0x20
-		NI::Node * sceneCollisionRoot; // 0x24
+		NI::Pointer<NI::Node> sceneCollisionRoot; // 0x24
 
 		//
 		// Function wrappers for our virtual table.
@@ -293,6 +300,7 @@ namespace TES3 {
 		void setAutoCalc(bool);
 		void setModelPath(const char*);
 		void setName(const char*);
+		void resetVisualNode(NI::Node* node = nullptr);
 		float getScale();
 		void setScale(float value, bool cap = false);
 

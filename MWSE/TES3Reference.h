@@ -26,6 +26,9 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
+		void ctor();
+		void dtor();
+
 		void activate(Reference* activator, int unknown = 1);
 		void setActionFlag(int);
 		void clearActionFlag(int);
@@ -38,7 +41,8 @@ namespace TES3 {
 		Vector3* getPositionFromAttachment();
 		LockAttachmentNode* getOrCreateLockNode();
 		ScriptVariables * getScriptVariables();
-		void removeAttachment(TES3::Attachment * attachment);
+		void removeAttachment(TES3::Attachment* attachment);
+		void removeAllAttachments();
 		void ensureScriptDataIsInstanced();
 
 		void detachDynamicLightFromAffectedNodes();
@@ -53,6 +57,8 @@ namespace TES3 {
 		bool enable();
 		bool disable();
 		bool getDisabled();
+
+		void setDeleted();
 
 		Vector3 * getPosition();
 		void setPosition(const Vector3 * newPosition);
@@ -85,6 +91,9 @@ namespace TES3 {
 
 		LightAttachmentNode* getAttachedDynamicLight();
 		LightAttachmentNode* getOrCreateAttachedDynamicLight(NI::PointLight *, float);
+
+		void setDynamicLighting();
+		void updateLighting();
 
 		bool getEmptyInventoryFlag();
 		void setEmptyInventoryFlag(bool);

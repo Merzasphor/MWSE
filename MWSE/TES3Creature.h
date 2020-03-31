@@ -3,8 +3,9 @@
 #include "sol_forward.hpp"
 
 #include "TES3Defines.h"
-
 #include "TES3Actor.h"
+
+#include "NINode.h"
 
 namespace TES3 {
 	namespace ActorFlagCreature {
@@ -81,11 +82,11 @@ namespace TES3 {
 	struct CreatureInstance : Actor {
 		Creature * baseCreature; // 0x6C
 		Item * weapon; // 0x70
-		void * sgNode_74;
+		NI::Pointer<NI::Node> sgNode_74;
 		int field_78;
-		void * sgNode_7C;
+		NI::Pointer<NI::Node> sgNode_7C;
 		int field_80;
-		void * sgNode_84;
+		NI::Pointer<NI::Node> sgNode_84;
 		AIPackageConfig * aiPackageConfig; // 0x88
 	};
 	static_assert(sizeof(CreatureInstance) == 0x8C, "TES3::CreatureInstance failed size validation");

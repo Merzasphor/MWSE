@@ -44,18 +44,6 @@ namespace TES3 {
 	static_assert(sizeof(StlList<void>) == 0x0C, "TES3::StlList failed size validation");
 
 	//
-	// HashMap
-	//
-
-	struct HashMap {
-		void * vTable; // 0x0
-		size_t count; // 0x4
-		size_t bucketCount; // 0x8
-		void * buckets; // 0xC
-	};
-	static_assert(sizeof(HashMap) == 0x10, "TES3::HashMap failed size validation");
-
-	//
 	// Iterators.
 	//
 
@@ -69,7 +57,10 @@ namespace TES3 {
 
 	template <typename T>
 	struct Iterator {
-		void * vTable;
+		struct VirtualTable {
+			void(__thiscall* destructor)(Iterator<T>*, bool); // 0x0
+		};
+		VirtualTable* vTable;
 		size_t size;
 		IteratorNode<T> * head;
 		IteratorNode<T> * tail;
@@ -87,8 +78,12 @@ namespace TES3 {
 			reinterpret_cast<void(__thiscall *)(Iterator<T>*, T*)>(0x47E360)(this, item);
 		}
 
-		void addItemAtIndex(T * item, size_t index) {
-			reinterpret_cast<void(__thiscall *)(Iterator<T>*, T*, size_t)>(0x47E4D0)(this, item, index);
+		void addItemAtIndex(T* item, size_t index) {
+			reinterpret_cast<void(__thiscall*)(Iterator<T>*, T*, size_t)>(0x47E4D0)(this, item, index);
+		}
+
+		void removeItemByValue(T* value) {
+			reinterpret_cast<void(__thiscall*)(Iterator<T>*, T*)>(0x47E6A0)(this, value);
 		}
 
 		IteratorNode<T> * getFirstNode() {

@@ -57,7 +57,7 @@ namespace mwse {
 				usertypeDefinition[sol::meta_function::length] = &TES3::Vector3::length;
 				usertypeDefinition[sol::meta_function::to_string] = [](TES3::Vector3& self) {
 					std::ostringstream ss;
-					ss << std::fixed << std::setprecision(2) << "<" << self.x << ", " << self.y << ", " << self.z << ">";
+					ss << std::fixed << std::setprecision(2) << std::dec << self;
 					return ss.str();
 				};
 
@@ -148,10 +148,7 @@ namespace mwse {
 				// Operator overloading.
 				usertypeDefinition[sol::meta_function::to_string] = [](TES3::Matrix33& self) {
 					std::ostringstream ss;
-					ss << std::fixed << std::setprecision(2) << std::dec
-						<< "<<<" << self.m0.x << ", " << self.m0.y << ", " << self.m0.z << ">,\n"
-						<< "  <" << self.m1.x << ", " << self.m1.y << ", " << self.m1.z << ">,\n"
-						<< "  <" << self.m2.x << ", " << self.m2.y << ", " << self.m2.z << ">>>";
+					ss << std::fixed << std::setprecision(2) << std::dec << self;
 					return ss.str();
 				};
 

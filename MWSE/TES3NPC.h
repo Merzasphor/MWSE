@@ -39,7 +39,7 @@ namespace TES3 {
 		//
 
 		int getBaseDisposition(bool);
-
+		bool isGuard();
 	};
 
 	struct NPC : NPCBase {

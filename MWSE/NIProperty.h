@@ -111,9 +111,9 @@ namespace NI {
 			float bumpMat[2][2];
 		};
 
-		ApplyMode applyMode;
-		TES3::TArray<Map> maps;
-		int unknown_34;
+		ApplyMode applyMode; // 0x18
+		TES3::TArray<Map> maps; // 0x1C
+		int unknown_34; // 0x34
 	};
 	static_assert(sizeof(TexturingProperty) == 0x38, "NI::TexturingProperty failed size validation");
 	static_assert(sizeof(TexturingProperty::Map) == 0x14, "NI::TexturingProperty::Map failed size validation");

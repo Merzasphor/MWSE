@@ -44,13 +44,23 @@ namespace TES3 {
 	const auto TES3_Reference_setMobileActor = reinterpret_cast<MobileActor* (__thiscall*)(Reference*, MobileActor*)>(0x4E5770);
 	const auto TES3_Reference_removeAttachment = reinterpret_cast<void(__thiscall*)(Reference*, Attachment*)>(0x4E4C10);
 
-	const auto TES3_Reference_ctor = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E4510);
 	Reference::Reference() {
+		// Do not add code here. Always place new logic in the ctor function, which gets called in Morrowind.exe.
+		ctor();
+	}
+
+	Reference::~Reference() {
+		// Do not add code here. Always place new logic in the dtor function, which gets called in Morrowind.exe.
+		dtor();
+	}
+
+	const auto TES3_Reference_ctor = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E4510);
+	void Reference::ctor() {
 		TES3_Reference_ctor(this);
 	}
 
 	const auto TES3_Reference_dtor = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E45C0);
-	Reference::~Reference() {
+	void Reference::dtor() {
 		TES3_Reference_dtor(this);
 	}
 
@@ -115,6 +125,11 @@ namespace TES3 {
 		TES3_Reference_removeAttachment(this, attachment);
 	}
 
+	const auto TES3_Reference_removeAllAttachments = reinterpret_cast<ScriptVariables * (__thiscall*)(Reference*)>(0x4E4A10);
+	void Reference::removeAllAttachments() {
+		TES3_Reference_removeAllAttachments(this);
+	}
+
 	const auto TES3_Reference_ensureScriptDataIsInstanced = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E7050);
 	void Reference::ensureScriptDataIsInstanced() {
 		TES3_Reference_ensureScriptDataIsInstanced(this);
@@ -157,6 +172,19 @@ namespace TES3 {
 		TES3::DataHandler::get()->setDynamicLightingForReference(this);
 
 		return attachment->data;
+	}
+
+	void Reference::setDynamicLighting() {
+		auto dataHandler = TES3::DataHandler::get();
+
+		dataHandler->setDynamicLightingForReference(this);
+	}
+
+	void Reference::updateLighting() {
+		auto dataHandler = TES3::DataHandler::get();
+
+		// Ensure the reference receives scene lighting.
+		dataHandler->updateLightingForReference(this);
 	}
 
 	const auto TES3_Reference_updateBipedParts = reinterpret_cast<bool (__thiscall*)(Reference*)>(0x4E8B50);
@@ -296,6 +324,18 @@ namespace TES3 {
 
 	bool Reference::getDisabled() {
 		return BIT_TEST(objectFlags, ObjectFlag::DisabledBit);
+	}
+
+	void Reference::setDeleted() {
+		disable();
+		if (baseObject) {
+			// This always seems to return 0 and do nothing.
+			// But we'll keep it for consistency.
+			baseObject->vTable.object->unknown_0x12C(baseObject);
+		}
+		removeAllAttachments();
+		setScale(1.0f);
+		BIT_SET_ON(objectFlags, ObjectFlag::DeleteBit);
 	}
 
 	Vector3 * Reference::getPosition() {

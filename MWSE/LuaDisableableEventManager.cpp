@@ -6,6 +6,7 @@
 #include "LuaActivationTargetChangedEvent.h"
 #include "LuaAddTopicEvent.h"
 #include "LuaAttackEvent.h"
+#include "LuaBodyPartAssignedEvent.h"
 #include "LuaBodyPartsUpdatedEvent.h"
 #include "LuaBookGetTextEvent.h"
 #include "LuaButtonPressedEvent.h"
@@ -18,6 +19,7 @@
 #include "LuaCalcRestInterruptEvent.h"
 #include "LuaCalcSoulValueEvent.h"
 #include "LuaCalcSpellPriceEvent.h"
+#include "LuaCalcSunDamageScalarEvent.h"
 #include "LuaCalcTrainingPriceEvent.h"
 #include "LuaCalcTravelPriceEvent.h"
 #include "LuaCellChangedEvent.h"
@@ -48,6 +50,7 @@
 #include "LuaInfoFilterEvent.h"
 #include "LuaInfoGetTextEvent.h"
 #include "LuaInfoResponseEvent.h"
+#include "LuaIsGuardEvent.h"
 #include "LuaItemDroppedEvent.h"
 #include "LuaItemTileUpdatedEvent.h"
 #include "LuaJournalEvent.h"
@@ -119,6 +122,7 @@ namespace mwse {
 				usertypeDefinition["activate"] = sol::property(&ActivateEvent::getEventEnabled, &ActivateEvent::setEventEnabled);
 				usertypeDefinition["activationTargetChanged"] = sol::property(&ActivationTargetChangedEvent::getEventEnabled, &ActivationTargetChangedEvent::setEventEnabled);
 				usertypeDefinition["attack"] = sol::property(&AttackEvent::getEventEnabled, &AttackEvent::setEventEnabled);
+				usertypeDefinition["bodyPartAssigned"] = sol::property(&BodyPartAssignedEvent::getEventEnabled, &BodyPartAssignedEvent::setEventEnabled);
 				usertypeDefinition["bodyPartsUpdated"] = sol::property(&BodyPartsUpdatedEvent::getEventEnabled, &BodyPartsUpdatedEvent::setEventEnabled);
 				usertypeDefinition["bookGetText"] = sol::property(&BookGetTextEvent::getEventEnabled, &BookGetTextEvent::setEventEnabled);
 				usertypeDefinition["buttonPressed"] = sol::property(&ButtonPressedEvent::getEventEnabled, &ButtonPressedEvent::setEventEnabled);
@@ -133,6 +137,7 @@ namespace mwse {
 				usertypeDefinition["calcRunSpeed"] = sol::property(&CalculateMovementSpeed::getEventEnabled, &CalculateMovementSpeed::setEventEnabled);
 				usertypeDefinition["calcSoulValue"] = sol::property(&CalculateSoulValueEvent::getEventEnabled, &CalculateSoulValueEvent::setEventEnabled);
 				usertypeDefinition["calcSpellPrice"] = sol::property(&CalculateSpellPriceEvent::getEventEnabled, &CalculateSpellPriceEvent::setEventEnabled);
+				usertypeDefinition["calcSunDamageScalar"] = sol::property(&CalcSunDamageScalarEvent::getEventEnabled, &CalcSunDamageScalarEvent::setEventEnabled);
 				usertypeDefinition["calcSwimRunSpeed"] = sol::property(&CalculateMovementSpeed::getEventEnabled, &CalculateMovementSpeed::setEventEnabled);
 				usertypeDefinition["calcSwimSpeed"] = sol::property(&CalculateMovementSpeed::getEventEnabled, &CalculateMovementSpeed::setEventEnabled);
 				usertypeDefinition["calcTrainingPrice"] = sol::property(&CalculateTrainingPriceEvent::getEventEnabled, &CalculateTrainingPriceEvent::setEventEnabled);
@@ -165,6 +170,7 @@ namespace mwse {
 				usertypeDefinition["infoFilter"] = sol::property(&InfoFilterEvent::getEventEnabled, &InfoFilterEvent::setEventEnabled);
 				usertypeDefinition["infoGetText"] = sol::property(&InfoGetTextEvent::getEventEnabled, &InfoGetTextEvent::setEventEnabled);
 				usertypeDefinition["infoResponse"] = sol::property(&InfoResponseEvent::getEventEnabled, &InfoResponseEvent::setEventEnabled);
+				usertypeDefinition["isGuard"] = sol::property(&IsGuardEvent::getEventEnabled, &IsGuardEvent::setEventEnabled);
 				usertypeDefinition["itemDropped"] = sol::property(&ItemDroppedEvent::getEventEnabled, &ItemDroppedEvent::setEventEnabled);
 				usertypeDefinition["itemTileUpdated"] = sol::property(&ItemTileUpdatedEvent::getEventEnabled, &ItemTileUpdatedEvent::setEventEnabled);
 				usertypeDefinition["journal"] = sol::property(&JournalEvent::getEventEnabled, &JournalEvent::setEventEnabled);

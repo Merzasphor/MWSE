@@ -28,6 +28,7 @@ Functions
     tes3/adjustSoundVolume
     tes3/cast
     tes3/checkMerchantTradesItem
+    tes3/createObject
     tes3/createReference
     tes3/deleteObject
     tes3/disableKey

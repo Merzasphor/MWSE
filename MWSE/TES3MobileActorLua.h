@@ -5,6 +5,7 @@
 #include "TES3ActorAnimationData.h"
 #include "TES3AIData.h"
 #include "TES3Cell.h"
+#include "TES3CombatSession.h"
 
 namespace mwse {
 	namespace lua {
@@ -21,6 +22,7 @@ namespace mwse {
 			usertypeDefinition["alarm"] = &TES3::MobileActor::alarm;
 			usertypeDefinition["barterGold"] = &TES3::MobileActor::barterGold;
 			usertypeDefinition["collidingReference"] = sol::readonly_property(&TES3::MobileActor::collidingReference);
+			usertypeDefinition["combatSession"] = sol::readonly_property(&TES3::MobileActor::combatSession);
 			usertypeDefinition["corpseHourstamp"] = &TES3::MobileActor::corpseHourstamp;
 			usertypeDefinition["currentEnchantedItem"] = sol::readonly_property(&TES3::MobileActor::currentEnchantedItem);
 			usertypeDefinition["encumbrance"] = sol::readonly_property(&TES3::MobileActor::encumbrance);

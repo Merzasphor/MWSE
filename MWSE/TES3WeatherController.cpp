@@ -4,7 +4,11 @@
 #include "TES3WeatherController.h"
 #include "TES3WorldController.h"
 
+#include "LuaManager.h"
+#include "LuaCalcSunDamageScalarEvent.h"
+
 namespace TES3 {
+	const auto TES3_WeatherController_calcSunDamageScalar = reinterpret_cast<float(__thiscall*)(WeatherController*)>(0x0440630);
 	const auto TES3_WeatherController_setBackgroundToFog = reinterpret_cast<void(__thiscall*)(WeatherController*, NI::Object*)>(0x43EB20);
 	const auto TES3_WeatherController_setFogColour = reinterpret_cast<void(__thiscall*)(WeatherController*, NI::Property*)>(0x43EB80);
 	const auto TES3_WeatherController_switch = reinterpret_cast<void(__thiscall*)(WeatherController*, int, float)>(0x441C40);
@@ -15,6 +19,20 @@ namespace TES3 {
 	const auto TES3_WeatherController_updateSunCols = reinterpret_cast<void(__thiscall*)(WeatherController*, float)>(0x43F5F0);
 	const auto TES3_WeatherController_updateSun = reinterpret_cast<void(__thiscall*)(WeatherController*, float)>(0x43FF80);
 	const auto TES3_WeatherController_updateTick = reinterpret_cast<void(__thiscall*)(WeatherController*, NI::Property*, float, bool, float)>(0x440C80);
+
+	float WeatherController::calcSunDamageScalar() {
+		float damage = TES3_WeatherController_calcSunDamageScalar(this);
+
+		// Trigger calcSunDamageScalar event.
+		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+		auto stateHandle = luaManager.getThreadSafeStateHandle();
+		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CalcSunDamageScalarEvent(damage));
+		if (eventData.valid()) {
+			damage = eventData.get<float>("damage");
+		}
+
+		return damage;
+	}
 
 	void WeatherController::switchWeather(int weatherId, float startingTransition) {
 		TES3_WeatherController_switch(this, weatherId, startingTransition);

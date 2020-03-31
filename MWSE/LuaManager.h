@@ -52,6 +52,8 @@ namespace mwse {
 			// Returns a thread-locking reference to the sol2 lua state.
 			ThreadedStateHandle getThreadSafeStateHandle();
 
+			const sol::state_view& getReadOnlyStateView();
+
 			// Uses the MemoryUtil library to create the necessary injections into Morrowind.
 			void hook();
 

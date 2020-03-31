@@ -42,7 +42,9 @@ namespace mwse {
 				usertypeDefinition["list"] = sol::readonly_property(&TES3::LeveledCreature::itemList);
 
 				// Basic function binding.
-				usertypeDefinition["pickFrom"] = [](TES3::LeveledCreature& self) { return self.resolve(); };
+				usertypeDefinition["pickFrom"] = &TES3::LeveledCreature::resolve;
+				usertypeDefinition["insert"] = &TES3::LeveledCreature::insert;
+				usertypeDefinition["remove"] = &TES3::LeveledCreature::remove;
 			}
 
 			// Binding for TES3::LeveledItem
@@ -65,7 +67,9 @@ namespace mwse {
 				usertypeDefinition["list"] = sol::readonly_property(&TES3::LeveledItem::itemList);
 
 				// Basic function binding.
-				usertypeDefinition["pickFrom"] = [](TES3::LeveledItem& self) { return self.resolve(); };
+				usertypeDefinition["pickFrom"] = &TES3::LeveledItem::resolve;
+				usertypeDefinition["insert"] = &TES3::LeveledItem::insert;
+				usertypeDefinition["remove"] = &TES3::LeveledItem::remove;
 			}
 		}
 	}

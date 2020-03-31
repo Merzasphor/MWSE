@@ -9,6 +9,7 @@
 #include "NINode.h"
 #include "NIPointLight.h"
 
+#include "TES3BodyPartManager.h"
 #include "TES3Cell.h"
 #include "TES3DataHandler.h"
 #include "TES3ItemData.h"
@@ -41,6 +42,9 @@ namespace TES3 {
 				break;
 			case AttachmentType::ActorData:
 				result["actor"] = reinterpret_cast<MobileActorAttachment*>(attachment)->data;
+				break;
+			case AttachmentType::BodyPartManager:
+				result["bodyPartManager"] = reinterpret_cast<BodyPartManagerAttachment*>(attachment)->data;
 				break;
 			}
 
@@ -127,7 +131,9 @@ namespace mwse {
 			usertypeDefinition["getOrCreateAttachedDynamicLight"] = &TES3::Reference::getOrCreateAttachedDynamicLight;
 			usertypeDefinition["setActionFlag"] = &TES3::Reference::setActionFlag;
 			usertypeDefinition["testActionFlag"] = &TES3::Reference::testActionFlag;
+			usertypeDefinition["setDynamicLighting"] = &TES3::Reference::setDynamicLighting;
 			usertypeDefinition["updateEquipment"] = &TES3::Reference::updateBipedParts;
+			usertypeDefinition["updateLighting"] = &TES3::Reference::updateLighting;
 
 			// Functions exposed as properties.
 			usertypeDefinition["activationReference"] = sol::property(&TES3::Reference::getActionReference, &TES3::Reference::setActionReference);

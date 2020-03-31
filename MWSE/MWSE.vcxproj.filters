@@ -97,9 +97,6 @@
     <Filter Include="Header Files\DataAdapters\TES3\_Unsorted_">
       <UniqueIdentifier>{661ff29e-17e0-4fd6-bda3-599f9823c9c8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\DataAdapters\Direct3D">
-      <UniqueIdentifier>{c69f450d-0ef0-43a1-ac94-ffaeb5bf967d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\DataAdapters\TES3\Dialog">
       <UniqueIdentifier>{2b3c3dd7-acd0-41a8-8ee8-12e9c3e71ef4}</UniqueIdentifier>
     </Filter>
@@ -305,21 +302,6 @@
     </ClInclude>
     <ClInclude Include="TES3Inventory.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Actor</Filter>
-    </ClInclude>
-    <ClInclude Include="D3DColorValue.h">
-      <Filter>Header Files\DataAdapters\Direct3D</Filter>
-    </ClInclude>
-    <ClInclude Include="D3DLight.h">
-      <Filter>Header Files\DataAdapters\Direct3D</Filter>
-    </ClInclude>
-    <ClInclude Include="D3DMaterial.h">
-      <Filter>Header Files\DataAdapters\Direct3D</Filter>
-    </ClInclude>
-    <ClInclude Include="D3DVector.h">
-      <Filter>Header Files\DataAdapters\Direct3D</Filter>
-    </ClInclude>
-    <ClInclude Include="D3DViewport.h">
-      <Filter>Header Files\DataAdapters\Direct3D</Filter>
     </ClInclude>
     <ClInclude Include="TES3DialogueInfo.h">
       <Filter>Header Files\DataAdapters\TES3\Dialog</Filter>
@@ -1343,6 +1325,51 @@
     </ClInclude>
     <ClInclude Include="LuaObject.h">
       <Filter>Header Files\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaIsGuardEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaCalcSunDamageScalarEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="NIRenderedTexture.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="NIRect.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="NIParticleSystemController.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="NIPerParticleData.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="NIParticleModifier.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="NIBinaryStream.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3HashMap.h">
+      <Filter>Header Files\DataAdapters\TES3\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="NIGeometryDataLua.h">
+      <Filter>Header Files\Lua\Bindings\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="NIExtraData.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="NIKeyframeController.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="NiKeyframeManager.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3BodyPartManager.h">
+      <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaBodyPartAssignedEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2908,6 +2935,36 @@
     </ClCompile>
     <ClCompile Include="TES3Weather.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaIsGuardEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaCalcSunDamageScalarEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3ReferenceList.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="NIRenderedTexture.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NIRenderer.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NICamera.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NIBinaryStream.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NIGeometryDataLua.cpp">
+      <Filter>Source Files\Lua\Bindings\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3BodyPartManager.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaBodyPartAssignedEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

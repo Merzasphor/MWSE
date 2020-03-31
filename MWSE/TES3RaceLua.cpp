@@ -53,7 +53,7 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
-				usertypeDefinition["head1"] = &TES3::Race::BodyParts::head1;
+				usertypeDefinition["head1"] = &TES3::Race::BodyParts::head;
 				usertypeDefinition["hair"] = &TES3::Race::BodyParts::hair;
 				usertypeDefinition["neck"] = &TES3::Race::BodyParts::neck;
 				usertypeDefinition["chest"] = &TES3::Race::BodyParts::chest;
@@ -68,7 +68,7 @@ namespace mwse {
 				usertypeDefinition["upperLeg"] = &TES3::Race::BodyParts::upperLeg;
 				usertypeDefinition["clavicle"] = &TES3::Race::BodyParts::clavicle;
 				usertypeDefinition["tail"] = &TES3::Race::BodyParts::tail;
-				usertypeDefinition["head2"] = &TES3::Race::BodyParts::head2;
+				usertypeDefinition["head2"] = &TES3::Race::BodyParts::vampireHead;
 			}
 
 			// Binding for TES3::Race.

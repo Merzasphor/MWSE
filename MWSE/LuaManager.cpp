@@ -5,6 +5,7 @@
 #include "TES3Util.h"
 #include "MemoryUtil.h"
 #include "ScriptUtil.h"
+#include "StringUtil.h"
 #include "UIUtil.h"
 #include "MWSEDefs.h"
 #include "BuildDate.h"
@@ -20,6 +21,7 @@
 #include "TES3ActorAnimationData.h"
 #include "TES3Alchemy.h"
 #include "TES3Book.h"
+#include "TES3BodyPartManager.h"
 #include "TES3CombatSession.h"
 #include "TES3Container.h"
 #include "TES3Creature.h"
@@ -50,6 +52,7 @@
 #include "TES3UIInventoryTile.h"
 #include "TES3UIManager.h"
 #include "TES3UIMenuController.h"
+#include "TES3WeatherController.h"
 #include "TES3WorldController.h"
 
 // Lua binding files. These are split out rather than kept here to help with compile times.
@@ -131,6 +134,7 @@
 #include "NICameraLua.h"
 #include "NICollisionSwitchLua.h"
 #include "NIColorLua.h"
+#include "NIGeometryDataLua.h"
 #include "NINodeLua.h"
 #include "NIObjectLua.h"
 #include "NILightLua.h"
@@ -220,10 +224,6 @@
 #define TES3_HOOK_LOAD_REFERENCE_SIZE 0x5
 #define TES3_HOOK_LOAD_REFERENCE_RETURN (TES3_HOOK_LOAD_REFERENCE + TES3_HOOK_LOAD_REFERENCE_SIZE)
 #define TES3_HOOK_LOAD_REFERENCE_RETURN_SUCCESS 0x4DE406
-
-#define TES3_HOOK_FINISH_INITIALIZATION 0x4BBC0C
-#define TES3_HOOK_FINISH_INITIALIZATION_SIZE 0x5
-#define TES3_HOOK_FINISH_INITIALIZATION_RETURN (TES3_HOOK_FINISH_INITIALIZATION + TES3_HOOK_FINISH_INITIALIZATION_SIZE)
 
 #define TES3_HOOK_UI_EVENT 0x58371A
 #define TES3_HOOK_UI_EVENT_SIZE 0x5
@@ -382,6 +382,12 @@ namespace mwse {
 				return memCounter.PrivateUsage;
 			};
 
+			luaState["mwse"]["crash"] = []() {
+				// You're not my manager!
+				int* x = nullptr;
+				*x = 4;
+			};
+
 			// Bind TES3 data types.
 			bindTES3ActionData();
 			bindTES3Activator();
@@ -458,6 +464,7 @@ namespace mwse {
 			bindNICamera();
 			bindNICollisionSwitch();
 			bindNIColor();
+			bindNIGeometryData();
 			bindNINode();
 			bindNIObject();
 			bindNILight();
@@ -566,7 +573,10 @@ namespace mwse {
 		// Hook: Finished initializing game code.
 		//
 
-		static void _stdcall FinishInitialization() {
+		void __fastcall FinishInitialization(TES3::Iterator<void>* itt) {
+			// Call overwritten code.
+			itt->clear();
+
 			// Hook up shorthand access to data handler, world controller, and game.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state &state = stateHandle.state;
@@ -575,23 +585,6 @@ namespace mwse {
 			state["tes3"]["game"] = TES3::Game::get();
 
 			stateHandle.triggerEvent(new event::GenericEvent("initialized"));
-		}
-
-		static DWORD callbackFinishedInitialization = TES3_HOOK_FINISH_INITIALIZATION_RETURN;
-		static __declspec(naked) void HookFinishInitialization() {
-			_asm
-			{
-				// Save the registers.
-				pushad
-
-				// Actually use our hook.
-				call FinishInitialization
-
-				// Resume normal execution.
-				popad
-				mov eax, 1
-				jmp callbackFinishedInitialization
-			}
 		}
 
 		//
@@ -632,7 +625,7 @@ namespace mwse {
 
 			// Send off our enterFrame event always.
 			if (event::FrameEvent::getEventEnabled()) {
-				luaManager.getThreadSafeStateHandle().triggerEvent(new event::FrameEvent(worldController->deltaTime, worldController->flagMenuMode));
+				luaManager.getThreadSafeStateHandle().triggerEvent(new event::FrameEvent(worldController->deltaTime, worldController->flagMenuMode, highResolutionTimestamp));
 			}
 
 			// If we're not in menu mode, send off the simulate event.
@@ -1563,8 +1556,7 @@ namespace mwse {
 				if (eventData.valid()) {
 					sol::optional<std::string> musicPath = eventData["music"];
 					if (musicPath) {
-						const auto TES3_getThreadSafeStringBuffer = reinterpret_cast<char*(__thiscall*)(char*)>(0x4D51B0);
-						char* buffer = TES3_getThreadSafeStringBuffer(reinterpret_cast<char*>(0x7CB478));
+						char* buffer = mwse::tes3::getThreadSafeStringBuffer();
 						snprintf(buffer, 512, "Data Files/music/%s", musicPath.value().c_str());
 						return true;
 					}
@@ -2158,8 +2150,7 @@ namespace mwse {
 
 			// Overwritten code for this hook.
 			if (TES3::WorldController::get()->menuController->unknown_0x24 % 1) {
-				const auto TES3_getThreadSafeStringBuffer = reinterpret_cast<char*(__thiscall*)(char*)>(0x4D51B0);
-				char* buffer = TES3_getThreadSafeStringBuffer(reinterpret_cast<char*>(0x7CB478));
+				char* buffer = mwse::tes3::getThreadSafeStringBuffer();
 				sprintf(buffer, "Attack Chance %d%%, for %s to hit %s", hitChance, attacker->reference->baseObject->getObjectID(), attacker->actionData.hitTarget->reference->baseObject->getObjectID());
 				const auto TES3_ConsoleLogResult = reinterpret_cast<void(__cdecl*)(const char*, bool)>(0x5B2C20);
 				TES3_ConsoleLogResult(buffer, false);
@@ -2470,7 +2461,7 @@ namespace mwse {
 					// Convert the table to json for storage.
 					auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 					sol::state &state = stateHandle.state;
-					std::string json = state["json"]["encode"](table);
+					std::string json = state["mwse"]["encodeForSave"](table);
 
 					// Call original writechunk function.
 					gameFile->writeChunkData('TAUL', json.c_str(), json.length() + 1);
@@ -2538,7 +2529,7 @@ namespace mwse {
 					// Convert the table to json for storage.
 					auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 					sol::state &state = stateHandle.state;
-					std::string json = state["json"]["encode"](table);
+					std::string json = state["mwse"]["encodeForSave"](table);
 
 					// Call original writechunk function.
 					gameFile->writeChunkData('TAUL', json.c_str(), json.length() + 1);
@@ -2619,6 +2610,21 @@ namespace mwse {
 			crimeEvent->dtor();
 		}
 
+		// Write errors to mwse.log as well.WINBASEAPI
+		BOOL WINAPI WriteToWarningsFile(HANDLE hFile, LPCVOID lpBuffer, DWORD nNumberOfBytesToWrite, LPDWORD lpNumberOfBytesWritten, LPOVERLAPPED lpOverlapped) {
+			// Overwritten code.
+			auto result = WriteFile(hFile, lpBuffer, nNumberOfBytesToWrite, lpNumberOfBytesWritten, lpOverlapped);
+
+			// Also log to mwse.log with stack trace.
+			if (LuaManager::getInstance().getReadOnlyStateView().stack_top() != 0) {
+				auto trimmedWarning = string::trim_copy((const char*)lpBuffer);
+				log::getLog() << "Morrowind has raised a warning with a lua stack trace: " << trimmedWarning << std::endl;
+				logStackTrace();
+			}
+
+			return result;
+		}
+
 		//
 		//
 		//
@@ -2641,6 +2647,10 @@ namespace mwse {
 
 		ThreadedStateHandle LuaManager::getThreadSafeStateHandle() {
 			return ThreadedStateHandle(this);
+		}
+
+		const sol::state_view& LuaManager::getReadOnlyStateView() {
+			return luaState;
 		}
 
 		// Override for how os.exit works to clear up a few system things.
@@ -2679,7 +2689,8 @@ namespace mwse {
 			genCallEnforced(0x5635D6, 0x56EAE0, reinterpret_cast<DWORD>(OnPlayerRecreated));
 
 			// Event: initialized. Hook just before we return successfully from where game data is loaded.
-			genJumpUnprotected(TES3_HOOK_FINISH_INITIALIZATION, reinterpret_cast<DWORD>(HookFinishInitialization), TES3_HOOK_FINISH_INITIALIZATION_SIZE);
+			genCallEnforced(0x4BB440, 0x47E280, reinterpret_cast<DWORD>(FinishInitialization));
+			genCallEnforced(0x4BBC07, 0x47E280, reinterpret_cast<DWORD>(FinishInitialization));
 
 			// Event: enterFrame. This hook can be in a couple of locations, because of MCP.
 			genCallEnforced(0x41ABB0, 0x40F610, reinterpret_cast<DWORD>(EnterFrame));
@@ -3585,6 +3596,42 @@ namespace mwse {
 			overrideVirtualTableEnforced(TES3::VirtualTableAddress::CreatureInstance, offsetof(TES3::ActorVirtualTable, onCloseInventory), 0x58D230, *reinterpret_cast<DWORD*>(&actorOnCloseInventory));
 			overrideVirtualTableEnforced(TES3::VirtualTableAddress::ContainerBase, offsetof(TES3::ActorVirtualTable, onCloseInventory), 0x58D230, *reinterpret_cast<DWORD*>(&actorOnCloseInventory));
 			overrideVirtualTableEnforced(TES3::VirtualTableAddress::ContainerInstance, offsetof(TES3::ActorVirtualTable, onCloseInventory), 0x4A4460, *reinterpret_cast<DWORD*>(&containerOnCloseInventory));
+
+			// Allow overriding of guard status.
+			auto npcBaseIsGuard = &TES3::NPCBase::isGuard;
+			overrideVirtualTableEnforced(0x749DE8, offsetof(TES3::ActorVirtualTable, isGuard), 0x04DA5E0, *reinterpret_cast<DWORD*>(&npcBaseIsGuard));
+
+			// Allow overriding of sun damage calculation.
+			auto weatherControllerCalcSunDamageScalar = &TES3::WeatherController::calcSunDamageScalar;
+			genCallEnforced(0x0464C1C, 0x440630, *reinterpret_cast<DWORD*>(&weatherControllerCalcSunDamageScalar));
+
+			// Allow defining certain objects as sourceless.
+			auto isSourcelessObject = &TES3::BaseObject::isSourcelessObject;
+			genCallEnforced(0x4BC3E0, 0x4C1980, *reinterpret_cast<DWORD*>(&isSourcelessObject));
+			genCallEnforced(0x4BC57F, 0x4C1980, *reinterpret_cast<DWORD*>(&isSourcelessObject));
+			genCallEnforced(0x4C0C1C, 0x4C1980, *reinterpret_cast<DWORD*>(&isSourcelessObject));
+			genCallEnforced(0x4C0DC8, 0x4C1980, *reinterpret_cast<DWORD*>(&isSourcelessObject));
+			genCallEnforced(0x4C7715, 0x4C1980, *reinterpret_cast<DWORD*>(&isSourcelessObject));
+
+			// Allow overriding body part assignment.
+			auto bodyPartManagerSetBodyPartForItem = &TES3::BodyPartManager::setBodyPartForItem;
+			genCallEnforced(0x4730DD, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
+			genCallEnforced(0x473CA6, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
+			genCallEnforced(0x4A12D0, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
+			genCallEnforced(0x4A3B8E, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
+			genCallEnforced(0x4D9F7C, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
+			genCallEnforced(0x4D9FBC, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
+
+			// Fix BPM constructor to always have a reference. 
+			auto bodyPartManagerConstructor = &TES3::BodyPartManager::ctor;
+			genCallEnforced(0x4D8235, 0x472580, *reinterpret_cast<DWORD*>(&bodyPartManagerConstructor));
+			genCallEnforced(0x4D8248, 0x472580, *reinterpret_cast<DWORD*>(&bodyPartManagerConstructor));
+			genCallEnforced(0x4DA1B0, 0x472580, *reinterpret_cast<DWORD*>(&bodyPartManagerConstructor));
+			genCallEnforced(0x4DA1C3, 0x472580, *reinterpret_cast<DWORD*>(&bodyPartManagerConstructor));
+
+			// Create lua tracebacks when a warning is created.
+			genCallUnprotected(0x4774D1, reinterpret_cast<DWORD>(WriteToWarningsFile), 0x6);
+			genCallUnprotected(0x476EA7, reinterpret_cast<DWORD>(WriteToWarningsFile), 0x6);
 
 			// UI framework hooks
 			TES3::UI::hook();

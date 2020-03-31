@@ -6,9 +6,12 @@
 #include "TES3GlobalVariable.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
+#include "TES3UIManager.h"
 #include "TES3WeatherController.h"
 
 #include "TES3Util.h"
+
+#include <string>
 
 #define TES3_WorldController_mainLoopBeforeInput 0x40F610
 #define TES3_WorldController_getMobilePlayer 0x40FF20
@@ -96,6 +99,70 @@ namespace TES3 {
 	}
 
 	//
+	// JournalHTML
+	//
+
+	const auto TES3_JournalHTML_updateJournal = reinterpret_cast<void(__thiscall*)(JournalHTML*, DialogueInfo*, MobileActor*)>(0x415150);
+	void JournalHTML::updateJournal(DialogueInfo* info, MobileActor* updatingActor) {
+		TES3_JournalHTML_updateJournal(this, info, updatingActor);
+	}
+
+	void JournalHTML::writeTimestampedEntry(const char* text) {
+		auto worldController = WorldController::get();
+		auto dataHandler = DataHandler::get();
+		auto ndd = dataHandler->nonDynamicData;
+		std::stringstream output;
+
+		// Build header.
+		int day = worldController->gvarDay->value;
+		const char* month = worldController->getNameForMonth(worldController->gvarMonth->value);
+		const char* gmstDay = ndd->GMSTs[GMST::sDay]->value.asString;
+		int daysPassed = worldController->gvarDaysPassed->value;
+		output << "<FONT COLOR=\"9F0000\">";
+		output << day << " " << month;
+		output << " (" << gmstDay << " " << daysPassed << ")";
+		output << "</FONT><BR>";
+
+		output << text;
+		output << "<P>\n";
+
+		writeText(output.str().c_str());
+	}
+
+	void JournalHTML::writeText(const char* text) {
+		const auto textLength = strlen(text);
+
+		// Write to in-memory HTML.
+		if (data) {
+			const auto dataLength = strlen(data);
+			if (dataLength + textLength >= length) {
+				// Grow to the next heighest multiple of 1024 that fits.
+				unsigned int newTextLength = dataLength + textLength;
+				data = (char*)mwse::tes3::realloc(data, newTextLength + (1024 - newTextLength % 1024));
+			}
+			strcat(data, text);
+		}
+
+		// Write to file.
+		auto file = CreateFile("", GENERIC_WRITE, 0, nullptr, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+		if (file != INVALID_HANDLE_VALUE) {
+			SetFilePointer(file, 0, 0, FILE_END);
+			DWORD bytesWritten = 0;
+			WriteFile(file, text, textLength, &bytesWritten, nullptr);
+			WriteFile(file, "\r\n", strlen("\r\n"), &bytesWritten, nullptr);
+			CloseHandle(file);
+		}
+
+		changedSinceLastSync = true;
+	}
+
+	void JournalHTML::showJournalUpdateNotification() {
+		if (UI::findMenu(*reinterpret_cast<UI::UI_ID*>(0x7D3442))) {
+			mwse::tes3::messagePlayer(TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::sJournalEntry]->value.asString);
+		}
+	}
+
+	//
 	// WorldController
 	//
 
@@ -136,6 +203,18 @@ namespace TES3 {
 			return -1;
 		}
 		return reinterpret_cast<unsigned short*>(TES3_Data_cumulativeDaysForMonth)[month];
+	}
+
+	const auto TES3_MonthNameGMSTs = reinterpret_cast<int*>(0x79449C);
+	const char* WorldController::getNameForMonth(int month) {
+		if (month < 0 || month > 11) {
+			return nullptr;
+		}
+
+		auto gmstId = TES3_MonthNameGMSTs[month];
+
+		auto ndd = DataHandler::get()->nonDynamicData;
+		return ndd->GMSTs[gmstId]->value.asString;
 	}
 
 	double WorldController::getHighPrecisionSimulationTimestamp() {

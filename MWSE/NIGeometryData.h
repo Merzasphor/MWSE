@@ -12,6 +12,20 @@ namespace NI {
 	static_assert(sizeof(GeometryData_vTable) == 0x38, "NI::GeometryData_vTable failed size validation");
 
 	struct GeometryData : Object {
+		enum Consistency : unsigned short {
+			Mutable = 0x0000,
+			Static = 0x4000,
+			Volatile = 0x8000,
+			Mask = 0xF000,
+		};
+		enum Mask : unsigned short {
+			Vertex = 0x0001,
+			Normal = 0x0002,
+			Color = 0x0004,
+			Texture = 0x0008,
+			Dirty = 0x0FFF,
+		};
+
 		unsigned short vertexCount; // 0x8
 		unsigned short id; // 0xA
 		Bound bounds; // 0xC
@@ -30,6 +44,14 @@ namespace NI {
 		//
 
 		unsigned short getVertexCount();
+
+		//
+		// Other this-call functions.
+		//
+
+		Consistency getConsistency();
+
+		void markAsChanged(unsigned short flags);
 
 	};
 	static_assert(sizeof(GeometryData) == 0x34, "NI::GeometryData failed size validation");

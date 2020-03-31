@@ -2,6 +2,8 @@ local tes3 = {}
 
 -- Game constants.
 tes3.actionFlag = require("tes3.actionFlag")
+tes3.activeBodyPart = require("tes3.activeBodyPart")
+tes3.activeBodyPartLayer = require("tes3.activeBodyPartLayer")
 tes3.actorType = require("tes3.actorType")
 tes3.aiPackage = require("tes3.aiPackage")
 tes3.animationGroup = require("tes3.animationGroup")
@@ -12,6 +14,7 @@ tes3.armorSlot = require("tes3.armorSlot")
 tes3.attachmentType = require("tes3.attachmentType")
 tes3.attribute = require("tes3.attribute")
 tes3.attributeName = require("tes3.attributeName")
+tes3.bodyPartAttachment = require("tes3.bodyPartAttachment")
 tes3.bookType = require("tes3.bookType")
 tes3.clothingSlot = require("tes3.clothingSlot")
 tes3.creatureType = require("tes3.creatureType")

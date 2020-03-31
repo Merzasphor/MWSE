@@ -50,6 +50,7 @@
 #include "LuaObjectInvalidatedEvent.h"
 
 #include <mutex>
+#include <unordered_set>
 
 namespace TES3 {
 	void * BaseObject::operator new(size_t size) {
@@ -101,6 +102,17 @@ namespace TES3 {
 		default:
 			return false;
 		}
+	}
+
+	std::unordered_set<BaseObject*> sourcelessObjects;
+
+	const auto TES3_isSourcelessObject = reinterpret_cast<bool(__stdcall*)(BaseObject*)>(0x4C1980);
+	bool __stdcall BaseObject::isSourcelessObject(BaseObject* object) {
+		return TES3_isSourcelessObject(object) || sourcelessObjects.find(object) != sourcelessObjects.end();
+	}
+
+	void BaseObject::setSourcelessObject(BaseObject* object) {
+		sourcelessObjects.insert(object);
 	}
 
 	static std::unordered_map<const BaseObject*, sol::object> baseObjectCache;
@@ -464,6 +476,10 @@ namespace TES3 {
 
 	void Object::setName(const char* name) {
 		vTable.object->setName(this, name);
+	}
+
+	void Object::resetVisualNode(NI::Node* node) {
+		vTable.object->resetVisualNode(this, node);
 	}
 
 	float Object::getScale() {

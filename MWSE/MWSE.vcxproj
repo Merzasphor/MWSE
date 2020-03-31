@@ -13,11 +13,13 @@
   <ItemGroup>
     <ClInclude Include="ArrayUtil.h" />
     <ClInclude Include="BitUtil.h" />
+    <ClInclude Include="LuaBodyPartAssignedEvent.h" />
     <ClInclude Include="LuaCalcHitArmorPieceEvent.h" />
     <ClInclude Include="LuaBookGetTextEvent.h" />
     <ClInclude Include="LuaCalcArmorRatingEvent.h" />
     <ClInclude Include="LuaCalcHitChanceEvent.h" />
     <ClInclude Include="LuaCalcSoulValueEvent.h" />
+    <ClInclude Include="LuaCalcSunDamageScalarEvent.h" />
     <ClInclude Include="LuaContainerClosedEvent.h" />
     <ClInclude Include="LuaConvertReferenceToItemEvent.h" />
     <ClInclude Include="LuaCrimeWitnessedEvent.h" />
@@ -64,6 +66,7 @@
     <ClInclude Include="LuaInfoFilterEvent.h" />
     <ClInclude Include="LuaInfoGetTextEvent.h" />
     <ClInclude Include="LuaInfoResponseEvent.h" />
+    <ClInclude Include="LuaIsGuardEvent.h" />
     <ClInclude Include="LuaItemDroppedEvent.h" />
     <ClInclude Include="LuaItemTileUpdatedEvent.h" />
     <ClInclude Include="LuaJournalEvent.h" />
@@ -118,16 +121,28 @@
     <ClInclude Include="LuaWeatherCycledEvent.h" />
     <ClInclude Include="LuaWeatherTransitionFinishedEvent.h" />
     <ClInclude Include="LuaWeatherTransitionStartedEvent.h" />
+    <ClInclude Include="NIBinaryStream.h" />
     <ClInclude Include="NIBound.h" />
     <ClInclude Include="NIDX8Renderer.h" />
+    <ClInclude Include="NIExtraData.h" />
     <ClInclude Include="NIGeometry.h" />
     <ClInclude Include="NIGeometryData.h" />
+    <ClInclude Include="NIGeometryDataLua.h" />
+    <ClInclude Include="NIKeyframeController.h" />
+    <ClInclude Include="NiKeyframeManager.h" />
+    <ClInclude Include="NIParticleModifier.h" />
+    <ClInclude Include="NIParticleSystemController.h" />
+    <ClInclude Include="NIPerParticleData.h" />
+    <ClInclude Include="NIRect.h" />
+    <ClInclude Include="NIRenderedTexture.h" />
     <ClInclude Include="NIRenderer.h" />
     <ClInclude Include="NITextureEffect.h" />
     <ClInclude Include="NiTriBasedGeometry.h" />
     <ClInclude Include="NiTriBasedGeometryData.h" />
     <ClInclude Include="NiTriShapeData.h" />
     <ClInclude Include="TES3Archive.h" />
+    <ClInclude Include="TES3BodyPartManager.h" />
+    <ClInclude Include="TES3HashMap.h" />
     <ClInclude Include="TES3MagicEffectController.h" />
     <ClInclude Include="MemoryUtilLua.h" />
     <ClInclude Include="NIAmbientLight.h" />
@@ -169,11 +184,6 @@
     <ClInclude Include="TES3CrimeController.h" />
     <ClInclude Include="TES3CrimeEvent.h" />
     <ClInclude Include="TES3CrimeEventList.h" />
-    <ClInclude Include="D3DColorValue.h" />
-    <ClInclude Include="D3DLight.h" />
-    <ClInclude Include="D3DMaterial.h" />
-    <ClInclude Include="D3DVector.h" />
-    <ClInclude Include="D3DViewport.h" />
     <ClInclude Include="DynamicLuaObject.h" />
     <ClInclude Include="TES3Fader.h" />
     <ClInclude Include="TES3FaderLua.h" />
@@ -407,6 +417,7 @@
     <ClCompile Include="LuaAddTopicEvent.cpp" />
     <ClCompile Include="LuaAttackEvent.cpp" />
     <ClCompile Include="LuaBaseEvent.cpp" />
+    <ClCompile Include="LuaBodyPartAssignedEvent.cpp" />
     <ClCompile Include="LuaBookGetTextEvent.cpp" />
     <ClCompile Include="LuaButtonPressedEvent.cpp" />
     <ClCompile Include="LuaCalcArmorRatingEvent.cpp" />
@@ -418,6 +429,7 @@
     <ClCompile Include="LuaCalcBarterPriceEvent.cpp" />
     <ClCompile Include="LuaCalcSoulValueEvent.cpp" />
     <ClCompile Include="LuaCalcSpellPriceEvent.cpp" />
+    <ClCompile Include="LuaCalcSunDamageScalarEvent.cpp" />
     <ClCompile Include="LuaCalcTrainingPriceEvent.cpp" />
     <ClCompile Include="LuaCalcTravelPriceEvent.cpp" />
     <ClCompile Include="LuaCellChangedEvent.cpp" />
@@ -451,6 +463,7 @@
     <ClCompile Include="LuaInfoFilterEvent.cpp" />
     <ClCompile Include="LuaInfoGetTextEvent.cpp" />
     <ClCompile Include="LuaInfoResponseEvent.cpp" />
+    <ClCompile Include="LuaIsGuardEvent.cpp" />
     <ClCompile Include="LuaItemDroppedEvent.cpp" />
     <ClCompile Include="LuaItemTileUpdatedEvent.cpp" />
     <ClCompile Include="LuaJournalEvent.cpp" />
@@ -508,10 +521,16 @@
     <ClCompile Include="LuaWeatherCycledEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionFinishedEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionStartedEvent.cpp" />
+    <ClCompile Include="NIBinaryStream.cpp" />
+    <ClCompile Include="NICamera.cpp" />
     <ClCompile Include="NIGeometry.cpp" />
     <ClCompile Include="NIGeometryData.cpp" />
+    <ClCompile Include="NIGeometryDataLua.cpp" />
+    <ClCompile Include="NIRenderedTexture.cpp" />
+    <ClCompile Include="NIRenderer.cpp" />
     <ClCompile Include="NiTriBasedGeometryData.cpp" />
     <ClCompile Include="TES3Activator.cpp" />
+    <ClCompile Include="TES3BodyPartManager.cpp" />
     <ClCompile Include="TES3MagicEffectController.cpp" />
     <ClCompile Include="MemoryUtil.cpp" />
     <ClCompile Include="MemoryUtilLua.cpp" />
@@ -578,6 +597,7 @@
     <ClCompile Include="TES3MobileSpellProjectile.cpp" />
     <ClCompile Include="TES3Quest.cpp" />
     <ClCompile Include="TES3Race.cpp" />
+    <ClCompile Include="TES3ReferenceList.cpp" />
     <ClCompile Include="TES3Skill.cpp" />
     <ClCompile Include="TES3SoundGenerator.cpp" />
     <ClCompile Include="TES3SpellInstanceController.cpp" />
@@ -961,13 +981,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)deps\boost;$(SolutionDir)deps\LuaJIT\src;$(SolutionDir)deps\span-lite;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)deps\boost;$(SolutionDir)deps\LuaJIT\src;$(SolutionDir)deps\span-lite;$(SolutionDir)deps\DirectX8\include;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
     <LibraryPath>$(OutDir);$(SolutionDir)deps\LuaJIT\src;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)deps\boost;$(SolutionDir)deps\LuaJIT\src;$(SolutionDir)deps\span-lite;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)deps\boost;$(SolutionDir)deps\LuaJIT\src;$(SolutionDir)deps\span-lite;$(SolutionDir)deps\DirectX8\include;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
     <LibraryPath>$(OutDir);$(SolutionDir)deps\LuaJIT\src;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -977,7 +997,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;SOL_SAFE_USERTYPE;SOL_EXCEPTIONS_SAFE_PROPAGATION;_DEBUG;MWSE_EXPORTS;_WINDOWS;_USRDLL;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;SOL_SAFE_USERTYPE;SOL_EXCEPTIONS_SAFE_PROPAGATION;_DEBUG;MWSE_EXPORTS;_WINDOWS;_USRDLL;NOMINMAX;_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
@@ -1011,7 +1031,7 @@ echo #define MWSE_BUILD_DATE %buildTime:~0,8% &gt;&gt; $(ProjectDir)/BuildDate.h
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;SOL_SAFE_USERTYPE;SOL_EXCEPTIONS_SAFE_PROPAGATION;NDEBUG;MWSE_EXPORTS;_WINDOWS;_USRDLL;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;SOL_SAFE_USERTYPE;SOL_EXCEPTIONS_SAFE_PROPAGATION;NDEBUG;MWSE_EXPORTS;_WINDOWS;_USRDLL;NOMINMAX;_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>

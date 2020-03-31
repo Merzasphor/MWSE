@@ -62,6 +62,12 @@ namespace NI {
 		static void clearCachedLuaObject(const Object* object);
 		static void clearCachedLuaObjects();
 
+		//
+		// Custom functions.
+		//
+
+		bool saveBinary(const char* filename);
+
 	};
 	static_assert(sizeof(Object) == 0x8, "NI::Object failed size validation");
 
@@ -72,7 +78,7 @@ namespace NI {
 		Object * (__thiscall * loadBinary)(Object*, Stream*); // 0xC
 		void * linkObject; // 0x10
 		void * registerStreamables; // 0x14
-		void * saveBinary; // 0x18
+		void (__thiscall* saveBinary)(Object*, Stream*); // 0x18
 		bool (__thiscall * isEqual)(Object*, Object*); // 0x1C
 		void * getViewerStrings; // 0x20
 		void * addViewerStrings; // 0x24

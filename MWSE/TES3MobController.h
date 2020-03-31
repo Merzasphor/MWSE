@@ -4,6 +4,9 @@
 
 #include "TES3Collections.h"
 
+#include "NIPointer.h"
+#include "NINode.h"
+
 #include <Windows.h>
 
 namespace TES3 {
@@ -42,15 +45,15 @@ namespace TES3 {
 	};
 	static_assert(sizeof(MobController_0x24) == 0x830, "TES3::MobController_0x24 failed size validation");
 
-	struct MobController_0x28 {
-		Iterator<void> unknown_0x0;
-		int unknown_0x18;
-		_RTL_CRITICAL_SECTION criticalSection;
+	struct ProjectileController {
+		Iterator<MobileProjectile> activeProjectiles; // 0x0
+		NI::Pointer<NI::Node> worldProjectileRoot; // 0x14
+		_RTL_CRITICAL_SECTION criticalSection; // 0x18
 		int unknown_0x30;
 		int unknown_0x34;
 		int unknown_0x38;
 	};
-	static_assert(sizeof(MobController_0x28) == 0x3C, "TES3::MobController_0x28 failed size validation");
+	static_assert(sizeof(ProjectileController) == 0x3C, "TES3::ProjectileController failed size validation");
 
 	struct MobController {
 		MobController_0x0 * unknown_0x0;
@@ -63,7 +66,7 @@ namespace TES3 {
 		float unknown_0x1C; // Initialized to 46 degrees.
 		float unknown_0x20; // Initialized to cos(46 degrees)
 		MobController_0x24 * unknown_0x24; // Mobile actor controller?
-		MobController_0x28 * unknown_0x28;
+		ProjectileController* projectileController; // 0x28
 		bool unknown_0x2C;
 		Iterator<void> unknown_0x30;
 		int unknown_0x44;

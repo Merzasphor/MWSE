@@ -32,6 +32,16 @@ namespace TES3 {
 		return result;
 	}
 
+	const auto TES3_LeveledCreature_InsertEntry = reinterpret_cast<bool(__thiscall*)(LeveledCreature*, BaseObject*, short)>(0x4CFCC0);
+	bool LeveledCreature::insert(BaseObject* entry, short level) {
+		return TES3_LeveledCreature_InsertEntry(this, entry, level);
+	}
+
+	const auto TES3_LeveledCreature_RemoveEntry = reinterpret_cast<bool(__thiscall*)(LeveledCreature*, BaseObject*, short)>(0x4CFC40);
+	bool LeveledCreature::remove(BaseObject* entry, short level) {
+		return TES3_LeveledCreature_RemoveEntry(this, entry, level);
+	}
+
 	Object * LeveledItem::resolve() {
 		// Call the original function.
 		Object * result = reinterpret_cast<Object*(__thiscall *)(LeveledItem*)>(TES3_LeveledItem_resolve)(this);
@@ -53,5 +63,15 @@ namespace TES3 {
 		}
 
 		return result;
+	}
+
+	const auto TES3_LeveledItem_InsertEntry = reinterpret_cast<bool(__thiscall*)(LeveledItem*, BaseObject*, short)>(0x4D0EE0);
+	bool LeveledItem::insert(BaseObject* entry, short level) {
+		return TES3_LeveledItem_InsertEntry(this, entry, level);
+	}
+
+	const auto TES3_LeveledItem_RemoveEntry = reinterpret_cast<bool(__thiscall*)(LeveledItem*, BaseObject*, short)>(0x4D0E60);
+	bool LeveledItem::remove(BaseObject* entry, short level) {
+		return TES3_LeveledItem_RemoveEntry(this, entry, level);
 	}
 }

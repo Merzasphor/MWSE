@@ -76,6 +76,7 @@ namespace mwse {
 			usertypeDefinition["nextWeather"] = sol::readonly_property([](TES3::WeatherController& self) { return self.nextWeather; });
 
 			// Basic function bindings.
+			usertypeDefinition["calcSunDamageScalar"] = &TES3::WeatherController::calcSunDamageScalar;
 			usertypeDefinition["switchImmediate"] = [](TES3::WeatherController& self, int weatherId) {
 				if (self.lastActiveRegion) {
 					self.lastActiveRegion->currentWeatherIndex = weatherId;

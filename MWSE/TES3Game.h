@@ -20,7 +20,7 @@ namespace TES3 {
 		void * unknown_0x18;
 		void * unknown_0x1C;
 		void * unknown_0x20;
-		void * unknown_0x24;
+		void(__thiscall* setPixelShaderEnabled)(Game*, bool); // 0x24
 		void * unknown_0x28;
 		void * unknown_0x2C;
 		void * unknown_0x30;
@@ -31,7 +31,7 @@ namespace TES3 {
 		void * unknown_0x44;
 		void * unknown_0x48;
 		void * unknown_0x4C;
-		void(__thiscall * setGamma)(Game*, float);
+		void(__thiscall * setGamma)(Game*, float); // 0x50
 		void * unknown_0x54;
 		void * unknown_0x58;
 		void * unknown_0x5C;
@@ -44,23 +44,23 @@ namespace TES3 {
 		void * unknown_0x4;
 		int unknown_0x8;
 		int unknown_0xC;
-		int unknown_0x10;
-		int unknown_0x14;
-		int unknown_0x18;
-		char unknown_0x1C;
-		char unknown_0x1D;
-		char unknown_0x1E;
-		char unknown_0x1F;
-		char unknown_0x20;
-		char unknown_0x21;
+		int screenDepth; // 0x10
+		int backBuffers; // 0x14
+		int multiSamples; // 0x18
+		bool fullscreen; // 0x1C
+		bool stencil; // 0x1D
+		bool mipmap; // 0x1E
+		bool hardware; // 0x1F
+		bool pixelShader; // 0x20
+		bool multiPass; // 0x21
 		bool screenShotsEnabled; // 0x22
-		int unknown_0x24;
-		int unknown_0x28;
-		int unknown_0x2C;
-		int unknown_0x30;
-		int unknown_0x34;
-		int unknown_0x38;
-		float unknown_0x3C;
+		int vertexProcessing; // 0x24
+		int swapEffect; // 0x28
+		int refreshRate; // 0x2C
+		int adapter; // 0x30
+		int mipmapSkipLevel; // 0x34
+		int presentationInterval; // 0x38
+		float gamma; // 0x3C
 		int unknown_0x40;
 		int screenX; // 0x44
 		int screenY; // 0x48

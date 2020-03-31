@@ -757,6 +757,10 @@ local function buildNamedTypeEntry(folder, key, parent)
 	-- Load our base package.
 	local path = folder .. "\\" .. key .. ".lua"
 	local package = dofile(path)
+	if (package == nil) then
+		error("Could not execute typed entry: " .. path)
+	end
+
 	package.key = key
 	package.folder = folder
 	package.parent = parent

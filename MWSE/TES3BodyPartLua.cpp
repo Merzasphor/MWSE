@@ -6,6 +6,7 @@
 #include "TES3ObjectLua.h"
 
 #include "TES3BodyPart.h"
+#include "TES3BodyPartManager.h"
 #include "TES3WearablePart.h"
 
 namespace mwse {
@@ -61,6 +62,55 @@ namespace mwse {
 				usertypeDefinition["type"] = &TES3::WearablePart::bodypartID;
 				usertypeDefinition["male"] = &TES3::WearablePart::male;
 				usertypeDefinition["female"] = &TES3::WearablePart::female;
+			}
+
+			// Binding for TES3::BodyPartManager::AttachNode
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.new_usertype<TES3::BodyPartManager::AttachNode>("tes3bodyPartManagerAttachNode");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Basic property binding.
+				usertypeDefinition["flags"] = &TES3::BodyPartManager::AttachNode::flags;
+				usertypeDefinition["node"] = &TES3::BodyPartManager::AttachNode::node;
+				usertypeDefinition["rotation"] = &TES3::BodyPartManager::AttachNode::rotation;
+				usertypeDefinition["translation"] = &TES3::BodyPartManager::AttachNode::translation;
+			}
+
+			// Binding for TES3::BodyPartManager::ActiveBodyPart
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.new_usertype<TES3::BodyPartManager::ActiveBodyPart>("tes3bodyPartManagerActiveBodyPart");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Basic property binding.
+				usertypeDefinition["bodyPart"] = &TES3::BodyPartManager::ActiveBodyPart::bodyPart;
+				usertypeDefinition["flags"] = &TES3::BodyPartManager::ActiveBodyPart::flags;
+				usertypeDefinition["item"] = &TES3::BodyPartManager::ActiveBodyPart::item;
+				usertypeDefinition["node"] = &TES3::BodyPartManager::ActiveBodyPart::node;
+			}
+
+			// Binding for TES3::BodyPartManager
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.new_usertype<TES3::BodyPartManager>("tes3bodyPartManager");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Basic property binding.
+				usertypeDefinition["activeBodyParts"] = sol::readonly_property(&TES3::BodyPartManager::activeBodyParts);
+				usertypeDefinition["animationPhase"] = sol::readonly_property(&TES3::BodyPartManager::animationPhase);
+				usertypeDefinition["attachNodes"] = sol::readonly_property(&TES3::BodyPartManager::attachNodes);
+				usertypeDefinition["reference"] = sol::readonly_property(&TES3::BodyPartManager::reference);
+
+				// Basic function bindings.
+				usertypeDefinition["getActiveBodyPart"] = &TES3::BodyPartManager::getActiveBodyPart;
+				usertypeDefinition["getActiveBodyPartForItem"] = &TES3::BodyPartManager::getActiveBodyPartForItem;
+				usertypeDefinition["getActiveBodyPartNode"] = &TES3::BodyPartManager::getActiveBodyPartNode;
+				usertypeDefinition["removeEquippedLayers"] = &TES3::BodyPartManager::removeEquippedLayers;
+				usertypeDefinition["setActivePartData"] = &TES3::BodyPartManager::setActivePartData;
+				usertypeDefinition["setBodyPartByIdForItem"] = &TES3::BodyPartManager::setBodyPartByIdForItem;
+				usertypeDefinition["setBodyPartForItem"] = &TES3::BodyPartManager::setBodyPartForItem;
+				usertypeDefinition["updateForReference"] = &TES3::BodyPartManager::updateForReference;
 			}
 		}
 	}

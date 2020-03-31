@@ -6,6 +6,11 @@ return {
 			readonly = true,
 			description = "The number of seconds since the last frame.",
 		},
+		timestamp = {
+			type = "number",
+			readonly = true,
+			description = "The number of seconds since the beginning of the 3rd Era (similar to the Unix Epoch).",
+		},
 		menuMode = {
 			type = "boolean",
 			readonly = true,

@@ -4,10 +4,16 @@
 #include "TES3Defines.h"
 
 #include "TES3Collections.h"
+#include "TES3HashMap.h"
+#include "TES3MagicEffect.h"
 #include "TES3Skill.h"
+
+#include "TES3AnimationData.h"
 
 #include "NIAVObject.h"
 #include "NIPointer.h"
+
+#include <Windows.h>
 
 #define MWSE_CUSTOM_EFFECTS
 
@@ -17,19 +23,32 @@ namespace TES3 {
 		Success = 0x1,
 		Block = 0x2
 	};
+	enum class BaseAnimationIndex : int {
+		Male,
+		MaleFirstPerson,
+		Female,
+		FemaleFirstPerson,
+		COUNT
+	};
 
 	struct MeshData {
-		HashMap * NIFs; // 0x0
-		HashMap * KFs; // 0x4
+		HashMap<const char*, NI::Node*>* NIFs; // 0x0
+		HashMap<const char*, KeyframeDefinition*>* KFs; // 0x4
 
 		// Path is relative to Data Files.
-		NI::AVObject * loadMesh(const char* path);
+		NI::AVObject* loadMesh(const char* path);
+		KeyframeDefinition* loadKeyFrame(const char* path, const char* animation);
+	};
+
+	template <typename OT>
+	struct ObjectMapContainer {
+		HashMap<const char*, OT*>* map;
 	};
 
 	struct NonDynamicData {
-		long unknown_0x00;
+		int activeModCount; // 0x0
 		long unknown_0x04; // always 0?
-		void * unknown_0x08; // Points to info about the last loaded save?
+		GameFile* unknown_0x08; // Points to info about the last loaded save?
 		LinkedList<Object> * list; // 0x0C
 		LinkedList<Spell> * spellsList; // 0x10
 		MeshData * meshData; // 0x14
@@ -44,7 +63,7 @@ namespace TES3 {
 		Iterator<GlobalVariable> * globals; // 0x38
 		Iterator<Dialogue> * dialogues; // 0x3C
 		Iterator<Region> * regions; // 0x40
-		Iterator<void> * birthsigns; // 0x44
+		Iterator<BaseObject> * birthsigns; // 0x44
 		Iterator<StartScript> * startScripts; // 0x48
 		Skill skills[27]; // 0x4C
 #ifdef MWSE_CUSTOM_EFFECTS
@@ -53,38 +72,31 @@ namespace TES3 {
 #else
 		MagicEffect magicEffects[143]; // 0x5C8
 #endif
-		void * lights; // 0x9DB8
-		int unknown_0x9DBC[600];
-		void * unknown_0xA71C[4];
-		int unknown_0xA72C[4];
-		int unknown_0xA73C[450];
-		void * unknown_0xAE44[3];
-		int unknown_0xAE50;
-		int unknown_0xAE54;
-		int unknown_0xAE58;
-		int sgWireframeProperty; // 0xAE5C
-		void * TESFiles; // 0xAE60
-		GameFile * activeMods[256]; // 0xAE64
+		StlList<Light>* lights; // 0x9DB8
+		AnimationGroup* baseAnimationGroups[4][150]; // 0x9DBC
+		NI::Pointer<NI::Node> baseSkeletons[4]; // 0xA71C
+		KeyframeDefinition* baseAnimations[4]; // 0xA72C
+		AnimationGroup* baseBeastAnimationGroups[3][150]; // 0xA73C
+		NI::Pointer<NI::Node> baseBeastSkeletons[3]; // 0x0xAE44
+		KeyframeDefinition* baseBeastAnimations[3]; // 0xAE50
+		NI::Pointer<NI::Property> collisionWireframeProperty; // 0xAE5C
+		StlList<GameFile>* TESFiles; // 0xAE60
+		GameFile* activeMods[256]; // 0xAE64
 		StlList<Cell> * cells; // 0xB264
-		HashMap * allObjectsById; // 0xB268
-		HashMap * unknown_0xB26C;
+		ObjectMapContainer<BaseObject>* allObjectsById; // 0xB268
+		ObjectMapContainer<Dialogue>* allDialoguesById; // 0xB26C
 		char dataFilesPath[260]; // 0xB270
 		char unknown_0xB374;
-		char unknown_0xB375;
-		char unknown_0xB376;
+		bool isSaving; // 0xB375
+		bool isModifyingMasters; // 0xB376
 		char unknown_0xB377;
 		char unknown_0xB378;
 		char unknown_0xB379;
 		char unknown_0xB37A;
-		Iterator<void> * unknown_0xB37C;
+		Iterator<BaseObject>* initiallyLoadedObjects; // 0xB37C
 		NI::Pointer<NI::SourceTexture> mapTexture; // 0xB380
 		Reference * playerSaveGame; // 0xB384
-		int unknown_0xB388;
-		int unknown_0xB38C;
-		int unknown_0xB390;
-		int unknown_0xB394;
-		int unknown_0xB398;
-		int unknown_0xB39C;
+		_RTL_CRITICAL_SECTION criticalSection; // 0xB388
 		int unknown_0xB3A0;
 		int unknown_0xB3A4;
 		int unknown_0xB3A8;
@@ -111,6 +123,7 @@ namespace TES3 {
 
 		Cell * getCellByGrid(int x, int y);
 		Cell * getCellByName(const char* name);
+		Region* getRegion(const char* id);
 
 		MagicEffect * getMagicEffect(int id);
 
@@ -192,7 +205,7 @@ namespace TES3 {
 		Cell ** exteriorCellBuffer; // 0xB4
 		int unknown_0xB8;
 		int unknown_0xBC;
-		Iterator<void> collisionGrid[2304]; // 0xC0
+		Iterator<Reference> collisionReferenceGrid[48][48]; // 0xC0
 		int collision_0xB4C0;
 		int collision_0xB4C4;
 		int collision_0xB4C8;
@@ -212,7 +225,7 @@ namespace TES3 {
 		char unknown_0xB4E5;
 		char unknown_0xB4E6;
 		char unknown_0xB4E7;
-		void * textureManager;
+		HashMap<const char*, NI::Pointer<NI::SourceTexture>>* textures; // 0xB4E8
 		void * waterController;
 		int unknown_0xB4F0;
 		int unknown_0xB4F4;
@@ -249,8 +262,8 @@ namespace TES3 {
 		char unknown_0xB531;
 		char unknown_0xB532;
 		char unknown_0xB533;
-		void * criticalSectionAudioEvents; // 0xB534
-		void * criticalSection; // 0xB538
+		_RTL_CRITICAL_SECTION* criticalSectionAudioEvents; // 0xB534
+		_RTL_CRITICAL_SECTION* criticalSection; // 0xB538
 		bool useCellTransitionFader;
 		char unknown_0xB53D;
 		char unknown_0xB53E;

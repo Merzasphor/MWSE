@@ -28,6 +28,7 @@ namespace TES3 {
 	struct BaseObject;
 	struct BaseObjectVirtualTable;
 	struct BodyPart;
+	struct BodyPartManager;
 	struct Book;
 	struct BoundingBox;
 	struct Cell;
@@ -65,6 +66,7 @@ namespace TES3 {
 	struct Item;
 	struct ItemData;
 	struct ItemStack;
+	struct KeyframeDefinition;
 	struct Land;
 	struct LandTexture;
 	struct LeveledCreature;
