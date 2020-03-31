@@ -1,6 +1,7 @@
 #pragma once
 
 #include "NIDefines.h"
+#include "NIPointer.h"
 
 #include "sol_forward.hpp"
 
@@ -57,8 +58,9 @@ namespace NI {
 		//
 
 		// Storage for cached userdata.
-		static sol::object getOrCreateLuaObject(lua_State* L, const Object* object);
-		static int pushCachedLuaObject(lua_State* L, const Object* object);
+		static sol::object getOrCreateLuaObject(lua_State* L, Object* object);
+		static int pushCachedLuaObject(lua_State* L, Object* object);
+
 		static void clearCachedLuaObject(const Object* object);
 		static void clearCachedLuaObjects();
 
@@ -88,11 +90,13 @@ namespace NI {
 }
 
 #define MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(T)\
-int sol_lua_push(sol::types<T*>, lua_State* L, const T* object);\
-int sol_lua_push(sol::types<T>, lua_State* L, const T& object);
+int sol_lua_push(sol::types<T*>, lua_State* L, T* object);\
+int sol_lua_push(sol::types<T>, lua_State* L, T& object);\
+int sol_lua_push(sol::types<NI::Pointer<T>>, lua_State* L, NI::Pointer<T>& object);
 #define MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(T)\
-int sol_lua_push(sol::types<T*>, lua_State* L, const T* object) { return T::pushCachedLuaObject(L, object); }\
-int sol_lua_push(sol::types<T>, lua_State* L, const T& object) { return T::pushCachedLuaObject(L, &object); }
+int sol_lua_push(sol::types<T*>, lua_State* L, T* object) { return T::pushCachedLuaObject(L, object); }\
+int sol_lua_push(sol::types<T>, lua_State* L, T& object) { return T::pushCachedLuaObject(L, &object); }\
+int sol_lua_push(sol::types<NI::Pointer<T>>, lua_State* L, NI::Pointer<T>& object) { return T::pushCachedLuaObject(L, object); }
 
 MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::AlphaProperty);
 MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::AmbientLight);
