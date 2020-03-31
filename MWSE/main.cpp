@@ -36,8 +36,6 @@
 #include "LuaManager.h"
 #include "TES3Game.h"
 
-#include <unordered_set>
-
 TES3MACHINE* mge_virtual_machine = NULL;
 
 struct VersionStruct {
@@ -129,11 +127,13 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 			}
 			std::filesystem::rename("MWSE-Update.tmp", "MWSE-Update.exe");
 		}
+
+		// List of temporary files that the updater couldn't update, and so need to be swapped out.
+		std::vector<std::string> updaterTempFiles;
+		updaterTempFiles.push_back("MWSE-Update.exe");
+		updaterTempFiles.push_back("Newtonsoft.Json.dll");
 		
 		// Look to see if an update to the MWSE Updater was downloaded. If so, swap the temp files.
-		std::unordered_set<std::string> updaterTempFiles;
-		updaterTempFiles.insert("MWSE-Update.exe");
-		updaterTempFiles.insert("Newtonsoft.Json.dll");
 		for (const std::string& destFile : updaterTempFiles) {
 			const std::string tempFile = destFile + ".tmp";
 			if (std::filesystem::exists(tempFile)) {
