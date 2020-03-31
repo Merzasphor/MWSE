@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 
-// Copyright (c) 2013-2019 Rapptz, ThePhD and contributors
+// Copyright (c) 2013-2020 Rapptz, ThePhD and contributors
 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -20,8 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 // This file was generated with a script.
-// Generated 2020-01-17 10:21:30.504542 UTC
-// This header was generated with sol v3.2.0 (revision 1c89390)
+// Generated 2020-03-31 04:18:51.740568 UTC
+// This header was generated with sol v3.2.0 (revision 82812c5)
 // https://github.com/ThePhD/sol2
 
 #ifndef SOL_SINGLE_INCLUDE_HPP
@@ -60,13 +60,10 @@
 
 // beginning of sol/feature_test.hpp
 
-#if (defined(__cplusplus) && __cplusplus >= 201703L) || (defined(_MSC_VER) && _MSC_VER > 1900 && ((defined(_HAS_CXX17) && _HAS_CXX17 == 1) || (defined(_MSVC_LANG) && (_MSVC_LANG > 201402L))))
-#ifndef SOL_CXX17_FEATURES
-#define SOL_CXX17_FEATURES 1
-#endif // C++17 features macro
+#if (defined(__cplusplus) && __cplusplus >= 201703L) \
+     || (defined(_MSC_VER) && _MSC_VER > 1900 && ((defined(_HAS_CXX17) && _HAS_CXX17 == 1) || (defined(_MSVC_LANG) && (_MSVC_LANG > 201402L))))
 #endif // C++17 features check
 
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
 #if defined(__cpp_noexcept_function_type) || ((defined(_MSC_VER) && _MSC_VER > 1911) && (defined(_MSVC_LANG) && ((_MSVC_LANG >= 201403L))))
 #ifndef SOL_NOEXCEPT_FUNCTION_TYPE
 #define SOL_NOEXCEPT_FUNCTION_TYPE 1
@@ -81,156 +78,116 @@
 #else
 #define SOL_STD_VARIANT 1
 #endif // Clang screws up variant
-#endif // C++17 only
 
 // beginning of sol/config.hpp
 
 #ifdef _MSC_VER
-	#if defined(_DEBUG) && !defined(NDEBUG)
-		#ifndef SOL_IN_DEBUG_DETECTED
-			#define SOL_IN_DEBUG_DETECTED 1
-		#endif
-	#endif // VC++ Debug macros
+#if defined(_DEBUG) && !defined(NDEBUG)
+#ifndef SOL_IN_DEBUG_DETECTED
+#define SOL_IN_DEBUG_DETECTED 1
+#endif
+#endif // VC++ Debug macros
 
-	#if !defined(_CPPUNWIND)
-		#if !defined(SOL_NO_EXCEPTIONS)
-			#define SOL_NO_EXCEPTIONS 1
-		#endif
-	#endif // Automatic Exceptions
+#if !defined(_CPPUNWIND)
+#if !defined(SOL_NO_EXCEPTIONS)
+#define SOL_NO_EXCEPTIONS 1
+#endif
+#endif // Automatic Exceptions
 
-	#if !defined(_CPPRTTI)
-		#if !defined(SOL_NO_RTTI)
-			#define SOL_NO_RTTI 1
-		#endif
-	#endif // Automatic RTTI
+#if !defined(_CPPRTTI)
+#if !defined(SOL_NO_RTTI)
+#define SOL_NO_RTTI 1
+#endif
+#endif // Automatic RTTI
 #elif defined(__GNUC__) || defined(__clang__)
 
-	#if !defined(NDEBUG) && !defined(__OPTIMIZE__)
-		#if !defined(SOL_IN_DEBUG_DETECTED)
-			#define SOL_IN_DEBUG_DETECTED 1
-		#endif
-	#endif // Not Debug && g++ optimizer flag
+#if !defined(NDEBUG) && !defined(__OPTIMIZE__)
+#if !defined(SOL_IN_DEBUG_DETECTED)
+#define SOL_IN_DEBUG_DETECTED 1
+#endif
+#endif // Not Debug && g++ optimizer flag
 
-	#if !defined(__EXCEPTIONS)
-		#if !defined(SOL_NO_EXCEPTIONS)
-			#define SOL_NO_EXCEPTIONS 1
-		#endif
-	#endif // No Exceptions
+#if !defined(__EXCEPTIONS)
+#if !defined(SOL_NO_EXCEPTIONS)
+#define SOL_NO_EXCEPTIONS 1
+#endif
+#endif // No Exceptions
 
-	#if !defined(__GXX_RTTI)
-		#if !defined(SOL_NO_RTTI)
-			#define SOL_NO_RTTI 1
-		#endif
-	#endif // No RTTI
+#if !defined(__GXX_RTTI)
+#if !defined(SOL_NO_RTTI)
+#define SOL_NO_RTTI 1
+#endif
+#endif // No RTTI
 
 #endif // vc++ || clang++/g++
 
 #if defined(SOL_CHECK_ARGUMENTS) && SOL_CHECK_ARGUMENTS != 0
-	#if defined(SOL_ALL_SAFETIES_ON)
-		#define SOL_ALL_SAFETIES_ON 1
-	#endif // turn all the safeties on
+#if defined(SOL_ALL_SAFETIES_ON)
+#define SOL_ALL_SAFETIES_ON 1
+#endif // turn all the safeties on
 #endif // Compatibility Define for Safety
 
 #if defined(SOL_ALL_SAFETIES_ON) && SOL_ALL_SAFETIES_ON != 0
 
-	// Checks low-level getter function
-	// (and thusly, affects nearly entire framework)
-	#if !defined(SOL_SAFE_GETTER)
-		#define SOL_SAFE_GETTER 1
-	#endif
+#if !defined(SOL_SAFE_GETTER)
+#define SOL_SAFE_GETTER 1
+#endif
 
-	// Checks access on usertype functions
-	// local my_obj = my_type.new()
-	// my_obj.my_member_function()
-	// -- bad syntax and crash
-	#if !defined(SOL_SAFE_USERTYPE)
-		#define SOL_SAFE_USERTYPE 1
-	#endif
+#if !defined(SOL_SAFE_USERTYPE)
+#define SOL_SAFE_USERTYPE 1
+#endif
 
-	// Checks sol::reference derived boundaries
-	// sol::function ref(L, 1);
-	// sol::userdata sref(L, 2);
-	#if !defined(SOL_SAFE_REFERENCES)
-		#define SOL_SAFE_REFERENCES 1
-	#endif
+#if !defined(SOL_SAFE_REFERENCES)
+#define SOL_SAFE_REFERENCES 1
+#endif
 
-	// Changes all typedefs of sol::function to point to the 
-	// protected_function version, instead of unsafe_function
-	#if !defined(SOL_SAFE_FUNCTION)
-		#define SOL_SAFE_FUNCTION 1
-	#endif
+#if !defined(SOL_SAFE_FUNCTION)
+#define SOL_SAFE_FUNCTION 1
+#endif
 
-	// Checks function parameters and
-	// returns upon call into/from Lua
-	// local a = 1
-	// local b = "woof"
-	// my_c_function(a, b)
-	#if !defined(SOL_SAFE_FUNCTION_CALLS)
-		#define SOL_SAFE_FUNCTION_CALLS 1
-	#endif
+#if !defined(SOL_SAFE_FUNCTION_CALLS)
+#define SOL_SAFE_FUNCTION_CALLS 1
+#endif
 
-	// Checks conversions
-	// int v = lua["bark"];
-	// int v2 = my_sol_function();
-	#if !defined(SOL_SAFE_PROXIES)
-		#define SOL_SAFE_PROXIES 1
-	#endif
+#if !defined(SOL_SAFE_PROXIES)
+#define SOL_SAFE_PROXIES 1
+#endif
 
-	// Check overflowing number conversions
-	// for things like 64 bit integers that don't fit in a typical lua_Number
-	// for Lua 5.1 and 5.2
-	#if !defined(SOL_SAFE_NUMERICS)
-		#define SOL_SAFE_NUMERICS 1
-	#endif
+#if !defined(SOL_SAFE_NUMERICS)
+#define SOL_SAFE_NUMERICS 1
+#endif
 
-	// Turn off Number Precision Checks
-	// if this is defined, we do not do range 
-	// checks on integers / unsigned integers that might
-	// be bigger than what Lua can represent
-	#if !defined(SOL_NO_CHECK_NUMBER_PRECISION)
-	// off by default
-		#define SOL_NO_CHECK_NUMBER_PRECISION 0
-	#endif
+#if !defined(SOL_NO_CHECK_NUMBER_PRECISION)
+#define SOL_NO_CHECK_NUMBER_PRECISION 0
+#endif
 
-	// Print any exceptions / errors that occur
-	// in debug mode to the default error stream / console
-	#if !defined(SOL_SAFE_STACK_CHECK)
-		#define SOL_SAFE_STACK_CHECK 1
-	#endif
+#if !defined(SOL_SAFE_STACK_CHECK)
+#define SOL_SAFE_STACK_CHECK 1
+#endif
 
 #endif // Turn on Safety for all if top-level macro is defined
 
 #if defined(SOL_IN_DEBUG_DETECTED) && SOL_IN_DEBUG_DETECTED != 0
 
-	#if !defined(SOL_SAFE_REFERENCES)
-	// Ensure that references are forcefully type-checked upon construction
-		#define SOL_SAFE_REFERENCES 1
-	#endif
+#if !defined(SOL_SAFE_REFERENCES)
+#define SOL_SAFE_REFERENCES 1
+#endif
 
-	// Safe usertypes checks for errors such as
-	// obj = my_type.new()
-	// obj.f() -- note the '.' instead of ':'
-	// usertypes should be safe no matter what
-	#if !defined(SOL_SAFE_USERTYPE)
-		#define SOL_SAFE_USERTYPE 1
-	#endif
+#if !defined(SOL_SAFE_USERTYPE)
+#define SOL_SAFE_USERTYPE 1
+#endif
 
-	#if !defined(SOL_SAFE_FUNCTION_CALLS)
-	// Function calls from Lua should be automatically safe in debug mode
-		#define SOL_SAFE_FUNCTION_CALLS 1
-	#endif
+#if !defined(SOL_SAFE_FUNCTION_CALLS)
+#define SOL_SAFE_FUNCTION_CALLS 1
+#endif
 
-	// Print any exceptions / errors that occur
-	// in debug mode to the default error stream / console
-	#if !defined(SOL_PRINT_ERRORS)
-		#define SOL_PRINT_ERRORS 1
-	#endif
+#if !defined(SOL_PRINT_ERRORS)
+#define SOL_PRINT_ERRORS 1
+#endif
 
-	// Print any exceptions / errors that occur
-	// in debug mode to the default error stream / console
-	#if !defined(SOL_SAFE_STACK_CHECK)
-		#define SOL_SAFE_STACK_CHECK 1
-	#endif
+#if !defined(SOL_SAFE_STACK_CHECK)
+#define SOL_SAFE_STACK_CHECK 1
+#endif
 
 #endif // DEBUG: Turn on all debug safety features for VC++ / g++ / clang++ and similar
 
@@ -251,12 +208,6 @@
 #define SOL_NO_NIL 1
 #endif
 #endif // avoiding nil defines / keywords
-
-#if defined(SOL_USE_BOOST) && SOL_USE_BOOST
-#if !defined(SOL_UNORDERED_MAP_COMPATIBLE_HASH)
-#define SOL_UNORDERED_MAP_COMPATIBLE_HASH 1
-#endif // SOL_UNORDERED_MAP_COMPATIBLE_HASH
-#endif 
 
 #ifndef SOL_STACK_STRING_OPTIMIZATION_SIZE
 #define SOL_STACK_STRING_OPTIMIZATION_SIZE 1024
@@ -1261,149 +1212,20 @@ namespace sol {
 // beginning of sol/string_view.hpp
 
 #include <string>
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
-#endif // C++17 features
 #include <functional>
 #if defined(SOL_USE_BOOST) && SOL_USE_BOOST
 #include <boost/functional/hash.hpp>
 #endif
 
 namespace sol {
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
 	template <typename C, typename T = std::char_traits<C>>
 	using basic_string_view = std::basic_string_view<C, T>;
+
 	typedef std::string_view string_view;
 	typedef std::wstring_view wstring_view;
 	typedef std::u16string_view u16string_view;
 	typedef std::u32string_view u32string_view;
 	typedef std::hash<std::string_view> string_view_hash;
-#else
-	template <typename Char, typename Traits = std::char_traits<Char>>
-	struct basic_string_view {
-		std::size_t s;
-		const Char* p;
-
-		basic_string_view(const std::string& r)
-		: basic_string_view(r.data(), r.size()) {
-		}
-		constexpr basic_string_view(const Char* ptr) : basic_string_view(ptr, Traits::length(ptr)) {
-		}
-		constexpr basic_string_view(const Char* ptr, std::size_t sz) : s(sz), p(ptr) {
-		}
-
-		static int compare(const Char* lhs_p, std::size_t lhs_sz, const Char* rhs_p, std::size_t rhs_sz) {
-			int result = Traits::compare(lhs_p, rhs_p, lhs_sz < rhs_sz ? lhs_sz : rhs_sz);
-			if (result != 0)
-				return result;
-			if (lhs_sz < rhs_sz)
-				return -1;
-			if (lhs_sz > rhs_sz)
-				return 1;
-			return 0;
-		}
-
-		constexpr const Char* begin() const {
-			return p;
-		}
-
-		constexpr const Char* end() const {
-			return p + s;
-		}
-
-		constexpr const Char* cbegin() const {
-			return p;
-		}
-
-		constexpr const Char* cend() const {
-			return p + s;
-		}
-
-		constexpr const Char* data() const {
-			return p;
-		}
-
-		constexpr std::size_t size() const {
-			return s;
-		}
-
-		constexpr std::size_t length() const {
-			return size();
-		}
-
-		operator std::basic_string<Char, Traits>() const {
-			return std::basic_string<Char, Traits>(data(), size());
-		}
-
-		bool operator==(const basic_string_view& r) const {
-			return compare(p, s, r.data(), r.size()) == 0;
-		}
-
-		bool operator==(const Char* r) const {
-			return compare(r, Traits::length(r), p, s) == 0;
-		}
-
-		bool operator==(const std::basic_string<Char, Traits>& r) const {
-			return compare(r.data(), r.size(), p, s) == 0;
-		}
-
-		bool operator!=(const basic_string_view& r) const {
-			return !(*this == r);
-		}
-
-		bool operator!=(const char* r) const {
-			return !(*this == r);
-		}
-
-		bool operator!=(const std::basic_string<Char, Traits>& r) const {
-			return !(*this == r);
-		}
-	};
-
-	template <typename Ch, typename Tr = std::char_traits<Ch>>
-	struct basic_string_view_hash {
-		typedef basic_string_view<Ch, Tr> argument_type;
-		typedef std::size_t result_type;
-
-		template <typename Al>
-		result_type operator()(const std::basic_string<Ch, Tr, Al>& r) const {
-			return (*this)(argument_type(r.c_str(), r.size()));
-		}
-
-		result_type operator()(const argument_type& r) const {
-#if defined(SOL_USE_BOOST) && SOL_USE_BOOST
-			return boost::hash_range(r.begin(), r.end());
-#else
-			// Modified, from libstdc++
-			// An implementation attempt at Fowler No Voll, 1a.
-			// Supposedly, used in MSVC,
-			// GCC (libstdc++) uses MurmurHash of some sort for 64-bit though...?
-			// But, well. Can't win them all, right?
-			// This should normally only apply when NOT using boost,
-			// so this should almost never be tapped into...
-			std::size_t hash = 0;
-			const unsigned char* cptr = reinterpret_cast<const unsigned char*>(r.data());
-			for (std::size_t sz = r.size(); sz != 0; --sz) {
-				hash ^= static_cast<size_t>(*cptr++);
-				hash *= static_cast<size_t>(1099511628211ULL);
-			}
-			return hash; 
-#endif
-		}
-	};
-} // namespace sol
-
-namespace std {
-	template <typename Ch, typename Tr>
-	struct hash< ::sol::basic_string_view<Ch, Tr> > : ::sol::basic_string_view_hash<Ch, Tr> {};
-} // namespace std
-
-namespace sol {
-	using string_view = basic_string_view<char>;
-	using wstring_view = basic_string_view<wchar_t>;
-	using u16string_view = basic_string_view<char16_t>;
-	using u32string_view = basic_string_view<char32_t>;
-	using string_view_hash = std::hash<string_view>;
-#endif // C++17 Support
 } // namespace sol
 
 // end of sol/string_view.hpp
@@ -1571,8 +1393,8 @@ namespace sol { namespace meta {
 			          struct count_when_for_pack<When, Limit, I, Pred, T, Ts...> : conditional_t < sizeof...(Ts)
 			     == 0
 			|| Limit<2, std::integral_constant<std::size_t, I + static_cast<std::size_t>(Limit != 0 && Pred<T>::value)>,
-			        count_when_for_pack<When, Limit - static_cast<std::size_t>(When<T, std::integral_constant<std::size_t, I>>::value),
-			             I + static_cast<std::size_t>(When<T, std::integral_constant<std::size_t, I>>::value&& Pred<T>::value), Pred, Ts...>> {};
+			     count_when_for_pack<When, Limit - static_cast<std::size_t>(When<T, std::integral_constant<std::size_t, I>>::value),
+			          I + static_cast<std::size_t>(When<T, std::integral_constant<std::size_t, I>>::value&& Pred<T>::value), Pred, Ts...>> {};
 	} // namespace meta_detail
 
 	template <template <typename...> class Pred, typename... Ts>
@@ -1660,7 +1482,7 @@ namespace sol { namespace meta {
 			std::enable_if_t<!std::is_final<unqualified_t<T>>::value && std::is_class<unqualified_t<T>>::value
 			     && std::is_destructible<unqualified_t<T>>::value>> {
 			struct F {
-				void operator()(){};
+				void operator()() {};
 			};
 			struct Derived : T, F {};
 			template <typename U, U>
@@ -1680,7 +1502,7 @@ namespace sol { namespace meta {
 			std::enable_if_t<!std::is_final<unqualified_t<T>>::value && std::is_class<unqualified_t<T>>::value
 			     && !std::is_destructible<unqualified_t<T>>::value>> {
 			struct F {
-				void operator()(){};
+				void operator()() {};
 			};
 			struct Derived : T, F {
 				~Derived() = delete;
@@ -1985,25 +1807,15 @@ namespace sol { namespace meta {
 	template <typename T, typename CharT>
 	struct is_string_view_of : std::false_type {};
 
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
 	template <typename CharT, typename CharTargetT, typename TraitsT>
 	struct is_string_view_of<std::basic_string_view<CharT, TraitsT>, CharTargetT> : std::is_same<CharT, CharTargetT> {};
-#else
-	template <typename CharT, typename CharTargetT, typename TraitsT>
-	struct is_string_view_of<basic_string_view<CharT, TraitsT>, CharTargetT> : std::is_same<CharT, CharTargetT> {};
-#endif
 
 	template <typename T, typename CharT>
 	constexpr inline bool is_string_view_of_v = is_string_view_of<T, CharT>::value;
 
 	template <typename T>
-	using is_string_like = meta::boolean<is_specialization_of_v<T, std::basic_string>
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
-		|| is_specialization_of_v<T, std::basic_string_view>
-#else
-		|| is_specialization_of_v<T, basic_string_view>
-#endif
-		|| is_string_literal_array_v<T>>;
+	using is_string_like
+		= meta::boolean<is_specialization_of_v<T, std::basic_string> || is_specialization_of_v<T, std::basic_string_view> || is_string_literal_array_v<T>>;
 
 	template <typename T>
 	constexpr inline bool is_string_like_v = is_string_like<T>::value;
@@ -2011,11 +1823,7 @@ namespace sol { namespace meta {
 	template <typename T, typename CharT = char>
 	using is_string_constructible = meta::boolean<
 		is_string_literal_array_of_v<T,
-		     CharT> || std::is_same_v<T, const CharT*> || std::is_same_v<T, CharT> || is_string_of_v<T, CharT> || std::is_same_v<T, std::initializer_list<CharT>>
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
-		|| is_string_view_of_v<T, CharT>
-#endif
-		>;
+		     CharT> || std::is_same_v<T, const CharT*> || std::is_same_v<T, CharT> || is_string_of_v<T, CharT> || std::is_same_v<T, std::initializer_list<CharT>> || is_string_view_of_v<T, CharT>>;
 
 	template <typename T, typename CharT = char>
 	constexpr inline bool is_string_constructible_v = is_string_constructible<T, CharT>::value;
@@ -3628,63 +3436,19 @@ namespace sol {
 
 namespace sol {
 
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
 	using in_place_t = std::in_place_t;
-	constexpr std::in_place_t in_place{};
-	constexpr std::in_place_t in_place_of{};
+	constexpr std::in_place_t in_place {};
+	constexpr std::in_place_t in_place_of {};
 
 	template <typename T>
 	using in_place_type_t = std::in_place_type_t<T>;
 	template <typename T>
-	constexpr std::in_place_type_t<T> in_place_type{};
+	constexpr std::in_place_type_t<T> in_place_type {};
 
 	template <size_t I>
 	using in_place_index_t = std::in_place_index_t<I>;
 	template <size_t I>
-	constexpr in_place_index_t<I> in_place_index{};
-#else
-	namespace detail {
-		struct in_place_of_tag {};
-		template <std::size_t I>
-		struct in_place_of_i {};
-		template <typename T>
-		struct in_place_of_t {};
-	} // namespace detail
-
-	struct in_place_tag {
-		constexpr in_place_tag() = default;
-	};
-
-	constexpr inline in_place_tag in_place(detail::in_place_of_tag) {
-		return in_place_tag();
-	}
-	template <typename T>
-	constexpr inline in_place_tag in_place(detail::in_place_of_t<T>) {
-		return in_place_tag();
-	}
-	template <std::size_t I>
-	constexpr inline in_place_tag in_place(detail::in_place_of_i<I>) {
-		return in_place_tag();
-	}
-
-	constexpr inline in_place_tag in_place_of(detail::in_place_of_tag) {
-		return in_place_tag();
-	}
-	template <typename T>
-	constexpr inline in_place_tag in_place_type(detail::in_place_of_t<T>) {
-		return in_place_tag();
-	}
-	template <std::size_t I>
-	constexpr inline in_place_tag in_place_index(detail::in_place_of_i<I>) {
-		return in_place_tag();
-	}
-
-	using in_place_t = in_place_tag (&)(detail::in_place_of_tag);
-	template <typename T>
-	using in_place_type_t = in_place_tag (&)(detail::in_place_of_t<T>);
-	template <std::size_t I>
-	using in_place_index_t = in_place_tag (&)(detail::in_place_of_i<I>);
-#endif
+	constexpr in_place_index_t<I> in_place_index {};
 
 } // namespace sol
 
@@ -5925,9 +5689,7 @@ namespace std {
 
 #endif // Boost vs. Better optional
 
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
 #include <optional>
-#endif
 
 namespace sol {
 
@@ -5940,13 +5702,8 @@ namespace sol {
 
 	namespace meta {
 		template <typename T>
-		using is_optional = any<
-			is_specialization_of<T, optional>
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
-		     , is_specialization_of<T, std::optional>
-#endif
-		>;
-		
+		using is_optional = any<is_specialization_of<T, optional>, is_specialization_of<T, std::optional>>;
+
 		template <typename T>
 		constexpr inline bool is_optional_v = is_optional<T>::value;
 	} // namespace meta
@@ -6295,33 +6052,31 @@ namespace sol { namespace detail {
 
 // end of sol/ebco.hpp
 
+// beginning of sol/map.hpp
+
+#include <unordered_map>
+
+#if defined(SOL_USE_BOOST)
+#include <boost/unordered_map.hpp>
+#endif // Use boost here: transparent hash ability is good
+
+namespace sol { namespace detail {
+#if defined(SOL_USE_BOOST)
+	template <typename K, typename V, typename H = boost::hash<K>, typename E = std::equal_to<>>
+	using unordered_map = boost::unordered_map<K, V, H, E>;
+#else
+	template <typename K, typename V, typename H = std::hash<K>, typename E = std::equal_to<>>
+	using unordered_map = std::unordered_map<K, V, H, E>;
+#endif // Boost map target
+}}     // namespace sol::detail
+
+// end of sol/map.hpp
+
 #include <initializer_list>
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
 #ifdef SOL_STD_VARIANT
 #endif
-#endif // C++17
-#ifdef SOL_USE_BOOST
-#include <boost/unordered_map.hpp>
-#else
-#include <unordered_map>
-#endif // Using Boost
 
 namespace sol {
-	namespace usertype_detail {
-#if defined(SOL_USE_BOOST)
-#if defined(SOL_CXX17_FEATURES)
-		template <typename K, typename V, typename H = std::hash<K>, typename E = std::equal_to<>>
-		using map_t = boost::unordered_map<K, V, H, E>;
-#else
-		template <typename K, typename V, typename H = boost::hash<K>, typename E = std::equal_to<>>
-		using map_t = boost::unordered_map<K, V, H, E>;
-#endif // C++17 or not, WITH boost
-#else
-		template <typename K, typename V, typename H = std::hash<K>, typename E = std::equal_to<>>
-		using map_t = std::unordered_map<K, V, H, E>;
-#endif // Boost map target
-	} // namespace usertype_detail
-
 	namespace detail {
 #ifdef SOL_NOEXCEPT_FUNCTION_TYPE
 		typedef int (*lua_CFunction_noexcept)(lua_State* L) noexcept;
@@ -6348,11 +6103,11 @@ namespace sol {
 		};
 
 		struct yield_tag_t {};
-		const yield_tag_t yield_tag = yield_tag_t{};
+		const yield_tag_t yield_tag = yield_tag_t {};
 	} // namespace detail
 
 	struct lua_nil_t {};
-	inline constexpr lua_nil_t lua_nil{};
+	inline constexpr lua_nil_t lua_nil {};
 	inline bool operator==(lua_nil_t, lua_nil_t) {
 		return true;
 	}
@@ -6619,6 +6374,8 @@ namespace sol {
 		T value_;
 
 	public:
+		using nested_type = T;
+
 		nested() = default;
 		nested(const nested&) = default;
 		nested(nested&&) = default;
@@ -6651,7 +6408,7 @@ namespace sol {
 	};
 
 	struct nested_tag_t {};
-	constexpr inline nested_tag_t nested_tag{};
+	constexpr inline nested_tag_t nested_tag {};
 
 	template <typename T>
 	as_table_t<T> as_table_ref(T&& container) {
@@ -6939,7 +6696,7 @@ namespace sol {
 	};
 
 	inline const std::string& to_string(call_status c) {
-		static const std::array<std::string, 10> names{ { "ok",
+		static const std::array<std::string, 10> names { { "ok",
 			"yielded",
 			"runtime",
 			"memory",
@@ -6990,7 +6747,7 @@ namespace sol {
 	}
 
 	inline const std::string& to_string(load_status c) {
-		static const std::array<std::string, 7> names{
+		static const std::array<std::string, 7> names {
 			{ "ok", "memory", "gc", "syntax", "file", "CRITICAL_EXCEPTION_FAILURE", "CRITICAL_INDETERMINATE_STATE_FAILURE" }
 		};
 		switch (c) {
@@ -7013,7 +6770,7 @@ namespace sol {
 	}
 
 	inline const std::string& to_string(load_mode c) {
-		static const std::array<std::string, 3> names{ {
+		static const std::array<std::string, 3> names { {
 			"bt",
 			"t",
 			"b",
@@ -7071,7 +6828,7 @@ namespace sol {
 			"__newindex",
 			"__mode",
 			"__call",
-			"__mt",
+			"__metatable",
 			"__tostring",
 			"__len",
 			"__unm",
@@ -7322,10 +7079,8 @@ namespace sol {
 		template <typename T>
 		struct lua_type_of<optional<T>> : std::integral_constant<type, type::poly> {};
 
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
 		template <typename T>
 		struct lua_type_of<std::optional<T>> : std::integral_constant<type, type::poly> {};
-#endif // std::optional
 
 		template <>
 		struct lua_type_of<variadic_args> : std::integral_constant<type, type::poly> {};
@@ -7361,12 +7116,10 @@ namespace sol {
 		template <>
 		struct lua_type_of<meta_function> : std::integral_constant<type, type::string> {};
 
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
 #if defined(SOL_STD_VARIANT) && SOL_STD_VARIANT
 		template <typename... Tn>
 		struct lua_type_of<std::variant<Tn...>> : std::integral_constant<type, type::poly> {};
 #endif // SOL_STD_VARIANT
-#endif // SOL_CXX17_FEATURES
 
 		template <typename T>
 		struct lua_type_of<nested<T>> : meta::conditional_t<::sol::is_container_v<T>, std::integral_constant<type, type::table>, lua_type_of<T>> {};
@@ -7428,7 +7181,7 @@ namespace sol {
 	: std::integral_constant<bool,
 	       type::userdata
 	                 != lua_type_of_v<
-	                         T> || ((type::userdata == lua_type_of_v<T>)&&detail::has_internal_marker_v<lua_type_of<T>> && !detail::has_internal_marker_v<lua_size<T>>)
+	                      T> || ((type::userdata == lua_type_of_v<T>)&&detail::has_internal_marker_v<lua_type_of<T>> && !detail::has_internal_marker_v<lua_size<T>>)
 	            || is_lua_reference_or_proxy_v<T> || meta::is_specialization_of_v<T, std::tuple> || meta::is_specialization_of_v<T, std::pair>> {};
 
 	template <typename T>
@@ -7449,6 +7202,8 @@ namespace sol {
 	struct is_stack_based<stack_proxy> : std::true_type {};
 	template <>
 	struct is_stack_based<stack_proxy_base> : std::true_type {};
+	template <>
+	struct is_stack_based<stack_count> : std::true_type {};
 
 	template <typename T>
 	constexpr inline bool is_stack_based_v = is_stack_based<T>::value;
@@ -7467,10 +7222,8 @@ namespace sol {
 	struct is_lua_primitive<light<T>> : is_lua_primitive<T*> {};
 	template <typename T>
 	struct is_lua_primitive<optional<T>> : std::true_type {};
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
 	template <typename T>
 	struct is_lua_primitive<std::optional<T>> : std::true_type {};
-#endif
 	template <typename T>
 	struct is_lua_primitive<as_table_t<T>> : std::true_type {};
 	template <typename T>
@@ -7479,6 +7232,10 @@ namespace sol {
 	struct is_lua_primitive<userdata_value> : std::true_type {};
 	template <>
 	struct is_lua_primitive<lightuserdata_value> : std::true_type {};
+	template <>
+	struct is_lua_primitive<stack_proxy> : std::true_type {};
+	template <>
+	struct is_lua_primitive<stack_proxy_base> : std::true_type {};
 	template <typename T>
 	struct is_lua_primitive<non_null<T>> : is_lua_primitive<T*> {};
 
@@ -9487,8 +9244,6 @@ namespace sol {
 #include <forward_list>
 #include <algorithm>
 #include <sstream>
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
-#endif // C++17
 
 namespace sol {
 	namespace detail {
@@ -9498,6 +9253,8 @@ namespace sol {
 		struct as_pointer_tag {};
 		template <typename T>
 		struct as_value_tag {};
+		template <typename T>
+		struct as_unique_tag {};
 		template <typename T>
 		struct as_table_tag {};
 
@@ -9537,7 +9294,7 @@ namespace sol {
 		template <typename... Args>
 		std::size_t aligned_space_for(void* alignment = nullptr) {
 			char* start = static_cast<char*>(alignment);
-			(void)detail::swallow{ int{}, (align_one(std::alignment_of_v<Args>, sizeof(Args), alignment), int{})... };
+			(void)detail::swallow { int {}, (align_one(std::alignment_of_v<Args>, sizeof(Args), alignment), int {})... };
 			return static_cast<char*>(alignment) - start;
 		}
 
@@ -9913,7 +9670,7 @@ namespace sol {
 			memory = align_usertype_pointer(memory);
 			T** pdata = static_cast<T**>(memory);
 			T* data = *pdata;
-			std::allocator<T> alloc{};
+			std::allocator<T> alloc {};
 			std::allocator_traits<std::allocator<T>>::destroy(alloc, data);
 			return 0;
 		}
@@ -10014,7 +9771,7 @@ namespace sol {
 			indexed_insert(lua_reg_table& cont, int& idx) : l(cont), index(idx) {
 			}
 			void operator()(meta_function mf, lua_CFunction f) {
-				l[index] = luaL_Reg{ to_string(mf).c_str(), f };
+				l[index] = luaL_Reg { to_string(mf).c_str(), f };
 				++index;
 			}
 		};
@@ -10178,7 +9935,7 @@ namespace sol {
 					return sol_lua_get(types<Tu>(), L, index, tracking);
 				}
 				else {
-					unqualified_getter<Tu> g{};
+					unqualified_getter<Tu> g {};
 					(void)g;
 					return g.get(L, index, tracking);
 				}
@@ -10190,7 +9947,7 @@ namespace sol {
 					return sol_lua_get(types<T>(), L, index, tracking);
 				}
 				else {
-					qualified_getter<T> g{};
+					qualified_getter<T> g {};
 					(void)g;
 					return g.get(L, index, tracking);
 				}
@@ -10208,7 +9965,7 @@ namespace sol {
 					(void)unadjusted_pointer;
 					(void)tracking;
 					using Ti = stack_detail::strip_t<Tu>;
-					return std::pair<bool, Ti*>{ false, nullptr };
+					return std::pair<bool, Ti*> { false, nullptr };
 				}
 			}
 
@@ -10335,7 +10092,7 @@ namespace sol {
 				return sol_lua_push(L, std::forward<T>(t), std::forward<Args>(args)...);
 			}
 			else {
-				unqualified_pusher<Tu> p{};
+				unqualified_pusher<Tu> p {};
 				(void)p;
 				return p.push(L, std::forward<T>(t), std::forward<Args>(args)...);
 			}
@@ -10355,7 +10112,7 @@ namespace sol {
 				return sol_lua_push(L, std::forward<Arg>(arg), std::forward<Args>(args)...);
 			}
 			else {
-				unqualified_pusher<Tu> p{};
+				unqualified_pusher<Tu> p {};
 				(void)p;
 				return p.push(L, std::forward<Arg>(arg), std::forward<Args>(args)...);
 			}
@@ -10364,14 +10121,18 @@ namespace sol {
 		template <typename T, typename... Args>
 		int push_userdata(lua_State* L, T&& t, Args&&... args) {
 			using U = meta::unqualified_t<T>;
-			using Tr = meta::conditional_t<std::is_pointer<U>::value, detail::as_pointer_tag<std::remove_pointer_t<U>>, detail::as_value_tag<U>>;
+			using Tr = meta::conditional_t<std::is_pointer_v<U>,
+			     detail::as_pointer_tag<std::remove_pointer_t<U>>,
+			     meta::conditional_t<is_unique_usertype_v<U>, detail::as_unique_tag<U>, detail::as_value_tag<U>>>;
 			return stack::push<Tr>(L, std::forward<T>(t), std::forward<Args>(args)...);
 		}
 
 		template <typename T, typename Arg, typename... Args>
 		int push_userdata(lua_State* L, Arg&& arg, Args&&... args) {
 			using U = meta::unqualified_t<T>;
-			using Tr = meta::conditional_t<std::is_pointer<U>::value, detail::as_pointer_tag<std::remove_pointer_t<U>>, detail::as_value_tag<U>>;
+			using Tr = meta::conditional_t<std::is_pointer_v<U>,
+			     detail::as_pointer_tag<std::remove_pointer_t<U>>,
+			     meta::conditional_t<is_unique_usertype_v<U>, detail::as_unique_tag<U>, detail::as_value_tag<U>>>;
 			return stack::push<Tr>(L, std::forward<Arg>(arg), std::forward<Args>(args)...);
 		}
 
@@ -10407,7 +10168,7 @@ namespace sol {
 		template <typename T, typename... Args>
 		int multi_push(lua_State* L, T&& t, Args&&... args) {
 			int pushcount = push(L, std::forward<T>(t));
-			void(detail::swallow{ (pushcount += stack::push(L, std::forward<Args>(args)), 0)... });
+			void(detail::swallow { (pushcount += stack::push(L, std::forward<Args>(args)), 0)... });
 			return pushcount;
 		}
 
@@ -10419,7 +10180,7 @@ namespace sol {
 		template <typename T, typename... Args>
 		int multi_push_reference(lua_State* L, T&& t, Args&&... args) {
 			int pushcount = push_reference(L, std::forward<T>(t));
-			void(detail::swallow{ (pushcount += stack::push_reference(L, std::forward<Args>(args)), 0)... });
+			void(detail::swallow { (pushcount += stack::push_reference(L, std::forward<Args>(args)), 0)... });
 			return pushcount;
 		}
 
@@ -10439,7 +10200,7 @@ namespace sol {
 
 		template <typename T, typename Handler>
 		bool unqualified_check(lua_State* L, int index, Handler&& handler) {
-			record tracking{};
+			record tracking {};
 			return unqualified_check<T>(L, index, std::forward<Handler>(handler), tracking);
 		}
 
@@ -10465,7 +10226,7 @@ namespace sol {
 
 		template <typename T, typename Handler>
 		bool check(lua_State* L, int index, Handler&& handler) {
-			record tracking{};
+			record tracking {};
 			return check<T>(L, index, std::forward<Handler>(handler), tracking);
 		}
 
@@ -10491,7 +10252,7 @@ namespace sol {
 
 		template <typename T, typename Handler>
 		bool check_usertype(lua_State* L, int index, Handler&& handler) {
-			record tracking{};
+			record tracking {};
 			return check_usertype<T>(L, index, std::forward<Handler>(handler), tracking);
 		}
 
@@ -10511,7 +10272,7 @@ namespace sol {
 				return sol_lua_check_get(types<Tu>(), L, index, std::forward<Handler>(handler), tracking);
 			}
 			else {
-				unqualified_check_getter<Tu> cg{};
+				unqualified_check_getter<Tu> cg {};
 				(void)cg;
 				return cg.get(L, index, std::forward<Handler>(handler), tracking);
 			}
@@ -10519,7 +10280,7 @@ namespace sol {
 
 		template <typename T, typename Handler>
 		decltype(auto) unqualified_check_get(lua_State* L, int index, Handler&& handler) {
-			record tracking{};
+			record tracking {};
 			return unqualified_check_get<T>(L, index, handler, tracking);
 		}
 
@@ -10535,7 +10296,7 @@ namespace sol {
 				return sol_lua_check_get(types<T>(), L, index, std::forward<Handler>(handler), tracking);
 			}
 			else {
-				qualified_check_getter<T> cg{};
+				qualified_check_getter<T> cg {};
 				(void)cg;
 				return cg.get(L, index, std::forward<Handler>(handler), tracking);
 			}
@@ -10543,7 +10304,7 @@ namespace sol {
 
 		template <typename T, typename Handler>
 		decltype(auto) check_get(lua_State* L, int index, Handler&& handler) {
-			record tracking{};
+			record tracking {};
 			return check_get<T>(L, index, handler, tracking);
 		}
 
@@ -10581,7 +10342,7 @@ namespace sol {
 
 		template <typename... Args, typename Handler>
 		bool multi_check(lua_State* L, int index, Handler&& handler) {
-			record tracking{};
+			record tracking {};
 			return multi_check<Args...>(L, index, std::forward<Handler>(handler), tracking);
 		}
 
@@ -10593,11 +10354,7 @@ namespace sol {
 		template <typename T>
 		auto unqualified_get(lua_State* L, int index, record& tracking) -> decltype(stack_detail::unchecked_unqualified_get<T>(L, index, tracking)) {
 #if defined(SOL_SAFE_GETTER) && SOL_SAFE_GETTER
-			static constexpr bool is_op = meta::is_specialization_of_v<T, optional>
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
-			     || meta::is_specialization_of_v<T, std::optional>
-#endif
-			     ;
+			static constexpr bool is_op = meta::is_optional_v<T>;
 			if constexpr (is_op) {
 				return stack_detail::unchecked_unqualified_get<T>(L, index, tracking);
 			}
@@ -10615,18 +10372,14 @@ namespace sol {
 
 		template <typename T>
 		decltype(auto) unqualified_get(lua_State* L, int index = -lua_size<meta::unqualified_t<T>>::value) {
-			record tracking{};
+			record tracking {};
 			return unqualified_get<T>(L, index, tracking);
 		}
 
 		template <typename T>
 		auto get(lua_State* L, int index, record& tracking) -> decltype(stack_detail::unchecked_get<T>(L, index, tracking)) {
 #if defined(SOL_SAFE_GETTER) && SOL_SAFE_GETTER
-			static constexpr bool is_op = meta::is_specialization_of_v<T, optional>
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
-			     || meta::is_specialization_of_v<T, std::optional>
-#endif
-			     ;
+			static constexpr bool is_op = meta::is_optional_v<T>;
 			if constexpr (is_op) {
 				return stack_detail::unchecked_get<T>(L, index, tracking);
 			}
@@ -10644,7 +10397,7 @@ namespace sol {
 
 		template <typename T>
 		decltype(auto) get(lua_State* L, int index = -lua_size<meta::unqualified_t<T>>::value) {
-			record tracking{};
+			record tracking {};
 			return get<T>(L, index, tracking);
 		}
 
@@ -10656,23 +10409,23 @@ namespace sol {
 
 		template <typename T>
 		decltype(auto) get_usertype(lua_State* L, int index = -lua_size<meta::unqualified_t<T>>::value) {
-			record tracking{};
+			record tracking {};
 			return get_usertype<T>(L, index, tracking);
 		}
 
 		template <typename T>
 		decltype(auto) pop(lua_State* L) {
-			return popper<meta::unqualified_t<T>>{}.pop(L);
+			return popper<meta::unqualified_t<T>> {}.pop(L);
 		}
 
 		template <bool global = false, bool raw = false, typename Key>
 		void get_field(lua_State* L, Key&& key) {
-			field_getter<meta::unqualified_t<Key>, global, raw>{}.get(L, std::forward<Key>(key));
+			field_getter<meta::unqualified_t<Key>, global, raw> {}.get(L, std::forward<Key>(key));
 		}
 
 		template <bool global = false, bool raw = false, typename Key>
 		void get_field(lua_State* L, Key&& key, int tableindex) {
-			field_getter<meta::unqualified_t<Key>, global, raw>{}.get(L, std::forward<Key>(key), tableindex);
+			field_getter<meta::unqualified_t<Key>, global, raw> {}.get(L, std::forward<Key>(key), tableindex);
 		}
 
 		template <bool global = false, typename Key>
@@ -10687,12 +10440,12 @@ namespace sol {
 
 		template <bool global = false, bool raw = false, typename C = detail::non_lua_nil_t, typename Key>
 		probe probe_get_field(lua_State* L, Key&& key) {
-			return probe_field_getter<meta::unqualified_t<Key>, C, global, raw>{}.get(L, std::forward<Key>(key));
+			return probe_field_getter<meta::unqualified_t<Key>, C, global, raw> {}.get(L, std::forward<Key>(key));
 		}
 
 		template <bool global = false, bool raw = false, typename C = detail::non_lua_nil_t, typename Key>
 		probe probe_get_field(lua_State* L, Key&& key, int tableindex) {
-			return probe_field_getter<meta::unqualified_t<Key>, C, global, raw>{}.get(L, std::forward<Key>(key), tableindex);
+			return probe_field_getter<meta::unqualified_t<Key>, C, global, raw> {}.get(L, std::forward<Key>(key), tableindex);
 		}
 
 		template <bool global = false, typename C = detail::non_lua_nil_t, typename Key>
@@ -10707,12 +10460,12 @@ namespace sol {
 
 		template <bool global = false, bool raw = false, typename Key, typename Value>
 		void set_field(lua_State* L, Key&& key, Value&& value) {
-			field_setter<meta::unqualified_t<Key>, global, raw>{}.set(L, std::forward<Key>(key), std::forward<Value>(value));
+			field_setter<meta::unqualified_t<Key>, global, raw> {}.set(L, std::forward<Key>(key), std::forward<Value>(value));
 		}
 
 		template <bool global = false, bool raw = false, typename Key, typename Value>
 		void set_field(lua_State* L, Key&& key, Value&& value, int tableindex) {
-			field_setter<meta::unqualified_t<Key>, global, raw>{}.set(L, std::forward<Key>(key), std::forward<Value>(value), tableindex);
+			field_setter<meta::unqualified_t<Key>, global, raw> {}.set(L, std::forward<Key>(key), std::forward<Value>(value), tableindex);
 		}
 
 		template <bool global = false, typename Key, typename Value>
@@ -10898,10 +10651,8 @@ namespace sol {
 // beginning of sol/stack_check_unqualified.hpp
 
 #include <cmath>
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
 #if defined(SOL_STD_VARIANT) && SOL_STD_VARIANT
 #endif // SOL_STD_VARIANT
-#endif // SOL_CXX17_FEATURES
 
 namespace sol { namespace stack {
 	namespace stack_detail {
@@ -11046,7 +10797,7 @@ namespace sol { namespace stack {
 				return success;
 #endif // Strings are Numbers
 			}
-			else if constexpr(meta::any_same_v<T, type, this_state, this_main_state, this_environment, variadic_args>) {
+			else if constexpr (meta::any_same_v<T, type, this_state, this_main_state, this_environment, variadic_args>) {
 				(void)L;
 				(void)index;
 				(void)handler;
@@ -11088,11 +10839,12 @@ namespace sol { namespace stack {
 				handler(L, index, type::userdata, indextype, "unrecognized userdata (not pushed by sol?)");
 				return false;
 			}
-			else if constexpr (meta::any_same_v<T, lua_nil_t, 
+			else if constexpr (meta::any_same_v<T,
+				                   lua_nil_t,
 #if defined(SOL_CXX_17_FEATURES) && SOL_CXX_17_FEATURES
-				std::nullopt_t,
+				                   std::nullopt_t,
 #endif
-			nullopt_t>) {
+				                   nullopt_t>) {
 				bool success = lua_isnil(L, index);
 				if (success) {
 					tracking.use(1);
@@ -11136,7 +10888,7 @@ namespace sol { namespace stack {
 				}
 				return true;
 			}
-			else if constexpr(meta::is_specialization_of_v<T, basic_environment>) {
+			else if constexpr (meta::is_specialization_of_v<T, basic_environment>) {
 				tracking.use(1);
 				if (lua_getmetatable(L, index) == 0) {
 					return true;
@@ -11169,6 +10921,47 @@ namespace sol { namespace stack {
 					return false;
 				}
 				return true;
+			}
+			else if constexpr (std::is_same_v<T, luaL_Stream*> || std::is_same_v<T, luaL_Stream>) {
+				if (lua_getmetatable(L, index) == 0) {
+					type t = type_of(L, index);
+					handler(L, index, expected, t, "value is not a valid luaL_Stream (has no metatable/is not a valid value)");
+					return false;
+				}
+				luaL_getmetatable(L, LUA_FILEHANDLE);
+				if (type_of(L, index) != type::table) {
+					type t = type_of(L, index);
+					lua_pop(L, 1);
+					handler(L,
+						index,
+						expected,
+						t,
+						"value is not a valid luaL_Stream (there is no metatable for luaL_Stream -- did you forget to "
+						"my_lua_state.open_libraries(sol::lib::state) or equivalent?)");
+					return false;
+				}
+				int is_stream_table = lua_compare(L, -1, -2, LUA_OPEQ);
+				lua_pop(L, 2);
+				if (is_stream_table == 0) {
+					type t = type_of(L, index);
+					handler(L, index, expected, t, "value is not a valid luaL_Stream (incorrect metatable)");
+					return false;
+				}
+				return true;
+			}
+			else if constexpr (meta::is_optional_v<T>) {
+				using ValueType = typename T::value_type;
+				(void)handler;
+				type t = type_of(L, index);
+				if (t == type::none) {
+					tracking.use(0);
+					return true;
+				}
+				if (t == type::lua_nil) {
+					tracking.use(1);
+					return true;
+				}
+				return stack::unqualified_check<ValueType>(L, index, no_panic, tracking);
 			}
 			else if constexpr (expected == type::userdata) {
 				if constexpr (meta::any_same_v<T, userdata_value> || meta::is_specialization_of_v<T, basic_userdata>) {
@@ -11300,7 +11093,9 @@ namespace sol { namespace stack {
 
 		template <typename U, typename Handler>
 		static bool check(types<U>, lua_State* L, int index, type indextype, Handler&& handler, record& tracking) {
-			if constexpr (std::is_same_v<T, lightuserdata_value> || std::is_same_v<T, userdata_value> || std::is_same_v<T, userdata> || std::is_same_v<T, lightuserdata>) {
+			if constexpr (
+				std::is_same_v<T,
+				     lightuserdata_value> || std::is_same_v<T, userdata_value> || std::is_same_v<T, userdata> || std::is_same_v<T, lightuserdata>) {
 				tracking.use(1);
 				if (indextype != type::userdata) {
 					handler(L, index, type::userdata, indextype, "value is not a valid userdata");
@@ -11334,9 +11129,9 @@ namespace sol { namespace stack {
 				bool success = false;
 				bool has_derived = derive<T>::value || weak_derive<T>::value;
 				if (has_derived) {
-	#if defined(SOL_SAFE_STACK_CHECK) && SOL_SAFE_STACK_CHECK
+#if defined(SOL_SAFE_STACK_CHECK) && SOL_SAFE_STACK_CHECK
 					luaL_checkstack(L, 1, detail::not_enough_stack_space_string);
-	#endif // make sure stack doesn't overflow
+#endif // make sure stack doesn't overflow
 					auto pn = stack::pop_n(L, 1);
 					lua_pushstring(L, &detail::base_class_check_key()[0]);
 					lua_rawget(L, metatableindex);
@@ -11390,42 +11185,6 @@ namespace sol { namespace stack {
 		}
 	};
 
-	template <typename T>
-	struct unqualified_checker<optional<T>, type::poly> {
-		template <typename Handler>
-		static bool check(lua_State* L, int index, Handler&&, record& tracking) {
-			type t = type_of(L, index);
-			if (t == type::none) {
-				tracking.use(0);
-				return true;
-			}
-			if (t == type::lua_nil) {
-				tracking.use(1);
-				return true;
-			}
-			return stack::unqualified_check<T>(L, index, no_panic, tracking);
-		}
-	};
-
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
-
-	template <typename T>
-	struct unqualified_checker<std::optional<T>, type::poly> {
-		template <typename Handler>
-		static bool check(lua_State* L, int index, Handler&&, record& tracking) {
-			type t = type_of(L, index);
-			if (t == type::none) {
-				tracking.use(0);
-				return true;
-			}
-			if (t == type::lua_nil) {
-				tracking.use(1);
-				return true;
-			}
-			return stack::check<T>(L, index, no_panic, tracking);
-		}
-	};
-
 #if defined(SOL_STD_VARIANT) && SOL_STD_VARIANT
 
 	template <typename... Tn>
@@ -11465,8 +11224,7 @@ namespace sol { namespace stack {
 
 #endif // SOL_STD_VARIANT
 
-#endif // SOL_CXX17_FEATURES
-}}     // namespace sol::stack
+}} // namespace sol::stack
 
 // end of sol/stack_check_unqualified.hpp
 
@@ -11521,6 +11279,10 @@ namespace stack {
 				else {
 					return stack::unqualified_check<nested<X>>(L, index, std::forward<Handler>(handler), tracking);
 				}
+			}
+			else if constexpr (!std::is_reference_v<X> && meta::is_specialization_of_v<X, nested>) {
+				using NestedX = typename meta::unqualified_t<X>::nested_type;
+				return stack::check<NestedX>(L, index, ::std::forward<Handler>(handler), tracking);
 			}
 			else {
 				return stack::unqualified_check<X>(L, index, std::forward<Handler>(handler), tracking);
@@ -11872,10 +11634,8 @@ namespace sol {
 }
 // end of sol/unicode.hpp
 
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
 #if defined(SOL_STD_VARIANT) && SOL_STD_VARIANT
 #endif // Apple clang screwed up
-#endif // C++17
 
 namespace sol { namespace stack {
 
@@ -11918,7 +11678,7 @@ namespace sol { namespace stack {
 					cp = dr.codepoint;
 					strtarget = dr.next;
 				}
-				if constexpr(std::is_same_v<Ch, char32_t>) {
+				if constexpr (std::is_same_v<Ch, char32_t>) {
 					auto er = unicode::code_point_to_utf32(cp);
 					f(er);
 				}
@@ -11987,6 +11747,18 @@ namespace sol { namespace stack {
 				Real* mem = static_cast<Real*>(memory);
 				return *mem;
 			}
+			else if constexpr (meta::is_optional_v<T>) {
+				using ValueType = typename T::value_type;
+				return stack::unqualified_check_get<ValueType>(L, index, no_panic, tracking);
+			}
+			else if constexpr (std::is_same_v<T, luaL_Stream*>) {
+				luaL_Stream* pstream = static_cast<luaL_Stream*>(lua_touserdata(L, index));
+				return pstream;
+			}
+			else if constexpr (std::is_same_v<T, luaL_Stream>) {
+				luaL_Stream* pstream = static_cast<luaL_Stream*>(lua_touserdata(L, index));
+				return *pstream;
+			}
 			else {
 				return stack_detail::unchecked_unqualified_get<detail::as_value_tag<T>>(L, index, tracking);
 			}
@@ -11998,7 +11770,8 @@ namespace sol { namespace stack {
 		static decltype(auto) get(lua_State* L, int index, record& tracking) {
 			using Tu = meta::unqualified_t<X>;
 			static constexpr bool is_userdata_of_some_kind
-				= !std::is_reference_v<X> && is_container_v<Tu> && std::is_default_constructible_v<Tu> && !is_lua_primitive_v<Tu> && !is_transparent_argument_v<Tu>;
+				= !std::is_reference_v<
+				       X> && is_container_v<Tu> && std::is_default_constructible_v<Tu> && !is_lua_primitive_v<Tu> && !is_transparent_argument_v<Tu>;
 			if constexpr (is_userdata_of_some_kind) {
 				if (type_of(L, index) == type::userdata) {
 					return static_cast<Tu>(stack_detail::unchecked_unqualified_get<Tu>(L, index, tracking));
@@ -12114,7 +11887,7 @@ namespace sol { namespace stack {
 
 			// the W4 flag is really great,
 			// so great that it can tell my for loops (twice nested)
-			// below never actually terminate 
+			// below never actually terminate
 			// without hitting where the gotos have infested
 
 			// so now I would get the error W4XXX unreachable
@@ -12150,7 +11923,7 @@ namespace sol { namespace stack {
 			T cont;
 			std::size_t idx = 0;
 #if SOL_LUA_VERSION >= 503
-			// This method is HIGHLY performant over regular table iteration 
+			// This method is HIGHLY performant over regular table iteration
 			// thanks to the Lua API changes in 5.3
 			// Questionable in 5.4
 			for (lua_Integer i = 0;; i += lua_size<V>::value) {
@@ -12197,7 +11970,7 @@ namespace sol { namespace stack {
 #endif
 					continue;
 				}
-				
+
 				push_back_at_end(meta::has_push_back<Tu>(), t, L, cont, idx);
 				++idx;
 				lua_pop(L, lua_size<V>::value);
@@ -12233,7 +12006,7 @@ namespace sol { namespace stack {
 				++idx;
 			}
 #endif
-			done:
+		done:
 			return cont;
 		}
 
@@ -12348,7 +12121,7 @@ namespace sol { namespace stack {
 				++idx;
 			}
 #endif
-			done:
+		done:
 			return cont;
 		}
 
@@ -12590,7 +12363,7 @@ namespace sol { namespace stack {
 	struct unqualified_getter<meta_function> {
 		static meta_function get(lua_State* L, int index, record& tracking) {
 			tracking.use(1);
-			const char* name = unqualified_getter<const char*>{}.get(L, index, tracking);
+			const char* name = unqualified_getter<const char*> {}.get(L, index, tracking);
 			const auto& mfnames = meta_function_names();
 			for (std::size_t i = 0; i < mfnames.size(); ++i)
 				if (mfnames[i] == name)
@@ -12708,8 +12481,7 @@ namespace sol { namespace stack {
 					lua_getfield(L, -1, &detail::base_class_cast_key()[0]);
 					if (type_of(L, -1) != type::lua_nil) {
 						void* basecastdata = lua_touserdata(L, -1);
-						detail::inheritance_cast_function ic
-							= reinterpret_cast<detail::inheritance_cast_function>(basecastdata);
+						detail::inheritance_cast_function ic = reinterpret_cast<detail::inheritance_cast_function>(basecastdata);
 						// use the casting function to properly adjust the pointer for the desired T
 						udata = ic(udata, usertype_traits<T>::qualified_name());
 					}
@@ -12787,15 +12559,14 @@ namespace sol { namespace stack {
 		template <typename... Args>
 		static R apply(std::index_sequence<>, lua_State*, int, record&, Args&&... args) {
 			// Fuck you too, VC++
-			return R{ std::forward<Args>(args)... };
+			return R { std::forward<Args>(args)... };
 		}
 
 		template <std::size_t I, std::size_t... Ix, typename... Args>
 		static R apply(std::index_sequence<I, Ix...>, lua_State* L, int index, record& tracking, Args&&... args) {
 			// Fuck you too, VC++
 			typedef std::tuple_element_t<I, std::tuple<Tn...>> T;
-			return apply(std::index_sequence<Ix...>(), L, index, tracking, std::forward<Args>(args)...,
-				stack::get<T>(L, index + tracking.used, tracking));
+			return apply(std::index_sequence<Ix...>(), L, index, tracking, std::forward<Args>(args)..., stack::get<T>(L, index + tracking.used, tracking));
 		}
 
 		static R get(lua_State* L, int index, record& tracking) {
@@ -12806,13 +12577,11 @@ namespace sol { namespace stack {
 	template <typename A, typename B>
 	struct unqualified_getter<std::pair<A, B>> {
 		static decltype(auto) get(lua_State* L, int index, record& tracking) {
-			return std::pair<decltype(stack::get<A>(L, index)), decltype(stack::get<B>(L, index))>{
-				stack::get<A>(L, index, tracking), stack::get<B>(L, index + tracking.used, tracking)
-			};
+			return std::pair<decltype(stack::get<A>(L, index)), decltype(stack::get<B>(L, index))> { stack::get<A>(L, index, tracking),
+				stack::get<B>(L, index + tracking.used, tracking) };
 		}
 	};
 
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
 #if defined(SOL_STD_VARIANT) && SOL_STD_VARIANT
 	template <typename... Tn>
 	struct unqualified_getter<std::variant<Tn...>> {
@@ -12826,9 +12595,9 @@ namespace sol { namespace stack {
 				return V();
 			}
 			else {
-				//using T = std::variant_alternative_t<0, V>;
+				// using T = std::variant_alternative_t<0, V>;
 				std::abort();
-				//return V(std::in_place_index<0>, stack::get<T>(L, index, tracking));
+				// return V(std::in_place_index<0>, stack::get<T>(L, index, tracking));
 			}
 		}
 
@@ -12848,9 +12617,8 @@ namespace sol { namespace stack {
 		}
 	};
 #endif // SOL_STD_VARIANT
-#endif // SOL_CXX17_FEATURES
 
-}}	// namespace sol::stack
+}} // namespace sol::stack
 
 // end of sol/stack_get_unqualified.hpp
 
@@ -12874,13 +12642,10 @@ namespace stack {
 
 // beginning of sol/stack_check_get_unqualified.hpp
 
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
 #if defined(SOL_STD_VARIANT) && SOL_STD_VARIANT
 #endif // variant
-#endif // C++17
 
-namespace sol {
-namespace stack {
+namespace sol { namespace stack {
 	template <typename T, typename>
 	struct unqualified_check_getter {
 		typedef decltype(stack_detail::unchecked_unqualified_get<T>(nullptr, -1, std::declval<record&>())) R;
@@ -12900,7 +12665,7 @@ namespace stack {
 					}
 					return stack_detail::unchecked_get<T>(L, index, tracking);
 				}
-				else if constexpr ((std::is_integral_v<T> || std::is_same_v<T, lua_Integer>) && !std::is_same_v<T, bool>) {
+				else if constexpr ((std::is_integral_v<T> || std::is_same_v<T, lua_Integer>)&&!std::is_same_v<T, bool>) {
 #if SOL_LUA_VERSION >= 503
 					if (lua_isinteger(L, index) != 0) {
 						tracking.use(1);
@@ -12968,25 +12733,6 @@ namespace stack {
 		}
 	};
 
-	template <typename T>
-	struct unqualified_getter<optional<T>> {
-		static decltype(auto) get(lua_State* L, int index, record& tracking) {
-			return stack::unqualified_check_get<T>(L, index, no_panic, tracking);
-		}
-	};
-
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
-	template <typename T>
-	struct unqualified_getter<std::optional<T>> {
-		static std::optional<T> get(lua_State* L, int index, record& tracking) {
-			if (!unqualified_check<T>(L, index, no_panic)) {
-				tracking.use(static_cast<int>(!lua_isnone(L, index)));
-				return std::nullopt;
-			}
-			return stack_detail::unchecked_unqualified_get<T>(L, index, tracking);
-		}
-	};
-
 #if defined(SOL_STD_VARIANT) && SOL_STD_VARIANT
 	template <typename... Tn, typename C>
 	struct unqualified_check_getter<std::variant<Tn...>, C> {
@@ -13004,7 +12750,8 @@ namespace stack {
 			// This should never be reached...
 			// please check your code and understand what you did to bring yourself here
 			// maybe file a bug report, or 5
-			handler(L, index, type::poly, type_of(L, index), "this variant code should never be reached: if it has, you have done something so terribly wrong");
+			handler(
+				L, index, type::poly, type_of(L, index), "this variant code should never be reached: if it has, you have done something so terribly wrong");
 			return nullopt;
 		}
 
@@ -13028,9 +12775,7 @@ namespace stack {
 		}
 	};
 #endif // SOL_STD_VARIANT
-#endif // SOL_CXX17_FEATURES
-}
-} // namespace sol::stack
+}}     // namespace sol::stack
 
 // end of sol/stack_check_get_unqualified.hpp
 
@@ -13066,41 +12811,29 @@ namespace sol { namespace stack {
 	};
 
 	template <typename T>
-	struct qualified_getter<optional<T>> {
-		static optional<T> get(lua_State* L, int index, record& tracking) {
-			if constexpr (is_lua_reference_v<T>) {
+	struct qualified_getter<T, std::enable_if_t<meta::is_optional_v<T>>> {
+		static T get(lua_State* L, int index, record& tracking) {
+			using ValueType = typename meta::unqualified_t<T>::value_type;
+			if constexpr (is_lua_reference_v<ValueType>) {
 				// actually check if it's none here, otherwise
 				// we'll have a none object inside an optional!
-				bool success = lua_isnoneornil(L, index) == 0 && stack::check<T>(L, index, no_panic);
+				bool success = lua_isnoneornil(L, index) == 0 && stack::check<ValueType>(L, index, no_panic);
 				if (!success) {
 					// expected type, actual type
 					tracking.use(static_cast<int>(success));
-					return nullopt;
+					return {};
 				}
-				return stack_detail::unchecked_get<T>(L, index, tracking);
+				return stack_detail::unchecked_get<ValueType>(L, index, tracking);
 			}
 			else {
-				if (!check<T>(L, index, &no_panic)) {
+				if (!check<ValueType>(L, index, &no_panic)) {
 					tracking.use(static_cast<int>(!lua_isnone(L, index)));
-					return nullopt;
+					return {};
 				}
-				return stack_detail::unchecked_get<T>(L, index, tracking);
+				return stack_detail::unchecked_get<ValueType>(L, index, tracking);
 			}
 		}
 	};
-
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
-	template <typename T>
-	struct qualified_getter<std::optional<T>> {
-		static std::optional<T> get(lua_State* L, int index, record& tracking) {
-			if (!check<T>(L, index, no_panic)) {
-				tracking.use(static_cast<int>(!lua_isnone(L, index)));
-				return std::nullopt;
-			}
-			return stack_detail::unchecked_get<T>(L, index, tracking);
-		}
-	};
-#endif // C++17 features
 
 }} // namespace sol::stack
 
@@ -13112,10 +12845,8 @@ namespace sol { namespace stack {
 
 #include <cassert>
 #include <limits>
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
 #if defined(SOL_STD_VARIANT) && SOL_STD_VARIANT
 #endif // Can use variant
-#endif // C++17
 
 namespace sol { namespace stack {
 	namespace stack_detail {
@@ -13192,7 +12923,7 @@ namespace sol { namespace stack {
        // just the sizeof(T*), and nothing else.
 			T* obj = detail::usertype_allocate<T>(L);
 			f();
-			std::allocator<T> alloc{};
+			std::allocator<T> alloc {};
 			std::allocator_traits<std::allocator<T>>::construct(alloc, obj, std::forward<Args>(args)...);
 			return 1;
 		}
@@ -13292,7 +13023,7 @@ namespace sol { namespace stack {
 				detail::unique_tag* id = nullptr;
 				Real* mem = detail::usertype_unique_allocate<P, Real>(L, pref, fx, id);
 				if (luaL_newmetatable(L, &usertype_traits<detail::unique_usertype<std::remove_cv_t<P>>>::metatable()[0]) == 1) {
-					detail::lua_reg_table l{};
+					detail::lua_reg_table l {};
 					int index = 0;
 					detail::indexed_insert insert_fx(l, index);
 					detail::insert_default_registrations<P>(insert_fx, detail::property_always_true);
@@ -13309,6 +13040,16 @@ namespace sol { namespace stack {
 		};
 	} // namespace stack_detail
 
+	template <typename T>
+	struct unqualified_pusher<detail::as_unique_tag<T>> {
+		template <typename... Args>
+		static int push(lua_State* L, Args&&... args) {
+			stack_detail::uu_pusher<T> p;
+			(void)p;
+			return p.push(L, std::forward<Args>(args)...);
+		}
+	};
+
 	template <typename T, typename>
 	struct unqualified_pusher {
 		template <typename... Args>
@@ -13316,7 +13057,7 @@ namespace sol { namespace stack {
 			using Tu = meta::unqualified_t<T>;
 			if constexpr (is_lua_reference_v<Tu>) {
 				using int_arr = int[];
-				int_arr p{ (std::forward<Args>(args).push(L))... };
+				int_arr p { (std::forward<Args>(args).push(L))... };
 				return p[0];
 			}
 			else if constexpr (std::is_same_v<Tu, bool>) {
@@ -13359,6 +13100,24 @@ namespace sol { namespace stack {
 				lua_pushnumber(L, std::forward<Args>(args)...);
 				return 1;
 			}
+			else if constexpr (std::is_same_v<Tu, luaL_Stream*>) {
+				luaL_Stream* source { std::forward<Args>(args)... };
+				luaL_Stream* stream = static_cast<luaL_Stream*>(lua_newuserdata(L, sizeof(luaL_Stream)));
+				stream->f = source->f;
+#if !defined(SOL_LUAJIT) && (SOL_LUA_VERSION > 501)
+				stream->closef = source->closef;
+#endif // LuaJIT and Lua 5.1 and below do not have
+				return 1;
+			}
+			else if constexpr (std::is_same_v<Tu, luaL_Stream>) {
+				luaL_Stream& source(std::forward<Args>(args)...);
+				luaL_Stream* stream = static_cast<luaL_Stream*>(lua_newuserdata(L, sizeof(luaL_Stream)));
+				stream->f = source.f;
+#if !defined(SOL_LUAJIT) && (SOL_LUA_VERSION > 501)
+				stream->closef = source.closef;
+#endif // LuaJIT and Lua 5.1 and below do not have
+				return 1;
+			}
 			else if constexpr (std::is_enum_v<Tu>) {
 				return stack_detail::msvc_is_ass_with_if_constexpr_push_enum(std::true_type(), L, std::forward<Args>(args)...);
 			}
@@ -13366,9 +13125,7 @@ namespace sol { namespace stack {
 				return stack::push<detail::as_pointer_tag<std::remove_pointer_t<T>>>(L, std::forward<Args>(args)...);
 			}
 			else if constexpr (is_unique_usertype_v<Tu>) {
-				stack_detail::uu_pusher<T> p;
-				(void)p;
-				return p.push(L, std::forward<Args>(args)...);
+				return stack::push<detail::as_unique_tag<T>>(L, std::forward<Args>(args)...);
 			}
 			else {
 				return stack::push<detail::as_value_tag<T>>(L, std::forward<Args>(args)...);
@@ -13493,7 +13250,7 @@ namespace sol { namespace stack {
 	template <typename T>
 	struct unqualified_pusher<std::initializer_list<T>> {
 		static int push(lua_State* L, const std::initializer_list<T>& il) {
-			unqualified_pusher<detail::as_table_tag<std::initializer_list<T>>> p{};
+			unqualified_pusher<detail::as_table_tag<std::initializer_list<T>>> p {};
 			// silence annoying VC++ warning
 			(void)p;
 			return p.push(L, il);
@@ -13524,7 +13281,7 @@ namespace sol { namespace stack {
 #if defined(SOL_SAFE_STACK_CHECK) && SOL_SAFE_STACK_CHECK
 			luaL_checkstack(L, 1, detail::not_enough_stack_space_generic);
 #endif // make sure stack doesn't overflow
-			lua_pushlstring(L, "__mt", 4);
+			lua_pushlstring(L, to_string(meta_function::metatable).c_str(), 4);
 			return 1;
 		}
 	};
@@ -13666,7 +13423,7 @@ namespace sol { namespace stack {
 				}
 				lua_setmetatable(L, -2);
 			}
-			std::allocator<T> alloc{};
+			std::allocator<T> alloc {};
 			std::allocator_traits<std::allocator<T>>::construct(alloc, data, std::forward<Args>(args)...);
 			return 1;
 		}
@@ -13749,25 +13506,25 @@ namespace sol { namespace stack {
 	template <>
 	struct unqualified_pusher<char*> {
 		static int push_sized(lua_State* L, const char* str, std::size_t len) {
-			unqualified_pusher<const char*> p{};
+			unqualified_pusher<const char*> p {};
 			(void)p;
 			return p.push_sized(L, str, len);
 		}
 
 		static int push(lua_State* L, const char* str) {
-			unqualified_pusher<const char*> p{};
+			unqualified_pusher<const char*> p {};
 			(void)p;
 			return p.push(L, str);
 		}
 
 		static int push(lua_State* L, const char* strb, const char* stre) {
-			unqualified_pusher<const char*> p{};
+			unqualified_pusher<const char*> p {};
 			(void)p;
 			return p.push(L, strb, stre);
 		}
 
 		static int push(lua_State* L, const char* str, std::size_t len) {
-			unqualified_pusher<const char*> p{};
+			unqualified_pusher<const char*> p {};
 			(void)p;
 			return p.push(L, str, len);
 		}
@@ -13912,19 +13669,19 @@ namespace sol { namespace stack {
 	template <>
 	struct unqualified_pusher<wchar_t*> {
 		static int push(lua_State* L, const wchar_t* str) {
-			unqualified_pusher<const wchar_t*> p{};
+			unqualified_pusher<const wchar_t*> p {};
 			(void)p;
 			return p.push(L, str);
 		}
 
 		static int push(lua_State* L, const wchar_t* strb, const wchar_t* stre) {
-			unqualified_pusher<const wchar_t*> p{};
+			unqualified_pusher<const wchar_t*> p {};
 			(void)p;
 			return p.push(L, strb, stre);
 		}
 
 		static int push(lua_State* L, const wchar_t* str, std::size_t len) {
-			unqualified_pusher<const wchar_t*> p{};
+			unqualified_pusher<const wchar_t*> p {};
 			(void)p;
 			return p.push(L, str, len);
 		}
@@ -13990,19 +13747,19 @@ namespace sol { namespace stack {
 	template <>
 	struct unqualified_pusher<char16_t*> {
 		static int push(lua_State* L, const char16_t* str) {
-			unqualified_pusher<const char16_t*> p{};
+			unqualified_pusher<const char16_t*> p {};
 			(void)p;
 			return p.push(L, str);
 		}
 
 		static int push(lua_State* L, const char16_t* strb, const char16_t* stre) {
-			unqualified_pusher<const char16_t*> p{};
+			unqualified_pusher<const char16_t*> p {};
 			(void)p;
 			return p.push(L, strb, stre);
 		}
 
 		static int push(lua_State* L, const char16_t* str, std::size_t len) {
-			unqualified_pusher<const char16_t*> p{};
+			unqualified_pusher<const char16_t*> p {};
 			(void)p;
 			return p.push(L, str, len);
 		}
@@ -14067,19 +13824,19 @@ namespace sol { namespace stack {
 	template <>
 	struct unqualified_pusher<char32_t*> {
 		static int push(lua_State* L, const char32_t* str) {
-			unqualified_pusher<const char32_t*> p{};
+			unqualified_pusher<const char32_t*> p {};
 			(void)p;
 			return p.push(L, str);
 		}
 
 		static int push(lua_State* L, const char32_t* strb, const char32_t* stre) {
-			unqualified_pusher<const char32_t*> p{};
+			unqualified_pusher<const char32_t*> p {};
 			(void)p;
 			return p.push(L, strb, stre);
 		}
 
 		static int push(lua_State* L, const char32_t* str, std::size_t len) {
-			unqualified_pusher<const char32_t*> p{};
+			unqualified_pusher<const char32_t*> p {};
 			(void)p;
 			return p.push(L, str, len);
 		}
@@ -14150,7 +13907,7 @@ namespace sol { namespace stack {
 			luaL_checkstack(L, static_cast<int>(sizeof...(I)), detail::not_enough_stack_space_generic);
 #endif // make sure stack doesn't overflow
 			int pushcount = 0;
-			(void)detail::swallow{ 0, (pushcount += stack::push(L, std::get<I>(std::forward<T>(t))), 0)... };
+			(void)detail::swallow { 0, (pushcount += stack::push(L, std::get<I>(std::forward<T>(t))), 0)... };
 			return pushcount;
 		}
 
@@ -14170,14 +13927,17 @@ namespace sol { namespace stack {
 		}
 	};
 
-	template <typename O>
-	struct unqualified_pusher<optional<O>> {
-		template <typename T>
-		static int push(lua_State* L, T&& t) {
-			if (t == nullopt) {
+	template <typename T>
+	struct unqualified_pusher<T, std::enable_if_t<meta::is_optional_v<T>>> {
+		using ValueType = typename meta::unqualified_t<T>::value_type;
+
+		template <typename Optional>
+		static int push(lua_State* L, Optional&& op) {
+			using QualifiedValueType = meta::conditional_t<std::is_lvalue_reference_v<Optional>, ValueType&, ValueType&&>;
+			if (!op) {
 				return stack::push(L, nullopt);
 			}
-			return stack::push(L, static_cast<meta::conditional_t<std::is_lvalue_reference<T>::value, O&, O&&>>(t.value()));
+			return stack::push(L, static_cast<QualifiedValueType>(op.value()));
 		}
 	};
 
@@ -14236,18 +13996,6 @@ namespace sol { namespace stack {
 		}
 	};
 
-#if defined(SOL_CXX17_FEATURES) && SOL_CXX17_FEATURES
-	template <typename O>
-	struct unqualified_pusher<std::optional<O>> {
-		template <typename T>
-		static int push(lua_State* L, T&& t) {
-			if (t == std::nullopt) {
-				return stack::push(L, nullopt);
-			}
-			return stack::push(L, static_cast<meta::conditional_t<std::is_lvalue_reference<T>::value, O&, O&&>>(t.value()));
-		}
-	};
-
 #if defined(SOL_STD_VARIANT) && SOL_STD_VARIANT
 	namespace stack_detail {
 
@@ -14276,8 +14024,8 @@ namespace sol { namespace stack {
 		}
 	};
 #endif // Variant because Clang is terrible
-#endif // C++17 Support
-}}     // namespace sol::stack
+
+}} // namespace sol::stack
 
 // end of sol/stack_push.hpp
 
@@ -14870,6 +14618,26 @@ namespace sol {
 		return r;
 	}
 
+	template <typename R = reference, bool should_pop = !is_stack_based_v<R>, typename T>
+	R make_reference_userdata(lua_State* L, T&& value) {
+		int backpedal = stack::push_userdata(L, std::forward<T>(value));
+		R r = stack::get<R>(L, -backpedal);
+		if (should_pop) {
+			lua_pop(L, backpedal);
+		}
+		return r;
+	}
+
+	template <typename T, typename R = reference, bool should_pop = !is_stack_based_v<R>, typename... Args>
+	R make_reference_userdata(lua_State* L, Args&&... args) {
+		int backpedal = stack::push_userdata<T>(L, std::forward<Args>(args)...);
+		R r = stack::get<R>(L, -backpedal);
+		if (should_pop) {
+			lua_pop(L, backpedal);
+		}
+		return r;
+	}
+
 } // namespace sol
 
 // end of sol/make_reference.hpp
@@ -15051,6 +14819,16 @@ namespace sol {
 	template <typename T, typename... Args>
 	object make_object(lua_State* L, Args&&... args) {
 		return make_reference<T, object, true>(L, std::forward<Args>(args)...);
+	}
+
+	template <typename T>
+	object make_object_userdata(lua_State* L, T&& value) {
+		return make_reference_userdata<object, true>(L, std::forward<T>(value));
+	}
+
+	template <typename T, typename... Args>
+	object make_object_userdata(lua_State* L, Args&&... args) {
+		return make_reference_userdata<T, object, true>(L, std::forward<Args>(args)...);
 	}
 } // namespace sol
 
@@ -15308,11 +15086,9 @@ namespace sol {
 namespace sol {
 	struct stack_proxy : public stack_proxy_base {
 	public:
-		stack_proxy()
-		: stack_proxy_base() {
+		stack_proxy() : stack_proxy_base() {
 		}
-		stack_proxy(lua_State* L, int index)
-		: stack_proxy_base(L, index) {
+		stack_proxy(lua_State* L, int index) : stack_proxy_base(L, index) {
 		}
 
 		template <typename... Ret, typename... Args>
@@ -15327,7 +15103,8 @@ namespace sol {
 	namespace stack {
 		template <>
 		struct unqualified_getter<stack_proxy> {
-			static stack_proxy get(lua_State* L, int index = -1) {
+			static stack_proxy get(lua_State* L, int index, record& tracking) {
+				tracking.use(0);
 				return stack_proxy(L, index);
 			}
 		};
@@ -15448,7 +15225,7 @@ namespace sol {
 			return tagged_get(types<meta::unqualified_t<T>>(), index_offset);
 		}
 
-		type get_type(difference_type index_offset = 0) const noexcept {
+		type get_type(int index_offset = 0) const noexcept {
 			return type_of(L, index + static_cast<int>(index_offset));
 		}
 
@@ -15507,7 +15284,7 @@ namespace sol {
 			return popcount;
 		};
 		void abandon() noexcept {
-			//L = nullptr;
+			// L = nullptr;
 			index = 0;
 			returncount = 0;
 			popcount = 0;
@@ -16487,11 +16264,11 @@ namespace sol {
 
 		template <typename F, bool is_index, bool is_variable, bool checked, int boost, bool clean_stack, typename = void>
 		struct agnostic_lua_call_wrapper {
-			using wrap = wrapper<meta::unqualified_t<F>>;
-
 			template <typename Fx, typename... Args>
 			static int call(lua_State* L, Fx&& f, Args&&... args) {
-				if constexpr (is_lua_reference_v<meta::unqualified_t<Fx>>) {
+				using uFx = meta::unqualified_t<Fx>;
+				static constexpr bool is_ref = is_lua_reference_v<uFx>;
+				if constexpr (is_ref) {
 					if constexpr (is_index) {
 						return stack::push(L, std::forward<Fx>(f), std::forward<Args>(args)...);
 					}
@@ -16501,10 +16278,11 @@ namespace sol {
 					}
 				}
 				else {
+					using wrap = wrapper<uFx>;
 					using traits_type = typename wrap::traits_type;
 					using fp_t = typename traits_type::function_pointer_type;
 					constexpr bool is_function_pointer_convertible
-					     = std::is_class_v<meta::unqualified_t<F>> && std::is_convertible_v<std::decay_t<Fx>, fp_t>;
+					     = std::is_class_v<uFx> && std::is_convertible_v<std::decay_t<Fx>, fp_t>;
 					if constexpr (is_function_pointer_convertible) {
 						fp_t fx = f;
 						return agnostic_lua_call_wrapper<fp_t, is_index, is_variable, checked, boost, clean_stack>{}.call(
@@ -16617,6 +16395,7 @@ namespace sol {
 					using object_type = typename wrap::object_type;
 					if constexpr (sizeof...(Args) < 1) {
 						using Ta = meta::conditional_t<std::is_void_v<T>, object_type, T>;
+						static_assert(std::is_base_of_v<object_type, Ta>, "It seems like you might have accidentally bound a class type with a member function method that does not correspond to the class. For example, there could be a small type in your new_usertype<T>(...) binding, where you specify one class \"T\" but then bind member methods from a complete unrelated class. Check things over!");
 #if defined(SOL_SAFE_USERTYPE) && SOL_SAFE_USERTYPE
 						auto maybeo = stack::check_get<Ta*>(L, 1);
 						if (!maybeo || maybeo.value() == nullptr) {
@@ -16646,6 +16425,7 @@ namespace sol {
 					if constexpr (is_index) {
 						if constexpr (sizeof...(Args) < 1) {
 							using Ta = meta::conditional_t<std::is_void_v<T>, object_type, T>;
+							static_assert(std::is_base_of_v<object_type, Ta>, "It seems like you might have accidentally bound a class type with a member function method that does not correspond to the class. For example, there could be a small type in your new_usertype<T>(...) binding, where you specify one class \"T\" but then bind member methods from a complete unrelated class. Check things over!");
 #if defined(SOL_SAFE_USERTYPE) && SOL_SAFE_USERTYPE
 							auto maybeo = stack::check_get<Ta*>(L, 1);
 							if (!maybeo || maybeo.value() == nullptr) {
@@ -19124,31 +18904,6 @@ namespace detail {
 
 // beginning of sol/usertype_container.hpp
 
-// beginning of sol/map.hpp
-
-#if defined(SOL_USE_BOOST)
-#endif // SOL_USE_BOOST
-
-namespace sol {
-namespace detail {
-#if defined(SOL_USE_BOOST)
-#if defined(SOL_CXX17_FEATURES)
-	template <typename K, typename V, typename H = std::hash<K>, typename E = std::equal_to<>>
-	using unordered_map = boost::unordered_map<K, V, H, E>;
-#else
-	template <typename K, typename V, typename H = boost::hash<K>, typename E = std::equal_to<>>
-	using unordered_map = boost::unordered_map<K, V, H, E>;
-#endif // C++17 or not, WITH boost
-#else
-	template <typename K, typename V, typename H = std::hash<K>, typename E = std::equal_to<>>
-	using unordered_map = std::unordered_map<K, V, H, E>;
-#endif // Boost map target
-}
-
-} // namespace sol::detail
-
-// end of sol/map.hpp
-
 namespace sol {
 
 	template <typename T>
@@ -19802,15 +19557,15 @@ namespace sol {
 
 			static detail::error_result set_category(std::random_access_iterator_tag, lua_State* L, T& self, stack_object okey, stack_object value) {
 				decltype(auto) key = okey.as<K>();
-				if (key <= 0) {
+				key += deferred_uc::index_adjustment(L, self);
+				if (key < 0) {
 					return detail::error_result("sol: out of bounds (too small) for set on '%s'", detail::demangle<T>().c_str());
 				}
-				key += deferred_uc::index_adjustment(L, self);
 				std::ptrdiff_t len = static_cast<std::ptrdiff_t>(size_start(L, self));
 				if (key == len) {
 					return add_copyable(is_copyable(), L, self, std::move(value));
 				}
-				else if (key > len) {
+				else if (key >= len) {
 					return detail::error_result("sol: out of bounds (too big) for set on '%s'", detail::demangle<T>().c_str());
 				}
 				auto it = std::next(deferred_uc::begin(L, self), key);
@@ -22782,7 +22537,7 @@ namespace sol {
 namespace sol {
 
 	template <typename reference_type>
-	class basic_table_iterator : public std::iterator<std::input_iterator_tag, std::pair<object, object>> {
+	class basic_table_iterator {
 	public:
 		typedef object key_type;
 		typedef object mapped_type;
@@ -22801,12 +22556,10 @@ namespace sol {
 		std::ptrdiff_t idx = 0;
 
 	public:
-		basic_table_iterator()
-		: keyidx(-1), idx(-1) {
+		basic_table_iterator() : keyidx(-1), idx(-1) {
 		}
 
-		basic_table_iterator(reference_type x)
-		: ref(std::move(x)) {
+		basic_table_iterator(reference_type x) : ref(std::move(x)) {
 			ref.push();
 			tableidx = lua_gettop(ref.lua_state());
 			stack::push(ref.lua_state(), lua_nil);
@@ -23197,7 +22950,10 @@ namespace sol {
 		}
 
 		iterator begin() const {
-			return iterator(*this);
+			if (this->get_type() == type::table) {
+				return iterator(*this);
+			}
+			return iterator();
 		}
 
 		iterator end() const {
