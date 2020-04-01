@@ -1244,7 +1244,7 @@ namespace mwse {
 				auto node = new NodeType();
 				node_ctor(node, path.c_str());
 
-				auto result = node->value;
+				NI::Pointer<NI::Object> result = node->value;
 
 				node_dtor(node);
 				delete node;
