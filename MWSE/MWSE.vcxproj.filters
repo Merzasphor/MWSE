@@ -2966,6 +2966,12 @@
     <ClCompile Include="LuaBodyPartAssignedEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
+    <ClCompile Include="TES3WeatherRain.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3WeatherThunder.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">

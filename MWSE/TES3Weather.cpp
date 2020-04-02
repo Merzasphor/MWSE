@@ -22,6 +22,14 @@
 #include "LuaObjectInvalidatedEvent.h"
 
 namespace TES3 {
+	bool Weather::setCloudTexturePath(const char* path) {
+		return strcpy_s(texturePathCloud, sizeof(texturePathCloud), path) == 0;
+	}
+
+	bool Weather::setAmbientLoopSoundID(const char* id) {
+		return strcpy_s(soundIDAmbientLoop, sizeof(soundIDAmbientLoop), id) == 0;
+	}
+
 	static std::unordered_map<const Weather*, sol::object> weatherObjectCache;
 	static std::mutex weatherObjectCacheMutex;
 

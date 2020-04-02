@@ -10,9 +10,8 @@
 
 namespace mwse {
 	namespace lua {
-		auto createActivator( sol::table params )
-		{
-			return makeObjectCreator( TES3::ObjectType::Activator )->create( params, false );
+		auto createActivator(sol::table params) {
+			return makeObjectCreator(TES3::ObjectType::Activator)->create(params, false);
 		}
 
 		void bindTES3Activator() {
@@ -37,7 +36,7 @@ namespace mwse {
 			usertypeDefinition["model"] = sol::property(&TES3::Activator::getModelPath, &TES3::Activator::setModelPath);
 
 			// utility function bindings
-			usertypeDefinition["create"] = &createActivator;
+			usertypeDefinition["create"] = createActivator;
 		}
 	}
 }

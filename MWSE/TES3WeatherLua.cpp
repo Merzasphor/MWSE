@@ -21,6 +21,46 @@ namespace mwse {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
 
+			// Binding for TES3::Weather
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.new_usertype<TES3::Weather>("tes3weather");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Basic property binding.
+				usertypeDefinition["ambientDayColor"] = sol::readonly_property(&TES3::Weather::ambientDayCol);
+				usertypeDefinition["ambientLoopSound"] = &TES3::Weather::soundAmbientLoop;
+				usertypeDefinition["ambientLoopSoundId"] = sol::property(&TES3::Weather::soundIDAmbientLoop, &TES3::Weather::setAmbientLoopSoundID);
+				usertypeDefinition["ambientNightColor"] = sol::readonly_property(&TES3::Weather::ambientNightCol);
+				usertypeDefinition["ambientPlaying"] = sol::readonly_property(&TES3::Weather::ambientPlaying);
+				usertypeDefinition["ambientSunriseColor"] = sol::readonly_property(&TES3::Weather::ambientSunriseCol);
+				usertypeDefinition["ambientSunsetColor"] = sol::readonly_property(&TES3::Weather::ambientSunsetCol);
+				usertypeDefinition["cloudsMaxPercent"] = &TES3::Weather::cloudsMaxPercent;
+				usertypeDefinition["cloudsSpeed"] = &TES3::Weather::cloudsSpeed;
+				usertypeDefinition["controller"] = sol::readonly_property(&TES3::Weather::controller);
+				usertypeDefinition["fogDayColor"] = sol::readonly_property(&TES3::Weather::fogDayCol);
+				usertypeDefinition["fogNightColor"] = sol::readonly_property(&TES3::Weather::fogNightCol);
+				usertypeDefinition["fogSunriseColor"] = sol::readonly_property(&TES3::Weather::fogSunriseCol);
+				usertypeDefinition["fogSunsetColor"] = sol::readonly_property(&TES3::Weather::fogSunsetCol);
+				usertypeDefinition["glareView"] = &TES3::Weather::glareView;
+				usertypeDefinition["index"] = sol::readonly_property(&TES3::Weather::index);
+				usertypeDefinition["landFogDayDepth"] = &TES3::Weather::landFogDayDepth;
+				usertypeDefinition["landFogNightDepth"] = &TES3::Weather::landFogNightDepth;
+				usertypeDefinition["skyDayColor"] = sol::readonly_property(&TES3::Weather::skyDayCol);
+				usertypeDefinition["skyNightColor"] = sol::readonly_property(&TES3::Weather::skyNightCol);
+				usertypeDefinition["skySunriseColor"] = sol::readonly_property(&TES3::Weather::skySunriseCol);
+				usertypeDefinition["skySunsetColor"] = sol::readonly_property(&TES3::Weather::skySunsetCol);
+				usertypeDefinition["sunDayColor"] = sol::readonly_property(&TES3::Weather::sunDayCol);
+				usertypeDefinition["sundiscSunsetColor"] = sol::readonly_property(&TES3::Weather::sundiscSunsetCol);
+				usertypeDefinition["sunNightColor"] = sol::readonly_property(&TES3::Weather::sunNightCol);
+				usertypeDefinition["sunSunriseColor"] = sol::readonly_property(&TES3::Weather::sunSunriseCol);
+				usertypeDefinition["sunSunsetColor"] = sol::readonly_property(&TES3::Weather::sunSunsetCol);
+				usertypeDefinition["transitionDelta"] = &TES3::Weather::transitionDelta;
+				usertypeDefinition["underwaterSoundState"] = sol::readonly_property(&TES3::Weather::underwaterSoundState);
+				usertypeDefinition["windSpeed"] = &TES3::Weather::windSpeed;
+			}
+			
+
 			// Binding for TES3::WeatherAsh
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
@@ -126,16 +166,9 @@ namespace mwse {
 				usertypeDefinition["particleHeightMin"] = &TES3::WeatherRain::rainHeightMin;
 				usertypeDefinition["particleRadius"] = &TES3::WeatherRain::rainRadius;
 				usertypeDefinition["rainActive"] = sol::readonly_property(&TES3::WeatherRain::rainPlaying);
+				usertypeDefinition["rainLoopSound"] = &TES3::WeatherRain::rainLoopSound;
+				usertypeDefinition["rainLoopSoundId"] = sol::property(&TES3::WeatherRain::soundIDRainLoop, &TES3::WeatherRain::setRainLoopSoundID);
 				usertypeDefinition["threshold"] = &TES3::WeatherRain::rainThreshold;
-
-				// Binding for IDs and paths.
-				usertypeDefinition["rainLoopSoundId"] = sol::property(
-					[](TES3::WeatherRain& self) { return self.soundIDRainLoop; },
-					[](TES3::WeatherRain& self, const char* value) { if (strlen(value) < 260) strcpy(self.soundIDRainLoop, value); }
-				);
-
-				// Access to other objects that need to be packaged.
-				usertypeDefinition["rainLoopSound"] = sol::readonly_property([](TES3::WeatherRain& self) { return self.rainLoopSound; });
 			}
 
 			// Binding for TES3::WeatherSnow
@@ -175,39 +208,20 @@ namespace mwse {
 				usertypeDefinition["particleHeightMin"] = &TES3::WeatherThunder::rainHeightMin;
 				usertypeDefinition["particleRadius"] = &TES3::WeatherThunder::rainRadius;
 				usertypeDefinition["rainActive"] = &TES3::WeatherThunder::rainPlaying;
+				usertypeDefinition["rainLoopSound"] = &TES3::WeatherThunder::rainLoopSound;
+				usertypeDefinition["rainLoopSoundId"] = sol::property(&TES3::WeatherThunder::soundIdRainLoop, &TES3::WeatherThunder::setRainLoopSoundID);
 				usertypeDefinition["threshold"] = &TES3::WeatherThunder::rainThreshold;
 				usertypeDefinition["thunderFrequency"] = &TES3::WeatherThunder::thunderFrequency;
+				usertypeDefinition["thunderSound1"] = &TES3::WeatherThunder::thunderSound1;
+				usertypeDefinition["thunderSound1Id"] = sol::property(&TES3::WeatherThunder::soundIdThunder1, &TES3::WeatherThunder::setThunder1SoundID);
+				usertypeDefinition["thunderSound2"] = &TES3::WeatherThunder::thunderSound2;
+				usertypeDefinition["thunderSound2Id"] = sol::property(&TES3::WeatherThunder::soundIdThunder2, &TES3::WeatherThunder::setThunder2SoundID);
+				usertypeDefinition["thunderSound3"] = &TES3::WeatherThunder::thunderSound3;
+				usertypeDefinition["thunderSound3Id"] = sol::property(&TES3::WeatherThunder::soundIdThunder3, &TES3::WeatherThunder::setThunder3SoundID);
+				usertypeDefinition["thunderSound4"] = &TES3::WeatherThunder::thunderSound4;
+				usertypeDefinition["thunderSound4Id"] = sol::property(&TES3::WeatherThunder::soundIdThunder4, &TES3::WeatherThunder::setThunder4SoundID);
 				usertypeDefinition["thunderSoundCount"] = &TES3::WeatherThunder::thunderSoundCount;
 				usertypeDefinition["thunderThreshold"] = &TES3::WeatherThunder::thunderThreshold;
-
-				// Binding for IDs and paths.
-				usertypeDefinition["rainLoopSoundId"] = sol::property(
-					[](TES3::WeatherThunder& self) { return self.soundIdRainLoop; },
-					[](TES3::WeatherThunder& self, const char* value) { if (strlen(value) < 260) strcpy(self.soundIdRainLoop, value); }
-				);
-				usertypeDefinition["thunderSound1Id"] = sol::property(
-					[](TES3::WeatherThunder& self) { return self.soundIdThunder1; },
-					[](TES3::WeatherThunder& self, const char* value) { if (strlen(value) < 260) strcpy(self.soundIdThunder1, value); }
-				);
-				usertypeDefinition["thunderSound2Id"] = sol::property(
-					[](TES3::WeatherThunder& self) { return self.soundIdThunder2; },
-					[](TES3::WeatherThunder& self, const char* value) { if (strlen(value) < 260) strcpy(self.soundIdThunder2, value); }
-				);
-				usertypeDefinition["thunderSound3Id"] = sol::property(
-					[](TES3::WeatherThunder& self) { return self.soundIdThunder3; },
-					[](TES3::WeatherThunder& self, const char* value) { if (strlen(value) < 260) strcpy(self.soundIdThunder3, value); }
-				);
-				usertypeDefinition["thunderSound4Id"] = sol::property(
-					[](TES3::WeatherThunder& self) { return self.soundIdThunder4; },
-					[](TES3::WeatherThunder& self, const char* value) { if (strlen(value) < 260) strcpy(self.soundIdThunder4, value); }
-				);
-
-				// Access to other objects that need to be packaged.
-				usertypeDefinition["rainLoopSound"] = sol::readonly_property([](TES3::WeatherThunder& self) { return self.rainLoopSound; });
-				usertypeDefinition["thunderSound1"] = sol::readonly_property([](TES3::WeatherThunder& self) { return self.thunderSound1; });
-				usertypeDefinition["thunderSound2"] = sol::readonly_property([](TES3::WeatherThunder& self) { return self.thunderSound2; });
-				usertypeDefinition["thunderSound3"] = sol::readonly_property([](TES3::WeatherThunder& self) { return self.thunderSound3; });
-				usertypeDefinition["thunderSound4"] = sol::readonly_property([](TES3::WeatherThunder& self) { return self.thunderSound4; });
 			}
 		}
 	}

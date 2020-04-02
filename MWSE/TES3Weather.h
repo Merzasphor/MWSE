@@ -55,6 +55,9 @@ namespace TES3 {
 		// Custom functions.
 		//
 
+		bool setCloudTexturePath(const char* path);
+		bool setAmbientLoopSoundID(const char* id);
+
 		// Storage for cached userdata.
 		static sol::object getOrCreateLuaObject(lua_State* L, const Weather* object);
 		static int pushCachedLuaObject(lua_State* L, const Weather* object);

@@ -708,6 +708,8 @@
     <ClCompile Include="TES3WeatherController.cpp" />
     <ClCompile Include="TES3WeatherControllerLua.cpp" />
     <ClCompile Include="TES3WeatherLua.cpp" />
+    <ClCompile Include="TES3WeatherRain.cpp" />
+    <ClCompile Include="TES3WeatherThunder.cpp" />
     <ClCompile Include="TES3WorldController.cpp" />
     <ClCompile Include="TES3WorldControllerLua.cpp" />
     <ClCompile Include="UIUtil.cpp" />
