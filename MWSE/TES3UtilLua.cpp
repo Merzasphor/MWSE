@@ -2332,6 +2332,22 @@ namespace mwse {
 				throw std::invalid_argument("The 'reference' reference does not point to an actor.");
 			}
 
+			// Enable defining a soul to add.
+			TES3::Actor* soul = getOptionalParam<TES3::Actor*>(params, "soul", nullptr);
+			bool createdItemData = false;
+			if (soul) {
+				if (!tes3::isSoulGem(item)) {
+					throw std::invalid_argument("Cannot add a soul to item, as it is not a soul gem.");
+				}
+
+				if (!itemData) {
+					itemData = TES3::ItemData::createForObject(item);
+					createdItemData = true;
+				}
+
+				itemData->soul = soul;
+			}
+
 			// Clone the object if needed.
 			if (reference->clone()) {
 				actor = static_cast<TES3::Actor*>(reference->baseObject);
@@ -2347,6 +2363,10 @@ namespace mwse {
 			if (getOptionalParam<bool>(params, "limit", false)) {
 				// Prevent placing items into organic containers.
 				if (BIT_TEST(actor->actorFlags, TES3::ActorFlagContainer::OrganicBit)) {
+					if (createdItemData) {
+						delete itemData;
+						itemData = nullptr;
+					}
 					return 0;
 				}
 
@@ -2361,6 +2381,10 @@ namespace mwse {
 
 			// No items to add? Great, let's get out of here.
 			if (fulfilledCount == 0) {
+				if (createdItemData) {
+					delete itemData;
+					itemData = nullptr;
+				}
 				return 0;
 			}
 
