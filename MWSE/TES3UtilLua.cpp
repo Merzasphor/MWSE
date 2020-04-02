@@ -2333,7 +2333,7 @@ namespace mwse {
 			}
 
 			// Enable defining a soul to add.
-			TES3::Actor* soul = getOptionalParam<TES3::Actor*>(params, "soul", nullptr);
+			TES3::Actor* soul = getOptionalParamObject<TES3::Actor>(params, "soul");
 			bool createdItemData = false;
 			if (soul) {
 				if (!tes3::isSoulGem(item)) {
