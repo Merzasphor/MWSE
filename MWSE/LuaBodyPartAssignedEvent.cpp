@@ -10,11 +10,11 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			BodyPartAssignedEvent::BodyPartAssignedEvent(TES3::BodyPartManager* manager, TES3::Reference* reference, TES3::Item* item, TES3::BodyPartManager::ActiveBodyPart::Index index, TES3::BodyPart* bodyPart, bool isFirstPerson) :
+			BodyPartAssignedEvent::BodyPartAssignedEvent(TES3::BodyPartManager* manager, TES3::Reference* reference, TES3::PhysicalObject* object, TES3::BodyPartManager::ActiveBodyPart::Index index, TES3::BodyPart* bodyPart, bool isFirstPerson) :
 				ObjectFilteredEvent("bodyPartAssigned", reference),
 				m_BodyPartManager(manager),
 				m_Reference(reference),
-				m_Item(item),
+				m_Object(object),
 				m_Index(index),
 				m_BodyPart(bodyPart),
 				m_IsFirstPerson(isFirstPerson)
@@ -29,7 +29,7 @@ namespace mwse {
 
 				eventData["manager"] = m_BodyPartManager;
 				eventData["reference"] = makeLuaObject(m_Reference);
-				eventData["item"] = makeLuaObject(m_Item);
+				eventData["object"] = makeLuaObject(m_Object);
 				eventData["index"] = m_Index;
 				eventData["bodyPart"] = makeLuaObject(m_BodyPart);
 				eventData["isFirstPerson"] = m_IsFirstPerson;

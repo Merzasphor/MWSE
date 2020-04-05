@@ -3652,13 +3652,13 @@ namespace mwse {
 			genCallEnforced(0x4C7715, 0x4C1980, *reinterpret_cast<DWORD*>(&isSourcelessObject));
 
 			// Allow overriding body part assignment.
-			auto bodyPartManagerSetBodyPartForItem = &TES3::BodyPartManager::setBodyPartForItem;
-			genCallEnforced(0x4730DD, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
-			genCallEnforced(0x473CA6, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
-			genCallEnforced(0x4A12D0, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
-			genCallEnforced(0x4A3B8E, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
-			genCallEnforced(0x4D9F7C, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
-			genCallEnforced(0x4D9FBC, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
+			auto bodyPartManagerSetBodyPartForObject = &TES3::BodyPartManager::setBodyPartForObject;
+			genCallEnforced(0x4730DD, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForObject));
+			genCallEnforced(0x473CA6, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForObject));
+			genCallEnforced(0x4A12D0, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForObject));
+			genCallEnforced(0x4A3B8E, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForObject));
+			genCallEnforced(0x4D9F7C, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForObject));
+			genCallEnforced(0x4D9FBC, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForObject));
 
 			// Fix BPM constructor to always have a reference. 
 			auto bodyPartManagerConstructor = &TES3::BodyPartManager::ctor;
