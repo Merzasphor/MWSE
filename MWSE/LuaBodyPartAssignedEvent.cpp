@@ -34,6 +34,9 @@ namespace mwse {
 				eventData["bodyPart"] = makeLuaObject(m_BodyPart);
 				eventData["isFirstPerson"] = m_IsFirstPerson;
 
+				// Backwards compatibility.
+				eventData["item"] = makeLuaObject(m_Object);
+
 				return eventData;
 			}
 
