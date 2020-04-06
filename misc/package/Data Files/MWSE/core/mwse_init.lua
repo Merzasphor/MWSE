@@ -272,6 +272,7 @@ _G.tes3 = require("tes3.init")
 _G.event = require("event")
 _G.json = require("dkjson")
 
+
 -------------------------------------------------
 -- Extend our base API: json
 -------------------------------------------------
@@ -357,6 +358,7 @@ end
 function mwse.encodeForSave(object)
 	return json.encode(object, { exception = exceptionWhenSaving })
 end
+
 
 -------------------------------------------------
 -- Extend our base API: tes3
@@ -446,7 +448,29 @@ function tes3uiElement:createImageButton(params)
 	return buttonBlock
 end
 
+
+-------------------------------------------------
+-- Setup debugger if necessary
 -------------------------------------------------
 
+local targetDebugger = os.getenv("MWSE_LUA_DEBUGGER")
+if (targetDebugger == "vscode-debuggee") then
+	-- Start up our debuggee.
+	local debuggee = require('vscode-debuggee')
+	local startResult, breakerType = debuggee.start(json)
+	mwse.log("[MWSE-Lua] vscode-debuggee start -> Result: %s, Type: %s", startResult, breakerType)
+
+	-- Overwrite the mwse.log function to also print to the debug console.
+	mwse.log = function(str, ...)
+		local message = tostring(str):format(...)
+		print(message)
+		debuggee.print("log", message)
+	end
+
+	-- Poll every frame.
+	event.register("enterFrame", debuggee.poll, { priority = 9001 })
+end
+
+
 -- Report that we're initialized.
-print("MWSE Lua interface initialized.")
+mwse.log("MWSE Lua interface initialized.")

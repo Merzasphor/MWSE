@@ -1,0 +1,32 @@
+{
+    "Lua.runtime.version": "LuaJIT",
+    "Lua.runtime.path": [
+        "./core/?.lua",
+        "./lib/?.lua",
+        "./mwse/?.lua"
+    ],
+    "Lua.workspace.library": {
+        "./core": true,
+        "./lib": true,
+        "./mods": true
+    },
+    "Lua.workspace.ignoreDir": [
+        "*"
+    ],
+    "Lua.diagnostics.disable": [
+    ],
+    "Lua.diagnostics.globals": [
+        "event",
+        "json",
+        "math",
+        "mge",
+        "mwscript",
+        "mwse",
+        "string",
+        "table",
+        "tes3",
+        "tes3ui",
+        "timer"
+    ],
+    "restructuredtext.confPath": "d:\\Games\\Morrowind\\mwse-source\\docs\\source"
+}
