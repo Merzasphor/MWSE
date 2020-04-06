@@ -126,10 +126,6 @@ namespace mwse {
 				usertypeDefinition.set("setBodyPartForObject", &TES3::BodyPartManager::setBodyPartForObject);
 				usertypeDefinition.set("updateForReference", &TES3::BodyPartManager::updateForReference);
 
-				// Legacy support, being removed.
-				usertypeDefinition.set("setBodyPartByIdForItem", &TES3::BodyPartManager::setBodyPartByIdForObject);
-				usertypeDefinition.set("setBodyPartForItem", &TES3::BodyPartManager::setBodyPartForObject);
-
 				// Finish up our usertype.
 				state.set_usertype("tes3bodyPartManager", usertypeDefinition);
 			}
