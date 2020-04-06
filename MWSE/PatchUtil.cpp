@@ -89,56 +89,24 @@ namespace mwse {
 		}
 
 		//
-		// Patch: Clean up cursor behavior when alt-tabbing.
+		// Patch: Clean up cursor behavior when alt-tabbing or hitting breakpoints.
 		//
 
-		bool& TES3_WindowInFocus = *reinterpret_cast<bool*>(0x776D08);
 		int& TES3_CursorShown = *reinterpret_cast<int*>(0x776D0C);
+		CURSORINFO lastCursorInfo;
 
-		WNDPROC TES3_DefaultWindowMessageHandler = nullptr;
-
-		LRESULT __stdcall PatchLessAggressiveCursorCapturingWindowHandle(HWND hWnd, int uMsg, WPARAM wParam, LPARAM lParam) {
-			switch (uMsg) {
-			case WM_ACTIVATE:
-			{
-				if (wParam) {
-					auto worldController = TES3::WorldController::get();
-					if (worldController) {
-						worldController->updateTiming();
-					}
-					TES3_WindowInFocus = true;
-					if (TES3_CursorShown) {
-						ShowCursor(false);
-						TES3_CursorShown = false;
-					}
+		int __stdcall TrackedShowCursor(int bShow) {
+			if (GetCursorInfo(&lastCursorInfo)) {
+				if (bShow != 0 && (lastCursorInfo.flags & 1) == 0) {
+					ShowCursor(TRUE);
+					TES3_CursorShown = TRUE;
 				}
-				else {
-					TES3_WindowInFocus = false;
-					if (!TES3_CursorShown) {
-						ShowCursor(true);
-						TES3_CursorShown = true;
-					}
+				else if (bShow == 0 (lastCursorInfo.flags & 1) == 1) {
+					ShowCursor(FALSE);
+					TES3_CursorShown = FALSE;
 				}
-				return 0;
 			}
-			break;
-			case WM_NCHITTEST:
-			{
-				auto result = DefWindowProc(hWnd, uMsg, wParam, lParam);
-				if (TES3_WindowInFocus && TES3_CursorShown && result == HTCLIENT) {
-					ShowCursor(false);
-					TES3_CursorShown = false;
-				}
-				else if (TES3_WindowInFocus && !TES3_CursorShown && result != HTCLIENT) {
-					ShowCursor(true);
-					TES3_CursorShown = true;
-				}
-				return result;
-			}
-			break;
-			}
-
-			return TES3_DefaultWindowMessageHandler(hWnd, uMsg, wParam, lParam);
+			return TES3_CursorShown;
 		}
 
 		//
@@ -198,10 +166,8 @@ namespace mwse {
 			genCallEnforced(0x5CDFD0, 0x581440, reinterpret_cast<DWORD>(PatchPaperdollTooltipCrashFix));
 
 			// Patch (optional): Change window cursor behavior.
-			TES3_DefaultWindowMessageHandler = (WNDPROC)SetClassLongPtr(TES3::WorldController::get()->Win32_hWndParent, GCLP_WNDPROC, (LONG_PTR)PatchLessAggressiveCursorCapturingWindowHandle);
-			if (TES3_DefaultWindowMessageHandler == nullptr) {
-				log::getLog() << "[MWSE:Patch:Less Aggressive Cursor Capturing] ERROR: Failed to replace window handler using SetClassLongPtr." << std::endl;
-			}
+			lastCursorInfo.cbSize = sizeof(CURSORINFO);
+			writeDoubleWordUnprotected(0x746378, (DWORD)&TrackedShowCursor);
 
 			// Patch: Optimize GetDeadCount and associated dialogue filtering/logic.
 			auto killCounterIncrement = &TES3::KillCounter::increment;
