@@ -14,6 +14,7 @@ namespace TES3 {
 			BodyPartManager = 0x1,
 			Light = 0x2,
 			Lock = 0x3,
+			LeveledBaseReference = 0x4,
 			TravelDestination = 0x5,
 			Variables = 0x6,
 			ActorData = 0x8,
@@ -71,6 +72,12 @@ namespace TES3 {
 	static_assert(sizeof(LockAttachmentNode) == 0x10, "TES3::LockAttachmentNode failed size validation");
 
 	typedef AttachmentWithNode<LockAttachmentNode> LockAttachment;
+
+	//
+	// Leveled Base Reference
+	//
+
+	typedef AttachmentWithNode<Reference> LeveledBaseReferenceAttachment;
 
 	//
 	// TravelDestination

@@ -28,11 +28,17 @@ namespace TES3 {
 		Attachment* attachment = this->attachments;
 		while (attachment) {
 			switch (attachment->type) {
+			case AttachmentType::BodyPartManager:
+				result["bodyPartManager"] = reinterpret_cast<BodyPartManagerAttachment*>(attachment)->data;
+				break;
 			case AttachmentType::Light:
 				result["light"] = sol::make_object(state, reinterpret_cast<LockAttachment*>(attachment)->data);
 				break;
 			case AttachmentType::Lock:
 				result["lock"] = sol::make_object(state, reinterpret_cast<LockAttachment*>(attachment)->data);
+				break;
+			case AttachmentType::LeveledBaseReference:
+				result["leveledBase"] = mwse::lua::makeLuaObject(reinterpret_cast<LeveledBaseReferenceAttachment*>(attachment)->data);
 				break;
 			case AttachmentType::TravelDestination:
 				result["travelDestination"] = sol::make_object(state, reinterpret_cast<TravelDestinationAttachment*>(attachment)->data);
@@ -42,9 +48,6 @@ namespace TES3 {
 				break;
 			case AttachmentType::ActorData:
 				result["actor"] = mwse::lua::makeLuaObject(reinterpret_cast<MobileActorAttachment*>(attachment)->data);
-				break;
-			case AttachmentType::BodyPartManager:
-				result["bodyPartManager"] = reinterpret_cast<BodyPartManagerAttachment*>(attachment)->data;
 				break;
 			}
 
@@ -116,6 +119,7 @@ namespace mwse {
 
 				return makeLuaObject(self.owningCollection.asReferenceList->cell);
 			}));
+			usertypeDefinition.set("leveledBaseReference", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.getLeveledBaseReference()); }));
 			usertypeDefinition.set("object", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.baseObject); }));
 			usertypeDefinition.set("sceneNode", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.sceneNode); }));
 
@@ -141,6 +145,7 @@ namespace mwse {
 			usertypeDefinition.set("context", sol::readonly_property(&getContext));
 			usertypeDefinition.set("data", sol::readonly_property(&TES3::Reference::getLuaTable));
 			usertypeDefinition.set("isEmpty", sol::property(&TES3::Reference::getEmptyInventoryFlag, &TES3::Reference::setEmptyInventoryFlag));
+			usertypeDefinition.set("isLeveledSpawn", sol::readonly_property(&TES3::Reference::isLeveledSpawn));
 			usertypeDefinition.set("isRespawn", sol::readonly_property(&TES3::Reference::isRespawn));
 			usertypeDefinition.set("orientation", sol::property([](TES3::Reference& self) { return self.getOrientation(); }, &TES3::Reference::setOrientationFromLua));
 			usertypeDefinition.set("position", sol::property([](TES3::Reference& self) { return self.getPosition(); }, &TES3::Reference::setPositionFromLua));
