@@ -150,6 +150,26 @@ namespace mwse {
 		}
 
 		//
+		// Patch: Allow the game to correctly close when quit with a messagebox popup.
+		//
+		// The game holds up a TES3::UI messagebox and runs its own infinite loop waiting for a response
+		// when a critical error has occurred. This does not respect the WorldController's stopGameLoop
+		// flag, which is set when the user attempts to close the window.
+		//
+		// Here we check if that flag is set, and if it is, force a choice on the "no" dialogue option,
+		// which stops the deadlock.
+		//
+
+		int __cdecl SafeQuitGetMessageChoice() {
+			if (TES3::WorldController::get()->stopGameLoop) {
+				log::getLog() << "[MWSE] Prevented rogue Morrowind.exe instance." << std::endl;
+				*reinterpret_cast<int*>(0x7B88C0) = 1;
+			}
+
+			return *reinterpret_cast<int*>(0x7B88C0);
+		}
+
+		//
 		// Install all the patches.
 		//
 
@@ -191,6 +211,11 @@ namespace mwse {
 			// Patch: Try to be better about deleting objects.
 			genCallEnforced(0x50C538, 0x4EEC70, reinterpret_cast<DWORD>(PatchMWScriptSetDelete));
 #endif
+
+			// Patch: Prevent error messageboxes from creating a rogue process.
+			genCallEnforced(0x47731B, 0x5F2160, reinterpret_cast<DWORD>(SafeQuitGetMessageChoice));
+			genCallEnforced(0x4779D9, 0x5F2160, reinterpret_cast<DWORD>(SafeQuitGetMessageChoice));
+			genCallEnforced(0x477E6F, 0x5F2160, reinterpret_cast<DWORD>(SafeQuitGetMessageChoice));
 		}
 
 		//
