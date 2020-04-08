@@ -89,27 +89,6 @@ namespace mwse {
 		}
 
 		//
-		// Patch: Clean up cursor behavior when alt-tabbing or hitting breakpoints.
-		//
-
-		int& TES3_CursorShown = *reinterpret_cast<int*>(0x776D0C);
-		CURSORINFO lastCursorInfo;
-
-		int __stdcall TrackedShowCursor(int bShow) {
-			if (GetCursorInfo(&lastCursorInfo)) {
-				if (bShow != 0 && (lastCursorInfo.flags & 1) == 0) {
-					ShowCursor(TRUE);
-					TES3_CursorShown = TRUE;
-				}
-				else if (bShow == 0 (lastCursorInfo.flags & 1) == 1) {
-					ShowCursor(FALSE);
-					TES3_CursorShown = FALSE;
-				}
-			}
-			return TES3_CursorShown;
-		}
-
-		//
 		// Patch: Fix crash with paper doll equipping/unequipping.
 		//
 		// In this patch, the tile associated with the stack may have been deleted, but the property to the TES3::ItemData 
@@ -130,23 +109,6 @@ namespace mwse {
 			}
 
 			return propValue;
-		}
-		
-		//
-		// Patch: Try to be better about deleting objects.
-		//
-		// In the original game, mwscript's SetDelete function simply sets the delete bit flag.
-		// This is inadequate, as background objects can still cause issues. This overwrite 
-		// forces the mwscript opcode to properly disable, clean, then flag the object.
-		//
-
-		void __fastcall PatchMWScriptSetDelete(TES3::Reference* reference, DWORD _UNUSED_, bool setDelete) {
-			if (setDelete) {
-				reference->setDeleted();
-			}
-			else {
-				BIT_SET_OFF(reference->objectFlags, TES3::ObjectFlag::DeleteBit);
-			}
 		}
 
 		//
@@ -185,10 +147,6 @@ namespace mwse {
 			// Patch: Crash fix for help text for paperdolls.
 			genCallEnforced(0x5CDFD0, 0x581440, reinterpret_cast<DWORD>(PatchPaperdollTooltipCrashFix));
 
-			// Patch (optional): Change window cursor behavior.
-			lastCursorInfo.cbSize = sizeof(CURSORINFO);
-			writeDoubleWordUnprotected(0x746378, (DWORD)&TrackedShowCursor);
-
 			// Patch: Optimize GetDeadCount and associated dialogue filtering/logic.
 			auto killCounterIncrement = &TES3::KillCounter::increment;
 			genCallEnforced(0x523D73, 0x55D820, *reinterpret_cast<DWORD*>(&killCounterIncrement));
@@ -204,13 +162,6 @@ namespace mwse {
 			genCallEnforced(0x41B857, 0x40FF50, *reinterpret_cast<DWORD*>(&WorldController_tickClock));
 			auto WorldController_checkForDayWrapping = &TES3::WorldController::checkForDayWrapping;
 			genCallEnforced(0x6350E9, 0x40FF50, *reinterpret_cast<DWORD*>(&WorldController_checkForDayWrapping));
-
-			// This patch seems to be causing some people to crash. Attachments are being recreated incorrectly or
-			// something. Need to find a better place to do this...
-#if false
-			// Patch: Try to be better about deleting objects.
-			genCallEnforced(0x50C538, 0x4EEC70, reinterpret_cast<DWORD>(PatchMWScriptSetDelete));
-#endif
 
 			// Patch: Prevent error messageboxes from creating a rogue process.
 			genCallEnforced(0x47731B, 0x5F2160, reinterpret_cast<DWORD>(SafeQuitGetMessageChoice));
