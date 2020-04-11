@@ -103,6 +103,9 @@ namespace mwse {
 				usertypeDefinition.set("isInstance", sol::var(true));
 				usertypeDefinition.set("weapon", sol::readonly_property([](TES3::CreatureInstance& self) { return makeLuaObject(self.weapon); }));
 
+				// Basic function binding.
+				usertypeDefinition.set("reevaluateEquipment", &TES3::CreatureInstance::reevaluateEquipment);
+
 				// Properties that directly point to the base creature.
 				usertypeDefinition.set("aiConfig", sol::readonly_property([](TES3::CreatureInstance& self) { return self.baseCreature->aiConfig; }));
 				usertypeDefinition.set("attacks", sol::readonly_property([](TES3::CreatureInstance& self) { return std::ref(self.baseCreature->attacks); }));
