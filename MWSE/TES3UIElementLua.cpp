@@ -557,6 +557,7 @@ namespace mwse {
 					if (!callback.valid()) {
 						const char *errorSource = self.name.cString ? self.name.cString : "(unnamed)";
 						log::getLog() << "UI register event has invalid callback: target " << errorSource << ", event " << eventID << std::endl;
+						logStackTrace();
 						return;
 					}
 
@@ -576,6 +577,7 @@ namespace mwse {
 				else {
 					const char *errorSource = self.name.cString ? self.name.cString : "(unnamed)";
 					log::getLog() << "UI register event has invalid callback type: target " << errorSource << ", event " << eventID << std::endl;
+					logStackTrace();
 				}
 			});
 			usertypeDefinition.set("unregister",
@@ -741,6 +743,7 @@ namespace mwse {
 				}
 				else {
 					log::getLog() << "createImage: path argument is required." << std::endl;
+					logStackTrace();
 				}
 				return static_cast<Element*>(nullptr);
 			});
@@ -760,6 +763,7 @@ namespace mwse {
 				}
 				else {
 					log::getLog() << "createNif: path argument is required." << std::endl;
+					logStackTrace();
 				}
 				return static_cast<Element*>(nullptr);
 			});
