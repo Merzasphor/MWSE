@@ -2419,8 +2419,8 @@ namespace mwse {
 
 			// Force equipment updates.
 			if (getOptionalParam<bool>(params, "reevaluateEquipment", true)) {
-				if (mobile != playerMobile) {
-					//actor->reevaluateEquipment();
+				if (mobile == nullptr) {
+					actor->reevaluateEquipment();
 				}
 			}
 
@@ -2530,7 +2530,7 @@ namespace mwse {
 
 			// Force equipment updates.
 			if (getOptionalParam<bool>(params, "reevaluateEquipment", true)) {
-				if (mobile != playerMobile) {
+				if (mobile == nullptr) {
 					actor->reevaluateEquipment();
 				}
 			}
@@ -2738,10 +2738,10 @@ namespace mwse {
 
 			// Force equipment updates.
 			if (getOptionalParam<bool>(params, "reevaluateEquipment", true)) {
-				if (fromMobile != playerMobile) {
+				if (fromMobile == nullptr) {
 					fromActor->reevaluateEquipment();
 				}
-				if (toMobile != playerMobile) {
+				if (toMobile == nullptr) {
 					toActor->reevaluateEquipment();
 				}
 			}
