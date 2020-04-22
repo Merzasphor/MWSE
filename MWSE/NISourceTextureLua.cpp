@@ -39,7 +39,7 @@ namespace mwse {
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
-				usertypeDefinition.set(sol::base_classes, sol::bases<NI::ObjectNET, NI::Object>());
+				usertypeDefinition.set(sol::base_classes, sol::bases<NI::Texture, NI::ObjectNET, NI::Object>());
 				setUserdataForNIObjectNET(usertypeDefinition);
 
 				// Basic property binding.
