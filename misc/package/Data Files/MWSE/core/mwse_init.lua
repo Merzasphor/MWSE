@@ -351,8 +351,18 @@ function mwse.log(str, ...)
 	print(tostring(str):format(...))
 end
 
-function mwse.loadConfig(fileName)
-	return json.loadfile(string.format("config\\%s", fileName))
+function mwse.loadConfig(fileName, defaults)
+	local result = json.loadfile(string.format("config\\%s", fileName))
+
+	if (result) then
+		if (type(defaults) == "table") then
+			table.copymissing(result, defaults)
+		end
+	else
+		result = defaults
+	end
+
+	return result
 end
 
 function mwse.saveConfig(fileName, object, config)
