@@ -11,5 +11,6 @@ Functions
 
     string/endswith
     string/format
+    string/multifind
     string/startswith
 

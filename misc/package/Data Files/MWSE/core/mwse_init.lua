@@ -249,6 +249,16 @@ function string.endswith(haystack, needle)
 end
 getmetatable("").endswith = string.endswith
 
+function string.multifind(s, patterns, index, plain)
+	for _, pattern in ipairs(patterns) do
+		local r = { string.find(s, pattern, index, plain) }
+		if (#r > 0) then
+			return pattern, unpack(r)
+		end
+	end
+end
+getmetatable("").multifind = string.multifind
+
 
 -------------------------------------------------
 -- Extend 3rd API: lfs
