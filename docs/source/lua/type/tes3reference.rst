@@ -195,11 +195,17 @@ Methods
 `setActionFlag`_
     Sets a bit in the reference's action data attachment
 
+`setDynamicLighting`_
+    Sets the dynamic lighting state of the reference using the global data handler.
+
 `testActionFlag`_ (`boolean`_)
     Returns the flag's value in the reference's action data attachment
 
 `updateEquipment`_
     Causes the reference, if of an actor, to reevaluate its equipment choices and equip items it should.
+
+`updateLighting`_
+    Updates the lighting of the reference using the global data handler.
 
 `updateSceneGraph`_
     Updates the reference's local rotation matrix, propagates position changes to the scene graph, and sets the reference's modified flag.
@@ -215,8 +221,10 @@ Methods
     tes3reference/getAttachedDynamicLight
     tes3reference/getOrCreateAttachedDynamicLight
     tes3reference/setActionFlag
+    tes3reference/setDynamicLighting
     tes3reference/testActionFlag
     tes3reference/updateEquipment
+    tes3reference/updateLighting
     tes3reference/updateSceneGraph
 
 .. _`activate`: tes3reference/activate.html
@@ -227,8 +235,10 @@ Methods
 .. _`getAttachedDynamicLight`: tes3reference/getAttachedDynamicLight.html
 .. _`getOrCreateAttachedDynamicLight`: tes3reference/getOrCreateAttachedDynamicLight.html
 .. _`setActionFlag`: tes3reference/setActionFlag.html
+.. _`setDynamicLighting`: tes3reference/setDynamicLighting.html
 .. _`testActionFlag`: tes3reference/testActionFlag.html
 .. _`updateEquipment`: tes3reference/updateEquipment.html
+.. _`updateLighting`: tes3reference/updateLighting.html
 .. _`updateSceneGraph`: tes3reference/updateSceneGraph.html
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
