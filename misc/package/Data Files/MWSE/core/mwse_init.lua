@@ -129,6 +129,22 @@ function table.deepcopy(t)
 	return copy
 end
 
+function table.copymissing(to, from)
+	if (type(to) ~= "table" or type(from) ~= "table") then
+		error("Arguments for table.copymissing must be tables.")
+	end
+
+	for k, v in pairs(from) do
+		if (type(to[k]) == "table" and type(v) == "table") then
+			table.copymissing(to[k], v)
+		else
+			if (to[k] == nil) then
+				to[k] = v
+			end
+		end
+	end
+end
+
 -------------------------------------------------
 -- Extend base table: Add binary search/insert
 -------------------------------------------------
@@ -151,9 +167,9 @@ end
 		on success: a table holding matching indices (e.g. { startindice,endindice } )
 		on failure: nil
 ]]--
-local default_fcompval = function( value ) return value end
-local fcompf = function( a,b ) return a < b end
-local fcompr = function( a,b ) return a > b end
+local function default_fcompval( value ) return value end
+local function fcompf( a,b ) return a < b end
+local function fcompr( a,b ) return a > b end
 function table.binsearch( t,value,fcompval,reversed )
 	-- Initialise functions
 	local fcompval = fcompval or default_fcompval

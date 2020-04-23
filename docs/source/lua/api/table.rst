@@ -13,6 +13,7 @@ Functions
     table/binsearch
     table/choice
     table/copy
+    table/copymissing
     table/deepcopy
     table/find
     table/removevalue

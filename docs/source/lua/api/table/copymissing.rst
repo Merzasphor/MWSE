@@ -1,18 +1,16 @@
-mwse.loadConfig
+table.copymissing
 ====================================================================================================
 
-Loads a config table from Data Files\MWSE\config\{fileName}.json.
-	
-If the default values table is passed, empty keys in the config will be filled in using its values. Additionally, if no file exists, the function will return the default table.
+Copies a table's contents from one table to another, including subtitles. If a non-table key is already defined, it will not be overwritten. Metatables are not copied.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 
-fileName (`string`_)
-    The non-extensioned name of the config file.
+to (`table`_)
+    No description available.
 
-defaults (`table`_)
-    Optional. A table of default values.
+from (`table`_)
+    No description available.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html
