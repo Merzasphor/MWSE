@@ -1,3 +1,7 @@
+# Note: This repository is deprecated. Active development on MWSE is now at: https://github.com/MWSE/MWSE
+
+
+
 # Morrowind Script Extender
 
 ## Synopsis
