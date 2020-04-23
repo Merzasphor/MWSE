@@ -1,18 +1,18 @@
-tes3.loadMesh
+tes3.loadSourceTexture
 ====================================================================================================
 
-Loads a mesh file and provides a scene graph object.
+Loads a source texture file and provides the niSourceTexture object.
 
 Returns
 ----------------------------------------------------------------------------------------------------
 
-`niNode`_.
+`niSourceTexture`_.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 
 path (`string`_)
-    Path, relative to Data Files/Meshes.
+    Path, relative to Data Files/Textures.
 
 useCache (`boolean`_)
     Default: ``true``. If false, a new object will be created even if it had been previously loaded.

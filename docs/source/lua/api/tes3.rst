@@ -93,6 +93,7 @@ Functions
     tes3/iterateObjects
     tes3/loadGame
     tes3/loadMesh
+    tes3/loadSourceTexture
     tes3/lock
     tes3/loopTArray
     tes3/menuMode

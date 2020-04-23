@@ -1255,6 +1255,23 @@ namespace mwse {
 			return sol::nil;
 		}
 
+		sol::object loadSourceTexture(const char* relativePath, sol::optional<bool> useCached) {
+			std::string path = "Textures\\";
+			path += relativePath;
+
+			if (useCached.value_or(true)) {
+				auto dataHandler = TES3::DataHandler::get();
+				if (dataHandler == nullptr) {
+					throw std::runtime_error("tes3dataHandler is not yet initialized.");
+				}
+				return makeLuaNiPointer(dataHandler->loadSourceTexture(path.c_str()));
+			}
+			else {
+				NI::SourceTexture::FormatPrefs prefs = { NI::SourceTexture::FormatPrefs::PixelLayout::PIX_DEFAULT, NI::SourceTexture::FormatPrefs::MipFlag::MIP_DEFAULT, NI::SourceTexture::FormatPrefs::AlphaFormat::ALPHA_DEFAULT };
+				return makeLuaNiPointer(NI::SourceTexture::createFromPath(path.c_str(), &prefs));
+			}
+		}
+
 		bool playVoiceover(sol::table params) {
 			auto& luaManager = mwse::lua::LuaManager::getInstance();
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
@@ -3788,6 +3805,7 @@ namespace mwse {
 			tes3["iterateObjects"] = iterateObjects;
 			tes3["loadGame"] = loadGame;
 			tes3["loadMesh"] = loadMesh;
+			tes3["loadSourceTexture"] = loadSourceTexture;
 			tes3["lock"] = lock;
 			tes3["messageBox"] = messageBox;
 			tes3["modStatistic"] = modStatistic;

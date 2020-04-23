@@ -279,6 +279,11 @@ namespace TES3 {
 		reinterpret_cast<void(__thiscall *)(DataHandler*, Sound*, Reference*)>(TES3_DataHandler_removeSound)(this, sound, reference);
 	}
 
+	const auto TES3_DataHandler_loadSourceTexture = reinterpret_cast<NI::SourceTexture*(__thiscall*)(TES3::DataHandler*, const char*)>(0x48DB60);
+	NI::Pointer<NI::SourceTexture> DataHandler::loadSourceTexture(const char* path) {
+		return TES3_DataHandler_loadSourceTexture(this, path);
+	}
+
 	const auto TES3_DataHandler_updateLightingForReference = reinterpret_cast<void(__thiscall*)(TES3::DataHandler *, TES3::Reference *)>(0x485E40);
 	void DataHandler::updateLightingForReference(Reference * reference) {
 		TES3_DataHandler_updateLightingForReference(this, reference);

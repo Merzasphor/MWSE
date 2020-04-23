@@ -12,6 +12,7 @@
 
 #include "NIAVObject.h"
 #include "NIPointer.h"
+#include "NISourceTexture.h"
 
 #include <Windows.h>
 
@@ -294,6 +295,8 @@ namespace TES3 {
 		SoundEvent* getSoundPlaying(Sound*, Reference*);
 		void adjustSoundVolume(Sound*, Reference*, unsigned char volume);
 		void removeSound(Sound*, Reference*);
+
+		NI::Pointer<NI::SourceTexture> loadSourceTexture(const char* path);
 
 		void updateLightingForReference(Reference * reference);
 		void setDynamicLightingForReference(Reference* reference);
