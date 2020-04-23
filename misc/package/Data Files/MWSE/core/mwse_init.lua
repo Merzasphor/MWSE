@@ -406,6 +406,9 @@ function tes3.claimSpellEffectId(name, id)
 	tes3.effect[name] = id
 end
 
+-- Store the root installation folder.
+tes3.installDirectory = lfs.currentdir()
+
 
 -------------------------------------------------
 -- Extend our base API: tes3ui

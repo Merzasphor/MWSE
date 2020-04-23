@@ -11,6 +11,7 @@ Values
 
     tes3/dataHandler
     tes3/game
+    tes3/installDirectory
     tes3/mobilePlayer
     tes3/player
     tes3/worldController
