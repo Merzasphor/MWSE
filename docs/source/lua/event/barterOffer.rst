@@ -14,6 +14,7 @@ mobile
 success
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`boolean`_. Read-only. Whether the trade was accepted or not.
+`bool`_. Read-only. Whether the trade was accepted or not.
 
 .. _`tes3mobileActor`: ../../lua/type/tes3mobileActor.html
+.. _`bool`: ../../lua/type/boolean.html
