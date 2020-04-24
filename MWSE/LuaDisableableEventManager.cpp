@@ -6,6 +6,7 @@
 #include "LuaActivationTargetChangedEvent.h"
 #include "LuaAddTopicEvent.h"
 #include "LuaAttackEvent.h"
+#include "LuaBarterOfferEvent.h"
 #include "LuaBodyPartAssignedEvent.h"
 #include "LuaBodyPartsUpdatedEvent.h"
 #include "LuaBookGetTextEvent.h"
@@ -120,6 +121,7 @@ namespace mwse {
 				usertypeDefinition.set("activate", sol::property(&ActivateEvent::getEventEnabled, &ActivateEvent::setEventEnabled));
 				usertypeDefinition.set("activationTargetChanged", sol::property(&ActivationTargetChangedEvent::getEventEnabled, &ActivationTargetChangedEvent::setEventEnabled));
 				usertypeDefinition.set("attack", sol::property(&AttackEvent::getEventEnabled, &AttackEvent::setEventEnabled));
+				usertypeDefinition.set("barterOffer", sol::property(&BarterOfferEvent::getEventEnabled, &BarterOfferEvent::setEventEnabled));
 				usertypeDefinition.set("bodyPartAssigned", sol::property(&BodyPartAssignedEvent::getEventEnabled, &BodyPartAssignedEvent::setEventEnabled));
 				usertypeDefinition.set("bodyPartsUpdated", sol::property(&BodyPartsUpdatedEvent::getEventEnabled, &BodyPartsUpdatedEvent::setEventEnabled));
 				usertypeDefinition.set("bookGetText", sol::property(&BookGetTextEvent::getEventEnabled, &BookGetTextEvent::setEventEnabled));

@@ -151,6 +151,7 @@
 #include "LuaActivationTargetChangedEvent.h"
 #include "LuaAddTopicEvent.h"
 #include "LuaAttackEvent.h"
+#include "LuaBarterOfferEvent.h"
 #include "LuaCalcHitArmorPieceEvent.h"
 #include "LuaCalcBarterPriceEvent.h"
 #include "LuaCalcHitChanceEvent.h"
@@ -2622,6 +2623,17 @@ namespace mwse {
 			crimeEvent->dtor();
 		}
 
+		const auto TES3_GameBarterOffer = reinterpret_cast<bool(__stdcall*)()>(0x5A66C0);
+		bool __stdcall GameBarterOffer() {
+			bool result = TES3_GameBarterOffer();
+			TES3::MobileActor* mact = TES3::UI::getServiceActor();
+			if (lua::event::BarterOfferEvent::getEventEnabled()) {
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new lua::event::BarterOfferEvent(mact, result));
+			}
+
+			return result;
+		}
+
 		// Write errors to mwse.log as well.WINBASEAPI
 		BOOL WINAPI WriteToWarningsFile(HANDLE hFile, LPCVOID lpBuffer, DWORD nNumberOfBytesToWrite, LPDWORD lpNumberOfBytesWritten, LPOVERLAPPED lpOverlapped) {
 			// Overwritten code.
@@ -3688,6 +3700,9 @@ namespace mwse {
 			genCallEnforced(0x4EEFAA, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
 			genCallEnforced(0x4F026F, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
 			genCallEnforced(0x4F0C83, 0x4F0CA0, reinterpret_cast<DWORD>(OnEntityDelete));
+
+			// Raise event for barter attempts.
+			genCallEnforced(0x5A70CF, 0x5A66C0, reinterpret_cast<DWORD>(GameBarterOffer));
 
 			// Look for main.lua scripts in the usual directories.
 			executeMainModScripts("Data Files\\MWSE\\core");
