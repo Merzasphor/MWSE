@@ -895,11 +895,37 @@ local function buildNamedType(folder, key)
 	if (package.values) then table.sort(package.values, sortByKey) end
 	if (package.methods) then table.sort(package.methods, sortByKey) end
 	if (package.functions) then table.sort(package.functions, sortByKey) end
+	if (package.examples) then table.sort(package.examples, sortByKey) end
 
 	-- Write out properties, etc.
 	writeOutPackageEntries(package.values, file, package, "Properties")
 	writeOutPackageEntries(package.methods, file, package, "Methods")
 	writeOutPackageEntries(package.functions, file, package, "Functions")
+
+	-- Write out examples.
+	local packagePath = folder .. "\\" .. key .. "\\"
+	if (package.examples) then
+		file:write("Examples\n" .. rstHeaders[2] .. "\n\n")
+		for k, v in pairs(package.examples) do
+			file:write((v.title or k) .. "\n" .. rstHeaders[3] .. "\n\n")
+
+			if (v.description) then
+				file:write(v.description .. "\n\n")
+			end
+
+			file:write(".. code-block:: " .. (v.language or "lua") .. "\n\n")
+
+			local exampleFilePath = packagePath .. key .. "\\" .. k .. "." .. (v.extension or "lua")
+			for line in io.lines(exampleFilePath) do
+				if (trimString(line) ~= "") then
+					file:write("    " .. line:gsub("\t", "    ") .. "\n")
+				else
+					file:write("\n")
+				end
+			end
+			file:write("\n\n")
+		end
+	end
 
 	-- Write out any link information.
 	if (package.links) then
