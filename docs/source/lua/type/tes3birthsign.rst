@@ -1,37 +1,19 @@
-tes3race
+tes3birthsign
 ====================================================================================================
 
-A core object representing a character race.
+An object representing a birthsign.
 
 Properties
 ----------------------------------------------------------------------------------------------------
-
-`baseAttributes`_ (`table`_)
-    Array-style table access to base 8 attributes for the race. Each element in the array is a tes3raceBaseAttribute.
 
 `deleted`_ (`boolean`_)
     The deleted state of the object.
 
 `description`_ (`string`_)
-	Loads from disk and returns the description of the race.
-
-`disabled`_ (`boolean`_)
-    The disabled state of the object.
-
-`femaleBody`_ (`tes3raceBodyParts`_)
-    Access to all the body parts that will be used for female actors of this race.
-
-`flags`_ (`number`_)
-    Raw bit-based flags.
-
-`height`_ (`tes3raceHeightWeight`_)
-    Access to the the height pair for males/females of the race.
+    Loads from disk and returns the description of the birthsign.
 
 `id`_ (`string`_)
     The unique identifier for the object.
-
-`maleBody`_ (`tes3raceBodyParts`_)
-    Access to all the body parts that will be used for male actors of this race.
 
 `modified`_ (`boolean`_)
     The modification state of the object since the last save.
@@ -45,49 +27,52 @@ Properties
 `objectType`_ (`number`_)
     The type of object. Maps to values in tes3.objectType.
 
-`skillBonuses`_ (`table`_)
-    Array-style table access for 7 skill bonuses for the race. Each element in the array is a tes3raceSkillBonus.
-
 `sourceMod`_ (`string`_)
     The filename of the mod that owns this object.
 
-`weight`_ (`tes3raceHeightWeight`_)
-    Access to the the height pair for males/females of the race.
+`spells`_ (`tes3spellList`_)
+    A list of spells that are granted by the birthsign.
+
+`texturePath`_ (`string`_)
+	Path to the related image representing the birthsign.
 
 .. toctree::
     :hidden:
 
-    tes3race/baseAttributes
-    tes3race/deleted
-    tes3race/disabled
-    tes3race/femaleBody
-    tes3race/flags
-    tes3race/height
-    tes3race/id
-    tes3race/maleBody
-    tes3race/modified
-    tes3race/name
-    tes3race/objectFlags
-    tes3race/objectType
-    tes3race/skillBonuses
-    tes3race/sourceMod
-    tes3race/weight
-
-.. _`baseAttributes`: tes3race/baseAttributes.html
-.. _`deleted`: tes3race/deleted.html
-.. _`disabled`: tes3race/disabled.html
-.. _`femaleBody`: tes3race/femaleBody.html
-.. _`flags`: tes3race/flags.html
-.. _`height`: tes3race/height.html
-.. _`id`: tes3race/id.html
-.. _`maleBody`: tes3race/maleBody.html
-.. _`modified`: tes3race/modified.html
-.. _`name`: tes3race/name.html
-.. _`objectFlags`: tes3race/objectFlags.html
-.. _`objectType`: tes3race/objectType.html
-.. _`skillBonuses`: tes3race/skillBonuses.html
-.. _`sourceMod`: tes3race/sourceMod.html
-.. _`weight`: tes3race/weight.html
+.. _`attributes`: tes3class/attributes.html
+.. _`bartersAlchemy`: tes3class/bartersAlchemy.html
+.. _`bartersApparatus`: tes3class/bartersApparatus.html
+.. _`bartersArmor`: tes3class/bartersArmor.html
+.. _`bartersBooks`: tes3class/bartersBooks.html
+.. _`bartersClothing`: tes3class/bartersClothing.html
+.. _`bartersEnchantedItems`: tes3class/bartersEnchantedItems.html
+.. _`bartersIngredients`: tes3class/bartersIngredients.html
+.. _`bartersLights`: tes3class/bartersLights.html
+.. _`bartersLockpicks`: tes3class/bartersLockpicks.html
+.. _`bartersMiscItems`: tes3class/bartersMiscItems.html
+.. _`bartersProbes`: tes3class/bartersProbes.html
+.. _`bartersRepairTools`: tes3class/bartersRepairTools.html
+.. _`bartersWeapons`: tes3class/bartersWeapons.html
+.. _`deleted`: tes3class/deleted.html
+.. _`description`: tes3class/description.html
+.. _`disabled`: tes3class/disabled.html
+.. _`id`: tes3class/id.html
+.. _`majorSkills`: tes3class/majorSkills.html
+.. _`minorSkills`: tes3class/minorSkills.html
+.. _`modified`: tes3class/modified.html
+.. _`name`: tes3class/name.html
+.. _`objectFlags`: tes3class/objectFlags.html
+.. _`objectType`: tes3class/objectType.html
+.. _`offersEnchanting`: tes3class/offersEnchanting.html
+.. _`offersRepairs`: tes3class/offersRepairs.html
+.. _`offersSpellmaking`: tes3class/offersSpellmaking.html
+.. _`offersSpells`: tes3class/offersSpells.html
+.. _`offersTraining`: tes3class/offersTraining.html
+.. _`playable`: tes3class/playable.html
+.. _`services`: tes3class/services.html
+.. _`skills`: tes3class/skills.html
+.. _`sourceMod`: tes3class/sourceMod.html
+.. _`specialization`: tes3class/specialization.html
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html
@@ -95,7 +80,6 @@ Properties
 .. _`tes3book`: ../../lua/type/tes3book.html
 .. _`tes3matrix33`: ../../lua/type/tes3matrix33.html
 .. _`tes3actor`: ../../lua/type/tes3actor.html
-.. _`tes3spell`: ../../lua/type/tes3spell.html
 .. _`tes3inputConfig`: ../../lua/type/tes3inputConfig.html
 .. _`tes3itemStack`: ../../lua/type/tes3itemStack.html
 .. _`tes3globalVariable`: ../../lua/type/tes3globalVariable.html
@@ -104,90 +88,87 @@ Properties
 .. _`niAVObject`: ../../lua/type/niAVObject.html
 .. _`tes3iterator`: ../../lua/type/tes3iterator.html
 .. _`tes3raceHeightWeight`: ../../lua/type/tes3raceHeightWeight.html
-.. _`tes3weatherThunder`: ../../lua/type/tes3weatherThunder.html
 .. _`tes3class`: ../../lua/type/tes3class.html
 .. _`tes3mobileProjectile`: ../../lua/type/tes3mobileProjectile.html
-.. _`tes3weatherSnow`: ../../lua/type/tes3weatherSnow.html
 .. _`tes3apparatus`: ../../lua/type/tes3apparatus.html
 .. _`tes3door`: ../../lua/type/tes3door.html
-.. _`tes3weatherRain`: ../../lua/type/tes3weatherRain.html
-.. _`tes3light`: ../../lua/type/tes3light.html
+.. _`tes3weatherThunder`: ../../lua/type/tes3weatherThunder.html
 .. _`tes3directInputMouseState`: ../../lua/type/tes3directInputMouseState.html
-.. _`nil`: ../../lua/type/nil.html
+.. _`tes3weatherSnow`: ../../lua/type/tes3weatherSnow.html
 .. _`niRTTI`: ../../lua/type/niRTTI.html
-.. _`tes3weatherController`: ../../lua/type/tes3weatherController.html
+.. _`tes3weatherRain`: ../../lua/type/tes3weatherRain.html
 .. _`niObjectNET`: ../../lua/type/niObjectNET.html
-.. _`tes3mobileObject`: ../../lua/type/tes3mobileObject.html
-.. _`tes3moon`: ../../lua/type/tes3moon.html
+.. _`tes3light`: ../../lua/type/tes3light.html
+.. _`tes3clothing`: ../../lua/type/tes3clothing.html
+.. _`tes3weatherController`: ../../lua/type/tes3weatherController.html
+.. _`tes3mobilePlayer`: ../../lua/type/tes3mobilePlayer.html
+.. _`tes3armor`: ../../lua/type/tes3armor.html
+.. _`nil`: ../../lua/type/nil.html
+.. _`tes3npcInstance`: ../../lua/type/tes3npcInstance.html
 .. _`tes3weatherBlizzard`: ../../lua/type/tes3weatherBlizzard.html
 .. _`tes3container`: ../../lua/type/tes3container.html
-.. _`tes3armor`: ../../lua/type/tes3armor.html
-.. _`tes3reference`: ../../lua/type/tes3reference.html
-.. _`tes3npcInstance`: ../../lua/type/tes3npcInstance.html
-.. _`tes3weather`: ../../lua/type/tes3weather.html
-.. _`tes3wearablePart`: ../../lua/type/tes3wearablePart.html
 .. _`tes3dataHandler`: ../../lua/type/tes3dataHandler.html
 .. _`tes3rangeInt`: ../../lua/type/tes3rangeInt.html
 .. _`tes3dialogueInfo`: ../../lua/type/tes3dialogueInfo.html
-.. _`tes3vector4`: ../../lua/type/tes3vector4.html
+.. _`tes3weather`: ../../lua/type/tes3weather.html
 .. _`tes3weatherAsh`: ../../lua/type/tes3weatherAsh.html
-.. _`tes3vector2`: ../../lua/type/tes3vector2.html
-.. _`tes3travelDestinationNode`: ../../lua/type/tes3travelDestinationNode.html
+.. _`tes3wearablePart`: ../../lua/type/tes3wearablePart.html
+.. _`tes3vector4`: ../../lua/type/tes3vector4.html
 .. _`tes3dialogue`: ../../lua/type/tes3dialogue.html
 .. _`tes3gameFile`: ../../lua/type/tes3gameFile.html
 .. _`tes3faction`: ../../lua/type/tes3faction.html
-.. _`tes3transform`: ../../lua/type/tes3transform.html
+.. _`tes3referenceList`: ../../lua/type/tes3referenceList.html
 .. _`tes3inputController`: ../../lua/type/tes3inputController.html
 .. _`tes3lockpick`: ../../lua/type/tes3lockpick.html
 .. _`tes3combatSession`: ../../lua/type/tes3combatSession.html
 .. _`boolean`: ../../lua/type/boolean.html
-.. _`tes3statistic`: ../../lua/type/tes3statistic.html
+.. _`tes3vector2`: ../../lua/type/tes3vector2.html
 .. _`tes3magicEffect`: ../../lua/type/tes3magicEffect.html
 .. _`string`: ../../lua/type/string.html
-.. _`tes3static`: ../../lua/type/tes3static.html
+.. _`tes3travelDestinationNode`: ../../lua/type/tes3travelDestinationNode.html
 .. _`tes3iteratorNode`: ../../lua/type/tes3iteratorNode.html
-.. _`tes3item`: ../../lua/type/tes3item.html
+.. _`tes3fader`: ../../lua/type/tes3fader.html
 .. _`tes3quest`: ../../lua/type/tes3quest.html
 .. _`tes3nonDynamicData`: ../../lua/type/tes3nonDynamicData.html
 .. _`tes3ingredient`: ../../lua/type/tes3ingredient.html
 .. _`tes3race`: ../../lua/type/tes3race.html
 .. _`tes3gameSetting`: ../../lua/type/tes3gameSetting.html
-.. _`tes3soulGemData`: ../../lua/type/tes3soulGemData.html
+.. _`tes3transform`: ../../lua/type/tes3transform.html
 .. _`table`: ../../lua/type/table.html
-.. _`tes3referenceList`: ../../lua/type/tes3referenceList.html
-.. _`tes3mobileCreature`: ../../lua/type/tes3mobileCreature.html
+.. _`tes3soulGemData`: ../../lua/type/tes3soulGemData.html
+.. _`tes3mobileObject`: ../../lua/type/tes3mobileObject.html
 .. _`tes3mobileNPC`: ../../lua/type/tes3mobileNPC.html
 .. _`tes3regionSound`: ../../lua/type/tes3regionSound.html
 .. _`tes3vector3`: ../../lua/type/tes3vector3.html
+.. _`tes3reference`: ../../lua/type/tes3reference.html
 .. _`tes3raceSkillBonus`: ../../lua/type/tes3raceSkillBonus.html
-.. _`tes3raceBodyParts`: ../../lua/type/tes3raceBodyParts.html
 .. _`tes3activator`: ../../lua/type/tes3activator.html
-.. _`tes3raceBaseAttribute`: ../../lua/type/tes3raceBaseAttribute.html
+.. _`tes3raceBodyParts`: ../../lua/type/tes3raceBodyParts.html
 .. _`tes3inventory`: ../../lua/type/tes3inventory.html
 .. _`tes3boundingBox`: ../../lua/type/tes3boundingBox.html
 .. _`tes3markData`: ../../lua/type/tes3markData.html
-.. _`tes3probe`: ../../lua/type/tes3probe.html
+.. _`tes3raceBaseAttribute`: ../../lua/type/tes3raceBaseAttribute.html
 .. _`tes3creatureInstance`: ../../lua/type/tes3creatureInstance.html
 .. _`tes3effect`: ../../lua/type/tes3effect.html
 .. _`tes3game`: ../../lua/type/tes3game.html
+.. _`tes3probe`: ../../lua/type/tes3probe.html
 .. _`tes3physicalObject`: ../../lua/type/tes3physicalObject.html
-.. _`tes3lockNode`: ../../lua/type/tes3lockNode.html
 .. _`tes3object`: ../../lua/type/tes3object.html
 .. _`tes3weatherClear`: ../../lua/type/tes3weatherClear.html
 .. _`number`: ../../lua/type/number.html
-.. _`tes3mobilePlayer`: ../../lua/type/tes3mobilePlayer.html
+.. _`tes3moon`: ../../lua/type/tes3moon.html
 .. _`tes3weatherCloudy`: ../../lua/type/tes3weatherCloudy.html
 .. _`tes3region`: ../../lua/type/tes3region.html
 .. _`tes3misc`: ../../lua/type/tes3misc.html
 .. _`tes3leveledListNode`: ../../lua/type/tes3leveledListNode.html
+.. _`tes3mobileCreature`: ../../lua/type/tes3mobileCreature.html
 .. _`tes3mobileActor`: ../../lua/type/tes3mobileActor.html
-.. _`tes3magicEffectInstance`: ../../lua/type/tes3magicEffectInstance.html
 .. _`function`: ../../lua/type/function.html
-.. _`tes3bodyPart`: ../../lua/type/tes3bodyPart.html
+.. _`tes3magicEffectInstance`: ../../lua/type/tes3magicEffectInstance.html
 .. _`tes3baseObject`: ../../lua/type/tes3baseObject.html
-.. _`mwseTimer`: ../../lua/type/mwseTimer.html
+.. _`tes3bodyPart`: ../../lua/type/tes3bodyPart.html
 .. _`tes3factionRank`: ../../lua/type/tes3factionRank.html
-.. _`tes3fader`: ../../lua/type/tes3fader.html
+.. _`mwseTimer`: ../../lua/type/mwseTimer.html
 .. _`tes3weatherBlight`: ../../lua/type/tes3weatherBlight.html
 .. _`tes3packedColor`: ../../lua/type/tes3packedColor.html
 .. _`bool`: ../../lua/type/boolean.html
@@ -195,7 +176,7 @@ Properties
 .. _`tes3weatherFoggy`: ../../lua/type/tes3weatherFoggy.html
 .. _`mwseTimerController`: ../../lua/type/mwseTimerController.html
 .. _`tes3leveledCreature`: ../../lua/type/tes3leveledCreature.html
-.. _`tes3clothing`: ../../lua/type/tes3clothing.html
+.. _`tes3lockNode`: ../../lua/type/tes3lockNode.html
 .. _`tes3activeMagicEffect`: ../../lua/type/tes3activeMagicEffect.html
 .. _`tes3cellExteriorData`: ../../lua/type/tes3cellExteriorData.html
 .. _`tes3weatherOvercast`: ../../lua/type/tes3weatherOvercast.html
