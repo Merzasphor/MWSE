@@ -450,6 +450,16 @@ namespace mwse {
 			));
 
 			// Custom property accessor functions.
+			usertypeDefinition.set("hasProperty",
+				[](Element& self, const char* propertyName) {
+					return self.hasProperty(TES3::UI::registerProperty(propertyName));
+				}
+			);
+			usertypeDefinition.set("getPropertyType",
+				[](Element& self, const char* propertyName) {
+					return self.getPropertyType(TES3::UI::registerProperty(propertyName));
+				}
+			);
 			usertypeDefinition.set("getPropertyBool",
 				[](Element& self, const char* propertyName) {
 					TES3::UI::Property prop = TES3::UI::registerProperty(propertyName);

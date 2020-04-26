@@ -27,10 +27,12 @@ namespace TES3 {
 		};
 
 		struct WidgetFillbar : Element {
-			int getCurrent() const;
-			void setCurrent(int value);
-			int getMax() const;
-			void setMax(int value);
+			double getCurrent() const;
+			void setCurrent(double value);
+			double getMax() const;
+			void setMax(double value);
+			double getNormalized() const;
+			void setNormalized(double value);
 			bool getShowText() const;
 			void setShowText(bool flag);
 			void setFillColour(const float(&c)[3]);

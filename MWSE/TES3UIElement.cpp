@@ -41,6 +41,7 @@ namespace TES3 {
 		const auto TES3_ui_updateLayoutContent = reinterpret_cast<void(__thiscall*)(Element*)>(0x583760);
 
 		const auto TES3_ui_getProperty = reinterpret_cast<PropertyValue* (__thiscall *)(const Element*, PropertyValue*, Property, PropertyType, const Element*, Boolean)>(0x581440);
+		const auto TES3_ui_getPropertyType = reinterpret_cast<PropertyType (__thiscall*)(const Element*, Property)>(0x582AD0);
 		const auto TES3_ui_getText = reinterpret_cast<const char* (__thiscall *)(const Element*)>(0x580BB0);
 		const auto TES3_ui_setProperty = reinterpret_cast<void (__thiscall *)(Element*, Property, PropertyValue, PropertyType)>(0x581F30);
 		const auto TES3_ui_setText = reinterpret_cast<void(__thiscall *)(Element*, const char*)>(0x58AD30);
@@ -234,6 +235,14 @@ namespace TES3 {
 			PropertyValue v;
 			TES3_ui_getProperty(this, &v, prop, propType, nullptr, 0);
 			return v;
+		}
+
+		PropertyType Element::getPropertyType(Property prop) const {
+			return TES3_ui_getPropertyType(this, prop);
+		}
+
+		bool Element::hasProperty(Property prop) const {
+			return TES3_ui_getPropertyType(this, prop) != PropertyType::INVALID;
 		}
 
 		void Element::setProperty(Property prop, PropertyValue value, PropertyType type) {
