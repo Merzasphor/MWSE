@@ -7,6 +7,7 @@
 
 #include "TES3MobilePlayer.h"
 #include "TES3Apparatus.h"
+#include "TES3Birthsign.h"
 #include "TES3Collections.h"
 #include "TES3GlobalVariable.h"
 #include "TES3NPC.h"
@@ -62,6 +63,7 @@ namespace mwse {
 				usertypeDefinition.set("skillProgress", sol::property([](TES3::MobilePlayer& self) { return std::ref(self.skillProgress); }));
 
 				// Access to other objects that need to be packaged.
+				usertypeDefinition.set("birthsign", sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.birthsign); }));
 				usertypeDefinition.set("clawMultiplier", sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.clawMultiplier); }));
 				usertypeDefinition.set("firstPerson", sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.firstPerson); }));
 				usertypeDefinition.set("firstPersonReference", sol::readonly_property([](TES3::MobilePlayer& self) { return makeLuaObject(self.firstPersonReference); }));

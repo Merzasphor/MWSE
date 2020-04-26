@@ -172,6 +172,7 @@ namespace mwse {
 
 				usertypeDefinition.set("current", sol::property(&WidgetFillbar::getCurrent, &WidgetFillbar::setCurrent));
 				usertypeDefinition.set("max", sol::property(&WidgetFillbar::getMax, &WidgetFillbar::setMax));
+				usertypeDefinition.set("normalized", sol::property(&WidgetFillbar::getNormalized, &WidgetFillbar::setNormalized));
 				usertypeDefinition.set("showText", sol::property(&WidgetFillbar::getShowText, &WidgetFillbar::setShowText));
 				usertypeDefinition.set("fillColor", sol::property(
 					[](WidgetFillbar& self, sol::table c) { self.setFillColour({ c[1], c[2], c[3] }); }

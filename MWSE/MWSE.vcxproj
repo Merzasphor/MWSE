@@ -142,6 +142,8 @@
     <ClInclude Include="NiTriBasedGeometryData.h" />
     <ClInclude Include="NiTriShapeData.h" />
     <ClInclude Include="TES3Archive.h" />
+    <ClInclude Include="TES3Birthsign.h" />
+    <ClInclude Include="TES3BirthsignLua.h" />
     <ClInclude Include="TES3BodyPartManager.h" />
     <ClInclude Include="TES3HashMap.h" />
     <ClInclude Include="TES3MagicEffectController.h" />
@@ -532,6 +534,8 @@
     <ClCompile Include="NIRenderer.cpp" />
     <ClCompile Include="NiTriBasedGeometryData.cpp" />
     <ClCompile Include="TES3Activator.cpp" />
+    <ClCompile Include="TES3Birthsign.cpp" />
+    <ClCompile Include="TES3BirthsignLua.cpp" />
     <ClCompile Include="TES3BodyPartManager.cpp" />
     <ClCompile Include="TES3MagicEffectController.cpp" />
     <ClCompile Include="MemoryUtil.cpp" />

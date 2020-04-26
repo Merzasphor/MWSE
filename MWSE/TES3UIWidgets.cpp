@@ -103,18 +103,55 @@ namespace TES3 {
 			return static_cast<WidgetFillbar*>(element);
 		}
 
-		int WidgetFillbar::getCurrent() const {
-			return getProperty(PropertyType::Integer, propFillbarCurrent).integerValue;
+		double WidgetFillbar::getCurrent() const {
+			const auto type = getPropertyType(propFillbarCurrent);
+			if (type == PropertyType::Integer) {
+				return getProperty(PropertyType::Integer, propFillbarCurrent).integerValue;
+			}
+			else if (type == PropertyType::Float) {
+				return getProperty(PropertyType::Float, propFillbarCurrent).floatValue;
+			}
+			return 0.0;
 		}
-		void WidgetFillbar::setCurrent(int value) {
-			setProperty(propFillbarCurrent, value);
+		void WidgetFillbar::setCurrent(double value) {
+			const auto type = getPropertyType(propFillbarCurrent);
+			if (type == PropertyType::Integer) {
+				setProperty(propFillbarCurrent, (int)value);
+			}
+			else {
+				setProperty(propFillbarCurrent, (float)value);
+			}
 		}
 
-		int WidgetFillbar::getMax() const {
-			return getProperty(PropertyType::Integer, propFillbarMax).integerValue;
+		double WidgetFillbar::getMax() const {
+			const auto type = getPropertyType(propFillbarMax);
+			if (type == PropertyType::Integer) {
+				return getProperty(PropertyType::Integer, propFillbarMax).integerValue;
+			}
+			else if (type == PropertyType::Float) {
+				return getProperty(PropertyType::Float, propFillbarMax).floatValue;
+			}
+			return 0.0;
 		}
-		void WidgetFillbar::setMax(int value) {
-			setProperty(propFillbarMax, value);
+		void WidgetFillbar::setMax(double value) {
+			const auto type = getPropertyType(propFillbarMax);
+			if (type == PropertyType::Integer) {
+				setProperty(propFillbarMax, (int)value);
+			}
+			else {
+				setProperty(propFillbarMax, (float)value);
+			}
+		}
+
+		double WidgetFillbar::getNormalized() const {
+			const double max = getMax();
+			if (max == 0.0) {
+				return 0.0;
+			}
+			return getCurrent() / max;
+		}
+		void WidgetFillbar::setNormalized(double value) {
+			setCurrent(value * getMax());
 		}
 
 		bool WidgetFillbar::getShowText() const {
