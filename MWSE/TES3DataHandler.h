@@ -64,7 +64,7 @@ namespace TES3 {
 		Iterator<GlobalVariable> * globals; // 0x38
 		Iterator<Dialogue> * dialogues; // 0x3C
 		Iterator<Region> * regions; // 0x40
-		Iterator<BaseObject> * birthsigns; // 0x44
+		Iterator<Birthsign> * birthsigns; // 0x44
 		Iterator<StartScript> * startScripts; // 0x48
 		Skill skills[27]; // 0x4C
 #ifdef MWSE_CUSTOM_EFFECTS

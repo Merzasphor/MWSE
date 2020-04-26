@@ -27,6 +27,7 @@
 #include "TES3Alchemy.h"
 #include "TES3Apparatus.h"
 #include "TES3Armor.h"
+#include "TES3Birthsign.h"
 #include "TES3BodyPart.h"
 #include "TES3Book.h"
 #include "TES3Cell.h"
@@ -358,6 +359,9 @@ namespace mwse {
 				break;
 			case TES3::VirtualTableAddress::Armor:
 				result = sol::make_object(state, reinterpret_cast<TES3::Armor*>(object));
+				break;
+			case TES3::VirtualTableAddress::Birthsign:
+				result = sol::make_object(state, reinterpret_cast<TES3::Birthsign*>(object));
 				break;
 			case TES3::VirtualTableAddress::BodyPart:
 				result = sol::make_object(state, reinterpret_cast<TES3::BodyPart*>(object));

@@ -1374,6 +1374,12 @@
     <ClInclude Include="LuaBarterOfferEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="TES3Birthsign.h">
+      <Filter>Header Files\DataAdapters\TES3\Objects\Actor\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3BirthsignLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -2968,6 +2974,12 @@
     </ClCompile>
     <ClCompile Include="LuaBarterOfferEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Birthsign.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3BirthsignLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
