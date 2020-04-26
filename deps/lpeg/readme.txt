@@ -10,3 +10,6 @@ Copy deps\lpeg\build\Release\lpeg.dll, deps\lpeg\test.lua, and deps\lpeg\re.lua 
 Open a command prompt.
 cd deps\LuaJIT\src
 luajit test.lua
+
+To test the speed of json decoding within MWSE, use the decode-speed-test mod in this directory.
+Instructions can be found in the comments at the top of main.lua.
