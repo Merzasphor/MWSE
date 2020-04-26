@@ -16,7 +16,6 @@ namespace TES3 {
 		
 		char * getName();
 		char * getDescription();
-		void loadDescription();
 		void freeDescription();
 		std::string getAndFreeDescription();
 

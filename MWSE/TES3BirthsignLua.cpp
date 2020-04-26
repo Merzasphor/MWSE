@@ -23,7 +23,7 @@ namespace mwse {
 			usertypeDefinition.set("texturePath", &TES3::Birthsign::texturePath);
 			usertypeDefinition.set("spells", sol::readonly_property(&TES3::Birthsign::spellList));
 
-			usertypeDefinition.set("description", sol::readonly_property([](TES3::Birthsign& self) {return self.getAndFreeDescription(); }));
+			usertypeDefinition.set("description", sol::readonly_property(&TES3::Birthsign::getAndFreeDescription));
 
 			// Finish up our usertype.
 			state.set_usertype("tes3birthsign", usertypeDefinition);

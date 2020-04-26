@@ -1,8 +1,5 @@
 #include "TES3Race.h"
 
-#define TES3_Race_loadDescription 0x4A7A90
-#define TES3_Race_freeDescription 0x4A7C90
-
 namespace TES3 {
 	char * Race::getObjectID() {
 		return id;
@@ -13,11 +10,13 @@ namespace TES3 {
 		return TES3_Race_getBodyPart(this, isFemale, isVampire, index);
 	}
 
+	const auto TES3_Race_loadDescription = reinterpret_cast<char* (__thiscall*)(Race*)>(0x4A7A90);
 	char* Race::loadDescription() {
-		return reinterpret_cast<char* (__thiscall*)(Race*)>(TES3_Race_loadDescription)(this);
+		return TES3_Race_loadDescription(this);
 	}
 
+	const auto TES3_Race_freeDescription = reinterpret_cast<void(__thiscall*)(Race*)>(0x4A7C90);
 	void Race::freeDescription() {
-		reinterpret_cast<void(__thiscall*)(Race*)>(TES3_Race_freeDescription)(this);
+		return TES3_Race_freeDescription(this);
 	}
 }

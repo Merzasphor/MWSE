@@ -5,6 +5,7 @@
 #include "LuaManager.h"
 
 #include "TES3Attachment.h"
+#include "TES3Birthsign.h"
 #include "TES3Cell.h"
 #include "TES3Dialogue.h"
 #include "TES3DialogueInfo.h"
@@ -58,6 +59,7 @@ namespace mwse {
 
 			// Generic TES3::Object iterators. As above, but the result data will be reinterpreted at runtime.
 			bindGenericObjectIterator<TES3::BaseObject>("tes3baseObjectIterator", "tes3baseObjectIteratorNode");
+			bindGenericObjectIterator<TES3::Birthsign>("tes3birthsignIterator", "tes3birthsignIteratorNode");
 			bindGenericObjectIterator<TES3::Dialogue>("tes3dialogueIterator", "tes3dialogueIteratorNode");
 			bindGenericObjectIterator<TES3::DialogueInfo>("tes3dialogueInfoIterator", "tes3dialogueInfoIteratorNode");
 			bindGenericObjectIterator<TES3::GlobalVariable>("tes3globalIterator", "tes3globalIteratorNode");

@@ -1,25 +1,23 @@
 #include "TES3Birthsign.h"
 
-#define TES3_Birthsign_getDescription 0x474990
-#define TES3_Birthsign_loadDescription 0x4749B0
-#define TES3_Birthsign_freeDescription 0x474B70
-
 namespace TES3 {
 	char* Birthsign::getName() {
 		return name;
 	}
 
+	const auto TES3_Birthsign_getDescription = reinterpret_cast<char* (__thiscall*)(Birthsign*)>(0x474990);
 	char* Birthsign::getDescription() {
-		return reinterpret_cast<char* (__thiscall*)(Birthsign*)>(TES3_Birthsign_getDescription)(this);
+		return TES3_Birthsign_getDescription(this);
 	}
 
+	const auto TES3_Birthsign_freeDescription = reinterpret_cast<void (__thiscall*)(Birthsign*)>(0x474B70);
 	void Birthsign::freeDescription() {
-		reinterpret_cast<void(__thiscall*)(Birthsign*)>(TES3_Birthsign_freeDescription)(this);
+		return TES3_Birthsign_freeDescription(this);
 	}
 
 	std::string Birthsign::getAndFreeDescription() {
-		std::string desc = Birthsign::getDescription();
-		Birthsign::freeDescription();
+		std::string desc = getDescription();
+		freeDescription();
 		return std::move(desc);
 	}
 }
