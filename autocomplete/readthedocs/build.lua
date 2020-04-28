@@ -568,7 +568,7 @@ local function buildNamedTypeEntryForValue(package)
 	-- Configure base path for nested folders.
 	local basePath = "..\\docs\\source\\lua\\type\\"
 	for category, pattern in pairs(typeCategories) do
-		if (key:sub(1, pattern:len()) == pattern) then
+		if (parent.key:sub(1, pattern:len()) == pattern) then
 			basePath = "..\\docs\\source\\lua\\type\\" .. category .. "\\"
 			break
 		end
@@ -654,7 +654,7 @@ local function buildNamedTypeEntryForFunction(package)
 	-- Configure base path for nested folders.
 	local basePath = "..\\docs\\source\\lua\\type\\"
 	for category, pattern in pairs(typeCategories) do
-		if (key:sub(1, pattern:len()) == pattern) then
+		if (parent.key:sub(1, pattern:len()) == pattern) then
 			basePath = "..\\docs\\source\\lua\\type\\" .. category .. "\\"
 			break
 		end
