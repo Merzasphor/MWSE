@@ -127,10 +127,24 @@ local typeLinks = {
 	["table"] = "lua/type/table",
 }
 
+local typeCategories = {
+	["mwse"] = "mwse",
+	["netimmerse"] = "ni",
+	["tes3"] = "tes3"
+}
+
 for entry in lfs.dir(definitionsFolder .. "\\namedTypes") do
 	local extension = entry:match("[^.]+$")
 	if (extension == "lua") then
 		local name = entry:match("[^/]+$"):sub(1, -1 * (#extension + 2))
+
+		for category, pattern in pairs(typeCategories) do
+			if (name:sub(1, pattern:len()) == pattern) then
+				typeLinks[name] = "lua/type/" .. category .. "/" .. name
+				break
+			end
+		end
+
 		typeLinks[name] = "lua/type/" .. name
 	end
 end
@@ -551,8 +565,17 @@ local function buildNamedTypeEntryForValue(package)
 	parent.values = parent.values or {}
 	table.insert(parent.values, package)
 
+	-- Configure base path for nested folders.
+	local basePath = "..\\docs\\source\\lua\\type\\"
+	for category, pattern in pairs(typeCategories) do
+		if (key:sub(1, pattern:len()) == pattern) then
+			basePath = "..\\docs\\source\\lua\\type\\" .. category .. "\\"
+			break
+		end
+	end
+
 	-- Open the output file.
-	local outPath = "..\\docs\\source\\lua\\type\\" .. parent.key .. "\\" .. key .. ".rst"
+	local outPath = basePath .. parent.key .. "\\" .. key .. ".rst"
 	local file = io.open(outPath, "w")
 
 	-- Write out the main header.
@@ -628,8 +651,17 @@ local function buildNamedTypeEntryForFunction(package)
 		table.insert(parent.functions, package)
 	end
 
+	-- Configure base path for nested folders.
+	local basePath = "..\\docs\\source\\lua\\type\\"
+	for category, pattern in pairs(typeCategories) do
+		if (key:sub(1, pattern:len()) == pattern) then
+			basePath = "..\\docs\\source\\lua\\type\\" .. category .. "\\"
+			break
+		end
+	end
+
 	-- Open the output file.
-	local outPath = "..\\docs\\source\\lua\\type\\" .. parent.key .. "\\" .. key .. ".rst"
+	local outPath = basePath .. parent.key .. "\\" .. key .. ".rst"
 	local file = io.open(outPath, "w")
 
 	-- Write out the main header.
@@ -835,8 +867,17 @@ local function buildNamedType(folder, key)
 		buildNamedType(folder, package.inherits)
 	end
 
+	-- Configure base path for nested folders.
+	local basePath = "..\\docs\\source\\lua\\type\\"
+	for category, pattern in pairs(typeCategories) do
+		if (key:sub(1, pattern:len()) == pattern) then
+			basePath = "..\\docs\\source\\lua\\type\\" .. category .. "\\"
+			break
+		end
+	end
+
 	-- Open the output file.
-	local outPath = "..\\docs\\source\\lua\\type\\" .. key .. ".rst"
+	local outPath = basePath .. key .. ".rst"
 	local file = io.open(outPath, "w")
 
 	-- Write out the main header.
@@ -846,17 +887,17 @@ local function buildNamedType(folder, key)
 	file:write((package.description .. "\n\n") or "No description yet available.\n\n")
 
 	-- Create a folder for children.
-	lfs.mkdir("..\\docs\\source\\lua\\type\\" .. key)
+	lfs.mkdir(basePath .. key)
 
 	-- Write out inherited children.
 	if (package.inherits) then
 		-- Copy over raw files.
-		local inheritedFolder = "..\\docs\\source\\lua\\type\\" .. package.inherits
+		local inheritedFolder = basePath .. package.inherits
 		for entry in lfs.dir(inheritedFolder) do
 			local extension = entry:match("[^.]+$")
 			if (extension == "rst") then
 				local inheritedPath = inheritedFolder .. "\\" .. entry
-				local localPath = "..\\docs\\source\\lua\\type\\" .. key .. "\\" .. entry
+				local localPath = basePath .. key .. "\\" .. entry
 				copyFile(inheritedPath, localPath)
 			end
 		end
