@@ -27,8 +27,8 @@ namespace TES3 {
 		const auto TES3_ui_getPaletteColour = reinterpret_cast<Vector3& (__cdecl*)(Vector3&, Property)>(0x57F610);
 		const auto TES3_ui_onMenuUnfocus = reinterpret_cast<EventCallback>(0x58F790);
 		const auto TES3_ui_ScrollbarArrow_onClick = reinterpret_cast<EventCallback>(0x647A60);
-		const auto TES3_ui_requestMenuModeOn = reinterpret_cast<Boolean (__cdecl*)(UI_ID)>(0x595230);
-		const auto TES3_ui_requestMenuModeOff = reinterpret_cast<Boolean (__cdecl*)(UI_ID)>(0x595270);
+		const auto TES3_ui_requestMenuModeOn = reinterpret_cast<bool (__cdecl*)(UI_ID)>(0x595230);
+		const auto TES3_ui_requestMenuModeOff = reinterpret_cast<bool (__cdecl*)(UI_ID)>(0x595270);
 		const auto TES3_ui_getServiceActor = reinterpret_cast<MobileActor* (__cdecl*)()>(0x5BFEA0);
 		const auto TES3_ui_updateDialogDisposition = reinterpret_cast<void (__cdecl*)()>(0x5C0780);
 
@@ -76,11 +76,11 @@ namespace TES3 {
 			return TES3_ui_getMenuOnTop();
 		}
 
-		Boolean enterMenuMode(UI_ID id) {
+		bool enterMenuMode(UI_ID id) {
 			return TES3_ui_requestMenuModeOn(id);
 		}
 
-		Boolean leaveMenuMode() {
+		bool leaveMenuMode() {
 			return TES3_ui_requestMenuModeOff(0);
 		}
 
@@ -105,7 +105,7 @@ namespace TES3 {
 		// Added functionality
 		//
 
-		Boolean __cdecl onScrollPaneMousewheel(Element* owningWidget, Property eventID, int data0, int data1, Element* source) {
+		bool __cdecl onScrollPaneMousewheel(Element* owningWidget, Property eventID, int data0, int data1, Element* source) {
 			static auto propScrollPane = registerProperty("PartScrollPane");
 			static auto propScrollPaneHor = registerProperty("PartScrollPaneHor");
 			static auto propScrollPaneVert = registerProperty("PartScrollPaneVert");
@@ -134,7 +134,8 @@ namespace TES3 {
 				Element* arrow = scrollbar->findChild(arrowID);
 				return TES3_ui_ScrollbarArrow_onClick(scrollbar, eventID, data0, data1, arrow);
 			}
-			return 1;
+
+			return true;
 		}
 
 		MobileActor* getServiceActor() {

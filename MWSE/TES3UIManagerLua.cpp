@@ -38,7 +38,7 @@ namespace mwse {
 		static std::unordered_map<Element*, std::vector<EventLuaCallback>> eventMap;
 		static std::unordered_map<Element*, void(__cdecl*)(Element*)> destroyMap;
 
-		TES3::UI::Boolean __cdecl eventDispatcher(Element* owningWidget, Property eventID, int data0, int data1, Element* source) {
+		bool __cdecl eventDispatcher(Element* owningWidget, Property eventID, int data0, int data1, Element* source) {
 			LuaManager& luaManager = LuaManager::getInstance();
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
@@ -96,7 +96,7 @@ namespace mwse {
 				}
 			}
 
-			return 1;
+			return true;
 		}
 
 		void __cdecl eventDestroyDispatcher(Element* source) {
@@ -188,7 +188,7 @@ namespace mwse {
 			}
 		}
 
-		TES3::UI::Boolean eventForwarder(sol::table eventData) {
+		bool eventForwarder(sol::table eventData) {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
 
@@ -210,7 +210,8 @@ namespace mwse {
 					}
 				}
 			}
-			return 1;
+
+			return true;
 		}
 
 		void triggerEvent(Element& target, Property eventID, int data0, int data1) {

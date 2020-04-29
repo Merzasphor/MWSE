@@ -6,7 +6,6 @@ namespace TES3 {
 	namespace UI {
 		struct MenuController;
 
-		typedef char Boolean;
 		typedef short UI_ID;
 
 		// Note that all properties are UI_IDs, and custom properties can be made at runtime.
@@ -284,7 +283,7 @@ namespace TES3 {
 			FocusIcon = -0x7EF9
 		};
 
-		typedef Boolean (__cdecl *EventCallback)(Element*, Property, int, int, Element*);
+		typedef bool (__cdecl *EventCallback)(Element*, Property, int, int, Element*);
 		typedef void (__cdecl *PropertyAccessCallback)(Property, int, PropertyType);
 
 		union PropertyValue {

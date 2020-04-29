@@ -8,12 +8,12 @@ namespace TES3 {
 	namespace UI {
 		typedef Element* (__cdecl *TES3_UI_WidgetFactoryMethod_t)(Element*);
 
-		const auto TES3_ui_createBlock = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, Boolean)>(0x588980);
-		const auto TES3_ui_createImage = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, const char*, Boolean)>(0x588630);
-		const auto TES3_ui_createLabel = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, const char*, Boolean, Boolean)>(0x588BE0);
-		const auto TES3_ui_createNif = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, const char*, Boolean)>(0x588830);
-		const auto TES3_ui_createRect = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, Boolean, Boolean)>(0x588340);
-		const auto TES3_ui_createWidget = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, TES3_UI_WidgetFactoryMethod_t, Boolean)>(0x588140);
+		const auto TES3_ui_createBlock = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, bool)>(0x588980);
+		const auto TES3_ui_createImage = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, const char*, bool)>(0x588630);
+		const auto TES3_ui_createLabel = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, const char*, bool, bool)>(0x588BE0);
+		const auto TES3_ui_createNif = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, const char*, bool)>(0x588830);
+		const auto TES3_ui_createRect = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, bool, bool)>(0x588340);
+		const auto TES3_ui_createWidget = reinterpret_cast<Element* (__thiscall *)(Element*, UI_ID, TES3_UI_WidgetFactoryMethod_t, bool)>(0x588140);
 		const auto TES3_deleting_dtor_UIElement = reinterpret_cast<void (__thiscall *)(Element*, char)>(0x578880);
 		const auto TES3_ui_destroyChildren = reinterpret_cast<void (__thiscall *)(Element*)>(0x578820);
 
@@ -32,15 +32,15 @@ namespace TES3 {
 
 		const auto TES3_ui_findChildElement = reinterpret_cast<Element* (__thiscall *)(const Element*, UI_ID)>(0x582DE0);
 		const auto TES3_ui_getTopLevelParent = reinterpret_cast<Element* (__thiscall *)(const Element*)>(0x582EF0);
-		const auto TES3_ui_performLayout = reinterpret_cast<Element* (__thiscall *)(Element*, Boolean)>(0x583B70);
-		const auto TES3_ui_setAutoHeight = reinterpret_cast<void (__thiscall *)(Element*, Boolean)>(0x581400);
-		const auto TES3_ui_setAutoWidth = reinterpret_cast<void (__thiscall *)(Element*, Boolean)>(0x5813C0);
-		const auto TES3_ui_setVisible = reinterpret_cast<void (__thiscall *)(Element*, Boolean)>(0x57F2A0);
+		const auto TES3_ui_performLayout = reinterpret_cast<Element* (__thiscall *)(Element*, bool)>(0x583B70);
+		const auto TES3_ui_setAutoHeight = reinterpret_cast<void (__thiscall *)(Element*, bool)>(0x581400);
+		const auto TES3_ui_setAutoWidth = reinterpret_cast<void (__thiscall *)(Element*, bool)>(0x5813C0);
+		const auto TES3_ui_setVisible = reinterpret_cast<void (__thiscall *)(Element*, bool)>(0x57F2A0);
 		const auto TES3_ui_timingUpdate = reinterpret_cast<long (__thiscall *)(Element*)>(0x583B60);
 		const auto TES3_ui_updateLayout_propagateFlow = reinterpret_cast<void(__thiscall*)(Element*)>(0x584850);
 		const auto TES3_ui_updateLayoutContent = reinterpret_cast<void(__thiscall*)(Element*)>(0x583760);
 
-		const auto TES3_ui_getProperty = reinterpret_cast<PropertyValue* (__thiscall *)(const Element*, PropertyValue*, Property, PropertyType, const Element*, Boolean)>(0x581440);
+		const auto TES3_ui_getProperty = reinterpret_cast<PropertyValue* (__thiscall *)(const Element*, PropertyValue*, Property, PropertyType, const Element*, bool)>(0x581440);
 		const auto TES3_ui_getPropertyType = reinterpret_cast<PropertyType (__thiscall*)(const Element*, Property)>(0x582AD0);
 		const auto TES3_ui_getText = reinterpret_cast<const char* (__thiscall *)(const Element*)>(0x580BB0);
 		const auto TES3_ui_setProperty = reinterpret_cast<void (__thiscall *)(Element*, Property, PropertyValue, PropertyType)>(0x581F30);
@@ -54,59 +54,59 @@ namespace TES3 {
 		// Widget creation/destruction methods
 		//
 
-		Element* Element::createBlock(UI_ID id, Boolean bReplaceThisElement) {
+		Element* Element::createBlock(UI_ID id, bool bReplaceThisElement) {
 			return TES3_ui_createBlock(this, id, bReplaceThisElement);
 		}
 
-		Element* Element::createButton(UI_ID id, Boolean bReplaceThisElement) {
+		Element* Element::createButton(UI_ID id, bool bReplaceThisElement) {
 			return TES3_ui_createWidget(this, id, TES3_ui_factoryButton, bReplaceThisElement);
 		}
 
-		Element* Element::createDragFrame(UI_ID id, Boolean bReplaceThisElement) {
+		Element* Element::createDragFrame(UI_ID id, bool bReplaceThisElement) {
 			return TES3_ui_createWidget(this, id, TES3_ui_factoryDragFrame, bReplaceThisElement);
 		}
 
-		Element* Element::createFillBar(UI_ID id, Boolean bReplaceThisElement) {
+		Element* Element::createFillBar(UI_ID id, bool bReplaceThisElement) {
 			return TES3_ui_createWidget(this, id, TES3_ui_factoryFillBar, bReplaceThisElement);
 		}
 
-		Element* Element::createFixedFrame(UI_ID id, Boolean bReplaceThisElement) {
+		Element* Element::createFixedFrame(UI_ID id, bool bReplaceThisElement) {
 			return TES3_ui_createWidget(this, id, TES3_ui_factoryFixedFrame, bReplaceThisElement);
 		}
 
-		Element* Element::createHorizontalScrollPane(UI_ID id, Boolean bReplaceThisElement) {
+		Element* Element::createHorizontalScrollPane(UI_ID id, bool bReplaceThisElement) {
 			return TES3_ui_createWidget(this, id, TES3_ui_factoryHorzScrollPane, bReplaceThisElement);
 		}
 
-		Element* Element::createHypertext(UI_ID id, Boolean bReplaceThisElement) {
+		Element* Element::createHypertext(UI_ID id, bool bReplaceThisElement) {
 			return TES3_ui_createWidget(this, id, TES3_ui_factoryHypertext, bReplaceThisElement);
 		}
 
-		Element* Element::createImage(UI_ID id, const char* imagePath, Boolean bReplaceThisElement) {
+		Element* Element::createImage(UI_ID id, const char* imagePath, bool bReplaceThisElement) {
 			return TES3_ui_createImage(this, id, imagePath, bReplaceThisElement);
 		}
 
-		Element* Element::createLabel(UI_ID id, const char* text, Boolean bBlackText, Boolean bReplaceThisElement) {
+		Element* Element::createLabel(UI_ID id, const char* text, bool bBlackText, bool bReplaceThisElement) {
 			return TES3_ui_createLabel(this, id, text, bBlackText, bReplaceThisElement);
 		}
 
-		Element* Element::createNif(UI_ID id, const char* path, Boolean bReplaceThisElement) {
+		Element* Element::createNif(UI_ID id, const char* path, bool bReplaceThisElement) {
 			return TES3_ui_createNif(this, id, path, bReplaceThisElement);
 		}
 
-		Element* Element::createParagraphInput(UI_ID id, Boolean bReplaceThisElement) {
+		Element* Element::createParagraphInput(UI_ID id, bool bReplaceThisElement) {
 			return TES3_ui_createWidget(this, id, TES3_ui_factoryParagraphInput, bReplaceThisElement);
 		}
 
-		Element* Element::createRect(UI_ID id, Boolean bReplaceThisElement, Boolean bRandomColour) {
+		Element* Element::createRect(UI_ID id, bool bReplaceThisElement, bool bRandomColour) {
 			return TES3_ui_createRect(this, id, bReplaceThisElement, bRandomColour);
 		}
 
-		Element* Element::createSlider(UI_ID id, Boolean bReplaceThisElement) {
+		Element* Element::createSlider(UI_ID id, bool bReplaceThisElement) {
 			return TES3_ui_createWidget(this, id, TES3_ui_factorySlider, bReplaceThisElement);
 		}
 
-		Element* Element::createSliderVertical(UI_ID id, Boolean bReplaceThisElement) {
+		Element* Element::createSliderVertical(UI_ID id, bool bReplaceThisElement) {
 			Element* slider = TES3_ui_createWidget(this, id, TES3_ui_factorySliderVert, bReplaceThisElement);
 			// Set is_part prop to correct value for WidgetScrollBar
 			static Property propPart = registerProperty("PartScrollBar");
@@ -114,15 +114,15 @@ namespace TES3 {
 			return slider;
 		}
 
-		Element* Element::createTextInput(UI_ID id, Boolean bReplaceThisElement) {
+		Element* Element::createTextInput(UI_ID id, bool bReplaceThisElement) {
 			return TES3_ui_createWidget(this, id, TES3_ui_factoryTextInput, bReplaceThisElement);
 		}
 
-		Element* Element::createTextSelect(UI_ID id, Boolean bReplaceThisElement) {
+		Element* Element::createTextSelect(UI_ID id, bool bReplaceThisElement) {
 			return TES3_ui_createWidget(this, id, TES3_ui_factoryTextSelect, bReplaceThisElement);
 		}
 
-		Element* Element::createVerticalScrollPane(UI_ID id, Boolean bReplaceThisElement) {
+		Element* Element::createVerticalScrollPane(UI_ID id, bool bReplaceThisElement) {
 			return TES3_ui_createWidget(this, id, TES3_ui_factoryVertScrollPane, bReplaceThisElement);
 		}
 
@@ -163,7 +163,7 @@ namespace TES3 {
 			return TES3_ui_getTopLevelParent(this);
 		}
 
-		Element* Element::performLayout(Boolean bUpdateTimestamp) {
+		Element* Element::performLayout(bool bUpdateTimestamp) {
 			return TES3_ui_performLayout(this, bUpdateTimestamp);
 		}
 
@@ -207,15 +207,15 @@ namespace TES3 {
 			return true;
 		}
 
-		void Element::setAutoHeight(Boolean bAuto) {
+		void Element::setAutoHeight(bool bAuto) {
 			return TES3_ui_setAutoHeight(this, bAuto);
 		}
 
-		void Element::setAutoWidth(Boolean bAuto) {
+		void Element::setAutoWidth(bool bAuto) {
 			return TES3_ui_setAutoWidth(this, bAuto);
 		}
 
-		void Element::setVisible(Boolean bVisible) {
+		void Element::setVisible(bool bVisible) {
 			return TES3_ui_setVisible(this, bVisible);
 		}
 

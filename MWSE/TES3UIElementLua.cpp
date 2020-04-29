@@ -61,7 +61,7 @@ namespace mwse {
 			return x ? TES3::UI::Property::boolean_true : TES3::UI::Property::boolean_false;
 		}
 
-		bool toBoolean(TES3::UI::Property prop) {
+		bool toBool(TES3::UI::Property prop) {
 			return prop == TES3::UI::Property::boolean_true;
 		}
 
@@ -197,12 +197,12 @@ namespace mwse {
 				[](Element& self, int value) { self.setProperty(TES3::UI::Property::y_loc, value); }
 			));
 			usertypeDefinition.set("visible", sol::property(
-				[](Element& self) { return self.visible != 0; },
-				[](Element& self, sol::optional<bool> value) { self.setVisible(value.value_or(true)); }
+				[](Element& self) { return self.visible; },
+				[](Element& self, bool value) { self.setVisible(value); }
 			));
 			usertypeDefinition.set("consumeMouseEvents", sol::property(
-				[](Element& self) { return self.flagConsumeMouseEvents != 0; },
-				[](Element& self, sol::optional<bool> value) { self.flagConsumeMouseEvents = value.value_or(true); }
+				[](Element& self) { return self.flagConsumeMouseEvents; },
+				[](Element& self, bool value) { self.flagConsumeMouseEvents = value; }
 			));
 			usertypeDefinition.set("nodeMinX", &Element::nodeMinX);
 			usertypeDefinition.set("nodeMaxX", &Element::nodeMaxX);
@@ -233,11 +233,11 @@ namespace mwse {
 				[](Element& self, sol::optional<int> value) { self.setProperty(TES3::UI::Property::max_height, value.value_or(INT32_MAX)); }
 			));
 			usertypeDefinition.set("autoWidth", sol::property(
-				[](Element& self) { return self.flagAutoWidth != 0; },
+				[](Element& self) { return self.flagAutoWidth; },
 				[](Element& self, bool value) { self.setAutoWidth(value); }
 			));
 			usertypeDefinition.set("autoHeight", sol::property(
-				[](Element& self) { return self.flagAutoHeight != 0; },
+				[](Element& self) { return self.flagAutoHeight; },
 				[](Element& self, bool value) { self.setAutoHeight(value); }
 			));
 			usertypeDefinition.set("widthProportional", sol::property(
@@ -306,7 +306,7 @@ namespace mwse {
 			usertypeDefinition.set("wrapText", sol::property(
 				[](Element& self) {
 					auto prop = self.getProperty(TES3::UI::PropertyType::Property, TES3::UI::Property::wrap_text);
-					return toBoolean(prop.propertyValue);
+					return toBool(prop.propertyValue);
 				},
 				[](Element& self, bool value) {
 					self.setProperty(TES3::UI::Property::wrap_text, toBooleanProperty(value));
@@ -344,9 +344,9 @@ namespace mwse {
 			usertypeDefinition.set("disabled", sol::property(
 				[](Element& self) {
 					auto prop = self.getProperty(TES3::UI::PropertyType::Property, TES3::UI::Property::disabled);
-					return toBoolean(prop.propertyValue);
+					return toBool(prop.propertyValue);
 				},
-				[](Element& self, bool value) { self.setProperty(TES3::UI::Property::disabled, toBooleanProperty(value)); }
+				[](Element& self, bool value) { self.setProperty(TES3::UI::Property::disabled, toBoolProperty(value)); }
 			));
 			usertypeDefinition.set("texture", sol::property(
 				[](Element& self) {
@@ -360,7 +360,7 @@ namespace mwse {
 			));
 			usertypeDefinition.set("scaleMode", sol::property(
 				[](Element& self) {
-					return toBoolean(self.scale_mode);
+					return toBool(self.scale_mode);
 				},
 				[](Element& self, bool value) {
 					self.scale_mode = toBooleanProperty(value);
@@ -408,7 +408,7 @@ namespace mwse {
 			usertypeDefinition.set("repeatKeys", sol::property(
 				[](Element& self) {
 					auto prop = self.getProperty(TES3::UI::PropertyType::Property, TES3::UI::Property::repeat_keys);
-					return toBoolean(prop.propertyValue);
+					return toBool(prop.propertyValue);
 				},
 				[](Element& self, bool value) { self.setProperty(TES3::UI::Property::repeat_keys, toBooleanProperty(value)); }
 			));
@@ -445,8 +445,8 @@ namespace mwse {
 				[](Element& self, float value) { self.setProperty(TES3::UI::Property::align_y, value); }
 			));
 			usertypeDefinition.set("acceptMouseEvents", sol::property(
-				[](Element& self) { return self.flagConsumeMouseEvents != 0; },
-				[](Element& self, sol::optional<bool> value) { self.flagConsumeMouseEvents = value.value_or(true); }
+				[](Element& self) { return self.flagConsumeMouseEvents; },
+				[](Element& self, bool value) { self.flagConsumeMouseEvents = value; }
 			));
 
 			// Custom property accessor functions.
@@ -464,7 +464,7 @@ namespace mwse {
 				[](Element& self, const char* propertyName) {
 					TES3::UI::Property prop = TES3::UI::registerProperty(propertyName);
 					auto b = self.getProperty(TES3::UI::PropertyType::Property, prop).propertyValue;
-					return toBoolean(b);
+					return toBool(b);
 				}
 			);
 			usertypeDefinition.set("getPropertyFloat",
