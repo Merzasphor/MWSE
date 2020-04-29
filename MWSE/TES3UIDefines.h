@@ -13,7 +13,7 @@ namespace TES3 {
 		// Therefore the Property enum contains the UI_IDs of pre-registered properties.
 		// UI_ID and Property are convertible.
 
-		enum class PropertyType {
+		enum class PropertyType : short {
 			INVALID = 0x0,
 			Integer = 0x1,
 			Float = 0x2,
