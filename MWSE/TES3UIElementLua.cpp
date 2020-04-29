@@ -346,7 +346,7 @@ namespace mwse {
 					auto prop = self.getProperty(TES3::UI::PropertyType::Property, TES3::UI::Property::disabled);
 					return toBool(prop.propertyValue);
 				},
-				[](Element& self, bool value) { self.setProperty(TES3::UI::Property::disabled, toBoolProperty(value)); }
+				[](Element& self, bool value) { self.setProperty(TES3::UI::Property::disabled, toBooleanProperty(value)); }
 			));
 			usertypeDefinition.set("texture", sol::property(
 				[](Element& self) {
