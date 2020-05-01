@@ -60,14 +60,15 @@ namespace TES3 {
 	sol::table Reference::getLuaTable() {
 		auto itemData = getAttachedItemData();
 
+		// Prevent adding a lua table if there's more than one item involved.
+		if (itemData && itemData->count > 1) {
+			throw std::exception("Cannot create lua data when more than one item is present.");
+		}
+
 		// Create the item data if it doesn't already exist.
 		if (itemData == nullptr) {
 			itemData = ItemData::createForObject(baseObject);
 			setAttachedItemData(itemData);
-		}
-		// Prevent adding a lua table if there's more than one item involved.
-		else if (itemData->count > 1) {
-			throw std::exception("Cannot create lua data when more than one item is present.");
 		}
 
 		return itemData->getOrCreateLuaDataTable();
