@@ -51,6 +51,7 @@ namespace NI {
 	struct TextKey;
 	struct TextKeyExtraData;
 	struct Texture;
+	struct TextureEffect;
 	struct TimeController;
 	struct Transform;
 	struct TriBasedGeometry;
