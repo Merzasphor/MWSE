@@ -3272,6 +3272,34 @@ namespace mwse {
 			animData->unknown_0x54 |= 0xFFFF;
 		}
 
+		void setAnimationTiming(sol::table params) {
+			TES3::Reference* reference = getOptionalParamExecutionReference(params);
+			if (reference == nullptr) {
+				throw std::invalid_argument("Invalid 'reference' parameter provided.");
+			}
+
+			auto animData = reference->getAttachedAnimationData();
+			if (animData == nullptr) {
+				return;
+			}
+
+			sol::object timing = params["timing"];
+			if (timing.valid() && timing != sol::nil) {
+				if (timing.is<double>()) {
+					const float fTiming = timing.as<double>();
+					animData->timing[0] = fTiming;
+					animData->timing[1] = fTiming;
+					animData->timing[2] = fTiming;
+				}
+				else if (timing.is<sol::table>() && timing.as<sol::table>().size() == 3) {
+					auto timings = timing.as<sol::table>();
+					animData->timing[0] = timings[1];
+					animData->timing[1] = timings[2];
+					animData->timing[2] = timings[3];
+				}
+			}
+		}
+
 		bool isAffectedBy(sol::table params) {
 			TES3::Reference* reference = getOptionalParamExecutionReference(params);
 			if (reference == nullptr) {
@@ -3830,6 +3858,7 @@ namespace mwse {
 			tes3["setAIFollow"] = setAIFollow;
 			tes3["setAITravel"] = setAITravel;
 			tes3["setAIWander"] = setAIWander;
+			tes3["setAnimationTiming"] = setAnimationTiming;
 			tes3["setDestination"] = setDestination;
 			tes3["setEnabled"] = setEnabled;
 			tes3["setGlobal"] = setGlobal;
