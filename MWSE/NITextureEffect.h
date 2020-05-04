@@ -7,6 +7,9 @@
 
 namespace NI {
 	struct TextureEffect : DynamicEffect {
+		TextureEffect();
+		~TextureEffect();
+
 		TES3::Matrix33 unknown_0xA8;
 		TES3::Vector3 unknnown_0xCC;
 		TES3::Matrix33 unknown_0xD8;
