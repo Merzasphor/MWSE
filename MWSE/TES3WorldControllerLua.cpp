@@ -66,6 +66,10 @@ namespace mwse {
 				usertypeDefinition.set("deadFloatScale", &TES3::WorldController::deadFloatScale);
 				usertypeDefinition.set("deltaTime", &TES3::WorldController::deltaTime);
 				usertypeDefinition.set("difficulty", &TES3::WorldController::difficulty);
+				usertypeDefinition.set("enchantedItemEffect", &TES3::WorldController::enchantedItemEffect);
+				usertypeDefinition.set("enchantedItemEffectCreated", &TES3::WorldController::enchantedItemEffectCreated);
+				usertypeDefinition.set("enchantedItemEffectTextures", &TES3::WorldController::enchantedItemEffectTextures);
+				usertypeDefinition.set("flagEventMenuModeOff", &TES3::WorldController::flagEventMenuModeOff);
 				usertypeDefinition.set("flagEventMenuModeOff", &TES3::WorldController::flagEventMenuModeOff);
 				usertypeDefinition.set("flagEventMenuModeOn", &TES3::WorldController::flagEventMenuModeOn);
 				usertypeDefinition.set("flagLevitationDisabled", &TES3::WorldController::flagLevitationDisabled);

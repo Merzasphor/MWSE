@@ -11,6 +11,11 @@ namespace TES3 {
 		return TES3_CombatSession_chooseAlchemyWithEffect(this, id);
 	}
 
+	const auto TES3_CombatSession_changeEquipment = reinterpret_cast<void(__thiscall*)(CombatSession*, EquipmentStack*)>(0x5379E0);
+	void CombatSession::changeEquipment(TES3::EquipmentStack* equipmentStack) {
+		TES3_CombatSession_changeEquipment(this, equipmentStack);
+	}
+
 	const auto TES3_CombatSession_determineNextAction = reinterpret_cast<void (__thiscall*)(CombatSession*)>(0x538F00);
 	void CombatSession::determineNextAction() {
 		auto& luaManager = mwse::lua::LuaManager::getInstance();

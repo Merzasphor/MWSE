@@ -8,7 +8,7 @@
 
 namespace mwse {
 	namespace lua {
-		// Speed-optimized binding for NI::ObjectNET.
+		// Speed-optimized binding for NI::TextureEffect.
 		template <typename T>
 		void setUserdataForNITextureEffect(sol::simple_usertype<T>& usertypeDefinition) {
 			setUserdataForNIDynamicEffect(usertypeDefinition);
