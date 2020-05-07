@@ -17,7 +17,8 @@ namespace mwse {
 			setUserdataForNIDynamicEffect(usertypeDefinition);
 
 			// Property binding.
-			usertypeDefinition.set("sourceTexture", [](NI::TextureEffect& self) { return makeLuaObject(self.sourceTexture); });			
+			usertypeDefinition.set("sourceTexture", &NI::TextureEffect::sourceTexture);
+			
 		}
 
 		void bindNITextureEffect();
