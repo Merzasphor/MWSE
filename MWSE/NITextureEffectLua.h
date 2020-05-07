@@ -16,11 +16,8 @@ namespace mwse {
 		void setUserdataForNITextureEffect(sol::simple_usertype<T>& usertypeDefinition) {
 			setUserdataForNIDynamicEffect(usertypeDefinition);
 
-			// Basic property binding.
-			usertypeDefinition.set("sourceTexture", &NI::TextureEffect::sourceTexture);
-
-			// Functions exposed as properties.
-			
+			// Property binding.
+			usertypeDefinition.set("sourceTexture", [](NI::TextureEffect& self) { return makeLuaObject(self.sourceTexture); });			
 		}
 
 		void bindNITextureEffect();
