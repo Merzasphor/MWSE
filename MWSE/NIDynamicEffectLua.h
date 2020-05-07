@@ -1,5 +1,7 @@
 #pragma once
 
+#include "NIDynamicEffect.h"
+
 #include "sol.hpp"
 
 #include "LuaUtil.h"
@@ -20,5 +22,7 @@ namespace mwse {
 			// Functions exposed as properties.
 			usertypeDefinition.set("type", sol::readonly_property(&NI::DynamicEffect::getType));
 		}
+
+		void bindNIDynamicEffect();
 	}
 }

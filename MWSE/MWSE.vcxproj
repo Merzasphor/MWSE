@@ -528,12 +528,14 @@
     <ClCompile Include="LuaWeatherTransitionStartedEvent.cpp" />
     <ClCompile Include="NIBinaryStream.cpp" />
     <ClCompile Include="NICamera.cpp" />
+    <ClCompile Include="NIDynamicEffectLua.cpp" />
     <ClCompile Include="NIGeometry.cpp" />
     <ClCompile Include="NIGeometryData.cpp" />
     <ClCompile Include="NIGeometryDataLua.cpp" />
     <ClCompile Include="NIRenderedTexture.cpp" />
     <ClCompile Include="NIRenderer.cpp" />
     <ClCompile Include="NITextureEffect.cpp" />
+    <ClCompile Include="NiTextureEffectLua.cpp" />
     <ClCompile Include="NiTriBasedGeometryData.cpp" />
     <ClCompile Include="TES3Activator.cpp" />
     <ClCompile Include="TES3Birthsign.cpp" />

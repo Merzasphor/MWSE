@@ -213,6 +213,7 @@
 
 #include <filesystem>
 #include <unordered_map>
+#include "NITextureEffectLua.h"
 
 #define TES3_HOOK_RUNSCRIPT_LUACHECK 0x5029A4
 #define TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE 0x6
@@ -467,6 +468,7 @@ namespace mwse {
 			bindNICamera();
 			bindNICollisionSwitch();
 			bindNIColor();
+			bindNIDynamicEffect();
 			bindNIGeometryData();
 			bindNINode();
 			bindNIObject();
@@ -476,6 +478,7 @@ namespace mwse {
 			bindNIProperties();
 			bindNISourceTexture();
 			bindNISwitchNode();
+			bindNITextureEffect();
 			bindNITimeController();
 			bindNITriShape();
 

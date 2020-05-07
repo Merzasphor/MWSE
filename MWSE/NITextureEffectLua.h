@@ -4,7 +4,10 @@
 
 #include "LuaUtil.h"
 
+#include "NITextureEffect.h"
+
 #include "NIObjectLua.h"
+#include "NIDynamicEffectLua.h"
 
 namespace mwse {
 	namespace lua {
@@ -19,5 +22,7 @@ namespace mwse {
 			// Functions exposed as properties.
 			
 		}
+
+		void bindNITextureEffect();
 	}
 }

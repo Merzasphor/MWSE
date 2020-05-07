@@ -2987,6 +2987,12 @@
     <ClCompile Include="NITextureEffect.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
+    <ClCompile Include="NIDynamicEffectLua.cpp">
+      <Filter>Source Files\Lua\Bindings\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NiTextureEffectLua.cpp">
+      <Filter>Source Files\Lua\Bindings\NI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">
