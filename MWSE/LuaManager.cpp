@@ -3237,6 +3237,13 @@ namespace mwse {
 			genCallEnforced(0x4CFB43, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
 			genCallEnforced(0x635236, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
 
+			// Event: Mobile Sneak Detection.
+			auto mobController_0x24DetectSneak = &TES3::MobController_0x24::detectSneak;
+			genCallEnforced(0x558975, 0x570600, *reinterpret_cast<DWORD*>(&mobController_0x24DetectSneak));
+			genCallEnforced(0x570A43, 0x570600, *reinterpret_cast<DWORD*>(&mobController_0x24DetectSneak));
+			genCallEnforced(0x570C0B, 0x570600, *reinterpret_cast<DWORD*>(&mobController_0x24DetectSneak));
+			genCallEnforced(0x570E48, 0x570600, *reinterpret_cast<DWORD*>(&mobController_0x24DetectSneak));
+
 			// Event: Mobile added to controller.
 			auto mobControllerAddMob = &TES3::MobController::addMob;
 			genCallEnforced(0x4665D5, 0x5636A0, *reinterpret_cast<DWORD*>(&mobControllerAddMob));

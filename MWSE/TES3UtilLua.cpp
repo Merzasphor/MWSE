@@ -1214,7 +1214,7 @@ namespace mwse {
 
 			// Do detection and the like.
 			bool forceDetection = getOptionalParam<bool>(params, "forceDetection", false);
-			auto controller = TES3::WorldController::get()->mobController->unknown_0x24;
+			auto controller = TES3::WorldController::get()->mobController->mobController_0x24;
 			if (!forceDetection && controller->detectPresence(crimeEvent.criminal)) {
 				controller->checkRadius(crimeEvent.victim, crimeEvent.witnesses);
 			}
