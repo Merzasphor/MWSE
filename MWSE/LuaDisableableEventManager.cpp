@@ -34,6 +34,7 @@
 #include "LuaDamageEvent.h"
 #include "LuaDamagedEvent.h"
 #include "LuaDeathEvent.h"
+#include "LuaDetectSneakEvent.h"
 #include "LuaDetermineActionEvent.h"
 #include "LuaDeterminedActionEvent.h"
 #include "LuaDisarmTrapEvent.h"
@@ -156,6 +157,7 @@ namespace mwse {
 				usertypeDefinition.set("damage", sol::property(&DamageEvent::getEventEnabled, &DamageEvent::setEventEnabled));
 				usertypeDefinition.set("damaged", sol::property(&DamagedEvent::getEventEnabled, &DamagedEvent::setEventEnabled));
 				usertypeDefinition.set("death", sol::property(&DeathEvent::getEventEnabled, &DeathEvent::setEventEnabled));
+				usertypeDefinition.set("detectSneak", sol::property(&DetectSneakEvent::getEventEnabled, &DetectSneakEvent::setEventEnabled));
 				usertypeDefinition.set("determineAction", sol::property(&DetermineActionEvent::getEventEnabled, &DetermineActionEvent::setEventEnabled));
 				usertypeDefinition.set("determinedAction", sol::property(&DeterminedActionEvent::getEventEnabled, &DeterminedActionEvent::setEventEnabled));
 				usertypeDefinition.set("enterFrame", sol::property(&FrameEvent::getEventEnabled, &FrameEvent::setEventEnabled));
