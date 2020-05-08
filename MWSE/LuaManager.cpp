@@ -1901,25 +1901,41 @@ namespace mwse {
 			}
 		}
 
-		void __fastcall OnSkillTrained(TES3::SkillStatistic * skill, DWORD _UNDEFINED_, float delta, bool capAt0, bool capAt100) {
+		// Skill and Id of the skill trained.
+		static TES3::SkillStatistic * OnSkillTrained_Skill;
+		static int OnSkillTrained_SkillId = -1;
+
+		void __fastcall OnSkillTrained_GetSkill(TES3::SkillStatistic * skill, DWORD _UNDEFINED_, float delta, bool capAt0, bool capAt100) {
 			skill->modSkillCapped(delta, capAt0, capAt100);
 
-			int skillId = -1;
+			OnSkillTrained_SkillId = -1;
 			auto macp = TES3::WorldController::get()->getMobilePlayer();
 			for (int i = TES3::SkillID::FirstSkill; i <= TES3::SkillID::LastSkill; i++) {
 				if (&macp->skills[i] == skill) {
-					skillId = i;
+					OnSkillTrained_SkillId = i;
 					break;
 				}
 			}
+			OnSkillTrained_Skill = skill;
+		}
+		
+		// OnSkillTrained_GetSkill is too soon for our event, because some relevant data structures haven't been updated yet.
+		// Specifically, levelUpProgress, and levelupsPerAttribute are not updated until later.
+		// Trigger the event when the UI updates instead, which happens immediately after levelupsPerAttribute is updated.
 
-			if (skillId == -1) {
+		void __cdecl OnSkillTrained_UpdateStatsPane() {
+			TES3::UI::updateStatsPane();
+
+			if (OnSkillTrained_SkillId == -1) {
 				return;
 			}
 
 			if (event::SkillRaisedEvent::getEventEnabled()) {
-				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SkillRaisedEvent(skillId, skill->base, "training"));
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SkillRaisedEvent(OnSkillTrained_SkillId, OnSkillTrained_Skill->base, "training"));
 			}
+			
+			// This should be unnecessary, but let's be extra careful.
+			OnSkillTrained_SkillId = -1;
 		}
 
 		void LuaManager::executeMainModScripts(const char* path, const char* filename) {
@@ -3359,7 +3375,8 @@ namespace mwse {
 			// Event: Skill Raised.
 			genCallEnforced(0x4A28C6, 0x629FC0, reinterpret_cast<DWORD>(OnSkillRaisedBook));
 			genCallEnforced(0x56BCF2, 0x629FC0, reinterpret_cast<DWORD>(OnSkillRaisedProgress));
-			genCallEnforced(0x618355, 0x401060, reinterpret_cast<DWORD>(OnSkillTrained));
+			genCallEnforced(0x618355, 0x401060, reinterpret_cast<DWORD>(OnSkillTrained_GetSkill));
+			genCallEnforced(0x6183A1, 0x6266D0, reinterpret_cast<DWORD>(OnSkillTrained_UpdateStatsPane));
 
 			// Event: UI Refreshed.
 			genCallEnforced(0x6272F9, 0x649870, reinterpret_cast<DWORD>(OnRefreshedStatsPane)); // MenuStat_scroll_pane
