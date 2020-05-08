@@ -13,20 +13,20 @@ namespace mwse {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
 
-			// Binding for TES3::MobPlayerController.
+			// Binding for TES3::MobController_0x24.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.create_simple_usertype<TES3::MobPlayerController>();
+				auto usertypeDefinition = state.create_simple_usertype<TES3::MobController_0x24>();
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Basic function binding.
-				usertypeDefinition.set("detectPresence", &TES3::MobPlayerController::detectPresence);
-				usertypeDefinition.set("detectSneak", &TES3::MobPlayerController::detectSneak);
-				usertypeDefinition.set("checkRadius", &TES3::MobPlayerController::checkRadius);
-				usertypeDefinition.set("checkPlayerDistance", &TES3::MobPlayerController::checkPlayerDistance);
+				usertypeDefinition.set("detectPresence", &TES3::MobController_0x24::detectPresence);
+				usertypeDefinition.set("detectSneak", &TES3::MobController_0x24::detectSneak);
+				usertypeDefinition.set("checkRadius", &TES3::MobController_0x24::checkRadius);
+				usertypeDefinition.set("checkPlayerDistance", &TES3::MobController_0x24::checkPlayerDistance);
 
 				// Finish up our usertype.
-				state.set_usertype("tes3mobPlayerController", usertypeDefinition);
+				state.set_usertype("tes3mobController_0x24", usertypeDefinition);
 			}
 
 			// Binding for TES3::ProjectileController.
@@ -38,7 +38,7 @@ namespace mwse {
 				// Basic function binding.
 	
 				// Finish up our usertype.
-				state.set_usertype("tes3projtectileController", usertypeDefinition);
+				state.set_usertype("tes3projectileController", usertypeDefinition);
 			}
 		
 
@@ -49,7 +49,7 @@ namespace mwse {
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Basic property binding.
-				usertypeDefinition.set("mobPlayerController", sol::readonly_property(&TES3::MobController::mobPlayerController));
+				usertypeDefinition.set("mobController_0x24", sol::readonly_property(&TES3::MobController::MobController_0x24));
 				usertypeDefinition.set("projectileController", sol::readonly_property(&TES3::MobController::projectileController));
 		
 				// Finish up our usertype.

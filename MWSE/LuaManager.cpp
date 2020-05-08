@@ -559,9 +559,9 @@ namespace mwse {
 		// Hook: Player container (re)created.
 		//
 
-		void __fastcall OnPlayerRecreated(TES3::MobPlayerController * self) {
+		void __fastcall OnPlayerRecreated(TES3::MobController_0x24 * self) {
 			// Call overwritten function.
-			reinterpret_cast<void(__thiscall *)(TES3::MobPlayerController*)>(0x56EAE0)(self);
+			reinterpret_cast<void(__thiscall *)(TES3::MobController_0x24*)>(0x56EAE0)(self);
 
 			// Grab the new player pointers for lua.
 			// Update tes3.player and tes3.mobilePlayer.
@@ -3238,11 +3238,11 @@ namespace mwse {
 			genCallEnforced(0x635236, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
 
 			// Event: Mobile Sneak Detection.
-			auto mobPlayerControllerDetectSneak = &TES3::MobPlayerController::detectSneak;
-			genCallEnforced(0x558975, 0x570600, *reinterpret_cast<DWORD*>(&mobPlayerControllerDetectSneak));
-			genCallEnforced(0x570A43, 0x570600, *reinterpret_cast<DWORD*>(&mobPlayerControllerDetectSneak));
-			genCallEnforced(0x570C0B, 0x570600, *reinterpret_cast<DWORD*>(&mobPlayerControllerDetectSneak));
-			genCallEnforced(0x570E48, 0x570600, *reinterpret_cast<DWORD*>(&mobPlayerControllerDetectSneak));
+			auto MobController_0x24DetectSneak = &TES3::MobController_0x24::detectSneak;
+			genCallEnforced(0x558975, 0x570600, *reinterpret_cast<DWORD*>(&MobController_0x24DetectSneak));
+			genCallEnforced(0x570A43, 0x570600, *reinterpret_cast<DWORD*>(&MobController_0x24DetectSneak));
+			genCallEnforced(0x570C0B, 0x570600, *reinterpret_cast<DWORD*>(&MobController_0x24DetectSneak));
+			genCallEnforced(0x570E48, 0x570600, *reinterpret_cast<DWORD*>(&MobController_0x24DetectSneak));
 
 			// Event: Mobile added to controller.
 			auto mobControllerAddMob = &TES3::MobController::addMob;
