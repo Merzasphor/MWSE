@@ -1,7 +1,7 @@
 niFormatPrefs
 ====================================================================================================
 
-A class that represents a set of application preferences for texture formats. These preferences are not direct texture format requests, but are only requests for general levels of pixel accuracy.
+A class that represents a set of preferences for texture formats. These preferences dictate levels of pixel accuracy.
 
 Properties
 ----------------------------------------------------------------------------------------------------

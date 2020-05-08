@@ -1,5 +1,5 @@
 return {
 	type = "class",
-	description = [[An object that allows applications to create triangle sets that can share vertices arbitrarily between triangles. Unlike triangle fans and triangle strips, triangle connectivity is unrestricted in an indexed triangle set.]],
+	description = [[An object that allows the sharing of vertices between triangles to create shapes.]],
 	inherits = "niTriBasedGeometry",
 }

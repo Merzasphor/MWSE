@@ -1,5 +1,5 @@
 return {
 	type = "class",
-	description = [[Abstract base class for all geometry subclasses that base their geometry upon triangles.]],
+	description = [[Base class for all geometry that uses triangles.]],
 	inherits = "niGeometry",
 }

@@ -1,22 +1,22 @@
 niMaterialProperty
 ====================================================================================================
 
-A rendering property that allows an application to specify the surface properties of the objects affected by the property. These surface properties include translucency, ambient reflective color, diffuse reflective color, emissive color intensity, and specular color.
+A rendering property that controls the surface properties of objects affected by the property. These surface properties include translucency, ambient reflective color, diffuse reflective color, emissive color intensity, and specular color.
 
 Properties
 ----------------------------------------------------------------------------------------------------
 
 `alpha`_ (`number`_)
-    The alpha or "translucency" value of the material. This value should be a floating-point value between 0.0 and 1.0 (values are not error-checked), with 0.0 representing fully translucent and 1.0 representing fully opaque. Setting this value also marks the material as changed, so that renderers know to update their copies of the material settings.
+    The alpha value of the material. Value should be between 0 - 1.
 
 `ambient`_ (`niColor`_)
-    The ambient material color. Setting this value also marks the material as changed, so that renderers know to update their copies of the material settings.
+    The ambient material color.
 
 `diffuse`_ (`niColor`_)
-    The diffuse material color. Setting this value also marks the material as changed, so that renderers know to update their copies of the material settings.
+    The diffuse material color.
 
 `emissive`_ (`niColor`_)
-    The emissive material color. Setting this value also marks the material as changed, so that renderers know to update their copies of the material settings.
+    The emissive material color.
 
 `name`_ (`string`_)
     The human-facing name of the given object.
@@ -28,10 +28,10 @@ Properties
     The runtime type information for this object.
 
 `shininess`_ (`number`_)
-    The shine or "gloss" of the material, used by some (but not all) renderers when computing specular lighting. This number should be non-negative; higher values tend to make the material appear to have a more mirror-like finish (i.e. tighter specular highlights). Setting this value also marks the material as changed, so that renderers know to update their copies of the material settings.
+    The shine of the material. Value should be >= 0.
 
 `specular`_ (`niColor`_)
-    The specular material color. Setting this value also marks the material as changed, so that renderers know to update their copies of the material settings.
+    The specular material color.
 
 `type`_ (`niPropertyType`_)
     The unique class identifier number of the given rendering property.

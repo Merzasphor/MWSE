@@ -1,4 +1,4 @@
 return {
 	type = "class",
-	description = [[AN object that represents floating-point RGB colors without alpha.]],
+	description = [[An object that represents a RGB color.]],
 }

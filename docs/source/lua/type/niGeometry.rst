@@ -1,7 +1,7 @@
 niGeometry
 ====================================================================================================
 
-Abstract base class that forms the base for most geometry-bearing scene graph objects.  Includes basic vertex and normal management.
+Base class for most geometric objects. Includes basic vertex and normal management.
     
 
 Properties

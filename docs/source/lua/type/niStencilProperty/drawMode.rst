@@ -1,7 +1,7 @@
 drawMode
 ====================================================================================================
 
-`number`_. The drawing (or culling) mode used to draw the object.
+`number`_. The drawing mode used to draw the object.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

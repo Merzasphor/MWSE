@@ -1,7 +1,7 @@
 green
 ====================================================================================================
 
-`number`_. Long alias for the green value of the color.
+`number`_. Alias for the green value of the color.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

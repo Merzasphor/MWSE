@@ -1,7 +1,7 @@
 specular
 ====================================================================================================
 
-`niColor`_. The specular material color. Setting this value also marks the material as changed, so that renderers know to update their copies of the material settings.
+`niColor`_. The specular material color.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

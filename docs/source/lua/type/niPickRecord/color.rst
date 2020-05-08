@@ -1,7 +1,7 @@
 color
 ====================================================================================================
 
-`number`_. The vertex color at the point of intersection.  The color is valid only when the 'return color' flag is set.
+`number`_. The vertex color at the point of intersection. The color is valid only when `returnColor = true`.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

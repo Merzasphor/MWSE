@@ -1,9 +1,7 @@
 pickObjects
 ====================================================================================================
 
-Performs the picking operation.  Forms an array of objects intersected by the ray defined by `origin` and `direction`.  This ray is in world coordinates.  The current PickType, SortType, IntersectType, and front-only mode determine the type of array formed.  The `append` parameter indicates whether the new results are appended onto those intersections already contained in the results array, or if a new array is formed clearing those results already contained in the results array.
-
-    
+Performs the picking operation.
 
 Parameters
 ----------------------------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 niSpotLight
 ====================================================================================================
 
-an object that represents a spotlight in a scene. Spotlights have a specific location and direction in space, as well as a distance attenuation function and an angle attenuation function. Location and distance attenuation are inherited from the `niPointLight` class. The light direction is handled in the same way as it is in `niDirectionalLight` -- it shines down the model-space positive X-axis of the light.
+Represents a spotlight in a scene. Spotlights have a specific location and direction, as well as a distance attenuation and angle attenuation functions. The light direction is handled in the same way as in `niDirectionalLight`.
 
 Properties
 ----------------------------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ Properties
     The specular settings for the light.
 
 `spotAngle`_ (`number`_)
-    The spotlight angle, in degrees. Unless the angle is something other than 1.0, Gamebryo uses linear attenuation from the spot direction to the edge of the light cone.
+    The spotlight angle, in degrees.
 
 `spotExponent`_ (`number`_)
     The spotlight angular attenuation exponent. This value may be ignored.

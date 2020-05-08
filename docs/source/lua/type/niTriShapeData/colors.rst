@@ -1,7 +1,7 @@
 colors
 ====================================================================================================
 
-`niColorA`_. The color list for the object.
+`niColorA`_. The color for the object.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

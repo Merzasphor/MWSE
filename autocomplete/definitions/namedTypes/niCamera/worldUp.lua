@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = [[Defines the model-space Y-axis of the camera basis vectors.]],
+	description = [[Defines the Y-axis of the camera.]],
 	valuetype = "tes3vector3",
 }

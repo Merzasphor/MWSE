@@ -1,13 +1,13 @@
 niStencilProperty
 ====================================================================================================
 
-A rendering property that allows the application to control the use of a stencil buffer in rendering. It also includes a draw-mode setting to allow applications to set the culling mode of a set of geometry.
+A rendering property that controls the use of a stencil buffer when rendering. It also includes a draw-mode setting to allows the game engine to control the culling mode of a set of geometry.
 
 Properties
 ----------------------------------------------------------------------------------------------------
 
 `drawMode`_ (`number`_)
-    The drawing (or culling) mode used to draw the object.
+    The drawing mode used to draw the object.
 
 `enabled`_ (`boolean`_)
     The value of the stencil buffer enable flag.
@@ -16,7 +16,7 @@ Properties
     The action that is taken in the stencil buffer when the stencil test fails.
 
 `mask`_ (`number`_)
-    The value of the stencil buffer mask that is AND-ed with the reference and buffer value prior to comparing and writing the buffer.
+    The mask value of the stencil buffer.
 
 `name`_ (`string`_)
     The human-facing name of the given object.
@@ -25,7 +25,7 @@ Properties
     The action that is taken in the stencil buffer when the stencil test passes and the pixel passes the Z-buffer test.
 
 `reference`_ (`number`_)
-    The stencil reference value, which is compared against the stencil value at an individual pixel to determine the success of the stencil test.
+    The stencil reference.
 
 `references`_ (`string`_)
     The number of references that exist for the given object. When this value hits zero, the object's memory is freed.

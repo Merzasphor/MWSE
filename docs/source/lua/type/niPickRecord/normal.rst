@@ -1,7 +1,7 @@
 normal
 ====================================================================================================
 
-`tes3vector3`_. The normal vector at the point of intersection.  The normal is valid only when the 'return normal' flag is set.
+`tes3vector3`_. The normal vector at the point of intersection. The normal is valid only when `returnNormal = true`.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

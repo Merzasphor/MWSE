@@ -1,7 +1,7 @@
 niTriShape
 ====================================================================================================
 
-An object that allows applications to create triangle sets that can share vertices arbitrarily between triangles. Unlike triangle fans and triangle strips, triangle connectivity is unrestricted in an indexed triangle set.
+An object that allows the sharing of vertices between triangles to create shapes.
 
 Properties
 ----------------------------------------------------------------------------------------------------
@@ -16,7 +16,7 @@ Properties
     The human-facing name of the given object.
 
 `normals`_ (`tes3vector3`_)
-    The normals of the object.\
+    The normals of the object.
 
 `references`_ (`string`_)
     The number of references that exist for the given object. When this value hits zero, the object's memory is freed.

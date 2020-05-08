@@ -1,7 +1,7 @@
 niPick
 ====================================================================================================
 
-This class is the entry point into the picking intersection system.  With the specification of a ray, the class allows an application to perform picking operations on a scene graph or any subtree within a scene graph.  Given a ray and a subtree, the subtree is traversed and any intersected objects satisfying user-defined constraints are added to an array. Intersections are only computed with bounding spheres (coarse scale operation) or with triangle geometry (fine scale operation).
+Class used in the picking intersection system within the game engine.  Using a ray, the engine performs picking operations on a scene graph or any subtree. Given a ray and a subtree, the subtree is traversed and matching nodes are added to an array.
 
 Properties
 ----------------------------------------------------------------------------------------------------
@@ -30,16 +30,16 @@ Properties
     The array of pick records obtained by the last call to PickObjects.
 
 `returnColor`_ (`boolean`_)
-    If true, a vertex color value is returned for the point of intersection of triangles intersected during the picking operation.  This color is not the final triangle color at that point; only source vertex colors are used.  Lighting, texturing, and specular effects are ignored.
+    If true, a vertex color value is returned for the point of intersection of triangles during picking.
 
 `returnNormal`_ (`boolean`_)
-    If true, a unit-length normal is returned for the point of intersection of triangles intersected during the picking operation.
+    If true, a unit-length normal is returned for the point of intersection of triangles intersected during the picking.
 
 `returnSmoothNormal`_ (`boolean`_)
-    If true and if vertex normals exist, then a unit-length normal vector is interpolated from the vertex normals and returned.  Otherwise, the returned normal vector is the unitized facet normal for the intersected triangle.
+    If true and if vertex normals exist, then a unit-length normal vector is interpolated from the vertex normals and returned during the picking operation.
 
 `returnTexture`_ (`boolean`_)
-    If true, texture coordinates are returned for the point of intersection of triangles intersected during the picking operation.
+    If true, texture coordinates are returned for the point of intersection of triangles during the picking operation.
 
 `root`_ (`niPickType`_)
     The root pick type for the object.
@@ -85,9 +85,7 @@ Methods
     Clears the results of any previous picking operation.
 
 `pickObjects`_
-    Performs the picking operation.  Forms an array of objects intersected by the ray defined by `origin` and `direction`.  This ray is in world coordinates.  The current PickType, SortType, IntersectType, and front-only mode determine the type of array formed.  The `append` parameter indicates whether the new results are appended onto those intersections already contained in the results array, or if a new array is formed clearing those results already contained in the results array.
-
-    
+    Performs the picking operation.
 
 .. toctree::
     :hidden:

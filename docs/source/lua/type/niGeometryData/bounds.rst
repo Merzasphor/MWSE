@@ -1,7 +1,7 @@
 bounds
 ====================================================================================================
 
-`niBound`_. The model-space bounding sphere of the object.
+`niBound`_. The bounds of the object.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

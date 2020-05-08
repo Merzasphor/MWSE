@@ -1,14 +1,13 @@
 niTimeController
 ====================================================================================================
 
-A pure virtual class. It provides the base timing and update functionality for all the Gamebryo animation controllers, and is documented in the animation system documention.
+Controls the timing and update functions for animation controllers.
 
 Properties
 ----------------------------------------------------------------------------------------------------
 
 `frequency`_ (`number`_)
-    The animation controller's frequency value. The frequency is a scaling value to convert from update time units to keyframe time units, if necessary.
-    
+    The animation controller's frequency value.
 
 `highKeyFrame`_ (`number`_)
     No description.

@@ -1,7 +1,7 @@
 mask
 ====================================================================================================
 
-`number`_. The value of the stencil buffer mask that is AND-ed with the reference and buffer value prior to comparing and writing the buffer.
+`number`_. The mask value of the stencil buffer.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

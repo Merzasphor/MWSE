@@ -1,7 +1,7 @@
 returnTexture
 ====================================================================================================
 
-`boolean`_. If true, texture coordinates are returned for the point of intersection of triangles intersected during the picking operation.
+`boolean`_. If true, texture coordinates are returned for the point of intersection of triangles during the picking operation.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

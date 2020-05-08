@@ -1,7 +1,7 @@
 worldDirection
 ====================================================================================================
 
-`tes3vector3`_. Defines the model-space X-axis of the camera basis vectors.
+`tes3vector3`_. Defines the X-axis of the camera.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

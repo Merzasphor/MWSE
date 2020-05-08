@@ -1,7 +1,7 @@
 getWidth
 ====================================================================================================
 
-Returns the width of the mipmap level at the given index, where level 1 is the finest (largest) mipmap level.
+Returns the width of the mipmap level at the given index, where level 1 is the largest.
 
 Returns
 ----------------------------------------------------------------------------------------------------

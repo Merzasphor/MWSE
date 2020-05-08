@@ -1,22 +1,22 @@
 niPickRecord
 ====================================================================================================
 
-A nested class of NiPick that stores the results of previous picking operations for use by the application.
+A nested class of NiPick that stores the results of previous picking operations for use by the game engine.
 
 Properties
 ----------------------------------------------------------------------------------------------------
 
 `color`_ (`number`_)
-    The vertex color at the point of intersection.  The color is valid only when the 'return color' flag is set.
+    The vertex color at the point of intersection. The color is valid only when `returnColor = true`.
 
 `distance`_ (`number`_)
-    The distance of the triangle intersection from the ray origin. This quantity is the parameter value along the ray at the point of intersection and is not a true distance from ray origin to point of intersection unless the ray direction is a unit length vector.
+    The distance of the triangle intersection from the ray origin.
 
 `intersection`_ (`tes3vector3`_)
     The intersection point on the triangle.
 
 `normal`_ (`tes3vector3`_)
-    The normal vector at the point of intersection.  The normal is valid only when the 'return normal' flag is set.
+    The normal vector at the point of intersection. The normal is valid only when `returnNormal = true`.
 
 `object`_ (`niAVObject`_)
     The object of the record.
@@ -28,7 +28,7 @@ Properties
     Quick reference to the associated object's reference.
 
 `texture`_ (`tes3vector2`_)
-    The texture coordinates at the point of intersection.  The coordinates are valid only when the 'return texture' flag is set.
+    The texture coordinates at the point of intersection. The coordinates are valid only when `returnTexture = true`.
 
 `triangleIndex`_ (`number`_)
     The index of the intersected triangle.

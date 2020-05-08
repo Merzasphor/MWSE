@@ -1,7 +1,7 @@
 niCamera
 ====================================================================================================
 
-Object that represent a camera in the scene graph. They have no inherent geometric representation, but use their parents' transforms to determine their location and orientation in world space. This organization enables cameras in Gamebryo to be attached to scene graph objects and automatically follow them for "in-car" cameras and "missile-cams".
+Object that represent a camera. Position and orientation is determined by parent properties.
 
 Properties
 ----------------------------------------------------------------------------------------------------
@@ -10,13 +10,13 @@ Properties
     Flags, dependent on the specific object type.
 
 `lodAdjust`_ (`number`_)
-    The level-of-detail adjustment value for the camera. This value is used by NiLODNode objects to multiple the distance between the object whose LOD is being computed and the camera. A higher value for this setting will tend to lower the LOD of the objects drawn by the camera.
+    The level-of-detail adjustment value for the camera. A higher value will lower the LOD of the objects drawn by the camera.
 
 `name`_ (`string`_)
     The human-facing name of the given object.
 
 `port`_ (`tes3vector4`_)
-    The port on the backbuffer to which the view frustum is mapped. The left edge of the backbuffer is 0.0; the right edge is 1.0. The top edge of the backbuffer is 1.0; the bottom edge is 0.0. All of these values must be between 0.0 and 1.0 and are not error-checked.
+    The port on the backbuffer of the camera.
 
 `references`_ (`string`_)
     The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
@@ -37,13 +37,13 @@ Properties
     The view distance of the camera.
 
 `worldDirection`_ (`tes3vector3`_)
-    Defines the model-space X-axis of the camera basis vectors.
+    Defines the X-axis of the camera.
 
 `worldRight`_ (`tes3vector3`_)
-    Defines the model-space Z-axis of the camera basis vectors.
+    Defines the Z-axis of the camera.
 
 `worldUp`_ (`tes3vector3`_)
-    Defines the model-space Y-axis of the camera basis vectors.
+    Defines the Y-axis of the camera.
 
 .. toctree::
     :hidden:

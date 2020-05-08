@@ -1,5 +1,5 @@
 return {
 	type = "value",
-	description = [[The model-space bounding sphere of the object.]],
+	description = [[The bounds of the object.]],
 	valuetype = "niBound",
 }

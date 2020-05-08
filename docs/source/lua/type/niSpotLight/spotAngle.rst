@@ -1,7 +1,7 @@
 spotAngle
 ====================================================================================================
 
-`number`_. The spotlight angle, in degrees. Unless the angle is something other than 1.0, Gamebryo uses linear attenuation from the spot direction to the edge of the light cone.
+`number`_. The spotlight angle, in degrees.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

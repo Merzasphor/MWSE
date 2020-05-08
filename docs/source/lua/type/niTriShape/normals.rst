@@ -1,7 +1,7 @@
 normals
 ====================================================================================================
 
-`tes3vector3`_. The normals of the object.\
+`tes3vector3`_. The normals of the object.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

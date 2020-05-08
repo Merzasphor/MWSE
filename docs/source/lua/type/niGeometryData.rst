@@ -1,17 +1,17 @@
 niGeometryData
 ====================================================================================================
 
-        NiGeometryData objects contain the actual geometry data necessary to render an NiGeometry object. When an NiGeometry-based object is constructed, all the actual geometry data, including arrays of vertices, normals, colors, and texture coordinates, are stored in a corresponding NiGeometryData object. The arrays become owned by the NiGeometryData object, which then has the responsibility of deleting them upon destruction or reallocation.
+        NiGeometryData objects contain the geometry data necessary to render an NiGeometry object. When an NiGeometry-based object is created, the actual geometry data is stored in an attached NiGeometryData object. 
     
 
 Properties
 ----------------------------------------------------------------------------------------------------
 
 `bounds`_ (`niBound`_)
-    The model-space bounding sphere of the object.
+    The bounds of the object.
 
 `colors`_ (`niColorA`_)
-    The color list for the object.
+    The color for the object.
 
 `compressFlags`_ (`boolean`_)
     If true, compress geometry.
@@ -90,7 +90,7 @@ Methods
     Determines if the object is of a given type. Types can be found in the tes3.niType table.
 
 `markAsChanged`_
-    Indicates to the renderer that the geometry has changed since the object was last rendered. If this function is not called, the renderer may continue to use prepacked buffers which contain obsolete data. This function must be called after vertices, normals, colors, or texture coordinates are changed.
+    Tells the renderer that the object has changed. Should be called after changing textures, vertices, or other properties.
 
 .. toctree::
     :hidden:

@@ -1,7 +1,7 @@
 niNode
 ====================================================================================================
 
-An abstract base class that represents light sources in a scene graph. This class includes the ambient, diffuse, and specular colors of a light, as well as its intensity.
+Base class that represents the nodes of a scene graph. A node can have any number of child nodes.
 
 Properties
 ----------------------------------------------------------------------------------------------------

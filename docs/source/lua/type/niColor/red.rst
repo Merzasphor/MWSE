@@ -1,7 +1,7 @@
 red
 ====================================================================================================
 
-`number`_. Long alias for the red value of the color.
+`number`_. Alias for the red value of the color.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

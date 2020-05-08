@@ -1,5 +1,5 @@
 return {
 	type = "class",
-	description = [[Object that represent a camera in the scene graph. They have no inherent geometric representation, but use their parents' transforms to determine their location and orientation in world space. This organization enables cameras in Gamebryo to be attached to scene graph objects and automatically follow them for "in-car" cameras and "missile-cams".]],
+	description = [[Object that represent a camera. Position and orientation is determined by parent properties.]],
 	inherits = "niAVObject",
 }

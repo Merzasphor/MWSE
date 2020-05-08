@@ -1,7 +1,7 @@
 niTriBasedGeometry
 ====================================================================================================
 
-Abstract base class for all geometry subclasses that base their geometry upon triangles.
+Base class for all geometry that uses triangles.
 
 Properties
 ----------------------------------------------------------------------------------------------------

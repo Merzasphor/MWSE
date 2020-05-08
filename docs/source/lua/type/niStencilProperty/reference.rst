@@ -1,7 +1,7 @@
 reference
 ====================================================================================================
 
-`number`_. The stencil reference value, which is compared against the stencil value at an individual pixel to determine the success of the stencil test.
+`number`_. The stencil reference.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

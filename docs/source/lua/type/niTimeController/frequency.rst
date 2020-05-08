@@ -1,8 +1,7 @@
 frequency
 ====================================================================================================
 
-`number`_. The animation controller's frequency value. The frequency is a scaling value to convert from update time units to keyframe time units, if necessary.
-    
+`number`_. The animation controller's frequency value.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

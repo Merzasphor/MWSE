@@ -1,7 +1,7 @@
 niColor
 ====================================================================================================
 
-AN object that represents floating-point RGB colors without alpha.
+An object that represents a RGB color.
 
 Properties
 ----------------------------------------------------------------------------------------------------
@@ -10,19 +10,19 @@ Properties
     The blue value of the color.
 
 `blue`_ (`number`_)
-    Long alias for the blue value of the color.
+    Alias for the blue value of the color.
 
 `g`_ (`number`_)
     The green value of the color.
 
 `green`_ (`number`_)
-    Long alias for the green value of the color.
+    Alias for the green value of the color.
 
 `r`_ (`number`_)
     The red value of the color.
 
 `red`_ (`number`_)
-    Long alias for the red value of the color.
+    Alias for the red value of the color.
 
 .. toctree::
     :hidden:

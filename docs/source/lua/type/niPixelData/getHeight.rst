@@ -1,7 +1,7 @@
 getHeight
 ====================================================================================================
 
-Returns the height of the mipmap level at the given index, where level 1 is the finest (largest) mipmap level.
+Returns the height of the mipmap level at the given index, where level 1 is the largest.
 
 Returns
 ----------------------------------------------------------------------------------------------------

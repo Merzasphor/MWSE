@@ -1,7 +1,7 @@
 niPixelData
 ====================================================================================================
 
-An object that represents two-dimensional arrays of pixel values, as well as pyramids of multiple mipmap levels, each of two-dimensional arrays of pixel values. The object also contains information representing the format of the pixels in the data arrays, as well as the dimensions of the arrays.
+Represents 2D arrays of pixel values, as well as pyramids of multiple mipmap levels, each of 2D arrays of pixel values. Also contains information representing the format of the pixels and dimensions of the arrays.
 
 Properties
 ----------------------------------------------------------------------------------------------------
@@ -41,10 +41,10 @@ Methods
     Creates a source texture from the current NiPixelData object.
 
 `getHeight`_ (`number`_)
-    Returns the height of the mipmap level at the given index, where level 1 is the finest (largest) mipmap level.
+    Returns the height of the mipmap level at the given index, where level 1 is the largest.
 
 `getWidth`_ (`number`_)
-    Returns the width of the mipmap level at the given index, where level 1 is the finest (largest) mipmap level.
+    Returns the width of the mipmap level at the given index, where level 1 is the largest.
 
 `isInstanceOfType`_ (`boolean`_)
     Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the tes3.niType table.

@@ -1,7 +1,7 @@
 applyMode
 ====================================================================================================
 
-`niTexturingPropertyApplyMode`_. The texture apply mode. The texture apply mode determines how the vertex colors (whose generation are controlled via the NiVertexColorProperty) are blended with the filtered texture color.
+`niTexturingPropertyApplyMode`_. The texture apply mode. The texture apply mode controls how the vertex colors are blended with the texture color.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

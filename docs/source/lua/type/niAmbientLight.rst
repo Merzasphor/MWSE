@@ -1,7 +1,7 @@
 niAmbientLight
 ====================================================================================================
 
-An object that represents a source of ambient light for a scene.  This object is the simplest type of light object, and has no location, direction, or attenuation.
+An object that represents an ambient light. This object is fairly simple, and has no location, direction, or attenuation.
 
 Properties
 ----------------------------------------------------------------------------------------------------

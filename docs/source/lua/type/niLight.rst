@@ -1,7 +1,7 @@
 niLight
 ====================================================================================================
 
-An abstract base class that represents light sources in a scene graph. This class includes the ambient, diffuse, and specular colors of a light, as well as its intensity.
+Base class that represents light sources in a scene graph. This includes the ambient, diffuse, and specular colors of a light, as well as its intensity.
 
 Properties
 ----------------------------------------------------------------------------------------------------

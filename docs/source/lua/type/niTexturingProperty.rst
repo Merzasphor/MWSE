@@ -1,13 +1,13 @@
 niTexturingProperty
 ====================================================================================================
 
-A rendering property that allows the application control over the methods used to filter the texture pixels and to blend the texture colors and vertex colors.
+A rendering property that controls the methods used to filter texture pixels, and blend texture colors and vertex colors.
 
 Properties
 ----------------------------------------------------------------------------------------------------
 
 `applyMode`_ (`niTexturingPropertyApplyMode`_)
-    The texture apply mode. The texture apply mode determines how the vertex colors (whose generation are controlled via the NiVertexColorProperty) are blended with the filtered texture color.
+    The texture apply mode. The texture apply mode controls how the vertex colors are blended with the texture color.
 
 `maps`_ (`niTexturingPropertyMapTArray`_)
     The maps of texture property. Accessible as an array.

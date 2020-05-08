@@ -1,7 +1,7 @@
 niFogProperty
 ====================================================================================================
 
-A rendering property that allows the application to enable, disable and control the appearance of fogging, also known as haze.
+A rendering property that controls the appearance of fogging.
 
 Properties
 ----------------------------------------------------------------------------------------------------
