@@ -62,6 +62,6 @@ namespace TES3 {
 	}
 
 	void MobController::checkPlayerDistance() {
-		MobController_0x24->checkPlayerDistance();
+		mobController_0x24->checkPlayerDistance();
 	}
 }

@@ -49,7 +49,7 @@ namespace mwse {
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Basic property binding.
-				usertypeDefinition.set("mobController_0x24", sol::readonly_property(&TES3::MobController::MobController_0x24));
+				usertypeDefinition.set("mobController_0x24", sol::readonly_property(&TES3::MobController::mobController_0x24));
 				usertypeDefinition.set("projectileController", sol::readonly_property(&TES3::MobController::projectileController));
 		
 				// Finish up our usertype.
