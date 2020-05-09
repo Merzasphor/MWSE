@@ -105,7 +105,7 @@ namespace TES3 {
 			char unknown_0x38;
 			char unknown_0x39;
 			char padding_0x3A[2];
-			short unknown_0x3C;
+			UI_ID unknown_0x3C;
 			FontColor fontColors[FontColorId::MAX_ID + 1];
 			int unknown_0x28C;
 			int unknown_0x290;
