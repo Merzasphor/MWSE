@@ -1099,15 +1099,20 @@ namespace mwse {
 		//
 		// Patch ui_reenableMenuDialogue function to exit menumode if there is no dialogue menu.
 		//
-		void __cdecl ReenableMenuDialogue()
-		{
-			TES3::UI::Element* dialog = TES3::UI::findMenu(TES3::UI::registerID("MenuDialog"));
-			if (dialog != nullptr)
-			{
+		void __cdecl ReenableMenuDialogue() {
+			TES3::UI::UI_ID dialogId = TES3::UI::registerID("MenuDialog");
+			TES3::UI::Element* dialog = TES3::UI::findMenu(dialogId);
+			if (dialog != nullptr) {
+				bool timestamp = dialog->updateReqTimestamp != 0;
+				dialog->timingUpdate();
+				TES3::WorldController::get()->menuController->menuInputController->textInputFocus = dialog;
+				TES3::WorldController::get()->menuController->unknown_0x3C = dialogId;
 				dialog->setVisible(true);
+				if (!timestamp) {
+					dialog->performLayout(true);
+				}
 			}
-			else
-			{
+			else {
 				TES3::UI::leaveMenuMode();
 			}
 		}
