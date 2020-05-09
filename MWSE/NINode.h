@@ -2,6 +2,7 @@
 
 #include "NIAVObject.h"
 #include "TES3Collections.h"
+#include "NIDefines.h"
 
 namespace NI {
 	struct Node : AVObject {
@@ -19,11 +20,12 @@ namespace NI {
 		void detachChild(AVObject ** out_detached, AVObject * child);
 		void detachChildAt(AVObject ** out_detached, unsigned int index);
 		void setChildAt(AVObject ** out_detached, unsigned int index, AVObject * child);
-
 		//
 		// Custom functions.
 		//
 
+		void attachEffect(DynamicEffect* effect);
+		void detachEffect(DynamicEffect* effect);
 		Pointer<DynamicEffect> getEffect(int type);
 
 	};

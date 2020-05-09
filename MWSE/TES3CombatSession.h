@@ -43,6 +43,8 @@ namespace TES3 {
 
 		float chooseAlchemyWithEffect(short id);
 
+		void changeEquipment(TES3::EquipmentStack* equipmentStack);
+
 		void determineNextAction();
 
 	};

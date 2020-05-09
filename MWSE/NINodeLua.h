@@ -33,6 +33,8 @@ namespace mwse {
 				self.detachChildAt(&returnedChild, index);
 				return makeLuaNiPointer(returnedChild);
 			});
+			usertypeDefinition.set("attachEffect", &NI::Node::attachEffect);
+			usertypeDefinition.set("detachEffect", &NI::Node::detachEffect);
 
 			// Functions that need their results wrapped.
 			usertypeDefinition.set("getEffect", [](NI::Node& self, int type) { return makeLuaNiPointer(self.getEffect(type)); });

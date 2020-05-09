@@ -35,6 +35,7 @@ namespace mwse {
 
 			// Basic function binding.
 			usertypeDefinition.set("selectAlchemyWithEffect", &TES3::CombatSession::chooseAlchemyWithEffect);
+			usertypeDefinition.set("changeEquipment", &TES3::CombatSession::changeEquipment);
 
 			// Finish up our usertype.
 			state.set_usertype("tes3combatSession", usertypeDefinition);

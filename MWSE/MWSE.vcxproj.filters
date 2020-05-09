@@ -1380,6 +1380,8 @@
     <ClInclude Include="TES3BirthsignLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
+    <ClInclude Include="NITextureEffectLua.h">
+      <Filter>Header Files\Lua\Bindings\NI</Filter>
     <ClInclude Include="TES3MobControllerLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
@@ -2987,6 +2989,14 @@
     <ClCompile Include="TES3BirthsignLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
+    <ClCompile Include="NITextureEffect.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NIDynamicEffectLua.cpp">
+      <Filter>Source Files\Lua\Bindings\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NiTextureEffectLua.cpp">
+      <Filter>Source Files\Lua\Bindings\NI</Filter>
     <ClCompile Include="TES3MobControllerLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>

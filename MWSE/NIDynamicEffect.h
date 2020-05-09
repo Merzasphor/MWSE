@@ -10,6 +10,9 @@ namespace NI {
 		unsigned int revisionId; // 0x9C
 		NodeLinkedList affectedNodes; // 0xA0
 
+		DynamicEffect();
+		~DynamicEffect();
+
 		//
 		// vTable wrappers.
 		//

@@ -12,6 +12,7 @@
 #include "NICollisionSwitch.h"
 #include "NIDefines.h"
 #include "NIDirectionalLight.h"
+#include "NIDynamicEffect.h"
 #include "NINode.h"
 #include "NIObject.h"
 #include "NIObjectNET.h"
@@ -20,6 +21,7 @@
 #include "NIRTTI.h"
 #include "NISpotLight.h"
 #include "NISwitchNode.h"
+#include "NITextureEffect.h"
 #include "NITriShape.h"
 
 #include "TES3Defines.h"
@@ -664,6 +666,8 @@ namespace mwse {
 				return sol::make_object(state, NI::Pointer<NI::CollisionSwitch>(reinterpret_cast<NI::CollisionSwitch*>(object)));
 			case NI::RTTIStaticPtr::NiDirectionalLight:
 				return sol::make_object(state, NI::Pointer<NI::DirectionalLight>(reinterpret_cast<NI::DirectionalLight*>(object)));
+			case NI::RTTIStaticPtr::NiDynamicEffect:
+				return sol::make_object(state, NI::Pointer<NI::DynamicEffect>(reinterpret_cast<NI::DynamicEffect*>(object)));
 			case NI::RTTIStaticPtr::NiFogProperty:
 				return sol::make_object(state, NI::Pointer<NI::FogProperty>(reinterpret_cast<NI::FogProperty*>(object)));
 			case NI::RTTIStaticPtr::NiMaterialProperty:
@@ -684,6 +688,8 @@ namespace mwse {
 				return sol::make_object(state, NI::Pointer<NI::StencilProperty>(reinterpret_cast<NI::StencilProperty*>(object)));
 			case NI::RTTIStaticPtr::NiSwitchNode:
 				return sol::make_object(state, NI::Pointer<NI::SwitchNode>(reinterpret_cast<NI::SwitchNode*>(object)));
+			case NI::RTTIStaticPtr::NiTextureEffect:
+				return sol::make_object(state, NI::Pointer<NI::TextureEffect>(reinterpret_cast<NI::TextureEffect*>(object)));
 			case NI::RTTIStaticPtr::NiTexturingProperty:
 				return sol::make_object(state, NI::Pointer<NI::TexturingProperty>(reinterpret_cast<NI::TexturingProperty*>(object)));
 			case NI::RTTIStaticPtr::NiTriShape:

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "NIDynamicEffect.h"
+
 #include "sol.hpp"
 
 #include "LuaUtil.h"
@@ -8,7 +10,7 @@
 
 namespace mwse {
 	namespace lua {
-		// Speed-optimized binding for NI::ObjectNET.
+		// Speed-optimized binding for NI::DynamicEffect.
 		template <typename T>
 		void setUserdataForNIDynamicEffect(sol::simple_usertype<T>& usertypeDefinition) {
 			setUserdataForNIAVObject(usertypeDefinition);
@@ -20,5 +22,7 @@ namespace mwse {
 			// Functions exposed as properties.
 			usertypeDefinition.set("type", sol::readonly_property(&NI::DynamicEffect::getType));
 		}
+
+		void bindNIDynamicEffect();
 	}
 }
