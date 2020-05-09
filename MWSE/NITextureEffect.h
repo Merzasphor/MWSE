@@ -3,6 +3,7 @@
 #include "NIDefines.h"
 
 #include "NIDynamicEffect.h"
+#include "NISourceTexture.h"
 #include "TES3Vectors.h"
 
 namespace NI {
@@ -14,7 +15,7 @@ namespace NI {
 		TES3::Vector3 unknnown_0xCC;
 		TES3::Matrix33 unknown_0xD8;
 		TES3::Vector3 unknnown_0xFC;
-		SourceTexture * sourceTexture; // 0x108
+		Pointer<SourceTexture> sourceTexture; // 0x108
 		int unknown_0x10C;
 		int unknown_0x110;
 		int unknown_0x114;
