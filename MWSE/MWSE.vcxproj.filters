@@ -1382,6 +1382,11 @@
     </ClInclude>
     <ClInclude Include="NITextureEffectLua.h">
       <Filter>Header Files\Lua\Bindings\NI</Filter>
+    <ClInclude Include="TES3MobControllerLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaDetectSneakEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2992,6 +2997,11 @@
     </ClCompile>
     <ClCompile Include="NiTextureEffectLua.cpp">
       <Filter>Source Files\Lua\Bindings\NI</Filter>
+    <ClCompile Include="TES3MobControllerLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaDetectSneakEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

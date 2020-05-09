@@ -24,6 +24,7 @@
     <ClInclude Include="LuaContainerClosedEvent.h" />
     <ClInclude Include="LuaConvertReferenceToItemEvent.h" />
     <ClInclude Include="LuaCrimeWitnessedEvent.h" />
+    <ClInclude Include="LuaDetectSneakEvent.h" />
     <ClInclude Include="LuaDisableableEvent.h" />
     <ClInclude Include="LuaDisableableEventManager.h" />
     <ClInclude Include="LuaBodyPartsUpdatedEvent.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="TES3LandTexture.h" />
     <ClInclude Include="TES3MobController.h" />
     <ClInclude Include="TES3AttachmentLua.h" />
+    <ClInclude Include="TES3MobControllerLua.h" />
     <ClInclude Include="TES3MobileSpellProjectile.h" />
     <ClInclude Include="TES3ScriptCompiler.h" />
     <ClInclude Include="TES3SoulGemData.h" />
@@ -448,6 +450,7 @@
     <ClCompile Include="LuaDamagedEvent.cpp" />
     <ClCompile Include="LuaDamageEvent.cpp" />
     <ClCompile Include="LuaDeathEvent.cpp" />
+    <ClCompile Include="LuaDetectSneakEvent.cpp" />
     <ClCompile Include="LuaDetermineActionEvent.cpp" />
     <ClCompile Include="LuaDeterminedActionEvent.cpp" />
     <ClCompile Include="LuaDisableableEventManager.cpp" />
@@ -603,6 +606,7 @@
     <ClCompile Include="TES3ItemData.cpp" />
     <ClCompile Include="TES3MagicEffect.cpp" />
     <ClCompile Include="TES3Misc.cpp" />
+    <ClCompile Include="TES3MobControllerLua.cpp" />
     <ClCompile Include="TES3MobileActorLua.cpp" />
     <ClCompile Include="TES3MobileSpellProjectile.cpp" />
     <ClCompile Include="TES3Quest.cpp" />
