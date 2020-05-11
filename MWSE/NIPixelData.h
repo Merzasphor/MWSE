@@ -4,6 +4,7 @@
 
 #include "NIObject.h"
 #include "NIPixelFormat.h"
+#include "NIPointer.h"
 
 namespace NI {
 	struct PixelData : Object {
@@ -17,7 +18,7 @@ namespace NI {
 		unsigned int bytesPerPixel; // 0x40 // Determined by format data.
 		unsigned int revisionID;
 
-		static PixelData* create(unsigned int width, unsigned int height);
+		static Pointer<PixelData> create(unsigned int width, unsigned int height, unsigned int mipMapLevels = 1);
 	};
 	static_assert(sizeof(PixelData) == 0x48, "NI::PixelData failed size validation");
 
