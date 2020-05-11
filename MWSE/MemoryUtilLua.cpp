@@ -441,9 +441,9 @@ namespace mwse {
 			convertFrom["int"] = [](int arg) { return *reinterpret_cast<DWORD*>(&arg); };
 			convertFrom["uint"] = [](unsigned int arg) { return arg; };
 			convertFrom["float"] = [](float arg) { return *reinterpret_cast<DWORD*>(&arg); };
-			convertFrom["tes3object"] = [](void * arg) { return (DWORD)arg; };
-			convertFrom["tes3mobileObject"] = [](void * arg) { return (DWORD)arg; };
-			convertFrom["tes3inventory"] = [](void * arg) { return (DWORD)arg; };
+			convertFrom["tes3object"] = [](TES3::BaseObject* arg) { return (DWORD)arg; };
+			convertFrom["tes3mobileObject"] = [](TES3::MobileObject* arg) { return (DWORD)arg; };
+			convertFrom["tes3inventory"] = [](TES3::Inventory* arg) { return (DWORD)arg; };
 			convertFrom["tes3equipmentStackIterator"] = [](TES3::Iterator<TES3::EquipmentStack>* arg) { return reinterpret_cast<DWORD>(arg); };
 			convertFrom["tes3equipmentStackIteratorNode"] = [](TES3::IteratorNode<TES3::EquipmentStack>* arg) { return reinterpret_cast<DWORD>(arg); };
 			memory["convertFrom"] = convertFrom;
