@@ -432,6 +432,8 @@ namespace mwse {
 			convertTo["tes3object"] = [](DWORD arg) { return makeLuaObject(reinterpret_cast<TES3::BaseObject*>(arg)); };
 			convertTo["tes3mobileObject"] = [](DWORD arg) { return makeLuaObject(reinterpret_cast<TES3::MobileObject*>(arg)); };
 			convertTo["tes3inventory"] = [](DWORD arg) { return reinterpret_cast<TES3::Inventory*>(arg); };
+			convertTo["tes3equipmentStackIterator"] = [](DWORD arg) { return reinterpret_cast<TES3::Iterator<TES3::EquipmentStack>*>(arg); };
+			convertTo["tes3equipmentStackIteratorNode"] = [](DWORD arg) { return reinterpret_cast<TES3::IteratorNode<TES3::EquipmentStack>*>(arg); };
 			memory["convertTo"] = convertTo;
 
 			auto convertFrom = memory.create();
@@ -442,6 +444,8 @@ namespace mwse {
 			convertFrom["tes3object"] = [](void * arg) { return (DWORD)arg; };
 			convertFrom["tes3mobileObject"] = [](void * arg) { return (DWORD)arg; };
 			convertFrom["tes3inventory"] = [](void * arg) { return (DWORD)arg; };
+			convertFrom["tes3equipmentStackIterator"] = [](TES3::Iterator<TES3::EquipmentStack>* arg) { return reinterpret_cast<DWORD>(arg); };
+			convertFrom["tes3equipmentStackIteratorNode"] = [](TES3::IteratorNode<TES3::EquipmentStack>* arg) { return reinterpret_cast<DWORD>(arg); };
 			memory["convertFrom"] = convertFrom;
 		}
 	}
