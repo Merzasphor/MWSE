@@ -1382,6 +1382,7 @@
     </ClInclude>
     <ClInclude Include="NITextureEffectLua.h">
       <Filter>Header Files\Lua\Bindings\NI</Filter>
+    </ClInclude>
     <ClInclude Include="TES3MobControllerLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
@@ -2997,6 +2998,7 @@
     </ClCompile>
     <ClCompile Include="NiTextureEffectLua.cpp">
       <Filter>Source Files\Lua\Bindings\NI</Filter>
+    </ClCompile>
     <ClCompile Include="TES3MobControllerLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
