@@ -2434,13 +2434,6 @@ namespace mwse {
 				}
 			}
 
-			// Force equipment updates.
-			if (getOptionalParam<bool>(params, "reevaluateEquipment", true)) {
-				if (mobile == nullptr) {
-					actor->reevaluateEquipment();
-				}
-			}
-
 			// Update body parts for creatures/NPCs that may have items unequipped.
 			if (mobile) {
 				reference->updateBipedParts();
@@ -2542,13 +2535,6 @@ namespace mwse {
 			if (getOptionalParam<bool>(params, "playSound", true)) {
 				if (mobile == playerMobile) {
 					worldController->playItemUpDownSound(item, false);
-				}
-			}
-
-			// Force equipment updates.
-			if (getOptionalParam<bool>(params, "reevaluateEquipment", true)) {
-				if (mobile == nullptr) {
-					actor->reevaluateEquipment();
 				}
 			}
 
@@ -2750,16 +2736,6 @@ namespace mwse {
 				}
 				else if (fromMobile == playerMobile) {
 					worldController->playItemUpDownSound(item, false);
-				}
-			}
-
-			// Force equipment updates.
-			if (getOptionalParam<bool>(params, "reevaluateEquipment", true)) {
-				if (fromMobile == nullptr) {
-					fromActor->reevaluateEquipment();
-				}
-				if (toMobile == nullptr) {
-					toActor->reevaluateEquipment();
 				}
 			}
 
