@@ -41,6 +41,8 @@ Functions
     tes3/findDialogue
     tes3/findGlobal
     tes3/findGMST
+    tes3/force1stPerson
+    tes3/force3rdPerson
     tes3/getActiveCells
     tes3/getAttachment
     tes3/getAttributeName
@@ -133,6 +135,7 @@ Functions
     tes3/skipAnimationFrame
     tes3/streamMusic
     tes3/tapKey
+    tes3/togglePOV
     tes3/transferItem
     tes3/triggerCrime
     tes3/unhammerKey

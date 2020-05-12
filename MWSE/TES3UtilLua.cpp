@@ -1950,6 +1950,44 @@ namespace mwse {
 			return true;
 		}
 
+		bool force1stPerson() {
+			auto worldController = TES3::WorldController::get();
+			if (worldController == nullptr) {
+				throw std::runtime_error("Function called before world controller is initialized.");
+			}
+
+			auto macp = worldController->getMobilePlayer();
+			if (macp == nullptr) {
+				throw std::runtime_error("Function called while mobile player is unavailable.");
+			}
+
+			auto animData = macp->animationData.asPlayer;
+			if (animData == nullptr) {
+				throw std::runtime_error("Function called while mobile player animation data is unavailable.");
+			}
+
+			return animData->force1stPerson();
+		}
+
+		bool force3rdPerson() {
+			auto worldController = TES3::WorldController::get();
+			if (worldController == nullptr) {
+				throw std::runtime_error("Function called before world controller is initialized.");
+			}
+
+			auto macp = worldController->getMobilePlayer();
+			if (macp == nullptr) {
+				throw std::runtime_error("Function called while mobile player is unavailable.");
+			}
+
+			auto animData = macp->animationData.asPlayer;
+			if (animData == nullptr) {
+				throw std::runtime_error("Function called while mobile player animation data is unavailable.");
+			}
+
+			return animData->force3rdPerson();
+		}
+
 		sol::object getActiveCells() {
 			auto dataHandler = TES3::DataHandler::get();
 			if (dataHandler == nullptr) {
@@ -2573,6 +2611,27 @@ namespace mwse {
 
 			reference->setObjectModified(true);
 			return fulfilledCount;
+		}
+
+		bool togglePOV() {
+			auto worldController = TES3::WorldController::get();
+			if (worldController == nullptr) {
+				throw std::runtime_error("Function called before world controller is initialized.");
+			}
+
+			auto macp = worldController->getMobilePlayer();
+			if (macp == nullptr) {
+				throw std::runtime_error("Function called while mobile player is unavailable.");
+			}
+
+			auto animData = macp->animationData.asPlayer;
+			if (animData == nullptr) {
+				throw std::runtime_error("Function called while mobile player animation data is unavailable.");
+			}
+
+			animData->togglePOV = true;
+
+			return animData->is3rdPerson;
 		}
 
 		int transferItem(sol::table params) {
@@ -3754,6 +3813,8 @@ namespace mwse {
 			tes3["findDialogue"] = findDialogue;
 			tes3["findGlobal"] = findGlobal;
 			tes3["findGMST"] = findGMST;
+			tes3["force1stPerson"] = force1stPerson;
+			tes3["force3rdPerson"] = force3rdPerson;
 			tes3["getActiveCells"] = getActiveCells;
 			tes3["getArchiveList"] = getArchiveList;
 			tes3["getCameraPosition"] = getCameraPosition;
@@ -3851,6 +3912,7 @@ namespace mwse {
 			tes3["skipAnimationFrame"] = skipAnimationFrame;
 			tes3["streamMusic"] = streamMusic;
 			tes3["tapKey"] = tapKey;
+			tes3["togglePOV"] = togglePOV;
 			tes3["transferItem"] = transferItem;
 			tes3["triggerCrime"] = triggerCrime;
 			tes3["undoTransform"] = undoTransform;
