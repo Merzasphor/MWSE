@@ -3,6 +3,8 @@ tes3.say
 
 Plays a sound file, with an optional alteration and subtitle.
 
+**Note**: MP3 voice files must conform to the MPEG Layer-3, 64 Kbps 44100 kHz, 16-bit mono specification.
+
 Parameters
 ----------------------------------------------------------------------------------------------------
 
@@ -11,7 +13,7 @@ Accepts parameters through a table with the given keys:
 reference (`tes3reference`_, `tes3mobileActor`_, `string`_)
     The reference to make say something.
 
-path (`string`_)
+soundPath (`string`_)
     A path to a valid sound file.
 
 pitch (`number`_)
