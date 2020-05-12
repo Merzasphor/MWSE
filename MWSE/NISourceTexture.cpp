@@ -11,6 +11,10 @@ namespace NI {
 		return NI_SourceTexture_createFromPixelData(pixelData, formatPrefs);
 	}
 
+	void SourceTexture::loadPixelDataFromFile() {
+		vTable.asSourceTexture->loadPixelDataFromFile(this);
+	}
+
 	void SourceTexture::clearPixelData() {
 		vTable.asSourceTexture->clearPixelData(this);
 	}

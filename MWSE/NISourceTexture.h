@@ -4,7 +4,7 @@
 
 namespace NI {
 	struct SourceTexture_vTable : Texture_vTable {
-		void * loadPixelDataFromFile; // 0x34
+		void(__thiscall* loadPixelDataFromFile)(SourceTexture*); // 0x34
 		void(__thiscall* clearPixelData)(SourceTexture*); // 0x38
 	};
 	static_assert(sizeof(SourceTexture_vTable) == 0x3C, "NI::SourceTexture's vtable failed size validation");
@@ -26,6 +26,7 @@ namespace NI {
 		// Virtual table functions.
 		//
 
+		void loadPixelDataFromFile();
 		void clearPixelData();
 
 	};

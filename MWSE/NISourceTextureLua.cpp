@@ -49,6 +49,7 @@ namespace mwse {
 
 				// Basic function binding.
 				usertypeDefinition.set("clearPixelData", &NI::SourceTexture::clearPixelData);
+				usertypeDefinition.set("loadPixelDataFromFile", &NI::SourceTexture::loadPixelDataFromFile);
 
 				// Functions bound as properties.
 				usertypeDefinition.set("fileName", sol::readonly_property(&NI::SourceTexture::fileName));
