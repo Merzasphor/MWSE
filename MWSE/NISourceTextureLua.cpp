@@ -47,6 +47,9 @@ namespace mwse {
 				usertypeDefinition.set("isStatic", &NI::SourceTexture::isStatic);
 				usertypeDefinition.set("pixelData", &NI::SourceTexture::pixelData);
 
+				// Basic function binding.
+				usertypeDefinition.set("clearPixelData", &NI::SourceTexture::clearPixelData);
+
 				// Functions bound as properties.
 				usertypeDefinition.set("fileName", sol::readonly_property(&NI::SourceTexture::fileName));
 				usertypeDefinition.set("height", sol::readonly_property(&NI::SourceTexture::getHeight));

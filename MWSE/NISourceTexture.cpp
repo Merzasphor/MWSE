@@ -10,4 +10,8 @@ namespace NI {
 	Pointer<SourceTexture> SourceTexture::createFromPixelData(PixelData* pixelData, SourceTexture::FormatPrefs * formatPrefs) {
 		return NI_SourceTexture_createFromPixelData(pixelData, formatPrefs);
 	}
+
+	void SourceTexture::clearPixelData() {
+		vTable.asSourceTexture->clearPixelData(this);
+	}
 }
