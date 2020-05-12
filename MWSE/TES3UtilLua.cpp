@@ -2160,6 +2160,9 @@ namespace mwse {
 				throw std::invalid_argument("Invalid 'object' parameter provided.");
 			}
 
+			// Make sure we have a base object.
+			object = static_cast<TES3::PhysicalObject*>(object->getBaseObject());
+
 			// Get the position.
 			auto maybePosition = getOptionalParamVector3(params, "position");
 			if (!maybePosition) {
