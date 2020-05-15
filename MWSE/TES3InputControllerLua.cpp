@@ -68,6 +68,9 @@ namespace mwse {
 				usertypeDefinition.set("isKeyDown", &TES3::InputController::isKeyDown);
 				usertypeDefinition.set("isKeyPressedThisFrame", &TES3::InputController::isKeyPressedThisFrame);
 				usertypeDefinition.set("isKeyReleasedThisFrame", &TES3::InputController::isKeyReleasedThisFrame);
+				usertypeDefinition.set("isMouseButtonDown", &TES3::InputController::isMouseButtonDown);
+				usertypeDefinition.set("isMouseButtonPressedThisFrame", &TES3::InputController::isMouseButtonPressedThisFrame);
+				usertypeDefinition.set("isMouseButtonReleasedThisFrame", &TES3::InputController::isMouseButtonReleasedThisFrame);
 
 				// Finish up our usertype.
 				state.set_usertype("tes3inputController", usertypeDefinition);

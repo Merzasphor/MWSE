@@ -53,6 +53,15 @@ Methods
 `isKeyReleasedThisFrame`_ (`boolean`_)
     Checks to see if a given scan code is released, and was pressed last frame.
 
+`isMouseButtonDown`_ (`boolean`_)
+    Returns the mouse down state for a given mouse button.
+
+`isMouseButtonPressedThisFrame`_ (`boolean`_)
+    Returns true if a mouse button was up last frame, and down this frame.
+
+`isMouseButtonReleasedThisFrame`_ (`boolean`_)
+    Returns true if a mouse button was down last frame, and up this frame.
+
 `keybindTest`_ (`boolean`_)
     Performs a test for a given keybind, and optionally a transition state.
 
@@ -62,11 +71,17 @@ Methods
     tes3inputController/isKeyDown
     tes3inputController/isKeyPressedThisFrame
     tes3inputController/isKeyReleasedThisFrame
+    tes3inputController/isMouseButtonDown
+    tes3inputController/isMouseButtonPressedThisFrame
+    tes3inputController/isMouseButtonReleasedThisFrame
     tes3inputController/keybindTest
 
 .. _`isKeyDown`: tes3inputController/isKeyDown.html
 .. _`isKeyPressedThisFrame`: tes3inputController/isKeyPressedThisFrame.html
 .. _`isKeyReleasedThisFrame`: tes3inputController/isKeyReleasedThisFrame.html
+.. _`isMouseButtonDown`: tes3inputController/isMouseButtonDown.html
+.. _`isMouseButtonPressedThisFrame`: tes3inputController/isMouseButtonPressedThisFrame.html
+.. _`isMouseButtonReleasedThisFrame`: tes3inputController/isMouseButtonReleasedThisFrame.html
 .. _`keybindTest`: tes3inputController/keybindTest.html
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
