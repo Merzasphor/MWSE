@@ -3235,6 +3235,24 @@ namespace mwse {
 			}
 		}
 
+		sol::object findClosestExteriorReferenceOfObject(sol::table params) {
+			TES3::PhysicalObject* object = getOptionalParamObject<TES3::PhysicalObject>(params, "object");
+			if (object == nullptr) {
+				throw std::invalid_argument("Invalid 'object' parameter provided.");
+			}
+
+			sol::optional<TES3::Vector3> position = getOptionalParamVector3(params, "position");
+			if (!position) {
+				throw std::invalid_argument("Invalid 'position' parameter provided.");
+			}
+
+			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+			if (dataHandler) {
+				return makeLuaObject(dataHandler->nonDynamicData->findClosestExteriorReferenceOfObject(object, &position.value()));
+			}
+			return sol::nil;
+		}
+
 		sol::object findDialogue(sol::table params) {
 			int type = getOptionalParam<int>(params, "type", -1);
 			int page = getOptionalParam<int>(params, "page", -1);
@@ -3810,6 +3828,7 @@ namespace mwse {
 			tes3["fadeIn"] = fadeIn;
 			tes3["fadeOut"] = fadeOut;
 			tes3["fadeTo"] = fadeTo;
+			tes3["findClosestExteriorReferenceOfObject"] = findClosestExteriorReferenceOfObject;
 			tes3["findDialogue"] = findDialogue;
 			tes3["findGlobal"] = findGlobal;
 			tes3["findGMST"] = findGMST;
