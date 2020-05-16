@@ -5,7 +5,7 @@ return {
 		name = "params",
 		type = "table",
 		tableParams = {
-			{ name = "object", type = "tes3physicalObject", description = "The object to search for." },
+			{ name = "object", type = "tes3physicalObject|string", description = "The object to search for." },
 			{ name = "position", optional = true, type = "tes3vector3", description = "The position to search from. Must be an exterior position. Defaults to the last exterior position of the player if no position is provided." },
 		},
 	}},

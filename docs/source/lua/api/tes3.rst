@@ -38,6 +38,7 @@ Functions
     tes3/fadeIn
     tes3/fadeOut
     tes3/fadeTo
+    tes3/findClosestExteriorReferenceOfObject
     tes3/findDialogue
     tes3/findGlobal
     tes3/findGMST
@@ -64,6 +65,7 @@ Functions
     tes3/getJournalIndex
     tes3/getLanguage
     tes3/getLanguageCode
+    tes3/getLastExteriorPosition
     tes3/getLocked
     tes3/getLockLevel
     tes3/getMagicEffect
