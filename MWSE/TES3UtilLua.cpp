@@ -2093,6 +2093,10 @@ namespace mwse {
 			return reinterpret_cast<int(__stdcall*)()>(0x4678F0)();
 		}
 
+		TES3::Vector3 getLastExteriorPosition() {
+			return TES3::DataHandler::get()->getLastExteriorPosition();
+		}
+
 		sol::optional<std::string> getLanguage() {
 			switch (getLanguageCode()) {
 			case 0:
@@ -3236,6 +3240,8 @@ namespace mwse {
 		}
 
 		sol::object findClosestExteriorReferenceOfObject(sol::table params) {
+			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+
 			TES3::PhysicalObject* object = getOptionalParamObject<TES3::PhysicalObject>(params, "object");
 			if (object == nullptr) {
 				throw std::invalid_argument("Invalid 'object' parameter provided.");
@@ -3243,10 +3249,9 @@ namespace mwse {
 
 			sol::optional<TES3::Vector3> position = getOptionalParamVector3(params, "position");
 			if (!position) {
-				throw std::invalid_argument("Invalid 'position' parameter provided.");
+				position = dataHandler->getLastExteriorPosition();
 			}
 
-			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
 			if (dataHandler) {
 				return makeLuaObject(dataHandler->nonDynamicData->findClosestExteriorReferenceOfObject(object, &position.value()));
 			}
@@ -3859,6 +3864,7 @@ namespace mwse {
 			tes3["getJournalIndex"] = getJournalIndex;
 			tes3["getLanguage"] = getLanguage;
 			tes3["getLanguageCode"] = getLanguageCode;
+			tes3["getLastExteriorPosition"] = getLastExteriorPosition;
 			tes3["getLocked"] = getLocked;
 			tes3["getLockLevel"] = getLockLevel;
 			tes3["getMagicEffect"] = getMagicEffect;

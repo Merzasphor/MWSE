@@ -255,6 +255,16 @@ namespace TES3 {
 		return *reinterpret_cast<TES3::DataHandler**>(0x7C67E0);
 	}
 
+	Vector3 DataHandler::getLastExteriorPosition() {
+		if (this->currentInteriorCell && this->lastExteriorCellPositionX != INT_MAX && this->lastExteriorCellPositionX != INT_MAX) {
+			return Vector3(this->lastExteriorCellPositionX * 8192, this->lastExteriorCellPositionY * 8192, 0);
+		}
+		else {
+			auto macp = TES3::WorldController::get()->getMobilePlayer();
+			return macp->position;
+		}
+	}
+
 	void DataHandler::addSound(Sound* sound, Reference* reference, int playbackFlags, unsigned char volume, float pitch, bool isVoiceover, int unknown) {
 		reinterpret_cast<void(__thiscall *)(DataHandler*, Sound*, Reference*, int, unsigned char, float, int, int)>(TES3_DataHandler_addSound)(this, sound, reference, playbackFlags, volume, pitch, isVoiceover, unknown);
 	}
