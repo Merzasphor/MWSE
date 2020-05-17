@@ -118,6 +118,7 @@ namespace TES3 {
 		Dialogue* findDialogue(const char*);
 		Sound* findSound(const char*);
 		Faction* findFaction(const char*);
+		Reference* findClosestExteriorReferenceOfObject(PhysicalObject* object, Vector3* position, bool searchForExteriorDoorMarker = false, int ignored = -1);
 		bool addNewObject(BaseObject*);
 		void deleteObject(BaseObject*);
 		void respawnContainers();
@@ -204,8 +205,8 @@ namespace TES3 {
 		Cell * currentInteriorCell; // 0xAC
 		Cell ** interiorCellBuffer; // 0xB0
 		Cell ** exteriorCellBuffer; // 0xB4
-		int unknown_0xB8;
-		int unknown_0xBC;
+		int lastExteriorCellPositionX; // 0xB8
+		int lastExteriorCellPositionY; // 0xBC
 		Iterator<Reference> collisionReferenceGrid[48][48]; // 0xC0
 		int collision_0xB4C0;
 		int collision_0xB4C4;
@@ -288,6 +289,7 @@ namespace TES3 {
 		//
 		// Other related this-call functions.
 		//
+		Vector3 getLastExteriorPosition();
 
 		void addSound(Sound* sound, Reference* reference = nullptr, int playbackFlags = 0, unsigned char volume = 250, float pitch = 1.0f, bool isVoiceover = false, int unknown = 0);
 		Sound* addSound(const char* soundId, Reference* reference = 0, int playbackFlags = 0, unsigned char volume = 250, float pitch = 1.0f, int unknown = 0);

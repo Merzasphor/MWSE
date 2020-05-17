@@ -204,6 +204,11 @@ namespace TES3 {
 		return TES3_NonDynamicData_findFaction(this, id);
 	}
 
+	const auto TES3_NonDynamicData_findClosestExteriorReferenceOfObject = reinterpret_cast<Reference * (__thiscall*)(NonDynamicData*, PhysicalObject*, Vector3*, bool, int)>(0x4B96F0);
+	Reference* NonDynamicData::findClosestExteriorReferenceOfObject(PhysicalObject* object, Vector3* position, bool searchForExteriorDoorMarker, int ignored){
+		return TES3_NonDynamicData_findClosestExteriorReferenceOfObject(this, object, position, searchForExteriorDoorMarker, ignored);
+	}
+
 	bool NonDynamicData::addNewObject(BaseObject* object) {
 		return reinterpret_cast<signed char(__thiscall *)(NonDynamicData*, BaseObject*)>(TES3_NonDynamicData_addNewObject)(this, object);
 	}
@@ -247,6 +252,16 @@ namespace TES3 {
 
 	DataHandler * DataHandler::get() {
 		return *reinterpret_cast<TES3::DataHandler**>(0x7C67E0);
+	}
+
+	Vector3 DataHandler::getLastExteriorPosition() {
+		if (this->currentInteriorCell && this->lastExteriorCellPositionX != INT_MAX && this->lastExteriorCellPositionX != INT_MAX) {
+			return Vector3(this->lastExteriorCellPositionX * 8192, this->lastExteriorCellPositionY * 8192, 0);
+		}
+		else {
+			auto macp = TES3::WorldController::get()->getMobilePlayer();
+			return macp->position;
+		}
 	}
 
 	void DataHandler::addSound(Sound* sound, Reference* reference, int playbackFlags, unsigned char volume, float pitch, bool isVoiceover, int unknown) {
