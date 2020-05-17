@@ -205,9 +205,8 @@ namespace TES3 {
 	}
 
 	const auto TES3_NonDynamicData_findClosestExteriorReferenceOfObject = reinterpret_cast<Reference * (__thiscall*)(NonDynamicData*, PhysicalObject*, Vector3*, bool, int)>(0x4B96F0);
-	Reference* NonDynamicData::findClosestExteriorReferenceOfObject(PhysicalObject* object, Vector3* position, bool isRecursiveCall, int ignored)
-	{
-		return TES3_NonDynamicData_findClosestExteriorReferenceOfObject(this, object, position, isRecursiveCall, ignored);
+	Reference* NonDynamicData::findClosestExteriorReferenceOfObject(PhysicalObject* object, Vector3* position, bool searchForExteriorDoorMarker, int ignored){
+		return TES3_NonDynamicData_findClosestExteriorReferenceOfObject(this, object, position, searchForExteriorDoorMarker, ignored);
 	}
 
 	bool NonDynamicData::addNewObject(BaseObject* object) {

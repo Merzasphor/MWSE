@@ -118,7 +118,7 @@ namespace TES3 {
 		Dialogue* findDialogue(const char*);
 		Sound* findSound(const char*);
 		Faction* findFaction(const char*);
-		Reference* findClosestExteriorReferenceOfObject(PhysicalObject* object, Vector3* position, bool isRecursiveCall = 0, int ignored = -1);
+		Reference* findClosestExteriorReferenceOfObject(PhysicalObject* object, Vector3* position, bool searchForExteriorDoorMarker = false, int ignored = -1);
 		bool addNewObject(BaseObject*);
 		void deleteObject(BaseObject*);
 		void respawnContainers();
