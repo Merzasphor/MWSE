@@ -71,11 +71,6 @@ namespace TES3 {
 	}
 
 	EquipmentStack* Actor::unequipItem(Object* item, bool deleteStack, MobileActor* mobileActor, bool updateGUI, ItemData* itemData) {
-		// Unequipping items from corpses causes crashes and invalid script on item errors.
-		// TODO: Do we need a similar check on equipItem()?
-		if (mobileActor && mobileActor->isDead()) {
-			return nullptr;
-		}
 		EquipmentStack* result = TES3_Actor_unequipItem(this, item, deleteStack, mobileActor, updateGUI, itemData);
 
 		// Trigger or queue our event if there's an attached mobile actor.
