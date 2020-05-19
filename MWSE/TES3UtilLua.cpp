@@ -2744,8 +2744,8 @@ namespace mwse {
 						toActor->inventory.addItem(toMobile, item, amountToTransfer, false, nullptr);
 						fromActor->inventory.removeItemWithData(fromMobile, item, nullptr, amountToTransfer, false);
 
-						// Check for ammunition, as unlike other equipment, it does not generate itemData when equipped.
-						if (!fromIsContainer && item->objectType == TES3::ObjectType::Ammo) {
+						// Check for ammunition and thrown weapons, as unlike other equipment, they do not generate itemData when equipped.
+						if (!fromIsContainer && (item->objectType == TES3::ObjectType::Ammo || item->objectType == TES3::ObjectType::Weapon)) {
 							fromActor->unequipItem(item, true, fromMobile, false, nullptr);
 						}
 
