@@ -2017,7 +2017,6 @@ namespace mwse {
 		}
 
 		bool positionCell(sol::table params) {
-			LuaManager::getInstance().setInPositionCell(true);
 			auto worldController = TES3::WorldController::get();
 			auto macp = worldController->getMobilePlayer();
 			auto playerRef = macp->reference;
@@ -2087,7 +2086,6 @@ namespace mwse {
 			reference->setObjectModified(true);
 			cell->setObjectModified(true);
 
-			LuaManager::getInstance().setInPositionCell(false);
 			return true;
 		}
 

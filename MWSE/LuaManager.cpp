@@ -2668,13 +2668,6 @@ namespace mwse {
 			return result;
 		}
 
-		// Override DontThreadLoad setting in Morrowind.ini
-		// positionCell() will deadlock sometimes if DontThreadLoad=0. This only seems to happen if the call to load
-		// that setting happens while positionCell() is still executing. We set it to 1 in that case to avoid deadlock.
-		UINT WINAPI	OverrideDontThreadLoad(LPCSTR lpAppName, LPCSTR lpKeyName, INT nDefault, LPCSTR lpFileName) {
-			return LuaManager::getInstance().getInPositionCell() ? 1 : GetPrivateProfileIntA(lpAppName, lpKeyName, nDefault, lpFileName);
-		}
-		
 		//
 		//
 		//
@@ -3737,12 +3730,6 @@ namespace mwse {
 
 			// Raise event for barter attempts.
 			genCallEnforced(0x5A70CF, 0x5A66C0, reinterpret_cast<DWORD>(GameBarterOffer));
-
-			// Attempt to avoid deadlock in positionCell
-			genCallUnprotected(0x48539C, reinterpret_cast<DWORD>(OverrideDontThreadLoad), 0x6);
-			genCallUnprotected(0x4869DB, reinterpret_cast<DWORD>(OverrideDontThreadLoad), 0x6);
-			genCallUnprotected(0x48F489, reinterpret_cast<DWORD>(OverrideDontThreadLoad), 0x6);
-			genCallUnprotected(0x4904D0, reinterpret_cast<DWORD>(OverrideDontThreadLoad), 0x6);
 
 			// Look for main.lua scripts in the usual directories.
 			executeMainModScripts("Data Files\\MWSE\\core");
