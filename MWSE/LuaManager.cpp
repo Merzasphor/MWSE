@@ -192,6 +192,7 @@
 #include "LuaMusicSelectTrackEvent.h"
 #include "LuaObjectInvalidatedEvent.h"
 #include "LuaPotionBrewedEvent.h"
+#include "LuaPreLevelUpEvent.h"
 #include "LuaProjectileExpireEvent.h"
 #include "LuaRestInterruptEvent.h"
 #include "LuaSimulateEvent.h"
@@ -1121,6 +1122,19 @@ namespace mwse {
 			player->exerciseSkill(skill, progress);
 		}
 
+		//
+		// Pre level up event.
+		//
+
+		void __stdcall OnPreLevelUp() {
+			// Launch our event.
+			if (event::PreLevelUpEvent::getEventEnabled()) {
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PreLevelUpEvent());
+			}
+			// Call the original function we overwrote to call this one.
+			reinterpret_cast<void(__stdcall*)()>(0x5DA050)();
+		}
+		
 		//
 		// Level up event.
 		//
@@ -3045,6 +3059,10 @@ namespace mwse {
 
 			// Event: Brew potion.
 			genCallEnforced(0x59D2A9, 0x6313E0, reinterpret_cast<DWORD>(OnBrewPotion));
+
+			// Event: Player is about to level.
+			genCallEnforced(0x5DA85A, 0x5DA050, reinterpret_cast<DWORD>(OnPreLevelUp));
+			genCallEnforced(0x634EA9, 0x5DA050, reinterpret_cast<DWORD>(OnPreLevelUp));
 
 			// Event: Player leveled.
 			genCallEnforced(0x5DA620, 0x626220, reinterpret_cast<DWORD>(OnLevelUp));

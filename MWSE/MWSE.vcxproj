@@ -100,6 +100,7 @@
     <ClInclude Include="LuaObjectInvalidatedEvent.h" />
     <ClInclude Include="LuaPickLockEvent.h" />
     <ClInclude Include="LuaPotionBrewedEvent.h" />
+    <ClInclude Include="LuaPreLevelUpEvent.h" />
     <ClInclude Include="LuaProjectileExpireEvent.h" />
     <ClInclude Include="LuaReferenceSceneNodeCreatedEvent.h" />
     <ClInclude Include="LuaRestInterruptEvent.h" />
@@ -504,6 +505,7 @@
     <ClCompile Include="LuaObjectInvalidatedEvent.cpp" />
     <ClCompile Include="LuaPickLockEvent.cpp" />
     <ClCompile Include="LuaPotionBrewedEvent.cpp" />
+    <ClCompile Include="LuaPreLevelUpEvent.cpp" />
     <ClCompile Include="LuaProjectileExpireEvent.cpp" />
     <ClCompile Include="LuaReferenceSceneNodeCreatedEvent.cpp" />
     <ClCompile Include="LuaRestInterruptEvent.cpp" />
