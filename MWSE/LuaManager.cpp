@@ -1126,13 +1126,11 @@ namespace mwse {
 		// Pre level up event.
 		//
 
-		void __stdcall OnPreLevelUp() {
-			// Launch our event.
+		void __cdecl OnPreLevelUp(TES3::UI::Element* e) {
 			if (event::PreLevelUpEvent::getEventEnabled()) {
 				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PreLevelUpEvent());
 			}
-			// Call the original function we overwrote to call this one.
-			reinterpret_cast<void(__stdcall*)()>(0x5DA050)();
+			reinterpret_cast<void(__cdecl*)(TES3::UI::Element*)>(0x5D90A0)(e);
 		}
 		
 		//
@@ -3061,8 +3059,7 @@ namespace mwse {
 			genCallEnforced(0x59D2A9, 0x6313E0, reinterpret_cast<DWORD>(OnBrewPotion));
 
 			// Event: Player is about to level.
-			genCallEnforced(0x5DA85A, 0x5DA050, reinterpret_cast<DWORD>(OnPreLevelUp));
-			genCallEnforced(0x634EA9, 0x5DA050, reinterpret_cast<DWORD>(OnPreLevelUp));
+			genCallEnforced(0x5DA091, 0x5D90A0, reinterpret_cast<DWORD>(OnPreLevelUp));
 
 			// Event: Player leveled.
 			genCallEnforced(0x5DA620, 0x626220, reinterpret_cast<DWORD>(OnLevelUp));
