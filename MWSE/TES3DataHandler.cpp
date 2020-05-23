@@ -43,6 +43,8 @@
 namespace TES3 {
 
 	Cell* DataHandler::previousVisitedCell = nullptr;
+	bool DataHandler::dontThreadLoad = false;
+	bool DataHandler::suppressThreadLoad = false;
 
 	//
 	// MeshData

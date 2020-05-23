@@ -90,9 +90,6 @@ namespace mwse {
 			void claimLuaThread();
 			void releaseLuaThread();
 
-			bool getInPositionCell() const { return inPositionCell; }
-			void setInPositionCell(bool b) { inPositionCell = b; }
-
 		private:
 			LuaManager();
 
@@ -134,9 +131,6 @@ namespace mwse {
 			std::shared_ptr<TimerController> gameTimers;
 			std::shared_ptr<TimerController> simulateTimers;
 			std::shared_ptr<TimerController> realTimers;
-
-			// Track whether positionCell() is executing.
-			bool inPositionCell = false;
 		};
 	}
 }

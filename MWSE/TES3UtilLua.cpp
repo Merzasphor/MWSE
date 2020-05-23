@@ -1946,7 +1946,10 @@ namespace mwse {
 				source = TES3::CompilerSource::Dialogue;
 			}
 
+			TES3::DataHandler::suppressThreadLoad = true;
 			script->doCommand(compiler, command, source, reference, variables, dialogueInfo, dialogue);
+			TES3::DataHandler::suppressThreadLoad = false;
+
 			return true;
 		}
 
@@ -2017,7 +2020,6 @@ namespace mwse {
 		}
 
 		bool positionCell(sol::table params) {
-			LuaManager::getInstance().setInPositionCell(true);
 			auto worldController = TES3::WorldController::get();
 			auto macp = worldController->getMobilePlayer();
 			auto playerRef = macp->reference;
@@ -2065,13 +2067,17 @@ namespace mwse {
 
 				sol::optional<bool> teleportCompanions = params["teleportCompanions"];
 				if (teleportCompanions.value_or(true) && macp->listFriendlyActors.size > 0) {
+					TES3::DataHandler::suppressThreadLoad = true;
 					const auto TES3_cellChangeWithCompanions = reinterpret_cast<void(__cdecl*)(TES3::Vector3, TES3::Vector3, TES3::Cell*)>(0x45C9B0);
 					TES3_cellChangeWithCompanions(position.value(), orientation.value(), cell);
+					TES3::DataHandler::suppressThreadLoad = false;
 				}
 				else {
+					TES3::DataHandler::suppressThreadLoad = true;
 					const auto TES3_cellChange = reinterpret_cast<void(__cdecl*)(TES3::Vector3, TES3::Vector3, TES3::Cell*, int)>(0x45CEF0);
 					sol::optional<bool> flag = params["flag"];
 					TES3_cellChange(position.value(), orientation.value(), cell, flag.value_or(true));
+					TES3::DataHandler::suppressThreadLoad = false;
 				}
 
 				if (suppressFader) {
@@ -2079,15 +2085,16 @@ namespace mwse {
 				}
 			}
 			else {
+				TES3::DataHandler::suppressThreadLoad = true;
 				const auto TES3_relocateReference = reinterpret_cast<void(__cdecl*)(TES3::Reference*, TES3::Cell*, TES3::Vector3*, float)>(0x50EDD0);
 				TES3_relocateReference(reference, cell, &position.value(), orientation.value().z);
+				TES3::DataHandler::suppressThreadLoad = false;
 			}
 
 			// Ensure the reference and cell is flagged as modified.
 			reference->setObjectModified(true);
 			cell->setObjectModified(true);
 
-			LuaManager::getInstance().setInPositionCell(false);
 			return true;
 		}
 

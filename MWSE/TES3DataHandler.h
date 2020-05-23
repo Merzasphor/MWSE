@@ -282,6 +282,8 @@ namespace TES3 {
 		//
 
 		static Cell* previousVisitedCell;
+		static bool dontThreadLoad;
+		static bool suppressThreadLoad;
 
 		// Get singleton.
 		_declspec (dllexport) static DataHandler * get();
@@ -289,6 +291,7 @@ namespace TES3 {
 		//
 		// Other related this-call functions.
 		//
+
 		Vector3 getLastExteriorPosition();
 
 		void addSound(Sound* sound, Reference* reference = nullptr, int playbackFlags = 0, unsigned char volume = 250, float pitch = 1.0f, bool isVoiceover = false, int unknown = 0);

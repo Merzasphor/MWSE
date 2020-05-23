@@ -107,15 +107,17 @@ namespace mwse {
 				usertypeDefinition.set("currentAmbientWaterSound", &TES3::DataHandler::currentAmbientWaterSound);
 				usertypeDefinition.set("currentCell", sol::readonly_property(&TES3::DataHandler::currentCell));
 				usertypeDefinition.set("currentInteriorCell", sol::readonly_property(&TES3::DataHandler::currentInteriorCell));
+				usertypeDefinition.set("dontThreadLoad", &TES3::DataHandler::dontThreadLoad);
 				usertypeDefinition.set("lastExteriorCell", sol::readonly_property(&TES3::DataHandler::lastExteriorCell));
 				usertypeDefinition.set("mainThread", sol::readonly_property(&TES3::DataHandler::mainThread));
 				usertypeDefinition.set("mainThreadId", sol::readonly_property(&TES3::DataHandler::mainThreadID));
 				usertypeDefinition.set("nonDynamicData", sol::readonly_property(&TES3::DataHandler::nonDynamicData));
+				usertypeDefinition.set("suppressThreadLoad", &TES3::DataHandler::suppressThreadLoad);
 				usertypeDefinition.set("threadSleepTime", sol::readonly_property(&TES3::DataHandler::threadSleepTime));
 				usertypeDefinition.set("useCellTransitionFader", &TES3::DataHandler::useCellTransitionFader);
+				usertypeDefinition.set("worldLandscapeRoot", sol::readonly_property(&TES3::DataHandler::worldLandscapeRoot));
 				usertypeDefinition.set("worldObjectRoot", sol::readonly_property(&TES3::DataHandler::worldObjectRoot));
 				usertypeDefinition.set("worldPickObjectRoot", sol::readonly_property(&TES3::DataHandler::worldPickObjectRoot));
-				usertypeDefinition.set("worldLandscapeRoot", sol::readonly_property(&TES3::DataHandler::worldLandscapeRoot));
 
 				// Indirect bindings to unions and arrays.
 				usertypeDefinition.set("exteriorCells", sol::readonly_property([](TES3::DataHandler& self) { return std::ref(self.exteriorCellData); }));
