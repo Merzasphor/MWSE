@@ -3809,6 +3809,16 @@ namespace mwse {
 			}
 		}
 
+		// Legacy tes3.getOwner.
+		sol::object getOwnerLegacy(TES3::Reference* reference) {
+			auto itemData = reference->getAttachedItemData();
+			if (itemData == nullptr) {
+				return sol::nil;
+			}
+
+			return makeLuaObject(itemData->owner);
+		}
+
 		std::tuple<sol::object, sol::object> getOwner(sol::table params) {
 			// Get the reference to get ownership for.
 			TES3::Reference* reference = getOptionalParamReference(params, "reference");
@@ -3949,7 +3959,7 @@ namespace mwse {
 			tes3["getMobilePlayer"] = getMobilePlayer;
 			tes3["getModList"] = getModList;
 			tes3["getObject"] = getObject;
-			tes3["getOwner"] = getOwner;
+			tes3["getOwner"] = sol::overload(getOwnerLegacy, getOwner);
 			tes3["getPlayerCell"] = getPlayerCell;
 			tes3["getPlayerEyePosition"] = getPlayerEyePosition;
 			tes3["getPlayerEyeVector"] = getPlayerEyeVector;
