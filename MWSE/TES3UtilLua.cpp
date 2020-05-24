@@ -3809,6 +3809,75 @@ namespace mwse {
 			}
 		}
 
+		std::tuple<sol::object, sol::object> getOwner(sol::table params) {
+			// Get the reference to get ownership for.
+			TES3::Reference* reference = getOptionalParamReference(params, "reference");
+			if (reference == nullptr) {
+				throw std::invalid_argument("Invalid 'reference' parameter provided.");
+			}
+
+			auto itemData = reference->getAttachedItemData();
+			if (itemData == nullptr || itemData->owner == nullptr) {
+				return std::make_tuple<sol::object, sol::object>(sol::nil, sol::nil);
+			}
+
+			if (itemData->owner->objectType == TES3::ObjectType::NPC) {
+				return std::make_tuple<sol::object, sol::object>(makeLuaObject(itemData->owner), makeLuaObject(itemData->requiredVariable));
+			}
+			else if (itemData->owner->objectType == TES3::ObjectType::Faction) {
+				return std::make_tuple<sol::object, sol::object>(makeLuaObject(itemData->owner), sol::make_object(params.lua_state(), itemData->requiredRank));
+			}
+			else {
+				throw std::runtime_error("Owner was not of a valid type. Report this issue to MWSE developers!");
+			}
+		}
+
+		void setOwner(sol::table params) {
+			// Get the reference to set ownership for.
+			TES3::Reference* reference = getOptionalParamReference(params, "reference");
+			if (reference == nullptr) {
+				throw std::invalid_argument("Invalid 'reference' parameter provided.");
+			}
+
+			// Are we removing an actor?
+			if (getOptionalParam<bool>(params, "remove", false)) {
+				auto itemData = reference->getAttachedItemData();
+				if (itemData) {
+					itemData->owner = nullptr;
+					itemData->requiredVariable = nullptr;
+				}
+				return;
+			}
+
+			// Are we getting an actor?
+			TES3::BaseObject* owner = getOptionalParamBaseObject(params, "owner");
+			if (owner == nullptr) {
+				throw std::invalid_argument("Invalid 'owner' parameter provided.");
+			}
+
+			// Setting an NPC?
+			else if (owner->objectType == TES3::ObjectType::NPC) {
+				auto itemData = reference->getOrCreateAttachedItemData();
+				itemData->owner = owner;
+				itemData->requiredVariable = getOptionalParamObject<TES3::GlobalVariable>(params, "requiredGlobal");
+			}
+
+			// Setting a faction?
+			else if (owner->objectType == TES3::ObjectType::Faction) {
+				auto itemData = reference->getOrCreateAttachedItemData();
+				itemData->owner = owner;
+				itemData->requiredRank = getOptionalParam(params, "requiredRank", 0);
+			}
+
+			// Given a bogus object type?
+			else {
+				throw std::invalid_argument("Invalid 'owner' parameter provided: must be of type NPC or Faction.");
+			}
+
+			// Finish up.
+			reference->setObjectModified(true);
+		}
+
 		void bindTES3Util() {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
@@ -3880,6 +3949,7 @@ namespace mwse {
 			tes3["getMobilePlayer"] = getMobilePlayer;
 			tes3["getModList"] = getModList;
 			tes3["getObject"] = getObject;
+			tes3["getOwner"] = getOwner;
 			tes3["getPlayerCell"] = getPlayerCell;
 			tes3["getPlayerEyePosition"] = getPlayerEyePosition;
 			tes3["getPlayerEyeVector"] = getPlayerEyeVector;
@@ -3939,6 +4009,7 @@ namespace mwse {
 			tes3["setJournalIndex"] = setJournalIndex;
 			tes3["setLockLevel"] = setLockLevel;
 			tes3["setMarkLocation"] = setMarkLocation;
+			tes3["setOwner"] = setOwner;
 			tes3["setStatistic"] = setStatistic;
 			tes3["setTrap"] = setTrap;
 			tes3["showRepairServiceMenu"] = showRepairServiceMenu;
