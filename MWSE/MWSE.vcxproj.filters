@@ -3022,10 +3022,10 @@
     </ClCompile>
     <ClCompile Include="LuaPreLevelUpEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
-    </ClInclude>
+    </ClCompile>
     <ClCompile Include="LuaPostInfoResponseEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
-    </ClInclude>
+    </ClCompile>
     <ClCompile Include="NILinesData.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
