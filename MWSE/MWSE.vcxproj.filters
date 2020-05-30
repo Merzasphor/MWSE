@@ -1392,6 +1392,12 @@
     <ClInclude Include="LuaPostInfoResponseEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="NILines.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="NILinesData.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3013,6 +3019,9 @@
     </ClCompile>
     <ClCompile Include="LuaPostInfoResponseEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
+    </ClInclude>
+    <ClCompile Include="NILinesData.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
