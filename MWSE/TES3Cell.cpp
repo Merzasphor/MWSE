@@ -1,6 +1,6 @@
 #include "TES3Cell.h"
-#include "TES3Util.h"
 
+#include "MemoryUtil.h"
 
 namespace TES3 {
 	const auto TES3_Cell_constructor = reinterpret_cast<Cell*(__thiscall *)(Cell*)>(0x4DB500);

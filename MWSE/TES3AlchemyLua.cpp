@@ -1,13 +1,13 @@
 #include "TES3AlchemyLua.h"
 
-#include "TES3Util.h"
-
 #include "LuaManager.h"
 #include "TES3ObjectLua.h"
 
 #include "TES3Alchemy.h"
 #include "TES3DataHandler.h"
 #include "TES3Script.h"
+
+#include "MemoryUtil.h"
 
 #define TES3_Alchemy_ctor 0x4ABA40
 

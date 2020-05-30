@@ -3,7 +3,7 @@
 #include "TES3Actor.h"
 #include "TES3Reference.h"
 
-#include "TES3Util.h"
+#include "MemoryUtil.h"
 
 #include <unordered_set>
 

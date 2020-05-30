@@ -3,7 +3,6 @@
 #include "sol.hpp"
 #include "LuaManager.h"
 
-#include "TES3Util.h"
 #include "Log.h"
 
 #include "NIAmbientLight.h"
@@ -87,6 +86,8 @@
 #include "TES3WeatherRain.h"
 #include "TES3WeatherSnow.h"
 #include "TES3WeatherThunder.h"
+
+#include "MemoryUtil.h"
 
 #include <Windows.h>
 

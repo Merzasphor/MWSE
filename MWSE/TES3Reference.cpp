@@ -9,7 +9,7 @@
 #include "LuaPickLockEvent.h"
 #include "LuaReferenceSceneNodeCreatedEvent.h"
 
-#include "TES3Util.h"
+#include "MemoryUtil.h"
 
 #include "NINode.h"
 #include "NIPointLight.h"

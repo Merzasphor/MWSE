@@ -9,6 +9,7 @@
 #include "TES3UIManager.h"
 #include "TES3WeatherController.h"
 
+#include "MemoryUtil.h"
 #include "TES3Util.h"
 
 #include <string>

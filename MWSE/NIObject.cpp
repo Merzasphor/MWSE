@@ -7,7 +7,7 @@
 
 #include <cstring>
 
-#include "TES3Util.h"
+#include "MemoryUtil.h"
 
 namespace NI {
 	const auto NI_Object_ctor = reinterpret_cast<Object * (__thiscall*)(Object *)>(0x6E98A0);

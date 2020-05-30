@@ -1,7 +1,5 @@
 #include "TES3ItemData.h"
 
-#include "TES3Util.h"
-
 #include "TES3Actor.h"
 #include "TES3DataHandler.h"
 #include "TES3Enchantment.h"
@@ -10,6 +8,8 @@
 #include "TES3Weapon.h"
 
 #include "LuaManager.h"
+
+#include "MemoryUtil.h"
 
 #include <unordered_set>
 #include <Windows.h>

@@ -193,7 +193,7 @@ namespace mwse {
 
 			// Patch: Fix NiLinesData binary loading.
 			auto NiLinesData_loadBinary = &NI::LinesData::loadBinary;
-			overrideVirtualTableEnforced(0x7501E0, 0xC, 0x6DA410, *reinterpret_cast<DWORD*>(&NiLinesData_loadBinary));
+			overrideVirtualTableEnforced(0x7501E0, offsetof(NI::Object_vTable, loadBinary), 0x6DA410, *reinterpret_cast<DWORD*>(&NiLinesData_loadBinary));
 		}
 
 		//

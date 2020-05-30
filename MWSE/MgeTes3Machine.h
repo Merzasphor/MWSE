@@ -15,7 +15,9 @@
 //#include "STRINGS.h"
 //#include "BREAKPOINT.h"
 
-#include "TES3Util.h"
+#include "TES3Defines.h"
+
+#include "MemoryUtil.h"
 
 struct HWBREAKPOINT;
 struct Context {};

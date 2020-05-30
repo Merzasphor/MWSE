@@ -2,7 +2,7 @@
 
 #include "TES3DataHandler.h"
 
-#include "TES3Util.h"
+#include "MemoryUtil.h"
 
 namespace TES3 {
 	enum LightAttenuationFlag {

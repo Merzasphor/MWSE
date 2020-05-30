@@ -306,25 +306,5 @@ namespace mwse {
 		int rand(unsigned int arg0) {
 			return TES3_rand(arg0);
 		}
-
-		const auto TES3_operator_new = reinterpret_cast<void*(__cdecl*)(size_t)>(0x727692);
-		void * _new(size_t size) {
-			return TES3_operator_new(size);
-		}
-
-		const auto TES3_operator_realloc = reinterpret_cast<void* (__cdecl**)(void*, size_t)>(0x746288);
-		void* realloc(void* address, size_t size) {
-			return (*TES3_operator_realloc)(address, size);
-		}
-
-		const auto TES3_operator_malloc = reinterpret_cast<void* (__cdecl*)(size_t)>(0x727738);
-		void* malloc(size_t size) {
-			return TES3_operator_malloc(size);
-		}
-
-		const auto TES3_operator_free = reinterpret_cast<void (__cdecl*)(void*)>(0x727732);
-		void free(void* address) {
-			TES3_operator_free(address);
-		}
 	}
 }

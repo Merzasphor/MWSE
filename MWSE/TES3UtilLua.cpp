@@ -14,6 +14,7 @@
 #include "ScriptUtil.h"
 #include "CodePatchUtil.h"
 #include "LuaObject.h"
+#include "MemoryUtil.h"
 
 #include "NICamera.h"
 #include "NINode.h"

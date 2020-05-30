@@ -1,7 +1,8 @@
 #include "NIPixelData.h"
 
 #include "NIPixelFormat.h"
-#include "TES3Util.h"
+
+#include "MemoryUtil.h"
 
 namespace NI {
 
