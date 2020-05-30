@@ -1389,6 +1389,9 @@
     <ClInclude Include="LuaDetectSneakEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="LuaPostInfoResponseEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
     <ClInclude Include="NILines.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
@@ -3014,6 +3017,9 @@
     <ClCompile Include="TES3PlayerAnimationData.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
+    <ClCompile Include="LuaPostInfoResponseEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClInclude>
     <ClCompile Include="NILinesData.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
