@@ -49,6 +49,7 @@ namespace mwse {
 			return value;
 		}
 
+		TES3::BaseObject* getOptionalParamBaseObject(sol::optional<sol::table> maybeParams, const char* key);
 		TES3::Script* getOptionalParamExecutionScript(sol::optional<sol::table> maybeParams);
 		TES3::Reference* getOptionalParamExecutionReference(sol::optional<sol::table> maybeParams);
 		TES3::Script* getOptionalParamScript(sol::optional<sol::table> maybeParams, const char* key);

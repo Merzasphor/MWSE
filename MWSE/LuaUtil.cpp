@@ -98,6 +98,28 @@
 
 namespace mwse {
 	namespace lua {
+		TES3::BaseObject* getOptionalParamBaseObject(sol::optional<sol::table> maybeParams, const char* key) {
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeObject = params[key];
+				if (maybeObject.valid()) {
+					if (maybeObject.is<std::string>()) {
+						return TES3::DataHandler::get()->nonDynamicData->resolveObject(maybeObject.as<std::string>().c_str())->getBaseObject();
+					}
+					else if (maybeObject.is<TES3::BaseObject>()) {
+						return maybeObject.as<TES3::BaseObject*>()->getBaseObject();
+					}
+					else if (maybeObject.is<TES3::MobileCreature>()) {
+						maybeObject.as<TES3::MobileCreature*>()->creatureInstance->baseCreature;
+					}
+					else if (maybeObject.is<TES3::MobileNPC>()) {
+						maybeObject.as<TES3::MobileNPC*>()->npcInstance->baseNPC;
+					}
+				}
+			}
+			return nullptr;
+		}
+
 		TES3::Script* getOptionalParamExecutionScript(sol::optional<sol::table> maybeParams) {
 			if (maybeParams) {
 				sol::table params = maybeParams.value();

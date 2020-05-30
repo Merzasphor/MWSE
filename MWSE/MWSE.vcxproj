@@ -99,6 +99,7 @@
     <ClInclude Include="LuaObjectFilteredEvent.h" />
     <ClInclude Include="LuaObjectInvalidatedEvent.h" />
     <ClInclude Include="LuaPickLockEvent.h" />
+    <ClInclude Include="LuaPostInfoResponseEvent.h" />
     <ClInclude Include="LuaPotionBrewedEvent.h" />
     <ClInclude Include="LuaPreLevelUpEvent.h" />
     <ClInclude Include="LuaProjectileExpireEvent.h" />
@@ -133,6 +134,8 @@
     <ClInclude Include="NIGeometryDataLua.h" />
     <ClInclude Include="NIKeyframeController.h" />
     <ClInclude Include="NiKeyframeManager.h" />
+    <ClInclude Include="NILines.h" />
+    <ClInclude Include="NILinesData.h" />
     <ClInclude Include="NIParticleModifier.h" />
     <ClInclude Include="NIParticleSystemController.h" />
     <ClInclude Include="NIPerParticleData.h" />
@@ -504,6 +507,7 @@
     <ClCompile Include="LuaObjectFilteredEvent.cpp" />
     <ClCompile Include="LuaObjectInvalidatedEvent.cpp" />
     <ClCompile Include="LuaPickLockEvent.cpp" />
+    <ClCompile Include="LuaPostInfoResponseEvent.cpp" />
     <ClCompile Include="LuaPotionBrewedEvent.cpp" />
     <ClCompile Include="LuaPreLevelUpEvent.cpp" />
     <ClCompile Include="LuaProjectileExpireEvent.cpp" />
@@ -537,6 +541,7 @@
     <ClCompile Include="NIGeometry.cpp" />
     <ClCompile Include="NIGeometryData.cpp" />
     <ClCompile Include="NIGeometryDataLua.cpp" />
+    <ClCompile Include="NILinesData.cpp" />
     <ClCompile Include="NIRenderedTexture.cpp" />
     <ClCompile Include="NIRenderer.cpp" />
     <ClCompile Include="NITextureEffect.cpp" />

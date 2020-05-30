@@ -191,6 +191,7 @@
 #include "LuaMouseWheelEvent.h"
 #include "LuaMusicSelectTrackEvent.h"
 #include "LuaObjectInvalidatedEvent.h"
+#include "LuaPostInfoResponseEvent.h"
 #include "LuaPotionBrewedEvent.h"
 #include "LuaPreLevelUpEvent.h"
 #include "LuaProjectileExpireEvent.h"
@@ -2162,6 +2163,10 @@ namespace mwse {
 			}
 
 			script->doCommand(compiler, command, source, reference, variables, info, dialogue);
+
+			if (mwse::lua::event::PostInfoResponseEvent::getEventEnabled()) {
+				mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::PostInfoResponseEvent(command, reference, variables, dialogue, info));
+			}
 		}
 
 		//
