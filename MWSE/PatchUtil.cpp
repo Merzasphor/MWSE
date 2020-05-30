@@ -17,6 +17,8 @@
 #include "TES3UIInventoryTile.h"
 #include "TES3WorldController.h"
 
+#include "NILinesData.h"
+
 #include "BitUtil.h"
 #include "TES3Util.h"
 
@@ -188,6 +190,10 @@ namespace mwse {
 			genCallUnprotected(0x4869DB, reinterpret_cast<DWORD>(OverrideDontThreadLoad), 0x6);
 			genCallUnprotected(0x48F489, reinterpret_cast<DWORD>(OverrideDontThreadLoad), 0x6);
 			genCallUnprotected(0x4904D0, reinterpret_cast<DWORD>(OverrideDontThreadLoad), 0x6);
+
+			// Patch: Fix NiLinesData binary loading.
+			auto NiLinesData_loadBinary = &NI::LinesData::loadBinary;
+			overrideVirtualTableEnforced(0x7501E0, 0xC, 0x6DA410, *reinterpret_cast<DWORD*>(&NiLinesData_loadBinary));
 		}
 
 		//
