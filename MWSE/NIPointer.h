@@ -1,7 +1,5 @@
 #pragma once
 
-#include "sol.hpp"
-
 namespace NI {
 	template <class T>
 	class Pointer {

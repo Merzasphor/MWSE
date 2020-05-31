@@ -1,7 +1,5 @@
 #include "TES3Ingredient.h"
 
-#include <stdexcept>
-
 namespace TES3 {
 	void Ingredient::setName(const char* n) {
 		if (strlen(n) >= 32) {

@@ -1,7 +1,5 @@
 #include "NIGeometryDataLua.h"
 
-#include "sol.hpp"
-
 #include "LuaManager.h"
 #include "LuaUtil.h"
 

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "sol.hpp"
-
 #include "TES3Defines.h"
 #include "TES3Attachment.h"
 #include "TES3Vectors.h"

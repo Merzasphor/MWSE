@@ -2,7 +2,6 @@
 
 #include "NIObjectLua.h"
 
-#include "sol.hpp"
 #include "Log.h"
 
 #include "LuaManager.h"

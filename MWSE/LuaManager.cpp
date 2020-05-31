@@ -10,8 +10,6 @@
 #include "MWSEDefs.h"
 #include "BuildDate.h"
 
-#include "sol.hpp"
-
 #include "LuaTimer.h"
 
 #include "LuaScript.h"
@@ -210,11 +208,6 @@
 #include "LuaWeatherTransitionFinishedEvent.h"
 #include "LuaWeatherTransitionStartedEvent.h"
 
-#include "windows.h"
-#include "psapi.h"
-
-#include <filesystem>
-#include <unordered_map>
 #include "NITextureEffectLua.h"
 
 #define TES3_HOOK_RUNSCRIPT_LUACHECK 0x5029A4

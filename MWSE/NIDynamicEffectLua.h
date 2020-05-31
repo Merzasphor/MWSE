@@ -2,8 +2,6 @@
 
 #include "NIDynamicEffect.h"
 
-#include "sol.hpp"
-
 #include "LuaUtil.h"
 
 #include "NIObjectLua.h"

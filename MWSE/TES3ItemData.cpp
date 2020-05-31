@@ -11,9 +11,6 @@
 
 #include "MemoryUtil.h"
 
-#include <unordered_set>
-#include <Windows.h>
-
 namespace TES3 {
 	//
 	// Vanilla ItemData

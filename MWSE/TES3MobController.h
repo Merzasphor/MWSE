@@ -7,8 +7,6 @@
 #include "NIPointer.h"
 #include "NINode.h"
 
-#include <Windows.h>
-
 namespace TES3 {
 	struct Object_0x751248 {
 		int unknown_0x0;

@@ -12,8 +12,6 @@
 #include "MemoryUtil.h"
 #include "TES3Util.h"
 
-#include <string>
-
 #define TES3_WorldController_mainLoopBeforeInput 0x40F610
 #define TES3_WorldController_getMobilePlayer 0x40FF20
 #define TES3_WorldController_playItemUpDownSound 0x411050

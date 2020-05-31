@@ -1,6 +1,6 @@
-#include <string.h>
-#include "MemAccess.h"
 #include "MemoryUtil.h"
+
+#include "MemAccess.h"
 #include "Log.h"
 
 namespace mwse {

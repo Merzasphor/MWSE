@@ -23,8 +23,6 @@
 #include "InstructionInterface.h"
 #include "Log.h"
 
-#include <exception>
-
 namespace mwse {
         // This can afford to be expensive for adding opcodes, as that's not done often.
         // Conversely, looking up opcodes needs to be as fast as possible.

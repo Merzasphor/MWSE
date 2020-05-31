@@ -1,6 +1,5 @@
 #pragma once
 
-#include "sol.hpp"
 #include "LuaUtil.h"
 
 #include "TES3Sound.h"

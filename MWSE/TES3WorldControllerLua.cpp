@@ -1,6 +1,5 @@
 #include "TES3WorldControllerLua.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
 #include "LuaUtil.h"
 

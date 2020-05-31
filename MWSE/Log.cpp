@@ -20,13 +20,6 @@
 
 #include "Log.h"
 
-#include <fstream>
-#include <ostream>
-#include <sstream>
-#include <iostream>
-#include <iomanip>
-#include <windows.h>
-
 using namespace mwse;
 using namespace log;
 

@@ -2,11 +2,6 @@
 
 #include "Stack.h"
 
-#include <algorithm>
-#include <cctype>
-#include <sstream>
-#include <iomanip>
-
 namespace mwse {
 	namespace string {
 		namespace store {

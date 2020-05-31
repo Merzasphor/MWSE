@@ -3,8 +3,6 @@
 #include "NIObjectLua.h"
 #include "NIGeometryData.h"
 
-#include <nonstd/span.hpp>
-
 namespace mwse {
 	namespace lua {
 		// Speed-optimized binding for NI::Node.

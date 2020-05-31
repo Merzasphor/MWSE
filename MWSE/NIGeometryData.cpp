@@ -1,7 +1,5 @@
 #include "NIGeometryData.h"
 
-#include <stdexcept>
-
 namespace NI {
 	unsigned short GeometryData::getVertexCount() {
 		return vTable.asGeometryData->getVertexCount(this);

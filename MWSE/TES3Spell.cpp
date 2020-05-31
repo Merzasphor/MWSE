@@ -1,4 +1,3 @@
-#include "sol.hpp"
 
 #include "LuaManager.h"
 #include "LuaSpellCastEvent.h"

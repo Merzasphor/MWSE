@@ -1,7 +1,4 @@
-
 #pragma once
-
-#include <map>
 
 namespace mwse {
 	namespace mcp {

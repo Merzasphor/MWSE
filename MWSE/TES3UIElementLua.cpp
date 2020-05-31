@@ -1,6 +1,4 @@
-#include <cstdint>
-#include <string>
-#include <unordered_map>
+#include "TES3UIElementLua.h"
 
 #include "LuaUtil.h"
 #include "NIProperty.h"
@@ -13,11 +11,8 @@
 #include "TES3UIWidgets.h"
 #include "TES3UIWidgetsLua.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
 #include "Log.h"
-
-#include <Windows.h>
 
 namespace mwse {
 	namespace lua {

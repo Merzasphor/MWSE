@@ -1,6 +1,5 @@
 #pragma once
 
-#include <stddef.h>
 #include "TES3Defines.h"
 
 #include "TES3Collections.h"
@@ -13,8 +12,6 @@
 #include "NIAVObject.h"
 #include "NIPointer.h"
 #include "NISourceTexture.h"
-
-#include <Windows.h>
 
 #define MWSE_CUSTOM_EFFECTS
 

@@ -17,7 +17,6 @@
 #include "TES3UIWidgets.h"
 
 #include "LuaManager.h"
-#include "sol.hpp"
 #include "LuaSpellTickEvent.h"
 #include "LuaUtil.h"
 

@@ -1,6 +1,5 @@
 #include "TES3DataHandlerLua.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
 
 #include "TES3Cell.h"

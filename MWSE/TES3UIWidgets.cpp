@@ -1,8 +1,6 @@
-#include <string>
-
-#include "TES3UIManager.h"
 #include "TES3UIWidgets.h"
 
+#include "TES3UIManager.h"
 
 namespace TES3 {
 	namespace UI {

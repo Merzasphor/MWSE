@@ -1,7 +1,5 @@
 #pragma once
 
-#include "sol.hpp"
-
 #include "NIDefines.h"
 #include "NIPointer.h"
 
@@ -9,8 +7,6 @@
 
 #include "TES3DataHandler.h"
 #include "TES3Vectors.h"
-
-#include <unordered_map>
 
 namespace mwse {
 	namespace lua {

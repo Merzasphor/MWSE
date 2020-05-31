@@ -19,7 +19,6 @@
 
 **************************************************************************/
 
-#include <stdlib.h>
 #include "VMExecuteInterface.h"
 #include "Stack.h"
 #include "InstructionInterface.h"

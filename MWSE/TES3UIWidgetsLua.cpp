@@ -1,7 +1,6 @@
 #include "TES3UIManager.h"
 #include "TES3UIWidgets.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
 
 namespace mwse {

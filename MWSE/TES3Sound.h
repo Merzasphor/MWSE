@@ -4,9 +4,6 @@
 
 #include "TES3Object.h"
 
-#include <dsound.h>
-#undef PlaySound
-
 namespace TES3 {
 	namespace SoundPlayFlags {
 		typedef int value_type;

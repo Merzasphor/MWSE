@@ -4,7 +4,6 @@
 
 #include "TES3Object.h"
 
-#include "sol_forward.hpp"
 
 namespace TES3 {
 	namespace ServiceFlag {

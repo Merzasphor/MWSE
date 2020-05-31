@@ -1,8 +1,5 @@
 #include "TES3GameFile.h"
 
-#include <string.h>
-#include <Windows.h>
-
 #include "TES3Util.h"
 
 #include "TES3DataHandler.h"

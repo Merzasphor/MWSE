@@ -1,5 +1,4 @@
 #include "string.h"
-#include <vector>
 
 #include "TES3UIManager.h"
 #include "TES3UIElement.h"

@@ -1,6 +1,5 @@
 #include "TES3MoonLua.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
 
 #include "TES3Moon.h"

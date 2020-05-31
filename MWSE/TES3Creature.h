@@ -1,7 +1,5 @@
 #pragma once
 
-#include "sol_forward.hpp"
-
 #include "TES3Defines.h"
 #include "TES3Actor.h"
 

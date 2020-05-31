@@ -7,8 +7,6 @@
 #include "NIPointer.h"
 #include "NIAmbientLight.h"
 
-#include <Windows.h>
-
 namespace TES3 {
 	struct Game_vTable {
 		void * unknown_0x0;

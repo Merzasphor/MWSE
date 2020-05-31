@@ -5,8 +5,6 @@
 #include "TES3Collections.h"
 #include "TES3Spell.h"
 
-#include <string>
-
 namespace TES3 {
 	struct SpellList {
 		int unknown_0x0;

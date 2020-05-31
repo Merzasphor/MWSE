@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cstdint>
-
 namespace NI {
 	struct AmbientLight;
 	struct AVObject;

@@ -1,8 +1,5 @@
 #pragma once
 
-#include <stddef.h>
-#include <Windows.h>
-
 #include "NIDefines.h"
 #include "NIDirectionalLight.h"
 #include "NIRenderedTexture.h"

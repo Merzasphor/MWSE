@@ -1,7 +1,5 @@
 #pragma once
 
-#include "sol.hpp"
-
 #include "LuaUtil.h"
 
 #include "NITextureEffect.h"

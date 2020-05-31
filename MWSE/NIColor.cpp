@@ -1,7 +1,5 @@
 #include "NIColor.h"
 
-#include <cmath>
-
 namespace NI {
 	bool Color::operator==(const Color& c) {
 		return r == c.r && g == c.g && b == c.b;

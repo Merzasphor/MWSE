@@ -1,6 +1,5 @@
 #pragma once
 
-#include <string>
 #include "TES3UIElement.h"
 
 namespace TES3 {

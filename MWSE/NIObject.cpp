@@ -5,8 +5,6 @@
 #include "NIRTTI.h"
 #include "NIStream.h"
 
-#include <cstring>
-
 #include "MemoryUtil.h"
 
 namespace NI {

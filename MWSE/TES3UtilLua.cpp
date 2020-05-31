@@ -1,7 +1,5 @@
 #include "TES3UtilLua.h"
 
-#include <algorithm>
-#include "sol.hpp"
 #include "LuaManager.h"
 
 #include "TES3GameFile.h"
@@ -73,8 +71,6 @@
 #include "TES3WorldController.h"
 
 #include "BitUtil.h"
-
-#include <unordered_set>
 
 namespace mwse {
 	namespace lua {

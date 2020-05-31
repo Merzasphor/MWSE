@@ -1,6 +1,5 @@
 #include "LuaUtil.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
 
 #include "Log.h"
@@ -88,8 +87,6 @@
 #include "TES3WeatherThunder.h"
 
 #include "MemoryUtil.h"
-
-#include <Windows.h>
 
 #define TES3_vTable_MobileCreature 0x74AFA4
 #define TES3_vTable_MobileNPC 0x74AE6C

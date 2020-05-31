@@ -1,6 +1,5 @@
 #include "TES3SpellLua.h"
 
-#include "sol.hpp"
 #include "LuaUtil.h"
 #include "LuaManager.h"
 

@@ -11,8 +11,6 @@
 	sol::meta_function::length, [](DynamicLuaObject& d) { return d.entries.size(); },
 */
 
-#include <unordered_map>
-
 struct DynamicLuaObject {
 	std::unordered_map<std::string, sol::object> entries;
 

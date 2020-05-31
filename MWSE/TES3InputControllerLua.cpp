@@ -1,7 +1,5 @@
 #include "TES3InputControllerLua.h"
 
-#include "sol.hpp"
-
 #include "LuaManager.h"
 
 #include "TES3InputController.h"

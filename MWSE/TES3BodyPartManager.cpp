@@ -1,7 +1,6 @@
 #include "TES3BodyPartManager.h"
 
 #include "LuaManager.h"
-#include "sol.hpp"
 
 #include "LuaBodyPartAssignedEvent.h"
 

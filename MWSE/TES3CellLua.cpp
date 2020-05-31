@@ -6,9 +6,6 @@
 #include "TES3Cell.h"
 #include "TES3Region.h"
 
-#include <unordered_set>
-#include <Windows.h>
-
 namespace mwse {
 	namespace lua {
 		auto iterateReferencesFiltered(const TES3::Cell& cell, const std::unordered_set<unsigned int> desiredTypes) {

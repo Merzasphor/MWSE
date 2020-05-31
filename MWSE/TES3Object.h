@@ -8,8 +8,6 @@
 #include "NIPointer.h"
 #include "NINode.h"
 
-#include <string>
-
 namespace TES3 {
 
 	//

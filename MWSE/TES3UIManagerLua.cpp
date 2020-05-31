@@ -1,7 +1,4 @@
-#include <string>
-#include <unordered_map>
-#include <utility>
-#include <vector>
+#include "TES3UIManagerLua.h"
 
 #include "TES3GameSetting.h"
 #include "TES3Item.h"
@@ -18,7 +15,6 @@
 
 #include "LuaUtil.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
 #include "Log.h"
 

@@ -2,8 +2,6 @@
 
 #include "NIStream.h"
 
-#include <Windows.h>
-
 namespace TES3 {
 	struct Archive : NI::Stream {
 		char path[128]; // 0xB0

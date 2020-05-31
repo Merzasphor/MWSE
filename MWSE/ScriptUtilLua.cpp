@@ -1,4 +1,3 @@
-#include "sol.hpp"
 #include "LuaUtil.h"
 #include "LuaManager.h"
 

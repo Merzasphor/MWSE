@@ -1,7 +1,5 @@
 #pragma once
 
-#include <Windows.h>
-
 namespace mwse {
 	// Container for registers, flags, and other information to help with the
 	// native to MWSE code bridge.

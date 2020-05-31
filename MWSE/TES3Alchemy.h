@@ -6,7 +6,6 @@
 #include "TES3Item.h"
 #include "TES3MagicEffect.h"
 
-#include "sol_forward.hpp"
 
 namespace TES3 {
 	namespace AlchemyFlag {

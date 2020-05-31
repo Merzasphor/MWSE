@@ -2,8 +2,6 @@
 
 #include "TES3Defines.h"
 
-#include <cstdint>
-
 namespace TES3 {
 	namespace CompilerSource {
 		enum CompilerSource : uintptr_t {

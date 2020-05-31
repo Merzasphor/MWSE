@@ -2,9 +2,6 @@
 
 #include "TES3AudioController.h"
 
-#include <stdexcept>
-#include <cmath>
-
 namespace TES3 {
 	const auto TES3_AudioController_changeMusicTrack = reinterpret_cast<void(__thiscall*)(AudioController*, const char*, int, float)>(0x403AC0);
 	void AudioController::changeMusicTrack(const char* filename, int crossfadeMillis, float volume) {

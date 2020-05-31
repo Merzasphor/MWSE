@@ -5,8 +5,6 @@
 
 #include "MemoryUtil.h"
 
-#include <unordered_set>
-
 namespace TES3 {
 	void * BaseObject::operator new(size_t size) {
 		return mwse::tes3::_new(size);

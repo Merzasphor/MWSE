@@ -1,9 +1,5 @@
 #pragma once
 
-#include <unordered_map>
-
-#include "sol_forward.hpp"
-
 #include "TES3Defines.h"
 
 #include "TES3MagicEffect.h"

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iostream>
-
 namespace TES3 {
 	struct Matrix33;
 

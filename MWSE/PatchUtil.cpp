@@ -25,11 +25,6 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
-#include <Windows.h>
-#include <Psapi.h>
-
-#include <dbghelp.h>
-
 namespace mwse {
 	namespace patch {
 

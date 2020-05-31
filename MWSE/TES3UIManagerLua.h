@@ -1,6 +1,5 @@
 #pragma once
 
-#include "sol.hpp"
 #include "TES3UIElement.h"
 
 namespace mwse {
