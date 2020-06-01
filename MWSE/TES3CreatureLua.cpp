@@ -57,6 +57,10 @@ namespace mwse {
 					[](TES3::Creature& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagCreature::BipedBit); },
 					[](TES3::Creature& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagCreature::BipedBit, state); }
 				));
+				usertypeDefinition.set("essential", sol::property(
+					[](TES3::Creature& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagCreature::EssentialBit); },
+					[](TES3::Creature& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagCreature::EssentialBit, state); }
+				));
 				usertypeDefinition.set("respawns", sol::property(
 					[](TES3::Creature& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagCreature::RespawnBit); },
 					[](TES3::Creature& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagCreature::RespawnBit, state); }
