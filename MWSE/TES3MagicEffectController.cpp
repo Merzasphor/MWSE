@@ -1011,7 +1011,7 @@ namespace TES3 {
 		memcpy_s(effectFlags, sizeof(effectFlags), (void*)0x747D88, sizeof(DWORD) * 143);
 
 		// Patch effect counters.
-		DWORD effectCounterAddress = (DWORD)&effectFlags;
+		DWORD effectCounterAddress = (DWORD)&effectCounters;
 		mwse::writeDoubleWordEnforced(0x537EE8 + 0x3, 0x787950, effectCounterAddress);
 		mwse::writeDoubleWordEnforced(0x538475 + 0x3, 0x787950, effectCounterAddress);
 
