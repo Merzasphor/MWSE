@@ -901,12 +901,12 @@ namespace TES3 {
 		mwse::writeDoubleWordEnforced(0x466988 + 0x3, 0x747D88, effectFlagAddresses);
 		mwse::writeDoubleWordEnforced(0x4AA1BB + 0x3, 0x747D88, effectFlagAddresses);
 		mwse::writeDoubleWordEnforced(0x4AA71B + 0x3, 0x747D88, effectFlagAddresses);
-		mwse::writeDoubleWordEnforced(0x4AB439 + 0x3, 0x747D88 + 0x1, effectFlagAddresses);
+		mwse::writeDoubleWordEnforced(0x4AB439 + 0x3, 0x747D88 + 0x1, effectFlagAddresses + 0x1);
 		mwse::writeDoubleWordEnforced(0x4AB604 + 0x2, 0x747D88, effectFlagAddresses);
 		mwse::writeDoubleWordEnforced(0x4AB8A7 + 0x3, 0x747D88, effectFlagAddresses);
 		mwse::writeDoubleWordEnforced(0x4AB932 + 0x3, 0x747D88, effectFlagAddresses);
 		mwse::writeDoubleWordEnforced(0x4AC23D + 0x3, 0x747D88, effectFlagAddresses);
-		mwse::writeDoubleWordEnforced(0x4AC328 + 0x3, 0x747D88 + 0x1, effectFlagAddresses);
+		mwse::writeDoubleWordEnforced(0x4AC328 + 0x3, 0x747D88 + 0x1, effectFlagAddresses + 0x1);
 		mwse::writeDoubleWordEnforced(0x4D7E3C + 0x3, 0x747D88, effectFlagAddresses);
 		mwse::writeDoubleWordEnforced(0x4D800A + 0x3, 0x747D88, effectFlagAddresses);
 		mwse::writeDoubleWordEnforced(0x516F06 + 0x3, 0x747D88, effectFlagAddresses);
@@ -926,10 +926,10 @@ namespace TES3 {
 		mwse::writeDoubleWordEnforced(0x519548 + 0x3, 0x747D88, effectFlagAddresses);
 		mwse::writeDoubleWordEnforced(0x519687 + 0x3, 0x747D88, effectFlagAddresses);
 		mwse::writeDoubleWordEnforced(0x538A2A + 0x3, 0x747D88, effectFlagAddresses);
-		mwse::writeDoubleWordEnforced(0x538A4F + 0x3, 0x747D88 + 0x2, effectFlagAddresses);
+		mwse::writeDoubleWordEnforced(0x538A4F + 0x3, 0x747D88 + 0x2, effectFlagAddresses + 0x2);
 		mwse::writeDoubleWordEnforced(0x538A72 + 0x3, 0x747D88, effectFlagAddresses);
 		mwse::writeDoubleWordEnforced(0x538C59 + 0x3, 0x747D88, effectFlagAddresses);
-		mwse::writeDoubleWordEnforced(0x538C81 + 0x3, 0x747D88 + 0x2, effectFlagAddresses);
+		mwse::writeDoubleWordEnforced(0x538C81 + 0x3, 0x747D88 + 0x2, effectFlagAddresses + 0x2);
 		mwse::writeDoubleWordEnforced(0x5919FA + 0x2, 0x747D88, effectFlagAddresses);
 		mwse::writeDoubleWordEnforced(0x591D2D + 0x3, 0x747D88, effectFlagAddresses);
 		mwse::writeDoubleWordEnforced(0x591DFA + 0x3, 0x747D88, effectFlagAddresses);
