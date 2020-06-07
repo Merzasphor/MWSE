@@ -119,7 +119,7 @@ namespace TES3 {
 
 	Actor * ItemData::getSoulActor() {
 		__try {
-			if (soul != nullptr && soul->isActor()) {
+			if (soul != nullptr && charge != -1.0f && soul->isActor()) {
 				return soul;
 			}
 		}
