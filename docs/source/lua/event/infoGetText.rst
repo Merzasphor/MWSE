@@ -11,6 +11,11 @@ info
 
 `tes3dialogueInfo`_. Read-only. The dialogue info object.
 
+loadOriginalText
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+method. Loads the original text for the info from the game files, bypassing this event.
+
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html
 .. _`tes3book`: ../../lua/type/tes3book.html
