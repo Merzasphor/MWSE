@@ -8,6 +8,7 @@
 #include "Log.h"
 
 #include "TES3Inventory.h"
+#include "TES3MagicEffectInstance.h"
 
 namespace mwse {
 	namespace lua {
@@ -433,6 +434,7 @@ namespace mwse {
 			convertTo["tes3inventory"] = [](DWORD arg) { return reinterpret_cast<TES3::Inventory*>(arg); };
 			convertTo["tes3equipmentStackIterator"] = [](DWORD arg) { return reinterpret_cast<TES3::Iterator<TES3::EquipmentStack>*>(arg); };
 			convertTo["tes3equipmentStackIteratorNode"] = [](DWORD arg) { return reinterpret_cast<TES3::IteratorNode<TES3::EquipmentStack>*>(arg); };
+			convertTo["tes3magicEffectInstance"] = [](DWORD arg) { return reinterpret_cast<TES3::MagicEffectInstance*>(arg); };
 			memory["convertTo"] = convertTo;
 
 			auto convertFrom = memory.create();
@@ -445,6 +447,7 @@ namespace mwse {
 			convertFrom["tes3inventory"] = [](TES3::Inventory* arg) { return reinterpret_cast<DWORD>(arg); };
 			convertFrom["tes3equipmentStackIterator"] = [](TES3::Iterator<TES3::EquipmentStack>* arg) { return reinterpret_cast<DWORD>(arg); };
 			convertFrom["tes3equipmentStackIteratorNode"] = [](TES3::IteratorNode<TES3::EquipmentStack>* arg) { return reinterpret_cast<DWORD>(arg); };
+			convertFrom["tes3magicEffectInstance"] = [](TES3::MagicEffectInstance* arg) { return reinterpret_cast<DWORD>(arg); };
 			memory["convertFrom"] = convertFrom;
 		}
 	}
