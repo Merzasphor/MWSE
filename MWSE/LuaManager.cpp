@@ -386,33 +386,33 @@ namespace mwse {
 				*x = 4;
 			};
 
-			luaState["os"]["getClipboardText"] = [](sol::this_state ts) -> sol::object {
+			luaState["os"]["getClipboardText"] = [](sol::this_state ts) -> sol::optional<std::string> {
 				if (!IsClipboardFormatAvailable(CF_TEXT)) {
-					return sol::make_object(ts, false);
+					return sol::optional<std::string>();
 				}
 
 				if (!OpenClipboard(TES3::Game::get()->windowHandle)) {
-					return sol::make_object(ts, false);
+					return sol::optional<std::string>();
 				}
 
 				auto clipboardHandle = GetClipboardData(CF_TEXT);
 				if (clipboardHandle == nullptr) {
 					CloseClipboard();
-					return sol::make_object(ts, false);
+					return sol::optional<std::string>();
 				}
 
 				const char* clipboardText = static_cast<const char*>(GlobalLock(clipboardHandle));
 				if (clipboardText == nullptr) {
 					CloseClipboard();
-					return sol::make_object(ts, false);
+					return sol::optional<std::string>();
 				}
 
-				auto result = sol::make_object(ts, std::move(std::string(clipboardText)));
+				auto result = std::move(std::string(clipboardText));
 
 				GlobalUnlock(clipboardHandle);
 				CloseClipboard();
 
-				return result;
+				return std::move(result);
 			};
 
 			luaState["os"]["setClipboardText"] = [](sol::optional<std::string> text) -> bool {
