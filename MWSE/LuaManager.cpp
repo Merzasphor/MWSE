@@ -386,6 +386,73 @@ namespace mwse {
 				*x = 4;
 			};
 
+			luaState["os"]["getClipboardText"] = [](sol::this_state ts) -> sol::object {
+				if (!IsClipboardFormatAvailable(CF_TEXT)) {
+					return sol::make_object(ts, false);
+				}
+
+				if (!OpenClipboard(TES3::Game::get()->windowHandle)) {
+					return sol::make_object(ts, false);
+				}
+
+				auto clipboardHandle = GetClipboardData(CF_TEXT);
+				if (clipboardHandle == nullptr) {
+					CloseClipboard();
+					return sol::make_object(ts, false);
+				}
+
+				const char* clipboardText = static_cast<const char*>(GlobalLock(clipboardHandle));
+				if (clipboardText == nullptr) {
+					CloseClipboard();
+					return sol::make_object(ts, false);
+				}
+
+				auto result = sol::make_object(ts, std::move(std::string(clipboardText)));
+
+				GlobalUnlock(clipboardHandle);
+				CloseClipboard();
+
+				return result;
+			};
+
+			luaState["os"]["setClipboardText"] = [](sol::optional<std::string> text) -> bool {
+				if (!OpenClipboard(TES3::Game::get()->windowHandle)) {
+					return false;
+				}
+
+				if (!EmptyClipboard()) {
+					CloseClipboard();
+					return false;
+				}
+
+				// Allow just clearing the text.
+				if (!text) {
+					CloseClipboard();
+					return true;
+				}
+
+				const auto stringSize = text.value().length() + 1;
+				auto clipBuffer = GlobalAlloc(GMEM_MOVEABLE, stringSize);
+				if (clipBuffer == nullptr) {
+					CloseClipboard();
+					return false;
+				}
+
+				char* buffer = (char*)GlobalLock(clipBuffer);
+				if (buffer == nullptr) {
+					CloseClipboard();
+					return false;
+				}
+
+				strcpy_s(buffer, stringSize, text.value().c_str());
+
+				GlobalUnlock(clipBuffer);
+				SetClipboardData(CF_TEXT, clipBuffer);
+				CloseClipboard();
+
+				return true;
+			};
+
 			// Bind TES3 data types.
 			bindTES3ActionData();
 			bindTES3Activator();
