@@ -17,7 +17,7 @@ namespace TES3 {
 		NI::Pointer<NI::SourceTexture> texture; // 0x30 // Loaded texture.
 		char texturePath[260]; // 0x34
 		int unknown_0x138;
-		int unknown_0x13C; // Version information?
+		int index; // 0x13C
 		Iterator<PropertyMap> * unknown_0x140; // Relates land textures to texture properties?
 	};
 	static_assert(sizeof(LandTexture) == 0x144, "TES3::LandTexture failed size validation");

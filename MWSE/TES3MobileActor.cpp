@@ -51,7 +51,7 @@ namespace TES3 {
 	}
 
 	int MobileActor::ActiveMagicEffect::getMagnitude() {
-		return getInstance()->getMagnitude(magicInstanceEffectIndex);
+		return magnitudeMin;
 	}
 
 	bool MobileActor::onActorCollision(int collisionIndex) {

@@ -407,7 +407,7 @@ namespace mwse {
 					return sol::optional<std::string>();
 				}
 
-				auto result = std::move(std::string(clipboardText));
+				std::string result = clipboardText;
 
 				GlobalUnlock(clipboardHandle);
 				CloseClipboard();
@@ -3790,6 +3790,12 @@ namespace mwse {
 			// Create lua tracebacks when a warning is created.
 			genCallUnprotected(0x4774D1, reinterpret_cast<DWORD>(WriteToWarningsFile), 0x6);
 			genCallUnprotected(0x476EA7, reinterpret_cast<DWORD>(WriteToWarningsFile), 0x6);
+
+			// Expand CombatSession struct.
+			genPushEnforced(0x4E60C5, (BYTE)sizeof(TES3::CombatSession)) && genCallEnforced(0x4E60DE, 0x537120, reinterpret_cast<DWORD>(&TES3::CombatSession::ctor));
+			genPushEnforced(0x530626, (BYTE)sizeof(TES3::CombatSession)) && genCallEnforced(0x530641, 0x537120, reinterpret_cast<DWORD>(&TES3::CombatSession::ctor));
+			genCallEnforced(0x51FAFF, 0x5372F0, reinterpret_cast<DWORD>(&TES3::CombatSession::dtor));
+			genCallEnforced(0x55886B, 0x5372F0, reinterpret_cast<DWORD>(&TES3::CombatSession::dtor));
 
 			// UI framework hooks
 			TES3::UI::hook();

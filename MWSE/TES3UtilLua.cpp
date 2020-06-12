@@ -32,6 +32,7 @@
 #include "TES3Cell.h"
 #include "TES3Class.h"
 #include "TES3Container.h"
+#include "TES3CombatSession.h"
 #include "TES3Creature.h"
 #include "TES3CrimeEventList.h"
 #include "TES3DataHandler.h"
@@ -947,10 +948,15 @@ namespace mwse {
 			return sol::optional<int>();
 		}
 
-		double getSimulationTimestamp() {
-			TES3::WorldController* worldController = TES3::WorldController::get();
-			if (worldController) {
-				return worldController->getHighPrecisionSimulationTimestamp();
+		double getSimulationTimestamp(sol::optional<bool> highPrecision) {
+			if (highPrecision.value_or(true)) {
+				TES3::WorldController* worldController = TES3::WorldController::get();
+				if (worldController) {
+					return worldController->getHighPrecisionSimulationTimestamp();
+				}
+			}
+			else {
+				return mwse::tes3::getSimulationTimestamp();
 			}
 			return 0.0;
 		}
@@ -3400,13 +3406,10 @@ namespace mwse {
 
 			// Check based on effect ID.
 			if (effectId > -1) {
-				auto firstEffect = mact->activeMagicEffects.firstEffect;
-				auto itt = firstEffect->next;
-				while (itt != firstEffect) {
-					if (itt->magicEffectID == effectId) {
+				for (auto& activeEffect : mact->activeMagicEffects) {
+					if (activeEffect.magicEffectID == effectId) {
 						return true;
 					}
-					itt = itt->next;
 				}
 			}
 			else {
@@ -3430,13 +3433,10 @@ namespace mwse {
 			int effectId = getOptionalParam<int>(params, "effect", -1);
 			if (!TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(effectId, TES3::EffectFlag::NoMagnitudeBit)) {
 				int magnitude = 0;
-				auto firstEffect = mact->activeMagicEffects.firstEffect;
-				auto itt = firstEffect->next;
-				while (itt != firstEffect) {
-					if (itt->magicEffectID == effectId) {
-						magnitude += itt->magnitudeMin;
+				for (auto& activeEffect : mact->activeMagicEffects) {
+					if (activeEffect.magicEffectID == effectId) {
+						magnitude += activeEffect.magnitudeMin;
 					}
-					itt = itt->next;
 				}
 				return magnitude;
 			}

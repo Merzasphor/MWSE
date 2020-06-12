@@ -263,7 +263,7 @@ namespace mwse {
 			usertypeDefinition.set("hasFreeAction", sol::property(&TES3::MobileActor::hasFreeAction));
 
 			// Legacy support for old structures.
-			usertypeDefinition.set("activeMagicEffects", sol::readonly_property([](TES3::MobileActor& self) { return self.activeMagicEffects.firstEffect; }));
+			usertypeDefinition.set("activeMagicEffects", sol::readonly_property([](TES3::MobileActor& self) { return self.activeMagicEffects; }));
 			usertypeDefinition.set("activeMagicEffectCount", sol::readonly_property([](TES3::MobileActor& self) { return self.activeMagicEffects.count; }));
 		}
 
