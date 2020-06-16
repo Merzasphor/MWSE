@@ -22,8 +22,10 @@ namespace mwse {
 			// Basic property binding.
 			usertypeDefinition.set("alchemyPriority", &TES3::CombatSession::alchemyPriority);
 			usertypeDefinition.set("distance", &TES3::CombatSession::combatDistance);
+			usertypeDefinition.set("lastUseTimestamp", &TES3::CombatSession::lastUseTimestamp);
+			usertypeDefinition.set("potionUseFlag", &TES3::CombatSession::potionUseFlag);
 			usertypeDefinition.set("selectedAction", &TES3::CombatSession::nextAction);
-			usertypeDefinition.set("selectedAlchemy", &TES3::CombatSession::selectedAlchemy);
+			usertypeDefinition.set("selectedItem", &TES3::CombatSession::selectedItem);
 			usertypeDefinition.set("selectedShield", sol::readonly_property(&TES3::CombatSession::selectedShield));
 			usertypeDefinition.set("selectedSpell", &TES3::CombatSession::selectedSpell);
 			usertypeDefinition.set("selectedWeapon", sol::readonly_property(&TES3::CombatSession::selectedWeapon));
@@ -35,6 +37,12 @@ namespace mwse {
 			// Basic function binding.
 			usertypeDefinition.set("selectAlchemyWithEffect", &TES3::CombatSession::chooseAlchemyWithEffect);
 			usertypeDefinition.set("changeEquipment", &TES3::CombatSession::changeEquipment);
+
+			// Custom lua data access.
+			usertypeDefinition.set("data", sol::property(&TES3::CombatSession::getLuaData, &TES3::CombatSession::setLuaData));
+
+			// Deprecated fields.
+			usertypeDefinition.set("selectedAlchemy", &TES3::CombatSession::selectedItem);
 
 			// Finish up our usertype.
 			state.set_usertype("tes3combatSession", usertypeDefinition);

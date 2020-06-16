@@ -15,6 +15,7 @@ namespace mwse {
 			usertypeDefinition.set("cellX", sol::readonly_property(&TES3::MobileObject::cellX));
 			usertypeDefinition.set("cellY", sol::readonly_property(&TES3::MobileObject::cellY));
 			usertypeDefinition.set("height", sol::readonly_property(&TES3::MobileObject::height));
+			usertypeDefinition.set("inventory", sol::readonly_property(&TES3::MobileObject::getInventory));
 			usertypeDefinition.set("movementFlags", sol::readonly_property(&TES3::MobileObject::movementFlags));
 			usertypeDefinition.set("prevMovementFlags", sol::readonly_property(&TES3::MobileObject::prevMovementFlags));
 

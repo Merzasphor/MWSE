@@ -152,6 +152,7 @@
     <ClInclude Include="TES3Birthsign.h" />
     <ClInclude Include="TES3BirthsignLua.h" />
     <ClInclude Include="TES3BodyPartManager.h" />
+    <ClInclude Include="TES3Deque.h" />
     <ClInclude Include="TES3HashMap.h" />
     <ClInclude Include="TES3MagicEffectController.h" />
     <ClInclude Include="MemoryUtilLua.h" />

@@ -1393,7 +1393,7 @@
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
-    	<Filter>Header Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="LuaPostInfoResponseEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
@@ -1403,6 +1403,9 @@
     </ClInclude>
     <ClInclude Include="NILinesData.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Deque.h">
+      <Filter>Header Files\DataAdapters\TES3\Collections</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
