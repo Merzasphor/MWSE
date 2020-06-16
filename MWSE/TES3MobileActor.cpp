@@ -46,11 +46,11 @@ namespace TES3 {
 	const auto TES3_MobileActor_determineModifiedPrice = reinterpret_cast<int(__thiscall*)(const MobileActor*, int, int)>(0x52AA50);
 	const auto TES3_MobileActor_playVoiceover = reinterpret_cast<void(__thiscall*)(const MobileActor*, int)>(0x528F80);
 
-	MagicSourceInstance* MobileActor::ActiveMagicEffect::getInstance() {
+	MagicSourceInstance* ActiveMagicEffect::getInstance() {
 		return WorldController::get()->spellInstanceController->getInstanceFromSerial(magicInstanceSerial);
 	}
 
-	int MobileActor::ActiveMagicEffect::getMagnitude() {
+	int ActiveMagicEffect::getMagnitude() {
 		return magnitudeMin;
 	}
 
@@ -142,6 +142,11 @@ namespace TES3 {
 		// Setup damage event data.
 		mwse::lua::event::DamageEvent::m_Attacker = nullptr;
 		mwse::lua::event::DamageEvent::m_Projectile = nullptr;
+	}
+
+	const auto TES3_MobileActor_setCurrentSpell = reinterpret_cast<void(__thiscall*)(MobileActor*, const Spell*)>(0x52B390);
+	void MobileActor::setCurrentSpell(const Spell* spell) {
+		TES3_MobileActor_setCurrentSpell(this, spell);
 	}
 
 	Cell* MobileActor::getCell() {
@@ -508,6 +513,15 @@ namespace TES3 {
 		if (animationData.asActor) {
 			animationData.asActor->updateOpacity();
 		}
+	}
+
+	bool MobileActor::hasSummonEffect() {
+		for (auto& activeEffect : activeMagicEffects) {
+			if (activeEffect.isSummon) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

@@ -84,6 +84,7 @@ namespace TES3 {
 		enum Flag : value_type {
 			Modified = 0x2,
 			LinksResolved = 0x8,
+			NoCollision = 0x10,
 			Delete = 0x20,
 			Persistent = 0x400,
 			Disabled = 0x800,
@@ -94,6 +95,7 @@ namespace TES3 {
 		enum FlagBit {
 			ModifiedBit = 1,
 			LinksResolvedBit = 3,
+			NoCollisionBit = 4,
 			DeleteBit = 5,
 			PersistentBit = 10,
 			DisabledBit = 11,

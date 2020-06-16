@@ -87,26 +87,27 @@ namespace TES3 {
 		};
 	}
 
+	struct ActiveMagicEffect {
+		unsigned int magicInstanceSerial; // 0x8
+		short magicInstanceEffectIndex; // 0xC
+		short magicEffectID; // 0xE
+		bool isHarmful; // 0x10
+		bool isSummon; // 0x11
+		unsigned short duration; // 0x14
+		unsigned short magnitudeMin; // 0x16
+		unsigned char skillOrAttributeID; // 0x18
+
+		//
+		// Custom functions.
+		//
+
+		MagicSourceInstance* getInstance();
+		int getMagnitude();
+
+	};
+	static_assert(sizeof(ActiveMagicEffect) == 0x10, "TES3::ActiveMagicEffect failed size validation");
+
 	struct MobileActor : MobileObject {
-		struct ActiveMagicEffect {
-			unsigned int magicInstanceSerial; // 0x8
-			short magicInstanceEffectIndex; // 0xC
-			short magicEffectID; // 0xE
-			bool isHarmful; // 0x10
-			bool isSummon; // 0x11
-			unsigned short duration; // 0x14
-			unsigned short magnitudeMin; // 0x16
-			unsigned char skillOrAttributeID; // 0x18
-
-			//
-			// Custom functions.
-			//
-
-			MagicSourceInstance* getInstance();
-			int getMagnitude();
-
-		};
-
 		Iterator<MobileActor> listTargetActors; // 0x80
 		Iterator<MobileActor> listFriendlyActors; // 0x94
 		float scanTimer; // 0xA8
@@ -199,6 +200,8 @@ namespace TES3 {
 		float calculateArmorRating(int * armorItemCount = nullptr);
 		void applyHitModifiers(MobileActor * attacker, MobileActor * defender, float unknown, float swing, MobileProjectile * projectile = nullptr, bool unknown2 = false);
 
+		void setCurrentSpell(const Spell* spell);
+
 		//
 		// Other related this-call functions.
 		//
@@ -257,7 +260,8 @@ namespace TES3 {
 		bool equipItem(Object* item, ItemData * itemData = nullptr, bool addItem = false, bool selectBestCondition = false, bool selectWorstCondition = false);
 
 		void updateOpacity();
+
+		bool hasSummonEffect();
 	};
-	static_assert(sizeof(MobileActor::ActiveMagicEffect) == 0x10, "TES3::MobileActor::ActiveMagicEffect failed size validation");
 	static_assert(sizeof(MobileActor) == 0x3B0, "TES3::MobileActor failed size validation");
 }

@@ -6,6 +6,17 @@
 #include "NIPointer.h"
 
 namespace NI {
+	struct TimeController_vTable : Object_vTable {
+		void(__thiscall* start)(TimeController*, float); // 0x2C
+		void(__thiscall* stop)(TimeController*); // 0x30
+		void(__thiscall* update)(TimeController*, float); // 0x34
+		void(__thiscall* setTarget)(TimeController*, ObjectNET*); // 0x38
+		float(__thiscall* computeScaledTime)(TimeController*, float); // 0x3C
+		void* unknown_0x40;
+		bool(__thiscall* targetIsRequiredType)(TimeController*); // 0x44
+	};
+	static_assert(sizeof(TimeController_vTable) == 0x48, "NI::TimeController's vtable failed size validation");
+
 	struct TimeController : Object {
 		unsigned short deprecatedFlags; // 0x8
 		float frequency; // 0xC

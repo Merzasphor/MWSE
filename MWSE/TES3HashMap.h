@@ -49,8 +49,8 @@ namespace TES3 {
 		V& getValue(K& key) {
 			auto index = hashKey(key);
 			for (auto itt = buckets[index]; itt; itt = itt->nextNode) {
-				if (compareKey(key, itt->kvp.key)) {
-					return itt->kvp.value;
+				if (compareKey(key, itt->keyValuePair.key)) {
+					return itt->keyValuePair.value;
 				}
 			}
 			throw std::runtime_error("Value doesn't exist for given key.");
