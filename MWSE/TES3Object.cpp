@@ -7,6 +7,7 @@
 #include "TES3AnimationGroup.h"
 #include "TES3Apparatus.h"
 #include "TES3Armor.h"
+#include "TES3Birthsign.h"
 #include "TES3BodyPart.h"
 #include "TES3Book.h"
 #include "TES3Cell.h"
@@ -147,6 +148,9 @@ namespace TES3 {
 			break;
 		case TES3::VirtualTableAddress::Armor:
 			ref = sol::make_object(L, static_cast<const TES3::Armor*>(object));
+			break;
+		case TES3::VirtualTableAddress::Birthsign:
+			ref = sol::make_object(L, static_cast<const TES3::Birthsign*>(object));
 			break;
 		case TES3::VirtualTableAddress::BodyPart:
 			ref = sol::make_object(L, static_cast<const TES3::BodyPart*>(object));
@@ -537,6 +541,7 @@ MWSE_SOL_CACHE_TYPE_BODY(TES3::AnimationGroup);
 MWSE_SOL_CACHE_TYPE_BODY(TES3::Apparatus);
 MWSE_SOL_CACHE_TYPE_BODY(TES3::Armor);
 MWSE_SOL_CACHE_TYPE_BODY(TES3::BaseObject);
+MWSE_SOL_CACHE_TYPE_BODY(TES3::Birthsign);
 MWSE_SOL_CACHE_TYPE_BODY(TES3::BodyPart);
 MWSE_SOL_CACHE_TYPE_BODY(TES3::Book);
 MWSE_SOL_CACHE_TYPE_BODY(TES3::Cell);
