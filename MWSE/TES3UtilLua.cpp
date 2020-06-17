@@ -803,7 +803,7 @@ namespace mwse {
 			}
 
 			// Did we get any results?
-			if (rayTestCache->results.filledCount == 0) {
+			if (rayTestCache->results.empty()) {
 				return sol::nil;
 			}
 
@@ -811,9 +811,8 @@ namespace mwse {
 			auto distanceScale = 1.0 / direction.value().length();
 			auto skinnedCorrection = (maxDistance != 0.0) ? maxDistance : 1.0;
 
-			for (int i = 0; i < rayTestCache->results.filledCount; i++) {
+			for (auto& r : rayTestCache->results) {
 				// Adjust distance as if direction was not normalized.
-				auto r = rayTestCache->results.storage[i];
 				r->distance *= distanceScale;
 
 				// Skinned nodes only have usable scaled distance data.
@@ -835,16 +834,15 @@ namespace mwse {
 
 				// Go through and clone the results in a way that will play nice.
 				// Skip any results that have a skinInstance
-				for (int i = 0; i < rayTestCache->results.filledCount; i++) {
-					auto r = rayTestCache->results.storage[i];
+				for (auto& r : rayTestCache->results) {
 					if (r->object->isInstanceOfType(NI::RTTIStaticPtr::NiTriShape)) {
 						auto node = static_cast<const NI::TriShape*>(r->object);
 						if (!node->skinInstance) {
-							results.add(rayTestCache->results.storage[i]);
+							results.add(r);
 						}
 					}
 					else {
-						results.add(rayTestCache->results.storage[i]);
+						results.add(r);
 					}
 				}
 
@@ -864,15 +862,15 @@ namespace mwse {
 				// Treat results as normal
 				// Are we looking for a single result?
 				if (rayTestCache->pickType == NI::PickType::FIND_FIRST) {
-					return sol::make_object(state, rayTestCache->results.storage[0]);
+					return sol::make_object(state, rayTestCache->results[0]);
 				}
 
 				// We're now in multi-result mode. We'll store these in a table.
 				sol::table results = state.create_table();
 
 				// Go through and clone the results in a way that will play nice.
-				for (int i = 0; i < rayTestCache->results.filledCount; i++) {
-					results.add(rayTestCache->results.storage[i]);
+				for (auto& r : rayTestCache->results) {
+					results.add(r);
 				}
 
 				return results;
@@ -2750,7 +2748,7 @@ namespace mwse {
 					}
 
 					// Remove transfer items without data first.
-					int countWithoutVariables = stackCount - (fromStack->variables ? fromStack->variables->endIndex : 0);
+					int countWithoutVariables = stackCount - (fromStack->variables ? fromStack->variables->getEndIndex() : 0);
 					if (countWithoutVariables > 0) {
 						int amountToTransfer = std::min(countWithoutVariables, itemsLeftToTransfer);
 						toActor->inventory.addItem(toMobile, item, amountToTransfer, false, nullptr);
@@ -2771,15 +2769,15 @@ namespace mwse {
 
 						if (fromStack->variables) {
 							// We need to unequip the item first.
-							auto removedEquipStack = fromActor->unequipItem(item, false, fromMobile, false, fromStack->variables->storage[0]);
+							auto removedEquipStack = fromActor->unequipItem(item, false, fromMobile, false, fromStack->variables->at(0));
 							if (removedEquipStack == nullptr) {
 								// If nothing was returned then the item wasn't equipped. So transfer using the first data.
-								itemDataRef = &fromStack->variables->storage[0];
+								itemDataRef = &fromStack->variables->at(0);
 							}
 							else {
 								// Item was unequipped, but remains the first item? Preserve the item data.
-								if (fromStack->variables && fromStack->variables->storage[0] == removedEquipStack->variables) {
-									itemDataRef = &fromStack->variables->storage[0];
+								if (fromStack->variables && fromStack->variables->at(0) == removedEquipStack->variables) {
+									itemDataRef = &fromStack->variables->at(0);
 								}
 
 								// Clean up after our check and manually delete.
@@ -2903,9 +2901,9 @@ namespace mwse {
 
 			if (!stack->variables) {
 				// Create array required to hold ItemData.
-				stack->variables = TES3::TArray<TES3::ItemData>::create();
+				stack->variables = new NI::TArray<TES3::ItemData*>();
 			}
-			else if (stack->count <= stack->variables->filledCount) {
+			else if (stack->count <= stack->variables->getFilledCount()) {
 				// All items already have ItemData.
 				return nullptr;
 			}

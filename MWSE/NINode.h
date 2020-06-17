@@ -1,12 +1,11 @@
 #pragma once
 
 #include "NIAVObject.h"
-#include "TES3Collections.h"
 #include "NIDefines.h"
 
 namespace NI {
 	struct Node : AVObject {
-		TES3::TArray<AVObject> children; // 0x90
+		TArray<Pointer<AVObject>> children; // 0x90
 		DynamicEffectLinkedList effectList; // 0xA8
 
 		Node();

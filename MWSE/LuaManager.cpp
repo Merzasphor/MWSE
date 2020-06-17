@@ -118,7 +118,6 @@
 #include "TES3MagicSourceInstanceLua.h"
 #include "TES3StaticLua.h"
 #include "TES3StatisticLua.h"
-#include "TES3TArrayLua.h"
 #include "TES3UIElementLua.h"
 #include "TES3UIInventoryTileLua.h"
 #include "TES3UIManagerLua.h"
@@ -513,7 +512,6 @@ namespace mwse {
 			bindTES3SpellList();
 			bindTES3Static();
 			bindTES3Statistic();
-			bindTES3TArray();
 			bindTES3Vectors();
 			bindTES3Weapon();
 			bindTES3Weather();
@@ -2561,7 +2559,7 @@ namespace mwse {
 			// Overwritten code.
 			int result = gameFile->writeChunkData(tag, data, size);
 
-			TES3::ItemData * itemData = currentlySavingInventoryIterator->current->data->variables->storage[currentlySavingInventoyItemDataIndex];
+			TES3::ItemData * itemData = currentlySavingInventoryIterator->current->data->variables->at(currentlySavingInventoyItemDataIndex);
 			if (itemData->luaData) {
 				sol::table table = itemData->luaData->data;
 

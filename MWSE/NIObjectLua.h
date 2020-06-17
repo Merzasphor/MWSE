@@ -34,6 +34,7 @@ namespace mwse {
 			));
 
 			// Basic function binding.
+			usertypeDefinition.set("getGameReference", &NI::ObjectNET::getTes3Reference_lua);
 			usertypeDefinition.set("prependController", &NI::ObjectNET::prependController);
 			usertypeDefinition.set("removeController", &NI::ObjectNET::removeController);
 			usertypeDefinition.set("removeAllControllers", &NI::ObjectNET::removeAllControllers);

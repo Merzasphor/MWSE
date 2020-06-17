@@ -28,7 +28,7 @@ namespace mwse {
 			usertypeDefinition.set("switchIndex", sol::property(
 				[](NI::SwitchNode& self) { return self.switchIndex; },
 				[](NI::SwitchNode& self, int index) {
-					if (index < 0 || index > (self.children.filledCount-1) || self.children.storage[index] == nullptr) {
+					if (index < 0 || self.children[index] == nullptr) {
 						throw std::exception("Attempted to set switchIndex beyond bounds!");
 					}
 					self.switchIndex = index;

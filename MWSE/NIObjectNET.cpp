@@ -1,5 +1,13 @@
 #include "NIObjectNET.h"
 
+#include "NIAVObject.h"
+#include "NIExtraData.h"
+#include "NINode.h"
+
+#include "TES3Reference.h"
+
+#include "LuaUtil.h"
+
 namespace NI {
 	const auto NI_ObjectNET_prependController = reinterpret_cast<void(__thiscall*)(const ObjectNET*, TimeController*)>(0x6EA3E0);
 	const auto NI_ObjectNET_removeController = reinterpret_cast<void(__thiscall*)(const ObjectNET*, TimeController*)>(0x6EA450);
@@ -21,5 +29,23 @@ namespace NI {
 
 	void ObjectNET::setName(const char* name) {
 		NI_ObjectNET_setName(this, name);
+	}
+
+	TES3::Reference* ObjectNET::getTes3Reference(bool searchParents) {
+		for (auto ed = extraData; ed; ed = ed->next) {
+			if (ed->isOfType(RTTIStaticPtr::TES3ObjectExtraData)) {
+				return static_cast<Tes3ExtraData*>(ed)->reference;
+			}
+		}
+
+		if (searchParents && isInstanceOfType(RTTIStaticPtr::NiAVObject) && static_cast<AVObject*>(this)->parentNode) {
+			return static_cast<AVObject*>(this)->parentNode->getTes3Reference(true);
+		}
+
+		return nullptr;
+	}
+
+	sol::object ObjectNET::getTes3Reference_lua(sol::optional<bool> searchParents) {
+		return mwse::lua::makeLuaObject(getTes3Reference(searchParents.value_or(false)));
 	}
 }
