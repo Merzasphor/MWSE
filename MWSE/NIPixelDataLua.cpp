@@ -2,7 +2,6 @@
 
 #include "NIObjectLua.h"
 
-#include "sol.hpp"
 #include "Log.h"
 
 #include "LuaManager.h"
@@ -104,6 +103,43 @@ namespace mwse {
 
 					// Indicate the pixel data has changed.
 					self.revisionID++;
+				};
+				usertypeDefinition["fill"] = [](NI::PixelData& self, sol::table data, sol::optional<unsigned int> mipMapLevel) {
+					unsigned int level = mipMapLevel.value_or(1) - 1;
+					if (level < 0 || level >= self.mipMapLevels) {
+						throw std::invalid_argument("Invalid mip level.");
+					}
+					
+					if (self.bytesPerPixel == 3) {
+						NI::PixelRGB pixel{
+							unsigned char(255.0 * double(data.get_or(1, 0.0)) + 0.5),
+							unsigned char(255.0 * double(data.get_or(2, 0.0)) + 0.5),
+							unsigned char(255.0 * double(data.get_or(3, 0.0)) + 0.5),
+						};
+
+						size_t pixelCount = self.widths[level] * self.heights[level];
+						NI::PixelRGB* dest = reinterpret_cast<NI::PixelRGB*>(self.pixels + self.offsets[level]);
+						for (size_t i = 1; i <= pixelCount; ++i) {
+							*dest++ = pixel;
+						}
+					}
+					else if (self.bytesPerPixel == 4) {
+						NI::PixelRGBA pixel{
+							unsigned char(255.0 * double(data.get_or(1, 0.0)) + 0.5),
+							unsigned char(255.0 * double(data.get_or(2, 0.0)) + 0.5),
+							unsigned char(255.0 * double(data.get_or(3, 0.0)) + 0.5),
+							unsigned char(255.0 * double(data.get_or(4, 1.0)) + 0.5),
+						};
+
+						size_t pixelCount = self.widths[level] * self.heights[level];
+						NI::PixelRGBA* dest = reinterpret_cast<NI::PixelRGBA*>(self.pixels + self.offsets[level]);
+						for (size_t i = 1; i <= pixelCount; ++i) {
+							*dest++ = pixel;
+						}
+					}
+					else {
+						throw std::runtime_error("Pixel data does not support 3 or 4-byte pixel values.");
+					}
 				};
 			}
 		}

@@ -1,6 +1,5 @@
 #include "TES3WorldControllerLua.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
@@ -63,6 +62,10 @@ namespace mwse {
 				usertypeDefinition["deadFloatScale"] = &TES3::WorldController::deadFloatScale;
 				usertypeDefinition["deltaTime"] = &TES3::WorldController::deltaTime;
 				usertypeDefinition["difficulty"] = &TES3::WorldController::difficulty;
+				usertypeDefinition["enchantedItemEffect"] = &TES3::WorldController::enchantedItemEffect;
+				usertypeDefinition["enchantedItemEffectCreated"] = &TES3::WorldController::enchantedItemEffectCreated;
+				usertypeDefinition["enchantedItemEffectTextures"] = &TES3::WorldController::enchantedItemEffectTextures;
+				usertypeDefinition["flagEventMenuModeOff"] = &TES3::WorldController::flagEventMenuModeOff;
 				usertypeDefinition["flagEventMenuModeOff"] = &TES3::WorldController::flagEventMenuModeOff;
 				usertypeDefinition["flagEventMenuModeOn"] = &TES3::WorldController::flagEventMenuModeOn;
 				usertypeDefinition["flagLevitationDisabled"] = &TES3::WorldController::flagLevitationDisabled;

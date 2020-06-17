@@ -1,10 +1,5 @@
 #pragma once
 
-#include <list>
-#include <unordered_set>
-
-#include "sol.hpp"
-
 namespace mwse {
 	namespace lua {
 		struct Timer;

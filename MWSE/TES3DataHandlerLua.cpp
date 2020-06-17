@@ -1,16 +1,26 @@
 #include "TES3DataHandlerLua.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
 
+#include "TES3Actor.h"
+#include "TES3Birthsign.h"
 #include "TES3Cell.h"
+#include "TES3Class.h"
 #include "TES3DataHandler.h"
+#include "TES3Dialogue.h"
 #include "TES3DialogueInfo.h"
 #include "TES3GlobalVariable.h"
 #include "TES3MagicEffectController.h"
 #include "TES3Reference.h"
 #include "TES3Script.h"
 #include "TES3Sound.h"
+#include "TES3Race.h"
+#include "TES3Region.h"
+#include "TES3Skill.h"
+#include "TES3SoundGenerator.h"
+#include "TES3Sound.h"
+#include "TES3Spell.h"
+#include "TES3MagicEffect.h"
 
 #include "NINode.h"
 #include "NISourceTexture.h"
@@ -49,14 +59,12 @@ namespace mwse {
 				// Basic function binding.
 				usertypeDefinition["addNewObject"] = &TES3::NonDynamicData::addNewObject;
 				usertypeDefinition["deleteObject"] = &TES3::NonDynamicData::deleteObject;
-
-				// Functions that need to be wrapped.
-				usertypeDefinition["findDialogue"] = [](TES3::NonDynamicData& self, const char* id) { return self.findDialogue(id); };
-				usertypeDefinition["findFirstCloneOfActor"] = [](TES3::NonDynamicData& self, const char* id) { return self.findFirstCloneOfActor(id); };
-				usertypeDefinition["findGlobalVariable"] = [](TES3::NonDynamicData& self, const char* id) { return self.findGlobalVariable(id); };
-				usertypeDefinition["findScript"] = [](TES3::NonDynamicData& self, const char* id) { return self.findScriptByName(id); };
-				usertypeDefinition["findSound"] = [](TES3::NonDynamicData& self, const char* id) { return self.findSound(id); };
-				usertypeDefinition["resolveObject"] = [](TES3::NonDynamicData& self, const char* id) { return self.resolveObject(id); };
+				usertypeDefinition["findDialogue"] = &TES3::NonDynamicData::findDialogue;
+				usertypeDefinition["findFirstCloneOfActor"] = &TES3::NonDynamicData::findFirstCloneOfActor;
+				usertypeDefinition["findGlobalVariable"] = &TES3::NonDynamicData::findGlobalVariable;
+				usertypeDefinition["findScript"] = &TES3::NonDynamicData::findScriptByName;
+				usertypeDefinition["findSound"] = &TES3::NonDynamicData::findSound;
+				usertypeDefinition["resolveObject"] = &TES3::NonDynamicData::resolveObject;
 
 				// Provide legacy access to magic effects table.
 				usertypeDefinition["magicEffects"] = sol::readonly_property(
@@ -101,15 +109,17 @@ namespace mwse {
 				usertypeDefinition["currentAmbientWaterSound"] = &TES3::DataHandler::currentAmbientWaterSound;
 				usertypeDefinition["currentCell"] = sol::readonly_property(&TES3::DataHandler::currentCell);
 				usertypeDefinition["currentInteriorCell"] = sol::readonly_property(&TES3::DataHandler::currentInteriorCell);
+				//usertypeDefinition["dontThreadLoad"] = &TES3::DataHandler::dontThreadLoad;
 				usertypeDefinition["lastExteriorCell"] = sol::readonly_property(&TES3::DataHandler::lastExteriorCell);
 				usertypeDefinition["mainThread"] = sol::readonly_property(&TES3::DataHandler::mainThread);
 				usertypeDefinition["mainThreadId"] = sol::readonly_property(&TES3::DataHandler::mainThreadID);
 				usertypeDefinition["nonDynamicData"] = sol::readonly_property(&TES3::DataHandler::nonDynamicData);
+				//usertypeDefinition["suppressThreadLoad"] = &TES3::DataHandler::suppressThreadLoad;
 				usertypeDefinition["threadSleepTime"] = sol::readonly_property(&TES3::DataHandler::threadSleepTime);
 				usertypeDefinition["useCellTransitionFader"] = &TES3::DataHandler::useCellTransitionFader;
+				usertypeDefinition["worldLandscapeRoot"] = sol::readonly_property(&TES3::DataHandler::worldLandscapeRoot);
 				usertypeDefinition["worldObjectRoot"] = sol::readonly_property(&TES3::DataHandler::worldObjectRoot);
 				usertypeDefinition["worldPickObjectRoot"] = sol::readonly_property(&TES3::DataHandler::worldPickObjectRoot);
-				usertypeDefinition["worldLandscapeRoot"] = sol::readonly_property(&TES3::DataHandler::worldLandscapeRoot);
 
 				// Indirect bindings to unions and arrays.
 				usertypeDefinition["exteriorCells"] = sol::readonly_property([](TES3::DataHandler& self) { return std::ref(self.exteriorCellData); });

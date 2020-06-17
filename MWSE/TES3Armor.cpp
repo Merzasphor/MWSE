@@ -1,7 +1,5 @@
 #include "TES3Armor.h"
 
-#include "sol.hpp"
-
 #include "LuaManager.h"
 
 #include "LuaCalcArmorRatingEvent.h"

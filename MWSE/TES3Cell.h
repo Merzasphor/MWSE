@@ -88,7 +88,7 @@ namespace TES3 {
 		};
 
 		char * name; // 0x10
-		NI::Node * pickObjectsRoot;
+		NI::Node * pickObjectsRoot; // 0x14
 		unsigned int cellFlags; // 0x18
 		union {
 			struct {
@@ -104,7 +104,7 @@ namespace TES3 {
 				float fogDensity; // 0xC
 			} interior;
 		} VariantData; // 0x1C
-		NI::Node * staticObjectsRoot;
+		NI::Node * staticObjectsRoot; // 0x2C
 		ReferenceList actors; // 0x30
 		ReferenceList persistentRefs; // 0x40
 		Iterator<MovedRef> * movedReferences; // 0x50

@@ -33,6 +33,8 @@ namespace mwse {
 				self.detachChildAt(&returnedChild, index);
 				return returnedChild;
 			};
+			usertypeDefinition["attachEffect"] = &NI::Node::attachEffect;
+			usertypeDefinition["detachEffect"] = &NI::Node::detachEffect;
 
 			// Functions that need their results wrapped.
 			usertypeDefinition["getEffect"] = [](NI::Node& self, int type) { return self.getEffect(type); };

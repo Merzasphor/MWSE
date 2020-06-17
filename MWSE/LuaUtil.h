@@ -1,15 +1,11 @@
 #pragma once
 
-#include "sol.hpp"
-
 #include "NIDefines.h"
 
 #include "TES3Defines.h"
 
 #include "TES3DataHandler.h"
 #include "TES3Vectors.h"
-
-#include <unordered_map>
 
 namespace mwse {
 	namespace lua {
@@ -48,6 +44,7 @@ namespace mwse {
 			return value;
 		}
 
+		TES3::BaseObject* getOptionalParamBaseObject(sol::optional<sol::table> maybeParams, const char* key);
 		TES3::Script* getOptionalParamExecutionScript(sol::optional<sol::table> maybeParams);
 		TES3::Reference* getOptionalParamExecutionReference(sol::optional<sol::table> maybeParams);
 		TES3::Script* getOptionalParamScript(sol::optional<sol::table> maybeParams, const char* key);

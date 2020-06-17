@@ -1,9 +1,7 @@
 #pragma once
 
-#include <string>
 #include "TES3UIDefines.h"
 
-#include "sol_forward.hpp"
 
 namespace mwse {
 	namespace lua {

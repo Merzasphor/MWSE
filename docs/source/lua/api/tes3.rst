@@ -11,6 +11,7 @@ Values
 
     tes3/dataHandler
     tes3/game
+    tes3/installDirectory
     tes3/mobilePlayer
     tes3/player
     tes3/worldController
@@ -37,9 +38,12 @@ Functions
     tes3/fadeIn
     tes3/fadeOut
     tes3/fadeTo
+    tes3/findClosestExteriorReferenceOfObject
     tes3/findDialogue
     tes3/findGlobal
     tes3/findGMST
+    tes3/force1stPerson
+    tes3/force3rdPerson
     tes3/getActiveCells
     tes3/getAttachment
     tes3/getAttributeName
@@ -61,6 +65,7 @@ Functions
     tes3/getJournalIndex
     tes3/getLanguage
     tes3/getLanguageCode
+    tes3/getLastExteriorPosition
     tes3/getLocked
     tes3/getLockLevel
     tes3/getMagicEffect
@@ -93,6 +98,7 @@ Functions
     tes3/iterateObjects
     tes3/loadGame
     tes3/loadMesh
+    tes3/loadSourceTexture
     tes3/lock
     tes3/loopTArray
     tes3/menuMode
@@ -131,6 +137,7 @@ Functions
     tes3/skipAnimationFrame
     tes3/streamMusic
     tes3/tapKey
+    tes3/togglePOV
     tes3/transferItem
     tes3/triggerCrime
     tes3/unhammerKey

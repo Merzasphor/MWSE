@@ -2,7 +2,6 @@
 
 #include "TES3Defines.h"
 
-#include "sol.hpp"
 
 namespace TES3 {
 	struct ItemDataVanilla {

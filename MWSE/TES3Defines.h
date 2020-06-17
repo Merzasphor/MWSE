@@ -27,6 +27,7 @@ namespace TES3 {
 	struct AudioController;
 	struct BaseObject;
 	struct BaseObjectVirtualTable;
+	struct Birthsign;
 	struct BodyPart;
 	struct BodyPartManager;
 	struct Book;

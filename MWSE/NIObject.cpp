@@ -5,14 +5,7 @@
 #include "NIRTTI.h"
 #include "NIStream.h"
 
-#include <cstring>
-
-#include "TES3Util.h"
-
-#include "sol.hpp"
-
-#include <unordered_map>
-#include <mutex>
+#include "MemoryUtil.h"
 
 #include "NIAmbientLight.h"
 #include "NIAVObject.h"

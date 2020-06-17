@@ -1,6 +1,5 @@
 #include "TES3CombatSessionLua.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
@@ -35,6 +34,7 @@ namespace mwse {
 
 			// Basic function binding.
 			usertypeDefinition["selectAlchemyWithEffect"] = &TES3::CombatSession::chooseAlchemyWithEffect;
+			usertypeDefinition["changeEquipment"] = &TES3::CombatSession::changeEquipment;
 		}
 	}
 }

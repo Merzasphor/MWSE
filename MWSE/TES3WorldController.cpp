@@ -9,9 +9,8 @@
 #include "TES3UIManager.h"
 #include "TES3WeatherController.h"
 
+#include "MemoryUtil.h"
 #include "TES3Util.h"
-
-#include <string>
 
 #define TES3_WorldController_mainLoopBeforeInput 0x40F610
 #define TES3_WorldController_getMobilePlayer 0x40FF20

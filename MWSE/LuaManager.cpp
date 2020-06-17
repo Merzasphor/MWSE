@@ -10,8 +10,6 @@
 #include "MWSEDefs.h"
 #include "BuildDate.h"
 
-#include "sol.hpp"
-
 #include "LuaTimer.h"
 
 #include "LuaScript.h"
@@ -69,6 +67,7 @@
 #include "TES3ArmorLua.h"
 #include "TES3AttachmentLua.h"
 #include "TES3AudioControllerLua.h"
+#include "TES3BirthsignLua.h"
 #include "TES3BodyPartLua.h"
 #include "TES3BookLua.h"
 #include "TES3CellLua.h"
@@ -151,6 +150,7 @@
 #include "LuaActivationTargetChangedEvent.h"
 #include "LuaAddTopicEvent.h"
 #include "LuaAttackEvent.h"
+#include "LuaBarterOfferEvent.h"
 #include "LuaCalcHitArmorPieceEvent.h"
 #include "LuaCalcBarterPriceEvent.h"
 #include "LuaCalcHitChanceEvent.h"
@@ -189,7 +189,9 @@
 #include "LuaMouseWheelEvent.h"
 #include "LuaMusicSelectTrackEvent.h"
 #include "LuaObjectInvalidatedEvent.h"
+#include "LuaPostInfoResponseEvent.h"
 #include "LuaPotionBrewedEvent.h"
+#include "LuaPreLevelUpEvent.h"
 #include "LuaProjectileExpireEvent.h"
 #include "LuaRestInterruptEvent.h"
 #include "LuaSimulateEvent.h"
@@ -206,11 +208,7 @@
 #include "LuaWeatherTransitionFinishedEvent.h"
 #include "LuaWeatherTransitionStartedEvent.h"
 
-#include "windows.h"
-#include "psapi.h"
-
-#include <filesystem>
-#include <unordered_map>
+#include "NITextureEffectLua.h"
 
 #define TES3_HOOK_RUNSCRIPT_LUACHECK 0x5029A4
 #define TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE 0x6
@@ -388,6 +386,73 @@ namespace mwse {
 				*x = 4;
 			};
 
+			luaState["os"]["getClipboardText"] = [](sol::this_state ts) -> sol::optional<std::string> {
+				if (!IsClipboardFormatAvailable(CF_TEXT)) {
+					return sol::optional<std::string>();
+				}
+
+				if (!OpenClipboard(TES3::Game::get()->windowHandle)) {
+					return sol::optional<std::string>();
+				}
+
+				auto clipboardHandle = GetClipboardData(CF_TEXT);
+				if (clipboardHandle == nullptr) {
+					CloseClipboard();
+					return sol::optional<std::string>();
+				}
+
+				const char* clipboardText = static_cast<const char*>(GlobalLock(clipboardHandle));
+				if (clipboardText == nullptr) {
+					CloseClipboard();
+					return sol::optional<std::string>();
+				}
+
+				auto result = std::move(std::string(clipboardText));
+
+				GlobalUnlock(clipboardHandle);
+				CloseClipboard();
+
+				return std::move(result);
+			};
+
+			luaState["os"]["setClipboardText"] = [](sol::optional<std::string> text) -> bool {
+				if (!OpenClipboard(TES3::Game::get()->windowHandle)) {
+					return false;
+				}
+
+				if (!EmptyClipboard()) {
+					CloseClipboard();
+					return false;
+				}
+
+				// Allow just clearing the text.
+				if (!text) {
+					CloseClipboard();
+					return true;
+				}
+
+				const auto stringSize = text.value().length() + 1;
+				auto clipBuffer = GlobalAlloc(GMEM_MOVEABLE, stringSize);
+				if (clipBuffer == nullptr) {
+					CloseClipboard();
+					return false;
+				}
+
+				char* buffer = (char*)GlobalLock(clipBuffer);
+				if (buffer == nullptr) {
+					CloseClipboard();
+					return false;
+				}
+
+				strcpy_s(buffer, stringSize, text.value().c_str());
+
+				GlobalUnlock(clipBuffer);
+				SetClipboardData(CF_TEXT, clipBuffer);
+				CloseClipboard();
+
+				return true;
+			};
+
 			// Bind TES3 data types.
 			bindTES3ActionData();
 			bindTES3Activator();
@@ -397,6 +462,7 @@ namespace mwse {
 			bindTES3Armor();
 			bindTES3Attachment();
 			bindTES3AudioController();
+			bindTES3Birthsign();
 			bindTES3BodyPart();
 			bindTES3Book();
 			bindTES3Cell();
@@ -464,6 +530,7 @@ namespace mwse {
 			bindNICamera();
 			bindNICollisionSwitch();
 			bindNIColor();
+			bindNIDynamicEffect();
 			bindNIGeometryData();
 			bindNINode();
 			bindNIObject();
@@ -473,6 +540,7 @@ namespace mwse {
 			bindNIProperties();
 			bindNISourceTexture();
 			bindNISwitchNode();
+			bindNITextureEffect();
 			bindNITimeController();
 			bindNITriShape();
 
@@ -1096,15 +1164,13 @@ namespace mwse {
 		//
 		// Patch ui_reenableMenuDialogue function to exit menumode if there is no dialogue menu.
 		//
-		void __cdecl ReenableMenuDialogue()
-		{
+		void __cdecl ReenableMenuDialogue() {
 			TES3::UI::Element* dialog = TES3::UI::findMenu(TES3::UI::registerID("MenuDialog"));
-			if (dialog != nullptr)
-			{
-				dialog->setVisible(true);
+			if (dialog != nullptr) {
+				// Call the original function
+				reinterpret_cast<void(__cdecl*)()>(0x5C0B60)();
 			}
-			else
-			{
+			else {
 				TES3::UI::leaveMenuMode();
 			}
 		}
@@ -1117,6 +1183,17 @@ namespace mwse {
 			player->exerciseSkill(skill, progress);
 		}
 
+		//
+		// Pre level up event.
+		//
+
+		void __cdecl OnPreLevelUp(TES3::UI::Element* e) {
+			if (event::PreLevelUpEvent::getEventEnabled()) {
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PreLevelUpEvent());
+			}
+			reinterpret_cast<void(__cdecl*)(TES3::UI::Element*)>(0x5D90A0)(e);
+		}
+		
 		//
 		// Level up event.
 		//
@@ -1886,25 +1963,41 @@ namespace mwse {
 			}
 		}
 
-		void __fastcall OnSkillTrained(TES3::SkillStatistic * skill, DWORD _UNDEFINED_, float delta, bool capAt0, bool capAt100) {
+		// Skill and Id of the skill trained.
+		static TES3::SkillStatistic * OnSkillTrained_Skill;
+		static int OnSkillTrained_SkillId = -1;
+
+		void __fastcall OnSkillTrained_GetSkill(TES3::SkillStatistic * skill, DWORD _UNDEFINED_, float delta, bool capAt0, bool capAt100) {
 			skill->modSkillCapped(delta, capAt0, capAt100);
 
-			int skillId = -1;
+			OnSkillTrained_SkillId = -1;
 			auto macp = TES3::WorldController::get()->getMobilePlayer();
 			for (int i = TES3::SkillID::FirstSkill; i <= TES3::SkillID::LastSkill; i++) {
 				if (&macp->skills[i] == skill) {
-					skillId = i;
+					OnSkillTrained_SkillId = i;
 					break;
 				}
 			}
+			OnSkillTrained_Skill = skill;
+		}
+		
+		// OnSkillTrained_GetSkill is too soon for our event, because some relevant data structures haven't been updated yet.
+		// Specifically, levelUpProgress, and levelupsPerAttribute are not updated until later.
+		// Trigger the event when the UI updates instead, which happens immediately after levelupsPerAttribute is updated.
 
-			if (skillId == -1) {
+		void __cdecl OnSkillTrained_UpdateStatsPane() {
+			TES3::UI::updateStatsPane();
+
+			if (OnSkillTrained_SkillId == -1) {
 				return;
 			}
 
 			if (event::SkillRaisedEvent::getEventEnabled()) {
-				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SkillRaisedEvent(skillId, skill->base, "training"));
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SkillRaisedEvent(OnSkillTrained_SkillId, OnSkillTrained_Skill->base, "training"));
 			}
+			
+			// This should be unnecessary, but let's be extra careful.
+			OnSkillTrained_SkillId = -1;
 		}
 
 		void LuaManager::executeMainModScripts(const char* path, const char* filename) {
@@ -2118,6 +2211,10 @@ namespace mwse {
 			}
 
 			script->doCommand(compiler, command, source, reference, variables, info, dialogue);
+
+			if (mwse::lua::event::PostInfoResponseEvent::getEventEnabled()) {
+				mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::PostInfoResponseEvent(command, reference, variables, dialogue, info));
+			}
 		}
 
 		//
@@ -2610,6 +2707,17 @@ namespace mwse {
 			crimeEvent->dtor();
 		}
 
+		const auto TES3_GameBarterOffer = reinterpret_cast<bool(__stdcall*)()>(0x5A66C0);
+		bool __stdcall GameBarterOffer() {
+			bool result = TES3_GameBarterOffer();
+			TES3::MobileActor* mact = TES3::UI::getServiceActor();
+			if (lua::event::BarterOfferEvent::getEventEnabled()) {
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new lua::event::BarterOfferEvent(mact, result));
+			}
+
+			return result;
+		}
+
 		// Write errors to mwse.log as well.WINBASEAPI
 		BOOL WINAPI WriteToWarningsFile(HANDLE hFile, LPCVOID lpBuffer, DWORD nNumberOfBytesToWrite, LPDWORD lpNumberOfBytesWritten, LPOVERLAPPED lpOverlapped) {
 			// Overwritten code.
@@ -2624,7 +2732,7 @@ namespace mwse {
 
 			return result;
 		}
-
+		
 		//
 		//
 		//
@@ -2977,6 +3085,9 @@ namespace mwse {
 			// Event: Brew potion.
 			genCallEnforced(0x59D2A9, 0x6313E0, reinterpret_cast<DWORD>(OnBrewPotion));
 
+			// Event: Player is about to level.
+			genCallEnforced(0x5DA091, 0x5D90A0, reinterpret_cast<DWORD>(OnPreLevelUp));
+
 			// Event: Player leveled.
 			genCallEnforced(0x5DA620, 0x626220, reinterpret_cast<DWORD>(OnLevelUp));
 
@@ -3074,7 +3185,8 @@ namespace mwse {
 			genCallEnforced(0x5F8634, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuName
 			genCallEnforced(0x5FCA28, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuOptions
 			genCallEnforced(0x5FF250, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuOptions
-			genCallEnforced(0x600174, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuPersuasion
+			genCallEnforced(0x60016F, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuPersuasion, without MCP Persuasion Improvements
+			genCallEnforced(0x600174, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuPersuasion, with MCP Persuation Improvements
 			genCallEnforced(0x601D3A, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuPrefs
 			genCallEnforced(0x60352C, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuQuantity
 			genCallEnforced(0x603777, 0x583B70, reinterpret_cast<DWORD>(OnUICreatedAfterPerformLayout)); // MenuQuantity
@@ -3183,6 +3295,13 @@ namespace mwse {
 			genCallEnforced(0x4CF9E7, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
 			genCallEnforced(0x4CFB43, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
 			genCallEnforced(0x635236, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
+
+			// Event: Mobile Sneak Detection.
+			auto mobController_0x24DetectSneak = &TES3::MobController_0x24::detectSneak;
+			genCallEnforced(0x558975, 0x570600, *reinterpret_cast<DWORD*>(&mobController_0x24DetectSneak));
+			genCallEnforced(0x570A43, 0x570600, *reinterpret_cast<DWORD*>(&mobController_0x24DetectSneak));
+			genCallEnforced(0x570C0B, 0x570600, *reinterpret_cast<DWORD*>(&mobController_0x24DetectSneak));
+			genCallEnforced(0x570E48, 0x570600, *reinterpret_cast<DWORD*>(&mobController_0x24DetectSneak));
 
 			// Event: Mobile added to controller.
 			auto mobControllerAddMob = &TES3::MobController::addMob;
@@ -3299,7 +3418,8 @@ namespace mwse {
 			// Event: Skill Raised.
 			genCallEnforced(0x4A28C6, 0x629FC0, reinterpret_cast<DWORD>(OnSkillRaisedBook));
 			genCallEnforced(0x56BCF2, 0x629FC0, reinterpret_cast<DWORD>(OnSkillRaisedProgress));
-			genCallEnforced(0x618355, 0x401060, reinterpret_cast<DWORD>(OnSkillTrained));
+			genCallEnforced(0x618355, 0x401060, reinterpret_cast<DWORD>(OnSkillTrained_GetSkill));
+			genCallEnforced(0x6183A1, 0x6266D0, reinterpret_cast<DWORD>(OnSkillTrained_UpdateStatsPane));
 
 			// Event: UI Refreshed.
 			genCallEnforced(0x6272F9, 0x649870, reinterpret_cast<DWORD>(OnRefreshedStatsPane)); // MenuStat_scroll_pane
@@ -3614,13 +3734,13 @@ namespace mwse {
 			genCallEnforced(0x4C7715, 0x4C1980, *reinterpret_cast<DWORD*>(&isSourcelessObject));
 
 			// Allow overriding body part assignment.
-			auto bodyPartManagerSetBodyPartForItem = &TES3::BodyPartManager::setBodyPartForItem;
-			genCallEnforced(0x4730DD, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
-			genCallEnforced(0x473CA6, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
-			genCallEnforced(0x4A12D0, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
-			genCallEnforced(0x4A3B8E, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
-			genCallEnforced(0x4D9F7C, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
-			genCallEnforced(0x4D9FBC, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForItem));
+			auto bodyPartManagerSetBodyPartForObject = &TES3::BodyPartManager::setBodyPartForObject;
+			genCallEnforced(0x4730DD, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForObject));
+			genCallEnforced(0x473CA6, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForObject));
+			genCallEnforced(0x4A12D0, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForObject));
+			genCallEnforced(0x4A3B8E, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForObject));
+			genCallEnforced(0x4D9F7C, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForObject));
+			genCallEnforced(0x4D9FBC, 0x473CB0, *reinterpret_cast<DWORD*>(&bodyPartManagerSetBodyPartForObject));
 
 			// Fix BPM constructor to always have a reference. 
 			auto bodyPartManagerConstructor = &TES3::BodyPartManager::ctor;
@@ -3650,6 +3770,9 @@ namespace mwse {
 			genCallEnforced(0x4EEFAA, 0x4F0CA0, *reinterpret_cast<DWORD*>(&baseObjectDestructor));
 			genCallEnforced(0x4F026F, 0x4F0CA0, *reinterpret_cast<DWORD*>(&baseObjectDestructor));
 			genCallEnforced(0x4F0C83, 0x4F0CA0, *reinterpret_cast<DWORD*>(&baseObjectDestructor));
+
+			// Raise event for barter attempts.
+			genCallEnforced(0x5A70CF, 0x5A66C0, reinterpret_cast<DWORD>(GameBarterOffer));
 
 			// Look for main.lua scripts in the usual directories.
 			executeMainModScripts("Data Files\\MWSE\\core");

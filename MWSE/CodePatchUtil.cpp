@@ -1,7 +1,5 @@
 #include "CodePatchUtil.h"
 
-#include <Windows.h>
-
 #include "Log.h"
 
 #define DEBUG_MCP_FEATURESET false

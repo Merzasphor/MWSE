@@ -1,7 +1,5 @@
 #pragma once
 
-#include <Windows.h>
-
 namespace mwse {
 	// Container for registers, flags, and other information to help with the
 	// native to MWSE code bridge.
@@ -73,4 +71,41 @@ namespace mwse {
 
 	// Code to determine what function an address calls.
 	DWORD getCallAddress(DWORD address);
+
+	namespace tes3 {
+		//
+		// Memory (de)allocation functions.
+		//
+		// Morrowind is compiled as a release build, and so typical new/delete/malloc/realloc/free
+		// calls will not pass debug checks. Anything that comes from or is passed to Morrowind that
+		// might be later freed needs to use these functions.
+		//
+
+		template <typename T>
+		inline constexpr T* _new(size_t count = 1) {
+			return reinterpret_cast<T * (__cdecl*)(size_t)>(0x727692)(sizeof(T) * count);
+		}
+
+		void* _new(size_t size);
+
+		template <typename T>
+		inline constexpr void _delete(T* address) {
+			const auto __delete = reinterpret_cast<void(__cdecl*)(T*)>(0x727530);
+			__delete(address);
+		}
+
+		void* realloc(void* address, size_t size);
+
+		void* malloc(size_t size);
+
+		template <typename T>
+		inline constexpr T* malloc() {
+			T* ret = reinterpret_cast<T*>(malloc(sizeof(T)));
+			memset(ret, 0, sizeof(T));
+			return ret;
+		}
+
+		void free(void* address);
+	}
 }
+

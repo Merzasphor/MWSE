@@ -1,7 +1,5 @@
 #include "TES3InputControllerLua.h"
 
-#include "sol.hpp"
-
 #include "LuaManager.h"
 
 #include "TES3InputController.h"
@@ -62,6 +60,9 @@ namespace mwse {
 				usertypeDefinition["isKeyDown"] = &TES3::InputController::isKeyDown;
 				usertypeDefinition["isKeyPressedThisFrame"] = &TES3::InputController::isKeyPressedThisFrame;
 				usertypeDefinition["isKeyReleasedThisFrame"] = &TES3::InputController::isKeyReleasedThisFrame;
+				usertypeDefinition["isMouseButtonDown"] = &TES3::InputController::isMouseButtonDown;
+				usertypeDefinition["isMouseButtonPressedThisFrame"] = &TES3::InputController::isMouseButtonPressedThisFrame;
+				usertypeDefinition["isMouseButtonReleasedThisFrame"] = &TES3::InputController::isMouseButtonReleasedThisFrame;
 			}
 		}
 	}

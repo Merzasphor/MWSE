@@ -2,16 +2,12 @@
 
 #include "NIObjectLua.h"
 
-#include "sol.hpp"
-
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
 #include "NIDefines.h"
 #include "NIRTTI.h"
 #include "NITriShape.h"
-
-#include <nonstd/span.hpp>
 
 namespace mwse {
 	namespace lua {

@@ -2,8 +2,6 @@
 
 #include "sol.hpp"
 
-#include <mutex>
-
 #include "TES3WeatherController.h"
 
 #include "TES3WeatherAsh.h"

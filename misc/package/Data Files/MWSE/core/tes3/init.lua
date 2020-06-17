@@ -87,14 +87,6 @@ function tes3.getAttachment(reference, attachment)
 	return reference and reference.attachments and reference.attachments[attachment]
 end
 
--- Get a reference's owner.
-function tes3.getOwner(reference)
-	local vars = tes3.getAttachment(reference, "variables")
-	if (vars) then
-		return vars.owner
-	end
-end
-
 -- Iterator to use TES3::Iterator in a for loop.
 function tes3.iterate(iterator)
 	local node = iterator.head

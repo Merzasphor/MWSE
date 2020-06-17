@@ -1,12 +1,11 @@
 #pragma once
 
-#include <stddef.h>
-#include <Windows.h>
-
 #include "NIDefines.h"
 #include "NIDirectionalLight.h"
 #include "NIRenderedTexture.h"
 #include "NIProperty.h"
+#include "NISourceTexture.h"
+#include "NITextureEffect.h"
 
 #include "TES3Defines.h"
 #include "TES3UIDefines.h"
@@ -305,9 +304,9 @@ namespace TES3 {
 		Fader * sunglareFader; // 0x35C
 		Fader * hitFader; // 0x360
 		Fader * werewolfFader; // 0x364
-		int unknown_0x368;
-		int unknown_0x36C;
-		int unknown_0x370;
+		bool enchantedItemEffectCreated; // 0x368
+		NI::Pointer<NI::TextureEffect> enchantedItemEffect; // 0x36C
+		NI::Pointer<NI::SourceTexture>* enchantedItemEffectTextures; // 0x370 // 32 elements in length.
 
 		// Get singleton.
 		_declspec (dllexport) static WorldController * get();

@@ -1,13 +1,6 @@
 #pragma once
 
-#include <unordered_map>
-#include <queue>
-
-#include <mutex>
-
 #include "TES3Util.h"
-
-#include "sol.hpp"
 
 #include "LuaBaseEvent.h"
 

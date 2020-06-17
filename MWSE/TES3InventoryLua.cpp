@@ -1,6 +1,5 @@
 #include "TES3InventoryLua.h"
 
-#include "sol.hpp"
 #include "LuaUtil.h"
 #include "LuaManager.h"
 
@@ -51,10 +50,11 @@ namespace mwse {
 				return sol::make_object(state, itemData.requiredRank);
 			}
 			else if (itemData.owner->objectType == TES3::ObjectType::NPC) {
+				// Unique case. Since we're returning 
 				auto& luaManager = mwse::lua::LuaManager::getInstance();
 				auto stateHandle = luaManager.getThreadSafeStateHandle();
 				sol::state& state = stateHandle.state;
-				return TES3::BaseObject::getOrCreateLuaObject(state, itemData.requiredVariable);
+				return sol::make_object(state, itemData.requiredVariable);
 			}
 
 			return sol::nil;
@@ -204,6 +204,7 @@ namespace mwse {
 				};
 				usertypeDefinition["dropItem"] = &TES3::Inventory::dropItem;
 				usertypeDefinition["calculateWeight"] = &TES3::Inventory::calculateContainedWeight;
+				usertypeDefinition["findItemStack"] = &TES3::Inventory::findItemStack;
 				usertypeDefinition["removeItem"] = [](TES3::Inventory& self, sol::table params) {
 					TES3::MobileActor * mact = getOptionalParamMobileActor(params, "mobile");
 					TES3::Item * item = getOptionalParamObject<TES3::Item>(params, "item");

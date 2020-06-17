@@ -108,8 +108,8 @@ namespace mwse {
 				usertypeDefinition["getActiveBodyPartNode"] = &TES3::BodyPartManager::getActiveBodyPartNode;
 				usertypeDefinition["removeEquippedLayers"] = &TES3::BodyPartManager::removeEquippedLayers;
 				usertypeDefinition["setActivePartData"] = &TES3::BodyPartManager::setActivePartData;
-				usertypeDefinition["setBodyPartByIdForItem"] = &TES3::BodyPartManager::setBodyPartByIdForItem;
-				usertypeDefinition["setBodyPartForItem"] = &TES3::BodyPartManager::setBodyPartForItem;
+				usertypeDefinition["setBodyPartByIdForObject"] = &TES3::BodyPartManager::setBodyPartByIdForObject;
+				usertypeDefinition["setBodyPartForObject"] = &TES3::BodyPartManager::setBodyPartForObject;
 				usertypeDefinition["updateForReference"] = &TES3::BodyPartManager::updateForReference;
 			}
 		}

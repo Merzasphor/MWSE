@@ -20,8 +20,6 @@
 
 #pragma once
 
-#include <ostream>
-
 namespace mwse
 {
 	namespace log

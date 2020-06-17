@@ -98,8 +98,8 @@ namespace TES3 {
 		NI::Node* getActiveBodyPartNode(ActiveBodyPart::Layer layer, ActiveBodyPart::Index index);
 
 		void setActivePartData(ActiveBodyPart::Layer layer, ActiveBodyPart::Index index, bool overwriteData = true, NI::Node* node = nullptr);
-		void setBodyPartForItem(Item* item, ActiveBodyPart::Index index, BodyPart* bodyPart, bool isFirstPerson = false);
-		void setBodyPartByIdForItem(Item* item, ActiveBodyPart::Index index, const char* bodyPartId, bool isFirstPerson = false);
+		void setBodyPartForObject(PhysicalObject* object, ActiveBodyPart::Index index, BodyPart* bodyPart, bool isFirstPerson = false);
+		void setBodyPartByIdForObject(PhysicalObject* object, ActiveBodyPart::Index index, const char* bodyPartId, bool isFirstPerson = false);
 
 		void removeEquippedLayers();
 

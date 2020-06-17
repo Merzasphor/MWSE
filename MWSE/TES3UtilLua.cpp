@@ -1,7 +1,5 @@
 #include "TES3UtilLua.h"
 
-#include <algorithm>
-#include "sol.hpp"
 #include "LuaManager.h"
 
 #include "TES3GameFile.h"
@@ -14,6 +12,7 @@
 #include "ScriptUtil.h"
 #include "CodePatchUtil.h"
 #include "LuaObject.h"
+#include "MemoryUtil.h"
 
 #include "NICamera.h"
 #include "NINode.h"
@@ -72,8 +71,6 @@
 #include "TES3WorldController.h"
 
 #include "BitUtil.h"
-
-#include <unordered_set>
 
 namespace mwse {
 	namespace lua {
@@ -1214,7 +1211,7 @@ namespace mwse {
 
 			// Do detection and the like.
 			bool forceDetection = getOptionalParam<bool>(params, "forceDetection", false);
-			auto controller = TES3::WorldController::get()->mobController->unknown_0x24;
+			auto controller = TES3::WorldController::get()->mobController->mobController_0x24;
 			if (!forceDetection && controller->detectPresence(crimeEvent.criminal)) {
 				controller->checkRadius(crimeEvent.victim, crimeEvent.witnesses);
 			}
@@ -1253,6 +1250,23 @@ namespace mwse {
 			}
 
 			return nullptr;
+		};
+
+		NI::Pointer<NI::SourceTexture> loadSourceTexture(const char* relativePath, sol::optional<bool> useCached) {
+			std::string path = "Textures\\";
+			path += relativePath;
+
+			if (useCached.value_or(true)) {
+				auto dataHandler = TES3::DataHandler::get();
+				if (dataHandler == nullptr) {
+					throw std::runtime_error("tes3dataHandler is not yet initialized.");
+				}
+				return dataHandler->loadSourceTexture(path.c_str());
+			}
+			else {
+				NI::SourceTexture::FormatPrefs prefs = { NI::SourceTexture::FormatPrefs::PixelLayout::PIX_DEFAULT, NI::SourceTexture::FormatPrefs::MipFlag::MIP_DEFAULT, NI::SourceTexture::FormatPrefs::AlphaFormat::ALPHA_DEFAULT };
+				return NI::SourceTexture::createFromPath(path.c_str(), &prefs);
+			}
 		}
 
 		bool playVoiceover(sol::table params) {
@@ -1929,8 +1943,49 @@ namespace mwse {
 				source = TES3::CompilerSource::Dialogue;
 			}
 
+			TES3::DataHandler::suppressThreadLoad = true;
 			script->doCommand(compiler, command, source, reference, variables, dialogueInfo, dialogue);
+			TES3::DataHandler::suppressThreadLoad = false;
+
 			return true;
+		}
+
+		bool force1stPerson() {
+			auto worldController = TES3::WorldController::get();
+			if (worldController == nullptr) {
+				throw std::runtime_error("Function called before world controller is initialized.");
+			}
+
+			auto macp = worldController->getMobilePlayer();
+			if (macp == nullptr) {
+				throw std::runtime_error("Function called while mobile player is unavailable.");
+			}
+
+			auto animData = macp->animationData.asPlayer;
+			if (animData == nullptr) {
+				throw std::runtime_error("Function called while mobile player animation data is unavailable.");
+			}
+
+			return animData->force1stPerson();
+		}
+
+		bool force3rdPerson() {
+			auto worldController = TES3::WorldController::get();
+			if (worldController == nullptr) {
+				throw std::runtime_error("Function called before world controller is initialized.");
+			}
+
+			auto macp = worldController->getMobilePlayer();
+			if (macp == nullptr) {
+				throw std::runtime_error("Function called while mobile player is unavailable.");
+			}
+
+			auto animData = macp->animationData.asPlayer;
+			if (animData == nullptr) {
+				throw std::runtime_error("Function called while mobile player animation data is unavailable.");
+			}
+
+			return animData->force3rdPerson();
 		}
 
 		sol::object getActiveCells() {
@@ -2009,13 +2064,17 @@ namespace mwse {
 
 				sol::optional<bool> teleportCompanions = params["teleportCompanions"];
 				if (teleportCompanions.value_or(true) && macp->listFriendlyActors.size > 0) {
+					TES3::DataHandler::suppressThreadLoad = true;
 					const auto TES3_cellChangeWithCompanions = reinterpret_cast<void(__cdecl*)(TES3::Vector3, TES3::Vector3, TES3::Cell*)>(0x45C9B0);
 					TES3_cellChangeWithCompanions(position.value(), orientation.value(), cell);
+					TES3::DataHandler::suppressThreadLoad = false;
 				}
 				else {
+					TES3::DataHandler::suppressThreadLoad = true;
 					const auto TES3_cellChange = reinterpret_cast<void(__cdecl*)(TES3::Vector3, TES3::Vector3, TES3::Cell*, int)>(0x45CEF0);
 					sol::optional<bool> flag = params["flag"];
 					TES3_cellChange(position.value(), orientation.value(), cell, flag.value_or(true));
+					TES3::DataHandler::suppressThreadLoad = false;
 				}
 
 				if (suppressFader) {
@@ -2023,8 +2082,10 @@ namespace mwse {
 				}
 			}
 			else {
+				TES3::DataHandler::suppressThreadLoad = true;
 				const auto TES3_relocateReference = reinterpret_cast<void(__cdecl*)(TES3::Reference*, TES3::Cell*, TES3::Vector3*, float)>(0x50EDD0);
 				TES3_relocateReference(reference, cell, &position.value(), orientation.value().z);
+				TES3::DataHandler::suppressThreadLoad = false;
 			}
 
 			// Ensure the reference and cell is flagged as modified.
@@ -2036,6 +2097,10 @@ namespace mwse {
 
 		int getLanguageCode() {
 			return reinterpret_cast<int(__stdcall*)()>(0x4678F0)();
+		}
+
+		TES3::Vector3 getLastExteriorPosition() {
+			return TES3::DataHandler::get()->getLastExteriorPosition();
 		}
 
 		sol::optional<std::string> getLanguage() {
@@ -2142,6 +2207,9 @@ namespace mwse {
 			if (object == nullptr) {
 				throw std::invalid_argument("Invalid 'object' parameter provided.");
 			}
+
+			// Make sure we have a base object.
+			object = static_cast<TES3::PhysicalObject*>(object->getBaseObject());
 
 			// Get the position.
 			auto maybePosition = getOptionalParamVector3(params, "position");
@@ -2329,6 +2397,22 @@ namespace mwse {
 				throw std::invalid_argument("The 'reference' reference does not point to an actor.");
 			}
 
+			// Enable defining a soul to add.
+			TES3::Actor* soul = getOptionalParamObject<TES3::Actor>(params, "soul");
+			bool createdItemData = false;
+			if (soul) {
+				if (!tes3::isSoulGem(item)) {
+					throw std::invalid_argument("Cannot add a soul to item, as it is not a soul gem.");
+				}
+
+				if (!itemData) {
+					itemData = TES3::ItemData::createForObject(item);
+					createdItemData = true;
+				}
+
+				itemData->soul = soul;
+			}
+
 			// Clone the object if needed.
 			if (reference->clone()) {
 				actor = static_cast<TES3::Actor*>(reference->baseObject);
@@ -2344,6 +2428,10 @@ namespace mwse {
 			if (getOptionalParam<bool>(params, "limit", false)) {
 				// Prevent placing items into organic containers.
 				if (BIT_TEST(actor->actorFlags, TES3::ActorFlagContainer::OrganicBit)) {
+					if (createdItemData) {
+						delete itemData;
+						itemData = nullptr;
+					}
 					return 0;
 				}
 
@@ -2358,6 +2446,10 @@ namespace mwse {
 
 			// No items to add? Great, let's get out of here.
 			if (fulfilledCount == 0) {
+				if (createdItemData) {
+					delete itemData;
+					itemData = nullptr;
+				}
 				return 0;
 			}
 
@@ -2528,6 +2620,27 @@ namespace mwse {
 			return fulfilledCount;
 		}
 
+		bool togglePOV() {
+			auto worldController = TES3::WorldController::get();
+			if (worldController == nullptr) {
+				throw std::runtime_error("Function called before world controller is initialized.");
+			}
+
+			auto macp = worldController->getMobilePlayer();
+			if (macp == nullptr) {
+				throw std::runtime_error("Function called while mobile player is unavailable.");
+			}
+
+			auto animData = macp->animationData.asPlayer;
+			if (animData == nullptr) {
+				throw std::runtime_error("Function called while mobile player animation data is unavailable.");
+			}
+
+			animData->togglePOV = true;
+
+			return animData->is3rdPerson;
+		}
+
 		int transferItem(sol::table params) {
 			// Get the reference we are transferring from.
 			TES3::Reference* fromReference = getOptionalParamReference(params, "from");
@@ -2600,7 +2713,6 @@ namespace mwse {
 			// Were we given an ItemData? If so, we only need to transfer one item.
 			if (itemData) {
 				if ((maxCapacity == -1.0f || currentWeight + itemWeight <= maxCapacity) && fromActor->inventory.containsItem(item, itemData)) {
-					fromActor->unequipItem(item, true, fromMobile, false, itemData);
 					toActor->inventory.addItem(toMobile, item, 1, false, &itemData);
 					fromActor->inventory.removeItemWithData(fromMobile, item, itemData, 1, false);
 
@@ -2635,8 +2747,8 @@ namespace mwse {
 						toActor->inventory.addItem(toMobile, item, amountToTransfer, false, nullptr);
 						fromActor->inventory.removeItemWithData(fromMobile, item, nullptr, amountToTransfer, false);
 
-						// Check for ammunition, as unlike other equipment, it does not generate itemData when equipped.
-						if (!fromIsContainer && item->objectType == TES3::ObjectType::Ammo) {
+						// Check for ammunition and thrown weapons, as unlike other equipment, they do not generate itemData when equipped.
+						if (!fromIsContainer && (item->objectType == TES3::ObjectType::Ammo || item->objectType == TES3::ObjectType::Weapon)) {
 							fromActor->unequipItem(item, true, fromMobile, false, nullptr);
 						}
 
@@ -3129,6 +3241,25 @@ namespace mwse {
 			}
 		}
 
+		TES3::Reference* findClosestExteriorReferenceOfObject(sol::table params) {
+			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+
+			TES3::PhysicalObject* object = getOptionalParamObject<TES3::PhysicalObject>(params, "object");
+			if (object == nullptr) {
+				throw std::invalid_argument("Invalid 'object' parameter provided.");
+			}
+
+			sol::optional<TES3::Vector3> position = getOptionalParamVector3(params, "position");
+			if (!position) {
+				position = dataHandler->getLastExteriorPosition();
+			}
+
+			if (dataHandler) {
+				return dataHandler->nonDynamicData->findClosestExteriorReferenceOfObject(object, &position.value());
+			}
+			return nullptr;
+		}
+
 		TES3::Dialogue* findDialogue(sol::table params) {
 			int type = getOptionalParam<int>(params, "type", -1);
 			int page = getOptionalParam<int>(params, "page", -1);
@@ -3202,6 +3333,34 @@ namespace mwse {
 			}
 
 			animData->unknown_0x54 |= 0xFFFF;
+		}
+
+		void setAnimationTiming(sol::table params) {
+			TES3::Reference* reference = getOptionalParamExecutionReference(params);
+			if (reference == nullptr) {
+				throw std::invalid_argument("Invalid 'reference' parameter provided.");
+			}
+
+			auto animData = reference->getAttachedAnimationData();
+			if (animData == nullptr) {
+				return;
+			}
+
+			sol::object timing = params["timing"];
+			if (timing.valid() && timing != sol::nil) {
+				if (timing.is<double>()) {
+					const float fTiming = timing.as<double>();
+					animData->timing[0] = fTiming;
+					animData->timing[1] = fTiming;
+					animData->timing[2] = fTiming;
+				}
+				else if (timing.is<sol::table>() && timing.as<sol::table>().size() == 3) {
+					auto timings = timing.as<sol::table>();
+					animData->timing[0] = timings[1];
+					animData->timing[1] = timings[2];
+					animData->timing[2] = timings[3];
+				}
+			}
 		}
 
 		bool isAffectedBy(sol::table params) {
@@ -3644,6 +3803,85 @@ namespace mwse {
 			}
 		}
 
+		// Legacy tes3.getOwner.
+		TES3::BaseObject* getOwnerLegacy(TES3::Reference* reference) {
+			auto itemData = reference->getAttachedItemData();
+			if (itemData == nullptr) {
+				return nullptr;
+			}
+
+			return itemData->owner;
+		}
+
+		std::tuple<sol::object, sol::object> getOwner(sol::table params) {
+			// Get the reference to get ownership for.
+			TES3::Reference* reference = getOptionalParamReference(params, "reference");
+			if (reference == nullptr) {
+				throw std::invalid_argument("Invalid 'reference' parameter provided.");
+			}
+
+			auto itemData = reference->getAttachedItemData();
+			if (itemData == nullptr || itemData->owner == nullptr) {
+				return std::make_tuple<sol::object, sol::object>(sol::nil, sol::nil);
+			}
+
+			if (itemData->owner->objectType == TES3::ObjectType::NPC) {
+				return std::make_tuple<sol::object, sol::object>(TES3::BaseObject::getOrCreateLuaObject(params.lua_state(), itemData->owner), TES3::BaseObject::getOrCreateLuaObject(params.lua_state(), itemData->requiredVariable));
+			}
+			else if (itemData->owner->objectType == TES3::ObjectType::Faction) {
+				return std::make_tuple<sol::object, sol::object>(TES3::BaseObject::getOrCreateLuaObject(params.lua_state(), itemData->owner), sol::make_object(params.lua_state(), itemData->requiredRank));
+			}
+			else {
+				throw std::runtime_error("Owner was not of a valid type. Report this issue to MWSE developers!");
+			}
+		}
+
+		void setOwner(sol::table params) {
+			// Get the reference to set ownership for.
+			TES3::Reference* reference = getOptionalParamReference(params, "reference");
+			if (reference == nullptr) {
+				throw std::invalid_argument("Invalid 'reference' parameter provided.");
+			}
+
+			// Are we removing an actor?
+			if (getOptionalParam<bool>(params, "remove", false)) {
+				auto itemData = reference->getAttachedItemData();
+				if (itemData) {
+					itemData->owner = nullptr;
+					itemData->requiredVariable = nullptr;
+				}
+				return;
+			}
+
+			// Are we getting an actor?
+			TES3::BaseObject* owner = getOptionalParamBaseObject(params, "owner");
+			if (owner == nullptr) {
+				throw std::invalid_argument("Invalid 'owner' parameter provided.");
+			}
+
+			// Setting an NPC?
+			else if (owner->objectType == TES3::ObjectType::NPC) {
+				auto itemData = reference->getOrCreateAttachedItemData();
+				itemData->owner = owner;
+				itemData->requiredVariable = getOptionalParamObject<TES3::GlobalVariable>(params, "requiredGlobal");
+			}
+
+			// Setting a faction?
+			else if (owner->objectType == TES3::ObjectType::Faction) {
+				auto itemData = reference->getOrCreateAttachedItemData();
+				itemData->owner = owner;
+				itemData->requiredRank = getOptionalParam(params, "requiredRank", 0);
+			}
+
+			// Given a bogus object type?
+			else {
+				throw std::invalid_argument("Invalid 'owner' parameter provided: must be of type NPC or Faction.");
+			}
+
+			// Finish up.
+			reference->setObjectModified(true);
+		}
+
 		void bindTES3Util() {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
@@ -3676,9 +3914,12 @@ namespace mwse {
 			tes3["fadeIn"] = fadeIn;
 			tes3["fadeOut"] = fadeOut;
 			tes3["fadeTo"] = fadeTo;
+			tes3["findClosestExteriorReferenceOfObject"] = findClosestExteriorReferenceOfObject;
 			tes3["findDialogue"] = findDialogue;
 			tes3["findGlobal"] = findGlobal;
 			tes3["findGMST"] = findGMST;
+			tes3["force1stPerson"] = force1stPerson;
+			tes3["force3rdPerson"] = force3rdPerson;
 			tes3["getActiveCells"] = getActiveCells;
 			tes3["getArchiveList"] = getArchiveList;
 			tes3["getCameraPosition"] = getCameraPosition;
@@ -3704,6 +3945,7 @@ namespace mwse {
 			tes3["getJournalIndex"] = getJournalIndex;
 			tes3["getLanguage"] = getLanguage;
 			tes3["getLanguageCode"] = getLanguageCode;
+			tes3["getLastExteriorPosition"] = getLastExteriorPosition;
 			tes3["getLocked"] = getLocked;
 			tes3["getLockLevel"] = getLockLevel;
 			tes3["getMagicEffect"] = getMagicEffect;
@@ -3711,6 +3953,7 @@ namespace mwse {
 			tes3["getMobilePlayer"] = getMobilePlayer;
 			tes3["getModList"] = getModList;
 			tes3["getObject"] = getObject;
+			tes3["getOwner"] = sol::overload(getOwnerLegacy, getOwner);
 			tes3["getPlayerCell"] = getPlayerCell;
 			tes3["getPlayerEyePosition"] = getPlayerEyePosition;
 			tes3["getPlayerEyeVector"] = getPlayerEyeVector;
@@ -3737,6 +3980,7 @@ namespace mwse {
 			tes3["iterateObjects"] = iterateObjects;
 			tes3["loadGame"] = loadGame;
 			tes3["loadMesh"] = loadMesh;
+			tes3["loadSourceTexture"] = loadSourceTexture;
 			tes3["lock"] = lock;
 			tes3["messageBox"] = messageBox;
 			tes3["modStatistic"] = modStatistic;
@@ -3761,6 +4005,7 @@ namespace mwse {
 			tes3["setAIFollow"] = setAIFollow;
 			tes3["setAITravel"] = setAITravel;
 			tes3["setAIWander"] = setAIWander;
+			tes3["setAnimationTiming"] = setAnimationTiming;
 			tes3["setDestination"] = setDestination;
 			tes3["setEnabled"] = setEnabled;
 			tes3["setGlobal"] = setGlobal;
@@ -3768,12 +4013,14 @@ namespace mwse {
 			tes3["setJournalIndex"] = setJournalIndex;
 			tes3["setLockLevel"] = setLockLevel;
 			tes3["setMarkLocation"] = setMarkLocation;
+			tes3["setOwner"] = setOwner;
 			tes3["setStatistic"] = setStatistic;
 			tes3["setTrap"] = setTrap;
 			tes3["showRepairServiceMenu"] = showRepairServiceMenu;
 			tes3["skipAnimationFrame"] = skipAnimationFrame;
 			tes3["streamMusic"] = streamMusic;
 			tes3["tapKey"] = tapKey;
+			tes3["togglePOV"] = togglePOV;
 			tes3["transferItem"] = transferItem;
 			tes3["triggerCrime"] = triggerCrime;
 			tes3["undoTransform"] = undoTransform;

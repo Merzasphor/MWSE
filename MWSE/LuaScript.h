@@ -1,7 +1,5 @@
 #pragma once
 
-#include "sol.hpp"
-
 #include "DynamicLuaObject.h"
 
 namespace mwse {

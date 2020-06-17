@@ -3,10 +3,6 @@
 #include "NIObjectLua.h"
 #include "NIGeometryData.h"
 
-#include <nonstd/span.hpp>
-
-#include "sol.hpp"
-
 namespace mwse {
 	namespace lua {
 		// Speed-optimized binding for NI::Node.
@@ -15,22 +11,22 @@ namespace mwse {
 			setUserdataForNIObject(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition.set("bounds", &NI::GeometryData::bounds);
-			usertypeDefinition.set("compressFlags", &NI::GeometryData::compressFlags);
-			usertypeDefinition.set("dataFlags", &NI::GeometryData::dataFlags);
-			usertypeDefinition.set("dirtyFlags", &NI::GeometryData::dirtyFlags);
-			usertypeDefinition.set("id", &NI::GeometryData::id);
-			usertypeDefinition.set("keepFlags", &NI::GeometryData::keepFlags);
-			usertypeDefinition.set("vertexCount", sol::readonly_property(&NI::GeometryData::getVertexCount));
+			usertypeDefinition["bounds"] = &NI::GeometryData::bounds;
+			usertypeDefinition["compressFlags"] = &NI::GeometryData::compressFlags;
+			usertypeDefinition["dataFlags"] = &NI::GeometryData::dataFlags;
+			usertypeDefinition["dirtyFlags"] = &NI::GeometryData::dirtyFlags;
+			usertypeDefinition["id"] = &NI::GeometryData::id;
+			usertypeDefinition["keepFlags"] = &NI::GeometryData::keepFlags;
+			usertypeDefinition["vertexCount"] = sol::readonly_property(&NI::GeometryData::getVertexCount);
 
 			// Safe access to arrays.
-			usertypeDefinition.set("colors", sol::readonly_property([](NI::GeometryData& self) { return nonstd::span(self.color, self.vertexCount); }));
-			usertypeDefinition.set("normals", sol::readonly_property([](NI::GeometryData& self) { return nonstd::span(self.normal, self.vertexCount); }));
-			usertypeDefinition.set("textures", sol::readonly_property([](NI::GeometryData& self) { return nonstd::span(self.texture, self.vertexCount); }));
-			usertypeDefinition.set("vertices", sol::readonly_property([](NI::GeometryData& self) { return nonstd::span(self.vertex, self.vertexCount); }));
+			usertypeDefinition["colors"] = sol::readonly_property([](NI::GeometryData& self) { return nonstd::span(self.color, self.vertexCount); });
+			usertypeDefinition["normals"] = sol::readonly_property([](NI::GeometryData& self) { return nonstd::span(self.normal, self.vertexCount); });
+			usertypeDefinition["textures"] = sol::readonly_property([](NI::GeometryData& self) { return nonstd::span(self.texture, self.vertexCount); });
+			usertypeDefinition["vertices"] = sol::readonly_property([](NI::GeometryData& self) { return nonstd::span(self.vertex, self.vertexCount); });
 
 			// Basic function binding.
-			usertypeDefinition.set("markAsChanged", &NI::GeometryData::markAsChanged);
+			usertypeDefinition["markAsChanged"] = &NI::GeometryData::markAsChanged;
 		}
 
 		void bindNIGeometryData();

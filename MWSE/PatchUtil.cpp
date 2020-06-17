@@ -17,16 +17,13 @@
 #include "TES3UIInventoryTile.h"
 #include "TES3WorldController.h"
 
+#include "NILinesData.h"
+
 #include "BitUtil.h"
 #include "TES3Util.h"
 
 #include "LuaManager.h"
 #include "LuaUtil.h"
-
-#include <Windows.h>
-#include <Psapi.h>
-
-#include <dbghelp.h>
 
 namespace mwse {
 	namespace patch {
@@ -89,59 +86,6 @@ namespace mwse {
 		}
 
 		//
-		// Patch: Clean up cursor behavior when alt-tabbing.
-		//
-
-		bool& TES3_WindowInFocus = *reinterpret_cast<bool*>(0x776D08);
-		int& TES3_CursorShown = *reinterpret_cast<int*>(0x776D0C);
-
-		WNDPROC TES3_DefaultWindowMessageHandler = nullptr;
-
-		LRESULT __stdcall PatchLessAggressiveCursorCapturingWindowHandle(HWND hWnd, int uMsg, WPARAM wParam, LPARAM lParam) {
-			switch (uMsg) {
-			case WM_ACTIVATE:
-			{
-				if (wParam) {
-					auto worldController = TES3::WorldController::get();
-					if (worldController) {
-						worldController->updateTiming();
-					}
-					TES3_WindowInFocus = true;
-					if (TES3_CursorShown) {
-						ShowCursor(false);
-						TES3_CursorShown = false;
-					}
-				}
-				else {
-					TES3_WindowInFocus = false;
-					if (!TES3_CursorShown) {
-						ShowCursor(true);
-						TES3_CursorShown = true;
-					}
-				}
-				return 0;
-			}
-			break;
-			case WM_NCHITTEST:
-			{
-				auto result = DefWindowProc(hWnd, uMsg, wParam, lParam);
-				if (TES3_WindowInFocus && TES3_CursorShown && result == HTCLIENT) {
-					ShowCursor(false);
-					TES3_CursorShown = false;
-				}
-				else if (TES3_WindowInFocus && !TES3_CursorShown && result != HTCLIENT) {
-					ShowCursor(true);
-					TES3_CursorShown = true;
-				}
-				return result;
-			}
-			break;
-			}
-
-			return TES3_DefaultWindowMessageHandler(hWnd, uMsg, wParam, lParam);
-		}
-
-		//
 		// Patch: Fix crash with paper doll equipping/unequipping.
 		//
 		// In this patch, the tile associated with the stack may have been deleted, but the property to the TES3::ItemData 
@@ -163,22 +107,39 @@ namespace mwse {
 
 			return propValue;
 		}
-		
+
 		//
-		// Patch: Try to be better about deleting objects.
+		// Patch: Allow the game to correctly close when quit with a messagebox popup.
 		//
-		// In the original game, mwscript's SetDelete function simply sets the delete bit flag.
-		// This is inadequate, as background objects can still cause issues. This overwrite 
-		// forces the mwscript opcode to properly disable, clean, then flag the object.
+		// The game holds up a TES3::UI messagebox and runs its own infinite loop waiting for a response
+		// when a critical error has occurred. This does not respect the WorldController's stopGameLoop
+		// flag, which is set when the user attempts to close the window.
+		//
+		// Here we check if that flag is set, and if it is, force a choice on the "no" dialogue option,
+		// which stops the deadlock.
 		//
 
-		void __fastcall PatchMWScriptSetDelete(TES3::Reference* reference, DWORD _UNUSED_, bool setDelete) {
-			if (setDelete) {
-				reference->setDeleted();
+		int __cdecl SafeQuitGetMessageChoice() {
+			if (TES3::WorldController::get()->stopGameLoop) {
+				log::getLog() << "[MWSE] Prevented rogue Morrowind.exe instance." << std::endl;
+				*reinterpret_cast<int*>(0x7B88C0) = 1;
 			}
-			else {
-				BIT_SET_OFF(reference->objectFlags, TES3::ObjectFlag::DeleteBit);
-			}
+
+			return *reinterpret_cast<int*>(0x7B88C0);
+		}
+
+		//
+		// Patch: Optimize DontThreadLoad, prevent multi-thread loading from lua.
+		//
+		// Every time the game wants to load, it checks the ini file from disk for the DontThreadLoad value.
+		// This patch caches the value so it only needs to be read once.
+		//
+		// Additionally, this provides a way to suppress thread loading from lua, if it is causing an issue in
+		// a script (namely, a lua state deadlock).
+		//
+
+		UINT WINAPI	OverrideDontThreadLoad(LPCSTR lpAppName, LPCSTR lpKeyName, INT nDefault, LPCSTR lpFileName) {
+			return TES3::DataHandler::suppressThreadLoad || TES3::DataHandler::dontThreadLoad;
 		}
 
 		//
@@ -197,12 +158,6 @@ namespace mwse {
 			// Patch: Crash fix for help text for paperdolls.
 			genCallEnforced(0x5CDFD0, 0x581440, reinterpret_cast<DWORD>(PatchPaperdollTooltipCrashFix));
 
-			// Patch (optional): Change window cursor behavior.
-			TES3_DefaultWindowMessageHandler = (WNDPROC)SetClassLongPtr(TES3::WorldController::get()->Win32_hWndParent, GCLP_WNDPROC, (LONG_PTR)PatchLessAggressiveCursorCapturingWindowHandle);
-			if (TES3_DefaultWindowMessageHandler == nullptr) {
-				log::getLog() << "[MWSE:Patch:Less Aggressive Cursor Capturing] ERROR: Failed to replace window handler using SetClassLongPtr." << std::endl;
-			}
-
 			// Patch: Optimize GetDeadCount and associated dialogue filtering/logic.
 			auto killCounterIncrement = &TES3::KillCounter::increment;
 			genCallEnforced(0x523D73, 0x55D820, *reinterpret_cast<DWORD*>(&killCounterIncrement));
@@ -219,12 +174,21 @@ namespace mwse {
 			auto WorldController_checkForDayWrapping = &TES3::WorldController::checkForDayWrapping;
 			genCallEnforced(0x6350E9, 0x40FF50, *reinterpret_cast<DWORD*>(&WorldController_checkForDayWrapping));
 
-			// This patch seems to be causing some people to crash. Attachments are being recreated incorrectly or
-			// something. Need to find a better place to do this...
-#if false
-			// Patch: Try to be better about deleting objects.
-			genCallEnforced(0x50C538, 0x4EEC70, reinterpret_cast<DWORD>(PatchMWScriptSetDelete));
-#endif
+			// Patch: Prevent error messageboxes from creating a rogue process.
+			genCallEnforced(0x47731B, 0x5F2160, reinterpret_cast<DWORD>(SafeQuitGetMessageChoice));
+			genCallEnforced(0x4779D9, 0x5F2160, reinterpret_cast<DWORD>(SafeQuitGetMessageChoice));
+			genCallEnforced(0x477E6F, 0x5F2160, reinterpret_cast<DWORD>(SafeQuitGetMessageChoice));
+
+			// Patch: Cache DontThreadLoad INI value and extend it with a suppression flag.
+			TES3::DataHandler::dontThreadLoad = GetPrivateProfileIntA("General", "DontThreadLoad", 0, ".\\Morrowind.ini") != 0;
+			genCallUnprotected(0x48539C, reinterpret_cast<DWORD>(OverrideDontThreadLoad), 0x6);
+			genCallUnprotected(0x4869DB, reinterpret_cast<DWORD>(OverrideDontThreadLoad), 0x6);
+			genCallUnprotected(0x48F489, reinterpret_cast<DWORD>(OverrideDontThreadLoad), 0x6);
+			genCallUnprotected(0x4904D0, reinterpret_cast<DWORD>(OverrideDontThreadLoad), 0x6);
+
+			// Patch: Fix NiLinesData binary loading.
+			auto NiLinesData_loadBinary = &NI::LinesData::loadBinary;
+			overrideVirtualTableEnforced(0x7501E0, offsetof(NI::Object_vTable, loadBinary), 0x6DA410, *reinterpret_cast<DWORD*>(&NiLinesData_loadBinary));
 		}
 
 		//

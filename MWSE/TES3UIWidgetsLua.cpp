@@ -1,7 +1,6 @@
 #include "TES3UIManager.h"
 #include "TES3UIWidgets.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
 
 namespace mwse {
@@ -173,6 +172,7 @@ namespace mwse {
 				usertypeDefinition["current"] = sol::property(&WidgetFillbar::getCurrent, &WidgetFillbar::setCurrent);
 				usertypeDefinition["max"] = sol::property(&WidgetFillbar::getMax, &WidgetFillbar::setMax);
 				usertypeDefinition["showText"] = sol::property(&WidgetFillbar::getShowText, &WidgetFillbar::setShowText);
+				usertypeDefinition["normalized"] = sol::property(&WidgetFillbar::getNormalized, &WidgetFillbar::setNormalized);
 				usertypeDefinition["fillColor"] = sol::property(
 					[](WidgetFillbar& self, sol::table c) { self.setFillColour({ c[1], c[2], c[3] }); }
 				);

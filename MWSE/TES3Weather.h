@@ -4,8 +4,6 @@
 
 #include "TES3Vectors.h"
 
-#include "sol_forward.hpp"
-
 namespace TES3 {
 	struct Weather_vTable {
 		void * deleting;

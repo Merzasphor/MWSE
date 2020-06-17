@@ -1,4 +1,4 @@
-#include <string>
+#include "TES3SkillLua.h"
 
 #include "LuaManager.h"
 #include "TES3ObjectLua.h"
@@ -6,7 +6,6 @@
 #include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
 #include "TES3Skill.h"
-#include "TES3SkillLua.h"
 
 namespace mwse {
 	namespace lua {

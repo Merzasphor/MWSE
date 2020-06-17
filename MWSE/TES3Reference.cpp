@@ -9,7 +9,7 @@
 #include "LuaPickLockEvent.h"
 #include "LuaReferenceSceneNodeCreatedEvent.h"
 
-#include "TES3Util.h"
+#include "MemoryUtil.h"
 
 #include "NINode.h"
 #include "NIPointLight.h"
@@ -116,6 +116,11 @@ namespace TES3 {
 		return reinterpret_cast<LockAttachmentNode* (__thiscall *)(Reference*)>(0x4E7DF0)(this);
 	}
 
+	const auto TES3_Reference_getLeveledBaseReference = reinterpret_cast<Reference* (__thiscall*)(Reference*)>(0x4E7EE0);
+	Reference* Reference::getLeveledBaseReference() {
+		return TES3_Reference_getLeveledBaseReference(this);
+	}
+
 	const auto TES3_Reference_getScriptVariables = reinterpret_cast<ScriptVariables*(__thiscall*)(Reference*)>(0x4E7020);
 	ScriptVariables * Reference::getScriptVariables() {
 		return TES3_Reference_getScriptVariables(this);
@@ -172,6 +177,10 @@ namespace TES3 {
 		TES3::DataHandler::get()->setDynamicLightingForReference(this);
 
 		return attachment->data;
+	}
+
+	bool Reference::isLeveledSpawn() {
+		return getLeveledBaseReference() != nullptr;
 	}
 
 	void Reference::setDynamicLighting() {

@@ -28,11 +28,17 @@ namespace TES3 {
 		Attachment* attachment = this->attachments;
 		while (attachment) {
 			switch (attachment->type) {
+			case AttachmentType::BodyPartManager:
+				result["bodyPartManager"] = reinterpret_cast<BodyPartManagerAttachment*>(attachment)->data;
+				break;
 			case AttachmentType::Light:
 				result["light"] = reinterpret_cast<LockAttachment*>(attachment)->data;
 				break;
 			case AttachmentType::Lock:
 				result["lock"] = reinterpret_cast<LockAttachment*>(attachment)->data;
+				break;
+			case AttachmentType::LeveledBaseReference:
+				result["leveledBase"] = reinterpret_cast<LeveledBaseReferenceAttachment*>(attachment)->data;
 				break;
 			case AttachmentType::TravelDestination:
 				result["travelDestination"] = reinterpret_cast<TravelDestinationAttachment*>(attachment)->data;
@@ -41,10 +47,7 @@ namespace TES3 {
 				result["variables"] = reinterpret_cast<ItemDataAttachment*>(attachment)->data;
 				break;
 			case AttachmentType::ActorData:
-				result["actor"] = reinterpret_cast<MobileActorAttachment*>(attachment)->data;
-				break;
-			case AttachmentType::BodyPartManager:
-				result["bodyPartManager"] = reinterpret_cast<BodyPartManagerAttachment*>(attachment)->data;
+				result["actor"] =reinterpret_cast<MobileActorAttachment*>(attachment)->data;
 				break;
 			}
 
@@ -57,14 +60,15 @@ namespace TES3 {
 	sol::table Reference::getLuaTable() {
 		auto itemData = getAttachedItemData();
 
+		// Prevent adding a lua table if there's more than one item involved.
+		if (itemData && itemData->count > 1) {
+			throw std::exception("Cannot create lua data when more than one item is present.");
+		}
+
 		// Create the item data if it doesn't already exist.
 		if (itemData == nullptr) {
 			itemData = ItemData::createForObject(baseObject);
 			setAttachedItemData(itemData);
-		}
-		// Prevent adding a lua table if there's more than one item involved.
-		else if (itemData->count > 1) {
-			throw std::exception("Cannot create lua data when more than one item is present.");
 		}
 
 		return itemData->getOrCreateLuaDataTable();
@@ -118,6 +122,7 @@ namespace mwse {
 			});
 			usertypeDefinition["object"] = sol::readonly_property([](TES3::Reference& self) { return self.baseObject; });
 			usertypeDefinition["sceneNode"] = sol::readonly_property([](TES3::Reference& self) { return self.sceneNode; });
+			usertypeDefinition["leveledBaseReference"] = sol::readonly_property(&TES3::Reference::getLeveledBaseReference);
 
 			// Basic function binding.
 			usertypeDefinition["activate"] = [](TES3::Reference& self, TES3::Reference& target) { target.activate(&self); };
@@ -141,9 +146,10 @@ namespace mwse {
 			usertypeDefinition["context"] = sol::readonly_property(&getContext);
 			usertypeDefinition["data"] = sol::readonly_property(&TES3::Reference::getLuaTable);
 			usertypeDefinition["isEmpty"] = sol::property(&TES3::Reference::getEmptyInventoryFlag, &TES3::Reference::setEmptyInventoryFlag);
+			usertypeDefinition["isLeveledSpawn"] = sol::readonly_property(&TES3::Reference::isLeveledSpawn);
 			usertypeDefinition["isRespawn"] = sol::readonly_property(&TES3::Reference::isRespawn);
-			usertypeDefinition["orientation"] = sol::property([](TES3::Reference& self) { return self.getOrientation(); }, &TES3::Reference::setOrientationFromLua);
-			usertypeDefinition["position"] = sol::property([](TES3::Reference& self) { return self.getPosition(); }, &TES3::Reference::setPositionFromLua);
+			usertypeDefinition["orientation"] = sol::property(&TES3::Reference::getOrientation, &TES3::Reference::setOrientationFromLua);
+			usertypeDefinition["position"] = sol::property(&TES3::Reference::getPosition, &TES3::Reference::setPositionFromLua);
 
 			// Functions for manually syncing the scene graph, for if orientation or position is manually modified.
 			usertypeDefinition["updateSceneGraph"] = [](TES3::Reference& self) {
@@ -154,6 +160,15 @@ namespace mwse {
 			};
 
 			// Quick access to attachment data.
+			usertypeDefinition["bodyPartManager"] = sol::property(
+				[](TES3::Reference& self) -> TES3::BodyPartManager* {
+					auto attachment = self.getAttachment(TES3::AttachmentType::BodyPartManager);
+					if (attachment) {
+						return reinterpret_cast<TES3::BodyPartManagerAttachment*>(attachment)->data;
+					}
+					return nullptr;
+				}
+			);
 			usertypeDefinition["itemData"] = sol::property(
 				[](TES3::Reference& self)
 				{

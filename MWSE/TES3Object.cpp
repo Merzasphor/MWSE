@@ -44,13 +44,12 @@
 #include "TES3Static.h"
 #include "TES3Weapon.h"
 
+#include "MemoryUtil.h"
+
 #include "sol.hpp"
 
 #include "LuaManager.h"
 #include "LuaObjectInvalidatedEvent.h"
-
-#include <mutex>
-#include <unordered_set>
 
 namespace TES3 {
 	void * BaseObject::operator new(size_t size) {
@@ -476,6 +475,10 @@ namespace TES3 {
 
 	void Object::setName(const char* name) {
 		vTable.object->setName(this, name);
+	}
+
+	void Object::reevaluateEquipment() {
+		vTable.object->reevaluateEquipment(this);
 	}
 
 	void Object::resetVisualNode(NI::Node* node) {

@@ -1,6 +1,6 @@
 #include "NIPick.h"
 
-#include "TES3Util.h"
+#include "MemoryUtil.h"
 
 #define NI_Pick_ctor 0x6F2DF0
 #define NI_Pick_dtor 0x6F2EA0

@@ -1,6 +1,4 @@
-#include <cstdint>
-#include <string>
-#include <unordered_map>
+#include "TES3UIElementLua.h"
 
 #include "LuaUtil.h"
 #include "NIProperty.h"
@@ -16,11 +14,8 @@
 #include "TES3UIWidgets.h"
 #include "TES3UIWidgetsLua.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
 #include "Log.h"
-
-#include <Windows.h>
 
 namespace mwse {
 	namespace lua {
@@ -64,7 +59,7 @@ namespace mwse {
 			return x ? TES3::UI::Property::boolean_true : TES3::UI::Property::boolean_false;
 		}
 
-		bool toBoolean(TES3::UI::Property prop) {
+		bool toBool(TES3::UI::Property prop) {
 			return prop == TES3::UI::Property::boolean_true;
 		}
 
@@ -274,7 +269,7 @@ namespace mwse {
 			usertypeDefinition["wrapText"] = sol::property(
 				[](Element& self) {
 					auto prop = self.getProperty(TES3::UI::PropertyType::Property, TES3::UI::Property::wrap_text);
-					return toBoolean(prop.propertyValue);
+					return toBool(prop.propertyValue);
 				},
 				[](Element& self, bool value) {
 					self.setProperty(TES3::UI::Property::wrap_text, toBooleanProperty(value));
@@ -308,7 +303,7 @@ namespace mwse {
 			usertypeDefinition["disabled"] = sol::property(
 				[](Element& self) {
 					auto prop = self.getProperty(TES3::UI::PropertyType::Property, TES3::UI::Property::disabled);
-					return toBoolean(prop.propertyValue);
+					return toBool(prop.propertyValue);
 				},
 				[](Element& self, bool value) { self.setProperty(TES3::UI::Property::disabled, toBooleanProperty(value)); });
 			usertypeDefinition["texture"] = sol::property(
@@ -322,7 +317,7 @@ namespace mwse {
 				});
 			usertypeDefinition["scaleMode"] = sol::property(
 				[](Element& self) {
-					return toBoolean(self.scale_mode);
+					return toBool(self.scale_mode);
 				},
 				[](Element& self, bool value) {
 					self.scale_mode = toBooleanProperty(value);
@@ -366,13 +361,15 @@ namespace mwse {
 			usertypeDefinition["repeatKeys"] = sol::property(
 				[](Element& self) {
 					auto prop = self.getProperty(TES3::UI::PropertyType::Property, TES3::UI::Property::repeat_keys);
-					return toBoolean(prop.propertyValue);
+					return toBool(prop.propertyValue);
 				},
-				[](Element& self, bool value) { self.setProperty(TES3::UI::Property::repeat_keys, toBooleanProperty(value)); });
+				[](Element& self, bool value) { self.setProperty(TES3::UI::Property::repeat_keys, toBooleanProperty(value)); }
+			);
 			usertypeDefinition["text"] = sol::property(getWidgetText, setWidgetText);
 			usertypeDefinition["contentPath"] = sol::property(
 				[](Element& self) { return self.contentPath.cString; },
-				[](Element& self, sol::optional<const char*> path) { self.setIcon(path.value_or("")); });
+				[](Element& self, sol::optional<const char*> path) { self.setIcon(path.value_or("")); }
+			);
 
 			// Deprecated properties.
 			// TODO: Remove in final release.
@@ -399,10 +396,16 @@ namespace mwse {
 				[](Element& self, sol::optional<bool> value) { self.flagConsumeMouseEvents = value.value_or(true); });
 
 			// Custom property accessor functions.
+			usertypeDefinition["hasProperty"] = [](Element& self, const char* propertyName) {
+				return self.hasProperty(TES3::UI::registerProperty(propertyName));
+			};
+			usertypeDefinition["getPropertyType"] = [](Element& self, const char* propertyName) {
+				return self.getPropertyType(TES3::UI::registerProperty(propertyName));
+			};
 			usertypeDefinition["getPropertyBool"] = [](Element& self, const char* propertyName) {
 				TES3::UI::Property prop = TES3::UI::registerProperty(propertyName);
 				auto b = self.getProperty(TES3::UI::PropertyType::Property, prop).propertyValue;
-				return toBoolean(b);
+				return toBool(b);
 			};
 			usertypeDefinition["getPropertyFloat"] = [](Element& self, const char* propertyName) {
 				TES3::UI::Property prop = TES3::UI::registerProperty(propertyName);
@@ -454,7 +457,7 @@ namespace mwse {
 			};
 			usertypeDefinition["setPropertyBool"] = [](Element& self, const char* propertyName, bool value) {
 				TES3::UI::Property prop = TES3::UI::registerProperty(propertyName);
-				self.setProperty(prop, toBooleanProperty(value) );
+				self.setProperty(prop, toBooleanProperty(value));
 			};
 			usertypeDefinition["setPropertyFloat"] = [](Element& self, const char* propertyName, float value) {
 				TES3::UI::Property prop = TES3::UI::registerProperty(propertyName);
@@ -490,6 +493,7 @@ namespace mwse {
 					if (!callback.valid()) {
 						const char *errorSource = self.name.cString ? self.name.cString : "(unnamed)";
 						log::getLog() << "UI register event has invalid callback: target " << errorSource << ", event " << eventID << std::endl;
+						logStackTrace();
 						return;
 					}
 
@@ -509,6 +513,7 @@ namespace mwse {
 				else {
 					const char *errorSource = self.name.cString ? self.name.cString : "(unnamed)";
 					log::getLog() << "UI register event has invalid callback type: target " << errorSource << ", event " << eventID << std::endl;
+					logStackTrace();
 				}
 			};
 			usertypeDefinition["unregister"] = [](Element& self, const std::string& eventID) {
@@ -668,6 +673,7 @@ namespace mwse {
 				}
 				else {
 					log::getLog() << "createImage: path argument is required." << std::endl;
+					logStackTrace();
 				}
 				return static_cast<Element*>(nullptr);
 			};
@@ -687,6 +693,7 @@ namespace mwse {
 				}
 				else {
 					log::getLog() << "createNif: path argument is required." << std::endl;
+					logStackTrace();
 				}
 				return static_cast<Element*>(nullptr);
 			};

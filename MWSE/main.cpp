@@ -19,10 +19,6 @@
 
 **************************************************************************/
 
-#include <windows.h>
-#include <dbghelp.h>
-#include <filesystem>
-
 #include "mwAdapter.h"
 #include "Log.h"
 #include "MgeTes3Machine.h"

@@ -10,7 +10,7 @@ namespace TES3 {
 		TES3::Vector3 unknown_0xD8;
 		void * pickData; // 0xE4
 		bool is3rdPerson; // 0xE8
-		char unknown_0xE9;
+		bool togglePOV; // 0xE9
 		char unknown_0xEA;
 		int unknown_0xEC;
 		char unknown_0xF0;
@@ -26,6 +26,14 @@ namespace TES3 {
 		int unknown_0x118;
 		int unknown_0x11C;
 		int unknown_0x120;
+
+		//
+		// Custom functions
+		//
+
+		bool force1stPerson();
+		bool force3rdPerson();
+
 	};
 	static_assert(sizeof(PlayerAnimationData) == 0x124, "TES3::PlayerAnimationData failed size validation");
 }

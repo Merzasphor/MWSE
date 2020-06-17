@@ -3,10 +3,10 @@
 #include "TES3Util.h"
 
 #include "LuaManager.h"
-#include "LuaUtil.h"
 
 #include "LuaBookGetTextEvent.h"
 
+#include "MemoryUtil.h"
 #include "Log.h"
 
 #define TES3_Book_loadBookText 0x4A2A90

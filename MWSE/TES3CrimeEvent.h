@@ -6,8 +6,6 @@
 #include "TES3StdString.h"
 #include "TES3Vectors.h"
 
-#include <string>
-
 namespace TES3 {
 	struct CrimeEvent {
 		int type; // 0x0

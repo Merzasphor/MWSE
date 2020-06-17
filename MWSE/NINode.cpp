@@ -30,6 +30,16 @@ namespace NI {
 		vTable.asNode->setChildAt(this, out_detached, index, child);
 	}
 
+	const auto NI_Node_AttachEffect = reinterpret_cast<void(__thiscall*)(Node*, DynamicEffect*)>(0x6C91E0);
+	void Node::attachEffect(DynamicEffect * effect ) {
+		NI_Node_AttachEffect(this, effect);
+	}
+
+	const auto NI_Node_DetachEffect = reinterpret_cast<void(__thiscall*)(Node*, DynamicEffect*)>(0x6C9220);
+	void Node::detachEffect(DynamicEffect* effect) {
+		NI_Node_DetachEffect(this, effect);
+	}
+
 	Pointer<DynamicEffect> Node::getEffect(int type) {
 		auto effectNode = &effectList;
 		while (effectNode) {

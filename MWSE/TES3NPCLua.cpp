@@ -100,6 +100,9 @@ namespace mwse {
 				usertypeDefinition["baseDisposition"] = sol::property(&TES3::NPCInstance::getBaseDisposition, &TES3::NPCInstance::setBaseDisposition);
 				usertypeDefinition["factionIndex"] = &TES3::NPCInstance::factionIndex;
 
+				// Basic function binding.
+				usertypeDefinition["reevaluateEquipment"] = &TES3::NPCInstance::reevaluateEquipment;
+
 				// Indirect bindings to unions and arrays.
 				usertypeDefinition["attributes"] = sol::property([](TES3::NPCInstance& self) { return std::ref(self.baseNPC->attributes); });
 				usertypeDefinition["skills"] = sol::property([](TES3::NPCInstance& self) { return std::ref(self.baseNPC->skills); });

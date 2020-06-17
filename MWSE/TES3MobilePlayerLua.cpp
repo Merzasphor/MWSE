@@ -5,12 +5,12 @@
 
 #include "TES3Collections.h"
 
-#include "TES3MobilePlayer.h"
-
 #include "TES3Alchemy.h"
-#include "TES3Apparatus.h"
-#include "TES3Collections.h"
 #include "TES3Enchantment.h"
+#include "TES3MobilePlayer.h"
+#include "TES3Apparatus.h"
+#include "TES3Birthsign.h"
+#include "TES3Collections.h"
 #include "TES3GlobalVariable.h"
 #include "TES3NPC.h"
 #include "TES3PlayerAnimationData.h"
@@ -37,14 +37,23 @@ namespace mwse {
 				usertypeDefinition["alwaysRun"] = &TES3::MobilePlayer::alwaysRun;
 				usertypeDefinition["attackDisabled"] = &TES3::MobilePlayer::attackDisabled;
 				usertypeDefinition["autoRun"] = &TES3::MobilePlayer::autoRun;
+				usertypeDefinition["birthsign"] = &TES3::MobilePlayer::birthsign;
 				usertypeDefinition["bounty"] = sol::property(&TES3::MobilePlayer::getBounty, &TES3::MobilePlayer::setBounty);
 				usertypeDefinition["castReady"] = &TES3::MobilePlayer::castReady;
+				usertypeDefinition["clawMultiplier"] = sol::readonly_property(&TES3::MobilePlayer::clawMultiplier);
 				usertypeDefinition["controlsDisabled"] = &TES3::MobilePlayer::controlsDisabled;
 				usertypeDefinition["dialogueList"] = sol::readonly_property(&TES3::MobilePlayer::dialogueList);
+				usertypeDefinition["firstPerson"] = sol::readonly_property(&TES3::MobilePlayer::firstPerson);
+				usertypeDefinition["firstPersonReference"] = sol::readonly_property(&TES3::MobilePlayer::firstPersonReference);
 				usertypeDefinition["inactivityTime"] = &TES3::MobilePlayer::inactivityTime;
 				usertypeDefinition["inJail"] = &TES3::MobilePlayer::playerInJail;
 				usertypeDefinition["jumpingDisabled"] = &TES3::MobilePlayer::jumpingDisabled;
+				usertypeDefinition["knownWerewolf"] = sol::readonly_property(&TES3::MobilePlayer::knownWerewolf);
+				usertypeDefinition["lastUsedAlembic"] = &TES3::MobilePlayer::lastUsedAlembic;
 				usertypeDefinition["lastUsedAmmoCount"] = &TES3::MobilePlayer::lastUsedAmmoCount;
+				usertypeDefinition["lastUsedCalcinator"] = &TES3::MobilePlayer::lastUsedCalcinator;
+				usertypeDefinition["lastUsedMortar"] = &TES3::MobilePlayer::lastUsedMortar;
+				usertypeDefinition["lastUsedRetort"] = &TES3::MobilePlayer::lastUsedRetort;
 				usertypeDefinition["levelUpProgress"] = &TES3::MobilePlayer::levelUpProgress;
 				usertypeDefinition["magicDisabled"] = &TES3::MobilePlayer::magicDisabled;
 				usertypeDefinition["markLocation"] = sol::readonly_property(&TES3::MobilePlayer::markLocation);
@@ -63,16 +72,6 @@ namespace mwse {
 				usertypeDefinition["levelupsPerAttribute"] = sol::property([](TES3::MobilePlayer& self) { return std::ref(self.levelupPerAttributeCount); });
 				usertypeDefinition["levelupsPerSpecialization"] = sol::property([](TES3::MobilePlayer& self) { return std::ref(self.levelupPerSpecialization); });
 				usertypeDefinition["skillProgress"] = sol::property([](TES3::MobilePlayer& self) { return std::ref(self.skillProgress); });
-
-				// Access to other objects that need to be packaged.
-				usertypeDefinition["clawMultiplier"] = sol::readonly_property([](TES3::MobilePlayer& self) { return self.clawMultiplier; });
-				usertypeDefinition["firstPerson"] = sol::readonly_property([](TES3::MobilePlayer& self) { return self.firstPerson; });
-				usertypeDefinition["firstPersonReference"] = sol::readonly_property([](TES3::MobilePlayer& self) { return self.firstPersonReference; });
-				usertypeDefinition["knownWerewolf"] = sol::readonly_property([](TES3::MobilePlayer& self) { return self.knownWerewolf; });
-				usertypeDefinition["lastUsedAlembic"] = sol::readonly_property([](TES3::MobilePlayer& self) { return self.lastUsedAlembic; });
-				usertypeDefinition["lastUsedCalcinator"] = sol::readonly_property([](TES3::MobilePlayer& self) { return self.lastUsedCalcinator; });
-				usertypeDefinition["lastUsedMortar"] = sol::readonly_property([](TES3::MobilePlayer& self) { return self.lastUsedMortar; });
-				usertypeDefinition["lastUsedRetort"] = sol::readonly_property([](TES3::MobilePlayer& self) { return self.lastUsedRetort; });
 
 				// Overwrite MobileActor::animationData for player.
 				usertypeDefinition["animationData"] = sol::readonly_property([](TES3::MobilePlayer& self) { return self.animationData.asPlayer; });

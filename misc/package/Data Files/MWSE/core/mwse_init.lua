@@ -129,6 +129,22 @@ function table.deepcopy(t)
 	return copy
 end
 
+function table.copymissing(to, from)
+	if (type(to) ~= "table" or type(from) ~= "table") then
+		error("Arguments for table.copymissing must be tables.")
+	end
+
+	for k, v in pairs(from) do
+		if (type(to[k]) == "table" and type(v) == "table") then
+			table.copymissing(to[k], v)
+		else
+			if (to[k] == nil) then
+				to[k] = v
+			end
+		end
+	end
+end
+
 -------------------------------------------------
 -- Extend base table: Add binary search/insert
 -------------------------------------------------
@@ -151,9 +167,9 @@ end
 		on success: a table holding matching indices (e.g. { startindice,endindice } )
 		on failure: nil
 ]]--
-local default_fcompval = function( value ) return value end
-local fcompf = function( a,b ) return a < b end
-local fcompr = function( a,b ) return a > b end
+local function default_fcompval( value ) return value end
+local function fcompf( a,b ) return a < b end
+local function fcompr( a,b ) return a > b end
 function table.binsearch( t,value,fcompval,reversed )
 	-- Initialise functions
 	local fcompval = fcompval or default_fcompval
@@ -233,6 +249,16 @@ function string.endswith(haystack, needle)
 end
 getmetatable("").endswith = string.endswith
 
+function string.multifind(s, patterns, index, plain)
+	for _, pattern in ipairs(patterns) do
+		local r = { string.find(s, pattern, index, plain) }
+		if (#r > 0) then
+			return pattern, unpack(r)
+		end
+	end
+end
+getmetatable("").multifind = string.multifind
+
 
 -------------------------------------------------
 -- Extend 3rd API: lfs
@@ -271,6 +297,7 @@ lfs.rmdir = deleteDirectoryRecursive
 _G.tes3 = require("tes3.init")
 _G.event = require("event")
 _G.json = require("dkjson")
+
 
 -------------------------------------------------
 -- Extend our base API: json
@@ -334,8 +361,18 @@ function mwse.log(str, ...)
 	print(tostring(str):format(...))
 end
 
-function mwse.loadConfig(fileName)
-	return json.loadfile(string.format("config\\%s", fileName))
+function mwse.loadConfig(fileName, defaults)
+	local result = json.loadfile(string.format("config\\%s", fileName))
+
+	if (result) then
+		if (type(defaults) == "table") then
+			table.copymissing(result, defaults)
+		end
+	else
+		result = defaults
+	end
+
+	return result
 end
 
 function mwse.saveConfig(fileName, object, config)
@@ -358,6 +395,7 @@ function mwse.encodeForSave(object)
 	return json.encode(object, { exception = exceptionWhenSaving })
 end
 
+
 -------------------------------------------------
 -- Extend our base API: tes3
 -------------------------------------------------
@@ -367,6 +405,9 @@ function tes3.claimSpellEffectId(name, id)
 	assert(tes3.effect[name] == nil, "Effect name is not unique.")
 	tes3.effect[name] = id
 end
+
+-- Store the root installation folder.
+tes3.installDirectory = lfs.currentdir()
 
 
 -------------------------------------------------
@@ -446,7 +487,29 @@ function tes3uiElement:createImageButton(params)
 	return buttonBlock
 end
 
+
+-------------------------------------------------
+-- Setup debugger if necessary
 -------------------------------------------------
 
+local targetDebugger = os.getenv("MWSE_LUA_DEBUGGER")
+if (targetDebugger == "vscode-debuggee") then
+	-- Start up our debuggee.
+	local debuggee = require('vscode-debuggee')
+	local startResult, breakerType = debuggee.start(json)
+	mwse.log("[MWSE-Lua] vscode-debuggee start -> Result: %s, Type: %s", startResult, breakerType)
+
+	-- Overwrite the mwse.log function to also print to the debug console.
+	mwse.log = function(str, ...)
+		local message = tostring(str):format(...)
+		print(message)
+		debuggee.print("log", message)
+	end
+
+	-- Poll every frame.
+	event.register("enterFrame", debuggee.poll, { priority = 9001 })
+end
+
+
 -- Report that we're initialized.
-print("MWSE Lua interface initialized.")
+mwse.log("MWSE Lua interface initialized.")

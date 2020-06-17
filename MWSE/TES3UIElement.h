@@ -23,18 +23,18 @@ namespace TES3 {
 			Vector<void> vector_50;
 			Vector<void> vector_60;
 			int updateReqTimestamp;
-			Boolean flagExtendImageToBounds;
-			Boolean visible;
-			Boolean visibleAtLastUpdate;
-			Boolean flagUsesRGBA;
-			Boolean flagPosChanged;
-			Boolean flagSizeChanged;
-			Boolean flagVisibilityChanged;
-			Boolean flagClippingChanged;
-			Boolean flagContentChanged;
+			bool flagExtendImageToBounds;
+			bool visible;
+			bool visibleAtLastUpdate;
+			bool flagUsesRGBA;
+			bool flagPosChanged;
+			bool flagSizeChanged;
+			bool flagVisibilityChanged;
+			bool flagClippingChanged;
+			bool flagContentChanged;
 			char unknown_0x7D;
 			char unknown_0x7E;
-			Boolean flagConsumeMouseEvents;
+			bool flagConsumeMouseEvents;
 			char unknown_0x80;
 			char unknown_0x81;
 			char unknown_0x82;
@@ -76,23 +76,23 @@ namespace TES3 {
 			// Widget creation/destruction methods
 			//
 
-			Element* createBlock(UI_ID id, Boolean bReplaceThisElement = 0);
-			Element* createButton(UI_ID id, Boolean bReplaceThisElement = 0);
-			Element* createDragFrame(UI_ID id, Boolean bReplaceThisElement = 0);
-			Element* createFillBar(UI_ID id, Boolean bReplaceThisElement = 0);
-			Element* createFixedFrame(UI_ID id, Boolean bReplaceThisElement = 0);
-			Element* createHorizontalScrollPane(UI_ID id, Boolean bReplaceThisElement = 0);
-			Element* createHypertext(UI_ID id, Boolean bReplaceThisElement = 0);
-			Element* createImage(UI_ID id, const char* imagePath, Boolean bReplaceThisElement = 0);
-			Element* createLabel(UI_ID id, const char* text, Boolean bBlackText = 0, Boolean bReplaceThisElement = 0);
-			Element* createNif(UI_ID id, const char* path, Boolean bReplaceThisElement = 0);
-			Element* createParagraphInput(UI_ID id, Boolean bReplaceThisElement = 0);
-			Element* createRect(UI_ID id, Boolean bReplaceThisElement = 0, Boolean bRandomColour = 0);
-			Element* createSlider(UI_ID id, Boolean bReplaceThisElement = 0);
-			Element* createSliderVertical(UI_ID id, Boolean bReplaceThisElement = 0);
-			Element* createTextInput(UI_ID id, Boolean bReplaceThisElement = 0);
-			Element* createTextSelect(UI_ID id, Boolean bReplaceThisElement = 0);
-			Element* createVerticalScrollPane(UI_ID id, Boolean bReplaceThisElement = 0);
+			Element* createBlock(UI_ID id, bool bReplaceThisElement = false);
+			Element* createButton(UI_ID id, bool bReplaceThisElement = false);
+			Element* createDragFrame(UI_ID id, bool bReplaceThisElement = false);
+			Element* createFillBar(UI_ID id, bool bReplaceThisElement = false);
+			Element* createFixedFrame(UI_ID id, bool bReplaceThisElement = false);
+			Element* createHorizontalScrollPane(UI_ID id, bool bReplaceThisElement = false);
+			Element* createHypertext(UI_ID id, bool bReplaceThisElement = false);
+			Element* createImage(UI_ID id, const char* imagePath, bool bReplaceThisElement = false);
+			Element* createLabel(UI_ID id, const char* text, bool bBlackText = 0, bool bReplaceThisElement = false);
+			Element* createNif(UI_ID id, const char* path, bool bReplaceThisElement = false);
+			Element* createParagraphInput(UI_ID id, bool bReplaceThisElement = false);
+			Element* createRect(UI_ID id, bool bReplaceThisElement = 0, bool bRandomColour = false);
+			Element* createSlider(UI_ID id, bool bReplaceThisElement = false);
+			Element* createSliderVertical(UI_ID id, bool bReplaceThisElement = false);
+			Element* createTextInput(UI_ID id, bool bReplaceThisElement = false);
+			Element* createTextSelect(UI_ID id, bool bReplaceThisElement = false);
+			Element* createVerticalScrollPane(UI_ID id, bool bReplaceThisElement = false);
 			void destroy();
 			void destroyChildren();
 
@@ -104,11 +104,11 @@ namespace TES3 {
 			int getIndexOfChild(const Element *child) const;
 			Element* getContentElement();
 			Element* getTopLevelParent();
-			Element* performLayout(Boolean bUpdateTimestamp = 1);
+			Element* performLayout(bool bUpdateTimestamp = true);
 			bool reorderChildren(int insertBefore, int moveFrom, int count);
-			void setAutoHeight(Boolean bAuto);
-			void setAutoWidth(Boolean bAuto);
-			void setVisible(Boolean bVisible);
+			void setAutoHeight(bool bAuto);
+			void setAutoWidth(bool bAuto);
+			void setVisible(bool bVisible);
 			long timingUpdate();
 
 			//
@@ -117,6 +117,8 @@ namespace TES3 {
 
 			PropertyValue* getProperty(PropertyValue* propValue, Property prop, PropertyType propType, const Element* element = nullptr, bool checkInherited = false) const;
 			PropertyValue getProperty(PropertyType propType, Property prop) const;
+			PropertyType getPropertyType(Property prop) const;
+			bool hasProperty(Property prop) const;
 			const char* getText() const;
 
 			void setProperty(Property prop, PropertyValue value, PropertyType type);

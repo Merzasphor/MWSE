@@ -3,11 +3,11 @@
 #include "LuaManager.h"
 #include "TES3ObjectLua.h"
 
-#include "TES3Util.h"
-
 #include "TES3MobileActor.h"
 #include "TES3Reference.h"
 #include "TES3Spell.h"
+
+#include "MemoryUtil.h"
 
 namespace mwse {
 	namespace lua {

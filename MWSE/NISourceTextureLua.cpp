@@ -2,8 +2,6 @@
 
 #include "NIObjectLua.h"
 
-#include "sol.hpp"
-
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
@@ -44,20 +42,22 @@ namespace mwse {
 				usertypeDefinition["isStatic"] = &NI::SourceTexture::isStatic;
 				usertypeDefinition["pixelData"] = &NI::SourceTexture::pixelData;
 
+				// Basic function binding.
+				usertypeDefinition["clearPixelData"] = &NI::SourceTexture::clearPixelData;
+				usertypeDefinition["loadPixelDataFromFile"] = &NI::SourceTexture::loadPixelDataFromFile;
+
 				// Functions bound as properties.
 				usertypeDefinition["fileName"] = sol::readonly_property(&NI::SourceTexture::fileName);
 				usertypeDefinition["height"] = sol::readonly_property(&NI::SourceTexture::getHeight);
 				usertypeDefinition["platformFileName"] = sol::readonly_property(&NI::SourceTexture::platformFileName);
 				usertypeDefinition["width"] = sol::readonly_property(&NI::SourceTexture::getWidth);
-				// Functions that need their results wrapped.
-				usertypeDefinition.set("createFromPath", 
-					[](const char* path) { 
-						using FormatPrefs = NI::Texture::FormatPrefs;
-						FormatPrefs prefs = { FormatPrefs::PixelLayout::PIX_DEFAULT, FormatPrefs::MipFlag::MIP_DEFAULT, FormatPrefs::AlphaFormat::ALPHA_DEFAULT };
-						return NI::SourceTexture::createFromPath(path, &prefs);
-					}
-				);
 
+				// Functions that need their results wrapped.
+				usertypeDefinition["createFromPath"] = [](const char* path) { 
+					using FormatPrefs = NI::Texture::FormatPrefs;
+					FormatPrefs prefs = { FormatPrefs::PixelLayout::PIX_DEFAULT, FormatPrefs::MipFlag::MIP_DEFAULT, FormatPrefs::AlphaFormat::ALPHA_DEFAULT };
+					return NI::SourceTexture::createFromPath(path, &prefs);
+				};
 			}
 		}
 	}

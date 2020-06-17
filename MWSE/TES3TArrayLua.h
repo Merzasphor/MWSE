@@ -4,8 +4,6 @@
 
 #include "LuaUtil.h"
 
-#include <cstddef>
-
 namespace mwse {
 	namespace lua {
 		//

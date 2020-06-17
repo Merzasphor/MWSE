@@ -1,13 +1,10 @@
 #include "TES3Vectors.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
 
 #include "TES3Vectors.h"
 
 #include "NIColor.h"
-
-#include <iomanip>
 
 namespace mwse {
 	namespace lua {

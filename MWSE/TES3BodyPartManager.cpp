@@ -1,7 +1,6 @@
 #include "TES3BodyPartManager.h"
 
 #include "LuaManager.h"
-#include "sol.hpp"
 
 #include "LuaBodyPartAssignedEvent.h"
 
@@ -28,11 +27,11 @@ namespace TES3 {
 		TES3_BodyPartManager_setActivePartData(this, layer, index, overwriteData, node);
 	}
 
-	const auto TES3_BodyPartManager_setBodyPartForItem = reinterpret_cast<void(__thiscall*)(BodyPartManager*, Item*, BodyPartManager::ActiveBodyPart::Index, BodyPart*, int)>(0x473CB0);
-	void BodyPartManager::setBodyPartForItem(Item* item, ActiveBodyPart::Index index, BodyPart* bodyPart, bool isFirstPerson) {
+	const auto TES3_BodyPartManager_setBodyPartForItem = reinterpret_cast<void(__thiscall*)(BodyPartManager*, PhysicalObject*, BodyPartManager::ActiveBodyPart::Index, BodyPart*, int)>(0x473CB0);
+	void BodyPartManager::setBodyPartForObject(PhysicalObject* object, ActiveBodyPart::Index index, BodyPart* bodyPart, bool isFirstPerson) {
 		if (mwse::lua::event::BodyPartAssignedEvent::getEventEnabled()) {
 			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
-			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::BodyPartAssignedEvent(this, reference, item, index, bodyPart, isFirstPerson));
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::BodyPartAssignedEvent(this, reference, object, index, bodyPart, isFirstPerson));
 			if (eventData.valid()) {
 				bodyPart = eventData.get_or("bodyPart", bodyPart);
 				if (eventData.get_or("block", false)) {
@@ -41,12 +40,12 @@ namespace TES3 {
 			}
 		}
 
-		TES3_BodyPartManager_setBodyPartForItem(this, item, index, bodyPart, isFirstPerson);
+		TES3_BodyPartManager_setBodyPartForItem(this, object, index, bodyPart, isFirstPerson);
 	}
 
-	const auto TES3_BodyPartManager_setBodyPartByIdForItem = reinterpret_cast<void(__thiscall*)(BodyPartManager*, Item*, BodyPartManager::ActiveBodyPart::Index, const char*, int)>(0x473C80);
-	void BodyPartManager::setBodyPartByIdForItem(Item* item, ActiveBodyPart::Index index, const char* bodyPartId, bool isFirstPerson) {
-		TES3_BodyPartManager_setBodyPartByIdForItem(this, item, index, bodyPartId, isFirstPerson);
+	const auto TES3_BodyPartManager_setBodyPartByIdForItem = reinterpret_cast<void(__thiscall*)(BodyPartManager*, PhysicalObject*, BodyPartManager::ActiveBodyPart::Index, const char*, int)>(0x473C80);
+	void BodyPartManager::setBodyPartByIdForObject(PhysicalObject* object, ActiveBodyPart::Index index, const char* bodyPartId, bool isFirstPerson) {
+		TES3_BodyPartManager_setBodyPartByIdForItem(this, object, index, bodyPartId, isFirstPerson);
 	}
 
 	const auto TES3_BodyPartManager_removeEquippedLayers = reinterpret_cast<void(__thiscall*)(BodyPartManager*)>(0x472D70);

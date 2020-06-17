@@ -1,6 +1,5 @@
 #pragma once
 
-#include <stddef.h>
 #include "TES3Defines.h"
 
 #include "TES3Collections.h"
@@ -11,8 +10,7 @@
 #include "TES3AnimationData.h"
 
 #include "NIAVObject.h"
-
-#include <Windows.h>
+#include "NISourceTexture.h"
 
 #define MWSE_CUSTOM_EFFECTS
 
@@ -62,7 +60,7 @@ namespace TES3 {
 		Iterator<GlobalVariable> * globals; // 0x38
 		Iterator<Dialogue> * dialogues; // 0x3C
 		Iterator<Region> * regions; // 0x40
-		Iterator<BaseObject> * birthsigns; // 0x44
+		Iterator<Birthsign> * birthsigns; // 0x44
 		Iterator<StartScript> * startScripts; // 0x48
 		Skill skills[27]; // 0x4C
 #ifdef MWSE_CUSTOM_EFFECTS
@@ -116,6 +114,7 @@ namespace TES3 {
 		Dialogue* findDialogue(const char*);
 		Sound* findSound(const char*);
 		Faction* findFaction(const char*);
+		Reference* findClosestExteriorReferenceOfObject(PhysicalObject* object, Vector3* position, bool searchForExteriorDoorMarker = false, int ignored = -1);
 		bool addNewObject(BaseObject*);
 		void deleteObject(BaseObject*);
 		void respawnContainers();
@@ -202,8 +201,8 @@ namespace TES3 {
 		Cell * currentInteriorCell; // 0xAC
 		Cell ** interiorCellBuffer; // 0xB0
 		Cell ** exteriorCellBuffer; // 0xB4
-		int unknown_0xB8;
-		int unknown_0xBC;
+		int lastExteriorCellPositionX; // 0xB8
+		int lastExteriorCellPositionY; // 0xBC
 		Iterator<Reference> collisionReferenceGrid[48][48]; // 0xC0
 		int collision_0xB4C0;
 		int collision_0xB4C4;
@@ -279,6 +278,8 @@ namespace TES3 {
 		//
 
 		static Cell* previousVisitedCell;
+		static bool dontThreadLoad;
+		static bool suppressThreadLoad;
 
 		// Get singleton.
 		_declspec (dllexport) static DataHandler * get();
@@ -287,12 +288,16 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
+		Vector3 getLastExteriorPosition();
+
 		void addSound(Sound* sound, Reference* reference = nullptr, int playbackFlags = 0, unsigned char volume = 250, float pitch = 1.0f, bool isVoiceover = false, int unknown = 0);
 		Sound* addSound(const char* soundId, Reference* reference = 0, int playbackFlags = 0, unsigned char volume = 250, float pitch = 1.0f, int unknown = 0);
 		void addTemporySound(const char* path, Reference * reference = nullptr, int playbackFlags = 0, int volume = 250, float pitch = 1.0f, bool isVoiceover = false, Sound * sound = nullptr);
 		SoundEvent* getSoundPlaying(Sound*, Reference*);
 		void adjustSoundVolume(Sound*, Reference*, unsigned char volume);
 		void removeSound(Sound*, Reference*);
+
+		NI::Pointer<NI::SourceTexture> loadSourceTexture(const char* path);
 
 		void updateLightingForReference(Reference * reference);
 		void setDynamicLightingForReference(Reference* reference);

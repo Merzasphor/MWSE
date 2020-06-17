@@ -3,10 +3,6 @@
 #include "TES3Defines.h"
 #include "TES3Vectors.h"
 
-#include <dsound.h>
-#include <dshow.h>
-#undef PlaySound
-
 namespace TES3 {
 	enum class AudioMixType {
 		Master = 0,

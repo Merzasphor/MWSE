@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cstdint>
-
 namespace NI {
 	struct AlphaProperty;
 	struct AmbientLight;
@@ -55,6 +53,7 @@ namespace NI {
 	struct TextKey;
 	struct TextKeyExtraData;
 	struct Texture;
+	struct TextureEffect;
 	struct TexturingProperty;
 	struct TimeController;
 	struct Transform;

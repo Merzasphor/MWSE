@@ -7,8 +7,6 @@
 
 #include "NINode.h"
 
-#include <string>
-
 namespace TES3 {
 
 	//
@@ -180,7 +178,7 @@ namespace TES3 {
 		void * unknown_0x104;
 		void * isLocationMarker; // 0x108
 		char* (__thiscall * setName)(BaseObject*, const char*); // 0x10C
-		void * unknown_0x110;
+		void (__thiscall* reevaluateEquipment)(BaseObject*); // 0x110
 		void * unknown_0x114;
 		void * unknown_0x118;
 		void(__thiscall* resetVisualNode)(BaseObject*, NI::Node*); // 0x11C
@@ -299,6 +297,7 @@ namespace TES3 {
 		void setAutoCalc(bool);
 		void setModelPath(const char*);
 		void setName(const char*);
+		void reevaluateEquipment();
 		void resetVisualNode(NI::Node* node = nullptr);
 		float getScale();
 		void setScale(float value, bool cap = false);

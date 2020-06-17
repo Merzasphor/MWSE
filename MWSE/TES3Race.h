@@ -100,6 +100,9 @@ namespace TES3 {
 		// Falls back to non-vampire if no vampiric body part is found, then to male if no female bodypart is found.
 		BodyPart* getBodyPart(bool isFemale, bool isVampire, PartIndex index);
 
+		char* loadDescription();
+		void freeDescription();
+
 	};
 	static_assert(sizeof(Race) == 0x1D8, "TES3::Race failed size validation");
 }

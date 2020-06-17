@@ -57,6 +57,10 @@ namespace mwse {
 					[](TES3::Creature& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagCreature::BipedBit); },
 					[](TES3::Creature& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagCreature::BipedBit, state); }
 				);
+				usertypeDefinition["essential"] = sol::property(
+					[](TES3::Creature& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagCreature::EssentialBit); },
+					[](TES3::Creature& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagCreature::EssentialBit, state); }
+				);
 				usertypeDefinition["respawns"] = sol::property(
 					[](TES3::Creature& self) { return BIT_TEST(self.actorFlags, TES3::ActorFlagCreature::RespawnBit); },
 					[](TES3::Creature& self, bool state) { BIT_SET(self.actorFlags, TES3::ActorFlagCreature::RespawnBit, state); }
@@ -99,6 +103,9 @@ namespace mwse {
 				usertypeDefinition["inventory"] = sol::readonly_property(&TES3::CreatureInstance::inventory);
 				usertypeDefinition["isInstance"] = sol::var(true);
 				usertypeDefinition["weapon"] = sol::readonly_property([](TES3::CreatureInstance& self) { return self.weapon; });
+
+				// Basic function binding.
+				usertypeDefinition["reevaluateEquipment"] = &TES3::CreatureInstance::reevaluateEquipment;
 
 				// Properties that directly point to the base creature.
 				usertypeDefinition["aiConfig"] = sol::readonly_property([](TES3::CreatureInstance& self) { return self.baseCreature->aiConfig; });

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "sol.hpp"
-
 #include "TES3Defines.h"
 #include "TES3Attachment.h"
 #include "TES3Vectors.h"
@@ -40,6 +38,7 @@ namespace TES3 {
 		Vector3* getOrCreateOrientationFromAttachment();
 		Vector3* getPositionFromAttachment();
 		LockAttachmentNode* getOrCreateLockNode();
+		Reference* getLeveledBaseReference();
 		ScriptVariables * getScriptVariables();
 		void removeAttachment(TES3::Attachment* attachment);
 		void removeAllAttachments();
@@ -91,6 +90,8 @@ namespace TES3 {
 
 		LightAttachmentNode* getAttachedDynamicLight();
 		LightAttachmentNode* getOrCreateAttachedDynamicLight(NI::PointLight *, float);
+
+		bool isLeveledSpawn();
 
 		void setDynamicLighting();
 		void updateLighting();

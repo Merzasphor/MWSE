@@ -1,6 +1,5 @@
 #include "MemoryUtilLua.h"
 
-#include "sol.hpp"
 #include "LuaUtil.h"
 #include "LuaManager.h"
 
@@ -9,6 +8,7 @@
 #include "Log.h"
 
 #include "TES3Inventory.h"
+#include "TES3MagicEffectInstance.h"
 #include "TES3MobileObject.h"
 
 namespace mwse {
@@ -433,16 +433,22 @@ namespace mwse {
 			convertTo["tes3object"] = [](DWORD arg) { return reinterpret_cast<TES3::BaseObject*>(arg); };
 			convertTo["tes3mobileObject"] = [](DWORD arg) { return reinterpret_cast<TES3::MobileObject*>(arg); };
 			convertTo["tes3inventory"] = [](DWORD arg) { return reinterpret_cast<TES3::Inventory*>(arg); };
+			convertTo["tes3equipmentStackIterator"] = [](DWORD arg) { return reinterpret_cast<TES3::Iterator<TES3::EquipmentStack>*>(arg); };
+			convertTo["tes3equipmentStackIteratorNode"] = [](DWORD arg) { return reinterpret_cast<TES3::IteratorNode<TES3::EquipmentStack>*>(arg); };
+			convertTo["tes3magicEffectInstance"] = [](DWORD arg) { return reinterpret_cast<TES3::MagicEffectInstance*>(arg); };
 			memory["convertTo"] = convertTo;
 
 			auto convertFrom = memory.create();
-			convertFrom["bool"] = [](bool arg) { return (DWORD)arg; };
+			convertFrom["bool"] = [](bool arg) { return static_cast<DWORD>(arg); };
 			convertFrom["int"] = [](int arg) { return *reinterpret_cast<DWORD*>(&arg); };
 			convertFrom["uint"] = [](unsigned int arg) { return arg; };
 			convertFrom["float"] = [](float arg) { return *reinterpret_cast<DWORD*>(&arg); };
-			convertFrom["tes3object"] = [](void * arg) { return (DWORD)arg; };
-			convertFrom["tes3mobileObject"] = [](void * arg) { return (DWORD)arg; };
-			convertFrom["tes3inventory"] = [](void * arg) { return (DWORD)arg; };
+			convertFrom["tes3object"] = [](TES3::BaseObject* arg) { return reinterpret_cast<DWORD>(arg); };
+			convertFrom["tes3mobileObject"] = [](TES3::MobileObject* arg) { return reinterpret_cast<DWORD>(arg); };
+			convertFrom["tes3inventory"] = [](TES3::Inventory* arg) { return reinterpret_cast<DWORD>(arg); };
+			convertFrom["tes3equipmentStackIterator"] = [](TES3::Iterator<TES3::EquipmentStack>* arg) { return reinterpret_cast<DWORD>(arg); };
+			convertFrom["tes3equipmentStackIteratorNode"] = [](TES3::IteratorNode<TES3::EquipmentStack>* arg) { return reinterpret_cast<DWORD>(arg); };
+			convertFrom["tes3magicEffectInstance"] = [](TES3::MagicEffectInstance* arg) { return reinterpret_cast<DWORD>(arg); };
 			memory["convertFrom"] = convertFrom;
 		}
 	}

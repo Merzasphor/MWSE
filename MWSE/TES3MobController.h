@@ -6,8 +6,6 @@
 
 #include "NINode.h"
 
-#include <Windows.h>
-
 namespace TES3 {
 	struct Object_0x751248 {
 		int unknown_0x0;
@@ -38,6 +36,7 @@ namespace TES3 {
 		//
 
 		bool detectPresence(MobileActor * actor, bool unknown = true);
+		bool detectSneak(MobileActor* detector, MobileActor* target, bool unknown = true);
 		void checkRadius(MobileActor * actor, Iterator<AIPlanner> * container);
 		void checkPlayerDistance();
 
@@ -64,7 +63,7 @@ namespace TES3 {
 		float unknown_0x18; // Initialized to -4005.5
 		float unknown_0x1C; // Initialized to 46 degrees.
 		float unknown_0x20; // Initialized to cos(46 degrees)
-		MobController_0x24 * unknown_0x24; // Mobile actor controller?
+		MobController_0x24 * mobController_0x24; // Mobile actor controller?
 		ProjectileController* projectileController; // 0x28
 		bool unknown_0x2C;
 		Iterator<void> unknown_0x30;

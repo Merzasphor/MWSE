@@ -75,31 +75,5 @@ namespace mwse {
 		//
 
 		int rand(unsigned int arg0 = 0);
-
-		template <typename T>
-		T * _new() {
-			return reinterpret_cast<T*(__cdecl*)(size_t)>(0x727692)(sizeof(T));
-		}
-
-		void * _new(size_t size);
-
-		template <typename T>
-		void _delete(T * address) {
-			const auto __delete = reinterpret_cast<void (__cdecl*)(T *)>(0x727530);
-			__delete(address);
-		}
-
-		void* realloc(void* address, size_t size);
-
-		void* malloc(size_t size);
-
-		template <typename T>
-		T* malloc() {
-			T * ret = reinterpret_cast<T*>(malloc(sizeof(T)));
-			memset(ret, 0, sizeof(T));
-			return ret;
-		}
-
-		void free(void* address);
 	}
 };

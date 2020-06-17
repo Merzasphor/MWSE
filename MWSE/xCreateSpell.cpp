@@ -22,6 +22,8 @@
 #include "VMExecuteInterface.h"
 #include "Stack.h"
 #include "InstructionInterface.h"
+#include "MemoryUtil.h"
+
 #include "TES3Util.h"
 
 #include "TES3Collections.h"

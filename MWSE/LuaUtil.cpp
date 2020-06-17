@@ -1,9 +1,7 @@
 #include "LuaUtil.h"
 
-#include "sol.hpp"
 #include "LuaManager.h"
 
-#include "TES3Util.h"
 #include "Log.h"
 
 #include "NIAmbientLight.h"
@@ -12,6 +10,7 @@
 #include "NICollisionSwitch.h"
 #include "NIDefines.h"
 #include "NIDirectionalLight.h"
+#include "NIDynamicEffect.h"
 #include "NINode.h"
 #include "NIObject.h"
 #include "NIObjectNET.h"
@@ -20,6 +19,7 @@
 #include "NIRTTI.h"
 #include "NISpotLight.h"
 #include "NISwitchNode.h"
+#include "NITextureEffect.h"
 #include "NITriShape.h"
 
 #include "TES3Defines.h"
@@ -27,6 +27,7 @@
 #include "TES3Alchemy.h"
 #include "TES3Apparatus.h"
 #include "TES3Armor.h"
+#include "TES3Birthsign.h"
 #include "TES3BodyPart.h"
 #include "TES3Book.h"
 #include "TES3Cell.h"
@@ -85,10 +86,32 @@
 #include "TES3WeatherSnow.h"
 #include "TES3WeatherThunder.h"
 
-#include <Windows.h>
+#include "MemoryUtil.h"
 
 namespace mwse {
 	namespace lua {
+		TES3::BaseObject* getOptionalParamBaseObject(sol::optional<sol::table> maybeParams, const char* key) {
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeObject = params[key];
+				if (maybeObject.valid()) {
+					if (maybeObject.is<std::string>()) {
+						return TES3::DataHandler::get()->nonDynamicData->resolveObject(maybeObject.as<std::string>().c_str())->getBaseObject();
+					}
+					else if (maybeObject.is<TES3::BaseObject>()) {
+						return maybeObject.as<TES3::BaseObject*>()->getBaseObject();
+					}
+					else if (maybeObject.is<TES3::MobileCreature>()) {
+						maybeObject.as<TES3::MobileCreature*>()->creatureInstance->baseCreature;
+					}
+					else if (maybeObject.is<TES3::MobileNPC>()) {
+						maybeObject.as<TES3::MobileNPC*>()->npcInstance->baseNPC;
+					}
+				}
+			}
+			return nullptr;
+		}
+
 		TES3::Script* getOptionalParamExecutionScript(sol::optional<sol::table> maybeParams) {
 			if (maybeParams) {
 				sol::table params = maybeParams.value();

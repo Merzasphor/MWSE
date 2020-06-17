@@ -4,9 +4,10 @@
 
 namespace NI {
 	struct SourceTexture_vTable : Texture_vTable {
-		void * loadPixelDataFromFile; // 0x34
-		void * clearPixelData; // 0x38
+		void(__thiscall* loadPixelDataFromFile)(SourceTexture*); // 0x34
+		void(__thiscall* clearPixelData)(SourceTexture*); // 0x38
 	};
+	static_assert(sizeof(SourceTexture_vTable) == 0x3C, "NI::SourceTexture's vtable failed size validation");
 
 	struct SourceTexture : Texture {
 		const char * fileName; // 0x2C
@@ -20,6 +21,13 @@ namespace NI {
 
 		static Pointer<SourceTexture> createFromPath(const char* path, SourceTexture::FormatPrefs * formatPrefs);
 		static Pointer<SourceTexture> createFromPixelData(PixelData* pixelData, SourceTexture::FormatPrefs * formatPrefs);
+
+		//
+		// Virtual table functions.
+		//
+
+		void loadPixelDataFromFile();
+		void clearPixelData();
 
 	};
 	static_assert(sizeof(SourceTexture) == 0x3C, "NI::SourceTexture failed size validation");

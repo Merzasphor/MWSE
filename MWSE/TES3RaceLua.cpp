@@ -94,6 +94,35 @@ namespace mwse {
 
 				// Functions exposed as properties.
 				usertypeDefinition["name"] = sol::readonly_property([](TES3::Race& self) { return self.name; });
+				// Description may need to be loaded from disk, handle it specially.
+				usertypeDefinition["description"] = sol::readonly_property(
+					[](TES3::Race& self) -> sol::object
+				{
+					auto& luaManager = mwse::lua::LuaManager::getInstance();
+					auto stateHandle = luaManager.getThreadSafeStateHandle();
+					sol::state& state = stateHandle.state;
+
+					// If the description is already loaded, just return it.
+					if (self.description) {
+						return sol::make_object(state, self.description);
+					}
+
+					// Otherwise we need to load it from disk, then free it.
+					else {
+						char* description = self.loadDescription();
+						if (description) {
+							// We loaded successfully, package, free, then return.
+							sol::object value = sol::make_object(state, description);
+							self.freeDescription();
+							return value;
+						}
+					}
+
+					return sol::nil;
+				}
+				);
+
+
 			}
 		}
 	}

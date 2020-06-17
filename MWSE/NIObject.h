@@ -3,8 +3,6 @@
 #include "NIDefines.h"
 #include "NIPointer.h"
 
-#include "sol_forward.hpp"
-
 namespace NI {
 	struct Object {
 		union {

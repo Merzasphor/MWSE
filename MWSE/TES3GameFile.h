@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cstdint>
-
 #include "TES3Defines.h"
 #include "TES3Collections.h"
 

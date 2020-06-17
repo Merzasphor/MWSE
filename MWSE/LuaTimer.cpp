@@ -1,7 +1,5 @@
 #include "LuaTimer.h"
 
-#include <algorithm>
-
 #include "LuaManager.h"
 
 #include "LuaUtil.h"

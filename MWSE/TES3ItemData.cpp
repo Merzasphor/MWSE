@@ -1,7 +1,5 @@
 #include "TES3ItemData.h"
 
-#include "TES3Util.h"
-
 #include "TES3Actor.h"
 #include "TES3DataHandler.h"
 #include "TES3Enchantment.h"
@@ -11,8 +9,7 @@
 
 #include "LuaManager.h"
 
-#include <unordered_set>
-#include <Windows.h>
+#include "MemoryUtil.h"
 
 namespace TES3 {
 	//
@@ -122,7 +119,7 @@ namespace TES3 {
 
 	Actor * ItemData::getSoulActor() {
 		__try {
-			if (soul != nullptr && soul->isActor()) {
+			if (soul != nullptr && charge != -1.0f && soul->isActor()) {
 				return soul;
 			}
 		}

@@ -14,14 +14,14 @@ namespace TES3 {
 		Element* findMenu(UI_ID id);
 		Element* findHelpLayerMenu(UI_ID id);
 		Element* getMenuOnTop();
-		Boolean enterMenuMode(UI_ID id);
-		Boolean leaveMenuMode();
+		bool enterMenuMode(UI_ID id);
+		bool leaveMenuMode();
 		void acquireTextInput(Element* element);
 		void captureMouseDrag(bool capture);
 		void preventInventoryMenuToggle(Element* menu);
 		Vector3 getPaletteColour(Property prop);
 
-		Boolean __cdecl onScrollPaneMousewheel(Element*, Property, int, int, Element*);
+		bool __cdecl onScrollPaneMousewheel(Element*, Property, int, int, Element*);
 
 		MobileActor* getServiceActor();
 		void updateDialogDisposition();
