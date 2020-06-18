@@ -3826,10 +3826,10 @@ namespace mwse {
 			}
 
 			if (itemData->owner->objectType == TES3::ObjectType::NPC) {
-				return std::make_tuple<sol::object, sol::object>(TES3::BaseObject::getOrCreateLuaObject(params.lua_state(), itemData->owner), TES3::BaseObject::getOrCreateLuaObject(params.lua_state(), itemData->requiredVariable));
+				return std::make_tuple<sol::object, sol::object>(itemData->owner->getOrCreateLuaObject(params.lua_state()), itemData->requiredVariable->getOrCreateLuaObject(params.lua_state()));
 			}
 			else if (itemData->owner->objectType == TES3::ObjectType::Faction) {
-				return std::make_tuple<sol::object, sol::object>(TES3::BaseObject::getOrCreateLuaObject(params.lua_state(), itemData->owner), sol::make_object(params.lua_state(), itemData->requiredRank));
+				return std::make_tuple<sol::object, sol::object>(itemData->owner->getOrCreateLuaObject(params.lua_state()), sol::make_object(params.lua_state(), itemData->requiredRank));
 			}
 			else {
 				throw std::runtime_error("Owner was not of a valid type. Report this issue to MWSE developers!");

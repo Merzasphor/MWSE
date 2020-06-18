@@ -80,14 +80,14 @@ namespace NI {
 	static std::unordered_map<const Object*, sol::object> niObjectCache;
 	static std::mutex niObjectCacheMutex;
 
-	sol::object Object::getOrCreateLuaObject(lua_State* L, Object* object) {
-		if (object == nullptr) {
+	sol::object Object::getOrCreateLuaObject(lua_State* L) {
+		if (this == nullptr) {
 			return sol::nil;
 		}
 
 		niObjectCacheMutex.lock();
 
-		auto cacheHit = niObjectCache.find(object);
+		auto cacheHit = niObjectCache.find(this);
 		if (cacheHit != niObjectCache.end()) {
 			auto result = cacheHit->second;
 			niObjectCacheMutex.unlock();
@@ -97,69 +97,69 @@ namespace NI {
 		niObjectCacheMutex.unlock();
 
 		// Loop through RTTI information until we find a type we like.
-		auto currentRTTI = object->getRunTimeTypeInformation();
+		auto currentRTTI = this->getRunTimeTypeInformation();
 		sol::object ref = sol::nil;
 		while (currentRTTI != nullptr && ref == sol::nil) {
 			switch ((uintptr_t)currentRTTI) {
-			case NI::RTTIStaticPtr::NiAlphaProperty:
-				ref = sol::make_object_userdata(L, NI::Pointer(static_cast<NI::AlphaProperty*>(object)));
+			case RTTIStaticPtr::NiAlphaProperty:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<AlphaProperty*>(this)));
 				break;
-			case NI::RTTIStaticPtr::NiAmbientLight:
-				ref = sol::make_object_userdata(L, NI::Pointer(static_cast<NI::AmbientLight*>(object)));
+			case RTTIStaticPtr::NiAmbientLight:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<AmbientLight*>(this)));
 				break;
-			case NI::RTTIStaticPtr::NiAVObject:
-				ref = sol::make_object_userdata(L, NI::Pointer(static_cast<NI::AVObject*>(object)));
+			case RTTIStaticPtr::NiAVObject:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<AVObject*>(this)));
 				break;
-			case NI::RTTIStaticPtr::NiCamera:
-				ref = sol::make_object_userdata(L, NI::Pointer(static_cast<NI::Camera*>(object)));
+			case RTTIStaticPtr::NiCamera:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<Camera*>(this)));
 				break;
-			case NI::RTTIStaticPtr::NiCollisionSwitch:
-				ref = sol::make_object_userdata(L, NI::Pointer(static_cast<NI::CollisionSwitch*>(object)));
+			case RTTIStaticPtr::NiCollisionSwitch:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<CollisionSwitch*>(this)));
 				break;
-			case NI::RTTIStaticPtr::NiDirectionalLight:
-				ref = sol::make_object_userdata(L, NI::Pointer(static_cast<NI::DirectionalLight*>(object)));
+			case RTTIStaticPtr::NiDirectionalLight:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<DirectionalLight*>(this)));
 				break;
-			case NI::RTTIStaticPtr::NiFogProperty:
-				ref = sol::make_object_userdata(L, NI::Pointer(static_cast<NI::FogProperty*>(object)));
+			case RTTIStaticPtr::NiFogProperty:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<FogProperty*>(this)));
 				break;
-			case NI::RTTIStaticPtr::NiMaterialProperty:
-				ref = sol::make_object_userdata(L, NI::Pointer(static_cast<NI::MaterialProperty*>(object)));
+			case RTTIStaticPtr::NiMaterialProperty:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<MaterialProperty*>(this)));
 				break;
-			case NI::RTTIStaticPtr::NiNode:
-				ref = sol::make_object_userdata(L, NI::Pointer(static_cast<NI::Node*>(object)));
+			case RTTIStaticPtr::NiNode:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<Node*>(this)));
 				break;
-			case NI::RTTIStaticPtr::NiObject:
-				ref = sol::make_object_userdata(L, NI::Pointer(object));
+			case RTTIStaticPtr::NiObject:
+				ref = sol::make_object_userdata(L, Pointer(this));
 				break;
-			case NI::RTTIStaticPtr::NiObjectNET:
-				ref = sol::make_object_userdata(L, NI::Pointer(static_cast<NI::ObjectNET*>(object)));
+			case RTTIStaticPtr::NiObjectNET:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<ObjectNET*>(this)));
 				break;
-			case NI::RTTIStaticPtr::NiPixelData:
-				ref = sol::make_object_userdata(L, NI::Pointer(static_cast<NI::PixelData*>(object)));
+			case RTTIStaticPtr::NiPixelData:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<PixelData*>(this)));
 				break;
-			case NI::RTTIStaticPtr::NiPointLight:
-				ref = sol::make_object_userdata(L, NI::Pointer(static_cast<NI::PointLight*>(object)));
+			case RTTIStaticPtr::NiPointLight:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<PointLight*>(this)));
 				break;
-			case NI::RTTIStaticPtr::NiSourceTexture:
-				ref = sol::make_object_userdata(L, NI::Pointer(static_cast<NI::SourceTexture*>(object)));
+			case RTTIStaticPtr::NiSourceTexture:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<SourceTexture*>(this)));
 				break;
-			case NI::RTTIStaticPtr::NiSpotLight:
-				ref = sol::make_object_userdata(L, NI::Pointer(static_cast<NI::SpotLight*>(object)));
+			case RTTIStaticPtr::NiSpotLight:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<SpotLight*>(this)));
 				break;
-			case NI::RTTIStaticPtr::NiStencilProperty:
-				ref = sol::make_object_userdata(L, NI::Pointer(static_cast<NI::StencilProperty*>(object)));
+			case RTTIStaticPtr::NiStencilProperty:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<StencilProperty*>(this)));
 				break;
-			case NI::RTTIStaticPtr::NiSwitchNode:
-				ref = sol::make_object_userdata(L, NI::Pointer(static_cast<NI::SwitchNode*>(object)));
+			case RTTIStaticPtr::NiSwitchNode:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<SwitchNode*>(this)));
 				break;
-			case NI::RTTIStaticPtr::NiTexturingProperty:
-				ref = sol::make_object_userdata(L, NI::Pointer(static_cast<NI::TexturingProperty*>(object)));
+			case RTTIStaticPtr::NiTexturingProperty:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<TexturingProperty*>(this)));
 				break;
-			case NI::RTTIStaticPtr::NiTriShape:
-				ref = sol::make_object_userdata(L, NI::Pointer(static_cast<NI::TriShape*>(object)));
+			case RTTIStaticPtr::NiTriShape:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<TriShape*>(this)));
 				break;
-			case NI::RTTIStaticPtr::NiVertexColorProperty:
-				ref = sol::make_object_userdata(L, NI::Pointer(static_cast<NI::VertexColorProperty*>(object)));
+			case RTTIStaticPtr::NiVertexColorProperty:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<VertexColorProperty*>(this)));
 				break;
 			}
 
@@ -168,15 +168,11 @@ namespace NI {
 
 		if (ref != sol::nil) {
 			niObjectCacheMutex.lock();
-			niObjectCache[object] = ref;
+			niObjectCache[this] = ref;
 			niObjectCacheMutex.unlock();
 		}
 
 		return ref;
-	}
-
-	int Object::pushCachedLuaObject(lua_State* L, Object* object) {
-		return getOrCreateLuaObject(L, object).push(L);
 	}
 
 	void Object::clearCachedLuaObject(const Object* object) {
@@ -207,23 +203,18 @@ namespace NI {
 	}
 }
 
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::AlphaProperty);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::AmbientLight);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::AVObject);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::Camera);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::CollisionSwitch);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::DirectionalLight);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::FogProperty);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::MaterialProperty);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::Node);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::Object);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::ObjectNET);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::PixelData);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::PointLight);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::SourceTexture);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::SpotLight);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::StencilProperty);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::SwitchNode);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::TexturingProperty);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::TriShape);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(NI::VertexColorProperty);
+int sol_lua_push(sol::types<NI::Object>, lua_State* L, NI::Object* obj) {
+	return obj->getOrCreateLuaObject(L).push(L);
+}
+
+int sol_lua_push(sol::types<NI::Object*>, lua_State* L, NI::Object& obj) {
+	return obj.getOrCreateLuaObject(L).push(L);
+}
+
+int sol_lua_push(sol::types<NI::Pointer<NI::Object>>, lua_State* L, NI::Pointer<NI::Object>& obj) {
+	return obj->getOrCreateLuaObject(L).push(L);
+}
+
+int sol_lua_push(sol::types<NI::Pointer<NI::Object>*>, lua_State* L, NI::Pointer<NI::Object>* obj) {
+	return (*obj)->getOrCreateLuaObject(L).push(L);
+}

@@ -434,9 +434,9 @@ namespace mwse {
 					case TES3::ObjectType::MobileCreature:
 					case TES3::ObjectType::MobileNPC:
 					case TES3::ObjectType::MobilePlayer:
-						return TES3::MobileObject::getOrCreateLuaObject(state, static_cast<TES3::MobileObject*>(ptr));
+						return static_cast<TES3::MobileObject*>(ptr)->getOrCreateLuaObject(state);
 					default:
-						return TES3::BaseObject::getOrCreateLuaObject(state, static_cast<TES3::BaseObject*>(ptr));
+						return static_cast<TES3::BaseObject*>(ptr)->getOrCreateLuaObject(state);
 					}
 				}
 				else {

@@ -31,14 +31,14 @@ namespace TES3 {
 	static std::unordered_map<const Weather*, sol::object> weatherObjectCache;
 	static std::mutex weatherObjectCacheMutex;
 
-	sol::object Weather::getOrCreateLuaObject(lua_State* L, const Weather* object) {
-		if (object == nullptr) {
+	sol::object Weather::getOrCreateLuaObject(lua_State* L) const {
+		if (this == nullptr) {
 			return sol::nil;
 		}
 
 		weatherObjectCacheMutex.lock();
 
-		auto cacheHit = weatherObjectCache.find(object);
+		auto cacheHit = weatherObjectCache.find(this);
 		if (cacheHit != weatherObjectCache.end()) {
 			auto result = cacheHit->second;
 			weatherObjectCacheMutex.unlock();
@@ -46,50 +46,48 @@ namespace TES3 {
 		}
 
 		sol::object ref = sol::nil;
-		switch (object->index) {
+		switch (index) {
 		case TES3::WeatherType::Ash:
-			ref = sol::make_object(L, static_cast<const TES3::WeatherAsh*>(object));
+			ref = sol::make_object(L, static_cast<const TES3::WeatherAsh*>(this));
 			break;
 		case TES3::WeatherType::Blight:
-			ref = sol::make_object(L, static_cast<const TES3::WeatherBlight*>(object));
+			ref = sol::make_object(L, static_cast<const TES3::WeatherBlight*>(this));
 			break;
 		case TES3::WeatherType::Blizzard:
-			ref = sol::make_object(L, static_cast<const TES3::WeatherBlizzard*>(object));
+			ref = sol::make_object(L, static_cast<const TES3::WeatherBlizzard*>(this));
 			break;
 		case TES3::WeatherType::Clear:
-			ref = sol::make_object(L, static_cast<const TES3::WeatherClear*>(object));
+			ref = sol::make_object(L, static_cast<const TES3::WeatherClear*>(this));
 			break;
 		case TES3::WeatherType::Cloudy:
-			ref = sol::make_object(L, static_cast<const TES3::WeatherCloudy*>(object));
+			ref = sol::make_object(L, static_cast<const TES3::WeatherCloudy*>(this));
 			break;
 		case TES3::WeatherType::Foggy:
-			ref = sol::make_object(L, static_cast<const TES3::WeatherFoggy*>(object));
+			ref = sol::make_object(L, static_cast<const TES3::WeatherFoggy*>(this));
 			break;
 		case TES3::WeatherType::Overcast:
-			ref = sol::make_object(L, static_cast<const TES3::WeatherOvercast*>(object));
+			ref = sol::make_object(L, static_cast<const TES3::WeatherOvercast*>(this));
 			break;
 		case TES3::WeatherType::Rain:
-			ref = sol::make_object(L, static_cast<const TES3::WeatherRain*>(object));
+			ref = sol::make_object(L, static_cast<const TES3::WeatherRain*>(this));
 			break;
 		case TES3::WeatherType::Snow:
-			ref = sol::make_object(L, static_cast<const TES3::WeatherSnow*>(object));
+			ref = sol::make_object(L, static_cast<const TES3::WeatherSnow*>(this));
 			break;
 		case TES3::WeatherType::Thunder:
-			ref = sol::make_object(L, static_cast<const TES3::WeatherThunder*>(object));
+			ref = sol::make_object(L, static_cast<const TES3::WeatherThunder*>(this));
 			break;
+		default:
+			ref = sol::make_object_userdata(L, this);
 		}
 
 		if (ref != sol::nil) {
-			weatherObjectCache[object] = ref;
+			weatherObjectCache[this] = ref;
 		}
 
 		weatherObjectCacheMutex.unlock();
 
 		return ref;;
-	}
-
-	int Weather::pushCachedLuaObject(lua_State* L, const Weather* object) {
-		return getOrCreateLuaObject(L, object).push(L);
 	}
 
 	void Weather::clearCachedLuaObject(const Weather* object) {
@@ -120,14 +118,10 @@ namespace TES3 {
 	}
 }
 
-MWSE_SOL_CACHE_WEATHER_TYPE_BODY(TES3::Weather);
-MWSE_SOL_CACHE_WEATHER_TYPE_BODY(TES3::WeatherAsh);
-MWSE_SOL_CACHE_WEATHER_TYPE_BODY(TES3::WeatherBlight);
-MWSE_SOL_CACHE_WEATHER_TYPE_BODY(TES3::WeatherBlizzard);
-MWSE_SOL_CACHE_WEATHER_TYPE_BODY(TES3::WeatherClear);
-MWSE_SOL_CACHE_WEATHER_TYPE_BODY(TES3::WeatherCloudy);
-MWSE_SOL_CACHE_WEATHER_TYPE_BODY(TES3::WeatherFoggy);
-MWSE_SOL_CACHE_WEATHER_TYPE_BODY(TES3::WeatherOvercast);
-MWSE_SOL_CACHE_WEATHER_TYPE_BODY(TES3::WeatherRain);
-MWSE_SOL_CACHE_WEATHER_TYPE_BODY(TES3::WeatherSnow);
-MWSE_SOL_CACHE_WEATHER_TYPE_BODY(TES3::WeatherThunder);
+int sol_lua_push(sol::types<TES3::Weather>, lua_State* L, const TES3::Weather* obj) {
+	return obj->getOrCreateLuaObject(L).push(L);
+}
+
+int sol_lua_push(sol::types<TES3::Weather*>, lua_State* L, const TES3::Weather& obj) {
+	return obj.getOrCreateLuaObject(L).push(L);
+}

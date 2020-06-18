@@ -233,8 +233,7 @@ namespace TES3 {
 		static void setSourcelessObject(BaseObject* object);
 
 		// Storage for cached userdata.
-		static sol::object getOrCreateLuaObject(lua_State* L, const BaseObject* object);
-		static int pushCachedLuaObject(lua_State* L, const BaseObject* object);
+		sol::object getOrCreateLuaObject(lua_State* L) const;
 		static void clearCachedLuaObject(const BaseObject* object);
 		static void clearCachedLuaObjects();
 
@@ -349,60 +348,5 @@ namespace TES3 {
 // Special lua handling.
 //
 
-#define MWSE_SOL_CACHE_TYPE_DEF(T) int sol_lua_push(sol::types<T*>, lua_State* L, const T* object);
-#define MWSE_SOL_CACHE_TYPE_BODY(T) int sol_lua_push(sol::types<T*>, lua_State* L, const T* object) { return T::pushCachedLuaObject(L, object); }
-
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Activator);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Actor);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Alchemy);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::AnimationGroup);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Apparatus);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Armor);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::BaseObject);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Birthsign);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::BodyPart);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Book);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Cell);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Class);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Clothing);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Container);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::ContainerInstance);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Creature);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::CreatureInstance);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Dialogue);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::DialogueInfo);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Door);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Enchantment);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Faction);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::GameSetting);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::GlobalVariable);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Ingredient);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Item);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Land);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::LeveledCreature);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::LeveledItem);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Light);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Lockpick);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::MagicEffect);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::MagicSourceInstance);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Misc);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::NPC);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::NPCBase);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::NPCInstance);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Object);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::PhysicalObject);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Probe);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Quest);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Race);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Reference);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Region);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::RepairTool);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Script);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Skill);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Sound);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::SoundGenerator);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Spell);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::StartScript);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Static);
-MWSE_SOL_CACHE_TYPE_DEF(TES3::Weapon);
-
+int sol_lua_push(sol::types<TES3::BaseObject>, lua_State* L, const TES3::BaseObject& obj);
+int sol_lua_push(sol::types<TES3::BaseObject*>, lua_State* L, const TES3::BaseObject* obj);

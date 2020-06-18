@@ -56,9 +56,7 @@ namespace NI {
 		//
 
 		// Storage for cached userdata.
-		static sol::object getOrCreateLuaObject(lua_State* L, Object* object);
-		static int pushCachedLuaObject(lua_State* L, Object* object);
-
+		sol::object getOrCreateLuaObject(lua_State* L);
 		static void clearCachedLuaObject(const Object* object);
 		static void clearCachedLuaObjects();
 
@@ -87,32 +85,7 @@ namespace NI {
 	static_assert(sizeof(Object_vTable) == 0x2C, "NI::Object's vtable failed size validation");
 }
 
-#define MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(T)\
-int sol_lua_push(sol::types<T*>, lua_State* L, T* object);\
-int sol_lua_push(sol::types<T>, lua_State* L, T& object);\
-int sol_lua_push(sol::types<NI::Pointer<T>>, lua_State* L, NI::Pointer<T>& object);
-#define MWSE_SOL_CACHE_NIOBJECT_TYPE_BODY(T)\
-int sol_lua_push(sol::types<T*>, lua_State* L, T* object) { return T::pushCachedLuaObject(L, object); }\
-int sol_lua_push(sol::types<T>, lua_State* L, T& object) { return T::pushCachedLuaObject(L, &object); }\
-int sol_lua_push(sol::types<NI::Pointer<T>>, lua_State* L, NI::Pointer<T>& object) { return T::pushCachedLuaObject(L, object); }
-
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::AlphaProperty);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::AmbientLight);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::AVObject);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::Camera);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::CollisionSwitch);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::DirectionalLight);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::FogProperty);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::MaterialProperty);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::Node);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::Object);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::ObjectNET);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::PixelData);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::PointLight);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::SourceTexture);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::SpotLight);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::StencilProperty);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::SwitchNode);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::TexturingProperty);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::TriShape);
-MWSE_SOL_CACHE_NIOBJECT_TYPE_DEF(NI::VertexColorProperty);
+int sol_lua_push(sol::types<NI::Object>, lua_State* L, NI::Object* obj);
+int sol_lua_push(sol::types<NI::Object*>, lua_State* L, NI::Object& obj);
+int sol_lua_push(sol::types<NI::Pointer<NI::Object>>, lua_State* L, NI::Pointer<NI::Object>& obj);
+int sol_lua_push(sol::types<NI::Pointer<NI::Object>*>, lua_State* L, NI::Pointer<NI::Object>* obj);

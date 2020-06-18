@@ -137,14 +137,14 @@ namespace TES3 {
 	static std::unordered_map<const MobileObject*, sol::object> mobileObjectCache;
 	static std::mutex mobileObjectCacheMutex;
 
-	sol::object MobileObject::getOrCreateLuaObject(lua_State* L, const MobileObject* object) {
-		if (object == nullptr) {
+	sol::object MobileObject::getOrCreateLuaObject(lua_State* L) const {
+		if (this == nullptr) {
 			return sol::nil;
 		}
 
 		mobileObjectCacheMutex.lock();
 
-		auto cacheHit = mobileObjectCache.find(object);
+		auto cacheHit = mobileObjectCache.find(this);
 		if (cacheHit != mobileObjectCache.end()) {
 			auto result = cacheHit->second;
 			mobileObjectCacheMutex.unlock();
@@ -152,32 +152,28 @@ namespace TES3 {
 		}
 
 		sol::object ref = sol::nil;
-		switch ((unsigned int)object->vTable.mobileObject) {
+		switch ((unsigned int)vTable.mobileObject) {
 		case TES3_vTable_MobileCreature:
-			ref = sol::make_object(L, static_cast<const TES3::MobileCreature*>(object));
+			ref = sol::make_object(L, static_cast<const TES3::MobileCreature*>(this));
 			break;
 		case TES3_vTable_MobileNPC:
-			ref = sol::make_object(L, static_cast<const TES3::MobileNPC*>(object));
+			ref = sol::make_object(L, static_cast<const TES3::MobileNPC*>(this));
 			break;
 		case TES3_vTable_MobilePlayer:
-			ref = sol::make_object(L, static_cast<const TES3::MobilePlayer*>(object));
+			ref = sol::make_object(L, static_cast<const TES3::MobilePlayer*>(this));
 			break;
 		case TES3_vTable_MobileProjectile:
-			ref = sol::make_object(L, static_cast<const TES3::MobileProjectile*>(object));
+			ref = sol::make_object(L, static_cast<const TES3::MobileProjectile*>(this));
 			break;
 		case TES3_vTable_SpellProjectile:
-			ref = sol::make_object(L, static_cast<const TES3::MobileSpellProjectile*>(object));
+			ref = sol::make_object(L, static_cast<const TES3::MobileSpellProjectile*>(this));
 			break;
 		}
 
-		mobileObjectCache[object] = ref;
+		mobileObjectCache[this] = ref;
 		mobileObjectCacheMutex.unlock();
 
 		return ref;
-	}
-
-	int MobileObject::pushCachedLuaObject(lua_State* L, const MobileObject* object) {
-		return getOrCreateLuaObject(L, object).push(L);
 	}
 
 	void MobileObject::clearCachedLuaObject(const MobileObject* object) {
@@ -208,10 +204,10 @@ namespace TES3 {
 	}
 }
 
-MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_BODY(TES3::MobileActor);
-MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_BODY(TES3::MobileCreature);
-MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_BODY(TES3::MobileNPC);
-MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_BODY(TES3::MobileObject);
-MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_BODY(TES3::MobilePlayer);
-MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_BODY(TES3::MobileProjectile);
-MWSE_SOL_CACHE_MOBILE_OBJECT_TYPE_BODY(TES3::MobileSpellProjectile);
+int sol_lua_push(sol::types<TES3::MobileObject>, lua_State* L, const TES3::MobileObject* obj) {
+	return obj->getOrCreateLuaObject(L).push(L);
+}
+
+int sol_lua_push(sol::types<TES3::MobileObject*>, lua_State* L, const TES3::MobileObject& obj) {
+	return obj.getOrCreateLuaObject(L).push(L);
+}

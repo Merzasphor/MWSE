@@ -57,25 +57,12 @@ namespace TES3 {
 		bool setAmbientLoopSoundID(const char* id);
 
 		// Storage for cached userdata.
-		static sol::object getOrCreateLuaObject(lua_State* L, const Weather* object);
-		static int pushCachedLuaObject(lua_State* L, const Weather* object);
+		sol::object getOrCreateLuaObject(lua_State* L) const;
 		static void clearCachedLuaObject(const Weather* object);
 		static void clearCachedLuaObjects();
 	};
 	static_assert(sizeof(Weather) == 0x318, "TES3::Weather failed size validation");
 }
 
-#define MWSE_SOL_CACHE_WEATHER_TYPE_DEF(T) int sol_lua_push(sol::types<T*>, lua_State* L, const T* object);
-#define MWSE_SOL_CACHE_WEATHER_TYPE_BODY(T) int sol_lua_push(sol::types<T*>, lua_State* L, const T* object) { return T::pushCachedLuaObject(L, object); }
-
-MWSE_SOL_CACHE_WEATHER_TYPE_DEF(TES3::Weather);
-MWSE_SOL_CACHE_WEATHER_TYPE_DEF(TES3::WeatherAsh);
-MWSE_SOL_CACHE_WEATHER_TYPE_DEF(TES3::WeatherBlight);
-MWSE_SOL_CACHE_WEATHER_TYPE_DEF(TES3::WeatherBlizzard);
-MWSE_SOL_CACHE_WEATHER_TYPE_DEF(TES3::WeatherClear);
-MWSE_SOL_CACHE_WEATHER_TYPE_DEF(TES3::WeatherCloudy);
-MWSE_SOL_CACHE_WEATHER_TYPE_DEF(TES3::WeatherFoggy);
-MWSE_SOL_CACHE_WEATHER_TYPE_DEF(TES3::WeatherOvercast);
-MWSE_SOL_CACHE_WEATHER_TYPE_DEF(TES3::WeatherRain);
-MWSE_SOL_CACHE_WEATHER_TYPE_DEF(TES3::WeatherSnow);
-MWSE_SOL_CACHE_WEATHER_TYPE_DEF(TES3::WeatherThunder);
+int sol_lua_push(sol::types<TES3::Weather>, lua_State* L, const TES3::Weather* obj);
+int sol_lua_push(sol::types<TES3::Weather*>, lua_State* L, const TES3::Weather& obj);
