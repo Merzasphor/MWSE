@@ -85,3 +85,5 @@ namespace TES3 {
 	};
 	static_assert(sizeof(Actor) == 0x6C, "TES3::Actor failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::Actor)

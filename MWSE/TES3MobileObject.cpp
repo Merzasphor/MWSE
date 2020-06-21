@@ -162,13 +162,13 @@ namespace TES3 {
 			ref = sol::make_object(L, static_cast<const TES3::MobileCreature*>(this));
 			break;
 		case TES3_vTable_MobileNPC:
-			ref = sol::make_object(L, static_cast<const TES3::MobileNPC*>(this));
+			ref = sol::make_object_userdata(L, static_cast<const TES3::MobileNPC*>(this));
 			break;
 		case TES3_vTable_MobilePlayer:
 			ref = sol::make_object(L, static_cast<const TES3::MobilePlayer*>(this));
 			break;
 		case TES3_vTable_MobileProjectile:
-			ref = sol::make_object(L, static_cast<const TES3::MobileProjectile*>(this));
+			ref = sol::make_object_userdata(L, static_cast<const TES3::MobileProjectile*>(this));
 			break;
 		case TES3_vTable_SpellProjectile:
 			ref = sol::make_object(L, static_cast<const TES3::MobileSpellProjectile*>(this));
@@ -209,10 +209,4 @@ namespace TES3 {
 	}
 }
 
-int sol_lua_push(sol::types<TES3::MobileObject>, lua_State* L, const TES3::MobileObject* obj) {
-	return obj->getOrCreateLuaObject(L).push(L);
-}
-
-int sol_lua_push(sol::types<TES3::MobileObject*>, lua_State* L, const TES3::MobileObject& obj) {
-	return obj.getOrCreateLuaObject(L).push(L);
-}
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3_MOBILEOBJECT(TES3::MobileObject)

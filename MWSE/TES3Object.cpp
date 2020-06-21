@@ -557,10 +557,6 @@ namespace TES3 {
 	}
 }
 
-int sol_lua_push(sol::types<TES3::BaseObject>, lua_State* L, const TES3::BaseObject& obj) {
-	return obj.getOrCreateLuaObject(L).push(L);
-}
-
-int sol_lua_push(sol::types<TES3::BaseObject*>, lua_State* L, const TES3::BaseObject* obj) {
-	return obj->getOrCreateLuaObject(L).push(L);
-}
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::BaseObject)
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::Object)
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::PhysicalObject)

@@ -33,3 +33,5 @@ namespace TES3 {
 	};
 	static_assert(sizeof(MobileProjectile) == 0xAC, "TES3::MobileProjectile failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3_MOBILEOBJECT(TES3::MobileProjectile)

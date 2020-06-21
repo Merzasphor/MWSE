@@ -40,3 +40,5 @@ namespace TES3 {
 	};
 	static_assert(sizeof(MobileNPC) == 0x56C, "TES3::MobileNPC failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3_MOBILEOBJECT(TES3::MobileNPC)

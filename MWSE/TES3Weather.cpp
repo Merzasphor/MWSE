@@ -118,10 +118,4 @@ namespace TES3 {
 	}
 }
 
-int sol_lua_push(sol::types<TES3::Weather>, lua_State* L, const TES3::Weather* obj) {
-	return obj->getOrCreateLuaObject(L).push(L);
-}
-
-int sol_lua_push(sol::types<TES3::Weather*>, lua_State* L, const TES3::Weather& obj) {
-	return obj.getOrCreateLuaObject(L).push(L);
-}
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3_WEATHER(TES3::Weather)

@@ -187,3 +187,5 @@ namespace TES3 {
 		onCloseInventory(reference.value_or(nullptr), unknown.value_or(0));
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::Actor)

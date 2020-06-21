@@ -7,6 +7,16 @@
 
 #include "NINode.h"
 
+// Must be added to header files that declare Ni types that can be derived.
+#define MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(T) \
+int sol_lua_push(sol::types<T>, lua_State* L, const T& obj); \
+int sol_lua_push(sol::types<T*>, lua_State* L, const T* obj);
+
+// Must be added to source files that declare Ni types that can be derived.
+#define MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(T) \
+int sol_lua_push(sol::types<T>, lua_State* L, const T& obj) { return obj.getOrCreateLuaObject(L).push(L); } \
+int sol_lua_push(sol::types<T*>, lua_State* L, const T* obj) { return obj->getOrCreateLuaObject(L).push(L); }
+
 namespace TES3 {
 
 	//
@@ -350,9 +360,7 @@ namespace TES3 {
 	static_assert(sizeof(PhysicalObject) == 0x30, "TES3::PhysicalObject failed size validation");
 }
 
-//
-// Special lua handling.
-//
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::BaseObject)
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::Object)
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::PhysicalObject)
 
-int sol_lua_push(sol::types<TES3::BaseObject>, lua_State* L, const TES3::BaseObject& obj);
-int sol_lua_push(sol::types<TES3::BaseObject*>, lua_State* L, const TES3::BaseObject* obj);

@@ -84,3 +84,5 @@ namespace TES3 {
 	}
 
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3_MOBILEOBJECT(TES3::MobileProjectile)

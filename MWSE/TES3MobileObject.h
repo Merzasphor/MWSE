@@ -6,6 +6,16 @@
 #include "TES3Object.h"
 #include "TES3Vectors.h"
 
+// Must be added to header files that declare types that can be derived.
+#define MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3_MOBILEOBJECT(T) \
+int sol_lua_push(sol::types<T>, lua_State* L, const T& obj); \
+int sol_lua_push(sol::types<T*>, lua_State* L, const T* obj);
+
+// Must be added to source files that declare types that can be derived.
+#define MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3_MOBILEOBJECT(T) \
+int sol_lua_push(sol::types<T>, lua_State* L, const T& obj) { return obj.getOrCreateLuaObject(L).push(L); } \
+int sol_lua_push(sol::types<T*>, lua_State* L, const T* obj) { return obj->getOrCreateLuaObject(L).push(L); }
+
 namespace TES3 {
 	namespace MobileActorFlag {
 		typedef unsigned int value_type;
@@ -246,5 +256,4 @@ namespace TES3 {
 	static_assert(sizeof(MobileObject::Collision) == 0x40, "TES3::MobileObject::Collision failed size validation");
 }
 
-int sol_lua_push(sol::types<TES3::MobileObject>, lua_State* L, const TES3::MobileObject* obj);
-int sol_lua_push(sol::types<TES3::MobileObject*>, lua_State* L, const TES3::MobileObject& obj);
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3_MOBILEOBJECT(TES3::MobileObject)
