@@ -88,5 +88,6 @@ namespace NI {
 	void MaterialProperty::incrementRevisionId() {
 		revisionID++;
 	}
-
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_NI(NI::Property)

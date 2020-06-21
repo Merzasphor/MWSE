@@ -61,3 +61,5 @@ namespace NI {
 	};
 	static_assert(sizeof(GeometryData) == 0x34, "NI::GeometryData failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_NI(NI::GeometryData)

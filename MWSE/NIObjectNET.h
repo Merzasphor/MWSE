@@ -23,3 +23,5 @@ namespace NI {
 	};
 	static_assert(sizeof(ObjectNET) == 0x14, "NI::ObjectNET failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_NI(NI::ObjectNET)

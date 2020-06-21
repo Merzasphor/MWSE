@@ -32,3 +32,5 @@ namespace NI {
 		return nonstd::span(texture, vertexCount);
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_NI(NI::GeometryData)

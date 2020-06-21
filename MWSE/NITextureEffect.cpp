@@ -16,3 +16,5 @@ namespace NI {
 		return new TextureEffect();
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_NI(NI::TextureEffect)

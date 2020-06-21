@@ -6,3 +6,5 @@ namespace NI {
 		return NI_Light_ctor(this);
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_NI(NI::Light)

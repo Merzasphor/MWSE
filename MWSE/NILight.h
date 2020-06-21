@@ -19,3 +19,5 @@ namespace NI {
 	};
 	static_assert(sizeof(Light) == 0xD0, "NI::Light failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_NI(NI::Light)

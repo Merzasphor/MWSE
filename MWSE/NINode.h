@@ -49,3 +49,5 @@ namespace NI {
 	};
 	static_assert(sizeof(Node_vTable) == 0xA8, "NI::Node's vtable failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_NI(NI::Node)

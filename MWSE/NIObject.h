@@ -3,6 +3,20 @@
 #include "NIDefines.h"
 #include "NIPointer.h"
 
+// Must be added to header files that declare Ni types that can be derived.
+#define MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_NI(T) \
+int sol_lua_push(sol::types<T>, lua_State* L, T& obj); \
+int sol_lua_push(sol::types<T*>, lua_State* L, T* obj); \
+int sol_lua_push(sol::types<NI::Pointer<T>>, lua_State* L, NI::Pointer<T>& obj); \
+int sol_lua_push(sol::types<NI::Pointer<T>*>, lua_State* L, NI::Pointer<T>* obj);
+
+// Must be added to source files that declare Ni types that can be derived.
+#define MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_NI(T) \
+int sol_lua_push(sol::types<T>, lua_State* L, T& obj) { return obj.getOrCreateLuaObject(L).push(L); } \
+int sol_lua_push(sol::types<T*>, lua_State* L, T* obj) { return obj->getOrCreateLuaObject(L).push(L); } \
+int sol_lua_push(sol::types<NI::Pointer<T>>, lua_State* L, NI::Pointer<T>& obj) { return obj->getOrCreateLuaObject(L).push(L); } \
+int sol_lua_push(sol::types<NI::Pointer<T>*>, lua_State* L, NI::Pointer<T>* obj) { return obj->get()->getOrCreateLuaObject(L).push(L); } 
+
 namespace NI {
 	struct Object {
 		union {
@@ -85,7 +99,4 @@ namespace NI {
 	static_assert(sizeof(Object_vTable) == 0x2C, "NI::Object's vtable failed size validation");
 }
 
-int sol_lua_push(sol::types<NI::Object>, lua_State* L, NI::Object& obj);
-int sol_lua_push(sol::types<NI::Object*>, lua_State* L, NI::Object* obj);
-int sol_lua_push(sol::types<NI::Pointer<NI::Object>>, lua_State* L, NI::Pointer<NI::Object>& obj);
-int sol_lua_push(sol::types<NI::Pointer<NI::Object>*>, lua_State* L, NI::Pointer<NI::Object>* obj);
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_NI(NI::Object)

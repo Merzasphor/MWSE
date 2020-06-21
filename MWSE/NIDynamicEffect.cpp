@@ -16,3 +16,5 @@ namespace NI {
 		return vTable.asDynamicEffect->getType(this);
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_NI(NI::DynamicEffect)

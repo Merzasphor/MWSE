@@ -27,3 +27,6 @@ namespace NI {
 		NI_ObjectNET_setName(this, name);
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_NI(NI::ObjectNET)
+

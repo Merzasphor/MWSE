@@ -41,3 +41,5 @@ namespace NI {
 	};
 	static_assert(sizeof(TextureEffect) == 0x148, "NI::TextureEffect failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_NI(NI::TextureEffect)
