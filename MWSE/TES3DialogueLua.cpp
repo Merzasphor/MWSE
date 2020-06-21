@@ -5,42 +5,19 @@
 #include "TES3ObjectLua.h"
 
 #include "TES3Actor.h"
+#include "TES3Cell.h"
+#include "TES3Class.h"
 #include "TES3Dialogue.h"
 #include "TES3DialogueConditional.h"
 #include "TES3DialogueInfo.h"
+#include "TES3Faction.h"
 #include "TES3MobileActor.h"
-#include "TES3MobilePlayer.h"
 #include "TES3Quest.h"
+#include "TES3Race.h"
 #include "TES3Reference.h"
-#include "TES3WorldController.h"
 
 namespace mwse {
 	namespace lua {
-		TES3::BaseObject* getFilterObject(TES3::DialogueInfo& info, TES3::DialogueInfoFilterType type) {
-			TES3::DialogueInfoFilterNode *node;
-
-			for (node = info.conditions; node; node = node->next) {
-				if (node->tag == type) {
-					break;
-				}
-			}
-			if (!node) {
-				return nullptr;
-			}
-
-			switch (type) {
-			case TES3::DialogueInfoFilterType::Actor:
-			case TES3::DialogueInfoFilterType::Race:
-			case TES3::DialogueInfoFilterType::Class:
-			case TES3::DialogueInfoFilterType::NPCFaction:
-			case TES3::DialogueInfoFilterType::Cell:
-			case TES3::DialogueInfoFilterType::PCFaction:
-				return node->object;
-			default:
-				return nullptr;
-			}
-		}
-
 		void bindTES3Dialogue() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -54,17 +31,16 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
-				setUserdataForBaseObject(usertypeDefinition);
+				setUserdataForTES3BaseObject(usertypeDefinition);
+
+				// Base class overrides.
+				usertypeDefinition["id"] = sol::readonly_property(&TES3::Dialogue::getObjectID);
 
 				// Override to-string to use the name rather than the (non-existant) id.
-				usertypeDefinition[sol::meta_function::to_string] = [](TES3::Dialogue& self) { return self.name; };
+				usertypeDefinition[sol::meta_function::to_string] = &TES3::Dialogue::getObjectID;
 
 				// Override tojson to use the name rather than the (non-existant) id.
-				usertypeDefinition["__tojson"] = [](TES3::Dialogue& self) {
-					std::ostringstream ss;
-					ss << "\"tes3dialogue:" << self.name << "\"";
-					return ss.str();
-				};
+				usertypeDefinition["__tojson"] = &TES3::Dialogue::toJson;
 
 				// Basic property binding.
 				usertypeDefinition["info"] = sol::readonly_property(&TES3::Dialogue::info);
@@ -72,20 +48,10 @@ namespace mwse {
 				usertypeDefinition["type"] = sol::readonly_property(&TES3::Dialogue::type);
 
 				// Expose the ability to add it to the journal.
-				usertypeDefinition["addToJournal"] = [](TES3::Dialogue& self, sol::table params) {
-					int index = getOptionalParam<int>(params, "index", 0);
-					TES3::MobileActor * actor = getOptionalParamMobileActor(params, "actor");
-					if (actor == nullptr) {
-						actor = TES3::WorldController::get()->getMobilePlayer();
-					}
-					return self.addToJournal(index, actor);
-				};
+				usertypeDefinition["addToJournal"] = &TES3::Dialogue::addToJournal_lua;
 
 				// Expose filtering.
-				usertypeDefinition["getInfo"] = [](TES3::Dialogue& self, sol::table params) {
-					TES3::MobileActor * mobile = getOptionalParamMobileActor(params, "actor");
-					return self.getDeepFilteredInfo(reinterpret_cast<TES3::Actor*>(mobile->reference->baseObject), mobile->reference, true);
-				};
+				usertypeDefinition["getInfo"] = &TES3::Dialogue::getDeepFilteredInfo_lua;
 			}
 
 			// Binding for TES3::DialogueInfo
@@ -96,14 +62,10 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
-				setUserdataForBaseObject(usertypeDefinition);
+				setUserdataForTES3BaseObject(usertypeDefinition);
 
 				// Allow dialogue to be serialized to json using its ID.
-				usertypeDefinition["__tojson"] = [](TES3::DialogueInfo& self, sol::table state) {
-					std::ostringstream ss;
-					ss << "\"tes3dialogueInfo:" << self.getLongIDFromFile() << "\"";
-					return ss.str();
-				};
+				usertypeDefinition["__tojson"] = &TES3::DialogueInfo::toJson;
 
 				// Basic property binding.
 				usertypeDefinition["type"] = sol::readonly_property(&TES3::DialogueInfo::type);
@@ -111,53 +73,18 @@ namespace mwse {
 				usertypeDefinition["npcRank"] = sol::readonly_property(&TES3::DialogueInfo::npcRank);
 				usertypeDefinition["npcSex"] = sol::readonly_property(&TES3::DialogueInfo::npcSex);
 				usertypeDefinition["pcRank"] = sol::readonly_property(&TES3::DialogueInfo::pcRank);
-				usertypeDefinition["firstHeardFrom"] = sol::property(
-					[](TES3::DialogueInfo& self) { return self.firstHeardFrom; },
-					[](TES3::DialogueInfo& self, TES3::Actor* actor) { self.firstHeardFrom = actor; }
-				);
+				usertypeDefinition["firstHeardFrom"] = &TES3::DialogueInfo::firstHeardFrom;
 
 				// Filter functions.
-				usertypeDefinition["actor"] = sol::property(
-					[](TES3::DialogueInfo& self) {
-						return getFilterObject(self, TES3::DialogueInfoFilterType::Actor);
-					}
-				);
-				usertypeDefinition["npcRace"] = sol::property(
-					[](TES3::DialogueInfo& self) {
-						return getFilterObject(self, TES3::DialogueInfoFilterType::Race);
-					}
-				);
-				usertypeDefinition["npcClass"] = sol::property(
-					[](TES3::DialogueInfo& self) {
-						return getFilterObject(self, TES3::DialogueInfoFilterType::Class);
-					}
-				);
-				usertypeDefinition["npcFaction"] = sol::property(
-					[](TES3::DialogueInfo& self) {
-						return getFilterObject(self, TES3::DialogueInfoFilterType::NPCFaction);
-					}
-				);
-				usertypeDefinition["cell"] = sol::property(
-					[](TES3::DialogueInfo& self) {
-						return getFilterObject(self, TES3::DialogueInfoFilterType::Cell);
-					}
-				);
-				usertypeDefinition["pcFaction"] = sol::property(
-					[](TES3::DialogueInfo& self) {
-						return getFilterObject(self, TES3::DialogueInfoFilterType::PCFaction);
-					}
-				);
+				usertypeDefinition["actor"] = sol::property(&TES3::DialogueInfo::getFilterActor);
+				usertypeDefinition["npcRace"] = sol::property(&TES3::DialogueInfo::getFilterNPCRace);
+				usertypeDefinition["npcClass"] = sol::property(&TES3::DialogueInfo::getFilterNPCClass);
+				usertypeDefinition["npcFaction"] = sol::property(&TES3::DialogueInfo::getFilterNPCFaction);
+				usertypeDefinition["cell"] = sol::property(&TES3::DialogueInfo::getFilterNPCCell);
+				usertypeDefinition["pcFaction"] = sol::property(&TES3::DialogueInfo::getFilterPCFaction);
 
 				// Load link access.
-				usertypeDefinition["id"] = sol::readonly_property([](TES3::DialogueInfo& self) -> sol::optional<std::string> {
-					if (self.loadId()) {
-						std::string id = self.loadLinkNode->name;
-						self.unloadId();
-						return id;
-					}
-
-					return sol::optional<std::string>();
-				});
+				usertypeDefinition["id"] = sol::readonly_property(&TES3::DialogueInfo::getID);
 
 				// Functions exposed as properties.
 				usertypeDefinition["text"] = sol::readonly_property(&TES3::DialogueInfo::getText);
@@ -174,14 +101,13 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
-				setUserdataForBaseObject(usertypeDefinition);
+				setUserdataForTES3BaseObject(usertypeDefinition);
+
+				// Base class overrides.
+				usertypeDefinition["id"] = sol::readonly_property(&TES3::Quest::getObjectID);
 
 				// Allow objects to be serialized to json using their ID.
-				usertypeDefinition["__tojson"] = [](TES3::BaseObject& self, sol::table state) {
-					std::ostringstream ss;
-					ss << "\"tes3quest:" << self.getObjectID() << "\"";
-					return ss.str();
-				};
+				usertypeDefinition["__tojson"] = &TES3::Quest::toJson;
 
 				// Basic property binding.
 				usertypeDefinition["dialogue"] = sol::readonly_property(&TES3::Quest::dialogue);

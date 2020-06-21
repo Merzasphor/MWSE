@@ -1,5 +1,7 @@
 #include "TES3NPC.h"
 
+#include "BitUtil.h"
+
 #include "TES3UIManager.h"
 
 #include "TES3MobileNPC.h"
@@ -20,7 +22,6 @@ namespace TES3 {
 		return vTable.actor->getDispositionRaw(this);
 	}
 
-
 	const auto TES3_NPCBase_isGuard = reinterpret_cast<bool(__thiscall*)(NPCBase*)>(0x04DA5E0);
 	bool NPCBase::isGuard() {
 		bool isGuard = TES3_NPCBase_isGuard(this);
@@ -34,6 +35,50 @@ namespace TES3 {
 		}
 
 		return isGuard;
+	}
+
+	bool NPCBase::getIsFemale() const {
+		return BIT_TEST(actorFlags, TES3::ActorFlagNPC::FemaleBit);
+	}
+
+	void NPCBase::setIsFemale(bool value) {
+		BIT_SET(actorFlags, ActorFlagNPC::FemaleBit, value);
+	}
+
+	bool NPCBase::getIsAutoCalc() const {
+		return BIT_TEST(actorFlags, TES3::ActorFlagNPC::AutoCalcBit);
+	}
+
+	void NPCBase::setIsAutoCalc(bool value) {
+		BIT_SET(actorFlags, ActorFlagNPC::AutoCalcBit, value);
+	}
+
+	bool NPCBase::getIsEssential_legacy() const {
+		return BIT_TEST(actorFlags, TES3::ActorFlagNPC::EssentialBit);
+	}
+
+	void NPCBase::setIsEssential_legacy(bool value) {
+		BIT_SET(actorFlags, ActorFlagNPC::EssentialBit, value);
+	}
+
+	bool NPCBase::getRespawns_legacy() const {
+		return BIT_TEST(actorFlags, TES3::ActorFlagNPC::RespawnBit);
+	}
+
+	void NPCBase::setRespawns_legacy(bool value) {
+		BIT_SET(actorFlags, ActorFlagNPC::RespawnBit, value);
+	}
+
+	//
+	// NPC
+	//
+
+	std::reference_wrapper<unsigned char[8]> NPC::getAttributes() {
+		return std::ref(attributes);
+	}
+
+	std::reference_wrapper<unsigned char[27]> NPC::getSkills() {
+		return std::ref(skills);
 	}
 
 	//
@@ -71,5 +116,37 @@ namespace TES3 {
 
 	void NPCInstance::setFactionRank(unsigned char value) {
 		baseNPC->factionRank = value;
+	}
+
+	int NPCInstance::getDisposition_lua() {
+		return getDisposition();
+	}
+
+	std::reference_wrapper<unsigned char[8]> NPCInstance::getAttributes() {
+		return baseNPC->getAttributes();
+	}
+	
+	std::reference_wrapper<unsigned char[27]> NPCInstance::getSkills() {
+		return baseNPC->getSkills();
+	}
+
+	Class* NPCInstance::getBaseClass() {
+		return baseNPC->class_;
+	}
+	
+	Faction* NPCInstance::getBaseFaction() {
+		return baseNPC->faction;
+	}
+
+	Race* NPCInstance::getBaseRace() {
+		return baseNPC->race;
+	}
+
+	Script* NPCInstance::getBaseScript() {
+		return baseNPC->getScript();
+	}
+
+	SpellList* NPCInstance::getBaseSpellList() {
+		return &baseNPC->spellList;
 	}
 }

@@ -1,6 +1,7 @@
 #include "NIPick.h"
 
 #include "MemoryUtil.h"
+#include "NIUtil.h"
 
 #define NI_Pick_ctor 0x6F2DF0
 #define NI_Pick_dtor 0x6F2EA0
@@ -23,5 +24,13 @@ namespace NI {
 
 	void Pick::clearResults() {
 		reinterpret_cast<void(__thiscall*)(Pick*)>(NI_Pick_clearResults)(this);
+	}
+
+	std::reference_wrapper<unsigned short[3]> PickRecord::getVertexIndex() {
+		return std::ref(vertexIndex);
+	}
+
+	TES3::Reference* PickRecord::getTES3Reference() {
+		return getAssociatedReference(object);
 	}
 }

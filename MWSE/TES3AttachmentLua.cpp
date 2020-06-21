@@ -39,21 +39,8 @@ namespace mwse {
 				usertypeDefinition["locked"] = &TES3::LockAttachmentNode::locked;
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["key"] = sol::property(
-					[](TES3::LockAttachmentNode& self) { return self.key; },
-					[](TES3::LockAttachmentNode& self, TES3::Misc * key)
-				{
-					if (key && !(key->flags & 1)) {
-						throw std::exception("Invalid key specified. Object is not a key.");
-					}
-
-					self.key = key;
-				}
-				);
-				usertypeDefinition["trap"] = sol::property(
-					[](TES3::LockAttachmentNode& self) { return self.trap; },
-					[](TES3::LockAttachmentNode& self, TES3::Spell * spell) { self.trap = spell; }
-				);
+				usertypeDefinition["key"] = sol::property(&TES3::LockAttachmentNode::getKey, &TES3::LockAttachmentNode::setKey);
+				usertypeDefinition["trap"] = &TES3::LockAttachmentNode::trap;
 			}
 
 			// Bind TES3::TravelDestination

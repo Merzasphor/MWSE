@@ -1,5 +1,7 @@
 #pragma once
 
+#include "TES3Vectors.h"
+
 namespace NI {
 	struct Color {
 		float r; // 0x0
@@ -16,12 +18,29 @@ namespace NI {
 		Color operator*(const Color&);
 		Color operator*(const float);
 
+		//
+		// Custom functions.
+		//
+
+		Color copy();
+		TES3::Vector3 toVector3();
+
 		void clamp();
+
+		std::string toString();
+
 	};
 	static_assert(sizeof(Color) == 0xC, "NI::Color failed size validation");
 
 	struct ColorA : Color {
 		float a;
+
+		//
+		// Custom functions.
+		//
+
+		std::string toString();
+
 	};
 	static_assert(sizeof(ColorA) == 0x10, "NI::ColorA failed size validation");
 }

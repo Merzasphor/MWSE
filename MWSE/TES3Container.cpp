@@ -1,6 +1,24 @@
 #include "TES3Container.h"
 
+#include "BitUtil.h"
+
 namespace TES3 {
+	bool ContainerBase::getIsOrganic() const {
+		return BITMASK_TEST(actorFlags, TES3::ActorFlagContainer::Organic);
+	}
+
+	void ContainerBase::setIsOrganic(bool value) {
+		BITMASK_SET(actorFlags, TES3::ActorFlagContainer::Organic, value);
+	}
+
+	bool ContainerBase::getRespawns() const {
+		return BITMASK_TEST(actorFlags, TES3::ActorFlagContainer::Respawns);
+	}
+
+	void ContainerBase::setRespawns(bool value) {
+		BITMASK_SET(actorFlags, TES3::ActorFlagContainer::Respawns, value);
+	}
+
 	const auto TES3_ContainerInstance_onCloseInventory = reinterpret_cast<void (__thiscall*)(Actor *, Reference *, int)>(0x4A4460);
 	void ContainerInstance::onCloseInventory(Reference* reference, int unknown) {
 		Actor::onCloseInventory(reference, unknown);

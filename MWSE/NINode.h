@@ -20,13 +20,22 @@ namespace NI {
 		void detachChild(AVObject ** out_detached, AVObject * child);
 		void detachChildAt(AVObject ** out_detached, unsigned int index);
 		void setChildAt(AVObject ** out_detached, unsigned int index, AVObject * child);
+
 		//
 		// Custom functions.
 		//
 
+		Pointer<Node> create();
+
+		Pointer<AVObject> detachChildHandled(AVObject* child);
+		Pointer<AVObject> detachChildAtHandled(size_t index);
+
 		void attachEffect(DynamicEffect* effect);
 		void detachEffect(DynamicEffect* effect);
 		Pointer<DynamicEffect> getEffect(int type);
+
+		void attachChild_lua(AVObject* child, sol::optional<bool> useFirstAvailable);
+		Pointer<AVObject> detachChildAt_lua(size_t index);
 
 	};
 	static_assert(sizeof(Node) == 0xB0, "NI::Node failed size validation");

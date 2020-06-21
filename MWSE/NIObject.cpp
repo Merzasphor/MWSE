@@ -97,7 +97,7 @@ namespace NI {
 		niObjectCacheMutex.unlock();
 
 		// Loop through RTTI information until we find a type we like.
-		auto currentRTTI = this->getRunTimeTypeInformation();
+		auto currentRTTI = getRunTimeTypeInformation();
 		sol::object ref = sol::nil;
 		while (currentRTTI != nullptr && ref == sol::nil) {
 			switch ((uintptr_t)currentRTTI) {
@@ -126,7 +126,7 @@ namespace NI {
 				ref = sol::make_object_userdata(L, Pointer(static_cast<MaterialProperty*>(this)));
 				break;
 			case RTTIStaticPtr::NiNode:
-				ref = sol::make_object_userdata(L, Pointer(static_cast<Node*>(this)));
+				ref = sol::make_object(L, Pointer(static_cast<Node*>(this)));
 				break;
 			case RTTIStaticPtr::NiObject:
 				ref = sol::make_object_userdata(L, Pointer(this));
@@ -203,12 +203,12 @@ namespace NI {
 	}
 }
 
-int sol_lua_push(sol::types<NI::Object>, lua_State* L, NI::Object* obj) {
-	return obj->getOrCreateLuaObject(L).push(L);
+int sol_lua_push(sol::types<NI::Object>, lua_State* L, NI::Object& obj) {
+	return obj.getOrCreateLuaObject(L).push(L);
 }
 
-int sol_lua_push(sol::types<NI::Object*>, lua_State* L, NI::Object& obj) {
-	return obj.getOrCreateLuaObject(L).push(L);
+int sol_lua_push(sol::types<NI::Object*>, lua_State* L, NI::Object* obj) {
+	return obj->getOrCreateLuaObject(L).push(L);
 }
 
 int sol_lua_push(sol::types<NI::Pointer<NI::Object>>, lua_State* L, NI::Pointer<NI::Object>& obj) {

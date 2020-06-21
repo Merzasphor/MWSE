@@ -1,9 +1,15 @@
 #include "TES3MobileNPCLua.h"
 
+#include "TES3MobileActorLua.h"
+
 #include "LuaManager.h"
 
+#include "TES3Actor.h"
 #include "TES3Alchemy.h"
 #include "TES3Enchantment.h"
+#include "TES3MobileNPC.h"
+#include "TES3NPC.h"
+#include "TES3Skill.h"
 #include "TES3Spell.h"
 
 namespace mwse {
@@ -88,7 +94,7 @@ namespace mwse {
 			usertypeDefinition[sol::base_classes] = sol::bases<TES3::MobileActor, TES3::MobileObject>();
 
 			// All binding is in the NPC function, so that mobile player doesn't have extra lookup times.
-			setUserdataForMobileNPC(usertypeDefinition);
+			setUserdataForTES3MobileNPC(usertypeDefinition);
 
 			// Basic function binding.
 			usertypeDefinition["equip"] = &equip;

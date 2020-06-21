@@ -1,5 +1,7 @@
 #include "TES3Alchemy.h"
 
+#include "TES3Util.h"
+
 namespace TES3 {
 	size_t Alchemy::getActiveEffectCount() {
 		size_t count = 0;
@@ -27,5 +29,16 @@ namespace TES3 {
 			}
 		}
 		return true;
+	}
+
+	void Alchemy::setIconPath(const char* path) {
+		if (strnlen_s(path, 32) >= 32) {
+			throw std::invalid_argument("Path must not be 32 or more characters.");
+		}
+		mwse::tes3::setDataString(&icon, path);
+	}
+
+	std::reference_wrapper<Effect[8]> Alchemy::getEffects() {
+		return std::ref(effects);
 	}
 }

@@ -9,6 +9,8 @@
 #include "UIUtil.h"
 #include "MWSEDefs.h"
 #include "BuildDate.h"
+#include "MWSEUtilLua.h"
+#include "WindowsUtil.h"
 
 #include "LuaTimer.h"
 
@@ -43,6 +45,7 @@
 #include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
 #include "TES3MobileProjectile.h"
+#include "TES3NPC.h"
 #include "TES3Reference.h"
 #include "TES3SoulGemData.h"
 #include "TES3Spell.h"
@@ -50,6 +53,7 @@
 #include "TES3UIInventoryTile.h"
 #include "TES3UIManager.h"
 #include "TES3UIMenuController.h"
+#include "TES3Weather.h"
 #include "TES3WeatherController.h"
 #include "TES3WorldController.h"
 
@@ -274,6 +278,47 @@ namespace mwse {
 			return sol::stack::push(L, description);
 		}
 
+		bool LuaManager::overrideScript(const char* scriptId, sol::object target) {
+			auto dataHandler = TES3::DataHandler::get();
+			if (dataHandler == nullptr) {
+				mwse::log::getLog() << "WARNING: mwse.overrideScript called before game data is initialized." << std::endl;
+				return false;
+			}
+
+			TES3::Script* script = dataHandler->nonDynamicData->findScriptByName(scriptId);
+			if (script == nullptr) {
+				return false;
+			}
+
+			if (target.is<sol::function>()) {
+				scriptOverrides[(unsigned long)script] = target;
+				script->dataLength = 0;
+				return true;
+			}
+			else if (target.is<std::string>()) {
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::object result = state.safe_script_file("./Data Files/MWSE/mods/" + target.as<std::string>() + ".lua");
+				if (result.get_type() == sol::type::table) {
+					scriptOverrides[(unsigned long)script] = result;
+					script->dataLength = 0;
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		void LuaManager::lua_print(sol::object message) {
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
+			// TODO: Optimize by caching function here.
+			std::string result = state["tostring"](message);
+			log::getLog() << result << std::endl;
+		}
+
 		// LuaManager constructor. This is private, as a singleton.
 		LuaManager::LuaManager() {
 			// Open default lua libraries.
@@ -290,34 +335,25 @@ namespace mwse {
 
 
 			// Overwrite the default print function to print to the MWSE log.
-			luaState["print"] = [](sol::object message) {
-				auto& luaManager = mwse::lua::LuaManager::getInstance();
-				auto stateHandle = luaManager.getThreadSafeStateHandle();
-				sol::state& state = stateHandle.state;
-				std::string result = state["tostring"](message);
-				log::getLog() << result << std::endl;
-			};
+			luaState["print"] = lua_print;
 
 			// Bind our data types.
 			bindData();
 		}
 
+		void lua_os_getClipboardText() {
+
+		}
+
 		void LuaManager::bindData() {
 			// Bind our LuaScript type, which is used for holding script contexts.
-			luaState.new_usertype<LuaScript>("LuaScript",
-				sol::constructors<LuaScript()>(),
-
-				// Implement dynamic object metafunctions.
-				sol::meta_function::index, &DynamicLuaObject::dynamic_get,
-				sol::meta_function::new_index, &DynamicLuaObject::dynamic_set,
-				sol::meta_function::length, [](DynamicLuaObject& d) { return d.entries.size(); },
-
-				// Set up read-only properties.
-				"script", sol::readonly(&LuaScript::script),
-				"reference", sol::readonly(&LuaScript::reference),
-				"context", sol::readonly_property([](LuaScript& self) { return std::shared_ptr<ScriptContext>(new ScriptContext(self.script)); })
-
-				);
+			auto usertypeDefinition = luaState.new_usertype<LuaScript>("LuaScript");
+			usertypeDefinition[sol::meta_function::index] = &LuaScript::dynamic_get;
+			usertypeDefinition[sol::meta_function::new_index] = &LuaScript::dynamic_set;
+			usertypeDefinition[sol::meta_function::length] = &LuaScript::size;
+			usertypeDefinition["script"] = sol::readonly_property(&LuaScript::m_Script);
+			usertypeDefinition["reference"] = sol::readonly_property(&LuaScript::m_Reference);
+			usertypeDefinition["context"] = sol::readonly_property(&LuaScript::getContext);
 
 			// Create the base of API tables.
 			luaState["mwse"] = luaState.create_table();
@@ -326,132 +362,11 @@ namespace mwse {
 
 			// Expose timers.
 			bindLuaTimer();
-			luaState["mwse"]["realTimers"] = realTimers;
-			luaState["mwse"]["simulateTimers"] = simulateTimers;
-			luaState["mwse"]["gameTimers"] = gameTimers;
+			bindMWSEUtil();
 
-			luaState["mwse"]["getVersion"] = []() {
-				return MWSE_VERSION_INTEGER;
-			};
-
-			luaState["mwse"]["version"] = MWSE_VERSION_INTEGER;
-			luaState["mwse"]["buildDate"] = MWSE_BUILD_DATE;
-
-			// We want to take care of this here rather than in an external file so we have access to scriptOverrides.
-			luaState["mwse"]["overrideScript"] = [](const char* scriptId, sol::object target) {
-				auto dataHandler = TES3::DataHandler::get();
-				if (dataHandler == nullptr) {
-					mwse::log::getLog() << "WARNING: mwse.overrideScript called before game data is initialized." << std::endl;
-					return false;
-				}
-
-				TES3::Script* script = dataHandler->nonDynamicData->findScriptByName(scriptId);
-				if (script == nullptr) {
-					return false;
-				}
-
-				if (target.is<sol::function>()) {
-					scriptOverrides[(unsigned long)script] = target;
-					script->dataLength = 0;
-					return true;
-				}
-				else if (target.is<std::string>()) {
-					auto& luaManager = mwse::lua::LuaManager::getInstance();
-					auto stateHandle = luaManager.getThreadSafeStateHandle();
-					sol::state& state = stateHandle.state;
-					sol::object result = state.safe_script_file("./Data Files/MWSE/mods/" + target.as<std::string>() + ".lua");
-					if (result.get_type() == sol::type::table) {
-						scriptOverrides[(unsigned long)script] = result;
-						script->dataLength = 0;
-						return true;
-					}
-				}
-
-				return false;
-			};
-
-			luaState["mwse"]["virtualKeyPressed"] = [](int VK_key) {
-				return (GetAsyncKeyState(VK_key) & 0x8000) == 0x8000;
-			};
-
-			luaState["mwse"]["getVirtualMemoryUsage"] = []() {
-				PROCESS_MEMORY_COUNTERS_EX memCounter;
-				GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&memCounter, sizeof(memCounter));
-				return memCounter.PrivateUsage;
-			};
-
-			luaState["mwse"]["crash"] = []() {
-				// You're not my manager!
-				int* x = nullptr;
-				*x = 4;
-			};
-
-			luaState["os"]["getClipboardText"] = [](sol::this_state ts) -> sol::optional<std::string> {
-				if (!IsClipboardFormatAvailable(CF_TEXT)) {
-					return sol::optional<std::string>();
-				}
-
-				if (!OpenClipboard(TES3::Game::get()->windowHandle)) {
-					return sol::optional<std::string>();
-				}
-
-				auto clipboardHandle = GetClipboardData(CF_TEXT);
-				if (clipboardHandle == nullptr) {
-					CloseClipboard();
-					return sol::optional<std::string>();
-				}
-
-				const char* clipboardText = static_cast<const char*>(GlobalLock(clipboardHandle));
-				if (clipboardText == nullptr) {
-					CloseClipboard();
-					return sol::optional<std::string>();
-				}
-
-				auto result = std::move(std::string(clipboardText));
-
-				GlobalUnlock(clipboardHandle);
-				CloseClipboard();
-
-				return std::move(result);
-			};
-
-			luaState["os"]["setClipboardText"] = [](sol::optional<std::string> text) -> bool {
-				if (!OpenClipboard(TES3::Game::get()->windowHandle)) {
-					return false;
-				}
-
-				if (!EmptyClipboard()) {
-					CloseClipboard();
-					return false;
-				}
-
-				// Allow just clearing the text.
-				if (!text) {
-					CloseClipboard();
-					return true;
-				}
-
-				const auto stringSize = text.value().length() + 1;
-				auto clipBuffer = GlobalAlloc(GMEM_MOVEABLE, stringSize);
-				if (clipBuffer == nullptr) {
-					CloseClipboard();
-					return false;
-				}
-
-				char* buffer = (char*)GlobalLock(clipBuffer);
-				if (buffer == nullptr) {
-					CloseClipboard();
-					return false;
-				}
-
-				strcpy_s(buffer, stringSize, text.value().c_str());
-
-				GlobalUnlock(clipBuffer);
-				SetClipboardData(CF_TEXT, clipBuffer);
-				CloseClipboard();
-
-				return true;
-			};
+			// Extend OS library.
+			luaState["os"]["getClipboardText"] = getClipboardText;
+			luaState["os"]["setClipboardText"] = setClipboardText;
 
 			// Bind TES3 data types.
 			bindTES3ActionData();
@@ -2558,6 +2473,7 @@ namespace mwse {
 					// Convert the table to json for storage.
 					auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 					sol::state &state = stateHandle.state;
+					// TODO: Optimize by caching function here.
 					std::string json = state["mwse"]["encodeForSave"](table);
 
 					// Call original writechunk function.
@@ -2592,6 +2508,7 @@ namespace mwse {
 					auto threadID = GetCurrentThreadId();
 					auto saveLoadItemData = saveLoadItemDataMap[threadID];
 					if (saveLoadItemData && saveLoadItemData->luaData == nullptr) {
+						// TODO: Optimize by caching function here.
 						saveLoadItemData->setLuaDataTable(state["json"]["decode"](buffer));
 						saveLoadItemDataMap.erase(threadID);
 					}
@@ -2626,6 +2543,7 @@ namespace mwse {
 					// Convert the table to json for storage.
 					auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 					sol::state &state = stateHandle.state;
+					// TODO: Optimize by caching function here.
 					std::string json = state["mwse"]["encodeForSave"](table);
 
 					// Call original writechunk function.
@@ -2661,6 +2579,7 @@ namespace mwse {
 					auto itemData = saveLoadReferenceMap[GetCurrentThreadId()]->getAttachedItemData();
 					if (itemData) {
 						if (itemData->luaData == nullptr) {
+							// TODO: Optimize by caching function here.
 							itemData->setLuaDataTable(state["json"]["decode"](buffer));
 						}
 					}

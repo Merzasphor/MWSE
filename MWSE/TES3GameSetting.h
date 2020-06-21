@@ -1560,18 +1560,20 @@ namespace TES3 {
 		// Virtual table overrides.
 		//
 
-		char * getObjectID();
+		char * getObjectID() const;
 
 		//
 		// Custom functions.
 		//
 
-		GameSettingInfo* getInfo();
-		char getType();
-		const char* getName();
-		const char* getDefaultStringValue();
-		int getDefaultIntValue();
-		float getDefaultFloatValue();
+		GameSettingInfo* getInfo() const;
+		char getType() const;
+		const char* getName() const;
+		const char* getDefaultStringValue() const;
+		int getDefaultIntValue() const;
+		float getDefaultFloatValue() const;
+
+		std::string toJson() const;
 
 	};
 	static_assert(sizeof(GameSetting) == 0x18, "TES3::GameSetting failed size validation");

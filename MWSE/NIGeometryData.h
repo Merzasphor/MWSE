@@ -46,12 +46,17 @@ namespace NI {
 		unsigned short getVertexCount();
 
 		//
-		// Other this-call functions.
+		// Custom functions.
 		//
 
 		Consistency getConsistency();
 
 		void markAsChanged(unsigned short flags);
+
+		nonstd::span<ColorA> getColors();
+		nonstd::span<TES3::Vector3> getVertices();
+		nonstd::span<TES3::Vector3> getNormals();
+		nonstd::span<TES3::Vector2> getTextureCoordinates();
 
 	};
 	static_assert(sizeof(GeometryData) == 0x34, "NI::GeometryData failed size validation");

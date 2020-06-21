@@ -8,4 +8,23 @@ namespace TES3 {
 
 		strcpy(name, n);
 	}
+
+	void Ingredient::setIconPath(const char* path) {
+		if (strlen(path) >= 32) {
+			throw std::invalid_argument("Path cannot be 32 or more characters.");
+		}
+		strncpy_s(texture, path, 32);
+	}
+
+	std::reference_wrapper<int[4]> Ingredient::getEffects() {
+		return std::ref(effects);
+	}
+
+	std::reference_wrapper<int[4]> Ingredient::getEffectSkillIds() {
+		return std::ref(effectAttributeIds);
+	}
+
+	std::reference_wrapper<int[4]> Ingredient::getEffectAttributeIds() {
+		return std::ref(effectSkillIds);
+	}
 }

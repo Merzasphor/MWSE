@@ -24,7 +24,7 @@ namespace mwse {
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition[sol::base_classes] = sol::bases<TES3::PhysicalObject, TES3::Object, TES3::BaseObject>();
-			setUserdataForPhysicalObject(usertypeDefinition);
+			setUserdataForTES3PhysicalObject(usertypeDefinition);
 
 			// Functions exposed as properties.
 			usertypeDefinition["mesh"] = sol::property(&TES3::Static::getModelPath, &TES3::Static::setModelPath);

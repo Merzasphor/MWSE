@@ -16,17 +16,6 @@ namespace mwse {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
 
-			// Binding for NI::DynamicEffect. TODO: MOVE THIS OUTSIDE OF HERE AT SOME POINT!
-			{
-				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.new_usertype<NI::DynamicEffect>("niDynamicEffect");
-				usertypeDefinition["new"] = sol::no_constructor;
-
-				// Inherit NI::DynamicEffect.
-				usertypeDefinition[sol::base_classes] = sol::bases<NI::Object, NI::ObjectNET, NI::AVObject>();
-				setUserdataForNIDynamicEffect(usertypeDefinition);
-			}
-
 			// Binding for NI::Light.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
@@ -67,7 +56,7 @@ namespace mwse {
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.new_usertype<NI::PointLight>("niPointLight");
-				usertypeDefinition["new"] = []() { return NI::PointLight::create(); };
+				usertypeDefinition["new"] = &NI::PointLight::create;
 
 				// Inherit NI::Light.
 				usertypeDefinition[sol::base_classes] = sol::bases<NI::Object, NI::ObjectNET, NI::AVObject, NI::DynamicEffect, NI::Light>();

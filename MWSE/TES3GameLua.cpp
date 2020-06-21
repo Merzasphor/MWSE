@@ -24,6 +24,7 @@ namespace mwse {
 			usertypeDefinition["debugRoot"] = sol::readonly_property(&TES3::Game::debugRoot);
 			usertypeDefinition["fogProperty"] = sol::readonly_property(&TES3::Game::fogProperty);
 			usertypeDefinition["parentWindowHandle"] = sol::readonly_property(&TES3::Game::parentWindowHandle);
+			usertypeDefinition["playerTarget"] = sol::readonly_property(&TES3::Game::playerTarget);
 			usertypeDefinition["renderDistance"] = &TES3::Game::renderDistance;
 			usertypeDefinition["sceneGraphCollideString"] = sol::readonly_property(&TES3::Game::collideString);
 			usertypeDefinition["sceneGraphGridString"] = sol::readonly_property(&TES3::Game::gridString);
@@ -46,9 +47,6 @@ namespace mwse {
 
 			// Basic function binding.
 			usertypeDefinition["setGamma"] = &TES3::Game::setGamma;
-
-			// Access to other objects that need to be packaged.
-			usertypeDefinition["playerTarget"] = sol::readonly_property([](TES3::Game& self) { return self.playerTarget; });
 		}
 	}
 }

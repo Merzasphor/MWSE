@@ -5,4 +5,8 @@ namespace TES3 {
 	AIPackage * AIPlanner::getActivePackage() {
 		return TES3_AIPlanner_getActivePackage(this);
 	}
+
+	std::reference_wrapper<AIPackage* [32]> AIPlanner::getPackages() {
+		return std::ref(packages);
+	}
 }

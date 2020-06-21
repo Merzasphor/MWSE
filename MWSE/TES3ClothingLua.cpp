@@ -21,21 +21,18 @@ namespace mwse {
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition[sol::base_classes] = sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>();
-			setUserdataForPhysicalObject(usertypeDefinition);
+			setUserdataForTES3PhysicalObject(usertypeDefinition);
 
 			// Basic property binding.
 			usertypeDefinition["enchantCapacity"] = &TES3::Clothing::enchantCapacity;
-			usertypeDefinition["parts"] = sol::readonly_property([](TES3::Clothing& self) { return std::ref(self.parts); });
+			usertypeDefinition["parts"] = sol::readonly_property(&TES3::Clothing::getParts);
 			usertypeDefinition["slot"] = &TES3::Clothing::slot;
 			usertypeDefinition["value"] = &TES3::Clothing::value;
 			usertypeDefinition["weight"] = &TES3::Clothing::weight;
 
 			// Functions exposed as properties.
 			usertypeDefinition["enchantment"] = sol::property(&TES3::Clothing::getEnchantment, &TES3::Clothing::setEnchantment);
-			usertypeDefinition["icon"] = sol::property(
-				&TES3::Clothing::getIconPath,
-				[](TES3::Clothing& self, const char* value) { if (strlen(value) < 32) tes3::setDataString(&self.icon, value); }
-			);
+			usertypeDefinition["icon"] = sol::property(&TES3::Clothing::getIconPath, &TES3::Clothing::setIconPath);
 			usertypeDefinition["isLeftPart"] = sol::property(&TES3::Clothing::isLeftPartOfPair);
 			usertypeDefinition["mesh"] = sol::property(&TES3::Clothing::getModelPath, &TES3::Clothing::setModelPath);
 			usertypeDefinition["name"] = sol::property(&TES3::Clothing::getName, &TES3::Clothing::setName);

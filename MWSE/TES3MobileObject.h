@@ -166,6 +166,15 @@ namespace TES3 {
 			short quantizedNormal[3];
 			unsigned char collisionType;
 			unsigned char unknown_3F;
+
+			//
+			//
+			//
+
+			static constexpr float QUANTIZER = 1.0f / 32767.0f;
+
+			Vector3 getNormal();
+
 		};
 
 		union {

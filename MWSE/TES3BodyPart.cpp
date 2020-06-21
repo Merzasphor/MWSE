@@ -13,4 +13,20 @@ namespace TES3 {
 			flags &= ~flag;
 		}
 	}
+
+	bool BodyPart::getIsFemale() {
+		return getFlag(TES3::BodyPartFlag::Female);
+	}
+
+	void BodyPart::setIsFemale(bool value) {
+		setFlag(TES3::BodyPartFlag::Female, value);
+	}
+
+	bool BodyPart::getIsPlayable() {
+		return getFlag(TES3::BodyPartFlag::Playable);
+	}
+
+	void BodyPart::setIsPlayable(bool value) {
+		setFlag(TES3::BodyPartFlag::Playable, value);
+	}
 }

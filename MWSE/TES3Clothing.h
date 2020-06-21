@@ -36,6 +36,15 @@ namespace TES3 {
 		unsigned short value; // 0xB0
 		unsigned short enchantCapacity; // 0xB2
 		Enchantment * enchantment; // 0xB4
+
+		//
+		// Custom functions.
+		//
+
+		void setIconPath(const char* path);
+
+		std::reference_wrapper<WearablePart[7]> getParts();
+
 	};
 	static_assert(sizeof(Clothing) == 0xB8, "TES3::Clothing failed size validation");
 }

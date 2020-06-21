@@ -10,8 +10,8 @@
 namespace mwse {
 	namespace lua {
 		template <typename T>
-		void setUserdataForMobileActor(T& usertypeDefinition) {
-			setUserdataForMobileObject(usertypeDefinition);
+		void setUserdataForTES3MobileActor(sol::usertype<T>& usertypeDefinition) {
+			setUserdataForTES3MobileObject(usertypeDefinition);
 
 			// Basic property binding.
 			usertypeDefinition["actionBeforeCombat"] = sol::readonly_property(&TES3::MobileActor::actionBeforeCombat);

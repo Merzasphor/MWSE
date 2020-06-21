@@ -127,12 +127,12 @@ namespace TES3 {
 
 		static Cell* create();
 
-		Reference * getFirstObjectOfType(ObjectType::ObjectType, bool);
+		Reference * getFirstObjectOfType(ObjectType::ObjectType, bool) const;
 
-		bool isInterior();
-		int getGridX();
+		bool isInterior() const;
+		int getGridX() const;
 		void setGridX(int x);
-		int getGridY();
+		int getGridY() const;
 		void setGridY(int y);
 
 		void setName(const char* name);
@@ -145,22 +145,40 @@ namespace TES3 {
 		// Other getter/setter functions.
 		//
 
-		bool getCellFlag(unsigned int);
+		const char* getName() const;
+
+		bool getCellFlag(unsigned int) const;
 		void setCellFlag(unsigned int, bool);
 
-		float getFogDensity();
-		void setFogDensity(float);
+		std::optional<float> getFogDensity() const;
+		void setFogDensity(float value);
 
-		float getWaterLevel();
+		std::optional<float> getWaterLevel() const;
 		void setWaterLevel(float);
 
-		Region * getRegion();
+		Region * getRegion() const;
+
+		TES3::PackedColor* getAmbientColor();
+		TES3::PackedColor* getFogColor();
+		TES3::PackedColor* getSunColor();
+
+		bool getBehavesAsExterior() const;
+		void setBehavesAsExterior(bool value);
+
+		bool getHasWater() const;
+		void setHasWater(bool value);
+
+		bool getIsInterior() const;
+		void setIsInterior(bool value);
+
+		bool getSleepingIsIllegal() const;
+		void setSleepingIsIllegal(bool value);
 
 		//
 		// Helper functions.
 		//
 
-		bool isPointInCell(float x, float y);
+		bool isPointInCell(float x, float y) const;
 		static int toGridCoord(float x) { return int(x) >> 13;  }
 	};
 	static_assert(sizeof(Cell) == 0x94, "TES3::Cell failed size validation");

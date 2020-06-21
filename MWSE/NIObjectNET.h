@@ -17,6 +17,7 @@ namespace NI {
 		void removeController(TimeController * controller);
 		void removeAllControllers();
 
+		const char* getName() const;
 		void setName(const char* name);
 
 	};

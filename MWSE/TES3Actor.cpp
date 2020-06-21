@@ -182,4 +182,8 @@ namespace TES3 {
 		actorFlags &= ~0x1C00;
 		actorFlags |= (value << 0xA);
 	}
+
+	void Actor::onCloseInventory_lua(sol::optional<TES3::Reference*> reference, sol::optional<int> unknown) {
+		onCloseInventory(reference.value_or(nullptr), unknown.value_or(0));
+	}
 }

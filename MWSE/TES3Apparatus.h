@@ -23,6 +23,13 @@ namespace TES3 {
 		float quality; // 0xAC
 		float weight; // 0xB0
 		long value; // 0xB4
+
+		//
+		// Custom functions.
+		//
+
+		void setIconPath(const char* path);
+
 	};
 	static_assert(sizeof(Apparatus) == 0xB8, "TES3::Apparatus  failed size validation");
 }

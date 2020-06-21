@@ -23,7 +23,7 @@ namespace mwse {
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition[sol::base_classes] = sol::bases<TES3::MobileActor, TES3::MobileObject>();
-			setUserdataForMobileActor(usertypeDefinition);
+			setUserdataForTES3MobileActor(usertypeDefinition);
 
 			// Basic property binding.
 			usertypeDefinition["skills"] = sol::property([](TES3::MobileCreature& self) { return std::ref(self.skills); });

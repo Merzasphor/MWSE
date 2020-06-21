@@ -35,9 +35,8 @@ namespace NI {
 		// vTable wrappers.
 		//
 
-		__inline PropertyType getType() {
-			return static_cast<PropertyType>(vTable.asProperty->getType(this));
-		}
+		PropertyType getType();
+		void update(float dt);
 
 	};
 	static_assert(sizeof(Property) == 0x18, "NI::Property failed size validation");
@@ -50,6 +49,13 @@ namespace NI {
 	struct FogProperty : Property {
 		float density;
 		unsigned char color[4];
+
+		//
+		// Custom functions.
+		//
+
+		std::reference_wrapper<unsigned char[4]> getColor();
+
 	};
 	static_assert(sizeof(FogProperty) == 0x20, "NI::FogProperty failed size validation");
 
@@ -62,6 +68,31 @@ namespace NI {
 		float shininess;
 		float alpha;
 		unsigned int revisionID;
+
+		//
+		// Custom functions.
+		//
+
+		Color getAmbient();
+		void setAmbient(Color& value);
+
+		Color getDiffuse();
+		void setDiffuse(Color& value);
+
+		Color getSpecular();
+		void setSpecular(Color& value);
+
+		Color getEmissive();
+		void setEmissive(Color& value);
+
+		float getShininess();
+		void setShininess(float value);
+
+		float getAlpha();
+		void setAlpha(float value);
+
+		void incrementRevisionId();
+
 	};
 	static_assert(sizeof(MaterialProperty) == 0x58, "NI::MaterialProperty failed size validation");
 

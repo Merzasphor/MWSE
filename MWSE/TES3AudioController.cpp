@@ -157,4 +157,8 @@ namespace TES3 {
 		positioning->Release();
 	}
 
+	void AudioController::changeMusicTrack_lua(const char* filename, sol::optional<int> crossfade, sol::optional<float> volume) {
+		changeMusicTrack(filename, crossfade.value_or(1000), volume.value_or(1.0f));
+	}
+
 }

@@ -21,14 +21,16 @@ namespace mwse {
 				sol::table eventData = state.create_table();
 
 				eventData["info"] = m_DialogueInfo;
-				eventData["loadOriginalText"] = [](sol::table self) {
-					setEventEnabled(false);
-					std::string text = self.get<TES3::DialogueInfo*>("info")->getText();
-					setEventEnabled(true);
-					return std::move(text);
-				};
+				eventData["loadOriginalText"] = getOriginalText;
 
 				return eventData;
+			}
+
+			std::string InfoGetTextEvent::getOriginalText(sol::table self) {
+				setEventEnabled(false);
+				std::string text = self.get<TES3::DialogueInfo*>("info")->getText();
+				setEventEnabled(true);
+				return std::move(text);
 			}
 
 			bool InfoGetTextEvent::m_EventEnabled = false;

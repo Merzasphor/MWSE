@@ -75,6 +75,12 @@ namespace mwse {
 			void claimLuaThread();
 			void releaseLuaThread();
 
+			bool overrideScript(const char* scriptId, sol::object function);
+
+			// Lua-bound static functions.
+			static void lua_print(sol::object object);
+
+
 		private:
 			LuaManager();
 
@@ -100,6 +106,7 @@ namespace mwse {
 			// Storage for our current button pressed callback.
 			sol::protected_function buttonPressedCallback = sol::nil;
 
+		public:
 			// Timers.
 			std::shared_ptr<TimerController> gameTimers;
 			std::shared_ptr<TimerController> simulateTimers;

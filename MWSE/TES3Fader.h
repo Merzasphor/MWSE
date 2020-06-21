@@ -51,6 +51,18 @@ namespace TES3 {
 		void updateMaterialProperty(float value);
 		void setTexture(const char* path);
 
+		//
+		// Custom functions.
+		//
+
+		void setActive(bool value);
+
+		void fadeIn_lua(sol::optional<sol::table> params);
+		void fadeOut_lua(sol::optional<sol::table> params);
+		void fadeTo_lua(sol::optional<sol::table> params);
+
+		bool setColor_lua(sol::table params);
+
 	};
 	static_assert(sizeof(Fader) == 0x40, "TES3::Fader failed size validation");
 	static_assert(sizeof(Fader::Node) == 0x10, "TES3::Fader::Node failed size validation");

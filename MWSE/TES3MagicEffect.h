@@ -260,23 +260,62 @@ namespace TES3 {
 		//
 		// Custom functions
 		//
-
-		int getNameGMST();
+		const char* getName() const;
+		int getNameGMST() const;
 		void setDescription( const char *value );
 
-		const char* getIcon();
+		const char* getIcon() const;
 		void setIcon(const char* path);
 
-		const char* getParticleTexture();
+		const char* getParticleTexture() const;
 		void setParticleTexture(const char* path);
-		const char* getCastSoundEffect();
+		const char* getCastSoundEffect() const;
 		void setCastSoundEffect(const char* path);
-		const char* getBoltSoundEffect();
+		const char* getBoltSoundEffect() const;
 		void setBoltSoundEffect(const char* path);
-		const char* getHitSoundEffect();
+		const char* getHitSoundEffect() const;
 		void setHitSoundEffect(const char* path);
-		const char* getAreaSoundEffect();
+		const char* getAreaSoundEffect() const;
 		void setAreaSoundEffect(const char* path);
+
+		unsigned int getEffectFlags() const;
+		void setEffectFlags(unsigned int flags) const;
+		bool getFlagTargetSkill() const;
+		void setFlagTargetSkill(bool value) const;
+		bool getFlagTargetAttribute() const;
+		void setFlagTargetAttribute(bool value) const;
+		bool getFlagNoDuration() const;
+		void setFlagNoDuration(bool value) const;
+		bool getFlagNoMagnitude() const;
+		void setFlagNoMagnitude(bool value) const;
+		bool getFlagHarmful() const;
+		void setFlagHarmful(bool value) const;
+		bool getFlagContinuousVFX() const;
+		void setFlagContinuousVFX(bool value) const;
+		bool getFlagCanCastSelf() const;
+		void setFlagCanCastSelf(bool value) const;
+		bool getFlagCanCastTouch() const;
+		void setFlagCanCastTouch(bool value) const;
+		bool getFlagCanCastTarget() const;
+		void setFlagCanCastTarget(bool value) const;
+		bool getFlagNegativeLighting() const;
+		void setFlagNegativeLighting(bool value) const;
+		bool getFlagAppliedOnce() const;
+		void setFlagAppliedOnce(bool value) const;
+		bool getFlagNonRecastable() const;
+		void setFlagNonRecastable(bool value) const;
+		bool getFlagIllegalDaedra() const;
+		void setFlagIllegalDaedra(bool value) const;
+		bool getFlagUnreflectable() const;
+		void setFlagUnreflectable(bool value) const;
+		bool getFlagCasterLinked() const;
+		void setFlagCasterLinked(bool value) const;
+
+		bool getAllowSpellmaking() const;
+		void setAllowSpellmaking(bool value);
+
+		bool getAllowEnchanting() const;
+		void setAllowEnchanting(bool value);
 
 	};
 	static_assert(sizeof(MagicEffect) == 0x0110, "TES3::EffectID:: failed size validation");
@@ -295,10 +334,10 @@ namespace TES3 {
 		// Custom functions
 		//
 
-		MagicEffect * getEffectData();
+		MagicEffect * getEffectData() const;
 		bool matchesEffectsWith(const Effect *);
 
-		std::string toString();
+		sol::optional<std::string> toString() const;
 
 	};
 	static_assert(sizeof(Effect) == 0x18, "TES3::Effect failed size validation");

@@ -21,19 +21,32 @@ namespace TES3 {
 		};
 	}
 
-	struct Container : Actor {
+	struct ContainerBase : Actor {
+		//
+		// Custom functions.
+		//
+
+		bool getIsOrganic() const;
+		void setIsOrganic(bool value);
+
+		bool getRespawns() const;
+		void setRespawns(bool value);
+	};
+
+	struct Container : ContainerBase {
 		char * model;
 		char * name;
 		Script * script;
 		float capacity;
+
 	};
 	static_assert(sizeof(Container) == 0x7C, "TES3::Container failed size validation");
 
-	struct ContainerInstance : Actor {
+	struct ContainerInstance : ContainerBase {
 		Container * container;
 
 		//
-		// Base object helper functions.
+		// Custom functions.
 		//
 
 		void onCloseInventory(Reference* reference, int unknown = 0);

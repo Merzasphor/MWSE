@@ -1,6 +1,7 @@
 #include "TES3Inventory.h"
 
 #include "TES3Util.h"
+#include "LuaUtil.h"
 
 #include "TES3Item.h"
 #include "TES3Reference.h"
@@ -91,5 +92,42 @@ namespace TES3 {
 		}
 
 		return count;
+	}
+
+	int Inventory::addItem_lua(sol::table params) {
+		TES3::MobileActor* mact = mwse::lua::getOptionalParamMobileActor(params, "mobile");
+		TES3::Item* item = mwse::lua::getOptionalParamObject<TES3::Item>(params, "item");
+		int count = mwse::lua::getOptionalParam<int>(params, "count", 1);
+		TES3::ItemData* itemData = mwse::lua::getOptionalParam<TES3::ItemData*>(params, "itemData", nullptr);
+		return addItem(mact, item, count, false, itemData ? &itemData : nullptr);
+	}
+
+	void Inventory::removeItem_lua(sol::table params) {
+		TES3::MobileActor* mact = mwse::lua::getOptionalParamMobileActor(params, "mobile");
+		TES3::Item* item = mwse::lua::getOptionalParamObject<TES3::Item>(params, "item");
+		int count = mwse::lua::getOptionalParam<int>(params, "count", 1);
+		TES3::ItemData* itemData = mwse::lua::getOptionalParam<TES3::ItemData*>(params, "itemData", nullptr);
+		bool deleteItemData = mwse::lua::getOptionalParam<bool>(params, "deleteItemData", false);
+		removeItemWithData(mact, item, itemData, count, deleteItemData);
+	}
+
+	bool Inventory::contains_lua(sol::object itemOrItemId, sol::optional<TES3::ItemData*> itemData) {
+		if (itemOrItemId.is<TES3::Item*>()) {
+			auto item = itemOrItemId.as<TES3::Item*>();
+			return containsItem(item, itemData.value_or(nullptr));
+		}
+		else if (itemOrItemId.is<const char*>()) {
+			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+			if (dataHandler) {
+				auto itemId = itemOrItemId.as<const char*>();
+				auto item = dataHandler->nonDynamicData->resolveObjectByType<TES3::Item>(itemId);
+				return containsItem(item, itemData.value_or(nullptr));
+			}
+		}
+		return false;
+	}
+
+	void Inventory::resolveLeveledLists_lua(sol::optional<MobileActor*> mobile) {
+		resolveLeveledLists(mobile.value_or(nullptr));
 	}
 }

@@ -26,6 +26,8 @@ namespace TES3 {
 
 		const char* getBookText();
 
+		void setIconPath(const char* path);
+
 	};
 	static_assert(sizeof(Book) == 0x70, "TES3::Book failed size validation");
 }

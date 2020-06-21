@@ -46,10 +46,11 @@ namespace NI {
 		void update(float fTime = 0.0f, bool bUpdateControllers = false, bool bUpdateBounds = true);
 		void updateEffects();
 		void updateProperties();
+		TES3::Matrix33* getLocalRotationMatrix() const;
 		void setLocalRotationMatrix(TES3::Matrix33* matrix);
 
 		void attachProperty(Pointer<Property> property);
-		Pointer<Property> * detachProperty(Pointer<Property> * out_detached, PropertyType type);
+		Pointer<Property> detachPropertyByType(PropertyType type);
 
 		//
 		// Custom functions.
@@ -57,6 +58,14 @@ namespace NI {
 
 		void clearTransforms();
 		Pointer<Property> getProperty(PropertyType type);
+
+		void update_lua(sol::optional<sol::table> args);
+
+		//
+		// Access to this type's raw functions.
+		//
+
+		static constexpr auto _detachPropertyByType = reinterpret_cast<Pointer<Property> * (__thiscall*)(AVObject*, Pointer<Property>*, PropertyType)>(0x6EAE20);
 
 	};
 	static_assert(sizeof(AVObject) == 0x90, "NI::AVObject failed size validation");

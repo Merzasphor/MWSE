@@ -66,6 +66,14 @@ namespace TES3 {
 		Misc * key; // 0x04
 		Spell * trap; // 0x08
 		bool locked; // 0x0C
+
+		//
+		// Custom functions.
+		//
+
+		Misc* getKey();
+		void setKey(Misc* key);
+
 	};
 	static_assert(sizeof(LockAttachmentNode) == 0x10, "TES3::LockAttachmentNode failed size validation");
 

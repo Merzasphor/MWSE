@@ -20,9 +20,7 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition["levelRequired"] = &TES3::LeveledListNode::levelRequirement;
-
-				// Access to other objects that need to be packaged.
-				usertypeDefinition["object"] = sol::readonly_property([](TES3::LeveledListNode& self) { return self.object; });
+				usertypeDefinition["object"] = sol::readonly_property(&TES3::LeveledListNode::object);
 			}
 
 			// Binding for TES3::LeveledCreature
@@ -33,7 +31,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::PhysicalObject, TES3::Object, TES3::BaseObject>();
-				setUserdataForPhysicalObject(usertypeDefinition);
+				setUserdataForTES3PhysicalObject(usertypeDefinition);
 
 				// Basic property binding.
 				usertypeDefinition["chanceForNothing"] = sol::readonly_property(&TES3::LeveledCreature::chanceForNothing);
@@ -55,7 +53,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::PhysicalObject, TES3::Object, TES3::BaseObject>();
-				setUserdataForPhysicalObject(usertypeDefinition);
+				setUserdataForTES3PhysicalObject(usertypeDefinition);
 
 				// Allow object to be converted to strings using their object ID.
 				usertypeDefinition[sol::meta_function::to_string] = &TES3::LeveledItem::getObjectID;

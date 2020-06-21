@@ -6,8 +6,6 @@
 #include "TES3Container.h"
 #include "TES3Script.h"
 
-#include "BitUtil.h"
-
 namespace mwse {
 	namespace lua {
 		void bindTES3Container() {
@@ -23,20 +21,14 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::Actor, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>();
-				setUserdataForActor(usertypeDefinition);
+				setUserdataForTES3Actor(usertypeDefinition);
 
 				// Basic property binding.
 				usertypeDefinition["capacity"] = &TES3::Container::capacity;
 
 				// Friendly access to actor flags.
-				usertypeDefinition["organic"] = sol::property(
-					[](TES3::Container& self) { return BITMASK_TEST(self.actorFlags, TES3::ActorFlagContainer::Organic); },
-					[](TES3::Container& self, bool set) { BITMASK_SET(self.actorFlags, TES3::ActorFlagContainer::Organic, set); }
-				);
-				usertypeDefinition["respawns"] = sol::property(
-					[](TES3::Container& self) { return BITMASK_TEST(self.actorFlags, TES3::ActorFlagContainer::Respawns); },
-					[](TES3::Container& self, bool set) { BITMASK_SET(self.actorFlags, TES3::ActorFlagContainer::Respawns, set); }
-				);
+				usertypeDefinition["organic"] = sol::property(&TES3::Container::getIsOrganic, &TES3::Container::setIsOrganic);
+				usertypeDefinition["respawns"] = sol::property(&TES3::Container::getRespawns, &TES3::Container::setRespawns);
 
 				// Constant values.
 				usertypeDefinition["isInstance"] = sol::var(false);
@@ -59,20 +51,14 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::Actor, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>();
-				setUserdataForActor(usertypeDefinition);
+				setUserdataForTES3Actor(usertypeDefinition);
 				
 				// Friendly access to actor flags.
-				usertypeDefinition["organic"] = sol::property(
-					[](TES3::ContainerInstance& self) { return BITMASK_TEST(self.actorFlags, TES3::ActorFlagContainer::Organic); },
-					[](TES3::ContainerInstance& self, bool set) { BITMASK_SET(self.actorFlags, TES3::ActorFlagContainer::Organic, set); }
-				);
-				usertypeDefinition["respawns"] = sol::property(
-					[](TES3::ContainerInstance& self) { return BITMASK_TEST(self.actorFlags, TES3::ActorFlagContainer::Respawns); },
-					[](TES3::ContainerInstance& self, bool set) { BITMASK_SET(self.actorFlags, TES3::ActorFlagContainer::Respawns, set); }
-				);
+				usertypeDefinition["organic"] = sol::property(&TES3::ContainerInstance::getIsOrganic, &TES3::ContainerInstance::setIsOrganic);
+				usertypeDefinition["respawns"] = sol::property(&TES3::ContainerInstance::getRespawns, &TES3::ContainerInstance::setRespawns);
 
-				// Access to other objects that need to be packaged.
-				usertypeDefinition["baseObject"] = sol::readonly_property([](TES3::ContainerInstance& self) { return self.container; });
+				// Basic property binding.
+				usertypeDefinition["baseObject"] = sol::readonly_property(&TES3::ContainerInstance::container);
 
 				// Constant values.
 				usertypeDefinition["isInstance"] = sol::var(true);
@@ -85,7 +71,7 @@ namespace mwse {
 				usertypeDefinition["script"] = sol::readonly_property(&TES3::ContainerInstance::getScript);
 
 				// TODO: Deprecated. Remove before 2.1-stable.
-				usertypeDefinition["container"] = sol::readonly_property([](TES3::ContainerInstance& self) { return self.container; });
+				usertypeDefinition["container"] = sol::readonly_property(&TES3::ContainerInstance::container);
 				usertypeDefinition["model"] = sol::property(&TES3::ContainerInstance::getModelPath, &TES3::ContainerInstance::setModelPath);
 			}
 		}

@@ -20,7 +20,7 @@ namespace mwse {
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition[sol::base_classes] = sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>();
-			setUserdataForPhysicalObject(usertypeDefinition);
+			setUserdataForTES3PhysicalObject(usertypeDefinition);
 
 			// Basic property binding.
 			usertypeDefinition["enchantCapacity"] = &TES3::Book::enchantCapacity;
@@ -31,10 +31,7 @@ namespace mwse {
 
 			// Functions exposed as properties.
 			usertypeDefinition["enchantment"] = sol::property(&TES3::Book::getEnchantment, &TES3::Book::setEnchantment);
-			usertypeDefinition["icon"] = sol::property(
-				&TES3::Book::getIconPath,
-				[](TES3::Book& self, const char* value) { if (strlen(value) < 32) tes3::setDataString(&self.icon, value); }
-			);
+			usertypeDefinition["icon"] = sol::property(&TES3::Book::getIconPath, &TES3::Book::setIconPath);
 			usertypeDefinition["mesh"] = sol::property(&TES3::Book::getModelPath, &TES3::Book::setModelPath);
 			usertypeDefinition["name"] = sol::property(&TES3::Book::getName, &TES3::Book::setName);
 			usertypeDefinition["script"] = sol::property(&TES3::Book::getScript);

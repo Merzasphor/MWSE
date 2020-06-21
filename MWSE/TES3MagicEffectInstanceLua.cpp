@@ -22,19 +22,17 @@ namespace mwse {
 
 			// Basic property binding.
 			usertypeDefinition["cumulativeMagnitude"] = &TES3::MagicEffectInstance::cumulativeMagnitude;
+			usertypeDefinition["lastUsedArmor"] = &TES3::MagicEffectInstance::lastUsedArmor;
+			usertypeDefinition["lastUsedEnchItem"] = &TES3::MagicEffectInstance::lastUsedEnchItem;
+			usertypeDefinition["lastUsedLight"] = &TES3::MagicEffectInstance::lastUsedLight;
+			usertypeDefinition["lastUsedShield"] = &TES3::MagicEffectInstance::lastUsedShield;
+			usertypeDefinition["lastUsedWeapon"] = &TES3::MagicEffectInstance::lastUsedWeapon;
 			usertypeDefinition["magnitude"] = &TES3::MagicEffectInstance::magnitude;
 			usertypeDefinition["resistedPercent"] = &TES3::MagicEffectInstance::resistedPercent;
 			usertypeDefinition["state"] = &TES3::MagicEffectInstance::state;
+			usertypeDefinition["target"] = &TES3::MagicEffectInstance::target;
 			usertypeDefinition["timeActive"] = &TES3::MagicEffectInstance::timeActive;
 			usertypeDefinition["visual"] = &TES3::MagicEffectInstance::visual;
-
-			// Access to other objects that need to be packaged.
-			usertypeDefinition["lastUsedArmor"] = sol::readonly_property([](TES3::MagicEffectInstance& self) { return self.lastUsedArmor; });
-			usertypeDefinition["lastUsedEnchItem"] = sol::readonly_property([](TES3::MagicEffectInstance& self) { return self.lastUsedEnchItem; });
-			usertypeDefinition["lastUsedLight"] = sol::readonly_property([](TES3::MagicEffectInstance& self) { return self.lastUsedLight; });
-			usertypeDefinition["lastUsedShield"] = sol::readonly_property([](TES3::MagicEffectInstance& self) { return self.lastUsedShield; });
-			usertypeDefinition["lastUsedWeapon"] = sol::readonly_property([](TES3::MagicEffectInstance& self) { return self.lastUsedWeapon; });
-			usertypeDefinition["target"] = sol::readonly_property([](TES3::MagicEffectInstance& self) { return self.target; });
 		}
 	}
 }

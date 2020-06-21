@@ -15,4 +15,20 @@ namespace NI {
 		}
 		dirtyFlags |= (flags & Mask::Dirty);
 	}
+
+	nonstd::span<ColorA> GeometryData::getColors() {
+		return nonstd::span(color, vertexCount);
+	}
+
+	nonstd::span<TES3::Vector3> GeometryData::getVertices() {
+		return nonstd::span(vertex, vertexCount);
+	}
+
+	nonstd::span<TES3::Vector3> GeometryData::getNormals() {
+		return nonstd::span(normal, vertexCount);
+	}
+
+	nonstd::span<TES3::Vector2> GeometryData::getTextureCoordinates() {
+		return nonstd::span(texture, vertexCount);
+	}
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "NITexture.h"
+#include "NIPixelData.h"
 
 namespace NI {
 	struct SourceTexture_vTable : Texture_vTable {
@@ -19,8 +20,8 @@ namespace NI {
 		// Static functions.
 		//
 
-		static Pointer<SourceTexture> createFromPath(const char* path, SourceTexture::FormatPrefs * formatPrefs);
-		static Pointer<SourceTexture> createFromPixelData(PixelData* pixelData, SourceTexture::FormatPrefs * formatPrefs);
+		static Pointer<SourceTexture> createFromPath(const char* path, SourceTexture::FormatPrefs * formatPrefs = FormatPrefs::DEFAULT_PREFS);
+		static Pointer<SourceTexture> createFromPixelData(PixelData* pixelData, SourceTexture::FormatPrefs * formatPrefs = FormatPrefs::DEFAULT_PREFS);
 
 		//
 		// Virtual table functions.
@@ -28,6 +29,12 @@ namespace NI {
 
 		void loadPixelDataFromFile();
 		void clearPixelData();
+
+		//
+		// Custom functions.
+		//
+
+		static Pointer<SourceTexture> createFromPath_lua(const char* path);
 
 	};
 	static_assert(sizeof(SourceTexture) == 0x3C, "NI::SourceTexture failed size validation");

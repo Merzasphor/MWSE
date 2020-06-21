@@ -2,15 +2,11 @@
 
 #include "TES3MobileActorLua.h"
 
-#include "TES3MobileNPC.h"
-#include "TES3NPC.h"
-#include "TES3Skill.h"
-
 namespace mwse {
 	namespace lua {
 		template <typename T>
-		void setUserdataForMobileNPC(T& usertypeDefinition) {
-			setUserdataForMobileActor(usertypeDefinition);
+		void setUserdataForTES3MobileNPC(sol::usertype<T>& usertypeDefinition) {
+			setUserdataForTES3MobileActor(usertypeDefinition);
 
 			// Basic property binding.
 			usertypeDefinition["forceJump"] = &TES3::MobileNPC::flagForceJump;

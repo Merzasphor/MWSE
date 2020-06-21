@@ -2,6 +2,8 @@
 
 #include "LuaManager.h"
 
+#include "TES3Sound.h"
+#include "TES3Weather.h"
 #include "TES3WeatherAsh.h"
 #include "TES3WeatherBlight.h"
 #include "TES3WeatherBlizzard.h"
@@ -16,6 +18,53 @@
 
 namespace mwse {
 	namespace lua {
+		void setUserdataForTES3Weather(sol::state& state, const char* usertype) {
+			auto usertypeDefinition = state[usertype];
+
+			// Basic property binding.
+			usertypeDefinition["ambientDayColor"] = sol::readonly_property(&TES3::Weather::ambientDayCol);
+			usertypeDefinition["ambientNightColor"] = sol::readonly_property(&TES3::Weather::ambientNightCol);
+			usertypeDefinition["ambientPlaying"] = sol::readonly_property(&TES3::Weather::ambientPlaying);
+			usertypeDefinition["ambientSunriseColor"] = sol::readonly_property(&TES3::Weather::ambientSunriseCol);
+			usertypeDefinition["ambientSunsetColor"] = sol::readonly_property(&TES3::Weather::ambientSunsetCol);
+			usertypeDefinition["cloudsMaxPercent"] = &TES3::Weather::cloudsMaxPercent;
+			usertypeDefinition["cloudsSpeed"] = &TES3::Weather::cloudsSpeed;
+			usertypeDefinition["controller"] = sol::readonly_property(&TES3::Weather::controller);
+			usertypeDefinition["fogDayColor"] = sol::readonly_property(&TES3::Weather::fogDayCol);
+			usertypeDefinition["fogNightColor"] = sol::readonly_property(&TES3::Weather::fogNightCol);
+			usertypeDefinition["fogSunriseColor"] = sol::readonly_property(&TES3::Weather::fogSunriseCol);
+			usertypeDefinition["fogSunsetColor"] = sol::readonly_property(&TES3::Weather::fogSunsetCol);
+			usertypeDefinition["glareView"] = &TES3::Weather::glareView;
+			usertypeDefinition["index"] = sol::readonly_property(&TES3::Weather::index);
+			usertypeDefinition["landFogDayDepth"] = &TES3::Weather::landFogDayDepth;
+			usertypeDefinition["landFogNightDepth"] = &TES3::Weather::landFogNightDepth;
+			usertypeDefinition["skyDayColor"] = sol::readonly_property(&TES3::Weather::skyDayCol);
+			usertypeDefinition["skyNightColor"] = sol::readonly_property(&TES3::Weather::skyNightCol);
+			usertypeDefinition["skySunriseColor"] = sol::readonly_property(&TES3::Weather::skySunriseCol);
+			usertypeDefinition["skySunsetColor"] = sol::readonly_property(&TES3::Weather::skySunsetCol);
+			usertypeDefinition["sunDayColor"] = sol::readonly_property(&TES3::Weather::sunDayCol);
+			usertypeDefinition["sundiscSunsetColor"] = sol::readonly_property(&TES3::Weather::sundiscSunsetCol);
+			usertypeDefinition["sunNightColor"] = sol::readonly_property(&TES3::Weather::sunNightCol);
+			usertypeDefinition["sunSunriseColor"] = sol::readonly_property(&TES3::Weather::sunSunriseCol);
+			usertypeDefinition["sunSunsetColor"] = sol::readonly_property(&TES3::Weather::sunSunsetCol);
+			usertypeDefinition["transitionDelta"] = &TES3::Weather::transitionDelta;
+			usertypeDefinition["underwaterSoundState"] = sol::readonly_property(&TES3::Weather::underwaterSoundState);
+			usertypeDefinition["windSpeed"] = &TES3::Weather::windSpeed;
+
+			// Binding for IDs and paths.
+			usertypeDefinition["ambientLoopSoundId"] = sol::property(
+				[](TES3::Weather& self) { return self.soundIDAmbientLoop; },
+				[](TES3::Weather& self, const char* value) { if (strlen(value) < 260) strcpy(self.soundIDAmbientLoop, value); }
+			);
+			usertypeDefinition["cloudTexture"] = sol::property(
+				[](TES3::Weather& self) { return self.texturePathCloud; },
+				[](TES3::Weather& self, const char* value) { if (strlen(value) < 260) strcpy(self.texturePathCloud, value); }
+			);
+
+			// Access to other objects that need to be packaged.
+			usertypeDefinition["ambientLoopSound"] = sol::readonly_property([](TES3::Weather& self) { return self.soundAmbientLoop; });
+		}
+
 		void bindTES3Weather() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -69,7 +118,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::Weather>();
-				setUserdataForWeather(usertypeDefinition);
+				setUserdataForTES3Weather(usertypeDefinition);
 
 				// Basic property binding.
 				usertypeDefinition["threshold"] = &TES3::WeatherAsh::stormThreshold;
@@ -83,7 +132,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::Weather>();
-				setUserdataForWeather(usertypeDefinition);
+				setUserdataForTES3Weather(usertypeDefinition);
 
 				// Basic property binding.
 				usertypeDefinition["blightDiseaseChance"] = &TES3::WeatherBlight::diseaseChance;
@@ -99,7 +148,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::Weather>();
-				setUserdataForWeather(usertypeDefinition);
+				setUserdataForTES3Weather(usertypeDefinition);
 
 				// Basic property binding.
 				usertypeDefinition["threshold"] = &TES3::WeatherBlizzard::stormThreshold;
@@ -113,7 +162,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::Weather>();
-				setUserdataForWeather(usertypeDefinition);
+				setUserdataForTES3Weather(usertypeDefinition);
 			}
 
 			// Binding for TES3::WeatherCloudy
@@ -124,7 +173,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::Weather>();
-				setUserdataForWeather(usertypeDefinition);
+				setUserdataForTES3Weather(usertypeDefinition);
 			}
 
 			// Binding for TES3::WeatherFoggy
@@ -135,7 +184,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::Weather>();
-				setUserdataForWeather(usertypeDefinition);
+				setUserdataForTES3Weather(usertypeDefinition);
 			}
 
 			// Binding for TES3::WeatherOvercast
@@ -146,7 +195,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::Weather>();
-				setUserdataForWeather(usertypeDefinition);
+				setUserdataForTES3Weather(usertypeDefinition);
 			}
 
 			// Binding for TES3::WeatherRain
@@ -157,7 +206,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::Weather>();
-				setUserdataForWeather(usertypeDefinition);
+				setUserdataForTES3Weather(usertypeDefinition);
 
 				// Basic property binding.
 				usertypeDefinition["maxParticles"] = &TES3::WeatherRain::raindropsMax;
@@ -179,7 +228,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::Weather>();
-				setUserdataForWeather(usertypeDefinition);
+				setUserdataForTES3Weather(usertypeDefinition);
 
 				// Basic property binding.
 				usertypeDefinition["maxParticles"] = &TES3::WeatherSnow::snowflakesMax;
@@ -198,7 +247,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::Weather>();
-				setUserdataForWeather(usertypeDefinition);
+				setUserdataForTES3Weather(usertypeDefinition);
 
 				// Basic property binding.
 				usertypeDefinition["flashDecrement"] = &TES3::WeatherThunder::flashDecrement;

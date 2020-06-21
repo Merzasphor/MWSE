@@ -8,8 +8,11 @@
 #include "TES3Weapon.h"
 
 #include "LuaManager.h"
+#include "LuaUtil.h"
 
 #include "MemoryUtil.h"
+
+#include "TES3ScriptLua.h"
 
 namespace TES3 {
 	//
@@ -155,5 +158,9 @@ namespace TES3 {
 		}
 
 		return luaData->data;
+	}
+
+	std::shared_ptr<mwse::lua::ScriptContext> ItemData::createContext() {
+		return std::make_shared<mwse::lua::ScriptContext>(script, scriptData);
 	}
 }

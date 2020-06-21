@@ -57,6 +57,29 @@ namespace mwse {
 			};
 		}
 
+		auto iterateReferences(TES3::Cell& self, sol::optional<sol::object> param) {
+			std::unordered_set<unsigned int> filters;
+
+			if (param) {
+				if (param.value().is<unsigned int>()) {
+					filters.insert(param.value().as<unsigned int>());
+				}
+				else if (param.value().is<sol::table>()) {
+					sol::table filterTable = param.value().as<sol::table>();
+					for (const auto& kv : filterTable) {
+						if (kv.second.is<unsigned int>()) {
+							filters.insert(kv.second.as<unsigned int>());
+						}
+					}
+				}
+				else {
+					throw std::invalid_argument("Iteration can only be filtered by object type, a table of object types, or must not have any filter.");
+				}
+			}
+
+			return iterateReferencesFiltered(self, std::move(filters));
+		}
+
 		void bindTES3Cell() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -89,7 +112,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
-				setUserdataForBaseObject(usertypeDefinition);
+				setUserdataForTES3BaseObject(usertypeDefinition);
 
 				// Basic property binding.
 				usertypeDefinition["actors"] = sol::readonly_property(&TES3::Cell::actors);
@@ -98,107 +121,24 @@ namespace mwse {
 				usertypeDefinition["statics"] = sol::readonly_property(&TES3::Cell::temporaryRefs);
 
 				// Functions exposed as properties.
-				usertypeDefinition["ambientColor"] = sol::readonly_property(
-					[](TES3::Cell& self) -> TES3::PackedColor*
-					{
-						if (self.cellFlags & TES3::CellFlag::Interior) {
-							return &self.VariantData.interior.ambientColor;
-						}
-						return nullptr;
-					}
-				);
-				usertypeDefinition["behavesAsExterior"] = sol::property(
-					[](TES3::Cell& self) { return self.getCellFlag(TES3::CellFlag::BehavesAsExterior); },
-					[](TES3::Cell& self, bool set) { self.setCellFlag(TES3::CellFlag::BehavesAsExterior, set); }
-				);
-				usertypeDefinition["fogColor"] = sol::readonly_property(
-					[](TES3::Cell& self) -> TES3::PackedColor*
-					{
-						if (self.cellFlags & TES3::CellFlag::Interior) {
-							return &self.VariantData.interior.fogColor;
-						}
-						return nullptr;
-					}
-				);
-				usertypeDefinition["fogDensity"] = sol::property(
-					[](TES3::Cell& self) -> sol::optional<float>
-					{
-						if (self.cellFlags & TES3::CellFlag::Interior) {
-							return self.VariantData.interior.fogDensity;
-						}
-						return sol::optional<float>();
-					},
-					[](TES3::Cell& self, float value)
-					{
-						if (self.cellFlags & TES3::CellFlag::Interior) {
-							self.VariantData.interior.fogDensity = value;
-						}
-					}
-				);
+				usertypeDefinition["ambientColor"] = sol::readonly_property(&TES3::Cell::getAmbientColor);
+				usertypeDefinition["behavesAsExterior"] = sol::property(&TES3::Cell::getBehavesAsExterior, &TES3::Cell::setBehavesAsExterior);
+				usertypeDefinition["fogColor"] = sol::readonly_property(&TES3::Cell::getFogColor);
+				usertypeDefinition["fogDensity"] = sol::property(&TES3::Cell::getFogDensity, &TES3::Cell::setFogDensity);
 				usertypeDefinition["gridX"] = sol::property(&TES3::Cell::getGridX, &TES3::Cell::setGridX);
 				usertypeDefinition["gridY"] = sol::property(&TES3::Cell::getGridY, &TES3::Cell::setGridY);
-				usertypeDefinition["hasWater"] = sol::property(
-					[](TES3::Cell& self) { return self.getCellFlag(TES3::CellFlag::HasWater); },
-					[](TES3::Cell& self, bool set) { self.setCellFlag(TES3::CellFlag::HasWater, set); }
-				);
-				usertypeDefinition["isInterior"] = sol::property(
-					[](TES3::Cell& self) { return self.getCellFlag(TES3::CellFlag::Interior); },
-					[](TES3::Cell& self, bool set) { self.setCellFlag(TES3::CellFlag::Interior, set); }
-				);
-				usertypeDefinition["name"] = sol::property(
-					[](TES3::Cell& self) { return self.name; },
-					[](TES3::Cell& self, const char* name) { self.setName(name); }
-				);
+				usertypeDefinition["hasWater"] = sol::property(&TES3::Cell::getHasWater, &TES3::Cell::setHasWater);
+				usertypeDefinition["isInterior"] = sol::property(&TES3::Cell::getIsInterior, &TES3::Cell::setIsInterior);
+				usertypeDefinition["name"] = sol::property(&TES3::Cell::getName, &TES3::Cell::setName);
 				usertypeDefinition["pickObjectsRoot"] = sol::readonly_property(&TES3::Cell::pickObjectsRoot);
 				usertypeDefinition["region"] = sol::readonly_property(&TES3::Cell::getRegion);
-				usertypeDefinition["restingIsIllegal"] = sol::property(
-					[](TES3::Cell& self) { return self.getCellFlag(TES3::CellFlag::SleepIsIllegal); },
-					[](TES3::Cell& self, bool set) { self.setCellFlag(TES3::CellFlag::SleepIsIllegal, set); }
-				);
+				usertypeDefinition["restingIsIllegal"] = sol::property(&TES3::Cell::getSleepingIsIllegal, &TES3::Cell::setSleepingIsIllegal);
 				usertypeDefinition["staticObjectsRoot"] = sol::readonly_property(&TES3::Cell::staticObjectsRoot);
-				usertypeDefinition["sunColor"] = sol::readonly_property(
-					[](TES3::Cell& self) -> TES3::PackedColor*
-					{
-						if (self.cellFlags & TES3::CellFlag::Interior) {
-							return &self.VariantData.interior.sunColor;
-						}
-						return nullptr;
-					}
-				);
-				usertypeDefinition["waterLevel"] = sol::property(
-					[](TES3::Cell& self) -> sol::optional<float>
-					{
-						if (self.cellFlags & TES3::CellFlag::Interior) {
-							return self.waterLevelOrRegion.waterLevel;
-						}
-						return sol::optional<float>();
-					},
-					&TES3::Cell::setWaterLevel
-				);
+				usertypeDefinition["sunColor"] = sol::readonly_property(&TES3::Cell::getSunColor);
+				usertypeDefinition["waterLevel"] = sol::property(&TES3::Cell::getWaterLevel, &TES3::Cell::setWaterLevel);
 
 				// Basic function binding.
-				usertypeDefinition["iterateReferences"] = [](TES3::Cell& self, sol::optional<sol::object> param) {
-					std::unordered_set<unsigned int> filters;
-
-					if (param) {
-						if (param.value().is<unsigned int>()) {
-							filters.insert(param.value().as<unsigned int>());
-						}
-						else if (param.value().is<sol::table>()) {
-							sol::table filterTable = param.value().as<sol::table>();
-							for (const auto& kv : filterTable) {
-								if (kv.second.is<unsigned int>()) {
-									filters.insert(kv.second.as<unsigned int>());
-								}
-							}
-						}
-						else {
-							throw std::invalid_argument("Iteration can only be filtered by object type, a table of object types, or must not have any filter.");
-						}
-					}
-
-					return iterateReferencesFiltered(self, std::move(filters));
-				};
+				usertypeDefinition["iterateReferences"] = iterateReferences;
 			}
 		}
 	}

@@ -246,6 +246,19 @@ namespace TES3 {
 		return TES3_NonDynamicData_createReference(this, object, position, orientation, cellWasCreated, existingReference, cell);
 	}
 
+	std::reference_wrapper<Skill[27]> NonDynamicData::getSkills() {
+		return std::ref(skills);
+	}
+
+	sol::table NonDynamicData::getMagicEffects_lua(sol::this_state ts) {
+		sol::state_view state = ts;
+		sol::table results = state.create_table();
+		for (auto itt : magicEffects->effectObjects) {
+			results.add(itt.second);
+		}
+		return results;
+	}
+
 	//
 	// DataHandler
 	//
@@ -312,6 +325,10 @@ namespace TES3 {
 	const auto TES3_DataHandler_updateCollisionGroupsForActiveCells = reinterpret_cast<void(__thiscall*)(DataHandler*, bool)>(0x488950);
 	void DataHandler::updateCollisionGroupsForActiveCells(bool unknown) {
 		TES3_DataHandler_updateCollisionGroupsForActiveCells(this, unknown);
+	}
+
+	std::reference_wrapper<DataHandler::ExteriorCellData* [9]> DataHandler::getExteriorCellData_lua() {
+		return std::ref(exteriorCellData);
 	}
 
 }

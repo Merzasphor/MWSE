@@ -20,6 +20,7 @@
 #include "TES3Door.h"
 #include "TES3Enchantment.h"
 #include "TES3Faction.h"
+#include "TES3GameFile.h"
 #include "TES3GameSetting.h"
 #include "TES3GlobalVariable.h"
 #include "TES3Ingredient.h"
@@ -45,6 +46,7 @@
 #include "TES3Static.h"
 #include "TES3Weapon.h"
 
+#include "BitUtil.h"
 #include "MemoryUtil.h"
 
 #include "sol.hpp"
@@ -102,6 +104,27 @@ namespace TES3 {
 		default:
 			return false;
 		}
+	}
+
+	const char* BaseObject::getSourceFilename() {
+		if (sourceMod) {
+			return sourceMod->filename;
+		}
+		return nullptr;
+	}
+
+	bool BaseObject::getDisabled() {
+		return BIT_TEST(objectFlags, TES3::ObjectFlag::DisabledBit);
+	}
+
+	bool BaseObject::getDeleted() {
+		return BIT_TEST(objectFlags, TES3::ObjectFlag::DeleteBit);
+	}
+
+	std::string BaseObject::toJson() {
+		std::ostringstream ss;
+		ss << "\"tes3baseObject:" << getObjectID() << "\"";
+		return std::move(ss.str());
 	}
 
 	std::unordered_set<BaseObject*> sourcelessObjects;
@@ -504,6 +527,10 @@ namespace TES3 {
 			object = object->nextInCollection;
 		}
 		return object;
+	}
+
+	ReferenceList* Object::getOwningCollection() {
+		return owningCollection.asReferenceList;
 	}
 
 	//

@@ -75,6 +75,12 @@ namespace TES3 {
 		// Overwrite vtable call to actually do something.
 		void setDurability(int value);
 
+		void setIconPath(const char* path);
+
+		std::reference_wrapper<WearablePart[7]> getParts();
+
+		float calculateArmorRating_lua(sol::object actor);
+
 	};
 	static_assert(sizeof(Armor) == 0xC4, "TES3::Armor failed size validation");
 

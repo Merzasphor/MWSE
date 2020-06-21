@@ -14,6 +14,11 @@
 #include "TES3Reference.h"
 
 namespace TES3 {
+
+	Vector3 MobileObject::Collision::getNormal() {
+		return TES3::Vector3(quantizedNormal[0] * QUANTIZER, quantizedNormal[1] * QUANTIZER, quantizedNormal[2] * QUANTIZER);
+	}
+
 #define TES3_vTable_MobileCreature 0x74AFA4
 #define TES3_vTable_MobileNPC 0x74AE6C
 #define TES3_vTable_MobilePlayer 0x74B174

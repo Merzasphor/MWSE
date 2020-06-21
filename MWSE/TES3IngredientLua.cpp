@@ -19,22 +19,19 @@ namespace mwse {
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition[sol::base_classes] = sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>();
-			setUserdataForPhysicalObject(usertypeDefinition);
+			setUserdataForTES3PhysicalObject(usertypeDefinition);
 
 			// Basic property binding.
 			usertypeDefinition["value"] = &TES3::Ingredient::value;
 			usertypeDefinition["weight"] = &TES3::Ingredient::weight;
 
 			// Indirect bindings to unions and arrays.
-			usertypeDefinition["effects"] = sol::readonly_property([](TES3::Ingredient& self) { return std::ref(self.effects); });
-			usertypeDefinition["effectSkillIds"] = sol::readonly_property([](TES3::Ingredient& self) { return std::ref(self.effectSkillIds); });
-			usertypeDefinition["effectAttributeIds"] = sol::readonly_property([](TES3::Ingredient& self) { return std::ref(self.effectAttributeIds); });
+			usertypeDefinition["effects"] = sol::readonly_property(&TES3::Ingredient::getEffects);
+			usertypeDefinition["effectAttributeIds"] = sol::readonly_property(&TES3::Ingredient::getEffectAttributeIds);
+			usertypeDefinition["effectSkillIds"] = sol::readonly_property(&TES3::Ingredient::getEffectSkillIds);
 
 			// Functions exposed as properties.
-			usertypeDefinition["icon"] = sol::property(
-				&TES3::Ingredient::getIconPath,
-				[](TES3::Ingredient& self, const char* value) { if (strlen(value) < 32) strcpy(self.texture, value); }
-			);
+			usertypeDefinition["icon"] = sol::property(&TES3::Ingredient::getIconPath, &TES3::Ingredient::setIconPath);
 			usertypeDefinition["mesh"] = sol::property(&TES3::Ingredient::getModelPath, &TES3::Ingredient::setModelPath);
 			usertypeDefinition["name"] = sol::property(&TES3::Ingredient::getName, &TES3::Ingredient::setName);
 			usertypeDefinition["script"] = sol::property(&TES3::Ingredient::getScript);

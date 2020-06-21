@@ -27,46 +27,15 @@ namespace mwse {
 			usertypeDefinition["removeMaterialProperty"] = &TES3::Fader::updateMaterialProperty;
 
 			// Expose writing active state as mapping for activate/deactivate.
-			usertypeDefinition["active"] = sol::property(
-				&TES3::Fader::isActive,
-				[](TES3::Fader& self, bool state)
-			{
-				if (state) {
-					self.activate();
-				}
-				else {
-					self.deactivate();
-				}
-			}
-			);
+			usertypeDefinition["active"] = sol::property(&TES3::Fader::isActive, &TES3::Fader::setActive);
 
 			// Expose fade as a fancier functions.
-			usertypeDefinition["fadeIn"] = [](TES3::Fader& self, sol::optional<sol::table> params) {
-				float duration = getOptionalParam(params, "duration", 1.0f);
-				self.fadeTo(1.0f, duration);
-			};
-			usertypeDefinition["fadeOut"] = [](TES3::Fader& self, sol::optional<sol::table> params) {
-				float duration = getOptionalParam(params, "duration", 1.0f);
-				self.fadeTo(0.0f, duration);
-			};
-			usertypeDefinition["fadeTo"] = [](TES3::Fader& self, sol::optional<sol::table> params) {
-				float value = getOptionalParam(params, "value", 1.0f);
-				float duration = getOptionalParam(params, "duration", 1.0f);
-				self.fadeTo(value, duration);
-			};
+			usertypeDefinition["fadeIn"] = &TES3::Fader::fadeIn_lua;
+			usertypeDefinition["fadeOut"] = &TES3::Fader::fadeOut_lua;
+			usertypeDefinition["fadeTo"] = &TES3::Fader::fadeTo_lua;
 
 			// Expose setColor fancier.
-			usertypeDefinition["setColor"] = [](TES3::Fader& self, sol::table params)
-			{
-				sol::optional <TES3::Vector3> color = getOptionalParamVector3(params, "color");
-				if (!color) {
-					return false;
-				}
-
-				self.setColor(color.value(), getOptionalParam<bool>(params, "flag", false));
-
-				return true;
-			};
+			usertypeDefinition["setColor"] = &TES3::Fader::setColor_lua;
 		}
 	}
 }

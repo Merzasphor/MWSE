@@ -25,14 +25,7 @@ namespace mwse {
 			setUserdataForNINode(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition["switchIndex"] = sol::property(
-				[](NI::SwitchNode& self) { return self.switchIndex; },
-				[](NI::SwitchNode& self, int index) {
-					if (index < 0 || index > (self.children.filledCount-1) || self.children.storage[index] == nullptr) {
-						throw std::exception("Attempted to set switchIndex beyond bounds!");
-					}
-					self.switchIndex = index;
-				});
+			usertypeDefinition["switchIndex"] = sol::property(&NI::SwitchNode::getSwitchIndex, &NI::SwitchNode::setSwitchIndex);
 		}
 	}
 }

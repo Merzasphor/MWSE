@@ -54,7 +54,7 @@ namespace NI {
 			return *this;
 		}
 
-		T * get() {
+		T * get() const {
 			return m_Pointer;
 		}
 

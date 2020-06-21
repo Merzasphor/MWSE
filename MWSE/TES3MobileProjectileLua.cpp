@@ -23,7 +23,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::MobileObject>();
-				setUserdataForMobileProjectile(usertypeDefinition);
+				setUserdataForTES3MobileProjectile(usertypeDefinition);
 			}
 
 			// Define spell projectiles.
@@ -34,7 +34,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::MobileProjectile, TES3::MobileObject>();
-				setUserdataForMobileProjectile(usertypeDefinition);
+				setUserdataForTES3MobileProjectile(usertypeDefinition);
 
 				// Basic property binding.
 				usertypeDefinition["spellInstanceSerial"] = sol::readonly_property(&TES3::MobileSpellProjectile::spellInstanceSerial);

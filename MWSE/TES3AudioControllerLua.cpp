@@ -42,9 +42,7 @@ namespace mwse {
 			usertypeDefinition["musicPosition"] = sol::property(&TES3::AudioController::getMusicPosition, &TES3::AudioController::setMusicPosition);
 			
 			// Wrapped functions.
-			usertypeDefinition["changeMusicTrack"] = [](TES3::AudioController& self, const char* filename, sol::optional<int> crossfade, sol::optional<float> volume) {
-				self.changeMusicTrack(filename, crossfade.value_or(1000), volume.value_or(1.0f));
-			};
+			usertypeDefinition["changeMusicTrack"] = &TES3::AudioController::changeMusicTrack_lua;
 		}
 	}
 }

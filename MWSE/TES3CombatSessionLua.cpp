@@ -22,15 +22,13 @@ namespace mwse {
 			// Basic property binding.
 			usertypeDefinition["alchemyPriority"] = &TES3::CombatSession::alchemyPriority;
 			usertypeDefinition["distance"] = &TES3::CombatSession::combatDistance;
+			usertypeDefinition["mobile"] = sol::readonly_property(&TES3::CombatSession::parentActor);
 			usertypeDefinition["selectedAction"] = &TES3::CombatSession::nextAction;
 			usertypeDefinition["selectedAlchemy"] = &TES3::CombatSession::selectedAlchemy;
 			usertypeDefinition["selectedShield"] = sol::readonly_property(&TES3::CombatSession::selectedShield);
 			usertypeDefinition["selectedSpell"] = &TES3::CombatSession::selectedSpell;
 			usertypeDefinition["selectedWeapon"] = sol::readonly_property(&TES3::CombatSession::selectedWeapon);
 			usertypeDefinition["selectionPriority"] = &TES3::CombatSession::selectionPriority;
-
-			// Properties that need to be packaged.
-			usertypeDefinition["mobile"] = sol::readonly_property([](TES3::CombatSession& self) { return self.parentActor; });
 
 			// Basic function binding.
 			usertypeDefinition["selectAlchemyWithEffect"] = &TES3::CombatSession::chooseAlchemyWithEffect;

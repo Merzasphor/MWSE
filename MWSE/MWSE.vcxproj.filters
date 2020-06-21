@@ -1404,6 +1404,12 @@
     <ClInclude Include="NILinesData.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
+    <ClInclude Include="MWSEUtilLua.h">
+      <Filter>Header Files\Lua\Bindings</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowsUtil.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3042,6 +3048,45 @@
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3WeatherThunder.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaScript.cpp">
+      <Filter>Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicLuaObject.cpp">
+      <Filter>Source Files\Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="MWSEUtilLua.cpp">
+      <Filter>Source Files\Lua\Bindings</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowsUtil.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="NICollisionSwitch.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NIProperty.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NISwitchNode.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NITriShape.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Apparatus.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Attachment.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Clothing.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Creature.cpp">
+      <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Lockpick.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
   </ItemGroup>

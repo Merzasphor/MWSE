@@ -198,6 +198,236 @@ namespace mwse {
 			return callGenericLuaFunctionFinal(callingAddress, definition);
 		}
 
+		sol::object reinterpret(sol::table params) {
+			sol::optional<DWORD> value = params["value"];
+			if (!value) {
+				throw std::invalid_argument("Invalid 'value' parameter provided.");
+			}
+
+			sol::optional<std::string> as = params["as"];
+			if (!as) {
+				throw std::invalid_argument("Invalid 'as' parameter provided.");
+			}
+
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::protected_function converter = stateHandle.state["mwse"]["convertTo"][as.value()];
+			sol::protected_function_result result = converter(value.value());
+			if (!result.valid()) {
+				sol::error error = result;
+				throw std::exception(error.what());
+			}
+
+			return result;
+		}
+
+		DWORD getCallAddress(sol::table params) {
+			sol::optional<DWORD> address = params["address"];
+			if (!address) {
+				throw std::invalid_argument("Invalid 'address' parameter provided.");
+			}
+
+			return mwse::getCallAddress(address.value());
+		}
+
+		bool writeByte(sol::table params) {
+			sol::optional<DWORD> address = params["address"];
+			if (!address) {
+				throw std::invalid_argument("Invalid 'address' parameter provided.");
+			}
+
+			sol::optional<DWORD> byte = params["byte"];
+			if (!byte) {
+				throw std::invalid_argument("Invalid 'byte' parameter provided.");
+			}
+
+			writeByteUnprotected(address.value(), byte.value());
+			return true;
+		}
+
+		bool writeBytes(sol::table params) {
+			sol::optional<DWORD> address = params["address"];
+			if (!address) {
+				throw std::invalid_argument("Invalid 'address' parameter provided.");
+			}
+
+			sol::optional<sol::table> bytes = params["bytes"];
+			if (!bytes) {
+				throw std::invalid_argument("Invalid 'bytes' parameter provided.");
+			}
+
+			size_t byteCount = bytes.value().size();
+			BYTE* data = new BYTE[byteCount];
+			for (size_t i = 0; i < byteCount; i++) {
+				sol::object byte = bytes.value()[i + 1];
+				if (byte.is<double>()) {
+					data[i] = byte.as<double>();
+				}
+				else {
+					data[i] = 0x90;
+				}
+			}
+
+			writePatchCodeUnprotected(address.value(), data, byteCount);
+
+			delete[] data;
+
+			return true;
+		}
+
+		bool writeFunctionCall(sol::table params) {
+			sol::optional<DWORD> address = params["address"];
+			if (!address) {
+				throw std::invalid_argument("Invalid 'address' parameter provided.");
+			}
+
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			auto& state = stateHandle.state;
+
+			sol::optional<DWORD> previousCall = params["previousCall"];
+			sol::optional<DWORD> length = params["length"];
+
+			sol::object newCall = params["call"];
+			if (newCall.is<double>()) {
+				if (previousCall) {
+					return genCallEnforced(address.value(), previousCall.value(), newCall.as<double>(), length.value_or(5U));
+				}
+				else {
+					genNOPUnprotected(address.value(), length.value_or(5U));
+					genCallUnprotected(address.value(), newCall.as<double>());
+					return true;
+				}
+			}
+			else if (newCall.is<sol::protected_function>()) {
+				// Backup what we used to call to.
+				auto definitionAddress = mwse::getCallAddress(address.value());
+				if (definitionAddress != NULL) {
+					existingFunctionCalls[address.value()] = definitionAddress;
+				}
+				else {
+					definitionAddress = address.value();
+				}
+
+				// Inject the right function call.
+				sol::optional<sol::table> signature = params["signature"];
+				if (signature) {
+					// Setup function definition for destination.
+					FunctionDefinition definition;
+					sol::table argumentConverters = state["mwse"]["memory"]["convertTo"];
+
+					sol::optional<std::string> thisConverter = signature.value()["this"];
+					if (thisConverter) {
+						definition.thisCall = true;
+						definition.thisCallConverter = argumentConverters[thisConverter.value()];
+					}
+
+					sol::optional<std::string> fastConverter = signature.value()["edx"];
+					if (fastConverter) {
+						definition.fastCall = true;
+						definition.fastCallConverter = argumentConverters[fastConverter.value()];
+					}
+
+					size_t argumentCount = 0;
+					sol::optional<sol::table> arguments = signature.value()["arguments"];
+					if (arguments) {
+						argumentCount = arguments.value().size();
+						for (size_t i = 0; i < argumentCount; i++) {
+							definition.argumentConverters.push_back(argumentConverters[arguments.value()[i + 1]]);
+						}
+					}
+
+					sol::optional<std::string> returnConverter = signature.value()["returns"];
+					if (returnConverter) {
+						sol::table returnConverters = state["mwse"]["memory"]["convertFrom"];
+						definition.returnConverter = returnConverters[returnConverter.value()];
+					}
+
+					functionDefinitions[definitionAddress] = std::move(definition);
+
+					// Figure out what alias function to call.
+					DWORD overwritingFunction = 0x0;
+					switch (argumentCount) {
+					case 0:
+						overwritingFunction = reinterpret_cast<DWORD>(callGenericLuaFunction_fastcall_0arg);
+						break;
+					case 1:
+						overwritingFunction = reinterpret_cast<DWORD>(callGenericLuaFunction_fastcall_1arg);
+						break;
+					case 2:
+						overwritingFunction = reinterpret_cast<DWORD>(callGenericLuaFunction_fastcall_2arg);
+						break;
+					case 3:
+						overwritingFunction = reinterpret_cast<DWORD>(callGenericLuaFunction_fastcall_3arg);
+						break;
+					case 4:
+						overwritingFunction = reinterpret_cast<DWORD>(callGenericLuaFunction_fastcall_4arg);
+						break;
+					case 5:
+						overwritingFunction = reinterpret_cast<DWORD>(callGenericLuaFunction_fastcall_5arg);
+						break;
+					case 6:
+						overwritingFunction = reinterpret_cast<DWORD>(callGenericLuaFunction_fastcall_6arg);
+						break;
+					default:
+						throw std::invalid_argument("No overload could be mapped for the given argument count.");
+					}
+
+					genCallUnprotected(address.value(), overwritingFunction);
+				}
+				else {
+					functionDefinitions[address.value()] = {};
+					genCallUnprotected(address.value(), reinterpret_cast<DWORD>(callGenericLuaFunction_fastcall_0arg));
+				}
+
+				// Make sure we can look back up our lua function from this address.
+				luaFunctionOverrides[address.value()] = newCall.as<sol::protected_function>();
+
+				return true;
+			}
+
+			return false;
+		}
+
+		bool writeNoOperation(sol::table params) {
+			sol::optional<DWORD> address = params["address"];
+			if (!address) {
+				throw std::invalid_argument("Invalid 'address' parameter provided.");
+			}
+
+			sol::optional<DWORD> length = params["length"];
+
+			return genNOPUnprotected(address.value(), length.value_or(1U));
+		}
+
+		template <typename T>
+		T convertArgTo(DWORD arg) {
+			return *reinterpret_cast<T*>(&arg);
+		}
+
+		template <>
+		bool convertArgTo(DWORD arg) {
+			return arg != 0;
+		}
+
+		template <>
+		unsigned int convertArgTo(DWORD arg) {
+			return arg;
+		}
+
+		template <typename T>
+		DWORD convertArgFrom(T arg) {
+			return *reinterpret_cast<DWORD*>(&arg);
+		};
+
+		template <>
+		DWORD convertArgFrom(bool arg) {
+			return arg;
+		}
+
+		template <>
+		DWORD convertArgFrom(unsigned int arg) {
+			return arg;
+		}
+
 		void bindMWSEMemoryUtil() {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
@@ -208,214 +438,22 @@ namespace mwse {
 			// Memory reinterpretation functions.
 			//
 
-			memory["reinterpret"] = [](sol::table params) -> sol::object {
-				sol::optional<DWORD> value = params["value"];
-				if (!value) {
-					throw std::invalid_argument("Invalid 'value' parameter provided.");
-				}
-
-				sol::optional<std::string> as = params["as"];
-				if (!as) {
-					throw std::invalid_argument("Invalid 'as' parameter provided.");
-				}
-
-				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-				sol::protected_function converter = stateHandle.state["mwse"]["convertTo"][as.value()];
-				sol::protected_function_result result = converter(value.value());
-				if (!result.valid()) {
-					sol::error error = result;
-					throw std::exception(error.what());
-				}
-
-				return result;
-			};
+			memory["reinterpret"] = reinterpret;
 
 			//
 			// Read operations.
 			//
 
-			memory["readCallAddress"] = [](sol::table params) {
-				sol::optional<DWORD> address = params["address"];
-				if (!address) {
-					throw std::invalid_argument("Invalid 'address' parameter provided.");
-				}
-
-				return getCallAddress(address.value());
-			};
+			memory["readCallAddress"] = getCallAddress;
 
 			//
 			// Write operations.
 			//
 
-			memory["writeNoOperation"] = [](sol::table params) {
-				sol::optional<DWORD> address = params["address"];
-				if (!address) {
-					throw std::invalid_argument("Invalid 'address' parameter provided.");
-				}
-
-				sol::optional<DWORD> length = params["length"];
-
-				return genNOPUnprotected(address.value(), length.value_or(1U));
-			};
-
-			memory["writeByte"] = [](sol::table params) {
-				sol::optional<DWORD> address = params["address"];
-				if (!address) {
-					throw std::invalid_argument("Invalid 'address' parameter provided.");
-				}
-
-				sol::optional<DWORD> byte = params["byte"];
-				if (!byte) {
-					throw std::invalid_argument("Invalid 'byte' parameter provided.");
-				}
-
-				writeByteUnprotected(address.value(), byte.value());
-				return true;
-			};
-
-			memory["writeBytes"] = [](sol::table params) {
-				sol::optional<DWORD> address = params["address"];
-				if (!address) {
-					throw std::invalid_argument("Invalid 'address' parameter provided.");
-				}
-
-				sol::optional<sol::table> bytes = params["bytes"];
-				if (!bytes) {
-					throw std::invalid_argument("Invalid 'bytes' parameter provided.");
-				}
-
-				size_t byteCount = bytes.value().size();
-				BYTE * data = new BYTE[byteCount];
-				for (size_t i = 0; i < byteCount; i++) {
-					sol::object byte = bytes.value()[i+1];
-					if (byte.is<double>()) {
-						data[i] = byte.as<double>();
-					}
-					else {
-						data[i] = 0x90;
-					}
-				}
-
-				writePatchCodeUnprotected(address.value(), data, byteCount);
-
-				delete[] data;
-
-				return true;
-			};
-
-			memory["writeFunctionCall"] = [](sol::table params) {
-				sol::optional<DWORD> address = params["address"];
-				if (!address) {
-					throw std::invalid_argument("Invalid 'address' parameter provided.");
-				}
-
-				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-				auto& state = stateHandle.state;
-
-				sol::optional<DWORD> previousCall = params["previousCall"];
-				sol::optional<DWORD> length = params["length"];
-
-				sol::object newCall = params["call"];
-				if (newCall.is<double>()) {
-					if (previousCall) {
-						return genCallEnforced(address.value(), previousCall.value(), newCall.as<double>(), length.value_or(5U));
-					}
-					else {
-						genNOPUnprotected(address.value(), length.value_or(5U));
-						genCallUnprotected(address.value(), newCall.as<double>());
-						return true;
-					}
-				}
-				else if (newCall.is<sol::protected_function>()) {
-					// Backup what we used to call to.
-					auto destinationAddr = getCallAddress(address.value());
-					DWORD definitionAddress = destinationAddr;
-					if (destinationAddr != NULL) {
-						existingFunctionCalls[address.value()] = destinationAddr;
-					}
-					else {
-						definitionAddress = address.value();
-					}
-
-					// Inject the right function call.
-					sol::optional<sol::table> signature = params["signature"];
-					if (signature) {
-						// Setup function definition for destination.
-						FunctionDefinition definition;
-						sol::table argumentConverters = state["mwse"]["memory"]["convertTo"];
-
-						sol::optional<std::string> thisConverter = signature.value()["this"];
-						if (thisConverter) {
-							definition.thisCall = true;
-							definition.thisCallConverter = argumentConverters[thisConverter.value()];
-						}
-
-						sol::optional<std::string> fastConverter = signature.value()["edx"];
-						if (fastConverter) {
-							definition.fastCall = true;
-							definition.fastCallConverter = argumentConverters[fastConverter.value()];
-						}
-
-						size_t argumentCount = 0;
-						sol::optional<sol::table> arguments = signature.value()["arguments"];
-						if (arguments) {
-							argumentCount = arguments.value().size();
-							for (size_t i = 0; i < argumentCount; i++) {
-								definition.argumentConverters.push_back(argumentConverters[arguments.value()[i + 1]]);
-							}
-						}
-
-						sol::optional<std::string> returnConverter = signature.value()["returns"];
-						if (returnConverter) {
-							sol::table returnConverters = state["mwse"]["memory"]["convertFrom"];
-							definition.returnConverter = returnConverters[returnConverter.value()];
-						}
-
-						functionDefinitions[definitionAddress] = std::move(definition);
-
-						// Figure out what alias function to call.
-						DWORD overwritingFunction = 0x0;
-						switch (argumentCount) {
-						case 0:
-							overwritingFunction = reinterpret_cast<DWORD>(callGenericLuaFunction_fastcall_0arg);
-							break;
-						case 1:
-							overwritingFunction = reinterpret_cast<DWORD>(callGenericLuaFunction_fastcall_1arg);
-							break;
-						case 2:
-							overwritingFunction = reinterpret_cast<DWORD>(callGenericLuaFunction_fastcall_2arg);
-							break;
-						case 3:
-							overwritingFunction = reinterpret_cast<DWORD>(callGenericLuaFunction_fastcall_3arg);
-							break;
-						case 4:
-							overwritingFunction = reinterpret_cast<DWORD>(callGenericLuaFunction_fastcall_4arg);
-							break;
-						case 5:
-							overwritingFunction = reinterpret_cast<DWORD>(callGenericLuaFunction_fastcall_5arg);
-							break;
-						case 6:
-							overwritingFunction = reinterpret_cast<DWORD>(callGenericLuaFunction_fastcall_6arg);
-							break;
-						default:
-							throw std::invalid_argument("No overload could be mapped for the given argument count.");
-						}
-
-						genCallUnprotected(address.value(), overwritingFunction);
-					}
-					else {
-						functionDefinitions[address.value()] = {};
-						genCallUnprotected(address.value(), reinterpret_cast<DWORD>(callGenericLuaFunction_fastcall_0arg));
-					}
-
-					// Make sure we can look back up our lua function from this address.
-					luaFunctionOverrides[address.value()] = newCall.as<sol::protected_function>();
-
-					return true;
-				}
-
-				return false;
-			};
+			memory["writeByte"] = writeByte;
+			memory["writeBytes"] = writeBytes;
+			memory["writeFunctionCall"] = writeFunctionCall;
+			memory["writeNoOperation"] = writeNoOperation;
 
 			state["mwse"]["memory"] = memory;
 
@@ -425,30 +463,30 @@ namespace mwse {
 			//
 
 			auto convertTo = memory.create();
-			convertTo["bool"] = [](DWORD arg) { return arg != 0; };
-			convertTo["int"] = [](DWORD arg) { return *reinterpret_cast<int*>(&arg); };
-			convertTo["uint"] = [](DWORD arg) { return arg; };
-			convertTo["float"] = [](DWORD arg) { return *reinterpret_cast<float*>(&arg); };
-			convertTo["string"] = [](DWORD arg) { return reinterpret_cast<const char*>(arg); };
-			convertTo["tes3object"] = [](DWORD arg) { return reinterpret_cast<TES3::BaseObject*>(arg); };
-			convertTo["tes3mobileObject"] = [](DWORD arg) { return reinterpret_cast<TES3::MobileObject*>(arg); };
-			convertTo["tes3inventory"] = [](DWORD arg) { return reinterpret_cast<TES3::Inventory*>(arg); };
-			convertTo["tes3equipmentStackIterator"] = [](DWORD arg) { return reinterpret_cast<TES3::Iterator<TES3::EquipmentStack>*>(arg); };
-			convertTo["tes3equipmentStackIteratorNode"] = [](DWORD arg) { return reinterpret_cast<TES3::IteratorNode<TES3::EquipmentStack>*>(arg); };
-			convertTo["tes3magicEffectInstance"] = [](DWORD arg) { return reinterpret_cast<TES3::MagicEffectInstance*>(arg); };
+			convertTo["bool"] = convertArgTo<bool>;
+			convertTo["int"] = convertArgTo<int>;
+			convertTo["uint"] = convertArgTo<DWORD>;
+			convertTo["float"] = convertArgTo<float>;
+			convertTo["string"] = convertArgTo<const char*>;
+			convertTo["tes3object"] = convertArgTo<TES3::BaseObject*>;
+			convertTo["tes3mobileObject"] = convertArgTo<TES3::MobileObject*>;
+			convertTo["tes3inventory"] = convertArgTo<TES3::Inventory*>;
+			convertTo["tes3equipmentStackIterator"] = convertArgTo<TES3::Iterator<TES3::EquipmentStack>*>;
+			convertTo["tes3equipmentStackIteratorNode"] = convertArgTo<TES3::IteratorNode<TES3::EquipmentStack>*>;
+			convertTo["tes3magicEffectInstance"] = convertArgTo<TES3::MagicEffectInstance*>;
 			memory["convertTo"] = convertTo;
 
 			auto convertFrom = memory.create();
-			convertFrom["bool"] = [](bool arg) { return static_cast<DWORD>(arg); };
-			convertFrom["int"] = [](int arg) { return *reinterpret_cast<DWORD*>(&arg); };
-			convertFrom["uint"] = [](unsigned int arg) { return arg; };
-			convertFrom["float"] = [](float arg) { return *reinterpret_cast<DWORD*>(&arg); };
-			convertFrom["tes3object"] = [](TES3::BaseObject* arg) { return reinterpret_cast<DWORD>(arg); };
-			convertFrom["tes3mobileObject"] = [](TES3::MobileObject* arg) { return reinterpret_cast<DWORD>(arg); };
-			convertFrom["tes3inventory"] = [](TES3::Inventory* arg) { return reinterpret_cast<DWORD>(arg); };
-			convertFrom["tes3equipmentStackIterator"] = [](TES3::Iterator<TES3::EquipmentStack>* arg) { return reinterpret_cast<DWORD>(arg); };
-			convertFrom["tes3equipmentStackIteratorNode"] = [](TES3::IteratorNode<TES3::EquipmentStack>* arg) { return reinterpret_cast<DWORD>(arg); };
-			convertFrom["tes3magicEffectInstance"] = [](TES3::MagicEffectInstance* arg) { return reinterpret_cast<DWORD>(arg); };
+			convertFrom["bool"] = convertArgFrom<bool>;
+			convertFrom["int"] = convertArgFrom<int>;
+			convertFrom["uint"] = convertArgFrom<unsigned int>;
+			convertFrom["float"] = convertArgFrom<float>;
+			convertFrom["tes3object"] = convertArgFrom<TES3::BaseObject*>;
+			convertFrom["tes3mobileObject"] = convertArgFrom<TES3::MobileObject*>;
+			convertFrom["tes3inventory"] = convertArgFrom<TES3::Inventory*>;
+			convertFrom["tes3equipmentStackIterator"] = convertArgFrom<TES3::Iterator<TES3::EquipmentStack>*>;
+			convertFrom["tes3equipmentStackIteratorNode"] = convertArgFrom<TES3::IteratorNode<TES3::EquipmentStack>*>;
+			convertFrom["tes3magicEffectInstance"] = convertArgFrom<TES3::MagicEffectInstance*>;
 			memory["convertFrom"] = convertFrom;
 		}
 	}

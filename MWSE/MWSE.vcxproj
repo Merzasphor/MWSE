@@ -125,6 +125,7 @@
     <ClInclude Include="LuaWeatherCycledEvent.h" />
     <ClInclude Include="LuaWeatherTransitionFinishedEvent.h" />
     <ClInclude Include="LuaWeatherTransitionStartedEvent.h" />
+    <ClInclude Include="MWSEUtilLua.h" />
     <ClInclude Include="NIBinaryStream.h" />
     <ClInclude Include="NIBound.h" />
     <ClInclude Include="NIDX8Renderer.h" />
@@ -418,10 +419,12 @@
     <ClInclude Include="VirtualMachine.h" />
     <ClInclude Include="VMExecuteInterface.h" />
     <ClInclude Include="VMHookInterface.h" />
+    <ClInclude Include="WindowsUtil.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArrayUtil.cpp" />
     <ClCompile Include="CodePatchUtil.cpp" />
+    <ClCompile Include="DynamicLuaObject.cpp" />
     <ClCompile Include="FileUtil.cpp" />
     <ClCompile Include="LuaActivateEvent.cpp" />
     <ClCompile Include="LuaActivationTargetChangedEvent.cpp" />
@@ -516,6 +519,7 @@
     <ClCompile Include="LuaRestInterruptEvent.cpp" />
     <ClCompile Include="LuaSavedGameEvent.cpp" />
     <ClCompile Include="LuaSaveGameEvent.cpp" />
+    <ClCompile Include="LuaScript.cpp" />
     <ClCompile Include="LuaShowRestWaitMenuEvent.cpp" />
     <ClCompile Include="LuaSimulateEvent.cpp" />
     <ClCompile Include="LuaSkillExerciseEvent.cpp" />
@@ -536,26 +540,36 @@
     <ClCompile Include="LuaWeatherCycledEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionFinishedEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionStartedEvent.cpp" />
+    <ClCompile Include="MWSEUtilLua.cpp" />
     <ClCompile Include="NIBinaryStream.cpp" />
     <ClCompile Include="NICamera.cpp" />
+    <ClCompile Include="NICollisionSwitch.cpp" />
     <ClCompile Include="NIDynamicEffectLua.cpp" />
     <ClCompile Include="NIGeometry.cpp" />
     <ClCompile Include="NIGeometryData.cpp" />
     <ClCompile Include="NIGeometryDataLua.cpp" />
     <ClCompile Include="NILinesData.cpp" />
+    <ClCompile Include="NIProperty.cpp" />
     <ClCompile Include="NIRenderedTexture.cpp" />
     <ClCompile Include="NIRenderer.cpp" />
+    <ClCompile Include="NISwitchNode.cpp" />
     <ClCompile Include="NITextureEffect.cpp" />
     <ClCompile Include="NiTextureEffectLua.cpp" />
     <ClCompile Include="NiTriBasedGeometryData.cpp" />
+    <ClCompile Include="NITriShape.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TES3Activator.cpp" />
+    <ClCompile Include="TES3Apparatus.cpp" />
+    <ClCompile Include="TES3Attachment.cpp" />
     <ClCompile Include="TES3Birthsign.cpp" />
     <ClCompile Include="TES3BirthsignLua.cpp" />
     <ClCompile Include="TES3BodyPartManager.cpp" />
+    <ClCompile Include="TES3Clothing.cpp" />
+    <ClCompile Include="TES3Creature.cpp" />
+    <ClCompile Include="TES3Lockpick.cpp" />
     <ClCompile Include="TES3MagicEffectController.cpp" />
     <ClCompile Include="MemoryUtil.cpp" />
     <ClCompile Include="MemoryUtilLua.cpp" />
@@ -740,6 +754,7 @@
     <ClCompile Include="TES3WorldController.cpp" />
     <ClCompile Include="TES3WorldControllerLua.cpp" />
     <ClCompile Include="UIUtil.cpp" />
+    <ClCompile Include="WindowsUtil.cpp" />
     <ClCompile Include="xLuaRunScript.cpp" />
     <ClCompile Include="xMyRef.cpp" />
     <ClCompile Include="StringUtil.cpp" />

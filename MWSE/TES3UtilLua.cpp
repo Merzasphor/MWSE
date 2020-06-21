@@ -1264,8 +1264,7 @@ namespace mwse {
 				return dataHandler->loadSourceTexture(path.c_str());
 			}
 			else {
-				NI::SourceTexture::FormatPrefs prefs = { NI::SourceTexture::FormatPrefs::PixelLayout::PIX_DEFAULT, NI::SourceTexture::FormatPrefs::MipFlag::MIP_DEFAULT, NI::SourceTexture::FormatPrefs::AlphaFormat::ALPHA_DEFAULT };
-				return NI::SourceTexture::createFromPath(path.c_str(), &prefs);
+				return NI::SourceTexture::createFromPath(path.c_str());
 			}
 		}
 

@@ -19,22 +19,17 @@ namespace mwse {
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition[sol::base_classes] = sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>();
-			setUserdataForPhysicalObject(usertypeDefinition);
+			setUserdataForTES3PhysicalObject(usertypeDefinition);
 
 			// Basic property binding.
 			usertypeDefinition["maxCondition"] = &TES3::Lockpick::maxCondition;
 			usertypeDefinition["quality"] = &TES3::Lockpick::quality;
+			usertypeDefinition["script"] = sol::readonly_property(&TES3::Lockpick::getScript);
 			usertypeDefinition["value"] = &TES3::Lockpick::value;
 			usertypeDefinition["weight"] = &TES3::Lockpick::weight;
 
-			// Access to other objects that need to be packaged.
-			usertypeDefinition["script"] = sol::readonly_property([](TES3::Lockpick& self) { return self.getScript(); });
-
 			// Functions exposed as properties.
-			usertypeDefinition["icon"] = sol::property(
-				&TES3::Lockpick::getIconPath,
-				[](TES3::Lockpick& self, const char* value) { if (strlen(value) < 32) strcpy(self.icon, value); }
-			);
+			usertypeDefinition["icon"] = sol::property(&TES3::Lockpick::getIconPath, &TES3::Lockpick::setIconPath);
 			usertypeDefinition["mesh"] = sol::property(&TES3::Lockpick::getModelPath, &TES3::Lockpick::setModelPath);
 			usertypeDefinition["name"] = sol::property(&TES3::Lockpick::getName, &TES3::Lockpick::setName);
 

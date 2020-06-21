@@ -53,11 +53,7 @@ namespace mwse {
 				usertypeDefinition["width"] = sol::readonly_property(&NI::SourceTexture::getWidth);
 
 				// Functions that need their results wrapped.
-				usertypeDefinition["createFromPath"] = [](const char* path) { 
-					using FormatPrefs = NI::Texture::FormatPrefs;
-					FormatPrefs prefs = { FormatPrefs::PixelLayout::PIX_DEFAULT, FormatPrefs::MipFlag::MIP_DEFAULT, FormatPrefs::AlphaFormat::ALPHA_DEFAULT };
-					return NI::SourceTexture::createFromPath(path, &prefs);
-				};
+				usertypeDefinition["createFromPath"] = &NI::SourceTexture::createFromPath_lua;
 			}
 		}
 	}

@@ -68,8 +68,8 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
-				usertypeDefinition["data"] = sol::readonly_property([](NI::DynamicEffectLinkedList& self) { return self.data; });
-				usertypeDefinition["next"] = &NI::DynamicEffectLinkedList::next;
+				usertypeDefinition["data"] = sol::readonly_property(&NI::DynamicEffectLinkedList::data);
+				usertypeDefinition["next"] = sol::readonly_property(&NI::DynamicEffectLinkedList::next);
 			}
 
 			// Binding for NI::NodeLinkedList.
@@ -79,8 +79,8 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
-				usertypeDefinition["data"] = sol::readonly_property([](NI::NodeLinkedList& self) { return self.data; });
-				usertypeDefinition["next"] = &NI::NodeLinkedList::next;
+				usertypeDefinition["data"] = sol::readonly_property(&NI::NodeLinkedList::data);
+				usertypeDefinition["next"] = sol::readonly_property(&NI::NodeLinkedList::next);
 			}
 
 			// Binding for NI::PropertyLinkedList.
@@ -90,8 +90,8 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
-				usertypeDefinition["data"] = sol::readonly_property([](NI::PropertyLinkedList& self) { return self.data; });
-				usertypeDefinition["next"] = &NI::PropertyLinkedList::next;
+				usertypeDefinition["data"] = sol::readonly_property(&NI::PropertyLinkedList::data);
+				usertypeDefinition["next"] = sol::readonly_property(&NI::PropertyLinkedList::next);
 			}
 		}
 	}

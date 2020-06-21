@@ -7,7 +7,7 @@
 namespace mwse {
 	namespace lua {
 		template <typename T>
-		void setUserdataForMobileObject(T& usertypeDefinition) {
+		void setUserdataForTES3MobileObject(sol::usertype<T>& usertypeDefinition) {
 			// Basic property binding.
 			usertypeDefinition["objectType"] = sol::readonly_property(&TES3::MobileObject::objectType);
 			usertypeDefinition["flags"] = sol::readonly_property(&TES3::MobileObject::actorFlags);

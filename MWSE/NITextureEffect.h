@@ -8,9 +8,6 @@
 
 namespace NI {
 	struct TextureEffect : DynamicEffect {
-		TextureEffect();
-		~TextureEffect();
-
 		TES3::Matrix33 unknown_0xA8;
 		TES3::Vector3 unknnown_0xCC;
 		TES3::Matrix33 unknown_0xD8;
@@ -31,6 +28,16 @@ namespace NI {
 		int unknown_0x13C;
 		int unknown_0x140;
 		int unknown_0x144;
+
+		TextureEffect();
+		~TextureEffect();
+
+		//
+		// Custom functions.
+		//
+
+		static Pointer<TextureEffect> create();
+
 	};
 	static_assert(sizeof(TextureEffect) == 0x148, "NI::TextureEffect failed size validation");
 }

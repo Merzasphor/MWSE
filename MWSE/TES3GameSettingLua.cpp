@@ -65,17 +65,16 @@ namespace mwse {
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
-			setUserdataForBaseObject(usertypeDefinition);
+			setUserdataForTES3BaseObject(usertypeDefinition);
+
+			// Base type overrides.
+			usertypeDefinition["id"] = &TES3::GameSetting::getObjectID;
 
 			// Allow object to be converted to strings using their object ID.
 			usertypeDefinition[sol::meta_function::to_string] = &TES3::GameSetting::getName;
 
 			// Allow object to be serialized to json.
-			usertypeDefinition["__tojson"] = [](TES3::GameSetting& self, sol::table state) {
-				std::ostringstream ss;
-				ss << "\"tes3gameSetting:" << self.getName() << "\"";
-				return ss.str();
-			};
+			usertypeDefinition["__tojson"] = &TES3::GameSetting::toJson;
 
 			// Basic property binding.
 			usertypeDefinition["index"] = sol::readonly_property(&TES3::GameSetting::index);

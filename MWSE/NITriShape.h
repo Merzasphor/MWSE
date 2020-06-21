@@ -2,7 +2,6 @@
 
 #include "NIAVObject.h"
 #include "NiTriBasedGeometry.h"
-#include "NiTriShapeData.h"
 
 namespace NI {
 	struct TriShape_vTable : TriBasedGeometry_vTable {
@@ -19,7 +18,11 @@ namespace NI {
 		// vTable type overwriting.
 		//
 
-		TriShapeData* getModelData() { return static_cast<TriShapeData*>(modelData.get()); }
+		TriShapeData* getModelData() const;
+
+		// Convenient access to model data.
+		nonstd::span<TES3::Vector3> getVertices() const;
+		nonstd::span<TES3::Vector3> getNormals() const;
 
 	};
 	static_assert(sizeof(TriShape) == 0xAC, "NI::TriShape failed size validation");

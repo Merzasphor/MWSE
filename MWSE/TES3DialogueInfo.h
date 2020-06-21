@@ -70,8 +70,21 @@ namespace TES3 {
 		// Custom functions.
 		//
 
+		sol::optional<std::string> getID();
+
+		BaseObject* getFilterObject(TES3::DialogueInfoFilterType type);
+
+		Actor* getFilterActor();
+		Race* getFilterNPCRace();
+		Class* getFilterNPCClass();
+		Faction* getFilterNPCFaction();
+		Cell* getFilterNPCCell();
+		Faction* getFilterPCFaction();
+
 		// Loads the string of numbers from disk and returns them.
 		std::string getLongIDFromFile();
+
+		std::string toJson();
 
 	};
 	static_assert(sizeof(DialogueInfo) == 0x2C, "TES3::DialogueInfo failed size validation");

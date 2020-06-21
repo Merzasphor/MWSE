@@ -6,63 +6,52 @@
 #include "TES3GameFile.h"
 #include "TES3ReferenceList.h"
 
-#include "BitUtil.h"
-
 namespace mwse {
 	namespace lua {
 		template <typename T>
-		void setUserdataForBaseObject(sol::usertype<T>& usertypeDefinition) {
+		void setUserdataForTES3BaseObject(sol::usertype<T>& usertypeDefinition) {
 			// Basic property binding.
-			usertypeDefinition["objectType"] = sol::readonly_property(&T::objectType);
-			usertypeDefinition["objectFlags"] = sol::readonly_property(&T::objectFlags);
+			usertypeDefinition["objectType"] = sol::readonly_property(&TES3::BaseObject::objectType);
+			usertypeDefinition["objectFlags"] = sol::readonly_property(&TES3::BaseObject::objectFlags);
 
 			// Allow object to be converted to strings using their object ID.
-			usertypeDefinition[sol::meta_function::to_string] = &T::getObjectID;
+			usertypeDefinition[sol::meta_function::to_string] = &TES3::BaseObject::getObjectID;
 
 			// Allow objects to be serialized to json using their ID.
-			usertypeDefinition["__tojson"] = [](T& self, sol::table state) {
-				std::ostringstream ss;
-				ss << "\"tes3baseObject:" << self.getObjectID() << "\"";
-				return ss.str();
-			};
+			usertypeDefinition["__tojson"] = &TES3::BaseObject::toJson;
 
 			// Functions exposed as properties.
-			usertypeDefinition["id"] = sol::readonly_property(&T::getObjectID);
-			usertypeDefinition["sourceMod"] = sol::readonly_property([](T& self) -> const char* {
-				if (self.sourceMod) {
-					return self.sourceMod->filename;
-				}
-				return nullptr;
-			});
-			usertypeDefinition["modified"] = sol::property(&T::getObjectModified, &T::setObjectModified);
-			usertypeDefinition["disabled"] = sol::readonly_property([](T& self) { return BIT_TEST(self.objectFlags, TES3::ObjectFlag::DisabledBit); });
-			usertypeDefinition["deleted"] = sol::readonly_property([](T& self) { return BIT_TEST(self.objectFlags, TES3::ObjectFlag::DeleteBit); });
+			usertypeDefinition["id"] = sol::readonly_property(&TES3::BaseObject::getObjectID);
+			usertypeDefinition["sourceMod"] = sol::readonly_property(&TES3::BaseObject::getSourceFilename);
+			usertypeDefinition["modified"] = sol::property(&TES3::BaseObject::getObjectModified, &TES3::BaseObject::setObjectModified);
+			usertypeDefinition["disabled"] = sol::readonly_property(&TES3::BaseObject::getDisabled);
+			usertypeDefinition["deleted"] = sol::readonly_property(&TES3::BaseObject::getDeleted);
 		}
 
 		template <typename T>
-		void setUserdataForObject(sol::usertype<T>& usertypeDefinition) {
-			setUserdataForBaseObject(usertypeDefinition);
+		void setUserdataForTES3Object(sol::usertype<T>& usertypeDefinition) {
+			setUserdataForTES3BaseObject(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition["nextInCollection"] = sol::readonly_property(&T::nextInCollection);
-			usertypeDefinition["previousInCollection"] = sol::readonly_property(&T::previousInCollection);
-			usertypeDefinition["scale"] = sol::property(&T::getScale, &T::setScale);
-			usertypeDefinition["sceneNode"] = sol::readonly_property(&T::sceneNode);
-			usertypeDefinition["sceneCollisionRoot"] = sol::readonly_property(&T::sceneCollisionRoot);
+			usertypeDefinition["nextInCollection"] = sol::readonly_property(&TES3::Object::nextInCollection);
+			usertypeDefinition["previousInCollection"] = sol::readonly_property(&TES3::Object::previousInCollection);
+			usertypeDefinition["sceneNode"] = sol::readonly_property(&TES3::Object::sceneNode);
+			usertypeDefinition["sceneCollisionRoot"] = sol::readonly_property(&TES3::Object::sceneCollisionRoot);
 
-			// Indirect bindings to unions and arrays.
-			usertypeDefinition["owningCollection"] = sol::property([](T& self) { return self.owningCollection.asReferenceList; });
+			// Functions exposed as properties.
+			usertypeDefinition["owningCollection"] = sol::readonly_property(&TES3::Object::getOwningCollection);
+			usertypeDefinition["scale"] = sol::property(&TES3::Object::getScale, &TES3::Object::setScale);
 		}
 
 		template <typename T>
-		void setUserdataForPhysicalObject(sol::usertype<T>& usertypeDefinition) {
-			setUserdataForObject(usertypeDefinition);
+		void setUserdataForTES3PhysicalObject(sol::usertype<T>& usertypeDefinition) {
+			setUserdataForTES3Object(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition["boundingBox"] = sol::readonly_property(&T::boundingBox);
+			usertypeDefinition["boundingBox"] = sol::readonly_property(&TES3::PhysicalObject::boundingBox);
 
 			// Functions exposed as properties.
-			usertypeDefinition["stolenList"] = sol::readonly_property(&T::getStolenList);
+			usertypeDefinition["stolenList"] = sol::readonly_property(&TES3::PhysicalObject::getStolenList);
 		}
 	}
 }

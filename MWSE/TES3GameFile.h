@@ -92,6 +92,24 @@ namespace TES3 {
 
 		std::uint64_t getFileSize() const;
 		std::uint64_t getModifiedTime() const;
+
+		const char* getFilename() const;
+		const char* getPath() const;
+		const char* getAuthor() const;
+		const char* getDescription() const;
+
+		float getCurrentHealth() const;
+		float getMaxHealth() const;
+		float getGameHour() const;
+		float getDay() const;
+		float getMonth() const;
+		float getYear() const;
+		const char* getCellName() const;
+		float getDaysPassed() const;
+		const char* getPlayerName() const;
+
+		sol::table getMasters_lua(sol::this_state ts) const;
+
 	};
 	static_assert(sizeof(GameFile) == 0x574, "TES3::GameFile failed size validation");
 	static_assert(sizeof(GameFile::GMDT) == 0x7C, "TES3::GameFile::GMDT failed size validation");

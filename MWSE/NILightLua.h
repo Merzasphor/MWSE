@@ -2,11 +2,12 @@
 
 #include "NIDynamicEffectLua.h"
 
+#include "NIColor.h"
+
 namespace mwse {
 	namespace lua {
-		// Speed-optimized binding for NI::Light.
 		template <typename T>
-		void setUserdataForNILight(T& usertypeDefinition) {
+		void setUserdataForNILight(sol::usertype<T>& usertypeDefinition) {
 			setUserdataForNIDynamicEffect(usertypeDefinition);
 
 			// Basic property binding.
@@ -16,9 +17,8 @@ namespace mwse {
 			usertypeDefinition["specular"] = &NI::Light::specular;
 		}
 
-		// Speed-optimized binding for NI::PointLight.
 		template <typename T>
-		void setUserdataForNIPointLight(T& usertypeDefinition) {
+		void setUserdataForNIPointLight(sol::usertype<T>& usertypeDefinition) {
 			setUserdataForNILight(usertypeDefinition);
 
 			// Basic property binding.

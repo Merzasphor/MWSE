@@ -17,6 +17,13 @@ namespace TES3 {
 		float quality; // 0xB0
 		unsigned short maxCondition; // 0xB4
 		short unknown_0xB6;
+
+		//
+		// Custom functions.
+		//
+
+		void setIconPath(const char* path);
+
 	};
 	static_assert(sizeof(Lockpick) == 0xB8, "TES3::Lockpick failed size validation");
 }

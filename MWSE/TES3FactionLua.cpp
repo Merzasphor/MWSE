@@ -23,8 +23,8 @@ namespace mwse {
 				usertypeDefinition["reputation"] = &TES3::Faction::Rank::reputation;
 
 				// Indirect bindings to unions and arrays.
-				usertypeDefinition["attributes"] = sol::readonly_property([](TES3::Faction::Rank& self) { return std::ref(self.reqAttributes); });
-				usertypeDefinition["skills"] = sol::readonly_property([](TES3::Faction::Rank& self) { return std::ref(self.reqSkills); });
+				usertypeDefinition["attributes"] = sol::readonly_property(&TES3::Faction::Rank::getRequiredAttributeValues);
+				usertypeDefinition["skills"] = sol::readonly_property(&TES3::Faction::Rank::getRequiredSkillValues);
 			}
 
 			// Binding for TES3::Faction::ReactionNode
@@ -35,7 +35,7 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition["reputation"] = &TES3::Faction::ReactionNode::reaction;
-				usertypeDefinition["faction"] = sol::readonly_property([](TES3::Faction::ReactionNode& self) { return self.faction; });
+				usertypeDefinition["faction"] = sol::readonly_property(&TES3::Faction::ReactionNode::faction);
 			}
 
 			// Binding for TES3::Faction
@@ -47,24 +47,18 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
-				setUserdataForBaseObject(usertypeDefinition);
+				setUserdataForTES3BaseObject(usertypeDefinition);
 
 				// Basic property binding.
 				usertypeDefinition["reactions"] = sol::readonly_property(&TES3::Faction::reactions);
 				usertypeDefinition["playerReputation"] = &TES3::Faction::playerReputation;
-				usertypeDefinition["playerJoined"] = sol::property(
-					[](TES3::Faction& self) { return self.getMembershipFlag(TES3::FactionMembershipFlag::PlayerJoined); },
-					[](TES3::Faction& self, bool set) { self.setMembershipFlag(TES3::FactionMembershipFlag::PlayerJoined, set); }
-				);
-				usertypeDefinition["playerExpelled"] = sol::property(
-					[](TES3::Faction& self) { return self.getMembershipFlag(TES3::FactionMembershipFlag::PlayerExpelled); },
-					[](TES3::Faction& self, bool set) { self.setMembershipFlag(TES3::FactionMembershipFlag::PlayerExpelled, set); }
-				);
+				usertypeDefinition["playerJoined"] = sol::property(&TES3::Faction::getPlayerJoined, &TES3::Faction::setPlayerJoined);
+				usertypeDefinition["playerExpelled"] = sol::property(&TES3::Faction::getPlayerExpelled, &TES3::Faction::setPlayerExpelled);
 
 				// Indirect bindings to unions and arrays.
-				usertypeDefinition["attributes"] = sol::property([](TES3::Faction& self) { return std::ref(self.attributes); });
-				usertypeDefinition["ranks"] = sol::readonly_property([](TES3::Faction& self) { return std::ref(self.ranks); });
-				usertypeDefinition["skills"] = sol::property([](TES3::Faction& self) { return std::ref(self.skills); });
+				usertypeDefinition["attributes"] = sol::property(&TES3::Faction::getAttributes);
+				usertypeDefinition["ranks"] = sol::readonly_property(&TES3::Faction::getRanks);
+				usertypeDefinition["skills"] = sol::property(&TES3::Faction::getSkills);
 
 				// Functions exposed as properties.
 				usertypeDefinition["name"] = sol::property(&TES3::Faction::getName, &TES3::Faction::setName);

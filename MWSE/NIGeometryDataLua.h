@@ -5,7 +5,6 @@
 
 namespace mwse {
 	namespace lua {
-		// Speed-optimized binding for NI::Node.
 		template <typename T>
 		void setUserdataForNIGeometryData(sol::usertype<T>& usertypeDefinition) {
 			setUserdataForNIObject(usertypeDefinition);
@@ -20,10 +19,10 @@ namespace mwse {
 			usertypeDefinition["vertexCount"] = sol::readonly_property(&NI::GeometryData::getVertexCount);
 
 			// Safe access to arrays.
-			usertypeDefinition["colors"] = sol::readonly_property([](NI::GeometryData& self) { return nonstd::span(self.color, self.vertexCount); });
-			usertypeDefinition["normals"] = sol::readonly_property([](NI::GeometryData& self) { return nonstd::span(self.normal, self.vertexCount); });
-			usertypeDefinition["textures"] = sol::readonly_property([](NI::GeometryData& self) { return nonstd::span(self.texture, self.vertexCount); });
-			usertypeDefinition["vertices"] = sol::readonly_property([](NI::GeometryData& self) { return nonstd::span(self.vertex, self.vertexCount); });
+			usertypeDefinition["colors"] = sol::readonly_property(&NI::GeometryData::getColors);
+			usertypeDefinition["normals"] = sol::readonly_property(&NI::GeometryData::getNormals);
+			usertypeDefinition["textures"] = sol::readonly_property(&NI::GeometryData::getTextureCoordinates);
+			usertypeDefinition["vertices"] = sol::readonly_property(&NI::GeometryData::getVertices);
 
 			// Basic function binding.
 			usertypeDefinition["markAsChanged"] = &NI::GeometryData::markAsChanged;

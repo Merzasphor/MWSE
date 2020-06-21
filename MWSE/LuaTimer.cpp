@@ -67,7 +67,7 @@ namespace mwse {
 
 			// Setup the timer structure.
 			auto timer = std::make_shared<Timer>();
-			timer->controller = this;
+			timer->controller = weak_from_this();
 			timer->duration = duration;
 			timer->timing = m_Clock + duration;
 			timer->iterations = iterations;
@@ -228,6 +228,56 @@ namespace mwse {
 		}
 
 		//
+		// Timer
+		//
+
+		bool Timer::pause() {
+			auto sharedController = controller.lock();
+			if (sharedController) {
+				return sharedController->pauseTimer(shared_from_this());
+			}
+			return false;
+		}
+
+		bool Timer::resume() {
+			auto sharedController = controller.lock();
+			if (sharedController) {
+				//return sharedController->resumeTimer(shared_from_this());
+			}
+			return false;
+		}
+
+		bool Timer::reset() {
+			auto sharedController = controller.lock();
+			if (sharedController) {
+				return sharedController->resetTimer(shared_from_this());
+			}
+			return false;
+		}
+
+		bool Timer::cancel() {
+			auto sharedController = controller.lock();
+			if (sharedController) {
+				return sharedController->cancelTimer(shared_from_this());
+			}
+			return false;
+		}
+
+		std::optional<double> Timer::getTimeLeft() {
+			if (state == TimerState::Active) {
+				auto sharedController = controller.lock();
+				if (sharedController) {
+					return timing - sharedController->getClock();
+				}
+			}
+			else if (state == TimerState::Paused) {
+				return timing;
+			}
+
+			return std::optional<double>();
+		}
+
+		//
 		// Legacy functions, to help people migrate their code to the new method of performing timers.
 		//
 
@@ -288,22 +338,22 @@ namespace mwse {
 
 		// Function to pause a given timer.
 		bool legacyTimerPause(std::shared_ptr<Timer> timer) {
-			return timer->controller->pauseTimer(timer);
+			return timer->pause();
 		}
 
 		// Function to resume a given timer.
 		bool legacyTimerResume(std::shared_ptr<Timer> timer) {
-			return timer->controller->resumeTimer(timer);
+			return timer->resume();
 		}
 
 		// Function to reset a given timer.
 		bool legacyTimerReset(std::shared_ptr<Timer> timer) {
-			return timer->controller->resetTimer(timer);
+			return timer->reset();
 		}
 
 		// Function to cancel a given timer.
 		bool legacyTimerCancel(std::shared_ptr<Timer> timer) {
-			return timer->controller->cancelTimer(timer);
+			return timer->cancel();
 		}
 
 		// Create a timer that will complete in the next cycle.
@@ -328,6 +378,10 @@ namespace mwse {
 		// Lua binding for new data types and functions.
 		//
 
+		auto createController() {
+			return std::make_shared<TimerController>();
+		};
+
 		void bindLuaTimer() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -343,9 +397,7 @@ namespace mwse {
 				usertypeDefinition["clock"] = sol::property(&TimerController::getClock, &TimerController::setClock);
 
 				// Allow creating timers.
-				usertypeDefinition["create"] = [](TimerController& self, sol::table params) {
-					return startTimer(&self, params);
-				};
+				usertypeDefinition["create"] = startTimer;
 			}
 
 			// Bind Timer.
@@ -360,16 +412,7 @@ namespace mwse {
 				usertypeDefinition["state"] = sol::readonly_property(&Timer::state);
 				usertypeDefinition["timing"] = sol::readonly_property(&Timer::timing);
 				usertypeDefinition["callback"] = sol::readonly_property(&Timer::callback);
-				usertypeDefinition["timeLeft"] = sol::readonly_property([](Timer& self) -> sol::optional<double> {
-					if (self.state == TimerState::Active) {
-						return self.timing - self.controller->getClock();
-					}
-					else if (self.state == TimerState::Paused) {
-						return self.timing;
-					}
-
-					return sol::optional<double>();
-				});
+				usertypeDefinition["timeLeft"] = sol::readonly_property(&Timer::getTimeLeft);
 
 				// Legacy value binding.
 				usertypeDefinition["t"] = &Timer::duration;
@@ -377,19 +420,11 @@ namespace mwse {
 				usertypeDefinition["i"] = &Timer::iterations;
 				usertypeDefinition["f"] = &Timer::timing;
 
-				// Allow creating timers.
-				usertypeDefinition["pause"] = [](std::shared_ptr<Timer> self) {
-					return self->controller->pauseTimer(self);
-				};
-				usertypeDefinition["resume"] = [](std::shared_ptr<Timer> self) {
-					return self->controller->resumeTimer(self);
-				};
-				usertypeDefinition["reset"] = [](std::shared_ptr<Timer> self) {
-					return self->controller->resetTimer(self);
-				};
-				usertypeDefinition["cancel"] = [](std::shared_ptr<Timer> self) {
-					return self->controller->cancelTimer(self);
-				};
+				// Basic function binding.
+				usertypeDefinition["pause"] = &Timer::pause;
+				usertypeDefinition["resume"] = &Timer::resume;
+				usertypeDefinition["reset"] = &Timer::reset;
+				usertypeDefinition["cancel"] = &Timer::cancel;
 			}
 
 			// Create our timer library.
@@ -425,9 +460,7 @@ namespace mwse {
 			state["timer"]["frame"]["delayOneFrame"] = &legacyTimerDelayOneFrame;
 
 			// Let new TimerControllers get made.
-			state["timer"]["createController"] = []() {
-				return std::make_shared<TimerController>();
-			};
+			state["timer"]["createController"] = createController;
 		}
 	}
 }

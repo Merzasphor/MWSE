@@ -85,7 +85,7 @@ namespace NI {
 	static_assert(sizeof(Object_vTable) == 0x2C, "NI::Object's vtable failed size validation");
 }
 
-int sol_lua_push(sol::types<NI::Object>, lua_State* L, NI::Object* obj);
-int sol_lua_push(sol::types<NI::Object*>, lua_State* L, NI::Object& obj);
+int sol_lua_push(sol::types<NI::Object>, lua_State* L, NI::Object& obj);
+int sol_lua_push(sol::types<NI::Object*>, lua_State* L, NI::Object* obj);
 int sol_lua_push(sol::types<NI::Pointer<NI::Object>>, lua_State* L, NI::Pointer<NI::Object>& obj);
 int sol_lua_push(sol::types<NI::Pointer<NI::Object>*>, lua_State* L, NI::Pointer<NI::Object>* obj);

@@ -50,7 +50,7 @@ namespace mwse {
 				usertypeDefinition["races"] = sol::readonly_property(&TES3::NonDynamicData::races);
 				usertypeDefinition["regions"] = sol::readonly_property(&TES3::NonDynamicData::regions);
 				usertypeDefinition["scripts"] = sol::readonly_property(&TES3::NonDynamicData::scripts);
-				usertypeDefinition["skills"] = sol::readonly_property([](TES3::NonDynamicData& self) { return std::ref(self.skills); });
+				usertypeDefinition["skills"] = sol::readonly_property(&TES3::NonDynamicData::getSkills);
 				usertypeDefinition["soundGenerators"] = sol::readonly_property(&TES3::NonDynamicData::soundGenerators);
 				usertypeDefinition["sounds"] = sol::readonly_property(&TES3::NonDynamicData::sounds);
 				usertypeDefinition["spells"] = sol::readonly_property(&TES3::NonDynamicData::spellsList);
@@ -67,16 +67,7 @@ namespace mwse {
 				usertypeDefinition["resolveObject"] = &TES3::NonDynamicData::resolveObject;
 
 				// Provide legacy access to magic effects table.
-				usertypeDefinition["magicEffects"] = sol::readonly_property(
-					[](TES3::NonDynamicData& self, sol::this_state s) {
-						sol::state_view state = s;
-						sol::table results = state.create_table();
-						for (auto itt : self.magicEffects->effectObjects) {
-							results.add(itt.second);
-						}
-						return results;
-					}
-				);
+				usertypeDefinition["magicEffects"] = sol::readonly_property(&TES3::NonDynamicData::getMagicEffects_lua);
 
 				// Deprecated functions. TODO: Remove before 2.1 final.
 				usertypeDefinition["findDialogInfo"] = &TES3::NonDynamicData::findDialogue; // Badly named. Actually gives DIAL, not INFO.
@@ -109,23 +100,23 @@ namespace mwse {
 				usertypeDefinition["currentAmbientWaterSound"] = &TES3::DataHandler::currentAmbientWaterSound;
 				usertypeDefinition["currentCell"] = sol::readonly_property(&TES3::DataHandler::currentCell);
 				usertypeDefinition["currentInteriorCell"] = sol::readonly_property(&TES3::DataHandler::currentInteriorCell);
-				//usertypeDefinition["dontThreadLoad"] = &TES3::DataHandler::dontThreadLoad;
+				usertypeDefinition["exteriorCells"] = sol::readonly_property(&TES3::DataHandler::getExteriorCellData_lua);
 				usertypeDefinition["lastExteriorCell"] = sol::readonly_property(&TES3::DataHandler::lastExteriorCell);
 				usertypeDefinition["mainThread"] = sol::readonly_property(&TES3::DataHandler::mainThread);
 				usertypeDefinition["mainThreadId"] = sol::readonly_property(&TES3::DataHandler::mainThreadID);
 				usertypeDefinition["nonDynamicData"] = sol::readonly_property(&TES3::DataHandler::nonDynamicData);
-				//usertypeDefinition["suppressThreadLoad"] = &TES3::DataHandler::suppressThreadLoad;
 				usertypeDefinition["threadSleepTime"] = sol::readonly_property(&TES3::DataHandler::threadSleepTime);
 				usertypeDefinition["useCellTransitionFader"] = &TES3::DataHandler::useCellTransitionFader;
 				usertypeDefinition["worldLandscapeRoot"] = sol::readonly_property(&TES3::DataHandler::worldLandscapeRoot);
 				usertypeDefinition["worldObjectRoot"] = sol::readonly_property(&TES3::DataHandler::worldObjectRoot);
 				usertypeDefinition["worldPickObjectRoot"] = sol::readonly_property(&TES3::DataHandler::worldPickObjectRoot);
 
-				// Indirect bindings to unions and arrays.
-				usertypeDefinition["exteriorCells"] = sol::readonly_property([](TES3::DataHandler& self) { return std::ref(self.exteriorCellData); });
-
 				// Basic function binding.
 				usertypeDefinition["updateCollisionGroupsForActiveCells"] = &TES3::DataHandler::updateCollisionGroupsForActiveCells;
+
+				// Static variable binding.
+				usertypeDefinition["dontThreadLoad"] = sol::var(&TES3::DataHandler::dontThreadLoad);
+				usertypeDefinition["suppressThreadLoad"] = sol::var(&TES3::DataHandler::suppressThreadLoad);
 			}
 		}
 	}

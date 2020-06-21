@@ -13,7 +13,14 @@ namespace TES3 {
 		// Virtual table overrides.
 		//
 
-		char* getObjectID();
+		char* getObjectID() const;
+
+		//
+		// Custom functions.
+		//
+
+		std::string toJson() const;
+
 	};
 	static_assert(sizeof(Quest) == 0x3C, "TES3::Quest failed size validation");
 }

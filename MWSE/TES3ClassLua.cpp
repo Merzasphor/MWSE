@@ -5,30 +5,6 @@
 
 #include "TES3Class.h"
 
-namespace TES3 {
-	sol::table Class::getMajorSkills() {
-		auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-
-		sol::table result = state.create_table();
-		for (int i = 0; i < 5; i++) {
-			result[i + 1] = skills[i * 2 + 1];
-		}
-		return result;
-	}
-
-	sol::table Class::getMinorSkills() {
-		auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-
-		sol::table result = state.create_table();
-		for (int i = 0; i < 5; i++) {
-			result[i + 1] = skills[i * 2];
-		}
-		return result;
-	}
-}
-
 namespace mwse {
 	namespace lua {
 		void bindTES3Class() {
@@ -42,136 +18,45 @@ namespace mwse {
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
-			setUserdataForBaseObject(usertypeDefinition);
+			setUserdataForTES3BaseObject(usertypeDefinition);
 
 			// Basic property binding.
 			usertypeDefinition["services"] = &TES3::Class::services;
 			usertypeDefinition["specialization"] = &TES3::Class::specialization;
 
 			// Indirect bindings to unions and arrays.
-			usertypeDefinition["attributes"] = sol::readonly_property([](TES3::Class& self) { return std::ref(self.attributes); });
-			usertypeDefinition["skills"] = sol::readonly_property([](TES3::Class& self) { return std::ref(self.skills); });
+			usertypeDefinition["attributes"] = sol::readonly_property(&TES3::Class::getAttributes);
+			usertypeDefinition["skills"] = sol::readonly_property(&TES3::Class::getSkills);
 
-			// Provide friendly access to service flags.
-			usertypeDefinition["bartersAlchemy"] = sol::property(
-				[](TES3::Class& self) { return self.getServiceFlag(TES3::ServiceFlag::BartersAlchemy); },
-				[](TES3::Class& self, bool set) { self.setServiceFlag(TES3::ServiceFlag::BartersAlchemy, set); }
-			);
-			usertypeDefinition["bartersApparatus"] = sol::property(
-				[](TES3::Class& self) { return self.getServiceFlag(TES3::ServiceFlag::BartersApparatus); },
-				[](TES3::Class& self, bool set) { self.setServiceFlag(TES3::ServiceFlag::BartersApparatus, set); }
-			);
-			usertypeDefinition["bartersArmor"] = sol::property(
-				[](TES3::Class& self) { return self.getServiceFlag(TES3::ServiceFlag::BartersArmor); },
-				[](TES3::Class& self, bool set) { self.setServiceFlag(TES3::ServiceFlag::BartersArmor, set); }
-			);
-			usertypeDefinition["bartersBooks"] = sol::property(
-				[](TES3::Class& self) { return self.getServiceFlag(TES3::ServiceFlag::BartersBooks); },
-				[](TES3::Class& self, bool set) { self.setServiceFlag(TES3::ServiceFlag::BartersBooks, set); }
-			);
-			usertypeDefinition["bartersClothing"] = sol::property(
-				[](TES3::Class& self) { return self.getServiceFlag(TES3::ServiceFlag::BartersClothing); },
-				[](TES3::Class& self, bool set) { self.setServiceFlag(TES3::ServiceFlag::BartersClothing, set); }
-			);
-			usertypeDefinition["bartersEnchantedItems"] = sol::property(
-				[](TES3::Class& self) { return self.getServiceFlag(TES3::ServiceFlag::BartersEnchantedItems); },
-				[](TES3::Class& self, bool set) { self.setServiceFlag(TES3::ServiceFlag::BartersEnchantedItems, set); }
-			);
-			usertypeDefinition["bartersIngredients"] = sol::property(
-				[](TES3::Class& self) { return self.getServiceFlag(TES3::ServiceFlag::BartersIngredients); },
-				[](TES3::Class& self, bool set) { self.setServiceFlag(TES3::ServiceFlag::BartersIngredients, set); }
-			);
-			usertypeDefinition["bartersLights"] = sol::property(
-				[](TES3::Class& self) { return self.getServiceFlag(TES3::ServiceFlag::BartersLights); },
-				[](TES3::Class& self, bool set) { self.setServiceFlag(TES3::ServiceFlag::BartersLights, set); }
-			);
-			usertypeDefinition["bartersLockpicks"] = sol::property(
-				[](TES3::Class& self) { return self.getServiceFlag(TES3::ServiceFlag::BartersLockpicks); },
-				[](TES3::Class& self, bool set) { self.setServiceFlag(TES3::ServiceFlag::BartersLockpicks, set); }
-			);
-			usertypeDefinition["bartersMiscItems"] = sol::property(
-				[](TES3::Class& self) { return self.getServiceFlag(TES3::ServiceFlag::BartersMiscItems); },
-				[](TES3::Class& self, bool set) { self.setServiceFlag(TES3::ServiceFlag::BartersMiscItems, set); }
-			);
-			usertypeDefinition["bartersProbes"] = sol::property(
-				[](TES3::Class& self) { return self.getServiceFlag(TES3::ServiceFlag::BartersProbes); },
-				[](TES3::Class& self, bool set) { self.setServiceFlag(TES3::ServiceFlag::BartersProbes, set); }
-			);
-			usertypeDefinition["bartersRepairTools"] = sol::property(
-				[](TES3::Class& self) { return self.getServiceFlag(TES3::ServiceFlag::BartersRepairTools); },
-				[](TES3::Class& self, bool set) { self.setServiceFlag(TES3::ServiceFlag::BartersRepairTools, set); }
-			);
-			usertypeDefinition["bartersWeapons"] = sol::property(
-				[](TES3::Class& self) { return self.getServiceFlag(TES3::ServiceFlag::BartersWeapons); },
-				[](TES3::Class& self, bool set) { self.setServiceFlag(TES3::ServiceFlag::BartersWeapons, set); }
-			);
-			usertypeDefinition["offersEnchanting"] = sol::property(
-				[](TES3::Class& self) { return self.getServiceFlag(TES3::ServiceFlag::OffersEnchanting); },
-				[](TES3::Class& self, bool set) { self.setServiceFlag(TES3::ServiceFlag::OffersEnchanting, set); }
-			);
-			usertypeDefinition["offersRepairs"] = sol::property(
-				[](TES3::Class& self) { return self.getServiceFlag(TES3::ServiceFlag::OffersRepairs); },
-				[](TES3::Class& self, bool set) { self.setServiceFlag(TES3::ServiceFlag::OffersRepairs, set); }
-			);
-			usertypeDefinition["offersSpellmaking"] = sol::property(
-				[](TES3::Class& self) { return self.getServiceFlag(TES3::ServiceFlag::OffersSpellmaking); },
-				[](TES3::Class& self, bool set) { self.setServiceFlag(TES3::ServiceFlag::OffersSpellmaking, set); }
-			);
-			usertypeDefinition["offersSpells"] = sol::property(
-				[](TES3::Class& self) { return self.getServiceFlag(TES3::ServiceFlag::OffersSpells); },
-				[](TES3::Class& self, bool set) { self.setServiceFlag(TES3::ServiceFlag::OffersSpells, set); }
-			);
-			usertypeDefinition["offersTraining"] = sol::property(
-				[](TES3::Class& self) { return self.getServiceFlag(TES3::ServiceFlag::OffersTraining); },
-				[](TES3::Class& self, bool set) { self.setServiceFlag(TES3::ServiceFlag::OffersTraining, set); }
-			);
+			// Provide friendly access to service flags.usertypeDefinition["bartersAlchemy"] = sol::property(&TES3::Class::getBartersAlchemy, &TES3::Class::setBartersAlchemy);
+			usertypeDefinition["bartersApparatus"] = sol::property(&TES3::Class::getBartersApparatus, &TES3::Class::setBartersApparatus);
+			usertypeDefinition["bartersArmor"] = sol::property(&TES3::Class::getBartersArmor, &TES3::Class::setBartersArmor);
+			usertypeDefinition["bartersBooks"] = sol::property(&TES3::Class::getBartersBooks, &TES3::Class::setBartersBooks);
+			usertypeDefinition["bartersClothing"] = sol::property(&TES3::Class::getBartersClothing, &TES3::Class::setBartersClothing);
+			usertypeDefinition["bartersEnchantedItems"] = sol::property(&TES3::Class::getBartersEnchantedItems, &TES3::Class::setBartersEnchantedItems);
+			usertypeDefinition["bartersIngredients"] = sol::property(&TES3::Class::getBartersIngredients, &TES3::Class::setBartersIngredients);
+			usertypeDefinition["bartersLights"] = sol::property(&TES3::Class::getBartersLights, &TES3::Class::setBartersLights);
+			usertypeDefinition["bartersLockpicks"] = sol::property(&TES3::Class::getBartersLockpicks, &TES3::Class::setBartersLockpicks);
+			usertypeDefinition["bartersMiscItems"] = sol::property(&TES3::Class::getBartersMiscItems, &TES3::Class::setBartersMiscItems);
+			usertypeDefinition["bartersProbes"] = sol::property(&TES3::Class::getBartersProbes, &TES3::Class::setBartersProbes);
+			usertypeDefinition["bartersRepairTools"] = sol::property(&TES3::Class::getBartersRepairTools, &TES3::Class::setBartersRepairTools);
+			usertypeDefinition["bartersWeapons"] = sol::property(&TES3::Class::getBartersWeapons, &TES3::Class::setBartersWeapons);
+			usertypeDefinition["offersEnchanting"] = sol::property(&TES3::Class::getOffersEnchanting, &TES3::Class::setOffersEnchanting);
+			usertypeDefinition["offersRepairs"] = sol::property(&TES3::Class::getOffersRepairs, &TES3::Class::setOffersRepairs);
+			usertypeDefinition["offersSpellmaking"] = sol::property(&TES3::Class::getOffersSpellmaking, &TES3::Class::setOffersSpellmaking);
+			usertypeDefinition["offersSpells"] = sol::property(&TES3::Class::getOffersSpells, &TES3::Class::setOffersSpells);
+			usertypeDefinition["offersTraining"] = sol::property(&TES3::Class::getOffersTraining, &TES3::Class::setOffersTraining);
 
 			// Properties that have type remapping.
-			usertypeDefinition["playable"] = sol::property(
-				[](TES3::Class& self) { return self.playable != 0; },
-				[](TES3::Class& self, bool value) { self.playable = value; }
-			);
+			usertypeDefinition["playable"] = sol::property(&TES3::Class::getIsPlayable, &TES3::Class::setIsPlayable);
 
 			// Functions exposed as properties.
-			usertypeDefinition["majorSkills"] = sol::readonly_property(&TES3::Class::getMajorSkills);
-			usertypeDefinition["minorSkills"] = sol::readonly_property(&TES3::Class::getMinorSkills);
-			usertypeDefinition["name"] = sol::property(
-				[](TES3::Class& self) { return self.name; },
-				[](TES3::Class& self, const char* value) { if (strlen(value) < 32) strcpy(self.name, value); }
-			);
+			usertypeDefinition["majorSkills"] = sol::readonly_property(&TES3::Class::getMajorSkills_lua);
+			usertypeDefinition["minorSkills"] = sol::readonly_property(&TES3::Class::getMinorSkills_lua);
+			usertypeDefinition["name"] = sol::property(&TES3::Class::getName, &TES3::Class::setName);
 
 			// Description may need to be loaded from disk, handle it specially.
-			usertypeDefinition["description"] = sol::property(
-				[](TES3::Class& self) -> sol::object
-			{
-				auto& luaManager = mwse::lua::LuaManager::getInstance();
-				auto stateHandle = luaManager.getThreadSafeStateHandle();
-				sol::state& state = stateHandle.state;
-
-				// If the description is already loaded, just return it.
-				if (self.description) {
-					return sol::make_object(state, self.description);
-				}
-
-				// Otherwise we need to load it from disk, then free it.
-				else {
-					char * description = self.loadDescription();
-					if (description) {
-						// We loaded successfully, package, free, then return.
-						sol::object value = sol::make_object(state, description);
-						self.freeDescription();
-						return value;
-					}
-				}
-
-				return sol::nil;
-			},
-				[](TES3::Class& self, const char* value)
-			{
-				self.setDescription(value);
-				self.setObjectModified(true);
-			}
-			);
+			usertypeDefinition["description"] = sol::property(&TES3::Class::getOrLoadDescription, &TES3::Class::setDescription_lua);
 		}
 	}
 }

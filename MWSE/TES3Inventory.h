@@ -43,7 +43,7 @@ namespace TES3 {
 		void removeItemWithData(MobileActor * mobile, Item * item, ItemData * itemData, int count, bool deleteStackData);
 		void dropItem(MobileActor* mobileActor, Item * item, ItemData * itemData, int count, Vector3 position, Vector3 orientation, bool unknown = false);
 
-		void resolveLeveledLists(MobileActor*);
+		void resolveLeveledLists(MobileActor* mobile = nullptr);
 
 		//
 		// Custom functions.
@@ -54,6 +54,11 @@ namespace TES3 {
 		float calculateContainedWeight();
 
 		int getSoulGemCount();
+
+		int addItem_lua(sol::table params);
+		void removeItem_lua(sol::table params);
+		bool contains_lua(sol::object itemOrItemId, sol::optional<TES3::ItemData*> itemData);
+		void resolveLeveledLists_lua(sol::optional<MobileActor*> mobile);
 
 	};
 	static_assert(sizeof(Inventory) == 0x1C, "TES3::Inventory failed size validation");

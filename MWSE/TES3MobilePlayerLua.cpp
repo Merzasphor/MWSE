@@ -6,6 +6,7 @@
 #include "TES3Collections.h"
 
 #include "TES3Alchemy.h"
+#include "TES3Cell.h"
 #include "TES3Enchantment.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Apparatus.h"
@@ -31,7 +32,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::MobileNPC, TES3::MobileActor, TES3::MobileObject>();
-				setUserdataForMobileNPC(usertypeDefinition);
+				setUserdataForTES3MobileNPC(usertypeDefinition);
 
 				// Basic property binding.
 				usertypeDefinition["alwaysRun"] = &TES3::MobilePlayer::alwaysRun;

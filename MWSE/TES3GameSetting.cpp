@@ -7,32 +7,38 @@ namespace TES3 {
 		return &reinterpret_cast<TES3::GameSettingInfo*>(0x794800)[id];
 	}
 
-	GameSettingInfo * GameSetting::getInfo() {
+	GameSettingInfo * GameSetting::getInfo() const {
 		return GameSettingInfo::get(index);
 	}
 
-	char * GameSetting::getObjectID() {
+	char * GameSetting::getObjectID() const {
 		return getInfo()->name;
 	}
 
-	char GameSetting::getType() {
+	char GameSetting::getType() const {
 		// The type is unreliable, instead use the first character of the name.
 		return getInfo()->name[0];
 	}
 
-	const char* GameSetting::getName() {
+	const char* GameSetting::getName() const {
 		return getInfo()->name;
 	}
 
-	const char* GameSetting::getDefaultStringValue() {
+	const char* GameSetting::getDefaultStringValue() const {
 		return getInfo()->defaultStringValue;
 	}
 
-	int GameSetting::getDefaultIntValue() {
+	int GameSetting::getDefaultIntValue() const {
 		return getInfo()->defaultIntValue;
 	}
 
-	float GameSetting::getDefaultFloatValue() {
+	float GameSetting::getDefaultFloatValue() const {
 		return getInfo()->defaultFloatValue;
+	}
+
+	std::string GameSetting::toJson() const {
+		std::ostringstream ss;
+		ss << "\"tes3gameSetting:" << getName() << "\"";
+		return std::move(ss.str());
 	}
 }

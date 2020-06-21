@@ -228,6 +228,11 @@ namespace TES3 {
 		BaseObject * getBaseObject();
 
 		bool isActor();
+		const char* getSourceFilename();
+		bool getDisabled();
+		bool getDeleted();
+
+		std::string toJson();
 
 		static bool __stdcall isSourcelessObject(BaseObject* object);
 		static void setSourcelessObject(BaseObject* object);
@@ -312,6 +317,7 @@ namespace TES3 {
 		//
 
 		Object * skipDeletedObjects();
+		ReferenceList* getOwningCollection();
 
 	};
 	static_assert(sizeof(Object) == 0x28, "TES3::Object failed size validation");

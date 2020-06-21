@@ -38,4 +38,8 @@ namespace TES3 {
 		}
 		return -1;
 	}
+
+	std::reference_wrapper<Effect[8]> Enchantment::getEffects() {
+		return std::ref(effects);
+	}
 }

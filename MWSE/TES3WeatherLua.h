@@ -2,13 +2,10 @@
 
 #include "LuaUtil.h"
 
-#include "TES3Sound.h"
-#include "TES3Weather.h"
-
 namespace mwse {
 	namespace lua {
 		template <typename T>
-		void setUserdataForWeather(T& usertypeDefinition) {
+		void setUserdataForTES3Weather(sol::usertype<T>& usertypeDefinition) {
 			// Basic property binding.
 			usertypeDefinition["ambientDayColor"] = sol::readonly_property(&TES3::Weather::ambientDayCol);
 			usertypeDefinition["ambientNightColor"] = sol::readonly_property(&TES3::Weather::ambientNightCol);

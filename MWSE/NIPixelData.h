@@ -19,7 +19,23 @@ namespace NI {
 		unsigned int revisionID;
 
 		static Pointer<PixelData> create(unsigned int width, unsigned int height, unsigned int mipMapLevels = 1);
-	};
+
+		//
+		// Custom functions.
+		//
+
+		Pointer<SourceTexture> createSourceTexture();
+
+		unsigned int getHeight(unsigned int mipMapLevel = 0);
+		unsigned int getWidth(unsigned int mipMapLevel = 0);
+
+		unsigned int getHeight_lua(sol::optional<unsigned int> mipMapLevel);
+		unsigned int getWidth_lua(sol::optional<unsigned int> mipMapLevel);
+		void setPixelsByte_lua(sol::table data, sol::optional<unsigned int> mipMapLevel);
+		void setPixelsFloat_lua(sol::table data, sol::optional<unsigned int> mipMapLevel);
+		void fill_lua(sol::table data, sol::optional<unsigned int> mipMapLevel);
+
+ 	};
 	static_assert(sizeof(PixelData) == 0x48, "NI::PixelData failed size validation");
 
 	struct PixelRGB {

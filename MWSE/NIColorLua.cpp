@@ -23,11 +23,7 @@ namespace mwse {
 				sol::resolve<NI::Color(const NI::Color&)>(&NI::Color::operator*),
 				sol::resolve<NI::Color(const float)>(&NI::Color::operator*)
 			);
-			usertypeDefinition[sol::meta_function::to_string] = [](NI::Color& self) {
-				std::ostringstream ss;
-				ss << std::fixed << std::setprecision(2) << "<" << self.r << ", " << self.g << ", " << self.b << ">";
-				return ss.str();
-			};
+			usertypeDefinition[sol::meta_function::to_string] = &NI::Color::toString;
 
 			// Basic property binding.
 			usertypeDefinition["r"] = &NI::Color::r;
@@ -40,11 +36,11 @@ namespace mwse {
 			usertypeDefinition["blue"] = &NI::Color::b;
 
 			// Basic function binding.
-			usertypeDefinition["copy"] = [](NI::Color& self) { return NI::Color(self); };
+			usertypeDefinition["copy"] = &NI::Color::copy;
 			usertypeDefinition["clamp"] = &NI::Color::clamp;
 
 			// Conversion to TES3::Vector3.
-			usertypeDefinition["toVector3"] = [](NI::Color& self) { return TES3::Vector3(self.r, self.g, self.b); };
+			usertypeDefinition["toVector3"] = &NI::Color::toVector3;
 		}
 	}
 }

@@ -11,4 +11,8 @@ namespace NI {
 		// Call dtor without deletion.
 		vTable.asObject->destructor(this, 0);
 	}
+
+	Pointer<TextureEffect> TextureEffect::create() {
+		return new TextureEffect();
+	}
 }

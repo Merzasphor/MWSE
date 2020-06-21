@@ -18,4 +18,8 @@ namespace NI {
 	void SourceTexture::clearPixelData() {
 		vTable.asSourceTexture->clearPixelData(this);
 	}
+
+	Pointer<SourceTexture> SourceTexture::createFromPath_lua(const char* path) {
+		return createFromPath(path);
+	}
 }

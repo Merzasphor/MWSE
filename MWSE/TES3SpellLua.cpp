@@ -64,7 +64,7 @@ namespace mwse {
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition[sol::base_classes] = sol::bases<TES3::Object, TES3::BaseObject>();
-			setUserdataForObject(usertypeDefinition);
+			setUserdataForTES3Object(usertypeDefinition);
 
 			// Basic property binding.
 			usertypeDefinition["castType"] = &TES3::Spell::castType;

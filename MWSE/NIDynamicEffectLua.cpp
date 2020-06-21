@@ -1,13 +1,6 @@
 #include "NIDynamicEffectLua.h"
 
-#include "NIObjectLua.h"
-
 #include "LuaManager.h"
-#include "LuaUtil.h"
-
-#include "NINode.h"
-#include "NIRTTI.h"
-
 
 namespace mwse {
 	namespace lua {
@@ -15,7 +8,6 @@ namespace mwse {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
-
 
 			// Binding for NI::DynamicEffect.
 			{

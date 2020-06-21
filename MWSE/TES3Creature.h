@@ -55,7 +55,29 @@ namespace TES3 {
 		};
 	}
 
-	struct Creature : Actor {
+	struct CreatureBase : Actor {
+
+		//
+		// Custom functions.
+		//
+
+		bool getIsBiped() const;
+		void setIsBiped(bool value);
+		bool getIsEssential() const;
+		void setIsEssential(bool value);
+		bool getRespawns() const;
+		void setRespawns(bool value);
+		bool getUsesEquipment() const;
+		void setUsesEquipment(bool value);
+		bool getSwims() const;
+		void setSwims(bool value);
+		bool getFlies() const;
+		void setFlies(bool value);
+		bool getWalks() const;
+		void setWalks(bool value);
+	};
+
+	struct Creature : CreatureBase {
 		char * model; // 0x6C
 		char * name; // 0x70
 		Script * script; // 0x74
@@ -74,10 +96,18 @@ namespace TES3 {
 		void * aiPackageList; // 0xE0
 		AIConfig * aiConfig; // 0xE4
 
+		//
+		// Custom functions.
+		//
+
+		std::reference_wrapper<int[8]> getAttributes();
+		std::reference_wrapper<int[3]> getSkills();
+		std::reference_wrapper<Range<int>[3]> getAttacks();
+
 	};
 	static_assert(sizeof(Creature) == 0xE8, "TES3::Creature failed size validation");
 
-	struct CreatureInstance : Actor {
+	struct CreatureInstance : CreatureBase {
 		Creature * baseCreature; // 0x6C
 		Item * weapon; // 0x70
 		NI::Pointer<NI::Node> sgNode_74;
@@ -86,6 +116,22 @@ namespace TES3 {
 		int field_80;
 		NI::Pointer<NI::Node> sgNode_84;
 		AIPackageConfig * aiPackageConfig; // 0x88
+
+		//
+		// Base creature access functions.
+		//
+
+		AIConfig* getBaseAIConfig() const;
+		std::reference_wrapper<int[8]> getBaseAttributes() const;
+		std::reference_wrapper<int[3]> getBaseSkills() const;
+		std::reference_wrapper<Range<int>[3]> getBaseAttacks() const;
+		Creature* getBaseSoundGenerator() const;
+		int getBaseCreatureType() const;
+		SpellList* getBaseSpells() const;
+
+		int getBaseSoulValue() const;
+		void setBaseSoulValue(int value);
+
 	};
 	static_assert(sizeof(CreatureInstance) == 0x8C, "TES3::CreatureInstance failed size validation");
 }

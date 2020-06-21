@@ -1,6 +1,7 @@
 #include "TES3Fader.h"
 
 #include "TES3Util.h"
+#include "LuaUtil.h"
 
 #include "TES3WorldController.h"
 
@@ -70,5 +71,41 @@ namespace TES3 {
 	const auto TES3_Fader_setTexture = reinterpret_cast<void(__thiscall*)(Fader*, const char*)>(0x40A3E0);
 	void Fader::setTexture(const char* path) {
 		TES3_Fader_setTexture(this, path);
+	}
+
+	void Fader::setActive(bool value) {
+		if (value) {
+			activate();
+		}
+		else {
+			deactivate();
+		}
+	}
+
+	void Fader::fadeIn_lua(sol::optional<sol::table> params) {
+		float duration = mwse::lua::getOptionalParam(params, "duration", 1.0f);
+		fadeTo(1.0f, duration);
+	}
+
+	void Fader::fadeOut_lua(sol::optional<sol::table> params) {
+		float duration = mwse::lua::getOptionalParam(params, "duration", 1.0f);
+		fadeTo(0.0f, duration);
+	}
+
+	void Fader::fadeTo_lua(sol::optional<sol::table> params) {
+		float value = mwse::lua::getOptionalParam(params, "value", 1.0f);
+		float duration = mwse::lua::getOptionalParam(params, "duration", 1.0f);
+		fadeTo(value, duration);
+	}
+
+	bool Fader::setColor_lua(sol::table params) {
+		sol::optional <TES3::Vector3> color = mwse::lua::getOptionalParamVector3(params, "color");
+		if (!color) {
+			return false;
+		}
+
+		setColor(color.value(), mwse::lua::getOptionalParam<bool>(params, "flag", false));
+
+		return true;
 	}
 }

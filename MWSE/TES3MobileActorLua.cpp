@@ -2,7 +2,10 @@
 
 #include "LuaManager.h"
 
+#include "TES3Alchemy.h"
+#include "TES3Enchantment.h"
 #include "TES3MobileActor.h"
+#include "TES3Spell.h"
 #include "TES3SpellInstanceController.h"
 #include "TES3WorldController.h"
 
@@ -38,7 +41,6 @@ namespace mwse {
 
 			return std::make_tuple(index, sol::object(l, sol::in_place, itt));
 		}
-
 		void bindTES3MobileActor() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();

@@ -4,8 +4,8 @@
 namespace mwse {
 	namespace lua {
 		template <typename T>
-		void setUserdataForMobileProjectile(sol::usertype<T>& usertypeDefinition) {
-			setUserdataForMobileObject(usertypeDefinition);
+		void setUserdataForTES3MobileProjectile(sol::usertype<T>& usertypeDefinition) {
+			setUserdataForTES3MobileObject(usertypeDefinition);
 
 			// Basic property binding.
 			usertypeDefinition["expire"] = &TES3::MobileProjectile::flagExpire;

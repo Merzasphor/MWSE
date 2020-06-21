@@ -17,7 +17,7 @@ namespace mwse {
 		};
 
 		// Manager for timers. Responsible for all timer-related logic.
-		class TimerController {
+		class TimerController : public std::enable_shared_from_this<TimerController>{
 		public:
 			// Constructor with an initial clock of 0.
 			TimerController();
@@ -72,9 +72,9 @@ namespace mwse {
 		};
 
 		// A logicless structure containing timer data.
-		struct Timer {
+		struct Timer : public std::enable_shared_from_this<Timer> {
 			// A handle back to the associated controller.
-			TimerController * controller;
+			std::weak_ptr<TimerController> controller;
 
 			// The current state of the timer.
 			TimerState state;
@@ -90,6 +90,12 @@ namespace mwse {
 
 			// Callback for timer completion.
 			sol::protected_function callback;
+
+			bool pause();
+			bool resume();
+			bool reset();
+			bool cancel();
+			std::optional<double> getTimeLeft();
 		};
 
 		// Create all the necessary lua binding for the timer API and the above data types.

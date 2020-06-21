@@ -10,6 +10,7 @@
 #include "TES3GameSetting.h"
 #include "TES3MobileActor.h"
 #include "TES3NPC.h"
+#include "TES3Reference.h"
 #include "TES3Skill.h"
 
 namespace TES3 {
@@ -137,5 +138,39 @@ namespace TES3 {
 
 	void Armor::setDurability(int value) {
 		maxCondition = value;
+	}
+
+	void Armor::setIconPath(const char* path) {
+		if (strnlen_s(path, 32) >= 32) {
+			throw std::invalid_argument("Path must not be 32 or more characters.");
+		}
+		mwse::tes3::setDataString(&icon, path);
+	}
+
+	std::reference_wrapper<WearablePart[7]> Armor::getParts() {
+		return std::ref(parts);
+	}
+
+	float Armor::calculateArmorRating_lua(sol::object actor) {
+		// If we're explicitly given a mobile actor, use that.
+		if (actor.is<TES3::MobileActor>()) {
+			return calculateArmorRating(actor.as<TES3::MobileActor*>());
+		}
+
+		// If we're given a reference, try to get its mobile actor.
+		else if (actor.is<TES3::Reference>()) {
+			TES3::MobileActor* mobileActor = actor.as<TES3::Reference*>()->getAttachedMobileActor();
+			if (mobileActor) {
+				return calculateArmorRating(mobileActor);
+			}
+			else {
+				throw std::exception("Reference does not have an attached mobile actor. Is this an NPC or creature reference?");
+			}
+		}
+
+		// If we were given something else, tell them they goofed.
+		else {
+			throw std::exception("Invalid function call. Requires mobile actor or reference as a parameter.");
+		}
 	}
 }

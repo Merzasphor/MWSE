@@ -35,6 +35,15 @@ namespace TES3 {
 		DialogueInfo* getFilteredInfo(Actor* actor, Reference* reference, bool flag);
 
 		//
+		// Custom functions.
+		//
+
+		std::string toJson();
+
+		bool addToJournal_lua(sol::table params);
+		DialogueInfo* getDeepFilteredInfo_lua(sol::table params);
+
+		//
 		// Other related static functions.
 		//
 

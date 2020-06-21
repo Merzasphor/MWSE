@@ -114,11 +114,9 @@ namespace mwse {
 				usertypeDefinition["charge"] = &TES3::ItemData::charge;
 				usertypeDefinition["count"] = &TES3::ItemData::count;
 				usertypeDefinition["condition"] = &TES3::ItemData::condition;
+				usertypeDefinition["script"] = sol::readonly_property(&TES3::ItemData::script);
 				usertypeDefinition["scriptVariables"] = &TES3::ItemData::scriptData;
 				usertypeDefinition["timeLeft"] = &TES3::ItemData::timeLeft;
-
-				// Access to other objects that need to be packaged.
-				usertypeDefinition["script"] = sol::readonly_property([](TES3::ItemData& self) { return self.script; });
 
 				// Complex properties that need special handling.
 				usertypeDefinition["owner"] = sol::property(&getItemDataOwner, &setItemDataOwner);
@@ -129,7 +127,7 @@ namespace mwse {
 				usertypeDefinition["data"] = sol::property(&TES3::ItemData::getOrCreateLuaDataTable, &TES3::ItemData::setLuaDataTable);
 
 				// Add the ability to get the unique script context from this itemdata for ease of mwscript interaction.
-				usertypeDefinition["context"] = sol::readonly_property([](TES3::ItemData& self) { return std::shared_ptr<ScriptContext>(new ScriptContext(self.script, self.scriptData)); });
+				usertypeDefinition["context"] = sol::readonly_property(&TES3::ItemData::createContext);
 			}
 
 			// Binding for TES3::ItemStack
@@ -140,10 +138,8 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition["count"] = &TES3::ItemStack::count;
+				usertypeDefinition["object"] = sol::readonly_property(&TES3::ItemStack::object);
 				usertypeDefinition["variables"] = &TES3::ItemStack::variables;
-
-				// Access to other objects that need to be packaged.
-				usertypeDefinition["object"] = sol::readonly_property([](TES3::ItemStack& self) { return self.object; });
 			}
 
 			// Binding for TES3::EquipmentStack
@@ -154,10 +150,8 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition["itemData"] = &TES3::EquipmentStack::variables;
+				usertypeDefinition["object"] = sol::readonly_property(&TES3::EquipmentStack::object);
 				usertypeDefinition["variables"] = &TES3::EquipmentStack::variables;
-
-				// Access to other objects that need to be packaged.
-				usertypeDefinition["object"] = sol::readonly_property([](TES3::EquipmentStack& self) { return self.object; });
 			}
 
 			// Binding for TES3::Inventory
@@ -180,40 +174,13 @@ namespace mwse {
 				usertypeDefinition["iterator"] = sol::readonly_property(&TES3::Inventory::iterator);
 
 				// Basic function binding.
-				usertypeDefinition["addItem"] = [](TES3::Inventory& self, sol::table params) {
-					TES3::MobileActor * mact = getOptionalParamMobileActor(params, "mobile");
-					TES3::Item * item = getOptionalParamObject<TES3::Item>(params, "item");
-					int count = getOptionalParam<int>(params, "count", 1);
-					TES3::ItemData * itemData = getOptionalParam<TES3::ItemData*>(params, "itemData", nullptr);
-					self.addItem(mact, item, count, false, itemData ? &itemData : nullptr);
-				};
-				usertypeDefinition["contains"] = [](TES3::Inventory& self, sol::object itemOrItemId, sol::optional<TES3::ItemData*> itemData) {
-					if (itemOrItemId.is<TES3::Item*>()) {
-						auto item = itemOrItemId.as<TES3::Item*>();
-						return self.containsItem(item, itemData.value_or(nullptr));
-					}
-					else if (itemOrItemId.is<const char*>()) {
-						TES3::DataHandler * dataHandler = TES3::DataHandler::get();
-						if (dataHandler) {
-							auto itemId = itemOrItemId.as<const char*>();
-							auto item = dataHandler->nonDynamicData->resolveObjectByType<TES3::Item>(itemId);
-							return self.containsItem(item, itemData.value_or(nullptr));
-						}
-					}
-					return false;
-				};
+				usertypeDefinition["addItem"] = &TES3::Inventory::addItem_lua;
+				usertypeDefinition["contains"] = &TES3::Inventory::contains_lua;
 				usertypeDefinition["dropItem"] = &TES3::Inventory::dropItem;
 				usertypeDefinition["calculateWeight"] = &TES3::Inventory::calculateContainedWeight;
 				usertypeDefinition["findItemStack"] = &TES3::Inventory::findItemStack;
-				usertypeDefinition["removeItem"] = [](TES3::Inventory& self, sol::table params) {
-					TES3::MobileActor * mact = getOptionalParamMobileActor(params, "mobile");
-					TES3::Item * item = getOptionalParamObject<TES3::Item>(params, "item");
-					int count = getOptionalParam<int>(params, "count", 1);
-					TES3::ItemData * itemData = getOptionalParam<TES3::ItemData*>(params, "itemData", nullptr);
-					bool deleteItemData = getOptionalParam<bool>(params, "deleteItemData", false);
-					self.removeItemWithData(mact, item, itemData, count, deleteItemData);
-				};
-				usertypeDefinition["resolveLeveledItems"] = [](TES3::Inventory& self, sol::optional<TES3::MobileActor*> actor) { self.resolveLeveledLists(actor.value_or(nullptr)); };
+				usertypeDefinition["removeItem"] = &TES3::Inventory::removeItem_lua;
+				usertypeDefinition["resolveLeveledItems"] = &TES3::Inventory::resolveLeveledLists_lua;
 			}
 		}
 	}

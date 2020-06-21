@@ -80,6 +80,8 @@ namespace TES3 {
 		int getBloodType();
 		void setBloodType(int value);
 
+		void onCloseInventory_lua(sol::optional<TES3::Reference*> reference, sol::optional<int> unknown);
+
 	};
 	static_assert(sizeof(Actor) == 0x6C, "TES3::Actor failed size validation");
 }

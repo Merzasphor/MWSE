@@ -8,6 +8,7 @@
 #include "NIDefines.h"
 #include "NIRTTI.h"
 #include "NITriShape.h"
+#include "NiTriShapeData.h"
 
 namespace mwse {
 	namespace lua {
@@ -29,21 +30,9 @@ namespace mwse {
 				// Basic property binding.
 				usertypeDefinition["data"] = sol::property(&NI::TriShape::getModelData, &NI::TriShape::setModelData);
 
-				// Get vertex list as a self-contained collection.
-				usertypeDefinition["vertices"] = sol::readonly_property(
-					[](NI::TriShape& self) {
-						auto data = self.getModelData();
-						return nonstd::span(data->vertex, data->vertexCount);
-					}
-				);
-
-				// Get normal list as a self-contained collection.
-				usertypeDefinition["normals"] = sol::readonly_property(
-					[](NI::TriShape& self) {
-						auto data = self.getModelData();
-						return nonstd::span(data->normal, data->vertexCount);
-					}
-				);
+				// Lazy access to geometry data. Don't encourage this.
+				usertypeDefinition["normals"] = sol::readonly_property(&NI::TriShape::getNormals);
+				usertypeDefinition["vertices"] = sol::readonly_property(&NI::TriShape::getVertices);
 			}
 		}
 	}

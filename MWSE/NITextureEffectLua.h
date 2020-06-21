@@ -1,20 +1,16 @@
 #pragma once
 
-#include "LuaUtil.h"
+#include "NIDynamicEffectLua.h"
 
 #include "NITextureEffect.h"
 
-#include "NIObjectLua.h"
-#include "NIDynamicEffectLua.h"
-
 namespace mwse {
 	namespace lua {
-		// Speed-optimized binding for NI::TextureEffect.
 		template <typename T>
-		void setUserdataForNITextureEffect(T& usertypeDefinition) {
+		void setUserdataForNITextureEffect(sol::usertype<T>& usertypeDefinition) {
 			setUserdataForNIDynamicEffect(usertypeDefinition);
 
-			// Property binding.
+			// Basic property binding. 
 			usertypeDefinition["sourceTexture"] = &NI::TextureEffect::sourceTexture;
 		}
 

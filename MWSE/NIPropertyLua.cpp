@@ -10,14 +10,6 @@
 
 namespace mwse {
 	namespace lua {
-		template <typename T>
-		void setUserdataForNIProperty(T& usertypeDefinition) {
-			setUserdataForNIObjectNET(usertypeDefinition);
-
-			// Basic property binding.
-			usertypeDefinition["type"] = &NI::Property::getType;
-		}
-
 		void bindNIProperties() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -59,7 +51,7 @@ namespace mwse {
 				setUserdataForNIProperty(usertypeDefinition);
 
 				// Basic property binding.
-				usertypeDefinition["color"] = sol::readonly_property([](NI::FogProperty& self) { return std::ref(self.color); });
+				usertypeDefinition["color"] = sol::readonly_property(&NI::FogProperty::getColor);
 				usertypeDefinition["density"] = &NI::FogProperty::density;
 			}
 
@@ -74,30 +66,15 @@ namespace mwse {
 				setUserdataForNIProperty(usertypeDefinition);
 
 				// Basic property binding.
-				usertypeDefinition["alpha"] = sol::property(
-					[](NI::MaterialProperty& self) { return self.alpha; },
-					[](NI::MaterialProperty& self, float alpha) { self.alpha = alpha; ++self.revisionID; }
-				);
-				usertypeDefinition["ambient"] = sol::property(
-					[](NI::MaterialProperty& self) { return self.ambient; },
-					[](NI::MaterialProperty& self, const NI::Color& ambient) { self.ambient = ambient; ++self.revisionID; }
-				);
-				usertypeDefinition["diffuse"] = sol::property(
-					[](NI::MaterialProperty& self) { return self.diffuse; },
-					[](NI::MaterialProperty& self, const NI::Color& diffuse) { self.diffuse = diffuse; ++self.revisionID; }
-				);
-				usertypeDefinition["emissive"] = sol::property(
-					[](NI::MaterialProperty& self) { return self.emissive; },
-					[](NI::MaterialProperty& self, const NI::Color& emissive) { self.emissive = emissive; ++self.revisionID; }
-				);
-				usertypeDefinition["shininess"] = sol::property(
-					[](NI::MaterialProperty& self) { return self.shininess; },
-					[](NI::MaterialProperty& self, float shininess) { self.shininess = shininess; ++self.revisionID; }
-				);
-				usertypeDefinition["specular"] = sol::property(
-					[](NI::MaterialProperty& self) { return self.specular; },
-					[](NI::MaterialProperty& self, const NI::Color& specular) { self.specular = specular; ++self.revisionID; }
-				);
+				usertypeDefinition["alpha"] = sol::property(&NI::MaterialProperty::getAlpha, &NI::MaterialProperty::setAlpha);
+				usertypeDefinition["ambient"] = sol::property(&NI::MaterialProperty::getAmbient, &NI::MaterialProperty::setAmbient);
+				usertypeDefinition["diffuse"] = sol::property(&NI::MaterialProperty::getDiffuse, &NI::MaterialProperty::setDiffuse);
+				usertypeDefinition["emissive"] = sol::property(&NI::MaterialProperty::getEmissive, &NI::MaterialProperty::setEmissive);
+				usertypeDefinition["shininess"] = sol::property(&NI::MaterialProperty::getShininess, &NI::MaterialProperty::setShininess);
+				usertypeDefinition["specular"] = sol::property(&NI::MaterialProperty::getSpecular, &NI::MaterialProperty::setSpecular);
+
+				// Basic function binding.
+				usertypeDefinition["incrementRevisionId"] = &NI::MaterialProperty::incrementRevisionId;
 			}
 
 			// Binding for NI::StencilProperty.
@@ -133,10 +110,7 @@ namespace mwse {
 				usertypeDefinition["texCoordSet"] = &NI::TexturingProperty::Map::texCoordSet;
 
 				// Properties that need extra work before returning.
-				usertypeDefinition["texture"] = sol::property(
-					[](NI::TexturingProperty::Map& self) { return self.texture; },
-					[](NI::TexturingProperty::Map& self, NI::Texture * texture) { self.texture = texture; }
-				);
+				usertypeDefinition["texture"] = &NI::TexturingProperty::Map::texture;
 			}
 
 			// Binding for NI::TexturingProperty.

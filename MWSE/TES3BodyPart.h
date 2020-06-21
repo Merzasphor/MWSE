@@ -29,6 +29,12 @@ namespace TES3 {
 		bool getFlag(BodyPartFlag::Flag flag);
 		void setFlag(BodyPartFlag::Flag flag, bool set);
 
+		bool getIsFemale();
+		void setIsFemale(bool value);
+
+		bool getIsPlayable();
+		void setIsPlayable(bool value);
+
 	};
 	static_assert(sizeof(BodyPart) == 0x40, "TES3::BodyPart failed size validation");
 }

@@ -131,6 +131,10 @@ namespace TES3 {
 		// Custom functions.
 		//
 
+		std::reference_wrapper<Skill[27]> getSkills();
+
+		sol::table getMagicEffects_lua(sol::this_state ts);
+
 		// Wrapper around resolveObject that enforces type.
 		template <typename T>
 		T * resolveObjectByType(const char* id, ObjectType::ObjectType type = ObjectType::Invalid) {
@@ -303,6 +307,12 @@ namespace TES3 {
 		void setDynamicLightingForReference(Reference* reference);
 
 		void updateCollisionGroupsForActiveCells(bool unknown = true);
+
+		//
+		// Custom functions.
+		//
+
+		std::reference_wrapper<ExteriorCellData* [9]> getExteriorCellData_lua();
 
 	};
 	static_assert(sizeof(DataHandler) == 0xB558, "TES3::DataHandler failed size validation");

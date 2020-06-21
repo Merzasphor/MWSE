@@ -2,11 +2,13 @@
 
 #include "TES3ObjectLua.h"
 
+#include "TES3Actor.h"
+
 namespace mwse {
 	namespace lua {
 		template <typename T>
-		void setUserdataForActor(T& usertypeDefinition) {
-			setUserdataForPhysicalObject(usertypeDefinition);
+		void setUserdataForTES3Actor(sol::usertype<T>& usertypeDefinition) {
+			setUserdataForTES3PhysicalObject(usertypeDefinition);
 
 			// Basic property binding.
 			usertypeDefinition["actorFlags"] = sol::readonly_property(&TES3::Actor::actorFlags);
@@ -22,9 +24,7 @@ namespace mwse {
 			usertypeDefinition["tradesItemType"] = &TES3::Actor::tradesItemType;
 
 			// Function exposing.
-			usertypeDefinition["onInventoryClose"] = [](TES3::Actor& self, sol::optional<TES3::Reference*> reference, sol::optional<int> unknown) {
-				self.onCloseInventory(reference.value_or(nullptr), unknown.value_or(0));
-			};
+			usertypeDefinition["onInventoryClose"] = &TES3::Actor::onCloseInventory_lua;
 		}
 	}
 }

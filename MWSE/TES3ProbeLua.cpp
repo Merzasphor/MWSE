@@ -14,12 +14,12 @@ namespace mwse {
 			sol::state& state = stateHandle.state;
 
 			// Start our usertype. We must finish this with state.set_usertype.
-			auto usertypeDefinition = state.new_usertype<TES3::Probe>("tes3lockpick");
+			auto usertypeDefinition = state.new_usertype<TES3::Probe>("tes3probe");
 			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition[sol::base_classes] = sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>();
-			setUserdataForPhysicalObject(usertypeDefinition);
+			setUserdataForTES3PhysicalObject(usertypeDefinition);
 
 			// Allow object to be converted to strings using their object ID.
 			usertypeDefinition[sol::meta_function::to_string] = &TES3::Probe::getObjectID;

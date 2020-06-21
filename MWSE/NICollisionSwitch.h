@@ -6,20 +6,14 @@
 
 namespace NI {
 	struct CollisionSwitch : Node {
-		static const unsigned short flagCollision = 0x20;
+		static constexpr unsigned short flagCollision = 0x20;
 
-		CollisionSwitch() {
-			vTable.asNode = reinterpret_cast<NI::Node_vTable*>(0x74F418);
-			BITMASK_SET_ON(flags, flagCollision);
-		}
+		CollisionSwitch();
 
-		bool getCollisionActive() {
-			return BITMASK_TEST(flags, flagCollision);
-		}
+		bool getCollisionActive();
+		void setCollisionActive(bool active);
 
-		void setCollisionActive(bool active) {
-			BITMASK_SET(flags, flagCollision, active);
-		}
+		Pointer<CollisionSwitch> create();
 	};
 	static_assert(sizeof(CollisionSwitch) == 0xB0, "NI::CollisionSwitch failed size validation");
 }

@@ -30,7 +30,7 @@ namespace mwse {
 				usertypeDefinition["getActivePackage"] = &TES3::AIPlanner::getActivePackage;
 
 				// Indirect bindings to unions and arrays.
-				usertypeDefinition["packages"] = sol::readonly_property([](TES3::AIPlanner& self) { return std::ref(self.packages); });
+				usertypeDefinition["packages"] = sol::readonly_property(&TES3::AIPlanner::getPackages);
 			}
 
 			// Binding for TES3::AIPackage

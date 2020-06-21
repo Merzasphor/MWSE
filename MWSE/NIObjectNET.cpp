@@ -19,6 +19,10 @@ namespace NI {
 		NI_ObjectNET_removeAllControllers(this);
 	}
 
+	const char* ObjectNET::getName() const {
+		return this->name;
+	}
+
 	void ObjectNET::setName(const char* name) {
 		NI_ObjectNET_setName(this, name);
 	}

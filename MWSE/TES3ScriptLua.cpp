@@ -173,7 +173,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
-				setUserdataForBaseObject(usertypeDefinition);
+				setUserdataForTES3BaseObject(usertypeDefinition);
 
 				// Access to other objects that need to be packaged.
 				usertypeDefinition["script"] = sol::readonly_property([](TES3::StartScript& self) { return self.script; });
@@ -187,7 +187,7 @@ namespace mwse {
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
-				setUserdataForBaseObject(usertypeDefinition);
+				setUserdataForTES3BaseObject(usertypeDefinition);
 
 				// Basic property binding.
 				usertypeDefinition["shortVariableCount"] = sol::readonly_property(&TES3::Script::shortCount);

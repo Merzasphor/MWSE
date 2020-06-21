@@ -38,7 +38,7 @@ namespace TES3 {
 		Sound * sound; // 0x70
 
 		//
-		// Functions to get/set flags.
+		// Custom functions.
 		//
 
 		bool getIsDynamic();
@@ -67,6 +67,12 @@ namespace TES3 {
 
 		bool getPulsesSlowly();
 		void setPulsesSlowly(bool);
+
+		void setIconPath(const char* path);
+
+		std::reference_wrapper<unsigned char[4]> getColor();
+
+		sol::optional<float> getTimeLeft_lua(sol::object object) const;
 
 	};
 	static_assert(sizeof(Light) == 0x74, "TES3::Light failed size validation");

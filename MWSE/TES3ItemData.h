@@ -2,6 +2,9 @@
 
 #include "TES3Defines.h"
 
+namespace mwse::lua {
+	class ScriptContext;
+}
 
 namespace TES3 {
 	struct ItemDataVanilla {
@@ -73,6 +76,8 @@ namespace TES3 {
 
 		void setLuaDataTable(sol::object data);
 		sol::table getOrCreateLuaDataTable();
+
+		std::shared_ptr<mwse::lua::ScriptContext> createContext();
 
 	};
 }

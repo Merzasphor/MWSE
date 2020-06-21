@@ -79,6 +79,8 @@ namespace TES3 {
 		double getMusicPosition();
 		void setMusicPosition(double position);
 
+		void changeMusicTrack_lua(const char* filename, sol::optional<int> crossfade, sol::optional<float> volume);
+
 		//
 		// Wrapper functions to expose volumes in a consistent format.
 		//

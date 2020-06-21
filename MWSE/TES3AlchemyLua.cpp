@@ -153,7 +153,7 @@ namespace mwse {
 
 			// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 			usertypeDefinition[sol::base_classes] = sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>();
-			setUserdataForPhysicalObject(usertypeDefinition);
+			setUserdataForTES3PhysicalObject(usertypeDefinition);
 
 			// Basic property binding.
 			usertypeDefinition["flags"] = &TES3::Alchemy::flags;
@@ -161,7 +161,7 @@ namespace mwse {
 			usertypeDefinition["value"] = &TES3::Alchemy::value;
 
 			// Indirect bindings to unions and arrays.
-			usertypeDefinition["effects"] = sol::readonly_property([](TES3::Alchemy& self) { return std::ref(self.effects); });
+			usertypeDefinition["effects"] = sol::readonly_property(&TES3::Alchemy::getEffects);
 
 			// Basic function binding.
 			usertypeDefinition["create"] = &createAlchemy;
@@ -170,10 +170,7 @@ namespace mwse {
 
 			// Functions exposed as properties.
 			usertypeDefinition["autoCalc"] = sol::property(&TES3::Alchemy::getAutoCalc, &TES3::Alchemy::setAutoCalc);
-			usertypeDefinition["icon"] = sol::property(
-				&TES3::Alchemy::getIconPath,
-				[](TES3::Alchemy& self, const char* value) { tes3::setDataString(&self.icon, value); }
-			);
+			usertypeDefinition["icon"] = sol::property(&TES3::Alchemy::getIconPath, &TES3::Alchemy::setIconPath);
 			usertypeDefinition["mesh"] = sol::property(&TES3::Alchemy::getModelPath, &TES3::Alchemy::setModelPath);
 			usertypeDefinition["name"] = sol::property(&TES3::Alchemy::getName, &TES3::Alchemy::setName);
 			usertypeDefinition["script"] = sol::property(&TES3::Alchemy::getScript);

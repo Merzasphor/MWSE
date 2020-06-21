@@ -19,6 +19,13 @@ namespace TES3 {
 		//
 
 		AIPackage * getActivePackage();
+
+		//
+		// Custom functions.
+		//
+
+		std::reference_wrapper<AIPackage* [32]> getPackages();
+
 	};
 	static_assert(sizeof(AIPlanner) == 0x98, "TES3::AIPlanner failed size validation");
 }

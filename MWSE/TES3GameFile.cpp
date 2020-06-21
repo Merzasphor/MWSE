@@ -99,4 +99,68 @@ namespace TES3 {
 		time = (uint64_t(x->ftLastWriteTime.dwHighDateTime) << 32) + uint64_t(x->ftLastWriteTime.dwLowDateTime);
 		return time;
 	}
+
+	const char* GameFile::getFilename() const {
+		return filename;
+	}
+
+	const char* GameFile::getPath() const {
+		return path;
+	}
+
+	const char* GameFile::getAuthor() const {
+		return author;
+	}
+
+	const char* GameFile::getDescription() const {
+		return description;
+	}
+
+	float GameFile::getCurrentHealth() const {
+		return gmdt.currentHealth;
+	}
+
+	float GameFile::getMaxHealth() const {
+		return gmdt.maxHealth;
+	}
+
+	float GameFile::getGameHour() const {
+		return gmdt.gameHour;
+	}
+
+	float GameFile::getDay() const {
+		return gmdt.day;
+	}
+
+	float GameFile::getMonth() const {
+		return gmdt.month;
+	}
+
+	float GameFile::getYear() const {
+		return gmdt.year;
+	}
+
+	const char* GameFile::getCellName() const {
+		return gmdt.cellName;
+	}
+
+	float GameFile::getDaysPassed() const {
+		return gmdt.daysPassed;
+	}
+
+	const char* GameFile::getPlayerName() const {
+		return gmdt.playerName;
+	}
+
+	sol::table GameFile::getMasters_lua(sol::this_state ts) const {
+		sol::state_view state = ts;
+
+		sol::table t = state.create_table();
+		TES3::GameFile* master = arrayMasters;
+		for (int i = 1, count = masterNames->size; i <= count; ++i, ++master) {
+			t[i] = master;
+		}
+		return t;
+	}
+
 }

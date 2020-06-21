@@ -39,5 +39,12 @@ namespace TES3 {
 
 		return reinterpret_cast<char*(__thiscall *)(Book*)>(TES3_Book_loadBookText)(this);
 	}
+
+	void Book::setIconPath(const char* path) {
+		if (strnlen_s(path, 32) >= 32) {
+			throw std::invalid_argument("Path must not be 32 or more characters.");
+		}
+		mwse::tes3::setDataString(&icon, path);
+	}
 }
 

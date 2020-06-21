@@ -40,6 +40,16 @@ namespace TES3 {
 
 		int getBaseDisposition(bool);
 		bool isGuard();
+
+		bool getIsFemale() const;
+		void setIsFemale(bool value);
+		bool getIsAutoCalc() const;
+		void setIsAutoCalc(bool value);
+		bool getIsEssential_legacy() const;
+		void setIsEssential_legacy(bool value);
+		bool getRespawns_legacy() const;
+		void setRespawns_legacy(bool value);
+
 	};
 
 	struct NPC : NPCBase {
@@ -68,6 +78,13 @@ namespace TES3 {
 		void * aiPackageList; // 0xDC
 		AIConfig aiConfig; // 0xE0
 
+		//
+		// Custom functions.
+		//
+
+		std::reference_wrapper<unsigned char[8]> getAttributes();
+		std::reference_wrapper<unsigned char[27]> getSkills();
+
 	};
 	static_assert(sizeof(NPC) == 0xF0, "TES3::NPC failed size validation");
 
@@ -95,6 +112,18 @@ namespace TES3 {
 		void setBaseDisposition(short);
 
 		void setFactionRank(unsigned char);
+
+		int getDisposition_lua();
+
+		std::reference_wrapper<unsigned char[8]> getAttributes();
+		std::reference_wrapper<unsigned char[27]> getSkills();
+
+		Class* getBaseClass();
+		Faction* getBaseFaction();
+		Race* getBaseRace();
+		Script* getBaseScript();
+		SpellList* getBaseSpellList();
+
 	};
 	static_assert(sizeof(NPCInstance) == 0x78, "TES3::NPCInstance failed size validation");
 }
