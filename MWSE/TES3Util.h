@@ -46,9 +46,9 @@ namespace mwse {
 		int getAttributeNameGMST(int);
 		int getCastRangeNameGMST(int);
 
-		TES3::SoulGemData * addCustomSoulGem(TES3::Misc * item);
-		TES3::SoulGemData * getSoulGemData(TES3::Misc * item);
-		bool isSoulGem(TES3::Object* objectOrReference);
+		TES3::SoulGemData * addCustomSoulGem(const TES3::Misc * item);
+		TES3::SoulGemData * getSoulGemData(const TES3::Misc * item);
+		bool isSoulGem(const TES3::Object* objectOrReference);
 
 		TES3::ArmorSlotData * getArmorSlotData(int slot);
 		void setArmorSlotData(TES3::ArmorSlotData * data);

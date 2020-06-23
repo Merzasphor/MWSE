@@ -26,14 +26,10 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Allow object to be converted to strings using their object ID.
-				usertypeDefinition[sol::meta_function::to_string] = [](TES3::SoulGemData& self) { self.id; };
+				usertypeDefinition[sol::meta_function::to_string] = &TES3::SoulGemData::toString;
 
 				// Allow object to be serialized to json.
-				usertypeDefinition["__tojson"] = [](TES3::SoulGemData& self, sol::table state) {
-					std::ostringstream ss;
-					ss << "\"tes3soulGemData:" << self.id << "\"";
-					return ss.str();
-				};
+				usertypeDefinition["__tojson"] = &TES3::SoulGemData::toJson;
 
 				// Basic property binding.
 				usertypeDefinition["id"] = sol::readonly_property(&TES3::SoulGemData::id);
@@ -42,9 +38,7 @@ namespace mwse {
 				usertypeDefinition["texture"] = sol::readonly_property(&TES3::SoulGemData::texture);
 				usertypeDefinition["value"] = &TES3::SoulGemData::value;
 				usertypeDefinition["weight"] = &TES3::SoulGemData::weight;
-
-				// Data that needs to be packaged.
-				usertypeDefinition["item"] = sol::readonly_property([](TES3::SoulGemData& self) { self.item; });
+				usertypeDefinition["item"] = sol::readonly_property(&TES3::SoulGemData::item);
 
 				// TODO: Deprecated. Remove before 2.1-stable.
 				usertypeDefinition["model"] = sol::readonly_property(&TES3::SoulGemData::mesh);
@@ -60,28 +54,13 @@ namespace mwse {
 				setUserdataForTES3PhysicalObject(usertypeDefinition);
 
 				// Basic property binding.
+				usertypeDefinition["script"] = sol::readonly_property(&TES3::Misc::getScript);
 				usertypeDefinition["value"] = &TES3::Misc::value;
 				usertypeDefinition["weight"] = &TES3::Misc::weight;
 
-				// Access to other objects that need to be packaged.
-				usertypeDefinition["script"] = sol::readonly_property([](TES3::Misc& self) { return self.getScript(); });
-
 				// Functions exposed as properties.
-				usertypeDefinition["icon"] = sol::property(
-					&TES3::Misc::getIconPath,
-					[](TES3::Misc& self, const char* value) { if (strlen(value) < 32) tes3::setDataString(&self.icon, value); }
-				);
-				usertypeDefinition["isKey"] = sol::property(
-					[](TES3::Misc& self) { return bool(self.flags & 1); },
-					[](TES3::Misc& self, bool value) {
-					if (value) {
-						self.flags |= 1;
-					}
-					else {
-						self.flags &= ~1;
-					}
-				}
-				);
+				usertypeDefinition["icon"] = sol::property(&TES3::Misc::getIconPath, &TES3::Misc::setIconPath);
+				usertypeDefinition["isKey"] = sol::property(&TES3::Misc::getIsKey, &TES3::Misc::setIsKey);
 				usertypeDefinition["isSoulGem"] = sol::readonly_property(&TES3::Misc::isSoulGem);
 				usertypeDefinition["soulGemData"] = sol::readonly_property(&TES3::Misc::getSoulGemData);
 

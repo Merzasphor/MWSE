@@ -25,15 +25,13 @@ namespace mwse {
 			usertypeDefinition["element"] = sol::readonly_property(&TES3::UI::InventoryTile::element);
 			usertypeDefinition["flags"] = sol::readonly_property(&TES3::UI::InventoryTile::flags);
 			usertypeDefinition["isBoundItem"] = sol::readonly_property(&TES3::UI::InventoryTile::isBoundItem);
+			usertypeDefinition["item"] = sol::readonly_property(&TES3::UI::InventoryTile::item);
 			usertypeDefinition["itemData"] = sol::readonly_property(&TES3::UI::InventoryTile::itemData);
 			usertypeDefinition["type"] = sol::readonly_property(&TES3::UI::InventoryTile::tileType);
 
-			// Access to other objects that need to be packaged.
-			usertypeDefinition["item"] = sol::readonly_property([](TES3::UI::InventoryTile& self) { return self.item; });
-
 			// Access into flags.
-			usertypeDefinition["isBartered"] = sol::readonly_property([](TES3::UI::InventoryTile& self) { return self.getFlag(TES3::UI::InventoryTileFlag::Bartered); });
-			usertypeDefinition["isEquipped"] = sol::readonly_property([](TES3::UI::InventoryTile& self) { return self.getFlag(TES3::UI::InventoryTileFlag::Equipped); });
+			usertypeDefinition["isBartered"] = sol::property(&TES3::UI::InventoryTile::getIsBartered, &TES3::UI::InventoryTile::setIsBartered);
+			usertypeDefinition["isEquipped"] = sol::property(&TES3::UI::InventoryTile::getIsEquipped, &TES3::UI::InventoryTile::setIsEquipped);
 		}
 	}
 }

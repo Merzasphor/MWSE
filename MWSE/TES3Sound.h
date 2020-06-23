@@ -65,8 +65,13 @@ namespace TES3 {
 		// Custom functions.
 		//
 
+		const char* getFilename() const;
+
 		float getVolume();
 		void setVolume(float volume);
+
+		std::string toJson() const;
+		bool play_lua(sol::optional<sol::table> params);
 
 	};
 	static_assert(sizeof(Sound) == 0x58, "TES3::Sound failed size validation");

@@ -82,54 +82,6 @@ namespace mwse {
 		//
 		//
 
-		sol::object getLocalVarData(TES3::Script* script, const char* name, bool useLocals = true) {
-			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-			sol::state& state = stateHandle.state;
-
-			unsigned int index = 0;
-			char type = script->getLocalVarIndexAndType(name, &index);
-			switch (type) {
-			case 's':
-				return state.create_table_with("type", type, "index", index, "value", script->getShortValue(index, useLocals));
-			case 'l':
-				return state.create_table_with("type", type, "index", index, "value", script->getLongValue(index, useLocals));
-			case 'f':
-				return state.create_table_with("type", type, "index", index, "value", script->getFloatValue(index, useLocals));
-			}
-			return sol::nil;
-		}
-
-		sol::object getLocalVarData(TES3::Script* script, bool useLocals = true) {
-			if (script->shortCount == 0 && script->longCount == 0 && script->floatCount == 0) {
-				return sol::nil;
-			}
-
-			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-			sol::state& state = stateHandle.state;
-
-			sol::table results = state.create_table();
-
-			// Append any short variables.
-			for (int i = 0; i < script->shortCount; i++) {
-				const char* varName = script->shortVarNamePointers[i];
-				results[varName] = getLocalVarData(script, varName, useLocals);
-			}
-
-			// Append any long variables.
-			for (int i = 0; i < script->longCount; i++) {
-				const char* varName = script->longVarNamePointers[i];
-				results[varName] = getLocalVarData(script, varName, useLocals);
-			}
-
-			// Append any float variables.
-			for (int i = 0; i < script->floatCount; i++) {
-				const char* varName = script->floatVarNamePointers[i];
-				results[varName] = getLocalVarData(script, varName, useLocals);
-			}
-
-			return results;
-		}
-
 		void bindTES3Script() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -155,14 +107,11 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["reference"] = sol::readonly_property([](TES3::GlobalScript& self) { return self.reference; });
-				usertypeDefinition["script"] = sol::readonly_property([](TES3::GlobalScript& self) { return self.script; });
+				usertypeDefinition["reference"] = sol::readonly_property(&TES3::GlobalScript::reference);
+				usertypeDefinition["script"] = sol::readonly_property(&TES3::GlobalScript::script);
 
 				// Allow a special context to be exposed for reading variables.
-				usertypeDefinition["context"] = sol::readonly_property([](TES3::GlobalScript& self) {
-					TES3::ItemData * itemData = self.reference->getAttachedItemData();
-					return std::shared_ptr<ScriptContext>(new ScriptContext(self.script, itemData ? itemData->scriptData : NULL));
-				});
+				usertypeDefinition["context"] = sol::readonly_property(&TES3::GlobalScript::createContext);
 			}
 
 			// Binding for TES3::StartScript
@@ -175,8 +124,8 @@ namespace mwse {
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
 				setUserdataForTES3BaseObject(usertypeDefinition);
 
-				// Access to other objects that need to be packaged.
-				usertypeDefinition["script"] = sol::readonly_property([](TES3::StartScript& self) { return self.script; });
+				// Basic property binding.
+				usertypeDefinition["script"] = sol::readonly_property(&TES3::StartScript::script);
 			}
 
 			// Binding for TES3::Script.
@@ -195,10 +144,10 @@ namespace mwse {
 				usertypeDefinition["floatVariableCount"] = sol::readonly_property(&TES3::Script::floatCount);
 
 				// Basic function binding.
-				usertypeDefinition["getVariableData"] = [](TES3::Script& self, sol::optional<bool> useLocals) { return getLocalVarData(&self, useLocals.value_or(true)); };
+				usertypeDefinition["getVariableData"] = &TES3::Script::getLocalVars_lua;
 
 				// Allow a special context to be exposed for reading variables.
-				usertypeDefinition["context"] = sol::readonly_property([](TES3::Script& self) { return std::shared_ptr<ScriptContext>(new ScriptContext(&self, &self.varValues)); });
+				usertypeDefinition["context"] = sol::readonly_property(&TES3::Script::createContext);
 			}
 		}
 	}

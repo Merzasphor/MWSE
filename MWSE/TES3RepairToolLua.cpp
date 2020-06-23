@@ -24,17 +24,12 @@ namespace mwse {
 			// Basic property binding.
 			usertypeDefinition["maxCondition"] = &TES3::RepairTool::maxCondition;
 			usertypeDefinition["quality"] = &TES3::RepairTool::quality;
+			usertypeDefinition["script"] = sol::readonly_property(&TES3::RepairTool::getScript);
 			usertypeDefinition["value"] = &TES3::RepairTool::value;
 			usertypeDefinition["weight"] = &TES3::RepairTool::weight;
 
-			// Access to other objects that need to be packaged.
-			usertypeDefinition["script"] = sol::readonly_property([](TES3::RepairTool& self) { return self.getScript(); });
-
 			// Functions exposed as properties.
-			usertypeDefinition["icon"] = sol::property(
-				&TES3::RepairTool::getIconPath,
-				[](TES3::RepairTool& self, const char* value) { if (strlen(value) < 32) strcpy(self.icon, value); }
-			);
+			usertypeDefinition["icon"] = sol::property(&TES3::RepairTool::getIconPath, &TES3::RepairTool::setIconPath);
 			usertypeDefinition["mesh"] = sol::property(&TES3::RepairTool::getModelPath, &TES3::RepairTool::setModelPath);
 			usertypeDefinition["name"] = sol::property(&TES3::RepairTool::getName, &TES3::RepairTool::setName);
 

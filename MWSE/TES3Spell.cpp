@@ -2,8 +2,11 @@
 #include "LuaManager.h"
 #include "LuaSpellCastEvent.h"
 
+#include "TES3MobileActor.h"
 #include "TES3Reference.h"
 #include "TES3Spell.h"
+
+#include "LuaUtil.h"
 #include "TES3Util.h"
 
 namespace TES3 {
@@ -57,4 +60,22 @@ namespace TES3 {
 		}
 		return -1;
 	}
+
+	float Spell::calculateCastChance_lua(sol::table params) {
+		bool checkMagicka = mwse::lua::getOptionalParam<bool>(params, "checkMagicka", true);
+		sol::object caster = params["caster"];
+		if (caster.is<TES3::Reference>()) {
+			return calculateCastChance(caster.as<TES3::Reference*>(), checkMagicka);
+		}
+		else if (caster.is<TES3::MobileActor>()) {
+			return calculateCastChance(caster.as<TES3::MobileActor*>(), checkMagicka);
+		}
+
+		return 0.0f;
+	}
+
+	std::reference_wrapper<Effect[8]> Spell::getEffects() {
+		return std::ref(effects);
+	}
+
 }

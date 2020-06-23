@@ -635,11 +635,14 @@
     <ClCompile Include="TES3MobControllerLua.cpp" />
     <ClCompile Include="TES3MobileActorLua.cpp" />
     <ClCompile Include="TES3MobileSpellProjectile.cpp" />
+    <ClCompile Include="TES3Moon.cpp" />
     <ClCompile Include="TES3PlayerAnimationData.cpp" />
     <ClCompile Include="TES3Quest.cpp" />
     <ClCompile Include="TES3Race.cpp" />
     <ClCompile Include="TES3ReferenceList.cpp" />
+    <ClCompile Include="TES3RepairTool.cpp" />
     <ClCompile Include="TES3Skill.cpp" />
+    <ClCompile Include="TES3SoulGemData.cpp" />
     <ClCompile Include="TES3SoundGenerator.cpp" />
     <ClCompile Include="TES3SpellInstanceController.cpp" />
     <ClCompile Include="TES3Static.cpp" />
@@ -738,6 +741,7 @@
     <ClCompile Include="TES3UIManagerLua.cpp" />
     <ClCompile Include="TES3UIMenuController.cpp" />
     <ClCompile Include="TES3UIMenuControllerLua.cpp" />
+    <ClCompile Include="TES3UITree.cpp" />
     <ClCompile Include="TES3UIWidgets.cpp" />
     <ClCompile Include="TES3UIWidgetsLua.cpp" />
     <ClCompile Include="TES3UtilLua.cpp" />

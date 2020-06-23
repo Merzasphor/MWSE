@@ -5,8 +5,8 @@ namespace TES3 {
 		return id;
 	}
 
-	const auto TES3_Race_getBodyPart = reinterpret_cast<BodyPart * (__thiscall*)(Race*, int, int, Race::PartIndex)>(0x4A7790);
-	BodyPart* Race::getBodyPart(bool isFemale, bool isVampire, PartIndex index) {
+	const auto TES3_Race_getBodyPart = reinterpret_cast<BodyPart * (__thiscall*)(const Race*, int, int, Race::PartIndex)>(0x4A7790);
+	BodyPart* Race::getBodyPart(bool isFemale, bool isVampire, PartIndex index) const {
 		return TES3_Race_getBodyPart(this, isFemale, isVampire, index);
 	}
 
@@ -19,4 +19,37 @@ namespace TES3 {
 	void Race::freeDescription() {
 		return TES3_Race_freeDescription(this);
 	}
+
+	const char* Race::getName() const {
+		return name;
+	}
+
+	sol::optional<std::string> Race::getAndLoadDescription() {
+		// If the description is already loaded, just return it.
+		if (description) {
+			return description;
+		}
+
+		// Otherwise we need to load it from disk, then free it.
+		else {
+			char* description = loadDescription();
+			if (description) {
+				// We loaded successfully, package, free, then return.
+				std::string value = description;
+				freeDescription();
+				return std::move(value);
+			}
+		}
+
+		return {};
+	}
+
+	std::reference_wrapper<Race::BaseAttribute[8]> Race::getBaseAttributes() {
+		return std::ref(baseAttributes);
+	}
+
+	std::reference_wrapper<Race::SkillBonus[7]> Race::getSkillBonuses() {
+		return std::ref(skillBonuses);
+	}
+
 }

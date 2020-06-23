@@ -33,7 +33,7 @@ namespace mwse {
 			usertypeDefinition["weatherController"] = sol::readonly_property(&TES3::Moon::weatherController);
 
 			// Functions exposed as properties.
-			usertypeDefinition["texture"] = sol::readonly_property([](TES3::Moon& self) -> const char* { return self.texturePath; });
+			usertypeDefinition["texture"] = sol::property(&TES3::Moon::getTexturePath, &TES3::Moon::setTexturePath);
 		}
 	}
 }

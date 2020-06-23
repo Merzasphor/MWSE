@@ -11,6 +11,7 @@ namespace TES3 {
 		Vector3 position; // 0x0
 		float rotation; // 0xC
 		Cell * cell; // 0x10
+
 	};
 
 	struct PlayerBounty {
@@ -95,6 +96,18 @@ namespace TES3 {
 		int getBounty();
 		void setBounty(int value);
 		void modBounty(int delta);
+
+		//
+		// Custom functions.
+		//
+
+		void setFlagSneak(bool value);
+
+		PlayerAnimationData* getPlayerAnimationData() const;
+
+		std::reference_wrapper<int[8]> getLevelupsPerAttribute();
+		std::reference_wrapper<int[3]> getLevelupsPerSpecialization();
+		std::reference_wrapper<float[27]> getSkillProgressValues();
 
 	};
 	static_assert(sizeof(MobilePlayer) == 0x694, "TES3::MobilePlayer failed size validation");

@@ -32,6 +32,10 @@ namespace TES3 {
 		// Custom functions.
 		//
 
+		bool add_lua(sol::object value);
+		bool remove_lua(sol::object value);
+		bool contains_lua(sol::object value);
+
 		bool containsType(SpellCastType::value_type);
 
 	};

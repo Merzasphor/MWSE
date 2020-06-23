@@ -24,22 +24,13 @@ namespace mwse {
 				setUserdataForTES3BaseObject(usertypeDefinition);
 
 				// Allow object to be serialized to json.
-				usertypeDefinition["__tojson"] = [](TES3::Sound& self, sol::table state) {
-					std::ostringstream ss;
-					ss << "\"tes3sound:" << self.id << "\"";
-					return ss.str();
-				};
+				usertypeDefinition["__tojson"] = &TES3::Sound::toJson;
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["filename"] = sol::readonly_property([](TES3::Sound& self) { return self.filename; });
+				usertypeDefinition["filename"] = sol::readonly_property(&TES3::Sound::filename);
 
 				// Basic function binding.
-				usertypeDefinition["play"] = [](TES3::Sound& self, sol::optional<sol::table> params) {
-					bool loop = getOptionalParam<bool>(params, "loop", false);
-					unsigned char volume = getOptionalParam<double>(params, "volume", 1.0) * 250;
-					float pitch = getOptionalParam<double>(params, "pitch", 1.0);
-					return self.play(loop ? TES3::SoundPlayFlags::Loop : 0, volume, pitch, true);
-				};
+				usertypeDefinition["play"] = &TES3::Sound::play_lua;
 				usertypeDefinition["stop"] = &TES3::Sound::stop;
 				usertypeDefinition["isPlaying"] = &TES3::Sound::isPlaying;
 
@@ -58,17 +49,11 @@ namespace mwse {
 				setUserdataForTES3BaseObject(usertypeDefinition);
 
 				// Allow object to be serialized to json.
-				usertypeDefinition["__tojson"] = [](TES3::SoundGenerator& self, sol::table state) {
-					std::ostringstream ss;
-					ss << "\"tes3soundGenerator:" << self.name << "\"";
-					return ss.str();
-				};
+				usertypeDefinition["__tojson"] = &TES3::SoundGenerator::toJson;
 
 				// Basic property binding.
+				usertypeDefinition["sound"] = sol::readonly_property(&TES3::SoundGenerator::sound);
 				usertypeDefinition["type"] = sol::readonly_property(&TES3::SoundGenerator::soundType);
-
-				// Access to other objects that need to be packaged.
-				usertypeDefinition["sound"] = sol::readonly_property([](TES3::SoundGenerator& self) { return self.sound; });
 			}
 		}
 	}

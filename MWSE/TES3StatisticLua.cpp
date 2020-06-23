@@ -19,7 +19,7 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition["base"] = sol::property(&TES3::Statistic::getBase, &TES3::Statistic::setBase);
-				usertypeDefinition["current"] = sol::property(&TES3::Statistic::getCurrent, [](TES3::Statistic& self, float value) { self.setCurrentCapped(value, false); });
+				usertypeDefinition["current"] = sol::property(&TES3::Statistic::getCurrent, &TES3::Statistic::setCurrent_lua);
 				usertypeDefinition["normalized"] = sol::property(&TES3::Statistic::getNormalized);
 			}
 
@@ -30,7 +30,7 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition["base"] = sol::property(&TES3::SkillStatistic::getBase, &TES3::SkillStatistic::setBase);
-				usertypeDefinition["current"] = sol::property(&TES3::SkillStatistic::getCurrent, [](TES3::SkillStatistic& self, float value) { self.setCurrentCapped(value, false); });
+				usertypeDefinition["current"] = sol::property(&TES3::SkillStatistic::getCurrent, &TES3::SkillStatistic::setCurrent_lua);
 				usertypeDefinition["normalized"] = sol::property(&TES3::SkillStatistic::getNormalized);
 				usertypeDefinition["type"] = &TES3::SkillStatistic::type;
 			}

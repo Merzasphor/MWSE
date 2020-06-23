@@ -1,7 +1,6 @@
 #pragma once
 
 #include "TES3Defines.h"
-#include "TES3Script.h"
 
 namespace mwse {
 	namespace lua {

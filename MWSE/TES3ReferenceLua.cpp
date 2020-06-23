@@ -2,7 +2,6 @@
 
 #include "LuaManager.h"
 #include "TES3ObjectLua.h"
-#include "TES3ScriptLua.h"
 
 #include "TES3Util.h"
 
@@ -17,82 +16,8 @@
 #include "TES3Reference.h"
 #include "TES3WorldController.h"
 
-namespace TES3 {
-	sol::object Reference::getAttachments() {
-		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
-		auto stateHandle = luaManager.getThreadSafeStateHandle();
-		sol::state& state = stateHandle.state;
-
-		sol::table result = state.create_table();
-
-		Attachment* attachment = this->attachments;
-		while (attachment) {
-			switch (attachment->type) {
-			case AttachmentType::BodyPartManager:
-				result["bodyPartManager"] = reinterpret_cast<BodyPartManagerAttachment*>(attachment)->data;
-				break;
-			case AttachmentType::Light:
-				result["light"] = reinterpret_cast<LockAttachment*>(attachment)->data;
-				break;
-			case AttachmentType::Lock:
-				result["lock"] = reinterpret_cast<LockAttachment*>(attachment)->data;
-				break;
-			case AttachmentType::LeveledBaseReference:
-				result["leveledBase"] = reinterpret_cast<LeveledBaseReferenceAttachment*>(attachment)->data;
-				break;
-			case AttachmentType::TravelDestination:
-				result["travelDestination"] = reinterpret_cast<TravelDestinationAttachment*>(attachment)->data;
-				break;
-			case AttachmentType::Variables:
-				result["variables"] = reinterpret_cast<ItemDataAttachment*>(attachment)->data;
-				break;
-			case AttachmentType::ActorData:
-				result["actor"] =reinterpret_cast<MobileActorAttachment*>(attachment)->data;
-				break;
-			}
-
-			attachment = attachment->next;
-		}
-
-		return result;
-	}
-
-	sol::table Reference::getLuaTable() {
-		auto itemData = getAttachedItemData();
-
-		// Prevent adding a lua table if there's more than one item involved.
-		if (itemData && itemData->count > 1) {
-			throw std::exception("Cannot create lua data when more than one item is present.");
-		}
-
-		// Create the item data if it doesn't already exist.
-		if (itemData == nullptr) {
-			itemData = ItemData::createForObject(baseObject);
-			setAttachedItemData(itemData);
-		}
-
-		return itemData->getOrCreateLuaDataTable();
-	}
-}
-
 namespace mwse {
 	namespace lua {
-		sol::object getContext(TES3::Reference& reference) {
-			if (reference.baseObject->getScript() == nullptr) {
-				return sol::nil;
-			}
-
-			auto& luaManager = mwse::lua::LuaManager::getInstance();
-			auto stateHandle = luaManager.getThreadSafeStateHandle();
-			sol::state& state = stateHandle.state;
-
-			auto variables = reference.getAttachedItemData();
-			if (variables == NULL) {
-				return sol::nil;
-			}
-			return sol::make_object(state, std::shared_ptr<ScriptContext>(new ScriptContext(variables->script, variables->scriptData)));
-		}
-
 		void bindTES3Reference() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -107,25 +32,14 @@ namespace mwse {
 			setUserdataForTES3Object(usertypeDefinition);
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition["baseObject"] = sol::readonly_property([](TES3::Reference& self) { return self.getBaseObject(); });
-			usertypeDefinition["cell"] = sol::readonly_property([](TES3::Reference& self) -> TES3::Cell* {
-				// Handle case for the player.
-				if (TES3::WorldController::get()->getMobilePlayer()->reference == &self) {
-					return TES3::DataHandler::get()->currentCell;
-				}
-
-				if (self.owningCollection.asReferenceList == nullptr) {
-					return nullptr;
-				}
-
-				return self.owningCollection.asReferenceList->cell;
-			});
-			usertypeDefinition["object"] = sol::readonly_property([](TES3::Reference& self) { return self.baseObject; });
-			usertypeDefinition["sceneNode"] = sol::readonly_property([](TES3::Reference& self) { return self.sceneNode; });
+			usertypeDefinition["baseObject"] = sol::readonly_property(&TES3::Reference::getBaseObject);
+			usertypeDefinition["cell"] = sol::readonly_property(&TES3::Reference::getCell_lua);
+			usertypeDefinition["object"] = sol::readonly_property(&TES3::Reference::baseObject);
+			usertypeDefinition["sceneNode"] = sol::readonly_property(&TES3::Reference::sceneNode);
 			usertypeDefinition["leveledBaseReference"] = sol::readonly_property(&TES3::Reference::getLeveledBaseReference);
 
 			// Basic function binding.
-			usertypeDefinition["activate"] = [](TES3::Reference& self, TES3::Reference& target) { target.activate(&self); };
+			usertypeDefinition["activate"] = &TES3::Reference::activate_lua;
 			usertypeDefinition["clearActionFlag"] = &TES3::Reference::clearActionFlag;
 			usertypeDefinition["clone"] = &TES3::Reference::clone;
 			usertypeDefinition["deleteDynamicLightAttachment"] = &TES3::Reference::deleteDynamicLightAttachment;
@@ -142,8 +56,8 @@ namespace mwse {
 
 			// Functions exposed as properties.
 			usertypeDefinition["activationReference"] = sol::property(&TES3::Reference::getActionReference, &TES3::Reference::setActionReference);
-			usertypeDefinition["attachments"] = sol::readonly_property(&TES3::Reference::getAttachments);
-			usertypeDefinition["context"] = sol::readonly_property(&getContext);
+			usertypeDefinition["attachments"] = sol::readonly_property(&TES3::Reference::getAttachments_lua);
+			usertypeDefinition["context"] = sol::readonly_property(&TES3::Reference::getContext_lua);
 			usertypeDefinition["data"] = sol::readonly_property(&TES3::Reference::getLuaTable);
 			usertypeDefinition["isEmpty"] = sol::property(&TES3::Reference::getEmptyInventoryFlag, &TES3::Reference::setEmptyInventoryFlag);
 			usertypeDefinition["isLeveledSpawn"] = sol::readonly_property(&TES3::Reference::isLeveledSpawn);
@@ -152,76 +66,21 @@ namespace mwse {
 			usertypeDefinition["position"] = sol::property(&TES3::Reference::getPosition, &TES3::Reference::setPositionFromLua);
 
 			// Functions for manually syncing the scene graph, for if orientation or position is manually modified.
-			usertypeDefinition["updateSceneGraph"] = [](TES3::Reference& self) {
-				TES3::Matrix33 tempOutArg;
-				self.sceneNode->setLocalRotationMatrix(self.updateSceneMatrix(&tempOutArg));
-				self.sceneNode->update();
-				self.setObjectModified(true);
-			};
+			usertypeDefinition["updateSceneGraph"] = &TES3::Reference::updateSceneGraph_lua;
 
 			// Quick access to attachment data.
-			usertypeDefinition["bodyPartManager"] = sol::property(
-				[](TES3::Reference& self) -> TES3::BodyPartManager* {
-					auto attachment = self.getAttachment(TES3::AttachmentType::BodyPartManager);
-					if (attachment) {
-						return reinterpret_cast<TES3::BodyPartManagerAttachment*>(attachment)->data;
-					}
-					return nullptr;
-				}
-			);
-			usertypeDefinition["itemData"] = sol::property(
-				[](TES3::Reference& self)
-				{
-					return self.getAttachedItemData();
-				},
-				[](TES3::Reference& self, TES3::ItemData * value)
-				{
-					auto attachment = static_cast<TES3::ItemDataAttachment*>(self.getAttachment(TES3::AttachmentType::Variables));
-					if (attachment) {
-						attachment->data = value;
-					}
-					else if (value != nullptr) {
-						self.addItemDataAttachment(value);
-					}
-				}
-			);
-			usertypeDefinition["lockNode"] = sol::property([](TES3::Reference& self) {
-				return self.getAttachedLockNode();
-			});
-			usertypeDefinition["destination"] = sol::property([](TES3::Reference& self) -> TES3::TravelDestination * {
-				TES3::TravelDestinationAttachment * attachment = static_cast<TES3::TravelDestinationAttachment*>(self.getAttachment(TES3::AttachmentType::TravelDestination));
-				if (attachment) {
-					return attachment->data;
-				}
-				return nullptr;
-			});
-			usertypeDefinition["light"] = sol::property([](TES3::Reference& self) -> NI::Pointer<NI::Light> {
-				auto attachment = static_cast<TES3::LightAttachment*>(self.getAttachment(TES3::AttachmentType::Light));
-				if (attachment) {
-					return attachment->data->light;
-				}
-				return nullptr;
-			});
-			usertypeDefinition["mobile"] = sol::property([](TES3::Reference& self) {
-				return self.getAttachedMobileActor();
-			});
-			usertypeDefinition["stackSize"] = sol::property(
-				[](TES3::Reference& self)
-			{
-				TES3::ItemData* itemData = self.getAttachedItemData();
-				return itemData ? itemData->count : 1;
-			},
-				[](TES3::Reference& self, int count)
-			{
-				TES3::ItemData* itemData = self.getOrCreateAttachedItemData();
-				itemData->count = count;
-			}
-			);
+			usertypeDefinition["bodyPartManager"] = sol::property(&TES3::Reference::getAttachedBodyPartManager);
+			usertypeDefinition["itemData"] = sol::property(&TES3::Reference::getAttachedItemData, &TES3::Reference::setAttachedItemData);
+			usertypeDefinition["lockNode"] = sol::readonly_property(&TES3::Reference::getAttachedLockNode);
+			usertypeDefinition["destination"] = sol::readonly_property(&TES3::Reference::getAttachedTravelDestination);
+			usertypeDefinition["light"] = sol::readonly_property(&TES3::Reference::getAttachedNiLight);
+			usertypeDefinition["mobile"] = sol::readonly_property(&TES3::Reference::getAttachedMobileActor);
+			usertypeDefinition["stackSize"] = sol::property(&TES3::Reference::getStackSize, &TES3::Reference::setStackSize);
 			
 			// Allow references to behave like a linked list node.
-			usertypeDefinition["previousNode"] = sol::readonly_property([](TES3::Reference& self) { return self.previousInCollection; });
-			usertypeDefinition["nextNode"] = sol::readonly_property([](TES3::Reference& self) { return self.nextInCollection; });
-			usertypeDefinition["nodeData"] = sol::readonly_property([](TES3::Reference& self) { return &self; });
+			usertypeDefinition["previousNode"] = sol::readonly_property(&TES3::Reference::previousInCollection);
+			usertypeDefinition["nextNode"] = sol::readonly_property(&TES3::Reference::nextInCollection);
+			usertypeDefinition["nodeData"] = sol::readonly_property(&TES3::Reference::getThis);
 		}
 	}
 }

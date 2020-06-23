@@ -15,10 +15,13 @@
 
 #include "TES3Actor.h"
 #include "TES3ActorAnimationData.h"
+#include "TES3Alchemy.h"
 #include "TES3AudioController.h"
+#include "TES3Enchantment.h"
 #include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
 #include "TES3ItemData.h"
+#include "TES3Spell.h"
 #include "TES3Reference.h"
 #include "TES3SpellInstanceController.h"
 #include "TES3WorldController.h"
@@ -330,17 +333,17 @@ namespace TES3 {
 	}
 
 	const auto TES3_MobileActor_isAffectedByAlchemy = reinterpret_cast<bool(__thiscall*)(const MobileActor*, Alchemy*)>(0x52D1A0);
-	bool MobileActor::isAffectedByAlchemy(Alchemy * alchemy) {
+	bool MobileActor::isAffectedByAlchemy(Alchemy * alchemy) const {
 		return TES3_MobileActor_isAffectedByAlchemy(this, alchemy);
 	}
 
 	const auto TES3_MobileActor_isAffectedByEnchantment = reinterpret_cast<bool(__thiscall*)(const MobileActor*, Enchantment*)>(0x52D140);
-	bool MobileActor::isAffectedByEnchantment(Enchantment * enchantment) {
+	bool MobileActor::isAffectedByEnchantment(Enchantment * enchantment) const {
 		return TES3_MobileActor_isAffectedByEnchantment(this, enchantment);
 	}
 
 	const auto TES3_MobileActor_isAffectedBySpell = reinterpret_cast<bool(__thiscall*)(const MobileActor*, Spell*)>(0x52D0E0);
-	bool MobileActor::isAffectedBySpell(Spell * spell) {
+	bool MobileActor::isAffectedBySpell(Spell * spell) const {
 		return TES3_MobileActor_isAffectedBySpell(this, spell);
 	}
 
@@ -386,7 +389,7 @@ namespace TES3 {
 		vTable.mobileActor->changeWerewolf(this, isWerewolf);
 	}
 
-	bool MobileActor::getMobileActorFlag(MobileActorFlag::Flag flag) {
+	bool MobileActor::getMobileActorFlag(MobileActorFlag::Flag flag) const {
 		return (actorFlags & flag) != 0;
 	}
 
@@ -399,7 +402,7 @@ namespace TES3 {
 		}
 	}
 
-	bool MobileActor::getMobileActorMovementFlag(ActorMovement::Flag flag) {
+	bool MobileActor::getMobileActorMovementFlag(ActorMovement::Flag flag) const {
 		return (movementFlags & flag) != 0;
 	}
 
@@ -508,6 +511,444 @@ namespace TES3 {
 		if (animationData.asActor) {
 			animationData.asActor->updateOpacity();
 		}
+	}
+
+	ActorAnimationData* MobileActor::getAnimationData() const {
+		return animationData.asActor;
+	}
+
+	BaseObject* MobileActor::getCurrentSpell() const {
+		return currentSpell.source.asGeneric;
+	}
+
+	std::reference_wrapper<Statistic[8]> MobileActor::getAttributes() {
+		return std::ref(attributes);
+	}
+
+	std::reference_wrapper<int[24]> MobileActor::getEffectAttributes() {
+		return std::ref(effectAttributes);
+	}
+
+	bool MobileActor::getFlagActiveAI() const {
+		return getMobileActorFlag(MobileActorFlag::ActiveAI);
+	}
+
+	void MobileActor::setFlagActiveAI(bool value) {
+		setMobileActorFlag(MobileActorFlag::ActiveAI, value);
+	}
+
+	bool MobileActor::getFlagAttacked() const {
+		return getMobileActorFlag(MobileActorFlag::Attacked);
+	}
+
+	void MobileActor::setFlagAttacked(bool value) {
+		setMobileActorFlag(MobileActorFlag::Attacked, value);
+	}
+
+	bool MobileActor::getFlagIdleAnim() const {
+		return getMobileActorFlag(MobileActorFlag::IdleAnim);
+	}
+
+	void MobileActor::setFlagIdleAnim(bool value) {
+		setMobileActorFlag(MobileActorFlag::IdleAnim, value);
+	}
+
+	bool MobileActor::getFlagInCombat() const {
+		return getMobileActorFlag(MobileActorFlag::InCombat);
+	}
+
+	void MobileActor::setFlagInCombat(bool value) {
+		setMobileActorFlag(MobileActorFlag::InCombat, value);
+	}
+
+	bool MobileActor::getFlagIsCrittable() const {
+		return getMobileActorFlag(MobileActorFlag::IsCrittable);
+	}
+
+	void MobileActor::setFlagIsCrittable(bool value) {
+		setMobileActorFlag(MobileActorFlag::IsCrittable, value);
+	}
+
+	bool MobileActor::getFlagSpellReadied() const {
+		return getMobileActorFlag(MobileActorFlag::SpellReadied);
+	}
+
+	void MobileActor::setFlagSpellReadied(bool value) {
+		setMobileActorFlag(MobileActorFlag::SpellReadied, value);
+	}
+
+	bool MobileActor::getFlagUnderwater() const {
+		return getMobileActorFlag(MobileActorFlag::Underwater);
+	}
+
+	void MobileActor::setFlagUnderwater(bool value) {
+		setMobileActorFlag(MobileActorFlag::Underwater, value);
+	}
+
+	bool MobileActor::getFlagWeaponDrawn() const {
+		return getMobileActorFlag(MobileActorFlag::WeaponDrawn);
+	}
+
+	void MobileActor::setFlagWeaponDrawn(bool value) {
+		setMobileActorFlag(MobileActorFlag::WeaponDrawn, value);
+	}
+
+	bool MobileActor::getFlagWerewolf() const {
+		return getMobileActorFlag(MobileActorFlag::Werewolf);
+	}
+
+	void MobileActor::setFlagWerewolf(bool value) {
+		setMobileActorFlag(MobileActorFlag::Werewolf, value);
+	}
+
+	Statistic* MobileActor::getAttributeAgility() {
+		return &attributes[TES3::Attribute::Agility];
+	}
+
+	Statistic* MobileActor::getAttributeEndurance() {
+		return &attributes[TES3::Attribute::Endurance];
+	}
+
+	Statistic* MobileActor::getAttributeIntelligence() {
+		return &attributes[TES3::Attribute::Intelligence];
+	}
+
+	Statistic* MobileActor::getAttributeLuck() {
+		return &attributes[TES3::Attribute::Luck];
+	}
+
+	Statistic* MobileActor::getAttributePersonality() {
+		return &attributes[TES3::Attribute::Personality];
+	}
+
+	Statistic* MobileActor::getAttributeSpeed() {
+		return &attributes[TES3::Attribute::Speed];
+	}
+
+	Statistic* MobileActor::getAttributeStrength() {
+		return &attributes[TES3::Attribute::Strength];
+	}
+
+	Statistic* MobileActor::getAttributeWillpower() {
+		return &attributes[TES3::Attribute::Willpower];
+	}
+
+	int MobileActor::getEffectAttributeAttackBonus() const {
+		return effectAttributes[EffectAttribute::AttackBonus];
+	}
+
+	void MobileActor::setEffectAttributeAttackBonus(int value) {
+		effectAttributes[EffectAttribute::AttackBonus] = value;
+	}
+
+	int MobileActor::getEffectAttributeBlind() const {
+		return effectAttributes[EffectAttribute::Blind];
+	}
+
+	void MobileActor::setEffectAttributeBlind(int value) {
+		effectAttributes[EffectAttribute::Blind] = value;
+	}
+
+	int MobileActor::getEffectAttributeChameleon() const {
+		return effectAttributes[EffectAttribute::Chameleon];
+	}
+
+	void MobileActor::setEffectAttributeChameleon(int value) {
+		effectAttributes[EffectAttribute::Chameleon] = value;
+	}
+
+	int MobileActor::getEffectAttributeInvisibility() const {
+		return effectAttributes[EffectAttribute::Invisibility];
+	}
+
+	void MobileActor::setEffectAttributeInvisibility(int value) {
+		effectAttributes[EffectAttribute::Invisibility] = value;
+	}
+
+	int MobileActor::getEffectAttributeJump() const {
+		return effectAttributes[EffectAttribute::Jump];
+	}
+
+	void MobileActor::setEffectAttributeJump(int value) {
+		effectAttributes[EffectAttribute::Jump] = value;
+	}
+
+	int MobileActor::getEffectAttributeLevitate() const {
+		return effectAttributes[EffectAttribute::Levitate];
+	}
+
+	void MobileActor::setEffectAttributeLevitate(int value) {
+		effectAttributes[EffectAttribute::Levitate] = value;
+	}
+
+	int MobileActor::getEffectAttributeParalyze() const {
+		return effectAttributes[EffectAttribute::Paralyze];
+	}
+
+	void MobileActor::setEffectAttributeParalyze(int value) {
+		effectAttributes[EffectAttribute::Paralyze] = value;
+	}
+
+	int MobileActor::getEffectAttributeResistBlightDisease() const {
+		return effectAttributes[EffectAttribute::ResistBlightDisease];
+	}
+
+	void MobileActor::setEffectAttributeResistBlightDisease(int value) {
+		effectAttributes[EffectAttribute::ResistBlightDisease] = value;
+	}
+
+	int MobileActor::getEffectAttributeResistCommonDisease() const {
+		return effectAttributes[EffectAttribute::ResistCommonDisease];
+	}
+
+	void MobileActor::setEffectAttributeResistCommonDisease(int value) {
+		effectAttributes[EffectAttribute::ResistCommonDisease] = value;
+	}
+
+	int MobileActor::getEffectAttributeResistCorprus() const {
+		return effectAttributes[EffectAttribute::ResistCorprus];
+	}
+
+	void MobileActor::setEffectAttributeResistCorprus(int value) {
+		effectAttributes[EffectAttribute::ResistCorprus] = value;
+	}
+
+	int MobileActor::getEffectAttributeResistFire() const {
+		return effectAttributes[EffectAttribute::ResistFire];
+	}
+
+	void MobileActor::setEffectAttributeResistFire(int value) {
+		effectAttributes[EffectAttribute::ResistFire] = value;
+	}
+
+	int MobileActor::getEffectAttributeResistFrost() const {
+		return effectAttributes[EffectAttribute::ResistFrost];
+	}
+
+	void MobileActor::setEffectAttributeResistFrost(int value) {
+		effectAttributes[EffectAttribute::ResistFrost] = value;
+	}
+
+	int MobileActor::getEffectAttributeResistMagicka() const {
+		return effectAttributes[EffectAttribute::ResistMagicka];
+	}
+
+	void MobileActor::setEffectAttributeResistMagicka(int value) {
+		effectAttributes[EffectAttribute::ResistMagicka] = value;
+	}
+
+	int MobileActor::getEffectAttributeResistNormalWeapons() const {
+		return effectAttributes[EffectAttribute::ResistNormalWeapons];
+	}
+
+	void MobileActor::setEffectAttributeResistNormalWeapons(int value) {
+		effectAttributes[EffectAttribute::ResistNormalWeapons] = value;
+	}
+
+	int MobileActor::getEffectAttributeResistParalysis() const {
+		return effectAttributes[EffectAttribute::ResistParalysis];
+	}
+
+	void MobileActor::setEffectAttributeResistParalysis(int value) {
+		effectAttributes[EffectAttribute::ResistParalysis] = value;
+	}
+
+	int MobileActor::getEffectAttributeResistPoison() const {
+		return effectAttributes[EffectAttribute::ResistPoison];
+	}
+
+	void MobileActor::setEffectAttributeResistPoison(int value) {
+		effectAttributes[EffectAttribute::ResistPoison] = value;
+	}
+
+	int MobileActor::getEffectAttributeResistShock() const {
+		return effectAttributes[EffectAttribute::ResistShock];
+	}
+
+	void MobileActor::setEffectAttributeResistShock(int value) {
+		effectAttributes[EffectAttribute::ResistShock] = value;
+	}
+
+	int MobileActor::getEffectAttributeSanctuary() const {
+		return effectAttributes[EffectAttribute::Sanctuary];
+	}
+
+	void MobileActor::setEffectAttributeSanctuary(int value) {
+		effectAttributes[EffectAttribute::Sanctuary] = value;
+	}
+
+	int MobileActor::getEffectAttributeShield() const {
+		return effectAttributes[EffectAttribute::Shield];
+	}
+
+	void MobileActor::setEffectAttributeShield(int value) {
+		effectAttributes[EffectAttribute::Shield] = value;
+	}
+
+	int MobileActor::getEffectAttributeSilence() const {
+		return effectAttributes[EffectAttribute::Silence];
+	}
+
+	void MobileActor::setEffectAttributeSilence(int value) {
+		effectAttributes[EffectAttribute::Silence] = value;
+	}
+
+	int MobileActor::getEffectAttributeSound() const {
+		return effectAttributes[EffectAttribute::Sound];
+	}
+
+	void MobileActor::setEffectAttributeSound(int value) {
+		effectAttributes[EffectAttribute::Sound] = value;
+	}
+
+	int MobileActor::getEffectAttributeSwiftSwim() const {
+		return effectAttributes[EffectAttribute::SwiftSwim];
+	}
+
+	void MobileActor::setEffectAttributeSwiftSwim(int value) {
+		effectAttributes[EffectAttribute::SwiftSwim] = value;
+	}
+
+	int MobileActor::getEffectAttributeWaterBreathing() const {
+		return effectAttributes[EffectAttribute::WaterBreathing];
+	}
+
+	void MobileActor::setEffectAttributeWaterBreathing(int value) {
+		effectAttributes[EffectAttribute::WaterBreathing] = value;
+	}
+
+	int MobileActor::getEffectAttributeWaterWalking() const {
+		return effectAttributes[EffectAttribute::WaterWalking];
+	}
+
+	void MobileActor::setEffectAttributeWaterWalking(int value) {
+		effectAttributes[EffectAttribute::WaterWalking] = value;
+	}
+
+	bool MobileActor::getMovementFlagFlying() const {
+		return getMobileActorMovementFlag(ActorMovement::Flying);
+	}
+
+	void MobileActor::setMovementFlagFlying(bool value) {
+		setMobileActorMovementFlag(TES3::ActorMovement::Flying, value);
+	}
+
+	bool MobileActor::getMovementFlagJumping() const {
+		return getMobileActorMovementFlag(ActorMovement::Jumping);
+	}
+
+	void MobileActor::setMovementFlagJumping(bool value) {
+		setMobileActorMovementFlag(TES3::ActorMovement::Jumping, value);
+	}
+
+	bool MobileActor::getMovementFlagBack() const {
+		return getMobileActorMovementFlag(ActorMovement::Back);
+	}
+
+	void MobileActor::setMovementFlagBack(bool value) {
+		setMobileActorMovementFlag(TES3::ActorMovement::Back, value);
+	}
+
+	bool MobileActor::getMovementFlagForward() const {
+		return getMobileActorMovementFlag(ActorMovement::Forward);
+	}
+
+	void MobileActor::setMovementFlagForward(bool value) {
+		setMobileActorMovementFlag(TES3::ActorMovement::Forward, value);
+	}
+
+	bool MobileActor::getMovementFlagLeft() const {
+		return getMobileActorMovementFlag(ActorMovement::Left);
+	}
+
+	void MobileActor::setMovementFlagLeft(bool value) {
+		setMobileActorMovementFlag(TES3::ActorMovement::Left, value);
+	}
+
+	bool MobileActor::getMovementFlagRight() const {
+		return getMobileActorMovementFlag(ActorMovement::Right);
+	}
+
+	void MobileActor::setMovementFlagRight(bool value) {
+		setMobileActorMovementFlag(TES3::ActorMovement::Right, value);
+	}
+
+	bool MobileActor::getMovementFlagRunning() const {
+		return getMobileActorMovementFlag(ActorMovement::Running);
+	}
+
+	void MobileActor::setMovementFlagRunning(bool value) {
+		setMobileActorMovementFlag(TES3::ActorMovement::Running, value);
+	}
+
+	bool MobileActor::getMovementFlagSneaking() const {
+		return getMobileActorMovementFlag(ActorMovement::Sneaking);
+	}
+
+	void MobileActor::setMovementFlagSneaking(bool value) {
+		setMobileActorMovementFlag(TES3::ActorMovement::Sneaking, value);
+	}
+
+	bool MobileActor::getMovementFlagJumped() const {
+		return getMobileActorMovementFlag(ActorMovement::Jumped);
+	}
+
+	void MobileActor::setMovementFlagJumped(bool value) {
+		setMobileActorMovementFlag(TES3::ActorMovement::Jumped, value);
+	}
+
+	bool MobileActor::getMovementFlagSwimming() const {
+		return getMobileActorMovementFlag(ActorMovement::Swimming);
+	}
+
+	void MobileActor::setMovementFlagSwimming(bool value) {
+		setMobileActorMovementFlag(TES3::ActorMovement::Swimming, value);
+	}
+
+	bool MobileActor::getMovementFlagTurnLeft() const {
+		return getMobileActorMovementFlag(ActorMovement::TurnLeft);
+	}
+
+	void MobileActor::setMovementFlagTurnLeft(bool value) {
+		setMobileActorMovementFlag(TES3::ActorMovement::TurnLeft, value);
+	}
+
+	bool MobileActor::getMovementFlagTurnRight() const {
+		return getMobileActorMovementFlag(ActorMovement::TurnRight);
+	}
+
+	void MobileActor::setMovementFlagTurnRight(bool value) {
+		setMobileActorMovementFlag(TES3::ActorMovement::TurnRight, value);
+	}
+
+	bool MobileActor::getMovementFlagWalking() const {
+		return getMobileActorMovementFlag(ActorMovement::Walking);
+	}
+
+	void MobileActor::setMovementFlagWalking(bool value) {
+		setMobileActorMovementFlag(TES3::ActorMovement::Walking, value);
+	}
+
+	bool MobileActor::isAffectedByObject_lua(sol::object object) const {
+		if (object.is<TES3::Alchemy>()) {
+			return isAffectedByAlchemy(object.as<TES3::Alchemy*>());
+		}
+		else if (object.is<TES3::Enchantment>()) {
+			return isAffectedByEnchantment(object.as<TES3::Enchantment*>());
+		}
+		else if (object.is<TES3::Spell>()) {
+			return isAffectedBySpell(object.as<TES3::Spell*>());
+		}
+
+		return false;
+	}
+
+	MobileActor::ActiveMagicEffect* MobileActor::getActiveMagicEffects_legacy() const {
+		return activeMagicEffects.firstEffect;
+	}
+
+	int MobileActor::getActiveMagicEffectCount_legacy() const {
+		return activeMagicEffects.count;
 	}
 
 }

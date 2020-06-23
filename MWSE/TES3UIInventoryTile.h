@@ -46,7 +46,18 @@ namespace TES3 {
 			unsigned int tileType; // 0x3C
 			bool isBoundItem; // 0x40
 
-			bool getFlag(unsigned int flag);
+			//
+			// Custom functions.
+			//
+
+			bool getFlag(unsigned int flag) const;
+			void setFlag(unsigned int flag, bool value);
+
+			bool getIsBartered() const;
+			void setIsBartered(bool value);
+
+			bool getIsEquipped() const;
+			void setIsEquipped(bool value);
 
 		};
 		static_assert(sizeof(InventoryTile) == 0x44, "TES3::UI::InventoryTile failed size validation");

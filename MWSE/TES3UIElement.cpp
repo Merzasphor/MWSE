@@ -1,7 +1,17 @@
 #include "string.h"
 
+#include "TES3UIInventoryTile.h"
 #include "TES3UIManager.h"
 #include "TES3UIElement.h"
+#include "TES3UIWidgets.h"
+
+#include "TES3ItemData.h"
+#include "TES3GameFile.h"
+#include "TES3MobileObject.h"
+#include "TES3Object.h"
+
+#include "LuaUtil.h"
+#include "TES3UIManagerLua.h"
 
 namespace TES3 {
 	namespace UI {
@@ -49,6 +59,9 @@ namespace TES3 {
 
 		const auto TES3_ui_updateSceneGraph = reinterpret_cast<void(__thiscall *)(Element*)>(0x587000);
 
+		using mwse::lua::valueDefaultAsNil;
+		using mwse::lua::getPropertyFromObject;
+
 		//
 		// Widget creation/destruction methods
 		//
@@ -59,6 +72,14 @@ namespace TES3 {
 
 		Element* Element::createButton(UI_ID id, bool bReplaceThisElement) {
 			return TES3_ui_createWidget(this, id, TES3_ui_factoryButton, bReplaceThisElement);
+		}
+
+		Element* Element::createDivider(UI_ID id, bool bReplaceThisElement) {
+			auto divider = TES3_ui_createImage(this, id, "Textures\\menu_divider.tga", bReplaceThisElement);
+			divider->borderAllSides = 8;
+			divider->widthProportional = 1.0;
+			divider->flagExtendImageToBounds = 1;
+			return divider;
 		}
 
 		Element* Element::createDragFrame(UI_ID id, bool bReplaceThisElement) {
@@ -119,6 +140,10 @@ namespace TES3 {
 
 		Element* Element::createTextSelect(UI_ID id, bool bReplaceThisElement) {
 			return TES3_ui_createWidget(this, id, TES3_ui_factoryTextSelect, bReplaceThisElement);
+		}
+
+		Element* Element::createThinBorder(UI_ID id, bool bReplaceThisElement) {
+			return TES3_ui_createNif(this, id, "menu_thin_border.nif", bReplaceThisElement);
 		}
 
 		Element* Element::createVerticalScrollPane(UI_ID id, bool bReplaceThisElement) {
@@ -304,9 +329,903 @@ namespace TES3 {
 			TES3_ui_updateSceneGraph(this);
 		}
 
+		const char* Element::getName() const {
+			return name.cString;
+		}
+
+		std::string Element::toJson() const {
+			std::ostringstream ss;
+			ss << "\"tes3uiElement:" << id << ":" << name.cString << "\"";
+			return std::move(ss.str());
+		}
+
+		sol::table Element::getChildren_lua(sol::this_state ts) const {
+			sol::state_view state = ts;
+			sol::table children = state.create_table();
+			auto it = vectorChildren.begin;
+			auto end = vectorChildren.end;
+			for (int i = 1; it != end; ++it, ++i) {
+				children[i] = *it;
+			}
+			return children;
+		}
+
+		// Helper function to build a table for an element's properties.
+		void addPropertyToTable(sol::table& table, const TES3::UI::TreeNode* node) {
+			TES3::UI::TreeNode* sentinal = *reinterpret_cast<TES3::UI::TreeNode**>(0x7D1CEC);
+			if (node == sentinal) {
+				return;
+			}
+
+			table.add(node->item);
+
+			addPropertyToTable(table, node->branchLess);
+			addPropertyToTable(table, node->branchGreaterThanOrEqual);
+		}
+
+		sol::table Element::getProperties_lua(sol::this_state ts) const {
+			sol::state_view state = ts;
+			sol::table result = state.create_table();
+
+			addPropertyToTable(result, properties.root->nextLeafOrRoot);
+
+			return result;
+		}
+
+		std::string Element::getContentTypeString() const {
+			switch (contentType) {
+			case TES3::UI::Property::model:
+				return "model";
+			case TES3::UI::Property::text:
+				return "text";
+			case TES3::UI::Property::image:
+				return "image";
+			case TES3::UI::Property::rect:
+				return "rect";
+			default:
+				return "layout";
+			}
+		}
+
+		static Property propButton, propFillbar, propParagraphInput;
+		static Property propScrollBar, propScrollPaneH, propScrollPaneV;
+		static Property propTextInput, propTextSelect;
+		static UI_ID uiidButtonText, uiidParagraphInputText;
+		void deferredPropInit() {
+			static bool init = false;
+			if (!init) {
+				propButton = registerProperty("PartButton");
+				propFillbar = registerProperty("PartFillbar");
+				propParagraphInput = registerProperty("PartParagraphInput");
+				propScrollBar = registerProperty("PartScrollBar");
+				propScrollPaneH = registerProperty("PartScrollPaneHor");
+				propScrollPaneV = registerProperty("PartScrollPaneVert");
+				propTextInput = registerProperty("PartTextInput");
+				propTextSelect = registerProperty("PartTextSelect");
+				uiidButtonText = registerID("PartButton_text_ptr");
+				uiidParagraphInputText = registerID("PartParagraphInput_text_input");
+				init = true;
+			}
+		}
+
+		sol::object Element::makeWidget(sol::this_state ts) {
+			deferredPropInit();
+
+			sol::state_view state = ts;
+			Property part = getProperty(PropertyType::Property, Property::is_part).propertyValue;
+
+			if (part == propButton) {
+				return sol::make_object(state, WidgetButton::fromElement(this));
+			}
+			else if (part == propFillbar) {
+				return sol::make_object(state, WidgetFillbar::fromElement(this));
+			}
+			else if (part == propParagraphInput) {
+				return sol::make_object(state, WidgetParagraphInput::fromElement(this));
+			}
+			else if (part == propScrollBar) {
+				return sol::make_object(state, WidgetScrollBar::fromElement(this));
+			}
+			else if (part == propScrollPaneH || part == propScrollPaneV) {
+				return sol::make_object(state, WidgetScrollPane::fromElement(this));
+			}
+			else if (part == propTextInput) {
+				return sol::make_object(state, WidgetTextInput::fromElement(this));
+			}
+			else if (part == propTextSelect) {
+				return sol::make_object(state, WidgetTextSelect::fromElement(this));
+			}
+
+			return sol::nil;
+		}
+
+		std::string Element::getWidgetText() const {
+			deferredPropInit();
+
+			Property part = getProperty(PropertyType::Property, Property::is_part).propertyValue;
+
+			if (part == propButton) {
+				return WidgetButton::fromElement(this)->getText();
+			}
+			else if (part == propParagraphInput) {
+				return WidgetParagraphInput::fromElement(this)->getText();
+			}
+			else if (part == propTextInput) {
+				return WidgetTextInput::fromElement(this)->getText();
+			}
+
+			return getText();
+		}
+
+		void Element::setWidgetText(const char* text) {
+			if (text == nullptr) {
+				text = "";
+			}
+
+			deferredPropInit();
+
+			Property part = getProperty(PropertyType::Property, Property::is_part).propertyValue;
+
+			if (part == propButton) {
+				WidgetButton::fromElement(this)->setText(text);
+			}
+			else if (part == propParagraphInput) {
+				WidgetParagraphInput::fromElement(this)->setText(text);
+			}
+			else if (part == propTextInput) {
+				WidgetTextInput::fromElement(this)->setText(text);
+			}
+			else {
+				setText(text);
+			}
+
+			getTopLevelParent()->timingUpdate();
+		}
+
+		sol::optional<float> Element::getAbsolutePosAlignX_lua() const {
+			return valueDefaultAsNil(absolutePosAlignX, -1.0f);
+		}
+
+		void Element::setAbsolutePosAlignX_lua(sol::optional<float> value) {
+			absolutePosAlignX = value.value_or(-1.0f);
+		}
+
+		sol::optional<float> Element::getAbsolutePosAlignY_lua() const {
+			return valueDefaultAsNil(absolutePosAlignY, -1.0f);
+		}
+
+		void Element::setAbsolutePosAlignY_lua(sol::optional<float> value) {
+			absolutePosAlignY = value.value_or(-1.0f);
+		}
+
+		float Element::getAlpha() const {
+			return colourAlpha;
+		}
+
+		void Element::setAlpha(float value) {
+			colourAlpha = value;
+			flagUsesRGBA = true;
+		}
+
+		int Element::getBorderAllSides() const {
+			return borderAllSides;
+		}
+
+		void Element::setBorderAllSides_lua(sol::optional<int> value) {
+			borderAllSides = value.value_or(0);
+		}
+
+		sol::optional<int> Element::getBorderBottom_lua() const {
+			return valueDefaultAsNil(borderBottom, -1);
+		}
+
+		void Element::setBorderBottom_lua(sol::optional<int> value) {
+			borderBottom = value.value_or(-1);
+		}
+
+		sol::optional<int> Element::getBorderLeft_lua() const {
+			return valueDefaultAsNil(borderLeft, -1);
+		}
+
+		void Element::setBorderLeft_lua(sol::optional<int> value) {
+			borderLeft = value.value_or(-1);
+		}
+
+		sol::optional<int> Element::getBorderRight_lua() const {
+			return valueDefaultAsNil(borderRight, -1);
+		}
+
+		void Element::setBorderRight_lua(sol::optional<int> value) {
+			borderRight = value.value_or(-1);
+		}
+
+		sol::optional<int> Element::getBorderTop_lua() const {
+			return valueDefaultAsNil(borderTop, -1);
+		}
+
+		void Element::setBorderTop_lua(sol::optional<int> value) {
+			borderTop = value.value_or(-1);
+		}
+
+		float Element::getChildAlignX() const {
+			return getProperty(TES3::UI::PropertyType::Float, TES3::UI::Property::align_x).floatValue;
+		}
+
+		void Element::setChildAlignX(float value) {
+			setProperty(TES3::UI::Property::align_x, value);
+		}
+
+		float Element::getChildAlignY() const {
+			return getProperty(TES3::UI::PropertyType::Float, TES3::UI::Property::align_y).floatValue;
+		}
+
+		void Element::setChildAlignY(float value) {
+			setProperty(TES3::UI::Property::align_y, value);
+		}
+
+		sol::optional<int> Element::getChildOffsetX_lua() const {
+			return valueDefaultAsNil(childOffsetX, INT32_MAX);
+		}
+
+		void Element::setChildOffsetX_lua(sol::optional<int> value) {
+			setProperty(TES3::UI::Property::child_offset_x, value.value_or(INT32_MAX));
+		}
+
+		sol::optional<int> Element::getChildOffsetY_lua() const {
+			return valueDefaultAsNil(childOffsetY, INT32_MAX);
+		}
+
+		void Element::setChildOffsetY_lua(sol::optional<int> value) {
+			setProperty(TES3::UI::Property::child_offset_y, value.value_or(INT32_MAX));
+		}
+
+		sol::table Element::getColor_lua(sol::this_state ts) const {
+			sol::state_view state = ts;
+			return state.create_table_with(1, colourRed, 2, colourGreen, 3, colourBlue);
+		}
+
+		void Element::setColor_lua(sol::table value) {
+			colourRed = value[1];
+			colourGreen = value[2];
+			colourBlue = value[3];
+			flagUsesRGBA = true;
+		}
+
+		void Element::setConsumeMouseEvents_lua(sol::optional<bool> value) {
+			flagConsumeMouseEvents = value.value_or(true);
+		}
+
+		const char* Element::getContentPath() const {
+			return contentPath.cString;
+		}
+
+		void Element::setContentPath_lua(sol::optional<const char*> value) {
+			setIcon(value.value_or(""));
+		}
+
+		bool Element::getDisabled() const {
+			return toBool(getProperty(PropertyType::Property, Property::disabled).propertyValue);
+		}
+
+		void Element::setDisabled(bool value) {
+			setProperty(TES3::UI::Property::disabled, toBooleanProperty(value));
+		}
+
+		std::string Element::getFlowDirectionString() const {
+			auto flow = getProperty(TES3::UI::PropertyType::Property, TES3::UI::Property::flow_direction).propertyValue;
+			return (flow == Property::top_to_bottom) ? "top_to_bottom" : "left_to_right";
+		}
+
+		void Element::setFlowDirectionString(std::string value) {
+			auto prop = (value == "top_to_bottom") ? Property::top_to_bottom : Property::left_to_right;
+			setProperty(TES3::UI::Property::flow_direction, prop);
+		}
+
+		int Element::getFont() const {
+			return font;
+		}
+
+		void Element::setFont_lua(sol::optional<int> value) {
+			setProperty(Property::font, value.value_or(0));
+		}
+
+		int Element::getHeight() const {
+			return height;
+		}
+
+		void Element::setHeight(int value) {
+			setProperty(Property::height, value);
+		}
+
+		sol::optional<float> Element::getHeightProportional_lua() const {
+			return valueDefaultAsNil(widthProportional, -1.0f);
+		}
+
+		void Element::setHeightProportional_lua(sol::optional<float> value) {
+			widthProportional = value.value_or(-1.0f);
+		}
+
+		bool Element::getImageFilter() const {
+			if (sceneNode && texture) {
+				using FilterMode = NI::TexturingProperty::FilterMode;
+				auto prop = sceneNode->children.at(0)->getProperty(NI::PropertyType::Texturing);
+				if (prop) {
+					auto texturing = static_cast<NI::TexturingProperty*>(prop.get());
+					return texturing->maps.at(0)->filterMode != FilterMode::NEAREST;
+				}
+			}
+			return true;
+		}
+
+		void Element::setImageFilter(bool value) {
+			if (sceneNode && texture) {
+				using FilterMode = NI::TexturingProperty::FilterMode;
+				auto prop = sceneNode->children.at(0)->getProperty(NI::PropertyType::Texturing);
+				if (prop) {
+					auto texturing = static_cast<NI::TexturingProperty*>(prop.get());
+					texturing->maps.at(0)->filterMode = value ? FilterMode::BILERP : FilterMode::NEAREST;
+					sceneNode->updateProperties();
+				}
+			}
+		}
+
+		float Element::getImageScaleX() const {
+			return imageScaleX;
+		}
+
+		void Element::setImageScaleX(float value) {
+			imageScaleX = value;
+			flagContentChanged = true;
+		}
+
+		float Element::getImageScaleY() const {
+			return imageScaleY;
+		}
+
+		void Element::setImageScaleY(float value) {
+			imageScaleY = value;
+			flagContentChanged = true;
+		}
+
+		std::string Element::getJustifyTextString() const {
+			auto justify = getProperty(PropertyType::Property, Property::justify).propertyValue;
+			if (justify == Property::center) return "center";
+			if (justify == Property::right) return "right";
+			return "left";
+		}
+
+		void Element::setJustifyTextString(std::string value) {
+			auto prop = Property::left;
+			if (value == "center") {
+				prop = Property::center;
+			}
+			else if (value == "right") {
+				prop = Property::right;
+			}
+			setProperty(TES3::UI::Property::justify, prop);
+			flagContentChanged = true;
+		}
+
+		sol::optional<int> Element::getMaxHeight_lua() const {
+			return valueDefaultAsNil(maxHeight, INT32_MAX);
+		}
+
+		void Element::setMaxHeight_lua(sol::optional<int> value) {
+			setProperty(TES3::UI::Property::max_height, value.value_or(INT32_MAX));
+		}
+
+		sol::optional<int> Element::getMaxWidth_lua() const {
+			return valueDefaultAsNil(maxWidth, INT32_MAX);
+		}
+
+		void Element::setMaxWidth_lua(sol::optional<int> value) {
+			setProperty(TES3::UI::Property::max_width, value.value_or(INT32_MAX));
+		}
+
+		sol::optional<int> Element::getMinHeight_lua() const {
+			return valueDefaultAsNil(minHeight, INT32_MIN);
+		}
+
+		void Element::setMinHeight_lua(sol::optional<int> value) {
+			setProperty(TES3::UI::Property::min_height, value.value_or(INT32_MIN));
+		}
+
+		sol::optional<int> Element::getMinWidth_lua() const {
+			return valueDefaultAsNil(minWidth, INT32_MIN);
+		}
+
+		void Element::setMinWidth_lua(sol::optional<int> value) {
+			setProperty(TES3::UI::Property::min_width, value.value_or(INT32_MIN));
+		}
+
+		int Element::getNodeOffsetX() const {
+			return nodeOffsetX;
+		}
+
+		void Element::setNodeOffsetX(int value) {
+			setProperty(Property::node_offset_x, value);
+		}
+
+		int Element::getNodeOffsetY() const {
+			return nodeOffsetY;
+		}
+
+		void Element::setNodeOffsetY(int value) {
+			setProperty(Property::node_offset_y, value);
+		}
+
+		int Element::getPaddingAllSides() const {
+			return paddingAllSides;
+		}
+
+		void Element::setPaddingAllSides_lua(sol::optional<int> value) {
+			paddingAllSides = value.value_or(0);
+		}
+
+		sol::optional<int> Element::getPaddingBottom_lua() const {
+			return valueDefaultAsNil(paddingBottom, -1);
+		}
+
+		void Element::setPaddingBottom_lua(sol::optional<int> value) {
+			paddingBottom = value.value_or(-1);
+		}
+
+		sol::optional<int> Element::getPaddingLeft_lua() const {
+			return valueDefaultAsNil(paddingLeft, -1);
+		}
+
+		void Element::setPaddingLeft_lua(sol::optional<int> value) {
+			paddingLeft = value.value_or(-1);
+		}
+
+		sol::optional<int> Element::getPaddingRight_lua() const {
+			return valueDefaultAsNil(paddingRight, -1);
+		}
+
+		void Element::setPaddingRight_lua(sol::optional<int> value) {
+			paddingRight = value.value_or(-1);
+		}
+
+		sol::optional<int> Element::getPaddingTop_lua() const {
+			return valueDefaultAsNil(paddingTop, -1);
+		}
+
+		void Element::setPaddingTop_lua(sol::optional<int> value) {
+			paddingTop = value.value_or(-1);
+		}
+
+		int Element::getPositionX() const {
+			return positionX;
+		}
+
+		void Element::setPositionX(int value) {
+			setProperty(Property::x_loc, value);
+		}
+
+		int Element::getPositionY() const {
+			return positionY;
+		}
+
+		void Element::setPositionY(int value) {
+			setProperty(Property::y_loc, value);
+		}
+
+		bool Element::getRepeatKeys() const {
+			return toBool(getProperty(TES3::UI::PropertyType::Property, TES3::UI::Property::repeat_keys).propertyValue);
+		}
+
+		void Element::setRepeatKeys(bool value) {
+			setProperty(TES3::UI::Property::repeat_keys, toBooleanProperty(value));
+		}
+
+		bool Element::getScaleMode() const {
+			return toBool(scale_mode);
+		}
+
+		void Element::setScaleMode(bool value) {
+			scale_mode = toBooleanProperty(value);
+			flagContentChanged = true;
+		}
+
+		NI::Pointer<NI::SourceTexture> Element::getTexture() const {
+			return texture;
+		}
+
+		void Element::setTexture(NI::Pointer<NI::SourceTexture> value) {
+			texture = value;
+			contentType = Property::image;
+			flagContentChanged = true;
+		}
+
+		bool Element::getVisible() const {
+			return visible;
+		}
+
+		void Element::setVisible_lua(sol::optional<bool> value) {
+			setVisible(value.value_or(true));
+		}
+
+		int Element::getWidth() const {
+			return width;
+		}
+
+		void Element::setWidth(int value) {
+			setProperty(TES3::UI::Property::width, value);
+		}
+
+		sol::optional<float> Element::getWidthProportional_lua() const {
+			return valueDefaultAsNil(widthProportional, -1.0f);
+		}
+
+		void Element::setWidthProportional_lua(sol::optional<float> value) {
+			widthProportional = value.value_or(-1.0f);
+		}
+
+		bool Element::getWrapText() const {
+			return toBool(getProperty(TES3::UI::PropertyType::Property, TES3::UI::Property::wrap_text).propertyValue);
+		}
+
+		void Element::setWrapText(bool value) {
+			setProperty(TES3::UI::Property::wrap_text, toBooleanProperty(value));
+			flagContentChanged = true;
+		}
+
+		bool Element::hasProperty_lua(sol::object key) const {
+			return hasProperty(getPropertyFromObject(key));
+		}
+
+		PropertyType Element::getPropertyType_lua(sol::object key) const {
+			return getPropertyType(getPropertyFromObject(key));
+		}
+
+		bool Element::getPropertyBool_lua(sol::object key) const {
+			return toBool(getProperty(TES3::UI::PropertyType::Property, getPropertyFromObject(key)).propertyValue);
+		}
+
+		void Element::setPropertyBool_lua(sol::object key, bool value) {
+			setProperty(getPropertyFromObject(key), toBooleanProperty(value));
+		}
+
+		int Element::getPropertyInt_lua(sol::object key) const {
+			return getProperty(TES3::UI::PropertyType::Property, getPropertyFromObject(key)).integerValue;
+		}
+
+		void Element::setPropertyInt_lua(sol::object key, int value) {
+			setProperty(getPropertyFromObject(key), value);
+		}
+
+		float Element::getPropertyFloat_lua(sol::object key) const {
+			return getProperty(TES3::UI::PropertyType::Property, getPropertyFromObject(key)).floatValue;
+		}
+
+		void Element::setPropertyFloat_lua(sol::object key, float value) {
+			setProperty(getPropertyFromObject(key), value);
+		}
+
+		sol::object Element::getPropertyObject_lua(sol::this_state ts, sol::object key, sol::optional<std::string> typeCast) const {
+			sol::state_view state = ts;
+
+			TES3::UI::Property prop = getPropertyFromObject(key);
+			auto ptr = getProperty(TES3::UI::PropertyType::Pointer, prop).ptrValue;
+
+			if (!ptr) {
+				return sol::nil;
+			}
+
+			if (!typeCast) {
+				auto object = static_cast<TES3::BaseObject*>(ptr);
+
+				switch (object->objectType) {
+				case TES3::ObjectType::MobileCreature:
+				case TES3::ObjectType::MobileNPC:
+				case TES3::ObjectType::MobilePlayer:
+					return static_cast<TES3::MobileObject*>(ptr)->getOrCreateLuaObject(state);
+				default:
+					return static_cast<TES3::BaseObject*>(ptr)->getOrCreateLuaObject(state);
+				}
+			}
+			else {
+				if (typeCast.value() == "tes3itemData") {
+					return sol::make_object(state, static_cast<TES3::ItemData*>(ptr));
+				}
+				else if (typeCast.value() == "tes3gameFile") {
+					return sol::make_object(state, static_cast<TES3::GameFile*>(ptr));
+				}
+				else if (typeCast.value() == "tes3inventoryTile") {
+					return sol::make_object(state, static_cast<TES3::UI::InventoryTile*>(ptr));
+				}
+				else if (typeCast.value() == "tes3uiElement") {
+					return sol::make_object(state, static_cast<TES3::UI::Element*>(ptr));
+				}
+				return sol::nil;
+			}
+		}
+
+		void Element::setPropertyObject_lua(sol::object key, sol::object value) {
+			auto prop = getPropertyFromObject(key);
+			if (value.is<void*>()) {
+				setProperty(prop, value.as<void*>());
+			}
+			else {
+				throw std::invalid_argument("Could not determine type of value to set.");
+			}
+		}
+
+		void Element::register_lua(const std::string& eventID, sol::object callback) {
+			// Callback is supposed to be an address. Dangerous advanced usage, sets the actual property.
+			if (callback.is<unsigned int>()) {
+				// Map friendlier event names to standard UI events
+				auto prop = getStandardEventFromName(eventID);
+				if (!prop) {
+					prop = registerProperty(eventID.c_str());
+				}
+
+				setProperty(prop.value(), reinterpret_cast<TES3::UI::EventCallback>(callback.as<unsigned int>()));
+			}
+
+			// Callback is a lua event, put it into our custom handler system.
+			else if (callback.is<sol::protected_function>()) {
+				if (!callback.valid()) {
+					std::stringstream ss;
+					ss << "UI register event has invalid callback: target " << (name.cString ? name.cString : "(unnamed)") << ", event " << eventID;
+					throw std::invalid_argument(ss.str());
+				}
+
+				// Map friendlier event names to standard UI events
+				auto prop = getStandardEventFromName(eventID);
+				if (!prop) {
+					prop = TES3::UI::registerProperty(eventID.c_str());
+				}
+
+				// Check UI registry for custom event
+				mwse::lua::registerUIEvent(this, prop.value(), callback.as<sol::protected_function>());
+			}
+
+			// Unrecognized type, spit an error.
+			else {
+				std::stringstream ss;
+				ss << "UI register event has invalid callback type: target " << (name.cString ? name.cString : "(unnamed)") << ", event " << eventID;
+				throw std::invalid_argument(ss.str());
+			}
+		}
+
+		void Element::unregister_lua(const std::string& eventID) {
+			auto prop = getStandardEventFromName(eventID);
+			if (!prop) {
+				prop = TES3::UI::registerProperty(eventID.c_str());
+			}
+			mwse::lua::unregisterUIEvent(this, prop.value());
+		}
+
+		void Element::forwardEvent_lua(sol::table eventData) const {
+			if (eventData.valid()) {
+				mwse::lua::eventForwarder(eventData);
+			}
+		}
+
+		void Element::triggerEvent_lua(sol::object params) {
+			if (params.get_type() == sol::type::table) {
+				auto eventData = params.as<sol::table>();
+				mwse::lua::triggerEvent(this, eventData["id"], eventData["data0"], eventData["data1"]);
+				return;
+			}
+
+			// Map friendlier event names to standard UI events
+			auto eventID = params.as<std::string>();
+			auto prop = getStandardEventFromName(eventID);
+			if (!prop) {
+				prop = TES3::UI::registerProperty(eventID.c_str());
+			}
+
+			mwse::lua::triggerEvent(this, prop.value(), 0, 0);
+		}
+
+		bool Element::reorderChildren_lua(sol::object insertBefore, sol::object moveFrom, int count) {
+			int indexInsertBefore, indexMoveFrom;
+
+			if (insertBefore.is<int>()) {
+				indexInsertBefore = insertBefore.as<int>();
+			}
+			else {
+				indexInsertBefore = getIndexOfChild(insertBefore.as<Element*>());
+				if (indexInsertBefore == -1) {
+					return false;
+				}
+			}
+			if (moveFrom.is<int>()) {
+				indexMoveFrom = moveFrom.as<int>();
+			}
+			else {
+				indexMoveFrom = getIndexOfChild(moveFrom.as<Element*>());
+				if (indexMoveFrom == -1) {
+					return false;
+				}
+			}
+
+			return reorderChildren(indexInsertBefore, indexMoveFrom, count);
+		}
+
+		void Element::updateLayout_lua(sol::optional<bool> updateTimestamp) {
+			performLayout(updateTimestamp.value_or(true));
+		}
+
+		Element* Element::createBlock_lua(sol::optional<sol::table> params) {
+			auto id = mwse::lua::getOptionalUIID(params, "id");
+			return createBlock(id);
+		}
+
+		Element* Element::createButton_lua(sol::optional<sol::table> params) {
+			auto id = mwse::lua::getOptionalUIID(params, "id");
+			Element* element = createButton(id);
+
+			auto text = mwse::lua::getOptionalParam<const char*>(params, "text", nullptr);
+			if (text) {
+				element->setText(text);
+			}
+
+			return element;
+		}
+
+		Element* Element::createDivider_lua(sol::optional<sol::table> params) {
+			auto id = mwse::lua::getOptionalUIID(params, "id");
+			return createDivider(id);
+		}
+
+		Element* Element::createFillBar_lua(sol::optional<sol::table> params) {
+			auto id = mwse::lua::getOptionalUIID(params, "id");
+
+			Element* element = createFillBar(id);
+			auto fillbar = WidgetFillbar::fromElement(element);
+			fillbar->setCurrent(mwse::lua::getOptionalParam(params, "current", 0));
+			fillbar->setMax(mwse::lua::getOptionalParam(params, "max", 0));
+
+			return element;
+		}
+
+		Element* Element::createHorizontalScrollPane_lua(sol::optional<sol::table> params) {
+			auto id = mwse::lua::getOptionalUIID(params, "id");
+			Element* scrollpane = createHorizontalScrollPane(id);
+
+			// Add mouse wheel handlers (see event dispatch patch in TES3UIManager.cpp)
+			scrollpane->setProperty(TES3::UI::Property::event_mouse_scroll_down, onScrollPaneMousewheel);
+			scrollpane->setProperty(TES3::UI::Property::event_mouse_scroll_up, onScrollPaneMousewheel);
+
+			return scrollpane;
+		}
+
+		Element* Element::createHypertext_lua(sol::optional<sol::table> params) {
+			auto id = mwse::lua::getOptionalUIID(params, "id");
+			return createHypertext(id);
+		}
+
+		Element* Element::createImage_lua(sol::optional<sol::table> params) {
+			std::string path = mwse::lua::getOptionalParam<const char*>(params, "path", nullptr);
+			if (path.empty()) {
+				throw std::invalid_argument("createImage: path argument is required.");
+			}
+
+			// Sanitize path.
+			std::replace(path.begin(), path.end(), '/', '\\');
+
+			auto id = mwse::lua::getOptionalUIID(params, "id");
+			return createImage(id, path.c_str());
+		}
+
+		Element* Element::createLabel_lua(sol::optional<sol::table> params) {
+			auto id = mwse::lua::getOptionalUIID(params, "id");
+			const char* text = mwse::lua::getOptionalParam<const char*>(params, "text", "(nil)");
+			return createLabel(id, text);
+		}
+
+		Element* Element::createNif_lua(sol::optional<sol::table> params) {
+			std::string path = mwse::lua::getOptionalParam<const char*>(params, "path", nullptr);
+			if (path.empty()) {
+				throw std::invalid_argument("createNif: path argument is required.");
+			}
+
+			// Sanitize path.
+			std::replace(path.begin(), path.end(), '/', '\\');
+
+			auto id = mwse::lua::getOptionalUIID(params, "id");
+			return createNif(id, path.c_str());
+		}
+
+		Element* Element::createParagraphInput_lua(sol::optional<sol::table> params) {
+			auto id = mwse::lua::getOptionalUIID(params, "id");
+			return createParagraphInput(id);
+		}
+
+		Element* Element::createRect_lua(sol::optional<sol::table> params) {
+			auto id = mwse::lua::getOptionalUIID(params, "id");
+			bool randomColor = mwse::lua::getOptionalParam(params, "randomizeColor", false);
+			auto element = createRect(id, false, randomColor);
+
+			if (!randomColor) {
+				auto color = mwse::lua::getOptionalParamVector3(params, "color");
+				if (color) {
+					colourRed = color.value().x;
+					colourGreen = color.value().y;
+					colourBlue = color.value().z;
+					element->flagUsesRGBA = true;
+				}
+			}
+
+			return element;
+		}
+
+		Element* Element::createSlider_lua(sol::optional<sol::table> params) {
+			auto id = mwse::lua::getOptionalUIID(params, "id");
+			auto element = createSlider(id);
+
+			auto slider = WidgetScrollBar::fromElement(element);
+			slider->setCurrent(mwse::lua::getOptionalParam(params, "current", 0));
+			slider->setMax(mwse::lua::getOptionalParam(params, "max", 0));
+			slider->setStepX(mwse::lua::getOptionalParam(params, "step", 1));
+			slider->setJumpX(mwse::lua::getOptionalParam(params, "jump", 5));
+
+			return element;
+		}
+
+		Element* Element::createSliderVertical_lua(sol::optional<sol::table> params) {
+			auto id = mwse::lua::getOptionalUIID(params, "id");
+			auto element = createSliderVertical(id);
+
+			auto slider = WidgetScrollBar::fromElement(element);
+			slider->setCurrent(mwse::lua::getOptionalParam(params, "current", 0));
+			slider->setMax(mwse::lua::getOptionalParam(params, "max", 0));
+			slider->setStepX(mwse::lua::getOptionalParam(params, "step", 1));
+			slider->setJumpX(mwse::lua::getOptionalParam(params, "jump", 5));
+
+			return element;
+		}
+
+		Element* Element::createTextInput_lua(sol::optional<sol::table> params) {
+			auto id = mwse::lua::getOptionalUIID(params, "id");
+			return createTextInput(id);
+		}
+
+		Element* Element::createTextSelect_lua(sol::optional<sol::table> params) {
+			auto id = mwse::lua::getOptionalUIID(params, "id");
+			auto element = createTextSelect(id);
+
+			auto text = mwse::lua::getOptionalParam<const char*>(params, "text", nullptr);
+			if (text) {
+				element->setText(text);
+			}
+
+			auto state = mwse::lua::getOptionalParam<int>(params, "state");
+			if (state) {
+				auto textSelect = TES3::UI::WidgetTextSelect::fromElement(element);
+				textSelect->setState(state.value());
+			}
+
+			return element;
+		}
+
+		Element* Element::createThinBorder_lua(sol::optional<sol::table> params) {
+			auto id = mwse::lua::getOptionalUIID(params, "id");
+			return createThinBorder(id);
+		}
+
+		Element* Element::createVerticalScrollPane_lua(sol::optional<sol::table> params) {
+			auto id = mwse::lua::getOptionalUIID(params, "id");
+			auto element = createVerticalScrollPane(id);
+
+			if (mwse::lua::getOptionalParam(params, "hideFrame", false)) {
+				element->setIcon("");
+			}
+
+			// Add mouse wheel handlers (see event dispatch patch in TES3UIManager.cpp)
+			element->setProperty(TES3::UI::Property::event_mouse_scroll_down, TES3::UI::onScrollPaneMousewheel);
+			element->setProperty(TES3::UI::Property::event_mouse_scroll_up, TES3::UI::onScrollPaneMousewheel);
+
+			return element;
+		}
+
 		//
 		// Patch methods
 		//
+
 		void Element::patchUpdateLayout_propagateFlow() {
 			// Call original function
 			TES3_ui_updateLayout_propagateFlow(this);

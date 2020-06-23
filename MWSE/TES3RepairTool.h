@@ -17,6 +17,13 @@ namespace TES3 {
 		unsigned short maxCondition; // 0xB0
 		short unknown_0xB2;
 		float quality; // 0xB4
+
+		//
+		// Custom functions.
+		//
+
+		void setIconPath(const char* path);
+
 	};
 	static_assert(sizeof(RepairTool) == 0xB8, "TES3::RepairTool failed size validation");
 }

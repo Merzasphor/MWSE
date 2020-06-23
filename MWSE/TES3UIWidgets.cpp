@@ -56,6 +56,11 @@ namespace TES3 {
 			return static_cast<WidgetButton*>(element);
 		}
 
+		const WidgetButton* WidgetButton::fromElement(const Element* element) {
+			static bool initialized = initProperties();
+			return static_cast<const WidgetButton*>(element);
+		}
+
 		int WidgetButton::getState() const {
 			return getProperty(PropertyType::Integer, propButtonState).integerValue;
 		}
@@ -99,6 +104,11 @@ namespace TES3 {
 		WidgetFillbar* WidgetFillbar::fromElement(Element* element) {
 			static bool initialized = initProperties();
 			return static_cast<WidgetFillbar*>(element);
+		}
+
+		const WidgetFillbar* WidgetFillbar::fromElement(const Element* element) {
+			static bool initialized = initProperties();
+			return static_cast<const WidgetFillbar*>(element);
 		}
 
 		double WidgetFillbar::getCurrent() const {
@@ -187,6 +197,11 @@ namespace TES3 {
 			return static_cast<WidgetParagraphInput*>(element);
 		}
 
+		const WidgetParagraphInput* WidgetParagraphInput::fromElement(const Element* element) {
+			static bool initialized = initProperties();
+			return static_cast<const WidgetParagraphInput*>(element);
+		}
+
 		int WidgetParagraphInput::getLengthLimit() const {
 			return getProperty(PropertyType::Integer, propParagraphInputMaxLength).integerValue;
 		}
@@ -198,6 +213,7 @@ namespace TES3 {
 			auto textInput = WidgetTextInput::fromElement(findChild(uiidParagraphInputText));
 			return textInput->getText();
 		}
+
 		void WidgetParagraphInput::setText(const char* text) {
 			std::string editText = text;
 			editText.append("|");
@@ -221,6 +237,11 @@ namespace TES3 {
 		WidgetScrollBar* WidgetScrollBar::fromElement(Element* element) {
 			static bool initialized = initProperties();
 			return static_cast<WidgetScrollBar*>(element);
+		}
+
+		const WidgetScrollBar* WidgetScrollBar::fromElement(const Element* element) {
+			static bool initialized = initProperties();
+			return static_cast<const WidgetScrollBar*>(element);
 		}
 
 		int WidgetScrollBar::getCurrent() const {
@@ -269,10 +290,16 @@ namespace TES3 {
 			return static_cast<WidgetScrollPane*>(element);
 		}
 
+		const WidgetScrollPane* WidgetScrollPane::fromElement(const Element* element) {
+			static bool initialized = initProperties();
+			return static_cast<const WidgetScrollPane*>(element);
+		}
+
 		int WidgetScrollPane::getHorizontalPos() const {
 			auto scroll = WidgetScrollBar::fromElement(findChild(uiidScrollPaneHScroll));
 			return scroll->getCurrent();
 		}
+
 		void WidgetScrollPane::setHorizontalPos(int value) {
 			auto scroll = WidgetScrollBar::fromElement(findChild(uiidScrollPaneHScroll));
 			scroll->setCurrent(value);
@@ -285,6 +312,7 @@ namespace TES3 {
 			auto scroll = WidgetScrollBar::fromElement(findChild(uiidScrollPaneVScroll));
 			return scroll->getCurrent();
 		}
+
 		void WidgetScrollPane::setVerticalPos(int value) {
 			auto scroll = WidgetScrollBar::fromElement(findChild(uiidScrollPaneVScroll));
 			scroll->setCurrent(value);
@@ -344,9 +372,15 @@ namespace TES3 {
 			return static_cast<WidgetTextInput*>(element);
 		}
 
+		const WidgetTextInput* WidgetTextInput::fromElement(const Element* element) {
+			static bool initialized = initProperties();
+			return static_cast<const WidgetTextInput*>(element);
+		}
+
 		int WidgetTextInput::getLengthLimit() const {
 			return getProperty(PropertyType::Integer, propTextInputLengthLimit).integerValue;
 		}
+
 		void WidgetTextInput::setLengthLimit(int limit) {
 			setProperty(propTextInputLengthLimit, limit);
 		}
@@ -411,6 +445,11 @@ namespace TES3 {
 		WidgetTextSelect* WidgetTextSelect::fromElement(Element* element) {
 			static bool initialized = initProperties();
 			return static_cast<WidgetTextSelect*>(element);
+		}
+
+		const WidgetTextSelect* WidgetTextSelect::fromElement(const Element* element) {
+			static bool initialized = initProperties();
+			return static_cast<const WidgetTextSelect*>(element);
 		}
 
 		int WidgetTextSelect::getState() const {

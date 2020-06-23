@@ -23,14 +23,19 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		int getGoldStackCount();
+		int getGoldStackCount() const;
 
 		//
 		// Custom functions.
 		//
 
-		SoulGemData * getSoulGemData();
-		bool isSoulGem();
+		void setIconPath(const char* path);
+
+		SoulGemData * getSoulGemData() const;
+		bool isSoulGem() const;
+
+		bool getIsKey() const;
+		void setIsKey(bool value);
 
 	};
 	static_assert(sizeof(Misc) == 0x60, "TES3::Misc failed size validation");

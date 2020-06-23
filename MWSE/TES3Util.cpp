@@ -152,7 +152,7 @@ namespace mwse {
 
 
 		int getSkillNameGMST(int id) {
-			return reinterpret_cast<int*>(0x794430)[id];
+			return TES3::Skill::NAME_GMSTS[id];
 		}
 
 		int getAttributeNameGMST(int id) {
@@ -163,20 +163,20 @@ namespace mwse {
 			return reinterpret_cast<int*>(0x7947C8)[id];
 		}
 
-		static std::unordered_map<TES3::Misc*, TES3::SoulGemData*> customSoulGems;
+		static std::unordered_map<const TES3::Misc*, TES3::SoulGemData*> customSoulGems;
 
-		bool isSoulGem(TES3::Object* objectOrReference) {
-			if (reinterpret_cast<bool(__cdecl *)(TES3::Object*)>(0x49ABE0)(objectOrReference)) {
+		bool isSoulGem(const TES3::Object* objectOrReference) {
+			if (reinterpret_cast<bool(__cdecl *)(const TES3::Object*)>(0x49ABE0)(objectOrReference)) {
 				return true;
 			}
 
 			// If we were given a reference, look at the base object.
 			if (objectOrReference->objectType == TES3::ObjectType::Reference) {
-				objectOrReference = reinterpret_cast<TES3::Reference*>(objectOrReference)->baseObject;
+				return isSoulGem(reinterpret_cast<const TES3::Reference*>(objectOrReference)->baseObject);
 			}
 
 			if (objectOrReference->objectType == TES3::ObjectType::Misc) {
-				auto searchResult = customSoulGems.find(reinterpret_cast<TES3::Misc*>(objectOrReference));
+				auto searchResult = customSoulGems.find(reinterpret_cast<const TES3::Misc*>(objectOrReference));
 				if (searchResult != customSoulGems.end()) {
 					return true;
 				}
@@ -185,13 +185,13 @@ namespace mwse {
 			return false;
 		}
 
-		TES3::SoulGemData * addCustomSoulGem(TES3::Misc * item) {
+		TES3::SoulGemData * addCustomSoulGem(const TES3::Misc * item) {
 			if (isSoulGem(item)) {
 				return nullptr;
 			}
 
 			auto data = new TES3::SoulGemData();
-			data->item = item;
+			data->item = const_cast<TES3::Misc*>(item);
 			data->id = item->objectID;
 			data->name = item->name;
 			data->mesh = item->model;
@@ -203,7 +203,7 @@ namespace mwse {
 			return data;
 		}
 
-		TES3::SoulGemData * getSoulGemData(TES3::Misc * item) {
+		TES3::SoulGemData * getSoulGemData(const TES3::Misc * item) {
 			TES3::SoulGemData * vanillaSoulGems = reinterpret_cast<TES3::SoulGemData*>(0x791C98);
 			for (size_t i = 0; i < 6; i++) {
 				if (vanillaSoulGems[i].item == item) {

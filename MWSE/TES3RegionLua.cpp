@@ -24,23 +24,10 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition["sound"] =  [](TES3::RegionSound& self) { return self.sound; };
+				usertypeDefinition["sound"] =  &TES3::RegionSound::sound;
 
 				// Restrict chance [0-100].
-				usertypeDefinition["chance"] = sol::property(
-					[](TES3::RegionSound& self) { return self.chance; },
-					[](TES3::RegionSound& self, int value)
-				{
-					if (value < 0) {
-						value = 0;
-					}
-					else if (value > 100) {
-						value = 100;
-					}
-
-					self.chance = value;
-				}
-				);
+				usertypeDefinition["chance"] = sol::property(&TES3::RegionSound::chance, &TES3::RegionSound::setChance);
 			}
 
 			// Binding for TES3::Region.
@@ -54,86 +41,30 @@ namespace mwse {
 				setUserdataForTES3BaseObject(usertypeDefinition);
 
 				// Basic property binding.
-				usertypeDefinition["name"] = sol::property([](TES3::Region& self) { return self.name; });
+				usertypeDefinition["name"] = sol::property(&TES3::Region::getName, &TES3::Region::setName);
+				usertypeDefinition["sleepCreature"] = sol::readonly_property(&TES3::Region::sleepCreature);
 				usertypeDefinition["sounds"] = sol::readonly_property(&TES3::Region::sounds);
 
 				// Indirect bindings to unions and arrays.
-				usertypeDefinition["weatherChances"] = sol::readonly_property([](TES3::Region& self) { return std::ref(self.weatherChances); });
+				usertypeDefinition["weatherChances"] = sol::readonly_property(&TES3::Region::getWeatherChances);
 
 				// User-friendly access to weather chances.
-				usertypeDefinition["weatherChanceAsh"] = sol::property(
-					[](TES3::Region& self) { return self.getWeatherChance(TES3::WeatherType::Ash); },
-					[](TES3::Region& self, unsigned char value) { self.setWeatherChance(TES3::WeatherType::Ash, value); }
-				);
-				usertypeDefinition["weatherChanceBlight"] = sol::property(
-					[](TES3::Region& self) { return self.getWeatherChance(TES3::WeatherType::Blight); },
-					[](TES3::Region& self, unsigned char value) { self.setWeatherChance(TES3::WeatherType::Blight, value); }
-				);
-				usertypeDefinition["weatherChanceBlizzard"] = sol::property(
-					[](TES3::Region& self) { return self.getWeatherChance(TES3::WeatherType::Blizzard); },
-					[](TES3::Region& self, unsigned char value) { self.setWeatherChance(TES3::WeatherType::Blizzard, value); }
-				);
-				usertypeDefinition["weatherChanceClear"] = sol::property(
-					[](TES3::Region& self) { return self.getWeatherChance(TES3::WeatherType::Clear); },
-					[](TES3::Region& self, unsigned char value) { self.setWeatherChance(TES3::WeatherType::Clear, value); }
-				);
-				usertypeDefinition["weatherChanceCloudy"] = sol::property(
-					[](TES3::Region& self) { return self.getWeatherChance(TES3::WeatherType::Cloudy); },
-					[](TES3::Region& self, unsigned char value) { self.setWeatherChance(TES3::WeatherType::Cloudy, value); }
-				);
-				usertypeDefinition["weatherChanceFoggy"] = sol::property(
-					[](TES3::Region& self) { return self.getWeatherChance(TES3::WeatherType::Foggy); },
-					[](TES3::Region& self, unsigned char value) { self.setWeatherChance(TES3::WeatherType::Foggy, value); }
-				);
-				usertypeDefinition["weatherChanceOvercast"] = sol::property(
-					[](TES3::Region& self) { return self.getWeatherChance(TES3::WeatherType::Overcast); },
-					[](TES3::Region& self, unsigned char value) { self.setWeatherChance(TES3::WeatherType::Overcast, value); }
-				);
-				usertypeDefinition["weatherChanceRain"] = sol::property(
-					[](TES3::Region& self) { return self.getWeatherChance(TES3::WeatherType::Rain); },
-					[](TES3::Region& self, unsigned char value) { self.setWeatherChance(TES3::WeatherType::Rain, value); }
-				);
-				usertypeDefinition["weatherChanceSnow"] = sol::property(
-					[](TES3::Region& self) { return self.getWeatherChance(TES3::WeatherType::Snow); },
-					[](TES3::Region& self, unsigned char value) { self.setWeatherChance(TES3::WeatherType::Snow, value); }
-				);
-				usertypeDefinition["weatherChanceThunder"] = sol::property(
-					[](TES3::Region& self) { return self.getWeatherChance(TES3::WeatherType::Thunder); },
-					[](TES3::Region& self, unsigned char value) { self.setWeatherChance(TES3::WeatherType::Thunder, value); }
-				);
-
-				// Access to other objects that need to be packaged.
-				usertypeDefinition["sleepCreature"] = sol::readonly_property([](TES3::Region& self) { return self.sleepCreature; });
+				usertypeDefinition["weatherChanceAsh"] = sol::property(&TES3::Region::getWeatherChanceAsh, &TES3::Region::setWeatherChanceAsh);
+				usertypeDefinition["weatherChanceBlight"] = sol::property(&TES3::Region::getWeatherChanceBlight, &TES3::Region::setWeatherChanceBlight);
+				usertypeDefinition["weatherChanceBlizzard"] = sol::property(&TES3::Region::getWeatherChanceBlizzard, &TES3::Region::setWeatherChanceBlizzard);
+				usertypeDefinition["weatherChanceClear"] = sol::property(&TES3::Region::getWeatherChanceClear, &TES3::Region::setWeatherChanceClear);
+				usertypeDefinition["weatherChanceCloudy"] = sol::property(&TES3::Region::getWeatherChanceCloudy, &TES3::Region::setWeatherChanceCloudy);
+				usertypeDefinition["weatherChanceFoggy"] = sol::property(&TES3::Region::getWeatherChanceFoggy, &TES3::Region::setWeatherChanceFoggy);
+				usertypeDefinition["weatherChanceOvercast"] = sol::property(&TES3::Region::getWeatherChanceOvercast, &TES3::Region::setWeatherChanceOvercast);
+				usertypeDefinition["weatherChanceRain"] = sol::property(&TES3::Region::getWeatherChanceRain, &TES3::Region::setWeatherChanceRain);
+				usertypeDefinition["weatherChanceSnow"] = sol::property(&TES3::Region::getWeatherChanceSnow, &TES3::Region::setWeatherChanceSnow);
+				usertypeDefinition["weatherChanceThunder"] = sol::property(&TES3::Region::getWeatherChanceThunder, &TES3::Region::setWeatherChanceThunder);
 
 				// Expose the current weather, and allow it to be changed via setting.
-				usertypeDefinition["weather"] = sol::property(
-					[](TES3::Region& self) -> TES3::Weather*
-				{
-					if (self.currentWeatherIndex < TES3::WeatherType::First || self.currentWeatherIndex > TES3::WeatherType::Last) {
-						return nullptr;
-					}
-					return TES3::WorldController::get()->weatherController->arrayWeathers[self.currentWeatherIndex];
-				},
-					[](TES3::Region& self, sol::object weather)
-				{
-					// Get the index, either from a weather object or directly as a number.
-					int index = -1;
-					if (weather.is<TES3::Weather>()) {
-						index = weather.as<TES3::Weather*>()->index;
-					}
-					else if (weather.is<int>()) {
-						index = weather.as<int>();
-					}
-
-					// If it was a valid and different index, change the weather to it.
-					if (index != self.currentWeatherIndex && index >= TES3::WeatherType::First && index <= TES3::WeatherType::Last) {
-						self.changeWeather(index);
-					}
-				}
-				);
+				usertypeDefinition["weather"] = sol::property(&TES3::Region::getCurrentWeather, &TES3::Region::setCurrentWeather_lua);
 
 				// Basic function binding.
-				usertypeDefinition["changeWeather"] = &TES3::Region::changeWeather;
+				usertypeDefinition["changeWeather"] = &TES3::Region::setCurrentWeather_lua;
 				usertypeDefinition["randomizeWeather"] = &TES3::Region::randomizeWeather;
 			}
 		}

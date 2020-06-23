@@ -3,6 +3,7 @@
 #include "NIDefines.h"
 
 #include "TES3Defines.h"
+#include "TES3UIDefines.h"
 
 #include "TES3DataHandler.h"
 #include "TES3Vectors.h"
@@ -22,6 +23,18 @@ namespace mwse {
 			}
 
 			return value;
+		}
+
+		template <typename T>
+		sol::optional<T> getOptionalParam(sol::optional<sol::table> maybeParams, const char* key) {
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeValue = params[key];
+				if (maybeValue.valid() && maybeValue.is<T>()) {
+					return maybeValue.as<T>();
+				}
+			}
+			return {};
 		}
 
 		template <typename T>
@@ -56,7 +69,20 @@ namespace mwse {
 		sol::optional<TES3::Vector3> getOptionalParamVector3(sol::optional<sol::table> maybeParams, const char* key);
 		TES3::Cell* getOptionalParamCell(sol::optional<sol::table> maybeParams, const char* key);
 
+		TES3::UI::Property getPropertyFromObject(sol::object object);
+		TES3::UI::UI_ID getUIIDFromObject(sol::object object);
+		TES3::UI::UI_ID getOptionalUIID(sol::optional<sol::table> maybeParams, const char* key);
+
 		void setVectorFromLua(TES3::Vector3*, sol::stack_object);
+
+		// Allow handling a default value as an unsatisfied optional.
+		template <typename T>
+		sol::optional<T> valueDefaultAsNil(const T& value, const T& defaultValue) {
+			if (value == defaultValue) {
+				return {};
+			}
+			return value;
+		}
 
 		// Dumps the current stacktrace to the log.
 		void logStackTrace(const char* message = nullptr);

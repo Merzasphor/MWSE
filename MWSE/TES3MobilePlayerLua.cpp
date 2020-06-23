@@ -70,26 +70,15 @@ namespace mwse {
 				usertypeDefinition["weaponReady"] = &TES3::MobilePlayer::weaponReady;
 
 				// Indirect bindings to unions and arrays.
-				usertypeDefinition["levelupsPerAttribute"] = sol::property([](TES3::MobilePlayer& self) { return std::ref(self.levelupPerAttributeCount); });
-				usertypeDefinition["levelupsPerSpecialization"] = sol::property([](TES3::MobilePlayer& self) { return std::ref(self.levelupPerSpecialization); });
-				usertypeDefinition["skillProgress"] = sol::property([](TES3::MobilePlayer& self) { return std::ref(self.skillProgress); });
+				usertypeDefinition["levelupsPerAttribute"] = sol::readonly_property(&TES3::MobilePlayer::getLevelupsPerAttribute);
+				usertypeDefinition["levelupsPerSpecialization"] = sol::readonly_property(&TES3::MobilePlayer::getLevelupsPerSpecialization);
+				usertypeDefinition["skillProgress"] = sol::readonly_property(&TES3::MobilePlayer::getSkillProgressValues);
 
 				// Overwrite MobileActor::animationData for player.
-				usertypeDefinition["animationData"] = sol::readonly_property([](TES3::MobilePlayer& self) { return self.animationData.asPlayer; });
+				usertypeDefinition["animationData"] = sol::readonly_property(&TES3::MobilePlayer::getPlayerAnimationData);
 
 				// Overwrite MobileNPC::forceSneak so that it works on the player. 
-				usertypeDefinition["forceSneak"] = sol::property(
-					[](TES3::MobilePlayer& self) { return (self.movementFlags & TES3::ActorMovement::Sneaking) != 0; },
-					[](TES3::MobilePlayer& self, bool set)
-				{
-					if (set) {
-						self.movementFlags |= TES3::ActorMovement::Sneaking;
-					}
-					else {
-						self.movementFlags &= ~TES3::ActorMovement::Sneaking;
-					}
-				}
-				);
+				usertypeDefinition["forceSneak"] = sol::property(&TES3::MobilePlayer::flagForceSneak, &TES3::MobilePlayer::setFlagSneak);
 
 				// Basic function binding.
 				usertypeDefinition["exerciseSkill"] = &TES3::MobilePlayer::exerciseSkill;
@@ -105,14 +94,9 @@ namespace mwse {
 				auto usertypeDefinition = state.new_usertype<TES3::MarkData>("tes3markData");
 
 				// Basic property bindings.
+				usertypeDefinition["cell"] = &TES3::MarkData::cell;
 				usertypeDefinition["position"] = &TES3::MarkData::position;
 				usertypeDefinition["rotation"] = &TES3::MarkData::rotation;
-
-				// Access to other objects that need to be packaged.
-				usertypeDefinition["cell"] = sol::property(
-					[](TES3::MarkData& self) { return self.cell; },
-					[](TES3::MarkData& self, sol::optional<TES3::Cell*> cell) { self.cell = cell.value_or(nullptr); }
-				);
 			}
 		}
 	}

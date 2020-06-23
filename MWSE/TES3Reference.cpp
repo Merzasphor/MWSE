@@ -16,6 +16,7 @@
 
 #include "TES3Actor.h"
 #include "TES3AudioController.h"
+#include "TES3BodyPartManager.h"
 #include "TES3Cell.h"
 #include "TES3Class.h"
 #include "TES3Game.h"
@@ -179,6 +180,14 @@ namespace TES3 {
 		return attachment->data;
 	}
 
+	NI::Pointer<NI::Light> Reference::getAttachedNiLight() {
+		auto dynamicLight = getAttachedDynamicLight();
+		if (dynamicLight) {
+			return dynamicLight->light;
+		}
+		return nullptr;
+	}
+
 	bool Reference::isLeveledSpawn() {
 		return getLeveledBaseReference() != nullptr;
 	}
@@ -206,6 +215,19 @@ namespace TES3 {
 		}
 
 		return result;
+	}
+
+	Cell* Reference::getCell_lua() const {
+		// Handle case for the player.
+		if (TES3::WorldController::get()->getMobilePlayer()->reference == this) {
+			return TES3::DataHandler::get()->currentCell;
+		}
+
+		if (owningCollection.asReferenceList == nullptr) {
+			return nullptr;
+		}
+
+		return owningCollection.asReferenceList->cell;
 	}
 
 	void Reference::setPositionFromLua(sol::stack_object value) {
@@ -567,6 +589,15 @@ namespace TES3 {
 		}
 	}
 
+	int Reference::getStackSize() {
+		TES3::ItemData* itemData = getAttachedItemData();
+		return itemData ? itemData->count : 1;
+	}
+
+	void Reference::setStackSize(int count) {
+		getOrCreateAttachedItemData()->count = count;
+	}
+
 	const auto TES3_Reference_getSceneGraphNode = reinterpret_cast<NI::Node*(__thiscall*)(Reference*)>(0x4E81A0);
 	NI::Node * Reference::getSceneGraphNode() {
 		auto previousNode = sceneNode;
@@ -732,6 +763,104 @@ namespace TES3 {
 			return attachment->data;
 		}
 		return nullptr;
+	}
+
+	BodyPartManager* Reference::getAttachedBodyPartManager() {
+		auto attachment = static_cast<TES3::BodyPartManagerAttachment*>(getAttachment(TES3::AttachmentType::BodyPartManager));
+		if (attachment) {
+			return attachment->data;
+		}
+		return nullptr;
+	}
+
+	TravelDestination* Reference::getAttachedTravelDestination() {
+		auto attachment = static_cast<TES3::TravelDestinationAttachment*>(getAttachment(TES3::AttachmentType::TravelDestination));
+		if (attachment) {
+			return attachment->data;
+		}
+		return nullptr;
+	}
+
+	sol::table Reference::getAttachments_lua(sol::this_state ts) {
+		sol::state_view state = ts;
+
+		sol::table result = state.create_table();
+
+		Attachment* attachment = attachments;
+		while (attachment) {
+			switch (attachment->type) {
+			case AttachmentType::BodyPartManager:
+				result["bodyPartManager"] = reinterpret_cast<BodyPartManagerAttachment*>(attachment)->data;
+				break;
+			case AttachmentType::Light:
+				result["light"] = reinterpret_cast<LockAttachment*>(attachment)->data;
+				break;
+			case AttachmentType::Lock:
+				result["lock"] = reinterpret_cast<LockAttachment*>(attachment)->data;
+				break;
+			case AttachmentType::LeveledBaseReference:
+				result["leveledBase"] = reinterpret_cast<LeveledBaseReferenceAttachment*>(attachment)->data;
+				break;
+			case AttachmentType::TravelDestination:
+				result["travelDestination"] = reinterpret_cast<TravelDestinationAttachment*>(attachment)->data;
+				break;
+			case AttachmentType::Variables:
+				result["variables"] = reinterpret_cast<ItemDataAttachment*>(attachment)->data;
+				break;
+			case AttachmentType::ActorData:
+				result["actor"] = reinterpret_cast<MobileActorAttachment*>(attachment)->data;
+				break;
+			}
+
+			attachment = attachment->next;
+		}
+
+		return result;
+	}
+
+	sol::table Reference::getLuaTable() {
+		auto itemData = getAttachedItemData();
+
+		// Prevent adding a lua table if there's more than one item involved.
+		if (itemData && itemData->count > 1) {
+			throw std::exception("Cannot create lua data when more than one item is present.");
+		}
+
+		// Create the item data if it doesn't already exist.
+		if (itemData == nullptr) {
+			itemData = ItemData::createForObject(baseObject);
+			setAttachedItemData(itemData);
+		}
+
+		return itemData->getOrCreateLuaDataTable();
+	}
+
+	void Reference::activate_lua(Reference* target) {
+		target->activate(this);
+	}
+
+	std::shared_ptr<mwse::lua::ScriptContext> Reference::getContext_lua() {
+		if (baseObject->getScript() == nullptr) {
+			return nullptr;
+		}
+
+		auto variables = getAttachedItemData();
+		if (variables == nullptr) {
+			return nullptr;
+		}
+
+		return std::make_shared<mwse::lua::ScriptContext>(variables->script, variables->scriptData);
+	}
+
+	void Reference::updateSceneGraph_lua() {
+		Matrix33 tempOutArg;
+		sceneNode->setLocalRotationMatrix(updateSceneMatrix(&tempOutArg));
+		sceneNode->update();
+		setObjectModified(true);
+	}
+
+	Reference* Reference::getThis() {
+		return this;
 	}
 
 }

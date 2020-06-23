@@ -28,36 +28,9 @@ namespace mwse {
 			usertypeDefinition["getCheapest"] = &TES3::SpellList::getCheapest;
 
 			// Ambiguous function binding.
-			usertypeDefinition["add"] = [](TES3::SpellList& self, sol::object value) {
-				if (value.is<TES3::Spell*>()) {
-					return self.add(value.as<TES3::Spell*>());
-				}
-				else if (value.is<const char*>()) {
-					return self.add(value.as<const char*>());
-				}
-
-				return false;
-			};
-			usertypeDefinition["remove"] = [](TES3::SpellList& self, sol::object value) {
-				if (value.is<TES3::Spell*>()) {
-					return self.remove(value.as<TES3::Spell*>());
-				}
-				else if (value.is<const char*>()) {
-					return self.remove(value.as<const char*>());
-				}
-
-				return false;
-			};
-			usertypeDefinition["contains"] = [](TES3::SpellList& self, sol::object value) {
-				if (value.is<TES3::Spell*>()) {
-					return self.contains(value.as<TES3::Spell*>());
-				}
-				else if (value.is<const char*>()) {
-					return self.contains(value.as<const char*>());
-				}
-
-				return false;
-			};
+			usertypeDefinition["add"] = &TES3::SpellList::add_lua;
+			usertypeDefinition["remove"] = &TES3::SpellList::remove_lua;
+			usertypeDefinition["contains"] = &TES3::SpellList::contains_lua;
 		}
 	}
 }

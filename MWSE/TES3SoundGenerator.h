@@ -26,7 +26,14 @@ namespace TES3 {
 		// Virtual table overrides.
 		//
 
-		char * getObjectID();
+		const char* getObjectID() const;
+
+		//
+		// Custom functions.
+		//
+
+		std::string toJson() const;
+
 	};
 	static_assert(sizeof(SoundGenerator) == 0x3C, "TES3::SoundGenerator failed size validation");
 }

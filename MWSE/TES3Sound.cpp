@@ -3,6 +3,8 @@
 #include "TES3Util.h"
 #include "TES3WorldController.h"
 
+#include "LuaUtil.h"
+
 namespace TES3 {
 	char* Sound::getObjectID() {
 		return id;
@@ -29,6 +31,10 @@ namespace TES3 {
 	bool Sound::isPlaying() {
 		return TES3_Sound_isPlaying(this);
 	}
+	
+	const char* Sound::getFilename() const {
+		return filename;
+	}
 
 	float Sound::getVolume() {
 		return (float)volume / 250.0f;
@@ -49,4 +55,18 @@ namespace TES3 {
 
 		setVolumeRaw(currentScale);
 	}
+
+	std::string Sound::toJson() const {
+		std::ostringstream ss;
+		ss << "\"tes3sound:" << id << "\"";
+		return std::move(ss.str());
+	}
+
+	bool Sound::play_lua(sol::optional<sol::table> params) {
+		bool loop = mwse::lua::getOptionalParam<bool>(params, "loop", false);
+		unsigned char volume = mwse::lua::getOptionalParam<double>(params, "volume", 1.0) * 250;
+		float pitch = mwse::lua::getOptionalParam<double>(params, "pitch", 1.0);
+		return play(loop ? TES3::SoundPlayFlags::Loop : 0, volume, pitch, true);
+	}
+
 }

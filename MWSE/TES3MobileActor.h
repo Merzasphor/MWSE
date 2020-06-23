@@ -231,9 +231,9 @@ namespace TES3 {
 		void playVoiceover(int);
 		void startDialogue();
 
-		bool isAffectedByAlchemy(Alchemy * alchemy);
-		bool isAffectedByEnchantment(Enchantment * enchantment);
-		bool isAffectedBySpell(Spell * spell);
+		bool isAffectedByAlchemy(Alchemy * alchemy) const;
+		bool isAffectedByEnchantment(Enchantment * enchantment) const;
+		bool isAffectedBySpell(Spell * spell) const;
 
 		Iterator<Spell> * getCombatSpellList();
 
@@ -254,15 +254,131 @@ namespace TES3 {
 		// Custom functions.
 		//
 
-		bool getMobileActorFlag(MobileActorFlag::Flag);
+		bool getMobileActorFlag(MobileActorFlag::Flag) const;
 		void setMobileActorFlag(MobileActorFlag::Flag, bool);
 
-		bool getMobileActorMovementFlag(ActorMovement::Flag);
+		bool getMobileActorMovementFlag(ActorMovement::Flag) const;
 		void setMobileActorMovementFlag(ActorMovement::Flag, bool);
 
 		bool equipItem(Object* item, ItemData * itemData = nullptr, bool addItem = false, bool selectBestCondition = false, bool selectWorstCondition = false);
 
 		void updateOpacity();
+
+		ActorAnimationData* getAnimationData() const;
+		BaseObject* getCurrentSpell() const;
+
+		std::reference_wrapper<Statistic[8]> getAttributes();
+		std::reference_wrapper<int[24]> getEffectAttributes();
+
+		bool getFlagActiveAI() const;
+		void setFlagActiveAI(bool value);
+		bool getFlagAttacked() const;
+		void setFlagAttacked(bool value);
+		bool getFlagIdleAnim() const;
+		void setFlagIdleAnim(bool value);
+		bool getFlagInCombat() const;
+		void setFlagInCombat(bool value);
+		bool getFlagIsCrittable() const;
+		void setFlagIsCrittable(bool value);
+		bool getFlagSpellReadied() const;
+		void setFlagSpellReadied(bool value);
+		bool getFlagUnderwater() const;
+		void setFlagUnderwater(bool value);
+		bool getFlagWeaponDrawn() const;
+		void setFlagWeaponDrawn(bool value);
+		bool getFlagWerewolf() const;
+		void setFlagWerewolf(bool value);
+
+		Statistic* getAttributeAgility();
+		Statistic* getAttributeEndurance();
+		Statistic* getAttributeIntelligence();
+		Statistic* getAttributeLuck();
+		Statistic* getAttributePersonality();
+		Statistic* getAttributeSpeed();
+		Statistic* getAttributeStrength();
+		Statistic* getAttributeWillpower();
+
+		int getEffectAttributeAttackBonus() const;
+		void setEffectAttributeAttackBonus(int value);
+		int getEffectAttributeBlind() const;
+		void setEffectAttributeBlind(int value);
+		int getEffectAttributeChameleon() const;
+		void setEffectAttributeChameleon(int value);
+		int getEffectAttributeInvisibility() const;
+		void setEffectAttributeInvisibility(int value);
+		int getEffectAttributeJump() const;
+		void setEffectAttributeJump(int value);
+		int getEffectAttributeLevitate() const;
+		void setEffectAttributeLevitate(int value);
+		int getEffectAttributeParalyze() const;
+		void setEffectAttributeParalyze(int value);
+		int getEffectAttributeResistBlightDisease() const;
+		void setEffectAttributeResistBlightDisease(int value);
+		int getEffectAttributeResistCommonDisease() const;
+		void setEffectAttributeResistCommonDisease(int value);
+		int getEffectAttributeResistCorprus() const;
+		void setEffectAttributeResistCorprus(int value);
+		int getEffectAttributeResistFire() const;
+		void setEffectAttributeResistFire(int value);
+		int getEffectAttributeResistFrost() const;
+		void setEffectAttributeResistFrost(int value);
+		int getEffectAttributeResistMagicka() const;
+		void setEffectAttributeResistMagicka(int value);
+		int getEffectAttributeResistNormalWeapons() const;
+		void setEffectAttributeResistNormalWeapons(int value);
+		int getEffectAttributeResistParalysis() const;
+		void setEffectAttributeResistParalysis(int value);
+		int getEffectAttributeResistPoison() const;
+		void setEffectAttributeResistPoison(int value);
+		int getEffectAttributeResistShock() const;
+		void setEffectAttributeResistShock(int value);
+		int getEffectAttributeSanctuary() const;
+		void setEffectAttributeSanctuary(int value);
+		int getEffectAttributeShield() const;
+		void setEffectAttributeShield(int value);
+		int getEffectAttributeSilence() const;
+		void setEffectAttributeSilence(int value);
+		int getEffectAttributeSound() const;
+		void setEffectAttributeSound(int value);
+		int getEffectAttributeSwiftSwim() const;
+		void setEffectAttributeSwiftSwim(int value);
+		int getEffectAttributeWaterBreathing() const;
+		void setEffectAttributeWaterBreathing(int value);
+		int getEffectAttributeWaterWalking() const;
+		void setEffectAttributeWaterWalking(int value);
+
+		bool getMovementFlagFlying() const;
+		void setMovementFlagFlying(bool value);
+		bool getMovementFlagJumping() const;
+		void setMovementFlagJumping(bool value);
+		bool getMovementFlagBack() const;
+		void setMovementFlagBack(bool value);
+		bool getMovementFlagForward() const;
+		void setMovementFlagForward(bool value);
+		bool getMovementFlagLeft() const;
+		void setMovementFlagLeft(bool value);
+		bool getMovementFlagRight() const;
+		void setMovementFlagRight(bool value);
+		bool getMovementFlagRunning() const;
+		void setMovementFlagRunning(bool value);
+		bool getMovementFlagSneaking() const;
+		void setMovementFlagSneaking(bool value);
+		bool getMovementFlagJumped() const;
+		void setMovementFlagJumped(bool value);
+		bool getMovementFlagSwimming() const;
+		void setMovementFlagSwimming(bool value);
+		bool getMovementFlagTurnLeft() const;
+		void setMovementFlagTurnLeft(bool value);
+		bool getMovementFlagTurnRight() const;
+		void setMovementFlagTurnRight(bool value);
+		bool getMovementFlagWalking() const;
+		void setMovementFlagWalking(bool value);
+
+		bool isAffectedByObject_lua(sol::object object) const;
+
+		ActiveMagicEffect* getActiveMagicEffects_legacy() const;
+		int getActiveMagicEffectCount_legacy() const;
+
 	};
 	static_assert(sizeof(MobileActor::ActiveMagicEffects) == 0xC, "TES3::MobileActor::ActiveMagicEffects failed size validation");
 	static_assert(sizeof(MobileActor::ActiveMagicEffect) == 0x18, "TES3::MobileActor::ActiveMagicEffect failed size validation");

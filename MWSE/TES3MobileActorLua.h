@@ -52,186 +52,72 @@ namespace mwse {
 			usertypeDefinition["width"] = sol::readonly_property(&TES3::MobileActor::widthInUnits);
 
 			// Indirect bindings to unions and arrays.
-			usertypeDefinition["animationData"] = sol::readonly_property([](TES3::MobileActor& self) { return self.animationData.asActor; });
-			usertypeDefinition["attributes"] = sol::readonly_property([](TES3::MobileActor& self) { return std::ref(self.attributes); });
-			usertypeDefinition["currentSpell"] = sol::readonly_property([](TES3::MobileActor& self) { return self.currentSpell.source.asGeneric; });
-			usertypeDefinition["effectAttributes"] = sol::readonly_property([](TES3::MobileActor& self) { return std::ref(self.effectAttributes); });
+			usertypeDefinition["animationData"] = sol::readonly_property(&TES3::MobileActor::getAnimationData);
+			usertypeDefinition["attributes"] = sol::readonly_property(&TES3::MobileActor::getAttributes);
+			usertypeDefinition["currentSpell"] = sol::readonly_property(&TES3::MobileActor::getCurrentSpell);
+			usertypeDefinition["effectAttributes"] = sol::readonly_property(&TES3::MobileActor::getEffectAttributes);
 
 			// Friendly access to actor flags.
-			usertypeDefinition["activeAI"] = sol::property(
-				[](TES3::MobileActor& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::ActiveAI); },
-				[](TES3::MobileActor& self, bool set) { self.setMobileActorFlag(TES3::MobileActorFlag::ActiveAI, set); }
-			);
-			usertypeDefinition["attacked"] = sol::property([](TES3::MobileActor& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::Attacked); });
-			usertypeDefinition["idleAnim"] = sol::property([](TES3::MobileActor& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::IdleAnim); });
-			usertypeDefinition["inCombat"] = sol::property([](TES3::MobileActor& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::InCombat); });
-			usertypeDefinition["isCrittable"] = sol::property([](TES3::MobileActor& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::IsCrittable); });
-			usertypeDefinition["spellReadied"] = sol::property([](TES3::MobileActor& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::SpellReadied); });
-			usertypeDefinition["underwater"] = sol::property([](TES3::MobileActor& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::Underwater); });
-			usertypeDefinition["weaponDrawn"] = sol::property([](TES3::MobileActor& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::WeaponDrawn); });
-			usertypeDefinition["werewolf"] = sol::property([](TES3::MobileActor& self) { return self.getMobileActorFlag(TES3::MobileActorFlag::Werewolf); });
+			usertypeDefinition["activeAI"] = sol::property(&TES3::MobileActor::getFlagActiveAI, &TES3::MobileActor::setFlagActiveAI);
+			usertypeDefinition["attacked"] = sol::property(&TES3::MobileActor::getFlagAttacked, &TES3::MobileActor::setFlagAttacked);
+			usertypeDefinition["idleAnim"] = sol::property(&TES3::MobileActor::getFlagIdleAnim, &TES3::MobileActor::setFlagIdleAnim);
+			usertypeDefinition["inCombat"] = sol::property(&TES3::MobileActor::getFlagInCombat, &TES3::MobileActor::setFlagInCombat);
+			usertypeDefinition["isCrittable"] = sol::property(&TES3::MobileActor::getFlagIsCrittable, &TES3::MobileActor::setFlagIsCrittable);
+			usertypeDefinition["spellReadied"] = sol::property(&TES3::MobileActor::getFlagSpellReadied, &TES3::MobileActor::setFlagSpellReadied);
+			usertypeDefinition["underwater"] = sol::property(&TES3::MobileActor::getFlagUnderwater, &TES3::MobileActor::setFlagUnderwater);
+			usertypeDefinition["weaponDrawn"] = sol::property(&TES3::MobileActor::getFlagWeaponDrawn, &TES3::MobileActor::setFlagWeaponDrawn);
+			usertypeDefinition["werewolf"] = sol::property(&TES3::MobileActor::getFlagWerewolf, &TES3::MobileActor::setFlagWerewolf);
 
 			// Provide some friendly exposure to attributes by name.
-			usertypeDefinition["agility"] = sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::Attribute::Agility]; });
-			usertypeDefinition["endurance"] = sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::Attribute::Endurance]; });
-			usertypeDefinition["intelligence"] = sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::Attribute::Intelligence]; });
-			usertypeDefinition["luck"] = sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::Attribute::Luck]; });
-			usertypeDefinition["personality"] = sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::Attribute::Personality]; });
-			usertypeDefinition["speed"] = sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::Attribute::Speed]; });
-			usertypeDefinition["strength"] = sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::Attribute::Strength]; });
-			usertypeDefinition["willpower"] = sol::readonly_property([](TES3::MobileActor& self) { return &self.attributes[TES3::Attribute::Willpower]; });
+			usertypeDefinition["agility"] = sol::readonly_property(&TES3::MobileActor::getAttributeAgility);
+			usertypeDefinition["endurance"] = sol::readonly_property(&TES3::MobileActor::getAttributeEndurance);
+			usertypeDefinition["intelligence"] = sol::readonly_property(&TES3::MobileActor::getAttributeIntelligence);
+			usertypeDefinition["luck"] = sol::readonly_property(&TES3::MobileActor::getAttributeLuck);
+			usertypeDefinition["personality"] = sol::readonly_property(&TES3::MobileActor::getAttributePersonality);
+			usertypeDefinition["speed"] = sol::readonly_property(&TES3::MobileActor::getAttributeSpeed);
+			usertypeDefinition["strength"] = sol::readonly_property(&TES3::MobileActor::getAttributeStrength);
+			usertypeDefinition["willpower"] = sol::readonly_property(&TES3::MobileActor::getAttributeWillpower);
 
 			// Provide some friendly exposure to effect attributes.
-			usertypeDefinition["attackBonus"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::AttackBonus]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::AttackBonus] = value; }
-			);
-			usertypeDefinition["blind"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Blind]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Blind] = value; }
-			);
-			usertypeDefinition["chameleon"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Chameleon]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Chameleon] = value; }
-			);
-			usertypeDefinition["invisibility"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Invisibility]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Invisibility] = value; }
-			);
-			usertypeDefinition["jump"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Jump]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Jump] = value; }
-			);
-			usertypeDefinition["levitate"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Levitate]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Levitate] = value; }
-			);
-			usertypeDefinition["paralyze"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Paralyze]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Paralyze] = value; }
-			);
-			usertypeDefinition["resistBlightDisease"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistBlightDisease]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistBlightDisease] = value; }
-			);
-			usertypeDefinition["resistCommonDisease"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistCommonDisease]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistCommonDisease] = value; }
-			);
-			usertypeDefinition["resistCorprus"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistCorprus]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistCorprus] = value; }
-			);
-			usertypeDefinition["resistFire"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistFire]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistFire] = value; }
-			);
-			usertypeDefinition["resistFrost"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistFrost]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistFrost] = value; }
-			);
-			usertypeDefinition["resistMagicka"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistMagicka]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistMagicka] = value; }
-			);
-			usertypeDefinition["resistNormalWeapons"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistNormalWeapons]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistNormalWeapons] = value; }
-			);
-			usertypeDefinition["resistParalysis"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistParalysis]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistParalysis] = value; }
-			);
-			usertypeDefinition["resistPoison"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistPoison]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistPoison] = value; }
-			);
-			usertypeDefinition["resistShock"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::ResistShock]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::ResistShock] = value; }
-			);
-			usertypeDefinition["sanctuary"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Sanctuary]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Sanctuary] = value; }
-			);
-			usertypeDefinition["shield"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Shield]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Shield] = value; }
-			);
-			usertypeDefinition["silence"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Silence]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Silence] = value; }
-			);
-			usertypeDefinition["sound"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::Sound]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::Sound] = value; }
-			);
-			usertypeDefinition["swiftSwim"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::SwiftSwim]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::SwiftSwim] = value; }
-			);
-			usertypeDefinition["waterBreathing"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::WaterBreathing]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::WaterBreathing] = value; }
-			);
-			usertypeDefinition["waterWalking"] = sol::property(
-				[](TES3::MobileActor& self) { return self.effectAttributes[TES3::EffectAttribute::WaterWalking]; },
-				[](TES3::MobileActor& self, int value) { self.effectAttributes[TES3::EffectAttribute::WaterWalking] = value; }
-			);
+			usertypeDefinition["attackBonus"] = sol::property(&TES3::MobileActor::getEffectAttributeAttackBonus, &TES3::MobileActor::setEffectAttributeAttackBonus);
+			usertypeDefinition["blind"] = sol::property(&TES3::MobileActor::getEffectAttributeBlind, &TES3::MobileActor::setEffectAttributeBlind);
+			usertypeDefinition["chameleon"] = sol::property(&TES3::MobileActor::getEffectAttributeChameleon, &TES3::MobileActor::setEffectAttributeChameleon);
+			usertypeDefinition["invisibility"] = sol::property(&TES3::MobileActor::getEffectAttributeInvisibility, &TES3::MobileActor::setEffectAttributeInvisibility);
+			usertypeDefinition["jump"] = sol::property(&TES3::MobileActor::getEffectAttributeJump, &TES3::MobileActor::setEffectAttributeJump);
+			usertypeDefinition["levitate"] = sol::property(&TES3::MobileActor::getEffectAttributeLevitate, &TES3::MobileActor::setEffectAttributeLevitate);
+			usertypeDefinition["paralyze"] = sol::property(&TES3::MobileActor::getEffectAttributeParalyze, &TES3::MobileActor::setEffectAttributeParalyze);
+			usertypeDefinition["resistBlightDisease"] = sol::property(&TES3::MobileActor::getEffectAttributeResistBlightDisease, &TES3::MobileActor::setEffectAttributeResistBlightDisease);
+			usertypeDefinition["resistCommonDisease"] = sol::property(&TES3::MobileActor::getEffectAttributeResistCommonDisease, &TES3::MobileActor::setEffectAttributeResistCommonDisease);
+			usertypeDefinition["resistCorprus"] = sol::property(&TES3::MobileActor::getEffectAttributeResistCorprus, &TES3::MobileActor::setEffectAttributeResistCorprus);
+			usertypeDefinition["resistFire"] = sol::property(&TES3::MobileActor::getEffectAttributeResistFire, &TES3::MobileActor::setEffectAttributeResistFire);
+			usertypeDefinition["resistFrost"] = sol::property(&TES3::MobileActor::getEffectAttributeResistFrost, &TES3::MobileActor::setEffectAttributeResistFrost);
+			usertypeDefinition["resistMagicka"] = sol::property(&TES3::MobileActor::getEffectAttributeResistMagicka, &TES3::MobileActor::setEffectAttributeResistMagicka);
+			usertypeDefinition["resistNormalWeapons"] = sol::property(&TES3::MobileActor::getEffectAttributeResistNormalWeapons, &TES3::MobileActor::setEffectAttributeResistNormalWeapons);
+			usertypeDefinition["resistParalysis"] = sol::property(&TES3::MobileActor::getEffectAttributeResistParalysis, &TES3::MobileActor::setEffectAttributeResistParalysis);
+			usertypeDefinition["resistPoison"] = sol::property(&TES3::MobileActor::getEffectAttributeResistPoison, &TES3::MobileActor::setEffectAttributeResistPoison);
+			usertypeDefinition["resistShock"] = sol::property(&TES3::MobileActor::getEffectAttributeResistShock, &TES3::MobileActor::setEffectAttributeResistShock);
+			usertypeDefinition["sanctuary"] = sol::property(&TES3::MobileActor::getEffectAttributeSanctuary, &TES3::MobileActor::setEffectAttributeSanctuary);
+			usertypeDefinition["shield"] = sol::property(&TES3::MobileActor::getEffectAttributeShield, &TES3::MobileActor::setEffectAttributeShield);
+			usertypeDefinition["silence"] = sol::property(&TES3::MobileActor::getEffectAttributeSilence, &TES3::MobileActor::setEffectAttributeSilence);
+			usertypeDefinition["sound"] = sol::property(&TES3::MobileActor::getEffectAttributeSound, &TES3::MobileActor::setEffectAttributeSound);
+			usertypeDefinition["swiftSwim"] = sol::property(&TES3::MobileActor::getEffectAttributeSwiftSwim, &TES3::MobileActor::setEffectAttributeSwiftSwim);
+			usertypeDefinition["waterBreathing"] = sol::property(&TES3::MobileActor::getEffectAttributeWaterBreathing, &TES3::MobileActor::setEffectAttributeWaterBreathing);
+			usertypeDefinition["waterWalking"] = sol::property(&TES3::MobileActor::getEffectAttributeWaterWalking, &TES3::MobileActor::setEffectAttributeWaterWalking);
 
 			// Provide some friendly exposure for movement flags.
-			usertypeDefinition["isFlying"] = sol::property(
-				[](TES3::MobileActor& self) { return (self.getMobileActorMovementFlag(TES3::ActorMovement::Flying)); },
-				[](TES3::MobileActor& self, bool state) { self.setMobileActorMovementFlag(TES3::ActorMovement::Flying, state); }
-			);
-			usertypeDefinition["isJumping"] = sol::property(
-				[](TES3::MobileActor& self) { return (self.getMobileActorMovementFlag(TES3::ActorMovement::Jumping)); },
-				[](TES3::MobileActor& self, bool state) { self.setMobileActorMovementFlag(TES3::ActorMovement::Jumping, state); }
-			);
-			usertypeDefinition["isMovingBack"] = sol::property(
-				[](TES3::MobileActor& self) { return (self.getMobileActorMovementFlag(TES3::ActorMovement::Back)); },
-				[](TES3::MobileActor& self, bool state) { self.setMobileActorMovementFlag(TES3::ActorMovement::Back, state); }
-			);
-			usertypeDefinition["isMovingForward"] = sol::property(
-				[](TES3::MobileActor& self) { return (self.getMobileActorMovementFlag(TES3::ActorMovement::Forward)); },
-				[](TES3::MobileActor& self, bool state) { self.setMobileActorMovementFlag(TES3::ActorMovement::Forward, state); }
-			);
-			usertypeDefinition["isMovingLeft"] = sol::property(
-				[](TES3::MobileActor& self) { return (self.getMobileActorMovementFlag(TES3::ActorMovement::Left)); },
-				[](TES3::MobileActor& self, bool state) { self.setMobileActorMovementFlag(TES3::ActorMovement::Left, state); }
-			);
-			usertypeDefinition["isMovingRight"] = sol::property(
-				[](TES3::MobileActor& self) { return (self.getMobileActorMovementFlag(TES3::ActorMovement::Right)); },
-				[](TES3::MobileActor& self, bool state) { self.setMobileActorMovementFlag(TES3::ActorMovement::Right, state); }
-			);
-			usertypeDefinition["isRunning"] = sol::property(
-				[](TES3::MobileActor& self) { return (self.getMobileActorMovementFlag(TES3::ActorMovement::Running)); },
-				[](TES3::MobileActor& self, bool state) { self.setMobileActorMovementFlag(TES3::ActorMovement::Running, state); }
-			);
-			usertypeDefinition["isSneaking"] = sol::property(
-				[](TES3::MobileActor& self) { return (self.getMobileActorMovementFlag(TES3::ActorMovement::Sneaking)); },
-				[](TES3::MobileActor& self, bool state) { self.setMobileActorMovementFlag(TES3::ActorMovement::Sneaking, state); }
-			);
-			usertypeDefinition["isStartingJump"] = sol::property(
-				[](TES3::MobileActor& self) { return (self.getMobileActorMovementFlag(TES3::ActorMovement::Jumped)); },
-				[](TES3::MobileActor& self, bool state) { self.setMobileActorMovementFlag(TES3::ActorMovement::Jumped, state); }
-			);
-			usertypeDefinition["isSwimming"] = sol::property(
-				[](TES3::MobileActor& self) { return (self.getMobileActorMovementFlag(TES3::ActorMovement::Swimming)); },
-				[](TES3::MobileActor& self, bool state) { self.setMobileActorMovementFlag(TES3::ActorMovement::Swimming, state); }
-			);
-			usertypeDefinition["isTurningLeft"] = sol::property(
-				[](TES3::MobileActor& self) { return (self.getMobileActorMovementFlag(TES3::ActorMovement::TurnLeft)); },
-				[](TES3::MobileActor& self, bool state) { self.setMobileActorMovementFlag(TES3::ActorMovement::TurnLeft, state); }
-			);
-			usertypeDefinition["isTurningRight"] = sol::property(
-				[](TES3::MobileActor& self) { return (self.getMobileActorMovementFlag(TES3::ActorMovement::TurnRight)); },
-				[](TES3::MobileActor& self, bool state) { self.setMobileActorMovementFlag(TES3::ActorMovement::TurnRight, state); }
-			);
-			usertypeDefinition["isWalking"] = sol::property(
-				[](TES3::MobileActor& self) { return (self.getMobileActorMovementFlag(TES3::ActorMovement::Walking)); },
-				[](TES3::MobileActor& self, bool state) { self.setMobileActorMovementFlag(TES3::ActorMovement::Walking, state); }
-			);
+			usertypeDefinition["isFlying"] = sol::property(&TES3::MobileActor::getMovementFlagFlying, &TES3::MobileActor::setMovementFlagFlying);
+			usertypeDefinition["isJumping"] = sol::property(&TES3::MobileActor::getMovementFlagJumping, &TES3::MobileActor::setMovementFlagJumping);
+			usertypeDefinition["isMovingBack"] = sol::property(&TES3::MobileActor::getMovementFlagBack, &TES3::MobileActor::setMovementFlagBack);
+			usertypeDefinition["isMovingForward"] = sol::property(&TES3::MobileActor::getMovementFlagForward, &TES3::MobileActor::setMovementFlagForward);
+			usertypeDefinition["isMovingLeft"] = sol::property(&TES3::MobileActor::getMovementFlagLeft, &TES3::MobileActor::setMovementFlagLeft);
+			usertypeDefinition["isMovingRight"] = sol::property(&TES3::MobileActor::getMovementFlagRight, &TES3::MobileActor::setMovementFlagRight);
+			usertypeDefinition["isRunning"] = sol::property(&TES3::MobileActor::getMovementFlagRunning, &TES3::MobileActor::setMovementFlagRunning);
+			usertypeDefinition["isSneaking"] = sol::property(&TES3::MobileActor::getMovementFlagSneaking, &TES3::MobileActor::setMovementFlagSneaking);
+			usertypeDefinition["isStartingJump"] = sol::property(&TES3::MobileActor::getMovementFlagJumped, &TES3::MobileActor::setMovementFlagJumped);
+			usertypeDefinition["isSwimming"] = sol::property(&TES3::MobileActor::getMovementFlagSwimming, &TES3::MobileActor::setMovementFlagSwimming);
+			usertypeDefinition["isTurningLeft"] = sol::property(&TES3::MobileActor::getMovementFlagTurnLeft, &TES3::MobileActor::setMovementFlagTurnLeft);
+			usertypeDefinition["isTurningRight"] = sol::property(&TES3::MobileActor::getMovementFlagTurnRight, &TES3::MobileActor::setMovementFlagTurnRight);
+			usertypeDefinition["isWalking"] = sol::property(&TES3::MobileActor::getMovementFlagWalking, &TES3::MobileActor::setMovementFlagWalking);
 
 			// Basic function binding.
 			usertypeDefinition["applyHealthDamage"] = &TES3::MobileActor::applyHealthDamage;
@@ -244,27 +130,15 @@ namespace mwse {
 			usertypeDefinition["updateOpacity"] = &TES3::MobileActor::updateOpacity;
 
 			// Provide single function for isAffectedByAlchemy, etc.
-			usertypeDefinition["isAffectedByObject"] = [](TES3::MobileActor& self, sol::object param) {
-				if (param.is<TES3::Alchemy>()) {
-					return self.isAffectedByAlchemy(param.as<TES3::Alchemy*>());
-				}
-				else if (param.is<TES3::Enchantment>()) {
-					return self.isAffectedByEnchantment(param.as<TES3::Enchantment*>());
-				}
-				else if (param.is<TES3::Spell>()) {
-					return self.isAffectedBySpell(param.as<TES3::Spell*>());
-				}
-
-				return false;
-			};
+			usertypeDefinition["isAffectedByObject"] = &TES3::MobileActor::isAffectedByObject_lua;
 
 			// Functions exposed as properties.
 			usertypeDefinition["cell"] = sol::property(&TES3::MobileActor::getCell);
 			usertypeDefinition["hasFreeAction"] = sol::property(&TES3::MobileActor::hasFreeAction);
 
 			// Legacy support for old structures.
-			usertypeDefinition["activeMagicEffects"] = sol::readonly_property([](TES3::MobileActor& self) { return self.activeMagicEffects.firstEffect; });
-			usertypeDefinition["activeMagicEffectCount"] = sol::readonly_property([](TES3::MobileActor& self) { return self.activeMagicEffects.count; });
+			usertypeDefinition["activeMagicEffects"] = sol::readonly_property(&TES3::MobileActor::getActiveMagicEffects_legacy);
+			usertypeDefinition["activeMagicEffectCount"] = sol::readonly_property(&TES3::MobileActor::getActiveMagicEffectCount_legacy);
 		}
 
 		void bindTES3MobileActor();

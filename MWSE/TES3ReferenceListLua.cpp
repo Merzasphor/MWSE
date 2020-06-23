@@ -22,9 +22,9 @@ namespace mwse {
 			usertypeDefinition["size"] = sol::readonly_property(&TES3::ReferenceList::size);
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition["cell"] = sol::readonly_property([](TES3::ReferenceList& self) { return self.cell; });
-			usertypeDefinition["head"] = sol::readonly_property([](TES3::ReferenceList& self) { return self.head; });
-			usertypeDefinition["tail"] = sol::readonly_property([](TES3::ReferenceList& self) { return self.tail; });
+			usertypeDefinition["cell"] = sol::readonly_property(&TES3::ReferenceList::cell);
+			usertypeDefinition["head"] = sol::readonly_property(&TES3::ReferenceList::head);
+			usertypeDefinition["tail"] = sol::readonly_property(&TES3::ReferenceList::tail);
 		}
 	}
 }

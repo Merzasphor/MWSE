@@ -37,7 +37,9 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		Effect * getSourceEffects();
+		Effect * getSourceEffects() const;
+		nonstd::span<Effect> getEffectSpan() const;
+
 	};
 	static_assert(sizeof(MagicSourceCombo) == 0x8, "TES3::MagicSourceCombo failed size validation");
 
@@ -66,8 +68,18 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		int getMagnitude(int effectIndex);
+		int getMagnitude(int effectIndex) const;
 		void playSpellVFX(float duration, Vector3 position, Reference* attachedReference, int unknown0, PhysicalObject* effectVisual, int effectIndex = 0, int unknown1 = 0);
+
+		//
+		// Custom functions.
+		//
+
+		Object* getSourceObject() const;
+		MagicSourceType getSourceType() const;
+		nonstd::span<Effect> getSourceEffects() const;
+
+		void playSpellVFX_lua(sol::table params);
 
 	};
 	static_assert(sizeof(MagicSourceInstance) == 0x12C, "TES3::MagicSourceInstance failed size validation");

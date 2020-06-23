@@ -21,6 +21,7 @@ namespace TES3 {
 
 			WidgetButton() = delete;
 			static WidgetButton* fromElement(Element* e);
+			static const WidgetButton* fromElement(const Element* e);
 		private:
 			static bool initProperties();
 		};
@@ -39,6 +40,7 @@ namespace TES3 {
 
 			WidgetFillbar() = delete;
 			static WidgetFillbar* fromElement(Element* e);
+			static const WidgetFillbar* fromElement(const Element* e);
 		private:
 			static bool initProperties();
 		};
@@ -51,6 +53,7 @@ namespace TES3 {
 
 			WidgetParagraphInput() = delete;
 			static WidgetParagraphInput* fromElement(Element* e);
+			static const WidgetParagraphInput* fromElement(const Element* e);
 		private:
 			static bool initProperties();
 		};
@@ -67,6 +70,7 @@ namespace TES3 {
 
 			WidgetScrollBar() = delete;
 			static WidgetScrollBar* fromElement(Element* e);
+			static const WidgetScrollBar* fromElement(const Element* e);
 		private:
 			static bool initProperties();
 		};
@@ -83,6 +87,7 @@ namespace TES3 {
 
 			WidgetScrollPane() = delete;
 			static WidgetScrollPane* fromElement(Element* e);
+			static const WidgetScrollPane* fromElement(const Element* e);
 		private:
 			static bool initProperties();
 		};
@@ -99,6 +104,7 @@ namespace TES3 {
 
 			WidgetTextInput() = delete;
 			static WidgetTextInput* fromElement(Element* e);
+			static const WidgetTextInput* fromElement(const Element* e);
 		private:
 			static bool initProperties();
 		};
@@ -118,6 +124,7 @@ namespace TES3 {
 
 			WidgetTextSelect() = delete;
 			static WidgetTextSelect* fromElement(Element* e);
+			static const WidgetTextSelect* fromElement(const Element* e);
 		private:
 			static bool initProperties();
 		};

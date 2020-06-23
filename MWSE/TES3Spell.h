@@ -72,6 +72,10 @@ namespace TES3 {
 		size_t getActiveEffectCount();
 		int getFirstIndexOfEffect(int effectId);
 
+		float calculateCastChance_lua(sol::table params);
+
+		std::reference_wrapper<Effect[8]> getEffects();
+
 	};
 	static_assert(sizeof(Spell) == 0xF8, "TES3::Spell failed size validation");
 }

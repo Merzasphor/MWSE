@@ -47,6 +47,7 @@
 #include "TES3MobileProjectile.h"
 #include "TES3NPC.h"
 #include "TES3Reference.h"
+#include "TES3Script.h"
 #include "TES3SoulGemData.h"
 #include "TES3Spell.h"
 #include "TES3UIElement.h"

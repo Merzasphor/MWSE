@@ -3,14 +3,10 @@
 #include "LuaManager.h"
 #include "TES3ObjectLua.h"
 
-#include "TES3DataHandler.h"
-#include "TES3GameSetting.h"
 #include "TES3Skill.h"
 
 namespace mwse {
 	namespace lua {
-		static const auto arraySkillIconPaths = reinterpret_cast<const char**>(0x7BB158);
-
 		void bindTES3Skill() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -30,22 +26,11 @@ namespace mwse {
 			usertypeDefinition["specialization"] = &TES3::Skill::specialization;
 
 			// Functions as properties.
-			usertypeDefinition["name"] = sol::readonly_property(
-				[](const TES3::Skill& self) {
-					auto dataHandler = TES3::DataHandler::get();
-					return dataHandler->nonDynamicData->GMSTs[0x380 + self.skill]->value.asString;
-				}
-			);
-			usertypeDefinition["iconPath"] = sol::readonly_property(
-				[](const TES3::Skill& self) {
-					std::string path = "icons\\k\\";
-					path.append(arraySkillIconPaths[self.skill]);
-					return path;
-				}
-			);
+			usertypeDefinition["name"] = sol::readonly_property(&TES3::Skill::getName);
+			usertypeDefinition["iconPath"] = sol::readonly_property(&TES3::Skill::getIconPath);
 
 			// Indirect bindings to unions and arrays.
-			usertypeDefinition["actions"] = sol::readonly_property([](TES3::Skill& self) { return std::ref(self.progressActions); });
+			usertypeDefinition["actions"] = sol::readonly_property(&TES3::Skill::getProgressActions);
 		}
 	}
 }

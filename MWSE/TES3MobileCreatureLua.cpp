@@ -26,13 +26,11 @@ namespace mwse {
 			setUserdataForTES3MobileActor(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition["skills"] = sol::property([](TES3::MobileCreature& self) { return std::ref(self.skills); });
-
-			// Access to other objects that need to be packaged.
-			usertypeDefinition["object"] = sol::readonly_property([](TES3::MobileCreature& self) { return self.creatureInstance; });
+			usertypeDefinition["object"] = sol::readonly_property(&TES3::MobileCreature::creatureInstance);
+			usertypeDefinition["skills"] = sol::property(&TES3::MobileCreature::getSkillStatistics);
 
 			// Allow read access to movement speeds.
-			usertypeDefinition["moveSpeed"] = sol::readonly_property([](TES3::MobileCreature& self) { return self.animationData.asActor->calculateMovementSpeed(); });
+			usertypeDefinition["moveSpeed"] = sol::readonly_property(&TES3::MobileCreature::calculateMovementSpeedFromAnimationData);
 			usertypeDefinition["walkSpeed"] = sol::readonly_property(&TES3::MobileCreature::calculateWalkSpeed);
 			usertypeDefinition["runSpeed"] = sol::readonly_property(&TES3::MobileCreature::calculateWalkSpeed);
 			usertypeDefinition["swimSpeed"] = sol::readonly_property(&TES3::MobileCreature::calculateWalkSpeed);
@@ -40,9 +38,9 @@ namespace mwse {
 			usertypeDefinition["flySpeed"] = sol::readonly_property(&TES3::MobileCreature::calculateWalkSpeed);
 
 			// Friendly access to skills.
-			usertypeDefinition["combat"] = sol::readonly_property([](TES3::MobileCreature& self) { return &self.skills[TES3::CreatureSkillID::Combat]; });
-			usertypeDefinition["magic"] = sol::readonly_property([](TES3::MobileCreature& self) { return &self.skills[TES3::CreatureSkillID::Magic]; });
-			usertypeDefinition["stealth"] = sol::readonly_property([](TES3::MobileCreature& self) { return &self.skills[TES3::CreatureSkillID::Stealth]; });
+			usertypeDefinition["combat"] = sol::readonly_property(&TES3::MobileCreature::getCombatSkill);
+			usertypeDefinition["magic"] = sol::readonly_property(&TES3::MobileCreature::getMagicSkill);
+			usertypeDefinition["stealth"] = sol::readonly_property(&TES3::MobileCreature::getStealthSkill);
 		}
 	}
 }

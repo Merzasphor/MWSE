@@ -5,6 +5,10 @@
 #include "TES3Object.h"
 #include "TES3ScriptCompiler.h"
 
+namespace mwse::lua {
+	class ScriptContext;
+}
+
 namespace TES3 {
 	struct ScriptVariables {
 		struct WeaponHitFlags {
@@ -22,6 +26,13 @@ namespace TES3 {
 	struct GlobalScript {
 		Reference * reference; // 0x0
 		Script * script; // 0x4
+
+		//
+		// Custom functions.
+		//
+
+		std::shared_ptr<mwse::lua::ScriptContext> createContext() const;
+
 	};
 	static_assert(sizeof(GlobalScript) == 0x8, "TES3::GlobalScript failed size validation");
 
@@ -60,6 +71,14 @@ namespace TES3 {
 		float getFloatValue(unsigned int, bool);
 		
 		void doCommand(ScriptCompiler * compiler, const char* command, int source = TES3::CompilerSource::Default, Reference * reference = nullptr, ScriptVariables * variables = nullptr, DialogueInfo * info = nullptr, Dialogue * dialogue = nullptr);
+
+		//
+		// Custom functions.
+		//
+
+		sol::table getLocalVars_lua(sol::this_state ts, sol::optional<bool> useLocals = false);
+		std::shared_ptr<mwse::lua::ScriptContext> createContext();
+
 	};
 	static_assert(sizeof(Script) == 0x70, "TES3::Script failed size validation");
 }

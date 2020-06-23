@@ -13,15 +13,15 @@ namespace mwse {
 			usertypeDefinition["forceMoveJump"] = &TES3::MobileNPC::flagForceMoveJump;
 			usertypeDefinition["forceRun"] = &TES3::MobileNPC::flagForceRun;
 			usertypeDefinition["forceSneak"] = &TES3::MobileNPC::flagForceSneak;
+			usertypeDefinition["object"] = sol::readonly_property(&TES3::MobileNPC::npcInstance);
 
 			// Indirect bindings to unions and arrays.
-			usertypeDefinition["skills"] = sol::property([](TES3::MobileNPC& self) { return std::ref(self.skills); });
+			usertypeDefinition["skills"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatistics);
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition["object"] = sol::readonly_property([](TES3::MobileNPC& self) { return self.npcInstance; });
 
 			// Allow read access to movement speeds.
-			usertypeDefinition["moveSpeed"] = sol::readonly_property([](TES3::MobileNPC& self) { return self.animationData.asActor->calculateMovementSpeed(); });
+			usertypeDefinition["moveSpeed"] = sol::readonly_property(&TES3::MobileNPC::calculateMovementSpeedFromAnimationData);
 			usertypeDefinition["walkSpeed"] = sol::readonly_property(&TES3::MobileNPC::calculateWalkSpeed);
 			usertypeDefinition["runSpeed"] = sol::readonly_property(&TES3::MobileNPC::calculateWalkSpeed);
 			usertypeDefinition["swimSpeed"] = sol::readonly_property(&TES3::MobileNPC::calculateWalkSpeed);
@@ -29,33 +29,33 @@ namespace mwse {
 			usertypeDefinition["flySpeed"] = sol::readonly_property(&TES3::MobileNPC::calculateWalkSpeed);
 
 			// Friendly access to skills.
-			usertypeDefinition["acrobatics"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Acrobatics]; });
-			usertypeDefinition["alchemy"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Alchemy]; });
-			usertypeDefinition["alteration"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Alteration]; });
-			usertypeDefinition["armorer"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Armorer]; });
-			usertypeDefinition["athletics"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Athletics]; });
-			usertypeDefinition["axe"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Axe]; });
-			usertypeDefinition["block"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Block]; });
-			usertypeDefinition["bluntWeapon"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::BluntWeapon]; });
-			usertypeDefinition["conjuration"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Conjuration]; });
-			usertypeDefinition["destruction"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Destruction]; });
-			usertypeDefinition["enchant"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Enchant]; });
-			usertypeDefinition["handToHand"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::HandToHand]; });
-			usertypeDefinition["heavyArmor"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::HeavyArmor]; });
-			usertypeDefinition["illusion"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Illusion]; });
-			usertypeDefinition["lightArmor"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::LightArmor]; });
-			usertypeDefinition["longBlade"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::LongBlade]; });
-			usertypeDefinition["marksman"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Marksman]; });
-			usertypeDefinition["mediumArmor"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::MediumArmor]; });
-			usertypeDefinition["mercantile"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Mercantile]; });
-			usertypeDefinition["mysticism"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Mysticism]; });
-			usertypeDefinition["restoration"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Restoration]; });
-			usertypeDefinition["security"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Security]; });
-			usertypeDefinition["shortBlade"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::ShortBlade]; });
-			usertypeDefinition["sneak"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Sneak]; });
-			usertypeDefinition["spear"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Spear]; });
-			usertypeDefinition["speechcraft"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Speechcraft]; });
-			usertypeDefinition["unarmored"] = sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Unarmored]; });
+			usertypeDefinition["acrobatics"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticAcrobatics);
+			usertypeDefinition["alchemy"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticAlchemy);
+			usertypeDefinition["alteration"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticAlteration);
+			usertypeDefinition["armorer"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticArmorer);
+			usertypeDefinition["athletics"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticAthletics);
+			usertypeDefinition["axe"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticAxe);
+			usertypeDefinition["block"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticBlock);
+			usertypeDefinition["bluntWeapon"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticBluntWeapon);
+			usertypeDefinition["conjuration"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticConjuration);
+			usertypeDefinition["destruction"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticDestruction);
+			usertypeDefinition["enchant"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticEnchant);
+			usertypeDefinition["handToHand"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticHandToHand);
+			usertypeDefinition["heavyArmor"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticHeavyArmor);
+			usertypeDefinition["illusion"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticIllusion);
+			usertypeDefinition["lightArmor"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticLightArmor);
+			usertypeDefinition["longBlade"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticLongBlade);
+			usertypeDefinition["marksman"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticMarksman);
+			usertypeDefinition["mediumArmor"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticMediumArmor);
+			usertypeDefinition["mercantile"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticMercantile);
+			usertypeDefinition["mysticism"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticMysticism);
+			usertypeDefinition["restoration"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticRestoration);
+			usertypeDefinition["security"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticSecurity);
+			usertypeDefinition["shortBlade"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticShortBlade);
+			usertypeDefinition["sneak"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticSneak);
+			usertypeDefinition["spear"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticSpear);
+			usertypeDefinition["speechcraft"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticSpeechcraft);
+			usertypeDefinition["unarmored"] = sol::readonly_property(&TES3::MobileNPC::getSkillStatisticUnarmored);
 		}
 
 		void bindTES3MobileNPC();

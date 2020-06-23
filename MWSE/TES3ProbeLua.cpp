@@ -26,18 +26,13 @@ namespace mwse {
 
 			// Basic property binding.
 			usertypeDefinition["maxCondition"] = &TES3::Probe::maxCondition;
+			usertypeDefinition["script"] = sol::readonly_property(&TES3::Probe::getScript);
 			usertypeDefinition["quality"] = &TES3::Probe::quality;
 			usertypeDefinition["value"] = &TES3::Probe::value;
 			usertypeDefinition["weight"] = &TES3::Probe::weight;
 
-			// Access to other objects that need to be packaged.
-			usertypeDefinition["script"] = sol::readonly_property([](TES3::Probe& self) { return self.getScript(); });
-
 			// Functions exposed as properties.
-			usertypeDefinition["icon"] = sol::property(
-				&TES3::Probe::getIconPath,
-				[](TES3::Probe& self, const char* value) { if (strlen(value) < 32) strcpy(self.icon, value); }
-			);
+			usertypeDefinition["icon"] = sol::property(&TES3::Probe::getIconPath, &TES3::Probe::setIconPath);
 			usertypeDefinition["mesh"] = sol::property(&TES3::Probe::getModelPath, &TES3::Probe::setModelPath);
 			usertypeDefinition["name"] = sol::property(&TES3::Probe::getName, &TES3::Probe::setName);
 

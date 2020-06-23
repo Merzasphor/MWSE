@@ -9,8 +9,12 @@ namespace TES3 {
 		const char* lookupID(UI_ID id);
 		Property registerProperty(const char* name);
 		Element* createMenu(UI_ID id);
+		Element* createMenu_lua(sol::table params);
 		Element* createHelpLayerMenu(UI_ID id);
+		Element* createHelpLayerMenu_lua(sol::table params);
 		Element* createTooltipMenu(UI_ID id);
+		Element* createTooltipMenu_lua();
+		void refreshTooltip();
 		Element* findMenu(UI_ID id);
 		Element* findHelpLayerMenu(UI_ID id);
 		Element* getMenuOnTop();
@@ -32,7 +36,11 @@ namespace TES3 {
 		bool isSuppressingHelpMenu();
 		void setSuppressingHelpMenu(bool);
 
+		void showDialogueMessage(const char* message, int style, int answerIndex);
+		void showDialogueMessage_lua(sol::table params);
+
 		void logToConsole(const char* text, bool isCommand = false);
+		void logToConsole_lua(const char* text, sol::optional<bool> isCommand = false);
 
 		void showBookMenu(const char* text);
 		void showScrollMenu(const char* text);
@@ -52,6 +60,27 @@ namespace TES3 {
 		void updateContentsCompanionElements();
 		void updateBarterMenuTiles();
 		int updateSelectInventoryTiles();
+		sol::optional<int> updateInventorySelectTiles_lua();
+		void forcePlayerInventoryUpdate();
+
+		bool isInMenuMode();
+
+		sol::table getPalette_lua(sol::this_state ts, const char* name);
+
+		void showInventorySelectMenu_lua(sol::table params);
+
+		//
+		// Helper functions.
+		//
+
+		Property toBooleanProperty(bool b);
+		bool toBool(Property prop);
+
+		std::optional<Property> getStandardEventFromName(const std::string& name);
+
+		//
+		// Perform our hook.
+		//
 
 		void hook();
 	}

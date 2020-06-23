@@ -75,4 +75,30 @@ namespace TES3 {
 	void MobilePlayer::modBounty(int delta) {
 		reinterpret_cast<void(__thiscall *)(MobilePlayer*, int)>(TES3_MobilePlayer_modBounty)(this, delta);
 	}
+
+	void MobilePlayer::setFlagSneak(bool value) {
+		if (value) {
+			movementFlags |= TES3::ActorMovement::Sneaking;
+		}
+		else {
+			movementFlags &= ~TES3::ActorMovement::Sneaking;
+		}
+	}
+
+	PlayerAnimationData* MobilePlayer::getPlayerAnimationData() const {
+		return animationData.asPlayer;
+	}
+
+	std::reference_wrapper<int[8]> MobilePlayer::getLevelupsPerAttribute() {
+		return std::ref(levelupPerAttributeCount);
+	}
+
+	std::reference_wrapper<int[3]> MobilePlayer::getLevelupsPerSpecialization() {
+		return std::ref(levelupPerSpecialization);
+	}
+
+	std::reference_wrapper<float[27]> MobilePlayer::getSkillProgressValues() {
+		return std::ref(skillProgress);
+	}
+
 }

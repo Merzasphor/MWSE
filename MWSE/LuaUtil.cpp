@@ -86,6 +86,8 @@
 #include "TES3WeatherSnow.h"
 #include "TES3WeatherThunder.h"
 
+#include "TES3UIManager.h"
+
 #include "MemoryUtil.h"
 
 namespace mwse {
@@ -290,10 +292,6 @@ namespace mwse {
 					// Were we given a table?
 					else if (maybeValue.get_type() == sol::type::table) {
 						sol::table value = maybeValue.as<sol::table>();
-						TES3::Vector3* result = tes3::malloc<TES3::Vector3>();
-						result->x = value[1];
-						result->y = value[2];
-						result->z = value[3];
 						return TES3::Vector3(value[1], value[2], value[3]);
 					}
 				}
@@ -325,6 +323,39 @@ namespace mwse {
 			}
 
 			return value;
+		}
+
+		const TES3::UI::UI_ID TES3_UI_ID_NULL = static_cast<TES3::UI::UI_ID>(TES3::UI::Property::null);
+
+		TES3::UI::Property getPropertyFromObject(sol::object object) {
+			if (object.is<TES3::UI::Property>()) {
+				return object.as<TES3::UI::Property>();
+			}
+			else if (object.is<const char*>()) {
+				return TES3::UI::registerProperty(object.as<const char*>());
+			}
+
+			throw std::invalid_argument("Could not determine property from value.");
+		}
+
+		TES3::UI::UI_ID getUIIDFromObject(sol::object object) {
+			if (object.valid()) {
+				if (object.is<TES3::UI::UI_ID>()) {
+					return object.as<TES3::UI::UI_ID>();
+				}
+				else if (object.is<const char*>()) {
+					return TES3::UI::registerID(object.as<const char*>());
+				}
+			}
+
+			return TES3_UI_ID_NULL;
+		}
+
+		TES3::UI::UI_ID getOptionalUIID(sol::optional<sol::table> maybeParams, const char* key) {
+			if (maybeParams) {
+				return getUIIDFromObject(maybeParams.value()[key]);
+			}
+			return TES3_UI_ID_NULL;
 		}
 
 		void setVectorFromLua(TES3::Vector3* vector, sol::stack_object value) {

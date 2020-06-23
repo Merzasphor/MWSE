@@ -1,8 +1,12 @@
 #pragma once
 
+#include "TES3ScriptLua.h"
+
 #include "TES3Defines.h"
 #include "TES3Attachment.h"
 #include "TES3Vectors.h"
+
+#include "NILight.h"
 
 namespace TES3 {
 	struct Reference : Object {
@@ -87,9 +91,12 @@ namespace TES3 {
 		ItemData* getOrCreateAttachedItemData();
 		LockAttachmentNode* getAttachedLockNode();
 		AnimationData* getAttachedAnimationData();
+		BodyPartManager* getAttachedBodyPartManager();
+		TravelDestination* getAttachedTravelDestination();
 
 		LightAttachmentNode* getAttachedDynamicLight();
 		LightAttachmentNode* getOrCreateAttachedDynamicLight(NI::PointLight *, float);
+		NI::Pointer<NI::Light> getAttachedNiLight();
 
 		bool isLeveledSpawn();
 
@@ -101,6 +108,9 @@ namespace TES3 {
 
 		void attemptUnlockDisarm(MobileNPC * disarmer, Item * tool, ItemData * itemData = nullptr);
 
+		int getStackSize();
+		void setStackSize(int count);
+
 		// Override for references to raise an event when their scene node is created.
 		NI::Node * getSceneGraphNode();
 
@@ -108,13 +118,24 @@ namespace TES3 {
 		// Lua interface functions.
 		//
 
+		Cell* getCell_lua() const;
+
 		void setPositionFromLua(sol::stack_object value);
 		void setOrientationFromLua(sol::stack_object value);
 
-		// Return a table (or nil) of attachments for this object.
-		sol::object getAttachments();
+		// Return a table of name-keyed attachments for this object.
+		sol::table getAttachments_lua(sol::this_state ts);
 
 		sol::table getLuaTable();
+
+		// For lua activation, reverse param order.
+		void activate_lua(Reference* target);
+
+		std::shared_ptr<mwse::lua::ScriptContext> getContext_lua();
+
+		void updateSceneGraph_lua();
+
+		Reference* getThis();
 
 	};
 	static_assert(sizeof(Reference) == 0x50, "TES3::Reference failed size validation");
