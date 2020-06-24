@@ -132,6 +132,8 @@ namespace TES3 {
 			bool getMapMenuEnabled();
 			bool getStatsMenuEnabled();
 
+			std::reference_wrapper<FontColor[FontColorId::MAX_ID + 1]> getFontColors();
+
 		};
 		static_assert(sizeof(MenuController) == 0x2A4, "TES3::UI::MenuController failed size validation");
 

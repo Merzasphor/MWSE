@@ -31,35 +31,15 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				usertypeDefinition["state"] = sol::property(&WidgetButton::getState, &WidgetButton::setState);
-				usertypeDefinition["idle"] = sol::property(
-					[](WidgetButton& self, sol::table c) { self.setColourIdle({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["over"] = sol::property(
-					[](WidgetButton& self, sol::table c) { self.setColourOver({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["pressed"] = sol::property(
-					[](WidgetButton& self, sol::table c) { self.setColourPressed({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["idleDisabled"] = sol::property(
-					[](WidgetButton& self, sol::table c) { self.setColourDisabled({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["overDisabled"] = sol::property(
-					[](WidgetButton& self, sol::table c) { self.setColourDisabledOver({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["pressedDisabled"] = sol::property(
-					[](WidgetButton& self, sol::table c) { self.setColourDisabledPressed({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["idleActive"] = sol::property(
-					[](WidgetButton& self, sol::table c) { self.setColourActive({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["overActive"] = sol::property(
-					[](WidgetButton& self, sol::table c) { self.setColourActiveOver({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["pressedActive"] = sol::property(
-					[](WidgetButton& self, sol::table c) { self.setColourActivePressed({ c[1], c[2], c[3] }); }
-				);
-
-				
+				usertypeDefinition["idle"] = sol::property(&WidgetButton::getColourIdle_lua, &WidgetButton::setColourIdle_lua);
+				usertypeDefinition["over"] = sol::property(&WidgetButton::getColourOver_lua, &WidgetButton::setColourOver_lua);
+				usertypeDefinition["pressed"] = sol::property(&WidgetButton::getColourPressed_lua, &WidgetButton::setColourPressed_lua);
+				usertypeDefinition["idleDisabled"] = sol::property(&WidgetButton::getColourDisabled_lua, &WidgetButton::setColourDisabled_lua);
+				usertypeDefinition["overDisabled"] = sol::property(&WidgetButton::getColourDisabledOver_lua, &WidgetButton::setColourDisabledOver_lua);
+				usertypeDefinition["pressedDisabled"] = sol::property(&WidgetButton::getColourDisabledPressed_lua, &WidgetButton::setColourDisabledPressed_lua);
+				usertypeDefinition["idleActive"] = sol::property(&WidgetButton::getColourActive_lua, &WidgetButton::setColourActive_lua);
+				usertypeDefinition["overActive"] = sol::property(&WidgetButton::getColourActiveOver_lua, &WidgetButton::setColourActiveOver_lua);
+				usertypeDefinition["pressedActive"] = sol::property(&WidgetButton::getColourActivePressed_lua, &WidgetButton::setColourActivePressed_lua);
 			}
 
 			//

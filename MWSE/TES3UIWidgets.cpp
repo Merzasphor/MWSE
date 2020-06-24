@@ -19,10 +19,26 @@ namespace TES3 {
 			prop[3] = registerProperty(name.c_str());
 		}
 
+		static sol::table getColourProperty(Element& e, Property(&prop)[4], sol::state_view state) {
+			return state.create_table_with(
+				1, e.getProperty(PropertyType::Float, prop[0]).floatValue,
+				2, e.getProperty(PropertyType::Float, prop[1]).floatValue,
+				3, e.getProperty(PropertyType::Float, prop[2]).floatValue,
+				4, e.getProperty(PropertyType::Float, prop[3]).floatValue
+			);
+		}
+
 		static void setColourProperty(Element& e, Property(&prop)[4], const float(&c)[3]) {
 			e.setProperty(prop[0], c[0]);
 			e.setProperty(prop[1], c[1]);
 			e.setProperty(prop[2], c[2]);
+		}
+
+		static void setColourProperty(Element& e, Property(&prop)[4], const sol::table c) {
+			e.setProperty(prop[0], c.get_or(1, 1.0f));
+			e.setProperty(prop[1], c.get_or(2, 1.0f));
+			e.setProperty(prop[2], c.get_or(3, 1.0f));
+			e.setProperty(prop[3], c.get_or(4, 1.0f));
 		}
 
 		//
@@ -69,15 +85,34 @@ namespace TES3 {
 			TES3_WidgetButton_updateStateColor(this);
 		}
 
+		sol::table WidgetButton::getColourIdle_lua(sol::this_state ts) { return getColourProperty(*this, propButtonIdle, ts); }
 		void WidgetButton::setColourIdle(const float(&c)[3]) { setColourProperty(*this, propButtonIdle, c); }
+		void WidgetButton::setColourIdle_lua(sol::table c) { setColourProperty(*this, propButtonIdle, c); }
+		sol::table WidgetButton::getColourOver_lua(sol::this_state ts) { return getColourProperty(*this, propButtonOver, ts); }
 		void WidgetButton::setColourOver(const float(&c)[3]) { setColourProperty(*this, propButtonOver, c); }
+		void WidgetButton::setColourOver_lua(sol::table c) { setColourProperty(*this, propButtonOver, c); }
+		sol::table WidgetButton::getColourPressed_lua(sol::this_state ts) { return getColourProperty(*this, propButtonPressed, ts); }
 		void WidgetButton::setColourPressed(const float(&c)[3]) { setColourProperty(*this, propButtonPressed, c); }
+		void WidgetButton::setColourPressed_lua(sol::table c) { setColourProperty(*this, propButtonPressed, c); }
+		sol::table WidgetButton::getColourDisabled_lua(sol::this_state ts) { return getColourProperty(*this, propButtonDisabled, ts); }
 		void WidgetButton::setColourDisabled(const float(&c)[3]) { setColourProperty(*this, propButtonDisabled, c); }
+		void WidgetButton::setColourDisabled_lua(sol::table c) { setColourProperty(*this, propButtonDisabled, c); }
+		sol::table WidgetButton::getColourDisabledOver_lua(sol::this_state ts) { return getColourProperty(*this, propButtonDisabledOver, ts); }
 		void WidgetButton::setColourDisabledOver(const float(&c)[3]) { setColourProperty(*this, propButtonDisabledOver, c); }
+		void WidgetButton::setColourDisabledOver_lua(sol::table c) { setColourProperty(*this, propButtonDisabledOver, c); }
+		sol::table WidgetButton::getColourDisabledPressed_lua(sol::this_state ts) { return getColourProperty(*this, propButtonDisabledPressed, ts); }
 		void WidgetButton::setColourDisabledPressed(const float(&c)[3]) { setColourProperty(*this, propButtonDisabledPressed, c); }
+		void WidgetButton::setColourDisabledPressed_lua(sol::table c) { setColourProperty(*this, propButtonDisabledPressed, c); }
+		sol::table WidgetButton::getColourActive_lua(sol::this_state ts) { return getColourProperty(*this, propButtonActive, ts); }
 		void WidgetButton::setColourActive(const float(&c)[3]) { setColourProperty(*this, propButtonActive, c); }
+		void WidgetButton::setColourActive_lua(sol::table c) { setColourProperty(*this, propButtonActive, c); }
+		sol::table WidgetButton::getColourActiveOver_lua(sol::this_state ts) { return getColourProperty(*this, propButtonActiveOver, ts); }
 		void WidgetButton::setColourActiveOver(const float(&c)[3]) { setColourProperty(*this, propButtonActiveOver, c); }
+		void WidgetButton::setColourActiveOver_lua(sol::table c) { setColourProperty(*this, propButtonActiveOver, c); }
+		sol::table WidgetButton::getColourActivePressed_lua(sol::this_state ts) { return getColourProperty(*this, propButtonActivePressed, ts); }
 		void WidgetButton::setColourActivePressed(const float(&c)[3]) { setColourProperty(*this, propButtonActivePressed, c); }
+		void WidgetButton::setColourActivePressed_lua(sol::table c) { setColourProperty(*this, propButtonActivePressed, c); }
+
 	
 		const char* WidgetButton::getText() const {
 			return findChild(uiidButtonText)->getText();

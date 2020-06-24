@@ -105,5 +105,9 @@ namespace TES3 {
 		bool MenuController::getStatsMenuEnabled() {
 			return statsMenuEnabled;
 		}
+
+		std::reference_wrapper<FontColor[FontColorId::MAX_ID + 1]> MenuController::getFontColors() {
+			return std::ref(fontColors);
+		}
 	}
 }

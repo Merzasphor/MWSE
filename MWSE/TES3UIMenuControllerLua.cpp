@@ -36,7 +36,7 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
-				usertypeDefinition["fontColors"] = sol::readonly_property([](TES3::UI::MenuController& self) { return std::ref(self.fontColors); });
+				usertypeDefinition["fontColors"] = sol::readonly_property(&TES3::UI::MenuController::getFontColors);
 				usertypeDefinition["helpDelay"] = sol::readonly_property(&TES3::UI::MenuController::helpDelay);
 				usertypeDefinition["helpRoot"] = sol::readonly_property(&TES3::UI::MenuController::helpRoot);
 				usertypeDefinition["inputController"] = sol::readonly_property(&TES3::UI::MenuController::menuInputController);
