@@ -20,8 +20,16 @@
 #include "LuaObjectInvalidatedEvent.h"
 
 namespace TES3 {
+	const char* Weather::getCloudTexturePath() const {
+		return texturePathCloud;
+	}
+
 	bool Weather::setCloudTexturePath(const char* path) {
 		return strcpy_s(texturePathCloud, sizeof(texturePathCloud), path) == 0;
+	}
+
+	const char* Weather::getAmbientLoopSoundID() const {
+		return soundIDAmbientLoop;
 	}
 
 	bool Weather::setAmbientLoopSoundID(const char* id) {

@@ -132,7 +132,12 @@ namespace TES3 {
 		// Helper functions.
 		//
 
+		std::reference_wrapper<Weather*[10]> getWeathers();
+
 		void updateVisuals();
+
+		void switchImmediate(int weather);
+		void switchTransition(int weather);
 	};
 	static_assert(sizeof(WeatherController) == 0x1F0, "TES3::WeatherController failed size validation");
 }

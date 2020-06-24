@@ -35,7 +35,7 @@ namespace mwse {
 				usertypeDefinition["y"] = &TES3::Vector2::y;
 
 				// Basic function binding.
-				usertypeDefinition["copy"] = [](TES3::Vector2& self) { return TES3::Vector2(self); };
+				usertypeDefinition["copy"] = &TES3::Vector2::copy;
 			}
 
 			// Binding for TES3::Vector3.
@@ -52,18 +52,10 @@ namespace mwse {
 					sol::resolve<TES3::Vector3(const float) const>(&TES3::Vector3::operator*)
 				);
 				usertypeDefinition[sol::meta_function::length] = &TES3::Vector3::length;
-				usertypeDefinition[sol::meta_function::to_string] = [](TES3::Vector3& self) {
-					std::ostringstream ss;
-					ss << std::fixed << std::setprecision(2) << std::dec << self;
-					return ss.str();
-				};
+				usertypeDefinition[sol::meta_function::to_string] = &TES3::Vector3::toString;
 
 				// Allow objects to be serialized to json using their ID.
-				usertypeDefinition["__tojson"] = [](TES3::Vector3& self, sol::table jsonState) {
-					std::ostringstream ss;
-					ss << "[\"x\":" << self.x << ",\"y\":" << self.y << ",\"z\":" << self.z << "]";
-					return ss.str();
-				};
+				usertypeDefinition["__tojson"] = &TES3::Vector3::toJson;
 
 				// Basic property bindings.
 				usertypeDefinition["x"] = &TES3::Vector3::x;
@@ -76,7 +68,7 @@ namespace mwse {
 				usertypeDefinition["b"] = &TES3::Vector3::z;
 
 				// Basic function binding.
-				usertypeDefinition["copy"] = [](TES3::Vector3& self) { return TES3::Vector3(self); };
+				usertypeDefinition["copy"] = &TES3::Vector3::copy;
 				usertypeDefinition["cross"] = &TES3::Vector3::crossProduct;
 				usertypeDefinition["distance"] = &TES3::Vector3::distance;
 				usertypeDefinition["dot"] = &TES3::Vector3::dotProduct;
@@ -89,7 +81,7 @@ namespace mwse {
 				usertypeDefinition["interpolate"] = &TES3::Vector3::interpolate;
 
 				// Conversion to NI::Color.
-				usertypeDefinition["toColor"] = [](TES3::Vector3& self) { return NI::Color(self.x, self.y, self.z); };
+				usertypeDefinition["toColor"] = &TES3::Vector3::toNiColor;
 			}
 
 			// Binding for TES3::Vector4.
@@ -105,7 +97,7 @@ namespace mwse {
 				usertypeDefinition["w"] = &TES3::Vector4::w;
 
 				// Basic function binding.
-				usertypeDefinition["copy"] = [](TES3::Vector4& self) { return TES3::Vector4(self); };
+				usertypeDefinition["copy"] = &TES3::Vector4::copy;
 			}
 
 			// Binding for TES3::BoundingBox.
@@ -119,7 +111,7 @@ namespace mwse {
 				usertypeDefinition["min"] = &TES3::BoundingBox::minimum;
 
 				// Basic function binding.
-				usertypeDefinition["copy"] = [](TES3::BoundingBox& self) { return TES3::BoundingBox(self); };
+				usertypeDefinition["copy"] = &TES3::BoundingBox::copy;
 			}
 
 			// Binding for TES3::Matrix33.
@@ -143,19 +135,16 @@ namespace mwse {
 				);
 
 				// Operator overloading.
-				usertypeDefinition[sol::meta_function::to_string] = [](TES3::Matrix33& self) {
-					std::ostringstream ss;
-					ss << std::fixed << std::setprecision(2) << std::dec << self;
-					return ss.str();
-				};
+				usertypeDefinition[sol::meta_function::to_string] = &TES3::Matrix33::toString;
+				usertypeDefinition["__tojson"] = &TES3::Matrix33::toJson;
 
 				// Basic property bindings.
-				usertypeDefinition["x"] = sol::readonly_property([](TES3::Matrix33& self) { return self.m0; });
-				usertypeDefinition["y"] = sol::readonly_property([](TES3::Matrix33& self) { return self.m1; });
-				usertypeDefinition["z"] = sol::readonly_property([](TES3::Matrix33& self) { return self.m2; });
+				usertypeDefinition["x"] = &TES3::Matrix33::m0;
+				usertypeDefinition["y"] = &TES3::Matrix33::m1;
+				usertypeDefinition["z"] = &TES3::Matrix33::m2;
 
 				// Basic function binding.
-				usertypeDefinition["copy"] = [](TES3::Matrix33& self) { return TES3::Matrix33(self); };
+				usertypeDefinition["copy"] = &TES3::Matrix33::copy;
 				usertypeDefinition["fromEulerXYZ"] = &TES3::Matrix33::fromEulerXYZ;
 				usertypeDefinition["reorthogonalize"] = &TES3::Matrix33::reorthogonalize;
 				usertypeDefinition["toIdentity"] = &TES3::Matrix33::toIdentity;
@@ -167,21 +156,9 @@ namespace mwse {
 				usertypeDefinition["transpose"] = &TES3::Matrix33::transpose;
 
 				// Handle functions with out values.
-				usertypeDefinition["invert"] = [](TES3::Matrix33& self) {
-					TES3::Matrix33 matrix;
-					bool valid = self.invert(&matrix);
-					return std::make_tuple(matrix, valid);
-				};
-				usertypeDefinition["toEulerXYZ"] = [](TES3::Matrix33& self) {
-					float x, y, z;
-					bool isUnique = self.toEulerXYZ(&x, &y, &z);
-					return std::make_tuple(TES3::Vector3(x, y, z), isUnique);
-				};
-				usertypeDefinition["toEulerZYX"] = [](TES3::Matrix33& self) {
-					float x, y, z;
-					bool isUnique = self.toEulerZYX(&x, &y, &z);
-					return std::make_tuple(TES3::Vector3(x, y, z), isUnique);
-				};
+				usertypeDefinition["invert"] = &TES3::Matrix33::invert_lua;
+				usertypeDefinition["toEulerXYZ"] = &TES3::Matrix33::toEulerXYZ_lua;
+				usertypeDefinition["toEulerZYX"] = &TES3::Matrix33::toEulerZYX_lua;
 			}
 
 			// Binding for TES3::Transform.
@@ -191,12 +168,12 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property bindings.
-				usertypeDefinition["rotation"] = sol::readonly_property([](TES3::Transform& self) { return self.rotation; });
-				usertypeDefinition["translation"] = sol::readonly_property([](TES3::Transform& self) { return self.translation; });
-				usertypeDefinition["scale"] = sol::readonly_property([](TES3::Transform& self) { return self.scale; });
+				usertypeDefinition["rotation"] = sol::readonly_property(&TES3::Transform::rotation);
+				usertypeDefinition["translation"] = sol::readonly_property(&TES3::Transform::translation);
+				usertypeDefinition["scale"] = sol::readonly_property(&TES3::Transform::scale);
 
 				// Basic function binding.
-				usertypeDefinition["copy"] = [](TES3::Transform& self) { return TES3::Transform(self); };
+				usertypeDefinition["copy"] = &TES3::Transform::copy;
 			}
 		}
 	}

@@ -63,7 +63,9 @@ namespace TES3 {
 		// Custom functions.
 		//
 
+		const char* getCloudTexturePath() const;
 		bool setCloudTexturePath(const char* path);
+		const char* getAmbientLoopSoundID() const;
 		bool setAmbientLoopSoundID(const char* id);
 
 		// Storage for cached userdata.

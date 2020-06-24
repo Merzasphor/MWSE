@@ -31,6 +31,10 @@ namespace TES3 {
 		TES3_WorldControllerRenderCamera_CameraData_SetFOV(this, degrees);
 	}
 
+	NI::Camera* WorldControllerRenderCamera::getCamera() const {
+		return cameraData.camera;
+	}
+
 	//
 	// KillCounter
 	//

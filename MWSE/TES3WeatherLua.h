@@ -37,17 +37,11 @@ namespace mwse {
 			usertypeDefinition["windSpeed"] = &TES3::Weather::windSpeed;
 
 			// Binding for IDs and paths.
-			usertypeDefinition["ambientLoopSoundId"] = sol::property(
-				[](TES3::Weather& self) { return self.soundIDAmbientLoop; },
-				[](TES3::Weather& self, const char* value) { if (strlen(value) < 260) strcpy(self.soundIDAmbientLoop, value); }
-			);
-			usertypeDefinition["cloudTexture"] = sol::property(
-				[](TES3::Weather& self) { return self.texturePathCloud; },
-				[](TES3::Weather& self, const char* value) { if (strlen(value) < 260) strcpy(self.texturePathCloud, value); }
-			);
+			usertypeDefinition["ambientLoopSoundId"] = sol::property(&TES3::Weather::getAmbientLoopSoundID, &TES3::Weather::setAmbientLoopSoundID);
+			usertypeDefinition["cloudTexture"] = sol::property(&TES3::Weather::getCloudTexturePath, &TES3::Weather::setCloudTexturePath);
 
 			// Access to other objects that need to be packaged.
-			usertypeDefinition["ambientLoopSound"] = sol::readonly_property([](TES3::Weather& self) { return self.soundAmbientLoop; });
+			usertypeDefinition["ambientLoopSound"] = &TES3::Weather::soundAmbientLoop;
 		}
 
 		void bindTES3Weather();

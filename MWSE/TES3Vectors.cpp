@@ -1,8 +1,58 @@
 #include "TES3Vectors.h"
 
+#include "NIColor.h"
+
 namespace TES3 {
 	constexpr double MATH_PI = 3.14159265358979323846;
 	constexpr double MATH_PI_2 = MATH_PI / 2;
+
+	//
+	// Vector2
+	//
+
+	Vector2::Vector2() :
+		x(0),
+		y(0)
+	{
+
+	}
+
+	Vector2::Vector2(float _x, float _y) :
+		x(_x),
+		y(_y)
+	{
+
+	}
+
+	Vector2 Vector2::copy() const {
+		return *this;
+	}
+
+	//
+	// Vector3
+	//
+
+	Vector3::Vector3() :
+		x(0.0f),
+		y(0.0f),
+		z(0.0f)
+	{
+
+	}
+
+	Vector3::Vector3(float _x, float _y, float _z) :
+		x(_x),
+		y(_y),
+		z(_z)
+	{
+
+	}
+
+	Vector3::Vector3(NI::Color& color) {
+		x = color.r;
+		y = color.g;
+		z = color.b;
+	}
 
 	bool Vector3::operator==(const Vector3& vec3) const {
 		return x == vec3.x && y == vec3.y && z == vec3.z;
@@ -20,7 +70,7 @@ namespace TES3 {
 		return Vector3(x - vec3.x, y - vec3.y, z - vec3.z);
 	}
 
-	Vector3 Vector3::operator*(const Vector3 & vec3) const {
+	Vector3 Vector3::operator*(const Vector3& vec3) const {
 		return Vector3(x * vec3.x, y * vec3.y, z * vec3.z);
 	}
 
@@ -33,6 +83,26 @@ namespace TES3 {
 		return str;
 	}
 
+	std::string Vector3::toString() const {
+		std::ostringstream ss;
+		ss << std::fixed << std::setprecision(2) << std::dec << *this;
+		return std::move(ss.str());
+	}
+
+	std::string Vector3::toJson() const {
+		std::ostringstream ss;
+		ss << "[\"x\":" << x << ",\"y\":" << y << ",\"z\":" << z << "]";
+		return std::move(ss.str());
+	}
+
+	Vector3 Vector3::copy() const {
+		return *this;
+	}
+
+	NI::Color Vector3::toNiColor() const {
+		return NI::Color(x, y, z);
+	}
+
 	Vector3 Vector3::crossProduct(Vector3* vec3) const {
 		return Vector3(y * vec3->z - z * vec3->y, z * vec3->x - vec3->z * x, x * vec3->y - y * vec3->x);
 	}
@@ -43,9 +113,9 @@ namespace TES3 {
 
 	Matrix33 Vector3::outerProduct(Vector3* vec3) const {
 		return Matrix33(
-			(x*vec3->x), (y*vec3->x), (z*vec3->x),
-			(x*vec3->y), (y*vec3->y), (z*vec3->y),
-			(x*vec3->z), (y*vec3->z), (z*vec3->z)
+			(x * vec3->x), (y * vec3->x), (z * vec3->x),
+			(x * vec3->y), (y * vec3->y), (z * vec3->y),
+			(x * vec3->z), (y * vec3->z), (z * vec3->z)
 		);
 	}
 
@@ -98,12 +168,42 @@ namespace TES3 {
 		return Vector3();
 	}
 
+	//
+	// Vector4
+	//
+
+	Vector4::Vector4() :
+		x(0.0f),
+		y(0.0f),
+		z(0.0f),
+		w(0.0f)
+	{
+
+	}
+
+	Vector4::Vector4(float _x, float _y, float _z, float _w) :
+		x(_x),
+		y(_y),
+		z(_z),
+		w(_w)
+	{
+
+	}
+
+	Vector4 Vector4::copy() const {
+		return *this;
+	}
+
+	//
+	// Matrix33
+	//
+
 	const auto TES3_Matrix33_testEqual = reinterpret_cast<bool(__thiscall*)(Matrix33*, const Matrix33*)>(0x6E7ED0);
-	const auto TES3_Matrix33_addMatrix = reinterpret_cast<Matrix33 *(__thiscall*)(Matrix33*, Matrix33*, const Matrix33*)>(0x6E7F60);
-	const auto TES3_Matrix33_subtractMatrix = reinterpret_cast<Matrix33 *(__thiscall*)(Matrix33*, Matrix33*, const Matrix33*)>(0x6E8000);
-	const auto TES3_Matrix33_multiplyMatrix = reinterpret_cast<Matrix33 *(__thiscall*)(Matrix33*, Matrix33*, const Matrix33*)>(0x6E80A0);
-	const auto TES3_Matrix33_multiplyVector = reinterpret_cast<Vector3 *(__thiscall*)(Matrix33*, Vector3*, const Vector3*)>(0x6E8230);
-	const auto TES3_Matrix33_multiplyScalar = reinterpret_cast<Matrix33 *(__thiscall*)(Matrix33*, Matrix33*, float)>(0x6E81B0);
+	const auto TES3_Matrix33_addMatrix = reinterpret_cast<Matrix33 * (__thiscall*)(Matrix33*, Matrix33*, const Matrix33*)>(0x6E7F60);
+	const auto TES3_Matrix33_subtractMatrix = reinterpret_cast<Matrix33 * (__thiscall*)(Matrix33*, Matrix33*, const Matrix33*)>(0x6E8000);
+	const auto TES3_Matrix33_multiplyMatrix = reinterpret_cast<Matrix33 * (__thiscall*)(Matrix33*, Matrix33*, const Matrix33*)>(0x6E80A0);
+	const auto TES3_Matrix33_multiplyVector = reinterpret_cast<Vector3 * (__thiscall*)(Matrix33*, Vector3*, const Vector3*)>(0x6E8230);
+	const auto TES3_Matrix33_multiplyScalar = reinterpret_cast<Matrix33 * (__thiscall*)(Matrix33*, Matrix33*, float)>(0x6E81B0);
 
 	const auto TES3_Matrix33_toIdentity = reinterpret_cast<void(__thiscall*)(Matrix33*)>(0x6E7CF0);
 	const auto TES3_Matrix33_toRotationX = reinterpret_cast<void(__thiscall*)(Matrix33*, float)>(0x6E7D20);
@@ -112,11 +212,11 @@ namespace TES3 {
 	const auto TES3_Matrix33_toRotationXYZ = reinterpret_cast<void(__thiscall*)(Matrix33*, float, float, float, float)> (0x6E7DE0);
 
 	const auto TES3_Matrix33_fromEulerXYZ = reinterpret_cast<void(__thiscall*)(Matrix33*, float, float, float)> (0x6E8D60);
-	const auto TES3_Matrix33_toEulerXYZ = reinterpret_cast<bool(__thiscall*)(Matrix33*, float*, float*, float*)> (0x6E8C50);
+	const auto TES3_Matrix33_toEulerXYZ = reinterpret_cast<bool(__thiscall*)(const Matrix33*, float*, float*, float*)> (0x6E8C50);
 
-	const auto TES3_Matrix33_transpose = reinterpret_cast<Matrix33*(__thiscall*)(Matrix33*, Matrix33*)> (0x6E8420);
-	const auto TES3_Matrix33_inverseRaw = reinterpret_cast<bool(__thiscall*)(Matrix33*, Matrix33*)> (0x6E82F0);
-	const auto TES3_Matrix33_inverse = reinterpret_cast<Matrix33*(__thiscall*)(Matrix33*, Matrix33*)> (0x6E83E0);
+	const auto TES3_Matrix33_transpose = reinterpret_cast<Matrix33 * (__thiscall*)(Matrix33*, Matrix33*)> (0x6E8420);
+	const auto TES3_Matrix33_inverseRaw = reinterpret_cast<bool(__thiscall*)(const Matrix33*, Matrix33*)> (0x6E82F0);
+	const auto TES3_Matrix33_inverse = reinterpret_cast<Matrix33 * (__thiscall*)(const Matrix33*, Matrix33*)> (0x6E83E0);
 
 	const auto TES3_Matrix33_reorthogonalize = reinterpret_cast<bool(__thiscall*)(Matrix33*)> (0x6E84A0);
 
@@ -193,6 +293,26 @@ namespace TES3 {
 		return str;
 	}
 
+	std::string Matrix33::toString() const {
+		std::ostringstream ss;
+		ss << std::fixed << std::setprecision(2) << std::dec << *this;
+		return std::move(ss.str());
+	}
+
+	std::string Matrix33::toJson() const {
+		std::ostringstream ss;
+		ss << "["
+			<< "[" << m0.x << "," << m0.y << "," << m0.z << "],"
+			<< "[" << m1.x << "," << m1.y << "," << m1.z << "],"
+			<< "[" << m2.x << "," << m2.y << "," << m2.z << "]"
+			<< "]";
+		return std::move(ss.str());
+	}
+
+	Matrix33 Matrix33::copy() const {
+		return *this;
+	}
+
 	void Matrix33::toZero() {
 		m0.x = 0.0f;
 		m0.y = 0.0f;
@@ -235,25 +355,37 @@ namespace TES3 {
 		return result;
 	}
 
-	Matrix33 Matrix33::invert() {
+	Matrix33 Matrix33::invert() const {
 		Matrix33 result;
 		TES3_Matrix33_inverse(this, &result);
 		return result;
 	}
 
-	bool Matrix33::invert(Matrix33 * out_matrix) {
+	bool Matrix33::invert(Matrix33* out_matrix) const {
 		return TES3_Matrix33_inverseRaw(this, out_matrix);
+	}
+
+	std::tuple<Matrix33, bool> Matrix33::invert_lua() const {
+		Matrix33 matrix;
+		bool valid = invert(&matrix);
+		return std::make_tuple(matrix, valid);
 	}
 
 	bool Matrix33::reorthogonalize() {
 		return TES3_Matrix33_reorthogonalize(this);
 	}
 
-	bool Matrix33::toEulerXYZ(float * x, float * y, float * z) {
+	bool Matrix33::toEulerXYZ(float * x, float * y, float * z) const {
 		return TES3_Matrix33_toEulerXYZ(this, x, y, z);
 	}
 
-	bool Matrix33::toEulerZYX(float * x, float * y, float * z) {
+	std::tuple<Vector3, bool> Matrix33::toEulerXYZ_lua() const {
+		float x, y, z;
+		bool isUnique = toEulerXYZ(&x, &y, &z);
+		return std::make_tuple(Vector3(x, y, z), isUnique);
+	}
+
+	bool Matrix33::toEulerZYX(float* x, float* y, float* z) const {
 		*x = 0; 
 		*y = asin(m2.x);
 		*z = 0;
@@ -274,5 +406,28 @@ namespace TES3 {
 			return false;
 		}
 	}
+
+	std::tuple<Vector3, bool> Matrix33::toEulerZYX_lua() const {
+		float x, y, z = 0.0f;
+		bool isUnique = toEulerZYX(&x, &y, &z);
+		return std::make_tuple(Vector3(x, y, z), isUnique);
+	}
+
+	//
+	// BoundingBox
+	//
+
+	BoundingBox BoundingBox::copy() const {
+		return *this;
+	}
+
+	//
+	// Transform
+	//
+
+	Transform Transform::copy() const {
+		return *this;
+	}
+
 }
 

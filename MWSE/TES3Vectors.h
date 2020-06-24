@@ -1,5 +1,7 @@
 #pragma once
 
+#include "NIDefines.h"
+
 namespace TES3 {
 	struct Matrix33;
 
@@ -14,16 +16,21 @@ namespace TES3 {
 		float x;
 		float y;
 
-		Vector2() : x(0), y(0) {}
-		Vector2(float _x, float _y) : x(_x), y(_y) {}
+		Vector2();
+		Vector2(float x, float y);
+
+		Vector2 copy() const;
 	};
 	static_assert(sizeof(Vector2) == 0x8, "TES3::Vector2 failed size validation");
 
-	struct Vector3 : Vector2 {
+	struct Vector3 {
+		float x;
+		float y;
 		float z;
 
-		Vector3() : Vector2(), z(0) {}
-		Vector3(float _x, float _y, float _z) : Vector2(_x, _y), z(_z) {}
+		Vector3();
+		Vector3(float x, float y, float z);
+		Vector3(NI::Color& color);
 
 		bool operator==(const Vector3& vector) const;
 		bool operator!=(const Vector3& vector) const;
@@ -33,10 +40,15 @@ namespace TES3 {
 		Vector3 operator*(const float) const;
 
 		friend std::ostream& operator<<(std::ostream& str, const Vector3& vector);
+		std::string toString() const;
+		std::string toJson() const;
 
 		//
 		// Associated functions.
 		//
+
+		Vector3 copy() const;
+		NI::Color toNiColor() const;
 
 		Vector3 crossProduct(Vector3*) const;
 		float dotProduct(Vector3*) const;
@@ -53,11 +65,16 @@ namespace TES3 {
 	};
 	static_assert(sizeof(Vector3) == 0xC, "TES3::Vector3 failed size validation");
 
-	struct Vector4 : Vector3 {
+	struct Vector4 {
+		float x;
+		float y;
+		float z;
 		float w;
 
-		Vector4() : Vector3(), w(0) {}
-		Vector4(float _x, float _y, float _z, float _w) : Vector3(_x, _y, _z), w(_w) {}
+		Vector4();
+		Vector4(float x, float y, float z, float w);
+
+		Vector4 copy() const;
 	};
 	static_assert(sizeof(Vector4) == 0x10, "TES3::Vector4 failed size validation");
 
@@ -83,11 +100,14 @@ namespace TES3 {
 		Matrix33 operator*(float scalar);
 
 		friend std::ostream& operator<<(std::ostream& str, const Matrix33& matrix);
-
+		std::string toString() const;
+		std::string toJson() const;
 
 		//
 		// Set the matrix to specific useful values.
 		//
+
+		Matrix33 copy() const;
 
 		void toZero();
 		void toIdentity();
@@ -102,12 +122,15 @@ namespace TES3 {
 
 		Matrix33 transpose();
 
-		Matrix33 invert();
-		bool invert(Matrix33 * out_matrix);
+		Matrix33 invert() const;
+		bool invert(Matrix33* out_matrix) const;
+		std::tuple<Matrix33, bool> invert_lua() const;
 
 		void fromEulerXYZ(float x, float y, float z);
-		bool toEulerXYZ(float * x, float * y, float * z);
-		bool toEulerZYX(float * x, float * y, float * z);
+		bool toEulerXYZ(float* x, float* y, float* z) const;
+		std::tuple<Vector3, bool> toEulerXYZ_lua() const;
+		bool toEulerZYX(float* x, float* y, float* z) const;
+		std::tuple<Vector3, bool> toEulerZYX_lua() const;
 
 		bool reorthogonalize();
 
@@ -117,6 +140,8 @@ namespace TES3 {
 	struct BoundingBox {
 		Vector3 minimum;
 		Vector3 maximum;
+
+		BoundingBox copy() const;
 	};
 	static_assert(sizeof(BoundingBox) == 0x18, "TES3::BoundingBox failed size validation");
 
@@ -124,6 +149,8 @@ namespace TES3 {
 		TES3::Matrix33 rotation;
 		TES3::Vector3 translation;
 		float scale;
+
+		Transform copy() const;
 	};
 	static_assert(sizeof(Transform) == 0x34, "TES3::Transform failed size validation");
 }

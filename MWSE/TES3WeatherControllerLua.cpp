@@ -11,17 +11,6 @@
 
 namespace mwse {
 	namespace lua {
-		sol::table getWeatherList(TES3::WeatherController * controller) {
-			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-			sol::table results = stateHandle.state.create_table();
-
-			for (unsigned int i = TES3::WeatherType::First; i <= TES3::WeatherType::Last; i++) {
-				results[i + 1] = controller->arrayWeathers[i];
-			}
-
-			return results;
-		}
-
 		void bindTES3WeatherController() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -34,12 +23,14 @@ namespace mwse {
 			// Basic property binding.
 			usertypeDefinition["currentFogColor"] = &TES3::WeatherController::currentFogColor;
 			usertypeDefinition["currentSkyColor"] = &TES3::WeatherController::currentSkyColor;
+			usertypeDefinition["currentWeather"] = sol::readonly_property(&TES3::WeatherController::currentWeather);
 			usertypeDefinition["hoursBetweenWeatherChanges"] = &TES3::WeatherController::hoursBetweenWeatherChanges;
 			usertypeDefinition["daysRemaining"] = &TES3::WeatherController::daysRemaining;
 			usertypeDefinition["hoursRemaining"] = &TES3::WeatherController::hoursRemaining;
 			usertypeDefinition["masser"] = sol::readonly_property(&TES3::WeatherController::moonMasser);
 			usertypeDefinition["secunda"] = sol::readonly_property(&TES3::WeatherController::moonSecunda);
 			usertypeDefinition["lastActiveRegion"] = sol::readonly_property(&TES3::WeatherController::lastActiveRegion);
+			usertypeDefinition["nextWeather"] = sol::readonly_property(&TES3::WeatherController::nextWeather);
 			usertypeDefinition["sceneRainRoot"] = sol::readonly_property(&TES3::WeatherController::sgRainRoot);
 			usertypeDefinition["sceneSkyLight"] = sol::readonly_property(&TES3::WeatherController::sgSkyLight);
 			usertypeDefinition["sceneSkyRoot"] = sol::readonly_property(&TES3::WeatherController::sgSkyRoot);
@@ -64,30 +55,14 @@ namespace mwse {
 			usertypeDefinition["underwaterNightFog"] = &TES3::WeatherController::underwaterNightFog;
 			usertypeDefinition["underwaterSunriseFog"] = &TES3::WeatherController::underwaterSunriseFog;
 			usertypeDefinition["underwaterSunsetFog"] = &TES3::WeatherController::underwaterSunsetFog;
+			usertypeDefinition["weathers"] = sol::readonly_property(&TES3::WeatherController::getWeathers);
 			usertypeDefinition["windVelocityCurrWeather"] = &TES3::WeatherController::windVelocityCurrWeather;
 			usertypeDefinition["windVelocityNextWeather"] = &TES3::WeatherController::windVelocityNextWeather;
 
-			// Indirect bindings to unions and arrays.
-			usertypeDefinition["weathers"] = sol::readonly_property([](TES3::WeatherController& self) { return getWeatherList(&self); });
-
-			// Access to other objects that need to be packaged.
-			usertypeDefinition["currentWeather"] = sol::readonly_property([](TES3::WeatherController& self) { return self.currentWeather; });
-			usertypeDefinition["nextWeather"] = sol::readonly_property([](TES3::WeatherController& self) { return self.nextWeather; });
-
 			// Basic function bindings.
 			usertypeDefinition["calcSunDamageScalar"] = &TES3::WeatherController::calcSunDamageScalar;
-			usertypeDefinition["switchImmediate"] = [](TES3::WeatherController& self, int weatherId) {
-				if (self.lastActiveRegion) {
-					self.lastActiveRegion->currentWeatherIndex = weatherId;
-				}
-				self.switchWeather(weatherId, 1.0f);
-			};
-			usertypeDefinition["switchTransition"] = [](TES3::WeatherController& self, int weatherId) {
-				self.switchWeather(weatherId, 0.001f);
-				if (self.lastActiveRegion) {
-					self.lastActiveRegion->currentWeatherIndex = weatherId;
-				}
-			};
+			usertypeDefinition["switchImmediate"] = &TES3::WeatherController::switchImmediate;
+			usertypeDefinition["switchTransition"] = &TES3::WeatherController::switchTransition;
 			usertypeDefinition["updateVisuals"] = &TES3::WeatherController::updateVisuals;
 		}
 	}

@@ -43,6 +43,13 @@ namespace TES3 {
 		NI::Object* root; // 0x8
 		NI::Node* cameraRoot; // 0xC
 		CameraData cameraData; // 0x10
+
+		//
+		// Custom functions.
+		//
+
+		NI::Camera* getCamera() const;
+
 	};
 	static_assert(sizeof(WorldControllerRenderCamera::CameraData) == 0x1C, "TES3::WorldControllerRenderCamera::CameraData failed size validation");
 	static_assert(sizeof(WorldControllerRenderCamera) == 0x2C, "TES3::WorldControllerRenderCamera failed size validation");

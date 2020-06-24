@@ -7,15 +7,35 @@ namespace TES3 {
 		struct WidgetButton : Element {
 			int getState() const;
 			void setState(int state);
+
+			sol::table getColourIdle_lua(sol::this_state);
 			void setColourIdle(const float(&c)[3]);
+			void setColourIdle_lua(sol::table);
+			sol::table getColourOver_lua(sol::this_state);
 			void setColourOver(const float(&c)[3]);
+			void setColourOver_lua(sol::table);
+			sol::table getColourPressed_lua(sol::this_state);
 			void setColourPressed(const float(&c)[3]);
+			void setColourPressed_lua(sol::table);
+			sol::table getColourDisabled_lua(sol::this_state);
 			void setColourDisabled(const float(&c)[3]);
+			void setColourDisabled_lua(sol::table);
+			sol::table getColourDisabledOver_lua(sol::this_state);
 			void setColourDisabledOver(const float(&c)[3]);
+			void setColourDisabledOver_lua(sol::table);
+			sol::table getColourDisabledPressed_lua(sol::this_state);
 			void setColourDisabledPressed(const float(&c)[3]);
+			void setColourDisabledPressed_lua(sol::table);
+			sol::table getColourActive_lua(sol::this_state);
 			void setColourActive(const float(&c)[3]);
+			void setColourActive_lua(sol::table);
+			sol::table getColourActiveOver_lua(sol::this_state);
 			void setColourActiveOver(const float(&c)[3]);
+			void setColourActiveOver_lua(sol::table);
+			sol::table getColourActivePressed_lua(sol::this_state);
 			void setColourActivePressed(const float(&c)[3]);
+			void setColourActivePressed_lua(sol::table);
+
 			const char* getText() const;
 			void setText(const char* text);
 
@@ -35,7 +55,9 @@ namespace TES3 {
 			void setNormalized(double value);
 			bool getShowText() const;
 			void setShowText(bool flag);
+			sol::table getFillColour_lua(sol::this_state ts);
 			void setFillColour(const float(&c)[3]);
+			void setFillColour_lua(sol::table c);
 			void setFillAlpha(float a);
 
 			WidgetFillbar() = delete;
@@ -48,6 +70,7 @@ namespace TES3 {
 		struct WidgetParagraphInput : Element {
 			int getLengthLimit() const;
 			void setLengthLimit(int limit);
+			void setLengthLimit_lua(sol::optional<int> limit = 1023);
 			std::string getText() const;
 			void setText(const char* text);
 
@@ -94,7 +117,9 @@ namespace TES3 {
 
 		struct WidgetTextInput : Element {
 			int getLengthLimit() const;
+			sol::optional<int> getLengthLimit_lua() const;
 			void setLengthLimit(int limit);
+			void setLengthLimit_lua(sol::optional<int> limit);
 			bool getNoLimit() const;
 			void setNoLimit(bool flag);
 			bool getEraseOnFirstKey() const;
@@ -112,15 +137,34 @@ namespace TES3 {
 		struct WidgetTextSelect : Element {
 			int getState() const;
 			void setState(int state);
+
+			sol::table getColourIdle_lua(sol::this_state);
 			void setColourIdle(const float(&c)[3]);
+			void setColourIdle_lua(sol::table);
+			sol::table getColourOver_lua(sol::this_state);
 			void setColourOver(const float(&c)[3]);
+			void setColourOver_lua(sol::table);
+			sol::table getColourPressed_lua(sol::this_state);
 			void setColourPressed(const float(&c)[3]);
+			void setColourPressed_lua(sol::table);
+			sol::table getColourDisabled_lua(sol::this_state);
 			void setColourDisabled(const float(&c)[3]);
+			void setColourDisabled_lua(sol::table);
+			sol::table getColourDisabledOver_lua(sol::this_state);
 			void setColourDisabledOver(const float(&c)[3]);
+			void setColourDisabledOver_lua(sol::table);
+			sol::table getColourDisabledPressed_lua(sol::this_state);
 			void setColourDisabledPressed(const float(&c)[3]);
+			void setColourDisabledPressed_lua(sol::table);
+			sol::table getColourActive_lua(sol::this_state);
 			void setColourActive(const float(&c)[3]);
+			void setColourActive_lua(sol::table);
+			sol::table getColourActiveOver_lua(sol::this_state);
 			void setColourActiveOver(const float(&c)[3]);
+			void setColourActiveOver_lua(sol::table);
+			sol::table getColourActivePressed_lua(sol::this_state);
 			void setColourActivePressed(const float(&c)[3]);
+			void setColourActivePressed_lua(sol::table);
 
 			WidgetTextSelect() = delete;
 			static WidgetTextSelect* fromElement(Element* e);

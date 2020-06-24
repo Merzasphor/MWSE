@@ -1,8 +1,11 @@
-#include "NIProperty.h"
+#include "TES3WeatherController.h"
+
 #include "TES3DataHandler.h"
 #include "TES3GlobalVariable.h"
-#include "TES3WeatherController.h"
+#include "TES3Region.h"
 #include "TES3WorldController.h"
+
+#include "NIProperty.h"
 
 #include "LuaManager.h"
 #include "LuaCalcSunDamageScalarEvent.h"
@@ -38,6 +41,10 @@ namespace TES3 {
 		TES3_WeatherController_switch(this, weatherId, startingTransition);
 	}
 
+	std::reference_wrapper<Weather*[10]> WeatherController::getWeathers() {
+		return std::ref(arrayWeathers);
+	}
+
 	void WeatherController::updateVisuals() {
 		// Allows weather visuals to update when simulation is paused.
 		auto gameHour = WorldController::get()->gvarGameHour->value;
@@ -59,5 +66,19 @@ namespace TES3 {
 		// setFogColour decrements the refCount
 		fogProperty->refCount++;
 		TES3_WeatherController_setFogColour(this, fogProperty);
+	}
+
+	void WeatherController::switchImmediate(int weather) {
+		if (lastActiveRegion) {
+			lastActiveRegion->currentWeatherIndex = weather;
+		}
+		switchWeather(weather, 1.0f);
+	}
+
+	void WeatherController::switchTransition(int weather) {
+		switchWeather(weather, 0.001f);
+		if (lastActiveRegion) {
+			lastActiveRegion->currentWeatherIndex = weather;
+		}
 	}
 }

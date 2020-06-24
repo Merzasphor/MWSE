@@ -31,35 +31,15 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				usertypeDefinition["state"] = sol::property(&WidgetButton::getState, &WidgetButton::setState);
-				usertypeDefinition["idle"] = sol::property(
-					[](WidgetButton& self, sol::table c) { self.setColourIdle({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["over"] = sol::property(
-					[](WidgetButton& self, sol::table c) { self.setColourOver({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["pressed"] = sol::property(
-					[](WidgetButton& self, sol::table c) { self.setColourPressed({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["idleDisabled"] = sol::property(
-					[](WidgetButton& self, sol::table c) { self.setColourDisabled({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["overDisabled"] = sol::property(
-					[](WidgetButton& self, sol::table c) { self.setColourDisabledOver({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["pressedDisabled"] = sol::property(
-					[](WidgetButton& self, sol::table c) { self.setColourDisabledPressed({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["idleActive"] = sol::property(
-					[](WidgetButton& self, sol::table c) { self.setColourActive({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["overActive"] = sol::property(
-					[](WidgetButton& self, sol::table c) { self.setColourActiveOver({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["pressedActive"] = sol::property(
-					[](WidgetButton& self, sol::table c) { self.setColourActivePressed({ c[1], c[2], c[3] }); }
-				);
-
-				
+				usertypeDefinition["idle"] = sol::property(&WidgetButton::getColourIdle_lua, &WidgetButton::setColourIdle_lua);
+				usertypeDefinition["over"] = sol::property(&WidgetButton::getColourOver_lua, &WidgetButton::setColourOver_lua);
+				usertypeDefinition["pressed"] = sol::property(&WidgetButton::getColourPressed_lua, &WidgetButton::setColourPressed_lua);
+				usertypeDefinition["idleDisabled"] = sol::property(&WidgetButton::getColourDisabled_lua, &WidgetButton::setColourDisabled_lua);
+				usertypeDefinition["overDisabled"] = sol::property(&WidgetButton::getColourDisabledOver_lua, &WidgetButton::setColourDisabledOver_lua);
+				usertypeDefinition["pressedDisabled"] = sol::property(&WidgetButton::getColourDisabledPressed_lua, &WidgetButton::setColourDisabledPressed_lua);
+				usertypeDefinition["idleActive"] = sol::property(&WidgetButton::getColourActive_lua, &WidgetButton::setColourActive_lua);
+				usertypeDefinition["overActive"] = sol::property(&WidgetButton::getColourActiveOver_lua, &WidgetButton::setColourActiveOver_lua);
+				usertypeDefinition["pressedActive"] = sol::property(&WidgetButton::getColourActivePressed_lua, &WidgetButton::setColourActivePressed_lua);
 			}
 
 			//
@@ -73,12 +53,8 @@ namespace mwse {
 				usertypeDefinition["max"] = sol::property(&WidgetFillbar::getMax, &WidgetFillbar::setMax);
 				usertypeDefinition["showText"] = sol::property(&WidgetFillbar::getShowText, &WidgetFillbar::setShowText);
 				usertypeDefinition["normalized"] = sol::property(&WidgetFillbar::getNormalized, &WidgetFillbar::setNormalized);
-				usertypeDefinition["fillColor"] = sol::property(
-					[](WidgetFillbar& self, sol::table c) { self.setFillColour({ c[1], c[2], c[3] }); }
-				);
+				usertypeDefinition["fillColor"] = sol::property(&WidgetFillbar::getFillColour_lua, &WidgetFillbar::setFillColour_lua);
 				usertypeDefinition["fillAlpha"] = sol::property(&WidgetFillbar::setFillAlpha);
-
-				
 			}
 
 			//
@@ -88,15 +64,7 @@ namespace mwse {
 				auto usertypeDefinition = state.new_usertype<WidgetParagraphInput>("tes3uiParagraphInput");
 				usertypeDefinition["new"] = sol::no_constructor;
 
-				usertypeDefinition["lengthLimit"] = sol::property(
-					[](WidgetParagraphInput& self) { return self.getLengthLimit(); },
-					[](WidgetParagraphInput& self, sol::optional<int> limit) {
-						const int defaultLength = 0x3ff;
-						self.setLengthLimit(limit.value_or(defaultLength));
-					}
-				);
-
-				
+				usertypeDefinition["lengthLimit"] = sol::property(&WidgetParagraphInput::getLengthLimit, &WidgetParagraphInput::setLengthLimit_lua);
 			}
 
 			//
@@ -110,8 +78,6 @@ namespace mwse {
 				usertypeDefinition["max"] = sol::property(&WidgetScrollBar::getMax, &WidgetScrollBar::setMax);
 				usertypeDefinition["step"] = sol::property(&WidgetScrollBar::getStepX, &WidgetScrollBar::setStepX);
 				usertypeDefinition["jump"] = sol::property(&WidgetScrollBar::getJumpX, &WidgetScrollBar::setJumpX);
-
-				
 			}
 
 			//
@@ -139,31 +105,8 @@ namespace mwse {
 				auto usertypeDefinition = state.new_usertype<WidgetTextInput>("tes3uiTextInput");
 				usertypeDefinition["new"] = sol::no_constructor;
 
-				usertypeDefinition["lengthLimit"] = sol::property(
-					[](WidgetTextInput& self) {
-						sol::optional<int> limit;
-
-						// Convert no limit to nil
-						int n = self.getLengthLimit();
-						if (!self.getNoLimit() && n > 0) {
-							limit = n;
-						}
-						return limit;
-					},
-					[](WidgetTextInput& self, sol::optional<int> limit) {
-						// Convert nil to no limit
-						if (limit) {
-							self.setLengthLimit(limit.value());
-							self.setNoLimit(false);
-						}
-						else {
-							self.setNoLimit(true);
-						}
-					}
-				);
+				usertypeDefinition["lengthLimit"] = sol::property(&WidgetTextInput::getLengthLimit_lua, &WidgetTextInput::setLengthLimit_lua);
 				usertypeDefinition["eraseOnFirstKey"] = sol::property(&WidgetTextInput::getEraseOnFirstKey, &WidgetTextInput::setEraseOnFirstKey);
-
-				
 			}
 
 			//
@@ -174,35 +117,15 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				usertypeDefinition["state"] = sol::property(&WidgetTextSelect::getState, &WidgetTextSelect::setState);
-				usertypeDefinition["idle"] = sol::property(
-					[](WidgetTextSelect& self, sol::table c) { self.setColourIdle({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["over"] = sol::property(
-					[](WidgetTextSelect& self, sol::table c) { self.setColourOver({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["pressed"] = sol::property(
-					[](WidgetTextSelect& self, sol::table c) { self.setColourPressed({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["idleDisabled"] = sol::property(
-					[](WidgetTextSelect& self, sol::table c) { self.setColourDisabled({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["overDisabled"] = sol::property(
-					[](WidgetTextSelect& self, sol::table c) { self.setColourDisabledOver({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["pressedDisabled"] = sol::property(
-					[](WidgetTextSelect& self, sol::table c) { self.setColourDisabledPressed({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["idleActive"] = sol::property(
-					[](WidgetTextSelect& self, sol::table c) { self.setColourActive({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["overActive"] = sol::property(
-					[](WidgetTextSelect& self, sol::table c) { self.setColourActiveOver({ c[1], c[2], c[3] }); }
-				);
-				usertypeDefinition["pressedActive"] = sol::property(
-					[](WidgetTextSelect& self, sol::table c) { self.setColourActivePressed({ c[1], c[2], c[3] }); }
-				);
-
-				
+				usertypeDefinition["idle"] = sol::property(&WidgetTextSelect::getColourIdle_lua, &WidgetTextSelect::setColourIdle_lua);
+				usertypeDefinition["over"] = sol::property(&WidgetTextSelect::getColourOver_lua, &WidgetTextSelect::setColourOver_lua);
+				usertypeDefinition["pressed"] = sol::property(&WidgetTextSelect::getColourPressed_lua, &WidgetTextSelect::setColourPressed_lua);
+				usertypeDefinition["idleDisabled"] = sol::property(&WidgetTextSelect::getColourDisabled_lua, &WidgetTextSelect::setColourDisabled_lua);
+				usertypeDefinition["overDisabled"] = sol::property(&WidgetTextSelect::getColourDisabledOver_lua, &WidgetTextSelect::setColourDisabledOver_lua);
+				usertypeDefinition["pressedDisabled"] = sol::property(&WidgetTextSelect::getColourDisabledPressed_lua, &WidgetTextSelect::setColourDisabledPressed_lua);
+				usertypeDefinition["idleActive"] = sol::property(&WidgetTextSelect::getColourActive_lua, &WidgetTextSelect::setColourActive_lua);
+				usertypeDefinition["overActive"] = sol::property(&WidgetTextSelect::getColourActiveOver_lua, &WidgetTextSelect::setColourActiveOver_lua);
+				usertypeDefinition["pressedActive"] = sol::property(&WidgetTextSelect::getColourActivePressed_lua, &WidgetTextSelect::setColourActivePressed_lua);
 			}
 		}
 
