@@ -10,17 +10,12 @@
 
 #include "TES3Collections.h"
 
-#include "TES3TArrayLua.h"
-
 namespace mwse {
 	namespace lua {
 		void bindNINode() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
-
-			// Binding for TES3::TArray<NI::AVObject>.
-			bindGenericObjectTArray<NI::AVObject>("niAVObjectTArray");
 
 			// Binding for NI::Node.
 			{

@@ -13,6 +13,8 @@
   <ItemGroup>
     <ClInclude Include="ArrayUtil.h" />
     <ClInclude Include="BitUtil.h" />
+    <ClInclude Include="BSAnimationManager.h" />
+    <ClInclude Include="BSAnimationNode.h" />
     <ClInclude Include="LuaBarterOfferEvent.h" />
     <ClInclude Include="LuaBodyPartAssignedEvent.h" />
     <ClInclude Include="LuaCalcHitArmorPieceEvent.h" />
@@ -143,16 +145,19 @@
     <ClInclude Include="NIRect.h" />
     <ClInclude Include="NIRenderedTexture.h" />
     <ClInclude Include="NIRenderer.h" />
+    <ClInclude Include="NITArray.h" />
     <ClInclude Include="NITextureEffect.h" />
     <ClInclude Include="NITextureEffectLua.h" />
     <ClInclude Include="NiTriBasedGeometry.h" />
     <ClInclude Include="NiTriBasedGeometryData.h" />
     <ClInclude Include="NiTriShapeData.h" />
+    <ClInclude Include="NIViewer.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TES3Archive.h" />
     <ClInclude Include="TES3Birthsign.h" />
     <ClInclude Include="TES3BirthsignLua.h" />
     <ClInclude Include="TES3BodyPartManager.h" />
+    <ClInclude Include="TES3Deque.h" />
     <ClInclude Include="TES3HashMap.h" />
     <ClInclude Include="TES3MagicEffectController.h" />
     <ClInclude Include="MemoryUtilLua.h" />
@@ -210,7 +215,6 @@
     <ClInclude Include="TES3SoulGemData.h" />
     <ClInclude Include="TES3SpellInstanceController.h" />
     <ClInclude Include="TES3StdString.h" />
-    <ClInclude Include="TES3TArrayLua.h" />
     <ClInclude Include="TES3UIDefines.h" />
     <ClInclude Include="LuaManager.h" />
     <ClInclude Include="LuaScript.h" />
@@ -553,8 +557,10 @@
     <ClCompile Include="NIRenderedTexture.cpp" />
     <ClCompile Include="NIRenderer.cpp" />
     <ClCompile Include="NISwitchNode.cpp" />
+    <ClCompile Include="NIRTTI.cpp" />
     <ClCompile Include="NITextureEffect.cpp" />
     <ClCompile Include="NiTextureEffectLua.cpp" />
+    <ClCompile Include="NITimeController.cpp" />
     <ClCompile Include="NiTriBasedGeometryData.cpp" />
     <ClCompile Include="NITriShape.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -650,7 +656,6 @@
     <ClCompile Include="TES3AttachmentLua.cpp" />
     <ClCompile Include="TES3CrimeEvent.cpp" />
     <ClCompile Include="TES3MobController.cpp" />
-    <ClCompile Include="TES3TArrayLua.cpp" />
     <ClCompile Include="TES3UIInventoryTile.cpp" />
     <ClCompile Include="TES3UIInventoryTileLua.cpp" />
     <ClCompile Include="TES3UIManager.cpp" />

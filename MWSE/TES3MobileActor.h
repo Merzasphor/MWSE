@@ -7,6 +7,7 @@
 #include "TES3Armor.h"
 #include "TES3Clothing.h"
 #include "TES3CrimeController.h"
+#include "TES3Deque.h"
 #include "TES3HashMap.h"
 #include "TES3Inventory.h"
 #include "TES3MagicSourceInstance.h"
@@ -86,33 +87,27 @@ namespace TES3 {
 		};
 	}
 
+	struct ActiveMagicEffect {
+		unsigned int magicInstanceSerial; // 0x8
+		short magicInstanceEffectIndex; // 0xC
+		short magicEffectID; // 0xE
+		bool isHarmful; // 0x10
+		bool isSummon; // 0x11
+		unsigned short duration; // 0x14
+		unsigned short magnitudeMin; // 0x16
+		unsigned char skillOrAttributeID; // 0x18
+
+		//
+		// Custom functions.
+		//
+
+		MagicSourceInstance* getInstance();
+		int getMagnitude();
+
+	};
+	static_assert(sizeof(ActiveMagicEffect) == 0x10, "TES3::ActiveMagicEffect failed size validation");
+
 	struct MobileActor : MobileObject {
-		struct ActiveMagicEffect {
-			ActiveMagicEffect* next; // 0x0
-			ActiveMagicEffect* prev; // 0x4
-			unsigned int magicInstanceSerial; // 0x8
-			short magicInstanceEffectIndex; // 0xC
-			short magicEffectID; // 0xE
-			bool isHarmful; // 0x10
-			bool unknown_0x9; // 0x11
-			unsigned short duration; // 0x14
-			unsigned short magnitudeMin; // 0x16
-			unsigned char skillOrAttributeID; // 0x18
-
-			//
-			// Custom functions.
-			//
-
-			MagicSourceInstance* getInstance();
-			int getMagnitude();
-
-		};
-		struct ActiveMagicEffects {
-			bool unknown_0x0;
-			ActiveMagicEffect * firstEffect; // 0x4
-			int count; // 0x8
-		};
-
 		Iterator<MobileActor> listTargetActors; // 0x80
 		Iterator<MobileActor> listFriendlyActors; // 0x94
 		float scanTimer; // 0xA8
@@ -131,7 +126,7 @@ namespace TES3 {
 		int unknown_0x1B8;
 		int unknown_0x1BC;
 		CombatSession * combatSession; // 0x1C0
-		ActiveMagicEffects activeMagicEffects; // 0x1C4
+		Deque<ActiveMagicEffect> activeMagicEffects; // 0x1C4
 		int unknown_0x1D0;
 		Collision collision_1D4;
 		HashMap<void*, void*> powers;
@@ -204,6 +199,8 @@ namespace TES3 {
 		float applyArmorRating(float damage, float swing, bool damageEquipment);
 		float calculateArmorRating(int * armorItemCount = nullptr);
 		void applyHitModifiers(MobileActor * attacker, MobileActor * defender, float unknown, float swing, MobileProjectile * projectile = nullptr, bool unknown2 = false);
+
+		void setCurrentSpell(const Spell* spell);
 
 		//
 		// Other related this-call functions.
@@ -376,12 +373,11 @@ namespace TES3 {
 
 		bool isAffectedByObject_lua(sol::object object) const;
 
+		bool hasSummonEffect();
+
 		ActiveMagicEffect* getActiveMagicEffects_legacy() const;
 		int getActiveMagicEffectCount_legacy() const;
-
 	};
-	static_assert(sizeof(MobileActor::ActiveMagicEffects) == 0xC, "TES3::MobileActor::ActiveMagicEffects failed size validation");
-	static_assert(sizeof(MobileActor::ActiveMagicEffect) == 0x18, "TES3::MobileActor::ActiveMagicEffect failed size validation");
 	static_assert(sizeof(MobileActor) == 0x3B0, "TES3::MobileActor failed size validation");
 }
 

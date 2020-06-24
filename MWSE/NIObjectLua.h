@@ -4,8 +4,11 @@
 #include "NINode.h"
 #include "NIRTTI.h"
 
+#include "TES3Reference.h"
+
 namespace mwse {
 	namespace lua {
+		// Speed-optimized binding for NI::Object.
 		template <typename T>
 		void setUserdataForNIObject(sol::usertype<T>& usertypeDefinition) {
 			// Basic property binding.
@@ -22,6 +25,7 @@ namespace mwse {
 			usertypeDefinition["runTimeTypeInformation"] = sol::readonly_property(&NI::Object::getRunTimeTypeInformation);
 		}
 
+		// Speed-optimized binding for NI::ObjectNET.
 		template <typename T>
 		void setUserdataForNIObjectNET(sol::usertype<T>& usertypeDefinition) {
 			setUserdataForNIObject(usertypeDefinition);
@@ -34,8 +38,10 @@ namespace mwse {
 			usertypeDefinition["prependController"] = &NI::ObjectNET::prependController;
 			usertypeDefinition["removeController"] = &NI::ObjectNET::removeController;
 			usertypeDefinition["removeAllControllers"] = &NI::ObjectNET::removeAllControllers;
+			usertypeDefinition["getGameReference"] &NI::ObjectNET::getTes3Reference_lua;
 		}
 
+		// Speed-optimized binding for NI::AVObject.
 		template <typename T>
 		void setUserdataForNIAVObject(sol::usertype<T>& usertypeDefinition) {
 			setUserdataForNIObjectNET(usertypeDefinition);

@@ -33,6 +33,10 @@ namespace mwse {
 			usertypeDefinition["lastTime"] = &NI::TimeController::lastTime;
 			usertypeDefinition["target"] = sol::readonly_property(&NI::TimeController::target);
 			usertypeDefinition["nextController"] = &NI::TimeController::nextController;
+
+			// Basic function binding.
+			usertypeDefinition["setTarget"] = &NI::TimeController::setTarget;
+			usertypeDefinition["start"] = &NI::TimeController::start;
 		}
 	}
 }

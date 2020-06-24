@@ -70,6 +70,10 @@ namespace mwse {
 
 		char* getThreadSafeStringBuffer();
 
+		inline constexpr float& getSimulationTimestamp() {
+			return *reinterpret_cast<float*>(0x7C6708);
+		};
+
 		//
 		// Original function calls in Morrowind.
 		//

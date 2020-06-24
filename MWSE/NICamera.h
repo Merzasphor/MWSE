@@ -14,9 +14,9 @@ namespace NI {
 		float viewFrustum[6]; // 0x100
 		TES3::Vector4 port; // 0x118
 		Object * scene; // 0x128
-		TES3::TArray<void> unknown_0x12C; // Screen related?
+		NI::TArray<void*> unknown_0x12C; // Screen related?
 		Object * renderer; // 0x144
-		TES3::TArray<void> unknown_0x148; // Multiple cameras?
+		NI::TArray<void*> unknown_0x148; // Multiple cameras?
 		int unknown_0x160;
 		TES3::Vector4 cullingPlanes[6]; // 0x164
 		float unknown_0x1C4;

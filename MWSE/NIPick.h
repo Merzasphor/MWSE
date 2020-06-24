@@ -1,9 +1,9 @@
 #pragma once
 
 #include "NIDefines.h"
+#include "NITArray.h"
 
 #include "TES3Defines.h"
-#include "TES3Collections.h"
 #include "TES3Vectors.h"
 
 namespace NI {
@@ -36,7 +36,7 @@ namespace NI {
 		bool observeAppCullFlag;
 		bool unknown_0x12;
 		Node * root;
-		TES3::TArray<PickRecord> results;
+		TArray<PickRecord*> results;
 		PickRecord * lastAddedRecord;
 		bool returnTexture;
 		bool returnNormal;

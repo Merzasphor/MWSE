@@ -2,6 +2,7 @@
 
 #include "TES3Defines.h"
 
+#include "NITArray.h"
 #include "TES3Collections.h"
 #include "TES3Vectors.h"
 
@@ -9,7 +10,7 @@ namespace TES3 {
 	struct ItemStack {
 		int count; // 0x0
 		Object * object; // 0x4
-		TArray<ItemData> * variables; // 0x8
+		NI::TArray<ItemData*> * variables; // 0x8
 
 	};
 	static_assert(sizeof(ItemStack) == 0xC, "TES3::ItemStack failed size validation");

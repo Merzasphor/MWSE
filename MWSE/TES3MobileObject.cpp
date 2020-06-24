@@ -119,6 +119,11 @@ namespace TES3 {
 		TES3_MobileObject_enterLeaveSimulationByDistance(this);
 	}
 
+	const auto TES3_MobileObject_getInventory = reinterpret_cast<Iterator<ItemStack> * (__thiscall*)(MobileObject*)>(0x521620);
+	Iterator<ItemStack>* MobileObject::getInventory() {
+		return TES3_MobileObject_getInventory(this);
+	}
+
 	void MobileObject::setImpulseVelocityFromLua(sol::stack_object value) {
 		// Use our util class to support vectors or a table.
 		mwse::lua::setVectorFromLua(&impulseVelocity, value);

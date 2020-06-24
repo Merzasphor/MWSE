@@ -1257,9 +1257,6 @@
     <ClInclude Include="NICollisionSwitchLua.h">
       <Filter>Header Files\Lua\Bindings\NI</Filter>
     </ClInclude>
-    <ClInclude Include="TES3TArrayLua.h">
-      <Filter>Header Files\Lua\Bindings\TES3</Filter>
-    </ClInclude>
     <ClInclude Include="TES3Fader.h">
       <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
     </ClInclude>
@@ -1407,8 +1404,26 @@
     <ClInclude Include="MWSEUtilLua.h">
       <Filter>Header Files\Lua\Bindings</Filter>
     </ClInclude>
+    <ClInclude Include="TES3Deque.h">
+      <Filter>Header Files\DataAdapters\TES3\Collections</Filter>
+    </ClInclude>
     <ClInclude Include="WindowsUtil.h">
       <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="NILuaController.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="NITArray.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="NIViewer.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="BSAnimationManager.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="BSAnimationNode.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2915,9 +2930,6 @@
     <ClCompile Include="NICollisionSwitchLua.cpp">
       <Filter>Source Files\Lua\Bindings\NI</Filter>
     </ClCompile>
-    <ClCompile Include="TES3TArrayLua.cpp">
-      <Filter>Source Files\Lua\Bindings\TES3</Filter>
-    </ClCompile>
     <ClCompile Include="LuaBodyPartsUpdatedEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
@@ -3071,7 +3083,13 @@
     <ClCompile Include="NISwitchNode.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
+    <ClCompile Include="NIRTTI.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
     <ClCompile Include="NITriShape.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NITimeController.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
     <ClCompile Include="TES3Apparatus.cpp">

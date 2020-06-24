@@ -4,6 +4,7 @@ namespace TES3 {
 	struct ActionAttachment;
 	struct ActionData;
 	struct Activator;
+	struct ActiveMagicEffect;
 	struct Actor;
 	struct ActorAnimationData;
 	struct ActorVirtualTable;

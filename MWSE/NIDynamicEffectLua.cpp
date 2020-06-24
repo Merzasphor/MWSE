@@ -16,7 +16,7 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
-				usertypeDefinition.set(sol::base_classes, sol::bases<NI::AVObject, NI::ObjectNET, NI::Object>());
+				usertypeDefinition[sol::base_classes] = sol::bases<NI::AVObject, NI::ObjectNET, NI::Object>();
 				setUserdataForNIDynamicEffect(usertypeDefinition);
 			}
 		}

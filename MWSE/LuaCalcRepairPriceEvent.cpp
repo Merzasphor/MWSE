@@ -32,8 +32,8 @@ namespace mwse {
 
 				if (m_Stack) {
 					eventData["item"] = m_Stack->object;
-					if (m_Stack->variables->storageCount > 0) {
-						eventData["itemData"] = m_Stack->variables->storage[0];
+					if (m_Stack->variables->size() > 0) {
+						eventData["itemData"] = m_Stack->variables->at(0);
 					}
 				}
 

@@ -49,12 +49,12 @@ namespace TES3 {
 	const auto TES3_MobileActor_determineModifiedPrice = reinterpret_cast<int(__thiscall*)(const MobileActor*, int, int)>(0x52AA50);
 	const auto TES3_MobileActor_playVoiceover = reinterpret_cast<void(__thiscall*)(const MobileActor*, int)>(0x528F80);
 
-	MagicSourceInstance* MobileActor::ActiveMagicEffect::getInstance() {
+	MagicSourceInstance* ActiveMagicEffect::getInstance() {
 		return WorldController::get()->spellInstanceController->getInstanceFromSerial(magicInstanceSerial);
 	}
 
-	int MobileActor::ActiveMagicEffect::getMagnitude() {
-		return getInstance()->getMagnitude(magicInstanceEffectIndex);
+	int ActiveMagicEffect::getMagnitude() {
+		return magnitudeMin;
 	}
 
 	bool MobileActor::onActorCollision(int collisionIndex) {
@@ -145,6 +145,11 @@ namespace TES3 {
 		// Setup damage event data.
 		mwse::lua::event::DamageEvent::m_Attacker = nullptr;
 		mwse::lua::event::DamageEvent::m_Projectile = nullptr;
+	}
+
+	const auto TES3_MobileActor_setCurrentSpell = reinterpret_cast<void(__thiscall*)(MobileActor*, const Spell*)>(0x52B390);
+	void MobileActor::setCurrentSpell(const Spell* spell) {
+		TES3_MobileActor_setCurrentSpell(this, spell);
 	}
 
 	Cell* MobileActor::getCell() {
@@ -450,13 +455,12 @@ namespace TES3 {
 			itemData = nullptr;
 
 			// Only scan if necessary; fully repaired items exist if stack count is greater than variables count.
-			if (s->variables && s->count == s->variables->filledCount) {
+			if (s->variables && s->count == s->variables->size()) {
 				int bestCondition = -1;
 				float bestCharge = -1.0f;
 
-				for (ItemData **it = &s->variables->storage[0]; it < &s->variables->storage[s->variables->endIndex]; ++it) {
+				for (const auto& i : *s->variables) {
 					// Select best condition, secondarily select best charge.
-					ItemData *i = *it;
 					if (i && i->condition > bestCondition || (i->condition == bestCondition && i->charge > bestCharge)) {
 						itemData = i;
 						bestCondition = i->condition;
@@ -470,13 +474,13 @@ namespace TES3 {
 			itemData = nullptr;
 
 			if (s->variables) {
-				int worstCondition = s->variables->storage[0]->condition;
-				float worstCharge = s->variables->storage[0]->charge;
-				itemData = s->variables->storage[0];
+				const auto firstVar = s->variables->at(0);
+				int worstCondition = firstVar->condition;
+				float worstCharge = firstVar->charge;
+				itemData = firstVar;
 
-				for (ItemData **it = &s->variables->storage[0]; it < &s->variables->storage[s->variables->endIndex]; ++it) {
+				for (const auto& i : *s->variables) {
 					// Select worst condition, secondarily select worst charge.
-					ItemData *i = *it;
 					if (i && i->condition < worstCondition || (i->condition == worstCondition && i->charge < worstCharge)) {
 						itemData = i;
 						worstCondition = i->condition;
@@ -493,7 +497,7 @@ namespace TES3 {
 			}
 			// Get first available itemdata if one isn't provided.
 			else if (s->variables != nullptr) {
-				itemData = s->variables->storage[0];
+				itemData = s->variables->at(0);
 			}
 		}
 
@@ -943,12 +947,22 @@ namespace TES3 {
 		return false;
 	}
 
-	MobileActor::ActiveMagicEffect* MobileActor::getActiveMagicEffects_legacy() const {
-		return activeMagicEffects.firstEffect;
+	bool MobileActor::hasSummonEffect() {
+		for (auto& activeEffect : activeMagicEffects) {
+			if (activeEffect.isSummon) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	ActiveMagicEffect* MobileActor::getActiveMagicEffects_legacy() const {
+		// TODO: Take a good, hard look at my life.
+		return &*activeMagicEffects.begin();
 	}
 
 	int MobileActor::getActiveMagicEffectCount_legacy() const {
-		return activeMagicEffects.count;
+		return activeMagicEffects.size();
 	}
 
 }

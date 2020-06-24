@@ -2,6 +2,8 @@
 
 #include "NIObject.h"
 
+#include "TES3Defines.h"
+
 namespace NI {
 	struct ExtraData : Object {
 		int unknown_0x8;
@@ -14,6 +16,11 @@ namespace NI {
 		char* string; // 0x14
 	};
 	static_assert(sizeof(StringExtraData) == 0x18, "NI::TextKey failed size validation");
+
+	struct Tes3ExtraData : ExtraData {
+		TES3::Reference* reference; // 0x14
+	};
+	static_assert(sizeof(Tes3ExtraData) == 0x18, "NI::Tes3ExtraData failed size validation");
 
 	struct TextKey {
 		float time; // 0x0

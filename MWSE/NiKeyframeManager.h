@@ -4,7 +4,6 @@
 #include "NIKeyframeController.h"
 #include "NIExtraData.h"
 
-#include "TES3Collections.h"
 #include "TES3HashMap.h"
 #include "TES3Vectors.h"
 
@@ -13,8 +12,8 @@ namespace NI {
 		char* name; // 0x0
 		char* unknown_0x4;
 		int unknown_0x8;
-		TES3::TArray<char> boneNames; // 0xC
-		TES3::TArray<KeyframeController> controllers; // 0x24
+		NI::TArray<char*> boneNames; // 0xC
+		NI::TArray<Pointer<KeyframeController>> controllers; // 0x24
 		Pointer<TextKeyExtraData> textKeys;
 		unsigned int currentBoneControllerIndex; // 0x40
 		KeyframeManager* manager; // 0x44

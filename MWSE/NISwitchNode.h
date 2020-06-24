@@ -7,7 +7,7 @@ namespace NI {
 		int switchIndex; // 0xB0
 		float fSavedTime;
 		int updateIndex;
-		TES3::TArray<unsigned int> childRevisionIDs;
+		TArray<unsigned int*> childRevisionIDs;
 		bool bUpdateControllers;
 
 		//

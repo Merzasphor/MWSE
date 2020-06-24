@@ -74,6 +74,7 @@ namespace NI {
 	struct Renderer_vTable;
 	struct SourceTexture_vTable;
 	struct Texture_vTable;
+	struct TimeController_vTable;
 	struct TriBasedGeometryData_vTable;
 	struct TriShape_vTable;
 

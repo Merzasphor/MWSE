@@ -3,6 +3,7 @@
 #include "NIDefines.h"
 
 #include "NIPointer.h"
+#include "NITArray.h"
 
 #include "TES3HashMap.h"
 
@@ -29,19 +30,9 @@ namespace NI {
 		TES3::HashMap<int, Object*> unknown_0x48;
 		BinaryStream* inStream; // 0x58
 		BinaryStream* outStream; // 0x5C
-		int unknown_0x60;
-		Pointer<Object>* loadedObject; // 0x64
-		int unknown_0x68;
-		int loadedObjectCount; // 0x6C
-		int unknown_0x70;
-		int unknown_0x74;
-		int unknown_0x78;
-		int unknown_0x7C;
-		int unknown_0x80;
-		int unknown_0x84;
-		int unknown_0x88;
-		int unknown_0x8C;
-		int unknown_0x90;
+		TArray<Pointer<Object>> loadedObjects;
+		Object* unknown_0x78;
+		TArray<void*> unknown_0x7C;
 		TES3::HashMap<int, Object*> unknown_0x94;
 		int unknown_0xA4;
 		TES3::HashMap<int, Object*>* unknown_0xA8;
@@ -54,6 +45,27 @@ namespace NI {
 		bool save(const char* file);
 
 		void insertObject(Object* object);
+
+		void readString(char** out_string);
+		void writeString(const char* string);
+
+		typedef Object* (__cdecl *CreateFunction)(Stream*);
+		static void __cdecl registerLoader(const char* className, CreateFunction createObjectFunction);
+
+		//
+		// Custom functions.
+		//
+
+		std::string readStdString();
+
+		//
+		// Access to this type's raw functions.
+		//
+
+		static constexpr auto _readString = reinterpret_cast<void(__thiscall*)(Stream*, char**)>(0x6C4C20);
+		static constexpr auto _writeString = reinterpret_cast<void(__thiscall*)(Stream*, const char*)>(0x6C4C80);
+		static constexpr auto _registerLoader = reinterpret_cast<void(__cdecl*)(const char*, CreateFunction)>(0x6C4460);
+
 	};
 	static_assert(sizeof(Stream) == 0xB0, "NI::Stream failed size validation");
 }

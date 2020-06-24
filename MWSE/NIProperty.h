@@ -143,7 +143,7 @@ namespace NI {
 		};
 
 		ApplyMode applyMode; // 0x18
-		TES3::TArray<Map> maps; // 0x1C
+		TArray<Map*> maps; // 0x1C
 		int unknown_34; // 0x34
 	};
 	static_assert(sizeof(TexturingProperty) == 0x38, "NI::TexturingProperty failed size validation");
