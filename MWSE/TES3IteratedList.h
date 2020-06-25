@@ -10,8 +10,12 @@ namespace TES3 {
 			Node* next;
 			T data;
 
+#if !defined(MWSE_NO_CUSTOM_ALLOC) || MWSE_NO_CUSTOM_ALLOC == 0
 			static void* operator new(size_t size) { return reinterpret_cast<void* (__cdecl*)(size_t)>(0x727692)(size); }
 			static void operator delete(void* block) { reinterpret_cast<void(__cdecl*)(void*)>(0x727530)(block); }
+#endif
+
+			Node(const Node&) = delete;
 
 			Node(const T& value) {
 				previous = nullptr;
@@ -45,7 +49,7 @@ namespace TES3 {
 			iterator(Node* node) : m_Node(node) {}
 
 		public:
-			using iterator_category = std::random_access_iterator_tag;
+			using iterator_category = std::bidirectional_iterator_tag;
 
 			using value_type = T;
 			using difference_type = int;
@@ -67,6 +71,10 @@ namespace TES3 {
 				return *this;
 			}
 
+			iterator operator--(int) {
+				return *this - 1;
+			}
+
 			iterator& operator-=(difference_type diff) {
 				while (m_Node && diff-- > 0) {
 					m_Node = m_Node->previous;
@@ -85,6 +93,10 @@ namespace TES3 {
 					m_Node = m_Node->next;
 				}
 				return *this;
+			}
+
+			iterator operator++(int) {
+				return *this + 1;
 			}
 
 			iterator& operator+=(difference_type diff) {
@@ -123,13 +135,13 @@ namespace TES3 {
 		using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
 		iterator begin() const { return head; }
-		iterator end() const { return nullptr; }
-		reverse_iterator rbegin() const { return tail; }
-		reverse_iterator rend() const { return nullptr; }
+		iterator end() const { return tail; }
+		reverse_iterator rbegin() const { return std::make_reverse_iterator(begin()); }
+		reverse_iterator rend() const { return std::make_reverse_iterator(end()); }
 		const_iterator cbegin() const { return head; }
 		const_iterator cend() const { return nullptr; }
-		const_reverse_iterator crbegin() const { return tail; }
-		const_reverse_iterator crend() const { return nullptr; }
+		const_reverse_iterator crbegin() const { return rbegin(); }
+		const_reverse_iterator crend() const { return rend(); }
 		size_type size() const noexcept { return count; }
 		bool empty() const noexcept { return count == 0; }
 
@@ -142,19 +154,20 @@ namespace TES3 {
 		Node* tail;
 		Node* current;
 
+#if !defined(MWSE_NO_CUSTOM_ALLOC) || MWSE_NO_CUSTOM_ALLOC == 0
 		static void* operator new(size_t size) { return reinterpret_cast<void* (__cdecl*)(size_t)>(0x727692)(size); }
 		static void operator delete(void* block) { reinterpret_cast<void(__cdecl*)(void*)>(0x727530)(block); }
+#endif
 
-		virtual ~IteratedList() {
-			clear();
-		}
+		virtual ~IteratedList() { clear(); }
 
-		const_iterator operator[](size_type index) const {
-			return begin() + index;
-		}
+		reference operator[](size_type index) const { return *(begin() + index); }
 
-		reference front() { return *begin(); }
-		const_reference front() const { return *begin(); }
+		reference front() { return head->data; }
+		const_reference front() const { return head->data; }
+
+		reference back() { return tail->data; }
+		const_reference back() const { return tail->data; }
 
 		void clear() {
 			auto itt = head;
@@ -170,30 +183,38 @@ namespace TES3 {
 
 		iterator insert(const_iterator position, const_reference value) {
 			auto newNode = new Node(value);
+			auto insertBeforeNode = position.m_Node;
 
-			auto beforeNode = position.m_Node;
-			if (beforeNode) {
-				if (beforeNode->next) {
-					beforeNode->next->previous = newNode;
-					beforeNode->next = newNode;
+			// Insert before a given node.
+			if (insertBeforeNode) {
+				if (insertBeforeNode->previous) {
+					insertBeforeNode->previous->next = newNode;
+					newNode->previous = insertBeforeNode->previous;
 				}
-				beforeNode->next = newNode;
 
-				count++;
+				insertBeforeNode->previous = newNode;
+				newNode->next = insertBeforeNode;
 			}
+			// Insert at end.
 			else {
-				if (head) {
+				if (tail) {
 					tail->next = newNode;
-					newNode->previous = tail;
-					count++;
 				}
-				else {
-					head = newNode;
-					tail = newNode;
-					count++;
-				}
+				newNode->previous = tail;
+				tail = newNode;
 			}
 
+			// New head check.
+			if (head == nullptr || insertBeforeNode == head) {
+				head = newNode;
+			}
+
+			// New tail check.
+			if (tail == nullptr || newNode->previous == tail) {
+				tail = newNode;
+			}
+
+			count++;
 			return newNode;
 		}
 
@@ -202,17 +223,7 @@ namespace TES3 {
 		}
 
 		void push_front(const_reference value) {
-			auto newNode = new Node(value);
-			newNode->next = head;
-
-			if (head) {
-				head->previous = newNode;
-			}
-			else {
-				tail = newNode;
-			}
-
-			head = newNode;
+			insert(begin(), value);
 		}
 
 		void push_back(const_reference value) {
@@ -259,16 +270,17 @@ namespace TES3 {
 			return erase(begin() + position);
 		}
 
-		iterator erase(const_reference value) {
-			return erase(std::find(cbegin(), cend(), value));
-		}
-
 		//
 		// Cached iterator access.
 		//
 
 		Node* cached_begin() {
 			current = head;
+			return current;
+		}
+
+		Node* cached_next() {
+			current = current->next;
 			return current;
 		}
 
