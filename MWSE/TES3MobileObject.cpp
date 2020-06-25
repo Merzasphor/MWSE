@@ -119,8 +119,8 @@ namespace TES3 {
 		TES3_MobileObject_enterLeaveSimulationByDistance(this);
 	}
 
-	const auto TES3_MobileObject_getInventory = reinterpret_cast<Iterator<ItemStack> * (__thiscall*)(MobileObject*)>(0x521620);
-	Iterator<ItemStack>* MobileObject::getInventory() {
+	const auto TES3_MobileObject_getInventory = reinterpret_cast<IteratedList<ItemStack*> * (__thiscall*)(MobileObject*)>(0x521620);
+	IteratedList<ItemStack*>* MobileObject::getInventory() {
 		return TES3_MobileObject_getInventory(this);
 	}
 

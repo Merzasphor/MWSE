@@ -1,13 +1,14 @@
 #pragma once
 
 #include "TES3Object.h"
-#include "TES3Collections.h"
+
+#include "TES3IteratedList.h"
 
 namespace TES3 {
 	struct Quest : BaseObject {
 		char * name; // 0x10
-		Iterator<Dialogue> dialogue; // 0x14
-		Iterator<DialogueInfo> activeInfo; // 0x28
+		IteratedList<Dialogue*> dialogue; // 0x14
+		IteratedList<DialogueInfo*> activeInfo; // 0x28
 
 		//
 		// Virtual table overrides.

@@ -67,11 +67,9 @@ namespace mwse {
 			usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
 			setUserdataForTES3BaseObject(usertypeDefinition);
 
-			// Base type overrides.
-			usertypeDefinition["id"] = &TES3::GameSetting::getObjectID;
-
-			// Allow object to be converted to strings using their object ID.
-			usertypeDefinition[sol::meta_function::to_string] = &TES3::GameSetting::getName;
+			// Base class overrides.
+			usertypeDefinition[sol::meta_function::to_string] = &TES3::GameSetting::getObjectID;
+			usertypeDefinition["id"] = sol::readonly_property(&TES3::GameSetting::getObjectID);
 
 			// Allow object to be serialized to json.
 			usertypeDefinition["__tojson"] = &TES3::GameSetting::toJson;

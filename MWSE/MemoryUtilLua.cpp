@@ -471,8 +471,8 @@ namespace mwse {
 			convertTo["tes3object"] = convertArgTo<TES3::BaseObject*>;
 			convertTo["tes3mobileObject"] = convertArgTo<TES3::MobileObject*>;
 			convertTo["tes3inventory"] = convertArgTo<TES3::Inventory*>;
-			convertTo["tes3equipmentStackIterator"] = convertArgTo<TES3::Iterator<TES3::EquipmentStack>*>;
-			convertTo["tes3equipmentStackIteratorNode"] = convertArgTo<TES3::IteratorNode<TES3::EquipmentStack>*>;
+			convertTo["tes3equipmentStackIterator"] = convertArgTo<TES3::IteratedList<TES3::EquipmentStack*>*>;
+			convertTo["tes3equipmentStackIteratorNode"] = convertArgTo<TES3::IteratedList<TES3::EquipmentStack*>::Node*>;
 			convertTo["tes3magicEffectInstance"] = convertArgTo<TES3::MagicEffectInstance*>;
 			memory["convertTo"] = convertTo;
 
@@ -484,8 +484,8 @@ namespace mwse {
 			convertFrom["tes3object"] = convertArgFrom<TES3::BaseObject*>;
 			convertFrom["tes3mobileObject"] = convertArgFrom<TES3::MobileObject*>;
 			convertFrom["tes3inventory"] = convertArgFrom<TES3::Inventory*>;
-			convertFrom["tes3equipmentStackIterator"] = convertArgFrom<TES3::Iterator<TES3::EquipmentStack>*>;
-			convertFrom["tes3equipmentStackIteratorNode"] = convertArgFrom<TES3::IteratorNode<TES3::EquipmentStack>*>;
+			convertFrom["tes3equipmentStackIterator"] = convertArgFrom<TES3::IteratedList<TES3::EquipmentStack*>*>;
+			convertFrom["tes3equipmentStackIteratorNode"] = convertArgFrom<TES3::IteratedList<TES3::EquipmentStack*>::Node*>;
 			convertFrom["tes3magicEffectInstance"] = convertArgFrom<TES3::MagicEffectInstance*>;
 			memory["convertFrom"] = convertFrom;
 		}

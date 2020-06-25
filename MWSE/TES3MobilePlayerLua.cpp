@@ -3,7 +3,6 @@
 #include "LuaManager.h"
 #include "TES3MobileNPCLua.h"
 
-#include "TES3Collections.h"
 
 #include "TES3Alchemy.h"
 #include "TES3Cell.h"
@@ -11,7 +10,6 @@
 #include "TES3MobilePlayer.h"
 #include "TES3Apparatus.h"
 #include "TES3Birthsign.h"
-#include "TES3Collections.h"
 #include "TES3GlobalVariable.h"
 #include "TES3NPC.h"
 #include "TES3PlayerAnimationData.h"

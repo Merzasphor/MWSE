@@ -1,7 +1,8 @@
 #pragma once
 
 #include "TES3Object.h"
-#include "TES3Collections.h"
+
+#include "TES3IteratedList.h"
 
 #include "NIProperty.h"
 #include "NISourceTexture.h"
@@ -17,7 +18,7 @@ namespace TES3 {
 		char texturePath[260]; // 0x34
 		int unknown_0x138;
 		int index; // 0x13C
-		Iterator<PropertyMap> * unknown_0x140; // Relates land textures to texture properties?
+		IteratedList<PropertyMap*> * unknown_0x140; // Relates land textures to texture properties?
 	};
 	static_assert(sizeof(LandTexture) == 0x144, "TES3::LandTexture failed size validation");
 }

@@ -4,7 +4,6 @@
 
 #include "NIColor.h"
 #include "NILinkedList.h"
-#include "TES3Collections.h"
 
 namespace NI {
 	enum class PropertyType : int {

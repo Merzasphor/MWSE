@@ -279,9 +279,6 @@
     <ClInclude Include="TES3Clothing.h">
       <Filter>Header Files\DataAdapters\TES3\Objects\Item</Filter>
     </ClInclude>
-    <ClInclude Include="TES3Collections.h">
-      <Filter>Header Files\DataAdapters\TES3\Collections</Filter>
-    </ClInclude>
     <ClInclude Include="TES3Vectors.h">
       <Filter>Header Files\DataAdapters\TES3\Collections</Filter>
     </ClInclude>
@@ -553,9 +550,6 @@
       <Filter>Header Files\Lua\Bindings</Filter>
     </ClInclude>
     <ClInclude Include="TES3ScriptLua.h">
-      <Filter>Header Files\Lua\Bindings\TES3</Filter>
-    </ClInclude>
-    <ClInclude Include="TES3CollectionsLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
     <ClInclude Include="TES3ReferenceListLua.h">
@@ -1410,9 +1404,6 @@
     <ClInclude Include="WindowsUtil.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="NILuaController.h">
-      <Filter>Header Files\DataAdapters\NI</Filter>
-    </ClInclude>
     <ClInclude Include="NITArray.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
@@ -1424,6 +1415,15 @@
     </ClInclude>
     <ClInclude Include="BSAnimationNode.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3IteratedList.h">
+      <Filter>Header Files\DataAdapters\TES3\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3StlList.h">
+      <Filter>Header Files\DataAdapters\TES3\Collections</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3LinkedObjectsList.h">
+      <Filter>Header Files\DataAdapters\TES3\Collections</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2316,9 +2316,6 @@
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3ScriptLua.cpp">
-      <Filter>Source Files\Lua\Bindings\TES3</Filter>
-    </ClCompile>
-    <ClCompile Include="TES3CollectionsLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3MobilePlayer.cpp">

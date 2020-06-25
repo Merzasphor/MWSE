@@ -3,6 +3,7 @@
 #include "LuaManager.h"
 
 #include "TES3Sound.h"
+#include "TES3Spell.h"
 #include "TES3Weather.h"
 #include "TES3WeatherAsh.h"
 #include "TES3WeatherBlight.h"

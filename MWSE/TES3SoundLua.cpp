@@ -23,6 +23,10 @@ namespace mwse {
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
 				setUserdataForTES3BaseObject(usertypeDefinition);
 
+				// Base class overrides.
+				usertypeDefinition[sol::meta_function::to_string] = &TES3::Sound::getObjectID;
+				usertypeDefinition["id"] = sol::readonly_property(&TES3::Sound::getObjectID);
+
 				// Allow object to be serialized to json.
 				usertypeDefinition["__tojson"] = &TES3::Sound::toJson;
 
@@ -47,6 +51,10 @@ namespace mwse {
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
 				setUserdataForTES3BaseObject(usertypeDefinition);
+
+				// Base class overrides.
+				usertypeDefinition[sol::meta_function::to_string] = &TES3::SoundGenerator::getObjectID;
+				usertypeDefinition["id"] = sol::readonly_property(&TES3::SoundGenerator::getObjectID);
 
 				// Allow object to be serialized to json.
 				usertypeDefinition["__tojson"] = &TES3::SoundGenerator::toJson;

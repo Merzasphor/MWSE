@@ -78,7 +78,6 @@
 #include "TES3CellLua.h"
 #include "TES3ClassLua.h"
 #include "TES3ClothingLua.h"
-#include "TES3CollectionsLua.h"
 #include "TES3CollisionLua.h"
 #include "TES3CombatSessionLua.h"
 #include "TES3ContainerLua.h"
@@ -383,7 +382,6 @@ namespace mwse {
 			bindTES3Cell();
 			bindTES3Class();
 			bindTES3Clothing();
-			bindTES3Collections();
 			bindTES3Collision();
 			bindTES3CombatSession();
 			bindTES3Container();
@@ -555,7 +553,7 @@ namespace mwse {
 		// Hook: Finished initializing game code.
 		//
 
-		void __fastcall FinishInitialization(TES3::Iterator<void>* itt) {
+		void __fastcall FinishInitialization(TES3::IteratedList<void*>* itt) {
 			// Call overwritten code.
 			itt->clear();
 
@@ -1317,9 +1315,9 @@ namespace mwse {
 		// Event: topicAdded
 		//
 
-		void __fastcall OnAddTopicAtIndex(TES3::Iterator<TES3::Dialogue> * topicList, DWORD _UNUSED_, TES3::Dialogue * topic, unsigned int index) {
+		void __fastcall OnAddTopicAtIndex(TES3::IteratedList<TES3::Dialogue*> * topicList, DWORD _UNUSED_, TES3::Dialogue * topic, unsigned int index) {
 			// Run overwritten function.
-			topicList->addItemAtIndex(topic, index);
+			topicList->insert(index, topic);
 
 			// Raise event.
 			if (event::AddTopicEvent::getEventEnabled()) {
@@ -1327,9 +1325,9 @@ namespace mwse {
 			}
 		}
 
-		void __fastcall OnAddTopic(TES3::Iterator<TES3::Dialogue> * topicList, DWORD _UNUSED_, TES3::Dialogue * topic) {
+		void __fastcall OnAddTopic(TES3::IteratedList<TES3::Dialogue*> * topicList, DWORD _UNUSED_, TES3::Dialogue * topic) {
 			// Run overwritten function.
-			topicList->addItem(topic);
+			topicList->push_back(topic);
 
 			// Raise event.
 			if (event::AddTopicEvent::getEventEnabled()) {
@@ -1625,13 +1623,13 @@ namespace mwse {
 		//
 
 		// Cached value of the inventory iterator.
-		static TES3::Iterator<TES3::ItemStack>* OnCalculateRepairPriceForList_CurrentInventoryList = nullptr;
+		static TES3::IteratedList<TES3::ItemStack*>* OnCalculateRepairPriceForList_CurrentInventoryList = nullptr;
 
 		// Store the inventory list that we're looking at when generating the repair list.
-		TES3::IteratorNode<TES3::ItemStack>* __fastcall OnCalculateRepairPriceForList_GetItemList(TES3::Iterator<TES3::ItemStack>* inventoryList) {
+		TES3::IteratedList<TES3::ItemStack*>::Node* __fastcall OnCalculateRepairPriceForList_GetItemList(TES3::IteratedList<TES3::ItemStack*>* inventoryList) {
 			OnCalculateRepairPriceForList_CurrentInventoryList = inventoryList;
 
-			return inventoryList->getFirstNode();
+			return inventoryList->cached_begin();
 		}
 
 		// Get the price for each item on the list.
@@ -1696,15 +1694,13 @@ namespace mwse {
 		//
 
 		// Cached value of the inventory iterator.
-		static TES3::Iterator<TES3::Spell>* OnCalculateSpellPrice_CurrentInventoryList = nullptr;
+		static TES3::IteratedList<TES3::Spell*>* OnCalculateSpellPrice_CurrentInventoryList = nullptr;
 
 		// Store the inventory list that we're looking at when generating the repair list.
-		TES3::IteratorNode<TES3::Spell>* __fastcall OnCalculateSpellPriceForList_GetSpellList(TES3::Iterator<TES3::Spell>* spellList) {
+		TES3::IteratedList<TES3::Spell*>::Node* __fastcall OnCalculateSpellPriceForList_GetSpellList(TES3::IteratedList<TES3::Spell*>* spellList) {
 			OnCalculateSpellPrice_CurrentInventoryList = spellList;
 
-			auto result = spellList->head;
-			spellList->current = result;
-			return result;
+			return spellList->cached_begin();
 		}
 
 		// Get the price for each item on the list.
@@ -1784,34 +1780,34 @@ namespace mwse {
 		//
 
 		// The destination list for the merchant.
-		static TES3::Iterator<TES3::TravelDestination> * OnCalculateTravelPrice_DestinationList;
+		static TES3::IteratedList<TES3::TravelDestination*> * OnCalculateTravelPrice_DestinationList;
 
 		// The player's friendly actor list.
-		static TES3::Iterator<TES3::MobileActor> * OnCalculateTravelPrice_CompanionList;
+		static TES3::IteratedList<TES3::MobileActor*> * OnCalculateTravelPrice_CompanionList;
 
 		// A custom list of followers close enough to travel with the player.
 		static std::vector<TES3::MobileActor*> OnCalculateTravelPrice_TravelCompanionList;
 
 		// Hook for ensuring that we have the right destination list.
-		TES3::IteratorNode<TES3::TravelDestination>* __fastcall OnCalculateTravelPrice_GetDestinationList(TES3::Iterator<TES3::TravelDestination>* iterator) {
+		TES3::IteratedList<TES3::TravelDestination*>::Node* __fastcall OnCalculateTravelPrice_GetDestinationList(TES3::IteratedList<TES3::TravelDestination*>* iterator) {
 			OnCalculateTravelPrice_DestinationList = iterator;
 
-			return iterator->getFirstNode();
+			return iterator->cached_begin();
 		}
 
 		// Hook for ensuring that we have the right companion list.
-		TES3::IteratorNode<TES3::MobileActor>* __fastcall OnCalculateTravelPrice_GetCompanionList(TES3::Iterator<TES3::MobileActor>* iterator) {
+		TES3::IteratedList<TES3::MobileActor*>::Node* __fastcall OnCalculateTravelPrice_GetCompanionList(TES3::IteratedList<TES3::MobileActor*>* iterator) {
 			OnCalculateTravelPrice_CompanionList = iterator;
 
 			OnCalculateTravelPrice_TravelCompanionList.clear();
 
-			return iterator->getFirstNode();
+			return iterator->cached_begin();
 		}
 
 		// Hook for checking and adding companions for our custom list so we can report valid companions in the event.
 		float OnCalculateTravelPrice_CheckCompanionDistance(TES3::Vector3* destinationPosition, TES3::Vector3* playerPosition) {
 			float distance = destinationPosition->distance(playerPosition);
-			if (OnCalculateTravelPrice_CompanionList->size * 128.0f + 512.0f > distance) {
+			if (OnCalculateTravelPrice_CompanionList->size() * 128.0f + 512.0f > distance) {
 				OnCalculateTravelPrice_TravelCompanionList.push_back(OnCalculateTravelPrice_CompanionList->current->data);
 			}
 			return distance;
@@ -1839,7 +1835,7 @@ namespace mwse {
 
 			// Destination is off by one, so we need the previous entry.
 			auto destination = OnCalculateTravelPrice_DestinationList->tail->data;
-			if (OnCalculateTravelPrice_DestinationList->current != nullptr) {
+			if (OnCalculateTravelPrice_DestinationList != nullptr) {
 				destination = OnCalculateTravelPrice_DestinationList->current->previous->data;
 			}
 
@@ -1990,7 +1986,7 @@ namespace mwse {
 			return TES3_FilterBarterTile(tile, item);
 		}
 
-		void __fastcall OnFilterContentsTile(TES3::Iterator<TES3::UI::InventoryTile> * list, DWORD _UNUSUED_, TES3::UI::InventoryTile * tile) {
+		void __fastcall OnFilterContentsTile(TES3::IteratedList<TES3::UI::InventoryTile*> * list, DWORD _UNUSUED_, TES3::UI::InventoryTile * tile) {
 			if (event::FilterContentsMenuEvent::getEventEnabled()) {
 				auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 				sol::table payload = stateHandle.triggerEvent(new event::FilterContentsMenuEvent(tile, tile->item));
@@ -2004,10 +2000,10 @@ namespace mwse {
 				}
 			}
 
-			list->addItem(tile);
+			list->push_back(tile);
 		}
 
-		void __fastcall OnFilterContentsTileForTakeAll(TES3::Iterator<TES3::UI::InventoryTile> * list, DWORD _UNUSUED_, TES3::UI::InventoryTile * tile) {
+		void __fastcall OnFilterContentsTileForTakeAll(TES3::IteratedList<TES3::UI::InventoryTile*> * list, DWORD _UNUSUED_, TES3::UI::InventoryTile * tile) {
 			if (event::FilterContentsMenuEvent::getEventEnabled()) {
 				auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 				sol::table payload = stateHandle.triggerEvent(new event::FilterContentsMenuEvent(tile, tile->item));
@@ -2021,8 +2017,8 @@ namespace mwse {
 				}
 			}
 
-			list->addItem(tile);
-			if (list->size == 1) {
+			list->push_back(tile);
+			if (list->size() == 1) {
 				TES3::WorldController::get()->playItemUpDownSound(tile->item);
 			}
 		}
@@ -2303,12 +2299,12 @@ namespace mwse {
 		// Fire an event when item tiles are updated.
 		//
 
-		TES3::IteratorNode<TES3::UI::InventoryTile> * __fastcall GetNextInventoryTileToUpdate(TES3::Iterator<TES3::UI::InventoryTile> * iterator) {
+		TES3::IteratedList<TES3::UI::InventoryTile*>::Node* __fastcall GetNextInventoryTileToUpdate(TES3::IteratedList<TES3::UI::InventoryTile*> * iterator) {
 			if (lua::event::ItemTileUpdatedEvent::getEventEnabled()) {
 				lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new lua::event::ItemTileUpdatedEvent(iterator->current->data));
 			}
 
-			return iterator->getNextNode();
+			return iterator->cached_begin();
 		}
 
 		void __inline TriggerItemTileUpdatedEventForElement(TES3::UI::Element * element, DWORD propertyAddress) {
@@ -2443,13 +2439,13 @@ namespace mwse {
 		//
 
 		// Data we use to keep track of the currently saving item data record.
-		TES3::Iterator<TES3::ItemStack> * currentlySavingInventoryIterator = nullptr;
+		TES3::IteratedList<TES3::ItemStack*> * currentlySavingInventoryIterator = nullptr;
 		unsigned int currentlySavingInventoyItemDataIndex = 0;
 
 		// Get a hold of the inventory we're looking at.
-		TES3::IteratorNode<TES3::ItemStack> * __fastcall GetFirstSavedItemStack(TES3::Iterator<TES3::ItemStack> * iterator) {
+		TES3::IteratedList<TES3::ItemStack*>::Node* __fastcall GetFirstSavedItemStack(TES3::IteratedList<TES3::ItemStack*> * iterator) {
 			currentlySavingInventoryIterator = iterator;
-			return iterator->getFirstNode();
+			return iterator->cached_begin();
 		}
 
 		// Get a hold of the current index in ItemData storage we're looking at.

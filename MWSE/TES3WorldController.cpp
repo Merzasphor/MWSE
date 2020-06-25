@@ -59,7 +59,7 @@ namespace TES3 {
 			node = mwse::tes3::_new<KillCounter::Node>();
 			node->count = 0;
 			node->actor = actor;
-			killedActors->addItem(node);
+			killedActors->push_back(node);
 		}
 
 		// Increment kills for this actor and total kills.

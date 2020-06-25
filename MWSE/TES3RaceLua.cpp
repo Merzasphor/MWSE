@@ -81,7 +81,8 @@ namespace mwse {
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
 				setUserdataForTES3BaseObject(usertypeDefinition);
 
-				// Base object overrides.
+				// Base class overrides.
+				usertypeDefinition[sol::meta_function::to_string] = &TES3::Race::getObjectID;
 				usertypeDefinition["id"] = sol::readonly_property(&TES3::Race::getObjectID);
 
 				// Basic property binding.

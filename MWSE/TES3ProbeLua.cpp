@@ -21,9 +21,6 @@ namespace mwse {
 			usertypeDefinition[sol::base_classes] = sol::bases<TES3::Item, TES3::PhysicalObject, TES3::Object, TES3::BaseObject>();
 			setUserdataForTES3PhysicalObject(usertypeDefinition);
 
-			// Allow object to be converted to strings using their object ID.
-			usertypeDefinition[sol::meta_function::to_string] = &TES3::Probe::getObjectID;
-
 			// Basic property binding.
 			usertypeDefinition["maxCondition"] = &TES3::Probe::maxCondition;
 			usertypeDefinition["script"] = sol::readonly_property(&TES3::Probe::getScript);

@@ -1,7 +1,9 @@
 #pragma once
 
 #include "TES3Defines.h"
-#include "TES3Collections.h"
+
+#include "TES3IteratedList.h"
+#include "TES3LinkedObjectsList.h"
 
 namespace TES3 {
 	struct GameFile {
@@ -55,13 +57,13 @@ namespace TES3 {
 		unsigned int countRecords; // 0x4D4
 		int flags_4D8;
 		int loadIndex; // 0x4DC
-		LinkedList<void>* masterNames; // 0x4E0
-		LinkedList<void>* masterFileSizes; // 0x4E4
+		LinkedObjectList<void>* masterNames; // 0x4E0 // TODO: Something is wrong here.
+		LinkedObjectList<void>* masterFileSizes; // 0x4E4 // TODO: Something is wrong here.
 		GameFile* arrayMasters; // 0x4E8
 		unsigned int highestFormID; // 0x4EC
 		GMDT gmdt; // 0x4F0
 		void* sgSaveImage; // 0x56C
-		Iterator<void>* list_570;
+		IteratedList<void*>* list_570;
 
 		//
 		// Other related this-call functions.

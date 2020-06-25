@@ -3,10 +3,9 @@
 #include "TES3Defines.h"
 
 #include "TES3Reference.h"
-#include "TES3Collections.h"
 
 namespace TES3 {
-	struct ReferenceList : LinkedList<Reference> {
+	struct ReferenceList : LinkedObjectList<Reference> {
 		Cell * cell;
 
 		//

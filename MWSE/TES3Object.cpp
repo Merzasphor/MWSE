@@ -69,7 +69,7 @@ namespace TES3 {
 		BaseObject_dtor(this);
 	}
 
-	bool BaseObject::getObjectModified() {
+	bool BaseObject::getObjectModified() const {
 		return (objectFlags & TES3::ObjectFlag::Modified);
 	}
 
@@ -77,7 +77,7 @@ namespace TES3 {
 		vTable.base->setObjectModified(this, modified);
 	}
 
-	char* BaseObject::getObjectID() {
+	const char* BaseObject::getObjectID() const {
 		return vTable.base->getObjectID(this);
 	}
 
@@ -537,7 +537,7 @@ namespace TES3 {
 	// PhysicalObject
 	//
 
-	Iterator<BaseObject> * PhysicalObject::getStolenList() {
+	IteratedList<BaseObject*> * PhysicalObject::getStolenList() {
 		return vTable.physical->getStolenList(this);
 	}
 

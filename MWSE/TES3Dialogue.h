@@ -1,7 +1,8 @@
 #pragma once
 
 #include "TES3Object.h"
-#include "TES3Collections.h"
+
+#include "TES3IteratedList.h"
 
 namespace TES3 {
 	enum class DialogueType : unsigned char {
@@ -15,14 +16,14 @@ namespace TES3 {
 	struct Dialogue : BaseObject {
 		char * name;
 		DialogueType type;
-		Iterator<DialogueInfo> info;
+		IteratedList<DialogueInfo*> info;
 		int journalIndex;
 
 		//
 		// Virtual table overrides.
 		//
 
-		char * getObjectID();
+		const char * getObjectID() const;
 
 		//
 		// Other related this-call functions.

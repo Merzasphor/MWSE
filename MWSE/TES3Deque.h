@@ -89,7 +89,7 @@ namespace TES3 {
 		iterator begin() const { return sentinel->next; }
 		iterator end() const { return sentinel; }
 		size_type size() const noexcept { return count; }
-		bool empty() const noexcept { return count != 0; }
+		bool empty() const noexcept { return count == 0; }
 
 	};
 	static_assert(sizeof(Deque<int>) == 0xC, "TES3::Deque failed size validation");

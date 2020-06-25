@@ -3,7 +3,6 @@
 #include "LuaUtil.h"
 #include "LuaManager.h"
 
-#include "TES3CollectionsLua.h"
 #include "TES3ScriptLua.h"
 
 #include "TES3Inventory.h"
@@ -162,11 +161,10 @@ namespace mwse {
 
 				// Metamethod binding.
 				usertypeDefinition[sol::meta_function::pairs] = [](TES3::Inventory& self) {
-					Iterator_state<TES3::ItemStack> it_state(&self.iterator);
-					return std::make_tuple(&bindIterator_pairsNext<TES3::ItemStack>, sol::user<Iterator_state<TES3::ItemStack>>(std::move(it_state)), sol::lua_nil);
+					throw std::logic_error("TODO: FIX THIS");
 				};
 				usertypeDefinition[sol::meta_function::length] = [](TES3::Inventory& self) {
-					return self.iterator.size;
+					return self.iterator.size();
 				};
 
 				// Basic property binding.

@@ -74,7 +74,7 @@ namespace TES3 {
 		Matrix33* updateSceneMatrix(Matrix33* matrix, bool eulerXYZ = false);
 
 		Inventory * getInventory();
-		Iterator<EquipmentStack> * getEquipment();
+		IteratedList<EquipmentStack*> * getEquipment();
 
 		void relocate(Cell * cell, const Vector3 * position);
 		bool clone();

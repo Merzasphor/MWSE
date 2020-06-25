@@ -7,7 +7,7 @@
 #include "LuaDetectSneakEvent.h"
 
 namespace TES3 {
-	const auto TES3_MobController_0x24_checkRadius = reinterpret_cast<void(__thiscall*)(MobController_0x24*, MobileActor*, Iterator<AIPlanner>*)>(0x5704B0);
+	const auto TES3_MobController_0x24_checkRadius = reinterpret_cast<void(__thiscall*)(MobController_0x24*, MobileActor*, IteratedList<AIPlanner*>*)>(0x5704B0);
 	const auto TES3_MobController_0x24_detectPresence = reinterpret_cast<bool(__thiscall*)(MobController_0x24*, MobileActor*, bool)>(0x570A60);
 	const auto TES3_MobController_0x24_detectSneak = reinterpret_cast<bool(__thiscall*)(MobController_0x24*, MobileActor*, MobileActor*, bool)>(0x570600);
 	const auto TES3_MobController_0x24_checkPlayerDist = reinterpret_cast<void(__thiscall*)(MobController_0x24*)>(0x56F730);
@@ -37,7 +37,7 @@ namespace TES3 {
 		return isDetected;
 	}
 
-	void MobController_0x24::checkRadius(MobileActor * actor, Iterator<AIPlanner> * container) {
+	void MobController_0x24::checkRadius(MobileActor * actor, IteratedList<AIPlanner*> * container) {
 		TES3_MobController_0x24_checkRadius(this, actor, container);
 	}
 

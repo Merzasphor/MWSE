@@ -2,7 +2,7 @@
 
 #include "TES3Defines.h"
 
-#include "TES3Collections.h"
+#include "TES3IteratedList.h"
 
 #include "NINode.h"
 
@@ -25,7 +25,7 @@ namespace TES3 {
 
 	struct MobController_0x24 {
 		MobilePlayer * mobilePlayer; // 0x0
-		Iterator<MobileActor> unknown_0x4;
+		IteratedList<MobileActor*> unknown_0x4;
 		bool unknown_0x18;
 		bool unknown_0x19; // Maybe force new actions?
 		_RTL_CRITICAL_SECTION criticalSection;
@@ -37,14 +37,14 @@ namespace TES3 {
 
 		bool detectPresence(MobileActor * actor, bool unknown = true);
 		bool detectSneak(MobileActor* detector, MobileActor* target, bool unknown = true);
-		void checkRadius(MobileActor * actor, Iterator<AIPlanner> * container);
+		void checkRadius(MobileActor * actor, IteratedList<AIPlanner*> * container);
 		void checkPlayerDistance();
 
 	};
 	static_assert(sizeof(MobController_0x24) == 0x830, "TES3::MobController_0x24 failed size validation");
 
 	struct ProjectileController {
-		Iterator<MobileProjectile> activeProjectiles; // 0x0
+		IteratedList<MobileProjectile*> activeProjectiles; // 0x0
 		NI::Pointer<NI::Node> worldProjectileRoot; // 0x14
 		_RTL_CRITICAL_SECTION criticalSection; // 0x18
 		int unknown_0x30;
@@ -66,7 +66,7 @@ namespace TES3 {
 		MobController_0x24 * mobController_0x24; // Mobile actor controller?
 		ProjectileController* projectileController; // 0x28
 		bool unknown_0x2C;
-		Iterator<void> unknown_0x30;
+		IteratedList<void*> unknown_0x30;
 		int unknown_0x44;
 		int unknown_0x48;
 		int unknown_0x4C;

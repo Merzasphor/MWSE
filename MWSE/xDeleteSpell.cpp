@@ -61,22 +61,8 @@ namespace mwse
 		}
 
 		// Manipulate the record list to remove this object.
-		TES3::LinkedList<TES3::Spell>* spellsList = TES3::DataHandler::get()->nonDynamicData->spellsList;
-		if (spell == spellsList->head) {
-			spell->nextInCollection->previousInCollection = NULL;
-			spellsList->head = reinterpret_cast<TES3::Spell*>(spell->nextInCollection);
-		}
-		else if (spell == spellsList->tail) {
-			spell->previousInCollection->nextInCollection = NULL;
-			spellsList->tail = reinterpret_cast<TES3::Spell*>(spell->previousInCollection);
-		}
-		else {
-			TES3::Object* nextSpell = spell->nextInCollection;
-			TES3::Object* previousSpell = spell->previousInCollection;
-			nextSpell->previousInCollection = previousSpell;
-			previousSpell->nextInCollection = nextSpell;
-		}
-		spellsList->size--;
+		auto spellsList = TES3::DataHandler::get()->nonDynamicData->spellsList;
+		spellsList->erase_value(spell);
 
 		// Delete the spell from memory.
 		tes3::free(spell->name);

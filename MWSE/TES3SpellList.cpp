@@ -25,9 +25,9 @@ namespace TES3 {
 	}
 
 	bool SpellList::remove(Spell* spell) {
-		int previousSize = list.size;
+		int previousSize = list.size();
 		reinterpret_cast<void(__thiscall*)(SpellList*, Spell*)>(TES3_SpellList_removeByObject)(this, spell);
-		return list.size < previousSize;
+		return list.size() < previousSize;
 	}
 
 	bool SpellList::remove(const char* id) {

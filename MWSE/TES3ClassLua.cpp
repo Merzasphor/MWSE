@@ -20,6 +20,10 @@ namespace mwse {
 			usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
 			setUserdataForTES3BaseObject(usertypeDefinition);
 
+			// Base property overrides.
+			usertypeDefinition[sol::meta_function::to_string] = &TES3::Class::getObjectID;
+			usertypeDefinition["id"] = sol::readonly_property(&TES3::Class::getObjectID);
+
 			// Basic property binding.
 			usertypeDefinition["services"] = &TES3::Class::services;
 			usertypeDefinition["specialization"] = &TES3::Class::specialization;

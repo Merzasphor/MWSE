@@ -2,8 +2,8 @@
 
 #include "TES3Defines.h"
 
-#include "TES3Collections.h"
 #include "TES3Item.h"
+#include "TES3IteratedList.h"
 
 namespace TES3 {
 	namespace LightFlags {
@@ -24,7 +24,7 @@ namespace TES3 {
 
 	struct Light : Item {
 		void * animationData;
-		Iterator<TES3::BaseObject> stolenList; // 0x30
+		IteratedList<TES3::BaseObject*> stolenList; // 0x30
 		char* name; // 0x48
 		char* model; // 0x4C
 		Script * script;

@@ -1,18 +1,19 @@
 #pragma once
 
+#include "TES3Defines.h"
+#include "TES3UIDefines.h"
+
+#include "TES3IteratedList.h"
+#include "TES3Vectors.h"
+
+#include "TES3UIVector.h"
+
 #include "NIDefines.h"
 #include "NIDirectionalLight.h"
 #include "NIRenderedTexture.h"
 #include "NIProperty.h"
 #include "NISourceTexture.h"
 #include "NITextureEffect.h"
-
-#include "TES3Defines.h"
-#include "TES3UIDefines.h"
-#include "TES3UIVector.h"
-
-#include "TES3Collections.h"
-#include "TES3Vectors.h"
 
 namespace TES3 {
 	enum class MusicSituation : int {
@@ -113,7 +114,7 @@ namespace TES3 {
 		};
 		int werewolfKills; // 0x0
 		int totalKills; // 0x4
-		Iterator<Node>* killedActors; // 0x8
+		IteratedList<Node*>* killedActors; // 0x8
 
 		//
 		// Custom functions.
@@ -188,7 +189,7 @@ namespace TES3 {
 		float bloodSplashDurations[6]; // 0x18 // ActiveSplash::maxAge for the used mesh index offset by 1. First and last entries seem unused garbage...
 		NI::Pointer<NI::SourceTexture> bloodTextures[8]; // 0x30
 		NI::Pointer<NI::TexturingProperty> bloodTextureProperties[8]; // 0x50
-		Iterator<ActiveSplash>* activeSplashes; // 0x70
+		IteratedList<ActiveSplash*>* activeSplashes; // 0x70
 	};
 	static_assert(sizeof(SplashController) == 0x74, "TES3::SplashController failed size validation");
 	static_assert(sizeof(SplashController::ActiveSplash) == 0xC, "TES3::SplashController::ActiveSplash failed size validation");
@@ -219,7 +220,7 @@ namespace TES3 {
 		KillCounter * playerKills; // 0x60
 		JournalHTML* journalHTML; // 0x64
 		SplashController* splashController; // 0x68
-		Iterator<Quest> * journalController; // 0x6C
+		IteratedList<Quest*> * journalController; // 0x6C
 		SpellInstanceController * spellInstanceController; // 0x70
 		int unknown_0x74;
 		int viewWidth; // 0x78
@@ -299,9 +300,9 @@ namespace TES3 {
 		int unknown_0x32C;
 		float deadFloatScale; // 0x330
 		int unknown_0x334;
-		Iterator<GlobalScript> * globalScripts; // 0x338
-		Iterator<MobileActor> * allActors; // 0x33C
-		Iterator<void> * chargableItems; // 0x340
+		IteratedList<GlobalScript*> * globalScripts; // 0x338
+		IteratedList<MobileActor*> * allActors; // 0x33C
+		IteratedList<void*> * chargableItems; // 0x340
 		bool showSubtitles; // 0x344
 		int countMusicTracksBattle; // 0x348
 		int countMusicTracksExplore; // 0x34C

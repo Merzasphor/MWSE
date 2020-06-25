@@ -176,7 +176,7 @@ namespace TES3 {
 	}
 
 	Spell* NonDynamicData::getSpellById(const char* id) {
-		TES3::Spell * spell = spellsList->head;
+		auto spell = spellsList->front();
 		while (spell != NULL && _stricmp(id, spell->objectID) != 0) {
 			spell = reinterpret_cast<TES3::Spell*>(spell->nextInCollection);
 		}

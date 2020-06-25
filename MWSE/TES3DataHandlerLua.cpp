@@ -9,6 +9,7 @@
 #include "TES3DataHandler.h"
 #include "TES3Dialogue.h"
 #include "TES3DialogueInfo.h"
+#include "TES3Faction.h"
 #include "TES3GlobalVariable.h"
 #include "TES3MagicEffectController.h"
 #include "TES3Reference.h"

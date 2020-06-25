@@ -2,8 +2,8 @@
 
 #include "TES3Defines.h"
 
-#include "TES3Collections.h"
 #include "TES3Item.h"
+#include "TES3IteratedList.h"
 #include "TES3WearablePart.h"
 
 namespace TES3 {
@@ -25,7 +25,7 @@ namespace TES3 {
 	}
 
 	struct Clothing : Item {
-		Iterator<TES3::BaseObject> stolenList; // 0x30
+		IteratedList<TES3::BaseObject*> stolenList; // 0x30
 		char * name; // 0x44
 		Script * script; // 0x48
 		char * model; // 0x4C

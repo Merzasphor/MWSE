@@ -2,10 +2,10 @@
 
 #include "TES3Defines.h"
 
-#include "TES3Collections.h"
 #include "TES3HashMap.h"
 #include "TES3MagicEffect.h"
 #include "TES3Skill.h"
+#include "TES3StlList.h"
 
 #include "TES3AnimationData.h"
 
@@ -46,22 +46,22 @@ namespace TES3 {
 		int activeModCount; // 0x0
 		long unknown_0x04; // always 0?
 		GameFile* unknown_0x08; // Points to info about the last loaded save?
-		LinkedList<Object> * list; // 0x0C
-		LinkedList<Spell> * spellsList; // 0x10
+		LinkedObjectList<Object> * list; // 0x0C
+		LinkedObjectList<Spell> * spellsList; // 0x10
 		MeshData * meshData; // 0x14
 		GameSetting ** GMSTs; // 0x18 // Pointer to array of GMST pointers.
-		Iterator<Race> * races; // 0x1C
-		Iterator<LandTexture> * landTextures; // 0x20
-		Iterator<Class> * classes; // 0x24
-		Iterator<Faction> * factions; // 0x28
-		Iterator<Script> * scripts; // 0x2C
-		Iterator<Sound> * sounds; // 0x30
-		Iterator<SoundGenerator> * soundGenerators; // 0x34
-		Iterator<GlobalVariable> * globals; // 0x38
-		Iterator<Dialogue> * dialogues; // 0x3C
-		Iterator<Region> * regions; // 0x40
-		Iterator<Birthsign> * birthsigns; // 0x44
-		Iterator<StartScript> * startScripts; // 0x48
+		IteratedList<Race*> * races; // 0x1C
+		IteratedList<LandTexture*> * landTextures; // 0x20
+		IteratedList<Class*> * classes; // 0x24
+		IteratedList<Faction*> * factions; // 0x28
+		IteratedList<Script*> * scripts; // 0x2C
+		IteratedList<Sound*> * sounds; // 0x30
+		IteratedList<SoundGenerator*> * soundGenerators; // 0x34
+		IteratedList<GlobalVariable*> * globals; // 0x38
+		IteratedList<Dialogue*> * dialogues; // 0x3C
+		IteratedList<Region*> * regions; // 0x40
+		IteratedList<Birthsign*> * birthsigns; // 0x44
+		IteratedList<StartScript*> * startScripts; // 0x48
 		Skill skills[27]; // 0x4C
 #ifdef MWSE_CUSTOM_EFFECTS
 		MagicEffectController * magicEffects; // 0x5C8
@@ -69,7 +69,7 @@ namespace TES3 {
 #else
 		MagicEffect magicEffects[143]; // 0x5C8
 #endif
-		StlList<Light>* lights; // 0x9DB8
+		StlList<Light*>* lights; // 0x9DB8
 		AnimationGroup* baseAnimationGroups[4][150]; // 0x9DBC
 		NI::Pointer<NI::Node> baseSkeletons[4]; // 0xA71C
 		KeyframeDefinition* baseAnimations[4]; // 0xA72C
@@ -77,9 +77,9 @@ namespace TES3 {
 		NI::Pointer<NI::Node> baseBeastSkeletons[3]; // 0x0xAE44
 		KeyframeDefinition* baseBeastAnimations[3]; // 0xAE50
 		NI::Pointer<NI::Property> collisionWireframeProperty; // 0xAE5C
-		StlList<GameFile>* TESFiles; // 0xAE60
+		StlList<GameFile*>* TESFiles; // 0xAE60
 		GameFile* activeMods[256]; // 0xAE64
-		StlList<Cell> * cells; // 0xB264
+		StlList<Cell*> * cells; // 0xB264
 		ObjectMapContainer<BaseObject>* allObjectsById; // 0xB268
 		ObjectMapContainer<Dialogue>* allDialoguesById; // 0xB26C
 		char dataFilesPath[260]; // 0xB270
@@ -90,7 +90,7 @@ namespace TES3 {
 		char unknown_0xB378;
 		char unknown_0xB379;
 		char unknown_0xB37A;
-		Iterator<BaseObject>* initiallyLoadedObjects; // 0xB37C
+		IteratedList<BaseObject*>* initiallyLoadedObjects; // 0xB37C
 		NI::Pointer<NI::SourceTexture> mapTexture; // 0xB380
 		Reference * playerSaveGame; // 0xB384
 		_RTL_CRITICAL_SECTION criticalSection; // 0xB388
@@ -207,14 +207,14 @@ namespace TES3 {
 		Cell ** exteriorCellBuffer; // 0xB4
 		int lastExteriorCellPositionX; // 0xB8
 		int lastExteriorCellPositionY; // 0xBC
-		Iterator<Reference> collisionReferenceGrid[48][48]; // 0xC0
+		IteratedList<Reference*> collisionReferenceGrid[48][48]; // 0xC0
 		int collision_0xB4C0;
 		int collision_0xB4C4;
 		int collision_0xB4C8;
 		int collision_0xB4CC;
-		Iterator<SoundEvent>* soundEvents; // 0xB4D0
-		Iterator<SoundEvent>* tempSoundEvents; // 0xB4D4
-		Iterator<SoundEvent>* lightSoundEvents; // 0xB4D8
+		IteratedList<SoundEvent*>* soundEvents; // 0xB4D0
+		IteratedList<SoundEvent*>* tempSoundEvents; // 0xB4D4
+		IteratedList<SoundEvent*>* lightSoundEvents; // 0xB4D8
 		bool showActorDrawBounds; // 0xB4DC
 		char unknown_0xB4DD;
 		char unknown_0xB4DE;

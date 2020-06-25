@@ -34,10 +34,8 @@ namespace mwse {
 				setUserdataForTES3BaseObject(usertypeDefinition);
 
 				// Base class overrides.
-				usertypeDefinition["id"] = sol::readonly_property(&TES3::Dialogue::getObjectID);
-
-				// Override to-string to use the name rather than the (non-existant) id.
 				usertypeDefinition[sol::meta_function::to_string] = &TES3::Dialogue::getObjectID;
+				usertypeDefinition["id"] = sol::readonly_property(&TES3::Dialogue::getObjectID);
 
 				// Override tojson to use the name rather than the (non-existant) id.
 				usertypeDefinition["__tojson"] = &TES3::Dialogue::toJson;
@@ -104,6 +102,7 @@ namespace mwse {
 				setUserdataForTES3BaseObject(usertypeDefinition);
 
 				// Base class overrides.
+				usertypeDefinition[sol::meta_function::to_string] = &TES3::Quest::getObjectID;
 				usertypeDefinition["id"] = sol::readonly_property(&TES3::Quest::getObjectID);
 
 				// Allow objects to be serialized to json using their ID.

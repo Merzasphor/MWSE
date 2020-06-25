@@ -108,8 +108,8 @@ namespace TES3 {
 	static_assert(sizeof(ActiveMagicEffect) == 0x10, "TES3::ActiveMagicEffect failed size validation");
 
 	struct MobileActor : MobileObject {
-		Iterator<MobileActor> listTargetActors; // 0x80
-		Iterator<MobileActor> listFriendlyActors; // 0x94
+		IteratedList<MobileActor*> listTargetActors; // 0x80
+		IteratedList<MobileActor*> listFriendlyActors; // 0x94
 		float scanTimer; // 0xA8
 		int scanInterval; // 0xAC
 		float greetTimer; // B0
@@ -232,7 +232,7 @@ namespace TES3 {
 		bool isAffectedByEnchantment(Enchantment * enchantment) const;
 		bool isAffectedBySpell(Spell * spell) const;
 
-		Iterator<Spell> * getCombatSpellList();
+		IteratedList<Spell*> * getCombatSpellList();
 
 		bool isActive();
 		void setCurrentMagicSourceFiltered(Object * magic);

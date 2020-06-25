@@ -2,7 +2,7 @@
 
 #include "TES3Defines.h"
 
-#include "TES3Collections.h"
+#include "TES3IteratedList.h"
 
 namespace TES3 {
 	namespace UI {
@@ -36,7 +36,7 @@ namespace TES3 {
 		struct InventoryTile {
 			Item * item; // 0x0
 			ItemData * itemData; // 0x4
-			Iterator<InventoryTile_Struct0x8> * unknown_0x8;
+			IteratedList<InventoryTile_Struct0x8*> * unknown_0x8;
 			int count; // 0xC
 			Element * element; // 0x10
 			char unknown_0x14;

@@ -1,7 +1,8 @@
 #pragma once
 
 #include "TES3Defines.h"
-#include "TES3Collections.h"
+
+#include "TES3IteratedList.h"
 
 #include "NIDefines.h"
 #include "NIAmbientLight.h"
@@ -87,7 +88,7 @@ namespace TES3 {
 		int unknown_0x8C;
 		int unknown_0x90;
 		int unknown_0x94;
-		Iterator<NI::ObjectNET>* unknown_0x98;
+		IteratedList<NI::ObjectNET*>* unknown_0x98;
 		NI::Pointer<NI::Node> worldRoot; // 0x9C
 		NI::Pointer<NI::Node> worldObjectRoot; // 0xA0
 		NI::Pointer<NI::Node> worldPickObjectRoot; // 0xA4

@@ -38,7 +38,7 @@ namespace mwse {
 			usertypeDefinition["prependController"] = &NI::ObjectNET::prependController;
 			usertypeDefinition["removeController"] = &NI::ObjectNET::removeController;
 			usertypeDefinition["removeAllControllers"] = &NI::ObjectNET::removeAllControllers;
-			usertypeDefinition["getGameReference"] &NI::ObjectNET::getTes3Reference_lua;
+			usertypeDefinition["getGameReference"] = &NI::ObjectNET::getTes3Reference_lua;
 		}
 
 		// Speed-optimized binding for NI::AVObject.

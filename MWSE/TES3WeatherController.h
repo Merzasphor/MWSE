@@ -3,7 +3,7 @@
 #include "TES3Defines.h"
 #include "NIDefines.h"
 
-#include "TES3Collections.h"
+#include "TES3IteratedList.h"
 #include "TES3Vectors.h"
 
 namespace TES3 {
@@ -90,8 +90,8 @@ namespace TES3 {
 		float starsFadingDuration; // 0x138
 		int activeRainParticles; // 0x13C
 		int activeSnowParticles; // 0x140
-		Iterator<void> listActiveParticles; // 0x144
-		Iterator<void> listInactiveParticles; // 0x158
+		IteratedList<void*> listActiveParticles; // 0x144
+		IteratedList<void*> listInactiveParticles; // 0x158
 		float hoursBetweenWeatherChanges; // 0x16C
 		float transitionScalar; // 0x170
 		float hoursRemaining; // 0x174

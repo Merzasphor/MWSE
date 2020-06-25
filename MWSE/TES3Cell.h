@@ -38,7 +38,7 @@ namespace TES3 {
 			int unknown_0x0;
 			int unknown_0x4;
 			int unknown_0x8;
-			Iterator<void>* connectedNodes; // 0xC
+			IteratedList<void*>* connectedNodes; // 0xC
 			PathGrid* parentGrid; // 0x10
 			int unknown_0x14;
 			NI::Pointer<NI::Node> debugNode; // 0x18
@@ -52,7 +52,7 @@ namespace TES3 {
 		Cell* parentCell; // 0x18
 		short unknown_0x1C;
 		short unknown_0x1E;
-		Iterator<Node> nodes; // 0x20
+		IteratedList<Node*> nodes; // 0x20
 		unsigned int fileOffset; // 0x34
 		char unknown_0x38;
 	};
@@ -107,14 +107,14 @@ namespace TES3 {
 		NI::Node * staticObjectsRoot; // 0x2C
 		ReferenceList actors; // 0x30
 		ReferenceList persistentRefs; // 0x40
-		Iterator<MovedRef> * movedReferences; // 0x50
-		Iterator<unsigned int> * moveRefSourceIDs; // 0x54
+		IteratedList<MovedRef*> * movedReferences; // 0x50
+		IteratedList<unsigned int*> * moveRefSourceIDs; // 0x54
 		ReferenceList temporaryRefs; // 0x58
-		Iterator<SourceMod> allSourceMods; // 0x68
+		IteratedList<SourceMod*> allSourceMods; // 0x68
 		void * fogOfWarData;
 		GameFile * lastModifyingFile;
 		MappingVisuals * mappingVisuals;
-		Iterator<MapNote> * mapNotes; // 0x88
+		IteratedList<MapNote*> * mapNotes; // 0x88
 		void * pathGrid; // 0x8C
 		union {
 			float waterLevel;

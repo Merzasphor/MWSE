@@ -410,12 +410,11 @@ namespace TES3 {
 			auto effect = effectItt.second;
 			bool hasEffect = false;
 			if (effect->flags & EffectFlag::AllowEnchanting) {
-				for (auto spellListItt = spellList->getFirstNode(); spellListItt != nullptr; spellListItt = spellListItt->next) {
+				for (auto& spell : *spellList) {
 					if (hasEffect) {
 						break;
 					}
 
-					auto spell = spellListItt->data;
 					if (spell->castType != SpellCastType::Spell) {
 						continue;
 					}
@@ -465,12 +464,11 @@ namespace TES3 {
 			auto effect = effectItt.second;
 			bool hasEffect = false;
 			if (effect->flags & EffectFlag::AllowSpellmaking) {
-				for (auto spellListItt = spellList->getFirstNode(); spellListItt != nullptr; spellListItt = spellListItt->next) {
+				for (auto& spell : *spellList) {
 					if (hasEffect) {
 						break;
 					}
 
-					auto spell = spellListItt->data;
 					if (spell->castType != SpellCastType::Spell) {
 						continue;
 					}

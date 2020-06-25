@@ -157,7 +157,7 @@ namespace TES3 {
 
 		sol::table t = state.create_table();
 		TES3::GameFile* master = arrayMasters;
-		for (int i = 1, count = masterNames->size; i <= count; ++i, ++master) {
+		for (int i = 1, count = masterNames->size(); i <= count; ++i, ++master) {
 			t[i] = master;
 		}
 		return t;

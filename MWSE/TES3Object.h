@@ -3,7 +3,8 @@
 #include "NIDefines.h"
 #include "TES3Defines.h"
 
-#include "TES3Collections.h"
+#include "TES3IteratedList.h"
+#include "TES3LinkedObjectsList.h"
 
 #include "NINode.h"
 
@@ -126,7 +127,7 @@ namespace TES3 {
 		void (__thiscall * setObjectModified)(BaseObject*, bool); // 0x14
 		int (__thiscall * setObjectFlag40)(BaseObject*, unsigned char); // 0x18
 		void * unknown_0x1C;
-		char * (__thiscall * getObjectID)(BaseObject*); // 0x20
+		const char * (__thiscall * getObjectID)(const BaseObject*); // 0x20
 	};
 	static_assert(sizeof(BaseObjectVirtualTable) == 0x24, "TES3::BaseObjectVirtualTable failed size validation");
 
@@ -229,9 +230,9 @@ namespace TES3 {
 		// Function wrappers for our virtual table.
 		//
 
-		bool getObjectModified();
+		bool getObjectModified() const;
 		void setObjectModified(bool);
-		char * getObjectID();
+		const char* getObjectID() const;
 
 		//
 		// Custom functions.
@@ -260,7 +261,7 @@ namespace TES3 {
 	struct Object : BaseObject {
 		NI::Node * sceneNode; // 0x10
 		union {
-			TES3::LinkedList<TES3::Spell> * asSpellList;
+			LinkedObjectList<Spell> * asSpellList;
 			ReferenceList * asReferenceList;
 		} owningCollection; // 0x14
 		void * referenceToThis; // 0x18
@@ -337,7 +338,7 @@ namespace TES3 {
 	struct PhysicalObjectVirtualTable : ObjectVirtualTable {
 		void * unknown_0x13C;
 		void * unknown_0x140;
-		Iterator<BaseObject> * (__thiscall * getStolenList)(PhysicalObject*); // 0x144
+		IteratedList<BaseObject*> * (__thiscall * getStolenList)(PhysicalObject*); // 0x144
 	};
 
 	struct PhysicalObject : Object {
@@ -348,7 +349,7 @@ namespace TES3 {
 		// Function wrappers for our virtual table.
 		//
 
-		Iterator<BaseObject> * getStolenList();
+		IteratedList<BaseObject*>* getStolenList();
 
 		//
 		// Other related this-call functions.

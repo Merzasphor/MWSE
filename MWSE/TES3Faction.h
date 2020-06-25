@@ -2,8 +2,9 @@
 
 #include "TES3Defines.h"
 
-#include "TES3Collections.h"
 #include "TES3Object.h"
+
+#include "TES3IteratedList.h"
 
 namespace TES3 {
 	namespace FactionMembershipFlag {
@@ -39,7 +40,7 @@ namespace TES3 {
 		Rank ranks[10]; // 0x198
 		int skills[7]; // 0x260
 		int unknown_0x27C;
-		Iterator<ReactionNode> reactions; // 0x280
+		IteratedList<ReactionNode*> reactions; // 0x280
 		int playerRank; // 0x294
 		int playerReputation; // 0x298
 		unsigned int playerMembershipFlags; // 0x29C

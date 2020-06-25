@@ -2,12 +2,12 @@
 
 #include "TES3Defines.h"
 
-#include "TES3Collections.h"
 #include "TES3Item.h"
+#include "TES3IteratedList.h"
 
 namespace TES3 {
 	struct Lockpick : Item {
-		Iterator<TES3::BaseObject> stolenList; // 0x30
+		IteratedList<TES3::BaseObject*> stolenList; // 0x30
 		char name[32]; // 0x44
 		Script * script; // 0x64
 		char model[32]; // 0x68

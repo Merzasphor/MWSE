@@ -2,7 +2,6 @@
 
 #include "LuaManager.h"
 #include "TES3ObjectLua.h"
-#include "TES3CollectionsLua.h"
 
 #include "TES3Faction.h"
 
@@ -49,6 +48,10 @@ namespace mwse {
 				usertypeDefinition[sol::base_classes] = sol::bases<TES3::BaseObject>();
 				setUserdataForTES3BaseObject(usertypeDefinition);
 
+				// Base class overrides.
+				usertypeDefinition[sol::meta_function::to_string] = &TES3::Faction::getObjectID;
+				usertypeDefinition["id"] = sol::readonly_property(&TES3::Faction::getObjectID);
+
 				// Basic property binding.
 				usertypeDefinition["reactions"] = sol::readonly_property(&TES3::Faction::reactions);
 				usertypeDefinition["playerReputation"] = &TES3::Faction::playerReputation;
@@ -64,9 +67,6 @@ namespace mwse {
 				usertypeDefinition["name"] = sol::property(&TES3::Faction::getName, &TES3::Faction::setName);
 				usertypeDefinition["playerRank"] = sol::property(&TES3::Faction::getEffectivePlayerRank, &TES3::Faction::setEffectivePlayerRank);
 			}
-
-			// Bind iterator access.
-			bindGenericObjectIterator<TES3::Faction>("tes3factionIterator", "tes3factionIteratorNode");
 		}
 	}
 }

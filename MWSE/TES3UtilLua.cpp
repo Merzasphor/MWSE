@@ -961,7 +961,7 @@ namespace mwse {
 
 		TES3::EquipmentStack* getEquippedItem(sol::table params) {
 			// Find our equipment based on the object given.
-			TES3::Iterator<TES3::EquipmentStack>* equipment = NULL;
+			TES3::IteratedList<TES3::EquipmentStack*>* equipment = NULL;
 			sol::object actor = params["actor"];
 			if (actor.valid()) {
 				if (actor.is<TES3::Reference*>()) {
@@ -1221,7 +1221,7 @@ namespace mwse {
 			}
 
 			// If we were detected, add it to the list.
-			if (forceDetection || crimeEvent.witnesses->size > 0) {
+			if (forceDetection || crimeEvent.witnesses->size() > 0) {
 				auto crimeController = &crimeEvent.victim->crimesA;
 				crimeController->insertCrime(&crimeEvent);
 			}
@@ -2066,7 +2066,7 @@ namespace mwse {
 				}
 
 				sol::optional<bool> teleportCompanions = params["teleportCompanions"];
-				if (teleportCompanions.value_or(true) && macp->listFriendlyActors.size > 0) {
+				if (teleportCompanions.value_or(true) && macp->listFriendlyActors.size() > 0) {
 					TES3::DataHandler::suppressThreadLoad = true;
 					const auto TES3_cellChangeWithCompanions = reinterpret_cast<void(__cdecl*)(TES3::Vector3, TES3::Vector3, TES3::Cell*)>(0x45C9B0);
 					TES3_cellChangeWithCompanions(position.value(), orientation.value(), cell);
@@ -2197,7 +2197,7 @@ namespace mwse {
 
 			cell->setObjectModified(true);
 
-			nonDynamicData->cells->insertAtFront(cell);
+			nonDynamicData->cells->push_back(cell);
 
 			return cell;
 		}

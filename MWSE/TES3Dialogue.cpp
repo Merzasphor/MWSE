@@ -14,7 +14,7 @@
 #define TES3_Dialogue_journalSetIndex 0x50F8B0
 
 namespace TES3 {
-	char* Dialogue::getObjectID() {
+	const char* Dialogue::getObjectID() const {
 		return name;
 	}
 

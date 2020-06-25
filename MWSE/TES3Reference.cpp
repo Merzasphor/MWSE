@@ -621,7 +621,7 @@ namespace TES3 {
 		return &reinterpret_cast<Actor*>(baseObject)->inventory;
 	}
 
-	Iterator<EquipmentStack> * Reference::getEquipment() {
+	IteratedList<EquipmentStack*> * Reference::getEquipment() {
 		// Only actors have equipment.
 		if (baseObject->objectType != ObjectType::Container &&
 			baseObject->objectType != ObjectType::Creature &&

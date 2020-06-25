@@ -19,7 +19,7 @@ namespace TES3 {
 		long * longVarValues; // 0x4
 		float * floatVarValues; // 0x8
 		int unknown_0xC;
-		Iterator<WeaponHitFlags> * hitWeapons; // 0x10
+		IteratedList<WeaponHitFlags*> * hitWeapons; // 0x10
 	};
 	static_assert(sizeof(ScriptVariables) == 0x14, "TES3::ScriptVariables failed size validation");
 

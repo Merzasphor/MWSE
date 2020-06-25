@@ -3,7 +3,8 @@
 #include "TES3Defines.h"
 
 #include "NITArray.h"
-#include "TES3Collections.h"
+
+#include "TES3IteratedList.h"
 #include "TES3Vectors.h"
 
 namespace TES3 {
@@ -29,7 +30,7 @@ namespace TES3 {
 
 	struct Inventory {
 		unsigned int flags; // 0x0
-		Iterator<ItemStack> iterator; // 0x4
+		IteratedList<ItemStack*> iterator; // 0x4
 		int unknown_0x18;
 
 		//

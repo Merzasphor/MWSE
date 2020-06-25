@@ -5,8 +5,6 @@
 #include "NIProperty.h"
 #include "NITransform.h"
 
-#include "TES3Collections.h"
-
 namespace NI {
 	struct AVObject : ObjectNET {
 		unsigned short flags; // 0x14

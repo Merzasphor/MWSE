@@ -8,17 +8,17 @@
 
 namespace mwse {
 	namespace lua {
-		auto iterateReferencesFiltered(const TES3::Cell& cell, const std::unordered_set<unsigned int> desiredTypes) {
+		auto iterateReferencesFiltered(TES3::Cell& cell, const std::unordered_set<unsigned int> desiredTypes) {
 			// Prepare the lists we care about.
 			std::queue<TES3::Reference*> referenceListQueue;
-			if (cell.actors.size > 0) {
-				referenceListQueue.push(cell.actors.head);
+			if (cell.actors.size() > 0) {
+				referenceListQueue.push(cell.actors.front());
 			}
-			if (cell.persistentRefs.size > 0) {
-				referenceListQueue.push(cell.persistentRefs.head);
+			if (cell.persistentRefs.size() > 0) {
+				referenceListQueue.push(cell.persistentRefs.front());
 			}
-			if (cell.temporaryRefs.size > 0) {
-				referenceListQueue.push(cell.temporaryRefs.head);
+			if (cell.temporaryRefs.size() > 0) {
+				referenceListQueue.push(cell.temporaryRefs.front());
 			}
 
 			// Get the first reference we care about.

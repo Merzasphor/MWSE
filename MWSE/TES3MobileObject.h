@@ -237,7 +237,7 @@ namespace TES3 {
 		//
 
 		void enterLeaveSimulationByDistance();
-		Iterator<ItemStack>* getInventory();
+		IteratedList<ItemStack*>* getInventory();
 
 		//
 		// Lua interface functions.

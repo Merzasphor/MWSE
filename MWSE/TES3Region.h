@@ -24,7 +24,7 @@ namespace TES3 {
 		unsigned char weatherChances[10];
 		unsigned char padding_0x5A[2];
 		LeveledCreature * sleepCreature; // 0x5C
-		Iterator<RegionSound> sounds; // 0x60
+		IteratedList<RegionSound*> sounds; // 0x60
 		int currentWeatherIndex; // 0x74
 
 		//

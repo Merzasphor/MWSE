@@ -18,8 +18,8 @@ namespace mwse {
 			}
 
 			// Get spell list.
-			TES3::LinkedList<TES3::Spell>* spellsList = TES3::DataHandler::get()->nonDynamicData->spellsList;
-			TES3::Spell* spellListHead = spellsList->head;
+			auto spellsList = TES3::DataHandler::get()->nonDynamicData->spellsList;
+			TES3::Spell* spellListHead = *spellsList->begin();
 
 			// Create new spell.
 			TES3::Spell* newSpell = tes3::malloc<TES3::Spell>();

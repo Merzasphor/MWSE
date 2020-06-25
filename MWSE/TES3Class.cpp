@@ -5,11 +5,11 @@
 #define TES3_Class_freeDescription 0x4A8450
 
 namespace TES3 {
-	char* Class::getObjectID() {
+	const char* Class::getObjectID() const {
 		return id;
 	}
 
-	char* Class::getName() {
+	const char* Class::getName() const {
 		return name;
 	}
 

@@ -8,8 +8,6 @@
 #include "NINode.h"
 #include "NIRTTI.h"
 
-#include "TES3Collections.h"
-
 namespace mwse {
 	namespace lua {
 		void bindNINode() {

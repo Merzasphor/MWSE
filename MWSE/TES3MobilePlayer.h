@@ -2,6 +2,7 @@
 
 #include "TES3Defines.h"
 
+#include "TES3Dialogue.h"
 #include "TES3MobileNPC.h"
 #include "TES3StdString.h"
 #include "TES3Vectors.h"
@@ -76,7 +77,7 @@ namespace TES3 {
 		char unknown_0x66B; // Undefined.
 		int unknown_0x66C;
 		Birthsign * birthsign; // 0x670
-		Iterator<Dialogue> * dialogueList; // 0x674
+		IteratedList<Dialogue*> * dialogueList; // 0x674
 		MarkData * markLocation; // 0x678
 		Vector3 field_67C;
 		float inactivityTime; // 0x684

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "TES3Attachment.h"
-#include "TES3Collections.h"
+#include "TES3IteratedList.h"
 
 namespace TES3 {
 	struct AIConfig {
@@ -11,7 +11,7 @@ namespace TES3 {
 		unsigned char alarm; // 0x4
 		char unknown_0x5[3];
 		unsigned int merchantFlags; // 0x8
-		Iterator<TravelDestination> * travelDestinations; // 0xC
+		IteratedList<TravelDestination*> * travelDestinations; // 0xC
 	};
 	static_assert(sizeof(AIConfig) == 0x10, "TES3::AIConfig failed size validation");
 }

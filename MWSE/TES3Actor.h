@@ -39,7 +39,7 @@ namespace TES3 {
 		unsigned int actorFlags; // 0x34
 		int cloneCount; // 0x38
 		Inventory inventory; // 0x3C
-		Iterator<EquipmentStack> equipment; // 0x58
+		IteratedList<EquipmentStack*> equipment; // 0x58
 
 		//
 		// Function wrappers for our virtual table.
