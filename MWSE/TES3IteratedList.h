@@ -135,11 +135,11 @@ namespace TES3 {
 		using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
 		iterator begin() const { return head; }
-		iterator end() const { return tail; }
+		iterator end() const { return nullptr; }
 		reverse_iterator rbegin() const { return std::make_reverse_iterator(begin()); }
 		reverse_iterator rend() const { return std::make_reverse_iterator(end()); }
-		const_iterator cbegin() const { return head; }
-		const_iterator cend() const { return nullptr; }
+		const_iterator cbegin() const { return begin(); }
+		const_iterator cend() const { return end(); }
 		const_reverse_iterator crbegin() const { return rbegin(); }
 		const_reverse_iterator crend() const { return rend(); }
 		size_type size() const noexcept { return count; }
