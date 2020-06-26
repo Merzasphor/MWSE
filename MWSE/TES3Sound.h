@@ -9,7 +9,7 @@ namespace TES3 {
 		typedef int value_type;
 
 		enum Flag {
-			Loop = 1
+			Loop = DSBPLAY_LOOPING,
 		};
 	}
 
