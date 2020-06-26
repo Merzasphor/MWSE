@@ -45,8 +45,9 @@ namespace TES3 {
 
 		private:
 			Node* m_Node;
+			const IteratedList* m_Parent;
 
-			iterator(Node* node) : m_Node(node) {}
+			iterator(Node* node, const IteratedList* parent) : m_Node(node), m_Parent(parent) {}
 
 		public:
 			using iterator_category = std::bidirectional_iterator_tag;
@@ -56,18 +57,16 @@ namespace TES3 {
 			using pointer = T*;
 			using reference = T&;
 
-			iterator() : m_Node(nullptr) {}
+			iterator(const IteratedList* parent) : m_Node(nullptr), m_Parent(parent) {}
 
 			iterator operator-(difference_type diff) const {
-				iterator r = m_Node;
+				iterator r(m_Node, m_Parent);
 				r -= diff;
 				return r;
 			}
 
 			iterator& operator--() {
-				if (m_Node) {
-					m_Node = m_Node->previous;
-				}
+				m_Node = m_Node->previous;
 				return *this;
 			}
 
@@ -76,22 +75,20 @@ namespace TES3 {
 			}
 
 			iterator& operator-=(difference_type diff) {
-				while (m_Node && diff-- > 0) {
+				while (diff-- > 0) {
 					m_Node = m_Node->previous;
 				}
 				return *this;
 			}
 
 			iterator operator+(difference_type diff) const {
-				iterator r = m_Node;
+				iterator r(m_Node, m_Parent);
 				r += diff;
 				return r;
 			}
 
 			iterator& operator++() {
-				if (m_Node) {
-					m_Node = m_Node->next;
-				}
+				m_Node = m_Node->next;
 				return *this;
 			}
 
@@ -100,18 +97,22 @@ namespace TES3 {
 			}
 
 			iterator& operator+=(difference_type diff) {
-				while (m_Node && diff-- > 0) {
+				while (diff-- > 0) {
 					m_Node = m_Node->next;
 				}
 				return *this;
 			}
 
 			bool operator==(const iterator& itt) const {
-				return itt.m_Node == m_Node;
+				bool isThisInvalid = m_Node == nullptr || isSentinel();
+				bool isThatInvalid = itt.m_Node == nullptr || itt.isSentinel();
+				return itt.m_Node == m_Node && isThisInvalid == isThatInvalid;
 			}
 
 			bool operator!=(const iterator& itt) const {
-				return itt.m_Node != m_Node;
+				bool isThisInvalid = m_Node == nullptr || isSentinel();
+				bool isThatInvalid = itt.m_Node == nullptr || itt.isSentinel();
+				return itt.m_Node != m_Node && isThisInvalid != isThatInvalid;
 			}
 
 			reference operator->() const {
@@ -120,6 +121,10 @@ namespace TES3 {
 
 			reference operator*() const {
 				return m_Node->data;
+			}
+
+			inline bool isSentinel() const {
+				return m_Node == m_Parent->sentinel();
 			}
 		};
 
@@ -134,10 +139,10 @@ namespace TES3 {
 		using reverse_iterator = std::reverse_iterator<iterator>;
 		using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
-		iterator begin() const { return head; }
-		iterator end() const { return nullptr; }
-		reverse_iterator rbegin() const { return std::make_reverse_iterator(begin()); }
-		reverse_iterator rend() const { return std::make_reverse_iterator(end()); }
+		iterator begin() const { return iterator(head, this); }
+		iterator end() const { return iterator(sentinel(), this); }
+		reverse_iterator rbegin() const { return std::make_reverse_iterator(end()); }
+		reverse_iterator rend() const { return std::make_reverse_iterator(begin()); }
 		const_iterator cbegin() const { return begin(); }
 		const_iterator cend() const { return end(); }
 		const_reverse_iterator crbegin() const { return rbegin(); }
@@ -159,6 +164,13 @@ namespace TES3 {
 		static void operator delete(void* block) { reinterpret_cast<void(__cdecl*)(void*)>(0x727530)(block); }
 #endif
 
+		IteratedList() {
+			count = 0;
+			head = nullptr;
+			tail = nullptr;
+			current = nullptr;
+		}
+
 		virtual ~IteratedList() { clear(); }
 
 		reference operator[](size_type index) const { return *(begin() + index); }
@@ -168,6 +180,8 @@ namespace TES3 {
 
 		reference back() { return tail->data; }
 		const_reference back() const { return tail->data; }
+
+		inline Node* sentinel() const  { return reinterpret_cast<Node*>(const_cast<Node**>(&tail)); }
 
 		void clear() {
 			auto itt = head;
@@ -181,12 +195,12 @@ namespace TES3 {
 			count = 0;
 		}
 
-		iterator insert(const_iterator position, const_reference value) {
+		iterator insert(const_iterator& position, const_reference value) {
 			auto newNode = new Node(value);
 			auto insertBeforeNode = position.m_Node;
 
 			// Insert before a given node.
-			if (insertBeforeNode) {
+			if (insertBeforeNode && insertBeforeNode != sentinel()) {
 				if (insertBeforeNode->previous) {
 					insertBeforeNode->previous->next = newNode;
 					newNode->previous = insertBeforeNode->previous;
@@ -215,26 +229,26 @@ namespace TES3 {
 			}
 
 			count++;
-			return newNode;
+			return iterator(newNode, this);
 		}
 
 		iterator insert(size_type position, const_reference value) {
 			return insert(begin() + position, value);
 		}
 
-		void push_front(const_reference value) {
+		void push_front(const_reference& value) {
 			insert(begin(), value);
 		}
 
-		void push_back(const_reference value) {
+		void push_back(const_reference& value) {
 			insert(end(), value);
 		}
 
-		iterator erase(const_iterator position) {
-			iterator next = nullptr;
+		iterator erase(const_iterator& position) {
+			iterator next(nullptr, this);
 
 			auto node = position.m_Node;
-			if (node) {
+			if (node && node != sentinel()) {
 				if (node == head) {
 					head = node->next;
 				}
@@ -246,7 +260,7 @@ namespace TES3 {
 					node->previous->next = node->next;
 				}
 				if (node->next) {
-					next = node->next;
+					next.m_Node = node->next;
 					node->next->previous = node->previous;
 				}
 				node->previous = nullptr;
@@ -258,7 +272,7 @@ namespace TES3 {
 			return next;
 		}
 
-		iterator erase(const_iterator first, const_iterator last) {
+		iterator erase(const_iterator& first, const_iterator& last) {
 			auto itt = first;
 			while (itt != end() && itt != last) {
 				itt = erase(itt);

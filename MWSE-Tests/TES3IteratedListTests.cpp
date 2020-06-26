@@ -39,7 +39,10 @@ namespace CustomContainers {
 			list.insert(0, 2);
 			Assert::AreEqual(2, list.front());
 
-			list.insert(9999999, 4);
+			list.insert(1, 2);
+			Assert::AreEqual(2, *(list.begin() + 1));
+
+			list.insert(list.size(), 4);
 			Assert::AreEqual(4, list.back());
 
 			list.insert(1, 6);
@@ -153,35 +156,10 @@ namespace CustomContainers {
 				list.push_front(rand() % 1000);
 			}
 
-			std::stringstream ss;
-			ss << "Values (forward):";
-			for (auto& value : list) {
-				ss << " " << value;
-			}
-			ss << std::endl;
-			Logger::WriteMessage(ss.str().c_str());
-
-			ss.str(std::string());
-			ss << "Tail: " << list.tail->data << std::endl;
-			Logger::WriteMessage(ss.str().c_str());
-
-			ss.str(std::string());
-			ss << "rbegin: " << *list.rbegin() << std::endl;
-			Logger::WriteMessage(ss.str().c_str());
-
-			ss.str(std::string());
-			ss << "Values (reverse):";
 			size_t elements = 0;
 			for (auto it = list.rbegin(); it != list.rend(); ++it) {
-				std::stringstream x;
-				x << *it << std::endl;;
-				Logger::WriteMessage(x.str().c_str());
-
-				ss << " " << *it;
 				elements++;
 			}
-			ss << std::endl;
-			Logger::WriteMessage(ss.str().c_str());
 
 			Assert::AreEqual(list.size(), elements);
 		}
@@ -222,9 +200,10 @@ namespace CustomContainers {
 				list.push_front(5);
 			}
 
+			// Causes compiler errors that need to be figured out...
 			//unsigned int sum = std::accumulate(list.crbegin(), list.crend(), 0);
 			//Assert::AreEqual(list.size() * 5, sum);
-			Assert::Fail();
+			Assert::Fail(L"Compiler says no.");
 		}
 
 	};
