@@ -2,11 +2,11 @@
 #include "CppUnitTest.h"
 
 #define MWSE_NO_CUSTOM_ALLOC 1
-#include "..\MWSE\TES3StlList.h"
+#include "..\MWSE\TES3Deque.h"
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace CustomContainers {
-	TEST_CLASS(StlList) {
+	TEST_CLASS(Deque) {
 public:
 
 	//
@@ -14,7 +14,7 @@ public:
 	//
 
 	TEST_METHOD(InsertAtIterator) {
-		TES3::StlList<int> container;
+		TES3::Deque<int> container;
 		for (auto i = 0; i < 10; i++) {
 			container.push_back(rand());
 		}
@@ -30,7 +30,7 @@ public:
 	}
 
 	TEST_METHOD(InsertAtPosition) {
-		TES3::StlList<int> container;
+		TES3::Deque<int> container;
 		for (auto i = 0; i < 10; i++) {
 			container.push_front(rand());
 		}
@@ -49,7 +49,7 @@ public:
 	}
 
 	TEST_METHOD(PushFront) {
-		TES3::StlList<int> container;
+		TES3::Deque<int> container;
 		for (auto i = 0; i < 10; i++) {
 			container.push_front(rand());
 		}
@@ -59,7 +59,7 @@ public:
 	}
 
 	TEST_METHOD(PushBack) {
-		TES3::StlList<int> container;
+		TES3::Deque<int> container;
 		container.push_back(42);
 		Assert::AreEqual(42, container.back());
 
@@ -76,7 +76,7 @@ public:
 	//
 
 	TEST_METHOD(EraseAtIterator) {
-		TES3::StlList<int> container;
+		TES3::Deque<int> container;
 		for (auto i = 0; i < 10; i++) {
 			container.push_front(rand() % 1000);
 		}
@@ -90,7 +90,7 @@ public:
 	}
 
 	TEST_METHOD(EraseAtPosition) {
-		TES3::StlList<int> container;
+		TES3::Deque<int> container;
 		for (auto i = 0; i < 10; i++) {
 			container.push_front(rand() % 1000);
 		}
@@ -108,7 +108,7 @@ public:
 	//
 
 	TEST_METHOD(StandardForLoop) {
-		TES3::StlList<int> container;
+		TES3::Deque<int> container;
 		for (auto i = 0; i < 10; i++) {
 			container.push_front(3);
 		}
@@ -125,7 +125,7 @@ public:
 	}
 
 	TEST_METHOD(ReverseForLoop) {
-		TES3::StlList<int> container;
+		TES3::Deque<int> container;
 		for (auto i = 0; i < 10; i++) {
 			container.push_front(rand() % 1000);
 		}
@@ -139,7 +139,7 @@ public:
 	}
 
 	TEST_METHOD(Accumulate) {
-		TES3::StlList<int> container;
+		TES3::Deque<int> container;
 		for (auto i = 0; i < 10; i++) {
 			container.push_front(5);
 		}
@@ -149,7 +149,7 @@ public:
 	}
 
 	TEST_METHOD(AccumulateConstant) {
-		TES3::StlList<int> container;
+		TES3::Deque<int> container;
 		for (auto i = 0; i < 10; i++) {
 			container.push_front(5);
 		}
@@ -159,7 +159,7 @@ public:
 	}
 
 	TEST_METHOD(AccumulateReversed) {
-		TES3::StlList<int> container;
+		TES3::Deque<int> container;
 		for (auto i = 0; i < 10; i++) {
 			container.push_front(5);
 		}
@@ -171,15 +171,14 @@ public:
 	/*
 	// TODO: Figure out why this fails to compile.
 	TEST_METHOD(AccumulateConstantReversed) {
-		TES3::StlList<int> container;
+		TES3::Deque<int> container;
 		for (auto i = 0; i < 10; i++) {
 			container.push_front(5);
 		}
 
 		// Causes compiler errors that need to be figured out...
-		//unsigned int sum = std::accumulate(container.crbegin(), container.crend(), 0);
-		//Assert::AreEqual(container.size() * 5, sum);
-		Assert::Fail(L"Compiler says no.");
+		unsigned int sum = std::accumulate(container.crbegin(), container.crend(), 0);
+		Assert::AreEqual(container.size() * 5, sum);
 	}
 	*/
 
@@ -195,7 +194,7 @@ public:
 	}
 
 	TEST_METHOD(LuaLength) {
-		TES3::StlList<int> container;
+		TES3::Deque<int> container;
 		for (auto i = 0; i < 10; i++) {
 			container.push_back(rand());
 		}
@@ -216,7 +215,7 @@ public:
 	}
 
 	TEST_METHOD(LuaIPairs) {
-		TES3::StlList<int> container;
+		TES3::Deque<int> container;
 		for (auto i = 0; i < 3; i++) {
 			container.push_back(5);
 		}
@@ -243,7 +242,7 @@ public:
 	}
 
 	TEST_METHOD(LuaPairs) {
-		TES3::StlList<int> container;
+		TES3::Deque<int> container;
 		for (auto i = 0; i < 3; i++) {
 			container.push_back(5);
 		}

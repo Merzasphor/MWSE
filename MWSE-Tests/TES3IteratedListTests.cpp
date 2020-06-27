@@ -7,281 +7,281 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace CustomContainers {
 	TEST_CLASS(IteratedList) {
-	public:
+public:
 
-		//
-		// Insertion tests
-		//
+	//
+	// Insertion tests
+	//
 
-		TEST_METHOD(InsertAtIterator) {
-			TES3::IteratedList<int> list;
-			for (auto i = 0; i < 10; i++) {
-				list.push_back(rand());
-			}
-
-			list.insert(list.begin(), 2);
-			Assert::AreEqual(2, list.front());
-
-			list.insert(list.end(), 4);
-			Assert::AreEqual(4, list.back());
-
-			list.insert(++list.begin(), 6);
-			Assert::AreEqual(6, list[1]);
+	TEST_METHOD(InsertAtIterator) {
+		TES3::IteratedList<int> container;
+		for (auto i = 0; i < 10; i++) {
+			container.push_back(rand());
 		}
 
-		TEST_METHOD(InsertAtPosition) {
-			TES3::IteratedList<int> list;
-			for (auto i = 0; i < 10; i++) {
-				list.push_front(rand());
-			}
+		container.insert(container.begin(), 2);
+		Assert::AreEqual(2, container.front());
 
-			list.insert(0, 2);
-			Assert::AreEqual(2, list.front());
+		container.insert(container.end(), 4);
+		Assert::AreEqual(4, container.back());
 
-			list.insert(1, 2);
-			Assert::AreEqual(2, *(list.begin() + 1));
+		container.insert(++container.begin(), 6);
+		Assert::AreEqual(6, container[1]);
+	}
 
-			list.insert(list.size(), 4);
-			Assert::AreEqual(4, list.back());
-
-			list.insert(1, 6);
-			Assert::AreEqual(6, list[1]);
+	TEST_METHOD(InsertAtPosition) {
+		TES3::IteratedList<int> container;
+		for (auto i = 0; i < 10; i++) {
+			container.push_front(rand());
 		}
 
-		TEST_METHOD(PushFront) {
-			TES3::IteratedList<int> list;
-			for (auto i = 0; i < 10; i++) {
-				list.push_front(rand());
-			}
+		container.insert(0, 2);
+		Assert::AreEqual(2, container.front());
 
-			list.push_front(9001);
-			Assert::AreEqual(9001, list.front());
+		container.insert(1, 2);
+		Assert::AreEqual(2, *(container.begin() + 1));
+
+		container.insert(container.size(), 4);
+		Assert::AreEqual(4, container.back());
+
+		container.insert(1, 6);
+		Assert::AreEqual(6, container[1]);
+	}
+
+	TEST_METHOD(PushFront) {
+		TES3::IteratedList<int> container;
+		for (auto i = 0; i < 10; i++) {
+			container.push_front(rand());
 		}
 
-		TEST_METHOD(PushBack) {
-			TES3::IteratedList<int> list;
-			list.push_back(42);
-			Assert::AreEqual(42, list.back());
+		container.push_front(9001);
+		Assert::AreEqual(9001, container.front());
+	}
 
-			for (auto i = 0; i < 10; i++) {
-				list.push_front(rand());
-			}
+	TEST_METHOD(PushBack) {
+		TES3::IteratedList<int> container;
+		container.push_back(42);
+		Assert::AreEqual(42, container.back());
 
-			list.push_back(9001);
-			Assert::AreEqual(9001, list.back());
+		for (auto i = 0; i < 10; i++) {
+			container.push_front(rand());
 		}
 
-		//
-		// Erasure tests
-		//
+		container.push_back(9001);
+		Assert::AreEqual(9001, container.back());
+	}
 
-		TEST_METHOD(EraseAtIterator) {
-			TES3::IteratedList<int> list;
-			for (auto i = 0; i < 10; i++) {
-				list.push_front(rand() % 1000);
-			}
-			const int sumBefore = std::accumulate(list.begin(), list.end(), 0);
+	//
+	// Erasure tests
+	//
 
-			list.insert(list.begin() + 4, 999);
-			list.erase(list.begin() + 4);
+	TEST_METHOD(EraseAtIterator) {
+		TES3::IteratedList<int> container;
+		for (auto i = 0; i < 10; i++) {
+			container.push_front(rand() % 1000);
+		}
+		const int sumBefore = std::accumulate(container.begin(), container.end(), 0);
 
-			const int sumAfter = std::accumulate(list.begin(), list.end(), 0);
-			Assert::AreEqual(sumBefore, sumAfter);
+		container.insert(container.begin() + 4, 999);
+		container.erase(container.begin() + 4);
+
+		const int sumAfter = std::accumulate(container.begin(), container.end(), 0);
+		Assert::AreEqual(sumBefore, sumAfter);
+	}
+
+	TEST_METHOD(EraseAtPosition) {
+		TES3::IteratedList<int> container;
+		for (auto i = 0; i < 10; i++) {
+			container.push_front(rand() % 1000);
+		}
+		const int sumBefore = std::accumulate(container.begin(), container.end(), 0);
+
+		container.insert(4, 999);
+		container.erase(4);
+
+		const int sumAfter = std::accumulate(container.begin(), container.end(), 0);
+		Assert::AreEqual(sumBefore, sumAfter);
+	}
+
+	//
+	// Other access tests
+	//
+
+	TEST_METHOD(CachedIteration) {
+		TES3::IteratedList<int> container;
+		for (auto i = 0; i < 10; i++) {
+			container.push_front(rand() % 1000);
 		}
 
-		TEST_METHOD(EraseAtPosition) {
-			TES3::IteratedList<int> list;
-			for (auto i = 0; i < 10; i++) {
-				list.push_front(rand() % 1000);
-			}
-			const int sumBefore = std::accumulate(list.begin(), list.end(), 0);
-
-			list.insert(4, 999);
-			list.erase(4);
-
-			const int sumAfter = std::accumulate(list.begin(), list.end(), 0);
-			Assert::AreEqual(sumBefore, sumAfter);
-		}
-
-		//
-		// Other access tests
-		//
-
-		TEST_METHOD(CachedIteration) {
-			TES3::IteratedList<int> list;
-			for (auto i = 0; i < 10; i++) {
-				list.push_front(rand() % 1000);
-			}
-
-			// Calculate the sum twice.
-			int sum = 0;
-			const auto ittBefore1 = list.current;
-			for (list.cached_begin(); list.current; list.cached_next()) {
-				// On 3rd element, calculate the sum again...
-				if (list.current == list.head->next->next) {
-					const auto ittBefore2 = list.current;
-					for (list.cached_begin(); list.current; list.cached_next()) {
-						sum += list.current->data;
-					}
-					list.current = ittBefore2;
+		// Calculate the sum twice.
+		int sum = 0;
+		const auto ittBefore1 = container.current;
+		for (container.cached_begin(); container.current; container.cached_next()) {
+			// On 3rd element, calculate the sum again...
+			if (container.current == container.head->next->next) {
+				const auto ittBefore2 = container.current;
+				for (container.cached_begin(); container.current; container.cached_next()) {
+					sum += container.current->data;
 				}
-
-				sum += list.current->data;
+				container.current = ittBefore2;
 			}
-			list.current = ittBefore1;
 
-			const int accumulatedSum = std::accumulate(list.begin(), list.end(), 0);
+			sum += container.current->data;
+		}
+		container.current = ittBefore1;
 
-			Assert::AreEqual(accumulatedSum * 2, sum);
+		const int accumulatedSum = std::accumulate(container.begin(), container.end(), 0);
+
+		Assert::AreEqual(accumulatedSum * 2, sum);
+	}
+
+	TEST_METHOD(StandardForLoop) {
+		TES3::IteratedList<int> container;
+		for (auto i = 0; i < 10; i++) {
+			container.push_front(3);
 		}
 
-		TEST_METHOD(StandardForLoop) {
-			TES3::IteratedList<int> list;
-			for (auto i = 0; i < 10; i++) {
-				list.push_front(3);
-			}
-
-			size_t elements = 0;
-			size_t sum = 0;
-			for (auto& value : list) {
-				elements++;
-				sum += value;
-			}
-
-			Assert::AreEqual(list.size(), elements);
-			Assert::AreEqual(list.size() * 3, sum);
+		size_t elements = 0;
+		size_t sum = 0;
+		for (auto& value : container) {
+			elements++;
+			sum += value;
 		}
 
-		TEST_METHOD(ReverseForLoop) {
-			TES3::IteratedList<int> list;
-			for (auto i = 0; i < 10; i++) {
-				list.push_front(rand() % 1000);
-			}
+		Assert::AreEqual(container.size(), elements);
+		Assert::AreEqual(container.size() * 3, sum);
+	}
 
-			size_t elements = 0;
-			for (auto it = list.rbegin(); it != list.rend(); ++it) {
-				elements++;
-			}
-
-			Assert::AreEqual(list.size(), elements);
+	TEST_METHOD(ReverseForLoop) {
+		TES3::IteratedList<int> container;
+		for (auto i = 0; i < 10; i++) {
+			container.push_front(rand() % 1000);
 		}
 
-		TEST_METHOD(Accumulate) {
-			TES3::IteratedList<int> list;
-			for (auto i = 0; i < 10; i++) {
-				list.push_front(5);
-			}
-
-			unsigned int sum = std::accumulate(list.begin(), list.end(), 0);
-			Assert::AreEqual(list.size() * 5, sum);
+		size_t elements = 0;
+		for (auto it = container.rbegin(); it != container.rend(); ++it) {
+			elements++;
 		}
 
-		TEST_METHOD(AccumulateConstant) {
-			TES3::IteratedList<int> list;
-			for (auto i = 0; i < 10; i++) {
-				list.push_front(5);
-			}
+		Assert::AreEqual(container.size(), elements);
+	}
 
-			unsigned int sum = std::accumulate(list.cbegin(), list.cend(), 0);
-			Assert::AreEqual(list.size() * 5, sum);
+	TEST_METHOD(Accumulate) {
+		TES3::IteratedList<int> container;
+		for (auto i = 0; i < 10; i++) {
+			container.push_front(5);
 		}
 
-		TEST_METHOD(AccumulateReversed) {
-			TES3::IteratedList<int> list;
-			for (auto i = 0; i < 10; i++) {
-				list.push_front(5);
-			}
+		unsigned int sum = std::accumulate(container.begin(), container.end(), 0);
+		Assert::AreEqual(container.size() * 5, sum);
+	}
 
-			unsigned int sum = std::accumulate(list.rbegin(), list.rend(), 0);
-			Assert::AreEqual(list.size() * 5, sum);
+	TEST_METHOD(AccumulateConstant) {
+		TES3::IteratedList<int> container;
+		for (auto i = 0; i < 10; i++) {
+			container.push_front(5);
 		}
 
-		/*
-		// TODO: Figure out why this fails to compile.
-		TEST_METHOD(AccumulateConstantReversed) {
-			TES3::IteratedList<int> list;
-			for (auto i = 0; i < 10; i++) {
-				list.push_front(5);
-			}
+		unsigned int sum = std::accumulate(container.cbegin(), container.cend(), 0);
+		Assert::AreEqual(container.size() * 5, sum);
+	}
 
-			// Causes compiler errors that need to be figured out...
-			unsigned int sum = std::accumulate(list.crbegin(), list.crend(), 0);
-			Assert::AreEqual(list.size() * 5, sum);
-		}
-		*/
-
-		//
-		// Lua test functions.
-		//
-
-		static void lua_log(sol::this_state ts, sol::object object) {
-			sol::state_view state = ts;
-			std::string result = state["tostring"](object);
-			result += "\n";
-			Logger::WriteMessage(result.c_str());
+	TEST_METHOD(AccumulateReversed) {
+		TES3::IteratedList<int> container;
+		for (auto i = 0; i < 10; i++) {
+			container.push_front(5);
 		}
 
-		TEST_METHOD(LuaLength) {
-			TES3::IteratedList<int> list;
-			for (auto i = 0; i < 10; i++) {
-				list.push_back(rand());
-			}
+		unsigned int sum = std::accumulate(container.rbegin(), container.rend(), 0);
+		Assert::AreEqual(container.size() * 5, sum);
+	}
 
-			sol::state lua;
-			lua.open_libraries();
-
-			try {
-				lua["container"] = &list;
-				size_t length = lua.safe_script("return #container");
-				Assert::AreEqual(list.size(), length);
-			}
-			catch (std::exception& e) {
-				std::wstringstream ss;
-				ss << "Lua exception: " << e.what();
-				Assert::Fail(ss.str().c_str());
-			}
+	/*
+	// TODO: Figure out why this fails to compile.
+	TEST_METHOD(AccumulateConstantReversed) {
+		TES3::IteratedList<int> container;
+		for (auto i = 0; i < 10; i++) {
+			container.push_front(5);
 		}
 
-		TEST_METHOD(LuaIPairs) {
-			TES3::IteratedList<int> list;
-			for (auto i = 0; i < 3; i++) {
-				list.push_back(5);
-			}
+		// Causes compiler errors that need to be figured out...
+		unsigned int sum = std::accumulate(container.crbegin(), container.crend(), 0);
+		Assert::AreEqual(container.size() * 5, sum);
+	}
+	*/
 
-			sol::state lua;
-			lua.open_libraries();
+	//
+	// Lua test functions.
+	//
 
-			try {
-				lua["container"] = &list;
-				size_t sum = lua.safe_script(R"(
+	static void lua_log(sol::this_state ts, sol::object object) {
+		sol::state_view state = ts;
+		std::string result = state["tostring"](object);
+		result += "\n";
+		Logger::WriteMessage(result.c_str());
+	}
+
+	TEST_METHOD(LuaLength) {
+		TES3::IteratedList<int> container;
+		for (auto i = 0; i < 10; i++) {
+			container.push_back(rand());
+		}
+
+		sol::state lua;
+		lua.open_libraries();
+
+		try {
+			lua["container"] = &container;
+			size_t length = lua.safe_script("return #container");
+			Assert::AreEqual(container.size(), length);
+		}
+		catch (std::exception& e) {
+			std::wstringstream ss;
+			ss << "Lua exception: " << e.what();
+			Assert::Fail(ss.str().c_str());
+		}
+	}
+
+	TEST_METHOD(LuaIPairs) {
+		TES3::IteratedList<int> container;
+		for (auto i = 0; i < 3; i++) {
+			container.push_back(5);
+		}
+
+		sol::state lua;
+		lua.open_libraries();
+
+		try {
+			lua["container"] = &container;
+			size_t sum = lua.safe_script(R"(
 					local sum = 0
 					for _, value in ipairs(container) do
 						sum = sum + value
 					end
 					return sum
 					)");
-				Assert::AreEqual(list.size() * 5, sum);
-			}
-			catch (std::exception& e) {
-				std::wstringstream ss;
-				ss << "Lua exception: " << e.what();
-				Assert::Fail(ss.str().c_str());
-			}
+			Assert::AreEqual(container.size() * 5, sum);
+		}
+		catch (std::exception& e) {
+			std::wstringstream ss;
+			ss << "Lua exception: " << e.what();
+			Assert::Fail(ss.str().c_str());
+		}
+	}
+
+	TEST_METHOD(LuaPairs) {
+		TES3::IteratedList<int> container;
+		for (auto i = 0; i < 3; i++) {
+			container.push_back(5);
 		}
 
-		TEST_METHOD(LuaPairs) {
-			TES3::IteratedList<int> list;
-			for (auto i = 0; i < 3; i++) {
-				list.push_back(5);
-			}
+		sol::state lua;
+		lua.open_libraries();
+		lua["print"] = &lua_log;
+		lua["container"] = &container;
 
-			sol::state lua;
-			lua.open_libraries();
-			lua["print"] = &lua_log;
-			lua["container"] = &list;
-
-			try {
-				size_t sum = lua.safe_script(R"(
+		try {
+			size_t sum = lua.safe_script(R"(
 					local sum = 0
 					for _, value in pairs(container) do
 						sum = sum + value
@@ -289,14 +289,14 @@ namespace CustomContainers {
 					end
 					return sum
 					)");
-				Assert::AreEqual(list.size() * 5, sum);
-			}
-			catch (std::exception& e) {
-				std::wstringstream ss;
-				ss << "Lua exception: " << e.what();
-				Assert::Fail(ss.str().c_str());
-			}
+			Assert::AreEqual(container.size() * 5, sum);
 		}
+		catch (std::exception& e) {
+			std::wstringstream ss;
+			ss << "Lua exception: " << e.what();
+			Assert::Fail(ss.str().c_str());
+		}
+	}
 
 	};
 }
