@@ -149,7 +149,7 @@ namespace TES3 {
 
 		Deque() {
 			unknown_0x0 = true;
-			sentinel = new Node(0);
+			sentinel = new Node(T());
 			sentinel->previous = sentinel;
 			sentinel->next = sentinel;
 			count = 0;

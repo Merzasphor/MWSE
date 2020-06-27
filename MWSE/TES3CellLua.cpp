@@ -8,17 +8,17 @@
 
 namespace mwse {
 	namespace lua {
-		auto iterateReferencesFiltered(const TES3::Cell& cell, const std::unordered_set<unsigned int> desiredTypes) {
+		auto iterateReferencesFiltered(const TES3::Cell* cell, const std::unordered_set<unsigned int> desiredTypes) {
 			// Prepare the lists we care about.
 			std::queue<TES3::Reference*> referenceListQueue;
-			if (cell.actors.size() > 0) {
-				referenceListQueue.push(cell.actors.front());
+			if (cell->actors.size() > 0) {
+				referenceListQueue.push(cell->actors.front());
 			}
-			if (cell.persistentRefs.size() > 0) {
-				referenceListQueue.push(cell.persistentRefs.front());
+			if (cell->persistentRefs.size() > 0) {
+				referenceListQueue.push(cell->persistentRefs.front());
 			}
-			if (cell.temporaryRefs.size() > 0) {
-				referenceListQueue.push(cell.temporaryRefs.front());
+			if (cell->temporaryRefs.size() > 0) {
+				referenceListQueue.push(cell->temporaryRefs.front());
 			}
 
 			// Get the first reference we care about.
@@ -28,7 +28,7 @@ namespace mwse {
 				referenceListQueue.pop();
 			}
 
-			return [&]() mutable -> TES3::Reference* {
+			return [cell, reference, referenceListQueue, desiredTypes]() mutable -> TES3::Reference* {
 				while (reference && !desiredTypes.empty() && !desiredTypes.count(reference->baseObject->objectType)) {
 					reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
 
@@ -57,7 +57,7 @@ namespace mwse {
 			};
 		}
 
-		auto iterateReferences(TES3::Cell& self, sol::optional<sol::object> param) {
+		auto iterateReferences(const TES3::Cell* self, sol::optional<sol::object> param) {
 			std::unordered_set<unsigned int> filters;
 
 			if (param) {
