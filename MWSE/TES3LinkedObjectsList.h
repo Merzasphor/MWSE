@@ -121,7 +121,7 @@ namespace TES3 {
 			return begin() + index;
 		}
 
-		value_type front() { return *begin(); }
+		value_type front() const { return *begin(); }
 
 		void clear() {
 			auto itt = head;

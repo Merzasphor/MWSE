@@ -10,6 +10,7 @@
 #include <list>
 #include <map>
 #include <mutex>
+#include <numeric>
 #include <ostream>
 #include <queue>
 #include <random>
@@ -56,4 +57,6 @@
 #include <boost/regex.hpp>
 
 // Core lua binding library.
+#define SOL_SAFE_USERTYPE 1
+#define SOL_EXCEPTIONS_SAFE_PROPAGATION 1
 #include "sol.hpp"

@@ -8,7 +8,7 @@
 
 namespace mwse {
 	namespace lua {
-		auto iterateReferencesFiltered(TES3::Cell& cell, const std::unordered_set<unsigned int> desiredTypes) {
+		auto iterateReferencesFiltered(const TES3::Cell& cell, const std::unordered_set<unsigned int> desiredTypes) {
 			// Prepare the lists we care about.
 			std::queue<TES3::Reference*> referenceListQueue;
 			if (cell.actors.size() > 0) {
@@ -28,7 +28,7 @@ namespace mwse {
 				referenceListQueue.pop();
 			}
 
-			return [cell, reference, referenceListQueue, desiredTypes]() mutable -> TES3::Reference* {
+			return [&]() mutable -> TES3::Reference* {
 				while (reference && !desiredTypes.empty() && !desiredTypes.count(reference->baseObject->objectType)) {
 					reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
 

@@ -104,15 +104,11 @@ namespace TES3 {
 			}
 
 			bool operator==(const iterator& itt) const {
-				bool isThisInvalid = m_Node == nullptr || isSentinel();
-				bool isThatInvalid = itt.m_Node == nullptr || itt.isSentinel();
-				return itt.m_Node == m_Node && isThisInvalid == isThatInvalid;
+				return itt.m_Node == m_Node || (m_Node == nullptr ? itt.isSentinel() : false);
 			}
 
 			bool operator!=(const iterator& itt) const {
-				bool isThisInvalid = m_Node == nullptr || isSentinel();
-				bool isThatInvalid = itt.m_Node == nullptr || itt.isSentinel();
-				return itt.m_Node != m_Node && isThisInvalid != isThatInvalid;
+				return itt.m_Node != m_Node && (m_Node == nullptr ? !itt.isSentinel() : true);
 			}
 
 			reference operator->() const {
@@ -170,6 +166,8 @@ namespace TES3 {
 			tail = nullptr;
 			current = nullptr;
 		}
+
+		IteratedList(const IteratedList& other) = delete;
 
 		virtual ~IteratedList() { clear(); }
 

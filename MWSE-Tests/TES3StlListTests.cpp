@@ -3,7 +3,6 @@
 
 #define MWSE_NO_CUSTOM_ALLOC 1
 #include "..\MWSE\TES3StlList.h"
-
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace CustomContainers {
@@ -111,17 +110,18 @@ public:
 	TEST_METHOD(StandardForLoop) {
 		TES3::StlList<int> list;
 		for (auto i = 0; i < 10; i++) {
-			list.push_front(rand() % 1000);
+			list.push_front(3);
 		}
 
-		auto sentinel = list.sentinel();
-
 		size_t elements = 0;
+		size_t sum = 0;
 		for (auto& value : list) {
 			elements++;
+			sum += value;
 		}
 
 		Assert::AreEqual(list.size(), elements);
+		Assert::AreEqual(list.size() * 3, sum);
 	}
 
 	TEST_METHOD(ReverseForLoop) {
@@ -178,6 +178,94 @@ public:
 		//unsigned int sum = std::accumulate(list.crbegin(), list.crend(), 0);
 		//Assert::AreEqual(list.size() * 5, sum);
 		Assert::Fail(L"Compiler says no.");
+	}
+
+	//
+	// Lua test functions.
+	//
+
+	static void lua_log(sol::this_state ts, sol::object object) {
+		sol::state_view state = ts;
+		std::string result = state["tostring"](object);
+		result += "\n";
+		Logger::WriteMessage(result.c_str());
+	}
+
+	TEST_METHOD(LuaLength) {
+		TES3::StlList<int> list;
+		for (auto i = 0; i < 10; i++) {
+			list.push_back(rand());
+		}
+
+		sol::state lua;
+		lua.open_libraries();
+
+		try {
+			lua["container"] = &list;
+			size_t length = lua.safe_script("return #container");
+			Assert::AreEqual(list.size(), length);
+		}
+		catch (std::exception& e) {
+			std::wstringstream ss;
+			ss << "Lua exception: " << e.what();
+			Assert::Fail(ss.str().c_str());
+		}
+	}
+
+	TEST_METHOD(LuaIPairs) {
+		TES3::StlList<int> list;
+		for (auto i = 0; i < 3; i++) {
+			list.push_back(5);
+		}
+
+		sol::state lua;
+		lua.open_libraries();
+
+		try {
+			lua["container"] = &list;
+			size_t sum = lua.safe_script(R"(
+					local sum = 0
+					for _, value in ipairs(container) do
+						sum = sum + value
+					end
+					return sum
+					)");
+			Assert::AreEqual(list.size() * 5, sum);
+		}
+		catch (std::exception& e) {
+			std::wstringstream ss;
+			ss << "Lua exception: " << e.what();
+			Assert::Fail(ss.str().c_str());
+		}
+	}
+
+	TEST_METHOD(LuaPairs) {
+		TES3::StlList<int> list;
+		for (auto i = 0; i < 3; i++) {
+			list.push_back(5);
+		}
+
+		sol::state lua;
+		lua.open_libraries();
+		lua["print"] = &lua_log;
+		lua["container"] = &list;
+
+		try {
+			size_t sum = lua.safe_script(R"(
+					local sum = 0
+					for _, value in container:pairs() do
+						sum = sum + value
+						print(string.format("Value: %d; Sum: %d", value, sum))
+					end
+					return sum
+					)");
+			Assert::AreEqual(list.size() * 5, sum);
+		}
+		catch (std::exception& e) {
+			std::wstringstream ss;
+			ss << "Lua exception: " << e.what();
+			Assert::Fail(ss.str().c_str());
+		}
 	}
 
 	};
