@@ -254,12 +254,12 @@ public:
 		try {
 			lua["container"] = &container;
 			size_t sum = lua.safe_script(R"(
-					local sum = 0
-					for _, value in ipairs(container) do
-						sum = sum + value
-					end
-					return sum
-					)");
+				local sum = 0
+				for _, value in ipairs(container) do
+					sum = sum + value
+				end
+				return sum
+				)");
 			Assert::AreEqual(container.size() * 5, sum);
 		}
 		catch (std::exception& e) {
@@ -282,13 +282,13 @@ public:
 
 		try {
 			size_t sum = lua.safe_script(R"(
-					local sum = 0
-					for _, value in pairs(container) do
-						sum = sum + value
-						print(string.format("Value: %d; Sum: %d", value, sum))
-					end
-					return sum
-					)");
+				local sum = 0
+				for _, value in pairs(container) do
+					sum = sum + value
+					print(string.format("Value: %d; Sum: %d", value, sum))
+				end
+				return sum
+				)");
 			Assert::AreEqual(container.size() * 5, sum);
 		}
 		catch (std::exception& e) {
