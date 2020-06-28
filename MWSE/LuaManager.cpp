@@ -2304,7 +2304,7 @@ namespace mwse {
 				lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new lua::event::ItemTileUpdatedEvent(iterator->current->data));
 			}
 
-			return iterator->cached_begin();
+			return iterator->cached_next();
 		}
 
 		void __inline TriggerItemTileUpdatedEventForElement(TES3::UI::Element * element, DWORD propertyAddress) {
