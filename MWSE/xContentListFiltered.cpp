@@ -129,7 +129,7 @@ namespace mwse {
 
 		// If we aren't given a node, get the first one.
 		if (node == NULL) {
-			node = static_cast<TES3::Actor*>(reference->baseObject)->inventory.iterator.head;
+			node = static_cast<TES3::Actor*>(reference->baseObject)->inventory.itemStacks.head;
 
 			// Pass over any records that don't match the current filter.
 			while (node && node->data && node->data->object && !passesFilter(node->data->object, filter)) {

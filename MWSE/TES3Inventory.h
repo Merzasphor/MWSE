@@ -30,7 +30,7 @@ namespace TES3 {
 
 	struct Inventory {
 		unsigned int flags; // 0x0
-		IteratedList<ItemStack*> iterator; // 0x4
+		IteratedList<ItemStack*> itemStacks; // 0x4
 		int unknown_0x18;
 
 		//
@@ -61,6 +61,35 @@ namespace TES3 {
 		void removeItem_lua(sol::table params);
 		bool contains_lua(sol::object itemOrItemId, sol::optional<TES3::ItemData*> itemData);
 		void resolveLeveledLists_lua(sol::optional<MobileActor*> mobile);
+
+		//
+		// Container wrapping methods.
+		// This allows lua and C++ to interface with this container as if it were the wrapped object.
+		//
+
+		using T = ItemStack*;
+		using value_type = T;
+		using size_type = size_t;
+		using difference_type = int;
+		using pointer = T*;
+		using const_pointer = const T*;
+		using reference = T&;
+		using const_reference = const T&;
+		using iterator = IteratedList<ItemStack*>::iterator;
+		using const_iterator = const iterator;
+		using reverse_iterator = std::reverse_iterator<iterator>;
+		using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+
+		iterator begin() const { return itemStacks.begin(); }
+		iterator end() const { return itemStacks.end(); }
+		reverse_iterator rbegin() const { return std::make_reverse_iterator(end()); }
+		reverse_iterator rend() const { return std::make_reverse_iterator(begin()); }
+		const_iterator cbegin() const { return begin(); }
+		const_iterator cend() const { return end(); }
+		const_reverse_iterator crbegin() const { return rbegin(); }
+		const_reverse_iterator crend() const { return rend(); }
+		size_type size() const noexcept { return itemStacks.count; }
+		bool empty() const noexcept { return itemStacks.count == 0; }
 
 	};
 	static_assert(sizeof(Inventory) == 0x1C, "TES3::Inventory failed size validation");

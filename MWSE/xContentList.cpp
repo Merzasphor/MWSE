@@ -75,7 +75,7 @@ namespace mwse {
 
 		// If we aren't given a node, get the first one.
 		if (node == NULL && reference->baseObject->isActor()) {
-			node = static_cast<TES3::Actor*>(reference->baseObject)->inventory.iterator.head;
+			node = static_cast<TES3::Actor*>(reference->baseObject)->inventory.itemStacks.head;
 		}
 
 		// Validate the node we've obtained.

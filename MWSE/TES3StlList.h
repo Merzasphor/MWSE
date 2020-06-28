@@ -294,5 +294,11 @@ namespace TES3 {
 
 	};
 	static_assert(sizeof(StlList<void*>) == 0xC, "TES3::StlList failed size validation");
+	static_assert(offsetof(StlList<void*>, count) == 0x0, "TES3::StlList::count failed offset validation");
+	static_assert(offsetof(StlList<void*>, head) == 0x4, "TES3::StlList::head failed offset validation");
+	static_assert(offsetof(StlList<void*>, tail) == 0x8, "TES3::StlList::tail failed offset validation");
 	static_assert(sizeof(StlList<void*>::Node) == 0xC, "TES3::StlList::Node failed size validation");
+	static_assert(offsetof(StlList<void*>::Node, data) == 0x0, "TES3::StlList::Node::data failed offset validation");
+	static_assert(offsetof(StlList<void*>::Node, previous) == sizeof(void*), "TES3::StlList::Node::previous failed offset validation");
+	static_assert(offsetof(StlList<void*>::Node, next) == sizeof(void*) + 0x4, "TES3::StlList::Node::next failed offset validation");
 }

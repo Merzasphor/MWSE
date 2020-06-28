@@ -159,17 +159,9 @@ namespace mwse {
 				auto usertypeDefinition = state.new_usertype<TES3::Inventory>("tes3inventory");
 				usertypeDefinition["new"] = sol::no_constructor;
 
-				// Metamethod binding.
-				usertypeDefinition[sol::meta_function::pairs] = [](TES3::Inventory& self) {
-					throw std::logic_error("TODO: FIX THIS");
-				};
-				usertypeDefinition[sol::meta_function::length] = [](TES3::Inventory& self) {
-					return self.iterator.size();
-				};
-
 				// Basic property binding.
 				usertypeDefinition["flags"] = sol::readonly_property(&TES3::Inventory::flags);
-				usertypeDefinition["iterator"] = sol::readonly_property(&TES3::Inventory::iterator);
+				usertypeDefinition["items"] = sol::readonly_property(&TES3::Inventory::itemStacks);
 
 				// Basic function binding.
 				usertypeDefinition["addItem"] = &TES3::Inventory::addItem_lua;
@@ -179,6 +171,9 @@ namespace mwse {
 				usertypeDefinition["findItemStack"] = &TES3::Inventory::findItemStack;
 				usertypeDefinition["removeItem"] = &TES3::Inventory::removeItem_lua;
 				usertypeDefinition["resolveLeveledItems"] = &TES3::Inventory::resolveLeveledLists_lua;
+
+				// Legacy bindings.
+				usertypeDefinition["iterator"] = sol::readonly_property(&TES3::Inventory::itemStacks);
 			}
 		}
 	}
