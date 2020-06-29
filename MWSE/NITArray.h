@@ -138,7 +138,7 @@ namespace NI {
 			endIndex = 0;
 			filledCount = 0;
 #if !defined(MWSE_NO_CUSTOM_ALLOC) || MWSE_NO_CUSTOM_ALLOC == 0
-			storage = reinterpret_cast<void* (__cdecl*)(size_type)>(0x727692)(size * 4);
+			storage = reinterpret_cast<T* (__cdecl*)(size_type)>(0x727692)(size * 4);
 #else
 			storage = new T[size];
 #endif
@@ -156,21 +156,21 @@ namespace NI {
 
 		const T operator[](size_type index) const { return at(index); }
 
-		constexpr T at(size_type pos) {
+		constexpr reference at(size_type pos) {
 			if (pos >= storageCount) {
 				throw std::out_of_range("TES3::TArray::at - Access out of bounds.");
 			}
 			return storage[pos];
 		}
 
-		constexpr T at(size_type pos) const {
+		constexpr reference at(size_type pos) const {
 			if (pos >= storageCount) {
 				throw std::out_of_range("TES3::TArray::at - Access out of bounds.");
 			}
 			return storage[pos];
 		}
 		
-		void fill(const T& value) {
+		void fill(const_reference value) {
 			for (size_type i = 0; i < storageCount; ++i) {
 				setAtIndex(i, value);
 			}
@@ -188,7 +188,7 @@ namespace NI {
 		// Non-STL functions.
 		//
 
-		T at_legacy(size_type pos) const {
+		value_type at_legacy(size_type pos) const {
 			return storage[pos];
 		}
 
@@ -249,7 +249,7 @@ namespace NI {
 				endIndex = size;
 			}
 #if !defined(MWSE_NO_CUSTOM_ALLOC) || MWSE_NO_CUSTOM_ALLOC == 0
-			auto newStorage = reinterpret_cast<void* (__cdecl*)(size_t)>(0x727692)(size * 4);
+			auto newStorage = reinterpret_cast<T* (__cdecl*)(size_t)>(0x727692)(size * 4);
 #else
 			auto newStorage = new T[size];
 #endif
