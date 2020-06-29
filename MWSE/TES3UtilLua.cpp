@@ -812,6 +812,10 @@ namespace mwse {
 			auto skinnedCorrection = (maxDistance != 0.0) ? maxDistance : 1.0;
 
 			for (auto& r : rayTestCache->results) {
+				if (r == nullptr) {
+					continue;
+				}
+
 				// Adjust distance as if direction was not normalized.
 				r->distance *= distanceScale;
 

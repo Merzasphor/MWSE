@@ -103,6 +103,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="NITArrayTests.cpp" />
     <ClCompile Include="TES3DequeTests.cpp" />
     <ClCompile Include="TES3IteratedListTests.cpp" />
     <ClCompile Include="pch.cpp">
