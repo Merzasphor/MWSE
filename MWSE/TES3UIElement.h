@@ -108,7 +108,9 @@ namespace TES3 {
 			Element* getTopLevelParent();
 			Element* performLayout(bool bUpdateTimestamp = true);
 			bool reorderChildren(int insertBefore, int moveFrom, int count);
+			bool getAutoHeight() const;
 			void setAutoHeight(bool bAuto);
+			bool getAutoWidth() const;
 			void setAutoWidth(bool bAuto);
 			void setVisible(bool bVisible);
 			long timingUpdate();
@@ -186,6 +188,7 @@ namespace TES3 {
 			void setChildOffsetY_lua(sol::optional<int> value = INT32_MAX);
 			sol::table getColor_lua(sol::this_state ts) const;
 			void setColor_lua(sol::table value);
+			bool getConsumeMouseEvents() const;
 			void setConsumeMouseEvents_lua(sol::optional<bool> value = true);
 			const char* getContentPath() const;
 			void setContentPath_lua(sol::optional<const char*> value);

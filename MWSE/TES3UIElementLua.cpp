@@ -54,8 +54,8 @@ namespace mwse {
 			usertypeDefinition["absolutePosAlignX"] = sol::property(&Element::getAbsolutePosAlignX_lua, &Element::setAbsolutePosAlignX_lua);
 			usertypeDefinition["absolutePosAlignY"] = sol::property(&Element::getAbsolutePosAlignY_lua, &Element::setAbsolutePosAlignY_lua);
 			usertypeDefinition["alpha"] = sol::property(&Element::getAlpha, &Element::setAlpha);
-			usertypeDefinition["autoHeight"] = sol::property(&Element::flagAutoHeight, &Element::setAutoHeight);
-			usertypeDefinition["autoWidth"] = sol::property(&Element::flagAutoWidth, &Element::setAutoWidth);
+			usertypeDefinition["autoHeight"] = sol::property(&Element::getAutoHeight, &Element::setAutoHeight);
+			usertypeDefinition["autoWidth"] = sol::property(&Element::getAutoWidth, &Element::setAutoWidth);
 			usertypeDefinition["borderAllSides"] = sol::property(&Element::getBorderAllSides, &Element::setBorderAllSides_lua);
 			usertypeDefinition["borderBottom"] = sol::property(&Element::getBorderBottom_lua, &Element::setBorderBottom_lua);
 			usertypeDefinition["borderLeft"] = sol::property(&Element::getBorderLeft_lua, &Element::setBorderLeft_lua);
@@ -66,7 +66,7 @@ namespace mwse {
 			usertypeDefinition["childOffsetX"] = sol::property(&Element::getChildOffsetX_lua, &Element::setChildOffsetX_lua);
 			usertypeDefinition["childOffsetY"] = sol::property(&Element::getChildOffsetY_lua, &Element::setChildOffsetY_lua);
 			usertypeDefinition["color"] = sol::property(&Element::getColor_lua, &Element::setColor_lua);
-			usertypeDefinition["consumeMouseEvents"] = sol::property(&Element::flagConsumeMouseEvents, &Element::setConsumeMouseEvents_lua);
+			usertypeDefinition["consumeMouseEvents"] = sol::property(&Element::getConsumeMouseEvents, &Element::setConsumeMouseEvents_lua);
 			usertypeDefinition["contentPath"] = sol::property(&Element::getContentPath, &Element::setContentPath_lua);
 			usertypeDefinition["disabled"] = sol::property(&Element::getDisabled, &Element::setDisabled);
 			usertypeDefinition["flowDirection"] = sol::property(&Element::getFlowDirectionString, &Element::setFlowDirectionString);
@@ -104,7 +104,7 @@ namespace mwse {
 			usertypeDefinition["wrapText"] = sol::property(&Element::getWrapText, &Element::setWrapText);
 
 			// Deprecated properties.
-			usertypeDefinition["acceptMouseEvents"] = sol::property(&Element::flagConsumeMouseEvents, &Element::setConsumeMouseEvents_lua);
+			usertypeDefinition["acceptMouseEvents"] = sol::property(&Element::getConsumeMouseEvents, &Element::setConsumeMouseEvents_lua);
 			usertypeDefinition["alignX"] = sol::property(&Element::getChildAlignX, &Element::setChildAlignX);
 			usertypeDefinition["alignY"] = sol::property(&Element::getChildAlignY, &Element::setChildAlignY);
 			usertypeDefinition["layoutHeightFraction"] = sol::property(&Element::getHeightProportional_lua, &Element::setHeightProportional_lua);

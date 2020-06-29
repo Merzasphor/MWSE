@@ -231,8 +231,16 @@ namespace TES3 {
 			return true;
 		}
 
+		bool Element::getAutoHeight() const {
+			return flagAutoHeight;
+		}
+
 		void Element::setAutoHeight(bool bAuto) {
 			return TES3_ui_setAutoHeight(this, bAuto);
+		}
+
+		bool Element::getAutoWidth() const {
+			return flagAutoWidth;
 		}
 
 		void Element::setAutoWidth(bool bAuto) {
@@ -347,6 +355,7 @@ namespace TES3 {
 			for (int i = 1; it != end; ++it, ++i) {
 				children[i] = *it;
 			}
+			auto size = children.size();
 			return children;
 		}
 
@@ -591,6 +600,10 @@ namespace TES3 {
 			flagUsesRGBA = true;
 		}
 
+		bool Element::getConsumeMouseEvents() const {
+			return flagConsumeMouseEvents;
+		}
+
 		void Element::setConsumeMouseEvents_lua(sol::optional<bool> value) {
 			flagConsumeMouseEvents = value.value_or(true);
 		}
@@ -638,11 +651,11 @@ namespace TES3 {
 		}
 
 		sol::optional<float> Element::getHeightProportional_lua() const {
-			return valueDefaultAsNil(widthProportional, -1.0f);
+			return valueDefaultAsNil(heightProportional, -1.0f);
 		}
 
 		void Element::setHeightProportional_lua(sol::optional<float> value) {
-			widthProportional = value.value_or(-1.0f);
+			heightProportional = value.value_or(-1.0f);
 		}
 
 		bool Element::getImageFilter() const {
@@ -887,7 +900,7 @@ namespace TES3 {
 		}
 
 		int Element::getPropertyInt_lua(sol::object key) const {
-			return getProperty(TES3::UI::PropertyType::Property, getPropertyFromObject(key)).integerValue;
+			return getProperty(TES3::UI::PropertyType::Integer, getPropertyFromObject(key)).integerValue;
 		}
 
 		void Element::setPropertyInt_lua(sol::object key, int value) {
@@ -895,7 +908,7 @@ namespace TES3 {
 		}
 
 		float Element::getPropertyFloat_lua(sol::object key) const {
-			return getProperty(TES3::UI::PropertyType::Property, getPropertyFromObject(key)).floatValue;
+			return getProperty(TES3::UI::PropertyType::Float, getPropertyFromObject(key)).floatValue;
 		}
 
 		void Element::setPropertyFloat_lua(sol::object key, float value) {
