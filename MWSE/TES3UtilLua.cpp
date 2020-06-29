@@ -80,7 +80,11 @@ namespace mwse {
 		//
 
 		auto iterateObjectsFiltered(const std::unordered_set<unsigned int> desiredTypes) {
-			auto ndd = TES3::DataHandler::get()->nonDynamicData;
+			auto dataHandler = TES3::DataHandler::get();
+			if (dataHandler == nullptr) {
+				throw std::runtime_error("Function called before game initialization.");
+			}
+			auto ndd = dataHandler->nonDynamicData;
 
 			// Prepare the lists we care about.
 			std::queue<TES3::Object*> objectListQueue;
