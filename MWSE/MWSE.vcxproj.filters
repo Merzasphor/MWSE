@@ -1404,9 +1404,6 @@
     <ClInclude Include="TES3Deque.h">
       <Filter>Header Files\DataAdapters\TES3\Collections</Filter>
     </ClInclude>
-    <ClInclude Include="NILuaController.h">
-      <Filter>Header Files\DataAdapters\NI</Filter>
-    </ClInclude>
     <ClInclude Include="NITArray.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
@@ -3046,9 +3043,6 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="NILuaController.cpp">
-      <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
     <ClCompile Include="NIRTTI.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
