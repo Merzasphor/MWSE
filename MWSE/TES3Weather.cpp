@@ -53,6 +53,9 @@ namespace TES3 {
 			return result;
 		}
 
+		// Make sure we're looking at the main state.
+		L = sol::main_thread(L);
+
 		sol::object ref = sol::nil;
 		switch (index) {
 		case TES3::WeatherType::Ash:

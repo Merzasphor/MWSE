@@ -161,6 +161,9 @@ namespace TES3 {
 			return result;
 		}
 
+		// Make sure we're looking at the main state.
+		L = sol::main_thread(L);
+
 		sol::object ref = sol::nil;
 		switch ((unsigned int)vTable.mobileObject) {
 		case TES3_vTable_MobileCreature:

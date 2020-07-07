@@ -96,6 +96,9 @@ namespace NI {
 
 		niObjectCacheMutex.unlock();
 
+		// Make sure we're looking at the main state.
+		L = sol::main_thread(L);
+
 		// Loop through RTTI information until we find a type we like.
 		auto currentRTTI = getRunTimeTypeInformation();
 		sol::object ref = sol::nil;
