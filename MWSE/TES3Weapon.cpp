@@ -1,6 +1,8 @@
 #include "TES3Weapon.h"
 
-namespace TES3{
+#include "TES3DataHandler.h"
+
+namespace TES3 {
 	bool Weapon::isOneHanded() {
 		switch (weaponType)
 		{
@@ -44,5 +46,13 @@ namespace TES3{
 
 	void Weapon::setDurability(int value) {
 		maxCondition = value;
+	}
+
+	int Weapon::getSkillId() const {
+		return _typeToSkillMap[weaponType];
+	}
+
+	Skill* Weapon::getSkill() const {
+		return &DataHandler::get()->nonDynamicData->skills[getSkillId()];
 	}
 }

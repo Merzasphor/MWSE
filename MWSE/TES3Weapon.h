@@ -60,6 +60,15 @@ namespace TES3 {
 		bool isAmmo();
 		bool hasDurability();
 		void setDurability(int value);
+
+		int getSkillId() const;
+		Skill* getSkill() const;
+
+		//
+		// Access to this type's raw functions.
+		//
+
+		static constexpr auto _typeToSkillMap = reinterpret_cast<int*>(0x7A8C0C);
 	};
 	static_assert(sizeof(Weapon) == 0x78, "TES3::Weapon failed size validation");
 }
