@@ -91,7 +91,7 @@ end
 function tes3.iterate(iterator)
 	local i = 0
 	return function()
-		if (i <= #iterator) then
+		if (i < #iterator) then
 			i = i + 1
 			return iterator[i]
 		end
