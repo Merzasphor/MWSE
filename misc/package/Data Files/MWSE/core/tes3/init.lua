@@ -89,12 +89,11 @@ end
 
 -- Iterator to use TES3::Iterator in a for loop.
 function tes3.iterate(iterator)
-	local node = iterator.head
+	local i = 0
 	return function()
-		if (node) then
-			local data = node.nodeData
-			node = node.nextNode
-			return data
+		if (i <= #iterator) then
+			i = i + 1
+			return iterator[i]
 		end
 	end
 end
