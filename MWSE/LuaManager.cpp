@@ -1835,7 +1835,7 @@ namespace mwse {
 
 			// Destination is off by one, so we need the previous entry.
 			auto destination = OnCalculateTravelPrice_DestinationList->tail->data;
-			if (OnCalculateTravelPrice_DestinationList != nullptr) {
+			if (OnCalculateTravelPrice_DestinationList->current != nullptr) {
 				destination = OnCalculateTravelPrice_DestinationList->current->previous->data;
 			}
 
