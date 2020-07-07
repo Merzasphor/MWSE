@@ -166,6 +166,7 @@ namespace TES3 {
 		}
 
 		StlList(const StlList& other) = delete;
+		StlList& operator=(const StlList&) = delete;
 
 		reference operator[](size_type index) const { return *(begin() + index); }
 

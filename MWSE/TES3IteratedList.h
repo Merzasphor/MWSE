@@ -88,7 +88,12 @@ namespace TES3 {
 			}
 
 			iterator& operator++() {
-				m_Node = m_Node->next;
+				if (m_Node == m_Parent->tail) {
+					m_Node = m_Parent->sentinel();
+				}
+				else {
+					m_Node = m_Node->next;
+				}
 				return *this;
 			}
 
@@ -98,17 +103,23 @@ namespace TES3 {
 
 			iterator& operator+=(difference_type diff) {
 				while (diff-- > 0) {
-					m_Node = m_Node->next;
+					if (m_Node == m_Parent->tail) {
+						m_Node = m_Parent->sentinel();
+						return *this;
+					}
+					else {
+						m_Node = m_Node->next;
+					}
 				}
 				return *this;
 			}
 
 			bool operator==(const iterator& itt) const {
-				return itt.m_Node == m_Node || (m_Node == nullptr ? itt.isSentinel() : false);
+				return itt.m_Node == m_Node;
 			}
 
 			bool operator!=(const iterator& itt) const {
-				return itt.m_Node != m_Node && (m_Node == nullptr ? !itt.isSentinel() : true);
+				return itt.m_Node != m_Node;
 			}
 
 			reference operator->() const {
@@ -117,10 +128,6 @@ namespace TES3 {
 
 			reference operator*() const {
 				return m_Node->data;
-			}
-
-			inline bool isSentinel() const {
-				return m_Node == m_Parent->sentinel();
 			}
 		};
 
@@ -150,6 +157,7 @@ namespace TES3 {
 		// General access functions.
 		//
 
+		void* virtualTable;
 		size_type count;
 		Node* head;
 		Node* tail;
@@ -161,6 +169,7 @@ namespace TES3 {
 #endif
 
 		IteratedList() {
+			virtualTable = nullptr;
 			count = 0;
 			head = nullptr;
 			tail = nullptr;
@@ -168,8 +177,9 @@ namespace TES3 {
 		}
 
 		IteratedList(const IteratedList& other) = delete;
+		IteratedList& operator=(const IteratedList&) = delete;
 
-		virtual ~IteratedList() { clear(); }
+		~IteratedList() { clear(); }
 
 		reference operator[](size_type index) const { return *(begin() + index); }
 

@@ -156,6 +156,7 @@ namespace TES3 {
 		}
 
 		Deque(const Deque& other) = delete;
+		Deque& operator=(const Deque&) = delete;
 
 		~Deque() { clear(); }
 

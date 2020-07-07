@@ -104,18 +104,18 @@ namespace NI {
 		using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
 		constexpr iterator begin() noexcept { return &storage[0]; }
-		constexpr const_iterator begin() const noexcept { return begin(); }
-		constexpr const_iterator cbegin() const noexcept { return begin(); }
+		constexpr const_iterator begin() const noexcept { return &storage[0]; }
+		constexpr const_iterator cbegin() const noexcept { return &storage[0]; }
 		constexpr iterator end() noexcept { return &storage[storageCount]; }
-		constexpr const_iterator end() const noexcept { return end(); }
-		constexpr const_iterator cend() const noexcept { return end(); }
+		constexpr const_iterator end() const noexcept { return &storage[storageCount]; }
+		constexpr const_iterator cend() const noexcept { return &storage[storageCount]; }
 
 		constexpr reverse_iterator rbegin() noexcept { std::make_reverse_iterator(end()); }
-		constexpr const_reverse_iterator rbegin() const noexcept { return rbegin(); }
-		constexpr const_reverse_iterator crbegin() const noexcept { return rbegin(); }
+		constexpr const_reverse_iterator rbegin() const noexcept { return std::make_reverse_iterator(end()); }
+		constexpr const_reverse_iterator crbegin() const noexcept { return std::make_reverse_iterator(end()); }
 		constexpr reverse_iterator rend() noexcept { std::make_reverse_iterator(begin()); }
-		constexpr const_reverse_iterator rend() const noexcept { return rend(); }
-		constexpr const_reverse_iterator crend() const noexcept { return rend(); }
+		constexpr const_reverse_iterator rend() const noexcept { return std::make_reverse_iterator(begin()); }
+		constexpr const_reverse_iterator crend() const noexcept { return std::make_reverse_iterator(begin()); }
 
 		//
 		// General access functions.
