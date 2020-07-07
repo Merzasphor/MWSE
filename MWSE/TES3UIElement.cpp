@@ -955,9 +955,10 @@ namespace TES3 {
 		}
 
 		void Element::setPropertyObject_lua(sol::object key, sol::object value) {
-			auto prop = getPropertyFromObject(key);
 			if (value.is<void*>()) {
-				setProperty(prop, value.as<void*>());
+				TES3::UI::Property prop = getPropertyFromObject(key);
+				void* ptr = *static_cast<void**>(value.as<void*>());
+				setProperty(prop, ptr);
 			}
 			else {
 				throw std::invalid_argument("Could not determine type of value to set.");
