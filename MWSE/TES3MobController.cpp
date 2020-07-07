@@ -19,8 +19,7 @@ namespace TES3 {
 		return TES3_MobController_0x24_detectPresence(this, actor, unknown);
 	}
 
-	bool MobController_0x24::detectSneak(MobileActor* detector, MobileActor* target, bool unknown)
-	{
+	bool MobController_0x24::detectSneak(MobileActor* detector, MobileActor* target, bool unknown) {
 		// Call the original function to get the default sneak detection.
 		bool isDetected = TES3_MobController_0x24_detectSneak(this, detector, target, unknown);
 
