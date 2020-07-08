@@ -19,6 +19,10 @@ namespace NI {
 		return pixelData;
 	}
 
+	Pointer<PixelData> PixelData::create_lua(unsigned int width, unsigned int height, sol::optional<unsigned int> mipMapLevels) {
+		return create(width, height, mipMapLevels.value_or(1));
+	}
+
 	Pointer<SourceTexture> PixelData::createSourceTexture() {
 		using FormatPrefs = Texture::FormatPrefs;
 		FormatPrefs prefs = { FormatPrefs::PixelLayout::PIX_DEFAULT, FormatPrefs::MipFlag::MIP_DEFAULT, FormatPrefs::AlphaFormat::ALPHA_DEFAULT };

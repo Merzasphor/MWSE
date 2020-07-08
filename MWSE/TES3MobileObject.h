@@ -243,8 +243,11 @@ namespace TES3 {
 		// Lua interface functions.
 		//
 
+		Vector3* getImpulseVelocity();
 		void setImpulseVelocityFromLua(sol::stack_object);
+		Vector3* getPosition();
 		void setPositionFromLua(sol::stack_object);
+		Vector3* getVelocity();
 		void setVelocityFromLua(sol::stack_object);
 
 		// Storage for cached userdata.

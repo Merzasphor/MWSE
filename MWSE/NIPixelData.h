@@ -19,6 +19,7 @@ namespace NI {
 		unsigned int revisionID;
 
 		static Pointer<PixelData> create(unsigned int width, unsigned int height, unsigned int mipMapLevels = 1);
+		static Pointer<PixelData> create_lua(unsigned int width, unsigned int height, sol::optional<unsigned int> mipMapLevels);
 
 		//
 		// Custom functions.

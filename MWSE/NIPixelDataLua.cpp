@@ -22,7 +22,7 @@ namespace mwse {
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.new_usertype<NI::PixelData>("niPixelData");
-				usertypeDefinition["new"] = sol::factories(&NI::PixelData::create);
+				usertypeDefinition["new"] = &NI::PixelData::create_lua;
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<NI::Object>();

@@ -6,8 +6,8 @@ namespace TES3 {
 	public:
 		class Node {
 		public:
-			Node* previous;
 			Node* next;
+			Node* previous;
 			T data;
 
 #if !defined(MWSE_NO_CUSTOM_ALLOC) || MWSE_NO_CUSTOM_ALLOC == 0
@@ -249,7 +249,7 @@ namespace TES3 {
 	static_assert(offsetof(Deque<int>, sentinel) == 0x4, "TES3::Deque::unknown_0x0 failed offset validation");
 	static_assert(offsetof(Deque<int>, count) == 0x8, "TES3::Deque::unknown_0x0 failed offset validation");
 	static_assert(sizeof(Deque<int>::Node) == 0xC, "TES3::Deque::Node failed size validation");
-	static_assert(offsetof(Deque<int>::Node, previous) == 0x0, "TES3::Deque::Node::previous failed offset validation");
-	static_assert(offsetof(Deque<int>::Node, next) == 0x4, "TES3::Deque::Node::next failed offset validation");
+	static_assert(offsetof(Deque<int>::Node, next) == 0x0, "TES3::Deque::Node::next failed offset validation");
+	static_assert(offsetof(Deque<int>::Node, previous) == 0x4, "TES3::Deque::Node::previous failed offset validation");
 	static_assert(offsetof(Deque<int>::Node, data) == 0x8, "TES3::Deque::Node::data failed offset validation");
 }

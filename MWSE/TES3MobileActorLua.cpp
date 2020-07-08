@@ -36,6 +36,7 @@ namespace mwse {
 
 				// Legacy support.
 				usertypeDefinition["flag9"] = sol::readonly_property(&TES3::ActiveMagicEffect::isSummon);
+				usertypeDefinition["next"] = sol::property(&TES3::ActiveMagicEffect::getNext_legacy);
 
 			}
 		}

@@ -101,8 +101,14 @@ namespace TES3 {
 		// Custom functions.
 		//
 
-		MagicSourceInstance* getInstance();
-		int getMagnitude();
+		MagicSourceInstance* getInstance() const;
+		int getMagnitude() const;
+
+		//
+		// Lua interface functions
+		//
+
+		ActiveMagicEffect* getNext_legacy() const;
 
 	};
 	static_assert(sizeof(ActiveMagicEffect) == 0x10, "TES3::ActiveMagicEffect failed size validation");

@@ -124,9 +124,17 @@ namespace TES3 {
 		return TES3_MobileObject_getInventory(this);
 	}
 
+	Vector3* MobileObject::getImpulseVelocity() {
+		return &impulseVelocity;
+	}
+
 	void MobileObject::setImpulseVelocityFromLua(sol::stack_object value) {
 		// Use our util class to support vectors or a table.
 		mwse::lua::setVectorFromLua(&impulseVelocity, value);
+	}
+
+	Vector3* MobileObject::getPosition() {
+		return &position;
 	}
 
 	void MobileObject::setPositionFromLua(sol::stack_object value) {
@@ -137,6 +145,10 @@ namespace TES3 {
 		if (reference) {
 			reference->setPositionFromLua(value);
 		}
+	}
+
+	Vector3* MobileObject::getVelocity() {
+		return &velocity;
 	}
 
 	void MobileObject::setVelocityFromLua(sol::stack_object value) {

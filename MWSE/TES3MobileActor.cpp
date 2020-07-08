@@ -49,12 +49,18 @@ namespace TES3 {
 	const auto TES3_MobileActor_determineModifiedPrice = reinterpret_cast<int(__thiscall*)(const MobileActor*, int, int)>(0x52AA50);
 	const auto TES3_MobileActor_playVoiceover = reinterpret_cast<void(__thiscall*)(const MobileActor*, int)>(0x528F80);
 
-	MagicSourceInstance* ActiveMagicEffect::getInstance() {
+	MagicSourceInstance* ActiveMagicEffect::getInstance() const {
 		return WorldController::get()->spellInstanceController->getInstanceFromSerial(magicInstanceSerial);
 	}
 
-	int ActiveMagicEffect::getMagnitude() {
+	int ActiveMagicEffect::getMagnitude() const {
 		return magnitudeMin;
+	}
+
+	static_assert(offsetof(Deque<ActiveMagicEffect>::Node, data) == 0x8);
+	ActiveMagicEffect* ActiveMagicEffect::getNext_legacy() const {
+		auto node = reinterpret_cast<const Deque<ActiveMagicEffect>::Node*>(DWORD(this) - offsetof(Deque<ActiveMagicEffect>::Node, data));
+		return &node->next->data;
 	}
 
 	bool MobileActor::onActorCollision(int collisionIndex) {
@@ -957,8 +963,7 @@ namespace TES3 {
 	}
 
 	ActiveMagicEffect* MobileActor::getActiveMagicEffects_legacy() const {
-		// TODO: Take a good, hard look at my life.
-		return &*activeMagicEffects.begin();
+		return &activeMagicEffects.sentinel->data;
 	}
 
 	int MobileActor::getActiveMagicEffectCount_legacy() const {
