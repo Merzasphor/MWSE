@@ -21,12 +21,7 @@ namespace NI {
 		int unknown_0x24;
 		int unknown_0x28;
 		int unknown_0x2C;
-		int unknown_0x30;
-		Pointer<Object>* unknown_0x34; // Array of 1024 pointers.
-		int unknown_0x38;
-		int unknown_0x3C;
-		int unknown_0x40;
-		int unknown_0x44;
+		TArray<Pointer<Object>> unknown_0x30;
 		TES3::HashMap<int, Object*> unknown_0x48;
 		BinaryStream* inStream; // 0x58
 		BinaryStream* outStream; // 0x5C
@@ -36,7 +31,6 @@ namespace NI {
 		TES3::HashMap<int, Object*> unknown_0x94;
 		int unknown_0xA4;
 		TES3::HashMap<int, Object*>* unknown_0xA8;
-		int unknown_0xAC;
 
 		Stream();
 		~Stream();
@@ -67,5 +61,5 @@ namespace NI {
 		static constexpr auto _registerLoader = reinterpret_cast<void(__cdecl*)(const char*, CreateFunction)>(0x6C4460);
 
 	};
-	static_assert(sizeof(Stream) == 0xB0, "NI::Stream failed size validation");
+	static_assert(sizeof(Stream) == 0xAC, "NI::Stream failed size validation");
 }

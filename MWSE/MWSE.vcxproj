@@ -153,6 +153,7 @@
     <ClInclude Include="NiTriShapeData.h" />
     <ClInclude Include="NIViewer.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TES3Allocator.h" />
     <ClInclude Include="TES3Archive.h" />
     <ClInclude Include="TES3Birthsign.h" />
     <ClInclude Include="TES3BirthsignLua.h" />
@@ -218,6 +219,7 @@
     <ClInclude Include="TES3SpellInstanceController.h" />
     <ClInclude Include="TES3StdString.h" />
     <ClInclude Include="TES3StlList.h" />
+    <ClInclude Include="TES3Stream.h" />
     <ClInclude Include="TES3UIDefines.h" />
     <ClInclude Include="LuaManager.h" />
     <ClInclude Include="LuaScript.h" />

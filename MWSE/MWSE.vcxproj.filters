@@ -1425,6 +1425,12 @@
     <ClInclude Include="TES3LinkedObjectsList.h">
       <Filter>Header Files\DataAdapters\TES3\Collections</Filter>
     </ClInclude>
+    <ClInclude Include="TES3Allocator.h">
+      <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Stream.h">
+      <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

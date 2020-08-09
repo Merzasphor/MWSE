@@ -1,9 +1,9 @@
 #pragma once
 
-#include "NIStream.h"
+#include "TES3Stream.h"
 
 namespace TES3 {
-	struct Archive : NI::Stream {
+	struct Archive : Stream {
 		char path[128]; // 0xB0
 		int unknown_0x130;
 		int unknown_0x134;
