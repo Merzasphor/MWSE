@@ -97,6 +97,26 @@ namespace NI {
 			DECAL,
 			MODULATE
 		};
+		enum struct MapType : unsigned int {
+			DECAL_0,
+			DARK,
+			DETAIL,
+			GLOSS,
+			GLOW,
+			BUMP,
+			DECAL_1,
+			DECAL_2,
+			DECAL_3,
+			DECAL_4,
+			DECAL_5,
+			DECAL_6,
+			DECAL_7,
+
+			EXTRA_DECALS_FIRST = DECAL_1,
+			EXTRA_DECALS_LAST = DECAL_7,
+
+			INVALID = UINT32_MAX,
+		};
 
 		struct Map {
 			void * vTable;
@@ -114,6 +134,13 @@ namespace NI {
 		ApplyMode applyMode; // 0x18
 		TES3::TArray<Map> maps; // 0x1C
 		int unknown_34; // 0x34
+
+		unsigned int getDecalCount() const;
+		bool canAddDecalMap() const;
+
+		unsigned int addDecalMap(Texture* texture);
+		sol::optional<std::tuple<Map*, unsigned int>> addDecalMap_lua(sol::optional<Texture*> texture);
+
 	};
 	static_assert(sizeof(TexturingProperty) == 0x38, "NI::TexturingProperty failed size validation");
 	static_assert(sizeof(TexturingProperty::Map) == 0x14, "NI::TexturingProperty::Map failed size validation");

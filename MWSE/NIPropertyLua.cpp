@@ -169,7 +169,12 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition.set("applyMode", &NI::TexturingProperty::applyMode);
+				usertypeDefinition.set("decalCount", sol::readonly_property(&NI::TexturingProperty::getDecalCount));
+				usertypeDefinition.set("canAddDecal", sol::readonly_property(&NI::TexturingProperty::canAddDecalMap));
 				usertypeDefinition.set("maps", sol::readonly_property(&NI::TexturingProperty::maps));
+
+				// Basic function binding.
+				usertypeDefinition.set("addDecalMap", &NI::TexturingProperty::addDecalMap_lua);
 
 				// Finish up our usertype.
 				state.set_usertype("niTexturingProperty", usertypeDefinition);
