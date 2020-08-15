@@ -5,9 +5,54 @@
 #include "NITexture.h"
 
 namespace NI {
+	void* TexturingProperty::Map::operator new(size_t size) {
+		return mwse::tes3::_new(size);
+	}
+
+	void TexturingProperty::Map::operator delete(void* address) {
+		mwse::tes3::_delete(address);
+	}
+
+	const auto NI_TexturingProperty_Map_ctor = reinterpret_cast<TexturingProperty::Map * (__thiscall*)(TexturingProperty::Map*)>(0x42DCD0);
+	TexturingProperty::Map::Map() {
+		NI_TexturingProperty_Map_ctor(this);
+	}
+
+	const auto NI_TexturingProperty_Map_ctorWithParams = reinterpret_cast<TexturingProperty::Map * (__thiscall*)(TexturingProperty::Map*, Texture*, TexturingProperty::ClampMode, TexturingProperty::FilterMode, unsigned int)>(0x4CEEC0);
+	TexturingProperty::Map::Map(Texture* _texture, ClampMode _clampMode, FilterMode _filterMode, unsigned int _textCoords) {
+		NI_TexturingProperty_Map_ctorWithParams(this, _texture, _clampMode, _filterMode, _textCoords);
+
+		// Seems to bug out on this value. Fixing here...
+		texCoordSet = _textCoords;
+	}
+
+	TexturingProperty::Map::~Map() {
+		vTable->destructor(this, false);
+	}
+
+	TexturingProperty::BumpMap::BumpMap() : Map() {
+		vTable = (VirtualTable*)0x7507B0;
+		lumaScale = 1.0f;
+		lumaOffset = 0.0f;
+		bumpMat[0][0] = 0.5f;
+		bumpMat[0][1] = 0.0f;
+		bumpMat[1][0] = 0.0f;
+		bumpMat[1][1] = 0.5f;
+	}
+
+	TexturingProperty::BumpMap::BumpMap(Texture* _texture, ClampMode _clampMode, FilterMode _filterMode, unsigned int _textCoords) : Map(_texture, _clampMode, _filterMode, _textCoords) {
+		vTable = (VirtualTable*)0x7507B0;
+		lumaScale = 1.0f;
+		lumaOffset = 0.0f;
+		bumpMat[0][0] = 0.5f;
+		bumpMat[0][1] = 0.0f;
+		bumpMat[1][0] = 0.0f;
+		bumpMat[1][1] = 0.5f;
+	}
+
 	unsigned int TexturingProperty::getDecalCount() const {
-		auto count = maps.at(0) == nullptr ? 0U : 1U;
-		for (unsigned int i = (unsigned int)MapType::EXTRA_DECALS_FIRST; i <= (unsigned int)MapType::EXTRA_DECALS_LAST; i++) {
+		auto count = 0;
+		for (unsigned int i = (unsigned int)MapType::DECAL_FIRST; i <= (unsigned int)MapType::DECAL_LAST; i++) {
 			if (i >= maps.storageCount) {
 				break;
 			}
@@ -20,18 +65,16 @@ namespace NI {
 	}
 
 	bool TexturingProperty::canAddDecalMap() const {
-		return getDecalCount() < 8;
+		return getDecalCount() < 7;
 	}
 
 	unsigned int TexturingProperty::addDecalMap(Texture* texture) {
-		unsigned int index = maps.at((size_t)MapType::DECAL_0) == nullptr ? (size_t)MapType::DECAL_0 : (size_t)MapType::EXTRA_DECALS_FIRST;
-		if (index != (size_t)MapType::DECAL_0) {
-			while (index < maps.storageCount && maps.at(index) != nullptr) {
-				++index;
-			}
+		unsigned int index = (unsigned int)MapType::DECAL_FIRST;
+		while (index < maps.storageCount && maps.at(index) != nullptr) {
+			++index;
 		}
 
-		if (index > (size_t)MapType::EXTRA_DECALS_LAST) {
+		if (index > (size_t)MapType::DECAL_LAST) {
 			return (size_t)MapType::INVALID;
 		}
 
@@ -39,16 +82,8 @@ namespace NI {
 			maps.setSize(maps.storageCount + maps.growByCount);
 		}
 
-		auto map = mwse::tes3::_new<Map>();
-		memset(map, 0, sizeof(Map));
-		map->vTable = (void*)0x7465E8;
-		map->clampMode = ClampMode::WRAP_S_WRAP_T;
-		map->filterMode = FilterMode::BILERP;
+		auto map = new Map(texture);
 		maps.setAtIndex(index, map);
-
-		if (texture) {
-			map->texture = texture;
-		}
 
 		return index;
 	}

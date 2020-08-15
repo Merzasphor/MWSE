@@ -98,7 +98,7 @@ namespace NI {
 			MODULATE
 		};
 		enum struct MapType : unsigned int {
-			DECAL_0,
+			BASE,
 			DARK,
 			DETAIL,
 			GLOSS,
@@ -112,23 +112,40 @@ namespace NI {
 			DECAL_6,
 			DECAL_7,
 
-			EXTRA_DECALS_FIRST = DECAL_1,
-			EXTRA_DECALS_LAST = DECAL_7,
+			DECAL_FIRST = DECAL_1,
+			DECAL_LAST = DECAL_7,
 
 			INVALID = UINT32_MAX,
 		};
 
 		struct Map {
-			void * vTable;
-			Pointer<Texture> texture;
-			ClampMode clampMode;
-			FilterMode filterMode;
-			unsigned int texCoordSet;
+			struct VirtualTable {
+				void(__thiscall* destructor)(Map*, bool); // 0x0
+				void(__thiscall* loadBinary)(Map*, Stream*); // 0x4
+				void(__thiscall* saveBinary)(Map*, Stream*); // 0x8
+			};
+
+			VirtualTable* vTable; // 0x0
+			Pointer<Texture> texture; // 0x4
+			ClampMode clampMode; // 0x8
+			FilterMode filterMode; // 0xC
+			unsigned int texCoordSet; // 0x10
+
+			static void* operator new(size_t size);
+			static void operator delete(void* block);
+
+			Map();
+			Map(Texture* texture, ClampMode clampMode = ClampMode::WRAP_S_WRAP_T, FilterMode filterMode = FilterMode::BILERP, unsigned int textureCoords = 0);
+			~Map();
+
 		};
 		struct BumpMap : Map {
 			float lumaScale;
 			float lumaOffset;
 			float bumpMat[2][2];
+
+			BumpMap();
+			BumpMap(Texture* texture, ClampMode clampMode = ClampMode::WRAP_S_WRAP_T, FilterMode filterMode = FilterMode::BILERP, unsigned int textureCoords = 0);
 		};
 
 		ApplyMode applyMode; // 0x18
