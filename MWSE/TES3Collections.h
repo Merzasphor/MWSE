@@ -118,9 +118,9 @@ namespace TES3 {
 			return reinterpret_cast<int(__cdecl *)(const TArray<T>*, const T*)>(0x497B60)(this, value);
 		}
 
-		void setAtIndex(size_t index, const T * value) {
+		void setAtIndex(size_t index, T *& value) {
 			// Note final parameter is a reference.
-			reinterpret_cast<void(__thiscall *)(TArray<T>*, size_t, const T*&)>(0x4975D0)(this, index, value);
+			reinterpret_cast<void(__thiscall *)(TArray<T>*, size_t, T*&)>(0x4975D0)(this, index, value);
 		}
 
 		void setSize(size_t size) {
