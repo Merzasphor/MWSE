@@ -175,6 +175,7 @@ namespace mwse {
 
 				// Basic function binding.
 				usertypeDefinition.set("addDecalMap", &NI::TexturingProperty::addDecalMap_lua);
+				usertypeDefinition.set("removeDecalMap", &NI::TexturingProperty::removeDecal_lua);
 
 				// Finish up our usertype.
 				state.set_usertype("niTexturingProperty", usertypeDefinition);

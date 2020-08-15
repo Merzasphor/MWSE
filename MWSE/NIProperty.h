@@ -158,6 +158,9 @@ namespace NI {
 		unsigned int addDecalMap(Texture* texture);
 		sol::optional<std::tuple<Map*, unsigned int>> addDecalMap_lua(sol::optional<Texture*> texture);
 
+		bool removeDecal(unsigned int index);
+		bool removeDecal_lua(unsigned int index);
+
 	};
 	static_assert(sizeof(TexturingProperty) == 0x38, "NI::TexturingProperty failed size validation");
 	static_assert(sizeof(TexturingProperty::Map) == 0x14, "NI::TexturingProperty::Map failed size validation");

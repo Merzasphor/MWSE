@@ -95,4 +95,26 @@ namespace NI {
 		}
 		return std::make_tuple(maps.at(index), index + 1);
 	}
+
+	bool TexturingProperty::removeDecal(unsigned int index) {
+		if (index < (unsigned int)MapType::DECAL_FIRST || index >(unsigned int)MapType::DECAL_LAST) {
+			throw std::invalid_argument("Invalid map index provided.");
+		}
+
+		if (index >= maps.storageCount) {
+			return false;
+		}
+
+		if (maps.storage[index] == nullptr) {
+			return false;
+		}
+
+		delete maps.storage[index];
+		maps.storage[index] = nullptr;
+		return true;
+	}
+
+	bool TexturingProperty::removeDecal_lua(unsigned int index) {
+		return removeDecal(index - 1);
+	}
 }
