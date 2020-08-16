@@ -18,12 +18,9 @@ namespace NI {
 		NI_TexturingProperty_Map_ctor(this);
 	}
 
-	const auto NI_TexturingProperty_Map_ctorWithParams = reinterpret_cast<TexturingProperty::Map * (__thiscall*)(TexturingProperty::Map*, Texture*, TexturingProperty::ClampMode, TexturingProperty::FilterMode, unsigned int)>(0x4CEEC0);
+	const auto NI_TexturingProperty_Map_ctorWithParams = reinterpret_cast<TexturingProperty::Map * (__thiscall*)(TexturingProperty::Map*, Texture*, unsigned int, TexturingProperty::ClampMode, TexturingProperty::FilterMode)>(0x4CEEC0);
 	TexturingProperty::Map::Map(Texture* _texture, ClampMode _clampMode, FilterMode _filterMode, unsigned int _textCoords) {
-		NI_TexturingProperty_Map_ctorWithParams(this, _texture, _clampMode, _filterMode, _textCoords);
-
-		// Seems to bug out on this value. Fixing here...
-		texCoordSet = _textCoords;
+		NI_TexturingProperty_Map_ctorWithParams(this, _texture, _textCoords, _clampMode, _filterMode);
 	}
 
 	TexturingProperty::Map::~Map() {
@@ -65,7 +62,8 @@ namespace NI {
 	}
 
 	bool TexturingProperty::canAddDecalMap() const {
-		return getDecalCount() < 7;
+		//return getDecalCount() < 7;
+		return true;
 	}
 
 	unsigned int TexturingProperty::addDecalMap(Texture* texture) {
