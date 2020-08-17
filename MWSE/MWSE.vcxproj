@@ -547,6 +547,7 @@
     <ClCompile Include="NIGeometryData.cpp" />
     <ClCompile Include="NIGeometryDataLua.cpp" />
     <ClCompile Include="NILinesData.cpp" />
+    <ClCompile Include="NIProperty.cpp" />
     <ClCompile Include="NIRenderedTexture.cpp" />
     <ClCompile Include="NIRenderer.cpp" />
     <ClCompile Include="NIRTTI.cpp" />

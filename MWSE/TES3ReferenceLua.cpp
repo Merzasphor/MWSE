@@ -110,7 +110,8 @@ namespace mwse {
 			usertypeDefinition.set("baseObject", sol::readonly_property([](TES3::Reference& self) { return makeLuaObject(self.getBaseObject()); }));
 			usertypeDefinition.set("cell", sol::readonly_property([](TES3::Reference& self) -> sol::object {
 				// Handle case for the player.
-				if (TES3::WorldController::get()->getMobilePlayer()->reference == &self) {
+				auto macp = TES3::WorldController::get()->getMobilePlayer();
+				if (macp != nullptr && macp->reference == &self) {
 					return makeLuaObject(TES3::DataHandler::get()->currentCell);
 				}
 
