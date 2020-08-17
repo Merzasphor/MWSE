@@ -24,6 +24,7 @@ namespace NI {
 	}
 
 	TexturingProperty::Map::~Map() {
+		texture = nullptr;
 		vTable->destructor(this, false);
 	}
 
@@ -108,7 +109,8 @@ namespace NI {
 		}
 
 		delete maps.storage[index];
-		maps.storage[index] = nullptr;
+		Map* temp = nullptr;
+		maps.setAtIndex(index, temp);
 		return true;
 	}
 
