@@ -3,11 +3,12 @@
 namespace mwse {
 	namespace lua {
 		struct Timer;
+		class LuaManager;
 
 		enum class TimerState {
 			Active,
 			Paused,
-			Expired
+			Expired,
 		};
 
 		// Comparing structure for use with std::upper_bound.
@@ -17,13 +18,11 @@ namespace mwse {
 		};
 
 		// Manager for timers. Responsible for all timer-related logic.
-		class TimerController : public std::enable_shared_from_this<TimerController>{
+		class TimerController : public std::enable_shared_from_this<TimerController> {
+			friend Timer;
+			friend LuaManager;
 		public:
-			// Constructor with an initial clock of 0.
-			TimerController();
-
-			// Constructor with a defined initial clock.
-			TimerController(double initialClock);
+			TimerController(double initialClock = 0.0);
 			
 			// Set time to the new clock.
 			void setClock(double clock);
@@ -32,10 +31,10 @@ namespace mwse {
 			void incrementClock(double delta);
 
 			// Get the current clock time.
-			double getClock();
+			double getClock() const;
 
 			// Create a new timer with fixed data.
-			std::shared_ptr<Timer> createTimer(double duration, sol::protected_function callback, int iterations = 1);
+			std::shared_ptr<Timer> createTimer(double duration, sol::object callback, int iterations = 1, bool persist = true);
 
 			// Move a timer from the active list to the inactive list, and mark it paused.
 			bool pauseTimer(std::shared_ptr<Timer> timer);
@@ -89,14 +88,24 @@ namespace mwse {
 			int iterations;
 
 			// Callback for timer completion.
-			sol::protected_function callback;
+			sol::object callback;
+
+			// Is the timer persistent?
+			bool isPersistent;
 
 			bool pause();
 			bool resume();
 			bool reset();
 			bool cancel();
+
 			std::optional<double> getTimeLeft();
+			sol::table toTable(sol::this_state state) const;
+			static std::shared_ptr<Timer> createFromTable(sol::table table);
 		};
+
+		// Get/set named timers.
+		sol::protected_function getNamedTimer(std::string& name);
+		void setNamedTimer(std::string& name, sol::protected_function fn);
 
 		// Create all the necessary lua binding for the timer API and the above data types.
 		void bindLuaTimer();

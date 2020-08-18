@@ -68,8 +68,12 @@ namespace mwse {
 
 			// Management functions for timers.
 			void updateTimers(float deltaTime, double simulationTimestamp, bool simulating);
+			void savePersistentTimers();
+			void restorePersistentTimers();
+			void clearPersistentTimers();
 			void clearTimers();
 			std::shared_ptr<TimerController> getTimerController(TimerType type);
+			TimerType getTimerControllerType(std::shared_ptr<TimerController> controller);
 
 			//
 			void claimLuaThread();

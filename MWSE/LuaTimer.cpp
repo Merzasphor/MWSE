@@ -27,12 +27,6 @@ namespace mwse {
 		// TimerController
 		//
 
-		TimerController::TimerController() :
-			m_Clock(0.0)
-		{
-
-		}
-
 		TimerController::TimerController(double initialClock) :
 			m_Clock(initialClock)
 		{
@@ -49,20 +43,28 @@ namespace mwse {
 			update();
 		}
 
-		double TimerController::getClock() {
+		double TimerController::getClock() const {
 			return m_Clock;
 		}
 
-		std::shared_ptr<Timer> TimerController::createTimer(double duration, sol::protected_function callback, int iterations) {
+		std::shared_ptr<Timer> TimerController::createTimer(double duration, sol::object callback, int iterations, bool persist) {
 			// Validate parameters.
 			if (callback == sol::nil) {
 				throw std::invalid_argument("Could not create timer: Callback function is nil.");
 			}
-			else if (duration <= 0.0 || callback.get_type() != sol::type::function) {
-				return nullptr;
+			else if (callback.get_type() != sol::type::function && callback.get_type() != sol::type::string) {
+				throw std::invalid_argument("Could not create timer: Callback must be a function or string.");
+			}
+			else if (duration <= 0.0) {
+				throw std::invalid_argument("Could not create timer: Duration must be >= 0.");
 			}
 			else if (iterations < 0) {
 				iterations = 0;
+			}
+
+			// Only named timers can persist.
+			if (persist && callback.get_type() != sol::type::string) {
+				persist = false;
 			}
 
 			// Setup the timer structure.
@@ -72,6 +74,7 @@ namespace mwse {
 			timer->timing = m_Clock + duration;
 			timer->iterations = iterations;
 			timer->callback = callback;
+			timer->isPersistent = persist;
 
 			// Find the position in the list to add this timer, and add it.
 			insertActiveTimer(timer);
@@ -179,8 +182,23 @@ namespace mwse {
 
 				data["timer"] = timer;
 
+				// Is this a named callback?
+				sol::protected_function callback;
+				if (timer->callback.get_type() == sol::type::string) {
+					auto& callbackName = timer->callback.as<std::string&>();
+					callback = getNamedTimer(callbackName);
+					if (callback == sol::nil) {
+						log::getLog() << "Lua error encountered in timer callback: Named callback \"" << callbackName << "\" is not registered." << std::endl;
+						logStackTrace();
+						cancelTimer(timer);
+						continue;
+					}
+				}
+				else if (timer->callback.get_type() == sol::type::function) {
+					callback = timer->callback;
+				}
+
 				// Invoke the callback.
-				sol::protected_function callback = timer->callback;
 				sol::protected_function_result result = callback(data);
 				if (!result.valid()) {
 					sol::error error = result;
@@ -242,7 +260,7 @@ namespace mwse {
 		bool Timer::resume() {
 			auto sharedController = controller.lock();
 			if (sharedController) {
-				//return sharedController->resumeTimer(shared_from_this());
+				return sharedController->resumeTimer(shared_from_this());
 			}
 			return false;
 		}
@@ -263,18 +281,40 @@ namespace mwse {
 			return false;
 		}
 
-		std::optional<double> Timer::getTimeLeft() {
-			if (state == TimerState::Active) {
-				auto sharedController = controller.lock();
-				if (sharedController) {
-					return timing - sharedController->getClock();
-				}
+		sol::table Timer::toTable(sol::this_state ts) const {
+			sol::state_view sv = ts;
+			sol::table t = sv.create_table();
+			t["c"] = LuaManager::getInstance().getTimerControllerType(controller.lock());
+			t["s"] = state;
+			t["d"] = duration;
+			t["t"] = timing;
+			t["i"] = iterations;
+			t["x"] = callback;
+			t["p"] = isPersistent;
+			return t;
+		}
+
+		std::shared_ptr<Timer> Timer::createFromTable(sol::table t) {
+			auto timer = std::make_shared<Timer>();
+
+			timer->controller = LuaManager::getInstance().getTimerController(t["c"]);
+			timer->state = t["s"];
+			timer->duration = t["d"];
+			timer->timing = t["t"];
+			timer->iterations = t["i"];
+			timer->callback = t["x"];
+			timer->isPersistent = t["p"];
+
+			auto controller = timer->controller.lock();
+
+			if (timer->state == TimerState::Active) {
+				controller->insertActiveTimer(timer);
 			}
-			else if (state == TimerState::Paused) {
-				return timing;
+			else if (timer->state == TimerState::Paused) {
+				controller->m_PausedTimers.insert(timer);
 			}
 
-			return std::optional<double>();
+			return timer;
 		}
 
 		//
@@ -285,8 +325,8 @@ namespace mwse {
 		std::shared_ptr<Timer> startTimer(TimerController* controller, sol::table params) {
 			// Get the timer variables.
 			double duration = getOptionalParam<double>(params, "duration", 0.0);
-			sol::function callback = getOptionalParam<sol::function>(params, "callback", sol::nil);
 			int iterations = getOptionalParam<int>(params, "iterations", 1);
+			bool persists = getOptionalParam<bool>(params, "persist", true);
 
 			// Allow infinite repeat.
 			if (iterations <= 0) {
@@ -294,7 +334,7 @@ namespace mwse {
 			}
 
 			// Create the timer.
-			return controller->createTimer(duration, callback, iterations);
+			return controller->createTimer(duration, params["callback"], iterations, persists);
 		}
 
 		// Create a timer, as above, but get the controller from params.type.
@@ -311,7 +351,7 @@ namespace mwse {
 		}
 
 		// Directly create a real-time timer.
-		std::shared_ptr<Timer> startTimerLegacyRealWithIterations(double duration, sol::protected_function callback, int iterations) {
+		std::shared_ptr<Timer> startTimerLegacyRealWithIterations(double duration, sol::object callback, int iterations) {
 			std::shared_ptr<TimerController> controller = LuaManager::getInstance().getTimerController(TimerType::RealTime);
 			if (controller == nullptr) {
 				return nullptr;
@@ -319,12 +359,12 @@ namespace mwse {
 
 			return controller->createTimer(duration, callback, iterations);
 		}
-		std::shared_ptr<Timer> startTimerLegacyReal(double duration, sol::protected_function callback) {
+		std::shared_ptr<Timer> startTimerLegacyReal(double duration, sol::object callback) {
 			return startTimerLegacyRealWithIterations(duration, callback, 1);
 		}
 
 		// Directly create a simulation-time timer.
-		std::shared_ptr<Timer> startTimerLegacySimulationWithIterations(double duration, sol::protected_function callback, int iterations) {
+		std::shared_ptr<Timer> startTimerLegacySimulationWithIterations(double duration, sol::object callback, int iterations) {
 			std::shared_ptr<TimerController> controller = LuaManager::getInstance().getTimerController(TimerType::SimulationTime);
 			if (controller == nullptr) {
 				return nullptr;
@@ -332,32 +372,32 @@ namespace mwse {
 
 			return controller->createTimer(duration, callback, iterations);
 		}
-		std::shared_ptr<Timer> startTimerLegacySimulation(double duration, sol::protected_function callback) {
+		std::shared_ptr<Timer> startTimerLegacySimulation(double duration, sol::object callback) {
 			return startTimerLegacySimulationWithIterations(duration, callback, 1);
 		}
 
 		// Function to pause a given timer.
 		bool legacyTimerPause(std::shared_ptr<Timer> timer) {
-			return timer->pause();
+			return timer->controller.lock()->pauseTimer(timer);
 		}
 
 		// Function to resume a given timer.
 		bool legacyTimerResume(std::shared_ptr<Timer> timer) {
-			return timer->resume();
+			return timer->controller.lock()->resumeTimer(timer);
 		}
 
 		// Function to reset a given timer.
 		bool legacyTimerReset(std::shared_ptr<Timer> timer) {
-			return timer->reset();
+			return timer->controller.lock()->resetTimer(timer);
 		}
 
 		// Function to cancel a given timer.
 		bool legacyTimerCancel(std::shared_ptr<Timer> timer) {
-			return timer->cancel();
+			return timer->controller.lock()->cancelTimer(timer);
 		}
 
 		// Create a timer that will complete in the next cycle.
-		std::shared_ptr<Timer> legacyTimerDelayOneFrame(sol::protected_function callback) {
+		std::shared_ptr<Timer> legacyTimerDelayOneFrame(sol::object callback) {
 			std::shared_ptr<TimerController> controller = LuaManager::getInstance().getTimerController(TimerType::RealTime);
 			if (controller == nullptr) {
 				return nullptr;
@@ -366,7 +406,7 @@ namespace mwse {
 		}
 
 		// Create a timer that will complete in the next cycle, defaulting to simulation time.
-		std::shared_ptr<Timer> legacyTimerDelayOneFrameSpecified(sol::protected_function callback, sol::optional<int> type) {
+		std::shared_ptr<Timer> legacyTimerDelayOneFrameSpecified(sol::object callback, sol::optional<int> type) {
 			std::shared_ptr<TimerController> controller = LuaManager::getInstance().getTimerController(static_cast<TimerType>(type.value_or((int)TimerType::SimulationTime)));
 			if (controller == nullptr) {
 				return nullptr;
@@ -374,13 +414,27 @@ namespace mwse {
 			return controller->createTimer(0.0000001, callback, 1);
 		}
 
+		std::unordered_map<std::string, sol::protected_function> namedTimerMap;
+
+		sol::protected_function getNamedTimer(std::string& name) {
+			auto itt = namedTimerMap.find(name);
+			if (itt != namedTimerMap.end()) {
+				return itt->second;
+			}
+			return sol::nil;
+		}
+
+		void setNamedTimer(std::string& name, sol::protected_function fn) {
+			namedTimerMap[name] = fn;
+		}
+
+		std::shared_ptr<TimerController> createController(sol::optional<double> startTime) {
+			return std::make_shared<TimerController>(startTime.value_or(0.0));
+		}
+
 		//
 		// Lua binding for new data types and functions.
 		//
-
-		auto createController() {
-			return std::make_shared<TimerController>();
-		};
 
 		void bindLuaTimer() {
 			// Get our lua state.
@@ -391,7 +445,7 @@ namespace mwse {
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.new_usertype<TimerController>("mwseTimerController");
-				usertypeDefinition["new"] = sol::constructors<TimerController(), TimerController(double)>();
+				usertypeDefinition["new"] = createController;
 
 				// Basic property binding.
 				usertypeDefinition["clock"] = sol::property(&TimerController::getClock, &TimerController::setClock);
@@ -446,6 +500,9 @@ namespace mwse {
 			// Legacy support for frame timers.
 			state["timer"]["frame"] = state.create_table();
 			state["timer"]["frame"]["start"] = sol::overload(&startTimerLegacyReal, &startTimerLegacyRealWithIterations);
+
+			// Allow registering named timers.
+			state["timer"]["register"] = setNamedTimer;
 
 			// Legacy support for functions.
 			state["timer"]["pause"] = &legacyTimerPause;

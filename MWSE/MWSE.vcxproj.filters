@@ -3122,6 +3122,9 @@
     <ClCompile Include="TES3UITree.cpp">
       <Filter>Source Files\DataAdapters\TES3\UI</Filter>
     </ClCompile>
+    <ClCompile Include="NIProperty.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MWSE.rc">

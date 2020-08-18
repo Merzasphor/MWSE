@@ -332,7 +332,6 @@ namespace mwse {
 			simulateTimers = std::make_shared<TimerController>();
 			realTimers = std::make_shared<TimerController>();
 
-
 			// Overwrite the default print function to print to the MWSE log.
 			luaState["print"] = lua_print;
 
@@ -3769,6 +3768,76 @@ namespace mwse {
 			}
 		}
 
+		void LuaManager::savePersistentTimers() {
+			auto macp = TES3::WorldController::get()->getMobilePlayer();
+			if (macp == nullptr) {
+				return;
+			}
+
+			// Store the real time clocks.
+			sol::table persists = luaState.create_table();
+			persists["clockReal"] = realTimers->getClock();
+			persists["clockSimulation"] = realTimers->getClock();
+
+			// Serialize timers into a list.
+			sol::table list = persists.create_named("list");
+			std::vector<std::shared_ptr<TimerController>> timers = { gameTimers, simulateTimers, realTimers };
+			for (auto controller : timers) {
+				for (auto timer : controller->m_ActiveTimers) {
+					if (timer->isPersistent) {
+						auto t = timer->toTable(luaState.lua_state());
+						t["p"] = sol::nil;
+						list.add(t);
+					}
+				}
+				for (auto timer : controller->m_PausedTimers) {
+					if (timer->isPersistent) {
+						auto t = timer->toTable(luaState.lua_state());
+						t["p"] = sol::nil;
+						list.add(t);
+					}
+				}
+			}
+
+			// No timers? Bail.
+			if (list.size() == 0) {
+				mwse::log::getLog() << "No timers to save." << std::endl;
+				return;
+			}
+
+			auto playerData = macp->reference->getLuaTable();
+			playerData["mwse:timers"] = persists;
+		}
+
+		void LuaManager::restorePersistentTimers() {
+			auto macp = TES3::WorldController::get()->getMobilePlayer();
+			if (macp == nullptr) {
+				return;
+			}
+
+			auto timerData = macp->reference->getLuaTable().get<sol::table>("mwse:timers");
+
+			// Restore controller values.
+			realTimers->setClock(timerData.get_or("clockReal", 0.0));
+			simulateTimers->setClock(timerData.get_or("clockSimulation", 0.0));
+
+			// Restore timer values.
+			auto list = timerData.get<sol::table>("list");
+			for (const auto& kvp : list) {
+				auto timer = Timer::createFromTable(kvp.second);
+			}
+		}
+
+		void LuaManager::clearPersistentTimers() {
+			auto macp = TES3::WorldController::get()->getMobilePlayer();
+			if (macp == nullptr) {
+				return;
+			}
+
+			auto playerData = macp->reference->getLuaTable();
+			playerData["mwse:timers"] = sol::nil;
+		}
+
 		void LuaManager::clearTimers() {
 			realTimers->clearTimers();
 			simulateTimers->clearTimers();
@@ -3787,6 +3856,20 @@ namespace mwse {
 			case TimerType::GameTime: return gameTimers;
 			}
 			return nullptr;
+		}
+
+		TimerType LuaManager::getTimerControllerType(std::shared_ptr<TimerController> controller) {
+			if (controller == realTimers) {
+				return TimerType::RealTime;
+			}
+			else if (controller == simulateTimers) {
+				return TimerType::SimulationTime;
+			}
+			else if (controller == gameTimers) {
+				return TimerType::GameTime;
+			}
+
+			throw std::invalid_argument("Controller cannot be mapped to a type.");
 		}
 
 		void LuaManager::claimLuaThread() {

@@ -85,7 +85,11 @@ namespace TES3 {
 			eventSaveName = eventData["name"];
 		}
 
+		luaManager.savePersistentTimers();
+
 		bool saved = reinterpret_cast<signed char(__thiscall *)(NonDynamicData*, const char*, const char*)>(TES3_NonDynamicData_saveGame)(this, eventFileName.c_str(), eventSaveName.c_str());
+
+		luaManager.clearPersistentTimers();
 
 		// Pass a follow-up event if we successfully saved.
 		if (saved && mwse::lua::event::SavedGameEvent::getEventEnabled()) {
@@ -119,6 +123,7 @@ namespace TES3 {
 		if (loaded) {
 			DataHandler::previousVisitedCell = nullptr;
 			luaManager.clearTimers();
+			luaManager.restorePersistentTimers();
 
 			if (mwse::lua::event::LoadedGameEvent::getEventEnabled()) {
 				luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str(), fileName == NULL));
@@ -155,6 +160,7 @@ namespace TES3 {
 		if (loaded) {
 			DataHandler::previousVisitedCell = nullptr;
 			luaManager.clearTimers();
+			luaManager.restorePersistentTimers();
 
 			if (mwse::lua::event::LoadedGameEvent::getEventEnabled()) {
 				luaManager.getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::LoadedGameEvent(eventFileName.c_str()));

@@ -125,7 +125,13 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition["applyMode"] = &NI::TexturingProperty::applyMode;
+				usertypeDefinition["canAddDecal"] = sol::readonly_property(&NI::TexturingProperty::canAddDecalMap);
+				usertypeDefinition["decalCount"] = sol::readonly_property(&NI::TexturingProperty::getDecalCount);
 				usertypeDefinition["maps"] = sol::readonly_property(&NI::TexturingProperty::maps);
+
+				// Basic function binding.
+				usertypeDefinition["addDecalMap"] = &NI::TexturingProperty::addDecalMap_lua;
+				usertypeDefinition["removeDecalMap"] = &NI::TexturingProperty::removeDecal_lua;
 			}
 
 			// Binding for NI::VertexColorProperty.
