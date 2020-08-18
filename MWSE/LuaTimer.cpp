@@ -249,7 +249,7 @@ namespace mwse {
 		// Timer
 		//
 
-		sol::table Timer::toTable(sol::this_state ts) {
+		sol::table Timer::toTable(sol::this_state ts) const {
 			sol::state_view sv = ts;
 			sol::table t = sv.create_table();
 			t["c"] = LuaManager::getInstance().getTimerControllerType(controller.lock());

@@ -93,7 +93,7 @@ namespace mwse {
 			// Is the timer persistent?
 			bool isPersistent;
 
-			sol::table toTable(sol::this_state state);
+			sol::table toTable(sol::this_state state) const;
 			static std::shared_ptr<Timer> createFromTable(sol::table table);
 		};
 
