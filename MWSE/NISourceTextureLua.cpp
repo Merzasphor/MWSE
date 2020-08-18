@@ -1,6 +1,6 @@
 #include "NISourceTextureLua.h"
 
-#include "NIObjectLua.h"
+#include "NITextureLua.h"
 
 #include "LuaManager.h"
 #include "LuaUtil.h"
@@ -34,11 +34,10 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
-				usertypeDefinition[sol::base_classes] = sol::bases<NI::ObjectNET, NI::Object>();
-				setUserdataForNIObjectNET(usertypeDefinition);
+				usertypeDefinition[sol::base_classes] = sol::bases<NI::Texture, NI::ObjectNET, NI::Object>();
+				setUserdataForNITexture(usertypeDefinition);
 
 				// Basic property binding.
-				usertypeDefinition["formatPrefs"] = &NI::SourceTexture::formatPrefs;
 				usertypeDefinition["isStatic"] = &NI::SourceTexture::isStatic;
 				usertypeDefinition["pixelData"] = &NI::SourceTexture::pixelData;
 
@@ -48,9 +47,7 @@ namespace mwse {
 
 				// Functions bound as properties.
 				usertypeDefinition["fileName"] = sol::readonly_property(&NI::SourceTexture::fileName);
-				usertypeDefinition["height"] = sol::readonly_property(&NI::SourceTexture::getHeight);
 				usertypeDefinition["platformFileName"] = sol::readonly_property(&NI::SourceTexture::platformFileName);
-				usertypeDefinition["width"] = sol::readonly_property(&NI::SourceTexture::getWidth);
 
 				// Functions that need their results wrapped.
 				usertypeDefinition["createFromPath"] = &NI::SourceTexture::createFromPath_lua;

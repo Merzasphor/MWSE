@@ -161,6 +161,7 @@ namespace TES3 {
 			sol::object makeWidget(sol::this_state ts);
 			std::string getWidgetText() const;
 			void setWidgetText(const char* text);
+			void setWidgetText_lua(sol::object text, sol::this_state ts);
 
 			sol::optional<float> getAbsolutePosAlignX_lua() const;
 			void setAbsolutePosAlignX_lua(sol::optional<float> value = -1.0f);

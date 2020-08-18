@@ -35,7 +35,7 @@ namespace TES3 {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::SpellCastEvent(this, caster, castChance, *weakestSchoolId));
 			if (eventData.valid()) {
-				castChance = eventData.get<float>("castChance");
+				castChance = eventData.get_or<float>("castChance", castChance);
 			}
 		}
 

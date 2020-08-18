@@ -145,6 +145,7 @@
 #include "NIPropertyLua.h"
 #include "NISourceTextureLua.h"
 #include "NISwitchNodeLua.h"
+#include "NITextureLua.h"
 #include "NITimeControllerLua.h"
 #include "NITriShapeLua.h"
 
@@ -452,6 +453,7 @@ namespace mwse {
 			bindNISourceTexture();
 			bindNISwitchNode();
 			bindNITextureEffect();
+			bindNITexture();
 			bindNITimeController();
 			bindNITriShape();
 
@@ -3815,7 +3817,10 @@ namespace mwse {
 				return;
 			}
 
-			auto timerData = macp->reference->getLuaTable().get<sol::table>("mwse:timers");
+			auto timerData = macp->reference->getLuaTable().get_or<sol::table>("mwse:timers", sol::nil);
+			if (timerData == sol::nil) {
+				return;
+			}
 
 			// Restore controller values.
 			realTimers->setClock(timerData.get_or("clockReal", 0.0));

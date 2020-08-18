@@ -96,7 +96,7 @@ namespace mwse {
 			usertypeDefinition["positionY"] = sol::property(&Element::getPositionY, &Element::setPositionY);
 			usertypeDefinition["repeatKeys"] = sol::property(&Element::getRepeatKeys, &Element::setRepeatKeys);
 			usertypeDefinition["scaleMode"] = sol::property(&Element::getScaleMode, &Element::setScaleMode);
-			usertypeDefinition["text"] = sol::property(&Element::getWidgetText, &Element::setWidgetText);
+			usertypeDefinition["text"] = sol::property(&Element::getWidgetText, &Element::setWidgetText_lua);
 			usertypeDefinition["texture"] = sol::property(&Element::getTexture, &Element::setTexture);
 			usertypeDefinition["visible"] = sol::property(&Element::getVisible, &Element::setVisible_lua);
 			usertypeDefinition["width"] = sol::property(&Element::getWidth, &Element::setWidth);

@@ -491,6 +491,24 @@ namespace TES3 {
 			getTopLevelParent()->timingUpdate();
 		}
 
+		void Element::setWidgetText_lua(sol::object value, sol::this_state ts) {
+			// Setting to nil clears text.
+			if (value == sol::nil) {
+				setWidgetText(nullptr);
+			}
+			// If it's a string, just set it normally.
+			else if (value.is<std::string>()) {
+				std::string& text = value.as<std::string&>();
+				setWidgetText(text.c_str());
+			}
+			// Otherwise try to convert it to a string.
+			else {
+				sol::state_view state = ts;
+				std::string text = state["tostring"](value);
+				setWidgetText(text.c_str());
+			}
+		}
+
 		sol::optional<float> Element::getAbsolutePosAlignX_lua() const {
 			return valueDefaultAsNil(absolutePosAlignX, -1.0f);
 		}

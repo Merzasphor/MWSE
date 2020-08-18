@@ -74,12 +74,12 @@ namespace TES3 {
 
 			Element* menu = createMenu(id.value());
 
-			if (params.get<bool>("fixedFrame")) {
+			if (params.get_or("fixedFrame", false)) {
 				menu->createFixedFrame(id.value(), 1);
 				// Standard behaviours
 				preventInventoryMenuToggle(menu);
 			}
-			else if (params.get<bool>("dragFrame")) {
+			else if (params.get_or("dragFrame", false)) {
 				menu->createDragFrame(id.value(), 1);
 			}
 

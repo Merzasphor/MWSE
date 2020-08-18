@@ -467,7 +467,7 @@ namespace mwse {
 
 		void loadGame(const char* fileName) {
 			// Char Gen State will equal 0 in the menu.
-			if (TES3::WorldController::get()->gvarCharGenState->value == 0)
+			if (TES3::WorldController::get()->gvarCharGenState->value == 0.0f)
 			{
 				TES3::DataHandler::get()->nonDynamicData->loadGameMainMenu(fileName);
 			}

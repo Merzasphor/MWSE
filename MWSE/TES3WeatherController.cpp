@@ -31,7 +31,7 @@ namespace TES3 {
 		auto stateHandle = luaManager.getThreadSafeStateHandle();
 		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CalcSunDamageScalarEvent(damage));
 		if (eventData.valid()) {
-			damage = eventData.get<float>("damage");
+			damage = eventData.get_or<float>("damage", damage);
 		}
 
 		return damage;

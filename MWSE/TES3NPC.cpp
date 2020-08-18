@@ -31,7 +31,7 @@ namespace TES3 {
 		auto stateHandle = luaManager.getThreadSafeStateHandle();
 		sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::IsGuardEvent(this, isGuard));
 		if (eventData.valid()) {
-			isGuard = eventData.get<bool>("isGuard");
+			isGuard = eventData.get_or<bool>("isGuard", isGuard);
 		}
 
 		return isGuard;
