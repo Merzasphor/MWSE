@@ -1,5 +1,9 @@
 #include "NIProperty.h"
 
+#include "MemoryUtil.h"
+
+#include "NITexture.h"
+
 namespace NI {
 
 	//

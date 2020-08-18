@@ -6,5 +6,5 @@ namespace TES3 {
 	struct Stream : NI::Stream {
 		int unknown_0xAC;
 	};
-	static_assert(sizeof(Loader) == 0xB0, "TES3::Stream failed size validation");
+	static_assert(sizeof(Stream) == 0xB0, "TES3::Stream failed size validation");
 }
