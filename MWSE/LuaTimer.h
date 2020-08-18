@@ -3,6 +3,7 @@
 namespace mwse {
 	namespace lua {
 		struct Timer;
+		class LuaManager;
 
 		enum class TimerState {
 			Active,
@@ -17,7 +18,9 @@ namespace mwse {
 		};
 
 		// Manager for timers. Responsible for all timer-related logic.
-		class TimerController {
+		class TimerController : public std::enable_shared_from_this<TimerController> {
+			friend Timer;
+			friend LuaManager;
 		public:
 			// Constructor with an initial clock of 0.
 			TimerController();
@@ -35,7 +38,7 @@ namespace mwse {
 			double getClock();
 
 			// Create a new timer with fixed data.
-			std::shared_ptr<Timer> createTimer(double duration, sol::protected_function callback, int iterations = 1);
+			std::shared_ptr<Timer> createTimer(double duration, sol::object callback, int iterations = 1, bool persist = true);
 
 			// Move a timer from the active list to the inactive list, and mark it paused.
 			bool pauseTimer(std::shared_ptr<Timer> timer);
@@ -74,7 +77,7 @@ namespace mwse {
 		// A logicless structure containing timer data.
 		struct Timer {
 			// A handle back to the associated controller.
-			TimerController * controller;
+			std::weak_ptr<TimerController> controller;
 
 			// The current state of the timer.
 			TimerState state;
@@ -89,8 +92,18 @@ namespace mwse {
 			int iterations;
 
 			// Callback for timer completion.
-			sol::protected_function callback;
+			sol::object callback;
+
+			// Is the timer persistent?
+			bool isPersistent;
+
+			sol::table toTable(sol::this_state state);
+			static std::shared_ptr<Timer> createFromTable(sol::table table);
 		};
+
+		// Get/set named timers.
+		sol::protected_function getNamedTimer(std::string& name);
+		void setNamedTimer(std::string& name, sol::protected_function fn);
 
 		// Create all the necessary lua binding for the timer API and the above data types.
 		void bindLuaTimer();

@@ -3976,6 +3976,65 @@ namespace mwse {
 			}
 		}
 
+		void LuaManager::savePersistentTimers() {
+			auto macp = TES3::WorldController::get()->getMobilePlayer();
+			if (macp == nullptr) {
+				return;
+			}
+
+			sol::table persists = luaState.create_table();
+
+			std::vector<std::shared_ptr<TimerController>> timers = { gameTimers, simulateTimers, realTimers };
+			for (auto controller : timers) {
+				for (auto timer : controller->m_ActiveTimers) {
+					if (timer->isPersistent) {
+						auto t = timer->toTable(luaState.lua_state());
+						t["p"] = sol::nil;
+						persists.add(t);
+					}
+				}
+				for (auto timer : controller->m_PausedTimers) {
+					if (timer->isPersistent) {
+						auto t = timer->toTable(luaState.lua_state());
+						t["p"] = sol::nil;
+						persists.add(t);
+					}
+				}
+			}
+
+			auto playerData = macp->reference->getLuaTable();
+			playerData["mwse:timers"] = persists;
+
+			std::string serialized = luaState["json"]["encode"](persists);
+			mwse::log::getLog() << "Saved persistent timers: " << serialized << std::endl;
+		}
+
+		void LuaManager::restorePersistentTimers() {
+			auto macp = TES3::WorldController::get()->getMobilePlayer();
+			if (macp == nullptr) {
+				mwse::log::getLog() << "Abandoned restoring persistent timers." << std::endl;
+				return;
+			}
+
+			auto saved = macp->reference->getLuaTable().get<sol::table>("mwse:timers");
+			for (const auto& kvp : saved) {
+				Timer::createFromTable(kvp.second);
+			}
+
+			std::string serialized = luaState["json"]["encode"](saved);
+			mwse::log::getLog() << "Loaded persistent timers: " << serialized << std::endl;
+		}
+
+		void LuaManager::clearPersistentTimers() {
+			auto macp = TES3::WorldController::get()->getMobilePlayer();
+			if (macp == nullptr) {
+				return;
+			}
+
+			auto playerData = macp->reference->getLuaTable();
+			playerData["mwse:timers"] = sol::nil;
+		}
+
 		void LuaManager::clearTimers() {
 			realTimers->clearTimers();
 			simulateTimers->clearTimers();
@@ -3994,6 +4053,20 @@ namespace mwse {
 			case TimerType::GameTime: return gameTimers;
 			}
 			return nullptr;
+		}
+
+		TimerType LuaManager::getTimerControllerType(std::shared_ptr<TimerController> controller) {
+			if (controller == realTimers) {
+				return TimerType::RealTime;
+			}
+			else if (controller == simulateTimers) {
+				return TimerType::SimulationTime;
+			}
+			else if (controller == gameTimers) {
+				return TimerType::GameTime;
+			}
+
+			throw std::invalid_argument("Controller cannot be mapped to a type.");
 		}
 
 		void LuaManager::claimLuaThread() {
