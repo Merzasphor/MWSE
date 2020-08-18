@@ -185,12 +185,21 @@ namespace NI {
 				endIndex = size;
 			}
 			auto newStorage = reinterpret_cast<T*>(mwse::tes3::_new(size * sizeof(T)));
-			for (auto i = 0; i < endIndex; i++) {
+			for (auto i = 0U; i < endIndex; i++) {
 				newStorage[i] = storage[i];
 			}
 			mwse::tes3::_delete(storage);
 			storage = newStorage;
 			storageCount = size;
+		}
+
+		bool growToFit(size_t index) {
+			if (index < storageCount) {
+				return false;
+			}
+			
+			setSize(std::max(storageCount + growByCount, index + 1));
+			return true;
 		}
 
 		bool contains(const_reference value) const {
@@ -210,6 +219,7 @@ namespace NI {
 		bool empty() const { return filledCount == 0; }
 		size_type getFilledCount() const { return filledCount; }
 		size_type getEndIndex() const { return endIndex; }
+		size_type getGrowCount() const { return growByCount; }
 
 	};
 	static_assert(sizeof(TArray<void*>) == 0x18, "NI::TArray failed size validation");

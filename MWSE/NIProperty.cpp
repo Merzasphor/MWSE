@@ -51,11 +51,11 @@ namespace NI {
 	unsigned int TexturingProperty::getDecalCount() const {
 		auto count = 0;
 		for (unsigned int i = (unsigned int)MapType::DECAL_FIRST; i <= (unsigned int)MapType::DECAL_LAST; i++) {
-			if (i >= maps.storageCount) {
+			if (i >= maps.size()) {
 				break;
 			}
 
-			if (maps.storage[i] != nullptr) {
+			if (maps[i] != nullptr) {
 				count++;
 			}
 		}
@@ -63,13 +63,12 @@ namespace NI {
 	}
 
 	bool TexturingProperty::canAddDecalMap() const {
-		//return getDecalCount() < 7;
-		return true;
+		return getDecalCount() < 7;
 	}
 
 	unsigned int TexturingProperty::addDecalMap(Texture* texture) {
 		unsigned int index = (unsigned int)MapType::DECAL_FIRST;
-		while (index < maps.storageCount && maps.at(index) != nullptr) {
+		while (index < maps.size() && maps[index] != nullptr) {
 			++index;
 		}
 
@@ -77,9 +76,7 @@ namespace NI {
 			return (size_t)MapType::INVALID;
 		}
 
-		if (maps.storageCount <= index) {
-			maps.setSize(maps.storageCount + maps.growByCount);
-		}
+		maps.growToFit(index);
 
 		auto map = new Map(texture);
 		maps.setAtIndex(index, map);
@@ -100,17 +97,16 @@ namespace NI {
 			throw std::invalid_argument("Invalid map index provided.");
 		}
 
-		if (index >= maps.storageCount) {
+		if (index >= maps.size()) {
 			return false;
 		}
 
-		if (maps.storage[index] == nullptr) {
+		if (maps[index] == nullptr) {
 			return false;
 		}
 
-		delete maps.storage[index];
-		Map* temp = nullptr;
-		maps.setAtIndex(index, temp);
+		delete maps[index];
+		maps.setAtIndex(index, nullptr);
 		return true;
 	}
 
