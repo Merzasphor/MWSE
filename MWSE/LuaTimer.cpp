@@ -27,12 +27,6 @@ namespace mwse {
 		// TimerController
 		//
 
-		TimerController::TimerController() :
-			m_Clock(0.0)
-		{
-
-		}
-
 		TimerController::TimerController(double initialClock) :
 			m_Clock(initialClock)
 		{
@@ -49,7 +43,7 @@ namespace mwse {
 			update();
 		}
 
-		double TimerController::getClock() {
+		double TimerController::getClock() const {
 			return m_Clock;
 		}
 
@@ -279,11 +273,13 @@ namespace mwse {
 			timer->callback = t["x"];
 			timer->isPersistent = t["p"];
 
+			auto controller = timer->controller.lock();
+
 			if (timer->state == TimerState::Active) {
-				timer->controller.lock()->insertActiveTimer(timer);
+				controller->insertActiveTimer(timer);
 			}
 			else if (timer->state == TimerState::Paused) {
-				timer->controller.lock()->m_PausedTimers.insert(timer);
+				controller->m_PausedTimers.insert(timer);
 			}
 
 			return timer;
@@ -400,6 +396,10 @@ namespace mwse {
 			namedTimerMap[name] = fn;
 		}
 
+		std::shared_ptr<TimerController> createController(sol::optional<double> startTime) {
+			return std::make_shared<TimerController>(startTime.value_or(0.0));
+		}
+
 		//
 		// Lua binding for new data types and functions.
 		//
@@ -413,7 +413,7 @@ namespace mwse {
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.create_simple_usertype<TimerController>();
-				usertypeDefinition.set("new", sol::constructors<TimerController(), TimerController(double)>());
+				usertypeDefinition.set("new", createController);
 
 				// Basic property binding.
 				usertypeDefinition.set("clock", sol::property(&TimerController::getClock, &TimerController::setClock));
@@ -510,9 +510,7 @@ namespace mwse {
 			state["timer"]["frame"]["delayOneFrame"] = &legacyTimerDelayOneFrame;
 
 			// Let new TimerControllers get made.
-			state["timer"]["createController"] = []() {
-				return std::make_shared<TimerController>();
-			};
+			state["timer"]["createController"] = createController;
 		}
 	}
 }

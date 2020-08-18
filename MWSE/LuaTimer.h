@@ -8,7 +8,7 @@ namespace mwse {
 		enum class TimerState {
 			Active,
 			Paused,
-			Expired
+			Expired,
 		};
 
 		// Comparing structure for use with std::upper_bound.
@@ -22,11 +22,7 @@ namespace mwse {
 			friend Timer;
 			friend LuaManager;
 		public:
-			// Constructor with an initial clock of 0.
-			TimerController();
-
-			// Constructor with a defined initial clock.
-			TimerController(double initialClock);
+			TimerController(double initialClock = 0.0);
 			
 			// Set time to the new clock.
 			void setClock(double clock);
@@ -35,7 +31,7 @@ namespace mwse {
 			void incrementClock(double delta);
 
 			// Get the current clock time.
-			double getClock();
+			double getClock() const;
 
 			// Create a new timer with fixed data.
 			std::shared_ptr<Timer> createTimer(double duration, sol::object callback, int iterations = 1, bool persist = true);

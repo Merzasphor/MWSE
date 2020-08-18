@@ -1257,9 +1257,6 @@
     <ClInclude Include="NICollisionSwitchLua.h">
       <Filter>Header Files\Lua\Bindings\NI</Filter>
     </ClInclude>
-    <ClInclude Include="TES3TArrayLua.h">
-      <Filter>Header Files\Lua\Bindings\TES3</Filter>
-    </ClInclude>
     <ClInclude Include="TES3Fader.h">
       <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
     </ClInclude>
@@ -2923,9 +2920,6 @@
     </ClCompile>
     <ClCompile Include="NICollisionSwitchLua.cpp">
       <Filter>Source Files\Lua\Bindings\NI</Filter>
-    </ClCompile>
-    <ClCompile Include="TES3TArrayLua.cpp">
-      <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
     <ClCompile Include="LuaBodyPartsUpdatedEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>

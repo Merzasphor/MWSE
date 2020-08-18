@@ -287,7 +287,6 @@ namespace mwse {
 			simulateTimers = std::make_shared<TimerController>();
 			realTimers = std::make_shared<TimerController>();
 
-
 			// Overwrite the default print function to print to the MWSE log.
 			luaState["print"] = [](sol::object message) {
 				auto& luaManager = mwse::lua::LuaManager::getInstance();
@@ -3982,47 +3981,58 @@ namespace mwse {
 				return;
 			}
 
+			// Store the real time clocks.
 			sol::table persists = luaState.create_table();
+			persists["clockReal"] = realTimers->getClock();
+			persists["clockSimulation"] = realTimers->getClock();
 
+			// Serialize timers into a list.
+			sol::table list = persists.create_named("list");
 			std::vector<std::shared_ptr<TimerController>> timers = { gameTimers, simulateTimers, realTimers };
 			for (auto controller : timers) {
 				for (auto timer : controller->m_ActiveTimers) {
 					if (timer->isPersistent) {
 						auto t = timer->toTable(luaState.lua_state());
 						t["p"] = sol::nil;
-						persists.add(t);
+						list.add(t);
 					}
 				}
 				for (auto timer : controller->m_PausedTimers) {
 					if (timer->isPersistent) {
 						auto t = timer->toTable(luaState.lua_state());
 						t["p"] = sol::nil;
-						persists.add(t);
+						list.add(t);
 					}
 				}
 			}
 
+			// No timers? Bail.
+			if (list.size() == 0) {
+				mwse::log::getLog() << "No timers to save." << std::endl;
+				return;
+			}
+
 			auto playerData = macp->reference->getLuaTable();
 			playerData["mwse:timers"] = persists;
-
-			std::string serialized = luaState["json"]["encode"](persists);
-			mwse::log::getLog() << "Saved persistent timers: " << serialized << std::endl;
 		}
 
 		void LuaManager::restorePersistentTimers() {
 			auto macp = TES3::WorldController::get()->getMobilePlayer();
 			if (macp == nullptr) {
-				mwse::log::getLog() << "Abandoned restoring persistent timers." << std::endl;
 				return;
 			}
 
-			auto saved = macp->reference->getLuaTable().get<sol::table>("mwse:timers");
-			for (const auto& kvp : saved) {
-				Timer::createFromTable(kvp.second);
-			}
+			auto timerData = macp->reference->getLuaTable().get<sol::table>("mwse:timers");
 
-			std::string serialized = luaState["json"]["encode"](saved);
-			mwse::log::getLog() << "Loaded persistent timers: " << serialized << std::endl;
+			// Restore controller values.
+			realTimers->setClock(timerData.get_or("clockReal", 0.0));
+			simulateTimers->setClock(timerData.get_or("clockSimulation", 0.0));
+
+			// Restore timer values.
+			auto list = timerData.get<sol::table>("list");
+			for (const auto& kvp : list) {
+				auto timer = Timer::createFromTable(kvp.second);
+			}
 		}
 
 		void LuaManager::clearPersistentTimers() {
