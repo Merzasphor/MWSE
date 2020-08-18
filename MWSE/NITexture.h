@@ -53,3 +53,5 @@ namespace NI {
 	};
 	static_assert(sizeof(Texture) == 0x2C, "NI::Texture failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_NI(NI::Texture)
