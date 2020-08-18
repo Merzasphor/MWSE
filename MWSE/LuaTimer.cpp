@@ -281,6 +281,19 @@ namespace mwse {
 			return false;
 		}
 
+		std::optional<double> Timer::getTimeLeft() const {
+			if (state == TimerState::Active) {
+				auto sharedController = controller.lock();
+				if (sharedController) {
+					return timing - sharedController->getClock();
+				}
+			}
+			else if (state == TimerState::Paused) {
+				return timing;
+			}
+			return std::optional<double>();
+		}
+
 		sol::table Timer::toTable(sol::this_state ts) const {
 			sol::state_view sv = ts;
 			sol::table t = sv.create_table();

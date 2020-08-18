@@ -1,7 +1,5 @@
 #include "TES3Weather.h"
 
-#include "sol.hpp"
-
 #include "TES3WeatherController.h"
 
 #include "TES3WeatherAsh.h"

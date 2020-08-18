@@ -49,8 +49,6 @@
 #include "BitUtil.h"
 #include "MemoryUtil.h"
 
-#include "sol.hpp"
-
 #include "LuaManager.h"
 #include "LuaObjectInvalidatedEvent.h"
 

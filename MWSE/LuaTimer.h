@@ -98,7 +98,8 @@ namespace mwse {
 			bool reset();
 			bool cancel();
 
-			std::optional<double> getTimeLeft();
+			std::optional<double> getTimeLeft() const;
+
 			sol::table toTable(sol::this_state state) const;
 			static std::shared_ptr<Timer> createFromTable(sol::table table);
 		};
