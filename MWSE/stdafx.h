@@ -54,4 +54,6 @@
 #include <boost/regex.hpp>
 
 // Core lua binding library.
+#define SOL_SAFE_USERTYPE true
+#define SOL_EXCEPTIONS_SAFE_PROPAGATION true
 #include "sol.hpp"
