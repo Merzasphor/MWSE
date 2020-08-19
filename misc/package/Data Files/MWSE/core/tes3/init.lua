@@ -89,13 +89,12 @@ function tes3.getAttachment(reference, attachment)
 end
 
 -- Iterator to use TES3::Iterator in a for loop.
+-- Only returns values, rather than a key-value pair.
 function tes3.iterate(iterator)
-	local i = 0
+	local next, t, k, v = pairs(iterator)
 	return function()
-		if (i < #iterator) then
-			i = i + 1
-			return iterator[i]
-		end
+		k, v = next(t, k)
+		return v
 	end
 end
 

@@ -432,7 +432,8 @@ namespace mwse {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
 
-			auto memory = state.create_table();
+			sol::table mwse = state["mwse"];
+			auto memory = mwse.create_named("memory");
 
 			//
 			// Memory reinterpretation functions.
@@ -455,39 +456,34 @@ namespace mwse {
 			memory["writeFunctionCall"] = writeFunctionCall;
 			memory["writeNoOperation"] = writeNoOperation;
 
-			state["mwse"]["memory"] = memory;
-
-
 			//
 			// Converters for various types of arguments.
 			//
 
-			auto convertTo = memory.create();
+			auto convertTo = memory.create_named("convertTo");
 			convertTo["bool"] = convertArgTo<bool>;
-			convertTo["int"] = convertArgTo<int>;
-			convertTo["uint"] = convertArgTo<DWORD>;
 			convertTo["float"] = convertArgTo<float>;
+			convertTo["int"] = convertArgTo<int>;
 			convertTo["string"] = convertArgTo<const char*>;
-			convertTo["tes3object"] = convertArgTo<TES3::BaseObject*>;
-			convertTo["tes3mobileObject"] = convertArgTo<TES3::MobileObject*>;
-			convertTo["tes3inventory"] = convertArgTo<TES3::Inventory*>;
 			convertTo["tes3equipmentStackIterator"] = convertArgTo<TES3::IteratedList<TES3::EquipmentStack*>*>;
 			convertTo["tes3equipmentStackIteratorNode"] = convertArgTo<TES3::IteratedList<TES3::EquipmentStack*>::Node*>;
+			convertTo["tes3inventory"] = convertArgTo<TES3::Inventory*>;
 			convertTo["tes3magicEffectInstance"] = convertArgTo<TES3::MagicEffectInstance*>;
-			memory["convertTo"] = convertTo;
+			convertTo["tes3mobileObject"] = convertArgTo<TES3::MobileObject*>;
+			convertTo["tes3object"] = convertArgTo<TES3::BaseObject*>;
+			convertTo["uint"] = convertArgTo<DWORD>;
 
-			auto convertFrom = memory.create();
+			auto convertFrom = memory.create_named("convertFrom");
 			convertFrom["bool"] = convertArgFrom<bool>;
-			convertFrom["int"] = convertArgFrom<int>;
-			convertFrom["uint"] = convertArgFrom<unsigned int>;
 			convertFrom["float"] = convertArgFrom<float>;
-			convertFrom["tes3object"] = convertArgFrom<TES3::BaseObject*>;
-			convertFrom["tes3mobileObject"] = convertArgFrom<TES3::MobileObject*>;
-			convertFrom["tes3inventory"] = convertArgFrom<TES3::Inventory*>;
+			convertFrom["int"] = convertArgFrom<int>;
 			convertFrom["tes3equipmentStackIterator"] = convertArgFrom<TES3::IteratedList<TES3::EquipmentStack*>*>;
 			convertFrom["tes3equipmentStackIteratorNode"] = convertArgFrom<TES3::IteratedList<TES3::EquipmentStack*>::Node*>;
+			convertFrom["tes3inventory"] = convertArgFrom<TES3::Inventory*>;
 			convertFrom["tes3magicEffectInstance"] = convertArgFrom<TES3::MagicEffectInstance*>;
-			memory["convertFrom"] = convertFrom;
+			convertFrom["tes3mobileObject"] = convertArgFrom<TES3::MobileObject*>;
+			convertFrom["tes3object"] = convertArgFrom<TES3::BaseObject*>;
+			convertFrom["uint"] = convertArgFrom<unsigned int>;
 		}
 	}
 }
