@@ -236,6 +236,15 @@ namespace TES3 {
 		TES3_WorldController_updateEnvironmentLightingWeather(this);
 	}
 
+	float WorldController::getAIDistance() const {
+		return mobController->mobController_0x24->aiDistance;
+	}
+
+	void WorldController::setAIDistance(float value) {
+		mobController->mobController_0x24->aiDistance = value;
+		aiDistanceScale = mobController->mobController_0x24->getAIDistanceScale();
+	}
+
 	float WorldController::getAIDistanceScale() const {
 		return aiDistanceScale;
 	}

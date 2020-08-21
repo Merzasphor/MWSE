@@ -331,6 +331,8 @@ namespace TES3 {
 		_declspec(dllexport) void updateTiming();
 		_declspec(dllexport) void updateEnvironmentLightingWeather();
 
+		float getAIDistance() const;
+		void setAIDistance(float value);
 		float getAIDistanceScale() const;
 		void setAIDistanceScale(float scale);
 

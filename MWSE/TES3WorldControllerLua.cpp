@@ -119,6 +119,7 @@ namespace mwse {
 				usertypeDefinition.set("year", &TES3::WorldController::gvarYear);
 
 				// Functions exposed as properties.
+				usertypeDefinition.set("aiDistance", sol::property(&TES3::WorldController::getAIDistance, &TES3::WorldController::setAIDistance));
 				usertypeDefinition.set("aiDistanceScale", sol::property(&TES3::WorldController::getAIDistanceScale, &TES3::WorldController::setAIDistanceScale));
 
 				// Access to other objects that need to be packaged.
@@ -142,9 +143,6 @@ namespace mwse {
 
 				// Basic function binding.
 				usertypeDefinition.set("applyEnchantEffect", &TES3::WorldController::applyEnchantEffect);
-
-				// Legacy bindings.
-				usertypeDefinition.set("aiDistance", sol::property(&TES3::WorldController::getAIDistanceScale, &TES3::WorldController::setAIDistanceScale));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3worldController", usertypeDefinition);
