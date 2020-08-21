@@ -45,6 +45,14 @@ namespace TES3 {
 		TES3_MobController_0x24_checkPlayerDist(this);
 	}
 
+	float MobController_0x24::getAIDistanceScale() const {
+		return (aiDistance - 1000.0f) / 6000.0f;
+	}
+
+	void MobController_0x24::setAIDistanceScale(float scalar) {
+		aiDistance = 1000.0f + 6000.0f * scalar;
+	}
+
 	void MobController::addMob(Reference * reference) {
 		TES3_MobController_addMob(this, reference);
 

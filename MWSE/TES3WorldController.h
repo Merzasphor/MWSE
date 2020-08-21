@@ -223,7 +223,7 @@ namespace TES3 {
 		unsigned char hudStyle; // 0x8C
 		float menuAlpha; // 0x90
 		bool cursorOff; // 0x94
-		float aiDistance; // 0x98
+		float aiDistanceScale; // 0x98
 		float difficulty; // 0x9C
 		int werewolfFOV; // 0xA0
 		float projectionDistance; // 0xA4
@@ -330,6 +330,9 @@ namespace TES3 {
 
 		_declspec(dllexport) void updateTiming();
 		_declspec(dllexport) void updateEnvironmentLightingWeather();
+
+		float getAIDistanceScale() const;
+		void setAIDistanceScale(float scale);
 
 		//
 		// Custom functions.

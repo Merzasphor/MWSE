@@ -19,10 +19,14 @@ namespace mwse {
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Basic function binding.
+				usertypeDefinition.set("aiDistaNCE", &TES3::MobController_0x24::aiDistance);
 				usertypeDefinition.set("detectPresence", &TES3::MobController_0x24::detectPresence);
 				usertypeDefinition.set("detectSneak", &TES3::MobController_0x24::detectSneak);
 				usertypeDefinition.set("checkRadius", &TES3::MobController_0x24::checkRadius);
 				usertypeDefinition.set("checkPlayerDistance", &TES3::MobController_0x24::checkPlayerDistance);
+
+				// Functions exposed as properties.
+				usertypeDefinition.set("aiDistanceScale", sol::property(&TES3::MobController_0x24::getAIDistanceScale, &TES3::MobController_0x24::setAIDistanceScale));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3mobController_0x24", usertypeDefinition);

@@ -50,7 +50,6 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition.set("activeQuests", &TES3::WorldController::journalController);
-				usertypeDefinition.set("aiDistance", &TES3::WorldController::aiDistance);
 				usertypeDefinition.set("armCamera", &TES3::WorldController::armCamera);
 				usertypeDefinition.set("audioController", sol::readonly_property(&TES3::WorldController::audioController));
 				usertypeDefinition.set("blindnessFader", sol::readonly_property(&TES3::WorldController::blindnessFader));
@@ -119,6 +118,9 @@ namespace mwse {
 				usertypeDefinition.set("worldCamera", &TES3::WorldController::worldCamera);
 				usertypeDefinition.set("year", &TES3::WorldController::gvarYear);
 
+				// Functions exposed as properties.
+				usertypeDefinition.set("aiDistanceScale", sol::property(&TES3::WorldController::getAIDistanceScale, &TES3::WorldController::setAIDistanceScale));
+
 				// Access to other objects that need to be packaged.
 				usertypeDefinition.set("criticalDamageSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundCriticalDamage); }));
 				usertypeDefinition.set("defaultLandSound", sol::readonly_property([](TES3::WorldController& self) { return makeLuaObject(self.soundDefaultLand); }));
@@ -140,6 +142,9 @@ namespace mwse {
 
 				// Basic function binding.
 				usertypeDefinition.set("applyEnchantEffect", &TES3::WorldController::applyEnchantEffect);
+
+				// Legacy bindings.
+				usertypeDefinition.set("aiDistance", sol::property(&TES3::WorldController::getAIDistanceScale, &TES3::WorldController::setAIDistanceScale));
 
 				// Finish up our usertype.
 				state.set_usertype("tes3worldController", usertypeDefinition);
