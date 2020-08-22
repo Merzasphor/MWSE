@@ -27,10 +27,10 @@ namespace mwse {
 			// Allow read access to movement speeds.
 			usertypeDefinition.set("moveSpeed", sol::readonly_property([](TES3::MobileNPC& self) { return self.animationData.asActor->calculateMovementSpeed(); }));
 			usertypeDefinition.set("walkSpeed", sol::readonly_property(&TES3::MobileNPC::calculateWalkSpeed));
-			usertypeDefinition.set("runSpeed", sol::readonly_property(&TES3::MobileNPC::calculateWalkSpeed));
-			usertypeDefinition.set("swimSpeed", sol::readonly_property(&TES3::MobileNPC::calculateWalkSpeed));
-			usertypeDefinition.set("swimRunSpeed", sol::readonly_property(&TES3::MobileNPC::calculateWalkSpeed));
-			usertypeDefinition.set("flySpeed", sol::readonly_property(&TES3::MobileNPC::calculateWalkSpeed));
+			usertypeDefinition.set("runSpeed", sol::readonly_property(&TES3::MobileNPC::calculateRunSpeed));
+			usertypeDefinition.set("swimSpeed", sol::readonly_property(&TES3::MobileNPC::calculateSwimSpeed));
+			usertypeDefinition.set("swimRunSpeed", sol::readonly_property(&TES3::MobileNPC::calculateSwimRunSpeed));
+			usertypeDefinition.set("flySpeed", sol::readonly_property(&TES3::MobileNPC::calculateFlySpeed));
 
 			// Friendly access to skills.
 			usertypeDefinition.set("acrobatics", sol::readonly_property([](TES3::MobileNPC& self) { return &self.skills[TES3::SkillID::Acrobatics]; }));
