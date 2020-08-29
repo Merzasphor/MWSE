@@ -23,11 +23,12 @@ namespace mwse {
 				usertypeDefinition.set("new", sol::no_constructor);
 
 				// Basic property binding.
-				usertypeDefinition.set("hello", &TES3::AIConfig::hello);
+				usertypeDefinition.set("alarm", &TES3::AIConfig::alarm);
 				usertypeDefinition.set("fight", &TES3::AIConfig::fight);
 				usertypeDefinition.set("flee", &TES3::AIConfig::flee);
-				usertypeDefinition.set("alarm", &TES3::AIConfig::alarm);
+				usertypeDefinition.set("hello", &TES3::AIConfig::hello);
 				usertypeDefinition.set("merchantFlags", &TES3::AIConfig::merchantFlags);
+				usertypeDefinition.set("travelDestinations", &TES3::AIConfig::travelDestinations);
 
 				// Nicer access to merchant flags.
 				usertypeDefinition.set("bartersAlchemy", sol::property(&TES3::AIConfig::getBartersAlchemy, &TES3::AIConfig::setBartersAlchemy));
