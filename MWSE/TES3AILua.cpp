@@ -29,6 +29,26 @@ namespace mwse {
 				usertypeDefinition.set("alarm", &TES3::AIConfig::alarm);
 				usertypeDefinition.set("merchantFlags", &TES3::AIConfig::merchantFlags);
 
+				// Nicer access to merchant flags.
+				usertypeDefinition.set("bartersAlchemy", sol::property(&TES3::AIConfig::getBartersAlchemy, &TES3::AIConfig::setBartersAlchemy));
+				usertypeDefinition.set("bartersApparatus", sol::property(&TES3::AIConfig::getBartersApparatus, &TES3::AIConfig::setBartersApparatus));
+				usertypeDefinition.set("bartersArmor", sol::property(&TES3::AIConfig::getBartersArmor, &TES3::AIConfig::setBartersArmor));
+				usertypeDefinition.set("bartersBooks", sol::property(&TES3::AIConfig::getBartersBooks, &TES3::AIConfig::setBartersBooks));
+				usertypeDefinition.set("bartersClothing", sol::property(&TES3::AIConfig::getBartersClothing, &TES3::AIConfig::setBartersClothing));
+				usertypeDefinition.set("bartersEnchantedItems", sol::property(&TES3::AIConfig::getBartersEnchantedItems, &TES3::AIConfig::setBartersEnchantedItems));
+				usertypeDefinition.set("bartersIngredients", sol::property(&TES3::AIConfig::getBartersIngredients, &TES3::AIConfig::setBartersIngredients));
+				usertypeDefinition.set("bartersLights", sol::property(&TES3::AIConfig::getBartersLights, &TES3::AIConfig::setBartersLights));
+				usertypeDefinition.set("bartersLockpicks", sol::property(&TES3::AIConfig::getBartersLockpicks, &TES3::AIConfig::setBartersLockpicks));
+				usertypeDefinition.set("bartersMiscItems", sol::property(&TES3::AIConfig::getBartersMiscItems, &TES3::AIConfig::setBartersMiscItems));
+				usertypeDefinition.set("bartersProbes", sol::property(&TES3::AIConfig::getBartersProbes, &TES3::AIConfig::setBartersProbes));
+				usertypeDefinition.set("bartersRepairTools", sol::property(&TES3::AIConfig::getBartersRepairTools, &TES3::AIConfig::setBartersRepairTools));
+				usertypeDefinition.set("bartersWeapons", sol::property(&TES3::AIConfig::getBartersWeapons, &TES3::AIConfig::setBartersWeapons));
+				usertypeDefinition.set("offersEnchanting", sol::property(&TES3::AIConfig::getOffersEnchanting, &TES3::AIConfig::setOffersEnchanting));
+				usertypeDefinition.set("offersRepairs", sol::property(&TES3::AIConfig::getOffersRepairs, &TES3::AIConfig::setOffersRepairs));
+				usertypeDefinition.set("offersSpellmaking", sol::property(&TES3::AIConfig::getOffersSpellmaking, &TES3::AIConfig::setOffersSpellmaking));
+				usertypeDefinition.set("offersSpells", sol::property(&TES3::AIConfig::getOffersSpells, &TES3::AIConfig::setOffersSpells));
+				usertypeDefinition.set("offersTraining", sol::property(&TES3::AIConfig::getOffersTraining, &TES3::AIConfig::setOffersTraining));
+
 				// Finish up our usertype.
 				state.set_usertype("tes3aiConfig", usertypeDefinition);
 			}

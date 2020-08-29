@@ -554,6 +554,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TES3Activator.cpp" />
+    <ClCompile Include="TES3AIConfig.cpp" />
     <ClCompile Include="TES3Birthsign.cpp" />
     <ClCompile Include="TES3BirthsignLua.cpp" />
     <ClCompile Include="TES3BodyPartManager.cpp" />
