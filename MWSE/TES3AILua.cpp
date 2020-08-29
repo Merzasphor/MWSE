@@ -3,6 +3,7 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "TES3AIConfig.h"
 #include "TES3AIData.h"
 #include "TES3AIPackage.h"
 #include "TES3Cell.h"
@@ -14,6 +15,23 @@ namespace mwse {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
+
+			// Binding for TES3::AIConfig
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.create_simple_usertype<TES3::AIConfig>();
+				usertypeDefinition.set("new", sol::no_constructor);
+
+				// Basic property binding.
+				usertypeDefinition.set("hello", &TES3::AIConfig::hello);
+				usertypeDefinition.set("fight", &TES3::AIConfig::fight);
+				usertypeDefinition.set("flee", &TES3::AIConfig::flee);
+				usertypeDefinition.set("alarm", &TES3::AIConfig::alarm);
+				usertypeDefinition.set("merchantFlags", &TES3::AIConfig::merchantFlags);
+
+				// Finish up our usertype.
+				state.set_usertype("tes3aiConfig", usertypeDefinition);
+			}
 
 			// Binding for TES3::AIPlanner
 			{
