@@ -62,11 +62,16 @@ namespace TES3 {
 
 		// Prevent adding a lua table if there's more than one item involved.
 		if (itemData && itemData->count > 1) {
-			throw std::exception("Cannot create lua data when more than one item is present.");
+			return sol::nil;
 		}
 
 		// Create the item data if it doesn't already exist.
 		if (itemData == nullptr) {
+			// Gold does all kinds of funky things. No ItemData creation on it is allowed.
+			if (_strnicmp(baseObject->getObjectID(), "gold_", 5) == 0) {
+				return sol::nil;
+			}
+
 			itemData = ItemData::createForObject(baseObject);
 			setAttachedItemData(itemData);
 		}
