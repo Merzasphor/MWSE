@@ -262,6 +262,7 @@ namespace mwse {
 				}
 				return result;
 			};
+
 			//
 			// Write operations.
 			//
