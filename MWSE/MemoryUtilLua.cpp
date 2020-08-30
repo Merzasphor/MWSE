@@ -207,7 +207,7 @@ namespace mwse {
 			// Memory reinterpretation functions.
 			//
 
-			memory["reinterpret"] = [](sol::table params) -> sol::object {
+			memory["reinterpret"] = [](sol::table params, sol::this_state ts) -> sol::object {
 				sol::optional<DWORD> value = params["value"];
 				if (!value) {
 					throw std::invalid_argument("Invalid 'value' parameter provided.");
@@ -218,8 +218,8 @@ namespace mwse {
 					throw std::invalid_argument("Invalid 'as' parameter provided.");
 				}
 
-				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-				sol::protected_function converter = stateHandle.state["mwse"]["convertTo"][as.value()];
+				sol::state_view state = ts;
+				sol::protected_function converter = state["mwse"]["memory"]["convertTo"][as.value()];
 				sol::protected_function_result result = converter(value.value());
 				if (!result.valid()) {
 					sol::error error = result;
@@ -242,6 +242,26 @@ namespace mwse {
 				return getCallAddress(address.value());
 			};
 
+			memory["readValue"] = [](sol::table params, sol::this_state ts) {
+				sol::optional<DWORD> address = params["address"];
+				if (!address) {
+					throw std::invalid_argument("Invalid 'address' parameter provided.");
+				}
+
+				sol::optional<std::string> as = params["as"];
+				if (!as) {
+					throw std::invalid_argument("Invalid 'as' parameter provided.");
+				}
+
+				sol::state_view state = ts;
+				sol::protected_function converter = state["mwse"]["memory"]["convertTo"][as.value()];
+				sol::protected_function_result result = converter(*reinterpret_cast<DWORD*>(address.value()));
+				if (!result.valid()) {
+					sol::error error = result;
+					throw std::exception(error.what());
+				}
+				return result;
+			};
 			//
 			// Write operations.
 			//
