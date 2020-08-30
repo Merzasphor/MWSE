@@ -85,6 +85,7 @@ namespace mwse {
 					}
 				}
 				));
+				usertypeDefinition.set("isGold", sol::readonly_property(&TES3::Misc::isGold));
 				usertypeDefinition.set("isSoulGem", sol::readonly_property(&TES3::Misc::isSoulGem));
 				usertypeDefinition.set("soulGemData", sol::readonly_property(&TES3::Misc::getSoulGemData));
 

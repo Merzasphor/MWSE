@@ -13,6 +13,7 @@
 #include "TES3Cell.h"
 #include "TES3DataHandler.h"
 #include "TES3ItemData.h"
+#include "TES3Misc.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
 #include "TES3WorldController.h"
@@ -68,7 +69,7 @@ namespace TES3 {
 		// Create the item data if it doesn't already exist.
 		if (itemData == nullptr) {
 			// Gold does all kinds of funky things. No ItemData creation on it is allowed.
-			if (_strnicmp(baseObject->getObjectID(), "gold_", 5) == 0) {
+			if (baseObject->objectType == ObjectType::Misc && static_cast<Misc*>(baseObject)->isGold()) {
 				return sol::nil;
 			}
 

@@ -163,20 +163,20 @@ namespace mwse {
 			return reinterpret_cast<int*>(0x7947C8)[id];
 		}
 
-		static std::unordered_map<TES3::Misc*, TES3::SoulGemData*> customSoulGems;
+		static std::unordered_map<const TES3::Misc*, TES3::SoulGemData*> customSoulGems;
 
-		bool isSoulGem(TES3::Object* objectOrReference) {
-			if (reinterpret_cast<bool(__cdecl *)(TES3::Object*)>(0x49ABE0)(objectOrReference)) {
+		bool isSoulGem(const TES3::Object* objectOrReference) {
+			if (reinterpret_cast<bool(__cdecl *)(const TES3::Object*)>(0x49ABE0)(objectOrReference)) {
 				return true;
 			}
 
 			// If we were given a reference, look at the base object.
 			if (objectOrReference->objectType == TES3::ObjectType::Reference) {
-				objectOrReference = reinterpret_cast<TES3::Reference*>(objectOrReference)->baseObject;
+				objectOrReference = reinterpret_cast<const TES3::Reference*>(objectOrReference)->baseObject;
 			}
 
 			if (objectOrReference->objectType == TES3::ObjectType::Misc) {
-				auto searchResult = customSoulGems.find(reinterpret_cast<TES3::Misc*>(objectOrReference));
+				auto searchResult = customSoulGems.find(reinterpret_cast<const TES3::Misc*>(objectOrReference));
 				if (searchResult != customSoulGems.end()) {
 					return true;
 				}

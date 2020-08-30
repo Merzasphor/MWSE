@@ -30,7 +30,9 @@ namespace TES3 {
 		//
 
 		SoulGemData * getSoulGemData();
-		bool isSoulGem();
+		bool isSoulGem() const;
+
+		bool isGold() const;
 
 	};
 	static_assert(sizeof(Misc) == 0x60, "TES3::Misc failed size validation");

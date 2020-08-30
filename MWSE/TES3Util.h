@@ -48,7 +48,7 @@ namespace mwse {
 
 		TES3::SoulGemData * addCustomSoulGem(TES3::Misc * item);
 		TES3::SoulGemData * getSoulGemData(TES3::Misc * item);
-		bool isSoulGem(TES3::Object* objectOrReference);
+		bool isSoulGem(const TES3::Object* objectOrReference);
 
 		TES3::ArmorSlotData * getArmorSlotData(int slot);
 		void setArmorSlotData(TES3::ArmorSlotData * data);

@@ -2,6 +2,8 @@
 
 #include "TES3Util.h"
 
+#include "TES3GoldData.h"
+
 namespace TES3 {
 	const auto TES3_MiscItem_ctor = reinterpret_cast< void( __thiscall * )( Misc * ) >( 0x4A6320 );
 	Misc::Misc() :
@@ -18,7 +20,7 @@ namespace TES3 {
 	}
 
 	const auto TES3_MiscItem_dtor = reinterpret_cast< void( __thiscall * )( Misc * ) >( 0x4A6400 );
-	Misc::~Misc(	)
+	Misc::~Misc()
 	{
 		TES3_MiscItem_dtor( this );
 	}
@@ -32,7 +34,17 @@ namespace TES3 {
 		return mwse::tes3::getSoulGemData(this);
 	}
 
-	bool Misc::isSoulGem() {
+	bool Misc::isSoulGem() const {
 		return mwse::tes3::isSoulGem(this);
+	}
+
+	bool Misc::isGold() const {
+		auto goldData = GoldData::DATA_ARRAY;
+		for (auto i = 0U; i < GoldData::DATA_ARRAY_COUNT; i++) {
+			if (goldData[i].object == this) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
