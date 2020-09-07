@@ -111,10 +111,13 @@
     <ClInclude Include="LuaSimulateEvent.h" />
     <ClInclude Include="LuaSkillExerciseEvent.h" />
     <ClInclude Include="LuaSkillRaisedEvent.h" />
+    <ClInclude Include="LuaAddSoundEvent.h" />
+    <ClInclude Include="LuaSoundObjectPlayEvent.h" />
     <ClInclude Include="LuaSpellCastedEvent.h" />
     <ClInclude Include="LuaSpellCastEvent.h" />
     <ClInclude Include="LuaSpellResistEvent.h" />
     <ClInclude Include="LuaSpellTickEvent.h" />
+    <ClInclude Include="LuaAddTempSoundEvent.h" />
     <ClInclude Include="LuaUiObjectTooltipEvent.h" />
     <ClInclude Include="LuaUiRefreshedEvent.h" />
     <ClInclude Include="LuaUiSpellTooltipEvent.h" />
@@ -521,10 +524,13 @@
     <ClCompile Include="LuaSimulateEvent.cpp" />
     <ClCompile Include="LuaSkillExerciseEvent.cpp" />
     <ClCompile Include="LuaSkillRaisedEvent.cpp" />
+    <ClCompile Include="LuaAddSoundEvent.cpp" />
+    <ClCompile Include="LuaSoundObjectPlayEvent.cpp" />
     <ClCompile Include="LuaSpellCastedEvent.cpp" />
     <ClCompile Include="LuaSpellCastEvent.cpp" />
     <ClCompile Include="LuaSpellResistEvent.cpp" />
     <ClCompile Include="LuaSpellTickEvent.cpp" />
+    <ClCompile Include="LuaAddTempSound.cpp" />
     <ClCompile Include="LuaTimer.cpp" />
     <ClCompile Include="LuaUiObjectTooltipEvent.cpp" />
     <ClCompile Include="LuaUiRefreshedEvent.cpp" />

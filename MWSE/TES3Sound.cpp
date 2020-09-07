@@ -3,16 +3,51 @@
 #include "TES3Util.h"
 #include "TES3WorldController.h"
 
+#include "LuaSoundObjectPlayEvent.h"
+
+#include "LuaManager.h"
+
 namespace TES3 {
 	char* Sound::getObjectID() {
 		return id;
 	}
 
-	const auto TES3_Sound_play = reinterpret_cast<bool (__thiscall *)(Sound*, int, unsigned char, float, bool)>(0x510A40);
 	bool Sound::play(int playbackFlags, unsigned char volume, float pitch, bool isNot3D) {
 		unsigned int master = TES3::WorldController::get()->audioController->volumeMaster;
 		unsigned int finalVolume = master * volume / 250;
-		return TES3_Sound_play(this, playbackFlags, finalVolume, pitch, isNot3D);
+		return playRaw(playbackFlags, finalVolume, pitch, isNot3D);
+	}
+
+	const auto TES3_Sound_play = reinterpret_cast<bool(__thiscall*)(Sound*, int, unsigned char, float, bool)>(0x510A40);
+	bool Sound::playRaw(int playbackFlags, unsigned char volume, float pitch, bool isNot3D) {
+		Sound* sound = this;
+
+		if (mwse::lua::event::SoundObjectPlayEvent::getEventEnabled()) {
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::SoundObjectPlayEvent(sound, playbackFlags, volume, pitch, isNot3D));
+			if (eventData.valid()) {
+				if (eventData["block"] == true) {
+					return false;
+				}
+
+				// Override event data.
+				Sound* sound = eventData["sound"];
+				playbackFlags = eventData["flags"];
+				volume = eventData["volume"];
+				pitch = eventData["pitch"];
+				isNot3D = eventData["isNot3D"];
+
+				// If it's not a sound, forward as if we were playing that sound, raising a new event.
+				if (sound != this) {
+					return sound->playRaw(playbackFlags, volume, pitch, isNot3D);
+				} else if (sound == nullptr) {
+					return false;
+				}
+			}
+		}
+
+		return TES3_Sound_play(sound, playbackFlags, volume, pitch, isNot3D);
 	}
 
 	const auto TES3_Sound_stop = reinterpret_cast<void(__thiscall *)(Sound*)>(0x510BC0);

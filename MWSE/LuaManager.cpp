@@ -3787,6 +3787,78 @@ namespace mwse {
 			genCallEnforced(0x4DA1B0, 0x472580, *reinterpret_cast<DWORD*>(&bodyPartManagerConstructor));
 			genCallEnforced(0x4DA1C3, 0x472580, *reinterpret_cast<DWORD*>(&bodyPartManagerConstructor));
 
+			// Event: soundPlay
+			auto dataHandlerAddSound = &TES3::DataHandler::addSound;
+			genCallEnforced(0x46F8B4, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x484D2F, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x48ABDD, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x48BD0E, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x4EA059, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x4EA371, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x4EA415, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x4EB8A9, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x4EB9AF, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x506052, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x506123, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x506210, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x514A93, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x514DE6, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x51529A, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x515638, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x515796, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x518C2F, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x525DD4, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x53E3F6, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x5417EE, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x54DA8C, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x54DAB9, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x54DAE7, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x5573C5, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x5575E3, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x557FA7, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x558097, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x5582CE, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x562156, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+			genCallEnforced(0x5621BB, 0x48BD40, *reinterpret_cast<DWORD*>(&dataHandlerAddSound));
+
+			// Event: tempSoundPlay
+			auto dataHandlerAddTemporarySound = &TES3::DataHandler::addTemporySound;
+			genCallEnforced(0x48B953, 0x48C2B0, *reinterpret_cast<DWORD*>(&dataHandlerAddTemporarySound));
+			genCallEnforced(0x48BF1F, 0x48C2B0, *reinterpret_cast<DWORD*>(&dataHandlerAddTemporarySound));
+			genCallEnforced(0x4A28B8, 0x48C2B0, *reinterpret_cast<DWORD*>(&dataHandlerAddTemporarySound));
+			genCallEnforced(0x50B997, 0x48C2B0, *reinterpret_cast<DWORD*>(&dataHandlerAddTemporarySound));
+			genCallEnforced(0x52917B, 0x48C2B0, *reinterpret_cast<DWORD*>(&dataHandlerAddTemporarySound));
+			genCallEnforced(0x6051C1, 0x48C2B0, *reinterpret_cast<DWORD*>(&dataHandlerAddTemporarySound));
+
+			// Event: soundObjectPlay
+			auto soundPlayRaw = &TES3::Sound::playRaw;
+			genCallEnforced(0x440C11, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x4470CD, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x447EB8, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x448CC8, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x449B88, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x44B1E5, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x44B426, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x44CCD6, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x44D011, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x44D1D8, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x44E396, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x44F653, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x45086C, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x451885, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x48A8D0, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x48B9CF, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x48C07A, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x5060A5, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x5984E0, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x607711, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x63A715, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x640F86, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x64733D, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x6475F7, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x647962, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+			genCallEnforced(0x64D3DA, 0x510A40, *reinterpret_cast<DWORD*>(&soundPlayRaw));
+
 			// Create lua tracebacks when a warning is created.
 			genCallUnprotected(0x4774D1, reinterpret_cast<DWORD>(WriteToWarningsFile), 0x6);
 			genCallUnprotected(0x476EA7, reinterpret_cast<DWORD>(WriteToWarningsFile), 0x6);
