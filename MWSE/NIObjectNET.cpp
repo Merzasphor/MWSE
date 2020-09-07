@@ -4,6 +4,8 @@
 
 #include "StringUtil.h"
 
+#include "NIExtraData.h"
+
 namespace NI {
 	const auto NI_ObjectNET_prependController = reinterpret_cast<void(__thiscall*)(const ObjectNET*, TimeController*)>(0x6EA3E0);
 	const auto NI_ObjectNET_removeController = reinterpret_cast<void(__thiscall*)(const ObjectNET*, TimeController*)>(0x6EA450);
