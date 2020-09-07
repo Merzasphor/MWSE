@@ -28,15 +28,20 @@ namespace mwse {
 
 			// Basic property binding.
 			usertypeDefinition.set("controller", sol::readonly_property(&NI::ObjectNET::controllers));
+			usertypeDefinition.set("extraData", sol::readonly_property(&NI::ObjectNET::getExtraData_lua));
 			usertypeDefinition.set("name", sol::property(
 				[](NI::ObjectNET& self) { return self.name; },
 				[](NI::ObjectNET& self, const char * name) { self.setName(name); }
 			));
 
 			// Basic function binding.
+			usertypeDefinition.set("getStringDataStartingWith", &NI::ObjectNET::getStringDataStartingWithValue_lua);
+			usertypeDefinition.set("getStringDataWith", &NI::ObjectNET::getStringDataWithValue_lua);
+			usertypeDefinition.set("hasStringDataStartingWith", &NI::ObjectNET::hasStringDataStartingWithValue);
+			usertypeDefinition.set("hasStringDataWith", &NI::ObjectNET::hasStringDataWithValue);
 			usertypeDefinition.set("prependController", &NI::ObjectNET::prependController);
-			usertypeDefinition.set("removeController", &NI::ObjectNET::removeController);
 			usertypeDefinition.set("removeAllControllers", &NI::ObjectNET::removeAllControllers);
+			usertypeDefinition.set("removeController", &NI::ObjectNET::removeController);
 		}
 
 		// Speed-optimized binding for NI::AVObject.

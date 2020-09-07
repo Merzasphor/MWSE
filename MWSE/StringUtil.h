@@ -74,6 +74,22 @@ namespace mwse {
 		int secernate(const char* format, const char* string, long* results, int maxResults);
 
 		//
+		// Comparison helpers.
+		//
+
+		// Returns true if a == b, case insensitive.
+		bool ciequal(char a, char b);
+
+		// Returns true if a == b, case sensitive.
+		bool equal(std::string_view a, std::string_view b);
+
+		// Returns true if a == b, case insensitive.
+		bool iequal(std::string_view a, std::string_view b);
+
+		// Returns true if a == b, case insensitive, only compares maxCount characters.
+		bool niequal(std::string_view a, std::string_view b, size_t maxCount);
+
+		//
 		// Other string utility functions.
 		//
 
