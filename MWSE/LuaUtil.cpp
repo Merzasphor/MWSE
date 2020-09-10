@@ -284,6 +284,33 @@ namespace mwse {
 			return value;
 		}
 
+		sol::optional<TES3::Vector2> getOptionalParamVector2(sol::optional<sol::table> maybeParams, const char* key) {
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeValue = params[key];
+				if (maybeValue.valid()) {
+					// Were we given a real vector?
+					if (maybeValue.is<TES3::Vector2>()) {
+						return maybeValue.as<TES3::Vector2>();
+					}
+					// Were we given a vector3 for some reason?
+					else if (maybeValue.is<TES3::Vector3>()) {
+						return TES3::Vector2(maybeValue.as<TES3::Vector2&>().x, maybeValue.as<TES3::Vector2&>().y);
+					}
+					// Were we given a table?
+					else if (maybeValue.get_type() == sol::type::table) {
+						sol::table value = maybeValue.as<sol::table>();
+						TES3::Vector2 result;
+						result.x = value[1];
+						result.y = value[2];
+						return TES3::Vector3(value[1], value[2], value[3]);
+					}
+				}
+			}
+
+			return {};
+		}
+
 		sol::optional<TES3::Vector3> getOptionalParamVector3(sol::optional<sol::table> maybeParams, const char* key) {
 			if (maybeParams) {
 				sol::table params = maybeParams.value();
@@ -297,16 +324,16 @@ namespace mwse {
 					// Were we given a table?
 					else if (maybeValue.get_type() == sol::type::table) {
 						sol::table value = maybeValue.as<sol::table>();
-						TES3::Vector3* result = tes3::malloc<TES3::Vector3>();
-						result->x = value[1];
-						result->y = value[2];
-						result->z = value[3];
-						return TES3::Vector3(value[1], value[2], value[3]);
+						TES3::Vector3 result;
+						result.x = value[1];
+						result.y = value[2];
+						result.z = value[3];
+						return result;
 					}
 				}
 			}
 
-			return sol::optional<TES3::Vector3>();
+			return {};
 		}
 
 		TES3::Cell* getOptionalParamCell(sol::optional<sol::table> maybeParams, const char* key) {

@@ -42,9 +42,9 @@ namespace TES3 {
 		TES3_Cell_setName(this, name);
 	}
 
-	const auto TES3_Cell_addMapNote = reinterpret_cast<void(__thiscall*)(Cell*, Vector3*, float, const char*)>(0x4E3730);
-	void Cell::addMapNote(Vector3* position, float positionZ, const char* text) {
-		TES3_Cell_addMapNote(this, position, positionZ, text);
+	const auto TES3_Cell_addMapNote = reinterpret_cast<void(__thiscall*)(Cell*, Vector2*, float, const char*)>(0x4E3730);
+	void Cell::addMapNote(Vector2* position, float unknown, const char* text) {
+		TES3_Cell_addMapNote(this, position, unknown, text);
 	}
 
 	const auto TES3_Cell_insertReference = reinterpret_cast<void(__thiscall *)(Cell*, Reference*)>(0x4DC030);
