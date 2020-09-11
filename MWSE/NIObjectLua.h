@@ -1,6 +1,7 @@
 #pragma once
 
 #include "NIObject.h"
+#include "NIExtraData.h"
 #include "NINode.h"
 #include "NIRTTI.h"
 
@@ -32,13 +33,18 @@ namespace mwse {
 
 			// Basic property binding.
 			usertypeDefinition["controller"] = sol::readonly_property(&NI::ObjectNET::controllers);
+			usertypeDefinition["extraData"] = sol::readonly_property(&NI::ObjectNET::extraData);
 			usertypeDefinition["name"] = sol::property(&NI::ObjectNET::getName, &NI::ObjectNET::setName);
 
 			// Basic function binding.
-			usertypeDefinition["prependController"] = &NI::ObjectNET::prependController;
-			usertypeDefinition["removeController"] = &NI::ObjectNET::removeController;
-			usertypeDefinition["removeAllControllers"] = &NI::ObjectNET::removeAllControllers;
 			usertypeDefinition["getGameReference"] = &NI::ObjectNET::getTes3Reference_lua;
+			usertypeDefinition["getStringDataStartingWith"] = &NI::ObjectNET::getStringDataStartingWithValue;
+			usertypeDefinition["getStringDataWith"] = &NI::ObjectNET::getStringDataWithValue;
+			usertypeDefinition["hasStringDataStartingWith"] = &NI::ObjectNET::hasStringDataStartingWithValue;
+			usertypeDefinition["hasStringDataWith"] = &NI::ObjectNET::hasStringDataWithValue;
+			usertypeDefinition["prependController"] = &NI::ObjectNET::prependController;
+			usertypeDefinition["removeAllControllers"] = &NI::ObjectNET::removeAllControllers;
+			usertypeDefinition["removeController"] = &NI::ObjectNET::removeController;
 		}
 
 		// Speed-optimized binding for NI::AVObject.

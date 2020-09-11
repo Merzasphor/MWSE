@@ -28,8 +28,9 @@ namespace TES3 {
 		IteratedList<MobileActor*> unknown_0x4;
 		bool unknown_0x18;
 		bool unknown_0x19; // Maybe force new actions?
-		_RTL_CRITICAL_SECTION criticalSection;
-		unsigned char unknown[0x7FC];
+		_RTL_CRITICAL_SECTION criticalSection; // 0x1C
+		unsigned char unknown[0x7F8]; // 0x34
+		float aiDistance; // 0x82C
 
 		//
 		// Related this-call functions.
@@ -39,6 +40,9 @@ namespace TES3 {
 		bool detectSneak(MobileActor* detector, MobileActor* target, bool unknown = true);
 		void checkRadius(MobileActor * actor, IteratedList<AIPlanner*> * container);
 		void checkPlayerDistance();
+
+		float getAIDistanceScale() const;
+		void setAIDistanceScale(float scalar);
 
 	};
 	static_assert(sizeof(MobController_0x24) == 0x830, "TES3::MobController_0x24 failed size validation");

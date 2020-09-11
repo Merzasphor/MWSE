@@ -11,6 +11,7 @@
 #include "NIDefines.h"
 #include "NIDirectionalLight.h"
 #include "NIDynamicEffect.h"
+#include "NIExtraData.h"
 #include "NINode.h"
 #include "NIObject.h"
 #include "NIObjectNET.h"
@@ -277,6 +278,30 @@ namespace mwse {
 			}
 
 			return value;
+		}
+
+		sol::optional<TES3::Vector2> getOptionalParamVector2(sol::optional<sol::table> maybeParams, const char* key) {
+			if (maybeParams) {
+				sol::table params = maybeParams.value();
+				sol::object maybeValue = params[key];
+				if (maybeValue.valid()) {
+					// Were we given a real vector?
+					if (maybeValue.is<TES3::Vector2>()) {
+						return maybeValue.as<TES3::Vector2>();
+					}
+					// Were we given a vector3 for some reason?
+					else if (maybeValue.is<TES3::Vector3>()) {
+						return TES3::Vector2(maybeValue.as<TES3::Vector2&>().x, maybeValue.as<TES3::Vector2&>().y);
+					}
+					// Were we given a table?
+					else if (maybeValue.get_type() == sol::type::table) {
+						sol::table value = maybeValue.as<sol::table>();
+						return TES3::Vector2(value[1], value[2]);
+					}
+				}
+			}
+
+			return {};
 		}
 
 		sol::optional<TES3::Vector3> getOptionalParamVector3(sol::optional<sol::table> maybeParams, const char* key) {

@@ -49,7 +49,7 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition["activeQuests"] = &TES3::WorldController::journalController;
-				usertypeDefinition["aiDistance"] = &TES3::WorldController::aiDistance;
+				usertypeDefinition["aiDistanceScale"] = sol::property(&TES3::WorldController::getAIDistanceScale, &TES3::WorldController::setAIDistanceScale);
 				usertypeDefinition["armCamera"] = &TES3::WorldController::armCamera;
 				usertypeDefinition["audioController"] = sol::readonly_property(&TES3::WorldController::audioController);
 				usertypeDefinition["blindnessFader"] = sol::readonly_property(&TES3::WorldController::blindnessFader);
@@ -134,6 +134,9 @@ namespace mwse {
 				usertypeDefinition["windowHandle"] = &TES3::WorldController::Win32_hWnd;
 				usertypeDefinition["worldCamera"] = &TES3::WorldController::worldCamera;
 				usertypeDefinition["year"] = &TES3::WorldController::gvarYear;
+
+				// Legacy bindings.
+				usertypeDefinition["aiDistance"] = sol::property(&TES3::WorldController::getAIDistanceScale, &TES3::WorldController::setAIDistanceScale);
 
 				// Basic function binding.
 				usertypeDefinition["applyEnchantEffect"] = &TES3::WorldController::applyEnchantEffect;

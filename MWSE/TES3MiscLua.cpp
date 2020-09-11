@@ -60,6 +60,7 @@ namespace mwse {
 
 				// Functions exposed as properties.
 				usertypeDefinition["icon"] = sol::property(&TES3::Misc::getIconPath, &TES3::Misc::setIconPath);
+				usertypeDefinition["isGold"] = sol::readonly_property(&TES3::Misc::isGold);
 				usertypeDefinition["isKey"] = sol::property(&TES3::Misc::getIsKey, &TES3::Misc::setIsKey);
 				usertypeDefinition["isSoulGem"] = sol::readonly_property(&TES3::Misc::isSoulGem);
 				usertypeDefinition["soulGemData"] = sol::readonly_property(&TES3::Misc::getSoulGemData);

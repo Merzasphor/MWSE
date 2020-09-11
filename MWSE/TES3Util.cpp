@@ -172,7 +172,7 @@ namespace mwse {
 
 			// If we were given a reference, look at the base object.
 			if (objectOrReference->objectType == TES3::ObjectType::Reference) {
-				return isSoulGem(reinterpret_cast<const TES3::Reference*>(objectOrReference)->baseObject);
+				objectOrReference = reinterpret_cast<const TES3::Reference*>(objectOrReference)->baseObject;
 			}
 
 			if (objectOrReference->objectType == TES3::ObjectType::Misc) {

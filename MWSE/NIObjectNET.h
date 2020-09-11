@@ -1,5 +1,6 @@
 #pragma once
 
+#include "NIDefines.h"
 #include "NIObject.h"
 #include "NITimeController.h"
 
@@ -21,6 +22,16 @@ namespace NI {
 
 		const char* getName() const;
 		void setName(const char* name);
+
+		//
+		// Custom functions.
+		//
+
+		StringExtraData* getStringDataWithValue(const char* value) const;
+		bool hasStringDataWithValue(const char* value) const;
+
+		StringExtraData* getStringDataStartingWithValue(const char* value) const;
+		bool hasStringDataStartingWithValue(const char* value) const;
 
 		//
 		// Custom functions.

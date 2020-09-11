@@ -113,10 +113,13 @@
     <ClInclude Include="LuaSimulateEvent.h" />
     <ClInclude Include="LuaSkillExerciseEvent.h" />
     <ClInclude Include="LuaSkillRaisedEvent.h" />
+    <ClInclude Include="LuaAddSoundEvent.h" />
+    <ClInclude Include="LuaSoundObjectPlayEvent.h" />
     <ClInclude Include="LuaSpellCastedEvent.h" />
     <ClInclude Include="LuaSpellCastEvent.h" />
     <ClInclude Include="LuaSpellResistEvent.h" />
     <ClInclude Include="LuaSpellTickEvent.h" />
+    <ClInclude Include="LuaAddTempSoundEvent.h" />
     <ClInclude Include="LuaUiObjectTooltipEvent.h" />
     <ClInclude Include="LuaUiRefreshedEvent.h" />
     <ClInclude Include="LuaUiSpellTooltipEvent.h" />
@@ -132,6 +135,7 @@
     <ClInclude Include="NIBound.h" />
     <ClInclude Include="NIDX8Renderer.h" />
     <ClInclude Include="NIExtraData.h" />
+    <ClInclude Include="NIExtraDataLua.h" />
     <ClInclude Include="NIGeometry.h" />
     <ClInclude Include="NIGeometryData.h" />
     <ClInclude Include="NIGeometryDataLua.h" />
@@ -160,6 +164,7 @@
     <ClInclude Include="TES3BirthsignLua.h" />
     <ClInclude Include="TES3BodyPartManager.h" />
     <ClInclude Include="TES3Deque.h" />
+    <ClInclude Include="TES3GoldData.h" />
     <ClInclude Include="TES3HashMap.h" />
     <ClInclude Include="TES3IteratedList.h" />
     <ClInclude Include="TES3LinkedObjectsList.h" />
@@ -530,10 +535,13 @@
     <ClCompile Include="LuaSimulateEvent.cpp" />
     <ClCompile Include="LuaSkillExerciseEvent.cpp" />
     <ClCompile Include="LuaSkillRaisedEvent.cpp" />
+    <ClCompile Include="LuaAddSoundEvent.cpp" />
+    <ClCompile Include="LuaSoundObjectPlayEvent.cpp" />
     <ClCompile Include="LuaSpellCastedEvent.cpp" />
     <ClCompile Include="LuaSpellCastEvent.cpp" />
     <ClCompile Include="LuaSpellResistEvent.cpp" />
     <ClCompile Include="LuaSpellTickEvent.cpp" />
+    <ClCompile Include="LuaAddTempSound.cpp" />
     <ClCompile Include="LuaTimer.cpp" />
     <ClCompile Include="LuaUiObjectTooltipEvent.cpp" />
     <ClCompile Include="LuaUiRefreshedEvent.cpp" />
@@ -551,6 +559,8 @@
     <ClCompile Include="NICamera.cpp" />
     <ClCompile Include="NICollisionSwitch.cpp" />
     <ClCompile Include="NIDynamicEffectLua.cpp" />
+    <ClCompile Include="NIExtraData.cpp" />
+    <ClCompile Include="NIExtraDataLua.cpp" />
     <ClCompile Include="NIGeometry.cpp" />
     <ClCompile Include="NIGeometryData.cpp" />
     <ClCompile Include="NIGeometryDataLua.cpp" />
@@ -573,6 +583,7 @@
     <ClCompile Include="TES3Activator.cpp" />
     <ClCompile Include="TES3Apparatus.cpp" />
     <ClCompile Include="TES3Attachment.cpp" />
+    <ClCompile Include="TES3AIConfig.cpp" />
     <ClCompile Include="TES3Birthsign.cpp" />
     <ClCompile Include="TES3BirthsignLua.cpp" />
     <ClCompile Include="TES3BodyPartManager.cpp" />

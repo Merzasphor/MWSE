@@ -34,6 +34,8 @@ namespace TES3 {
 		SoulGemData * getSoulGemData() const;
 		bool isSoulGem() const;
 
+		bool isGold() const;
+
 		bool getIsKey() const;
 		void setIsKey(bool value);
 

@@ -12,6 +12,7 @@
 #include "TES3Cell.h"
 #include "TES3DataHandler.h"
 #include "TES3ItemData.h"
+#include "TES3Misc.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
 #include "TES3WorldController.h"

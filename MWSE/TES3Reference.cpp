@@ -23,6 +23,7 @@
 #include "TES3GameSetting.h"
 #include "TES3ItemData.h"
 #include "TES3Light.h"
+#include "TES3Misc.h"
 #include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
 #include "TES3MobileProjectile.h"
@@ -505,7 +506,7 @@ namespace TES3 {
 
 			if (lockData && lockData->trap) {
 				if (chance <= 0 || chance <= (mwse::tes3::rand() % 100)) {
-					dataHandler->addSound("Disarm Trap Fail", this, 0, worldController->audioController->getMixVolume(AudioMixType::Effects) * 250);
+					dataHandler->addSoundById("Disarm Trap Fail", this, 0, worldController->audioController->getMixVolume(AudioMixType::Effects) * 250);
 					if (chance <= 0) {
 						mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sTrapImpossible]->value.asString);
 					}
@@ -517,7 +518,7 @@ namespace TES3 {
 					lockData->trap = nullptr;
 					setObjectModified(true);
 					Game::get()->clearTarget();
-					dataHandler->addSound("Disarm Trap", this, 0, worldController->audioController->getMixVolume(AudioMixType::Effects) * 250);
+					dataHandler->addSoundById("Disarm Trap", this, 0, worldController->audioController->getMixVolume(AudioMixType::Effects) * 250);
 
 					auto macp = worldController->getMobilePlayer();
 					if (macp == disarmer) {
@@ -565,7 +566,7 @@ namespace TES3 {
 
 			if (lockData && lockData->lockLevel > 0) {
 				if (chance <= 0 || chance <= (mwse::tes3::rand() % 100)) {
-					dataHandler->addSound("Open Lock Fail", this, 0, worldController->audioController->getMixVolume(AudioMixType::Effects) * 250);
+					dataHandler->addSoundById("Open Lock Fail", this, 0, worldController->audioController->getMixVolume(AudioMixType::Effects) * 250);
 					if (chance <= 0) {
 						mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sLockImpossible]->value.asString);
 					}
@@ -577,7 +578,7 @@ namespace TES3 {
 					lockData->locked = false;
 					setObjectModified(true);
 					Game::get()->clearTarget();
-					dataHandler->addSound("Open Lock", this, 0, worldController->audioController->getMixVolume(AudioMixType::Effects) * 250);
+					dataHandler->addSoundById("Open Lock", this, 0, worldController->audioController->getMixVolume(AudioMixType::Effects) * 250);
 
 					auto macp = worldController->getMobilePlayer();
 					if (macp == disarmer) {
@@ -823,11 +824,16 @@ namespace TES3 {
 
 		// Prevent adding a lua table if there's more than one item involved.
 		if (itemData && itemData->count > 1) {
-			throw std::exception("Cannot create lua data when more than one item is present.");
+			return sol::nil;
 		}
 
 		// Create the item data if it doesn't already exist.
 		if (itemData == nullptr) {
+			// Gold does all kinds of funky things. No ItemData creation on it is allowed.
+			if (baseObject->objectType == ObjectType::Misc && static_cast<Misc*>(baseObject)->isGold()) {
+				return sol::nil;
+			}
+
 			itemData = ItemData::createForObject(baseObject);
 			setAttachedItemData(itemData);
 		}

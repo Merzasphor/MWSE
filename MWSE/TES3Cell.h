@@ -137,7 +137,7 @@ namespace TES3 {
 
 		void setName(const char* name);
 
-		void addMapNote(Vector3* position, float positionZ, const char* text);
+		void addMapNote(Vector2* position, float unknown, const char* text);
 
 		void insertReference(Reference* reference);
 

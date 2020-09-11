@@ -3,11 +3,13 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
-#include "LuaLoadGameEvent.h"
+#include "LuaAddSoundEvent.h"
+#include "LuaAddTempSoundEvent.h"
 #include "LuaLoadedGameEvent.h"
+#include "LuaLoadGameEvent.h"
 #include "LuaMeshLoadedEvent.h"
-#include "LuaSaveGameEvent.h"
 #include "LuaSavedGameEvent.h"
+#include "LuaSaveGameEvent.h"
 
 #include "TES3Util.h"
 
@@ -32,8 +34,6 @@
 #define TES3_NonDynamicData_addNewObject 0x4B8980
 #define TES3_NonDynamicData_deleteObject 0x4B8B20
 
-#define TES3_DataHandler_addSound 0x48BD40
-#define TES3_DataHandler_addSoundByName 0x48BCB0
 #define TES3_DataHandler_getSoundPlaying 0x48BBD0
 #define TES3_DataHandler_removeSound 0x48C0D0
 #define TES3_Audio_setBufferVolume 0x4029F0
@@ -283,16 +283,55 @@ namespace TES3 {
 		}
 	}
 
+	const auto TES3_DataHandler_addSound = reinterpret_cast<void(__thiscall*)(DataHandler*, Sound*, Reference*, int, unsigned char, float, bool, int)>(0x48BD40);
 	void DataHandler::addSound(Sound* sound, Reference* reference, int playbackFlags, unsigned char volume, float pitch, bool isVoiceover, int unknown) {
-		reinterpret_cast<void(__thiscall *)(DataHandler*, Sound*, Reference*, int, unsigned char, float, int, int)>(TES3_DataHandler_addSound)(this, sound, reference, playbackFlags, volume, pitch, isVoiceover, unknown);
+		if (mwse::lua::event::AddSoundEvent::getEventEnabled()) {
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::AddSoundEvent(sound, reference, playbackFlags, volume, pitch, isVoiceover));
+			if (eventData.valid()) {
+				if (eventData["block"] == true) {
+					return;
+				}
+
+				// Override event data.
+				sound = eventData["sound"];
+				reference = eventData["reference"];
+				volume = eventData["volume"];
+				pitch = eventData["pitch"];
+				isVoiceover = eventData["isVoiceover"];
+			}
+		}
+
+		TES3_DataHandler_addSound(this, sound, reference, playbackFlags, volume, pitch, isVoiceover, unknown);
 	}
 
-	Sound* DataHandler::addSound(const char* soundId, Reference* reference, int playbackFlags, unsigned char volume, float pitch, int unknown) {
-		return reinterpret_cast<Sound*(__thiscall *)(DataHandler*, const char*, Reference*, int, unsigned char, float, int)>(TES3_DataHandler_addSoundByName)(this, soundId, reference, playbackFlags, volume, pitch, unknown);
+	const auto TES3_DataHandler_addSoundById = reinterpret_cast<Sound*(__thiscall*)(DataHandler*, const char*, Reference*, int, unsigned char, float, int)>(0x48BCB0);
+	Sound* DataHandler::addSoundById(const char* soundId, Reference* reference, int playbackFlags, unsigned char volume, float pitch, int unknown) {
+		return TES3_DataHandler_addSoundById(this, soundId, reference, playbackFlags, volume, pitch, unknown);
 	}
 
 	const auto TES3_DataHandler_addTemporySound = reinterpret_cast<void(__thiscall*)(DataHandler*, const char*, Reference*, int, int, float, bool, Sound*)>(0x48C2B0);
 	void DataHandler::addTemporySound(const char* path, Reference * reference, int playbackFlags, int volume, float pitch, bool isVoiceover, Sound * sound) {
+		if (mwse::lua::event::AddTempSoundEvent::getEventEnabled()) {
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::AddTempSoundEvent(path, reference, playbackFlags, volume, pitch, isVoiceover, sound));
+			if (eventData.valid()) {
+				if (eventData["block"] == true) {
+					return;
+				}
+
+				// Override event data.
+				path = eventData.get_or<const char*>("path", path);
+				reference = eventData["reference"];
+				volume = eventData["volume"];
+				pitch = eventData["pitch"];
+				isVoiceover = eventData["isVoiceover"];
+				sound = eventData["sound"];
+			}
+		}
+
 		TES3_DataHandler_addTemporySound(this, path, reference, playbackFlags, volume, pitch, isVoiceover, sound);
 	}
 

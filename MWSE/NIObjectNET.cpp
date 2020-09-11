@@ -6,6 +6,8 @@
 
 #include "TES3Reference.h"
 
+#include "StringUtil.h"
+
 namespace NI {
 	const auto NI_ObjectNET_prependController = reinterpret_cast<void(__thiscall*)(const ObjectNET*, TimeController*)>(0x6EA3E0);
 	const auto NI_ObjectNET_removeController = reinterpret_cast<void(__thiscall*)(const ObjectNET*, TimeController*)>(0x6EA450);
@@ -31,6 +33,41 @@ namespace NI {
 
 	void ObjectNET::setName(const char* name) {
 		NI_ObjectNET_setName(this, name);
+	}
+
+	StringExtraData* ObjectNET::getStringDataWithValue(const char* value) const {
+		auto extra = extraData;
+		while (extra) {
+			if (extra->isInstanceOfType(NI::RTTIStaticPtr::NiStringExtraData)) {
+				if (mwse::string::iequal(value, reinterpret_cast<NI::StringExtraData*>(extra)->string)) {
+					return reinterpret_cast<NI::StringExtraData*>(extra);
+				}
+			}
+			extra = extra->next;
+		}
+		return nullptr;
+	}
+
+	bool ObjectNET::hasStringDataWithValue(const char* value) const {
+		return getStringDataWithValue(value) != nullptr;
+	}
+
+	StringExtraData* ObjectNET::getStringDataStartingWithValue(const char* value) const {
+		size_t maxCount = strlen(value);
+		auto extra = extraData;
+		while (extra) {
+			if (extra->isInstanceOfType(NI::RTTIStaticPtr::NiStringExtraData)) {
+				if (mwse::string::niequal(value, reinterpret_cast<NI::StringExtraData*>(extra)->string, maxCount)) {
+					return reinterpret_cast<NI::StringExtraData*>(extra);
+				}
+			}
+			extra = extra->next;
+		}
+		return nullptr;
+	}
+
+	bool ObjectNET::hasStringDataStartingWithValue(const char* value) const {
+		return getStringDataStartingWithValue(value) != nullptr;
 	}
 
 	TES3::Reference* ObjectNET::getTes3Reference(bool searchParents) {

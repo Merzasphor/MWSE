@@ -12,6 +12,7 @@
 #include "NICamera.h"
 #include "NICollisionSwitch.h"
 #include "NIDirectionalLight.h"
+#include "NIExtraData.h"
 #include "NINode.h"
 #include "NIObjectNET.h"
 #include "NIPixelData.h"
@@ -122,6 +123,9 @@ namespace NI {
 			case RTTIStaticPtr::NiDirectionalLight:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<DirectionalLight*>(this)));
 				break;
+			case RTTIStaticPtr::NiExtraData:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<ExtraData*>(this)));
+				break;
 			case RTTIStaticPtr::NiFogProperty:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<FogProperty*>(this)));
 				break;
@@ -152,11 +156,20 @@ namespace NI {
 			case RTTIStaticPtr::NiStencilProperty:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<StencilProperty*>(this)));
 				break;
+			case RTTIStaticPtr::NiStringExtraData:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<StringExtraData*>(this)));
+				break;
 			case RTTIStaticPtr::NiSwitchNode:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<SwitchNode*>(this)));
 				break;
+			case RTTIStaticPtr::TES3ObjectExtraData:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<Tes3ExtraData*>(this)));
+				break;
 			case RTTIStaticPtr::NiTexturingProperty:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<TexturingProperty*>(this)));
+				break;
+			case RTTIStaticPtr::NiTextKeyExtraData:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<TextKeyExtraData*>(this)));
 				break;
 			case RTTIStaticPtr::NiTriShape:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<TriShape*>(this)));

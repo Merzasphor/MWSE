@@ -4,6 +4,7 @@
 #include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
 #include "TES3GlobalVariable.h"
+#include "TES3MobController.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
 #include "TES3UIManager.h"
@@ -237,6 +238,24 @@ namespace TES3 {
 	const auto TES3_WorldController_updateEnvironmentLightingWeather = reinterpret_cast<void(__thiscall*)(WorldController*)>(0x4100D0);
 	void WorldController::updateEnvironmentLightingWeather() {
 		TES3_WorldController_updateEnvironmentLightingWeather(this);
+	}
+
+	float WorldController::getAIDistance() const {
+		return mobController->mobController_0x24->aiDistance;
+	}
+
+	void WorldController::setAIDistance(float value) {
+		mobController->mobController_0x24->aiDistance = value;
+		aiDistanceScale = mobController->mobController_0x24->getAIDistanceScale();
+	}
+
+	float WorldController::getAIDistanceScale() const {
+		return aiDistanceScale;
+	}
+
+	void WorldController::setAIDistanceScale(float scale) {
+		aiDistanceScale = scale;
+		mobController->mobController_0x24->setAIDistanceScale(scale);
 	}
 
 	void WorldController::tickClock() {
