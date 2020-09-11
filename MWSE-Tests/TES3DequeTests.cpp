@@ -148,6 +148,12 @@ public:
 		Assert::AreEqual(container.size() * 5, sum);
 	}
 
+	TEST_METHOD(AccumulateEmpty) {
+		TES3::Deque<int> container;
+		unsigned int sum = std::accumulate(container.begin(), container.end(), 0);
+		Assert::AreEqual(0U, sum);
+	}
+
 	TEST_METHOD(AccumulateConstant) {
 		TES3::Deque<int> container;
 		for (auto i = 0; i < 10; i++) {

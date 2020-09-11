@@ -142,7 +142,7 @@ namespace TES3 {
 		using reverse_iterator = std::reverse_iterator<iterator>;
 		using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
-		iterator begin() const { return iterator(head, this); }
+		iterator begin() const { return iterator(head ? head : sentinel(), this); }
 		iterator end() const { return iterator(sentinel(), this); }
 		reverse_iterator rbegin() const { return std::make_reverse_iterator(end()); }
 		reverse_iterator rend() const { return std::make_reverse_iterator(begin()); }
