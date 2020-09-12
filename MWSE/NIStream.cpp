@@ -3,12 +3,12 @@
 #include "MemoryUtil.h"
 
 namespace NI {
-	const auto NI_Stream_ctor = reinterpret_cast<void(__thiscall*)(Stream*)>(0x51AD20);
+	const auto NI_Stream_ctor = reinterpret_cast<void(__thiscall*)(Stream*)>(0x6C2B60);
 	Stream::Stream() {
 		NI_Stream_ctor(this);
 	}
 
-	const auto NI_Stream_dtor = reinterpret_cast<void(__thiscall*)(Stream*)>(0x51AD60);
+	const auto NI_Stream_dtor = reinterpret_cast<void(__thiscall*)(Stream*)>(0x6C2DD0);
 	Stream::~Stream() {
 		NI_Stream_dtor(this);
 	}
