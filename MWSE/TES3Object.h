@@ -332,6 +332,8 @@ namespace TES3 {
 		Object * skipDeletedObjects();
 		ReferenceList* getOwningCollection();
 
+		void setScale_lua(float scale);
+
 	};
 	static_assert(sizeof(Object) == 0x28, "TES3::Object failed size validation");
 

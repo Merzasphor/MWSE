@@ -534,6 +534,10 @@ namespace TES3 {
 		return owningCollection.asReferenceList;
 	}
 
+	void Object::setScale_lua(float scale) {
+		setScale(scale);
+	}
+
 	//
 	// PhysicalObject
 	//
