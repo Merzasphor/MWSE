@@ -11,10 +11,15 @@
 
 namespace mwse {
 	namespace lua {
-		TES3::Spell* createSpell(std::string id, std::string name) {
+		TES3::Spell* createSpell(std::string id, sol::optional<std::string> name) {
 			// Make sure a spell doesn't already exist with this id.
-			if (TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<TES3::Spell>(id, TES3::ObjectType::Spell) != NULL) {
-				return NULL;
+			if (TES3::DataHandler::get()->nonDynamicData->resolveObjectByType<TES3::Spell>(id, TES3::ObjectType::Spell) != nullptr) {
+				return nullptr;
+			}
+
+			// Limit name to 31 characters.
+			if (name && name.value().length() > 31) {
+				throw std::invalid_argument("Name must be 31 characters or fewer.");
 			}
 
 			// Get spell list.
@@ -22,25 +27,19 @@ namespace mwse {
 			TES3::Spell* spellListHead = *spellsList->begin();
 
 			// Create new spell.
-			TES3::Spell* newSpell = tes3::malloc<TES3::Spell>();
+			TES3::Spell* newSpell = new TES3::Spell();
 			memset(newSpell, 0, sizeof(TES3::Spell));
-			newSpell->vTable = spellListHead->vTable;
-			newSpell->objectType = TES3::ObjectType::Spell;
 			newSpell->owningCollection.asSpellList = spellsList;
 			newSpell->magickaCost = 1;
 
-			// Limit name to 31 characters.
-			if (name.length() > 31) {
-				return NULL;
-			}
-
 			// Set id/name.
 			newSpell->setID(id.c_str());
-			newSpell->setName(name.c_str());
 
-			// Set effects.
-			for (int i = 0; i < 8; i++) {
-				newSpell->effects[i].effectID = TES3::EffectID::None;
+			if (name) {
+				newSpell->setName(name.value().c_str());
+			}
+			else {
+				newSpell->setName("");
 			}
 
 			// Set the first effect just so that there is something? TODO: Why?

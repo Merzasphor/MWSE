@@ -10,6 +10,16 @@
 #include "TES3Util.h"
 
 namespace TES3 {
+	const auto TES3_Spell_ctor = reinterpret_cast<TES3::Spell * (__thiscall*)(TES3::Spell*)>(0x4A9FD0);
+	Spell::Spell() {
+		TES3_Spell_ctor(this);
+	}
+
+	const auto TES3_Spell_dtor = reinterpret_cast<void (__thiscall*)(TES3::Spell*)>(0x4AA0E0);
+	Spell::~Spell() {
+		TES3_Spell_dtor(this);
+	}
+
 	float Spell::calculateCastChance(Reference* caster, bool checkMagicka, int* weakestSchoolId) {
 		MobileActor* mobileCaster = nullptr;
 		if (caster) {

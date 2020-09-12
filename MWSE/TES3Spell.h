@@ -57,6 +57,9 @@ namespace TES3 {
 		Effect effects[8]; // 0x34
 		unsigned int spellFlags; //  0xF4
 
+		Spell();
+		~Spell();
+
 		//
 		// Other related this-call functions.
 		//
