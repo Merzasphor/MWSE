@@ -33,3 +33,7 @@ namespace TES3 {
 		container->capacity = value;
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::ContainerBase)
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::Container)
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::ContainerInstance)

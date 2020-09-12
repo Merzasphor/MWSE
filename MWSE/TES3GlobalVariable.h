@@ -15,3 +15,5 @@ namespace TES3 {
 	};
 	static_assert(sizeof(GlobalVariable) == 0x38, "TES3::GlobalVariable failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::GlobalVariable)

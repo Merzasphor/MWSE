@@ -30,3 +30,5 @@ namespace TES3 {
 		setFlag(TES3::BodyPartFlag::Playable, value);
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::BodyPart)

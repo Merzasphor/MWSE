@@ -27,3 +27,5 @@ namespace NI {
 	};
 	static_assert(sizeof(TriShape) == 0xAC, "NI::TriShape failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_NI(NI::TriShape)

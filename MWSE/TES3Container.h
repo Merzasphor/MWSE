@@ -56,3 +56,7 @@ namespace TES3 {
 	};
 	static_assert(sizeof(ContainerInstance) == 0x70, "TES3::ContainerInstance failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::ContainerBase)
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::Container)
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::ContainerInstance)

@@ -23,3 +23,5 @@ namespace NI {
 		return createFromPath(path);
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_NI(NI::SourceTexture)

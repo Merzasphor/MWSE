@@ -122,3 +122,5 @@ namespace TES3 {
 		return std::move(ss.str());
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::DialogueInfo)

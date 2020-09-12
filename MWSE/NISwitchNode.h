@@ -20,3 +20,5 @@ namespace NI {
 	};
 	static_assert(sizeof(SwitchNode) == 0xD8, "NI::SwitchNode failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_NI(NI::SwitchNode)

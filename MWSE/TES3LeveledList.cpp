@@ -75,3 +75,6 @@ namespace TES3 {
 		return TES3_LeveledItem_RemoveEntry(this, entry, level);
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::LeveledCreature)
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::LeveledItem)

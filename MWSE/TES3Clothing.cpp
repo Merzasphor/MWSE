@@ -14,3 +14,5 @@ namespace TES3 {
 		return std::ref(parts);
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::Clothing)

@@ -17,3 +17,5 @@ namespace NI {
 	};
 	static_assert(sizeof(CollisionSwitch) == 0xB0, "NI::CollisionSwitch failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_NI(NI::CollisionSwitch)

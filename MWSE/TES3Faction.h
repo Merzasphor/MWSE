@@ -79,3 +79,5 @@ namespace TES3 {
 	static_assert(sizeof(Faction::ReactionNode) == 0x8, "TES3::Faction::ReactionNode failed size validation");
 	static_assert(sizeof(Faction) == 0x2A0, "TES3::Faction failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::Faction)

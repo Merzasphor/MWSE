@@ -51,3 +51,5 @@ namespace NI {
 	};
 	static_assert(sizeof(PixelRGBA) == 0x4, "NI::PixelRGBA failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_NI(NI::PixelData)

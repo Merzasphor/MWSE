@@ -17,3 +17,5 @@ namespace TES3 {
 		TES3_Activator_dtor(this);
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::Activator)

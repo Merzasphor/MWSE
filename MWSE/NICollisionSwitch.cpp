@@ -18,3 +18,5 @@ namespace NI {
 		return new CollisionSwitch();
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_NI(NI::CollisionSwitch)

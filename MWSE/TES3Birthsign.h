@@ -22,3 +22,5 @@ namespace TES3 {
 	};
 	static_assert(sizeof(Birthsign) == 0x58, "TES3::Birthsign failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::Birthsign)

@@ -90,3 +90,5 @@ namespace TES3 {
 		float weight;
 	};
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::Armor)

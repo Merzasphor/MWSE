@@ -127,3 +127,7 @@ namespace TES3 {
 	};
 	static_assert(sizeof(NPCInstance) == 0x78, "TES3::NPCInstance failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::NPCBase)
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::NPC)
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::NPCInstance)

@@ -21,3 +21,5 @@ namespace TES3 {
 		return std::move(desc);
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::Birthsign)

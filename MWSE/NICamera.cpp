@@ -6,3 +6,5 @@ namespace NI {
 		NI_Camera_click(this, something);
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_NI(NI::Camera)

@@ -82,3 +82,5 @@ namespace TES3 {
 	};
 	static_assert(sizeof(Script) == 0x70, "TES3::Script failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::Script)

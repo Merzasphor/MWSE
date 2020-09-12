@@ -22,3 +22,5 @@ namespace TES3 {
 	};
 	static_assert(sizeof(Land) == 0x240, "TES3::Land failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::Land)

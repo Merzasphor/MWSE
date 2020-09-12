@@ -12,3 +12,5 @@ namespace NI {
 		switchIndex = index;
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_NI(NI::SwitchNode)

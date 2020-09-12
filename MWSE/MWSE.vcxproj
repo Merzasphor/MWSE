@@ -555,9 +555,11 @@
     <ClCompile Include="LuaWeatherTransitionFinishedEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionStartedEvent.cpp" />
     <ClCompile Include="MWSEUtilLua.cpp" />
+    <ClCompile Include="NIAmbientLight.cpp" />
     <ClCompile Include="NIBinaryStream.cpp" />
     <ClCompile Include="NICamera.cpp" />
     <ClCompile Include="NICollisionSwitch.cpp" />
+    <ClCompile Include="NIDirectionalLight.cpp" />
     <ClCompile Include="NIDynamicEffectLua.cpp" />
     <ClCompile Include="NIExtraData.cpp" />
     <ClCompile Include="NIExtraDataLua.cpp" />
@@ -568,6 +570,7 @@
     <ClCompile Include="NIProperty.cpp" />
     <ClCompile Include="NIRenderedTexture.cpp" />
     <ClCompile Include="NIRenderer.cpp" />
+    <ClCompile Include="NISpotLight.cpp" />
     <ClCompile Include="NISwitchNode.cpp" />
     <ClCompile Include="NIRTTI.cpp" />
     <ClCompile Include="NITextureEffect.cpp" />
@@ -581,6 +584,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TES3Activator.cpp" />
+    <ClCompile Include="TES3AnimationGroup.cpp" />
     <ClCompile Include="TES3Apparatus.cpp" />
     <ClCompile Include="TES3Attachment.cpp" />
     <ClCompile Include="TES3AIConfig.cpp" />
@@ -589,6 +593,9 @@
     <ClCompile Include="TES3BodyPartManager.cpp" />
     <ClCompile Include="TES3Clothing.cpp" />
     <ClCompile Include="TES3Creature.cpp" />
+    <ClCompile Include="TES3Door.cpp" />
+    <ClCompile Include="TES3GlobalVariable.cpp" />
+    <ClCompile Include="TES3Land.cpp" />
     <ClCompile Include="TES3Lockpick.cpp" />
     <ClCompile Include="TES3MagicEffectController.cpp" />
     <ClCompile Include="MemoryUtil.cpp" />
@@ -657,6 +664,7 @@
     <ClCompile Include="TES3MobileSpellProjectile.cpp" />
     <ClCompile Include="TES3Moon.cpp" />
     <ClCompile Include="TES3PlayerAnimationData.cpp" />
+    <ClCompile Include="TES3Probe.cpp" />
     <ClCompile Include="TES3Quest.cpp" />
     <ClCompile Include="TES3Race.cpp" />
     <ClCompile Include="TES3ReferenceList.cpp" />

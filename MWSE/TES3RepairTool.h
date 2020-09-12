@@ -27,3 +27,5 @@ namespace TES3 {
 	};
 	static_assert(sizeof(RepairTool) == 0xB8, "TES3::RepairTool failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::RepairTool)

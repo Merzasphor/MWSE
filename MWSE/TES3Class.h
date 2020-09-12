@@ -111,3 +111,5 @@ namespace TES3 {
 	};
 	static_assert(sizeof(Class) == 0x94, "TES3::Class failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::Class)

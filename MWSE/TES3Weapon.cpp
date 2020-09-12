@@ -56,3 +56,5 @@ namespace TES3 {
 		return &DataHandler::get()->nonDynamicData->skills[getSkillId()];
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::Weapon)

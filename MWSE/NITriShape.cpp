@@ -15,3 +15,5 @@ namespace NI {
 		return getModelData()->getNormals();
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_NI(NI::TriShape)

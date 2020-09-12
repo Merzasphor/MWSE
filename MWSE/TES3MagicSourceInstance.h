@@ -84,3 +84,5 @@ namespace TES3 {
 	};
 	static_assert(sizeof(MagicSourceInstance) == 0x12C, "TES3::MagicSourceInstance failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::MagicSourceInstance)

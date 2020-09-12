@@ -38,3 +38,5 @@ namespace TES3 {
 	};
 	static_assert(sizeof(BodyPart) == 0x40, "TES3::BodyPart failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::BodyPart)

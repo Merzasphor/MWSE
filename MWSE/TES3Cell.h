@@ -186,3 +186,5 @@ namespace TES3 {
 	static_assert(sizeof(Cell::SourceMod) == 0xC, "TES3::Cell::SourceMod failed size validation");
 	static_assert(sizeof(Cell::MappingVisuals) == 0x18, "TES3::Cell::MappingVisuals failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::Cell)

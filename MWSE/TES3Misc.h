@@ -42,3 +42,5 @@ namespace TES3 {
 	};
 	static_assert(sizeof(Misc) == 0x60, "TES3::Misc failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::Misc)

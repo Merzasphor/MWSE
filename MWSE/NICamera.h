@@ -35,3 +35,5 @@ namespace NI {
 	};
 	static_assert(sizeof(Camera) == 0x1E0, "NI::Camera failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_NI(NI::Camera)

@@ -8,3 +8,5 @@ namespace TES3 {
 		strncpy_s(texture, path, 32);
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::Apparatus)

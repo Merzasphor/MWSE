@@ -42,3 +42,4 @@ namespace TES3 {
 	static_assert(sizeof(Alchemy) == 0x120, "TES3::Alchemy failed size validation");
 }
 
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::Alchemy)

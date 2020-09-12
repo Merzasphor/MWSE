@@ -35,3 +35,5 @@ namespace TES3 {
 	};
 	static_assert(sizeof(Ingredient) == 0xE0, "TES3::Ingredient failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::Ingredient)

@@ -31,3 +31,5 @@ namespace TES3 {
 	};
 	static_assert(sizeof(Book) == 0x70, "TES3::Book failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::Book)

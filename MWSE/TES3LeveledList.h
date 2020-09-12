@@ -55,3 +55,6 @@ namespace TES3 {
 	};
 	static_assert(sizeof(LeveledItem) == 0x40, "TES3::LeveledItem failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::LeveledCreature)
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::LeveledItem)

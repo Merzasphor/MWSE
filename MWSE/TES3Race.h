@@ -117,3 +117,5 @@ namespace TES3 {
 	};
 	static_assert(sizeof(Race) == 0x1D8, "TES3::Race failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::Race)

@@ -53,3 +53,5 @@ namespace TES3 {
 	};
 	static_assert(sizeof(Dialogue) == 0x30, "TES3::Dialogue failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::Dialogue)

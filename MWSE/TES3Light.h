@@ -77,3 +77,5 @@ namespace TES3 {
 	};
 	static_assert(sizeof(Light) == 0x74, "TES3::Light failed size validation");
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::Light)

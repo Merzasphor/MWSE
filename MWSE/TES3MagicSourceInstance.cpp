@@ -60,3 +60,5 @@ namespace TES3 {
 		playSpellVFX(duration, position.value(), reference, 0, visual, effectIndex, 0);
 	}
 }
+
+MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::MagicSourceInstance)
