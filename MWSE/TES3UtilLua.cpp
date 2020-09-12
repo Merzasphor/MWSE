@@ -1079,6 +1079,14 @@ namespace mwse {
 			return nullptr;
 		}
 
+		TES3::Region* findRegion(const char* id) {
+			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+			if (dataHandler) {
+				return dataHandler->nonDynamicData->getRegion(id);
+			}
+			return nullptr;
+		}
+
 		TES3::Weather* getCurrentWeather() {
 			TES3::WorldController* worldController = TES3::WorldController::get();
 			if (worldController) {
@@ -3923,6 +3931,7 @@ namespace mwse {
 			tes3["findDialogue"] = findDialogue;
 			tes3["findGlobal"] = findGlobal;
 			tes3["findGMST"] = findGMST;
+			tes3["findRegion"] = findRegion;
 			tes3["force1stPerson"] = force1stPerson;
 			tes3["force3rdPerson"] = force3rdPerson;
 			tes3["getActiveCells"] = getActiveCells;
