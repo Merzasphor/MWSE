@@ -41,7 +41,7 @@ namespace TES3 {
 		if (mwse::lua::event::DetermineActionEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table result = stateHandle.triggerEvent(new mwse::lua::event::DetermineActionEvent(this));
-			if (result.valid() && result["block"] == true) {
+			if (result.valid() && result.get_or("block", false)) {
 				if (mwse::lua::event::DeterminedActionEvent::getEventEnabled()) {
 					stateHandle.triggerEvent(new mwse::lua::event::DeterminedActionEvent(this));
 				}

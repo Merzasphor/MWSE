@@ -145,9 +145,6 @@ function this.trigger(eventType, payload, options)
 	payload.eventType = eventType
 	payload.eventFilter = options.filter
 
-	payload.claim = false
-	payload.block = false
-
 	local callbacks = table.copy(getEventTable(eventType, options.filter))
 	for _, callback in pairs(callbacks) do
 		local status, result = xpcall(callback, onEventError, payload)

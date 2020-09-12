@@ -629,7 +629,7 @@ namespace mwse {
 				sol::object response = stateHandle.triggerEvent(new event::EquipEvent(TES3::WorldController::get()->getMobilePlayer()->reference, tile->item, tile->itemData));
 				if (response.get_type() == sol::type::table) {
 					sol::table eventData = response;
-					if (eventData["block"] == true) {
+					if (eventData.get_or("block", false)) {
 						// If we want to block it, we need to run some functions to clear the held item back to the inventory.
 						TES3::UI::Element* inventoryMenu = tes3::ui::getMenuNode(tes3::ui::getInventoryMenuId());
 						inventoryMenu->timingUpdate();
@@ -655,7 +655,7 @@ namespace mwse {
 				sol::object response = stateHandle.triggerEvent(new event::EquipEvent(TES3::WorldController::get()->getMobilePlayer()->reference, object, data));
 				if (response.get_type() == sol::type::table) {
 					sol::table eventData = response;
-					if (eventData["block"] == true) {
+					if (eventData.get_or("block", false)) {
 						return 0;
 					}
 				}
@@ -675,7 +675,7 @@ namespace mwse {
 				sol::object response = stateHandle.triggerEvent(new event::EquipEvent(TES3::WorldController::get()->getMobilePlayer()->reference, object, data));
 				if (response.get_type() == sol::type::table) {
 					sol::table eventData = response;
-					if (eventData["block"] == true) {
+					if (eventData.get_or("block", false)) {
 						OnPCEquipItemDoubled_blocked = true;
 						return 0;
 					}
@@ -882,7 +882,7 @@ namespace mwse {
 			if (event::GenericUiPreEvent::getEventEnabled()) {
 				auto stateHandle = luaManager.getThreadSafeStateHandle();
 				sol::table eventData = stateHandle.triggerEvent(new event::GenericUiPreEvent(parent, source, prop, b, c));
-				if (eventData.valid() && eventData["block"] == true) {
+				if (eventData.valid() && eventData.get_or("block", false)) {
 					return 0;
 				}
 			}
@@ -1255,7 +1255,7 @@ namespace mwse {
 				sol::table eventData = stateHandle.triggerEvent(new event::CalcRestInterruptEvent(count, hour));
 				if (eventData.valid()) {
 					// Allow blocking any spawn.
-					if (eventData["block"] == true) {
+					if (eventData.get_or("block", false)) {
 						tes3::setRestInterruptCount(0);
 						tes3::setRestHoursInterrupted(-1);
 						return;
@@ -1289,7 +1289,7 @@ namespace mwse {
 				sol::table eventData = stateHandle.triggerEvent(new event::RestInterruptEvent(leveledCreature));
 				if (eventData.valid()) {
 					// Allow blocking any spawn.
-					if (eventData["block"] == true) {
+					if (eventData.get_or("block", false)) {
 						tes3::setRestInterruptCount(0);
 						tes3::setRestHoursInterrupted(-1);
 						return NULL;
@@ -2118,7 +2118,7 @@ namespace mwse {
 				sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::InfoResponseEvent(command, reference, variables, dialogue, info));
 				if (eventResult.valid()) {
 					sol::table eventData = eventResult;
-					if (eventData["block"] == true) {
+					if (eventData.get_or("block", false)) {
 						return;
 					}
 				}

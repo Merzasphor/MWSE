@@ -24,8 +24,7 @@ namespace TES3 {
 				sol::table eventData = eventResult;
 
 				sol::optional<int> value = eventData["armorRating"];
-				sol::optional<bool> block = eventData["block"];
-				if (block.value_or(false) && value) {
+				if (eventData.get_or("block", false) && value) {
 					return value.value();
 				}
 			}
@@ -64,8 +63,7 @@ namespace TES3 {
 				sol::table eventData = eventResult;
 
 				sol::optional<int> value = eventData["armorRating"];
-				sol::optional<bool> block = eventData["block"];
-				if (block.value_or(false) && value) {
+				if (eventData.get_or("block", false) && value) {
 					return value.value();
 				}
 			}

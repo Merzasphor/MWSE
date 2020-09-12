@@ -29,7 +29,7 @@ namespace TES3 {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::SoundObjectPlayEvent(sound, playbackFlags, volume, pitch, isNot3D));
 			if (eventData.valid()) {
-				if (eventData["block"] == true) {
+				if (eventData.get_or("block", false)) {
 					return false;
 				}
 

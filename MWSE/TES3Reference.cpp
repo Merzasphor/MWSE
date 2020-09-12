@@ -73,7 +73,7 @@ namespace TES3 {
 			sol::object response = stateHandle.triggerEvent(new mwse::lua::event::ActivateEvent(activator, this));
 			if (response.get_type() == sol::type::table) {
 				sol::table eventData = response;
-				if (eventData["block"] == true) {
+				if (eventData.get_or("block", false)) {
 					return;
 				}
 			}

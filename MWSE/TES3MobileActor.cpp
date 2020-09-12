@@ -173,7 +173,7 @@ namespace TES3 {
 		if (mwse::lua::event::CombatStartEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CombatStartEvent(this, target));
-			if (eventData.valid() && eventData["block"] == true) {
+			if (eventData.valid() && eventData.get_or("block", false)) {
 				return;
 			}
 		}
@@ -193,7 +193,7 @@ namespace TES3 {
 		if (mwse::lua::event::CombatStopEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::CombatStopEvent(this));
-			if (eventData.valid() && eventData["block"] == true) {
+			if (eventData.valid() && eventData.get_or("block", false)) {
 				return;
 			}
 		}
@@ -228,7 +228,7 @@ namespace TES3 {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::DamageEvent(this, damage));
 			if (eventData.valid()) {
-				if (eventData["block"] == true) {
+				if (eventData.get_or("block", false)) {
 					return false;
 				}
 

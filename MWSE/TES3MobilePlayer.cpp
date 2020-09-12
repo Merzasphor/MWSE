@@ -26,7 +26,7 @@ namespace TES3 {
 			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::SkillExerciseEvent(skillId, progress));
 			if (eventData.valid()) {
-				if (eventData["block"] == true) {
+				if (eventData.get_or("block", false)) {
 					return;
 				}
 

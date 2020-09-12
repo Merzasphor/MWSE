@@ -352,7 +352,7 @@ namespace TES3 {
 			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::SpellTickEvent(effectId, sourceInstance, deltaTime, effectInstance, effectIndex));
 			if (eventData.valid()) {
-				if (eventData["block"] == true) {
+				if (eventData.get_or("block", false)) {
 					// We still need the main effect event function to be called for visual effects and durations to be handled.
 					int flags = (DataHandler::get()->nonDynamicData->magicEffects->getEffectFlags(effectId) >> 12) & 0xFFFFFF01;
 					int value = 0;

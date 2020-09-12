@@ -185,7 +185,7 @@ namespace mwse {
 					sol::object response = stateHandle.triggerEvent(new event::EquipEvent(reference, item, NULL));
 					if (response.get_type() == sol::type::table) {
 						sol::table eventData = response;
-						if (eventData["block"] == true) {
+						if (eventData.get_or("block", false)) {
 							return false;
 						}
 					}

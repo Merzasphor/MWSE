@@ -21,7 +21,7 @@ namespace TES3 {
 			if (eventResult.valid()) {
 				sol::table eventData = eventResult;
 
-				if (eventData["block"] == true) {
+				if (eventData.get_or("block", false)) {
 					return nullptr;
 				}
 
@@ -54,7 +54,7 @@ namespace TES3 {
 			if (eventResult.valid()) {
 				sol::table eventData = eventResult;
 
-				if (eventData["block"] == true) {
+				if (eventData.get_or("block", false)) {
 					return nullptr;
 				}
 

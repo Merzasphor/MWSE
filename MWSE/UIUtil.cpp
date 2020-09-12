@@ -79,7 +79,7 @@ namespace mwse {
 					auto stateHandle = luaManager.getThreadSafeStateHandle();
 					sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::ShowRestWaitMenuEvent(allowRest, scripted));
 					if (eventData.valid()) {
-						if (eventData["block"] == true) {
+						if (eventData.get_or("block", false)) {
 							return;
 						}
 
