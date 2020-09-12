@@ -28,7 +28,6 @@ namespace mwse {
 
 			// Create new spell.
 			TES3::Spell* newSpell = new TES3::Spell();
-			memset(newSpell, 0, sizeof(TES3::Spell));
 			newSpell->owningCollection.asSpellList = spellsList;
 			newSpell->magickaCost = 1;
 
