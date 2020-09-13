@@ -134,6 +134,11 @@ namespace TES3 {
 			return TES3_ui_requestMenuModeOff(0);
 		}
 
+		const auto TES3_ui_toggleJournal = reinterpret_cast<void(__cdecl*)()>(0x5D6A10);
+		void closeJournal() {
+			TES3_ui_toggleJournal();
+		}
+
 		void acquireTextInput(Element* element) {
 			TES3::WorldController::get()->menuController->menuInputController->acquireTextInput(element);
 		}

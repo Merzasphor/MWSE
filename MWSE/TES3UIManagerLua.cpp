@@ -235,6 +235,7 @@ namespace mwse {
 			tes3ui["menuMode"] = TES3::UI::isInMenuMode;
 			tes3ui["enterMenuMode"] = TES3::UI::enterMenuMode;
 			tes3ui["leaveMenuMode"] = TES3::UI::leaveMenuMode;
+			tes3ui["closeJournal"] = TES3::UI::closeJournal;
 			tes3ui["acquireTextInput"] = TES3::UI::acquireTextInput;
 			tes3ui["captureMouseDrag"] = TES3::UI::captureMouseDrag;
 			tes3ui["getPalette"] = TES3::UI::getPalette_lua;

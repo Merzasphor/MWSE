@@ -20,6 +20,7 @@ namespace TES3 {
 		Element* getMenuOnTop();
 		bool enterMenuMode(UI_ID id);
 		bool leaveMenuMode();
+		void closeJournal();
 		void acquireTextInput(Element* element);
 		void captureMouseDrag(bool capture);
 		void preventInventoryMenuToggle(Element* menu);
