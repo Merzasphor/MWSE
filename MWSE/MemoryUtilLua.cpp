@@ -36,6 +36,21 @@ namespace mwse {
 		// Temporary container that holds the current argument list to be sent to the called lua function.
 		std::vector<sol::object> luaFunctionArguments;
 
+		// Fake types for when we can't bind the normal types.
+		template <typename T>
+		struct LegacyIteratedList {
+			struct Node {
+				Node* previous;
+				Node* next;
+				T data;
+			};
+			void* virtualTable;
+			size_t count;
+			Node* head;
+			Node* tail;
+			Node* current;
+		};
+
 		// Fills luaFunctionArguments based on given argX parameters and what converters it expects.
 		FunctionDefinition * fillLuaCallArguments(DWORD callingAddress, DWORD functionAt, DWORD ecx, DWORD edx, DWORD arg0 = 0, DWORD arg1 = 0, DWORD arg2 = 0, DWORD arg3 = 0, DWORD arg4 = 0, DWORD arg5 = 0) {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -489,8 +504,8 @@ namespace mwse {
 			convertTo["float"] = convertArgTo<float>;
 			convertTo["int"] = convertArgTo<int>;
 			convertTo["string"] = convertArgTo<const char*>;
-			convertTo["tes3equipmentStackIterator"] = convertArgTo<TES3::IteratedList<TES3::EquipmentStack*>*>;
-			convertTo["tes3equipmentStackIteratorNode"] = convertArgTo<TES3::IteratedList<TES3::EquipmentStack*>::Node*>;
+			convertTo["tes3equipmentStackIterator"] = convertArgTo<LegacyIteratedList<TES3::EquipmentStack*>*>;
+			convertTo["tes3equipmentStackIteratorNode"] = convertArgTo<LegacyIteratedList<TES3::EquipmentStack*>::Node*>;
 			convertTo["tes3inventory"] = convertArgTo<TES3::Inventory*>;
 			convertTo["tes3magicEffectInstance"] = convertArgTo<TES3::MagicEffectInstance*>;
 			convertTo["tes3mobileObject"] = convertArgTo<TES3::MobileObject*>;
@@ -501,13 +516,35 @@ namespace mwse {
 			convertFrom["bool"] = convertArgFrom<bool>;
 			convertFrom["float"] = convertArgFrom<float>;
 			convertFrom["int"] = convertArgFrom<int>;
-			convertFrom["tes3equipmentStackIterator"] = convertArgFrom<TES3::IteratedList<TES3::EquipmentStack*>*>;
-			convertFrom["tes3equipmentStackIteratorNode"] = convertArgFrom<TES3::IteratedList<TES3::EquipmentStack*>::Node*>;
+			convertFrom["tes3equipmentStackIterator"] = convertArgFrom<LegacyIteratedList<TES3::EquipmentStack*>*>;
+			convertFrom["tes3equipmentStackIteratorNode"] = convertArgFrom<LegacyIteratedList<TES3::EquipmentStack*>::Node*>;
 			convertFrom["tes3inventory"] = convertArgFrom<TES3::Inventory*>;
 			convertFrom["tes3magicEffectInstance"] = convertArgFrom<TES3::MagicEffectInstance*>;
 			convertFrom["tes3mobileObject"] = convertArgFrom<TES3::MobileObject*>;
 			convertFrom["tes3object"] = convertArgFrom<TES3::BaseObject*>;
 			convertFrom["uint"] = convertArgFrom<unsigned int>;
+
+			//
+			// Special lower level usertype binding.
+			//
+
+			// TES3::IteratedList<TES3::EquipmentStack*>
+			{
+				auto usertypeDefinition = state.new_usertype<LegacyIteratedList<TES3::EquipmentStack*>>("tes3equipmentStackIterator");
+				usertypeDefinition["current"] = &LegacyIteratedList<TES3::EquipmentStack*>::current;
+				usertypeDefinition["count"] = &LegacyIteratedList<TES3::EquipmentStack*>::count;
+				usertypeDefinition["head"] = &LegacyIteratedList<TES3::EquipmentStack*>::head;
+				usertypeDefinition["tail"] = &LegacyIteratedList<TES3::EquipmentStack*>::tail;
+			}
+
+			// TES3::IteratedList<TES3::EquipmentStack*>::Node
+			{
+				auto usertypeDefinition = state.new_usertype<LegacyIteratedList<TES3::EquipmentStack*>::Node>("tes3equipmentStackIteratorNode");
+				usertypeDefinition["nodeData"] = &LegacyIteratedList<TES3::EquipmentStack*>::Node::data;
+				usertypeDefinition["nextNode"] = &LegacyIteratedList<TES3::EquipmentStack*>::Node::next;
+				usertypeDefinition["previousNode"] = &LegacyIteratedList<TES3::EquipmentStack*>::Node::previous;
+			}
+
 		}
 	}
 }
