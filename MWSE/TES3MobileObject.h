@@ -185,6 +185,8 @@ namespace TES3 {
 
 			Vector3 getNormal();
 
+			void clone(Collision* from);
+
 		};
 
 		union {

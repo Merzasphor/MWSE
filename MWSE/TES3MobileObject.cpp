@@ -13,11 +13,35 @@
 #include "TES3MobileSpellProjectile.h"
 #include "TES3Reference.h"
 
+#include "Log.h"
+
 namespace TES3 {
 
 	Vector3 MobileObject::Collision::getNormal() {
 		return TES3::Vector3(quantizedNormal[0] * QUANTIZER, quantizedNormal[1] * QUANTIZER, quantizedNormal[2] * QUANTIZER);
 	}
+
+	const auto TES3_MobileObject_Collision_clone = reinterpret_cast<void(__thiscall*)(MobileObject::Collision*, MobileObject::Collision*)>(0x405450);
+#pragma optimize( "", off )
+	void MobileObject::Collision::clone(Collision* from) {
+		// Call the original function.
+		TES3_MobileObject_Collision_clone(this, from);
+
+		// Check to see if something was borked.
+		__try {
+			if (colliderRef) {
+				colliderRef->baseObject->objectType;
+			}
+		}
+		__except (EXCEPTION_EXECUTE_HANDLER) {
+			mwse::log::getLog() << "WARNING: Caught invalid collision reference. Setting collision to invalid." << std::endl;
+			valid = false;
+			from->valid = false;
+			colliderRef = nullptr;
+			from->colliderRef = nullptr;
+		}
+	}
+#pragma optimize( "", on )
 
 #define TES3_vTable_MobileCreature 0x74AFA4
 #define TES3_vTable_MobileNPC 0x74AE6C

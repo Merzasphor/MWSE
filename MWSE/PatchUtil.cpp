@@ -189,6 +189,12 @@ namespace mwse {
 			// Patch: Fix NiLinesData binary loading.
 			auto NiLinesData_loadBinary = &NI::LinesData::loadBinary;
 			overrideVirtualTableEnforced(0x7501E0, offsetof(NI::Object_vTable, loadBinary), 0x6DA410, *reinterpret_cast<DWORD*>(&NiLinesData_loadBinary));
+
+			// Patch: Try to catch bogus collisions.
+			auto MobileObject_Collision_clone = &TES3::MobileObject::Collision::clone;
+			genCallEnforced(0x537107, 0x405450, *reinterpret_cast<DWORD*>(&MobileObject_Collision_clone));
+			genCallEnforced(0x55F7C4, 0x405450, *reinterpret_cast<DWORD*>(&MobileObject_Collision_clone));
+			genCallEnforced(0x55F818, 0x405450, *reinterpret_cast<DWORD*>(&MobileObject_Collision_clone));
 		}
 
 		//
