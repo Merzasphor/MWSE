@@ -23,7 +23,7 @@ namespace TES3 {
 		bool enterMenuMode(UI_ID id);
 		bool enterMenuMode_lua(sol::object id);
 		bool leaveMenuMode();
-		void closeJournal();
+		bool closeJournal();
 		void acquireTextInput(Element* element);
 		void captureMouseDrag(bool capture);
 		void preventInventoryMenuToggle(Element* menu);

@@ -148,9 +148,11 @@ namespace TES3 {
 			return TES3_ui_requestMenuModeOff(0);
 		}
 
-		const auto TES3_ui_toggleJournal = reinterpret_cast<void(__cdecl*)()>(0x5D6A10);
-		void closeJournal() {
-			TES3_ui_toggleJournal();
+		const auto TES3_ui_closeJournal = reinterpret_cast<bool(__cdecl*)()>(0x5D6A10);
+		bool closeJournal() {
+			if (!TES3_ui_closeJournal()) return false;
+			while (TES3_ui_closeJournal());
+			return true;
 		}
 
 		void acquireTextInput(Element* element) {
