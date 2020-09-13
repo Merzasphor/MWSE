@@ -24,7 +24,7 @@ namespace NI {
 		// Custom functions.
 		//
 
-		Pointer<Node> create();
+		static Pointer<Node> create();
 
 		Pointer<AVObject> detachChildHandled(AVObject* child);
 		Pointer<AVObject> detachChildAtHandled(size_t index);
