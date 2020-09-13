@@ -16,9 +16,12 @@ namespace TES3 {
 		Element* createTooltipMenu_lua();
 		void refreshTooltip();
 		Element* findMenu(UI_ID id);
+		Element* findMenu_lua(sol::object id);
 		Element* findHelpLayerMenu(UI_ID id);
+		Element* findHelpLayerMenu_lua(sol::object id);
 		Element* getMenuOnTop();
 		bool enterMenuMode(UI_ID id);
+		bool enterMenuMode_lua(sol::object id);
 		bool leaveMenuMode();
 		void closeJournal();
 		void acquireTextInput(Element* element);

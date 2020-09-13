@@ -44,6 +44,8 @@ namespace TES3 {
 		const auto TES3_ui_getServiceActor = reinterpret_cast<MobileActor* (__cdecl*)()>(0x5BFEA0);
 		const auto TES3_ui_updateDialogDisposition = reinterpret_cast<void (__cdecl*)()>(0x5C0780);
 
+		const UI_ID idNull = static_cast<UI_ID>(TES3::UI::Property::null);
+
 		//
 		// UI framework functions
 		//
@@ -66,21 +68,21 @@ namespace TES3 {
 		}
 
 		Element* createMenu_lua(sol::table params) {
-			auto id = params.get<sol::optional<UI_ID>>("id");
-			if (!id) {
+			auto id = mwse::lua::getOptionalUIID(params, "id");
+			if (id == idNull) {
 				mwse::log::getLog() << "createMenu: id argument is required." << std::endl;
-				return static_cast<Element*>(nullptr);
+				return nullptr;
 			}
 
-			Element* menu = createMenu(id.value());
+			Element* menu = createMenu(id);
 
 			if (params.get_or("fixedFrame", false)) {
-				menu->createFixedFrame(id.value(), 1);
+				menu->createFixedFrame(id, 1);
 				// Standard behaviours
 				preventInventoryMenuToggle(menu);
 			}
 			else if (params.get_or("dragFrame", false)) {
-				menu->createDragFrame(id.value(), 1);
+				menu->createDragFrame(id, 1);
 			}
 
 			return menu;
@@ -94,12 +96,12 @@ namespace TES3 {
 		}
 
 		Element* createHelpLayerMenu_lua(sol::table params) {
-			auto id = params.get<sol::optional<UI_ID>>("id");
-			if (!id) {
+			auto id = mwse::lua::getOptionalUIID(params, "id");
+			if (id == idNull) {
 				mwse::log::getLog() << "createHelpLayerMenu: id argument is required." << std::endl;
 				return static_cast<Element*>(nullptr);
 			}
-			return createHelpLayerMenu(id.value());
+			return createHelpLayerMenu(id);
 		}
 
 		Element* createTooltipMenu(UI_ID id) {
@@ -118,8 +120,16 @@ namespace TES3 {
 			return TES3_ui_findMenu(id);
 		}
 
+		Element* findMenu_lua(sol::object id) {
+			return TES3_ui_findMenu(mwse::lua::getUIIDFromObject(id));
+		}
+
 		Element* findHelpLayerMenu(UI_ID id) {
 			return TES3_ui_findHelpLayerMenu(id);
+		}
+
+		Element* findHelpLayerMenu_lua(sol::object id) {
+			return TES3_ui_findHelpLayerMenu(mwse::lua::getUIIDFromObject(id));
 		}
 
 		Element* getMenuOnTop() {
@@ -128,6 +138,10 @@ namespace TES3 {
 
 		bool enterMenuMode(UI_ID id) {
 			return TES3_ui_requestMenuModeOn(id);
+		}
+
+		bool enterMenuMode_lua(sol::object id) {
+			return enterMenuMode(mwse::lua::getUIIDFromObject(id));
 		}
 
 		bool leaveMenuMode() {

@@ -228,12 +228,12 @@ namespace mwse {
 			tes3ui["createMenu"] = TES3::UI::createMenu_lua;
 			tes3ui["createHelpLayerMenu"] = TES3::UI::createHelpLayerMenu_lua;
 			tes3ui["createTooltipMenu"] = TES3::UI::createTooltipMenu_lua;
-			tes3ui["findMenu"] = TES3::UI::findMenu;
-			tes3ui["findHelpLayerMenu"] = TES3::UI::findHelpLayerMenu;
+			tes3ui["findMenu"] = TES3::UI::findMenu_lua;
+			tes3ui["findHelpLayerMenu"] = TES3::UI::findHelpLayerMenu_lua;
 			tes3ui["getMenuOnTop"] = TES3::UI::getMenuOnTop;
 			tes3ui["forcePlayerInventoryUpdate"] = TES3::UI::forcePlayerInventoryUpdate;
 			tes3ui["menuMode"] = TES3::UI::isInMenuMode;
-			tes3ui["enterMenuMode"] = TES3::UI::enterMenuMode;
+			tes3ui["enterMenuMode"] = TES3::UI::enterMenuMode_lua;
 			tes3ui["leaveMenuMode"] = TES3::UI::leaveMenuMode;
 			tes3ui["closeJournal"] = TES3::UI::closeJournal;
 			tes3ui["acquireTextInput"] = TES3::UI::acquireTextInput;
