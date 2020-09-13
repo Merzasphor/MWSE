@@ -51,13 +51,7 @@ namespace TES3 {
 		}
 		// Fall back to chameleon, based on magnitude.
 		else if (chameleon > 0) {
-			float opacity = 1.0f - (float(chameleon) / 100.0f);
-			if (mobileActor == TES3::WorldController::get()->getMobilePlayer()) {
-				setOpacity(std::clamp(opacity, 0.25f, 75.0f));
-			}
-			else {
-				setOpacity(std::clamp(opacity, 0.0f, 75.0f));
-			}
+			setOpacity(std::clamp(1.0f - (float(chameleon) / 100.0f), 0.25f, 75.0f));
 		}
 		// If all else fails we go for no Opacity.
 		else {
