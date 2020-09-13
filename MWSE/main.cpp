@@ -61,10 +61,10 @@ VersionStruct GetMGEVersion() {
 	}
 
 	VersionStruct version;
-	version.major = HIWORD(pFileInfo->dwProductVersionMS);
-	version.minor = LOWORD(pFileInfo->dwProductVersionMS);
-	version.patch = LOWORD(pFileInfo->dwProductVersionLS >> 16);
-	version.build = HIWORD(pFileInfo->dwProductVersionLS >> 16);
+	version.major = BYTE(HIWORD(pFileInfo->dwProductVersionMS));
+	version.minor = BYTE(LOWORD(pFileInfo->dwProductVersionMS));
+	version.patch = BYTE(LOWORD(pFileInfo->dwProductVersionLS >> 16));
+	version.build = BYTE(HIWORD(pFileInfo->dwProductVersionLS >> 16));
 	delete[] pbVersionInfo;
 
 	return version;

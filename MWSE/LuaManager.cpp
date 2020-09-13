@@ -940,7 +940,7 @@ namespace mwse {
 			// Go through the keys to see if any of the states have changed, and launch an event based on that.
 			LuaManager& luaManager = LuaManager::getInstance();
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
-			for (size_t i = 0; i < 256; i++) {
+			for (BYTE i = 0; i < UINT8_MAX; i++) {
 				if (event::KeyDownEvent::getEventEnabled() && inputController->isKeyPressedThisFrame(i)) {
 					stateHandle.triggerEvent(new event::KeyDownEvent(i, controlDown, shiftDown, altDown, superDown));
 
@@ -953,10 +953,14 @@ namespace mwse {
 					// TODO: Remove! Deprecated generic key event.
 					stateHandle.triggerEvent(new event::KeyEvent(i, false, controlDown, shiftDown, altDown, superDown));
 				}
+
+				if (i == UINT8_MAX) {
+					break;
+				}
 			}
 
 			// Do the same with mouse buttons.
-			for (size_t i = 0; i < 8; i++) {
+			for (BYTE i = 0; i < 8; i++) {
 				if (event::MouseButtonDownEvent::getEventEnabled() && inputController->isMouseButtonPressedThisFrame(i)) {
 					stateHandle.triggerEvent(new event::MouseButtonDownEvent(i, controlDown, shiftDown, altDown, superDown));
 				}
