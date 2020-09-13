@@ -79,26 +79,22 @@ namespace NI {
 	}
 
 	static std::unordered_map<const Object*, sol::object> niObjectCache;
-	static std::mutex niObjectCacheMutex;
 
 	sol::object Object::getOrCreateLuaObject(lua_State* L) {
 		if (this == nullptr) {
 			return sol::nil;
 		}
 
-		niObjectCacheMutex.lock();
+		auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 
 		auto cacheHit = niObjectCache.find(this);
 		if (cacheHit != niObjectCache.end()) {
 			auto result = cacheHit->second;
-			niObjectCacheMutex.unlock();
 			return result;
 		}
 
-		niObjectCacheMutex.unlock();
-
 		// Make sure we're looking at the main state.
-		L = sol::main_thread(L);
+		L = stateHandle.state;
 
 		// Loop through RTTI information until we find a type we like.
 		auto currentRTTI = getRunTimeTypeInformation();
@@ -183,23 +179,21 @@ namespace NI {
 		}
 
 		if (ref != sol::nil) {
-			niObjectCacheMutex.lock();
 			niObjectCache[this] = ref;
-			niObjectCacheMutex.unlock();
 		}
 
 		return ref;
 	}
 
 	void Object::clearCachedLuaObject(const Object* object) {
-		if (!niObjectCache.empty()) {
-			niObjectCacheMutex.lock();
+		auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 
+		if (!niObjectCache.empty()) {
 			// Clear any events that make use of this object.
 			auto it = niObjectCache.find(object);
 			if (it != niObjectCache.end()) {
 				// Let people know that this object is invalidated.
-				mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ObjectInvalidatedEvent(it->second));
+				stateHandle.triggerEvent(new mwse::lua::event::ObjectInvalidatedEvent(it->second));
 
 				// Clear any events that make use of this object.
 				mwse::lua::event::clearObjectFilter(it->second);
@@ -207,15 +201,12 @@ namespace NI {
 				// Remove it from the cache.
 				niObjectCache.erase(it);
 			}
-
-			niObjectCacheMutex.unlock();
 		}
 	}
 
 	void Object::clearCachedLuaObjects() {
-		niObjectCacheMutex.lock();
+		auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 		niObjectCache.clear();
-		niObjectCacheMutex.unlock();
 	}
 }
 

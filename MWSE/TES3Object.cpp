@@ -137,24 +137,22 @@ namespace TES3 {
 	}
 
 	static std::unordered_map<const BaseObject*, sol::object> baseObjectCache;
-	static std::mutex baseObjectCacheMutex;
 
 	sol::object BaseObject::getOrCreateLuaObject(lua_State* L) const {
 		if (this == nullptr) {
 			return sol::nil;
 		}
 
-		baseObjectCacheMutex.lock();
+		auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 
 		auto cacheHit = baseObjectCache.find(this);
 		if (cacheHit != baseObjectCache.end()) {
 			auto result = cacheHit->second;
-			baseObjectCacheMutex.unlock();
 			return result;
 		}
 
 		// Make sure we're looking at the main state.
-		L = sol::main_thread(L);
+		L = stateHandle.state;
 
 		sol::object ref = sol::nil;
 		switch ((uint32_t)vTable.object) {
@@ -305,20 +303,17 @@ namespace TES3 {
 			baseObjectCache[this] = ref;
 		}
 
-		baseObjectCacheMutex.unlock();
-
 		return ref;
 	}
 
 	void BaseObject::clearCachedLuaObject(const BaseObject* object) {
+		auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 		if (!baseObjectCache.empty()) {
-			baseObjectCacheMutex.lock();
-
 			// Clear any events that make use of this object.
 			auto it = baseObjectCache.find(object);
 			if (it != baseObjectCache.end()) {
 				// Let people know that this object is invalidated.
-				mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ObjectInvalidatedEvent(it->second));
+				stateHandle.triggerEvent(new mwse::lua::event::ObjectInvalidatedEvent(it->second));
 
 				// Clear any events that make use of this object.
 				mwse::lua::event::clearObjectFilter(it->second);
@@ -326,15 +321,12 @@ namespace TES3 {
 				// Remove it from the cache.
 				baseObjectCache.erase(it);
 			}
-
-			baseObjectCacheMutex.unlock();
 		}
 	}
 
 	void BaseObject::clearCachedLuaObjects() {
-		baseObjectCacheMutex.lock();
+		auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 		baseObjectCache.clear();
-		baseObjectCacheMutex.unlock();
 	}
 
 	void Object::setID(const char* id) {
