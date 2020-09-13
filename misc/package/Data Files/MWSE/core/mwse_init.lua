@@ -395,6 +395,32 @@ function mwse.encodeForSave(object)
 	return json.encode(object, { exception = exceptionWhenSaving })
 end
 
+-------------------------------------------------
+-- Setup and load MWSE config.
+-------------------------------------------------
+
+-- Helper function: Sets a config value while obfuscating the userdata binding.
+function mwse.setConfig(key, value)
+	return pcall(function()
+		mwseConfig[key] = value
+	end)
+end
+
+-- Helper function: Gets a config value while obfuscating the userdata binding.
+function mwse.getConfig(key)
+	return mwseConfig[key]
+end
+
+-- Load user config values.
+local userConfig = mwse.loadConfig("MWSE", mwseConfig.getDefaults())
+for k, v in pairs(userConfig) do
+	if (not mwse.setConfig(k, v)) then
+		mwse.log("WARNING: User config key '%s' could not be assigned to '%s'.", k, v)
+	end
+end
+
+-- Refresh the file so that it shows users what other values can be tweaked.
+mwse.saveConfig("MWSE", userConfig)
 
 -------------------------------------------------
 -- Extend our base API: tes3

@@ -11,6 +11,7 @@
 #include "BuildDate.h"
 #include "MWSEUtilLua.h"
 #include "WindowsUtil.h"
+#include "MWSEConfig.h"
 
 #include "LuaTimer.h"
 
@@ -360,6 +361,9 @@ namespace mwse {
 			luaState["mwse"] = luaState.create_table();
 			luaState["mwscript"] = luaState.create_table();
 			luaState["mge"] = luaState.create_table();
+
+			// Bind config.
+			Configuration::bindToLua();
 
 			// Expose timers.
 			bindLuaTimer();
@@ -2636,14 +2640,14 @@ namespace mwse {
 			return result;
 		}
 
-		// Write errors to mwse.log as well.WINBASEAPI
+		// Write errors to mwse.log as well.
 		BOOL WINAPI WriteToWarningsFile(HANDLE hFile, LPCVOID lpBuffer, DWORD nNumberOfBytesToWrite, LPDWORD lpNumberOfBytesWritten, LPOVERLAPPED lpOverlapped) {
 			// Overwritten code.
 			auto result = WriteFile(hFile, lpBuffer, nNumberOfBytesToWrite, lpNumberOfBytesWritten, lpOverlapped);
 
 			// Also log to mwse.log with stack trace.
-			if (LuaManager::getInstance().getReadOnlyStateView().stack_top() != 0) {
-				auto trimmedWarning = string::trim_copy((const char*)lpBuffer);
+			if (Configuration::LogWarningsWithLuaStack && LuaManager::getInstance().getReadOnlyStateView().stack_top() != 0) {
+				auto trimmedWarning = std::move(string::trim_copy((const char*)lpBuffer));
 				log::getLog() << "Morrowind has raised a warning with a lua stack trace: " << trimmedWarning << std::endl;
 				logStackTrace();
 			}
@@ -3775,7 +3779,9 @@ namespace mwse {
 			executeMainModScripts("Data Files\\MWSE\\mods");
 
 			// Temporary backwards compatibility for old-style MWSE mods.
-			executeMainModScripts("Data Files\\MWSE\\lua", "mod_init.lua");
+			if (Configuration::EnableLegacyLuaMods) {
+				executeMainModScripts("Data Files\\MWSE\\lua", "mod_init.lua");
+			}
 		}
 
 		void LuaManager::cleanup() {

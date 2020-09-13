@@ -130,6 +130,7 @@
     <ClInclude Include="LuaWeatherCycledEvent.h" />
     <ClInclude Include="LuaWeatherTransitionFinishedEvent.h" />
     <ClInclude Include="LuaWeatherTransitionStartedEvent.h" />
+    <ClInclude Include="MWSEConfig.h" />
     <ClInclude Include="MWSEUtilLua.h" />
     <ClInclude Include="NIBinaryStream.h" />
     <ClInclude Include="NIBound.h" />
@@ -554,6 +555,7 @@
     <ClCompile Include="LuaWeatherCycledEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionFinishedEvent.cpp" />
     <ClCompile Include="LuaWeatherTransitionStartedEvent.cpp" />
+    <ClCompile Include="MWSEConfig.cpp" />
     <ClCompile Include="MWSEUtilLua.cpp" />
     <ClCompile Include="NIAmbientLight.cpp" />
     <ClCompile Include="NIBinaryStream.cpp" />
