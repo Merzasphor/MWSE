@@ -5,6 +5,7 @@
 #include "Log.h"
 
 #include "TES3Actor.h"
+#include "TES3BodyPartManager.h"
 #include "TES3DataHandler.h"
 #include "TES3Game.h"
 #include "TES3GameFile.h"
@@ -195,6 +196,11 @@ namespace mwse {
 			genCallEnforced(0x537107, 0x405450, *reinterpret_cast<DWORD*>(&MobileObject_Collision_clone));
 			genCallEnforced(0x55F7C4, 0x405450, *reinterpret_cast<DWORD*>(&MobileObject_Collision_clone));
 			genCallEnforced(0x55F818, 0x405450, *reinterpret_cast<DWORD*>(&MobileObject_Collision_clone));
+
+			// Patch: Fix up transparency.
+			auto BodyPartManager_updateForReference = &TES3::BodyPartManager::updateForReference;
+			genCallEnforced(0x46444C, 0x473EA0, *reinterpret_cast<DWORD*>(&BodyPartManager_updateForReference));
+			genCallEnforced(0x4DA07C, 0x473EA0, *reinterpret_cast<DWORD*>(&BodyPartManager_updateForReference));
 		}
 
 		//

@@ -4,6 +4,10 @@
 
 #include "LuaBodyPartAssignedEvent.h"
 
+#include "TES3ActorAnimationData.h"
+#include "TES3MobileActor.h"
+#include "TES3Reference.h"
+
 namespace TES3 {
 	const auto TES3_BodyPartManager_ctor = reinterpret_cast<BodyPartManager* (__thiscall*)(BodyPartManager*, NI::Node*, Reference*)>(0x472580);
 	BodyPartManager* BodyPartManager::ctor(NI::Node* parentNode, Reference* ref) {
@@ -56,6 +60,17 @@ namespace TES3 {
 	const auto TES3_BodyPartManager_updateForReference = reinterpret_cast<void(__thiscall*)(BodyPartManager*, Reference*)>(0x473EA0);
 	void BodyPartManager::updateForReference(Reference* reference) {
 		TES3_BodyPartManager_updateForReference(this, reference);
+
+		// Force update opacity.
+		auto mobile = reference->getAttachedMobileActor();
+		if (mobile) {
+			auto animData = mobile->getAnimationData();
+			if (animData && animData->getOpacity() < 1.0f) {
+				const auto oldAlpha = animData->getOpacity();
+				animData->materialProperty->alpha = -1.0f;
+				animData->setOpacity(oldAlpha);
+			}
+		}
 	}
 
 	BodyPartManager::ActiveBodyPart* BodyPartManager::getActiveBodyPart(ActiveBodyPart::Layer layer, ActiveBodyPart::Index index) {
