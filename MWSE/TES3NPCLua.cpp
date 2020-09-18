@@ -5,9 +5,6 @@
 
 #include "TES3NPC.h"
 #include "TES3BodyPart.h"
-#include "TES3Race.h"
-#include "TES3Class.h"
-#include "TES3Faction.h"
 #include "TES3Script.h"
 
 #include "BitUtil.h"
@@ -49,9 +46,9 @@ namespace mwse {
 				usertypeDefinition.set("isInstance", sol::var(false));
 
 				// Access to other objects that need to be packaged.
-				usertypeDefinition.set("class", sol::readonly_property([](TES3::NPC& self) { return makeLuaObject(self.class_); }));
-				usertypeDefinition.set("faction", sol::readonly_property([](TES3::NPC& self) { return makeLuaObject(self.faction); }));
-				usertypeDefinition.set("race", sol::readonly_property([](TES3::NPC& self) { return makeLuaObject(self.race); }));
+				usertypeDefinition.set("class", sol::property(&TES3::NPC::getClass_lua , &TES3::NPC::setClass));
+				usertypeDefinition.set("faction", sol::property(&TES3::NPC::getFaction_lua, &TES3::NPC::setFaction));
+				usertypeDefinition.set("race", sol::property(&TES3::NPC::getRace_lua, &TES3::NPC::setRace));
 				usertypeDefinition.set("script", sol::readonly_property([](TES3::NPC& self) { return makeLuaObject(self.getScript()); }));
 
 				// Functions exposed as properties.
@@ -115,9 +112,9 @@ namespace mwse {
 
 				// Access to other objects that need to be packaged.
 				usertypeDefinition.set("baseObject", sol::readonly_property([](TES3::NPCInstance& self) { return makeLuaObject(self.baseNPC); }));
-				usertypeDefinition.set("class", sol::readonly_property([](TES3::NPCInstance& self) { return makeLuaObject(self.baseNPC->class_); }));
-				usertypeDefinition.set("faction", sol::readonly_property([](TES3::NPCInstance& self) { return makeLuaObject(self.baseNPC->faction); }));
-				usertypeDefinition.set("race", sol::readonly_property([](TES3::NPCInstance& self) { return makeLuaObject(self.baseNPC->race); }));
+				usertypeDefinition.set("class", sol::readonly_property([](TES3::NPCInstance& self) { return self.baseNPC->getClass_lua(); }));
+				usertypeDefinition.set("faction", sol::readonly_property([](TES3::NPCInstance& self) { return self.baseNPC->getFaction_lua(); }));
+				usertypeDefinition.set("race", sol::readonly_property([](TES3::NPCInstance& self) { return self.baseNPC->getRace_lua(); }));
 				usertypeDefinition.set("script", sol::readonly_property([](TES3::NPCInstance& self) { return makeLuaObject(self.getScript()); }));
 
 				// Functions exposed as properties.

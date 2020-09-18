@@ -68,6 +68,19 @@ namespace TES3 {
 		void * aiPackageList; // 0xDC
 		AIConfig aiConfig; // 0xE0
 
+		//
+		// Custom functions.
+		//
+
+		sol::object getClass_lua() const;
+		void setClass(Class* value);
+
+		sol::object getRace_lua() const;
+		void setRace(Race* value);
+
+		sol::object getFaction_lua() const;
+		void setFaction(Faction* value);
+
 	};
 	static_assert(sizeof(NPC) == 0xF0, "TES3::NPC failed size validation");
 

@@ -2,11 +2,17 @@
 
 #include "TES3UIManager.h"
 
+
+#include "TES3Class.h"
+#include "TES3Faction.h"
 #include "TES3MobileNPC.h"
+#include "TES3Race.h"
 #include "TES3UIElement.h"
 
 #include "LuaManager.h"
 #include "LuaIsGuardEvent.h"
+
+#include "LuaUtil.h"
 
 #define TES3_UI_ID_MenuDialog 0x7D3442
 #define TES3_UI_ID_MenuDialog_start_disposition 0x7D3486
@@ -34,6 +40,34 @@ namespace TES3 {
 		}
 
 		return isGuard;
+	}
+
+	//
+	// NPC
+	//
+
+	sol::object NPC::getClass_lua() const {
+		return mwse::lua::makeLuaObject(class_);
+	}
+
+	void NPC::setClass(Class* value) {
+		class_ = value;
+	}
+
+	sol::object NPC::getRace_lua() const {
+		return mwse::lua::makeLuaObject(race);
+	}
+
+	void NPC::setRace(Race* value) {
+		race = value;
+	}
+
+	sol::object NPC::getFaction_lua() const {
+		return mwse::lua::makeLuaObject(faction);
+	}
+
+	void NPC::setFaction(Faction* value) {
+		faction = value;
 	}
 
 	//
