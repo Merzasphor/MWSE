@@ -348,9 +348,17 @@ namespace TES3 {
 		TES3_DataHandler_setDynamicLightingForReference(this, reference);
 	}
 
+	static bool& TES3_COLLISION_DATA_RESETTING = *reinterpret_cast<bool*>(0x7C9A78);
+	static bool& COLLISION_DATA_RESET_COLLISION_GROUPS = *reinterpret_cast<bool*>(0x7C9BCC);
+	void DataHandler::updateCollisionGroupsForActiveCells(bool force, bool isResettingData, bool resetCollisionGroups) {
+		TES3_COLLISION_DATA_RESETTING = isResettingData;
+		COLLISION_DATA_RESET_COLLISION_GROUPS = resetCollisionGroups;
+		updateCollisionGroupsForActiveCells_raw(force);
+	}
+
 	const auto TES3_DataHandler_updateCollisionGroupsForActiveCells = reinterpret_cast<void(__thiscall*)(DataHandler*, bool)>(0x488950);
-	void DataHandler::updateCollisionGroupsForActiveCells(bool unknown) {
-		TES3_DataHandler_updateCollisionGroupsForActiveCells(this, unknown);
+	void DataHandler::updateCollisionGroupsForActiveCells_raw(bool force) {
+		TES3_DataHandler_updateCollisionGroupsForActiveCells(this, force);
 	}
 
 }

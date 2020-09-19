@@ -40,8 +40,8 @@ namespace TES3 {
 	struct Game {
 		Game_vTable * vTable;
 		void * unknown_0x4;
-		int unknown_0x8;
-		int unknown_0xC;
+		int windowWidth; // 0x8
+		int windowHeight; // 0xC
 		int screenDepth; // 0x10
 		int backBuffers; // 0x14
 		int multiSamples; // 0x18

@@ -303,7 +303,8 @@ namespace TES3 {
 		void updateLightingForReference(Reference * reference);
 		void setDynamicLightingForReference(Reference* reference);
 
-		void updateCollisionGroupsForActiveCells(bool unknown = true);
+		void updateCollisionGroupsForActiveCells(bool force = true, bool isResettingData = false, bool resetCollisionGroups = true);
+		void updateCollisionGroupsForActiveCells_raw(bool force = true);
 
 	};
 	static_assert(sizeof(DataHandler) == 0xB558, "TES3::DataHandler failed size validation");

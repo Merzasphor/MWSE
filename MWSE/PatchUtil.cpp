@@ -50,6 +50,14 @@ namespace mwse {
 			}
 		}
 
+		void* __fastcall PatchScriptOpDisableCollision(TES3::Reference* reference) {
+			// Force update collision.
+			TES3::DataHandler::get()->updateCollisionGroupsForActiveCells();
+
+			// Return overwritten code.
+			return &reference->baseObject;
+		}
+
 		//
 		// Patch: Unify athletics training.
 		//
@@ -150,6 +158,7 @@ namespace mwse {
 			// Patch: Enable/Disable.
 			genCallUnprotected(0x508FEB, reinterpret_cast<DWORD>(PatchScriptOpEnable), 0x9);
 			genCallUnprotected(0x5090DB, reinterpret_cast<DWORD>(PatchScriptOpDisable), 0x9);
+			genCallUnprotected(0x50912F, reinterpret_cast<DWORD>(PatchScriptOpDisableCollision));
 
 			// Patch: Unify athletics and sneak training.
 			genCallUnprotected(0x569EE7, reinterpret_cast<DWORD>(PatchUnifyAthleticsTraining), 0xC6);
