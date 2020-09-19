@@ -21,6 +21,7 @@
 
 #include "BitUtil.h"
 #include "TES3Util.h"
+#include "ScriptUtil.h"
 
 #include "LuaManager.h"
 #include "LuaUtil.h"
@@ -33,8 +34,8 @@ namespace mwse {
 		//
 
 		void PatchScriptOpEnable() {
-			TES3::ScriptVariables* scriptVars = *reinterpret_cast<TES3::ScriptVariables**>(TES3_LOCALVARIABLES_IMAGE);
-			if (scriptVars != NULL) {
+			TES3::ScriptVariables* scriptVars = mwscript::getLocalScriptVariables();
+			if (scriptVars) {
 				scriptVars->unknown_0xC &= 0xFE;
 			}
 		}
@@ -43,16 +44,21 @@ namespace mwse {
 		// Patch: Disable
 		//
 
+		static bool PatchScriptOpDisable_WasDisabled = false;
+
 		void PatchScriptOpDisable() {
-			TES3::ScriptVariables* scriptVars = *reinterpret_cast<TES3::ScriptVariables**>(TES3_LOCALVARIABLES_IMAGE);
-			if (scriptVars != NULL) {
+			TES3::ScriptVariables* scriptVars = mwscript::getLocalScriptVariables();
+			if (scriptVars) {
 				scriptVars->unknown_0xC |= 0x1;
 			}
+			PatchScriptOpDisable_WasDisabled = mwscript::getScriptTargetReference()->getDisabled();
 		}
 
 		void* __fastcall PatchScriptOpDisableCollision(TES3::Reference* reference) {
 			// Force update collision.
-			TES3::DataHandler::get()->updateCollisionGroupsForActiveCells();
+			if (!PatchScriptOpDisable_WasDisabled) {
+				TES3::DataHandler::get()->updateCollisionGroupsForActiveCells();
+			}
 
 			// Return overwritten code.
 			return &reference->baseObject;
