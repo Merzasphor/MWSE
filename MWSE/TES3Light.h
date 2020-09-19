@@ -26,8 +26,8 @@ namespace TES3 {
 		void * animationData;
 		IteratedList<TES3::BaseObject*> stolenList; // 0x30
 		char* name; // 0x48
-		char* model; // 0x4C
-		Script * script;
+		Script* script; // 0x4C
+		char* model; // 0x50
 		char* icon; // 0x54
 		float weight; // 0x58
 		long value; // 0x5C
