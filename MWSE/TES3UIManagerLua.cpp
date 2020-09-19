@@ -252,7 +252,7 @@ namespace mwse {
 			tes3ui["stealHelpMenu"] = TES3::UI::stealHelpMenu;
 			tes3ui["refreshTooltip"] = TES3::UI::refreshTooltip;
 			tes3ui["suppressTooltip"] = TES3::UI::setSuppressingHelpMenu;
-			tes3ui["showDialogueMessage"] = TES3::UI::showDialogueMessage;
+			tes3ui["showDialogueMessage"] = TES3::UI::showDialogueMessage_lua;
 			tes3ui["updateDialogDisposition"] = TES3::UI::updateDialogDisposition;
 			tes3ui["updateSpellmakingMenu"] = TES3::UI::updateSpellmakingMenu;
 			tes3ui["updateEnchantingMenu"] = TES3::UI::updateEnchantingMenu;
