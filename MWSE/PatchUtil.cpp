@@ -22,6 +22,7 @@
 
 #include "BitUtil.h"
 #include "TES3Util.h"
+#include "ScriptUtil.h"
 
 #include "LuaManager.h"
 #include "LuaUtil.h"
@@ -34,8 +35,8 @@ namespace mwse {
 		//
 
 		void PatchScriptOpEnable() {
-			TES3::ScriptVariables* scriptVars = *reinterpret_cast<TES3::ScriptVariables**>(TES3_LOCALVARIABLES_IMAGE);
-			if (scriptVars != NULL) {
+			TES3::ScriptVariables* scriptVars = mwscript::getLocalScriptVariables();
+			if (scriptVars) {
 				scriptVars->unknown_0xC &= 0xFE;
 			}
 		}
@@ -44,11 +45,24 @@ namespace mwse {
 		// Patch: Disable
 		//
 
+		static bool PatchScriptOpDisable_WasDisabled = false;
+
 		void PatchScriptOpDisable() {
-			TES3::ScriptVariables* scriptVars = *reinterpret_cast<TES3::ScriptVariables**>(TES3_LOCALVARIABLES_IMAGE);
-			if (scriptVars != NULL) {
+			TES3::ScriptVariables* scriptVars = mwscript::getLocalScriptVariables();
+			if (scriptVars) {
 				scriptVars->unknown_0xC |= 0x1;
 			}
+			PatchScriptOpDisable_WasDisabled = mwscript::getScriptTargetReference()->getDisabled();
+		}
+
+		void* __fastcall PatchScriptOpDisableCollision(TES3::Reference* reference) {
+			// Force update collision.
+			if (!PatchScriptOpDisable_WasDisabled) {
+				TES3::DataHandler::get()->updateCollisionGroupsForActiveCells();
+			}
+
+			// Return overwritten code.
+			return &reference->baseObject;
 		}
 
 		//
@@ -151,6 +165,7 @@ namespace mwse {
 			// Patch: Enable/Disable.
 			genCallUnprotected(0x508FEB, reinterpret_cast<DWORD>(PatchScriptOpEnable), 0x9);
 			genCallUnprotected(0x5090DB, reinterpret_cast<DWORD>(PatchScriptOpDisable), 0x9);
+			genCallUnprotected(0x50912F, reinterpret_cast<DWORD>(PatchScriptOpDisableCollision));
 
 			// Patch: Unify athletics and sneak training.
 			genCallUnprotected(0x569EE7, reinterpret_cast<DWORD>(PatchUnifyAthleticsTraining), 0xC6);

@@ -40,9 +40,9 @@ namespace mwse {
 				usertypeDefinition["level"] = &TES3::NPC::level;
 				usertypeDefinition["magicka"] = &TES3::NPC::magicka;
 				usertypeDefinition["reputation"] = &TES3::NPC::reputation;
-				usertypeDefinition["class"] = sol::readonly_property(&TES3::NPC::class_);
-				usertypeDefinition["faction"] = sol::readonly_property(&TES3::NPC::faction);
-				usertypeDefinition["race"] = sol::readonly_property(&TES3::NPC::race);
+				usertypeDefinition["class"] = &TES3::NPC::class_;
+				usertypeDefinition["faction"] = &TES3::NPC::faction;
+				usertypeDefinition["race"] = &TES3::NPC::race;
 				usertypeDefinition["script"] = sol::readonly_property(&TES3::NPC::getScript);
 
 				// Indirect bindings to unions and arrays.
