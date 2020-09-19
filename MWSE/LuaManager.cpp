@@ -3888,7 +3888,6 @@ namespace mwse {
 
 			// No timers? Bail.
 			if (list.size() == 0) {
-				mwse::log::getLog() << "No timers to save." << std::endl;
 				return;
 			}
 

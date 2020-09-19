@@ -258,6 +258,13 @@ namespace mwse {
 		VirtualProtect((DWORD*)address, sizeof(BYTE), oldProtect, &oldProtect);
 	}
 
+	void writeBytesUnprotected(DWORD address, const BYTE* value, size_t count) {
+		DWORD oldProtect;
+		VirtualProtect((DWORD*)address, count, PAGE_READWRITE, &oldProtect);
+		memmove_s((void*)address, count, value, count);
+		VirtualProtect((DWORD*)address, count, oldProtect, &oldProtect);
+	}
+
 	void writeDoubleWordUnprotected(DWORD address, DWORD value) {
 		// Unprotect memory.
 		DWORD oldProtect;
@@ -298,12 +305,7 @@ namespace mwse {
 		// Read incremental linker trampoline to find real patch
 		patch += 5 + *reinterpret_cast<const ptrdiff_t*>(patch + 1);
 #endif
-		DWORD oldProtect;
-		VirtualProtect((DWORD*)address, size, PAGE_READWRITE, &oldProtect);
-
-		memmove_s((void*)address, size, patch, size);
-
-		VirtualProtect((DWORD*)address, size, oldProtect, &oldProtect);
+		writeBytesUnprotected(address, patch, size);
 	}
 
 	DWORD getCallAddress(DWORD address) {

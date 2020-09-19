@@ -62,6 +62,7 @@ namespace mwse {
 
 	// Write a single value to memory.
 	void writeByteUnprotected(DWORD address, BYTE value);
+	void writeBytesUnprotected(DWORD address, const BYTE* value, size_t count);
 	void writeDoubleWordUnprotected(DWORD address, DWORD value);
 	bool writeDoubleWordEnforced(DWORD address, DWORD previousValue, DWORD value);
 

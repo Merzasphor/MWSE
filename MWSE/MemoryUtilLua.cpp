@@ -303,7 +303,7 @@ namespace mwse {
 				}
 			}
 
-			writePatchCodeUnprotected(address.value(), data, byteCount);
+			writeBytesUnprotected(address.value(), data, byteCount);
 
 			delete[] data;
 
