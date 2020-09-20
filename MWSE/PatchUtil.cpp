@@ -20,6 +20,7 @@
 
 #include "NIFlipController.h"
 #include "NILinesData.h"
+#include "NIUVController.h"
 
 #include "BitUtil.h"
 #include "TES3Util.h"
@@ -245,6 +246,10 @@ namespace mwse {
 			// Patch: Fix NiFlipController losing its affectedMap on clone.
 			auto NiFlipController_clone = &NI::FlipController::copy;
 			genCallEnforced(0x715D26, 0x715D40, *reinterpret_cast<DWORD*>(&NiFlipController_clone));
+
+			// Patch: Fix NiUVController losing its texture set on clone.
+			auto UVController_clone = &NI::UVController::copy;
+			genCallEnforced(0x722317, 0x722330, *reinterpret_cast<DWORD*>(&UVController_clone));
 		}
 
 		void installPostLuaPatches() {

@@ -1446,6 +1446,12 @@
     <ClInclude Include="NIFlipController.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
+    <ClInclude Include="NIUVController.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="NIUVData.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3192,6 +3198,9 @@
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
     <ClCompile Include="NIFlipController.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NIUVController.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
   </ItemGroup>
