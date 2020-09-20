@@ -171,7 +171,7 @@ namespace mwse {
 		}
 
 		//
-		//
+		// Patch: Make Morrowind believe that it is always the front window in the main gameplay loop block.
 		//
 
 		HWND __stdcall PatchGetMorrowindMainWindow() {
