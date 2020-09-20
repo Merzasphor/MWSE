@@ -56,6 +56,8 @@ namespace NI {
 		static constexpr auto _ctor = reinterpret_cast<void(__thiscall*)(TimeController*)>(0x6FC540);
 		static constexpr auto _dtor = reinterpret_cast<void(__thiscall*)(TimeController*)>(0x6FC610);
 
+		static constexpr auto _copy = reinterpret_cast<void(__thiscall*)(const TimeController*, TimeController*)>(0x6FC8E0);
+
 		static constexpr auto _loadBinary = reinterpret_cast<void(__thiscall*)(TimeController*, Stream*)>(0x6FC9F0);
 		static constexpr auto _registerStreamables = reinterpret_cast<bool(__thiscall*)(TimeController*, Stream*)>(0x6FCAD0);
 		static constexpr auto _saveBinary = reinterpret_cast<void(__thiscall*)(TimeController*, Stream*)>(0x6FCB00);

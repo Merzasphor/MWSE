@@ -18,6 +18,7 @@
 #include "TES3UIInventoryTile.h"
 #include "TES3WorldController.h"
 
+#include "NIFlipController.h"
 #include "NILinesData.h"
 
 #include "BitUtil.h"
@@ -241,6 +242,9 @@ namespace mwse {
 			// Patch: Decrease MO2 load times.
 			writeDoubleWordUnprotected(0x7462F4, reinterpret_cast<DWORD>(&PatchCacheFileLastModifyTimesBecauseMO2IsSlow));
 
+			// Patch: Fix NiFlipController losing its affectedMap on clone.
+			auto NiFlipController_clone = &NI::FlipController::copy;
+			genCallEnforced(0x715D26, 0x715D40, *reinterpret_cast<DWORD*>(&NiFlipController_clone));
 		}
 
 		void installPostLuaPatches() {

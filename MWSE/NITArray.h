@@ -139,12 +139,15 @@ namespace NI {
 			filledCount = 0;
 #if !defined(MWSE_NO_CUSTOM_ALLOC) || MWSE_NO_CUSTOM_ALLOC == 0
 			storage = reinterpret_cast<T* (__cdecl*)(size_type)>(0x727692)(size * 4);
+			memset(storage, 0, size * 4);
 #else
 			storage = new T[size];
 #endif
 		}
 
-		TArray(const TArray& other) = delete;
+		TArray(const TArray& other) {
+			*this = other;
+		}
 
 		virtual ~TArray() {
 #if !defined(MWSE_NO_CUSTOM_ALLOC) || MWSE_NO_CUSTOM_ALLOC == 0
@@ -152,6 +155,22 @@ namespace NI {
 #else
 			delete[] storage;
 #endif
+		}
+
+		TArray<T>& TArray::operator= (const TArray<T>& other) {
+			// Clear current data.
+			clear();
+
+			// Change size to fit.
+			growByCount = other.growByCount;
+			setSize(other.size());
+			
+			// Copy over values.
+			for (size_t i = 0; i < storageCount; i++) {
+				setAtIndex(i, other.storage[i]);
+			}
+
+			return *this;
 		}
 
 		const T operator[](size_type index) const { return at(index); }
@@ -208,7 +227,7 @@ namespace NI {
 			return INVALID_INDEX;
 		}
 
-		void setAtIndex(size_type index, const T value) {
+		void setAtIndex(size_type index, const_reference value) {
 			if (index >= storageCount) {
 				return;
 			}
@@ -250,13 +269,18 @@ namespace NI {
 			}
 #if !defined(MWSE_NO_CUSTOM_ALLOC) || MWSE_NO_CUSTOM_ALLOC == 0
 			auto newStorage = reinterpret_cast<T* (__cdecl*)(size_t)>(0x727692)(size * 4);
+			memset(newStorage, 0, size * 4);
 #else
 			auto newStorage = new T[size];
 #endif
 			for (auto i = 0; i < endIndex; i++) {
 				newStorage[i] = storage[i];
 			}
-			mwse::tes3::_delete(storage);
+#if !defined(MWSE_NO_CUSTOM_ALLOC) || MWSE_NO_CUSTOM_ALLOC == 0
+			reinterpret_cast<void(__cdecl*)(void*)>(0x727530)(storage);
+#else
+			delete[] storage;
+#endif
 			storage = newStorage;
 			storageCount = size;
 		}
@@ -282,6 +306,12 @@ namespace NI {
 			}
 			setAtIndex(index, value);
 			return index;
+		}
+
+		void clear() {
+			for (size_t i = 0; i < storageCount; i++) {
+				setAtIndex(i, T(0));
+			}
 		}
 
 		size_type getFilledCount() const { return filledCount; }

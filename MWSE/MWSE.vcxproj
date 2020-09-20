@@ -137,6 +137,7 @@
     <ClInclude Include="NIDX8Renderer.h" />
     <ClInclude Include="NIExtraData.h" />
     <ClInclude Include="NIExtraDataLua.h" />
+    <ClInclude Include="NIFlipController.h" />
     <ClInclude Include="NIGeometry.h" />
     <ClInclude Include="NIGeometryData.h" />
     <ClInclude Include="NIGeometryDataLua.h" />
@@ -565,6 +566,7 @@
     <ClCompile Include="NIDynamicEffectLua.cpp" />
     <ClCompile Include="NIExtraData.cpp" />
     <ClCompile Include="NIExtraDataLua.cpp" />
+    <ClCompile Include="NIFlipController.cpp" />
     <ClCompile Include="NIGeometry.cpp" />
     <ClCompile Include="NIGeometryData.cpp" />
     <ClCompile Include="NIGeometryDataLua.cpp" />
