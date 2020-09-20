@@ -70,13 +70,20 @@ VersionStruct GetMGEVersion() {
 	return version;
 }
 
-bool __fastcall OnGameStructInitialized(TES3::Game * game) {
-	// Setup our lua interface before initializing.
-	mwse::lua::LuaManager::getInstance().hook();
-
+const auto TES3_Game_ctor = reinterpret_cast<TES3::Game*(__thiscall*)(TES3::Game*)>(0x417280);
+TES3::Game* __fastcall OnGameStructCreated(TES3::Game * game) {
 	// Install necessary patches.
 	mwse::patch::installPatches();
 
+	// Call overloaded function.
+	return TES3_Game_ctor(game);
+}
+
+bool __fastcall OnGameStructInitialized(TES3::Game* game) {
+	// Setup our lua interface before initializing.
+	mwse::lua::LuaManager::getInstance().hook();
+
+	// Call overloaded function.
 	return game->initialize();
 }
 
@@ -147,6 +154,9 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 
 		// Initialize our main mwscript hook.
 		mwse::mwAdapter::Hook();
+
+		// Install patches.
+		mwse::genCallEnforced(0x417169, 0x417280, reinterpret_cast<DWORD>(OnGameStructCreated));
 
 		// Create MGE VM interface.
 		mge_virtual_machine = new TES3MACHINE();

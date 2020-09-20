@@ -158,6 +158,17 @@ namespace mwse {
 		}
 
 		//
+		// Patch: Use modern stat function to obtain file last modified times.
+		//
+		// The bundled version with Morrowind seems to cause Mod Organizer 2 to hang on startup for long periods
+		// of time. Simply swapping this out drastically reduces load times when using that.
+		//
+
+		static int __cdecl PatchCacheFileLastModifyTimesBecauseMO2IsSlow(const char* path, struct _stat32* out_stat) {
+			return _stat32(path, out_stat);
+		}
+
+		//
 		// Install all the patches.
 		//
 
@@ -216,6 +227,9 @@ namespace mwse {
 			auto BodyPartManager_updateForReference = &TES3::BodyPartManager::updateForReference;
 			genCallEnforced(0x46444C, 0x473EA0, *reinterpret_cast<DWORD*>(&BodyPartManager_updateForReference));
 			genCallEnforced(0x4DA07C, 0x473EA0, *reinterpret_cast<DWORD*>(&BodyPartManager_updateForReference));
+
+			// Patch: Decrease MO2 load times.
+			writeDoubleWordUnprotected(0x7462F4, reinterpret_cast<DWORD>(&PatchCacheFileLastModifyTimesBecauseMO2IsSlow));
 		}
 
 		//
