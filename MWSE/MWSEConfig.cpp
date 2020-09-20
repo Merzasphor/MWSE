@@ -9,7 +9,7 @@ namespace mwse {
 	bool Configuration::EnableLegacyLuaMods = true;
 	bool Configuration::LogWarningsWithLuaStack = true;
 	bool Configuration::KeepAllNetImmerseObjectsAlive = false;
-	bool Configuration::RunInBackground = true;
+	bool Configuration::RunInBackground = false;
 
 	// Allow default values to be accessed later.
 	sol::table defaultConfig;
