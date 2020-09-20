@@ -13,7 +13,7 @@ namespace NI {
 		bool getCollisionActive();
 		void setCollisionActive(bool active);
 
-		Pointer<CollisionSwitch> create();
+		static Pointer<CollisionSwitch> create();
 	};
 	static_assert(sizeof(CollisionSwitch) == 0xB0, "NI::CollisionSwitch failed size validation");
 }
