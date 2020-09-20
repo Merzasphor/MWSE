@@ -27,6 +27,8 @@
 
 #include "LuaManager.h"
 
+#include "MWSEConfig.h"
+
 namespace NI {
 	const auto NI_Object_ctor = reinterpret_cast<Object * (__thiscall*)(Object *)>(0x6E98A0);
 	Object::Object() {
@@ -87,10 +89,12 @@ namespace NI {
 
 		auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 
-		auto cacheHit = niObjectCache.find(this);
-		if (cacheHit != niObjectCache.end()) {
-			auto result = cacheHit->second;
-			return result;
+		if (mwse::Configuration::KeepAllNetImmerseObjectsAlive) {
+			auto cacheHit = niObjectCache.find(this);
+			if (cacheHit != niObjectCache.end()) {
+				auto result = cacheHit->second;
+				return result;
+			}
 		}
 
 		// Make sure we're looking at the main state.
@@ -178,8 +182,10 @@ namespace NI {
 			currentRTTI = currentRTTI->baseRTTI;
 		}
 
-		if (ref != sol::nil) {
-			niObjectCache[this] = ref;
+		if (mwse::Configuration::KeepAllNetImmerseObjectsAlive) {
+			if (ref != sol::nil) {
+				niObjectCache[this] = ref;
+			}
 		}
 
 		return ref;

@@ -6,6 +6,7 @@ namespace mwse {
 	// Declare default values.
 	bool Configuration::EnableLegacyLuaMods = true;
 	bool Configuration::LogWarningsWithLuaStack = true;
+	bool Configuration::KeepAllNetImmerseObjectsAlive = false;
 
 	// Allow default values to be accessed later.
 	sol::table defaultConfig;
@@ -35,5 +36,6 @@ namespace mwse {
 		// Bind all of our config entries.
 		bindConfig(usertypeDefinition, "EnableLegacyLuaMods", Configuration::EnableLegacyLuaMods);
 		bindConfig(usertypeDefinition, "LogWarningsWithLuaStack", Configuration::LogWarningsWithLuaStack);
+		bindConfig(usertypeDefinition, "KeepAllNetImmerseObjectsAlive", Configuration::KeepAllNetImmerseObjectsAlive);
 	}
 }
