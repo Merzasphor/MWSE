@@ -174,6 +174,44 @@ namespace TES3 {
 			return cellX == VariantData.exterior.gridX && cellY == VariantData.exterior.gridY;
 		}
 	}
+
+	DWORD getObjectTypeForInput(sol::object obj) {
+		if (obj.is<DWORD>()) {
+			return obj.as<DWORD>();
+		}
+		throw std::invalid_argument("Invalid reference filter provided.");
+	}
+
+	void addReferencesToTable(sol::table& result, const TES3::ReferenceList& references, std::unordered_set<DWORD>& filters) {
+		for (auto ref : references) {
+			if (filters.empty() || filters.count(ref->baseObject->objectType) > 0) {
+				result.add(ref);
+			}
+		}
+	}
+
+	sol::table Cell::getFilteredReferences(sol::optional<sol::object> param, sol::this_state ts) const {
+		sol::state_view state = ts;
+		sol::table result = state.create_table();
+
+		std::unordered_set<DWORD> filter;
+		if (param) {
+			if (param.value().is<sol::table>()) {
+				for (auto& entry : param.value().as<sol::table>()) {
+					filter.insert(getObjectTypeForInput(entry.second));
+				}
+			}
+			else {
+				filter.insert(getObjectTypeForInput(param.value()));
+			}
+		}
+
+		addReferencesToTable(result, actors, filter);
+		addReferencesToTable(result, persistentRefs, filter);
+		addReferencesToTable(result, temporaryRefs, filter);
+
+		return result;
+	}
 }
 
 MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3(TES3::Cell)

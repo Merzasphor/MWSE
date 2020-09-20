@@ -180,6 +180,8 @@ namespace TES3 {
 
 		bool isPointInCell(float x, float y) const;
 		static int toGridCoord(float x) { return int(x) >> 13;  }
+
+		sol::table getFilteredReferences(sol::optional<sol::object> param, sol::this_state ts) const;
 	};
 	static_assert(sizeof(Cell) == 0x94, "TES3::Cell failed size validation");
 	static_assert(sizeof(Cell::MovedRef) == 0x10, "TES3::Cell::MovedRef failed size validation");

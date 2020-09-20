@@ -446,6 +446,35 @@ end
 
 
 -------------------------------------------------
+-- Usertype Extensions: tes3cell
+-------------------------------------------------
+
+function tes3cell:iterateReferences(param)
+	local function iter()
+		-- Get the list of references in the cell.
+		local references = self:getFilteredReferences(param)
+
+		-- If a reference is removed while we're working, remove the value.
+		local invalidatedRefs = {}
+		local function blacklistInvalidReferences(e)
+			invalidatedRefs[e.object] = true
+		end
+		event.register("objectInvalidated", blacklistInvalidReferences)
+
+		for _, reference in ipairs(references) do
+			if (not invalidatedRefs[reference]) then
+				coroutine.yield(reference)
+			end
+		end
+
+		-- We no longer need to handle this.
+		event.unregister("objectInvalidated", blacklistInvalidReferences)
+	end
+	return coroutine.wrap(iter)
+end
+
+
+-------------------------------------------------
 -- Usertype Extensions: tes3uiElement
 -------------------------------------------------
 
