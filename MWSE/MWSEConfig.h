@@ -6,6 +6,7 @@ namespace mwse {
 		static bool LogWarningsWithLuaStack;
 		static bool EnableLegacyLuaMods;
 		static bool KeepAllNetImmerseObjectsAlive;
+		static bool RunInBackground;
 
 		static sol::table getDefaults();
 

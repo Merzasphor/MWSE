@@ -83,6 +83,9 @@ bool __fastcall OnGameStructInitialized(TES3::Game* game) {
 	// Setup our lua interface before initializing.
 	mwse::lua::LuaManager::getInstance().hook();
 
+	// Install our later patches.
+	mwse::patch::installPostLuaPatches();
+
 	// Call overloaded function.
 	return game->initialize();
 }

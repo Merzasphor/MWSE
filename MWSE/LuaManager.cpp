@@ -928,6 +928,11 @@ namespace mwse {
 		//
 
 		void __fastcall OnKeyReadState(TES3::InputController* inputController) {
+			// If we're using the run in background patch, add a check here.
+			if (Configuration::RunInBackground && GetActiveWindow() != TES3::WorldController::get()->Win32_hWndParent) {
+				return;
+			}
+
 			// Call the original function.
 			inputController->readKeyState();
 

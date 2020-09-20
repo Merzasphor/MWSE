@@ -2,11 +2,14 @@
 
 #include "LuaManager.h"
 
+#define DECLARE_CONFIG(cfg) bindConfig(usertypeDefinition, #cfg, Configuration::cfg);
+
 namespace mwse {
 	// Declare default values.
 	bool Configuration::EnableLegacyLuaMods = true;
 	bool Configuration::LogWarningsWithLuaStack = true;
 	bool Configuration::KeepAllNetImmerseObjectsAlive = false;
+	bool Configuration::RunInBackground = true;
 
 	// Allow default values to be accessed later.
 	sol::table defaultConfig;
@@ -34,8 +37,9 @@ namespace mwse {
 		usertypeDefinition["getDefaults"] = &Configuration::getDefaults;
 
 		// Bind all of our config entries.
-		bindConfig(usertypeDefinition, "EnableLegacyLuaMods", Configuration::EnableLegacyLuaMods);
-		bindConfig(usertypeDefinition, "LogWarningsWithLuaStack", Configuration::LogWarningsWithLuaStack);
-		bindConfig(usertypeDefinition, "KeepAllNetImmerseObjectsAlive", Configuration::KeepAllNetImmerseObjectsAlive);
+		DECLARE_CONFIG(EnableLegacyLuaMods)
+		DECLARE_CONFIG(LogWarningsWithLuaStack)
+		DECLARE_CONFIG(KeepAllNetImmerseObjectsAlive)
+		DECLARE_CONFIG(RunInBackground)
 	}
 }

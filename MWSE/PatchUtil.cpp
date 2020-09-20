@@ -27,6 +27,8 @@
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
+#include "MWSEConfig.h"
+
 namespace mwse {
 	namespace patch {
 
@@ -169,6 +171,14 @@ namespace mwse {
 		}
 
 		//
+		//
+		//
+
+		HWND __stdcall PatchGetMorrowindMainWindow() {
+			return TES3::WorldController::get()->Win32_hWndParent;
+		}
+
+		//
 		// Install all the patches.
 		//
 
@@ -230,6 +240,15 @@ namespace mwse {
 
 			// Patch: Decrease MO2 load times.
 			writeDoubleWordUnprotected(0x7462F4, reinterpret_cast<DWORD>(&PatchCacheFileLastModifyTimesBecauseMO2IsSlow));
+
+		}
+
+		void installPostLuaPatches() {
+			// Patch: The window is never out of focus.
+			if (Configuration::RunInBackground) {
+				writeByteUnprotected(0x416BC3 + 0x2 + 0x4, 1);
+				genCallUnprotected(0x41AB7D, reinterpret_cast<DWORD>(PatchGetMorrowindMainWindow), 0x6);
+			}
 		}
 
 		//
