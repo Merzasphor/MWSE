@@ -43,6 +43,16 @@ namespace TES3 {
 		return TES3_TES3File_writeChunkData(this, tag, data, size);
 	}
 
+	const auto TES3_TES3File_writeRecordHeader = reinterpret_cast<int(__thiscall*)(GameFile*, unsigned int, unsigned int)>(0x4B6B00);
+	int GameFile::writeRecordHeader(unsigned int tag, unsigned int flags) {
+		return TES3_TES3File_writeRecordHeader(this, tag, flags);
+	}
+
+	const auto TES3_TES3File_endRecord = reinterpret_cast<int(__thiscall*)(GameFile*)>(0x4B6C50);
+	int GameFile::endRecord() {
+		return TES3_TES3File_endRecord(this);
+	}
+
 	const auto TES3_TES3File_getFirstSubrecord = reinterpret_cast<unsigned int(__thiscall*)(GameFile*)>(0x4B6750);
 	unsigned int GameFile::getFirstSubrecord() {
 		return TES3_TES3File_getFirstSubrecord(this);
@@ -58,9 +68,9 @@ namespace TES3 {
 		return TES3_TES3File_getNextSubrecord(this);
 	}
 
-	const auto TES3_TES3File_isRecordEnd = reinterpret_cast<int(__thiscall*)(GameFile*)>(0x4B67F0);
-	bool GameFile::isRecordEnd() {
-		return TES3_TES3File_isRecordEnd(this);
+	const auto TES3_TES3File_hasMoreRecords = reinterpret_cast<int(__thiscall*)(GameFile*)>(0x4B67F0);
+	bool GameFile::hasMoreRecords() {
+		return TES3_TES3File_hasMoreRecords(this);
 	}
 
 	bool GameFile::collectActiveMods(bool showMasterErrors) {

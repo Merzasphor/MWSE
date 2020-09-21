@@ -2,12 +2,14 @@
 
 #include "TES3Actor.h"
 #include "TES3DataHandler.h"
+#include "TES3GameFile.h"
 #include "TES3GameSetting.h"
 #include "TES3GlobalVariable.h"
 #include "TES3MobController.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
 #include "TES3UIManager.h"
+#include "TES3UIMenuController.h"
 #include "TES3WeatherController.h"
 
 #include "MemoryUtil.h"
@@ -40,11 +42,106 @@ namespace TES3 {
 	// KillCounter
 	//
 
-	void KillCounter::increment(MobileActor * mobile) {
-		TES3::Actor * actor = static_cast<TES3::Actor*>(mobile->reference->baseObject)->getBaseActor();
+	const auto TES3_KillCounter_ctor = reinterpret_cast<KillCounter*(__thiscall*)(KillCounter*)>(0x55D750);
+	KillCounter* KillCounter::ctor() {
+#if MWSE_CUSTOM_KILLCOUNTER
+		werewolfKills = 0;
+		totalKills = 0;
+		counter = new std::unordered_map<Actor*, int>();
+		return this;
+#else
+		return TES3_KillCounter_ctor(this);
+#endif
+	}
 
+	const auto TES3_KillCounter_dtor = reinterpret_cast<void(__thiscall*)(KillCounter*)>(0x55D7D0);
+	void KillCounter::dtor() {
+#if MWSE_CUSTOM_KILLCOUNTER
+		delete counter;
+#else
+		TES3_KillCounter_dtor(this);
+#endif
+	}
+
+	int KillCounter::getKillCount(Actor * actor) const {
+#if MWSE_CUSTOM_KILLCOUNTER
+		auto itt = counter->find(actor);
+		if (itt != counter->end()) {
+			return itt->second;
+		}
+#else
+		auto node = killedActors->head;
+		while (node) {
+			if (node->data->actor == actor) {
+				return node->data->count;
+			}
+			node = node->next;
+		}
+#endif
+
+		return 0;
+	}
+
+	void KillCounter::decrementMobile(MobileActor* mobile) {
+		decrement(static_cast<TES3::Actor*>(mobile->reference->baseObject));
+	}
+
+	void KillCounter::decrement(Actor* actor) {
+		actor = static_cast<Actor*>(actor->getBaseObject());
+
+#if MWSE_CUSTOM_KILLCOUNTER
+		(*counter)[actor]--;
+		totalKills--;
+#else
 		// Is this actor already in the collection?
-		KillCounter::Node * node = nullptr;
+		KillCounter::Node* node = nullptr;
+		auto itt = killedActors->head;
+		while (itt) {
+			if (itt->data->actor == actor) {
+				node = itt->data;
+				break;
+			}
+
+			itt = itt->next;
+		}
+
+		// If it isn't in the collection, we don't care about it.
+		if (node == nullptr) {
+			return;
+		}
+
+		// Increment kills for this actor and total kills.
+		node->count--;
+		totalKills--;
+#endif
+
+		// Increment werewolf kills if the player is wolfing out.
+		auto worldController = TES3::WorldController::get();
+		if (werewolfKills > 0 && actor->objectType == TES3::ObjectType::NPC && worldController->getMobilePlayer()->getMobileActorFlag(TES3::MobileActorFlag::Werewolf)) {
+			werewolfKills--;
+		}
+
+		// Log to console.
+		if (worldController->menuController->unknown_0x24 & 0x100000) {
+			std::stringstream ss;
+			ss << actor->getObjectID() << " killed, total kills " << totalKills << ", werewolf kills " << werewolfKills << ".";
+			UI::logToConsole(ss.str().c_str());
+		}
+	}
+
+	void KillCounter::incrementMobile(MobileActor* mobile) {
+		increment(static_cast<TES3::Actor*>(mobile->reference->baseObject));
+	}
+
+	void KillCounter::increment(Actor* actor) {
+		actor = static_cast<Actor*>(actor->getBaseObject());
+
+#if MWSE_CUSTOM_KILLCOUNTER
+		(*counter)[actor]++;
+		totalKills++;
+#else
+		// Is this actor already in the collection?
+		KillCounter::Node* node = nullptr;
 		auto itt = killedActors->head;
 		while (itt) {
 			if (itt->data->actor == actor) {
@@ -66,26 +163,145 @@ namespace TES3 {
 		// Increment kills for this actor and total kills.
 		node->count++;
 		totalKills++;
+#endif
 
 		// Increment werewolf kills if the player is wolfing out.
-		if (mobile->actorType == TES3::MobileActorType::NPC && TES3::WorldController::get()->getMobilePlayer()->getMobileActorFlag(TES3::MobileActorFlag::Werewolf)) {
+		auto worldController = TES3::WorldController::get();
+		if (actor->objectType == TES3::ObjectType::NPC && worldController->getMobilePlayer()->getMobileActorFlag(TES3::MobileActorFlag::Werewolf)) {
 			werewolfKills++;
 		}
 
-		// TODO: Add back in console logging.
+		// Log to console.
+		if (worldController->menuController->unknown_0x24 & 0x100000) {
+			std::stringstream ss;
+			ss << actor->getObjectID() << " killed, total kills " << totalKills << ", werewolf kills " << werewolfKills << ".";
+			UI::logToConsole(ss.str().c_str());
+		}
 	}
 
-	int KillCounter::getKillCount(Actor * actor) {
-		auto node = killedActors->head;
-		while (node) {
-			if (node->data->actor == actor) {
-				return node->data->count;
-			}
-
-			node = node->next;
+	void KillCounter::setKillCount(Actor* actor, int count) {
+		if (count < 0) {
+			return;
 		}
 
-		return 0;
+#if MWSE_CUSTOM_KILLCOUNTER
+		int countBefore = (*counter)[actor];
+		if (countBefore == count) {
+			return;
+		}
+
+		(*counter)[actor] = count;
+		totalKills += (count - countBefore);
+#else
+		// Is this actor already in the collection?
+		KillCounter::Node* node = nullptr;
+		auto itt = killedActors->head;
+		while (itt) {
+			if (itt->data->actor == actor) {
+				node = itt->data;
+				break;
+			}
+
+			itt = itt->next;
+		}
+
+		// If it isn't in the collection, create a new node and add it.
+		if (node == nullptr) {
+			node = mwse::tes3::_new<KillCounter::Node>();
+			node->count = 0;
+			node->actor = actor;
+			killedActors->push_back(node);
+		}
+
+		totalKills += (count - node->count);
+		node->count = count;
+#endif
+	}
+
+	const auto TES3_KillCounter_clear = reinterpret_cast<void(__thiscall*)(KillCounter*)>(0x55DBD0);
+	void KillCounter::clear() {
+#if MWSE_CUSTOM_KILLCOUNTER
+		totalKills = 0;
+		werewolfKills = 0;
+		counter->clear();
+#else
+		TES3_KillCounter_clear(this);
+#endif
+	}
+
+	static_assert(0x4D414E4Bu == 'MANK', "");
+
+	const auto TES3_KillCounter_load = reinterpret_cast<void(__thiscall*)(KillCounter*, GameFile*)>(0x55DA90);
+	void KillCounter::load(GameFile* file) {
+#if MWSE_CUSTOM_KILLCOUNTER
+		if (file->getFirstSubrecord() == 'TSLK') {
+			// Clear existing data.
+			counter->clear();
+
+			// Parse subrecords.
+			int countBuffer;
+			char idBuffer[32];
+			while (auto subrecord = file->getNextSubrecord()) {
+				switch (subrecord) {
+				case 'MANK':
+					file->readChunkData(&idBuffer);
+					break;
+				case 'MANC':
+				{
+					file->readChunkData(&countBuffer);
+					auto actor = static_cast<Actor*>(TES3::DataHandler::get()->nonDynamicData->resolveObject(idBuffer));
+					if (actor == nullptr) {
+						reinterpret_cast<void(__cdecl*)(const char*, const char*)>(0x477400)("Unable to locate Killed Object '%s'.", idBuffer);
+					}
+					setKillCount(actor, countBuffer);
+					totalKills += countBuffer;
+				}
+				break;
+				case 'INTV':
+					file->readChunkData(&werewolfKills);
+					break;
+				}
+
+				if (!file->hasMoreRecords()) {
+					break;
+				}
+			}
+		}
+#else
+		return TES3_KillCounter_load(this, file);
+#endif
+	}
+
+	const auto TES3_KillCounter_save = reinterpret_cast<void(__thiscall*)(const KillCounter*, GameFile*)>(0x55D950);
+	void KillCounter::save(GameFile* file) const {
+#if MWSE_CUSTOM_KILLCOUNTER
+		// Write nothing if we have no kills.
+		if (counter->empty()) {
+			return;
+		}
+
+		// Create the record header.
+		BaseObject recordHolder;
+		recordHolder.objectType = (ObjectType::ObjectType)'TSLK';
+		recordHolder.writeFileHeader(file);
+
+		// Write out individual kills.
+		for (auto& itt : *counter) {
+			if (itt.second > 0) {
+				const char* id = itt.first->getObjectID();
+				file->writeChunkData('MANK', id, strnlen_s(id, 32) + 1);
+				file->writeChunkData('MANC', &itt.second, 4);
+			}
+		}
+
+		// Write werewolf kills.
+		file->writeChunkData('INTV', &werewolfKills, 4);
+
+		// Finish up this record.
+		file->endRecord();
+#else
+		TES3_KillCounter_save(this, file);
+#endif
 	}
 
 	//

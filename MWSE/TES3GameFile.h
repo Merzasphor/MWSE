@@ -75,11 +75,13 @@ namespace TES3 {
 		void deleteFile();
 		bool readChunkData(void * data, unsigned int size = 0);
 		int writeChunkData(unsigned int tag, const void * data, unsigned int size);
+		int writeRecordHeader(unsigned int tag, unsigned int flags);
+		int endRecord();
 
 		unsigned int getFirstSubrecord();
 		bool hasNextSubrecord();
 		unsigned int getNextSubrecord();
-		bool isRecordEnd();
+		bool hasMoreRecords();
 
 		bool collectActiveMods(bool showMasterErrors = false);
 		bool load(int unknown1 = 0, bool unknown2 = false);

@@ -3895,6 +3895,60 @@ namespace mwse {
 			reference->setObjectModified(true);
 		}
 
+		int getKillCount(sol::optional<sol::table> params) {
+			if (params) {
+				auto actor = getOptionalParamObject<TES3::Actor>(params, "actor");
+				if (actor == nullptr) {
+					throw std::invalid_argument("Invalid 'actor' parameter provided: must be an actor id.");
+				}
+				return TES3::WorldController::get()->playerKills->getKillCount(actor);
+			}
+			else {
+				return TES3::WorldController::get()->playerKills->totalKills;
+			}
+		}
+
+		void setKillCount(sol::table params) {
+			auto actor = getOptionalParamObject<TES3::Actor>(params, "actor");
+			if (actor == nullptr) {
+				throw std::invalid_argument("Invalid 'actor' parameter provided: must be an actor id.");
+			}
+			TES3::WorldController::get()->playerKills->getKillCount(actor);
+		}
+
+		void decrementKillCount(sol::table params) {
+			auto actor = getOptionalParamObject<TES3::Actor>(params, "actor");
+			if (actor == nullptr) {
+				throw std::invalid_argument("Invalid 'actor' parameter provided: must be an actor id.");
+			}
+			TES3::WorldController::get()->playerKills->decrement(actor);
+		}
+
+		void incrementKillCount(sol::table params) {
+			auto actor = getOptionalParamObject<TES3::Actor>(params, "actor");
+			if (actor == nullptr) {
+				throw std::invalid_argument("Invalid 'actor' parameter provided: must be an actor id.");
+			}
+			TES3::WorldController::get()->playerKills->increment(actor);
+		}
+
+		sol::table getKillCounts(sol::this_state ts) {
+			sol::state_view state = ts;
+			sol::table killMap = state.create_table();
+			for (auto& itt : *TES3::WorldController::get()->playerKills->counter) {
+				killMap[itt.first] = itt.second;
+			}
+			return killMap;
+		}
+
+		int getWerewolfKillCount() {
+			return TES3::WorldController::get()->playerKills->werewolfKills;
+		}
+
+		void setWerewolfKillCount(int count) {
+			TES3::WorldController::get()->playerKills->werewolfKills = count;
+		}
+
 		void bindTES3Util() {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
@@ -3920,6 +3974,7 @@ namespace mwse {
 			tes3["createCell"] = createCell;
 			tes3["createObject"] = createObject;
 			tes3["createReference"] = createReference;
+			tes3["decrementKillCount"] = decrementKillCount;
 			tes3["deleteObject"] = deleteObject;
 			tes3["disableKey"] = disableKey;
 			tes3["dropItem"] = dropItem;
@@ -3957,6 +4012,8 @@ namespace mwse {
 			tes3["getInputBinding"] = getInputBinding;
 			tes3["getItemIsStolen"] = getItemIsStolen;
 			tes3["getJournalIndex"] = getJournalIndex;
+			tes3["getKillCount"] = getKillCount;
+			tes3["getKillCounts"] = getKillCounts;
 			tes3["getLanguage"] = getLanguage;
 			tes3["getLanguageCode"] = getLanguageCode;
 			tes3["getLastExteriorPosition"] = getLastExteriorPosition;
@@ -3984,10 +4041,12 @@ namespace mwse {
 			tes3["getSoundPlaying"] = getSoundPlaying;
 			tes3["getTopMenu"] = TES3::UI::getMenuOnTop;
 			tes3["getTrap"] = getTrap;
+			tes3["getWerewolfKillCount"] = getWerewolfKillCount;
 			tes3["getWorldController"] = TES3::WorldController::get;
 			tes3["hammerKey"] = hammerKey;
 			tes3["hasCodePatchFeature"] = hasCodePatchFeature;
 			tes3["hasOwnershipAccess"] = hasOwnershipAccess;
+			tes3["incrementKillCount"] = incrementKillCount;
 			tes3["is3rdPerson"] = isThirdPerson;
 			tes3["isAffectedBy"] = isAffectedBy;
 			tes3["isModActive"] = isModActive;
@@ -4025,11 +4084,13 @@ namespace mwse {
 			tes3["setGlobal"] = setGlobal;
 			tes3["setItemIsStolen"] = setItemIsStolen;
 			tes3["setJournalIndex"] = setJournalIndex;
+			tes3["setKillCount"] = setKillCount;
 			tes3["setLockLevel"] = setLockLevel;
 			tes3["setMarkLocation"] = setMarkLocation;
 			tes3["setOwner"] = setOwner;
 			tes3["setStatistic"] = setStatistic;
 			tes3["setTrap"] = setTrap;
+			tes3["setWerewolfKillCount"] = setWerewolfKillCount;
 			tes3["showRepairServiceMenu"] = showRepairServiceMenu;
 			tes3["skipAnimationFrame"] = skipAnimationFrame;
 			tes3["streamMusic"] = streamMusic;

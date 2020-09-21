@@ -107,21 +107,39 @@ namespace TES3 {
 	};
 	static_assert(sizeof(MouseController) == 0x80, "TES3::MouseController failed size validation");
 
+#define MWSE_CUSTOM_KILLCOUNTER true
 	struct KillCounter {
+#if !MWSE_CUSTOM_KILLCOUNTER
 		struct Node {
 			int count; // 0x0
 			Actor* actor; // 0x4
 		};
+#endif
 		int werewolfKills; // 0x0
 		int totalKills; // 0x4
+#if MWSE_CUSTOM_KILLCOUNTER
+		std::unordered_map<Actor*, int>* counter;
+#else
 		IteratedList<Node*>* killedActors; // 0x8
+#endif
 
 		//
 		// Custom functions.
 		//
 
-		_declspec(dllexport) void increment(MobileActor* actor);
-		_declspec(dllexport) int getKillCount(Actor* actor);
+		KillCounter* ctor();
+		void dtor();
+
+		int getKillCount(Actor* actor) const;
+		void decrementMobile(MobileActor* actor);
+		void decrement(Actor* actor);
+		void incrementMobile(MobileActor* actor);
+		void increment(Actor* actor);
+		void setKillCount(Actor* actor, int count);
+		void clear();
+
+		void load(GameFile* file);
+		void save(GameFile* file) const;
 
 	};
 	static_assert(sizeof(KillCounter) == 0xC, "TES3::KillCounter failed size validation");

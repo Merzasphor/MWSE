@@ -235,6 +235,12 @@ namespace TES3 {
 		const char* getObjectID() const;
 
 		//
+		// Other related this-call functions.
+		//
+
+		bool writeFileHeader(GameFile* file) const;
+
+		//
 		// Custom functions.
 		//
 

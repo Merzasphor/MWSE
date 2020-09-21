@@ -79,6 +79,11 @@ namespace TES3 {
 		return vTable.base->getObjectID(this);
 	}
 
+	const auto BaseObject_writeFileHeader = reinterpret_cast<bool(__thiscall*)(const BaseObject*, GameFile*)>(0x4EEE60);
+	bool BaseObject::writeFileHeader(GameFile* file) const {
+		return BaseObject_writeFileHeader(this, file);
+	}
+
 	BaseObject * BaseObject::getBaseObject() {
 		BaseObject * object = this;
 

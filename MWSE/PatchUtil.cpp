@@ -187,13 +187,25 @@ namespace mwse {
 			genCallEnforced(0x5CDFD0, 0x581440, reinterpret_cast<DWORD>(PatchPaperdollTooltipCrashFix));
 
 			// Patch: Optimize GetDeadCount and associated dialogue filtering/logic.
-			auto killCounterIncrement = &TES3::KillCounter::increment;
-			genCallEnforced(0x523D73, 0x55D820, *reinterpret_cast<DWORD*>(&killCounterIncrement));
-			auto killCounterGetCount = &TES3::KillCounter::getKillCount;
-			genCallEnforced(0x4B0B2E, 0x55D900, *reinterpret_cast<DWORD*>(&killCounterGetCount));
-			genCallEnforced(0x50AC85, 0x55D900, *reinterpret_cast<DWORD*>(&killCounterGetCount));
-			genCallEnforced(0x50ACAB, 0x55D900, *reinterpret_cast<DWORD*>(&killCounterGetCount));
-			genCallEnforced(0x745FF0, 0x55D900, *reinterpret_cast<DWORD*>(&killCounterGetCount));
+			auto killCounter_increment = &TES3::KillCounter::incrementMobile;
+			genCallEnforced(0x523D73, 0x55D820, *reinterpret_cast<DWORD*>(&killCounter_increment));
+			auto killCounter_getCount = &TES3::KillCounter::getKillCount;
+			genCallEnforced(0x4B0B2E, 0x55D900, *reinterpret_cast<DWORD*>(&killCounter_getCount));
+			genCallEnforced(0x50AC85, 0x55D900, *reinterpret_cast<DWORD*>(&killCounter_getCount));
+			genCallEnforced(0x50ACAB, 0x55D900, *reinterpret_cast<DWORD*>(&killCounter_getCount));
+			genCallEnforced(0x745FF0, 0x55D900, *reinterpret_cast<DWORD*>(&killCounter_getCount));
+#if MWSE_CUSTOM_KILLCOUNTER
+			auto killCounter_ctor = &TES3::KillCounter::ctor;
+			genCallEnforced(0x40DE9B, 0x55D750, *reinterpret_cast<DWORD*>(&killCounter_ctor));
+			auto killCounter_dtor = &TES3::KillCounter::dtor;
+			genCallEnforced(0x40E049, 0x55D7D0, *reinterpret_cast<DWORD*>(&killCounter_dtor));
+			auto killCounter_clear = &TES3::KillCounter::clear;
+			genCallEnforced(0x4C6F76, 0x55DBD0, *reinterpret_cast<DWORD*>(&killCounter_clear));
+			auto killCounter_load = &TES3::KillCounter::load;
+			genCallEnforced(0x4C076C, 0x55DA90, *reinterpret_cast<DWORD*>(&killCounter_load));
+			auto killCounter_save = &TES3::KillCounter::save;
+			genCallEnforced(0x4BCB7E, 0x55D950, *reinterpret_cast<DWORD*>(&killCounter_save));
+#endif
 
 			// Patch: Don't truncate hour when advancing time past midnight.
 			// Also don't nudge time forward by small extra increments when resting.
