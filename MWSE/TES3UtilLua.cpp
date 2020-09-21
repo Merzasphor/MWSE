@@ -3913,7 +3913,13 @@ namespace mwse {
 			if (actor == nullptr) {
 				throw std::invalid_argument("Invalid 'actor' parameter provided: must be an actor id.");
 			}
-			TES3::WorldController::get()->playerKills->getKillCount(actor);
+			
+			sol::optional<int> count = params["count"];
+			if (!count) {
+				throw std::invalid_argument("Invalid 'count' parameter provided: must be a number.");
+			}
+
+			TES3::WorldController::get()->playerKills->setKillCount(actor, count.value());
 		}
 
 		void decrementKillCount(sol::table params) {
