@@ -104,6 +104,9 @@ namespace TES3 {
 		std::reference_wrapper<int[3]> getSkills();
 		std::reference_wrapper<Range<int>[3]> getAttacks();
 
+		int getSoulValue();
+		void setSoulValue(int value);
+
 	};
 	static_assert(sizeof(Creature) == 0xE8, "TES3::Creature failed size validation");
 

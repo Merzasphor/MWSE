@@ -2267,26 +2267,11 @@ namespace mwse {
 		const size_t patchSetupCheckSoulTrapSoulGem_size = 0x13;
 
 		int __stdcall PatchGetSoulValueForActor(TES3::Actor * actor) {
-			int value = 0;
-
-			if (actor->objectType == TES3::ObjectType::Creature) {
-				value = static_cast<TES3::Creature*>(actor)->soul;
+			if (actor->objectType != TES3::ObjectType::Creature) {
+				return 0;
 			}
 
-			// Allow lua to determine the soul's value.
-			if (lua::event::CalculateSoulValueEvent::getEventEnabled()) {
-				auto& luaManager = mwse::lua::LuaManager::getInstance();
-				auto stateHandle = luaManager.getThreadSafeStateHandle();
-				sol::table payload = stateHandle.triggerEvent(new lua::event::CalculateSoulValueEvent(actor, value));
-				if (payload.valid()) {
-					sol::object eventValue = payload["value"];
-					if (eventValue.is<int>()) {
-						value = eventValue.as<int>();
-					}
-				}
-			}
-
-			return value;
+			return static_cast<TES3::Creature*>(actor)->getSoulValue();
 		}
 
 		int __fastcall PatchGetSoulValueForMobileActor(TES3::MobileActor * mact) {

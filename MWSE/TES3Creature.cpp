@@ -2,6 +2,10 @@
 
 #include "BitUtil.h"
 
+#include "LuaCalcSoulValueEvent.h"
+
+#include "LuaManager.h"
+
 namespace TES3 {
 	bool CreatureBase::getIsBiped() const {
 		return BIT_TEST(actorFlags, ActorFlagCreature::BipedBit);
@@ -71,6 +75,29 @@ namespace TES3 {
 		return std::ref(attacks);
 	}
 
+	int Creature::getSoulValue() {
+		int value = soul;
+
+		// Allow lua to determine the soul's value.
+		if (mwse::lua::event::CalculateSoulValueEvent::getEventEnabled()) {
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table payload = stateHandle.triggerEvent(new mwse::lua::event::CalculateSoulValueEvent(this, soul));
+			if (payload.valid()) {
+				sol::object eventValue = payload["value"];
+				if (eventValue.is<int>()) {
+					value = eventValue.as<int>();
+				}
+			}
+		}
+
+		return value;
+	}
+
+	void Creature::setSoulValue(int value) {
+		soul = value;
+	}
+
 	AIConfig* CreatureInstance::getBaseAIConfig() const {
 		return baseCreature->aiConfig;
 	}
@@ -100,11 +127,11 @@ namespace TES3 {
 	}
 
 	int CreatureInstance::getBaseSoulValue() const {
-		return baseCreature->soul;
+		return baseCreature->getSoulValue();
 	}
 
 	void CreatureInstance::setBaseSoulValue(int value) {
-		baseCreature->soul = value;
+		baseCreature->setSoulValue(value);
 	}
 }
 

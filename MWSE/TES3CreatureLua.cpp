@@ -31,7 +31,7 @@ namespace mwse {
 				// Basic property binding.
 				usertypeDefinition["aiConfig"] = sol::readonly_property(&TES3::Creature::aiConfig);
 				usertypeDefinition["isInstance"] = sol::var(false);
-				usertypeDefinition["soul"] = &TES3::Creature::soul;
+				usertypeDefinition["soul"] = sol::property(&TES3::Creature::getSoulValue, &TES3::Creature::setSoulValue);
 				usertypeDefinition["soundCreature"] = &TES3::Creature::soundGenerator;
 				usertypeDefinition["spells"] = sol::readonly_property(&TES3::Creature::spellList);
 				usertypeDefinition["type"] = &TES3::Creature::creatureType;

@@ -39,6 +39,7 @@ namespace mwse {
 				usertypeDefinition["value"] = &TES3::SoulGemData::value;
 				usertypeDefinition["weight"] = &TES3::SoulGemData::weight;
 				usertypeDefinition["item"] = sol::readonly_property(&TES3::SoulGemData::item);
+				usertypeDefinition["capacity"] = sol::readonly_property(&TES3::SoulGemData::getCapacity);
 
 				// TODO: Deprecated. Remove before 2.1-stable.
 				usertypeDefinition["model"] = sol::readonly_property(&TES3::SoulGemData::mesh);
