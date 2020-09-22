@@ -189,7 +189,7 @@ namespace TES3 {
 
 		// Make sure we're not doing anything to the player.
 		auto macp = TES3::WorldController::get()->getMobilePlayer();
-		if (actor == macp->npcInstance->getBaseObject() || actor == macp->firstPerson->getBaseObject()) {
+		if (macp && (actor == macp->npcInstance->getBaseObject() || actor == macp->firstPerson->getBaseObject())) {
 			return;
 		}
 
