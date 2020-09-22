@@ -14,6 +14,7 @@
 #include "TES3Util.h"
 
 #include "TES3DialogueInfo.h"
+#include "TES3GlobalVariable.h"
 #include "TES3MagicEffectController.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
@@ -62,6 +63,25 @@ namespace TES3 {
 	KeyframeDefinition* MeshData::loadKeyFrame(const char* path, const char* animation) {
 		return TES3_MeshData_loadKeyFrame(this, path, animation);
 	}
+
+	//
+	// GlobalHashContainer
+	//
+
+#if MWSE_CUSTOM_GLOBALS
+	GlobalVariable* GlobalHashContainer::getVariable(const char* id) const {
+		auto itt = cache.find(id);
+		if (itt == cache.end()) {
+			return nullptr;
+		}
+		return itt->second;
+	}
+
+	void GlobalHashContainer::addVariable(GlobalVariable* value) {
+		variables.push_back(value);
+		cache[value->name] = value;
+	}
+#endif
 
 	//
 	// NonDynamicData
@@ -194,7 +214,11 @@ namespace TES3 {
 	}
 
 	GlobalVariable* NonDynamicData::findGlobalVariable(const char* name) {
+#if MWSE_CUSTOM_GLOBALS
+		return globals->getVariable(name);
+#else
 		return reinterpret_cast<GlobalVariable*(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findGlobalVariable)(this, name);
+#endif
 	}
 
 	Dialogue* NonDynamicData::findDialogue(const char* name) {

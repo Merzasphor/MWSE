@@ -12,7 +12,8 @@
 #include "NIAVObject.h"
 #include "NISourceTexture.h"
 
-#define MWSE_CUSTOM_EFFECTS
+#define MWSE_CUSTOM_EFFECTS true
+#define MWSE_CUSTOM_GLOBALS true
 
 namespace TES3 {
 	enum class LoadGameResult {
@@ -42,6 +43,27 @@ namespace TES3 {
 		HashMap<const char*, OT*>* map;
 	};
 
+#if MWSE_CUSTOM_GLOBALS
+	struct GlobalHashContainer {
+		struct icomp {
+			bool operator() (const std::string_view& lhs, const std::string_view& rhs) const {
+				return _strnicmp(lhs.data(), rhs.data(), 32) < 0;
+			}
+		};
+
+		IteratedList<GlobalVariable*> variables;
+		std::map<std::string_view, GlobalVariable*, icomp> cache;
+
+		//
+		// Custom functions.
+		//
+
+		GlobalVariable* getVariable(const char* id) const;
+		void addVariable(GlobalVariable* value);
+
+	};
+#endif
+
 	struct NonDynamicData {
 		int activeModCount; // 0x0
 		long unknown_0x04; // always 0?
@@ -57,13 +79,17 @@ namespace TES3 {
 		IteratedList<Script*> * scripts; // 0x2C
 		IteratedList<Sound*> * sounds; // 0x30
 		IteratedList<SoundGenerator*> * soundGenerators; // 0x34
-		IteratedList<GlobalVariable*> * globals; // 0x38
+#if MWSE_CUSTOM_GLOBALS
+		GlobalHashContainer* globals; // 0x38
+#else
+		IteratedList<GlobalVariable*>* globals; // 0x38
+#endif
 		IteratedList<Dialogue*> * dialogues; // 0x3C
 		IteratedList<Region*> * regions; // 0x40
 		IteratedList<Birthsign*> * birthsigns; // 0x44
 		IteratedList<StartScript*> * startScripts; // 0x48
 		Skill skills[27]; // 0x4C
-#ifdef MWSE_CUSTOM_EFFECTS
+#if MWSE_CUSTOM_EFFECTS
 		MagicEffectController * magicEffects; // 0x5C8
 		unsigned char freed_0x5CC[0x97EC]; // Unused space free for plundering.
 #else
