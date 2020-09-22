@@ -49,19 +49,27 @@ namespace mwse {
 		// Patch: Disable
 		//
 
-		static bool PatchScriptOpDisable_WasDisabled = false;
+		static bool PatchScriptOpDisable_ForceCollisionUpdate = false;
 
 		void PatchScriptOpDisable() {
 			TES3::ScriptVariables* scriptVars = mwscript::getLocalScriptVariables();
 			if (scriptVars) {
 				scriptVars->unknown_0xC |= 0x1;
 			}
-			PatchScriptOpDisable_WasDisabled = mwscript::getScriptTargetReference()->getDisabled();
+
+			// Determine if we need to force update collision.
+			auto reference = mwscript::getScriptTargetReference();
+			if (reference) {
+				PatchScriptOpDisable_ForceCollisionUpdate = !reference->getDisabled();
+			}
+			else {
+				PatchScriptOpDisable_ForceCollisionUpdate = false;
+			}
 		}
 
 		void* __fastcall PatchScriptOpDisableCollision(TES3::Reference* reference) {
 			// Force update collision.
-			if (!PatchScriptOpDisable_WasDisabled) {
+			if (PatchScriptOpDisable_ForceCollisionUpdate) {
 				TES3::DataHandler::get()->updateCollisionGroupsForActiveCells();
 			}
 

@@ -354,7 +354,7 @@ namespace TES3 {
 		return true;
 	}
 
-	bool Reference::getDisabled() {
+	bool Reference::getDisabled() const {
 		return BIT_TEST(objectFlags, ObjectFlag::DisabledBit);
 	}
 
