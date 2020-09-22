@@ -7,6 +7,7 @@
 #include "TES3GlobalVariable.h"
 #include "TES3MobController.h"
 #include "TES3MobilePlayer.h"
+#include "TES3NPC.h"
 #include "TES3Reference.h"
 #include "TES3UIManager.h"
 #include "TES3UIMenuController.h"
@@ -180,7 +181,15 @@ namespace TES3 {
 	}
 
 	void KillCounter::setKillCount(Actor* actor, int count) {
+		actor = static_cast<Actor*>(actor->getBaseObject());
+
 		if (count < 0) {
+			return;
+		}
+
+		// Make sure we're not doing anything to the player.
+		auto macp = TES3::WorldController::get()->getMobilePlayer();
+		if (actor == macp->npcInstance->getBaseObject() || actor == macp->firstPerson->getBaseObject()) {
 			return;
 		}
 
