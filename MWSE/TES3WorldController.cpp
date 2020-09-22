@@ -259,11 +259,13 @@ namespace TES3 {
 				{
 					file->readChunkData(&countBuffer);
 					auto actor = static_cast<Actor*>(TES3::DataHandler::get()->nonDynamicData->resolveObject(idBuffer));
-					if (actor == nullptr) {
+					if (actor) {
+						setKillCount(actor, countBuffer);
+						totalKills += countBuffer;
+					}
+					else {
 						reinterpret_cast<void(__cdecl*)(const char*, const char*)>(0x477400)("Unable to locate Killed Object '%s'.", idBuffer);
 					}
-					setKillCount(actor, countBuffer);
-					totalKills += countBuffer;
 				}
 				break;
 				case 'INTV':
