@@ -89,6 +89,7 @@ namespace mwse {
 
 				// Basic function binding.
 				usertypeDefinition["runScript"] = &TES3::DialogueInfo::runScript;
+				usertypeDefinition["filter"] = &TES3::DialogueInfo::filter;
 			}
 
 			// Binding for TES3::Quest
