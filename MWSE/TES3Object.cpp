@@ -52,6 +52,8 @@
 #include "LuaManager.h"
 #include "LuaObjectInvalidatedEvent.h"
 
+#include "Log.h"
+
 namespace TES3 {
 	void * BaseObject::operator new(size_t size) {
 		return mwse::tes3::_new(size);
@@ -175,6 +177,10 @@ namespace TES3 {
 			break;
 		case TES3::VirtualTableAddress::Armor:
 			ref = sol::make_object_userdata(L, static_cast<const TES3::Armor*>(this));
+			break;
+		case TES3::VirtualTableAddress::BaseObject:
+			// Invalidated object.
+			ref = stateHandle.state.create_table();
 			break;
 		case TES3::VirtualTableAddress::Birthsign:
 			ref = sol::make_object_userdata(L, static_cast<const TES3::Birthsign*>(this));
@@ -301,6 +307,7 @@ namespace TES3 {
 			break;
 		default:
 			ref = sol::make_object_userdata(L, this);
+			mwse::log::getLog() << "[MWSE] Invalid object found. vtable is: 0x" << std::hex << uint32_t(vTable.object) << std::endl;
 			break;
 		}
 
