@@ -185,14 +185,14 @@ namespace mwse {
 
 			// New variables.
 			auto globals = TES3::DataHandler::get()->nonDynamicData->globals;
-			globals->addVariable(worldController->gvarGameHour);
-			globals->addVariable(worldController->gvarYear);
-			globals->addVariable(worldController->gvarMonth);
-			globals->addVariable(worldController->gvarDay);
-			globals->addVariable(worldController->gvarDaysPassed);
-			globals->addVariable(worldController->gvarTimescale);
-			globals->addVariable(worldController->gvarCharGenState);
-			globals->addVariable(worldController->gvarMonthsToRespawn);
+			globals->addVariableCacheOnly(worldController->gvarGameHour);
+			globals->addVariableCacheOnly(worldController->gvarYear);
+			globals->addVariableCacheOnly(worldController->gvarMonth);
+			globals->addVariableCacheOnly(worldController->gvarDay);
+			globals->addVariableCacheOnly(worldController->gvarDaysPassed);
+			globals->addVariableCacheOnly(worldController->gvarTimescale);
+			globals->addVariableCacheOnly(worldController->gvarCharGenState);
+			globals->addVariableCacheOnly(worldController->gvarMonthsToRespawn);
 		}
 
 		//

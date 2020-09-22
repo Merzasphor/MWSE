@@ -81,6 +81,10 @@ namespace TES3 {
 		variables.push_back(value);
 		cache[value->name] = value;
 	}
+
+	void GlobalHashContainer::addVariableCacheOnly(GlobalVariable* value) {
+		cache[value->name] = value;
+	}
 #endif
 
 	//

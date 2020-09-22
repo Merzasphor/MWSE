@@ -60,6 +60,7 @@ namespace TES3 {
 
 		GlobalVariable* getVariable(const char* id) const;
 		void addVariable(GlobalVariable* value);
+		void addVariableCacheOnly(GlobalVariable* value);
 
 	};
 #endif
