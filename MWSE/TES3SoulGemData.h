@@ -19,7 +19,9 @@ namespace TES3 {
 		std::string toString() const;
 		std::string toJson() const;
 
-		float getCapacity() const;
+		int getValue() const;
+		float getWeight() const;
+		int getCapacity() const;
 
 	};
 }

@@ -2,6 +2,8 @@
 
 #include "TES3Util.h"
 
+#include "TES3DataHandler.h"
+#include "TES3GameSetting.h"
 #include "TES3GoldData.h"
 
 namespace TES3 {
@@ -42,6 +44,13 @@ namespace TES3 {
 
 	bool Misc::isSoulGem() const {
 		return mwse::tes3::isSoulGem(this);
+	}
+
+	int  Misc::getSoulGemCapacity() const {
+		if (isSoulGem()) {
+			return value * TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::fSoulGemMult]->value.asFloat;
+		}
+		return 0;
 	}
 	
 	bool Misc::getIsKey() const {

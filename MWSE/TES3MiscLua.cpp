@@ -36,8 +36,8 @@ namespace mwse {
 				usertypeDefinition["mesh"] = sol::readonly_property(&TES3::SoulGemData::mesh);
 				usertypeDefinition["name"] = sol::readonly_property(&TES3::SoulGemData::name);
 				usertypeDefinition["texture"] = sol::readonly_property(&TES3::SoulGemData::texture);
-				usertypeDefinition["value"] = &TES3::SoulGemData::value;
-				usertypeDefinition["weight"] = &TES3::SoulGemData::weight;
+				usertypeDefinition["value"] = sol::readonly_property(&TES3::SoulGemData::getValue);
+				usertypeDefinition["weight"] = sol::readonly_property(&TES3::SoulGemData::getWeight);
 				usertypeDefinition["item"] = sol::readonly_property(&TES3::SoulGemData::item);
 				usertypeDefinition["capacity"] = sol::readonly_property(&TES3::SoulGemData::getCapacity);
 
@@ -56,6 +56,7 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition["script"] = sol::readonly_property(&TES3::Misc::getScript);
+				usertypeDefinition["soulGemCapacity"] = sol::readonly_property(&TES3::Misc::getSoulGemCapacity);
 				usertypeDefinition["value"] = &TES3::Misc::value;
 				usertypeDefinition["weight"] = &TES3::Misc::weight;
 

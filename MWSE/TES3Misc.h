@@ -33,6 +33,7 @@ namespace TES3 {
 
 		SoulGemData * getSoulGemData() const;
 		bool isSoulGem() const;
+		int getSoulGemCapacity() const;
 
 		bool isGold() const;
 
