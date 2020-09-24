@@ -29,6 +29,7 @@
 #include "TES3Archive.h"
 #include "TES3Armor.h"
 #include "TES3AudioController.h"
+#include "TES3Birthsign.h"
 #include "TES3Cell.h"
 #include "TES3Class.h"
 #include "TES3Container.h"
@@ -3955,6 +3956,15 @@ namespace mwse {
 			TES3::WorldController::get()->playerKills->werewolfKills = count;
 		}
 
+		TES3::Birthsign* findBirthsign(const char* id) {
+			for (auto birthsign : *TES3::DataHandler::get()->nonDynamicData->birthsigns) {
+				if (mwse::string::iequal(id, birthsign->id)) {
+					return birthsign;
+				}
+			}
+			return nullptr;
+		}
+
 		void bindTES3Util() {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
@@ -3988,6 +3998,7 @@ namespace mwse {
 			tes3["fadeIn"] = fadeIn;
 			tes3["fadeOut"] = fadeOut;
 			tes3["fadeTo"] = fadeTo;
+			tes3["findBirthsign"] = findBirthsign;
 			tes3["findClosestExteriorReferenceOfObject"] = findClosestExteriorReferenceOfObject;
 			tes3["findDialogue"] = findDialogue;
 			tes3["findGlobal"] = findGlobal;

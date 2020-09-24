@@ -42,6 +42,7 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
+				usertypeDefinition["birthsigns"] = sol::readonly_property(&TES3::NonDynamicData::birthsigns);
 				usertypeDefinition["cells"] = sol::readonly_property(&TES3::NonDynamicData::cells);
 				usertypeDefinition["classes"] = sol::readonly_property(&TES3::NonDynamicData::classes);
 				usertypeDefinition["dialogues"] = sol::readonly_property(&TES3::NonDynamicData::dialogues);
