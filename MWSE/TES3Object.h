@@ -99,7 +99,8 @@ namespace TES3 {
 			Persistent = 0x400,
 			Disabled = 0x800,
 			SelectedByConsole = 0x1000,
-			EmptyInventory = 0x2000
+			Blocked = 0x2000,
+			EmptyInventory = 0x2000,
 		};
 
 		enum FlagBit {
@@ -110,7 +111,8 @@ namespace TES3 {
 			PersistentBit = 10,
 			DisabledBit = 11,
 			SelectedByConsoleBit = 12,
-			EmptyInventoryBit = 13
+			BlockedBit = 13,
+			EmptyInventoryBit = 13,
 		};
 	}
 
@@ -248,8 +250,15 @@ namespace TES3 {
 
 		bool isActor();
 		const char* getSourceFilename();
-		bool getDisabled();
-		bool getDeleted();
+
+		bool getDisabled() const;
+		bool getDeleted() const;
+
+		bool getPersistent() const;
+		void setPersistent(bool value);
+
+		bool getBlocked() const;
+		void setBlocked(bool value);
 
 		std::string toJson();
 

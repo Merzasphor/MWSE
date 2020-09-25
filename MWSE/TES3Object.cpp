@@ -118,12 +118,28 @@ namespace TES3 {
 		return nullptr;
 	}
 
-	bool BaseObject::getDisabled() {
+	bool BaseObject::getDisabled() const {
 		return BIT_TEST(objectFlags, TES3::ObjectFlag::DisabledBit);
 	}
 
-	bool BaseObject::getDeleted() {
+	bool BaseObject::getDeleted() const {
 		return BIT_TEST(objectFlags, TES3::ObjectFlag::DeleteBit);
+	}
+
+	bool BaseObject::getPersistent() const {
+		return BIT_TEST(objectFlags, TES3::ObjectFlag::PersistentBit);
+	}
+
+	void BaseObject::setPersistent(bool value) {
+		BIT_SET(objectFlags, TES3::ObjectFlag::PersistentBit, value);
+	}
+
+	bool BaseObject::getBlocked() const {
+		return BIT_TEST(objectFlags, TES3::ObjectFlag::BlockedBit);
+	}
+
+	void BaseObject::setBlocked(bool value) {
+		BIT_SET(objectFlags, TES3::ObjectFlag::BlockedBit, value);
 	}
 
 	std::string BaseObject::toJson() {
@@ -180,7 +196,7 @@ namespace TES3 {
 			break;
 		case TES3::VirtualTableAddress::BaseObject:
 			// Invalidated object.
-			ref = stateHandle.state.create_table();
+			ref = stateHandle.state.create_table_with("object", stateHandle.state.create_table());
 			break;
 		case TES3::VirtualTableAddress::Birthsign:
 			ref = sol::make_object_userdata(L, static_cast<const TES3::Birthsign*>(this));

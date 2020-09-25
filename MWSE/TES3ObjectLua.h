@@ -26,6 +26,8 @@ namespace mwse {
 			usertypeDefinition["modified"] = sol::property(&TES3::BaseObject::getObjectModified, &TES3::BaseObject::setObjectModified);
 			usertypeDefinition["disabled"] = sol::readonly_property(&TES3::BaseObject::getDisabled);
 			usertypeDefinition["deleted"] = sol::readonly_property(&TES3::BaseObject::getDeleted);
+			usertypeDefinition["persistent"] = sol::property(&TES3::BaseObject::getPersistent, &TES3::BaseObject::setPersistent);
+			usertypeDefinition["blocked"] = sol::property(&TES3::BaseObject::getBlocked, &TES3::BaseObject::setBlocked);
 		}
 
 		template <typename T>
