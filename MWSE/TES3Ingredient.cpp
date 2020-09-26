@@ -21,11 +21,11 @@ namespace TES3 {
 	}
 
 	std::reference_wrapper<int[4]> Ingredient::getEffectSkillIds() {
-		return std::ref(effectAttributeIds);
+		return std::ref(effectSkillIds);
 	}
 
 	std::reference_wrapper<int[4]> Ingredient::getEffectAttributeIds() {
-		return std::ref(effectSkillIds);
+		return std::ref(effectAttributeIds);
 	}
 }
 
