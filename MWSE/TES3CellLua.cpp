@@ -33,7 +33,7 @@ namespace mwse {
 					reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
 
 					// Skip references that are invalidated.
-					while (reference && uint32_t(reference->vTable.object) != TES3::VirtualTableAddress::Reference) {
+					while (reference && (uint32_t(reference->vTable.object) != TES3::VirtualTableAddress::Reference || reference->baseObject == nullptr)) {
 						reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
 					}
 
