@@ -8,7 +8,7 @@ namespace NI {
 	struct ExtraData : Object {
 		int unknown_0x8;
 		char* name; // 0xC
-		ExtraData* next; // 0x10
+		Pointer<ExtraData> next; // 0x10
 
 		//
 		// Custom functions.

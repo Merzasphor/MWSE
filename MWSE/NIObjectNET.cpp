@@ -1,7 +1,6 @@
 #include "NIObjectNET.h"
 
 #include "NIAVObject.h"
-#include "NIExtraData.h"
 #include "NINode.h"
 
 #include "TES3Reference.h"
@@ -35,8 +34,8 @@ namespace NI {
 		NI_ObjectNET_setName(this, name);
 	}
 
-	StringExtraData* ObjectNET::getStringDataWithValue(const char* value) const {
-		auto extra = extraData;
+	Pointer<StringExtraData> ObjectNET::getStringDataWithValue(const char* value) const {
+		ExtraData* extra = extraData;
 		while (extra) {
 			if (extra->isInstanceOfType(NI::RTTIStaticPtr::NiStringExtraData)) {
 				if (mwse::string::iequal(value, reinterpret_cast<NI::StringExtraData*>(extra)->string)) {
@@ -52,9 +51,9 @@ namespace NI {
 		return getStringDataWithValue(value) != nullptr;
 	}
 
-	StringExtraData* ObjectNET::getStringDataStartingWithValue(const char* value) const {
+	Pointer<StringExtraData> ObjectNET::getStringDataStartingWithValue(const char* value) const {
 		size_t maxCount = strlen(value);
-		auto extra = extraData;
+		ExtraData* extra = extraData;
 		while (extra) {
 			if (extra->isInstanceOfType(NI::RTTIStaticPtr::NiStringExtraData)) {
 				if (mwse::string::niequal(value, reinterpret_cast<NI::StringExtraData*>(extra)->string, maxCount)) {
@@ -70,8 +69,30 @@ namespace NI {
 		return getStringDataStartingWithValue(value) != nullptr;
 	}
 
+	Pointer<ExtraData> ObjectNET::removeExtraData(ExtraData* data) {
+		auto extra = extraData;
+		ExtraData* previous = nullptr;
+		while (extra && extra != data) {
+			previous = extra;
+			extra = extra->next;
+		}
+
+		if (extra) {
+			if (previous) {
+				previous->next = extra->next;
+			}
+			else {
+				extraData = nullptr;
+			}
+			extra->next = nullptr;
+			return extra;
+		}
+
+		return nullptr;
+	}
+
 	TES3::Reference* ObjectNET::getTes3Reference(bool searchParents) {
-		for (auto ed = extraData; ed; ed = ed->next) {
+		for (ExtraData* ed = extraData; ed; ed = ed->next) {
 			if (ed->isOfType(RTTIStaticPtr::TES3ObjectExtraData)) {
 				return static_cast<Tes3ExtraData*>(ed)->reference;
 			}

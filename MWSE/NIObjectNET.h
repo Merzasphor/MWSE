@@ -1,7 +1,10 @@
 #pragma once
 
 #include "NIDefines.h"
+
 #include "NIObject.h"
+
+#include "NIExtraData.h"
 #include "NITimeController.h"
 
 #include "TES3Defines.h"
@@ -9,7 +12,7 @@
 namespace NI {
 	struct ObjectNET : Object {
 		char * name; // 0x8
-		ExtraData* extraData; // 0xC
+		Pointer<ExtraData> extraData; // 0xC
 		Pointer<TimeController> controllers; // 0x10
 
 		//
@@ -27,11 +30,13 @@ namespace NI {
 		// Custom functions.
 		//
 
-		StringExtraData* getStringDataWithValue(const char* value) const;
+		Pointer<StringExtraData> getStringDataWithValue(const char* value) const;
 		bool hasStringDataWithValue(const char* value) const;
 
-		StringExtraData* getStringDataStartingWithValue(const char* value) const;
+		Pointer<StringExtraData> getStringDataStartingWithValue(const char* value) const;
 		bool hasStringDataStartingWithValue(const char* value) const;
+
+		Pointer<ExtraData> removeExtraData(ExtraData* data);
 
 		//
 		// Custom functions.
