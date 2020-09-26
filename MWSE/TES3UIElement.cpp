@@ -983,6 +983,40 @@ namespace TES3 {
 			}
 		}
 
+		void Element::registerBefore_lua(const std::string& eventID, sol::protected_function callback, sol::optional<double> priority) {
+			if (!callback.valid()) {
+				std::stringstream ss;
+				ss << "UI register before-event has invalid callback: target " << (name.cString ? name.cString : "(unnamed)") << ", event " << eventID;
+				throw std::invalid_argument(ss.str());
+			}
+
+			// Map friendlier event names to standard UI events
+			auto prop = getStandardEventFromName(eventID);
+			if (!prop) {
+				prop = TES3::UI::registerProperty(eventID.c_str());
+			}
+
+			// Check UI registry for custom event
+			mwse::lua::registerBeforeUIEvent(this, prop.value(), callback, priority.value_or(0.0));
+		}
+
+		void Element::registerAfter_lua(const std::string& eventID, sol::protected_function callback, sol::optional<double> priority) {
+			if (!callback.valid()) {
+				std::stringstream ss;
+				ss << "UI register after-event has invalid callback: target " << (name.cString ? name.cString : "(unnamed)") << ", event " << eventID;
+				throw std::invalid_argument(ss.str());
+			}
+
+			// Map friendlier event names to standard UI events
+			auto prop = getStandardEventFromName(eventID);
+			if (!prop) {
+				prop = TES3::UI::registerProperty(eventID.c_str());
+			}
+
+			// Check UI registry for custom event
+			mwse::lua::registerAfterUIEvent(this, prop.value(), callback, priority.value_or(0.0));
+		}
+
 		void Element::register_lua(const std::string& eventID, sol::object callback) {
 			// Callback is supposed to be an address. Dangerous advanced usage, sets the actual property.
 			if (callback.is<unsigned int>()) {
@@ -1019,6 +1053,22 @@ namespace TES3 {
 				ss << "UI register event has invalid callback type: target " << (name.cString ? name.cString : "(unnamed)") << ", event " << eventID;
 				throw std::invalid_argument(ss.str());
 			}
+		}
+
+		void Element::unregisterBefore_lua(const std::string& eventID, sol::protected_function callback) {
+			auto prop = getStandardEventFromName(eventID);
+			if (!prop) {
+				prop = TES3::UI::registerProperty(eventID.c_str());
+			}
+			mwse::lua::unregisterBeforeUIEvent(this, prop.value(), callback);
+		}
+
+		void Element::unregisterAfter_lua(const std::string& eventID, sol::protected_function callback) {
+			auto prop = getStandardEventFromName(eventID);
+			if (!prop) {
+				prop = TES3::UI::registerProperty(eventID.c_str());
+			}
+			mwse::lua::unregisterAfterUIEvent(this, prop.value(), callback);
 		}
 
 		void Element::unregister_lua(const std::string& eventID) {

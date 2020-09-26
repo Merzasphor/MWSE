@@ -263,7 +263,11 @@ namespace TES3 {
 			sol::object getPropertyObject_lua(sol::this_state ts, sol::object key, sol::optional<std::string> typeCast) const;
 			void setPropertyObject_lua(sol::object key, sol::object value);
 
+			void registerBefore_lua(const std::string& eventID, sol::protected_function callback, sol::optional<double> priority);
+			void registerAfter_lua(const std::string& eventID, sol::protected_function callback, sol::optional<double> priority);
 			void register_lua(const std::string& eventID, sol::object callback);
+			void unregisterBefore_lua(const std::string& eventID, sol::protected_function callback);
+			void unregisterAfter_lua(const std::string& eventID, sol::protected_function callback);
 			void unregister_lua(const std::string& eventID);
 			void forwardEvent_lua(sol::table eventData) const;
 			void triggerEvent_lua(sol::object params);
