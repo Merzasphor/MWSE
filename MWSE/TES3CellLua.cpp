@@ -32,6 +32,11 @@ namespace mwse {
 				while (reference && !desiredTypes.empty() && !desiredTypes.count(reference->baseObject->objectType)) {
 					reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
 
+					// Skip references that are invalidated.
+					while (reference && uint32_t(reference->vTable.object) != TES3::VirtualTableAddress::Reference) {
+						reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
+					}
+
 					// If we hit the end of the list, check for the next list.
 					if (reference == nullptr && !referenceListQueue.empty()) {
 						reference = referenceListQueue.front();
