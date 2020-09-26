@@ -148,15 +148,30 @@ namespace TES3 {
 		return std::move(ss.str());
 	}
 
-	std::unordered_set<BaseObject*> sourcelessObjects;
+	std::unordered_set<const BaseObject*> sourcelessObjects;
 
-	const auto TES3_isSourcelessObject = reinterpret_cast<bool(__stdcall*)(BaseObject*)>(0x4C1980);
-	bool __stdcall BaseObject::isSourcelessObject(BaseObject* object) {
+	bool BaseObject::getSourceless() const {
+		return isSourcelessObject(this);
+	}
+
+	void BaseObject::setSourceless(bool sourceless) const {
+		if (sourceless) {
+			setSourcelessObject(this);
+		}
+		else {
+			sourcelessObjects.erase(this);
+		}
+	}
+
+	const auto TES3_isSourcelessObject = reinterpret_cast<bool(__stdcall*)(const BaseObject*)>(0x4C1980);
+	bool __stdcall BaseObject::isSourcelessObject(const BaseObject* object) {
 		return TES3_isSourcelessObject(object) || sourcelessObjects.find(object) != sourcelessObjects.end();
 	}
 
-	void BaseObject::setSourcelessObject(BaseObject* object) {
-		sourcelessObjects.insert(object);
+	void BaseObject::setSourcelessObject(const BaseObject* object) {
+		if (!TES3_isSourcelessObject(object)) {
+			sourcelessObjects.insert(object);
+		}
 	}
 
 	static std::unordered_map<const BaseObject*, sol::object> baseObjectCache;

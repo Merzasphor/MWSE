@@ -262,8 +262,11 @@ namespace TES3 {
 
 		std::string toJson();
 
-		static bool __stdcall isSourcelessObject(BaseObject* object);
-		static void setSourcelessObject(BaseObject* object);
+		bool getSourceless() const;
+		void setSourceless(bool sourceless) const;
+
+		static bool __stdcall isSourcelessObject(const BaseObject* object);
+		static void setSourcelessObject(const BaseObject* object);
 
 		// Storage for cached userdata.
 		sol::object getOrCreateLuaObject(lua_State* L) const;
