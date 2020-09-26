@@ -322,7 +322,7 @@ namespace TES3 {
 		// Cull the scene node.
 		auto sceneNode = getSceneGraphNode();
 		if (sceneNode) {
-			getSceneGraphNode()->setAppCulled(true);
+			sceneNode->setAppCulled(true);
 		}
 
 		// Leave simulation if we have a mobile.
