@@ -435,6 +435,11 @@ end
 -- Store the root installation folder.
 tes3.installDirectory = lfs.currentdir()
 
+local safeObjectHandle = require("mwse_safeObjectHandle")
+function tes3.makeSafeObjectHandle(object)
+	return safeObjectHandle.new(object)
+end
+
 
 -------------------------------------------------
 -- Extend our base API: tes3ui
