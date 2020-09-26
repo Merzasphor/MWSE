@@ -47,6 +47,9 @@ namespace mwse {
 			// Add object to the game.
 			TES3::DataHandler::get()->nonDynamicData->addNewObject(newSpell);
 
+			// Force the object as modified.
+			newSpell->setObjectModified(true);
+
 			// Finally return the spell.
 			return newSpell;
 		}
