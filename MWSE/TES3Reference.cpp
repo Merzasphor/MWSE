@@ -280,7 +280,10 @@ namespace TES3 {
 		auto dataHandler = TES3::DataHandler::get();
 
 		// Don't cull the scene node.
-		getSceneGraphNode()->setAppCulled(false);
+		auto sceneNode = getSceneGraphNode();
+		if (sceneNode) {
+			sceneNode->setAppCulled(false);
+		}
 
 		// Enable simulation for creatures/NPCs.
 		if (baseObject->objectType == TES3::ObjectType::Creature || baseObject->objectType == TES3::ObjectType::NPC) {
