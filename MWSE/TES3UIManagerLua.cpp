@@ -48,19 +48,22 @@ namespace mwse {
 
 			// Find dispatch target. Almost always source, but is owningWidget for 'focus' and 'unfocus' events.
 			Element* target = source;
-			if (eventID == Property::event_focus || eventID == Property::event_unfocus) {
-				target = owningWidget;
-			}
 
 			// Handle event bubbling.
-			while (target) {
-				if (target->getProperty(PropertyType::Property, eventID).propertyValue == Property::inherit
-					|| target->getProperty(PropertyType::EventCallback, eventID).eventCallback == nullptr) {
-
-					target = target->parent;
+			if (eventID != Property::event_destroy) {
+				if (eventID == Property::event_focus || eventID == Property::event_unfocus) {
+					target = owningWidget;
 				}
-				else {
-					break;
+
+				while (target) {
+					if (target->getProperty(PropertyType::Property, eventID).propertyValue == Property::inherit
+						|| target->getProperty(PropertyType::EventCallback, eventID).eventCallback == nullptr) {
+
+						target = target->parent;
+					}
+					else {
+						break;
+					}
 				}
 			}
 
