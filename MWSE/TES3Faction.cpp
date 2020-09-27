@@ -31,6 +31,20 @@ namespace TES3 {
 		}
 	}
 
+	const char* Faction::getRankName(size_t rank) const {
+		return rankNames[std::clamp(rank, 0U, 10U)];
+	}
+
+	void Faction::setRankName(size_t rank, const char* name) {
+		if (rank < 0 || rank > 9) {
+			throw std::invalid_argument("Rank must be between inclusive values 0 and 9.");
+		}
+		else if (strnlen_s(name, 32) > 31) {
+			throw std::invalid_argument("Name must not be more than 31 characters.");
+		}
+		strncpy_s(rankNames[rank], name, 32);
+	}
+
 	bool Faction::getMembershipFlag(unsigned int flag) const {
 		return (playerMembershipFlags & flag) != 0;
 	}

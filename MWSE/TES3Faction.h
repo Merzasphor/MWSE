@@ -58,6 +58,9 @@ namespace TES3 {
 		char * getName();
 		void setName(const char*);
 
+		const char* getRankName(size_t rank) const;
+		void setRankName(size_t rank, const char* name);
+
 		bool getMembershipFlag(unsigned int) const;
 		void setMembershipFlag(unsigned int, bool);
 

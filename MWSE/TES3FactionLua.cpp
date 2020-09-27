@@ -66,6 +66,10 @@ namespace mwse {
 				// Functions exposed as properties.
 				usertypeDefinition["name"] = sol::property(&TES3::Faction::getName, &TES3::Faction::setName);
 				usertypeDefinition["playerRank"] = sol::property(&TES3::Faction::getEffectivePlayerRank, &TES3::Faction::setEffectivePlayerRank);
+
+				// Basic function binding.
+				usertypeDefinition["getRankName"] = &TES3::Faction::getRankName;
+				usertypeDefinition["setRankName"] = &TES3::Faction::setRankName;
 			}
 		}
 	}
