@@ -110,6 +110,8 @@ namespace TES3 {
 
 		int getStackSize();
 		void setStackSize(int count);
+		
+		bool hasValidBaseObject() const;
 
 		// Override for references to raise an event when their scene node is created.
 		NI::Node * getSceneGraphNode();

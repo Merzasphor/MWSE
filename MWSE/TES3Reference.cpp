@@ -605,12 +605,18 @@ namespace TES3 {
 		getOrCreateAttachedItemData()->count = count;
 	}
 
+	bool Reference::hasValidBaseObject() const {
+		return this != nullptr
+			&& baseObject != nullptr
+			&& uint32_t(baseObject->vTable.object) != TES3::VirtualTableAddress::BaseObject;
+	}
+
 	const auto TES3_Reference_getSceneGraphNode = reinterpret_cast<NI::Node*(__thiscall*)(Reference*)>(0x4E81A0);
 	NI::Node * Reference::getSceneGraphNode() {
 		auto previousNode = sceneNode;
 		auto newNode = TES3_Reference_getSceneGraphNode(this);
 
-		if (previousNode != newNode && mwse::lua::event::ReferenceSceneNodeCreatedEvent::getEventEnabled()) {
+		if (mwse::lua::event::ReferenceSceneNodeCreatedEvent::getEventEnabled() && hasValidBaseObject() && previousNode != newNode) {
 			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ReferenceSceneNodeCreatedEvent(this));
 		}
 
