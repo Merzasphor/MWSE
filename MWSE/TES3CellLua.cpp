@@ -35,6 +35,12 @@ namespace mwse {
 					// Skip references that are invalidated.
 					while (reference && !reference->hasValidBaseObject()) {
 						reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
+
+						// If we hit the end of the list, check for the next list.
+						if (reference == nullptr && !referenceListQueue.empty()) {
+							reference = referenceListQueue.front();
+							referenceListQueue.pop();
+						}
 					}
 
 					// If we hit the end of the list, check for the next list.
