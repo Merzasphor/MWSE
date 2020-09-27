@@ -138,7 +138,7 @@ namespace mwse {
 
 			// Layout functions.
 			usertypeDefinition["destroyChildren"] = &Element::destroyChildren;
-			usertypeDefinition["findChild"] = &Element::findChild;
+			usertypeDefinition["findChild"] = &Element::findChild_lua;
 			usertypeDefinition["getContentElement"] = &Element::getContentElement;
 			usertypeDefinition["getTopLevelMenu"] = &Element::getTopLevelParent;
 			usertypeDefinition["getTopLevelParent"] = &Element::getTopLevelParent;
