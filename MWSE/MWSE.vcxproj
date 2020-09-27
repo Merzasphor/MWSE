@@ -1103,7 +1103,8 @@ copy /y "$(TargetDir)MWSE.pdb" "$(SolutionDir)..\MWSE.pdb"</Command>
 for /f "skip=1 delims=" %%x in ('wmic os get localdatetime') do if not defined buildTime set buildTime=%%x
 echo #pragma once &gt; $(ProjectDir)/BuildDate.h
 echo. &gt;&gt; $(ProjectDir)/BuildDate.h
-echo #define MWSE_BUILD_DATE %buildTime:~0,8% &gt;&gt; $(ProjectDir)/BuildDate.h</Command>
+echo #define MWSE_BUILD_DATE %buildTime:~0,8% &gt;&gt; $(ProjectDir)/BuildDate.h
+if defined APPVEYOR_BUILD_ID (echo #define APPVEYOR_BUILD_ID %APPVEYOR_BUILD_ID% &gt;&gt; $(ProjectDir)/BuildDate.h)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -1140,7 +1141,8 @@ copy /y "$(TargetDir)MWSE.pdb" "$(SolutionDir)..\MWSE.pdb"</Command>
 for /f "skip=1 delims=" %%x in ('wmic os get localdatetime') do if not defined buildTime set buildTime=%%x
 echo #pragma once &gt; $(ProjectDir)/BuildDate.h
 echo. &gt;&gt; $(ProjectDir)/BuildDate.h
-echo #define MWSE_BUILD_DATE %buildTime:~0,8% &gt;&gt; $(ProjectDir)/BuildDate.h</Command>
+echo #define MWSE_BUILD_DATE %buildTime:~0,8% &gt;&gt; $(ProjectDir)/BuildDate.h
+if defined APPVEYOR_BUILD_ID (echo #define APPVEYOR_BUILD_ID %APPVEYOR_BUILD_ID% &gt;&gt; $(ProjectDir)/BuildDate.h)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
