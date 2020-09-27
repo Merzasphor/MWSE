@@ -244,7 +244,7 @@ namespace mwse {
 			return mwse::getCallAddress(address.value());
 		}
 
-		DWORD readValue(sol::table params, sol::this_state ts) {
+		sol::object readValue(sol::table params, sol::this_state ts) {
 			sol::optional<DWORD> address = params["address"];
 			if (!address) {
 				throw std::invalid_argument("Invalid 'address' parameter provided.");
