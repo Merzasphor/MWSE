@@ -39,10 +39,10 @@ namespace mwse::lua {
 		// Basic value binding.
 		lua_mwse["version"] = MWSE_VERSION_INTEGER;
 		lua_mwse["buildDate"] = MWSE_BUILD_DATE;
-#ifdef APPVEYOR_BUILD_ID
-		lua_mwse["buildID"] = APPVEYOR_BUILD_ID;
+#ifdef APPVEYOR_BUILD_NUMBER
+		lua_mwse["buildNumber"] = APPVEYOR_BUILD_NUMBER;
 #else
-		lua_mwse["buildID"] = UINT_MAX;
+		lua_mwse["buildNumber"] = UINT_MAX;
 #endif
 
 		// Basic function binding.
