@@ -196,11 +196,11 @@ namespace NI {
 		}
 
 		constexpr auto size() const noexcept {
-			return storageCount;
+			return filledCount;
 		}
 
 		constexpr bool empty() const noexcept {
-			return filledCount == 0;
+			return size() == 0;
 		}
 
 		//
