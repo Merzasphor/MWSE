@@ -47,7 +47,7 @@ namespace NI {
 		TES3::Matrix33* getLocalRotationMatrix() const;
 		void setLocalRotationMatrix(TES3::Matrix33* matrix);
 
-		void attachProperty(Pointer<Property> property);
+		void attachProperty(Property* property);
 		Pointer<Property> detachPropertyByType(PropertyType type);
 
 		//
