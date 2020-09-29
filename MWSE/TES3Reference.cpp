@@ -607,6 +607,7 @@ namespace TES3 {
 
 	bool Reference::hasValidBaseObject() const {
 		return this != nullptr
+			&& uint32_t(vTable.object) != TES3::VirtualTableAddress::BaseObject
 			&& baseObject != nullptr
 			&& uint32_t(baseObject->vTable.object) != TES3::VirtualTableAddress::BaseObject;
 	}
