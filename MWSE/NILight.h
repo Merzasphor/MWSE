@@ -16,6 +16,22 @@ namespace NI {
 
 		Light * ctor();
 
+		//
+		// Custom functions.
+		//
+
+		Color& getAmbientColor();
+		void setAmbientColor(const Color& color);
+		void setAmbientColor_lua(sol::object object);
+
+		Color& getDiffuseColor();
+		void setDiffuseColor(const Color& color);
+		void setDiffuseColor_lua(sol::object object);
+
+		Color& getSpecularColor();
+		void setSpecularColor(const Color& color);
+		void setSpecularColor_lua(sol::object object);
+
 	};
 	static_assert(sizeof(Light) == 0xD0, "NI::Light failed size validation");
 }

@@ -67,11 +67,11 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition["alpha"] = sol::property(&NI::MaterialProperty::getAlpha, &NI::MaterialProperty::setAlpha);
-				usertypeDefinition["ambient"] = sol::property(&NI::MaterialProperty::getAmbient, &NI::MaterialProperty::setAmbient);
-				usertypeDefinition["diffuse"] = sol::property(&NI::MaterialProperty::getDiffuse, &NI::MaterialProperty::setDiffuse);
-				usertypeDefinition["emissive"] = sol::property(&NI::MaterialProperty::getEmissive, &NI::MaterialProperty::setEmissive);
+				usertypeDefinition["ambient"] = sol::property(&NI::MaterialProperty::getAmbient, &NI::MaterialProperty::setAmbient_lua);
+				usertypeDefinition["diffuse"] = sol::property(&NI::MaterialProperty::getDiffuse, &NI::MaterialProperty::setDiffuse_lua);
+				usertypeDefinition["emissive"] = sol::property(&NI::MaterialProperty::getEmissive, &NI::MaterialProperty::setEmissive_lua);
 				usertypeDefinition["shininess"] = sol::property(&NI::MaterialProperty::getShininess, &NI::MaterialProperty::setShininess);
-				usertypeDefinition["specular"] = sol::property(&NI::MaterialProperty::getSpecular, &NI::MaterialProperty::setSpecular);
+				usertypeDefinition["specular"] = sol::property(&NI::MaterialProperty::getSpecular, &NI::MaterialProperty::setSpecular_lua);
 
 				// Basic function binding.
 				usertypeDefinition["incrementRevisionId"] = &NI::MaterialProperty::incrementRevisionId;

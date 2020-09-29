@@ -74,15 +74,19 @@ namespace NI {
 
 		Color getAmbient();
 		void setAmbient(Color& value);
+		void setAmbient_lua(sol::object value);
 
 		Color getDiffuse();
 		void setDiffuse(Color& value);
+		void setDiffuse_lua(sol::object value);
 
 		Color getSpecular();
 		void setSpecular(Color& value);
+		void setSpecular_lua(sol::object value);
 
 		Color getEmissive();
 		void setEmissive(Color& value);
+		void setEmissive_lua(sol::object value);
 
 		float getShininess();
 		void setShininess(float value);

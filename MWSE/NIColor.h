@@ -10,6 +10,13 @@ namespace NI {
 
 		Color() : r(0.0f), g(0.0f), b(0.0f) {}
 		Color(float _r, float _g, float _b) : r(_r), g(_g), b(_b) {}
+		Color(TES3::Vector3& vector);
+		Color(sol::table table);
+		Color(sol::object object);
+
+		Color& operator=(const TES3::Vector3& vector);
+		Color& operator=(const sol::table table);
+		Color& operator=(const sol::object object);
 
 		bool operator==(const Color& c);
 		bool operator!=(const Color& c);

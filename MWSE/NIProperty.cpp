@@ -39,6 +39,11 @@ namespace NI {
 		revisionID++;
 	}
 
+	void MaterialProperty::setAmbient_lua(sol::object value) {
+		ambient = value;
+		revisionID++;
+	}
+
 
 	Color MaterialProperty::getDiffuse() {
 		return diffuse;
@@ -49,6 +54,10 @@ namespace NI {
 		revisionID++;
 	}
 
+	void MaterialProperty::setDiffuse_lua(sol::object value) {
+		diffuse = value;
+		revisionID++;
+	}
 
 	Color MaterialProperty::getSpecular() {
 		return specular;
@@ -59,6 +68,10 @@ namespace NI {
 		revisionID++;
 	}
 
+	void MaterialProperty::setSpecular_lua(sol::object value) {
+		specular = value;
+		revisionID++;
+	}
 
 	Color MaterialProperty::getEmissive() {
 		return emissive;
@@ -69,6 +82,10 @@ namespace NI {
 		revisionID++;
 	}
 
+	void MaterialProperty::setEmissive_lua(sol::object value) {
+		emissive = value;
+		revisionID++;
+	}
 
 	float MaterialProperty::getShininess() {
 		return shininess;
@@ -78,7 +95,6 @@ namespace NI {
 		shininess = value;
 		revisionID++;
 	}
-
 
 	float MaterialProperty::getAlpha() {
 		return alpha;

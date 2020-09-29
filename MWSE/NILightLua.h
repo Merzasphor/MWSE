@@ -11,10 +11,10 @@ namespace mwse {
 			setUserdataForNIDynamicEffect(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition["ambient"] = &NI::Light::ambient;
-			usertypeDefinition["diffuse"] = &NI::Light::diffuse;
+			usertypeDefinition["ambient"] = sol::property(&NI::Light::getAmbientColor, &NI::Light::setAmbientColor_lua);
+			usertypeDefinition["diffuse"] = sol::property(&NI::Light::getDiffuseColor, &NI::Light::setDiffuseColor_lua);
 			usertypeDefinition["dimmer"] = &NI::Light::dimmer;
-			usertypeDefinition["specular"] = &NI::Light::specular;
+			usertypeDefinition["specular"] = sol::property(&NI::Light::getSpecularColor, &NI::Light::setSpecularColor_lua);
 		}
 
 		template <typename T>
