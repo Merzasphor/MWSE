@@ -440,6 +440,67 @@ function tes3.makeSafeObjectHandle(object)
 	return safeObjectHandle.new(object)
 end
 
+-------------------------------------------------
+-- Usertype Extensions: tes3cell
+-------------------------------------------------
+
+local allObjectFilter = {}
+for k, v in pairs(tes3.objectType) do
+	allObjectFilter[v] = true
+end
+
+function tes3cell:iterateReferences(filter)
+	local acceptedObjectTypes = {}
+
+	-- Setup our filters.
+	if (filter) then
+		if (type(filter) == "string") then
+			acceptedObjectTypes[tes3.objectType[filter]] = true
+		elseif (type(filter) == "table") then
+			for _, v in ipairs(filter) do
+				if (type(v) == "string") then
+					acceptedObjectTypes[tes3.objectType[v]] = true
+				else
+					acceptedObjectTypes[v] = true
+				end
+			end
+		else
+			acceptedObjectTypes[filter] = true
+		end
+	else
+		acceptedObjectTypes = allObjectFilter
+	end
+
+	-- If no filters were found, add all object types.
+	if (table.empty(acceptedObjectTypes)) then
+		acceptedObjectTypes = allObjectFilter
+	end
+
+	local results = {}
+	
+	for _, ref in pairs(self.actors) do
+		if (ref.object and acceptedObjectTypes[ref.object.objectType]) then
+			table.insert(results, ref)
+		end
+	end
+	for _, ref in pairs(self.activators) do
+		if (ref.object and acceptedObjectTypes[ref.object.objectType]) then
+			table.insert(results, ref)
+		end
+	end
+	for _, ref in pairs(self.statics) do
+		if (ref.object and acceptedObjectTypes[ref.object.objectType]) then
+			table.insert(results, ref)
+		end
+	end
+
+	return coroutine.wrap(function()
+		for _, ref in ipairs(results) do
+			coroutine.yield(ref)
+		end
+	end)
+end
+
 
 -------------------------------------------------
 -- Extend our base API: tes3ui

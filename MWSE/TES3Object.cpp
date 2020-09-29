@@ -51,6 +51,7 @@
 
 #include "LuaManager.h"
 #include "LuaObjectInvalidatedEvent.h"
+#include "LuaUtil.h"
 
 #include "Log.h"
 
@@ -211,7 +212,6 @@ namespace TES3 {
 			break;
 		case TES3::VirtualTableAddress::BaseObject:
 			// Invalidated object.
-			ref = stateHandle.state.create_table_with("object", stateHandle.state.create_table());
 			break;
 		case TES3::VirtualTableAddress::Birthsign:
 			ref = sol::make_object_userdata(L, static_cast<const TES3::Birthsign*>(this));
@@ -304,7 +304,9 @@ namespace TES3 {
 			ref = sol::make_object_userdata(L, static_cast<const TES3::Race*>(this));
 			break;
 		case TES3::VirtualTableAddress::Reference:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Reference*>(this));
+			if (static_cast<const TES3::Reference*>(this)->hasValidBaseObject()) {
+				ref = sol::make_object_userdata(L, static_cast<const TES3::Reference*>(this));
+			}
 			break;
 		case TES3::VirtualTableAddress::Region:
 			ref = sol::make_object_userdata(L, static_cast<const TES3::Region*>(this));
@@ -335,10 +337,6 @@ namespace TES3 {
 			break;
 		case TES3::VirtualTableAddress::Weapon:
 			ref = sol::make_object_userdata(L, static_cast<const TES3::Weapon*>(this));
-			break;
-		default:
-			ref = sol::make_object_userdata(L, this);
-			mwse::log::getLog() << "[MWSE] Invalid object found. vtable is: 0x" << std::hex << uint32_t(vTable.object) << std::endl;
 			break;
 		}
 
