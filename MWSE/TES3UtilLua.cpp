@@ -1634,7 +1634,7 @@ namespace mwse {
 			return TES3::DataHandler::get()->nonDynamicData->getCellByGrid(params["x"], params["y"]);
 		}
 
-		void fadeIn(sol::table params) {
+		void fadeIn(sol::optional<sol::table> params) {
 			TES3::Fader* fader = getOptionalParam(params, "fader", TES3::WorldController::get()->transitionFader);
 			if (fader == nullptr) {
 				return;
@@ -1644,7 +1644,7 @@ namespace mwse {
 			fader->fadeTo(0.0f, duration);
 		}
 
-		void fadeOut(sol::table params) {
+		void fadeOut(sol::optional<sol::table> params) {
 			TES3::Fader* fader = getOptionalParam(params, "fader", TES3::WorldController::get()->transitionFader);
 			if (fader == nullptr) {
 				return;
@@ -1654,7 +1654,7 @@ namespace mwse {
 			fader->fadeTo(1.0f, duration);
 		}
 
-		void fadeTo(sol::table params) {
+		void fadeTo(sol::optional<sol::table> params) {
 			TES3::Fader* fader = getOptionalParam(params, "fader", TES3::WorldController::get()->transitionFader);
 			if (fader == nullptr) {
 				return;
