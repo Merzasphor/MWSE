@@ -8,6 +8,89 @@
 
 namespace mwse {
 	namespace lua {
+		auto iterateReferencesFiltered(const TES3::Cell* cell, const std::unordered_set<unsigned int> desiredTypes) {
+			// Prepare the lists we care about.
+			std::queue<TES3::Reference*> referenceListQueue;
+			if (cell->actors.size() > 0) {
+				referenceListQueue.push(cell->actors.front());
+			}
+			if (cell->persistentRefs.size() > 0) {
+				referenceListQueue.push(cell->persistentRefs.front());
+			}
+			if (cell->temporaryRefs.size() > 0) {
+				referenceListQueue.push(cell->temporaryRefs.front());
+			}
+
+			// Get the first reference we care about.
+			TES3::Reference* reference = nullptr;
+			if (!referenceListQueue.empty()) {
+				reference = referenceListQueue.front();
+				referenceListQueue.pop();
+			}
+
+			return [cell, reference, referenceListQueue, desiredTypes]() mutable -> TES3::Reference* {
+				while (reference && !desiredTypes.empty() && !desiredTypes.count(reference->baseObject->objectType)) {
+					reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
+
+					// Skip references that are invalidated.
+					while (reference && !reference->hasValidBaseObject()) {
+						reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
+
+						// If we hit the end of the list, check for the next list.
+						if (reference == nullptr && !referenceListQueue.empty()) {
+							reference = referenceListQueue.front();
+							referenceListQueue.pop();
+						}
+					}
+
+					// If we hit the end of the list, check for the next list.
+					if (reference == nullptr && !referenceListQueue.empty()) {
+						reference = referenceListQueue.front();
+						referenceListQueue.pop();
+					}
+				}
+
+				if (reference == nullptr) {
+					return nullptr;
+				}
+
+				// Get the object we want to return.
+				auto ret = reference;
+
+				// Get the next reference. If we're at the end of the list, go to the next one
+				reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
+				if (reference == nullptr && !referenceListQueue.empty()) {
+					reference = referenceListQueue.front();
+					referenceListQueue.pop();
+				}
+
+				return ret;
+			};
+		}
+
+		auto iterateReferences(const TES3::Cell* self, sol::optional<sol::object> param) {
+			std::unordered_set<unsigned int> filters;
+
+			if (param) {
+				if (param.value().is<unsigned int>()) {
+					filters.insert(param.value().as<unsigned int>());
+				}
+				else if (param.value().is<sol::table>()) {
+					sol::table filterTable = param.value().as<sol::table>();
+					for (const auto& kv : filterTable) {
+						if (kv.second.is<unsigned int>()) {
+							filters.insert(kv.second.as<unsigned int>());
+						}
+					}
+				}
+				else {
+					throw std::invalid_argument("Iteration can only be filtered by object type, a table of object types, or must not have any filter.");
+				}
+			}
+
+			return iterateReferencesFiltered(self, std::move(filters));
+		}
+
 		void bindTES3Cell() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -64,6 +147,9 @@ namespace mwse {
 				usertypeDefinition["staticObjectsRoot"] = sol::readonly_property(&TES3::Cell::staticObjectsRoot);
 				usertypeDefinition["sunColor"] = sol::readonly_property(&TES3::Cell::getSunColor);
 				usertypeDefinition["waterLevel"] = sol::property(&TES3::Cell::getWaterLevel, &TES3::Cell::setWaterLevel);
+
+				// Basic function binding.
+				usertypeDefinition["iterateReferences"] = iterateReferences;
 			}
 		}
 	}
