@@ -67,6 +67,65 @@ public:
 			Assert::Fail(ss.str().c_str());
 		}
 	}
+	TEST_METHOD(LuaManualLoop) {
+		NI::TArray<int> container(13);
+
+		// Fill all but one slots with 5, and fill the last one with 6.
+		for (size_t i = 0; i < 12; i++) {
+			container.setAtIndex(i, 5);
+		}
+		container.setAtIndex(12, 6);
+
+		sol::state lua;
+		lua.open_libraries();
+
+		try {
+			lua["container"] = &container;
+			size_t sum = lua.safe_script(R"(
+				local sum = 0
+				for i = 1, #container do
+					sum = sum + container[i]
+				end
+				return sum
+				)");
+			Assert::AreEqual(12u * 5u + 6u, sum);
+		}
+		catch (std::exception& e) {
+			std::wstringstream ss;
+			ss << "Lua exception: " << e.what();
+			Assert::Fail(ss.str().c_str());
+		}
+	}
+
+	TEST_METHOD(LuaManualFill) {
+		NI::TArray<int> container(13);
+
+		sol::state lua;
+		lua.open_libraries();
+
+		try {
+			lua["container"] = &container;
+			size_t sum = lua.safe_script(R"(
+				for i = 1, 12 do
+					container[i] = 5
+				end
+				container[13] = 6
+
+				local sum = 0
+				for i = 1, #container do
+					sum = sum + container[i]
+				end
+
+				return sum
+				)");
+			Assert::AreEqual(12u * 5u + 6u, sum);
+		}
+		catch (std::exception& e) {
+			std::wstringstream ss;
+			ss << "Lua exception: " << e.what();
+			Assert::Fail(ss.str().c_str());
+		}
+	}
 
 	TEST_METHOD(LuaPairs) {
 		NI::TArray<int> container(6);

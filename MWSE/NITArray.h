@@ -18,8 +18,6 @@ namespace NI {
 		private:
 			T* m_Ptr;
 
-			iterator(T* ptr) : m_Ptr(ptr) {}
-
 		public:
 			using iterator_category = std::random_access_iterator_tag;
 
@@ -29,11 +27,10 @@ namespace NI {
 			using reference = T&;
 
 			iterator() : m_Ptr(nullptr) {}
+			iterator(T* ptr) : m_Ptr(ptr) {}
 
 			iterator operator-(difference_type diff) const {
-				iterator r = m_Ptr;
-				r -= diff;
-				return r;
+				return m_Ptr - diff;
 			}
 
 			iterator& operator--() {
@@ -46,16 +43,12 @@ namespace NI {
 			}
 
 			iterator& operator-=(difference_type diff) {
-				while (diff-- > 0) {
-					--m_Ptr;
-				}
+				m_Ptr -= diff;
 				return *this;
 			}
 
 			iterator operator+(difference_type diff) const {
-				iterator r = m_Ptr;
-				r += diff;
-				return r;
+				return m_Ptr + diff;
 			}
 
 			iterator& operator++() {
@@ -68,9 +61,7 @@ namespace NI {
 			}
 
 			iterator& operator+=(difference_type diff) {
-				while (diff-- > 0) {
-					++m_Ptr;
-				}
+				m_Ptr += diff;
 				return *this;
 			}
 
@@ -103,12 +94,12 @@ namespace NI {
 		using reverse_iterator = std::reverse_iterator<iterator>;
 		using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
-		constexpr iterator begin() noexcept { return &storage[0]; }
-		constexpr const_iterator begin() const noexcept { return &storage[0]; }
-		constexpr const_iterator cbegin() const noexcept { return &storage[0]; }
+		constexpr iterator begin() noexcept { return storage; }
+		constexpr const_iterator begin() const noexcept { return storage; }
+		constexpr const_iterator cbegin() const noexcept { return begin(); }
 		constexpr iterator end() noexcept { return &storage[storageCount]; }
 		constexpr const_iterator end() const noexcept { return &storage[storageCount]; }
-		constexpr const_iterator cend() const noexcept { return &storage[storageCount]; }
+		constexpr const_iterator cend() const noexcept { return end(); }
 
 		constexpr reverse_iterator rbegin() noexcept { std::make_reverse_iterator(end()); }
 		constexpr const_reverse_iterator rbegin() const noexcept { return std::make_reverse_iterator(end()); }
@@ -139,10 +130,10 @@ namespace NI {
 			filledCount = 0;
 #if !defined(MWSE_NO_CUSTOM_ALLOC) || MWSE_NO_CUSTOM_ALLOC == 0
 			storage = reinterpret_cast<T* (__cdecl*)(size_type)>(0x727692)(size * 4);
-			memset(storage, 0, size * 4);
 #else
 			storage = new T[size];
 #endif
+			memset(storage, 0, size * 4);
 		}
 
 		TArray(const TArray& other) {
@@ -188,6 +179,62 @@ namespace NI {
 			}
 			return storage[pos];
 		}
+
+		constexpr size_type getIndexOfIterator(const_iterator& itt) {
+			return itt.m_Ptr - storage;
+		}
+
+		iterator insert(const_iterator& position, const_reference value) {
+			// Generic add.
+			if (position == end()) {
+				auto index = add(value);
+				return &storage[index];
+			}
+
+			// Get our index.
+			auto index = getIndexOfIterator(position);
+			setAtIndex(index, value);
+
+			// Actually set the value.
+			return &storage[index];
+		}
+
+		iterator insert(size_type position, const_reference value) {
+			return insert(begin() + position, value);
+		}
+
+		void push_front(const_reference& value) {
+			insert(begin(), value);
+		}
+
+		void push_back(const_reference& value) {
+			insert(end(), value);
+		}
+
+		iterator erase(const_iterator& position) {
+			setAtIndex(position.m_Ptr - storage, 0);
+			return position + 1;
+		}
+
+		iterator erase(const_iterator& first, const_iterator& last) {
+			auto itt = first;
+			while (itt != end() && itt != last) {
+				itt = erase(itt);
+			}
+			return itt;
+		}
+
+		iterator erase(size_type position) {
+			return erase(begin() + position);
+		}
+
+		void clear() {
+			for (size_type i = 0; i < storageCount; i++) {
+				storage[i] = T(0);
+			}
+			filledCount = 0;
+			endIndex = 0;
+		}
 		
 		void fill(const_reference value) {
 			for (size_type i = 0; i < storageCount; ++i) {
@@ -196,7 +243,7 @@ namespace NI {
 		}
 
 		constexpr auto size() const noexcept {
-			return filledCount;
+			return storageCount;
 		}
 
 		constexpr bool empty() const noexcept {
@@ -261,7 +308,7 @@ namespace NI {
 			if (size < endIndex) {
 				for (auto i = size; i < endIndex; i++) {
 					if (storage[i]) {
-						storage[i] = 0;
+						storage[i] = T(0);
 						filledCount--;
 					}
 				}
@@ -273,7 +320,7 @@ namespace NI {
 #else
 			auto newStorage = new T[size];
 #endif
-			for (auto i = 0; i < endIndex; i++) {
+			for (size_type i = 0; i < endIndex; i++) {
 				newStorage[i] = storage[i];
 			}
 #if !defined(MWSE_NO_CUSTOM_ALLOC) || MWSE_NO_CUSTOM_ALLOC == 0
@@ -283,6 +330,10 @@ namespace NI {
 #endif
 			storage = newStorage;
 			storageCount = size;
+		}
+
+		bool grow() {
+			return growToFit(storageCount + growByCount);
 		}
 
 		bool growToFit(size_t index) {
@@ -308,20 +359,19 @@ namespace NI {
 			return index;
 		}
 
-		void clear() {
-			for (size_t i = 0; i < storageCount; i++) {
-				setAtIndex(i, T(0));
-			}
-		}
-
 		size_type getFilledCount() const { return filledCount; }
 		size_type getEndIndex() const { return endIndex; }
 
+		void recalculateFirstEmpty() {
+			endIndex = storageCount;
+			for (size_type i = 0; i < storageCount; i++) {
+				if (storage[i] == T(0)) {
+					endIndex = i;
+					return;
+				}
+			}
+		}
+
 	};
 	static_assert(sizeof(TArray<int>) == 0x18, "NI::TArray failed size validation");
-	static_assert(offsetof(TArray<int>, storage) == 0x4, "NI::TArray::storage failed offset validation");
-	static_assert(offsetof(TArray<int>, storageCount) == 0x8, "NI::TArray::storageCount failed offset validation");
-	static_assert(offsetof(TArray<int>, endIndex) == 0xC, "NI::TArray::endIndex failed offset validation");
-	static_assert(offsetof(TArray<int>, filledCount) == 0x10, "NI::TArray::filledCount failed offset validation");
-	static_assert(offsetof(TArray<int>, growByCount) == 0x14, "NI::TArray::growByCount failed offset validation");
 }
