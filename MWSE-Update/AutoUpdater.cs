@@ -289,18 +289,16 @@ namespace MWSE
                     };
                     Process.Start(startInfo);
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("\nThere was a problem when updating MWSE: {0}", e.Message);
-#if _DEBUG
-                Console.ReadKey();
-#endif
-            }
 
 #if _DEBUG
             Console.ReadKey();
 #endif
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("\nThere was a problem when updating MWSE: {0}", e.Message);
+                Console.ReadKey();
+            }
 
             return 0;
         }
