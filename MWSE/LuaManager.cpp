@@ -1478,21 +1478,20 @@ namespace mwse {
 		//
 
 		static const uintptr_t MACP__getPlayerAnimData_fieldEC = 0x567990;
-		static TES3::Reference* previousTarget;
 
 		static __declspec(naked) void HookPreFindActivationTarget() {
 			_asm {
 				mov eax, ds:[0x7C6CDC]  // global_TES3_Game
 				mov eax, [eax + 0xE8]	// game->playerTarget
-				mov previousTarget, eax
+				mov TES3::Game::previousPlayerTarget, eax
 				jmp MACP__getPlayerAnimData_fieldEC
 			}
 		}
 
 		static void HookPostFindActivationTarget() {
 			TES3::Reference *currentTarget = TES3::Game::get()->playerTarget;
-			if (previousTarget != currentTarget && event::ActivationTargetChangedEvent::getEventEnabled()) {
-				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::ActivationTargetChangedEvent(previousTarget, currentTarget));
+			if (TES3::Game::previousPlayerTarget != currentTarget && event::ActivationTargetChangedEvent::getEventEnabled()) {
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::ActivationTargetChangedEvent(TES3::Game::previousPlayerTarget, currentTarget));
 			}
 		}
 

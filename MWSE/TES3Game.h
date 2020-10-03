@@ -118,8 +118,11 @@ namespace TES3 {
 		char unknown_0x10C;
 		char unknown_0x10D[3]; // Padding.
 
-		// Get singleton.
-		_declspec (dllexport) static Game * get();
+		//
+		// Extra static data fields.
+		//
+
+		static Reference* previousPlayerTarget;
 
 		//
 		// vTable accessor functions.
@@ -134,6 +137,13 @@ namespace TES3 {
 		bool initialize();
 
 		void clearTarget();
+
+		//
+		// Custom functions.
+		//
+
+		// Get singleton.
+		_declspec (dllexport) static Game* get();
 
 	};
 	static_assert(sizeof(Game) == 0x110, "TES3::Game failed size validation");
