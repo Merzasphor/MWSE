@@ -3965,6 +3965,12 @@ namespace mwse {
 			return nullptr;
 		}
 
+		void setSourceless(TES3::BaseObject* object, sol::optional<bool> sourceless) {
+			if (object) {
+				object->setSourceless(sourceless.value_or(true));
+			}
+		}
+
 		void bindTES3Util() {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
@@ -4105,6 +4111,7 @@ namespace mwse {
 			tes3["setLockLevel"] = setLockLevel;
 			tes3["setMarkLocation"] = setMarkLocation;
 			tes3["setOwner"] = setOwner;
+			tes3["setSourceless"] = setSourceless;
 			tes3["setStatistic"] = setStatistic;
 			tes3["setTrap"] = setTrap;
 			tes3["setWerewolfKillCount"] = setWerewolfKillCount;
