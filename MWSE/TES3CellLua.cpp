@@ -32,17 +32,6 @@ namespace mwse {
 				while (reference && !desiredTypes.empty() && !desiredTypes.count(reference->baseObject->objectType)) {
 					reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
 
-					// Skip references that are invalidated.
-					while (reference && !reference->hasValidBaseObject()) {
-						reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
-
-						// If we hit the end of the list, check for the next list.
-						if (reference == nullptr && !referenceListQueue.empty()) {
-							reference = referenceListQueue.front();
-							referenceListQueue.pop();
-						}
-					}
-
 					// If we hit the end of the list, check for the next list.
 					if (reference == nullptr && !referenceListQueue.empty()) {
 						reference = referenceListQueue.front();
@@ -55,7 +44,7 @@ namespace mwse {
 				}
 
 				// Get the object we want to return.
-				auto ret = reference;
+				TES3::Reference* ret = reference;
 
 				// Get the next reference. If we're at the end of the list, go to the next one
 				reference = reinterpret_cast<TES3::Reference*>(reference->nextInCollection);
