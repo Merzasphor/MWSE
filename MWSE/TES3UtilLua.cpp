@@ -800,7 +800,9 @@ namespace mwse {
 			}
 
 			// Our pick is configured. Let's run it! (Use normalized direction for skinned mesh fix later.)
-			rayTestCache->pickObjects(&position.value(), &direction.value().normalized(), false, maxDistance);
+			if (!rayTestCache->pickObjects(&position.value(), &direction.value().normalized(), false, maxDistance)) {
+				return sol::nil;
+			}
 
 			// Restore previous cull states.
 			for (auto itt = ignoreRestoreList.begin(); itt != ignoreRestoreList.end(); itt++) {
