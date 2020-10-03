@@ -50,7 +50,7 @@ namespace NI {
 		static Pick* malloc();
 		void free();
 
-		bool pickObjects(TES3::Vector3 * origin, TES3::Vector3 * direction, bool append = false, float maxDistance = 0.0f);
+		bool pickObjects(const TES3::Vector3 * origin, const TES3::Vector3 * direction, bool append = false, float maxDistance = 0.0f);
 		void clearResults();
 
 	};
