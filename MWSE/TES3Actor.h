@@ -72,12 +72,12 @@ namespace TES3 {
 		// Custom functions.
 		//
 
-		bool isBaseActor();
-		bool isClone();
+		bool isBaseActor() const;
+		bool isClone() const;
 
 		bool tradesItemType(ObjectType::ObjectType type);
 
-		int getBloodType();
+		int getBloodType() const;
 		void setBloodType(int value);
 
 		void onCloseInventory_lua(sol::optional<TES3::Reference*> reference, sol::optional<int> unknown);

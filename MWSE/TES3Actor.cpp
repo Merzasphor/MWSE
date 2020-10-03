@@ -127,11 +127,11 @@ namespace TES3 {
 		return TES3_Actor_getEquippedClothingBySlot(this, slot);
 	}
 
-	bool Actor::isBaseActor() {
+	bool Actor::isBaseActor() const {
 		return (actorFlags & TES3::ActorFlag::IsBase);
 	}
 
-	bool Actor::isClone() {
+	bool Actor::isClone() const {
 		return !(actorFlags & TES3::ActorFlag::IsBase);
 	}
 
@@ -169,7 +169,7 @@ namespace TES3 {
 		return false;
 	}
 
-	int Actor::getBloodType() {
+	int Actor::getBloodType() const {
 		return (actorFlags >> 0xA) & 0x7;
 	}
 

@@ -193,156 +193,159 @@ namespace TES3 {
 		L = stateHandle.state;
 
 		sol::object ref = sol::nil;
-		switch ((uint32_t)vTable.object) {
-		case TES3::VirtualTableAddress::Activator:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Activator*>(this));
+		switch (objectType) {
+		case ObjectType::Activator:
+			ref = sol::make_object_userdata(L, static_cast<const Activator*>(this));
 			break;
-		case TES3::VirtualTableAddress::Alchemy:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Alchemy*>(this));
+		case ObjectType::Alchemy:
+			ref = sol::make_object_userdata(L, static_cast<const Alchemy*>(this));
 			break;
-		case TES3::VirtualTableAddress::AnimationGroup:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::AnimationGroup*>(this));
+		case ObjectType::AnimationGroup:
+			ref = sol::make_object_userdata(L, static_cast<const AnimationGroup*>(this));
 			break;
-		case TES3::VirtualTableAddress::Apparatus:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Apparatus*>(this));
+		case ObjectType::Apparatus:
+			ref = sol::make_object_userdata(L, static_cast<const Apparatus*>(this));
 			break;
-		case TES3::VirtualTableAddress::Armor:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Armor*>(this));
+		case ObjectType::Armor:
+			ref = sol::make_object_userdata(L, static_cast<const Armor*>(this));
 			break;
-		case TES3::VirtualTableAddress::BaseObject:
-			// Invalidated object.
-			ref = stateHandle.state.create_table_with("object", stateHandle.state.create_table());
+		case ObjectType::Birthsign:
+			ref = sol::make_object_userdata(L, static_cast<const Birthsign*>(this));
 			break;
-		case TES3::VirtualTableAddress::Birthsign:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Birthsign*>(this));
+		case ObjectType::Bodypart:
+			ref = sol::make_object_userdata(L, static_cast<const BodyPart*>(this));
 			break;
-		case TES3::VirtualTableAddress::BodyPart:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::BodyPart*>(this));
+		case ObjectType::Book:
+			ref = sol::make_object_userdata(L, static_cast<const Book*>(this));
 			break;
-		case TES3::VirtualTableAddress::Book:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Book*>(this));
+		case ObjectType::Cell:
+			ref = sol::make_object_userdata(L, static_cast<const Cell*>(this));
 			break;
-		case TES3::VirtualTableAddress::Cell:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Cell*>(this));
+		case ObjectType::Class:
+			ref = sol::make_object_userdata(L, static_cast<const Class*>(this));
 			break;
-		case TES3::VirtualTableAddress::Class:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Class*>(this));
+		case ObjectType::Clothing:
+			ref = sol::make_object_userdata(L, static_cast<const Clothing*>(this));
 			break;
-		case TES3::VirtualTableAddress::Clothing:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Clothing*>(this));
+		case ObjectType::Container:
+			if (static_cast<const Actor*>(this)->isClone()) {
+				ref = sol::make_object_userdata(L, static_cast<const ContainerInstance*>(this));
+			}
+			else {
+				ref = sol::make_object_userdata(L, static_cast<const Container*>(this));
+			}
 			break;
-		case TES3::VirtualTableAddress::ContainerBase:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Container*>(this));
+		case ObjectType::Creature:
+			if (static_cast<const Actor*>(this)->isClone()) {
+				ref = sol::make_object_userdata(L, static_cast<const CreatureInstance*>(this));
+			}
+			else {
+				ref = sol::make_object_userdata(L, static_cast<const Creature*>(this));
+			}
 			break;
-		case TES3::VirtualTableAddress::ContainerInstance:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::ContainerInstance*>(this));
+		case ObjectType::Dialogue:
+			ref = sol::make_object_userdata(L, static_cast<const Dialogue*>(this));
 			break;
-		case TES3::VirtualTableAddress::CreatureBase:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Creature*>(this));
+		case ObjectType::DialogueInfo:
+			ref = sol::make_object_userdata(L, static_cast<const DialogueInfo*>(this));
 			break;
-		case TES3::VirtualTableAddress::CreatureInstance:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::CreatureInstance*>(this));
+		case ObjectType::Door:
+			ref = sol::make_object_userdata(L, static_cast<const Door*>(this));
 			break;
-		case TES3::VirtualTableAddress::Dialogue:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Dialogue*>(this));
+		case ObjectType::Enchantment:
+			ref = sol::make_object_userdata(L, static_cast<const Enchantment*>(this));
 			break;
-		case TES3::VirtualTableAddress::DialogueInfo:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::DialogueInfo*>(this));
+		case ObjectType::Faction:
+			ref = sol::make_object_userdata(L, static_cast<const Faction*>(this));
 			break;
-		case TES3::VirtualTableAddress::Door:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Door*>(this));
+		case ObjectType::Global:
+			ref = sol::make_object_userdata(L, static_cast<const GlobalVariable*>(this));
 			break;
-		case TES3::VirtualTableAddress::Enchantment:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Enchantment*>(this));
+		case ObjectType::GameSetting:
+			ref = sol::make_object_userdata(L, static_cast<const GameSetting*>(this));
 			break;
-		case TES3::VirtualTableAddress::Faction:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Faction*>(this));
+		case ObjectType::Ingredient:
+			ref = sol::make_object_userdata(L, static_cast<const Ingredient*>(this));
 			break;
-		case TES3::VirtualTableAddress::GlobalVariable:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::GlobalVariable*>(this));
+		case ObjectType::Land:
+			ref = sol::make_object_userdata(L, static_cast<const Land*>(this));
 			break;
-		case TES3::VirtualTableAddress::GameSetting:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::GameSetting*>(this));
+		case ObjectType::LeveledCreature:
+			ref = sol::make_object_userdata(L, static_cast<const LeveledCreature*>(this));
 			break;
-		case TES3::VirtualTableAddress::Ingredient:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Ingredient*>(this));
+		case ObjectType::LeveledItem:
+			ref = sol::make_object_userdata(L, static_cast<const LeveledItem*>(this));
 			break;
-		case TES3::VirtualTableAddress::Land:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Land*>(this));
+		case ObjectType::Light:
+			ref = sol::make_object_userdata(L, static_cast<const Light*>(this));
 			break;
-		case TES3::VirtualTableAddress::LeveledCreature:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::LeveledCreature*>(this));
+		case ObjectType::Lockpick:
+			ref = sol::make_object_userdata(L, static_cast<const Lockpick*>(this));
 			break;
-		case TES3::VirtualTableAddress::LeveledItem:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::LeveledItem*>(this));
+		case ObjectType::MagicEffect:
+			ref = sol::make_object_userdata(L, static_cast<const MagicEffect*>(this));
 			break;
-		case TES3::VirtualTableAddress::Light:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Light*>(this));
+		case ObjectType::Misc:
+			ref = sol::make_object_userdata(L, static_cast<const Misc*>(this));
 			break;
-		case TES3::VirtualTableAddress::Lockpick:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Lockpick*>(this));
+		case ObjectType::NPC:
+			if (static_cast<const Actor*>(this)->isClone()) {
+				ref = sol::make_object_userdata(L, static_cast<const NPCInstance*>(this));
+			}
+			else {
+				ref = sol::make_object_userdata(L, static_cast<const NPC*>(this));
+			}
 			break;
-		case TES3::VirtualTableAddress::MagicEffect:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::MagicEffect*>(this));
+		case ObjectType::Probe:
+			ref = sol::make_object_userdata(L, static_cast<const Probe*>(this));
 			break;
-		case TES3::VirtualTableAddress::Miscellaneous:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Misc*>(this));
+		case ObjectType::Quest:
+			ref = sol::make_object_userdata(L, static_cast<const Quest*>(this));
 			break;
-		case TES3::VirtualTableAddress::NPCBase:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::NPC*>(this));
+		case ObjectType::Race:
+			ref = sol::make_object_userdata(L, static_cast<const Race*>(this));
 			break;
-		case TES3::VirtualTableAddress::NPCInstance:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::NPCInstance*>(this));
+		case ObjectType::Reference:
+			ref = sol::make_object_userdata(L, static_cast<const Reference*>(this));
 			break;
-		case TES3::VirtualTableAddress::Probe:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Probe*>(this));
+		case ObjectType::Region:
+			ref = sol::make_object_userdata(L, static_cast<const Region*>(this));
 			break;
-		case TES3::VirtualTableAddress::Quest:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Quest*>(this));
+		case ObjectType::Repair:
+			ref = sol::make_object_userdata(L, static_cast<const RepairTool*>(this));
 			break;
-		case TES3::VirtualTableAddress::Race:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Race*>(this));
+		case ObjectType::Script:
+			ref = sol::make_object_userdata(L, static_cast<const Script*>(this));
 			break;
-		case TES3::VirtualTableAddress::Reference:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Reference*>(this));
+		case ObjectType::Skill:
+			ref = sol::make_object_userdata(L, static_cast<const Skill*>(this));
 			break;
-		case TES3::VirtualTableAddress::Region:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Region*>(this));
+		case ObjectType::Sound:
+			ref = sol::make_object_userdata(L, static_cast<const Sound*>(this));
 			break;
-		case TES3::VirtualTableAddress::RepairTool:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::RepairTool*>(this));
+		case ObjectType::SoundGenerator:
+			ref = sol::make_object_userdata(L, static_cast<const SoundGenerator*>(this));
 			break;
-		case TES3::VirtualTableAddress::Script:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Script*>(this));
+		case ObjectType::Spell:
+			ref = sol::make_object_userdata(L, static_cast<const Spell*>(this));
 			break;
-		case TES3::VirtualTableAddress::Skill:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Skill*>(this));
+		case ObjectType::MagicSourceInstance:
+			ref = sol::make_object_userdata(L, static_cast<const MagicSourceInstance*>(this));
 			break;
-		case TES3::VirtualTableAddress::Sound:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Sound*>(this));
+		case ObjectType::Static:
+			ref = sol::make_object_userdata(L, static_cast<const Static*>(this));
 			break;
-		case TES3::VirtualTableAddress::SoundGenerator:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::SoundGenerator*>(this));
-			break;
-		case TES3::VirtualTableAddress::Spell:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Spell*>(this));
-			break;
-		case TES3::VirtualTableAddress::MagicSourceInstance:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::MagicSourceInstance*>(this));
-			break;
-		case TES3::VirtualTableAddress::Static:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Static*>(this));
-			break;
-		case TES3::VirtualTableAddress::Weapon:
-			ref = sol::make_object_userdata(L, static_cast<const TES3::Weapon*>(this));
+		case ObjectType::Ammo:
+		case ObjectType::Weapon:
+			ref = sol::make_object_userdata(L, static_cast<const Weapon*>(this));
 			break;
 		default:
-			ref = sol::make_object_userdata(L, this);
-			mwse::log::getLog() << "[MWSE] Invalid object found. vtable is: 0x" << std::hex << uint32_t(vTable.object) << std::endl;
+			mwse::log::getLog() << "[MWSE] Invalidated object pushed. vtable is: 0x" << std::hex << uint32_t(vTable.object) << std::endl;
 			break;
 		}
 
-		if (ref != sol::nil) {
+		// Don't cache misses or objects that are invalidated.
+		if (ref != sol::nil && uint32_t(vTable.object) != VirtualTableAddress::BaseObject) {
 			baseObjectCache[this] = ref;
 		}
 
