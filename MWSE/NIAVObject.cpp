@@ -7,6 +7,18 @@
 #define NI_AVObject_update 0x6EB000
 
 namespace NI {
+	TES3::Vector3 AVObject::getVelocity() const {
+		return *velocities;
+	}
+
+	void AVObject::setVelocity(const TES3::Vector3& velocity) {
+		*velocities = velocity;
+	}
+
+	void AVObject::setVelocity_lua(sol::object object) {
+		*velocities = object;
+	}
+
 	AVObject * AVObject::getObjectByName(const char* name) {
 		return vTable.asAVObject->getObjectByName(this, name);
 	}
