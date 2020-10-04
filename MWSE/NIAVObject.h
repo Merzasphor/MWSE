@@ -27,8 +27,7 @@ namespace NI {
 		// vTable wrappers.
 		//
 
-		TES3::Vector3 getVelocity() const;
-		void setVelocity(const TES3::Vector3& velocity);
+		sol::optional<TES3::Vector3> getVelocity_lua() const;
 		void setVelocity_lua(sol::object object);
 
 		AVObject * getObjectByName(const char*);

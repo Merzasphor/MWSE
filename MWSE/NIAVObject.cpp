@@ -2,20 +2,33 @@
 
 #include "NIProperty.h"
 
+#include "MemoryUtil.h"
+
 #define NI_AVObject_updateEffects 0x6EB380
 #define NI_AVObject_updateProperties 0x6EB0E0
 #define NI_AVObject_update 0x6EB000
 
 namespace NI {
-	TES3::Vector3 AVObject::getVelocity() const {
+	sol::optional<TES3::Vector3> AVObject::getVelocity_lua() const {
+		if (velocities == nullptr) {
+			return {};
+		}
 		return *velocities;
 	}
 
-	void AVObject::setVelocity(const TES3::Vector3& velocity) {
-		*velocities = velocity;
-	}
-
 	void AVObject::setVelocity_lua(sol::object object) {
+		// Handle delete case.
+		if (object == sol::nil) {
+			if (velocities) {
+				mwse::tes3::_delete(velocities);
+				velocities = nullptr;
+			}
+			return;
+		}
+
+		if (velocities == nullptr) {
+			velocities = mwse::tes3::_new<TES3::Vector3>();
+		}
 		*velocities = object;
 	}
 
