@@ -54,6 +54,49 @@ namespace TES3 {
 		z = color.b;
 	}
 
+	Vector3::Vector3(sol::table table) {
+		x = table.get_or("x", table.get_or(1, 0.0f));
+		y = table.get_or("y", table.get_or(2, 0.0f));
+		z = table.get_or("z", table.get_or(3, 0.0f));
+	}
+
+	Vector3::Vector3(sol::object object) {
+		if (object.is<NI::Color>()) {
+			*this = NI::Color(object.as<NI::Color>());
+		}
+		else if (object.is<sol::table>()) {
+			*this = NI::Color(object.as<sol::table>());
+		}
+		throw std::invalid_argument("Could not convert lua object to TES3Vector3.");
+	}
+
+	Vector3& Vector3::operator=(const NI::Color& vector) {
+		x = vector.r;
+		y = vector.g;
+		z = vector.b;
+		return *this;
+	}
+
+	Vector3& Vector3::operator=(const sol::table table) {
+		x = table.get_or("x", table.get_or(1, 0.0f));
+		y = table.get_or("y", table.get_or(2, 0.0f));
+		z = table.get_or("z", table.get_or(3, 0.0f));
+		return *this;
+	}
+
+	Vector3& Vector3::operator=(const sol::object object) {
+		if (object.is<NI::Color>()) {
+			*this = object.as<NI::Color>();
+		}
+		else if (object.is<sol::table>()) {
+			*this = object.as<sol::table>();
+		}
+		else {
+			throw std::invalid_argument("Could not convert lua object to NiColor.");
+		}
+		return *this;
+	}
+
 	bool Vector3::operator==(const Vector3& vec3) const {
 		return x == vec3.x && y == vec3.y && z == vec3.z;
 	}

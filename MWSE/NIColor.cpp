@@ -15,10 +15,10 @@ namespace NI {
 
 	Color::Color(sol::object object) {
 		if (object.is<TES3::Vector3>()) {
-			Color(object.as<TES3::Vector3>());
+			*this = Color(object.as<TES3::Vector3>());
 		}
 		else if (object.is<sol::table>()) {
-			Color(object.as<sol::table>());
+			*this = Color(object.as<sol::table>());
 		}
 		throw std::invalid_argument("Could not convert lua object to NiColor.");
 	}
