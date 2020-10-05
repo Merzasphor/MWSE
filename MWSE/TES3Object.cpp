@@ -521,10 +521,17 @@ namespace TES3 {
 	}
 
 	void Object::setModelPath(const char* path) {
+		if (strnlen_s(path, 32) >= 32) {
+			throw std::invalid_argument("Path cannot be more than 31 characters in length.");
+		}
+
 		vTable.object->setModelPath(this, path);
 	}
 
 	void Object::setName(const char* name) {
+		if (strnlen_s(name, 32) >= 32) {
+			throw std::invalid_argument("Name cannot be more than 31 characters in length.");
+		}
 		vTable.object->setName(this, name);
 	}
 
