@@ -468,12 +468,12 @@ namespace TES3 {
 	}
 
 	float WorldController::getAIDistance() const {
-		return mobController->mobController_0x24->aiDistance;
+		return mobController->processManager->aiDistance;
 	}
 
 	void WorldController::setAIDistance(float value) {
-		mobController->mobController_0x24->aiDistance = value;
-		aiDistanceScale = mobController->mobController_0x24->getAIDistanceScale();
+		mobController->processManager->aiDistance = value;
+		aiDistanceScale = mobController->processManager->getAIDistanceScale();
 	}
 
 	float WorldController::getAIDistanceScale() const {
@@ -482,7 +482,7 @@ namespace TES3 {
 
 	void WorldController::setAIDistanceScale(float scale) {
 		aiDistanceScale = scale;
-		mobController->mobController_0x24->setAIDistanceScale(scale);
+		mobController->processManager->setAIDistanceScale(scale);
 	}
 
 	void WorldController::tickClock() {

@@ -23,7 +23,7 @@ namespace TES3 {
 	};
 	static_assert(sizeof(MobController_0x0) == 0x30, "TES3::MobController_0x0 failed size validation");
 
-	struct MobController_0x24 {
+	struct ProcessManager {
 		MobilePlayer * mobilePlayer; // 0x0
 		IteratedList<MobileActor*> unknown_0x4;
 		bool unknown_0x18;
@@ -45,7 +45,7 @@ namespace TES3 {
 		void setAIDistanceScale(float scalar);
 
 	};
-	static_assert(sizeof(MobController_0x24) == 0x830, "TES3::MobController_0x24 failed size validation");
+	static_assert(sizeof(ProcessManager) == 0x830, "TES3::MobController_0x24 failed size validation");
 
 	struct ProjectileController {
 		IteratedList<MobileProjectile*> activeProjectiles; // 0x0
@@ -67,7 +67,7 @@ namespace TES3 {
 		float unknown_0x18; // Initialized to -4005.5
 		float unknown_0x1C; // Initialized to 46 degrees.
 		float unknown_0x20; // Initialized to cos(46 degrees)
-		MobController_0x24 * mobController_0x24; // Mobile actor controller?
+		ProcessManager * processManager; // Mobile actor controller?
 		ProjectileController* projectileController; // 0x28
 		bool unknown_0x2C;
 		IteratedList<void*> unknown_0x30;
