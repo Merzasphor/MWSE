@@ -35,10 +35,14 @@ namespace NI {
 	}
 
 	Pointer<StringExtraData> ObjectNET::getStringDataWithValue(const char* value) const {
+		if (!value) {
+			return nullptr;
+		}
+
 		ExtraData* extra = extraData;
 		while (extra) {
-			if (extra->isInstanceOfType(NI::RTTIStaticPtr::NiStringExtraData)) {
-				if (mwse::string::iequal(value, reinterpret_cast<NI::StringExtraData*>(extra)->string)) {
+			if (extra->isInstanceOfType(NI::RTTIStaticPtr::NiStringExtraData) && static_cast<NI::StringExtraData*>(extra)->string) {
+				if (mwse::string::iequal(value, static_cast<NI::StringExtraData*>(extra)->string)) {
 					return reinterpret_cast<NI::StringExtraData*>(extra);
 				}
 			}
@@ -52,11 +56,15 @@ namespace NI {
 	}
 
 	Pointer<StringExtraData> ObjectNET::getStringDataStartingWithValue(const char* value) const {
+		if (!value) {
+			return nullptr;
+		}
+
 		size_t maxCount = strlen(value);
 		ExtraData* extra = extraData;
 		while (extra) {
-			if (extra->isInstanceOfType(NI::RTTIStaticPtr::NiStringExtraData)) {
-				if (mwse::string::niequal(value, reinterpret_cast<NI::StringExtraData*>(extra)->string, maxCount)) {
+			if (extra->isInstanceOfType(NI::RTTIStaticPtr::NiStringExtraData) && static_cast<NI::StringExtraData*>(extra)->string) {
+				if (mwse::string::niequal(value, static_cast<NI::StringExtraData*>(extra)->string, maxCount)) {
 					return reinterpret_cast<NI::StringExtraData*>(extra);
 				}
 			}
