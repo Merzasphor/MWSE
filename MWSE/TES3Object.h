@@ -269,6 +269,8 @@ namespace TES3 {
 		static void setSourcelessObject(const BaseObject* object);
 
 		// Storage for cached userdata.
+		bool hasCachedLuaObject() const;
+		sol::object getCachedLuaObject() const;
 		sol::object getOrCreateLuaObject(lua_State* L) const;
 		static void clearCachedLuaObject(const BaseObject* object);
 		static void clearCachedLuaObjects();

@@ -176,6 +176,20 @@ namespace TES3 {
 
 	static std::unordered_map<const BaseObject*, sol::object> baseObjectCache;
 
+	bool BaseObject::hasCachedLuaObject() const {
+		return baseObjectCache.find(this) != baseObjectCache.end();
+	}
+
+	sol::object BaseObject::getCachedLuaObject() const {
+		auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+		auto cacheHit = baseObjectCache.find(this);
+		if (cacheHit != baseObjectCache.end()) {
+			auto result = cacheHit->second;
+			return result;
+		}
+		return sol::nil;
+	}
+
 	sol::object BaseObject::getOrCreateLuaObject(lua_State* L) const {
 		if (this == nullptr) {
 			return sol::nil;
