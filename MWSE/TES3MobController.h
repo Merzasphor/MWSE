@@ -42,6 +42,8 @@ namespace TES3 {
 		void checkRadius(MobileActor * actor, IteratedList<AIPlanner*> * container);
 		void checkPlayerDistance();
 
+		bool canRest();
+
 		float getAIDistanceScale() const;
 		void setAIDistanceScale(float scalar);
 

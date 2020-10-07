@@ -253,6 +253,8 @@ namespace TES3 {
 		void setIsWerewolf(bool set);
 		void changeWerewolfState(bool isWerewolf);
 
+		float getActionWeightFight(MobileActor* target);
+
 		//
 		// Custom functions.
 		//

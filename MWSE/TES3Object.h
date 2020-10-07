@@ -248,7 +248,7 @@ namespace TES3 {
 
 		BaseObject * getBaseObject();
 
-		bool isActor();
+		bool isActor() const;
 		const char* getSourceFilename();
 
 		bool getDisabled() const;

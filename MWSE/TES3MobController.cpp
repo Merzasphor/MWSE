@@ -40,6 +40,11 @@ namespace TES3 {
 		TES3_ProcessManager_checkPlayerDist(this);
 	}
 
+	const auto TES3_ProcessManager_canRest = reinterpret_cast<bool(__thiscall*)(ProcessManager*)>(0x56F810);
+	bool ProcessManager::canRest() {
+		return TES3_ProcessManager_canRest(this);
+	}
+
 	float ProcessManager::getAIDistanceScale() const {
 		return (aiDistance - 1000.0f) / 6000.0f;
 	}

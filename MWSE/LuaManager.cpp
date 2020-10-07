@@ -199,6 +199,7 @@
 #include "LuaPostInfoResponseEvent.h"
 #include "LuaPotionBrewedEvent.h"
 #include "LuaPreLevelUpEvent.h"
+#include "LuaPreventRestEvent.h"
 #include "LuaProjectileExpireEvent.h"
 #include "LuaRestInterruptEvent.h"
 #include "LuaSimulateEvent.h"
@@ -2633,6 +2634,31 @@ namespace mwse {
 			return result;
 		}
 
+		//
+		// Event: Prevent Rest
+		//
+
+		float __fastcall OnCheckActionWeightFightForRest(TES3::MobileActor* self, DWORD _EDX_, TES3::MobilePlayer* player) {
+			auto result = self->getActionWeightFight(player);
+
+			if (event::PreventRestEvent::getEventEnabled() && result >= 100.0f) {
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::object eventResult = stateHandle.triggerEvent(new event::PreventRestEvent(self));
+				if (eventResult.valid()) {
+					sol::table eventData = eventResult;
+					if (eventData.get_or("block", false)) {
+						return 0.0f;
+					}
+				}
+			}
+
+			return result;
+		}
+
+		//
+		//
+		//
+
 		// Write errors to mwse.log as well.
 		BOOL WINAPI WriteToWarningsFile(HANDLE hFile, LPCVOID lpBuffer, DWORD nNumberOfBytesToWrite, LPDWORD lpNumberOfBytesWritten, LPOVERLAPPED lpOverlapped) {
 			// Overwritten code.
@@ -3745,6 +3771,9 @@ namespace mwse {
 			genPushEnforced(0x530624, (BYTE)sizeof(TES3::CombatSession)) && genCallEnforced(0x530641, 0x537120, reinterpret_cast<DWORD>(&TES3::CombatSession::ctor));
 			genCallEnforced(0x51FAFF, 0x5372F0, reinterpret_cast<DWORD>(&TES3::CombatSession::dtor));
 			genCallEnforced(0x55886B, 0x5372F0, reinterpret_cast<DWORD>(&TES3::CombatSession::dtor));
+
+			// Event: Prevent Rest
+			genCallEnforced(0x564FF6, 0x530A20, reinterpret_cast<DWORD>(OnCheckActionWeightFightForRest));
 
 			// UI framework hooks
 			TES3::UI::hook();

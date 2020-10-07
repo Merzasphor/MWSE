@@ -20,6 +20,8 @@ namespace TES3 {
 
 		AIPackage * getActivePackage();
 
+		bool allowRestingNear();
+
 		//
 		// Custom functions.
 		//

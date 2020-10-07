@@ -100,7 +100,7 @@ namespace TES3 {
 		return object;
 	}
 
-	bool BaseObject::isActor() {
+	bool BaseObject::isActor() const {
 		switch (objectType) {
 		case TES3::ObjectType::Container:
 		case TES3::ObjectType::Creature:

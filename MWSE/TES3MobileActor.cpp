@@ -400,6 +400,11 @@ namespace TES3 {
 		vTable.mobileActor->changeWerewolf(this, isWerewolf);
 	}
 
+	const auto TES3_MobileActor_getActionWeightFight = reinterpret_cast<float(__thiscall*)(MobileActor*, MobileActor*)>(0x530A20);
+	float MobileActor::getActionWeightFight(MobileActor* target) {
+		return TES3_MobileActor_getActionWeightFight(this, target);
+	}
+
 	bool MobileActor::getMobileActorFlag(MobileActorFlag::Flag flag) const {
 		return (actorFlags & flag) != 0;
 	}
