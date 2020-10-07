@@ -811,7 +811,7 @@ namespace TES3 {
 				result["bodyPartManager"] = reinterpret_cast<BodyPartManagerAttachment*>(attachment)->data;
 				break;
 			case AttachmentType::Light:
-				result["light"] = reinterpret_cast<LockAttachment*>(attachment)->data;
+				result["light"] = reinterpret_cast<LightAttachment*>(attachment)->data;
 				break;
 			case AttachmentType::Lock:
 				result["lock"] = reinterpret_cast<LockAttachment*>(attachment)->data;
