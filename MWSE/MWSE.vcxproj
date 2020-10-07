@@ -601,6 +601,7 @@
     <ClCompile Include="TES3BodyPartManager.cpp" />
     <ClCompile Include="TES3Clothing.cpp" />
     <ClCompile Include="TES3Creature.cpp" />
+    <ClCompile Include="TES3CriticalSection.cpp" />
     <ClCompile Include="TES3Door.cpp" />
     <ClCompile Include="TES3GlobalVariable.cpp" />
     <ClCompile Include="TES3Land.cpp" />
