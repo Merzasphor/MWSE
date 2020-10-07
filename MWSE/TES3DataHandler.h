@@ -2,6 +2,7 @@
 
 #include "TES3Defines.h"
 
+#include "TES3CriticalSection.h"
 #include "TES3HashMap.h"
 #include "TES3MagicEffect.h"
 #include "TES3Skill.h"
@@ -120,10 +121,7 @@ namespace TES3 {
 		IteratedList<BaseObject*>* initiallyLoadedObjects; // 0xB37C
 		NI::Pointer<NI::SourceTexture> mapTexture; // 0xB380
 		Reference * playerSaveGame; // 0xB384
-		_RTL_CRITICAL_SECTION criticalSection; // 0xB388
-		int unknown_0xB3A0;
-		int unknown_0xB3A4;
-		int unknown_0xB3A8;
+		CriticalSection criticalSection; // 0xB388
 
 		//
 		// Other related this-call functions.
@@ -291,8 +289,8 @@ namespace TES3 {
 		char unknown_0xB531;
 		char unknown_0xB532;
 		char unknown_0xB533;
-		_RTL_CRITICAL_SECTION* criticalSectionAudioEvents; // 0xB534
-		_RTL_CRITICAL_SECTION* criticalSection; // 0xB538
+		CriticalSection* criticalSectionAudioEvents; // 0xB534
+		CriticalSection* criticalSection; // 0xB538
 		bool useCellTransitionFader;
 		char unknown_0xB53D;
 		char unknown_0xB53E;

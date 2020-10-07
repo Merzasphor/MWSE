@@ -2,6 +2,8 @@
 
 #include "TES3Stream.h"
 
+#include "TES3CriticalSection.h"
+
 namespace TES3 {
 	struct Archive : Stream {
 		char path[128]; // 0xB0
@@ -14,10 +16,7 @@ namespace TES3 {
 		int unknown_0x148;
 		int unknown_0x14C;
 		Archive* nextArchive; // 0x150
-		_RTL_CRITICAL_SECTION criticalSection; // 0x154
-		int unknown_0x16C;
-		int unknown_0x170;
-		int unknown_0x174;
+		CriticalSection criticalSection; // 0x154
 	};
 	static_assert(sizeof(Archive) >= 0x178, "TES3::Archive failed size validation");
 }

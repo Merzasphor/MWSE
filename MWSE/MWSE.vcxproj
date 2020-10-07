@@ -167,6 +167,7 @@
     <ClInclude Include="TES3Birthsign.h" />
     <ClInclude Include="TES3BirthsignLua.h" />
     <ClInclude Include="TES3BodyPartManager.h" />
+    <ClInclude Include="TES3CriticalSection.h" />
     <ClInclude Include="TES3Deque.h" />
     <ClInclude Include="TES3GoldData.h" />
     <ClInclude Include="TES3HashMap.h" />

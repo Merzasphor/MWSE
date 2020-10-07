@@ -2,6 +2,7 @@
 
 #include "TES3Defines.h"
 
+#include "TES3CriticalSection.h"
 #include "TES3IteratedList.h"
 
 #include "NINode.h"
@@ -25,11 +26,11 @@ namespace TES3 {
 
 	struct ProcessManager {
 		MobilePlayer * mobilePlayer; // 0x0
-		IteratedList<MobileActor*> unknown_0x4;
+		IteratedList<AIPlanner*> aiPlanners; // 0x4
 		bool unknown_0x18;
 		bool unknown_0x19; // Maybe force new actions?
-		_RTL_CRITICAL_SECTION criticalSection; // 0x1C
-		unsigned char unknown[0x7F8]; // 0x34
+		CriticalSection criticalSection; // 0x1C
+		unsigned char unknown[0x7EC]; // 0x40
 		float aiDistance; // 0x82C
 
 		//
@@ -50,10 +51,7 @@ namespace TES3 {
 	struct ProjectileController {
 		IteratedList<MobileProjectile*> activeProjectiles; // 0x0
 		NI::Pointer<NI::Node> worldProjectileRoot; // 0x14
-		_RTL_CRITICAL_SECTION criticalSection; // 0x18
-		int unknown_0x30;
-		int unknown_0x34;
-		int unknown_0x38;
+		CriticalSection criticalSection; // 0x18
 	};
 	static_assert(sizeof(ProjectileController) == 0x3C, "TES3::ProjectileController failed size validation");
 
@@ -67,28 +65,12 @@ namespace TES3 {
 		float unknown_0x18; // Initialized to -4005.5
 		float unknown_0x1C; // Initialized to 46 degrees.
 		float unknown_0x20; // Initialized to cos(46 degrees)
-		ProcessManager * processManager; // Mobile actor controller?
+		ProcessManager * processManager; // 0x24
 		ProjectileController* projectileController; // 0x28
 		bool unknown_0x2C;
 		IteratedList<void*> unknown_0x30;
-		int unknown_0x44;
-		int unknown_0x48;
-		int unknown_0x4C;
-		int unknown_0x50;
-		int unknown_0x54;
-		int unknown_0x58;
-		int unknown_0x5C;
-		int unknown_0x60;
-		int unknown_0x64;
-		int unknown_0x68;
-		int unknown_0x6C;
-		int unknown_0x70;
-		int unknown_0x74;
-		int unknown_0x78;
-		int unknown_0x7C;
-		int unknown_0x80;
-		int unknown_0x84;
-		int unknown_0x88;
+		CriticalSection unknown_0x44;
+		CriticalSection unknown_0x68;
 
 		//
 		// Related this-call functions.

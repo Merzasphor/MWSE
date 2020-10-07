@@ -45,6 +45,7 @@ namespace TES3 {
 	struct CrimeController;
 	struct CrimeEvent;
 	struct CrimeEventList;
+	struct CriticalSection;
 	struct DataHandler;
 	struct Dialogue;
 	struct DialogueConditional;
@@ -108,6 +109,7 @@ namespace TES3 {
 	struct PlayerAnimationData;
 	struct PlayerBounty;
 	struct Probe;
+	struct ProcessManager;
 	struct Quest;
 	struct Race;
 	struct Reference;
