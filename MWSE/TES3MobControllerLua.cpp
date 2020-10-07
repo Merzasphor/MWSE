@@ -22,6 +22,7 @@ namespace mwse {
 				usertypeDefinition["aiDistaNCE"] = &TES3::ProcessManager::aiDistance;
 
 				// Basic function binding.
+				usertypeDefinition["canRest"] = &TES3::ProcessManager::canRest;
 				usertypeDefinition["detectPresence"] = &TES3::ProcessManager::detectPresence;
 				usertypeDefinition["detectSneak"] = &TES3::ProcessManager::detectSneak;
 				usertypeDefinition["checkRadius"] = &TES3::ProcessManager::checkRadius;

@@ -3971,6 +3971,14 @@ namespace mwse {
 			}
 		}
 
+		sol::optional<bool> canRest() {
+			auto worldController = TES3::WorldController::get();
+			if (worldController) {
+				return worldController->mobController->processManager->canRest();
+			}
+			return {};
+		}
+
 		void bindTES3Util() {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
@@ -3990,6 +3998,7 @@ namespace mwse {
 			tes3["adjustSoundVolume"] = adjustSoundVolume;
 			tes3["advanceTime"] = advanceTime;
 			tes3["beginTransform"] = beginTransform;
+			tes3["canRest"] = canRest;
 			tes3["cast"] = cast;
 			tes3["checkMerchantTradesItem"] = checkMerchantTradesItem;
 			tes3["clearMarkLocation"] = clearMarkLocation;
