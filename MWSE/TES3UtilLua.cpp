@@ -3979,6 +3979,127 @@ namespace mwse {
 			return {};
 		}
 
+		bool showRestMenu(sol::optional<sol::table> params) {
+			auto worldController = TES3::WorldController::get();
+			auto dataHandler = TES3::DataHandler::get();
+			if (!worldController || !dataHandler) return false;
+
+			// Check to see if there are enemies nearby.
+			if (getOptionalParam<bool>(params, "checkForEnemies", true) && !worldController->mobController->processManager->canRest()) {
+				if (getOptionalParam<bool>(params, "showMessage", true)) {
+					TES3::UI::showDialogueMessage(dataHandler->nonDynamicData->GMSTs[TES3::GMST::sNotifyMessage2]->value.asString, 0, 1);
+				}
+				return false;
+			}
+
+			// Check to make sure the player isn't underwater.
+			auto macp = worldController->getMobilePlayer();
+			if (getOptionalParam<bool>(params, "checkForSolidGround", true) && macp->getBasePositionIsUnderwater()) {
+				if (getOptionalParam<bool>(params, "showMessage", true)) {
+					TES3::UI::showDialogueMessage(dataHandler->nonDynamicData->GMSTs[TES3::GMST::sNotifyMessage1]->value.asString, 0, 1);
+				}
+				return false;
+			}
+
+			// Allow using resting/waiting param. Defaults to resting.
+			bool resting = getOptionalParam(params, "resting", !getOptionalParam(params, "waiting", false));
+
+			// Is sleeping illegal here?
+			if (resting && getOptionalParam<bool>(params, "checkSleepingIllegal", true) && dataHandler->currentCell->getSleepingIsIllegal()) {
+				resting = false;
+			}
+
+			// Werewolves can't sleep.
+			if (resting && getOptionalParam<bool>(params, "checkIsWerewolf", true) && macp->getIsWerewolf()) {
+				resting = false;
+			}
+
+			// Finally show the message.
+			TES3::UI::showRestMenu(resting);
+			return true;
+		}
+
+		bool setPlayerControlState(sol::optional<sol::table> params) {
+			auto worldController = TES3::WorldController::get();
+			if (!worldController) {
+				return false;
+			}
+
+			auto macp = worldController->getMobilePlayer();
+			if (!macp) {
+				return false;
+			}
+
+			// Set individual control states.
+			auto enabled = getOptionalParam<bool>(params, "enabled", false);
+			macp->controlsDisabled = !enabled;
+			macp->attackDisabled = !getOptionalParam(params, "attack", enabled);
+			macp->jumpingDisabled = !getOptionalParam(params, "jumping", enabled);
+			macp->magicDisabled = !getOptionalParam(params, "magic", enabled);
+			macp->vanityDisabled = !getOptionalParam(params, "vanity", enabled);
+			macp->viewSwitchDisabled = !getOptionalParam(params, "viewSwitch", enabled);
+		}
+
+		bool wakeUp() {
+			auto worldController = TES3::WorldController::get();
+			if (!worldController) {
+				return false;
+			}
+
+			auto macp = worldController->getMobilePlayer();
+			if (!macp) {
+				return false;
+			}
+
+			// Make sure we're currently sleeping/waiting.
+			if (!macp->sleeping && !macp->waiting) {
+				return false;
+			}
+
+			macp->wakeUp();
+			return true;
+		}
+
+		bool setVanityMode(sol::optional<sol::table> params) {
+			auto worldController = TES3::WorldController::get();
+			if (!worldController) {
+				return false;
+			}
+
+			auto macp = worldController->getMobilePlayer();
+			if (!macp) {
+				return false;
+			}
+
+			// Do nothing if vanity is disabled.
+			if (macp->vanityDisabled && getOptionalParam(params, "checkVanityDisabled", true)) {
+				return false;
+			}
+
+			// Allow toggling.
+			bool enabled = getOptionalParam(params, "enabled", true);
+			if (getOptionalParam(params, "toggle", false)) {
+				enabled = macp->getVanityState() == 0;
+			}
+
+			macp->setVanityState(enabled ? 2 : 0);
+			return true;
+		}
+
+		bool getVanityMode() {
+			auto worldController = TES3::WorldController::get();
+			if (!worldController) {
+				return false;
+			}
+
+			auto macp = worldController->getMobilePlayer();
+			if (!macp) {
+				return false;
+			}
+
+			return macp->getVanityState() != 0;
+		}
+
 		void bindTES3Util() {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
@@ -3989,6 +4110,10 @@ namespace mwse {
 
 			sol::table tes3 = state["tes3"];
 
+			tes3["setVanityMode"] = setVanityMode;
+			tes3["wakeUp"] = wakeUp;
+			tes3["showRestMenu"] = showRestMenu;
+			tes3["setPlayerControlState"] = setPlayerControlState;
 			tes3["addArmorSlot"] = addArmorSlot;
 			tes3["addItem"] = addItem;
 			tes3["addItemData"] = addItemData;

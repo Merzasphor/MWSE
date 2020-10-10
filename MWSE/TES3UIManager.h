@@ -49,6 +49,9 @@ namespace TES3 {
 		void showBookMenu(const char* text);
 		void showScrollMenu(const char* text);
 
+		void showRestMenu(bool resting = true);
+		void showRestMenu_lua(sol::optional<bool> resting);
+
 		void updateFillBar(UI_ID id, float current, float max);
 		void updateHealthFillBar(float current, float max);
 		void updateMagickaFillBar(float current, float max);

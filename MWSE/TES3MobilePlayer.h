@@ -93,10 +93,14 @@ namespace TES3 {
 		void onDeath();
 		bool is3rdPerson();
 		int getGold();
+		void wakeUp();
 
 		int getBounty();
 		void setBounty(int value);
 		void modBounty(int delta);
+
+		int getVanityState() const;
+		void setVanityState(int state);
 
 		//
 		// Custom functions.

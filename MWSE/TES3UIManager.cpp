@@ -339,6 +339,15 @@ namespace TES3 {
 			TES3_ShowScrollMenu(text);
 		}
 
+		const auto TES3_ShowRestMenu = reinterpret_cast<void(__cdecl*)(bool)>(0x610170);
+		void showRestMenu(bool resting) {
+			TES3_ShowRestMenu(resting);
+		}
+
+		void showRestMenu_lua(sol::optional<bool> resting) {
+			showRestMenu(resting.value_or(true));
+		}
+
 		const auto TES3_UpdateFillBar = reinterpret_cast<void(__cdecl*)(UI_ID, float, float)>(0x6262D0);
 		void updateFillBar(UI_ID id, float current, float max) {
 			TES3_UpdateFillBar(id, current, max);

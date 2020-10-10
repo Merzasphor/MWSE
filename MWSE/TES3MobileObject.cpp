@@ -148,6 +148,11 @@ namespace TES3 {
 		return TES3_MobileObject_getInventory(this);
 	}
 
+	const auto TES3_MobileObject_getBasePositionIsUnderwater = reinterpret_cast<bool(__thiscall*)(const MobileObject*)>(0x529540);
+	bool MobileObject::getBasePositionIsUnderwater() const {
+		return TES3_MobileObject_getBasePositionIsUnderwater(this);
+	}
+
 	Vector3* MobileObject::getImpulseVelocity() {
 		return &impulseVelocity;
 	}

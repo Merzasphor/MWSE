@@ -240,6 +240,7 @@ namespace TES3 {
 
 		void enterLeaveSimulationByDistance();
 		IteratedList<ItemStack*>* getInventory();
+		bool getBasePositionIsUnderwater() const;
 
 		//
 		// Lua interface functions.

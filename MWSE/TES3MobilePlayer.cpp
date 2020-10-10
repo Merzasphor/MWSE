@@ -64,6 +64,11 @@ namespace TES3 {
 		return reinterpret_cast<int(__thiscall *)(MobilePlayer*)>(TES3_MobilePlayer_getGoldHeld)(this);
 	}
 
+	const auto TES3_MobilePlayer_wakeUp = reinterpret_cast<void(__thiscall*)(MobilePlayer*)>(0x56BBB0);
+	void MobilePlayer::wakeUp() {
+		TES3_MobilePlayer_wakeUp(this);
+	}
+
 	int MobilePlayer::getBounty() {
 		return reinterpret_cast<int(__thiscall *)(MobilePlayer*)>(TES3_MobilePlayer_getBounty)(this);
 	}
@@ -75,6 +80,17 @@ namespace TES3 {
 	void MobilePlayer::modBounty(int delta) {
 		reinterpret_cast<void(__thiscall *)(MobilePlayer*, int)>(TES3_MobilePlayer_modBounty)(this, delta);
 	}
+
+	const auto TES3_MobilePlayer_getVanityState = reinterpret_cast<int(__thiscall*)(const MobilePlayer*)>(0x567990);
+	int MobilePlayer::getVanityState() const {
+		return TES3_MobilePlayer_getVanityState(this);
+	}
+
+	const auto TES3_MobilePlayer_setVanityState = reinterpret_cast<void(__thiscall*)(MobilePlayer*, int)>(0x567960);
+	void MobilePlayer::setVanityState(int state) {
+		TES3_MobilePlayer_setVanityState(this, state);
+	}
+
 
 	void MobilePlayer::setFlagSneak(bool value) {
 		if (value) {
