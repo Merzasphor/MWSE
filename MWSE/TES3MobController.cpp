@@ -6,6 +6,8 @@
 #include "LuaMobileActorDeactivatedEvent.h"
 #include "LuaDetectSneakEvent.h"
 
+#include "TES3Reference.h"
+
 namespace TES3 {
 	const auto TES3_ProcessManager_detectPresence = reinterpret_cast<bool(__thiscall*)(ProcessManager*, MobileActor*, bool)>(0x570A60);
 	bool ProcessManager::detectPresence(MobileActor * actor, bool unknown) {
@@ -57,8 +59,9 @@ namespace TES3 {
 	void MobController::addMob(Reference * reference) {
 		TES3_MobController_addMob(this, reference);
 
-		if (mwse::lua::event::MobileActorActivatedEvent::getEventEnabled()) {
-			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileActorActivatedEvent(reference));
+		auto mobile = reference->getAttachedMobileObject();
+		if (mwse::lua::event::MobileActorActivatedEvent::getEventEnabled() && mobile) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileActorActivatedEvent(mobile));
 		}
 	}
 
