@@ -49,7 +49,7 @@ namespace TES3 {
 		void showBookMenu(const char* text);
 		void showScrollMenu(const char* text);
 
-		void showRestMenu(bool resting = true);
+		void showRestMenu(bool resting = true, bool scripted = true);
 		void showRestMenu_lua(sol::optional<bool> resting);
 
 		void updateFillBar(UI_ID id, float current, float max);

@@ -17,6 +17,8 @@
 #include "TES3Reference.h"
 #include "TES3WorldController.h"
 
+#include "LuaShowRestWaitMenuEvent.h"
+
 namespace TES3 {
 	namespace UI {
 		static bool bSuppressHelpMenu = false;
@@ -340,7 +342,21 @@ namespace TES3 {
 		}
 
 		const auto TES3_ShowRestMenu = reinterpret_cast<void(__cdecl*)(bool)>(0x610170);
-		void showRestMenu(bool resting) {
+		void showRestMenu(bool resting, bool scripted) {
+			// Execute event. If the event blocked the call, bail.
+			if (mwse::lua::event::ShowRestWaitMenuEvent::getEventEnabled()) {
+				mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::ShowRestWaitMenuEvent(resting, scripted));
+				if (eventData.valid()) {
+					if (eventData.get_or("block", false)) {
+						return;
+					}
+
+					resting = eventData["allowRest"];
+				}
+			}
+
 			TES3_ShowRestMenu(resting);
 		}
 
