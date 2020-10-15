@@ -3336,15 +3336,33 @@ namespace mwse {
 				throw std::invalid_argument("Invalid 'group' parameter provided: must be between 0 and 149.");
 			}
 
+			int lowerGroup = getOptionalParam<int>(params, "lower", group);
+			if (lowerGroup < 0 || lowerGroup > 149) {
+				throw std::invalid_argument("Invalid 'lowerGroup' parameter provided: must be between 0 and 149.");
+			}
+
+			int upperGroup = getOptionalParam<int>(params, "upper", group);
+			if (upperGroup < 0 || upperGroup > 149) {
+				throw std::invalid_argument("Invalid 'upperGroup' parameter provided: must be between 0 and 149.");
+			}
+
+			int shieldGroup = getOptionalParam<int>(params, "shield", group);
+			if (shieldGroup < 0 || shieldGroup > 149) {
+				throw std::invalid_argument("Invalid 'shieldGroup' parameter provided: must be between 0 and 149.");
+			}
+
 			int startFlag = getOptionalParam<int>(params, "startFlag", 0);
 			int loopCount = getOptionalParam<int>(params, "loopCount", -1);
 
 			auto mact = reference->getAttachedMobileActor();
 			if (mact) {
-				mact->setMobileActorFlag(TES3::MobileActorFlag::IdleAnim, group != 0);
+				bool idleAnim = getOptionalParam<bool>(params, "idleAnim", lowerGroup != 0 || upperGroup != 0 || shieldGroup != 0);
+				mact->setMobileActorFlag(TES3::MobileActorFlag::IdleAnim, idleAnim);
 			}
 
-			animData->playAnimationGroup(group, startFlag, loopCount);
+			animData->playAnimationGroupForIndex(lowerGroup, 0, startFlag, loopCount);
+			animData->playAnimationGroupForIndex(upperGroup, 1, startFlag, loopCount);
+			animData->playAnimationGroupForIndex(shieldGroup, 2, startFlag, loopCount);
 		}
 
 		void skipAnimationFrame(sol::table params) {
