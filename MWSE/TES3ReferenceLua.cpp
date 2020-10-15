@@ -60,6 +60,7 @@ namespace mwse {
 			usertypeDefinition["attachments"] = sol::readonly_property(&TES3::Reference::getAttachments_lua);
 			usertypeDefinition["context"] = sol::readonly_property(&TES3::Reference::getContext_lua);
 			usertypeDefinition["data"] = sol::readonly_property(&TES3::Reference::getLuaTable);
+			usertypeDefinition["mesh"] = sol::property(&TES3::Reference::getModelPath, &TES3::Reference::setModelPath);
 			usertypeDefinition["isEmpty"] = sol::property(&TES3::Reference::getEmptyInventoryFlag, &TES3::Reference::setEmptyInventoryFlag);
 			usertypeDefinition["isLeveledSpawn"] = sol::readonly_property(&TES3::Reference::isLeveledSpawn);
 			usertypeDefinition["isRespawn"] = sol::readonly_property(&TES3::Reference::isRespawn);

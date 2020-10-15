@@ -83,6 +83,8 @@ namespace TES3 {
 
 		void checkPlayerDistance();
 
+		void addPlayerAsCollider();
+
 	};
 	static_assert(sizeof(MobController) == 0x8C, "TES3::MobController failed size validation");
 }

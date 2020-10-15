@@ -77,4 +77,9 @@ namespace TES3 {
 	void MobController::checkPlayerDistance() {
 		processManager->checkPlayerDistance();
 	}
+
+	const auto TES3_MobController_addPlayerAsCollider = reinterpret_cast<void(__thiscall*)(MobController*)>(0x563640);
+	void MobController::addPlayerAsCollider() {
+		TES3_MobController_addPlayerAsCollider(this);
+	}
 }

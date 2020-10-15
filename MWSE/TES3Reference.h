@@ -52,6 +52,7 @@ namespace TES3 {
 		void deleteDynamicLightAttachment();
 
 		bool updateBipedParts();
+		void setModelPath(const char* path);
 
 		//
 		// Other utility functions.

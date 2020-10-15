@@ -3320,6 +3320,12 @@ namespace mwse {
 				throw std::invalid_argument("Invalid 'reference' parameter provided.");
 			}
 
+			// Allow changing the animation model.
+			const char* model = getOptionalParam<const char*>(params, "mesh", nullptr);
+			if (model != nullptr) {
+				reference->setModelPath(model);
+			}
+
 			auto animData = reference->getAttachedAnimationData();
 			if (animData == nullptr) {
 				return;

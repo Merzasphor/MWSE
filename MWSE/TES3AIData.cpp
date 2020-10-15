@@ -11,6 +11,11 @@ namespace TES3 {
 		return TES3_AIPlanner_allowRestingNear(this);
 	}
 
+	const auto TES3_AIPlanner_assignMobileActor = reinterpret_cast<void(__thiscall*)(AIPlanner*, MobileActor*)>(0x564E40);
+	void AIPlanner::assignMobileActor(MobileActor* mobile) {
+		TES3_AIPlanner_assignMobileActor(this, mobile);
+	}
+
 	std::reference_wrapper<AIPackage* [32]> AIPlanner::getPackages() {
 		return std::ref(packages);
 	}

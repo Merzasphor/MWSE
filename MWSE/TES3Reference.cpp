@@ -15,6 +15,7 @@
 #include "NIPointLight.h"
 
 #include "TES3Actor.h"
+#include "TES3AIData.h"
 #include "TES3AudioController.h"
 #include "TES3BodyPartManager.h"
 #include "TES3Cell.h"
@@ -220,6 +221,63 @@ namespace TES3 {
 		}
 
 		return result;
+	}
+
+
+	const auto TES3_MobilePlayer_sub566500 = reinterpret_cast<void(__thiscall*)(MobilePlayer*)>(0x566500);
+	void Reference::setModelPath(const char* path) {
+		// Cache the old model path, then set
+		auto baseObject = static_cast<TES3::Object*>(getBaseObject());
+		baseObject->setModelPath(path);
+
+		// Do nothing if the reference is not rendered.
+		if (!sceneNode) {
+			return;
+		}
+
+		auto parentNode = sceneNode->parentNode;
+
+		resetVisualNode();
+		auto node = getSceneGraphNode();
+
+		parentNode->attachChild(node, true);
+		parentNode->update();
+
+		node->updateEffects();
+		node->updateProperties();
+
+		auto worldController = TES3::WorldController::get();
+		auto macp = worldController->getMobilePlayer();
+		auto mobile = getAttachedMobileActor();
+		if (mobile != nullptr) {
+			if (mobile->actorType == TES3::MobileActorType::Player) {
+				auto firstPersonRef = macp->firstPersonReference;
+				if (firstPersonRef->sceneNode) {
+					auto parent = firstPersonRef->sceneNode->parentNode;
+					firstPersonRef->resetVisualNode();
+					auto firstPersonSceneNode = firstPersonRef->getSceneGraphNode();
+					parent->attachChild(firstPersonSceneNode, true);
+					firstPersonSceneNode->updateEffects();
+					firstPersonSceneNode->updateProperties();
+					firstPersonSceneNode->update();
+				}
+
+				if (macp->is3rdPerson()) {
+					firstPersonRef->getSceneGraphNode()->setAppCulled(true);
+				}
+				else {
+					macp->reference->getSceneGraphNode()->setAppCulled(true);
+				}
+
+				macp->aiPlanner->assignMobileActor(macp);
+				worldController->mobController->addPlayerAsCollider();
+				TES3_MobilePlayer_sub566500(macp);
+			}
+			else {
+				mobile->vTable.mobileObject->enterLeaveSimulation(mobile, true);
+				TES3::WorldController::get()->mobController->addMob(this);
+			}
+		}
 	}
 
 	Cell* Reference::getCell_lua() const {
