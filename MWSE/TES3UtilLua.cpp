@@ -2072,6 +2072,13 @@ namespace mwse {
 				}
 			}
 
+			// Are we doing a simple reposition?
+			if (cell == reference->getCell() && !getOptionalParam<bool>(params, "forceCellChange", false)) {
+				reference->position = position.value();
+				reference->orientation = orientation.value();
+				return true;
+			}
+
 			// Are we dealing with the player? If so, use the special functions.
 			if (reference == playerRef) {
 				sol::optional<bool> suppressFaderOpt = params["suppressFader"];

@@ -280,7 +280,7 @@ namespace TES3 {
 		}
 	}
 
-	Cell* Reference::getCell_lua() const {
+	Cell* Reference::getCell() const {
 		// Handle case for the player.
 		if (TES3::WorldController::get()->getMobilePlayer()->reference == this) {
 			return TES3::DataHandler::get()->currentCell;

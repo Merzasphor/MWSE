@@ -34,7 +34,7 @@ namespace mwse {
 
 			// Access to other objects that need to be packaged.
 			usertypeDefinition["baseObject"] = sol::readonly_property(&TES3::Reference::getBaseObject);
-			usertypeDefinition["cell"] = sol::readonly_property(&TES3::Reference::getCell_lua);
+			usertypeDefinition["cell"] = sol::readonly_property(&TES3::Reference::getCell);
 			usertypeDefinition["object"] = sol::readonly_property(&TES3::Reference::baseObject);
 			usertypeDefinition["sceneNode"] = sol::readonly_property(&TES3::Reference::sceneNode);
 			usertypeDefinition["leveledBaseReference"] = sol::readonly_property(&TES3::Reference::getLeveledBaseReference);

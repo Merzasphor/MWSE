@@ -121,7 +121,7 @@ namespace TES3 {
 		// Lua interface functions.
 		//
 
-		Cell* getCell_lua() const;
+		Cell* getCell() const;
 
 		void setPositionFromLua(sol::stack_object value);
 		void setOrientationFromLua(sol::stack_object value);
