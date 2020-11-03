@@ -259,6 +259,53 @@ function string.multifind(s, patterns, index, plain)
 end
 getmetatable("").multifind = string.multifind
 
+-------------------------------------------------
+-- Extend base API: debug
+-------------------------------------------------
+
+local function getNthLine(fileName, n)
+	local f = io.open(fileName, "r")
+	local i = 1
+	for line in f:lines() do
+		if i == n then
+			f:close()
+			return line
+		end
+		i = i + 1
+	end
+	f:close()
+end
+
+local logTextCache = {}
+
+function debug.log(value)
+	local info = debug.getinfo(2, "Sl")
+
+	if not info.source:find("^@") then
+		error("'debug.log' called from invalid source")
+		return
+	end
+
+	-- strip the '@' tag
+	local fileName = info.source:sub(2)
+
+	-- include line info
+	local location = fileName:lower():gsub("data files\\mwse\\", "") .. ":" .. info.currentline
+
+	local text = logTextCache[location]
+	if text == nil then
+		text = getNthLine(fileName, info.currentline)
+		if text ~= nil then
+			text = text:match("debug%.log%((.*)%)")
+			logTextCache[location] = text
+		end
+	end
+
+	print(string.format("[%s] %s = %s", location, text, value))
+
+    return value
+end
+
 
 -------------------------------------------------
 -- Extend 3rd API: lfs
