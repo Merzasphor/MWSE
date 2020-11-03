@@ -2074,8 +2074,8 @@ namespace mwse {
 
 			// Are we doing a simple reposition?
 			if (cell == reference->getCell() && !getOptionalParam<bool>(params, "forceCellChange", false)) {
-				reference->position = position.value();
-				reference->orientation = orientation.value();
+				reference->setPosition(&position.value());
+				reference->setOrientation(&orientation.value());
 				return true;
 			}
 
