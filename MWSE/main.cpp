@@ -169,7 +169,28 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 		mge_virtual_machine = new TES3MACHINE();
 
 		// Parse and load the features installed by the Morrowind Code Patch.
-		if (!mwse::mcp::loadFeatureList()) {
+		if (mwse::mcp::loadFeatureList()) {
+			auto& log = mwse::log::getLog();
+			log << "Morrowind Code Patch installed features: ";
+
+			// Get a sorted list of enabled features.
+			std::vector<long> enabledFeatures;
+			for (const auto& itt : mwse::mcp::featureStore) {
+				if (itt.second) {
+					enabledFeatures.push_back(itt.first);
+				}
+			}
+			std::sort(enabledFeatures.begin(), enabledFeatures.end());
+
+			// Print them to the log.
+			log << std::dec;
+			for (auto i = 0U; i < enabledFeatures.size(); i++) {
+				if (i != 0) log << ", ";
+				log << enabledFeatures[i];
+			}
+			log << std::endl;
+		}
+		else {
 			mwse::log::getLog() << "Failed to detect Morrowind Code Patch installed features. MCP may not be installed, or the mcpatch\\installed file may have been deleted. Mods will be unable to detect MCP feature support." << std::endl;
 		}
 
