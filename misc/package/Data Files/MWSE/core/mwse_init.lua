@@ -303,7 +303,7 @@ function debug.log(value)
 
 	print(string.format("[%s] %s = %s", location, text, value))
 
-    return value
+	return value
 end
 
 
