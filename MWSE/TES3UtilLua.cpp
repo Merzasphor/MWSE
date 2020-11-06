@@ -3028,7 +3028,7 @@ namespace mwse {
 				config->destination = TES3::Vector3(FLT_MAX, FLT_MAX, 0.0f);
 			}
 			config->duration = getOptionalParam<double>(params, "duration", 0.0);
-			config->actor = static_cast<TES3::Actor*>(target->getBaseObject());
+			config->actor = static_cast<TES3::Actor*>(target->baseObject);
 			config->cell = getOptionalParamCell(params, "cell");
 			config->reset = getOptionalParam<bool>(params, "reset", true);
 
