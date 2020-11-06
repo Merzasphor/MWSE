@@ -381,6 +381,13 @@ namespace TES3 {
 		void removeStolenFlag(BaseObject* stolenFrom);
 		bool getStolenFlag(BaseObject* stolenFrom);
 
+		MobileObject* getMobile() const;
+
+		//
+		// Custom functions.
+		//
+		Reference* getReference() const;
+
 	};
 	static_assert(sizeof(PhysicalObject) == 0x30, "TES3::PhysicalObject failed size validation");
 }

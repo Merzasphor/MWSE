@@ -31,6 +31,7 @@
 #include "TES3MagicEffect.h"
 #include "TES3MagicSourceInstance.h"
 #include "TES3Misc.h"
+#include "TES3MobilePlayer.h"
 #include "TES3NPC.h"
 #include "TES3Probe.h"
 #include "TES3Quest.h"
@@ -45,6 +46,7 @@
 #include "TES3Spell.h"
 #include "TES3Static.h"
 #include "TES3Weapon.h"
+#include "TES3WorldController.h"
 
 #include "BitUtil.h"
 #include "MemoryUtil.h"
@@ -607,6 +609,19 @@ namespace TES3 {
 	const auto TES3_PhysicalObject_getStolenFlag = reinterpret_cast<bool(__thiscall*)(PhysicalObject*, BaseObject*)>(0x4EFEB0);
 	bool PhysicalObject::getStolenFlag(BaseObject* stolenFrom) {
 		return TES3_PhysicalObject_getStolenFlag(this, stolenFrom);
+	}
+
+	const auto TES3_PhysicalObject_getMobile = reinterpret_cast<MobileObject*(__thiscall*)(const PhysicalObject*)>(0x494E70);
+	MobileObject* PhysicalObject::getMobile() const {
+		return TES3_PhysicalObject_getMobile(this);
+	}
+
+	Reference* PhysicalObject::getReference() const {
+		auto mobile = getMobile();
+		if (mobile == nullptr) {
+			return nullptr;
+		}
+		return mobile->reference;
 	}
 }
 

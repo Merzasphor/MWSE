@@ -5,6 +5,7 @@
 #include "NINode.h"
 #include "TES3GameFile.h"
 #include "TES3ReferenceList.h"
+#include "TES3MobileObject.h"
 
 namespace mwse {
 	namespace lua {
@@ -54,6 +55,8 @@ namespace mwse {
 			usertypeDefinition["boundingBox"] = sol::readonly_property(&TES3::PhysicalObject::boundingBox);
 
 			// Functions exposed as properties.
+			usertypeDefinition["mobile"] = sol::readonly_property(&TES3::PhysicalObject::getMobile);
+			usertypeDefinition["reference"] = sol::readonly_property(&TES3::PhysicalObject::getReference);
 			usertypeDefinition["stolenList"] = sol::readonly_property(&TES3::PhysicalObject::getStolenList);
 		}
 	}
