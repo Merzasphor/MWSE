@@ -3400,6 +3400,20 @@ namespace mwse {
 			animData->unknown_0x54 |= 0xFFFF;
 		}
 
+		sol::optional<std::tuple<float, float, float>> getAnimationTiming(sol::table params) {
+			TES3::Reference* reference = getOptionalParamExecutionReference(params);
+			if (reference == nullptr) {
+				throw std::invalid_argument("Invalid 'reference' parameter provided.");
+			}
+
+			auto animData = reference->getAttachedAnimationData();
+			if (animData == nullptr) {
+				return {};
+			}
+
+			return std::make_tuple(animData->timing[0], animData->timing[1], animData->timing[2]);
+		}
+
 		void setAnimationTiming(sol::table params) {
 			TES3::Reference* reference = getOptionalParamExecutionReference(params);
 			if (reference == nullptr) {
@@ -4189,6 +4203,7 @@ namespace mwse {
 			tes3["force3rdPerson"] = force3rdPerson;
 			tes3["getActiveCells"] = getActiveCells;
 			tes3["getAnimationGroups"] = getCurrentAnimationGroups;
+			tes3["getAnimationTiming"] = getAnimationTiming;
 			tes3["getArchiveList"] = getArchiveList;
 			tes3["getCameraPosition"] = getCameraPosition;
 			tes3["getCameraVector"] = getCameraVector;
