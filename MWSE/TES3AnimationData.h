@@ -8,7 +8,7 @@
 namespace TES3 {
 	struct AnimationData {
 		NI::Node * actorNode; // 0x0
-		NI::AVObject * unknown_0x4; // 0x4
+		NI::Node * MRT; // 0x4
 		TES3::Vector3 unknown_0x8;
 		NI::Node * childNodeBip01Spine1; // 0x14
 		NI::Node * childNodeBip01Spine2; // 0x18
