@@ -3324,7 +3324,7 @@ namespace mwse {
 		sol::optional<std::tuple<unsigned char, unsigned char, unsigned char>> getCurrentAnimationGroups(sol::table params) {
 			TES3::Reference* reference = getOptionalParamExecutionReference(params);
 			if (reference == nullptr) {
-				return {};
+				throw std::invalid_argument("Invalid 'reference' parameter provided.");
 			}
 
 			auto animData = reference->getAttachedAnimationData();
@@ -4188,13 +4188,13 @@ namespace mwse {
 			tes3["force1stPerson"] = force1stPerson;
 			tes3["force3rdPerson"] = force3rdPerson;
 			tes3["getActiveCells"] = getActiveCells;
+			tes3["getAnimationGroups"] = getCurrentAnimationGroups;
 			tes3["getArchiveList"] = getArchiveList;
 			tes3["getCameraPosition"] = getCameraPosition;
 			tes3["getCameraVector"] = getCameraVector;
 			tes3["getCell"] = getCell;
 			tes3["getCumulativeDaysForMonth"] = getCumulativeDaysForMonth;
 			tes3["getCurrentAIPackageId"] = getCurrentAIPackageId;
-			tes3["getCurrentAnimationGroups"] = getCurrentAnimationGroups;
 			tes3["getCurrentWeather"] = getCurrentWeather;
 			tes3["getCursorPosition"] = getCursorPosition;
 			tes3["getDataHandler"] = TES3::DataHandler::get;
