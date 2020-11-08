@@ -4155,10 +4155,6 @@ namespace mwse {
 
 			sol::table tes3 = state["tes3"];
 
-			tes3["setVanityMode"] = setVanityMode;
-			tes3["wakeUp"] = wakeUp;
-			tes3["showRestMenu"] = showRestMenu;
-			tes3["setPlayerControlState"] = setPlayerControlState;
 			tes3["addArmorSlot"] = addArmorSlot;
 			tes3["addItem"] = addItem;
 			tes3["addItemData"] = addItemData;
@@ -4198,6 +4194,7 @@ namespace mwse {
 			tes3["getCell"] = getCell;
 			tes3["getCumulativeDaysForMonth"] = getCumulativeDaysForMonth;
 			tes3["getCurrentAIPackageId"] = getCurrentAIPackageId;
+			tes3["getCurrentAnimationGroups"] = getCurrentAnimationGroups;
 			tes3["getCurrentWeather"] = getCurrentWeather;
 			tes3["getCursorPosition"] = getCursorPosition;
 			tes3["getDataHandler"] = TES3::DataHandler::get;
@@ -4262,7 +4259,6 @@ namespace mwse {
 			tes3["newGame"] = tes3::startNewGame;
 			tes3["persuade"] = persuade;
 			tes3["playAnimation"] = playAnimation;
-			tes3["getCurrentAnimationGroups"] = getCurrentAnimationGroups;
 			tes3["playItemPickupSound"] = playItemPickupSound;
 			tes3["playSound"] = playSound;
 			tes3["playVoiceover"] = playVoiceover;
@@ -4291,11 +4287,14 @@ namespace mwse {
 			tes3["setLockLevel"] = setLockLevel;
 			tes3["setMarkLocation"] = setMarkLocation;
 			tes3["setOwner"] = setOwner;
+			tes3["setPlayerControlState"] = setPlayerControlState;
 			tes3["setSourceless"] = setSourceless;
 			tes3["setStatistic"] = setStatistic;
 			tes3["setTrap"] = setTrap;
+			tes3["setVanityMode"] = setVanityMode;
 			tes3["setWerewolfKillCount"] = setWerewolfKillCount;
 			tes3["showRepairServiceMenu"] = showRepairServiceMenu;
+			tes3["showRestMenu"] = showRestMenu;
 			tes3["skipAnimationFrame"] = skipAnimationFrame;
 			tes3["streamMusic"] = streamMusic;
 			tes3["tapKey"] = tapKey;
@@ -4306,6 +4305,7 @@ namespace mwse {
 			tes3["unhammerKey"] = unhammerKey;
 			tes3["unlock"] = unlock;
 			tes3["updateJournal"] = updateJournal;
+			tes3["wakeUp"] = wakeUp;
 		}
 	}
 }
