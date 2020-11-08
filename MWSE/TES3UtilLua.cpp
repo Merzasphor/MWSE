@@ -3321,6 +3321,20 @@ namespace mwse {
 			}
 		}
 
+		sol::optional<std::tuple<unsigned char, unsigned char, unsigned char>> getCurrentAnimationGroups(sol::table params) {
+			TES3::Reference* reference = getOptionalParamExecutionReference(params);
+			if (reference == nullptr) {
+				return {};
+			}
+
+			auto animData = reference->getAttachedAnimationData();
+			if (animData == nullptr) {
+				return {};
+			}
+
+			return std::make_tuple(animData->currentAnimGroup[0], animData->currentAnimGroup[1], animData->currentAnimGroup[2]);
+		}
+
 		void playAnimation(sol::table params) {
 			TES3::Reference* reference = getOptionalParamExecutionReference(params);
 			if (reference == nullptr) {
@@ -4248,6 +4262,7 @@ namespace mwse {
 			tes3["newGame"] = tes3::startNewGame;
 			tes3["persuade"] = persuade;
 			tes3["playAnimation"] = playAnimation;
+			tes3["getCurrentAnimationGroups"] = getCurrentAnimationGroups;
 			tes3["playItemPickupSound"] = playItemPickupSound;
 			tes3["playSound"] = playSound;
 			tes3["playVoiceover"] = playVoiceover;
