@@ -3412,7 +3412,11 @@ namespace mwse {
 			}
 
 			sol::state_view state = thisState;
-			return state.create_table_with(animData->timing[0], animData->timing[1], animData->timing[2]);
+			sol::table result = state.create_table();
+			for (size_t i = 0; i < 3; i++) {
+				result[i + 1] = animData->timing[i];
+			}
+			return result;
 		}
 
 		void setAnimationTiming(sol::table params) {
