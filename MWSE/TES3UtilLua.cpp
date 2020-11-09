@@ -3400,7 +3400,7 @@ namespace mwse {
 			animData->unknown_0x54 |= 0xFFFF;
 		}
 
-		sol::optional<std::tuple<float, float, float>> getAnimationTiming(sol::table params) {
+		sol::optional<sol::table> getAnimationTiming(sol::table params, sol::this_state thisState) {
 			TES3::Reference* reference = getOptionalParamExecutionReference(params);
 			if (reference == nullptr) {
 				throw std::invalid_argument("Invalid 'reference' parameter provided.");
@@ -3411,7 +3411,8 @@ namespace mwse {
 				return {};
 			}
 
-			return std::make_tuple(animData->timing[0], animData->timing[1], animData->timing[2]);
+			sol::state_view state = thisState;
+			return state.create_table_with(animData->timing[0], animData->timing[1], animData->timing[2]);
 		}
 
 		void setAnimationTiming(sol::table params) {
