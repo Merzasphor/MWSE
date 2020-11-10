@@ -30,7 +30,7 @@ namespace mwse {
 				usertypeDefinition["boltVisualEffect"] = &TES3::MagicEffect::boltEffect;
 				usertypeDefinition["castSoundEffect"] = sol::property(&TES3::MagicEffect::getCastSoundEffect, &TES3::MagicEffect::setCastSoundEffect);
 				usertypeDefinition["castVisualEffect"] = &TES3::MagicEffect::castEffect;
-				usertypeDefinition["description"] = sol::property(&TES3::MagicEffect::description, &TES3::MagicEffect::setDescription);
+				usertypeDefinition["description"] = sol::property(&TES3::MagicEffect::getDescription, &TES3::MagicEffect::setDescription);
 				usertypeDefinition["flags"] = &TES3::MagicEffect::flags;
 				usertypeDefinition["hitSoundEffect"] = sol::property(&TES3::MagicEffect::getHitSoundEffect, &TES3::MagicEffect::setHitSoundEffect);
 				usertypeDefinition["hitVisualEffect"] = &TES3::MagicEffect::hitEffect;

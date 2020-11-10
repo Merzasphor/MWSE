@@ -263,6 +263,7 @@ namespace TES3 {
 		const char* getName() const;
 		int getNameGMST() const;
 		void setDescription( const char *value );
+		const char* getDescription() const noexcept;
 
 		const char* getIcon() const;
 		void setIcon(const char* path);

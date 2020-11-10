@@ -48,6 +48,11 @@ namespace TES3 {
 		mwse::tes3::setDataString( &description, value );
 	}
 
+	const char* MagicEffect::getDescription() const noexcept
+	{
+		return description;
+	}
+
 	const char* MagicEffect::getIcon() const {
 		return icon;
 	}
