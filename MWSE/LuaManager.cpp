@@ -1139,19 +1139,48 @@ namespace mwse {
 		}
 
 		//
-		// Projectile expire event.
+		// Potion brewed event.
 		//
 
-		DWORD __fastcall OnBrewPotion(TES3::UI::InventoryTile* inventoryTile, DWORD _UNUSED_, TES3::Alchemy* object, TES3::ItemData* itemData, DWORD unk1, DWORD unk2, DWORD unk3, DWORD unk4) {
-			// Call original function.
-			DWORD result = reinterpret_cast<DWORD(__thiscall*)(TES3::UI::InventoryTile*, TES3::Object*, TES3::ItemData*, DWORD, DWORD, DWORD, DWORD)>(0x6313E0)(inventoryTile, object, itemData, unk1, unk2, unk3, unk4);
+		static TES3::Alchemy* lastBrewedPotion = nullptr;
+		DWORD __fastcall CacheLastBrewedPotion(TES3::UI::InventoryTile* inventoryTile, DWORD _UNUSED_, TES3::Alchemy* object, TES3::ItemData* itemData, DWORD unk1, DWORD unk2, DWORD unk3, DWORD unk4) {
+			lastBrewedPotion = object;
 
-			// Pass a lua event.
-			if (event::PotionBrewedEvent::getEventEnabled()) {
-				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PotionBrewedEvent(object));
+			// Call original function.
+			return reinterpret_cast<DWORD(__thiscall*)(TES3::UI::InventoryTile*, TES3::Object*, TES3::ItemData*, DWORD, DWORD, DWORD, DWORD)>(0x6313E0)(inventoryTile, object, itemData, unk1, unk2, unk3, unk4);
+		}
+
+		TES3::Ingredient* getBrewingIngredient(DWORD parentIdAddress) {
+			auto menuAlchemy = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D225C));
+			if (!menuAlchemy) {
+				return nullptr;
 			}
 
-			return result;
+			auto child = menuAlchemy->findChild(*reinterpret_cast<TES3::UI::UI_ID*>(parentIdAddress));
+			if (!child) {
+				return nullptr;
+			}
+
+			return reinterpret_cast<TES3::Ingredient*>(child->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(0x7D2344)).ptrValue);
+		}
+
+		const auto TES3_AttemptPotionBrew = reinterpret_cast<bool(__cdecl*)()>(0x59C030);
+		bool __cdecl OnBrewPotionAttempt() {
+			// Store the last used ingredients, since they get nuked.
+			auto ingredient1 = getBrewingIngredient(0x7D22F0);
+			auto ingredient2 = getBrewingIngredient(0x7D22F2);
+			auto ingredient3 = getBrewingIngredient(0x7D22C0);
+			auto ingredient4 = getBrewingIngredient(0x7D2292);
+
+			// Call original function.
+			bool success = TES3_AttemptPotionBrew();
+
+			// Pass a lua event.
+			if (success && event::PotionBrewedEvent::getEventEnabled()) {
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PotionBrewedEvent(lastBrewedPotion, ingredient1, ingredient2, ingredient3, ingredient4));
+			}
+
+			return success;
 		}
 
 		// Spell cast resolution hook
@@ -3024,7 +3053,8 @@ namespace mwse {
 			genCallEnforced(0x60ECB2, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
 
 			// Event: Brew potion.
-			genCallEnforced(0x59D2A9, 0x6313E0, reinterpret_cast<DWORD>(OnBrewPotion));
+			genCallEnforced(0x59C010, 0x59C030, reinterpret_cast<DWORD>(OnBrewPotionAttempt));
+			genCallEnforced(0x59D2A9, 0x6313E0, reinterpret_cast<DWORD>(CacheLastBrewedPotion));
 
 			// Event: Player is about to level.
 			genCallEnforced(0x5DA091, 0x5D90A0, reinterpret_cast<DWORD>(OnPreLevelUp));
