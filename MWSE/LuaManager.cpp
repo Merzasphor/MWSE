@@ -1166,6 +1166,9 @@ namespace mwse {
 
 		const auto TES3_AttemptPotionBrew = reinterpret_cast<bool(__cdecl*)()>(0x59C030);
 		bool __cdecl OnBrewPotionAttempt() {
+			// Reset success state.
+			lastBrewedPotion = nullptr;
+
 			// Store the last used ingredients, since they get nuked.
 			auto ingredient1 = getBrewingIngredient(0x7D22F0);
 			auto ingredient2 = getBrewingIngredient(0x7D22F2);
@@ -1176,7 +1179,7 @@ namespace mwse {
 			bool success = TES3_AttemptPotionBrew();
 
 			// Pass a lua event.
-			if (success && event::PotionBrewedEvent::getEventEnabled()) {
+			if (success && lastBrewedPotion && event::PotionBrewedEvent::getEventEnabled()) {
 				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PotionBrewedEvent(lastBrewedPotion, ingredient1, ingredient2, ingredient3, ingredient4));
 			}
 
