@@ -72,6 +72,8 @@ namespace TES3 {
 		// Custom functions.
 		//
 
+		float getArmorScalar() const;
+
 		// Overwrite vtable call to actually do something.
 		void setDurability(int value);
 
@@ -88,6 +90,7 @@ namespace TES3 {
 		int slot;
 		std::string name;
 		float weight;
+		float armorScalar;
 	};
 }
 

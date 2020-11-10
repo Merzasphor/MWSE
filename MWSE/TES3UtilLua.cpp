@@ -2171,11 +2171,13 @@ namespace mwse {
 			}
 
 			sol::optional<float> weight = params["weight"];
+			sol::optional<float> armorScalar = params["scalar"];
 
 			auto slotData = new TES3::ArmorSlotData();
 			slotData->slot = slot.value();
 			slotData->name = name.value();
 			slotData->weight = weight.value_or(0.0f);
+			slotData->armorScalar = armorScalar.value_or(0.1f);
 
 			mwse::tes3::setArmorSlotData(slotData);
 		}

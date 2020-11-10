@@ -47,7 +47,7 @@ namespace TES3 {
 				return 0.0f;
 			}
 
-			return armorRating * armorSkillValue / TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::iBaseArmorSkill]->value.asLong;
+			return armorRating * armorSkillValue / TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::iBaseArmorSkill]->value.asLong * getArmorScalar();
 		}
 
 		return TES3_Armor_calculateArmorRating(this, actor);
@@ -86,7 +86,7 @@ namespace TES3 {
 				return 0.0f;
 			}
 
-			return armorRating * armorSkillValue / TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::iBaseArmorSkill]->value.asLong;
+			return armorRating * armorSkillValue / TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::iBaseArmorSkill]->value.asLong * getArmorScalar();
 		}
 
 		return TES3_Armor_calculateArmorRatingForNPC(this, npc);
@@ -132,6 +132,38 @@ namespace TES3 {
 
 		// Finally, we fall back to the vanilla function.
 		return TES3_Armor_getWeightClass(this);
+	}
+
+	float Armor::getArmorScalar() const {
+		// Handle custom slots.
+		TES3::ArmorSlotData* slotData = mwse::tes3::getArmorSlotData(slot);
+		if (slot < ArmorSlot::First || slot > ArmorSlot::Last) {
+			TES3::ArmorSlotData* slotData = mwse::tes3::getArmorSlotData(slot);
+			if (slotData) {
+				return slotData->armorScalar;
+			}
+		}
+		else {
+			// Default slot values.
+			switch (slot) {
+			case ArmorSlot::Cuirass:
+				return 0.3f;
+			case ArmorSlot::Helmet:
+			case ArmorSlot::LeftPauldron:
+			case ArmorSlot::RightPauldron:
+			case ArmorSlot::Greaves:
+			case ArmorSlot::Boots:
+			case ArmorSlot::Shield:
+				return 0.1f;
+			case ArmorSlot::LeftGauntlet:
+			case ArmorSlot::RightGauntlet:
+			case ArmorSlot::LeftBracer:
+			case ArmorSlot::RightBracer:
+				return 0.05f;
+			}
+		}
+
+		return 0.0f;
 	}
 
 	void Armor::setDurability(int value) {

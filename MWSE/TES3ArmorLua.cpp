@@ -26,6 +26,7 @@ namespace mwse {
 
 			// Basic property binding.
 			usertypeDefinition["armorRating"] = &TES3::Armor::armorRating;
+			usertypeDefinition["armorScalar"] = sol::readonly_property(&TES3::Armor::getArmorScalar);
 			usertypeDefinition["enchantCapacity"] = &TES3::Armor::enchantCapacity;
 			usertypeDefinition["parts"] = sol::readonly_property(&TES3::Armor::getParts);
 			usertypeDefinition["slot"] = &TES3::Armor::slot;
