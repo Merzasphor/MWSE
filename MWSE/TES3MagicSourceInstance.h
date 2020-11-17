@@ -19,6 +19,7 @@ namespace TES3 {
 	};
 
 	enum class MagicSourceType : unsigned char {
+		Invalid = 0,
 		Spell = 1,
 		Enchantment = 2,
 		Alchemy = 3
@@ -33,6 +34,9 @@ namespace TES3 {
 		} source; // 0xA0
 		MagicSourceType sourceType;// 0xA4
 
+		MagicSourceCombo();
+		MagicSourceCombo(Object* object);
+
 		//
 		// Other related this-call functions.
 		//
@@ -45,9 +49,8 @@ namespace TES3 {
 
 	struct MagicSourceInstance : BaseObject {
 		float overrideCastChance; // 0x10
-		Reference * target;
-		signed char unknown_0x18;
-		char padding_0x19[3];
+		Reference * target; // 0x14
+		bool bypassResistances; // 0x18
 		HashMap<Reference*, void*> effects[8]; // 0x1C
 		MobileProjectile * magicProjectile;
 		MagicSourceCombo sourceCombo;

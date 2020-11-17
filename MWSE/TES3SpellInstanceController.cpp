@@ -2,8 +2,8 @@
 
 namespace TES3 {
 
-	const auto TES3_SpellInstanceController_activateSpell = reinterpret_cast<unsigned int (__thiscall*)(SpellInstanceController*, Reference *, void *, MagicSourceCombo*)>(0x454A60);
-	unsigned int SpellInstanceController::activateSpell(Reference * reference, void * sourceItem, MagicSourceCombo* source) {
+	const auto TES3_SpellInstanceController_activateSpell = reinterpret_cast<unsigned int (__thiscall*)(SpellInstanceController*, Reference *, EquipmentStack*, MagicSourceCombo*)>(0x454A60);
+	unsigned int SpellInstanceController::activateSpell(Reference * reference, EquipmentStack* sourceItem, MagicSourceCombo* source) {
 		return TES3_SpellInstanceController_activateSpell(this, reference, sourceItem, source);
 	}
 
