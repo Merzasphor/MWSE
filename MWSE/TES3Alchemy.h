@@ -28,6 +28,13 @@ namespace TES3 {
 		unsigned short flags; // 0x011C
 
 		//
+		// Basic operators.
+		//
+
+		void ctor();
+		void dtor();
+
+		//
 		// Custom functions.
 		//
 

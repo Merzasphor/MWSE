@@ -2397,6 +2397,50 @@ namespace mwse {
 
 			// Get the source for the effect.
 			auto source = getOptionalParamObject<TES3::Object>(params, "source");
+
+			// Are we given custom effects? If so make a potion.
+			sol::optional<sol::table> effects = params["effects"];
+			if (source == nullptr && effects) {
+				const char* name = getOptionalParam<const char*>(params, "name", nullptr);
+				if (!name) {
+					throw std::invalid_argument("Invalid 'name' parameter provided when creating dynamic effect.");
+				}
+
+				// Dynamically create our potion.
+				auto dynamicPotion = new TES3::Alchemy();
+				dynamicPotion->setName(name);
+				dynamicPotion->flags |= 0x2;
+				TES3::DataHandler::get()->nonDynamicData->addNewObject(dynamicPotion);
+
+				// Assign effects.
+				if (effects) {
+					for (int i = 1; i <= 8; i++) {
+						sol::optional<sol::table> effectParams = effects.value()[i];
+						if (!effectParams) {
+							break;
+						}
+
+						TES3::Effect* effect = &dynamicPotion->effects[i - 1];
+						effect->effectID = getOptionalParam<int>(effectParams, "id", -1);
+						effect->skillID = getOptionalParam<int>(effectParams, "skill", -1);
+						effect->attributeID = getOptionalParam<int>(effectParams, "attribute", -1);
+						effect->rangeType = static_cast<TES3::EffectRange>(getOptionalParam<int>(effectParams, "range", int(TES3::EffectRange::Self)));
+						effect->radius = getOptionalParam<int>(effectParams, "radius", 0);
+						effect->duration = getOptionalParam<int>(effectParams, "duration", 0);
+						effect->magnitudeMin = getOptionalParam<int>(effectParams, "min", 0);
+						effect->magnitudeMax = getOptionalParam<int>(effectParams, "max", 0);
+					}
+				}
+
+				// If we don't have an effect, fill in the first one.
+				if (dynamicPotion->effects[0].effectID == TES3::EffectID::None) {
+					dynamicPotion->effects[0].effectID = TES3::EffectID::WaterBreathing;
+				}
+
+				source = dynamicPotion;
+			}
+
+			// Did we end up figuring out a source?
 			if (source == nullptr) {
 				throw std::invalid_argument("Invalid 'source' parameter provided.");
 			}

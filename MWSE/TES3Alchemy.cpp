@@ -1,8 +1,19 @@
 #include "TES3Alchemy.h"
 
+#include "MemoryUtil.h"
 #include "TES3Util.h"
 
 namespace TES3 {
+	const auto TES3_Alchemy_ctor = reinterpret_cast<TES3::Alchemy * (__thiscall*)(TES3::Alchemy*)>(0x4ABA40);
+	void Alchemy::ctor() {
+		TES3_Alchemy_ctor(this);
+	}
+
+	const auto TES3_Alchemy_dtor = reinterpret_cast<void (__thiscall*)(TES3::Alchemy*)>(0x4ABB70);
+	void Alchemy::dtor() {
+		TES3_Alchemy_dtor(this);
+	}
+
 	size_t Alchemy::getActiveEffectCount() {
 		size_t count = 0;
 		for (size_t i = 0; i < 8; i++) {
