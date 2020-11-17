@@ -31,6 +31,9 @@ namespace TES3 {
 		// Basic operators.
 		//
 
+		Alchemy();
+		~Alchemy();
+
 		void ctor();
 		void dtor();
 

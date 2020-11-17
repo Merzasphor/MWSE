@@ -4,6 +4,14 @@
 #include "TES3Util.h"
 
 namespace TES3 {
+	Alchemy::Alchemy() {
+		ctor();
+	}
+
+	Alchemy::~Alchemy() {
+		dtor();
+	}
+
 	const auto TES3_Alchemy_ctor = reinterpret_cast<TES3::Alchemy * (__thiscall*)(TES3::Alchemy*)>(0x4ABA40);
 	void Alchemy::ctor() {
 		TES3_Alchemy_ctor(this);
