@@ -2387,6 +2387,44 @@ namespace mwse {
 			return false;
 		}
 
+		TES3::MagicSourceInstance* applyMagicSource(sol::table params) {
+			// Get who we're adding the magic effect to.
+			auto reference = getOptionalParamExecutionReference(params);
+			if (reference == nullptr) {
+				throw std::invalid_argument("Invalid 'reference' parameter provided.");
+			}
+
+			// Get the source for the effect.
+			auto source = getOptionalParamObject<TES3::Object>(params, "source");
+			if (source == nullptr) {
+				throw std::invalid_argument("Invalid 'source' parameter provided.");
+			}
+
+			// Try to make a source for this object.
+			TES3::MagicSourceCombo sourceCombo(source);
+			if (sourceCombo.sourceType == TES3::MagicSourceType::Invalid) {
+				throw std::invalid_argument("Invalid 'source' parameter provided: Not a valid source type.");
+			}
+
+			// Do we have a piece of equipment this is coming from?
+			auto from = getOptionalParam<TES3::EquipmentStack*>(params, "fromStack");
+
+			// Activate the source on our target.
+			auto spellInstanceController = TES3::WorldController::get()->spellInstanceController;
+			auto serial = spellInstanceController->activateSpell(reference, from.value_or(nullptr), &sourceCombo);
+			auto instance = spellInstanceController->getInstanceFromSerial(serial);
+
+			// Force cast chance?
+			auto castChance = getOptionalParam<float>(params, "castChance");
+			if (castChance) {
+				instance->overrideCastChance = castChance.value();
+			}
+
+			// Specify target.
+			instance->target = getOptionalParamReference(params, "target");
+			
+			return instance;
+		}
 
 		TES3::MagicSourceInstance* getMagicSourceInstanceBySerial(sol::table params) {
 			auto serialNumber = getOptionalParam<unsigned int>(params, "serialNumber", UINT32_MAX);
@@ -4181,6 +4219,7 @@ namespace mwse {
 			tes3["addSoulGem"] = addSoulGem;
 			tes3["adjustSoundVolume"] = adjustSoundVolume;
 			tes3["advanceTime"] = advanceTime;
+			tes3["applyMagicSource"] = applyMagicSource;
 			tes3["beginTransform"] = beginTransform;
 			tes3["canRest"] = canRest;
 			tes3["cast"] = cast;
