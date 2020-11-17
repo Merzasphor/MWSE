@@ -53,12 +53,15 @@ namespace mwse {
 					eventData["magicEffectInstance"] = m_MagicEffectInstance;
 				}
 
+				if (m_ActiveMagicEffect) {
+					eventData["activeMagicEffect"] = m_ActiveMagicEffect;
+				}
+
 				if (m_Source) {
 					eventData["source"] = m_Source;
 				}
 
 				eventData["damage"] = m_Damage;
-				eventData["resistAttribute"] = m_ResistAttribute;
 
 				return eventData;
 			}
@@ -68,8 +71,8 @@ namespace mwse {
 			TES3::MobileProjectile * DamageEvent::m_Projectile = nullptr;
 			TES3::MagicSourceInstance * DamageEvent::m_MagicSourceInstance = nullptr;
 			TES3::MagicEffectInstance * DamageEvent::m_MagicEffectInstance = nullptr;
+			TES3::ActiveMagicEffect * DamageEvent::m_ActiveMagicEffect = nullptr;
 			const char * DamageEvent::m_Source = nullptr;
-			int DamageEvent::m_ResistAttribute = 0;
 		}
 	}
 }

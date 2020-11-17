@@ -1039,38 +1039,13 @@ namespace mwse {
 			mwse::lua::event::DamageEvent::m_Source = nullptr;
 			return result;
 		}
-
-		void __stdcall OnMagicShieldResist(int effectAttribute) {
-			mwse::lua::event::DamageEvent::m_ResistAttribute = effectAttribute;
-		}
-
-		static DWORD postMagicShieldResist = 0x5556E4 + 0x7;
-		static __declspec(naked) void HookMagicShieldResist() {
-			_asm
-			{
-				// Save all registers.
-				pushad
-
-				// Actually use our hook.
-				push ecx
-				call OnMagicShieldResist
-
-				// Restore all registers.
-				popad
-
-				// Overwritten code.
-				fild dword ptr[esi + ecx * 0x4 + 0x2f0]
-				
-				// Resume normal execution.
-				jmp postMagicShieldResist
-			}
-		}
 		
-		void __stdcall OnMagicShieldHit(TES3::MobileActor* attacker) {
+		void __stdcall OnMagicShieldHit(TES3::MobileActor* attacker, TES3::ActiveMagicEffect* effect) {
 			mwse::lua::event::DamageEvent::m_Attacker = attacker;
+			mwse::lua::event::DamageEvent::m_ActiveMagicEffect = effect;
 		}
 
-		static DWORD postMagicShieldHit = 0x555722 + 0x6;
+		static DWORD postMagicShieldHit = 0x555670 + 0x6;
 		static __declspec(naked) void HookMagicShieldHit() {
 			_asm
 			{
@@ -1078,6 +1053,8 @@ namespace mwse {
 				pushad
 
 				// Actually use our hook.
+				lea eax, [ebx + 0x8]
+				push eax
 				push edi
 				call OnMagicShieldHit
 
@@ -1085,8 +1062,7 @@ namespace mwse {
 				popad
 
 				// Overwritten code.
-				mov eax, dword ptr[edi + 0x14]
-				mov ecx, dword ptr[eax + 0x28]
+				mov edx, dword ptr [esi + 0x2a8]
 				
 				// Resume normal execution.
 				jmp postMagicShieldHit
@@ -3061,8 +3037,7 @@ namespace mwse {
 			genCallEnforced(0x524884, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromSuffocation));
 			genCallEnforced(0x52978F, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromFalling));
 			genCallEnforced(0x5299CB, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromSuffocation));
-			genJumpUnprotected(0x5556E4, reinterpret_cast<DWORD>(HookMagicShieldResist), 0x7);
-			genJumpUnprotected(0x555722, reinterpret_cast<DWORD>(HookMagicShieldHit), 0x6);
+			genJumpUnprotected(0x555670, reinterpret_cast<DWORD>(HookMagicShieldHit), 0x6);
 			genCallEnforced(0x555789, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromMagicShield));
 			genCallEnforced(0x556AE0, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromAttack));
 			genCallEnforced(0x55782C, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromMagic));

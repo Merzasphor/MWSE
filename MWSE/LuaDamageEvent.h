@@ -15,8 +15,8 @@ namespace mwse {
 				static TES3::MobileProjectile * m_Projectile;
 				static TES3::MagicSourceInstance * m_MagicSourceInstance;
 				static TES3::MagicEffectInstance * m_MagicEffectInstance;
+				static TES3::ActiveMagicEffect * m_ActiveMagicEffect;
 				static const char * m_Source;
-				static int m_ResistAttribute;
 
 			protected:
 				TES3::MobileActor * m_MobileActor;

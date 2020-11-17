@@ -56,13 +56,16 @@ namespace mwse {
 					eventData["magicEffectInstance"] = DamageEvent::m_MagicEffectInstance;
 				}
 
+				if (DamageEvent::m_ActiveMagicEffect) {
+					eventData["activeMagicEffect"] = DamageEvent::m_ActiveMagicEffect;
+				}
+
 				if (DamageEvent::m_Source) {
 					eventData["source"] = DamageEvent::m_Source;
 				}
 
 				eventData["damage"] = m_Damage;
 				eventData["checkForKnockdown"] = m_CheckForKnockdown;
-				eventData["resistAttribute"] = DamageEvent::m_ResistAttribute;
 
 				return eventData;
 			}
