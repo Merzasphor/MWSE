@@ -1040,6 +1040,33 @@ namespace mwse {
 			return result;
 		}
 
+		void __stdcall OnMagicShieldHit(TES3::MobileActor* attacker) {
+			mwse::lua::event::DamageEvent::m_Attacker = attacker;
+		}
+
+		static DWORD postMagicShieldHit = 0x555722 + 0x6;
+		static __declspec(naked) void HookMagicShieldHit() {
+			_asm
+			{
+				// Save all registers.
+				pushad
+
+				// Actually use our hook.
+				push edi
+				call OnMagicShieldHit
+
+				// Restore all registers.
+				popad
+
+				// Overwritten code.
+				mov eax, dword ptr[edi + 0x14]
+				mov ecx, dword ptr[eax + 0x28]
+				
+				// Resume normal execution.
+				jmp postMagicShieldHit
+			}
+		}
+
 		bool __fastcall OnApplyDamageFromMagicShield(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
 			mwse::lua::event::DamageEvent::m_Source = "shield";
 			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
@@ -3008,6 +3035,7 @@ namespace mwse {
 			genCallEnforced(0x524884, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromSuffocation));
 			genCallEnforced(0x52978F, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromFalling));
 			genCallEnforced(0x5299CB, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromSuffocation));
+			genJumpUnprotected(0x555722, reinterpret_cast<DWORD>(HookMagicShieldHit), 0x6);
 			genCallEnforced(0x555789, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromMagicShield));
 			genCallEnforced(0x556AE0, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromAttack));
 			genCallEnforced(0x55782C, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromMagic));
