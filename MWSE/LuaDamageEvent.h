@@ -16,6 +16,7 @@ namespace mwse {
 				static TES3::MagicSourceInstance * m_MagicSourceInstance;
 				static TES3::MagicEffectInstance * m_MagicEffectInstance;
 				static const char * m_Source;
+				static int m_ResistAttribute;
 
 			protected:
 				TES3::MobileActor * m_MobileActor;

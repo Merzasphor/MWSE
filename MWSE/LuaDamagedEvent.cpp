@@ -62,6 +62,7 @@ namespace mwse {
 
 				eventData["damage"] = m_Damage;
 				eventData["checkForKnockdown"] = m_CheckForKnockdown;
+				eventData["resistAttribute"] = DamageEvent::m_ResistAttribute;
 
 				return eventData;
 			}

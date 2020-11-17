@@ -58,6 +58,7 @@ namespace mwse {
 				}
 
 				eventData["damage"] = m_Damage;
+				eventData["resistAttribute"] = m_ResistAttribute;
 
 				return eventData;
 			}
@@ -68,6 +69,7 @@ namespace mwse {
 			TES3::MagicSourceInstance * DamageEvent::m_MagicSourceInstance = nullptr;
 			TES3::MagicEffectInstance * DamageEvent::m_MagicEffectInstance = nullptr;
 			const char * DamageEvent::m_Source = nullptr;
+			int DamageEvent::m_ResistAttribute = 0;
 		}
 	}
 }
