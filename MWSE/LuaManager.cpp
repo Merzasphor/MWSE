@@ -2705,6 +2705,14 @@ namespace mwse {
 
 			return result;
 		}
+
+		//
+		// Patch sourceless objects so they don't get deleted when drunk.
+		//
+
+		bool __fastcall SafeSourcelessDeleteFromRetiredEffect(TES3::Alchemy* alchemy) {
+			return alchemy->sourceMod || alchemy->getSourceless();
+		}
 		
 		//
 		//
@@ -3706,6 +3714,9 @@ namespace mwse {
 			genCallEnforced(0x4C0C1C, 0x4C1980, *reinterpret_cast<DWORD*>(&isSourcelessObject));
 			genCallEnforced(0x4C0DC8, 0x4C1980, *reinterpret_cast<DWORD*>(&isSourcelessObject));
 			genCallEnforced(0x4C7715, 0x4C1980, *reinterpret_cast<DWORD*>(&isSourcelessObject));
+
+			// Prevent sourceless objects from being deleted if they are drunk.
+			genCallEnforced(0x4551E1, 0x4EEE40, reinterpret_cast<DWORD>(SafeSourcelessDeleteFromRetiredEffect));
 
 			// Allow overriding body part assignment.
 			auto bodyPartManagerSetBodyPartForObject = &TES3::BodyPartManager::setBodyPartForObject;
