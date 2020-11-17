@@ -2423,6 +2423,9 @@ namespace mwse {
 			// Specify target.
 			instance->target = getOptionalParamReference(params, "target");
 			
+			// Bypass resistnaces?
+			instance->bypassResistances = getOptionalParam<bool>(params, "bypassResistances", false);
+			
 			return instance;
 		}
 

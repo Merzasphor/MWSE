@@ -49,9 +49,8 @@ namespace TES3 {
 
 	struct MagicSourceInstance : BaseObject {
 		float overrideCastChance; // 0x10
-		Reference * target;
-		signed char unknown_0x18;
-		char padding_0x19[3];
+		Reference * target; // 0x14
+		bool bypassResistances; // 0x18
 		HashMap<Reference*, void*> effects[8]; // 0x1C
 		MobileProjectile * magicProjectile;
 		MagicSourceCombo sourceCombo;
