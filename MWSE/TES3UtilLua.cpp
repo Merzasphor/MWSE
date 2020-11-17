@@ -2387,6 +2387,7 @@ namespace mwse {
 			return false;
 		}
 
+		static TES3::EquipmentStack tempApplyMagicSourceStack = { nullptr, nullptr };
 		TES3::MagicSourceInstance* applyMagicSource(sol::table params) {
 			// Get who we're adding the magic effect to.
 			auto reference = getOptionalParamExecutionReference(params);
@@ -2408,6 +2409,10 @@ namespace mwse {
 
 			// Do we have a piece of equipment this is coming from?
 			auto from = getOptionalParam<TES3::EquipmentStack*>(params, "fromStack");
+			if (!from && sourceCombo.sourceType == TES3::MagicSourceType::Alchemy) {
+				tempApplyMagicSourceStack.object = source;
+				from = &tempApplyMagicSourceStack;
+			}
 
 			// Activate the source on our target.
 			auto spellInstanceController = TES3::WorldController::get()->spellInstanceController;
