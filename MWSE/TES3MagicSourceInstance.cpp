@@ -3,6 +3,32 @@
 #include "LuaUtil.h"
 
 namespace TES3 {
+	MagicSourceCombo::MagicSourceCombo() {
+		source.asGeneric = nullptr;
+		sourceType = MagicSourceType::Invalid;
+	}
+
+	MagicSourceCombo::MagicSourceCombo(Object* object) : MagicSourceCombo() {
+		if (object == nullptr) {
+			return;
+		}
+
+		switch (object->objectType) {
+		case TES3::ObjectType::Alchemy:
+			sourceType = MagicSourceType::Alchemy;
+			break;
+		case TES3::ObjectType::Enchantment:
+			sourceType = MagicSourceType::Enchantment;
+			break;
+		case TES3::ObjectType::Spell:
+			sourceType = MagicSourceType::Spell;
+			break;
+		default:
+			return;
+		}
+		source.asGeneric = object;
+	}
+
 	const auto TES3_MagicSourceCombo_getSourceEffects = reinterpret_cast<Effect * (__thiscall*)(const MagicSourceCombo *)>(0x496FA0);
 	Effect * MagicSourceCombo::getSourceEffects() const {
 		return TES3_MagicSourceCombo_getSourceEffects(this);

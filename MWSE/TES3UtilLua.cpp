@@ -2375,10 +2375,7 @@ namespace mwse {
 				}
 			}
 			else {
-				TES3::MagicSourceCombo sourceCombo;
-				sourceCombo.source.asSpell = spell;
-				sourceCombo.sourceType = TES3::MagicSourceType::Spell;
-
+				TES3::MagicSourceCombo sourceCombo(spell);
 				auto spellInstanceController = TES3::WorldController::get()->spellInstanceController;
 				auto serial = spellInstanceController->activateSpell(reference, nullptr, &sourceCombo);
 				auto spellInstance = spellInstanceController->getInstanceFromSerial(serial);
@@ -2390,10 +2387,10 @@ namespace mwse {
 			return false;
 		}
 
-		TES3::MagicSourceInstance* getMagicSourceInstanceBySerial(sol::table params) {
-			int serialNumber = getOptionalParam< double >(params, "serialNumber", -1);
 
-			if (serialNumber <= -1) {
+		TES3::MagicSourceInstance* getMagicSourceInstanceBySerial(sol::table params) {
+			auto serialNumber = getOptionalParam<unsigned int>(params, "serialNumber", UINT32_MAX);
+			if (serialNumber == UINT32_MAX) {
 				throw std::invalid_argument("Invalid 'serialNumber' parameter provided.");
 			}
 

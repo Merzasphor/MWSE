@@ -19,6 +19,7 @@ namespace TES3 {
 	};
 
 	enum class MagicSourceType : unsigned char {
+		Invalid = 0,
 		Spell = 1,
 		Enchantment = 2,
 		Alchemy = 3
@@ -32,6 +33,9 @@ namespace TES3 {
 			Spell * asSpell;
 		} source; // 0xA0
 		MagicSourceType sourceType;// 0xA4
+
+		MagicSourceCombo();
+		MagicSourceCombo(Object* object);
 
 		//
 		// Other related this-call functions.
