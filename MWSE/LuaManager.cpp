@@ -243,6 +243,10 @@
 #define TES3_HOOK_SPELL_CAST_FAILURE_SIZE 0xA
 #define TES3_HOOK_SPELL_CAST_FAILURE_RETURN (TES3_HOOK_SPELL_CAST_FAILURE + TES3_HOOK_SPELL_CAST_FAILURE_SIZE)
 
+#define TES3_HOOK_MAGIC_SHIELD_HIT 0x555670
+#define TES3_HOOK_MAGIC_SHIELD_HIT_SIZE 0x6
+#define TES3_HOOK_MAGIC_SHIELD_HIT_RETURN (TES3_HOOK_MAGIC_SHIELD_HIT + TES3_HOOK_MAGIC_SHIELD_HIT_SIZE)
+
 #define TES3_ActorAnimData_attackCheckMeleeHit 0x541530
 
 #define TES3_BaseObject_destructor 0x4F0CA0
@@ -1045,7 +1049,7 @@ namespace mwse {
 			mwse::lua::event::DamageEvent::m_ActiveMagicEffect = effect;
 		}
 
-		static DWORD postMagicShieldHit = 0x555670 + 0x6;
+		static DWORD postMagicShieldHit = TES3_HOOK_MAGIC_SHIELD_HIT_RETURN;
 		static __declspec(naked) void HookMagicShieldHit() {
 			_asm
 			{
@@ -3037,7 +3041,7 @@ namespace mwse {
 			genCallEnforced(0x524884, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromSuffocation));
 			genCallEnforced(0x52978F, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromFalling));
 			genCallEnforced(0x5299CB, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromSuffocation));
-			genJumpUnprotected(0x555670, reinterpret_cast<DWORD>(HookMagicShieldHit), 0x6);
+			genJumpUnprotected(TES3_HOOK_MAGIC_SHIELD_HIT, reinterpret_cast<DWORD>(HookMagicShieldHit), TES3_HOOK_MAGIC_SHIELD_HIT_SIZE);
 			genCallEnforced(0x555789, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromMagicShield));
 			genCallEnforced(0x556AE0, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromAttack));
 			genCallEnforced(0x55782C, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromMagic));
