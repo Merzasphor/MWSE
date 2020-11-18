@@ -588,15 +588,6 @@ namespace TES3 {
 		return owningCollection.asReferenceList;
 	}
 
-	void Object::copy_lua(const Object* from, sol::optional<int> unknown) {
-		if (from == nullptr) {
-			throw std::invalid_argument("Valid copy target must be provided.");
-		} else if (objectType != from->objectType) {
-			throw std::invalid_argument("Copy target's type does not match current object's type.");
-		}
-		copy(from, unknown.value_or(0));
-	}
-
 	void Object::setScale_lua(float scale) {
 		setScale(scale);
 	}

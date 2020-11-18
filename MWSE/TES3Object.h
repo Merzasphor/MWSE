@@ -353,7 +353,6 @@ namespace TES3 {
 		Object * skipDeletedObjects();
 		ReferenceList* getOwningCollection();
 
-		void copy_lua(const Object* from, sol::optional<int> unknown);
 		void setScale_lua(float scale);
 
 	};
