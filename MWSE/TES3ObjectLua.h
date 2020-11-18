@@ -45,6 +45,9 @@ namespace mwse {
 			// Functions exposed as properties.
 			usertypeDefinition["owningCollection"] = sol::readonly_property(&TES3::Object::getOwningCollection);
 			usertypeDefinition["scale"] = sol::property(&TES3::Object::getScale, &TES3::Object::setScale_lua);
+
+			// Basic function binding.
+			usertypeDefinition["copy"] = &TES3::Object::copy_lua;
 		}
 
 		template <typename T>

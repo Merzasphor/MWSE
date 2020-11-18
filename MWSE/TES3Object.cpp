@@ -380,6 +380,10 @@ namespace TES3 {
 		baseObjectCache.clear();
 	}
 
+	void Object::copy(const Object* from, int unknown) {
+		vTable.object->copy(this, from, unknown);
+	}
+
 	void Object::setID(const char* id) {
 		vTable.object->setID(this, id);
 	}
@@ -582,6 +586,15 @@ namespace TES3 {
 
 	ReferenceList* Object::getOwningCollection() {
 		return owningCollection.asReferenceList;
+	}
+
+	void Object::copy_lua(const Object* from, sol::optional<int> unknown) {
+		if (from == nullptr) {
+			throw std::invalid_argument("Valid copy target must be provided.");
+		} else if (objectType != from->objectType) {
+			throw std::invalid_argument("Copy target's type does not match current object's type.");
+		}
+		copy(from, unknown.value_or(0));
 	}
 
 	void Object::setScale_lua(float scale) {

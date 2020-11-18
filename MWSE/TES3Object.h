@@ -134,7 +134,7 @@ namespace TES3 {
 	static_assert(sizeof(BaseObjectVirtualTable) == 0x24, "TES3::BaseObjectVirtualTable failed size validation");
 
 	struct ObjectVirtualTable : BaseObjectVirtualTable {
-		void * copyEntity; // 0x24
+		void (__thiscall * copy)(Object*, const Object*, int); // 0x24
 		void (__thiscall * setID)(BaseObject*, const char*); // 0x28
 		NI::Node * (__thiscall * getSceneGraphNode)(BaseObject*); // 0x2C
 		void * unknown_0x30;
@@ -293,6 +293,7 @@ namespace TES3 {
 		// Function wrappers for our virtual table.
 		//
 
+		void copy(const Object* from, int unknown = 0);
 		void setID(const char*);
 		char * getName();
 		char * getIconPath();
@@ -352,6 +353,7 @@ namespace TES3 {
 		Object * skipDeletedObjects();
 		ReferenceList* getOwningCollection();
 
+		void copy_lua(const Object* from, sol::optional<int> unknown);
 		void setScale_lua(float scale);
 
 	};
