@@ -16,9 +16,12 @@
 #include "MemoryUtil.h"
 #include "TES3Util.h"
 
+#include "LuaPlayItemSoundEvent.h"
+
+#include "LuaManager.h"
+
 #define TES3_WorldController_mainLoopBeforeInput 0x40F610
 #define TES3_WorldController_getMobilePlayer 0x40FF20
-#define TES3_WorldController_playItemUpDownSound 0x411050
 #define TES3_WorldController_getSimulationTimestamp 0x411000
 
 #define TES3_Data_daysInMonth 0x775E40
@@ -409,8 +412,19 @@ namespace TES3 {
 		return reinterpret_cast<MobilePlayer*(__thiscall *)(WorldController*)>(TES3_WorldController_getMobilePlayer)(this);
 	}
 
-	void WorldController::playItemUpDownSound(BaseObject* item, bool pickup, Reference* reference) {
-		reinterpret_cast<void(__thiscall *)(WorldController*, BaseObject*, int, Reference*)>(TES3_WorldController_playItemUpDownSound)(this, item, pickup, reference);
+	const auto TES3_WorldController_playItemUpDownSound = reinterpret_cast<void(__thiscall*)(WorldController*, BaseObject*, ItemSoundState, Reference*)>(0x411050);
+	void WorldController::playItemUpDownSound(BaseObject* item, ItemSoundState state, Reference* reference) {
+		// Allow event overrides.
+		if (mwse::lua::event::PlayItemSoundEvent::getEventEnabled()) {
+			auto& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table result = stateHandle.triggerEvent(new mwse::lua::event::PlayItemSoundEvent(item, static_cast<int>(state), reference));
+			if (result.valid() && result.get_or("block", false)) {
+				return;
+			}
+		}
+
+		TES3_WorldController_playItemUpDownSound(this, item, state, reference);
 	}
 
 	float WorldController::getSimulationTimestamp() {

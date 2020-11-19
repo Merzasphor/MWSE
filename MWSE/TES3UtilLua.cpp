@@ -540,12 +540,12 @@ namespace mwse {
 		void playItemPickupSound(sol::optional<sol::table> params) {
 			TES3::Reference* reference = getOptionalParamExecutionReference(params);
 			TES3::Item* item = getOptionalParamObject<TES3::Item>(params, "item");
-			bool pickup = getOptionalParam<bool>(params, "pickup", true);
+			auto state = getOptionalParam<bool>(params, "pickup", true) ? TES3::ItemSoundState::Up : TES3::ItemSoundState::Down;
 			if (item == NULL) {
 				return;
 			}
 
-			TES3::WorldController::get()->playItemUpDownSound(item, pickup, reference);
+			TES3::WorldController::get()->playItemUpDownSound(item, state, reference);
 		}
 
 		auto iterateObjects(sol::optional<sol::object> filter) {
@@ -2614,7 +2614,7 @@ namespace mwse {
 			auto playerMobile = worldController->getMobilePlayer();
 			if (getOptionalParam<bool>(params, "playSound", true)) {
 				if (mobile == playerMobile) {
-					worldController->playItemUpDownSound(item, true);
+					worldController->playItemUpDownSound(item, TES3::ItemSoundState::Down);
 				}
 			}
 
@@ -2718,7 +2718,7 @@ namespace mwse {
 			auto playerMobile = worldController->getMobilePlayer();
 			if (getOptionalParam<bool>(params, "playSound", true)) {
 				if (mobile == playerMobile) {
-					worldController->playItemUpDownSound(item, false);
+					worldController->playItemUpDownSound(item, TES3::ItemSoundState::Up);
 				}
 			}
 
@@ -2936,10 +2936,10 @@ namespace mwse {
 			auto playerMobile = worldController->getMobilePlayer();
 			if (getOptionalParam<bool>(params, "playSound", true)) {
 				if (toMobile == playerMobile) {
-					worldController->playItemUpDownSound(item, true);
+					worldController->playItemUpDownSound(item, TES3::ItemSoundState::Down);
 				}
 				else if (fromMobile == playerMobile) {
-					worldController->playItemUpDownSound(item, false);
+					worldController->playItemUpDownSound(item, TES3::ItemSoundState::Up);
 				}
 			}
 

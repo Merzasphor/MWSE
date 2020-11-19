@@ -3819,6 +3819,34 @@ namespace mwse {
 			// Event: Prevent Rest
 			genCallEnforced(0x564FF6, 0x530A20, reinterpret_cast<DWORD>(OnCheckActionWeightFightForRest));
 
+			// Event: Play Item Up/Down Sound Event
+			auto WorldController_playItemUpDownSound = &TES3::WorldController::playItemUpDownSound;
+			genCallEnforced(0x49B2C3, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x4EA632, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x527F4F, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x569591, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5A4450, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5A7315, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5B4EF4, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5B5F48, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5B7131, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5CB61D, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5CB703, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5CB94A, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5CE498, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5CE66F, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5CED42, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5CF24A, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5CF456, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5CF5DA, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5CF8B5, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5D01A5, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5D0282, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5D3A03, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5D3B43, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x5D3BC8, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+			genCallEnforced(0x61678A, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+
 			// UI framework hooks
 			TES3::UI::hook();
 

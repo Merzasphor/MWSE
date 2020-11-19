@@ -1458,6 +1458,9 @@
     <ClInclude Include="LuaPreventRestEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="LuaPlayItemSoundEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3213,6 +3216,9 @@
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
     <ClCompile Include="LuaPreventRestEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaPlayItemSoundEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>

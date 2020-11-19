@@ -22,6 +22,12 @@ namespace TES3 {
 		Uninterruptible = 2
 	};
 
+	enum class ItemSoundState : int {
+		Up = 0,
+		Down = 1,
+		Direct = 2,
+	};
+
 	struct WorldControllerRenderCamera {
 		struct CameraData {
 			NI::Camera* camera; // 0x0
@@ -343,7 +349,7 @@ namespace TES3 {
 
 		void mainLoopBeforeInput();
 		_declspec(dllexport) MobilePlayer* getMobilePlayer();
-		_declspec(dllexport) void playItemUpDownSound(BaseObject* item, bool pickup = false, Reference* reference = nullptr);
+		_declspec(dllexport) void playItemUpDownSound(BaseObject* item, ItemSoundState state = ItemSoundState::Up, Reference* reference = nullptr);
 		_declspec(dllexport) float getSimulationTimestamp();
 		_declspec(dllexport) void processGlobalScripts();
 
