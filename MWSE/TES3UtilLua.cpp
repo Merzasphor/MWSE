@@ -2399,7 +2399,7 @@ namespace mwse {
 			auto source = getOptionalParamObject<TES3::Object>(params, "source");
 
 			// Are we given custom effects? If so make a potion.
-			bool cloneSource = true;
+			bool createCopy = true;
 			sol::optional<sol::table> effects = params["effects"];
 			if (source == nullptr && effects) {
 				const char* name = getOptionalParam<const char*>(params, "name", nullptr);
@@ -2439,7 +2439,7 @@ namespace mwse {
 				}
 
 				source = dynamicPotion;
-				cloneSource = false;
+				createCopy = false;
 			}
 
 			// Did we end up figuring out a source?
@@ -2458,24 +2458,21 @@ namespace mwse {
 
 			// Handle some alchemy patching.
 			if (sourceCombo.sourceType == TES3::MagicSourceType::Alchemy) {
-				cloneSource = getOptionalParam<bool>(params, "createCopy", cloneSource);
+				// Do we need to make a copy of this object?
+				if (getOptionalParam<bool>(params, "createCopy", createCopy)) {
+					auto copy = new TES3::Alchemy();
+					copy->copy(source);
+					copy->setID("");
+					TES3::DataHandler::get()->nonDynamicData->addNewObject(copy);
+
+					source = copy;
+					sourceCombo.source.asAlchemy = copy;
+				}
+
 				if (!from) {
 					tempApplyMagicSourceStack.object = source;
 					from = &tempApplyMagicSourceStack;
 				}
-			}
-			else {
-				cloneSource = false;
-			}
-
-			// Do we need to make a copy of this object?
-			if (cloneSource) {
-				auto copy = new TES3::Alchemy();
-				copy->copy(source);
-				copy->setID("");
-				TES3::DataHandler::get()->nonDynamicData->addNewObject(copy);
-
-				source = copy;
 			}
 
 			// Activate the source on our target.
