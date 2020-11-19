@@ -146,6 +146,7 @@ namespace MWSE
             try
             {
                 WebClient webClient = new WebClient();
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
                 // Get the currently installed version.
                 String versionPath = Path.Combine(installLocation, "mwse-version.txt");
