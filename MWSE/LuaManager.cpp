@@ -1043,41 +1043,21 @@ namespace mwse {
 			mwse::lua::event::DamageEvent::m_Source = nullptr;
 			return result;
 		}
-		
-		void __stdcall OnMagicShieldHit(TES3::MobileActor* attacker, TES3::ActiveMagicEffect* effect) {
-			mwse::lua::event::DamageEvent::m_Attacker = attacker;
-			mwse::lua::event::DamageEvent::m_ActiveMagicEffect = effect;
-		}
 
-		static DWORD postMagicShieldHit = TES3_HOOK_MAGIC_SHIELD_HIT_RETURN;
-		static __declspec(naked) void HookMagicShieldHit() {
-			_asm
-			{
-				// Save all registers.
-				pushad
-
-				// Actually use our hook.
-				lea eax, [ebx + 0x8]
-				push eax
-				push edi
-				call OnMagicShieldHit
-
-				// Restore all registers.
-				popad
-
-				// Overwritten code.
-				mov edx, dword ptr [esi + 0x2a8]
-				
-				// Resume normal execution.
-				jmp postMagicShieldHit
-			}
-		}
-
-		bool __fastcall OnApplyDamageFromMagicShield(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
+		bool __fastcall OnApplyDamageFromMagicShield(TES3::MobileActor* mobileActor, TES3::Deque<TES3::ActiveMagicEffect>::Node* effectNode, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
 			mwse::lua::event::DamageEvent::m_Source = "shield";
+			mwse::lua::event::DamageEvent::m_ActiveMagicEffect = &effectNode->data;
 			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
 			mwse::lua::event::DamageEvent::m_Source = nullptr;
+			mwse::lua::event::DamageEvent::m_ActiveMagicEffect = nullptr;
 			return result;
+		}
+
+		static __declspec(naked) bool OnApplyDamageFromMagicShield_Wrapper() {
+			_asm {
+				mov edx, ebx
+				jmp OnApplyDamageFromMagicShield
+			}
 		}
 
 		const auto TES3_AttributeSpellEffect = reinterpret_cast<bool(__cdecl*)(TES3::MagicSourceInstance*, bool, TES3::Statistic*, void*, TES3::MagicEffectInstance*, float, int)>(0x519110);
@@ -3041,8 +3021,7 @@ namespace mwse {
 			genCallEnforced(0x524884, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromSuffocation));
 			genCallEnforced(0x52978F, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromFalling));
 			genCallEnforced(0x5299CB, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromSuffocation));
-			genJumpUnprotected(TES3_HOOK_MAGIC_SHIELD_HIT, reinterpret_cast<DWORD>(HookMagicShieldHit), TES3_HOOK_MAGIC_SHIELD_HIT_SIZE);
-			genCallEnforced(0x555789, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromMagicShield));
+			genCallEnforced(0x555789, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromMagicShield_Wrapper));
 			genCallEnforced(0x556AE0, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromAttack));
 			genCallEnforced(0x55782C, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromMagic));
 			auto mobileActorApplyHitModifiers = &TES3::MobileActor::applyHitModifiers;
