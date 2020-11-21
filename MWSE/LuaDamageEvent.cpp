@@ -38,17 +38,24 @@ namespace mwse {
 					eventData["projectile"] = m_Projectile;
 				}
 
-				if (m_MagicSourceInstance) {
-					eventData["magicSourceInstance"] = m_MagicSourceInstance;
+				auto magicSourceInstance = m_MagicSourceInstance;
+				if (m_ActiveMagicEffect) {
+					eventData["activeMagicEffect"] = m_ActiveMagicEffect;
+					magicSourceInstance = m_ActiveMagicEffect->getInstance();
+				}
+
+				if (magicSourceInstance) {
+					eventData["magicSourceInstance"] = magicSourceInstance;
 
 					// Get the attacker as the caster of the spell.
 					if (!m_Attacker) {
-						eventData["attackerReference"] = m_MagicSourceInstance->caster;
-						if (m_MagicSourceInstance->caster) {
-							eventData["attacker"] = m_MagicSourceInstance->caster->getAttachedMobileActor();
+						eventData["attackerReference"] = magicSourceInstance->caster;
+						if (magicSourceInstance->caster) {
+							eventData["attacker"] = magicSourceInstance->caster->getAttachedMobileActor();
 						}
 					}
 				}
+
 				if (m_MagicEffectInstance) {
 					eventData["magicEffectInstance"] = m_MagicEffectInstance;
 				}
@@ -67,6 +74,7 @@ namespace mwse {
 			TES3::MobileProjectile * DamageEvent::m_Projectile = nullptr;
 			TES3::MagicSourceInstance * DamageEvent::m_MagicSourceInstance = nullptr;
 			TES3::MagicEffectInstance * DamageEvent::m_MagicEffectInstance = nullptr;
+			TES3::ActiveMagicEffect * DamageEvent::m_ActiveMagicEffect = nullptr;
 			const char * DamageEvent::m_Source = nullptr;
 		}
 	}

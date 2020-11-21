@@ -41,17 +41,24 @@ namespace mwse {
 					eventData["projectile"] = DamageEvent::m_Projectile;
 				}
 
-				if (DamageEvent::m_MagicSourceInstance) {
-					eventData["magicSourceInstance"] = DamageEvent::m_MagicSourceInstance;
+				auto magicSourceInstance = DamageEvent::m_MagicSourceInstance;
+				if (DamageEvent::m_ActiveMagicEffect) {
+					eventData["activeMagicEffect"] = DamageEvent::m_ActiveMagicEffect;
+					magicSourceInstance = DamageEvent::m_ActiveMagicEffect->getInstance();
+				}
+
+				if (magicSourceInstance) {
+					eventData["magicSourceInstance"] = magicSourceInstance;
 
 					// Get the attacker as the caster of the spell.
 					if (!DamageEvent::m_Attacker) {
-						eventData["attackerReference"] = DamageEvent::m_MagicSourceInstance->caster;
-						if (DamageEvent::m_MagicSourceInstance->caster) {
-							eventData["attacker"] = DamageEvent::m_MagicSourceInstance->caster->getAttachedMobileActor();
+						eventData["attackerReference"] = magicSourceInstance->caster;
+						if (magicSourceInstance->caster) {
+							eventData["attacker"] = magicSourceInstance->caster->getAttachedMobileActor();
 						}
 					}
 				}
+
 				if (DamageEvent::m_MagicEffectInstance) {
 					eventData["magicEffectInstance"] = DamageEvent::m_MagicEffectInstance;
 				}
