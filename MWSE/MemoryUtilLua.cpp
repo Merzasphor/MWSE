@@ -516,6 +516,7 @@ namespace mwse {
 			convertFrom["bool"] = convertArgFrom<bool>;
 			convertFrom["float"] = convertArgFrom<float>;
 			convertFrom["int"] = convertArgFrom<int>;
+			convertFrom["string"] = convertArgFrom<const char*>;
 			convertFrom["tes3equipmentStackIterator"] = convertArgFrom<LegacyIteratedList<TES3::EquipmentStack*>*>;
 			convertFrom["tes3equipmentStackIteratorNode"] = convertArgFrom<LegacyIteratedList<TES3::EquipmentStack*>::Node*>;
 			convertFrom["tes3inventory"] = convertArgFrom<TES3::Inventory*>;
