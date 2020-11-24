@@ -435,7 +435,7 @@ namespace TES3 {
 			setReferenceInactive();
 		}
 
-		BIT_SET(objectFlags, ObjectFlag::DisabledBit, deleted);
+		BIT_SET(objectFlags, ObjectFlag::DeleteBit, deleted);
 	}
 
 	void Reference::setDeletedWithSafety() {
