@@ -7,6 +7,8 @@
 #include "LuaBodyPartsUpdatedEvent.h"
 #include "LuaDisarmTrapEvent.h"
 #include "LuaPickLockEvent.h"
+#include "LuaReferenceActivatedEvent.h"
+#include "LuaReferenceDeactivatedEvent.h"
 #include "LuaReferenceSceneNodeCreatedEvent.h"
 
 #include "MemoryUtil.h"
@@ -282,7 +284,8 @@ namespace TES3 {
 
 	Cell* Reference::getCell() const {
 		// Handle case for the player.
-		if (TES3::WorldController::get()->getMobilePlayer()->reference == this) {
+		auto macp = TES3::WorldController::get()->getMobilePlayer();
+		if (macp && macp->reference == this) {
 			return TES3::DataHandler::get()->currentCell;
 		}
 
@@ -426,7 +429,16 @@ namespace TES3 {
 		return BIT_TEST(objectFlags, ObjectFlag::DisabledBit);
 	}
 
-	void Reference::setDeleted() {
+	void Reference::setDeleted(bool deleted) {
+		// Deactivate the reference if needed.
+		if (objectType == ObjectType::Reference && !getDeleted() && getCell()->getCellActive()) {
+			setReferenceInactive();
+		}
+
+		BIT_SET(objectFlags, ObjectFlag::DisabledBit, deleted);
+	}
+
+	void Reference::setDeletedWithSafety() {
 		disable();
 		if (baseObject) {
 			// This always seems to return 0 and do nothing.
@@ -672,6 +684,26 @@ namespace TES3 {
 			&& uint32_t(vTable.object) != TES3::VirtualTableAddress::BaseObject
 			&& baseObject != nullptr
 			&& uint32_t(baseObject->vTable.object) != TES3::VirtualTableAddress::BaseObject;
+	}
+
+	void Reference::setReferenceActive() {
+		if (getDeleted()) {
+			return;
+		}
+
+		if (mwse::lua::event::ReferenceActivatedEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ReferenceActivatedEvent(this));
+		}
+	}
+
+	void Reference::setReferenceInactive() {
+		if (getDeleted()) {
+			return;
+		}
+
+		if (mwse::lua::event::ReferenceDeactivatedEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ReferenceDeactivatedEvent(this));
+		}
 	}
 
 	const auto TES3_Reference_getSceneGraphNode = reinterpret_cast<NI::Node*(__thiscall*)(Reference*)>(0x4E81A0);

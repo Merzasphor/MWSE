@@ -12,6 +12,7 @@
 #include "MWSEUtilLua.h"
 #include "WindowsUtil.h"
 #include "MWSEConfig.h"
+#include "BitUtil.h"
 
 #include "LuaTimer.h"
 
@@ -158,8 +159,8 @@
 #include "LuaAddTopicEvent.h"
 #include "LuaAttackEvent.h"
 #include "LuaBarterOfferEvent.h"
-#include "LuaCalcHitArmorPieceEvent.h"
 #include "LuaCalcBarterPriceEvent.h"
+#include "LuaCalcHitArmorPieceEvent.h"
 #include "LuaCalcHitChanceEvent.h"
 #include "LuaCalcRepairPriceEvent.h"
 #include "LuaCalcRestInterruptEvent.h"
@@ -2697,6 +2698,40 @@ namespace mwse {
 		}
 
 		//
+		// Event: cell/reference activated/deactivated
+		//
+
+		// General cell activation.
+		const auto TES3_DataHandler_AddMobilesToCell = reinterpret_cast<void(__thiscall*)(TES3::DataHandler*, TES3::Cell*)>(0x484E50);
+		void __fastcall AddMobilesToCell(TES3::DataHandler* dataHandler, DWORD _EDX_, TES3::Cell* cell) {
+			TES3_DataHandler_AddMobilesToCell(dataHandler, cell);
+			if (cell) {
+				cell->setCellActive();
+			}
+		}
+
+		// General cell deactivation.
+		const auto TES3_DataHandler_RemoveMobilesFromCell = reinterpret_cast<void(__thiscall*)(TES3::DataHandler*, TES3::Cell*)>(0x484D80);
+		void __fastcall RemoveMobilesFromCell(TES3::DataHandler* dataHandler, DWORD _EDX_, TES3::Cell* cell) {
+			TES3_DataHandler_RemoveMobilesFromCell(dataHandler, cell);
+			if (cell) {
+				cell->setCellInactive();
+			}
+		}
+
+		void __fastcall SetObjectDeleted(TES3::Reference* object, DWORD _EDX_, bool deleted) {
+			// Deactivate the reference if needed.
+			if (object->objectType == TES3::ObjectType::Reference && !object->getDeleted()) {
+				auto cell = object->getCell();
+				if (cell && cell->getCellActive()) {
+					object->setReferenceInactive();
+				}
+			}
+
+			BIT_SET(object->objectFlags, TES3::ObjectFlag::DisabledBit, deleted);
+		}
+
+		//
 		//
 		//
 
@@ -3855,6 +3890,127 @@ namespace mwse {
 			genCallEnforced(0x5D3B43, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
 			genCallEnforced(0x5D3BC8, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
 			genCallEnforced(0x61678A, 0x411050, *reinterpret_cast<DWORD*>(&WorldController_playItemUpDownSound));
+
+			// Event: Reference Activated/Deactivated.
+			genCallEnforced(0x4849E8, 0x484E50, reinterpret_cast<DWORD>(AddMobilesToCell));
+			genCallEnforced(0x484E9B, 0x484E50, reinterpret_cast<DWORD>(AddMobilesToCell));
+			genCallEnforced(0x485346, 0x484E50, reinterpret_cast<DWORD>(AddMobilesToCell));
+			genCallEnforced(0x4855E1, 0x484E50, reinterpret_cast<DWORD>(AddMobilesToCell));
+			genCallEnforced(0x486B88, 0x484E50, reinterpret_cast<DWORD>(AddMobilesToCell));
+			genCallEnforced(0x486C97, 0x484E50, reinterpret_cast<DWORD>(AddMobilesToCell));
+			genCallEnforced(0x486D9A, 0x484E50, reinterpret_cast<DWORD>(AddMobilesToCell));
+			genCallEnforced(0x486E6F, 0x484E50, reinterpret_cast<DWORD>(AddMobilesToCell));
+			genCallEnforced(0x486FB7, 0x484E50, reinterpret_cast<DWORD>(AddMobilesToCell));
+			genCallEnforced(0x4895F1, 0x484E50, reinterpret_cast<DWORD>(AddMobilesToCell));
+			genCallEnforced(0x4834A8, 0x484D80, reinterpret_cast<DWORD>(RemoveMobilesFromCell));
+			genCallEnforced(0x4848CE, 0x484D80, reinterpret_cast<DWORD>(RemoveMobilesFromCell));
+			genCallEnforced(0x4891F3, 0x484D80, reinterpret_cast<DWORD>(RemoveMobilesFromCell));
+			genCallEnforced(0x4898EB, 0x484D80, reinterpret_cast<DWORD>(RemoveMobilesFromCell));
+			auto Cell_insertReference = &TES3::Cell::insertReference;
+			genCallEnforced(0x4665AF, 0x4DC030, *reinterpret_cast<DWORD*>(&Cell_insertReference));
+			genCallEnforced(0x4B8E5F, 0x4DC030, *reinterpret_cast<DWORD*>(&Cell_insertReference));
+			genCallEnforced(0x4B8F27, 0x4DC030, *reinterpret_cast<DWORD*>(&Cell_insertReference));
+			genCallEnforced(0x4C1171, 0x4DC030, *reinterpret_cast<DWORD*>(&Cell_insertReference));
+			genCallEnforced(0x4C16EA, 0x4DC030, *reinterpret_cast<DWORD*>(&Cell_insertReference));
+			genCallEnforced(0x4CFBAD, 0x4DC030, *reinterpret_cast<DWORD*>(&Cell_insertReference));
+			genCallEnforced(0x4E7DE1, 0x4DC030, *reinterpret_cast<DWORD*>(&Cell_insertReference));
+			genCallEnforced(0x5098DE, 0x4DC030, *reinterpret_cast<DWORD*>(&Cell_insertReference));
+			genCallEnforced(0x509A41, 0x4DC030, *reinterpret_cast<DWORD*>(&Cell_insertReference));
+			genCallEnforced(0x50A22F, 0x4DC030, *reinterpret_cast<DWORD*>(&Cell_insertReference));
+			genCallEnforced(0x635368, 0x4DC030, *reinterpret_cast<DWORD*>(&Cell_insertReference));
+			genCallEnforced(0x4668F2, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4668FB, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4748B7, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x481088, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x482A70, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x482B99, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x49C73F, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x49DCA8, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x49E9AA, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x49FBAC, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A0080, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A077F, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A1579, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A2222, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A3091, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A3DB5, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A4A01, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A52E7, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A5513, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A5ABA, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A6037, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A65CD, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A6AF7, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A6FE7, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A743B, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A799D, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A80B0, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A86F6, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A878E, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A8909, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A8E31, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4A962A, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4AA3F1, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4AB081, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4ABE33, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4ACF4D, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4ADAC0, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4AF54A, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4AF5C5, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4AFFD8, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4B24B7, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4B2514, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4B2614, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4B2807, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4BD930, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4BDD1F, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4BE468, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4BE5F1, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4BE674, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4BEB6B, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4BEFA8, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4BF165, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4BF1CD, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4BF3AE, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4BF610, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4BFC86, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4C00C6, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4C03D6, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4C0607, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4C0A2A, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4C0D42, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4C0D8F, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4C9808, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4D1E5A, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4D640E, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4D8A4C, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4D996A, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4DCC1D, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4DD3AB, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4DDB5F, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4DDBFA, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4DE4B7, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4E0753, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4E086B, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4E0CDA, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4E2A51, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4E2B53, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4E45F0, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4E5AEF, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4E8103, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4E95AE, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4EA98A, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4EA9C1, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4EBE19, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4EBF58, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4EBF8C, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4EC00F, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4F2239, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x4FF7E0, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x50C538, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x5106E6, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x511652, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
+			genCallEnforced(0x529B86, 0x4EEC70, reinterpret_cast<DWORD>(SetObjectDeleted));
 
 			// UI framework hooks
 			TES3::UI::hook();

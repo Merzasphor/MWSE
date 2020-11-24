@@ -62,7 +62,8 @@ namespace TES3 {
 		bool disable();
 		bool getDisabled() const;
 
-		void setDeleted();
+		void setDeleted(bool deleted);
+		void setDeletedWithSafety();
 
 		Vector3 * getPosition();
 		void setPosition(const Vector3 * newPosition);

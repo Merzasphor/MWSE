@@ -15,6 +15,8 @@ namespace TES3 {
 			Interior = 0x1,
 			HasWater = 0x2,
 			SleepIsIllegal = 0x4,
+			WasLoaded = 0x8,
+			IsLoaded = 0x20,
 			BehavesAsExterior = 0x80
 		};
 	}
@@ -173,6 +175,14 @@ namespace TES3 {
 
 		bool getSleepingIsIllegal() const;
 		void setSleepingIsIllegal(bool value);
+
+		//
+		// Custom functions.
+		//
+
+		void setCellActive();
+		void setCellInactive();
+		bool getCellActive() const;
 
 		//
 		// Helper functions.

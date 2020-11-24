@@ -112,6 +112,10 @@
 #include "LuaWeatherCycledEvent.h"
 #include "LuaWeatherTransitionFinishedEvent.h"
 #include "LuaWeatherTransitionStartedEvent.h"
+#include "LuaCellActivatedEvent.h"
+#include "LuaCellDeactivatedEvent.h"
+#include "LuaReferenceActivatedEvent.h"
+#include "LuaReferenceDeactivatedEvent.h"
 
 namespace mwse {
 	namespace lua {
@@ -153,7 +157,9 @@ namespace mwse {
 				usertypeDefinition["calcTrainingPrice"] = sol::property(&CalculateTrainingPriceEvent::getEventEnabled, &CalculateTrainingPriceEvent::setEventEnabled);
 				usertypeDefinition["calcTravelPrice"] = sol::property(&CalculateTravelPriceEvent::getEventEnabled, &CalculateTravelPriceEvent::setEventEnabled);
 				usertypeDefinition["calcWalkSpeed"] = sol::property(&CalculateMovementSpeed::getEventEnabled, &CalculateMovementSpeed::setEventEnabled);
+				usertypeDefinition["cellActivated"] = sol::property(&CellActivatedEvent::getEventEnabled, &CellActivatedEvent::setEventEnabled);
 				usertypeDefinition["cellChanged"] = sol::property(&CellChangedEvent::getEventEnabled, &CellChangedEvent::setEventEnabled);
+				usertypeDefinition["cellDeactivated"] = sol::property(&CellDeactivatedEvent::getEventEnabled, &CellDeactivatedEvent::setEventEnabled);
 				usertypeDefinition["collideWater"] = sol::property(&MobileObjectWaterImpactEvent::getEventEnabled, &MobileObjectWaterImpactEvent::setEventEnabled);
 				usertypeDefinition["collision"] = sol::property(&MobileObjectCollisionEvent::getEventEnabled, &MobileObjectCollisionEvent::setEventEnabled);
 				usertypeDefinition["combatStart"] = sol::property(&CombatStartEvent::getEventEnabled, &CombatStartEvent::setEventEnabled);
@@ -214,6 +220,8 @@ namespace mwse {
 				usertypeDefinition["projectileHitActor"] = sol::property(&MobileProjectileActorCollisionEvent::getEventEnabled, &MobileProjectileActorCollisionEvent::setEventEnabled);
 				usertypeDefinition["projectileHitObject"] = sol::property(&MobileProjectileObjectCollisionEvent::getEventEnabled, &MobileProjectileObjectCollisionEvent::setEventEnabled);
 				usertypeDefinition["projectileHitTerrain"] = sol::property(&MobileProjectileTerrainCollisionEvent::getEventEnabled, &MobileProjectileTerrainCollisionEvent::setEventEnabled);
+				usertypeDefinition["referenceActivated"] = sol::property(&ReferenceActivatedEvent::getEventEnabled, &ReferenceActivatedEvent::setEventEnabled);
+				usertypeDefinition["referenceDeactivated"] = sol::property(&ReferenceDeactivatedEvent::getEventEnabled, &ReferenceDeactivatedEvent::setEventEnabled);
 				usertypeDefinition["referenceSceneNodeCreated"] = sol::property(&ReferenceSceneNodeCreatedEvent::getEventEnabled, &ReferenceSceneNodeCreatedEvent::setEventEnabled);
 				usertypeDefinition["restInterrupt"] = sol::property(&RestInterruptEvent::getEventEnabled, &RestInterruptEvent::setEventEnabled);
 				usertypeDefinition["save"] = sol::property(&SaveGameEvent::getEventEnabled, &SaveGameEvent::setEventEnabled);

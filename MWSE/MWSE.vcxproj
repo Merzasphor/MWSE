@@ -23,6 +23,8 @@
     <ClInclude Include="LuaCalcHitChanceEvent.h" />
     <ClInclude Include="LuaCalcSoulValueEvent.h" />
     <ClInclude Include="LuaCalcSunDamageScalarEvent.h" />
+    <ClInclude Include="LuaCellActivatedEvent.h" />
+    <ClInclude Include="LuaCellDeactivatedEvent.h" />
     <ClInclude Include="LuaContainerClosedEvent.h" />
     <ClInclude Include="LuaConvertReferenceToItemEvent.h" />
     <ClInclude Include="LuaCrimeWitnessedEvent.h" />
@@ -107,6 +109,8 @@
     <ClInclude Include="LuaPreLevelUpEvent.h" />
     <ClInclude Include="LuaPreventRestEvent.h" />
     <ClInclude Include="LuaProjectileExpireEvent.h" />
+    <ClInclude Include="LuaReferenceActivatedEvent.h" />
+    <ClInclude Include="LuaReferenceDeactivatedEvent.h" />
     <ClInclude Include="LuaReferenceSceneNodeCreatedEvent.h" />
     <ClInclude Include="LuaRestInterruptEvent.h" />
     <ClInclude Include="LuaSavedGameEvent.h" />
@@ -465,7 +469,9 @@
     <ClCompile Include="LuaCalcSunDamageScalarEvent.cpp" />
     <ClCompile Include="LuaCalcTrainingPriceEvent.cpp" />
     <ClCompile Include="LuaCalcTravelPriceEvent.cpp" />
+    <ClCompile Include="LuaCellActivatedEvent.cpp" />
     <ClCompile Include="LuaCellChangedEvent.cpp" />
+    <ClCompile Include="LuaCellDeactivatedEvent.cpp" />
     <ClCompile Include="LuaCombatStartedEvent.cpp" />
     <ClCompile Include="LuaCombatStartEvent.cpp" />
     <ClCompile Include="LuaCombatStopEvent.cpp" />
@@ -535,6 +541,8 @@
     <ClCompile Include="LuaPreLevelUpEvent.cpp" />
     <ClCompile Include="LuaPreventRestEvent.cpp" />
     <ClCompile Include="LuaProjectileExpireEvent.cpp" />
+    <ClCompile Include="LuaReferenceActivatedEvent.cpp" />
+    <ClCompile Include="LuaReferenceDeactivatedEvent.cpp" />
     <ClCompile Include="LuaReferenceSceneNodeCreatedEvent.cpp" />
     <ClCompile Include="LuaRestInterruptEvent.cpp" />
     <ClCompile Include="LuaSavedGameEvent.cpp" />
