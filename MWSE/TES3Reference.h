@@ -65,6 +65,9 @@ namespace TES3 {
 		void setDeleted(bool deleted);
 		void setDeletedWithSafety();
 
+		void setReferenceActive();
+		void setReferenceInactive();
+
 		Vector3 * getPosition();
 		void setPosition(const Vector3 * newPosition);
 
