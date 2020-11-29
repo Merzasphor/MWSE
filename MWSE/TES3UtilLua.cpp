@@ -618,7 +618,7 @@ namespace mwse {
 
 		TES3::MagicEffect* getMagicEffect(int id) {
 			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
-			if (dataHandler && id >= TES3::EffectID::FirstEffect && id <= TES3::EffectID::LastEffect) {
+			if (dataHandler) {
 				return dataHandler->nonDynamicData->getMagicEffect(id);
 			}
 			return nullptr;
