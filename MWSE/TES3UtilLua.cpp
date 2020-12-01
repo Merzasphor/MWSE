@@ -4271,6 +4271,44 @@ namespace mwse {
 			return macp->getVanityState() != 0;
 		}
 
+		sol::table getCollidingReferences(sol::table params, sol::this_state thisState) {
+			// Get the reference to set ownership for.
+			auto colliderRef = getOptionalParamReference(params, "reference");
+			if (colliderRef == nullptr) {
+				throw std::invalid_argument("Invalid 'reference' parameter provided.");
+			}
+
+			sol::state_view state = thisState;
+			sol::table results = state.create_table();
+
+			// Do we have a mobile for the collider?
+			auto colliderMobile = colliderRef->getAttachedMobileObject();
+			if (colliderMobile) {
+				for (int i = 0; i < 30; i++) {
+					auto& collision = colliderMobile->arrayCollisionResults[i];
+					if (collision.valid && collision.colliderRef) {
+						results.add(collision.colliderRef);
+					}
+				}
+			}
+			else {
+				// If we don't, life gets harder and we need to figure it out by looking at all active actors.
+				auto& planners = TES3::WorldController::get()->mobController->processManager->aiPlanners;
+				for (auto planner : planners) {
+					auto mobile = planner->mobileActor;
+					for (int i = 0; i < 30; i++) {
+						auto& collision = mobile->arrayCollisionResults[i];
+						if (collision.valid && collision.colliderRef == colliderRef) {
+							results.add(mobile->reference);
+							break;
+						}
+					}
+				}
+			}
+
+			return results;
+		}
+
 		void bindTES3Util() {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
@@ -4321,6 +4359,7 @@ namespace mwse {
 			tes3["getCameraPosition"] = getCameraPosition;
 			tes3["getCameraVector"] = getCameraVector;
 			tes3["getCell"] = getCell;
+			tes3["getCollidingReferences"] = getCollidingReferences;
 			tes3["getCumulativeDaysForMonth"] = getCumulativeDaysForMonth;
 			tes3["getCurrentAIPackageId"] = getCurrentAIPackageId;
 			tes3["getCurrentWeather"] = getCurrentWeather;
