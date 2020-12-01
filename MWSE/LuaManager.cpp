@@ -244,6 +244,10 @@
 #define TES3_HOOK_SPELL_CAST_FAILURE_SIZE 0xA
 #define TES3_HOOK_SPELL_CAST_FAILURE_RETURN (TES3_HOOK_SPELL_CAST_FAILURE + TES3_HOOK_SPELL_CAST_FAILURE_SIZE)
 
+#define TES3_PATCH_MAGIC_SAVE_LOAD 0x51391F
+#define TES3_PATCH_MAGIC_SAVE_LOAD_SIZE 0x8
+#define TES3_PATCH_MAGIC_SAVE_LOAD_RETURN (TES3_PATCH_MAGIC_SAVE_LOAD + TES3_PATCH_MAGIC_SAVE_LOAD_SIZE)
+
 #define TES3_ActorAnimData_attackCheckMeleeHit 0x541530
 
 #define TES3_BaseObject_destructor 0x4F0CA0
@@ -2645,6 +2649,51 @@ namespace mwse {
 		}
 
 		//
+		// Patch bound item / summon saving and loading.
+		//
+
+		// Override the effect id, but only if this is a custom effect with a valid summon or bound item.
+		short __stdcall PatchMagicSaveLoad_UpdateId(TES3::Object* object, short id) {
+			if (id > TES3::EffectID::LastEffect && object) {
+				if (object->objectType == TES3::ObjectType::Armor || object->objectType == TES3::ObjectType::Weapon) {
+					id = TES3::EffectID::BoundDagger;
+				}
+				else if (object->objectType == TES3::ObjectType::Reference) {
+					id = TES3::EffectID::SummonScamp;
+				}
+			}
+			return id;
+		}
+
+		static DWORD postPatchMagicSaveLoad = TES3_PATCH_MAGIC_SAVE_LOAD_RETURN;
+
+		// Intercept the effect id. If it's a custom effect and there's a summon or bound item, change it to an appropriate vanilla effect,
+		// so that the game will select the appropriate branch of the switch. This will allow the game to properly serialize the bound item or 
+		// summon associated with this effect.
+		static __declspec(naked) short PatchMagicSaveLoad() {
+			_asm {
+				// Restore overwritten code. Read the id from the appropriate effect and place it in eax.
+				mov ecx, dword ptr[esp + 0x20]
+				movsx eax, word ptr[eax + ecx * 0x1]
+
+				// short id
+				push eax
+
+				// esi contains an Object** that might point to a bound item or summon
+				// The game has already checked that esi is not null.
+				mov eax, dword ptr[esi]
+				
+				// TES3::Object* object
+				push eax
+
+				call PatchMagicSaveLoad_UpdateId
+
+				// eax now contains the potentially updated effect id. Resume execution.
+				jmp postPatchMagicSaveLoad
+			}
+		}
+
+		//
 		// Event: Crime witnessed.
 		//
 
@@ -4021,6 +4070,9 @@ namespace mwse {
 
 			// Raise event for barter attempts.
 			genCallEnforced(0x5A70CF, 0x5A66C0, reinterpret_cast<DWORD>(GameBarterOffer));
+
+			// Patch custom magic effect saving and loading.
+			genJumpUnprotected(TES3_PATCH_MAGIC_SAVE_LOAD, reinterpret_cast<DWORD>(PatchMagicSaveLoad), TES3_PATCH_MAGIC_SAVE_LOAD_SIZE);
 
 			// Look for main.lua scripts in the usual directories.
 			executeMainModScripts("Data Files\\MWSE\\core");
