@@ -4208,6 +4208,7 @@ namespace mwse {
 			macp->magicDisabled = !getOptionalParam(params, "magic", enabled);
 			macp->vanityDisabled = !getOptionalParam(params, "vanity", enabled);
 			macp->viewSwitchDisabled = !getOptionalParam(params, "viewSwitch", enabled);
+			return true;
 		}
 
 		bool wakeUp() {
