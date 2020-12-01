@@ -201,7 +201,7 @@ namespace TES3 {
 		short unknown_0xE; // Undefined.
 		unsigned int actorFlags; // 0x10
 		Reference * reference; // 0x14
-		Collision * arrayCollisionResults; // 0x18
+		Collision * arrayCollisionResults; // 0x18 // Exactly 30 elements.
 		short cellX; // 0x1C
 		short cellY; // 0x1E
 		short unknown_0x20;

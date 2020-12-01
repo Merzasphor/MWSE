@@ -147,8 +147,7 @@ namespace TES3 {
 		float lastGroundZ; // 0x22C
 		int unknown_0x230;
 		Reference * collidingReference; // 0x234
-		int unknown_0x238;
-		int unknown_0x23C;
+		Reference * moreCollidingReferences[2]; // 0x238
 		int unknown_0x240;
 		union {
 			ActorAnimationData * asActor;
