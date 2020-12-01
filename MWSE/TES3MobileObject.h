@@ -165,6 +165,16 @@ namespace TES3 {
 
 	struct MobileObject {
 		struct Collision {
+			enum class CollisionType : unsigned char {
+				Actor = 0,
+				Static = 1,
+				Terrain = 2,
+				Water = 3,
+				Activator = 4,
+				Unknown_AlsoStatic = 5,
+				None = 6,
+			};
+
 			bool valid;
 			float fTime;
 			TES3::Vector3 point;
@@ -174,7 +184,7 @@ namespace TES3 {
 			TES3::Reference * colliderRef;
 			NI::Pointer<NI::Node> node_34;
 			short quantizedNormal[3];
-			unsigned char collisionType;
+			CollisionType collisionType;
 			unsigned char unknown_3F;
 
 			//
@@ -252,6 +262,8 @@ namespace TES3 {
 		void setPositionFromLua(sol::stack_object);
 		Vector3* getVelocity();
 		void setVelocityFromLua(sol::stack_object);
+
+		sol::table getCollisions_lua(sol::this_state ts) const;
 
 		// Storage for cached userdata.
 		sol::object getOrCreateLuaObject(lua_State* L) const;

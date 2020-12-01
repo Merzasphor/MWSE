@@ -185,6 +185,20 @@ namespace TES3 {
 		mwse::lua::setVectorFromLua(&velocity, value);
 	}
 
+	sol::table MobileObject::getCollisions_lua(sol::this_state ts) const {
+		sol::state_view state = ts;
+		sol::table results = state.create_table();
+
+		for (int i = 0; i < 30; i++) {
+			Collision* collision = &arrayCollisionResults[i];
+			if (collision->valid && collision->collisionType != Collision::CollisionType::None) {
+				results.add(collision);
+			}
+		}
+
+		return results;
+	}
+
 	static std::unordered_map<const MobileObject*, sol::object> mobileObjectCache;
 	static std::mutex mobileObjectCacheMutex;
 
