@@ -189,7 +189,7 @@ namespace TES3 {
 		sol::state_view state = ts;
 		sol::table results = state.create_table();
 
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < countCollisionResults; i++) {
 			Collision* collision = &arrayCollisionResults[i];
 			if (collision->valid && collision->collisionType != Collision::CollisionType::None) {
 				results.add(collision);
