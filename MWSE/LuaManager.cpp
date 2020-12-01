@@ -2674,7 +2674,7 @@ namespace mwse {
 			_asm {
 				// Restore overwritten code. Read the id from the appropriate effect and place it in eax.
 				mov ecx, dword ptr[esp + 0x20]
-				movsx eax, word ptr[eax + ecx * 0x1]
+				movsx eax, word ptr[eax + ecx]
 
 				// short id
 				push eax
