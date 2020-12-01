@@ -2653,7 +2653,7 @@ namespace mwse {
 		//
 
 		// Override the effect id, but only if this is a custom effect with a valid summon or bound item.
-		short __stdcall PatchMagicSaveLoad_UpdateId(TES3::Object* object, short id) {
+		short __stdcall PatchMagicSaveLoad_UpdateId(const TES3::Object* const object, short id) {
 			if (id > TES3::EffectID::LastEffect && object) {
 				if (object->objectType == TES3::ObjectType::Armor || object->objectType == TES3::ObjectType::Weapon) {
 					id = TES3::EffectID::BoundDagger;
