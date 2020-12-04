@@ -2714,15 +2714,45 @@ namespace mwse {
 			crimeEvent->dtor();
 		}
 
+		//
+		// Event: Barter Offered
+		//
+
+		static float lastBarterSkillProgress = 0.0f;
+
+		// Store the last attempt to raise mercantile based on bartering, so we can deliver it slightly later.
+		void __fastcall GameBarterOffer_BufferSkillGain(TES3::MobilePlayer* macp, DWORD _EDX_, TES3::SkillID::SkillID skill, float progress) {
+			lastBarterSkillProgress = progress;
+		}
+
 		const auto TES3_GameBarterOffer = reinterpret_cast<bool(__stdcall*)()>(0x5A66C0);
 		bool __stdcall GameBarterOffer() {
-			bool result = TES3_GameBarterOffer();
-			TES3::MobileActor* mact = TES3::UI::getServiceActor();
+			// Reset skill progress.
+			lastBarterSkillProgress = 0.0f;
+			bool success = TES3_GameBarterOffer();
+
+			// Fire off the event.
 			if (lua::event::BarterOfferEvent::getEventEnabled()) {
-				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new lua::event::BarterOfferEvent(mact, result));
+				TES3::MobileActor* mact = TES3::UI::getServiceActor();
+				int baseCost = *reinterpret_cast<int*>(0x7D2878);
+				int haggleAmount = *reinterpret_cast<int*>(0x7D287C);
+				sol::object eventResult = LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new lua::event::BarterOfferEvent(mact, success, baseCost, haggleAmount));
+				if (eventResult.valid()) {
+					sol::table eventData = eventResult;
+					if (eventData.get_or("block", false)) {
+						return false;
+					}
+
+					success = eventData.get_or("success", success);
+				}
+			}
+			
+			// Only exercise the skill if the barter was a success (and the event didn't block).
+			if (success && lastBarterSkillProgress > 0.0f) {
+				TES3::WorldController::get()->getMobilePlayer()->exerciseSkill(TES3::SkillID::Mercantile, lastBarterSkillProgress);
 			}
 
-			return result;
+			return success;
 		}
 
 		//
@@ -3989,6 +4019,7 @@ namespace mwse {
 
 			// Raise event for barter attempts.
 			genCallEnforced(0x5A70CF, 0x5A66C0, reinterpret_cast<DWORD>(GameBarterOffer));
+			genCallEnforced(0x5A6777, reinterpret_cast<DWORD>(OnExerciseSkill), reinterpret_cast<DWORD>(GameBarterOffer_BufferSkillGain));
 
 			// Patch custom magic effect saving and loading.
 			genJumpUnprotected(TES3_PATCH_MAGIC_SAVE_LOAD, reinterpret_cast<DWORD>(PatchMagicSaveLoad), TES3_PATCH_MAGIC_SAVE_LOAD_SIZE);
