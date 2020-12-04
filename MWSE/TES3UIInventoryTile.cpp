@@ -13,7 +13,6 @@ namespace TES3 {
 		}
 
 		bool InventoryTile::getIsBartered() const {
-			return getFlag(InventoryTileFlag::Bartered);
 			return BITMASK_TEST(flags, InventoryTileFlag::Bartered);
 		}
 

@@ -359,7 +359,6 @@ namespace TES3 {
 			for (int i = 1; it != end; ++it, ++i) {
 				children[i] = *it;
 			}
-			auto size = children.size();
 			return children;
 		}
 
