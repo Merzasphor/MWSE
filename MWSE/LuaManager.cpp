@@ -2734,9 +2734,9 @@ namespace mwse {
 			// Fire off the event.
 			if (lua::event::BarterOfferEvent::getEventEnabled()) {
 				TES3::MobileActor* mact = TES3::UI::getServiceActor();
-				int sale = *reinterpret_cast<int*>(0x7D2878);
+				int value = *reinterpret_cast<int*>(0x7D2878);
 				int offer = *reinterpret_cast<int*>(0x7D287C);
-				sol::object eventResult = LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new lua::event::BarterOfferEvent(mact, success, sale, offer));
+				sol::object eventResult = LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new lua::event::BarterOfferEvent(mact, success, value, offer));
 				if (eventResult.valid()) {
 					sol::table eventData = eventResult;
 					if (eventData.get_or("block", false)) {

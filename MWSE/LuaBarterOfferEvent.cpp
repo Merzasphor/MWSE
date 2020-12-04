@@ -13,11 +13,11 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			BarterOfferEvent::BarterOfferEvent(TES3::MobileActor* mobileActor, bool success, int sale, int offer) :
+			BarterOfferEvent::BarterOfferEvent(TES3::MobileActor* mobileActor, bool success, int value, int offer) :
 				GenericEvent("barterOffer"),
 				m_MobileActor(mobileActor),
 				m_Success(success),
-				m_Sale(sale),
+				m_Value(value),
 				m_Offer(offer)
 			{
 
@@ -62,7 +62,7 @@ namespace mwse {
 
 				eventData["mobile"] = m_MobileActor;
 				eventData["success"] = m_Success;
-				eventData["sale"] = m_Sale;
+				eventData["value"] = m_Value;
 				eventData["offer"] = m_Offer;
 				eventData["selling"] = getBuySellTable("MenuBarter");
 				eventData["buying"] = getBuySellTable("MenuInventory");
