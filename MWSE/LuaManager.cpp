@@ -2653,12 +2653,12 @@ namespace mwse {
 		//
 
 		// Override the effect id, but only if this is a custom effect with a valid summon or bound item.
-		short __stdcall PatchMagicSaveLoad_UpdateId(const TES3::Object* const object, short id) {
-			if (id > TES3::EffectID::LastEffect && object) {
-				if (object->objectType == TES3::ObjectType::Armor || object->objectType == TES3::ObjectType::Weapon) {
+		short __stdcall PatchMagicSaveLoad_UpdateId(const TES3::EquipmentStack* const stack, short id) {
+			if (id > TES3::EffectID::LastEffect && stack->object) {
+				if (stack->object->objectType == TES3::ObjectType::Armor || stack->object->objectType == TES3::ObjectType::Weapon) {
 					id = TES3::EffectID::BoundDagger;
 				}
-				else if (object->objectType == TES3::ObjectType::Reference) {
+				else if (stack->object->objectType == TES3::ObjectType::Reference) {
 					id = TES3::EffectID::SummonScamp;
 				}
 			}
@@ -2679,12 +2679,9 @@ namespace mwse {
 				// short id
 				push eax
 
-				// esi contains an Object** that might point to a bound item or summon
+				// esi might be a TES3::EquipmentStack*
 				// The game has already checked that esi is not null.
-				mov eax, dword ptr[esi]
-				
-				// TES3::Object* object
-				push eax
+				push esi
 
 				call PatchMagicSaveLoad_UpdateId
 
