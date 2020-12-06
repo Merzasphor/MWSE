@@ -14,11 +14,33 @@ package.cpath = package.cpath .. ".\\Data Files\\MWSE\\mods\\?.dll;"
 package.path = package.path .. ".\\Data Files\\MWSE\\lua\\?.lua;.\\Data Files\\MWSE\\lua\\?\\init.lua;"
 package.cpath = package.cpath .. ".\\Data Files\\MWSE\\lua\\?.dll;"
 
+local originalRequire = require
+
+-- Allow users to try to include files that may not exist.
 function include(moduleName)
-	local status, result = pcall(require, moduleName)
+	-- First try to load the lowercase module.
+	local status, result = pcall(originalRequire, moduleName:gsub("[/\\]", "."):lower())
 	if (status) then
 		return result
 	end
+
+	-- Then try to load the original path.
+	local status, result = pcall(originalRequire, moduleName)
+	if (status) then
+		return result
+	end
+end
+
+-- Try to return a lowercased module first, fall back to regular require.
+function require(moduleName)
+	-- First try to load the lowercase module.
+	local status, result = pcall(originalRequire, moduleName:gsub("[/\\]", "."):lower())
+	if (status) then
+		return result
+	end
+
+	-- Then load the original path.
+	return originalRequire(moduleName)
 end
 
 -------------------------------------------------
