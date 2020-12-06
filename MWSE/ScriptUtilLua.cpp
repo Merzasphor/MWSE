@@ -409,9 +409,7 @@ namespace mwse {
 				TES3::Script* script = getOptionalParamExecutionScript(params);
 				TES3::Reference* reference = getOptionalParamExecutionReference(params);
 
-				bool del = getOptionalParam<bool>(params, "delete", true);
-				BITMASK_SET_ON(reference->objectFlags, TES3::ObjectFlag::Delete);
-
+				reference->setDeleted(getOptionalParam<bool>(params, "delete", true));
 				reference->setObjectModified(true);
 
 				return true;
