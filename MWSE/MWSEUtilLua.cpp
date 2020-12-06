@@ -9,6 +9,12 @@
 #include "LuaTimer.h"
 
 namespace mwse::lua {
+#ifdef APPVEYOR_BUILD_NUMBER
+	constexpr unsigned int buildNumber = APPVEYOR_BUILD_NUMBER;
+#else
+	constexpr unsigned int buildNumber = UINT_MAX;
+#endif
+
 	void crash() {
 		// You're not my manager!
 		int* x = nullptr;
@@ -21,6 +27,11 @@ namespace mwse::lua {
 
 	bool overrideScript(const char* scriptId, sol::object target) {
 		return LuaManager::getInstance().overrideScript(scriptId, target);
+	}
+
+	sol::object breakpoint() {
+		while (ShowCursor(TRUE) < 0);
+		return sol::nil;
 	}
 
 	void bindMWSEUtil() {
@@ -37,15 +48,12 @@ namespace mwse::lua {
 		lua_mwse["gameTimers"] = manager.gameTimers;
 
 		// Basic value binding.
-		lua_mwse["version"] = MWSE_VERSION_INTEGER;
 		lua_mwse["buildDate"] = MWSE_BUILD_DATE;
-#ifdef APPVEYOR_BUILD_NUMBER
-		lua_mwse["buildNumber"] = APPVEYOR_BUILD_NUMBER;
-#else
-		lua_mwse["buildNumber"] = UINT_MAX;
-#endif
+		lua_mwse["buildNumber"] = buildNumber;
+		lua_mwse["version"] = MWSE_VERSION_INTEGER;
 
 		// Basic function binding.
+		lua_mwse["breakpoint"] = breakpoint;
 		lua_mwse["crash"] = crash;
 		lua_mwse["getVersion"] = getVersion;
 		lua_mwse["getVirtualMemoryUsage"] = getVirtualMemoryUsage;
