@@ -431,8 +431,16 @@ namespace TES3 {
 
 	void Reference::setDeleted(bool deleted) {
 		// Deactivate the reference if needed.
-		if (objectType == ObjectType::Reference && !getDeleted() && getCell()->getCellActive()) {
-			setReferenceInactive();
+		if (objectType == ObjectType::Reference) {
+			// Are we marking a reference deleted in an active cell?
+			if (getCell()->getCellActive()) {
+				if (deleted) {
+					setReferenceInactive();
+				}
+				else if (!deleted) {
+					setReferenceActive(false);
+				}
+			}
 		}
 
 		BIT_SET(objectFlags, ObjectFlag::DeleteBit, deleted);
@@ -468,7 +476,8 @@ namespace TES3 {
 		if (relocateCell) {
 			// Use relocation helper function.
 			// Note that relocate only saves correctly for persistent or player owned refs.
-			relocate(relocateCell, newPosition);
+			relocateNoRotation(relocateCell, newPosition);
+
 			// Script item data needs to be instanced if the item is now active but has not been seen before.
 			ensureScriptDataIsInstanced();
 		}
@@ -686,8 +695,8 @@ namespace TES3 {
 			&& uint32_t(baseObject->vTable.object) != TES3::VirtualTableAddress::BaseObject;
 	}
 
-	void Reference::setReferenceActive() {
-		if (getDeleted()) {
+	void Reference::setReferenceActive(bool skipDeleted) {
+		if (skipDeleted && getDeleted()) {
 			return;
 		}
 
@@ -696,8 +705,8 @@ namespace TES3 {
 		}
 	}
 
-	void Reference::setReferenceInactive() {
-		if (getDeleted()) {
+	void Reference::setReferenceInactive(bool skipDeleted) {
+		if (skipDeleted && getDeleted()) {
 			return;
 		}
 
@@ -741,12 +750,28 @@ namespace TES3 {
 	}
 
 	const auto TES3_game_relocateReference = reinterpret_cast<void(__cdecl*)(Reference*, Cell*, const Vector3*, float)>(0x50EDD0);
-	void Reference::relocate(Cell * cell, const Vector3 * position) {
-		// Note that relocate only saves correctly for persistent or player owned refs.
-		// Restore Z orientation after relocation, as it does not perform all the updates that setOrientation does.
-		float restoreOriZ = orientation.z;
-		TES3_game_relocateReference(this, cell, position, 0);
-		orientation.z = restoreOriZ;
+	void Reference::relocate(Cell * cell, const Vector3 * position, float rotation) {
+		// Store old cell.
+		const auto oldCell = getCell();
+
+		// Fire off original function.
+		TES3_game_relocateReference(this, cell, position, rotation);
+		
+		// Determine if cell active state changed.
+		const auto oldCellActive = oldCell ? oldCell->getCellActive() : false;
+		const auto newCellActive = cell->getCellActive();
+		if (!oldCellActive && newCellActive) {
+			setReferenceActive();
+		}
+		else if (oldCellActive && !newCellActive) {
+			setReferenceInactive();
+		}
+	}
+
+	void Reference::relocateNoRotation(Cell* cell, const Vector3* position) {
+		const auto z = orientation.z;
+		relocate(cell, position, z);
+		orientation.z = z;
 	}
 
 	bool Reference::clone() {

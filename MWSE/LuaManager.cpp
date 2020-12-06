@@ -2795,6 +2795,10 @@ namespace mwse {
 			}
 		}
 
+		void __cdecl ScriptRelocateReference(TES3::Reference* reference, TES3::Cell* cell, TES3::Vector3* position, float rotation) {
+			reference->relocate(cell, position, rotation);
+		}
+
 		//
 		//
 		//
@@ -3995,6 +3999,11 @@ namespace mwse {
 			genCallEnforced(0x4EC00F, 0x4EEC70, *reinterpret_cast<DWORD*>(&Reference_setDeleted));
 			genCallEnforced(0x50C538, 0x4EEC70, *reinterpret_cast<DWORD*>(&Reference_setDeleted));
 			genCallEnforced(0x529B86, 0x4EEC70, *reinterpret_cast<DWORD*>(&Reference_setDeleted));
+
+			// Patch other functions to use referenceActivated/Deactivated functions.
+			genCallEnforced(0x5063A6, 0x50EDD0, reinterpret_cast<DWORD>(ScriptRelocateReference));
+			genCallEnforced(0x5064D8, 0x50EDD0, reinterpret_cast<DWORD>(ScriptRelocateReference));
+			genCallEnforced(0x509D85, 0x50EDD0, reinterpret_cast<DWORD>(ScriptRelocateReference));
 
 			// UI framework hooks
 			TES3::UI::hook();

@@ -2110,8 +2110,7 @@ namespace mwse {
 			}
 			else {
 				TES3::DataHandler::suppressThreadLoad = true;
-				const auto TES3_relocateReference = reinterpret_cast<void(__cdecl*)(TES3::Reference*, TES3::Cell*, TES3::Vector3*, float)>(0x50EDD0);
-				TES3_relocateReference(reference, cell, &position.value(), orientation.value().z);
+				reference->relocate(cell, &position.value(), orientation.value().z);
 				TES3::DataHandler::suppressThreadLoad = false;
 			}
 

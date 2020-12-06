@@ -65,8 +65,8 @@ namespace TES3 {
 		void setDeleted(bool deleted);
 		void setDeletedWithSafety();
 
-		void setReferenceActive();
-		void setReferenceInactive();
+		void setReferenceActive(bool skipDeleted = true);
+		void setReferenceInactive(bool skipDeleted = true);
 
 		Vector3 * getPosition();
 		void setPosition(const Vector3 * newPosition);
@@ -81,7 +81,8 @@ namespace TES3 {
 		Inventory * getInventory();
 		IteratedList<EquipmentStack*> * getEquipment();
 
-		void relocate(Cell * cell, const Vector3 * position);
+		void relocate(Cell * cell, const Vector3 * position, float rotation);
+		void relocateNoRotation(Cell* cell, const Vector3* position);
 		bool clone();
 
 		bool insertAttachment(Attachment* attachment);
