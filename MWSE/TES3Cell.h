@@ -37,12 +37,12 @@ namespace TES3 {
 
 	struct PathGrid : BaseObject {
 		struct Node {
-			int unknown_0x0;
-			int unknown_0x4;
-			int unknown_0x8;
-			IteratedList<void*>* connectedNodes; // 0xC
+			int x;
+			int y;
+			int z;
+			IteratedList<Node*>* connectedNodes; // 0xC
 			PathGrid* parentGrid; // 0x10
-			int unknown_0x14;
+			int index; // 0x14
 			NI::Pointer<NI::Node> debugNode; // 0x18
 		};
 
@@ -52,8 +52,8 @@ namespace TES3 {
 		char unknown_0x16;
 		char unknown_0x17;
 		Cell* parentCell; // 0x18
-		short unknown_0x1C;
-		short unknown_0x1E;
+		short granularity; // 0x1C
+		short pointCount; // 0x1E
 		IteratedList<Node*> nodes; // 0x20
 		unsigned int fileOffset; // 0x34
 		char unknown_0x38;
