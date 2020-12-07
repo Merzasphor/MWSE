@@ -30,6 +30,8 @@ namespace TES3 {
 			Attacked = 0x20000,
 			IsCrittable = 0x8000000,
 			IdleAnim = 0x10000000,
+			PCHidden = 0x20000000,
+			PCDetected = 0x40000000,
 			BodypartsChanged = 0x80000000
 		};
 
@@ -43,6 +45,8 @@ namespace TES3 {
 			AttackedBit = 17,
 			IsCrittableBit = 27,
 			IdleAnimBit = 28,
+			PCHiddenBit = 29,
+			PCDetectedBit = 30,
 			BodypartsChangedBit = 31
 		};
 	}

@@ -284,6 +284,10 @@ namespace TES3 {
 		void setFlagInCombat(bool value);
 		bool getFlagIsCrittable() const;
 		void setFlagIsCrittable(bool value);
+		bool getFlagIsPCDetected() const;
+		void setFlagIsPCDetected(bool value);
+		bool getFlagIsPCHidden() const;
+		void setFlagIsPCHidden(bool value);
 		bool getFlagSpellReadied() const;
 		void setFlagSpellReadied(bool value);
 		bool getFlagUnderwater() const;

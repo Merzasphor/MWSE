@@ -20,6 +20,8 @@
 #include "TES3Enchantment.h"
 #include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
+#include "TES3MobController.h"
+#include "TES3MobilePlayer.h"
 #include "TES3ItemData.h"
 #include "TES3Spell.h"
 #include "TES3Reference.h"
@@ -582,6 +584,22 @@ namespace TES3 {
 
 	void MobileActor::setFlagIsCrittable(bool value) {
 		setMobileActorFlag(MobileActorFlag::IsCrittable, value);
+	}
+
+	bool MobileActor::getFlagIsPCDetected() const {
+		return getMobileActorFlag(MobileActorFlag::PCDetected);
+	}
+
+	void MobileActor::setFlagIsPCDetected(bool value) {
+		setMobileActorFlag(MobileActorFlag::PCDetected, value);
+	}
+
+	bool MobileActor::getFlagIsPCHidden() const {
+		return getMobileActorFlag(MobileActorFlag::PCHidden);
+	}
+
+	void MobileActor::setFlagIsPCHidden(bool value) {
+		setMobileActorFlag(MobileActorFlag::PCHidden, value);
 	}
 
 	bool MobileActor::getFlagSpellReadied() const {

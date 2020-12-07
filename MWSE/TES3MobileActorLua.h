@@ -63,6 +63,8 @@ namespace mwse {
 			usertypeDefinition["idleAnim"] = sol::property(&TES3::MobileActor::getFlagIdleAnim, &TES3::MobileActor::setFlagIdleAnim);
 			usertypeDefinition["inCombat"] = sol::property(&TES3::MobileActor::getFlagInCombat, &TES3::MobileActor::setFlagInCombat);
 			usertypeDefinition["isCrittable"] = sol::property(&TES3::MobileActor::getFlagIsCrittable, &TES3::MobileActor::setFlagIsCrittable);
+			usertypeDefinition["isPlayerDetected"] = sol::property(&TES3::MobileActor::getFlagIsPCDetected, &TES3::MobileActor::setFlagIsPCDetected);
+			usertypeDefinition["isPlayerHidden"] = sol::property(&TES3::MobileActor::getFlagIsPCHidden, &TES3::MobileActor::setFlagIsPCHidden);
 			usertypeDefinition["spellReadied"] = sol::property(&TES3::MobileActor::getFlagSpellReadied, &TES3::MobileActor::setFlagSpellReadied);
 			usertypeDefinition["underwater"] = sol::property(&TES3::MobileActor::getFlagUnderwater, &TES3::MobileActor::setFlagUnderwater);
 			usertypeDefinition["weaponDrawn"] = sol::property(&TES3::MobileActor::getFlagWeaponDrawn, &TES3::MobileActor::setFlagWeaponDrawn);
