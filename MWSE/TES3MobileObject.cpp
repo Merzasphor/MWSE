@@ -49,12 +49,7 @@ namespace TES3 {
 #define TES3_vTable_MobileProjectile 0x74B2B4
 #define TES3_vTable_SpellProjectile 0x74B360
 
-	const auto TES3_MobileObject_onActorCollision = reinterpret_cast<bool(__thiscall *)(MobileObject*, int)>(0x5615A0);
-	const auto TES3_MobileObject_onObjectCollision = reinterpret_cast<bool(__thiscall *)(MobileObject*, int, bool)>(0x5615C0);
-	const auto TES3_MobileObject_onTerrainCollision = reinterpret_cast<bool(__thiscall *)(MobileObject*, int)>(0x5615E0);
-	const auto TES3_MobileObject_onWaterCollision = reinterpret_cast<bool(__thiscall *)(MobileObject*, int)>(0x5615E0);
-	const auto TES3_MobileObject_onActivatorCollision = reinterpret_cast<bool(__thiscall *)(MobileObject*, int)>(0x561600);
-
+	const auto TES3_MobileObject_onActorCollision = reinterpret_cast<bool(__thiscall*)(MobileObject*, int)>(0x5615A0);
 	bool MobileObject::onActorCollision(int collisionIndex) {
 		// Grab the hit reference now, it won't be available after calling the main function.
 		TES3::Reference* hitReference = this->arrayCollisionResults[collisionIndex].colliderRef;
@@ -70,6 +65,7 @@ namespace TES3 {
 		return result;
 	}
 
+	const auto TES3_MobileObject_onObjectCollision = reinterpret_cast<bool(__thiscall*)(MobileObject*, int, bool)>(0x5615C0);
 	bool MobileObject::onObjectCollision(int collisionIndex, bool flag) {
 		// Grab the hit reference now, it won't be available after calling the main function.
 		TES3::Reference* hitReference = this->arrayCollisionResults[collisionIndex].colliderRef;
@@ -85,6 +81,7 @@ namespace TES3 {
 		return result;
 	}
 
+	const auto TES3_MobileObject_onTerrainCollision = reinterpret_cast<bool(__thiscall*)(MobileObject*, int)>(0x5615E0);
 	bool MobileObject::onTerrainCollision(int collisionIndex) {
 		// Grab the hit reference now, it won't be available after calling the main function.
 		TES3::Reference* hitReference = this->arrayCollisionResults[collisionIndex].colliderRef;
@@ -100,6 +97,7 @@ namespace TES3 {
 		return result;
 	}
 
+	const auto TES3_MobileObject_onWaterCollision = reinterpret_cast<bool(__thiscall*)(MobileObject*, int)>(0x5615E0);
 	bool MobileObject::onWaterCollision(int collisionIndex) {
 		// Grab the hit reference now, it won't be available after calling the main function.
 		TES3::Reference* hitReference = this->arrayCollisionResults[collisionIndex].colliderRef;
@@ -115,6 +113,7 @@ namespace TES3 {
 		return result;
 	}
 
+	const auto TES3_MobileObject_onActivatorCollision = reinterpret_cast<bool(__thiscall*)(MobileObject*, int)>(0x561600);
 	bool MobileObject::onActivatorCollision(int collisionIndex) {
 		// Grab the hit reference now, it won't be available after calling the main function.
 		TES3::Reference* hitReference = this->arrayCollisionResults[collisionIndex].colliderRef;

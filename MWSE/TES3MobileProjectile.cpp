@@ -8,11 +8,7 @@
 #include "LuaMobileObjectCollisionEvent.h"
 
 namespace TES3 {
-	const auto TES3_MobileProjectile_onActorCollision = reinterpret_cast<bool(__thiscall *)(MobileProjectile*, int)>(0x573860);
-	const auto TES3_MobileProjectile_onObjectCollision = reinterpret_cast<bool(__thiscall *)(MobileProjectile*, int, bool)>(0x573820);
-	const auto TES3_MobileProjectile_onTerrainCollision = reinterpret_cast<bool(__thiscall *)(MobileProjectile*, int)>(0x5737F0);
-	const auto TES3_MobileProjectile_onWaterCollision = reinterpret_cast<bool(__thiscall *)(MobileProjectile*, int)>(0x573790);
-
+	const auto TES3_MobileProjectile_onActorCollision = reinterpret_cast<bool(__thiscall*)(MobileProjectile*, int)>(0x573860);
 	bool MobileProjectile::onActorCollision(int collisionIndex) {
 		// Grab the collision data now, it won't be available after calling the main function.
 		const auto& hit = this->arrayCollisionResults[collisionIndex];
@@ -32,6 +28,7 @@ namespace TES3 {
 		return result;
 	}
 
+	const auto TES3_MobileProjectile_onObjectCollision = reinterpret_cast<bool(__thiscall*)(MobileProjectile*, int, bool)>(0x573820);
 	bool MobileProjectile::onObjectCollision(int collisionIndex, bool flag) {
 		// Grab the collision data now, it won't be available after calling the main function.
 		const auto& hit = this->arrayCollisionResults[collisionIndex];
@@ -51,6 +48,7 @@ namespace TES3 {
 		return result;
 	}
 
+	const auto TES3_MobileProjectile_onTerrainCollision = reinterpret_cast<bool(__thiscall*)(MobileProjectile*, int)>(0x5737F0);
 	bool MobileProjectile::onTerrainCollision(int collisionIndex) {
 		// Grab the collision data now, it won't be available after calling the main function.
 		const auto& hit = this->arrayCollisionResults[collisionIndex];
@@ -68,6 +66,7 @@ namespace TES3 {
 		return result;
 	}
 
+	const auto TES3_MobileProjectile_onWaterCollision = reinterpret_cast<bool(__thiscall*)(MobileProjectile*, int)>(0x573790);
 	bool MobileProjectile::onWaterCollision(int collisionIndex) {
 		// Grab the hit reference now, it won't be available after calling the main function.
 		TES3::Reference* hitReference = this->arrayCollisionResults[collisionIndex].colliderRef;
