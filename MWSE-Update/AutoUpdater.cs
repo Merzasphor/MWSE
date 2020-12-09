@@ -145,8 +145,13 @@ namespace MWSE
 
             try
             {
+                // On Windows versions before 8.1, we have to force TLS support.
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT && Environment.OSVersion.Version.CompareTo(new Version(6, 3)) < 0)
+                {
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+                }
+
                 WebClient webClient = new WebClient();
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
                 // Get the currently installed version.
                 String versionPath = Path.Combine(installLocation, "mwse-version.txt");
