@@ -57,6 +57,7 @@
 #include "TES3MobilePlayer.h"
 #include "TES3NPC.h"
 #include "TES3PlayerAnimationData.h" 
+#include "TES3Race.h"
 #include "TES3Reference.h"
 #include "TES3Region.h"
 #include "TES3Script.h"
@@ -4270,6 +4271,64 @@ namespace mwse {
 			return macp->getVanityState() != 0;
 		}
 
+		bool testLineOfSight(sol::table params) {
+			// Were we given position data directly?
+			auto position1 = getOptionalParamVector3(params, "position1");
+			if (position1) {
+				auto height1 = getOptionalParam<float>(params, "height1");
+				auto position2 = getOptionalParamVector3(params, "position2");
+				auto height2 = getOptionalParam<float>(params, "height2");
+
+				if (!height1 || !position2 || !height2) {
+					throw std::invalid_argument("Invalid positional params provided. Must provided two references or two positions/heights.");
+				}
+
+				return tes3::testLineOfSight(&position1.value(), height1.value(), &position2.value(), height2.value());
+			}
+
+			// Were we given two actors?
+			auto reference1 = getOptionalParamReference(params, "reference1");
+			auto reference2 = getOptionalParamReference(params, "reference2");
+			if (!reference1 || !reference2) {
+				throw std::invalid_argument("Invalid positional params provided. Must provided two references or two positions/heights.");
+			}
+
+			// 
+			sol::optional<float> height1;
+			sol::optional<TES3::Vector3> position2;
+			sol::optional<float> height2;
+
+			// Try to get the first reference's data.
+			auto mobile1 = reference1->getAttachedMobileActor();
+			if (mobile1) {
+				position1 = mobile1->position;
+				height1 = mobile1->height;
+			}
+			else if (reference1->baseObject->boundingBox) {
+				auto boundingBox = reference1->baseObject->boundingBox;
+				height1 = boundingBox->maximum.z - boundingBox->minimum.z;
+			}
+			else {
+				throw std::invalid_argument("Could not determine first reference's position/height data.");
+			}
+
+			// Try to get the second reference's data.
+			auto mobile2 = reference2->getAttachedMobileActor();
+			if (mobile2) {
+				position2 = mobile2->position;
+				height2 = mobile2->height;
+			}
+			else if (reference2->baseObject->boundingBox) {
+				auto boundingBox = reference2->baseObject->boundingBox;
+				height2 = boundingBox->maximum.z - boundingBox->minimum.z;
+			}
+			else {
+				throw std::invalid_argument("Could not determine second reference's position/height data.");
+			}
+
+			return tes3::testLineOfSight(&position1.value(), height1.value(), &position2.value(), height2.value());
+		}
+
 		void bindTES3Util() {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
@@ -4425,6 +4484,7 @@ namespace mwse {
 			tes3["skipAnimationFrame"] = skipAnimationFrame;
 			tes3["streamMusic"] = streamMusic;
 			tes3["tapKey"] = tapKey;
+			tes3["testLineOfSight"] = testLineOfSight;
 			tes3["togglePOV"] = togglePOV;
 			tes3["transferItem"] = transferItem;
 			tes3["triggerCrime"] = triggerCrime;

@@ -302,6 +302,11 @@ namespace mwse {
 			return TES3_getThreadSafeStringBuffer(reinterpret_cast<char*>(0x7CB478));
 		}
 
+		const auto TES3_testLineOfSight = reinterpret_cast<bool (__cdecl*)(TES3::Vector3*, float, TES3::Vector3*, float)>(0x53B200);
+		bool testLineOfSight(TES3::Vector3* pos1, float height1, TES3::Vector3* pos2, float height2) {
+			return TES3_testLineOfSight(pos1, height1, pos2, height2);
+		}
+
 		const auto TES3_rand = reinterpret_cast<int(__cdecl*)(int)>(0x47B3B0);
 		int rand(unsigned int arg0) {
 			return TES3_rand(arg0);

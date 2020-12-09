@@ -1,6 +1,7 @@
 #pragma once
 
 namespace TES3 {
+	class MagicEffectController;
 	struct ActionAttachment;
 	struct ActionData;
 	struct Activator;
@@ -79,11 +80,11 @@ namespace TES3 {
 	struct LockAttachmentNode;
 	struct Lockpick;
 	struct MagicEffect;
-	class MagicEffectController;
 	struct MagicEffectInstance;
 	struct MagicSourceCombo;
 	struct MagicSourceInstance;
 	struct MapNote;
+	struct Matrix33;
 	struct Misc;
 	struct MobController;
 	struct MobileActor_vTable;
@@ -132,7 +133,11 @@ namespace TES3 {
 	struct StartScript;
 	struct Static;
 	struct Statistic;
+	struct Transform;
 	struct TravelDestination;
+	struct Vector2;
+	struct Vector3;
+	struct Vector4;
 	struct Weapon;
 	struct WearablePart;
 	struct Weather;
