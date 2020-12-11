@@ -1,11 +1,23 @@
 #include "NIFlipController.h"
 
 namespace NI {
+	Texture* FlipController::getTextureAtIndex(size_t index) const {
+		return _getTextureAtIndex(this, index);
+	}
+
+	void FlipController::setTexture(Texture* texture, size_t index) {
+		_setTexture(this, texture, index);
+	}
+
 	void FlipController::copy(FlipController* to) const {
 		TimeController::_copy(this, to);
+		
+		// Copy textures.
+		for (size_t i = 0; i < textures.endIndex; i++) {
+			to->setTexture(getTextureAtIndex(i), i);
+		}
 
 		// Copy fields.
-		to->textures = textures;
 		to->currentIndex = currentIndex;
 		to->affectedMap = affectedMap;
 		to->flipStartTime = flipStartTime;
