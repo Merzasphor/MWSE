@@ -1061,7 +1061,7 @@ namespace mwse {
 			return nullptr;
 		}
 
-		TES3::Region* getRegion() {
+		TES3::Region* getRegion(sol::optional<sol::table> maybeParams) {
 			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
 			if (dataHandler) {
 				// Try to get the current cell's region first.
@@ -1069,6 +1069,21 @@ namespace mwse {
 					TES3::Region* region = dataHandler->currentCell->getRegion();
 					if (region) {
 						return region;
+					}
+
+					// Try to get a cell region.
+					if (dataHandler->currentCell->isInterior() && getOptionalParam(maybeParams, "useDoors", false)) {
+						for (auto ref : dataHandler->currentCell->persistentRefs) {
+							if (ref->baseObject->objectType == TES3::ObjectType::Door) {
+								auto destination = ref->getAttachedTravelDestination();
+								if (destination && destination->cell) {
+									auto region = destination->cell->getRegion();
+									if (region) {
+										return region;
+									}
+								}
+							}
+						}
 					}
 				}
 
