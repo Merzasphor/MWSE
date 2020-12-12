@@ -25,7 +25,9 @@
 #include "LuaCalcSunDamageScalarEvent.h"
 #include "LuaCalcTrainingPriceEvent.h"
 #include "LuaCalcTravelPriceEvent.h"
+#include "LuaCellActivatedEvent.h"
 #include "LuaCellChangedEvent.h"
+#include "LuaCellDeactivatedEvent.h"
 #include "LuaCombatStartedEvent.h"
 #include "LuaCombatStartEvent.h"
 #include "LuaCombatStopEvent.h"
@@ -83,12 +85,15 @@
 #include "LuaMusicSelectTrackEvent.h"
 #include "LuaObjectInvalidatedEvent.h"
 #include "LuaPickLockEvent.h"
+#include "LuaPlayAnimationGroupEvent.h"
 #include "LuaPlayItemSoundEvent.h"
 #include "LuaPostInfoResponseEvent.h"
 #include "LuaPotionBrewedEvent.h"
 #include "LuaPreLevelUpEvent.h"
 #include "LuaPreventRestEvent.h"
 #include "LuaProjectileExpireEvent.h"
+#include "LuaReferenceActivatedEvent.h"
+#include "LuaReferenceDeactivatedEvent.h"
 #include "LuaReferenceSceneNodeCreatedEvent.h"
 #include "LuaRestInterruptEvent.h"
 #include "LuaSavedGameEvent.h"
@@ -112,10 +117,6 @@
 #include "LuaWeatherCycledEvent.h"
 #include "LuaWeatherTransitionFinishedEvent.h"
 #include "LuaWeatherTransitionStartedEvent.h"
-#include "LuaCellActivatedEvent.h"
-#include "LuaCellDeactivatedEvent.h"
-#include "LuaReferenceActivatedEvent.h"
-#include "LuaReferenceDeactivatedEvent.h"
 
 namespace mwse {
 	namespace lua {
@@ -211,6 +212,7 @@ namespace mwse {
 				usertypeDefinition["mouseWheel"] = sol::property(&MouseWheelEvent::getEventEnabled, &MouseWheelEvent::setEventEnabled);
 				usertypeDefinition["musicSelectTrack"] = sol::property(&MusicSelectTrackEvent::getEventEnabled, &MusicSelectTrackEvent::setEventEnabled);
 				usertypeDefinition["objectInvalidated"] = sol::property(&ObjectInvalidatedEvent::getEventEnabled, &ObjectInvalidatedEvent::setEventEnabled);
+				usertypeDefinition["playGroup"] = sol::property(&PlayAnimationGroupEvent::getEventEnabled, &PlayAnimationGroupEvent::setEventEnabled);
 				usertypeDefinition["playItemSound"] = sol::property(&PlayItemSoundEvent::getEventEnabled, &PlayItemSoundEvent::setEventEnabled);
 				usertypeDefinition["postInfoResponse"] = sol::property(&PostInfoResponseEvent::getEventEnabled, &PostInfoResponseEvent::setEventEnabled);
 				usertypeDefinition["potionBrewed"] = sol::property(&PotionBrewedEvent::getEventEnabled, &PotionBrewedEvent::setEventEnabled);
