@@ -136,6 +136,11 @@ function this.clear(eventType, filter)
 			filteredEvents[eventType][filter] = nil
 		end
 	end
+
+	-- Do we no longer care about this event?
+	if (disableableEvents[eventType] == true and generalEvents[eventType] == nil and filteredEvents[eventType] == nil) then
+		disableableEvents[eventType] = false
+	end
 end
 
 local function onEventError(error)
