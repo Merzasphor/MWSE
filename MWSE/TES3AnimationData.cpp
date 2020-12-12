@@ -39,6 +39,7 @@ namespace TES3 {
 		if (actorNode) {
 			return actorNode->getTes3Reference(false);
 		}
+		return nullptr;
 	}
 
 	void AnimationData::playAnimationGroup(int animationGroup, int startFlag, int loopCount) {
