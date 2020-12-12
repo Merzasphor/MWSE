@@ -61,13 +61,13 @@ namespace mwse {
 			usertypeDefinition["attachments"] = sol::readonly_property(&TES3::Reference::getAttachments_lua);
 			usertypeDefinition["context"] = sol::readonly_property(&TES3::Reference::getContext_lua);
 			usertypeDefinition["data"] = sol::readonly_property(&TES3::Reference::getLuaTable);
-			usertypeDefinition["mesh"] = sol::property(&TES3::Reference::getModelPath, &TES3::Reference::setModelPath);
+			usertypeDefinition["facing"] = sol::property(&TES3::Reference::getFacing, &TES3::Reference::setFacing);
 			usertypeDefinition["isEmpty"] = sol::property(&TES3::Reference::getEmptyInventoryFlag, &TES3::Reference::setEmptyInventoryFlag);
 			usertypeDefinition["isLeveledSpawn"] = sol::readonly_property(&TES3::Reference::isLeveledSpawn);
 			usertypeDefinition["isRespawn"] = sol::readonly_property(&TES3::Reference::isRespawn);
+			usertypeDefinition["mesh"] = sol::property(&TES3::Reference::getModelPath, &TES3::Reference::setModelPath);
 			usertypeDefinition["orientation"] = sol::property(&TES3::Reference::getOrientation, &TES3::Reference::setOrientationFromLua);
 			usertypeDefinition["position"] = sol::property(&TES3::Reference::getPosition, &TES3::Reference::setPositionFromLua);
-			usertypeDefinition["rotation"] = sol::property(&TES3::Reference::getRotation, &TES3::Reference::setRotation);
 
 			// Functions for manually syncing the scene graph, for if orientation or position is manually modified.
 			usertypeDefinition["updateSceneGraph"] = &TES3::Reference::updateSceneGraph_lua;

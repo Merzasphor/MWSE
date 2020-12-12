@@ -74,8 +74,8 @@ namespace TES3 {
 		Vector3 * getOrientation();
 		void setOrientation(const Vector3 * newOrientation);
 
-		float getRotation();
-		void setRotation(float rotation);
+		float getFacing();
+		void setFacing(float facing);
 
 		float getAngleToReference(Reference* reference);
 

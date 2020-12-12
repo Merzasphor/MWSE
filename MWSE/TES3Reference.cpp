@@ -529,17 +529,17 @@ namespace TES3 {
 		setObjectModified(true);
 	}
 
-	float Reference::getRotation() {
+	float Reference::getFacing() {
 		return getOrientation()->z;
 	}
 
-	void Reference::setRotation(float rotation) {
+	void Reference::setFacing(float rotation) {
 		Vector3 orientation(0, 0, rotation);
 		setOrientation(&orientation);
 	}
 
 	float Reference::getAngleToReference(Reference* reference) {
-		auto rotation = getRotation();
+		auto rotation = getFacing();
 		Vector3 forward(sinf(rotation), cosf(rotation), 0.0f);
 		return (*reference->getPosition() - *getPosition()).angle(&forward);
 	}
