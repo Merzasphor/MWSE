@@ -47,6 +47,7 @@ namespace mwse {
 			usertypeDefinition["detachDynamicLightFromAffectedNodes"] = &TES3::Reference::detachDynamicLightFromAffectedNodes;
 			usertypeDefinition["disable"] = &TES3::Reference::disable;
 			usertypeDefinition["enable"] = &TES3::Reference::enable;
+			usertypeDefinition["getAngleTo"] = &TES3::Reference::getAngleToReference;
 			usertypeDefinition["getAttachedDynamicLight"] = &TES3::Reference::getAttachedDynamicLight;
 			usertypeDefinition["getOrCreateAttachedDynamicLight"] = &TES3::Reference::getOrCreateAttachedDynamicLight;
 			usertypeDefinition["setActionFlag"] = &TES3::Reference::setActionFlag;
@@ -66,6 +67,7 @@ namespace mwse {
 			usertypeDefinition["isRespawn"] = sol::readonly_property(&TES3::Reference::isRespawn);
 			usertypeDefinition["orientation"] = sol::property(&TES3::Reference::getOrientation, &TES3::Reference::setOrientationFromLua);
 			usertypeDefinition["position"] = sol::property(&TES3::Reference::getPosition, &TES3::Reference::setPositionFromLua);
+			usertypeDefinition["rotation"] = sol::property(&TES3::Reference::getRotation, &TES3::Reference::setRotation);
 
 			// Functions for manually syncing the scene graph, for if orientation or position is manually modified.
 			usertypeDefinition["updateSceneGraph"] = &TES3::Reference::updateSceneGraph_lua;

@@ -74,6 +74,11 @@ namespace TES3 {
 		Vector3 * getOrientation();
 		void setOrientation(const Vector3 * newOrientation);
 
+		float getRotation();
+		void setRotation(float rotation);
+
+		float getAngleToReference(Reference* reference);
+
 		TravelDestination * setTravelDestination(const Vector3 * position, const Vector3 * orientation, Cell * cell = nullptr);
 
 		Matrix33* updateSceneMatrix(Matrix33* matrix, bool eulerXYZ = false);

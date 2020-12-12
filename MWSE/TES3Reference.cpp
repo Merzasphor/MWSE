@@ -529,6 +529,21 @@ namespace TES3 {
 		setObjectModified(true);
 	}
 
+	float Reference::getRotation() {
+		return getOrientation()->z;
+	}
+
+	void Reference::setRotation(float rotation) {
+		Vector3 orientation(0, 0, rotation);
+		setOrientation(&orientation);
+	}
+
+	float Reference::getAngleToReference(Reference* reference) {
+		auto rotation = getRotation();
+		Vector3 forward(sinf(rotation), cosf(rotation), 0.0f);
+		return (*reference->getPosition() - *getPosition()).angle(&forward);
+	}
+
 	const auto TES3_Reference_setTravelDestination = reinterpret_cast<TravelDestination*(__thiscall*)(Reference*, const Vector3 *, const Vector3*)>(0x4E7B80);
 	TravelDestination * Reference::setTravelDestination(const Vector3 * position, const Vector3 * orientation, Cell * cell) {
 		auto destination = TES3_Reference_setTravelDestination(this, position, orientation);
