@@ -56,12 +56,12 @@ namespace TES3 {
 		Vector3 copy() const;
 		NI::Color toNiColor() const;
 
-		Vector3 crossProduct(Vector3*) const;
-		float dotProduct(Vector3*) const;
-		Matrix33 outerProduct(Vector3*) const;
+		Vector3 crossProduct(const Vector3*) const;
+		float dotProduct(const Vector3*) const;
+		Matrix33 outerProduct(const Vector3*) const;
 			
-		float heightDifference(Vector3*) const;
-		float distance(Vector3*) const;
+		float heightDifference(const Vector3*) const;
+		float distance(const Vector3*) const;
 		float length() const;
 		void negate();
 		bool normalize();

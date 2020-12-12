@@ -146,15 +146,15 @@ namespace TES3 {
 		return NI::Color(x, y, z);
 	}
 
-	Vector3 Vector3::crossProduct(Vector3* vec3) const {
+	Vector3 Vector3::crossProduct(const Vector3* vec3) const {
 		return Vector3(y * vec3->z - z * vec3->y, z * vec3->x - vec3->z * x, x * vec3->y - y * vec3->x);
 	}
 
-	float Vector3::dotProduct(Vector3* vec3) const {
+	float Vector3::dotProduct(const Vector3* vec3) const {
 		return vec3->z * z + vec3->y * y + vec3->x * x;
 	}
 
-	Matrix33 Vector3::outerProduct(Vector3* vec3) const {
+	Matrix33 Vector3::outerProduct(const Vector3* vec3) const {
 		return Matrix33(
 			(x * vec3->x), (y * vec3->x), (z * vec3->x),
 			(x * vec3->y), (y * vec3->y), (z * vec3->y),
@@ -162,11 +162,11 @@ namespace TES3 {
 		);
 	}
 
-	float Vector3::heightDifference(Vector3* vec3) const {
+	float Vector3::heightDifference(const Vector3* vec3) const {
 		return fabs(z - vec3->z);
 	}
 
-	float Vector3::distance(Vector3* vec3) const {
+	float Vector3::distance(const Vector3* vec3) const {
 		float dx = x - vec3->x;
 		float dy = y - vec3->y;
 		float dz = z - vec3->z;
