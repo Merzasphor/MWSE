@@ -103,6 +103,7 @@
     <ClInclude Include="LuaObjectFilteredEvent.h" />
     <ClInclude Include="LuaObjectInvalidatedEvent.h" />
     <ClInclude Include="LuaPickLockEvent.h" />
+    <ClInclude Include="LuaPlayAnimationGroupEvent.h" />
     <ClInclude Include="LuaPlayItemSoundEvent.h" />
     <ClInclude Include="LuaPostInfoResponseEvent.h" />
     <ClInclude Include="LuaPotionBrewedEvent.h" />
@@ -535,6 +536,7 @@
     <ClCompile Include="LuaObjectFilteredEvent.cpp" />
     <ClCompile Include="LuaObjectInvalidatedEvent.cpp" />
     <ClCompile Include="LuaPickLockEvent.cpp" />
+    <ClCompile Include="LuaPlayAnimationGroupEvent.cpp" />
     <ClCompile Include="LuaPlayItemSoundEvent.cpp" />
     <ClCompile Include="LuaPostInfoResponseEvent.cpp" />
     <ClCompile Include="LuaPotionBrewedEvent.cpp" />

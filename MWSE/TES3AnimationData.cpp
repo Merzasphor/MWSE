@@ -1,14 +1,44 @@
 #include "TES3AnimationData.h"
 
+#include "NINode.h"
+
+#include "LuaManager.h"
+
+#include "LuaPlayAnimationGroupEvent.h"
+
 namespace TES3 {
 	const auto TES3_AnimationData_playAnimationGroupForIndex = reinterpret_cast<void(__thiscall*)(AnimationData*, int, int, int, int)>(0x470AE0);
 	void AnimationData::playAnimationGroupForIndex(int animationGroup, int triIndex, int startFlag, int loopCount) {
+		if (mwse::lua::event::PlayAnimationGroupEvent::getEventEnabled()) {
+			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::object response = stateHandle.triggerEvent(new mwse::lua::event::PlayAnimationGroupEvent(this, animationGroup, triIndex, startFlag, loopCount));
+			if (response.get_type() == sol::type::table) {
+				sol::table eventData = response;
+
+				// Allow event blocking.
+				if (eventData.get_or("block", false)) {
+					return;
+				}
+
+				// Allow overrides.
+				animationGroup = eventData.get_or("group", animationGroup);
+				startFlag = eventData.get_or("flags", startFlag);
+				loopCount = eventData.get_or("loopCount", loopCount);
+			}
+		}
+
 		TES3_AnimationData_playAnimationGroupForIndex(this, animationGroup, triIndex, startFlag, loopCount);
 	}
 
 	const auto TES3_AnimationData_setHeadNode = reinterpret_cast<void(__thiscall*)(AnimationData*, NI::Node*)>(0x4704B0);
 	void AnimationData::setHeadNode(NI::Node* head) {
 		TES3_AnimationData_setHeadNode(this, head);
+	}
+
+	Reference* AnimationData::getReference() const {
+		if (actorNode) {
+			return actorNode->getTes3Reference(false);
+		}
 	}
 
 	void AnimationData::playAnimationGroup(int animationGroup, int startFlag, int loopCount) {

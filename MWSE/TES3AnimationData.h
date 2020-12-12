@@ -177,6 +177,8 @@ namespace TES3 {
 		// Custom functions.
 		//
 
+		Reference* getReference() const;
+
 		void playAnimationGroup(int animationGroup, int startFlag = 0, int loopCount = -1);
 
 	};
