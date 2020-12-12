@@ -62,6 +62,7 @@ namespace TES3 {
 			
 		float heightDifference(const Vector3*) const;
 		float distance(const Vector3*) const;
+		float angle(const Vector3*) const;
 		float length() const;
 		void negate();
 		bool normalize();

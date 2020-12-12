@@ -173,6 +173,10 @@ namespace TES3 {
 		return sqrt(dz * dz + dx * dx + dy * dy);
 	}
 
+	float Vector3::angle(const Vector3* v) const {
+		return acosf(dotProduct(v) / (length() * v->length()));
+	}
+
 	float Vector3::length() const {
 		return sqrt(x * x + y * y + z * z);
 	}

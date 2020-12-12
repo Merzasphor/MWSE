@@ -68,6 +68,7 @@ namespace mwse {
 				usertypeDefinition["b"] = &TES3::Vector3::z;
 
 				// Basic function binding.
+				usertypeDefinition["angle"] = &TES3::Vector3::angle;
 				usertypeDefinition["copy"] = &TES3::Vector3::copy;
 				usertypeDefinition["cross"] = &TES3::Vector3::crossProduct;
 				usertypeDefinition["distance"] = &TES3::Vector3::distance;
