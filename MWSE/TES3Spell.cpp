@@ -8,6 +8,7 @@
 
 #include "LuaUtil.h"
 #include "TES3Util.h"
+#include "BitUtil.h"
 
 namespace TES3 {
 	const auto TES3_Spell_ctor = reinterpret_cast<TES3::Spell * (__thiscall*)(TES3::Spell*)>(0x4A9FD0);
@@ -50,6 +51,38 @@ namespace TES3 {
 		}
 
 		return castChance;
+	}
+
+	bool Spell::getSpellFlag(SpellFlag::Flag flag) const {
+		return BITMASK_TEST(spellFlags, flag);
+	}
+
+	void Spell::setSpellFlag(SpellFlag::Flag flag, bool value) {
+		BITMASK_SET(spellFlags, flag, value);
+	}
+
+	bool Spell::getAutoCalc() const {
+		return getSpellFlag(SpellFlag::Flag::AutoCalc);
+	}
+
+	void Spell::setAutoCalc(bool value) {
+		setSpellFlag(SpellFlag::Flag::AutoCalc, value);
+	}
+
+	bool Spell::getPlayerStart() const {
+		return getSpellFlag(SpellFlag::Flag::PCStartSpell);
+	}
+
+	void Spell::setPlayerStart(bool value) {
+		setSpellFlag(SpellFlag::Flag::PCStartSpell, value);
+	}
+
+	bool Spell::getAlwaysSucceeds() const {
+		return getSpellFlag(SpellFlag::Flag::AlwaysSucceeds);
+	}
+
+	void Spell::setAlwaysSucceeds(bool value) {
+		setSpellFlag(SpellFlag::Flag::AlwaysSucceeds, value);
 	}
 
 	size_t Spell::getActiveEffectCount() {

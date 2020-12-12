@@ -80,10 +80,12 @@ namespace mwse {
 			usertypeDefinition["calculateCastChance"] = &TES3::Spell::calculateCastChance_lua;
 			usertypeDefinition["getActiveEffectCount"] = &TES3::Spell::getActiveEffectCount;
 			usertypeDefinition["getFirstIndexOfEffect"] = &TES3::Spell::getFirstIndexOfEffect;
-
-			// Functions exposed as properties.
-			usertypeDefinition["autoCalc"] = sol::property(&TES3::Spell::getAutoCalc, &TES3::Spell::setAutoCalc);
 			usertypeDefinition["name"] = sol::property(&TES3::Spell::getName, &TES3::Spell::setName);
+
+			// Convenient flag access.
+			usertypeDefinition["alwaysSucceeds"] = sol::property(&TES3::Spell::getAlwaysSucceeds, &TES3::Spell::setAlwaysSucceeds);
+			usertypeDefinition["autoCalc"] = sol::property(&TES3::Spell::getAutoCalc, &TES3::Spell::setAutoCalc);
+			usertypeDefinition["playerStart"] = sol::property(&TES3::Spell::getPlayerStart, &TES3::Spell::setPlayerStart);
 		}
 	}
 }

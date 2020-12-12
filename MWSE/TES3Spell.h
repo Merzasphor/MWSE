@@ -72,6 +72,16 @@ namespace TES3 {
 		// Custom functions.
 		//
 
+		bool getSpellFlag(SpellFlag::Flag flag) const;
+		void setSpellFlag(SpellFlag::Flag flag, bool value);
+
+		bool getAutoCalc() const;
+		void setAutoCalc(bool value);
+		bool getPlayerStart() const;
+		void setPlayerStart(bool value);
+		bool getAlwaysSucceeds() const;
+		void setAlwaysSucceeds(bool value);
+
 		size_t getActiveEffectCount();
 		int getFirstIndexOfEffect(int effectId);
 
