@@ -134,7 +134,7 @@ namespace TES3 {
 
 	std::string Vector3::toJson() const {
 		std::ostringstream ss;
-		ss << "[\"x\":" << x << ",\"y\":" << y << ",\"z\":" << z << "]";
+		ss << "{\"x\":" << x << ",\"y\":" << y << ",\"z\":" << z << "}";
 		return std::move(ss.str());
 	}
 
