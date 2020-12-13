@@ -26,6 +26,8 @@ namespace NI {
 
 		static Pointer<Node> create();
 
+		TES3::BoundingBox createBoundingBox_lua(sol::optional<float> scale) const;
+
 		Pointer<AVObject> detachChildHandled(AVObject* child);
 		Pointer<AVObject> detachChildAtHandled(size_t index);
 

@@ -34,6 +34,20 @@ namespace NI {
 		return new Node();
 	}
 
+	const auto NI_CreateBoundingBoxForNode = reinterpret_cast<void(__cdecl*)(const Node*, TES3::Vector3*, TES3::Vector3*, TES3::Vector3*, TES3::Matrix33*, float*)>(0x4EF410);
+	TES3::BoundingBox Node::createBoundingBox_lua(sol::optional<float> _scale) const {
+		TES3::BoundingBox bb;
+		bb.minimum.x = FLT_MAX;
+		bb.minimum.y = FLT_MAX;
+		bb.minimum.z = FLT_MAX;
+		bb.maximum.x = FLT_MIN;
+		bb.maximum.y = FLT_MIN;
+		bb.maximum.z = FLT_MIN;
+		float scale = _scale.value_or(1.0f);
+		NI_CreateBoundingBoxForNode(this, &bb.minimum, &bb.maximum, (TES3::Vector3*)0x7DE6CC, (TES3::Matrix33*)0x7DE664, &scale);
+		return bb;
+	}
+
 	Pointer<AVObject> Node::detachChildHandled(AVObject* child) {
 		AVObject* returnedChild = nullptr;
 		detachChild(&returnedChild, child);

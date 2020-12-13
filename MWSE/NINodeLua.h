@@ -15,6 +15,7 @@ namespace mwse {
 
 			// Basic function binding.
 			usertypeDefinition["attachChild"] = &NI::Node::attachChild_lua;
+			usertypeDefinition["createBoundingBox"] = &NI::Node::createBoundingBox_lua;
 			usertypeDefinition["detachChild"] = &NI::Node::detachChildHandled;
 			usertypeDefinition["detachChildAt"] = &NI::Node::detachChildAt_lua;
 			usertypeDefinition["attachEffect"] = &NI::Node::attachEffect;
