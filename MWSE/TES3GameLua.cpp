@@ -43,10 +43,13 @@ namespace mwse {
 			usertypeDefinition["worldLandscapeRoot"] = sol::readonly_property(&TES3::Game::worldLandscapeRoot);
 			usertypeDefinition["worldObjectRoot"] = sol::readonly_property(&TES3::Game::worldObjectRoot);
 			usertypeDefinition["worldPickRoot"] = sol::readonly_property(&TES3::Game::worldPickObjectRoot);
-			usertypeDefinition["worldSceneGraphRoot"] = sol::readonly_property(&TES3::Game::worldRoot);
+			usertypeDefinition["worldRoot"] = sol::readonly_property(&TES3::Game::worldRoot);
 
 			// Basic function binding.
 			usertypeDefinition["setGamma"] = &TES3::Game::setGamma;
+
+			// Deprecated bindings.
+			usertypeDefinition["worldSceneGraphRoot"] = sol::readonly_property(&TES3::Game::worldRoot);
 		}
 	}
 }
