@@ -1217,11 +1217,6 @@ namespace TES3 {
 			// Sanitize path.
 			std::replace(path.begin(), path.end(), '/', '\\');
 
-			// Make sure the file exists.
-			if (mwse::tes3::resolveAssetPath(path.c_str()) == 0) {
-				throw std::invalid_argument("Provided file does not exist.");
-			}
-
 			auto id = mwse::lua::getOptionalUIID(params, "id");
 			return createNif(id, path.c_str());
 		}
