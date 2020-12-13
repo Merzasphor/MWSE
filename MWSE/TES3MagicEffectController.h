@@ -5,7 +5,8 @@
 #include "TES3MagicEffect.h"
 
 namespace TES3 {
-#define MAX_EFFECT_COUNT SHRT_MAX
+	constexpr int MAX_EFFECT_COUNT = SHRT_MAX;
+	constexpr int EFFECT_ID_INVALID = MAX_EFFECT_COUNT - 1;
 
 	namespace MagicEffectAttribute {
 		typedef unsigned int value_type;
@@ -51,6 +52,7 @@ namespace TES3 {
 		// MagicEffect object functions.
 		MagicEffect* getEffectObject(int id);
 		void addEffectObject(MagicEffect* effect);
+		bool getEffectExists(int id);
 
 		const char * getEffectName(int id);
 
@@ -67,8 +69,6 @@ namespace TES3 {
 		std::unordered_map<int, sol::protected_function> effectLuaTickFunctions;
 		std::unordered_map<int, sol::protected_function> effectLuaCollisionFunctions;
 		std::unordered_map<int, std::string> effectCustomNames;
-
-		// Unimplemented.
 		static unsigned int effectNameGMSTs[MAX_EFFECT_COUNT];
 		static unsigned int effectFlags[MAX_EFFECT_COUNT];
 		static unsigned int effectCounters[MAX_EFFECT_COUNT][5];

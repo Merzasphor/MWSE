@@ -39,10 +39,22 @@ namespace TES3 {
 		}
 	}
 
+	static MagicEffect* InvalidMagicEffect = nullptr;
+	static std::unordered_set<int> warnedMagicEffectIds;
+
 	MagicEffect* MagicEffectController::getEffectObject(int id) {
+		if (id == -1) {
+			return nullptr;
+		}
+
 		auto itt = effectObjects.find(id);
 		if (itt == effectObjects.end()) {
-			return nullptr;
+			// Warn only once per effect ID.
+			if (warnedMagicEffectIds.find(id) == warnedMagicEffectIds.end()) {
+				mwse::log::getLog() << "Invalid effect ID " << id << " encountered. Spoofing substitute. Uninstalling mods that add custom effects can lead to unexpected behavior and crashes." << std::endl;
+				warnedMagicEffectIds.insert(id);
+			}
+			return InvalidMagicEffect;
 		}
 
 		return itt->second;
@@ -50,6 +62,10 @@ namespace TES3 {
 
 	void MagicEffectController::addEffectObject(MagicEffect* effect) {
 		effectObjects[effect->id] = effect;
+	}
+
+	bool MagicEffectController::getEffectExists(int id) {
+		return effectObjects.find(id) != effectObjects.end();
 	}
 
 	const char * MagicEffectController::getEffectName(int id) {
@@ -86,14 +102,35 @@ namespace TES3 {
 	//
 
 	void __fastcall InitializeController(NonDynamicData * ndd) {
-		ndd->magicEffects = new MagicEffectController();
+		auto magicEffectController = new MagicEffectController();
+		ndd->magicEffects = magicEffectController;
 
 		memset(ndd->freed_0x5CC, 0x0, sizeof(ndd->freed_0x5CC));
 
 		for (int i = EffectID::FirstEffect; i <= EffectID::LastEffect; i++) {
 			auto effect = new MagicEffect(i);
-			ndd->magicEffects->addEffectObject(effect);
+			magicEffectController->addEffectObject(effect);
 		}
+
+		// Add an invalid effect for catching crashes.
+		InvalidMagicEffect = new MagicEffect(EFFECT_ID_INVALID);
+		InvalidMagicEffect->setDescription("This effect is invalid. This typically happens when uninstalling mods.");
+		magicEffectController->effectCustomNames[EFFECT_ID_INVALID] = "Invalid Effect";
+		magicEffectController->effectNameGMSTs[EFFECT_ID_INVALID] = -EFFECT_ID_INVALID;
+		magicEffectController->setEffectFlags(EFFECT_ID_INVALID, 0U);
+		InvalidMagicEffect->flags = 0;
+		strcpy_s(InvalidMagicEffect->particleTexture, "vfx_default.tga");
+		strcpy_s(InvalidMagicEffect->icon, "s\\Tx_S_sEfft_Unusd02.tga");
+		strcpy_s(InvalidMagicEffect->castSoundEffect, "Conjuration Cast");
+		strcpy_s(InvalidMagicEffect->boltSoundEffect, "Conjuration Bolt");
+		strcpy_s(InvalidMagicEffect->hitSoundEffect, "Conjuration Hit");
+		strcpy_s(InvalidMagicEffect->areaSoundEffect, "Conjuration Area");
+		InvalidMagicEffect->speed = 1.0f;
+		InvalidMagicEffect->size = 1.0f;
+		InvalidMagicEffect->sizeCap = 50.0f;
+		InvalidMagicEffect->lightingRed = 192;
+		InvalidMagicEffect->lightingGreen = 192;
+		InvalidMagicEffect->lightingBlue = 192;
 	}
 
 	void __stdcall DestroyController() {
@@ -106,6 +143,12 @@ namespace TES3 {
 		for (auto itt : controller->effectObjects) {
 			itt.second->resolveLinks(nonDynamicData);
 		}
+
+		// Finish up the invalid effect.
+		InvalidMagicEffect->castEffect = static_cast<PhysicalObject*>(nonDynamicData->resolveObject("VFX_DefaultCast"));
+		InvalidMagicEffect->boltEffect = static_cast<PhysicalObject*>(nonDynamicData->resolveObject("VFX_DefaultBolt"));
+		InvalidMagicEffect->hitEffect = static_cast<PhysicalObject*>(nonDynamicData->resolveObject("VFX_DefaultHit"));
+		InvalidMagicEffect->areaEffect = static_cast<PhysicalObject*>(nonDynamicData->resolveObject("VFX_DefaultArea"));
 
 		mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::GenericEvent("magicEffectsResolved"));
 	}

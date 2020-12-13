@@ -620,7 +620,10 @@ namespace mwse {
 		TES3::MagicEffect* getMagicEffect(int id) {
 			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
 			if (dataHandler) {
-				return dataHandler->nonDynamicData->getMagicEffect(id);
+				auto magicEffectsController = dataHandler->nonDynamicData->magicEffects;
+				if (magicEffectsController->getEffectExists(id)) {
+					return magicEffectsController->getEffectObject(id);
+				}
 			}
 			return nullptr;
 		}
@@ -3645,10 +3648,10 @@ namespace mwse {
 
 			// Get the new ID.
 			int id = getOptionalParam<int>(params, "id", -1);;
-			if (id <= TES3::EffectID::LastEffect) {
-				throw std::invalid_argument("Invalid 'id' parameter provided. It must be an integer greater than 142.");
+			if (id <= TES3::EffectID::LastEffect || id >= TES3::EFFECT_ID_INVALID) {
+				throw std::invalid_argument("Invalid 'id' parameter provided. It must be an integer greater than 142 and less than 32766.");
 			}
-			else if (magicEffectController->getEffectObject(id)) {
+			else if (magicEffectController->getEffectExists(id)) {
 				throw std::invalid_argument("Invalid 'id' parameter provided. An effect with this id already exists.");
 			}
 
