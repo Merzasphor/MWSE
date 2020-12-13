@@ -107,6 +107,12 @@ namespace mwse {
 				auto usertypeDefinition = state.new_usertype<TES3::BoundingBox>("tes3boundingBox");
 				usertypeDefinition["new"] = sol::no_constructor;
 
+				// Operator overloading.
+				usertypeDefinition[sol::meta_function::to_string] = &TES3::BoundingBox::toString;
+
+				// Allow objects to be serialized to json using their ID.
+				usertypeDefinition["__tojson"] = &TES3::BoundingBox::toJson;
+
 				// Basic property bindings.
 				usertypeDefinition["max"] = &TES3::BoundingBox::maximum;
 				usertypeDefinition["min"] = &TES3::BoundingBox::minimum;

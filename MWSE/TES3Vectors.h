@@ -148,6 +148,16 @@ namespace TES3 {
 		Vector3 minimum;
 		Vector3 maximum;
 
+		BoundingBox();
+		BoundingBox(float minX, float minY, float minZ, float maxX, float maxY, float maxZ);
+
+		bool operator==(const BoundingBox& other) const;
+		bool operator!=(const BoundingBox& other) const;
+
+		friend std::ostream& operator<<(std::ostream& str, const BoundingBox& other);
+		std::string toString() const;
+		std::string toJson() const;
+
 		BoundingBox copy() const;
 	};
 	static_assert(sizeof(BoundingBox) == 0x18, "TES3::BoundingBox failed size validation");

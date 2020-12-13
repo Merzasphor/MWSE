@@ -464,6 +464,48 @@ namespace TES3 {
 	// BoundingBox
 	//
 
+	BoundingBox::BoundingBox() :
+		minimum(),
+		maximum()
+	{
+
+	}
+
+	BoundingBox::BoundingBox(float minX, float minY, float minZ, float maxX, float maxY, float maxZ) :
+		minimum(minX, minY, minZ),
+		maximum(maxX, maxY, maxZ)
+	{
+
+	}
+
+	bool BoundingBox::operator==(const BoundingBox& other) const {
+		return minimum == other.minimum && maximum == other.maximum;
+	}
+
+	bool BoundingBox::operator!=(const BoundingBox& other) const {
+		return minimum != other.minimum || maximum != other.maximum;
+	}
+
+	std::ostream& operator<<(std::ostream& str, const BoundingBox& other) {
+		str << "(" << other.minimum << "," << other.maximum << ")";
+		return str;
+	}
+
+	std::string BoundingBox::toString() const {
+		std::ostringstream ss;
+		ss << std::fixed << std::setprecision(2) << std::dec << *this;
+		return std::move(ss.str());
+	}
+
+	std::string BoundingBox::toJson() const {
+		std::ostringstream ss;
+		ss << "{"
+			<< "\"min\":" << minimum.toJson() << ","
+			<< "\"max\":" << maximum.toJson()
+			<< "}";
+		return std::move(ss.str());
+	}
+
 	BoundingBox BoundingBox::copy() const {
 		return *this;
 	}
