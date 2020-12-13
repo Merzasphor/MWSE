@@ -33,6 +33,9 @@ namespace mwse {
 				// Lazy access to geometry data. Don't encourage this.
 				usertypeDefinition["normals"] = sol::readonly_property(&NI::TriShape::getNormals);
 				usertypeDefinition["vertices"] = sol::readonly_property(&NI::TriShape::getVertices);
+
+				// Basic function binding.
+				usertypeDefinition["createBoundingBox"] = &NI::TriShape::createBoundingBox_lua;
 			}
 		}
 	}

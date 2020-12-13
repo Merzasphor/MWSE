@@ -57,6 +57,8 @@ namespace NI {
 		// Custom functions.
 		//
 
+		std::shared_ptr<TES3::BoundingBox> createBoundingBox_lua() const;
+
 		void clearTransforms();
 		Pointer<Property> getProperty(PropertyType type);
 
