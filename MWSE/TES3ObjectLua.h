@@ -52,7 +52,7 @@ namespace mwse {
 			setUserdataForTES3Object(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition["boundingBox"] = sol::readonly_property(&TES3::PhysicalObject::boundingBox);
+			usertypeDefinition["boundingBox"] = sol::readonly_property(&TES3::PhysicalObject::getOrCreateBoundingBox);
 
 			// Functions exposed as properties.
 			usertypeDefinition["mobile"] = sol::readonly_property(&TES3::PhysicalObject::getMobile);

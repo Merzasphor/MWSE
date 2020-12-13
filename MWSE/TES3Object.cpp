@@ -620,6 +620,18 @@ namespace TES3 {
 		return TES3_PhysicalObject_getMobile(this);
 	}
 
+	const auto TES3_PhysicalObject_createBoundingBox = reinterpret_cast<void(__thiscall*)(PhysicalObject*)>(0x4EEFC0);
+	void PhysicalObject::createBoundingBox() {
+		TES3_PhysicalObject_createBoundingBox(this);
+	}
+
+	BoundingBox* PhysicalObject::getOrCreateBoundingBox() {
+		if (!boundingBox) {
+			createBoundingBox();
+		}
+		return boundingBox;
+	}
+
 	Reference* PhysicalObject::getReference() const {
 		auto mobile = getMobile();
 		if (mobile == nullptr) {

@@ -384,9 +384,14 @@ namespace TES3 {
 
 		MobileObject* getMobile() const;
 
+		void createBoundingBox();
+
 		//
 		// Custom functions.
 		//
+
+		BoundingBox* getOrCreateBoundingBox();
+
 		Reference* getReference() const;
 
 	};
