@@ -130,6 +130,7 @@ namespace TES3 {
 		//
 
 		void readKeyState();
+		int readButtonPressed(DWORD* data);
 		bool keybindTest(unsigned int, unsigned int) const;
 
 		//

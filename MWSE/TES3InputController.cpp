@@ -1,19 +1,23 @@
 #include "TES3InputController.h"
 
-#define TES3_InputController_readKeyState 0x4065E0
-#define TES3_InputController_keybindTest 0x406F40
-
 namespace TES3 {
 	std::reference_wrapper<BYTE[8]> InputController::DirectInputMouseState::getButtons() {
 		return std::ref(rgbButtons);
 	}
 
+	const auto TES3_InputController_readKeyState = reinterpret_cast<void(__thiscall*)(InputController*)>(0x4065E0);
 	void InputController::readKeyState() {
-		reinterpret_cast<void(__thiscall *)(InputController*)>(TES3_InputController_readKeyState)(this);
+		TES3_InputController_readKeyState(this);
 	}
 
+	const auto TES3_InputController_readButtonPressed = reinterpret_cast<int(__thiscall*)(InputController*, DWORD*)>(0x406950);
+	int InputController::readButtonPressed(DWORD* data) {
+		return TES3_InputController_readButtonPressed(this, data);
+	}
+
+	const auto TES3_InputController_keybindTest = reinterpret_cast<int(__thiscall*)(const InputController*, unsigned int, unsigned int)>(0x406F40);
 	bool InputController::keybindTest(unsigned int keyBind, unsigned int transition) const {
-		return reinterpret_cast<int(__thiscall *)(const InputController*, unsigned int, unsigned int)>(TES3_InputController_keybindTest)(this, keyBind, transition) == 1;
+		return TES3_InputController_keybindTest(this, keyBind, transition);
 	}
 
 	bool InputController::isKeyDown(unsigned char keyCode) const {

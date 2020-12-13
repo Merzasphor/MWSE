@@ -10,6 +10,7 @@
 #include "TES3Game.h"
 #include "TES3GameFile.h"
 #include "TES3GameSetting.h"
+#include "TES3InputController.h"
 #include "TES3Misc.h"
 #include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
@@ -173,8 +174,48 @@ namespace mwse {
 		// Patch: Make Morrowind believe that it is always the front window in the main gameplay loop block.
 		//
 
+		static HWND lastActiveWindow = 0;
 		HWND __stdcall PatchGetMorrowindMainWindow() {
-			return TES3::WorldController::get()->Win32_hWndParent;
+			auto worldController = TES3::WorldController::get();
+			auto mainWindowHandle = worldController->Win32_hWndParent;
+
+			// Check to see if we've become inactive.
+			auto activeWindow = GetActiveWindow();
+			if (activeWindow != mainWindowHandle && activeWindow != lastActiveWindow) {
+				// Reset mouse deltas so it stops moving.
+				auto inputController = worldController->inputController;
+				inputController->mouseState.lX = 0;
+				inputController->mouseState.lY = 0;
+				inputController->mouseState.lZ = 0;
+
+				memset(inputController->keyboardState, 0, sizeof(inputController->keyboardState));
+				memset(inputController->previousKeyboardState, 0, sizeof(inputController->previousKeyboardState));
+			}
+
+			lastActiveWindow = activeWindow;
+
+			return mainWindowHandle;
+		}
+
+		void __fastcall PatchGetMorrowindMainWindow_NoBackgroundInput(TES3::InputController* inputController) {
+			if (GetActiveWindow() != TES3::WorldController::get()->Win32_hWndParent) {
+				return;
+			}
+
+			inputController->readKeyState();
+		}
+
+		int __fastcall PatchGetMorrowindMainWindow_NoBufferReading(TES3::InputController* inputController, DWORD _EDX_, DWORD* key) {
+			if (GetActiveWindow() != TES3::WorldController::get()->Win32_hWndParent) {
+				// Read in the input so it doesn't get buffered when we alt-tab back in.
+				inputController->readButtonPressed(key);
+
+				// But pretend that nothing was found.
+				*key = 0;
+				return 0;
+			}
+
+			return inputController->readButtonPressed(key);
 		}
 
 		//
@@ -333,6 +374,14 @@ namespace mwse {
 			if (Configuration::RunInBackground) {
 				writeByteUnprotected(0x416BC3 + 0x2 + 0x4, 1);
 				genCallUnprotected(0x41AB7D, reinterpret_cast<DWORD>(PatchGetMorrowindMainWindow), 0x6);
+				genCallEnforced(0x425313, 0x4065E0, reinterpret_cast<DWORD>(PatchGetMorrowindMainWindow_NoBackgroundInput));
+				genCallEnforced(0x4772CE, 0x4065E0, reinterpret_cast<DWORD>(PatchGetMorrowindMainWindow_NoBackgroundInput));
+				genCallEnforced(0x47798C, 0x4065E0, reinterpret_cast<DWORD>(PatchGetMorrowindMainWindow_NoBackgroundInput));
+				genCallEnforced(0x477E1E, 0x4065E0, reinterpret_cast<DWORD>(PatchGetMorrowindMainWindow_NoBackgroundInput));
+				genCallEnforced(0x5BC9E1, 0x4065E0, reinterpret_cast<DWORD>(PatchGetMorrowindMainWindow_NoBackgroundInput));
+				genCallEnforced(0x5BCA33, 0x4065E0, reinterpret_cast<DWORD>(PatchGetMorrowindMainWindow_NoBackgroundInput));
+				genCallEnforced(0x58E8C6, 0x406950, reinterpret_cast<DWORD>(PatchGetMorrowindMainWindow_NoBufferReading));
+				genCallEnforced(0x5BCA1D, 0x406950, reinterpret_cast<DWORD>(PatchGetMorrowindMainWindow_NoBufferReading));
 			}
 		}
 
