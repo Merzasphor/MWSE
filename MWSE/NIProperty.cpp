@@ -10,6 +10,16 @@ namespace NI {
 	// NiProperty
 	//
 
+	const auto NI_Property_ctor = reinterpret_cast<Property * (__thiscall*)(Property*)>(0x405990);
+	Property::Property() {
+		NI_Property_ctor(this);
+	}
+
+	const auto NI_Property_dtor = reinterpret_cast<void(__thiscall*)(Property*)>(0x405B40);
+	Property::~Property() {
+		NI_Property_dtor(this);
+	}
+
 	PropertyType Property::getType() {
 		return static_cast<PropertyType>(vTable.asProperty->getType(this));
 	}
@@ -220,6 +230,43 @@ namespace NI {
 
 	bool TexturingProperty::removeDecal_lua(unsigned int index) {
 		return removeDecal(index - 1);
+	}
+
+	//
+	// VertexColorProperty
+	//
+
+	VertexColorProperty::VertexColorProperty() {
+		vTable.asProperty = (Property_vTable*)0x7464F8;
+		source = 0;
+		lighting = 1;
+	}
+
+	VertexColorProperty::~VertexColorProperty() {
+	}
+
+	Pointer<VertexColorProperty> VertexColorProperty::create() {
+		return new VertexColorProperty();
+	}
+
+	//
+	// NiZBufferProperty
+	//
+
+	ZBufferProperty::ZBufferProperty() {
+		Property::Property();
+		vTable.asProperty = (Property_vTable*)0x74652C;
+		setFlag(false, 0);
+		setFlag(false, 1);
+		mask = 3;
+	}
+
+	ZBufferProperty::~ZBufferProperty() {
+
+	}
+
+	Pointer<ZBufferProperty> ZBufferProperty::create() {
+		return new ZBufferProperty();
 	}
 }
 

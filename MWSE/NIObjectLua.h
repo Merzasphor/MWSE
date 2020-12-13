@@ -46,6 +46,7 @@ namespace mwse {
 			usertypeDefinition["removeAllControllers"] = &NI::ObjectNET::removeAllControllers;
 			usertypeDefinition["removeController"] = &NI::ObjectNET::removeController;
 			usertypeDefinition["removeExtraData"] = &NI::ObjectNET::removeExtraData;
+			usertypeDefinition["setFlag"] = &NI::ObjectNET::setFlag;
 		}
 
 		// Speed-optimized binding for NI::AVObject.

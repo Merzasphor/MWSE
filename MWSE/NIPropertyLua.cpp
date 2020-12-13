@@ -138,7 +138,7 @@ namespace mwse {
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.new_usertype<NI::VertexColorProperty>("niVertexColorProperty");
-				usertypeDefinition["new"] = sol::no_constructor;
+				usertypeDefinition["new"] = &NI::VertexColorProperty::create;
 
 				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
 				usertypeDefinition[sol::base_classes] = sol::bases<NI::Property, NI::ObjectNET, NI::Object>();
@@ -147,6 +147,20 @@ namespace mwse {
 				// Basic property binding.
 				usertypeDefinition["lighting"] = &NI::VertexColorProperty::lighting;
 				usertypeDefinition["source"] = &NI::VertexColorProperty::source;
+			}
+
+			// Binding for NI::ZBufferProperty.
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.new_usertype<NI::ZBufferProperty>("niZBufferProperty");
+				usertypeDefinition["new"] = &NI::ZBufferProperty::create;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<NI::Property, NI::ObjectNET, NI::Object>();
+				setUserdataForNIProperty(usertypeDefinition);
+
+				// Basic property binding.
+				usertypeDefinition["mask"] = &NI::ZBufferProperty::mask;
 			}
 
 		}

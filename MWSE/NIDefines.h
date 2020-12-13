@@ -62,7 +62,7 @@ namespace NI {
 	struct TriShape;
 	struct TriShapeData;
 	struct VertexColorProperty;
-
+	struct ZBufferProperty;
 
 	struct AVObject_vTable;
 	struct DynamicEffect_vTable;

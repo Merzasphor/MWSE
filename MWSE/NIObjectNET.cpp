@@ -9,19 +9,16 @@
 
 namespace NI {
 	const auto NI_ObjectNET_prependController = reinterpret_cast<void(__thiscall*)(const ObjectNET*, TimeController*)>(0x6EA3E0);
-	const auto NI_ObjectNET_removeController = reinterpret_cast<void(__thiscall*)(const ObjectNET*, TimeController*)>(0x6EA450);
-	const auto NI_ObjectNET_removeAllControllers = reinterpret_cast<void(__thiscall*)(const ObjectNET*)>(0x6EA5A0);
-
-	const auto NI_ObjectNET_setName = reinterpret_cast<void(__thiscall*)(const ObjectNET*, const char *)>(0x6EA1A0);
-
 	void ObjectNET::prependController(TimeController * controller) {
 		NI_ObjectNET_prependController(this, controller);
 	}
 
+	const auto NI_ObjectNET_removeController = reinterpret_cast<void(__thiscall*)(const ObjectNET*, TimeController*)>(0x6EA450);
 	void ObjectNET::removeController(TimeController * controller) {
 		NI_ObjectNET_removeController(this, controller);
 	}
 
+	const auto NI_ObjectNET_removeAllControllers = reinterpret_cast<void(__thiscall*)(const ObjectNET*)>(0x6EA5A0);
 	void ObjectNET::removeAllControllers() {
 		NI_ObjectNET_removeAllControllers(this);
 	}
@@ -30,8 +27,14 @@ namespace NI {
 		return this->name;
 	}
 
+	const auto NI_ObjectNET_setName = reinterpret_cast<void(__thiscall*)(const ObjectNET*, const char*)>(0x6EA1A0);
 	void ObjectNET::setName(const char* name) {
 		NI_ObjectNET_setName(this, name);
+	}
+
+	const auto NI_ObjectNET_setFlag = reinterpret_cast<void(__thiscall*)(ObjectNET*, bool, byte)>(0x405960);
+	void ObjectNET::setFlag(bool state, byte index) {
+		NI_ObjectNET_setFlag(this, state, index);
 	}
 
 	Pointer<StringExtraData> ObjectNET::getStringDataWithValue(const char* value) const {

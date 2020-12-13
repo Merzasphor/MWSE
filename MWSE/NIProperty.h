@@ -30,6 +30,9 @@ namespace NI {
 	struct Property : ObjectNET {
 		unsigned short flags;
 
+		Property();
+		~Property();
+
 		//
 		// vTable wrappers.
 		//
@@ -201,13 +204,23 @@ namespace NI {
 	static_assert(sizeof(TexturingProperty::BumpMap) == 0x2C, "NI::TexturingProperty::BumpMap failed size validation");
 
 	struct VertexColorProperty : Property {
-		int source;
-		int lighting;
+		int source; // 0x18
+		int lighting; // 0x1C
+
+		VertexColorProperty();
+		~VertexColorProperty();
+
+		static Pointer<VertexColorProperty> create();
 	};
 	static_assert(sizeof(VertexColorProperty) == 0x20, "NI::VertexColorProperty failed size validation");
 
 	struct ZBufferProperty : Property {
 		unsigned int mask; // 0x18
+
+		ZBufferProperty();
+		~ZBufferProperty();
+
+		static Pointer<ZBufferProperty> create();
 	};
 	static_assert(sizeof(ZBufferProperty) == 0x1C, "NI::ZBufferProperty failed size validation");
 }

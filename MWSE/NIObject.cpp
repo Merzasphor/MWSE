@@ -177,6 +177,9 @@ namespace NI {
 			case RTTIStaticPtr::NiVertexColorProperty:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<VertexColorProperty*>(this)));
 				break;
+			case RTTIStaticPtr::NiZBufferProperty:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<ZBufferProperty*>(this)));
+				break;
 			}
 
 			currentRTTI = currentRTTI->baseRTTI;
