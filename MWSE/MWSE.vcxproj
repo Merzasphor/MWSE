@@ -124,6 +124,7 @@
     <ClInclude Include="LuaSoundObjectPlayEvent.h" />
     <ClInclude Include="LuaSpellCastedEvent.h" />
     <ClInclude Include="LuaSpellCastEvent.h" />
+    <ClInclude Include="LuaSpellCreatedEvent.h" />
     <ClInclude Include="LuaSpellResistEvent.h" />
     <ClInclude Include="LuaSpellTickEvent.h" />
     <ClInclude Include="LuaAddTempSoundEvent.h" />
@@ -558,6 +559,7 @@
     <ClCompile Include="LuaSoundObjectPlayEvent.cpp" />
     <ClCompile Include="LuaSpellCastedEvent.cpp" />
     <ClCompile Include="LuaSpellCastEvent.cpp" />
+    <ClCompile Include="LuaSpellCreatedEvent.cpp" />
     <ClCompile Include="LuaSpellResistEvent.cpp" />
     <ClCompile Include="LuaSpellTickEvent.cpp" />
     <ClCompile Include="LuaAddTempSound.cpp" />

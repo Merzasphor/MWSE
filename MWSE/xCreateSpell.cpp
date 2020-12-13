@@ -29,6 +29,9 @@
 #include "TES3DataHandler.h"
 #include "TES3Spell.h"
 
+#include "LuaManager.h"
+#include "LuaSpellCreatedEvent.h"
+
 using namespace mwse;
 
 namespace mwse
@@ -106,6 +109,11 @@ namespace mwse
 
 		// Add object to the game.
 		TES3::DataHandler::get()->nonDynamicData->addNewObject(newSpell);
+
+		// Fire off spell created event.
+		if (mwse::lua::event::SpellCreatedEvent::getEventEnabled()) {
+			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::SpellCreatedEvent(newSpell, "script"));
+		}
 
 		Stack::getInstance().pushLong(true);
 

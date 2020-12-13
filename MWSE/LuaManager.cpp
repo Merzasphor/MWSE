@@ -206,6 +206,7 @@
 #include "LuaSimulateEvent.h"
 #include "LuaSkillRaisedEvent.h"
 #include "LuaSpellCastedEvent.h"
+#include "LuaSpellCreatedEvent.h"
 #include "LuaSpellResistEvent.h"
 #include "LuaSpellTickEvent.h"
 #include "LuaUiRefreshedEvent.h"
@@ -1174,6 +1175,20 @@ namespace mwse {
 			}
 
 			return success;
+		}
+
+		//
+		// Spell created event.
+		//
+
+		void __fastcall OnAddNewlyCreatedSpell(TES3::NonDynamicData* ndd, DWORD _EDX_, TES3::Spell* spell) {
+			// Call overwritten code.
+			ndd->addNewObject(spell);
+
+			// Pass a lua event.
+			if (event::SpellCreatedEvent::getEventEnabled()) {
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SpellCreatedEvent(spell, "service"));
+			}
 		}
 
 		// Spell cast resolution hook
@@ -3162,6 +3177,9 @@ namespace mwse {
 			// Event: Brew potion.
 			genCallEnforced(0x59C010, 0x59C030, reinterpret_cast<DWORD>(OnBrewPotionAttempt));
 			genCallEnforced(0x59D2A9, 0x6313E0, reinterpret_cast<DWORD>(CacheLastBrewedPotion));
+
+			// Event: Spell created from service menu.
+			genCallEnforced(0x622D05, 0x4B8980, reinterpret_cast<DWORD>(OnAddNewlyCreatedSpell));
 
 			// Event: Player is about to level.
 			genCallEnforced(0x5DA091, 0x5D90A0, reinterpret_cast<DWORD>(OnPreLevelUp));

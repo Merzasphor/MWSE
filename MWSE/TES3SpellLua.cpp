@@ -9,6 +9,8 @@
 
 #include "MemoryUtil.h"
 
+#include "LuaSpellCreatedEvent.h"
+
 namespace mwse {
 	namespace lua {
 		TES3::Spell* createSpell(std::string id, sol::optional<std::string> name) {
@@ -46,6 +48,11 @@ namespace mwse {
 
 			// Add object to the game.
 			TES3::DataHandler::get()->nonDynamicData->addNewObject(newSpell);
+
+			// Fire off spell created event.
+			if (event::SpellCreatedEvent::getEventEnabled()) {
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::SpellCreatedEvent(newSpell, "script"));
+			}
 
 			// Force the object as modified.
 			newSpell->setObjectModified(true);
