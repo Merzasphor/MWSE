@@ -10,6 +10,7 @@ namespace mwse {
 	bool Configuration::LogWarningsWithLuaStack = true;
 	bool Configuration::KeepAllNetImmerseObjectsAlive = false;
 	bool Configuration::RunInBackground = false;
+	bool Configuration::PatchNiFlipController = true;
 
 	// Allow default values to be accessed later.
 	sol::table defaultConfig;
@@ -41,5 +42,6 @@ namespace mwse {
 		DECLARE_CONFIG(LogWarningsWithLuaStack)
 		DECLARE_CONFIG(KeepAllNetImmerseObjectsAlive)
 		DECLARE_CONFIG(RunInBackground)
+		DECLARE_CONFIG(PatchNiFlipController)
 	}
 }

@@ -319,10 +319,6 @@ namespace mwse {
 			// Patch: Decrease MO2 load times. Somehow...
 			writeDoubleWordUnprotected(0x7462F4, reinterpret_cast<DWORD>(&_stat32));
 
-			// Patch: Fix NiFlipController losing its affectedMap on clone.
-			auto NiFlipController_clone = &NI::FlipController::copy;
-			genCallEnforced(0x715D26, DWORD(NI::FlipController::_copy), *reinterpret_cast<DWORD*>(&NiFlipController_clone));
-
 			// Patch: Fix NiUVController losing its texture set on clone.
 			auto UVController_clone = &NI::UVController::copy;
 			genCallEnforced(0x722317, 0x722330, *reinterpret_cast<DWORD*>(&UVController_clone));
@@ -382,6 +378,12 @@ namespace mwse {
 				genCallEnforced(0x5BCA33, 0x4065E0, reinterpret_cast<DWORD>(PatchGetMorrowindMainWindow_NoBackgroundInput));
 				genCallEnforced(0x58E8C6, 0x406950, reinterpret_cast<DWORD>(PatchGetMorrowindMainWindow_NoBufferReading));
 				genCallEnforced(0x5BCA1D, 0x406950, reinterpret_cast<DWORD>(PatchGetMorrowindMainWindow_NoBufferReading));
+			}
+
+			// Patch: Fix NiFlipController losing its affectedMap on clone.
+			if (Configuration::PatchNiFlipController) {
+				auto NiFlipController_clone = &NI::FlipController::copy;
+				genCallEnforced(0x715D26, DWORD(NI::FlipController::_copy), *reinterpret_cast<DWORD*>(&NiFlipController_clone));
 			}
 		}
 

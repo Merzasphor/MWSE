@@ -7,6 +7,7 @@ namespace mwse {
 		static bool EnableLegacyLuaMods;
 		static bool KeepAllNetImmerseObjectsAlive;
 		static bool RunInBackground;
+		static bool PatchNiFlipController;
 
 		static sol::table getDefaults();
 
