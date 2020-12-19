@@ -9,6 +9,10 @@ namespace NI {
 		_setTexture(this, texture, index);
 	}
 
+	void FlipController::updateTimings() {
+		_updateTimings(this);
+	}
+
 	void FlipController::copy(FlipController* to) const {
 		TimeController::_copy(this, to);
 		
@@ -23,5 +27,9 @@ namespace NI {
 		to->flipStartTime = flipStartTime;
 		to->duration = duration;
 		to->secondsPerFrame = secondsPerFrame;
+
+		// Recalculate duration and high key frame.
+		// This is needed because setTexture invalidates these fields, expecting to be manually recalculated later.
+		to->updateTimings();
 	}
 }
