@@ -105,6 +105,7 @@ namespace TES3 {
 		auto magicEffectController = new MagicEffectController();
 		ndd->magicEffects = magicEffectController;
 
+		memset(ndd->activeMods, 0x0, sizeof(ndd->activeMods));
 		memset(ndd->freed_0x5CC, 0x0, sizeof(ndd->freed_0x5CC));
 
 		for (int i = EffectID::FirstEffect; i <= EffectID::LastEffect; i++) {

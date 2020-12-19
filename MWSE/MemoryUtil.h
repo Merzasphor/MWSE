@@ -1,5 +1,7 @@
 #pragma once
 
+#include "MemAccess.h"
+
 namespace mwse {
 	// Container for registers, flags, and other information to help with the
 	// native to MWSE code bridge.
@@ -65,6 +67,26 @@ namespace mwse {
 	void writeBytesUnprotected(DWORD address, const BYTE* value, size_t count);
 	void writeDoubleWordUnprotected(DWORD address, DWORD value);
 	bool writeDoubleWordEnforced(DWORD address, DWORD previousValue, DWORD value);
+
+	template <typename T>
+	bool writeValueEnforced(DWORD address, T previousValue, T value) {
+		T currentValue = *reinterpret_cast<T*>(address);
+		if (currentValue != previousValue) {
+			return false;
+		}
+
+		// Unprotect memory.
+		DWORD oldProtect;
+		VirtualProtect((DWORD*)address, sizeof(T), PAGE_READWRITE, &oldProtect);
+
+		// Overwrite our single byte.
+		MemAccess<T>::Set(address, value);
+
+		// Protect memory again.
+		VirtualProtect((DWORD*)address, sizeof(T), oldProtect, &oldProtect);
+
+		return true;
+	}
 
 	// Code to write a patch to a code segment. This function unprotects the memory.
 	// WARNING: If passing a function address, always use a non-static function or it will crash.

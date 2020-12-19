@@ -245,6 +245,41 @@ namespace mwse {
 		}
 
 		//
+		// Patch: Support loading existing moved references.
+		//
+
+		struct NewSaveLoadRefFormId {
+			DWORD modIndex;
+			DWORD formId;
+		};
+
+		void __fastcall CellLoadMovedReferenceId(TES3::GameFile* file, DWORD edx, DWORD* out_movedFormId, size_t size) {
+			// Loading the new format?
+			NewSaveLoadRefFormId data;
+			if (file->currentChunkHeader.size == 0x8) {
+				file->readChunkData(&data);
+			}
+			else {
+				// If it's not the new format, we need to convert.
+				DWORD oldFormId = 0;
+				file->readChunkData(&oldFormId);
+
+				data.modIndex = (oldFormId >> 24);
+				data.formId = (oldFormId & 0x00FFFFFF);
+			}
+
+			*out_movedFormId = (data.modIndex << 22) + data.formId;
+		}
+
+		void __fastcall CellSaveMovedReferenceId(TES3::GameFile* file, DWORD edx, unsigned int tag, DWORD* movedRefId, size_t size) {
+			// Loading the new format?
+			NewSaveLoadRefFormId data;
+			data.modIndex = (*movedRefId << 22);
+			data.formId = (*movedRefId) & 0x003FFFFF;
+			file->writeChunkData(tag, &data, sizeof(data));
+		}
+
+		//
 		// Install all the patches.
 		//
 
@@ -363,6 +398,59 @@ namespace mwse {
 			genCallEnforced(0x565D8E, 0x4BA820, *reinterpret_cast<DWORD*>(&DataHandlerNonDynamicData_findGlobal));
 			genCallEnforced(0x565E1C, 0x4BA820, *reinterpret_cast<DWORD*>(&DataHandlerNonDynamicData_findGlobal));
 #endif
+
+			// Patch: Raise esm/esp limit from 256 to 1024.
+			{
+				// Change hardcoded 256 checks to 1024.
+				writeValueEnforced<DWORD>(0x4B7A22 + 0x1, 256u, 1024u);
+				writeValueEnforced<DWORD>(0x4BB4AE + 0x3, 256u, 1024u);
+				writeValueEnforced<DWORD>(0x4BB588 + 0x3, 256u, 1024u);
+
+				// Fix accesses into the active mods list to point to the new array.
+				writeValueEnforced<DWORD>(0x4B7A27 + 0x2, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
+				writeValueEnforced<DWORD>(0x4B87A9 + 0x2, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
+				writeValueEnforced<DWORD>(0x4BB498 + 0x3, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
+				writeValueEnforced<DWORD>(0x4BB56F + 0x3, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
+				writeValueEnforced<DWORD>(0x4BB5ED + 0x2, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
+				writeValueEnforced<DWORD>(0x4BB650 + 0x3, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
+				writeValueEnforced<DWORD>(0x4BBD21 + 0x2, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
+				writeValueEnforced<DWORD>(0x4BD252 + 0x2, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
+				writeValueEnforced<DWORD>(0x4C8B92 + 0x2, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
+
+				// Change of form ID: 8 bit to 10 bit game file mask.
+				writeValueEnforced<BYTE>(0x4DD2A7 + 0x2, 0x18, 0x16);
+				writeValueEnforced<BYTE>(0x4DD31E + 0x2, 0x18, 0x16);
+				writeValueEnforced<BYTE>(0x4DDA09 + 0x2, 0x18, 0x16);
+				writeValueEnforced<BYTE>(0x4DDBB1 + 0x2, 0x18, 0x16);
+				writeValueEnforced<BYTE>(0x7367A0 + 0x2, 0x18, 0x16);
+				writeValueEnforced<BYTE>(0x736809 + 0x2, 0x18, 0x16);
+				writeValueEnforced<BYTE>(0x73685A + 0x2, 0x18, 0x16);
+				writeValueEnforced<BYTE>(0x736890 + 0x2, 0x18, 0x16);
+				writeValueEnforced<BYTE>(0x7368D7 + 0x2, 0x18, 0x16);
+				writeValueEnforced<BYTE>(0x736B75 + 0x2, 0x18, 0x16);
+				writeValueEnforced<BYTE>(0x4DD03F + 0x2, 0x18, 0x1A);
+				writeValueEnforced<BYTE>(0x736B56 + 0x2, 0x18, 0x1A);
+				writeValueEnforced<DWORD>(0x4DD030 + 0x1, 0xFF000000, 0xFFC00000);
+				writeValueEnforced<DWORD>(0x4DD80B + 0x2, 0xFF000000, 0xFFC00000);
+				writeValueEnforced<DWORD>(0x4B54DD + 0x1, 0x00FFFFFF, 0x003FFFFF);
+				writeValueEnforced<DWORD>(0x4DD089 + 0x1, 0x00FFFFFF, 0x003FFFFF);
+				writeValueEnforced<DWORD>(0x4DD107 + 0x2, 0x00FFFFFF, 0x003FFFFF);
+				writeValueEnforced<DWORD>(0x4DD829 + 0x2, 0x00FFFFFF, 0x003FFFFF);
+				writeValueEnforced<DWORD>(0x4E0C8B + 0x2, 0x00FFFFFF, 0x003FFFFF);
+				writeValueEnforced<DWORD>(0x4E0C91 + 0x2, 0x00FFFFFF, 0x003FFFFF);
+				writeValueEnforced<DWORD>(0x7367A3 + 0x2, 0x00FFFFFF, 0x003FFFFF);
+				writeValueEnforced<DWORD>(0x73680C + 0x2, 0x00FFFFFF, 0x003FFFFF);
+				writeValueEnforced<DWORD>(0x736B78 + 0x2, 0x00FFFFFF, 0x003FFFFF);
+
+				// Support saves with old format, convert.
+				genCallEnforced(0x4DD027, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
+				genCallEnforced(0x4E0C2F, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
+				genCallEnforced(0x7367BA, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
+				genCallEnforced(0x736B48, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
+				genCallEnforced(0x4E1144, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
+				genCallEnforced(0x4E1B15, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
+				genCallEnforced(0x4E1E78, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
+			}
 		}
 
 		void installPostLuaPatches() {
