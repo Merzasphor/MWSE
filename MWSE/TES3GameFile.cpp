@@ -89,7 +89,7 @@ namespace TES3 {
 		return TES3_TES3File_setFilePointer(this, offset);
 	}
 
-	const auto TES3_TES3File_getMaster = reinterpret_cast<GameFile*(__thiscall*)(GameFile*, unsigned int)>(0x4B67C0);
+	const auto TES3_TES3File_getMaster = reinterpret_cast<GameFile*(__thiscall*)(GameFile*, unsigned int)>(0x4B5CF0);
 	GameFile* GameFile::getMaster(unsigned int index) {
 		return TES3_TES3File_getMaster(this, index);
 	}
