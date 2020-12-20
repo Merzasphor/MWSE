@@ -248,6 +248,15 @@ namespace mwse {
 		// Patch: Support loading existing moved references.
 		//
 
+		constexpr DWORD REFID_VANILLA_MOD_BITS = 8;
+		constexpr DWORD REFID_VANILLA_FORM_BITS = 24;
+		constexpr DWORD REFID_VANILLA_MOD_MASK = ((1 << REFID_VANILLA_MOD_BITS) - 1) << REFID_VANILLA_FORM_BITS;
+		constexpr DWORD REFID_VANILLA_FORM_MASK = (1 << REFID_VANILLA_FORM_BITS) - 1;
+		constexpr DWORD REFID_MWSE_MOD_BITS = 10;
+		constexpr DWORD REFID_MWSE_FORM_BITS = 22;
+		constexpr DWORD REFID_MWSE_MOD_MASK = ((1 << REFID_MWSE_MOD_BITS) - 1) << REFID_MWSE_FORM_BITS;
+		constexpr DWORD REFID_MWSE_FORM_MASK = (1 << REFID_MWSE_FORM_BITS) - 1;
+
 		struct NewSaveLoadRefFormId {
 			DWORD modIndex;
 			DWORD formId;
@@ -264,18 +273,18 @@ namespace mwse {
 				DWORD oldFormId = 0;
 				file->readChunkData(&oldFormId);
 
-				data.modIndex = (oldFormId >> 24);
-				data.formId = (oldFormId & 0x00FFFFFF);
+				data.modIndex = (oldFormId >> REFID_VANILLA_FORM_BITS);
+				data.formId = (oldFormId & REFID_VANILLA_FORM_MASK);
 			}
 
-			*out_movedFormId = (data.modIndex << 22) + data.formId;
+			*out_movedFormId = (data.modIndex << REFID_MWSE_FORM_BITS) + data.formId;
 		}
 
 		void __fastcall CellSaveMovedReferenceId(TES3::GameFile* file, DWORD edx, unsigned int tag, DWORD* movedRefId, size_t size) {
 			// Loading the new format?
 			NewSaveLoadRefFormId data;
-			data.modIndex = (*movedRefId << 22);
-			data.formId = (*movedRefId) & 0x003FFFFF;
+			data.modIndex = *movedRefId << REFID_MWSE_FORM_BITS;
+			data.formId = *movedRefId & REFID_MWSE_FORM_MASK;
 			file->writeChunkData(tag, &data, sizeof(data));
 		}
 
@@ -418,35 +427,37 @@ namespace mwse {
 				writeValueEnforced<DWORD>(0x4C8B92 + 0x2, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
 
 				// Change of form ID: 8 bit to 10 bit game file mask.
-				writeValueEnforced<BYTE>(0x4DD2A7 + 0x2, 0x18, 0x16);
-				writeValueEnforced<BYTE>(0x4DD31E + 0x2, 0x18, 0x16);
-				writeValueEnforced<BYTE>(0x4DDA09 + 0x2, 0x18, 0x16);
-				writeValueEnforced<BYTE>(0x4DDBB1 + 0x2, 0x18, 0x16);
-				writeValueEnforced<BYTE>(0x7367A0 + 0x2, 0x18, 0x16);
-				writeValueEnforced<BYTE>(0x736809 + 0x2, 0x18, 0x16);
-				writeValueEnforced<BYTE>(0x73685A + 0x2, 0x18, 0x16);
-				writeValueEnforced<BYTE>(0x736890 + 0x2, 0x18, 0x16);
-				writeValueEnforced<BYTE>(0x7368D7 + 0x2, 0x18, 0x16);
-				writeValueEnforced<BYTE>(0x736B75 + 0x2, 0x18, 0x16);
-				writeValueEnforced<BYTE>(0x4DD03F + 0x2, 0x18, 0x1A);
-				writeValueEnforced<BYTE>(0x736B56 + 0x2, 0x18, 0x1A);
-				writeValueEnforced<DWORD>(0x4DD030 + 0x1, 0xFF000000, 0xFFC00000);
-				writeValueEnforced<DWORD>(0x4DD80B + 0x2, 0xFF000000, 0xFFC00000);
-				writeValueEnforced<DWORD>(0x4B54DD + 0x1, 0x00FFFFFF, 0x003FFFFF);
-				writeValueEnforced<DWORD>(0x4DD089 + 0x1, 0x00FFFFFF, 0x003FFFFF);
-				writeValueEnforced<DWORD>(0x4DD107 + 0x2, 0x00FFFFFF, 0x003FFFFF);
-				writeValueEnforced<DWORD>(0x4DD829 + 0x2, 0x00FFFFFF, 0x003FFFFF);
-				writeValueEnforced<DWORD>(0x4E0C8B + 0x2, 0x00FFFFFF, 0x003FFFFF);
-				writeValueEnforced<DWORD>(0x4E0C91 + 0x2, 0x00FFFFFF, 0x003FFFFF);
-				writeValueEnforced<DWORD>(0x7367A3 + 0x2, 0x00FFFFFF, 0x003FFFFF);
-				writeValueEnforced<DWORD>(0x73680C + 0x2, 0x00FFFFFF, 0x003FFFFF);
-				writeValueEnforced<DWORD>(0x736B78 + 0x2, 0x00FFFFFF, 0x003FFFFF);
+				writeValueEnforced<BYTE>(0x4DD03F + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
+				writeValueEnforced<BYTE>(0x4DD2A7 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
+				writeValueEnforced<BYTE>(0x4DD31E + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
+				writeValueEnforced<BYTE>(0x4DD813 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
+				writeValueEnforced<BYTE>(0x4DDA09 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
+				writeValueEnforced<BYTE>(0x4DDBB1 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
+				writeValueEnforced<BYTE>(0x7367A0 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
+				writeValueEnforced<BYTE>(0x736809 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
+				writeValueEnforced<BYTE>(0x73685A + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
+				writeValueEnforced<BYTE>(0x736890 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
+				writeValueEnforced<BYTE>(0x7368D7 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
+				writeValueEnforced<BYTE>(0x736B56 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
+				writeValueEnforced<BYTE>(0x736B75 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
+				writeValueEnforced<DWORD>(0x4B54DD + 0x1, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
+				writeValueEnforced<DWORD>(0x4DD030 + 0x1, REFID_VANILLA_MOD_MASK, REFID_MWSE_MOD_MASK);
+				writeValueEnforced<DWORD>(0x4DD089 + 0x1, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
+				writeValueEnforced<DWORD>(0x4DD107 + 0x2, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
+				writeValueEnforced<DWORD>(0x4DD80B + 0x2, REFID_VANILLA_MOD_MASK, REFID_MWSE_MOD_MASK);
+				writeValueEnforced<DWORD>(0x4DD829 + 0x2, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
+				writeValueEnforced<DWORD>(0x4E0C8B + 0x2, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
+				writeValueEnforced<DWORD>(0x4E0C91 + 0x2, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
+				writeValueEnforced<DWORD>(0x7367A3 + 0x2, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
+				writeValueEnforced<DWORD>(0x73680C + 0x2, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
+				writeValueEnforced<DWORD>(0x736B78 + 0x2, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
 
 				// Support saves with old format, convert.
 				genCallEnforced(0x4DD027, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
+				genCallEnforced(0x4DE197, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
 				genCallEnforced(0x4E0C2F, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
-				genCallEnforced(0x7367BA, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
 				genCallEnforced(0x736B48, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
+				genJumpEnforced(0x7367BA, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
 				genCallEnforced(0x4E1144, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
 				genCallEnforced(0x4E1B15, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
 				genCallEnforced(0x4E1E78, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
