@@ -250,6 +250,7 @@ namespace mwse {
 		// The following records have been modified:
 		//  - CELL.FRMR
 		//  - CELL.MVRF
+		//  - REFR.FRMR
 		//  - SCPT.RNAM
 		//
 
@@ -293,7 +294,16 @@ namespace mwse {
 			PatchRaiseESXLimit_SerializedFormId data;
 			data.modIndex = *movedRefId >> PatchRaiseESXLimit_FormBitsMWSE;
 			data.formId = *movedRefId & PatchRaiseESXLimit_FormMaskMWSE;
-			file->writeChunkData(tag, &data, sizeof(data));
+
+			// If the mod index is higher than the vanilla limit, save the new format.
+			if (data.modIndex > 255) {
+				file->writeChunkData(tag, &data, sizeof(data));
+			}
+			// If the mod index is <255, use the vanilla save format for compatibility.
+			else {
+				DWORD refId = (data.modIndex << PatchRaiseESXLimit_FormBitsVanilla) + data.formId;
+				file->writeChunkData(tag, &refId, 4);
+			}
 		}
 
 		//
