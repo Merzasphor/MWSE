@@ -468,6 +468,7 @@ namespace mwse {
 				genCallEnforced(0x4E14D5, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
 				genCallEnforced(0x4E1B15, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
 				genCallEnforced(0x4E1E78, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
+				genCallEnforced(0x4FFB78, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
 			}
 #endif
 		}
