@@ -247,25 +247,33 @@ namespace mwse {
 		//
 		// Patch: Support loading existing moved references.
 		//
+		// The following records have been modified:
+		//  - CELL.FRMR
+		//  - CELL.MVRF
+		//  - SCPT.RNAM
+		//
 
-		constexpr DWORD REFID_VANILLA_MOD_BITS = 8;
-		constexpr DWORD REFID_VANILLA_FORM_BITS = 24;
-		constexpr DWORD REFID_VANILLA_MOD_MASK = ((1 << REFID_VANILLA_MOD_BITS) - 1) << REFID_VANILLA_FORM_BITS;
-		constexpr DWORD REFID_VANILLA_FORM_MASK = (1 << REFID_VANILLA_FORM_BITS) - 1;
-		constexpr DWORD REFID_MWSE_MOD_BITS = 10;
-		constexpr DWORD REFID_MWSE_FORM_BITS = 22;
-		constexpr DWORD REFID_MWSE_MOD_MASK = ((1 << REFID_MWSE_MOD_BITS) - 1) << REFID_MWSE_FORM_BITS;
-		constexpr DWORD REFID_MWSE_FORM_MASK = (1 << REFID_MWSE_FORM_BITS) - 1;
+		constexpr DWORD PatchRaiseESXLimit_ModBitsVanilla = 8;
+		constexpr DWORD PatchRaiseESXLimit_FormBitsVanilla = 24;
+		constexpr DWORD PatchRaiseESXLimit_ModMaskVanilla = ((1 << PatchRaiseESXLimit_ModBitsVanilla) - 1) << PatchRaiseESXLimit_FormBitsVanilla;
+		constexpr DWORD PatchRaiseESXLimit_FormMaskVanilla = (1 << PatchRaiseESXLimit_FormBitsVanilla) - 1;
+		constexpr DWORD PatchRaiseESXLimit_ModCountVanilla = 1 << PatchRaiseESXLimit_ModBitsVanilla;
 
-		struct NewSaveLoadRefFormId {
-			DWORD modIndex;
-			DWORD formId;
+		constexpr DWORD PatchRaiseESXLimit_ModBitsMWSE = 10;
+		constexpr DWORD PatchRaiseESXLimit_FormBitsMWSE = 22;
+		constexpr DWORD PatchRaiseESXLimit_ModMaskMWSE = ((1 << PatchRaiseESXLimit_ModBitsMWSE) - 1) << PatchRaiseESXLimit_FormBitsMWSE;
+		constexpr DWORD PatchRaiseESXLimit_FormMaskMWSE = (1 << PatchRaiseESXLimit_FormBitsMWSE) - 1;
+		constexpr DWORD PatchRaiseESXLimit_ModCountMWSE = 1 << PatchRaiseESXLimit_ModBitsMWSE;
+
+		struct PatchRaiseESXLimit_SerializedFormId {
+			DWORD modIndex; // 0x0
+			DWORD formId; // 0x4
 		};
 
-		void __fastcall CellLoadMovedReferenceId(TES3::GameFile* file, DWORD edx, DWORD* out_movedFormId, size_t size) {
+		void __fastcall PatchRaiseESXLimit_LoadFormId(TES3::GameFile* file, DWORD edx, DWORD* out_movedFormId, size_t size) {
 			// Loading the new format?
-			NewSaveLoadRefFormId data;
-			if (file->currentChunkHeader.size == 0x8) {
+			PatchRaiseESXLimit_SerializedFormId data;
+			if (file->currentChunkHeader.size == sizeof(PatchRaiseESXLimit_SerializedFormId)) {
 				file->readChunkData(&data);
 			}
 			else {
@@ -273,18 +281,18 @@ namespace mwse {
 				DWORD oldFormId = 0;
 				file->readChunkData(&oldFormId);
 
-				data.modIndex = (oldFormId >> REFID_VANILLA_FORM_BITS);
-				data.formId = (oldFormId & REFID_VANILLA_FORM_MASK);
+				data.modIndex = (oldFormId >> PatchRaiseESXLimit_FormBitsVanilla);
+				data.formId = (oldFormId & PatchRaiseESXLimit_FormMaskVanilla);
 			}
 
-			*out_movedFormId = (data.modIndex << REFID_MWSE_FORM_BITS) + data.formId;
+			*out_movedFormId = (data.modIndex << PatchRaiseESXLimit_FormBitsMWSE) + data.formId;
 		}
 
-		void __fastcall CellSaveMovedReferenceId(TES3::GameFile* file, DWORD edx, unsigned int tag, DWORD* movedRefId, size_t size) {
+		void __fastcall PatchRaiseESXLimit_SaveFormId(TES3::GameFile* file, DWORD edx, unsigned int tag, DWORD* movedRefId, size_t size) {
 			// Loading the new format?
-			NewSaveLoadRefFormId data;
-			data.modIndex = *movedRefId >> REFID_MWSE_FORM_BITS;
-			data.formId = *movedRefId & REFID_MWSE_FORM_MASK;
+			PatchRaiseESXLimit_SerializedFormId data;
+			data.modIndex = *movedRefId >> PatchRaiseESXLimit_FormBitsMWSE;
+			data.formId = *movedRefId & PatchRaiseESXLimit_FormMaskMWSE;
 			file->writeChunkData(tag, &data, sizeof(data));
 		}
 
@@ -412,9 +420,9 @@ namespace mwse {
 			// Patch: Raise esm/esp limit from 256 to 1024.
 			{
 				// Change hardcoded 256 checks to 1024.
-				writeValueEnforced<DWORD>(0x4B7A22 + 0x1, 256u, 1024u);
-				writeValueEnforced<DWORD>(0x4BB4AE + 0x3, 256u, 1024u);
-				writeValueEnforced<DWORD>(0x4BB588 + 0x3, 256u, 1024u);
+				writeValueEnforced<DWORD>(0x4B7A22 + 0x1, PatchRaiseESXLimit_ModCountVanilla, PatchRaiseESXLimit_ModCountMWSE);
+				writeValueEnforced<DWORD>(0x4BB4AE + 0x3, PatchRaiseESXLimit_ModCountVanilla, PatchRaiseESXLimit_ModCountMWSE);
+				writeValueEnforced<DWORD>(0x4BB588 + 0x3, PatchRaiseESXLimit_ModCountVanilla, PatchRaiseESXLimit_ModCountMWSE);
 
 				// Fix accesses into the active mods list to point to the new array.
 				writeValueEnforced<DWORD>(0x4B7A27 + 0x2, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
@@ -428,47 +436,47 @@ namespace mwse {
 				writeValueEnforced<DWORD>(0x4C8B92 + 0x2, 0xAE64, offsetof(TES3::NonDynamicData, activeMods));
 
 				// Change of form ID: 8 bit to 10 bit game file mask.
-				writeValueEnforced<BYTE>(0x4DD03F + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
-				writeValueEnforced<BYTE>(0x4DD2A7 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
-				writeValueEnforced<BYTE>(0x4DD31E + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
-				writeValueEnforced<BYTE>(0x4DD813 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
-				writeValueEnforced<BYTE>(0x4DDA09 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
-				writeValueEnforced<BYTE>(0x4DDBB1 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
-				writeValueEnforced<BYTE>(0x7367A0 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
-				writeValueEnforced<BYTE>(0x736809 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
-				writeValueEnforced<BYTE>(0x73685A + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
-				writeValueEnforced<BYTE>(0x736890 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
-				writeValueEnforced<BYTE>(0x7368D7 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
-				writeValueEnforced<BYTE>(0x736B56 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
-				writeValueEnforced<BYTE>(0x736B75 + 0x2, REFID_VANILLA_FORM_BITS, REFID_MWSE_FORM_BITS);
-				writeValueEnforced<DWORD>(0x4B54DD + 0x1, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
-				writeValueEnforced<DWORD>(0x4DD030 + 0x1, REFID_VANILLA_MOD_MASK, REFID_MWSE_MOD_MASK);
-				writeValueEnforced<DWORD>(0x4DD089 + 0x1, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
-				writeValueEnforced<DWORD>(0x4DD107 + 0x2, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
-				writeValueEnforced<DWORD>(0x4DD80B + 0x2, REFID_VANILLA_MOD_MASK, REFID_MWSE_MOD_MASK);
-				writeValueEnforced<DWORD>(0x4DD829 + 0x2, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
-				writeValueEnforced<DWORD>(0x4E0C8B + 0x2, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
-				writeValueEnforced<DWORD>(0x4E0C91 + 0x2, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
-				writeValueEnforced<DWORD>(0x7367A3 + 0x2, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
-				writeValueEnforced<DWORD>(0x73680C + 0x2, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
-				writeValueEnforced<DWORD>(0x736B78 + 0x2, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
+				writeValueEnforced<BYTE>(0x4DD03F + 0x2, PatchRaiseESXLimit_FormBitsVanilla, PatchRaiseESXLimit_FormBitsMWSE);
+				writeValueEnforced<BYTE>(0x4DD2A7 + 0x2, PatchRaiseESXLimit_FormBitsVanilla, PatchRaiseESXLimit_FormBitsMWSE);
+				writeValueEnforced<BYTE>(0x4DD31E + 0x2, PatchRaiseESXLimit_FormBitsVanilla, PatchRaiseESXLimit_FormBitsMWSE);
+				writeValueEnforced<BYTE>(0x4DD813 + 0x2, PatchRaiseESXLimit_FormBitsVanilla, PatchRaiseESXLimit_FormBitsMWSE);
+				writeValueEnforced<BYTE>(0x4DDA09 + 0x2, PatchRaiseESXLimit_FormBitsVanilla, PatchRaiseESXLimit_FormBitsMWSE);
+				writeValueEnforced<BYTE>(0x4DDBB1 + 0x2, PatchRaiseESXLimit_FormBitsVanilla, PatchRaiseESXLimit_FormBitsMWSE);
+				writeValueEnforced<BYTE>(0x7367A0 + 0x2, PatchRaiseESXLimit_FormBitsVanilla, PatchRaiseESXLimit_FormBitsMWSE);
+				writeValueEnforced<BYTE>(0x736809 + 0x2, PatchRaiseESXLimit_FormBitsVanilla, PatchRaiseESXLimit_FormBitsMWSE);
+				writeValueEnforced<BYTE>(0x73685A + 0x2, PatchRaiseESXLimit_FormBitsVanilla, PatchRaiseESXLimit_FormBitsMWSE);
+				writeValueEnforced<BYTE>(0x736890 + 0x2, PatchRaiseESXLimit_FormBitsVanilla, PatchRaiseESXLimit_FormBitsMWSE);
+				writeValueEnforced<BYTE>(0x7368D7 + 0x2, PatchRaiseESXLimit_FormBitsVanilla, PatchRaiseESXLimit_FormBitsMWSE);
+				writeValueEnforced<BYTE>(0x736B56 + 0x2, PatchRaiseESXLimit_FormBitsVanilla, PatchRaiseESXLimit_FormBitsMWSE);
+				writeValueEnforced<BYTE>(0x736B75 + 0x2, PatchRaiseESXLimit_FormBitsVanilla, PatchRaiseESXLimit_FormBitsMWSE);
+				writeValueEnforced<DWORD>(0x4B54DD + 0x1, PatchRaiseESXLimit_FormMaskVanilla, PatchRaiseESXLimit_FormMaskMWSE);
+				writeValueEnforced<DWORD>(0x4DD030 + 0x1, PatchRaiseESXLimit_ModMaskVanilla, PatchRaiseESXLimit_ModMaskMWSE);
+				writeValueEnforced<DWORD>(0x4DD089 + 0x1, PatchRaiseESXLimit_FormMaskVanilla, PatchRaiseESXLimit_FormMaskMWSE);
+				writeValueEnforced<DWORD>(0x4DD107 + 0x2, PatchRaiseESXLimit_FormMaskVanilla, PatchRaiseESXLimit_FormMaskMWSE);
+				writeValueEnforced<DWORD>(0x4DD80B + 0x2, PatchRaiseESXLimit_ModMaskVanilla, PatchRaiseESXLimit_ModMaskMWSE);
+				writeValueEnforced<DWORD>(0x4DD829 + 0x2, PatchRaiseESXLimit_FormMaskVanilla, PatchRaiseESXLimit_FormMaskMWSE);
+				writeValueEnforced<DWORD>(0x4E0C8B + 0x2, PatchRaiseESXLimit_FormMaskVanilla, PatchRaiseESXLimit_FormMaskMWSE);
+				writeValueEnforced<DWORD>(0x4E0C91 + 0x2, PatchRaiseESXLimit_FormMaskVanilla, PatchRaiseESXLimit_FormMaskMWSE);
+				writeValueEnforced<DWORD>(0x7367A3 + 0x2, PatchRaiseESXLimit_FormMaskVanilla, PatchRaiseESXLimit_FormMaskMWSE);
+				writeValueEnforced<DWORD>(0x73680C + 0x2, PatchRaiseESXLimit_FormMaskVanilla, PatchRaiseESXLimit_FormMaskMWSE);
+				writeValueEnforced<DWORD>(0x736B78 + 0x2, PatchRaiseESXLimit_FormMaskVanilla, PatchRaiseESXLimit_FormMaskMWSE);
 
 				// Patch loading to support either the old or new format.
-				genCallEnforced(0x4C01B1, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
-				genCallEnforced(0x4DCE01, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
-				genCallEnforced(0x4DD027, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
-				genCallEnforced(0x4DE197, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
-				genCallEnforced(0x4E0C2F, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
-				genCallEnforced(0x4E0C6D, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
-				genCallEnforced(0x736B48, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
-				genJumpEnforced(0x7367BA, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
+				genCallEnforced(0x4C01B1, 0x4B6880, reinterpret_cast<DWORD>(PatchRaiseESXLimit_LoadFormId));
+				genCallEnforced(0x4DCE01, 0x4B6880, reinterpret_cast<DWORD>(PatchRaiseESXLimit_LoadFormId));
+				genCallEnforced(0x4DD027, 0x4B6880, reinterpret_cast<DWORD>(PatchRaiseESXLimit_LoadFormId));
+				genCallEnforced(0x4DE197, 0x4B6880, reinterpret_cast<DWORD>(PatchRaiseESXLimit_LoadFormId));
+				genCallEnforced(0x4E0C2F, 0x4B6880, reinterpret_cast<DWORD>(PatchRaiseESXLimit_LoadFormId));
+				genCallEnforced(0x4E0C6D, 0x4B6880, reinterpret_cast<DWORD>(PatchRaiseESXLimit_LoadFormId));
+				genJumpEnforced(0x7367BA, 0x4B6880, reinterpret_cast<DWORD>(PatchRaiseESXLimit_LoadFormId));
+				genCallEnforced(0x736B48, 0x4B6880, reinterpret_cast<DWORD>(PatchRaiseESXLimit_LoadFormId));
 
 				// Patch saving to always write the new format.
-				genCallEnforced(0x4E1144, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
-				genCallEnforced(0x4E14D5, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
-				genCallEnforced(0x4E1B15, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
-				genCallEnforced(0x4E1E78, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
-				genCallEnforced(0x4FFB78, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
+				genCallEnforced(0x4E1144, 0x4B6BA0, reinterpret_cast<DWORD>(PatchRaiseESXLimit_SaveFormId));
+				genCallEnforced(0x4E14D5, 0x4B6BA0, reinterpret_cast<DWORD>(PatchRaiseESXLimit_SaveFormId));
+				genCallEnforced(0x4E1B15, 0x4B6BA0, reinterpret_cast<DWORD>(PatchRaiseESXLimit_SaveFormId));
+				genCallEnforced(0x4E1E78, 0x4B6BA0, reinterpret_cast<DWORD>(PatchRaiseESXLimit_SaveFormId));
+				genCallEnforced(0x4FFB78, 0x4B6BA0, reinterpret_cast<DWORD>(PatchRaiseESXLimit_SaveFormId));
 			}
 #endif
 		}
