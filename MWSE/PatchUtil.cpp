@@ -283,7 +283,7 @@ namespace mwse {
 		void __fastcall CellSaveMovedReferenceId(TES3::GameFile* file, DWORD edx, unsigned int tag, DWORD* movedRefId, size_t size) {
 			// Loading the new format?
 			NewSaveLoadRefFormId data;
-			data.modIndex = *movedRefId << REFID_MWSE_FORM_BITS;
+			data.modIndex = *movedRefId >> REFID_MWSE_FORM_BITS;
 			data.formId = *movedRefId & REFID_MWSE_FORM_MASK;
 			file->writeChunkData(tag, &data, sizeof(data));
 		}
@@ -453,13 +453,19 @@ namespace mwse {
 				writeValueEnforced<DWORD>(0x73680C + 0x2, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
 				writeValueEnforced<DWORD>(0x736B78 + 0x2, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
 
-				// Support saves with old format, and save to new format.
+				// Patch loading to support either the old or new format.
+				genCallEnforced(0x4C01B1, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
+				genCallEnforced(0x4DCE01, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
 				genCallEnforced(0x4DD027, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
 				genCallEnforced(0x4DE197, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
 				genCallEnforced(0x4E0C2F, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
+				genCallEnforced(0x4E0C6D, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
 				genCallEnforced(0x736B48, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
 				genJumpEnforced(0x7367BA, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
+
+				// Patch saving to always write the new format.
 				genCallEnforced(0x4E1144, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
+				genCallEnforced(0x4E14D5, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
 				genCallEnforced(0x4E1B15, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
 				genCallEnforced(0x4E1E78, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
 			}
