@@ -408,6 +408,7 @@ namespace mwse {
 			genCallEnforced(0x565E1C, 0x4BA820, *reinterpret_cast<DWORD*>(&DataHandlerNonDynamicData_findGlobal));
 #endif
 
+#if MWSE_RAISED_FILE_LIMIT
 			// Patch: Raise esm/esp limit from 256 to 1024.
 			{
 				// Change hardcoded 256 checks to 1024.
@@ -452,7 +453,7 @@ namespace mwse {
 				writeValueEnforced<DWORD>(0x73680C + 0x2, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
 				writeValueEnforced<DWORD>(0x736B78 + 0x2, REFID_VANILLA_FORM_MASK, REFID_MWSE_FORM_MASK);
 
-				// Support saves with old format, convert.
+				// Support saves with old format, and save to new format.
 				genCallEnforced(0x4DD027, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
 				genCallEnforced(0x4DE197, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
 				genCallEnforced(0x4E0C2F, 0x4B6880, reinterpret_cast<DWORD>(CellLoadMovedReferenceId));
@@ -462,6 +463,7 @@ namespace mwse {
 				genCallEnforced(0x4E1B15, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
 				genCallEnforced(0x4E1E78, 0x4B6BA0, reinterpret_cast<DWORD>(CellSaveMovedReferenceId));
 			}
+#endif
 		}
 
 		void installPostLuaPatches() {
