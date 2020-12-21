@@ -152,6 +152,9 @@ namespace TES3 {
 
 		float createReference(PhysicalObject * object, Vector3 * position, Vector3 * orientation, bool& cellWasCreated, Reference * existingReference = nullptr, Cell * cell = nullptr);
 
+		void showLocationOnMap(const char* name);
+		void drawCellMapMarker(Cell* cell, int unused = 0);
+
 		//
 		// Custom functions.
 		//

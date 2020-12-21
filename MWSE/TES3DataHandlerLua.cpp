@@ -61,12 +61,14 @@ namespace mwse {
 				// Basic function binding.
 				usertypeDefinition["addNewObject"] = &TES3::NonDynamicData::addNewObject;
 				usertypeDefinition["deleteObject"] = &TES3::NonDynamicData::deleteObject;
+				usertypeDefinition["drawCellMapMarker"] = &TES3::NonDynamicData::drawCellMapMarker;
 				usertypeDefinition["findDialogue"] = &TES3::NonDynamicData::findDialogue;
 				usertypeDefinition["findFirstCloneOfActor"] = &TES3::NonDynamicData::findFirstCloneOfActor;
 				usertypeDefinition["findGlobalVariable"] = &TES3::NonDynamicData::findGlobalVariable;
 				usertypeDefinition["findScript"] = &TES3::NonDynamicData::findScriptByName;
 				usertypeDefinition["findSound"] = &TES3::NonDynamicData::findSound;
 				usertypeDefinition["resolveObject"] = &TES3::NonDynamicData::resolveObject;
+				usertypeDefinition["showLocationOnMap"] = &TES3::NonDynamicData::showLocationOnMap;
 
 				// Provide legacy access to magic effects table.
 				usertypeDefinition["magicEffects"] = sol::readonly_property(&TES3::NonDynamicData::getMagicEffects_lua);

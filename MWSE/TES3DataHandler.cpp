@@ -13,6 +13,7 @@
 
 #include "TES3Util.h"
 
+#include "TES3Cell.h"
 #include "TES3DialogueInfo.h"
 #include "TES3GlobalVariable.h"
 #include "TES3MagicEffectController.h"
@@ -278,6 +279,28 @@ namespace TES3 {
 	const auto TES3_NonDynamicData_createReference = reinterpret_cast<float(__thiscall*)(NonDynamicData*, PhysicalObject*, Vector3*, Vector3*, bool&, Reference*, Cell*)>(0x4C0E80);
 	float NonDynamicData::createReference(PhysicalObject * object, Vector3 * position, Vector3 * orientation, bool& cellWasCreated, Reference * existingReference, Cell * cell) {
 		return TES3_NonDynamicData_createReference(this, object, position, orientation, cellWasCreated, existingReference, cell);
+	}
+
+	const auto TES3_NonDynamicData_showLocationOnMap = reinterpret_cast<void(__thiscall*)(TES3::NonDynamicData*, const char*)>(0x4C8480);
+	void NonDynamicData::showLocationOnMap(const char* name) {
+		auto idLength = strnlen_s(name, 32);
+		for (auto cell : *cells) {
+			if (cell->name && !cell->isInterior() && !(cell->cellFlags & 0x20)) {
+				if (_strnicmp(cell->name, name, idLength) == 0) {
+					drawCellMapMarker(cell);
+				}
+			}
+		}
+	}
+
+	const auto TES3_NonDynamicData_drawCellMapMarker = reinterpret_cast<void(__thiscall*)(TES3::NonDynamicData*, TES3::Cell*, int)>(0x4C8540);
+	void NonDynamicData::drawCellMapMarker(Cell* cell, int unused) {
+		// Fix crash when trying to render cells too far out.
+		if (cell->getGridY() < -27) {
+			return;
+		}
+
+		TES3_NonDynamicData_drawCellMapMarker(this, cell, unused);
 	}
 
 	std::reference_wrapper<Skill[27]> NonDynamicData::getSkills() {

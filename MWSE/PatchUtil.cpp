@@ -6,6 +6,7 @@
 
 #include "TES3Actor.h"
 #include "TES3BodyPartManager.h"
+#include "TES3Cell.h"
 #include "TES3DataHandler.h"
 #include "TES3Game.h"
 #include "TES3GameFile.h"
@@ -363,6 +364,16 @@ namespace mwse {
 			genCallEnforced(0x565D8E, 0x4BA820, *reinterpret_cast<DWORD*>(&DataHandlerNonDynamicData_findGlobal));
 			genCallEnforced(0x565E1C, 0x4BA820, *reinterpret_cast<DWORD*>(&DataHandlerNonDynamicData_findGlobal));
 #endif
+
+			// Patch: Fix crash when trying to draw cell markers that don't fit on the map.
+			auto NonDynamicData_drawCellMapMarker = &TES3::NonDynamicData::drawCellMapMarker;
+			genCallEnforced(0x4C840F, 0x4C8540, *reinterpret_cast<DWORD*>(&NonDynamicData_drawCellMapMarker));
+			genCallEnforced(0x4C8520, 0x4C8540, *reinterpret_cast<DWORD*>(&NonDynamicData_drawCellMapMarker));
+
+			// Patch: Optimize ShowMap (and FillMap) mwscript command.
+			auto NonDynamicData_showLocationOnMap = &TES3::NonDynamicData::showLocationOnMap;
+			genCallEnforced(0x505374, 0x4C8480, *reinterpret_cast<DWORD*>(&NonDynamicData_showLocationOnMap));
+			genCallEnforced(0x50CB22, 0x4C8480, *reinterpret_cast<DWORD*>(&NonDynamicData_showLocationOnMap));
 		}
 
 		void installPostLuaPatches() {
