@@ -74,7 +74,7 @@ namespace TES3 {
 		char unknown_0x5B;
 		HWND parentWindowHandle; // 0x5C
 		HWND windowHandle; // 0x60
-		NI::Object* renderer; // 0x64
+		NI::Renderer* renderer; // 0x64
 		int unknown_0x68;
 		int unknown_0x6C;
 		int unknown_0x70;

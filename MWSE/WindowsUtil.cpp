@@ -11,23 +11,23 @@ namespace mwse {
 
 	std::optional<std::string> getClipboardText() {
 		if (!IsClipboardFormatAvailable(CF_TEXT)) {
-			return std::optional<std::string>();
+			return {};
 		}
 
 		if (!OpenClipboard(TES3::Game::get()->windowHandle)) {
-			return std::optional<std::string>();
+			return {};
 		}
 
 		auto clipboardHandle = GetClipboardData(CF_TEXT);
 		if (clipboardHandle == nullptr) {
 			CloseClipboard();
-			return std::optional<std::string>();
+			return {};
 		}
 
 		const char* clipboardText = static_cast<const char*>(GlobalLock(clipboardHandle));
 		if (clipboardText == nullptr) {
 			CloseClipboard();
-			return std::optional<std::string>();
+			return {};
 		}
 
 		auto result = std::move(std::string(clipboardText));
