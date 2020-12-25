@@ -279,7 +279,7 @@ namespace NI {
 		ObjectNET::_saveBinary(this, stream);
 
 		// Pack the flags with the test function.
-		unsigned short serializedFlags = flags;
+		unsigned short serializedFlags = flags & ~0x3C;
 		serializedFlags |= (testFunction & 0xF) << 2;
 
 		// Write the property flags with the custom masking, instead of the usual field.
