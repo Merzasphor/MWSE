@@ -222,7 +222,18 @@ namespace NI {
 	static_assert(sizeof(VertexColorProperty) == 0x20, "NI::VertexColorProperty failed size validation");
 
 	struct ZBufferProperty : Property {
-		unsigned int testFunction; // 0x18
+		enum struct TestFunction : unsigned int {
+			ALWAYS,
+			LESS,
+			EQUAL,
+			LESS_EQUAL,
+			GREATER,
+			NOT_EQUAL,
+			GREATER_EQUAL,
+			NEVER,
+		};
+
+		TestFunction testFunction; // 0x18
 
 		ZBufferProperty();
 		~ZBufferProperty();
