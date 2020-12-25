@@ -2,6 +2,8 @@
 
 #include "MemoryUtil.h"
 
+#include "NIBinaryStream.h"
+#include "NIStream.h"
 #include "NITexture.h"
 
 namespace NI {
@@ -258,11 +260,30 @@ namespace NI {
 		vTable.asProperty = (Property_vTable*)0x74652C;
 		setFlag(false, 0);
 		setFlag(false, 1);
-		mask = 3;
+		testFunction = 3;
 	}
 
 	ZBufferProperty::~ZBufferProperty() {
 
+	}
+
+	void ZBufferProperty::loadBinary(Stream* stream) {
+		Property::_loadBinary(this, stream);
+
+		// Extract the test function from the flags.
+		testFunction = (flags & 0x3C) >> 2;
+	}
+
+	void ZBufferProperty::saveBinary(Stream* stream) const {
+		// We don't want to do the normal NiProperty serialization here.
+		ObjectNET::_saveBinary(this, stream);
+
+		// Pack the flags with the test function.
+		unsigned short serializedFlags = flags;
+		serializedFlags |= (testFunction & 0xF) << 2;
+
+		// Write the property flags with the custom masking, instead of the usual field.
+		stream->outStream->write(&serializedFlags, sizeof(serializedFlags));
 	}
 
 	Pointer<ZBufferProperty> ZBufferProperty::create() {

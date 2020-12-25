@@ -160,7 +160,10 @@ namespace mwse {
 				setUserdataForNIProperty(usertypeDefinition);
 
 				// Basic property binding.
-				usertypeDefinition["mask"] = &NI::ZBufferProperty::mask;
+				usertypeDefinition["testFunction"] = &NI::ZBufferProperty::testFunction;
+
+				// Deprecated bindings.
+				usertypeDefinition["mask"] = &NI::ZBufferProperty::testFunction;
 			}
 
 		}
