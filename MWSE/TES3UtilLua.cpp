@@ -2554,9 +2554,14 @@ namespace mwse {
 			return TES3::WorldController::get()->spellInstanceController->getInstanceFromSerial(serialNumber);
 		}
 
+		const auto TES3_UI_showAlchemyMenu = reinterpret_cast<void(__cdecl*)()>(0x599A30);
+		void showAlchemyMenu() {
+			TES3_UI_showAlchemyMenu();
+		}
+
+		const auto TES3_UI_showRepairServiceMenu = reinterpret_cast<void(__cdecl*)(TES3::MobileActor*)>(0x615160);
 		void showRepairServiceMenu() {
-			reinterpret_cast<int(__cdecl*)(TES3::MobileActor*)>(0x615160)(TES3::WorldController::get()->getMobilePlayer());
-			TES3::UI::enterMenuMode(TES3::UI::registerID("MenuServiceRepair"));
+			TES3_UI_showRepairServiceMenu(TES3::WorldController::get()->getMobilePlayer());
 		}
 
 		int addItem(sol::table params) {
@@ -4531,6 +4536,7 @@ namespace mwse {
 			tes3["setTrap"] = setTrap;
 			tes3["setVanityMode"] = setVanityMode;
 			tes3["setWerewolfKillCount"] = setWerewolfKillCount;
+			tes3["showAlchemyMenu"] = showAlchemyMenu;
 			tes3["showRepairServiceMenu"] = showRepairServiceMenu;
 			tes3["showRestMenu"] = showRestMenu;
 			tes3["skipAnimationFrame"] = skipAnimationFrame;
