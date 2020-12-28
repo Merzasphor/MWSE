@@ -105,8 +105,8 @@ namespace TES3 {
 		void * unknown_0xD0[3]; // SG nodes?
 		int unknown_0xDC;
 		int unknown_0xE0;
-		int unknown_0xE4;
-		Reference * playerTarget; // 0xE8
+		NI::Pointer<NI::Pick> playerTargetPick; // 0xE4
+		Reference* playerTarget; // 0xE8
 		int unknown_0xEC;
 		NI::Pointer<NI::FogProperty> fogProperty; // 0xF0
 		int unknown_0xF4;
