@@ -6,8 +6,8 @@
 
 namespace TES3 {
 	struct PlayerAnimationData : ActorAnimationData {
-		NI::Camera * firstPersonHeadCameraNode; // 0xD4
-		TES3::Vector3 unknown_0xD8;
+		NI::Camera * firstPersonHeadCameraNode; // 0xD4 
+		TES3::Vector3 cameraOffset; // 0xD8
 		void * pickData; // 0xE4
 		bool is3rdPerson; // 0xE8
 		bool togglePOV; // 0xE9
