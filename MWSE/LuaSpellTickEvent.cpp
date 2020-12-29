@@ -27,7 +27,7 @@ namespace mwse {
 				sol::table eventData = state.create_table();
 
 				eventData["caster"] = m_SourceInstance->caster;
-				eventData["target"] = m_EffectInstance->target;
+				eventData["target"] = m_SourceInstance->target;
 
 				eventData["effectId"] = m_EffectId;
 				eventData["source"] = m_SourceInstance->sourceCombo.source.asGeneric;

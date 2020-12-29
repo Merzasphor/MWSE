@@ -27,7 +27,7 @@ namespace mwse {
 				sol::table eventData = state.create_table();
 
 				eventData["caster"] = m_MagicSourceInstance->caster;
-				eventData["target"] = m_EffectInstance->target;
+				eventData["target"] = m_MagicSourceInstance->target;
 				eventData["resistedPercent"] = m_EffectInstance->resistedPercent;
 
 				eventData["source"] = m_MagicSourceInstance->sourceCombo.source.asGeneric;
