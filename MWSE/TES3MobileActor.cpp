@@ -985,6 +985,10 @@ namespace TES3 {
 		return false;
 	}
 
+	bool MobileActor::hasUsedPower(const Spell* spell) const {
+		return powers.containsKey(spell);
+	}
+
 	ActiveMagicEffect* MobileActor::getActiveMagicEffects_legacy() const {
 		return &activeMagicEffects.sentinel->data;
 	}
