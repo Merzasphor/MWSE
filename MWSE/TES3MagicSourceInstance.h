@@ -3,7 +3,6 @@
 #include "TES3Defines.h"
 
 #include "TES3HashMap.h"
-#include "TES3MagicEffectInstance.h"
 #include "TES3Object.h"
 #include "TES3Vectors.h"
 
@@ -52,7 +51,7 @@ namespace TES3 {
 		float overrideCastChance; // 0x10
 		Reference * target; // 0x14
 		bool bypassResistances; // 0x18
-		HashMap<const char*, MagicEffectInstance::Data> effects[8]; // 0x1C
+		HashMap<Reference*, void*> effects[8]; // 0x1C
 		MobileProjectile * magicProjectile;
 		MagicSourceCombo sourceCombo;
 		unsigned int serialNumber;

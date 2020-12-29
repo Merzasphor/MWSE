@@ -30,7 +30,7 @@ namespace mwse {
 			usertypeDefinition["magnitude"] = &TES3::MagicEffectInstance::magnitude;
 			usertypeDefinition["resistedPercent"] = &TES3::MagicEffectInstance::resistedPercent;
 			usertypeDefinition["state"] = &TES3::MagicEffectInstance::state;
-			usertypeDefinition["target"] = &TES3::MagicEffectInstance::targetId;
+			usertypeDefinition["target"] = &TES3::MagicEffectInstance::target;
 			usertypeDefinition["timeActive"] = &TES3::MagicEffectInstance::timeActive;
 			usertypeDefinition["visual"] = &TES3::MagicEffectInstance::visual;
 		}
