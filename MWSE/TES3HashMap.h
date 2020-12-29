@@ -21,9 +21,9 @@ namespace TES3 {
 		};
 		struct VirtualTable {
 			void(__thiscall* destructor)(HashMap<K, V>*, bool); // 0x0
-			unsigned int(__thiscall* hashKey)(HashMap<K, V>*, K); // 0x4
-			bool(__thiscall* compareKey)(HashMap<K, V>*, K, K); // 0x8
-			void(__thiscall* makeKeyValuePair)(HashMap<K, V>*, KeyValuePair*, K, V); // 0xC
+			unsigned int(__thiscall* hashKey)(const HashMap<K, V>*, K); // 0x4
+			bool(__thiscall* compareKey)(const HashMap<K, V>*, K, K); // 0x8
+			void(__thiscall* makeKeyValuePair)(const HashMap<K, V>*, KeyValuePair*, K, V); // 0xC
 			void(__thiscall* deleteKeyValuePair)(HashMap<K, V>*, KeyValuePair*); // 0x10
 		};
 		VirtualTable* vTable; // 0x0
@@ -31,26 +31,36 @@ namespace TES3 {
 		size_t bucketCount; // 0x8
 		Node** buckets; // 0xC
 
-		unsigned int hashKey(K& key) { return vTable->hashKey(this, key); }
-		bool compareKey(K& first, K& second) { return vTable->compareKey(this, first, second); }
-		bool makeKeyValuePair(KeyValuePair* kvp, K& key, V& value) { vTable->makeKeyValuePair(this, kvp, key, value); }
+		unsigned int hashKey(K& key) const { return vTable->hashKey(this, key); }
+		bool compareKey(K& first, K& second) const { return vTable->compareKey(this, first, second); }
+		bool makeKeyValuePair(KeyValuePair* kvp, K& key, V& value) const { vTable->makeKeyValuePair(this, kvp, key, value); }
 		bool deleteKeyValuePair(KeyValuePair* kvp) { vTable->deleteKeyValuePair(this, kvp); }
 
-		bool containsKey(K& key) {
+		bool containsKey(K& key) const {
 			auto index = hashKey(key);
 			for (auto itt = buckets[index]; itt; itt = itt->nextNode) {
-				if (compareKey(key, itt->kvp.key)) {
+				if (compareKey(key, itt->keyValuePair.key)) {
 					return true;
 				}
 			}
 			return false;
 		}
 
-		V& getValue(K& key) {
+		V& getValue(K& key) const {
 			auto index = hashKey(key);
 			for (auto itt = buckets[index]; itt; itt = itt->nextNode) {
 				if (compareKey(key, itt->keyValuePair.key)) {
 					return itt->keyValuePair.value;
+				}
+			}
+			throw std::runtime_error("Value doesn't exist for given key.");
+		}
+
+		Node* getNode(K& key) const {
+			auto index = hashKey(key);
+			for (auto itt = buckets[index]; itt; itt = itt->nextNode) {
+				if (compareKey(key, itt->keyValuePair.key)) {
+					return itt;
 				}
 			}
 			throw std::runtime_error("Value doesn't exist for given key.");
