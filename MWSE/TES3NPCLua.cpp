@@ -31,7 +31,6 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition["baseDisposition"] = &TES3::NPC::baseDisposition;
-				usertypeDefinition["factionIndex"] = &TES3::NPC::factionIndex;
 				usertypeDefinition["factionRank"] = &TES3::NPC::factionRank;
 				usertypeDefinition["fatigue"] = &TES3::NPC::fatigue;
 				usertypeDefinition["hair"] = &TES3::NPC::hair;
@@ -85,7 +84,7 @@ namespace mwse {
 				usertypeDefinition["baseObject"] = sol::readonly_property(&TES3::NPCInstance::baseNPC);
 				usertypeDefinition["disposition"] = sol::property(&TES3::NPCInstance::getDisposition_lua);
 				usertypeDefinition["baseDisposition"] = sol::property(&TES3::NPCInstance::getBaseDisposition, &TES3::NPCInstance::setBaseDisposition);
-				usertypeDefinition["factionIndex"] = &TES3::NPCInstance::factionIndex;
+				usertypeDefinition["reputation"] = &TES3::NPCInstance::reputation;
 
 				// Basic function binding.
 				usertypeDefinition["reevaluateEquipment"] = &TES3::NPCInstance::reevaluateEquipment;

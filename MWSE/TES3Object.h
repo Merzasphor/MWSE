@@ -158,8 +158,8 @@ namespace TES3 {
 		void * unknown_0x78;
 		void (__thiscall * setDispositionRaw)(BaseObject*, int); // 0x7C
 		int (__thiscall * modDisposition)(BaseObject*, signed int); // 0x80
-		int (__thiscall * getFactionIndex)(BaseObject*); // 0x84
-		signed char (__thiscall * setFactionIndex)(BaseObject*, signed char); // 0x88
+		int (__thiscall * getReputation)(const BaseObject*); // 0x84
+		int (__thiscall * setReputation)(BaseObject*, int); // 0x88
 		int (__thiscall * getDispositionRaw)(BaseObject*); // 0x8C
 		signed char(__thiscall * modFactionIndex)(BaseObject*, signed char); // 0x90
 		int (__thiscall * getType)(BaseObject*); // 0x94
@@ -311,8 +311,8 @@ namespace TES3 {
 		int getLevel();
 		void setDispositionRaw(signed char);
 		int modDisposition(signed int);
-		int getFactionIndex();
-		signed char setFactionIndex(signed char);
+		int getReputation() const;
+		int setReputation(int);
 		int getDispositionRaw();
 		signed char modFactionIndex(signed char);
 		int getType();
