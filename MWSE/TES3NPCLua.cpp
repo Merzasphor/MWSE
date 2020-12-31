@@ -67,6 +67,7 @@ namespace mwse {
 				// TODO: Deprecated. Remove before 2.1-stable.
 				usertypeDefinition["model"] = sol::property(&TES3::NPC::getModelPath, &TES3::NPC::setModelPath);
 				usertypeDefinition["essential"] = sol::property(&TES3::NPC::getIsEssential_legacy, &TES3::NPC::setIsEssential_legacy);
+				usertypeDefinition["factionIndex"] = &TES3::NPC::reputation;
 				usertypeDefinition["respawns"] = sol::property(&TES3::NPC::getRespawns_legacy, &TES3::NPC::setRespawns_legacy);
 			}
 
@@ -123,6 +124,7 @@ namespace mwse {
 				// TODO: Deprecated. Remove before 2.1-stable.
 				usertypeDefinition["model"] = sol::property(&TES3::NPCInstance::getModelPath, &TES3::NPCInstance::setModelPath);
 				usertypeDefinition["essential"] = sol::property(&TES3::NPCInstance::getIsEssential_legacy, &TES3::NPCInstance::setIsEssential_legacy);
+				usertypeDefinition["factionIndex"] = &TES3::NPCInstance::reputation;
 				usertypeDefinition["respawns"] = sol::property(&TES3::NPCInstance::getRespawns_legacy, &TES3::NPCInstance::setRespawns_legacy);
 			}
 		}
