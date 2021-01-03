@@ -14,7 +14,7 @@
 #include "NISourceTexture.h"
 
 #define MWSE_CUSTOM_EFFECTS true
-#define MWSE_RAISED_FILE_LIMIT MWSE_CUSTOM_EFFECTS
+#define MWSE_RAISED_FILE_LIMIT true
 #define MWSE_CUSTOM_GLOBALS true
 
 namespace TES3 {

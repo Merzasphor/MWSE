@@ -255,20 +255,22 @@ namespace mwse {
 		//  - SCPT.RNAM
 		//
 
+#if MWSE_RAISED_FILE_LIMIT
 		namespace PatchRaiseESXLimit {
 			// Vanilla offsets and masks.
 			constexpr DWORD ModBitsVanilla = 8;
-			constexpr DWORD FormBitsVanilla = 24;
+			constexpr DWORD FormBitsVanilla = sizeof(DWORD) * CHAR_BIT - ModBitsVanilla;
 			constexpr DWORD ModMaskVanilla = ((1 << ModBitsVanilla) - 1) << FormBitsVanilla;
 			constexpr DWORD FormMaskVanilla = (1 << FormBitsVanilla) - 1;
 			constexpr DWORD ModCountVanilla = 1 << ModBitsVanilla;
 
 			// New offsets and masks.
 			constexpr DWORD ModBitsMWSE = 10;
-			constexpr DWORD FormBitsMWSE = 22;
+			constexpr DWORD FormBitsMWSE = sizeof(DWORD) * CHAR_BIT - ModBitsMWSE;
 			constexpr DWORD ModMaskMWSE = ((1 << ModBitsMWSE) - 1) << FormBitsMWSE;
 			constexpr DWORD FormMaskMWSE = (1 << FormBitsMWSE) - 1;
 			constexpr DWORD ModCountMWSE = 1 << ModBitsMWSE;
+			static_assert(1 << ModBitsMWSE == sizeof(TES3::NonDynamicData::activeMods) / sizeof(TES3::GameFile*), "Reference FormID bit assignment does not match active game file array size.");
 
 			struct SerializedFormId {
 				DWORD modIndex; // 0x0
@@ -310,6 +312,7 @@ namespace mwse {
 				}
 			}
 		}
+#endif
 
 		//
 		// Install all the patches.
