@@ -31,7 +31,6 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition["baseDisposition"] = &TES3::NPC::baseDisposition;
-				usertypeDefinition["factionIndex"] = &TES3::NPC::factionIndex;
 				usertypeDefinition["factionRank"] = &TES3::NPC::factionRank;
 				usertypeDefinition["fatigue"] = &TES3::NPC::fatigue;
 				usertypeDefinition["hair"] = &TES3::NPC::hair;
@@ -68,6 +67,7 @@ namespace mwse {
 				// TODO: Deprecated. Remove before 2.1-stable.
 				usertypeDefinition["model"] = sol::property(&TES3::NPC::getModelPath, &TES3::NPC::setModelPath);
 				usertypeDefinition["essential"] = sol::property(&TES3::NPC::getIsEssential_legacy, &TES3::NPC::setIsEssential_legacy);
+				usertypeDefinition["factionIndex"] = &TES3::NPC::reputation;
 				usertypeDefinition["respawns"] = sol::property(&TES3::NPC::getRespawns_legacy, &TES3::NPC::setRespawns_legacy);
 			}
 
@@ -85,7 +85,7 @@ namespace mwse {
 				usertypeDefinition["baseObject"] = sol::readonly_property(&TES3::NPCInstance::baseNPC);
 				usertypeDefinition["disposition"] = sol::property(&TES3::NPCInstance::getDisposition_lua);
 				usertypeDefinition["baseDisposition"] = sol::property(&TES3::NPCInstance::getBaseDisposition, &TES3::NPCInstance::setBaseDisposition);
-				usertypeDefinition["factionIndex"] = &TES3::NPCInstance::factionIndex;
+				usertypeDefinition["reputation"] = &TES3::NPCInstance::reputation;
 
 				// Basic function binding.
 				usertypeDefinition["reevaluateEquipment"] = &TES3::NPCInstance::reevaluateEquipment;
@@ -124,6 +124,7 @@ namespace mwse {
 				// TODO: Deprecated. Remove before 2.1-stable.
 				usertypeDefinition["model"] = sol::property(&TES3::NPCInstance::getModelPath, &TES3::NPCInstance::setModelPath);
 				usertypeDefinition["essential"] = sol::property(&TES3::NPCInstance::getIsEssential_legacy, &TES3::NPCInstance::setIsEssential_legacy);
+				usertypeDefinition["factionIndex"] = &TES3::NPCInstance::reputation;
 				usertypeDefinition["respawns"] = sol::property(&TES3::NPCInstance::getRespawns_legacy, &TES3::NPCInstance::setRespawns_legacy);
 			}
 		}

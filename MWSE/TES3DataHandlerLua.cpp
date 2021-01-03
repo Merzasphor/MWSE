@@ -10,6 +10,7 @@
 #include "TES3Dialogue.h"
 #include "TES3DialogueInfo.h"
 #include "TES3Faction.h"
+#include "TES3GameFile.h"
 #include "TES3GlobalVariable.h"
 #include "TES3MagicEffectController.h"
 #include "TES3Reference.h"
@@ -42,6 +43,7 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
+				usertypeDefinition["lastLoadedFile"] = sol::readonly_property(&TES3::NonDynamicData::unknown_0x08);
 				usertypeDefinition["birthsigns"] = sol::readonly_property(&TES3::NonDynamicData::birthsigns);
 				usertypeDefinition["cells"] = sol::readonly_property(&TES3::NonDynamicData::cells);
 				usertypeDefinition["classes"] = sol::readonly_property(&TES3::NonDynamicData::classes);

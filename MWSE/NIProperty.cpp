@@ -2,6 +2,8 @@
 
 #include "MemoryUtil.h"
 
+#include "NIBinaryStream.h"
+#include "NIStream.h"
 #include "NITexture.h"
 
 namespace NI {
@@ -258,11 +260,47 @@ namespace NI {
 		vTable.asProperty = (Property_vTable*)0x74652C;
 		setFlag(false, 0);
 		setFlag(false, 1);
-		mask = 3;
+		testFunction = TestFunction::LESS_EQUAL;
 	}
 
 	ZBufferProperty::~ZBufferProperty() {
 
+	}
+
+	void ZBufferProperty::loadBinary(Stream* stream) {
+		// We don't want to do the normal NiProperty deserialization here.
+		ObjectNET::_loadBinary(this, stream);
+
+		// Get our raw flags.
+		unsigned short rawFlags = 0;
+		stream->inStream->read(&rawFlags, sizeof(rawFlags));
+
+		// Assign the first two bits to property flags;
+		flags = rawFlags & 0x3;
+
+		// Check for the custom test function bit.
+		if (rawFlags & 0x40) {
+			testFunction = static_cast<TestFunction>((rawFlags >> 2) & 0xF);
+		}
+	}
+
+	void ZBufferProperty::saveBinary(Stream* stream) const {
+		// We don't want to do the normal NiProperty serialization here.
+		ObjectNET::_saveBinary(this, stream);
+
+		// Pack the flags with the test function.
+		unsigned short serializedFlags = flags & 0x3;
+
+		// If we're using a non-default test function, serialize it in the flags.
+		if (testFunction != TestFunction::LESS_EQUAL) {
+			serializedFlags |= (DWORD(testFunction) & 0xF) << 2;
+			
+			// We also need to set the custom "we're using a new test function" bit.
+			serializedFlags |= 0x40;
+		}
+
+		// Write the property flags with the custom masking, instead of the usual field.
+		stream->outStream->write(&serializedFlags, sizeof(serializedFlags));
 	}
 
 	Pointer<ZBufferProperty> ZBufferProperty::create() {

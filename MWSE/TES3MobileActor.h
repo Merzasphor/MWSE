@@ -114,6 +114,11 @@ namespace TES3 {
 	static_assert(sizeof(ActiveMagicEffect) == 0x10, "TES3::ActiveMagicEffect failed size validation");
 
 	struct MobileActor : MobileObject {
+		struct PowerUsage {
+			float timestamp; // 0x0
+			float unknown_0x4;
+		};
+
 		IteratedList<MobileActor*> listTargetActors; // 0x80
 		IteratedList<MobileActor*> listFriendlyActors; // 0x94
 		float scanTimer; // 0xA8
@@ -135,7 +140,7 @@ namespace TES3 {
 		Deque<ActiveMagicEffect> activeMagicEffects; // 0x1C4
 		int unknown_0x1D0;
 		Collision collision_1D4;
-		HashMap<void*, void*> powers;
+		HashMap<const Spell*, PowerUsage> powers;
 		char unknown_0x224;
 		char prevAIBehaviourState;
 		char unknown_0x226;
@@ -385,6 +390,8 @@ namespace TES3 {
 		bool isAffectedByObject_lua(sol::object object) const;
 
 		bool hasSummonEffect();
+
+		bool hasUsedPower(const Spell* spell) const;
 
 		ActiveMagicEffect* getActiveMagicEffects_legacy() const;
 		int getActiveMagicEffectCount_legacy() const;

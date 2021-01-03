@@ -24,6 +24,7 @@ namespace mwse {
 			usertypeDefinition["currentHealth"] = sol::readonly_property(&TES3::GameFile::getCurrentHealth);
 			usertypeDefinition["maxHealth"] = sol::readonly_property(&TES3::GameFile::getMaxHealth);
 			usertypeDefinition["gameHour"] = sol::readonly_property(&TES3::GameFile::getGameHour);
+			usertypeDefinition["highestFormID"] = sol::readonly_property(&TES3::GameFile::highestFormID);
 			usertypeDefinition["day"] = sol::readonly_property(&TES3::GameFile::getDay);
 			usertypeDefinition["month"] = sol::readonly_property(&TES3::GameFile::getMonth);
 			usertypeDefinition["year"] = sol::readonly_property(&TES3::GameFile::getYear);

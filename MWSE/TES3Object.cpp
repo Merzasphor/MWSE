@@ -452,12 +452,12 @@ namespace TES3 {
 		return vTable.object->modDisposition(this, value);
 	}
 
-	int Object::getFactionIndex() {
-		return vTable.object->getFactionIndex(this);
+	int Object::getReputation() const {
+		return vTable.object->getReputation(this);
 	}
 
-	signed char Object::setFactionIndex(signed char index) {
-		return vTable.object->setFactionIndex(this, index);
+	int Object::setReputation(int reputation) {
+		return vTable.object->setReputation(this, reputation);
 	}
 
 	int Object::getDispositionRaw() {

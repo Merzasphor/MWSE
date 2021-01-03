@@ -669,6 +669,38 @@ namespace mwse {
 			return sol::optional<TES3::Vector3>();
 		}
 
+		sol::optional<TES3::Vector3> get3rdPersonCameraOffset() {
+			auto worldController = TES3::WorldController::get();
+			if (!worldController) {
+				return {};
+			}
+
+			auto macp = worldController->getMobilePlayer();
+			if (!macp) {
+				return {};
+			}
+
+			return macp->animationData.asPlayer->cameraOffset;
+		}
+
+		void set3rdPersonCameraOffset(sol::table params) {
+			auto offset = getOptionalParamVector3(params, "offset");
+			if (!offset) {
+				throw std::exception("Invalid 'offset' param provided.");
+			}
+			auto worldController = TES3::WorldController::get();
+			if (!worldController) {
+				throw std::exception("WorldController is not yet initialized.");
+			}
+
+			auto macp = worldController->getMobilePlayer();
+			if (!macp) {
+				throw std::exception("MobilePlayer is not yet initialized.");
+			}
+
+			macp->animationData.asPlayer->cameraOffset = offset.value();
+		}
+
 		static NI::Pick* rayTestCache = nullptr;
 		static std::vector<NI::AVObject*> rayTestIgnoreRoots;
 		sol::object rayTest(sol::table params) {
@@ -2522,9 +2554,14 @@ namespace mwse {
 			return TES3::WorldController::get()->spellInstanceController->getInstanceFromSerial(serialNumber);
 		}
 
+		const auto TES3_UI_showAlchemyMenu = reinterpret_cast<void(__cdecl*)()>(0x599A30);
+		void showAlchemyMenu() {
+			TES3_UI_showAlchemyMenu();
+		}
+
+		const auto TES3_UI_showRepairServiceMenu = reinterpret_cast<void(__cdecl*)(TES3::MobileActor*)>(0x615160);
 		void showRepairServiceMenu() {
-			reinterpret_cast<int(__cdecl*)(TES3::MobileActor*)>(0x615160)(TES3::WorldController::get()->getMobilePlayer());
-			TES3::UI::enterMenuMode(TES3::UI::registerID("MenuServiceRepair"));
+			TES3_UI_showRepairServiceMenu(TES3::WorldController::get()->getMobilePlayer());
 		}
 
 		int addItem(sol::table params) {
@@ -4390,6 +4427,7 @@ namespace mwse {
 			tes3["findRegion"] = findRegion;
 			tes3["force1stPerson"] = force1stPerson;
 			tes3["force3rdPerson"] = force3rdPerson;
+			tes3["get3rdPersonCameraOffset"] = get3rdPersonCameraOffset;
 			tes3["getActiveCells"] = getActiveCells;
 			tes3["getAnimationGroups"] = getCurrentAnimationGroups;
 			tes3["getAnimationTiming"] = getAnimationTiming;
@@ -4476,6 +4514,7 @@ namespace mwse {
 			tes3["runLegacyScript"] = runLegacyScript;
 			tes3["saveGame"] = saveGame;
 			tes3["say"] = say;
+			tes3["set3rdPersonCameraOffset"] = set3rdPersonCameraOffset;
 			tes3["setAIActivate"] = setAIActivate;
 			tes3["setAIEscort"] = setAIEscort;
 			tes3["setAIFollow"] = setAIFollow;
@@ -4497,6 +4536,7 @@ namespace mwse {
 			tes3["setTrap"] = setTrap;
 			tes3["setVanityMode"] = setVanityMode;
 			tes3["setWerewolfKillCount"] = setWerewolfKillCount;
+			tes3["showAlchemyMenu"] = showAlchemyMenu;
 			tes3["showRepairServiceMenu"] = showRepairServiceMenu;
 			tes3["showRestMenu"] = showRestMenu;
 			tes3["skipAnimationFrame"] = skipAnimationFrame;

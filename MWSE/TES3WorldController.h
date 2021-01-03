@@ -231,7 +231,7 @@ namespace TES3 {
 		unsigned int lastFrameTimeMillis; // 0x4
 		int unknown_0x28;
 		float deltaTime; // 0xC
-		NI::Object * renderer; // 0x30
+		NI::Renderer * renderer; // 0x30
 		AudioController * audioController; // 0x34
 		int unknown_0x38;
 		int unknown_0x3C;

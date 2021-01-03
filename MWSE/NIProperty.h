@@ -40,6 +40,13 @@ namespace NI {
 		PropertyType getType();
 		void update(float dt);
 
+		//
+		// Other function addresses.
+		//
+
+		static constexpr auto _loadBinary = reinterpret_cast<void(__thiscall*)(Property*, Stream*)>(0x6E9610);
+		static constexpr auto _saveBinary = reinterpret_cast<void(__thiscall*)(const Property*, Stream*)>(0x6E9660);
+
 	};
 	static_assert(sizeof(Property) == 0x18, "NI::Property failed size validation");
 
@@ -215,10 +222,24 @@ namespace NI {
 	static_assert(sizeof(VertexColorProperty) == 0x20, "NI::VertexColorProperty failed size validation");
 
 	struct ZBufferProperty : Property {
-		unsigned int mask; // 0x18
+		enum struct TestFunction : unsigned int {
+			ALWAYS,
+			LESS,
+			EQUAL,
+			LESS_EQUAL,
+			GREATER,
+			NOT_EQUAL,
+			GREATER_EQUAL,
+			NEVER,
+		};
+
+		TestFunction testFunction; // 0x18
 
 		ZBufferProperty();
 		~ZBufferProperty();
+
+		void loadBinary(Stream* stream);
+		void saveBinary(Stream* stream) const;
 
 		static Pointer<ZBufferProperty> create();
 	};

@@ -6,6 +6,7 @@
 #include "TES3WorldController.h"
 
 #include "NIProperty.h"
+#include "NIRenderer.h"
 
 #include "LuaManager.h"
 #include "LuaCalcSunDamageScalarEvent.h"

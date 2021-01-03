@@ -47,6 +47,13 @@ namespace NI {
 		TES3::Reference* getTes3Reference(bool searchParents = false);
 		TES3::Reference* getTes3Reference_lua(sol::optional<bool> searchParents = false);
 
+		//
+		// Other function addresses.
+		//
+
+		static constexpr auto _loadBinary = reinterpret_cast<void(__thiscall*)(ObjectNET*, Stream*)>(0x6EA610);
+		static constexpr auto _saveBinary = reinterpret_cast<void(__thiscall*)(const ObjectNET*, Stream*)>(0x6EA710);
+
 	};
 	static_assert(sizeof(ObjectNET) == 0x14, "NI::ObjectNET failed size validation");
 }
