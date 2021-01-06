@@ -114,10 +114,12 @@ namespace TES3 {
 	static_assert(sizeof(ActiveMagicEffect) == 0x10, "TES3::ActiveMagicEffect failed size validation");
 
 	struct MobileActor : MobileObject {
+#pragma pack(push, 4)
 		struct PowerUsage {
-			float timestamp; // 0x0
-			float unknown_0x4;
+			int unknown_0x0;
+			double castTimestamp; // 0x4
 		};
+#pragma pack(pop)
 
 		IteratedList<MobileActor*> listTargetActors; // 0x80
 		IteratedList<MobileActor*> listFriendlyActors; // 0x94
@@ -391,12 +393,13 @@ namespace TES3 {
 
 		bool hasSummonEffect();
 
-		bool hasUsedPower(const Spell* spell) const;
+		bool hasUsedPower(const Spell* power) const;
 
 		ActiveMagicEffect* getActiveMagicEffects_legacy() const;
 		int getActiveMagicEffectCount_legacy() const;
 	};
 	static_assert(sizeof(MobileActor) == 0x3B0, "TES3::MobileActor failed size validation");
+	static_assert(sizeof(MobileActor::PowerUsage) == 0xC, "TES3::MobileActor::PowerUsage failed size validation");
 }
 
 MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3_MOBILEOBJECT(TES3::MobileActor)
