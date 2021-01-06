@@ -89,6 +89,7 @@
 #include "LuaPlayItemSoundEvent.h"
 #include "LuaPostInfoResponseEvent.h"
 #include "LuaPotionBrewedEvent.h"
+#include "LuaPowerRechargedEvent.h"
 #include "LuaPreLevelUpEvent.h"
 #include "LuaPreventRestEvent.h"
 #include "LuaProjectileExpireEvent.h"
@@ -104,8 +105,8 @@
 #include "LuaSkillRaisedEvent.h"
 #include "LuaSoundObjectPlayEvent.h"
 #include "LuaSpellCastedEvent.h"
-#include "LuaSpellCreatedEvent.h"
 #include "LuaSpellCastEvent.h"
+#include "LuaSpellCreatedEvent.h"
 #include "LuaSpellResistEvent.h"
 #include "LuaSpellTickEvent.h"
 #include "LuaUiObjectTooltipEvent.h"
@@ -217,6 +218,7 @@ namespace mwse {
 				usertypeDefinition["playItemSound"] = sol::property(&PlayItemSoundEvent::getEventEnabled, &PlayItemSoundEvent::setEventEnabled);
 				usertypeDefinition["postInfoResponse"] = sol::property(&PostInfoResponseEvent::getEventEnabled, &PostInfoResponseEvent::setEventEnabled);
 				usertypeDefinition["potionBrewed"] = sol::property(&PotionBrewedEvent::getEventEnabled, &PotionBrewedEvent::setEventEnabled);
+				usertypeDefinition["powerRecharged"] = sol::property(&PowerRechargedEvent::getEventEnabled, &PowerRechargedEvent::setEventEnabled);
 				usertypeDefinition["preLevelUp"] = sol::property(&PreLevelUpEvent::getEventEnabled, &PreLevelUpEvent::setEventEnabled);
 				usertypeDefinition["preventRest"] = sol::property(&PreventRestEvent::getEventEnabled, &PreventRestEvent::setEventEnabled);
 				usertypeDefinition["projectileExpire"] = sol::property(&ProjectileExpireEvent::getEventEnabled, &ProjectileExpireEvent::setEventEnabled);

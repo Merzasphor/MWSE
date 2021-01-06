@@ -123,8 +123,11 @@ namespace mwse {
 
 			// Basic function binding.
 			usertypeDefinition["applyHealthDamage"] = &TES3::MobileActor::applyHealthDamage;
+			usertypeDefinition["getPowerUseTimestamp"] = &TES3::MobileActor::getPowerUseTimestamp;
 			usertypeDefinition["getSkillStatistic"] = &TES3::MobileActor::getSkillStatistic;
 			usertypeDefinition["getSkillValue"] = &TES3::MobileActor::getSkillValue;
+			usertypeDefinition["hasUsedPower"] = &TES3::MobileActor::hasUsedPower;
+			usertypeDefinition["rechargePower"] = &TES3::MobileActor::rechargePower;
 			usertypeDefinition["startCombat"] = &TES3::MobileActor::startCombat;
 			usertypeDefinition["startDialogue"] = &TES3::MobileActor::startDialogue;
 			usertypeDefinition["stopCombat"] = &TES3::MobileActor::stopCombat;

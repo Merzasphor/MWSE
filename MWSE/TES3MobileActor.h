@@ -142,7 +142,7 @@ namespace TES3 {
 		Deque<ActiveMagicEffect> activeMagicEffects; // 0x1C4
 		int unknown_0x1D0;
 		Collision collision_1D4;
-		HashMap<const Spell*, PowerUsage> powers;
+		HashMap<Spell*, PowerUsage> powers;
 		char unknown_0x224;
 		char prevAIBehaviourState;
 		char unknown_0x226;
@@ -393,7 +393,9 @@ namespace TES3 {
 
 		bool hasSummonEffect();
 
-		bool hasUsedPower(const Spell* power) const;
+		bool hasUsedPower(Spell* power) const;
+		bool rechargePower(Spell* power);
+		sol::optional<double> getPowerUseTimestamp(Spell* spell) const;
 
 		ActiveMagicEffect* getActiveMagicEffects_legacy() const;
 		int getActiveMagicEffectCount_legacy() const;
