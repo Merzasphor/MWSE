@@ -46,6 +46,20 @@ namespace TES3 {
 			return false;
 		}
 
+		bool eraseKey(K& key) {
+			auto index = hashKey(key);
+			for (auto itt = &buckets[index]; *itt; itt = &(*itt)->nextNode) {
+				if (compareKey(key, (*itt)->key)) {
+					auto next = (*itt)->nextNode;
+					deleteKeyValuePair(&(*itt)->keyValuePair);
+					reinterpret_cast<void(__cdecl*)(void*)>(0x727530)(*itt);
+					*itt = next;
+					return true;
+				}
+			}
+			return false;
+		}
+
 		V& getValue(K& key) const {
 			auto index = hashKey(key);
 			for (auto itt = buckets[index]; itt; itt = itt->nextNode) {
