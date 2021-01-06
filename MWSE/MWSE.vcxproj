@@ -107,6 +107,7 @@
     <ClInclude Include="LuaPlayItemSoundEvent.h" />
     <ClInclude Include="LuaPostInfoResponseEvent.h" />
     <ClInclude Include="LuaPotionBrewedEvent.h" />
+    <ClInclude Include="LuaPowerRechargedEvent.h" />
     <ClInclude Include="LuaPreLevelUpEvent.h" />
     <ClInclude Include="LuaPreventRestEvent.h" />
     <ClInclude Include="LuaProjectileExpireEvent.h" />
@@ -541,6 +542,7 @@
     <ClCompile Include="LuaPlayItemSoundEvent.cpp" />
     <ClCompile Include="LuaPostInfoResponseEvent.cpp" />
     <ClCompile Include="LuaPotionBrewedEvent.cpp" />
+    <ClCompile Include="LuaPowerRechargedEvent.cpp" />
     <ClCompile Include="LuaPreLevelUpEvent.cpp" />
     <ClCompile Include="LuaPreventRestEvent.cpp" />
     <ClCompile Include="LuaProjectileExpireEvent.cpp" />

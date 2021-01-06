@@ -199,6 +199,7 @@
 #include "LuaObjectInvalidatedEvent.h"
 #include "LuaPostInfoResponseEvent.h"
 #include "LuaPotionBrewedEvent.h"
+#include "LuaPowerRechargedEvent.h"
 #include "LuaPreLevelUpEvent.h"
 #include "LuaPreventRestEvent.h"
 #include "LuaProjectileExpireEvent.h"
@@ -522,6 +523,9 @@ namespace mwse {
 				log::getLog() << "No execute function found for script override of '" << script->name << "'. Script execution stopped." << std::endl;
 				mwscript::StopScript(script, script);
 			}
+
+			manager.setCurrentReference(nullptr);
+			manager.setCurrentScript(nullptr);
 		}
 
 		// Hook for HookRunScriptIndirect.
@@ -2791,6 +2795,18 @@ namespace mwse {
 		}
 
 		//
+		// Event: Power recharged
+		//
+
+		using PowersHashMap = decltype(TES3::MobileActor::powers);
+		void __fastcall OnDeletePowerHashMapKVP(PowersHashMap* self, DWORD edx, PowersHashMap::Node* node) {
+			if (event::PowerRechargedEvent::getEventEnabled()) {
+				auto mobile = reinterpret_cast<TES3::MobileActor*>(DWORD(self) - offsetof(TES3::MobileActor, powers));
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new lua::event::PowerRechargedEvent(node->key, mobile));
+			}
+		}
+
+		//
 		//
 		//
 
@@ -4037,6 +4053,9 @@ namespace mwse {
 			genCallEnforced(0x745B89, 0x470AE0, *reinterpret_cast<DWORD*>(&AnimationData_playAnimationGroupForIndex));
 			genCallEnforced(0x745B9E, 0x470AE0, *reinterpret_cast<DWORD*>(&AnimationData_playAnimationGroupForIndex));
 			genCallEnforced(0x745BB3, 0x470AE0, *reinterpret_cast<DWORD*>(&AnimationData_playAnimationGroupForIndex));
+
+			// Event: Power Recharged
+			overrideVirtualTableEnforced(0x74AC54, offsetof(PowersHashMap::VirtualTable, deleteKeyValuePair), 0x4F1C50, reinterpret_cast<DWORD>(OnDeletePowerHashMapKVP));
 
 			// UI framework hooks
 			TES3::UI::hook();

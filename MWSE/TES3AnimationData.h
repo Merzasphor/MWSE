@@ -30,7 +30,7 @@ namespace TES3 {
 		NI::TimeController * timeController; // 0x2C0 // NiKeyframeController
 		int unknown_0x2C4[9];
 		int unknown_0x2E8;
-		int unknown_0x2EC;
+		float lipsyncLevel; // 0x2EC
 		int unknown_0x2F0;
 		int unknown_0x2F4;
 		int unknown_0x2F8;

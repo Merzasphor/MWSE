@@ -985,8 +985,21 @@ namespace TES3 {
 		return false;
 	}
 
-	bool MobileActor::hasUsedPower(const Spell* spell) const {
-		return powers.containsKey(spell);
+	bool MobileActor::hasUsedPower(Spell* power) const {
+		return powers.containsKey(power);
+	}
+
+	bool MobileActor::rechargePower(Spell* power) {
+		return powers.eraseKey(power);
+	}
+
+	sol::optional<double> MobileActor::getPowerUseTimestamp(Spell* power) const {
+		auto node = powers.getNode(power);
+		if (!node) {
+			return {};
+		}
+
+		return node->value.castTimestamp;
 	}
 
 	ActiveMagicEffect* MobileActor::getActiveMagicEffects_legacy() const {

@@ -490,6 +490,9 @@ namespace TES3 {
 		//
 		// WidgetTextSelect
 		//
+
+		const auto TES3_ui_updateTextSelectColorForState = reinterpret_cast<bool(__cdecl*)(Element*)>(0x64CB60);
+
 		static Property propSelectState;
 		static Property propSelectIdle[4], propSelectOver[4], propSelectPressed[4];
 		static Property propSelectDisabled[4], propSelectDisabledOver[4], propSelectDisabledPressed[4];
@@ -522,36 +525,38 @@ namespace TES3 {
 		int WidgetTextSelect::getState() const {
 			return getProperty(PropertyType::Integer, propSelectState).integerValue;
 		}
+
 		void WidgetTextSelect::setState(int state) {
 			setProperty(propSelectState, state);
+			TES3_ui_updateTextSelectColorForState(this);
 		}
 
 		sol::table WidgetTextSelect::getColourIdle_lua(sol::this_state ts) { return getColourProperty(*this, propSelectIdle, ts); }
-		void WidgetTextSelect::setColourIdle(const float(&c)[3]) { setColourProperty(*this, propSelectIdle, c); }
-		void WidgetTextSelect::setColourIdle_lua(sol::table c) { setColourProperty(*this, propSelectIdle, c); }
+		void WidgetTextSelect::setColourIdle(const float(&c)[3]) { setColourProperty(*this, propSelectIdle, c); TES3_ui_updateTextSelectColorForState(this); }
+		void WidgetTextSelect::setColourIdle_lua(sol::table c) { setColourProperty(*this, propSelectIdle, c); TES3_ui_updateTextSelectColorForState(this); }
 		sol::table WidgetTextSelect::getColourOver_lua(sol::this_state ts) { return getColourProperty(*this, propSelectOver, ts); }
-		void WidgetTextSelect::setColourOver(const float(&c)[3]) { setColourProperty(*this, propSelectOver, c); }
-		void WidgetTextSelect::setColourOver_lua(sol::table c) { setColourProperty(*this, propSelectOver, c); }
+		void WidgetTextSelect::setColourOver(const float(&c)[3]) { setColourProperty(*this, propSelectOver, c); TES3_ui_updateTextSelectColorForState(this); }
+		void WidgetTextSelect::setColourOver_lua(sol::table c) { setColourProperty(*this, propSelectOver, c); TES3_ui_updateTextSelectColorForState(this); }
 		sol::table WidgetTextSelect::getColourPressed_lua(sol::this_state ts) { return getColourProperty(*this, propSelectPressed, ts); }
-		void WidgetTextSelect::setColourPressed(const float(&c)[3]) { setColourProperty(*this, propSelectPressed, c); }
-		void WidgetTextSelect::setColourPressed_lua(sol::table c) { setColourProperty(*this, propSelectPressed, c); }
+		void WidgetTextSelect::setColourPressed(const float(&c)[3]) { setColourProperty(*this, propSelectPressed, c); TES3_ui_updateTextSelectColorForState(this); }
+		void WidgetTextSelect::setColourPressed_lua(sol::table c) { setColourProperty(*this, propSelectPressed, c); TES3_ui_updateTextSelectColorForState(this); }
 		sol::table WidgetTextSelect::getColourDisabled_lua(sol::this_state ts) { return getColourProperty(*this, propSelectDisabled, ts); }
-		void WidgetTextSelect::setColourDisabled(const float(&c)[3]) { setColourProperty(*this, propSelectDisabled, c); }
-		void WidgetTextSelect::setColourDisabled_lua(sol::table c) { setColourProperty(*this, propSelectDisabled, c); }
+		void WidgetTextSelect::setColourDisabled(const float(&c)[3]) { setColourProperty(*this, propSelectDisabled, c); TES3_ui_updateTextSelectColorForState(this); }
+		void WidgetTextSelect::setColourDisabled_lua(sol::table c) { setColourProperty(*this, propSelectDisabled, c); TES3_ui_updateTextSelectColorForState(this); }
 		sol::table WidgetTextSelect::getColourDisabledOver_lua(sol::this_state ts) { return getColourProperty(*this, propSelectDisabledOver, ts); }
-		void WidgetTextSelect::setColourDisabledOver(const float(&c)[3]) { setColourProperty(*this, propSelectDisabledOver, c); }
-		void WidgetTextSelect::setColourDisabledOver_lua(sol::table c) { setColourProperty(*this, propSelectDisabledOver, c); }
+		void WidgetTextSelect::setColourDisabledOver(const float(&c)[3]) { setColourProperty(*this, propSelectDisabledOver, c); TES3_ui_updateTextSelectColorForState(this); }
+		void WidgetTextSelect::setColourDisabledOver_lua(sol::table c) { setColourProperty(*this, propSelectDisabledOver, c); TES3_ui_updateTextSelectColorForState(this); }
 		sol::table WidgetTextSelect::getColourDisabledPressed_lua(sol::this_state ts) { return getColourProperty(*this, propSelectDisabledPressed, ts); }
-		void WidgetTextSelect::setColourDisabledPressed(const float(&c)[3]) { setColourProperty(*this, propSelectDisabledPressed, c); }
-		void WidgetTextSelect::setColourDisabledPressed_lua(sol::table c) { setColourProperty(*this, propSelectDisabledPressed, c); }
+		void WidgetTextSelect::setColourDisabledPressed(const float(&c)[3]) { setColourProperty(*this, propSelectDisabledPressed, c); TES3_ui_updateTextSelectColorForState(this); }
+		void WidgetTextSelect::setColourDisabledPressed_lua(sol::table c) { setColourProperty(*this, propSelectDisabledPressed, c); TES3_ui_updateTextSelectColorForState(this); }
 		sol::table WidgetTextSelect::getColourActive_lua(sol::this_state ts) { return getColourProperty(*this, propSelectActive, ts); }
-		void WidgetTextSelect::setColourActive(const float(&c)[3]) { setColourProperty(*this, propSelectActive, c); }
-		void WidgetTextSelect::setColourActive_lua(sol::table c) { setColourProperty(*this, propSelectActive, c); }
+		void WidgetTextSelect::setColourActive(const float(&c)[3]) { setColourProperty(*this, propSelectActive, c); TES3_ui_updateTextSelectColorForState(this); }
+		void WidgetTextSelect::setColourActive_lua(sol::table c) { setColourProperty(*this, propSelectActive, c); TES3_ui_updateTextSelectColorForState(this); }
 		sol::table WidgetTextSelect::getColourActiveOver_lua(sol::this_state ts) { return getColourProperty(*this, propSelectActiveOver, ts); }
-		void WidgetTextSelect::setColourActiveOver(const float(&c)[3]) { setColourProperty(*this, propSelectActiveOver, c); }
-		void WidgetTextSelect::setColourActiveOver_lua(sol::table c) { setColourProperty(*this, propSelectActiveOver, c); }
+		void WidgetTextSelect::setColourActiveOver(const float(&c)[3]) { setColourProperty(*this, propSelectActiveOver, c); TES3_ui_updateTextSelectColorForState(this); }
+		void WidgetTextSelect::setColourActiveOver_lua(sol::table c) { setColourProperty(*this, propSelectActiveOver, c); TES3_ui_updateTextSelectColorForState(this); }
 		sol::table WidgetTextSelect::getColourActivePressed_lua(sol::this_state ts) { return getColourProperty(*this, propSelectActivePressed, ts); }
-		void WidgetTextSelect::setColourActivePressed(const float(&c)[3]) { setColourProperty(*this, propSelectActivePressed, c); }
-		void WidgetTextSelect::setColourActivePressed_lua(sol::table c) { setColourProperty(*this, propSelectActivePressed, c); }
+		void WidgetTextSelect::setColourActivePressed(const float(&c)[3]) { setColourProperty(*this, propSelectActivePressed, c); TES3_ui_updateTextSelectColorForState(this); }
+		void WidgetTextSelect::setColourActivePressed_lua(sol::table c) { setColourProperty(*this, propSelectActivePressed, c); TES3_ui_updateTextSelectColorForState(this); }
 	}
 }

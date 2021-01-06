@@ -33,13 +33,27 @@ namespace TES3 {
 
 		unsigned int hashKey(K& key) const { return vTable->hashKey(this, key); }
 		bool compareKey(K& first, K& second) const { return vTable->compareKey(this, first, second); }
-		bool makeKeyValuePair(KeyValuePair* kvp, K& key, V& value) const { vTable->makeKeyValuePair(this, kvp, key, value); }
-		bool deleteKeyValuePair(KeyValuePair* kvp) { vTable->deleteKeyValuePair(this, kvp); }
+		void makeKeyValuePair(KeyValuePair* kvp, K& key, V& value) const { vTable->makeKeyValuePair(this, kvp, key, value); }
+		void deleteKeyValuePair(KeyValuePair* kvp) { vTable->deleteKeyValuePair(this, kvp); }
 
 		bool containsKey(K& key) const {
 			auto index = hashKey(key);
 			for (auto itt = buckets[index]; itt; itt = itt->nextNode) {
-				if (compareKey(key, itt->keyValuePair.key)) {
+				if (compareKey(key, itt->key)) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		bool eraseKey(K& key) {
+			auto index = hashKey(key);
+			for (auto itt = &buckets[index]; *itt; itt = &(*itt)->nextNode) {
+				if (compareKey(key, (*itt)->key)) {
+					auto next = (*itt)->nextNode;
+					deleteKeyValuePair(&(*itt)->keyValuePair);
+					reinterpret_cast<void(__cdecl*)(void*)>(0x727530)(*itt);
+					*itt = next;
 					return true;
 				}
 			}
@@ -49,8 +63,8 @@ namespace TES3 {
 		V& getValue(K& key) const {
 			auto index = hashKey(key);
 			for (auto itt = buckets[index]; itt; itt = itt->nextNode) {
-				if (compareKey(key, itt->keyValuePair.key)) {
-					return itt->keyValuePair.value;
+				if (compareKey(key, itt->key)) {
+					return itt->value;
 				}
 			}
 			throw std::runtime_error("Value doesn't exist for given key.");
@@ -59,11 +73,11 @@ namespace TES3 {
 		Node* getNode(K& key) const {
 			auto index = hashKey(key);
 			for (auto itt = buckets[index]; itt; itt = itt->nextNode) {
-				if (compareKey(key, itt->keyValuePair.key)) {
+				if (compareKey(key, itt->key)) {
 					return itt;
 				}
 			}
-			throw std::runtime_error("Value doesn't exist for given key.");
+			return nullptr;
 		}
 	};
 	static_assert(sizeof(HashMap<const char*, void*>) == 0x10, "TES3::HashMap failed size validation");
