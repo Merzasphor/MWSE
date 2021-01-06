@@ -77,12 +77,17 @@ namespace mwse
 					cachedModule = result;
 				}
 				else {
+					manager.setCurrentReference(nullptr);
+					manager.setCurrentScript(nullptr);
 					return 0.0f;
 				}
 			}
 			else {
 				sol::error error = result;
 				log::getLog() << "Lua error encountered for xLuaRunScript call of '" << scriptName << "' from script '" << virtualMachine.getScript()->name << "':" << std::endl << error.what() << std::endl;
+
+				manager.setCurrentReference(nullptr);
+				manager.setCurrentScript(nullptr);
 
 				// Clear the stack, since we can't trust what the script did or did not do.
 				mwse::Stack::getInstance().clear();
@@ -110,6 +115,9 @@ namespace mwse
 				mwse::Stack::getInstance().clear();
 			}
 		}
+
+		manager.setCurrentReference(nullptr);
+		manager.setCurrentScript(nullptr);
 
 		return 0.0f;
 	}

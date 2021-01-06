@@ -522,6 +522,9 @@ namespace mwse {
 				log::getLog() << "No execute function found for script override of '" << script->name << "'. Script execution stopped." << std::endl;
 				mwscript::StopScript(script, script);
 			}
+
+			manager.setCurrentReference(nullptr);
+			manager.setCurrentScript(nullptr);
 		}
 
 		// Hook for HookRunScriptIndirect.
