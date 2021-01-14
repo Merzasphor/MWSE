@@ -485,6 +485,7 @@ namespace mwse {
 		void CreateMiniDump(EXCEPTION_POINTERS* pep) {
 			log::getLog() << std::endl;
 			log::getLog() << "Morrowind has crashed! To help improve game stability, send MWSE_Minidump.dmp and mwse.log to NullCascade@gmail.com or to NullCascade#1010 on Discord." << std::endl;
+			log::getLog() << "Additional support can be found in the #mwse channel at the Morrowind Modding Community Discord: https://discord.me/mwmods" << std::endl;
 
 			// Display the memory usage in the log.
 			PROCESS_MEMORY_COUNTERS_EX memCounter;
