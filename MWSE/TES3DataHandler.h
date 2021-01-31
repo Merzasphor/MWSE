@@ -14,6 +14,7 @@
 #include "NISourceTexture.h"
 
 #define MWSE_CUSTOM_EFFECTS true
+#define MWSE_RAISED_FILE_LIMIT true
 #define MWSE_CUSTOM_GLOBALS true
 
 namespace TES3 {
@@ -92,8 +93,13 @@ namespace TES3 {
 		IteratedList<StartScript*> * startScripts; // 0x48
 		Skill skills[27]; // 0x4C
 #if MWSE_CUSTOM_EFFECTS
-		MagicEffectController * magicEffects; // 0x5C8
+		MagicEffectController * magicEffects; // 0x5C8  
+#if MWSE_RAISED_FILE_LIMIT
+		GameFile* activeMods[1024]; // 0x5CC
+		unsigned char freed_0x5CC[0x87EC]; // Unused space free for plundering.
+#else 
 		unsigned char freed_0x5CC[0x97EC]; // Unused space free for plundering.
+#endif
 #else
 		MagicEffect magicEffects[143]; // 0x5C8
 #endif
@@ -105,8 +111,12 @@ namespace TES3 {
 		NI::Pointer<NI::Node> baseBeastSkeletons[3]; // 0x0xAE44
 		KeyframeDefinition* baseBeastAnimations[3]; // 0xAE50
 		NI::Pointer<NI::Property> collisionWireframeProperty; // 0xAE5C
-		StlList<GameFile*>* TESFiles; // 0xAE60
-		GameFile* activeMods[256]; // 0xAE64
+		StlList<GameFile*>* TESFiles; // 0xAE60 
+#ifdef MWSE_RAISED_FILE_LIMIT
+		unsigned char freed_0xAE64[0x400]; // Unused space free for plundering.
+#else
+		GameFile* activeMods[256]; // 0xAE64 // Relocated and resized at 0x5CC.
+#endif
 		StlList<Cell*> * cells; // 0xB264
 		ObjectMapContainer<BaseObject>* allObjectsById; // 0xB268
 		ObjectMapContainer<Dialogue>* allDialoguesById; // 0xB26C
