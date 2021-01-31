@@ -79,7 +79,14 @@ TES3::Game* __fastcall OnGameStructCreated(TES3::Game * game) {
 	return TES3_Game_ctor(game);
 }
 
+// This is technically a this-call function, but it doesn't make any use of member data.
+const auto TES3_LoadLanguageFromINI = reinterpret_cast<void(__stdcall*)()>(0x467850);
+
 bool __fastcall OnGameStructInitialized(TES3::Game* game) {
+	// Force language recognition early so pre-initialization mods can make use of it.
+	// We want this to run before mwse_init.lua but after MO2 has had a chance to do its thing.
+	TES3_LoadLanguageFromINI();
+
 	// Setup our lua interface before initializing.
 	mwse::lua::LuaManager::getInstance().hook();
 
