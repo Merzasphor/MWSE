@@ -10,12 +10,26 @@
 
 namespace TES3 {
 	struct Reference : Object {
-		PhysicalObject * baseObject; // 0x28
-		Vector3 orientation; // 0x2c
-		Vector3 position; // 0x38
-		Attachment * attachments; // 0x44
-		unsigned int sourceID; // 0x48
-		unsigned int targetID; // 0x4C
+		struct ReferenceData {
+			PhysicalObject* baseObject; // 0x0
+			Vector3 orientation; // 0x4
+			Vector3 position; // 0x10
+			Attachment* attachments; // 0x1C
+			unsigned int sourceID; // 0x20
+			unsigned int targetID; // 0x24
+		};
+		// Backwards compatibility union to provide direct access into ReferenceData.
+		union {
+			ReferenceData referenceData; // 0x28
+			struct {
+				PhysicalObject* baseObject; // 0x28
+				Vector3 orientation; // 0x2c
+				Vector3 position; // 0x38
+				Attachment* attachments; // 0x44
+				unsigned int sourceID; // 0x48
+				unsigned int targetID; // 0x4C
+			};
+		};
 
 		//
 		// Basic operators.
