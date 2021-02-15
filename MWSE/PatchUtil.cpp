@@ -313,6 +313,40 @@ namespace mwse {
 			}
 		}
 #endif
+		
+		//
+		// Patch: Fix RemoveItem crash.
+		//
+		// Seen with StarFire's StarfireNPCA_nightlife script. Doesn't seem to actually call RemoveItem.
+		// Mostly here to gather more information to help diagnose the crash.
+		//
+		// Note: This assumes the target reference is of an actor.
+		//
+
+		TES3::Reference::ReferenceData* __fastcall PatchFixupActorSelfReference(TES3::Reference* self) {
+			if (self->baseObject->referenceToThis == nullptr) {
+				self->baseObject->referenceToThis = self;
+
+				using namespace mwse::log;
+				auto& log = getLog();
+				log << "[MWSE] Fixed crash with invalid RemoveItem call. Report this to the #mwse channel in the Morrowind Modding Community Discord so we can narrow this down more. Dumping related objects." << std::endl;
+
+				log << "Reference: " << self->getObjectID() << std::endl;
+				prettyDump(self);
+
+				log << "Object: " << self->baseObject->getObjectID() << std::endl;
+				prettyDump(static_cast<TES3::Actor*>(self->baseObject));
+
+				auto script = self->baseObject->getScript();
+				if (script) {
+					log << "Script: " << self->baseObject->getScript()->getObjectID() << std::endl;
+					prettyDump(script);
+				}
+
+				log << "mwscript data: OpCode: " << std::hex << *reinterpret_cast<DWORD*>(0x7A91C4) << "; Cursor offset: " << *reinterpret_cast<DWORD*>(0x7CEBB0) << "; Look ahead token: " << int(*reinterpret_cast<unsigned char*>(0x7CEBA8)) << std::endl;
+			}
+			return &self->referenceData;
+		}
 
 		//
 		// Install all the patches.
@@ -513,6 +547,9 @@ namespace mwse {
 			overrideVirtualTableEnforced(0x74652C, offsetof(NI::Object_vTable, loadBinary), 0x6E7270, *reinterpret_cast<DWORD*>(&ZBufferProperty_loadBinary));
 			auto ZBufferProperty_saveBinary = &NI::ZBufferProperty::saveBinary;
 			overrideVirtualTableEnforced(0x74652C, offsetof(NI::Object_vTable, saveBinary), 0x6D7C80, *reinterpret_cast<DWORD*>(&ZBufferProperty_saveBinary));
+
+			// Patch: Fix crash when trying to remove items from incomplete references.
+			genCallEnforced(0x508D14, 0x45E5C0, reinterpret_cast<DWORD>(PatchFixupActorSelfReference));
 		}
 
 		void installPostLuaPatches() {
