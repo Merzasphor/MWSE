@@ -610,6 +610,14 @@ namespace TES3 {
 		setMobileActorFlag(MobileActorFlag::SpellReadied, value);
 	}
 
+	bool MobileActor::getFlagTalkedTo() const {
+		return getMobileActorFlag(MobileActorFlag::TalkedTo);
+	}
+
+	void MobileActor::setFlagTalkedTo(bool value) {
+		setMobileActorFlag(MobileActorFlag::TalkedTo, value);
+	}
+
 	bool MobileActor::getFlagUnderwater() const {
 		return getMobileActorFlag(MobileActorFlag::Underwater);
 	}

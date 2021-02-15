@@ -297,6 +297,8 @@ namespace TES3 {
 		void setFlagIsPCHidden(bool value);
 		bool getFlagSpellReadied() const;
 		void setFlagSpellReadied(bool value);
+		bool getFlagTalkedTo() const;
+		void setFlagTalkedTo(bool value);
 		bool getFlagUnderwater() const;
 		void setFlagUnderwater(bool value);
 		bool getFlagWeaponDrawn() const;
