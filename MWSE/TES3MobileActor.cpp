@@ -450,7 +450,7 @@ namespace TES3 {
 			}
 			return false;
 		}
-		else if (itemData && !s->variables->contains(itemData)) {
+		else if (itemData && !(s->variables && s->variables->contains(itemData))) {
 			return false;
 		}
 
