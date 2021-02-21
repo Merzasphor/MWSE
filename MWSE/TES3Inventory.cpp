@@ -68,7 +68,12 @@ namespace TES3 {
 		}
 
 		if (data) {
-			return stack->variables->contains(data);
+			if (stack->variables) {
+				return stack->variables->contains(data);
+			}
+			else {
+				return false;
+			}
 		}
 
 		return true;
