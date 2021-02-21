@@ -26,10 +26,10 @@ namespace mwse {
 				return false;
 			}
 
-			TES3::ItemData * itemData = getOptionalParam(params, "itemData", nullptr);
-			bool addItem = getOptionalParam<bool>(params, "addItem", false);
-			bool selectBestCondition = getOptionalParam<bool>(params, "selectBestCondition", false);
-			bool selectWorstCondition = getOptionalParam<bool>(params, "selectWorstCondition", false);
+			auto itemData = getOptionalParam<TES3::ItemData*>(params, "itemData", nullptr);
+			auto addItem = getOptionalParam<bool>(params, "addItem", false);
+			auto selectBestCondition = getOptionalParam<bool>(params, "selectBestCondition", false);
+			auto selectWorstCondition = getOptionalParam<bool>(params, "selectWorstCondition", false);
 
 			return self.equipItem(item, itemData, addItem, selectBestCondition, selectWorstCondition);
 		}
