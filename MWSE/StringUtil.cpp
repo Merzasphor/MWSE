@@ -534,5 +534,13 @@ namespace mwse {
 			if (a.size() < maxCount || b.size() < maxCount) return false;
 			return std::equal(a.begin(), a.begin() + maxCount, b.begin(), b.begin() + maxCount, ciequal);
 		}
+
+		bool replace(std::string& str, const std::string_view from, const std::string_view to) {
+			size_t start_pos = str.find(from);
+			if (start_pos == std::string::npos)
+				return false;
+			str.replace(start_pos, from.length(), to);
+			return true;
+		}
 	}
 }

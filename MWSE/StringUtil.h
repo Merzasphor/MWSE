@@ -89,6 +89,8 @@ namespace mwse {
 		// Returns true if a == b, case insensitive, only compares maxCount characters.
 		bool niequal(std::string_view a, std::string_view b, size_t maxCount);
 
+		bool replace(std::string& str, const std::string_view from, const std::string_view to);
+
 		//
 		// Other string utility functions.
 		//
