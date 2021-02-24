@@ -36,7 +36,7 @@ namespace mwse {
 			usertypeDefinition["isRanged"] = sol::readonly_property(&TES3::Weapon::isRanged);
 			usertypeDefinition["isTwoHanded"] = sol::readonly_property(&TES3::Weapon::isTwoHanded);
 			usertypeDefinition["maxCondition"] = sol::property(&TES3::Weapon::getDurability, &TES3::Weapon::setDurability);
-			usertypeDefinition["mesh"] = sol::readonly_property(&TES3::Weapon::getModelPath);
+			usertypeDefinition["mesh"] = sol::property(&TES3::Weapon::getModelPath, &TES3::Weapon::setModelPath);
 			usertypeDefinition["name"] = sol::property(&TES3::Weapon::getName, &TES3::Weapon::setName);
 			usertypeDefinition["reach"] = &TES3::Weapon::reach;
 			usertypeDefinition["script"] = sol::readonly_property(&TES3::Weapon::getScript);
