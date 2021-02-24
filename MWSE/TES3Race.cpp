@@ -1,5 +1,7 @@
 #include "TES3Race.h"
 
+#include "BitUtil.h"
+
 namespace TES3 {
 	char * Race::getObjectID() {
 		return id;
@@ -22,6 +24,22 @@ namespace TES3 {
 
 	const char* Race::getName() const {
 		return name;
+	}
+
+	bool Race::getIsPlayable() const {
+		return BIT_TEST(flags, PlayableBit);
+	}
+
+	void Race::setIsPlayable(bool value) {
+		BIT_SET(flags, PlayableBit, value);
+	}
+
+	bool Race::getIsBeast() const {
+		return BIT_TEST(flags, BeastBit);
+	}
+
+	void Race::setIsBeast(bool value) {
+		BIT_SET(flags, BeastBit, value);
 	}
 
 	sol::optional<std::string> Race::getAndLoadDescription() {

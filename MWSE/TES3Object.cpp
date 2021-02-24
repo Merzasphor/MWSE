@@ -432,7 +432,7 @@ namespace TES3 {
 		return vTable.object->getFaction(this);
 	}
 
-	bool Object::isFemale() {
+	bool Object::isFemale() const {
 		return vTable.object->isFemale(this);
 	}
 

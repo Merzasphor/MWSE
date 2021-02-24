@@ -165,6 +165,8 @@ namespace TES3 {
 		void showLocationOnMap(const char* name);
 		void drawCellMapMarker(Cell* cell, int unused = 0);
 
+		const char* getBaseAnimationFile(int isFemale = 0, int firstPerson = 0) const;
+
 		//
 		// Custom functions.
 		//

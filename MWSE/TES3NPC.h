@@ -53,7 +53,7 @@ namespace TES3 {
 	};
 
 	struct NPC : NPCBase {
-		void * model; // 0x6C
+		char * model; // 0x6C
 		char * name; // 0x70
 		Script * script; // 0x74
 		void * linkedObjectIDs; // 0x78

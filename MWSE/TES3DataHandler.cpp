@@ -303,6 +303,11 @@ namespace TES3 {
 		TES3_NonDynamicData_drawCellMapMarker(this, cell, unused);
 	}
 
+	const auto TES3_NonDynamicData_getBaseAnimationFile = reinterpret_cast<const char*(__thiscall*)(const TES3::NonDynamicData*, int, int)>(0x4C2720);
+	const char* NonDynamicData::getBaseAnimationFile(int isFemale, int firstPerson) const {
+		return TES3_NonDynamicData_getBaseAnimationFile(this, isFemale, firstPerson);
+	}
+
 	std::reference_wrapper<Skill[27]> NonDynamicData::getSkills() {
 		return std::ref(skills);
 	}

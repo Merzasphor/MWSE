@@ -152,7 +152,7 @@ namespace TES3 {
 		Race * (__thiscall * getRace)(BaseObject*); // 0x60
 		Class * (__thiscall * getClass)(BaseObject*); // 0x64
 		Faction * (__thiscall * getFaction)(BaseObject*); // 0x68
-		bool (__thiscall * isFemale)(BaseObject*); // 0x6C
+		bool (__thiscall * isFemale)(const BaseObject*); // 0x6C
 		int (__thiscall * getFactionRank)(BaseObject*); // 0x70
 		int (__thiscall * getLevel)(BaseObject*); // 0x74
 		void * unknown_0x78;
@@ -306,7 +306,7 @@ namespace TES3 {
 		Race * getRace();
 		Class * getClass();
 		Faction * getFaction();
-		bool isFemale();
+		bool isFemale() const;
 		int getFactionRank();
 		int getLevel();
 		void setDispositionRaw(signed char);
