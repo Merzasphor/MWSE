@@ -92,6 +92,10 @@ namespace mwse {
 				usertypeDefinition["maleBody"] = sol::readonly_property(&TES3::Race::maleBody);
 				usertypeDefinition["weight"] = sol::readonly_property(&TES3::Race::weight);
 
+				// Access to race flags.
+				usertypeDefinition["isBeast"] = sol::property(&TES3::Race::getIsBeast, &TES3::Race::setIsBeast);
+				usertypeDefinition["isPlayable"] = sol::property(&TES3::Race::getIsPlayable, &TES3::Race::setIsPlayable);
+
 				// Indirect bindings to unions and arrays.
 				usertypeDefinition["baseAttributes"] = sol::readonly_property(&TES3::Race::getBaseAttributes);
 				usertypeDefinition["skillBonuses"] = sol::readonly_property(&TES3::Race::getSkillBonuses);
