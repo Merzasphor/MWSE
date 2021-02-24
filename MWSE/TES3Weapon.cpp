@@ -2,6 +2,8 @@
 
 #include "TES3DataHandler.h"
 
+#include "TES3Util.h"
+
 namespace TES3 {
 	bool Weapon::isOneHanded() {
 		switch (weaponType)
@@ -54,6 +56,13 @@ namespace TES3 {
 
 	Skill* Weapon::getSkill() const {
 		return &DataHandler::get()->nonDynamicData->skills[getSkillId()];
+	}
+
+	void Weapon::setIconPath(const char* path) {
+		if (strnlen_s(path, 32) >= 32) {
+			throw std::invalid_argument("Path must not be 32 or more characters.");
+		}
+		mwse::tes3::setDataString(&icon, path);
 	}
 }
 

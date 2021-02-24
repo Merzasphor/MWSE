@@ -29,7 +29,7 @@ namespace mwse {
 			usertypeDefinition["enchantment"] = sol::property(&TES3::Weapon::getEnchantment, &TES3::Weapon::setEnchantment);
 			usertypeDefinition["flags"] = &TES3::Weapon::materialFlags;
 			usertypeDefinition["hasDurability"] = sol::readonly_property(&TES3::Weapon::hasDurability);
-			usertypeDefinition["icon"] = sol::readonly_property(&TES3::Weapon::getIconPath);
+			usertypeDefinition["icon"] = sol::property(&TES3::Weapon::getIconPath, &TES3::Weapon::setIconPath);
 			usertypeDefinition["isAmmo"] = sol::readonly_property(&TES3::Weapon::isAmmo);
 			usertypeDefinition["isMelee"] = sol::readonly_property(&TES3::Weapon::isMelee);
 			usertypeDefinition["isOneHanded"] = sol::readonly_property(&TES3::Weapon::isOneHanded);

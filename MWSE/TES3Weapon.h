@@ -64,6 +64,8 @@ namespace TES3 {
 		int getSkillId() const;
 		Skill* getSkill() const;
 
+		void setIconPath(const char* path);
+
 		//
 		// Access to this type's raw functions.
 		//
