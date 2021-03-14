@@ -1575,6 +1575,10 @@ namespace TES3 {
 
 		std::string toJson() const;
 
+		sol::object getDefaultValue_lua(sol::this_state ts) const;
+		sol::object getValue_lua(sol::this_state ts) const;
+		void setValue_lua(sol::object value, sol::this_state ts);
+
 	};
 	static_assert(sizeof(GameSetting) == 0x18, "TES3::GameSetting failed size validation");
 }

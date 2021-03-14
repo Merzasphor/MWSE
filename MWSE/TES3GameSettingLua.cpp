@@ -7,53 +7,6 @@
 
 namespace mwse {
 	namespace lua {
-		sol::object getDefaultValue(TES3::GameSetting& gmst) {
-			auto& luaManager = mwse::lua::LuaManager::getInstance();
-			auto stateHandle = luaManager.getThreadSafeStateHandle();
-			sol::state& state = stateHandle.state;
-
-			switch (gmst.getType()) {
-			case 'i': return sol::make_object(state, (double)gmst.getDefaultIntValue());
-			case 'f': return sol::make_object(state, (double)gmst.getDefaultFloatValue());
-			case 's': return sol::make_object(state, gmst.getDefaultStringValue());
-			}
-
-			return sol::nil;
-		}
-
-		sol::object getValue(TES3::GameSetting& gmst) {
-			auto& luaManager = mwse::lua::LuaManager::getInstance();
-			auto stateHandle = luaManager.getThreadSafeStateHandle();
-			sol::state& state = stateHandle.state;
-
-			switch (gmst.getType()) {
-			case 'i': return sol::make_object(state, (double)gmst.value.asLong);
-			case 'f': return sol::make_object(state, (double)gmst.value.asFloat);
-			case 's': return sol::make_object(state, gmst.value.asString);
-			}
-
-			return sol::nil;
-		}
-
-		void setValue(TES3::GameSetting& gmst, sol::object value) {
-			auto& luaManager = mwse::lua::LuaManager::getInstance();
-			auto stateHandle = luaManager.getThreadSafeStateHandle();
-			sol::state& state = stateHandle.state;
-
-			char type = gmst.getType();
-			if (type == 's' && value.is<std::string>()) {
-				tes3::setDataString(&gmst.value.asString, value.as<std::string>().c_str());
-			}
-			else if (value.is<double>()) {
-				if (type == 'i') {
-					gmst.value.asLong = value.as<double>();
-				}
-				else if (type == 'f') {
-					gmst.value.asFloat = value.as<double>();
-				}
-			}
-		}
-
 		void bindTES3GameSetting() {
 			// Get our lua state.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
@@ -78,9 +31,9 @@ namespace mwse {
 			usertypeDefinition["index"] = sol::readonly_property(&TES3::GameSetting::index);
 
 			// Functions exposed as properties.
-			usertypeDefinition["defaultValue"] = sol::readonly_property(&getDefaultValue);
+			usertypeDefinition["defaultValue"] = sol::readonly_property(&TES3::GameSetting::getDefaultValue_lua);
 			usertypeDefinition["type"] = sol::readonly_property(&TES3::GameSetting::getType);
-			usertypeDefinition["value"] = sol::property(&getValue, &setValue);
+			usertypeDefinition["value"] = sol::property(&TES3::GameSetting::getValue_lua, &TES3::GameSetting::setValue_lua);
 		}
 	}
 }
