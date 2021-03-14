@@ -32,6 +32,7 @@ namespace mwse {
 
 			// Functions exposed as properties.
 			usertypeDefinition["defaultValue"] = sol::readonly_property(&TES3::GameSetting::getDefaultValue_lua);
+			usertypeDefinition["rawValue"] = &TES3::GameSetting::value;
 			usertypeDefinition["type"] = sol::readonly_property(&TES3::GameSetting::getType);
 			usertypeDefinition["value"] = sol::property(&TES3::GameSetting::getValue_lua, &TES3::GameSetting::setValue_lua);
 		}
