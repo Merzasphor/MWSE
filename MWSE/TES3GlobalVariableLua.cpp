@@ -21,7 +21,7 @@ namespace mwse {
 			setUserdataForTES3BaseObject(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition["value"] = &TES3::GlobalVariable::value;
+			usertypeDefinition["value"] = sol::property(&TES3::GlobalVariable::getValue_lua, &TES3::GlobalVariable::setValue_lua);
 		}
 	}
 }

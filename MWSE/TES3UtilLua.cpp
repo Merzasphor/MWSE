@@ -208,15 +208,15 @@ namespace mwse {
 			return nullptr;
 		};
 
-		sol::optional<float> getGlobal(const char* id) {
+		sol::optional<double> getGlobal(const char* id) {
 			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
 			if (dataHandler) {
 				TES3::GlobalVariable* global = dataHandler->nonDynamicData->findGlobalVariable(id);
 				if (global) {
-					return global->value;
+					return global->getValue_lua();
 				}
 			}
-			return sol::optional<float>();
+			return {};
 		}
 
 		bool setGlobal(std::string& id, double value) {
@@ -224,7 +224,7 @@ namespace mwse {
 			if (dataHandler) {
 				TES3::GlobalVariable* global = dataHandler->nonDynamicData->findGlobalVariable(id.c_str());
 				if (global) {
-					global->value = value;
+					global->setValue_lua(value);
 					return true;
 				}
 			}
