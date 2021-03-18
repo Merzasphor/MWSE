@@ -150,6 +150,7 @@ namespace mwse {
 			usertypeDefinition["createButton"] = &Element::createButton_lua;
 			usertypeDefinition["createDivider"] = &Element::createDivider_lua;
 			usertypeDefinition["createFillBar"] = &Element::createFillBar_lua;
+			usertypeDefinition["createHypertext"] = &Element::createHypertext_lua;
 			usertypeDefinition["createHorizontalScrollPane"] = &Element::createHorizontalScrollPane_lua;
 			usertypeDefinition["createImage"] = &Element::createImage_lua;
 			usertypeDefinition["createLabel"] = &Element::createLabel_lua;
