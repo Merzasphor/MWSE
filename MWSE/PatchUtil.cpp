@@ -663,8 +663,10 @@ namespace mwse {
 			log::getLog() << "Memory usage: " << memCounter.PrivateUsage << " bytes." << std::endl;
 
 			// Try to print the lua stack trace.
-			log::getLog() << "Lua traceback at time of crash:" << std::endl;
-			mwse::lua::logStackTrace();
+			if (mwse::lua::LuaManager::getInstance().getReadOnlyStateView().stack_top() != 0) {
+				log::getLog() << "Lua traceback at time of crash:" << std::endl;
+				mwse::lua::logStackTrace();
+			}
 
 			// Open the file.
 			HANDLE hFile = CreateFile("MWSE_MiniDump.dmp", GENERIC_READ | GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
