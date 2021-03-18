@@ -72,12 +72,21 @@ namespace TES3 {
 		
 		void doCommand(ScriptCompiler * compiler, const char* command, int source = TES3::CompilerSource::Default, Reference * reference = nullptr, ScriptVariables * variables = nullptr, DialogueInfo * info = nullptr, Dialogue * dialogue = nullptr);
 
+		float execute(Reference* reference, ScriptVariables* data, DialogueInfo* info, Reference* reference2);
+
 		//
 		// Custom functions.
 		//
 
 		sol::table getLocalVars_lua(sol::this_state ts, sol::optional<bool> useLocals = false);
 		std::shared_ptr<mwse::lua::ScriptContext> createContext();
+
+		//
+		// Debug values.
+		//
+
+		static Script* currentlyExecutingScript;
+		static Reference* currentlyExecutingScriptReference;
 
 	};
 	static_assert(sizeof(Script) == 0x70, "TES3::Script failed size validation");
