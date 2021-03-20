@@ -224,6 +224,7 @@ namespace TES3 {
 
 		void startCombat(MobileActor*);
 		void stopCombat(bool);
+		void stopCombat_lua(sol::optional<bool>);
 		bool isDead();
 		void onDeath();
 		bool applyHealthDamage(float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth);

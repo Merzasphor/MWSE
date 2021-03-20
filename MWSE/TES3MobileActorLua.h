@@ -131,7 +131,7 @@ namespace mwse {
 			usertypeDefinition["rechargePower"] = &TES3::MobileActor::rechargePower;
 			usertypeDefinition["startCombat"] = &TES3::MobileActor::startCombat;
 			usertypeDefinition["startDialogue"] = &TES3::MobileActor::startDialogue;
-			usertypeDefinition["stopCombat"] = &TES3::MobileActor::stopCombat;
+			usertypeDefinition["stopCombat"] = &TES3::MobileActor::stopCombat_lua;
 			usertypeDefinition["updateDerivedStatistics"] = &TES3::MobileActor::updateDerivedStatistics;
 			usertypeDefinition["updateOpacity"] = &TES3::MobileActor::updateOpacity;
 

@@ -209,6 +209,10 @@ namespace TES3 {
 		}
 	}
 
+	void MobileActor::stopCombat_lua(sol::optional<bool> something) {
+		stopCombat(something.value_or(false));
+	}
+
 	bool MobileActor::isDead() {
 		return actionData.animStateAttack == AttackAnimationState::Dead || actionData.animStateAttack == AttackAnimationState::Dying;
 	}
