@@ -170,6 +170,11 @@ namespace TES3 {
 	}
 
 	void MobileActor::startCombat(MobileActor* target) {
+		// Patch: Make sure that disabled NPCs can't start combat.
+		if (reference->getDisabled()) {
+			return;
+		}
+
 		// Invoke our first event and check if it is blocked.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
 		if (mwse::lua::event::CombatStartEvent::getEventEnabled()) {
