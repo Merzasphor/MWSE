@@ -241,7 +241,6 @@ namespace TES3 {
 #endif
 	}
 
-
 	const auto TES3_KillCounter_load = reinterpret_cast<void(__thiscall*)(KillCounter*, GameFile*)>(0x55DA90);
 	void KillCounter::load(GameFile* file) {
 #if MWSE_CUSTOM_KILLCOUNTER

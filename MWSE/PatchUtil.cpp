@@ -689,10 +689,8 @@ namespace mwse {
 			log::getLog() << "Memory usage: " << memCounter.PrivateUsage << " bytes." << std::endl;
 
 			// Try to print the lua stack trace.
-			if (mwse::lua::LuaManager::getInstance().getReadOnlyStateView().stack_top() != 0) {
-				log::getLog() << "Lua traceback at time of crash:" << std::endl;
-				mwse::lua::logStackTrace();
-			}
+			log::getLog() << "Lua traceback at time of crash:" << std::endl;
+			mwse::lua::logStackTrace();
 
 			// Try to print any relevant mwscript information.
 			if (TES3::Script::currentlyExecutingScript) {
