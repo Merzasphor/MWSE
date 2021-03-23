@@ -43,6 +43,7 @@ namespace mwse {
 			usertypeDefinition["sceneCollisionRoot"] = sol::readonly_property(&TES3::Object::sceneCollisionRoot);
 
 			// Functions exposed as properties.
+			usertypeDefinition["isLocationMarker"] = sol::property(&TES3::Object::getIsLocationMarker, &TES3::Object::setIsLocationMarker);
 			usertypeDefinition["owningCollection"] = sol::readonly_property(&TES3::Object::getOwningCollection);
 			usertypeDefinition["scale"] = sol::property(&TES3::Object::getScale, &TES3::Object::setScale_lua);
 		}

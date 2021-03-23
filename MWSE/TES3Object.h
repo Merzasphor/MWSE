@@ -191,7 +191,7 @@ namespace TES3 {
 		char* (__thiscall * setModelPath)(BaseObject*, const char*); // 0xFC
 		void * unknown_0x100;
 		void * unknown_0x104;
-		void * isLocationMarker; // 0x108
+		bool (__thiscall* isLocationMarker)(const BaseObject*); // 0x108
 		char* (__thiscall * setName)(BaseObject*, const char*); // 0x10C
 		void (__thiscall* reevaluateEquipment)(BaseObject*); // 0x110
 		void * unknown_0x114;
@@ -246,7 +246,7 @@ namespace TES3 {
 		// Custom functions.
 		//
 
-		BaseObject * getBaseObject();
+		BaseObject * getBaseObject() const;
 
 		bool isActor() const;
 		const char* getSourceFilename();
@@ -340,9 +340,8 @@ namespace TES3 {
 		float getScale() const;
 		void setScale(float value, bool cap = false);
 
-		//
-		// Function wrappers for our virtual table.
-		//
+		bool getIsLocationMarker() const;
+		bool getIsLocationMarker_override() const;
 
 		NI::Node * getSceneGraphNode();
 
@@ -354,6 +353,8 @@ namespace TES3 {
 		ReferenceList* getOwningCollection();
 
 		void setScale_lua(float scale);
+
+		void setIsLocationMarker(bool isMarker);
 
 	};
 	static_assert(sizeof(Object) == 0x28, "TES3::Object failed size validation");

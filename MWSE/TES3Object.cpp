@@ -88,8 +88,8 @@ namespace TES3 {
 		return BaseObject_writeFileHeader(this, file);
 	}
 
-	BaseObject* BaseObject::getBaseObject() {
-		BaseObject* object = this;
+	BaseObject* BaseObject::getBaseObject() const {
+		BaseObject* object = const_cast<BaseObject*>(this);
 
 		if (object->objectType == ObjectType::Reference) {
 			object = static_cast<Reference*>(object)->baseObject;
@@ -571,6 +571,10 @@ namespace TES3 {
 		vTable.object->setScale(this, value, cap);
 	}
 
+	bool Object::getIsLocationMarker() const {
+		return vTable.object->isLocationMarker(this);
+	}
+
 	NI::Node * Object::getSceneGraphNode() {
 		return vTable.object->getSceneGraphNode(this);
 	}
@@ -590,6 +594,30 @@ namespace TES3 {
 
 	void Object::setScale_lua(float scale) {
 		setScale(scale);
+	}
+
+	static std::unordered_set<const Object*> customLocationMarkers;
+
+	const auto TES3_Object_isLocationMarker = reinterpret_cast<bool(__stdcall*)(const BaseObject*)>(0x4C1980);
+	bool Object::getIsLocationMarker_override() const {
+		if (this == nullptr) {
+			return false;
+		}
+
+		if (TES3_Object_isLocationMarker(getBaseObject())) {
+			return true;
+		}
+
+		return customLocationMarkers.find(this) != customLocationMarkers.end();
+	}
+
+	void Object::setIsLocationMarker(bool isMarker) {
+		if (isMarker) {
+			customLocationMarkers.insert(this);
+		}
+		else {
+			customLocationMarkers.erase(this);
+		}
 	}
 
 	//
