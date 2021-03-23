@@ -241,7 +241,6 @@ namespace TES3 {
 #endif
 	}
 
-	static_assert(0x4D414E4Bu == 'MANK', "");
 
 	const auto TES3_KillCounter_load = reinterpret_cast<void(__thiscall*)(KillCounter*, GameFile*)>(0x55DA90);
 	void KillCounter::load(GameFile* file) {
