@@ -57,11 +57,11 @@
 #include "Log.h"
 
 namespace TES3 {
-	void * BaseObject::operator new(size_t size) {
+	void* BaseObject::operator new(size_t size) {
 		return mwse::tes3::_new(size);
 	}
 
-	void BaseObject::operator delete(void * address) {
+	void BaseObject::operator delete(void* address) {
 		mwse::tes3::_delete(address);
 	}
 
@@ -88,8 +88,8 @@ namespace TES3 {
 		return BaseObject_writeFileHeader(this, file);
 	}
 
-	BaseObject * BaseObject::getBaseObject() {
-		BaseObject * object = this;
+	BaseObject* BaseObject::getBaseObject() {
+		BaseObject* object = this;
 
 		if (object->objectType == ObjectType::Reference) {
 			object = static_cast<Reference*>(object)->baseObject;
@@ -388,47 +388,47 @@ namespace TES3 {
 		vTable.object->setID(this, id);
 	}
 
-	char* Object::getName() {
+	char* Object::getName() const {
 		return vTable.object->getName(this);
 	}
 
-	char* Object::getIconPath() {
+	char* Object::getIconPath() const {
 		return vTable.object->getIconPath(this);
 	}
 
-	char* Object::getModelPath() {
+	char* Object::getModelPath() const {
 		return vTable.object->getModelPath(this);
 	}
 
-	Script* Object::getScript() {
+	Script* Object::getScript() const {
 		return vTable.object->getScript(this);
 	}
 
-	Sound* Object::getSound() {
+	Sound* Object::getSound() const {
 		return vTable.object->getSound(this);
 	}
 
-	char* Object::getRaceID() {
+	char* Object::getRaceID() const {
 		return vTable.object->getRaceID(this);
 	}
 
-	char* Object::getClassID() {
+	char* Object::getClassID() const {
 		return vTable.object->getClassID(this);
 	}
 
-	char* Object::getBirthsignID() {
+	char* Object::getBirthsignID() const {
 		return vTable.object->getBirthsignID(this);
 	}
 
-	Race* Object::getRace() {
+	Race* Object::getRace() const {
 		return vTable.object->getRace(this);
 	}
 
-	Class* Object::getClass() {
+	Class* Object::getClass() const {
 		return vTable.object->getClass(this);
 	}
 
-	Faction* Object::getFaction() {
+	Faction* Object::getFaction() const {
 		return vTable.object->getFaction(this);
 	}
 
@@ -436,11 +436,11 @@ namespace TES3 {
 		return vTable.object->isFemale(this);
 	}
 
-	int Object::getFactionRank() {
+	int Object::getFactionRank() const {
 		return vTable.object->getFactionRank(this);
 	}
 
-	int Object::getLevel() {
+	int Object::getLevel() const {
 		return vTable.object->getLevel(this);
 	}
 
@@ -460,7 +460,7 @@ namespace TES3 {
 		return vTable.object->setReputation(this, reputation);
 	}
 
-	int Object::getDispositionRaw() {
+	int Object::getDispositionRaw() const {
 		return vTable.object->getDispositionRaw(this);
 	}
 
@@ -468,19 +468,19 @@ namespace TES3 {
 		return vTable.object->modFactionIndex(this, value);
 	}
 
-	int Object::getType() {
+	int Object::getType() const {
 		return vTable.object->getType(this);
 	}
 
-	char* Object::getTypeName() {
+	char* Object::getTypeName() const {
 		return vTable.object->getTypeName(this);
 	}
 
-	float Object::getWeight() {
+	float Object::getWeight() const {
 		return vTable.object->getWeight(this);
 	}
 
-	int Object::getValue() {
+	int Object::getValue() const {
 		return vTable.object->getValue(this);
 	}
 
@@ -488,39 +488,39 @@ namespace TES3 {
 		return vTable.object->setDurability(this, value);
 	}
 
-	int Object::getDurability() {
+	int Object::getDurability() const {
 		return vTable.object->getDurability(this);
 	}
 
-	int Object::getMagicka() {
+	int Object::getMagicka() const {
 		return vTable.object->getMagicka(this);
 	}
 
-	int Object::getFatigue() {
+	int Object::getFatigue() const {
 		return vTable.object->getFatigue(this);
 	}
 
-	float Object::getQuality() {
+	float Object::getQuality() const {
 		return vTable.object->getQuality(this);
 	}
 
-	bool Object::isLeftPartOfPair() {
+	bool Object::isLeftPartOfPair() const {
 		return vTable.object->isLeftPartOfPair(this);
 	}
 
-	bool Object::isEssential() {
+	bool Object::isEssential() const {
 		return vTable.object->isEssential(this);
 	}
 
-	bool Object::isRespawn() {
+	bool Object::isRespawn() const {
 		return vTable.object->isRespawn(this);
 	}
 
-	int Object::getUses() {
+	int Object::getUses() const {
 		return vTable.object->getUses(this);
 	}
 
-	Enchantment* Object::getEnchantment() {
+	Enchantment* Object::getEnchantment() const {
 		return vTable.object->getEnchantment(this);
 	}
 
@@ -528,11 +528,11 @@ namespace TES3 {
 		return vTable.object->setEnchantment(this, enchantment);
 	}
 
-	AIConfig* Object::getAIConfig() {
+	AIConfig* Object::getAIConfig() const {
 		return vTable.object->getAIConfig(this);
 	}
 
-	bool Object::getAutoCalc() {
+	bool Object::getAutoCalc() const {
 		return vTable.object->getAutoCalc(this);
 	}
 
@@ -563,7 +563,7 @@ namespace TES3 {
 		vTable.object->resetVisualNode(this, node);
 	}
 
-	float Object::getScale() {
+	float Object::getScale() const {
 		return vTable.object->getScale(this);
 	}
 

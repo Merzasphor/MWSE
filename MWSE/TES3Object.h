@@ -139,51 +139,51 @@ namespace TES3 {
 		NI::Node * (__thiscall * getSceneGraphNode)(BaseObject*); // 0x2C
 		void * unknown_0x30;
 		void * unknown_0x34;
-		char * (__thiscall * getName)(BaseObject*); // 0x38
-		char * (__thiscall * getIconPath)(BaseObject*); // 0x3C
+		char * (__thiscall * getName)(const BaseObject*); // 0x38
+		char * (__thiscall * getIconPath)(const BaseObject*); // 0x3C
 		void * unknown_0x40;
 		void * unknown_0x44;
-		char * (__thiscall * getModelPath)(BaseObject*); // 0x48
-		Script * (__thiscall * getScript)(BaseObject*); // 0x4C
-		Sound * (__thiscall * getSound)(BaseObject*); // 0x50
-		char * (__thiscall * getRaceID)(BaseObject*); // 0x54
-		char * (__thiscall * getClassID)(BaseObject*); // 0x58
-		char * (__thiscall * getBirthsignID)(BaseObject*); // 0x5C
-		Race * (__thiscall * getRace)(BaseObject*); // 0x60
-		Class * (__thiscall * getClass)(BaseObject*); // 0x64
-		Faction * (__thiscall * getFaction)(BaseObject*); // 0x68
+		char* (__thiscall * getModelPath)(const BaseObject*); // 0x48
+		Script * (__thiscall * getScript)(const BaseObject*); // 0x4C
+		Sound * (__thiscall * getSound)(const BaseObject*); // 0x50
+		char * (__thiscall * getRaceID)(const BaseObject*); // 0x54
+		char * (__thiscall * getClassID)(const BaseObject*); // 0x58
+		char * (__thiscall * getBirthsignID)(const BaseObject*); // 0x5C
+		Race * (__thiscall * getRace)(const BaseObject*); // 0x60
+		Class * (__thiscall * getClass)(const BaseObject*); // 0x64
+		Faction * (__thiscall * getFaction)(const BaseObject*); // 0x68
 		bool (__thiscall * isFemale)(const BaseObject*); // 0x6C
-		int (__thiscall * getFactionRank)(BaseObject*); // 0x70
-		int (__thiscall * getLevel)(BaseObject*); // 0x74
+		int (__thiscall * getFactionRank)(const BaseObject*); // 0x70
+		int (__thiscall * getLevel)(const BaseObject*); // 0x74
 		void * unknown_0x78;
 		void (__thiscall * setDispositionRaw)(BaseObject*, int); // 0x7C
 		int (__thiscall * modDisposition)(BaseObject*, signed int); // 0x80
 		int (__thiscall * getReputation)(const BaseObject*); // 0x84
 		int (__thiscall * setReputation)(BaseObject*, int); // 0x88
-		int (__thiscall * getDispositionRaw)(BaseObject*); // 0x8C
+		int (__thiscall * getDispositionRaw)(const BaseObject*); // 0x8C
 		signed char(__thiscall * modFactionIndex)(BaseObject*, signed char); // 0x90
-		int (__thiscall * getType)(BaseObject*); // 0x94
-		char * (__thiscall * getTypeName)(BaseObject*); // 0x98
-		float (__thiscall * getWeight)(BaseObject*); // 0x9C
-		int (__thiscall * getValue)(BaseObject*); // 0xA0
+		int (__thiscall * getType)(const BaseObject*); // 0x94
+		char * (__thiscall * getTypeName)(const BaseObject*); // 0x98
+		float (__thiscall * getWeight)(const BaseObject*); // 0x9C
+		int (__thiscall * getValue)(const BaseObject*); // 0xA0
 		void (__thiscall * setDurability)(BaseObject*, int); // 0xA4
-		int (__thiscall * getDurability)(BaseObject*); // 0xA8
-		int (__thiscall * getMagicka)(BaseObject*); // 0xAC
-		int (__thiscall * getFatigue)(BaseObject*); // 0xB0
-		float (__thiscall * getQuality)(BaseObject*); // 0xB4
-		bool (__thiscall * isLeftPartOfPair)(BaseObject*); // 0xB8
-		bool (__thiscall * isEssential)(BaseObject*); // 0xBC
-		bool (__thiscall * isRespawn)(BaseObject*); // 0xC0
+		int (__thiscall * getDurability)(const BaseObject*); // 0xA8
+		int (__thiscall * getMagicka)(const BaseObject*); // 0xAC
+		int (__thiscall * getFatigue)(const BaseObject*); // 0xB0
+		float (__thiscall * getQuality)(const BaseObject*); // 0xB4
+		bool (__thiscall * isLeftPartOfPair)(const BaseObject*); // 0xB8
+		bool (__thiscall * isEssential)(const BaseObject*); // 0xBC
+		bool (__thiscall * isRespawn)(const BaseObject*); // 0xC0
 		void * unknown_0xC4;
-		int (__thiscall * getUses)(BaseObject*); // 0xC8
-		int (__thiscall * getEnchantCapacity)(BaseObject*);  // 0xCC
-		Enchantment * (__thiscall * getEnchantment)(BaseObject*); // 0xD0
+		int (__thiscall * getUses)(const BaseObject*); // 0xC8
+		int (__thiscall * getEnchantCapacity)(const BaseObject*);  // 0xCC
+		Enchantment * (__thiscall * getEnchantment)(const BaseObject*); // 0xD0
 		Enchantment * (__thiscall * setEnchantment)(BaseObject*, Enchantment*); // 0xD4
-		AIConfig * (__thiscall * getAIConfig)(BaseObject*); // 0xD8
-		void * (__thiscall * getAIPackageList)(BaseObject*); // 0xDC
+		AIConfig * (__thiscall * getAIConfig)(const BaseObject*); // 0xD8
+		void * (__thiscall * getAIPackageList)(const BaseObject*); // 0xDC
 		void * resolveInternalIDs; // 0xE0
 		void * unknown_0xE4;
-		unsigned char (__thiscall * getAutoCalc)(BaseObject*); // 0xE8
+		unsigned char (__thiscall * getAutoCalc)(const BaseObject*); // 0xE8
 		void (__thiscall * setAutoCalc)(BaseObject*, unsigned char); // 0xEC
 		void * unknown_0xF0;
 		void * unknown_0xF4;
@@ -197,7 +197,7 @@ namespace TES3 {
 		void * unknown_0x114;
 		void * unknown_0x118;
 		void(__thiscall* resetVisualNode)(BaseObject*, NI::Node*); // 0x11C
-		float (__thiscall * getScale)(BaseObject*); // 0x120
+		float (__thiscall * getScale)(const BaseObject*); // 0x120
 		void (__thiscall * setScale)(BaseObject*, float, bool); // 0x124
 		void * unknown_0x128;
 		int(__thiscall* unknown_0x12C)(BaseObject*); // 0x12C
@@ -295,49 +295,49 @@ namespace TES3 {
 
 		void copy(const Object* from, int unknown = 0);
 		void setID(const char*);
-		char * getName();
-		char * getIconPath();
-		char * getModelPath();
-		Script * getScript();
-		Sound * getSound();
-		char * getRaceID();
-		char * getClassID();
-		char * getBirthsignID();
-		Race * getRace();
-		Class * getClass();
-		Faction * getFaction();
+		char * getName() const;
+		char * getIconPath() const;
+		char * getModelPath() const;
+		Script * getScript() const;
+		Sound * getSound() const;
+		char * getRaceID() const;
+		char * getClassID() const;
+		char * getBirthsignID() const;
+		Race * getRace() const;
+		Class * getClass() const;
+		Faction * getFaction() const;
 		bool isFemale() const;
-		int getFactionRank();
-		int getLevel();
+		int getFactionRank() const;
+		int getLevel() const;
 		void setDispositionRaw(signed char);
 		int modDisposition(signed int);
 		int getReputation() const;
 		int setReputation(int);
-		int getDispositionRaw();
+		int getDispositionRaw() const;
 		signed char modFactionIndex(signed char);
-		int getType();
-		char * getTypeName();
-		float getWeight();
-		int getValue();
+		int getType() const;
+		char * getTypeName() const;
+		float getWeight() const;
+		int getValue() const;
 		void setDurability(int);
-		int getDurability();
-		int getMagicka();
-		int getFatigue();
-		float getQuality();
-		bool isLeftPartOfPair();
-		bool isEssential();
-		bool isRespawn();
-		int getUses();
-		Enchantment * getEnchantment();
+		int getDurability() const;
+		int getMagicka() const;
+		int getFatigue() const;
+		float getQuality() const;
+		bool isLeftPartOfPair() const;
+		bool isEssential() const;
+		bool isRespawn() const;
+		int getUses() const;
+		Enchantment * getEnchantment() const;
 		Enchantment * setEnchantment(Enchantment*);
-		AIConfig * getAIConfig();
-		bool getAutoCalc();
+		AIConfig * getAIConfig() const;
+		bool getAutoCalc() const;
 		void setAutoCalc(bool);
 		void setModelPath(const char*);
 		void setName(const char*);
 		void reevaluateEquipment();
 		void resetVisualNode(NI::Node* node = nullptr);
-		float getScale();
+		float getScale() const;
 		void setScale(float value, bool cap = false);
 
 		//
