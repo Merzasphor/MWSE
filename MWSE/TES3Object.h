@@ -341,7 +341,6 @@ namespace TES3 {
 		void setScale(float value, bool cap = false);
 
 		bool getIsLocationMarker() const;
-		bool getIsLocationMarker_override() const;
 
 		NI::Node * getSceneGraphNode();
 
@@ -353,8 +352,6 @@ namespace TES3 {
 		ReferenceList* getOwningCollection();
 
 		void setScale_lua(float scale);
-
-		void setIsLocationMarker(bool isMarker);
 
 	};
 	static_assert(sizeof(Object) == 0x28, "TES3::Object failed size validation");

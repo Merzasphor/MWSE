@@ -4057,27 +4057,6 @@ namespace mwse {
 			// Event: Power Recharged
 			overrideVirtualTableEnforced(0x74AC54, offsetof(PowersHashMap::VirtualTable, deleteKeyValuePair), 0x4F1C50, reinterpret_cast<DWORD>(OnDeletePowerHashMapKVP));
 
-			// Make use of mutable isLocationMarker flag.
-			auto TES3_Object_getIsLocationMarker_override = &TES3::Object::getIsLocationMarker_override;
-			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Activator, offsetof(TES3::ObjectVirtualTable, isLocationMarker), 0x4F1030, *reinterpret_cast<DWORD*>(&TES3_Object_getIsLocationMarker_override));
-			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Alchemy, offsetof(TES3::ObjectVirtualTable, isLocationMarker), 0x4F1030, *reinterpret_cast<DWORD*>(&TES3_Object_getIsLocationMarker_override));
-			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Apparatus, offsetof(TES3::ObjectVirtualTable, isLocationMarker), 0x4F1030, *reinterpret_cast<DWORD*>(&TES3_Object_getIsLocationMarker_override));
-			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Armor, offsetof(TES3::ObjectVirtualTable, isLocationMarker), 0x4F1030, *reinterpret_cast<DWORD*>(&TES3_Object_getIsLocationMarker_override));
-			overrideVirtualTableEnforced(TES3::VirtualTableAddress::BodyPart, offsetof(TES3::ObjectVirtualTable, isLocationMarker), 0x4F1030, *reinterpret_cast<DWORD*>(&TES3_Object_getIsLocationMarker_override));
-			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Book, offsetof(TES3::ObjectVirtualTable, isLocationMarker), 0x4F1030, *reinterpret_cast<DWORD*>(&TES3_Object_getIsLocationMarker_override));
-			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Clothing, offsetof(TES3::ObjectVirtualTable, isLocationMarker), 0x4F1030, *reinterpret_cast<DWORD*>(&TES3_Object_getIsLocationMarker_override));
-			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Door, offsetof(TES3::ObjectVirtualTable, isLocationMarker), 0x4F1030, *reinterpret_cast<DWORD*>(&TES3_Object_getIsLocationMarker_override));
-			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Enchantment, offsetof(TES3::ObjectVirtualTable, isLocationMarker), 0x4F1030, *reinterpret_cast<DWORD*>(&TES3_Object_getIsLocationMarker_override));
-			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Ingredient, offsetof(TES3::ObjectVirtualTable, isLocationMarker), 0x4F1030, *reinterpret_cast<DWORD*>(&TES3_Object_getIsLocationMarker_override));
-			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Light, offsetof(TES3::ObjectVirtualTable, isLocationMarker), 0x4F1030, *reinterpret_cast<DWORD*>(&TES3_Object_getIsLocationMarker_override));
-			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Lockpick, offsetof(TES3::ObjectVirtualTable, isLocationMarker), 0x4F1030, *reinterpret_cast<DWORD*>(&TES3_Object_getIsLocationMarker_override));
-			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Miscellaneous, offsetof(TES3::ObjectVirtualTable, isLocationMarker), 0x4F1030, *reinterpret_cast<DWORD*>(&TES3_Object_getIsLocationMarker_override));
-			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Probe, offsetof(TES3::ObjectVirtualTable, isLocationMarker), 0x4F1030, *reinterpret_cast<DWORD*>(&TES3_Object_getIsLocationMarker_override));
-			overrideVirtualTableEnforced(TES3::VirtualTableAddress::RepairTool, offsetof(TES3::ObjectVirtualTable, isLocationMarker), 0x4F1030, *reinterpret_cast<DWORD*>(&TES3_Object_getIsLocationMarker_override));
-			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Spell, offsetof(TES3::ObjectVirtualTable, isLocationMarker), 0x4F1030, *reinterpret_cast<DWORD*>(&TES3_Object_getIsLocationMarker_override));
-			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Static, offsetof(TES3::ObjectVirtualTable, isLocationMarker), 0x4F1030, *reinterpret_cast<DWORD*>(&TES3_Object_getIsLocationMarker_override));
-			overrideVirtualTableEnforced(TES3::VirtualTableAddress::Weapon, offsetof(TES3::ObjectVirtualTable, isLocationMarker), 0x4F1030, *reinterpret_cast<DWORD*>(&TES3_Object_getIsLocationMarker_override));
-
 			// UI framework hooks
 			TES3::UI::hook();
 

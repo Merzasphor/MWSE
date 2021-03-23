@@ -596,30 +596,6 @@ namespace TES3 {
 		setScale(scale);
 	}
 
-	static std::unordered_set<const Object*> customLocationMarkers;
-
-	const auto TES3_Object_isLocationMarker = reinterpret_cast<bool(__stdcall*)(const BaseObject*)>(0x4C1980);
-	bool Object::getIsLocationMarker_override() const {
-		if (this == nullptr) {
-			return false;
-		}
-
-		if (TES3_Object_isLocationMarker(getBaseObject())) {
-			return true;
-		}
-
-		return customLocationMarkers.find(this) != customLocationMarkers.end();
-	}
-
-	void Object::setIsLocationMarker(bool isMarker) {
-		if (isMarker) {
-			customLocationMarkers.insert(this);
-		}
-		else {
-			customLocationMarkers.erase(this);
-		}
-	}
-
 	//
 	// PhysicalObject
 	//
