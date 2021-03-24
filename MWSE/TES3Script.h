@@ -72,7 +72,7 @@ namespace TES3 {
 		
 		void doCommand(ScriptCompiler * compiler, const char* command, int source = TES3::CompilerSource::Default, Reference * reference = nullptr, ScriptVariables * variables = nullptr, DialogueInfo * info = nullptr, Dialogue * dialogue = nullptr);
 
-		float execute(Reference* reference, ScriptVariables* data, DialogueInfo* info, Reference* reference2);
+		void execute(Reference* reference, ScriptVariables* data, DialogueInfo* info, Reference* reference2);
 
 		//
 		// Custom functions.

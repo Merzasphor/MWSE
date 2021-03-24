@@ -63,14 +63,13 @@ namespace TES3 {
 		TES3_Script_DoCommand(this, compiler, command, source, reference, variables, info, dialogue);
 	}
 
-	const auto TES3_Script_execute = reinterpret_cast<float(__thiscall*)(Script*, Reference*, ScriptVariables*, DialogueInfo*, Reference*)>(0x5028A0);
-	float Script::execute(Reference* reference, ScriptVariables* data, DialogueInfo* info, Reference* reference2) {
+	const auto TES3_Script_execute = reinterpret_cast<void(__thiscall*)(Script*, Reference*, ScriptVariables*, DialogueInfo*, Reference*)>(0x5028A0);
+	void Script::execute(Reference* reference, ScriptVariables* data, DialogueInfo* info, Reference* reference2) {
 		currentlyExecutingScript = this;
 		currentlyExecutingScriptReference = reference;
-		auto result = TES3_Script_execute(this, reference, data, info, reference2);
+		TES3_Script_execute(this, reference, data, info, reference2);
 		currentlyExecutingScript = nullptr;
 		currentlyExecutingScriptReference = nullptr;
-		return result;
 	}
 
 	sol::table Script::getLocalVars_lua(sol::this_state ts, sol::optional<bool> useLocals) {
