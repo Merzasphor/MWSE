@@ -123,6 +123,7 @@ namespace mwse {
 				// Functions exposed as properties.
 				usertypeDefinition["ambientColor"] = sol::readonly_property(&TES3::Cell::getAmbientColor);
 				usertypeDefinition["behavesAsExterior"] = sol::property(&TES3::Cell::getBehavesAsExterior, &TES3::Cell::setBehavesAsExterior);
+				usertypeDefinition["displayName"] = sol::readonly_property(&TES3::Cell::getDisplayName);
 				usertypeDefinition["fogColor"] = sol::readonly_property(&TES3::Cell::getFogColor);
 				usertypeDefinition["fogDensity"] = sol::property(&TES3::Cell::getFogDensity, &TES3::Cell::setFogDensity);
 				usertypeDefinition["gridX"] = sol::property(&TES3::Cell::getGridX, &TES3::Cell::setGridX);

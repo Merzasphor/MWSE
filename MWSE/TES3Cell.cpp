@@ -7,6 +7,8 @@
 #include "LuaCellActivatedEvent.h"
 #include "LuaCellDeactivatedEvent.h"
 
+#include "TES3Region.h"
+
 namespace TES3 {
 	const auto TES3_Cell_constructor = reinterpret_cast<Cell*(__thiscall *)(Cell*)>(0x4DB500);
 	Cell * Cell::create() {
@@ -214,6 +216,17 @@ namespace TES3 {
 
 	bool Cell::getCellActive() const {
 		return activeCells.find(this) != activeCells.end();
+	}
+
+	const char* Cell::getDisplayName() const {
+		auto name = getName();
+		if (name == nullptr) {
+			auto region = getRegion();
+			if (region) {
+				name = region->getName();
+			}
+		}
+		return name;
 	}
 
 	bool Cell::isPointInCell(float x, float y) const {

@@ -184,6 +184,8 @@ namespace TES3 {
 		void setCellInactive();
 		bool getCellActive() const;
 
+		const char* getDisplayName() const;
+
 		//
 		// Helper functions.
 		//
