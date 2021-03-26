@@ -7,6 +7,8 @@
 #include "LuaCellActivatedEvent.h"
 #include "LuaCellDeactivatedEvent.h"
 
+#include "TES3DataHandler.h"
+#include "TES3GameSetting.h"
 #include "TES3Region.h"
 
 namespace TES3 {
@@ -219,14 +221,20 @@ namespace TES3 {
 	}
 
 	const char* Cell::getDisplayName() const {
+		// Try the cell name first.
 		auto name = getName();
-		if (name == nullptr) {
-			auto region = getRegion();
-			if (region) {
-				name = region->getName();
-			}
+		if (name) {
+			return name;
 		}
-		return name;
+
+		// Fall back to region name.
+		auto region = getRegion();
+		if (region) {
+			return region->getName();
+		}
+
+		// Fallback to GMST.
+		return TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::sDefaultCellname]->value.asString;
 	}
 
 	bool Cell::isPointInCell(float x, float y) const {
