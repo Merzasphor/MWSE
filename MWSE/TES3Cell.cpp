@@ -85,14 +85,14 @@ namespace TES3 {
 
 	std::optional<float> Cell::getFogDensity() const {
 		if (cellFlags & CellFlag::Interior) {
-			return VariantData.interior.fogDensity;
+			return variantData.interior.fogDensity;
 		}
 		return {};
 	}
 
 	void Cell::setFogDensity(float value) {
 		if (cellFlags & CellFlag::Interior) {
-			VariantData.interior.fogDensity = value;
+			variantData.interior.fogDensity = value;
 		}
 	}
 
@@ -128,21 +128,21 @@ namespace TES3 {
 
 	TES3::PackedColor* Cell::getAmbientColor() {
 		if (cellFlags & TES3::CellFlag::Interior) {
-			return &VariantData.interior.ambientColor;
+			return &variantData.interior.ambientColor;
 		}
 		return nullptr;
 	}
 
 	TES3::PackedColor* Cell::getFogColor() {
 		if (cellFlags & TES3::CellFlag::Interior) {
-			return &VariantData.interior.fogColor;
+			return &variantData.interior.fogColor;
 		}
 		return nullptr;
 	}
 
 	TES3::PackedColor* Cell::getSunColor() {
 		if (cellFlags & TES3::CellFlag::Interior) {
-			return &VariantData.interior.sunColor;
+			return &variantData.interior.sunColor;
 		}
 		return nullptr;
 	}
@@ -249,13 +249,15 @@ namespace TES3 {
 	}
 
 	bool Cell::isPointInCell(float x, float y) const {
-		if (cellFlags & CellFlag::Interior) {
+		if (isInterior()) {
 			return true;
 		}
-		else {
-			int cellX = toGridCoord(x), cellY = toGridCoord(y);
-			return cellX == VariantData.exterior.gridX && cellY == VariantData.exterior.gridY;
-		}
+
+		return toGridCoord(x) == variantData.exterior.gridX && toGridCoord(y) == variantData.exterior.gridY;
+	}
+
+	int Cell::toGridCoord(float x) {
+		return int(x) / exteriorGridWidth;
 	}
 }
 

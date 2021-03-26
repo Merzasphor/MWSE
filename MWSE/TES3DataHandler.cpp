@@ -330,8 +330,10 @@ namespace TES3 {
 	}
 
 	Vector3 DataHandler::getLastExteriorPosition() {
-		if (this->currentInteriorCell && this->lastExteriorCellPositionX != INT_MAX && this->lastExteriorCellPositionX != INT_MAX) {
-			return Vector3(this->lastExteriorCellPositionX * 8192, this->lastExteriorCellPositionY * 8192, 0);
+		if (currentInteriorCell && lastExteriorCellPositionX != INT_MAX && lastExteriorCellPositionX != INT_MAX) {
+			auto x = float(lastExteriorCellPositionX * TES3::Cell::exteriorGridWidth);
+			auto y = float(lastExteriorCellPositionY * TES3::Cell::exteriorGridWidth);
+			return Vector3(x, y, 0.0f);
 		}
 		else {
 			auto macp = TES3::WorldController::get()->getMobilePlayer();
