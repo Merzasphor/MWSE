@@ -185,6 +185,7 @@ namespace TES3 {
 		bool getCellActive() const;
 
 		const char* getDisplayName() const;
+		std::string getEditorName() const;
 
 		//
 		// Helper functions.

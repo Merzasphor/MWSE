@@ -237,6 +237,17 @@ namespace TES3 {
 		return TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::sDefaultCellname]->value.asString;
 	}
 
+	std::string Cell::getEditorName() const {
+		std::stringstream ss;
+
+		ss << getDisplayName();
+		if (!isInterior()) {
+			ss << " (" << getGridX() << ", " << getGridY() << ")";
+		}
+
+		return std::move(ss.str());
+	}
+
 	bool Cell::isPointInCell(float x, float y) const {
 		if (cellFlags & CellFlag::Interior) {
 			return true;
