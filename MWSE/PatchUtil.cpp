@@ -676,7 +676,7 @@ namespace mwse {
 				return object->getObjectID();
 			}
 			__except (EXCEPTION_EXECUTE_HANDLER) {
-				return "<memory corrupted>";
+				return nullptr;
 			}
 		}
 
@@ -685,7 +685,17 @@ namespace mwse {
 				return object->getSourceFilename();
 			}
 			__except (EXCEPTION_EXECUTE_HANDLER) {
-				return "<memory corrupted>";
+				return nullptr;
+			}
+		}
+
+		template <typename T>
+		void safePrintObjectToLog(const char* title, const T* object) {
+			auto id = SafeGetObjectId(TES3::Script::currentlyExecutingScript);
+			auto source = SafeGetSourceFile(TES3::Script::currentlyExecutingScript);
+			log::getLog() << "  " << title << ": " << (id ? id : "<memory corrupted>") << " (" << (source ? source : "<memory corrupted>") << ")" << std::endl;
+			if (id) {
+				log::prettyDump(object);
 			}
 		}
 
@@ -706,8 +716,8 @@ namespace mwse {
 			// Try to print any relevant mwscript information.
 			if (TES3::Script::currentlyExecutingScript) {
 				log::getLog() << "Currently executing mwscript context:" << std::endl;
-				log::getLog() << "  Script: " << SafeGetObjectId(TES3::Script::currentlyExecutingScript) << " (" << SafeGetSourceFile(TES3::Script::currentlyExecutingScript) << ")" << std::endl;
-				log::getLog() << "  Reference: " << SafeGetObjectId(TES3::Script::currentlyExecutingScriptReference) << " (" << SafeGetSourceFile(TES3::Script::currentlyExecutingScriptReference) << ")" << std::endl;
+				safePrintObjectToLog("Script", TES3::Script::currentlyExecutingScript);
+				safePrintObjectToLog("Reference", TES3::Script::currentlyExecutingScriptReference);
 				log::getLog() << "  OpCode: 0x" << std::hex << *reinterpret_cast<DWORD*>(0x7A91C4) << std::endl;
 				log::getLog() << "  Cursor Offset: 0x" << std::hex << *reinterpret_cast<DWORD*>(0x7CEBB0) << std::endl;
 			}
