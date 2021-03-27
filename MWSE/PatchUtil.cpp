@@ -339,8 +339,19 @@ namespace mwse {
 
 				auto script = self->baseObject->getScript();
 				if (script) {
-					log << "Script: " << self->baseObject->getScript()->getObjectID() << std::endl;
+					log << "Script: " << script->getObjectID() << std::endl;
 					prettyDump(script);
+				}
+
+				auto cell = self->getCell();
+				if (cell) {
+					log << "Cell: " << cell->getEditorName() << std::endl;
+					prettyDump(cell);
+
+					auto playerCell = TES3::DataHandler::get()->currentCell;
+					if (playerCell && playerCell != cell) {
+						log << "Player cell differs: " << playerCell->getEditorName() << std::endl;
+					}
 				}
 
 				log << "mwscript data: OpCode: " << std::hex << *reinterpret_cast<DWORD*>(0x7A91C4) << "; Cursor offset: " << *reinterpret_cast<DWORD*>(0x7CEBB0) << "; Look ahead token: " << int(*reinterpret_cast<unsigned char*>(0x7CEBA8)) << std::endl;
