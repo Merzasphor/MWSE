@@ -387,7 +387,7 @@ namespace mwse {
 			const char* relativePath = getOptionalParam<const char*>(params, "path", nullptr);
 			int situation = getOptionalParam<int>(params, "situation", int(TES3::MusicSituation::Uninterruptible));
 			double crossfade = getOptionalParam<double>(params, "crossfade", 1.0);
-			float volume = getOptionalParam<float> (params, "volume", worldController->audioController->getMusicVolume());
+			float volume = getOptionalParam<float>(params, "volume", worldController->audioController->getMusicVolume());
 
 			if (relativePath) {
 				char path[260];
