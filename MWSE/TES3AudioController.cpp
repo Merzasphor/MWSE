@@ -13,18 +13,18 @@ namespace TES3 {
 	}
 
 	float AudioController::getMixVolume(AudioMixType mix) {
-		float volume = 0.004 * volumeMaster;
+		float volume = 0.004f * volumeMaster;
 		switch (mix) {
 		case AudioMixType::Master:
 			break;
 		case AudioMixType::Voice:
-			volume *= 0.004 * volumeVoice;
+			volume *= 0.004f * volumeVoice;
 			break;
 		case AudioMixType::Effects:
-			volume *= 0.004 * volumeEffects;
+			volume *= 0.004f * volumeEffects;
 			break;
 		case AudioMixType::Footsteps:
-			volume *= 0.004 * volumeFootsteps;
+			volume *= 0.004f * volumeFootsteps;
 			break;
 		case AudioMixType::Music:
 			// Music is not linked to master volume
@@ -39,7 +39,7 @@ namespace TES3 {
 	}
 
 	void AudioController::setNormalizedMasterVolume(float value) {
-		volumeMaster = std::fminf(std::fmaxf(value, 0.0f), 1.0f) * 250;
+		volumeMaster = uint8_t(std::clamp(value, 0.0f, 1.0f) * 250);
 		adjustActiveSounds();
 	}
 
@@ -48,7 +48,7 @@ namespace TES3 {
 	}
 
 	void AudioController::setNormalizedEffectsVolume(float value) {
-		volumeEffects = std::fminf(std::fmaxf(value, 0.0f), 1.0f) * 250;
+		volumeEffects = uint8_t(std::clamp(value, 0.0f, 1.0f) * 250);
 		adjustActiveSounds();
 	}
 
@@ -57,7 +57,7 @@ namespace TES3 {
 	}
 
 	void AudioController::setNormalizedVoiceVolume(float value) {
-		volumeVoice = std::fminf(std::fmaxf(value, 0.0f), 1.0f) * 250;
+		volumeVoice = uint8_t(std::clamp(value, 0.0f, 1.0f) * 250);
 		adjustActiveSounds();
 	}
 
@@ -66,7 +66,7 @@ namespace TES3 {
 	}
 
 	void AudioController::setNormalizedFootstepsVolume(float value) {
-		volumeFootsteps = std::fminf(std::fmaxf(value, 0.0f), 1.0f) * 250;
+		volumeFootsteps = uint8_t(std::clamp(value, 0.0f, 1.0f) * 250);
 		adjustActiveSounds();
 	}
 
