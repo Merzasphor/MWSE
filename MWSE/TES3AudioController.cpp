@@ -40,6 +40,7 @@ namespace TES3 {
 
 	void AudioController::setNormalizedMasterVolume(float value) {
 		volumeMaster = std::fminf(std::fmaxf(value, 0.0f), 1.0f) * 250;
+		adjustActiveSounds();
 	}
 
 	float AudioController::getNormalizedEffectsVolume() {
@@ -48,6 +49,7 @@ namespace TES3 {
 
 	void AudioController::setNormalizedEffectsVolume(float value) {
 		volumeEffects = std::fminf(std::fmaxf(value, 0.0f), 1.0f) * 250;
+		adjustActiveSounds();
 	}
 
 	float AudioController::getNormalizedVoiceVolume() {
@@ -56,6 +58,7 @@ namespace TES3 {
 
 	void AudioController::setNormalizedVoiceVolume(float value) {
 		volumeVoice = std::fminf(std::fmaxf(value, 0.0f), 1.0f) * 250;
+		adjustActiveSounds();
 	}
 
 	float AudioController::getNormalizedFootstepsVolume() {
@@ -64,6 +67,7 @@ namespace TES3 {
 
 	void AudioController::setNormalizedFootstepsVolume(float value) {
 		volumeFootsteps = std::fminf(std::fmaxf(value, 0.0f), 1.0f) * 250;
+		adjustActiveSounds();
 	}
 
 	float AudioController::getMusicVolume() {
@@ -161,4 +165,8 @@ namespace TES3 {
 		changeMusicTrack(filename, crossfade.value_or(1000), volume.value_or(1.0f));
 	}
 
+	const auto TES3_AdjustActiveSounds = reinterpret_cast<void(__cdecl*)()>(0x5A1E10);
+	void __cdecl AudioController::adjustActiveSounds() {
+		TES3_AdjustActiveSounds();
+	}
 }
