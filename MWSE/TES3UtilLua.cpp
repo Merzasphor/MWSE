@@ -381,18 +381,20 @@ namespace mwse {
 		}
 
 		void streamMusic(sol::optional<sol::table> params) {
+			auto worldController = TES3::WorldController::get();
+
 			// Get parameters.
 			const char* relativePath = getOptionalParam<const char*>(params, "path", nullptr);
 			int situation = getOptionalParam<int>(params, "situation", int(TES3::MusicSituation::Uninterruptible));
 			double crossfade = getOptionalParam<double>(params, "crossfade", 1.0);
+			float volume = getOptionalParam<float> (params, "volume", worldController->audioController->getMusicVolume());
 
 			if (relativePath) {
-				auto w = TES3::WorldController::get();
 				char path[260];
 
 				std::snprintf(path, sizeof(path), "Data Files/music/%s", relativePath);
-				w->audioController->changeMusicTrack(path, 1000 * crossfade, 1.0);
-				w->musicSituation = TES3::MusicSituation(situation);
+				worldController->audioController->changeMusicTrack(path, 1000 * crossfade, volume);
+				worldController->musicSituation = TES3::MusicSituation(situation);
 			}
 		}
 
