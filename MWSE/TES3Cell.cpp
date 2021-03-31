@@ -257,7 +257,7 @@ namespace TES3 {
 	}
 
 	int Cell::toGridCoord(float x) {
-		return int(x) / exteriorGridWidth;
+		return int(x) >> 13;
 	}
 }
 
