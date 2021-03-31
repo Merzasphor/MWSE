@@ -58,15 +58,19 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
-				usertypeDefinition["countPackages"] = sol::readonly_property(&TES3::AIPlanner::countPackages);
-				usertypeDefinition["indexActivePackage"] = sol::readonly_property(&TES3::AIPlanner::indexActivePackage);
+				usertypeDefinition["currentPackageIndex"] = sol::readonly_property(&TES3::AIPlanner::currentPackageIndex);
 				usertypeDefinition["mobile"] = sol::readonly_property(&TES3::AIPlanner::mobileActor);
+				usertypeDefinition["nextOpenPackageIndex"] = sol::readonly_property(&TES3::AIPlanner::nextOpenPackageIndex);
 
 				// Basic function binding.
 				usertypeDefinition["getActivePackage"] = &TES3::AIPlanner::getActivePackage;
 
 				// Indirect bindings to unions and arrays.
 				usertypeDefinition["packages"] = sol::readonly_property(&TES3::AIPlanner::getPackages);
+
+				// Legacy renamed fields.
+				usertypeDefinition["countPackages"] = sol::readonly_property(&TES3::AIPlanner::currentPackageIndex);
+				usertypeDefinition["indexActivePackage"] = sol::readonly_property(&TES3::AIPlanner::nextOpenPackageIndex);
 			}
 
 			// Binding for TES3::AIPackage
