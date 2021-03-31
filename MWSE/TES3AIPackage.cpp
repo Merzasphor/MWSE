@@ -20,6 +20,24 @@ namespace TES3 {
 		vTable->cleanup(this);
 	}
 
+	MobileActor* AIPackage::getTargetActor() const {
+		return targetActor;
+	}
+
+	void AIPackage::setTargetActor(TES3::MobileActor* target) {
+		targetActor = target;
+	}
+
+	const auto TES3_AIPackage_setTargetActorAsFriend = reinterpret_cast<void(__thiscall*)(AIPackage*, MobileActor*)>(0x534D70);
+	void AIPackage::setTargetActorAsFriend(TES3::MobileActor* target) {
+		TES3_AIPackage_setTargetActorAsFriend(this, target);
+	}
+
+	const auto TES3_AIPackage_setTargetActorAsFriendIfActive = reinterpret_cast<void(__thiscall*)(AIPackage*, MobileActor*)>(0x535730);
+	void AIPackage::setTargetActorAsFriendIfActive(TES3::MobileActor* target) {
+		TES3_AIPackage_setTargetActorAsFriendIfActive(this, target);
+	}
+
 	static std::unordered_map<const AIPackage*, sol::object> AIPackageObjectCache;
 	static std::mutex AIPackageObjectCacheMutex;
 

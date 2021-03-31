@@ -72,6 +72,15 @@ namespace TES3 {
 		void cleanup();
 
 		//
+		// Other related this-call functions.
+		//
+
+		MobileActor* getTargetActor() const;
+		void setTargetActor(TES3::MobileActor* target);
+		void setTargetActorAsFriend(TES3::MobileActor* target);
+		void setTargetActorAsFriendIfActive(TES3::MobileActor* target);
+
+		//
 		// Custom functions
 		//
 

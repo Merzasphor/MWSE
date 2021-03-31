@@ -118,6 +118,7 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition["destination"] = &TES3::AIPackageEscort::destination;
+				usertypeDefinition["targetActor"] = sol::property(&TES3::AIPackageEscort::getTargetActor, &TES3::AIPackageEscort::setTargetActorAsFriend);
 			}
 
 			// Binding for TES3::AIPackageFollow
@@ -133,6 +134,7 @@ namespace mwse {
 				// Basic property binding.
 				usertypeDefinition["destination"] = &TES3::AIPackageFollow::destination;
 				usertypeDefinition["followDistance"] = &TES3::AIPackageFollow::followDistance;
+				usertypeDefinition["targetActor"] = sol::property(&TES3::AIPackageEscort::getTargetActor, &TES3::AIPackageFollow::setTargetActorAsFriendIfActive);
 			}
 
 			// Binding for TES3::AIPackageActivate

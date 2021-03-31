@@ -16,7 +16,7 @@ namespace mwse {
 			usertypeDefinition["isStarted"] = &T::started;
 			usertypeDefinition["mobile"] = &T::owningActor;
 			usertypeDefinition["startGameHour"] = &T::startGameHour;
-			usertypeDefinition["targetActor"] = &T::targetActor;
+			usertypeDefinition["targetActor"] = sol::property(&T::getTargetActor, &T::setTargetActor);
 			usertypeDefinition["targetPosition"] = &T::targetPosition;
 			usertypeDefinition["type"] = sol::readonly_property(&T::packageType);
 		}
