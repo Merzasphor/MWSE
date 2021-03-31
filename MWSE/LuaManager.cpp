@@ -1089,6 +1089,7 @@ namespace mwse {
 		//
 		// Patch ui_reenableMenuDialogue function to exit menumode if there is no dialogue menu.
 		//
+
 		void __cdecl ReenableMenuDialogue() {
 			TES3::UI::Element* dialog = TES3::UI::findMenu(TES3::UI::registerID("MenuDialog"));
 			if (dialog != nullptr) {
