@@ -84,10 +84,8 @@ namespace TES3 {
 		// Custom functions
 		//
 
-		// Storage for cached userdata.
+		// Allow dynamic recasting to derived types.
 		sol::object getOrCreateLuaObject(lua_State* L) const;
-		static void clearCachedLuaObject(const AIPackage* object);
-		static void clearCachedLuaObjects();
 
 	};
 	static_assert(sizeof(AIPackage) == 0x3C, "TES3::AIPackage failed size validation");

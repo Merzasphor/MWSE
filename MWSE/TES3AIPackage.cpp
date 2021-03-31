@@ -38,21 +38,9 @@ namespace TES3 {
 		TES3_AIPackage_setTargetActorAsFriendIfActive(this, target);
 	}
 
-	static std::unordered_map<const AIPackage*, sol::object> AIPackageObjectCache;
-	static std::mutex AIPackageObjectCacheMutex;
-
 	sol::object AIPackage::getOrCreateLuaObject(lua_State* L) const {
 		if (this == nullptr) {
 			return sol::nil;
-		}
-
-		AIPackageObjectCacheMutex.lock();
-
-		auto cacheHit = AIPackageObjectCache.find(this);
-		if (cacheHit != AIPackageObjectCache.end()) {
-			auto result = cacheHit->second;
-			AIPackageObjectCacheMutex.unlock();
-			return result;
 		}
 
 		// Make sure we're looking at the main state.
@@ -79,40 +67,7 @@ namespace TES3 {
 			ref = sol::make_object_userdata(L, this);
 		}
 
-		if (ref != sol::nil) {
-			AIPackageObjectCache[this] = ref;
-		}
-
-		AIPackageObjectCacheMutex.unlock();
-
 		return ref;;
-	}
-
-	void AIPackage::clearCachedLuaObject(const AIPackage* object) {
-		if (!AIPackageObjectCache.empty()) {
-			AIPackageObjectCacheMutex.lock();
-
-			// Clear any events that make use of this object.
-			auto it = AIPackageObjectCache.find(object);
-			if (it != AIPackageObjectCache.end()) {
-				// Let people know that this object is invalidated.
-				mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::ObjectInvalidatedEvent(it->second));
-
-				// Clear any events that make use of this object.
-				mwse::lua::event::clearObjectFilter(it->second);
-
-				// Remove it from the cache.
-				AIPackageObjectCache.erase(it);
-			}
-
-			AIPackageObjectCacheMutex.unlock();
-		}
-	}
-
-	void AIPackage::clearCachedLuaObjects() {
-		AIPackageObjectCacheMutex.lock();
-		AIPackageObjectCache.clear();
-		AIPackageObjectCacheMutex.unlock();
 	}
 
 	AIPackageType AIPackageConfig::toPackageType() const {
