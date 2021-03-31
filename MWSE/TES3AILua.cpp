@@ -75,18 +75,78 @@ namespace mwse {
 				auto usertypeDefinition = state.new_usertype<TES3::AIPackage>("tes3aiPackage");
 				usertypeDefinition["new"] = sol::no_constructor;
 
+				setUserdataForTES3AIPackage(usertypeDefinition);
+			}
+
+			// Binding for TES3::AIPackageTravel
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.new_usertype<TES3::AIPackageTravel>("tes3aiPackageTravel");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<TES3::AIPackage>();
+				setUserdataForTES3AIPackage(usertypeDefinition);
+
 				// Basic property binding.
-				usertypeDefinition["destinationCell"] = sol::readonly_property(&TES3::AIPackage::destinationCell);
-				usertypeDefinition["distance"] = sol::readonly_property(&TES3::AIPackage::distance);
-				usertypeDefinition["duration"] = sol::readonly_property(&TES3::AIPackage::duration);
-				usertypeDefinition["hourOfDay"] = sol::readonly_property(&TES3::AIPackage::hourOfDay);
-				usertypeDefinition["isDone"] = sol::readonly_property(&TES3::AIPackage::done);
-				usertypeDefinition["isFinalized"] = sol::readonly_property(&TES3::AIPackage::finalized);
-				usertypeDefinition["isMoving"] = sol::readonly_property(&TES3::AIPackage::moving);
-				usertypeDefinition["isReset"] = sol::readonly_property(&TES3::AIPackage::reset);
-				usertypeDefinition["isStarted"] = sol::readonly_property(&TES3::AIPackage::started);
-				usertypeDefinition["targetPosition"] = sol::readonly_property(&TES3::AIPackage::targetPosition);
-				usertypeDefinition["type"] = sol::readonly_property(&TES3::AIPackage::packageType);
+				usertypeDefinition["destination"] = &TES3::AIPackageTravel::destination;
+			}
+
+			// Binding for TES3::AIPackageWander
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.new_usertype<TES3::AIPackageWander>("tes3aiPackageWander");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<TES3::AIPackage>();
+				setUserdataForTES3AIPackage(usertypeDefinition);
+
+				// Basic property binding.
+				usertypeDefinition["activationTarget"] = &TES3::AIPackageWander::activationTarget;
+			}
+
+			// Binding for TES3::AIPackageEscort
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.new_usertype<TES3::AIPackageEscort>("tes3aiPackageEscort");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<TES3::AIPackage>();
+				setUserdataForTES3AIPackage(usertypeDefinition);
+
+				// Basic property binding.
+				usertypeDefinition["destination"] = &TES3::AIPackageEscort::destination;
+			}
+
+			// Binding for TES3::AIPackageFollow
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.new_usertype<TES3::AIPackageFollow>("tes3aiPackageFollow");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<TES3::AIPackage>();
+				setUserdataForTES3AIPackage(usertypeDefinition);
+
+				// Basic property binding.
+				usertypeDefinition["destination"] = &TES3::AIPackageFollow::destination;
+				usertypeDefinition["followDistance"] = &TES3::AIPackageFollow::followDistance;
+			}
+
+			// Binding for TES3::AIPackageActivate
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.new_usertype<TES3::AIPackageActivate>("tes3aiPackageActivate");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Define inheritance structures. These must be defined in order from top to bottom. The complete chain must be defined.
+				usertypeDefinition[sol::base_classes] = sol::bases<TES3::AIPackage>();
+				setUserdataForTES3AIPackage(usertypeDefinition);
+
+				// Basic property binding.
+				usertypeDefinition["activateTarget"] = &TES3::AIPackageActivate::activateTarget;
 			}
 		}
 	}
