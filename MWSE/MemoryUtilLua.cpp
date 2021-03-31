@@ -501,6 +501,8 @@ namespace mwse {
 
 			auto convertTo = memory.create_named("convertTo");
 			convertTo["bool"] = convertArgTo<bool>;
+			convertTo["byte"] = convertArgTo<BYTE>;
+			convertTo["char"] = convertArgTo<char>;
 			convertTo["float"] = convertArgTo<float>;
 			convertTo["int"] = convertArgTo<int>;
 			convertTo["string"] = convertArgTo<const char*>;
@@ -514,6 +516,8 @@ namespace mwse {
 
 			auto convertFrom = memory.create_named("convertFrom");
 			convertFrom["bool"] = convertArgFrom<bool>;
+			convertFrom["byte"] = convertArgFrom<byte>;
+			convertFrom["char"] = convertArgFrom<char>;
 			convertFrom["float"] = convertArgFrom<float>;
 			convertFrom["int"] = convertArgFrom<int>;
 			convertFrom["string"] = convertArgFrom<const char*>;
