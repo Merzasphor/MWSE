@@ -160,6 +160,8 @@
     <ClInclude Include="NIRect.h" />
     <ClInclude Include="NIRenderedTexture.h" />
     <ClInclude Include="NIRenderer.h" />
+    <ClInclude Include="NISkinInstance.h" />
+    <ClInclude Include="NISkinPartition.h" />
     <ClInclude Include="NITArray.h" />
     <ClInclude Include="NITextureEffect.h" />
     <ClInclude Include="NITextureEffectLua.h" />

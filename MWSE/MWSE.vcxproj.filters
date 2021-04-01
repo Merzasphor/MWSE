@@ -1482,6 +1482,12 @@
     <ClInclude Include="LuaPowerRechargedEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="NISkinInstance.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="NISkinPartition.h">
+      <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
