@@ -707,7 +707,7 @@ namespace mwse {
 			// Display the memory usage in the log.
 			PROCESS_MEMORY_COUNTERS_EX memCounter;
 			GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&memCounter, sizeof(memCounter));
-			log::getLog() << "Memory usage: " << memCounter.PrivateUsage << " bytes." << std::endl;
+			log::getLog() << "Memory usage: " << std::dec << memCounter.PrivateUsage << " bytes." << std::endl;
 
 			// Try to print the lua stack trace.
 			log::getLog() << "Lua traceback at time of crash:" << std::endl;
