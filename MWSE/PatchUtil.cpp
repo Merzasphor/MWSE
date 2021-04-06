@@ -569,6 +569,9 @@ namespace mwse {
 			genCallEnforced(0x49A5D7, 0x5028A0, *reinterpret_cast<DWORD*>(&Script_execute));
 			genCallEnforced(0x4E71FE, 0x5028A0, *reinterpret_cast<DWORD*>(&Script_execute));
 			genCallEnforced(0x50E6BD, 0x5028A0, *reinterpret_cast<DWORD*>(&Script_execute));
+
+			// Patch: Always clone scene graph nodes.
+			writeValueEnforced(0x4EF9FB, BYTE(0x02), BYTE(0x00));
 		}
 
 		void installPostLuaPatches() {
