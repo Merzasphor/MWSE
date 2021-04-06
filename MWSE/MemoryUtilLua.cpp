@@ -521,7 +521,7 @@ namespace mwse {
 			convertFrom["char"] = convertArgFrom<char>;
 			convertFrom["float"] = convertArgFrom<float>;
 			convertFrom["int"] = convertArgFrom<int>;
-			convertFrom["niObject"] = convertArgTo<NI::Object*>;
+			convertFrom["niObject"] = convertArgFrom<NI::Object*>;
 			convertFrom["string"] = convertArgFrom<const char*>;
 			convertFrom["tes3equipmentStackIterator"] = convertArgFrom<LegacyIteratedList<TES3::EquipmentStack*>*>;
 			convertFrom["tes3equipmentStackIteratorNode"] = convertArgFrom<LegacyIteratedList<TES3::EquipmentStack*>::Node*>;
