@@ -59,7 +59,7 @@ namespace mwse::lua {
 			if (script != nullptr)
 				activator->script = script;
 
-			activator->objectFlags = getOptionalParam<double>(params, "objectFlags", 0.0);
+			activator->objectFlags = getOptionalParam<unsigned int>(params, "objectFlags", 0);
 
 			activator->objectFlags |= TES3::ObjectFlag::Modified;
 
@@ -113,10 +113,10 @@ namespace mwse::lua {
 			if (!icon.empty() && icon.size() < 31)
 				tes3::setDataString(&miscItem->icon, icon.c_str());
 
-			miscItem->objectFlags = getOptionalParam<double>(params, "objectFlags", 0.0);
-			miscItem->weight = getOptionalParam<double>(params, "weight", 0.0);
-			miscItem->value = getOptionalParam<double>(params, "value", 0.0);
-			miscItem->flags = getOptionalParam<double>(params, "flags", 0.0);
+			miscItem->objectFlags = getOptionalParam<unsigned int>(params, "objectFlags", 0);
+			miscItem->weight = getOptionalParam<float>(params, "weight", 0.0f);
+			miscItem->value = getOptionalParam<int>(params, "value", 0);
+			miscItem->flags = getOptionalParam<unsigned int>(params, "flags", 0);
 
 			miscItem->objectFlags |= TES3::ObjectFlag::Modified;
 
@@ -155,7 +155,7 @@ namespace mwse::lua {
 			staticObject->setID(id.c_str());
 			staticObject->setModelPath(mesh.c_str());
 
-			staticObject->objectFlags = getOptionalParam<double>(params, "objectFlags", 0.0);
+			staticObject->objectFlags = getOptionalParam<unsigned int>(params, "objectFlags", 0);
 
 			staticObject->objectFlags |= TES3::ObjectFlag::Modified;
 
@@ -194,11 +194,11 @@ namespace mwse::lua {
 			if (castType >= TES3::EnchantmentCastType::Invalid)
 				throw std::invalid_argument{ "tes3enchantment.create: 'castType' parameter as an incorrect value. Use values in tes3.enchantmentType" };
 
-			unsigned short chargeCost = getOptionalParam<double>(params, "chargeCost", 0.0);
+			unsigned short chargeCost = getOptionalParam<unsigned short>(params, "chargeCost", 0);
 			if (chargeCost == 0)
 				throw std::invalid_argument{ "tes3enchantment.create: 'chargeCost' parameter must be greater than 0." };
 
-			unsigned short maxCharge = getOptionalParam<double>(params, "maxCharge", 0.0);
+			unsigned short maxCharge = getOptionalParam<unsigned short>(params, "maxCharge", 0);
 			if (maxCharge == 0)
 				throw std::invalid_argument{ "tes3enchantment.create: 'maxCharge' parameter must be greater than 0." };
 
@@ -208,8 +208,8 @@ namespace mwse::lua {
 			enchantment->castType = castType;
 			enchantment->chargeCost = chargeCost;
 			enchantment->maxCharge = maxCharge;
-			enchantment->flags = getOptionalParam<double>(params, "flags", 0.0);
-			enchantment->objectFlags = getOptionalParam<double>(params, "objectFlags", 0.0);
+			enchantment->flags = getOptionalParam<unsigned int>(params, "flags", 0);
+			enchantment->objectFlags = getOptionalParam<unsigned int>(params, "objectFlags", 0);
 			enchantment->objectFlags |= TES3::ObjectFlag::Modified;
 
 			if (!TES3::DataHandler::get()->nonDynamicData->addNewObject(enchantment))
