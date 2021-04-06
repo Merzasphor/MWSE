@@ -505,6 +505,7 @@ namespace mwse {
 			convertTo["char"] = convertArgTo<char>;
 			convertTo["float"] = convertArgTo<float>;
 			convertTo["int"] = convertArgTo<int>;
+			convertTo["niObject"] = convertArgTo<NI::Object*>;
 			convertTo["string"] = convertArgTo<const char*>;
 			convertTo["tes3equipmentStackIterator"] = convertArgTo<LegacyIteratedList<TES3::EquipmentStack*>*>;
 			convertTo["tes3equipmentStackIteratorNode"] = convertArgTo<LegacyIteratedList<TES3::EquipmentStack*>::Node*>;
@@ -520,6 +521,7 @@ namespace mwse {
 			convertFrom["char"] = convertArgFrom<char>;
 			convertFrom["float"] = convertArgFrom<float>;
 			convertFrom["int"] = convertArgFrom<int>;
+			convertFrom["niObject"] = convertArgTo<NI::Object*>;
 			convertFrom["string"] = convertArgFrom<const char*>;
 			convertFrom["tes3equipmentStackIterator"] = convertArgFrom<LegacyIteratedList<TES3::EquipmentStack*>*>;
 			convertFrom["tes3equipmentStackIteratorNode"] = convertArgFrom<LegacyIteratedList<TES3::EquipmentStack*>::Node*>;
