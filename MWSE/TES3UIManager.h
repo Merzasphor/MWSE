@@ -43,6 +43,8 @@ namespace TES3 {
 		void showDialogueMessage(const char* message, int style, int answerIndex);
 		void showDialogueMessage_lua(sol::table params);
 
+		Element* showMessageBox(const char* message, void* image = nullptr, bool showInDialog = true);
+
 		void logToConsole(const char* text, bool isCommand = false);
 		void logToConsole_lua(const char* text, sol::optional<bool> isCommand = false);
 

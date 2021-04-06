@@ -34,6 +34,8 @@
 #include "TES3NPC.h"
 #include "TES3WorldController.h"
 
+#include "TES3UIManager.h"
+
 #include "BitUtil.h"
 
 #define TES3_Reference_activate 0x4E9610
@@ -612,10 +614,10 @@ namespace TES3 {
 				if (chance <= 0 || chance <= (mwse::tes3::rand() % 100)) {
 					dataHandler->addSoundById("Disarm Trap Fail", this, 0, worldController->audioController->getMixVolume(AudioMixType::Effects) * 250);
 					if (chance <= 0) {
-						mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sTrapImpossible]->value.asString);
+						TES3::UI::showMessageBox(ndd->GMSTs[GMST::sTrapImpossible]->value.asString);
 					}
 					else {
-						mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sTrapFail]->value.asString);
+						TES3::UI::showMessageBox(ndd->GMSTs[GMST::sTrapFail]->value.asString);
 					}
 				}
 				else {
@@ -627,7 +629,7 @@ namespace TES3 {
 					auto macp = worldController->getMobilePlayer();
 					if (macp == disarmer) {
 						macp->exerciseSkill(SkillID::Security, ndd->skills[SkillID::Security].progressActions[0]);
-						mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sTrapSuccess]->value.asString);
+						TES3::UI::showMessageBox(ndd->GMSTs[GMST::sTrapSuccess]->value.asString);
 					}
 				}
 			}
@@ -672,10 +674,10 @@ namespace TES3 {
 				if (chance <= 0 || chance <= (mwse::tes3::rand() % 100)) {
 					dataHandler->addSoundById("Open Lock Fail", this, 0, worldController->audioController->getMixVolume(AudioMixType::Effects) * 250);
 					if (chance <= 0) {
-						mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sLockImpossible]->value.asString);
+						TES3::UI::showMessageBox(ndd->GMSTs[GMST::sLockImpossible]->value.asString);
 					}
 					else {
-						mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sLockFail]->value.asString);
+						TES3::UI::showMessageBox(ndd->GMSTs[GMST::sLockFail]->value.asString);
 					}
 				}
 				else {
@@ -687,7 +689,7 @@ namespace TES3 {
 					auto macp = worldController->getMobilePlayer();
 					if (macp == disarmer) {
 						macp->exerciseSkill(SkillID::Security, ndd->skills[SkillID::Security].progressActions[1]);
-						mwse::tes3::messagePlayer(ndd->GMSTs[GMST::sLockSuccess]->value.asString);
+						TES3::UI::showMessageBox(ndd->GMSTs[GMST::sLockSuccess]->value.asString);
 					}
 				}
 			}

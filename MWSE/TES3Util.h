@@ -40,8 +40,6 @@ namespace mwse {
 
 		void checkForLevelUp(long progress);
 
-		void messagePlayer(const char* message);
-
 		int getSkillNameGMST(int);
 		int getAttributeNameGMST(int);
 		int getCastRangeNameGMST(int);

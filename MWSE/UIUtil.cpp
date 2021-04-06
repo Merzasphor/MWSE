@@ -10,7 +10,6 @@
 #define TES3_ui_requestMenuModeOn 0x595230
 #define TES3_ui_getMenuNode 0x595370
 
-#define TES3_ui_messagePlayer 0x5F90C0
 #define TES3_ui_buttonPressedIndex 0x7B88C0
 
 #define TES3_ui_inventory_addTile 0x5CBCC0
@@ -30,10 +29,6 @@ namespace mwse {
 
 			bool requestMenuModeOn(short prop) {
 				return reinterpret_cast<signed char(__cdecl *)(short)>(TES3_ui_requestMenuModeOn)(prop);
-			}
-
-			int messagePlayer(const char* message) {
-				return reinterpret_cast<int(__cdecl *)(const char*, char*, signed char)>(TES3_ui_messagePlayer)(message, 0, 1);
 			}
 
 			int getButtonPressedIndex() {

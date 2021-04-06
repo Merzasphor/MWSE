@@ -22,6 +22,8 @@
 #include "TES3MagicSourceInstance.h"
 #include "TES3WorldController.h"
 
+#include "TES3UIManager.h"
+
 #include "LuaManager.h"
 #include "LuaUtil.h"
 
@@ -141,13 +143,8 @@ namespace mwse {
 			TES3::NonDynamicData* nonDynamicData = TES3::DataHandler::get()->nonDynamicData;
 			if (progress >= nonDynamicData->GMSTs[TES3::GMST::iLevelupTotal]->value.asLong) {
 				const char* levelUpMessage = nonDynamicData->GMSTs[TES3::GMST::sLevelUpMsg]->value.asString;
-				messagePlayer(levelUpMessage);
+				TES3::UI::showMessageBox(levelUpMessage);
 			}
-		}
-
-		const auto TES3_general_messagePlayer = reinterpret_cast<void(__cdecl *)(const char*, int, int)>(0x5F90C0);
-		void messagePlayer(const char* message) {
-			TES3_general_messagePlayer(message, 0, 1);
 		}
 
 

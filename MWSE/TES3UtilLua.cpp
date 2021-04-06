@@ -398,17 +398,19 @@ namespace mwse {
 			}
 		}
 
-		int messageBox(sol::object param, sol::optional<sol::variadic_args> va) {
+		TES3::UI::Element* messageBox(sol::object param, sol::optional<sol::variadic_args> va) {
 			auto& luaManager = mwse::lua::LuaManager::getInstance();
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
 
 			if (param.is<std::string>()) {
 				std::string message = state["string"]["format"](param, va);
-				return tes3::ui::messagePlayer(message.c_str());
+				return TES3::UI::showMessageBox(message.c_str());
 			}
 			else if (param.get_type() == sol::type::table) {
 				sol::table params = param;
+
+				auto showInDialog = getOptionalParam<bool>(params, "showInDialog", true);
 
 				// We need to make sure the strings stay in memory, we can't just snag the c-string in passing.
 				std::string buttonText[32];
@@ -435,26 +437,35 @@ namespace mwse {
 
 				// No buttons, do a normal popup.
 				else {
-					return tes3::ui::messagePlayer(message.c_str());
+					auto element = TES3::UI::showMessageBox(message.c_str(), nullptr, showInDialog);
+					if (element) {
+						// Allow overriding the duration.
+						auto duration = getOptionalParam<float>(params, "duration");
+						if (duration) {
+							element->setProperty(TES3::UI::registerProperty("MenuNotify_timestamp"), duration.value());
+						}
+					}
+					return element;
 				}
 
 				// Set up our event callback.
 				LuaManager::getInstance().setButtonPressedCallback(params["callback"]);
 
 				// Temporary hook into the function that creates message boxes. 
-				return reinterpret_cast<int(__cdecl*)(const char*, ...)>(0x5F1AA0)(message.c_str(), buttonTextStruct, NULL);
+				reinterpret_cast<void(__cdecl*)(const char*, ...)>(0x5F1AA0)(message.c_str(), buttonTextStruct, NULL);
+				return TES3::UI::findMenu(TES3::UI::registerID("MenuMessage"));
 			}
 			else {
 				sol::protected_function_result result = state["tostring"](param);
 				if (result.valid()) {
 					sol::optional<const char*> asString = result;
 					if (asString) {
-						return tes3::ui::messagePlayer(asString.value());
+						return TES3::UI::showMessageBox(asString.value());
 					}
 				}
 				throw std::exception("tes3.messageBox: Unable to convert parameter to string.");
 			}
-			return 0;
+			return nullptr;
 		}
 
 		bool saveGame(sol::optional<sol::table> params) {
@@ -1575,7 +1586,7 @@ namespace mwse {
 
 			sol::optional<bool> showMessage = params["showMessage"];
 			if (showMessage.value_or(false) && tes3::ui::getMenuNode(*reinterpret_cast<short*>(0x7D3442)) == nullptr) {
-				tes3::ui::messagePlayer(TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::sJournalEntry]->value.asString);
+				TES3::UI::showMessageBox(TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::sJournalEntry]->value.asString);
 			}
 
 			return true;
@@ -1603,7 +1614,7 @@ namespace mwse {
 
 			sol::optional<bool> showMessage = params["showMessage"];
 			if (showMessage.value_or(true) && tes3::ui::getMenuNode(*reinterpret_cast<short*>(0x7D3442)) == nullptr) {
-				tes3::ui::messagePlayer(TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::sJournalEntry]->value.asString);
+				TES3::UI::showMessageBox(TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::sJournalEntry]->value.asString);
 			}
 
 			return true;
@@ -3301,7 +3312,7 @@ namespace mwse {
 			if (worldController->showSubtitles || getOptionalParam(params, "forceSubtitle", false)) {
 				const char* subtitle = getOptionalParam<const char*>(params, "subtitle", nullptr);
 				if (subtitle != nullptr) {
-					tes3::ui::messagePlayer(subtitle);
+					TES3::UI::showMessageBox(subtitle);
 				}
 			}
 

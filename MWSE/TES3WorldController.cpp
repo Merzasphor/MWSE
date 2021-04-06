@@ -390,7 +390,7 @@ namespace TES3 {
 
 	void JournalHTML::showJournalUpdateNotification() {
 		if (UI::findMenu(*reinterpret_cast<UI::UI_ID*>(0x7D3442))) {
-			mwse::tes3::messagePlayer(TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::sJournalEntry]->value.asString);
+			TES3::UI::showMessageBox(TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::sJournalEntry]->value.asString);
 		}
 	}
 
