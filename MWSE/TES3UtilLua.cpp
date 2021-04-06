@@ -2666,7 +2666,7 @@ namespace mwse {
 			// Play the relevant sound.
 			auto worldController = TES3::WorldController::get();
 			auto playerMobile = worldController->getMobilePlayer();
-			if (getOptionalParam<bool>(params, "playSound", true)) {
+			if (playerMobile && getOptionalParam<bool>(params, "playSound", true)) {
 				if (mobile == playerMobile) {
 					worldController->playItemUpDownSound(item, TES3::ItemSoundState::Down);
 				}
@@ -2684,7 +2684,7 @@ namespace mwse {
 			}
 
 			// If either of them are the player, we need to update the GUI.
-			if (getOptionalParam<bool>(params, "updateGUI", true)) {
+			if (playerMobile && getOptionalParam<bool>(params, "updateGUI", true)) {
 				// Update inventory menu if necessary.
 				if (mobile == playerMobile) {
 					worldController->inventoryData->clearIcons(2);
@@ -2770,7 +2770,7 @@ namespace mwse {
 			// Play the relevant sound.
 			auto worldController = TES3::WorldController::get();
 			auto playerMobile = worldController->getMobilePlayer();
-			if (getOptionalParam<bool>(params, "playSound", true)) {
+			if (playerMobile && getOptionalParam<bool>(params, "playSound", true)) {
 				if (mobile == playerMobile) {
 					worldController->playItemUpDownSound(item, TES3::ItemSoundState::Up);
 				}
@@ -2788,7 +2788,7 @@ namespace mwse {
 			}
 
 			// If either of them are the player, we need to update the GUI.
-			if (getOptionalParam<bool>(params, "updateGUI", true)) {
+			if (playerMobile && getOptionalParam<bool>(params, "updateGUI", true)) {
 				// Update inventory menu if necessary.
 				if (mobile == playerMobile) {
 					worldController->inventoryData->clearIcons(2);
@@ -2988,7 +2988,7 @@ namespace mwse {
 			// Play the relevant sound.
 			auto worldController = TES3::WorldController::get();
 			auto playerMobile = worldController->getMobilePlayer();
-			if (getOptionalParam<bool>(params, "playSound", true)) {
+			if (playerMobile && getOptionalParam<bool>(params, "playSound", true)) {
 				if (toMobile == playerMobile) {
 					worldController->playItemUpDownSound(item, TES3::ItemSoundState::Down);
 				}
@@ -3009,7 +3009,7 @@ namespace mwse {
 			}
 
 			// If either of them are the player, we need to update the GUI.
-			if (getOptionalParam<bool>(params, "updateGUI", true)) {
+			if (playerMobile && getOptionalParam<bool>(params, "updateGUI", true)) {
 				// Update inventory menu if necessary.
 				if (fromMobile == playerMobile || toMobile == playerMobile) {
 					worldController->inventoryData->clearIcons(2);
