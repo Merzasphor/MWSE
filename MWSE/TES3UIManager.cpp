@@ -292,8 +292,8 @@ namespace TES3 {
 			TES3_showDialogueMessage(text, style, answerIndex);
 		}
 
-		const auto TES3_showMessageBox = reinterpret_cast<Element*(__cdecl*)(const char*, void*, bool)>(0x5F90C0);
-		Element* showMessageBox(const char* message, void* image, bool showInDialog) {
+		const auto TES3_showMessageBox = reinterpret_cast<Element*(__cdecl*)(const char*, const char*, bool)>(0x5F90C0);
+		Element* showMessageBox(const char* message, const char* image, bool showInDialog) {
 			return TES3_showMessageBox(message, image, showInDialog);
 		}
 

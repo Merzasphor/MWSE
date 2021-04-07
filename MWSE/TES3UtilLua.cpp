@@ -410,8 +410,6 @@ namespace mwse {
 			else if (param.get_type() == sol::type::table) {
 				sol::table params = param;
 
-				auto showInDialog = getOptionalParam<bool>(params, "showInDialog", true);
-
 				// We need to make sure the strings stay in memory, we can't just snag the c-string in passing.
 				std::string buttonText[32];
 				struct {
@@ -437,6 +435,8 @@ namespace mwse {
 
 				// No buttons, do a normal popup.
 				else {
+					auto showInDialog = getOptionalParam<bool>(params, "showInDialog", true);
+
 					auto element = TES3::UI::showMessageBox(message.c_str(), nullptr, showInDialog);
 					if (element) {
 						// Allow overriding the duration.
