@@ -14,27 +14,20 @@ namespace TES3 {
 	}
 
 	struct SoundBuffer {
-		IDirectSoundBuffer * lpSoundBuffer;
-		IDirectSound3DBuffer * lpSound3DBuffer;
+		IDirectSoundBuffer * lpSoundBuffer; // 0x0
+		IDirectSound3DBuffer * lpSound3DBuffer; // 0x4
 		char fileHeader[16];
 		short unknown_0x18;
-		int unknown_0x1C;
-		unsigned int flags;
-		int waveSize;
-		int unknown_0x28;
-		unsigned char* wavHeader;
-		int unknown_0x30;
-		int unknown_0x34;
-		int unknown_0x38;
-		int unknown_0x3C;
-		bool isVoiceover;
-		short* rawAudio;
-		int volume_related_0x48;
-		unsigned char volume;
-		int minDistance;
-		int maxDistance;
+		DSBUFFERDESC bufferDescription; // 0x1C
+		bool isVoiceover; // 0x40
+		short* rawAudio; // 0x44
+		int unknown_0x48; // Volume related
+		unsigned char volume; // 0x4C
+		int minDistance; // 0x50
+		int maxDistance; // 0x58
 	};
 	static_assert(sizeof(SoundBuffer) == 0x58, "TES3::SoundBuffer failed size validation");
+	static_assert(sizeof(DSBUFFERDESC) == 0x24, "TES3::SoundBuffer failed size validation");
 
 	struct Sound : BaseObject {
 		char field_10;
