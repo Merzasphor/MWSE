@@ -24,12 +24,12 @@ namespace mwse {
 			usertypeDefinition["attackDirection"] = &TES3::ActionData::attackDirection;
 			usertypeDefinition["attackSwing"] = &TES3::ActionData::attackSwing;
 			usertypeDefinition["currentAnimationGroup"] = &TES3::ActionData::currentAnimGroup;
-			usertypeDefinition["hitTarget"] = sol::readonly_property(&TES3::ActionData::hitTarget);
+			usertypeDefinition["hitTarget"] = &TES3::ActionData::hitTarget;
 			usertypeDefinition["lastBarterHoursPassed"] = &TES3::ActionData::lastBarterHoursPassed;
-			usertypeDefinition["nockedProjectile"] = sol::readonly_property(&TES3::ActionData::nockedProjectile);
+			usertypeDefinition["nockedProjectile"] = &TES3::ActionData::nockedProjectile;
 			usertypeDefinition["physicalDamage"] = &TES3::ActionData::physicalDamage;
-			usertypeDefinition["stolenFrom"] = sol::readonly_property(&TES3::ActionData::stolenFromFactionOrNPC);
-			usertypeDefinition["target"] = sol::readonly_property(&TES3::ActionData::target);
+			usertypeDefinition["stolenFrom"] = &TES3::ActionData::stolenFromFactionOrNPC;
+			usertypeDefinition["target"] = &TES3::ActionData::target;
 			usertypeDefinition["walkDestination"] = &TES3::ActionData::walkDestination;
 		}
 	}
