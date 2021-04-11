@@ -226,6 +226,8 @@ namespace TES3 {
 		float getFacingDifference(float targetFacing, const Vector3* targetPosition) const;
 		float getFacingDifferenceToActor(const TES3::MobileActor* mobile) const;
 
+		float getBootsWeight() const;
+
 		void startCombat(MobileActor*);
 		void stopCombat(bool);
 		void stopCombat_lua(sol::optional<bool>);

@@ -185,6 +185,11 @@ namespace TES3 {
 		return getFacingDifference(mobile->getFacing(), &mobile->reference->position);
 	}
 
+	const auto TES3_MobileActor_getBootsWeight = reinterpret_cast<float(__thiscall*)(const MobileActor*)>(0x526F30);
+	float MobileActor::getBootsWeight() const {
+		return TES3_MobileActor_getBootsWeight(this);
+	}
+
 	void MobileActor::startCombat(MobileActor* target) {
 		// Patch: Make sure that disabled NPCs can't start combat.
 		if (reference->getDisabled()) {
