@@ -19,7 +19,7 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
-				usertypeDefinition["aiDistaNCE"] = &TES3::ProcessManager::aiDistance;
+				usertypeDefinition["aiDistance"] = &TES3::ProcessManager::aiDistance;
 
 				// Basic function binding.
 				usertypeDefinition["canRest"] = &TES3::ProcessManager::canRest;
@@ -38,7 +38,6 @@ namespace mwse {
 				auto usertypeDefinition = state.new_usertype<TES3::ProjectileController>("tes3projectileController");
 				usertypeDefinition["new"] = sol::no_constructor;
 			}
-		
 
 			// Binding for TES3::MobController.
 			{
