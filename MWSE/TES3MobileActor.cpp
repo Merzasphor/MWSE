@@ -176,13 +176,17 @@ namespace TES3 {
 		return 0.0f;
 	}
 
-	const auto TES3_MobileActor_getFacingDifference = reinterpret_cast<float(__thiscall*)(const MobileActor*, float, const Vector3*)>(0x5264C0);
-	float MobileActor::getFacingDifference(float targetFacing, const Vector3* targetPosition) const {
-		return TES3_MobileActor_getFacingDifference(this, targetFacing, targetPosition);
+	float MobileActor::getViewToPoint(const Vector3* point) const {
+		return getViewToPointWithFacing(getFacing(), point);
 	}
 
-	float MobileActor::getFacingDifferenceToActor(const TES3::MobileActor* mobile) const {
-		return getFacingDifference(mobile->getFacing(), &mobile->reference->position);
+	const auto TES3_MobileActor_getFacingDifference = reinterpret_cast<float(__thiscall*)(const MobileActor*, float, const Vector3*)>(0x5264C0);
+	float MobileActor::getViewToPointWithFacing(float facing, const Vector3* point) const {
+		return TES3_MobileActor_getFacingDifference(this, facing, point);
+	}
+
+	float MobileActor::getViewToActor(const TES3::MobileActor* mobile) const {
+		return getViewToPointWithFacing(getFacing(), &mobile->reference->position);
 	}
 
 	const auto TES3_MobileActor_getBootsWeight = reinterpret_cast<float(__thiscall*)(const MobileActor*)>(0x526F30);

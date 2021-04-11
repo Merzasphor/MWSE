@@ -223,8 +223,9 @@ namespace TES3 {
 		float getFatigueTerm() const;
 
 		float getFacing() const;
-		float getFacingDifference(float targetFacing, const Vector3* targetPosition) const;
-		float getFacingDifferenceToActor(const TES3::MobileActor* mobile) const;
+		float getViewToPoint(const Vector3* point) const;
+		float getViewToPointWithFacing(float facing, const Vector3* point) const;
+		float getViewToActor(const TES3::MobileActor* mobile) const;
 
 		float getBootsWeight() const;
 
