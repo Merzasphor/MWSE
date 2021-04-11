@@ -220,7 +220,11 @@ namespace TES3 {
 
 		Cell* getCell();
 
-		float getFatigueTerm();
+		float getFatigueTerm() const;
+
+		float getFacing() const;
+		float getFacingDifference(float targetFacing, const Vector3* targetPosition) const;
+		float getFacingDifferenceToActor(const TES3::MobileActor* mobile) const;
 
 		void startCombat(MobileActor*);
 		void stopCombat(bool);

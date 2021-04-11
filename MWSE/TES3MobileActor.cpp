@@ -164,9 +164,25 @@ namespace TES3 {
 		return reinterpret_cast<Cell*(__thiscall *)(MobileActor*)>(TES3_MobileActor_getCell)(this);
 	}
 
-	const auto TES3_MobileActor_getFatigueTerm = reinterpret_cast<float(__thiscall *)(MobileActor*)>(0x527610);
-	float MobileActor::getFatigueTerm() {
+	const auto TES3_MobileActor_getFatigueTerm = reinterpret_cast<float(__thiscall *)(const MobileActor*)>(0x527610);
+	float MobileActor::getFatigueTerm() const {
 		return TES3_MobileActor_getFatigueTerm(this);
+	}
+
+	float MobileActor::getFacing() const {
+		if (reference) {
+			return reference->orientation.z;
+		}
+		return 0.0f;
+	}
+
+	const auto TES3_MobileActor_getFacingDifference = reinterpret_cast<float(__thiscall*)(const MobileActor*, float, const Vector3*)>(0x5264C0);
+	float MobileActor::getFacingDifference(float targetFacing, const Vector3* targetPosition) const {
+		return TES3_MobileActor_getFacingDifference(this, targetFacing, targetPosition);
+	}
+
+	float MobileActor::getFacingDifferenceToActor(const TES3::MobileActor* mobile) const {
+		return getFacingDifference(mobile->getFacing(), &mobile->reference->position);
 	}
 
 	void MobileActor::startCombat(MobileActor* target) {
