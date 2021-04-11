@@ -123,6 +123,7 @@
 #include "TES3SpellListLua.h"
 #include "TES3MagicEffectInstanceLua.h"
 #include "TES3MagicSourceInstanceLua.h"
+#include "TES3MobControllerLua.h"
 #include "TES3StaticLua.h"
 #include "TES3StatisticLua.h"
 #include "TES3UIElementLua.h"
@@ -421,6 +422,7 @@ namespace mwse {
 			bindTES3MagicSourceInstance();
 			bindTES3Misc();
 			bindTES3MobileActor();
+			bindTES3MobController();
 			bindTES3MobileCreature();
 			bindTES3MobileNPC();
 			bindTES3MobilePlayer();
