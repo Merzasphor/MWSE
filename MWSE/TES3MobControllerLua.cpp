@@ -12,7 +12,7 @@ namespace mwse {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
 
-			// Binding for TES3::MobController_0x24.
+			// Binding for TES3::ProcessManager.
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::ProcessManager>("tes3processManager");

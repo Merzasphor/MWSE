@@ -104,6 +104,7 @@ namespace mwse {
 				usertypeDefinition["menuController"] = &TES3::WorldController::menuController;
 				usertypeDefinition["menuSizeSound"] = &TES3::WorldController::soundMenuSize;
 				usertypeDefinition["missSound"] = &TES3::WorldController::soundMiss;
+				usertypeDefinition["mobController"] = sol::readonly_property(&TES3::WorldController::mobController);
 				usertypeDefinition["month"] = &TES3::WorldController::gvarMonth;
 				usertypeDefinition["monthsToRespawn"] = &TES3::WorldController::gvarMonthsToRespawn;
 				usertypeDefinition["mouseSensitivityX"] = &TES3::WorldController::horzSensitivity;
