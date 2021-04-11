@@ -180,9 +180,9 @@ namespace TES3 {
 		return getViewToPointWithFacing(getFacing(), point);
 	}
 
-	const auto TES3_MobileActor_getFacingDifference = reinterpret_cast<float(__thiscall*)(const MobileActor*, float, const Vector3*)>(0x5264C0);
+	const auto TES3_MobileActor_getViewToPointWithFacing = reinterpret_cast<float(__thiscall*)(const MobileActor*, float, const Vector3*)>(0x5264C0);
 	float MobileActor::getViewToPointWithFacing(float facing, const Vector3* point) const {
-		return TES3_MobileActor_getFacingDifference(this, facing, point);
+		return TES3_MobileActor_getViewToPointWithFacing(this, facing, point);
 	}
 
 	float MobileActor::getViewToActor(const TES3::MobileActor* mobile) const {
