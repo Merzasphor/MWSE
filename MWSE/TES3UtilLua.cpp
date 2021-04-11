@@ -245,20 +245,22 @@ namespace mwse {
 				return nullptr;
 			}
 
-			if (key.is<double>()) {
-				int index = key.as<double>();
-				if (index >= TES3::GMST::sMonthMorningstar && index <= TES3::GMST::sWitchhunter) {
-					return dataHandler->nonDynamicData->GMSTs[index];
-				}
+			int index = -1;
+			if (key.is<int>()) {
+				index = key.as<int>();
 			}
 			else if (key.is<const char*>()) {
-				int index = -1;
-				const char* keyStr = key.as<const char*>();
-				for (int i = 0; i <= TES3::GMST::sWitchhunter; i++) {
-					if (strcmp(TES3::GameSettingInfo::get(i)->name, keyStr) == 0) {
-						return dataHandler->nonDynamicData->GMSTs[i];
-					}
+				auto& luaManager = mwse::lua::LuaManager::getInstance();
+				auto stateHandle = luaManager.getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				sol::object asIndex = state["tes3"]["gmst"][key.as<const char*>()];
+				if (asIndex.is<int>()) {
+					index = asIndex.as<int>();
 				}
+			}
+
+			if (index >= TES3::GMST::sMonthMorningstar && index <= TES3::GMST::sWitchhunter) {
+				return dataHandler->nonDynamicData->GMSTs[index];
 			}
 
 			return nullptr;
