@@ -12,6 +12,7 @@
 #include "TES3GlobalVariable.h"
 #include "TES3InputController.h"
 #include "TES3MobileActor.h"
+#include "TES3MobController.h"
 #include "TES3Quest.h"
 #include "TES3Script.h"
 #include "TES3Sound.h"
