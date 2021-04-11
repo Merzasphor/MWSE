@@ -52,6 +52,11 @@ namespace TES3 {
 		TES3_PlaySpellVFX(this, duration, position, attachedReference, unknown0, effectVisual, effectIndex, unknown1);
 	}
 
+	const auto TES3_MagicSourceInstance_retire = reinterpret_cast<void(__thiscall*)(MagicSourceInstance*, TES3::Reference*)>(0x512940);
+	void MagicSourceInstance::retire(TES3::Reference* reference) {
+		TES3_MagicSourceInstance_retire(this, reference);
+	}
+
 	Object* MagicSourceInstance::getSourceObject() const {
 		return sourceCombo.source.asGeneric;
 	}

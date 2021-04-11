@@ -74,6 +74,8 @@ namespace TES3 {
 		int getMagnitude(int effectIndex) const;
 		void playSpellVFX(float duration, Vector3 position, Reference* attachedReference, int unknown0, PhysicalObject* effectVisual, int effectIndex = 0, int unknown1 = 0);
 
+		void retire(TES3::Reference* reference);
+
 		//
 		// Custom functions.
 		//
