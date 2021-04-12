@@ -573,11 +573,6 @@ namespace mwse {
 			// Patch: Always clone scene graph nodes.
 			writeValueEnforced(0x4EF9FB, BYTE(0x02), BYTE(0x00));
 
-			// Patch: Fix bounding box center calculations. Makes jumping collisions less derpy.
-			BYTE Patch_FixBoundingBoxCenters[4] = { 0x90, 0x90, 0x90, 0x90 };
-			writeBytesUnprotected(0x52BD2D, Patch_FixBoundingBoxCenters, sizeof(Patch_FixBoundingBoxCenters) / sizeof(BYTE));
-			writeBytesUnprotected(0x52BDB5, Patch_FixBoundingBoxCenters, sizeof(Patch_FixBoundingBoxCenters) / sizeof(BYTE));
-
 		}
 
 		void installPostLuaPatches() {
