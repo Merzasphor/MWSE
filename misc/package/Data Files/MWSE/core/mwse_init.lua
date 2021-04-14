@@ -167,6 +167,21 @@ function table.copymissing(to, from)
 	end
 end
 
+function table.traverse(t, k)
+	k = k or "children"
+	local function iter(nodes)
+		for i, node in ipairs(nodes or t) do
+			if node then
+				coroutine.yield(node)
+				if node[k] then
+					iter(node[k])
+				end
+			end
+		end
+	end
+	return coroutine.wrap(iter)
+end
+
 -------------------------------------------------
 -- Extend base table: Add binary search/insert
 -------------------------------------------------
