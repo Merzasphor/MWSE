@@ -4369,11 +4369,16 @@ namespace mwse {
 			// Try to get the first reference's data.
 			auto mobile1 = reference1->getAttachedMobileActor();
 			if (mobile1) {
-				position1 = mobile1->position;
+				position1 = reference1->position;
 				height1 = mobile1->height;
 			}
 			else if (reference1->baseObject->boundingBox) {
 				auto boundingBox = reference1->baseObject->boundingBox;
+				position1 = {
+					(boundingBox->minimum.x + boundingBox->maximum.x) / 2,
+					(boundingBox->minimum.y + boundingBox->maximum.y) / 2,
+					boundingBox->minimum.z
+				};
 				height1 = boundingBox->maximum.z - boundingBox->minimum.z;
 			}
 			else {
@@ -4383,11 +4388,16 @@ namespace mwse {
 			// Try to get the second reference's data.
 			auto mobile2 = reference2->getAttachedMobileActor();
 			if (mobile2) {
-				position2 = mobile2->position;
+				position2 = reference2->position;
 				height2 = mobile2->height;
 			}
 			else if (reference2->baseObject->boundingBox) {
 				auto boundingBox = reference2->baseObject->boundingBox;
+				position2 = {
+					(boundingBox->minimum.x + boundingBox->maximum.x) / 2,
+					(boundingBox->minimum.y + boundingBox->maximum.y) / 2,
+					boundingBox->minimum.z
+				};
 				height2 = boundingBox->maximum.z - boundingBox->minimum.z;
 			}
 			else {
