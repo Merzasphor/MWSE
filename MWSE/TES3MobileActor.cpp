@@ -31,7 +31,6 @@
 #include "TES3Util.h"
 
 #define TES3_MobileActor_getCell 0x521630
-#define TES3_MobileActor_startCombat 0x530470
 #define TES3_MobileActor_stopCombat 0x558720
 #define TES3_MobileActor_onDeath 0x523AA0
 #define TES3_MobileActor_hasFreeAction 0x527580
@@ -64,7 +63,7 @@ namespace TES3 {
 	const auto TES3_MobileActor_onActorCollision = reinterpret_cast<bool(__thiscall*)(MobileActor*, int)>(0x5234A0);
 	bool MobileActor::onActorCollision(int collisionIndex) {
 		// Grab the hit reference now, it won't be available after calling the main function.
-		TES3::Reference* hitReference = this->arrayCollisionResults[collisionIndex].colliderRef;
+		TES3::Reference* hitReference = arrayCollisionResults[collisionIndex].colliderRef;
 
 		// Call the original function. We can't invoke the vtable here because we overwrite it.
 		bool result = TES3_MobileActor_onActorCollision(this, collisionIndex);
@@ -80,7 +79,7 @@ namespace TES3 {
 	const auto TES3_MobileActor_onObjectCollision = reinterpret_cast<bool(__thiscall*)(MobileActor*, int, bool)>(0x5233B0);
 	bool MobileActor::onObjectCollision(int collisionIndex, bool flag) {
 		// Grab the hit reference now, it won't be available after calling the main function.
-		TES3::Reference* hitReference = this->arrayCollisionResults[collisionIndex].colliderRef;
+		TES3::Reference* hitReference = arrayCollisionResults[collisionIndex].colliderRef;
 
 		// Call the original function. We can't invoke the vtable here because we overwrite it.
 		bool result = TES3_MobileActor_onObjectCollision(this, collisionIndex, flag);
@@ -96,7 +95,7 @@ namespace TES3 {
 	const auto TES3_MobileActor_onTerrainCollision = reinterpret_cast<bool(__thiscall*)(MobileActor*, int)>(0x523310);
 	bool MobileActor::onTerrainCollision(int collisionIndex) {
 		// Grab the hit reference now, it won't be available after calling the main function.
-		TES3::Reference* hitReference = this->arrayCollisionResults[collisionIndex].colliderRef;
+		TES3::Reference* hitReference = arrayCollisionResults[collisionIndex].colliderRef;
 
 		// Call the original function. We can't invoke the vtable here because we overwrite it.
 		bool result = TES3_MobileActor_onTerrainCollision(this, collisionIndex);
@@ -112,7 +111,7 @@ namespace TES3 {
 	const auto TES3_MobileActor_onActivatorCollision = reinterpret_cast<bool(__thiscall*)(MobileActor*, int)>(0x523590);
 	bool MobileActor::onActivatorCollision(int collisionIndex) {
 		// Grab the hit reference now, it won't be available after calling the main function.
-		TES3::Reference* hitReference = this->arrayCollisionResults[collisionIndex].colliderRef;
+		TES3::Reference* hitReference = arrayCollisionResults[collisionIndex].colliderRef;
 
 		// Call the original function. We can't invoke the vtable here because we overwrite it.
 		bool result = TES3_MobileActor_onActivatorCollision(this, collisionIndex);
@@ -129,7 +128,7 @@ namespace TES3 {
 		return vTable.mobileActor->getSkillStatistic(this, skillId);
 	}
 
-	float MobileActor::getSkillValue(int skillId) {
+	float MobileActor::getSkillValue(int skillId) const {
 		return vTable.mobileActor->getSkillValue(this, skillId);
 	}
 
@@ -137,7 +136,7 @@ namespace TES3 {
 		return vTable.mobileActor->applyArmorRating(this, damage, swing, damageEquipment);
 	}
 
-	float MobileActor::calculateArmorRating(int * armorItemCount) {
+	float MobileActor::calculateArmorRating(int * armorItemCount) const {
 		return vTable.mobileActor->calculateArmorRating(this, armorItemCount);
 	}
 
@@ -194,6 +193,7 @@ namespace TES3 {
 		return TES3_MobileActor_getBootsWeight(this);
 	}
 
+	const auto TES3_MobileActor_startCombat = reinterpret_cast<void(__thiscall*)(MobileActor*, MobileActor*)>(0x530470);
 	void MobileActor::startCombat(MobileActor* target) {
 		// Patch: Make sure that disabled NPCs can't start combat.
 		if (reference->getDisabled()) {
@@ -211,7 +211,7 @@ namespace TES3 {
 		}
 
 		// Call original function.
-		reinterpret_cast<void(__thiscall *)(MobileActor*, MobileActor*)>(TES3_MobileActor_startCombat)(this, target);
+		TES3_MobileActor_startCombat(this, target);
 
 		// Do our follow up started event.
 		if (mwse::lua::event::CombatStartedEvent::getEventEnabled()) {
@@ -243,7 +243,7 @@ namespace TES3 {
 		stopCombat(something.value_or(false));
 	}
 
-	bool MobileActor::isDead() {
+	bool MobileActor::isDead() const {
 		return actionData.animStateAttack == AttackAnimationState::Dead || actionData.animStateAttack == AttackAnimationState::Dying;
 	}
 
@@ -286,8 +286,8 @@ namespace TES3 {
 		return checkForKnockdown;
 	}
 
-	bool MobileActor::hasFreeAction() {
-		return reinterpret_cast<bool(__thiscall *)(MobileActor*)>(TES3_MobileActor_hasFreeAction)(this);
+	bool MobileActor::hasFreeAction() const {
+		return reinterpret_cast<bool(__thiscall *)(const MobileActor*)>(TES3_MobileActor_hasFreeAction)(this);
 	}
 
 	float MobileActor::calculateRunSpeed() {

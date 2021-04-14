@@ -17,7 +17,7 @@
 
 namespace TES3 {
 
-	Vector3 MobileObject::Collision::getNormal() {
+	Vector3 MobileObject::Collision::getNormal() const {
 		return TES3::Vector3(quantizedNormal[0] * QUANTIZER, quantizedNormal[1] * QUANTIZER, quantizedNormal[2] * QUANTIZER);
 	}
 
@@ -129,7 +129,7 @@ namespace TES3 {
 		return result;
 	}
 
-	bool MobileObject::isActor() {
+	bool MobileObject::isActor() const {
 		return vTable.mobileObject->isActor(this);
 	}
 
@@ -142,8 +142,8 @@ namespace TES3 {
 		TES3_MobileObject_enterLeaveSimulationByDistance(this);
 	}
 
-	const auto TES3_MobileObject_getInventory = reinterpret_cast<IteratedList<ItemStack*> * (__thiscall*)(MobileObject*)>(0x521620);
-	IteratedList<ItemStack*>* MobileObject::getInventory() {
+	const auto TES3_MobileObject_getInventory = reinterpret_cast<IteratedList<ItemStack*> * (__thiscall*)(const MobileObject*)>(0x521620);
+	IteratedList<ItemStack*>* MobileObject::getInventory() const {
 		return TES3_MobileObject_getInventory(this);
 	}
 
