@@ -2823,7 +2823,7 @@ namespace mwse {
 					// Update container weight variable.
 					auto MenuContents_totalweight = *reinterpret_cast<TES3::UI::Property*>(0x7D30B8);
 					auto currentWeight = contentsMenu->getProperty(TES3::UI::PropertyType::Float, MenuContents_totalweight).floatValue;
-					contentsMenu->setProperty(MenuContents_totalweight, currentWeight + item->getWeight() * fulfilledCount);
+					contentsMenu->setProperty(MenuContents_totalweight, currentWeight - item->getWeight() * fulfilledCount);
 				}
 			}
 
