@@ -2712,7 +2712,9 @@ namespace mwse {
 					}
 
 					// Update container weight variable.
-					contentsMenu->setProperty(*reinterpret_cast<TES3::UI::Property*>(0x7D30B8), contentsReference->getInventory()->calculateContainedWeight());
+					auto MenuContents_totalweight = *reinterpret_cast<TES3::UI::Property*>(0x7D30B8);
+					auto currentWeight = contentsMenu->getProperty(TES3::UI::PropertyType::Float, MenuContents_totalweight).floatValue;
+					contentsMenu->setProperty(MenuContents_totalweight, currentWeight + item->getWeight() * fulfilledCount);
 				}
 			}
 
@@ -2819,7 +2821,9 @@ namespace mwse {
 					}
 
 					// Update container weight variable.
-					contentsMenu->setProperty(*reinterpret_cast<TES3::UI::Property*>(0x7D30B8), contentsReference->getInventory()->calculateContainedWeight());
+					auto MenuContents_totalweight = *reinterpret_cast<TES3::UI::Property*>(0x7D30B8);
+					auto currentWeight = contentsMenu->getProperty(TES3::UI::PropertyType::Float, MenuContents_totalweight).floatValue;
+					contentsMenu->setProperty(MenuContents_totalweight, currentWeight + item->getWeight() * fulfilledCount);
 				}
 			}
 
@@ -3058,7 +3062,14 @@ namespace mwse {
 					}
 
 					// Update container weight variable.
-					contentsMenu->setProperty(*reinterpret_cast<TES3::UI::Property*>(0x7D30B8), contentsReference->getInventory()->calculateContainedWeight());
+					auto MenuContents_totalweight = *reinterpret_cast<TES3::UI::Property*>(0x7D30B8);
+					auto currentWeight = contentsMenu->getProperty(TES3::UI::PropertyType::Float, MenuContents_totalweight).floatValue;
+					if (toReference == contentsReference) {
+						contentsMenu->setProperty(MenuContents_totalweight, currentWeight + item->getWeight() * fulfilledCount);
+					}
+					else {
+						contentsMenu->setProperty(MenuContents_totalweight, currentWeight - item->getWeight() * fulfilledCount);
+					}
 				}
 			}
 
@@ -3136,9 +3147,6 @@ namespace mwse {
 					if (toReference == contentsReference) {
 						TES3::UI::updateContentsMenuTiles();
 					}
-
-					// Update container weight variable.
-					contentsMenu->setProperty(*reinterpret_cast<TES3::UI::Property*>(0x7D30B8), contentsReference->getInventory()->calculateContainedWeight());
 				}
 			}
 
