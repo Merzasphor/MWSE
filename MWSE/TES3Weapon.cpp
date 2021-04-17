@@ -4,6 +4,8 @@
 
 #include "TES3Util.h"
 
+#include "BitUtil.h"
+
 namespace TES3 {
 	bool Weapon::isOneHanded() {
 		switch (weaponType)
@@ -48,6 +50,30 @@ namespace TES3 {
 
 	void Weapon::setDurability(int value) {
 		maxCondition = value;
+	}
+
+	bool Weapon::getMaterialFlag(WeaponMaterialFlag::WeaponMaterialFlag flag) const {
+		return BIT_TEST(materialFlags, flag);
+	}
+
+	void Weapon::setMaterialFlag(WeaponMaterialFlag::WeaponMaterialFlag flag, bool value) {
+		BIT_SET(materialFlags, flag, value);
+	}
+
+	bool Weapon::getIgnoresNormalWeaponResistance() const {
+		return getMaterialFlag(WeaponMaterialFlag::IgnoresNormalWeaponResistance);
+	}
+
+	void Weapon::setIgnoresNormalWeaponResistance(bool value) {
+		setMaterialFlag(WeaponMaterialFlag::IgnoresNormalWeaponResistance, value);
+	}
+
+	bool Weapon::getIsSilver() const {
+		return getMaterialFlag(WeaponMaterialFlag::Silver);
+	}
+
+	void Weapon::setIsSilver(bool) {
+		setMaterialFlag(WeaponMaterialFlag::Silver, value);
 	}
 
 	int Weapon::getSkillId() const {

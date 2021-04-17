@@ -27,6 +27,15 @@ namespace TES3 {
 		};
 	}
 
+	namespace WeaponMaterialFlag {
+		typedef unsigned int value_type;
+
+		enum WeaponMaterialFlag : value_type {
+			IgnoresNormalWeaponResistance = 0x1,
+			Silver = 0x2
+		};
+	}
+
 	struct Weapon : Item {
 		IteratedList<TES3::BaseObject*> stolenList; // 0x30
 		char * name; // 0x44
@@ -60,6 +69,14 @@ namespace TES3 {
 		bool isAmmo();
 		bool hasDurability();
 		void setDurability(int value);
+
+		bool getMaterialFlag(WeaponMaterialFlag::WeaponMaterialFlag) const;
+		void setMaterialFlag(WeaponMaterialFlag::WeaponMaterialFlag, bool);
+
+		bool getIgnoresNormalWeaponResistance() const;
+		void setIgnoresNormalWeaponResistance(bool);
+		bool getIsSilver() const;
+		void setIsSilver(bool);
 
 		int getSkillId() const;
 		Skill* getSkill() const;

@@ -30,10 +30,12 @@ namespace mwse {
 			usertypeDefinition["flags"] = &TES3::Weapon::materialFlags;
 			usertypeDefinition["hasDurability"] = sol::readonly_property(&TES3::Weapon::hasDurability);
 			usertypeDefinition["icon"] = sol::property(&TES3::Weapon::getIconPath, &TES3::Weapon::setIconPath);
+			usertypeDefinition["ignoresNormalWeaponResistance"] = sol::property(&TES3::Weapon::getIgnoresNormalWeaponResistance, &TES3::Weapon::setIgnoresNormalWeaponResistance);
 			usertypeDefinition["isAmmo"] = sol::readonly_property(&TES3::Weapon::isAmmo);
 			usertypeDefinition["isMelee"] = sol::readonly_property(&TES3::Weapon::isMelee);
 			usertypeDefinition["isOneHanded"] = sol::readonly_property(&TES3::Weapon::isOneHanded);
 			usertypeDefinition["isRanged"] = sol::readonly_property(&TES3::Weapon::isRanged);
+			usertypeDefinition["isSilver"] = sol::property(&TES3::Weapon::getIsSilver, &TES3::Weapon::setIsSilver);
 			usertypeDefinition["isTwoHanded"] = sol::readonly_property(&TES3::Weapon::isTwoHanded);
 			usertypeDefinition["maxCondition"] = sol::property(&TES3::Weapon::getDurability, &TES3::Weapon::setDurability);
 			usertypeDefinition["mesh"] = sol::property(&TES3::Weapon::getModelPath, &TES3::Weapon::setModelPath);
@@ -51,6 +53,10 @@ namespace mwse {
 			usertypeDefinition["typeName"] = sol::readonly_property(&TES3::Weapon::getTypeName);
 			usertypeDefinition["value"] = &TES3::Weapon::value;
 			usertypeDefinition["weight"] = &TES3::Weapon::weight;
+
+			// Basic function binding.
+			usertypeDefinition["getMaterialFlag"] = &TES3::Weapon::getMaterialFlag;
+			usertypeDefinition["setMaterialFlag"] = &TES3::Weapon::setMaterialFlag;
 
 			// TODO: Deprecated. Remove before 2.1-stable.
 			usertypeDefinition["health"] = sol::readonly_property(&TES3::Weapon::getDurability);
