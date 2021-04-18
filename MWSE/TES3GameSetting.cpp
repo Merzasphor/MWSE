@@ -65,7 +65,7 @@ namespace TES3 {
 	void GameSetting::setValue_lua(sol::object v, sol::this_state ts) {
 		char type = getType();
 		if (type == 's' && v.is<std::string>()) {
-			mwse::tes3::setDataString(&value.asString, v.as<std::string>().c_str());
+			mwse::tes3::setDataString(&value.asString, v.as<std::string>().c_str(), true);
 		}
 		else if (v.is<double>()) {
 			if (type == 'i') {

@@ -32,7 +32,7 @@ namespace mwse {
 		TES3::Reference* getReference(const char* id);
 		TES3::Reference* getReference(std::string& id);
 
-		char* setDataString(char**, const char*);
+		void setDataString(char** string, const char* contents, bool allowEmpty = false);
 
 		bool setEffect(TES3::Effect * effects, long index, long effectId,
 			long skillAttributeId, long range, long area, long duration,

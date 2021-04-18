@@ -30,6 +30,8 @@
 #include "LuaLoadGameEvent.h"
 #include "LuaLoadedGameEvent.h"
 
+#include "MemoryUtil.h"
+
 namespace mwse {
 	namespace tes3 {
 		TES3::Reference* getReference(const char* id) {
@@ -55,9 +57,18 @@ namespace mwse {
 			return getReference(id.c_str());
 		}
 
-		const auto TES3_general_setStringSlot = reinterpret_cast<char*(__cdecl *)(char**, const char*)>(0x47B410);
-		char* setDataString(char** container, const char* string) {
-			return TES3_general_setStringSlot(container, string);
+		const auto TES3_general_setStringSlot = reinterpret_cast<void(__cdecl *)(char**, const char*)>(0x47B410);
+		void setDataString(char** container, const char* string, bool allowEmpty) {
+			if (allowEmpty && string && string[0] == '\0') {
+				if (*container) {
+					_delete(*container);
+				}
+				*container = _new<char>(1);
+				**container = '\0';
+			}
+			else {
+				TES3_general_setStringSlot(container, string);
+			}
 		}
 
 		bool setEffect(TES3::Effect * effects, long index, long effectId,
