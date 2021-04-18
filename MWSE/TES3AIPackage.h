@@ -131,7 +131,9 @@ namespace TES3 {
 		signed char unknown_0x4F;
 		Reference * activationTarget; // 0x50
 		int unknown_0x54;
-		IdleNode unknown_0x58[8];
+		IdleNode idles[8]; // 0x58
+
+		std::reference_wrapper<IdleNode[8]> getIdles();
 	};
 	static_assert(sizeof(AIPackageWander) == 0x98, "TES3::AIPackageWander failed size validation");
 	static_assert(sizeof(AIPackageWander::Config) == 0x14, "TES3::AIPackageWander::Config failed size validation");

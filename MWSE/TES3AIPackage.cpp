@@ -85,6 +85,11 @@ namespace TES3 {
 		}
 		return AIPackageType::Wander;
 	}
+
+
+	std::reference_wrapper<AIPackageWander::IdleNode[8]> AIPackageWander::getIdles() {
+		return idles;
+	}
 }
 
 MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_TES3_AIPACKAGE(TES3::AIPackage)

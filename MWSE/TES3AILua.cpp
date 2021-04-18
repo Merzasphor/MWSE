@@ -108,6 +108,18 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition["activationTarget"] = &TES3::AIPackageWander::activationTarget;
+				usertypeDefinition["idles"] = sol::readonly_property(&TES3::AIPackageWander::getIdles);
+			}
+
+			// Binding for TES3::AIPackageWander::IdleNode
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.new_usertype<TES3::AIPackageWander::IdleNode>("tes3aiPackageWanderIdleNode");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Basic property binding.
+				usertypeDefinition["chance"] = &TES3::AIPackageWander::IdleNode::chance;
+				usertypeDefinition["index"] = &TES3::AIPackageWander::IdleNode::index;
 			}
 
 			// Binding for TES3::AIPackageEscort
