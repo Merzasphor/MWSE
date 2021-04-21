@@ -1404,7 +1404,7 @@
     <ClInclude Include="BSAnimationManager.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
-    <ClInclude Include="BSAnimationNode.h">
+    <ClInclude Include="NIBSAnimationNode.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
     <ClInclude Include="TES3IteratedList.h">
