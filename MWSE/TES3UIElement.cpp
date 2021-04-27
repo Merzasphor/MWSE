@@ -1234,9 +1234,9 @@ namespace TES3 {
 			if (!randomColor) {
 				auto color = mwse::lua::getOptionalParamVector3(params, "color");
 				if (color) {
-					colourRed = color.value().x;
-					colourGreen = color.value().y;
-					colourBlue = color.value().z;
+					element->colourRed = color.value().x;
+					element->colourGreen = color.value().y;
+					element->colourBlue = color.value().z;
 					element->flagUsesRGBA = true;
 				}
 			}
