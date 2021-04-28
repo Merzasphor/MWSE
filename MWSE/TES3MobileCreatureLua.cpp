@@ -32,10 +32,10 @@ namespace mwse {
 			// Allow read access to movement speeds.
 			usertypeDefinition["moveSpeed"] = sol::readonly_property(&TES3::MobileCreature::calculateMovementSpeedFromAnimationData);
 			usertypeDefinition["walkSpeed"] = sol::readonly_property(&TES3::MobileCreature::calculateWalkSpeed);
-			usertypeDefinition["runSpeed"] = sol::readonly_property(&TES3::MobileCreature::calculateWalkSpeed);
-			usertypeDefinition["swimSpeed"] = sol::readonly_property(&TES3::MobileCreature::calculateWalkSpeed);
-			usertypeDefinition["swimRunSpeed"] = sol::readonly_property(&TES3::MobileCreature::calculateWalkSpeed);
-			usertypeDefinition["flySpeed"] = sol::readonly_property(&TES3::MobileCreature::calculateWalkSpeed);
+			usertypeDefinition["runSpeed"] = sol::readonly_property(&TES3::MobileCreature::calculateRunSpeed);
+			usertypeDefinition["swimSpeed"] = sol::readonly_property(&TES3::MobileCreature::calculateSwimSpeed);
+			usertypeDefinition["swimRunSpeed"] = sol::readonly_property(&TES3::MobileCreature::calculateSwimRunSpeed);
+			usertypeDefinition["flySpeed"] = sol::readonly_property(&TES3::MobileCreature::calculateFlySpeed);
 
 			// Friendly access to skills.
 			usertypeDefinition["combat"] = sol::readonly_property(&TES3::MobileCreature::getCombatSkill);
