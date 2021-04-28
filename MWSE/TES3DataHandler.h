@@ -148,6 +148,7 @@ namespace TES3 {
 		GlobalVariable* findGlobalVariable(const char*);
 		Dialogue* findDialogue(const char*);
 		Sound* findSound(const char*);
+		Class* findClass(const char*);
 		Faction* findFaction(const char*);
 		Reference* findClosestExteriorReferenceOfObject(PhysicalObject* object, Vector3* position, bool searchForExteriorDoorMarker = false, int ignored = -1);
 		bool addNewObject(BaseObject*);

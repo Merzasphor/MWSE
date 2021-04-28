@@ -622,6 +622,14 @@ namespace mwse {
 			return nullptr;
 		}
 
+		TES3::Class* findClass(const char* id) {
+			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+			if (dataHandler) {
+				return dataHandler->nonDynamicData->findClass(id);
+			}
+			return nullptr;
+		}
+
 		TES3::Faction* getFaction(const char* id) {
 			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
 			if (dataHandler) {
@@ -4463,6 +4471,7 @@ namespace mwse {
 			tes3["fadeOut"] = fadeOut;
 			tes3["fadeTo"] = fadeTo;
 			tes3["findBirthsign"] = findBirthsign;
+			tes3["findClass"] = findClass;
 			tes3["findClosestExteriorReferenceOfObject"] = findClosestExteriorReferenceOfObject;
 			tes3["findDialogue"] = findDialogue;
 			tes3["findGlobal"] = findGlobal;
