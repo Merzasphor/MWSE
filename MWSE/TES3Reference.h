@@ -79,6 +79,10 @@ namespace TES3 {
 		void setDeleted(bool deleted);
 		void setDeletedWithSafety();
 
+		bool getNoCollision() const;
+		void setNoCollision(bool set, bool updateCells = true);
+		void setNoCollision_lua(bool set, sol::optional<bool> updateCells);
+
 		void setReferenceActive(bool skipDeleted = true);
 		void setReferenceInactive(bool skipDeleted = true);
 

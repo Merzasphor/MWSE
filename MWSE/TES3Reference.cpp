@@ -448,13 +448,35 @@ namespace TES3 {
 		BIT_SET(objectFlags, ObjectFlag::DeleteBit, deleted);
 	}
 
+	bool Reference::getNoCollision() const {
+		return BIT_TEST(objectFlags, ObjectFlag::NoCollisionBit);
+	}
+
+	void Reference::setNoCollision(bool set, bool updateCollisions) {
+		if (getNoCollision() == set) {
+			return;
+		}
+
+		BIT_SET(objectFlags, ObjectFlag::NoCollisionBit, set);
+
+		if (updateCollisions) {
+			TES3::DataHandler::get()->updateCollisionGroupsForActiveCells();
+		}
+	}
+
+	void Reference::setNoCollision_lua (bool set, sol::optional<bool> updateCollisions) {
+		setNoCollision(set, updateCollisions.value_or(true));
+	}
+
 	void Reference::setDeletedWithSafety() {
 		disable();
+
 		if (baseObject) {
 			// This always seems to return 0 and do nothing.
 			// But we'll keep it for consistency.
 			baseObject->vTable.object->unknown_0x12C(baseObject);
 		}
+
 		removeAllAttachments();
 		setScale(1.0f);
 		setDeleted(true);

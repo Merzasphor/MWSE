@@ -53,6 +53,7 @@ namespace mwse {
 			usertypeDefinition["setActionFlag"] = &TES3::Reference::setActionFlag;
 			usertypeDefinition["testActionFlag"] = &TES3::Reference::testActionFlag;
 			usertypeDefinition["setDynamicLighting"] = &TES3::Reference::setDynamicLighting;
+			usertypeDefinition["setNoCollisionFlag"] = &TES3::Reference::setNoCollision_lua;
 			usertypeDefinition["updateEquipment"] = &TES3::Reference::updateBipedParts;
 			usertypeDefinition["updateLighting"] = &TES3::Reference::updateLighting;
 
@@ -62,6 +63,7 @@ namespace mwse {
 			usertypeDefinition["context"] = sol::readonly_property(&TES3::Reference::getContext_lua);
 			usertypeDefinition["data"] = sol::readonly_property(&TES3::Reference::getLuaTable);
 			usertypeDefinition["facing"] = sol::property(&TES3::Reference::getFacing, &TES3::Reference::setFacing);
+			usertypeDefinition["hasNoCollision"] = sol::property(&TES3::Reference::getNoCollision, &TES3::Reference::setNoCollision_lua);
 			usertypeDefinition["isEmpty"] = sol::property(&TES3::Reference::getEmptyInventoryFlag, &TES3::Reference::setEmptyInventoryFlag);
 			usertypeDefinition["isLeveledSpawn"] = sol::readonly_property(&TES3::Reference::isLeveledSpawn);
 			usertypeDefinition["isRespawn"] = sol::readonly_property(&TES3::Reference::isRespawn);
