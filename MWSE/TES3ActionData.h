@@ -32,7 +32,7 @@ namespace TES3 {
 		short unknown_0x0;
 		short unknown_0x2;
 		float attackSwing; // 0x4
-		float unknown_0x8;
+		float swingTimer; // 0x8
 		float physicalDamage; // 0xC
 		signed char aiBehaviourState; // 0x10
 		AttackAnimationState animStateAttack; // 0x11

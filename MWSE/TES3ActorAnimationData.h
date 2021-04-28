@@ -37,12 +37,12 @@ namespace TES3 {
 		int unknown_0xC;
 		float unknown_0x10;
 		int unknown_0x14;
-		int unknown_0x18;
+		float unknown_0x18;
 		int unknown_0x1C;
 		int unknown_0x20;
 		int unknown_0x24;
 		int unknown_0x28;
-		int unknown_0x2C;
+		float unknown_0x2C;
 		int unknown_0x30;
 		float unknown_0x34;
 		MobileActor * mobileActor; // 0x38
