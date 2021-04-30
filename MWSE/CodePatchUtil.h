@@ -179,6 +179,8 @@ namespace mwse {
 				AutoStackAmmunition = 182,
 				SeaWaterSoundFalloffFix = 183,
 				ActorCollisionBoxFix = 184,
+				SlidingAfterJumpingFix = 185,
+				FallingCreaturesCollisionFix = 186,
 				MapExpansionForTamrielRebuilt = 256,
 				MainMenuWiderTextures = 257,
 				DisableMapSmoothing = 258,
