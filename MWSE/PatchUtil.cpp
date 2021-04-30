@@ -32,6 +32,7 @@
 #include "LuaUtil.h"
 
 #include "MWSEConfig.h"
+#include "CodePatchUtil.h"
 
 namespace mwse {
 	namespace patch {
@@ -481,7 +482,7 @@ namespace mwse {
 
 #if MWSE_RAISED_FILE_LIMIT
 			// Patch: Raise esm/esp limit from 256 to 1024.
-			{
+			if (mcp::getFeatureEnabled(mcp::feature::SavegameCorruptionFix)) {
 				// Change hardcoded 256 checks to 1024.
 				writeValueEnforced<DWORD>(0x4B7A22 + 0x1, PatchRaiseESXLimit::ModCountVanilla, PatchRaiseESXLimit::ModCountMWSE);
 				writeValueEnforced<DWORD>(0x4BB4AE + 0x3, PatchRaiseESXLimit::ModCountVanilla, PatchRaiseESXLimit::ModCountMWSE);
