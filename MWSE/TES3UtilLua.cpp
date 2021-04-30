@@ -4396,40 +4396,30 @@ namespace mwse {
 
 			// Try to get the first reference's data.
 			auto mobile1 = reference1->getAttachedMobileActor();
+			position1 = reference1->position;
 			if (mobile1) {
-				position1 = reference1->position;
 				height1 = mobile1->height;
 			}
 			else if (reference1->baseObject->boundingBox) {
 				auto boundingBox = reference1->baseObject->boundingBox;
-				position1 = {
-					(boundingBox->minimum.x + boundingBox->maximum.x) / 2,
-					(boundingBox->minimum.y + boundingBox->maximum.y) / 2,
-					boundingBox->minimum.z
-				};
 				height1 = boundingBox->maximum.z - boundingBox->minimum.z;
 			}
 			else {
-				throw std::invalid_argument("Could not determine first reference's position/height data.");
+				throw std::invalid_argument("Could not determine first reference's height data.");
 			}
 
 			// Try to get the second reference's data.
 			auto mobile2 = reference2->getAttachedMobileActor();
+			position2 = reference2->position;
 			if (mobile2) {
-				position2 = reference2->position;
 				height2 = mobile2->height;
 			}
 			else if (reference2->baseObject->boundingBox) {
 				auto boundingBox = reference2->baseObject->boundingBox;
-				position2 = {
-					(boundingBox->minimum.x + boundingBox->maximum.x) / 2,
-					(boundingBox->minimum.y + boundingBox->maximum.y) / 2,
-					boundingBox->minimum.z
-				};
 				height2 = boundingBox->maximum.z - boundingBox->minimum.z;
 			}
 			else {
-				throw std::invalid_argument("Could not determine second reference's position/height data.");
+				throw std::invalid_argument("Could not determine second reference's height data.");
 			}
 
 			return tes3::testLineOfSight(&position1.value(), height1.value(), &position2.value(), height2.value());
