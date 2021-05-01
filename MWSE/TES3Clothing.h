@@ -20,7 +20,10 @@ namespace TES3 {
 			LeftGlove = 0x6,
 			Skirt = 0x7,
 			Ring = 0x8,
-			Amulet = 0x9
+			Amulet = 0x9,
+
+			First = Pants,
+			Last = Amulet,
 		};
 	}
 
@@ -42,11 +45,17 @@ namespace TES3 {
 		//
 
 		void setIconPath(const char* path);
+		const char* getSlotName();
 
 		std::reference_wrapper<WearablePart[7]> getParts();
 
 	};
 	static_assert(sizeof(Clothing) == 0xB8, "TES3::Clothing failed size validation");
+
+	struct ClothingSlotData {
+		int slot;
+		std::string name;
+	};
 }
 
 MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3(TES3::Clothing)

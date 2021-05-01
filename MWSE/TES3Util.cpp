@@ -227,6 +227,21 @@ namespace mwse {
 			return nullptr;
 		}
 
+		static std::map<int, std::shared_ptr<TES3::ClothingSlotData>> customClothingSlots;
+
+		std::shared_ptr<TES3::ClothingSlotData> getClothingSlotData(int slot) {
+			auto searchResult = customClothingSlots.find(slot);
+			if (searchResult != customClothingSlots.end()) {
+				return searchResult->second;
+			}
+
+			return nullptr;
+		}
+
+		void setClothingSlotData(std::shared_ptr<TES3::ClothingSlotData> data) {
+			customClothingSlots[data->slot] = data;
+		}
+
 		static std::map<int, std::shared_ptr<TES3::ArmorSlotData>> customArmorSlots;
 
 		std::shared_ptr<TES3::ArmorSlotData> getArmorSlotData(int slot) {

@@ -3667,6 +3667,10 @@ namespace mwse {
 			auto armorGetSlotName = &TES3::Armor::getSlotName;
 			overrideVirtualTableEnforced(0x748258, offsetof(TES3::ObjectVirtualTable, getTypeName), 0x4A1270, *reinterpret_cast<DWORD*>(&armorGetSlotName));
 
+			// Allow overriding of clothing slot name.
+			auto clothingGetSlotName = &TES3::Clothing::getSlotName;
+			overrideVirtualTableEnforced(0x748634, offsetof(TES3::ObjectVirtualTable, getTypeName), 0x4A38E0, *reinterpret_cast<DWORD*>(&clothingGetSlotName));
+
 			// Recognize when an inventory tile is updated.
 			genCallEnforced(0x5A5DA4, 0x47E720, reinterpret_cast<DWORD>(GetNextInventoryTileToUpdate)); // General barter menu update.
 			genCallEnforced(0x5B6655, 0x581F30, reinterpret_cast<DWORD>(OnInventoryTileChildPropertySet)); // During click event into contents menu.

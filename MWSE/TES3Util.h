@@ -48,6 +48,8 @@ namespace mwse {
 		TES3::SoulGemData * getSoulGemData(const TES3::Misc * item);
 		bool isSoulGem(const TES3::Object* objectOrReference);
 
+		std::shared_ptr<TES3::ClothingSlotData> getClothingSlotData(int slot);
+		void setClothingSlotData(std::shared_ptr<TES3::ClothingSlotData> data);
 		std::shared_ptr<TES3::ArmorSlotData> getArmorSlotData(int slot);
 		void setArmorSlotData(std::shared_ptr<TES3::ArmorSlotData> data);
 

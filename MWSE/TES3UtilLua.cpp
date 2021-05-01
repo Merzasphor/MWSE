@@ -2253,6 +2253,28 @@ namespace mwse {
 			mwse::tes3::setArmorSlotData(slotData);
 		}
 
+		void addClothingSlot(sol::table params) {
+			sol::optional<int> slot = params["slot"];
+			if (!slot || (slot.value() >= TES3::ClothingSlot::First && slot.value() <= TES3::ClothingSlot::Last) || mwse::tes3::getClothingSlotData(slot.value())) {
+				throw std::exception("tes3.addClothingSlot: Invalid slot. An unusued slot must be provided.");
+			}
+
+			if (slot.value() < 0 || slot.value() > UINT8_MAX) {
+				throw std::exception("tes3.addClothingSlot: Invalid slot. Value must be between 10 and 255.");
+			}
+
+			sol::optional<const char*> name = params["name"];
+			if (!name || name.value() == nullptr) {
+				throw std::exception("tes3.addClothingSlot: No name provided for slot.");
+			}
+
+			auto slotData = std::make_shared<TES3::ClothingSlotData>();
+			slotData->slot = slot.value();
+			slotData->name = name.value();
+
+			mwse::tes3::setClothingSlotData(slotData);
+		}
+
 		// WARNING: This function doesn't persist through saves correctly and shouldn't be used.
 		TES3::Cell* createCell(sol::table params) {
 			auto nonDynamicData = TES3::DataHandler::get()->nonDynamicData;

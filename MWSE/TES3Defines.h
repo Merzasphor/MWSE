@@ -38,6 +38,7 @@ namespace TES3 {
 	struct CellExteriorData;
 	struct Class;
 	struct Clothing;
+	struct ClothingSlotData;
 	struct CombatSession;
 	struct Container;
 	struct ContainerInstance;
