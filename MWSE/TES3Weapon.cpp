@@ -7,6 +7,16 @@
 #include "BitUtil.h"
 
 namespace TES3 {
+	const auto TES3_Weapon_ctor = reinterpret_cast<void(__thiscall*)(Weapon*)>(0x4F1EE0);
+	Weapon::Weapon() {
+		TES3_Weapon_ctor(this);
+	}
+
+	const auto TES3_Weapon_dtor = reinterpret_cast<void(__thiscall*)(Weapon*)>(0x4F1FA0);
+	Weapon::~Weapon() {
+		TES3_Weapon_dtor(this);
+	}
+
 	bool Weapon::isOneHanded() {
 		switch (weaponType)
 		{

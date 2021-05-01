@@ -58,6 +58,9 @@ namespace TES3 {
 		unsigned int materialFlags; // 0x70
 		Enchantment * enchantment; // 0x74
 
+		Weapon();
+		~Weapon();
+
 		//
 		// Custom functions.
 		//

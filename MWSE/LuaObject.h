@@ -7,6 +7,7 @@
 #include "TES3Misc.h"
 #include "TES3Static.h"
 #include "TES3Enchantment.h"
+#include "TES3Weapon.h"
 #include "TES3WorldController.h"
 
 namespace mwse::lua {
@@ -168,6 +169,88 @@ namespace mwse::lua {
 			}
 
 			return staticObject;
+		}
+	};
+
+	template<>
+	class ObjectCreator<TES3::Weapon> : public ObjectCreatorBase {
+	public:
+		TES3::BaseObject* create(sol::table params, bool getIfExists) const override {
+			std::string id = getOptionalParam<std::string>(params, "id", {});
+			if (id.size() > 31) {
+				throw std::invalid_argument{ "tes3weapon.create: 'id' parameter must be less than 32 character long." };
+			}
+
+			if (auto existingObject = TES3::DataHandler::get()->nonDynamicData->resolveObject(id.c_str()); existingObject != nullptr) {
+				if (getIfExists && existingObject->objectType == TES3::ObjectType::Weapon) {
+					return existingObject;
+				}
+
+				throw std::invalid_argument{ "tes3weapon.create: 'id' parameter already assigned to an existing object that is not a weapon item." };
+			}
+
+			std::string name = getOptionalParam<std::string>(params, "name", "Miscellaneous item");
+			if (name.size() > 31) {
+				throw std::invalid_argument{ "tes3weapon.create: 'name' parameter must be less than 32 character long." };
+			}
+
+			std::string mesh = getOptionalParam<std::string>(params, "mesh", {});
+			if (mesh.size() > 31) {
+				throw std::invalid_argument{ "tes3weapon.create: 'mesh' parameter must be less than 32 character long." };
+			}
+
+			auto weapon = new TES3::Weapon();
+
+			weapon->setID(id.c_str());
+			weapon->setName(name.c_str());
+			weapon->setModelPath(mesh.c_str());
+
+			auto script = getOptionalParamScript(params, "script");
+
+			if (script != nullptr) {
+				weapon->script = script;
+			}
+
+			auto enchantment = getOptionalParamObject<TES3::Enchantment>(params, "enchantment");
+			if (enchantment && enchantment->objectType == TES3::ObjectType::Enchantment) {
+				weapon->enchantment = enchantment;
+			}
+
+			std::string icon = getOptionalParam<std::string>(params, "icon", {});
+			if (!icon.empty() && icon.size() < 31) {
+				tes3::setDataString(&weapon->icon, icon.c_str());
+			}
+
+			weapon->objectFlags = getOptionalParam<unsigned int>(params, "objectFlags", 0);
+			weapon->weight = getOptionalParam<float>(params, "weight", 1.0f);
+			weapon->value = getOptionalParam<int>(params, "value", 1);
+			weapon->weaponType = getOptionalParam<unsigned char>(params, "type", TES3::WeaponType::ShortBlade1H);
+			weapon->maxCondition = getOptionalParam<unsigned short>(params, "maxCondition", 100);
+			weapon->speed = getOptionalParam<float>(params, "speed", 1.0f);
+			weapon->reach = getOptionalParam<float>(params, "reach", 1.0f);
+			weapon->enchantCapacity = getOptionalParam<unsigned short>(params, "enchantCapacity", 100);
+			weapon->chopMin = getOptionalParam<unsigned char>(params, "chopMin", 1);
+			weapon->chopMax = getOptionalParam<unsigned char>(params, "chopMax", 5);
+			weapon->slashMin = getOptionalParam<unsigned char>(params, "slashMin", 1);
+			weapon->slashMax = getOptionalParam<unsigned char>(params, "slashMax", 5);
+			weapon->thrustMin = getOptionalParam<unsigned char>(params, "thrustMin", 1);
+			weapon->thrustMax = getOptionalParam<unsigned char>(params, "thrustMax", 5);
+			weapon->materialFlags = getOptionalParam<unsigned int>(params, "materialFlags", 0);
+
+			weapon->setIgnoresNormalWeaponResistance(getOptionalParam<bool>(params, "ignoresNormalWeaponResistance", weapon->getIgnoresNormalWeaponResistance()));
+
+			weapon->objectFlags |= TES3::ObjectFlag::Modified;
+
+			if (!TES3::DataHandler::get()->nonDynamicData->addNewObject(weapon)) {
+				throw std::runtime_error("tes3weapon.create: could not add the newly created misc item in its proper collection.");
+			}
+
+			// If created outside of a save game, mark the object as sourceless.
+			if (getOptionalParam<bool>(params, "sourceless", false) || TES3::WorldController::get()->getMobilePlayer() == nullptr) {
+				TES3::BaseObject::setSourcelessObject(weapon);
+			}
+
+			return weapon;
 		}
 	};
 

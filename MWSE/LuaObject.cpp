@@ -11,6 +11,8 @@ namespace mwse::lua {
 			return std::make_unique<ObjectCreator<TES3::Static>>();
 		case TES3::ObjectType::Enchantment:
 			return std::make_unique<ObjectCreator<TES3::Enchantment>>();
+		case TES3::ObjectType::Weapon:
+			return std::make_unique<ObjectCreator<TES3::Weapon>>();
 		default:
 			return std::make_unique<InvalidObjectCreator>();
 		}
