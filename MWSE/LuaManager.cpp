@@ -184,6 +184,7 @@
 #include "LuaGenericUiPostEvent.h"
 #include "LuaGenericUiPreEvent.h"
 #include "LuaInfoGetTextEvent.h"
+#include "LuaInfoLinkResolveEvent.h"
 #include "LuaInfoResponseEvent.h"
 #include "LuaItemDroppedEvent.h"
 #include "LuaItemTileUpdatedEvent.h"
@@ -2191,6 +2192,26 @@ namespace mwse {
 		}
 
 		//
+		// Event: Dialogue link resolve topic.
+		//
+
+		TES3::Dialogue * __fastcall OnInfoLinkResolve(TES3::NonDynamicData * _this, DWORD _UNUSUED_, const char* topic) {
+			if (mwse::lua::event::InfoLinkResolveEvent::getEventEnabled()) {
+				auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::object eventResult = stateHandle.triggerEvent(new mwse::lua::event::InfoLinkResolveEvent(topic));
+				if (eventResult.valid()) {
+					sol::table eventData = eventResult;
+					sol::object newTopic = eventData["topic"];
+					if (newTopic.is<const char*>()) {
+						return _this->findDialogue(newTopic.as<const char*>());
+					}
+				}
+			}
+
+			return _this->findDialogue(topic);
+		}
+
+		//
 		// Event: Item Dropped.
 		//
 
@@ -3569,7 +3590,10 @@ namespace mwse {
 
 			// Event: Execute lua from dialogue response.
 			genCallEnforced(0x4B1FB2, 0x50E5A0, reinterpret_cast<DWORD>(OnRunDialogueCommand));
-			
+
+			// Event: Dialogue link resolve.
+			genCallEnforced(0x40B89E, 0x4BA8D0, reinterpret_cast<DWORD>(OnInfoLinkResolve));
+
 			// Hook overriding book text.
 			auto bookGetText = &TES3::Book::getBookText;
 			genCallEnforced(0x4A29FA, 0x4A2A90, *reinterpret_cast<DWORD*>(&bookGetText));

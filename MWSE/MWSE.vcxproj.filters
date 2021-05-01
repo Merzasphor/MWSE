@@ -1488,6 +1488,9 @@
     <ClInclude Include="NISkinInstanceLua.h">
       <Filter>Header Files\Lua\Bindings\NI</Filter>
     </ClInclude>
+    <ClInclude Include="LuaInfoLinkResolveEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3277,6 +3280,9 @@
     </ClCompile>
     <ClCompile Include="NISkinInstanceLua.cpp">
       <Filter>Source Files\Lua\Bindings\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaInfoLinkResolveEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

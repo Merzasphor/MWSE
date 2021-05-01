@@ -55,6 +55,7 @@
 #include "LuaGenericUiPreEvent.h"
 #include "LuaInfoFilterEvent.h"
 #include "LuaInfoGetTextEvent.h"
+#include "LuaInfoLinkResolveEvent.h"
 #include "LuaInfoResponseEvent.h"
 #include "LuaIsGuardEvent.h"
 #include "LuaItemDroppedEvent.h"
@@ -189,6 +190,7 @@ namespace mwse {
 				usertypeDefinition["filterSoulGemTarget"] = sol::property(&FilterSoulGemTargetEvent::getEventEnabled, &FilterSoulGemTargetEvent::setEventEnabled);
 				usertypeDefinition["infoFilter"] = sol::property(&InfoFilterEvent::getEventEnabled, &InfoFilterEvent::setEventEnabled);
 				usertypeDefinition["infoGetText"] = sol::property(&InfoGetTextEvent::getEventEnabled, &InfoGetTextEvent::setEventEnabled);
+				usertypeDefinition["infoLinkResolve"] = sol::property(&InfoLinkResolveEvent::getEventEnabled, &InfoLinkResolveEvent::setEventEnabled);
 				usertypeDefinition["infoResponse"] = sol::property(&InfoResponseEvent::getEventEnabled, &InfoResponseEvent::setEventEnabled);
 				usertypeDefinition["isGuard"] = sol::property(&IsGuardEvent::getEventEnabled, &IsGuardEvent::setEventEnabled);
 				usertypeDefinition["itemDropped"] = sol::property(&ItemDroppedEvent::getEventEnabled, &ItemDroppedEvent::setEventEnabled);
