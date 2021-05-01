@@ -119,6 +119,7 @@ return {
 	["telekinesisFix"] = 126,
 	["mapTextureConflictFix"] = 127,
 	["rainSnowCollision"] = 128,
+	["overTheShoulderFirstPersonCamera"] = 130,
 	["overTheShoulderThirdPersonCamera"] = 130,
 	["bumpReflectMapLocalLighting"] = 131,
 	["improvedAnimationSupport"] = 132,
