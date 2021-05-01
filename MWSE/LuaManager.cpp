@@ -148,6 +148,7 @@
 #include "NIPickLua.h"
 #include "NIPixelDataLua.h"
 #include "NIPropertyLua.h"
+#include "NISkinInstanceLua.h"
 #include "NISourceTextureLua.h"
 #include "NISwitchNodeLua.h"
 #include "NITextureLua.h"
@@ -467,6 +468,7 @@ namespace mwse {
 			bindNIPick();
 			bindNIPixelData();
 			bindNIProperties();
+			bindNISkinInstance();
 			bindNISourceTexture();
 			bindNISwitchNode();
 			bindNITextureEffect();

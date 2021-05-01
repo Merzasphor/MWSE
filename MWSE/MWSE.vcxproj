@@ -161,7 +161,7 @@
     <ClInclude Include="NIRenderedTexture.h" />
     <ClInclude Include="NIRenderer.h" />
     <ClInclude Include="NISkinInstance.h" />
-    <ClInclude Include="NISkinPartition.h" />
+    <ClInclude Include="NISkinInstanceLua.h" />
     <ClInclude Include="NITArray.h" />
     <ClInclude Include="NITextureEffect.h" />
     <ClInclude Include="NITextureEffectLua.h" />
@@ -597,6 +597,8 @@
     <ClCompile Include="NIProperty.cpp" />
     <ClCompile Include="NIRenderedTexture.cpp" />
     <ClCompile Include="NIRenderer.cpp" />
+    <ClCompile Include="NISkinInstance.cpp" />
+    <ClCompile Include="NISkinInstanceLua.cpp" />
     <ClCompile Include="NISpotLight.cpp" />
     <ClCompile Include="NISwitchNode.cpp" />
     <ClCompile Include="NIRTTI.cpp" />

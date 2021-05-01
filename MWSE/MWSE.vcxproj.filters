@@ -1485,8 +1485,8 @@
     <ClInclude Include="NISkinInstance.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
-    <ClInclude Include="NISkinPartition.h">
-      <Filter>Header Files\DataAdapters\NI</Filter>
+    <ClInclude Include="NISkinInstanceLua.h">
+      <Filter>Header Files\Lua\Bindings\NI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -3271,6 +3271,12 @@
     </ClCompile>
     <ClCompile Include="TES3ScriptCompiler.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="NISkinInstance.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NISkinInstanceLua.cpp">
+      <Filter>Source Files\Lua\Bindings\NI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

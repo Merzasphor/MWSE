@@ -18,6 +18,7 @@
 #include "NIPixelData.h"
 #include "NIPointLight.h"
 #include "NIProperty.h"
+#include "NISkinInstance.h"
 #include "NISourceTexture.h"
 #include "NISpotLight.h"
 #include "NISwitchNode.h"
@@ -146,6 +147,15 @@ namespace NI {
 				break;
 			case RTTIStaticPtr::NiPointLight:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<PointLight*>(this)));
+				break;
+			case RTTIStaticPtr::NiSkinData:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<SkinData*>(this)));
+				break;
+			case RTTIStaticPtr::NiSkinInstance:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<SkinInstance*>(this)));
+				break;
+			case RTTIStaticPtr::NiSkinPartition:
+				ref = sol::make_object_userdata(L, Pointer(static_cast<SkinPartition*>(this)));
 				break;
 			case RTTIStaticPtr::NiSourceTexture:
 				ref = sol::make_object_userdata(L, Pointer(static_cast<SourceTexture*>(this)));
