@@ -33,6 +33,7 @@
 
 #include "MWSEConfig.h"
 #include "MWSEDefs.h"
+#include "BuildDate.h"
 #include "CodePatchUtil.h"
 
 namespace mwse {
@@ -711,10 +712,11 @@ namespace mwse {
 			log::getLog() << "Additional support can be found in the #mwse channel at the Morrowind Modding Community Discord: https://discord.me/mwmods" << std::endl;
 
 #ifdef APPVEYOR_BUILD_NUMBER
-			mwse::log::getLog() << "MWSE version: " << MWSE_VERSION_MAJOR << "." << MWSE_VERSION_MINOR << "." << MWSE_VERSION_PATCH << "-" << APPVEYOR_BUILD_NUMBER << " (built " << __DATE__ << ") hooked." << std::endl;
+			mwse::log::getLog() << "MWSE version: " << MWSE_VERSION_MAJOR << "." << MWSE_VERSION_MINOR << "." << MWSE_VERSION_PATCH << "-" << APPVEYOR_BUILD_NUMBER << std::endl;
 #else
-			mwse::log::getLog() << "MWSE version: " << MWSE_VERSION_MAJOR << "." << MWSE_VERSION_MINOR << "." << MWSE_VERSION_PATCH << " (built " << __DATE__ << ") hooked." << std::endl;
+			mwse::log::getLog() << "MWSE version: " << MWSE_VERSION_MAJOR << "." << MWSE_VERSION_MINOR << "." << MWSE_VERSION_PATCH << std::endl;
 #endif
+			mwse::log::getLog() << "Build date: " << MWSE_BUILD_DATE << std::endl;
 
 			// Display the memory usage in the log.
 			PROCESS_MEMORY_COUNTERS_EX memCounter;
