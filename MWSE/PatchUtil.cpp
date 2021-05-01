@@ -32,6 +32,7 @@
 #include "LuaUtil.h"
 
 #include "MWSEConfig.h"
+#include "MWSEDefs.h"
 #include "CodePatchUtil.h"
 
 namespace mwse {
@@ -708,6 +709,12 @@ namespace mwse {
 			log::getLog() << std::endl;
 			log::getLog() << "Morrowind has crashed! To help improve game stability, send MWSE_Minidump.dmp and mwse.log to NullCascade@gmail.com or to NullCascade#1010 on Discord." << std::endl;
 			log::getLog() << "Additional support can be found in the #mwse channel at the Morrowind Modding Community Discord: https://discord.me/mwmods" << std::endl;
+
+#ifdef APPVEYOR_BUILD_NUMBER
+			mwse::log::getLog() << "MWSE version: " << MWSE_VERSION_MAJOR << "." << MWSE_VERSION_MINOR << "." << MWSE_VERSION_PATCH << "-" << APPVEYOR_BUILD_NUMBER << " (built " << __DATE__ << ") hooked." << std::endl;
+#else
+			mwse::log::getLog() << "MWSE version: " << MWSE_VERSION_MAJOR << "." << MWSE_VERSION_MINOR << "." << MWSE_VERSION_PATCH << " (built " << __DATE__ << ") hooked." << std::endl;
+#endif
 
 			// Display the memory usage in the log.
 			PROCESS_MEMORY_COUNTERS_EX memCounter;
