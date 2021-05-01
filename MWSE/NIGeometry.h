@@ -3,6 +3,8 @@
 #include "NIAVObject.h"
 #include "NIGeometryData.h"
 
+#include "NISkinInstance.h"
+
 namespace NI {
 	struct Geometry_vTable : AVObject_vTable {
 		void* (__thiscall* setModelData)(Geometry*, GeometryData*); // 0x94
@@ -14,7 +16,7 @@ namespace NI {
 		void* propertyState; // 0x90
 		void* effectState; // 0x94
 		Pointer<GeometryData> modelData; // 0x98
-		void* skinInstance; // 0x9C
+		Pointer<SkinInstance> skinInstance; // 0x9C
 		int unknown_0xA0;
 		int unknown_0xA4;
 		char unknown_0xA8;

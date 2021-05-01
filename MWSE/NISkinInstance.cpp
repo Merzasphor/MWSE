@@ -17,6 +17,10 @@ namespace NI {
 		return nonstd::span<unsigned short>(vertices, numVertices);
 	}
 
+	nonstd::span<SkinPartition::Partition> SkinPartition::getPartitions() {
+		return nonstd::span<Partition>(partitions, partitionCount);
+	}
+
 	nonstd::span<SkinData::BoneData::VertexWeight> SkinData::BoneData::getWeights() {
 		return nonstd::span<VertexWeight>(weights, weightCount);
 	}
@@ -25,7 +29,7 @@ namespace NI {
 		return nonstd::span<BoneData>(boneData, numBones);
 	}
 
-	nonstd::span<SkinPartition::Partition> SkinPartition::getPartitions() {
-		return nonstd::span<Partition>(partitions, partitionCount);
+	nonstd::span<AVObject*> SkinInstance::getBoneObjects() {
+		return nonstd::span<AVObject*>(bones, skinData->numBones);
 	}
 }

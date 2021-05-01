@@ -29,6 +29,7 @@ namespace mwse {
 
 				// Basic property binding.
 				usertypeDefinition["data"] = sol::property(&NI::TriShape::getModelData, &NI::TriShape::setModelData);
+				usertypeDefinition["skinInstance"] = &NI::TriShape::skinInstance;
 
 				// Lazy access to geometry data. Don't encourage this.
 				usertypeDefinition["normals"] = sol::readonly_property(&NI::TriShape::getNormals);

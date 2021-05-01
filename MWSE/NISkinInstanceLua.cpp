@@ -20,6 +20,7 @@ namespace mwse::lua {
 			usertypeDefinition[sol::base_classes] = sol::bases<NI::Object>();
 
 			// Basic bindings.
+			usertypeDefinition["bones"] = sol::readonly_property(&NI::SkinInstance::getBoneObjects);
 			usertypeDefinition["data"] = &NI::SkinInstance::skinData;
 			usertypeDefinition["root"] = &NI::SkinInstance::rootParent;
 		}

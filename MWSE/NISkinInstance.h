@@ -67,8 +67,10 @@ namespace NI {
 	struct SkinInstance : Object {
 		Pointer<SkinData> skinData; // 0x8
 		Pointer<Node> rootParent; // 0xC
-		void* bones; // 0x10
+		AVObject** bones; // 0x10
 		int unknown_0x14;
+
+		nonstd::span<AVObject*> getBoneObjects();
 	};
 	static_assert(sizeof(SkinInstance) == 0x18, "NI::SkinInstance failed size validation");
 }
