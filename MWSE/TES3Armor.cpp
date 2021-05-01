@@ -96,7 +96,7 @@ namespace TES3 {
 	const char* Armor::getSlotName() {
 		// If this armor has weight and is of an invalid slot, return straight up armor rating.
 		if (slot < ArmorSlot::First || slot > ArmorSlot::Last) {
-			TES3::ArmorSlotData * slotData = mwse::tes3::getArmorSlotData(slot);
+			auto slotData = mwse::tes3::getArmorSlotData(slot);
 			if (slotData) {
 				return slotData->name.c_str();
 			}
@@ -112,7 +112,7 @@ namespace TES3 {
 		// Figure out custom slots.
 		if (slot < ArmorSlot::First || slot > ArmorSlot::Last) {
 			// If we have no custom data, assume light.
-			TES3::ArmorSlotData * slotData = mwse::tes3::getArmorSlotData(slot);
+			auto slotData = mwse::tes3::getArmorSlotData(slot);
 			if (slotData == nullptr) {
 				return ArmorWeightClass::Light;
 			}
@@ -136,9 +136,8 @@ namespace TES3 {
 
 	float Armor::getArmorScalar() const {
 		// Handle custom slots.
-		TES3::ArmorSlotData* slotData = mwse::tes3::getArmorSlotData(slot);
 		if (slot < ArmorSlot::First || slot > ArmorSlot::Last) {
-			TES3::ArmorSlotData* slotData = mwse::tes3::getArmorSlotData(slot);
+			auto slotData = mwse::tes3::getArmorSlotData(slot);
 			if (slotData) {
 				return slotData->armorScalar;
 			}

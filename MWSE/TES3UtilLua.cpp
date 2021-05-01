@@ -2244,7 +2244,7 @@ namespace mwse {
 			sol::optional<float> weight = params["weight"];
 			sol::optional<float> armorScalar = params["scalar"];
 
-			auto slotData = new TES3::ArmorSlotData();
+			auto slotData = std::make_shared<TES3::ArmorSlotData>();
 			slotData->slot = slot.value();
 			slotData->name = name.value();
 			slotData->weight = weight.value_or(0.0f);

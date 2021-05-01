@@ -227,9 +227,9 @@ namespace mwse {
 			return nullptr;
 		}
 
-		static std::map<int, TES3::ArmorSlotData*> customArmorSlots;
+		static std::map<int, std::shared_ptr<TES3::ArmorSlotData>> customArmorSlots;
 
-		TES3::ArmorSlotData * getArmorSlotData(int slot) {
+		std::shared_ptr<TES3::ArmorSlotData> getArmorSlotData(int slot) {
 			auto searchResult = customArmorSlots.find(slot);
 			if (searchResult != customArmorSlots.end()) {
 				return searchResult->second;
@@ -238,13 +238,7 @@ namespace mwse {
 			return nullptr;
 		}
 
-		void setArmorSlotData(TES3::ArmorSlotData * data) {
-			auto searchResult = customArmorSlots.find(data->slot);
-			if (searchResult != customArmorSlots.end()) {
-				delete searchResult->second;
-				customArmorSlots.erase(data->slot);
-			}
-
+		void setArmorSlotData(std::shared_ptr<TES3::ArmorSlotData> data) {
 			customArmorSlots[data->slot] = data;
 		}
 

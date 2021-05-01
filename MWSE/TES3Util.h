@@ -48,8 +48,8 @@ namespace mwse {
 		TES3::SoulGemData * getSoulGemData(const TES3::Misc * item);
 		bool isSoulGem(const TES3::Object* objectOrReference);
 
-		TES3::ArmorSlotData * getArmorSlotData(int slot);
-		void setArmorSlotData(TES3::ArmorSlotData * data);
+		std::shared_ptr<TES3::ArmorSlotData> getArmorSlotData(int slot);
+		void setArmorSlotData(std::shared_ptr<TES3::ArmorSlotData> data);
 
 		// Used in xFirstNPC/Static/Item. The last element should never be non-null.
 		// The first eight elements are pointers to the first reference from the 8 surrounding cells.
