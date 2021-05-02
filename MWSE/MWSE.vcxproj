@@ -144,6 +144,7 @@
     <ClInclude Include="MWSEUtilLua.h" />
     <ClInclude Include="NIBinaryStream.h" />
     <ClInclude Include="NIBound.h" />
+    <ClInclude Include="NICollisionGroup.h" />
     <ClInclude Include="NIDX8Renderer.h" />
     <ClInclude Include="NIExtraData.h" />
     <ClInclude Include="NIExtraDataLua.h" />
@@ -586,6 +587,7 @@
     <ClCompile Include="NIAmbientLight.cpp" />
     <ClCompile Include="NIBinaryStream.cpp" />
     <ClCompile Include="NICamera.cpp" />
+    <ClCompile Include="NICollisionGroup.cpp" />
     <ClCompile Include="NICollisionSwitch.cpp" />
     <ClCompile Include="NIDirectionalLight.cpp" />
     <ClCompile Include="NIDynamicEffectLua.cpp" />

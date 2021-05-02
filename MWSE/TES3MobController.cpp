@@ -1,4 +1,5 @@
 #include "TES3MobController.h"
+#include "TES3MobileActor.h"
 
 #include "LuaManager.h"
 
@@ -81,5 +82,27 @@ namespace TES3 {
 	const auto TES3_MobController_addPlayerAsCollider = reinterpret_cast<void(__thiscall*)(MobController*)>(0x563640);
 	void MobController::addPlayerAsCollider() {
 		TES3_MobController_addPlayerAsCollider(this);
+	}
+
+	void MobController::enableMobileCollision(Reference * reference) {
+		auto mobile = reference->getAttachedMobileObject();
+		if (mobile && (mobile->actorFlags & TES3::MobileActorFlag::ActiveAI)) {
+			criticalSection_Mobs.enter();
+			if (!mobCollisionGroup->containsCollider(reference->sceneNode)) {
+				mobCollisionGroup->addCollider(reference->sceneNode);
+			}
+			criticalSection_Mobs.leave();
+		}
+	}
+
+	void MobController::disableMobileCollision(Reference* reference) {
+		auto mobile = reference->getAttachedMobileObject();
+		if (mobile && (mobile->actorFlags & TES3::MobileActorFlag::ActiveAI)) {
+			criticalSection_Mobs.enter();
+			if (mobCollisionGroup->containsCollider(reference->sceneNode)) {
+				mobCollisionGroup->removeCollider(reference->sceneNode);
+			}
+			criticalSection_Mobs.leave();
+		}
 	}
 }

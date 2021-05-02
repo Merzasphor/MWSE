@@ -6,24 +6,9 @@
 #include "TES3IteratedList.h"
 
 #include "NINode.h"
+#include "NICollisionGroup.h"
 
 namespace TES3 {
-	struct Object_0x751248 {
-		int unknown_0x0;
-		int unknown_0x4;
-		int unknown_0x8;
-		int unknown_0xC;
-		int unknown_0x10;
-		int unknown_0x14;
-	};
-	static_assert(sizeof(Object_0x751248) == 0x18, "TES3::Object_0x751248 failed size validation");
-
-	struct MobController_0x0 {
-		Object_0x751248 unknown_0x0;
-		Object_0x751248 unknown_0x18;
-	};
-	static_assert(sizeof(MobController_0x0) == 0x30, "TES3::MobController_0x0 failed size validation");
-
 	struct ProcessManager {
 		MobilePlayer * mobilePlayer; // 0x0
 		IteratedList<AIPlanner*> aiPlanners; // 0x4
@@ -58,7 +43,7 @@ namespace TES3 {
 	static_assert(sizeof(ProjectileController) == 0x3C, "TES3::ProjectileController failed size validation");
 
 	struct MobController {
-		MobController_0x0 * unknown_0x0;
+		NI::CollisionGroup * mobCollisionGroup;
 		int unknown_0x4;
 		int unknown_0x8;
 		float gravity; // 0xC
@@ -70,9 +55,9 @@ namespace TES3 {
 		ProcessManager * processManager; // 0x24
 		ProjectileController* projectileController; // 0x28
 		bool unknown_0x2C;
-		IteratedList<void*> unknown_0x30;
-		CriticalSection unknown_0x44;
-		CriticalSection unknown_0x68;
+		IteratedList<Reference*> listPropReferences;
+		CriticalSection criticalSection_Props;
+		CriticalSection criticalSection_Mobs;
 
 		//
 		// Related this-call functions.
@@ -85,6 +70,12 @@ namespace TES3 {
 
 		void addPlayerAsCollider();
 
+		//
+		// Custom functions.
+		//
+
+		void enableMobileCollision(Reference* reference);
+		void disableMobileCollision(Reference* reference);
 	};
 	static_assert(sizeof(MobController) == 0x8C, "TES3::MobController failed size validation");
 }
