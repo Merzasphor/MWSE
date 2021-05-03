@@ -198,7 +198,14 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 			log << std::endl;
 		}
 		else {
-			mwse::log::getLog() << "Failed to detect Morrowind Code Patch installed features. MCP may not be installed, or the mcpatch\\installed file may have been deleted. Mods will be unable to detect MCP feature support." << std::endl;
+			mwse::log::getLog() << "The Morrowind Script Extender requires the Morrowind Code Patch to be installed. Ensure that you have installed it, and have not deleted the mcpatch folder." << std::endl;
+
+			auto result = MessageBox(NULL, "The Morrowind Script Extender requires the Morrowind Code Patch to be installed. Ensure that you have installed it, and have not deleted the mcpatch folder.\n\nWould you like to open the browser to visit the MCP download page?", "Morrowind Code Patch not installed!", MB_YESNO | MB_APPLMODAL | MB_ICONERROR);
+			if (result == IDYES) {
+				system("start https://www.nexusmods.com/morrowind/mods/19510?");
+			}
+
+			exit(0);
 		}
 
 		// Delay our lua hook until later, to ensure that Mod Organizer's VFS is hooked up.
