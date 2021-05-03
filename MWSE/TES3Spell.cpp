@@ -16,9 +16,19 @@ namespace TES3 {
 		TES3_Spell_ctor(this);
 	}
 
-	const auto TES3_Spell_dtor = reinterpret_cast<void (__thiscall*)(TES3::Spell*)>(0x4AA0E0);
+	const auto TES3_Spell_dtor = reinterpret_cast<void(__thiscall*)(TES3::Spell*)>(0x4AA0E0);
 	Spell::~Spell() {
 		TES3_Spell_dtor(this);
+	}
+
+	const auto TES3_Spell_getLeastProficientEffect = reinterpret_cast<Effect*(__thiscall*)(const TES3::Spell*, const NPC * npc)>(0x4AA850);
+	Effect* Spell::getLeastProficientEffect(const NPC* npc) const {
+		return TES3_Spell_getLeastProficientEffect(this, npc);
+	}
+
+	const auto TES3_Spell_getLeastProficientSchool = reinterpret_cast<int (__thiscall*)(const TES3::Spell*, const NPC * npc)>(0x4AA910);
+	int Spell::getLeastProficientSchool(const NPC* npc) const {
+		return TES3_Spell_getLeastProficientSchool(this, npc);
 	}
 
 	float Spell::calculateCastChance(Reference* caster, bool checkMagicka, int* weakestSchoolId) {

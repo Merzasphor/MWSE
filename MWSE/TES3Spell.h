@@ -64,8 +64,10 @@ namespace TES3 {
 		// Other related this-call functions.
 		//
 
-		float calculateCastChance(Reference* caster, bool checkMagicka = true, int* weakestSchoolId = 0);
-		float calculateCastChance(MobileActor* caster, bool checkMagicka = true, int* weakestSchoolId = 0);
+		Effect* getLeastProficientEffect(const NPC* npc) const;
+		int getLeastProficientSchool(const NPC* npc) const;
+		float calculateCastChance(Reference* caster, bool checkMagicka = true, int* weakestSchoolId = nullptr);
+		float calculateCastChance(MobileActor* caster, bool checkMagicka = true, int* weakestSchoolId = nullptr);
 		float castChanceOnCast(MobileActor* caster, bool checkMagicka, int* weakestSchoolId);
 
 		//
