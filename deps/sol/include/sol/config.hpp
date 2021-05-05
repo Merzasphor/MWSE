@@ -28,8 +28,10 @@
 #define SOL_SINGLE_CONFIG_HPP
 
 // Customizations
+#define SOL_LUAJIT 1
 #define SOL_SAFE_USERTYPE 1
-#define SOL_EXCEPTIONS_SAFE_PROPAGATION 1
+// It's _not_ wanted to propagate exceptions through Lua
+#define SOL_EXCEPTIONS_SAFE_PROPAGATION 0
 
 // beginning of sol/config.hpp
 
