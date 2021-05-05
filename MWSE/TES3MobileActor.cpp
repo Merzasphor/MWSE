@@ -1044,6 +1044,26 @@ namespace TES3 {
 		return node->value.castTimestamp;
 	}
 
+	bool MobileActor::getMobToMobCollision() const {
+		if (actorFlags & TES3::MobileActorFlag::ActiveAI) {
+			auto mobController = TES3::WorldController::get()->mobController;
+			return mobController->hasMobileCollision(this);
+		}
+		return false;
+	}
+
+	void MobileActor::setMobToMobCollision(bool collide) {
+		if (actorFlags & TES3::MobileActorFlag::ActiveAI) {
+			auto mobController = TES3::WorldController::get()->mobController;
+			if (collide) {
+				mobController->enableMobileCollision(this);
+			}
+			else {
+				mobController->disableMobileCollision(this);
+			}
+		}
+	}
+
 	ActiveMagicEffect* MobileActor::getActiveMagicEffects_legacy() const {
 		return &activeMagicEffects.sentinel->data;
 	}

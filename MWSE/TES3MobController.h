@@ -74,8 +74,9 @@ namespace TES3 {
 		// Custom functions.
 		//
 
-		void enableMobileCollision(Reference* reference);
-		void disableMobileCollision(Reference* reference);
+		bool hasMobileCollision(const MobileActor* mobile);
+		void enableMobileCollision(MobileActor* mobile);
+		void disableMobileCollision(MobileActor* mobile);
 	};
 	static_assert(sizeof(MobController) == 0x8C, "TES3::MobController failed size validation");
 }

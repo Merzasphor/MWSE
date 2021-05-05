@@ -84,24 +84,33 @@ namespace TES3 {
 		TES3_MobController_addPlayerAsCollider(this);
 	}
 
-	void MobController::enableMobileCollision(Reference * reference) {
-		auto mobile = reference->getAttachedMobileObject();
+	bool MobController::hasMobileCollision(const MobileActor* mobile) {
+		bool result = false;
 		if (mobile && (mobile->actorFlags & TES3::MobileActorFlag::ActiveAI)) {
+			auto node = mobile->reference->sceneNode;
 			criticalSection_Mobs.enter();
-			if (!mobCollisionGroup->containsCollider(reference->sceneNode)) {
-				mobCollisionGroup->addCollider(reference->sceneNode);
+			result = mobCollisionGroup->containsCollider(node);
+			criticalSection_Mobs.leave();
+		}
+		return result;
+	}
+
+	void MobController::enableMobileCollision(MobileActor* mobile) {
+		if (mobile && (mobile->actorFlags & TES3::MobileActorFlag::ActiveAI)) {
+			auto node = mobile->reference->sceneNode;
+			criticalSection_Mobs.enter();
+			if (!mobCollisionGroup->containsCollider(node)) {
+				mobCollisionGroup->addCollider(node);
 			}
 			criticalSection_Mobs.leave();
 		}
 	}
 
-	void MobController::disableMobileCollision(Reference* reference) {
-		auto mobile = reference->getAttachedMobileObject();
+	void MobController::disableMobileCollision(MobileActor* mobile) {
 		if (mobile && (mobile->actorFlags & TES3::MobileActorFlag::ActiveAI)) {
+			auto node = mobile->reference->sceneNode;
 			criticalSection_Mobs.enter();
-			if (mobCollisionGroup->containsCollider(reference->sceneNode)) {
-				mobCollisionGroup->removeCollider(reference->sceneNode);
-			}
+			mobCollisionGroup->removeCollider(node);
 			criticalSection_Mobs.leave();
 		}
 	}

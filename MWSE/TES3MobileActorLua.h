@@ -147,6 +147,7 @@ namespace mwse {
 			// Functions exposed as properties.
 			usertypeDefinition["cell"] = sol::property(&TES3::MobileActor::getCell);
 			usertypeDefinition["hasFreeAction"] = sol::property(&TES3::MobileActor::hasFreeAction);
+			usertypeDefinition["mobToMobCollision"] = sol::property(&TES3::MobileActor::getMobToMobCollision, &TES3::MobileActor::setMobToMobCollision);
 
 			// Legacy support for old structures.
 			usertypeDefinition["activeMagicEffects"] = sol::readonly_property(&TES3::MobileActor::getActiveMagicEffects_legacy);

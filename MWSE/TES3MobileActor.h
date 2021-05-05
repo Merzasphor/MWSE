@@ -407,6 +407,9 @@ namespace TES3 {
 		bool rechargePower(Spell* power);
 		sol::optional<double> getPowerUseTimestamp(Spell* spell) const;
 
+		bool getMobToMobCollision() const;
+		void setMobToMobCollision(bool collide);
+
 		ActiveMagicEffect* getActiveMagicEffects_legacy() const;
 		int getActiveMagicEffectCount_legacy() const;
 	};

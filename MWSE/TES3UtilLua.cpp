@@ -3671,30 +3671,6 @@ namespace mwse {
 			}
 		}
 
-		void setMobileCollision(sol::table params) {
-			TES3::Reference* reference = getOptionalParamExecutionReference(params);
-			if (reference == nullptr) {
-				throw std::invalid_argument("Invalid 'reference' parameter provided.");
-			}
-
-			auto mact = reference->getAttachedMobileActor();
-			if (mact == nullptr) {
-				throw std::invalid_argument("Invalid 'reference' parameter provided. No mobile actor found.");
-			}
-
-			bool collide = getOptionalParam<bool>(params, "collide", true);
-
-			if (mact->actorFlags & TES3::MobileActorFlag::ActiveAI) {
-				auto mobController = TES3::WorldController::get()->mobController;
-				if (collide) {
-					mobController->enableMobileCollision(reference);
-				}
-				else {
-					mobController->disableMobileCollision(reference);
-				}
-			}
-		}
-
 		bool isAffectedBy(sol::table params) {
 			TES3::Reference* reference = getOptionalParamExecutionReference(params);
 			if (reference == nullptr) {
@@ -4617,7 +4593,6 @@ namespace mwse {
 			tes3["setKillCount"] = setKillCount;
 			tes3["setLockLevel"] = setLockLevel;
 			tes3["setMarkLocation"] = setMarkLocation;
-			tes3["setMobileCollision"] = setMobileCollision;
 			tes3["setOwner"] = setOwner;
 			tes3["setPlayerControlState"] = setPlayerControlState;
 			tes3["setSourceless"] = setSourceless;
