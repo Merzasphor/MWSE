@@ -25,6 +25,9 @@ namespace mwse {
 			usertypeDefinition["impulseVelocity"] = sol::property(&TES3::MobileObject::getImpulseVelocity, &TES3::MobileObject::setImpulseVelocityFromLua);
 			usertypeDefinition["position"] = sol::property(&TES3::MobileObject::getPosition, &TES3::MobileObject::setPositionFromLua);
 			usertypeDefinition["velocity"] = sol::property(&TES3::MobileObject::getVelocity, &TES3::MobileObject::setVelocityFromLua);
+
+			// Custom property bindings.
+			usertypeDefinition["movementCollision"] = sol::property(&TES3::MobileObject::getMovementCollisionFlag, &TES3::MobileObject::setMovementCollisionFlag);
 		}
 	}
 }

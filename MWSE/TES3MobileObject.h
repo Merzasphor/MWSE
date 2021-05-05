@@ -22,6 +22,7 @@ namespace TES3 {
 
 		enum Flag : value_type {
 			ActiveAI = 0x4,
+			CollisionActive = 0x20,
 			Werewolf = 0x400,
 			Underwater = 0x800,
 			TalkedTo = 0x1000,
@@ -38,6 +39,7 @@ namespace TES3 {
 
 		enum FlagBit {
 			ActiveAIBit = 2,
+			CollisionActiveBit = 5,
 			WerewolfBit = 10,
 			UnderwaterBit = 11,
 			TalkedToBit = 12,
@@ -211,11 +213,11 @@ namespace TES3 {
 			MobileNPC_vTable * mobileNPC;
 		} vTable; // 0x0
 		ObjectType::ObjectType objectType; // 0x4
-		unsigned short movementFlags; // 0x8
-		unsigned short prevMovementFlags; // 0xA
+		ActorMovement::value_type movementFlags; // 0x8
+		ActorMovement::value_type prevMovementFlags; // 0xA
 		short unknown_0xC;
 		short unknown_0xE; // Undefined.
-		unsigned int actorFlags; // 0x10
+		MobileActorFlag::value_type actorFlags; // 0x10
 		Reference * reference; // 0x14
 		Collision * arrayCollisionResults; // 0x18 // Exactly 30 elements.
 		short cellX; // 0x1C
@@ -269,6 +271,8 @@ namespace TES3 {
 		Vector3* getVelocity();
 		void setVelocityFromLua(sol::stack_object);
 
+		bool getMovementCollisionFlag() const;
+		void setMovementCollisionFlag(bool collide);
 		sol::table getCollisions_lua(sol::this_state ts) const;
 
 		// Storage for cached userdata.

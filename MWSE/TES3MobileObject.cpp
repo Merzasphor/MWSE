@@ -184,6 +184,19 @@ namespace TES3 {
 		mwse::lua::setVectorFromLua(&velocity, value);
 	}
 
+	bool MobileObject::getMovementCollisionFlag() const {
+		return bool(actorFlags & MobileActorFlag::CollisionActive);
+	}
+
+	void MobileObject::setMovementCollisionFlag(bool collide) {
+		if (collide) {
+			actorFlags |= MobileActorFlag::CollisionActive;
+		}
+		else {
+			actorFlags &= ~MobileActorFlag::CollisionActive;
+		}
+	}
+
 	sol::table MobileObject::getCollisions_lua(sol::this_state ts) const {
 		sol::state_view state = ts;
 		sol::table results = state.create_table();
