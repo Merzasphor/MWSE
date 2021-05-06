@@ -3597,7 +3597,10 @@ namespace mwse {
 			}
 
 			int startFlag = getOptionalParam<int>(params, "startFlag", 0);
-			int loopCount = getOptionalParam<int>(params, "loopCount", -1);
+			int loopCount = getOptionalParam<int>(params, "loopCount", 0) - 1;
+			if (loopCount < -1) {
+				loopCount = -1;
+			}
 
 			auto mact = reference->getAttachedMobileActor();
 			if (mact) {
