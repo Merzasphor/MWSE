@@ -1,7 +1,7 @@
-compressFlags
+textureSets.
 ====================================================================================================
 
-`boolean`_. If true, compress geometry.
+`number`_. The number of texture coordinate sets in the data.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

@@ -1,14 +1,16 @@
 markAsChanged
 ====================================================================================================
 
-Tells the renderer that the object has changed. Should be called after changing textures, vertices, or other properties.
+Tells the renderer that the object has changed. Should be called after you have finished changing any vertex data.
+
+If you have altered vertex positions, you may need to also call `updateModelBound`_. You should call it if vertices have been moved outside the bounds of the original model.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 
-flags (`number`_)
-    No description available.
+None
 
+.. _`updateModelBound`: updateModelBound.html
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html
 .. _`tes3book`: ../../../lua/type/tes3book.html

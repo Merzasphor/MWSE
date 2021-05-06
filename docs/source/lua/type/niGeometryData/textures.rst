@@ -1,7 +1,7 @@
 textures
 ====================================================================================================
 
-`tes3vector2`_. The textures list for the object.
+`tes3vector2`_. The array of texture coordinates.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

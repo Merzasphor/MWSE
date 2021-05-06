@@ -1,7 +1,7 @@
-keepFlags
+unqiueID
 ====================================================================================================
 
-`boolean`_. If true, keep geometry arrays after converting geometry.
+`number`_. Read-only. A unique ID for this model, assigned at model creation.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

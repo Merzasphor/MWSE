@@ -1,19 +1,21 @@
 #include "NIGeometryData.h"
 
 namespace NI {
-	unsigned short GeometryData::getVertexCount() {
-		return vTable.asGeometryData->getVertexCount(this);
+	unsigned short GeometryData::getActiveVertexCount() {
+		return vTable.asGeometryData->getActiveVertexCount(this);
 	}
 
-	GeometryData::Consistency GeometryData::getConsistency() {
-		return (Consistency)(dirtyFlags & Consistency::Mask);
-	}
-
-	void GeometryData::markAsChanged(unsigned short flags) {
-		if (getConsistency() == Consistency::Static) {
-			throw std::runtime_error("Consistency for geometry cannot be static.");
+	void GeometryData::markAsChanged() {
+		++revisionID;
+		// Avoid revisionID 0, which implies static data
+		if (revisionID == 0) {
+			++revisionID;
 		}
-		dirtyFlags |= (flags & Mask::Dirty);
+	}
+
+	const auto NI_Bound_ComputeFromData = reinterpret_cast<void(__thiscall*)(NI::Bound*, int, TES3::Vector3*, unsigned int)>(0x6ED170);
+	void GeometryData::updateModelBound() {
+		NI_Bound_ComputeFromData(&bounds, vertexCount, vertex, sizeof(TES3::Vector3));
 	}
 
 	nonstd::span<ColorA> GeometryData::getColors() {
@@ -29,7 +31,7 @@ namespace NI {
 	}
 
 	nonstd::span<TES3::Vector2> GeometryData::getTextureCoordinates() {
-		return nonstd::span(texture, vertexCount);
+		return nonstd::span(textureCoords, vertexCount);
 	}
 }
 

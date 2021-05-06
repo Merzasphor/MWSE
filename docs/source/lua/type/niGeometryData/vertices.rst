@@ -1,7 +1,7 @@
 vertices
 ====================================================================================================
 
-`tes3vector3`_. The vertice list for the object.
+`tes3vector3`_. The array of vertex position data.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html
