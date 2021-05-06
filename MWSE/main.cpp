@@ -169,9 +169,6 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 		// Initialize our main mwscript hook.
 		mwse::mwAdapter::Hook();
 
-		// Install patches.
-		mwse::genCallEnforced(0x417169, 0x417280, reinterpret_cast<DWORD>(OnGameStructCreated));
-
 		// Create MGE VM interface.
 		mge_virtual_machine = new TES3MACHINE();
 
@@ -205,8 +202,11 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved) {
 				system("start https://www.nexusmods.com/morrowind/mods/19510?");
 			}
 
-			exit(0);
+			return FALSE;
 		}
+
+		// Install patches.
+		mwse::genCallEnforced(0x417169, 0x417280, reinterpret_cast<DWORD>(OnGameStructCreated));
 
 		// Delay our lua hook until later, to ensure that Mod Organizer's VFS is hooked up.
 		if (!mwse::genCallEnforced(0x417195, 0x417880, reinterpret_cast<DWORD>(OnGameStructInitialized))) {
