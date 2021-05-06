@@ -31,7 +31,7 @@ namespace NI {
 	}
 
 	nonstd::span<TES3::Vector2> GeometryData::getTextureCoordinates() {
-		return nonstd::span(textureCoords, vertexCount);
+		return nonstd::span(textureCoords, vertexCount * textureSets);
 	}
 }
 
