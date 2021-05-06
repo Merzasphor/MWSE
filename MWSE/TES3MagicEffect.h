@@ -221,9 +221,9 @@ namespace TES3 {
 	}
 
 	struct MagicEffect : BaseObject {
-		long id; // 0x10
+		int id; // 0x10
 		char * description; // 0x14
-		long descriptionFileOffset; // 0x18
+		int descriptionFileOffset; // 0x18
 		char icon[32]; // 0x1C
 		char particleTexture[32]; // 0x3C
 								  // Only a few effects have data in their sound effect strings.
@@ -239,9 +239,9 @@ namespace TES3 {
 		int school; // 0xEC
 		float baseMagickaCost; // 0xF0
 		unsigned int flags; // 0xF4
-		long lightingRed; // 0xF8
-		long lightingGreen; // 0xFC
-		long lightingBlue; // 0x0100
+		int lightingRed; // 0xF8
+		int lightingGreen; // 0xFC
+		int lightingBlue; // 0x0100
 		float size; // 0x0104
 		float speed; // 0x0108
 		float sizeCap; // 0x010C

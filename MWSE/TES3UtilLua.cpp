@@ -279,8 +279,8 @@ namespace mwse {
 				return nullptr;
 			}
 
-			if (key.is<double>()) {
-				int index = key.as<double>();
+			if (key.is<int>()) {
+				int index = key.as<int>();
 				if (index >= TES3::GMST::sMonthMorningstar && index <= TES3::GMST::sWitchhunter) {
 					return dataHandler->nonDynamicData->GMSTs[index];
 				}
@@ -312,7 +312,7 @@ namespace mwse {
 			bool loop = getOptionalParam<bool>(params, "loop", false);
 			int mix = getOptionalParam<int>(params, "mixChannel", int(TES3::AudioMixType::Effects));
 			double volume = getOptionalParam<double>(params, "volume", 1.0);
-			float pitch = getOptionalParam<double>(params, "pitch", 1.0);
+			float pitch = getOptionalParam<float>(params, "pitch", 1.0f);
 
 			if (sound == nullptr && soundPath == nullptr) {
 				log::getLog() << "tes3.playSound: Could not locate sound." << std::endl;
@@ -328,11 +328,11 @@ namespace mwse {
 
 			if (soundPath) {
 				bool isVoiceover = getOptionalParam<bool>(params, "isVoiceover", false);
-				TES3::DataHandler::get()->addTemporySound(soundPath, reference, loop ? TES3::SoundPlayFlags::Loop : 0, volume, pitch, isVoiceover, sound);
+				TES3::DataHandler::get()->addTemporySound(soundPath, reference, loop ? TES3::SoundPlayFlags::Loop : 0, int(volume), pitch, isVoiceover, sound);
 				return true;
 			}
 			else if (sound) {
-				TES3::DataHandler::get()->addSound(sound, reference, loop ? TES3::SoundPlayFlags::Loop : 0, volume, pitch);
+				TES3::DataHandler::get()->addSound(sound, reference, loop ? TES3::SoundPlayFlags::Loop : 0, int(volume), pitch);
 				return true;
 			}
 
@@ -356,8 +356,8 @@ namespace mwse {
 			// Get parameters.
 			TES3::Sound* sound = getOptionalParamSound(params, "sound");
 			TES3::Reference* reference = getOptionalParamReference(params, "reference");
-			int mix = getOptionalParam<int>(params, "mixChannel", int(TES3::AudioMixType::Effects));
-			double volume = getOptionalParam<double>(params, "volume", 1.0);
+			auto mix = getOptionalParam<int>(params, "mixChannel", int(TES3::AudioMixType::Effects));
+			auto volume = getOptionalParam<double>(params, "volume", 1.0);
 
 			if (!sound || !reference) {
 				log::getLog() << "tes3.adjustSoundVolume: Valid sound and reference required." << std::endl;
@@ -371,7 +371,7 @@ namespace mwse {
 			// Apply mix and rescale to 0-250
 			volume *= 250.0 * TES3::WorldController::get()->audioController->getMixVolume(TES3::AudioMixType(mix));
 
-			TES3::DataHandler::get()->adjustSoundVolume(sound, reference, volume);
+			TES3::DataHandler::get()->adjustSoundVolume(sound, reference, unsigned char(volume));
 		}
 
 		void removeSound(sol::optional<sol::table> params) {
@@ -395,7 +395,7 @@ namespace mwse {
 				char path[260];
 
 				std::snprintf(path, sizeof(path), "Data Files/music/%s", relativePath);
-				worldController->audioController->changeMusicTrack(path, 1000 * crossfade, volume);
+				worldController->audioController->changeMusicTrack(path, int(1000.0f * crossfade), volume);
 				worldController->musicSituation = TES3::MusicSituation(situation);
 			}
 		}
@@ -742,7 +742,7 @@ namespace mwse {
 			}
 
 			// Get optional maximum search distance.
-			double maxDistance = getOptionalParam<double>(params, "maxDistance", 0.0);
+			auto maxDistance = getOptionalParam<float>(params, "maxDistance", 0.0f);
 
 			// Create our pick if it doesn't exist.
 			if (rayTestCache == nullptr) {
@@ -879,13 +879,13 @@ namespace mwse {
 				}
 
 				// Adjust distance as if direction was not normalized.
-				r->distance *= distanceScale;
+				r->distance *= float(distanceScale);
 
 				// Skinned nodes only have usable scaled distance data.
 				if (r->object->isInstanceOfType(NI::RTTIStaticPtr::NiTriShape)) {
 					auto node = static_cast<const NI::TriShape*>(r->object);
 					if (node->skinInstance) {
-						r->distance *= skinnedCorrection;
+						r->distance *= float(skinnedCorrection);
 						r->intersection = position.value() + direction.value() * r->distance;
 						r->normal = (r->intersection - node->worldBoundOrigin).normalized();
 					}
@@ -1275,7 +1275,7 @@ namespace mwse {
 			crimeEvent.criminal = criminal;
 
 			// Set some basic crime event data.
-			crimeEvent.timestamp = timeGetTime();
+			crimeEvent.timestamp = float(timeGetTime());
 			crimeEvent.position = criminal->position;
 			crimeEvent.penalty = getOptionalParam<int>(params, "value", crimeEvent.penalty);
 
@@ -3251,7 +3251,7 @@ namespace mwse {
 			else {
 				config->destination = TES3::Vector3(FLT_MAX, FLT_MAX, 0.0f);
 			}
-			config->duration = getOptionalParam<double>(params, "duration", 0.0);
+			config->duration = getOptionalParam<unsigned char>(params, "duration", 0);
 			config->actor = static_cast<TES3::Actor*>(target->baseObject);
 			config->cell = getOptionalParamCell(params, "cell");
 			config->reset = getOptionalParam<bool>(params, "reset", true);
@@ -3279,7 +3279,7 @@ namespace mwse {
 			auto config = tes3::_new<TES3::AIPackageEscort::Config>();
 			config->type = TES3::AIPackageConfigType::Escort;
 			config->destination = destination.value();
-			config->duration = getOptionalParam<double>(params, "duration", 0.0);
+			config->duration = getOptionalParam<unsigned char>(params, "duration", 0);
 			config->actor = static_cast<TES3::Actor*>(target->getBaseObject());
 			config->cell = getOptionalParamCell(params, "cell");
 			config->reset = getOptionalParam<bool>(params, "reset", true);
@@ -3321,9 +3321,9 @@ namespace mwse {
 
 			auto config = tes3::_new<TES3::AIPackageWander::Config>();
 			config->type = TES3::AIPackageConfigType::Wander;
-			config->range = getOptionalParam<double>(params, "range", 0.0);
-			config->duration = getOptionalParam<double>(params, "duration", 0.0);
-			config->time = getOptionalParam<double>(params, "time", 0.0);
+			config->range = getOptionalParam<unsigned short>(params, "range", 0);
+			config->duration = getOptionalParam<unsigned char>(params, "duration", 0);
+			config->time = getOptionalParam<unsigned char>(params, "time", 0);
 			config->reset = getOptionalParam<bool>(params, "reset", true);
 
 			sol::table idles = maybeIdles.value();
@@ -3355,7 +3355,7 @@ namespace mwse {
 			float pitch = getOptionalParam(params, "pitch", 1.0f);
 
 			// Apply volume, using mix channel and rescale to 0-250.
-			float volume = std::min(std::max(0.0f, getOptionalParam(params, "volume", 1.0f)), 1.0f);
+			double volume = std::min(std::max(0.0, getOptionalParam(params, "volume", 1.0)), 1.0);
 			volume *= 250.0 * worldController->audioController->getMixVolume(TES3::AudioMixType::Voice);
 
 			// Show a messagebox.
@@ -3367,7 +3367,7 @@ namespace mwse {
 			}
 
 			// Play the related sound.
-			dataHandler->addTemporySound(path, reference, 0, volume, pitch, true);
+			dataHandler->addTemporySound(path, reference, 0, int(volume), pitch, true);
 		}
 
 		bool hasOwnershipAccess(sol::table params) {
@@ -3656,8 +3656,8 @@ namespace mwse {
 
 			sol::object timing = params["timing"];
 			if (timing.valid() && timing != sol::nil) {
-				if (timing.is<double>()) {
-					const float fTiming = timing.as<double>();
+				if (timing.is<float>()) {
+					const float fTiming = timing.as<float>();
 					animData->timing[0] = fTiming;
 					animData->timing[1] = fTiming;
 					animData->timing[2] = fTiming;
