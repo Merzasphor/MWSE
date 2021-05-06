@@ -231,6 +231,10 @@ namespace mwse {
 			return new TES3::GlobalHashContainer();
 		}
 
+		void __fastcall DataHandlerDestroyGlobalsContainer(TES3::GlobalHashContainer* container) {
+			delete container;
+		}
+
 		const auto TES3_WorldController_InitGlobals = reinterpret_cast<void (__thiscall*)(TES3::WorldController*)>(0x40E920);
 		void __fastcall WorldControllerInitGlobals(TES3::WorldController* worldController) {
 			// Call original code.
@@ -444,6 +448,7 @@ namespace mwse {
 			// Patch: Make globals less slow to access.
 #if MWSE_CUSTOM_GLOBALS
 			genCallEnforced(0x4B7D74, 0x47E1E0, reinterpret_cast<DWORD>(DataHandlerCreateGlobalsContainer));
+			genCallUnprotected(0x4B8154, reinterpret_cast<DWORD>(DataHandlerDestroyGlobalsContainer), 6);
 			genCallEnforced(0x41A029, 0x40E920, reinterpret_cast<DWORD>(WorldControllerInitGlobals));
 			genCallEnforced(0x4C6012, 0x40E920, reinterpret_cast<DWORD>(WorldControllerInitGlobals));
 			genCallEnforced(0x5FB10F, 0x40E920, reinterpret_cast<DWORD>(WorldControllerInitGlobals));

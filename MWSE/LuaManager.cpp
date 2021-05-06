@@ -4062,6 +4062,8 @@ namespace mwse {
 			genCallEnforced(0x4EC00F, 0x4EEC70, *reinterpret_cast<DWORD*>(&Reference_setDeleted));
 			genCallEnforced(0x50C538, 0x4EEC70, *reinterpret_cast<DWORD*>(&Reference_setDeleted));
 			genCallEnforced(0x529B86, 0x4EEC70, *reinterpret_cast<DWORD*>(&Reference_setDeleted));
+			// Skip destruction on exit of a global temp reference. Avoids event triggering on this reference.
+			genNOPUnprotected(0x49A4E9, 0xD);
 
 			// Patch other functions to use referenceActivated/Deactivated functions.
 			genCallEnforced(0x5063A6, 0x50EDD0, reinterpret_cast<DWORD>(ScriptRelocateReference));
