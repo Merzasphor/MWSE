@@ -9,27 +9,22 @@
 #define NI_AVObject_update 0x6EB000
 
 namespace NI {
-	sol::optional<TES3::Vector3> AVObject::getVelocity_lua() const {
-		if (velocities == nullptr) {
-			return {};
+	TES3::Vector3 AVObject::getLocalVelocity() const {
+		if (velocities) {
+			return velocities->localVelocity;
 		}
-		return *velocities;
+		return TES3::Vector3{ 0, 0, 0 };
 	}
 
-	void AVObject::setVelocity_lua(sol::object object) {
-		// Handle delete case.
-		if (object == sol::nil) {
-			if (velocities) {
-				mwse::tes3::_delete(velocities);
-				velocities = nullptr;
-			}
-			return;
+	void AVObject::setLocalVelocity(TES3::Vector3* v) {
+		if (velocities) {
+			velocities->localVelocity = *v;
 		}
-
-		if (velocities == nullptr) {
-			velocities = mwse::tes3::_new<TES3::Vector3>();
+		else {
+			velocities = mwse::tes3::_new<ObjectVelocities>();
+			velocities->localVelocity = *v;
+			velocities->worldVelocity = { 0, 0, 0 };
 		}
-		*velocities = object;
 	}
 
 	AVObject * AVObject::getObjectByName(const char* name) {

@@ -6,6 +6,11 @@
 #include "NITransform.h"
 
 namespace NI {
+	struct ObjectVelocities {
+		TES3::Vector3 localVelocity;
+		TES3::Vector3 worldVelocity;
+	};
+
 	struct AVObject : ObjectNET {
 		unsigned short flags; // 0x14
 		short pad_16;
@@ -16,7 +21,7 @@ namespace NI {
 		TES3::Vector3 localTranslate; // 0x30
 		float localScale; // 0x3C
 		TES3::Transform worldTransform; // 0x40
-		TES3::Vector3 * velocities; // 0x74
+		ObjectVelocities* velocities; // 0x74
 		void * modelABV; // 0x78
 		void * worldABV; // 0x7C
 		int (__cdecl * collideCallback)(void*); // 0x80
@@ -27,8 +32,8 @@ namespace NI {
 		// vTable wrappers.
 		//
 
-		sol::optional<TES3::Vector3> getVelocity_lua() const;
-		void setVelocity_lua(sol::object object);
+		TES3::Vector3 getLocalVelocity() const;
+		void setLocalVelocity(TES3::Vector3*);
 
 		AVObject * getObjectByName(const char*);
 

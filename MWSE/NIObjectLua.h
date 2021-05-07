@@ -59,7 +59,7 @@ namespace mwse {
 			usertypeDefinition["flags"] = &NI::AVObject::flags;
 			usertypeDefinition["scale"] = &NI::AVObject::localScale;
 			usertypeDefinition["translation"] = &NI::AVObject::localTranslate;
-			usertypeDefinition["velocity"] = sol::property(&NI::AVObject::getVelocity_lua, &NI::AVObject::setVelocity_lua);
+			usertypeDefinition["velocity"] = sol::property(&NI::AVObject::getLocalVelocity, &NI::AVObject::setLocalVelocity);
 			usertypeDefinition["worldBoundOrigin"] = &NI::AVObject::worldBoundOrigin;
 			usertypeDefinition["worldBoundRadius"] = &NI::AVObject::worldBoundRadius;
 			usertypeDefinition["worldTransform"] = &NI::AVObject::worldTransform;
