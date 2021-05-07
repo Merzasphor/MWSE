@@ -8,7 +8,7 @@ return {
 			{ name = "reference", type = "tes3mobileActor|tes3reference|string", description = "The reference that will play the animation." },
 			{ name = "group", type = "number", default = 0, description = "The group id -- a value from 0 to 149. Maps to tes3.animationGroup.* constants." },
 			{ name = "startFlag", type = "number", default = 0, description = "A flag for starting the group with, matching tes3.animationStartFlag.* constants." },
-			{ name = "loopCount", type = "number", optional = true, description = "If provided, the animation will play a given number of times. If not provided, the animation will loop forever." },
+			{ name = "loopCount", type = "number", optional = true, description = "If provided, the animation will loop a given number of times." },
 		},
 	}},
 }
