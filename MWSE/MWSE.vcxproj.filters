@@ -1344,7 +1344,7 @@
     <ClInclude Include="NIKeyframeController.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
-    <ClInclude Include="NiKeyframeManager.h">
+    <ClInclude Include="NIKeyframeManager.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
     </ClInclude>
     <ClInclude Include="TES3BodyPartManager.h">
@@ -3288,6 +3288,9 @@
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
     <ClCompile Include="NICollisionGroup.cpp">
+      <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="NIKeyframeManager.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3559,38 +3559,61 @@ namespace mwse {
 			return std::make_tuple(animData->currentAnimGroup[0], animData->currentAnimGroup[1], animData->currentAnimGroup[2]);
 		}
 
-		void playAnimation(sol::table params) {
+		const auto TES3_ModelLoader_loadAnimKF = reinterpret_cast<TES3::KeyframeDefinition * (__thiscall*)(void*, const char*, const char*)>(0x4EE200);
+
+		void loadAnimation(sol::table params) {
 			TES3::Reference* reference = getOptionalParamExecutionReference(params);
 			if (reference == nullptr) {
 				throw std::invalid_argument("Invalid 'reference' parameter provided.");
 			}
 
 			auto animData = reference->getAttachedAnimationData();
-			if (animData == nullptr) {
+			if (reference->sceneNode == nullptr || animData == nullptr) {
 				return;
 			}
 
-			const char* deprecatedFile = getOptionalParam<const char*>(params, "mesh", nullptr);
-			const char* modelFile = getOptionalParam<const char*>(params, "file", deprecatedFile);
+			// Reset actor animations.
+			// This is the desired effect when the file argument is nil.
+			// It is also required to replace an anim layer, because merging needs to start with fresh data.
+			if (animData->hasSpecialAnimations()) {
+				reference->loadReloadBaseAnimations();
+				animData = reference->getAttachedAnimationData();
+			}
+
+			const char* modelFile = getOptionalParam<const char*>(params, "file", nullptr);
 			if (modelFile != nullptr) {
-				const auto TES3_ModelLoader_loadAnimKF = reinterpret_cast<TES3::KeyframeDefinition * (__thiscall*)(void*, const char*, const char*)>(0x4EE200);
+				// Load animation file and set layer 0.
+				const int layerIndex = 0;
 				auto modelLoader = TES3::DataHandler::get()->nonDynamicData->meshData;
 				auto keyframe = TES3_ModelLoader_loadAnimKF(modelLoader, modelFile, "MWSE Anim");
 
 				if (keyframe) {
-					const auto TES3_AnimAttachment_addData = reinterpret_cast<bool(__thiscall*)(TES3::AnimationData*, TES3::KeyframeDefinition*, NI::Node*, int, int)>(0x46B950);
-					const auto TES3_AnimAttachment_setLayerKeyframes = reinterpret_cast<bool(__thiscall*)(TES3::AnimationData*, TES3::KeyframeDefinition*, int, int)>(0x46BA30);
-					const auto TES3_AnimAttachment_mergeAnimGroups = reinterpret_cast<bool(__thiscall*)(TES3::AnimationData*, TES3::AnimationGroup*, int)>(0x4708D0);
-					const int layerIndex = 0;
-
-					if (TES3_AnimAttachment_addData(animData, keyframe, reference->sceneNode, 1, layerIndex)) {
-						TES3_AnimAttachment_setLayerKeyframes(animData, keyframe, layerIndex, 1);
-						TES3_AnimAttachment_mergeAnimGroups(animData, keyframe->animationGroup, layerIndex);
-					}
+					animData->setAnimationLayer(keyframe, layerIndex);
 				}
 				else {
 					throw std::invalid_argument("Couldn't load animation from 'file' parameter.");
 				}
+			}
+		}
+
+		void playAnimation(sol::table params) {
+			TES3::Reference* reference = getOptionalParamExecutionReference(params);
+			if (reference == nullptr) {
+				throw std::invalid_argument("Invalid 'reference' parameter provided.");
+			}
+
+			// Ensure there is target data to override.
+			auto animData = reference->getAttachedAnimationData();
+			if (reference->sceneNode == nullptr || animData == nullptr) {
+				return;
+			}
+
+			// Deprecated argument.
+			const char* modelFile = getOptionalParam<const char*>(params, "mesh", nullptr);
+			if (modelFile) {
+				params["file"] = modelFile;
+				loadAnimation(params);
+				animData = reference->getAttachedAnimationData();
 			}
 
 			int group = getOptionalParam<int>(params, "group", 0);
@@ -3638,7 +3661,7 @@ namespace mwse {
 				return;
 			}
 
-			animData->unknown_0x54 |= 0xFFFF;
+			animData->flags |= 0xFFFF;
 		}
 
 		sol::optional<sol::table> getAnimationTiming(sol::table params, sol::this_state thisState) {
@@ -4573,6 +4596,7 @@ namespace mwse {
 			tes3["isAffectedBy"] = isAffectedBy;
 			tes3["isModActive"] = isModActive;
 			tes3["iterateObjects"] = iterateObjects;
+			tes3["loadAnimation"] = loadAnimation;
 			tes3["loadGame"] = loadGame;
 			tes3["loadMesh"] = loadMesh;
 			tes3["loadSourceTexture"] = loadSourceTexture;

@@ -284,6 +284,11 @@ namespace TES3 {
 		}
 	}
 
+	const auto TES3_Reference_loadReloadBaseAnimations = reinterpret_cast<void(__thiscall*)(Reference*)>(0x4E6220);
+	void Reference::loadReloadBaseAnimations() {
+		TES3_Reference_loadReloadBaseAnimations(this);
+	}
+
 	Cell* Reference::getCell() const {
 		// Handle case for the player.
 		auto macp = TES3::WorldController::get()->getMobilePlayer();

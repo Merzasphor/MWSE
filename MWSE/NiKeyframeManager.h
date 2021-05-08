@@ -8,26 +8,45 @@
 #include "TES3Vectors.h"
 
 namespace NI {
+	enum struct SequenceState : int {
+		Inactive,
+		Animating,
+		LayerBlend,
+		SyncSeqBlend,
+		BlendSource,
+		BlendDest,
+		MorphSource,
+		MorphDest,
+		SumSource,
+		SumDest
+	};
+
 	struct Sequence {
 		char* name; // 0x0
-		char* unknown_0x4;
-		int unknown_0x8;
+		char* filename; // 0x4
+		int fileNum;
 		NI::TArray<char*> boneNames; // 0xC
 		NI::TArray<Pointer<KeyframeController>> controllers; // 0x24
 		Pointer<TextKeyExtraData> textKeys;
-		unsigned int currentBoneControllerIndex; // 0x40
+		unsigned int textKeyControllerIndex; // 0x40
 		KeyframeManager* manager; // 0x44
-		int unknown_0x48;
-		int unknown_0x4C;
-		Sequence* unknown_0x50;
-		int unknown_0x54;
-		char unknown_0x58;
-		char unknown_0x59;
-		int unknown_0x5C;
-		TES3::Matrix33 unknown_0x60;
-		TES3::Vector3 unknown_0x84;
-		TES3::Matrix33 unknown_0x90;
-		TES3::Vector3 unknown_0xB4;
+		SequenceState state;
+		float endPointTime;
+		Sequence* partnerSequence;
+		float offset;
+		char bCumulative;
+		char bFirstFrame;
+		float lastTime;
+		TES3::Matrix33 m_kLoopScaleRotation;
+		TES3::Vector3 m_kLoopTranslation;
+		TES3::Matrix33 m_kTempScaleRotation;
+		TES3::Vector3 m_kTempTranslation;
+
+		//
+		// Custom functions.
+		//
+
+		void release();
 	};
 	static_assert(sizeof(Sequence) == 0xC0, "NI::Sequence failed size validation");
 

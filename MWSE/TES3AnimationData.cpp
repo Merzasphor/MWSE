@@ -1,6 +1,8 @@
 #include "TES3AnimationData.h"
+#include "TES3ActorAnimationData.h"
 
 #include "NINode.h"
+#include "NIKeyframeManager.h"
 
 #include "LuaManager.h"
 
@@ -47,4 +49,35 @@ namespace TES3 {
 		playAnimationGroupForIndex(animationGroup, 1, startFlag, loopCount);
 		playAnimationGroupForIndex(animationGroup, 2, startFlag, loopCount);
 	}
+
+	const auto TES3_AnimAttachment_setLayerKeyframes = reinterpret_cast<bool(__thiscall*)(TES3::AnimationData*, TES3::KeyframeDefinition*, int, int)>(0x46BA30);
+	const auto TES3_AnimAttachment_mergeAnimGroups = reinterpret_cast<bool(__thiscall*)(TES3::AnimationData*, TES3::AnimationGroup*, int)>(0x4708D0);
+
+	void AnimationData::setAnimationLayer(TES3::KeyframeDefinition* keyframe, int layerIndex) {
+		// Set sequence group layer and update animation group pointers.
+		TES3_AnimAttachment_setLayerKeyframes(this, keyframe, layerIndex, 1);
+		TES3_AnimAttachment_mergeAnimGroups(this, keyframe->animationGroup, layerIndex);
+	}
+
+	bool AnimationData::hasSpecialAnimations() const {
+		return keyframeLayers[0].lower != nullptr;
+	}
+
+	void AnimationData::clearAnimationLayer(int layerIndex) {
+		// Free NiSequence clones.
+		auto& layer = keyframeLayers[layerIndex];
+		if (layer.lower) {
+			layer.lower->release();
+			layer.lower = nullptr;
+		}
+		if (layer.upper) {
+			layer.upper->release();
+			layer.upper = nullptr;
+		}
+		if (layer.leftArm) {
+			layer.leftArm->release();
+			layer.leftArm = nullptr;
+		}
+	}
+
 }

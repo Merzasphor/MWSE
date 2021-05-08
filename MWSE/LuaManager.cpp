@@ -4062,13 +4062,13 @@ namespace mwse {
 			genCallEnforced(0x4EC00F, 0x4EEC70, *reinterpret_cast<DWORD*>(&Reference_setDeleted));
 			genCallEnforced(0x50C538, 0x4EEC70, *reinterpret_cast<DWORD*>(&Reference_setDeleted));
 			genCallEnforced(0x529B86, 0x4EEC70, *reinterpret_cast<DWORD*>(&Reference_setDeleted));
-			// Skip destruction on exit of a global temp reference. Avoids event triggering on this reference.
-			genNOPUnprotected(0x49A4E9, 0xD);
 
 			// Patch other functions to use referenceActivated/Deactivated functions.
 			genCallEnforced(0x5063A6, 0x50EDD0, reinterpret_cast<DWORD>(ScriptRelocateReference));
 			genCallEnforced(0x5064D8, 0x50EDD0, reinterpret_cast<DWORD>(ScriptRelocateReference));
 			genCallEnforced(0x509D85, 0x50EDD0, reinterpret_cast<DWORD>(ScriptRelocateReference));
+			// Disable destruction on process exit of a global temp reference. Avoids deactivation event triggering on this reference.
+			genNOPUnprotected(0x49A4E9, 0xD);
 
 			// Event: playGroup
 			auto AnimationData_playAnimationGroupForIndex = &TES3::AnimationData::playAnimationGroupForIndex;
@@ -4088,6 +4088,10 @@ namespace mwse {
 			genCallEnforced(0x745B89, 0x470AE0, *reinterpret_cast<DWORD*>(&AnimationData_playAnimationGroupForIndex));
 			genCallEnforced(0x745B9E, 0x470AE0, *reinterpret_cast<DWORD*>(&AnimationData_playAnimationGroupForIndex));
 			genCallEnforced(0x745BB3, 0x470AE0, *reinterpret_cast<DWORD*>(&AnimationData_playAnimationGroupForIndex));
+
+			// Make mobile IdleAnim flag reset on Stop key, instead of when loopCount reaches zero.
+			genJumpEnforced(0x46DA0D, 0x46E64E, 0x46E49E);
+			genJumpUnprotected(0x46E498, 0x46E64E);
 
 			// Event: Power Recharged
 			overrideVirtualTableEnforced(0x74AC54, offsetof(PowersHashMap::VirtualTable, deleteKeyValuePair), 0x4F1C50, reinterpret_cast<DWORD>(OnDeletePowerHashMapKVP));

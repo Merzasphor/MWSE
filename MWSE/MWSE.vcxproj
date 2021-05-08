@@ -153,7 +153,7 @@
     <ClInclude Include="NIGeometryData.h" />
     <ClInclude Include="NIGeometryDataLua.h" />
     <ClInclude Include="NIKeyframeController.h" />
-    <ClInclude Include="NiKeyframeManager.h" />
+    <ClInclude Include="NIKeyframeManager.h" />
     <ClInclude Include="NILines.h" />
     <ClInclude Include="NILinesData.h" />
     <ClInclude Include="NIParticleModifier.h" />
@@ -597,6 +597,7 @@
     <ClCompile Include="NIGeometry.cpp" />
     <ClCompile Include="NIGeometryData.cpp" />
     <ClCompile Include="NIGeometryDataLua.cpp" />
+    <ClCompile Include="NIKeyframeManager.cpp" />
     <ClCompile Include="NILinesData.cpp" />
     <ClCompile Include="NIProperty.cpp" />
     <ClCompile Include="NIRenderedTexture.cpp" />
