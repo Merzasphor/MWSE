@@ -367,6 +367,25 @@ namespace mwse {
 		}
 
 		//
+		// Patch: Player animation idles.
+		//
+		// Update animations for third person and first person player reference when idle mode is flagged.
+		//
+
+		const auto TES3_DataHandler_UpdateAllIdles = reinterpret_cast<void(__thiscall*)(TES3::DataHandler*)>(0x48AED0);
+		const auto TES3_Reference_AnimIdleUpdate = reinterpret_cast<void(__thiscall*)(TES3::Reference*)>(0x4E6E20);
+		void __stdcall PatchUpdateAllIdles() {
+			TES3_DataHandler_UpdateAllIdles(TES3::DataHandler::get());
+
+			auto worldController = TES3::WorldController::get();
+			auto mobilePlayer = worldController->getMobilePlayer();
+			if (mobilePlayer->actorFlags & TES3::MobileActorFlag::IdleAnim) {
+				TES3_Reference_AnimIdleUpdate(mobilePlayer->reference);
+				TES3_Reference_AnimIdleUpdate(mobilePlayer->firstPersonReference);
+			}
+		}
+
+		//
 		// Install all the patches.
 		//
 
@@ -580,6 +599,9 @@ namespace mwse {
 
 			// Patch: Always clone scene graph nodes.
 			writeValueEnforced(0x4EF9FB, BYTE(0x02), BYTE(0x00));
+
+			// Patch: Update player first and third person animations when the idle flag is pausing the controller.
+			genCallUnprotected(0x41B836, reinterpret_cast<DWORD>(PatchUpdateAllIdles));
 
 		}
 

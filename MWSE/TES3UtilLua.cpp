@@ -3565,15 +3565,32 @@ namespace mwse {
 				throw std::invalid_argument("Invalid 'reference' parameter provided.");
 			}
 
-			// Allow changing the animation model.
-			const char* model = getOptionalParam<const char*>(params, "mesh", nullptr);
-			if (model != nullptr) {
-				reference->setModelPath(model);
-			}
-
 			auto animData = reference->getAttachedAnimationData();
 			if (animData == nullptr) {
 				return;
+			}
+
+			const char* deprecatedFile = getOptionalParam<const char*>(params, "mesh", nullptr);
+			const char* modelFile = getOptionalParam<const char*>(params, "file", deprecatedFile);
+			if (modelFile != nullptr) {
+				const auto TES3_ModelLoader_loadAnimKF = reinterpret_cast<TES3::KeyframeDefinition * (__thiscall*)(void*, const char*, const char*)>(0x4EE200);
+				auto modelLoader = TES3::DataHandler::get()->nonDynamicData->meshData;
+				auto keyframe = TES3_ModelLoader_loadAnimKF(modelLoader, modelFile, "MWSE Anim");
+
+				if (keyframe) {
+					const auto TES3_AnimAttachment_addData = reinterpret_cast<bool(__thiscall*)(TES3::AnimationData*, TES3::KeyframeDefinition*, NI::Node*, int, int)>(0x46B950);
+					const auto TES3_AnimAttachment_setLayerKeyframes = reinterpret_cast<bool(__thiscall*)(TES3::AnimationData*, TES3::KeyframeDefinition*, int, int)>(0x46BA30);
+					const auto TES3_AnimAttachment_mergeAnimGroups = reinterpret_cast<bool(__thiscall*)(TES3::AnimationData*, TES3::AnimationGroup*, int)>(0x4708D0);
+					const int layerIndex = 0;
+
+					if (TES3_AnimAttachment_addData(animData, keyframe, reference->sceneNode, 1, layerIndex)) {
+						TES3_AnimAttachment_setLayerKeyframes(animData, keyframe, layerIndex, 1);
+						TES3_AnimAttachment_mergeAnimGroups(animData, keyframe->animationGroup, layerIndex);
+					}
+				}
+				else {
+					throw std::invalid_argument("Couldn't load animation from 'file' parameter.");
+				}
 			}
 
 			int group = getOptionalParam<int>(params, "group", 0);
