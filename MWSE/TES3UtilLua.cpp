@@ -3650,6 +3650,28 @@ namespace mwse {
 			animData->playAnimationGroupForIndex(shieldGroup, 2, startFlag, loopCount);
 		}
 
+		void cancelAnimationLoop(sol::table params) {
+			TES3::Reference* reference = getOptionalParamExecutionReference(params);
+			if (reference == nullptr) {
+				throw std::invalid_argument("Invalid 'reference' parameter provided.");
+			}
+
+			auto animData = reference->getAttachedAnimationData();
+			if (reference->sceneNode == nullptr || animData == nullptr) {
+				return;
+			}
+
+			if (animData->currentAnimGroup[0] != 0) {
+				animData->loopCounts[0] = 0;
+			}
+			if (animData->currentAnimGroup[1] != 0) {
+				animData->loopCounts[1] = 0;
+			}
+			if (animData->currentAnimGroup[2] != 0) {
+				animData->loopCounts[2] = 0;
+			}
+		}
+
 		void skipAnimationFrame(sol::table params) {
 			TES3::Reference* reference = getOptionalParamExecutionReference(params);
 			if (reference == nullptr) {
@@ -4507,6 +4529,7 @@ namespace mwse {
 			tes3["advanceTime"] = advanceTime;
 			tes3["applyMagicSource"] = applyMagicSource;
 			tes3["beginTransform"] = beginTransform;
+			tes3["cancelAnimationLoop"] = cancelAnimationLoop;
 			tes3["canRest"] = canRest;
 			tes3["cast"] = cast;
 			tes3["checkMerchantTradesItem"] = checkMerchantTradesItem;
