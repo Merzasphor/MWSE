@@ -6,6 +6,10 @@ namespace NI {
 		return NI_Light_ctor(this);
 	}
 
+	float Light::getDimmer() const {
+		return dimmer;
+	}
+
 	void Light::setDimmer(float value) {
 		dimmer = value;
 		revisionId++;

@@ -20,6 +20,7 @@ namespace NI {
 		// Custom functions.
 		//
 
+		float getDimmer() const;
 		void setDimmer(float value);
 
 		Color& getAmbientColor();
