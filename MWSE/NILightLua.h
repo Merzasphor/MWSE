@@ -11,10 +11,10 @@ namespace mwse {
 			setUserdataForNIDynamicEffect(usertypeDefinition);
 
 			// Basic property binding.
-			usertypeDefinition["ambient"] = sol::property(&NI::Light::getAmbientColor, &NI::Light::setAmbientColor_lua);
-			usertypeDefinition["diffuse"] = sol::property(&NI::Light::getDiffuseColor, &NI::Light::setDiffuseColor_lua);
-			usertypeDefinition["dimmer"] = &NI::Light::dimmer;
-			usertypeDefinition["specular"] = sol::property(&NI::Light::getSpecularColor, &NI::Light::setSpecularColor_lua);
+			usertypeDefinition["ambient"] = sol::property(&NI::Light::ambient, &NI::Light::setAmbientColor_lua);
+			usertypeDefinition["diffuse"] = sol::property(&NI::Light::diffuse, &NI::Light::setDiffuseColor_lua);
+			usertypeDefinition["dimmer"] = sol::property(&NI::Light::dimmer, &NI::Light::setDimmer);
+			usertypeDefinition["specular"] = sol::property(&NI::Light::specular, &NI::Light::setSpecularColor_lua);
 		}
 
 		template <typename T>
@@ -28,6 +28,7 @@ namespace mwse {
 
 			// Basic function binding.
 			usertypeDefinition["setAttenuationForRadius"] = &NI::PointLight::setAttenuationForRadius;
+			usertypeDefinition["setRadius"] = &NI::PointLight::setRadius;
 		}
 
 		void bindNILight();

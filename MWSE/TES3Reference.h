@@ -125,7 +125,7 @@ namespace TES3 {
 		TravelDestination* getAttachedTravelDestination();
 
 		LightAttachmentNode* getAttachedDynamicLight();
-		LightAttachmentNode* getOrCreateAttachedDynamicLight(NI::PointLight *, float);
+		LightAttachmentNode* getOrCreateAttachedDynamicLight_lua(sol::optional<NI::PointLight*> light, sol::optional<float> value);
 		NI::Pointer<NI::Light> getAttachedNiLight();
 
 		bool isLeveledSpawn();

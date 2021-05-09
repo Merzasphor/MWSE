@@ -167,10 +167,27 @@ namespace TES3 {
 		return attachment ? attachment->data : nullptr;
 	}
 
-	LightAttachmentNode* Reference::getOrCreateAttachedDynamicLight(NI::PointLight * light, float value) {
+	LightAttachmentNode* Reference::getOrCreateAttachedDynamicLight_lua(sol::optional<NI::PointLight*> light_arg, sol::optional<float> phase_arg) {
 		auto attachmentNode = getAttachedDynamicLight();
 		if (attachmentNode) {
 			return attachmentNode;
+		}
+
+		// Convenience feature. Create an easily visible light by default.
+		NI::Pointer<NI::PointLight> light = light_arg.value_or(nullptr);
+		if (light == nullptr) {
+			light = NI::PointLight::create();
+			light->setRadius(512);
+		}
+
+		// Automatically attach the light to the attachLight subnode, as in light entities, or the scene node otherwise.
+		if (sceneNode != nullptr) {
+			auto attachPoint = sceneNode->getObjectByNameAndType<NI::Node>("attachLight");
+			if (attachPoint == nullptr) {
+				attachPoint = sceneNode;
+			}
+			attachPoint->attachChild(light);
+			attachPoint->update();
 		}
 
 		auto attachment = mwse::tes3::_new<TES3::LightAttachment>();
@@ -180,7 +197,7 @@ namespace TES3 {
 		attachmentNode = mwse::tes3::_new<TES3::LightAttachmentNode>();
 		memset(attachmentNode, 0, sizeof(TES3::LightAttachmentNode));
 		attachmentNode->light = light;
-		attachmentNode->flickerPhase = value;
+		attachmentNode->flickerPhase = phase_arg.value_or(0);
 		attachment->data = attachmentNode;
 		
 		insertAttachment(attachment);

@@ -49,7 +49,7 @@ namespace mwse {
 			usertypeDefinition["enable"] = &TES3::Reference::enable;
 			usertypeDefinition["getAngleTo"] = &TES3::Reference::getAngleToReference;
 			usertypeDefinition["getAttachedDynamicLight"] = &TES3::Reference::getAttachedDynamicLight;
-			usertypeDefinition["getOrCreateAttachedDynamicLight"] = &TES3::Reference::getOrCreateAttachedDynamicLight;
+			usertypeDefinition["getOrCreateAttachedDynamicLight"] = &TES3::Reference::getOrCreateAttachedDynamicLight_lua;
 			usertypeDefinition["setActionFlag"] = &TES3::Reference::setActionFlag;
 			usertypeDefinition["testActionFlag"] = &TES3::Reference::testActionFlag;
 			usertypeDefinition["setDynamicLighting"] = &TES3::Reference::setDynamicLighting;

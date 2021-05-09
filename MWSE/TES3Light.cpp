@@ -152,7 +152,7 @@ namespace TES3 {
 		else if (object.is<ItemData>()) {
 			return object.as<ItemData*>()->timeLeft;
 		}
-		return time;
+		return float(time);
 	}
 }
 

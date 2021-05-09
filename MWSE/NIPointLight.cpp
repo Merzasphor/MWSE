@@ -38,6 +38,17 @@ namespace NI {
 		return light;
 	}
 
+	void PointLight::setRadius(unsigned int radius) {
+		// Set light attenuation.
+		setAttenuationForRadius(radius);
+
+		// Set dynamic culling radius, misplaced by Morrowind into specular.
+		float r = radius;
+		specular.r = r;
+		specular.g = r;
+		specular.b = r;
+	}
+
 	void PointLight::setAttenuationForRadius(unsigned int radius) {
 		// Get constant attenuation.
 		if (TES3::LightAttenuation_Flags & TES3::LightAttenuationFlag::UseConstant) {
