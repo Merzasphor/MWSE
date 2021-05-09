@@ -2833,6 +2833,39 @@ namespace mwse {
 		}
 
 		//
+		// Patch: Getting the correct radius of a light attached to a non-light entity.
+		//
+		
+		__declspec(naked) void patchGetEntityLightRadius() {
+			__asm {
+				push ebx
+				mov ebx, [esi+0x28]			// ebx = esi->Reference.baseEntity
+
+				mov eax, [eax]				// eax = eax->RefrAttachment_Light.sgLight
+				cmp dword ptr [ebx+4], 0x4847494C		// tag == 'LIGH'
+				jnz non_light
+				mov ecx, [ebx+0x64]			// ecx = ebx->EntityLight.radius
+				jmp done
+
+			non_light:
+				fld dword ptr [eax+0xC4]	// Load radius from eax->NiLight.specular
+				push ecx
+				fistp dword ptr [esp]
+				pop ecx						// Radius converted to integer
+
+			done:
+				mov edx, [esp+0x10]			// edx = <reference argument>
+				nop
+				push 1
+				push 1
+				push ecx
+				push edx
+				push eax
+			}
+		}
+		const size_t patchGetEntityLightRadius_size = 0x2B;
+
+		//
 		//
 		//
 
@@ -3654,6 +3687,9 @@ namespace mwse {
 			genCallUnprotected(0x5C5E69, reinterpret_cast<DWORD>(PatchSPrintFSoulValue), 0x6);
 			genNOPUnprotected(0x5C5E6F, 0x6);
 			genCallEnforced(0x5C5E87, 0x581F30, reinterpret_cast<DWORD>(PatchSetSoulValueProperty));
+
+			// Patch reading correct light culling radius from non-light entities during light updates.
+			writePatchCodeUnprotected(0x485DAD, (BYTE*)&patchGetEntityLightRadius, patchGetEntityLightRadius_size);
 
 			// Make soul gem data writable.
 			DWORD OldProtect;
