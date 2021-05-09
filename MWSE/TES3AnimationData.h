@@ -43,7 +43,7 @@ namespace TES3 {
 		float timing[3]; // 0x58
 		float deltaTime; // 0x5C
 		AnimationGroup * animationGroups[150]; // 0x68
-		NI::KeyframeController * controller; // 0x2C0
+		NI::KeyframeManager * manager; // 0x2C0
 		SequenceGroup keyframeLayers[3]; // 0x2C4
 		NI::Geometry* sgHead; // 0x2E8
 		float lipsyncLevel; // 0x2EC
@@ -53,7 +53,7 @@ namespace TES3 {
 		int unknown_0x2FC;
 		int unknown_0x300;
 		int unknown_0x304;
-		int unknown_0x308[3];
+		int currentAnimGroupLayer[3];
 		signed char animGroupLayerIndex[150]; // 0x314
 		short approxRootTravelSpeed[150]; // 0x3AA
 		float playbackSpeed; // 0x4D8

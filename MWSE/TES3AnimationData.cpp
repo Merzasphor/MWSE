@@ -53,7 +53,22 @@ namespace TES3 {
 	const auto TES3_AnimAttachment_setLayerKeyframes = reinterpret_cast<bool(__thiscall*)(TES3::AnimationData*, TES3::KeyframeDefinition*, int, int)>(0x46BA30);
 	const auto TES3_AnimAttachment_mergeAnimGroups = reinterpret_cast<bool(__thiscall*)(TES3::AnimationData*, TES3::AnimationGroup*, int)>(0x4708D0);
 
+	struct OriginalAnimGroups {
+		TES3::AnimationGroup* groups[150];
+		signed char groupLayers[150];
+	};
+	static_assert(sizeof(OriginalAnimGroups::groups) == sizeof(AnimationData::animationGroups));
+	static_assert(sizeof(OriginalAnimGroups::groupLayers) == sizeof(AnimationData::animGroupLayerIndex));
+
+	// This is horrible but more reliable than other methods.
+	static std::map<TES3::AnimationData*, OriginalAnimGroups> originalAnimGroupsCache;
+
 	void AnimationData::setAnimationLayer(TES3::KeyframeDefinition* keyframe, int layerIndex) {
+		// Keep a copy of the old anim group data.
+		auto& cacheEntry = originalAnimGroupsCache[this];
+		std::memcpy(cacheEntry.groups, animationGroups, sizeof(cacheEntry.groups));
+		std::memcpy(cacheEntry.groupLayers, animGroupLayerIndex, sizeof(cacheEntry.groupLayers));
+
 		// Set sequence group layer and update animation group pointers.
 		TES3_AnimAttachment_setLayerKeyframes(this, keyframe, layerIndex, 1);
 		TES3_AnimAttachment_mergeAnimGroups(this, keyframe->animationGroup, layerIndex);
@@ -64,17 +79,42 @@ namespace TES3 {
 	}
 
 	void AnimationData::clearAnimationLayer(int layerIndex) {
-		// Free NiSequence clones.
+		// Restore old anim group data.
+		const auto& cacheEntry = originalAnimGroupsCache.find(this);
+		if (cacheEntry != originalAnimGroupsCache.end()) {
+			std::memcpy(animationGroups, cacheEntry->second.groups, sizeof(animationGroups));
+			std::memcpy(animGroupLayerIndex, cacheEntry->second.groupLayers, sizeof(animGroupLayerIndex));
+		}
+
+		// Switch out the currently running animation and free NiSequence clones.
 		auto& layer = keyframeLayers[layerIndex];
+		auto& baseLayer = keyframeLayers[0];
 		if (layer.lower) {
+			if (currentAnimGroupLayer[0] == layerIndex) {
+				manager->deactivateSequence(layer.lower);
+				manager->activateSequence(baseLayer.lower);
+				currentAnimGroupLayer[0] = 0;
+			}
 			layer.lower->release();
 			layer.lower = nullptr;
 		}
+
 		if (layer.upper) {
+			if (currentAnimGroupLayer[1] == layerIndex) {
+				manager->deactivateSequence(layer.upper);
+				manager->activateSequence(baseLayer.upper);
+				currentAnimGroupLayer[1] = 0;
+			}
 			layer.upper->release();
 			layer.upper = nullptr;
 		}
+
 		if (layer.leftArm) {
+			if (currentAnimGroupLayer[2] == layerIndex) {
+				manager->deactivateSequence(layer.leftArm);
+				manager->activateSequence(baseLayer.leftArm);
+				currentAnimGroupLayer[2] = 0;
+			}
 			layer.leftArm->release();
 			layer.leftArm = nullptr;
 		}
