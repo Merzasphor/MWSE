@@ -180,8 +180,9 @@ namespace TES3 {
 			light->setRadius(512);
 		}
 
-		// Automatically attach the light to the attachLight subnode, as in light entities, or the scene node otherwise.
-		if (sceneNode != nullptr) {
+		// If the light is not part of the scene graph yet, automatically attach the light.
+		// It can be placed under the attachLight subnode, as in light entities, or the scene node otherwise.
+		if (light->parentNode == nullptr && sceneNode != nullptr) {
 			auto attachPoint = sceneNode->getObjectByNameAndType<NI::Node>("attachLight");
 			if (attachPoint == nullptr) {
 				attachPoint = sceneNode;
