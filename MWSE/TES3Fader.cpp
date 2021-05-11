@@ -35,7 +35,10 @@ namespace TES3 {
 
 	const auto TES3_Fader_dtor = reinterpret_cast<void(__thiscall*)(Fader*)>(0x409210);
 	Fader::~Fader() {
-		TES3_Fader_dtor(this);
+		// Fader destructor tries to detach itself from the camera in the WorldController. Avoid this on exit to prevent a crash.
+		if (TES3::WorldController::get() != nullptr) {
+			TES3_Fader_dtor(this);
+		}
 	}
 
 	const auto TES3_Fader_activate = reinterpret_cast<void(__thiscall*)(Fader*)>(0x409890);
