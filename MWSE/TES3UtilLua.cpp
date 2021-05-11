@@ -4459,15 +4459,15 @@ namespace mwse {
 			// Were we given position data directly?
 			auto position1 = getOptionalParamVector3(params, "position1");
 			if (position1) {
-				auto height1 = getOptionalParam<float>(params, "height1");
 				auto position2 = getOptionalParamVector3(params, "position2");
-				auto height2 = getOptionalParam<float>(params, "height2");
+				auto height1 = getOptionalParam<float>(params, "height1", 0.0f);
+				auto height2 = getOptionalParam<float>(params, "height2", 0.0f);
 
-				if (!height1 || !position2 || !height2) {
-					throw std::invalid_argument("Invalid positional params provided. Must provided two references or two positions/heights.");
+				if (!position2) {
+					throw std::invalid_argument("Invalid positional params provided. Must provided two references or two positions.");
 				}
 
-				return tes3::testLineOfSight(&position1.value(), height1.value(), &position2.value(), height2.value());
+				return tes3::testLineOfSight(&position1.value(), height1, &position2.value(), height2);
 			}
 
 			// Were we given two actors?
@@ -4478,9 +4478,8 @@ namespace mwse {
 			}
 
 			// 
-			sol::optional<float> height1;
 			sol::optional<TES3::Vector3> position2;
-			sol::optional<float> height2;
+			float height1, height2;
 
 			// Try to get the first reference's data.
 			auto mobile1 = reference1->getAttachedMobileActor();
@@ -4489,8 +4488,8 @@ namespace mwse {
 				height1 = mobile1->height;
 			}
 			else if (reference1->baseObject->boundingBox) {
-				auto boundingBox = reference1->baseObject->boundingBox;
-				height1 = boundingBox->maximum.z - boundingBox->minimum.z;
+				// Use distance from centre to top of bounding box as height.
+				height1 = reference1->baseObject->boundingBox->maximum.z;
 			}
 			else {
 				throw std::invalid_argument("Could not determine first reference's height data.");
@@ -4503,14 +4502,14 @@ namespace mwse {
 				height2 = mobile2->height;
 			}
 			else if (reference2->baseObject->boundingBox) {
-				auto boundingBox = reference2->baseObject->boundingBox;
-				height2 = boundingBox->maximum.z - boundingBox->minimum.z;
+				// Use distance from centre to top of bounding box as height.
+				height2 = reference2->baseObject->boundingBox->maximum.z;
 			}
 			else {
 				throw std::invalid_argument("Could not determine second reference's height data.");
 			}
 
-			return tes3::testLineOfSight(&position1.value(), height1.value(), &position2.value(), height2.value());
+			return tes3::testLineOfSight(&position1.value(), height1, &position2.value(), height2);
 		}
 
 		void bindTES3Util() {
