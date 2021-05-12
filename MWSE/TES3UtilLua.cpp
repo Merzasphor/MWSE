@@ -3622,7 +3622,8 @@ namespace mwse {
 				throw std::invalid_argument("Invalid 'shieldGroup' parameter provided: must be between 0 and 149.");
 			}
 
-			int startFlag = getOptionalParam<int>(params, "startFlag", 0);
+			// Default to immediate start and infinite looping.
+			int startFlag = getOptionalParam<int>(params, "startFlag", 1);
 			int loopCount = getOptionalParam<int>(params, "loopCount", -1);
 
 			auto mact = reference->getAttachedMobileActor();
