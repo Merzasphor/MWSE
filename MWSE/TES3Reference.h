@@ -67,7 +67,6 @@ namespace TES3 {
 
 		bool updateBipedParts();
 		void setModelPath(const char* path);
-		void loadReloadBaseAnimations();
 
 		//
 		// Other utility functions.

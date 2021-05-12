@@ -79,10 +79,6 @@ namespace TES3 {
 
 		void playAnimationGroup(int animationGroup, int startFlag = 0, int loopCount = -1);
 
-		void setAnimationLayer(TES3::KeyframeDefinition* keyframe, int layerIndex);
-		bool hasSpecialAnimations() const;
-		void clearAnimationLayer(int layerIndex);
-
 	};
 	static_assert(sizeof(AnimationData) == 0x7E4, "TES3::AnimationAttachment failed size validation");
 }
