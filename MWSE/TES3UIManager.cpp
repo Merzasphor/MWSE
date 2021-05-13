@@ -463,6 +463,11 @@ namespace TES3 {
 			TES3::UI::updateInventoryMenuTiles();
 		}
 
+		void updateInventoryCharacterImage() {
+			const auto TES3_updateInventoryCharacterImage = reinterpret_cast<void(__cdecl*)(bool)>(0x5CD2A0);
+			TES3_updateInventoryCharacterImage(false);
+		}
+
 		bool isInMenuMode() {
 			return TES3::WorldController::get()->flagMenuMode;
 		}

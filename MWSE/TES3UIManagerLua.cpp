@@ -407,6 +407,7 @@ namespace mwse {
 			tes3ui["updateContentsMenuTiles"] = TES3::UI::updateContentsMenuTiles;
 			tes3ui["updateDialogDisposition"] = TES3::UI::updateDialogDisposition;
 			tes3ui["updateEnchantingMenu"] = TES3::UI::updateEnchantingMenu;
+			tes3ui["updateInventoryCharacterImage"] = TES3::UI::updateInventoryCharacterImage;
 			tes3ui["updateInventorySelectTiles"] = TES3::UI::updateInventorySelectTiles_lua;
 			tes3ui["updateInventoryTiles"] = TES3::UI::updateInventoryMenuTiles;
 			tes3ui["updateSpellmakingMenu"] = TES3::UI::updateSpellmakingMenu;

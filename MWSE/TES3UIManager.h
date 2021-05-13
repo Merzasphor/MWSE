@@ -71,6 +71,7 @@ namespace TES3 {
 		int updateSelectInventoryTiles();
 		sol::optional<int> updateInventorySelectTiles_lua();
 		void forcePlayerInventoryUpdate();
+		void updateInventoryCharacterImage();
 
 		bool isInMenuMode();
 
