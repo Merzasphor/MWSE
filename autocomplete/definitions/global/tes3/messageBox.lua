@@ -13,7 +13,7 @@ return {
 				{ name = "duration", type = "float", description = "Overrides how long the toast-style message remains visible.", optional = true },
 			},
 		},
-		{ name = "formatAdditions", type = "variadic", optional = true, description = "Only used if messageOrParams is a string.", },
+		{ name = "formatAdditions", type = "variadic", optional = true, description = "Only used if messageOrParams is a string." },
 	},
 	returns = "soundIsPlaying",
 	valuetype = "boolean",
