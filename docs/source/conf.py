@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# Morrowind Script Extender v2 documentation build configuration file, created by
+# Morrowind Script Extender v2.1 documentation build configuration file, created by
 # sphinx-quickstart on Mon Jan 29 22:24:54 2018.
 #
 # This file is execfile()d with the current directory set to its
@@ -47,7 +47,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Morrowind Script Extender v2.1'
-copyright = '2008-2019, MWSE Team'
+copyright = '2008-2021, MWSE Team'
 author = 'MWSE Team'
 
 # The version info for the project you're documenting, acts as replacement for
