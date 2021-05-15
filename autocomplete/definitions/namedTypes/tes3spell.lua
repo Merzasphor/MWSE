@@ -1,5 +1,5 @@
 return {
 	type = "class",
-	description = [[An spell game object.]],
+	description = [[A spell game object.]],
 	inherits = "tes3object",
 }
