@@ -12,7 +12,7 @@ local function onDamage(e)
     end
 
     -- Check weather the player is a Bosmer
-    if e.reference.race == "bosmer" then    -- change this line
+    if e.reference.object.race.id:lower() == "bosmer" then    -- This is the same as tes3.player.object.race.id:lower() == "bosmer"
         -- Taunt the player
         tes3.messageBox("Ha ha ha, you broke your leg Bosmer")
 
