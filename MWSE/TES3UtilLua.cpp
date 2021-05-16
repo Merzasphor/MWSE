@@ -3779,10 +3779,11 @@ namespace mwse {
 			}
 
 			int effectId = getOptionalParam<int>(params, "effect", -1);
+			int skillOrAttributeID = getOptionalParam<int>(params, "skill", getOptionalParam<int>(params, "attribute", -1));
 			if (!TES3::DataHandler::get()->nonDynamicData->magicEffects->getEffectFlag(effectId, TES3::EffectFlag::NoMagnitudeBit)) {
 				int magnitude = 0;
 				for (auto& activeEffect : mact->activeMagicEffects) {
-					if (activeEffect.magicEffectID == effectId) {
+					if (activeEffect.magicEffectID == effectId && activeEffect.skillOrAttributeID == skillOrAttributeID) {
 						magnitude += activeEffect.magnitudeMin;
 					}
 				}

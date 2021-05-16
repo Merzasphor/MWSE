@@ -95,7 +95,7 @@ namespace TES3 {
 		bool isSummon; // 0x11
 		unsigned short duration; // 0x14
 		unsigned short magnitudeMin; // 0x16
-		unsigned char skillOrAttributeID; // 0x18
+		signed char skillOrAttributeID; // 0x18
 
 		//
 		// Custom functions.
