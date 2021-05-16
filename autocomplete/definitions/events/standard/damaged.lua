@@ -17,4 +17,9 @@ return {
 			description = "mobile’s associated reference.",
 		},
 	},
+	examples = {
+		["knockDownCheck"] = {
+			title = "Notify the player that his arrow/bolt knocked down his opponent"
+		},
+	},
 }
