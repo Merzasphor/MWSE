@@ -77,14 +77,14 @@ namespace mwse {
 				usertypeDefinition[sol::meta_function::to_string] = &TES3::Effect::toString;
 
 				// Basic property binding.
-				usertypeDefinition["attribute"] = &TES3::Effect::attributeID;
+				usertypeDefinition["attribute"] = sol::property(&TES3::Effect::geAttributeID, &TES3::Effect::setSkillID_lua);
 				usertypeDefinition["duration"] = &TES3::Effect::duration;
 				usertypeDefinition["id"] = &TES3::Effect::effectID;
 				usertypeDefinition["max"] = &TES3::Effect::magnitudeMax;
 				usertypeDefinition["min"] = &TES3::Effect::magnitudeMin;
 				usertypeDefinition["radius"] = &TES3::Effect::radius;
 				usertypeDefinition["rangeType"] = &TES3::Effect::rangeType;
-				usertypeDefinition["skill"] = &TES3::Effect::skillID;
+				usertypeDefinition["skill"] = sol::property(&TES3::Effect::getSkillID, &TES3::Effect::setSkillID_lua);
 
 				// Allow easy access to the base magic effect.
 				usertypeDefinition["object"] = sol::readonly_property(&TES3::Effect::getEffectData);

@@ -260,6 +260,31 @@ namespace TES3 {
 			magnitudeMax == other->magnitudeMax;
 	}
 
+	signed char Effect::getSkillID() const {
+		return skillID;
+	}
+
+	void Effect::setSkillID(signed char id) {
+		skillID = id;
+	}
+
+	void Effect::setSkillID_lua(sol::optional<signed char> id) {
+		setSkillID(id.value_or(-1));
+	}
+
+	signed char Effect::geAttributeID() const {
+		return attributeID;
+	}
+
+	void Effect::seAttributeID(signed char id) {
+		attributeID = id;
+	}
+
+	void Effect::seAttributeID_lua(sol::optional<signed char> id) {
+		seAttributeID(id.value_or(-1));
+	}
+
+
 	sol::optional<std::string> Effect::toString() const {
 		if (effectID == -1) {
 			return {};

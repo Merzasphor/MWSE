@@ -338,6 +338,14 @@ namespace TES3 {
 		MagicEffect * getEffectData() const;
 		bool matchesEffectsWith(const Effect *);
 
+		signed char getSkillID() const;
+		void setSkillID(signed char id);
+		void setSkillID_lua(sol::optional<signed char> id);
+
+		signed char geAttributeID() const;
+		void seAttributeID(signed char id);
+		void seAttributeID_lua(sol::optional<signed char> id);
+
 		sol::optional<std::string> toString() const;
 
 	};
