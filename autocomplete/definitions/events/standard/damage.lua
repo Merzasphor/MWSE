@@ -16,4 +16,9 @@ return {
 			description = "mobile’s associated reference.",
 		},
 	},
+	examples = {
+		["changeFallDamage"] = {
+			title = "Change fall damage"
+		},
+	},
 }
