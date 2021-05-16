@@ -88,14 +88,14 @@ namespace TES3 {
 	}
 
 	struct ActiveMagicEffect {
-		unsigned int magicInstanceSerial; // 0x8
-		short magicInstanceEffectIndex; // 0xC
-		short magicEffectID; // 0xE
-		bool isHarmful; // 0x10
-		bool isSummon; // 0x11
-		unsigned short duration; // 0x14
-		unsigned short magnitudeMin; // 0x16
-		signed char skillOrAttributeID; // 0x18
+		unsigned int magicInstanceSerial; // 0x0
+		short magicInstanceEffectIndex; // 0x4
+		short magicEffectID; // 0x6
+		bool isHarmful; // 0x8
+		bool isSummon; // 0x9
+		unsigned short duration; // 0xA
+		unsigned short magnitudeMin; // 0xC
+		signed char skillOrAttributeID; // 0xE
 
 		//
 		// Custom functions.
