@@ -77,7 +77,7 @@ namespace mwse {
 				usertypeDefinition[sol::meta_function::to_string] = &TES3::Effect::toString;
 
 				// Basic property binding.
-				usertypeDefinition["attribute"] = sol::property(&TES3::Effect::geAttributeID, &TES3::Effect::setSkillID_lua);
+				usertypeDefinition["attribute"] = sol::property(&TES3::Effect::geAttributeID, &TES3::Effect::seAttributeID_lua);
 				usertypeDefinition["duration"] = &TES3::Effect::duration;
 				usertypeDefinition["id"] = &TES3::Effect::effectID;
 				usertypeDefinition["max"] = &TES3::Effect::magnitudeMax;
