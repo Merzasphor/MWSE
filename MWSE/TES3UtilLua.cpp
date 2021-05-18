@@ -3638,8 +3638,8 @@ namespace mwse {
 				// Actor animation control modification.
 				int boneGroup = getOptionalParam<int>(params, "boneGroup", -1);
 				if (boneGroup >= 0 && mact->actorType == TES3::MobileActorType::Player) {
-					// Switch with intentional fall-through.
 					switch (boneGroup) {
+					// Switch with intentional fall-through.
 					case 0:
 						animData->playAnimationGroupForIndex(lowerGroup, 0, startFlag, loopCount);
 					case 1:

@@ -1,8 +1,8 @@
 return {
 	type = "function",
 	description = [[Loads an animation and uses it to override existing animations on an actor. Animation groups present in the file will replace the actor's animation groups. The actor's model must be already loaded into memory to have its animations modified. The overridden animations only persist until the actor is unloaded.
-    
-    Calling this multiple times will remove the previous animation override before loading the new animation. Calling this without a file argument will just reset the animations to base.]],
+
+Calling this multiple times will remove the previous animation override before loading the new animation. Calling this without a file argument will just reset the animations to base.]],
 	arguments = {{
 		name = "params",
 		type = "table",
