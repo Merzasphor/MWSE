@@ -8,7 +8,7 @@ return {
 		type = "table",
 		tableParams = {
 			{ name = "reference", type = "tes3mobileActor|tes3reference|string", description = "The reference to the actor that is having its animations modified." },
-			{ name = "file", type = "string", optional = true, description = "The specified animation base file that will be loaded. e.g. For an animation composed of files anim.nif, xanim.nif and xanim.kf, you should pass file=\"anim.nif\". The animation target skeleton must match the skeleton of the actor to work." },
+			{ name = "file", type = "string", optional = true, description = "The specified animation base file that will be loaded. e.g. For an animation composed of files anim.nif, xanim.nif and xanim.kf, you should pass file=\"anim.nif\". The animation target skeleton _must_ match the skeleton of the actor to work. i.e. 3rd person anims for NPCs and tes3.player, 1st person anims for firstPersonReference." },
 		},
 	}},
 }

@@ -247,6 +247,8 @@ namespace TES3 {
 
 
 	const auto TES3_MobilePlayer_sub566500 = reinterpret_cast<void(__thiscall*)(MobilePlayer*)>(0x566500);
+	const auto TES3_ModelLoader_loadAnimKF = reinterpret_cast<TES3::KeyframeDefinition * (__thiscall*)(void*, const char*, const char*)>(0x4EE200);
+
 	void Reference::setModelPath(const char* path) {
 		// Cache the old model path, then set
 		auto baseObject = static_cast<TES3::Object*>(getBaseObject());
@@ -274,14 +276,26 @@ namespace TES3 {
 		if (mobile != nullptr) {
 			if (mobile->actorType == TES3::MobileActorType::Player) {
 				auto firstPersonRef = macp->firstPersonReference;
+
 				if (firstPersonRef->sceneNode) {
-					auto parent = firstPersonRef->sceneNode->parentNode;
-					firstPersonRef->resetVisualNode();
-					auto firstPersonSceneNode = firstPersonRef->getSceneGraphNode();
-					parent->attachChild(firstPersonSceneNode, true);
-					firstPersonSceneNode->updateEffects();
-					firstPersonSceneNode->updateProperties();
-					firstPersonSceneNode->update();
+					if (this == firstPersonRef && path != nullptr) {
+						auto animData = getAttachedAnimationData();
+						auto modelLoader = TES3::DataHandler::get()->nonDynamicData->meshData;
+						auto keyframes = TES3_ModelLoader_loadAnimKF(modelLoader, path, "MWSE Anim");
+
+						if (animData && keyframes) {
+							animData->setOverrideLayerKeyframes(keyframes);
+						}
+					}
+					else {
+						auto parent = firstPersonRef->sceneNode->parentNode;
+						firstPersonRef->resetVisualNode();
+						auto firstPersonSceneNode = firstPersonRef->getSceneGraphNode();
+						parent->attachChild(firstPersonSceneNode, true);
+						firstPersonSceneNode->updateEffects();
+						firstPersonSceneNode->updateProperties();
+						firstPersonSceneNode->update();
+					}
 				}
 
 				if (macp->is3rdPerson()) {

@@ -21,11 +21,12 @@
 #include "NIStream.h"
 #include "NITriShape.h"
 
-#include "TES3AnimationData.h"
 #include "TES3Actor.h"
+#include "TES3ActorAnimationData.h"
 #include "TES3AIData.h"
 #include "TES3AIPackage.h"
 #include "TES3Alchemy.h"
+#include "TES3AnimationData.h"
 #include "TES3Archive.h"
 #include "TES3Armor.h"
 #include "TES3AudioController.h"
@@ -3581,6 +3582,12 @@ namespace mwse {
 					mact->setMobileActorFlag(TES3::MobileActorFlag::IdleAnim, false);
 				}
 			}
+			else {
+				animData = reference->getAttachedAnimationData();
+				if (!animData->hasOverrideAnimations()) {
+					throw std::logic_error("Animation file failed to load.");
+				}
+			}
 		}
 
 		void playAnimation(sol::table params) {
@@ -3628,8 +3635,27 @@ namespace mwse {
 
 			auto mact = reference->getAttachedMobileActor();
 			if (mact) {
-				bool idleAnim = getOptionalParam<bool>(params, "idleAnim", lowerGroup != 0 || upperGroup != 0 || shieldGroup != 0);
-				mact->setMobileActorFlag(TES3::MobileActorFlag::IdleAnim, idleAnim);
+				// Actor animation control modification.
+				int boneGroup = getOptionalParam<int>(params, "boneGroup", -1);
+				if (boneGroup >= 0 && mact->actorType == TES3::MobileActorType::Player) {
+					// Switch with intentional fall-through.
+					switch (boneGroup) {
+					case 0:
+						animData->playAnimationGroupForIndex(lowerGroup, 0, startFlag, loopCount);
+					case 1:
+						animData->playAnimationGroupForIndex(upperGroup, 1, startFlag, loopCount);
+					case 2:
+						animData->playAnimationGroupForIndex(shieldGroup, 2, startFlag, loopCount);
+						mact->animationData.asActor->patchedOverrideState = boneGroup;
+					}
+					return;
+				}
+				else {
+					// Idle anim flag pauses all AI animation control.
+					bool idleAnim = getOptionalParam<bool>(params, "idleAnim", lowerGroup != 0 || upperGroup != 0 || shieldGroup != 0);
+					mact->setMobileActorFlag(TES3::MobileActorFlag::IdleAnim, idleAnim);
+					mact->animationData.asActor->patchedOverrideState = 0xFF;
+				}
 			}
 
 			animData->playAnimationGroupForIndex(lowerGroup, 0, startFlag, loopCount);
