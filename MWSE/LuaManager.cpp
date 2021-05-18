@@ -560,17 +560,30 @@ namespace mwse {
 		// Hook: Player container (re)created.
 		//
 
-		void __fastcall OnPlayerRecreated(TES3::ProcessManager * self) {
+		const auto TES3_Reference_SetMobile = reinterpret_cast<void(__thiscall*)(TES3::Reference*, TES3::MobileObject*)>(0x4E5770);
+		void __fastcall OnPlayerReferenceAssigned(TES3::Reference* player, DWORD _EDX_, TES3::MobilePlayer* macp) {
 			// Call overwritten function.
-			reinterpret_cast<void(__thiscall *)(TES3::ProcessManager*)>(0x56EAE0)(self);
+			TES3_Reference_SetMobile(player, macp);
 
 			// Grab the new player pointers for lua.
 			// Update tes3.player and tes3.mobilePlayer.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
-			TES3::MobilePlayer * mobilePlayer = self->mobilePlayer;
-			state["tes3"]["mobilePlayer"] = mobilePlayer;
-			state["tes3"]["player"] = mobilePlayer->reference;
+			state["tes3"]["mobilePlayer"] = macp;
+			state["tes3"]["player"] = player;
+			state["tes3"]["player1stPerson"] = macp->firstPersonReference;
+		}
+
+		TES3::Reference* __fastcall OnPlayerReferenceCreated(TES3::Reference* player) {
+			// Call overwritten function.
+			player->ctor();
+
+			// Grab the new player pointers for lua.
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::state& state = stateHandle.state;
+			state["tes3"]["player"] = player;
+
+			return player;
 		}
 
 		//
@@ -2959,7 +2972,8 @@ namespace mwse {
 			genJumpUnprotected(TES3_HOOK_RUNSCRIPT_LUACHECK, reinterpret_cast<DWORD>(HookRunScript), TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE);
 
 			// Hook the MACP creation functions to update lua variables that point to the player.
-			genCallEnforced(0x5635D6, 0x56EAE0, reinterpret_cast<DWORD>(OnPlayerRecreated));
+			genCallEnforced(0x5661A0, 0x4E5770, reinterpret_cast<DWORD>(OnPlayerReferenceAssigned));
+			genCallEnforced(0x4C0180, 0x4E4510, reinterpret_cast<DWORD>(OnPlayerReferenceCreated));
 
 			// Event: initialized. Hook just before we return successfully from where game data is loaded.
 			genCallEnforced(0x4BB440, 0x47E280, reinterpret_cast<DWORD>(FinishInitialization));

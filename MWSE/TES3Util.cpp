@@ -35,22 +35,21 @@
 namespace mwse {
 	namespace tes3 {
 		TES3::Reference* getReference(const char* id) {
+			TES3::DataHandler* dataHandler = TES3::DataHandler::get();
+			if (!dataHandler || !dataHandler->nonDynamicData) {
+				return nullptr;
+			}
 
-			bool isplayer = !_stricmp(id, "player") || !_stricmp(id, "playersavegame");
-			if (isplayer) {
-				TES3::WorldController* worldController = TES3::WorldController::get();
-				if (worldController) {
-					return worldController->getMobilePlayer()->reference;
-				}
+			if (!_stricmp(id, "player") || !_stricmp(id, "playersavegame")) {
+				return dataHandler->nonDynamicData->playerSaveGame;
 			}
 			else {
-				TES3::DataHandler* dataHandler = TES3::DataHandler::get();
 				if (dataHandler) {
 					return dataHandler->nonDynamicData->findFirstCloneOfActor(id);
 				}
 			}
 
-			return NULL;
+			return nullptr;
 		}
 
 		TES3::Reference* getReference(std::string& id) {
