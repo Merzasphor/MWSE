@@ -26,6 +26,7 @@ function this.new(object)
 
 	local raw = { _object = object }
 	function raw:valid() return rawget(self, "_object") ~= nil end
+	function raw:getObject() return rawget(self, "_object") end
 
 	-- Create a metatable redirect.
 	local handle = setmetatable(raw, this)
