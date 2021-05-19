@@ -2,7 +2,9 @@ return {
 	type = "function",
 	description = [[Loads an animation and uses it to override existing animations on an actor. Animation groups present in the file will replace the actor's animation groups. The actor's model must be already loaded into memory to have its animations modified. The overridden animations only persist until the actor is unloaded.
 
-Calling this multiple times will remove the previous animation override before loading the new animation. Calling this without a file argument will just reset the animations to base.]],
+Calling this more than once will remove the previous animation override before loading the new animation. Therefore, if applying animations to the player, you should call this before every playAnimation so that different animation mods can co-exist. For NPCs under your mod's control, you only need to do it when the player enters the cell containing the NPC.
+
+Calling this without a file argument will reset the reference's animations to default.]],
 	arguments = {{
 		name = "params",
 		type = "table",

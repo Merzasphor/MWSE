@@ -2911,7 +2911,7 @@ namespace mwse {
 		void __fastcall ActorAnimData_selectMovementAnimAndUpdate(TES3::ActorAnimationData* animData, DWORD _UNUSED_, float t, bool b) {
 			auto state = animData->patchedOverrideState;
 
-			if (state != 0xFF && animData->mobileActor->actorType == TES3::MobileActorType::Player) {
+			if (state != 0xFF) {
 				auto baseAnimGroup = animData->animationAttachment->currentAnimGroup[0];
 				auto overrideAnimGroup = animData->animationAttachment->currentAnimGroup[2];
 
