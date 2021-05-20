@@ -15,7 +15,6 @@
     <ClInclude Include="BitUtil.h" />
     <ClInclude Include="BSAnimationManager.h" />
     <ClInclude Include="LuaInfoLinkResolveEvent.h" />
-    <ClInclude Include="LuaUpdatedDerivedStatisticsEvent.h" />
     <ClInclude Include="NIBSAnimationNode.h" />
     <ClInclude Include="LuaBarterOfferEvent.h" />
     <ClInclude Include="LuaBodyPartAssignedEvent.h" />
@@ -576,7 +575,6 @@
     <ClCompile Include="LuaUiRefreshedEvent.cpp" />
     <ClCompile Include="LuaUiSpellTooltipEvent.cpp" />
     <ClCompile Include="LuaUnequippedEvent.cpp" />
-    <ClCompile Include="LuaUpdatedDerivedStatisticsEvent.cpp" />
     <ClCompile Include="LuaUtil.cpp" />
     <ClCompile Include="LuaWeaponReadiedEvent.cpp" />
     <ClCompile Include="LuaWeaponUnreadiedEvent.cpp" />

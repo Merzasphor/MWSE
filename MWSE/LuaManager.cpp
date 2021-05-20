@@ -4139,28 +4139,6 @@ namespace mwse {
 			genCallEnforced(0x745B9E, 0x470AE0, *reinterpret_cast<DWORD*>(&AnimationData_playAnimationGroupForIndex));
 			genCallEnforced(0x745BB3, 0x470AE0, *reinterpret_cast<DWORD*>(&AnimationData_playAnimationGroupForIndex));
 
-			// Event: updatedDerivedStatistics
-			auto MobileActor_updateDerivedStatistics = &TES3::MobileActor::updateDerivedStatistics;
-			genCallEnforced(0x45F594, 0x527BC0, *reinterpret_cast<DWORD*>(&MobileActor_updateDerivedStatistics));
-			genCallEnforced(0x45F6C4, 0x527BC0, *reinterpret_cast<DWORD*>(&MobileActor_updateDerivedStatistics));
-			genCallEnforced(0x461FF0, 0x527BC0, *reinterpret_cast<DWORD*>(&MobileActor_updateDerivedStatistics));
-			genCallEnforced(0x4620A6, 0x527BC0, *reinterpret_cast<DWORD*>(&MobileActor_updateDerivedStatistics));
-			genCallEnforced(0x462126, 0x527BC0, *reinterpret_cast<DWORD*>(&MobileActor_updateDerivedStatistics));
-			genCallEnforced(0x4621F6, 0x527BC0, *reinterpret_cast<DWORD*>(&MobileActor_updateDerivedStatistics));
-			genCallEnforced(0x4622FA, 0x527BC0, *reinterpret_cast<DWORD*>(&MobileActor_updateDerivedStatistics));
-			genCallEnforced(0x4627B0, 0x527BC0, *reinterpret_cast<DWORD*>(&MobileActor_updateDerivedStatistics));
-			genCallEnforced(0x507D48, 0x527BC0, *reinterpret_cast<DWORD*>(&MobileActor_updateDerivedStatistics));
-			genCallEnforced(0x519463, 0x527BC0, *reinterpret_cast<DWORD*>(&MobileActor_updateDerivedStatistics));
-			genCallEnforced(0x5195D4, 0x527BC0, *reinterpret_cast<DWORD*>(&MobileActor_updateDerivedStatistics));
-			genCallEnforced(0x5196F6, 0x527BC0, *reinterpret_cast<DWORD*>(&MobileActor_updateDerivedStatistics));
-			genCallEnforced(0x5215F8, 0x527BC0, *reinterpret_cast<DWORD*>(&MobileActor_updateDerivedStatistics));
-			genCallEnforced(0x56D325, 0x527BC0, *reinterpret_cast<DWORD*>(&MobileActor_updateDerivedStatistics));
-			genCallEnforced(0x56D8EF, 0x527BC0, *reinterpret_cast<DWORD*>(&MobileActor_updateDerivedStatistics));
-			genCallEnforced(0x5DA371, 0x527BC0, *reinterpret_cast<DWORD*>(&MobileActor_updateDerivedStatistics));
-			genCallEnforced(0x5DA43D, 0x527BC0, *reinterpret_cast<DWORD*>(&MobileActor_updateDerivedStatistics));
-			genCallEnforced(0x5DA506, 0x527BC0, *reinterpret_cast<DWORD*>(&MobileActor_updateDerivedStatistics));
-			genCallEnforced(0x62CE83, 0x527BC0, *reinterpret_cast<DWORD*>(&MobileActor_updateDerivedStatistics));
-
 			// Make mobile IdleAnim flag reset on Stop key, instead of when loopCount reaches zero.
 			genJumpEnforced(0x46DA0D, 0x46E64E, 0x46E49E);
 			genJumpUnprotected(0x46E498, 0x46E64E);
