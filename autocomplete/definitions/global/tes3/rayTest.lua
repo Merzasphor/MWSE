@@ -36,10 +36,10 @@ return {
 			title = "Multiple Results",
 			description = "This example performs a ray test and displays all results in the entire ray test, rather than ending at the first object hit.",
 		},
-        ["rayTestForLater"] = {
-            title = "Save rayTest result for use at a later point",
-            description = "If you plan to use the results of rayTest, you should make sure it still exists. For example, an object which was in a list of results of rayTest can get unloaded when the player changes cells and become invalid, so it shouldn't be accessed.",
-        },
+        	["rayTestForLater"] = {
+            		title = "Save rayTest result for use at a later point",
+            		description = "If you plan to use the results of rayTest, you should make sure it still exists. For example, an object which was in a list of results of rayTest can get unloaded when the player changes cells and become invalid, so it shouldn't be accessed.",
+        	},
 	},
 	returns = "result",
 	valuetype = "niPickRecord|table",
