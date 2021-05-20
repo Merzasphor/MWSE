@@ -484,10 +484,6 @@ namespace TES3 {
 
 		// Pass to lua to muck with.
 		if (mwse::lua::event::UpdatedDerivedStatisticsEvent::getEventEnabled()) {
-			if (reference == nullptr) {
-				int x = 4;
-			}
-
 			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			if (statistic) {
