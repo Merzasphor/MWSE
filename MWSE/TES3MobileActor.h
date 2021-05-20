@@ -241,6 +241,7 @@ namespace TES3 {
 		float calculateSwimRunSpeed();
 		float calculateFlySpeed();
 
+		const char* getStatisticName(const Statistic* statistic) const;
 		void updateDerivedStatistics(Statistic * baseStatistic);
 
 		int determineModifiedPrice(int basePrice, bool buying);

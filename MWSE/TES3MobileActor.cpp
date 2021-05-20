@@ -12,6 +12,7 @@
 #include "LuaDamageEvent.h"
 #include "LuaDeathEvent.h"
 #include "LuaMobileObjectCollisionEvent.h"
+#include "LuaUpdatedDerivedStatisticsEvent.h"
 
 #include "TES3Actor.h"
 #include "TES3ActorAnimationData.h"
@@ -21,6 +22,7 @@
 #include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
 #include "TES3MobController.h"
+#include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
 #include "TES3ItemData.h"
 #include "TES3Spell.h"
@@ -42,7 +44,6 @@
 namespace TES3 {
 	const auto TES3_MobileActor_isInAttackAnim = reinterpret_cast<bool (__thiscall*)(const MobileActor*)>(0x5567D0);
 	const auto TES3_MobileActor_wearItem = reinterpret_cast<void (__thiscall*)(MobileActor*, Object*, ItemData*, bool, bool)>(0x52C770);
-	const auto TES3_MobileActor_calcDerivedStats = reinterpret_cast<void(__thiscall*)(const MobileActor*, Statistic*)>(0x527BC0);
 	const auto TES3_MobileActor_determineModifiedPrice = reinterpret_cast<int(__thiscall*)(const MobileActor*, int, int)>(0x52AA50);
 	const auto TES3_MobileActor_playVoiceover = reinterpret_cast<void(__thiscall*)(const MobileActor*, int)>(0x528F80);
 
@@ -362,8 +363,159 @@ namespace TES3 {
 		return speed;
 	}
 
-	void MobileActor::updateDerivedStatistics(Statistic * baseStatistic) {
-		TES3_MobileActor_calcDerivedStats(this, baseStatistic);
+	enum StatisticOffset {
+		AttributeAgility = offsetof(MobileActor, attributes[Attribute::Agility]),
+		AttributeEndurance = offsetof(MobileActor, attributes[Attribute::Endurance]),
+		AttributeIntelligence = offsetof(MobileActor, attributes[Attribute::Intelligence]),
+		AttributeLuck = offsetof(MobileActor, attributes[Attribute::Luck]),
+		AttributePersonality = offsetof(MobileActor, attributes[Attribute::Personality]),
+		AttributeSpeed = offsetof(MobileActor, attributes[Attribute::Speed]),
+		AttributeStrength = offsetof(MobileActor, attributes[Attribute::Strength]),
+		AttributeWillpower = offsetof(MobileActor, attributes[Attribute::Willpower]),
+		Encumbrance = offsetof(MobileActor, encumbrance),
+		Fatigue = offsetof(MobileActor, fatigue),
+		Health = offsetof(MobileActor, health),
+		Magicka = offsetof(MobileActor, magicka),
+		MagickaMultiplier = offsetof(MobileActor, magickaMultiplier),
+		SkillCreatureCombat = offsetof(MobileCreature, skills[CreatureSkillID::Combat]),
+		SkillCreatureMagic = offsetof(MobileCreature, skills[CreatureSkillID::Magic]),
+		SkillCreatureStealth = offsetof(MobileCreature, skills[CreatureSkillID::Stealth]),
+		SkillNPCAcrobatics = offsetof(MobileNPC, skills[SkillID::Acrobatics]),
+		SkillNPCAlchemy = offsetof(MobileNPC, skills[SkillID::Alchemy]),
+		SkillNPCAlteration = offsetof(MobileNPC, skills[SkillID::Alteration]),
+		SkillNPCArmorer = offsetof(MobileNPC, skills[SkillID::Armorer]),
+		SkillNPCAthletics = offsetof(MobileNPC, skills[SkillID::Athletics]),
+		SkillNPCAxe = offsetof(MobileNPC, skills[SkillID::Axe]),
+		SkillNPCBlock = offsetof(MobileNPC, skills[SkillID::Block]),
+		SkillNPCBluntWeapon = offsetof(MobileNPC, skills[SkillID::BluntWeapon]),
+		SkillNPCConjuration = offsetof(MobileNPC, skills[SkillID::Conjuration]),
+		SkillNPCDestruction = offsetof(MobileNPC, skills[SkillID::Destruction]),
+		SkillNPCEnchant = offsetof(MobileNPC, skills[SkillID::Enchant]),
+		SkillNPCHandToHand = offsetof(MobileNPC, skills[SkillID::HandToHand]),
+		SkillNPCHeavyArmor = offsetof(MobileNPC, skills[SkillID::HeavyArmor]),
+		SkillNPCIllusion = offsetof(MobileNPC, skills[SkillID::Illusion]),
+		SkillNPCLightArmor = offsetof(MobileNPC, skills[SkillID::LightArmor]),
+		SkillNPCLongBlade = offsetof(MobileNPC, skills[SkillID::LongBlade]),
+		SkillNPCMarksman = offsetof(MobileNPC, skills[SkillID::Marksman]),
+		SkillNPCMediumArmor = offsetof(MobileNPC, skills[SkillID::MediumArmor]),
+		SkillNPCMercantile = offsetof(MobileNPC, skills[SkillID::Mercantile]),
+		SkillNPCMysticism = offsetof(MobileNPC, skills[SkillID::Mysticism]),
+		SkillNPCRestoration = offsetof(MobileNPC, skills[SkillID::Restoration]),
+		SkillNPCSecurity = offsetof(MobileNPC, skills[SkillID::Security]),
+		SkillNPCShortBlade = offsetof(MobileNPC, skills[SkillID::ShortBlade]),
+		SkillNPCSneak = offsetof(MobileNPC, skills[SkillID::Sneak]),
+		SkillNPCSpear = offsetof(MobileNPC, skills[SkillID::Spear]),
+		SkillNPCSpeechcraft = offsetof(MobileNPC, skills[SkillID::Speechcraft]),
+		SkillNPCUnarmored = offsetof(MobileNPC, skills[SkillID::Unarmored]),
+	};
+
+	const char* MobileActor::getStatisticName(const Statistic* statistic) const {
+		if (statistic == nullptr) {
+			return "invalid";
+		}
+
+		const auto statisticOffset = size_t(statistic) - size_t(this);
+		switch (statisticOffset) {
+		case StatisticOffset::AttributeAgility: return "agility";
+		case StatisticOffset::AttributeEndurance: return "endurance";
+		case StatisticOffset::AttributeIntelligence: return "intelligence";
+		case StatisticOffset::AttributeLuck: return "luck";
+		case StatisticOffset::AttributePersonality: return "personality";
+		case StatisticOffset::AttributeSpeed: return "speed";
+		case StatisticOffset::AttributeStrength: return "strength";
+		case StatisticOffset::AttributeWillpower: return "willpower";
+		case StatisticOffset::Encumbrance: return "encumbrance";
+		case StatisticOffset::Fatigue: return "fatigue";
+		case StatisticOffset::Health: return "health";
+		case StatisticOffset::Magicka: return "magicka";
+		case StatisticOffset::MagickaMultiplier: return "magickaMultiplier";
+		}
+
+		if (actorType == MobileActorType::Creature) {
+			switch (statisticOffset) {
+			case StatisticOffset::SkillCreatureCombat: return "combat";
+			case StatisticOffset::SkillCreatureMagic: return "magic";
+			case StatisticOffset::SkillCreatureStealth: return "stealth";
+			}
+		}
+		else {
+			switch (statisticOffset) {
+			case StatisticOffset::SkillNPCAcrobatics: return "acrobatics";
+			case StatisticOffset::SkillNPCAlchemy: return "alchemy";
+			case StatisticOffset::SkillNPCAlteration: return "alteration";
+			case StatisticOffset::SkillNPCArmorer: return "armorer";
+			case StatisticOffset::SkillNPCAthletics: return "athletics";
+			case StatisticOffset::SkillNPCAxe: return "axe";
+			case StatisticOffset::SkillNPCBlock: return "block";
+			case StatisticOffset::SkillNPCBluntWeapon: return "bluntWeapon";
+			case StatisticOffset::SkillNPCConjuration: return "conjuration";
+			case StatisticOffset::SkillNPCDestruction: return "destruction";
+			case StatisticOffset::SkillNPCEnchant: return "enchant";
+			case StatisticOffset::SkillNPCHandToHand: return "handToHand";
+			case StatisticOffset::SkillNPCHeavyArmor: return "heavyArmor";
+			case StatisticOffset::SkillNPCIllusion: return "illusion";
+			case StatisticOffset::SkillNPCLightArmor: return "lightArmor";
+			case StatisticOffset::SkillNPCLongBlade: return "longBlade";
+			case StatisticOffset::SkillNPCMarksman: return "marksman";
+			case StatisticOffset::SkillNPCMediumArmor: return "mediumArmor";
+			case StatisticOffset::SkillNPCMercantile: return "mercantile";
+			case StatisticOffset::SkillNPCMysticism: return "mysticism";
+			case StatisticOffset::SkillNPCRestoration: return "restoration";
+			case StatisticOffset::SkillNPCSecurity: return "security";
+			case StatisticOffset::SkillNPCShortBlade: return "shortBlade";
+			case StatisticOffset::SkillNPCSneak: return "sneak";
+			case StatisticOffset::SkillNPCSpear: return "spear";
+			case StatisticOffset::SkillNPCSpeechcraft: return "speechcraft";
+			case StatisticOffset::SkillNPCUnarmored: return "unarmored";
+			}
+		}
+
+		return "unknown";
+	}
+
+	inline void sendUpdateDerivedStatisticsEvent(MobileActor* mobile, Statistic* statistic, mwse::lua::ThreadedStateHandle& state) {
+		state.triggerEvent(new mwse::lua::event::UpdatedDerivedStatisticsEvent(mobile, statistic, mobile->getStatisticName(statistic)));
+	}
+
+	const auto TES3_MobileActor_updateDerivedStatistics = reinterpret_cast<void(__thiscall*)(const MobileActor*, Statistic*)>(0x527BC0);
+	void MobileActor::updateDerivedStatistics(Statistic * statistic) {
+		// Call original function.
+		TES3_MobileActor_updateDerivedStatistics(this, statistic);
+
+		// Pass to lua to muck with.
+		if (mwse::lua::event::UpdatedDerivedStatisticsEvent::getEventEnabled()) {
+			if (reference == nullptr) {
+				int x = 4;
+			}
+
+			mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			if (statistic) {
+				sendUpdateDerivedStatisticsEvent(this, statistic, stateHandle);
+			}
+			// Updated all statistics.
+			else {
+				for (size_t i = Attribute::FirstAttribute; i < Attribute::LastAttribute; i++) {
+					sendUpdateDerivedStatisticsEvent(this, &attributes[i], stateHandle);
+				}
+				sendUpdateDerivedStatisticsEvent(this, &encumbrance, stateHandle);
+				sendUpdateDerivedStatisticsEvent(this, &fatigue, stateHandle);
+				sendUpdateDerivedStatisticsEvent(this, &health, stateHandle);
+				sendUpdateDerivedStatisticsEvent(this, &magicka, stateHandle);
+				sendUpdateDerivedStatisticsEvent(this, &magickaMultiplier, stateHandle);
+
+				if (actorType == MobileActorType::Creature) {
+					for (size_t i = CreatureSkillID::FirstSkill; i < CreatureSkillID::LastSkill; i++) {
+						sendUpdateDerivedStatisticsEvent(this, &static_cast<MobileCreature*>(this)->skills[i], stateHandle);
+					}
+				}
+				else {
+					for (size_t i = SkillID::FirstSkill; i < SkillID::LastSkill; i++) {
+						sendUpdateDerivedStatisticsEvent(this, &static_cast<MobileNPC*>(this)->skills[i], stateHandle);
+					}
+				}
+			}
+		}
 	}
 
 	int MobileActor::determineModifiedPrice(int basePrice, bool buying) {
