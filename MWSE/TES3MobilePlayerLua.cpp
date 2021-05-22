@@ -12,7 +12,7 @@
 #include "TES3Birthsign.h"
 #include "TES3GlobalVariable.h"
 #include "TES3NPC.h"
-#include "TES3PlayerAnimationData.h"
+#include "TES3PlayerAnimationController.h"
 #include "TES3Spell.h"
 
 namespace mwse {
@@ -72,8 +72,8 @@ namespace mwse {
 				usertypeDefinition["levelupsPerSpecialization"] = sol::readonly_property(&TES3::MobilePlayer::getLevelupsPerSpecialization);
 				usertypeDefinition["skillProgress"] = sol::readonly_property(&TES3::MobilePlayer::getSkillProgressValues);
 
-				// Overwrite MobileActor::animationData for player.
-				usertypeDefinition["animationData"] = sol::readonly_property(&TES3::MobilePlayer::getPlayerAnimationData);
+				// Overwrite MobileActor::animationController for player.
+				usertypeDefinition["animationController"] = sol::readonly_property(&TES3::MobilePlayer::getPlayerAnimationController);
 
 				// Overwrite MobileNPC::forceSneak so that it works on the player. 
 				usertypeDefinition["forceSneak"] = sol::property(&TES3::MobilePlayer::flagForceSneak, &TES3::MobilePlayer::setFlagSneak);

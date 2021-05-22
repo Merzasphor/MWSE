@@ -1,14 +1,14 @@
-#include "TES3PlayerAnimationData.h"
+#include "TES3PlayerAnimationController.h"
 
 namespace TES3 {
-	bool PlayerAnimationData::force1stPerson() {
+	bool PlayerAnimationController::force1stPerson() {
 		if (is3rdPerson) {
 			togglePOV = true;
 		}
 		return togglePOV;
 	}
 
-	bool PlayerAnimationData::force3rdPerson() {
+	bool PlayerAnimationController::force3rdPerson() {
 		if (!is3rdPerson) {
 			togglePOV = true;
 		}

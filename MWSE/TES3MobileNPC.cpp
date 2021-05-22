@@ -7,7 +7,7 @@
 #include "LuaCalcMovementSpeedEvent.h"
 #include "LuaCalcHitArmorPieceEvent.h"
 
-#include "TES3ActorAnimationData.h"
+#include "TES3ActorAnimationController.h"
 #include "TES3AudioController.h"
 #include "TES3Class.h"
 #include "TES3DataHandler.h"
@@ -202,7 +202,7 @@ namespace TES3 {
 	}
 
 	float MobileNPC::calculateMovementSpeedFromAnimationData() {
-		return animationData.asActor->calculateMovementSpeed();
+		return animationController.asActor->calculateMovementSpeed();
 	}
 
 	std::reference_wrapper<SkillStatistic[27]> MobileNPC::getSkillStatistics() {

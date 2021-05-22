@@ -16,20 +16,20 @@ namespace TES3 {
 	};
 	static_assert(sizeof(KeyframeDefinition) == 0x18, "TES3::KeyframeDefinition failed size validation");
 
-	struct ActorAnimationData_VirtualTable {
-		void(__thiscall* destructor)(ActorAnimationData*, int); // 0x0
-		void(__thiscall* unknown_0x4)(ActorAnimationData*, float); // 0x4
-		void(__thiscall* unknown_0x8)(ActorAnimationData*, int); // 0x8
-		void(__thiscall* syncReferenceRotation)(ActorAnimationData*); // 0xC
-		void(__thiscall* setProperties)(ActorAnimationData*, NI::Node*); // 0x10
-		Matrix33* (__thiscall* getRotation)(ActorAnimationData*, Matrix33*); // 0x14
-		void(__thiscall* unknown_0x18)(ActorAnimationData*, Vector3*); // 0x18
-		void(__thiscall* unknown_0x1C)(ActorAnimationData*); // 0x1C
+	struct ActorAnimationController_VirtualTable {
+		void(__thiscall* destructor)(ActorAnimationController*, int); // 0x0
+		void(__thiscall* unknown_0x4)(ActorAnimationController*, float); // 0x4
+		void(__thiscall* unknown_0x8)(ActorAnimationController*, int); // 0x8
+		void(__thiscall* syncReferenceRotation)(ActorAnimationController*); // 0xC
+		void(__thiscall* setProperties)(ActorAnimationController*, NI::Node*); // 0x10
+		Matrix33* (__thiscall* getRotation)(ActorAnimationController*, Matrix33*); // 0x14
+		void(__thiscall* unknown_0x18)(ActorAnimationController*, Vector3*); // 0x18
+		void(__thiscall* unknown_0x1C)(ActorAnimationController*); // 0x1C
 	};
-	static_assert(sizeof(ActorAnimationData_VirtualTable) == 0x20, "TES3::ActorAnimationData_VirtualTable failed size validation");
+	static_assert(sizeof(ActorAnimationController_VirtualTable) == 0x20, "TES3::ActorAnimationController_VirtualTable failed size validation");
 
-	struct ActorAnimationData {
-		ActorAnimationData_VirtualTable* vTable; // 0x0
+	struct ActorAnimationController {
+		ActorAnimationController_VirtualTable* vTable; // 0x0
 		signed char useAnimationDelta; // 0x04
 		char padding_0x5[3];
 		char unknown_0x8;
@@ -87,5 +87,5 @@ namespace TES3 {
 		// Fixes any transparency values.
 		void updateOpacity();
 	};
-	static_assert(sizeof(ActorAnimationData) == 0xD4, "TES3::ActorAnimationData failed size validation");
+	static_assert(sizeof(ActorAnimationController) == 0xD4, "TES3::ActorAnimationController failed size validation");
 }

@@ -14,7 +14,7 @@
 #include "LuaMobileObjectCollisionEvent.h"
 
 #include "TES3Actor.h"
-#include "TES3ActorAnimationData.h"
+#include "TES3ActorAnimationController.h"
 #include "TES3Alchemy.h"
 #include "TES3AudioController.h"
 #include "TES3Enchantment.h"
@@ -559,13 +559,13 @@ namespace TES3 {
 	}
 
 	void MobileActor::updateOpacity() {
-		if (animationData.asActor) {
-			animationData.asActor->updateOpacity();
+		if (animationController.asActor) {
+			animationController.asActor->updateOpacity();
 		}
 	}
 
-	ActorAnimationData* MobileActor::getAnimationData() const {
-		return animationData.asActor;
+	ActorAnimationController* MobileActor::getAnimationController() const {
+		return animationController.asActor;
 	}
 
 	BaseObject* MobileActor::getCurrentSpell() const {

@@ -157,9 +157,9 @@ namespace TES3 {
 		Reference* moreCollidingReferences[2]; // 0x238
 		int unknown_0x240;
 		union {
-			ActorAnimationData * asActor;
-			PlayerAnimationData * asPlayer;
-		} animationData; // 0x244
+			ActorAnimationController * asActor;
+			PlayerAnimationController * asPlayer;
+		} animationController; // 0x244
 		CrimeController crimesB; // 0x248
 		Statistic attributes[8]; // 0x254
 		Statistic health; // 0x2B4
@@ -283,7 +283,7 @@ namespace TES3 {
 
 		void updateOpacity();
 
-		ActorAnimationData* getAnimationData() const;
+		ActorAnimationController* getAnimationController() const;
 		BaseObject* getCurrentSpell() const;
 
 		std::reference_wrapper<Statistic[8]> getAttributes();

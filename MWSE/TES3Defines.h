@@ -7,7 +7,7 @@ namespace TES3 {
 	struct Activator;
 	struct ActiveMagicEffect;
 	struct Actor;
-	struct ActorAnimationData;
+	struct ActorAnimationController;
 	struct ActorVirtualTable;
 	struct AIConfig;
 	struct AIPackage;
@@ -108,7 +108,7 @@ namespace TES3 {
 	struct OwnershipAttachmentNode;
 	struct PhysicalObject;
 	struct PhysicalObjectVirtualTable;
-	struct PlayerAnimationData;
+	struct PlayerAnimationController;
 	struct PlayerBounty;
 	struct Probe;
 	struct ProcessManager;

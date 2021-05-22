@@ -1,4 +1,4 @@
-#include "TES3ActorAnimationData.h"
+#include "TES3ActorAnimationController.h"
 
 #include "LuaManager.h"
 
@@ -7,12 +7,11 @@
 #include "TES3MobilePlayer.h"
 #include "TES3WorldController.h"
 
-#define TES3_ActorAnimationData_calculateMovementSpeed 0x53E1A0
-
 namespace TES3 {
-	float ActorAnimationData::calculateMovementSpeed() {
+	const auto TES3_ActorAnimationController_calculateMovementSpeed = reinterpret_cast<float(__thiscall*)(ActorAnimationController*)>(0x53E1A0);
+	float ActorAnimationController::calculateMovementSpeed() {
 		// Call the original function to get the default movement speed value.
-		float speed = reinterpret_cast<float(__thiscall *)(ActorAnimationData*)>(TES3_ActorAnimationData_calculateMovementSpeed)(this);
+		float speed = TES3_ActorAnimationController_calculateMovementSpeed(this);
 
 		// Launch our event, and overwrite the speed with what was given back to us.
 		if (mwse::lua::event::CalculateMovementSpeed::getEventEnabled()) {
@@ -26,17 +25,17 @@ namespace TES3 {
 		return speed;
 	}
 
-	const auto TES3_ActorAnimationData_getOpacity = reinterpret_cast<float(__thiscall*)(ActorAnimationData*)>(0x542130);
-	float ActorAnimationData::getOpacity() {
-		return TES3_ActorAnimationData_getOpacity(this);
+	const auto TES3_ActorAnimationController_getOpacity = reinterpret_cast<float(__thiscall*)(ActorAnimationController*)>(0x542130);
+	float ActorAnimationController::getOpacity() {
+		return TES3_ActorAnimationController_getOpacity(this);
 	}
 
-	const auto TES3_ActorAnimationData_setOpacity = reinterpret_cast<void(__thiscall*)(ActorAnimationData*, float)>(0x542030);
-	void ActorAnimationData::setOpacity(float value) {
-		TES3_ActorAnimationData_setOpacity(this, value);
+	const auto TES3_ActorAnimationController_setOpacity = reinterpret_cast<void(__thiscall*)(ActorAnimationController*, float)>(0x542030);
+	void ActorAnimationController::setOpacity(float value) {
+		TES3_ActorAnimationController_setOpacity(this, value);
 	}
 
-	void ActorAnimationData::updateOpacity() {
+	void ActorAnimationController::updateOpacity() {
 		const auto invisibility = mobileActor->effectAttributes[TES3::EffectAttribute::Invisibility];
 		const auto chameleon = mobileActor->effectAttributes[TES3::EffectAttribute::Chameleon];
 

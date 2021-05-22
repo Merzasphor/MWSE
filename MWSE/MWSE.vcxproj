@@ -280,7 +280,7 @@
     <ClInclude Include="TES3MobileObject.h" />
     <ClInclude Include="TES3MobileObjectLua.h" />
     <ClInclude Include="TES3ObjectLua.h" />
-    <ClInclude Include="TES3PlayerAnimationData.h" />
+    <ClInclude Include="TES3PlayerAnimationController.h" />
     <ClInclude Include="TES3Quest.h" />
     <ClInclude Include="TES3SoundGenerator.h" />
     <ClInclude Include="StackLua.h" />
@@ -288,7 +288,7 @@
     <ClInclude Include="TES3ActionDataLua.h" />
     <ClInclude Include="TES3Activator.h" />
     <ClInclude Include="TES3ActivatorLua.h" />
-    <ClInclude Include="TES3ActorAnimationData.h" />
+    <ClInclude Include="TES3ActorAnimationController.h" />
     <ClInclude Include="TES3Alchemy.h" />
     <ClInclude Include="TES3AlchemyLua.h" />
     <ClInclude Include="TES3Apparatus.h" />
@@ -699,7 +699,7 @@
     <ClCompile Include="TES3MobileActorLua.cpp" />
     <ClCompile Include="TES3MobileSpellProjectile.cpp" />
     <ClCompile Include="TES3Moon.cpp" />
-    <ClCompile Include="TES3PlayerAnimationData.cpp" />
+    <ClCompile Include="TES3PlayerAnimationController.cpp" />
     <ClCompile Include="TES3Probe.cpp" />
     <ClCompile Include="TES3Quest.cpp" />
     <ClCompile Include="TES3Race.cpp" />
@@ -724,7 +724,7 @@
     <ClCompile Include="TES3ActionDataLua.cpp" />
     <ClCompile Include="TES3ActivatorLua.cpp" />
     <ClCompile Include="TES3Actor.cpp" />
-    <ClCompile Include="TES3ActorAnimationData.cpp" />
+    <ClCompile Include="TES3ActorAnimationController.cpp" />
     <ClCompile Include="TES3AlchemyLua.cpp" />
     <ClCompile Include="TES3ApparatusLua.cpp" />
     <ClCompile Include="TES3Armor.cpp" />

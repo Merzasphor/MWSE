@@ -4,7 +4,7 @@
 
 #include "LuaBodyPartAssignedEvent.h"
 
-#include "TES3ActorAnimationData.h"
+#include "TES3ActorAnimationController.h"
 #include "TES3MobileActor.h"
 #include "TES3Reference.h"
 
@@ -64,11 +64,11 @@ namespace TES3 {
 		// Force update opacity.
 		auto mobile = reference->getAttachedMobileActor();
 		if (mobile) {
-			auto animData = mobile->getAnimationData();
-			if (animData && animData->getOpacity() < 1.0f) {
-				const auto oldAlpha = animData->getOpacity();
-				animData->materialProperty->alpha = -1.0f;
-				animData->setOpacity(oldAlpha);
+			auto animController = mobile->getAnimationController();
+			if (animController && animController->getOpacity() < 1.0f) {
+				const auto oldAlpha = animController->getOpacity();
+				animController->materialProperty->alpha = -1.0f;
+				animController->setOpacity(oldAlpha);
 			}
 		}
 	}

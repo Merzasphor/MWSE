@@ -2,7 +2,7 @@
 
 #include "TES3MobileObjectLua.h"
 
-#include "TES3ActorAnimationData.h"
+#include "TES3ActorAnimationController.h"
 #include "TES3AIData.h"
 #include "TES3Cell.h"
 #include "TES3CombatSession.h"
@@ -53,7 +53,7 @@ namespace mwse {
 			usertypeDefinition["width"] = sol::readonly_property(&TES3::MobileActor::widthInUnits);
 
 			// Indirect bindings to unions and arrays.
-			usertypeDefinition["animationData"] = sol::readonly_property(&TES3::MobileActor::getAnimationData);
+			usertypeDefinition["animationController"] = sol::readonly_property(&TES3::MobileActor::getAnimationController);
 			usertypeDefinition["attributes"] = sol::readonly_property(&TES3::MobileActor::getAttributes);
 			usertypeDefinition["currentSpell"] = sol::readonly_property(&TES3::MobileActor::getCurrentSpell);
 			usertypeDefinition["effectAttributes"] = sol::readonly_property(&TES3::MobileActor::getEffectAttributes);

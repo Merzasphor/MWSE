@@ -20,7 +20,7 @@
 
 #include "TES3Defines.h"
 #include "TES3Actor.h"
-#include "TES3ActorAnimationData.h"
+#include "TES3ActorAnimationController.h"
 #include "TES3Alchemy.h"
 #include "TES3Book.h"
 #include "TES3BodyPartManager.h"
@@ -831,9 +831,9 @@ namespace mwse {
 		// Hook: Attack
 		//
 
-		void __fastcall OnAttack(TES3::ActorAnimationData* animData) {
+		void __fastcall OnAttack(TES3::ActorAnimationController* animData) {
 			// Call original function.
-			reinterpret_cast<void(__thiscall *)(TES3::ActorAnimationData*)>(TES3_ActorAnimData_attackCheckMeleeHit)(animData);
+			reinterpret_cast<void(__thiscall *)(TES3::ActorAnimationController*)>(TES3_ActorAnimData_attackCheckMeleeHit)(animData);
 
 			// Prepare our event data.
 			if (event::AttackEvent::getEventEnabled()) {
@@ -3277,7 +3277,7 @@ namespace mwse {
 			genCallEnforced(0x5DA620, 0x626220, reinterpret_cast<DWORD>(OnLevelUp));
 
 			// Event: Calculate movement speed. Called after the below speed events.
-			auto calculateMoveSpeed = &TES3::ActorAnimationData::calculateMovementSpeed;
+			auto calculateMoveSpeed = &TES3::ActorAnimationController::calculateMovementSpeed;
 			genCallEnforced(0x53E2F2, 0x53E1A0, *reinterpret_cast<DWORD*>(&calculateMoveSpeed));
 			genCallEnforced(0x53ED52, 0x53E1A0, *reinterpret_cast<DWORD*>(&calculateMoveSpeed));
 			genCallEnforced(0x540C7D, 0x53E1A0, *reinterpret_cast<DWORD*>(&calculateMoveSpeed));

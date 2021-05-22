@@ -1,11 +1,11 @@
 #pragma once
 
-#include "TES3ActorAnimationData.h"
+#include "TES3ActorAnimationController.h"
 
 #include "TES3Vectors.h"
 
 namespace TES3 {
-	struct PlayerAnimationData : ActorAnimationData {
+	struct PlayerAnimationController : ActorAnimationController {
 		NI::Camera * firstPersonHeadCameraNode; // 0xD4 
 		TES3::Vector3 cameraOffset; // 0xD8
 		void * pickData; // 0xE4
@@ -35,5 +35,5 @@ namespace TES3 {
 		bool force3rdPerson();
 
 	};
-	static_assert(sizeof(PlayerAnimationData) == 0x124, "TES3::PlayerAnimationData failed size validation");
+	static_assert(sizeof(PlayerAnimationController) == 0x124, "TES3::PlayerAnimationController failed size validation");
 }

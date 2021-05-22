@@ -56,7 +56,7 @@
 #include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
 #include "TES3NPC.h"
-#include "TES3PlayerAnimationData.h" 
+#include "TES3PlayerAnimationController.h" 
 #include "TES3Race.h"
 #include "TES3Reference.h"
 #include "TES3Region.h"
@@ -675,7 +675,7 @@ namespace mwse {
 			if (worldController) {
 				auto mobilePlayer = worldController->getMobilePlayer();
 				if (mobilePlayer) {
-					return mobilePlayer->animationData.asPlayer->firstPersonHeadCameraNode->worldTransform.translation;
+					return mobilePlayer->animationController.asPlayer->firstPersonHeadCameraNode->worldTransform.translation;
 				}
 			}
 			return sol::optional<TES3::Vector3>();
@@ -701,7 +701,7 @@ namespace mwse {
 				return {};
 			}
 
-			return macp->animationData.asPlayer->cameraOffset;
+			return macp->animationController.asPlayer->cameraOffset;
 		}
 
 		void set3rdPersonCameraOffset(sol::table params) {
@@ -719,7 +719,7 @@ namespace mwse {
 				throw std::exception("MobilePlayer is not yet initialized.");
 			}
 
-			macp->animationData.asPlayer->cameraOffset = offset.value();
+			macp->animationController.asPlayer->cameraOffset = offset.value();
 		}
 
 		static NI::Pick* rayTestCache = nullptr;
@@ -2053,7 +2053,7 @@ namespace mwse {
 				throw std::runtime_error("Function called while mobile player is unavailable.");
 			}
 
-			auto animData = macp->animationData.asPlayer;
+			auto animData = macp->animationController.asPlayer;
 			if (animData == nullptr) {
 				throw std::runtime_error("Function called while mobile player animation data is unavailable.");
 			}
@@ -2072,7 +2072,7 @@ namespace mwse {
 				throw std::runtime_error("Function called while mobile player is unavailable.");
 			}
 
-			auto animData = macp->animationData.asPlayer;
+			auto animData = macp->animationController.asPlayer;
 			if (animData == nullptr) {
 				throw std::runtime_error("Function called while mobile player animation data is unavailable.");
 			}
@@ -2872,7 +2872,7 @@ namespace mwse {
 				throw std::runtime_error("Function called while mobile player is unavailable.");
 			}
 
-			auto animData = macp->animationData.asPlayer;
+			auto animData = macp->animationController.asPlayer;
 			if (animData == nullptr) {
 				throw std::runtime_error("Function called while mobile player animation data is unavailable.");
 			}

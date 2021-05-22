@@ -80,5 +80,5 @@ namespace TES3 {
 		void playAnimationGroup(int animationGroup, int startFlag = 0, int loopCount = -1);
 
 	};
-	static_assert(sizeof(AnimationData) == 0x7E4, "TES3::AnimationAttachment failed size validation");
+	static_assert(sizeof(AnimationData) == 0x7E4, "TES3::AnimationData failed size validation");
 }
