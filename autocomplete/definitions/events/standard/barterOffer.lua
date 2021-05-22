@@ -1,14 +1,15 @@
 return{
-    description = "This event is triggered when player presses Offer button in Bartering menu.",
+    description = "This event is called when a potentially successful barter offer is made by the player. Potentially successful means both parties have the required funds to make the trade.",
     eventData = {
         ["mobile"] = {
             type = "tes3mobileActor",
             readonly = true,
-            description = "",
+            description = "The mobile actor of the merchant the player is interacting with.",
         },
         ["success"] = {
             type = "boolean",
-            description = "True if bartering is successful. e.sucess = false, will make player fail the bartering event.",
+            --readonly = true,
+            description = "Whether the trade was accepted or not.",
         },
         ["value"] = {
             type = "number",
@@ -28,7 +29,7 @@ return{
         ["buying"] = {
             type = "table",
             readonly = true,
-            description = "Table of tes3what being sold These items will be transfered to player's inventory on a successful bartering event.",
+            description = "Table of tes3what being bought. These items will be transfered to player's inventory on a successful bartering event.",
         },
     },
 }
