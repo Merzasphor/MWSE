@@ -5,6 +5,7 @@
 #include "LuaCalcMovementSpeedEvent.h"
 
 #include "TES3MobilePlayer.h"
+#include "TES3Reference.h"
 #include "TES3WorldController.h"
 
 namespace TES3 {
@@ -57,4 +58,20 @@ namespace TES3 {
 			setOpacity(1.0f);
 		}
 	}
+
+	float ActorAnimationController::getWeaponAnimSpeed() const {
+		return animationData->weaponSpeed;
+	}
+
+	void ActorAnimationController::setWeaponAnimSpeed(float speed) {
+		if (mobileActor->actorType == MobileActorType::Player) {
+			auto macp = static_cast<MobilePlayer*>(mobileActor);
+			macp->reference->getAttachedAnimationData()->weaponSpeed = speed;
+			macp->firstPersonReference->getAttachedAnimationData()->weaponSpeed = speed;
+		}
+		else {
+			animationData->weaponSpeed = speed;
+		}
+	}
+
 }

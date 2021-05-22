@@ -175,6 +175,7 @@
     <ClInclude Include="NIUVData.h" />
     <ClInclude Include="NIViewer.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TES3ActorAnimationControllerLua.h" />
     <ClInclude Include="TES3Allocator.h" />
     <ClInclude Include="TES3Archive.h" />
     <ClInclude Include="TES3Birthsign.h" />
@@ -238,6 +239,7 @@
     <ClInclude Include="TES3AttachmentLua.h" />
     <ClInclude Include="TES3MobControllerLua.h" />
     <ClInclude Include="TES3MobileSpellProjectile.h" />
+    <ClInclude Include="TES3PlayerAnimationControllerLua.h" />
     <ClInclude Include="TES3ScriptCompiler.h" />
     <ClInclude Include="TES3SoulGemData.h" />
     <ClInclude Include="TES3SpellInstanceController.h" />
@@ -619,6 +621,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="TES3Activator.cpp" />
+    <ClCompile Include="TES3ActorAnimationControllerLua.cpp" />
     <ClCompile Include="TES3AnimationGroup.cpp" />
     <ClCompile Include="TES3Apparatus.cpp" />
     <ClCompile Include="TES3Attachment.cpp" />
@@ -700,6 +703,7 @@
     <ClCompile Include="TES3MobileSpellProjectile.cpp" />
     <ClCompile Include="TES3Moon.cpp" />
     <ClCompile Include="TES3PlayerAnimationController.cpp" />
+    <ClCompile Include="TES3PlayerAnimationControllerLua.cpp" />
     <ClCompile Include="TES3Probe.cpp" />
     <ClCompile Include="TES3Quest.cpp" />
     <ClCompile Include="TES3Race.cpp" />

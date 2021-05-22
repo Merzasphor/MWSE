@@ -69,6 +69,7 @@
 #include "TES3UtilLua.h"
 #include "TES3ActionDataLua.h"
 #include "TES3ActivatorLua.h"
+#include "TES3ActorAnimationControllerLua.h"
 #include "TES3AILua.h"
 #include "TES3AlchemyLua.h"
 #include "TES3ApparatusLua.h"
@@ -110,6 +111,7 @@
 #include "TES3MobileProjectileLua.h"
 #include "TES3MoonLua.h"
 #include "TES3NPCLua.h"
+#include "TES3PlayerAnimationControllerLua.h"
 #include "TES3ProbeLua.h"
 #include "TES3RaceLua.h"
 #include "TES3ReferenceLua.h"
@@ -387,6 +389,7 @@ namespace mwse {
 			// Bind TES3 data types.
 			bindTES3ActionData();
 			bindTES3Activator();
+			bindTES3ActorAnimationController();
 			bindTES3AI();
 			bindTES3Alchemy();
 			bindTES3Apparatus();
@@ -431,6 +434,7 @@ namespace mwse {
 			bindTES3MobileProjectile();
 			bindTES3Moon();
 			bindTES3NPC();
+			bindTES3PlayerAnimationController();
 			bindTES3Probe();
 			bindTES3Race();
 			bindTES3Reference();

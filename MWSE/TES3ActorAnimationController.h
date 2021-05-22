@@ -1,6 +1,8 @@
 #pragma once
 
 #include "TES3Defines.h"
+
+#include "TES3AnimationData.h"
 #include "TES3Vectors.h"
 
 #include "NIExtraData.h"
@@ -46,7 +48,7 @@ namespace TES3 {
 		int unknown_0x30;
 		float unknown_0x34;
 		MobileActor * mobileActor; // 0x38
-		int unknown_0x3C;
+		AnimationData * animationData; // 0x3C
 		NI::Pointer<NI::AlphaProperty> alphaProperty; // 0x40
 		NI::Pointer<NI::MaterialProperty> materialProperty; // 0x44
 		NI::Pointer<NI::VertexColorProperty> vertexColorProperty; // 0x48
@@ -86,6 +88,9 @@ namespace TES3 {
 
 		// Fixes any transparency values.
 		void updateOpacity();
+
+		float getWeaponAnimSpeed() const;
+		void setWeaponAnimSpeed(float speed);
 	};
 	static_assert(sizeof(ActorAnimationController) == 0xD4, "TES3::ActorAnimationController failed size validation");
 }
