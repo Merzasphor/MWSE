@@ -3709,6 +3709,9 @@ namespace mwse {
 			// Patch reading correct light culling radius from non-light entities during light updates.
 			writePatchCodeUnprotected(0x485DAD, (BYTE*)&patchGetEntityLightRadius, patchGetEntityLightRadius_size);
 
+			// Allow hand-to-hand animation speed to be changed.
+			writeByteUnprotected(0x46CAD7, 0x89);
+
 			// Make soul gem data writable.
 			DWORD OldProtect;
 			VirtualProtect((DWORD*)0x791C98, 6 * sizeof(TES3::SoulGemData), PAGE_READWRITE, &OldProtect);
