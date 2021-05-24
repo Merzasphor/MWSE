@@ -175,6 +175,7 @@
 #include "LuaCellChangedEvent.h"
 #include "LuaCrimeWitnessedEvent.h"
 #include "LuaDamageEvent.h"
+#include "LuaDamageHandToHandEvent.h"
 #include "LuaEquipEvent.h"
 #include "LuaFilterBarterMenuEvent.h"
 #include "LuaFilterContentsMenuEvent.h"
@@ -1039,6 +1040,20 @@ namespace mwse {
 			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, doNotChangeHealth);
 			mwse::lua::event::DamageEvent::m_Source = nullptr;
 			return result;
+		}
+
+		float __fastcall OnApplyFatigueDamageFromAttack(TES3::MobileActor* mobileActor, TES3::MobileActor* attacker, float damage, float swing, bool alwaysPlayHitVoice) {
+			mwse::lua::event::DamageHandToHandEvent::m_Attacker = attacker;
+			auto result = mobileActor->applyFatigueDamage(damage, swing, alwaysPlayHitVoice);
+			mwse::lua::event::DamageHandToHandEvent::m_Attacker = nullptr;
+			return result;
+		}
+
+		static __declspec(naked) float OnApplyFatigueDamageFromAttack_Wrapper() {
+			_asm {
+				mov edx, esi
+				jmp OnApplyFatigueDamageFromAttack
+			}
 		}
 
 		bool __fastcall OnApplyDamageFromMagic(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool doNotChangeHealth) {
@@ -3230,6 +3245,9 @@ namespace mwse {
 			genCallEnforced(0x51889D, 0x519110, reinterpret_cast<DWORD>(AttributeSpellEffect));
 			genCallEnforced(0x518D5C, 0x519110, reinterpret_cast<DWORD>(AttributeSpellEffect));
 			genCallEnforced(0x518F9F, 0x519110, reinterpret_cast<DWORD>(AttributeSpellEffect));
+
+			// Event: Damage(d)HandToHand
+			genCallEnforced(0x5576D4, 0x5581B0, reinterpret_cast<DWORD>(OnApplyFatigueDamageFromAttack_Wrapper));
 
 			// Event: Spell cast resolution
 			genCallEnforced(0x5156B2, 0x4AA950, reinterpret_cast<DWORD>(OnSpellCastResolution));

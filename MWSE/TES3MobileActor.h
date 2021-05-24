@@ -235,6 +235,7 @@ namespace TES3 {
 		bool isDead() const;
 		void onDeath();
 		bool applyHealthDamage(float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool doNotChangeHealth);
+		float applyFatigueDamage(float damage, float swing, bool alwaysPlayHitVoice = false);
 		bool hasFreeAction() const;
 		float calculateRunSpeed();
 		float calculateSwimSpeed();

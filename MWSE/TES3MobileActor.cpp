@@ -9,7 +9,9 @@
 #include "LuaCombatStopEvent.h"
 #include "LuaCombatStoppedEvent.h"
 #include "LuaDamagedEvent.h"
+#include "LuaDamagedHandToHandEvent.h"
 #include "LuaDamageEvent.h"
+#include "LuaDamageHandToHandEvent.h"
 #include "LuaDeathEvent.h"
 #include "LuaMobileObjectCollisionEvent.h"
 
@@ -284,6 +286,32 @@ namespace TES3 {
 		}
 
 		return checkForKnockdown;
+	}
+
+	const auto TES3_MobileActor_applyFatigueDamage = reinterpret_cast<float(__thiscall*)(MobileActor*, float, float, bool)>(0x5581B0);
+	float MobileActor::applyFatigueDamage(float fatigueDamage, float swing, bool alwaysPlayHitVoice) {
+		// Invoke our pre-damage event and check if it is blocked.
+		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+		if (mwse::lua::event::DamageHandToHandEvent::getEventEnabled()) {
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::DamageHandToHandEvent(this, fatigueDamage));
+			if (eventData.valid()) {
+				if (eventData.get_or("block", false)) {
+					return 0;
+				}
+
+				fatigueDamage = eventData["fatigueDamage"];
+			}
+		}
+
+		float result = TES3_MobileActor_applyFatigueDamage(this, fatigueDamage, swing, alwaysPlayHitVoice);
+
+		// Do our post-damage event.
+		if (mwse::lua::event::DamagedHandToHandEvent::getEventEnabled()) {
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::DamagedHandToHandEvent(this, fatigueDamage));
+		}
+		return result;
 	}
 
 	bool MobileActor::hasFreeAction() const {

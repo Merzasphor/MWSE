@@ -125,6 +125,7 @@ namespace mwse {
 
 			// Basic function binding.
 			usertypeDefinition["applyHealthDamage"] = &TES3::MobileActor::applyHealthDamage;
+			usertypeDefinition["applyFatigueDamage"] = &TES3::MobileActor::applyFatigueDamage;
 			usertypeDefinition["getBootsWeight"] = &TES3::MobileActor::getBootsWeight;
 			usertypeDefinition["getViewToActor"] = &TES3::MobileActor::getViewToActor;
 			usertypeDefinition["getViewToPoint"] = &TES3::MobileActor::getViewToPoint;

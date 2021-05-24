@@ -36,7 +36,9 @@
 #include "LuaConvertReferenceToItemEvent.h"
 #include "LuaCrimeWitnessedEvent.h"
 #include "LuaDamagedEvent.h"
+#include "LuaDamagedHandToHandEvent.h"
 #include "LuaDamageEvent.h"
+#include "LuaDamageHandToHandEvent.h"
 #include "LuaDeathEvent.h"
 #include "LuaDetectSneakEvent.h"
 #include "LuaDetermineActionEvent.h"
@@ -175,6 +177,8 @@ namespace mwse {
 				usertypeDefinition["crimeWitnessed"] = sol::property(&CrimeWitnessedEvent::getEventEnabled, &CrimeWitnessedEvent::setEventEnabled);
 				usertypeDefinition["damage"] = sol::property(&DamageEvent::getEventEnabled, &DamageEvent::setEventEnabled);
 				usertypeDefinition["damaged"] = sol::property(&DamagedEvent::getEventEnabled, &DamagedEvent::setEventEnabled);
+				usertypeDefinition["damagedHandToHand"] = sol::property(&DamagedHandToHandEvent::getEventEnabled, &DamagedHandToHandEvent::setEventEnabled);
+				usertypeDefinition["damageHandToHand"] = sol::property(&DamageHandToHandEvent::getEventEnabled, &DamageHandToHandEvent::setEventEnabled);
 				usertypeDefinition["death"] = sol::property(&DeathEvent::getEventEnabled, &DeathEvent::setEventEnabled);
 				usertypeDefinition["detectSneak"] = sol::property(&DetectSneakEvent::getEventEnabled, &DetectSneakEvent::setEventEnabled);
 				usertypeDefinition["determineAction"] = sol::property(&DetermineActionEvent::getEventEnabled, &DetermineActionEvent::setEventEnabled);

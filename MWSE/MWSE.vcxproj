@@ -14,6 +14,8 @@
     <ClInclude Include="ArrayUtil.h" />
     <ClInclude Include="BitUtil.h" />
     <ClInclude Include="BSAnimationManager.h" />
+    <ClInclude Include="LuaDamagedHandToHandEvent.h" />
+    <ClInclude Include="LuaDamageHandToHandEvent.h" />
     <ClInclude Include="LuaInfoLinkResolveEvent.h" />
     <ClInclude Include="NIBSAnimationNode.h" />
     <ClInclude Include="LuaBarterOfferEvent.h" />
@@ -489,7 +491,9 @@
     <ClCompile Include="LuaConvertReferenceToItemEvent.cpp" />
     <ClCompile Include="LuaCrimeWitnessedEvent.cpp" />
     <ClCompile Include="LuaDamagedEvent.cpp" />
+    <ClCompile Include="LuaDamagedHandToHandEvent.cpp" />
     <ClCompile Include="LuaDamageEvent.cpp" />
+    <ClCompile Include="LuaDamageHandToHandEvent.cpp" />
     <ClCompile Include="LuaDeathEvent.cpp" />
     <ClCompile Include="LuaDetectSneakEvent.cpp" />
     <ClCompile Include="LuaDetermineActionEvent.cpp" />
