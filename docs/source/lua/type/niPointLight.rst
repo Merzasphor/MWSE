@@ -12,6 +12,9 @@ Properties
 `ambient`_ (`niColor`_)
     The ambient settings for the light.
 
+`appCulled`_ (`boolean`_)
+    A flag indicating if this object is culled. When culled, it will not render, and raycasts ignore it.
+
 `constantAttenuation`_ (`number`_)
     The constant attenuation factor.
 
@@ -33,6 +36,9 @@ Properties
 `name`_ (`string`_)
     The human-facing name of the given object.
 
+`properties`_ (`niPropertyLinkedList`_)
+    The list of properties attached to this niAVObject.
+
 `quadraticAttenuation`_ (`number`_)
     The quadratic attenuation factor.
 
@@ -45,8 +51,14 @@ Properties
 `runTimeTypeInformation`_ (`niRTTI`_)
     The runtime type information for this object.
 
+`scale`_ (`number`_)
+    The object's local uniform scaling factor.
+
 `specular`_ (`niColor`_)
     The specular settings for the light.
+
+`translation`_ (`tes3vector3`_)
+    The object's local translation vector.
 
 `type`_ (`number`_)
     The enumerated type of a given dynamic effect. Types: `0 - niAmbientLight`, `1 - niDirectionalLight`, `2 - niPointLight`, `3 - niSpotLight`, `4 - niTextureEffect`.
@@ -56,6 +68,7 @@ Properties
 
     niPointLight/affectedNodes
     niPointLight/ambient
+    niPointLight/appCulled
     niPointLight/constantAttenuation
     niPointLight/diffuse
     niPointLight/dimmer
@@ -63,15 +76,19 @@ Properties
     niPointLight/flags
     niPointLight/linearAttenuation
     niPointLight/name
+    niPointLight/properties
     niPointLight/quadraticAttenuation
     niPointLight/references
     niPointLight/rotation
     niPointLight/runTimeTypeInformation
+    niPointLight/scale
     niPointLight/specular
+    niPointLight/translation
     niPointLight/type
 
 .. _`affectedNodes`: niPointLight/affectedNodes.html
 .. _`ambient`: niPointLight/ambient.html
+.. _`appCulled`: niPointLight/appCulled.html
 .. _`constantAttenuation`: niPointLight/constantAttenuation.html
 .. _`diffuse`: niPointLight/diffuse.html
 .. _`dimmer`: niPointLight/dimmer.html
@@ -79,18 +96,36 @@ Properties
 .. _`flags`: niPointLight/flags.html
 .. _`linearAttenuation`: niPointLight/linearAttenuation.html
 .. _`name`: niPointLight/name.html
+.. _`properties`: niPointLight/properties.html
 .. _`quadraticAttenuation`: niPointLight/quadraticAttenuation.html
 .. _`references`: niPointLight/references.html
 .. _`rotation`: niPointLight/rotation.html
 .. _`runTimeTypeInformation`: niPointLight/runTimeTypeInformation.html
+.. _`scale`: niPointLight/scale.html
 .. _`specular`: niPointLight/specular.html
+.. _`translation`: niPointLight/translation.html
 .. _`type`: niPointLight/type.html
 
 Methods
 ----------------------------------------------------------------------------------------------------
 
+`attachProperty`_
+    Attach a property to this object.
+
+`clearTransforms`_
+    Resets the object's local transform.
+
 `clone`_ (`niObject`_)
     Creates a copy of this object.
+
+`detachProperty`_ (`niProperty`_)
+    Detaches and returns a property from the object which matches the given property type.
+
+`getObjectByName`_ (`niAVObject`_)
+    Searches this node and all child nodes recursively for a node with a name that matches the argument.
+
+`getProperty`_ (`niProperty`_)
+    Gets an attached property by property type.
 
 `isInstanceOfType`_ (`boolean`_)
     Determines if the object is of a given type, or of a type derived from the given type. Types can be found in the tes3.niType table.
@@ -110,24 +145,54 @@ Methods
 `setAttenuationForRadius`_
     Sets the attenuation for the radius.
 
+`setRadius`_
+    Sets both the light's influence radius, and its lighting attenuation to match the radius.
+
+`update`_
+    Updates the world transforms of this node and its children, which makes changes visible for rendering. Use after changing any local rotation, translation, scale, or bounds.
+
+`updateEffects`_
+    Update all attached effects.
+
+`updateProperties`_
+    Update all attached properties.
+
 .. toctree::
     :hidden:
 
+    niPointLight/attachProperty
+    niPointLight/clearTransforms
     niPointLight/clone
+    niPointLight/detachProperty
+    niPointLight/getObjectByName
+    niPointLight/getProperty
     niPointLight/isInstanceOfType
     niPointLight/isOfType
     niPointLight/prependController
     niPointLight/removeAllControllers
     niPointLight/removeController
     niPointLight/setAttenuationForRadius
+    niPointLight/setRadius
+    niPointLight/update
+    niPointLight/updateEffects
+    niPointLight/updateProperties
 
+.. _`attachProperty`: niPointLight/attachProperty.html
+.. _`clearTransforms`: niPointLight/clearTransforms.html
 .. _`clone`: niPointLight/clone.html
+.. _`detachProperty`: niPointLight/detachProperty.html
+.. _`getObjectByName`: niPointLight/getObjectByName.html
+.. _`getProperty`: niPointLight/getProperty.html
 .. _`isInstanceOfType`: niPointLight/isInstanceOfType.html
 .. _`isOfType`: niPointLight/isOfType.html
 .. _`prependController`: niPointLight/prependController.html
 .. _`removeAllControllers`: niPointLight/removeAllControllers.html
 .. _`removeController`: niPointLight/removeController.html
 .. _`setAttenuationForRadius`: niPointLight/setAttenuationForRadius.html
+.. _`setRadius`: niPointLight/setRadius.html
+.. _`update`: niPointLight/update.html
+.. _`updateEffects`: niPointLight/updateEffects.html
+.. _`updateProperties`: niPointLight/updateProperties.html
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html
@@ -135,11 +200,12 @@ Methods
 .. _`niAlphaProperty`: ../../lua/type/niAlphaProperty.html
 .. _`tes3spell`: ../../lua/type/tes3spell.html
 .. _`tes3inputConfig`: ../../lua/type/tes3inputConfig.html
-.. _`tes3raceBodyParts`: ../../lua/type/tes3raceBodyParts.html
+.. _`tes3itemStack`: ../../lua/type/tes3itemStack.html
 .. _`niTexturingPropertyMap`: ../../lua/type/niTexturingPropertyMap.html
 .. _`tes3globalVariable`: ../../lua/type/tes3globalVariable.html
 .. _`tes3probe`: ../../lua/type/tes3probe.html
 .. _`tes3iterator`: ../../lua/type/tes3iterator.html
+.. _`tes3uiElement`: ../../lua/type/tes3uiElement.html
 .. _`tes3class`: ../../lua/type/tes3class.html
 .. _`niTriShapeData`: ../../lua/type/niTriShapeData.html
 .. _`niObjectNET`: ../../lua/type/niObjectNET.html
@@ -166,7 +232,7 @@ Methods
 .. _`tes3travelDestinationNode`: ../../lua/type/tes3travelDestinationNode.html
 .. _`tes3race`: ../../lua/type/tes3race.html
 .. _`tes3static`: ../../lua/type/tes3static.html
-.. _`tes3clothing`: ../../lua/type/tes3clothing.html
+.. _`table`: ../../lua/type/table.html
 .. _`tes3weatherBlizzard`: ../../lua/type/tes3weatherBlizzard.html
 .. _`tes3weather`: ../../lua/type/tes3weather.html
 .. _`tes3activator`: ../../lua/type/tes3activator.html
@@ -200,6 +266,7 @@ Methods
 .. _`niTriShape`: ../../lua/type/niTriShape.html
 .. _`tes3matrix33`: ../../lua/type/tes3matrix33.html
 .. _`tes3actor`: ../../lua/type/tes3actor.html
+.. _`tes3playerAnimationController`: ../../lua/type/tes3playerAnimationController.html
 .. _`tes3containerInstance`: ../../lua/type/tes3containerInstance.html
 .. _`tes3magicSourceInstance`: ../../lua/type/tes3magicSourceInstance.html
 .. _`niAVObject`: ../../lua/type/niAVObject.html
@@ -208,7 +275,7 @@ Methods
 .. _`tes3mobileProjectile`: ../../lua/type/tes3mobileProjectile.html
 .. _`tes3mobileObject`: ../../lua/type/tes3mobileObject.html
 .. _`tes3door`: ../../lua/type/tes3door.html
-.. _`tes3directInputMouseState`: ../../lua/type/tes3directInputMouseState.html
+.. _`tes3actionData`: ../../lua/type/tes3actionData.html
 .. _`niPixelData`: ../../lua/type/niPixelData.html
 .. _`niRTTI`: ../../lua/type/niRTTI.html
 .. _`tes3alchemy`: ../../lua/type/tes3alchemy.html
@@ -220,63 +287,64 @@ Methods
 .. _`tes3faction`: ../../lua/type/tes3faction.html
 .. _`tes3combatSession`: ../../lua/type/tes3combatSession.html
 .. _`tes3weatherThunder`: ../../lua/type/tes3weatherThunder.html
-.. _`tes3item`: ../../lua/type/tes3item.html
 .. _`tes3weatherSnow`: ../../lua/type/tes3weatherSnow.html
+.. _`niProperty`: ../../lua/type/niProperty.html
+.. _`tes3moon`: ../../lua/type/tes3moon.html
 .. _`tes3statistic`: ../../lua/type/tes3statistic.html
 .. _`tes3ingredient`: ../../lua/type/tes3ingredient.html
-.. _`tes3moon`: ../../lua/type/tes3moon.html
+.. _`niSwitchNode`: ../../lua/type/niSwitchNode.html
 .. _`nil`: ../../lua/type/nil.html
-.. _`niDynamicEffectLinkedList`: ../../lua/type/niDynamicEffectLinkedList.html
 .. _`tes3weatherController`: ../../lua/type/tes3weatherController.html
-.. _`tes3physicalObject`: ../../lua/type/tes3physicalObject.html
+.. _`tes3directInputMouseState`: ../../lua/type/tes3directInputMouseState.html
 .. _`tes3weatherBlight`: ../../lua/type/tes3weatherBlight.html
+.. _`tes3wearablePart`: ../../lua/type/tes3wearablePart.html
 .. _`tes3mobileNPC`: ../../lua/type/tes3mobileNPC.html
 .. _`tes3regionSound`: ../../lua/type/tes3regionSound.html
 .. _`tes3vector3`: ../../lua/type/tes3vector3.html
-.. _`tes3wearablePart`: ../../lua/type/tes3wearablePart.html
 .. _`tes3vector4`: ../../lua/type/tes3vector4.html
 .. _`tes3vector2`: ../../lua/type/tes3vector2.html
 .. _`tes3transform`: ../../lua/type/tes3transform.html
 .. _`tes3soulGemData`: ../../lua/type/tes3soulGemData.html
-.. _`tes3bodyPart`: ../../lua/type/tes3bodyPart.html
 .. _`tes3region`: ../../lua/type/tes3region.html
 .. _`tes3referenceList`: ../../lua/type/tes3referenceList.html
+.. _`tes3bodyPart`: ../../lua/type/tes3bodyPart.html
+.. _`niPickRecord`: ../../lua/type/niPickRecord.html
 .. _`tes3lockNode`: ../../lua/type/tes3lockNode.html
 .. _`tes3cell`: ../../lua/type/tes3cell.html
 .. _`tes3game`: ../../lua/type/tes3game.html
 .. _`niDirectionalLight`: ../../lua/type/niDirectionalLight.html
-.. _`niPickRecord`: ../../lua/type/niPickRecord.html
-.. _`tes3itemStack`: ../../lua/type/tes3itemStack.html
+.. _`tes3physicalObject`: ../../lua/type/tes3physicalObject.html
+.. _`tes3raceBodyParts`: ../../lua/type/tes3raceBodyParts.html
 .. _`tes3raceBaseAttribute`: ../../lua/type/tes3raceBaseAttribute.html
-.. _`tes3light`: ../../lua/type/tes3light.html
-.. _`table`: ../../lua/type/table.html
+.. _`tes3clothing`: ../../lua/type/tes3clothing.html
+.. _`tes3packedColor`: ../../lua/type/tes3packedColor.html
 .. _`tes3weatherCloudy`: ../../lua/type/tes3weatherCloudy.html
 .. _`niTriBasedGeometry`: ../../lua/type/niTriBasedGeometry.html
 .. _`niMaterialProperty`: ../../lua/type/niMaterialProperty.html
-.. _`tes3apparatus`: ../../lua/type/tes3apparatus.html
 .. _`tes3npcInstance`: ../../lua/type/tes3npcInstance.html
-.. _`tes3actionData`: ../../lua/type/tes3actionData.html
-.. _`niFormatPrefs`: ../../lua/type/niFormatPrefs.html
+.. _`tes3apparatus`: ../../lua/type/tes3apparatus.html
 .. _`niColor`: ../../lua/type/niColor.html
+.. _`niFormatPrefs`: ../../lua/type/niFormatPrefs.html
+.. _`tes3light`: ../../lua/type/tes3light.html
 .. _`tes3weatherRain`: ../../lua/type/tes3weatherRain.html
 .. _`tes3mobilePlayer`: ../../lua/type/tes3mobilePlayer.html
 .. _`tes3factionRank`: ../../lua/type/tes3factionRank.html
-.. _`niSwitchNode`: ../../lua/type/niSwitchNode.html
+.. _`tes3item`: ../../lua/type/tes3item.html
 .. _`tes3mobileCreature`: ../../lua/type/tes3mobileCreature.html
-.. _`tes3packedColor`: ../../lua/type/tes3packedColor.html
-.. _`tes3markData`: ../../lua/type/tes3markData.html
+.. _`tes3actorAnimationController`: ../../lua/type/tes3actorAnimationController.html
+.. _`niDynamicEffect`: ../../lua/type/niDynamicEffect.html
 .. _`niPick`: ../../lua/type/niPick.html
 .. _`niCollisionSwitch`: ../../lua/type/niCollisionSwitch.html
-.. _`niProperty`: ../../lua/type/niProperty.html
-.. _`niTriBasedGeometryData`: ../../lua/type/niTriBasedGeometryData.html
+.. _`tes3markData`: ../../lua/type/tes3markData.html
+.. _`niDynamicEffectLinkedList`: ../../lua/type/niDynamicEffectLinkedList.html
 .. _`niCamera`: ../../lua/type/niCamera.html
-.. _`niDynamicEffect`: ../../lua/type/niDynamicEffect.html
+.. _`niTriBasedGeometryData`: ../../lua/type/niTriBasedGeometryData.html
 .. _`tes3magicEffectInstance`: ../../lua/type/tes3magicEffectInstance.html
 .. _`tes3weatherOvercast`: ../../lua/type/tes3weatherOvercast.html
 .. _`tes3gameSetting`: ../../lua/type/tes3gameSetting.html
-.. _`tes3equipmentStack`: ../../lua/type/tes3equipmentStack.html
-.. _`niSourceTexture`: ../../lua/type/niSourceTexture.html
 .. _`niFogProperty`: ../../lua/type/niFogProperty.html
+.. _`niSourceTexture`: ../../lua/type/niSourceTexture.html
+.. _`tes3equipmentStack`: ../../lua/type/tes3equipmentStack.html
 .. _`niGeometry`: ../../lua/type/niGeometry.html
 .. _`tes3itemData`: ../../lua/type/tes3itemData.html
 .. _`niTexturingProperty`: ../../lua/type/niTexturingProperty.html
