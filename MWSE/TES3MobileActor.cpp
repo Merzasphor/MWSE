@@ -140,16 +140,16 @@ namespace TES3 {
 		return vTable.mobileActor->calculateArmorRating(this, armorItemCount);
 	}
 
-	const auto TES3_MobileActor_applyHitModifiers = reinterpret_cast<void(__thiscall *)(MobileActor*, MobileActor*, MobileActor*, float, float, MobileProjectile*, bool)>(0x5568F0);
-	void MobileActor::applyHitModifiers(MobileActor * attacker, MobileActor * defender, float unknown, float swing, MobileProjectile * projectile, bool unknown2) {
-		// Clean up damage event data.
+	const auto TES3_MobileActor_applyPhysicalHit = reinterpret_cast<void(__thiscall *)(MobileActor*, MobileActor*, MobileActor*, float, float, MobileProjectile*, bool)>(0x5568F0);
+	void MobileActor::applyPhysicalHit(MobileActor * attacker, MobileActor * defender, float damage, float swing, MobileProjectile * projectile, bool alwaysPlayHitVoice) {
+		// Setup damage event data.
 		mwse::lua::event::DamageEvent::m_Attacker = attacker;
 		mwse::lua::event::DamageEvent::m_Projectile = projectile;
 
 		// Call original function.
-		TES3_MobileActor_applyHitModifiers(this, attacker, defender, unknown, swing, projectile, unknown2);
+		TES3_MobileActor_applyPhysicalHit(this, attacker, defender, damage, swing, projectile, alwaysPlayHitVoice);
 
-		// Setup damage event data.
+		// Clean up damage event data.
 		mwse::lua::event::DamageEvent::m_Attacker = nullptr;
 		mwse::lua::event::DamageEvent::m_Projectile = nullptr;
 	}
@@ -256,9 +256,9 @@ namespace TES3 {
 		}
 	}
 
-	const auto TES3_MobileActor_applyHealthDamage = reinterpret_cast<void(__thiscall *)(MobileActor*, MobileActor*, MobileActor*, float, float, MobileProjectile*, bool)>(0x5568F0);
-	bool MobileActor::applyHealthDamage(float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
-		// Invoke our combat stop event and check if it is blocked.
+	const auto TES3_MobileActor_applyHealthDamage = reinterpret_cast<bool(__thiscall*)(MobileActor*, float, bool, bool, bool)>(0x557CF0);
+	bool MobileActor::applyHealthDamage(float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool doNotChangeHealth) {
+		// Invoke our pre-damage event and check if it is blocked.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
 		if (mwse::lua::event::DamageEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
@@ -272,9 +272,9 @@ namespace TES3 {
 			}
 		}
 
-		bool checkForKnockdown = reinterpret_cast<bool (__thiscall *)(MobileActor*, float, bool, bool, bool)>(0x557CF0)(this, damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+		bool checkForKnockdown = TES3_MobileActor_applyHealthDamage(this, damage, flipDifficultyScale, scaleWithDifficulty, doNotChangeHealth);
 
-		// Do our follow up event.
+		// Do our post-damage event.
 		if (mwse::lua::event::DamagedEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::DamagedEvent(this, damage, checkForKnockdown));

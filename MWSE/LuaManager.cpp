@@ -1013,45 +1013,45 @@ namespace mwse {
 		// Mobile actor apply damage event.
 		//
 
-		bool __fastcall OnApplyDamageFromScript(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
+		bool __fastcall OnApplyDamageFromScript(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool doNotChangeHealth) {
 			mwse::lua::event::DamageEvent::m_Source = "script";
-			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, doNotChangeHealth);
 			mwse::lua::event::DamageEvent::m_Source = nullptr;
 			return result;
 		}
 
-		bool __fastcall OnApplyDamageFromFalling(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
+		bool __fastcall OnApplyDamageFromFalling(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool doNotChangeHealth) {
 			mwse::lua::event::DamageEvent::m_Source = "fall";
-			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, doNotChangeHealth);
 			mwse::lua::event::DamageEvent::m_Source = nullptr;
 			return result;
 		}
 
-		bool __fastcall OnApplyDamageFromSuffocation(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
+		bool __fastcall OnApplyDamageFromSuffocation(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool doNotChangeHealth) {
 			mwse::lua::event::DamageEvent::m_Source = "suffocation";
-			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, doNotChangeHealth);
 			mwse::lua::event::DamageEvent::m_Source = nullptr;
 			return result;
 		}
 
-		bool __fastcall OnApplyDamageFromAttack(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
+		bool __fastcall OnApplyDamageFromAttack(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool doNotChangeHealth) {
 			mwse::lua::event::DamageEvent::m_Source = "attack";
-			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, doNotChangeHealth);
 			mwse::lua::event::DamageEvent::m_Source = nullptr;
 			return result;
 		}
 
-		bool __fastcall OnApplyDamageFromMagic(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
+		bool __fastcall OnApplyDamageFromMagic(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool doNotChangeHealth) {
 			mwse::lua::event::DamageEvent::m_Source = "magic";
-			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, doNotChangeHealth);
 			mwse::lua::event::DamageEvent::m_Source = nullptr;
 			return result;
 		}
 
-		bool __fastcall OnApplyDamageFromMagicShield(TES3::MobileActor* mobileActor, TES3::Deque<TES3::ActiveMagicEffect>::Node* effectNode, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
+		bool __fastcall OnApplyDamageFromMagicShield(TES3::MobileActor* mobileActor, TES3::Deque<TES3::ActiveMagicEffect>::Node* effectNode, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool doNotChangeHealth) {
 			mwse::lua::event::DamageEvent::m_Source = "shield";
 			mwse::lua::event::DamageEvent::m_ActiveMagicEffect = &effectNode->data;
-			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, doNotChangeHealth);
 			mwse::lua::event::DamageEvent::m_Source = nullptr;
 			mwse::lua::event::DamageEvent::m_ActiveMagicEffect = nullptr;
 			return result;
@@ -1065,10 +1065,10 @@ namespace mwse {
 		}
 
 		const auto TES3_AttributeSpellEffect = reinterpret_cast<bool(__cdecl*)(TES3::MagicSourceInstance*, bool, TES3::Statistic*, void*, TES3::MagicEffectInstance*, float, int)>(0x519110);
-		bool __cdecl AttributeSpellEffect(TES3::MagicSourceInstance * sourceInstance, bool a2, TES3::Statistic * statistic, void * a4, TES3::MagicEffectInstance * effectInstance, float delta, int a6) {
+		bool __cdecl AttributeSpellEffect(TES3::MagicSourceInstance * sourceInstance, bool positiveModifier, TES3::Statistic * statistic, void * attributeTypeInfo, TES3::MagicEffectInstance * effectInstance, float delta, int effectIndex) {
 			mwse::lua::event::DamageEvent::m_MagicSourceInstance = sourceInstance;
 			mwse::lua::event::DamageEvent::m_MagicEffectInstance = effectInstance;
-			auto result = TES3_AttributeSpellEffect(sourceInstance, a2, statistic, a4, effectInstance, delta, a6);
+			auto result = TES3_AttributeSpellEffect(sourceInstance, positiveModifier, statistic, attributeTypeInfo, effectInstance, delta, effectIndex);
 			mwse::lua::event::DamageEvent::m_MagicSourceInstance = nullptr;
 			mwse::lua::event::DamageEvent::m_MagicEffectInstance = nullptr;
 			return result;
@@ -3223,9 +3223,9 @@ namespace mwse {
 			genCallEnforced(0x555789, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromMagicShield_Wrapper));
 			genCallEnforced(0x556AE0, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromAttack));
 			genCallEnforced(0x55782C, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromMagic));
-			auto mobileActorApplyHitModifiers = &TES3::MobileActor::applyHitModifiers;
-			genCallEnforced(0x5577C6, 0x5568F0, *reinterpret_cast<DWORD*>(&mobileActorApplyHitModifiers));
-			genCallEnforced(0x573C51, 0x5568F0, *reinterpret_cast<DWORD*>(&mobileActorApplyHitModifiers));
+			auto mobileActorApplyPhysicalHit = &TES3::MobileActor::applyPhysicalHit;
+			genCallEnforced(0x5577C6, 0x5568F0, *reinterpret_cast<DWORD*>(&mobileActorApplyPhysicalHit));
+			genCallEnforced(0x573C51, 0x5568F0, *reinterpret_cast<DWORD*>(&mobileActorApplyPhysicalHit));
 			genCallEnforced(0x518526, 0x519110, reinterpret_cast<DWORD>(AttributeSpellEffect));
 			genCallEnforced(0x51889D, 0x519110, reinterpret_cast<DWORD>(AttributeSpellEffect));
 			genCallEnforced(0x518D5C, 0x519110, reinterpret_cast<DWORD>(AttributeSpellEffect));

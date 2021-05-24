@@ -210,7 +210,7 @@ namespace TES3 {
 
 		float applyArmorRating(float damage, float swing, bool damageEquipment);
 		float calculateArmorRating(int * armorItemCount = nullptr) const;
-		void applyHitModifiers(MobileActor * attacker, MobileActor * defender, float unknown, float swing, MobileProjectile * projectile = nullptr, bool unknown2 = false);
+		void applyPhysicalHit(MobileActor * attacker, MobileActor * defender, float damage, float swing, MobileProjectile * projectile = nullptr, bool alwaysPlayHitVoice = false);
 
 		void setCurrentSpell(const Spell* spell);
 
@@ -234,7 +234,7 @@ namespace TES3 {
 		void stopCombat_lua(sol::optional<bool>);
 		bool isDead() const;
 		void onDeath();
-		bool applyHealthDamage(float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth);
+		bool applyHealthDamage(float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool doNotChangeHealth);
 		bool hasFreeAction() const;
 		float calculateRunSpeed();
 		float calculateSwimSpeed();
