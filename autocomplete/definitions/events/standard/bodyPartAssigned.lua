@@ -12,12 +12,12 @@ return {
             description = "",
         },
         ["object"] = {
-            type = "",
+            type = "tes3bodyPart",
             readonly = true,
             description = "",
         },
         ["index"] = {
-            --type = "",
+            type = "number",
             readonly = true,
             description = "",
         },
