@@ -210,6 +210,7 @@ namespace TES3 {
 
 		float applyArmorRating(float damage, float swing, bool damageEquipment);
 		float calculateArmorRating(int * armorItemCount = nullptr) const;
+		float getArmorRating_lua() const;
 		void applyPhysicalHit(MobileActor* attacker, MobileActor* defender, float damage, float swing, MobileProjectile* projectile = nullptr, bool alwaysPlayHitVoice = false);
 
 		void setCurrentSpell(const Spell* spell);

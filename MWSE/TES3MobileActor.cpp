@@ -143,6 +143,10 @@ namespace TES3 {
 		return vTable.mobileActor->calculateArmorRating(this, armorItemCount);
 	}
 
+	float MobileActor::getArmorRating_lua() const {
+		return calculateArmorRating(nullptr);
+	}
+
 	const auto TES3_MobileActor_applyPhysicalHit = reinterpret_cast<void(__thiscall *)(MobileActor*, MobileActor*, MobileActor*, float, float, MobileProjectile*, bool)>(0x5568F0);
 	void MobileActor::applyPhysicalHit(MobileActor * attacker, MobileActor * defender, float damage, float swing, MobileProjectile * projectile, bool alwaysPlayHitVoice) {
 		// Setup damage event data.

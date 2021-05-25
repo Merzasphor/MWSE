@@ -45,6 +45,14 @@ Properties
 `animationData`_ (`tes3actorAnimationData`_)
     No description available.
 
+`armorRating`_ (`number`_)
+    The actor's current armour rating, taking equipment condition into account. Armour mitigation can be automatically applied to damage by using the applyDamage function.
+
+Armour mitigation calculation:
+x = damage / (damage + target.armorRating)
+damage *= max(fCombatArmorMinMult, x)
+if damage < 1 then damage = 1 end
+
 `armorer`_ (`tes3skillStatistic`_)
     Direct access to the NPC's armorer skill statistic.
 
@@ -462,6 +470,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobileNPC/alchemy
     tes3mobileNPC/alteration
     tes3mobileNPC/animationData
+    tes3mobileNPC/armorRating
     tes3mobileNPC/armorer
     tes3mobileNPC/athletics
     tes3mobileNPC/attackBonus
@@ -609,6 +618,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`alchemy`: tes3mobileNPC/alchemy.html
 .. _`alteration`: tes3mobileNPC/alteration.html
 .. _`animationData`: tes3mobileNPC/animationData.html
+.. _`armorRating`: tes3mobileNPC/armorRating.html
 .. _`armorer`: tes3mobileNPC/armorer.html
 .. _`athletics`: tes3mobileNPC/athletics.html
 .. _`attackBonus`: tes3mobileNPC/attackBonus.html

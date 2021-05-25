@@ -36,6 +36,14 @@ Properties
 `animationData`_ (`tes3actorAnimationData`_)
     No description available.
 
+`armorRating`_ (`number`_)
+    The actor's current armour rating, taking equipment condition into account. Armour mitigation can be automatically applied to damage by using the applyDamage function.
+
+Armour mitigation calculation:
+x = damage / (damage + target.armorRating)
+damage *= max(fCombatArmorMinMult, x)
+if damage < 1 then damage = 1 end
+
 `attackBonus`_ (`number`_)
     Direct access to the actor's attack bonus effect attribute.
 
@@ -342,6 +350,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobileActor/aiPlanner
     tes3mobileActor/alarm
     tes3mobileActor/animationData
+    tes3mobileActor/armorRating
     tes3mobileActor/attackBonus
     tes3mobileActor/attacked
     tes3mobileActor/attributes
@@ -450,6 +459,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`aiPlanner`: tes3mobileActor/aiPlanner.html
 .. _`alarm`: tes3mobileActor/alarm.html
 .. _`animationData`: tes3mobileActor/animationData.html
+.. _`armorRating`: tes3mobileActor/armorRating.html
 .. _`attackBonus`: tes3mobileActor/attackBonus.html
 .. _`attacked`: tes3mobileActor/attacked.html
 .. _`attributes`: tes3mobileActor/attributes.html

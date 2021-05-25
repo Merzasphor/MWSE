@@ -147,6 +147,7 @@ namespace mwse {
 			usertypeDefinition["isAffectedByObject"] = &TES3::MobileActor::isAffectedByObject_lua;
 
 			// Functions exposed as properties.
+			usertypeDefinition["armorRating"] = sol::property(&TES3::MobileActor::getArmorRating_lua);
 			usertypeDefinition["cell"] = sol::property(&TES3::MobileActor::getCell);
 			usertypeDefinition["hasFreeAction"] = sol::property(&TES3::MobileActor::hasFreeAction);
 			usertypeDefinition["mobToMobCollision"] = sol::property(&TES3::MobileActor::getMobToMobCollision, &TES3::MobileActor::setMobToMobCollision);
