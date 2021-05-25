@@ -2053,12 +2053,12 @@ namespace mwse {
 				throw std::runtime_error("Function called while mobile player is unavailable.");
 			}
 
-			auto animData = macp->animationController.asPlayer;
-			if (animData == nullptr) {
-				throw std::runtime_error("Function called while mobile player animation data is unavailable.");
+			auto animController = macp->animationController.asPlayer;
+			if (animController == nullptr) {
+				throw std::runtime_error("Function called while mobile player animation controller is unavailable.");
 			}
 
-			return animData->force1stPerson();
+			return animController->force1stPerson();
 		}
 
 		bool force3rdPerson() {
@@ -2072,12 +2072,12 @@ namespace mwse {
 				throw std::runtime_error("Function called while mobile player is unavailable.");
 			}
 
-			auto animData = macp->animationController.asPlayer;
-			if (animData == nullptr) {
-				throw std::runtime_error("Function called while mobile player animation data is unavailable.");
+			auto animController = macp->animationController.asPlayer;
+			if (animController == nullptr) {
+				throw std::runtime_error("Function called while mobile player animation controller is unavailable.");
 			}
 
-			return animData->force3rdPerson();
+			return animController->force3rdPerson();
 		}
 
 		sol::object getActiveCells() {
@@ -2872,14 +2872,14 @@ namespace mwse {
 				throw std::runtime_error("Function called while mobile player is unavailable.");
 			}
 
-			auto animData = macp->animationController.asPlayer;
-			if (animData == nullptr) {
-				throw std::runtime_error("Function called while mobile player animation data is unavailable.");
+			auto animController = macp->animationController.asPlayer;
+			if (animController == nullptr) {
+				throw std::runtime_error("Function called while mobile player animation controller is unavailable.");
 			}
 
-			animData->togglePOV = true;
+			animController->togglePOV = true;
 
-			return animData->is3rdPerson;
+			return animController->is3rdPerson;
 		}
 
 		int transferItem(sol::table params) {

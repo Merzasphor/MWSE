@@ -256,7 +256,7 @@
 #define TES3_PATCH_MAGIC_SAVE_LOAD_SIZE 0x8
 #define TES3_PATCH_MAGIC_SAVE_LOAD_RETURN (TES3_PATCH_MAGIC_SAVE_LOAD + TES3_PATCH_MAGIC_SAVE_LOAD_SIZE)
 
-#define TES3_ActorAnimData_attackCheckMeleeHit 0x541530
+#define TES3_ActorAnimController_attackCheckMeleeHit 0x541530
 
 #define TES3_BaseObject_destructor 0x4F0CA0
 
@@ -836,13 +836,13 @@ namespace mwse {
 		// Hook: Attack
 		//
 
-		void __fastcall OnAttack(TES3::ActorAnimationController* animData) {
+		void __fastcall OnAttack(TES3::ActorAnimationController* animController) {
 			// Call original function.
-			reinterpret_cast<void(__thiscall *)(TES3::ActorAnimationController*)>(TES3_ActorAnimData_attackCheckMeleeHit)(animData);
+			reinterpret_cast<void(__thiscall *)(TES3::ActorAnimationController*)>(TES3_ActorAnimController_attackCheckMeleeHit)(animController);
 
 			// Prepare our event data.
 			if (event::AttackEvent::getEventEnabled()) {
-				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::AttackEvent(animData));
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::AttackEvent(animController));
 			}
 		}
 
@@ -3147,9 +3147,9 @@ namespace mwse {
 			genJumpEnforced(0x7365E9, 0x558720, reinterpret_cast<DWORD>(OnStopCombat));
 
 			// Event: Melee Hit Check
-			genCallEnforced(0x541489, TES3_ActorAnimData_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
-			genCallEnforced(0x5414CD, TES3_ActorAnimData_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
-			genCallEnforced(0x569E78, TES3_ActorAnimData_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
+			genCallEnforced(0x541489, TES3_ActorAnimController_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
+			genCallEnforced(0x5414CD, TES3_ActorAnimController_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
+			genCallEnforced(0x569E78, TES3_ActorAnimController_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
 
 			// Collision events: Mobile Object
 			auto mobileObjectCollideActor = &TES3::MobileObject::onActorCollision;
