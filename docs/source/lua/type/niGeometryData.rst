@@ -13,21 +13,6 @@ Properties
 `colors`_ (`niColorA`_)
     The color for the object.
 
-`compressFlags`_ (`boolean`_)
-    If true, compress geometry.
-
-`dataFlags`_ (`number`_)
-    Data flags for the object.
-
-`dirtyFlags`_ (`number`_)
-    Dirty flags for the object.
-
-`id`_ (`number`_)
-    The ID of the object.
-
-`keepFlags`_ (`boolean`_)
-    If true, keep geometry arrays after converting geometry.
-
 `normals`_ (`tes3vector3`_)
     The normals list for the object.
 
@@ -37,43 +22,48 @@ Properties
 `runTimeTypeInformation`_ (`niRTTI`_)
     The runtime type information for this object.
 
+`texCoords`_ (`tes3vector2`_)
+    The array of texture coordinates.
+
+`textureSets`_ (`number`_)
+    The number of texture coordinate sets in the data.
+
 `textures`_ (`tes3vector2`_)
-    The textures list for the object.
+    The array of texture coordinates.
+
+`uniqueID`_ (`number`_)
+    A unique ID for this model, assigned at model creation.
 
 `vertexCount`_ (`number`_)
     The vertex count for the object.
 
 `vertices`_ (`tes3vector3`_)
-    The vertice list for the object.
+    The array of vertex position data.
 
 .. toctree::
     :hidden:
 
     niGeometryData/bounds
     niGeometryData/colors
-    niGeometryData/compressFlags
-    niGeometryData/dataFlags
-    niGeometryData/dirtyFlags
-    niGeometryData/id
-    niGeometryData/keepFlags
     niGeometryData/normals
     niGeometryData/references
     niGeometryData/runTimeTypeInformation
+    niGeometryData/texCoords
+    niGeometryData/textureSets
     niGeometryData/textures
+    niGeometryData/uniqueID
     niGeometryData/vertexCount
     niGeometryData/vertices
 
 .. _`bounds`: niGeometryData/bounds.html
 .. _`colors`: niGeometryData/colors.html
-.. _`compressFlags`: niGeometryData/compressFlags.html
-.. _`dataFlags`: niGeometryData/dataFlags.html
-.. _`dirtyFlags`: niGeometryData/dirtyFlags.html
-.. _`id`: niGeometryData/id.html
-.. _`keepFlags`: niGeometryData/keepFlags.html
 .. _`normals`: niGeometryData/normals.html
 .. _`references`: niGeometryData/references.html
 .. _`runTimeTypeInformation`: niGeometryData/runTimeTypeInformation.html
+.. _`texCoords`: niGeometryData/texCoords.html
+.. _`textureSets`: niGeometryData/textureSets.html
 .. _`textures`: niGeometryData/textures.html
+.. _`uniqueID`: niGeometryData/uniqueID.html
 .. _`vertexCount`: niGeometryData/vertexCount.html
 .. _`vertices`: niGeometryData/vertices.html
 
@@ -90,7 +80,14 @@ Methods
     Determines if the object is of a given type. Types can be found in the tes3.niType table.
 
 `markAsChanged`_
-    Tells the renderer that the object has changed. Should be called after changing textures, vertices, or other properties.
+    Tells the renderer that the object has changed. Should be called after you have finished changing any vertex data.
+
+If you have altered vertex positions, you may need to also call `updateModelBound`_. You should call it if vertices have been moved outside the bounds of the original model.
+
+`updateModelBound`_
+    Updates the geometry bounds to match the vertex data. You should call it if vertices have been moved outside the bounds of the original model, or if the effective bounds have become significantly smaller. 
+
+If you already know the effective radius of the vertex data, you could more efficiently set the bounds directly instead of calling this function.
 
 .. toctree::
     :hidden:
@@ -99,11 +96,13 @@ Methods
     niGeometryData/isInstanceOfType
     niGeometryData/isOfType
     niGeometryData/markAsChanged
+    niGeometryData/updateModelBound
 
 .. _`clone`: niGeometryData/clone.html
 .. _`isInstanceOfType`: niGeometryData/isInstanceOfType.html
 .. _`isOfType`: niGeometryData/isOfType.html
 .. _`markAsChanged`: niGeometryData/markAsChanged.html
+.. _`updateModelBound`: niGeometryData/updateModelBound.html
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html
@@ -111,11 +110,12 @@ Methods
 .. _`niAlphaProperty`: ../../lua/type/niAlphaProperty.html
 .. _`tes3spell`: ../../lua/type/tes3spell.html
 .. _`tes3inputConfig`: ../../lua/type/tes3inputConfig.html
-.. _`tes3raceBodyParts`: ../../lua/type/tes3raceBodyParts.html
+.. _`tes3itemStack`: ../../lua/type/tes3itemStack.html
 .. _`niTexturingPropertyMap`: ../../lua/type/niTexturingPropertyMap.html
 .. _`tes3globalVariable`: ../../lua/type/tes3globalVariable.html
 .. _`tes3probe`: ../../lua/type/tes3probe.html
 .. _`tes3iterator`: ../../lua/type/tes3iterator.html
+.. _`tes3uiElement`: ../../lua/type/tes3uiElement.html
 .. _`tes3class`: ../../lua/type/tes3class.html
 .. _`niTriShapeData`: ../../lua/type/niTriShapeData.html
 .. _`niObjectNET`: ../../lua/type/niObjectNET.html
@@ -142,7 +142,7 @@ Methods
 .. _`tes3travelDestinationNode`: ../../lua/type/tes3travelDestinationNode.html
 .. _`tes3race`: ../../lua/type/tes3race.html
 .. _`tes3static`: ../../lua/type/tes3static.html
-.. _`tes3clothing`: ../../lua/type/tes3clothing.html
+.. _`table`: ../../lua/type/table.html
 .. _`tes3weatherBlizzard`: ../../lua/type/tes3weatherBlizzard.html
 .. _`tes3weather`: ../../lua/type/tes3weather.html
 .. _`tes3activator`: ../../lua/type/tes3activator.html
@@ -176,6 +176,7 @@ Methods
 .. _`niTriShape`: ../../lua/type/niTriShape.html
 .. _`tes3matrix33`: ../../lua/type/tes3matrix33.html
 .. _`tes3actor`: ../../lua/type/tes3actor.html
+.. _`tes3playerAnimationController`: ../../lua/type/tes3playerAnimationController.html
 .. _`tes3containerInstance`: ../../lua/type/tes3containerInstance.html
 .. _`tes3magicSourceInstance`: ../../lua/type/tes3magicSourceInstance.html
 .. _`niAVObject`: ../../lua/type/niAVObject.html
@@ -184,7 +185,7 @@ Methods
 .. _`tes3mobileProjectile`: ../../lua/type/tes3mobileProjectile.html
 .. _`tes3mobileObject`: ../../lua/type/tes3mobileObject.html
 .. _`tes3door`: ../../lua/type/tes3door.html
-.. _`tes3directInputMouseState`: ../../lua/type/tes3directInputMouseState.html
+.. _`tes3actionData`: ../../lua/type/tes3actionData.html
 .. _`niPixelData`: ../../lua/type/niPixelData.html
 .. _`niRTTI`: ../../lua/type/niRTTI.html
 .. _`tes3alchemy`: ../../lua/type/tes3alchemy.html
@@ -196,63 +197,64 @@ Methods
 .. _`tes3faction`: ../../lua/type/tes3faction.html
 .. _`tes3combatSession`: ../../lua/type/tes3combatSession.html
 .. _`tes3weatherThunder`: ../../lua/type/tes3weatherThunder.html
-.. _`tes3item`: ../../lua/type/tes3item.html
 .. _`tes3weatherSnow`: ../../lua/type/tes3weatherSnow.html
+.. _`niProperty`: ../../lua/type/niProperty.html
+.. _`tes3moon`: ../../lua/type/tes3moon.html
 .. _`tes3statistic`: ../../lua/type/tes3statistic.html
 .. _`tes3ingredient`: ../../lua/type/tes3ingredient.html
-.. _`tes3moon`: ../../lua/type/tes3moon.html
+.. _`niSwitchNode`: ../../lua/type/niSwitchNode.html
 .. _`nil`: ../../lua/type/nil.html
-.. _`niDynamicEffectLinkedList`: ../../lua/type/niDynamicEffectLinkedList.html
 .. _`tes3weatherController`: ../../lua/type/tes3weatherController.html
-.. _`tes3physicalObject`: ../../lua/type/tes3physicalObject.html
+.. _`tes3directInputMouseState`: ../../lua/type/tes3directInputMouseState.html
 .. _`tes3weatherBlight`: ../../lua/type/tes3weatherBlight.html
+.. _`tes3wearablePart`: ../../lua/type/tes3wearablePart.html
 .. _`tes3mobileNPC`: ../../lua/type/tes3mobileNPC.html
 .. _`tes3regionSound`: ../../lua/type/tes3regionSound.html
 .. _`tes3vector3`: ../../lua/type/tes3vector3.html
-.. _`tes3wearablePart`: ../../lua/type/tes3wearablePart.html
 .. _`tes3vector4`: ../../lua/type/tes3vector4.html
 .. _`tes3vector2`: ../../lua/type/tes3vector2.html
 .. _`tes3transform`: ../../lua/type/tes3transform.html
 .. _`tes3soulGemData`: ../../lua/type/tes3soulGemData.html
-.. _`tes3bodyPart`: ../../lua/type/tes3bodyPart.html
 .. _`tes3region`: ../../lua/type/tes3region.html
 .. _`tes3referenceList`: ../../lua/type/tes3referenceList.html
+.. _`tes3bodyPart`: ../../lua/type/tes3bodyPart.html
+.. _`niPickRecord`: ../../lua/type/niPickRecord.html
 .. _`tes3lockNode`: ../../lua/type/tes3lockNode.html
 .. _`tes3cell`: ../../lua/type/tes3cell.html
 .. _`tes3game`: ../../lua/type/tes3game.html
 .. _`niDirectionalLight`: ../../lua/type/niDirectionalLight.html
-.. _`niPickRecord`: ../../lua/type/niPickRecord.html
-.. _`tes3itemStack`: ../../lua/type/tes3itemStack.html
+.. _`tes3physicalObject`: ../../lua/type/tes3physicalObject.html
+.. _`tes3raceBodyParts`: ../../lua/type/tes3raceBodyParts.html
 .. _`tes3raceBaseAttribute`: ../../lua/type/tes3raceBaseAttribute.html
-.. _`tes3light`: ../../lua/type/tes3light.html
-.. _`table`: ../../lua/type/table.html
+.. _`tes3clothing`: ../../lua/type/tes3clothing.html
+.. _`tes3packedColor`: ../../lua/type/tes3packedColor.html
 .. _`tes3weatherCloudy`: ../../lua/type/tes3weatherCloudy.html
 .. _`niTriBasedGeometry`: ../../lua/type/niTriBasedGeometry.html
 .. _`niMaterialProperty`: ../../lua/type/niMaterialProperty.html
-.. _`tes3apparatus`: ../../lua/type/tes3apparatus.html
 .. _`tes3npcInstance`: ../../lua/type/tes3npcInstance.html
-.. _`tes3actionData`: ../../lua/type/tes3actionData.html
-.. _`niFormatPrefs`: ../../lua/type/niFormatPrefs.html
+.. _`tes3apparatus`: ../../lua/type/tes3apparatus.html
 .. _`niColor`: ../../lua/type/niColor.html
+.. _`niFormatPrefs`: ../../lua/type/niFormatPrefs.html
+.. _`tes3light`: ../../lua/type/tes3light.html
 .. _`tes3weatherRain`: ../../lua/type/tes3weatherRain.html
 .. _`tes3mobilePlayer`: ../../lua/type/tes3mobilePlayer.html
 .. _`tes3factionRank`: ../../lua/type/tes3factionRank.html
-.. _`niSwitchNode`: ../../lua/type/niSwitchNode.html
+.. _`tes3item`: ../../lua/type/tes3item.html
 .. _`tes3mobileCreature`: ../../lua/type/tes3mobileCreature.html
-.. _`tes3packedColor`: ../../lua/type/tes3packedColor.html
-.. _`tes3markData`: ../../lua/type/tes3markData.html
+.. _`tes3actorAnimationController`: ../../lua/type/tes3actorAnimationController.html
+.. _`niDynamicEffect`: ../../lua/type/niDynamicEffect.html
 .. _`niPick`: ../../lua/type/niPick.html
 .. _`niCollisionSwitch`: ../../lua/type/niCollisionSwitch.html
-.. _`niProperty`: ../../lua/type/niProperty.html
-.. _`niTriBasedGeometryData`: ../../lua/type/niTriBasedGeometryData.html
+.. _`tes3markData`: ../../lua/type/tes3markData.html
+.. _`niDynamicEffectLinkedList`: ../../lua/type/niDynamicEffectLinkedList.html
 .. _`niCamera`: ../../lua/type/niCamera.html
-.. _`niDynamicEffect`: ../../lua/type/niDynamicEffect.html
+.. _`niTriBasedGeometryData`: ../../lua/type/niTriBasedGeometryData.html
 .. _`tes3magicEffectInstance`: ../../lua/type/tes3magicEffectInstance.html
 .. _`tes3weatherOvercast`: ../../lua/type/tes3weatherOvercast.html
 .. _`tes3gameSetting`: ../../lua/type/tes3gameSetting.html
-.. _`tes3equipmentStack`: ../../lua/type/tes3equipmentStack.html
-.. _`niSourceTexture`: ../../lua/type/niSourceTexture.html
 .. _`niFogProperty`: ../../lua/type/niFogProperty.html
+.. _`niSourceTexture`: ../../lua/type/niSourceTexture.html
+.. _`tes3equipmentStack`: ../../lua/type/tes3equipmentStack.html
 .. _`niGeometry`: ../../lua/type/niGeometry.html
 .. _`tes3itemData`: ../../lua/type/tes3itemData.html
 .. _`niTexturingProperty`: ../../lua/type/niTexturingProperty.html

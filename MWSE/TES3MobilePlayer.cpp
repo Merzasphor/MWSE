@@ -9,7 +9,7 @@
 #include "Log.h"
 
 #include "TES3Skill.h"
-#include "TES3PlayerAnimationData.h"
+#include "TES3PlayerAnimationController.h"
 
 #define TES3_MobilePlayer_exerciseSkill 0x56A5D0
 #define TES3_MobilePlayer_levelSkill 0x56BBE0
@@ -101,8 +101,8 @@ namespace TES3 {
 		}
 	}
 
-	PlayerAnimationData* MobilePlayer::getPlayerAnimationData() const {
-		return animationData.asPlayer;
+	PlayerAnimationController* MobilePlayer::getPlayerAnimationController() const {
+		return animationController.asPlayer;
 	}
 
 	std::reference_wrapper<int[8]> MobilePlayer::getLevelupsPerAttribute() {

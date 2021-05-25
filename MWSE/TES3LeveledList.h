@@ -21,7 +21,7 @@ namespace TES3 {
 	static_assert(sizeof(LeveledListNode) == 0x8, "TES3::LeveledListNode failed size validation");
 
 	struct LeveledCreature : PhysicalObject {
-		ActorAnimationData * animationData; // 0x30 // Why?
+		ActorAnimationController * animationController; // 0x30 // Why?
 		IteratedList<LeveledListNode*> * itemList; // 0x34
 		int itemCount; // 0x38
 		unsigned int flags; // 0x3C

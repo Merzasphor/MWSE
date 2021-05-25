@@ -579,7 +579,7 @@
     <ClInclude Include="PatchUtil.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="TES3ActorAnimationData.h">
+    <ClInclude Include="TES3ActorAnimationController.h">
       <Filter>Header Files\DataAdapters\TES3\Animations</Filter>
     </ClInclude>
     <ClInclude Include="TES3GameFile.h">
@@ -660,7 +660,7 @@
     <ClInclude Include="NIPickLua.h">
       <Filter>Header Files\Lua\Bindings\NI</Filter>
     </ClInclude>
-    <ClInclude Include="TES3PlayerAnimationData.h">
+    <ClInclude Include="TES3PlayerAnimationController.h">
       <Filter>Header Files\DataAdapters\TES3\Animations</Filter>
     </ClInclude>
     <ClInclude Include="TES3MagicSourceInstance.h">
@@ -1493,6 +1493,18 @@
     </ClInclude>
     <ClInclude Include="NICollisionGroup.h">
       <Filter>Header Files\DataAdapters\NI</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3ActorAnimationControllerLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3PlayerAnimationControllerLua.h">
+      <Filter>Header Files\Lua\Bindings\TES3</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaDamageHandToHandEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaDamagedHandToHandEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2510,7 +2522,7 @@
     <ClCompile Include="TES3MobileCreature.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
-    <ClCompile Include="TES3ActorAnimationData.cpp">
+    <ClCompile Include="TES3ActorAnimationController.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3Weapon.cpp">
@@ -3107,7 +3119,7 @@
     <ClCompile Include="LuaDetectSneakEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
-    <ClCompile Include="TES3PlayerAnimationData.cpp">
+    <ClCompile Include="TES3PlayerAnimationController.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
     <ClCompile Include="LuaPreLevelUpEvent.cpp">
@@ -3292,6 +3304,18 @@
     </ClCompile>
     <ClCompile Include="NIKeyframeManager.cpp">
       <Filter>Source Files\DataAdapters\NI</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3ActorAnimationControllerLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3PlayerAnimationControllerLua.cpp">
+      <Filter>Source Files\Lua\Bindings\TES3</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaDamageHandToHandEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaDamagedHandToHandEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

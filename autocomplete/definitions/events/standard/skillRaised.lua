@@ -11,6 +11,11 @@ return {
 			readonly = true,
 			description = "The new level of the skill.",
 		},
+        ["source"] = {
+            type = "",
+            --readonly = true,
+            description = "",
+        },
 	},
 	filter = "skill",
 }

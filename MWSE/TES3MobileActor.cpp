@@ -9,17 +9,20 @@
 #include "LuaCombatStopEvent.h"
 #include "LuaCombatStoppedEvent.h"
 #include "LuaDamagedEvent.h"
+#include "LuaDamagedHandToHandEvent.h"
 #include "LuaDamageEvent.h"
+#include "LuaDamageHandToHandEvent.h"
 #include "LuaDeathEvent.h"
 #include "LuaMobileObjectCollisionEvent.h"
 
 #include "TES3Actor.h"
-#include "TES3ActorAnimationData.h"
+#include "TES3ActorAnimationController.h"
 #include "TES3Alchemy.h"
 #include "TES3AudioController.h"
 #include "TES3Enchantment.h"
 #include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
+#include "TES3MagicEffectController.h"
 #include "TES3MobController.h"
 #include "TES3MobilePlayer.h"
 #include "TES3ItemData.h"
@@ -140,16 +143,16 @@ namespace TES3 {
 		return vTable.mobileActor->calculateArmorRating(this, armorItemCount);
 	}
 
-	const auto TES3_MobileActor_applyHitModifiers = reinterpret_cast<void(__thiscall *)(MobileActor*, MobileActor*, MobileActor*, float, float, MobileProjectile*, bool)>(0x5568F0);
-	void MobileActor::applyHitModifiers(MobileActor * attacker, MobileActor * defender, float unknown, float swing, MobileProjectile * projectile, bool unknown2) {
-		// Clean up damage event data.
+	const auto TES3_MobileActor_applyPhysicalHit = reinterpret_cast<void(__thiscall *)(MobileActor*, MobileActor*, MobileActor*, float, float, MobileProjectile*, bool)>(0x5568F0);
+	void MobileActor::applyPhysicalHit(MobileActor * attacker, MobileActor * defender, float damage, float swing, MobileProjectile * projectile, bool alwaysPlayHitVoice) {
+		// Setup damage event data.
 		mwse::lua::event::DamageEvent::m_Attacker = attacker;
 		mwse::lua::event::DamageEvent::m_Projectile = projectile;
 
 		// Call original function.
-		TES3_MobileActor_applyHitModifiers(this, attacker, defender, unknown, swing, projectile, unknown2);
+		TES3_MobileActor_applyPhysicalHit(this, attacker, defender, damage, swing, projectile, alwaysPlayHitVoice);
 
-		// Setup damage event data.
+		// Clean up damage event data.
 		mwse::lua::event::DamageEvent::m_Attacker = nullptr;
 		mwse::lua::event::DamageEvent::m_Projectile = nullptr;
 	}
@@ -256,9 +259,9 @@ namespace TES3 {
 		}
 	}
 
-	const auto TES3_MobileActor_applyHealthDamage = reinterpret_cast<void(__thiscall *)(MobileActor*, MobileActor*, MobileActor*, float, float, MobileProjectile*, bool)>(0x5568F0);
-	bool MobileActor::applyHealthDamage(float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
-		// Invoke our combat stop event and check if it is blocked.
+	const auto TES3_MobileActor_applyHealthDamage = reinterpret_cast<bool(__thiscall*)(MobileActor*, float, bool, bool, bool)>(0x557CF0);
+	bool MobileActor::applyHealthDamage(float damage, bool isPlayerAttack, bool scaleWithDifficulty, bool doNotChangeHealth) {
+		// Invoke our pre-damage event and check if it is blocked.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
 		if (mwse::lua::event::DamageEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
@@ -272,9 +275,9 @@ namespace TES3 {
 			}
 		}
 
-		bool checkForKnockdown = reinterpret_cast<bool (__thiscall *)(MobileActor*, float, bool, bool, bool)>(0x557CF0)(this, damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+		bool checkForKnockdown = TES3_MobileActor_applyHealthDamage(this, damage, isPlayerAttack, scaleWithDifficulty, doNotChangeHealth);
 
-		// Do our follow up event.
+		// Do our post-damage event.
 		if (mwse::lua::event::DamagedEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
 			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::DamagedEvent(this, damage, checkForKnockdown));
@@ -284,6 +287,70 @@ namespace TES3 {
 		}
 
 		return checkForKnockdown;
+	}
+
+	float MobileActor::applyDamage_lua(sol::table params) {
+		bool applyArmor = params["applyArmor"].get_or(false);
+		bool applyDifficulty = params["applyDifficulty"].get_or(false);
+		sol::optional<float> damage = params["damage"];
+		bool doNotChangeHealth = params["doNotChangeHealth"].get_or(false);
+		sol::optional<bool> playerAttack = params["playerAttack"];
+		sol::optional<int> resistAttribute = params["resistAttribute"];
+		int resistIndex = resistAttribute.value_or(-1);
+
+		if (applyDifficulty && !playerAttack) {
+			throw std::invalid_argument("'applyDifficulty' requires a 'playerAttack' parameter.");
+		}
+		if (!damage) {
+			throw std::invalid_argument("Invalid 'damage' parameter provided.");
+		}
+		if (resistAttribute) {
+			if (resistIndex < TES3::MagicEffectAttribute::AttackBonus || resistIndex > TES3::MagicEffectAttribute::Invisibility) {
+				// Disable resistAttribute for effect attributes that are > Invisibility.
+				resistAttribute.reset();
+			}
+		}
+
+		float adjustedDamage = damage.value();
+		if (applyArmor) {
+			adjustedDamage = applyArmorRating(adjustedDamage, 1.0f, true);
+		}
+		if (resistAttribute) {
+			adjustedDamage *= std::max(0, 100 - this->effectAttributes[resistIndex]) / 100.0f;
+		}
+
+		auto prevSource = mwse::lua::event::DamageEvent::m_Source;
+		mwse::lua::event::DamageEvent::m_Source = "script";
+		applyHealthDamage(adjustedDamage, playerAttack.value_or(false), applyDifficulty, doNotChangeHealth);
+		mwse::lua::event::DamageEvent::m_Source = prevSource;
+
+		return adjustedDamage;
+	}
+
+	const auto TES3_MobileActor_applyFatigueDamage = reinterpret_cast<float(__thiscall*)(MobileActor*, float, float, bool)>(0x5581B0);
+	float MobileActor::applyFatigueDamage(float fatigueDamage, float swing, bool alwaysPlayHitVoice) {
+		// Invoke our pre-damage event and check if it is blocked.
+		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
+		if (mwse::lua::event::DamageHandToHandEvent::getEventEnabled()) {
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::DamageHandToHandEvent(this, fatigueDamage));
+			if (eventData.valid()) {
+				if (eventData.get_or("block", false)) {
+					return 0;
+				}
+
+				fatigueDamage = eventData["fatigueDamage"];
+			}
+		}
+
+		float result = TES3_MobileActor_applyFatigueDamage(this, fatigueDamage, swing, alwaysPlayHitVoice);
+
+		// Do our post-damage event.
+		if (mwse::lua::event::DamagedHandToHandEvent::getEventEnabled()) {
+			auto stateHandle = luaManager.getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::DamagedHandToHandEvent(this, fatigueDamage));
+		}
+		return result;
 	}
 
 	bool MobileActor::hasFreeAction() const {
@@ -559,13 +626,13 @@ namespace TES3 {
 	}
 
 	void MobileActor::updateOpacity() {
-		if (animationData.asActor) {
-			animationData.asActor->updateOpacity();
+		if (animationController.asActor) {
+			animationController.asActor->updateOpacity();
 		}
 	}
 
-	ActorAnimationData* MobileActor::getAnimationData() const {
-		return animationData.asActor;
+	ActorAnimationController* MobileActor::getAnimationController() const {
+		return animationController.asActor;
 	}
 
 	BaseObject* MobileActor::getCurrentSpell() const {

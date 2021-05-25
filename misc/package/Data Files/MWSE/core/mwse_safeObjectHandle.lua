@@ -26,6 +26,7 @@ function this.new(object)
 
 	local raw = { _object = object }
 	function raw:valid() return rawget(self, "_object") ~= nil end
+	function raw:getObject() return rawget(self, "_object") end
 
 	-- Create a metatable redirect.
 	local handle = setmetatable(raw, this)
@@ -42,7 +43,13 @@ function this:__index(key)
 	end
 
 	local reference = assert(rawget(self, "_object"), "unsafe_object: This object has been invalidated.")
-	return reference[key]
+	local result = reference[key]
+	if (type(result) == "function") then
+		return function(self, ...)
+			return result(reference, ...)
+		end
+	end
+	return result
 end
 
 -- Allow this handle to set values of the reference, with some checking.
@@ -69,7 +76,7 @@ function this:__tojson()
 	else
 		return "null"
 	end
-	return rawget(self, "_object").__tojson()
+	return rawget(self, "_object"):__tojson()
 end
 
 return this

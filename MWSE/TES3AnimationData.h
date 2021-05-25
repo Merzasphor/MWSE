@@ -82,5 +82,5 @@ namespace TES3 {
 		bool hasOverrideAnimations() const;
 
 	};
-	static_assert(sizeof(AnimationData) == 0x7E4, "TES3::AnimationAttachment failed size validation");
+	static_assert(sizeof(AnimationData) == 0x7E4, "TES3::AnimationData failed size validation");
 }

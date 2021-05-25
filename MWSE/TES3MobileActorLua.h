@@ -2,7 +2,7 @@
 
 #include "TES3MobileObjectLua.h"
 
-#include "TES3ActorAnimationData.h"
+#include "TES3ActorAnimationController.h"
 #include "TES3AIData.h"
 #include "TES3Cell.h"
 #include "TES3CombatSession.h"
@@ -53,7 +53,7 @@ namespace mwse {
 			usertypeDefinition["width"] = sol::readonly_property(&TES3::MobileActor::widthInUnits);
 
 			// Indirect bindings to unions and arrays.
-			usertypeDefinition["animationData"] = sol::readonly_property(&TES3::MobileActor::getAnimationData);
+			usertypeDefinition["animationController"] = sol::readonly_property(&TES3::MobileActor::getAnimationController);
 			usertypeDefinition["attributes"] = sol::readonly_property(&TES3::MobileActor::getAttributes);
 			usertypeDefinition["currentSpell"] = sol::readonly_property(&TES3::MobileActor::getCurrentSpell);
 			usertypeDefinition["effectAttributes"] = sol::readonly_property(&TES3::MobileActor::getEffectAttributes);
@@ -125,6 +125,8 @@ namespace mwse {
 
 			// Basic function binding.
 			usertypeDefinition["applyHealthDamage"] = &TES3::MobileActor::applyHealthDamage;
+			usertypeDefinition["applyFatigueDamage"] = &TES3::MobileActor::applyFatigueDamage;
+			usertypeDefinition["applyDamage"] = &TES3::MobileActor::applyDamage_lua;
 			usertypeDefinition["getBootsWeight"] = &TES3::MobileActor::getBootsWeight;
 			usertypeDefinition["getViewToActor"] = &TES3::MobileActor::getViewToActor;
 			usertypeDefinition["getViewToPoint"] = &TES3::MobileActor::getViewToPoint;

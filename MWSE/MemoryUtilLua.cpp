@@ -320,16 +320,15 @@ namespace mwse {
 			auto& state = stateHandle.state;
 
 			sol::optional<DWORD> previousCall = params["previousCall"];
-			sol::optional<DWORD> length = params["length"];
+			DWORD length = params["length"].get_or(5U);
 
 			sol::object newCall = params["call"];
 			if (newCall.is<double>()) {
 				if (previousCall) {
-					return genCallEnforced(address.value(), previousCall.value(), newCall.as<double>(), length.value_or(5U));
+					return genCallEnforced(address.value(), previousCall.value(), newCall.as<double>(), length);
 				}
 				else {
-					genNOPUnprotected(address.value(), length.value_or(5U));
-					genCallUnprotected(address.value(), newCall.as<double>());
+					genCallUnprotected(address.value(), newCall.as<double>(), length);
 					return true;
 				}
 			}
@@ -407,11 +406,11 @@ namespace mwse {
 						throw std::invalid_argument("No overload could be mapped for the given argument count.");
 					}
 
-					genCallUnprotected(address.value(), overwritingFunction);
+					genCallUnprotected(address.value(), overwritingFunction, length);
 				}
 				else {
 					functionDefinitions[address.value()] = {};
-					genCallUnprotected(address.value(), reinterpret_cast<DWORD>(callGenericLuaFunction_fastcall_0arg));
+					genCallUnprotected(address.value(), reinterpret_cast<DWORD>(callGenericLuaFunction_fastcall_0arg), length);
 				}
 
 				// Make sure we can look back up our lua function from this address.

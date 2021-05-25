@@ -22,7 +22,7 @@
 #include "NITriShape.h"
 
 #include "TES3Actor.h"
-#include "TES3ActorAnimationData.h"
+#include "TES3ActorAnimationController.h"
 #include "TES3AIData.h"
 #include "TES3AIPackage.h"
 #include "TES3Alchemy.h"
@@ -57,7 +57,7 @@
 #include "TES3MobileCreature.h"
 #include "TES3MobilePlayer.h"
 #include "TES3NPC.h"
-#include "TES3PlayerAnimationData.h" 
+#include "TES3PlayerAnimationController.h" 
 #include "TES3Race.h"
 #include "TES3Reference.h"
 #include "TES3Region.h"
@@ -676,7 +676,7 @@ namespace mwse {
 			if (worldController) {
 				auto mobilePlayer = worldController->getMobilePlayer();
 				if (mobilePlayer) {
-					return mobilePlayer->animationData.asPlayer->firstPersonHeadCameraNode->worldTransform.translation;
+					return mobilePlayer->animationController.asPlayer->firstPersonHeadCameraNode->worldTransform.translation;
 				}
 			}
 			return sol::optional<TES3::Vector3>();
@@ -702,7 +702,7 @@ namespace mwse {
 				return {};
 			}
 
-			return macp->animationData.asPlayer->cameraOffset;
+			return macp->animationController.asPlayer->cameraOffset;
 		}
 
 		void set3rdPersonCameraOffset(sol::table params) {
@@ -720,7 +720,7 @@ namespace mwse {
 				throw std::exception("MobilePlayer is not yet initialized.");
 			}
 
-			macp->animationData.asPlayer->cameraOffset = offset.value();
+			macp->animationController.asPlayer->cameraOffset = offset.value();
 		}
 
 		static NI::Pick* rayTestCache = nullptr;
@@ -2054,12 +2054,12 @@ namespace mwse {
 				throw std::runtime_error("Function called while mobile player is unavailable.");
 			}
 
-			auto animData = macp->animationData.asPlayer;
-			if (animData == nullptr) {
-				throw std::runtime_error("Function called while mobile player animation data is unavailable.");
+			auto animController = macp->animationController.asPlayer;
+			if (animController == nullptr) {
+				throw std::runtime_error("Function called while mobile player animation controller is unavailable.");
 			}
 
-			return animData->force1stPerson();
+			return animController->force1stPerson();
 		}
 
 		bool force3rdPerson() {
@@ -2073,12 +2073,12 @@ namespace mwse {
 				throw std::runtime_error("Function called while mobile player is unavailable.");
 			}
 
-			auto animData = macp->animationData.asPlayer;
-			if (animData == nullptr) {
-				throw std::runtime_error("Function called while mobile player animation data is unavailable.");
+			auto animController = macp->animationController.asPlayer;
+			if (animController == nullptr) {
+				throw std::runtime_error("Function called while mobile player animation controller is unavailable.");
 			}
 
-			return animData->force3rdPerson();
+			return animController->force3rdPerson();
 		}
 
 		sol::object getActiveCells() {
@@ -2873,14 +2873,14 @@ namespace mwse {
 				throw std::runtime_error("Function called while mobile player is unavailable.");
 			}
 
-			auto animData = macp->animationData.asPlayer;
-			if (animData == nullptr) {
-				throw std::runtime_error("Function called while mobile player animation data is unavailable.");
+			auto animController = macp->animationController.asPlayer;
+			if (animController == nullptr) {
+				throw std::runtime_error("Function called while mobile player animation controller is unavailable.");
 			}
 
-			animData->togglePOV = true;
+			animController->togglePOV = true;
 
-			return animData->is3rdPerson;
+			return animController->is3rdPerson;
 		}
 
 		int transferItem(sol::table params) {
@@ -3663,13 +3663,13 @@ namespace mwse {
 					else if (shieldGroup != -1) {
 						targetBones = 2;
 					}
-					mact->animationData.asActor->patchedOverrideState = targetBones;
+					mact->animationController.asActor->patchedOverrideState = targetBones;
 				}
 				else {
 					// Idle anim flag pauses all AI animation control.
 					bool idleAnim = getOptionalParam<bool>(params, "idleAnim", lowerGroup > 0 || upperGroup > 0 || shieldGroup > 0);
 					mact->setMobileActorFlag(TES3::MobileActorFlag::IdleAnim, idleAnim);
-					mact->animationData.asActor->patchedOverrideState = 0xFF;
+					mact->animationController.asActor->patchedOverrideState = 0xFF;
 				}
 			}
 		}

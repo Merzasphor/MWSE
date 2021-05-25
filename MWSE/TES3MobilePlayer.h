@@ -108,7 +108,7 @@ namespace TES3 {
 
 		void setFlagSneak(bool value);
 
-		PlayerAnimationData* getPlayerAnimationData() const;
+		PlayerAnimationController* getPlayerAnimationController() const;
 
 		std::reference_wrapper<int[8]> getLevelupsPerAttribute();
 		std::reference_wrapper<int[3]> getLevelupsPerSpecialization();

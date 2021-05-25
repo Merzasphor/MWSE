@@ -27,6 +27,7 @@ Functions
     tes3/addItemData
     tes3/addSoulGem
     tes3/adjustSoundVolume
+    tes3/cancelAnimationLoop
     tes3/cast
     tes3/checkMerchantTradesItem
     tes3/createObject
@@ -96,6 +97,7 @@ Functions
     tes3/isModActive
     tes3/iterate
     tes3/iterateObjects
+    tes3/loadAnimation
     tes3/loadGame
     tes3/loadMesh
     tes3/loadSourceTexture
@@ -137,6 +139,7 @@ Functions
     tes3/skipAnimationFrame
     tes3/streamMusic
     tes3/tapKey
+    tes3/testLineOfSight
     tes3/togglePOV
     tes3/transferItem
     tes3/triggerCrime

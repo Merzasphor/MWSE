@@ -20,7 +20,7 @@
 
 #include "TES3Defines.h"
 #include "TES3Actor.h"
-#include "TES3ActorAnimationData.h"
+#include "TES3ActorAnimationController.h"
 #include "TES3Alchemy.h"
 #include "TES3Book.h"
 #include "TES3BodyPartManager.h"
@@ -48,7 +48,7 @@
 #include "TES3MobilePlayer.h"
 #include "TES3MobileProjectile.h"
 #include "TES3NPC.h"
-#include "TES3PlayerAnimationData.h"
+#include "TES3PlayerAnimationController.h"
 #include "TES3Reference.h"
 #include "TES3Script.h"
 #include "TES3SoulGemData.h"
@@ -70,6 +70,7 @@
 #include "TES3UtilLua.h"
 #include "TES3ActionDataLua.h"
 #include "TES3ActivatorLua.h"
+#include "TES3ActorAnimationControllerLua.h"
 #include "TES3AILua.h"
 #include "TES3AlchemyLua.h"
 #include "TES3ApparatusLua.h"
@@ -111,6 +112,7 @@
 #include "TES3MobileProjectileLua.h"
 #include "TES3MoonLua.h"
 #include "TES3NPCLua.h"
+#include "TES3PlayerAnimationControllerLua.h"
 #include "TES3ProbeLua.h"
 #include "TES3RaceLua.h"
 #include "TES3ReferenceLua.h"
@@ -174,6 +176,7 @@
 #include "LuaCellChangedEvent.h"
 #include "LuaCrimeWitnessedEvent.h"
 #include "LuaDamageEvent.h"
+#include "LuaDamageHandToHandEvent.h"
 #include "LuaEquipEvent.h"
 #include "LuaFilterBarterMenuEvent.h"
 #include "LuaFilterContentsMenuEvent.h"
@@ -254,7 +257,7 @@
 #define TES3_PATCH_MAGIC_SAVE_LOAD_SIZE 0x8
 #define TES3_PATCH_MAGIC_SAVE_LOAD_RETURN (TES3_PATCH_MAGIC_SAVE_LOAD + TES3_PATCH_MAGIC_SAVE_LOAD_SIZE)
 
-#define TES3_ActorAnimData_attackCheckMeleeHit 0x541530
+#define TES3_ActorAnimController_attackCheckMeleeHit 0x541530
 
 #define TES3_BaseObject_destructor 0x4F0CA0
 
@@ -388,6 +391,7 @@ namespace mwse {
 			// Bind TES3 data types.
 			bindTES3ActionData();
 			bindTES3Activator();
+			bindTES3ActorAnimationController();
 			bindTES3AI();
 			bindTES3Alchemy();
 			bindTES3Apparatus();
@@ -432,6 +436,7 @@ namespace mwse {
 			bindTES3MobileProjectile();
 			bindTES3Moon();
 			bindTES3NPC();
+			bindTES3PlayerAnimationController();
 			bindTES3Probe();
 			bindTES3Race();
 			bindTES3Reference();
@@ -832,13 +837,13 @@ namespace mwse {
 		// Hook: Attack
 		//
 
-		void __fastcall OnAttack(TES3::ActorAnimationData* animData) {
+		void __fastcall OnAttack(TES3::ActorAnimationController* animController) {
 			// Call original function.
-			reinterpret_cast<void(__thiscall *)(TES3::ActorAnimationData*)>(TES3_ActorAnimData_attackCheckMeleeHit)(animData);
+			reinterpret_cast<void(__thiscall *)(TES3::ActorAnimationController*)>(TES3_ActorAnimController_attackCheckMeleeHit)(animController);
 
 			// Prepare our event data.
 			if (event::AttackEvent::getEventEnabled()) {
-				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::AttackEvent(animData));
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::AttackEvent(animController));
 			}
 		}
 
@@ -1010,45 +1015,59 @@ namespace mwse {
 		// Mobile actor apply damage event.
 		//
 
-		bool __fastcall OnApplyDamageFromScript(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
+		bool __fastcall OnApplyDamageFromScript(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool doNotChangeHealth) {
 			mwse::lua::event::DamageEvent::m_Source = "script";
-			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, doNotChangeHealth);
 			mwse::lua::event::DamageEvent::m_Source = nullptr;
 			return result;
 		}
 
-		bool __fastcall OnApplyDamageFromFalling(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
+		bool __fastcall OnApplyDamageFromFalling(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool doNotChangeHealth) {
 			mwse::lua::event::DamageEvent::m_Source = "fall";
-			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, doNotChangeHealth);
 			mwse::lua::event::DamageEvent::m_Source = nullptr;
 			return result;
 		}
 
-		bool __fastcall OnApplyDamageFromSuffocation(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
+		bool __fastcall OnApplyDamageFromSuffocation(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool doNotChangeHealth) {
 			mwse::lua::event::DamageEvent::m_Source = "suffocation";
-			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, doNotChangeHealth);
 			mwse::lua::event::DamageEvent::m_Source = nullptr;
 			return result;
 		}
 
-		bool __fastcall OnApplyDamageFromAttack(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
+		bool __fastcall OnApplyDamageFromAttack(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool doNotChangeHealth) {
 			mwse::lua::event::DamageEvent::m_Source = "attack";
-			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, doNotChangeHealth);
 			mwse::lua::event::DamageEvent::m_Source = nullptr;
 			return result;
 		}
 
-		bool __fastcall OnApplyDamageFromMagic(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
+		float __fastcall OnApplyFatigueDamageFromAttack(TES3::MobileActor* mobileActor, TES3::MobileActor* attacker, float damage, float swing, bool alwaysPlayHitVoice) {
+			mwse::lua::event::DamageHandToHandEvent::m_Attacker = attacker;
+			auto result = mobileActor->applyFatigueDamage(damage, swing, alwaysPlayHitVoice);
+			mwse::lua::event::DamageHandToHandEvent::m_Attacker = nullptr;
+			return result;
+		}
+
+		static __declspec(naked) float OnApplyFatigueDamageFromAttack_Wrapper() {
+			_asm {
+				mov edx, esi
+				jmp OnApplyFatigueDamageFromAttack
+			}
+		}
+
+		bool __fastcall OnApplyDamageFromMagic(TES3::MobileActor* mobileActor, DWORD _UNUSED_, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool doNotChangeHealth) {
 			mwse::lua::event::DamageEvent::m_Source = "magic";
-			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, doNotChangeHealth);
 			mwse::lua::event::DamageEvent::m_Source = nullptr;
 			return result;
 		}
 
-		bool __fastcall OnApplyDamageFromMagicShield(TES3::MobileActor* mobileActor, TES3::Deque<TES3::ActiveMagicEffect>::Node* effectNode, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth) {
+		bool __fastcall OnApplyDamageFromMagicShield(TES3::MobileActor* mobileActor, TES3::Deque<TES3::ActiveMagicEffect>::Node* effectNode, float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool doNotChangeHealth) {
 			mwse::lua::event::DamageEvent::m_Source = "shield";
 			mwse::lua::event::DamageEvent::m_ActiveMagicEffect = &effectNode->data;
-			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, takeHealth);
+			auto result = mobileActor->applyHealthDamage(damage, flipDifficultyScale, scaleWithDifficulty, doNotChangeHealth);
 			mwse::lua::event::DamageEvent::m_Source = nullptr;
 			mwse::lua::event::DamageEvent::m_ActiveMagicEffect = nullptr;
 			return result;
@@ -1062,10 +1081,10 @@ namespace mwse {
 		}
 
 		const auto TES3_AttributeSpellEffect = reinterpret_cast<bool(__cdecl*)(TES3::MagicSourceInstance*, bool, TES3::Statistic*, void*, TES3::MagicEffectInstance*, float, int)>(0x519110);
-		bool __cdecl AttributeSpellEffect(TES3::MagicSourceInstance * sourceInstance, bool a2, TES3::Statistic * statistic, void * a4, TES3::MagicEffectInstance * effectInstance, float delta, int a6) {
+		bool __cdecl AttributeSpellEffect(TES3::MagicSourceInstance * sourceInstance, bool positiveModifier, TES3::Statistic * statistic, void * attributeTypeInfo, TES3::MagicEffectInstance * effectInstance, float delta, int effectIndex) {
 			mwse::lua::event::DamageEvent::m_MagicSourceInstance = sourceInstance;
 			mwse::lua::event::DamageEvent::m_MagicEffectInstance = effectInstance;
-			auto result = TES3_AttributeSpellEffect(sourceInstance, a2, statistic, a4, effectInstance, delta, a6);
+			auto result = TES3_AttributeSpellEffect(sourceInstance, positiveModifier, statistic, attributeTypeInfo, effectInstance, delta, effectIndex);
 			mwse::lua::event::DamageEvent::m_MagicSourceInstance = nullptr;
 			mwse::lua::event::DamageEvent::m_MagicEffectInstance = nullptr;
 			return result;
@@ -2907,37 +2926,37 @@ namespace mwse {
 			}
 		}
 
-		const auto TES3_ActorAnimData_selectMovementAnimAndUpdate = reinterpret_cast<void(__thiscall*)(TES3::ActorAnimationData*, float, bool)>(0x540A90);
-		void __fastcall ActorAnimData_selectMovementAnimAndUpdate(TES3::ActorAnimationData* animData, DWORD _UNUSED_, float t, bool b) {
-			auto state = animData->patchedOverrideState;
+		const auto TES3_ActorAnimController_selectMovementAnimAndUpdate = reinterpret_cast<void(__thiscall*)(TES3::ActorAnimationController*, float, bool)>(0x540A90);
+		void __fastcall ActorAnimController_selectMovementAnimAndUpdate(TES3::ActorAnimationController* animController, DWORD _UNUSED_, float t, bool b) {
+			auto state = animController->patchedOverrideState;
 
 			if (state != 0xFF) {
-				auto baseAnimGroup = animData->animationAttachment->currentAnimGroup[0];
-				auto overrideAnimGroup = animData->animationAttachment->currentAnimGroup[2];
+				auto baseAnimGroup = animController->animationData->currentAnimGroup[0];
+				auto overrideAnimGroup = animController->animationData->currentAnimGroup[2];
 
 				// Check if override animation has completed.
 				if (overrideAnimGroup != baseAnimGroup) {
 					// Still animating. Suppress updates to the AnimationAttachment by misusing ActorAnimData internal flags.
 					if (state <= 1) {
-						animData->layerUpperBody.playbackFlags = 8;
+						animController->layerUpperBody.playbackFlags = 8;
 					}
 					if (state <= 2) {
-						animData->layerLeftArm.playbackFlags = 8;
+						animController->layerLeftArm.playbackFlags = 8;
 					}
 				}
 				else {
 					// Animation has completed, and been paused at the end. Signal controller to update animations.
 					if (state <= 1) {
-						animData->animationAttachment->currentAnimGroup[1] = 0xFF;
+						animController->animationData->currentAnimGroup[1] = 0xFF;
 					}
 					if (state <= 2) {
-						animData->animationAttachment->currentAnimGroup[2] = 0xFF;
+						animController->animationData->currentAnimGroup[2] = 0xFF;
 					}
 					// End override state.
-					animData->patchedOverrideState = 0xFF;
+					animController->patchedOverrideState = 0xFF;
 				}
 			}
-			TES3_ActorAnimData_selectMovementAnimAndUpdate(animData, t, b);
+			TES3_ActorAnimController_selectMovementAnimAndUpdate(animController, t, b);
 		}
 
 		//
@@ -3190,9 +3209,9 @@ namespace mwse {
 			genJumpEnforced(0x7365E9, 0x558720, reinterpret_cast<DWORD>(OnStopCombat));
 
 			// Event: Melee Hit Check
-			genCallEnforced(0x541489, TES3_ActorAnimData_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
-			genCallEnforced(0x5414CD, TES3_ActorAnimData_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
-			genCallEnforced(0x569E78, TES3_ActorAnimData_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
+			genCallEnforced(0x541489, TES3_ActorAnimController_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
+			genCallEnforced(0x5414CD, TES3_ActorAnimController_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
+			genCallEnforced(0x569E78, TES3_ActorAnimController_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
 
 			// Collision events: Mobile Object
 			auto mobileObjectCollideActor = &TES3::MobileObject::onActorCollision;
@@ -3281,13 +3300,16 @@ namespace mwse {
 			genCallEnforced(0x555789, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromMagicShield_Wrapper));
 			genCallEnforced(0x556AE0, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromAttack));
 			genCallEnforced(0x55782C, 0x557CF0, reinterpret_cast<DWORD>(OnApplyDamageFromMagic));
-			auto mobileActorApplyHitModifiers = &TES3::MobileActor::applyHitModifiers;
-			genCallEnforced(0x5577C6, 0x5568F0, *reinterpret_cast<DWORD*>(&mobileActorApplyHitModifiers));
-			genCallEnforced(0x573C51, 0x5568F0, *reinterpret_cast<DWORD*>(&mobileActorApplyHitModifiers));
+			auto mobileActorApplyPhysicalHit = &TES3::MobileActor::applyPhysicalHit;
+			genCallEnforced(0x5577C6, 0x5568F0, *reinterpret_cast<DWORD*>(&mobileActorApplyPhysicalHit));
+			genCallEnforced(0x573C51, 0x5568F0, *reinterpret_cast<DWORD*>(&mobileActorApplyPhysicalHit));
 			genCallEnforced(0x518526, 0x519110, reinterpret_cast<DWORD>(AttributeSpellEffect));
 			genCallEnforced(0x51889D, 0x519110, reinterpret_cast<DWORD>(AttributeSpellEffect));
 			genCallEnforced(0x518D5C, 0x519110, reinterpret_cast<DWORD>(AttributeSpellEffect));
 			genCallEnforced(0x518F9F, 0x519110, reinterpret_cast<DWORD>(AttributeSpellEffect));
+
+			// Event: Damage(d)HandToHand
+			genCallEnforced(0x5576D4, 0x5581B0, reinterpret_cast<DWORD>(OnApplyFatigueDamageFromAttack_Wrapper));
 
 			// Event: Spell cast resolution
 			genCallEnforced(0x5156B2, 0x4AA950, reinterpret_cast<DWORD>(OnSpellCastResolution));
@@ -3339,7 +3361,7 @@ namespace mwse {
 			genCallEnforced(0x5DA620, 0x626220, reinterpret_cast<DWORD>(OnLevelUp));
 
 			// Event: Calculate movement speed. Called after the below speed events.
-			auto calculateMoveSpeed = &TES3::ActorAnimationData::calculateMovementSpeed;
+			auto calculateMoveSpeed = &TES3::ActorAnimationController::calculateMovementSpeed;
 			genCallEnforced(0x53E2F2, 0x53E1A0, *reinterpret_cast<DWORD*>(&calculateMoveSpeed));
 			genCallEnforced(0x53ED52, 0x53E1A0, *reinterpret_cast<DWORD*>(&calculateMoveSpeed));
 			genCallEnforced(0x540C7D, 0x53E1A0, *reinterpret_cast<DWORD*>(&calculateMoveSpeed));
@@ -3766,6 +3788,9 @@ namespace mwse {
 
 			// Patch reading correct light culling radius from non-light entities during light updates.
 			writePatchCodeUnprotected(0x485DAD, (BYTE*)&patchGetEntityLightRadius, patchGetEntityLightRadius_size);
+
+			// Allow hand-to-hand animation speed to be changed.
+			writeByteUnprotected(0x46CAD7, 0x89);
 
 			// Make soul gem data writable.
 			DWORD OldProtect;
@@ -4204,7 +4229,7 @@ namespace mwse {
 			// Modify actor animation controller to allow blocking animation changes.
 			writePatchCodeUnprotected(0x53DAB5, (BYTE*)&patchActorAnimInit, patchActorAnimInit_size);
 			genCallUnprotected(0x5428A3, reinterpret_cast<DWORD>(&CheckTogglePOV), 6);
-			genCallEnforced(0x53E135, 0x540A90, reinterpret_cast<DWORD>(&ActorAnimData_selectMovementAnimAndUpdate));
+			genCallEnforced(0x53E135, 0x540A90, reinterpret_cast<DWORD>(&ActorAnimController_selectMovementAnimAndUpdate));
 
 			// Make mobile IdleAnim flag reset on Stop key, instead of when loopCount reaches zero.
 			genJumpEnforced(0x46DA0D, 0x46E64E, 0x46E49E);

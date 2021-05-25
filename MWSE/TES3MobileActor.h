@@ -157,9 +157,9 @@ namespace TES3 {
 		Reference* moreCollidingReferences[2]; // 0x238
 		int unknown_0x240;
 		union {
-			ActorAnimationData * asActor;
-			PlayerAnimationData * asPlayer;
-		} animationData; // 0x244
+			ActorAnimationController * asActor;
+			PlayerAnimationController * asPlayer;
+		} animationController; // 0x244
 		CrimeController crimesB; // 0x248
 		Statistic attributes[8]; // 0x254
 		Statistic health; // 0x2B4
@@ -210,7 +210,7 @@ namespace TES3 {
 
 		float applyArmorRating(float damage, float swing, bool damageEquipment);
 		float calculateArmorRating(int * armorItemCount = nullptr) const;
-		void applyHitModifiers(MobileActor * attacker, MobileActor * defender, float unknown, float swing, MobileProjectile * projectile = nullptr, bool unknown2 = false);
+		void applyPhysicalHit(MobileActor* attacker, MobileActor* defender, float damage, float swing, MobileProjectile* projectile = nullptr, bool alwaysPlayHitVoice = false);
 
 		void setCurrentSpell(const Spell* spell);
 
@@ -234,7 +234,9 @@ namespace TES3 {
 		void stopCombat_lua(sol::optional<bool>);
 		bool isDead() const;
 		void onDeath();
-		bool applyHealthDamage(float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool takeHealth);
+		bool applyHealthDamage(float damage, bool isPlayerAttack, bool scaleWithDifficulty, bool doNotChangeHealth);
+		float applyFatigueDamage(float damage, float swing, bool alwaysPlayHitVoice = false);
+		float applyDamage_lua(sol::table params);
 		bool hasFreeAction() const;
 		float calculateRunSpeed();
 		float calculateSwimSpeed();
@@ -283,7 +285,7 @@ namespace TES3 {
 
 		void updateOpacity();
 
-		ActorAnimationData* getAnimationData() const;
+		ActorAnimationController* getAnimationController() const;
 		BaseObject* getCurrentSpell() const;
 
 		std::reference_wrapper<Statistic[8]> getAttributes();

@@ -1,5 +1,5 @@
 #include "TES3AnimationData.h"
-#include "TES3ActorAnimationData.h"
+#include "TES3ActorAnimationController.h"
 
 #include "NINode.h"
 #include "NIKeyframeManager.h"
