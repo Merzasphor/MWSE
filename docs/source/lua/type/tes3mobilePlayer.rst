@@ -931,8 +931,13 @@ May be useful when free movement is required in crowded situations, or to tempor
 Methods
 ----------------------------------------------------------------------------------------------------
 
+`applyDamage`_ (`number`_)
+    Damages the actor, with options to control mitigation and difficulty scaling. Invokes the 'damage' and 'damaged' events, with 'script' source. Returns the actual damage done after mitigation and resistance, but before difficulty scaling.
+
 `applyHealthDamage`_ (`boolean`_)
-    Damages the actor.
+    **Deprecated, please use applyDamage instead.**
+
+Damages the actor.
 
 `equip`_ (`boolean`_)
     Equips an item, optionally adding the item if needed.
@@ -970,6 +975,7 @@ Methods
 .. toctree::
     :hidden:
 
+    tes3mobilePlayer/applyDamage
     tes3mobilePlayer/applyHealthDamage
     tes3mobilePlayer/equip
     tes3mobilePlayer/exerciseSkill
@@ -983,6 +989,7 @@ Methods
     tes3mobilePlayer/stopCombat
     tes3mobilePlayer/unequip
 
+.. _`applyDamage`: tes3mobilePlayer/applyDamage.html
 .. _`applyHealthDamage`: tes3mobilePlayer/applyHealthDamage.html
 .. _`equip`: tes3mobilePlayer/equip.html
 .. _`exerciseSkill`: tes3mobilePlayer/exerciseSkill.html

@@ -1,29 +1,35 @@
-applyHealthDamage
+applyDamage
 ====================================================================================================
 
-**Deprecated, please use applyDamage instead.**
-
-Damages the actor.
+Damages the actor, with options to control mitigation and difficulty scaling. Invokes the 'damage' and 'damaged' events, with 'script' source. Returns the actual damage done after mitigation and resistance, but before difficulty scaling.
 
 Returns
 ----------------------------------------------------------------------------------------------------
 
-`boolean`_.
+`number`_.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters through a table with the given keys:
+
 damage (`number`_)
     The amount of damage to apply.
 
-isPlayerAttack (`boolean`_)
-    Used to calculate difficulty scaling.
+applyArmor (`boolean`_)
+    Optional. If armor should mitigate the incoming damage. If the player is the target, armor experience will be gained.
 
-scaleWithDifficulty (`boolean`_)
-    Apply difficulty scaling to the damage.
+resistAttribute (`number`_)
+    Optional. The resistance attribute that is applied to the damage . It can reduce damage or exploit weakness. Uses values from tes3.effectAttributes.
+
+applyDifficulty (`boolean`_)
+    Optional. If the game difficulty modifier should be applied. Must be used with the 'playerAttack' argument to apply the correct modifier.
+
+playerAttack (`boolean`_)
+    Optional. If the attack came from the player. Used for difficulty calculation.
 
 doNotChangeHealth (`boolean`_)
-    Do all the audiovisual effects of damage without the health change.
+    Optional. If all effects except the health change should be applied.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

@@ -551,8 +551,13 @@ May be useful when free movement is required in crowded situations, or to tempor
 Methods
 ----------------------------------------------------------------------------------------------------
 
+`applyDamage`_ (`number`_)
+    Damages the actor, with options to control mitigation and difficulty scaling. Invokes the 'damage' and 'damaged' events, with 'script' source. Returns the actual damage done after mitigation and resistance, but before difficulty scaling.
+
 `applyHealthDamage`_ (`boolean`_)
-    Damages the actor.
+    **Deprecated, please use applyDamage instead.**
+
+Damages the actor.
 
 `getSkillStatistic`_ (`tes3skillStatistic`_)
     Fetches the statistic object of a skill with a given index. This converts to the limited options available for creatures.
@@ -578,6 +583,7 @@ Methods
 .. toctree::
     :hidden:
 
+    tes3mobileActor/applyDamage
     tes3mobileActor/applyHealthDamage
     tes3mobileActor/getSkillStatistic
     tes3mobileActor/getSkillValue
@@ -587,6 +593,7 @@ Methods
     tes3mobileActor/startDialogue
     tes3mobileActor/stopCombat
 
+.. _`applyDamage`: tes3mobileActor/applyDamage.html
 .. _`applyHealthDamage`: tes3mobileActor/applyHealthDamage.html
 .. _`getSkillStatistic`: tes3mobileActor/getSkillStatistic.html
 .. _`getSkillValue`: tes3mobileActor/getSkillValue.html

@@ -1,6 +1,8 @@
 applyHealthDamage
 ====================================================================================================
 
+**Deprecated, please use applyDamage instead.**
+
 Damages the actor.
 
 Returns
@@ -14,14 +16,14 @@ Parameters
 damage (`number`_)
     The amount of damage to apply.
 
-flipDifficultyScale (`boolean`_)
-    No description available.
+isPlayerAttack (`boolean`_)
+    Used to calculate difficulty scaling.
 
 scaleWithDifficulty (`boolean`_)
     Apply difficulty scaling to the damage.
 
-takeHealth (`boolean`_)
-    No description available.
+doNotChangeHealth (`boolean`_)
+    Do all the audiovisual effects of damage without the health change.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html
