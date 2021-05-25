@@ -22,6 +22,7 @@
 #include "TES3Enchantment.h"
 #include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
+#include "TES3MagicEffectController.h"
 #include "TES3MobController.h"
 #include "TES3MobilePlayer.h"
 #include "TES3ItemData.h"
@@ -259,7 +260,7 @@ namespace TES3 {
 	}
 
 	const auto TES3_MobileActor_applyHealthDamage = reinterpret_cast<bool(__thiscall*)(MobileActor*, float, bool, bool, bool)>(0x557CF0);
-	bool MobileActor::applyHealthDamage(float damage, bool flipDifficultyScale, bool scaleWithDifficulty, bool doNotChangeHealth) {
+	bool MobileActor::applyHealthDamage(float damage, bool isPlayerAttack, bool scaleWithDifficulty, bool doNotChangeHealth) {
 		// Invoke our pre-damage event and check if it is blocked.
 		mwse::lua::LuaManager& luaManager = mwse::lua::LuaManager::getInstance();
 		if (mwse::lua::event::DamageEvent::getEventEnabled()) {
@@ -274,7 +275,7 @@ namespace TES3 {
 			}
 		}
 
-		bool checkForKnockdown = TES3_MobileActor_applyHealthDamage(this, damage, flipDifficultyScale, scaleWithDifficulty, doNotChangeHealth);
+		bool checkForKnockdown = TES3_MobileActor_applyHealthDamage(this, damage, isPlayerAttack, scaleWithDifficulty, doNotChangeHealth);
 
 		// Do our post-damage event.
 		if (mwse::lua::event::DamagedEvent::getEventEnabled()) {
@@ -286,6 +287,44 @@ namespace TES3 {
 		}
 
 		return checkForKnockdown;
+	}
+
+	float MobileActor::applyDamage_lua(sol::table params) {
+		bool applyArmor = params["applyArmor"].get_or(false);
+		bool applyDifficulty = params["applyDifficulty"].get_or(false);
+		sol::optional<float> damage = params["damage"];
+		bool doNotChangeHealth = params["doNotChangeHealth"].get_or(false);
+		sol::optional<bool> playerAttack = params["playerAttack"];
+		sol::optional<int> resistAttribute = params["resistAttribute"];
+		int resistIndex = resistAttribute.value_or(-1);
+
+		if (applyDifficulty && !playerAttack) {
+			throw std::invalid_argument("'applyDifficulty' requires a 'playerAttack' parameter.");
+		}
+		if (!damage) {
+			throw std::invalid_argument("Invalid 'damage' parameter provided.");
+		}
+		if (resistAttribute) {
+			if (resistIndex < TES3::MagicEffectAttribute::AttackBonus || resistIndex > TES3::MagicEffectAttribute::Invisibility) {
+				// Disable resistAttribute for effect attributes that are > Invisibility.
+				resistAttribute.reset();
+			}
+		}
+
+		float adjustedDamage = damage.value();
+		if (applyArmor) {
+			adjustedDamage = applyArmorRating(adjustedDamage, 1.0f, true);
+		}
+		if (resistAttribute) {
+			adjustedDamage *= std::max(0, 100 - this->effectAttributes[resistIndex]) / 100.0f;
+		}
+
+		auto prevSource = mwse::lua::event::DamageEvent::m_Source;
+		mwse::lua::event::DamageEvent::m_Source = "script";
+		applyHealthDamage(adjustedDamage, playerAttack.value_or(false), applyDifficulty, doNotChangeHealth);
+		mwse::lua::event::DamageEvent::m_Source = prevSource;
+
+		return adjustedDamage;
 	}
 
 	const auto TES3_MobileActor_applyFatigueDamage = reinterpret_cast<float(__thiscall*)(MobileActor*, float, float, bool)>(0x5581B0);
