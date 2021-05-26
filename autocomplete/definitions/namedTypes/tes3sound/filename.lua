@@ -1,6 +1,6 @@
 return {
 	type = "value",
-	description = [[]],
+	description = [[Path to the sound file.]],
 	readOnly = true,
 	valuetype = "string",
 }
