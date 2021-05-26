@@ -135,6 +135,7 @@ namespace mwse {
 			usertypeDefinition["getPowerUseTimestamp"] = &TES3::MobileActor::getPowerUseTimestamp;
 			usertypeDefinition["getSkillStatistic"] = &TES3::MobileActor::getSkillStatistic;
 			usertypeDefinition["getSkillValue"] = &TES3::MobileActor::getSkillValue;
+			usertypeDefinition["getWeaponSpeed"] = &TES3::MobileActor::getWeaponSpeed;
 			usertypeDefinition["hasUsedPower"] = &TES3::MobileActor::hasUsedPower;
 			usertypeDefinition["rechargePower"] = &TES3::MobileActor::rechargePower;
 			usertypeDefinition["startCombat"] = &TES3::MobileActor::startCombat;

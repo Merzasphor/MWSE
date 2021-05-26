@@ -846,6 +846,11 @@ namespace mwse {
 			}
 		}
 
+		void __fastcall OnAttackStart(TES3::ActorAnimationController* animController, DWORD _UNUSED_, float swing) {
+			// Call our wrapper for the function so that events are triggered.
+			animController->startAttackAnimation(swing);
+		}
+
 		//
 		// Collision events: Mobile Actor
 		//
@@ -3150,6 +3155,10 @@ namespace mwse {
 			genCallEnforced(0x541489, TES3_ActorAnimController_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
 			genCallEnforced(0x5414CD, TES3_ActorAnimController_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
 			genCallEnforced(0x569E78, TES3_ActorAnimController_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
+
+			// Event: Begin physical attack
+			genCallEnforced(0x54A4BA, 0x5411C0, reinterpret_cast<DWORD>(OnAttackStart));
+			genCallEnforced(0x569DFB, 0x5411C0, reinterpret_cast<DWORD>(OnAttackStart));
 
 			// Collision events: Mobile Object
 			auto mobileObjectCollideActor = &TES3::MobileObject::onActorCollision;
