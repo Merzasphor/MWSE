@@ -147,6 +147,17 @@ ID  Armor Type
 
 .. note:: `xEquipmentList <functions/iteration/xEquipmentList.html>`_'s returns this value as the subtype for armor objects. Note that the values are **increased by one** by that function.
 
+Armor Weight Classes
+-----------------------------------------------------------
+
+== ===============
+ID Weight Class
+== ===============
+0  Light
+1  Medium
+2  Heavy
+== ===============
+
 Attributes
 -----------------------------------------------------------
 
