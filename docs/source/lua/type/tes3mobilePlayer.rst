@@ -45,10 +45,10 @@ Properties
 `alwaysRun`_ (`boolean`_)
     Toggle flag for if the player should always run.
 
-`animationData`_ (`tes3playerAnimationData`_)
+`animationController`_ (`tes3actorAnimationController`_)
     No description available.
 
-`animationData`_ (`tes3actorAnimationData`_)
+`animationData`_ (`tes3playerAnimationData`_)
     No description available.
 
 `armorRating`_ (`number`_)
@@ -581,7 +581,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobilePlayer/alchemy
     tes3mobilePlayer/alteration
     tes3mobilePlayer/alwaysRun
-    tes3mobilePlayer/animationData
+    tes3mobilePlayer/animationController
     tes3mobilePlayer/animationData
     tes3mobilePlayer/armorRating
     tes3mobilePlayer/armorer
@@ -766,7 +766,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`alchemy`: tes3mobilePlayer/alchemy.html
 .. _`alteration`: tes3mobilePlayer/alteration.html
 .. _`alwaysRun`: tes3mobilePlayer/alwaysRun.html
-.. _`animationData`: tes3mobilePlayer/animationData.html
+.. _`animationController`: tes3mobilePlayer/animationController.html
 .. _`animationData`: tes3mobilePlayer/animationData.html
 .. _`armorRating`: tes3mobilePlayer/armorRating.html
 .. _`armorer`: tes3mobilePlayer/armorer.html
@@ -961,6 +961,9 @@ Damages the actor.
 `getSkillValue`_ (`number`_)
     Fetches the current value of a skill with a given index. This converts to the limited options available for creatures.
 
+`getWeaponSpeed`_ (`number`_)
+    Fetches the weapon speed of the actor's currently equipped weapon, or 1.0 if no weapon is equipped.
+
 `hasFreeAction`_ (`boolean`_)
     If true, the actor isn't paralyzed, dead, stunned, or otherwise unable to take action.
 
@@ -991,6 +994,7 @@ Damages the actor.
     tes3mobilePlayer/exerciseSkill
     tes3mobilePlayer/getSkillStatistic
     tes3mobilePlayer/getSkillValue
+    tes3mobilePlayer/getWeaponSpeed
     tes3mobilePlayer/hasFreeAction
     tes3mobilePlayer/isAffectedByObject
     tes3mobilePlayer/levelSkill
@@ -1005,6 +1009,7 @@ Damages the actor.
 .. _`exerciseSkill`: tes3mobilePlayer/exerciseSkill.html
 .. _`getSkillStatistic`: tes3mobilePlayer/getSkillStatistic.html
 .. _`getSkillValue`: tes3mobilePlayer/getSkillValue.html
+.. _`getWeaponSpeed`: tes3mobilePlayer/getWeaponSpeed.html
 .. _`hasFreeAction`: tes3mobilePlayer/hasFreeAction.html
 .. _`isAffectedByObject`: tes3mobilePlayer/isAffectedByObject.html
 .. _`levelSkill`: tes3mobilePlayer/levelSkill.html

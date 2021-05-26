@@ -33,7 +33,7 @@ Properties
 `alarm`_ (`number`_)
     The actor's alarm AI value.
 
-`animationData`_ (`tes3actorAnimationData`_)
+`animationController`_ (`tes3actorAnimationController`_)
     No description available.
 
 `armorRating`_ (`number`_)
@@ -382,7 +382,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobileCreature/agility
     tes3mobileCreature/aiPlanner
     tes3mobileCreature/alarm
-    tes3mobileCreature/animationData
+    tes3mobileCreature/animationController
     tes3mobileCreature/armorRating
     tes3mobileCreature/attackBonus
     tes3mobileCreature/attacked
@@ -502,7 +502,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`agility`: tes3mobileCreature/agility.html
 .. _`aiPlanner`: tes3mobileCreature/aiPlanner.html
 .. _`alarm`: tes3mobileCreature/alarm.html
-.. _`animationData`: tes3mobileCreature/animationData.html
+.. _`animationController`: tes3mobileCreature/animationController.html
 .. _`armorRating`: tes3mobileCreature/armorRating.html
 .. _`attackBonus`: tes3mobileCreature/attackBonus.html
 .. _`attacked`: tes3mobileCreature/attacked.html
@@ -630,6 +630,9 @@ Damages the actor.
 `getSkillValue`_ (`number`_)
     Fetches the current value of a skill with a given index. This converts to the limited options available for creatures.
 
+`getWeaponSpeed`_ (`number`_)
+    Fetches the weapon speed of the actor's currently equipped weapon, or 1.0 if no weapon is equipped.
+
 `hasFreeAction`_ (`boolean`_)
     If true, the actor isn't paralyzed, dead, stunned, or otherwise unable to take action.
 
@@ -652,6 +655,7 @@ Damages the actor.
     tes3mobileCreature/applyHealthDamage
     tes3mobileCreature/getSkillStatistic
     tes3mobileCreature/getSkillValue
+    tes3mobileCreature/getWeaponSpeed
     tes3mobileCreature/hasFreeAction
     tes3mobileCreature/isAffectedByObject
     tes3mobileCreature/startCombat
@@ -662,6 +666,7 @@ Damages the actor.
 .. _`applyHealthDamage`: tes3mobileCreature/applyHealthDamage.html
 .. _`getSkillStatistic`: tes3mobileCreature/getSkillStatistic.html
 .. _`getSkillValue`: tes3mobileCreature/getSkillValue.html
+.. _`getWeaponSpeed`: tes3mobileCreature/getWeaponSpeed.html
 .. _`hasFreeAction`: tes3mobileCreature/hasFreeAction.html
 .. _`isAffectedByObject`: tes3mobileCreature/isAffectedByObject.html
 .. _`startCombat`: tes3mobileCreature/startCombat.html

@@ -13,7 +13,7 @@ Properties
     No description available.
 
 `attackDirection`_ (`number`_)
-    When attacking, the direction swung with the weapon. This shows if the actor was thrusting, swinging, or chopping.
+    **Deprecated. Use tes3actionData.physicalAttackType instead.** When attacking, the direction swung with the weapon. This shows if the actor was thrusting, swinging, or chopping.
 
 `attackSwing`_ (`number`_)
     When attacking, this value represents how much the weapon has been pulled back. The value ranges from [0.0 - 1.0].
@@ -29,6 +29,9 @@ Properties
 
 `nockedProjectile`_ (`tes3weapon`_)
     The currently knocked projectile the associated actor is using.
+
+`physicalAttackType`_ (`number`_)
+    A number from the tes3.physicalAttackType enumeration identifying the physical attack type. Can be tes3.physicalAttackType.slash, .chop, .thrust, .projectile, .creature1, .creature2, or .creature3.
 
 `physicalDamage`_ (`number`_)
     When attacking, this is the value of the weapon damage that was rolled. This value doesn't take into account the actor's strength, or other additional damage.
@@ -53,6 +56,7 @@ Properties
     tes3actionData/hitTarget
     tes3actionData/lastBarterHoursPassed
     tes3actionData/nockedProjectile
+    tes3actionData/physicalAttackType
     tes3actionData/physicalDamage
     tes3actionData/stolenFrom
     tes3actionData/target
@@ -66,6 +70,7 @@ Properties
 .. _`hitTarget`: tes3actionData/hitTarget.html
 .. _`lastBarterHoursPassed`: tes3actionData/lastBarterHoursPassed.html
 .. _`nockedProjectile`: tes3actionData/nockedProjectile.html
+.. _`physicalAttackType`: tes3actionData/physicalAttackType.html
 .. _`physicalDamage`: tes3actionData/physicalDamage.html
 .. _`stolenFrom`: tes3actionData/stolenFrom.html
 .. _`target`: tes3actionData/target.html

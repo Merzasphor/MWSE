@@ -1,7 +1,7 @@
 attackDirection
 ====================================================================================================
 
-`number`_. When attacking, the direction swung with the weapon. This shows if the actor was thrusting, swinging, or chopping.
+`number`_. **Deprecated. Use tes3actionData.physicalAttackType instead.** When attacking, the direction swung with the weapon. This shows if the actor was thrusting, swinging, or chopping.
 
 .. _`tes3creature`: ../../../lua/type/tes3creature.html
 .. _`niObject`: ../../../lua/type/niObject.html

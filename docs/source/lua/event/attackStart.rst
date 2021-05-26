@@ -1,27 +1,30 @@
-tes3actorAnimationController
+attackStart
 ====================================================================================================
 
-Works in conjuction with mobile AI to perform idle, movement, and attack animations. Holds data on the status of the current and next desired animation states for the different body sections that can be animated.
+This event is invoked whenever an actor starts an attack with their fists or a weapon, or a creature makes any attack. It is when the actor raises a melee weapon or draws an arrow. There is not necessarily a target in range, or any target at all for the player.
 
-Properties
+Event Data
 ----------------------------------------------------------------------------------------------------
 
-`mobile`_ (`tes3mobileActor`_)
-    The mobile actor that this controller is responsible for.
+attackSpeed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`weaponSpeed`_ (`number`_)
-    The animation speed scaling of the weapon animations. This includes all weapon related idle, attack, and ready/unready animations. This value is reset at the starting frame of each weapon strike, normally equal to the the weapon speed. Therefore if you use this it should be changed after every strike, and reset after. Ready/unready actions do not change speed, but are affected by speed.
+`number`_. The speed multiplier of the attack animation, normally equal to the weapon speed (1.0 for no equipped weapon). May be changed to change the current attack's speed. See also tes3.actorAnimationController to change animation speed during the attack.
 
-Use by getting the animation controller from the mobile. e.g. mobile.animationController.weaponSpeed = 0.5
+mobile
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. toctree::
-    :hidden:
+`tes3mobileActor`_. Read-only. The mobile actor making the attack.
 
-    tes3actorAnimationController/mobile
-    tes3actorAnimationController/weaponSpeed
+reference
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. _`mobile`: tes3actorAnimationController/mobile.html
-.. _`weaponSpeed`: tes3actorAnimationController/weaponSpeed.html
+`tes3reference`_. Read-only. A shortcut to the reference that is attacking.
+
+attackType
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`number`_. A number from the tes3.physicalAttackType enumeration identifying the physical attack type. Can be tes3.physicalAttackType.slash, .chop, .thrust, .projectile, .creature1, .creature2, or .creature3. May be changed to change the attack's type if the original attack was slash, chop, or thrust.
 
 .. _`tes3creature`: ../../lua/type/tes3creature.html
 .. _`niObject`: ../../lua/type/niObject.html

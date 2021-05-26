@@ -33,7 +33,7 @@ Properties
 `alarm`_ (`number`_)
     The actor's alarm AI value.
 
-`animationData`_ (`tes3actorAnimationData`_)
+`animationController`_ (`tes3actorAnimationController`_)
     No description available.
 
 `armorRating`_ (`number`_)
@@ -349,7 +349,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobileActor/agility
     tes3mobileActor/aiPlanner
     tes3mobileActor/alarm
-    tes3mobileActor/animationData
+    tes3mobileActor/animationController
     tes3mobileActor/armorRating
     tes3mobileActor/attackBonus
     tes3mobileActor/attacked
@@ -458,7 +458,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`agility`: tes3mobileActor/agility.html
 .. _`aiPlanner`: tes3mobileActor/aiPlanner.html
 .. _`alarm`: tes3mobileActor/alarm.html
-.. _`animationData`: tes3mobileActor/animationData.html
+.. _`animationController`: tes3mobileActor/animationController.html
 .. _`armorRating`: tes3mobileActor/armorRating.html
 .. _`attackBonus`: tes3mobileActor/attackBonus.html
 .. _`attacked`: tes3mobileActor/attacked.html
@@ -575,6 +575,9 @@ Damages the actor.
 `getSkillValue`_ (`number`_)
     Fetches the current value of a skill with a given index. This converts to the limited options available for creatures.
 
+`getWeaponSpeed`_ (`number`_)
+    Fetches the weapon speed of the actor's currently equipped weapon, or 1.0 if no weapon is equipped.
+
 `hasFreeAction`_ (`boolean`_)
     If true, the actor isn't paralyzed, dead, stunned, or otherwise unable to take action.
 
@@ -597,6 +600,7 @@ Damages the actor.
     tes3mobileActor/applyHealthDamage
     tes3mobileActor/getSkillStatistic
     tes3mobileActor/getSkillValue
+    tes3mobileActor/getWeaponSpeed
     tes3mobileActor/hasFreeAction
     tes3mobileActor/isAffectedByObject
     tes3mobileActor/startCombat
@@ -607,6 +611,7 @@ Damages the actor.
 .. _`applyHealthDamage`: tes3mobileActor/applyHealthDamage.html
 .. _`getSkillStatistic`: tes3mobileActor/getSkillStatistic.html
 .. _`getSkillValue`: tes3mobileActor/getSkillValue.html
+.. _`getWeaponSpeed`: tes3mobileActor/getWeaponSpeed.html
 .. _`hasFreeAction`: tes3mobileActor/hasFreeAction.html
 .. _`isAffectedByObject`: tes3mobileActor/isAffectedByObject.html
 .. _`startCombat`: tes3mobileActor/startCombat.html

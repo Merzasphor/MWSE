@@ -42,7 +42,7 @@ Properties
 `alteration`_ (`tes3skillStatistic`_)
     Direct access to the NPC's alteration skill statistic.
 
-`animationData`_ (`tes3actorAnimationData`_)
+`animationController`_ (`tes3actorAnimationController`_)
     No description available.
 
 `armorRating`_ (`number`_)
@@ -469,7 +469,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobileNPC/alarm
     tes3mobileNPC/alchemy
     tes3mobileNPC/alteration
-    tes3mobileNPC/animationData
+    tes3mobileNPC/animationController
     tes3mobileNPC/armorRating
     tes3mobileNPC/armorer
     tes3mobileNPC/athletics
@@ -617,7 +617,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`alarm`: tes3mobileNPC/alarm.html
 .. _`alchemy`: tes3mobileNPC/alchemy.html
 .. _`alteration`: tes3mobileNPC/alteration.html
-.. _`animationData`: tes3mobileNPC/animationData.html
+.. _`animationController`: tes3mobileNPC/animationController.html
 .. _`armorRating`: tes3mobileNPC/armorRating.html
 .. _`armorer`: tes3mobileNPC/armorer.html
 .. _`athletics`: tes3mobileNPC/athletics.html
@@ -773,6 +773,9 @@ Damages the actor.
 `getSkillValue`_ (`number`_)
     Fetches the current value of a skill with a given index. This converts to the limited options available for creatures.
 
+`getWeaponSpeed`_ (`number`_)
+    Fetches the weapon speed of the actor's currently equipped weapon, or 1.0 if no weapon is equipped.
+
 `hasFreeAction`_ (`boolean`_)
     If true, the actor isn't paralyzed, dead, stunned, or otherwise unable to take action.
 
@@ -799,6 +802,7 @@ Damages the actor.
     tes3mobileNPC/equip
     tes3mobileNPC/getSkillStatistic
     tes3mobileNPC/getSkillValue
+    tes3mobileNPC/getWeaponSpeed
     tes3mobileNPC/hasFreeAction
     tes3mobileNPC/isAffectedByObject
     tes3mobileNPC/startCombat
@@ -811,6 +815,7 @@ Damages the actor.
 .. _`equip`: tes3mobileNPC/equip.html
 .. _`getSkillStatistic`: tes3mobileNPC/getSkillStatistic.html
 .. _`getSkillValue`: tes3mobileNPC/getSkillValue.html
+.. _`getWeaponSpeed`: tes3mobileNPC/getWeaponSpeed.html
 .. _`hasFreeAction`: tes3mobileNPC/hasFreeAction.html
 .. _`isAffectedByObject`: tes3mobileNPC/isAffectedByObject.html
 .. _`startCombat`: tes3mobileNPC/startCombat.html
