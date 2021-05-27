@@ -34,5 +34,3 @@ Methods
 
 .. _`copy`: tes3boundingBox/copy.html
 
-.. _`tes3boundingBox`: ../../lua/type/tes3boundingBox.html
-.. _`tes3vector3`: ../../lua/type/tes3vector3.html

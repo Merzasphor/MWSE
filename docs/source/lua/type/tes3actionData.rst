@@ -76,8 +76,3 @@ Properties
 .. _`target`: tes3actionData/target.html
 .. _`walkDestination`: tes3actionData/walkDestination.html
 
-.. _`tes3object`: ../../lua/type/tes3object.html
-.. _`number`: ../../lua/type/number.html
-.. _`tes3mobileActor`: ../../lua/type/tes3mobileActor.html
-.. _`tes3actionData`: ../../lua/type/tes3actionData.html
-.. _`tes3vector3`: ../../lua/type/tes3vector3.html

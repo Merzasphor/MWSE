@@ -91,4 +91,3 @@ Properties
 .. _`upperLeg`: tes3raceBodyParts/upperLeg.html
 .. _`wrist`: tes3raceBodyParts/wrist.html
 
-.. _`tes3bodyPart`: ../../lua/type/tes3bodyPart.html

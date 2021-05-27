@@ -134,13 +134,3 @@ Functions
 .. _`getActiveEffectCount`: tes3spell/getActiveEffectCount.html
 .. _`getFirstIndexOfEffect`: tes3spell/getFirstIndexOfEffect.html
 
-.. _`tes3spell`: ../../lua/type/tes3spell.html
-.. _`boolean`: ../../lua/type/boolean.html
-.. _`string`: ../../lua/type/string.html
-.. _`table`: ../../lua/type/table.html
-.. _`tes3object`: ../../lua/type/tes3object.html
-.. _`number`: ../../lua/type/number.html
-.. _`niNode`: ../../lua/type/niNode.html
-.. _`tes3mobileActor`: ../../lua/type/tes3mobileActor.html
-.. _`tes3reference`: ../../lua/type/tes3reference.html
-.. _`tes3referenceList`: ../../lua/type/tes3referenceList.html

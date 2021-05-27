@@ -82,9 +82,3 @@ Functions
 
 .. _`new`: tes3fader/new.html
 
-.. _`boolean`: ../../lua/type/boolean.html
-.. _`string`: ../../lua/type/string.html
-.. _`tes3fader`: ../../lua/type/tes3fader.html
-.. _`table`: ../../lua/type/table.html
-.. _`number`: ../../lua/type/number.html
-.. _`tes3vector3`: ../../lua/type/tes3vector3.html

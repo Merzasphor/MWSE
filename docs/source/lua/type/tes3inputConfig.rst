@@ -21,4 +21,3 @@ Properties
 .. _`device`: tes3inputConfig/device.html
 .. _`keyCode`: tes3inputConfig/keyCode.html
 
-.. _`number`: ../../lua/type/number.html

@@ -69,5 +69,3 @@ Methods
 .. _`reset`: mwseTimer/reset.html
 .. _`resume`: mwseTimer/resume.html
 
-.. _`number`: ../../lua/type/number.html
-.. _`function`: ../../lua/type/function.html

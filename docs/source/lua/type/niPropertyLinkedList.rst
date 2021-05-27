@@ -21,5 +21,3 @@ Properties
 .. _`data`: niPropertyLinkedList/data.html
 .. _`next`: niPropertyLinkedList/next.html
 
-.. _`niPropertyLinkedList`: ../../lua/type/niPropertyLinkedList.html
-.. _`niProperty`: ../../lua/type/niProperty.html

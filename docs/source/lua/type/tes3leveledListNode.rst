@@ -21,5 +21,3 @@ Properties
 .. _`levelRequired`: tes3leveledListNode/levelRequired.html
 .. _`object`: tes3leveledListNode/object.html
 
-.. _`number`: ../../lua/type/number.html
-.. _`tes3physicalObject`: ../../lua/type/tes3physicalObject.html

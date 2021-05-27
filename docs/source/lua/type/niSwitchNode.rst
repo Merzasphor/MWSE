@@ -169,17 +169,3 @@ Methods
 .. _`updateEffects`: niSwitchNode/updateEffects.html
 .. _`updateProperties`: niSwitchNode/updateProperties.html
 
-.. _`niObject`: ../../lua/type/niObject.html
-.. _`boolean`: ../../lua/type/boolean.html
-.. _`string`: ../../lua/type/string.html
-.. _`niTimeController`: ../../lua/type/niTimeController.html
-.. _`number`: ../../lua/type/number.html
-.. _`bool`: ../../lua/type/boolean.html
-.. _`tes3matrix33`: ../../lua/type/tes3matrix33.html
-.. _`niAVObject`: ../../lua/type/niAVObject.html
-.. _`niRTTI`: ../../lua/type/niRTTI.html
-.. _`niPropertyLinkedList`: ../../lua/type/niPropertyLinkedList.html
-.. _`niProperty`: ../../lua/type/niProperty.html
-.. _`tes3vector3`: ../../lua/type/tes3vector3.html
-.. _`niDynamicEffect`: ../../lua/type/niDynamicEffect.html
-.. _`niDynamicEffectLinkedList`: ../../lua/type/niDynamicEffectLinkedList.html

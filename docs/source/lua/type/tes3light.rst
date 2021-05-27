@@ -194,16 +194,3 @@ Methods
 
 .. _`getTimeLeft`: tes3light/getTimeLeft.html
 
-.. _`tes3iterator`: ../../lua/type/tes3iterator.html
-.. _`tes3sound`: ../../lua/type/tes3sound.html
-.. _`boolean`: ../../lua/type/boolean.html
-.. _`string`: ../../lua/type/string.html
-.. _`table`: ../../lua/type/table.html
-.. _`tes3boundingBox`: ../../lua/type/tes3boundingBox.html
-.. _`tes3object`: ../../lua/type/tes3object.html
-.. _`number`: ../../lua/type/number.html
-.. _`niNode`: ../../lua/type/niNode.html
-.. _`tes3reference`: ../../lua/type/tes3reference.html
-.. _`tes3referenceList`: ../../lua/type/tes3referenceList.html
-.. _`tes3equipmentStack`: ../../lua/type/tes3equipmentStack.html
-.. _`tes3itemData`: ../../lua/type/tes3itemData.html

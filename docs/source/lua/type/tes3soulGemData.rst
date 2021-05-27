@@ -46,6 +46,3 @@ Properties
 .. _`value`: tes3soulGemData/value.html
 .. _`weight`: tes3soulGemData/weight.html
 
-.. _`string`: ../../lua/type/string.html
-.. _`number`: ../../lua/type/number.html
-.. _`tes3misc`: ../../lua/type/tes3misc.html

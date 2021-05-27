@@ -21,4 +21,3 @@ Properties
 .. _`female`: tes3raceHeightWeight/female.html
 .. _`male`: tes3raceHeightWeight/male.html
 
-.. _`number`: ../../lua/type/number.html

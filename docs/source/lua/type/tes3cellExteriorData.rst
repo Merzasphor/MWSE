@@ -26,5 +26,3 @@ Properties
 .. _`gridX`: tes3cellExteriorData/gridX.html
 .. _`gridY`: tes3cellExteriorData/gridY.html
 
-.. _`number`: ../../lua/type/number.html
-.. _`tes3cell`: ../../lua/type/tes3cell.html

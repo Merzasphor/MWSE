@@ -34,5 +34,3 @@ Methods
 
 .. _`copy`: tes3vector2/copy.html
 
-.. _`number`: ../../lua/type/number.html
-.. _`tes3vector2`: ../../lua/type/tes3vector2.html

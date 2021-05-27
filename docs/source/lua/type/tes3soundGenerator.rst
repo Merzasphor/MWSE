@@ -74,7 +74,3 @@ Methods
 
 .. _`__tojson`: tes3soundGenerator/__tojson.html
 
-.. _`tes3sound`: ../../lua/type/tes3sound.html
-.. _`boolean`: ../../lua/type/boolean.html
-.. _`string`: ../../lua/type/string.html
-.. _`number`: ../../lua/type/number.html

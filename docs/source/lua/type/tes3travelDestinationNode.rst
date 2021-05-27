@@ -21,5 +21,3 @@ Properties
 .. _`cell`: tes3travelDestinationNode/cell.html
 .. _`marker`: tes3travelDestinationNode/marker.html
 
-.. _`tes3reference`: ../../lua/type/tes3reference.html
-.. _`tes3cell`: ../../lua/type/tes3cell.html

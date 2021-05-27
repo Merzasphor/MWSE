@@ -31,4 +31,3 @@ Properties
 .. _`g`: tes3packedColor/g.html
 .. _`r`: tes3packedColor/r.html
 
-.. _`number`: ../../lua/type/number.html

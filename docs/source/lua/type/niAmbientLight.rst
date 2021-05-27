@@ -172,7 +172,6 @@ Methods
 .. _`niObject`: ../../lua/type/niObject.html
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`string`: ../../lua/type/string.html
-.. _`niTimeController`: ../../lua/type/niTimeController.html
 .. _`number`: ../../lua/type/number.html
 .. _`tes3matrix33`: ../../lua/type/tes3matrix33.html
 .. _`niAVObject`: ../../lua/type/niAVObject.html

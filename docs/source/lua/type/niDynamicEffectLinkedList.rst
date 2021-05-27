@@ -21,5 +21,3 @@ Properties
 .. _`data`: niDynamicEffectLinkedList/data.html
 .. _`next`: niDynamicEffectLinkedList/next.html
 
-.. _`niDynamicEffect`: ../../lua/type/niDynamicEffect.html
-.. _`niDynamicEffectLinkedList`: ../../lua/type/niDynamicEffectLinkedList.html

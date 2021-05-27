@@ -21,4 +21,3 @@ Properties
 .. _`max`: tes3rangeInt/max.html
 .. _`min`: tes3rangeInt/min.html
 
-.. _`number`: ../../lua/type/number.html

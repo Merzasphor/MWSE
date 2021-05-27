@@ -21,4 +21,3 @@ Properties
 .. _`bonus`: tes3raceSkillBonus/bonus.html
 .. _`skill`: tes3raceSkillBonus/skill.html
 
-.. _`number`: ../../lua/type/number.html

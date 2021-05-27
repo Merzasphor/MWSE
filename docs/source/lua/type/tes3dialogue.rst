@@ -79,10 +79,3 @@ Methods
 .. _`addToJournal`: tes3dialogue/addToJournal.html
 .. _`getInfo`: tes3dialogue/getInfo.html
 
-.. _`tes3iterator`: ../../lua/type/tes3iterator.html
-.. _`tes3dialogueInfo`: ../../lua/type/tes3dialogueInfo.html
-.. _`boolean`: ../../lua/type/boolean.html
-.. _`string`: ../../lua/type/string.html
-.. _`number`: ../../lua/type/number.html
-.. _`tes3mobileActor`: ../../lua/type/tes3mobileActor.html
-.. _`tes3reference`: ../../lua/type/tes3reference.html

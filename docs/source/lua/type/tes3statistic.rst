@@ -26,4 +26,3 @@ Properties
 .. _`current`: tes3statistic/current.html
 .. _`normalized`: tes3statistic/normalized.html
 
-.. _`number`: ../../lua/type/number.html

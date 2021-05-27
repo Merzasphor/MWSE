@@ -96,8 +96,3 @@ Properties
 .. _`reference`: tes3mobileProjectile/reference.html
 .. _`velocity`: tes3mobileProjectile/velocity.html
 
-.. _`boolean`: ../../lua/type/boolean.html
-.. _`number`: ../../lua/type/number.html
-.. _`tes3mobileActor`: ../../lua/type/tes3mobileActor.html
-.. _`tes3reference`: ../../lua/type/tes3reference.html
-.. _`tes3vector3`: ../../lua/type/tes3vector3.html

@@ -96,7 +96,3 @@ Methods
 .. _`clearResults`: niPick/clearResults.html
 .. _`pickObjects`: niPick/pickObjects.html
 
-.. _`boolean`: ../../lua/type/boolean.html
-.. _`number`: ../../lua/type/number.html
-.. _`tes3vector3`: ../../lua/type/tes3vector3.html
-.. _`niPickRecord`: ../../lua/type/niPickRecord.html

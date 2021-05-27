@@ -122,11 +122,3 @@ Functions
 
 .. _`createFromPath`: niSourceTexture/createFromPath.html
 
-.. _`niObject`: ../../lua/type/niObject.html
-.. _`boolean`: ../../lua/type/boolean.html
-.. _`string`: ../../lua/type/string.html
-.. _`niTimeController`: ../../lua/type/niTimeController.html
-.. _`number`: ../../lua/type/number.html
-.. _`niPixelData`: ../../lua/type/niPixelData.html
-.. _`niRTTI`: ../../lua/type/niRTTI.html
-.. _`niFormatPrefs`: ../../lua/type/niFormatPrefs.html

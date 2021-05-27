@@ -69,9 +69,3 @@ Methods
 .. _`removeAllControllers`: niProperty/removeAllControllers.html
 .. _`removeController`: niProperty/removeController.html
 
-.. _`niObject`: ../../lua/type/niObject.html
-.. _`boolean`: ../../lua/type/boolean.html
-.. _`string`: ../../lua/type/string.html
-.. _`niTimeController`: ../../lua/type/niTimeController.html
-.. _`number`: ../../lua/type/number.html
-.. _`niRTTI`: ../../lua/type/niRTTI.html

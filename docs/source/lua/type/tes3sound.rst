@@ -89,6 +89,3 @@ Methods
 .. _`play`: tes3sound/play.html
 .. _`stop`: tes3sound/stop.html
 
-.. _`boolean`: ../../lua/type/boolean.html
-.. _`string`: ../../lua/type/string.html
-.. _`number`: ../../lua/type/number.html
