@@ -27,7 +27,7 @@ namespace TES3 {
 		int maxDistance; // 0x58
 	};
 	static_assert(sizeof(SoundBuffer) == 0x58, "TES3::SoundBuffer failed size validation");
-	static_assert(sizeof(DSBUFFERDESC) == 0x24, "TES3::SoundBuffer failed size validation");
+	static_assert(sizeof(DSBUFFERDESC) == 0x24, "DSBUFFERDESC failed size validation");
 
 	struct Sound : BaseObject {
 		char field_10;
