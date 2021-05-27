@@ -839,6 +839,18 @@ local function buildNamedType(folder, key)
 	local outPath = "..\\docs\\source\\lua\\type\\" .. key .. ".rst"
 	local file = io.open(outPath, "w")
 
+	-- Keep track of what links are written.
+	local detectedLinks = {}
+	local originalWrite = getmetatable(file).write
+	getmetatable(file).write = function(self, str)
+		for capture in string.gmatch(str, "`.-`_") do
+			local link = string.sub(capture, 2, -3)
+			detectedLinks[link] = true
+		end
+
+		return originalWrite(self, str)
+	end
+
 	-- Write out the main header.
 	file:write(key .. "\n" .. rstHeaders[1] .. "\n\n")
 
@@ -927,16 +939,23 @@ local function buildNamedType(folder, key)
 		end
 	end
 
+	-- Restore original write function.
+	getmetatable(file).write = originalWrite
+	originalWrite = nil
+
 	-- Write out any link information.
-	if (package.links) then
-		for k, v in pairs(package.links) do
+	package.links = package.links or {}
+	for k, v in pairs(package.links) do
+		if (detectedLinks[k]) then
 			file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
 		end
 	end
 
 	-- Also write out all our type links.
 	for k, v in pairs(typeLinks) do
-		file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
+		if (not package.links[k] and detectedLinks[k]) then
+			file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
+		end
 	end
 
 	-- Close up shop.
