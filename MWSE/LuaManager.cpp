@@ -2931,37 +2931,9 @@ namespace mwse {
 			}
 		}
 
-		const auto TES3_ActorAnimController_selectMovementAnimAndUpdate = reinterpret_cast<void(__thiscall*)(TES3::ActorAnimationController*, float, bool)>(0x540A90);
-		void __fastcall ActorAnimController_selectMovementAnimAndUpdate(TES3::ActorAnimationController* animController, DWORD _UNUSED_, float t, bool b) {
-			auto state = animController->patchedOverrideState;
-
-			if (state != 0xFF) {
-				auto baseAnimGroup = animController->animationData->currentAnimGroup[0];
-				auto overrideAnimGroup = animController->animationData->currentAnimGroup[2];
-
-				// Check if override animation has completed.
-				if (overrideAnimGroup != baseAnimGroup) {
-					// Still animating. Suppress updates to the AnimationAttachment by misusing ActorAnimData internal flags.
-					if (state <= 1) {
-						animController->layerUpperBody.playbackTypeEnum = 8;
-					}
-					if (state <= 2) {
-						animController->layerShieldArm.playbackTypeEnum = 8;
-					}
-				}
-				else {
-					// Animation has completed, and been paused at the end. Signal controller to update animations.
-					if (state <= 1) {
-						animController->animationData->currentAnimGroup[1] = 0xFF;
-					}
-					if (state <= 2) {
-						animController->animationData->currentAnimGroup[2] = 0xFF;
-					}
-					// End override state.
-					animController->patchedOverrideState = 0xFF;
-				}
-			}
-			TES3_ActorAnimController_selectMovementAnimAndUpdate(animController, t, b);
+		// Call our custom function when updating animation playback.
+		void __fastcall ActorAnimController_selectMovementAnimAndUpdate(TES3::ActorAnimationController* animController, DWORD _UNUSED_, float deltaTime, bool flag) {
+			animController->selectMovementAnimAndUpdate(deltaTime, flag);
 		}
 
 		//

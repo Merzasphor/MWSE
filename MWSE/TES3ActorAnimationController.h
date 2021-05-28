@@ -93,7 +93,7 @@ namespace TES3 {
 
 		float getWeaponAnimSpeed() const;
 		void setWeaponAnimSpeed(float speed);
-
+		void selectMovementAnimAndUpdate(float deltaTime, bool flag);
 	};
 	static_assert(sizeof(ActorAnimationController) == 0xD4, "TES3::ActorAnimationController failed size validation");
 }
