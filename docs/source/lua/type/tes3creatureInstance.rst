@@ -133,7 +133,7 @@ Properties
     The filename of the mod that owns this object.
 
 `spells`_ (`tes3spellList`_)
-    Simplified access to the base creature's spell list. A list of spells that the creature has access to.
+    Quick access to the base creature's spell list. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, spell in pairs(creature.spells.iterator) do print(spell.name) end
 
 `stolenList`_ (`tes3iterator`_)
     A list of actors that the object has been stolen from.
