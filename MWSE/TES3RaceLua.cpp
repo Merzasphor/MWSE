@@ -5,6 +5,7 @@
 
 #include "TES3BodyPart.h"
 #include "TES3Race.h"
+#include "TES3SpellList.h"
 
 namespace mwse {
 	namespace lua {
@@ -97,6 +98,7 @@ namespace mwse {
 				usertypeDefinition["isPlayable"] = sol::property(&TES3::Race::getIsPlayable, &TES3::Race::setIsPlayable);
 
 				// Indirect bindings to unions and arrays.
+				usertypeDefinition["abilities"] = sol::readonly_property(&TES3::Race::abilities);
 				usertypeDefinition["baseAttributes"] = sol::readonly_property(&TES3::Race::getBaseAttributes);
 				usertypeDefinition["skillBonuses"] = sol::readonly_property(&TES3::Race::getSkillBonuses);
 

@@ -143,6 +143,10 @@ namespace TES3 {
 		return vTable.mobileActor->calculateArmorRating(this, armorItemCount);
 	}
 
+	float MobileActor::getArmorRating_lua() const {
+		return calculateArmorRating(nullptr);
+	}
+
 	const auto TES3_MobileActor_applyPhysicalHit = reinterpret_cast<void(__thiscall *)(MobileActor*, MobileActor*, MobileActor*, float, float, MobileProjectile*, bool)>(0x5568F0);
 	void MobileActor::applyPhysicalHit(MobileActor * attacker, MobileActor * defender, float damage, float swing, MobileProjectile * projectile, bool alwaysPlayHitVoice) {
 		// Setup damage event data.
@@ -194,6 +198,11 @@ namespace TES3 {
 	const auto TES3_MobileActor_getBootsWeight = reinterpret_cast<float(__thiscall*)(const MobileActor*)>(0x526F30);
 	float MobileActor::getBootsWeight() const {
 		return TES3_MobileActor_getBootsWeight(this);
+	}
+
+	const auto TES3_MobileActor_getWeaponSpeed = reinterpret_cast<float(__thiscall*)(const MobileActor*)>(0x556580);
+	float MobileActor::getWeaponSpeed() const {
+		return TES3_MobileActor_getWeaponSpeed(this);
 	}
 
 	const auto TES3_MobileActor_startCombat = reinterpret_cast<void(__thiscall*)(MobileActor*, MobileActor*)>(0x530470);

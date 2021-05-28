@@ -33,8 +33,8 @@ namespace TES3 {
 	struct ActorAnimationController {
 		struct Layer {
 			unsigned char animGroupID;
-			int playbackFlags;
-			float time_0x8;
+			int playbackTypeEnum;
+			float timing_8;
 			int loopCount;
 		};
 		static_assert(sizeof(ActorAnimationController::Layer) == 0x10, "TES3::ActorAnimationController::Layer failed size validation");
@@ -44,24 +44,24 @@ namespace TES3 {
 		char padding_0x5[3];
 		char animGroup_unknown; // 0x08
 		char padding_0x9[3];
-		int casting_related_state; // 0x0C
-		float unknown_0x10;
-		float remainingBlockAnimTime; // 0x14
-		float beginTime; // 0x18
-		int unknown_0x1C;
-		float endTime; // 0x20
-		int unknown_0x24;
-		int unknown_0x28;
+		int playbackTypeEnum; // 0x0C
+		float attackFollowTiming;
+		float remainingBlockTime; // 0x14
+		float startTime; // 0x18
+		float minAttackTiming; // 0x1C
+		float maxAttackTiming; // 0x20
+		float minHitTiming; // 0x24
+		float hitTiming; // 0x28
 		float attackSwing; // 0x2C
-		int unknown_0x30;
+		float attachTiming; // 0x30
 		float speedMultiplier; // 0x34
 		MobileActor * mobileActor; // 0x38
 		AnimationData * animationData; // 0x3C
 		NI::Pointer<NI::AlphaProperty> alphaProperty; // 0x40
 		NI::Pointer<NI::MaterialProperty> materialProperty; // 0x44
 		NI::Pointer<NI::VertexColorProperty> vertexColorProperty; // 0x48
-		Matrix33 localRotation;
-		Matrix33 unknown_0x70;
+		Matrix33 groundPlaneRotation; // 0x4C
+		Matrix33 swimmingFlyingRotation; // 0x70
 		int unknown_0x94;
 		unsigned char animGroupMovement; // 0x98
 		unsigned char animGroupIdle; // 0x99
@@ -69,9 +69,9 @@ namespace TES3 {
 		unsigned char patchedOverrideState; // 0x9B
 		int shouldJump; // 0x9C
 		int unknown_0xA0;
-		Layer layerBase; // 0xA4
+		Layer layerLowerBody; // 0xA4
 		Layer layerUpperBody; // 0xB4
-		Layer layerLeftArm; // 0xC4
+		Layer layerShieldArm; // 0xC4
 
 		//
 		// Other related this-call functions.
@@ -81,6 +81,8 @@ namespace TES3 {
 
 		float getOpacity();
 		void setOpacity(float value);
+
+		void startAttackAnimation(float swing);
 
 		//
 		// Custom functions.

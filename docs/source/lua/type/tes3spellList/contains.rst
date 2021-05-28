@@ -1,0 +1,19 @@
+contains
+====================================================================================================
+
+Checks if the specified spell is contained in the spell list.
+
+Returns
+----------------------------------------------------------------------------------------------------
+
+`boolean`_.
+
+Parameters
+----------------------------------------------------------------------------------------------------
+
+spell (`string`_, `tes3spell`_)
+    The spell.
+
+.. _`tes3spell`: ../../../lua/type/tes3spell.html
+.. _`boolean`: ../../../lua/type/boolean.html
+.. _`string`: ../../../lua/type/string.html

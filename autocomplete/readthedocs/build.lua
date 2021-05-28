@@ -31,7 +31,7 @@ function json.savefile(fileName, object, config)
 	f:close()
 end
 
-function isTableEmpty(t)
+local function isTableEmpty(t)
 	for _, _ in pairs(t) do
 		return false
 	end
@@ -67,11 +67,11 @@ function table.deepcopy(t)
 end
 
 local match = string.match
-function trimString(s)
+local function trimString(s)
    return match(s,'^()%s*$') and '' or match(s,'^%s*(.*%S)')
 end
 
-function splitString(inputstr, sep)
+local function splitString(inputstr, sep)
 	if sep == nil then
 		sep = "%s"
 	end
@@ -141,6 +141,53 @@ local function breakoutMultipleTypes(str)
 end
 
 -- 
+-- Handle link caching to optimize RTD build times.
+-- 
+
+local cachingLinks = false
+local writtenLinks = {}
+local originalFileWrite = nil
+
+local originalIOOpen = io.open
+local fileMetatable = nil
+
+local function cachedWrite(self, str)
+	if (cachingLinks) then
+		writtenLinks[self] = writtenLinks[self] or {}
+		for capture in string.gmatch(str, "`.-`_") do
+			writtenLinks[self][string.sub(capture, 2, -3)] = true
+		end
+	end
+
+	return originalFileWrite(self, str)
+end
+
+function io.open(...)
+	local file = originalIOOpen(...)
+	if (file) then
+		if (not originalFileWrite) then
+			local mt = getmetatable(file)
+			originalFileWrite = mt.write
+			mt.write = cachedWrite
+		end
+		writtenLinks[file] = writtenLinks[file] or {}
+	end
+	return file
+end
+
+local function beginCachingLinks()
+	cachingLinks = true
+end
+
+local function stopCachingLinks()
+	cachingLinks = false
+end
+
+local function isLinkCached(file, link)
+	return writtenLinks[file] and writtenLinks[file][link] == true
+end
+
+-- 
 -- Events
 -- 
 
@@ -153,6 +200,9 @@ local function buildEvent(folder, key)
 	-- Open the output file.
 	local outPath = "..\\docs\\source\\lua\\event\\" .. key .. ".rst"
 	local file = io.open(outPath, "w")
+
+	-- Keep track of what links are written.
+	beginCachingLinks()
 
 	-- Write out the main header.
 	file:write(key .. "\n" .. rstHeaders[1] .. "\n\n")
@@ -214,16 +264,22 @@ local function buildEvent(folder, key)
 		end
 	end
 
+	-- Restore original write function.
+	stopCachingLinks()
+
 	-- Write out any link information.
-	if (package.links) then
-		for k, v in pairs(package.links) do
+	package.links = package.links or {}
+	for k, v in pairs(package.links) do
+		if isLinkCached(file, k) then
 			file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
 		end
 	end
 
 	-- Also write out all our type links.
 	for k, v in pairs(typeLinks) do
-		file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
+		if (not package.links[k] and isLinkCached(file, k)) then
+			file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
+		end
 	end
 
 	-- Close up shop.
@@ -269,6 +325,9 @@ local function buildAPIEntryForFunction(package)
 	-- Open the output file.
 	local outPath = "..\\docs\\source\\lua\\api\\" .. parent.key .. "\\" .. key .. ".rst"
 	local file = io.open(outPath, "w")
+
+	-- Keep track of what links are written.
+	beginCachingLinks()
 
 	-- Write out the main header.
 	file:write(parent.key .. "." .. key .. "\n" .. rstHeaders[1] .. "\n\n")
@@ -369,16 +428,22 @@ local function buildAPIEntryForFunction(package)
 		end
 	end
 
+	-- Restore original write function.
+	stopCachingLinks()
+
 	-- Write out any link information.
-	if (package.links) then
-		for k, v in pairs(package.links) do
+	package.links = package.links or {}
+	for k, v in pairs(package.links) do
+		if isLinkCached(file, k) then
 			file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
 		end
 	end
 
 	-- Also write out all our type links.
 	for k, v in pairs(typeLinks) do
-		file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
+		if (not package.links[k] and isLinkCached(file, k)) then
+			file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
+		end
 	end
 
 	-- Close up shop.
@@ -395,6 +460,9 @@ local function buildAPIEntryForValue(package)
 	-- Open the output file.
 	local outPath = "..\\docs\\source\\lua\\api\\" .. parent.key .. "\\" .. key .. ".rst"
 	local file = io.open(outPath, "w")
+
+	-- Keep track of what links are written.
+	beginCachingLinks()
 
 	-- Write out the main header.
 	file:write(parent.key .. "." .. key .. "\n" .. rstHeaders[1] .. "\n\n")
@@ -440,16 +508,22 @@ local function buildAPIEntryForValue(package)
 		end
 	end
 
+	-- Restore original write function.
+	stopCachingLinks()
+
 	-- Write out any link information.
-	if (package.links) then
-		for k, v in pairs(package.links) do
+	package.links = package.links or {}
+	for k, v in pairs(package.links) do
+		if isLinkCached(file, k) then
 			file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
 		end
 	end
 
 	-- Also write out all our type links.
 	for k, v in pairs(typeLinks) do
-		file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
+		if (not package.links[k] and isLinkCached(file, k)) then
+			file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
+		end
 	end
 
 	-- Close up shop.
@@ -555,6 +629,9 @@ local function buildNamedTypeEntryForValue(package)
 	local outPath = "..\\docs\\source\\lua\\type\\" .. parent.key .. "\\" .. key .. ".rst"
 	local file = io.open(outPath, "w")
 
+	-- Keep track of what links are written.
+	beginCachingLinks()
+
 	-- Write out the main header.
 	file:write(key .. "\n" .. rstHeaders[1] .. "\n\n")
 
@@ -599,16 +676,22 @@ local function buildNamedTypeEntryForValue(package)
 		end
 	end
 
+	-- Restore original write function.
+	stopCachingLinks()
+
 	-- Write out any link information.
-	if (package.links) then
-		for k, v in pairs(package.links) do
+	package.links = package.links or {}
+	for k, v in pairs(package.links) do
+		if isLinkCached(file, k) then
 			file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
 		end
 	end
 
 	-- Also write out all our type links.
 	for k, v in pairs(typeLinks) do
-		file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
+		if (not package.links[k] and isLinkCached(file, k)) then
+			file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
+		end
 	end
 
 	-- Close up shop.
@@ -631,6 +714,9 @@ local function buildNamedTypeEntryForFunction(package)
 	-- Open the output file.
 	local outPath = "..\\docs\\source\\lua\\type\\" .. parent.key .. "\\" .. key .. ".rst"
 	local file = io.open(outPath, "w")
+
+	-- Keep track of what links are written.
+	beginCachingLinks()
 
 	-- Write out the main header.
 	file:write(key .. "\n" .. rstHeaders[1] .. "\n\n")
@@ -731,16 +817,22 @@ local function buildNamedTypeEntryForFunction(package)
 		end
 	end
 
+	-- Restore original write function.
+	stopCachingLinks()
+
 	-- Write out any link information.
-	if (package.links) then
-		for k, v in pairs(package.links) do
+	package.links = package.links or {}
+	for k, v in pairs(package.links) do
+		if isLinkCached(file, k) then
 			file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
 		end
 	end
 
 	-- Also write out all our type links.
 	for k, v in pairs(typeLinks) do
-		file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
+		if (not package.links[k] and isLinkCached(file, k)) then
+			file:write(".. _`" .. k .. "`: ../../../" .. v .. ".html\n")
+		end
 	end
 
 	-- Close up shop.
@@ -839,6 +931,9 @@ local function buildNamedType(folder, key)
 	local outPath = "..\\docs\\source\\lua\\type\\" .. key .. ".rst"
 	local file = io.open(outPath, "w")
 
+	-- Keep track of what links are written.
+	beginCachingLinks()
+
 	-- Write out the main header.
 	file:write(key .. "\n" .. rstHeaders[1] .. "\n\n")
 
@@ -927,16 +1022,22 @@ local function buildNamedType(folder, key)
 		end
 	end
 
+	-- Restore original write function.
+	stopCachingLinks()
+
 	-- Write out any link information.
-	if (package.links) then
-		for k, v in pairs(package.links) do
+	package.links = package.links or {}
+	for k, v in pairs(package.links) do
+		if isLinkCached(file, k) then
 			file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
 		end
 	end
 
 	-- Also write out all our type links.
 	for k, v in pairs(typeLinks) do
-		file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
+		if (not package.links[k] and isLinkCached(file, k)) then
+			file:write(".. _`" .. k .. "`: ../../" .. v .. ".html\n")
+		end
 	end
 
 	-- Close up shop.

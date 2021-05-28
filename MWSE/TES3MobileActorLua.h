@@ -135,6 +135,7 @@ namespace mwse {
 			usertypeDefinition["getPowerUseTimestamp"] = &TES3::MobileActor::getPowerUseTimestamp;
 			usertypeDefinition["getSkillStatistic"] = &TES3::MobileActor::getSkillStatistic;
 			usertypeDefinition["getSkillValue"] = &TES3::MobileActor::getSkillValue;
+			usertypeDefinition["getWeaponSpeed"] = &TES3::MobileActor::getWeaponSpeed;
 			usertypeDefinition["hasUsedPower"] = &TES3::MobileActor::hasUsedPower;
 			usertypeDefinition["rechargePower"] = &TES3::MobileActor::rechargePower;
 			usertypeDefinition["startCombat"] = &TES3::MobileActor::startCombat;
@@ -147,6 +148,7 @@ namespace mwse {
 			usertypeDefinition["isAffectedByObject"] = &TES3::MobileActor::isAffectedByObject_lua;
 
 			// Functions exposed as properties.
+			usertypeDefinition["armorRating"] = sol::property(&TES3::MobileActor::getArmorRating_lua);
 			usertypeDefinition["cell"] = sol::property(&TES3::MobileActor::getCell);
 			usertypeDefinition["hasFreeAction"] = sol::property(&TES3::MobileActor::hasFreeAction);
 			usertypeDefinition["mobToMobCollision"] = sol::property(&TES3::MobileActor::getMobToMobCollision, &TES3::MobileActor::setMobToMobCollision);

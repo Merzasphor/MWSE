@@ -2,6 +2,7 @@
 
 #include "LuaManager.h"
 
+#include "LuaAttackStartEvent.h"
 #include "LuaCalcMovementSpeedEvent.h"
 
 #include "TES3MobilePlayer.h"
@@ -34,6 +35,39 @@ namespace TES3 {
 	const auto TES3_ActorAnimationController_setOpacity = reinterpret_cast<void(__thiscall*)(ActorAnimationController*, float)>(0x542030);
 	void ActorAnimationController::setOpacity(float value) {
 		TES3_ActorAnimationController_setOpacity(this, value);
+	}
+
+	const auto TES3_ActorAnimController_startAttackAnimation = reinterpret_cast<void(__thiscall*)(ActorAnimationController*, float)>(0x5411C0);
+	void ActorAnimationController::startAttackAnimation(float swing) {
+		sol::optional<float> speed;
+
+		if (mwse::lua::event::AttackStartEvent::getEventEnabled()) {
+			PhysicalAttackType attack = mobileActor->actionData.physicalAttackType;
+			speed = mobileActor->getWeaponSpeed();
+
+			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::AttackStartEvent(mobileActor, attack, speed.value()));
+			if (eventData.valid()) {
+				// Replace attack type only if original is slash, chop, or thrust.
+				PhysicalAttackType newAttack = eventData["attackType"];
+				if (attack >= PhysicalAttackType::Slash && attack <= PhysicalAttackType::Thrust
+					&& newAttack >= PhysicalAttackType::Slash && newAttack <= PhysicalAttackType::Thrust) {
+
+					mobileActor->actionData.physicalAttackType = newAttack;
+				}
+
+				// Replace weapon speed.
+				speed = eventData["attackSpeed"];
+			}
+		}
+
+		// Call the original function.
+		TES3_ActorAnimController_startAttackAnimation(this, swing);
+
+		// Optionally override weapon animation speed.
+		if (speed) {
+			animationData->weaponSpeed = speed.value();
+		}
 	}
 
 	void ActorAnimationController::updateOpacity() {
