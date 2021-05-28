@@ -6,6 +6,9 @@ A core object representing a character race.
 Properties
 ----------------------------------------------------------------------------------------------------
 
+`abilities`_ (`tes3spellList`_)
+    A list of abilities that NPCs of that race have access to. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, ability in pairs(race.abilities.iterator) do print(ability.name) end
+
 `baseAttributes`_ (`table`_)
     Array-style table access to base 8 attributes for the race. Each element in the array is a tes3raceBaseAttribute.
 
@@ -57,6 +60,7 @@ Properties
 .. toctree::
     :hidden:
 
+    tes3race/abilities
     tes3race/baseAttributes
     tes3race/deleted
     tes3race/description
@@ -74,6 +78,7 @@ Properties
     tes3race/sourceMod
     tes3race/weight
 
+.. _`abilities`: tes3race/abilities.html
 .. _`baseAttributes`: tes3race/baseAttributes.html
 .. _`deleted`: tes3race/deleted.html
 .. _`description`: tes3race/description.html

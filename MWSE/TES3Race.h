@@ -7,12 +7,12 @@
 namespace TES3 {
 	struct Race : BaseObject {
 		struct SkillBonus {
-			long skill;
-			unsigned long bonus;
+			int skill;
+			unsigned int bonus;
 		};
 		struct BaseAttribute {
-			unsigned long male;
-			unsigned long female;
+			unsigned int male;
+			unsigned int female;
 		};
 		struct HeightWeight {
 			float male;
@@ -84,7 +84,7 @@ namespace TES3 {
 		HeightWeight height; // 0xC8
 		HeightWeight weight; // 0xD0
 		unsigned int flags; // 0xD8 // 1 = playable, 2 = beast
-		int unknown_0xDC; // Pointer? Abilities list?
+		SpellList * abilities; // 0xDC
 		char * description; // 0xE0
 		unsigned int descriptionFileOffset; // 0xE4
 		union {
