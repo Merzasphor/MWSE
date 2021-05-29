@@ -541,39 +541,17 @@ namespace TES3 {
 	}
 
 	void Object::setModelPath(const char* path) {
-		switch (objectType) {
-		case ObjectType::Apparatus:
-		case ObjectType::Door:
-		case ObjectType::Ingredient:
-		case ObjectType::Lockpick:
-		case ObjectType::Repair:
-			if (strnlen_s(path, 32) >= 32) {
-				throw std::invalid_argument("Model path cannot be more than 31 characters in length for this object type.");
-			}
+		if (strnlen_s(path, 32) >= 32) {
+			throw std::invalid_argument("Path cannot be more than 31 characters in length.");
 		}
 
 		vTable.object->setModelPath(this, path);
 	}
 
 	void Object::setName(const char* name) {
-		switch (objectType) {
-		case ObjectType::Apparatus:
-		case ObjectType::Class:
-		case ObjectType::Door:
-		case ObjectType::Faction:
-		case ObjectType::Global:
-		case ObjectType::Ingredient:
-		case ObjectType::Lockpick:
-		case ObjectType::Race:
-		case ObjectType::Region:
-		case ObjectType::Repair:
-		case ObjectType::Script:
-		case ObjectType::SoundGenerator:
-			if (strnlen_s(name, 32) >= 32) {
-				throw std::invalid_argument("Name cannot be more than 31 characters in length for this object type.");
-			}
+		if (strnlen_s(name, 32) >= 32) {
+			throw std::invalid_argument("Name cannot be more than 31 characters in length.");
 		}
-
 		vTable.object->setName(this, name);
 	}
 
