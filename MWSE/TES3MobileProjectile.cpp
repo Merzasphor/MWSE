@@ -24,7 +24,7 @@ namespace TES3 {
 
 		// Fire off our hit event.
 		//! TODO: Make this into projectileHitMobile event with backup projectileHitActor for backwards compatibility.
-		if (mwse::lua::event::MobileProjectileActorCollisionEvent::getEventEnabled() && reference->baseObject->isActor()) {
+		if (mwse::lua::event::MobileProjectileActorCollisionEvent::getEventEnabled() && hitReference->baseObject->isActor()) {
 			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileProjectileActorCollisionEvent(this, hitReference, point, pos, vel));
 		}
 
