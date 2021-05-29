@@ -22,6 +22,8 @@
 #include "TES3BodyPartManager.h"
 #include "TES3Cell.h"
 #include "TES3Class.h"
+#include "TES3Container.h"
+#include "TES3Creature.h"
 #include "TES3Game.h"
 #include "TES3GameSetting.h"
 #include "TES3ItemData.h"
@@ -249,16 +251,44 @@ namespace TES3 {
 	const auto TES3_MobilePlayer_sub566500 = reinterpret_cast<void(__thiscall*)(MobilePlayer*)>(0x566500);
 	const auto TES3_ModelLoader_loadAnimKF = reinterpret_cast<TES3::KeyframeDefinition * (__thiscall*)(void*, const char*, const char*)>(0x4EE200);
 
-	void Reference::setModelPath(const char* path) {
-		// Cache the old model path, then set
+	void Reference::setModelPath(const char* path, bool temporary) {
 		auto baseObject = static_cast<TES3::Object*>(getBaseObject());
-		baseObject->setModelPath(path);
+		char** modelSlot = nullptr;
+		char* oldModel = nullptr;
 
-		// Do nothing if the reference is not rendered.
-		if (!sceneNode) {
-			return;
+		if (temporary) {
+			// Save original model path. getModelPath() does not return the raw path that we want to temporarily modify.
+			if (baseObject->objectType == ObjectType::NPC) {
+				modelSlot = &static_cast<TES3::NPC*>(baseObject)->model;
+			}
+			else if (baseObject->objectType == ObjectType::Creature) {
+				modelSlot = &static_cast<TES3::Creature*>(baseObject)->model;
+			}
+			else if (baseObject->objectType == ObjectType::Container) {
+				modelSlot = &static_cast<TES3::Container*>(baseObject)->model;
+			}
+			if (modelSlot) {
+				std::swap(*modelSlot, oldModel);
+			}
 		}
 
+		baseObject->setModelPath(path);
+
+		// Update model if it is currently part of the scenegraph.
+		if (sceneNode) {
+			reloadAnimation(path);
+		}
+
+		// Reset model path if desired.
+		if (modelSlot) {
+			std::swap(*modelSlot, oldModel);
+			if (oldModel) {
+				mwse::tes3::free(oldModel);
+			}
+		}
+	}
+
+	void Reference::reloadAnimation(const char* path) {
 		auto parentNode = sceneNode->parentNode;
 
 		resetVisualNode();

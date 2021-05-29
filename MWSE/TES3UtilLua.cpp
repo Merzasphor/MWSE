@@ -3571,9 +3571,9 @@ namespace mwse {
 				return;
 			}
 
+			// Change the animation temporarily. Passing nullptr resets the animation to base.
 			const char* modelFile = getOptionalParam<const char*>(params, "file", nullptr);
-			// Change the animation model. Passing nullptr resets the animation to base.
-			reference->setModelPath(modelFile);
+			reference->setModelPath(modelFile, true);
 
 			if (modelFile == nullptr) {
 				// Reset animation control.
@@ -3602,10 +3602,10 @@ namespace mwse {
 				return;
 			}
 
-			// Allow changing the animation model.
+			// Allow loading an animation temporarily.
 			const char* modelFile = getOptionalParam<const char*>(params, "mesh", nullptr);
 			if (modelFile != nullptr) {
-				reference->setModelPath(modelFile);
+				reference->setModelPath(modelFile, true);
 				animData = reference->getAttachedAnimationData();
 			}
 
