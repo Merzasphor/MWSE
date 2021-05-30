@@ -50,4 +50,20 @@ namespace TES3 {
 		playAnimationGroupForIndex(animationGroup, 2, startFlag, loopCount);
 	}
 
+	const auto TES3_AnimationData_setLayerKeyframes = reinterpret_cast<bool(__thiscall*)(AnimationData*, KeyframeDefinition*, int, bool)>(0x46BA30);
+	const auto TES3_AnimationData_mergeAnimGroups = reinterpret_cast<void(__thiscall*)(AnimationData*, AnimationGroup*, int)>(0x4708D0);
+
+	bool AnimationData::setOverrideLayerKeyframes(KeyframeDefinition* kfData) {
+		constexpr int specialLayerIndex = 0;
+		bool success = TES3_AnimationData_setLayerKeyframes(this, kfData, specialLayerIndex, true);
+		if (success) {
+			TES3_AnimationData_mergeAnimGroups(this, kfData->animationGroup, specialLayerIndex);
+		}
+		return success;
+	}
+
+	bool AnimationData::hasOverrideAnimations() const {
+		return keyframeLayers[0].lower != nullptr;
+	}
+
 }

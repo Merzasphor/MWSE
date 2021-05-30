@@ -21,16 +21,25 @@ reference (`tes3mobileActor`_, `tes3reference`_, `string`_)
     The reference that will play the animation.
 
 group (`number`_)
-    Default: ``0``. The group id -- a value from 0 to 149. Maps to tes3.animationGroup.* constants.
+    Optional. The animation group id to start playing -- a value from 0 to 149. Applies the animation to the whole body. Maps to tes3.animationGroup.* constants.
+
+lower (`number`_)
+    Optional. Sets the animation group id for the lower body. This is used to combine different animations for each body section. Maps to tes3.animationGroup.* constants.
+
+upper (`number`_)
+    Optional. Sets the animation group id for the upper body. This is used to combine different animations for each body section. Maps to tes3.animationGroup.* constants.
+
+shield (`number`_)
+    Optional. Sets the animation group id for the shield arm. This is used to combine different animations for each body section. Maps to tes3.animationGroup.* constants.
 
 startFlag (`number`_)
-    Default: ``1``. A flag for starting the group with, matching tes3.animationStartFlag.* constants. Defaults to tes3.animationStartFlag.immediate for convenience.
+    Default: ``tes3.animationStartFlag.immediate``. A flag for starting the group with, using tes3.animationStartFlag.* constants.
 
 loopCount (`number`_)
-    Optional. If provided, the animation will loop a given number of times.
+    Default: ``-1``. If provided, the animation will repeat its loop section a given number of times. To make an animation play through once, set loopCount = 0. Defaults to infinite looping.
 
 mesh (`string`_)
-    Optional. Deprecated. Please use tes3.loadAnimation (check its documentation).
+    Optional. Deprecated. Please use tes3.loadAnimation (check its documentation) before calling playAnimation. You can also use loadAnimation to reset loaded animations to default.
 
 .. _`string`: ../../../lua/type/string.html
 .. _`number`: ../../../lua/type/number.html
