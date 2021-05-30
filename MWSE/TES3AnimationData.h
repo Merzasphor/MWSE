@@ -78,6 +78,8 @@ namespace TES3 {
 		Reference* getReference() const;
 
 		void playAnimationGroup(int animationGroup, int startFlag = 0, int loopCount = -1);
+		bool setOverrideLayerKeyframes(KeyframeDefinition* animData);
+		bool hasOverrideAnimations() const;
 
 	};
 	static_assert(sizeof(AnimationData) == 0x7E4, "TES3::AnimationData failed size validation");

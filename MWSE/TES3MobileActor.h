@@ -229,6 +229,7 @@ namespace TES3 {
 		float getViewToActor(const TES3::MobileActor* mobile) const;
 
 		float getBootsWeight() const;
+		float getWeaponSpeed() const;
 
 		void startCombat(MobileActor*);
 		void stopCombat(bool);

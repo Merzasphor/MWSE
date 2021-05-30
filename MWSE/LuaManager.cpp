@@ -48,6 +48,7 @@
 #include "TES3MobilePlayer.h"
 #include "TES3MobileProjectile.h"
 #include "TES3NPC.h"
+#include "TES3PlayerAnimationController.h"
 #include "TES3Reference.h"
 #include "TES3Script.h"
 #include "TES3SoulGemData.h"
@@ -844,6 +845,11 @@ namespace mwse {
 			if (event::AttackEvent::getEventEnabled()) {
 				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::AttackEvent(animController));
 			}
+		}
+
+		void __fastcall OnAttackStart(TES3::ActorAnimationController* animController, DWORD _UNUSED_, float swing) {
+			// Call our wrapper for the function so that events are triggered.
+			animController->startAttackAnimation(swing);
 		}
 
 		//
@@ -2898,6 +2904,39 @@ namespace mwse {
 		const size_t patchGetEntityLightRadius_size = 0x2B;
 
 		//
+		// Patch: Play animation while retaining player control.
+		// 
+
+		// Patches ActorAnimData::ctor.
+		__declspec(naked) void patchActorAnimInit() {
+			__asm {
+				// Initialize members ActorAnimData+0x98..0x9B in one op. Patch uses ActorAnimData+0x9B for new state.
+				mov dword ptr [esi+0x98], 0xFF00FFFF
+				nop
+				nop
+			}
+		}
+		const size_t patchActorAnimInit_size = 0xC;
+
+		// Defer switching between first and third person during animation override.
+		__declspec(naked) bool CheckTogglePOV() {
+			__asm {
+				xor al, al
+				cmp [esi+0x9B], 0xFF // esi->PlayerAnimData.patchedOverrideState == 0xFF
+				jnz done
+
+				mov al, byte ptr [esi+0xE9] // al = esi->PlayerAnimData.togglePOV
+			done:
+				ret
+			}
+		}
+
+		// Call our custom function when updating animation playback.
+		void __fastcall ActorAnimController_selectMovementAnimAndUpdate(TES3::ActorAnimationController* animController, DWORD _UNUSED_, float deltaTime, bool flag) {
+			animController->selectMovementAnimAndUpdate(deltaTime, flag);
+		}
+
+		//
 		//
 		//
 
@@ -3150,6 +3189,10 @@ namespace mwse {
 			genCallEnforced(0x541489, TES3_ActorAnimController_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
 			genCallEnforced(0x5414CD, TES3_ActorAnimController_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
 			genCallEnforced(0x569E78, TES3_ActorAnimController_attackCheckMeleeHit, reinterpret_cast<DWORD>(OnAttack));
+
+			// Event: Begin physical attack
+			genCallEnforced(0x54A4BA, 0x5411C0, reinterpret_cast<DWORD>(OnAttackStart));
+			genCallEnforced(0x569DFB, 0x5411C0, reinterpret_cast<DWORD>(OnAttackStart));
 
 			// Collision events: Mobile Object
 			auto mobileObjectCollideActor = &TES3::MobileObject::onActorCollision;
@@ -4163,6 +4206,11 @@ namespace mwse {
 			genCallEnforced(0x745B89, 0x470AE0, *reinterpret_cast<DWORD*>(&AnimationData_playAnimationGroupForIndex));
 			genCallEnforced(0x745B9E, 0x470AE0, *reinterpret_cast<DWORD*>(&AnimationData_playAnimationGroupForIndex));
 			genCallEnforced(0x745BB3, 0x470AE0, *reinterpret_cast<DWORD*>(&AnimationData_playAnimationGroupForIndex));
+
+			// Modify actor animation controller to allow blocking animation changes.
+			writePatchCodeUnprotected(0x53DAB5, (BYTE*)&patchActorAnimInit, patchActorAnimInit_size);
+			genCallUnprotected(0x5428A3, reinterpret_cast<DWORD>(&CheckTogglePOV), 6);
+			genCallEnforced(0x53E135, 0x540A90, reinterpret_cast<DWORD>(&ActorAnimController_selectMovementAnimAndUpdate));
 
 			// Make mobile IdleAnim flag reset on Stop key, instead of when loopCount reaches zero.
 			genJumpEnforced(0x46DA0D, 0x46E64E, 0x46E49E);

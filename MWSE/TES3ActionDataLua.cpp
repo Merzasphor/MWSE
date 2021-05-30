@@ -21,16 +21,19 @@ namespace mwse {
 			// Basic property binding.
 			usertypeDefinition["aiBehaviorState"] = &TES3::ActionData::aiBehaviourState;
 			usertypeDefinition["animationAttackState"] = &TES3::ActionData::animStateAttack;
-			usertypeDefinition["attackDirection"] = &TES3::ActionData::attackDirection;
 			usertypeDefinition["attackSwing"] = &TES3::ActionData::attackSwing;
 			usertypeDefinition["currentAnimationGroup"] = &TES3::ActionData::currentAnimGroup;
 			usertypeDefinition["hitTarget"] = &TES3::ActionData::hitTarget;
 			usertypeDefinition["lastBarterHoursPassed"] = &TES3::ActionData::lastBarterHoursPassed;
 			usertypeDefinition["nockedProjectile"] = &TES3::ActionData::nockedProjectile;
+			usertypeDefinition["physicalAttackType"] = &TES3::ActionData::physicalAttackType;
 			usertypeDefinition["physicalDamage"] = &TES3::ActionData::physicalDamage;
 			usertypeDefinition["stolenFrom"] = &TES3::ActionData::stolenFromFactionOrNPC;
 			usertypeDefinition["target"] = &TES3::ActionData::target;
 			usertypeDefinition["walkDestination"] = &TES3::ActionData::walkDestination;
+
+			// Deprecated properties.
+			usertypeDefinition["attackDirection"] = &TES3::ActionData::physicalAttackType;
 		}
 	}
 }

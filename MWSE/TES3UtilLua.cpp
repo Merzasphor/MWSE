@@ -21,11 +21,12 @@
 #include "NIStream.h"
 #include "NITriShape.h"
 
-#include "TES3AnimationData.h"
 #include "TES3Actor.h"
+#include "TES3ActorAnimationController.h"
 #include "TES3AIData.h"
 #include "TES3AIPackage.h"
 #include "TES3Alchemy.h"
+#include "TES3AnimationData.h"
 #include "TES3Archive.h"
 #include "TES3Armor.h"
 #include "TES3AudioController.h"
@@ -3570,15 +3571,21 @@ namespace mwse {
 				return;
 			}
 
+			// Change the animation temporarily. Passing nullptr resets the animation to base.
 			const char* modelFile = getOptionalParam<const char*>(params, "file", nullptr);
-			// Change the animation model. Passing nullptr resets the animation to base.
-			reference->setModelPath(modelFile);
+			reference->setModelPath(modelFile, true);
 
 			if (modelFile == nullptr) {
 				// Reset animation control.
 				auto mact = reference->getAttachedMobileActor();
 				if (mact) {
 					mact->setMobileActorFlag(TES3::MobileActorFlag::IdleAnim, false);
+				}
+			}
+			else {
+				animData = reference->getAttachedAnimationData();
+				if (!animData->hasOverrideAnimations()) {
+					throw std::logic_error("Animation file failed to load.");
 				}
 			}
 		}
@@ -3595,46 +3602,76 @@ namespace mwse {
 				return;
 			}
 
-			// Allow changing the animation model.
+			// Allow loading an animation temporarily.
 			const char* modelFile = getOptionalParam<const char*>(params, "mesh", nullptr);
 			if (modelFile != nullptr) {
-				reference->setModelPath(modelFile);
+				reference->setModelPath(modelFile, true);
 				animData = reference->getAttachedAnimationData();
 			}
 
-			int group = getOptionalParam<int>(params, "group", 0);
-			if (group < 0 || group > 149) {
+			int group = getOptionalParam<int>(params, "group", -1);
+			if (group < -1 || group > 149) {
 				throw std::invalid_argument("Invalid 'group' parameter provided: must be between 0 and 149.");
 			}
 
 			int lowerGroup = getOptionalParam<int>(params, "lower", group);
-			if (lowerGroup < 0 || lowerGroup > 149) {
+			if (lowerGroup < -1 || lowerGroup > 149) {
 				throw std::invalid_argument("Invalid 'lowerGroup' parameter provided: must be between 0 and 149.");
 			}
 
-			int upperGroup = getOptionalParam<int>(params, "upper", group);
-			if (upperGroup < 0 || upperGroup > 149) {
+			int upperGroup = getOptionalParam<int>(params, "upper", lowerGroup);
+			if (upperGroup < -1 || upperGroup > 149) {
 				throw std::invalid_argument("Invalid 'upperGroup' parameter provided: must be between 0 and 149.");
 			}
 
-			int shieldGroup = getOptionalParam<int>(params, "shield", group);
-			if (shieldGroup < 0 || shieldGroup > 149) {
+			int shieldGroup = getOptionalParam<int>(params, "shield", upperGroup);
+			if (shieldGroup < -1 || shieldGroup > 149) {
 				throw std::invalid_argument("Invalid 'shieldGroup' parameter provided: must be between 0 and 149.");
+			}
+
+			// Play anim group 0 (returns control to AI) if no groups are specified.
+			if (lowerGroup == -1 && upperGroup == -1 && shieldGroup == -1) {
+				group = lowerGroup = upperGroup = shieldGroup = 0;
 			}
 
 			// Default to immediate start and infinite looping.
 			int startFlag = getOptionalParam<int>(params, "startFlag", 1);
 			int loopCount = getOptionalParam<int>(params, "loopCount", -1);
 
-			auto mact = reference->getAttachedMobileActor();
-			if (mact) {
-				bool idleAnim = getOptionalParam<bool>(params, "idleAnim", lowerGroup != 0 || upperGroup != 0 || shieldGroup != 0);
-				mact->setMobileActorFlag(TES3::MobileActorFlag::IdleAnim, idleAnim);
+			// Start animations.
+			if (lowerGroup != -1) {
+				animData->playAnimationGroupForIndex(lowerGroup, 0, startFlag, loopCount);
+			}
+			if (upperGroup != -1) {
+				animData->playAnimationGroupForIndex(upperGroup, 1, startFlag, loopCount);
+			}
+			if (shieldGroup != -1) {
+				animData->playAnimationGroupForIndex(shieldGroup, 2, startFlag, loopCount);
 			}
 
-			animData->playAnimationGroupForIndex(lowerGroup, 0, startFlag, loopCount);
-			animData->playAnimationGroupForIndex(upperGroup, 1, startFlag, loopCount);
-			animData->playAnimationGroupForIndex(shieldGroup, 2, startFlag, loopCount);
+			auto mact = reference->getAttachedMobileActor();
+			if (mact) {
+				// If no overall group is specified, do not idle AI and only override specified body part groups.
+				if (group == -1) {
+					unsigned char targetBones = 0xFF;
+					if (lowerGroup != -1) {
+						targetBones = 0;
+					}
+					else if (upperGroup != -1) {
+						targetBones = 1;
+					}
+					else if (shieldGroup != -1) {
+						targetBones = 2;
+					}
+					mact->animationController.asActor->patchedOverrideState = targetBones;
+				}
+				else {
+					// Idle anim flag pauses all AI animation control.
+					bool idleAnim = getOptionalParam<bool>(params, "idleAnim", lowerGroup > 0 || upperGroup > 0 || shieldGroup > 0);
+					mact->setMobileActorFlag(TES3::MobileActorFlag::IdleAnim, idleAnim);
+					mact->animationController.asActor->patchedOverrideState = 0xFF;
+				}
+			}
 		}
 
 		void cancelAnimationLoop(sol::table params) {

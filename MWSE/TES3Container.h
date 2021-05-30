@@ -34,8 +34,8 @@ namespace TES3 {
 	};
 
 	struct Container : ContainerBase {
-		char * model;
 		char * name;
+		char * model;
 		Script * script;
 		float capacity;
 
