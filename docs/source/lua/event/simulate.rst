@@ -9,7 +9,7 @@ Event Data
 timestamp
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`number`_. Read-only. The number of seconds since the beginning of the 3rd Era (similar to the Unix Epoch).
+`number`_. Read-only. The number of hours since the beginning of the 3rd Era (similar to the Unix Epoch).
 
 delta
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

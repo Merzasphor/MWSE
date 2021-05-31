@@ -942,12 +942,15 @@ Methods
 ----------------------------------------------------------------------------------------------------
 
 `applyDamage`_ (`number`_)
-    Damages the actor, with options to control mitigation and difficulty scaling. Invokes the 'damage' and 'damaged' events, with 'script' source. Returns the actual damage done after mitigation and resistance, but before difficulty scaling.
+    Damages the actor, with options to control mitigation and difficulty scaling. Invokes the 'damage' and 'damaged' events, with 'script' source. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
 
 `applyHealthDamage`_ (`boolean`_)
     **Deprecated, please use applyDamage instead.**
 
 Damages the actor.
+
+`calcEffectiveDamage`_ (`number`_)
+    Calculates the damage that would be inflicted to an actor after armor and/or resistance. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
 
 `equip`_ (`boolean`_)
     Equips an item, optionally adding the item if needed.
@@ -990,6 +993,7 @@ Damages the actor.
 
     tes3mobilePlayer/applyDamage
     tes3mobilePlayer/applyHealthDamage
+    tes3mobilePlayer/calcEffectiveDamage
     tes3mobilePlayer/equip
     tes3mobilePlayer/exerciseSkill
     tes3mobilePlayer/getSkillStatistic
@@ -1005,6 +1009,7 @@ Damages the actor.
 
 .. _`applyDamage`: tes3mobilePlayer/applyDamage.html
 .. _`applyHealthDamage`: tes3mobilePlayer/applyHealthDamage.html
+.. _`calcEffectiveDamage`: tes3mobilePlayer/calcEffectiveDamage.html
 .. _`equip`: tes3mobilePlayer/equip.html
 .. _`exerciseSkill`: tes3mobilePlayer/exerciseSkill.html
 .. _`getSkillStatistic`: tes3mobilePlayer/getSkillStatistic.html
