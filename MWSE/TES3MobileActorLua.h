@@ -127,6 +127,7 @@ namespace mwse {
 			usertypeDefinition["applyHealthDamage"] = &TES3::MobileActor::applyHealthDamage;
 			usertypeDefinition["applyFatigueDamage"] = &TES3::MobileActor::applyFatigueDamage;
 			usertypeDefinition["applyDamage"] = &TES3::MobileActor::applyDamage_lua;
+			usertypeDefinition["calcEffectiveDamage"] = &TES3::MobileActor::calcEffectiveDamage_lua;
 			usertypeDefinition["getBootsWeight"] = &TES3::MobileActor::getBootsWeight;
 			usertypeDefinition["getViewToActor"] = &TES3::MobileActor::getViewToActor;
 			usertypeDefinition["getViewToPoint"] = &TES3::MobileActor::getViewToPoint;
