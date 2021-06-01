@@ -3653,23 +3653,27 @@ namespace mwse {
 			if (mact) {
 				// If no overall group is specified, do not idle AI and only override specified body part groups.
 				if (group == -1) {
-					unsigned char targetBones = 0xFF;
-					if (lowerGroup != -1) {
-						targetBones = 0;
+					if (mact->animationController.asActor) {
+						unsigned char targetBones = 0xFF;
+						if (lowerGroup != -1) {
+							targetBones = 0;
+						}
+						else if (upperGroup != -1) {
+							targetBones = 1;
+						}
+						else if (shieldGroup != -1) {
+							targetBones = 2;
+						}
+						mact->animationController.asActor->patchedOverrideState = targetBones;
 					}
-					else if (upperGroup != -1) {
-						targetBones = 1;
-					}
-					else if (shieldGroup != -1) {
-						targetBones = 2;
-					}
-					mact->animationController.asActor->patchedOverrideState = targetBones;
 				}
 				else {
 					// Idle anim flag pauses all AI animation control.
 					bool idleAnim = getOptionalParam<bool>(params, "idleAnim", lowerGroup > 0 || upperGroup > 0 || shieldGroup > 0);
 					mact->setMobileActorFlag(TES3::MobileActorFlag::IdleAnim, idleAnim);
-					mact->animationController.asActor->patchedOverrideState = 0xFF;
+					if (mact->animationController.asActor) {
+						mact->animationController.asActor->patchedOverrideState = 0xFF;
+					}
 				}
 			}
 		}
