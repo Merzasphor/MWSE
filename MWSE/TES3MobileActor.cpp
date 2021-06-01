@@ -284,18 +284,18 @@ namespace TES3 {
 			}
 		}
 
-		bool checkForKnockdown = TES3_MobileActor_applyHealthDamage(this, damage, isPlayerAttack, scaleWithDifficulty, doNotChangeHealth);
+		bool killingBlow = TES3_MobileActor_applyHealthDamage(this, damage, isPlayerAttack, scaleWithDifficulty, doNotChangeHealth);
 
 		// Do our post-damage event.
 		if (mwse::lua::event::DamagedEvent::getEventEnabled()) {
 			auto stateHandle = luaManager.getThreadSafeStateHandle();
-			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::DamagedEvent(this, damage, checkForKnockdown));
+			sol::table eventData = stateHandle.triggerEvent(new mwse::lua::event::DamagedEvent(this, damage, killingBlow));
 			if (eventData.valid()) {
-				checkForKnockdown = eventData["checkForKnockdown"];
+				killingBlow = eventData["killingBlow"];
 			}
 		}
 
-		return checkForKnockdown;
+		return killingBlow;
 	}
 
 	float MobileActor::applyDamage_lua(sol::table params) {
@@ -321,9 +321,11 @@ namespace TES3 {
 		}
 
 		float adjustedDamage = damage.value();
+		// Apply armor mitigation. Includes damaging armor condition, hit sounds, and player armor skill experience.
 		if (applyArmor) {
 			adjustedDamage = applyArmorRating(adjustedDamage, 1.0f, true);
 		}
+		// Effect attribute based resistance/weakness.
 		if (resistAttribute) {
 			adjustedDamage *= std::max(0, 100 - this->effectAttributes[resistIndex]) / 100.0f;
 		}
@@ -352,6 +354,7 @@ namespace TES3 {
 			}
 		}
 
+		// Emulate armor mitigation.
 		float adjustedDamage = damage.value();
 		if (applyArmor) {
 			if (adjustedDamage > 0.001f) {
@@ -364,6 +367,7 @@ namespace TES3 {
 				adjustedDamage = 0;
 			}
 		}
+		// Effect attribute based resistance/weakness.
 		if (resistAttribute) {
 			adjustedDamage *= std::max(0, 100 - this->effectAttributes[resistIndex]) / 100.0f;
 		}
