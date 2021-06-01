@@ -336,6 +336,41 @@ namespace TES3 {
 		return adjustedDamage;
 	}
 
+	float MobileActor::calcEffectiveDamage_lua(sol::table params) {
+		bool applyArmor = params["applyArmor"].get_or(false);
+		sol::optional<float> damage = params["damage"];
+		sol::optional<int> resistAttribute = params["resistAttribute"];
+		int resistIndex = resistAttribute.value_or(-1);
+
+		if (!damage) {
+			throw std::invalid_argument("Invalid 'damage' parameter provided.");
+		}
+		if (resistAttribute) {
+			if (resistIndex < TES3::MagicEffectAttribute::AttackBonus || resistIndex > TES3::MagicEffectAttribute::Invisibility) {
+				// Disable resistAttribute for effect attributes that are > Invisibility.
+				resistAttribute.reset();
+			}
+		}
+
+		float adjustedDamage = damage.value();
+		if (applyArmor) {
+			if (adjustedDamage > 0.001f) {
+				float fCombatArmorMinMult = TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::fCombatArmorMinMult]->value.asFloat;
+				float armor = calculateArmorRating();
+				float reducer = std::max(fCombatArmorMinMult, adjustedDamage / (armor + adjustedDamage));
+				adjustedDamage = std::max(1.0f, reducer * adjustedDamage);
+			}
+			else {
+				adjustedDamage = 0;
+			}
+		}
+		if (resistAttribute) {
+			adjustedDamage *= std::max(0, 100 - this->effectAttributes[resistIndex]) / 100.0f;
+		}
+
+		return adjustedDamage;
+	}
+
 	const auto TES3_MobileActor_applyFatigueDamage = reinterpret_cast<float(__thiscall*)(MobileActor*, float, float, bool)>(0x5581B0);
 	float MobileActor::applyFatigueDamage(float fatigueDamage, float swing, bool alwaysPlayHitVoice) {
 		// Invoke our pre-damage event and check if it is blocked.

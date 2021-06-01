@@ -757,12 +757,15 @@ Methods
 ----------------------------------------------------------------------------------------------------
 
 `applyDamage`_ (`number`_)
-    Damages the actor, with options to control mitigation and difficulty scaling. Invokes the 'damage' and 'damaged' events, with 'script' source. Returns the actual damage done after mitigation and resistance, but before difficulty scaling.
+    Damages the actor, with options to control mitigation and difficulty scaling. Invokes the 'damage' and 'damaged' events, with 'script' source. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
 
 `applyHealthDamage`_ (`boolean`_)
     **Deprecated, please use applyDamage instead.**
 
 Damages the actor.
+
+`calcEffectiveDamage`_ (`number`_)
+    Calculates the damage that would be inflicted to an actor after armor and/or resistance. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
 
 `equip`_ (`boolean`_)
     Equips an item, optionally adding the item if needed.
@@ -799,6 +802,7 @@ Damages the actor.
 
     tes3mobileNPC/applyDamage
     tes3mobileNPC/applyHealthDamage
+    tes3mobileNPC/calcEffectiveDamage
     tes3mobileNPC/equip
     tes3mobileNPC/getSkillStatistic
     tes3mobileNPC/getSkillValue
@@ -812,6 +816,7 @@ Damages the actor.
 
 .. _`applyDamage`: tes3mobileNPC/applyDamage.html
 .. _`applyHealthDamage`: tes3mobileNPC/applyHealthDamage.html
+.. _`calcEffectiveDamage`: tes3mobileNPC/calcEffectiveDamage.html
 .. _`equip`: tes3mobileNPC/equip.html
 .. _`getSkillStatistic`: tes3mobileNPC/getSkillStatistic.html
 .. _`getSkillValue`: tes3mobileNPC/getSkillValue.html

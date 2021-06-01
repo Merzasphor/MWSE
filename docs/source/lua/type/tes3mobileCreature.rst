@@ -617,12 +617,15 @@ Methods
 ----------------------------------------------------------------------------------------------------
 
 `applyDamage`_ (`number`_)
-    Damages the actor, with options to control mitigation and difficulty scaling. Invokes the 'damage' and 'damaged' events, with 'script' source. Returns the actual damage done after mitigation and resistance, but before difficulty scaling.
+    Damages the actor, with options to control mitigation and difficulty scaling. Invokes the 'damage' and 'damaged' events, with 'script' source. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
 
 `applyHealthDamage`_ (`boolean`_)
     **Deprecated, please use applyDamage instead.**
 
 Damages the actor.
+
+`calcEffectiveDamage`_ (`number`_)
+    Calculates the damage that would be inflicted to an actor after armor and/or resistance. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
 
 `getSkillStatistic`_ (`tes3skillStatistic`_)
     Fetches the statistic object of a skill with a given index. This converts to the limited options available for creatures.
@@ -653,6 +656,7 @@ Damages the actor.
 
     tes3mobileCreature/applyDamage
     tes3mobileCreature/applyHealthDamage
+    tes3mobileCreature/calcEffectiveDamage
     tes3mobileCreature/getSkillStatistic
     tes3mobileCreature/getSkillValue
     tes3mobileCreature/getWeaponSpeed
@@ -664,6 +668,7 @@ Damages the actor.
 
 .. _`applyDamage`: tes3mobileCreature/applyDamage.html
 .. _`applyHealthDamage`: tes3mobileCreature/applyHealthDamage.html
+.. _`calcEffectiveDamage`: tes3mobileCreature/calcEffectiveDamage.html
 .. _`getSkillStatistic`: tes3mobileCreature/getSkillStatistic.html
 .. _`getSkillValue`: tes3mobileCreature/getSkillValue.html
 .. _`getWeaponSpeed`: tes3mobileCreature/getWeaponSpeed.html
