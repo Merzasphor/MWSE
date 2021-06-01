@@ -1,6 +1,6 @@
-expire
+attackSwing
 ====================================================================================================
 
-`number`_. A flag that causes the projectile to expire when set to 1.
+`number`_. The attack swing value of the attacker at the time of releasing the projectile.
 
 .. _`number`: ../../../lua/type/number.html

@@ -1,6 +1,6 @@
-expire
+animTime
 ====================================================================================================
 
-`number`_. A flag that causes the projectile to expire when set to 1.
+`number`_. The time index for the projectile model's animation controllers.
 
 .. _`number`: ../../../lua/type/number.html

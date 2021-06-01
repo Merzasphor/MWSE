@@ -12,14 +12,12 @@ namespace TES3 {
 		Weapon* firingWeapon; // 0x84
 		unsigned char flagExpire; // 0x88
 		char padding_0x89[3];
-		int unknown_0x8C;
-		int unknown_0x90;
+		float attackSwing; // 0x8C
+		float initialSpeed; // 0x90
 		int unknown_0x94;
-		int unknown_0x98;
-		int unknown_0x9C;
-		int unknown_0xA0;
-		int unknown_0xA4;
-		int unknown_0xA8;
+		Vector3 velocity; // 0x98
+		float damage; // 0xA4
+		float animTime; // 0xA8
 
 		//
 		// vTable accessor functions.

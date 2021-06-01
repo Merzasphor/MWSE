@@ -1,6 +1,6 @@
 velocity
 ====================================================================================================
 
-`tes3vector3`_. A vector that represents the 3D velocity of the object.
+`tes3vector3`_. Access to the current velocity of the projectile.
 
 .. _`tes3vector3`: ../../../lua/type/tes3vector3.html

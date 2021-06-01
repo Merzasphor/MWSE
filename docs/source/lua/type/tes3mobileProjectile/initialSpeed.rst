@@ -1,6 +1,6 @@
-expire
+initialSpeed
 ====================================================================================================
 
-`number`_. A flag that causes the projectile to expire when set to 1.
+`number`_. The initial speed that the projectile was launched at.
 
 .. _`number`: ../../../lua/type/number.html
