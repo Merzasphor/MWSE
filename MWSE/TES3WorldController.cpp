@@ -13,6 +13,7 @@
 #include "TES3UIMenuController.h"
 #include "TES3WeatherController.h"
 
+#include "CodePatchUtil.h"
 #include "MemoryUtil.h"
 #include "TES3Util.h"
 
@@ -535,12 +536,17 @@ namespace TES3 {
 			}
 
 			// Are we advancing to the next month?
+			bool advanceRespawn = false;
 			int daysInMonth = getDaysInMonth(month);
 			if (day > daysInMonth) {
 				day = 1;
 				month++;
+				advanceRespawn = true;
+			}
 
-				// Do we need to respawn containers?
+			// Do we need to respawn containers?
+			// mcp::ContainerRespawnTimescale modifies respawn cycle to use days.
+			if (advanceRespawn || mwse::mcp::getFeatureEnabled(mwse::mcp::feature::ContainerRespawnTimescale)) {
 				int monthsToRespawn = --gvarMonthsToRespawn->value;
 				if (monthsToRespawn <= 0) {
 					respawnContainers = true;
