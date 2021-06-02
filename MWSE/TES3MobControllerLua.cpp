@@ -4,6 +4,7 @@
 #include "LuaUtil.h"
 
 #include "TES3MobController.h"
+#include "TES3MobileProjectile.h"
 
 namespace mwse {
 	namespace lua {
@@ -37,6 +38,9 @@ namespace mwse {
 				// Start our usertype. We must finish this with state.set_usertype.
 				auto usertypeDefinition = state.new_usertype<TES3::ProjectileController>("tes3projectileController");
 				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Basic property binding.
+				usertypeDefinition["projectiles"] = sol::readonly_property(&TES3::ProjectileController::activeProjectiles);
 			}
 
 			// Binding for TES3::MobController.

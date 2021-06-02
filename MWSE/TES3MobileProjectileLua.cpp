@@ -37,10 +37,14 @@ namespace mwse {
 				setUserdataForTES3MobileProjectile(usertypeDefinition);
 
 				// Basic property binding.
+				usertypeDefinition["rotationSpeed"] = &TES3::MobileSpellProjectile::rotationSpeed;
 				usertypeDefinition["spellInstanceSerial"] = sol::readonly_property(&TES3::MobileSpellProjectile::spellInstanceSerial);
 
 				// Functions exposed as properties.
 				usertypeDefinition["spellInstance"] = sol::readonly_property(&TES3::MobileSpellProjectile::getInstance);
+
+				// Basic function bindings.
+				usertypeDefinition["explode"] = &TES3::MobileSpellProjectile::explode;
 			}
 		}
 	}

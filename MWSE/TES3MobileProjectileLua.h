@@ -17,7 +17,7 @@ namespace mwse {
 			usertypeDefinition["firingMobile"] = sol::readonly_property(&TES3::MobileProjectile::firingActor);
 			usertypeDefinition["firingWeapon"] = sol::readonly_property(&TES3::MobileProjectile::firingWeapon);
 			usertypeDefinition["initialSpeed"] = sol::readonly_property(&TES3::MobileProjectile::initialSpeed);
-			usertypeDefinition["velocity"] = &TES3::MobileProjectile::velocity;
+			usertypeDefinition["velocity"] = sol::property(&TES3::MobileProjectile::getProjectileVelocity, &TES3::MobileProjectile::setProjectileVelocity_lua);
 		}
 
 		void bindTES3MobileProjectile();

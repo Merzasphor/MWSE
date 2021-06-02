@@ -28,6 +28,13 @@ namespace TES3 {
 		bool onTerrainCollision(int collisionIndex);
 		bool onWaterCollision(int collisionIndex);
 
+		//
+		// Custom functions.
+		//
+
+		Vector3 getProjectileVelocity() const;
+		void setProjectileVelocity_lua(sol::stack_object value);
+
 	};
 	static_assert(sizeof(MobileProjectile) == 0xAC, "TES3::MobileProjectile failed size validation");
 }
