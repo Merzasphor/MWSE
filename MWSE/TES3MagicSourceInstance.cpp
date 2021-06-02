@@ -47,9 +47,19 @@ namespace TES3 {
 		return TES3_MagicSourceInstance_getMagnitudeForIndex(this, effectIndex);
 	}
 
-	const auto TES3_PlaySpellVFX = reinterpret_cast<void(__cdecl *)(MagicSourceInstance *, float, Vector3, Reference*, int, PhysicalObject*, int, int)>(0x515D60);
-	void MagicSourceInstance::playSpellVFX(float duration, Vector3 position, Reference* attachedReference, int unknown0, PhysicalObject* effectVisual, int effectIndex, int unknown1) {
-		TES3_PlaySpellVFX(this, duration, position, attachedReference, unknown0, effectVisual, effectIndex, unknown1);
+	const auto TES3_PlaySpellVFX = reinterpret_cast<void(__cdecl *)(MagicSourceInstance *, float, Vector3, Reference*, float, PhysicalObject*, int, int)>(0x515D60);
+	void MagicSourceInstance::playSpellVFX(float scale, Vector3 position, Reference* attachedReference, float offsetZ, PhysicalObject* effectVisual, int effectIndex, int isContinuous) {
+		TES3_PlaySpellVFX(this, scale, position, attachedReference, offsetZ, effectVisual, effectIndex, isContinuous);
+	}
+
+	const auto TES3_MagicSourceInstance_projectileHit = reinterpret_cast<void(__thiscall*)(MagicSourceInstance*, MobileObject::Collision*)>(0x5175C0);
+	void MagicSourceInstance::projectileHit(MobileObject::Collision* collision) {
+		TES3_MagicSourceInstance_projectileHit(this, collision);
+	}
+
+	const auto TES3_MagicSourceInstance_spellHit = reinterpret_cast<bool(__thiscall*)(MagicSourceInstance*, Reference*, int)>(0x516D90);
+	bool MagicSourceInstance::spellHit(Reference* hitReference, int effectIndex) {
+		return TES3_MagicSourceInstance_spellHit(this, hitReference, effectIndex);
 	}
 
 	const auto TES3_MagicSourceInstance_retire = reinterpret_cast<void(__thiscall*)(MagicSourceInstance*, TES3::Reference*)>(0x512940);

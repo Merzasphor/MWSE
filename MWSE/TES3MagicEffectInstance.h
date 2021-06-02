@@ -18,7 +18,6 @@ namespace TES3 {
 		Armor * lastUsedShield; // 0x2C
 		Light * lastUsedLight; // 0x30
 		Item * lastUsedEnchItem; // 0x34
-		int unknown_0x38;
 	};
-	static_assert(sizeof(MagicEffectInstance) == 0x3C, "TES3::MagicEffectInstance failed size validation");
+	static_assert(sizeof(MagicEffectInstance) == 0x38, "TES3::MagicEffectInstance failed size validation");
 }
