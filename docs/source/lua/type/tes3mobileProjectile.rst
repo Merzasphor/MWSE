@@ -1,7 +1,7 @@
 tes3mobileProjectile
 ====================================================================================================
 
-A mobile object for a spell or ammo projectile.
+A mobile object for a physical projectile.
 
 Properties
 ----------------------------------------------------------------------------------------------------
