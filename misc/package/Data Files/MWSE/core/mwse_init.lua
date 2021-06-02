@@ -43,6 +43,34 @@ function require(moduleName)
 	return originalRequire(moduleName)
 end
 
+-- Custom dofile that respects package pathing and supports lua's dot notation for paths.
+function dofile(path)
+	assert(path and type(path) == "string")
+
+	-- Replace . and / with \, and remove .lua extension if it exists.
+	local standardizedPath = path:gsub("[/.]", "\\"):lower()
+	if (standardizedPath:endswith("\\lua")) then
+		standardizedPath = standardizedPath:sub(0, -5)
+	end
+
+	-- First pass: Direct load. Have to manually add the .lua extension.
+	local r = loadfile(standardizedPath .. ".lua")
+	if (r) then
+		return r()
+	end
+
+	-- Check all package paths.
+	for ppath in package.path:gmatch("[^;]+") do
+		r = loadfile(ppath:gsub("?", standardizedPath))
+		if (r) then
+			return r()
+		end
+	end
+
+	-- No result? Error.
+	error("dofile: Could not resolve path " .. path)
+end
+
 -------------------------------------------------
 -- Extend base API: math
 -------------------------------------------------
