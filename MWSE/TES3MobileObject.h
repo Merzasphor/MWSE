@@ -179,21 +179,21 @@ namespace TES3 {
 				Terrain = 2,
 				Water = 3,
 				Activator = 4,
-				Unknown_AlsoStatic = 5,
+				Static_AvoidNode = 5,
 				None = 6,
 			};
 
-			bool valid;
-			float fTime;
-			TES3::Vector3 point;
-			TES3::Vector3 objectPosAtCollision;
-			TES3::Vector3 velocity;
-			NI::Pointer<NI::Node> colliderRoot;
-			TES3::Reference * colliderRef;
-			NI::Pointer<NI::Node> node_34;
-			short quantizedNormal[3];
-			CollisionType collisionType;
-			unsigned char unknown_3F;
+			bool valid; // 0x0
+			float time; // 0x4
+			TES3::Vector3 point; // 0x8
+			TES3::Vector3 objectPosAtCollision; // 0x14
+			TES3::Vector3 velocity; // 0x20
+			NI::Pointer<NI::Node> colliderRoot; // 0x2C
+			TES3::Reference * colliderRef; // 0x30
+			NI::Pointer<NI::Node> node_34; // 0x34
+			short quantizedNormal[3]; // 0x38
+			CollisionType collisionType; // 0x3E
+			unsigned char processingState; // 0x3F
 
 			//
 			//
