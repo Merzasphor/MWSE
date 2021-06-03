@@ -386,6 +386,14 @@ namespace mwse {
 		}
 
 		//
+		// Patch: Correctly initialize MobileProjectile tag/objectType
+		//
+
+		void __fastcall PatchInitializeMobileProjectileType(TES3::ObjectType::ObjectType* type) {
+			*type = TES3::ObjectType::MobileProjectile;
+		}
+
+		//
 		// Install all the patches.
 		//
 
@@ -603,6 +611,8 @@ namespace mwse {
 			// Patch: Update player first and third person animations when the idle flag is pausing the controller.
 			genCallUnprotected(0x41B836, reinterpret_cast<DWORD>(PatchUpdateAllIdles));
 
+			// Patch: Correctly initialize MobileProjectile tag/objectType
+			genCallEnforced(0x572444, 0x4EE8A0, reinterpret_cast<DWORD>(PatchInitializeMobileProjectileType));
 		}
 
 		void installPostLuaPatches() {
