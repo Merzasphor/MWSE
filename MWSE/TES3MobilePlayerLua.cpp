@@ -83,6 +83,7 @@ namespace mwse {
 				usertypeDefinition["levelSkill"] = &TES3::MobilePlayer::levelSkill;
 
 				// Functions exposed as properties.
+				usertypeDefinition["cameraHeight"] = sol::property(&TES3::MobilePlayer::getCameraHeight, &TES3::MobilePlayer::setCameraHeight_lua);
 				usertypeDefinition["is3rdPerson"] = sol::readonly_property(&TES3::MobilePlayer::is3rdPerson);
 			}
 

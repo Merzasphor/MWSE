@@ -91,7 +91,6 @@ namespace TES3 {
 		void exerciseSkill(int skillId, float progress);
 		void levelSkill(int skillId);
 		void onDeath();
-		bool is3rdPerson();
 		int getGold();
 		void wakeUp();
 
@@ -99,6 +98,9 @@ namespace TES3 {
 		void setBounty(int value);
 		void modBounty(int delta);
 
+		bool is3rdPerson();
+		float getCameraHeight() const;
+		void setCameraHeight_lua(sol::optional<float> height);
 		int getVanityState() const;
 		void setVanityState(int state);
 
