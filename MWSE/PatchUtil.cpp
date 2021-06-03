@@ -387,6 +387,9 @@ namespace mwse {
 
 		//
 		// Patch: Correctly initialize MobileProjectile tag/objectType
+		// 
+		// The copy constructor for MobileProjectiles fails to correctly set the object type correctly. This
+		// ensures that it is set to the right value, instead of 0.
 		//
 
 		void __fastcall PatchInitializeMobileProjectileType(TES3::ObjectType::ObjectType* type) {
