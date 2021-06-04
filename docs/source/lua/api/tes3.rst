@@ -9,6 +9,7 @@ Values
 .. toctree::
     :maxdepth: 1
 
+    tes3/animationState
     tes3/dataHandler
     tes3/game
     tes3/installDirectory
