@@ -50,9 +50,6 @@
 #define TES3_Reference_addItemDataAttachment 0x4E5360
 
 namespace TES3 {
-	const auto TES3_Reference_setMobileActor = reinterpret_cast<MobileActor* (__thiscall*)(Reference*, MobileActor*)>(0x4E5770);
-	const auto TES3_Reference_removeAttachment = reinterpret_cast<void(__thiscall*)(Reference*, Attachment*)>(0x4E4C10);
-
 	Reference::Reference() {
 		// Do not add code here. Always place new logic in the ctor function, which gets called in Morrowind.exe.
 		ctor();
@@ -139,6 +136,7 @@ namespace TES3 {
 		return TES3_Reference_getScriptVariables(this);
 	}
 
+	const auto TES3_Reference_removeAttachment = reinterpret_cast<void(__thiscall*)(Reference*, Attachment*)>(0x4E4C10);
 	void Reference::removeAttachment(TES3::Attachment * attachment) {
 		TES3_Reference_removeAttachment(this, attachment);
 	}
@@ -969,7 +967,15 @@ namespace TES3 {
 
 	const auto TES3_Reference_setAttachedItemData = reinterpret_cast<void(__thiscall*)(Reference*, ItemData*)>(0x4E5360);
 	void Reference::setAttachedItemData(ItemData * itemData) {
-		TES3_Reference_setAttachedItemData(this, itemData);
+		if (itemData) {
+			TES3_Reference_setAttachedItemData(this, itemData);
+		}
+		else {
+			auto itemDataAttachment = getAttachment(AttachmentType::Variables);
+			if (itemDataAttachment) {
+				removeAttachment(itemDataAttachment);
+			}
+		}
 	}
 
 	ItemData* Reference::getOrCreateAttachedItemData() {
