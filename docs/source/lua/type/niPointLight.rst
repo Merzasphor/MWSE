@@ -36,6 +36,9 @@ Properties
 `name`_ (`string`_)
     The human-facing name of the given object.
 
+`parent`_ (`niNode`_)
+    The object's parent. It may not have one if it is not attached to the scene.
+
 `properties`_ (`niPropertyLinkedList`_)
     The list of properties attached to this niAVObject.
 
@@ -76,6 +79,7 @@ Properties
     niPointLight/flags
     niPointLight/linearAttenuation
     niPointLight/name
+    niPointLight/parent
     niPointLight/properties
     niPointLight/quadraticAttenuation
     niPointLight/references
@@ -96,6 +100,7 @@ Properties
 .. _`flags`: niPointLight/flags.html
 .. _`linearAttenuation`: niPointLight/linearAttenuation.html
 .. _`name`: niPointLight/name.html
+.. _`parent`: niPointLight/parent.html
 .. _`properties`: niPointLight/properties.html
 .. _`quadraticAttenuation`: niPointLight/quadraticAttenuation.html
 .. _`references`: niPointLight/references.html

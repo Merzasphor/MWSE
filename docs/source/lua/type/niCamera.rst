@@ -18,6 +18,9 @@ Properties
 `name`_ (`string`_)
     The human-facing name of the given object.
 
+`parent`_ (`niNode`_)
+    The object's parent. It may not have one if it is not attached to the scene.
+
 `port`_ (`tes3vector4`_)
     The port on the backbuffer of the camera.
 
@@ -64,6 +67,7 @@ Properties
     niCamera/flags
     niCamera/lodAdjust
     niCamera/name
+    niCamera/parent
     niCamera/port
     niCamera/properties
     niCamera/references
@@ -82,6 +86,7 @@ Properties
 .. _`flags`: niCamera/flags.html
 .. _`lodAdjust`: niCamera/lodAdjust.html
 .. _`name`: niCamera/name.html
+.. _`parent`: niCamera/parent.html
 .. _`port`: niCamera/port.html
 .. _`properties`: niCamera/properties.html
 .. _`references`: niCamera/references.html

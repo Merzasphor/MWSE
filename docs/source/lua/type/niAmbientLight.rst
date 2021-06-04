@@ -30,6 +30,9 @@ Properties
 `name`_ (`string`_)
     The human-facing name of the given object.
 
+`parent`_ (`niNode`_)
+    The object's parent. It may not have one if it is not attached to the scene.
+
 `properties`_ (`niPropertyLinkedList`_)
     The list of properties attached to this niAVObject.
 
@@ -65,6 +68,7 @@ Properties
     niAmbientLight/enabled
     niAmbientLight/flags
     niAmbientLight/name
+    niAmbientLight/parent
     niAmbientLight/properties
     niAmbientLight/references
     niAmbientLight/rotation
@@ -82,6 +86,7 @@ Properties
 .. _`enabled`: niAmbientLight/enabled.html
 .. _`flags`: niAmbientLight/flags.html
 .. _`name`: niAmbientLight/name.html
+.. _`parent`: niAmbientLight/parent.html
 .. _`properties`: niAmbientLight/properties.html
 .. _`references`: niAmbientLight/references.html
 .. _`rotation`: niAmbientLight/rotation.html
@@ -173,6 +178,7 @@ Methods
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`string`: ../../lua/type/string.html
 .. _`number`: ../../lua/type/number.html
+.. _`niNode`: ../../lua/type/niNode.html
 .. _`tes3matrix33`: ../../lua/type/tes3matrix33.html
 .. _`niAVObject`: ../../lua/type/niAVObject.html
 .. _`niRTTI`: ../../lua/type/niRTTI.html

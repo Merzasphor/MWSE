@@ -33,6 +33,9 @@ Properties
 `name`_ (`string`_)
     The human-facing name of the given object.
 
+`parent`_ (`niNode`_)
+    The object's parent. It may not have one if it is not attached to the scene.
+
 `properties`_ (`niPropertyLinkedList`_)
     The list of properties attached to this niAVObject.
 
@@ -69,6 +72,7 @@ Properties
     niDirectionalLight/enabled
     niDirectionalLight/flags
     niDirectionalLight/name
+    niDirectionalLight/parent
     niDirectionalLight/properties
     niDirectionalLight/references
     niDirectionalLight/rotation
@@ -87,6 +91,7 @@ Properties
 .. _`enabled`: niDirectionalLight/enabled.html
 .. _`flags`: niDirectionalLight/flags.html
 .. _`name`: niDirectionalLight/name.html
+.. _`parent`: niDirectionalLight/parent.html
 .. _`properties`: niDirectionalLight/properties.html
 .. _`references`: niDirectionalLight/references.html
 .. _`rotation`: niDirectionalLight/rotation.html

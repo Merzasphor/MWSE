@@ -21,6 +21,9 @@ Properties
 `name`_ (`string`_)
     The human-facing name of the given object.
 
+`parent`_ (`niNode`_)
+    The object's parent. It may not have one if it is not attached to the scene.
+
 `properties`_ (`niPropertyLinkedList`_)
     The list of properties attached to this niAVObject.
 
@@ -47,6 +50,7 @@ Properties
     niNode/effectList
     niNode/flags
     niNode/name
+    niNode/parent
     niNode/properties
     niNode/references
     niNode/rotation
@@ -59,6 +63,7 @@ Properties
 .. _`effectList`: niNode/effectList.html
 .. _`flags`: niNode/flags.html
 .. _`name`: niNode/name.html
+.. _`parent`: niNode/parent.html
 .. _`properties`: niNode/properties.html
 .. _`references`: niNode/references.html
 .. _`rotation`: niNode/rotation.html
