@@ -2460,8 +2460,10 @@ namespace mwse {
 				throw std::invalid_argument("Invalid spell parameter provided.");
 			}
 
+			bool instant = getOptionalParam<bool>(params, "instant", false);
 			TES3::MobileActor* casterMobile = reference->getAttachedMobileActor();
-			if (casterMobile) {
+			if (casterMobile && !instant) {
+				// Request AI to cast chosen spell.
 				if (casterMobile->isActive()) {
 					casterMobile->setCurrentMagicSourceFiltered(spell);
 					casterMobile->setActionTarget(target->getAttachedMobileActor());
@@ -2469,12 +2471,23 @@ namespace mwse {
 				}
 			}
 			else {
+				// Instant cast from both actors and non-actors.
 				TES3::MagicSourceCombo sourceCombo(spell);
 				auto spellInstanceController = TES3::WorldController::get()->spellInstanceController;
 				auto serial = spellInstanceController->activateSpell(reference, nullptr, &sourceCombo);
 				auto spellInstance = spellInstanceController->getInstanceFromSerial(serial);
-				spellInstance->overrideCastChance = 100.0f;
+
+				if (getOptionalParam<bool>(params, "alwaysSucceeds", true)) {
+					spellInstance->overrideCastChance = 100.0f;
+				}
 				spellInstance->target = target;
+				spellInstance->bypassResistances = getOptionalParam<bool>(params, "bypassResistances", false);
+
+				// Trigger spells to progress from pre-cast to targetting state. This state is automatically reset by active AI.
+				if (casterMobile) {
+					casterMobile->actionData.animStateAttack = TES3::AttackAnimationState::Casting2;
+				}
+
 				return true;
 			}
 
