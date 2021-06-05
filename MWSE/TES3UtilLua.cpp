@@ -2576,20 +2576,27 @@ namespace mwse {
 
 			// Check if magic activation succeeded before setting more data.
 			if (instance) {
-				// Force cast chance?
-				auto castChance = getOptionalParam<float>(params, "castChance");
-				if (castChance) {
-					instance->overrideCastChance = castChance.value();
-				}
-
 				// Specify target.
 				instance->target = getOptionalParamReference(params, "target");
 
 				// Bypass resistances?
 				instance->bypassResistances = getOptionalParam<bool>(params, "bypassResistances", false);
 
-				// Add enchantment source item to recharger.
-				if (sourceCombo.sourceType == TES3::MagicSourceType::Enchantment) {
+				if (sourceCombo.sourceType == TES3::MagicSourceType::Spell) {
+					// Force spells to apply all effects to the target immediately. Use caster if no target is specified.
+					// This method bypasses cast chance and animations.
+					const auto& effects = sourceCombo.source.asSpell->effects;
+					auto spellTarget = instance->target ? instance->target : reference;
+
+					for (int i = 0; i < 8; ++i) {
+						if (effects[i].effectID != -1) {
+							instance->spellHit(spellTarget, i);
+						}
+					}
+					instance->state = TES3::SpellEffectState::Working;
+				}
+				else if (sourceCombo.sourceType == TES3::MagicSourceType::Enchantment) {
+					// Add enchantment source item to recharger.
 					auto stack = from.value();
 					TES3::WorldController::get()->rechargerAddItem(stack->object, stack->variables, sourceCombo.source.asEnchantment);
 				}
