@@ -498,6 +498,11 @@ namespace TES3 {
 		mobController->processManager->setAIDistanceScale(scale);
 	}
 
+	const auto TES3_WorldController_rechargerAddItem = reinterpret_cast<void(__thiscall*)(WorldController*, Object*, Enchantment*, ItemData*)>(0x410790);
+	void WorldController::rechargerAddItem(Object* item, ItemData* itemData, Enchantment* enchantment) {
+		TES3_WorldController_rechargerAddItem(this, item, enchantment, itemData);
+	}
+
 	void WorldController::tickClock() {
 		gvarGameHour->value += (deltaTime * gvarTimescale->value) / 3600.0f;
 		checkForDayWrapping();

@@ -2574,18 +2574,27 @@ namespace mwse {
 			auto serial = spellInstanceController->activateSpell(reference, from.value_or(nullptr), &sourceCombo);
 			auto instance = spellInstanceController->getInstanceFromSerial(serial);
 
-			// Force cast chance?
-			auto castChance = getOptionalParam<float>(params, "castChance");
-			if (castChance) {
-				instance->overrideCastChance = castChance.value();
+			// Check if magic activation succeeded before setting more data.
+			if (instance) {
+				// Force cast chance?
+				auto castChance = getOptionalParam<float>(params, "castChance");
+				if (castChance) {
+					instance->overrideCastChance = castChance.value();
+				}
+
+				// Specify target.
+				instance->target = getOptionalParamReference(params, "target");
+
+				// Bypass resistances?
+				instance->bypassResistances = getOptionalParam<bool>(params, "bypassResistances", false);
+
+				// Add enchantment source item to recharger.
+				if (sourceCombo.sourceType == TES3::MagicSourceType::Enchantment) {
+					auto stack = from.value();
+					TES3::WorldController::get()->rechargerAddItem(stack->object, stack->variables, sourceCombo.source.asEnchantment);
+				}
 			}
 
-			// Specify target.
-			instance->target = getOptionalParamReference(params, "target");
-			
-			// Bypass resistnaces?
-			instance->bypassResistances = getOptionalParam<bool>(params, "bypassResistances", false);
-			
 			return instance;
 		}
 

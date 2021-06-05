@@ -368,6 +368,8 @@ namespace TES3 {
 		float getAIDistanceScale() const;
 		void setAIDistanceScale(float scale);
 
+		void rechargerAddItem(Object* item, ItemData* itemData, Enchantment* enchantment);
+
 		//
 		// Custom functions.
 		//
