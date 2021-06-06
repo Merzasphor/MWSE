@@ -1,12 +1,8 @@
-tes3.deleteObject
+tes3.setAnimationTiming
 ====================================================================================================
 
-Deletes a game object from the system. This can be dangerous, use with caution.
+This function sets a reference's animation groups' timings to a specified value.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 
-object (`tes3object`_)
-    The object to delete.
-
-.. _`tes3object`: ../../../lua/type/tes3object.html

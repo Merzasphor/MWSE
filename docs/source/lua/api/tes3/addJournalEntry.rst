@@ -1,12 +1,8 @@
-tes3.deleteObject
+tes3.addJournalEntry
 ====================================================================================================
 
-Deletes a game object from the system. This can be dangerous, use with caution.
+"This function creates a new journal entry. It can be called once world controller is loaded."
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 
-object (`tes3object`_)
-    The object to delete.
-
-.. _`tes3object`: ../../../lua/type/tes3object.html

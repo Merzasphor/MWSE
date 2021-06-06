@@ -1,12 +1,8 @@
-tes3.deleteObject
+tes3.incrementKillCount
 ====================================================================================================
 
-Deletes a game object from the system. This can be dangerous, use with caution.
+Increases player's kill count of a certain type of actor by one.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 
-object (`tes3object`_)
-    The object to delete.
-
-.. _`tes3object`: ../../../lua/type/tes3object.html

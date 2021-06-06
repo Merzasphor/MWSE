@@ -1,12 +1,8 @@
-tes3.deleteObject
+tes3.setMarkLocation
 ====================================================================================================
 
-Deletes a game object from the system. This can be dangerous, use with caution.
+This function set player's mark location to the one specified.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
 
-object (`tes3object`_)
-    The object to delete.
-
-.. _`tes3object`: ../../../lua/type/tes3object.html
