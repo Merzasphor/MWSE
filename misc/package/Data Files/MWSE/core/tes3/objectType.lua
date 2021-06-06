@@ -21,6 +21,8 @@ return {
 	["mobileCreature"] = 1380139341,
 	["mobileNPC"] = 1212367181,
 	["mobilePlayer"] = 1346584909,
+	["mobileProjectile"] = 1246908493,
+	["mobileSpellProjectile"] = 1347637325,
 	["npc"] = 1598246990,
 	["probe"] = 1112494672,
 	["reference"] = 1380336978,

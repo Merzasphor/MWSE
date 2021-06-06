@@ -16,6 +16,9 @@ Properties
 `name`_ (`string`_)
     The human-facing name of the given object.
 
+`parent`_ (`niNode`_)
+    The object's parent. It may not have one if it is not attached to the scene.
+
 `properties`_ (`niPropertyLinkedList`_)
     The list of properties attached to this niAVObject.
 
@@ -40,6 +43,7 @@ Properties
     niGeometry/appCulled
     niGeometry/flags
     niGeometry/name
+    niGeometry/parent
     niGeometry/properties
     niGeometry/references
     niGeometry/rotation
@@ -50,6 +54,7 @@ Properties
 .. _`appCulled`: niGeometry/appCulled.html
 .. _`flags`: niGeometry/flags.html
 .. _`name`: niGeometry/name.html
+.. _`parent`: niGeometry/parent.html
 .. _`properties`: niGeometry/properties.html
 .. _`references`: niGeometry/references.html
 .. _`rotation`: niGeometry/rotation.html
@@ -139,6 +144,7 @@ Methods
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`string`: ../../lua/type/string.html
 .. _`number`: ../../lua/type/number.html
+.. _`niNode`: ../../lua/type/niNode.html
 .. _`tes3matrix33`: ../../lua/type/tes3matrix33.html
 .. _`niAVObject`: ../../lua/type/niAVObject.html
 .. _`niRTTI`: ../../lua/type/niRTTI.html

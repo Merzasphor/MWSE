@@ -3,7 +3,7 @@
 #include "TES3Defines.h"
 
 #include "TES3HashMap.h"
-#include "TES3Object.h"
+#include "TES3MobileObject.h"
 #include "TES3Vectors.h"
 
 namespace TES3 {
@@ -51,19 +51,19 @@ namespace TES3 {
 		float overrideCastChance; // 0x10
 		Reference * target; // 0x14
 		bool bypassResistances; // 0x18
-		HashMap<Reference*, void*> effects[8]; // 0x1C
-		MobileProjectile * magicProjectile;
-		MagicSourceCombo sourceCombo;
-		unsigned int serialNumber;
+		HashMap<Reference*, MagicEffectInstance> effects[8]; // 0x1C
+		MobileProjectile * magicProjectile; // 0x9C
+		MagicSourceCombo sourceCombo; // 0xA0
+		unsigned int serialNumber; // 0xA8
 		void * unknown_0xAC;
 		float timestampCastBegin; // 0xB0
-		SpellEffectState state;
-		Reference * caster;
-		Item * castingItem;
-		ItemData * castingItemCondition;
-		char castingItemID[32];
-		char magicID[32];
-		Sound * soundEffects[8];
+		SpellEffectState state; // 0xB4
+		Reference * caster; // 0xB8
+		Item * castingItem; // 0xBC
+		ItemData * castingItemCondition; // 0xC0
+		char castingItemID[32]; // 0xC4
+		char magicID[32]; // 0xE4
+		Sound * soundEffects[8]; // 0x104
 		int unknown_0x124;
 		float unknown_0x128;
 
@@ -72,7 +72,9 @@ namespace TES3 {
 		//
 
 		int getMagnitude(int effectIndex) const;
-		void playSpellVFX(float duration, Vector3 position, Reference* attachedReference, int unknown0, PhysicalObject* effectVisual, int effectIndex = 0, int unknown1 = 0);
+		void playSpellVFX(float scale, Vector3 position, Reference* attachedReference, float offsetZ, PhysicalObject* effectVisual, int effectIndex, int isContinuous);
+		void projectileHit(MobileObject::Collision* collision);
+		bool spellHit(Reference* hitReference, int effectIndex);
 
 		void retire(TES3::Reference* reference);
 

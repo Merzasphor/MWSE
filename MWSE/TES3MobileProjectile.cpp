@@ -1,6 +1,7 @@
 #include "TES3MobileProjectile.h"
 
 #include "LuaManager.h"
+#include "LuaUtil.h"
 
 #include "LuaMobileProjectileActorCollisionEvent.h"
 #include "LuaMobileProjectileObjectCollisionEvent.h"
@@ -83,6 +84,15 @@ namespace TES3 {
 		}
 
 		return result;
+	}
+
+	Vector3 MobileProjectile::getProjectileVelocity() const {
+		return velocity;
+	}
+
+	void MobileProjectile::setProjectileVelocity_lua(sol::stack_object value) {
+		// Use our util class to support vectors or a table.
+		mwse::lua::setVectorFromLua(&velocity, value);
 	}
 
 }

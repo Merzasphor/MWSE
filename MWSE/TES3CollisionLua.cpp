@@ -23,7 +23,7 @@ namespace mwse {
 			usertypeDefinition["collisionType"] = sol::readonly_property(&Collision::collisionType);
 			usertypeDefinition["objectPosAtCollision"] = sol::readonly_property(&Collision::objectPosAtCollision);
 			usertypeDefinition["point"] = sol::readonly_property(&Collision::point);
-			usertypeDefinition["time"] = sol::readonly_property(&Collision::fTime);
+			usertypeDefinition["time"] = sol::readonly_property(&Collision::time);
 			usertypeDefinition["valid"] = sol::readonly_property(&Collision::valid);
 			usertypeDefinition["velocity"] = sol::readonly_property(&Collision::velocity);
 

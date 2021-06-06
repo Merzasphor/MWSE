@@ -46,15 +46,15 @@ return {
 			readonly = true,
 			description = "The origin of damage. Values of this variable can be: \"script\", \"fall\", \"suffocation\", \"attack\", \"magic\", \"shield\" or nil.",
 		},
-		checkForKnockdown = {
+		killingBlow = {
 			type ="boolean",
 			readonly = true,
-			description = "If true, the damage can cause a knockdown.",
+			description = "If true, the damage killed the target.",
 		},
 	},
 	examples = {
-		["knockDownCheck"] = {
-			title = "Notify the player that his arrow/bolt knocked down his opponent"
+		["killingBlow"] = {
+			title = "Notify the player that their arrow/bolt killed their opponent"
 		},
 	},
 }

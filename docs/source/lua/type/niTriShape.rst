@@ -21,6 +21,9 @@ Properties
 `normals`_ (`tes3vector3`_)
     The normals of the object.
 
+`parent`_ (`niNode`_)
+    The object's parent. It may not have one if it is not attached to the scene.
+
 `properties`_ (`niPropertyLinkedList`_)
     The list of properties attached to this niAVObject.
 
@@ -50,6 +53,7 @@ Properties
     niTriShape/flags
     niTriShape/name
     niTriShape/normals
+    niTriShape/parent
     niTriShape/properties
     niTriShape/references
     niTriShape/rotation
@@ -63,6 +67,7 @@ Properties
 .. _`flags`: niTriShape/flags.html
 .. _`name`: niTriShape/name.html
 .. _`normals`: niTriShape/normals.html
+.. _`parent`: niTriShape/parent.html
 .. _`properties`: niTriShape/properties.html
 .. _`references`: niTriShape/references.html
 .. _`rotation`: niTriShape/rotation.html

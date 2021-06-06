@@ -2460,8 +2460,10 @@ namespace mwse {
 				throw std::invalid_argument("Invalid spell parameter provided.");
 			}
 
+			bool instant = getOptionalParam<bool>(params, "instant", false);
 			TES3::MobileActor* casterMobile = reference->getAttachedMobileActor();
-			if (casterMobile) {
+			if (casterMobile && !instant) {
+				// Request AI to cast chosen spell.
 				if (casterMobile->isActive()) {
 					casterMobile->setCurrentMagicSourceFiltered(spell);
 					casterMobile->setActionTarget(target->getAttachedMobileActor());
@@ -2469,12 +2471,23 @@ namespace mwse {
 				}
 			}
 			else {
+				// Instant cast from both actors and non-actors.
 				TES3::MagicSourceCombo sourceCombo(spell);
 				auto spellInstanceController = TES3::WorldController::get()->spellInstanceController;
 				auto serial = spellInstanceController->activateSpell(reference, nullptr, &sourceCombo);
 				auto spellInstance = spellInstanceController->getInstanceFromSerial(serial);
-				spellInstance->overrideCastChance = 100.0f;
+
+				if (getOptionalParam<bool>(params, "alwaysSucceeds", true)) {
+					spellInstance->overrideCastChance = 100.0f;
+				}
 				spellInstance->target = target;
+				spellInstance->bypassResistances = getOptionalParam<bool>(params, "bypassResistances", false);
+
+				// Trigger spells to progress from pre-cast to targetting state. This state is automatically reset by active AI.
+				if (casterMobile) {
+					casterMobile->actionData.animStateAttack = TES3::AttackAnimationState::Casting2;
+				}
+
 				return true;
 			}
 
@@ -2574,18 +2587,34 @@ namespace mwse {
 			auto serial = spellInstanceController->activateSpell(reference, from.value_or(nullptr), &sourceCombo);
 			auto instance = spellInstanceController->getInstanceFromSerial(serial);
 
-			// Force cast chance?
-			auto castChance = getOptionalParam<float>(params, "castChance");
-			if (castChance) {
-				instance->overrideCastChance = castChance.value();
+			// Check if magic activation succeeded before setting more data.
+			if (instance) {
+				// Specify target.
+				instance->target = getOptionalParamReference(params, "target");
+
+				// Bypass resistances?
+				instance->bypassResistances = getOptionalParam<bool>(params, "bypassResistances", false);
+
+				if (sourceCombo.sourceType == TES3::MagicSourceType::Spell) {
+					// Force spells to apply all effects to the target immediately. Use caster if no target is specified.
+					// This method bypasses cast chance and animations.
+					const auto& effects = sourceCombo.source.asSpell->effects;
+					auto spellTarget = instance->target ? instance->target : reference;
+
+					for (int i = 0; i < 8; ++i) {
+						if (effects[i].effectID != -1) {
+							instance->spellHit(spellTarget, i);
+						}
+					}
+					instance->state = TES3::SpellEffectState::Working;
+				}
+				else if (sourceCombo.sourceType == TES3::MagicSourceType::Enchantment) {
+					// Add enchantment source item to recharger.
+					auto stack = from.value();
+					TES3::WorldController::get()->rechargerAddItem(stack->object, stack->variables, sourceCombo.source.asEnchantment);
+				}
 			}
 
-			// Specify target.
-			instance->target = getOptionalParamReference(params, "target");
-			
-			// Bypass resistnaces?
-			instance->bypassResistances = getOptionalParam<bool>(params, "bypassResistances", false);
-			
 			return instance;
 		}
 

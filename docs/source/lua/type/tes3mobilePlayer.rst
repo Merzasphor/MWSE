@@ -101,6 +101,9 @@ if damage < 1 then damage = 1 end
 `bounty`_ (`number`_)
     The player's current bounty.
 
+`cameraHeight`_ (`number`_)
+    Access to the player camera height, used for both the first person and third person camera (specifically the orbit centre). It is normally placed at head height by the game, on loading, or when a race is selected. The camera height can be reset to its regular value by setting this property to nil.
+
 `castReady`_ (`boolean`_)
     Toggle flag for if the player has casting ready.
 
@@ -598,6 +601,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobilePlayer/bluntWeapon
     tes3mobilePlayer/boundSize
     tes3mobilePlayer/bounty
+    tes3mobilePlayer/cameraHeight
     tes3mobilePlayer/castReady
     tes3mobilePlayer/cell
     tes3mobilePlayer/cellX
@@ -783,6 +787,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`bluntWeapon`: tes3mobilePlayer/bluntWeapon.html
 .. _`boundSize`: tes3mobilePlayer/boundSize.html
 .. _`bounty`: tes3mobilePlayer/bounty.html
+.. _`cameraHeight`: tes3mobilePlayer/cameraHeight.html
 .. _`castReady`: tes3mobilePlayer/castReady.html
 .. _`cell`: tes3mobilePlayer/cell.html
 .. _`cellX`: tes3mobilePlayer/cellX.html

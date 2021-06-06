@@ -13,11 +13,11 @@
 namespace mwse {
 	namespace lua {
 		namespace event {
-			DamagedEvent::DamagedEvent(TES3::MobileActor* mobileActor, float damage, bool checkForKnockdown) :
+			DamagedEvent::DamagedEvent(TES3::MobileActor* mobileActor, float damage, bool killingBlow) :
 				ObjectFilteredEvent("damaged", mobileActor->reference),
 				m_MobileActor(mobileActor),
 				m_Damage(damage),
-				m_CheckForKnockdown(checkForKnockdown)
+				m_KillingBlow(killingBlow)
 			{
 
 			}
@@ -68,7 +68,7 @@ namespace mwse {
 				}
 
 				eventData["damage"] = m_Damage;
-				eventData["checkForKnockdown"] = m_CheckForKnockdown;
+				eventData["killingBlow"] = m_KillingBlow;
 
 				return eventData;
 			}

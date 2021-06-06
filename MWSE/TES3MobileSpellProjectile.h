@@ -5,13 +5,14 @@
 namespace TES3 {
 	struct MobileSpellProjectile : MobileProjectile {
 		unsigned int spellInstanceSerial; // 0xAC
-		int unknown_0xB0;
+		float rotationSpeed; // 0xB0
 
 		//
 		// Custom functions.
 		//
 
 		MagicSourceInstance* getInstance();
+		void explode();
 	};
 	static_assert(sizeof(MobileSpellProjectile) == 0xB4, "TES3::MobileSpellProjectile failed size validation");
 }

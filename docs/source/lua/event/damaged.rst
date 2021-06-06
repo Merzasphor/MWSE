@@ -21,11 +21,6 @@ reference
 
 `tes3reference`_. Read-only. mobile’s associated reference.
 
-checkForKnockdown
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`boolean`_. Read-only. If true, the damage can cause a knockdown.
-
 mobile
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -36,15 +31,20 @@ magicSourceInstance
 
 `tes3magicSourceInstance`_. Read-only. tes3magicSourceInstance of a spell that caused damage. Can be nil.
 
+source
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+damageSourceType. Read-only. The origin of damage. Values of this variable can be: "script", "fall", "suffocation", "attack", "magic", "shield" or nil.
+
 projectile
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 `tes3mobileProjectile`_. Read-only. Projectile that dealt the damage. Can be nil.
 
-source
+killingBlow
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-damageSourceType. Read-only. The origin of damage. Values of this variable can be: "script", "fall", "suffocation", "attack", "magic", "shield" or nil.
+`boolean`_. Read-only. If true, the damage killed the target.
 
 attacker
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -59,13 +59,13 @@ damage
 Examples
 ----------------------------------------------------------------------------------------------------
 
-Notify the player that his arrow/bolt knocked down his opponent
+Notify the player that their arrow/bolt killed their opponent
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: lua
 
 
-    -- Print a message if player's arrow knocks down its target
+    -- Print a message if player's arrow killed its target
     local function onDamaged(e)
         -- We only care if the player did the damage
         if e.attackerReference ~= tes3.player then
@@ -75,9 +75,9 @@ Notify the player that his arrow/bolt knocked down his opponent
         -- Check if the damage was caused by a projectile, but not by a spell, so it must be an arrow or a bolt
         if e.projectile ~= nil and e.magicSourceInstance == nil then
 
-            -- Did the damage knock down the target?
-            if e.checkForKnockdown == true then
-                tes3.messageBox("Your arrow knocked down its target!")
+            -- Did the damage kill the target?
+            if e.killingBlow == true then
+                tes3.messageBox("Your arrow felled its target!")
             end
         end
     end

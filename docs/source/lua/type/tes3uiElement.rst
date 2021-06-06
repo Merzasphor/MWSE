@@ -425,7 +425,7 @@ Methods
     Finds the parent menu containing the element. Useful for finding the correct menu to run layout updates on.
 
 `register`_
-    Sets an `event`_ handler. Can be a standard `event`_ name, or an event specific to an element class. The callback receives an argument with the event data. See below for details.
+    Sets an ``event`` handler, which can add or override an existing event handler. The use of ``registerBefore`` or ``registerAfter`` is recommended if you do not want to replace the existing event handler. The eventID can be a standard ``event`` name, or an event specific to an element class. The callback receives an argument with the event data. See below for details.
     
 The original Morrowind callback is captured and can be invoked with the ``forwardEvent`` method on the event argument. If there is an existing Lua callback, it is replaced.
 
@@ -532,6 +532,12 @@ The standard type signature for events.
         **relativeY** (`number`_)
             For mouse events only. X and Y coordinates of the pointer relative to the top-left of the element.
 
+`registerAfter`_
+    Sets an ``event`` handler to run after any existing event handler on the element. Can be any event usable with ``register``. The callback receives an argument with the event data. See ``register`` for details.
+
+`registerBefore`_
+    Sets an ``event`` handler to run before any existing event handler on the element. Can be any event usable with ``register``. The callback receives an argument with the event data. See ``register`` for details.
+
 `reorderChildren`_ (`boolean`_)
         Moves the layout order of the children of this element. ``count`` elements are taken from starting child `Element`_ or index (0-based) ``moveFrom``, and moved before the child `Element`_ or index (0-based) ``insertBefore``. If ``count`` is -1, all children after ``moveFrom`` are moved. If any index is a negative number, then the index represents a distance from the end of the child list.
     
@@ -590,6 +596,8 @@ The standard type signature for events.
     tes3uiElement/getPropertyObject
     tes3uiElement/getTopLevelMenu
     tes3uiElement/register
+    tes3uiElement/registerAfter
+    tes3uiElement/registerBefore
     tes3uiElement/reorderChildren
     tes3uiElement/setPropertyBool
     tes3uiElement/setPropertyFloat
@@ -628,6 +636,8 @@ The standard type signature for events.
 .. _`getPropertyObject`: tes3uiElement/getPropertyObject.html
 .. _`getTopLevelMenu`: tes3uiElement/getTopLevelMenu.html
 .. _`register`: tes3uiElement/register.html
+.. _`registerAfter`: tes3uiElement/registerAfter.html
+.. _`registerBefore`: tes3uiElement/registerBefore.html
 .. _`reorderChildren`: tes3uiElement/reorderChildren.html
 .. _`setPropertyBool`: tes3uiElement/setPropertyBool.html
 .. _`setPropertyFloat`: tes3uiElement/setPropertyFloat.html

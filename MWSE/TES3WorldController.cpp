@@ -13,6 +13,7 @@
 #include "TES3UIMenuController.h"
 #include "TES3WeatherController.h"
 
+#include "CodePatchUtil.h"
 #include "MemoryUtil.h"
 #include "TES3Util.h"
 
@@ -497,6 +498,11 @@ namespace TES3 {
 		mobController->processManager->setAIDistanceScale(scale);
 	}
 
+	const auto TES3_WorldController_rechargerAddItem = reinterpret_cast<void(__thiscall*)(WorldController*, Object*, Enchantment*, ItemData*)>(0x410790);
+	void WorldController::rechargerAddItem(Object* item, ItemData* itemData, Enchantment* enchantment) {
+		TES3_WorldController_rechargerAddItem(this, item, enchantment, itemData);
+	}
+
 	void WorldController::tickClock() {
 		gvarGameHour->value += (deltaTime * gvarTimescale->value) / 3600.0f;
 		checkForDayWrapping();
@@ -535,12 +541,17 @@ namespace TES3 {
 			}
 
 			// Are we advancing to the next month?
+			bool advanceRespawn = false;
 			int daysInMonth = getDaysInMonth(month);
 			if (day > daysInMonth) {
 				day = 1;
 				month++;
+				advanceRespawn = true;
+			}
 
-				// Do we need to respawn containers?
+			// Do we need to respawn containers?
+			// mcp::ContainerRespawnTimescale modifies respawn cycle to use days.
+			if (advanceRespawn || mwse::mcp::getFeatureEnabled(mwse::mcp::feature::ContainerRespawnTimescale)) {
 				int monthsToRespawn = --gvarMonthsToRespawn->value;
 				if (monthsToRespawn <= 0) {
 					respawnContainers = true;

@@ -91,9 +91,10 @@ namespace mwse {
 						sol::protected_function callback = eventLua.callback;
 						sol::protected_function_result result = callback(eventData);
 						if (result.valid()) {
-							sol::optional<bool> block = result;
-							if (block.value_or(false)) {
-								return true;
+							// Return boolean results
+							sol::optional<bool> bool_result = result;
+							if (bool_result) {
+								return bool_result.value();
 							}
 						}
 						else {
@@ -132,9 +133,10 @@ namespace mwse {
 						sol::protected_function callback = eventLua.callback;
 						sol::protected_function_result result = callback(eventData);
 						if (result.valid()) {
-							sol::optional<bool> block = result;
-							if (block.value_or(false)) {
-								return true;
+							// Return boolean results
+							sol::optional<bool> bool_result = result;
+							if (bool_result) {
+								return bool_result.value();
 							}
 							break;
 						}
@@ -180,15 +182,16 @@ namespace mwse {
 						sol::protected_function callback = eventLua.callback;
 						sol::protected_function_result result = callback(eventData);
 						if (result.valid()) {
-							sol::optional<bool> block = result;
-							if (block.value_or(false)) {
-								return true;
+							// Return boolean results
+							sol::optional<bool> bool_result = result;
+							if (bool_result) {
+								return bool_result.value();
 							}
 						}
 						else {
 							sol::error error = result;
 							const char* errorSource = target->name.cString ? target->name.cString : "(unnamed)";
-							log::getLog() << "Lua error encountered during UI before-event from element " << errorSource << ":" << std::endl << error.what() << std::endl;
+							log::getLog() << "Lua error encountered during UI after-event from element " << errorSource << ":" << std::endl << error.what() << std::endl;
 							return true;
 						}
 					}
