@@ -4241,6 +4241,9 @@ namespace mwse {
 			genCallEnforced(0x5A70CF, 0x5A66C0, reinterpret_cast<DWORD>(GameBarterOffer));
 			genCallEnforced(0x5A6777, reinterpret_cast<DWORD>(OnExerciseSkill), reinterpret_cast<DWORD>(GameBarterOffer_BufferSkillGain));
 
+			// Allow area-of-effect magic effects and tes3.findActorsInProximity to hit/find incapacitated actors.
+			genJumpUnprotected(0x570341, 0x57034C);
+
 			// Patch custom magic effect saving and loading.
 			genJumpUnprotected(TES3_PATCH_MAGIC_SAVE_LOAD, reinterpret_cast<DWORD>(PatchMagicSaveLoad), TES3_PATCH_MAGIC_SAVE_LOAD_SIZE);
 
