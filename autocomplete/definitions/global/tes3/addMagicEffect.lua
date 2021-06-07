@@ -21,7 +21,7 @@ return {
 				name = "school",
 				type = "tes3.magicSchool",
 				optional = true,
-				default = tes3.magicSchool.alteration,
+				default = "tes3.magicSchool.alteration",
 				description = "The magic school the new effect will be assigned to. Maps to tes3.magicSchool.* constants"
 			},
 			{
