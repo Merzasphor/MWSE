@@ -61,7 +61,7 @@ function dofile(path)
 
 	-- Check all package paths.
 	for ppath in package.path:gmatch("[^;]+") do
-		r = loadfile(ppath:gsub("?", standardizedPath))
+		r = loadfile(tes3.installDirectory .. ppath:gsub("?", standardizedPath))
 		if (r) then
 			return r()
 		end
