@@ -4569,6 +4569,42 @@ namespace mwse {
 			return tes3::testLineOfSight(&position1.value(), height1, &position2.value(), height2);
 		}
 
+		sol::object findActorsInProximity(sol::table params) {
+			TES3::Reference* reference = getOptionalParamReference(params, "reference");
+			auto position = getOptionalParamVector3(params, "position");
+			auto range = getOptionalParam<float>(params, "range");
+
+			if (reference) {
+				position = reference->position;
+
+				// Use centre of body location to match how the findActorsInProximity treats mobiles.
+				auto mobile = reference->getAttachedMobileActor();
+				if (mobile) {
+					position.value().z += 0.5 * mobile->height;
+				}
+			}
+
+			if (!position) {
+				throw std::invalid_argument("A valid 'reference' or 'position' parameter is required.");
+			}
+			if (!range) {
+				throw std::invalid_argument("Invalid 'range' parameter provided.");
+			}
+
+			TES3::IteratedList<TES3::MobileActor*> actors;
+			auto processManager = TES3::WorldController::get()->mobController->processManager;
+			processManager->findActorsInProximity(&position.value(), range.value(), &actors);
+
+			// Convert list to lua array.
+			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+			sol::table result = stateHandle.state.create_table();
+			for (auto& i : actors) {
+				result.add(i);
+			}
+
+			return result;
+		}
+
 		void bindTES3Util() {
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 			sol::state& state = stateHandle.state;
@@ -4605,6 +4641,7 @@ namespace mwse {
 			tes3["fadeIn"] = fadeIn;
 			tes3["fadeOut"] = fadeOut;
 			tes3["fadeTo"] = fadeTo;
+			tes3["findActorsInProximity"] = findActorsInProximity;
 			tes3["findBirthsign"] = findBirthsign;
 			tes3["findClass"] = findClass;
 			tes3["findClosestExteriorReferenceOfObject"] = findClosestExteriorReferenceOfObject;

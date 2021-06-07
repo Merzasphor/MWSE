@@ -50,6 +50,7 @@ Functions
     tes3/fadeIn
     tes3/fadeOut
     tes3/fadeTo
+    tes3/findActorsInProximity
     tes3/findBirthsign
     tes3/findClass
     tes3/findClosestExteriorReferenceOfObject

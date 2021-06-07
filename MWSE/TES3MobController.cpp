@@ -33,6 +33,11 @@ namespace TES3 {
 		return isDetected;
 	}
 
+	const auto TES3_ProcessManager_findActorsInProximity = reinterpret_cast<void(__thiscall*)(ProcessManager*, Vector3*, float, IteratedList<MobileActor*>*)>(0x5702B0);
+	void ProcessManager::findActorsInProximity(Vector3 * position, float range, IteratedList<MobileActor*>* outputList) {
+		TES3_ProcessManager_findActorsInProximity(this, position, range, outputList);
+	}
+
 	const auto TES3_ProcessManager_checkRadius = reinterpret_cast<void(__thiscall*)(ProcessManager*, MobileActor*, IteratedList<AIPlanner*>*)>(0x5704B0);
 	void ProcessManager::checkRadius(MobileActor * actor, IteratedList<AIPlanner*> * container) {
 		TES3_ProcessManager_checkRadius(this, actor, container);
