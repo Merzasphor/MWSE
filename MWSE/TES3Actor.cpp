@@ -183,8 +183,8 @@ namespace TES3 {
 		actorFlags |= (value << 0xA);
 	}
 
-	void Actor::onCloseInventory_lua(sol::optional<TES3::Reference*> reference, sol::optional<int> unknown) {
-		onCloseInventory(reference.value_or(nullptr), unknown.value_or(0));
+	void Actor::onCloseInventory_lua(TES3::Reference* reference, sol::optional<int> unknown) {
+		vTable.actor->onCloseInventory(this, reference, unknown.value_or(0));
 	}
 }
 

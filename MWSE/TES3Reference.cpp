@@ -894,6 +894,18 @@ namespace TES3 {
 		return true;
 	}
 
+	bool Reference::onCloseInventory() {
+		// Check to make sure that the contained object is of the right type.
+		ObjectType::ObjectType baseType = baseObject->objectType;
+		if (baseType != ObjectType::Container && baseType != ObjectType::Creature && baseType != ObjectType::NPC) {
+			return false;
+		}
+
+		Actor* actor = reinterpret_cast<Actor*>(baseObject);
+		actor->vTable.actor->onCloseInventory(actor, this, 0);
+		return true;
+	}
+
 	bool Reference::insertAttachment(Attachment* attachment) {
 		// If there are no attachments, set this as the first.
 		if (attachments == nullptr) {

@@ -145,7 +145,7 @@ Methods
 ----------------------------------------------------------------------------------------------------
 
 `onInventoryClose`_
-    A callback function invoked when an inventory is closed. Typically not used outside of specific purposes.
+    A callback function invoked when an inventory is closed. Typically not used outside of specific purposes. You may find tes3.reference's onCloseInventory() to be more convenient to use.
 
 .. toctree::
     :hidden:

@@ -196,6 +196,9 @@ Methods
     
     If the light is not attached to any part of the scene graph yet, the point light will be placed as a child of the "attachLight" subnode of the model, or a child of the model if "attachLight" is not found.
 
+`onCloseInventory`_ (`boolean`_)
+    A function that tells the game that an inventory has been closed, if you are simulating inventory operations. It has the capability of un-cloning an inventory if it has not been modified. Typically not used outside of specific purposes.
+
 `setActionFlag`_
     Sets a bit in the reference's action data attachment
 
@@ -224,6 +227,7 @@ Methods
     tes3reference/detachDynamicLightFromAffectedNodes
     tes3reference/getAttachedDynamicLight
     tes3reference/getOrCreateAttachedDynamicLight
+    tes3reference/onCloseInventory
     tes3reference/setActionFlag
     tes3reference/setDynamicLighting
     tes3reference/testActionFlag
@@ -238,6 +242,7 @@ Methods
 .. _`detachDynamicLightFromAffectedNodes`: tes3reference/detachDynamicLightFromAffectedNodes.html
 .. _`getAttachedDynamicLight`: tes3reference/getAttachedDynamicLight.html
 .. _`getOrCreateAttachedDynamicLight`: tes3reference/getOrCreateAttachedDynamicLight.html
+.. _`onCloseInventory`: tes3reference/onCloseInventory.html
 .. _`setActionFlag`: tes3reference/setActionFlag.html
 .. _`setDynamicLighting`: tes3reference/setDynamicLighting.html
 .. _`testActionFlag`: tes3reference/testActionFlag.html

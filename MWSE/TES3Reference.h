@@ -108,6 +108,7 @@ namespace TES3 {
 		void relocate(Cell * cell, const Vector3 * position, float rotation);
 		void relocateNoRotation(Cell* cell, const Vector3* position);
 		bool clone();
+		bool onCloseInventory();
 
 		bool insertAttachment(Attachment* attachment);
 		Attachment* getAttachment(AttachmentType::AttachmentType type);
