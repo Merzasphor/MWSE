@@ -246,7 +246,7 @@ namespace TES3 {
 		float simulationDistance; // 0x38
 		Vector3 velocity; // 0x3C
 		Vector3 impulseVelocity; // 0x48
-		Vector3 position; // 0x54
+		Vector3 positionAtLastLightUpdate; // 0x54
 		NI::CollisionGroup * collisionGroup; // 0x60
 		float thisFrameDistanceMoved; // 0x64
 		Vector3 thisFrameDeltaPosition; // 0x68

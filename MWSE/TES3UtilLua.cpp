@@ -1277,7 +1277,7 @@ namespace mwse {
 
 			// Set some basic crime event data.
 			crimeEvent.timestamp = float(timeGetTime());
-			crimeEvent.position = criminal->position;
+			crimeEvent.position = criminal->reference->position;
 			crimeEvent.penalty = getOptionalParam<int>(params, "value", crimeEvent.penalty);
 
 			// Victim can be more complicated.

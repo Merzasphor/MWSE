@@ -1,6 +1,7 @@
 #include "TES3MobileSpellProjectile.h"
 
 #include "TES3MagicSourceInstance.h"
+#include "TES3Reference.h"
 #include "TES3SpellInstanceController.h"
 #include "TES3WorldController.h"
 
@@ -19,8 +20,8 @@ namespace TES3 {
 		MobileObject::Collision collision;
 		collision.valid = true;
 		collision.time = 0;
-		collision.point = position;
-		collision.objectPosAtCollision = position;
+		collision.point = reference->position;
+		collision.objectPosAtCollision = reference->position;
 		collision.colliderRef = nullptr;
 		collision.collisionType = MobileObject::Collision::CollisionType::None;
 

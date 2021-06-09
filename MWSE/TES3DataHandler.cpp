@@ -342,7 +342,7 @@ namespace TES3 {
 		}
 		else {
 			auto macp = TES3::WorldController::get()->getMobilePlayer();
-			return macp->position;
+			return macp->reference->position;
 		}
 	}
 

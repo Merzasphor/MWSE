@@ -162,17 +162,13 @@ namespace TES3 {
 	}
 
 	Vector3* MobileObject::getPosition() {
-		return &position;
+		// Delegate to reference.
+		return &reference->position;
 	}
 
 	void MobileObject::setPositionFromLua(sol::stack_object value) {
-		// Use our util class to support vectors or a table.
-		mwse::lua::setVectorFromLua(&position, value);
-
-		// Update the reference if possible.
-		if (reference) {
-			reference->setPositionFromLua(value);
-		}
+		// Delegate to reference.
+		reference->setPositionFromLua(value);
 	}
 
 	Vector3* MobileObject::getVelocity() {
