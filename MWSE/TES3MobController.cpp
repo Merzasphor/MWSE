@@ -38,9 +38,9 @@ namespace TES3 {
 		TES3_ProcessManager_findActorsInProximity(this, position, range, outputList);
 	}
 
-	const auto TES3_ProcessManager_checkRadius = reinterpret_cast<void(__thiscall*)(ProcessManager*, MobileActor*, IteratedList<AIPlanner*>*)>(0x5704B0);
-	void ProcessManager::checkRadius(MobileActor * actor, IteratedList<AIPlanner*> * container) {
-		TES3_ProcessManager_checkRadius(this, actor, container);
+	const auto TES3_ProcessManager_checkAlarmRadius = reinterpret_cast<void(__thiscall*)(ProcessManager*, MobileActor*, IteratedList<AIPlanner*>*)>(0x5704B0);
+	void ProcessManager::checkAlarmRadius(MobileActor * actor, IteratedList<AIPlanner*> * container) {
+		TES3_ProcessManager_checkAlarmRadius(this, actor, container);
 	}
 
 	const auto TES3_ProcessManager_checkPlayerDist = reinterpret_cast<void(__thiscall*)(ProcessManager*)>(0x56F730);
@@ -91,7 +91,7 @@ namespace TES3 {
 
 	bool MobController::hasMobileCollision(const MobileActor* mobile) {
 		bool result = false;
-		if (mobile && (mobile->actorFlags & TES3::MobileActorFlag::ActiveAI)) {
+		if (mobile && (mobile->actorFlags & TES3::MobileActorFlag::ActiveInSimulation)) {
 			auto node = mobile->reference->sceneNode;
 			criticalSection_Mobs.enter();
 			result = mobCollisionGroup->containsCollider(node);
@@ -101,7 +101,7 @@ namespace TES3 {
 	}
 
 	void MobController::enableMobileCollision(MobileActor* mobile) {
-		if (mobile && (mobile->actorFlags & TES3::MobileActorFlag::ActiveAI)) {
+		if (mobile && (mobile->actorFlags & TES3::MobileActorFlag::ActiveInSimulation)) {
 			auto node = mobile->reference->sceneNode;
 			criticalSection_Mobs.enter();
 			if (!mobCollisionGroup->containsCollider(node)) {
@@ -112,7 +112,7 @@ namespace TES3 {
 	}
 
 	void MobController::disableMobileCollision(MobileActor* mobile) {
-		if (mobile && (mobile->actorFlags & TES3::MobileActorFlag::ActiveAI)) {
+		if (mobile && (mobile->actorFlags & TES3::MobileActorFlag::ActiveInSimulation)) {
 			auto node = mobile->reference->sceneNode;
 			criticalSection_Mobs.enter();
 			mobCollisionGroup->removeCollider(node);

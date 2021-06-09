@@ -1307,7 +1307,7 @@ namespace mwse {
 			bool forceDetection = getOptionalParam<bool>(params, "forceDetection", false);
 			auto processManager = TES3::WorldController::get()->mobController->processManager;
 			if (!forceDetection && processManager->detectPresence(crimeEvent.criminal)) {
-				processManager->checkRadius(crimeEvent.victim, crimeEvent.witnesses);
+				processManager->checkAlarmRadius(crimeEvent.victim, crimeEvent.witnesses);
 			}
 
 			// If we were detected, add it to the list.

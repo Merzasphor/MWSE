@@ -696,11 +696,11 @@ namespace TES3 {
 	}
 
 	bool MobileActor::getFlagActiveAI() const {
-		return getMobileActorFlag(MobileActorFlag::ActiveAI);
+		return getMobileActorFlag(MobileActorFlag::ActiveInSimulation);
 	}
 
 	void MobileActor::setFlagActiveAI(bool value) {
-		setMobileActorFlag(MobileActorFlag::ActiveAI, value);
+		setMobileActorFlag(MobileActorFlag::ActiveInSimulation, value);
 	}
 
 	bool MobileActor::getFlagAttacked() const {
@@ -1160,7 +1160,7 @@ namespace TES3 {
 	}
 
 	bool MobileActor::getMobToMobCollision() const {
-		if (actorFlags & TES3::MobileActorFlag::ActiveAI) {
+		if (actorFlags & TES3::MobileActorFlag::ActiveInSimulation) {
 			auto mobController = TES3::WorldController::get()->mobController;
 			return mobController->hasMobileCollision(this);
 		}
@@ -1168,7 +1168,7 @@ namespace TES3 {
 	}
 
 	void MobileActor::setMobToMobCollision(bool collide) {
-		if (actorFlags & TES3::MobileActorFlag::ActiveAI) {
+		if (actorFlags & TES3::MobileActorFlag::ActiveInSimulation) {
 			auto mobController = TES3::WorldController::get()->mobController;
 			if (collide) {
 				mobController->enableMobileCollision(this);

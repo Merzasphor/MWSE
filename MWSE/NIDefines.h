@@ -7,6 +7,7 @@ namespace NI {
 	struct BinaryStream;
 	struct Bound;
 	struct Camera;
+	struct CollisionGroup;
 	struct CollisionSwitch;
 	struct Color;
 	struct ColorA;

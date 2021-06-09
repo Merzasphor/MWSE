@@ -26,7 +26,7 @@ namespace mwse {
 				usertypeDefinition["canRest"] = &TES3::ProcessManager::canRest;
 				usertypeDefinition["detectPresence"] = &TES3::ProcessManager::detectPresence;
 				usertypeDefinition["detectSneak"] = &TES3::ProcessManager::detectSneak;
-				usertypeDefinition["checkRadius"] = &TES3::ProcessManager::checkRadius;
+				usertypeDefinition["checkAlarmRadius"] = &TES3::ProcessManager::checkAlarmRadius;
 				usertypeDefinition["checkPlayerDistance"] = &TES3::ProcessManager::checkPlayerDistance;
 
 				// Functions exposed as properties.
