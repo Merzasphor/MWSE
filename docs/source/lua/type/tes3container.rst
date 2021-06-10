@@ -13,7 +13,7 @@ Properties
     The bounding box for the object.
 
 `capacity`_ (`number`_)
-    The amount of weight, in pounds, that the container can hold.
+    The amount of weight that the container can hold.
 
 `cloneCount`_ (`number`_)
     The number of clones that exist of this actor.

@@ -76,7 +76,7 @@ Properties
     The value of the object.
 
 `weight`_ (`number`_)
-    The weight, in pounds, of the object.
+    The weight of the object.
 
 .. toctree::
     :hidden:
