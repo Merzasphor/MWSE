@@ -1,9 +1,9 @@
 return {
 	type = "function",
-	description = [[This function opens resting menu and returns true on success. If the player can't rest currently, it returns false.
+	description = [[This function opens the resting menu and returns true on success. If the player can't rest currently, it returns false.
 
 Various parameters can be used to allow resting in situations not normally possible.]],
-	arguments = {
+	arguments = {{
 		name = "params",
 		type = "table",
 		tableParams = {
@@ -15,7 +15,7 @@ Various parameters can be used to allow resting in situations not normally possi
 			{ name = "resting", type = "boolean", optional = true, default = true, description = "Should this be a rest?" },
 			{ name = "waiting", type = "boolean", optional = true, default = false, description = "Or, is this a wait?" },
 		},
-	},
+	}},
 	returns = "success",
 	valuetype = "boolean",
 }

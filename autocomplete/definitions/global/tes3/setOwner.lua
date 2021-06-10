@@ -1,7 +1,7 @@
 return {
 	type = "function",
 	description = [[This function sets the owner of a reference.]],
-	arguments = {
+	arguments = {{
 		name = "params",
 		type = "table",
 		tableParams = {
@@ -11,5 +11,5 @@ return {
 			{ name = "requiredGlobal", type = "tes3globalVariable", optional = true, description = "If owner is set to NPC, requiredGlobal variable can be set." },
 			{ name = "requiredRank", type = "number", optional = true, default = 0, description = "If owner is set to faction, requitedRank variable controls minimal rank in faction the player has to have to be able to freely take the reference." },
 		},
-	},
+	}},
 }

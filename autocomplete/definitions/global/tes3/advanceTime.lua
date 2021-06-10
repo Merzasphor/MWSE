@@ -1,7 +1,7 @@
 return {
 	type = "function",
 	description = [[Advances the game time. Can be used to simulate player resting.]],
-	arguments = {
+	arguments = {{
 		name = "params",
 		type = "table",
 		tableParams = {
@@ -9,7 +9,7 @@ return {
 			{ name = "resting", type = "boolean", optional = true, default = false, description = "Should advancing time count as resting? If set to true invokes usual sleeping mechanics: health, fatigue and magicka restoration, and possible rest interruption. The length of the rest will be equal to hours parameter, rounded down to nearest natural number." },
 			{ name = "updateEnvironment", type = "boolean", optional = true, default = true },
 		},
-	},
+	}},
 	returns = "hoursPassed",
 	valuetype = "number",
 }

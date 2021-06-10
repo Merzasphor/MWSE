@@ -1,7 +1,7 @@
 return {
 	type = "function",
 	description = [[This function returns the total maginitude of a certain spell effect affecting a reference.]],
-	arguments = {
+	arguments = {{
 		name = "params",
 		type = "table",
 		tableParams = {
@@ -10,7 +10,7 @@ return {
 			{ name = "skill", optional = true, default = -1, type = "tes3.skill.* constants", description = "If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Skill, a skill should be provided. This also applies to any custom spell effect which operates on a certain skill." },
 			{ name = "attribute", optional = true, default = -1, type = "tes3.attribute.* constants", description = "If effect parameter specified is: Absorb, Damage, Drain, Fortify or Restore Attribute, an attribute should be provided. This also applies to any custom spell effect which operates on a certain attribute." },
 		},
-	},
+	}},
 	returns = "magnitude",
 	valuetype = "number",
 }

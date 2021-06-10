@@ -11,4 +11,10 @@ Returns
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters through a table with the given keys:
+
+serialNumber (`number`_)
+    No description available.
+
+.. _`number`: ../../../lua/type/number.html
 .. _`tes3magicSourceInstance`: ../../../lua/type/tes3magicSourceInstance.html

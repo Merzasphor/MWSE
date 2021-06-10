@@ -1,7 +1,7 @@
 return {
 	type = "function",
 	description = [[]],
-	arguments = {
+	arguments = {{
 		name = "params",
 		type = "table",
 		tableParams = {
@@ -30,7 +30,7 @@ return {
 			{ name = "target", type = "tes3reference|tes3mobileActor|string", optional = true, description = "" },
 			{ name = "bypassResistances", type = "boolean", optional = true, default = false, description = "Is this effect going to bypass magic resistance?" },
 		},
-	},
+	}},
 	returns = "instance",
 	valuetype = "tes3magicSourceInstance",
 }

@@ -1,7 +1,7 @@
 return {
 	type = "function",
-	description = [[This function creates a new spell effect.]],
-	arguments = {
+	description = [[This function creates a new custom magic effect. The effect can be scripted through lua.]],
+	arguments = {{
 		name = "params",
 		type = "table",
 		tableParams = {
@@ -276,7 +276,7 @@ return {
 				description = "A function which will be called when a spell containing this spell effect collides with something."
 			},
 		},
-	},
+	}},
 	returns = "effect",
 	valuetype = "tes3effect"
 }

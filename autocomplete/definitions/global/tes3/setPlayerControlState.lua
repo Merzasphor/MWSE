@@ -1,7 +1,7 @@
 return {
 	type = "function",
 	description = [[Enables or disables player's controls state.]],
-	arguments = {
+	arguments = {{
 		name = "params",
 		type = "table",
 		tableParams = {
@@ -12,7 +12,7 @@ return {
 			{ name = "vanity", type = "boolean", optional = true, default = false, description = "If this is false, it will block player from going to vanity mode." },
 			{ name = "viewSwitch", type = "boolean", optional = true, default = false, description = "If this is false, it will block player changing view mod from 1st to 3rd person camera and vice versa." },
 		},
-	},
+	}},
 	returns = "changedControlState",
 	valuetype = "boolean",
 }
