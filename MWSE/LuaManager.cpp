@@ -571,6 +571,9 @@ namespace mwse {
 			// Call overwritten function.
 			TES3_Reference_SetMobile(player, macp);
 
+			// Initialize mobile data that is never updated for the player.
+			macp->simulationDistance = 0;
+
 			// Grab the new player pointers for lua.
 			// Update tes3.player and tes3.mobilePlayer.
 			auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();

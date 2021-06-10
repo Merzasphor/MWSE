@@ -279,6 +279,7 @@ namespace TES3 {
 		// Lua interface functions.
 		//
 
+		Vector3 getBoundSize() const;
 		Vector3* getImpulseVelocity();
 		void setImpulseVelocityFromLua(sol::stack_object);
 		Vector3* getPosition();

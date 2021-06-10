@@ -229,6 +229,9 @@ May be useful when free movement is required in crowded situations, or to tempor
 `personality`_ (`tes3statistic`_)
     Direct access to the actor's personality attribute statistic.
 
+`playerDistance`_ (`number`_)
+    The distance to the player. Updated every frame when the mobile is in an active cell.
+
 `position`_ (`tes3vector3`_)
     A vector that represents the 3D position of the object.
 
@@ -412,6 +415,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobileActor/objectType
     tes3mobileActor/paralyze
     tes3mobileActor/personality
+    tes3mobileActor/playerDistance
     tes3mobileActor/position
     tes3mobileActor/prevMovementFlags
     tes3mobileActor/readiedAmmo
@@ -521,6 +525,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`objectType`: tes3mobileActor/objectType.html
 .. _`paralyze`: tes3mobileActor/paralyze.html
 .. _`personality`: tes3mobileActor/personality.html
+.. _`playerDistance`: tes3mobileActor/playerDistance.html
 .. _`position`: tes3mobileActor/position.html
 .. _`prevMovementFlags`: tes3mobileActor/prevMovementFlags.html
 .. _`readiedAmmo`: tes3mobileActor/readiedAmmo.html

@@ -152,6 +152,10 @@ namespace TES3 {
 		return TES3_MobileObject_getBasePositionIsUnderwater(this);
 	}
 
+	Vector3 MobileObject::getBoundSize() const {
+		return Vector3(boundSize.x, boundSize.y, height);
+	}
+
 	Vector3* MobileObject::getImpulseVelocity() {
 		return &impulseVelocity;
 	}

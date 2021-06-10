@@ -1,5 +1,4 @@
 #include "TES3MobController.h"
-#include "TES3MobileActor.h"
 
 #include "LuaManager.h"
 
@@ -7,7 +6,10 @@
 #include "LuaMobileActorDeactivatedEvent.h"
 #include "LuaDetectSneakEvent.h"
 
+#include "TES3MobileActor.h"
+#include "TES3MobilePlayer.h"
 #include "TES3Reference.h"
+#include "TES3WorldController.h"
 
 namespace TES3 {
 	const auto TES3_ProcessManager_detectPresence = reinterpret_cast<bool(__thiscall*)(ProcessManager*, MobileActor*, bool)>(0x570A60);
@@ -67,6 +69,10 @@ namespace TES3 {
 
 		auto mobile = reference->getAttachedMobileObject();
 		if (mwse::lua::event::MobileActorActivatedEvent::getEventEnabled() && mobile) {
+			// Update simulation distance with an initial value before the event fires.
+			auto macp = WorldController::get()->getMobilePlayer();
+			mobile->simulationDistance = reference->position.distance(&macp->reference->position);
+
 			mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new mwse::lua::event::MobileActorActivatedEvent(mobile));
 		}
 	}

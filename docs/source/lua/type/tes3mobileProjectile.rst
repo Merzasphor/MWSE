@@ -54,6 +54,9 @@ Properties
 `objectType`_ (`number`_)
     The type of mobile object. Maps to values in tes3.objectType.
 
+`playerDistance`_ (`number`_)
+    The distance to the player. Updated every frame when the mobile is in an active cell.
+
 `position`_ (`tes3vector3`_)
     A vector that represents the 3D position of the object.
 
@@ -88,6 +91,7 @@ Properties
     tes3mobileProjectile/movementCollision
     tes3mobileProjectile/movementFlags
     tes3mobileProjectile/objectType
+    tes3mobileProjectile/playerDistance
     tes3mobileProjectile/position
     tes3mobileProjectile/prevMovementFlags
     tes3mobileProjectile/reference
@@ -110,6 +114,7 @@ Properties
 .. _`movementCollision`: tes3mobileProjectile/movementCollision.html
 .. _`movementFlags`: tes3mobileProjectile/movementFlags.html
 .. _`objectType`: tes3mobileProjectile/objectType.html
+.. _`playerDistance`: tes3mobileProjectile/playerDistance.html
 .. _`position`: tes3mobileProjectile/position.html
 .. _`prevMovementFlags`: tes3mobileProjectile/prevMovementFlags.html
 .. _`reference`: tes3mobileProjectile/reference.html
