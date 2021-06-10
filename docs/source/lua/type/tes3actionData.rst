@@ -78,5 +78,6 @@ Properties
 
 .. _`tes3object`: ../../lua/type/tes3object.html
 .. _`number`: ../../lua/type/number.html
+.. _`tes3weapon`: ../../lua/type/tes3weapon.html
 .. _`tes3mobileActor`: ../../lua/type/tes3mobileActor.html
 .. _`tes3vector3`: ../../lua/type/tes3vector3.html

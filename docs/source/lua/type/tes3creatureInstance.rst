@@ -278,5 +278,6 @@ Methods
 .. _`tes3object`: ../../lua/type/tes3object.html
 .. _`number`: ../../lua/type/number.html
 .. _`niNode`: ../../lua/type/niNode.html
+.. _`tes3weapon`: ../../lua/type/tes3weapon.html
 .. _`tes3referenceList`: ../../lua/type/tes3referenceList.html
 .. _`tes3spellList`: ../../lua/type/tes3spellList.html

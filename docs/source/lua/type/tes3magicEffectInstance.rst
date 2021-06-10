@@ -68,5 +68,6 @@ Properties
 
 .. _`tes3armor`: ../../lua/type/tes3armor.html
 .. _`number`: ../../lua/type/number.html
+.. _`tes3weapon`: ../../lua/type/tes3weapon.html
 .. _`tes3reference`: ../../lua/type/tes3reference.html
 .. _`tes3item`: ../../lua/type/tes3item.html
