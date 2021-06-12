@@ -255,6 +255,9 @@ namespace NI {
 	// NiZBufferProperty
 	//
 
+	const unsigned int testFunctionPresentFlag = 0x40;
+	const unsigned int testFunctionMask = 0x7;
+
 	ZBufferProperty::ZBufferProperty() {
 		Property::Property();
 		vTable.asProperty = (Property_vTable*)0x74652C;
@@ -279,8 +282,8 @@ namespace NI {
 		flags = rawFlags & 0x3;
 
 		// Check for the custom test function bit.
-		if (rawFlags & 0x40) {
-			testFunction = static_cast<TestFunction>((rawFlags >> 2) & 0xF);
+		if (rawFlags & testFunctionPresentFlag) {
+			testFunction = static_cast<TestFunction>((rawFlags >> 2) & testFunctionMask);
 		}
 	}
 
@@ -293,10 +296,10 @@ namespace NI {
 
 		// If we're using a non-default test function, serialize it in the flags.
 		if (testFunction != TestFunction::LESS_EQUAL) {
-			serializedFlags |= (DWORD(testFunction) & 0xF) << 2;
+			serializedFlags |= (DWORD(testFunction) & testFunctionMask) << 2;
 			
 			// We also need to set the custom "we're using a new test function" bit.
-			serializedFlags |= 0x40;
+			serializedFlags |= testFunctionPresentFlag;
 		}
 
 		// Write the property flags with the custom masking, instead of the usual field.
