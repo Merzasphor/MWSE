@@ -238,9 +238,6 @@ namespace NI {
 		ZBufferProperty();
 		~ZBufferProperty();
 
-		void loadBinary(Stream* stream);
-		void saveBinary(Stream* stream) const;
-
 		static Pointer<ZBufferProperty> create();
 	};
 	static_assert(sizeof(ZBufferProperty) == 0x1C, "NI::ZBufferProperty failed size validation");

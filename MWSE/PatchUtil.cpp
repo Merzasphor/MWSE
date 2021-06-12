@@ -591,12 +591,6 @@ namespace mwse {
 			genCallEnforced(0x505374, 0x4C8480, *reinterpret_cast<DWORD*>(&NonDynamicData_showLocationOnMap));
 			genCallEnforced(0x50CB22, 0x4C8480, *reinterpret_cast<DWORD*>(&NonDynamicData_showLocationOnMap));
 
-			// Patch: Extend NiZBufferProperty binary loading/saving to support custom test function values.
-			auto ZBufferProperty_loadBinary = &NI::ZBufferProperty::loadBinary;
-			overrideVirtualTableEnforced(0x74652C, offsetof(NI::Object_vTable, loadBinary), 0x6E7270, *reinterpret_cast<DWORD*>(&ZBufferProperty_loadBinary));
-			auto ZBufferProperty_saveBinary = &NI::ZBufferProperty::saveBinary;
-			overrideVirtualTableEnforced(0x74652C, offsetof(NI::Object_vTable, saveBinary), 0x6D7C80, *reinterpret_cast<DWORD*>(&ZBufferProperty_saveBinary));
-
 			// Patch: Fix crash when trying to remove items from incomplete references.
 			genCallEnforced(0x508D14, 0x45E5C0, reinterpret_cast<DWORD>(PatchFixupActorSelfReference));
 
