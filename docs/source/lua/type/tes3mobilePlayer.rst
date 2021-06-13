@@ -18,11 +18,8 @@ Properties
 `activeAI`_ (`boolean`_)
     Friendly access to the actor's flag that controls if AI is active.
 
-`activeMagicEffectCount`_ (`number`_)
-    The number of active magic effects currently operating on the actor.
-
-`activeMagicEffects`_ (`tes3activeMagicEffect`_)
-    The first active magic effect on the actor, from which all others can be accessed.
+`activeMagicEffectList`_ (`table`_)
+    The active magic effects on the actor, from which all others can be accessed. A table with tes3activeMagicEffect items.
 
 `actorType`_ (`number`_)
     The type of the mobile actor. 0 is a creature, 1 is an NPC, 2 is the player.
@@ -46,9 +43,6 @@ Properties
     Toggle flag for if the player should always run.
 
 `animationController`_ (`tes3actorAnimationController`_)
-    No description available.
-
-`animationData`_ (`tes3playerAnimationData`_)
     No description available.
 
 `armorRating`_ (`number`_)
@@ -125,6 +119,9 @@ if damage < 1 then damage = 1 end
 `collidingReference`_ (`tes3reference`_)
     The reference that the mobile has collided with this frame.
 
+`combatSession`_ (`tes3combatSession`_)
+    Combat session data. This exists while the actor is in combat to provide memory for AI combat decisions.
+
 `conjuration`_ (`tes3skillStatistic`_)
     Direct access to the NPC's conjuration skill statistic.
 
@@ -157,6 +154,9 @@ if damage < 1 then damage = 1 end
 
 `endurance`_ (`tes3statistic`_)
     Direct access to the actor's endurance attribute statistic.
+
+`facing`_ (`number`_)
+    The facing of the actor, in radians.
 
 `fatigue`_ (`tes3statistic`_)
     Access to the actor's fatigue statistic.
@@ -249,7 +249,10 @@ if damage < 1 then damage = 1 end
     Shows if the player's camera is currently in 3rd person view.
 
 `isCrittable`_ (`boolean`_)
-    Friendly access to the actor's flag that controls if the actor can be crittically hit.
+    Friendly access to the actor's flag that controls if the actor can be critically hit.
+
+`isDead`_ (`boolean`_)
+    True if the actor is dead.
 
 `isFlying`_ (`boolean`_)
     Direct access to the actor's current movement flags, showing if the actor is flying.
@@ -268,6 +271,12 @@ if damage < 1 then damage = 1 end
 
 `isMovingRight`_ (`boolean`_)
     Direct access to the actor's current movement flags, showing if the actor is moving right.
+
+`isPlayerDetected`_ (`boolean`_)
+    Direct access to the actor's flag showing the player was detected on the last detection check.
+
+`isPlayerHidden`_ (`boolean`_)
+    Direct access to the actor's flag showing the player was hidden on the last detection check.
 
 `isRunning`_ (`boolean`_)
     Direct access to the actor's current movement flags, showing if the actor is running.
@@ -517,6 +526,9 @@ May be useful when free movement is required in crowded situations, or to tempor
 `swimSpeed`_ (`number`_)
     The calculated swim movement speed.
 
+`talkedTo`_ (`boolean`_)
+    Direct access to the actor's flag that shows it was recently talked to.
+
 `telekinesis`_ (`number`_)
     Direct access to the player's telekinesis effect attribute.
 
@@ -578,8 +590,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobilePlayer/actionBeforeCombat
     tes3mobilePlayer/actionData
     tes3mobilePlayer/activeAI
-    tes3mobilePlayer/activeMagicEffectCount
-    tes3mobilePlayer/activeMagicEffects
+    tes3mobilePlayer/activeMagicEffectList
     tes3mobilePlayer/actorType
     tes3mobilePlayer/agility
     tes3mobilePlayer/aiPlanner
@@ -588,7 +599,6 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobilePlayer/alteration
     tes3mobilePlayer/alwaysRun
     tes3mobilePlayer/animationController
-    tes3mobilePlayer/animationData
     tes3mobilePlayer/armorRating
     tes3mobilePlayer/armorer
     tes3mobilePlayer/athletics
@@ -612,6 +622,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobilePlayer/chameleon
     tes3mobilePlayer/clawMultiplier
     tes3mobilePlayer/collidingReference
+    tes3mobilePlayer/combatSession
     tes3mobilePlayer/conjuration
     tes3mobilePlayer/controlsDisabled
     tes3mobilePlayer/corpseHourstamp
@@ -623,6 +634,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobilePlayer/enchant
     tes3mobilePlayer/encumbrance
     tes3mobilePlayer/endurance
+    tes3mobilePlayer/facing
     tes3mobilePlayer/fatigue
     tes3mobilePlayer/fight
     tes3mobilePlayer/firstPerson
@@ -654,12 +666,15 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobilePlayer/invisibility
     tes3mobilePlayer/is3rdPerson
     tes3mobilePlayer/isCrittable
+    tes3mobilePlayer/isDead
     tes3mobilePlayer/isFlying
     tes3mobilePlayer/isJumping
     tes3mobilePlayer/isMovingBack
     tes3mobilePlayer/isMovingForward
     tes3mobilePlayer/isMovingLeft
     tes3mobilePlayer/isMovingRight
+    tes3mobilePlayer/isPlayerDetected
+    tes3mobilePlayer/isPlayerHidden
     tes3mobilePlayer/isRunning
     tes3mobilePlayer/isSneaking
     tes3mobilePlayer/isStartingJump
@@ -742,6 +757,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobilePlayer/swiftSwim
     tes3mobilePlayer/swimRunSpeed
     tes3mobilePlayer/swimSpeed
+    tes3mobilePlayer/talkedTo
     tes3mobilePlayer/telekinesis
     tes3mobilePlayer/torchSlot
     tes3mobilePlayer/travelling
@@ -765,8 +781,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`actionBeforeCombat`: tes3mobilePlayer/actionBeforeCombat.html
 .. _`actionData`: tes3mobilePlayer/actionData.html
 .. _`activeAI`: tes3mobilePlayer/activeAI.html
-.. _`activeMagicEffectCount`: tes3mobilePlayer/activeMagicEffectCount.html
-.. _`activeMagicEffects`: tes3mobilePlayer/activeMagicEffects.html
+.. _`activeMagicEffectList`: tes3mobilePlayer/activeMagicEffectList.html
 .. _`actorType`: tes3mobilePlayer/actorType.html
 .. _`agility`: tes3mobilePlayer/agility.html
 .. _`aiPlanner`: tes3mobilePlayer/aiPlanner.html
@@ -775,7 +790,6 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`alteration`: tes3mobilePlayer/alteration.html
 .. _`alwaysRun`: tes3mobilePlayer/alwaysRun.html
 .. _`animationController`: tes3mobilePlayer/animationController.html
-.. _`animationData`: tes3mobilePlayer/animationData.html
 .. _`armorRating`: tes3mobilePlayer/armorRating.html
 .. _`armorer`: tes3mobilePlayer/armorer.html
 .. _`athletics`: tes3mobilePlayer/athletics.html
@@ -799,6 +813,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`chameleon`: tes3mobilePlayer/chameleon.html
 .. _`clawMultiplier`: tes3mobilePlayer/clawMultiplier.html
 .. _`collidingReference`: tes3mobilePlayer/collidingReference.html
+.. _`combatSession`: tes3mobilePlayer/combatSession.html
 .. _`conjuration`: tes3mobilePlayer/conjuration.html
 .. _`controlsDisabled`: tes3mobilePlayer/controlsDisabled.html
 .. _`corpseHourstamp`: tes3mobilePlayer/corpseHourstamp.html
@@ -810,6 +825,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`enchant`: tes3mobilePlayer/enchant.html
 .. _`encumbrance`: tes3mobilePlayer/encumbrance.html
 .. _`endurance`: tes3mobilePlayer/endurance.html
+.. _`facing`: tes3mobilePlayer/facing.html
 .. _`fatigue`: tes3mobilePlayer/fatigue.html
 .. _`fight`: tes3mobilePlayer/fight.html
 .. _`firstPerson`: tes3mobilePlayer/firstPerson.html
@@ -841,12 +857,15 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`invisibility`: tes3mobilePlayer/invisibility.html
 .. _`is3rdPerson`: tes3mobilePlayer/is3rdPerson.html
 .. _`isCrittable`: tes3mobilePlayer/isCrittable.html
+.. _`isDead`: tes3mobilePlayer/isDead.html
 .. _`isFlying`: tes3mobilePlayer/isFlying.html
 .. _`isJumping`: tes3mobilePlayer/isJumping.html
 .. _`isMovingBack`: tes3mobilePlayer/isMovingBack.html
 .. _`isMovingForward`: tes3mobilePlayer/isMovingForward.html
 .. _`isMovingLeft`: tes3mobilePlayer/isMovingLeft.html
 .. _`isMovingRight`: tes3mobilePlayer/isMovingRight.html
+.. _`isPlayerDetected`: tes3mobilePlayer/isPlayerDetected.html
+.. _`isPlayerHidden`: tes3mobilePlayer/isPlayerHidden.html
 .. _`isRunning`: tes3mobilePlayer/isRunning.html
 .. _`isSneaking`: tes3mobilePlayer/isSneaking.html
 .. _`isStartingJump`: tes3mobilePlayer/isStartingJump.html
@@ -929,6 +948,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`swiftSwim`: tes3mobilePlayer/swiftSwim.html
 .. _`swimRunSpeed`: tes3mobilePlayer/swimRunSpeed.html
 .. _`swimSpeed`: tes3mobilePlayer/swimSpeed.html
+.. _`talkedTo`: tes3mobilePlayer/talkedTo.html
 .. _`telekinesis`: tes3mobilePlayer/telekinesis.html
 .. _`torchSlot`: tes3mobilePlayer/torchSlot.html
 .. _`travelling`: tes3mobilePlayer/travelling.html
@@ -954,6 +974,9 @@ Methods
 `applyDamage`_ (`number`_)
     Damages the actor, with options to control mitigation and difficulty scaling. Invokes the 'damage' and 'damaged' events, with 'script' source. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
 
+`applyFatigueDamage`_ (`number`_)
+    Damages the actor's fatigue, with accompanying reaction from the reciever. Invokes the 'damageHandToHand' and 'damagedHandToHand' events, with 'script' source. Returns the actual fatigue damage done.
+
 `applyHealthDamage`_ (`boolean`_)
     **Deprecated, please use applyDamage instead.**
 
@@ -968,11 +991,29 @@ Damages the actor.
 `exerciseSkill`_
     Exercises a skill, providing experience in it.
 
+`getBootsWeight`_ (`number`_)
+    Gets the weight of the boots equipped on the actor, or 0 if no boots are equipped.
+
+`getFatigueTerm`_ (`number`_)
+    Gets the fatigue-based skill scaling term used by many game mechanics, based on the actor's current and maximum fatigue. It is equal to ``max(0, fFatigueBase - fFatigueMult * max(0, 1 - fatigue.current/fatigue.base))``
+
+`getPowerUseTimestamp`_ (`number`_)
+    Finds the timestamp a recharging power was used.
+
 `getSkillStatistic`_ (`tes3skillStatistic`_)
     Fetches the statistic object of a skill with a given index. This converts to the limited options available for creatures.
 
 `getSkillValue`_ (`number`_)
     Fetches the current value of a skill with a given index. This converts to the limited options available for creatures.
+
+`getViewToActor`_ (`number`_)
+    No description available.
+
+`getViewToPoint`_ (`number`_)
+    No description available.
+
+`getViewToPointWithFacing`_ (`number`_)
+    No description available.
 
 `getWeaponSpeed`_ (`number`_)
     Fetches the weapon speed of the actor's currently equipped weapon, or 1.0 if no weapon is equipped.
@@ -980,11 +1021,17 @@ Damages the actor.
 `hasFreeAction`_ (`boolean`_)
     If true, the actor isn't paralyzed, dead, stunned, or otherwise unable to take action.
 
+`hasUsedPower`_ (`boolean`_)
+    Check if a power has been used and is recharging.
+
 `isAffectedByObject`_ (`boolean`_)
     Determines if the actor is currently being affected by a given alchemy, enchantment, or spell.
 
 `levelSkill`_
     Checks to see if a skill is ready to be leveled up, and performs any levelup logic.
+
+`rechargePower`_ (`number`_)
+    Makes a power immediately available for casting again.
 
 `startCombat`_
     Forces the actor into combat with another actor.
@@ -998,40 +1045,68 @@ Damages the actor.
 `unequip`_ (`boolean`_)
     Unequips one or more items from the actor.
 
+`updateDerivedStatistics`_
+    Updates statistics derived from attributes, which are magicka, fatigue, and encumbrance. Normally handled automatically when you use tes3.modStatistic.
+
+`updateOpacity`_
+    Updates the actor's visual opacity. Used after modifying applied chameleon or invisiblity effects.
+
 .. toctree::
     :hidden:
 
     tes3mobilePlayer/applyDamage
+    tes3mobilePlayer/applyFatigueDamage
     tes3mobilePlayer/applyHealthDamage
     tes3mobilePlayer/calcEffectiveDamage
     tes3mobilePlayer/equip
     tes3mobilePlayer/exerciseSkill
+    tes3mobilePlayer/getBootsWeight
+    tes3mobilePlayer/getFatigueTerm
+    tes3mobilePlayer/getPowerUseTimestamp
     tes3mobilePlayer/getSkillStatistic
     tes3mobilePlayer/getSkillValue
+    tes3mobilePlayer/getViewToActor
+    tes3mobilePlayer/getViewToPoint
+    tes3mobilePlayer/getViewToPointWithFacing
     tes3mobilePlayer/getWeaponSpeed
     tes3mobilePlayer/hasFreeAction
+    tes3mobilePlayer/hasUsedPower
     tes3mobilePlayer/isAffectedByObject
     tes3mobilePlayer/levelSkill
+    tes3mobilePlayer/rechargePower
     tes3mobilePlayer/startCombat
     tes3mobilePlayer/startDialogue
     tes3mobilePlayer/stopCombat
     tes3mobilePlayer/unequip
+    tes3mobilePlayer/updateDerivedStatistics
+    tes3mobilePlayer/updateOpacity
 
 .. _`applyDamage`: tes3mobilePlayer/applyDamage.html
+.. _`applyFatigueDamage`: tes3mobilePlayer/applyFatigueDamage.html
 .. _`applyHealthDamage`: tes3mobilePlayer/applyHealthDamage.html
 .. _`calcEffectiveDamage`: tes3mobilePlayer/calcEffectiveDamage.html
 .. _`equip`: tes3mobilePlayer/equip.html
 .. _`exerciseSkill`: tes3mobilePlayer/exerciseSkill.html
+.. _`getBootsWeight`: tes3mobilePlayer/getBootsWeight.html
+.. _`getFatigueTerm`: tes3mobilePlayer/getFatigueTerm.html
+.. _`getPowerUseTimestamp`: tes3mobilePlayer/getPowerUseTimestamp.html
 .. _`getSkillStatistic`: tes3mobilePlayer/getSkillStatistic.html
 .. _`getSkillValue`: tes3mobilePlayer/getSkillValue.html
+.. _`getViewToActor`: tes3mobilePlayer/getViewToActor.html
+.. _`getViewToPoint`: tes3mobilePlayer/getViewToPoint.html
+.. _`getViewToPointWithFacing`: tes3mobilePlayer/getViewToPointWithFacing.html
 .. _`getWeaponSpeed`: tes3mobilePlayer/getWeaponSpeed.html
 .. _`hasFreeAction`: tes3mobilePlayer/hasFreeAction.html
+.. _`hasUsedPower`: tes3mobilePlayer/hasUsedPower.html
 .. _`isAffectedByObject`: tes3mobilePlayer/isAffectedByObject.html
 .. _`levelSkill`: tes3mobilePlayer/levelSkill.html
+.. _`rechargePower`: tes3mobilePlayer/rechargePower.html
 .. _`startCombat`: tes3mobilePlayer/startCombat.html
 .. _`startDialogue`: tes3mobilePlayer/startDialogue.html
 .. _`stopCombat`: tes3mobilePlayer/stopCombat.html
 .. _`unequip`: tes3mobilePlayer/unequip.html
+.. _`updateDerivedStatistics`: tes3mobilePlayer/updateDerivedStatistics.html
+.. _`updateOpacity`: tes3mobilePlayer/updateOpacity.html
 
 .. _`tes3spell`: ../../lua/type/tes3spell.html
 .. _`tes3globalVariable`: ../../lua/type/tes3globalVariable.html
@@ -1039,10 +1114,10 @@ Damages the actor.
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`table`: ../../lua/type/table.html
 .. _`number`: ../../lua/type/number.html
-.. _`tes3activeMagicEffect`: ../../lua/type/tes3activeMagicEffect.html
 .. _`tes3npc`: ../../lua/type/tes3npc.html
 .. _`tes3actionData`: ../../lua/type/tes3actionData.html
 .. _`tes3reference`: ../../lua/type/tes3reference.html
+.. _`tes3combatSession`: ../../lua/type/tes3combatSession.html
 .. _`tes3statistic`: ../../lua/type/tes3statistic.html
 .. _`tes3vector3`: ../../lua/type/tes3vector3.html
 .. _`tes3cell`: ../../lua/type/tes3cell.html

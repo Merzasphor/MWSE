@@ -18,11 +18,8 @@ Properties
 `activeAI`_ (`boolean`_)
     Friendly access to the actor's flag that controls if AI is active.
 
-`activeMagicEffectCount`_ (`number`_)
-    The number of active magic effects currently operating on the actor.
-
-`activeMagicEffects`_ (`tes3activeMagicEffect`_)
-    The first active magic effect on the actor, from which all others can be accessed.
+`activeMagicEffectList`_ (`table`_)
+    The active magic effects on the actor, from which all others can be accessed. A table with tes3activeMagicEffect items.
 
 `actorType`_ (`number`_)
     The type of the mobile actor. 0 is a creature, 1 is an NPC, 2 is the player.
@@ -101,6 +98,9 @@ if damage < 1 then damage = 1 end
 `collidingReference`_ (`tes3reference`_)
     The reference that the mobile has collided with this frame.
 
+`combatSession`_ (`tes3combatSession`_)
+    Combat session data. This exists while the actor is in combat to provide memory for AI combat decisions.
+
 `conjuration`_ (`tes3skillStatistic`_)
     Direct access to the NPC's conjuration skill statistic.
 
@@ -127,6 +127,9 @@ if damage < 1 then damage = 1 end
 
 `endurance`_ (`tes3statistic`_)
     Direct access to the actor's endurance attribute statistic.
+
+`facing`_ (`number`_)
+    The facing of the actor, in radians.
 
 `fatigue`_ (`tes3statistic`_)
     Access to the actor's fatigue statistic.
@@ -204,7 +207,10 @@ if damage < 1 then damage = 1 end
     Direct access to the actor's invisibility effect attribute.
 
 `isCrittable`_ (`boolean`_)
-    Friendly access to the actor's flag that controls if the actor can be crittically hit.
+    Friendly access to the actor's flag that controls if the actor can be critically hit.
+
+`isDead`_ (`boolean`_)
+    True if the actor is dead.
 
 `isFlying`_ (`boolean`_)
     Direct access to the actor's current movement flags, showing if the actor is flying.
@@ -223,6 +229,12 @@ if damage < 1 then damage = 1 end
 
 `isMovingRight`_ (`boolean`_)
     Direct access to the actor's current movement flags, showing if the actor is moving right.
+
+`isPlayerDetected`_ (`boolean`_)
+    Direct access to the actor's flag showing the player was detected on the last detection check.
+
+`isPlayerHidden`_ (`boolean`_)
+    Direct access to the actor's flag showing the player was hidden on the last detection check.
 
 `isRunning`_ (`boolean`_)
     Direct access to the actor's current movement flags, showing if the actor is running.
@@ -424,6 +436,9 @@ May be useful when free movement is required in crowded situations, or to tempor
 `swimSpeed`_ (`number`_)
     The calculated swim movement speed.
 
+`talkedTo`_ (`boolean`_)
+    Direct access to the actor's flag that shows it was recently talked to.
+
 `torchSlot`_ (`tes3equipmentStack`_)
     The currently equipped light.
 
@@ -464,8 +479,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobileNPC/actionBeforeCombat
     tes3mobileNPC/actionData
     tes3mobileNPC/activeAI
-    tes3mobileNPC/activeMagicEffectCount
-    tes3mobileNPC/activeMagicEffects
+    tes3mobileNPC/activeMagicEffectList
     tes3mobileNPC/actorType
     tes3mobileNPC/agility
     tes3mobileNPC/aiPlanner
@@ -490,6 +504,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobileNPC/cellY
     tes3mobileNPC/chameleon
     tes3mobileNPC/collidingReference
+    tes3mobileNPC/combatSession
     tes3mobileNPC/conjuration
     tes3mobileNPC/corpseHourstamp
     tes3mobileNPC/currentEnchantedItem
@@ -499,6 +514,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobileNPC/enchant
     tes3mobileNPC/encumbrance
     tes3mobileNPC/endurance
+    tes3mobileNPC/facing
     tes3mobileNPC/fatigue
     tes3mobileNPC/fight
     tes3mobileNPC/flags
@@ -525,12 +541,15 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobileNPC/intelligence
     tes3mobileNPC/invisibility
     tes3mobileNPC/isCrittable
+    tes3mobileNPC/isDead
     tes3mobileNPC/isFlying
     tes3mobileNPC/isJumping
     tes3mobileNPC/isMovingBack
     tes3mobileNPC/isMovingForward
     tes3mobileNPC/isMovingLeft
     tes3mobileNPC/isMovingRight
+    tes3mobileNPC/isPlayerDetected
+    tes3mobileNPC/isPlayerHidden
     tes3mobileNPC/isRunning
     tes3mobileNPC/isSneaking
     tes3mobileNPC/isStartingJump
@@ -597,6 +616,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobileNPC/swiftSwim
     tes3mobileNPC/swimRunSpeed
     tes3mobileNPC/swimSpeed
+    tes3mobileNPC/talkedTo
     tes3mobileNPC/torchSlot
     tes3mobileNPC/unarmored
     tes3mobileNPC/underwater
@@ -613,8 +633,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`actionBeforeCombat`: tes3mobileNPC/actionBeforeCombat.html
 .. _`actionData`: tes3mobileNPC/actionData.html
 .. _`activeAI`: tes3mobileNPC/activeAI.html
-.. _`activeMagicEffectCount`: tes3mobileNPC/activeMagicEffectCount.html
-.. _`activeMagicEffects`: tes3mobileNPC/activeMagicEffects.html
+.. _`activeMagicEffectList`: tes3mobileNPC/activeMagicEffectList.html
 .. _`actorType`: tes3mobileNPC/actorType.html
 .. _`agility`: tes3mobileNPC/agility.html
 .. _`aiPlanner`: tes3mobileNPC/aiPlanner.html
@@ -639,6 +658,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`cellY`: tes3mobileNPC/cellY.html
 .. _`chameleon`: tes3mobileNPC/chameleon.html
 .. _`collidingReference`: tes3mobileNPC/collidingReference.html
+.. _`combatSession`: tes3mobileNPC/combatSession.html
 .. _`conjuration`: tes3mobileNPC/conjuration.html
 .. _`corpseHourstamp`: tes3mobileNPC/corpseHourstamp.html
 .. _`currentEnchantedItem`: tes3mobileNPC/currentEnchantedItem.html
@@ -648,6 +668,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`enchant`: tes3mobileNPC/enchant.html
 .. _`encumbrance`: tes3mobileNPC/encumbrance.html
 .. _`endurance`: tes3mobileNPC/endurance.html
+.. _`facing`: tes3mobileNPC/facing.html
 .. _`fatigue`: tes3mobileNPC/fatigue.html
 .. _`fight`: tes3mobileNPC/fight.html
 .. _`flags`: tes3mobileNPC/flags.html
@@ -674,12 +695,15 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`intelligence`: tes3mobileNPC/intelligence.html
 .. _`invisibility`: tes3mobileNPC/invisibility.html
 .. _`isCrittable`: tes3mobileNPC/isCrittable.html
+.. _`isDead`: tes3mobileNPC/isDead.html
 .. _`isFlying`: tes3mobileNPC/isFlying.html
 .. _`isJumping`: tes3mobileNPC/isJumping.html
 .. _`isMovingBack`: tes3mobileNPC/isMovingBack.html
 .. _`isMovingForward`: tes3mobileNPC/isMovingForward.html
 .. _`isMovingLeft`: tes3mobileNPC/isMovingLeft.html
 .. _`isMovingRight`: tes3mobileNPC/isMovingRight.html
+.. _`isPlayerDetected`: tes3mobileNPC/isPlayerDetected.html
+.. _`isPlayerHidden`: tes3mobileNPC/isPlayerHidden.html
 .. _`isRunning`: tes3mobileNPC/isRunning.html
 .. _`isSneaking`: tes3mobileNPC/isSneaking.html
 .. _`isStartingJump`: tes3mobileNPC/isStartingJump.html
@@ -746,6 +770,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`swiftSwim`: tes3mobileNPC/swiftSwim.html
 .. _`swimRunSpeed`: tes3mobileNPC/swimRunSpeed.html
 .. _`swimSpeed`: tes3mobileNPC/swimSpeed.html
+.. _`talkedTo`: tes3mobileNPC/talkedTo.html
 .. _`torchSlot`: tes3mobileNPC/torchSlot.html
 .. _`unarmored`: tes3mobileNPC/unarmored.html
 .. _`underwater`: tes3mobileNPC/underwater.html
@@ -764,6 +789,9 @@ Methods
 `applyDamage`_ (`number`_)
     Damages the actor, with options to control mitigation and difficulty scaling. Invokes the 'damage' and 'damaged' events, with 'script' source. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
 
+`applyFatigueDamage`_ (`number`_)
+    Damages the actor's fatigue, with accompanying reaction from the reciever. Invokes the 'damageHandToHand' and 'damagedHandToHand' events, with 'script' source. Returns the actual fatigue damage done.
+
 `applyHealthDamage`_ (`boolean`_)
     **Deprecated, please use applyDamage instead.**
 
@@ -775,11 +803,29 @@ Damages the actor.
 `equip`_ (`boolean`_)
     Equips an item, optionally adding the item if needed.
 
+`getBootsWeight`_ (`number`_)
+    Gets the weight of the boots equipped on the actor, or 0 if no boots are equipped.
+
+`getFatigueTerm`_ (`number`_)
+    Gets the fatigue-based skill scaling term used by many game mechanics, based on the actor's current and maximum fatigue. It is equal to ``max(0, fFatigueBase - fFatigueMult * max(0, 1 - fatigue.current/fatigue.base))``
+
+`getPowerUseTimestamp`_ (`number`_)
+    Finds the timestamp a recharging power was used.
+
 `getSkillStatistic`_ (`tes3skillStatistic`_)
     Fetches the statistic object of a skill with a given index. This converts to the limited options available for creatures.
 
 `getSkillValue`_ (`number`_)
     Fetches the current value of a skill with a given index. This converts to the limited options available for creatures.
+
+`getViewToActor`_ (`number`_)
+    No description available.
+
+`getViewToPoint`_ (`number`_)
+    No description available.
+
+`getViewToPointWithFacing`_ (`number`_)
+    No description available.
 
 `getWeaponSpeed`_ (`number`_)
     Fetches the weapon speed of the actor's currently equipped weapon, or 1.0 if no weapon is equipped.
@@ -787,8 +833,14 @@ Damages the actor.
 `hasFreeAction`_ (`boolean`_)
     If true, the actor isn't paralyzed, dead, stunned, or otherwise unable to take action.
 
+`hasUsedPower`_ (`boolean`_)
+    Check if a power has been used and is recharging.
+
 `isAffectedByObject`_ (`boolean`_)
     Determines if the actor is currently being affected by a given alchemy, enchantment, or spell.
+
+`rechargePower`_ (`number`_)
+    Makes a power immediately available for casting again.
 
 `startCombat`_
     Forces the actor into combat with another actor.
@@ -802,45 +854,73 @@ Damages the actor.
 `unequip`_ (`boolean`_)
     Unequips one or more items from the actor.
 
+`updateDerivedStatistics`_
+    Updates statistics derived from attributes, which are magicka, fatigue, and encumbrance. Normally handled automatically when you use tes3.modStatistic.
+
+`updateOpacity`_
+    Updates the actor's visual opacity. Used after modifying applied chameleon or invisiblity effects.
+
 .. toctree::
     :hidden:
 
     tes3mobileNPC/applyDamage
+    tes3mobileNPC/applyFatigueDamage
     tes3mobileNPC/applyHealthDamage
     tes3mobileNPC/calcEffectiveDamage
     tes3mobileNPC/equip
+    tes3mobileNPC/getBootsWeight
+    tes3mobileNPC/getFatigueTerm
+    tes3mobileNPC/getPowerUseTimestamp
     tes3mobileNPC/getSkillStatistic
     tes3mobileNPC/getSkillValue
+    tes3mobileNPC/getViewToActor
+    tes3mobileNPC/getViewToPoint
+    tes3mobileNPC/getViewToPointWithFacing
     tes3mobileNPC/getWeaponSpeed
     tes3mobileNPC/hasFreeAction
+    tes3mobileNPC/hasUsedPower
     tes3mobileNPC/isAffectedByObject
+    tes3mobileNPC/rechargePower
     tes3mobileNPC/startCombat
     tes3mobileNPC/startDialogue
     tes3mobileNPC/stopCombat
     tes3mobileNPC/unequip
+    tes3mobileNPC/updateDerivedStatistics
+    tes3mobileNPC/updateOpacity
 
 .. _`applyDamage`: tes3mobileNPC/applyDamage.html
+.. _`applyFatigueDamage`: tes3mobileNPC/applyFatigueDamage.html
 .. _`applyHealthDamage`: tes3mobileNPC/applyHealthDamage.html
 .. _`calcEffectiveDamage`: tes3mobileNPC/calcEffectiveDamage.html
 .. _`equip`: tes3mobileNPC/equip.html
+.. _`getBootsWeight`: tes3mobileNPC/getBootsWeight.html
+.. _`getFatigueTerm`: tes3mobileNPC/getFatigueTerm.html
+.. _`getPowerUseTimestamp`: tes3mobileNPC/getPowerUseTimestamp.html
 .. _`getSkillStatistic`: tes3mobileNPC/getSkillStatistic.html
 .. _`getSkillValue`: tes3mobileNPC/getSkillValue.html
+.. _`getViewToActor`: tes3mobileNPC/getViewToActor.html
+.. _`getViewToPoint`: tes3mobileNPC/getViewToPoint.html
+.. _`getViewToPointWithFacing`: tes3mobileNPC/getViewToPointWithFacing.html
 .. _`getWeaponSpeed`: tes3mobileNPC/getWeaponSpeed.html
 .. _`hasFreeAction`: tes3mobileNPC/hasFreeAction.html
+.. _`hasUsedPower`: tes3mobileNPC/hasUsedPower.html
 .. _`isAffectedByObject`: tes3mobileNPC/isAffectedByObject.html
+.. _`rechargePower`: tes3mobileNPC/rechargePower.html
 .. _`startCombat`: tes3mobileNPC/startCombat.html
 .. _`startDialogue`: tes3mobileNPC/startDialogue.html
 .. _`stopCombat`: tes3mobileNPC/stopCombat.html
 .. _`unequip`: tes3mobileNPC/unequip.html
+.. _`updateDerivedStatistics`: tes3mobileNPC/updateDerivedStatistics.html
+.. _`updateOpacity`: tes3mobileNPC/updateOpacity.html
 
 .. _`tes3spell`: ../../lua/type/tes3spell.html
 .. _`tes3iterator`: ../../lua/type/tes3iterator.html
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`table`: ../../lua/type/table.html
 .. _`number`: ../../lua/type/number.html
-.. _`tes3activeMagicEffect`: ../../lua/type/tes3activeMagicEffect.html
 .. _`tes3actionData`: ../../lua/type/tes3actionData.html
 .. _`tes3reference`: ../../lua/type/tes3reference.html
+.. _`tes3combatSession`: ../../lua/type/tes3combatSession.html
 .. _`tes3statistic`: ../../lua/type/tes3statistic.html
 .. _`tes3vector3`: ../../lua/type/tes3vector3.html
 .. _`tes3cell`: ../../lua/type/tes3cell.html
