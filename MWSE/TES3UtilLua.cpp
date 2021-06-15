@@ -3856,7 +3856,7 @@ namespace mwse {
 			return false;
 		}
 
-		int getEffectMagnitude(sol::table params) {
+		unsigned int getEffectMagnitude(sol::table params) {
 			TES3::Reference* reference = getOptionalParamExecutionReference(params);
 			if (reference == nullptr) {
 				throw std::invalid_argument("Invalid 'reference' parameter provided.");
@@ -3869,19 +3869,30 @@ namespace mwse {
 
 			int effectId = getOptionalParam<int>(params, "effect", -1);
 			auto effectController = TES3::DataHandler::get()->nonDynamicData->magicEffects;
-			if (!effectController->getEffectExists(effectId) || effectController->getEffectFlag(effectId, TES3::EffectFlag::NoMagnitudeBit)) {
+			if (!effectController->getEffectExists(effectId)) {
+				throw std::invalid_argument("Invalid 'effectId' parameter provided. No effect exists with the given id.");
+			}
+
+			if (effectController->getEffectFlag(effectId, TES3::EffectFlag::NoMagnitudeBit)) {
 				return 0;
 			}
 
+			// Get our attribute or skill, if appropriate.
 			sol::optional<int> skillOrAttributeID;
-			if (effectController->getEffectFlag(effectId, TES3::EffectFlag::TargetAttributeBit) || effectController->getEffectFlag(effectId, TES3::EffectFlag::TargetSkillBit)) {
+			if (effectController->getEffectFlag(effectId, TES3::EffectFlag::TargetAttributeBit)) {
+				skillOrAttributeID = getOptionalParam<int>(params, "attribute");
+				if (!skillOrAttributeID) {
+					return 0;
+				}
+			}
+			else if (effectController->getEffectFlag(effectId, TES3::EffectFlag::TargetSkillBit)) {
 				skillOrAttributeID = getOptionalParam<int>(params, "skill");
 				if (!skillOrAttributeID) {
-					skillOrAttributeID = getOptionalParam<int>(params, "attribute");
+					return 0;
 				}
 			}
 
-			int magnitude = 0;
+			unsigned magnitude = 0;
 			for (auto& activeEffect : mact->activeMagicEffects) {
 				if (activeEffect.magicEffectID == effectId && (!skillOrAttributeID || activeEffect.skillOrAttributeID == skillOrAttributeID)) {
 					magnitude += activeEffect.magnitudeMin;
