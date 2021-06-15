@@ -2,8 +2,8 @@
 
 #include "LuaManager.h"
 
+#include "TES3MagicInstanceController.h"
 #include "TES3MobileActor.h"
-#include "TES3SpellInstanceController.h"
 #include "TES3WorldController.h"
 
 namespace mwse {
@@ -26,7 +26,6 @@ namespace mwse {
 				usertypeDefinition["effectIndex"] = sol::readonly_property(&TES3::ActiveMagicEffect::magicInstanceEffectIndex);
 				usertypeDefinition["harmful"] = sol::readonly_property(&TES3::ActiveMagicEffect::isHarmful);
 				usertypeDefinition["isSummon"] = sol::readonly_property(&TES3::ActiveMagicEffect::isSummon);
-				usertypeDefinition["magnitudeMin"] = sol::readonly_property(&TES3::ActiveMagicEffect::magnitudeMin);
 				usertypeDefinition["serial"] = sol::readonly_property(&TES3::ActiveMagicEffect::magicInstanceSerial);
 				usertypeDefinition["skillId"] = sol::readonly_property(&TES3::ActiveMagicEffect::skillOrAttributeID);
 
@@ -36,6 +35,7 @@ namespace mwse {
 
 				// Legacy support.
 				usertypeDefinition["flag9"] = sol::readonly_property(&TES3::ActiveMagicEffect::isSummon);
+				usertypeDefinition["magnitudeMin"] = sol::readonly_property(&TES3::ActiveMagicEffect::unresistedMagnitude);
 				usertypeDefinition["next"] = sol::property(&TES3::ActiveMagicEffect::getNext_legacy);
 
 			}

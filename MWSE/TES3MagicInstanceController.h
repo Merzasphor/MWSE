@@ -1,23 +1,22 @@
 #pragma once
 
+#include "NIDefines.h"
 #include "TES3Defines.h"
 
 namespace TES3 {
-	struct SpellInstanceController {
-		int unknown_0x0;
-		int unknown_0x4;
-		int unknown_0x8;
-		int unknown_0xC;
-		int unknown_0x10;
-		int unknown_0x14;
-		int unknown_0x18;
-		int unknown_0x1C;
-		int unknown_0x20;
-		int unknown_0x24;
-		int unknown_0x28;
-		int unknown_0x2C;
-		int unknown_0x30;
-		int unknown_0x34;
+	struct MagicInstanceController {
+		struct StlMap {
+			char tag;
+			void * root;
+			char unknown_8;
+			size_t itemCount;
+		};
+
+		NI::Node * worldSpellRoot;
+		bool flagNoProcess;
+		StlMap mapSerialToMagicSourceInstance;
+		StlMap mapItemDataToSerial;
+		StlMap mapReferenceToSerial;
 
 		//
 		// Other related this-call functions.
@@ -29,5 +28,5 @@ namespace TES3 {
 		MagicSourceInstance * getInstanceFromSerial(unsigned int serial);
 
 	};
-	static_assert(sizeof(SpellInstanceController) == 0x38, "TES3::SpellInstanceController failed size validation");
+	static_assert(sizeof(MagicInstanceController) == 0x38, "TES3::MagicInstanceController failed size validation");
 }

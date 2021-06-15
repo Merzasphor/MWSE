@@ -51,7 +51,7 @@ namespace TES3 {
 		float overrideCastChance; // 0x10
 		Reference * target; // 0x14
 		bool bypassResistances; // 0x18
-		HashMap<Reference*, MagicEffectInstance> effects[8]; // 0x1C
+		HashMap<const char*, MagicEffectInstance> effects[8]; // 0x1C, key is the objectID
 		MobileProjectile * magicProjectile; // 0x9C
 		MagicSourceCombo sourceCombo; // 0xA0
 		unsigned int serialNumber; // 0xA8

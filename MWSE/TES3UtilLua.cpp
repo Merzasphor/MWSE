@@ -52,6 +52,7 @@
 #include "TES3LeveledList.h"
 #include "TES3Light.h"
 #include "TES3MagicEffectController.h"
+#include "TES3MagicInstanceController.h"
 #include "TES3Misc.h"
 #include "TES3MobController.h"
 #include "TES3MobileCreature.h"
@@ -66,7 +67,6 @@
 #include "TES3Sound.h"
 #include "TES3SoundGenerator.h"
 #include "TES3Spell.h"
-#include "TES3SpellInstanceController.h"
 #include "TES3UIElement.h"
 #include "TES3UIManager.h"
 #include "TES3UIMenuController.h"
@@ -1206,11 +1206,11 @@ namespace mwse {
 			}
 
 			if (effect != -1) {
-				TES3::WorldController::get()->spellInstanceController->removeSpellsByEffect(reference, effect, chance);
+				TES3::WorldController::get()->magicInstanceController->removeSpellsByEffect(reference, effect, chance);
 			}
 			else if (castType != -1) {
 				bool removeSpell = getOptionalParam<bool>(params, "removeSpell", castType != int(TES3::SpellCastType::Spell));
-				TES3::WorldController::get()->spellInstanceController->clearSpellEffect(reference, castType, chance, removeSpell);
+				TES3::WorldController::get()->magicInstanceController->clearSpellEffect(reference, castType, chance, removeSpell);
 			}
 			else {
 				throw std::exception("tes3.removeEffects: Must pass either 'effect' or 'castType' parameter!");
@@ -2476,9 +2476,9 @@ namespace mwse {
 			else {
 				// Instant cast from both actors and non-actors.
 				TES3::MagicSourceCombo sourceCombo(spell);
-				auto spellInstanceController = TES3::WorldController::get()->spellInstanceController;
-				auto serial = spellInstanceController->activateSpell(reference, nullptr, &sourceCombo);
-				auto spellInstance = spellInstanceController->getInstanceFromSerial(serial);
+				auto magicInstanceController = TES3::WorldController::get()->magicInstanceController;
+				auto serial = magicInstanceController->activateSpell(reference, nullptr, &sourceCombo);
+				auto spellInstance = magicInstanceController->getInstanceFromSerial(serial);
 
 				if (getOptionalParam<bool>(params, "alwaysSucceeds", true)) {
 					spellInstance->overrideCastChance = 100.0f;
@@ -2586,9 +2586,9 @@ namespace mwse {
 			}
 
 			// Activate the source on our target.
-			auto spellInstanceController = TES3::WorldController::get()->spellInstanceController;
-			auto serial = spellInstanceController->activateSpell(reference, from.value_or(nullptr), &sourceCombo);
-			auto instance = spellInstanceController->getInstanceFromSerial(serial);
+			auto magicInstanceController = TES3::WorldController::get()->magicInstanceController;
+			auto serial = magicInstanceController->activateSpell(reference, from.value_or(nullptr), &sourceCombo);
+			auto instance = magicInstanceController->getInstanceFromSerial(serial);
 
 			// Check if magic activation succeeded before setting more data.
 			if (instance) {
@@ -2627,7 +2627,7 @@ namespace mwse {
 				throw std::invalid_argument("Invalid 'serialNumber' parameter provided.");
 			}
 
-			return TES3::WorldController::get()->spellInstanceController->getInstanceFromSerial(serialNumber);
+			return TES3::WorldController::get()->magicInstanceController->getInstanceFromSerial(serialNumber);
 		}
 
 		const auto TES3_UI_showAlchemyMenu = reinterpret_cast<void(__cdecl*)()>(0x599A30);
@@ -3894,7 +3894,7 @@ namespace mwse {
 			unsigned magnitude = 0;
 			for (auto& activeEffect : mact->activeMagicEffects) {
 				if (activeEffect.magicEffectID == effectId && (!skillOrAttributeID || activeEffect.skillOrAttributeID == skillOrAttributeID)) {
-					magnitude += activeEffect.magnitudeMin;
+					magnitude += activeEffect.unresistedMagnitude;
 				}
 			}
 			return magnitude;

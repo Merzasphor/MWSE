@@ -245,7 +245,7 @@ namespace TES3 {
 		JournalHTML* journalHTML; // 0x64
 		SplashController* splashController; // 0x68
 		IteratedList<Quest*> * journalController; // 0x6C
-		SpellInstanceController * spellInstanceController; // 0x70
+		MagicInstanceController * magicInstanceController; // 0x70
 		int unknown_0x74;
 		int viewWidth; // 0x78
 		int viewHeight; // 0x7C

@@ -1,13 +1,13 @@
 #include "TES3MobileSpellProjectile.h"
 
+#include "TES3MagicInstanceController.h"
 #include "TES3MagicSourceInstance.h"
 #include "TES3Reference.h"
-#include "TES3SpellInstanceController.h"
 #include "TES3WorldController.h"
 
 namespace TES3 {
 	MagicSourceInstance* MobileSpellProjectile::getInstance() {
-		return TES3::WorldController::get()->spellInstanceController->getInstanceFromSerial(spellInstanceSerial);
+		return TES3::WorldController::get()->magicInstanceController->getInstanceFromSerial(spellInstanceSerial);
 	}
 
 	void MobileSpellProjectile::explode() {

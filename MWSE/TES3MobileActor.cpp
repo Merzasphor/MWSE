@@ -23,12 +23,12 @@
 #include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
 #include "TES3MagicEffectController.h"
+#include "TES3MagicInstanceController.h"
 #include "TES3MobController.h"
 #include "TES3MobilePlayer.h"
 #include "TES3ItemData.h"
 #include "TES3Spell.h"
 #include "TES3Reference.h"
-#include "TES3SpellInstanceController.h"
 #include "TES3WorldController.h"
 
 #include "TES3Util.h"
@@ -50,11 +50,11 @@ namespace TES3 {
 	const auto TES3_MobileActor_playVoiceover = reinterpret_cast<void(__thiscall*)(const MobileActor*, int)>(0x528F80);
 
 	MagicSourceInstance* ActiveMagicEffect::getInstance() const {
-		return WorldController::get()->spellInstanceController->getInstanceFromSerial(magicInstanceSerial);
+		return WorldController::get()->magicInstanceController->getInstanceFromSerial(magicInstanceSerial);
 	}
 
 	int ActiveMagicEffect::getMagnitude() const {
-		return magnitudeMin;
+		return unresistedMagnitude;
 	}
 
 	static_assert(offsetof(Deque<ActiveMagicEffect>::Node, data) == 0x8);

@@ -245,7 +245,7 @@
     <ClInclude Include="TES3PlayerAnimationControllerLua.h" />
     <ClInclude Include="TES3ScriptCompiler.h" />
     <ClInclude Include="TES3SoulGemData.h" />
-    <ClInclude Include="TES3SpellInstanceController.h" />
+    <ClInclude Include="TES3MagicInstanceController.h" />
     <ClInclude Include="TES3StdString.h" />
     <ClInclude Include="TES3StlList.h" />
     <ClInclude Include="TES3Stream.h" />
@@ -719,7 +719,7 @@
     <ClCompile Include="TES3Skill.cpp" />
     <ClCompile Include="TES3SoulGemData.cpp" />
     <ClCompile Include="TES3SoundGenerator.cpp" />
-    <ClCompile Include="TES3SpellInstanceController.cpp" />
+    <ClCompile Include="TES3MagicInstanceController.cpp" />
     <ClCompile Include="TES3Static.cpp" />
     <ClCompile Include="TES3StdString.cpp" />
     <ClCompile Include="TES3AttachmentLua.cpp" />

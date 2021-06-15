@@ -1044,7 +1044,7 @@
     <ClInclude Include="TES3CombatSessionLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
-    <ClInclude Include="TES3SpellInstanceController.h">
+    <ClInclude Include="TES3MagicInstanceController.h">
       <Filter>Header Files\DataAdapters\TES3\Magic</Filter>
     </ClInclude>
     <ClInclude Include="LuaSkillRaisedEvent.h">
@@ -2822,7 +2822,7 @@
     <ClCompile Include="TES3CombatSessionLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
     </ClCompile>
-    <ClCompile Include="TES3SpellInstanceController.cpp">
+    <ClCompile Include="TES3MagicInstanceController.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3MobileActorLua.cpp">
