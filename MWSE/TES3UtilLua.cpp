@@ -52,6 +52,7 @@
 #include "TES3LeveledList.h"
 #include "TES3Light.h"
 #include "TES3MagicEffectController.h"
+#include "TES3MagicEffectInstance.h"
 #include "TES3MagicInstanceController.h"
 #include "TES3Misc.h"
 #include "TES3MobController.h"
@@ -3855,7 +3856,7 @@ namespace mwse {
 			return false;
 		}
 
-		unsigned int getEffectMagnitude(sol::table params) {
+		std::pair<float, unsigned int> getEffectMagnitude(sol::table params) {
 			TES3::Reference* reference = getOptionalParamExecutionReference(params);
 			if (reference == nullptr) {
 				throw std::invalid_argument("Invalid 'reference' parameter provided.");
@@ -3869,11 +3870,11 @@ namespace mwse {
 			int effectId = getOptionalParam<int>(params, "effect", -1);
 			auto effectController = TES3::DataHandler::get()->nonDynamicData->magicEffects;
 			if (!effectController->getEffectExists(effectId)) {
-				throw std::invalid_argument("Invalid 'effectId' parameter provided. No effect exists with the given id.");
+				throw std::invalid_argument("Invalid 'effect' parameter provided. No effect exists with the given id.");
 			}
 
 			if (effectController->getEffectFlag(effectId, TES3::EffectFlag::NoMagnitudeBit)) {
-				return 0;
+				return std::make_pair(0, 0);
 			}
 
 			// Get our attribute or skill, if appropriate.
@@ -3881,23 +3882,34 @@ namespace mwse {
 			if (effectController->getEffectFlag(effectId, TES3::EffectFlag::TargetAttributeBit)) {
 				skillOrAttributeID = getOptionalParam<int>(params, "attribute");
 				if (!skillOrAttributeID) {
-					return 0;
+					return std::make_pair(0, 0);
 				}
 			}
 			else if (effectController->getEffectFlag(effectId, TES3::EffectFlag::TargetSkillBit)) {
 				skillOrAttributeID = getOptionalParam<int>(params, "skill");
 				if (!skillOrAttributeID) {
-					return 0;
+					return std::make_pair(0, 0);
 				}
 			}
 
-			unsigned magnitude = 0;
+			auto magicInstanceController = TES3::WorldController::get()->magicInstanceController;
+			auto referenceID = reference->getObjectID();
+			unsigned int unresistedMagnitude = 0;
+			float magnitude = 0;
+
 			for (auto& activeEffect : mact->activeMagicEffects) {
 				if (activeEffect.magicEffectID == effectId && (!skillOrAttributeID || activeEffect.skillOrAttributeID == skillOrAttributeID)) {
-					magnitude += activeEffect.unresistedMagnitude;
+					auto instance = magicInstanceController->getInstanceFromSerial(activeEffect.magicInstanceSerial);
+					if (instance) {
+						auto effectInstance = instance->effects[activeEffect.magicInstanceEffectIndex].getNode(referenceID);
+						if (effectInstance) {
+							unresistedMagnitude += effectInstance->value.magnitude;
+							magnitude += effectInstance->value.magnitude * (1.0f - effectInstance->value.resistedPercent / 100.0f);
+						}
+					}
 				}
 			}
-			return magnitude;
+			return std::make_pair(magnitude, unresistedMagnitude);
 		}
 
 		TES3::MagicEffect* addMagicEffect(sol::table params) {
