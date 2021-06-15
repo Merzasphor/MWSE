@@ -43,7 +43,7 @@ namespace TES3 {
 
 		size_t getActiveEffectCount();
 		int getFirstIndexOfEffect(int effectId);
-		bool effectsMatchWith(Alchemy * other);
+		bool effectsMatchWith(const Alchemy * other) const;
 		void setIconPath(const char* path);
 
 		std::reference_wrapper<Effect[8]> getEffects();

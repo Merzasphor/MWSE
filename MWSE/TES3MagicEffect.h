@@ -336,7 +336,7 @@ namespace TES3 {
 		//
 
 		MagicEffect * getEffectData() const;
-		bool matchesEffectsWith(const Effect *);
+		bool matchesEffectsWith(const Effect *) const;
 
 		signed char getSkillID() const;
 		void setSkillID(signed char id);

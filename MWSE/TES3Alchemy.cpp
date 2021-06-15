@@ -41,7 +41,7 @@ namespace TES3 {
 		return -1;
 	}
 
-	bool Alchemy::effectsMatchWith(Alchemy * other) {
+	bool Alchemy::effectsMatchWith(const Alchemy * other) const {
 		for (size_t i = 0; i < 8; i++) {
 			if (effects[i].matchesEffectsWith(&other->effects[i])) {
 				return false;
