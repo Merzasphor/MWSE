@@ -3828,22 +3828,21 @@ namespace mwse {
 			// Check based on effect ID.
 			if (effectId > -1) {
 				auto effectController = TES3::DataHandler::get()->nonDynamicData->magicEffects;
+				sol::optional<int> skillOrAttributeID;
+				if (effectController->getEffectFlag(effectId, TES3::EffectFlag::TargetAttributeBit)) {
+					skillOrAttributeID = getOptionalParam<int>(params, "attribute");
+					if (!skillOrAttributeID) {
+						throw std::invalid_argument("Invalid 'attribute' parameter provided. The given effect requires an associated attribute.");
+					}
+				}
+				else if (effectController->getEffectFlag(effectId, TES3::EffectFlag::TargetSkillBit)) {
+					skillOrAttributeID = getOptionalParam<int>(params, "skill");
+					if (!skillOrAttributeID) {
+						throw std::invalid_argument("Invalid 'skill' parameter provided. The given effect requires an associated skill.");
+					}
+				}
 
 				for (auto& activeEffect : mact->activeMagicEffects) {
-					sol::optional<int> skillOrAttributeID;
-					if (effectController->getEffectFlag(effectId, TES3::EffectFlag::TargetAttributeBit)) {
-						skillOrAttributeID = getOptionalParam<int>(params, "attribute");
-						if (!skillOrAttributeID) {
-							throw std::invalid_argument("Invalid 'attribute' parameter provided. The given effect requires an associated attribute.");
-						}
-					}
-					else if (effectController->getEffectFlag(effectId, TES3::EffectFlag::TargetSkillBit)) {
-						skillOrAttributeID = getOptionalParam<int>(params, "skill");
-						if (!skillOrAttributeID) {
-							throw std::invalid_argument("Invalid 'skill' parameter provided. The given effect requires an associated skill.");
-						}
-					}
-
 					if (activeEffect.magicEffectID == effectId && (!skillOrAttributeID || activeEffect.skillOrAttributeID == skillOrAttributeID)) {
 						return true;
 					}
