@@ -1,7 +1,7 @@
 getPowerUseTimestamp
 ====================================================================================================
 
-Finds the timestamp a recharging power was used.
+Finds the timestamp a recharging power was used. Powers recharge 24 hours after this timestamp. The timestamp units are hours. The current time as a timestamp can be accessed at tes3.getSimulationTimestamp().
 
 Returns
 ----------------------------------------------------------------------------------------------------

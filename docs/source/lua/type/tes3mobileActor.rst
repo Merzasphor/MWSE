@@ -612,7 +612,7 @@ Damages the actor.
     Gets the fatigue-based skill scaling term used by many game mechanics, based on the actor's current and maximum fatigue. It is equal to ``max(0, fFatigueBase - fFatigueMult * max(0, 1 - fatigue.current/fatigue.base))``
 
 `getPowerUseTimestamp`_ (`number`_)
-    Finds the timestamp a recharging power was used.
+    Finds the timestamp a recharging power was used. Powers recharge 24 hours after this timestamp. The timestamp units are hours. The current time as a timestamp can be accessed at tes3.getSimulationTimestamp().
 
 `getSkillStatistic`_ (`tes3skillStatistic`_)
     Fetches the statistic object of a skill with a given index. This converts to the limited options available for creatures.
@@ -643,6 +643,9 @@ Damages the actor.
 
 `rechargePower`_ (`number`_)
     Makes a power immediately available for casting again.
+
+`setPowerUseTimestamp`_
+    Sets the timestamp a recharging power was used. Powers recharge 24 hours after this timestamp.
 
 `startCombat`_
     Forces the actor into combat with another actor.
@@ -679,6 +682,7 @@ Damages the actor.
     tes3mobileActor/hasUsedPower
     tes3mobileActor/isAffectedByObject
     tes3mobileActor/rechargePower
+    tes3mobileActor/setPowerUseTimestamp
     tes3mobileActor/startCombat
     tes3mobileActor/startDialogue
     tes3mobileActor/stopCombat
@@ -702,6 +706,7 @@ Damages the actor.
 .. _`hasUsedPower`: tes3mobileActor/hasUsedPower.html
 .. _`isAffectedByObject`: tes3mobileActor/isAffectedByObject.html
 .. _`rechargePower`: tes3mobileActor/rechargePower.html
+.. _`setPowerUseTimestamp`: tes3mobileActor/setPowerUseTimestamp.html
 .. _`startCombat`: tes3mobileActor/startCombat.html
 .. _`startDialogue`: tes3mobileActor/startDialogue.html
 .. _`stopCombat`: tes3mobileActor/stopCombat.html

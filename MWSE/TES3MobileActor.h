@@ -115,13 +115,6 @@ namespace TES3 {
 	static_assert(sizeof(ActiveMagicEffect) == 0x10, "TES3::ActiveMagicEffect failed size validation");
 
 	struct MobileActor : MobileObject {
-#pragma pack(push, 4)
-		struct PowerUsage {
-			int unknown_0x0;
-			double castTimestamp; // 0x4
-		};
-#pragma pack(pop)
-
 		IteratedList<MobileActor*> listTargetActors; // 0x80
 		IteratedList<MobileActor*> listFriendlyActors; // 0x94
 		float scanTimer; // 0xA8
@@ -143,7 +136,7 @@ namespace TES3 {
 		Deque<ActiveMagicEffect> activeMagicEffects; // 0x1C4
 		int unknown_0x1D0;
 		Collision collision_1D4;
-		HashMap<Spell*, PowerUsage> powers;
+		HashMap<Spell*, double> powers;
 		char unknown_0x224;
 		signed char prevAIBehaviourState;
 		char unknown_0x226;
@@ -411,7 +404,8 @@ namespace TES3 {
 
 		bool hasUsedPower(Spell* power) const;
 		bool rechargePower(Spell* power);
-		sol::optional<double> getPowerUseTimestamp(Spell* spell) const;
+		sol::optional<double> getPowerUseTimestamp(Spell* power) const;
+		void setPowerUseTimestamp(Spell* power, double timestamp);
 
 		bool getMobToMobCollision() const;
 		void setMobToMobCollision(bool collide);
@@ -420,7 +414,8 @@ namespace TES3 {
 		int getActiveMagicEffectCount_legacy() const;
 	};
 	static_assert(sizeof(MobileActor) == 0x3B0, "TES3::MobileActor failed size validation");
-	static_assert(sizeof(MobileActor::PowerUsage) == 0xC, "TES3::MobileActor::PowerUsage failed size validation");
+	static_assert(sizeof(decltype(MobileActor::powers)::Node) == 0x18, "TES3::MobileActor::powers::Node failed size validation");
+	static_assert(offsetof(decltype(MobileActor::powers)::Node, value) == 0x8, "TES3::MobileActor::powers::Node::value failed offset validation");
 }
 
 MWSE_SOL_CUSTOMIZED_PUSHER_DECLARE_TES3_MOBILEOBJECT(TES3::MobileActor)

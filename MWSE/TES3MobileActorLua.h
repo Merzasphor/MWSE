@@ -139,6 +139,7 @@ namespace mwse {
 			usertypeDefinition["getWeaponSpeed"] = &TES3::MobileActor::getWeaponSpeed;
 			usertypeDefinition["hasUsedPower"] = &TES3::MobileActor::hasUsedPower;
 			usertypeDefinition["rechargePower"] = &TES3::MobileActor::rechargePower;
+			usertypeDefinition["setPowerUseTimestamp"] = &TES3::MobileActor::setPowerUseTimestamp;
 			usertypeDefinition["startCombat"] = &TES3::MobileActor::startCombat;
 			usertypeDefinition["startDialogue"] = &TES3::MobileActor::startDialogue;
 			usertypeDefinition["stopCombat"] = &TES3::MobileActor::stopCombat_lua;

@@ -1156,7 +1156,11 @@ namespace TES3 {
 			return {};
 		}
 
-		return node->value.castTimestamp;
+		return node->value;
+	}
+
+	void MobileActor::setPowerUseTimestamp(Spell* power, double timestamp) {
+		powers.addKey(power, timestamp);
 	}
 
 	bool MobileActor::getMobToMobCollision() const {

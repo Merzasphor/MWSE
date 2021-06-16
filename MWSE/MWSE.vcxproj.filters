@@ -178,6 +178,9 @@
     <Filter Include="Source Files\Lua\Events">
       <UniqueIdentifier>{c81b5931-1a46-4ba2-b3dc-3e0a8dfd6d2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\DataAdapters\TES3\Collections">
+      <UniqueIdentifier>{4efc7251-f248-4f4c-ae1a-655f113f5426}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Flags.h">
@@ -531,9 +534,6 @@
     <ClInclude Include="TES3SkillLua.h">
       <Filter>Header Files\Lua\Bindings\TES3</Filter>
     </ClInclude>
-    <ClInclude Include="TES3Sound.h">
-      <Filter>Header Files\DataAdapters\TES3\Collections</Filter>
-    </ClInclude>
     <ClInclude Include="StackLua.h">
       <Filter>Header Files\Lua\Bindings</Filter>
     </ClInclude>
@@ -794,9 +794,6 @@
     </ClInclude>
     <ClInclude Include="TES3DialogueConditional.h">
       <Filter>Header Files\DataAdapters\TES3\Dialog</Filter>
-    </ClInclude>
-    <ClInclude Include="TES3StdString.h">
-      <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
     </ClInclude>
     <ClInclude Include="TES3MobController.h">
       <Filter>Header Files\DataAdapters\TES3\Worldspace</Filter>
@@ -1508,6 +1505,12 @@
     </ClInclude>
     <ClInclude Include="LuaAttackStartEvent.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3Sound.h">
+      <Filter>Header Files\DataAdapters\TES3\_Unsorted_</Filter>
+    </ClInclude>
+    <ClInclude Include="TES3StdString.h">
+      <Filter>Header Files\DataAdapters\TES3\Collections</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2477,9 +2480,6 @@
     <ClCompile Include="NIPickLua.cpp">
       <Filter>Source Files\Lua\Bindings\NI</Filter>
     </ClCompile>
-    <ClCompile Include="TES3Vectors.cpp">
-      <Filter>Source Files\DataAdapters\TES3</Filter>
-    </ClCompile>
     <ClCompile Include="TES3Spell.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
@@ -2500,9 +2500,6 @@
     </ClCompile>
     <ClCompile Include="TES3SpellListLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
-    </ClCompile>
-    <ClCompile Include="TES3SpellList.cpp">
-      <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3GlobalVariableLua.cpp">
       <Filter>Source Files\Lua\Bindings\TES3</Filter>
@@ -2568,9 +2565,6 @@
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3CrimeEvent.cpp">
-      <Filter>Source Files\DataAdapters\TES3</Filter>
-    </ClCompile>
-    <ClCompile Include="TES3StdString.cpp">
       <Filter>Source Files\DataAdapters\TES3</Filter>
     </ClCompile>
     <ClCompile Include="TES3WeatherController.cpp">
@@ -3322,6 +3316,15 @@
     </ClCompile>
     <ClCompile Include="LuaAttackStartEvent.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3SpellList.cpp">
+      <Filter>Source Files\DataAdapters\TES3\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3StdString.cpp">
+      <Filter>Source Files\DataAdapters\TES3\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="TES3Vectors.cpp">
+      <Filter>Source Files\DataAdapters\TES3\Collections</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
