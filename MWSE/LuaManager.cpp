@@ -22,6 +22,7 @@
 #include "TES3Actor.h"
 #include "TES3ActorAnimationController.h"
 #include "TES3Alchemy.h"
+#include "TES3Apparatus.h"
 #include "TES3Book.h"
 #include "TES3BodyPartManager.h"
 #include "TES3CombatSession.h"
@@ -38,6 +39,7 @@
 #include "TES3InputController.h"
 #include "TES3ItemData.h"
 #include "TES3LeveledList.h"
+#include "TES3Lockpick.h"
 #include "TES3MagicEffect.h"
 #include "TES3MagicEffectController.h"
 #include "TES3MagicEffectInstance.h"
@@ -49,7 +51,9 @@
 #include "TES3MobileProjectile.h"
 #include "TES3NPC.h"
 #include "TES3PlayerAnimationController.h"
+#include "TES3Probe.h"
 #include "TES3Reference.h"
+#include "TES3RepairTool.h"
 #include "TES3Script.h"
 #include "TES3SoulGemData.h"
 #include "TES3Sound.h"
@@ -4249,6 +4253,16 @@ namespace mwse {
 
 			// Patch custom magic effect saving and loading.
 			genJumpUnprotected(TES3_PATCH_MAGIC_SAVE_LOAD, reinterpret_cast<DWORD>(PatchMagicSaveLoad), TES3_PATCH_MAGIC_SAVE_LOAD_SIZE);
+
+			// Allow setting names of apparatus, lockpicks, probes, and repair tools.
+			auto TES3_Apparatus_setName = &TES3::Apparatus::setName;
+			auto TES3_Lockpick_setName = &TES3::Lockpick::setName;
+			auto TES3_Probe_setName = &TES3::Probe::setName;
+			auto TES3_RepairTool_setName = &TES3::RepairTool::setName;
+			overrideVirtualTableEnforced(0x748110, offsetof(TES3::ObjectVirtualTable, setName), 0x4F1C50, *reinterpret_cast<DWORD*>(&TES3_Apparatus_setName));
+			overrideVirtualTableEnforced(0x748D10, offsetof(TES3::ObjectVirtualTable, setName), 0x4F1C50, *reinterpret_cast<DWORD*>(&TES3_Lockpick_setName));
+			overrideVirtualTableEnforced(0x748FA0, offsetof(TES3::ObjectVirtualTable, setName), 0x4F1C50, *reinterpret_cast<DWORD*>(&TES3_Probe_setName));
+			overrideVirtualTableEnforced(0x7490E8, offsetof(TES3::ObjectVirtualTable, setName), 0x4F1C50, *reinterpret_cast<DWORD*>(&TES3_RepairTool_setName));
 
 			// Look for main.lua scripts in the usual directories.
 			executeMainModScripts("Data Files\\MWSE\\core");
