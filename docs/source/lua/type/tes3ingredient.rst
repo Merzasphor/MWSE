@@ -16,13 +16,13 @@ Properties
     The disabled state of the object.
 
 `effectAttributeIds`_ (`string`_)
-    An array-style table access the attributes associated with the effects.
+    Read-only. An array-style table access the attributes associated with the effects.
 
 `effects`_ (`string`_)
-    An array-style table access to the four ingredient effects. Unlike alchemy or enchanting objects, these are simple numbers representing the effect ID.
+    Read-only. An array-style table access to the four ingredient effects. Unlike alchemy or enchanting objects, these are simple numbers representing the effect ID.
 
 `effectsSkillIds`_ (`string`_)
-    An array-style table access the skills associated with the effects.
+    Read-only. An array-style table access the skills associated with the effects.
 
 `icon`_ (`string`_)
     The path to the object's icon.

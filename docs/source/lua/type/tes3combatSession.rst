@@ -22,13 +22,13 @@ Properties
     No description available.
 
 `selectedShield`_ (`tes3equipmentStack`_)
-    No description available.
+    Read-only. No description available.
 
 `selectedSpell`_ (`tes3spell`_)
     No description available.
 
 `selectedWeapon`_ (`tes3equipmentStack`_)
-    No description available.
+    Read-only. No description available.
 
 `selectionPriority`_ (`number`_)
     No description available.

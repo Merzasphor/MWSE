@@ -7,7 +7,7 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `buttons`_ (`table`_)
-    The array-style access to 8 buttons states available on the mouse. Not all may be used.
+    Read-only. The array-style access to 8 buttons states available on the mouse. Not all may be used.
 
 `x`_ (`number`_)
     A basic property of the mouse for the X-axis.

@@ -29,7 +29,7 @@ mobile
 magicSourceInstance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`tes3magicSourceInstance`_. Read-only. tes3magicSourceInstance of a spell that caused damage. Can be nil.
+`tes3magicSourceInstance`_. tes3magicSourceInstance of a spell that caused damage. Can be nil.
 
 projectile
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

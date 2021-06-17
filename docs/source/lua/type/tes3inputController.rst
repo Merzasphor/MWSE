@@ -7,22 +7,22 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `creationFlags`_ (`number`_)
-    A bit field representing device capabilities and settings.
+    Read-only. A bit field representing device capabilities and settings.
 
 `inputMaps`_ (`table`_)
-    The array-style access to input bindings.
+    Read-only. The array-style access to input bindings.
 
 `keyboardState`_ (`table`_)
-    The array-style access to raw key states.
+    Read-only. The array-style access to raw key states.
 
 `mouseState`_ (`tes3directInputMouseState`_)
-    The raw DirectInput mouse state.
+    Read-only. The raw DirectInput mouse state.
 
 `previousKeyboardState`_ (`table`_)
-    The array-style access to the previous frame's raw key states.
+    Read-only. The array-style access to the previous frame's raw key states.
 
 `previousMouseStatement`_ (`tes3directInputMouseState`_)
-    The raw DirectInput mouse state for the previous state.
+    Read-only. The raw DirectInput mouse state for the previous state.
 
 .. toctree::
     :hidden:

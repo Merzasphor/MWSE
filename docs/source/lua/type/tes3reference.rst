@@ -12,13 +12,13 @@ Properties
     The current reference, if any, that this reference will activate.
 
 `attachments`_ (`table`_)
-    A table with friendly named access to all supported attachments.
+    Read-only. A table with friendly named access to all supported attachments.
 
 `cell`_ (`tes3cell`_)
-    The cell that the reference is currently in.
+    Read-only. The cell that the reference is currently in.
 
 `context`_ (`tes3scriptContext`_)
-    Access to the script context for this reference and its associated script.
+    Read-only. Access to the script context for this reference and its associated script.
 
 `data`_ (`table`_)
     A generic lua table that data can be written to, and synced to/from the save. All information stored must be valid for serialization to json. For item references, this is the same table as on the tes3itemData structure.
@@ -36,16 +36,16 @@ Properties
     Friendly access onto the reference's empty inventory flag.
 
 `isRespawn`_ (`boolean`_)
-    If true, the references respawn flag is set.
+    Read-only. If true, the references respawn flag is set.
 
 `light`_ (`niPointLight`_)
-    Direct access to the scene graph light, if a dynamic light is set.
+    Read-only. Direct access to the scene graph light, if a dynamic light is set.
 
 `lockNode`_ (`tes3lockNode`_)
-    Quick access to the reference's lock node, if any.
+    Read-only. Quick access to the reference's lock node, if any.
 
 `mobile`_ (`tes3mobileObject`_)
-    Access to the attached mobile object, if applicable.
+    Read-only. Access to the attached mobile object, if applicable.
 
 `modified`_ (`boolean`_)
     The modification state of the object since the last save.
@@ -54,13 +54,13 @@ Properties
     The next object in parent collection's list.
 
 `nextNode`_ (`tes3reference`_)
-    The next reference in the parent reference list.
+    Read-only. The next reference in the parent reference list.
 
 `nodeData`_ (`tes3reference`_)
-    Redundant access to this object, for iterating over a tes3referenceList.
+    Read-only. Redundant access to this object, for iterating over a tes3referenceList.
 
 `object`_ (`tes3physicalObject`_)
-    The object that the reference is for, such as a weapon, armor, or actor.
+    Read-only. The object that the reference is for, such as a weapon, armor, or actor.
 
 `objectFlags`_ (`number`_)
     The raw flags of the object.
@@ -81,7 +81,7 @@ Properties
     The previous object in parent collection's list.
 
 `previousNode`_ (`tes3reference`_)
-    The previous reference in the parent reference list.
+    Read-only. The previous reference in the parent reference list.
 
 `scale`_ (`number`_)
     The object's scale.
@@ -90,7 +90,7 @@ Properties
     The scene graph node for this object.
 
 `sceneNode`_ (`niNode`_)
-    The scene graph node that the reference uses for rendering.
+    Read-only. The scene graph node that the reference uses for rendering.
 
 `sceneReference`_ (`niNode`_)
     The scene graph reference node for this object.

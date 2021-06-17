@@ -25,7 +25,7 @@ Properties
     A requirement, typically associated with ownership and when the player may freely interact with an object. The type depends on the owner. Faction owners provide a required rank as a number, while NPCs provide a global variable to check.
 
 `script`_ (`tes3script`_)
-    The script associated with the scriptVariables.
+    Read-only. The script associated with the scriptVariables.
 
 `scriptVariables`_ (`tes3scriptVariables`_)
     Access to the structure where individual mwscript data is stored.

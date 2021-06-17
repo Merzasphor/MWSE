@@ -10,7 +10,7 @@ Properties
     The deleted state of the object.
 
 `description`_ (`string`_)
-    Loads from disk and returns the description of the birthsign.
+    Read-only. Loads from disk and returns the description of the birthsign.
 
 `disabled`_ (`boolean`_)
     The disabled state of the object.
@@ -34,7 +34,7 @@ Properties
     The filename of the mod that owns this object.
 
 `spells`_ (`tes3spellList`_)
-    A list of spells granted by the birthsign.
+    Read-only. A list of spells granted by the birthsign.
 
 `texturePath`_ (`string`_)
     Path to the related image representing the birthsign.

@@ -7,40 +7,40 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `attributeId`_ (`number`_)
-    The attribute ID (note that this may be the skill ID if the effect affects skills).
+    Read-only. The attribute ID (note that this may be the skill ID if the effect affects skills).
 
 `duration`_ (`number`_)
-    No description available.
+    Read-only. No description available.
 
 `effectId`_ (`number`_)
-    No description available.
+    Read-only. No description available.
 
 `effectIndex`_ (`number`_)
-    No description available.
+    Read-only. No description available.
 
 `harmful`_ (`boolean`_)
-    No description available.
+    Read-only. No description available.
 
 `instance`_ (`tes3magicSourceInstance`_)
-    No description available.
+    Read-only. No description available.
 
 `magnitude`_ (`number`_)
-    The unresisted magnitude of the magic effect, that is the magnitude before resistance attributes are applied. This is always an integer number. To find the actual applied magnitude, you must check the magic source instance.
+    Read-only. The unresisted magnitude of the magic effect, that is the magnitude before resistance attributes are applied. This is always an integer number. To find the actual applied magnitude, you must check the magic source instance.
 
 `magnitudeMin`_ (`number`_)
-    No description available.
+    Read-only. No description available.
 
 `next`_ (`tes3activeMagicEffect`_)
-    No description available.
+    Read-only. No description available.
 
 `previous`_ (`tes3activeMagicEffect`_)
-    No description available.
+    Read-only. No description available.
 
 `serial`_ (`number`_)
-    No description available.
+    Read-only. No description available.
 
 `skillId`_ (`number`_)
-    The skill ID (note that this may be the attribute ID if the effect affects attributes).
+    Read-only. The skill ID (note that this may be the attribute ID if the effect affects attributes).
 
 .. toctree::
     :hidden:

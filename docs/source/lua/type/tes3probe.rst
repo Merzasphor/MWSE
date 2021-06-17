@@ -61,7 +61,7 @@ Properties
     The scene graph reference node for this object.
 
 `script`_ (`tes3script`_)
-    The script that runs on the object.
+    Read-only. The script that runs on the object.
 
 `sourceMod`_ (`string`_)
     The filename of the mod that owns this object.

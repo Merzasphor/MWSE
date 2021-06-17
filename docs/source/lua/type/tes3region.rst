@@ -28,10 +28,10 @@ Properties
     The type of object. Maps to values in tes3.objectType.
 
 `sleepCreature`_ (`tes3leveledCreature`_)
-    The region's leveled creature that can be spawned while the player is sleeping.
+    Read-only. The region's leveled creature that can be spawned while the player is sleeping.
 
 `sounds`_ (`table`_)
-    Array-style table for the different region sounds. Each object in the table is a tes3regionSound.
+    Read-only. Array-style table for the different region sounds. Each object in the table is a tes3regionSound.
 
 `sourceMod`_ (`string`_)
     The filename of the mod that owns this object.
@@ -70,7 +70,7 @@ Properties
     The chance the Thunder weather-type will be used. Must be an integer between 0 - 100.
 
 `weatherChances`_ (`table`_)
-    Array-style table for the different weather chances. Each object in the table is a number, between 1 - 100. The index of the table is the weather type.
+    Read-only. Array-style table for the different weather chances. Each object in the table is a number, between 1 - 100. The index of the table is the weather type.
 
 .. toctree::
     :hidden:

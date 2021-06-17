@@ -19,10 +19,10 @@ Properties
     The normal vector at the point of intersection. The normal is valid only when `returnNormal = true`.
 
 `object`_ (`niAVObject`_)
-    The object of the record.
+    Read-only. The object of the record.
 
 `parent`_ (`niAVObject`_)
-    The parent of the record.
+    Read-only. The parent of the record.
 
 `reference`_ (`tes3reference`_)
     Quick reference to the associated object's reference.

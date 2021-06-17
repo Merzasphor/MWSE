@@ -7,10 +7,10 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `actorFlags`_ (`number`_)
-    A number representing the actor flags. Truly a bit field.
+    Read-only. A number representing the actor flags. Truly a bit field.
 
 `aiConfig`_ (`tes3aiConfig`_)
-    Simplified access to the base creature's AI configuration.
+    Read-only. Simplified access to the base creature's AI configuration.
 
 `attacks`_ (`table`_)
     Simplified access to the base creature's attacks. A table of three attacks, represented by a trio of tes3rangeInt.
@@ -31,7 +31,7 @@ Properties
     The bounding box for the object.
 
 `cloneCount`_ (`number`_)
-    The number of clones that exist of this actor.
+    Read-only. The number of clones that exist of this actor.
 
 `deleted`_ (`boolean`_)
     The deleted state of the object.
@@ -40,46 +40,46 @@ Properties
     The disabled state of the object.
 
 `equipment`_ (`tes3iterator`_)
-    The items currently equipped to the actor.
+    Read-only. The items currently equipped to the actor.
 
 `equipment`_ (`tes3iterator`_)
-    A collection that contains the currently equipped items.
+    Read-only. A collection that contains the currently equipped items.
 
 `fatigue`_ (`number`_)
-    The creature's current fatigue.
+    Read-only. The creature's current fatigue.
 
 `flies`_ (`boolean`_)
     Access to the creature's flies flag.
 
 `health`_ (`number`_)
-    The creature's current health.
+    Read-only. The creature's current health.
 
 `id`_ (`string`_)
     The unique identifier for the object.
 
 `inventory`_ (`tes3iterator`_)
-    A collection that contains the items in the actor's inventory.
+    Read-only. A collection that contains the items in the actor's inventory.
 
 `inventory`_ (`tes3iterator`_)
-    The items currently carried by the actor.
+    Read-only. The items currently carried by the actor.
 
 `isAttacked`_ (`boolean`_)
-    If true, the creature attacked flag is set.
+    Read-only. If true, the creature attacked flag is set.
 
 `isEssential`_ (`boolean`_)
-    If true, the creature essential flag is set.
+    Read-only. If true, the creature essential flag is set.
 
 `isInstance`_ (`boolean`_)
     Always returns true.
 
 `isRespawn`_ (`boolean`_)
-    If true, the creature respawn flag is set.
+    Read-only. If true, the creature respawn flag is set.
 
 `level`_ (`number`_)
-    The base level of the creature.
+    Read-only. The base level of the creature.
 
 `magicka`_ (`number`_)
-    The creature's current magicka.
+    Read-only. The creature's current magicka.
 
 `mesh`_ (`string`_)
     The path to the object's mesh.
@@ -133,7 +133,7 @@ Properties
     The filename of the mod that owns this object.
 
 `spells`_ (`tes3spellList`_)
-    Quick access to the base creature's spell list. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, spell in pairs(creature.spells.iterator) do print(spell.name) end
+    Read-only. Quick access to the base creature's spell list. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, spell in pairs(creature.spells.iterator) do print(spell.name) end
 
 `stolenList`_ (`tes3iterator`_)
     A list of actors that the object has been stolen from.
@@ -151,7 +151,7 @@ Properties
     Access to the creature's walks flag.
 
 `weapon`_ (`tes3weapon`_)
-    The creature's currently equipped weapon.
+    Read-only. The creature's currently equipped weapon.
 
 .. toctree::
     :hidden:

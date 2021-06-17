@@ -7,7 +7,7 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `iterator`_ (`tes3iterator`_)
-    A collection of spells. Can be iterated over using *pairs*.
+    Read-only. A collection of spells. Can be iterated over using *pairs*.
 
 .. toctree::
     :hidden:

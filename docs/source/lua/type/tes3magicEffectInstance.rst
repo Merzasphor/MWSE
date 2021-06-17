@@ -10,16 +10,16 @@ Properties
     No description available.
 
 `lastUsedArmor`_ (`tes3armor`_)
-    No description available.
+    Read-only. No description available.
 
 `lastUsedEnchItem`_ (`tes3item`_)
-    No description available.
+    Read-only. No description available.
 
 `lastUsedShield`_ (`tes3armor`_)
-    No description available.
+    Read-only. No description available.
 
 `lastUsedWeapon`_ (`tes3weapon`_)
-    No description available.
+    Read-only. No description available.
 
 `magnitude`_ (`number`_)
     No description available.

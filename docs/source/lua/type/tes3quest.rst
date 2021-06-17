@@ -10,7 +10,7 @@ Properties
     The deleted state of the object.
 
 `dialogue`_ (`tes3iterator`_)
-    A collection of dialogues associated with the quest.
+    Read-only. A collection of dialogues associated with the quest.
 
 `disabled`_ (`boolean`_)
     The disabled state of the object.
@@ -19,7 +19,7 @@ Properties
     The unique identifier for the object.
 
 `info`_ (`tes3iterator`_)
-    A collection of dialogue info associated with the quest.
+    Read-only. A collection of dialogue info associated with the quest.
 
 `modified`_ (`boolean`_)
     The modification state of the object since the last save.

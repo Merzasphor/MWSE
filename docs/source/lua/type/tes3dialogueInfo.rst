@@ -7,10 +7,10 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `actor`_ (`tes3actor`_)
-    The speaker's actor that the info is filtered for.
+    Read-only. The speaker's actor that the info is filtered for.
 
 `cell`_ (`tes3cell`_)
-    The speaker's current cell that the info is filtered for.
+    Read-only. The speaker's current cell that the info is filtered for.
 
 `deleted`_ (`boolean`_)
     The deleted state of the object.
@@ -19,13 +19,13 @@ Properties
     The disabled state of the object.
 
 `disposition`_ (`number`_)
-    The minimum disposition that the info is filtered for.
+    Read-only. The minimum disposition that the info is filtered for.
 
 `firstHeardFrom`_ (`tes3actor`_)
     The actor that the player first heard the info from.
 
 `id`_ (`string`_)
-    The unique long string ID for the info. This is not kept in memory, and must be loaded from files for each call.
+    Read-only. The unique long string ID for the info. This is not kept in memory, and must be loaded from files for each call.
 
 `id`_ (`string`_)
     The unique identifier for the object.
@@ -34,19 +34,19 @@ Properties
     The modification state of the object since the last save.
 
 `npcClass`_ (`tes3class`_)
-    The speaker's class that the info is filtered for.
+    Read-only. The speaker's class that the info is filtered for.
 
 `npcFaction`_ (`tes3faction`_)
-    The speaker's faction that the info is filtered for.
+    Read-only. The speaker's faction that the info is filtered for.
 
 `npcRace`_ (`tes3actor`_)
-    The speaker's race that the info is filtered for.
+    Read-only. The speaker's race that the info is filtered for.
 
 `npcRank`_ (`number`_)
-    The speaker's faction rank that the info is filtered for.
+    Read-only. The speaker's faction rank that the info is filtered for.
 
 `npcSex`_ (`number`_)
-    The speaker's sex that the info is filtered for.
+    Read-only. The speaker's sex that the info is filtered for.
 
 `objectFlags`_ (`number`_)
     The raw flags of the object.
@@ -55,19 +55,19 @@ Properties
     The type of object. Maps to values in tes3.objectType.
 
 `pcFaction`_ (`number`_)
-    The player's joined faction that the info is filtered for.
+    Read-only. The player's joined faction that the info is filtered for.
 
 `pcRank`_ (`number`_)
-    The player's rank required rank in the speaker's faction.
+    Read-only. The player's rank required rank in the speaker's faction.
 
 `sourceMod`_ (`string`_)
     The filename of the mod that owns this object.
 
 `text`_ (`string`_)
-    String contents for the info. This is not kept in memory, and must be loaded from files for each call.
+    Read-only. String contents for the info. This is not kept in memory, and must be loaded from files for each call.
 
 `type`_ (`number`_)
-    The type of the info.
+    Read-only. The type of the info.
 
 .. toctree::
     :hidden:

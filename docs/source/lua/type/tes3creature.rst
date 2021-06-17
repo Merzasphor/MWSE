@@ -7,10 +7,10 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `actorFlags`_ (`number`_)
-    A number representing the actor flags. Truly a bit field.
+    Read-only. A number representing the actor flags. Truly a bit field.
 
 `aiConfig`_ (`tes3aiConfig`_)
-    A substructure off of actors that contains information on the current AI configuration.
+    Read-only. A substructure off of actors that contains information on the current AI configuration.
 
 `attacks`_ (`table`_)
     A table of three attacks, represented by a trio of tes3rangeInt.
@@ -25,7 +25,7 @@ Properties
     The bounding box for the object.
 
 `cloneCount`_ (`number`_)
-    The number of clones that exist of this actor.
+    Read-only. The number of clones that exist of this actor.
 
 `deleted`_ (`boolean`_)
     The deleted state of the object.
@@ -34,40 +34,40 @@ Properties
     The disabled state of the object.
 
 `equipment`_ (`tes3iterator`_)
-    The items currently equipped to the actor.
+    Read-only. The items currently equipped to the actor.
 
 `fatigue`_ (`number`_)
-    The actor's max fatigue.
+    Read-only. The actor's max fatigue.
 
 `flies`_ (`boolean`_)
     Access to the creature's flies flag.
 
 `health`_ (`number`_)
-    The actor's max health.
+    Read-only. The actor's max health.
 
 `id`_ (`string`_)
     The unique identifier for the object.
 
 `inventory`_ (`tes3iterator`_)
-    The items currently carried by the actor.
+    Read-only. The items currently carried by the actor.
 
 `isAttacked`_ (`boolean`_)
-    If true, the actor's attacked flag is set.
+    Read-only. If true, the actor's attacked flag is set.
 
 `isEssential`_ (`boolean`_)
-    If true, the actor's essential flag is set.
+    Read-only. If true, the actor's essential flag is set.
 
 `isInstance`_ (`boolean`_)
     Always returns false.
 
 `isRespawn`_ (`boolean`_)
-    If true, the actor's respawn flag is set.
+    Read-only. If true, the actor's respawn flag is set.
 
 `level`_ (`number`_)
-    The base level of the creature.
+    Read-only. The base level of the creature.
 
 `magicka`_ (`number`_)
-    The actor's max magicka.
+    Read-only. The actor's max magicka.
 
 `mesh`_ (`string`_)
     The path to the object's mesh.
@@ -121,7 +121,7 @@ Properties
     The filename of the mod that owns this object.
 
 `spells`_ (`tes3spellList`_)
-    A list of spells that the actor has access to. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, spell in pairs(creature.spells.iterator) do print(spell.name) end
+    Read-only. A list of spells that the actor has access to. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, spell in pairs(creature.spells.iterator) do print(spell.name) end
 
 `stolenList`_ (`tes3iterator`_)
     A list of actors that the object has been stolen from.

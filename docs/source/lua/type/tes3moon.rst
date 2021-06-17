@@ -31,7 +31,7 @@ Properties
     No description available.
 
 `index`_ (`number`_)
-    The index of the moon, 0 for Masser, 1 for Secunda
+    Read-only. The index of the moon, 0 for Masser, 1 for Secunda
 
 `isRed`_ (`boolean`_)
     Determines if the moon is red, typically during the events of Bloodmoon.
@@ -46,10 +46,10 @@ Properties
     No description available.
 
 `texture`_ (`string`_)
-    The texture to use for the moon.
+    Read-only. The texture to use for the moon.
 
 `weatherController`_ (`tes3weatherController`_)
-    Quick access back to the weather controller structure.
+    Read-only. Quick access back to the weather controller structure.
 
 .. toctree::
     :hidden:

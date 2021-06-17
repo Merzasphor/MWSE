@@ -10,7 +10,7 @@ Properties
     No description available.
 
 `caster`_ (`tes3reference`_)
-    No description available.
+    Read-only. No description available.
 
 `deleted`_ (`boolean`_)
     The deleted state of the object.
@@ -22,16 +22,16 @@ Properties
     The unique identifier for the object.
 
 `item`_ (`tes3item`_)
-    No description available.
+    Read-only. No description available.
 
 `itemData`_ (`tes3itemData`_)
-    No description available.
+    Read-only. No description available.
 
 `itemID`_ (`string`_)
-    No description available.
+    Read-only. No description available.
 
 `magicID`_ (`string`_)
-    No description available.
+    Read-only. No description available.
 
 `modified`_ (`boolean`_)
     The modification state of the object since the last save.
@@ -43,22 +43,22 @@ Properties
     The type of object. Maps to values in tes3.objectType.
 
 `projectile`_ (`tes3mobileProjectile`_)
-    No description available.
+    Read-only. No description available.
 
 `source`_ (`tes3alchemy`_, `tes3enchantment`_, `tes3spell`_)
-    No description available.
+    Read-only. No description available.
 
 `sourceMod`_ (`string`_)
     The filename of the mod that owns this object.
 
 `sourceType`_ (`number`_)
-    Shows if the source is a spell, enchantment, or alchemy.
+    Read-only. Shows if the source is a spell, enchantment, or alchemy.
 
 `state`_ (`number`_)
     Shows if the state is pre-cast, cast, beginning, working, ending, retired, etc.
 
 `target`_ (`tes3reference`_)
-    No description available.
+    Read-only. No description available.
 
 `timestampCastBegin`_ (`number`_)
     No description available.

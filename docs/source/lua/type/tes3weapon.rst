@@ -31,7 +31,7 @@ Properties
     Access to the weapon flag bitfield. Known flags can be accessed via other weapon properties.
 
 `hasDurability`_ (`boolean`_)
-    Whether the weapon type has durability. Thrown weapons and ammunition are used once fired, and therefore do not use durability.
+    Read-only. Whether the weapon type has durability. Thrown weapons and ammunition are used once fired, and therefore do not use durability.
 
 `icon`_ (`string`_)
     The path to the object's icon.
@@ -43,22 +43,22 @@ Properties
     Access to the flag that controls if this weapon bypasses the "Resist normal weapons" magic effect.
 
 `isAmmo`_ (`boolean`_)
-    If true, the weapon is a type of ammunition.
+    Read-only. If true, the weapon is a type of ammunition.
 
 `isMelee`_ (`boolean`_)
-    If true, the weapon has a melee weapon type.
+    Read-only. If true, the weapon has a melee weapon type.
 
 `isOneHanded`_ (`boolean`_)
-    If true, the weapon is a one-handed melee weapon.
+    Read-only. If true, the weapon is a one-handed melee weapon.
 
 `isRanged`_ (`boolean`_)
-    If true, the weapon is a ranged weapon.
+    Read-only. If true, the weapon is a ranged weapon.
 
 `isSilver`_ (`boolean`_)
     If true, the weapon has a silver material flag.
 
 `isTwoHanded`_ (`boolean`_)
-    If true, the weapon is a two-handed melee weapon.
+    Read-only. If true, the weapon is a two-handed melee weapon.
 
 `maxCondition`_ (`number`_)
     The object's maximum condition.
@@ -100,7 +100,7 @@ Properties
     The scene graph reference node for this object.
 
 `script`_ (`tes3script`_)
-    The script that runs on the object.
+    Read-only. The script that runs on the object.
 
 `skill`_ (`tes3skill`_)
     Gets the skill data for the attack skill used by the weapon.
@@ -130,10 +130,10 @@ Properties
     Thrust damage inflicted at minimum weapon swing.
 
 `type`_ (`number`_)
-    A number representing the weapon type. Matches values from the tes3.weaponType table.
+    Read-only. A number representing the weapon type. Matches values from the tes3.weaponType table.
 
 `typeName`_ (`string`_)
-    The player-facing name for the weapon type.
+    Read-only. The player-facing name for the weapon type.
 
 `value`_ (`number`_)
     The value of the object.

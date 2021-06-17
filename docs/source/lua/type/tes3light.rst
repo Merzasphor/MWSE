@@ -13,7 +13,7 @@ Properties
     Access to the light's flags, determining if the light can be carried.
 
 `color`_ (`table`_)
-    Access to the light's base colors, in an array-style table of four values. The values can range from 0 to 255.
+    Read-only. Access to the light's base colors, in an array-style table of four values. The values can range from 0 to 255.
 
 `deleted`_ (`boolean`_)
     The deleted state of the object.
@@ -88,10 +88,10 @@ Properties
     The scene graph reference node for this object.
 
 `script`_ (`tes3script`_)
-    The script that runs on the object.
+    Read-only. The script that runs on the object.
 
 `sound`_ (`tes3sound`_)
-    The sound that runs on the object.
+    Read-only. The sound that runs on the object.
 
 `sourceMod`_ (`string`_)
     The filename of the mod that owns this object.

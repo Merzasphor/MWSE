@@ -25,7 +25,7 @@ Properties
     Access to the flag determining if this item is recognized as a key.
 
 `isSoulGem`_ (`boolean`_)
-    Determines if this item is a soul gem.
+    Read-only. Determines if this item is a soul gem.
 
 `mesh`_ (`string`_)
     The path to the object's mesh.
@@ -61,10 +61,10 @@ Properties
     The scene graph reference node for this object.
 
 `script`_ (`tes3script`_)
-    The script that runs on the object.
+    Read-only. The script that runs on the object.
 
 `soulGemData`_ (`tes3soulGemData`_)
-    Fetches related soul gem data, if this item is a soul gem.
+    Read-only. Fetches related soul gem data, if this item is a soul gem.
 
 `sourceMod`_ (`string`_)
     The filename of the mod that owns this object.

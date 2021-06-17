@@ -16,7 +16,7 @@ Properties
     The unique identifier for the object.
 
 `info`_ (`tes3iterator`_)
-    A collection of individual entries in the dialogue.
+    Read-only. A collection of individual entries in the dialogue.
 
 `journalIndex`_ (`number`_)
     For journal dialogues, the currently active journal index.
@@ -34,7 +34,7 @@ Properties
     The filename of the mod that owns this object.
 
 `type`_ (`number`_)
-    The type of the dialogue.
+    Read-only. The type of the dialogue.
 
 .. toctree::
     :hidden:

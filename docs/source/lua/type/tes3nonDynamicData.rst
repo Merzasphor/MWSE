@@ -7,49 +7,49 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `cells`_ (`tes3stlList`_)
-    A collection of all cell objects.
+    Read-only. A collection of all cell objects.
 
 `classes`_ (`tes3iterator`_)
-    A collection of all class objects.
+    Read-only. A collection of all class objects.
 
 `dialogues`_ (`tes3iterator`_)
-    A collection of all dialogue objects.
+    Read-only. A collection of all dialogue objects.
 
 `factions`_ (`tes3iterator`_)
-    A collection of all faction objects.
+    Read-only. A collection of all faction objects.
 
 `globals`_ (`tes3iterator`_)
-    A collection of all global variable objects.
+    Read-only. A collection of all global variable objects.
 
 `magicEffects`_ (`table`_)
-    A table of references to all 143 magic effects.
+    Read-only. A table of references to all 143 magic effects.
 
 `objects`_ (`tes3linkedList`_)
-    A collection of all other game objects.
+    Read-only. A collection of all other game objects.
 
 `races`_ (`tes3iterator`_)
-    A collection of all race objects.
+    Read-only. A collection of all race objects.
 
 `regions`_ (`tes3iterator`_)
-    A collection of all region objects.
+    Read-only. A collection of all region objects.
 
 `scripts`_ (`tes3iterator`_)
-    A collection of all script objects.
+    Read-only. A collection of all script objects.
 
 `skills`_ (`table`_)
-    A table of references to all 27 skills.
+    Read-only. A table of references to all 27 skills.
 
 `soundGenerators`_ (`tes3iterator`_)
-    A collection of all sound generator objects.
+    Read-only. A collection of all sound generator objects.
 
 `sounds`_ (`tes3iterator`_)
-    A collection of all sound objects.
+    Read-only. A collection of all sound objects.
 
 `spells`_ (`tes3linkedList`_)
-    A collection of all spell objects.
+    Read-only. A collection of all spell objects.
 
 `startScripts`_ (`tes3iterator`_)
-    A collection of all tes3startScript objects.
+    Read-only. A collection of all tes3startScript objects.
 
 .. toctree::
     :hidden:

@@ -73,7 +73,7 @@ Properties
     A list of actors that the object has been stolen from.
 
 `text`_ (`string`_)
-    Loads and displays the text of the book.
+    Read-only. Loads and displays the text of the book.
 
 `type`_ (`number`_)
     The book type, where 0 is book and 1 is scroll.

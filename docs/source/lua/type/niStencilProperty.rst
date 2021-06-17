@@ -28,7 +28,7 @@ Properties
     The stencil reference.
 
 `references`_ (`string`_)
-    The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
+    Read-only. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
 
 `runTimeTypeInformation`_ (`niRTTI`_)
     The runtime type information for this object.

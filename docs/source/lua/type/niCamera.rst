@@ -28,10 +28,10 @@ Properties
     The list of properties attached to this niAVObject.
 
 `references`_ (`string`_)
-    The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
+    Read-only. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
 
 `renderer`_ (`niObject`_)
-    The renderer of the camera.
+    Read-only. The renderer of the camera.
 
 `rotation`_ (`tes3matrix33`_)
     The object's local rotation matrix.
@@ -43,7 +43,7 @@ Properties
     The object's local uniform scaling factor.
 
 `scene`_ (`niObject`_)
-    The scene of the camera.
+    Read-only. The scene of the camera.
 
 `translation`_ (`tes3vector3`_)
     The object's local translation vector.

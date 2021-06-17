@@ -7,10 +7,10 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `flags`_ (`number`_)
-    Raw bit-based flags.
+    Read-only. Raw bit-based flags.
 
 `iterator`_ (`tes3iterator`_)
-    Direct acces to the container that holds the inventory's items.
+    Read-only. Direct acces to the container that holds the inventory's items.
 
 .. toctree::
     :hidden:

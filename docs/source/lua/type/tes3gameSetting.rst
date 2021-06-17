@@ -7,7 +7,7 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `defaultValue`_ (`number`_, `string`_)
-    The default value of the GMST, if no master defines the value.
+    Read-only. The default value of the GMST, if no master defines the value.
 
 `deleted`_ (`boolean`_)
     The deleted state of the object.
@@ -19,7 +19,7 @@ Properties
     The unique identifier for the object.
 
 `index`_ (`number`_)
-    The array index for the GMST.
+    Read-only. The array index for the GMST.
 
 `modified`_ (`boolean`_)
     The modification state of the object since the last save.
@@ -34,7 +34,7 @@ Properties
     The filename of the mod that owns this object.
 
 `type`_ (`string`_)
-    The type of the variable, either 'i', 'f', or 's'.
+    Read-only. The type of the variable, either 'i', 'f', or 's'.
 
 `value`_ (`number`_, `string`_)
     The value of the GMST.

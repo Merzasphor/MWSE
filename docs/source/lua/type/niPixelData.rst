@@ -7,13 +7,13 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `bytesPerPixel`_ (`number`_)
-    The number of bytes per pixel.
+    Read-only. The number of bytes per pixel.
 
 `mipMapLevels`_ (`number`_)
-    The number of MipMap levels.
+    Read-only. The number of MipMap levels.
 
 `references`_ (`string`_)
-    The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
+    Read-only. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
 
 `runTimeTypeInformation`_ (`niRTTI`_)
     The runtime type information for this object.

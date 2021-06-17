@@ -7,7 +7,7 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `cell`_ (`tes3cell`_)
-    The cell to recall to.
+    Read-only. The cell to recall to.
 
 `position`_ (`tes3vector3`_)
     The position to recall to.

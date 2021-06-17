@@ -7,43 +7,43 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `acrobatics`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's acrobatics skill statistic.
+    Read-only. Direct access to the NPC's acrobatics skill statistic.
 
 `actionBeforeCombat`_ (`tes3actionData`_)
-    Action data stored before the actor entered combat.
+    Read-only. Action data stored before the actor entered combat.
 
 `actionData`_ (`tes3actionData`_)
-    Current action data. Pre-combat action data is stored in the actionBeforeCombat property.
+    Read-only. Current action data. Pre-combat action data is stored in the actionBeforeCombat property.
 
 `activeAI`_ (`boolean`_)
     Friendly access to the actor's flag that controls if AI is active.
 
 `activeMagicEffectList`_ (`table`_)
-    The active magic effects on the actor, from which all others can be accessed. A table with tes3activeMagicEffect items.
+    Read-only. The active magic effects on the actor, from which all others can be accessed. A table with tes3activeMagicEffect items.
 
 `actorType`_ (`number`_)
-    The type of the mobile actor. 0 is a creature, 1 is an NPC, 2 is the player.
+    Read-only. The type of the mobile actor. 0 is a creature, 1 is an NPC, 2 is the player.
 
 `agility`_ (`tes3statistic`_)
-    Direct access to the actor's agility attribute statistic.
+    Read-only. Direct access to the actor's agility attribute statistic.
 
 `aiPlanner`_ (`tes3aiPlanner`_)
-    Access to the mobile's AI planner and AI package information.
+    Read-only. Access to the mobile's AI planner and AI package information.
 
 `alarm`_ (`number`_)
     The actor's alarm AI value.
 
 `alchemy`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's alchemy skill statistic.
+    Read-only. Direct access to the NPC's alchemy skill statistic.
 
 `alteration`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's alteration skill statistic.
+    Read-only. Direct access to the NPC's alteration skill statistic.
 
 `animationController`_ (`tes3actorAnimationController`_)
-    No description available.
+    Read-only. No description available.
 
 `armorRating`_ (`number`_)
-    The actor's current armour rating, taking equipment condition into account. Armour mitigation can be automatically applied to damage by using the applyDamage function.
+    Read-only. The actor's current armour rating, taking equipment condition into account. Armour mitigation can be automatically applied to damage by using the applyDamage function.
 
 Armour mitigation calculation:
 x = damage / (damage + target.armorRating)
@@ -51,22 +51,22 @@ damage *= max(fCombatArmorMinMult, x)
 if damage < 1 then damage = 1 end
 
 `armorer`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's armorer skill statistic.
+    Read-only. Direct access to the NPC's armorer skill statistic.
 
 `athletics`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's athletics skill statistic.
+    Read-only. Direct access to the NPC's athletics skill statistic.
 
 `attackBonus`_ (`number`_)
     Direct access to the actor's attack bonus effect attribute.
 
 `attacked`_ (`boolean`_)
-    Friendly access to the actor's flag that controls if the actor has been attacked.
+    Read-only. Friendly access to the actor's flag that controls if the actor has been attacked.
 
 `attributes`_ (`table`_)
-    Access to a table of 8 tes3statistic objects for the actor's attributes.
+    Read-only. Access to a table of 8 tes3statistic objects for the actor's attributes.
 
 `axe`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's axe skill statistic.
+    Read-only. Direct access to the NPC's axe skill statistic.
 
 `barterGold`_ (`number`_)
     The current amount of gold that the actor has access to for bartering.
@@ -75,76 +75,76 @@ if damage < 1 then damage = 1 end
     Direct access to the actor's blind effect attribute.
 
 `block`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's block skill statistic.
+    Read-only. Direct access to the NPC's block skill statistic.
 
 `bluntWeapon`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's blunt weapon skill statistic.
+    Read-only. Direct access to the NPC's blunt weapon skill statistic.
 
 `boundSize`_ (`tes3vector3`_)
-    A vector that shows the size of the bounding box in each direction.
+    Read-only. A vector that shows the size of the bounding box in each direction.
 
 `cell`_ (`tes3cell`_)
-    Fetches the cell that the actor is in.
+    Read-only. Fetches the cell that the actor is in.
 
 `cellX`_ (`number`_)
-    The X grid coordinate of the cell the mobile is in.
+    Read-only. The X grid coordinate of the cell the mobile is in.
 
 `cellY`_ (`number`_)
-    The Y grid coordinate of the cell the mobile is in.
+    Read-only. The Y grid coordinate of the cell the mobile is in.
 
 `chameleon`_ (`number`_)
     Direct access to the actor's chameleon effect attribute.
 
 `collidingReference`_ (`tes3reference`_)
-    The reference that the mobile has collided with this frame.
+    Read-only. The reference that the mobile has collided with this frame.
 
 `combatSession`_ (`tes3combatSession`_)
-    Combat session data. This exists while the actor is in combat to provide memory for AI combat decisions.
+    Read-only. Combat session data. This exists while the actor is in combat to provide memory for AI combat decisions.
 
 `conjuration`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's conjuration skill statistic.
+    Read-only. Direct access to the NPC's conjuration skill statistic.
 
 `corpseHourstamp`_ (`number`_)
     No description available.
 
 `currentEnchantedItem`_ (`tes3equipmentStack`_)
-    The currently equipped enchanted item that the actor will use.
+    Read-only. The currently equipped enchanted item that the actor will use.
 
 `currentSpell`_ (`tes3spell`_)
-    The currently equipped spell that the actor will use.
+    Read-only. The currently equipped spell that the actor will use.
 
 `destruction`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's destruction skill statistic.
+    Read-only. Direct access to the NPC's destruction skill statistic.
 
 `effectAttributes`_ (`table`_)
-    Access to a table of 24 numbers for the actor's effect attributes.
+    Read-only. Access to a table of 24 numbers for the actor's effect attributes.
 
 `enchant`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's enchant skill statistic.
+    Read-only. Direct access to the NPC's enchant skill statistic.
 
 `encumbrance`_ (`tes3statistic`_)
-    Access to the actor's encumbrance statistic.
+    Read-only. Access to the actor's encumbrance statistic.
 
 `endurance`_ (`tes3statistic`_)
-    Direct access to the actor's endurance attribute statistic.
+    Read-only. Direct access to the actor's endurance attribute statistic.
 
 `facing`_ (`number`_)
-    The facing of the actor, in radians.
+    Read-only. The facing of the actor, in radians.
 
 `fatigue`_ (`tes3statistic`_)
-    Access to the actor's fatigue statistic.
+    Read-only. Access to the actor's fatigue statistic.
 
 `fight`_ (`number`_)
     The actor's fight AI value.
 
 `flags`_ (`number`_)
-    Access to the root mobile object flags, represented as an integer. Should not be accessed directly.
+    Read-only. Access to the root mobile object flags, represented as an integer. Should not be accessed directly.
 
 `flee`_ (`number`_)
     The actor's flee AI value.
 
 `flySpeed`_ (`number`_)
-    The calculated fly movement speed.
+    Read-only. The calculated fly movement speed.
 
 `forceJump`_ (`boolean`_)
     Toggle flag for if the NPC jumps.
@@ -159,25 +159,25 @@ if damage < 1 then damage = 1 end
     Toggle flag for if the NPC sneaks.
 
 `friendlyActors`_ (`tes3iterator`_)
-    A collection of other tes3mobileActors that this actor considers friendly.
+    Read-only. A collection of other tes3mobileActors that this actor considers friendly.
 
 `greetDuration`_ (`number`_)
     No description available.
 
 `greetTimer`_ (`number`_)
-    No description available.
+    Read-only. No description available.
 
 `handToHand`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's hand to hand skill statistic.
+    Read-only. Direct access to the NPC's hand to hand skill statistic.
 
 `health`_ (`tes3statistic`_)
-    Access to the actor's health statistic.
+    Read-only. Access to the actor's health statistic.
 
 `heavyArmor`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's heavy armor skill statistic.
+    Read-only. Direct access to the NPC's heavy armor skill statistic.
 
 `height`_ (`number`_)
-    The height of the mobile above the ground.
+    Read-only. The height of the mobile above the ground.
 
 `hello`_ (`number`_)
     The actor's hello AI value.
@@ -186,31 +186,31 @@ if damage < 1 then damage = 1 end
     No description available.
 
 `hostileActors`_ (`tes3iterator`_)
-    A collection of other tes3mobileActors that this actor considers hostile.
+    Read-only. A collection of other tes3mobileActors that this actor considers hostile.
 
 `idleAnim`_ (`boolean`_)
-    Friendly access to the actor's flag that controls if the actor is using their idle animation.
+    Read-only. Friendly access to the actor's flag that controls if the actor is using their idle animation.
 
 `illusion`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's illusion skill statistic.
+    Read-only. Direct access to the NPC's illusion skill statistic.
 
 `impulseVelocity`_ (`tes3vector3`_)
     A vector that represents the 3D acceleration of the object.
 
 `inCombat`_ (`boolean`_)
-    Friendly access to the actor's flag that controls if the actor is in combat.
+    Read-only. Friendly access to the actor's flag that controls if the actor is in combat.
 
 `intelligence`_ (`tes3statistic`_)
-    Direct access to the actor's intelligence attribute statistic.
+    Read-only. Direct access to the actor's intelligence attribute statistic.
 
 `invisibility`_ (`number`_)
     Direct access to the actor's invisibility effect attribute.
 
 `isCrittable`_ (`boolean`_)
-    Friendly access to the actor's flag that controls if the actor can be critically hit.
+    Read-only. Friendly access to the actor's flag that controls if the actor can be critically hit.
 
 `isDead`_ (`boolean`_)
-    True if the actor is dead.
+    Read-only. True if the actor is dead.
 
 `isFlying`_ (`boolean`_)
     Direct access to the actor's current movement flags, showing if the actor is flying.
@@ -267,28 +267,28 @@ if damage < 1 then damage = 1 end
     Direct access to the actor's levitate effect attribute.
 
 `lightArmor`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's light armor skill statistic.
+    Read-only. Direct access to the NPC's light armor skill statistic.
 
 `longBlade`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's long blade skill statistic.
+    Read-only. Direct access to the NPC's long blade skill statistic.
 
 `luck`_ (`tes3statistic`_)
-    Direct access to the actor's luck attribute statistic.
+    Read-only. Direct access to the actor's luck attribute statistic.
 
 `magicka`_ (`tes3statistic`_)
-    Access to the actor's magicka statistic.
+    Read-only. Access to the actor's magicka statistic.
 
 `magickaMultiplier`_ (`tes3statistic`_)
-    Access to the actor's magicka multiplier statistic.
+    Read-only. Access to the actor's magicka multiplier statistic.
 
 `marksman`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's marksman skill statistic.
+    Read-only. Direct access to the NPC's marksman skill statistic.
 
 `mediumArmor`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's medium armor skill statistic.
+    Read-only. Direct access to the NPC's medium armor skill statistic.
 
 `mercantile`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's mercantile skill statistic.
+    Read-only. Direct access to the NPC's mercantile skill statistic.
 
 `mobToMobCollision`_ (`boolean`_)
     Allows modifying if this actor will collide with other actors. When true (default), the actor cannot move through other actors. When false, the actor is allowed to move through other actors, and other actors can move through it.
@@ -296,31 +296,31 @@ if damage < 1 then damage = 1 end
 May be useful when free movement is required in crowded situations, or to temporarily let the player move past an actor.
 
 `moveSpeed`_ (`number`_)
-    The calculated base movement speed.
+    Read-only. The calculated base movement speed.
 
 `movementCollision`_ (`boolean`_)
     Controls if the mobile has movement collision active. When false, the mobile can move through any object, but can still block other mobiles, and can still be hit in combat. Actors will still follow pathgrids, ramps and stairs when navigating.
 
 `movementFlags`_ (`number`_)
-    Access to the root mobile object movement flags, represented as an integer. Should not be accessed directly.
+    Read-only. Access to the root mobile object movement flags, represented as an integer. Should not be accessed directly.
 
 `mysticism`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's mysticism skill statistic.
+    Read-only. Direct access to the NPC's mysticism skill statistic.
 
 `nextActionWeight`_ (`number`_)
-    No description available.
+    Read-only. No description available.
 
 `object`_ (`tes3npcInstance`_)
-    The actor object that maps to this mobile.
+    Read-only. The actor object that maps to this mobile.
 
 `objectType`_ (`number`_)
-    The type of mobile object. Maps to values in tes3.objectType.
+    Read-only. The type of mobile object. Maps to values in tes3.objectType.
 
 `paralyze`_ (`number`_)
     Direct access to the actor's paralyze effect attribute.
 
 `personality`_ (`tes3statistic`_)
-    Direct access to the actor's personality attribute statistic.
+    Read-only. Direct access to the actor's personality attribute statistic.
 
 `playerDistance`_ (`number`_)
     The distance to the player. Updated every frame when the mobile is in an active cell.
@@ -329,7 +329,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     A vector that represents the 3D position of the object.
 
 `prevMovementFlags`_ (`number`_)
-    Access to the root mobile object movement flags from the previous frame, represented as an integer. Should not be accessed directly.
+    Read-only. Access to the root mobile object movement flags from the previous frame, represented as an integer. Should not be accessed directly.
 
 `readiedAmmo`_ (`tes3equipmentStack`_)
     The currently equipped ammo.
@@ -344,7 +344,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     The currently equipped weapon.
 
 `reference`_ (`tes3reference`_)
-    Access to the reference object for the mobile, if any.
+    Read-only. Access to the reference object for the mobile, if any.
 
 `resistBlightDisease`_ (`number`_)
     Direct access to the actor's blight disease resistance effect attribute.
@@ -377,64 +377,64 @@ May be useful when free movement is required in crowded situations, or to tempor
     Direct access to the actor's shock resistance effect attribute.
 
 `restoration`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's restoration skill statistic.
+    Read-only. Direct access to the NPC's restoration skill statistic.
 
 `runSpeed`_ (`number`_)
-    The calculated run movement speed.
+    Read-only. The calculated run movement speed.
 
 `sanctuary`_ (`number`_)
     Direct access to the actor's sanctuary effect attribute.
 
 `scanInterval`_ (`number`_)
-    No description available.
+    Read-only. No description available.
 
 `scanTimer`_ (`number`_)
-    No description available.
+    Read-only. No description available.
 
 `security`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's security skill statistic.
+    Read-only. Direct access to the NPC's security skill statistic.
 
 `shield`_ (`number`_)
     Direct access to the actor's shield effect attribute.
 
 `shortBlade`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's short blade skill statistic.
+    Read-only. Direct access to the NPC's short blade skill statistic.
 
 `silence`_ (`number`_)
     Direct access to the actor's silence effect attribute.
 
 `skills`_ (`table`_)
-    An array-style table with access to the twenty seven NPC skill statistics.
+    Read-only. An array-style table with access to the twenty seven NPC skill statistics.
 
 `sneak`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's sneak skill statistic.
+    Read-only. Direct access to the NPC's sneak skill statistic.
 
 `sound`_ (`number`_)
     Direct access to the actor's sound effect attribute.
 
 `spear`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's spear skill statistic.
+    Read-only. Direct access to the NPC's spear skill statistic.
 
 `speechcraft`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's speechcraft skill statistic.
+    Read-only. Direct access to the NPC's speechcraft skill statistic.
 
 `speed`_ (`tes3statistic`_)
-    Direct access to the actor's speed attribute statistic.
+    Read-only. Direct access to the actor's speed attribute statistic.
 
 `spellReadied`_ (`boolean`_)
-    Friendly access to the actor's flag that controls if the actor has a spell readied.
+    Read-only. Friendly access to the actor's flag that controls if the actor has a spell readied.
 
 `strength`_ (`tes3statistic`_)
-    Direct access to the actor's strength attribute statistic.
+    Read-only. Direct access to the actor's strength attribute statistic.
 
 `swiftSwim`_ (`number`_)
     Direct access to the actor's swift swim effect attribute.
 
 `swimRunSpeed`_ (`number`_)
-    The calculated swim movement speed while running.
+    Read-only. The calculated swim movement speed while running.
 
 `swimSpeed`_ (`number`_)
-    The calculated swim movement speed.
+    Read-only. The calculated swim movement speed.
 
 `talkedTo`_ (`boolean`_)
     Direct access to the actor's flag that shows it was recently talked to.
@@ -443,16 +443,16 @@ May be useful when free movement is required in crowded situations, or to tempor
     The currently equipped light.
 
 `unarmored`_ (`tes3skillStatistic`_)
-    Direct access to the NPC's unarmored skill statistic.
+    Read-only. Direct access to the NPC's unarmored skill statistic.
 
 `underwater`_ (`boolean`_)
-    Friendly access to the actor's flag that controls if the actor is under water.
+    Read-only. Friendly access to the actor's flag that controls if the actor is under water.
 
 `velocity`_ (`tes3vector3`_)
     A vector that represents the 3D velocity of the object.
 
 `walkSpeed`_ (`number`_)
-    The calculated walk movement speed.
+    Read-only. The calculated walk movement speed.
 
 `waterBreathing`_ (`number`_)
     Direct access to the actor's water breathing effect attribute.
@@ -461,16 +461,16 @@ May be useful when free movement is required in crowded situations, or to tempor
     Direct access to the actor's water walking effect attribute.
 
 `weaponDrawn`_ (`boolean`_)
-    Friendly access to the actor's flag that shows if the weapon model is visible. When readying a weapon, there is a short period of time at the start of the animation, where the weapon is not visible yet. This flag will only be set after this initial stage is done. This flag is still set with hand-to-hand even though it doesn't use a model. Setting this to false while a weapon is drawn will normally cause the actor to play its weapon draw animation again.
+    Read-only. Friendly access to the actor's flag that shows if the weapon model is visible. When readying a weapon, there is a short period of time at the start of the animation, where the weapon is not visible yet. This flag will only be set after this initial stage is done. This flag is still set with hand-to-hand even though it doesn't use a model. Setting this to false while a weapon is drawn will normally cause the actor to play its weapon draw animation again.
 
 `werewolf`_ (`boolean`_)
-    Friendly access to the actor's flag that controls if the actor in werewolf form.
+    Read-only. Friendly access to the actor's flag that controls if the actor in werewolf form.
 
 `width`_ (`number`_)
-    No description available.
+    Read-only. No description available.
 
 `willpower`_ (`tes3statistic`_)
-    Direct access to the actor's willpower attribute statistic.
+    Read-only. Direct access to the actor's willpower attribute statistic.
 
 .. toctree::
     :hidden:
@@ -804,7 +804,7 @@ Damages the actor.
     Equips an item, optionally adding the item if needed.
 
 `getBootsWeight`_ (`number`_)
-    Gets the weight of the boots equipped on the actor, or 0 if no boots are equipped.
+    Read-only. Gets the weight of the boots equipped on the actor, or 0 if no boots are equipped.
 
 `getFatigueTerm`_ (`number`_)
     Gets the fatigue-based skill scaling term used by many game mechanics, based on the actor's current and maximum fatigue. It is equal to ``max(0, fFatigueBase - fFatigueMult * max(0, 1 - fatigue.current/fatigue.base))``

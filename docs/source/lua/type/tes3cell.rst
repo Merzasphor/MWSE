@@ -7,10 +7,10 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `activators`_ (`tes3referenceList`_)
-    One of the three reference collections for a cell.
+    Read-only. One of the three reference collections for a cell.
 
 `actors`_ (`tes3referenceList`_)
-    One of the three reference collections for a cell.
+    Read-only. One of the three reference collections for a cell.
 
 `ambientColor`_ (`tes3packedColor`_)
     The cell's ambient color. Only available on interior cells.
@@ -70,7 +70,7 @@ Properties
     The filename of the mod that owns this object.
 
 `statics`_ (`tes3referenceList`_)
-    One of the three reference collections for a cell.
+    Read-only. One of the three reference collections for a cell.
 
 `sunColor`_ (`tes3packedColor`_)
     The cell's sun color. Only available on interior cells.

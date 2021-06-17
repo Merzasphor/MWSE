@@ -22,7 +22,7 @@ Properties
     The minimum magnitude of the effect.
 
 `object`_ (`tes3magicEffect`_)
-    Fetches the tes3magicEffect for the given id used.
+    Read-only. Fetches the tes3magicEffect for the given id used.
 
 `radius`_ (`number`_)
     The radius of the effect.

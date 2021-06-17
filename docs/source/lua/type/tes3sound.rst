@@ -13,13 +13,13 @@ Properties
     The disabled state of the object.
 
 `filename`_ (`string`_)
-    Path to the sound file.
+    Read-only. Path to the sound file.
 
 `id`_ (`string`_)
     The unique identifier for the object.
 
 `id`_ (`string`_)
-    The unique identifier for the object.
+    Read-only. The unique identifier for the object.
 
 `modified`_ (`boolean`_)
     The modification state of the object since the last save.

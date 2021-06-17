@@ -7,55 +7,55 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `backgroundThread`_ (`number`_)
-    A Windows handle to the background processing thread.
+    Read-only. A Windows handle to the background processing thread.
 
 `backgroundThreadId`_ (`number`_)
-    The thread ID for the background processing thread.
+    Read-only. The thread ID for the background processing thread.
 
 `backgroundThreadRunning`_ (`boolean`_)
-    Access to the running state for the background processing thread.
+    Read-only. Access to the running state for the background processing thread.
 
 `cellChanged`_ (`boolean`_)
-    A flag set for the frame that the player has changed cells.
+    Read-only. A flag set for the frame that the player has changed cells.
 
 `centralGridX`_ (`boolean`_)
-    The position of the origin horizontal grid coordinate.
+    Read-only. The position of the origin horizontal grid coordinate.
 
 `centralGridY`_ (`boolean`_)
-    The position of the origin longitudinal grid coordinate.
+    Read-only. The position of the origin longitudinal grid coordinate.
 
 `currentCell`_ (`tes3cell`_)
-    Access to the cell that the player is currently in.
+    Read-only. Access to the cell that the player is currently in.
 
 `currentInteriorCell`_ (`tes3cell`_)
-    Access to the current interior cell, if the player is in an interior.
+    Read-only. Access to the current interior cell, if the player is in an interior.
 
 `exteriorCells`_ (`table`_)
-    A table of nine tes3cellExteriorData objects for any loaded exterior cells.
+    Read-only. A table of nine tes3cellExteriorData objects for any loaded exterior cells.
 
 `lastExteriorCell`_ (`tes3cell`_)
-    Access to the last visited exterior cell.
+    Read-only. Access to the last visited exterior cell.
 
 `mainThread`_ (`number`_)
-    A Windows handle to the main execution thread.
+    Read-only. A Windows handle to the main execution thread.
 
 `mainThreadId`_ (`number`_)
-    The thread ID for the main execution thread.
+    Read-only. The thread ID for the main execution thread.
 
 `nonDynamicData`_ (`tes3nonDynamicData`_)
-    A child structure where core game objects are held.
+    Read-only. A child structure where core game objects are held.
 
 `threadSleepTime`_ (`number`_)
-    No description available.
+    Read-only. No description available.
 
 `worldObjectRoot`_ (`niNode`_)
-    One of the core parent scene graph nodes.
+    Read-only. One of the core parent scene graph nodes.
 
 `worldPickLandscapeRoot`_ (`niNode`_)
-    One of the core parent scene graph nodes.
+    Read-only. One of the core parent scene graph nodes.
 
 `worldPickObjectRoot`_ (`niNode`_)
-    One of the core parent scene graph nodes.
+    Read-only. One of the core parent scene graph nodes.
 
 .. toctree::
     :hidden:

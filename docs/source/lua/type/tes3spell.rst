@@ -19,7 +19,7 @@ Properties
     The disabled state of the object.
 
 `effects`_ (`table`_)
-    An array-style table of the tes3effect data on the object.
+    Read-only. An array-style table of the tes3effect data on the object.
 
 `flags`_ (`number`_)
     A bit field for the spell's flags.

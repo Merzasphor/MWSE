@@ -16,7 +16,7 @@ Properties
     Access to the base flag that determines if this effect can be used in enchanting.
 
 `areaSoundEffect`_ (`string`_)
-    The sound path to the sound effect to use for area of effect impacts.
+    Read-only. The sound path to the sound effect to use for area of effect impacts.
 
 `baseFlags`_ (`number`_)
     No description available.
@@ -25,7 +25,7 @@ Properties
     The base magicka cost to use in calculations.
 
 `boltSoundEffects`_ (`string`_)
-    The sound path to the sound effect to use for target projectiles.
+    Read-only. The sound path to the sound effect to use for target projectiles.
 
 `canCastSelf`_ (`boolean`_)
     Access to the base flag that determines if this effect can be used with a range of self.
@@ -37,7 +37,7 @@ Properties
     Access to the base flag that determines if this effect can be used with a range of touch.
 
 `castSoundEffect`_ (`string`_)
-    The sound path to the sound effect to use when casting.
+    Read-only. The sound path to the sound effect to use when casting.
 
 `casterLinked`_ (`boolean`_)
     Access to the base flag.
@@ -55,13 +55,13 @@ Properties
     Access to the base flag that determines if this effect doesn't make use of its magnitude.
 
 `hitSoundEffect`_ (`string`_)
-    The sound path to the sound effect to use when the effect hits a target.
+    Read-only. The sound path to the sound effect to use when the effect hits a target.
 
 `icon`_ (`string`_)
     The sound path to the icon to use for the effect.
 
 `id`_ (`number`_)
-    The numerical id for the effect.
+    Read-only. The numerical id for the effect.
 
 `illegalDaedra`_ (`boolean`_)
     Access to the base flag that determines if this effect summons an illegal daedra. This flag isn't used.
@@ -82,7 +82,7 @@ Properties
     Access to the base flag that determines if this effect can be refreshed by recasting.
 
 `particleTexture`_ (`boolean`_)
-    The path to use for the particle effect texture.
+    Read-only. The path to use for the particle effect texture.
 
 `school`_ (`number`_)
     The school that the effect is associated with.

@@ -7,16 +7,16 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `current`_ (`tes3iteratorNode`_)
-    A reference for the currently iterated node. This is used by the core game engine, but should not be accessed from lua.
+    Read-only. A reference for the currently iterated node. This is used by the core game engine, but should not be accessed from lua.
 
 `head`_ (`tes3iteratorNode`_)
-    The first node in the collection.
+    Read-only. The first node in the collection.
 
 `size`_ (`number`_)
-    The amount of items in the iterator.
+    Read-only. The amount of items in the iterator.
 
 `tail`_ (`tes3iteratorNode`_)
-    The last node in the collection.
+    Read-only. The last node in the collection.
 
 .. toctree::
     :hidden:

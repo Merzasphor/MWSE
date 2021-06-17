@@ -7,16 +7,16 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `actorFlags`_ (`number`_)
-    A number representing the actor flags. Truly a bit field.
+    Read-only. A number representing the actor flags. Truly a bit field.
 
 `baseObject`_ (`tes3object`_)
-    The base container object that the instance inherits from.
+    Read-only. The base container object that the instance inherits from.
 
 `boundingBox`_ (`tes3boundingBox`_)
     The bounding box for the object.
 
 `cloneCount`_ (`number`_)
-    The number of clones that exist of this actor.
+    Read-only. The number of clones that exist of this actor.
 
 `deleted`_ (`boolean`_)
     The deleted state of the object.
@@ -25,13 +25,13 @@ Properties
     The disabled state of the object.
 
 `equipment`_ (`tes3iterator`_)
-    The items currently equipped to the actor.
+    Read-only. The items currently equipped to the actor.
 
 `id`_ (`string`_)
     The unique identifier for the object.
 
 `inventory`_ (`tes3iterator`_)
-    The items currently carried by the actor.
+    Read-only. The items currently carried by the actor.
 
 `isInstance`_ (`boolean`_)
     Always returns true.

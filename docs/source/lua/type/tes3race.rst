@@ -7,40 +7,40 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `abilities`_ (`tes3spellList`_)
-    A list of abilities that NPCs of that race have access to. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, ability in pairs(race.abilities.iterator) do print(ability.name) end
+    Read-only. A list of abilities that NPCs of that race have access to. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, ability in pairs(race.abilities.iterator) do print(ability.name) end
 
 `baseAttributes`_ (`table`_)
-    Array-style table access to base 8 attributes for the race. Each element in the array is a tes3raceBaseAttribute.
+    Read-only. Array-style table access to base 8 attributes for the race. Each element in the array is a tes3raceBaseAttribute.
 
 `deleted`_ (`boolean`_)
     The deleted state of the object.
 
 `description`_ (`string`_)
-    Loads from disk and returns the description of the race.
+    Read-only. Loads from disk and returns the description of the race.
 
 `disabled`_ (`boolean`_)
     The disabled state of the object.
 
 `femaleBody`_ (`tes3raceBodyParts`_)
-    Access to all the body parts that will be used for female actors of this race.
+    Read-only. Access to all the body parts that will be used for female actors of this race.
 
 `flags`_ (`number`_)
     Raw bit-based flags.
 
 `height`_ (`tes3raceHeightWeight`_)
-    Access to the the height pair for males/females of the race.
+    Read-only. Access to the the height pair for males/females of the race.
 
 `id`_ (`string`_)
     The unique identifier for the object.
 
 `maleBody`_ (`tes3raceBodyParts`_)
-    Access to all the body parts that will be used for male actors of this race.
+    Read-only. Access to all the body parts that will be used for male actors of this race.
 
 `modified`_ (`boolean`_)
     The modification state of the object since the last save.
 
 `name`_ (`string`_)
-    The player-facing name for the object.
+    Read-only. The player-facing name for the object.
 
 `objectFlags`_ (`number`_)
     The raw flags of the object.
@@ -49,13 +49,13 @@ Properties
     The type of object. Maps to values in tes3.objectType.
 
 `skillBonuses`_ (`table`_)
-    Array-style table access for 7 skill bonuses for the race. Each element in the array is a tes3raceSkillBonus.
+    Read-only. Array-style table access for 7 skill bonuses for the race. Each element in the array is a tes3raceSkillBonus.
 
 `sourceMod`_ (`string`_)
     The filename of the mod that owns this object.
 
 `weight`_ (`tes3raceHeightWeight`_)
-    Access to the the height pair for males/females of the race.
+    Read-only. Access to the the height pair for males/females of the race.
 
 .. toctree::
     :hidden:

@@ -7,10 +7,10 @@ Properties
 ----------------------------------------------------------------------------------------------------
 
 `actorFlags`_ (`number`_)
-    A number representing the actor flags. Truly a bit field.
+    Read-only. A number representing the actor flags. Truly a bit field.
 
 `aiConfig`_ (`tes3aiConfig`_)
-    A substructure off of actors that contains information on the current AI configuration.
+    Read-only. A substructure off of actors that contains information on the current AI configuration.
 
 `attributes`_ (`table`_)
     A table of eight numbers, representing the base values for the actor's attributes.
@@ -19,16 +19,16 @@ Properties
     Direct access to the actor autocalc flag.
 
 `barterGold`_ (`number`_)
-    The actor's max health.
+    Read-only. The actor's max health.
 
 `boundingBox`_ (`tes3boundingBox`_)
     The bounding box for the object.
 
 `class`_ (`tes3class`_)
-    The class that the NPC uses.
+    Read-only. The class that the NPC uses.
 
 `cloneCount`_ (`number`_)
-    The number of clones that exist of this actor.
+    Read-only. The number of clones that exist of this actor.
 
 `deleted`_ (`boolean`_)
     The deleted state of the object.
@@ -40,10 +40,10 @@ Properties
     The actor's base disposition.
 
 `equipment`_ (`tes3iterator`_)
-    The items currently equipped to the actor.
+    Read-only. The items currently equipped to the actor.
 
 `faction`_ (`tes3faction`_)
-    The class that the NPC is joined to.
+    Read-only. The class that the NPC is joined to.
 
 `factionIndex`_ (`number`_)
     No description available.
@@ -70,19 +70,19 @@ Properties
     The unique identifier for the object.
 
 `inventory`_ (`tes3iterator`_)
-    The items currently carried by the actor.
+    Read-only. The items currently carried by the actor.
 
 `isAttacked`_ (`boolean`_)
-    If true, the actor's attacked flag is set.
+    Read-only. If true, the actor's attacked flag is set.
 
 `isEssential`_ (`boolean`_)
-    If true, the actor's essential flag is set.
+    Read-only. If true, the actor's essential flag is set.
 
 `isInstance`_ (`boolean`_)
     Always returns false.
 
 `isRespawn`_ (`boolean`_)
-    If true, the actor's respawn flag is set.
+    Read-only. If true, the actor's respawn flag is set.
 
 `level`_ (`number`_)
     The actor's level.
@@ -115,7 +115,7 @@ Properties
     The previous object in parent collection's list.
 
 `race`_ (`tes3race`_)
-    The race that the NPC uses.
+    Read-only. The race that the NPC uses.
 
 `reputation`_ (`number`_)
     The actor's base reputation.
@@ -139,7 +139,7 @@ Properties
     The filename of the mod that owns this object.
 
 `spells`_ (`tes3spellList`_)
-    A list of spells that the actor has access to. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, spell in pairs(npc.spells.iterator) do print(spell.name) end
+    Read-only. A list of spells that the actor has access to. It is a tes3spellList, which is a list wrapper with helper functions. The actual list is accessed with .iterator. e.g. for _, spell in pairs(npc.spells.iterator) do print(spell.name) end
 
 `stolenList`_ (`tes3iterator`_)
     A list of actors that the object has been stolen from.

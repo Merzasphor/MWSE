@@ -10,10 +10,10 @@ Properties
     The bounding box for the object.
 
 `chanceForNothing`_ (`number`_)
-    The percent chance, from 0 to 100, for no object to be chosen.
+    Read-only. The percent chance, from 0 to 100, for no object to be chosen.
 
 `count`_ (`number`_)
-    The number of possible options in the leveled object container.
+    Read-only. The number of possible options in the leveled object container.
 
 `deleted`_ (`boolean`_)
     The deleted state of the object.
@@ -22,13 +22,13 @@ Properties
     The disabled state of the object.
 
 `flags`_ (`number`_)
-    A numerical representation of bit flags for the object.
+    Read-only. A numerical representation of bit flags for the object.
 
 `id`_ (`string`_)
     The unique identifier for the object.
 
 `list`_ (`tes3iterator`_)
-    The collection that itself, containing tes3leveledListNodes.
+    Read-only. The collection that itself, containing tes3leveledListNodes.
 
 `modified`_ (`boolean`_)
     The modification state of the object since the last save.

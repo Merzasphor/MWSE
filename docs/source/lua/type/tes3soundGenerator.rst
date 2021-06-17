@@ -16,7 +16,7 @@ Properties
     The unique identifier for the object.
 
 `id`_ (`string`_)
-    The unique identifier for the object.
+    Read-only. The unique identifier for the object.
 
 `modified`_ (`boolean`_)
     The modification state of the object since the last save.
@@ -28,13 +28,13 @@ Properties
     The type of object. Maps to values in tes3.objectType.
 
 `sound`_ (`tes3sound`_)
-    Sound object tied to this sound generator.
+    Read-only. Sound object tied to this sound generator.
 
 `sourceMod`_ (`string`_)
     The filename of the mod that owns this object.
 
 `type`_ (`number`_)
-    Maps to tes3.soundGenType constants.
+    Read-only. Maps to tes3.soundGenType constants.
 
 .. toctree::
     :hidden:

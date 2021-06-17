@@ -55,7 +55,7 @@ Properties
     See childOffsetX.
 
 `children`_ (`table`_)
-    A table containing references to child elements. This is a copy that does not track changes.
+    Read-only. A table containing references to child elements. This is a copy that does not track changes.
 
 `color`_ (`table`_)
     Element RGB colour, an array of 3 floats with value range [0.0, 1.0]. For menus and rects, it sets the background colour. For text, it sets the text colour. For images, it multiplies the image by the colour.
@@ -86,7 +86,7 @@ Properties
     Overrides fixed, minimum and maximum sizes unless this value is ``nil`` (default).
 
 `id`_ (`number`_)
-    The element's ID.  The element can be later accessed by ``ancestor:findChild(id)``. Note that multiple elements may have the same ID, such as subparts of a widget, or list items. Therefore, you may think of ids as an element class identifier.
+    Read-only. The element's ID.  The element can be later accessed by ``ancestor:findChild(id)``. Note that multiple elements may have the same ID, such as subparts of a widget, or list items. Therefore, you may think of ids as an element class identifier.
 
 `imageScaleX`_ (`number`_)
     Image scaling multipliers. Only applies to image elements.
@@ -110,7 +110,7 @@ Properties
     Minimum dimensions for auto-size layout and resizable frames. Integer number.
 
 `name`_ (`string`_)
-    The element's name, taken from the name registered for the ID.
+    Read-only. The element's name, taken from the name registered for the ID.
 
 `paddingAllSides`_ (`number`_)
     Integer number. Padding size in pixels. Padding is the blank space between the edge of an element and its contents. Individual padding sizes default to -1, making it use the paddingAllSides setting.
@@ -128,7 +128,7 @@ Properties
     Integer number. Top padding size in pixels. When this is set to -1, the paddingAllSides setting is used for this side instead.
 
 `parent`_ (`tes3uiElement`_)
-    A reference to the parent element.
+    Read-only. A reference to the parent element.
 
 `positionX`_ (`number`_)
     Integer number. Element X position relative to its parent's top-left content area. For top-level menus there is a difference: (0, 0) is the centre of the screen.

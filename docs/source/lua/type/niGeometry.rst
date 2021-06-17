@@ -23,7 +23,7 @@ Properties
     The list of properties attached to this niAVObject.
 
 `references`_ (`string`_)
-    The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
+    Read-only. The number of references that exist for the given object. When this value hits zero, the object's memory is freed.
 
 `rotation`_ (`tes3matrix33`_)
     The object's local rotation matrix.
