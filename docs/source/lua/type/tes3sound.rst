@@ -16,10 +16,16 @@ Properties
     Read-only. Path to the sound file.
 
 `id`_ (`string`_)
-    The unique identifier for the object.
+    Read-only. The unique identifier for the object.
 
 `id`_ (`string`_)
-    Read-only. The unique identifier for the object.
+    The unique identifier for the object.
+
+`maxDistance`_ (`number`_)
+    The maximum distance the sound will be played at. Defaults to 0. If both this and minDistance are 0, the values are ignored.
+
+`minDistance`_ (`number`_)
+    The minimum distance the sound will be played at. Defaults to 0.
 
 `modified`_ (`boolean`_)
     The modification state of the object since the last save.
@@ -44,6 +50,8 @@ Properties
     tes3sound/filename
     tes3sound/id
     tes3sound/id
+    tes3sound/maxDistance
+    tes3sound/minDistance
     tes3sound/modified
     tes3sound/objectFlags
     tes3sound/objectType
@@ -55,6 +63,8 @@ Properties
 .. _`filename`: tes3sound/filename.html
 .. _`id`: tes3sound/id.html
 .. _`id`: tes3sound/id.html
+.. _`maxDistance`: tes3sound/maxDistance.html
+.. _`minDistance`: tes3sound/minDistance.html
 .. _`modified`: tes3sound/modified.html
 .. _`objectFlags`: tes3sound/objectFlags.html
 .. _`objectType`: tes3sound/objectType.html
@@ -67,8 +77,11 @@ Methods
 `__tojson`_ (`string`_)
     Serializes the object to json.
 
+`isLooping`_ (`boolean`_)
+    Returns true if the sound is actively looping.
+
 `isPlaying`_ (`boolean`_)
-    Check if the sound is playing.
+    Returns true if the sound is actively playing.
 
 `play`_
     This metod plays the sound.
@@ -80,11 +93,13 @@ Methods
     :hidden:
 
     tes3sound/__tojson
+    tes3sound/isLooping
     tes3sound/isPlaying
     tes3sound/play
     tes3sound/stop
 
 .. _`__tojson`: tes3sound/__tojson.html
+.. _`isLooping`: tes3sound/isLooping.html
 .. _`isPlaying`: tes3sound/isPlaying.html
 .. _`play`: tes3sound/play.html
 .. _`stop`: tes3sound/stop.html

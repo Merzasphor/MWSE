@@ -147,6 +147,7 @@ namespace TES3 {
 		Script* findScriptByName(const char*);
 		GlobalVariable* findGlobalVariable(const char*);
 		Dialogue* findDialogue(const char*);
+		bool addSound(Sound*);
 		Sound* findSound(const char*);
 		Class* findClass(const char*);
 		Faction* findFaction(const char*);

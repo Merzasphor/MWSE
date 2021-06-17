@@ -1,7 +1,7 @@
-isPlaying
+isLooping
 ====================================================================================================
 
-Returns true if the sound is actively playing.
+Returns true if the sound is actively looping.
 
 Returns
 ----------------------------------------------------------------------------------------------------

@@ -231,6 +231,15 @@ namespace TES3 {
 		return reinterpret_cast<Dialogue*(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findDialogue)(this, name);
 	}
 
+	bool NonDynamicData::addSound(Sound* sound) {
+		if (findSound(sound->getObjectID())) {
+			return false;
+		}
+
+		sounds->push_back(sound);
+		return true;
+	}
+
 	Sound* NonDynamicData::findSound(const char* id) {
 		return reinterpret_cast<Sound*(__thiscall *)(NonDynamicData*, const char*)>(TES3_NonDynamicData_findSound)(this, id);
 	}
