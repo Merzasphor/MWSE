@@ -7,22 +7,22 @@ return {
 		},
 		mobile = {
 			type = "tes3mobileActor",
-			readonly = true,
+			readOnly = true,
 			description = "The mobile actor that is taking fatigue damage.",
 		},
 		reference = {
 			type = "tes3reference",
-			readonly = true,
+			readOnly = true,
 			description = "The mobile’s associated reference.",
 		},
         attacker = {
 			type = "tes3mobileActor",
-			readonly = true,
+			readOnly = true,
 			description = "The mobile actor dealing the damage. Can be nil.",
 		},
 		attackerReference = {
 			type = "tes3reference",
-			readonly = true,
+			readOnly = true,
 			description = "The attacker mobile's associated reference. Can be nil.",
 		},
 	},

@@ -237,7 +237,7 @@ local function buildEvent(folder, key)
 				file:write(v.type .. ". ")
 			end
 
-			if (v.readonly) then
+			if (v.readOnly) then
 				file:write("Read-only. ")
 			end
 
@@ -891,7 +891,11 @@ local function writeOutPackageEntries(t, file, package, title)
 		else
 			file:write("`" .. v.key .. "`_\n")
 		end
-		file:write("    " .. (v.brief or v.description or "No description available.") .. "\n\n")
+		file:write("    ")
+		if (v.readOnly) then
+			file:write("Read-only. ")
+		end
+		file:write((v.brief or v.description or "No description available.") .. "\n\n")
 	end
 
 	-- Build out hidden TOC tree.
