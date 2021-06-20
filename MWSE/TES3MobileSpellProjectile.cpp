@@ -31,5 +31,11 @@ namespace TES3 {
 		// Expire projectile.
 		enterLeaveSimulation(false);
 		flagExpire = true;
+		patchFlagExplode = false;
+	}
+
+	void MobileSpellProjectile::explodeDeferred() {
+		// The explode logic is deferred to execute at the same point as projectile simulation to preserve consistency.
+		patchFlagExplode = true;
 	}
 }

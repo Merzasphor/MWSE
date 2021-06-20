@@ -64,6 +64,7 @@ namespace TES3 {
 			MobileObject = 'TCAM',
 			MobilePlayer = 'PCAM',
 			MobileProjectile = 'JRPM',
+			MobileSpellProjectile = 'PSPM',
 			NPC = '_CPN',
 			NPCClone = 'CCPN',
 			PathGrid = 'DRGP',

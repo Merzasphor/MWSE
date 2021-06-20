@@ -4264,6 +4264,13 @@ namespace mwse {
 			overrideVirtualTableEnforced(0x748FA0, offsetof(TES3::ObjectVirtualTable, setName), 0x4F1C50, *reinterpret_cast<DWORD*>(&TES3_Probe_setName));
 			overrideVirtualTableEnforced(0x7490E8, offsetof(TES3::ObjectVirtualTable, setName), 0x4F1C50, *reinterpret_cast<DWORD*>(&TES3_RepairTool_setName));
 
+			// Support for MobileSpellProjectile::explode.
+			// Initialize extra flag members in MobileProjectile::ctor.
+			writeByteUnprotected(0x5723BC, 0x89);
+			// The explode logic is deferred to execute at the same point as projectile simulation to preserve consistency.
+			auto projectileControllerResolveCollisions = &TES3::ProjectileController::resolveCollisions;
+			genCallEnforced(0x5638F8, 0x5753A0, *reinterpret_cast<DWORD*>(&projectileControllerResolveCollisions));
+
 			// Look for main.lua scripts in the usual directories.
 			executeMainModScripts("Data Files\\MWSE\\core");
 			executeMainModScripts("Data Files\\MWSE\\mods");
