@@ -75,7 +75,7 @@ if damage < 1 then damage = 1 end
     Read-only. The reference that the mobile has collided with this frame.
 
 `combat`_ (`tes3statistic`_)
-    Read-only. Direct access to the creature's combat statistic.
+    Read-only. Direct access to the creature's combat statistic. This is a creature-specific generalization of skills, where this statistic is used in place of all combat skills. To get an individual skill value by skill ID, see the getSkillValue or getSkillStatistic methods.
 
 `combatSession`_ (`tes3combatSession`_)
     Read-only. Combat session data. This exists while the actor is in combat to provide memory for AI combat decisions.
@@ -219,7 +219,7 @@ if damage < 1 then damage = 1 end
     Read-only. Direct access to the actor's luck attribute statistic.
 
 `magic`_ (`tes3statistic`_)
-    Read-only. Direct access to the creature's magic statistic.
+    Read-only. Direct access to the creature's magic statistic. This is a creature-specific generalization of skills, where this statistic is used in place of all magic skills. To get an individual skill value by skill ID, see the getSkillValue or getSkillStatistic methods.
 
 `magicka`_ (`tes3statistic`_)
     Read-only. Access to the actor's magicka statistic.
@@ -341,7 +341,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     Read-only. Friendly access to the actor's flag that controls if the actor has a spell readied.
 
 `stealth`_ (`tes3statistic`_)
-    Read-only. Direct access to the creature's stealth statistic.
+    Read-only. Direct access to the creature's stealth statistic. This is a creature-specific generalization of skills, where this statistic is used in place of all stealth skills. To get an individual skill value by skill ID, see the getSkillValue or getSkillStatistic methods.
 
 `strength`_ (`tes3statistic`_)
     Read-only. Direct access to the actor's strength attribute statistic.
@@ -670,10 +670,10 @@ Damages the actor.
     Finds the timestamp a recharging power was used. Powers recharge 24 hours after this timestamp. The timestamp units are hours. The current time as a timestamp can be accessed at tes3.getSimulationTimestamp().
 
 `getSkillStatistic`_ (`tes3skillStatistic`_)
-    Fetches the statistic object of a skill with a given index. This converts to the limited options available for creatures.
+    Fetches the statistic object of a skill with a given index. This is the way to access skills for any type of actor, as creatures have a limited version of the skill system. Note that creatures share a statistic between multiple skills (they only have combat, magic, and stealth stats), so many values will be the same.
 
 `getSkillValue`_ (`number`_)
-    Fetches the current value of a skill with a given index. This converts to the limited options available for creatures.
+    Fetches the current value of a skill with a given index. This is the way to access skills for any type of actor, as creatures have a limited version of the skill system. Note that creatures share a statistic between multiple skills (they only have combat, magic, and stealth stats), so many values will be the same.
 
 `getViewToActor`_ (`number`_)
     No description available.

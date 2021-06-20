@@ -615,10 +615,10 @@ Damages the actor.
     Finds the timestamp a recharging power was used. Powers recharge 24 hours after this timestamp. The timestamp units are hours. The current time as a timestamp can be accessed at tes3.getSimulationTimestamp().
 
 `getSkillStatistic`_ (`tes3skillStatistic`_)
-    Fetches the statistic object of a skill with a given index. This converts to the limited options available for creatures.
+    Fetches the statistic object of a skill with a given index. This is the way to access skills for any type of actor, as creatures have a limited version of the skill system. Note that creatures share a statistic between multiple skills (they only have combat, magic, and stealth stats), so many values will be the same.
 
 `getSkillValue`_ (`number`_)
-    Fetches the current value of a skill with a given index. This converts to the limited options available for creatures.
+    Fetches the current value of a skill with a given index. This is the way to access skills for any type of actor, as creatures have a limited version of the skill system. Note that creatures share a statistic between multiple skills (they only have combat, magic, and stealth stats), so many values will be the same.
 
 `getViewToActor`_ (`number`_)
     No description available.

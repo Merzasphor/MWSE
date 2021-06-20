@@ -24,6 +24,9 @@ Properties
 `centralGridY`_ (`boolean`_)
     Read-only. The position of the origin longitudinal grid coordinate.
 
+`currentAmbientWaterSound`_ (`tes3sound`_)
+    Access to the current ambient water sound.
+
 `currentCell`_ (`tes3cell`_)
     Read-only. Access to the cell that the player is currently in.
 
@@ -48,10 +51,13 @@ Properties
 `threadSleepTime`_ (`number`_)
     Read-only. No description available.
 
-`worldObjectRoot`_ (`niNode`_)
+`useCellTransitionFader`_ (`boolean`_)
+    An engine flag that controls if there is a fade in/out between cells.
+
+`worldLandscapeRoot`_ (`niNode`_)
     Read-only. One of the core parent scene graph nodes.
 
-`worldPickLandscapeRoot`_ (`niNode`_)
+`worldObjectRoot`_ (`niNode`_)
     Read-only. One of the core parent scene graph nodes.
 
 `worldPickObjectRoot`_ (`niNode`_)
@@ -66,6 +72,7 @@ Properties
     tes3dataHandler/cellChanged
     tes3dataHandler/centralGridX
     tes3dataHandler/centralGridY
+    tes3dataHandler/currentAmbientWaterSound
     tes3dataHandler/currentCell
     tes3dataHandler/currentInteriorCell
     tes3dataHandler/exteriorCells
@@ -74,8 +81,9 @@ Properties
     tes3dataHandler/mainThreadId
     tes3dataHandler/nonDynamicData
     tes3dataHandler/threadSleepTime
+    tes3dataHandler/useCellTransitionFader
+    tes3dataHandler/worldLandscapeRoot
     tes3dataHandler/worldObjectRoot
-    tes3dataHandler/worldPickLandscapeRoot
     tes3dataHandler/worldPickObjectRoot
 
 .. _`backgroundThread`: tes3dataHandler/backgroundThread.html
@@ -84,6 +92,7 @@ Properties
 .. _`cellChanged`: tes3dataHandler/cellChanged.html
 .. _`centralGridX`: tes3dataHandler/centralGridX.html
 .. _`centralGridY`: tes3dataHandler/centralGridY.html
+.. _`currentAmbientWaterSound`: tes3dataHandler/currentAmbientWaterSound.html
 .. _`currentCell`: tes3dataHandler/currentCell.html
 .. _`currentInteriorCell`: tes3dataHandler/currentInteriorCell.html
 .. _`exteriorCells`: tes3dataHandler/exteriorCells.html
@@ -92,10 +101,12 @@ Properties
 .. _`mainThreadId`: tes3dataHandler/mainThreadId.html
 .. _`nonDynamicData`: tes3dataHandler/nonDynamicData.html
 .. _`threadSleepTime`: tes3dataHandler/threadSleepTime.html
+.. _`useCellTransitionFader`: tes3dataHandler/useCellTransitionFader.html
+.. _`worldLandscapeRoot`: tes3dataHandler/worldLandscapeRoot.html
 .. _`worldObjectRoot`: tes3dataHandler/worldObjectRoot.html
-.. _`worldPickLandscapeRoot`: tes3dataHandler/worldPickLandscapeRoot.html
 .. _`worldPickObjectRoot`: tes3dataHandler/worldPickObjectRoot.html
 
+.. _`tes3sound`: ../../lua/type/tes3sound.html
 .. _`boolean`: ../../lua/type/boolean.html
 .. _`tes3nonDynamicData`: ../../lua/type/tes3nonDynamicData.html
 .. _`table`: ../../lua/type/table.html

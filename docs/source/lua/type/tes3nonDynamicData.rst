@@ -6,6 +6,9 @@ A child container from tes3dataHandler, where game data is stored.
 Properties
 ----------------------------------------------------------------------------------------------------
 
+`birthsigns`_ (`tes3iterator`_)
+    Read-only. A collection of all birthsign objects.
+
 `cells`_ (`tes3stlList`_)
     Read-only. A collection of all cell objects.
 
@@ -54,6 +57,7 @@ Properties
 .. toctree::
     :hidden:
 
+    tes3nonDynamicData/birthsigns
     tes3nonDynamicData/cells
     tes3nonDynamicData/classes
     tes3nonDynamicData/dialogues
@@ -70,6 +74,7 @@ Properties
     tes3nonDynamicData/spells
     tes3nonDynamicData/startScripts
 
+.. _`birthsigns`: tes3nonDynamicData/birthsigns.html
 .. _`cells`: tes3nonDynamicData/cells.html
 .. _`classes`: tes3nonDynamicData/classes.html
 .. _`dialogues`: tes3nonDynamicData/dialogues.html
@@ -95,6 +100,9 @@ Methods
 `deleteObject`_
     Removes an object from the proper collections.
 
+`drawCellMapMarker`_
+    Draws a map marker box for an exterior cell onto the world map.
+
 `findDialogue`_ (`tes3dialogue`_)
     Locates a dialogue for a given ID.
 
@@ -113,26 +121,33 @@ Methods
 `resolveObject`_ (`tes3baseObject`_)
     Locates a general object for a given ID.
 
+`showLocationOnMap`_
+    Draws map marker boxes onto the world map for all cells with names starting with the prefix. e.g. showLocationOnMap("Vivec") draws boxes for all cells in Vivec, because the cell names "Vivec, Arena", "Vivec, Temple", etc. matches.
+
 .. toctree::
     :hidden:
 
     tes3nonDynamicData/addNewObject
     tes3nonDynamicData/deleteObject
+    tes3nonDynamicData/drawCellMapMarker
     tes3nonDynamicData/findDialogue
     tes3nonDynamicData/findFirstCloneOfActor
     tes3nonDynamicData/findGlobalVariable
     tes3nonDynamicData/findScript
     tes3nonDynamicData/findSound
     tes3nonDynamicData/resolveObject
+    tes3nonDynamicData/showLocationOnMap
 
 .. _`addNewObject`: tes3nonDynamicData/addNewObject.html
 .. _`deleteObject`: tes3nonDynamicData/deleteObject.html
+.. _`drawCellMapMarker`: tes3nonDynamicData/drawCellMapMarker.html
 .. _`findDialogue`: tes3nonDynamicData/findDialogue.html
 .. _`findFirstCloneOfActor`: tes3nonDynamicData/findFirstCloneOfActor.html
 .. _`findGlobalVariable`: tes3nonDynamicData/findGlobalVariable.html
 .. _`findScript`: tes3nonDynamicData/findScript.html
 .. _`findSound`: tes3nonDynamicData/findSound.html
 .. _`resolveObject`: tes3nonDynamicData/resolveObject.html
+.. _`showLocationOnMap`: tes3nonDynamicData/showLocationOnMap.html
 
 .. _`tes3globalVariable`: ../../lua/type/tes3globalVariable.html
 .. _`tes3iterator`: ../../lua/type/tes3iterator.html
