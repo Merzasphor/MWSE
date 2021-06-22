@@ -2005,7 +2005,7 @@ namespace mwse {
 		bool runLegacyScript(sol::table params) {
 			TES3::Script* script = getOptionalParamScript(params, "script");
 			if (script == nullptr) {
-				script = TES3::WorldController::get()->scriptGlobals;
+				script = TES3::WorldController::get()->scriptCompileAndRun;
 			}
 
 			TES3::ScriptCompiler* compiler = TES3::WorldController::get()->menuController->scriptCompiler;
