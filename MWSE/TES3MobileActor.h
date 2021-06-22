@@ -106,7 +106,7 @@ namespace TES3 {
 		int getMagnitude() const;
 
 		//
-		// Lua interface functions
+		// Lua interface functions.
 		//
 
 		ActiveMagicEffect* getNext_legacy() const;
@@ -114,12 +114,25 @@ namespace TES3 {
 	};
 	static_assert(sizeof(ActiveMagicEffect) == 0x10, "TES3::ActiveMagicEffect failed size validation");
 
+	struct ActiveMagicEffectLua : ActiveMagicEffect {
+		MobileActor * mobile;
+
+		ActiveMagicEffectLua(const ActiveMagicEffect& e, MobileActor * mobileActor)
+			: ActiveMagicEffect(e), mobile(mobileActor) {}
+
+		//
+		// Lua interface functions.
+		//
+
+		MagicEffectInstance * getEffectInstance() const;
+	};
+
 	struct MobileActor : MobileObject {
 		IteratedList<MobileActor*> listTargetActors; // 0x80
 		IteratedList<MobileActor*> listFriendlyActors; // 0x94
 		float scanTimer; // 0xA8
 		int scanInterval; // 0xAC
-		float greetTimer; // B0
+		float greetTimer; // 0xB0
 		Vector3 unknown_0xB4;
 		char unknown_0xC0;
 		char unknown_0xC1; // Undefined.
@@ -136,9 +149,9 @@ namespace TES3 {
 		Deque<ActiveMagicEffect> activeMagicEffects; // 0x1C4
 		int unknown_0x1D0;
 		Collision collision_1D4;
-		HashMap<Spell*, double> powers;
+		HashMap<Spell*, double> powers; // 0x214
 		char unknown_0x224;
-		signed char prevAIBehaviourState;
+		signed char prevAIBehaviourState; // 0x225
 		char unknown_0x226;
 		signed char nextActionWeight; // 0x227
 		MobileActorType actorType; // 0x228
@@ -410,6 +423,7 @@ namespace TES3 {
 		bool getMobToMobCollision() const;
 		void setMobToMobCollision(bool collide);
 
+		sol::table getActiveMagicEffectsList_lua(sol::table params);
 		ActiveMagicEffect* getActiveMagicEffects_legacy() const;
 		int getActiveMagicEffectCount_legacy() const;
 	};

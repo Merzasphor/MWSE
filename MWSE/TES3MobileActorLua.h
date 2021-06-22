@@ -1,4 +1,4 @@
-	#pragma once
+#pragma once
 
 #include "TES3MobileObjectLua.h"
 
@@ -16,7 +16,6 @@ namespace mwse {
 			// Basic property binding.
 			usertypeDefinition["actionBeforeCombat"] = sol::readonly_property(&TES3::MobileActor::actionBeforeCombat);
 			usertypeDefinition["actionData"] = sol::readonly_property(&TES3::MobileActor::actionData);
-			usertypeDefinition["activeMagicEffectList"] = sol::readonly_property(&TES3::MobileActor::activeMagicEffects);
 			usertypeDefinition["actorType"] = sol::readonly_property(&TES3::MobileActor::actorType);
 			usertypeDefinition["aiPlanner"] = sol::readonly_property(&TES3::MobileActor::aiPlanner);
 			usertypeDefinition["alarm"] = &TES3::MobileActor::alarm;
@@ -53,6 +52,7 @@ namespace mwse {
 			usertypeDefinition["width"] = sol::readonly_property(&TES3::MobileActor::widthInUnits);
 
 			// Indirect bindings to unions and arrays.
+			usertypeDefinition["activeMagicEffectList"] = sol::readonly_property(&TES3::MobileActor::getActiveMagicEffectsList_lua);
 			usertypeDefinition["animationController"] = sol::readonly_property(&TES3::MobileActor::getAnimationController);
 			usertypeDefinition["attributes"] = sol::readonly_property(&TES3::MobileActor::getAttributes);
 			usertypeDefinition["currentSpell"] = sol::readonly_property(&TES3::MobileActor::getCurrentSpell);
@@ -128,6 +128,7 @@ namespace mwse {
 			usertypeDefinition["applyFatigueDamage"] = &TES3::MobileActor::applyFatigueDamage;
 			usertypeDefinition["applyDamage"] = &TES3::MobileActor::applyDamage_lua;
 			usertypeDefinition["calcEffectiveDamage"] = &TES3::MobileActor::calcEffectiveDamage_lua;
+			usertypeDefinition["getActiveMagicEffects"] = &TES3::MobileActor::getActiveMagicEffectsList_lua;
 			usertypeDefinition["getBootsWeight"] = &TES3::MobileActor::getBootsWeight;
 			usertypeDefinition["getViewToActor"] = &TES3::MobileActor::getViewToActor;
 			usertypeDefinition["getViewToPoint"] = &TES3::MobileActor::getViewToPoint;

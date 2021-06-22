@@ -803,6 +803,9 @@ Damages the actor.
 `equip`_ (`boolean`_)
     Equips an item, optionally adding the item if needed.
 
+`getActiveMagicEffects`_ (`table`_)
+    Fetches a filtered list of the active magic effects on the actor. Returns a table with tes3activeMagicEffect items.
+
 `getBootsWeight`_ (`number`_)
     Read-only. Gets the weight of the boots equipped on the actor, or 0 if no boots are equipped.
 
@@ -871,6 +874,7 @@ Damages the actor.
     tes3mobileNPC/applyHealthDamage
     tes3mobileNPC/calcEffectiveDamage
     tes3mobileNPC/equip
+    tes3mobileNPC/getActiveMagicEffects
     tes3mobileNPC/getBootsWeight
     tes3mobileNPC/getFatigueTerm
     tes3mobileNPC/getPowerUseTimestamp
@@ -897,6 +901,7 @@ Damages the actor.
 .. _`applyHealthDamage`: tes3mobileNPC/applyHealthDamage.html
 .. _`calcEffectiveDamage`: tes3mobileNPC/calcEffectiveDamage.html
 .. _`equip`: tes3mobileNPC/equip.html
+.. _`getActiveMagicEffects`: tes3mobileNPC/getActiveMagicEffects.html
 .. _`getBootsWeight`: tes3mobileNPC/getBootsWeight.html
 .. _`getFatigueTerm`: tes3mobileNPC/getFatigueTerm.html
 .. _`getPowerUseTimestamp`: tes3mobileNPC/getPowerUseTimestamp.html

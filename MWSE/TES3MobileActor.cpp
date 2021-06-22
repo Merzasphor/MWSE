@@ -23,6 +23,7 @@
 #include "TES3DataHandler.h"
 #include "TES3GameSetting.h"
 #include "TES3MagicEffectController.h"
+#include "TES3MagicEffectInstance.h"
 #include "TES3MagicInstanceController.h"
 #include "TES3MobController.h"
 #include "TES3MobilePlayer.h"
@@ -61,6 +62,14 @@ namespace TES3 {
 	ActiveMagicEffect* ActiveMagicEffect::getNext_legacy() const {
 		auto node = reinterpret_cast<const Deque<ActiveMagicEffect>::Node*>(DWORD(this) - offsetof(Deque<ActiveMagicEffect>::Node, data));
 		return &node->next->data;
+	}
+
+	MagicEffectInstance * ActiveMagicEffectLua::getEffectInstance() const {
+		auto magicInstance = getInstance();
+		if (magicInstance) {
+			return magicInstance->getEffectInstance(magicInstanceEffectIndex, mobile->reference);
+		}
+		return nullptr;
 	}
 
 	const auto TES3_MobileActor_onActorCollision = reinterpret_cast<bool(__thiscall*)(MobileActor*, int)>(0x5234A0);
@@ -1181,6 +1190,29 @@ namespace TES3 {
 				mobController->disableMobileCollision(this);
 			}
 		}
+	}
+
+	sol::table MobileActor::getActiveMagicEffectsList_lua(sol::table params) {
+		sol::optional<int> effectID = params["effect"];
+		sol::optional<unsigned int> serial = params["serial"];
+
+		auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+		sol::table effectsList = stateHandle.state.create_table();
+		int index = 1;
+
+		for (auto& activeEffect : activeMagicEffects) {
+			if (effectID && effectID.value() != activeEffect.magicEffectID) {
+				continue;
+			}
+			if (serial && serial.value() != activeEffect.magicInstanceSerial) {
+				continue;
+			}
+
+			effectsList[index] = ActiveMagicEffectLua(activeEffect, this);
+			index++;
+		}
+
+		return effectsList;
 	}
 
 	ActiveMagicEffect* MobileActor::getActiveMagicEffects_legacy() const {

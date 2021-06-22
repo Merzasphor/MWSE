@@ -991,6 +991,9 @@ Damages the actor.
 `exerciseSkill`_
     Exercises a skill, providing experience in it.
 
+`getActiveMagicEffects`_ (`table`_)
+    Fetches a filtered list of the active magic effects on the actor. Returns a table with tes3activeMagicEffect items.
+
 `getBootsWeight`_ (`number`_)
     Read-only. Gets the weight of the boots equipped on the actor, or 0 if no boots are equipped.
 
@@ -1063,6 +1066,7 @@ Damages the actor.
     tes3mobilePlayer/calcEffectiveDamage
     tes3mobilePlayer/equip
     tes3mobilePlayer/exerciseSkill
+    tes3mobilePlayer/getActiveMagicEffects
     tes3mobilePlayer/getBootsWeight
     tes3mobilePlayer/getFatigueTerm
     tes3mobilePlayer/getPowerUseTimestamp
@@ -1091,6 +1095,7 @@ Damages the actor.
 .. _`calcEffectiveDamage`: tes3mobilePlayer/calcEffectiveDamage.html
 .. _`equip`: tes3mobilePlayer/equip.html
 .. _`exerciseSkill`: tes3mobilePlayer/exerciseSkill.html
+.. _`getActiveMagicEffects`: tes3mobilePlayer/getActiveMagicEffects.html
 .. _`getBootsWeight`: tes3mobilePlayer/getBootsWeight.html
 .. _`getFatigueTerm`: tes3mobilePlayer/getFatigueTerm.html
 .. _`getPowerUseTimestamp`: tes3mobilePlayer/getPowerUseTimestamp.html

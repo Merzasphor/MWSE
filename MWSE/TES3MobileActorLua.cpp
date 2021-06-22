@@ -2,6 +2,7 @@
 
 #include "LuaManager.h"
 
+#include "TES3MagicEffectInstance.h"
 #include "TES3MagicInstanceController.h"
 #include "TES3MobileActor.h"
 #include "TES3WorldController.h"
@@ -16,7 +17,7 @@ namespace mwse {
 			// Binding for TES3::ActiveMagicEffect
 			{
 				// Start our usertype. We must finish this with state.set_usertype.
-				auto usertypeDefinition = state.new_usertype<TES3::ActiveMagicEffect>("tes3activeMagicEffect");
+				auto usertypeDefinition = state.new_usertype<TES3::ActiveMagicEffect>("tes3activeMagicEffectLegacy");
 				usertypeDefinition["new"] = sol::no_constructor;
 
 				// Basic property binding.
@@ -39,8 +40,31 @@ namespace mwse {
 				usertypeDefinition["next"] = sol::property(&TES3::ActiveMagicEffect::getNext_legacy);
 
 			}
-		}
 
+			// Binding for TES3::ActiveMagicEffectLua
+			{
+				// Start our usertype. We must finish this with state.set_usertype.
+				auto usertypeDefinition = state.new_usertype<TES3::ActiveMagicEffectLua>("tes3activeMagicEffect");
+				usertypeDefinition["new"] = sol::no_constructor;
+
+				// Basic property binding.
+				usertypeDefinition["attributeId"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::skillOrAttributeID);
+				usertypeDefinition["duration"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::duration);
+				usertypeDefinition["effectId"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::magicEffectID);
+				usertypeDefinition["effectIndex"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::magicInstanceEffectIndex);
+				usertypeDefinition["harmful"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::isHarmful);
+				usertypeDefinition["mobile"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::mobile);
+				usertypeDefinition["isSummon"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::isSummon);
+				usertypeDefinition["serial"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::magicInstanceSerial);
+				usertypeDefinition["skillId"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::skillOrAttributeID);
+
+				// Expose functions as properties.
+				usertypeDefinition["effectInstance"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::getEffectInstance);
+				usertypeDefinition["instance"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::getInstance);
+				usertypeDefinition["magnitude"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::getMagnitude);
+
+			}
+		}
 
 	}
 }

@@ -109,14 +109,19 @@ Properties
 Methods
 ----------------------------------------------------------------------------------------------------
 
+`getEffectInstance`_ (`tes3magicEffectInstance`_)
+    Gets the magic effect instance for a given effect index and target reference. Effect instances may not all be active on a target, due to reflect, absorption, dispels, different durations and other factors.
+
 `getMagnitudeForIndex`_ (`number`_)
     Gets the magnitude from the casting source for a given effect index.
 
 .. toctree::
     :hidden:
 
+    tes3magicSourceInstance/getEffectInstance
     tes3magicSourceInstance/getMagnitudeForIndex
 
+.. _`getEffectInstance`: tes3magicSourceInstance/getEffectInstance.html
 .. _`getMagnitudeForIndex`: tes3magicSourceInstance/getMagnitudeForIndex.html
 
 .. _`tes3spell`: ../../lua/type/tes3spell.html
@@ -128,4 +133,5 @@ Methods
 .. _`tes3alchemy`: ../../lua/type/tes3alchemy.html
 .. _`tes3reference`: ../../lua/type/tes3reference.html
 .. _`tes3item`: ../../lua/type/tes3item.html
+.. _`tes3magicEffectInstance`: ../../lua/type/tes3magicEffectInstance.html
 .. _`tes3itemData`: ../../lua/type/tes3itemData.html

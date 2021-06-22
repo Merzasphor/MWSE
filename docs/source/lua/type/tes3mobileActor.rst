@@ -605,6 +605,9 @@ Damages the actor.
 `calcEffectiveDamage`_ (`number`_)
     Calculates the damage that would be inflicted to an actor after armor and/or resistance. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
 
+`getActiveMagicEffects`_ (`table`_)
+    Fetches a filtered list of the active magic effects on the actor. Returns a table with tes3activeMagicEffect items.
+
 `getBootsWeight`_ (`number`_)
     Read-only. Gets the weight of the boots equipped on the actor, or 0 if no boots are equipped.
 
@@ -669,6 +672,7 @@ Damages the actor.
     tes3mobileActor/applyFatigueDamage
     tes3mobileActor/applyHealthDamage
     tes3mobileActor/calcEffectiveDamage
+    tes3mobileActor/getActiveMagicEffects
     tes3mobileActor/getBootsWeight
     tes3mobileActor/getFatigueTerm
     tes3mobileActor/getPowerUseTimestamp
@@ -693,6 +697,7 @@ Damages the actor.
 .. _`applyFatigueDamage`: tes3mobileActor/applyFatigueDamage.html
 .. _`applyHealthDamage`: tes3mobileActor/applyHealthDamage.html
 .. _`calcEffectiveDamage`: tes3mobileActor/calcEffectiveDamage.html
+.. _`getActiveMagicEffects`: tes3mobileActor/getActiveMagicEffects.html
 .. _`getBootsWeight`: tes3mobileActor/getBootsWeight.html
 .. _`getFatigueTerm`: tes3mobileActor/getFatigueTerm.html
 .. _`getPowerUseTimestamp`: tes3mobileActor/getPowerUseTimestamp.html
