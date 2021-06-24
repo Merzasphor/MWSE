@@ -826,6 +826,39 @@ namespace TES3 {
 		return newNode;
 	}
 
+#if MWSE_RAISED_FILE_LIMIT
+	// New offsets and masks.
+	constexpr DWORD ModBits = 10;
+	constexpr DWORD FormBits = sizeof(DWORD) * CHAR_BIT - ModBits;
+	constexpr DWORD ModMask = ((1 << ModBits) - 1) << FormBits;
+	constexpr DWORD FormMask = (1 << FormBits) - 1;
+	constexpr DWORD ModCount = 1 << ModBits;
+#else
+	// Vanilla offsets and masks.
+	constexpr DWORD ModBits = 8;
+	constexpr DWORD FormBits = sizeof(DWORD) * CHAR_BIT - ModBits;
+	constexpr DWORD ModMask = ((1 << ModBits) - 1) << FormBits;
+	constexpr DWORD FormMask = (1 << FormBits) - 1;
+	constexpr DWORD ModCount = 1 << ModBits;
+#endif
+
+
+	unsigned int Reference::getSourceModId() const {
+		return sourceID >> ModBits;
+	}
+
+	unsigned int Reference::getSourceFormId() const {
+		return sourceID & FormMask;
+	}
+
+	unsigned int Reference::getTargetModId() const {
+		return targetID >> ModBits;
+	}
+
+	unsigned int Reference::getTargetFormId() const {
+		return targetID & FormMask;
+	}
+
 	Inventory * Reference::getInventory() {
 		// Only actors have equipment.
 		if (baseObject->objectType != ObjectType::Container &&

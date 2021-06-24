@@ -147,6 +147,11 @@ namespace TES3 {
 		// Override for references to raise an event when their scene node is created.
 		NI::Node * getSceneGraphNode();
 
+		unsigned int getSourceModId() const;
+		unsigned int getSourceFormId() const;
+		unsigned int getTargetModId() const;
+		unsigned int getTargetFormId() const;
+
 		//
 		// Lua interface functions.
 		//
