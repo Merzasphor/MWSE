@@ -1,7 +1,7 @@
 dropItem
 ====================================================================================================
 
-Checks to see if the inventory contains an item. This should not be used, in favor of tes3 APIs.
+Checks to see if the inventory contains an item. This should not be used, instead use the tes3.dropItem function.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ position (`tes3vector3`_)
 orientation (`tes3vector3`_)
     A vector determining placement rotation.
 
-unknown (`boolean`_)
+ignoreItemData (`boolean`_)
     No description available.
 
 .. _`boolean`: ../../../lua/type/boolean.html

@@ -270,7 +270,7 @@ namespace TES3 {
 		void setCurrentMagicSourceFiltered(Object * magic);
 		void forceSpellCast(MobileActor * target);
 
-		void dropItem(Object * item, ItemData * itemData = nullptr, int count = 1, bool exact = true);
+		void dropItem(Object * item, ItemData * itemData = nullptr, int count = 1, bool ignoreItemData = true);
 
 		// Always returns false for non-MACH.
 		bool persuade(int random, int persuasionIndex);

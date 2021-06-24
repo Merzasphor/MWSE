@@ -3474,12 +3474,31 @@ namespace mwse {
 			}
 
 			// Get data about what is being dropped.
-			TES3::ItemData* itemData = getOptionalParam<TES3::ItemData*>(params, "itemData", nullptr);
+			auto itemData = getOptionalParam<TES3::ItemData*>(params, "itemData");
 			int count = getOptionalParam<int>(params, "count", 1);
-			bool matchExact = getOptionalParam<bool>(params, "matchExact", true);
+			bool matchNoItemData = getOptionalParam<bool>(params, "matchNoItemData", false);
+
+			// Check if the item to drop exists, as the game functions don't handle it.
+			auto actor = static_cast<TES3::Actor*>(mobile->reference->baseObject);
+			auto stack = actor->inventory.findItemStack(item);
+			if (!stack) {
+				return nullptr;
+			}
+			if (matchNoItemData) {
+				if (stack->count == stack->variables->size()) {
+					// Match failed: All items have itemData.
+					return nullptr;
+				}
+			}
+			else if (itemData.has_value()) {
+				if (!stack->variables->contains(itemData.value())) {
+					return nullptr;
+				}
+			}
 
 			// Drop the item.
-			mobile->dropItem(item, itemData, count, matchExact);
+			bool matchExact = itemData.has_value() || matchNoItemData;
+			mobile->dropItem(item, itemData.value_or(nullptr), count, !matchExact);
 			auto droppedReference = mobile->getCell()->temporaryRefs.tail;
 
 			// Update inventory tiles if needed.

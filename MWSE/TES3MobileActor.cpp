@@ -539,8 +539,8 @@ namespace TES3 {
 	}
 
 	const auto TES3_MobileActor_dropItem = reinterpret_cast<void (__thiscall*)(MobileActor*, Object*, ItemData*, int, bool)>(0x52C460);
-	void MobileActor::dropItem(Object * item, ItemData * itemData, int count, bool exact) {
-		return TES3_MobileActor_dropItem(this, item, itemData, count, exact);
+	void MobileActor::dropItem(Object * item, ItemData * itemData, int count, bool ignoreItemData) {
+		return TES3_MobileActor_dropItem(this, item, itemData, count, ignoreItemData);
 	}
 
 	const auto TES3_MobileActor_persuade = reinterpret_cast<bool(__thiscall*)(MobileActor*, int, int)>(0x529D10);

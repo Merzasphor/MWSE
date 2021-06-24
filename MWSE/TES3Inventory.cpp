@@ -52,8 +52,8 @@ namespace TES3 {
 	}
 
 	const auto TES3_Inventory_DropItem = reinterpret_cast<void(__thiscall*)(Inventory*, MobileActor*, Item *, ItemData *, int, Vector3, Vector3, bool)>(0x49B090);
-	void Inventory::dropItem(MobileActor* mobileActor, Item * item, ItemData * itemData, int count, Vector3 position, Vector3 orientation, bool unknown) {
-		TES3_Inventory_DropItem(this, mobileActor, item, itemData, count, position, orientation, unknown);
+	void Inventory::dropItem(MobileActor* mobileActor, Item * item, ItemData * itemData, int count, Vector3 position, Vector3 orientation, bool ignoreItemData) {
+		TES3_Inventory_DropItem(this, mobileActor, item, itemData, count, position, orientation, ignoreItemData);
 	}
 
 	const auto TES3_Inventory_resolveLeveledLists = reinterpret_cast<void(__thiscall*)(Inventory*, MobileActor*)>(0x49A190);

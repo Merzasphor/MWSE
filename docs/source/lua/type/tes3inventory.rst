@@ -34,7 +34,7 @@ Methods
     Checks to see if the inventory contains an item.
 
 `dropItem`_
-    Checks to see if the inventory contains an item. This should not be used, in favor of tes3 APIs.
+    Checks to see if the inventory contains an item. This should not be used, instead use the tes3.dropItem function.
 
 `removeItem`_
     Removes an item from the inventory directly. This should not be used, in favor of the tes3 API function.
