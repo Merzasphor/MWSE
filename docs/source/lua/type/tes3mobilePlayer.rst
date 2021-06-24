@@ -986,7 +986,7 @@ Damages the actor.
     Calculates the damage that would be inflicted to an actor after armor and/or resistance. Returns the actual damage done after armor mitigation and resistance, but before difficulty scaling.
 
 `equip`_ (`boolean`_)
-    Equips an item, optionally adding the item if needed.
+    Equips an item, optionally adding the item if needed. If the best match is already equipped, it does not perform an unequip-equip cycle, but does return true.
 
 `exerciseSkill`_
     Exercises a skill, providing experience in it.
