@@ -3007,7 +3007,7 @@ namespace mwse {
 					int itemsLeftToTransfer = std::min(desiredCount, stackCount);
 
 					// If we're limited by capacity, find out how many items we really want to transfer.
-					if (maxCapacity != -1.0f) {
+					if (maxCapacity != -1.0f && itemWeight != 0.0f) {
 						itemsLeftToTransfer = std::min(itemsLeftToTransfer, (int)std::floorf((maxCapacity - currentWeight) / itemWeight));
 					}
 
