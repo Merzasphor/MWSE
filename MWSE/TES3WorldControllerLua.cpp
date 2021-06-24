@@ -5,6 +5,7 @@
 
 #include "NICamera.h"
 #include "NINode.h"
+#include "NIRenderer.h"
 
 #include "TES3AudioController.h"
 #include "TES3Fader.h"

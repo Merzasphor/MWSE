@@ -842,7 +842,6 @@ namespace TES3 {
 	constexpr DWORD ModCount = 1 << ModBits;
 #endif
 
-
 	unsigned int Reference::getSourceModId() const {
 		return sourceID >> ModBits;
 	}

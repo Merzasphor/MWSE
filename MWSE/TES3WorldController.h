@@ -46,8 +46,8 @@ namespace TES3 {
 
 		};
 		void* vTable; // 0x0
-		NI::Object* renderer; // 0x4
-		NI::Object* root; // 0x8
+		NI::Renderer* renderer; // 0x4
+		NI::Node* root; // 0x8
 		NI::Node* cameraRoot; // 0xC
 		CameraData cameraData; // 0x10
 
