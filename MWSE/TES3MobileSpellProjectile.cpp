@@ -1,5 +1,7 @@
 #include "TES3MobileSpellProjectile.h"
 
+#include "TES3DataHandler.h"
+#include "TES3MagicEffectController.h"
 #include "TES3MagicInstanceController.h"
 #include "TES3MagicSourceInstance.h"
 #include "TES3Reference.h"
@@ -11,22 +13,23 @@ namespace TES3 {
 	}
 
 	void MobileSpellProjectile::explode() {
-		auto spellInstance = getInstance();
-		if (!spellInstance) {
+		auto magicSourceInstance = getInstance();
+		if (!magicSourceInstance) {
 			return;
 		}
 
-		// Create temporary collision data for the projectile hit function.
+		// Create temporary collision data for the projectile hit function. The projectile collider is itself.
 		MobileObject::Collision collision;
 		collision.valid = true;
 		collision.time = 0;
 		collision.point = reference->position;
 		collision.objectPosAtCollision = reference->position;
-		collision.colliderRef = nullptr;
+		collision.colliderRef = reference;
 		collision.collisionType = MobileObject::Collision::CollisionType::None;
 
 		// Call projectile impact handling function.
-		spellInstance->projectileHit(&collision);
+		auto magicEffectController = DataHandler::get()->nonDynamicData->magicEffects;
+		magicEffectController->spellProjectileHit(magicSourceInstance, &collision);
 
 		// Expire projectile.
 		enterLeaveSimulation(false);
