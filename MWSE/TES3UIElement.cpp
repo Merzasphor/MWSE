@@ -196,6 +196,11 @@ namespace TES3 {
 			return TES3_ui_performLayout(this, bUpdateTimestamp);
 		}
 
+		const auto TES3_ui_reattachToParent = reinterpret_cast<void(__thiscall*)(Element*, Element*)>(0x57B850);
+		void Element::reattachToParent(Element* parent) {
+			TES3_ui_reattachToParent(this, parent);
+		}
+
 		bool Element::reorderChildren(int insertBefore, int moveFrom, int count) {
 			// Move <count> children from index <moveFrom> to index <insertBefore>
 			// Negative positions indicate distance from end, negative count moves all children after moveFrom
