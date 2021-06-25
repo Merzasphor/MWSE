@@ -626,13 +626,19 @@ namespace TES3 {
 			itemData = nullptr;
 
 			// Only scan if necessary; fully repaired items exist if stack count is greater than variables count.
-			if (s->variables && s->count == s->variables->size()) {
+			if (s->variables && s->count == s->variables->filledCount) {
 				int bestCondition = -1;
 				float bestCharge = -1.0f;
 
-				for (const auto& i : *s->variables) {
+				for (auto it = s->variables->cbegin(), end = it + s->variables->endIndex; it != end; ++it) {
 					// Select best condition, secondarily select best charge.
-					if (i && i->condition > bestCondition || (i->condition == bestCondition && i->charge > bestCharge)) {
+					TES3::ItemData* i = *it;
+					if (i == nullptr) {
+						// nullptr condition represents a fully repaired item.
+						itemData = nullptr;
+						break;
+					}
+					if (i->condition > bestCondition || (i->condition == bestCondition && i->charge > bestCharge)) {
 						itemData = i;
 						bestCondition = i->condition;
 						bestCharge = i->charge;
@@ -650,9 +656,13 @@ namespace TES3 {
 				float worstCharge = firstVar->charge;
 				itemData = firstVar;
 
-				for (const auto& i : *s->variables) {
+				for (auto it = s->variables->cbegin(), end = it + s->variables->endIndex; it != end; ++it) {
 					// Select worst condition, secondarily select worst charge.
-					if (i && i->condition < worstCondition || (i->condition == worstCondition && i->charge < worstCharge)) {
+					TES3::ItemData* i = *it;
+					if (i == nullptr) {
+						continue;
+					}
+					if (i->condition < worstCondition || (i->condition == worstCondition && i->charge < worstCharge)) {
 						itemData = i;
 						worstCondition = i->condition;
 						worstCharge = i->charge;

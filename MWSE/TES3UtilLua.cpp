@@ -3485,7 +3485,7 @@ namespace mwse {
 				return nullptr;
 			}
 			if (matchNoItemData) {
-				if (stack->variables && stack->count == stack->variables->size()) {
+				if (stack->variables && stack->count == stack->variables->filledCount) {
 					// Match failed: All items have itemData.
 					return nullptr;
 				}
