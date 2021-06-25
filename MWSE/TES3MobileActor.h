@@ -400,8 +400,8 @@ namespace TES3 {
 		void setMovementFlagRunning(bool value);
 		bool getMovementFlagSneaking() const;
 		void setMovementFlagSneaking(bool value);
-		bool getMovementFlagJumped() const;
-		void setMovementFlagJumped(bool value);
+		bool getMovementFlagFalling() const;
+		void setMovementFlagFalling(bool value);
 		bool getMovementFlagSwimming() const;
 		void setMovementFlagSwimming(bool value);
 		bool getMovementFlagTurnLeft() const;

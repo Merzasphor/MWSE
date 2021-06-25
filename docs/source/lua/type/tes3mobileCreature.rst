@@ -161,6 +161,9 @@ if damage < 1 then damage = 1 end
 `isDead`_ (`boolean`_)
     Read-only. True if the actor is dead.
 
+`isFalling`_ (`boolean`_)
+    Direct access to the actor's current movement flags, showing if the actor is falling. This is when the actor is falling without having jumped, e.g. if they walked off a ledge.
+
 `isFlying`_ (`boolean`_)
     Direct access to the actor's current movement flags, showing if the actor is flying.
 
@@ -190,9 +193,6 @@ if damage < 1 then damage = 1 end
 
 `isSneaking`_ (`boolean`_)
     Direct access to the actor's current movement flags, showing if the actor is sneaking.
-
-`isStartingJump`_ (`boolean`_)
-    Direct access to the actor's current movement flags, showing if the actor has started jumping.
 
 `isSwimming`_ (`boolean`_)
     Direct access to the actor's current movement flags, showing if the actor is swimming.
@@ -441,6 +441,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobileCreature/invisibility
     tes3mobileCreature/isCrittable
     tes3mobileCreature/isDead
+    tes3mobileCreature/isFalling
     tes3mobileCreature/isFlying
     tes3mobileCreature/isJumping
     tes3mobileCreature/isMovingBack
@@ -451,7 +452,6 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobileCreature/isPlayerHidden
     tes3mobileCreature/isRunning
     tes3mobileCreature/isSneaking
-    tes3mobileCreature/isStartingJump
     tes3mobileCreature/isSwimming
     tes3mobileCreature/isTurningLeft
     tes3mobileCreature/isTurningRight
@@ -567,6 +567,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`invisibility`: tes3mobileCreature/invisibility.html
 .. _`isCrittable`: tes3mobileCreature/isCrittable.html
 .. _`isDead`: tes3mobileCreature/isDead.html
+.. _`isFalling`: tes3mobileCreature/isFalling.html
 .. _`isFlying`: tes3mobileCreature/isFlying.html
 .. _`isJumping`: tes3mobileCreature/isJumping.html
 .. _`isMovingBack`: tes3mobileCreature/isMovingBack.html
@@ -577,7 +578,6 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`isPlayerHidden`: tes3mobileCreature/isPlayerHidden.html
 .. _`isRunning`: tes3mobileCreature/isRunning.html
 .. _`isSneaking`: tes3mobileCreature/isSneaking.html
-.. _`isStartingJump`: tes3mobileCreature/isStartingJump.html
 .. _`isSwimming`: tes3mobileCreature/isSwimming.html
 .. _`isTurningLeft`: tes3mobileCreature/isTurningLeft.html
 .. _`isTurningRight`: tes3mobileCreature/isTurningRight.html

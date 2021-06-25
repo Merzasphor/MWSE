@@ -117,7 +117,7 @@ namespace mwse {
 			usertypeDefinition["isMovingRight"] = sol::property(&TES3::MobileActor::getMovementFlagRight, &TES3::MobileActor::setMovementFlagRight);
 			usertypeDefinition["isRunning"] = sol::property(&TES3::MobileActor::getMovementFlagRunning, &TES3::MobileActor::setMovementFlagRunning);
 			usertypeDefinition["isSneaking"] = sol::property(&TES3::MobileActor::getMovementFlagSneaking, &TES3::MobileActor::setMovementFlagSneaking);
-			usertypeDefinition["isStartingJump"] = sol::property(&TES3::MobileActor::getMovementFlagJumped, &TES3::MobileActor::setMovementFlagJumped);
+			usertypeDefinition["isFalling"] = sol::property(&TES3::MobileActor::getMovementFlagFalling, &TES3::MobileActor::setMovementFlagFalling);
 			usertypeDefinition["isSwimming"] = sol::property(&TES3::MobileActor::getMovementFlagSwimming, &TES3::MobileActor::setMovementFlagSwimming);
 			usertypeDefinition["isTurningLeft"] = sol::property(&TES3::MobileActor::getMovementFlagTurnLeft, &TES3::MobileActor::setMovementFlagTurnLeft);
 			usertypeDefinition["isTurningRight"] = sol::property(&TES3::MobileActor::getMovementFlagTurnRight, &TES3::MobileActor::setMovementFlagTurnRight);

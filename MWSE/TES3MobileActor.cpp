@@ -1098,12 +1098,12 @@ namespace TES3 {
 		setMobileActorMovementFlag(TES3::ActorMovement::Sneaking, value);
 	}
 
-	bool MobileActor::getMovementFlagJumped() const {
-		return getMobileActorMovementFlag(ActorMovement::Jumped);
+	bool MobileActor::getMovementFlagFalling() const {
+		return getMobileActorMovementFlag(ActorMovement::Falling);
 	}
 
-	void MobileActor::setMovementFlagJumped(bool value) {
-		setMobileActorMovementFlag(TES3::ActorMovement::Jumped, value);
+	void MobileActor::setMovementFlagFalling(bool value) {
+		setMobileActorMovementFlag(TES3::ActorMovement::Falling, value);
 	}
 
 	bool MobileActor::getMovementFlagSwimming() const {

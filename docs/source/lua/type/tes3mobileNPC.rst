@@ -212,6 +212,9 @@ if damage < 1 then damage = 1 end
 `isDead`_ (`boolean`_)
     Read-only. True if the actor is dead.
 
+`isFalling`_ (`boolean`_)
+    Direct access to the actor's current movement flags, showing if the actor is falling. This is when the actor is falling without having jumped, e.g. if they walked off a ledge.
+
 `isFlying`_ (`boolean`_)
     Direct access to the actor's current movement flags, showing if the actor is flying.
 
@@ -241,9 +244,6 @@ if damage < 1 then damage = 1 end
 
 `isSneaking`_ (`boolean`_)
     Direct access to the actor's current movement flags, showing if the actor is sneaking.
-
-`isStartingJump`_ (`boolean`_)
-    Direct access to the actor's current movement flags, showing if the actor has started jumping.
 
 `isSwimming`_ (`boolean`_)
     Direct access to the actor's current movement flags, showing if the actor is swimming.
@@ -542,6 +542,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobileNPC/invisibility
     tes3mobileNPC/isCrittable
     tes3mobileNPC/isDead
+    tes3mobileNPC/isFalling
     tes3mobileNPC/isFlying
     tes3mobileNPC/isJumping
     tes3mobileNPC/isMovingBack
@@ -552,7 +553,6 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobileNPC/isPlayerHidden
     tes3mobileNPC/isRunning
     tes3mobileNPC/isSneaking
-    tes3mobileNPC/isStartingJump
     tes3mobileNPC/isSwimming
     tes3mobileNPC/isTurningLeft
     tes3mobileNPC/isTurningRight
@@ -696,6 +696,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`invisibility`: tes3mobileNPC/invisibility.html
 .. _`isCrittable`: tes3mobileNPC/isCrittable.html
 .. _`isDead`: tes3mobileNPC/isDead.html
+.. _`isFalling`: tes3mobileNPC/isFalling.html
 .. _`isFlying`: tes3mobileNPC/isFlying.html
 .. _`isJumping`: tes3mobileNPC/isJumping.html
 .. _`isMovingBack`: tes3mobileNPC/isMovingBack.html
@@ -706,7 +707,6 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`isPlayerHidden`: tes3mobileNPC/isPlayerHidden.html
 .. _`isRunning`: tes3mobileNPC/isRunning.html
 .. _`isSneaking`: tes3mobileNPC/isSneaking.html
-.. _`isStartingJump`: tes3mobileNPC/isStartingJump.html
 .. _`isSwimming`: tes3mobileNPC/isSwimming.html
 .. _`isTurningLeft`: tes3mobileNPC/isTurningLeft.html
 .. _`isTurningRight`: tes3mobileNPC/isTurningRight.html

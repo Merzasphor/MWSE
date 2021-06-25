@@ -254,6 +254,9 @@ if damage < 1 then damage = 1 end
 `isDead`_ (`boolean`_)
     Read-only. True if the actor is dead.
 
+`isFalling`_ (`boolean`_)
+    Direct access to the actor's current movement flags, showing if the actor is falling. This is when the actor is falling without having jumped, e.g. if they walked off a ledge.
+
 `isFlying`_ (`boolean`_)
     Direct access to the actor's current movement flags, showing if the actor is flying.
 
@@ -283,9 +286,6 @@ if damage < 1 then damage = 1 end
 
 `isSneaking`_ (`boolean`_)
     Direct access to the actor's current movement flags, showing if the actor is sneaking.
-
-`isStartingJump`_ (`boolean`_)
-    Direct access to the actor's current movement flags, showing if the actor has started jumping.
 
 `isSwimming`_ (`boolean`_)
     Direct access to the actor's current movement flags, showing if the actor is swimming.
@@ -667,6 +667,7 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobilePlayer/is3rdPerson
     tes3mobilePlayer/isCrittable
     tes3mobilePlayer/isDead
+    tes3mobilePlayer/isFalling
     tes3mobilePlayer/isFlying
     tes3mobilePlayer/isJumping
     tes3mobilePlayer/isMovingBack
@@ -677,7 +678,6 @@ May be useful when free movement is required in crowded situations, or to tempor
     tes3mobilePlayer/isPlayerHidden
     tes3mobilePlayer/isRunning
     tes3mobilePlayer/isSneaking
-    tes3mobilePlayer/isStartingJump
     tes3mobilePlayer/isSwimming
     tes3mobilePlayer/isTurningLeft
     tes3mobilePlayer/isTurningRight
@@ -858,6 +858,7 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`is3rdPerson`: tes3mobilePlayer/is3rdPerson.html
 .. _`isCrittable`: tes3mobilePlayer/isCrittable.html
 .. _`isDead`: tes3mobilePlayer/isDead.html
+.. _`isFalling`: tes3mobilePlayer/isFalling.html
 .. _`isFlying`: tes3mobilePlayer/isFlying.html
 .. _`isJumping`: tes3mobilePlayer/isJumping.html
 .. _`isMovingBack`: tes3mobilePlayer/isMovingBack.html
@@ -868,7 +869,6 @@ May be useful when free movement is required in crowded situations, or to tempor
 .. _`isPlayerHidden`: tes3mobilePlayer/isPlayerHidden.html
 .. _`isRunning`: tes3mobilePlayer/isRunning.html
 .. _`isSneaking`: tes3mobilePlayer/isSneaking.html
-.. _`isStartingJump`: tes3mobilePlayer/isStartingJump.html
 .. _`isSwimming`: tes3mobilePlayer/isSwimming.html
 .. _`isTurningLeft`: tes3mobilePlayer/isTurningLeft.html
 .. _`isTurningRight`: tes3mobilePlayer/isTurningRight.html
