@@ -4464,18 +4464,21 @@ namespace mwse {
 			// Check to see if there are enemies nearby.
 			if (getOptionalParam<bool>(params, "checkForEnemies", true) && !worldController->mobController->processManager->canRest()) {
 				if (getOptionalParam<bool>(params, "showMessage", true)) {
-					TES3::UI::showDialogueMessage(dataHandler->nonDynamicData->GMSTs[TES3::GMST::sNotifyMessage2]->value.asString, 0, 1);
+					TES3::UI::showMessageBox(dataHandler->nonDynamicData->GMSTs[TES3::GMST::sNotifyMessage2]->value.asString, nullptr, true);
 				}
 				return false;
 			}
 
-			// Check to make sure the player isn't underwater.
+			// Check to make sure the player isn't underwater, jumping, or flying.
 			auto macp = worldController->getMobilePlayer();
-			if (getOptionalParam<bool>(params, "checkForSolidGround", true) && macp->getBasePositionIsUnderwater()) {
-				if (getOptionalParam<bool>(params, "showMessage", true)) {
-					TES3::UI::showDialogueMessage(dataHandler->nonDynamicData->GMSTs[TES3::GMST::sNotifyMessage1]->value.asString, 0, 1);
+			if (getOptionalParam<bool>(params, "checkForSolidGround", true)) {
+				const auto excludedMovement = TES3::ActorMovement::Flying | TES3::ActorMovement::Jumping;
+				if ((macp->movementFlags & excludedMovement) || macp->getBasePositionIsUnderwater()) {
+					if (getOptionalParam<bool>(params, "showMessage", true)) {
+						TES3::UI::showMessageBox(dataHandler->nonDynamicData->GMSTs[TES3::GMST::sNotifyMessage1]->value.asString, nullptr, true);
+					}
+					return false;
 				}
-				return false;
 			}
 
 			// Allow using resting/waiting param. Defaults to resting.
