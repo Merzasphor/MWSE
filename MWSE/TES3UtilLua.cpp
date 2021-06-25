@@ -3485,13 +3485,14 @@ namespace mwse {
 				return nullptr;
 			}
 			if (matchNoItemData) {
-				if (stack->count == stack->variables->size()) {
+				if (stack->variables && stack->count == stack->variables->size()) {
 					// Match failed: All items have itemData.
 					return nullptr;
 				}
 			}
 			else if (itemData.has_value()) {
-				if (!stack->variables->contains(itemData.value())) {
+				if (stack->variables == nullptr || !stack->variables->contains(itemData.value())) {
+					// Match failed: itemData is not found.
 					return nullptr;
 				}
 			}
