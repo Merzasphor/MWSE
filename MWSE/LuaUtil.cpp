@@ -99,16 +99,19 @@ namespace mwse {
 				sol::object maybeObject = params[key];
 				if (maybeObject.valid()) {
 					if (maybeObject.is<std::string>()) {
-						return TES3::DataHandler::get()->nonDynamicData->resolveObject(maybeObject.as<std::string>().c_str())->getBaseObject();
+						auto obj = TES3::DataHandler::get()->nonDynamicData->resolveObject(maybeObject.as<std::string>().c_str());
+						if (obj) {
+							return obj->getBaseObject();
+						}
 					}
 					else if (maybeObject.is<TES3::BaseObject>()) {
 						return maybeObject.as<TES3::BaseObject*>()->getBaseObject();
 					}
 					else if (maybeObject.is<TES3::MobileCreature>()) {
-						maybeObject.as<TES3::MobileCreature*>()->creatureInstance->baseCreature;
+						return maybeObject.as<TES3::MobileCreature*>()->creatureInstance->baseCreature;
 					}
 					else if (maybeObject.is<TES3::MobileNPC>()) {
-						maybeObject.as<TES3::MobileNPC*>()->npcInstance->baseNPC;
+						return maybeObject.as<TES3::MobileNPC*>()->npcInstance->baseNPC;
 					}
 				}
 			}
@@ -134,7 +137,7 @@ namespace mwse {
 		}
 
 		TES3::Reference* getOptionalParamExecutionReference(sol::optional<sol::table> maybeParams) {
-			TES3::Reference* reference = NULL;
+			TES3::Reference* reference = nullptr;
 
 			if (maybeParams) {
 				sol::table params = maybeParams.value();
@@ -152,7 +155,7 @@ namespace mwse {
 				}
 			}
 
-			if (reference == NULL) {
+			if (reference == nullptr) {
 				reference = LuaManager::getInstance().getCurrentReference();
 			}
 
@@ -177,7 +180,7 @@ namespace mwse {
 		}
 
 		TES3::Reference* getOptionalParamReference(sol::optional<sol::table> maybeParams, const char* key) {
-			TES3::Reference* value = NULL;
+			TES3::Reference* value = nullptr;
 
 			if (maybeParams) {
 				sol::table params = maybeParams.value();
@@ -224,7 +227,7 @@ namespace mwse {
 		}
 
 		TES3::Spell* getOptionalParamSpell(sol::optional<sol::table> maybeParams, const char* key) {
-			TES3::Spell* value = NULL;
+			TES3::Spell* value = nullptr;
 
 			if (maybeParams) {
 				sol::table params = maybeParams.value();
@@ -243,7 +246,7 @@ namespace mwse {
 		}
 
 		TES3::Dialogue* getOptionalParamDialogue(sol::optional<sol::table> maybeParams, const char* key) {
-			TES3::Dialogue* value = NULL;
+			TES3::Dialogue* value = nullptr;
 
 			if (maybeParams) {
 				sol::table params = maybeParams.value();
@@ -262,7 +265,7 @@ namespace mwse {
 		}
 
 		TES3::Sound* getOptionalParamSound(sol::optional<sol::table> maybeParams, const char* key) {
-			TES3::Sound* value = NULL;
+			TES3::Sound* value = nullptr;
 
 			if (maybeParams) {
 				sol::table params = maybeParams.value();
