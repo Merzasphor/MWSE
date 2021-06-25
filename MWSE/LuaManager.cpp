@@ -1224,9 +1224,14 @@ namespace mwse {
 			// Call original function.
 			bool success = TES3_AttemptPotionBrew();
 
-			// Pass a lua event.
-			if (success && lastBrewedPotion && event::PotionBrewedEvent::getEventEnabled()) {
-				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PotionBrewedEvent(lastBrewedPotion, ingredient1, ingredient2, ingredient3, ingredient4));
+			if (success && lastBrewedPotion) {
+				// Set unused target attribute/skill ids to -1.
+				lastBrewedPotion->cleanUnusedAttributeSkillIds();
+
+				// Pass a lua event.
+				if (event::PotionBrewedEvent::getEventEnabled()) {
+					LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PotionBrewedEvent(lastBrewedPotion, ingredient1, ingredient2, ingredient3, ingredient4));
+				}
 			}
 
 			return success;
@@ -3338,6 +3343,10 @@ namespace mwse {
 			// Event: Brew potion.
 			genCallEnforced(0x59C010, 0x59C030, reinterpret_cast<DWORD>(OnBrewPotionAttempt));
 			genCallEnforced(0x59D2A9, 0x6313E0, reinterpret_cast<DWORD>(CacheLastBrewedPotion));
+
+			// Clean unused alchemy attribute and skill IDs on loading.
+			auto alchemyLoadObjectSpecific = &TES3::Alchemy::loadObjectSpecific;
+			overrideVirtualTableEnforced(0x749684, offsetof(TES3::BaseObjectVirtualTable, TES3::BaseObjectVirtualTable::loadObjectSpecific), 0x4ABD90, *reinterpret_cast<DWORD*>(&alchemyLoadObjectSpecific));
 
 			// Event: Spell created from service menu.
 			genCallEnforced(0x622D05, 0x4B8980, reinterpret_cast<DWORD>(OnAddNewlyCreatedSpell));
