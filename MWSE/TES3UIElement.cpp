@@ -12,6 +12,7 @@
 #include "TES3Object.h"
 
 #include "LuaUtil.h"
+#include "MemoryUtilLua.h"
 #include "TES3Util.h"
 #include "TES3UIManagerLua.h"
 
@@ -966,23 +967,14 @@ namespace TES3 {
 				}
 			}
 			else {
-				if (typeCast.value() == "tes3itemData") {
-					return sol::make_object(state, static_cast<TES3::ItemData*>(ptr));
+				// New types are added to the mwse.memory.convertTo table, defined in MemoryUtilLua.cpp
+				sol::protected_function converter = mwse::lua::convertTo[typeCast.value()];
+				if (converter) {
+					return converter(DWORD(ptr));
 				}
-				if (typeCast.value() == "tes3itemStack") {
-					return sol::make_object(state, static_cast<TES3::ItemStack*>(ptr));
-				}
-				else if (typeCast.value() == "tes3gameFile") {
-					return sol::make_object(state, static_cast<TES3::GameFile*>(ptr));
-				}
-				else if (typeCast.value() == "tes3inventoryTile") {
-					return sol::make_object(state, static_cast<TES3::UI::InventoryTile*>(ptr));
-				}
-				else if (typeCast.value() == "tes3uiElement") {
-					return sol::make_object(state, static_cast<TES3::UI::Element*>(ptr));
-				}
-				return sol::nil;
 			}
+
+			return sol::nil;
 		}
 
 		void Element::setPropertyObject_lua(sol::object key, sol::object value) {
