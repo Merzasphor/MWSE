@@ -107,7 +107,7 @@ namespace TES3 {
 
 	int Spell::getFirstIndexOfEffect(int effectId) {
 		for (size_t i = 0; i < 8; i++) {
-			if (effects[i].effectID = effectId) {
+			if (effects[i].effectID == effectId) {
 				return i;
 			}
 		}
