@@ -5,6 +5,7 @@
 #include "TES3UIElement.h"
 #include "TES3UIWidgets.h"
 
+#include "TES3Inventory.h"
 #include "TES3ItemData.h"
 #include "TES3GameFile.h"
 #include "TES3MobileObject.h"
@@ -967,6 +968,9 @@ namespace TES3 {
 			else {
 				if (typeCast.value() == "tes3itemData") {
 					return sol::make_object(state, static_cast<TES3::ItemData*>(ptr));
+				}
+				if (typeCast.value() == "tes3itemStack") {
+					return sol::make_object(state, static_cast<TES3::ItemStack*>(ptr));
 				}
 				else if (typeCast.value() == "tes3gameFile") {
 					return sol::make_object(state, static_cast<TES3::GameFile*>(ptr));
