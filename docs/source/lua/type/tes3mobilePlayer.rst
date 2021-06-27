@@ -1052,7 +1052,7 @@ Damages the actor.
     Unequips one or more items from the actor.
 
 `updateDerivedStatistics`_
-    Updates statistics derived from attributes, which are magicka, fatigue, and encumbrance. Normally handled automatically when you use tes3.modStatistic.
+    Updates statistics derived from attributes, which are magicka, fatigue, and encumbrance. Will also update the UI if used on the player. Normally handled automatically when you use tes3.modStatistic.
 
 `updateOpacity`_
     Updates the actor's visual opacity. Used after modifying applied chameleon or invisiblity effects.

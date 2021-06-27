@@ -257,6 +257,7 @@ namespace TES3 {
 		float calculateFlySpeed();
 
 		void updateDerivedStatistics(Statistic * baseStatistic);
+		void updateDerivedStatistics_lua(sol::optional<Statistic*> baseStatistic);
 
 		int determineModifiedPrice(int basePrice, bool buying);
 

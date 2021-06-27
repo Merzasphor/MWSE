@@ -502,6 +502,10 @@ namespace TES3 {
 		TES3_MobileActor_calcDerivedStats(this, baseStatistic);
 	}
 
+	void MobileActor::updateDerivedStatistics_lua(sol::optional<Statistic*> baseStatistic) {
+		TES3_MobileActor_calcDerivedStats(this, baseStatistic.value_or(nullptr));
+	}
+
 	int MobileActor::determineModifiedPrice(int basePrice, bool buying) {
 		return TES3_MobileActor_determineModifiedPrice(this, basePrice, buying);
 	}

@@ -144,7 +144,7 @@ namespace mwse {
 			usertypeDefinition["startCombat"] = &TES3::MobileActor::startCombat;
 			usertypeDefinition["startDialogue"] = &TES3::MobileActor::startDialogue;
 			usertypeDefinition["stopCombat"] = &TES3::MobileActor::stopCombat_lua;
-			usertypeDefinition["updateDerivedStatistics"] = &TES3::MobileActor::updateDerivedStatistics;
+			usertypeDefinition["updateDerivedStatistics"] = &TES3::MobileActor::updateDerivedStatistics_lua;
 			usertypeDefinition["updateOpacity"] = &TES3::MobileActor::updateOpacity;
 
 			// Provide single function for isAffectedByAlchemy, etc.
