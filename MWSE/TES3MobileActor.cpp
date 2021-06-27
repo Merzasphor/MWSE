@@ -72,6 +72,18 @@ namespace TES3 {
 		return nullptr;
 	}
 
+	ActiveMagicEffect* ActiveMagicEffectLua::getFirst_legacy() const {
+		return &mobile->activeMagicEffects.front();
+	}
+
+	ActiveMagicEffect* ActiveMagicEffectLua::getNext_legacy() {
+		// This is a bad solution that only works for the legacy codebase we have to support.
+		// Due to how ActiveMagicEffect::getNext_legacy above functions, and how ActiveMagicEffectLua
+		// is copied when pushed to lua, its possible for this copy to break. We have to overwrite it
+		// otherwise it will crash.
+		return this;
+	}
+
 	const auto TES3_MobileActor_onActorCollision = reinterpret_cast<bool(__thiscall*)(MobileActor*, int)>(0x5234A0);
 	bool MobileActor::onActorCollision(int collisionIndex) {
 		// Grab the hit reference now, it won't be available after calling the main function.

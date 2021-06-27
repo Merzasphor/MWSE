@@ -63,6 +63,9 @@ namespace mwse {
 				usertypeDefinition["instance"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::getInstance);
 				usertypeDefinition["magnitude"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::getMagnitude);
 
+				// Legacy bindings for mod support.
+				usertypeDefinition["first"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::getFirst_legacy);
+				usertypeDefinition["next"] = sol::readonly_property(&TES3::ActiveMagicEffectLua::getNext_legacy);
 			}
 		}
 

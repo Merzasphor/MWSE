@@ -125,6 +125,9 @@ namespace TES3 {
 		//
 
 		MagicEffectInstance * getEffectInstance() const;
+
+		ActiveMagicEffect* getFirst_legacy() const;
+		ActiveMagicEffect* getNext_legacy();
 	};
 
 	struct MobileActor : MobileObject {
