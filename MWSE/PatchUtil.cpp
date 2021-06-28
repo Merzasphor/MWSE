@@ -397,6 +397,30 @@ namespace mwse {
 		}
 
 		//
+		// Helper function for raised mod limit.
+		//
+		// Raise C runtime fopen limit from 512 to 2048. This covers the case where all mods are open during game load.
+		// Otherwise, fopen will fail and Morrowind will ignore the error, causing issues.
+		//
+		bool raiseStdioFileLimit() {
+			// Use stdio function from Morrowind's C runtime.
+			HINSTANCE hMSVCRT = GetModuleHandleA("msvcrt.dll");
+			if (hMSVCRT != NULL) {
+				auto msvcrt_setmaxstdio = reinterpret_cast<int(*)(int)>(GetProcAddress(hMSVCRT, "_setmaxstdio"));
+				if (msvcrt_setmaxstdio(2048) == 2048) {
+					return true;
+				}
+				else {
+					mwse::log::getLog() << "MWSE_RAISED_FILE_LIMIT: msvcrt_setmaxstdio(2048) failed." << std::endl;
+				}
+			}
+			else {
+				mwse::log::getLog() << "MWSE_RAISED_FILE_LIMIT: GetModuleHandleA(\"msvcrt.dll\") failed." << std::endl;
+			}
+			return false;
+		}
+
+		//
 		// Install all the patches.
 		//
 
@@ -519,7 +543,11 @@ namespace mwse {
 
 #if MWSE_RAISED_FILE_LIMIT
 			// Patch: Raise esm/esp limit from 256 to 1024.
-			if (mcp::getFeatureEnabled(mcp::feature::SavegameCorruptionFix)) {
+
+			// First, raise C runtime fopen limit from 512 to 2048.
+			bool canHandle2048OpenFiles = raiseStdioFileLimit();
+
+			if (canHandle2048OpenFiles && mcp::getFeatureEnabled(mcp::feature::SavegameCorruptionFix)) {
 				// Change hardcoded 256 checks to 1024.
 				writeValueEnforced<DWORD>(0x4B7A22 + 0x1, PatchRaiseESXLimit::ModCountVanilla, PatchRaiseESXLimit::ModCountMWSE);
 				writeValueEnforced<DWORD>(0x4BB4AE + 0x3, PatchRaiseESXLimit::ModCountVanilla, PatchRaiseESXLimit::ModCountMWSE);
