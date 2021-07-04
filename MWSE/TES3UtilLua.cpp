@@ -1014,15 +1014,10 @@ namespace mwse {
 			return sol::optional<int>();
 		}
 
-		double getSimulationTimestamp(sol::optional<bool> highPrecision) {
-			if (highPrecision.value_or(true)) {
-				TES3::WorldController* worldController = TES3::WorldController::get();
-				if (worldController) {
-					return worldController->getHighPrecisionSimulationTimestamp();
-				}
-			}
-			else {
-				return mwse::tes3::getSimulationTimestamp();
+		double getSimulationTimestamp(sol::optional<bool> highPrecision_deprecated) {
+			TES3::WorldController* worldController = TES3::WorldController::get();
+			if (worldController) {
+				return worldController->getSimulationTimestamp();
 			}
 			return 0.0;
 		}

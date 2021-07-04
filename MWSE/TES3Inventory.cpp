@@ -79,12 +79,9 @@ namespace TES3 {
 		return true;
 	}
 
-	float Inventory::calculateContainedWeight() {
-		float weight = 0.0f;
-		for (auto& stack : itemStacks) {
-			weight += stack->object->getWeight() * std::abs(stack->count);
-		}
-		return weight;
+	const auto TES3_Inventory_calculateContainedWeight = reinterpret_cast<float(__thiscall*)(const Inventory*)>(0x49A080);
+	float Inventory::calculateContainedWeight() const {
+		return TES3_Inventory_calculateContainedWeight(this);
 	}
 
 	int Inventory::getSoulGemCount() {

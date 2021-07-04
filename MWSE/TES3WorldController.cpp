@@ -23,7 +23,6 @@
 
 #define TES3_WorldController_mainLoopBeforeInput 0x40F610
 #define TES3_WorldController_getMobilePlayer 0x40FF20
-#define TES3_WorldController_getSimulationTimestamp 0x411000
 
 #define TES3_Data_daysInMonth 0x775E40
 #define TES3_Data_cumulativeDaysForMonth 0x775E58
@@ -426,8 +425,9 @@ namespace TES3 {
 		TES3_WorldController_playItemUpDownSound(this, item, state, reference);
 	}
 
-	float WorldController::getSimulationTimestamp() {
-		return reinterpret_cast<float(__thiscall *)(WorldController*)>(TES3_WorldController_getSimulationTimestamp)(this);
+	const auto TES3_WorldController_getSimulationTimestamp = reinterpret_cast<double(__thiscall*)(const WorldController*)>(0x411000);
+	double WorldController::getSimulationTimestamp() const {
+		return TES3_WorldController_getSimulationTimestamp(this);
 	}
 
 	const auto TES3_WorldController_processGlobalScripts = reinterpret_cast<void(__thiscall*)(WorldController*)>(0x40FBE0);
@@ -459,10 +459,6 @@ namespace TES3 {
 
 		auto ndd = DataHandler::get()->nonDynamicData;
 		return ndd->GMSTs[gmstId]->value.asString;
-	}
-
-	double WorldController::getHighPrecisionSimulationTimestamp() {
-		return (gvarYear->value * 365.0 + getCumulativeDaysForMonth((int)gvarMonth->value) + gvarDay->value) * 24.0 + gvarGameHour->value;
 	}
 
 	const auto TES3_WorldController_applyEnchantEffect = reinterpret_cast<bool(__thiscall*)(WorldController*, NI::Node*, Enchantment*)>(0x410B00);
