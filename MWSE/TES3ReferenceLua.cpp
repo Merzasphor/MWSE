@@ -73,8 +73,10 @@ namespace mwse {
 			usertypeDefinition["position"] = sol::property(&TES3::Reference::getPosition, &TES3::Reference::setPositionFromLua);
 			usertypeDefinition["sourceFormId"] = sol::readonly_property(&TES3::Reference::getSourceFormId);
 			usertypeDefinition["sourceModId"] = sol::readonly_property(&TES3::Reference::getSourceModId);
+			usertypeDefinition["supportsLuaData"] = sol::readonly_property(&TES3::Reference::getSupportsLuaData);
 			usertypeDefinition["targetFormId"] = sol::readonly_property(&TES3::Reference::getTargetFormId);
 			usertypeDefinition["targetModId"] = sol::readonly_property(&TES3::Reference::getTargetModId);
+			usertypeDefinition["tempData"] = sol::readonly_property(&TES3::Reference::getLuaTempTable);
 
 			// Functions for manually syncing the scene graph, for if orientation or position is manually modified.
 			usertypeDefinition["updateSceneGraph"] = &TES3::Reference::updateSceneGraph_lua;

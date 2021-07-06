@@ -961,7 +961,7 @@ namespace TES3 {
 		return true;
 	}
 
-	Attachment * Reference::getAttachment(AttachmentType::AttachmentType type) {
+	Attachment * Reference::getAttachment(AttachmentType::AttachmentType type) const {
 		Attachment* attachment = attachments;
 		while (attachment && attachment->type != type) {
 			attachment = attachment->next;
@@ -1001,7 +1001,7 @@ namespace TES3 {
 		return static_cast<MobileProjectile*>(getAttachedMobileObject());
 	}
 
-	ItemData* Reference::getAttachedItemData() {
+	ItemData* Reference::getAttachedItemData() const {
 		auto attachment = static_cast<TES3::ItemDataAttachment*>(getAttachment(TES3::AttachmentType::Variables));
 		if (attachment) {
 			return attachment->data;
@@ -1102,26 +1102,36 @@ namespace TES3 {
 		return result;
 	}
 
-	sol::table Reference::getLuaTable() {
+	bool Reference::getSupportsLuaData() const {
 		auto itemData = getAttachedItemData();
 
 		// Prevent adding a lua table if there's more than one item involved.
 		if (itemData && itemData->count > 1) {
+			return false;
+		}
+
+		// Gold does all kinds of funky things. No ItemData creation on it is allowed.
+		if (baseObject->objectType == ObjectType::Misc && static_cast<Misc*>(baseObject)->isGold()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	sol::table Reference::getLuaTable() {
+		if (!getSupportsLuaData()) {
 			return sol::nil;
 		}
 
-		// Create the item data if it doesn't already exist.
-		if (itemData == nullptr) {
-			// Gold does all kinds of funky things. No ItemData creation on it is allowed.
-			if (baseObject->objectType == ObjectType::Misc && static_cast<Misc*>(baseObject)->isGold()) {
-				return sol::nil;
-			}
+		return getOrCreateAttachedItemData()->getOrCreateLuaDataTable();
+	}
 
-			itemData = ItemData::createForObject(baseObject);
-			setAttachedItemData(itemData);
+	sol::table Reference::getLuaTempTable() {
+		if (!getSupportsLuaData()) {
+			return sol::nil;
 		}
 
-		return itemData->getOrCreateLuaDataTable();
+		return getOrCreateAttachedItemData()->getOrCreateLuaTempDataTable();
 	}
 
 	void Reference::activate_lua(Reference* target) {

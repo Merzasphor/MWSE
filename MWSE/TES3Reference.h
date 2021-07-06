@@ -111,13 +111,13 @@ namespace TES3 {
 		bool onCloseInventory();
 
 		bool insertAttachment(Attachment* attachment);
-		Attachment* getAttachment(AttachmentType::AttachmentType type);
+		Attachment* getAttachment(AttachmentType::AttachmentType type) const;
 		MobileObject* getAttachedMobileObject();
 		MobileActor* getAttachedMobileActor();
 		MobileCreature* getAttachedMobileCreature();
 		MobileNPC* getAttachedMobileNPC();
 		MobileProjectile* getAttachedMobileProjectile();
-		ItemData* getAttachedItemData();
+		ItemData* getAttachedItemData() const;
 		void setAttachedItemData(ItemData * itemData);
 		ItemData* getOrCreateAttachedItemData();
 		LockAttachmentNode* getAttachedLockNode();
@@ -164,7 +164,9 @@ namespace TES3 {
 		// Return a table of name-keyed attachments for this object.
 		sol::table getAttachments_lua(sol::this_state ts);
 
+		bool getSupportsLuaData() const;
 		sol::table getLuaTable();
+		sol::table getLuaTempTable();
 
 		// For lua activation, reverse param order.
 		void activate_lua(Reference* target);

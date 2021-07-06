@@ -47,7 +47,7 @@ namespace TES3 {
 	ItemData::LuaData::LuaData() {
 		auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
 		data = stateHandle.state.create_table();
-		data["temp"] = stateHandle.state.create_table();
+		tempData = stateHandle.state.create_table();
 	}
 
 	ItemData::ItemData() {
@@ -116,7 +116,7 @@ namespace TES3 {
 
 		if (itemData->luaData) {
 			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
-			return itemData->luaData->data.empty();
+			return itemData->luaData->data.empty() && itemData->luaData->tempData.empty();
 		}
 
 		return true;
@@ -139,6 +139,7 @@ namespace TES3 {
 		if (data == sol::nil) {
 			if (luaData != nullptr) {
 				luaData->data = sol::nil;
+				luaData->tempData = sol::nil;
 				delete luaData;
 				luaData = nullptr;
 			}
@@ -148,10 +149,26 @@ namespace TES3 {
 				luaData = new TES3::ItemData::LuaData();
 			}
 			luaData->data = data;
+		}
+		else {
+			throw std::exception("Invalid data type assignment. Must be a table or nil.");
+		}
+	}
 
-			// Ensure that our temp table is there.
-			sol::state_view state = data.lua_state();
-			luaData->data["temp"] = state.create_table();
+	void ItemData::setLuaTempDataTable(sol::object data) {
+		if (data == sol::nil) {
+			if (luaData != nullptr) {
+				luaData->data = sol::nil;
+				luaData->tempData = sol::nil;
+				delete luaData;
+				luaData = nullptr;
+			}
+		}
+		else if (data.is<sol::table>()) {
+			if (luaData == nullptr) {
+				luaData = new TES3::ItemData::LuaData();
+			}
+			luaData->tempData = data;
 		}
 		else {
 			throw std::exception("Invalid data type assignment. Must be a table or nil.");
@@ -164,6 +181,14 @@ namespace TES3 {
 		}
 
 		return luaData->data;
+	}
+
+	sol::table ItemData::getOrCreateLuaTempDataTable() {
+		if (luaData == nullptr) {
+			luaData = new ItemData::LuaData();
+		}
+
+		return luaData->tempData;
 	}
 
 	std::shared_ptr<mwse::lua::ScriptContext> ItemData::createContext() {

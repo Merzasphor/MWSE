@@ -124,6 +124,7 @@ namespace mwse {
 
 				// 
 				usertypeDefinition["data"] = sol::property(&TES3::ItemData::getOrCreateLuaDataTable, &TES3::ItemData::setLuaDataTable);
+				usertypeDefinition["tempData"] = sol::property(&TES3::ItemData::getOrCreateLuaTempDataTable, &TES3::ItemData::setLuaTempDataTable);
 
 				// Add the ability to get the unique script context from this itemdata for ease of mwscript interaction.
 				usertypeDefinition["context"] = sol::readonly_property(&TES3::ItemData::createContext);
