@@ -2,6 +2,7 @@
 #include "LuaManager.h"
 #include "LuaSpellCastEvent.h"
 
+#include "TES3GameSetting.h"
 #include "TES3MobileActor.h"
 #include "TES3Reference.h"
 #include "TES3Spell.h"
@@ -112,6 +113,10 @@ namespace TES3 {
 			}
 		}
 		return -1;
+	}
+
+	int Spell::calculateBasePuchaseCost() const {
+		return int(magickaCost * TES3::DataHandler::get()->nonDynamicData->GMSTs[TES3::GMST::fSpellValueMult]->value.asFloat);
 	}
 
 	float Spell::calculateCastChance_lua(sol::table params) {

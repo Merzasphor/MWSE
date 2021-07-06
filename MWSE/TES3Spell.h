@@ -87,6 +87,7 @@ namespace TES3 {
 		size_t getActiveEffectCount();
 		int getFirstIndexOfEffect(int effectId);
 
+		int calculateBasePuchaseCost() const;
 		float calculateCastChance_lua(sol::table params);
 
 		std::reference_wrapper<Effect[8]> getEffects();

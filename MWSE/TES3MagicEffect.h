@@ -318,6 +318,8 @@ namespace TES3 {
 		bool getAllowEnchanting() const;
 		void setAllowEnchanting(bool value);
 
+		int getSkillForSchool() const;
+
 	};
 	static_assert(sizeof(MagicEffect) == 0x0110, "TES3::EffectID:: failed size validation");
 
@@ -330,6 +332,12 @@ namespace TES3 {
 		int duration; // 0xC
 		int magnitudeMin; // 0x10
 		int magnitudeMax; // 0x14
+
+		//
+		// Other related this-call functions.
+		//
+
+		float calculateCost() const;
 
 		//
 		// Custom functions
