@@ -633,7 +633,7 @@ namespace mwse {
 			}
 			
 			// Update timer controllers.
-			double highResolutionTimestamp = worldController->getSimulationTimestamp();
+			double highResolutionTimestamp = worldController->getHighPrecisionSimulationTimestamp();
 			luaManager.updateTimers(worldController->deltaTime, highResolutionTimestamp, worldController->flagMenuMode == 0);
 
 			// Has menu mode changed?
@@ -4437,7 +4437,7 @@ namespace mwse {
 			// Reset the clocks for each timer.
 			realTimers->setClock(0.0);
 			simulateTimers->setClock(0.0);
-			gameTimers->setClock(TES3::WorldController::get()->getSimulationTimestamp());
+			gameTimers->setClock(TES3::WorldController::get()->getHighPrecisionSimulationTimestamp());
 		}
 
 		std::shared_ptr<TimerController> LuaManager::getTimerController(TimerType type) {

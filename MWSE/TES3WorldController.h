@@ -350,12 +350,13 @@ namespace TES3 {
 		void mainLoopBeforeInput();
 		_declspec(dllexport) MobilePlayer* getMobilePlayer();
 		_declspec(dllexport) void playItemUpDownSound(BaseObject* item, ItemSoundState state = ItemSoundState::Up, Reference* reference = nullptr);
-		_declspec(dllexport) double getSimulationTimestamp() const;
+		_declspec(dllexport) float getSimulationTimestamp();
 		_declspec(dllexport) void processGlobalScripts();
 
 		_declspec(dllexport) unsigned short getDaysInMonth(int);
 		_declspec(dllexport) unsigned short getCumulativeDaysForMonth(int month);
 		_declspec(dllexport) const char* getNameForMonth(int month);
+		_declspec(dllexport) double getHighPrecisionSimulationTimestamp();
 
 		_declspec(dllexport) bool applyEnchantEffect(NI::Node* node, Enchantment * enchantment);
 
