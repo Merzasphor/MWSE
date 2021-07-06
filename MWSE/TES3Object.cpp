@@ -144,6 +144,15 @@ namespace TES3 {
 		BIT_SET(objectFlags, TES3::ObjectFlag::BlockedBit, value);
 	}
 
+	bool BaseObject::getSupportsLuaData() const {
+		// Gold does all kinds of funky things. No ItemData creation on it is allowed.
+		if (objectType == ObjectType::Misc && static_cast<const Misc*>(this)->isGold()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	std::string BaseObject::toJson() {
 		std::ostringstream ss;
 		ss << "\"tes3baseObject:" << getObjectID() << "\"";

@@ -1110,8 +1110,8 @@ namespace TES3 {
 			return false;
 		}
 
-		// Gold does all kinds of funky things. No ItemData creation on it is allowed.
-		if (baseObject->objectType == ObjectType::Misc && static_cast<Misc*>(baseObject)->isGold()) {
+		// Does the base object support it?
+		if (!baseObject->getSupportsLuaData()) {
 			return false;
 		}
 

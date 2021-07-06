@@ -261,6 +261,8 @@ namespace TES3 {
 		bool getBlocked() const;
 		void setBlocked(bool value);
 
+		bool getSupportsLuaData() const;
+
 		std::string toJson();
 
 		bool getSourceless() const;
