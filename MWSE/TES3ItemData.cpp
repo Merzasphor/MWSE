@@ -45,7 +45,9 @@ namespace TES3 {
 	//
 
 	ItemData::LuaData::LuaData() {
-		data = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle().state.create_table();
+		auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
+		data = stateHandle.state.create_table();
+		data["temp"] = stateHandle.state.create_table();
 	}
 
 	ItemData::ItemData() {
@@ -146,6 +148,10 @@ namespace TES3 {
 				luaData = new TES3::ItemData::LuaData();
 			}
 			luaData->data = data;
+
+			// Ensure that our temp table is there.
+			sol::state_view state = data.lua_state();
+			luaData->data["temp"] = state.create_table();
 		}
 		else {
 			throw std::exception("Invalid data type assignment. Must be a table or nil.");

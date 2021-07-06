@@ -2581,6 +2581,8 @@ namespace mwse {
 			TES3::ItemData * itemData = currentlySavingInventoryIterator->current->data->variables->at(currentlySavingInventoyItemDataIndex);
 			if (itemData->luaData) {
 				sol::table table = itemData->luaData->data;
+				sol::object cachedTemp = table["temp"];
+				table["temp"] = sol::nil;
 
 				// If it is empty, don't bother saving it.
 				if (!table.empty()) {
@@ -2593,6 +2595,8 @@ namespace mwse {
 					// Call original writechunk function.
 					gameFile->writeChunkData('TAUL', json.c_str(), json.length() + 1);
 				}
+
+				table["temp"] = cachedTemp;
 			}
 
 			return result;
@@ -2651,6 +2655,8 @@ namespace mwse {
 			auto saveLoadItemData = saveLoadItemDataMap[GetCurrentThreadId()];
 			if (saveLoadItemData->luaData) {
 				sol::table table = saveLoadItemData->luaData->data;
+				sol::object cachedTemp = table["temp"];
+				table["temp"] = sol::nil;
 
 				// If it is empty, don't bother saving it.
 				if (!table.empty()) {
@@ -2663,6 +2669,8 @@ namespace mwse {
 					// Call original writechunk function.
 					gameFile->writeChunkData('TAUL', json.c_str(), json.length() + 1);
 				}
+
+				table["temp"] = cachedTemp;
 			}
 
 			saveLoadItemData = nullptr;
