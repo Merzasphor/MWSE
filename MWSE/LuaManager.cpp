@@ -633,7 +633,7 @@ namespace mwse {
 			}
 			
 			// Update timer controllers.
-			double highResolutionTimestamp = worldController->getHighPrecisionSimulationTimestamp();
+			double highResolutionTimestamp = worldController->getSimulationTimestamp();
 			luaManager.updateTimers(worldController->deltaTime, highResolutionTimestamp, worldController->flagMenuMode == 0);
 
 			// Has menu mode changed?
