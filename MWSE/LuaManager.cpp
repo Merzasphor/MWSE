@@ -4437,7 +4437,7 @@ namespace mwse {
 			// Reset the clocks for each timer.
 			realTimers->setClock(0.0);
 			simulateTimers->setClock(0.0);
-			gameTimers->setClock(TES3::WorldController::get()->getHighPrecisionSimulationTimestamp());
+			gameTimers->setClock(TES3::WorldController::get()->getSimulationTimestamp());
 		}
 
 		std::shared_ptr<TimerController> LuaManager::getTimerController(TimerType type) {
