@@ -115,9 +115,17 @@ function table.size(t)
 	return count
 end
 
-function table.empty(t)
-	for _ in pairs(t) do
-		return false
+function table.empty(t, deepCheck)
+	if (deepCheck) then
+		for _, v in pairs(t) do
+			if (type(v) ~= "table" or not table.empty(t, true)) then
+				return false
+			end
+		end
+	else
+		for _ in pairs(t) do
+			return false
+		end
 	end
 	return true
 end
