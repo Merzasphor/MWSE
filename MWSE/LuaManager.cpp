@@ -2573,6 +2573,10 @@ namespace mwse {
 			return gameFile->writeChunkData(tag, data, size);
 		}
 
+		sol::protected_function fnTableEmpty;
+		sol::protected_function fnEncodeForSave;
+		sol::protected_function fnDecodeFromSave;
+
 		// The last extra data written. We'll add the lua data here if needed.
 		int __fastcall WriteItemDataCondition(TES3::GameFile * gameFile, DWORD _UNUSED_, unsigned int tag, const void * data, unsigned int size) {
 			// Overwritten code.
@@ -2583,12 +2587,11 @@ namespace mwse {
 				sol::table table = itemData->luaData->data;
 
 				// If it is empty, don't bother saving it.
-				if (!table.empty()) {
-					// Convert the table to json for storage.
-					auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-					sol::state &state = stateHandle.state;
 					// TODO: Optimize by caching function here.
-					std::string json = state["mwse"]["encodeForSave"](table);
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				if (!fnTableEmpty(table, true)) {
+					// Convert the table to json for storage.
+					std::string json = fnEncodeForSave(table);
 
 					// Call original writechunk function.
 					gameFile->writeChunkData('TAUL', json.c_str(), json.length() + 1);
@@ -2623,7 +2626,7 @@ namespace mwse {
 					auto saveLoadItemData = saveLoadItemDataMap[threadID];
 					if (saveLoadItemData && saveLoadItemData->luaData == nullptr) {
 						// TODO: Optimize by caching function here.
-						saveLoadItemData->setLuaDataTable(state["json"]["decode"](buffer));
+						saveLoadItemData->setLuaDataTable(fnDecodeFromSave(buffer));
 						saveLoadItemDataMap.erase(threadID);
 					}
 				}
@@ -2653,12 +2656,12 @@ namespace mwse {
 				sol::table table = saveLoadItemData->luaData->data;
 
 				// If it is empty, don't bother saving it.
-				if (!table.empty()) {
+				// TODO: Optimize by caching function here.
+				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
+				sol::state& state = stateHandle.state;
+				if (!fnTableEmpty(table, true)) {
 					// Convert the table to json for storage.
-					auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
-					sol::state &state = stateHandle.state;
-					// TODO: Optimize by caching function here.
-					std::string json = state["mwse"]["encodeForSave"](table);
+					std::string json = fnEncodeForSave(table);
 
 					// Call original writechunk function.
 					gameFile->writeChunkData('TAUL', json.c_str(), json.length() + 1);
@@ -3037,6 +3040,11 @@ namespace mwse {
 
 			// Alter existing libraries.
 			luaState["os"]["exit"] = customOSExit;
+
+			// Cache some often used functions.
+			fnTableEmpty = luaState["table"]["empty"];
+			fnEncodeForSave = luaState["mwse"]["encodeForSave"];
+			fnDecodeFromSave = luaState["json"]["decode"];
 
 			// Hook the RunScript function so we can intercept Lua scripts and invoke Lua code if needed.
 			genJumpUnprotected(TES3_HOOK_RUNSCRIPT_LUACHECK, reinterpret_cast<DWORD>(HookRunScript), TES3_HOOK_RUNSCRIPT_LUACHECK_SIZE);

@@ -116,7 +116,10 @@ namespace TES3 {
 
 		if (itemData->luaData) {
 			auto stateHandle = mwse::lua::LuaManager::getInstance().getThreadSafeStateHandle();
-			return itemData->luaData->data.empty() && itemData->luaData->tempData.empty();
+			static sol::protected_function fnTableEmpty = stateHandle.state["table"]["empty"];
+			if (!fnTableEmpty(itemData->luaData->data, true) || !fnTableEmpty(itemData->luaData->tempData, true)) {
+				return false;
+			}
 		}
 
 		return true;
