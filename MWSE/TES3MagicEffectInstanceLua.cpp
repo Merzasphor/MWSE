@@ -21,6 +21,7 @@ namespace mwse {
 			usertypeDefinition["new"] = sol::no_constructor;
 
 			// Basic property binding.
+			usertypeDefinition["createdData"] = &TES3::MagicEffectInstance::createdData;
 			usertypeDefinition["cumulativeMagnitude"] = &TES3::MagicEffectInstance::cumulativeMagnitude;
 			usertypeDefinition["lastUsedArmor"] = &TES3::MagicEffectInstance::lastUsedArmor;
 			usertypeDefinition["lastUsedEnchItem"] = &TES3::MagicEffectInstance::lastUsedEnchItem;
