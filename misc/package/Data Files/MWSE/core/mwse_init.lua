@@ -44,7 +44,8 @@ function require(moduleName)
 end
 
 -- Custom dofile that respects package pathing and supports lua's dot notation for paths.
-function dofile(path)
+local fileLocationCache = {}
+function dofile(path, ...)
 	assert(path and type(path) == "string")
 
 	-- Replace . and / with \, and remove .lua extension if it exists.
@@ -53,17 +54,26 @@ function dofile(path)
 		standardizedPath = standardizedPath:sub(0, -5)
 	end
 
+	-- Any results in cache?
+	local cachedPath = fileLocationCache[standardizedPath]
+	if (cachedPath) then
+		loadfile(cachedPath)(...)
+	end
+
 	-- First pass: Direct load. Have to manually add the .lua extension.
 	local r = loadfile(standardizedPath .. ".lua")
 	if (r) then
-		return r()
+		fileLocationCache[standardizedPath] = standardizedPath .. ".lua";
+		return r(...)
 	end
 
 	-- Check all package paths.
 	for ppath in package.path:gmatch("[^;]+") do
-		r = loadfile(tes3.installDirectory .. ppath:gsub("?", standardizedPath))
+		local adjustedPath = tes3.installDirectory .. ppath:gsub("?", standardizedPath)
+		r = loadfile(adjustedPath)
 		if (r) then
-			return r()
+			fileLocationCache[standardizedPath] = adjustedPath;
+			return r(...)
 		end
 	end
 
