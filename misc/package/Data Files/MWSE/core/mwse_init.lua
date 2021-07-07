@@ -128,7 +128,7 @@ end
 function table.empty(t, deepCheck)
 	if (deepCheck) then
 		for _, v in pairs(t) do
-			if (type(v) ~= "table" or not table.empty(t, true)) then
+			if (type(v) ~= "table" or not table.empty(v, true)) then
 				return false
 			end
 		end

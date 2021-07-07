@@ -2587,7 +2587,6 @@ namespace mwse {
 				sol::table table = itemData->luaData->data;
 
 				// If it is empty, don't bother saving it.
-					// TODO: Optimize by caching function here.
 				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 				if (!fnTableEmpty(table, true)) {
 					// Convert the table to json for storage.
@@ -2625,7 +2624,6 @@ namespace mwse {
 					auto threadID = GetCurrentThreadId();
 					auto saveLoadItemData = saveLoadItemDataMap[threadID];
 					if (saveLoadItemData && saveLoadItemData->luaData == nullptr) {
-						// TODO: Optimize by caching function here.
 						saveLoadItemData->setLuaDataTable(fnDecodeFromSave(buffer));
 						saveLoadItemDataMap.erase(threadID);
 					}
@@ -2656,7 +2654,6 @@ namespace mwse {
 				sol::table table = saveLoadItemData->luaData->data;
 
 				// If it is empty, don't bother saving it.
-				// TODO: Optimize by caching function here.
 				auto stateHandle = LuaManager::getInstance().getThreadSafeStateHandle();
 				sol::state& state = stateHandle.state;
 				if (!fnTableEmpty(table, true)) {
@@ -2696,8 +2693,7 @@ namespace mwse {
 					auto itemData = saveLoadReferenceMap[GetCurrentThreadId()]->getAttachedItemData();
 					if (itemData) {
 						if (itemData->luaData == nullptr) {
-							// TODO: Optimize by caching function here.
-							itemData->setLuaDataTable(state["json"]["decode"](buffer));
+							itemData->setLuaDataTable(fnDecodeFromSave(buffer));
 						}
 					}
 #if _DEBUG
