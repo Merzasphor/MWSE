@@ -32,6 +32,8 @@ namespace NI {
 		//
 
 		void click(bool something = false);
+		void click_lua(sol::optional<bool> something = false);
+
 	};
 	static_assert(sizeof(Camera) == 0x1E0, "NI::Camera failed size validation");
 }

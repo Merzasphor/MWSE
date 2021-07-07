@@ -5,6 +5,10 @@ namespace NI {
 	void Camera::click(bool something) {
 		NI_Camera_click(this, something);
 	}
+
+	void Camera::click_lua(sol::optional<bool> something) {
+		click(something.value_or(false));
+	}
 }
 
 MWSE_SOL_CUSTOMIZED_PUSHER_DEFINE_NI(NI::Camera)

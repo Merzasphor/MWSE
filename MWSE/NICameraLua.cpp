@@ -29,6 +29,9 @@ namespace mwse {
 			usertypeDefinition["worldDirection"] = &NI::Camera::worldDirection;
 			usertypeDefinition["worldRight"] = &NI::Camera::worldRight;
 			usertypeDefinition["worldUp"] = &NI::Camera::worldUp;
+
+			// Basic function binding.
+			usertypeDefinition["click"] = &NI::Camera::click_lua;
 		}
 	}
 }
