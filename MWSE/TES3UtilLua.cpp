@@ -724,6 +724,25 @@ namespace mwse {
 			macp->animationController.asPlayer->cameraOffset = offset.value();
 		}
 
+		const auto TES3_rand = reinterpret_cast<int (__cdecl*)(unsigned int)>(0x47B3B0);
+		int random(sol::optional<sol::object> maybe_object) {
+			if (maybe_object) {
+				sol::object object = maybe_object.value();
+				if (object.is<void*>()) {
+					return TES3_rand(unsigned int(object.as<void*>()));
+				}
+				else if (object.is<double>()) {
+					return TES3_rand(unsigned int(object.as<double>()));
+				}
+				else {
+					throw std::exception("Object must be reasonably convertable to a number.");
+				}
+			}
+			else {
+				return TES3_rand(0);
+			}
+		}
+
 		static NI::Pick* rayTestCache = nullptr;
 		static std::vector<NI::AVObject*> rayTestIgnoreRoots;
 		sol::object rayTest(sol::table params) {
@@ -4800,6 +4819,7 @@ namespace mwse {
 			tes3["playVoiceover"] = playVoiceover;
 			tes3["positionCell"] = positionCell;
 			tes3["pushKey"] = pushKey;
+			tes3["random"] = random;
 			tes3["rayTest"] = rayTest;
 			tes3["releaseKey"] = releaseKey;
 			tes3["removeEffects"] = removeEffects;
