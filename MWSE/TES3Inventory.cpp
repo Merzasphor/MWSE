@@ -3,11 +3,14 @@
 #include "TES3Util.h"
 #include "LuaUtil.h"
 
+#include "TES3Actor.h"
 #include "TES3Item.h"
+#include "TES3MobileActor.h"
 #include "TES3Reference.h"
 
 #include "LuaManager.h"
 #include "LuaConvertReferenceToItemEvent.h"
+#include "LuaLeveledItemPickedEvent.h"
 
 namespace TES3 {
 	//
@@ -56,9 +59,16 @@ namespace TES3 {
 		TES3_Inventory_DropItem(this, mobileActor, item, itemData, count, position, orientation, ignoreItemData);
 	}
 
+	// Note: A custom call to TES3_Inventory_resolveLeveledLists is made in LuaManager.cpp.
 	const auto TES3_Inventory_resolveLeveledLists = reinterpret_cast<void(__thiscall*)(Inventory*, MobileActor*)>(0x49A190);
-	void Inventory::resolveLeveledLists(MobileActor* actor) {
-		TES3_Inventory_resolveLeveledLists(this, actor);
+	void Inventory::resolveLeveledLists(MobileActor* mobile) {
+		mwse::lua::event::LeveledItemPickedEvent::m_Reference = mobile ? mobile->reference : getActor()->getReference();
+		TES3_Inventory_resolveLeveledLists(this, mobile);
+		mwse::lua::event::LeveledItemPickedEvent::m_Reference = nullptr;
+	}
+
+	Actor* Inventory::getActor() {
+		return reinterpret_cast<Actor*>(reinterpret_cast<BYTE*>(this) - offsetof(Actor, inventory));
 	}
 
 	bool Inventory::containsItem(Item * item, ItemData * data) {

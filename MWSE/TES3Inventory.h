@@ -51,6 +51,10 @@ namespace TES3 {
 		// Custom functions.
 		//
 
+		// This makes the assumption that there are no free-floating inventories in memory, and that they only exist in actors.
+		// This is true everywhere but when checking if the game needs to declone inventories.
+		Actor* getActor();
+
 		bool containsItem(Item * item, ItemData * data = nullptr);
 
 		float calculateContainedWeight() const;

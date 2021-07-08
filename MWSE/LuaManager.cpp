@@ -233,6 +233,7 @@
 #include "LuaWeatherCycledEvent.h"
 #include "LuaWeatherTransitionFinishedEvent.h"
 #include "LuaWeatherTransitionStartedEvent.h"
+#include "LuaLeveledItemPickedEvent.h"
 
 #include "NITextureEffectLua.h"
 
@@ -1772,6 +1773,19 @@ namespace mwse {
 		//
 		// Events: Leveled list resolving
 		//
+
+		TES3::IteratedList<TES3::ItemStack*>* __fastcall CacheContainerCloseReference(TES3::ContainerInstance* self) {
+			mwse::lua::event::LeveledItemPickedEvent::m_Reference = self->getReference();
+			return &self->inventory.itemStacks;
+		}
+
+		// We can't use the mapped function in TES3Inventory.h because of the custom inventory pointer made. That breaks getActor.
+		// So we need to get a cached reference above.
+		const auto TES3_Inventory_resolveLeveledLists = reinterpret_cast<void(__thiscall*)(TES3::Inventory*, TES3::MobileActor*)>(0x49A190);
+		void __fastcall ContainerCloseResolveLevelledLists(TES3::Inventory* inventory, DWORD _EDX_, TES3::MobileActor* mobile) {
+			TES3_Inventory_resolveLeveledLists(inventory, mobile);
+			mwse::lua::event::LeveledItemPickedEvent::m_Reference = nullptr;
+		}
 
 		TES3::Reference* __fastcall CacheLeveledCreatureSpawner(TES3::Reference* reference) {
 			// Overwritten code.
@@ -3669,6 +3683,14 @@ namespace mwse {
 			genCallEnforced(0x49A20E, 0x4D0BD0, *reinterpret_cast<DWORD*>(&leveledItemPick));
 			genCallEnforced(0x49A25B, 0x4D0BD0, *reinterpret_cast<DWORD*>(&leveledItemPick));
 			genCallEnforced(0x4D0DD3, 0x4D0BD0, *reinterpret_cast<DWORD*>(&leveledItemPick));
+			auto inventoryResolveLeveledLists = &TES3::Inventory::resolveLeveledLists;
+			genCallEnforced(0x49D5C4, 0x49A190, *reinterpret_cast<DWORD*>(&inventoryResolveLeveledLists));
+			genCallEnforced(0x4A42A9, 0x49A190, *reinterpret_cast<DWORD*>(&inventoryResolveLeveledLists));
+			genCallEnforced(0x4A4492, 0x4957E0, reinterpret_cast<DWORD>(CacheContainerCloseReference));
+			genCallEnforced(0x4A44F8, 0x49A190, reinterpret_cast<DWORD>(ContainerCloseResolveLevelledLists));
+			genCallEnforced(0x4D83A1, 0x49A190, *reinterpret_cast<DWORD*>(&inventoryResolveLeveledLists));
+			genCallEnforced(0x508BB2, 0x49A190, *reinterpret_cast<DWORD*>(&inventoryResolveLeveledLists));
+			genCallEnforced(0x529B72, 0x49A190, *reinterpret_cast<DWORD*>(&inventoryResolveLeveledLists));
 
 			// Event: Leveled creature picked.
 			auto leveledCreaturePick = &TES3::LeveledCreature::resolve;
