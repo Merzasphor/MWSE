@@ -113,7 +113,7 @@ namespace mwse {
 				usertypeDefinition["charge"] = &TES3::ItemData::charge;
 				usertypeDefinition["count"] = &TES3::ItemData::count;
 				usertypeDefinition["condition"] = &TES3::ItemData::condition;
-				usertypeDefinition["script"] = sol::readonly_property(&TES3::ItemData::script);
+				usertypeDefinition["script"] = &TES3::ItemData::script;
 				usertypeDefinition["scriptVariables"] = &TES3::ItemData::scriptData;
 				usertypeDefinition["timeLeft"] = &TES3::ItemData::timeLeft;
 

@@ -41,7 +41,7 @@ namespace mwse {
 			usertypeDefinition["mesh"] = sol::property(&TES3::Weapon::getModelPath, &TES3::Weapon::setModelPath);
 			usertypeDefinition["name"] = sol::property(&TES3::Weapon::getName, &TES3::Weapon::setName);
 			usertypeDefinition["reach"] = &TES3::Weapon::reach;
-			usertypeDefinition["script"] = sol::readonly_property(&TES3::Weapon::getScript);
+			usertypeDefinition["script"] = &TES3::Weapon::script;
 			usertypeDefinition["skill"] = sol::property(&TES3::Weapon::getSkill);
 			usertypeDefinition["skillId"] = sol::property(&TES3::Weapon::getSkillId);
 			usertypeDefinition["slashMax"] = &TES3::Weapon::slashMax;
