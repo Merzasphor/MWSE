@@ -1515,6 +1515,12 @@
     <ClInclude Include="LuaPotionBrewFailedEvent.h">
       <Filter>Header Files\Lua\Events</Filter>
     </ClInclude>
+    <ClInclude Include="LuaEnchantedItemCreatedEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaEnchantedItemCreateFailedEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3330,6 +3336,12 @@
       <Filter>Source Files\DataAdapters\TES3\Collections</Filter>
     </ClCompile>
     <ClCompile Include="LuaPotionBrewFailedEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaEnchantedItemCreatedEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaEnchantedItemCreateFailedEvent.cpp">
       <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>

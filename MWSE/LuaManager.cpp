@@ -181,6 +181,8 @@
 #include "LuaCrimeWitnessedEvent.h"
 #include "LuaDamageEvent.h"
 #include "LuaDamageHandToHandEvent.h"
+#include "LuaEnchantedItemCreatedEvent.h"
+#include "LuaEnchantedItemCreateFailedEvent.h"
 #include "LuaEquipEvent.h"
 #include "LuaFilterBarterMenuEvent.h"
 #include "LuaFilterContentsMenuEvent.h"
@@ -1241,6 +1243,68 @@ namespace mwse {
 			else {
 				if (event::PotionBrewFailedEvent::getEventEnabled()) {
 					LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PotionBrewFailedEvent(ingredient1, ingredient2, ingredient3, ingredient4));
+				}
+			}
+
+			return true;
+		}
+
+		//
+		// Enchantment created event.
+		//
+
+		template <typename T>
+		T* getValueFromEnchantingMenu(DWORD parentIdAddress, DWORD propertyIdAddress) {
+			auto menuEnchanting = TES3::UI::findMenu(*reinterpret_cast<TES3::UI::UI_ID*>(0x7D36BC));
+			if (!menuEnchanting) {
+				return nullptr;
+			}
+
+			auto child = menuEnchanting->findChild(*reinterpret_cast<TES3::UI::UI_ID*>(parentIdAddress));
+			if (!child) {
+				return nullptr;
+			}
+
+			return reinterpret_cast<T*>(child->getProperty(TES3::UI::PropertyType::Pointer, *reinterpret_cast<TES3::UI::Property*>(propertyIdAddress)).ptrValue);
+		}
+
+		static TES3::Item* lastCreatedEnchantedItem = nullptr;
+		void __fastcall CacheLastEnchantedItem(TES3::Item* item, DWORD _EDX_, TES3::Enchantment* enchantment) {
+			lastCreatedEnchantedItem = item;
+			item->setEnchantment(enchantment);
+		}
+
+		const auto TES3_AttemptCreateEnchantedItem = reinterpret_cast<bool(__cdecl*)()>(0x5C3D90);
+		bool __cdecl OnCreateEnchantedItemAttempt() {
+			// Reset success state.
+			lastCreatedEnchantedItem = nullptr;
+
+			// Store the original item, the soul gem, and the contained soul since they get nuked.
+			// None of these names make sense. Blame Todd.
+			const auto ui_id_ptr_MenuEnchantment_Item = 0x7D358C;
+			const auto ui_id_ptr_MenuEnchantment_SoulGem = 0x7D35A6;
+			auto enchantedFrom = getValueFromEnchantingMenu<TES3::Item>(ui_id_ptr_MenuEnchantment_Item, ui_id_ptr_MenuEnchantment_SoulGem);
+			auto soulGemUsed = getValueFromEnchantingMenu<TES3::Misc>(ui_id_ptr_MenuEnchantment_SoulGem, ui_id_ptr_MenuEnchantment_SoulGem);
+			auto soulGemItemData = getValueFromEnchantingMenu<TES3::ItemData>(ui_id_ptr_MenuEnchantment_SoulGem, ui_id_ptr_MenuEnchantment_Item);
+			auto soulUsed = soulGemItemData ? soulGemItemData->soul : nullptr;
+
+			// TODO: Allow item data to be accessed or transferred to the newly enchanted item.
+			//auto enchantedFromItemData = getValueFromEnchantingMenu<TES3::ItemData>(ui_id_ptr_MenuEnchantment_Item, ui_id_ptr_MenuEnchantment_Item);
+
+			// Call original function.
+			if (!TES3_AttemptCreateEnchantedItem()) {
+				return false;
+			}
+
+			// Fire off any events.
+			if (lastCreatedEnchantedItem) {
+				if (event::EnchantedItemCreatedEvent::getEventEnabled()) {
+					LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::EnchantedItemCreatedEvent(lastCreatedEnchantedItem, enchantedFrom, soulGemUsed, soulUsed));
+				}
+			}
+			else {
+				if (event::EnchantedItemCreateFailedEvent::getEventEnabled()) {
+					LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::EnchantedItemCreateFailedEvent(enchantedFrom, soulGemUsed, soulUsed));
 				}
 			}
 
@@ -3385,9 +3449,16 @@ namespace mwse {
 			genCallEnforced(0x60E81C, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
 			genCallEnforced(0x60ECB2, 0x56A5D0, reinterpret_cast<DWORD>(OnExerciseSkill));
 
-			// Event: Brew potion.
+			// Event: Brew potion (failed).
 			genCallEnforced(0x59C010, 0x59C030, reinterpret_cast<DWORD>(OnBrewPotionAttempt));
 			genCallEnforced(0x59D2A9, 0x6313E0, reinterpret_cast<DWORD>(CacheLastBrewedPotion));
+
+			// Event: Create enchanted item (failed).
+			genCallUnprotected(0x5C494B, reinterpret_cast<DWORD>(CacheLastEnchantedItem), 0x6); // ARMO
+			genCallUnprotected(0x5C49EF, reinterpret_cast<DWORD>(CacheLastEnchantedItem), 0x6); // WEAP/AMMO
+			genCallUnprotected(0x5C4A96, reinterpret_cast<DWORD>(CacheLastEnchantedItem), 0x6); // CLOT
+			genCallUnprotected(0x5C4B3A, reinterpret_cast<DWORD>(CacheLastEnchantedItem), 0x6); // BOOK
+			genPushEnforced(0x5C28D8, reinterpret_cast<DWORD>(OnCreateEnchantedItemAttempt));
 
 			// Clean unused alchemy attribute and skill IDs on loading.
 			auto alchemyLoadObjectSpecific = &TES3::Alchemy::loadObjectSpecific;
