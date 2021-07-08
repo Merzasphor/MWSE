@@ -11,6 +11,13 @@ return {
 				description = "Id of the new effect. Maps to tes3.effect.* added with tes3.claimSpellEffectId. If the effect of this id already exists, an error will be thrown."
 			},
 			{
+				name = "name",
+				type = "string",
+				optional = true,
+				default = "Unnamed Effect",
+				description = "Name of the effect."
+			},
+			{
 				name = "baseCost",
 				type = "number",
 				optional = true,
@@ -136,13 +143,6 @@ return {
 				type = "tes3physicalObject",
 				optional = true,
 				description = ""
-			},
-			{
-				name = "name",
-				type = "string",
-				optional = true,
-				default = "Unnamed Effect",
-				description = "Name of the effect."
 			},
 			{
 				name = "allowEnchanting",

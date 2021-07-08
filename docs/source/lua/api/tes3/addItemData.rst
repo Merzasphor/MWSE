@@ -14,7 +14,7 @@ Parameters
 Accepts parameters through a table with the given keys:
 
 to (`tes3reference`_, `tes3mobileActor`_, `string`_)
-    The reference whose inventory will be modified.
+    The reference or mobile whose inventory will be modified.
 
 item (`tes3item`_, `string`_)
     The item to create item data for.

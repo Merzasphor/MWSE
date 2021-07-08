@@ -16,6 +16,9 @@ Accepts parameters through a table with the given keys:
 id (`tes3.effect`_)
     Id of the new effect. Maps to tes3.effect.* added with tes3.claimSpellEffectId. If the effect of this id already exists, an error will be thrown.
 
+name (`string`_)
+    Default: ``Unnamed Effect``. Name of the effect.
+
 baseCost (`number`_)
     Default: ``1``. Base magicka cost for the effect.
 
@@ -66,9 +69,6 @@ hitVFX (`tes3physicalObject`_)
 
 areaVFX (`tes3physicalObject`_)
     Optional. 
-
-name (`string`_)
-    Default: ``Unnamed Effect``. Name of the effect.
 
 allowEnchanting (`boolean`_)
     Default: ``true``. Can this effect be used in a custom enchantment?

@@ -1,7 +1,7 @@
 tes3.setItemIsStolen
 ====================================================================================================
 
-This function changes item's stolen flag.
+This function changes an item's stolen flag. Morrowind handles stealing by marking the base item (not the inventory stack) with with NPCs that you have stolen that item from. The NPC will recognize an item is stolen if they are marked as stolen on the base item.
 
 Parameters
 ----------------------------------------------------------------------------------------------------
