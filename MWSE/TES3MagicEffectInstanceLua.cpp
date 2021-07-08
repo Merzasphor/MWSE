@@ -4,6 +4,7 @@
 #include "LuaUtil.h"
 
 #include "TES3Armor.h"
+#include "TES3Inventory.h"
 #include "TES3Light.h"
 #include "TES3MagicEffectInstance.h"
 #include "TES3Reference.h"
