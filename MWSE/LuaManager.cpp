@@ -1224,17 +1224,18 @@ namespace mwse {
 			auto ingredient4 = getBrewingIngredient(0x7D2292);
 
 			// Call original function.
-			auto success = TES3_AttemptPotionBrew();
+			if (!TES3_AttemptPotionBrew()) {
+				return false;
+			}
 
-			if (success) {
-				if (lastBrewedPotion) {
-					// Set unused target attribute/skill ids to -1.
-					lastBrewedPotion->cleanUnusedAttributeSkillIds();
+			// Perform patches and fire off events.
+			if (lastBrewedPotion) {
+				// Set unused target attribute/skill ids to -1.
+				lastBrewedPotion->cleanUnusedAttributeSkillIds();
 
-					// Pass a lua event.
-					if (event::PotionBrewedEvent::getEventEnabled()) {
-						LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PotionBrewedEvent(lastBrewedPotion, ingredient1, ingredient2, ingredient3, ingredient4));
-					}
+				// Pass a lua event.
+				if (event::PotionBrewedEvent::getEventEnabled()) {
+					LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PotionBrewedEvent(lastBrewedPotion, ingredient1, ingredient2, ingredient3, ingredient4));
 				}
 			}
 			else {
@@ -1243,7 +1244,7 @@ namespace mwse {
 				}
 			}
 
-			return success;
+			return true;
 		}
 
 		//
