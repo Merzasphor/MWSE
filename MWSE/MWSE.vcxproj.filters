@@ -1512,6 +1512,9 @@
     <ClInclude Include="TES3StdString.h">
       <Filter>Header Files\DataAdapters\TES3\Collections</Filter>
     </ClInclude>
+    <ClInclude Include="LuaPotionBrewFailedEvent.h">
+      <Filter>Header Files\Lua\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -3325,6 +3328,9 @@
     </ClCompile>
     <ClCompile Include="TES3Vectors.cpp">
       <Filter>Source Files\DataAdapters\TES3\Collections</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaPotionBrewFailedEvent.cpp">
+      <Filter>Source Files\Lua\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

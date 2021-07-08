@@ -177,6 +177,7 @@
     <ClInclude Include="NIUVController.h" />
     <ClInclude Include="NIUVData.h" />
     <ClInclude Include="NIViewer.h" />
+    <ClInclude Include="LuaPotionBrewFailedEvent.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TES3ActorAnimationControllerLua.h" />
     <ClInclude Include="TES3Allocator.h" />
@@ -555,6 +556,7 @@
     <ClCompile Include="LuaPlayItemSoundEvent.cpp" />
     <ClCompile Include="LuaPostInfoResponseEvent.cpp" />
     <ClCompile Include="LuaPotionBrewedEvent.cpp" />
+    <ClCompile Include="LuaPotionBrewFailedEvent.cpp" />
     <ClCompile Include="LuaPowerRechargedEvent.cpp" />
     <ClCompile Include="LuaPreLevelUpEvent.cpp" />
     <ClCompile Include="LuaPreventRestEvent.cpp" />

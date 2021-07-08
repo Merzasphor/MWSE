@@ -167,7 +167,6 @@
 #include "LuaActivationTargetChangedEvent.h"
 #include "LuaAddTopicEvent.h"
 #include "LuaAttackEvent.h"
-#include "LuaLeveledCreaturePickedEvent.h"
 #include "LuaBarterOfferEvent.h"
 #include "LuaCalcBarterPriceEvent.h"
 #include "LuaCalcHitArmorPieceEvent.h"
@@ -199,6 +198,7 @@
 #include "LuaItemTileUpdatedEvent.h"
 #include "LuaKeyDownEvent.h"
 #include "LuaKeyUpEvent.h"
+#include "LuaLeveledCreaturePickedEvent.h"
 #include "LuaLevelUpEvent.h"
 #include "LuaLoadedGameEvent.h"
 #include "LuaMagicCastedEvent.h"
@@ -211,6 +211,7 @@
 #include "LuaObjectInvalidatedEvent.h"
 #include "LuaPostInfoResponseEvent.h"
 #include "LuaPotionBrewedEvent.h"
+#include "LuaPotionBrewFailedEvent.h"
 #include "LuaPowerRechargedEvent.h"
 #include "LuaPreLevelUpEvent.h"
 #include "LuaPreventRestEvent.h"
@@ -1233,6 +1234,9 @@ namespace mwse {
 				if (event::PotionBrewedEvent::getEventEnabled()) {
 					LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PotionBrewedEvent(lastBrewedPotion, ingredient1, ingredient2, ingredient3, ingredient4));
 				}
+			}
+			else if (event::PotionBrewFailedEvent::getEventEnabled()) {
+				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PotionBrewFailedEvent(ingredient1, ingredient2, ingredient3, ingredient4));
 			}
 
 			return success;
