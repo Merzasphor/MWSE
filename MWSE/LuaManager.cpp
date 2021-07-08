@@ -1224,19 +1224,23 @@ namespace mwse {
 			auto ingredient4 = getBrewingIngredient(0x7D2292);
 
 			// Call original function.
-			bool success = TES3_AttemptPotionBrew();
+			auto success = TES3_AttemptPotionBrew();
 
-			if (success && lastBrewedPotion) {
-				// Set unused target attribute/skill ids to -1.
-				lastBrewedPotion->cleanUnusedAttributeSkillIds();
+			if (success) {
+				if (lastBrewedPotion) {
+					// Set unused target attribute/skill ids to -1.
+					lastBrewedPotion->cleanUnusedAttributeSkillIds();
 
-				// Pass a lua event.
-				if (event::PotionBrewedEvent::getEventEnabled()) {
-					LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PotionBrewedEvent(lastBrewedPotion, ingredient1, ingredient2, ingredient3, ingredient4));
+					// Pass a lua event.
+					if (event::PotionBrewedEvent::getEventEnabled()) {
+						LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PotionBrewedEvent(lastBrewedPotion, ingredient1, ingredient2, ingredient3, ingredient4));
+					}
 				}
 			}
-			else if (event::PotionBrewFailedEvent::getEventEnabled()) {
-				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PotionBrewFailedEvent(ingredient1, ingredient2, ingredient3, ingredient4));
+			else {
+				if (event::PotionBrewFailedEvent::getEventEnabled()) {
+					LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::PotionBrewFailedEvent(ingredient1, ingredient2, ingredient3, ingredient4));
+				}
 			}
 
 			return success;
