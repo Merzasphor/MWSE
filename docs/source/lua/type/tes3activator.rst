@@ -60,6 +60,9 @@ Properties
 `stolenList`_ (`tes3iterator`_)
     A list of actors that the object has been stolen from.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 .. toctree::
     :hidden:
 
@@ -81,6 +84,7 @@ Properties
     tes3activator/script
     tes3activator/sourceMod
     tes3activator/stolenList
+    tes3activator/supportsLuaData
 
 .. _`boundingBox`: tes3activator/boundingBox.html
 .. _`deleted`: tes3activator/deleted.html
@@ -100,6 +104,7 @@ Properties
 .. _`script`: tes3activator/script.html
 .. _`sourceMod`: tes3activator/sourceMod.html
 .. _`stolenList`: tes3activator/stolenList.html
+.. _`supportsLuaData`: tes3activator/supportsLuaData.html
 
 Functions
 ----------------------------------------------------------------------------------------------------

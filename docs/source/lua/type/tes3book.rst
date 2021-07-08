@@ -72,6 +72,9 @@ Properties
 `stolenList`_ (`tes3iterator`_)
     A list of actors that the object has been stolen from.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 `text`_ (`string`_)
     Read-only. Loads and displays the text of the book.
 
@@ -109,6 +112,7 @@ Properties
     tes3book/skill
     tes3book/sourceMod
     tes3book/stolenList
+    tes3book/supportsLuaData
     tes3book/text
     tes3book/type
     tes3book/value
@@ -136,6 +140,7 @@ Properties
 .. _`skill`: tes3book/skill.html
 .. _`sourceMod`: tes3book/sourceMod.html
 .. _`stolenList`: tes3book/stolenList.html
+.. _`supportsLuaData`: tes3book/supportsLuaData.html
 .. _`text`: tes3book/text.html
 .. _`type`: tes3book/type.html
 .. _`value`: tes3book/value.html

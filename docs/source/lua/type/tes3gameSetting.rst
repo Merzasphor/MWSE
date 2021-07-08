@@ -33,6 +33,9 @@ Properties
 `sourceMod`_ (`string`_)
     The filename of the mod that owns this object.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 `type`_ (`string`_)
     Read-only. The type of the variable, either 'i', 'f', or 's'.
 
@@ -51,6 +54,7 @@ Properties
     tes3gameSetting/objectFlags
     tes3gameSetting/objectType
     tes3gameSetting/sourceMod
+    tes3gameSetting/supportsLuaData
     tes3gameSetting/type
     tes3gameSetting/value
 
@@ -63,6 +67,7 @@ Properties
 .. _`objectFlags`: tes3gameSetting/objectFlags.html
 .. _`objectType`: tes3gameSetting/objectType.html
 .. _`sourceMod`: tes3gameSetting/sourceMod.html
+.. _`supportsLuaData`: tes3gameSetting/supportsLuaData.html
 .. _`type`: tes3gameSetting/type.html
 .. _`value`: tes3gameSetting/value.html
 

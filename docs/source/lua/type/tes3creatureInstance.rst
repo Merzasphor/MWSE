@@ -40,10 +40,10 @@ Properties
     The disabled state of the object.
 
 `equipment`_ (`tes3iterator`_)
-    Read-only. The items currently equipped to the actor.
+    Read-only. A collection that contains the currently equipped items.
 
 `equipment`_ (`tes3iterator`_)
-    Read-only. A collection that contains the currently equipped items.
+    Read-only. The items currently equipped to the actor.
 
 `fatigue`_ (`number`_)
     Read-only. The creature's current fatigue.
@@ -58,10 +58,10 @@ Properties
     The unique identifier for the object.
 
 `inventory`_ (`tes3iterator`_)
-    Read-only. A collection that contains the items in the actor's inventory.
+    Read-only. The items currently carried by the actor.
 
 `inventory`_ (`tes3iterator`_)
-    Read-only. The items currently carried by the actor.
+    Read-only. A collection that contains the items in the actor's inventory.
 
 `isAttacked`_ (`boolean`_)
     Read-only. If true, the creature attacked flag is set.
@@ -138,6 +138,9 @@ Properties
 `stolenList`_ (`tes3iterator`_)
     A list of actors that the object has been stolen from.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 `swims`_ (`boolean`_)
     Access to the creature's swims flag.
 
@@ -200,6 +203,7 @@ Properties
     tes3creatureInstance/sourceMod
     tes3creatureInstance/spells
     tes3creatureInstance/stolenList
+    tes3creatureInstance/supportsLuaData
     tes3creatureInstance/swims
     tes3creatureInstance/type
     tes3creatureInstance/usesEquipment
@@ -250,6 +254,7 @@ Properties
 .. _`sourceMod`: tes3creatureInstance/sourceMod.html
 .. _`spells`: tes3creatureInstance/spells.html
 .. _`stolenList`: tes3creatureInstance/stolenList.html
+.. _`supportsLuaData`: tes3creatureInstance/supportsLuaData.html
 .. _`swims`: tes3creatureInstance/swims.html
 .. _`type`: tes3creatureInstance/type.html
 .. _`usesEquipment`: tes3creatureInstance/usesEquipment.html

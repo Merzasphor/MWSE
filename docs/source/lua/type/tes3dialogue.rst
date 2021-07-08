@@ -33,6 +33,9 @@ Properties
 `sourceMod`_ (`string`_)
     The filename of the mod that owns this object.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 `type`_ (`number`_)
     Read-only. The type of the dialogue.
 
@@ -48,6 +51,7 @@ Properties
     tes3dialogue/objectFlags
     tes3dialogue/objectType
     tes3dialogue/sourceMod
+    tes3dialogue/supportsLuaData
     tes3dialogue/type
 
 .. _`deleted`: tes3dialogue/deleted.html
@@ -59,6 +63,7 @@ Properties
 .. _`objectFlags`: tes3dialogue/objectFlags.html
 .. _`objectType`: tes3dialogue/objectType.html
 .. _`sourceMod`: tes3dialogue/sourceMod.html
+.. _`supportsLuaData`: tes3dialogue/supportsLuaData.html
 .. _`type`: tes3dialogue/type.html
 
 Methods

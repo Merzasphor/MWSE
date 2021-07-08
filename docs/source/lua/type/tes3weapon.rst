@@ -123,6 +123,9 @@ Properties
 `stolenList`_ (`tes3iterator`_)
     A list of actors that the object has been stolen from.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 `thrustMax`_ (`number`_)
     Thrust damage inflicted at maximum weapon swing.
 
@@ -183,6 +186,7 @@ Properties
     tes3weapon/sourceMod
     tes3weapon/speed
     tes3weapon/stolenList
+    tes3weapon/supportsLuaData
     tes3weapon/thrustMax
     tes3weapon/thrustMin
     tes3weapon/type
@@ -229,6 +233,7 @@ Properties
 .. _`sourceMod`: tes3weapon/sourceMod.html
 .. _`speed`: tes3weapon/speed.html
 .. _`stolenList`: tes3weapon/stolenList.html
+.. _`supportsLuaData`: tes3weapon/supportsLuaData.html
 .. _`thrustMax`: tes3weapon/thrustMax.html
 .. _`thrustMin`: tes3weapon/thrustMin.html
 .. _`type`: tes3weapon/type.html

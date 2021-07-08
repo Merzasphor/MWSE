@@ -9,6 +9,9 @@ Properties
 `boundingBox`_ (`tes3boundingBox`_)
     The bounding box for the object.
 
+`calculateFromAllLevels`_ (`boolean`_)
+    If true, the leveled list is picked from the entire level range, instead of just the highest.
+
 `chanceForNothing`_ (`number`_)
     Read-only. The percent chance, from 0 to 100, for no object to be chosen.
 
@@ -63,10 +66,14 @@ Properties
 `stolenList`_ (`tes3iterator`_)
     A list of actors that the object has been stolen from.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 .. toctree::
     :hidden:
 
     tes3leveledCreature/boundingBox
+    tes3leveledCreature/calculateFromAllLevels
     tes3leveledCreature/chanceForNothing
     tes3leveledCreature/count
     tes3leveledCreature/deleted
@@ -85,8 +92,10 @@ Properties
     tes3leveledCreature/sceneReference
     tes3leveledCreature/sourceMod
     tes3leveledCreature/stolenList
+    tes3leveledCreature/supportsLuaData
 
 .. _`boundingBox`: tes3leveledCreature/boundingBox.html
+.. _`calculateFromAllLevels`: tes3leveledCreature/calculateFromAllLevels.html
 .. _`chanceForNothing`: tes3leveledCreature/chanceForNothing.html
 .. _`count`: tes3leveledCreature/count.html
 .. _`deleted`: tes3leveledCreature/deleted.html
@@ -105,6 +114,7 @@ Properties
 .. _`sceneReference`: tes3leveledCreature/sceneReference.html
 .. _`sourceMod`: tes3leveledCreature/sourceMod.html
 .. _`stolenList`: tes3leveledCreature/stolenList.html
+.. _`supportsLuaData`: tes3leveledCreature/supportsLuaData.html
 
 Methods
 ----------------------------------------------------------------------------------------------------

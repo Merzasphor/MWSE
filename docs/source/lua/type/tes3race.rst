@@ -54,6 +54,9 @@ Properties
 `sourceMod`_ (`string`_)
     The filename of the mod that owns this object.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 `weight`_ (`tes3raceHeightWeight`_)
     Read-only. Access to the the height pair for males/females of the race.
 
@@ -76,6 +79,7 @@ Properties
     tes3race/objectType
     tes3race/skillBonuses
     tes3race/sourceMod
+    tes3race/supportsLuaData
     tes3race/weight
 
 .. _`abilities`: tes3race/abilities.html
@@ -94,6 +98,7 @@ Properties
 .. _`objectType`: tes3race/objectType.html
 .. _`skillBonuses`: tes3race/skillBonuses.html
 .. _`sourceMod`: tes3race/sourceMod.html
+.. _`supportsLuaData`: tes3race/supportsLuaData.html
 .. _`weight`: tes3race/weight.html
 
 .. _`boolean`: ../../lua/type/boolean.html

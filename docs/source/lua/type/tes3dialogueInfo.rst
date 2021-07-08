@@ -25,10 +25,10 @@ Properties
     The actor that the player first heard the info from.
 
 `id`_ (`string`_)
-    Read-only. The unique long string ID for the info. This is not kept in memory, and must be loaded from files for each call.
+    The unique identifier for the object.
 
 `id`_ (`string`_)
-    The unique identifier for the object.
+    Read-only. The unique long string ID for the info. This is not kept in memory, and must be loaded from files for each call.
 
 `modified`_ (`boolean`_)
     The modification state of the object since the last save.
@@ -63,6 +63,9 @@ Properties
 `sourceMod`_ (`string`_)
     The filename of the mod that owns this object.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 `text`_ (`string`_)
     Read-only. String contents for the info. This is not kept in memory, and must be loaded from files for each call.
 
@@ -91,6 +94,7 @@ Properties
     tes3dialogueInfo/pcFaction
     tes3dialogueInfo/pcRank
     tes3dialogueInfo/sourceMod
+    tes3dialogueInfo/supportsLuaData
     tes3dialogueInfo/text
     tes3dialogueInfo/type
 
@@ -113,6 +117,7 @@ Properties
 .. _`pcFaction`: tes3dialogueInfo/pcFaction.html
 .. _`pcRank`: tes3dialogueInfo/pcRank.html
 .. _`sourceMod`: tes3dialogueInfo/sourceMod.html
+.. _`supportsLuaData`: tes3dialogueInfo/supportsLuaData.html
 .. _`text`: tes3dialogueInfo/text.html
 .. _`type`: tes3dialogueInfo/type.html
 

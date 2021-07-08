@@ -36,6 +36,9 @@ Properties
 `sourceMod`_ (`string`_)
     The filename of the mod that owns this object.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 `weather`_ (`tes3weather`_)
     The region's current weather.
 
@@ -85,6 +88,7 @@ Properties
     tes3region/sleepCreature
     tes3region/sounds
     tes3region/sourceMod
+    tes3region/supportsLuaData
     tes3region/weather
     tes3region/weatherChanceAsh
     tes3region/weatherChanceBlight
@@ -108,6 +112,7 @@ Properties
 .. _`sleepCreature`: tes3region/sleepCreature.html
 .. _`sounds`: tes3region/sounds.html
 .. _`sourceMod`: tes3region/sourceMod.html
+.. _`supportsLuaData`: tes3region/supportsLuaData.html
 .. _`weather`: tes3region/weather.html
 .. _`weatherChanceAsh`: tes3region/weatherChanceAsh.html
 .. _`weatherChanceBlight`: tes3region/weatherChanceBlight.html

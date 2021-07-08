@@ -21,7 +21,7 @@ Properties
     Read-only. Access to the script context for this reference and its associated script.
 
 `data`_ (`table`_)
-    A generic lua table that data can be written to, and synced to/from the save. All information stored must be valid for serialization to json. For item references, this is the same table as on the tes3itemData structure.
+    A generic lua table that data can be written to, and synced to/from the save. All information stored must be valid for serialization to json. For item references, this is the same table as on the tes3itemData structure. To store data that doesn't get serialized to/from the save, use tempData.
 
 `deleted`_ (`boolean`_)
     The deleted state of the object.
@@ -101,6 +101,15 @@ Properties
 `stackSize`_ (`number`_)
     Access to the size of a stack, if the reference represents one or more items.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
+`supportsLuaData`_ (`boolean`_)
+    If true, this reference can store temporary or persistent lua data.
+
+`tempData`_ (`table`_)
+    As with the data field, a generic lua table that data can be written to. No information in this table will persist into saves. For item references, this is the same table as on the tes3itemData structure.
+
 .. toctree::
     :hidden:
 
@@ -135,6 +144,9 @@ Properties
     tes3reference/sceneReference
     tes3reference/sourceMod
     tes3reference/stackSize
+    tes3reference/supportsLuaData
+    tes3reference/supportsLuaData
+    tes3reference/tempData
 
 .. _`activationReference`: tes3reference/activationReference.html
 .. _`attachments`: tes3reference/attachments.html
@@ -167,6 +179,9 @@ Properties
 .. _`sceneReference`: tes3reference/sceneReference.html
 .. _`sourceMod`: tes3reference/sourceMod.html
 .. _`stackSize`: tes3reference/stackSize.html
+.. _`supportsLuaData`: tes3reference/supportsLuaData.html
+.. _`supportsLuaData`: tes3reference/supportsLuaData.html
+.. _`tempData`: tes3reference/tempData.html
 
 Methods
 ----------------------------------------------------------------------------------------------------

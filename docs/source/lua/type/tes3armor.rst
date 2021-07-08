@@ -87,6 +87,9 @@ Properties
 `stolenList`_ (`tes3iterator`_)
     A list of actors that the object has been stolen from.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 `value`_ (`number`_)
     The value of the object.
 
@@ -126,6 +129,7 @@ Properties
     tes3armor/slotName
     tes3armor/sourceMod
     tes3armor/stolenList
+    tes3armor/supportsLuaData
     tes3armor/value
     tes3armor/weight
     tes3armor/weightClass
@@ -157,6 +161,7 @@ Properties
 .. _`slotName`: tes3armor/slotName.html
 .. _`sourceMod`: tes3armor/sourceMod.html
 .. _`stolenList`: tes3armor/stolenList.html
+.. _`supportsLuaData`: tes3armor/supportsLuaData.html
 .. _`value`: tes3armor/value.html
 .. _`weight`: tes3armor/weight.html
 .. _`weightClass`: tes3armor/weightClass.html

@@ -69,6 +69,9 @@ Properties
 `stolenList`_ (`tes3iterator`_)
     A list of actors that the object has been stolen from.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 `value`_ (`number`_)
     The value of the object.
 
@@ -99,6 +102,7 @@ Properties
     tes3lockpick/script
     tes3lockpick/sourceMod
     tes3lockpick/stolenList
+    tes3lockpick/supportsLuaData
     tes3lockpick/value
     tes3lockpick/weight
 
@@ -123,6 +127,7 @@ Properties
 .. _`script`: tes3lockpick/script.html
 .. _`sourceMod`: tes3lockpick/sourceMod.html
 .. _`stolenList`: tes3lockpick/stolenList.html
+.. _`supportsLuaData`: tes3lockpick/supportsLuaData.html
 .. _`value`: tes3lockpick/value.html
 .. _`weight`: tes3lockpick/weight.html
 

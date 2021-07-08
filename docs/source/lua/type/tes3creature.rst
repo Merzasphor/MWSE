@@ -126,6 +126,9 @@ Properties
 `stolenList`_ (`tes3iterator`_)
     A list of actors that the object has been stolen from.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 `swims`_ (`boolean`_)
     Access to the creature's swims flag.
 
@@ -181,6 +184,7 @@ Properties
     tes3creature/sourceMod
     tes3creature/spells
     tes3creature/stolenList
+    tes3creature/supportsLuaData
     tes3creature/swims
     tes3creature/type
     tes3creature/usesEquipment
@@ -226,6 +230,7 @@ Properties
 .. _`sourceMod`: tes3creature/sourceMod.html
 .. _`spells`: tes3creature/spells.html
 .. _`stolenList`: tes3creature/stolenList.html
+.. _`supportsLuaData`: tes3creature/supportsLuaData.html
 .. _`swims`: tes3creature/swims.html
 .. _`type`: tes3creature/type.html
 .. _`usesEquipment`: tes3creature/usesEquipment.html

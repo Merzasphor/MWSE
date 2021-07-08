@@ -9,6 +9,9 @@ Properties
 `autoCalc`_ (`boolean`_)
     Determines if the Magicka Cost for the spell is autocalculated.
 
+`basePurchaseCost`_ (`number`_)
+    Calculates the base cost to purchase the spell. This value is not adjusted by mercantile skills.
+
 `castType`_ (`number`_)
     The spell's cast type.
 
@@ -63,10 +66,14 @@ Properties
 `sourceMod`_ (`string`_)
     The filename of the mod that owns this object.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 .. toctree::
     :hidden:
 
     tes3spell/autoCalc
+    tes3spell/basePurchaseCost
     tes3spell/castType
     tes3spell/deleted
     tes3spell/disabled
@@ -85,8 +92,10 @@ Properties
     tes3spell/sceneNode
     tes3spell/sceneReference
     tes3spell/sourceMod
+    tes3spell/supportsLuaData
 
 .. _`autoCalc`: tes3spell/autoCalc.html
+.. _`basePurchaseCost`: tes3spell/basePurchaseCost.html
 .. _`castType`: tes3spell/castType.html
 .. _`deleted`: tes3spell/deleted.html
 .. _`disabled`: tes3spell/disabled.html
@@ -105,6 +114,7 @@ Properties
 .. _`sceneNode`: tes3spell/sceneNode.html
 .. _`sceneReference`: tes3spell/sceneReference.html
 .. _`sourceMod`: tes3spell/sourceMod.html
+.. _`supportsLuaData`: tes3spell/supportsLuaData.html
 
 Functions
 ----------------------------------------------------------------------------------------------------

@@ -99,6 +99,9 @@ Properties
 `stolenList`_ (`tes3iterator`_)
     A list of actors that the object has been stolen from.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 `time`_ (`number`_)
     The amount of time that the light will last.
 
@@ -142,6 +145,7 @@ Properties
     tes3light/sound
     tes3light/sourceMod
     tes3light/stolenList
+    tes3light/supportsLuaData
     tes3light/time
     tes3light/value
     tes3light/weight
@@ -177,6 +181,7 @@ Properties
 .. _`sound`: tes3light/sound.html
 .. _`sourceMod`: tes3light/sourceMod.html
 .. _`stolenList`: tes3light/stolenList.html
+.. _`supportsLuaData`: tes3light/supportsLuaData.html
 .. _`time`: tes3light/time.html
 .. _`value`: tes3light/value.html
 .. _`weight`: tes3light/weight.html

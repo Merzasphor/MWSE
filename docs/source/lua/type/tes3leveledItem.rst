@@ -9,6 +9,12 @@ Properties
 `boundingBox`_ (`tes3boundingBox`_)
     The bounding box for the object.
 
+`calculateForEachItem`_ (`boolean`_)
+    If true, each entry is rolled in the leveled list when resolving items. This can result in multiple items from one list being added.
+
+`calculateFromAllLevels`_ (`boolean`_)
+    If true, the leveled list is picked from the entire level range, instead of just the highest.
+
 `chanceForNothing`_ (`number`_)
     Read-only. The percent chance, from 0 to 100, for no object to be chosen.
 
@@ -63,10 +69,15 @@ Properties
 `stolenList`_ (`tes3iterator`_)
     A list of actors that the object has been stolen from.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 .. toctree::
     :hidden:
 
     tes3leveledItem/boundingBox
+    tes3leveledItem/calculateForEachItem
+    tes3leveledItem/calculateFromAllLevels
     tes3leveledItem/chanceForNothing
     tes3leveledItem/count
     tes3leveledItem/deleted
@@ -85,8 +96,11 @@ Properties
     tes3leveledItem/sceneReference
     tes3leveledItem/sourceMod
     tes3leveledItem/stolenList
+    tes3leveledItem/supportsLuaData
 
 .. _`boundingBox`: tes3leveledItem/boundingBox.html
+.. _`calculateForEachItem`: tes3leveledItem/calculateForEachItem.html
+.. _`calculateFromAllLevels`: tes3leveledItem/calculateFromAllLevels.html
 .. _`chanceForNothing`: tes3leveledItem/chanceForNothing.html
 .. _`count`: tes3leveledItem/count.html
 .. _`deleted`: tes3leveledItem/deleted.html
@@ -105,6 +119,7 @@ Properties
 .. _`sceneReference`: tes3leveledItem/sceneReference.html
 .. _`sourceMod`: tes3leveledItem/sourceMod.html
 .. _`stolenList`: tes3leveledItem/stolenList.html
+.. _`supportsLuaData`: tes3leveledItem/supportsLuaData.html
 
 Methods
 ----------------------------------------------------------------------------------------------------

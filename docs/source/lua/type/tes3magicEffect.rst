@@ -93,6 +93,9 @@ Properties
 `sizeCap`_ (`number`_)
     No description available.
 
+`skill`_ (`number`_)
+    The skill for the associated school that the effect is associated with.
+
 `speed`_ (`number`_)
     No description available.
 
@@ -140,6 +143,7 @@ Properties
     tes3magicEffect/school
     tes3magicEffect/size
     tes3magicEffect/sizeCap
+    tes3magicEffect/skill
     tes3magicEffect/speed
     tes3magicEffect/targetsAttributes
     tes3magicEffect/targetsSkills
@@ -175,6 +179,7 @@ Properties
 .. _`school`: tes3magicEffect/school.html
 .. _`size`: tes3magicEffect/size.html
 .. _`sizeCap`: tes3magicEffect/sizeCap.html
+.. _`skill`: tes3magicEffect/skill.html
 .. _`speed`: tes3magicEffect/speed.html
 .. _`targetsAttributes`: tes3magicEffect/targetsAttributes.html
 .. _`targetsSkills`: tes3magicEffect/targetsSkills.html

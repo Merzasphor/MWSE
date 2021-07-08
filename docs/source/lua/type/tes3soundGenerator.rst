@@ -33,6 +33,9 @@ Properties
 `sourceMod`_ (`string`_)
     The filename of the mod that owns this object.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 `type`_ (`number`_)
     Read-only. Maps to tes3.soundGenType constants.
 
@@ -48,6 +51,7 @@ Properties
     tes3soundGenerator/objectType
     tes3soundGenerator/sound
     tes3soundGenerator/sourceMod
+    tes3soundGenerator/supportsLuaData
     tes3soundGenerator/type
 
 .. _`deleted`: tes3soundGenerator/deleted.html
@@ -59,6 +63,7 @@ Properties
 .. _`objectType`: tes3soundGenerator/objectType.html
 .. _`sound`: tes3soundGenerator/sound.html
 .. _`sourceMod`: tes3soundGenerator/sourceMod.html
+.. _`supportsLuaData`: tes3soundGenerator/supportsLuaData.html
 .. _`type`: tes3soundGenerator/type.html
 
 Methods

@@ -75,6 +75,9 @@ Properties
 `sunColor`_ (`tes3packedColor`_)
     The cell's sun color. Only available on interior cells.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 `waterLevel`_ (`number`_)
     The water level in the cell. Only available on interior cells.
 
@@ -104,6 +107,7 @@ Properties
     tes3cell/sourceMod
     tes3cell/statics
     tes3cell/sunColor
+    tes3cell/supportsLuaData
     tes3cell/waterLevel
 
 .. _`activators`: tes3cell/activators.html
@@ -129,6 +133,7 @@ Properties
 .. _`sourceMod`: tes3cell/sourceMod.html
 .. _`statics`: tes3cell/statics.html
 .. _`sunColor`: tes3cell/sunColor.html
+.. _`supportsLuaData`: tes3cell/supportsLuaData.html
 .. _`waterLevel`: tes3cell/waterLevel.html
 
 Methods

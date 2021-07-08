@@ -51,6 +51,9 @@ Properties
 `stolenList`_ (`tes3iterator`_)
     A list of actors that the object has been stolen from.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 .. toctree::
     :hidden:
 
@@ -69,6 +72,7 @@ Properties
     tes3physicalObject/sceneReference
     tes3physicalObject/sourceMod
     tes3physicalObject/stolenList
+    tes3physicalObject/supportsLuaData
 
 .. _`boundingBox`: tes3physicalObject/boundingBox.html
 .. _`deleted`: tes3physicalObject/deleted.html
@@ -85,6 +89,7 @@ Properties
 .. _`sceneReference`: tes3physicalObject/sceneReference.html
 .. _`sourceMod`: tes3physicalObject/sourceMod.html
 .. _`stolenList`: tes3physicalObject/stolenList.html
+.. _`supportsLuaData`: tes3physicalObject/supportsLuaData.html
 
 .. _`tes3iterator`: ../../lua/type/tes3iterator.html
 .. _`boolean`: ../../lua/type/boolean.html

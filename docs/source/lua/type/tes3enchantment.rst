@@ -63,6 +63,9 @@ Properties
 `sourceMod`_ (`string`_)
     The filename of the mod that owns this object.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 .. toctree::
     :hidden:
 
@@ -85,6 +88,7 @@ Properties
     tes3enchantment/sceneNode
     tes3enchantment/sceneReference
     tes3enchantment/sourceMod
+    tes3enchantment/supportsLuaData
 
 .. _`castType`: tes3enchantment/castType.html
 .. _`chargeCost`: tes3enchantment/chargeCost.html
@@ -105,6 +109,7 @@ Properties
 .. _`sceneNode`: tes3enchantment/sceneNode.html
 .. _`sceneReference`: tes3enchantment/sceneReference.html
 .. _`sourceMod`: tes3enchantment/sourceMod.html
+.. _`supportsLuaData`: tes3enchantment/supportsLuaData.html
 
 Functions
 ----------------------------------------------------------------------------------------------------

@@ -144,6 +144,9 @@ Properties
 `stolenList`_ (`tes3iterator`_)
     A list of actors that the object has been stolen from.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 .. toctree::
     :hidden:
 
@@ -193,6 +196,7 @@ Properties
     tes3npc/sourceMod
     tes3npc/spells
     tes3npc/stolenList
+    tes3npc/supportsLuaData
 
 .. _`actorFlags`: tes3npc/actorFlags.html
 .. _`aiConfig`: tes3npc/aiConfig.html
@@ -240,6 +244,7 @@ Properties
 .. _`sourceMod`: tes3npc/sourceMod.html
 .. _`spells`: tes3npc/spells.html
 .. _`stolenList`: tes3npc/stolenList.html
+.. _`supportsLuaData`: tes3npc/supportsLuaData.html
 
 Methods
 ----------------------------------------------------------------------------------------------------

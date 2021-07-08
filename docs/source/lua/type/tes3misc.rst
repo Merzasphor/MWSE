@@ -72,6 +72,9 @@ Properties
 `stolenList`_ (`tes3iterator`_)
     A list of actors that the object has been stolen from.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 `value`_ (`number`_)
     The value of the object.
 
@@ -103,6 +106,7 @@ Properties
     tes3misc/soulGemData
     tes3misc/sourceMod
     tes3misc/stolenList
+    tes3misc/supportsLuaData
     tes3misc/value
     tes3misc/weight
 
@@ -128,6 +132,7 @@ Properties
 .. _`soulGemData`: tes3misc/soulGemData.html
 .. _`sourceMod`: tes3misc/sourceMod.html
 .. _`stolenList`: tes3misc/stolenList.html
+.. _`supportsLuaData`: tes3misc/supportsLuaData.html
 .. _`value`: tes3misc/value.html
 .. _`weight`: tes3misc/weight.html
 

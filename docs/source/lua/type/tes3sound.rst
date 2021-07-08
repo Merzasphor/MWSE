@@ -39,6 +39,9 @@ Properties
 `sourceMod`_ (`string`_)
     The filename of the mod that owns this object.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 `volume`_ (`number`_)
     Direct access to sound's volume.
 
@@ -56,6 +59,7 @@ Properties
     tes3sound/objectFlags
     tes3sound/objectType
     tes3sound/sourceMod
+    tes3sound/supportsLuaData
     tes3sound/volume
 
 .. _`deleted`: tes3sound/deleted.html
@@ -69,6 +73,7 @@ Properties
 .. _`objectFlags`: tes3sound/objectFlags.html
 .. _`objectType`: tes3sound/objectType.html
 .. _`sourceMod`: tes3sound/sourceMod.html
+.. _`supportsLuaData`: tes3sound/supportsLuaData.html
 .. _`volume`: tes3sound/volume.html
 
 Methods

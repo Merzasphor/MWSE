@@ -66,6 +66,9 @@ Properties
 `stolenList`_ (`tes3iterator`_)
     A list of actors that the object has been stolen from.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 `type`_ (`number`_)
     The type of the apparatus.
 
@@ -98,6 +101,7 @@ Properties
     tes3apparatus/script
     tes3apparatus/sourceMod
     tes3apparatus/stolenList
+    tes3apparatus/supportsLuaData
     tes3apparatus/type
     tes3apparatus/value
     tes3apparatus/weight
@@ -122,6 +126,7 @@ Properties
 .. _`script`: tes3apparatus/script.html
 .. _`sourceMod`: tes3apparatus/sourceMod.html
 .. _`stolenList`: tes3apparatus/stolenList.html
+.. _`supportsLuaData`: tes3apparatus/supportsLuaData.html
 .. _`type`: tes3apparatus/type.html
 .. _`value`: tes3apparatus/value.html
 .. _`weight`: tes3apparatus/weight.html

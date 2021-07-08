@@ -57,6 +57,9 @@ Properties
 `state`_ (`number`_)
     Shows if the state is pre-cast, cast, beginning, working, ending, retired, etc.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 `target`_ (`tes3reference`_)
     Read-only. No description available.
 
@@ -83,6 +86,7 @@ Properties
     tes3magicSourceInstance/sourceMod
     tes3magicSourceInstance/sourceType
     tes3magicSourceInstance/state
+    tes3magicSourceInstance/supportsLuaData
     tes3magicSourceInstance/target
     tes3magicSourceInstance/timestampCastBegin
 
@@ -103,6 +107,7 @@ Properties
 .. _`sourceMod`: tes3magicSourceInstance/sourceMod.html
 .. _`sourceType`: tes3magicSourceInstance/sourceType.html
 .. _`state`: tes3magicSourceInstance/state.html
+.. _`supportsLuaData`: tes3magicSourceInstance/supportsLuaData.html
 .. _`target`: tes3magicSourceInstance/target.html
 .. _`timestampCastBegin`: tes3magicSourceInstance/timestampCastBegin.html
 

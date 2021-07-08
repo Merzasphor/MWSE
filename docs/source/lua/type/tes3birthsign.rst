@@ -36,6 +36,9 @@ Properties
 `spells`_ (`tes3spellList`_)
     Read-only. A list of spells granted by the birthsign.
 
+`supportsLuaData`_ (`boolean`_)
+    If true, references of this object can store temporary or persistent lua data.
+
 `texturePath`_ (`string`_)
     Path to the related image representing the birthsign.
 
@@ -52,6 +55,7 @@ Properties
     tes3birthsign/objectType
     tes3birthsign/sourceMod
     tes3birthsign/spells
+    tes3birthsign/supportsLuaData
     tes3birthsign/texturePath
 
 .. _`deleted`: tes3birthsign/deleted.html
@@ -64,6 +68,7 @@ Properties
 .. _`objectType`: tes3birthsign/objectType.html
 .. _`sourceMod`: tes3birthsign/sourceMod.html
 .. _`spells`: tes3birthsign/spells.html
+.. _`supportsLuaData`: tes3birthsign/supportsLuaData.html
 .. _`texturePath`: tes3birthsign/texturePath.html
 
 .. _`boolean`: ../../lua/type/boolean.html

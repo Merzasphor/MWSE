@@ -16,7 +16,7 @@ Properties
     Returns an ease of use script context for variable access.
 
 `data`_ (`table`_)
-    A generic lua table that data can be written to, and synced to/from the save. All information stored must be valid for serialization to json.
+    A generic lua table that data can be written to, and synced to/from the save. All information stored must be valid for serialization to json. For data that doesn't persist, use tempData.
 
 `owner`_ (`tes3npc`_, `tes3faction`_, `nil`_)
     The script associated with the scriptVariables.
@@ -33,6 +33,9 @@ Properties
 `soul`_ (`tes3actor`_)
     Only available on misc items. The actor that is stored inside the soul gem.
 
+`tempData`_ (`table`_)
+    A generic lua table that data can be written to, but is not synced to/from a save.
+
 `timeLeft`_ (`number`_)
     The time remaining on a light. Provides incorrect values on non-light items, which instead have a condition property.
 
@@ -48,6 +51,7 @@ Properties
     tes3itemData/script
     tes3itemData/scriptVariables
     tes3itemData/soul
+    tes3itemData/tempData
     tes3itemData/timeLeft
 
 .. _`charge`: tes3itemData/charge.html
@@ -59,6 +63,7 @@ Properties
 .. _`script`: tes3itemData/script.html
 .. _`scriptVariables`: tes3itemData/scriptVariables.html
 .. _`soul`: tes3itemData/soul.html
+.. _`tempData`: tes3itemData/tempData.html
 .. _`timeLeft`: tes3itemData/timeLeft.html
 
 .. _`tes3globalVariable`: ../../lua/type/tes3globalVariable.html

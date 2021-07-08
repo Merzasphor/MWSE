@@ -143,6 +143,7 @@ Functions
     tes3/playVoiceover
     tes3/positionCell
     tes3/pushKey
+    tes3/random
     tes3/rayTest
     tes3/releaseKey
     tes3/removeEffects
