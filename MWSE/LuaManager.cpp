@@ -167,6 +167,7 @@
 #include "LuaActivationTargetChangedEvent.h"
 #include "LuaAddTopicEvent.h"
 #include "LuaAttackEvent.h"
+#include "LuaLeveledCreaturePickedEvent.h"
 #include "LuaBarterOfferEvent.h"
 #include "LuaCalcBarterPriceEvent.h"
 #include "LuaCalcHitArmorPieceEvent.h"
@@ -1693,6 +1694,37 @@ namespace mwse {
 			if (mobile && mobile->reference && wasDrawn && event::WeaponUnreadiedEvent::getEventEnabled()) {
 				LuaManager::getInstance().getThreadSafeStateHandle().triggerEvent(new event::WeaponUnreadiedEvent(mobile->reference));
 			}
+		}
+
+		//
+		// Events: Leveled list resolving
+		//
+
+		TES3::Reference* __fastcall CacheLeveledCreatureSpawner(TES3::Reference* reference) {
+			// Overwritten code.
+			auto result = reference->getLeveledBaseReference();
+
+			if (result == nullptr) {
+				event::LeveledCreaturePickedEvent::m_LastLeveledSourceReference = reference;
+			}
+
+			return result;
+		}
+
+		TES3::Object* __fastcall PickLeveledCreatureWithCachedSpawner(TES3::LeveledCreature* leveledList) {
+			auto result = leveledList->resolve();
+
+			// Clear cached spawning reference so it doesn't pollute other calls.
+			event::LeveledCreaturePickedEvent::m_LastLeveledSourceReference = nullptr;
+
+			return result;
+		}
+
+		TES3::Object* __fastcall PickLeveledCreatureForEmptyCell(TES3::LeveledCreature* leveledList) {
+			event::LeveledCreaturePickedEvent::m_IsForEmptyCell = true;
+			auto result = leveledList->resolve();
+			event::LeveledCreaturePickedEvent::m_IsForEmptyCell = false;
+			return result;
 		}
 
 		//
@@ -3560,10 +3592,11 @@ namespace mwse {
 
 			// Event: Leveled creature picked.
 			auto leveledCreaturePick = &TES3::LeveledCreature::resolve;
-			genCallEnforced(0x4B8C95, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
-			genCallEnforced(0x4B8E80, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
+			genCallEnforced(0x4B8C95, 0x4CF870, reinterpret_cast<DWORD>(PickLeveledCreatureForEmptyCell));
+			genCallEnforced(0x4B8E80, 0x4CF870, reinterpret_cast<DWORD>(PickLeveledCreatureForEmptyCell));
 			genCallEnforced(0x4CF9E7, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
-			genCallEnforced(0x4CFB43, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
+			genCallEnforced(0x4CFB34, 0x4E7EE0, reinterpret_cast<DWORD>(CacheLeveledCreatureSpawner));
+			genCallEnforced(0x4CFB43, 0x4CF870, reinterpret_cast<DWORD>(PickLeveledCreatureWithCachedSpawner));
 			genCallEnforced(0x635236, 0x4CF870, *reinterpret_cast<DWORD*>(&leveledCreaturePick));
 
 			// Event: Mobile Sneak Detection.

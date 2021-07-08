@@ -5,13 +5,11 @@
 #include "LuaLeveledCreaturePickedEvent.h"
 #include "LuaLeveledItemPickedEvent.h"
 
-#define TES3_LeveledCreature_resolve 0x4CF870
-#define TES3_LeveledItem_resolve 0x4D0BD0
-
 namespace TES3 {
+	const auto TES3_LeveledCreature_resolve = reinterpret_cast<Object * (__thiscall*)(LeveledCreature*)>(0x4CF870);
 	Object * LeveledCreature::resolve() {
 		// Call the original function.
-		Object * result = reinterpret_cast<Object*(__thiscall *)(LeveledCreature*)>(TES3_LeveledCreature_resolve)(this);
+		Object * result = TES3_LeveledCreature_resolve(this);
 
 		// Allow the event to override the pick.
 		if (mwse::lua::event::LeveledCreaturePickedEvent::getEventEnabled()) {
@@ -42,9 +40,10 @@ namespace TES3 {
 		return TES3_LeveledCreature_RemoveEntry(this, entry, level);
 	}
 
+	const auto TES3_LeveledItem_resolve = reinterpret_cast<Object * (__thiscall*)(LeveledItem*)>(0x4D0BD0);
 	Object * LeveledItem::resolve() {
 		// Call the original function.
-		Object * result = reinterpret_cast<Object*(__thiscall *)(LeveledItem*)>(TES3_LeveledItem_resolve)(this);
+		Object * result = TES3_LeveledItem_resolve(this);
 
 		// Allow the event to override the pick.
 		if (mwse::lua::event::LeveledItemPickedEvent::getEventEnabled()) {
