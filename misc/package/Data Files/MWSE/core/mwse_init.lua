@@ -57,7 +57,7 @@ function dofile(path, ...)
 	-- Any results in cache?
 	local cachedPath = fileLocationCache[standardizedPath]
 	if (cachedPath) then
-		loadfile(cachedPath)(...)
+		return loadfile(cachedPath)(...)
 	end
 
 	-- First pass: Direct load. Have to manually add the .lua extension.
