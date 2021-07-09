@@ -32,6 +32,8 @@ namespace mwse {
 
 			// Basic function binding.
 			usertypeDefinition["click"] = &NI::Camera::click_lua;
+			usertypeDefinition["windowPointToRay"] = &NI::Camera::windowPointToRay_lua;
+			usertypeDefinition["worldPointToScreenPoint"] = &NI::Camera::worldPointToScreenPoint_lua;
 		}
 	}
 }

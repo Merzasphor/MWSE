@@ -146,6 +146,12 @@ Methods
 `updateProperties`_
     Update all attached properties.
 
+`windowPointToRay`_
+    Given a screen space position, calculates the world position and outlook direction. This can be useful when trying to find a reference under a UI element, such as the cusor.
+
+`worldPointToScreenPoint`_
+    Given a world coordinate position, calculates where that point relates to the screen space.
+
 .. toctree::
     :hidden:
 
@@ -163,6 +169,8 @@ Methods
     niCamera/update
     niCamera/updateEffects
     niCamera/updateProperties
+    niCamera/windowPointToRay
+    niCamera/worldPointToScreenPoint
 
 .. _`attachProperty`: niCamera/attachProperty.html
 .. _`clearTransforms`: niCamera/clearTransforms.html
@@ -178,6 +186,8 @@ Methods
 .. _`update`: niCamera/update.html
 .. _`updateEffects`: niCamera/updateEffects.html
 .. _`updateProperties`: niCamera/updateProperties.html
+.. _`windowPointToRay`: niCamera/windowPointToRay.html
+.. _`worldPointToScreenPoint`: niCamera/worldPointToScreenPoint.html
 
 .. _`niObject`: ../../lua/type/niObject.html
 .. _`boolean`: ../../lua/type/boolean.html

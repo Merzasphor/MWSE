@@ -34,6 +34,16 @@ namespace NI {
 		void click(bool something = false);
 		void click_lua(sol::optional<bool> something = false);
 
+		// Note: screen coordinates are real from the viewport, and not 
+		bool windowPointToRay(int screenX, int screenY, TES3::Vector3& out_origin, TES3::Vector3& out_direction);
+		bool worldPointToScreenPoint(const TES3::Vector3* point, float& out_screenX, float& out_screenY);
+
+		// Unlike above, we need to convert the ouput from [width/-2, width/2] to [0, width] and flip the height.
+		sol::optional<std::tuple<TES3::Vector3, TES3::Vector3>> windowPointToRay_lua(sol::stack_object);
+
+		// Unlike above, we need to convert the ouput from [0,1] to [width/-2, width/2].
+		sol::optional<TES3::Vector2> worldPointToScreenPoint_lua(sol::stack_object);
+
 	};
 	static_assert(sizeof(Camera) == 0x1E0, "NI::Camera failed size validation");
 }
