@@ -385,7 +385,7 @@ namespace TES3 {
 		sol::state_view state = ts;
 		sol::table results = state.create_table();
 		for (auto itt : magicEffects->effectObjects) {
-			results.add(itt.second);
+			results[itt.second->id + 1] = itt.second;
 		}
 		return results;
 	}
