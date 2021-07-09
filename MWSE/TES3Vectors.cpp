@@ -24,8 +24,64 @@ namespace TES3 {
 
 	}
 
+	Vector2::Vector2(sol::table table) {
+		x = table.get_or("x", table.get_or(1, 0.0f));
+		y = table.get_or("y", table.get_or(2, 0.0f));
+	}
+
+	Vector2& Vector2::operator=(const sol::table table) {
+		x = table.get_or("x", table.get_or(1, 0.0f));
+		y = table.get_or("y", table.get_or(2, 0.0f));
+		return *this;
+	}
+
+	bool Vector2::operator==(const Vector2& vec3) const {
+		return x == vec3.x && y == vec3.y;
+	}
+
+	bool Vector2::operator!=(const Vector2& vec3) const {
+		return x != vec3.x || y != vec3.y;
+	}
+
+	Vector2 Vector2::operator+(const Vector2& vec3) const {
+		return Vector2(x + vec3.x, y + vec3.y);
+	}
+
+	Vector2 Vector2::operator-(const Vector2& vec3) const {
+		return Vector2(x - vec3.x, y - vec3.y);
+	}
+
+	Vector2 Vector2::operator*(const Vector2& vec3) const {
+		return Vector2(x * vec3.x, y * vec3.y);
+	}
+
+	Vector2 Vector2::operator*(const float scalar) const {
+		return Vector2(x * scalar, y * scalar);
+	}
+
+	std::ostream& operator<<(std::ostream& str, const Vector2& vector) {
+		str << "(" << vector.x << "," << vector.y << ")";
+		return str;
+	}
+
+	std::string Vector2::toString() const {
+		std::ostringstream ss;
+		ss << std::fixed << std::setprecision(2) << std::dec << *this;
+		return std::move(ss.str());
+	}
+
+	std::string Vector2::toJson() const {
+		std::ostringstream ss;
+		ss << "{\"x\":" << x << ",\"y\":" << y << "}";
+		return std::move(ss.str());
+	}
+
 	Vector2 Vector2::copy() const {
 		return *this;
+	}
+
+	float Vector2::length() const {
+		return sqrt(x * x + y * y);
 	}
 
 	//

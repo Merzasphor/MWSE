@@ -298,8 +298,7 @@ namespace mwse {
 					}
 					// Were we given a table?
 					else if (maybeValue.get_type() == sol::type::table) {
-						sol::table value = maybeValue.as<sol::table>();
-						return TES3::Vector2(value[1], value[2]);
+						return maybeValue.as<sol::table>();
 					}
 				}
 			}
@@ -386,24 +385,34 @@ namespace mwse {
 			return TES3_UI_ID_NULL;
 		}
 
-		void setVectorFromLua(TES3::Vector3* vector, sol::stack_object value) {
+		bool setVectorFromLua(TES3::Vector2& vector, sol::stack_object value) {
 			// Is it a vector?
-			if (value.is<TES3::Vector3*>()) {
-				TES3::Vector3 * newVector = value.as<TES3::Vector3*>();
-				vector->x = newVector->x;
-				vector->y = newVector->y;
-				vector->z = newVector->z;
+			if (value.is<TES3::Vector2>()) {
+				vector = value.as<TES3::Vector2&>();
+				return true;
 			}
 			// Allow a simple table to be provided.
 			else if (value.get_type() == sol::type::table) {
-				// Get the values from the table.
-				sol::table table = value.as<sol::table>();
-				if (table.size() == 3) {
-					vector->x = table[1];
-					vector->y = table[2];
-					vector->z = table[3];
-				}
+				vector = value.as<sol::table>();
+				return true;
 			}
+
+			return false;
+		}
+
+		bool setVectorFromLua(TES3::Vector3& vector, sol::stack_object value) {
+			// Is it a vector?
+			if (value.is<TES3::Vector3*>()) {
+				vector = value.as<TES3::Vector3&>();
+				return true;
+			}
+			// Allow a simple table to be provided.
+			else if (value.get_type() == sol::type::table) {
+				vector = value.as<sol::table>();
+				return true;
+			}
+
+			return false;
 		}
 
 		void logStackTrace(const char* message) {

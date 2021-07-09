@@ -30,12 +30,26 @@ namespace mwse {
 				auto usertypeDefinition = state.new_usertype<TES3::Vector2>("tes3vector2");
 				usertypeDefinition["new"] = sol::constructors<TES3::Vector2(), TES3::Vector2(float, float)>();
 
+				// Operator overloading.
+				usertypeDefinition[sol::meta_function::addition] = &TES3::Vector2::operator+;
+				usertypeDefinition[sol::meta_function::subtraction] = &TES3::Vector2::operator-;
+				usertypeDefinition[sol::meta_function::multiplication] = sol::overload(
+					sol::resolve<TES3::Vector2(const TES3::Vector2&) const>(&TES3::Vector2::operator*),
+					sol::resolve<TES3::Vector2(const float) const>(&TES3::Vector2::operator*)
+				);
+				usertypeDefinition[sol::meta_function::length] = &TES3::Vector2::length;
+				usertypeDefinition[sol::meta_function::to_string] = &TES3::Vector2::toString;
+
+				// Allow objects to be serialized to json using their ID.
+				usertypeDefinition["__tojson"] = &TES3::Vector2::toJson;
+
 				// Basic property bindings.
 				usertypeDefinition["x"] = &TES3::Vector2::x;
 				usertypeDefinition["y"] = &TES3::Vector2::y;
 
 				// Basic function binding.
 				usertypeDefinition["copy"] = &TES3::Vector2::copy;
+				usertypeDefinition["length"] = &TES3::Vector2::length;
 			}
 
 			// Binding for TES3::Vector3.

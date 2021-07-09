@@ -18,8 +18,24 @@ namespace TES3 {
 
 		Vector2();
 		Vector2(float x, float y);
+		Vector2(sol::table table);
+
+		Vector2& operator=(const sol::table table);
+
+		bool operator==(const Vector2& vector) const;
+		bool operator!=(const Vector2& vector) const;
+		Vector2 operator+(const Vector2&) const;
+		Vector2 operator-(const Vector2&) const;
+		Vector2 operator*(const Vector2&) const;
+		Vector2 operator*(const float) const;
+
+		friend std::ostream& operator<<(std::ostream& str, const Vector2& vector);
+		std::string toString() const;
+		std::string toJson() const;
 
 		Vector2 copy() const;
+
+		float length() const;
 	};
 	static_assert(sizeof(Vector2) == 0x8, "TES3::Vector2 failed size validation");
 
