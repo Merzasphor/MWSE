@@ -30,7 +30,10 @@ namespace NI {
 	}
 
 	nonstd::span<TextKey> TextKeyExtraData::getKeys() const {
-		return nonstd::span(key, keyCount);
+		if (key) {
+			return nonstd::span(key, keyCount);
+		}
+		return {};
 	}
 }
 

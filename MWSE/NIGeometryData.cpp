@@ -19,19 +19,31 @@ namespace NI {
 	}
 
 	nonstd::span<ColorA> GeometryData::getColors() {
-		return nonstd::span(color, vertexCount);
+		if (color) {
+			nonstd::span(color, vertexCount);
+		}
+		return {};
 	}
 
 	nonstd::span<TES3::Vector3> GeometryData::getVertices() {
-		return nonstd::span(vertex, vertexCount);
+		if (vertex) {
+			return nonstd::span(vertex, vertexCount);
+		}
+		return {};
 	}
 
 	nonstd::span<TES3::Vector3> GeometryData::getNormals() {
-		return nonstd::span(normal, vertexCount);
+		if (normal) {
+			return nonstd::span(normal, vertexCount);
+		}
+		return {};
 	}
 
 	nonstd::span<TES3::Vector2> GeometryData::getTextureCoordinates() {
-		return nonstd::span(textureCoords, vertexCount * textureSets);
+		if (textureCoords) {
+			return nonstd::span(textureCoords, vertexCount * textureSets);
+		}
+		return {};
 	}
 }
 
