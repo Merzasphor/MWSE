@@ -106,10 +106,10 @@ namespace mwse {
 				usertypeDefinition["new"] = sol::constructors<TES3::Vector4(), TES3::Vector4(float, float, float, float)>();
 
 				// Basic property bindings.
+				usertypeDefinition["w"] = &TES3::Vector4::w;
 				usertypeDefinition["x"] = &TES3::Vector4::x;
 				usertypeDefinition["y"] = &TES3::Vector4::y;
 				usertypeDefinition["z"] = &TES3::Vector4::z;
-				usertypeDefinition["w"] = &TES3::Vector4::w;
 
 				// Basic function binding.
 				usertypeDefinition["copy"] = &TES3::Vector4::copy;
