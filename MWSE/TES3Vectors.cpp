@@ -609,7 +609,27 @@ namespace TES3 {
 	}
 
 	Matrix44 Matrix44::operator*(const Matrix44& matrix) {
-		return Matrix44(m0 * matrix.m0, m1 * matrix.m1, m2 * matrix.m2, m3 * matrix.m3);
+		return Matrix44(
+			m0.w * matrix.m0.w + m0.x * matrix.m1.w + m0.y * matrix.m2.w + m0.z * matrix.m3.w,
+			m0.w * matrix.m0.x + m0.x * matrix.m1.x + m0.y * matrix.m2.x + m0.z * matrix.m3.x,
+			m0.w * matrix.m0.y + m0.x * matrix.m1.y + m0.y * matrix.m2.y + m0.z * matrix.m3.y,
+			m0.w * matrix.m0.z + m0.x * matrix.m1.z + m0.y * matrix.m2.z + m0.z * matrix.m3.z,
+
+			m1.w * matrix.m0.w + m1.x * matrix.m1.w + m1.y * matrix.m2.w + m1.z * matrix.m3.w,
+			m1.w * matrix.m0.x + m1.x * matrix.m1.x + m1.y * matrix.m2.x + m1.z * matrix.m3.x,
+			m1.w * matrix.m0.y + m1.x * matrix.m1.y + m1.y * matrix.m2.y + m1.z * matrix.m3.y,
+			m1.w * matrix.m0.z + m1.x * matrix.m1.z + m1.y * matrix.m2.z + m1.z * matrix.m3.z,
+
+			m2.w * matrix.m0.w + m2.x * matrix.m1.w + m2.y * matrix.m2.w + m2.z * matrix.m3.w,
+			m2.w * matrix.m0.x + m2.x * matrix.m1.x + m2.y * matrix.m2.x + m2.z * matrix.m3.x,
+			m2.w * matrix.m0.y + m2.x * matrix.m1.y + m2.y * matrix.m2.y + m2.z * matrix.m3.y,
+			m2.w * matrix.m0.z + m2.x * matrix.m1.z + m2.y * matrix.m2.z + m2.z * matrix.m3.z,
+
+			m3.w * matrix.m0.w + m3.x * matrix.m1.w + m3.y * matrix.m2.w + m3.z * matrix.m3.w,
+			m3.w * matrix.m0.x + m3.x * matrix.m1.x + m3.y * matrix.m2.x + m3.z * matrix.m3.x,
+			m3.w * matrix.m0.y + m3.x * matrix.m1.y + m3.y * matrix.m2.y + m3.z * matrix.m3.y,
+			m3.w * matrix.m0.z + m3.x * matrix.m1.z + m3.y * matrix.m2.z + m3.z * matrix.m3.z
+		);
 	}
 
 	Matrix44 Matrix44::operator*(float scalar) {
