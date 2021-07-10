@@ -20,7 +20,7 @@ namespace NI {
 
 	nonstd::span<ColorA> GeometryData::getColors() {
 		if (color) {
-			nonstd::span(color, vertexCount);
+			return nonstd::span(color, vertexCount);
 		}
 		return {};
 	}
