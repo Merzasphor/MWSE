@@ -45,7 +45,8 @@ end
 
 -- Custom dofile that respects package pathing and supports lua's dot notation for paths.
 local fileLocationCache = {}
-function dofile(path, ...)
+local originalDoFile = dofile
+function dofile(path)
 	assert(path and type(path) == "string")
 
 	-- Replace . and / with \, and remove .lua extension if it exists.
@@ -57,23 +58,21 @@ function dofile(path, ...)
 	-- Any results in cache?
 	local cachedPath = fileLocationCache[standardizedPath]
 	if (cachedPath) then
-		return loadfile(cachedPath)(...)
+		return originalDoFile(cachedPath)
 	end
 
 	-- First pass: Direct load. Have to manually add the .lua extension.
-	local r = loadfile(standardizedPath .. ".lua")
-	if (r) then
-		fileLocationCache[standardizedPath] = standardizedPath .. ".lua";
-		return r(...)
+	if (lfs.fileexists(standardizedPath .. ".lua", true)) then
+		fileLocationCache[standardizedPath] = standardizedPath .. ".lua"
+		return originalDoFile(standardizedPath .. ".lua")
 	end
 
 	-- Check all package paths.
 	for ppath in package.path:gmatch("[^;]+") do
-		local adjustedPath = tes3.installDirectory .. ppath:gsub("?", standardizedPath)
-		r = loadfile(adjustedPath)
-		if (r) then
-			fileLocationCache[standardizedPath] = adjustedPath;
-			return r(...)
+		local adjustedPath = ppath:gsub("?", standardizedPath)
+		if (lfs.fileexists(adjustedPath, true)) then
+			fileLocationCache[standardizedPath] = adjustedPath
+			return originalDoFile(adjustedPath)
 		end
 	end
 
@@ -419,6 +418,37 @@ local function deleteDirectoryRecursive(dir, recursive)
 end
 lfs.rmdir = deleteDirectoryRecursive
 
+-- Basic "file exists" check.
+function lfs.fileexists(filepath, relativeToInstallDirectory)
+	local currentDir = lfs.currentdir()
+	if (relativeToInstallDirectory) then
+		lfs.chdir(tes3.installDirectory)
+	end
+
+	if (lfs.attributes(filepath, "mode") == "file") then
+		lfs.chdir(currentDir)
+		return true
+	end
+
+	lfs.chdir(currentDir)
+	return false
+end
+
+-- Basic "folder exists" check.
+function lfs.directoryexists(filepath)
+	local currentDir = lfs.currentdir()
+	if (relativeToInstallDirectory) then
+		lfs.chdir(tes3.installDirectory)
+	end
+
+	if (lfs.attributes(filepath, "mode") == "directory") then
+		lfs.chdir(currentDir)
+		return true
+	end
+
+	lfs.chdir(currentDir)
+	return false
+end
 
 -------------------------------------------------
 -- Global includes
