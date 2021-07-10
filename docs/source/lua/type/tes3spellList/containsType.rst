@@ -11,6 +11,8 @@ Returns
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 spellType (`number`_)
     A value from tes3.spellType.
 

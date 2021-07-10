@@ -11,6 +11,8 @@ Returns
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 object (`tes3alchemy`_, `tes3enchantment`_, `tes3spell`_)
     The magic to check for.
 

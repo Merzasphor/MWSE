@@ -11,6 +11,8 @@ Returns
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 text (`string`_, `nil`_)
     Optional. The text to put in the clipboard. If nil is provided instead, then the clipboard will be cleared.
 

@@ -13,6 +13,8 @@ Returns
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 path (`string`_)
     The path to lock.
 

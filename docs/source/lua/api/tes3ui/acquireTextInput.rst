@@ -8,6 +8,8 @@ Only one element can have control of input, and there is no automatic restoratio
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 element (`tes3uiElement`_)
     Optional. No description available.
 

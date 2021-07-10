@@ -15,6 +15,8 @@ Returns
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 id (`number`_)
     Optional. A registered identifier to help find this element later.
 

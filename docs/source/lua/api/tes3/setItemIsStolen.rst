@@ -6,6 +6,8 @@ This function changes an item's stolen flag. Morrowind handles stealing by marki
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 item (`tes3item`_)
     The item whose stolen flag to modify.
 

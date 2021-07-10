@@ -11,6 +11,8 @@ Returns
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 callback (`function`_)
     The callback function that will execute when the timer expires.
 

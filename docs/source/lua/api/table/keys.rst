@@ -11,6 +11,8 @@ Returns
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 t (`table`_)
     The table to get keys for.
 

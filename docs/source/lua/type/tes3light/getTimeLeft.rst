@@ -11,6 +11,8 @@ Returns
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 data (`tes3reference`_, `tes3itemData`_, `tes3equipmentStack`_)
     No description available.
 

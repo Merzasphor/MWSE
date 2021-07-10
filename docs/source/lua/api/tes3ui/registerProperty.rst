@@ -13,6 +13,8 @@ Returns
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 s (`string`_)
     No description available.
 

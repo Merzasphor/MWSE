@@ -14,6 +14,8 @@ Returns
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 t (`table`_)
     A table to transverse.
 

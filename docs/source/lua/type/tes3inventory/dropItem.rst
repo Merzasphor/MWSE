@@ -6,6 +6,8 @@ Checks to see if the inventory contains an item. This should not be used, instea
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 mobile (`tes3mobileActor`_, `tes3reference`_, `string`_)
     The mobile actor whose stats will be updated.
 

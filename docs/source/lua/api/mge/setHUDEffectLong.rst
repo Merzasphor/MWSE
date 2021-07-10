@@ -6,6 +6,8 @@ Sets the effect long variable for a HUD element. This is a wrapper for MGENIDSet
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 hud (`string`_)
     Optional. No description available.
 

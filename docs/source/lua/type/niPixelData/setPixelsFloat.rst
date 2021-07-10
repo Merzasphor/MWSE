@@ -6,6 +6,8 @@ Sets the pixel data from float data.
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 data (`table`_)
     The float data to be set to.
 

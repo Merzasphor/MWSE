@@ -6,6 +6,8 @@ Sets a shader's long variable. Wrapper for mwscript's MGEShaderSetLong.
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 shader (`string`_)
     No description available.
 

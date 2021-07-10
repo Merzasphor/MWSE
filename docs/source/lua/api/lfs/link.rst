@@ -13,6 +13,8 @@ Returns
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 old (`string`_)
     The object to link to.
 

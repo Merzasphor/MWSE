@@ -6,6 +6,8 @@ Sets a shader's float variable. Wrapper for mwscript's MGEShaderSetFloat.
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 shader (`string`_)
     No description available.
 

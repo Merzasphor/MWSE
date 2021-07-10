@@ -6,6 +6,8 @@ Registers a function to be called when an event is raised.
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 eventId (`string`_)
     No description available.
 

@@ -6,6 +6,8 @@ Unregisters a function  event is raised.
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 eventId (`string`_)
     No description available.
 

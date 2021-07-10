@@ -20,6 +20,8 @@ Returns
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 propName (`string`_)
     The property name.
 

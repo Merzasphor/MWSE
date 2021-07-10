@@ -400,6 +400,7 @@ local function buildAPIEntryForFunction(package)
 				end
 			end
 		else
+			file:write("Accepts parameters in the following order:\n\n")
 			for _, param in ipairs(package.arguments) do
 				file:write((param.name or "...") .. " (" .. breakoutMultipleTypes(param.type) .. ")\n")
 				file:write("    ")
@@ -789,6 +790,7 @@ local function buildNamedTypeEntryForFunction(package)
 				end
 			end
 		else
+			file:write("Accepts parameters in the following order:\n\n")
 			for _, param in ipairs(package.arguments) do
 				file:write((param.name or "...") .. " (" .. breakoutMultipleTypes(param.type) .. ")\n")
 				file:write("    ")

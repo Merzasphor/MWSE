@@ -6,6 +6,8 @@ Updates statistics derived from attributes, which are magicka, fatigue, and encu
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 attribute (`tes3statistic`_)
     Optional. Limits the update to statistics derived from this attribute.  e.g. ``mobile:updateDerivedStatistics(mobile.strength)``. If not present, all derived statistics will be updated.
 

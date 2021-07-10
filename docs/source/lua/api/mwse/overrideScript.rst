@@ -6,6 +6,8 @@ Configures MWSE to execute a given function instead when a script would run.
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 scriptId (`string`_)
     No description available.
 

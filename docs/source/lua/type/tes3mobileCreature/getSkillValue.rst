@@ -11,6 +11,8 @@ Returns
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 skillId (`number`_)
     The index of the skill statistic's value to fetch.
 

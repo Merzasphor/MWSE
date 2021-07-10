@@ -11,6 +11,8 @@ Returns
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 point (`tes3vector3`_)
     The world position to calculate screen position for.
 

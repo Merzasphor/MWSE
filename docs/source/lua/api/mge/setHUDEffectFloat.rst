@@ -6,6 +6,8 @@ Sets the effect float variable for a HUD element. This is a wrapper for MGENIDSe
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 hud (`string`_)
     Optional. No description available.
 

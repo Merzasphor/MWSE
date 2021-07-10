@@ -111,6 +111,8 @@ The standard type signature for events.
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 eventID (`string`_)
     The event id.
 

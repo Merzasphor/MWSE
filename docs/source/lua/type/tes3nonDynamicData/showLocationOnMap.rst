@@ -6,6 +6,8 @@ Draws map marker boxes onto the world map for all cells with names starting with
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 cellNamePrefix (`string`_)
     No description available.
 

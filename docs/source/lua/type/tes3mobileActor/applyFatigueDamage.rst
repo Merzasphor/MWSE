@@ -11,6 +11,8 @@ Returns
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 fatigueDamage (`number`_)
     The amount of fatigue damage to apply.
 

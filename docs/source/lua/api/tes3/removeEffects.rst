@@ -6,6 +6,8 @@ Removes magic effects from a given reference. Requires that either the effect or
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 reference (`tes3reference`_)
     Target reference to remove effects from.
 

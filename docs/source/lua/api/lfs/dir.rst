@@ -6,6 +6,8 @@ Creates a Lua iterator over the entries of a given directory. This can be used t
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 path (`string`_)
     The path to iterate over.
 

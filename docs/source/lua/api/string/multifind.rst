@@ -8,6 +8,8 @@ If any of the available patterns match, the matching pattern is returned followe
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 s (`string`_)
     The string to perform finds on.
 

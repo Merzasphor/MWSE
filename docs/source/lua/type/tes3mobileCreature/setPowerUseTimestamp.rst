@@ -6,6 +6,8 @@ Sets the timestamp a recharging power was used. Powers recharge 24 hours after t
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 power (`tes3spell`_)
     The spell object for the power.
 

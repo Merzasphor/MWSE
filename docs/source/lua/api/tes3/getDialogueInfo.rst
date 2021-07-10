@@ -11,6 +11,8 @@ Returns
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 dialogue (`tes3dialogue`_, `string`_)
     The dialogue that the info belongs to.
 

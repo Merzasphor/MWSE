@@ -13,6 +13,8 @@ Returns
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 insertBefore (`tes3uiElement`_, `number`_)
     The insertion point (or its 0-based child index).
 

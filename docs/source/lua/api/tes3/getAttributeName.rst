@@ -11,6 +11,8 @@ Returns
 Parameters
 ----------------------------------------------------------------------------------------------------
 
+Accepts parameters in the following order:
+
 attributeId (`number`_)
     The attribute id to get the name of, from tes3.attributeName constants.
 
