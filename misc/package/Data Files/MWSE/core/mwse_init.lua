@@ -227,6 +227,15 @@ function table.traverse(t, k)
 	return coroutine.wrap(iter)
 end
 
+function table.keys(t, sortFn)
+	local keys = {}
+	for k, _ in pairs(t) do
+		table.insert(keys, k)
+	end
+	table.sort(keys, sortFn)
+	return keys
+end
+
 -------------------------------------------------
 -- Extend base table: Add binary search/insert
 -------------------------------------------------

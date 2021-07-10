@@ -17,6 +17,7 @@ Functions
     table/deepcopy
     table/empty
     table/find
+    table/keys
     table/removevalue
     table/size
     table/traverse
