@@ -37,12 +37,17 @@ Methods
 `copy`_ (`tes3vector4`_)
     Creates a copy of the vector.
 
+`length`_ (`number`_)
+    Calculates the length of the vector.
+
 .. toctree::
     :hidden:
 
     tes3vector4/copy
+    tes3vector4/length
 
 .. _`copy`: tes3vector4/copy.html
+.. _`length`: tes3vector4/length.html
 
 .. _`number`: ../../lua/type/number.html
 .. _`tes3vector4`: ../../lua/type/tes3vector4.html
