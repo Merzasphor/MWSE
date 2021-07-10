@@ -4,7 +4,7 @@
 
 namespace NI {
 	struct Camera : AVObject {
-		float worldToCamera[16]; // 0x90
+		TES3::Matrix44 worldToCamera; // 0x90
 		float viewDistance; // 0xD0
 		float twoDivRmL; // 0xD4
 		float twoDivTmB; // 0xD8

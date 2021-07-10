@@ -57,6 +57,9 @@ Properties
 `worldRight`_ (`tes3vector3`_)
     Defines the Z-axis of the camera.
 
+`worldToCamera`_ (`tes3matrix44`_)
+    The world-to-camera transform matrix in row-major order.
+
 `worldUp`_ (`tes3vector3`_)
     Defines the Y-axis of the camera.
 
@@ -80,6 +83,7 @@ Properties
     niCamera/viewDistance
     niCamera/worldDirection
     niCamera/worldRight
+    niCamera/worldToCamera
     niCamera/worldUp
 
 .. _`appCulled`: niCamera/appCulled.html
@@ -99,6 +103,7 @@ Properties
 .. _`viewDistance`: niCamera/viewDistance.html
 .. _`worldDirection`: niCamera/worldDirection.html
 .. _`worldRight`: niCamera/worldRight.html
+.. _`worldToCamera`: niCamera/worldToCamera.html
 .. _`worldUp`: niCamera/worldUp.html
 
 Methods
@@ -199,5 +204,6 @@ Methods
 .. _`number`: ../../lua/type/number.html
 .. _`string`: ../../lua/type/string.html
 .. _`tes3matrix33`: ../../lua/type/tes3matrix33.html
+.. _`tes3matrix44`: ../../lua/type/tes3matrix44.html
 .. _`tes3vector3`: ../../lua/type/tes3vector3.html
 .. _`tes3vector4`: ../../lua/type/tes3vector4.html
